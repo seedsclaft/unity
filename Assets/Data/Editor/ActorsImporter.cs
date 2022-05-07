@@ -8,33 +8,30 @@ using NPOI.HSSF.UserModel;
 using NPOI.SS.UserModel;
 using NPOI.XSSF.UserModel;
 
-public class ActorsInfoImporter : AssetPostprocessor {
+public class ActorsImporter : AssetPostprocessor {
     enum BaseColumn
     {
 		Id = 0,
-		Name,
+		NameId,
 		ClassId,
 		ImagePath,
 		InitLv,
+		MaxLv,
 		InitHp,
-		InitStr,
-		InitMag,
-		InitTec,
+		InitMp,
+		InitAtk,
 		InitSpd,
-		InitLuk,
-		InitDef,
-		InitRes,
-		InitMov,
-		GrowthHp,
-		GrowthStr,
-		GrowthMag,
-		GrowthTec,
-		GrowthSpd,
-		GrowthLuk,
-		GrowthDef,
-		GrowthRes,
-		GrowthMov,
+		MaxHp,
+		MaxMp,
+		MaxAtk,
+		MaxSpd,
     }
+    enum BaseTextColumn
+    {
+
+		Id = 0,
+		Text,
+	}
 	static readonly string ExcelPath = "Assets/Data";
 	static readonly string ExcelName = "Actors.xlsx";
 
@@ -102,37 +99,43 @@ public class ActorsInfoImporter : AssetPostprocessor {
 
 					var ActorInfo = new ActorsData.ActorData();
 					ActorInfo.Id = (int)Baserow.GetCell((int)BaseColumn.Id)?.SafeNumericCellValue();
-					ActorInfo.Name = Baserow.GetCell((int)BaseColumn.Name)?.SafeStringCellValue();
+					ActorInfo.NameId = (int)Baserow.GetCell((int)BaseColumn.NameId)?.SafeNumericCellValue();
 					ActorInfo.ClassId = (int)Baserow.GetCell((int)BaseColumn.ClassId)?.SafeNumericCellValue();
 					ActorInfo.ImagePath = Baserow.GetCell((int)BaseColumn.ImagePath)?.SafeStringCellValue();
 					ActorInfo.InitLv = (int)Baserow.GetCell((int)BaseColumn.InitLv)?.SafeNumericCellValue();
+					ActorInfo.MaxLv = (int)Baserow.GetCell((int)BaseColumn.MaxLv)?.SafeNumericCellValue();
 
 					int InitHp = (int)Baserow.GetCell((int)BaseColumn.InitHp)?.SafeNumericCellValue();
-					int InitStr = (int)Baserow.GetCell((int)BaseColumn.InitStr)?.SafeNumericCellValue();
-					int InitMag = (int)Baserow.GetCell((int)BaseColumn.InitMag)?.SafeNumericCellValue();
-					int InitTec = (int)Baserow.GetCell((int)BaseColumn.InitTec)?.SafeNumericCellValue();
+					int InitMp = (int)Baserow.GetCell((int)BaseColumn.InitMp)?.SafeNumericCellValue();
+					int InitAtk = (int)Baserow.GetCell((int)BaseColumn.InitAtk)?.SafeNumericCellValue();
 					int InitSpd = (int)Baserow.GetCell((int)BaseColumn.InitSpd)?.SafeNumericCellValue();
-					int InitLuk = (int)Baserow.GetCell((int)BaseColumn.InitLuk)?.SafeNumericCellValue();
-					int InitDef = (int)Baserow.GetCell((int)BaseColumn.InitDef)?.SafeNumericCellValue();
-					int InitRes = (int)Baserow.GetCell((int)BaseColumn.InitRes)?.SafeNumericCellValue();
-					int InitMov = (int)Baserow.GetCell((int)BaseColumn.InitMov)?.SafeNumericCellValue();
 					ActorInfo.InitStatus = new StatusInfo();
-					ActorInfo.InitStatus.SetParameter(InitHp,InitStr,InitMag,InitTec,InitSpd,InitLuk,InitDef,InitRes,InitMov);
+					ActorInfo.InitStatus.SetParameter(InitHp,InitMp,InitAtk,InitSpd);
 
-					int GrowthHp = (int)Baserow.GetCell((int)BaseColumn.GrowthHp)?.SafeNumericCellValue();
-					int GrowthStr = (int)Baserow.GetCell((int)BaseColumn.GrowthStr)?.SafeNumericCellValue();
-					int GrowthMag = (int)Baserow.GetCell((int)BaseColumn.GrowthMag)?.SafeNumericCellValue();
-					int GrowthTec = (int)Baserow.GetCell((int)BaseColumn.GrowthTec)?.SafeNumericCellValue();
-					int GrowthSpd = (int)Baserow.GetCell((int)BaseColumn.GrowthSpd)?.SafeNumericCellValue();
-					int GrowthLuk = (int)Baserow.GetCell((int)BaseColumn.GrowthLuk)?.SafeNumericCellValue();
-					int GrowthDef = (int)Baserow.GetCell((int)BaseColumn.GrowthDef)?.SafeNumericCellValue();
-					int GrowthRes = (int)Baserow.GetCell((int)BaseColumn.GrowthRes)?.SafeNumericCellValue();
-					int GrowthMov = (int)Baserow.GetCell((int)BaseColumn.GrowthMov)?.SafeNumericCellValue();
-
-					ActorInfo.GrowthRateStatus = new StatusInfo();
-					ActorInfo.GrowthRateStatus.SetParameter(GrowthHp,GrowthStr,GrowthMag,GrowthTec,GrowthSpd,GrowthLuk,GrowthDef,GrowthRes,GrowthMov);
+					int MaxHp = (int)Baserow.GetCell((int)BaseColumn.MaxHp)?.SafeNumericCellValue();
+					int MaxMp = (int)Baserow.GetCell((int)BaseColumn.MaxMp)?.SafeNumericCellValue();
+					int MaxAtk = (int)Baserow.GetCell((int)BaseColumn.MaxAtk)?.SafeNumericCellValue();
+					int MaxSpd = (int)Baserow.GetCell((int)BaseColumn.MaxSpd)?.SafeNumericCellValue();
+					ActorInfo.MaxStatus = new StatusInfo();
+					ActorInfo.MaxStatus.SetParameter(MaxHp,MaxMp,MaxAtk,MaxSpd);
 
 					Data._data.Add(ActorInfo);
+				}
+
+				// 情報の初期化
+				Data._textdata.Clear();
+
+				BaseSheet = Book.GetSheetAt(1);
+
+				for (int i = 1; i <= BaseSheet.LastRowNum; i++)
+				{
+					IRow Baserow = BaseSheet.GetRow(i);
+					var TextData = new TextData();
+
+					TextData.Id = (int)Baserow.GetCell((int)BaseTextColumn.Id)?.SafeNumericCellValue();
+					TextData.Text = Baserow.GetCell((int)BaseTextColumn.Text)?.SafeStringCellValue();
+					
+					Data._textdata.Add(TextData);
 				}
 			}
 		}

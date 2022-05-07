@@ -11,9 +11,8 @@ public class BaseModel
     public StatusInfo LevelUpActor(int actorId)
     {
         var actorData = DataSystem.Actors.Find(x => x.Id == actorId);
-        var classData = DataSystem.Classes.Find(x => x.Id == actorData.ClassId);
 
-        var actorInfo = _playInfo._playerData._actors.Find(x => x.ActorId == actorId);
-        return actorInfo.LevelUp(actorData.GrowthRateStatus,classData.BaseStatus,classData.MaxStatus);
+        //var actorInfo = _playInfo._playerData._actors.Find(x => x.ActorId == actorId);
+        return actorData.LevelUpStatus(1);
     }
 }

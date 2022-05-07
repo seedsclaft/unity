@@ -12,10 +12,6 @@ public class ClassesData : ScriptableObject {
     {   
         public int Id;
         public string Name;
-        public StatusInfo BaseStatus;
-        public StatusInfo MaxStatus;
-        public WeaponRankInfo BaseWeaponRank;
-        public WeaponRankInfo MaxWeaponRank;
         
 
         public string GetName()

@@ -5,26 +5,44 @@ using UnityEngine;
 
 public class ActorsData : ScriptableObject {
     [SerializeField] public List<ActorData> _data = new List<ActorData>();
+    [SerializeField] public List<TextData> _textdata = new List<TextData>();
 
 
     [Serializable]
     public class ActorData
     {   
         public int Id;
-        public string Name;
+        public int NameId;
         public int ClassId;
         public string ImagePath;
         public int InitLv;
+        public int MaxLv;
         public StatusInfo InitStatus;
-        public StatusInfo GrowthRateStatus;
+        public StatusInfo MaxStatus;
         
-
-        public string GetName()
+        public int CurrentParam(StatusParamType growType,int level)
         {
-            string name = Name;
-            return name;
+            int init = InitStatus.GetParameter(growType);
+            int max = MaxStatus.GetParameter(growType);
+            float per = MaxLv - InitLv;
+            float upParam = ((max - init) / per) * level;
+            return init + (int)upParam;
         }
 
+        public StatusInfo LevelUpStatus(int level)
+        {
+            StatusInfo upStatus = new StatusInfo();
+            foreach (StatusParamType growType in Enum.GetValues(typeof(StatusParamType)))
+            {
+                int currentParam = CurrentParam(growType,level);
+                int nextParam = CurrentParam(growType,level + 1);
+                if (currentParam < nextParam){
+                    int upParam = nextParam - currentParam;
+                    upStatus.AddParameter(growType,upParam);
+                }
+            }
+            return upStatus;
+        }
     }
 
 }
@@ -34,46 +52,22 @@ public class ActorInfo
 {
     private int _actorId;
     public int ActorId {get {return _actorId;}}
-    private int _level;
     private int _exp;
-    private StatusInfo _plusStatus;
 
-    public ActorInfo(ActorsData.ActorData actorInfo)
+    public ActorInfo(ActorsData.ActorData actorData)
     {
-        _actorId = actorInfo.Id;
-        _level = actorInfo.InitLv;
-        _exp = (actorInfo.InitLv - 1) * 100;
-        _plusStatus = new StatusInfo();
+        _actorId = actorData.Id;
+        _exp = (actorData.InitLv - 1) * 100;
     }
 
-    public StatusInfo LevelUp(StatusInfo growStatus,StatusInfo baseStatus,StatusInfo maxStatus)
+    private int GetLevel()
     {
-        _level++;
-        return LevelUpStatus(growStatus,baseStatus,maxStatus);
+        return _exp / 100;
     }
 
-    private StatusInfo LevelUpStatus(StatusInfo growStatus,StatusInfo baseStatus,StatusInfo maxStatus)
+    private void GainExp(int exp)
     {
-        StatusInfo upStatus = new StatusInfo();
-        foreach (StatusParamType growType in Enum.GetValues(typeof(StatusParamType)))
-        {
-            int currentParam = baseStatus.GetParameter(growType) + _plusStatus.GetParameter(growType);
-            int maxParam = maxStatus.GetParameter(growType);
-            if (currentParam < maxParam){
-                int growParam = growStatus.GetParameter(growType);
-                if (IsStatusUp(growParam)){
-                    _plusStatus.AddParameter(growType,1);
-                    upStatus.AddParameter(growType,1);
-                }
-            }
-        }
-        return upStatus;
-    }
-
-    private bool IsStatusUp(int growParam)
-    {
-        int rate = new System.Random().Next(0,100);
-        return (growParam >= rate);
+        _exp += exp; 
     }
 
 };
@@ -82,34 +76,19 @@ public class ActorInfo
 public class StatusInfo
 {
     public int _hp = 0;
-    public int _str = 0;
-    public int _mag = 0;
-    public int _tec = 0;
+    public int _mp = 0;
+    public int _atk = 0;
     public int _spd = 0;
-    public int _luc = 0;
-    public int _def = 0;
-    public int _res = 0;
-    public int _mov = 0;
     public int Hp {get { return _hp;}}
-    public int Atk {get { return _str;}}
-    public int Tec {get { return _tec;}}
+    public int Mp {get { return _mp;}}
+    public int Atk {get { return _atk;}}
     public int Spd {get { return _spd;}}
-    public int Luc {get { return _luc;}}
-    public int Def {get { return _def;}}
-    public int Res {get { return _res;}}
-    public int Mov {get { return _mov;}}
-
-    public void SetParameter(int hp,int str,int mag,int tec,int spd,int luc,int def,int res,int mov)
+    public void SetParameter(int hp,int mp,int atk,int spd)
     {
         _hp = hp;
-        _str = str;
-        _mag = mag;
-        _tec = tec;
+        _mp = mp;
+        _atk = atk;
         _spd = spd;
-        _luc = luc;
-        _def = def;
-        _res = res;
-        _mov = mov;
     }
 
     public int GetParameter(StatusParamType paramType)
@@ -117,14 +96,9 @@ public class StatusInfo
         switch (paramType)
         {
             case StatusParamType.Hp: return _hp;
-            case StatusParamType.Str: return _str;
-            case StatusParamType.Mag: return _mag;
-            case StatusParamType.Tec: return _tec;
+            case StatusParamType.Mp: return _mp;
+            case StatusParamType.Atk: return _atk;
             case StatusParamType.Spd: return _spd;
-            case StatusParamType.Luc: return _luc;
-            case StatusParamType.Def: return _def;
-            case StatusParamType.Res: return _res;
-            case StatusParamType.Mov: return _mov;
         }
         return 0;
     }
@@ -134,14 +108,9 @@ public class StatusInfo
         switch (paramType)
         {
             case StatusParamType.Hp: _hp += param; break;
-            case StatusParamType.Str: _str += param; break;
-            case StatusParamType.Mag: _mag += param; break;
-            case StatusParamType.Tec: _tec += param; break;
+            case StatusParamType.Mp: _mp += param; break;
+            case StatusParamType.Atk: _atk += param; break;
             case StatusParamType.Spd: _spd += param; break;
-            case StatusParamType.Luc: _luc += param; break;
-            case StatusParamType.Def: _def += param; break; 
-            case StatusParamType.Res: _res += param; break; 
-            case StatusParamType.Mov: _mov += param; break;
         }
     }
 }
@@ -149,16 +118,17 @@ public class StatusInfo
 public enum StatusParamType
 {
     Hp = 0,
-    Str,
-    Mag,
-    Tec,
+    Mp,
+    Atk,
     Spd,
-    Luc,
-    Def,
-    Res,
-    Mov
 }
 
+[Serializable]
+public class TextData
+{   
+    public int Id;
+    public string Text;
+}
 
 [Serializable]
 public class WeaponRankInfo
