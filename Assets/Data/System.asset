@@ -1,0 +1,50 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 8
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41f3152f92ac33c4eaedc3725fdaf6c4, type: 3}
+  m_Name: System
+  m_EditorClassIdentifier: 
+  MenuCommandData:
+  - Id: 1
+    Key: item
+    NameTextId: 1
+  - Id: 2
+    Key: skill
+    NameTextId: 2
+  - Id: 3
+    Key: status
+    NameTextId: 3
+  - Id: 4
+    Key: party
+    NameTextId: 4
+  - Id: 5
+    Key: word
+    NameTextId: 5
+  - Id: 6
+    Key: system
+    NameTextId: 6
+  - Id: 7
+    Key: option
+    NameTextId: 7
+  TitleCommandData:
+  - Id: 1
+    Key: newgame
+    NameTextId: 101
+  - Id: 2
+    Key: continue
+    NameTextId: 102
+  - Id: 3
+    Key: option
+    NameTextId: 103
+  - Id: 4
+    Key: exit
+    NameTextId: 104
+  InitActors: 01000000

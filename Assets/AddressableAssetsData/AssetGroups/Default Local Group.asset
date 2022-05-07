@@ -1,0 +1,81 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Default Local Group
+  m_EditorClassIdentifier: 
+  m_GroupName: Default Local Group
+  m_Data:
+    m_SerializedData: []
+  m_GUID: 01919885b82d7944b9d3283ca85ea5c3
+  m_SerializeEntries:
+  - m_GUID: f7cd1b60cd974874b91470352fc15a10
+    m_Address: Assets/Audios/field001.mp3
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 58c1035330556f840bb151ca79864899
+    m_Address: Assets/Audios/limitant.mp3
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 370416ce0e2abf54faebb4fe9066d63a
+    m_Address: Assets/Data/Actors.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: af4b5658291715c4c870f9b07f54dce4
+    m_Address: Assets/Images/Actors/0001/main.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: e7dc9d5730df31346b4185b4c18650e3
+    m_Address: Assets/Images/Actors/0002/main.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: c414e29e7ad6eab46be5bcee31d85b5d
+    m_Address: Assets/Images/Actors/0003/main.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: b7cc528449c233648965ccaf619f3667
+    m_Address: Assets/Images/Actors/0005/main.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 4dc54c2a950e3c5479035e00dcf570ac
+    m_Address: Assets/Images/Actors/0004/main.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 2640b180968255944a30b01416df8b9c
+    m_Address: Assets/Data/System.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: c2c85e39b81ea8448833223ad13ea8c7
+    m_Address: Assets/Prefabs/Boot/BootScene.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: ce816c9646a18d941ae3438de7597570
+    m_Address: Assets/Prefabs/Title/TitleScene.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: e92051a54d45c644d9c49db623dfa5c4
+    m_Address: Assets/Prefabs/MainMenu/MainMenuScene.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 1ab578c0efda2394fab824d2e91362a3
+    m_Address: Assets/Data/Classes.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: a03b8c6d5b5a5ce4cb2b88fd9688f8b5
+    m_Address: Assets/Data/Items.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 03904f7cbaacd05438ef4796d1ae962a, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 22c2caeb4b672bf4db9b0534c96dff63, type: 2}
+    - {fileID: 11400000, guid: d2f023c144d3f0b459222d4f313c1235, type: 2}

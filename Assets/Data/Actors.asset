@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 8
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 197a87feeb3ec1940a87b1cd875b91ff, type: 3}
+  m_Name: Actors
+  m_EditorClassIdentifier: 
+  _data:
+  - Id: 1
+    Name: "\u30DF\u30AB\u30E4"
+    ClassId: 1
+    ImagePath: 1
+    InitLv: 1
+    InitStatus:
+      _hp: 15
+      _str: 2
+      _mag: 7
+      _tec: 8
+      _spd: 7
+      _luc: 10
+      _def: 2
+      _res: 4
+      _mov: 5
+    GrowthRateStatus:
+      _hp: 40
+      _str: 15
+      _mag: 80
+      _tec: 40
+      _spd: 35
+      _luc: 80
+      _def: 20
+      _res: 90
+      _mov: 0
