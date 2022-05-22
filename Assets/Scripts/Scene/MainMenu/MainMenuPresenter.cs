@@ -23,9 +23,9 @@ public class MainMenuPresenter
 
         var menuCommand = await _model.MenuCommand();
         _view.SetCommandData(menuCommand);
-        List<ActorsData.ActorData> actors = DataSystem.Actors;
+        List<ActorInfo> actors = _model.MenuActors();
         var actorImages = _model.ActorsImage(actors);
-        _view.SetActorsData(actors,actorImages);
+        _view.SetActorsData(actors);
 
         var bgm = await _model.BgmData();
 

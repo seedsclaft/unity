@@ -5,8 +5,6 @@ using UnityEngine;
 
 public class BaseModel
 {
-    private SavePlayInfo _playInfo;
-    public SavePlayInfo PlayInfo{get{return _playInfo;} set{_playInfo = value;}}
 
     public StatusInfo LevelUpActor(int actorId)
     {

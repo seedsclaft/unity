@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41f3152f92ac33c4eaedc3725fdaf6c4, type: 3}
   m_Name: System
   m_EditorClassIdentifier: 
-  MenuCommandData:
+  MenuCommandDataList:
   - Id: 1
     Key: item
     NameTextId: 1
@@ -36,15 +36,15 @@ MonoBehaviour:
     NameTextId: 7
   TitleCommandData:
   - Id: 1
-    Key: newgame
+    Key: NEWGAME
     NameTextId: 101
   - Id: 2
-    Key: continue
+    Key: CONTINUE
     NameTextId: 102
   - Id: 3
-    Key: option
+    Key: OPTION
     NameTextId: 103
   - Id: 4
-    Key: exit
+    Key: EXIT
     NameTextId: 104
   InitActors: 01000000

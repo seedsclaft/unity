@@ -10,6 +10,8 @@ public class GameSystem : MonoBehaviour
     
     private BaseView _currentScene = null;
     private BaseModel _model = null;
+    
+    public static SavePlayInfo CurrentData = null;
 
 
     private bool _busy = false;
@@ -26,14 +28,14 @@ public class GameSystem : MonoBehaviour
         }
         if (viewEvent.commandType == Base.CommandType.SceneChange)
         {
-            CommandSceneChange(Scene.Title);
+            CommandSceneChange(viewEvent.templete);
             Debug.Log("Start Change Scene");
         }
         if (viewEvent.commandType == Base.CommandType.InitSaveInfo)
         {
             var playInfo = new SavePlayInfo();
             playInfo.InitSaveData();
-            _model.PlayInfo = playInfo;
+            CurrentData = playInfo;
             Debug.Log("InitSaveInfo");
         }
     }

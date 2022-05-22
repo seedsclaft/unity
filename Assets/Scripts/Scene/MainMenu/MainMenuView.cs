@@ -40,12 +40,12 @@ public class MainMenuView : BaseView
         _commandData(eventData);
     }
     
-    public void SetActorsData(List<ActorsData.ActorData> actors,List<Sprite> images){
-        actorList.Initialize(actors,images,(actorInfo) => CallMainMenuActor(actorInfo));
+    public void SetActorsData(List<ActorInfo> actors){
+        actorList.Initialize(actors,(actorInfo) => CallMainMenuActor(actorInfo));
         SetInputHandler(actorList.GetComponent<IInputHandlerEvent>());
     }
     
-    private void CallMainMenuActor(ActorsData.ActorData actor){
+    private void CallMainMenuActor(ActorInfo actor){
         var eventData = new ViewEvent(CommandType.MainMenuCommand);
         eventData.templete = actor;
         _commandData(eventData);

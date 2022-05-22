@@ -1,4 +1,4 @@
-
+﻿
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -8,23 +8,16 @@ using NPOI.HSSF.UserModel;
 using NPOI.SS.UserModel;
 using NPOI.XSSF.UserModel;
 
-public class ActorsImporter : AssetPostprocessor {
+public class EnemiesImporter : AssetPostprocessor {
     enum BaseColumn
     {
 		Id = 0,
 		NameId,
-		ClassId,
-		ImagePath,
-		InitLv,
-		MaxLv,
-		InitHp,
-		InitMp,
-		InitAtk,
-		InitSpd,
-		MaxHp,
-		MaxMp,
-		MaxAtk,
-		MaxSpd,
+		ImageName,
+		BaseHp,
+		BaseMp,
+		BaseAtk,
+		BaseSpd,
     }
     enum BaseTextColumn
     {
@@ -33,12 +26,12 @@ public class ActorsImporter : AssetPostprocessor {
 		Text,
 	}
 	static readonly string ExcelPath = "Assets/Data";
-	static readonly string ExcelName = "Actors.xlsx";
+	static readonly string ExcelName = "Enemies.xlsx";
 
 	// アセット更新があると呼ばれる
 	static void OnPostprocessAllAssets(string[] importedAssets, string[] deletedAssets, string[] movedAssets, string[] movedFromAssetPaths) {
 		foreach (string asset in importedAssets) {
-
+			//拡張子を取得
 			string ext = Path.GetExtension(asset);
 			if (ext != ".xls" && ext != ".xlsx" && ext != ".xlsm") continue;
 
@@ -54,14 +47,14 @@ public class ActorsImporter : AssetPostprocessor {
 			// 同じファイルのみ
 			if (fileName != ExcelName) { continue; }
 
-			CreateActorInfo(asset);
+			CreateEnemyData(asset);
 
 			AssetDatabase.SaveAssets();
 			return;
 		}
 	}
 
-	static void CreateActorInfo(string asset)
+	static void CreateEnemyData(string asset)
 	{
 		// 拡張子なしのファイル名を取得
 		string FileName = Path.GetFileNameWithoutExtension(asset);
@@ -69,11 +62,11 @@ public class ActorsImporter : AssetPostprocessor {
 		// ディレクトリ情報とファイル名の文字列を結合してアセット名を指定
 		string ExportPath = $"{Path.Combine(Path.GetDirectoryName(asset), FileName)}.asset";
 
-		ActorsData Data = AssetDatabase.LoadAssetAtPath<ActorsData>(ExportPath);
+		EnemiesData Data = AssetDatabase.LoadAssetAtPath<EnemiesData>(ExportPath);
 		if (!Data)
 		{
 			// データがなければ作成
-			Data = ScriptableObject.CreateInstance<ActorsData>();
+			Data = ScriptableObject.CreateInstance<EnemiesData>();
 			AssetDatabase.CreateAsset(Data, ExportPath);
 			Data.hideFlags = HideFlags.NotEditable;
 		}
@@ -96,29 +89,19 @@ public class ActorsImporter : AssetPostprocessor {
 				{
 					IRow Baserow = BaseSheet.GetRow(i);
 
-					var ActorInfo = new ActorsData.ActorData();
-					ActorInfo.Id = (int)Baserow.GetCell((int)BaseColumn.Id).NumericCellValue;
-					ActorInfo.NameId = (int)Baserow.GetCell((int)BaseColumn.NameId).NumericCellValue;
-					ActorInfo.ClassId = (int)Baserow.GetCell((int)BaseColumn.ClassId)?.NumericCellValue;
-					ActorInfo.ImagePath = Baserow.GetCell((int)BaseColumn.ImagePath).ToString();
-					ActorInfo.InitLv = (int)Baserow.GetCell((int)BaseColumn.InitLv)?.NumericCellValue;
-					ActorInfo.MaxLv = (int)Baserow.GetCell((int)BaseColumn.MaxLv)?.NumericCellValue;
+					var EnemyData = new EnemiesData.EnemyData();
+					EnemyData.Id = (int)Baserow.GetCell((int)BaseColumn.Id)?.SafeNumericCellValue();
+					EnemyData.NameId = (int)Baserow.GetCell((int)BaseColumn.NameId)?.SafeNumericCellValue();
+					EnemyData.ImageName = Baserow.GetCell((int)BaseColumn.ImageName)?.SafeStringCellValue();
+					
+					int BaseHp = (int)Baserow.GetCell((int)BaseColumn.BaseHp)?.SafeNumericCellValue();
+					int BaseMp = (int)Baserow.GetCell((int)BaseColumn.BaseMp)?.SafeNumericCellValue();
+					int BaseAtk = (int)Baserow.GetCell((int)BaseColumn.BaseAtk)?.SafeNumericCellValue();
+					int BaseSpd = (int)Baserow.GetCell((int)BaseColumn.BaseSpd)?.SafeNumericCellValue();
+					EnemyData.BaseStatus = new StatusInfo();
+					EnemyData.BaseStatus.SetParameter(BaseHp,BaseMp,BaseAtk,BaseSpd);
 
-					int InitHp = (int)Baserow.GetCell((int)BaseColumn.InitHp)?.NumericCellValue;
-					int InitMp = (int)Baserow.GetCell((int)BaseColumn.InitMp)?.NumericCellValue;
-					int InitAtk = (int)Baserow.GetCell((int)BaseColumn.InitAtk)?.NumericCellValue;
-					int InitSpd = (int)Baserow.GetCell((int)BaseColumn.InitSpd)?.NumericCellValue;
-					ActorInfo.InitStatus = new StatusInfo();
-					ActorInfo.InitStatus.SetParameter(InitHp,InitMp,InitAtk,InitSpd);
-
-					int MaxHp = (int)Baserow.GetCell((int)BaseColumn.MaxHp)?.NumericCellValue;
-					int MaxMp = (int)Baserow.GetCell((int)BaseColumn.MaxMp)?.NumericCellValue;
-					int MaxAtk = (int)Baserow.GetCell((int)BaseColumn.MaxAtk)?.NumericCellValue;
-					int MaxSpd = (int)Baserow.GetCell((int)BaseColumn.MaxSpd)?.NumericCellValue;
-					ActorInfo.MaxStatus = new StatusInfo();
-					ActorInfo.MaxStatus.SetParameter(MaxHp,MaxMp,MaxAtk,MaxSpd);
-
-					Data._data.Add(ActorInfo);
+					Data._data.Add(EnemyData);
 				}
 
 				// 情報の初期化
@@ -131,8 +114,8 @@ public class ActorsImporter : AssetPostprocessor {
 					IRow Baserow = BaseSheet.GetRow(i);
 					var TextData = new TextData();
 
-					TextData.Id = (int)Baserow.GetCell((int)BaseTextColumn.Id)?.NumericCellValue;
-					TextData.Text = Baserow.GetCell((int)BaseTextColumn.Text).ToString();
+					TextData.Id = (int)Baserow.GetCell((int)BaseTextColumn.Id)?.SafeNumericCellValue();
+					TextData.Text = Baserow.GetCell((int)BaseTextColumn.Text)?.SafeStringCellValue();
 					
 					Data._textdata.Add(TextData);
 				}
@@ -160,5 +143,36 @@ public class ActorsImporter : AssetPostprocessor {
 		{
 			Workbook = new XSSFWorkbook(stream);
 		}
+	}
+
+	// 文字列を分解
+	static string[] StringSplit(string str, int count)
+	{
+		List<string> List = new List<string>();
+
+		int Length = (int)Math.Ceiling((double)str.Length / count);
+
+		for (int i = 0; i < Length; i++)
+		{
+			int Start = count * i;
+
+			// 始まりが文字列の長さより多かったら
+			if (str.Length <= Start)
+			{
+				break;
+			}
+			// 読み取る大きさが文字列の長さより多かったら終わりを指定しない
+			if (str.Length < Start + count)
+			{
+				List.Add(str.Substring(Start));
+			}
+			// 始まりの位置と終わりの位置を指定（始まりの値は含むが終わりの値は含まない）
+			else
+			{
+				List.Add(str.Substring(Start, count));
+			}
+		}
+
+		return List.ToArray();
 	}
 }

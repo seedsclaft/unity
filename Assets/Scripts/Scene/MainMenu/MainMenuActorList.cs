@@ -7,9 +7,9 @@ public class MainMenuActorList: ListWindow , IInputHandlerEvent
 {   
     [SerializeField] private int rows = 0;
     [SerializeField] private int cols = 0;
-    private List<ActorsData.ActorData> _data = new List<ActorsData.ActorData>();
+    private List<ActorInfo> _data = new List<ActorInfo>();
 
-    public void Initialize(List<ActorsData.ActorData> actors,List<Sprite> images,System.Action<ActorsData.ActorData> callEvent)
+    public void Initialize(List<ActorInfo> actors,System.Action<ActorInfo> callEvent)
     {
         InitializeListView(actors.Count);
         for (var i = 0; i < actors.Count;i++){
@@ -18,7 +18,7 @@ public class MainMenuActorList: ListWindow , IInputHandlerEvent
         for (int i = 0; i < ObjectList.Count;i++)
         {
             var actor = ObjectList[i].GetComponent<MainMenuActor>();
-            actor.SetData(actors[i],images[i]);
+            actor.SetData(actors[i]);
         }
         UpdateAllItems();
     }

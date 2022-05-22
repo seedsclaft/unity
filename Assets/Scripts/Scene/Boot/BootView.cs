@@ -12,15 +12,5 @@ public class BootView : BaseView
         new BootPresenter(this);
     }
 
-    public void CommandSceneChange()
-    {
-        var eventData = new BaseViewEvent(Base.CommandType.SceneChange);
-        CallSceneChangeCommand(eventData);
-    }
 
-    public void CommandInitSaveInfo()
-    {
-        var eventData = new BaseViewEvent(Base.CommandType.InitSaveInfo);
-        CallSceneChangeCommand(eventData);
-    }
 }

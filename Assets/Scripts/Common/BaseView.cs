@@ -46,6 +46,17 @@ abstract public class BaseView : MonoBehaviour
     {
         _commandData(eventData);
     }
+    public void CommandSceneChange(Scene scene)
+    {
+        var eventData = new BaseViewEvent(Base.CommandType.SceneChange);
+        eventData.templete = scene;
+        CallSceneChangeCommand(eventData);
+    }
+    public void CommandInitSaveInfo()
+    {
+        var eventData = new BaseViewEvent(Base.CommandType.InitSaveInfo);
+        CallSceneChangeCommand(eventData);
+    }
 }
 
 namespace Base
@@ -61,7 +72,7 @@ namespace Base
 public class BaseViewEvent
 {
     public Base.CommandType commandType;
-    public object templete;
+    public Scene templete;
 
     public BaseViewEvent(Base.CommandType type)
     {

@@ -4,17 +4,16 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class MainMenuActor : ListItem ,IListViewItem  
-{    
-    private ActorsData.ActorData _data; 
-    private Sprite _image; 
-    [SerializeField] private Image thumb;
+{   
+    [SerializeField] private ActorInfoComponent component;
+    private ActorInfo _data; 
 
-    public void SetData(ActorsData.ActorData data,Sprite image){
+
+    public void SetData(ActorInfo data){
         _data = data;
-        _image = image;
     }
 
-    public void SetCallHandler(System.Action<ActorsData.ActorData> handler)
+    public void SetCallHandler(System.Action<ActorInfo> handler)
     {
         if (_data == null) return;
         clickButton.onClick.AddListener(() => handler(_data));
@@ -23,6 +22,6 @@ public class MainMenuActor : ListItem ,IListViewItem
     public void UpdateViewItem()
     {
         if (_data == null) return;
-        thumb.sprite = _image;
+        component.UpdateInfo(_data);
     }
 }

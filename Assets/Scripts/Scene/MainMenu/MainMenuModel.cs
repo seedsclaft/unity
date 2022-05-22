@@ -6,7 +6,7 @@ using UnityEngine.ResourceManagement.AsyncOperations;
 using System.Threading;
 using System.Threading.Tasks;
 
-public class MainMenuModel : DataSystem
+public class MainMenuModel : BaseModel
 {
     private MenuComandType _commandType = MenuComandType.None;
     public async Task<List<SystemData.MenuCommandData>> MenuCommand(){
@@ -15,13 +15,17 @@ public class MainMenuModel : DataSystem
         return asset.MenuCommandDataList;
     }
     
+    public List<ActorInfo> MenuActors(){
+        return GameSystem.CurrentData._actors;
+    }
 
-    public List<Sprite> ActorsImage(List<ActorsData.ActorData> actors){
+    public List<Sprite> ActorsImage(List<ActorInfo> actors){
         var sprites = new List<Sprite>();
         for (var i = 0;i < actors.Count;i++)
         {
+            var actorData = DataSystem.Actors.Find(actor => actor.Id == actors[i].ActorId);
             var asset = Addressables.LoadAssetAsync<Sprite>(
-            "Assets/Images/Actors/000" + actors[i].ImagePath + "/main.png"
+                "Assets/Images/Actors/" + actorData.ImagePath + "/main.png"
             );
             asset.WaitForCompletion();
             sprites.Add(asset.Result);

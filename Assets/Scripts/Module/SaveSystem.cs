@@ -78,93 +78,45 @@ public class SaveSystem : MonoBehaviour
 [Serializable]
 public class SavePlayInfo
 {
-
 	public	const	int		SAVEDATA_VER = 100;
-	//	設定情報
-	[Serializable]
-	public class	SettingInfo
-	{
-		//public GameInstance     m_pGameInstance;
-		//public FsDatabase       m_pDatabase;
-	};
 
-    // ゲーム内で一つだけ存在する情報。
-    // ゲームインスタンスへの参照やデータベースの参照等。
-	public static SettingInfo   s_SettingInfo;
-
-	public Player _playerData = null;
-
+	public PlayerInfo _playerInfo = null;
+    public List<ActorInfo> _actors = new List<ActorInfo>();
+    public PartyInfo _party = null;
 	/// <summary>
 	/// 初期化
     /// </summary>
     public SavePlayInfo()
     {
-        /*
-		//	ヘッダー
-		//this.HeaderInit();
-		//	カード管理
-		this.CardInit();
-
-		//	デッキ管理
-		this.DeckInit();
-		//	進行
-		this.SavePointInit();
-		this.StoryInit();
-		this.PlayFlagInit();
-
-		//	お金
-		this.MoneyInit();
-
-		//	プロフィール
-		this.ProfileInit();
-
-		//	カードパック　※データベースのBS_デッキ情報.xlsx
-		this.CardPackInit();
-
-		//	スリーブ
-		this.SleevesInit();
-
-		//	プレイシート
-		this.PlaySheetInit();
-
-		//	アバター
-		this.AvatarInit();
-
-		//	称号
-		this.TrophyInit();
-
-		//	ワールド
-		this.WorldInit();
-
-		//	マッチング条件情報
-		this.MatchInit();
-
-		//	オプション
-		this.OptionInit();
-
-		//	カウンタ
-		this.CountInit();
-
-		//	DLC
-		this.DlcInit();
-        */
+		this.InitActors();
+		this.InitParty();
 	}
+
+    public void InitActors()
+    {
+        _actors.Clear();
+    }
+
+    public void InitParty()
+    {
+        _party = new PartyInfo();
+    }
 
 	public void InitSaveData()
 	{
 		this.InitPlayer();
 	}
+
 	private void InitPlayer()
 	{
-		_playerData = new Player();
-		_playerData.InitActors();
 		for (int i = 0;i < DataSystem.InitActors.Count;i++)
 		{
 			var actorInfo = DataSystem.Actors.Find(actor => actor.Id == DataSystem.InitActors[i]);
 			if (actorInfo != null)
 			{
 				var actor = new	ActorInfo(actorInfo);
-				_playerData.AddActor(actor);
+				_actors.Add(actor);
+				_party.AddActor(actor.ActorId);
 			}
 		}
 	}

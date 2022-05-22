@@ -38,14 +38,8 @@ public class TitlePresenter
         }
         if (viewEvent.commandType == CommandType.TitleCommand)
         {
-            if (viewEvent.templete != null)
-            {
-                /*
-                var selectedMenuCommand = viewEvent.templete;
-                _model.SetSelectedMenuCommand((MenuComandType)selectedMenuCommand);
-                _view.CommandSkill();
-                */
-            }
+            _view.CommandInitSaveInfo();
+            _view.CommandSceneChange(Scene.MainMenu);
         }
     }
 }

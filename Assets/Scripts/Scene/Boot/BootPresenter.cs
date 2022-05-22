@@ -22,8 +22,7 @@ public class BootPresenter
 
         _busy = false;
         Debug.Log("Boot Success");
-        _view.CommandSceneChange();
-        _view.CommandInitSaveInfo();
+        _view.CommandSceneChange(Scene.Title);
         //SaveSystem.SaveStart();
     }
 }
