@@ -15,15 +15,10 @@ public class ItemsImporter : AssetPostprocessor {
     {
 		Id = 0,
 		Name,
-		Rank,
-		Mt,
-		Hit,
-		Cri,
-		MinRange,
-		MaxRange,
-		UseCount,
 		Worth,
-		Exp,
+		Feature,
+		Target,
+		Value,
     }
 	static readonly string ExcelPath = "Assets/Data";
 	static readonly string ExcelName = "Items.xlsx";
@@ -92,15 +87,11 @@ public class ItemsImporter : AssetPostprocessor {
 					var ItemInfo = new ItemsData.ItemData();
 					ItemInfo.Id = (int)Baserow.GetCell((int)BaseColumn.Id)?.SafeNumericCellValue();
 					ItemInfo.Name = Baserow.GetCell((int)BaseColumn.Name)?.SafeStringCellValue();
-					ItemInfo.Rank = (int)Baserow.GetCell((int)BaseColumn.Rank)?.SafeNumericCellValue();
-					ItemInfo.Mt = (int)Baserow.GetCell((int)BaseColumn.Mt)?.SafeNumericCellValue();
-					ItemInfo.Hit = (int)Baserow.GetCell((int)BaseColumn.Hit)?.SafeNumericCellValue();
-					ItemInfo.Cri = (int)Baserow.GetCell((int)BaseColumn.Cri)?.SafeNumericCellValue();
-					ItemInfo.MinRange = (int)Baserow.GetCell((int)BaseColumn.MinRange)?.SafeNumericCellValue();
-                    ItemInfo.MaxRange = (int)Baserow.GetCell((int)BaseColumn.MaxRange)?.SafeNumericCellValue();
-                    ItemInfo.Worth = (int)Baserow.GetCell((int)BaseColumn.Worth)?.SafeNumericCellValue();
-                    ItemInfo.Exp = (int)Baserow.GetCell((int)BaseColumn.Exp)?.SafeNumericCellValue();
-
+					ItemInfo.Worth = (int)Baserow.GetCell((int)BaseColumn.Worth)?.SafeNumericCellValue();
+                    ItemInfo.Feature = (int)Baserow.GetCell((int)BaseColumn.Feature)?.SafeNumericCellValue();
+                    ItemInfo.Target = (int)Baserow.GetCell((int)BaseColumn.Target)?.SafeNumericCellValue();
+                    ItemInfo.Value = (int)Baserow.GetCell((int)BaseColumn.Value)?.SafeNumericCellValue();
+                    
 					Data._data.Add(ItemInfo);
 				}
 			}

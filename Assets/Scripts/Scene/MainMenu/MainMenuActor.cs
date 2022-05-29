@@ -22,6 +22,6 @@ public class MainMenuActor : ListItem ,IListViewItem
     public void UpdateViewItem()
     {
         if (_data == null) return;
-        component.UpdateInfo(_data);
+        //component.UpdateInfo(_data);
     }
 }

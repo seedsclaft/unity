@@ -29,6 +29,38 @@ MonoBehaviour:
       _mp: 5
       _atk: 40
       _spd: 20
+  - Id: 2
+    NameId: 2
+    ClassId: 2
+    ImagePath: 0002
+    InitLv: 1
+    MaxLv: 40
+    InitStatus:
+      _hp: 28
+      _mp: 1
+      _atk: 15
+      _spd: 12
+    MaxStatus:
+      _hp: 80
+      _mp: 4
+      _atk: 65
+      _spd: 34
+  - Id: 3
+    NameId: 3
+    ClassId: 3
+    ImagePath: 0003
+    InitLv: 1
+    MaxLv: 40
+    InitStatus:
+      _hp: 15
+      _mp: 5
+      _atk: 7
+      _spd: 4
+    MaxStatus:
+      _hp: 47
+      _mp: 8
+      _atk: 25
+      _spd: 27
   _textdata:
   - Id: 1
     Text: "\u30EC\u30F3"

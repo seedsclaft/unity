@@ -39,7 +39,7 @@ public class MainMenuPresenter
         if (_busy){
             return;
         }
-        if (viewEvent.commandType == CommandType.MainMenuCommand)
+        if (viewEvent.commandType == (int)CommandType.MainMenuCommand)
         {
             if (viewEvent.templete != null)
             {
@@ -47,6 +47,10 @@ public class MainMenuPresenter
                 _model.SetSelectedMenuCommand((MenuComandType)selectedMenuCommand);
                 _view.CommandSkill();
             }
+        }
+        if (viewEvent.commandType == (int)CommandType.ActorSelect)
+        {
+            ActorInfo actorInfo = viewEvent.templete as ActorInfo;
         }
     }
 

@@ -12,6 +12,7 @@ public class GameSystem : MonoBehaviour
     private BaseModel _model = null;
     
     public static SavePlayInfo CurrentData = null;
+    public static TempInfo CurrentTempData = null;
 
 
     private bool _busy = false;
@@ -21,17 +22,21 @@ public class GameSystem : MonoBehaviour
         CommandSceneChange(Scene.Boot);
     }
 
-    private void updateCommand(BaseViewEvent viewEvent)
+    private void updateCommand(ViewEvent viewEvent)
     {
         if (_busy){
             return;
         }
-        if (viewEvent.commandType == Base.CommandType.SceneChange)
+        if (viewEvent.commandType == (int)Base.CommandType.SetTemplete)
         {
-            CommandSceneChange(viewEvent.templete);
+            CommandSetTemplete((TempInfo)viewEvent.templete);
+        }
+        if (viewEvent.commandType == (int)Base.CommandType.SceneChange)
+        {
+            CommandSceneChange((Scene)viewEvent.templete);
             Debug.Log("Start Change Scene");
         }
-        if (viewEvent.commandType == Base.CommandType.InitSaveInfo)
+        if (viewEvent.commandType == (int)Base.CommandType.InitSaveInfo)
         {
             var playInfo = new SavePlayInfo();
             playInfo.InitSaveData();
@@ -51,6 +56,10 @@ public class GameSystem : MonoBehaviour
         prefab.transform.SetParent(uiRoot.transform, false);
         _currentScene = prefab.GetComponent<BaseView>();
         _currentScene.SetEvent((type) => updateCommand(type));
+    }
+
+    private void CommandSetTemplete(TempInfo templete){
+        CurrentTempData = templete;
     }
 }
 

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 public class TitleModel : DataSystem
 {
-    public List<SystemData.MenuCommandData> TitleCommand {get{return DataSystem.TitleCommand;}}
+    public new List<SystemData.MenuCommandData> TitleCommand {get{return DataSystem.TitleCommand;}}
 
     public async Task<AudioClip> BgmData(){
         return await Addressables.LoadAssetAsync<AudioClip>("Assets/Audios/limitant.mp3").Task;

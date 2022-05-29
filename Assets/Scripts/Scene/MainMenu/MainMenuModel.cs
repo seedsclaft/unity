@@ -16,7 +16,7 @@ public class MainMenuModel : BaseModel
     }
     
     public List<ActorInfo> MenuActors(){
-        return GameSystem.CurrentData._actors;
+        return GameSystem.CurrentData.Actors;
     }
 
     public List<Sprite> ActorsImage(List<ActorInfo> actors){

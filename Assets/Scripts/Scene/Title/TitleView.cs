@@ -7,7 +7,7 @@ public class TitleView : BaseView
 {
     [SerializeField] private TitleCommandList commandList = null;
 
-    private System.Action<TitleViewEvent> _commandData = null;
+    private new System.Action<TitleViewEvent> _commandData = null;
 
     protected void Awake(){
         InitializeInput();

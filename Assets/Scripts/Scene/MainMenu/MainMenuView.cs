@@ -10,7 +10,6 @@ public class MainMenuView : BaseView
     [SerializeField] private MainMenuCommandList commandList = null;
     [SerializeField] private MainMenuActorList actorList = null;
 
-    private System.Action<ViewEvent> _commandData = null;
 
     protected void Awake(){
         InitializeInput();
@@ -24,7 +23,7 @@ public class MainMenuView : BaseView
     public void SetImage(string str){
     }
 
-    public void SetEvent(System.Action<ViewEvent> commandData)
+    public new void SetEvent(System.Action<ViewEvent> commandData)
     {
         _commandData = commandData;
     }
@@ -35,7 +34,7 @@ public class MainMenuView : BaseView
     }
 
     private void CallMainMenuCommand(MenuComandType commandType){
-        var eventData = new ViewEvent(CommandType.MainMenuCommand);
+        var eventData = new ViewEvent(Scene.MainMenu, CommandType.MainMenuCommand);
         eventData.templete = commandType;
         _commandData(eventData);
     }
@@ -46,7 +45,7 @@ public class MainMenuView : BaseView
     }
     
     private void CallMainMenuActor(ActorInfo actor){
-        var eventData = new ViewEvent(CommandType.MainMenuCommand);
+        var eventData = new ViewEvent(Scene.MainMenu, CommandType.ActorSelect);
         eventData.templete = actor;
         _commandData(eventData);
     }
@@ -57,6 +56,11 @@ public class MainMenuView : BaseView
         actorList.Activate();
     }
 
+    public void UpdateActorStatus()
+    {
+        actorList.UpdateAllItems();
+    }
+
 }
 
 namespace MainMenu
@@ -64,7 +68,7 @@ namespace MainMenu
     public enum CommandType
     {
         None = 0,
-        MenuOpen,
-        MainMenuCommand
+        MainMenuCommand,
+        ActorSelect
     }
 }

@@ -39,7 +39,10 @@ public class TitlePresenter
         if (viewEvent.commandType == CommandType.TitleCommand)
         {
             _view.CommandInitSaveInfo();
-            _view.CommandSceneChange(Scene.MainMenu);
+            var temp = DataSystem.Enemies;
+            TempInfo info = new TempInfo(temp);
+            _view.CommandSetTemplete(info);
+            _view.CommandSceneChange(Scene.Battle);
         }
     }
 }

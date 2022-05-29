@@ -2,26 +2,20 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MainMenuActorList: ListWindow , IInputHandlerEvent
-{   
-    [SerializeField] private int rows = 0;
-    [SerializeField] private int cols = 0;
-    private List<ActorInfo> _data = new List<ActorInfo>();
-
-    public void Initialize(List<ActorInfo> actors,System.Action<ActorInfo> callEvent)
+public class BattleEnemyList : ListWindow , IInputHandlerEvent
+{
+    public void Initialize(List<BattlerInfo> battlers,System.Action<BattlerInfo> callEvent)
     {
-        InitializeListView(actors.Count);
-        for (var i = 0; i < actors.Count;i++){
-            _data.Add(actors[i]);
-        }
+        InitializeListView(battlers.Count);
         for (int i = 0; i < ObjectList.Count;i++)
         {
-            var actor = ObjectList[i].GetComponent<MainMenuActor>();
-            actor.SetData(actors[i]);
-            actor.SetCallHandler(callEvent);
+            var enemy = ObjectList[i].GetComponent<BattleEnemyListItem>();
+            enemy.SetData(battlers[i]);
+            enemy.SetCallHandler(callEvent);
         }
         UpdateAllItems();
     }
+
     public void InputHandler(InputKeyType keyType)
     {
         if (!IsInputEnable())
@@ -39,10 +33,5 @@ public class MainMenuActorList: ListWindow , IInputHandlerEvent
             ObjectList[Index].GetComponent<ListItem>().SetSelect();
         } 
         ResetInputFrame();
-    }
-
-    public void UpdateActorStatus()
-    {
-
     }
 }

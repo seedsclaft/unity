@@ -6,13 +6,15 @@ using System;
 
 public class ViewEvent
 {
-    public MainMenu.CommandType commandType;
+    public Scene scene;
+    public int commandType;
     public object templete;
 
-    public ViewEvent(MainMenu.CommandType type)
+    public ViewEvent(Scene scene, object type)
     {
-        commandType = type;
+        commandType = (int)type;
     }
+    
 }
 
 

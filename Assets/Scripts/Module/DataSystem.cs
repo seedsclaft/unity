@@ -11,12 +11,19 @@ abstract public class DataSystem
     private static List<ActorsData.ActorData> _actors;
     public static List<ActorsData.ActorData> Actors {get{return _actors;}}
     
+    public static ActorsData.ActorData GetActor (int actorId)
+    {
+        return _actors.Find(actor => actor.Id == actorId);
+    }
+
     private static SystemData _system;
     public static SystemData System {get{return _system;}}
 
     private static ClassesData _classes;
     public static List<ClassesData.ClassData> Classes {get{return _classes._data;}}
     
+    private static EnemiesData _enemies;
+    public static List<EnemiesData.EnemyData> Enemies {get{return _enemies._data;}}
     public static List<SystemData.MenuCommandData> TitleCommand {get { return _system.TitleCommandData;}}
     public static List<int> InitActors {get { return _system.InitActors;}}
     /*
@@ -41,5 +48,7 @@ abstract public class DataSystem
         DataSystem._system = asset2;
         var asset3 = await Addressables.LoadAssetAsync<ClassesData>("Assets/Data/Classes.asset").Task;
         DataSystem._classes = asset3;
+        var asset4 = await Addressables.LoadAssetAsync<EnemiesData>("Assets/Data/Enemies.asset").Task;
+        DataSystem._enemies = asset4;
     }
 }

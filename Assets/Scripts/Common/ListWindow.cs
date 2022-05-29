@@ -27,7 +27,7 @@ abstract public class ListWindow : MonoBehaviour
     private int _lastStartIndex = 0;
     private LinkedList<IListViewItem> _itemList = new LinkedList<IListViewItem>();
     public LinkedList<IListViewItem> ItemList {get {return _itemList;}}
-    private new List<GameObject> _objectList = new List<GameObject>();
+    private List<GameObject> _objectList = new List<GameObject>();
     public List<GameObject> ObjectList {get {return _objectList;}}
 
     public void Activate()

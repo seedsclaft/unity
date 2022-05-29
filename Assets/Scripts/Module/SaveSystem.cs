@@ -81,7 +81,8 @@ public class SavePlayInfo
 	public	const	int		SAVEDATA_VER = 100;
 
 	public PlayerInfo _playerInfo = null;
-    public List<ActorInfo> _actors = new List<ActorInfo>();
+    private List<ActorInfo> _actors = new List<ActorInfo>();
+    public List<ActorInfo> Actors {get {return _actors;}}
     public PartyInfo _party = null;
 	/// <summary>
 	/// 初期化

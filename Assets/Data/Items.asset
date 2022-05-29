@@ -13,14 +13,9 @@ MonoBehaviour:
   m_Name: Items
   m_EditorClassIdentifier: 
   _data:
-  - Id: 901
-    Name: "\u30E9\u30A4\u30C8"
-    Rank: 0
-    Mt: 3
-    Hit: 100
-    Cri: 0
-    MinRange: 1
-    MaxRange: 2
-    UseCount: 0
-    Worth: 960
-    Exp: 1
+  - Id: 1
+    Name: "\u56DE\u5FA9\u85AC"
+    Worth: 50
+    Feature: 1
+    Target: 1
+    Value: 10

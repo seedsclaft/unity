@@ -12,15 +12,10 @@ public class ItemsData : ScriptableObject {
     {   
         public int Id;
         public string Name;
-        public int Rank;
-        public int Mt;
-        public int Hit;
-        public int Cri;
-        public int MinRange;
-        public int MaxRange;
-        public int UseCount;
         public int Worth;
-        public int Exp;
+        public int Feature;
+        public int Target;
+        public int Value;
 
         
 
