@@ -19,8 +19,11 @@ public class BattlePresenter : BasePresenter
     {
         _view.SetEvent((type) => updateCommand(type));
 
+        _model.InitBattleMembers();
         _view.SetBattleActorData(_model.BattleActors());
         _view.SetBattleEnemyData(_model.BattleEnemies());
+        _view.SetBattleOrder(_model.BattleMembers);
+        _view.SetNextBattler(_model.BattleMembers[0]);
         _busy = false;
     }
 

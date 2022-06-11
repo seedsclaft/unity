@@ -8,7 +8,10 @@ public class BattleView : BaseView
     private new System.Action<BattleViewEvent> _commandData = null;
     [SerializeField] private BattleActorList battleActorsList = null;
     [SerializeField] private BattleEnemyList battleEnemyList = null;
-    protected void Awake(){
+    [SerializeField] private BattleOrder battleOrder = null;
+    [SerializeField] private BattlePicture battlePicture = null;
+    protected void Awake()
+    {
         InitializeInput();
         Initialize();
     }
@@ -22,28 +25,47 @@ public class BattleView : BaseView
         _commandData = commandData;
     }
 
-    public void SetBattleActorData(List<BattlerInfo> battlerInfos){
+    public void SetBattleActorData(List<BattlerInfo> battlerInfos)
+    {
         battleActorsList.Initialize(battlerInfos,(battler) => CallBattleActorCommand(battler));
         //SetInputHandler(battleActorsList.GetComponent<IInputHandlerEvent>());
     }
 
-    private void CallBattleActorCommand(BattlerInfo battlerInfo){
+    private void CallBattleActorCommand(BattlerInfo battlerInfo)
+    {
         var eventData = new BattleViewEvent(Battle.CommandType.SelectActor);
         eventData.templete = battlerInfo;
         _commandData(eventData);
     }
 
-    public void SetBattleEnemyData(List<BattlerInfo> battlerInfos){
+    public void SetBattleEnemyData(List<BattlerInfo> battlerInfos)
+    {
         battleEnemyList.Initialize(battlerInfos,(battler) => CallBattleEnemyCommand(battler));
         //SetInputHandler(battleActorsList.GetComponent<IInputHandlerEvent>());
     }
 
-    private void CallBattleEnemyCommand(BattlerInfo battlerInfo){
+    private void CallBattleEnemyCommand(BattlerInfo battlerInfo)
+    {
         var eventData = new BattleViewEvent(Battle.CommandType.SelectActor);
         eventData.templete = battlerInfo;
         _commandData(eventData);
     }
+
+    public void SetBattleOrder(List<BattlerInfo> battleMembers)
+    {
+        battleOrder.Initialize(battleMembers);
+        battleOrder.UpdateBattleMambers(battleMembers);
+    }
     
+    public void SetNextBattler(BattlerInfo battler)
+    {
+        UpdateBattlePicture(battler);
+    }
+
+    private void UpdateBattlePicture(BattlerInfo battler)
+    {
+        battlePicture.UpdatePicture(battler);
+    }
 }
 
 namespace Battle
@@ -51,6 +73,7 @@ namespace Battle
     public enum CommandType
     {
         None = 0,
+        Initialize,
         SelectActor,
         SelectEnemy,
 
