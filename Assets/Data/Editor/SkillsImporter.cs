@@ -1,4 +1,4 @@
-
+﻿
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -8,34 +8,21 @@ using NPOI.HSSF.UserModel;
 using NPOI.SS.UserModel;
 using NPOI.XSSF.UserModel;
 
-public class ActorsImporter : AssetPostprocessor {
+public class SkillsImporter : AssetPostprocessor {
     enum BaseColumn
     {
 		Id = 0,
 		NameId,
-		ClassId,
-		ImagePath,
-		InitLv,
-		MaxLv,
-		InitHp,
-		InitMp,
-		InitAtk,
-		InitSpd,
-		MaxHp,
-		MaxMp,
-		MaxAtk,
-		MaxSpd,
+        IconPath,
+		Mp,
+		Attribute,
+		Scope,
+		EffectType,
+		Effectvalue,
     }
-    enum BaseLearningColumn
-    {
 
-		ActorId = 0,
-		SkillId,
-		LearningType,
-		Value,
-	}
 	static readonly string ExcelPath = "Assets/Data";
-	static readonly string ExcelName = "Actors.xlsx";
+	static readonly string ExcelName = "Skills.xlsx";
 
 	// アセット更新があると呼ばれる
 	static void OnPostprocessAllAssets(string[] importedAssets, string[] deletedAssets, string[] movedAssets, string[] movedFromAssetPaths) {
@@ -56,14 +43,14 @@ public class ActorsImporter : AssetPostprocessor {
 			// 同じファイルのみ
 			if (fileName != ExcelName) { continue; }
 
-			CreateActorInfo(asset);
+			CreateSkillData(asset);
 
 			AssetDatabase.SaveAssets();
 			return;
 		}
 	}
 
-	static void CreateActorInfo(string asset)
+	static void CreateSkillData(string asset)
 	{
 		// 拡張子なしのファイル名を取得
 		string FileName = Path.GetFileNameWithoutExtension(asset);
@@ -71,11 +58,11 @@ public class ActorsImporter : AssetPostprocessor {
 		// ディレクトリ情報とファイル名の文字列を結合してアセット名を指定
 		string ExportPath = $"{Path.Combine(Path.GetDirectoryName(asset), FileName)}.asset";
 
-		ActorsData Data = AssetDatabase.LoadAssetAtPath<ActorsData>(ExportPath);
+		SkillsData Data = AssetDatabase.LoadAssetAtPath<SkillsData>(ExportPath);
 		if (!Data)
 		{
 			// データがなければ作成
-			Data = ScriptableObject.CreateInstance<ActorsData>();
+			Data = ScriptableObject.CreateInstance<SkillsData>();
 			AssetDatabase.CreateAsset(Data, ExportPath);
 			Data.hideFlags = HideFlags.NotEditable;
 		}
@@ -87,11 +74,10 @@ public class ActorsImporter : AssetPostprocessor {
 			{
 				// エクセルブックを作成
 				CreateBook(asset, Mainstream, out IWorkbook Book);
-				List<TextData> textData = CreateText(Book.GetSheetAt(2));
-
+				// テキストデータ作成
+				List<TextData> textData = CreateText(Book.GetSheetAt(1));
 				// 情報の初期化
 				Data._data.Clear();
-
 				// エクセルシートからセル単位で読み込み
 				ISheet BaseSheet = Book.GetSheetAt(0);
 
@@ -99,47 +85,16 @@ public class ActorsImporter : AssetPostprocessor {
 				{
 					IRow Baserow = BaseSheet.GetRow(i);
 
-					var ActorData = new ActorsData.ActorData();
-					ActorData.Id = (int)Baserow.GetCell((int)BaseColumn.Id).NumericCellValue;
-					ActorData.Name = textData.Find(a => a.Id == (int)Baserow.GetCell((int)BaseColumn.NameId).NumericCellValue).Text;
-					
-					ActorData.ClassId = (int)Baserow.GetCell((int)BaseColumn.ClassId)?.NumericCellValue;
-					ActorData.ImagePath = Baserow.GetCell((int)BaseColumn.ImagePath).ToString();
-					ActorData.InitLv = (int)Baserow.GetCell((int)BaseColumn.InitLv)?.NumericCellValue;
-					ActorData.MaxLv = (int)Baserow.GetCell((int)BaseColumn.MaxLv)?.NumericCellValue;
-
-					int InitHp = (int)Baserow.GetCell((int)BaseColumn.InitHp)?.NumericCellValue;
-					int InitMp = (int)Baserow.GetCell((int)BaseColumn.InitMp)?.NumericCellValue;
-					int InitAtk = (int)Baserow.GetCell((int)BaseColumn.InitAtk)?.NumericCellValue;
-					int InitSpd = (int)Baserow.GetCell((int)BaseColumn.InitSpd)?.NumericCellValue;
-					ActorData.InitStatus = new StatusInfo();
-					ActorData.InitStatus.SetParameter(InitHp,InitMp,InitAtk,InitSpd);
-
-					int MaxHp = (int)Baserow.GetCell((int)BaseColumn.MaxHp)?.NumericCellValue;
-					int MaxMp = (int)Baserow.GetCell((int)BaseColumn.MaxMp)?.NumericCellValue;
-					int MaxAtk = (int)Baserow.GetCell((int)BaseColumn.MaxAtk)?.NumericCellValue;
-					int MaxSpd = (int)Baserow.GetCell((int)BaseColumn.MaxSpd)?.NumericCellValue;
-					ActorData.MaxStatus = new StatusInfo();
-					ActorData.MaxStatus.SetParameter(MaxHp,MaxMp,MaxAtk,MaxSpd);
-
-					Data._data.Add(ActorData);
-				}
-				// 習得スキル情報設定
-				BaseSheet = Book.GetSheetAt(1);
-
-				for (int i = 1; i <= BaseSheet.LastRowNum; i++)
-				{
-					IRow Baserow = BaseSheet.GetRow(i);
-					var LearningData = new LearningData();
-
-					int ActorId = (int)Baserow.GetCell((int)BaseLearningColumn.ActorId)?.NumericCellValue;
-					ActorsData.ActorData Actor = Data._data.Find(a => a.Id == ActorId);
-					
-					LearningData.SkillId = (int)Baserow.GetCell((int)BaseLearningColumn.SkillId)?.NumericCellValue;
-					LearningData.LearningType = (LearningType)Baserow.GetCell((int)BaseLearningColumn.LearningType)?.NumericCellValue;
-					LearningData.Value = (int)Baserow.GetCell((int)BaseLearningColumn.Value)?.NumericCellValue;
-					
-					Actor.LearningSkills.Add(LearningData);
+					var SkillData = new SkillsData.SkillData();
+					SkillData.Id = (int)Baserow.GetCell((int)BaseColumn.Id).NumericCellValue;
+					SkillData.Name = textData.Find(a => a.Id == (int)Baserow.GetCell((int)BaseColumn.NameId).NumericCellValue).Text;
+					SkillData.IconPath = Baserow.GetCell((int)BaseColumn.IconPath).ToString();
+					SkillData.Mp = (int)Baserow.GetCell((int)BaseColumn.Mp).NumericCellValue;
+					SkillData.Attribute = (AttributeType)Baserow.GetCell((int)BaseColumn.Attribute)?.NumericCellValue;
+					SkillData.Scope = (ScopeType)Baserow.GetCell((int)BaseColumn.Scope)?.NumericCellValue;
+                    SkillData.EffectType = (EffectType)Baserow.GetCell((int)BaseColumn.EffectType)?.NumericCellValue;
+                    SkillData.EffectValue = (float)Baserow.GetCell((int)BaseColumn.Effectvalue)?.NumericCellValue;
+					Data._data.Add(SkillData);
 				}
 
 			}
@@ -186,12 +141,4 @@ public class ActorsImporter : AssetPostprocessor {
 
 		return textData;
 	}
-}
-
-
-public enum BaseTextColumn
-{
-
-	Id = 0,
-	Text,
 }

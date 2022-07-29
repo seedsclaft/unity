@@ -10,6 +10,7 @@ public class BattleView : BaseView
     [SerializeField] private BattleEnemyList battleEnemyList = null;
     [SerializeField] private BattleOrder battleOrder = null;
     [SerializeField] private BattlePicture battlePicture = null;
+    [SerializeField] private BattleSkillList battleSkillList = null;
     protected void Awake()
     {
         InitializeInput();
@@ -60,11 +61,25 @@ public class BattleView : BaseView
     public void SetNextBattler(BattlerInfo battler)
     {
         UpdateBattlePicture(battler);
+        UpdateBattleSkillData(battler.Skills);
     }
 
     private void UpdateBattlePicture(BattlerInfo battler)
     {
         battlePicture.UpdatePicture(battler);
+    }
+
+    public void UpdateBattleSkillData(List<SkillInfo> skillInfos)
+    {
+        battleSkillList.Initialize(skillInfos,(skill) => CallBattleSkillCommand(skill));
+        SetInputHandler(battleActorsList.GetComponent<IInputHandlerEvent>());
+    }
+
+    private void CallBattleSkillCommand(SkillInfo skillInfo)
+    {
+        var eventData = new BattleViewEvent(Battle.CommandType.SelectSkill);
+        eventData.templete = skillInfo;
+        _commandData(eventData);
     }
 }
 
@@ -76,6 +91,7 @@ namespace Battle
         Initialize,
         SelectActor,
         SelectEnemy,
+        SelectSkill,
 
     }
 }

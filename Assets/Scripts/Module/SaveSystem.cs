@@ -112,12 +112,13 @@ public class SavePlayInfo
 	{
 		for (int i = 0;i < DataSystem.InitActors.Count;i++)
 		{
-			var actorInfo = DataSystem.Actors.Find(actor => actor.Id == DataSystem.InitActors[i]);
-			if (actorInfo != null)
+			ActorsData.ActorData actorData = DataSystem.Actors.Find(actor => actor.Id == DataSystem.InitActors[i]);
+			if (actorData != null)
 			{
-				var actor = new	ActorInfo(actorInfo);
-				_actors.Add(actor);
-				_party.AddActor(actor.ActorId);
+				ActorInfo actorInfo = new ActorInfo(actorData);
+				actorInfo.InitSkillInfo(actorData.LearningSkills);
+				_actors.Add(actorInfo);
+				_party.AddActor(actorInfo.ActorId);
 			}
 		}
 	}

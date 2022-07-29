@@ -22,8 +22,12 @@ public class BattlePresenter : BasePresenter
         _model.InitBattleMembers();
         _view.SetBattleActorData(_model.BattleActors());
         _view.SetBattleEnemyData(_model.BattleEnemies());
+
+        _model.SortBattleMembers();
         _view.SetBattleOrder(_model.BattleMembers);
-        _view.SetNextBattler(_model.BattleMembers[0]);
+        
+        _model.CalcNextBattler();
+        _view.SetNextBattler(_model.GetNextBattler());
         _busy = false;
     }
 
@@ -32,8 +36,9 @@ public class BattlePresenter : BasePresenter
         if (_busy){
             return;
         }
-        if (viewEvent.commandType == (int)Battle.CommandType.None)
+        if (viewEvent.commandType == Battle.CommandType.SelectSkill)
         {
+            UnityEngine.Debug.Log("select skill");
             if (viewEvent.templete != null)
             {
             }

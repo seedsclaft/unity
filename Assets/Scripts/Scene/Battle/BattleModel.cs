@@ -18,7 +18,7 @@ public class BattleModel : BaseModel
             BattlerInfo info = new BattlerInfo(paramdata[i],1,CurrentData.Actors.Count+i);
             _battleMembers.Add(info);
         }
-        SortBattleMembers();
+        //SortBattleMembers();
     }
 
     public List<BattlerInfo> BattleActors()
@@ -31,9 +31,19 @@ public class BattleModel : BaseModel
         return _battleMembers.FindAll(a => a.isActor == false);
     }
 
-    private void SortBattleMembers()
+    public void SortBattleMembers()
     {
         _battleMembers.Sort((a,b) => a.Index - b.Index);
         _battleMembers.Sort((a,b) => a.Ap - b.Ap);
+    }
+
+    public void CalcNextBattler()
+    {
+        BattleUtility.CalcNextBattler(_battleMembers);
+    }
+    
+    public BattlerInfo GetNextBattler()
+    {
+        return _battleMembers[0];
     }
 }

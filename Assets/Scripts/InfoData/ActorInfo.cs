@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 [Serializable]
 public class ActorInfo
@@ -15,8 +16,8 @@ public class ActorInfo
     private StatusInfo _status;
     public StatusInfo Status {get {return _status;}}
     public int Hp {get {return _status.Hp;}}
-
-
+    private List<SkillInfo> _skills;
+    public List<SkillInfo> Skills {get {return _skills;}}
 
 
     public ActorInfo(ActorsData.ActorData actorData)
@@ -26,7 +27,25 @@ public class ActorInfo
         _status = actorData.InitStatus;
     }
 
-    public int Level { get{return _exp / 100;}}
+    public void InitSkillInfo(List<LearningData> learningData)
+    {
+        _skills = new List<SkillInfo>();
+        for (int i = 0;i < learningData.Count;i++)
+        {
+            LearningData _learningData = learningData[i];
+            if (_skills.Find(a =>a.SkillId == _learningData.SkillId) != null) continue;
+            if (_learningData.LearningType == LearningType.Level)
+            {
+                if (Level >= _learningData.Value)
+                {
+                    SkillInfo skillInfo = new SkillInfo(_learningData.SkillId);
+                    _skills.Add(skillInfo);
+                }
+            }
+        }
+    }
+
+    public int Level { get{return 1 + (_exp / 100);}}
 
     private void GainExp(int exp)
     {

@@ -5,20 +5,21 @@ using UnityEngine;
 
 public class ActorsData : ScriptableObject {
     [SerializeField] public List<ActorData> _data = new List<ActorData>();
-    [SerializeField] public List<TextData> _textdata = new List<TextData>();
+
 
 
     [Serializable]
     public class ActorData
     {   
         public int Id;
-        public int NameId;
+        public string Name;
         public int ClassId;
         public string ImagePath;
         public int InitLv;
         public int MaxLv;
         public StatusInfo InitStatus;
         public StatusInfo MaxStatus;
+        public List<LearningData> LearningSkills = new List<LearningData>();
         
         public int CurrentParam(StatusParamType growType,int level)
         {
@@ -47,6 +48,17 @@ public class ActorsData : ScriptableObject {
 
 }
 
+[Serializable]
+public class LearningData
+{   
+    public int SkillId;
+    public LearningType LearningType;
+    public int Value;
+}
+public enum LearningType{
+    None = 0,
+    Level = 1
+}
 
 [Serializable]
 public class TextData

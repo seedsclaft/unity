@@ -24,6 +24,10 @@ abstract public class DataSystem
     
     private static EnemiesData _enemies;
     public static List<EnemiesData.EnemyData> Enemies {get{return _enemies._data;}}
+
+    private static SkillsData _skills;
+    public static List<SkillsData.SkillData> Skills {get{return _skills._data;}}
+
     public static List<SystemData.MenuCommandData> TitleCommand {get { return _system.TitleCommandData;}}
     public static List<int> InitActors {get { return _system.InitActors;}}
     /*
@@ -50,5 +54,7 @@ abstract public class DataSystem
         DataSystem._classes = asset3;
         var asset4 = await Addressables.LoadAssetAsync<EnemiesData>("Assets/Data/Enemies.asset").Task;
         DataSystem._enemies = asset4;
+        var asset5 = await Addressables.LoadAssetAsync<SkillsData>("Assets/Data/Skills.asset").Task;
+        DataSystem._skills = asset5;
     }
 }

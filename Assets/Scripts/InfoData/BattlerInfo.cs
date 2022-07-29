@@ -16,14 +16,19 @@ public class BattlerInfo
     public int Level {get {return _level;}}
     private int _ap;
     public int Ap {get {return _ap;}}
+    
+    private List<SkillInfo> _skills;
+    public List<SkillInfo> Skills {get {return _skills;}}
     public BattlerInfo(ActorInfo actorInfo,int index){
         _charaId = actorInfo.ActorId;
         _level = actorInfo.Level;
         _status = actorInfo.Status;
         _index = index;
+        _skills = actorInfo.Skills;
         _isActor = true;
         ResetAp();
     }
+
     public BattlerInfo(EnemiesData.EnemyData enemyData,int lv,int index){
         _charaId = enemyData.Id;
         _level = lv;
@@ -42,5 +47,10 @@ public class BattlerInfo
     public void ResetAp()
     {
         _ap = 400 - Status.Spd * 4;
+    }
+
+    public void GainAp(int ap)
+    {
+        _ap += ap;
     }
 }
