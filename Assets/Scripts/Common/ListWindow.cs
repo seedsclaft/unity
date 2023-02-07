@@ -11,7 +11,7 @@ abstract public class ListWindow : MonoBehaviour
 
     private int _index = 0;
     public int Index {get{return _index;}}
-    public int _defaultInputFrame = 60;
+    public int _defaultInputFrame = 30;
     private int _inputBusyFrame = 0;
 
     [SerializeField] private bool horizontal = false; 

@@ -194,4 +194,5 @@ public enum BaseTextColumn
 
 	Id = 0,
 	Text,
+	Help,
 }

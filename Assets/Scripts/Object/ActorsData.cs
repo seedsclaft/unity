@@ -65,6 +65,7 @@ public class TextData
 {   
     public int Id;
     public string Text;
+    public string Help;
 }
 
 [Serializable]

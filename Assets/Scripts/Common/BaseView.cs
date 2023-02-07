@@ -6,7 +6,6 @@ abstract public class BaseView : MonoBehaviour
 {
     private InputSystem _input;
     private List<IInputHandlerEvent> _inputHandler = new List<IInputHandlerEvent>();
-    //private System.Action<BaseViewEvent> _commandData = null;
     public System.Action<ViewEvent> _commandData = null;
     public void InitializeInput()
     {    
@@ -47,18 +46,21 @@ abstract public class BaseView : MonoBehaviour
     {
         _commandData(eventData);
     }
+
     public void CommandSceneChange(Scene scene)
     {
         var eventData = new ViewEvent(Scene.Base, Base.CommandType.SceneChange);
         eventData.templete = scene;
         CallSceneChangeCommand(eventData);
     }
+
     public void CommandSetTemplete(TempInfo temp)
     {
         var eventData = new ViewEvent(Scene.Base, Base.CommandType.SetTemplete);
         eventData.templete = temp;
         CallSceneChangeCommand(eventData);
     }
+    
     public void CommandInitSaveInfo()
     {
         var eventData = new ViewEvent(Scene.Base, Base.CommandType.InitSaveInfo);

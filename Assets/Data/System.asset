@@ -14,37 +14,44 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MenuCommandDataList:
   - Id: 1
-    Key: item
-    NameTextId: 1
+    Key: TRAIN
+    Name: "\u795E\u683C\u878D\u5408"
+    Help: 
   - Id: 2
-    Key: skill
-    NameTextId: 2
+    Key: ALCHEMY
+    Name: "\u9B54\u6CD5\u9023\u7D50"
+    Help: 
   - Id: 3
-    Key: status
-    NameTextId: 3
+    Key: RECOVER
+    Name: "\u5B58\u5728\u4FEE\u5FA9"
+    Help: 
   - Id: 4
-    Key: party
-    NameTextId: 4
+    Key: BATTLE
+    Name: "\u6551\u6E08\u57F7\u884C"
+    Help: 
   - Id: 5
-    Key: word
-    NameTextId: 5
+    Key: RESOURCE
+    Name: "\u7D20\u5B50\u88DC\u5145"
+    Help: 
   - Id: 6
-    Key: system
-    NameTextId: 6
+    Key: STATUS
+    Name: "\u60C5\u5831\u78BA\u8A8D"
+    Help: 
   - Id: 7
-    Key: option
-    NameTextId: 7
+    Key: TURNEND
+    Name: "\u4F5C\u6226\u958B\u59CB"
+    Help: 
   TitleCommandData:
   - Id: 1
     Key: NEWGAME
-    NameTextId: 101
+    Name: NewGame
+    Help: "\u521D\u3081\u304B\u3089\u30B2\u30FC\u30E0\u3092\u958B\u59CB\u3057\u307E\u3059"
   - Id: 2
     Key: CONTINUE
-    NameTextId: 102
+    Name: Continue
+    Help: "\u4EE5\u524D\u306E\u7D9A\u304D\u304B\u3089\u30B2\u30FC\u30E0\u3092\u958B\u59CB\u3057\u307E\u3059"
   - Id: 3
     Key: OPTION
-    NameTextId: 103
-  - Id: 4
-    Key: EXIT
-    NameTextId: 104
+    Name: Option
+    Help: "\u30B2\u30FC\u30E0\u306E\u8A2D\u5B9A\u3092\u5909\u66F4\u3057\u307E\u3059"
   InitActors: 01000000

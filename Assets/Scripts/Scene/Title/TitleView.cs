@@ -6,9 +6,15 @@ using Title;
 public class TitleView : BaseView
 {
     [SerializeField] private TitleCommandList commandList = null;
-
     private new System.Action<TitleViewEvent> _commandData = null;
+    [SerializeField] private GameObject helpRoot = null;
+    [SerializeField] private GameObject helpPrefab = null;
+    private HelpWindow _helpWindow = null;
 
+    public int titleCommandIndex{
+        get {return commandList.selectIndex;}
+    }
+    
     protected void Awake(){
         InitializeInput();
         Initialize();
@@ -18,7 +24,13 @@ public class TitleView : BaseView
         new TitlePresenter(this);
     }
 
-    
+    public void SetHelpWindow(){
+        GameObject prefab = Instantiate(helpPrefab);
+        prefab.transform.SetParent(helpRoot.transform, false);
+        _helpWindow = prefab.GetComponent<HelpWindow>();
+        commandList.SetHelpWindow(_helpWindow);
+    }
+
     public void SetEvent(System.Action<TitleViewEvent> commandData)
     {
         _commandData = commandData;
@@ -29,12 +41,11 @@ public class TitleView : BaseView
         SetInputHandler(commandList.GetComponent<IInputHandlerEvent>());
     }
 
-    private void CallTitleCommand(MenuComandType commandType){
+    private void CallTitleCommand(TitleComandType commandType){
         var eventData = new TitleViewEvent(CommandType.TitleCommand);
         eventData.templete = commandType;
         _commandData(eventData);
     }
-    
 }
 
 namespace Title

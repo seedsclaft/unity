@@ -29,7 +29,7 @@ public class MainMenuPresenter
 
         var bgm = await _model.BgmData();
 
-        Sound.SoundManager.Instance.PlayBgm(bgm,1.0f,true);
+        //SoundManager.Instance.PlayBgm(bgm,1.0f,true);
 
         _busy = false;
     }
@@ -58,6 +58,6 @@ public class MainMenuPresenter
     {
         var bgm = await _model.BgmData2();
 
-        Sound.SoundManager.Instance.CrossFadeBgm(bgm,1.0f,true);
+        SoundManager.Instance.CrossFadeBgm(bgm,1.0f,true);
     }
 }

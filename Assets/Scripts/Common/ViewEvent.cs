@@ -39,6 +39,7 @@ abstract public class ListItem : MonoBehaviour
     private Color _normalColor;
     private Color _selectedColor;
     private Color _disableColor;
+    [SerializeField] private GameObject cursor;
     public void Awake()
     {
         InitButtonColors();
@@ -55,17 +56,23 @@ abstract public class ListItem : MonoBehaviour
 
     public void SetSelect()
     {
-        if (clickButton == null) return;
+        if (cursor == null) return;
+        cursor.SetActive(true);
+        /*
         ColorBlock cb = clickButton.colors;
         cb.normalColor = _selectedColor;
         clickButton.colors = cb;
+        */
     }
     
     public void SetUnSelect()
     {
-        if (clickButton == null) return;
+        if (cursor == null) return;
+        cursor.SetActive(false);
+        /*
         ColorBlock cb = clickButton.colors;
         cb.normalColor = _normalColor;
         clickButton.colors = cb;
+        */
     }
 }

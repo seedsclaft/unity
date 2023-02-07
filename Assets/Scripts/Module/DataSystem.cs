@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 
 abstract public class DataSystem 
 {
+    private static DataManager _data;
+    public static DataManager Data {get{return _data;}}
     private static List<ActorsData.ActorData> _actors;
     public static List<ActorsData.ActorData> Actors {get{return _actors;}}
     
@@ -56,5 +58,7 @@ abstract public class DataSystem
         DataSystem._enemies = asset4;
         var asset5 = await Addressables.LoadAssetAsync<SkillsData>("Assets/Data/Skills.asset").Task;
         DataSystem._skills = asset5;
+
+        AddressablesKey.LoadAssetAsync<DataManager>("Assets/Data/MainData.asset",(data) => {DataSystem._data = data;});
     }
 }

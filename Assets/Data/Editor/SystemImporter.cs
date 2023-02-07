@@ -81,6 +81,7 @@ public class SystemImporter : AssetPostprocessor
 			{
 				// エクセルブックを作成
 				CreateBook(asset, Mainstream, out IWorkbook Book);
+				List<TextData> textData = CreateText(Book.GetSheetAt(3));
 
 				// 情報の初期化
 				Data.MenuCommandDataList = new List<SystemData.MenuCommandData>();
@@ -97,7 +98,7 @@ public class SystemImporter : AssetPostprocessor
 					var MenuCommandInfo = new SystemData.MenuCommandData();
 					MenuCommandInfo.Id = (int)Baserow.GetCell((int)BaseColumn.Id)?.SafeNumericCellValue();
 					MenuCommandInfo.Key = Baserow.GetCell((int)BaseColumn.Key)?.SafeStringCellValue();
-					MenuCommandInfo.NameTextId = (int)Baserow.GetCell((int)BaseColumn.NameTextId)?.SafeNumericCellValue();
+					MenuCommandInfo.Name = textData.Find(a => a.Id == (int)Baserow.GetCell((int)BaseColumn.NameTextId).NumericCellValue).Text;
 					Data.MenuCommandDataList.Add(MenuCommandInfo);
 				}
 				
@@ -110,7 +111,8 @@ public class SystemImporter : AssetPostprocessor
 					var TitleCommandInfo = new SystemData.MenuCommandData();
 					TitleCommandInfo.Id = (int)Baserow.GetCell((int)BaseColumn.Id)?.SafeNumericCellValue();
 					TitleCommandInfo.Key = Baserow.GetCell((int)BaseColumn.Key)?.SafeStringCellValue();
-					TitleCommandInfo.NameTextId = (int)Baserow.GetCell((int)BaseColumn.NameTextId)?.SafeNumericCellValue();
+					TitleCommandInfo.Name = textData.Find(a => a.Id == (int)Baserow.GetCell((int)BaseColumn.NameTextId).NumericCellValue).Text;
+					TitleCommandInfo.Help = textData.Find(a => a.Id == (int)Baserow.GetCell((int)BaseColumn.NameTextId).NumericCellValue).Help;
 					Data.TitleCommandData.Add(TitleCommandInfo);
 				}
 
@@ -129,7 +131,7 @@ public class SystemImporter : AssetPostprocessor
 							Data.InitActors.Add(int.Parse(item));
 						}
 					}
-				}	
+				}
 			}
 		}
 		catch (Exception ex)
@@ -156,4 +158,23 @@ public class SystemImporter : AssetPostprocessor
 		}
 	}
 
+	// テキストデータを作成
+	static List<TextData> CreateText(ISheet BaseSheet)
+	{
+		var textData = new List<TextData>();
+
+		for (int i = 1; i <= BaseSheet.LastRowNum; i++)
+		{
+			IRow Baserow = BaseSheet.GetRow(i);
+			var TextData = new TextData();
+
+			TextData.Id = (int)Baserow.GetCell((int)BaseTextColumn.Id)?.NumericCellValue;
+			TextData.Text = Baserow.GetCell((int)BaseTextColumn.Text).ToString();
+			TextData.Help = Baserow.GetCell((int)BaseTextColumn.Help).ToString();
+			
+			textData.Add(TextData);
+		}
+
+		return textData;
+	}
 }

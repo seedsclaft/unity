@@ -24,6 +24,7 @@ public class EnemiesImporter : AssetPostprocessor {
 
 		Id = 0,
 		Text,
+		Help
 	}
 	static readonly string ExcelPath = "Assets/Data";
 	static readonly string ExcelName = "Enemies.xlsx";

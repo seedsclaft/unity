@@ -7,7 +7,6 @@ public class TitlePresenter
 {
     TitleModel _model = null;
     TitleView _view = null;
-
     private bool _busy = true;
     public TitlePresenter(TitleView view)
     {
@@ -19,15 +18,12 @@ public class TitlePresenter
 
     private async void Initialize()
     {
+        _view.SetHelpWindow();
         _view.SetEvent((type) => updateCommand(type));
-
-        var titleCommand = _model.TitleCommand;
-        _view.SetTitleCommand(titleCommand);
+        _view.SetTitleCommand(_model.TitleCommand);
 
         var bgm = await _model.BgmData();
-
-        Sound.SoundManager.Instance.PlayBgm(bgm,1.0f,true);
-
+        SoundManager.Instance.PlayBgm(bgm,1.0f,true);
         _busy = false;
     }
 
@@ -38,11 +34,27 @@ public class TitlePresenter
         }
         if (viewEvent.commandType == CommandType.TitleCommand)
         {
+            CommandTitle();
+
+            /*
             _view.CommandInitSaveInfo();
             var temp = DataSystem.Enemies;
             TempInfo info = new TempInfo(temp);
             _view.CommandSetTemplete(info);
-            _view.CommandSceneChange(Scene.Battle);
+            _view.CommandSceneChange(Scene.Map);
+            */
+        }
+    }
+
+    void CommandTitle(){
+        _busy = true;
+        switch ((TitleComandType)_view.titleCommandIndex){
+            case TitleComandType.NewGame:
+            break;
+            case TitleComandType.Continue:
+            break;
+            case TitleComandType.Option:
+            break;
         }
     }
 }

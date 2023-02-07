@@ -17,6 +17,13 @@ public class ResourceSystem : MonoBehaviour
         Addressables.Release(asset);
         return result;
     }
+
+    public static async Task<T> LoadAsset<T>(string address){
+        var asset = await Addressables.LoadAssetAsync<T>(address).Task;
+        var result = asset;
+        Addressables.Release(asset);
+        return result;
+    }
     /*
     public static List<T> LoadScene<T>(Scene scene){
         string address = GetScenePrefab(scene);
@@ -46,6 +53,8 @@ public class ResourceSystem : MonoBehaviour
             return "Assets/Prefabs/MainMenu/MainMenuScene.prefab";
             case Scene.Battle:
             return "Assets/Prefabs/Battle/BattleScene.prefab";
+            case Scene.Map:
+            return "Assets/Prefabs/Map/MapScene.prefab";
 
             
         }
@@ -62,5 +71,6 @@ public enum Scene
     Boot,
     Title,
     MainMenu,
-    Battle
+    Battle,
+    Map
 }

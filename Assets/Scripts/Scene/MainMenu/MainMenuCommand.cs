@@ -22,7 +22,7 @@ public class MainMenuCommand : ListItem ,IListViewItem ,IClickHandlerEvent
     public void UpdateViewItem()
     {
         if (_data == null) return;
-        commandName.text = _data.NameTextId.ToString();
+        commandName.text = _data.Name;
     }
 
     public void ClickHandler()

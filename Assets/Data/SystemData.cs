@@ -14,7 +14,8 @@ public class SystemData : ScriptableObject
 		
 		public int Id;
 		public string Key;
-		public int NameTextId;
+		public string Name;
+		public string Help;
 	}
 }
 
@@ -22,4 +23,10 @@ public enum MenuComandType {
 	None,
 	Item,
 	Skill
+}
+
+public enum TitleComandType {
+	NewGame = 0,
+	Continue,
+	Option
 }
