@@ -87,6 +87,8 @@ public class SystemImporter : AssetPostprocessor
 				Data.MenuCommandDataList = new List<SystemData.MenuCommandData>();
 				Data.TitleCommandData = new List<SystemData.MenuCommandData>();
 				Data.InitActors = new List<int>();
+				Data.SystemTextData = new List<TextData>();
+				Data.SystemTextData = textData;
 
 				// エクセルシートからセル単位で読み込み
 				ISheet BaseSheet = Book.GetSheetAt(0);

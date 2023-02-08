@@ -17,6 +17,7 @@ public class EnemiesImporter : AssetPostprocessor {
 		BaseHp,
 		BaseMp,
 		BaseAtk,
+		BaseDef,
 		BaseSpd,
     }
     enum BaseTextColumn
@@ -98,9 +99,10 @@ public class EnemiesImporter : AssetPostprocessor {
 					int BaseHp = (int)Baserow.GetCell((int)BaseColumn.BaseHp)?.SafeNumericCellValue();
 					int BaseMp = (int)Baserow.GetCell((int)BaseColumn.BaseMp)?.SafeNumericCellValue();
 					int BaseAtk = (int)Baserow.GetCell((int)BaseColumn.BaseAtk)?.SafeNumericCellValue();
+					int BaseDef = (int)Baserow.GetCell((int)BaseColumn.BaseDef)?.SafeNumericCellValue();
 					int BaseSpd = (int)Baserow.GetCell((int)BaseColumn.BaseSpd)?.SafeNumericCellValue();
 					EnemyData.BaseStatus = new StatusInfo();
-					EnemyData.BaseStatus.SetParameter(BaseHp,BaseMp,BaseAtk,BaseSpd);
+					EnemyData.BaseStatus.SetParameter(BaseHp,BaseMp,BaseAtk,BaseDef,BaseSpd);
 
 					Data._data.Add(EnemyData);
 				}

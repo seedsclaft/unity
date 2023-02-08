@@ -83,6 +83,9 @@ public class SavePlayInfo
 	public PlayerInfo _playerInfo = null;
     private List<ActorInfo> _actors = new List<ActorInfo>();
     public List<ActorInfo> Actors {get {return _actors;}}
+	
+    private List<StageInfo> _stages = new List<StageInfo>();
+    public List<StageInfo> Stages {get {return _stages;}}
     public PartyInfo _party = null;
 	/// <summary>
 	/// 初期化
@@ -90,12 +93,18 @@ public class SavePlayInfo
     public SavePlayInfo()
     {
 		this.InitActors();
+		this.InitStages();
 		this.InitParty();
 	}
 
     public void InitActors()
     {
         _actors.Clear();
+    }
+
+    public void InitStages()
+    {
+        _stages.Clear();
     }
 
     public void InitParty()
@@ -106,6 +115,7 @@ public class SavePlayInfo
 	public void InitSaveData()
 	{
 		this.InitPlayer();
+		this.InitStageInfo();
 	}
 
 	private void InitPlayer()
@@ -123,6 +133,14 @@ public class SavePlayInfo
 		}
 	}
 
+	private void InitStageInfo()
+	{
+		for (int i = 0;i < DataSystem.Stages.Count;i++)
+		{
+			StageInfo stageInfo = new StageInfo(DataSystem.Stages[i]);
+			_stages.Add(stageInfo);
+		}
+	}
 	
 
 }

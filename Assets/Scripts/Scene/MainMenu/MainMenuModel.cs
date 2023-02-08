@@ -19,6 +19,10 @@ public class MainMenuModel : BaseModel
         return GameSystem.CurrentData.Actors;
     }
 
+    public List<StageInfo> Stages(){
+        return GameSystem.CurrentData.Stages;
+    }
+
     public List<Sprite> ActorsImage(List<ActorInfo> actors){
         var sprites = new List<Sprite>();
         for (var i = 0;i < actors.Count;i++)
@@ -34,9 +38,17 @@ public class MainMenuModel : BaseModel
         return sprites;
     }
     
-    public async Task<AudioClip> BgmData(){
-        return await Addressables.LoadAssetAsync<AudioClip>("Assets/Audios/limitant.mp3").Task;
+    public async Task<List<AudioClip>> BgmData(){
+        BGMData bGMData = DataSystem.Data.GetBGM("MAINMENU");
+        List<string> data = new List<string>();
+        data.Add("BGM/" + bGMData.FileName + "_intro.ogg");
+        data.Add("BGM/" + bGMData.FileName + "_loop.ogg");
         
+        var result1 = await ResourceSystem.LoadAsset<AudioClip>(data[0]);
+        var result2 = await ResourceSystem.LoadAsset<AudioClip>(data[1]);
+        return new List<AudioClip>(){
+            result1,result2
+        };    
     }
     public async Task<AudioClip> BgmData2(){
         return await Addressables.LoadAssetAsync<AudioClip>("Assets/Audios/field001.mp3").Task;

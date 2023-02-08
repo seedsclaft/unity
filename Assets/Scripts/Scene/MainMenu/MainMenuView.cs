@@ -6,10 +6,13 @@ using MainMenu;
 
 public class MainMenuView : BaseView
 {
-    [SerializeField] private Image backGround = null; 
-    [SerializeField] private MainMenuCommandList commandList = null;
-    [SerializeField] private MainMenuActorList actorList = null;
+    [SerializeField] private SpriteRenderer backGround = null; 
+    [SerializeField] private MainMenuStageList stageList = null;
+    [SerializeField] private GameObject helpRoot = null;
+    [SerializeField] private GameObject helpPrefab = null;
+    private HelpWindow _helpWindow = null;
 
+    private new System.Action<MainMenuViewEvent> _commandData = null;
 
     protected void Awake(){
         InitializeInput();
@@ -19,48 +22,28 @@ public class MainMenuView : BaseView
     void Initialize(){
         new MainMenuPresenter(this);
     }
-
-    public void SetImage(string str){
+    public void SetHelpWindow(){
+        GameObject prefab = Instantiate(helpPrefab);
+        prefab.transform.SetParent(helpRoot.transform, false);
+        _helpWindow = prefab.GetComponent<HelpWindow>();
+        _helpWindow.SetHelpText(DataSystem.System.SystemTextData.Find(a => a.Id == 11040).Text);
     }
 
-    public new void SetEvent(System.Action<ViewEvent> commandData)
+    public void SetEvent(System.Action<MainMenuViewEvent> commandData)
     {
         _commandData = commandData;
     }
-
-    public void SetCommandData(List<SystemData.MenuCommandData> menuCommands){
-        commandList.Initialize(menuCommands,(menuCommandInfo) => CallMainMenuCommand(menuCommandInfo));
-        SetInputHandler(commandList.GetComponent<IInputHandlerEvent>());
-    }
-
-    private void CallMainMenuCommand(MenuComandType commandType){
-        var eventData = new ViewEvent(Scene.MainMenu, CommandType.MainMenuCommand);
-        eventData.templete = commandType;
-        _commandData(eventData);
+    
+    public void SetStagesData(List<StageInfo> stages){
+        stageList.Initialize(stages,(stageInfo) => CallMainMenuStage(stageInfo));
+        SetInputHandler(stageList.GetComponent<IInputHandlerEvent>());
     }
     
-    public void SetActorsData(List<ActorInfo> actors){
-        actorList.Initialize(actors,(actorInfo) => CallMainMenuActor(actorInfo));
-        SetInputHandler(actorList.GetComponent<IInputHandlerEvent>());
-    }
-    
-    private void CallMainMenuActor(ActorInfo actor){
-        var eventData = new ViewEvent(Scene.MainMenu, CommandType.ActorSelect);
-        eventData.templete = actor;
+    private void CallMainMenuStage(StageInfo stage){
+        var eventData = new MainMenuViewEvent(CommandType.StageSelect);
+        eventData.templete = stage;
         _commandData(eventData);
     }
-
-    public void CommandSkill()
-    {
-        commandList.Deactivate();
-        actorList.Activate();
-    }
-
-    public void UpdateActorStatus()
-    {
-        actorList.UpdateAllItems();
-    }
-
 }
 
 namespace MainMenu
@@ -68,7 +51,16 @@ namespace MainMenu
     public enum CommandType
     {
         None = 0,
-        MainMenuCommand,
-        ActorSelect
+        StageSelect = 101,
+    }
+}
+public class MainMenuViewEvent
+{
+    public MainMenu.CommandType commandType;
+    public object templete;
+
+    public MainMenuViewEvent(MainMenu.CommandType type)
+    {
+        commandType = type;
     }
 }

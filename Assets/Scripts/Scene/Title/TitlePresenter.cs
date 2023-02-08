@@ -50,6 +50,8 @@ public class TitlePresenter
         _busy = true;
         switch ((TitleComandType)_view.titleCommandIndex){
             case TitleComandType.NewGame:
+            _view.CommandInitSaveInfo();
+            _view.CommandSceneChange(Scene.MainMenu);
             break;
             case TitleComandType.Continue:
             break;

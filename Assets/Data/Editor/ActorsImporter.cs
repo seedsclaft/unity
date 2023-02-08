@@ -20,11 +20,19 @@ public class ActorsImporter : AssetPostprocessor {
 		InitHp,
 		InitMp,
 		InitAtk,
+		InitDef,
 		InitSpd,
-		MaxHp,
-		MaxMp,
-		MaxAtk,
-		MaxSpd,
+		
+		NeedHp,
+		NeedMp,
+		NeedAtk,
+		NeedDef,
+		NeedSpd,
+		Element1,
+		Element2,
+		Element3,
+		Element4,
+		Element5,
     }
     enum BaseLearningColumn
     {
@@ -112,15 +120,29 @@ public class ActorsImporter : AssetPostprocessor {
 					int InitMp = (int)Baserow.GetCell((int)BaseColumn.InitMp)?.NumericCellValue;
 					int InitAtk = (int)Baserow.GetCell((int)BaseColumn.InitAtk)?.NumericCellValue;
 					int InitSpd = (int)Baserow.GetCell((int)BaseColumn.InitSpd)?.NumericCellValue;
+					int InitDef = (int)Baserow.GetCell((int)BaseColumn.InitDef)?.NumericCellValue;
 					ActorData.InitStatus = new StatusInfo();
-					ActorData.InitStatus.SetParameter(InitHp,InitMp,InitAtk,InitSpd);
+					ActorData.InitStatus.SetParameter(InitHp,InitMp,InitAtk,InitDef,InitSpd);
 
-					int MaxHp = (int)Baserow.GetCell((int)BaseColumn.MaxHp)?.NumericCellValue;
-					int MaxMp = (int)Baserow.GetCell((int)BaseColumn.MaxMp)?.NumericCellValue;
-					int MaxAtk = (int)Baserow.GetCell((int)BaseColumn.MaxAtk)?.NumericCellValue;
-					int MaxSpd = (int)Baserow.GetCell((int)BaseColumn.MaxSpd)?.NumericCellValue;
-					ActorData.MaxStatus = new StatusInfo();
-					ActorData.MaxStatus.SetParameter(MaxHp,MaxMp,MaxAtk,MaxSpd);
+					int NeedHp = (int)Baserow.GetCell((int)BaseColumn.NeedHp)?.NumericCellValue;
+					int NeedMp = (int)Baserow.GetCell((int)BaseColumn.NeedMp)?.NumericCellValue;
+					int NeedAtk = (int)Baserow.GetCell((int)BaseColumn.NeedAtk)?.NumericCellValue;
+					int NeedSpd = (int)Baserow.GetCell((int)BaseColumn.NeedSpd)?.NumericCellValue;
+					int NeedDef = (int)Baserow.GetCell((int)BaseColumn.NeedDef)?.NumericCellValue;
+					ActorData.NeedStatus = new StatusInfo();
+					ActorData.NeedStatus.SetParameter(NeedHp,NeedMp,NeedAtk,NeedDef,NeedSpd);
+
+					int Element1 = (int)Baserow.GetCell((int)BaseColumn.Element1)?.NumericCellValue;
+					int Element2 = (int)Baserow.GetCell((int)BaseColumn.Element2)?.NumericCellValue;
+					int Element3 = (int)Baserow.GetCell((int)BaseColumn.Element3)?.NumericCellValue;
+					int Element4 = (int)Baserow.GetCell((int)BaseColumn.Element4)?.NumericCellValue;
+					int Element5 = (int)Baserow.GetCell((int)BaseColumn.Element5)?.NumericCellValue;
+					ActorData.Attribute = new List<int>();
+					ActorData.Attribute.Add(Element1);
+					ActorData.Attribute.Add(Element2);
+					ActorData.Attribute.Add(Element3);
+					ActorData.Attribute.Add(Element4);
+					ActorData.Attribute.Add(Element5);
 
 					Data._data.Add(ActorData);
 				}

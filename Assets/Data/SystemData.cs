@@ -7,6 +7,7 @@ public class SystemData : ScriptableObject
 	public List<MenuCommandData> MenuCommandDataList;
 	public List<MenuCommandData> TitleCommandData;
 	public List<int> InitActors;
+	public List<TextData> SystemTextData;
 
 	[System.SerializableAttribute]
 	public class MenuCommandData

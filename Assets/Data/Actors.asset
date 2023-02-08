@@ -14,56 +14,135 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _data:
   - Id: 1
-    Name: "\u30EC\u30F3"
+    Name: "\u30D8\u30AB\u30C6\u30FC"
     ClassId: 1
     ImagePath: 0001
     InitLv: 1
     MaxLv: 40
     InitStatus:
-      _hp: 20
+      _hp: 45
+      _mp: 20
+      _atk: 28
+      _def: 5
+      _spd: 17
+    PlusStatus:
+      _hp: 0
+      _mp: 0
+      _atk: 0
+      _def: 0
+      _spd: 0
+    NeedStatus:
+      _hp: 2
       _mp: 2
-      _atk: 10
-      _spd: 10
-    MaxStatus:
-      _hp: 60
-      _mp: 5
-      _atk: 40
-      _spd: 20
+      _atk: 2
+      _def: 2
+      _spd: 2
+    Attribute: 6400000028000000000000001400000032000000
     LearningSkills:
     - SkillId: 1
       LearningType: 1
       Value: 1
   - Id: 2
-    Name: "\u30A8\u30B9\u30C8"
+    Name: "\u30AD\u30E3\u30ED\u30E9\u30A4\u30F3"
     ClassId: 2
     ImagePath: 0002
     InitLv: 1
     MaxLv: 40
     InitStatus:
-      _hp: 28
-      _mp: 1
-      _atk: 15
-      _spd: 12
-    MaxStatus:
-      _hp: 80
-      _mp: 4
-      _atk: 65
-      _spd: 34
+      _hp: 36
+      _mp: 20
+      _atk: 21
+      _def: 3
+      _spd: 32
+    PlusStatus:
+      _hp: 0
+      _mp: 0
+      _atk: 0
+      _def: 0
+      _spd: 0
+    NeedStatus:
+      _hp: 2
+      _mp: 2
+      _atk: 2
+      _def: 4
+      _spd: 1
+    Attribute: 3200000064000000140000000000000014000000
     LearningSkills: []
   - Id: 3
-    Name: "\u30EA\u30FC\u30F4\u30A1"
+    Name: "\u30A2\u30EA\u30B9"
     ClassId: 3
     ImagePath: 0003
     InitLv: 1
     MaxLv: 40
     InitStatus:
-      _hp: 15
-      _mp: 5
-      _atk: 7
-      _spd: 4
-    MaxStatus:
-      _hp: 47
-      _mp: 8
-      _atk: 25
-      _spd: 27
+      _hp: 34
+      _mp: 20
+      _atk: 19
+      _def: 7
+      _spd: 21
+    PlusStatus:
+      _hp: 0
+      _mp: 0
+      _atk: 0
+      _def: 0
+      _spd: 0
+    NeedStatus:
+      _hp: 2
+      _mp: 2
+      _atk: 4
+      _def: 1
+      _spd: 2
+    Attribute: 1e00000000000000640000003200000000000000
+    LearningSkills: []
+  - Id: 4
+    Name: "\u30D5\u30EA\u30EB"
+    ClassId: 4
+    ImagePath: 0004
+    InitLv: 1
+    MaxLv: 40
+    InitStatus:
+      _hp: 42
+      _mp: 20
+      _atk: 22
+      _def: 4
+      _spd: 26
+    PlusStatus:
+      _hp: 0
+      _mp: 0
+      _atk: 0
+      _def: 0
+      _spd: 0
+    NeedStatus:
+      _hp: 1
+      _mp: 2
+      _atk: 3
+      _def: 2
+      _spd: 2
+    Attribute: 00000000280000003c0000006400000000000000
+    LearningSkills: []
+  - Id: 5
+    Name: "\u30CB\u30E5\u30AF\u30B9"
+    ClassId: 5
+    ImagePath: 0005
+    InitLv: 1
+    MaxLv: 40
+    InitStatus:
+      _hp: 27
+      _mp: 20
+      _atk: 31
+      _def: 6
+      _spd: 14
+    PlusStatus:
+      _hp: 0
+      _mp: 0
+      _atk: 0
+      _def: 0
+      _spd: 0
+    NeedStatus:
+      _hp: 3
+      _mp: 2
+      _atk: 2
+      _def: 2
+      _spd: 2
+    Attribute: 2800000028000000280000000000000064000000
     LearningSkills: []

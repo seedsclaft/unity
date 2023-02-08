@@ -32,6 +32,10 @@ abstract public class DataSystem
 
     public static List<SystemData.MenuCommandData> TitleCommand {get { return _system.TitleCommandData;}}
     public static List<int> InitActors {get { return _system.InitActors;}}
+
+    
+    private static StagesData _stages;
+    public static List<StagesData.StageData> Stages {get{return _stages._data;}}
     /*
     public async Task LoadData()
     {
@@ -58,6 +62,8 @@ abstract public class DataSystem
         DataSystem._enemies = asset4;
         var asset5 = await Addressables.LoadAssetAsync<SkillsData>("Assets/Data/Skills.asset").Task;
         DataSystem._skills = asset5;
+        var asset6 = await Addressables.LoadAssetAsync<StagesData>("Assets/Data/Stages.asset").Task;
+        DataSystem._stages = asset6;
 
         AddressablesKey.LoadAssetAsync<DataManager>("Assets/Data/MainData.asset",(data) => {DataSystem._data = data;});
     }

@@ -6,15 +6,21 @@ public class ActorInfo
 {
     private int _actorId;
     public int ActorId {get {return _actorId;}}
-    private int _exp;
     public int MaxHp { get
         {
             return DataSystem.GetActor(_actorId).CurrentParam(StatusParamType.Hp,Level);
         }
     }
+
+    private int _level;
+    public int Level {get {return _level;}}
     
     private StatusInfo _status;
     public StatusInfo Status {get {return _status;}}
+    private StatusInfo _usePoint;
+    public StatusInfo UsePoint {get {return _usePoint;}}
+    private List<int> _attribute;
+    public List<int> Attribute {get {return _attribute;}}
     public int Hp {get {return _status.Hp;}}
     private List<SkillInfo> _skills;
     public List<SkillInfo> Skills {get {return _skills;}}
@@ -23,8 +29,9 @@ public class ActorInfo
     public ActorInfo(ActorsData.ActorData actorData)
     {
         _actorId = actorData.Id;
-        _exp = (actorData.InitLv - 1) * 100;
         _status = actorData.InitStatus;
+        _usePoint = actorData.NeedStatus;
+        _attribute = actorData.Attribute;
     }
 
     public void InitSkillInfo(List<LearningData> learningData)
@@ -43,13 +50,6 @@ public class ActorInfo
                 }
             }
         }
-    }
-
-    public int Level { get{return 1 + (_exp / 100);}}
-
-    private void GainExp(int exp)
-    {
-        _exp += exp; 
     }
 
     public int GainHp(int value)

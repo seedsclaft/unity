@@ -18,32 +18,17 @@ public class ActorsData : ScriptableObject {
         public int InitLv;
         public int MaxLv;
         public StatusInfo InitStatus;
-        public StatusInfo MaxStatus;
+        public StatusInfo PlusStatus;
+        public StatusInfo NeedStatus;
+        public List<int> Attribute;
         public List<LearningData> LearningSkills = new List<LearningData>();
         
         public int CurrentParam(StatusParamType growType,int level)
         {
             int init = InitStatus.GetParameter(growType);
-            int max = MaxStatus.GetParameter(growType);
-            float per = MaxLv - InitLv;
-            float upParam = ((max - init) / per) * level;
-            return init + (int)upParam;
+            return init;
         }
 
-        public StatusInfo LevelUpStatus(int level)
-        {
-            StatusInfo upStatus = new StatusInfo();
-            foreach (StatusParamType growType in Enum.GetValues(typeof(StatusParamType)))
-            {
-                int currentParam = CurrentParam(growType,level);
-                int nextParam = CurrentParam(growType,level + 1);
-                if (currentParam < nextParam){
-                    int upParam = nextParam - currentParam;
-                    upStatus.AddParameter(growType,upParam);
-                }
-            }
-            return upStatus;
-        }
     }
 
 }

@@ -19,45 +19,42 @@ public class MainMenuPresenter
 
     private async void Initialize()
     {
+        _view.SetHelpWindow();
         _view.SetEvent((type) => updateCommand(type));
 
-        var menuCommand = await _model.MenuCommand();
-        _view.SetCommandData(menuCommand);
-        List<ActorInfo> actors = _model.MenuActors();
-        var actorImages = _model.ActorsImage(actors);
-        _view.SetActorsData(actors);
+        List<StageInfo> stages = _model.Stages();
+        _view.SetStagesData(stages);
+
 
         var bgm = await _model.BgmData();
-
+        SoundManager.Instance.PlayBgm(bgm,1.0f,true);
         //SoundManager.Instance.PlayBgm(bgm,1.0f,true);
 
         _busy = false;
     }
 
-    private void updateCommand(ViewEvent viewEvent)
+    private void updateCommand(MainMenuViewEvent viewEvent)
     {
         if (_busy){
             return;
         }
-        if (viewEvent.commandType == (int)CommandType.MainMenuCommand)
+        if (viewEvent.commandType == CommandType.StageSelect)
         {
             if (viewEvent.templete != null)
             {
+                
+                _view.CommandSceneChange(Scene.Status);
+                /*
                 var selectedMenuCommand = viewEvent.templete;
                 _model.SetSelectedMenuCommand((MenuComandType)selectedMenuCommand);
-                _view.CommandSkill();
+                */
+                //_view.CommandSkill();
             }
-        }
-        if (viewEvent.commandType == (int)CommandType.ActorSelect)
-        {
-            ActorInfo actorInfo = viewEvent.templete as ActorInfo;
         }
     }
 
     public async void CrossFade()
     {
-        var bgm = await _model.BgmData2();
 
-        SoundManager.Instance.CrossFadeBgm(bgm,1.0f,true);
     }
 }

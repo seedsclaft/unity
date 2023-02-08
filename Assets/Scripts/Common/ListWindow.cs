@@ -30,6 +30,7 @@ abstract public class ListWindow : MonoBehaviour
     private List<GameObject> _objectList = new List<GameObject>();
     public List<GameObject> ObjectList {get {return _objectList;}}
 
+    public HelpWindow _helpWindow = null;
     public void Activate()
     {
         _active = true;
@@ -320,5 +321,55 @@ abstract public class ListWindow : MonoBehaviour
     public void ResetInputFrame()
     {
         _inputBusyFrame = _defaultInputFrame;
+    }
+    
+    public void SetHelpWindow(HelpWindow helpWindow){
+        _helpWindow = helpWindow;
+    }
+
+    
+    public void InputHandler(InputKeyType keyType)
+    {
+        if (!IsInputEnable())
+        {
+            return;
+        }
+        InputSelectIndex(keyType);
+        UpdateSelectIndex(Index);
+        ResetInputFrame();
+    }
+
+    public void InputSelectIndex(InputKeyType keyType){
+        int selectIndex = -1;
+        if (keyType == InputKeyType.Down){
+            selectIndex = Index + 1;
+            if (selectIndex > ObjectList.Count-1){
+                selectIndex = 0;
+            }
+        } else
+        if (keyType == InputKeyType.Up){
+            selectIndex = Index - 1;
+            if (selectIndex < 0){
+                selectIndex = ObjectList.Count-1;
+            }
+        }
+        SelectIndex(selectIndex);
+    }
+
+    public void UpdateSelectIndex(int index){
+        SelectIndex(index);
+        UpdateHelpWindow();
+        for (int i = 0; i < ObjectList.Count;i++)
+        {
+            var listItem = ObjectList[i].GetComponent<ListItem>();
+            if (index == i){
+                listItem.SetSelect();
+            } else{
+                listItem.SetUnSelect();
+            }
+        }
+    }
+
+    public virtual void UpdateHelpWindow(){
     }
 }

@@ -10,7 +10,6 @@ public class TitleCommandList : ListWindow , IInputHandlerEvent
     [SerializeField] private int cols = 0;
     private List<SystemData.MenuCommandData> _data = new List<SystemData.MenuCommandData>();
 
-    private HelpWindow _helpWindow = null;
     public int selectIndex{
         get {return Index;}
     }
@@ -32,44 +31,10 @@ public class TitleCommandList : ListWindow , IInputHandlerEvent
         UpdateSelectIndex(0);
     }
 
-    public void SetHelpWindow(HelpWindow helpWindow){
-        _helpWindow = helpWindow;
-    }
-
-    public void InputHandler(InputKeyType keyType)
-    {
-        if (!IsInputEnable())
+    public override void UpdateHelpWindow(){
+        if (_helpWindow != null)
         {
-            return;
-        }
-        int selectIndex = -1;
-        if (keyType == InputKeyType.Down){
-            selectIndex = Index + 1;
-            if (selectIndex > _data.Count-1){
-                selectIndex = 0;
-            }
-        } else
-        if (keyType == InputKeyType.Up){
-            selectIndex = Index - 1;
-            if (selectIndex < 0){
-                selectIndex = _data.Count-1;
-            }
-        } 
-        UpdateSelectIndex(selectIndex);
-        ResetInputFrame();
-    }
-
-    void UpdateSelectIndex(int index){
-        SelectIndex(index);
-        _helpWindow.SetHelpText(_data[index].Help);
-        for (int i = 0; i < ObjectList.Count;i++)
-        {
-            var titleCommand = ObjectList[i].GetComponent<TitleCommand>();
-            if (index == i){
-                titleCommand.SetSelect();
-            } else{
-                titleCommand.SetUnSelect();
-            }
+            _helpWindow.SetHelpText(_data[Index].Help);
         }
     }
 }
