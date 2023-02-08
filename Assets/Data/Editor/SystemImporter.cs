@@ -81,10 +81,11 @@ public class SystemImporter : AssetPostprocessor
 			{
 				// エクセルブックを作成
 				CreateBook(asset, Mainstream, out IWorkbook Book);
-				List<TextData> textData = CreateText(Book.GetSheetAt(3));
+				List<TextData> textData = CreateText(Book.GetSheetAt(4));
 
 				// 情報の初期化
 				Data.MenuCommandDataList = new List<SystemData.MenuCommandData>();
+				Data.StatusCommandData = new List<SystemData.MenuCommandData>();
 				Data.TitleCommandData = new List<SystemData.MenuCommandData>();
 				Data.InitActors = new List<int>();
 				Data.SystemTextData = new List<TextData>();
@@ -119,6 +120,20 @@ public class SystemImporter : AssetPostprocessor
 				}
 
 				BaseSheet = Book.GetSheetAt(2);
+
+				for (int i = 1; i <= BaseSheet.LastRowNum; i++)
+				{
+					IRow Baserow = BaseSheet.GetRow(i);
+
+					var StatusCommandInfo = new SystemData.MenuCommandData();
+					StatusCommandInfo.Id = (int)Baserow.GetCell((int)BaseColumn.Id)?.SafeNumericCellValue();
+					StatusCommandInfo.Key = Baserow.GetCell((int)BaseColumn.Key)?.SafeStringCellValue();
+					StatusCommandInfo.Name = textData.Find(a => a.Id == (int)Baserow.GetCell((int)BaseColumn.NameTextId).NumericCellValue).Text;
+					StatusCommandInfo.Help = textData.Find(a => a.Id == (int)Baserow.GetCell((int)BaseColumn.NameTextId).NumericCellValue).Help;
+					Data.StatusCommandData.Add(StatusCommandInfo);
+				}
+
+				BaseSheet = Book.GetSheetAt(3);
 
 				for (int i = 1; i <= BaseSheet.LastRowNum; i++)
 				{

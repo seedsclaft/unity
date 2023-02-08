@@ -21,6 +21,12 @@ public class ActorsData : ScriptableObject {
         public StatusInfo PlusStatus;
         public StatusInfo NeedStatus;
         public List<int> Attribute;
+        public int X;
+        public int Y;
+        public float Scale;
+        public int AwakenX;
+        public int AwakenY;
+        public float AwakenScale;
         public List<LearningData> LearningSkills = new List<LearningData>();
         
         public int CurrentParam(StatusParamType growType,int level)

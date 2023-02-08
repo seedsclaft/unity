@@ -41,6 +41,15 @@ MonoBehaviour:
     Key: TURNEND
     Name: "\u4F5C\u6226\u958B\u59CB"
     Help: 
+  StatusCommandData:
+  - Id: 1
+    Key: STRENGTH
+    Name: "\u7D44\u7E54\u958B\u767A"
+    Help: '""'
+  - Id: 2
+    Key: SKILLLIST
+    Name: "\u9B54\u6CD5\u78BA\u8A8D"
+    Help: '""'
   TitleCommandData:
   - Id: 1
     Key: NEWGAME
@@ -54,7 +63,7 @@ MonoBehaviour:
     Key: OPTION
     Name: Option
     Help: "\u30B2\u30FC\u30E0\u306E\u8A2D\u5B9A\u3092\u5909\u66F4\u3057\u307E\u3059"
-  InitActors: 01000000
+  InitActors: 0100000002000000030000000400000005000000
   SystemTextData:
   - Id: 1
     Text: "\u795E\u683C\u878D\u5408"
@@ -86,6 +95,12 @@ MonoBehaviour:
   - Id: 103
     Text: Option
     Help: "\u30B2\u30FC\u30E0\u306E\u8A2D\u5B9A\u3092\u5909\u66F4\u3057\u307E\u3059"
+  - Id: 201
+    Text: "\u7D44\u7E54\u958B\u767A"
+    Help: '""'
+  - Id: 202
+    Text: "\u9B54\u6CD5\u78BA\u8A8D"
+    Help: '""'
   - Id: 11010
     Text: "\u7D42\u7109\u307E\u3067 :"
     Help: '""'

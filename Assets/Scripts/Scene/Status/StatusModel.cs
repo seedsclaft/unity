@@ -18,11 +18,27 @@ public class StatusModel : BaseModel
     {
         get {return Actors()[_currentIndex];}
     }
+
+    public void ChangeActorIndex(int value){
+        _currentIndex += value;
+        if (_currentIndex > Actors().Count-1){
+            _currentIndex = 0;
+        } else
+        if (_currentIndex < 0){
+            _currentIndex = Actors().Count-1;
+        }
+    }
+
     private MenuComandType _commandType = MenuComandType.None;
 
     
     public List<ActorInfo> Actors(){
         return GameSystem.CurrentData.Actors;
+    }
+
+    public new List<SystemData.MenuCommandData> StatusCommand
+    {
+        get { return DataSystem.StatusCommand;}
     }
 
     public List<Sprite> ActorsImage(List<ActorInfo> actors){

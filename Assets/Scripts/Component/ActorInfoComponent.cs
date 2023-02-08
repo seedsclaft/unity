@@ -32,16 +32,16 @@ public class ActorInfoComponent : MonoBehaviour
         var actorData = DataSystem.Actors.Find(actor => actor.Id == actorInfo.ActorId);
         
         if (mainThumb != null){
-            //UpdateMainThumb(actorData.ImagePath);
+            UpdateMainThumb(actorData.ImagePath,actorData.X,actorData.Y,actorData.Scale);
         }
         if (awakenThumb != null){
-            //UpdateAwakenThumb(actorData.ImagePath);
+            UpdateAwakenThumb(actorData.ImagePath,actorData.AwakenX,actorData.AwakenY,actorData.AwakenScale);
         }
         if (faceThumb != null){
-            //UpdateMainFaceThumb(actorData.ImagePath);
+            UpdateMainFaceThumb(actorData.ImagePath);
         }
         if (awakenFaceThumb != null){
-            //UpdateAwakenFaceThumb(actorData.ImagePath);
+            UpdateAwakenFaceThumb(actorData.ImagePath);
         }
         if (name != null){
             name.text = actorData.Name;
@@ -82,21 +82,27 @@ public class ActorInfoComponent : MonoBehaviour
         
     }
 
-    private void UpdateMainThumb(string imagePath)
+    private void UpdateMainThumb(string imagePath,int x,int y,float scale)
     {
         Addressables.LoadAssetAsync<Sprite>(
             "Assets/Images/Actors/" + imagePath + "/Main.png"
         ).Completed += op => {
+            RectTransform rect = mainThumb.GetComponent < RectTransform > ();
+            rect.localPosition = new Vector3(x, y, 0);
+            rect.localScale = new Vector3(scale, scale, 1);
             mainThumb.sprite = op.Result;
         };
     }
 
-    private void UpdateAwakenThumb(string imagePath)
+    private void UpdateAwakenThumb(string imagePath,int x,int y,float scale)
     {
         Addressables.LoadAssetAsync<Sprite>(
             "Assets/Images/Actors/" + imagePath + "/Awaken.png"
         ).Completed += op => {
-            mainThumb.sprite = op.Result;
+            RectTransform rect = awakenThumb.GetComponent < RectTransform > ();
+            rect.localPosition = new Vector3(x, y, 0);
+            rect.localScale = new Vector3(scale, scale, 1);
+            awakenThumb.sprite = op.Result;
         };
     }
 
@@ -105,7 +111,7 @@ public class ActorInfoComponent : MonoBehaviour
         Addressables.LoadAssetAsync<Sprite>(
             "Assets/Images/Actors/" + imagePath + "/MainFace.png"
         ).Completed += op => {
-            mainThumb.sprite = op.Result;
+            faceThumb.sprite = op.Result;
         };
     }
     private void UpdateAwakenFaceThumb(string imagePath)
@@ -113,7 +119,7 @@ public class ActorInfoComponent : MonoBehaviour
         Addressables.LoadAssetAsync<Sprite>(
             "Assets/Images/Actors/" + imagePath + "/AwakenFace.png"
         ).Completed += op => {
-            mainThumb.sprite = op.Result;
+            awakenFaceThumb.sprite = op.Result;
         };
     }
 

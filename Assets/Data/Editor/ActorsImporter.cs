@@ -33,6 +33,12 @@ public class ActorsImporter : AssetPostprocessor {
 		Element3,
 		Element4,
 		Element5,
+		X,
+		Y,
+		Scale,
+		AwakenX,
+		AwakenY,
+		AwakenScale
     }
     enum BaseLearningColumn
     {
@@ -144,6 +150,20 @@ public class ActorsImporter : AssetPostprocessor {
 					ActorData.Attribute.Add(Element4);
 					ActorData.Attribute.Add(Element5);
 
+					int X = (int)Baserow.GetCell((int)BaseColumn.X)?.NumericCellValue;
+					int Y = (int)Baserow.GetCell((int)BaseColumn.Y)?.NumericCellValue;
+					float Scale = (float)Baserow.GetCell((int)BaseColumn.Scale)?.NumericCellValue;
+					int AwakenX = (int)Baserow.GetCell((int)BaseColumn.AwakenX)?.NumericCellValue;
+					int AwakenY = (int)Baserow.GetCell((int)BaseColumn.AwakenY)?.NumericCellValue;
+					float AwakenScale = (float)Baserow.GetCell((int)BaseColumn.AwakenScale)?.NumericCellValue;
+					ActorData.X = X;
+					ActorData.Y = Y;
+					ActorData.Scale = Scale;
+					ActorData.AwakenX = AwakenX;
+					ActorData.AwakenY = AwakenY;
+					ActorData.AwakenScale = AwakenScale;
+
+					
 					Data._data.Add(ActorData);
 				}
 				// 習得スキル情報設定

@@ -38,6 +38,12 @@ MonoBehaviour:
       _def: 2
       _spd: 2
     Attribute: 6400000028000000000000001400000032000000
+    X: -200
+    Y: -200
+    Scale: 0.75
+    AwakenX: 0
+    AwakenY: -24
+    AwakenScale: 0.75
     LearningSkills:
     - SkillId: 1
       LearningType: 1
@@ -67,6 +73,12 @@ MonoBehaviour:
       _def: 4
       _spd: 1
     Attribute: 3200000064000000140000000000000014000000
+    X: -200
+    Y: -40
+    Scale: 0.8
+    AwakenX: 24
+    AwakenY: -160
+    AwakenScale: 0.8
     LearningSkills: []
   - Id: 3
     Name: "\u30A2\u30EA\u30B9"
@@ -93,6 +105,12 @@ MonoBehaviour:
       _def: 1
       _spd: 2
     Attribute: 1e00000000000000640000003200000000000000
+    X: -104
+    Y: -144
+    Scale: 0.75
+    AwakenX: 80
+    AwakenY: -96
+    AwakenScale: 0.7
     LearningSkills: []
   - Id: 4
     Name: "\u30D5\u30EA\u30EB"
@@ -119,6 +137,12 @@ MonoBehaviour:
       _def: 2
       _spd: 2
     Attribute: 00000000280000003c0000006400000000000000
+    X: -200
+    Y: -16
+    Scale: 0.8
+    AwakenX: 40
+    AwakenY: -160
+    AwakenScale: 0.8
     LearningSkills: []
   - Id: 5
     Name: "\u30CB\u30E5\u30AF\u30B9"
@@ -145,4 +169,10 @@ MonoBehaviour:
       _def: 2
       _spd: 2
     Attribute: 2800000028000000280000000000000064000000
+    X: -80
+    Y: -240
+    Scale: 1
+    AwakenX: 240
+    AwakenY: 16
+    AwakenScale: 1
     LearningSkills: []
