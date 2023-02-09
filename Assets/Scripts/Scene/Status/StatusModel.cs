@@ -36,6 +36,11 @@ public class StatusModel : BaseModel
         return GameSystem.CurrentData.Actors;
     }
 
+    public List<SkillInfo> SkillActionList()
+    {
+        return CurrentActor.Skills;
+    }
+
     public new List<SystemData.MenuCommandData> StatusCommand
     {
         get { return DataSystem.StatusCommand;}

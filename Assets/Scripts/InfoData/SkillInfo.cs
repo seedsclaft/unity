@@ -3,11 +3,12 @@
 [Serializable]
 public class SkillInfo 
 {
-    private int _skillId;
-    public int SkillId {get {return _skillId;}}
+    private int _id;
+    public int Id {get {return _id;}}
     
-    public SkillInfo(int skillId)
+
+    public SkillInfo(int id)
     {
-        _skillId = skillId;
+        _id = id;
     }
 }

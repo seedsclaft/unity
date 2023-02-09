@@ -13,12 +13,15 @@ public class SkillsImporter : AssetPostprocessor {
     {
 		Id = 0,
 		NameId,
-        IconPath,
-		Mp,
+        IconIndex,
+		MpCost,
 		Attribute,
-		Scope,
 		EffectType,
-		Effectvalue,
+		EffectValue,
+		TargetType,
+		Scope,
+		Range,
+		AnimationId,
     }
 
 	static readonly string ExcelPath = "Assets/Data";
@@ -86,14 +89,18 @@ public class SkillsImporter : AssetPostprocessor {
 					IRow Baserow = BaseSheet.GetRow(i);
 
 					var SkillData = new SkillsData.SkillData();
-					SkillData.Id = (int)Baserow.GetCell((int)BaseColumn.Id).NumericCellValue;
-					SkillData.Name = textData.Find(a => a.Id == (int)Baserow.GetCell((int)BaseColumn.NameId).NumericCellValue).Text;
-					SkillData.IconPath = Baserow.GetCell((int)BaseColumn.IconPath).ToString();
-					SkillData.Mp = (int)Baserow.GetCell((int)BaseColumn.Mp).NumericCellValue;
+					SkillData.Id = (int)Baserow.GetCell((int)BaseColumn.Id)?.NumericCellValue;
+					SkillData.Name = textData.Find(a => a.Id == (int)Baserow.GetCell((int)BaseColumn.NameId)?.NumericCellValue).Text;
+					SkillData.IconIndex = (int)Baserow.GetCell((int)BaseColumn.IconIndex)?.NumericCellValue;
+					SkillData.MpCost = (int)Baserow.GetCell((int)BaseColumn.MpCost)?.NumericCellValue;
 					SkillData.Attribute = (AttributeType)Baserow.GetCell((int)BaseColumn.Attribute)?.NumericCellValue;
-					SkillData.Scope = (ScopeType)Baserow.GetCell((int)BaseColumn.Scope)?.NumericCellValue;
-                    SkillData.EffectType = (EffectType)Baserow.GetCell((int)BaseColumn.EffectType)?.NumericCellValue;
-                    SkillData.EffectValue = (float)Baserow.GetCell((int)BaseColumn.Effectvalue)?.NumericCellValue;
+					SkillData.EffectType = (EffectType)Baserow.GetCell((int)BaseColumn.EffectType)?.NumericCellValue;
+                    SkillData.EffectValue = (float)Baserow.GetCell((int)BaseColumn.EffectValue)?.NumericCellValue;
+					SkillData.TargetType = (TargetType)Baserow.GetCell((int)BaseColumn.TargetType)?.NumericCellValue;
+                    SkillData.Scope = (ScopeType)Baserow.GetCell((int)BaseColumn.Scope)?.NumericCellValue;
+                    SkillData.Range = (RangeType)Baserow.GetCell((int)BaseColumn.Range)?.NumericCellValue;
+                    SkillData.AnimationId = (int)Baserow.GetCell((int)BaseColumn.AnimationId)?.NumericCellValue;
+                    SkillData.Help = textData.Find(a => a.Id == (int)Baserow.GetCell((int)BaseColumn.NameId)?.NumericCellValue).Help;
 					Data._data.Add(SkillData);
 				}
 
@@ -135,6 +142,7 @@ public class SkillsImporter : AssetPostprocessor {
 
 			TextData.Id = (int)Baserow.GetCell((int)BaseTextColumn.Id)?.NumericCellValue;
 			TextData.Text = Baserow.GetCell((int)BaseTextColumn.Text).ToString();
+			TextData.Help = Baserow.GetCell((int)BaseTextColumn.Help).ToString();
 			
 			textData.Add(TextData);
 		}

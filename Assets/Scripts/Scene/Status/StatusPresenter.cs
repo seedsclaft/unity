@@ -26,7 +26,7 @@ public class StatusPresenter
         _view.SetActorInfo(_model.CurrentActor);
 
 
-        _view.SetTitleCommand(_model.StatusCommand);
+        _view.SetStatusCommand(_model.StatusCommand);
         //var bgm = await _model.BgmData();
         //SoundManager.Instance.PlayBgm(bgm,1.0f,true);
         //SoundManager.Instance.PlayBgm(bgm,1.0f,true);
@@ -39,6 +39,10 @@ public class StatusPresenter
         if (_busy){
             return;
         }
+        if (viewEvent.commandType == Status.CommandType.StatusCommand)
+        {
+            CommandStatusCommand((StatusComandType)viewEvent.templete);
+        }
         if (viewEvent.commandType == Status.CommandType.LeftActor)
         {
             CommandLeftActor();
@@ -46,6 +50,15 @@ public class StatusPresenter
         if (viewEvent.commandType == Status.CommandType.RightActor)
         {
             CommandRightActor();
+        }
+    }
+
+    private void CommandStatusCommand(StatusComandType statusComandType)
+    {
+        if (statusComandType == StatusComandType.SkillActionList)
+        {
+            List<SkillInfo> skillInfos = _model.SkillActionList();
+            _view.ShowSkillActionList(skillInfos);
         }
     }
 

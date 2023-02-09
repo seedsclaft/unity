@@ -35,6 +35,6 @@ public enum TitleComandType {
 
 
 public enum StatusComandType {
-	Strength = 0,
-	SkillList,
+	Strength = 1,
+	SkillActionList = 2,
 }

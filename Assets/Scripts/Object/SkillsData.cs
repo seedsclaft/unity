@@ -9,13 +9,16 @@ public class SkillsData : ScriptableObject {
     {   
         public int Id;
         public string Name;
-        public string IconPath;
-        public int Mp;
+        public int IconIndex;
+        public int MpCost;
         public AttributeType Attribute;
         public ScopeType Scope;
         public EffectType EffectType;
         public float EffectValue;
-        
+        public TargetType TargetType;
+        public string Help;
+        public RangeType Range;
+        public int AnimationId;
     }
 }
 
@@ -42,4 +45,18 @@ public enum AttributeType{
     Ice = 3,
     White = 4,
     Black = 5
+}
+
+public enum TargetType{
+    None = 0,
+    Opponent = 1,
+    Friend = 2,
+    All = 3,
+    Self = 4
+}
+
+public enum RangeType{
+    None = 0,
+    S = 1,
+    L = 2
 }

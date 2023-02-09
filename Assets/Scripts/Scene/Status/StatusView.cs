@@ -8,6 +8,7 @@ public class StatusView : BaseView
 {
     [SerializeField] private ActorInfoComponent actorInfoComponent = null;
     [SerializeField] private StatusCommandList commandList = null;
+    [SerializeField] private SkillActionList skillActionList = null;
     private new System.Action<StatusViewEvent> _commandData = null;
     [SerializeField] private GameObject helpRoot = null;
     [SerializeField] private GameObject helpPrefab = null;
@@ -19,16 +20,19 @@ public class StatusView : BaseView
     private Button _leftButton = null;
     private Button _rightButton = null;
 
-    protected void Awake(){
+    protected void Awake()
+    {
         InitializeInput();
         Initialize();
     }
 
-    void Initialize(){
+    void Initialize()
+    {
         new StatusPresenter(this);
     }
     
-    public void SetUIButton(){
+    public void SetUIButton()
+    {
         GameObject prefab = Instantiate(backPrefab);
         prefab.transform.SetParent(helpRoot.transform, false);
         
@@ -44,7 +48,8 @@ public class StatusView : BaseView
         //_helpWindow = prefab.GetComponent<HelpWindow>();
     }
 
-    public void SetHelpWindow(){
+    public void SetHelpWindow()
+    {
         GameObject prefab = Instantiate(helpPrefab);
         prefab.transform.SetParent(helpRoot.transform, false);
         _helpWindow = prefab.GetComponent<HelpWindow>();
@@ -55,22 +60,23 @@ public class StatusView : BaseView
         _commandData = commandData;
     }
     
-    public void SetActorInfo(ActorInfo actorInfo){
+    public void SetActorInfo(ActorInfo actorInfo)
+    {
         actorInfoComponent.UpdateInfo(actorInfo);
     }
 
     
-    public void SetTitleCommand(List<SystemData.MenuCommandData> menuCommands){
-        commandList.Initialize(menuCommands,(menuCommandInfo) => CallTitleCommand(menuCommandInfo));
+    public void SetStatusCommand(List<SystemData.MenuCommandData> menuCommands)
+    {
+        commandList.Initialize(menuCommands,(menuCommandInfo) => CallStatusCommand(menuCommandInfo));
         SetInputHandler(commandList.GetComponent<IInputHandlerEvent>());
     }
 
-    private void CallTitleCommand(StatusComandType commandType){
-        /*
+    private void CallStatusCommand(StatusComandType commandType)
+    {
         var eventData = new StatusViewEvent(CommandType.StatusCommand);
         eventData.templete = commandType;
         _commandData(eventData);
-        */
     }
 
     private void OnClickLeft()
@@ -83,6 +89,11 @@ public class StatusView : BaseView
     {
         var eventData = new StatusViewEvent(CommandType.RightActor);
         _commandData(eventData);
+    }
+
+    public void ShowSkillActionList(List<SkillInfo> skillInfos)
+    {
+        skillActionList.Initialize(skillInfos,null);
     }
 }
 

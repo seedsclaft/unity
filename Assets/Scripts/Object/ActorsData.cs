@@ -43,12 +43,6 @@ public class ActorsData : ScriptableObject {
 public class LearningData
 {   
     public int SkillId;
-    public LearningType LearningType;
-    public int Value;
-}
-public enum LearningType{
-    None = 0,
-    Level = 1
 }
 
 [Serializable]

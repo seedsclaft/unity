@@ -40,15 +40,9 @@ public class ActorInfo
         for (int i = 0;i < learningData.Count;i++)
         {
             LearningData _learningData = learningData[i];
-            if (_skills.Find(a =>a.SkillId == _learningData.SkillId) != null) continue;
-            if (_learningData.LearningType == LearningType.Level)
-            {
-                if (Level >= _learningData.Value)
-                {
-                    SkillInfo skillInfo = new SkillInfo(_learningData.SkillId);
-                    _skills.Add(skillInfo);
-                }
-            }
+            if (_skills.Find(a =>a.Id == _learningData.SkillId) != null) continue;
+            SkillInfo skillInfo = new SkillInfo(_learningData.SkillId);
+            _skills.Add(skillInfo);
         }
     }
 
