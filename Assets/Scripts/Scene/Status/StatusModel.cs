@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -13,7 +14,12 @@ public class StatusModel : BaseModel
     {
         get {return _currentIndex;}
     }
+    private AttributeType _currentAttributeType = AttributeType.Fire;
     
+    public AttributeType CurrentAttributeType
+    {
+        get {return _currentAttributeType;}
+    }
     public ActorInfo CurrentActor
     {
         get {return Actors()[_currentIndex];}
@@ -36,9 +42,26 @@ public class StatusModel : BaseModel
         return GameSystem.CurrentData.Actors;
     }
 
-    public List<SkillInfo> SkillActionList()
+    public List<SkillInfo> SkillActionList(AttributeType attributeType)
     {
-        return CurrentActor.Skills;
+        if (attributeType != null)
+        {
+            _currentAttributeType = attributeType;
+        }
+        return CurrentActor.Skills.FindAll(a => a.Attribute == _currentAttributeType);
+    }
+
+    public List<AttributeType> AttributeTypes()
+    {
+        List<AttributeType> attributeTypes = new List<AttributeType>();
+        foreach(var attribute in Enum.GetValues(typeof(AttributeType)))
+        {
+            if ((int)attribute != 0)
+            {
+                attributeTypes.Add((AttributeType)attribute);
+            }
+        } 
+        return attributeTypes;
     }
 
     public new List<SystemData.MenuCommandData> StatusCommand

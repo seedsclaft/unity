@@ -14,18 +14,35 @@ public class SkillActionList : ListWindow , IInputHandlerEvent
         get {return Index;}
     }
 
-    public void Initialize(List<SkillInfo> skillInfoData ,System.Action<int> callEvent)
+
+    public void Initialize(System.Action<int> callEvent)
     {
-        InitializeListView(skillInfoData.Count);
-        for (var i = 0; i < skillInfoData.Count;i++){
+        InitializeListView(rows);
+        for (int i = 0; i < rows;i++)
+        {
+            var statusCommand = ObjectList[i].GetComponent<SkillAction>();
+            statusCommand.SetCallHandler(callEvent);
+            statusCommand.SetSelectHandler((data) => UpdateSelectIndex(data));
+            ObjectList[i].SetActive(false);
+        }
+    }
+
+    public void Refresh(List<SkillInfo> skillInfoData)
+    {
+        _data.Clear();
+        for (var i = 0; i < skillInfoData.Count;i++)
+        {
             _data.Add(skillInfoData[i]);
         }
         for (int i = 0; i < ObjectList.Count;i++)
         {
-            var statusCommand = ObjectList[i].GetComponent<SkillAction>();
-            statusCommand.SetData(skillInfoData[i],i);
-            statusCommand.SetCallHandler(callEvent);
-            statusCommand.SetSelectHandler((data) => UpdateSelectIndex(data));
+            ObjectList[i].SetActive(false);
+            if (i < _data.Count) 
+            {
+                var statusCommand = ObjectList[i].GetComponent<SkillAction>();
+                statusCommand.SetData(skillInfoData[i],i);
+                ObjectList[i].SetActive(true);
+            }
         }
         UpdateAllItems();
         UpdateSelectIndex(0);

@@ -9,6 +9,8 @@ public class StatusView : BaseView
     [SerializeField] private ActorInfoComponent actorInfoComponent = null;
     [SerializeField] private StatusCommandList commandList = null;
     [SerializeField] private SkillActionList skillActionList = null;
+    [SerializeField] private SkillAttributeList skillAttributeList = null;
+    [SerializeField] private Button decideButton = null;
     private new System.Action<StatusViewEvent> _commandData = null;
     [SerializeField] private GameObject helpRoot = null;
     [SerializeField] private GameObject helpPrefab = null;
@@ -29,6 +31,15 @@ public class StatusView : BaseView
     void Initialize()
     {
         new StatusPresenter(this);
+        InitializeSkillActionList();
+    }
+
+    private void InitializeSkillActionList()
+    {
+        skillActionList.Initialize(null);
+        SetInputHandler(skillActionList.GetComponent<IInputHandlerEvent>());
+        skillActionList.gameObject.SetActive(false);
+        skillAttributeList.gameObject.SetActive(false);
     }
     
     public void SetUIButton()
@@ -46,6 +57,8 @@ public class StatusView : BaseView
         _rightButton = prefab3.GetComponent<Button>();
         _rightButton.onClick.AddListener(() => OnClickRight());
         //_helpWindow = prefab.GetComponent<HelpWindow>();
+
+        decideButton.onClick.AddListener(() => OnClickDecide());
     }
 
     public void SetHelpWindow()
@@ -91,9 +104,39 @@ public class StatusView : BaseView
         _commandData(eventData);
     }
 
-    public void ShowSkillActionList(List<SkillInfo> skillInfos)
+    private void OnClickDecide()
     {
-        skillActionList.Initialize(skillInfos,null);
+        var eventData = new StatusViewEvent(CommandType.DecideActor);
+        _commandData(eventData);
+    }
+
+    public void ShowSkillActionList()
+    {
+        skillActionList.gameObject.SetActive(true);
+        skillAttributeList.gameObject.SetActive(true);
+    }
+    
+    public void RefreshSkillActionList(List<SkillInfo> skillInfos)
+    {
+        skillActionList.Refresh(skillInfos);
+    }
+
+    public void SetAttributeTypes(List<AttributeType> attributeTypes)
+    {
+        skillAttributeList.Initialize(attributeTypes ,(attribute) => CallAttributeTypes(attribute));
+        //SetInputHandler(skillAttributeList.GetComponent<IInputHandlerEvent>());
+    }
+
+    private void CallAttributeTypes(AttributeType attributeType)
+    {
+        var eventData = new StatusViewEvent(CommandType.AttributeType);
+        eventData.templete = attributeType;
+        _commandData(eventData);
+    }
+
+    public void CommandAttributeType(AttributeType attributeType)
+    {
+        
     }
 }
 
@@ -103,6 +146,8 @@ namespace Status
     {
         None = 0,
         StatusCommand,
+        AttributeType,
+        DecideActor,
         LeftActor,
         RightActor,
     }

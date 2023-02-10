@@ -27,6 +27,7 @@ public class StatusPresenter
 
 
         _view.SetStatusCommand(_model.StatusCommand);
+        _view.SetAttributeTypes(_model.AttributeTypes());
         //var bgm = await _model.BgmData();
         //SoundManager.Instance.PlayBgm(bgm,1.0f,true);
         //SoundManager.Instance.PlayBgm(bgm,1.0f,true);
@@ -43,6 +44,14 @@ public class StatusPresenter
         {
             CommandStatusCommand((StatusComandType)viewEvent.templete);
         }
+        if (viewEvent.commandType == Status.CommandType.AttributeType)
+        {
+            CommandAttributeType((AttributeType)viewEvent.templete);
+        }
+        if (viewEvent.commandType == Status.CommandType.DecideActor)
+        {
+            CommandDecideActor();
+        }
         if (viewEvent.commandType == Status.CommandType.LeftActor)
         {
             CommandLeftActor();
@@ -57,21 +66,34 @@ public class StatusPresenter
     {
         if (statusComandType == StatusComandType.SkillActionList)
         {
-            List<SkillInfo> skillInfos = _model.SkillActionList();
-            _view.ShowSkillActionList(skillInfos);
+            _view.ShowSkillActionList();
+            CommandAttributeType(_model.CurrentAttributeType);
         }
     }
 
+    private void CommandAttributeType(AttributeType attributeType)
+    {
+        List<SkillInfo> skillInfos = _model.SkillActionList(attributeType);
+        _view.RefreshSkillActionList(skillInfos);
+    }
+
+    private void CommandDecideActor()
+    {
+
+    }
+    
     private void CommandLeftActor()
     {
          _model.ChangeActorIndex(-1);
         _view.SetActorInfo(_model.CurrentActor);
+        CommandAttributeType(_model.CurrentAttributeType);
     }
 
     private void CommandRightActor()
     {
          _model.ChangeActorIndex(1);
         _view.SetActorInfo(_model.CurrentActor);
+        CommandAttributeType(_model.CurrentAttributeType);
     }
 
     public async void CrossFade()
