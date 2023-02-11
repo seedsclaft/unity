@@ -13,12 +13,13 @@ public class EnemiesImporter : AssetPostprocessor {
     {
 		Id = 0,
 		NameId,
-		ImageName,
-		BaseHp,
-		BaseMp,
-		BaseAtk,
-		BaseDef,
-		BaseSpd,
+		ImagePath,
+		Hp,
+		Mp,
+		Atk,
+		Def,
+		Spd,
+		AttributeType,
     }
     enum BaseTextColumn
     {
@@ -80,6 +81,7 @@ public class EnemiesImporter : AssetPostprocessor {
 			{
 				// エクセルブックを作成
 				CreateBook(asset, Mainstream, out IWorkbook Book);
+				List<TextData> textData = CreateText(Book.GetSheetAt(1));
 
 				// 情報の初期化
 				Data._data.Clear();
@@ -93,16 +95,19 @@ public class EnemiesImporter : AssetPostprocessor {
 
 					var EnemyData = new EnemiesData.EnemyData();
 					EnemyData.Id = (int)Baserow.GetCell((int)BaseColumn.Id)?.SafeNumericCellValue();
-					EnemyData.NameId = (int)Baserow.GetCell((int)BaseColumn.NameId)?.SafeNumericCellValue();
-					EnemyData.ImageName = Baserow.GetCell((int)BaseColumn.ImageName)?.SafeStringCellValue();
+					EnemyData.Name = textData.Find(a => a.Id == (int)Baserow.GetCell((int)BaseColumn.NameId).NumericCellValue).Text;
+					EnemyData.ImagePath = Baserow.GetCell((int)BaseColumn.ImagePath)?.SafeStringCellValue();
 					
-					int BaseHp = (int)Baserow.GetCell((int)BaseColumn.BaseHp)?.SafeNumericCellValue();
-					int BaseMp = (int)Baserow.GetCell((int)BaseColumn.BaseMp)?.SafeNumericCellValue();
-					int BaseAtk = (int)Baserow.GetCell((int)BaseColumn.BaseAtk)?.SafeNumericCellValue();
-					int BaseDef = (int)Baserow.GetCell((int)BaseColumn.BaseDef)?.SafeNumericCellValue();
-					int BaseSpd = (int)Baserow.GetCell((int)BaseColumn.BaseSpd)?.SafeNumericCellValue();
+					
+					int Hp = (int)Baserow.GetCell((int)BaseColumn.Hp)?.SafeNumericCellValue();
+					int Mp = (int)Baserow.GetCell((int)BaseColumn.Mp)?.SafeNumericCellValue();
+					int Atk = (int)Baserow.GetCell((int)BaseColumn.Atk)?.SafeNumericCellValue();
+					int Def = (int)Baserow.GetCell((int)BaseColumn.Def)?.SafeNumericCellValue();
+					int Spd = (int)Baserow.GetCell((int)BaseColumn.Spd)?.SafeNumericCellValue();
+					EnemyData.AttributeType = (AttributeType)Baserow.GetCell((int)BaseColumn.AttributeType)?.SafeNumericCellValue();
+					
 					EnemyData.BaseStatus = new StatusInfo();
-					EnemyData.BaseStatus.SetParameter(BaseHp,BaseMp,BaseAtk,BaseDef,BaseSpd);
+					EnemyData.BaseStatus.SetParameter(Hp,Mp,Atk,Def,Spd);
 
 					Data._data.Add(EnemyData);
 				}
@@ -177,5 +182,24 @@ public class EnemiesImporter : AssetPostprocessor {
 		}
 
 		return List.ToArray();
+	}
+
+	// テキストデータを作成
+	static List<TextData> CreateText(ISheet BaseSheet)
+	{
+		var textData = new List<TextData>();
+
+		for (int i = 1; i <= BaseSheet.LastRowNum; i++)
+		{
+			IRow Baserow = BaseSheet.GetRow(i);
+			var TextData = new TextData();
+
+			TextData.Id = (int)Baserow.GetCell((int)BaseTextColumn.Id)?.NumericCellValue;
+			TextData.Text = Baserow.GetCell((int)BaseTextColumn.Text).ToString();
+			
+			textData.Add(TextData);
+		}
+
+		return textData;
 	}
 }

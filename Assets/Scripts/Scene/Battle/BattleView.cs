@@ -9,6 +9,7 @@ public class BattleView : BaseView
 {
 
     [SerializeField] private BattleActorList battleActorList = null;
+    [SerializeField] private BattleEnemyLayer battleEnemyLayer = null;
     [SerializeField] private BattleGridLayer battleGridLayer = null;
     [SerializeField] private SkillAttributeList skillAttributeList = null;
 
@@ -73,8 +74,18 @@ public class BattleView : BaseView
         battleActorList.Refresh(battlerInfos);
         battleGridLayer.SetActorInfo(battlerInfos);
     }
+    
+    public void SetEnemies(List<BattlerInfo> battlerInfos)
+    {
+        battleEnemyLayer.Initialize(battlerInfos,(batterInfo) => CallEnemyInfo(batterInfo));
+        battleGridLayer.SetEnemyInfo(battlerInfos);
+    }
 
-
+    private void CallEnemyInfo(BattlerInfo battlerInfo)
+    {
+        var eventData = new BattleViewEvent(CommandType.LeftActor);
+        _commandData(eventData);
+    }
 
     private void CallActorList(int index)
     {

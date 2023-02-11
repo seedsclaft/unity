@@ -10,8 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1754835754856964964}
   - component: {fileID: 8376478711070595785}
-  - component: {fileID: 8854605350616589065}
   - component: {fileID: 2522359617540979795}
+  - component: {fileID: 8854605350616589065}
+  - component: {fileID: 8130019300442044151}
   m_Layer: 5
   m_Name: BattleGrid
   m_TagString: Untagged
@@ -50,6 +51,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2689483007591944502}
   m_CullTransparentMesh: 0
+--- !u!114 &2522359617540979795
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2689483007591944502}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c1ea577db469dd949b33ed403e9985eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  actorInfoComponent: {fileID: 8854605350616589065}
+  enemyInfoComponent: {fileID: 8130019300442044151}
 --- !u!114 &8854605350616589065
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -78,7 +93,7 @@ MonoBehaviour:
   element3: {fileID: 0}
   element4: {fileID: 0}
   element5: {fileID: 0}
---- !u!114 &2522359617540979795
+--- !u!114 &8130019300442044151
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -87,10 +102,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 2689483007591944502}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c1ea577db469dd949b33ed403e9985eb, type: 3}
+  m_Script: {fileID: 11500000, guid: f904c2d23502c4142a46a850ee1d1e13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  actorInfoComponent: {fileID: 8854605350616589065}
+  mainThumb: {fileID: 7831040812183204337}
+  name: {fileID: 0}
+  lv: {fileID: 0}
+  statusInfoComponent: {fileID: 0}
 --- !u!1 &6491590324197183158
 GameObject:
   m_ObjectHideFlags: 0
@@ -459,7 +477,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: b0476bcc4ed163342a5a6c11897cf974, type: 3}
+  m_Sprite: {fileID: 0}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

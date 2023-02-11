@@ -27,6 +27,7 @@ public class BattlePresenter
         //List<ActorInfo> actorInfos = _model.Actors();
         //_view.SetActorInfo(_model.CurrentActor);
         _view.SetActors(_model.BattlerActors());
+        _view.SetEnemies(_model.BattlerEnemies());
 
         _view.SetAttributeTypes(_model.AttributeTypes());
         var bgm = await _model.BgmData();

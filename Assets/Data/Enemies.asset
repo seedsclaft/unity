@@ -14,13 +14,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _data:
   - Id: 1
-    NameId: 1
-    ImageName: slime
+    Name: "\u30CD\u30EC\u30A4\u30C9\u30B8\u30A7\u30E0"
+    ImagePath: NY_CJ_monster_013_1
     BaseStatus:
       _hp: 20
-      _mp: 2
+      _mp: 20
       _atk: 10
+      _def: 10
       _spd: 10
+      _attributeType: 0
+    AttributeType: 3
   _textdata:
   - Id: 1
-    Text: "\u30B9\u30E9\u30A4\u30E0"
+    Text: "\u30CD\u30EC\u30A4\u30C9\u30B8\u30A7\u30E0"
+    Help: 

@@ -39,6 +39,15 @@ public class BattleModel : BaseModel
             BattlerInfo battlerInfo = new BattlerInfo(Actors()[i],i);
             _battlers.Add(battlerInfo);
         }
+        int troopId = 1;
+        var enemies = DataSystem.Troops.FindAll(a => a.TroopId == troopId);
+        
+        for (int i = 0;i < enemies.Count;i++)
+        {
+            EnemiesData.EnemyData enemyData = DataSystem.Enemies.Find(a => a.Id == enemies[i].EnemyId);
+            BattlerInfo battlerInfo = new BattlerInfo(enemyData,enemies[i].Lv,i);
+            _battlers.Add(battlerInfo);
+        }
     }
 
     public void ChangeActorIndex(int value){
@@ -52,14 +61,16 @@ public class BattleModel : BaseModel
     }
 
     public List<BattlerInfo> BattlerActors(){
-        return _battlers.FindAll(a => a.isActor);
+        return _battlers.FindAll(a => a.isActor == true);
     }
 
+    public List<BattlerInfo> BattlerEnemies(){
+        return _battlers.FindAll(a => a.isActor == false);
+    }
     
     public List<ActorInfo> Actors(){
         return GameSystem.CurrentData.Actors;
     }
-
 
     public List<SkillInfo> SkillActionList(AttributeType attributeType)
     {
@@ -100,13 +111,15 @@ public class BattleModel : BaseModel
     }
     
     public async Task<List<AudioClip>> BgmData(){
-        BGMData bGMData = DataSystem.Data.GetBGM("TACTICS1");
+        BGMData bGMData = DataSystem.Data.GetBGM("BATTLE3");
         List<string> data = new List<string>();
-        data.Add("BGM/" + bGMData.FileName + ".ogg");
+        data.Add("BGM/" + bGMData.FileName + "_intro.ogg");
+        data.Add("BGM/" + bGMData.FileName + "_loop.ogg");
         
         var result1 = await ResourceSystem.LoadAsset<AudioClip>(data[0]);
+        var result2 = await ResourceSystem.LoadAsset<AudioClip>(data[1]);
         return new List<AudioClip>(){
-            result1,null
+            result1,result2
         };    
     }
 }

@@ -12,9 +12,10 @@ public class EnemiesData : ScriptableObject {
     public class EnemyData
     {   
         public int Id;
-        public int NameId;
-        public string ImageName;
+        public string Name;
+        public string ImagePath;
         public StatusInfo BaseStatus;
+        public AttributeType AttributeType;
         
         public int CurrentParam(StatusParamType growType,int level)
         {

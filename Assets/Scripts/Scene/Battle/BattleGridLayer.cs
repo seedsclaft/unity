@@ -20,4 +20,16 @@ public class BattleGridLayer : MonoBehaviour
             _data.Add(comp);
         }
     }
+    
+    public void SetEnemyInfo(List<BattlerInfo> battlerInfos)
+    {
+        for (int i = 0; i < battlerInfos.Count;i++)
+        {
+            GameObject prefab = Instantiate(battleGridprefab);
+            prefab.transform.SetParent(enemyRoot.transform, false);
+            var comp = prefab.GetComponent<BattlerInfoComponent>();
+            comp.UpdateInfo(battlerInfos[i]);
+            _data.Add(comp);
+        }
+    }
 }

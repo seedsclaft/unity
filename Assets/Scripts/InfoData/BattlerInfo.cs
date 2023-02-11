@@ -21,6 +21,8 @@ public class BattlerInfo
     public List<SkillInfo> Skills {get {return _skills;}}
     private ActorInfo _actorInfo;
     public ActorInfo ActorInfo {get {return _actorInfo;} }
+    private EnemiesData.EnemyData _enemyData;
+    public EnemiesData.EnemyData EnemyData {get {return _enemyData;} }
     public BattlerInfo(ActorInfo actorInfo,int index){
         _charaId = actorInfo.ActorId;
         _level = actorInfo.Level;
@@ -39,6 +41,7 @@ public class BattlerInfo
         _status = enemyData.BaseStatus;
         _index = index;
         _isActor = false;
+        _enemyData = enemyData;
         ResetAp();
     }
 
