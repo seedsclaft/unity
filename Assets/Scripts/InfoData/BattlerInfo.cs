@@ -19,6 +19,8 @@ public class BattlerInfo
     
     private List<SkillInfo> _skills;
     public List<SkillInfo> Skills {get {return _skills;}}
+    private ActorInfo _actorInfo;
+    public ActorInfo ActorInfo {get {return _actorInfo;} }
     public BattlerInfo(ActorInfo actorInfo,int index){
         _charaId = actorInfo.ActorId;
         _level = actorInfo.Level;
@@ -26,6 +28,8 @@ public class BattlerInfo
         _index = index;
         _skills = actorInfo.Skills;
         _isActor = true;
+        
+        _actorInfo = actorInfo;
         ResetAp();
     }
 

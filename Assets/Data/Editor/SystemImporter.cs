@@ -84,7 +84,7 @@ public class SystemImporter : AssetPostprocessor
 				List<TextData> textData = CreateText(Book.GetSheetAt(4));
 
 				// 情報の初期化
-				Data.MenuCommandDataList = new List<SystemData.MenuCommandData>();
+				Data.TacticsCommandData = new List<SystemData.MenuCommandData>();
 				Data.StatusCommandData = new List<SystemData.MenuCommandData>();
 				Data.TitleCommandData = new List<SystemData.MenuCommandData>();
 				Data.InitActors = new List<int>();
@@ -98,11 +98,12 @@ public class SystemImporter : AssetPostprocessor
 				{
 					IRow Baserow = BaseSheet.GetRow(i);
 
-					var MenuCommandInfo = new SystemData.MenuCommandData();
-					MenuCommandInfo.Id = (int)Baserow.GetCell((int)BaseColumn.Id)?.SafeNumericCellValue();
-					MenuCommandInfo.Key = Baserow.GetCell((int)BaseColumn.Key)?.SafeStringCellValue();
-					MenuCommandInfo.Name = textData.Find(a => a.Id == (int)Baserow.GetCell((int)BaseColumn.NameTextId).NumericCellValue).Text;
-					Data.MenuCommandDataList.Add(MenuCommandInfo);
+					var TitleCommandInfo = new SystemData.MenuCommandData();
+					TitleCommandInfo.Id = (int)Baserow.GetCell((int)BaseColumn.Id)?.SafeNumericCellValue();
+					TitleCommandInfo.Key = Baserow.GetCell((int)BaseColumn.Key)?.SafeStringCellValue();
+					TitleCommandInfo.Name = textData.Find(a => a.Id == (int)Baserow.GetCell((int)BaseColumn.NameTextId).NumericCellValue).Text;
+					TitleCommandInfo.Help = textData.Find(a => a.Id == (int)Baserow.GetCell((int)BaseColumn.NameTextId).NumericCellValue).Help;
+					Data.TacticsCommandData.Add(TitleCommandInfo);
 				}
 				
 				BaseSheet = Book.GetSheetAt(1);

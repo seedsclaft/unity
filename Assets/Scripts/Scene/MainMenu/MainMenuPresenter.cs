@@ -44,11 +44,6 @@ public class MainMenuPresenter
             {
                 
                 _view.CommandSceneChange(Scene.Status);
-                /*
-                var selectedMenuCommand = viewEvent.templete;
-                _model.SetSelectedMenuCommand((MenuComandType)selectedMenuCommand);
-                */
-                //_view.CommandSkill();
             }
         }
     }

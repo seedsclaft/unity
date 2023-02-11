@@ -35,7 +35,6 @@ public class StatusModel : BaseModel
         }
     }
 
-    private MenuComandType _commandType = MenuComandType.None;
 
     
     public List<ActorInfo> Actors(){

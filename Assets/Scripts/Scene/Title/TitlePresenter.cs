@@ -23,7 +23,7 @@ public class TitlePresenter
         _view.SetTitleCommand(_model.TitleCommand);
 
         var bgm = await _model.BgmData();
-        SoundManager.Instance.PlayBgm(bgm,1.0f,true);
+        SoundManager.Instance.PlayBgm(bgm,1.0f,false);
         _busy = false;
     }
 
@@ -51,7 +51,9 @@ public class TitlePresenter
         switch ((TitleComandType)_view.titleCommandIndex){
             case TitleComandType.NewGame:
             _view.CommandInitSaveInfo();
-            _view.CommandSceneChange(Scene.MainMenu);
+            //_view.CommandSceneChange(Scene.MainMenu);
+            //_view.CommandSceneChange(Scene.Tactics);
+            _view.CommandSceneChange(Scene.Battle);
             break;
             case TitleComandType.Continue:
             break;

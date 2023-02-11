@@ -29,7 +29,8 @@ abstract public class DataSystem
 
     private static SkillsData _skills;
     public static List<SkillsData.SkillData> Skills {get{return _skills._data;}}
-
+    public static List<SystemData.MenuCommandData> TacticsCommand {get { return _system.TacticsCommandData;}}
+    
     public static List<SystemData.MenuCommandData> TitleCommand {get { return _system.TitleCommandData;}}
     public static List<SystemData.MenuCommandData> StatusCommand {get { return _system.StatusCommandData;}}
         public static List<int> InitActors {get { return _system.InitActors;}}

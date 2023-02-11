@@ -8,12 +8,6 @@ using System.Threading.Tasks;
 
 public class MainMenuModel : BaseModel
 {
-    private MenuComandType _commandType = MenuComandType.None;
-    public async Task<List<SystemData.MenuCommandData>> MenuCommand(){
-        var asset = await Addressables.LoadAssetAsync<SystemData>("Assets/Data/System.asset").Task;
-        
-        return asset.MenuCommandDataList;
-    }
     
     public List<ActorInfo> MenuActors(){
         return GameSystem.CurrentData.Actors;
@@ -55,15 +49,4 @@ public class MainMenuModel : BaseModel
         
     }
 
-    public void SetSelectedMenuCommand(MenuComandType commandType)
-    {
-        _commandType = commandType;
-    }
-}
-
-namespace MainMenuModelData{
-    public class CommandData{
-        public string key = "";
-        public string name;
-    }
 }

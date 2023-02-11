@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public class SystemData : ScriptableObject
 {	
-	public List<MenuCommandData> MenuCommandDataList;
+	public List<MenuCommandData> TacticsCommandData;
 	public List<MenuCommandData> StatusCommandData;
 	public List<MenuCommandData> TitleCommandData;
 	public List<int> InitActors;
@@ -21,10 +21,14 @@ public class SystemData : ScriptableObject
 	}
 }
 
-public enum MenuComandType {
-	None,
-	Item,
-	Skill
+public enum TacticsComandType {
+	Train,
+	Alchemy,
+	Recover,
+	Battle,
+	Resource,
+	Status,
+	Turnend
 }
 
 public enum TitleComandType {
