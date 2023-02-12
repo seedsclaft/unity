@@ -17,4 +17,5 @@ public class BattlerInfoComponent : MonoBehaviour
             enemyInfoComponent.UpdateInfo(battlerInfo);
         }
     }
+    
 }

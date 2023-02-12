@@ -42,6 +42,18 @@ public class BattlePresenter
         if (_busy){
             return;
         }
+        if (viewEvent.commandType == Battle.CommandType.UpdateAp)
+        {
+            CommandUpdateAp();
+        }
+        if (viewEvent.commandType == Battle.CommandType.SkillAction)
+        {
+            CommandSkillAction((int)viewEvent.templete);
+        }
+        if (viewEvent.commandType == Battle.CommandType.EnemyLayer)
+        {
+            CommandEnemyLayer((List<int>)viewEvent.templete);
+        }
         if (viewEvent.commandType == Battle.CommandType.AttributeType)
         {
             CommandAttributeType((AttributeType)viewEvent.templete);
@@ -60,6 +72,38 @@ public class BattlePresenter
         }
     }
 
+    private void CommandUpdateAp()
+    {
+        _model.UpdateAp();
+        _view.UpdateAp();
+        if (_model.CurrentBattler != null)
+        {
+            _view.SetBusy(true);
+            _view.ShowSkillActionList(_model.CurrentBattler.ActorInfo);
+            CommandAttributeType(_model.CurrentAttributeType);
+        }
+    }
+
+    private void CommandSkillAction(int skillId)
+    {
+        _model.ClearActionInfo();
+        ActionInfo actionInfo = _model.MakeActionInfo(skillId);
+        if (actionInfo.TargetType == TargetType.Opponent)
+        {
+            _view.HideSkillActionList();
+            _view.ShowEnemyTarget(actionInfo);
+        }
+        //
+    }
+
+    private void CommandEnemyLayer(List<int> enemyIndexList)
+    {
+        ActionInfo actionInfo = _model.CurrentActionInfo();
+        if (actionInfo != null)
+        {
+            _model.MakeActionResultInfo(actionInfo,enemyIndexList);
+        }
+    }
 
     private void CommandAttributeType(AttributeType attributeType)
     {

@@ -25,7 +25,6 @@ public class SkillAction : ListItem ,IListViewItem ,IClickHandlerEvent
 
     public void SetCallHandler(System.Action<int> handler)
     {
-        if (_data == null) return;
         clickButton.onClick.AddListener(() => handler((int)_data.Id));
     }
 

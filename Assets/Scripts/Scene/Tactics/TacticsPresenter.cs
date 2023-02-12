@@ -91,8 +91,4 @@ public class TacticsPresenter
         CommandAttributeType(_model.CurrentAttributeType);
     }
 
-    public async void CrossFade()
-    {
-
-    }
 }

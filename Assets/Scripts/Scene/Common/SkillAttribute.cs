@@ -29,7 +29,7 @@ public class SkillAttribute : ListItem ,IListViewItem ,IClickHandlerEvent
 
     public void SetCallHandler(System.Action<AttributeType> handler)
     {
-        if (_data == null) return;
+        if (_data == AttributeType.None) return;
         clickButton.onClick.AddListener(() => handler((AttributeType)_index));
     }
 
@@ -47,7 +47,7 @@ public class SkillAttribute : ListItem ,IListViewItem ,IClickHandlerEvent
 
     public void UpdateViewItem()
     {
-        if (_data == null) return;
+        if (_data == AttributeType.None) return;
         if (icon != null)
         {
             UpdateSkillIcon(_index-1);

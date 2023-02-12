@@ -16,7 +16,7 @@ public class StatusPresenter
         Initialize();
     }
 
-    private async void Initialize()
+    private void Initialize()
     {
         _view.SetHelpWindow();
         _view.SetUIButton();
@@ -96,8 +96,4 @@ public class StatusPresenter
         CommandAttributeType(_model.CurrentAttributeType);
     }
 
-    public async void CrossFade()
-    {
-
-    }
 }

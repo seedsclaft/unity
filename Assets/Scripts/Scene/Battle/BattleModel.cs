@@ -31,6 +31,13 @@ public class BattleModel : BaseModel
         get {return Actors()[_currentIndex];}
     }
 
+    private BattlerInfo _currentBattler = null;
+    public BattlerInfo CurrentBattler
+    {
+        get {return _currentBattler;}
+    }
+
+    private List<ActionInfo> _actionInfos = new List<ActionInfo>();
     public void CreateBattleData()
     {
         _battlers.Clear();
@@ -47,6 +54,33 @@ public class BattleModel : BaseModel
             EnemiesData.EnemyData enemyData = DataSystem.Enemies.Find(a => a.Id == enemies[i].EnemyId);
             BattlerInfo battlerInfo = new BattlerInfo(enemyData,enemies[i].Lv,i);
             _battlers.Add(battlerInfo);
+        }
+    }
+
+    public void UpdateAp()
+    {
+        for (int i = 0;i < _battlers.Count;i++)
+        {
+            BattlerInfo battlerInfo = _battlers[i];
+            _battlers[i].UpdateAp();
+        }
+        MackActionBattler();
+    }
+
+    public void MackActionBattler()
+    {
+        for (int i = 0;i < _battlers.Count;i++)
+        {
+            BattlerInfo battlerInfo = _battlers[i];
+            if (battlerInfo.Ap <= 0)
+            {
+                _currentBattler = battlerInfo;
+                if (battlerInfo.LastSkill != null)
+                {
+                    _currentAttributeType = battlerInfo.LastSkill.Attribute;
+                }
+                break;
+            }
         }
     }
 
@@ -74,11 +108,42 @@ public class BattleModel : BaseModel
 
     public List<SkillInfo> SkillActionList(AttributeType attributeType)
     {
-        if (attributeType != null)
+        if (attributeType != AttributeType.None)
         {
             _currentAttributeType = attributeType;
         }
-        return CurrentActor.Skills.FindAll(a => a.Attribute == _currentAttributeType);
+        return CurrentBattler.Skills.FindAll(a => a.Attribute == _currentAttributeType);
+    }
+
+    public void ClearActionInfo()
+    {
+        _actionInfos.Clear();
+    }
+
+    public ActionInfo MakeActionInfo(int skillId)
+    {
+        ActionInfo actionInfo = new ActionInfo(skillId,_currentBattler.Index,_currentBattler.LastTargetIndex());
+        _actionInfos.Add(actionInfo);
+        return actionInfo;
+    }
+
+    public ActionInfo CurrentActionInfo()
+    {
+        if (_actionInfos.Count < 1){
+            return null;
+        }
+        return _actionInfos[0];
+    }
+
+    public void MakeActionResultInfo(ActionInfo actionInfo,List<int> enemyIndexList)
+    {
+        List<ActionResultInfo> actionResultInfos = new List<ActionResultInfo>();
+        for (int i = 0; i < enemyIndexList.Count;i++)
+        {
+            ActionResultInfo actionResultInfo = new ActionResultInfo(CurrentBattler,BattlerEnemies()[i],CurrentActionInfo());
+            actionResultInfos.Add(actionResultInfo);
+        }
+        actionInfo.SetActionResult(actionResultInfos);
     }
 
     public List<AttributeType> AttributeTypes()

@@ -30,6 +30,8 @@ public class EnemyInfoComponent : MonoBehaviour
         }
         if (statusInfoComponent != null){
             statusInfoComponent.UpdateInfo(battlerInfo.Status);
+            statusInfoComponent.UpdateHp(battlerInfo.Hp);
+            statusInfoComponent.UpdateMp(battlerInfo.Mp);
         }
         
     }

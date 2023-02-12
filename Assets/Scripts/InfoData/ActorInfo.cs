@@ -21,17 +21,24 @@ public class ActorInfo
     public StatusInfo UsePoint {get {return _usePoint;}}
     private List<int> _attribute;
     public List<int> Attribute {get {return _attribute;}}
-    public int Hp {get {return _status.Hp;}}
     private List<SkillInfo> _skills;
     public List<SkillInfo> Skills {get {return _skills;}}
 
 
+    private int _hp;
+    public int Hp {get {return _hp;}}
+    private int _mp;
+    public int Mp {get {return _mp;}}
+    private int _ap;
+    public int Ap {get {return _ap;}}
     public ActorInfo(ActorsData.ActorData actorData)
     {
         _actorId = actorData.Id;
         _status = actorData.InitStatus;
         _usePoint = actorData.NeedStatus;
         _attribute = actorData.Attribute;
+        _hp = _status.Hp;
+        _mp = _status.Mp;
     }
 
     public void InitSkillInfo(List<LearningData> learningData)
@@ -61,4 +68,7 @@ public class ActorInfo
         _status._hp = Math.Max(0,MaxHp);
     }
 
+    public void UpdateStatus()
+    {
+    }
 }

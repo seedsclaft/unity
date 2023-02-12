@@ -36,4 +36,16 @@ public class StatusInfoComponent : MonoBehaviour
         }
         
     }
+    public void UpdateHp(int currentHp)
+    {
+        if (hp != null){
+            hp.text = currentHp.ToString();
+        }
+    }
+    public void UpdateMp(int currentMp)
+    {
+        if (mp != null){
+            mp.text = currentMp.ToString();
+        }
+    }
 }

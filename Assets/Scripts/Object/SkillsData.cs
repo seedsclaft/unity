@@ -25,11 +25,10 @@ public class SkillsData : ScriptableObject {
 
 public enum ScopeType{
     None = 0,
-    OneEnemy = 1,
-    AllEnemy = 2,
-    OneParty = 3,
-    AllParty = 4,
-    Self = 5
+    One = 1,
+    Line = 2,
+    All = 3,
+    Self = 4,
 }
 
 

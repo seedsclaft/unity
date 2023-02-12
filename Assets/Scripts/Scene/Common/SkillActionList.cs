@@ -20,9 +20,9 @@ public class SkillActionList : ListWindow , IInputHandlerEvent
         InitializeListView(rows);
         for (int i = 0; i < rows;i++)
         {
-            var statusCommand = ObjectList[i].GetComponent<SkillAction>();
-            statusCommand.SetCallHandler(callEvent);
-            statusCommand.SetSelectHandler((data) => UpdateSelectIndex(data));
+            var skillAction = ObjectList[i].GetComponent<SkillAction>();
+            skillAction.SetCallHandler(callEvent);
+            skillAction.SetSelectHandler((data) => UpdateSelectIndex(data));
             ObjectList[i].SetActive(false);
         }
     }

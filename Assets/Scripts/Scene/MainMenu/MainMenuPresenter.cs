@@ -48,8 +48,4 @@ public class MainMenuPresenter
         }
     }
 
-    public async void CrossFade()
-    {
-
-    }
 }

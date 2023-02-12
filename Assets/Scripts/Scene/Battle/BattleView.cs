@@ -11,13 +11,21 @@ public class BattleView : BaseView
     [SerializeField] private BattleActorList battleActorList = null;
     [SerializeField] private BattleEnemyLayer battleEnemyLayer = null;
     [SerializeField] private BattleGridLayer battleGridLayer = null;
+    [SerializeField] private SkillActionList skillActionList = null;
     [SerializeField] private SkillAttributeList skillAttributeList = null;
+    [SerializeField] private BattleThumb battleThumb = null;
 
     private new System.Action<BattleViewEvent> _commandData = null;
     [SerializeField] private GameObject helpRoot = null;
     [SerializeField] private GameObject helpPrefab = null;
     [SerializeField] private GameObject backPrefab = null;
     private HelpWindow _helpWindow = null;
+
+    private bool _busy = false;
+    public void SetBusy(bool isBusy)
+    {
+        _busy = isBusy;
+    }
 
 
     protected void Awake()
@@ -29,6 +37,32 @@ public class BattleView : BaseView
     void Initialize()
     {
         new BattlePresenter(this);
+        InitializeSkillActionList();
+    }
+
+    private void InitializeSkillActionList()
+    {
+        skillActionList.Initialize(actorInfo => CallSkillAction(actorInfo));
+        SetInputHandler(skillActionList.GetComponent<IInputHandlerEvent>());
+        skillActionList.gameObject.SetActive(false);
+        skillAttributeList.gameObject.SetActive(false);
+    }
+    
+    private void CallSkillAction(int skillId)
+    {
+        var eventData = new BattleViewEvent(CommandType.SkillAction);
+        eventData.templete = skillId;
+        _commandData(eventData);
+    }
+
+    public void HideSkillAction(ActionInfo actionInfo)
+    {
+        
+    }
+
+    public void ShowEnemyTarget(ActionInfo actionInfo)
+    {
+        battleEnemyLayer.gameObject.SetActive(true);
     }
 
     public void CreateObject()
@@ -81,9 +115,10 @@ public class BattleView : BaseView
         battleGridLayer.SetEnemyInfo(battlerInfos);
     }
 
-    private void CallEnemyInfo(BattlerInfo battlerInfo)
+    private void CallEnemyInfo(List<int> indexList)
     {
-        var eventData = new BattleViewEvent(CommandType.LeftActor);
+        var eventData = new BattleViewEvent(CommandType.EnemyLayer);
+        eventData.templete = indexList;
         _commandData(eventData);
     }
 
@@ -112,14 +147,32 @@ public class BattleView : BaseView
         _commandData(eventData);
     }
 
-    public void RefreshSkillActionList(List<SkillInfo> skillInfos)
+    public void ShowSkillActionList(ActorInfo actorInfo)
     {
-        //skillActionList.Refresh(skillInfos);
+        skillActionList.gameObject.SetActive(true);
+        skillAttributeList.gameObject.SetActive(true);
+        battleThumb.ShowMainThumb(actorInfo);
     }
 
+    public void HideSkillActionList()
+    {
+        skillActionList.gameObject.SetActive(false);
+        skillAttributeList.gameObject.SetActive(false);
+        battleThumb.HideThumb();
+    }
+    
+    public void RefreshSkillActionList(List<SkillInfo> skillInfos)
+    {
+        skillActionList.Refresh(skillInfos);
+    }
+
+    public void RefreshBattlerEnemyLayerTarget(ActionInfo actionInfo)
+    {
+        battleEnemyLayer.RefreshTarget(actionInfo);
+    }
     public void SetAttributeTypes(List<AttributeType> attributeTypes)
     {
-        //skillAttributeList.Initialize(attributeTypes ,(attribute) => CallAttributeTypes(attribute));
+        skillAttributeList.Initialize(attributeTypes ,(attribute) => CallAttributeTypes(attribute));
         //SetInputHandler(skillAttributeList.GetComponent<IInputHandlerEvent>());
     }
 
@@ -134,6 +187,18 @@ public class BattleView : BaseView
     {
         
     }
+
+    private void Update() 
+    {
+        if (_busy == true) return;
+        var eventData = new BattleViewEvent(CommandType.UpdateAp);
+        _commandData(eventData);
+    }
+
+    public void UpdateAp() 
+    {
+        battleGridLayer.UpdatePosition();
+    }
 }
 
 namespace Battle
@@ -147,6 +212,9 @@ namespace Battle
         LeftActor,
         RightActor,
         ActorList,
+        UpdateAp,
+        SkillAction,
+        EnemyLayer
     }
 }
 

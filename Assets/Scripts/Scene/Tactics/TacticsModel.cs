@@ -45,7 +45,7 @@ public class TacticsModel : BaseModel
 
     public List<SkillInfo> SkillActionList(AttributeType attributeType)
     {
-        if (attributeType != null)
+        if (attributeType != AttributeType.None)
         {
             _currentAttributeType = attributeType;
         }
