@@ -45,7 +45,6 @@ public class BattleActorList : ListWindow , IInputHandlerEvent
             }
         }
         UpdateAllItems();
-        UpdateSelectIndex(0);
     }
 
     public override void UpdateHelpWindow(){

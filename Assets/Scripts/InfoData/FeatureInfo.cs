@@ -19,5 +19,5 @@ public class FeatureInfo
 public enum FeatureType
 {
     None = 0,
-    GainHp = 1,
+    HpDamage = 1,
 }

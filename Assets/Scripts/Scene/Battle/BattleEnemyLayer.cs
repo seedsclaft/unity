@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Effekseer;
 
 public class BattleEnemyLayer : MonoBehaviour
 {
@@ -72,6 +73,10 @@ public class BattleEnemyLayer : MonoBehaviour
     public void RefreshTarget(ActionInfo actionInfo)
     {
         UpdateAllUnSelect();
+        if (actionInfo == null) {
+            _targetScopeType = ScopeType.None;
+            return;
+        }
         _targetScopeType = actionInfo.ScopeType;
         if (_targetScopeType == ScopeType.All)
         {
@@ -108,6 +113,11 @@ public class BattleEnemyLayer : MonoBehaviour
     }
     
     private void UpdateSelectIndex(int index){
+        if (_targetScopeType == ScopeType.All)
+        {
+            UpdateAllSelect();
+            return;
+        }
         if (_targetScopeType == ScopeType.Line)
         {
             UpdateLineSelect(index);
@@ -151,6 +161,14 @@ public class BattleEnemyLayer : MonoBehaviour
                     listItem.SetUnSelect();
                 }
             }
+        }
+    }
+
+    public void StartAnimation(List<int> indexList, EffekseerEffectAsset effectAsset)
+    {
+        for (int i = 0; i < indexList.Count;i++)
+        {
+            battleEnemies[i].StartAnimation(effectAsset);
         }
     }
 }

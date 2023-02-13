@@ -38,7 +38,9 @@ public class BattlerInfo
     public BattlerInfo(ActorInfo actorInfo,int index){
         _charaId = actorInfo.ActorId;
         _level = actorInfo.Level;
-        _status = actorInfo.Status;
+        StatusInfo statusInfo = new StatusInfo();
+        statusInfo.SetParameter(actorInfo.Status.Hp,actorInfo.Status.Mp,actorInfo.Status.Atk,actorInfo.Status.Def,actorInfo.Status.Spd);
+        _status = statusInfo;
         _index = index;
         _skills = actorInfo.Skills;
         _isActor = true;
@@ -52,7 +54,9 @@ public class BattlerInfo
     public BattlerInfo(EnemiesData.EnemyData enemyData,int lv,int index){
         _charaId = enemyData.Id;
         _level = lv;
-        _status = enemyData.BaseStatus;
+        StatusInfo statusInfo = new StatusInfo();
+        statusInfo.SetParameter(enemyData.BaseStatus.Hp,enemyData.BaseStatus.Mp,enemyData.BaseStatus.Atk,enemyData.BaseStatus.Def,enemyData.BaseStatus.Spd);
+        _status = statusInfo;
         _index = index;
         _isActor = false;
         _enemyData = enemyData;
@@ -81,7 +85,7 @@ public class BattlerInfo
     public void UpdateAp()
     {
         if (isActor == false) return;
-        _ap -= 1;
+        _ap -= 4;
     }
 
     public int LastTargetIndex()

@@ -12,13 +12,36 @@ public class ActionResultInfo
         _subject = subject;
         _target = target;
         _actionInfo = actionInfo;
+        MakeResultData();
     }
+
+    private int _hpDamage = 0;
 
     public void MakeResultData()
     {
-        if (_actionInfo.Master.EffectType == EffectType.Attack)
+        List<SkillsData.FeatureData> featureDatas = _actionInfo.Master.FeatureDatas;
+        for (int i = 0; i < featureDatas.Count; i++)
         {
-            
+            ExecFeature(featureDatas[i]);
         }
+    }
+
+    private void ExecFeature(SkillsData.FeatureData featureData)
+    {
+        switch (featureData.FeatureType)
+        {
+            case FeatureType.HpDamage:
+                ExecHpDamage(featureData);
+                return;
+
+        }
+    }
+
+    private void ExecHpDamage(SkillsData.FeatureData featureData)
+    {
+        int AtkValue = _subject.Status.Atk;
+        int DefValue = _target.Status.Def;
+        float DamageValue = Mathf.Max(0,(featureData.Param1 * 0.01f * (AtkValue * 0.5f)) - (DefValue * 0.5f));
+        _hpDamage = (int)Mathf.Round(DamageValue);
     }
 }

@@ -154,6 +154,7 @@ GameObject:
   - component: {fileID: 1803032663109092593}
   - component: {fileID: 6987941350644293425}
   - component: {fileID: 4962212183374112296}
+  - component: {fileID: 3247875641065563969}
   m_Layer: 5
   m_Name: Image
   m_TagString: Untagged
@@ -233,6 +234,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_HorizontalFit: 2
   m_VerticalFit: 2
+--- !u!114 &3247875641065563969
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2129568889956389992}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35d396bcb8480c24eb784eebe6096a99, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TimingOfUpdate: 0
+  EmitterScale: 0
+  TimeScale: 0
+  effectAsset: {fileID: 0}
+  playOnStart: 0
+  isLooping: 0
 --- !u!1 &2286417706273965206
 GameObject:
   m_ObjectHideFlags: 0
@@ -746,6 +765,7 @@ MonoBehaviour:
   cursorObject: {fileID: 418140813400388577}
   imageObject: {fileID: 2129568889956389992}
   enemyImage: {fileID: 6987941350644293425}
+  effekseerEmitter: {fileID: 3247875641065563969}
 --- !u!114 &7386022236450824358
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -779,6 +799,10 @@ MonoBehaviour:
   atk: {fileID: 0}
   def: {fileID: 0}
   spd: {fileID: 0}
+  hpGaugeBg: {fileID: 0}
+  hpGauge: {fileID: 0}
+  mpGaugeBg: {fileID: 0}
+  mpGauge: {fileID: 0}
 --- !u!114 &8931612411976862959
 MonoBehaviour:
   m_ObjectHideFlags: 0

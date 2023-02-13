@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using UnityEngine.Events;
 using TMPro;
+using Effekseer;
 
 public class BattleEnemy : ListItem 
 {
@@ -12,6 +13,7 @@ public class BattleEnemy : ListItem
     [SerializeField] private GameObject cursorObject;
     [SerializeField] private GameObject imageObject;
     [SerializeField] private Image enemyImage;
+    [SerializeField] private EffekseerEmitter effekseerEmitter;
     private bool _sizeInit = false;
 
     private BattlerInfo _data;
@@ -58,6 +60,11 @@ public class BattleEnemy : ListItem
         objectRect.sizeDelta = new Vector2(imagerect.sizeDelta.x,rect.sizeDelta.y);
     }
 
+    public void StartAnimation(EffekseerEffectAsset effectAsset)
+    {
+        effekseerEmitter.Play(effectAsset);
+    }
+
     private void Update() {
         if (_sizeInit == false && enemyImage.sprite != null)
         {
@@ -65,6 +72,4 @@ public class BattleEnemy : ListItem
             _sizeInit = true;
         }
     }
-
-    
 }

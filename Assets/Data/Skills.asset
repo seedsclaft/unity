@@ -16,6 +16,8 @@ MonoBehaviour:
   - Id: 101
     Name: "\u30D5\u30A1\u30A4\u30A2\u30DC\u30FC\u30EB"
     IconIndex: 286
+    AnimationName: NA_Fire_001
+    AnimationType: 1
     MpCost: 5
     Attribute: 1
     Scope: 1
@@ -24,10 +26,19 @@ MonoBehaviour:
     TargetType: 1
     Help: "\u6575\u5358\u4F53\u306B\u30C0\u30E1\u30FC\u30B8"
     Range: 1
-    AnimationId: 1
+    TriggerType: 0
+    TriggerValue: 0
+    FeatureDatas:
+    - SkillId: 101
+      FeatureType: 1
+      Param1: 150
+      Param2: 0
+      Param3: 0
   - Id: 102
     Name: "\u30D5\u30A1\u30A4\u30A2\u30DC\u30FC\u30EB+"
     IconIndex: 286
+    AnimationName: NA_Fire_001
+    AnimationType: 1
     MpCost: 5
     Attribute: 1
     Scope: 1
@@ -36,10 +47,19 @@ MonoBehaviour:
     TargetType: 1
     Help: "\u6575\u5358\u4F53\u306B\u30C0\u30E1\u30FC\u30B8"
     Range: 1
-    AnimationId: 1
+    TriggerType: 0
+    TriggerValue: 0
+    FeatureDatas:
+    - SkillId: 102
+      FeatureType: 1
+      Param1: 250
+      Param2: 0
+      Param3: 0
   - Id: 103
     Name: "\u30D0\u30FC\u30F3\u30B9\u30C8\u30FC\u30E0"
     IconIndex: 19
+    AnimationName: NA_Fire_001
+    AnimationType: 1
     MpCost: 5
     Attribute: 1
     Scope: 2
@@ -48,10 +68,14 @@ MonoBehaviour:
     TargetType: 1
     Help: "\u6575\u4E00\u5217\u306B\u30C0\u30E1\u30FC\u30B8"
     Range: 1
-    AnimationId: 2
+    TriggerType: 0
+    TriggerValue: 0
+    FeatureDatas: []
   - Id: 104
     Name: "\u30D0\u30FC\u30F3\u30B9\u30C8\u30FC\u30E0+"
     IconIndex: 19
+    AnimationName: NA_Fire_001
+    AnimationType: 1
     MpCost: 5
     Attribute: 1
     Scope: 2
@@ -60,28 +84,38 @@ MonoBehaviour:
     TargetType: 1
     Help: "\u6575\u4E00\u5217\u306B\u30C0\u30E1\u30FC\u30B8"
     Range: 1
-    AnimationId: 2
+    TriggerType: 0
+    TriggerValue: 0
+    FeatureDatas: []
   - Id: 105
     Name: "\u30D2\u30FC\u30C8\u30A6\u30A7\u30FC\u30D6"
     IconIndex: 57
+    AnimationName: NA_Fire_001
+    AnimationType: 1
     MpCost: 5
     Attribute: 1
     Scope: 1
-    EffectType: 0
+    EffectType: 2
     EffectValue: 0
     TargetType: 1
     Help: "\u6575\u5358\u4F53\u306B\u706B\u50B7\u4ED8\u4E0E"
     Range: 1
-    AnimationId: 3
+    TriggerType: 0
+    TriggerValue: 0
+    FeatureDatas: []
   - Id: 106
     Name: "\u30D2\u30FC\u30C8\u30A6\u30A7\u30FC\u30D6+"
     IconIndex: 57
+    AnimationName: NA_Fire_001
+    AnimationType: 1
     MpCost: 5
     Attribute: 1
     Scope: 1
-    EffectType: 0
+    EffectType: 2
     EffectValue: 0
     TargetType: 1
     Help: "\u6575\u4E00\u5217\u306B\u706B\u50B7\u4ED8\u4E0E"
     Range: 1
-    AnimationId: 3
+    TriggerType: 0
+    TriggerValue: 0
+    FeatureDatas: []

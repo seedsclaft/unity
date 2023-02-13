@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Battle;
 using TMPro;
+using Effekseer;
 
 public class BattleView : BaseView
 {
@@ -60,7 +61,7 @@ public class BattleView : BaseView
         
     }
 
-    public void ShowEnemyTarget(ActionInfo actionInfo)
+    public void ShowEnemyTarget()
     {
         battleEnemyLayer.gameObject.SetActive(true);
     }
@@ -170,6 +171,12 @@ public class BattleView : BaseView
     {
         battleEnemyLayer.RefreshTarget(actionInfo);
     }
+
+    public void StartSkillActionAnimation(List<int> indexList,EffekseerEffectAsset effekseerEffectAsset)
+    {
+        battleEnemyLayer.StartAnimation(indexList,effekseerEffectAsset);
+    }
+
     public void SetAttributeTypes(List<AttributeType> attributeTypes)
     {
         skillAttributeList.Initialize(attributeTypes ,(attribute) => CallAttributeTypes(attribute));

@@ -6,6 +6,7 @@ using UnityEngine.ResourceManagement.AsyncOperations;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Effekseer;
 
 public class BattleModel : BaseModel
 {
@@ -146,6 +147,12 @@ public class BattleModel : BaseModel
         actionInfo.SetActionResult(actionResultInfos);
     }
 
+    public async Task<EffekseerEffectAsset> SkillActionAnimation(ActionInfo actionInfo){
+        string path = "Assets/Animations/" + actionInfo.Master.AnimationName + ".asset";
+        var result = await ResourceSystem.LoadAsset<EffekseerEffectAsset>(path);
+        return result;
+    }
+
     public List<AttributeType> AttributeTypes()
     {
         List<AttributeType> attributeTypes = new List<AttributeType>();
@@ -176,7 +183,7 @@ public class BattleModel : BaseModel
     }
     
     public async Task<List<AudioClip>> BgmData(){
-        BGMData bGMData = DataSystem.Data.GetBGM("BATTLE3");
+        BGMData bGMData = DataSystem.Data.GetBGM("BATTLE1");
         List<string> data = new List<string>();
         data.Add("BGM/" + bGMData.FileName + "_intro.ogg");
         data.Add("BGM/" + bGMData.FileName + "_loop.ogg");

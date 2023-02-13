@@ -14,6 +14,8 @@ public class SkillsImporter : AssetPostprocessor {
 		Id = 0,
 		NameId,
         IconIndex,
+		AnimationName,
+		AnimationType,
 		MpCost,
 		Attribute,
 		EffectType,
@@ -21,7 +23,8 @@ public class SkillsImporter : AssetPostprocessor {
 		TargetType,
 		Scope,
 		Range,
-		AnimationId,
+		TriggerType,
+		TriggerValue,
     }
 
 	static readonly string ExcelPath = "Assets/Data";
@@ -78,7 +81,7 @@ public class SkillsImporter : AssetPostprocessor {
 				// エクセルブックを作成
 				CreateBook(asset, Mainstream, out IWorkbook Book);
 				// テキストデータ作成
-				List<TextData> textData = CreateText(Book.GetSheetAt(1));
+				List<TextData> textData = CreateText(Book.GetSheetAt(2));
 				// 情報の初期化
 				Data._data.Clear();
 				// エクセルシートからセル単位で読み込み
@@ -92,18 +95,43 @@ public class SkillsImporter : AssetPostprocessor {
 					SkillData.Id = (int)Baserow.GetCell((int)BaseColumn.Id)?.NumericCellValue;
 					SkillData.Name = textData.Find(a => a.Id == (int)Baserow.GetCell((int)BaseColumn.NameId)?.NumericCellValue).Text;
 					SkillData.IconIndex = (int)Baserow.GetCell((int)BaseColumn.IconIndex)?.NumericCellValue;
-					SkillData.MpCost = (int)Baserow.GetCell((int)BaseColumn.MpCost)?.NumericCellValue;
+					SkillData.AnimationName = Baserow.GetCell((int)BaseColumn.AnimationName)?.SafeStringCellValue();
+                    SkillData.AnimationType = (AnimationType)Baserow.GetCell((int)BaseColumn.AnimationType)?.NumericCellValue;
+                    SkillData.MpCost = (int)Baserow.GetCell((int)BaseColumn.MpCost)?.NumericCellValue;
 					SkillData.Attribute = (AttributeType)Baserow.GetCell((int)BaseColumn.Attribute)?.NumericCellValue;
 					SkillData.EffectType = (EffectType)Baserow.GetCell((int)BaseColumn.EffectType)?.NumericCellValue;
                     SkillData.EffectValue = (float)Baserow.GetCell((int)BaseColumn.EffectValue)?.NumericCellValue;
 					SkillData.TargetType = (TargetType)Baserow.GetCell((int)BaseColumn.TargetType)?.NumericCellValue;
                     SkillData.Scope = (ScopeType)Baserow.GetCell((int)BaseColumn.Scope)?.NumericCellValue;
                     SkillData.Range = (RangeType)Baserow.GetCell((int)BaseColumn.Range)?.NumericCellValue;
-                    SkillData.AnimationId = (int)Baserow.GetCell((int)BaseColumn.AnimationId)?.NumericCellValue;
+                    SkillData.TriggerType = (int)Baserow.GetCell((int)BaseColumn.TriggerType)?.NumericCellValue;
+                    SkillData.TriggerValue = (int)Baserow.GetCell((int)BaseColumn.TriggerValue)?.NumericCellValue;
                     SkillData.Help = textData.Find(a => a.Id == (int)Baserow.GetCell((int)BaseColumn.NameId)?.NumericCellValue).Help;
 					Data._data.Add(SkillData);
 				}
 
+
+				BaseSheet = Book.GetSheetAt(1);
+				
+				for (int i = 1; i <= BaseSheet.LastRowNum; i++)
+				{
+					IRow Baserow = BaseSheet.GetRow(i);
+
+					var FeatureData = new SkillsData.FeatureData();
+					FeatureData.SkillId = (int)Baserow.GetCell((int)BaseColumn.Id)?.NumericCellValue;
+					FeatureData.FeatureType = (FeatureType)Baserow.GetCell((int)BaseColumn.NameId)?.NumericCellValue;
+					FeatureData.Param1 = (int)Baserow.GetCell((int)BaseColumn.IconIndex)?.NumericCellValue;
+					FeatureData.Param2 = (int)Baserow.GetCell((int)BaseColumn.AnimationName)?.NumericCellValue;
+					FeatureData.Param3 = (int)Baserow.GetCell((int)BaseColumn.AnimationType)?.NumericCellValue;
+					
+					var SkillData = Data._data.Find(a => a.Id == FeatureData.SkillId);
+					if (SkillData != null){
+						if (SkillData.FeatureDatas == null){
+							SkillData.FeatureDatas = new List<SkillsData.FeatureData>();
+						}
+						SkillData.FeatureDatas.Add(FeatureData);
+					}
+				}
 			}
 		}
 		catch (Exception ex)

@@ -91,17 +91,24 @@ public class BattlePresenter
         if (actionInfo.TargetType == TargetType.Opponent)
         {
             _view.HideSkillActionList();
-            _view.ShowEnemyTarget(actionInfo);
+            _view.ShowEnemyTarget();
+            _view.RefreshBattlerEnemyLayerTarget(actionInfo);
         }
         //
     }
 
-    private void CommandEnemyLayer(List<int> enemyIndexList)
+    private async void CommandEnemyLayer(List<int> enemyIndexList)
     {
         ActionInfo actionInfo = _model.CurrentActionInfo();
         if (actionInfo != null)
         {
+            _view.RefreshBattlerEnemyLayerTarget(null);
             _model.MakeActionResultInfo(actionInfo,enemyIndexList);
+            var animation = await _model.SkillActionAnimation(actionInfo);
+            if (actionInfo.Master.AnimationType == AnimationType.One)
+            {
+                _view.StartSkillActionAnimation(enemyIndexList,animation);
+            }
         }
     }
 

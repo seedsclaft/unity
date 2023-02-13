@@ -10,6 +10,8 @@ public class SkillsData : ScriptableObject {
         public int Id;
         public string Name;
         public int IconIndex;
+        public string AnimationName;
+        public AnimationType AnimationType;
         public int MpCost;
         public AttributeType Attribute;
         public ScopeType Scope;
@@ -18,10 +20,29 @@ public class SkillsData : ScriptableObject {
         public TargetType TargetType;
         public string Help;
         public RangeType Range;
-        public int AnimationId;
+
+        public int TriggerType;
+        public int TriggerValue;
+        public List<FeatureData> FeatureDatas;
+    }
+    [Serializable]
+    public class FeatureData
+    {   
+        public int SkillId;
+        public FeatureType FeatureType;
+        public int Param1;
+        public int Param2;
+        public int Param3;
     }
 }
 
+public enum AnimationType
+{
+    None = 0,
+    One = 1,
+    Line = 2,
+    All = 3
+}
 
 public enum ScopeType{
     None = 0,
@@ -58,4 +79,12 @@ public enum RangeType{
     None = 0,
     S = 1,
     L = 2
+}
+public enum DamageType
+{
+    None = 0,
+    HpDamage = 1,
+    HpCritical = 2,
+    HpHeal = 3,    
+    MpHeal = 4
 }
