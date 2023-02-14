@@ -6,6 +6,8 @@ public class ActionInfo
 {
     private int _skillId = 0;
     
+    private BattlerInfo _subject = null;
+    public BattlerInfo Subject {get {return _subject;}}
     private int _subjectIndex = 0;
     public int SubjectIndex {get {return _subjectIndex;}}
     
@@ -22,13 +24,15 @@ public class ActionInfo
 
     private List<ActionResultInfo> _actionResult = new List<ActionResultInfo>();
     public List<ActionResultInfo> actionResults {get {return _actionResult;}}
-    public ActionInfo(int skillId,int subjectIndex,int lastTargetIndex)
+
+    public ActionInfo(int skillId,BattlerInfo subject,int lastTargetIndex)
     {
         _skillId = skillId;
         _scopeType = Master.Scope;
         _rangeType = Master.Range;
         _targetType = Master.TargetType;
-        _subjectIndex = subjectIndex;
+        _subject = subject;
+        _subjectIndex = subject.Index;
         _lastTargetIndex = lastTargetIndex;
     }
 

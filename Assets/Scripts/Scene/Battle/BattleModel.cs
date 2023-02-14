@@ -102,6 +102,11 @@ public class BattleModel : BaseModel
     public List<BattlerInfo> BattlerEnemies(){
         return _battlers.FindAll(a => a.isActor == false);
     }
+
+    public BattlerInfo GetBattlerInfo(int index)
+    {
+        return _battlers.Find(a => a.Index == index);
+    }
     
     public List<ActorInfo> Actors(){
         return GameSystem.CurrentData.Actors;
@@ -123,7 +128,23 @@ public class BattleModel : BaseModel
 
     public ActionInfo MakeActionInfo(int skillId)
     {
-        ActionInfo actionInfo = new ActionInfo(skillId,_currentBattler.Index,_currentBattler.LastTargetIndex());
+        var skill = DataSystem.Skills.Find(a => a.Id == skillId);
+        int LastTargetIndex = -1;
+        if (_currentBattler.isActor)
+        {
+            LastTargetIndex = _currentBattler.LastTargetIndex();
+            if (skill.TargetType == TargetType.Opponent)
+            {
+                if (BattlerEnemies()[LastTargetIndex] == null || BattlerEnemies()[LastTargetIndex].IsAlive() == false)
+                {
+                    LastTargetIndex = BattlerEnemies().FindIndex(a => a.IsAlive());
+                }
+            } else
+            {
+                LastTargetIndex = _currentBattler.Index;
+            }
+        }
+        ActionInfo actionInfo = new ActionInfo(skillId,_currentBattler,LastTargetIndex);
         _actionInfos.Add(actionInfo);
         return actionInfo;
     }
@@ -136,21 +157,91 @@ public class BattleModel : BaseModel
         return _actionInfos[0];
     }
 
-    public void MakeActionResultInfo(ActionInfo actionInfo,List<int> enemyIndexList)
+    public void MakeActionResultInfo(ActionInfo actionInfo,List<int> indexList)
     {
-        List<ActionResultInfo> actionResultInfos = new List<ActionResultInfo>();
-        for (int i = 0; i < enemyIndexList.Count;i++)
+        List<BattlerInfo> targetInfos = new List<BattlerInfo>();
+        if (actionInfo.Subject.isActor)
         {
-            ActionResultInfo actionResultInfo = new ActionResultInfo(CurrentBattler,BattlerEnemies()[i],CurrentActionInfo());
+            if (actionInfo.Master.TargetType == TargetType.Opponent)
+            {
+                targetInfos = BattlerEnemies();
+                if (indexList.Count > 0)
+                {
+                    CurrentBattler.SetLastTargetIndex(indexList[0]);
+                }
+            } else
+            if (actionInfo.Master.TargetType == TargetType.Friend)
+            {
+                targetInfos = BattlerActors();
+            }
+        } else
+        {
+            if (actionInfo.Master.TargetType == TargetType.Opponent)
+            {
+                targetInfos = BattlerActors();
+            } else
+            if (actionInfo.Master.TargetType == TargetType.Friend)
+            {
+                targetInfos = BattlerEnemies();
+            }
+        }
+        List<ActionResultInfo> actionResultInfos = new List<ActionResultInfo>();
+        for (int i = 0; i < indexList.Count;i++)
+        {
+            ActionResultInfo actionResultInfo = new ActionResultInfo(CurrentBattler,targetInfos[indexList[i]],CurrentActionInfo());
             actionResultInfos.Add(actionResultInfo);
         }
         actionInfo.SetActionResult(actionResultInfos);
     }
 
-    public async Task<EffekseerEffectAsset> SkillActionAnimation(ActionInfo actionInfo){
-        string path = "Assets/Animations/" + actionInfo.Master.AnimationName + ".asset";
+    public async Task<EffekseerEffectAsset> SkillActionAnimation(string animationName)
+    {
+        string path = "Assets/Animations/" + animationName + ".asset";
         var result = await ResourceSystem.LoadAsset<EffekseerEffectAsset>(path);
         return result;
+    }
+
+    public void ExecActionResult()
+    {
+        ActionInfo actionInfo = CurrentActionInfo();
+        if (actionInfo != null)
+        {
+            List<ActionResultInfo> actionResultInfos = actionInfo.actionResults;
+            for (int i = 0; i < actionResultInfos.Count; i++)
+            {
+                BattlerInfo battlerInfo = actionResultInfos[i].Target;
+                if (actionResultInfos[i].HpDamage != 0)
+                {
+                    battlerInfo.ChangeHp(-1 * actionResultInfos[i].HpDamage);
+                }
+            }
+        }
+    }
+    
+    public List<int> DeathBattlerIndex()
+    {
+        List<int> deathBattlerIndex = new List<int>();
+        ActionInfo actionInfo = CurrentActionInfo();
+        if (actionInfo != null)
+        {
+            List<ActionResultInfo> actionResultInfos = actionInfo.actionResults;
+            for (int i = 0; i < actionResultInfos.Count; i++)
+            {
+                BattlerInfo battlerInfo = actionResultInfos[i].Target;
+                if (actionResultInfos[i].IsDead == true)
+                {
+                    deathBattlerIndex.Add(battlerInfo.Index);
+                }
+            }
+        }
+        return deathBattlerIndex;
+    }
+
+    public void TurnEnd()
+    {
+        _actionInfos.RemoveAt(0);
+        CurrentBattler.ResetAp();
+        _currentBattler = null;
     }
 
     public List<AttributeType> AttributeTypes()

@@ -150,4 +150,14 @@ public class ActorInfoComponent : MonoBehaviour
         }
         textMeshProUGUI.text = attributeParam;
     }
+
+    public void ChangeHp(int value,int maxHp)
+    {
+        statusInfoComponent.UpdateHp(value,maxHp);
+    }
+
+    public void HideUI()
+    {
+        statusInfoComponent.gameObject.SetActive(false);
+    }
 }

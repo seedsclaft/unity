@@ -47,6 +47,10 @@ public class StatusInfoComponent : MonoBehaviour
     }
     public void UpdateHp(int currentHp,int maxhp)
     {
+        if (currentHp < 0)
+        {
+            currentHp = 0;
+        }
         if (hp != null){
             hp.text = currentHp.ToString();
         }

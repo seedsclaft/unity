@@ -62,6 +62,8 @@ public class BattlerInfo
         _enemyData = enemyData;
         _hp = _status.Hp;
         _mp = _status.Mp;
+        _skills = new List<SkillInfo>();
+        _skills.Add(new SkillInfo(1));
         ResetAp();
     }
 
@@ -84,7 +86,7 @@ public class BattlerInfo
 
     public void UpdateAp()
     {
-        if (isActor == false) return;
+        if (isActor == true) return;
         _ap -= 4;
     }
 
@@ -94,5 +96,20 @@ public class BattlerInfo
             return _lastTargetIndex;
         }
         return -1;
+    }
+
+    public void ChangeHp(int value)
+    {
+        _hp += value;
+    }
+
+    public void ChangeMp(int value)
+    {
+        _mp += value;
+    }
+
+    public bool IsAlive()
+    {
+        return _hp > 0;
     }
 }

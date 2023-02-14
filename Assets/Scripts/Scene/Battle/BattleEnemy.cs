@@ -14,23 +14,40 @@ public class BattleEnemy : ListItem
     [SerializeField] private GameObject imageObject;
     [SerializeField] private Image enemyImage;
     [SerializeField] private EffekseerEmitter effekseerEmitter;
+    [SerializeField] private GameObject battleDamageRoot;
+    [SerializeField] private GameObject battleDamagePrefab;
+    [SerializeField] private _2dxFX_DestroyedFX deathAnimation;
+    private float _deathAnimation = 0.0f;
+    public bool IsBusy {
+        get {return effekseerEmitter.exists || _damageTiming > 0 || _battleDamage.IsBusy;}
+    }
     private bool _sizeInit = false;
+    private BattleDamage _battleDamage = null;
 
-    private BattlerInfo _data;
+    private BattlerInfo _battlerInfo;
     private int _index; 
     private EventTrigger eventTrigger;
     private EventTrigger.Entry entry1;
     private System.Action<int> _selectHandler;
+    private System.Action<int> _damageHandler;
+    private int _damageTiming = 0; 
     public void SetData(BattlerInfo battlerInfo,int index)
     {
         battlerInfoComponent.UpdateInfo(battlerInfo);
-        _data = battlerInfo;
+        _battlerInfo = battlerInfo;
         _index = index;
+        if (_battleDamage == null)
+        {
+            GameObject prefab = Instantiate(battleDamagePrefab);
+            battleDamageRoot.SetActive(true);
+            prefab.transform.SetParent(battleDamageRoot.transform, false);
+            _battleDamage = prefab.GetComponent<BattleDamage>();
+        }
     }
     
     public void SetCallHandler(System.Action<int> handler)
     {
-        if (_data == null) return;
+        if (_battlerInfo == null) return;
         clickButton.onClick.AddListener(() => handler((int)_index));
     }
     
@@ -48,8 +65,48 @@ public class BattleEnemy : ListItem
     }
 
     void OnMyPointerEnter(BaseEventData data) {
+        if (_battlerInfo.IsAlive() == false) return;
         _selectHandler(_index);
 	}
+
+
+    public void StartAnimation(EffekseerEffectAsset effectAsset)
+    {
+        effekseerEmitter.Play(effectAsset);
+    }
+
+    public void SetStartSkillDamage(int damageTiming,System.Action<int> callEvent)
+    {
+        _damageTiming = damageTiming;
+        _damageHandler = callEvent;
+    }
+
+    public void StartDamage(DamageType damageType,int value)
+    {
+        _battleDamage.StartDamage(damageType,value);
+        battlerInfoComponent.ChangeHp(value * -1);
+    }
+
+    public void StartDeathAnimation()
+    {
+        _deathAnimation = 0.01f;
+        battlerInfoComponent.HideUI();
+    }
+
+    public void RefreshStatus()
+    {
+        battlerInfoComponent.RefreshStatus();
+    }
+
+    private void Update() {
+        if (_sizeInit == false && enemyImage.sprite != null)
+        {
+            UpdateSizeDelta();
+            _sizeInit = true;
+        }
+        UpdateDamageTiming();
+        UpdateDeathAnimation();
+    }
 
     private void UpdateSizeDelta()
     {
@@ -60,16 +117,33 @@ public class BattleEnemy : ListItem
         objectRect.sizeDelta = new Vector2(imagerect.sizeDelta.x,rect.sizeDelta.y);
     }
 
-    public void StartAnimation(EffekseerEffectAsset effectAsset)
+    private void UpdateDamageTiming()
     {
-        effekseerEmitter.Play(effectAsset);
-    }
-
-    private void Update() {
-        if (_sizeInit == false && enemyImage.sprite != null)
+        if (_damageTiming > 0)
         {
-            UpdateSizeDelta();
-            _sizeInit = true;
+            _damageTiming--;
+            if (_damageTiming == 0)
+            {
+                _damageHandler(_index);
+                _damageHandler = null;
+            }
+        }
+    }
+    
+    private void UpdateDeathAnimation()
+    {
+        if (deathAnimation == null) return;
+        if (_deathAnimation <= 0) return;
+
+        deathAnimation.Destroyed = _deathAnimation;
+        if (_deathAnimation >= 1)
+        {
+            _deathAnimation = 0;
+            enemyImage.enabled = false;
+        } 
+        else
+        {
+            _deathAnimation += 0.01f;
         }
     }
 }

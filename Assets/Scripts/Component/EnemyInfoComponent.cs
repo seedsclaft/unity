@@ -47,4 +47,14 @@ public class EnemyInfoComponent : MonoBehaviour
             mainThumb.sprite = op.Result;
         };
     }
+
+    public void ChangeHp(int value,int maxHp)
+    {
+        statusInfoComponent.UpdateHp(value,maxHp);
+    }
+
+    public void HideUI()
+    {
+        statusInfoComponent.gameObject.SetActive(false);
+    }
 }

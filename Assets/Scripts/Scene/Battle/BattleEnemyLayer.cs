@@ -11,6 +11,10 @@ public class BattleEnemyLayer : MonoBehaviour
     private List<BattleEnemy> battleEnemies = new List<BattleEnemy>();
     private ScopeType _targetScopeType = ScopeType.None;
     private int _backStartIndex = 0;
+    private bool _animationBusy = false;
+    public bool AnimationBusy {
+        get {return _animationBusy;}
+    }
 
     public void Initialize(List<BattlerInfo> battlerInfos ,System.Action<List<int>> callEvent)
     {
@@ -168,7 +172,63 @@ public class BattleEnemyLayer : MonoBehaviour
     {
         for (int i = 0; i < indexList.Count;i++)
         {
-            battleEnemies[i].StartAnimation(effectAsset);
+            battleEnemies[indexList[i]].StartAnimation(effectAsset);
         }
+        _animationBusy = true;
+    }
+
+    public void StartAnimation(int targetIndex, EffekseerEffectAsset effectAsset)
+    {
+        battleEnemies[targetIndex].StartAnimation(effectAsset);
+        _animationBusy = true;
+    }
+
+    public void StartSkillDamage(int targetIndex,int damageTiming, System.Action<int> callEvent)
+    {
+        battleEnemies[targetIndex].SetStartSkillDamage(damageTiming,callEvent);
+        _animationBusy = true;
+    }
+
+
+    public void StartDamage(int targetIndex , DamageType damageType , int value)
+    {        
+        battleEnemies[targetIndex].StartDamage(damageType,value);
+    }
+
+    public void StartDeathAnimation(int targetIndex)
+    {
+        battleEnemies[targetIndex].StartDeathAnimation();
+    }
+
+    public void RefreshStatus()
+    {
+        for (int i = 0; i < battleEnemies.Count;i++)
+        {
+            battleEnemies[i].RefreshStatus();
+        }
+    }
+
+    private void Update() {
+        if (_animationBusy == true)
+        {
+            if (CheckAnimationBusy() == false)
+            {
+                _animationBusy = false;
+            }
+        }
+    }
+
+    private bool CheckAnimationBusy()
+    {
+        bool isBusy = false;
+        for (int i = 0; i < battleEnemies.Count;i++)
+        {
+            if (battleEnemies[i].IsBusy)
+            {
+                isBusy = true;
+                break;
+            }
+        }
+        return isBusy;
     }
 }

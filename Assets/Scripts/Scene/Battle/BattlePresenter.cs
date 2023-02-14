@@ -8,6 +8,7 @@ public class BattlePresenter
     BattleView _view = null;
 
     private bool _busy = true;
+    private Battle.CommandType _nextCommandType = Battle.CommandType.None;
     public BattlePresenter(BattleView view)
     {
         _view = view;
@@ -54,6 +55,14 @@ public class BattlePresenter
         {
             CommandEnemyLayer((List<int>)viewEvent.templete);
         }
+        if (viewEvent.commandType == Battle.CommandType.ActorList)
+        {
+            CommandActorList((List<int>)viewEvent.templete);
+        }
+        if (viewEvent.commandType == Battle.CommandType.EndAnimation)
+        {
+            CommandEndAnimation();
+        }
         if (viewEvent.commandType == Battle.CommandType.AttributeType)
         {
             CommandAttributeType((AttributeType)viewEvent.templete);
@@ -79,8 +88,24 @@ public class BattlePresenter
         if (_model.CurrentBattler != null)
         {
             _view.SetBusy(true);
-            _view.ShowSkillActionList(_model.CurrentBattler.ActorInfo);
-            CommandAttributeType(_model.CurrentAttributeType);
+            if (_model.CurrentBattler.isActor)
+            {
+                _view.ShowSkillActionList(_model.CurrentBattler.ActorInfo);
+                CommandAttributeType(_model.CurrentAttributeType);
+            } else
+            {
+                ActionInfo actionInfo = _model.MakeActionInfo(1);
+                var indexList = new List<int>();
+                indexList.Add(0);  
+                _model.MakeActionResultInfo(actionInfo,indexList);
+                if (actionInfo.actionResults[0].Target.isActor){
+                    CommandActorList(indexList);
+                } 
+                else
+                {
+                    CommandEnemyLayer(indexList);
+                }
+            }
         }
     }
 
@@ -88,11 +113,16 @@ public class BattlePresenter
     {
         _model.ClearActionInfo();
         ActionInfo actionInfo = _model.MakeActionInfo(skillId);
+        _view.HideSkillActionList();
         if (actionInfo.TargetType == TargetType.Opponent)
         {
-            _view.HideSkillActionList();
             _view.ShowEnemyTarget();
             _view.RefreshBattlerEnemyLayerTarget(actionInfo);
+        } else
+        if (actionInfo.TargetType == TargetType.Friend)
+        {
+            _view.ShowPartyTarget();
+            _view.RefreshBattlerPartyLayerTarget(actionInfo);
         }
         //
     }
@@ -104,12 +134,108 @@ public class BattlePresenter
         {
             _view.RefreshBattlerEnemyLayerTarget(null);
             _model.MakeActionResultInfo(actionInfo,enemyIndexList);
-            var animation = await _model.SkillActionAnimation(actionInfo);
-            if (actionInfo.Master.AnimationType == AnimationType.One)
+            var animation = await _model.SkillActionAnimation(actionInfo.Master.AnimationName);
+
+            _nextCommandType = Battle.CommandType.EndAnimation;
+            for (int i = 0; i < enemyIndexList.Count; i++)
             {
-                _view.StartSkillActionAnimation(enemyIndexList,animation);
+                _view.StartAnimationEnemy(enemyIndexList[i],animation);
+                _view.StartSkillDamageEnemy(enemyIndexList[i],actionInfo.Master.DamageTiming,(targetIndex) => StartSkillDamage(targetIndex));
             }
         }
+    }
+
+    private async void CommandActorList(List<int> partyIndexList)
+    {
+        ActionInfo actionInfo = _model.CurrentActionInfo();
+        if (actionInfo != null)
+        {
+            _view.RefreshBattlerPartyLayerTarget(null);
+            _model.MakeActionResultInfo(actionInfo,partyIndexList);
+            var animation = await _model.SkillActionAnimation(actionInfo.Master.AnimationName);
+            _nextCommandType = Battle.CommandType.EndAnimation;
+            for (int i = 0; i < partyIndexList.Count; i++)
+            {
+                _view.StartAnimationActor(partyIndexList[i],animation);
+                _view.StartSkillDamageActor(partyIndexList[i],actionInfo.Master.DamageTiming,(targetIndex) => StartSkillDamage(targetIndex));
+            }
+        }
+    }
+
+    private void StartSkillDamage(int targetIndex)
+    {
+        ActionInfo actionInfo = _model.CurrentActionInfo();
+        if (actionInfo != null)
+        {
+            List<ActionResultInfo> actionResultInfos = actionInfo.actionResults;
+            for (int i = 0; i < actionResultInfos.Count; i++)
+            {
+                if (actionResultInfos[i].HpDamage > 0)
+                {
+                    if (actionResultInfos[i].TargetIndex == targetIndex)
+                    {
+                        if (actionResultInfos[i].Target.isActor){
+                            _view.StartDamageActor(targetIndex,DamageType.HpDamage,actionResultInfos[i].HpDamage);
+                        } else{
+                            _view.StartDamageEnemy(targetIndex,DamageType.HpDamage,actionResultInfos[i].HpDamage);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private void CommandEndAnimation()
+    {
+        // ダメージなどを適用
+        _model.ExecActionResult();
+        List<int> deathBattlerIndex = _model.DeathBattlerIndex();
+        if (deathBattlerIndex.Count > 0)
+        {
+            //var animation = await _model.SkillActionAnimation("");
+            for (int i = 0; i < deathBattlerIndex.Count; i++)
+            {
+                _view.StartDeathAnimation(deathBattlerIndex[i]);
+            }
+        }
+        // ステートなどを適用
+        // ターン終了
+        _view.RefreshStatus();
+        _model.TurnEnd();
+        _view.SetBusy(false);
+        /*
+        ActionInfo actionInfo = _model.CurrentActionInfo();
+        if (actionInfo != null)
+        {
+            List<ActionResultInfo> actionResultInfos = actionInfo.actionResults;
+            for (int i = 0; i < actionResultInfos.Count; i++)
+            {
+                if (actionResultInfos[i].HpDamage > 0)
+                {
+                    if (actionResultInfos[i].TargetIndex == targetIndex)
+                    {
+                        _view.StartDamage(targetIndex,DamageType.HpDamage,actionResultInfos[i].HpDamage);
+                    }
+                }
+            }
+        }
+        /*
+        if (_nextCommandType == Battle.CommandType.StartDamage)
+        {
+            ActionInfo actionInfo = _model.CurrentActionInfo();
+            if (actionInfo != null)
+            {
+                List<ActionResultInfo> actionResultInfos = actionInfo.actionResults;
+                for (int i = 0; i < actionResultInfos.Count; i++)
+                {
+                    if (actionResultInfos[i].HpDamage > 0)
+                    {
+                        _view.StartDamage(actionResultInfos[i].TargetIndex,DamageType.HpDamage,actionResultInfos[i].HpDamage);
+                    }
+                }
+            }
+        }
+        */
     }
 
     private void CommandAttributeType(AttributeType attributeType)

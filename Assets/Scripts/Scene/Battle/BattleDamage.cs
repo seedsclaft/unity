@@ -3,50 +3,115 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using TMPro;
+using DG.Tweening;
 
 public class BattleDamage : MonoBehaviour
 {
-    [SerializeField] private List<TextMeshProUGUI> hpDamageList;
-    [SerializeField] private List<TextMeshProUGUI> hpCriticalList;
-    [SerializeField] private List<TextMeshProUGUI> hpHealList;
-    [SerializeField] private List<TextMeshProUGUI> mpHealList;
+    [SerializeField] private GameObject hpDamageRoot;
+    [SerializeField] private GameObject hpDamagePrefab;
+    [SerializeField] private GameObject hpCriticalRoot;
+    [SerializeField] private GameObject hpCriticalPrefab;
+    [SerializeField] private GameObject hpHealRoot;
+    [SerializeField] private GameObject hpHealPrefab;
+    [SerializeField] private GameObject mpHealRoot;
+    [SerializeField] private GameObject mpHealPrefab;
+    //[SerializeField] private List<TextMeshProUGUI> mpHealList;
 
+    private bool _busy = false;
+    public bool IsBusy{
+        get {return _busy;}
+    }
     private void Awake() {
         UpdateAllHide();
     }
 
     public void UpdateAllHide()
     {
-        hpCriticalList.ForEach(a => a.gameObject.SetActive(false));
-        hpDamageList.ForEach(a => a.gameObject.SetActive(false));
-        hpHealList.ForEach(a => a.gameObject.SetActive(false));
-        mpHealList.ForEach(a => a.gameObject.SetActive(false));
+        DestroyChild(hpDamageRoot);
+        DestroyChild(hpCriticalRoot);
+        DestroyChild(hpHealRoot);
+        DestroyChild(mpHealRoot);
     }
 
-    public void StartDamage(DamageType damageType,int damage)
+    private void DestroyChild(GameObject gameObject)
     {
-        UpdateAllHide();
-        string result = damage.ToString();
-        for (int i = 0; i < result.Count(); i++)
-        {   
-            TextMeshProUGUI textMeshProUGUI = GetListType(damageType)[i];
-            textMeshProUGUI.text = result[i].ToString();
-            textMeshProUGUI.gameObject.SetActive(true);
+        foreach(Transform child in gameObject.transform){
+            Destroy(child.gameObject);
         }
     }
 
-    private List<TextMeshProUGUI> GetListType(DamageType damageType)
+    public void StartDamage(DamageType damageType,int value)
+    {
+        UpdateAllHide();
+        _busy = true;
+        string result = value.ToString();
+        List<GameObject> _damageList = new List<GameObject>();
+        for (int i = 0; i < result.Count(); i++)
+        {   
+            GameObject prefab = Instantiate(GetPrefabType(damageType));
+            prefab.transform.SetParent(GetRootType(damageType).transform, false);
+            TextMeshProUGUI textMeshProUGUI = prefab.GetComponent<TextMeshProUGUI>();
+            textMeshProUGUI.text = result[i].ToString();
+            _damageList.Add(prefab);
+        }
+
+        for (int i = _damageList.Count-1; i >= 0; i--)
+        {   
+            TextMeshProUGUI textMeshProUGUI = _damageList[i].GetComponent<TextMeshProUGUI>();
+            textMeshProUGUI.alpha = 0;
+            textMeshProUGUI.DOFade(0.0f, 0.0f)
+                .SetDelay(1.8f)
+                .SetEase(Ease.InOutQuad)
+                .OnComplete(() => {
+                    _busy = false;
+                    textMeshProUGUI.DOFade(0.0f, 0.2f);
+                });
+            Sequence sequence = DOTween.Sequence()
+                .SetDelay(i * 0.05f)
+                .Append(textMeshProUGUI.DOFade(1.0f, 0.1f))
+                .SetEase(Ease.InOutQuad)
+                .Append(textMeshProUGUI.gameObject.transform.DOLocalMoveY(16, 0.1f))
+                .SetDelay(0.1f)
+                .SetEase(Ease.InOutQuad)
+                .Append(textMeshProUGUI.gameObject.transform.DOLocalMoveY(0, 0.2f))
+                .SetDelay(0.25f)
+                .SetEase(Ease.InOutQuad)
+                .Append(textMeshProUGUI.gameObject.transform.DOLocalMoveY(4, 0.05f))
+                .SetDelay(0.05f)
+                .SetEase(Ease.InOutQuad)
+                .Append(textMeshProUGUI.gameObject.transform.DOLocalMoveY(0, 0.05f))
+                .OnComplete(() => Debug.Log("Completed"));
+        }
+    }
+
+    private GameObject GetPrefabType(DamageType damageType)
     {
         switch (damageType)
         {
             case DamageType.HpDamage:
-            return hpDamageList;
+            return hpDamagePrefab;
             case DamageType.HpCritical:
-            return hpCriticalList;
+            return hpCriticalPrefab;
             case DamageType.HpHeal:
-            return hpHealList;
+            return hpHealPrefab;
             case DamageType.MpHeal:
-            return mpHealList;
+            return mpHealPrefab;
+        }
+        return null;
+    }
+    
+    private GameObject GetRootType(DamageType damageType)
+    {
+        switch (damageType)
+        {
+            case DamageType.HpDamage:
+            return hpDamageRoot;
+            case DamageType.HpCritical:
+            return hpCriticalRoot;
+            case DamageType.HpHeal:
+            return hpHealRoot;
+            case DamageType.MpHeal:
+            return mpHealRoot;
         }
         return null;
     }

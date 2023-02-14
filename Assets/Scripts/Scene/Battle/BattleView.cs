@@ -27,6 +27,7 @@ public class BattleView : BaseView
     {
         _busy = isBusy;
     }
+    private bool _animationBusy = false;
 
 
     protected void Awake()
@@ -64,6 +65,11 @@ public class BattleView : BaseView
     public void ShowEnemyTarget()
     {
         battleEnemyLayer.gameObject.SetActive(true);
+    }
+
+    public void ShowPartyTarget()
+    {
+        battleActorList.gameObject.SetActive(true);
     }
 
     public void CreateObject()
@@ -123,10 +129,10 @@ public class BattleView : BaseView
         _commandData(eventData);
     }
 
-    private void CallActorList(int index)
+    private void CallActorList(List<int> indexList)
     {
         var eventData = new BattleViewEvent(CommandType.ActorList);
-        eventData.templete = index;
+        eventData.templete = indexList;
         _commandData(eventData);
     }
 
@@ -172,9 +178,57 @@ public class BattleView : BaseView
         battleEnemyLayer.RefreshTarget(actionInfo);
     }
 
+    public void RefreshBattlerPartyLayerTarget(ActionInfo actionInfo)
+    {
+        battleActorList.RefreshTarget(actionInfo);
+    }
+
     public void StartSkillActionAnimation(List<int> indexList,EffekseerEffectAsset effekseerEffectAsset)
     {
+        _animationBusy = true;
         battleEnemyLayer.StartAnimation(indexList,effekseerEffectAsset);
+    }
+
+    public void StartAnimationActor(int targetIndex,EffekseerEffectAsset effekseerEffectAsset)
+    {
+        _animationBusy = true;
+        battleActorList.StartAnimation(targetIndex,effekseerEffectAsset);
+    }
+
+    public void StartAnimationEnemy(int targetIndex,EffekseerEffectAsset effekseerEffectAsset)
+    {
+        _animationBusy = true;
+        battleEnemyLayer.StartAnimation(targetIndex,effekseerEffectAsset);
+    }
+
+    public void StartSkillDamageActor(int targetIndex,int damageTiming,System.Action<int> callEvent)
+    {
+        battleActorList.StartSkillDamage(targetIndex,damageTiming,callEvent);
+    }
+
+    public void StartSkillDamageEnemy(int targetIndex,int damageTiming,System.Action<int> callEvent)
+    {
+        battleEnemyLayer.StartSkillDamage(targetIndex,damageTiming,callEvent);
+    }
+
+    public void StartDamageActor(int targetIndex,DamageType damageType,int value)
+    {
+        battleActorList.StartDamage(targetIndex,damageType,value);
+    }
+
+    public void StartDamageEnemy(int targetIndex,DamageType damageType,int value)
+    {
+        battleEnemyLayer.StartDamage(targetIndex,damageType,value);
+    }
+
+    public void StartDeathAnimation(int targetIndex)
+    {
+        battleEnemyLayer.StartDeathAnimation(targetIndex);
+    }
+
+    public void RefreshStatus()
+    {
+        battleEnemyLayer.RefreshStatus();
     }
 
     public void SetAttributeTypes(List<AttributeType> attributeTypes)
@@ -197,6 +251,11 @@ public class BattleView : BaseView
 
     private void Update() 
     {
+        if (_animationBusy == true)
+        {
+            CheckAnimationBusy();
+            return;
+        }
         if (_busy == true) return;
         var eventData = new BattleViewEvent(CommandType.UpdateAp);
         _commandData(eventData);
@@ -205,6 +264,19 @@ public class BattleView : BaseView
     public void UpdateAp() 
     {
         battleGridLayer.UpdatePosition();
+    }
+
+    private void CheckAnimationBusy()
+    {
+        if (_animationBusy == true)
+        {
+            if (battleEnemyLayer.AnimationBusy == false && battleActorList.AnimationBusy == false)
+            {
+                _animationBusy = false;
+                var eventData = new BattleViewEvent(CommandType.EndAnimation);
+                _commandData(eventData);
+            }
+        }
     }
 }
 
@@ -221,7 +293,9 @@ namespace Battle
         ActorList,
         UpdateAp,
         SkillAction,
-        EnemyLayer
+        EnemyLayer,
+        EndAnimation,
+        StartDamage
     }
 }
 
