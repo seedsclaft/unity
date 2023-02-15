@@ -182,6 +182,15 @@ public class BattleActorList : ListWindow , IInputHandlerEvent
     private void UpdateLineSelect(int index){
     }
     
+    public void RefreshStatus()
+    {
+        for (int i = 0; i < ObjectList.Count;i++)
+        {
+            BattleActor battleActor = ObjectList[i].GetComponent<BattleActor>();
+            battleActor.RefreshStatus();
+        }
+    }
+    
     private void Update() {
         if (_animationBusy == true)
         {

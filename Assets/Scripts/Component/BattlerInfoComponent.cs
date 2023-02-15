@@ -30,10 +30,21 @@ public class BattlerInfoComponent : MonoBehaviour
     {
         if (_battlerInfo.isActor)
         {
-            actorInfoComponent.ChangeHp(value + _battlerInfo.Hp,_battlerInfo.ActorInfo.MaxHp);
+            actorInfoComponent.ChangeHp(value,_battlerInfo.ActorInfo.MaxHp);
         } else
         {
-            enemyInfoComponent.ChangeHp(value + _battlerInfo.Hp,_battlerInfo.Status.Hp);
+            enemyInfoComponent.ChangeHp(value,_battlerInfo.Status.Hp);
+        }
+    }
+
+    public void ChangeMp(int value)
+    {
+        if (_battlerInfo.isActor)
+        {
+            actorInfoComponent.ChangeMp(value,_battlerInfo.ActorInfo.Mp);
+        } else
+        {
+            enemyInfoComponent.ChangeMp(value,_battlerInfo.Status.Mp);
         }
     }
 
@@ -46,6 +57,8 @@ public class BattlerInfoComponent : MonoBehaviour
         {
             enemyInfoComponent.UpdateInfo(_battlerInfo);
         }
+        ChangeHp(_battlerInfo.Hp);
+        ChangeMp(_battlerInfo.Mp);
     }
 
     public void HideUI()

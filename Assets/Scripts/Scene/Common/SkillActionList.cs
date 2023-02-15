@@ -21,7 +21,14 @@ public class SkillActionList : ListWindow , IInputHandlerEvent
         for (int i = 0; i < rows;i++)
         {
             var skillAction = ObjectList[i].GetComponent<SkillAction>();
-            skillAction.SetCallHandler(callEvent);
+            skillAction.SetCallHandler((d) => {
+                SkillInfo skillInfo = _data.Find(a => a.Id == d);
+                if (skillInfo.Enabel == false)
+                {
+                    return;
+                }
+                callEvent(d);
+            } );
             skillAction.SetSelectHandler((data) => UpdateSelectIndex(data));
             ObjectList[i].SetActive(false);
         }

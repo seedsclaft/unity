@@ -89,7 +89,7 @@ public class BattleActor : ListItem ,IListViewItem ,IClickHandlerEvent
     public void StartDamage(DamageType damageType,int value)
     {
         _battleDamage.StartDamage(damageType,value);
-        battlerInfoComponent.ChangeHp(value * -1);
+        battlerInfoComponent.ChangeHp(value * -1 + _data.Hp);
     }
 
     public void StartDeathAnimation()
@@ -97,6 +97,13 @@ public class BattleActor : ListItem ,IListViewItem ,IClickHandlerEvent
         _deathAnimation = 0.01f;
         battlerInfoComponent.HideUI();
     }
+    
+    public void RefreshStatus()
+    {
+        if (_data == null) return;
+        battlerInfoComponent.RefreshStatus();
+    }
+
     private void Update() {
         UpdateDamageTiming();
         UpdateDeathAnimation();

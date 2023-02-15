@@ -57,7 +57,7 @@ public class BattlerInfo
         StatusInfo statusInfo = new StatusInfo();
         statusInfo.SetParameter(enemyData.BaseStatus.Hp,enemyData.BaseStatus.Mp,enemyData.BaseStatus.Atk,enemyData.BaseStatus.Def,enemyData.BaseStatus.Spd);
         _status = statusInfo;
-        _index = index;
+        _index = index + 100;
         _isActor = false;
         _enemyData = enemyData;
         _hp = _status.Hp;
@@ -86,7 +86,7 @@ public class BattlerInfo
 
     public void UpdateAp()
     {
-        if (isActor == true) return;
+        if (isActor == false) return;
         _ap -= 4;
     }
 
@@ -101,11 +101,23 @@ public class BattlerInfo
     public void ChangeHp(int value)
     {
         _hp += value;
+        if (_hp < 0){
+            _hp = 0;
+        }
+        if (_hp > _status.Hp){
+            _hp = _status.Hp;
+        }
     }
 
     public void ChangeMp(int value)
     {
         _mp += value;
+        if (_mp < 0){
+            _mp = 0;
+        }
+        if (_mp > _status.Mp){
+            _mp = _status.Mp;
+        }
     }
 
     public bool IsAlive()

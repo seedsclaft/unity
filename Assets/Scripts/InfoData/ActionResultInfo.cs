@@ -4,20 +4,22 @@ using UnityEngine;
 
 public class ActionResultInfo 
 {
-    private BattlerInfo _subject = null;
-    private BattlerInfo _target = null;
+    private int _subjectIndex = 0;
+    public BattlerInfo Subject{
+        get {return _battlerInfos.Find(a => a.Index == _subjectIndex);}
+    }
+    private int _targetIndex = 0;
     public BattlerInfo Target{
-        get {return _target;}
+        get {return _battlerInfos.Find(a => a.Index == _targetIndex);}
     }
     private ActionInfo _actionInfo = null;
 
 
-    public ActionResultInfo(BattlerInfo subject,BattlerInfo target,ActionInfo actionInfo)
+    public ActionResultInfo(int subjectIndex,int targetIndex,ActionInfo actionInfo)
     {
-        _subject = subject;
-        _target = target;
+        _subjectIndex = subjectIndex;
+        _targetIndex = targetIndex;
         _actionInfo = actionInfo;
-        MakeResultData();
     }
 
     private int _hpDamage = 0;
@@ -29,11 +31,13 @@ public class ActionResultInfo
         get {return _isDead;}
     }
     public int TargetIndex{
-        get { return _target.Index;}
+        get { return _targetIndex;}
     }
 
-    public void MakeResultData()
+    private List<BattlerInfo> _battlerInfos = new List<BattlerInfo>();
+    public void MakeResultData(List<BattlerInfo> battlerInfos)
     {
+        _battlerInfos = battlerInfos;
         List<SkillsData.FeatureData> featureDatas = _actionInfo.Master.FeatureDatas;
         for (int i = 0; i < featureDatas.Count; i++)
         {
@@ -54,14 +58,14 @@ public class ActionResultInfo
 
     private void MakeHpDamage(SkillsData.FeatureData featureData)
     {
-        int AtkValue = _subject.Status.Atk;
-        int DefValue = _target.Status.Def;
+        int AtkValue = Subject.Status.Atk;
+        int DefValue = Target.Status.Def;
         float DamageValue = Mathf.Max(0,(featureData.Param1 * 0.01f * (AtkValue * 0.5f)) - (DefValue * 0.5f));
         _hpDamage = (int)Mathf.Round(DamageValue);
         // 属性補正
         // クリティカル
         _hpDamage = ApplyVariance(_hpDamage);
-        if (_hpDamage >= _target.Hp)
+        if (_hpDamage >= Target.Hp)
         {
             _isDead = true;
         }

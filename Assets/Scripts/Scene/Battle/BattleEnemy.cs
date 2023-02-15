@@ -84,7 +84,7 @@ public class BattleEnemy : ListItem
     public void StartDamage(DamageType damageType,int value)
     {
         _battleDamage.StartDamage(damageType,value);
-        battlerInfoComponent.ChangeHp(value * -1);
+        battlerInfoComponent.ChangeHp(value * -1 + _battlerInfo.Hp);
     }
 
     public void StartDeathAnimation()
@@ -124,7 +124,7 @@ public class BattleEnemy : ListItem
             _damageTiming--;
             if (_damageTiming == 0)
             {
-                _damageHandler(_index);
+                _damageHandler(_battlerInfo.Index);
                 _damageHandler = null;
             }
         }

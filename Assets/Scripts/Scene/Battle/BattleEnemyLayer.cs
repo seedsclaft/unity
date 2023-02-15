@@ -31,12 +31,18 @@ public class BattleEnemyLayer : MonoBehaviour
             var battleEnemy = prefab.GetComponent<BattleEnemy>();
             battleEnemy.SetData(battlerInfos[i],i);
             battleEnemy.SetCallHandler((enemyIndex) => {
+                if (battlerInfos[enemyIndex].IsAlive() == false){
+                    return;
+                }
                 List<int> indexList = new List<int>();
                 if (_targetScopeType == ScopeType.All)
                 {
                     for (int i = 0; i < battleEnemies.Count;i++)
                     {
-                        indexList.Add(i);
+                        if (battlerInfos[i].IsAlive())
+                        {
+                            indexList.Add(battlerInfos[i].Index);
+                        }
                     }
                 } else
                 if (_targetScopeType == ScopeType.Line)
@@ -47,23 +53,35 @@ public class BattleEnemyLayer : MonoBehaviour
                         {
                             if (i < _backStartIndex)
                             {
-                                indexList.Add(i);
+                                if (battlerInfos[i].IsAlive())
+                                {
+                                    indexList.Add(battlerInfos[i].Index);
+                                }
                             }
                         } else{
                             if (i >= _backStartIndex)
                             {
-                                indexList.Add(i);
+                                if (battlerInfos[i].IsAlive())
+                                {
+                                    indexList.Add(battlerInfos[i].Index);
+                                }
                             }
                         }
                     }
                 } else
                 if (_targetScopeType == ScopeType.One)
                 {
-                    indexList.Add(enemyIndex);
+                    if (battlerInfos[enemyIndex].IsAlive())
+                    {
+                        indexList.Add(battlerInfos[enemyIndex].Index);
+                    }
                 } else
                 if (_targetScopeType == ScopeType.Self)
                 {
-                    indexList.Add(enemyIndex);
+                    if (battlerInfos[enemyIndex].IsAlive())
+                    {
+                        indexList.Add(battlerInfos[enemyIndex].Index);
+                    }
                 }
                 callEvent(indexList);
             });

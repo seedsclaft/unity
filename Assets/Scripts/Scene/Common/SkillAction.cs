@@ -44,6 +44,7 @@ public class SkillAction : ListItem ,IListViewItem ,IClickHandlerEvent
     {
         if (_data == null) return;
         skillInfoComponent.SetInfoData(_data);
+        Disable.SetActive(_data.Enabel == false);
     }
 
     public void ClickHandler()

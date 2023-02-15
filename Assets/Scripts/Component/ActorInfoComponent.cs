@@ -156,6 +156,11 @@ public class ActorInfoComponent : MonoBehaviour
         statusInfoComponent.UpdateHp(value,maxHp);
     }
 
+    public void ChangeMp(int value,int maxMp)
+    {
+        statusInfoComponent.UpdateMp(value,maxMp);
+    }
+
     public void HideUI()
     {
         statusInfoComponent.gameObject.SetActive(false);

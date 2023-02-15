@@ -139,8 +139,8 @@ public class BattlePresenter
             _nextCommandType = Battle.CommandType.EndAnimation;
             for (int i = 0; i < enemyIndexList.Count; i++)
             {
-                _view.StartAnimationEnemy(enemyIndexList[i],animation);
-                _view.StartSkillDamageEnemy(enemyIndexList[i],actionInfo.Master.DamageTiming,(targetIndex) => StartSkillDamage(targetIndex));
+                _view.StartAnimation(enemyIndexList[i],animation);
+                _view.StartSkillDamage(enemyIndexList[i],actionInfo.Master.DamageTiming,(targetIndex) => StartSkillDamage(targetIndex));
             }
         }
     }
@@ -154,10 +154,16 @@ public class BattlePresenter
             _model.MakeActionResultInfo(actionInfo,partyIndexList);
             var animation = await _model.SkillActionAnimation(actionInfo.Master.AnimationName);
             _nextCommandType = Battle.CommandType.EndAnimation;
+            if (actionInfo.Master.AnimationType == AnimationType.All)
+            {
+                _view.StartAnimationAll(animation);
+            }
             for (int i = 0; i < partyIndexList.Count; i++)
             {
-                _view.StartAnimationActor(partyIndexList[i],animation);
-                _view.StartSkillDamageActor(partyIndexList[i],actionInfo.Master.DamageTiming,(targetIndex) => StartSkillDamage(targetIndex));
+                if (actionInfo.Master.AnimationType != AnimationType.All){
+                    _view.StartAnimation(partyIndexList[i],animation);
+                }
+                _view.StartSkillDamage(partyIndexList[i],actionInfo.Master.DamageTiming,(targetIndex) => StartSkillDamage(targetIndex));
             }
         }
     }
@@ -174,11 +180,7 @@ public class BattlePresenter
                 {
                     if (actionResultInfos[i].TargetIndex == targetIndex)
                     {
-                        if (actionResultInfos[i].Target.isActor){
-                            _view.StartDamageActor(targetIndex,DamageType.HpDamage,actionResultInfos[i].HpDamage);
-                        } else{
-                            _view.StartDamageEnemy(targetIndex,DamageType.HpDamage,actionResultInfos[i].HpDamage);
-                        }
+                        _view.StartDamage(targetIndex,DamageType.HpDamage,actionResultInfos[i].HpDamage);
                     }
                 }
             }

@@ -59,12 +59,16 @@ public class StatusInfoComponent : MonoBehaviour
             //RectTransform bgRect = hpGaugeBg.gameObject.GetComponent < RectTransform > ();
             RectTransform rect = hpGauge.gameObject.GetComponent < RectTransform > ();
             //bgRect.sizeDelta = new Vector2(maxhp,bgRect.sizeDelta.y);
-            rect.sizeDelta = new Vector2(80 * (currentHp / maxhp) - 3,rect.sizeDelta.y);
+            rect.sizeDelta = new Vector2(80 * (currentHp * 100 / maxhp) * 0.01f - 3,rect.sizeDelta.y);
             //hpGauge.fillAmount = currentHp / maxhp;
         }
     }
     public void UpdateMp(int currentMp,int maxmp)
     {
+        if (currentMp < 0)
+        {
+            currentMp = 0;
+        }
         if (mp != null){
             mp.text = currentMp.ToString();
         }
@@ -73,7 +77,7 @@ public class StatusInfoComponent : MonoBehaviour
             RectTransform bgRect = mpGaugeBg.gameObject.GetComponent < RectTransform > ();
             RectTransform rect = mpGauge.gameObject.GetComponent < RectTransform > ();
             bgRect.sizeDelta = new Vector2(maxmp * 1.5f,bgRect.sizeDelta.y);
-            rect.sizeDelta = new Vector2(maxmp * 1.5f * (currentMp / maxmp) - 3,rect.sizeDelta.y);
+            rect.sizeDelta = new Vector2(maxmp * 1.5f * (currentMp*100 / maxmp) * 0.01f - 3,rect.sizeDelta.y);
             //mpGauge.fillAmount = currentMp / maxmp;
         }
     }

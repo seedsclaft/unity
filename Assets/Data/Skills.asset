@@ -16,8 +16,8 @@ MonoBehaviour:
   - Id: 1
     Name: "\u653B\u6483"
     IconIndex: 1
-    AnimationName: NA_magic_001
-    AnimationType: 1
+    AnimationName: tktk01/Fire2
+    AnimationType: 3
     DamageTiming: 32
     MpCost: 0
     Attribute: 0
@@ -41,12 +41,12 @@ MonoBehaviour:
     AnimationName: NA_Fire_001
     AnimationType: 1
     DamageTiming: 32
-    MpCost: 5
+    MpCost: 0
     Attribute: 1
     Scope: 1
     EffectType: 1
     EffectValue: 150
-    TargetType: 2
+    TargetType: 1
     Help: "\u6575\u5358\u4F53\u306B\u30C0\u30E1\u30FC\u30B8"
     Range: 1
     TriggerType: 0
@@ -63,7 +63,7 @@ MonoBehaviour:
     AnimationName: NA_Fire_001
     AnimationType: 1
     DamageTiming: 32
-    MpCost: 5
+    MpCost: 0
     Attribute: 1
     Scope: 1
     EffectType: 1
@@ -85,7 +85,7 @@ MonoBehaviour:
     AnimationName: NA_Fire_001
     AnimationType: 2
     DamageTiming: 32
-    MpCost: 5
+    MpCost: 20
     Attribute: 1
     Scope: 2
     EffectType: 1

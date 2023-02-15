@@ -20,6 +20,8 @@ public class BattleView : BaseView
     [SerializeField] private GameObject helpRoot = null;
     [SerializeField] private GameObject helpPrefab = null;
     [SerializeField] private GameObject backPrefab = null;
+    
+    [SerializeField] private EffekseerEmitter effekseerEmitter = null;
     private HelpWindow _helpWindow = null;
 
     private bool _busy = false;
@@ -189,45 +191,51 @@ public class BattleView : BaseView
         battleEnemyLayer.StartAnimation(indexList,effekseerEffectAsset);
     }
 
-    public void StartAnimationActor(int targetIndex,EffekseerEffectAsset effekseerEffectAsset)
+    public void StartAnimation(int targetIndex,EffekseerEffectAsset effekseerEffectAsset)
     {
         _animationBusy = true;
-        battleActorList.StartAnimation(targetIndex,effekseerEffectAsset);
+        if (targetIndex >= 100)
+        {
+            battleEnemyLayer.StartAnimation(targetIndex - 100,effekseerEffectAsset);
+        } else
+        {
+            battleActorList.StartAnimation(targetIndex,effekseerEffectAsset);
+        }
     }
 
-    public void StartAnimationEnemy(int targetIndex,EffekseerEffectAsset effekseerEffectAsset)
+    public void StartAnimationAll(EffekseerEffectAsset effekseerEffectAsset)
     {
-        _animationBusy = true;
-        battleEnemyLayer.StartAnimation(targetIndex,effekseerEffectAsset);
+        effekseerEmitter.Play(effekseerEffectAsset);
     }
 
-    public void StartSkillDamageActor(int targetIndex,int damageTiming,System.Action<int> callEvent)
+    public void StartSkillDamage(int targetIndex,int damageTiming,System.Action<int> callEvent)
     {
-        battleActorList.StartSkillDamage(targetIndex,damageTiming,callEvent);
+        if (targetIndex >= 100)
+        {
+            battleEnemyLayer.StartSkillDamage(targetIndex - 100,damageTiming,callEvent);
+        } else{
+            battleActorList.StartSkillDamage(targetIndex,damageTiming,callEvent);
+        }
     }
 
-    public void StartSkillDamageEnemy(int targetIndex,int damageTiming,System.Action<int> callEvent)
+    public void StartDamage(int targetIndex,DamageType damageType,int value)
     {
-        battleEnemyLayer.StartSkillDamage(targetIndex,damageTiming,callEvent);
-    }
-
-    public void StartDamageActor(int targetIndex,DamageType damageType,int value)
-    {
-        battleActorList.StartDamage(targetIndex,damageType,value);
-    }
-
-    public void StartDamageEnemy(int targetIndex,DamageType damageType,int value)
-    {
-        battleEnemyLayer.StartDamage(targetIndex,damageType,value);
+        if (targetIndex >= 100)
+        {
+            battleEnemyLayer.StartDamage(targetIndex - 100,damageType,value);
+        } else{
+            battleActorList.StartDamage(targetIndex,damageType,value);
+        }
     }
 
     public void StartDeathAnimation(int targetIndex)
     {
-        battleEnemyLayer.StartDeathAnimation(targetIndex);
+        battleEnemyLayer.StartDeathAnimation(targetIndex - 100);
     }
 
     public void RefreshStatus()
     {
+        battleActorList.RefreshStatus();
         battleEnemyLayer.RefreshStatus();
     }
 

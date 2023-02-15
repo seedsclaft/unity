@@ -118,7 +118,16 @@ public class BattleModel : BaseModel
         {
             _currentAttributeType = attributeType;
         }
-        return CurrentBattler.Skills.FindAll(a => a.Attribute == _currentAttributeType);
+        List<SkillInfo> skillInfos = CurrentBattler.Skills.FindAll(a => a.Attribute == _currentAttributeType);
+        for (int i = 0; i < skillInfos.Count;i++)
+        {
+            skillInfos[i].SetEnable();
+            if (skillInfos[i].Master.MpCost > CurrentBattler.Mp)
+            {
+                skillInfos[i].SetDisable();
+            }
+        }
+        return skillInfos;
     }
 
     public void ClearActionInfo()
@@ -144,7 +153,7 @@ public class BattleModel : BaseModel
                 LastTargetIndex = _currentBattler.Index;
             }
         }
-        ActionInfo actionInfo = new ActionInfo(skillId,_currentBattler,LastTargetIndex);
+        ActionInfo actionInfo = new ActionInfo(skillId,_currentBattler.Index,LastTargetIndex);
         _actionInfos.Add(actionInfo);
         return actionInfo;
     }
@@ -158,16 +167,16 @@ public class BattleModel : BaseModel
     }
 
     public void MakeActionResultInfo(ActionInfo actionInfo,List<int> indexList)
-    {
+    {   
         List<BattlerInfo> targetInfos = new List<BattlerInfo>();
-        if (actionInfo.Subject.isActor)
+        if (actionInfo.SubjectIndex < 100)
         {
             if (actionInfo.Master.TargetType == TargetType.Opponent)
             {
                 targetInfos = BattlerEnemies();
                 if (indexList.Count > 0)
                 {
-                    CurrentBattler.SetLastTargetIndex(indexList[0]);
+                    CurrentBattler.SetLastTargetIndex(indexList[0] - 100);
                 }
             } else
             if (actionInfo.Master.TargetType == TargetType.Friend)
@@ -188,7 +197,9 @@ public class BattleModel : BaseModel
         List<ActionResultInfo> actionResultInfos = new List<ActionResultInfo>();
         for (int i = 0; i < indexList.Count;i++)
         {
-            ActionResultInfo actionResultInfo = new ActionResultInfo(CurrentBattler,targetInfos[indexList[i]],CurrentActionInfo());
+            int targetIndex = targetInfos.Find(a => a.Index == indexList[i]).Index;
+            ActionResultInfo actionResultInfo = new ActionResultInfo(CurrentBattler.Index,targetIndex,CurrentActionInfo());
+            actionResultInfo.MakeResultData(_battlers);
             actionResultInfos.Add(actionResultInfo);
         }
         actionInfo.SetActionResult(actionResultInfos);
@@ -206,6 +217,8 @@ public class BattleModel : BaseModel
         ActionInfo actionInfo = CurrentActionInfo();
         if (actionInfo != null)
         {
+            // Mpの支払い
+            CurrentBattler.ChangeMp(actionInfo.Master.MpCost * -1);
             List<ActionResultInfo> actionResultInfos = actionInfo.actionResults;
             for (int i = 0; i < actionResultInfos.Count; i++)
             {
