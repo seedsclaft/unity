@@ -85,6 +85,15 @@ public class BattleModel : BaseModel
         }
     }
 
+    public void SetActionBattler(int targetIndex)
+    {
+        BattlerInfo battlerInfo = GetBattlerInfo(targetIndex);
+        if (battlerInfo != null)
+        {
+            _currentBattler = battlerInfo;
+        }
+    }
+
     public void ChangeActorIndex(int value){
         _currentIndex += value;
         if (_currentIndex > Actors().Count-1){
@@ -123,6 +132,10 @@ public class BattleModel : BaseModel
         {
             skillInfos[i].SetEnable();
             if (skillInfos[i].Master.MpCost > CurrentBattler.Mp)
+            {
+                skillInfos[i].SetDisable();
+            }
+            if (skillInfos[i].Master.SkillType != SkillType.Magic)
             {
                 skillInfos[i].SetDisable();
             }
@@ -194,6 +207,8 @@ public class BattleModel : BaseModel
                 targetInfos = BattlerEnemies();
             }
         }
+        int MpCost = actionInfo.Master.MpCost;
+        actionInfo.SetMpCost(MpCost);
         List<ActionResultInfo> actionResultInfos = new List<ActionResultInfo>();
         for (int i = 0; i < indexList.Count;i++)
         {
@@ -255,6 +270,56 @@ public class BattleModel : BaseModel
         _actionInfos.RemoveAt(0);
         CurrentBattler.ResetAp();
         _currentBattler = null;
+    }
+
+    public List<ActionInfo> CheckTriggerSkillInfos(TriggerTiming triggerTiming)
+    {
+        List<ActionInfo> actionInfos = new List<ActionInfo>();
+        List <SkillInfo> triggeredSkills = CurrentBattler.TriggerdSkillInfos(triggerTiming,CurrentActionInfo());
+        if (triggeredSkills.Count > 0)
+        {
+            for (var i = 0;i < triggeredSkills.Count;i++){
+                ActionInfo makeActionInfo = MakeActionInfo(triggeredSkills[i].Id);
+                actionInfos.Add(makeActionInfo);
+            }
+        }
+        return actionInfos;
+    }
+
+    public List<int> MakeAutoSelectIndex(ActionInfo actionInfo)
+    {
+        List<int> indexList = new List<int>();
+        List<BattlerInfo> targetInfos = new List<BattlerInfo>();
+        if (actionInfo.SubjectIndex < 100)
+        {
+            if (actionInfo.Master.TargetType == TargetType.Opponent)
+            {
+                targetInfos = BattlerEnemies();
+                if (targetInfos.Find(targetInfo => targetInfo.Index == CurrentBattler.LastTargetIndex()) != null)
+                {
+                    indexList.Add(CurrentBattler.LastTargetIndex());
+                }
+            } else
+            if (actionInfo.Master.TargetType == TargetType.Friend)
+            {
+                targetInfos = BattlerActors();
+            }
+        } else
+        {
+            if (actionInfo.Master.TargetType == TargetType.Opponent)
+            {
+                targetInfos = BattlerActors();
+            } else
+            if (actionInfo.Master.TargetType == TargetType.Friend)
+            {
+                targetInfos = BattlerEnemies();
+            }
+        }
+        if (indexList.Count == 0)
+        {
+            indexList.Add (targetInfos [UnityEngine.Random.Range (0, targetInfos.Count)].Index);
+        }
+        return indexList;
     }
 
     public List<AttributeType> AttributeTypes()

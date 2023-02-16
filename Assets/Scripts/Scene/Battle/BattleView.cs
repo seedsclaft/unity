@@ -5,6 +5,8 @@ using UnityEngine.UI;
 using Battle;
 using TMPro;
 using Effekseer;
+using System.Threading;
+using System.Threading.Tasks;
 
 public class BattleView : BaseView
 {
@@ -205,8 +207,16 @@ public class BattleView : BaseView
 
     public void StartAnimationAll(EffekseerEffectAsset effekseerEffectAsset)
     {
+        _animationBusy = true;
         effekseerEmitter.Play(effekseerEffectAsset);
     }
+
+    public void StartAnimationDemigod(EffekseerEffectAsset effekseerEffectAsset)
+    {
+        _animationBusy = true;
+        effekseerEmitter.Play(effekseerEffectAsset);
+    }
+
 
     public void StartSkillDamage(int targetIndex,int damageTiming,System.Action<int> callEvent)
     {
@@ -278,7 +288,7 @@ public class BattleView : BaseView
     {
         if (_animationBusy == true)
         {
-            if (battleEnemyLayer.AnimationBusy == false && battleActorList.AnimationBusy == false)
+            if (battleEnemyLayer.AnimationBusy == false && battleActorList.AnimationBusy == false && !effekseerEmitter.exists)
             {
                 _animationBusy = false;
                 var eventData = new BattleViewEvent(CommandType.EndAnimation);
@@ -303,6 +313,7 @@ namespace Battle
         SkillAction,
         EnemyLayer,
         EndAnimation,
+        EndDemigodAnimation,
         StartDamage
     }
 }

@@ -26,6 +26,10 @@ public class ActionResultInfo
     public int HpDamage {
         get {return _hpDamage;}
     }
+    private int _mpDamage = 0;
+    public int MpDamage {
+        get {return _mpDamage;}
+    }
     private bool _isDead = false;
     public bool IsDead {
         get {return _isDead;}

@@ -16,8 +16,7 @@ public class SkillsData : ScriptableObject {
         public int MpCost;
         public AttributeType Attribute;
         public ScopeType Scope;
-        public EffectType EffectType;
-        public float EffectValue;
+        public SkillType SkillType;
         public TargetType TargetType;
         public string Help;
         public RangeType Range;
@@ -25,12 +24,24 @@ public class SkillsData : ScriptableObject {
         public int TriggerType;
         public int TriggerValue;
         public List<FeatureData> FeatureDatas;
+        public List<TriggerData> TriggerDatas;
     }
     [Serializable]
     public class FeatureData
     {   
         public int SkillId;
         public FeatureType FeatureType;
+        public int Param1;
+        public int Param2;
+        public int Param3;
+    }
+    
+    [Serializable]
+    public class TriggerData
+    {   
+        public int SkillId;
+        public TriggerType TriggerType;
+        public TriggerTiming TriggerTiming;
         public int Param1;
         public int Param2;
         public int Param3;
@@ -54,9 +65,11 @@ public enum ScopeType{
 }
 
 
-public enum EffectType{
+public enum SkillType{
     None = 0,
-    Attack = 1, // 攻撃
+    Magic = 1, // 通常スキル
+    Passive = 2, // パッシブ
+    Demigod = 3, // 神化
 }
 
 public enum AttributeType{
@@ -88,4 +101,17 @@ public enum DamageType
     HpCritical = 2,
     HpHeal = 3,    
     MpHeal = 4
+}
+
+public enum TriggerType
+{
+    None = 0,
+    AfterMp = 100
+}
+
+public enum TriggerTiming
+{
+    None = 0,
+    Use = 1,
+    After = 2
 }

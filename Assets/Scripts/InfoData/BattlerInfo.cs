@@ -124,4 +124,50 @@ public class BattlerInfo
     {
         return _hp > 0;
     }
+
+    // Triggerを満たすSkillInfoを取得
+    public List<SkillInfo> TriggerdSkillInfos(TriggerTiming triggerTiming,ActionInfo actionInfo)
+    {
+        List <SkillInfo> triggeredSkills = new List<SkillInfo>();
+        for (var i = 0;i < Skills.Count;i++)
+        {
+            SkillInfo skillInfo = Skills[i];
+            var triggerDatas = skillInfo.Master.TriggerDatas.FindAll(a => a.TriggerTiming == triggerTiming);
+            if (triggerDatas.Count > 0)
+            {
+                for (var j = 0;j < triggerDatas.Count;j++)
+                {
+                    if (triggerDatas[j].TriggerType == TriggerType.AfterMp)
+                    {
+                        if ( TriggerdAfterMpSkillInfos(triggerDatas[j],actionInfo) )
+                        {
+                            triggeredSkills.Add(skillInfo);
+                        }
+                    }
+                }
+            }
+        }
+        return triggeredSkills;
+    }
+
+    private bool TriggerdAfterMpSkillInfos(SkillsData.TriggerData triggerData,ActionInfo actionInfo)
+    {
+        bool IsTriggered = false;
+        if (triggerData.Param1 <= Mp)
+        {
+            if (actionInfo.SubjectIndex == Index && actionInfo.MpCost > 0)
+            {
+                IsTriggered = true;
+            } else
+            {
+                var results = actionInfo.actionResults.FindAll(a => a.TargetIndex == Index);
+                var find = results.Find(a => a.MpDamage > 0);
+                if (find != null)
+                {              
+                    IsTriggered = true;
+                }
+            }
+        }
+        return IsTriggered;
+    }
 }

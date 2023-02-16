@@ -23,6 +23,11 @@ public class ActionInfo
     private List<ActionResultInfo> _actionResult = new List<ActionResultInfo>();
     public List<ActionResultInfo> actionResults {get {return _actionResult;}}
 
+    private int _mpCost;
+    public int MpCost{
+        get {return _mpCost;}
+    }
+
     public ActionInfo(int skillId,int subjectIndex,int lastTargetIndex)
     {
         _skillId = skillId;
@@ -31,6 +36,10 @@ public class ActionInfo
         _targetType = Master.TargetType;
         _subjectIndex = subjectIndex;
         _lastTargetIndex = lastTargetIndex;
+    }
+    public void SetMpCost(int mpCost)
+    {
+        _mpCost = mpCost;
     }
 
     public void SetActionResult(List<ActionResultInfo> actionResult)

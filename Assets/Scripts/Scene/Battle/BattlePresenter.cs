@@ -53,11 +53,11 @@ public class BattlePresenter
         }
         if (viewEvent.commandType == Battle.CommandType.EnemyLayer)
         {
-            CommandEnemyLayer((List<int>)viewEvent.templete);
+            CommandSelectIndex((List<int>)viewEvent.templete);
         }
         if (viewEvent.commandType == Battle.CommandType.ActorList)
         {
-            CommandActorList((List<int>)viewEvent.templete);
+            CommandSelectIndex((List<int>)viewEvent.templete);
         }
         if (viewEvent.commandType == Battle.CommandType.EndAnimation)
         {
@@ -95,16 +95,7 @@ public class BattlePresenter
             } else
             {
                 ActionInfo actionInfo = _model.MakeActionInfo(1);
-                var indexList = new List<int>();
-                indexList.Add(0);  
-                _model.MakeActionResultInfo(actionInfo,indexList);
-                if (actionInfo.actionResults[0].Target.isActor){
-                    CommandActorList(indexList);
-                } 
-                else
-                {
-                    CommandEnemyLayer(indexList);
-                }
+                CommandSelectIndex(_model.MakeAutoSelectIndex(actionInfo));
             }
         }
     }
@@ -127,46 +118,65 @@ public class BattlePresenter
         //
     }
 
-    private async void CommandEnemyLayer(List<int> enemyIndexList)
+    private void CommandSelectIndex(List<int> indexList)
+    {
+        MakeActionResultInfo(indexList);
+        ActionInfo actionInfo = _model.CurrentActionInfo();
+        if (actionInfo != null)
+        {
+            //_view.RefreshBattlerEnemyLayerTarget(null);
+            //_view.RefreshBattlerPartyLayerTarget(null);
+            //_model.MakeActionResultInfo(actionInfo,indexList);
+            if (actionInfo.Master.SkillType == SkillType.Demigod)
+            {
+                StartAnimationDemigod();
+                return;
+            }
+            StartAnimationSkill();
+            /*
+            var animation = await _model.SkillActionAnimation(actionInfo.Master.AnimationName);
+
+            _nextCommandType = Battle.CommandType.EndAnimation;
+            for (int i = 0; i < indexList.Count; i++)
+            {
+                _view.StartAnimation(indexList[i],animation);
+                _view.StartSkillDamage(indexList[i],actionInfo.Master.DamageTiming,(targetIndex) => StartSkillDamage(targetIndex));
+            }
+            */
+        }
+    }
+
+    private void MakeActionResultInfo(List<int> indexList)
     {
         ActionInfo actionInfo = _model.CurrentActionInfo();
         if (actionInfo != null)
         {
             _view.RefreshBattlerEnemyLayerTarget(null);
-            _model.MakeActionResultInfo(actionInfo,enemyIndexList);
-            var animation = await _model.SkillActionAnimation(actionInfo.Master.AnimationName);
-
-            _nextCommandType = Battle.CommandType.EndAnimation;
-            for (int i = 0; i < enemyIndexList.Count; i++)
-            {
-                _view.StartAnimation(enemyIndexList[i],animation);
-                _view.StartSkillDamage(enemyIndexList[i],actionInfo.Master.DamageTiming,(targetIndex) => StartSkillDamage(targetIndex));
-            }
+            _view.RefreshBattlerPartyLayerTarget(null);
+            _model.MakeActionResultInfo(actionInfo,indexList);
         }
     }
 
-    private async void CommandActorList(List<int> partyIndexList)
+    private async void StartAnimationDemigod()
+    {
+        var demigod = await _model.SkillActionAnimation("NA_cut-in_002");
+        _view.StartAnimationDemigod(demigod);
+        _nextCommandType = Battle.CommandType.EndDemigodAnimation;
+    }
+
+    private async void StartAnimationSkill()
     {
         ActionInfo actionInfo = _model.CurrentActionInfo();
-        if (actionInfo != null)
+        var animation = await _model.SkillActionAnimation(actionInfo.Master.AnimationName);
+
+        for (int i = 0; i < actionInfo.actionResults.Count; i++)
         {
-            _view.RefreshBattlerPartyLayerTarget(null);
-            _model.MakeActionResultInfo(actionInfo,partyIndexList);
-            var animation = await _model.SkillActionAnimation(actionInfo.Master.AnimationName);
-            _nextCommandType = Battle.CommandType.EndAnimation;
-            if (actionInfo.Master.AnimationType == AnimationType.All)
-            {
-                _view.StartAnimationAll(animation);
-            }
-            for (int i = 0; i < partyIndexList.Count; i++)
-            {
-                if (actionInfo.Master.AnimationType != AnimationType.All){
-                    _view.StartAnimation(partyIndexList[i],animation);
-                }
-                _view.StartSkillDamage(partyIndexList[i],actionInfo.Master.DamageTiming,(targetIndex) => StartSkillDamage(targetIndex));
-            }
+            _view.StartAnimation(actionInfo.actionResults[i].TargetIndex,animation);
+            _view.StartSkillDamage(actionInfo.actionResults[i].TargetIndex,actionInfo.Master.DamageTiming,(targetIndex) => StartSkillDamage(targetIndex));
         }
+        _nextCommandType = Battle.CommandType.EndAnimation;
     }
+    
 
     private void StartSkillDamage(int targetIndex)
     {
@@ -189,6 +199,11 @@ public class BattlePresenter
 
     private void CommandEndAnimation()
     {
+        if (_nextCommandType == Battle.CommandType.EndDemigodAnimation)
+        {
+            StartAnimationSkill();
+            return;
+        }
         // ダメージなどを適用
         _model.ExecActionResult();
         List<int> deathBattlerIndex = _model.DeathBattlerIndex();
@@ -203,41 +218,17 @@ public class BattlePresenter
         // ステートなどを適用
         // ターン終了
         _view.RefreshStatus();
+        // TriggerAfter
+        List<ActionInfo> actionInfos = _model.CheckTriggerSkillInfos(TriggerTiming.After);
         _model.TurnEnd();
+        // 次の行動者がいれば続ける
+        if (actionInfos.Count > 0)
+        {
+            _model.SetActionBattler(actionInfos[0].SubjectIndex);
+            CommandSelectIndex(_model.MakeAutoSelectIndex(actionInfos[0]));
+            return;
+        }
         _view.SetBusy(false);
-        /*
-        ActionInfo actionInfo = _model.CurrentActionInfo();
-        if (actionInfo != null)
-        {
-            List<ActionResultInfo> actionResultInfos = actionInfo.actionResults;
-            for (int i = 0; i < actionResultInfos.Count; i++)
-            {
-                if (actionResultInfos[i].HpDamage > 0)
-                {
-                    if (actionResultInfos[i].TargetIndex == targetIndex)
-                    {
-                        _view.StartDamage(targetIndex,DamageType.HpDamage,actionResultInfos[i].HpDamage);
-                    }
-                }
-            }
-        }
-        /*
-        if (_nextCommandType == Battle.CommandType.StartDamage)
-        {
-            ActionInfo actionInfo = _model.CurrentActionInfo();
-            if (actionInfo != null)
-            {
-                List<ActionResultInfo> actionResultInfos = actionInfo.actionResults;
-                for (int i = 0; i < actionResultInfos.Count; i++)
-                {
-                    if (actionResultInfos[i].HpDamage > 0)
-                    {
-                        _view.StartDamage(actionResultInfos[i].TargetIndex,DamageType.HpDamage,actionResultInfos[i].HpDamage);
-                    }
-                }
-            }
-        }
-        */
     }
 
     private void CommandAttributeType(AttributeType attributeType)

@@ -35,10 +35,9 @@ public class SkillInfoComponent : MonoBehaviour
             UpdateLineImege();
         }
         if (type != null){
-            type.text = skillData.EffectType.ToString();
+            type.text = skillData.SkillType.ToString();
         }
         if (value != null){
-            value.text = skillData.EffectValue.ToString();
         }
         if (description != null){
             description.text = skillData.Help;
