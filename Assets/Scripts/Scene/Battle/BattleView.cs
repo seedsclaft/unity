@@ -158,11 +158,16 @@ public class BattleView : BaseView
         _commandData(eventData);
     }
 
-    public void ShowSkillActionList(ActorInfo actorInfo)
+    public void ShowSkillActionList(BattlerInfo battlerInfo)
     {
         skillActionList.gameObject.SetActive(true);
         skillAttributeList.gameObject.SetActive(true);
-        battleThumb.ShowMainThumb(actorInfo);
+        if (battlerInfo.IsState(StateType.Demigod))
+        {
+            battleThumb.ShowAwakenThumb(battlerInfo.ActorInfo);
+        } else{
+            battleThumb.ShowMainThumb(battlerInfo.ActorInfo);
+        }
     }
 
     public void HideSkillActionList()
@@ -245,6 +250,7 @@ public class BattleView : BaseView
 
     public void RefreshStatus()
     {
+        battleGridLayer.RefreshStatus();
         battleActorList.RefreshStatus();
         battleEnemyLayer.RefreshStatus();
     }

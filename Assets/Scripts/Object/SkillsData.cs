@@ -21,8 +21,6 @@ public class SkillsData : ScriptableObject {
         public string Help;
         public RangeType Range;
 
-        public int TriggerType;
-        public int TriggerValue;
         public List<FeatureData> FeatureDatas;
         public List<TriggerData> TriggerDatas;
     }
@@ -70,6 +68,7 @@ public enum SkillType{
     Magic = 1, // 通常スキル
     Passive = 2, // パッシブ
     Demigod = 3, // 神化
+    Awaken = 4, // 覚醒
 }
 
 public enum AttributeType{

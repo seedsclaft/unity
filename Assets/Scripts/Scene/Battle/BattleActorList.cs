@@ -65,8 +65,8 @@ public class BattleActorList : ListWindow , IInputHandlerEvent
             ObjectList[i].SetActive(false);
             if (i < _battleInfos.Count) 
             {
-                var statusCommand = ObjectList[i].GetComponent<BattleActor>();
-                statusCommand.SetData(battlerInfos[i],i);
+                var battleActor = ObjectList[i].GetComponent<BattleActor>();
+                battleActor.SetData(battlerInfos[i],i);
                 ObjectList[i].SetActive(true);
             }
         }

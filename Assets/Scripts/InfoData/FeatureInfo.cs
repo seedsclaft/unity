@@ -20,4 +20,7 @@ public enum FeatureType
 {
     None = 0,
     HpDamage = 1,
+    AddState = 21,
+    RemoveState = 22,
+    PlusSkill = 101,
 }

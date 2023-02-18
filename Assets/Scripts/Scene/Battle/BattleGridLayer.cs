@@ -19,6 +19,7 @@ public class BattleGridLayer : MonoBehaviour
             _data[battlerInfos[i]] = comp;
         }
         UpdatePosition();
+        RefreshStatus();
     }
     
     public void SetEnemyInfo(List<BattlerInfo> battlerInfos)
@@ -32,6 +33,7 @@ public class BattleGridLayer : MonoBehaviour
             _data[battlerInfos[i]] = comp;
         }
         UpdatePosition();
+        RefreshStatus();
     }
 
     public void UpdatePosition()
@@ -40,6 +42,14 @@ public class BattleGridLayer : MonoBehaviour
         {
             RectTransform rect = data.Value.gameObject.GetComponent < RectTransform > ();
             rect.localPosition = new Vector3(rect.localPosition.x, data.Key.Ap, 0);
+        }
+    }
+
+    public void RefreshStatus()
+    {
+        foreach (var data in _data)
+        {
+            data.Value.RefreshStatus();
         }
     }
 }

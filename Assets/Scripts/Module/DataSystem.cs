@@ -42,6 +42,11 @@ abstract public class DataSystem
     
     private static TroopsData _troops;
     public static List<TroopsData.TroopData> Troops {get{return _troops._data;}}
+
+    
+    private static StatesData _states;
+    public static List<StatesData.StateData> States {get{return _states._data;}}
+
     /*
     public async Task LoadData()
     {
@@ -72,7 +77,9 @@ abstract public class DataSystem
         DataSystem._stages = asset6;
         var asset7 = await Addressables.LoadAssetAsync<TroopsData>("Assets/Data/Troops.asset").Task;
         DataSystem._troops = asset7;
-        
+        var asset8 = await Addressables.LoadAssetAsync<StatesData>("Assets/Data/States.asset").Task;
+        DataSystem._states = asset8;
+       
         AddressablesKey.LoadAssetAsync<DataManager>("Assets/Data/MainData.asset",(data) => {DataSystem._data = data;});
     }
 }

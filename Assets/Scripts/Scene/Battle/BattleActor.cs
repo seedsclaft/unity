@@ -64,6 +64,7 @@ public class BattleActor : ListItem ,IListViewItem ,IClickHandlerEvent
     {
         if (_data == null) return;
         battlerInfoComponent.UpdateInfo(_data);
+        battlerInfoComponent.RefreshStatus();
     }
 
     public void ClickHandler()

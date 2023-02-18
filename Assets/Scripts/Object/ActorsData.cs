@@ -6,8 +6,6 @@ using UnityEngine;
 public class ActorsData : ScriptableObject {
     [SerializeField] public List<ActorData> _data = new List<ActorData>();
 
-
-
     [Serializable]
     public class ActorData
     {   

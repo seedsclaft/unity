@@ -37,6 +37,7 @@ public class ActionInfo
         _subjectIndex = subjectIndex;
         _lastTargetIndex = lastTargetIndex;
     }
+
     public void SetMpCost(int mpCost)
     {
         _mpCost = mpCost;
@@ -45,5 +46,18 @@ public class ActionInfo
     public void SetActionResult(List<ActionResultInfo> actionResult)
     {
         _actionResult = actionResult;
+    }
+
+    public List<ActionInfo> CheckPlusSkill()
+    {
+        List<SkillsData.FeatureData> featureDatas = Master.FeatureDatas;
+        var PlusSkill = featureDatas.FindAll(a => a.FeatureType == FeatureType.PlusSkill);
+        
+        List<ActionInfo> actionInfos = new List<ActionInfo>();
+        for (var i = 0;i < PlusSkill.Count;i++){
+            ActionInfo actionInfo = new ActionInfo(PlusSkill[i].Param1,SubjectIndex,-1);
+            actionInfos.Add(actionInfo);
+        }
+        return actionInfos;
     }
 }

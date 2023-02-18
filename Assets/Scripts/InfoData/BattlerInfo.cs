@@ -31,6 +31,10 @@ public class BattlerInfo
     private int _lastSkillId = 0;
     public SkillInfo LastSkill {get {return Skills.Find(a => a.Id == _lastSkillId);} }
 
+
+    private List<StateInfo> _stateInfos = new List<StateInfo>();
+    public List<StateInfo> StateInfos {get {return _stateInfos;} }
+
     private int _lastTargetIndex = 0;
     public void SetLastTargetIndex(int index){
         _lastTargetIndex = index;
@@ -125,6 +129,81 @@ public class BattlerInfo
         return _hp > 0;
     }
 
+
+    public bool IsState(StateType stateType)
+    {
+        return _stateInfos.Find(a => a.StateId == (int)stateType) != null;
+    }
+
+    public int StateEffect(StateType stateType)
+    {
+        int effect = 0;
+        if (IsState(stateType))
+        {
+            effect += _stateInfos.Find(a => a.StateId == (int)stateType).Effect;
+        }
+        return effect;
+    }
+
+    public bool AddState(StateInfo stateInfo)
+    {
+        bool IsAdded = false;
+        if (_stateInfos.Find(a => a.CheckOverWriteState(stateInfo) == false) == null)
+        {
+            _stateInfos.Add(stateInfo);
+            IsAdded = true;
+        }
+        return IsAdded;
+    }
+
+    public bool RemoveState(StateInfo stateInfo)
+    {
+        bool IsRemoved = false;
+        int RemoveIndex = _stateInfos.FindIndex(a => a.CheckOverWriteState(stateInfo) == false);
+        if (RemoveIndex > -1)
+        {
+            _stateInfos.RemoveAt(RemoveIndex);
+            IsRemoved = true;
+        }
+        return IsRemoved;
+    }
+
+    public void UpdateState(RemovalTiming removalTiming)
+    {
+        for (var i = _stateInfos.Count-1;i >= 0;i--)
+        {
+            StateInfo stateInfo = _stateInfos[i];
+            if (stateInfo.Master.RemovalTiming == removalTiming)
+            {
+                bool IsRemove = stateInfo.UpdateTurn();
+                if (IsRemove)
+                {
+                    RemoveState(stateInfo);
+                }
+            }
+        }
+    }
+
+    public int CurrentAtk()
+    {
+        int atk = Status.Atk;
+        if (IsState(StateType.Demigod))
+        {
+            atk += StateEffect(StateType.Demigod);
+        }
+        return atk;
+    }
+    
+    public int CurrentDef()
+    {
+        int def = Status.Def;
+        if (IsState(StateType.Demigod))
+        {
+            def += StateEffect(StateType.Demigod);
+        }
+        return def;
+    }
+
     // Triggerを満たすSkillInfoを取得
     public List<SkillInfo> TriggerdSkillInfos(TriggerTiming triggerTiming,ActionInfo actionInfo)
     {
@@ -153,7 +232,7 @@ public class BattlerInfo
     private bool TriggerdAfterMpSkillInfos(SkillsData.TriggerData triggerData,ActionInfo actionInfo)
     {
         bool IsTriggered = false;
-        if (triggerData.Param1 <= Mp)
+        if (triggerData.Param1 == Mp)
         {
             if (actionInfo.SubjectIndex == Index && actionInfo.MpCost > 0)
             {

@@ -90,7 +90,7 @@ public class BattlePresenter
             _view.SetBusy(true);
             if (_model.CurrentBattler.isActor)
             {
-                _view.ShowSkillActionList(_model.CurrentBattler.ActorInfo);
+                _view.ShowSkillActionList(_model.CurrentBattler);
                 CommandAttributeType(_model.CurrentAttributeType);
             } else
             {
@@ -218,14 +218,16 @@ public class BattlePresenter
         // ステートなどを適用
         // ターン終了
         _view.RefreshStatus();
+        // PlusSkill
+        _model.CheckPlusSkill();
         // TriggerAfter
-        List<ActionInfo> actionInfos = _model.CheckTriggerSkillInfos(TriggerTiming.After);
+        _model.CheckTriggerSkillInfos(TriggerTiming.After);
         _model.TurnEnd();
         // 次の行動者がいれば続ける
-        if (actionInfos.Count > 0)
+        if (_model.CurrentActionInfo() != null)
         {
-            _model.SetActionBattler(actionInfos[0].SubjectIndex);
-            CommandSelectIndex(_model.MakeAutoSelectIndex(actionInfos[0]));
+            _model.SetActionBattler(_model.CurrentActionInfo().SubjectIndex);
+            CommandSelectIndex(_model.MakeAutoSelectIndex(_model.CurrentActionInfo()));
             return;
         }
         _view.SetBusy(false);

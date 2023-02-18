@@ -50,16 +50,19 @@ public class EnemyInfoComponent : MonoBehaviour
 
     public void ChangeHp(int value,int maxHp)
     {
+        if (statusInfoComponent == null) return;
         statusInfoComponent.UpdateHp(value,maxHp);
     }
 
     public void ChangeMp(int value,int maxHp)
     {
+        if (statusInfoComponent == null) return;
         statusInfoComponent.UpdateMp(value,maxHp);
     }
 
     public void HideUI()
     {
+        if (statusInfoComponent == null) return;
         statusInfoComponent.gameObject.SetActive(false);
     }
 }

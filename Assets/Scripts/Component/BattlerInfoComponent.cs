@@ -53,6 +53,7 @@ public class BattlerInfoComponent : MonoBehaviour
         if (_battlerInfo.isActor)
         {
             actorInfoComponent.UpdateInfo(_battlerInfo.ActorInfo);
+            actorInfoComponent.SetAwakeMode(_battlerInfo.IsState(StateType.Demigod));
         } else
         {
             enemyInfoComponent.UpdateInfo(_battlerInfo);

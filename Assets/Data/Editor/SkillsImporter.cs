@@ -23,8 +23,6 @@ public class SkillsImporter : AssetPostprocessor {
 		TargetType,
 		Scope,
 		Range,
-		TriggerType,
-		TriggerValue,
     }
 
 	static readonly string ExcelPath = "Assets/Data";
@@ -104,8 +102,6 @@ public class SkillsImporter : AssetPostprocessor {
                     SkillData.TargetType = (TargetType)Baserow.GetCell((int)BaseColumn.TargetType)?.NumericCellValue;
                     SkillData.Scope = (ScopeType)Baserow.GetCell((int)BaseColumn.Scope)?.NumericCellValue;
                     SkillData.Range = (RangeType)Baserow.GetCell((int)BaseColumn.Range)?.NumericCellValue;
-                    SkillData.TriggerType = (int)Baserow.GetCell((int)BaseColumn.TriggerType)?.NumericCellValue;
-                    SkillData.TriggerValue = (int)Baserow.GetCell((int)BaseColumn.TriggerValue)?.NumericCellValue;
                     SkillData.Help = textData.Find(a => a.Id == (int)Baserow.GetCell((int)BaseColumn.NameId)?.NumericCellValue).Help;
 					Data._data.Add(SkillData);
 				}

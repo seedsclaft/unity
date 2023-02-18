@@ -153,16 +153,28 @@ public class ActorInfoComponent : MonoBehaviour
 
     public void ChangeHp(int value,int maxHp)
     {
+        if (statusInfoComponent == null) return;
         statusInfoComponent.UpdateHp(value,maxHp);
     }
 
     public void ChangeMp(int value,int maxMp)
     {
+        if (statusInfoComponent == null) return;
         statusInfoComponent.UpdateMp(value,maxMp);
     }
 
     public void HideUI()
     {
+        if (statusInfoComponent == null) return;
         statusInfoComponent.gameObject.SetActive(false);
+    }
+
+    public void SetAwakeMode(bool IsAwaken)
+    {
+        if (faceThumb != null && awakenFaceThumb != null)
+        {
+            faceThumb.gameObject.SetActive(!IsAwaken);
+            awakenFaceThumb.gameObject.SetActive(IsAwaken);
+        }
     }
 }

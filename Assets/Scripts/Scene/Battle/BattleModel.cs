@@ -64,6 +64,7 @@ public class BattleModel : BaseModel
         {
             BattlerInfo battlerInfo = _battlers[i];
             _battlers[i].UpdateAp();
+            _battlers[i].UpdateState(RemovalTiming.UpdateAp);
         }
         MackActionBattler();
     }
@@ -135,9 +136,20 @@ public class BattleModel : BaseModel
             {
                 skillInfos[i].SetDisable();
             }
-            if (skillInfos[i].Master.SkillType != SkillType.Magic)
+            if (skillInfos[i].Master.SkillType == SkillType.Passive)
             {
                 skillInfos[i].SetDisable();
+            }
+            if (skillInfos[i].Master.SkillType == SkillType.Demigod)
+            {
+                skillInfos[i].SetDisable();
+            }
+            if (skillInfos[i].Master.SkillType == SkillType.Awaken)
+            {
+                if (!CurrentBattler.IsState(StateType.Demigod))
+                {
+                    skillInfos[i].SetDisable();
+                }
             }
         }
         return skillInfos;
@@ -182,6 +194,15 @@ public class BattleModel : BaseModel
     public void MakeActionResultInfo(ActionInfo actionInfo,List<int> indexList)
     {   
         List<BattlerInfo> targetInfos = new List<BattlerInfo>();
+        if (actionInfo.Master.TargetType == TargetType.Self)
+        {
+            if (actionInfo.SubjectIndex < 100)
+            {
+                targetInfos = BattlerActors();
+            } else{
+                targetInfos = BattlerEnemies();
+            }
+        } else
         if (actionInfo.SubjectIndex < 100)
         {
             if (actionInfo.Master.TargetType == TargetType.Opponent)
@@ -212,9 +233,10 @@ public class BattleModel : BaseModel
         List<ActionResultInfo> actionResultInfos = new List<ActionResultInfo>();
         for (int i = 0; i < indexList.Count;i++)
         {
-            int targetIndex = targetInfos.Find(a => a.Index == indexList[i]).Index;
+            BattlerInfo Target = targetInfos.Find(a => a.Index == indexList[i]);
+            int targetIndex = Target.Index;
             ActionResultInfo actionResultInfo = new ActionResultInfo(CurrentBattler.Index,targetIndex,CurrentActionInfo());
-            actionResultInfo.MakeResultData(_battlers);
+            actionResultInfo.MakeResultData(CurrentBattler,Target);
             actionResultInfos.Add(actionResultInfo);
         }
         actionInfo.SetActionResult(actionResultInfos);
@@ -237,7 +259,7 @@ public class BattleModel : BaseModel
             List<ActionResultInfo> actionResultInfos = actionInfo.actionResults;
             for (int i = 0; i < actionResultInfos.Count; i++)
             {
-                BattlerInfo battlerInfo = actionResultInfos[i].Target;
+                BattlerInfo battlerInfo = _battlers.Find(a => a.Index == actionResultInfos[i].TargetIndex);
                 if (actionResultInfos[i].HpDamage != 0)
                 {
                     battlerInfo.ChangeHp(-1 * actionResultInfos[i].HpDamage);
@@ -255,7 +277,7 @@ public class BattleModel : BaseModel
             List<ActionResultInfo> actionResultInfos = actionInfo.actionResults;
             for (int i = 0; i < actionResultInfos.Count; i++)
             {
-                BattlerInfo battlerInfo = actionResultInfos[i].Target;
+                BattlerInfo battlerInfo = _battlers.Find(a => a.Index == actionResultInfos[i].TargetIndex);
                 if (actionResultInfos[i].IsDead == true)
                 {
                     deathBattlerIndex.Add(battlerInfo.Index);
@@ -269,10 +291,19 @@ public class BattleModel : BaseModel
     {
         _actionInfos.RemoveAt(0);
         CurrentBattler.ResetAp();
+        CurrentBattler.UpdateState(RemovalTiming.UpdateTurn);
         _currentBattler = null;
     }
 
-    public List<ActionInfo> CheckTriggerSkillInfos(TriggerTiming triggerTiming)
+    public void CheckPlusSkill()
+    {
+        ActionInfo actionInfo = CurrentActionInfo();
+        List<ActionInfo> actionInfos = actionInfo.CheckPlusSkill();
+        
+        _actionInfos.AddRange(actionInfos);
+    }
+
+    public void CheckTriggerSkillInfos(TriggerTiming triggerTiming)
     {
         List<ActionInfo> actionInfos = new List<ActionInfo>();
         List <SkillInfo> triggeredSkills = CurrentBattler.TriggerdSkillInfos(triggerTiming,CurrentActionInfo());
@@ -280,16 +311,18 @@ public class BattleModel : BaseModel
         {
             for (var i = 0;i < triggeredSkills.Count;i++){
                 ActionInfo makeActionInfo = MakeActionInfo(triggeredSkills[i].Id);
-                actionInfos.Add(makeActionInfo);
             }
         }
-        return actionInfos;
     }
 
     public List<int> MakeAutoSelectIndex(ActionInfo actionInfo)
     {
         List<int> indexList = new List<int>();
         List<BattlerInfo> targetInfos = new List<BattlerInfo>();
+        if (actionInfo.Master.TargetType == TargetType.Self)
+        {
+            indexList.Add(CurrentBattler.Index);
+        } else
         if (actionInfo.SubjectIndex < 100)
         {
             if (actionInfo.Master.TargetType == TargetType.Opponent)
