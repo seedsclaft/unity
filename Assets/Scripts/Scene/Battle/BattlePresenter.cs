@@ -83,6 +83,11 @@ public class BattlePresenter
 
     private void CommandUpdateAp()
     {
+        var chainActionResults = _model.UpdateChainState();
+        for (int i = 0; i < chainActionResults.Count; i++)
+        {
+            _view.StartDamage(chainActionResults[i].TargetIndex,DamageType.HpDamage,chainActionResults[i].HpDamage);
+        }
         _model.UpdateAp();
         _view.UpdateAp();
         if (_model.CurrentBattler != null)
@@ -90,8 +95,17 @@ public class BattlePresenter
             _view.SetBusy(true);
             if (_model.CurrentBattler.isActor)
             {
-                _view.ShowSkillActionList(_model.CurrentBattler);
-                CommandAttributeType(_model.CurrentAttributeType);
+                List<int> chainTargetIndexs = _model.CheckChainBattler();
+                if (chainTargetIndexs.Count > 0)
+                {
+                    // 拘束解除
+                    ActionInfo actionInfo = _model.MakeActionInfo(202);
+                    CommandSelectIndex(chainTargetIndexs);
+                } 
+                else{
+                    _view.ShowSkillActionList(_model.CurrentBattler);
+                    CommandAttributeType(_model.CurrentAttributeType);
+                }
             } else
             {
                 ActionInfo actionInfo = _model.MakeActionInfo(1);

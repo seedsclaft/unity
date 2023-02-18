@@ -59,28 +59,19 @@ public class BattleDamage : MonoBehaviour
         {   
             TextMeshProUGUI textMeshProUGUI = _damageList[i].GetComponent<TextMeshProUGUI>();
             textMeshProUGUI.alpha = 0;
-            textMeshProUGUI.DOFade(0.0f, 0.0f)
-                .SetDelay(1.8f)
+            Sequence sequence = DOTween.Sequence()
+                .SetDelay(i * 0.05f)
+                .Append(textMeshProUGUI.DOFade(1.0f, 0.1f))
+                .Append(textMeshProUGUI.gameObject.transform.DOLocalMoveY(16, 0.1f))
+                .Append(textMeshProUGUI.gameObject.transform.DOLocalMoveY(0, 0.2f))
+                .SetDelay(0.05f)
+                .Append(textMeshProUGUI.gameObject.transform.DOLocalMoveY(4, 0.05f))
+                .Append(textMeshProUGUI.gameObject.transform.DOLocalMoveY(0, 0.05f))
                 .SetEase(Ease.InOutQuad)
                 .OnComplete(() => {
                     _busy = false;
                     textMeshProUGUI.DOFade(0.0f, 0.2f);
                 });
-            Sequence sequence = DOTween.Sequence()
-                .SetDelay(i * 0.05f)
-                .Append(textMeshProUGUI.DOFade(1.0f, 0.1f))
-                .SetEase(Ease.InOutQuad)
-                .Append(textMeshProUGUI.gameObject.transform.DOLocalMoveY(16, 0.1f))
-                .SetDelay(0.1f)
-                .SetEase(Ease.InOutQuad)
-                .Append(textMeshProUGUI.gameObject.transform.DOLocalMoveY(0, 0.2f))
-                .SetDelay(0.25f)
-                .SetEase(Ease.InOutQuad)
-                .Append(textMeshProUGUI.gameObject.transform.DOLocalMoveY(4, 0.05f))
-                .SetDelay(0.05f)
-                .SetEase(Ease.InOutQuad)
-                .Append(textMeshProUGUI.gameObject.transform.DOLocalMoveY(0, 0.05f))
-                .OnComplete(() => Debug.Log("Completed"));
         }
     }
 

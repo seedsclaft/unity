@@ -22,12 +22,24 @@ public class BattleEnemyLayer : MonoBehaviour
         {
             frontEnemyRoots[i].SetActive(false);
         }
+        for (int i = 0; i < backEnemyRoots.Count;i++)
+        {
+            backEnemyRoots[i].SetActive(false);
+        }
 
         for (int i = 0; i < battlerInfos.Count;i++)
         {
             GameObject prefab = Instantiate(battleEnemyPrefab);
-            frontEnemyRoots[i].SetActive(true);
-            prefab.transform.SetParent(frontEnemyRoots[i].transform, false);
+            if (battlerInfos[i].LineIndex == 0)
+            {
+                frontEnemyRoots[i].SetActive(true);
+                prefab.transform.SetParent(frontEnemyRoots[i].transform, false);
+            } else
+            {
+                int backIndex = i - _backStartIndex;
+                backEnemyRoots[backIndex].SetActive(true);
+                prefab.transform.SetParent(backEnemyRoots[backIndex].transform, false);
+            }
             var battleEnemy = prefab.GetComponent<BattleEnemy>();
             battleEnemy.SetData(battlerInfos[i],i);
             battleEnemy.SetCallHandler((enemyIndex) => {

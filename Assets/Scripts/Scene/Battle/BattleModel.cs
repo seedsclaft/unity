@@ -53,7 +53,7 @@ public class BattleModel : BaseModel
         for (int i = 0;i < enemies.Count;i++)
         {
             EnemiesData.EnemyData enemyData = DataSystem.Enemies.Find(a => a.Id == enemies[i].EnemyId);
-            BattlerInfo battlerInfo = new BattlerInfo(enemyData,enemies[i].Lv,i);
+            BattlerInfo battlerInfo = new BattlerInfo(enemyData,enemies[i].Lv,i,enemies[i].Line);
             _battlers.Add(battlerInfo);
         }
     }
@@ -67,6 +67,28 @@ public class BattleModel : BaseModel
             _battlers[i].UpdateState(RemovalTiming.UpdateAp);
         }
         MackActionBattler();
+    }
+    
+    public List<ActionResultInfo> UpdateChainState()
+    {
+        List<ActionResultInfo> actionResultInfos = new List<ActionResultInfo>();
+        for (int i = 0;i < _battlers.Count;i++)
+        {
+            List<StateInfo> chainDamageStateInfos = _battlers[i].UpdateChainState();
+            for (int j = 0;j < chainDamageStateInfos.Count;j++)
+            {
+                StateInfo stateInfo = chainDamageStateInfos[j];
+                BattlerInfo target = _battlers.Find(a => a.Index == stateInfo.TargetIndex);
+                if (target != null)
+                {
+                    target.ChangeHp(stateInfo.Effect * -1);
+                    ActionResultInfo actionResultInfo = new ActionResultInfo(_battlers[i].Index,stateInfo.TargetIndex,null);
+                    actionResultInfo.HpDamage = stateInfo.Effect;
+                    actionResultInfos.Add(actionResultInfo);
+                }
+            }
+        }
+        return actionResultInfos;
     }
 
     public void MackActionBattler()
@@ -93,6 +115,29 @@ public class BattleModel : BaseModel
         {
             _currentBattler = battlerInfo;
         }
+    }
+
+    public List<int> CheckChainBattler()
+    {
+        List<int> targetIndexs = new List<int>();
+        List<BattlerInfo> battlerInfos = _battlers.FindAll(a => a.IsState(StateType.Chain));
+        for (int i = 0; i < _battlers.Count;i++)
+        {
+            List<StateInfo> stateInfos = _battlers[i].GetStateInfoAll(StateType.Chain);
+            for (int j = stateInfos.Count-1; 0 <= j;j--)
+            {
+                if (stateInfos[j].BattlerId == CurrentBattler.Index)
+                {
+                    targetIndexs.Add(stateInfos[j].TargetIndex);
+                    _battlers[i].RemoveState(stateInfos[j]);
+                }
+            }
+        }
+        if (targetIndexs.Count > 0)
+        {
+            CurrentBattler.GainChainCount(1);
+        }
+        return targetIndexs;
     }
 
     public void ChangeActorIndex(int value){
@@ -290,7 +335,7 @@ public class BattleModel : BaseModel
     public void TurnEnd()
     {
         _actionInfos.RemoveAt(0);
-        CurrentBattler.ResetAp();
+        CurrentBattler.ResetAp(false);
         CurrentBattler.UpdateState(RemovalTiming.UpdateTurn);
         _currentBattler = null;
     }
@@ -311,6 +356,9 @@ public class BattleModel : BaseModel
         {
             for (var i = 0;i < triggeredSkills.Count;i++){
                 ActionInfo makeActionInfo = MakeActionInfo(triggeredSkills[i].Id);
+                if (triggeredSkills[i].Master.SkillType == SkillType.Demigod){
+                    CurrentBattler.SetAwaken();
+                }
             }
         }
     }

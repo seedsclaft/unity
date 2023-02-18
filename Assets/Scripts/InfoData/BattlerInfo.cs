@@ -30,11 +30,17 @@ public class BattlerInfo
 
     private int _lastSkillId = 0;
     public SkillInfo LastSkill {get {return Skills.Find(a => a.Id == _lastSkillId);} }
-
-
     private List<StateInfo> _stateInfos = new List<StateInfo>();
     public List<StateInfo> StateInfos {get {return _stateInfos;} }
 
+    private bool _isAwaken = false;
+    public bool IsAwaken {get {return _isAwaken;} }
+
+    private int _lineIndex = 0;
+    public int LineIndex {get {return _lineIndex;} }
+
+    
+    private int _chainSuccessCount = 0;
     private int _lastTargetIndex = 0;
     public void SetLastTargetIndex(int index){
         _lastTargetIndex = index;
@@ -52,10 +58,11 @@ public class BattlerInfo
         _actorInfo = actorInfo;
         _hp = actorInfo.Hp;
         _mp = actorInfo.Mp;
-        ResetAp();
+        _lineIndex = 0;
+        ResetAp(true);
     }
 
-    public BattlerInfo(EnemiesData.EnemyData enemyData,int lv,int index){
+    public BattlerInfo(EnemiesData.EnemyData enemyData,int lv,int index,int lineIndex){
         _charaId = enemyData.Id;
         _level = lv;
         StatusInfo statusInfo = new StatusInfo();
@@ -66,9 +73,11 @@ public class BattlerInfo
         _enemyData = enemyData;
         _hp = _status.Hp;
         _mp = _status.Mp;
+        _lineIndex = lineIndex;
         _skills = new List<SkillInfo>();
         _skills.Add(new SkillInfo(1));
-        ResetAp();
+        ResetAp(true);
+        _ap = 1;
     }
 
 
@@ -77,9 +86,29 @@ public class BattlerInfo
         return _isActor;
     }
 
-    public void ResetAp()
+    public void ResetAp(bool IsBattleStart)
     {
+        if (IsState(StateType.ReAct))
+        {
+            List <StateInfo> stateInfos = GetStateInfoAll(StateType.ReAct);
+            for (var i = stateInfos.Count-1;i >= 0;i--)
+            {
+                StateInfo stateInfo = stateInfos[i];
+                stateInfo.UpdateTurn();
+                bool IsRemove = stateInfo.UpdateTurn();
+                if (IsRemove)
+                {
+                    RemoveState(stateInfo);
+                }
+            }
+            _ap = 0;
+            return;
+        }
         int rand = new Random().Next(-10, 10);
+        if (IsBattleStart == false)
+        {
+            rand = 0;
+        }
         _ap = 400 - (Status.Spd + rand) * 4;
     }
 
@@ -90,6 +119,10 @@ public class BattlerInfo
 
     public void UpdateAp()
     {
+        if (IsState(StateType.Chain))
+        {
+            _ap += 2;
+        }
         if (isActor == false) return;
         _ap -= 4;
     }
@@ -135,6 +168,11 @@ public class BattlerInfo
         return _stateInfos.Find(a => a.StateId == (int)stateType) != null;
     }
 
+    public List<StateInfo> GetStateInfoAll(StateType stateType)
+    {
+        return _stateInfos.FindAll(a => a.StateId == (int)stateType);
+    }
+
     public int StateEffect(StateType stateType)
     {
         int effect = 0;
@@ -148,7 +186,7 @@ public class BattlerInfo
     public bool AddState(StateInfo stateInfo)
     {
         bool IsAdded = false;
-        if (_stateInfos.Find(a => a.CheckOverWriteState(stateInfo) == false) == null)
+        if (_stateInfos.Find(a => a.CheckOverWriteState(stateInfo) == true) == null)
         {
             _stateInfos.Add(stateInfo);
             IsAdded = true;
@@ -159,7 +197,7 @@ public class BattlerInfo
     public bool RemoveState(StateInfo stateInfo)
     {
         bool IsRemoved = false;
-        int RemoveIndex = _stateInfos.FindIndex(a => a.CheckOverWriteState(stateInfo) == false);
+        int RemoveIndex = _stateInfos.FindIndex(a => a.CheckOverWriteState(stateInfo) == true);
         if (RemoveIndex > -1)
         {
             _stateInfos.RemoveAt(RemoveIndex);
@@ -184,6 +222,25 @@ public class BattlerInfo
         }
     }
 
+    public List<StateInfo> UpdateChainState()
+    {
+        List<StateInfo> stateInfos = new List<StateInfo>();
+        for (var i = _stateInfos.Count-1;i >= 0;i--)
+        {
+            StateInfo stateInfo = _stateInfos[i];
+            if (stateInfo.Master.RemovalTiming == RemovalTiming.UpdateChain)
+            {
+                bool IsChainDamage = stateInfo.UpdateTurn();
+                if (IsChainDamage)
+                {
+                    stateInfo.ResetTurns();
+                    stateInfos.Add(stateInfo);
+                }
+            }
+        }
+        return stateInfos;
+    }
+
     public int CurrentAtk()
     {
         int atk = Status.Atk;
@@ -204,6 +261,16 @@ public class BattlerInfo
         return def;
     }
 
+    public void SetAwaken()
+    {
+        _isAwaken = true;
+    }
+
+    public void GainChainCount(int value)
+    {
+        _chainSuccessCount += value;
+    }
+
     // Triggerを満たすSkillInfoを取得
     public List<SkillInfo> TriggerdSkillInfos(TriggerTiming triggerTiming,ActionInfo actionInfo)
     {
@@ -211,6 +278,9 @@ public class BattlerInfo
         for (var i = 0;i < Skills.Count;i++)
         {
             SkillInfo skillInfo = Skills[i];
+            if (skillInfo.Master.SkillType == SkillType.Demigod && _isAwaken){
+                continue;
+            }
             var triggerDatas = skillInfo.Master.TriggerDatas.FindAll(a => a.TriggerTiming == triggerTiming);
             if (triggerDatas.Count > 0)
             {
@@ -219,6 +289,13 @@ public class BattlerInfo
                     if (triggerDatas[j].TriggerType == TriggerType.AfterMp)
                     {
                         if ( TriggerdAfterMpSkillInfos(triggerDatas[j],actionInfo) )
+                        {
+                            triggeredSkills.Add(skillInfo);
+                        }
+                    }
+                    if (triggerDatas[j].TriggerType == TriggerType.ChainCount)
+                    {
+                        if ( TriggerdChainCountSkillInfos(triggerDatas[j],actionInfo) )
                         {
                             triggeredSkills.Add(skillInfo);
                         }
@@ -246,6 +323,16 @@ public class BattlerInfo
                     IsTriggered = true;
                 }
             }
+        }
+        return IsTriggered;
+    }
+
+    private bool TriggerdChainCountSkillInfos(SkillsData.TriggerData triggerData,ActionInfo actionInfo)
+    {
+        bool IsTriggered = false;
+        if (_chainSuccessCount >= triggerData.Param1)
+        {
+            IsTriggered = true;
         }
         return IsTriggered;
     }

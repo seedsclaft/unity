@@ -19,7 +19,7 @@ public class ActionResultInfo
 
     private int _hpDamage = 0;
     public int HpDamage {
-        get {return _hpDamage;}
+        get {return _hpDamage;} set{_hpDamage = value;}
     }
     private int _mpDamage = 0;
     public int MpDamage {
@@ -89,7 +89,7 @@ public class ActionResultInfo
 
     private void MakeAddState(BattlerInfo subject,BattlerInfo target,SkillsData.FeatureData featureData)
     {
-        StateInfo stateInfo = new StateInfo(featureData.Param1,featureData.Param2,featureData.Param3,subject.Index);
+        StateInfo stateInfo = new StateInfo(featureData.Param1,featureData.Param2,featureData.Param3,subject.Index,target.Index);
         bool IsAdded = target.AddState(stateInfo);
         if (IsAdded)
         {
@@ -99,7 +99,7 @@ public class ActionResultInfo
     
     private void MakeRemoveState(BattlerInfo subject,BattlerInfo target,SkillsData.FeatureData featureData)
     {
-        StateInfo stateInfo = new StateInfo(featureData.Param1,featureData.Param2,featureData.Param3,subject.Index);
+        StateInfo stateInfo = new StateInfo(featureData.Param1,featureData.Param2,featureData.Param3,subject.Index,target.Index);
         bool IsRemoved = target.RemoveState(stateInfo);
         if (IsRemoved)
         {

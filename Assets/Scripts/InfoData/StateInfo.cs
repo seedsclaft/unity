@@ -10,20 +10,25 @@ public class StateInfo {
     public int StateId{ get {return _stateId;}}
     private int _turns = 0;
     public int Tunrs{ get {return _turns;}}
+    private int _baseTurns = 0;
     private int _effect = 0;
     public int Effect{ get {return _effect;}}
     private int _battlerId = 0;
     public int BattlerId{ get {return _battlerId;}}
-    public StateInfo(int stateId,int turns,int effect,int battlerId){
+    private int _targetIndex = 0;
+    public int TargetIndex{ get {return _targetIndex;}}
+    public StateInfo(int stateId,int turns,int effect,int battlerId,int targetIndex){
         _stateId = stateId;
         _turns = turns;
+        _baseTurns = turns;
         _effect = effect;
         _battlerId = battlerId;
+        _targetIndex = targetIndex;
     }
 
     public bool CheckOverWriteState(StateInfo stateInfo)
     {
-        return (stateInfo.StateId != _stateId) && (stateInfo.BattlerId != _battlerId);
+        return (stateInfo.StateId == _stateId) && (stateInfo.BattlerId == _battlerId);
     }
 
     public bool UpdateTurn()
@@ -34,5 +39,10 @@ public class StateInfo {
             return true;
         }
         return false;
+    }
+
+    public void ResetTurns()
+    {
+        _turns = _baseTurns;
     }
 }

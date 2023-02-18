@@ -19,10 +19,10 @@ public class BattleEnemy : ListItem
     [SerializeField] private _2dxFX_DestroyedFX deathAnimation;
     private float _deathAnimation = 0.0f;
     public bool IsBusy {
-        get {return effekseerEmitter.exists || _damageTiming > 0 || _battleDamage.IsBusy;}
+        get {return effekseerEmitter.exists || _damageTiming > 0 || _battleDamages.Find(a => a.IsBusy);}
     }
     private bool _sizeInit = false;
-    private BattleDamage _battleDamage = null;
+    private List<BattleDamage> _battleDamages = new List<BattleDamage>();
 
     private BattlerInfo _battlerInfo;
     private int _index; 
@@ -36,13 +36,6 @@ public class BattleEnemy : ListItem
         battlerInfoComponent.UpdateInfo(battlerInfo);
         _battlerInfo = battlerInfo;
         _index = index;
-        if (_battleDamage == null)
-        {
-            GameObject prefab = Instantiate(battleDamagePrefab);
-            battleDamageRoot.SetActive(true);
-            prefab.transform.SetParent(battleDamageRoot.transform, false);
-            _battleDamage = prefab.GetComponent<BattleDamage>();
-        }
     }
     
     public void SetCallHandler(System.Action<int> handler)
@@ -83,7 +76,12 @@ public class BattleEnemy : ListItem
 
     public void StartDamage(DamageType damageType,int value)
     {
-        _battleDamage.StartDamage(damageType,value);
+        GameObject prefab = Instantiate(battleDamagePrefab);
+        battleDamageRoot.SetActive(true);
+        prefab.transform.SetParent(battleDamageRoot.transform, false);
+        var battleDamage = prefab.GetComponent<BattleDamage>();
+        battleDamage.StartDamage(damageType,value);
+        _battleDamages.Add(battleDamage);
         battlerInfoComponent.ChangeHp(value * -1 + _battlerInfo.Hp);
     }
 

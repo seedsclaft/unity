@@ -105,7 +105,8 @@ public enum DamageType
 public enum TriggerType
 {
     None = 0,
-    AfterMp = 100
+    AfterMp = 101,
+    ChainCount = 102,
 }
 
 public enum TriggerTiming

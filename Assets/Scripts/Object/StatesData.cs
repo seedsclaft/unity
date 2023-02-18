@@ -20,7 +20,9 @@ public enum StateType
 {
     None = 0,
     Death = 1,
-    Demigod = 11
+    Demigod = 11,
+    Chain = 101,
+    ReAct = 102,
 }
 
 public enum RemovalTiming
@@ -28,5 +30,6 @@ public enum RemovalTiming
     None = 0,
     UpdateTurn = 1,
     UpdateAp = 2,
+    UpdateChain = 3
 
 }
