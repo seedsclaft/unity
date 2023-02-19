@@ -120,7 +120,12 @@ MonoBehaviour:
     AwakenX: 80
     AwakenY: -96
     AwakenScale: 0.7
-    LearningSkills: []
+    LearningSkills:
+    - SkillId: 11
+    - SkillId: 21
+    - SkillId: 301
+    - SkillId: 311
+    - SkillId: 312
   - Id: 4
     Name: "\u30D5\u30EA\u30EB"
     ClassId: 4

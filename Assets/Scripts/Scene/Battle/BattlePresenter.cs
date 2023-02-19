@@ -99,7 +99,7 @@ public class BattlePresenter
                 if (chainTargetIndexs.Count > 0)
                 {
                     // 拘束解除
-                    ActionInfo actionInfo = _model.MakeActionInfo(202);
+                    ActionInfo actionInfo = _model.MakeActionInfo(_model.CurrentBattler,202,false);
                     CommandSelectIndex(chainTargetIndexs);
                 } 
                 else{
@@ -108,7 +108,7 @@ public class BattlePresenter
                 }
             } else
             {
-                ActionInfo actionInfo = _model.MakeActionInfo(1);
+                ActionInfo actionInfo = _model.MakeActionInfo(_model.CurrentBattler,1,false);
                 CommandSelectIndex(_model.MakeAutoSelectIndex(actionInfo));
             }
         }
@@ -117,14 +117,14 @@ public class BattlePresenter
     private void CommandSkillAction(int skillId)
     {
         _model.ClearActionInfo();
-        ActionInfo actionInfo = _model.MakeActionInfo(skillId);
+        ActionInfo actionInfo = _model.MakeActionInfo(_model.CurrentBattler,skillId,false);
         _view.HideSkillActionList();
         if (actionInfo.TargetType == TargetType.Opponent)
         {
             _view.ShowEnemyTarget();
             _view.RefreshBattlerEnemyLayerTarget(actionInfo);
         } else
-        if (actionInfo.TargetType == TargetType.Friend)
+        if (actionInfo.TargetType == TargetType.Friend || actionInfo.TargetType == TargetType.Self)
         {
             _view.ShowPartyTarget();
             _view.RefreshBattlerPartyLayerTarget(actionInfo);
@@ -168,6 +168,12 @@ public class BattlePresenter
             _view.RefreshBattlerEnemyLayerTarget(null);
             _view.RefreshBattlerPartyLayerTarget(null);
             _model.MakeActionResultInfo(actionInfo,indexList);
+            var result = _model.CheckTriggerSkillInfos(TriggerTiming.Interrupt);
+            if (result)
+            {
+                _model.SetActionBattler(_model.CurrentActionInfo().SubjectIndex);
+                _model.MakeActionResultInfo(_model.CurrentActionInfo(),_model.MakeAutoSelectIndex(_model.CurrentActionInfo()));
+            }
         }
     }
 
@@ -207,6 +213,10 @@ public class BattlePresenter
                         _view.StartDamage(targetIndex,DamageType.HpDamage,actionResultInfos[i].HpDamage);
                     }
                 }
+                if (actionResultInfos[i].ReDamage > 0)
+                {
+                    _view.StartDamage(actionResultInfos[i].SubjectIndex,DamageType.HpDamage,actionResultInfos[i].ReDamage);
+                }
             }
         }
     }
@@ -235,7 +245,7 @@ public class BattlePresenter
         // PlusSkill
         _model.CheckPlusSkill();
         // TriggerAfter
-        _model.CheckTriggerSkillInfos(TriggerTiming.After);
+        var result = _model.CheckTriggerSkillInfos(TriggerTiming.After);
         _model.TurnEnd();
         // 次の行動者がいれば続ける
         if (_model.CurrentActionInfo() != null)

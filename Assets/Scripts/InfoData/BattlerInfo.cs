@@ -77,7 +77,6 @@ public class BattlerInfo
         _skills = new List<SkillInfo>();
         _skills.Add(new SkillInfo(1));
         ResetAp(true);
-        _ap = 1;
     }
 
 
@@ -122,8 +121,14 @@ public class BattlerInfo
         if (IsState(StateType.Chain))
         {
             _ap += 2;
+            return;
         }
-        if (isActor == false) return;
+        if (IsState(StateType.Slow))
+        {
+            _ap -= 2;
+            return;
+        }
+        //if (isActor == false) return;
         _ap -= 4;
     }
 
@@ -300,6 +305,14 @@ public class BattlerInfo
                             triggeredSkills.Add(skillInfo);
                         }
                     }
+                    if (triggerDatas[j].TriggerType == TriggerType.ActionResultDeath)
+                    {
+                        if ( TriggerdActionResultDeathSkillInfos(triggerDatas[j],actionInfo) )
+                        {
+                            skillInfo.SetInterrupt(true);
+                            triggeredSkills.Add(skillInfo);
+                        }
+                    }
                 }
             }
         }
@@ -331,6 +344,16 @@ public class BattlerInfo
     {
         bool IsTriggered = false;
         if (_chainSuccessCount >= triggerData.Param1)
+        {
+            IsTriggered = true;
+        }
+        return IsTriggered;
+    }
+    private bool TriggerdActionResultDeathSkillInfos(SkillsData.TriggerData triggerData,ActionInfo actionInfo)
+    {
+        bool IsTriggered = false;
+        List<ActionResultInfo> actionResultInfos = actionInfo.actionResults;
+        if (actionResultInfos.Find(a => a.IsDead && a.TargetIndex == Index) != null)
         {
             IsTriggered = true;
         }

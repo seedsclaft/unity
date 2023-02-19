@@ -24,6 +24,7 @@ public class SkillsData : ScriptableObject {
         public List<FeatureData> FeatureDatas;
         public List<TriggerData> TriggerDatas;
     }
+
     [Serializable]
     public class FeatureData
     {   
@@ -61,7 +62,6 @@ public enum ScopeType{
     All = 3,
     Self = 4,
 }
-
 
 public enum SkillType{
     None = 0,
@@ -105,13 +105,15 @@ public enum DamageType
 public enum TriggerType
 {
     None = 0,
-    AfterMp = 101,
-    ChainCount = 102,
+    AfterMp = 101, // Mpが〇になる
+    ChainCount = 102, // 拘束成功回数
+    ActionResultDeath = 103 // 攻撃を受けると戦闘不能になる
 }
 
 public enum TriggerTiming
 {
     None = 0,
     Use = 1,
-    After = 2
+    After = 2,
+    Interrupt = 3
 }

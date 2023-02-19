@@ -334,3 +334,81 @@ MonoBehaviour:
       Param2: 0
       Param3: 0
     TriggerDatas: []
+  - Id: 301
+    Name: "\u30AB\u30A6\u30F3\u30BF\u30FC\u30AA\u30FC\u30E9"
+    IconIndex: 370
+    AnimationName: NA_Fire_001
+    AnimationType: 1
+    DamageTiming: 26
+    MpCost: 0
+    Attribute: 3
+    Scope: 1
+    SkillType: 1
+    TargetType: 2
+    Help: "\u5473\u65B9\u4E00\u4EBA\u306BCA\u3092\u4ED8\u4E0E"
+    Range: 1
+    FeatureDatas:
+    - SkillId: 301
+      FeatureType: 21
+      Param1: 103
+      Param2: 1
+      Param3: 0
+    TriggerDatas: []
+  - Id: 311
+    Name: "\u30D5\u30EA\u30B8\u30C3\u30C8\u30B7\u30A7\u30EB"
+    IconIndex: 145
+    AnimationName: NA_Fire_001
+    AnimationType: 1
+    DamageTiming: 26
+    MpCost: 0
+    Attribute: 3
+    Scope: 3
+    SkillType: 3
+    TargetType: 2
+    Help: "(\u6761\u4EF6)\u6575\u306E\u884C\u52D5\u3067\u5473\u65B9\u304C\u6226\u95D8\u4E0D\u80FD\n\u5473\u65B9\u5168\u54E1\u306B\u30B7\u30FC\u30EB\u30C9\u3092\u4ED8\u4E0E
+      \u795E\u5316\u72B6\u614B\u306B\u79FB\u884C"
+    Range: 1
+    FeatureDatas:
+    - SkillId: 311
+      FeatureType: 21
+      Param1: 104
+      Param2: 1
+      Param3: 0
+    - SkillId: 311
+      FeatureType: 101
+      Param1: 11
+      Param2: 0
+      Param3: 0
+    TriggerDatas:
+    - SkillId: 311
+      TriggerType: 103
+      TriggerTiming: 3
+      Param1: 0
+      Param2: 0
+      Param3: 0
+  - Id: 312
+    Name: "\u30CE\u30ED\u30DE\u30CA\u30AB\u30E1\u30CB\u30CA\u30EC"
+    IconIndex: 40
+    AnimationName: NA_Fire_001
+    AnimationType: 1
+    DamageTiming: 26
+    MpCost: 0
+    Attribute: 3
+    Scope: 3
+    SkillType: 4
+    TargetType: 1
+    Help: "(\u6761\u4EF6)\u795E\u5316\u72B6\u614B\n\u6575\u5168\u4F53\u306B\u920D\u8DB3\u4ED8\u4E0E
+      \u795E\u5316\u89E3\u9664"
+    Range: 2
+    FeatureDatas:
+    - SkillId: 312
+      FeatureType: 21
+      Param1: 21
+      Param2: 2
+      Param3: 0
+    - SkillId: 312
+      FeatureType: 101
+      Param1: 21
+      Param2: 0
+      Param3: 0
+    TriggerDatas: []

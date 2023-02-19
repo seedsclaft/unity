@@ -205,13 +205,13 @@ public class BattleModel : BaseModel
         _actionInfos.Clear();
     }
 
-    public ActionInfo MakeActionInfo(int skillId)
+    public ActionInfo MakeActionInfo(BattlerInfo subject, int skillId,bool IsInterrupt)
     {
         var skill = DataSystem.Skills.Find(a => a.Id == skillId);
         int LastTargetIndex = -1;
-        if (_currentBattler.isActor)
+        if (subject.isActor)
         {
-            LastTargetIndex = _currentBattler.LastTargetIndex();
+            LastTargetIndex = subject.LastTargetIndex();
             if (skill.TargetType == TargetType.Opponent)
             {
                 if (BattlerEnemies()[LastTargetIndex] == null || BattlerEnemies()[LastTargetIndex].IsAlive() == false)
@@ -220,11 +220,17 @@ public class BattleModel : BaseModel
                 }
             } else
             {
-                LastTargetIndex = _currentBattler.Index;
+                LastTargetIndex = subject.Index;
             }
         }
-        ActionInfo actionInfo = new ActionInfo(skillId,_currentBattler.Index,LastTargetIndex);
-        _actionInfos.Add(actionInfo);
+        ActionInfo actionInfo = new ActionInfo(skillId,subject.Index,LastTargetIndex);
+        if (IsInterrupt)
+        {
+            _actionInfos.Insert(0,actionInfo);
+        } else
+        {
+            _actionInfos.Add(actionInfo);
+        }
         return actionInfo;
     }
 
@@ -304,10 +310,23 @@ public class BattleModel : BaseModel
             List<ActionResultInfo> actionResultInfos = actionInfo.actionResults;
             for (int i = 0; i < actionResultInfos.Count; i++)
             {
-                BattlerInfo battlerInfo = _battlers.Find(a => a.Index == actionResultInfos[i].TargetIndex);
+                BattlerInfo subject = _battlers.Find(a => a.Index == actionResultInfos[i].SubjectIndex);
+                BattlerInfo target = _battlers.Find(a => a.Index == actionResultInfos[i].TargetIndex);
                 if (actionResultInfos[i].HpDamage != 0)
                 {
-                    battlerInfo.ChangeHp(-1 * actionResultInfos[i].HpDamage);
+                    target.ChangeHp(-1 * actionResultInfos[i].HpDamage);
+                }
+                if (actionResultInfos[i].ReDamage != 0)
+                {
+                    subject.ChangeHp(-1 * actionResultInfos[i].ReDamage);
+                }
+                foreach (var targetIndex in actionResultInfos[i].ExecStateInfos)
+                {
+                    BattlerInfo execTarget = _battlers.Find(a => a.Index == targetIndex.Key);
+                    if (execTarget != null)
+                    {
+                        execTarget.UpdateState(RemovalTiming.UpdateCount);
+                    }
                 }
             }
         }
@@ -348,19 +367,41 @@ public class BattleModel : BaseModel
         _actionInfos.AddRange(actionInfos);
     }
 
-    public void CheckTriggerSkillInfos(TriggerTiming triggerTiming)
+    public bool CheckTriggerSkillInfos(TriggerTiming triggerTiming)
     {
+        bool IsTriggered = false;
         List<ActionInfo> actionInfos = new List<ActionInfo>();
         List <SkillInfo> triggeredSkills = CurrentBattler.TriggerdSkillInfos(triggerTiming,CurrentActionInfo());
         if (triggeredSkills.Count > 0)
         {
-            for (var i = 0;i < triggeredSkills.Count;i++){
-                ActionInfo makeActionInfo = MakeActionInfo(triggeredSkills[i].Id);
+            IsTriggered = true;
+            for (var i = 0;i < triggeredSkills.Count;i++)
+            {
+                ActionInfo makeActionInfo = MakeActionInfo(CurrentBattler,triggeredSkills[i].Id,triggeredSkills[i].Interrupt);
                 if (triggeredSkills[i].Master.SkillType == SkillType.Demigod){
                     CurrentBattler.SetAwaken();
                 }
             }
         }
+
+        List<ActionResultInfo> actionResultInfos = CurrentActionInfo().actionResults;
+        for (var i = 0;i < actionResultInfos.Count;i++)
+        {
+            BattlerInfo target = _battlers.Find(a => a.Index == actionResultInfos[i].TargetIndex);
+            triggeredSkills = target.TriggerdSkillInfos(triggerTiming,CurrentActionInfo());
+            if (triggeredSkills.Count > 0)
+            {
+                IsTriggered = true;
+                for (var j = 0;j < triggeredSkills.Count;j++)
+                {
+                    ActionInfo makeActionInfo = MakeActionInfo(target,triggeredSkills[j].Id,triggeredSkills[j].Interrupt);
+                    if (triggeredSkills[j].Master.SkillType == SkillType.Demigod){
+                        target.SetAwaken();
+                    }
+                }
+            }
+        }
+        return IsTriggered;
     }
 
     public List<int> MakeAutoSelectIndex(ActionInfo actionInfo)

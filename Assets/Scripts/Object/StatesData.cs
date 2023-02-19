@@ -21,8 +21,11 @@ public enum StateType
     None = 0,
     Death = 1,
     Demigod = 11,
+    Slow = 21,
     Chain = 101,
     ReAct = 102,
+    CounterOura = 103,
+    NoDamage = 104
 }
 
 public enum RemovalTiming
@@ -30,6 +33,7 @@ public enum RemovalTiming
     None = 0,
     UpdateTurn = 1,
     UpdateAp = 2,
-    UpdateChain = 3
+    UpdateChain = 3,
+    UpdateCount = 4
 
 }

@@ -5,7 +5,13 @@ using UnityEngine;
 public class ActionResultInfo 
 {
     private int _subjectIndex = 0;
+    public int SubjectIndex{
+        get { return _subjectIndex;}
+    }
     private int _targetIndex = 0;
+    public int TargetIndex{
+        get { return _targetIndex;}
+    }
 
     private ActionInfo _actionInfo = null;
 
@@ -25,14 +31,16 @@ public class ActionResultInfo
     public int MpDamage {
         get {return _mpDamage;}
     }
+    private int _reDamage = 0;
+    public int ReDamage {
+        get {return _reDamage;} set{_reDamage = value;}
+    }
     private bool _isDead = false;
     public bool IsDead {
         get {return _isDead;}
     }
-    public int TargetIndex{
-        get { return _targetIndex;}
-    }
 
+    
     private List<StateInfo> _addedStates = new List<StateInfo>();
     public List<StateInfo> AddedStates {
         get {return _addedStates;}
@@ -41,10 +49,16 @@ public class ActionResultInfo
     public List<StateInfo> RemovedStates {
         get {return _removedStates;}
     }
+    private Dictionary<int,List<StateType>> _execStateInfos = new Dictionary<int, List<StateType>>();
+    public  Dictionary<int,List<StateType>> ExecStateInfos{
+        get {return _execStateInfos;}
+    }
 
     public void MakeResultData(BattlerInfo subject,BattlerInfo target)
     {
         _targetIndex = target.Index;
+        _execStateInfos[subject.Index] = new List<StateType>();
+        _execStateInfos[_targetIndex] = new List<StateType>();
         List<SkillsData.FeatureData> featureDatas = _actionInfo.Master.FeatureDatas;
         for (int i = 0; i < featureDatas.Count; i++)
         {
@@ -74,9 +88,21 @@ public class ActionResultInfo
 
     private void MakeHpDamage(BattlerInfo subject,BattlerInfo target,SkillsData.FeatureData featureData)
     {
+        if (target.IsState(StateType.NoDamage))
+        {
+            _execStateInfos[target.Index].Add(StateType.NoDamage);
+            return;
+        }
         int AtkValue = subject.CurrentAtk();
         int DefValue = target.CurrentDef();
-        float DamageValue = Mathf.Max(0,(featureData.Param1 * 0.01f * (AtkValue * 0.5f)) - (DefValue * 0.5f));
+        float SkillDamage = (featureData.Param1 * 0.01f * (AtkValue * 0.5f));
+        if (target.IsState(StateType.CounterOura))
+        {
+            _execStateInfos[target.Index].Add(StateType.CounterOura);
+            _reDamage = (int)SkillDamage;
+        }
+        SkillDamage -= (DefValue * 0.5f);
+        float DamageValue = Mathf.Max(0,SkillDamage);
         _hpDamage = (int)Mathf.Round(DamageValue);
         // 属性補正
         // クリティカル

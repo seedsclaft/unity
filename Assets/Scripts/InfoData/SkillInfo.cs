@@ -9,10 +9,13 @@ public class SkillInfo
     
     private bool _enabel;
     public bool Enabel {get {return _enabel;}}
+    private bool _interrupt;
+    public bool Interrupt {get {return _interrupt;}}
     public AttributeType Attribute {get {return Master.Attribute;}}
     public SkillInfo(int id)
     {
         _id = id;
+        _interrupt = false;
     }
 
     public void SetEnable()
@@ -22,5 +25,9 @@ public class SkillInfo
     public void SetDisable()
     {
         _enabel = false;
+    }
+    public void SetInterrupt(bool IsInterrupt)
+    {
+        _interrupt = IsInterrupt;
     }
 }

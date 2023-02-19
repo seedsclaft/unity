@@ -13,18 +13,43 @@ public class SkillsImporter : AssetPostprocessor {
     {
 		Id = 0,
 		NameId,
+		_Name,
         IconIndex,
 		AnimationName,
 		AnimationType,
+		_AnimationType,
 		DamageTiming,
 		MpCost,
 		Attribute,
+		_Attribute,
 		SkillType,
+		_SkillType,
 		TargetType,
+		_TargetType,
 		Scope,
+		_Scope,
 		Range,
     }
 
+    enum BaseFeatureColumn
+	{
+		SkillId,
+		FeatureType,
+		_FeatureType,
+		Param1,
+		Param2,
+		Param3
+	}
+    enum BaseTriggerColumn
+	{
+
+		SkillId,
+		TriggerType,
+		TriggerTiming,
+		Param1,
+		Param2,
+		Param3
+	}
 	static readonly string ExcelPath = "Assets/Data";
 	static readonly string ExcelName = "Skills.xlsx";
 
@@ -114,11 +139,11 @@ public class SkillsImporter : AssetPostprocessor {
 					IRow Baserow = BaseSheet.GetRow(i);
 
 					var FeatureData = new SkillsData.FeatureData();
-					FeatureData.SkillId = (int)Baserow.GetCell((int)BaseColumn.Id)?.NumericCellValue;
-					FeatureData.FeatureType = (FeatureType)Baserow.GetCell((int)BaseColumn.NameId)?.NumericCellValue;
-					FeatureData.Param1 = (int)Baserow.GetCell((int)BaseColumn.IconIndex)?.NumericCellValue;
-					FeatureData.Param2 = (int)Baserow.GetCell((int)BaseColumn.AnimationName)?.NumericCellValue;
-					FeatureData.Param3 = (int)Baserow.GetCell((int)BaseColumn.AnimationType)?.NumericCellValue;
+					FeatureData.SkillId = (int)Baserow.GetCell((int)BaseFeatureColumn.SkillId)?.NumericCellValue;
+					FeatureData.FeatureType = (FeatureType)Baserow.GetCell((int)BaseFeatureColumn.FeatureType)?.NumericCellValue;
+					FeatureData.Param1 = (int)Baserow.GetCell((int)BaseFeatureColumn.Param1)?.NumericCellValue;
+					FeatureData.Param2 = (int)Baserow.GetCell((int)BaseFeatureColumn.Param2)?.NumericCellValue;
+					FeatureData.Param3 = (int)Baserow.GetCell((int)BaseFeatureColumn.Param3)?.NumericCellValue;
 					
 					var SkillData = Data._data.Find(a => a.Id == FeatureData.SkillId);
 					if (SkillData != null){
@@ -135,12 +160,12 @@ public class SkillsImporter : AssetPostprocessor {
 					IRow Baserow = BaseSheet.GetRow(i);
 
 					var TriggerData = new SkillsData.TriggerData();
-					TriggerData.SkillId = (int)Baserow.GetCell((int)BaseColumn.Id)?.NumericCellValue;
-					TriggerData.TriggerType = (TriggerType)Baserow.GetCell((int)BaseColumn.NameId)?.NumericCellValue;
-					TriggerData.TriggerTiming = (TriggerTiming)Baserow.GetCell((int)BaseColumn.IconIndex)?.NumericCellValue;
-					TriggerData.Param1 = (int)Baserow.GetCell((int)BaseColumn.AnimationName)?.NumericCellValue;
-					TriggerData.Param2 = (int)Baserow.GetCell((int)BaseColumn.AnimationType)?.NumericCellValue;
-					TriggerData.Param3 = (int)Baserow.GetCell((int)BaseColumn.DamageTiming)?.NumericCellValue;
+					TriggerData.SkillId = (int)Baserow.GetCell((int)BaseTriggerColumn.SkillId)?.NumericCellValue;
+					TriggerData.TriggerType = (TriggerType)Baserow.GetCell((int)BaseTriggerColumn.TriggerType)?.NumericCellValue;
+					TriggerData.TriggerTiming = (TriggerTiming)Baserow.GetCell((int)BaseTriggerColumn.TriggerTiming)?.NumericCellValue;
+					TriggerData.Param1 = (int)Baserow.GetCell((int)BaseTriggerColumn.Param1)?.NumericCellValue;
+					TriggerData.Param2 = (int)Baserow.GetCell((int)BaseTriggerColumn.Param2)?.NumericCellValue;
+					TriggerData.Param3 = (int)Baserow.GetCell((int)BaseTriggerColumn.Param3)?.NumericCellValue;
 					
 					var SkillData = Data._data.Find(a => a.Id == TriggerData.SkillId);
 					if (SkillData != null){
