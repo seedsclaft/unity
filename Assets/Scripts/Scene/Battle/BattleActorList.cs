@@ -104,6 +104,12 @@ public class BattleActorList : ListWindow , IInputHandlerEvent
         battleActor.StartDamage(damageType,value);
     }
 
+    public void StartHeal(int targetIndex , DamageType damageType , int value)
+    {        
+        BattleActor battleActor = ObjectList[targetIndex].GetComponent<BattleActor>();
+        battleActor.StartHeal(damageType,value);
+    }
+
     public override void UpdateHelpWindow(){
         if (_helpWindow != null)
         {

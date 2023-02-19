@@ -212,7 +212,7 @@ public class BattleModel : BaseModel
         if (subject.isActor)
         {
             LastTargetIndex = subject.LastTargetIndex();
-            if (skill.TargetType == TargetType.Opponent)
+            if (skill.TargetType == TargetType.Opponent || skill.TargetType == TargetType.All)
             {
                 if (BattlerEnemies()[LastTargetIndex] == null || BattlerEnemies()[LastTargetIndex].IsAlive() == false)
                 {
@@ -267,6 +267,10 @@ public class BattleModel : BaseModel
             if (actionInfo.Master.TargetType == TargetType.Friend)
             {
                 targetInfos = BattlerActors();
+            } else
+            if (actionInfo.Master.TargetType == TargetType.DeadFriend)
+            {
+                targetInfos = BattlerActors().FindAll(a => a.IsState(StateType.Death));
             }
         } else
         {
@@ -277,6 +281,21 @@ public class BattleModel : BaseModel
             if (actionInfo.Master.TargetType == TargetType.Friend)
             {
                 targetInfos = BattlerEnemies();
+            } else
+            if (actionInfo.Master.TargetType == TargetType.DeadFriend)
+            {
+                targetInfos = BattlerEnemies().FindAll(a => a.IsState(StateType.Death));
+            }
+        }
+        if (actionInfo.Master.TargetType == TargetType.All)
+        {
+            targetInfos = _battlers;
+            if (indexList.Count > 0)
+            {
+                if (indexList[0] > 100)
+                {
+                    CurrentBattler.SetLastTargetIndex(indexList[0] - 100);
+                }
             }
         }
         int MpCost = actionInfo.Master.MpCost;
@@ -316,9 +335,17 @@ public class BattleModel : BaseModel
                 {
                     target.ChangeHp(-1 * actionResultInfos[i].HpDamage);
                 }
+                if (actionResultInfos[i].HpHeal != 0)
+                {
+                    target.ChangeHp(actionResultInfos[i].HpHeal);
+                }
                 if (actionResultInfos[i].ReDamage != 0)
                 {
                     subject.ChangeHp(-1 * actionResultInfos[i].ReDamage);
+                }
+                if (actionResultInfos[i].ReHeal != 0)
+                {
+                    subject.ChangeHp(actionResultInfos[i].ReHeal);
                 }
                 foreach (var targetIndex in actionResultInfos[i].ExecStateInfos)
                 {
@@ -367,11 +394,35 @@ public class BattleModel : BaseModel
         _actionInfos.AddRange(actionInfos);
     }
 
+    public List<BattlerInfo> CheckRegeneBattlers()
+    {
+        return _battlers.FindAll(a => a.IsState(StateType.Regene));
+    }
+
+    public List<ActionResultInfo> UpdateRegeneState()
+    {
+        List<ActionResultInfo> actionResultInfos = new List<ActionResultInfo>();
+        List<BattlerInfo> regeneBattlers = CheckRegeneBattlers();
+        for (int i = 0;i < regeneBattlers.Count;i++)
+        {
+            List<StateInfo> stateInfos = regeneBattlers[i].GetStateInfoAll(StateType.Regene);
+            
+            for (int j = 0;j < stateInfos.Count;j++)
+            {
+                regeneBattlers[i].ChangeHp(stateInfos[j].Effect);
+                ActionResultInfo actionResultInfo = new ActionResultInfo(stateInfos[j].BattlerId,stateInfos[j].TargetIndex,null);
+                actionResultInfo.HpHeal = stateInfos[j].Effect;
+                actionResultInfos.Add(actionResultInfo);
+            }
+        }
+        return actionResultInfos;
+    }
+
     public bool CheckTriggerSkillInfos(TriggerTiming triggerTiming)
     {
         bool IsTriggered = false;
         List<ActionInfo> actionInfos = new List<ActionInfo>();
-        List <SkillInfo> triggeredSkills = CurrentBattler.TriggerdSkillInfos(triggerTiming,CurrentActionInfo());
+        List <SkillInfo> triggeredSkills = CurrentBattler.TriggerdSkillInfos(triggerTiming,CurrentActionInfo(),_battlers);
         if (triggeredSkills.Count > 0)
         {
             IsTriggered = true;
@@ -388,7 +439,25 @@ public class BattleModel : BaseModel
         for (var i = 0;i < actionResultInfos.Count;i++)
         {
             BattlerInfo target = _battlers.Find(a => a.Index == actionResultInfos[i].TargetIndex);
-            triggeredSkills = target.TriggerdSkillInfos(triggerTiming,CurrentActionInfo());
+            triggeredSkills = target.TriggerdSkillInfos(triggerTiming,CurrentActionInfo(),_battlers);
+            if (triggeredSkills.Count > 0)
+            {
+                IsTriggered = true;
+                for (var j = 0;j < triggeredSkills.Count;j++)
+                {
+                    ActionInfo makeActionInfo = MakeActionInfo(target,triggeredSkills[j].Id,triggeredSkills[j].Interrupt);
+                    if (triggeredSkills[j].Master.SkillType == SkillType.Demigod){
+                        target.SetAwaken();
+                    }
+                }
+            }
+        }
+
+        
+        for (var i = 0;i < _battlers.Count;i++)
+        {
+            BattlerInfo target = _battlers[i];
+            triggeredSkills = target.TriggerdSkillInfos(triggerTiming,CurrentActionInfo(),_battlers);
             if (triggeredSkills.Count > 0)
             {
                 IsTriggered = true;
@@ -425,6 +494,10 @@ public class BattleModel : BaseModel
             if (actionInfo.Master.TargetType == TargetType.Friend)
             {
                 targetInfos = BattlerActors();
+            } else
+            if (actionInfo.Master.TargetType == TargetType.DeadFriend)
+            {
+                targetInfos = BattlerActors().FindAll(a => a.IsState(StateType.Death));
             }
         } else
         {
@@ -435,7 +508,15 @@ public class BattleModel : BaseModel
             if (actionInfo.Master.TargetType == TargetType.Friend)
             {
                 targetInfos = BattlerEnemies();
+            } else
+            if (actionInfo.Master.TargetType == TargetType.DeadFriend)
+            {
+                targetInfos = BattlerEnemies().FindAll(a => a.IsState(StateType.Death));
             }
+        }
+        if (actionInfo.Master.TargetType == TargetType.All)
+        {
+            targetInfos = _battlers;
         }
         if (indexList.Count == 0)
         {

@@ -27,6 +27,10 @@ public class ActionResultInfo
     public int HpDamage {
         get {return _hpDamage;} set{_hpDamage = value;}
     }
+    private int _hpHeal = 0;
+    public int HpHeal {
+        get {return _hpHeal;} set{_hpHeal = value;}
+    }
     private int _mpDamage = 0;
     public int MpDamage {
         get {return _mpDamage;}
@@ -34,6 +38,10 @@ public class ActionResultInfo
     private int _reDamage = 0;
     public int ReDamage {
         get {return _reDamage;} set{_reDamage = value;}
+    }
+    private int _reHeal = 0;
+    public int ReHeal {
+        get {return _reHeal;} set{_reHeal = value;}
     }
     private bool _isDead = false;
     public bool IsDead {
@@ -73,6 +81,12 @@ public class ActionResultInfo
             case FeatureType.HpDamage:
                 MakeHpDamage(subject,target,featureData);
                 return;
+            case FeatureType.HpHeal:
+                MakeHpHeal(subject,target,featureData);
+                return;
+            case FeatureType.HpDrain:
+                MakeHpDrain(subject,target,featureData);
+                return;
             case FeatureType.AddState:
                 MakeAddState(subject,target,featureData);
                 return;
@@ -111,6 +125,19 @@ public class ActionResultInfo
         {
             _isDead = true;
         }
+    }
+
+    private void MakeHpHeal(BattlerInfo subject,BattlerInfo target,SkillsData.FeatureData featureData)
+    {
+        float HealValue = target.Status.Hp * featureData.Param1 * 0.01f;
+        _hpHeal = (int)Mathf.Round(HealValue);
+        _hpHeal = ApplyVariance(_hpHeal);
+    }
+
+    private void MakeHpDrain(BattlerInfo subject,BattlerInfo target,SkillsData.FeatureData featureData)
+    {
+        MakeHpDamage(subject,target,featureData);
+        _reHeal = (int)Mathf.Floor(HpDamage * featureData.Param3 * 0.01f);
     }
 
     private void MakeAddState(BattlerInfo subject,BattlerInfo target,SkillsData.FeatureData featureData)

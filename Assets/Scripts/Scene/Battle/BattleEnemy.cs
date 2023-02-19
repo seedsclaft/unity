@@ -85,6 +85,17 @@ public class BattleEnemy : ListItem
         battlerInfoComponent.ChangeHp(value * -1 + _battlerInfo.Hp);
     }
 
+    public void StartHeal(DamageType damageType,int value)
+    {
+        GameObject prefab = Instantiate(battleDamagePrefab);
+        battleDamageRoot.SetActive(true);
+        prefab.transform.SetParent(battleDamageRoot.transform, false);
+        var battleDamage = prefab.GetComponent<BattleDamage>();
+        battleDamage.StartHeal(damageType,value);
+        _battleDamages.Add(battleDamage);
+        battlerInfoComponent.ChangeHp(value + _battlerInfo.Hp);
+    }
+
     public void StartDeathAnimation()
     {
         _deathAnimation = 0.01f;

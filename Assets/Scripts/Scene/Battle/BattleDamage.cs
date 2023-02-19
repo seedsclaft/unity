@@ -75,6 +75,41 @@ public class BattleDamage : MonoBehaviour
         }
     }
 
+    public void StartHeal(DamageType damageType,int value)
+    {
+        UpdateAllHide();
+        _busy = true;
+        string result = value.ToString();
+        List<GameObject> _damageList = new List<GameObject>();
+        for (int i = 0; i < result.Count(); i++)
+        {   
+            GameObject prefab = Instantiate(GetPrefabType(damageType));
+            prefab.transform.SetParent(GetRootType(damageType).transform, false);
+            TextMeshProUGUI textMeshProUGUI = prefab.GetComponent<TextMeshProUGUI>();
+            textMeshProUGUI.text = result[i].ToString();
+            _damageList.Add(prefab);
+        }
+
+        for (int i = _damageList.Count-1; i >= 0; i--)
+        {   
+            TextMeshProUGUI textMeshProUGUI = _damageList[i].GetComponent<TextMeshProUGUI>();
+            textMeshProUGUI.alpha = 0;
+            Sequence sequence = DOTween.Sequence()
+                .SetDelay(i * 0.05f)
+                .Append(textMeshProUGUI.DOFade(1.0f, 0.1f))
+                .Append(textMeshProUGUI.gameObject.transform.DOLocalMoveY(16, 0.1f))
+                .Append(textMeshProUGUI.gameObject.transform.DOLocalMoveY(0, 0.2f))
+                .SetDelay(0.05f)
+                .Append(textMeshProUGUI.gameObject.transform.DOLocalMoveY(4, 0.05f))
+                .Append(textMeshProUGUI.gameObject.transform.DOLocalMoveY(0, 0.05f))
+                .SetEase(Ease.InOutQuad)
+                .OnComplete(() => {
+                    _busy = false;
+                    textMeshProUGUI.DOFade(0.0f, 0.2f);
+                });
+        }
+    }
+
     private GameObject GetPrefabType(DamageType damageType)
     {
         switch (damageType)

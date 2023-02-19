@@ -28,6 +28,10 @@ public class StateInfo {
 
     public bool CheckOverWriteState(StateInfo stateInfo)
     {
+        if (stateInfo.StateId == (int)StateType.Death)
+        {
+            return (stateInfo.StateId == _stateId);
+        }
         return (stateInfo.StateId == _stateId) && (stateInfo.BattlerId == _battlerId);
     }
 

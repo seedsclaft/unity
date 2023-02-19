@@ -225,6 +225,11 @@ public class BattleEnemyLayer : MonoBehaviour
         battleEnemies[targetIndex].StartDamage(damageType,value);
     }
 
+    public void StartHeal(int targetIndex , DamageType damageType , int value)
+    {        
+        battleEnemies[targetIndex].StartHeal(damageType,value);
+    }
+
     public void StartDeathAnimation(int targetIndex)
     {
         battleEnemies[targetIndex].StartDeathAnimation();

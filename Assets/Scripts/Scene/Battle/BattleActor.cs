@@ -93,6 +93,12 @@ public class BattleActor : ListItem ,IListViewItem ,IClickHandlerEvent
         battlerInfoComponent.ChangeHp(value * -1 + _data.Hp);
     }
 
+    public void StartHeal(DamageType damageType,int value)
+    {
+        _battleDamage.StartHeal(damageType,value);
+        battlerInfoComponent.ChangeHp(value + _data.Hp);
+    }
+
     public void StartDeathAnimation()
     {
         _deathAnimation = 0.01f;

@@ -118,6 +118,10 @@ public class BattlerInfo
 
     public void UpdateAp()
     {
+        if (IsState(StateType.Death))
+        {
+            return;
+        }
         if (IsState(StateType.Chain))
         {
             _ap += 2;
@@ -148,6 +152,11 @@ public class BattlerInfo
         }
         if (_hp > _status.Hp){
             _hp = _status.Hp;
+        }
+        if (_hp <= 0)
+        {
+            StateInfo stateInfo = new StateInfo((int)StateType.Death,0,0,Index,Index);
+            AddState(stateInfo);
         }
     }
 
@@ -207,6 +216,10 @@ public class BattlerInfo
         {
             _stateInfos.RemoveAt(RemoveIndex);
             IsRemoved = true;
+            if (stateInfo.StateId == (int)StateType.Death)
+            {
+                _hp = 1;
+            }
         }
         return IsRemoved;
     }
@@ -277,7 +290,7 @@ public class BattlerInfo
     }
 
     // Triggerを満たすSkillInfoを取得
-    public List<SkillInfo> TriggerdSkillInfos(TriggerTiming triggerTiming,ActionInfo actionInfo)
+    public List<SkillInfo> TriggerdSkillInfos(TriggerTiming triggerTiming,ActionInfo actionInfo,List<BattlerInfo> battlers)
     {
         List <SkillInfo> triggeredSkills = new List<SkillInfo>();
         for (var i = 0;i < Skills.Count;i++)
@@ -310,6 +323,20 @@ public class BattlerInfo
                         if ( TriggerdActionResultDeathSkillInfos(triggerDatas[j],actionInfo) )
                         {
                             skillInfo.SetInterrupt(true);
+                            triggeredSkills.Add(skillInfo);
+                        }
+                    }
+                    if (triggerDatas[j].TriggerType == TriggerType.DeadWithoutSelf)
+                    {
+                        if ( TriggerdDeadWithoutSelfSkillInfos(triggerDatas[j],battlers) )
+                        {
+                            triggeredSkills.Add(skillInfo);
+                        }
+                    }
+                    if (triggerDatas[j].TriggerType == TriggerType.SelfDead)
+                    {
+                        if ( TriggerdSelfDeadSkillInfos(triggerDatas[j],actionInfo) )
+                        {
                             triggeredSkills.Add(skillInfo);
                         }
                     }
@@ -349,6 +376,7 @@ public class BattlerInfo
         }
         return IsTriggered;
     }
+
     private bool TriggerdActionResultDeathSkillInfos(SkillsData.TriggerData triggerData,ActionInfo actionInfo)
     {
         bool IsTriggered = false;
@@ -359,4 +387,57 @@ public class BattlerInfo
         }
         return IsTriggered;
     }
+
+    private bool TriggerdDeadWithoutSelfSkillInfos(SkillsData.TriggerData triggerData,List<BattlerInfo> battlerInfos)
+    {
+        bool IsTriggered = false;
+        if (isActor)
+        {
+            int count = 0;
+            for (var i = 0;i < battlerInfos.Count;i++)
+            {
+                if (battlerInfos[i].isActor && battlerInfos[i].IsState(StateType.Death))
+                {
+                    count++;
+                }
+            }
+            if (count > 0 && (count+1) >= battlerInfos.FindAll(a => a.isActor).Count)
+            {
+                IsTriggered = true;
+            }
+        } else
+        {
+            int count = 0;
+            for (var i = 0;i < battlerInfos.Count;i++)
+            {
+                if (!battlerInfos[i].isActor && battlerInfos[i].IsState(StateType.Death))
+                {
+                    count++;
+                }
+            }
+            if (count > 0 && (count+1) >= battlerInfos.FindAll(a => !a.isActor).Count)
+            {
+                IsTriggered = true;
+            }
+        } 
+        return IsTriggered;
+    }
+
+    private bool TriggerdSelfDeadSkillInfos(SkillsData.TriggerData triggerData,ActionInfo actionInfo){
+        bool IsTriggered = false;
+        List<ActionResultInfo> actionResultInfos = actionInfo.actionResults;
+        if (actionResultInfos.Find(a => a.IsDead && a.TargetIndex == Index) != null)
+        {
+            IsTriggered = true;
+        }
+        if (IsTriggered)
+        {
+            List<StateInfo> stateInfos = GetStateInfoAll(StateType.Death);
+            for (var i = 0;i < stateInfos.Count;i++){
+                RemoveState(stateInfos[i]);
+            }
+        }
+        return IsTriggered;
+    }
+    
 }

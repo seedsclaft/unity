@@ -243,9 +243,22 @@ public class BattleView : BaseView
         }
     }
 
+    public void StartHeal(int targetIndex,DamageType damageType,int value)
+    {
+        if (targetIndex >= 100)
+        {
+            battleEnemyLayer.StartHeal(targetIndex - 100,damageType,value);
+        } else{
+            battleActorList.StartHeal(targetIndex,damageType,value);
+        }
+    }
+
     public void StartDeathAnimation(int targetIndex)
     {
-        battleEnemyLayer.StartDeathAnimation(targetIndex - 100);
+        if (targetIndex >= 100)
+        {
+            battleEnemyLayer.StartDeathAnimation(targetIndex - 100);
+        }
     }
 
     public void RefreshStatus()
@@ -320,6 +333,7 @@ namespace Battle
         EnemyLayer,
         EndAnimation,
         EndDemigodAnimation,
+        EndRegeneAnimation,
         StartDamage
     }
 }

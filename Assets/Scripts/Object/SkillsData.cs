@@ -85,7 +85,9 @@ public enum TargetType{
     Opponent = 1,
     Friend = 2,
     All = 3,
-    Self = 4
+    Self = 4,
+    DeadOpponent = 5,
+    DeadFriend = 6,
 }
 
 public enum RangeType{
@@ -107,7 +109,9 @@ public enum TriggerType
     None = 0,
     AfterMp = 101, // Mpが〇になる
     ChainCount = 102, // 拘束成功回数
-    ActionResultDeath = 103 // 攻撃を受けると戦闘不能になる
+    ActionResultDeath = 103, // 攻撃を受けると戦闘不能になる
+    DeadWithoutSelf = 104, // 自身以外が戦闘不能
+    SelfDead = 105
 }
 
 public enum TriggerTiming

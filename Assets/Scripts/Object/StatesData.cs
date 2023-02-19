@@ -25,7 +25,8 @@ public enum StateType
     Chain = 101,
     ReAct = 102,
     CounterOura = 103,
-    NoDamage = 104
+    NoDamage = 104,
+    Regene = 105,
 }
 
 public enum RemovalTiming

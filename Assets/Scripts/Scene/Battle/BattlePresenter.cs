@@ -124,10 +124,16 @@ public class BattlePresenter
             _view.ShowEnemyTarget();
             _view.RefreshBattlerEnemyLayerTarget(actionInfo);
         } else
-        if (actionInfo.TargetType == TargetType.Friend || actionInfo.TargetType == TargetType.Self)
+        if (actionInfo.TargetType == TargetType.Friend || actionInfo.TargetType == TargetType.Self || actionInfo.TargetType == TargetType.DeadFriend)
         {
             _view.ShowPartyTarget();
             _view.RefreshBattlerPartyLayerTarget(actionInfo);
+        } else
+        {
+            _view.ShowEnemyTarget();
+            _view.ShowPartyTarget();
+            _view.RefreshBattlerPartyLayerTarget(actionInfo);
+            _view.RefreshBattlerEnemyLayerTarget(actionInfo);
         }
         //
     }
@@ -147,16 +153,6 @@ public class BattlePresenter
                 return;
             }
             StartAnimationSkill();
-            /*
-            var animation = await _model.SkillActionAnimation(actionInfo.Master.AnimationName);
-
-            _nextCommandType = Battle.CommandType.EndAnimation;
-            for (int i = 0; i < indexList.Count; i++)
-            {
-                _view.StartAnimation(indexList[i],animation);
-                _view.StartSkillDamage(indexList[i],actionInfo.Master.DamageTiming,(targetIndex) => StartSkillDamage(targetIndex));
-            }
-            */
         }
     }
 
@@ -184,14 +180,32 @@ public class BattlePresenter
         _nextCommandType = Battle.CommandType.EndDemigodAnimation;
     }
 
+    private async void StartAnimationRegene()
+    {
+        var regeneActionResults = _model.UpdateRegeneState();
+        var animation = await _model.SkillActionAnimation("tktk01/Cure1");
+        for (int i = 0; i < regeneActionResults.Count; i++)
+        {
+            _view.StartAnimation(regeneActionResults[i].TargetIndex,animation);
+            _view.StartHeal(regeneActionResults[i].TargetIndex,DamageType.HpHeal,regeneActionResults[i].HpHeal);
+        }
+        _nextCommandType = Battle.CommandType.EndRegeneAnimation;
+    }
+
     private async void StartAnimationSkill()
     {
         ActionInfo actionInfo = _model.CurrentActionInfo();
         var animation = await _model.SkillActionAnimation(actionInfo.Master.AnimationName);
-
+        if (actionInfo.Master.AnimationType == AnimationType.All)
+        {
+            _view.StartAnimationAll(animation);
+        }
         for (int i = 0; i < actionInfo.actionResults.Count; i++)
         {
-            _view.StartAnimation(actionInfo.actionResults[i].TargetIndex,animation);
+            if (actionInfo.Master.AnimationType != AnimationType.All)
+            {
+                _view.StartAnimation(actionInfo.actionResults[i].TargetIndex,animation);
+            }
             _view.StartSkillDamage(actionInfo.actionResults[i].TargetIndex,actionInfo.Master.DamageTiming,(targetIndex) => StartSkillDamage(targetIndex));
         }
         _nextCommandType = Battle.CommandType.EndAnimation;
@@ -213,9 +227,20 @@ public class BattlePresenter
                         _view.StartDamage(targetIndex,DamageType.HpDamage,actionResultInfos[i].HpDamage);
                     }
                 }
+                if (actionResultInfos[i].HpHeal > 0)
+                {
+                    if (actionResultInfos[i].TargetIndex == targetIndex)
+                    {
+                        _view.StartHeal(targetIndex,DamageType.HpHeal,actionResultInfos[i].HpHeal);
+                    }
+                }
                 if (actionResultInfos[i].ReDamage > 0)
                 {
                     _view.StartDamage(actionResultInfos[i].SubjectIndex,DamageType.HpDamage,actionResultInfos[i].ReDamage);
+                }
+                if (actionResultInfos[i].ReHeal > 0)
+                {
+                    _view.StartHeal(actionResultInfos[i].SubjectIndex,DamageType.HpHeal,actionResultInfos[i].ReHeal);
                 }
             }
         }
@@ -226,6 +251,11 @@ public class BattlePresenter
         if (_nextCommandType == Battle.CommandType.EndDemigodAnimation)
         {
             StartAnimationSkill();
+            return;
+        }
+        if (_nextCommandType == Battle.CommandType.EndRegeneAnimation)
+        {
+            _view.SetBusy(false);
             return;
         }
         // ダメージなどを適用
@@ -254,6 +284,14 @@ public class BattlePresenter
             CommandSelectIndex(_model.MakeAutoSelectIndex(_model.CurrentActionInfo()));
             return;
         }
+        // リジェネ
+        var regene = _model.CheckRegeneBattlers();
+        if (regene.Count > 0)
+        {
+            StartAnimationRegene();
+            return;
+        }
+
         _view.SetBusy(false);
     }
 
