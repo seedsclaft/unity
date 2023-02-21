@@ -71,7 +71,7 @@ public class BattleActor : ListItem ,IListViewItem ,IClickHandlerEvent
     }
 
     void OnMyPointerEnter(BaseEventData data) {
-        _selectHandler(_index);
+        _selectHandler(_data.Index);
 	}
 
     

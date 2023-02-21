@@ -23,7 +23,54 @@ MonoBehaviour:
       _def: 10
       _spd: 10
     AttributeType: 3
+    LearningSkills:
+    - SkillId: 1
+  - Id: 2
+    Name: '""'
+    ImagePath: NY_CJ_monster_018_1
+    BaseStatus:
+      _hp: 1
+      _mp: 1
+      _atk: 1
+      _def: 1
+      _spd: 1
+    AttributeType: 1
+    LearningSkills:
+    - SkillId: 1
+  - Id: 3
+    Name: "\u30CD\u30FC\u30E0\u30EC\u30B9"
+    ImagePath: Bee
+    BaseStatus:
+      _hp: 39
+      _mp: 20
+      _atk: 18
+      _def: 6
+      _spd: 37
+    AttributeType: 2
+    LearningSkills:
+    - SkillId: 1
+  - Id: 4
+    Name: "\u30B1\u30EB\u30D9\u30ED\u30B9"
+    ImagePath: NY_CJ_monster_002_4
+    BaseStatus:
+      _hp: 49
+      _mp: 20
+      _atk: 22
+      _def: 8
+      _spd: 22
+    AttributeType: 1
+    LearningSkills:
+    - SkillId: 1
   _textdata:
   - Id: 1
     Text: "\u30CD\u30EC\u30A4\u30C9\u30B8\u30A7\u30E0"
+    Help: 
+  - Id: 2
+    Text: '""'
+    Help: 
+  - Id: 3
+    Text: "\u30CD\u30FC\u30E0\u30EC\u30B9"
+    Help: 
+  - Id: 4
+    Text: "\u30B1\u30EB\u30D9\u30ED\u30B9"
     Help: 

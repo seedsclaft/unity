@@ -108,7 +108,8 @@ public class BattlePresenter
                 }
             } else
             {
-                ActionInfo actionInfo = _model.MakeActionInfo(_model.CurrentBattler,1,false);
+                int autoSkillId = _model.MakeAutoSkillId(_model.CurrentBattler);
+                ActionInfo actionInfo = _model.MakeActionInfo(_model.CurrentBattler,autoSkillId,false);
                 CommandSelectIndex(_model.MakeAutoSelectIndex(actionInfo));
             }
         }
@@ -124,7 +125,7 @@ public class BattlePresenter
             _view.ShowEnemyTarget();
             _view.RefreshBattlerEnemyLayerTarget(actionInfo);
         } else
-        if (actionInfo.TargetType == TargetType.Friend || actionInfo.TargetType == TargetType.Self || actionInfo.TargetType == TargetType.DeadFriend)
+        if (actionInfo.TargetType == TargetType.Friend || actionInfo.TargetType == TargetType.Self)
         {
             _view.ShowPartyTarget();
             _view.RefreshBattlerPartyLayerTarget(actionInfo);
@@ -144,9 +145,6 @@ public class BattlePresenter
         ActionInfo actionInfo = _model.CurrentActionInfo();
         if (actionInfo != null)
         {
-            //_view.RefreshBattlerEnemyLayerTarget(null);
-            //_view.RefreshBattlerPartyLayerTarget(null);
-            //_model.MakeActionResultInfo(actionInfo,indexList);
             if (actionInfo.Master.SkillType == SkillType.Demigod)
             {
                 StartAnimationDemigod();
@@ -194,6 +192,7 @@ public class BattlePresenter
 
     private async void StartAnimationSkill()
     {
+        _view.ClearDamagePopup();
         ActionInfo actionInfo = _model.CurrentActionInfo();
         var animation = await _model.SkillActionAnimation(actionInfo.Master.AnimationName);
         if (actionInfo.Master.AnimationType == AnimationType.All)
@@ -214,7 +213,6 @@ public class BattlePresenter
 
     private void StartSkillDamage(int targetIndex)
     {
-        _view.ClearDamagePopup();
         ActionInfo actionInfo = _model.CurrentActionInfo();
         if (actionInfo != null)
         {

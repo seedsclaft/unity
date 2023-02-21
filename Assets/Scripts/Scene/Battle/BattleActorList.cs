@@ -16,6 +16,7 @@ public class BattleActorList : ListWindow , IInputHandlerEvent
         get {return _animationBusy;}
     }
     private ScopeType _targetScopeType = ScopeType.None;
+    private List<int> _targetIndexList = new List<int>();
     public int selectIndex{
         get {return Index;}
     }
@@ -29,6 +30,11 @@ public class BattleActorList : ListWindow , IInputHandlerEvent
         {
             var battleActor = ObjectList[i].GetComponent<BattleActor>();
             battleActor.SetCallHandler((actorIndex) => {
+                BattlerInfo battlerInfo = _battleInfos.Find(a => a.Index == actorIndex);
+                if (_targetIndexList.IndexOf(actorIndex) == -1)
+                {
+                    return;
+                }
                 List<int> indexList = new List<int>();
                 if (_targetScopeType == ScopeType.All)
                 {
@@ -39,6 +45,7 @@ public class BattleActorList : ListWindow , IInputHandlerEvent
                 } else
                 if (_targetScopeType == ScopeType.Line)
                 {
+                    indexList.Add(actorIndex);
                 } else
                 if (_targetScopeType == ScopeType.One)
                 {
@@ -141,6 +148,7 @@ public class BattleActorList : ListWindow , IInputHandlerEvent
             _targetScopeType = ScopeType.None;
             return;
         }
+        _targetIndexList = actionInfo.TargetIndexList;
         _targetScopeType = actionInfo.ScopeType;
         if (_targetScopeType == ScopeType.All)
         {
@@ -177,6 +185,10 @@ public class BattleActorList : ListWindow , IInputHandlerEvent
     }
     
     private new void UpdateSelectIndex(int index){
+        if (_targetIndexList.IndexOf(index) == -1)
+        {
+            return;
+        }
         if (_targetScopeType == ScopeType.All)
         {
             UpdateAllSelect();

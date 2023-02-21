@@ -27,8 +27,12 @@ public class ActionInfo
     public int MpCost{
         get {return _mpCost;}
     }
+    private List<int> _targetIndexList;
+    public List<int> TargetIndexList{
+        get {return _targetIndexList;}
+    }
 
-    public ActionInfo(int skillId,int subjectIndex,int lastTargetIndex)
+    public ActionInfo(int skillId,int subjectIndex,int lastTargetIndex,List<int> targetIndexList)
     {
         _skillId = skillId;
         _scopeType = Master.Scope;
@@ -36,6 +40,7 @@ public class ActionInfo
         _targetType = Master.TargetType;
         _subjectIndex = subjectIndex;
         _lastTargetIndex = lastTargetIndex;
+        _targetIndexList = targetIndexList;
     }
 
     public void SetMpCost(int mpCost)
@@ -55,7 +60,7 @@ public class ActionInfo
         
         List<ActionInfo> actionInfos = new List<ActionInfo>();
         for (var i = 0;i < PlusSkill.Count;i++){
-            ActionInfo actionInfo = new ActionInfo(PlusSkill[i].Param1,SubjectIndex,-1);
+            ActionInfo actionInfo = new ActionInfo(PlusSkill[i].Param1,SubjectIndex,-1,null);
             actionInfos.Add(actionInfo);
         }
         return actionInfos;

@@ -75,7 +75,10 @@ public class BattlerInfo
         _mp = _status.Mp;
         _lineIndex = lineIndex;
         _skills = new List<SkillInfo>();
-        _skills.Add(new SkillInfo(1));
+        for (int i = 0;i < enemyData.LearningSkills.Count;i++)
+        {
+            _skills.Add(new SkillInfo(enemyData.LearningSkills[i].SkillId));
+        }
         ResetAp(true);
     }
 

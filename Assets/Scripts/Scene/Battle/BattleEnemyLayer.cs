@@ -12,6 +12,7 @@ public class BattleEnemyLayer : MonoBehaviour
     [SerializeField] private List<GameObject> backDamageRoots;
     private List<BattleEnemy> battleEnemies = new List<BattleEnemy>();
     private ScopeType _targetScopeType = ScopeType.None;
+    private List<int> _targetIndexList = new List<int>();
     private int _backStartIndex = 0;
     private bool _animationBusy = false;
     public bool AnimationBusy {
@@ -25,25 +26,33 @@ public class BattleEnemyLayer : MonoBehaviour
         frontEnemyRoots.ForEach(a => a.SetActive(false));
         backEnemyRoots.ForEach(a => a.SetActive(false));
 
+        int frontIndex = 0;
         for (int i = 0; i < battlerInfos.Count;i++)
         {
             GameObject prefab = Instantiate(battleEnemyPrefab);
-            var battleEnemy = prefab.GetComponent<BattleEnemy>();
+            BattleEnemy battleEnemy = prefab.GetComponent<BattleEnemy>();
             if (battlerInfos[i].LineIndex == 0)
             {
                 frontEnemyRoots[i].SetActive(true);
                 prefab.transform.SetParent(frontEnemyRoots[i].transform, false);
                 battleEnemy.SetDamageRoot(frontDamageRoots[i]);
+                _backStartIndex = battlerInfos[i].Index + 1;
             } else
             {
-                int backIndex = i - _backStartIndex;
+                int backIndex = i - frontIndex;
                 backEnemyRoots[backIndex].SetActive(true);
                 prefab.transform.SetParent(backEnemyRoots[backIndex].transform, false);
                 battleEnemy.SetDamageRoot(backDamageRoots[backIndex]);
             }
             battleEnemy.SetData(battlerInfos[i],i);
             battleEnemy.SetCallHandler((enemyIndex) => {
-                if (battlerInfos[enemyIndex].IsAlive() == false){
+                BattlerInfo battlerInfo = battlerInfos.Find(a => a.Index == enemyIndex);
+                if (battlerInfo.IsAlive() == false)
+                {
+                    return;
+                }
+                if (_targetIndexList.IndexOf(enemyIndex) == -1)
+                {
                     return;
                 }
                 List<int> indexList = new List<int>();
@@ -61,45 +70,34 @@ public class BattleEnemyLayer : MonoBehaviour
                 {
                     for (int i = 0; i < battleEnemies.Count;i++)
                     {
-                        if (enemyIndex < _backStartIndex)
+                        if (battlerInfo.LineIndex == battlerInfos[i].LineIndex)
                         {
-                            if (i < _backStartIndex)
+                            if (battlerInfos[i].IsAlive())
                             {
-                                if (battlerInfos[i].IsAlive())
-                                {
-                                    indexList.Add(battlerInfos[i].Index);
-                                }
-                            }
-                        } else{
-                            if (i >= _backStartIndex)
-                            {
-                                if (battlerInfos[i].IsAlive())
-                                {
-                                    indexList.Add(battlerInfos[i].Index);
-                                }
+                                indexList.Add(battlerInfos[i].Index);
                             }
                         }
                     }
                 } else
                 if (_targetScopeType == ScopeType.One)
                 {
-                    if (battlerInfos[enemyIndex].IsAlive())
+                    if (battlerInfo.IsAlive())
                     {
-                        indexList.Add(battlerInfos[enemyIndex].Index);
+                        indexList.Add(battlerInfo.Index);
                     }
                 } else
                 if (_targetScopeType == ScopeType.Self)
                 {
-                    if (battlerInfos[enemyIndex].IsAlive())
+                    if (battlerInfo.IsAlive())
                     {
-                        indexList.Add(battlerInfos[enemyIndex].Index);
+                        indexList.Add(battlerInfo.Index);
                     }
                 }
                 callEvent(indexList);
             });
             battleEnemy.SetSelectHandler((data) => UpdateSelectIndex(data));
             battleEnemies.Add(battleEnemy);
-            _backStartIndex++; 
+            frontIndex++;
         }
         UpdateAllUnSelect();
     }
@@ -111,6 +109,7 @@ public class BattleEnemyLayer : MonoBehaviour
             _targetScopeType = ScopeType.None;
             return;
         }
+        _targetIndexList = actionInfo.TargetIndexList;
         _targetScopeType = actionInfo.ScopeType;
         if (_targetScopeType == ScopeType.All)
         {
@@ -147,6 +146,10 @@ public class BattleEnemyLayer : MonoBehaviour
     }
     
     private void UpdateSelectIndex(int index){
+        if (_targetIndexList.IndexOf(index) == -1)
+        {
+            return;
+        }
         if (_targetScopeType == ScopeType.All)
         {
             UpdateAllSelect();
@@ -164,7 +167,7 @@ public class BattleEnemyLayer : MonoBehaviour
         for (int i = 0; i < battleEnemies.Count;i++)
         {
             var listItem = battleEnemies[i].GetComponent<ListItem>();
-            if (index == i){
+            if (index == battleEnemies[i].EnemyIndex){
                 listItem.SetSelect();
             } else{
                 listItem.SetUnSelect();
@@ -182,14 +185,14 @@ public class BattleEnemyLayer : MonoBehaviour
             var listItem = battleEnemies[i].GetComponent<ListItem>();
             if (isFront)
             {
-                if (i < _backStartIndex){
+                if (battleEnemies[i].EnemyIndex < _backStartIndex){
                     listItem.SetSelect();
                 } else{
                     listItem.SetUnSelect();
                 }
             } else
             {
-                if (i >= _backStartIndex){
+                if (battleEnemies[i].EnemyIndex >= _backStartIndex){
                     listItem.SetSelect();
                 } else{
                     listItem.SetUnSelect();

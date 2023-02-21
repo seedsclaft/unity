@@ -21,6 +21,12 @@ public class EnemiesImporter : AssetPostprocessor {
 		Spd,
 		AttributeType,
     }
+    enum BaseLearningColumn
+    {
+
+		ActorId = 0,
+		SkillId,
+	}
     enum BaseTextColumn
     {
 
@@ -81,7 +87,7 @@ public class EnemiesImporter : AssetPostprocessor {
 			{
 				// エクセルブックを作成
 				CreateBook(asset, Mainstream, out IWorkbook Book);
-				List<TextData> textData = CreateText(Book.GetSheetAt(1));
+				List<TextData> textData = CreateText(Book.GetSheetAt(2));
 
 				// 情報の初期化
 				Data._data.Clear();
@@ -112,10 +118,24 @@ public class EnemiesImporter : AssetPostprocessor {
 					Data._data.Add(EnemyData);
 				}
 
+				BaseSheet = Book.GetSheetAt(1);
+
+				for (int i = 1; i <= BaseSheet.LastRowNum; i++)
+				{
+					IRow Baserow = BaseSheet.GetRow(i);
+					var LearningData = new LearningData();
+
+					int ActorId = (int)Baserow.GetCell((int)BaseLearningColumn.ActorId)?.NumericCellValue;
+					EnemiesData.EnemyData Enemy = Data._data.Find(a => a.Id == ActorId);
+					
+					LearningData.SkillId = (int)Baserow.GetCell((int)BaseLearningColumn.SkillId)?.NumericCellValue;
+					Enemy.LearningSkills.Add(LearningData);
+				}
+
 				// 情報の初期化
 				Data._textdata.Clear();
 
-				BaseSheet = Book.GetSheetAt(1);
+				BaseSheet = Book.GetSheetAt(2);
 
 				for (int i = 1; i <= BaseSheet.LastRowNum; i++)
 				{

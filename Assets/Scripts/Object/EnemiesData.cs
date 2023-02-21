@@ -16,6 +16,7 @@ public class EnemiesData : ScriptableObject {
         public string ImagePath;
         public StatusInfo BaseStatus;
         public AttributeType AttributeType;
+        public List<LearningData> LearningSkills = new List<LearningData>();
         
         public int CurrentParam(StatusParamType growType,int level)
         {

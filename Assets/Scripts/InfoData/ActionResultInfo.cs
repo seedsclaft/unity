@@ -115,7 +115,7 @@ public class ActionResultInfo
             _reDamage = (int)SkillDamage;
         }
         SkillDamage -= (DefValue * 0.5f);
-        float DamageValue = Mathf.Max(0,SkillDamage);
+        float DamageValue = Mathf.Max(1,SkillDamage);
         _hpDamage = (int)Mathf.Round(DamageValue);
         // 属性補正
         // クリティカル

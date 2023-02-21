@@ -30,7 +30,11 @@ public class BattleEnemy : ListItem
     private EventTrigger.Entry entry1;
     private System.Action<int> _selectHandler;
     private System.Action<int> _damageHandler;
-    private int _damageTiming = 0; 
+    private int _damageTiming = 0;
+
+    public int EnemyIndex{
+        get {return _battlerInfo.Index;}
+    }
     public void SetData(BattlerInfo battlerInfo,int index)
     {
         battlerInfoComponent.UpdateInfo(battlerInfo);
@@ -47,7 +51,7 @@ public class BattleEnemy : ListItem
     public void SetCallHandler(System.Action<int> handler)
     {
         if (_battlerInfo == null) return;
-        clickButton.onClick.AddListener(() => handler((int)_index));
+        clickButton.onClick.AddListener(() => handler(_battlerInfo.Index));
     }
     
     public void SetSelectHandler(System.Action<int> handler){
@@ -65,7 +69,7 @@ public class BattleEnemy : ListItem
 
     void OnMyPointerEnter(BaseEventData data) {
         if (_battlerInfo.IsAlive() == false) return;
-        _selectHandler(_index);
+        _selectHandler(_battlerInfo.Index);
 	}
 
 

@@ -20,6 +20,7 @@ public class SkillsData : ScriptableObject {
         public TargetType TargetType;
         public string Help;
         public RangeType Range;
+        public bool AliveOnly;
 
         public List<FeatureData> FeatureDatas;
         public List<TriggerData> TriggerDatas;
@@ -86,8 +87,6 @@ public enum TargetType{
     Friend = 2,
     All = 3,
     Self = 4,
-    DeadOpponent = 5,
-    DeadFriend = 6,
 }
 
 public enum RangeType{
