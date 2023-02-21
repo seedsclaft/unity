@@ -94,7 +94,6 @@ public class ActionResultInfo
                 MakeRemoveState(subject,target,featureData);
                 return;
             case FeatureType.PlusSkill:
-                //MakePlusSkill(featureData);
                 return;
 
         }
@@ -158,6 +157,11 @@ public class ActionResultInfo
         {
             _removedStates.Add(stateInfo);
         }
+    }
+
+    public void AddRemoveState(StateInfo stateInfo)
+    {
+        _removedStates.Add(stateInfo);
     }
 
 

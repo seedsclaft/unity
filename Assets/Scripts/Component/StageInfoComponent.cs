@@ -7,7 +7,7 @@ using TMPro;
 
 public class StageInfoComponent : MonoBehaviour
 {
-    [SerializeField] private TextMeshProUGUI name;
+    [SerializeField] private TextMeshProUGUI nameText;
     [SerializeField] private TextMeshProUGUI help;
     [SerializeField] private TextMeshProUGUI turns;
     [SerializeField] private TextMeshProUGUI clearCount;
@@ -18,8 +18,8 @@ public class StageInfoComponent : MonoBehaviour
         }
         var stageData = DataSystem.Stages.Find(stage => stage.Id == stageInfo.Id);
         
-        if (name != null){
-            name.text = stageData.Name;
+        if (nameText != null){
+            nameText.text = stageData.Name;
         }
         if (help != null){
             help.text = stageData.Help;

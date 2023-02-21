@@ -11,12 +11,12 @@ public class BattleActor : ListItem ,IListViewItem ,IClickHandlerEvent
 {
     [SerializeField] private BattlerInfoComponent battlerInfoComponent;
     [SerializeField] private EffekseerEmitter effekseerEmitter;
-    [SerializeField] private GameObject battleDamageRoot;
+    private GameObject _battleDamageRoot;
     [SerializeField] private GameObject battleDamagePrefab;
     [SerializeField] private _2dxFX_DestroyedFX deathAnimation;
     private float _deathAnimation = 0.0f;
     public bool IsBusy {
-        get {return effekseerEmitter.exists || _damageTiming > 0 || (_battleDamage && _battleDamage.IsBusy);}
+        get {return effekseerEmitter.exists || _damageTiming > 0 || _battleDamages.Find(a => a.IsBusy);}
     }
     private BattlerInfo _data; 
     private int _index; 
@@ -24,19 +24,18 @@ public class BattleActor : ListItem ,IListViewItem ,IClickHandlerEvent
     private EventTrigger.Entry entry1;
     private System.Action<int> _selectHandler;
     private System.Action<int> _damageHandler;
-    private BattleDamage _battleDamage = null;
     private int _damageTiming = 0; 
 
+    private List<BattleDamage> _battleDamages = new List<BattleDamage>();
     public void SetData(BattlerInfo data,int index){
         _data = data;
         _index = index;
-        if (_battleDamage == null)
-        {
-            GameObject prefab = Instantiate(battleDamagePrefab);
-            battleDamageRoot.SetActive(true);
-            prefab.transform.SetParent(battleDamageRoot.transform, false);
-            _battleDamage = prefab.GetComponent<BattleDamage>();
-        }
+    }
+
+    public void SetDamageRoot(GameObject damageRoot)
+    {
+        _battleDamageRoot = damageRoot;
+        _battleDamageRoot.SetActive(true);
     }
 
     public int listIndex(){
@@ -83,20 +82,47 @@ public class BattleActor : ListItem ,IListViewItem ,IClickHandlerEvent
 
     public void SetStartSkillDamage(int damageTiming,System.Action<int> callEvent)
     {
+        ClearDamagePopup();
         _damageTiming = damageTiming;
         _damageHandler = callEvent;
     }
 
+    private BattleDamage CreatePrefab()
+    {
+        GameObject prefab = Instantiate(battleDamagePrefab);
+        prefab.transform.SetParent(_battleDamageRoot.transform, false);
+        return prefab.GetComponent<BattleDamage>();
+    }
+
+    public void ClearDamagePopup()
+    {
+        foreach ( Transform n in _battleDamageRoot.transform )
+        {
+            GameObject.Destroy(n.gameObject);
+        }
+        _battleDamages.Clear();
+    }
+
     public void StartDamage(DamageType damageType,int value)
     {
-        _battleDamage.StartDamage(damageType,value);
+        var battleDamage = CreatePrefab();
+        battleDamage.StartDamage(damageType,value);
+        _battleDamages.Add(battleDamage);
         battlerInfoComponent.ChangeHp(value * -1 + _data.Hp);
     }
 
     public void StartHeal(DamageType damageType,int value)
     {
-        _battleDamage.StartHeal(damageType,value);
+        var battleDamage = CreatePrefab();
+        battleDamage.StartHeal(damageType,value);
+        _battleDamages.Add(battleDamage);
         battlerInfoComponent.ChangeHp(value + _data.Hp);
+    }
+
+    public void StartStatePopup(DamageType damageType,string stateName)
+    {
+        var battleDamage = CreatePrefab();
+        battleDamage.StartStatePopup(damageType,stateName,_battleDamages.Count);
     }
 
     public void StartDeathAnimation()

@@ -8,6 +8,8 @@ public class BattleEnemyLayer : MonoBehaviour
     [SerializeField] private List<GameObject> frontEnemyRoots;
     [SerializeField] private List<GameObject> backEnemyRoots;
     [SerializeField] private GameObject battleEnemyPrefab;
+    [SerializeField] private List<GameObject> frontDamageRoots;
+    [SerializeField] private List<GameObject> backDamageRoots;
     private List<BattleEnemy> battleEnemies = new List<BattleEnemy>();
     private ScopeType _targetScopeType = ScopeType.None;
     private int _backStartIndex = 0;
@@ -18,29 +20,27 @@ public class BattleEnemyLayer : MonoBehaviour
 
     public void Initialize(List<BattlerInfo> battlerInfos ,System.Action<List<int>> callEvent)
     {
-        for (int i = 0; i < frontEnemyRoots.Count;i++)
-        {
-            frontEnemyRoots[i].SetActive(false);
-        }
-        for (int i = 0; i < backEnemyRoots.Count;i++)
-        {
-            backEnemyRoots[i].SetActive(false);
-        }
+        frontDamageRoots.ForEach(a => a.SetActive(false));
+        backDamageRoots.ForEach(a => a.SetActive(false));
+        frontEnemyRoots.ForEach(a => a.SetActive(false));
+        backEnemyRoots.ForEach(a => a.SetActive(false));
 
         for (int i = 0; i < battlerInfos.Count;i++)
         {
             GameObject prefab = Instantiate(battleEnemyPrefab);
+            var battleEnemy = prefab.GetComponent<BattleEnemy>();
             if (battlerInfos[i].LineIndex == 0)
             {
                 frontEnemyRoots[i].SetActive(true);
                 prefab.transform.SetParent(frontEnemyRoots[i].transform, false);
+                battleEnemy.SetDamageRoot(frontDamageRoots[i]);
             } else
             {
                 int backIndex = i - _backStartIndex;
                 backEnemyRoots[backIndex].SetActive(true);
                 prefab.transform.SetParent(backEnemyRoots[backIndex].transform, false);
+                battleEnemy.SetDamageRoot(backDamageRoots[backIndex]);
             }
-            var battleEnemy = prefab.GetComponent<BattleEnemy>();
             battleEnemy.SetData(battlerInfos[i],i);
             battleEnemy.SetCallHandler((enemyIndex) => {
                 if (battlerInfos[enemyIndex].IsAlive() == false){
@@ -219,6 +219,10 @@ public class BattleEnemyLayer : MonoBehaviour
         _animationBusy = true;
     }
 
+    public void ClearDamagePopup()
+    {
+        battleEnemies.ForEach(a => a.ClearDamagePopup());
+    }
 
     public void StartDamage(int targetIndex , DamageType damageType , int value)
     {        
@@ -228,6 +232,11 @@ public class BattleEnemyLayer : MonoBehaviour
     public void StartHeal(int targetIndex , DamageType damageType , int value)
     {        
         battleEnemies[targetIndex].StartHeal(damageType,value);
+    }
+
+    public void StartStatePopup(int targetIndex , DamageType damageType ,string stateName)
+    {        
+        battleEnemies[targetIndex].StartStatePopup(damageType,stateName);
     }
 
     public void StartDeathAnimation(int targetIndex)

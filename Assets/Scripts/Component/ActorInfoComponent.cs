@@ -11,7 +11,7 @@ public class ActorInfoComponent : MonoBehaviour
     [SerializeField] private Image awakenThumb;
     [SerializeField] private Image faceThumb;
     [SerializeField] private Image awakenFaceThumb;
-    [SerializeField] private TextMeshProUGUI name;
+    [SerializeField] private TextMeshProUGUI nameText;
     [SerializeField] private TextMeshProUGUI element;
     [SerializeField] private TextMeshProUGUI demigod;
     [SerializeField] private TextMeshProUGUI lv;
@@ -43,8 +43,8 @@ public class ActorInfoComponent : MonoBehaviour
         if (awakenFaceThumb != null){
             UpdateAwakenFaceThumb(actorData.ImagePath);
         }
-        if (name != null){
-            name.text = actorData.Name;
+        if (nameText != null){
+            nameText.text = actorData.Name;
         }
         if (element != null){
             //element.text = actorData.Name;

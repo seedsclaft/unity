@@ -233,6 +233,13 @@ public class BattleView : BaseView
         }
     }
 
+    public void ClearDamagePopup()
+    {
+        
+        battleEnemyLayer.ClearDamagePopup();
+        battleActorList.ClearDamagePopup();
+    }
+
     public void StartDamage(int targetIndex,DamageType damageType,int value)
     {
         if (targetIndex >= 100)
@@ -250,6 +257,16 @@ public class BattleView : BaseView
             battleEnemyLayer.StartHeal(targetIndex - 100,damageType,value);
         } else{
             battleActorList.StartHeal(targetIndex,damageType,value);
+        }
+    }
+
+    public void StartStatePopup(int targetIndex,DamageType damageType,string stateName)
+    {
+        if (targetIndex >= 100)
+        {
+            battleEnemyLayer.StartStatePopup(targetIndex - 100,damageType,stateName);
+        } else{
+            battleActorList.StartStatePopup(targetIndex,damageType,stateName);
         }
     }
 

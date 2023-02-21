@@ -9,6 +9,7 @@ public class BattleActorList : ListWindow , IInputHandlerEvent
 {
     [SerializeField] private int rows = 0;
     [SerializeField] private int cols = 0;
+    [SerializeField] private List<GameObject> damageRoots;
     private List<BattlerInfo> _battleInfos = new List<BattlerInfo>();
     private bool _animationBusy = false;
     public bool AnimationBusy {
@@ -22,6 +23,7 @@ public class BattleActorList : ListWindow , IInputHandlerEvent
 
     public void Initialize(System.Action<List<int>> callEvent)
     {
+        damageRoots.ForEach(a => a.SetActive(false));
         InitializeListView(rows);
         for (int i = 0; i < rows;i++)
         {
@@ -49,6 +51,7 @@ public class BattleActorList : ListWindow , IInputHandlerEvent
                 callEvent(indexList);
             });
             battleActor.SetSelectHandler((data) => UpdateSelectIndex(data));
+            battleActor.SetDamageRoot(damageRoots[i]);
             ObjectList[i].SetActive(false);
         }
     }
@@ -97,7 +100,15 @@ public class BattleActorList : ListWindow , IInputHandlerEvent
         _animationBusy = true;
     }
 
-
+    public void ClearDamagePopup()
+    {
+        for (int i = 0; i < ObjectList.Count;i++)
+        {
+            var battleActor = ObjectList[i].GetComponent<BattleActor>();
+            battleActor.ClearDamagePopup();
+        }
+    }
+    
     public void StartDamage(int targetIndex , DamageType damageType , int value)
     {        
         BattleActor battleActor = ObjectList[targetIndex].GetComponent<BattleActor>();
@@ -108,6 +119,12 @@ public class BattleActorList : ListWindow , IInputHandlerEvent
     {        
         BattleActor battleActor = ObjectList[targetIndex].GetComponent<BattleActor>();
         battleActor.StartHeal(damageType,value);
+    }
+    
+    public void StartStatePopup(int targetIndex , DamageType damageType ,string stateName)
+    {        
+        BattleActor battleActor = ObjectList[targetIndex].GetComponent<BattleActor>();
+        battleActor.StartStatePopup(damageType,stateName);
     }
 
     public override void UpdateHelpWindow(){
@@ -159,7 +176,7 @@ public class BattleActorList : ListWindow , IInputHandlerEvent
         }
     }
     
-    private void UpdateSelectIndex(int index){
+    private new void UpdateSelectIndex(int index){
         if (_targetScopeType == ScopeType.All)
         {
             UpdateAllSelect();

@@ -8,7 +8,7 @@ public class SystemTextComponent : MonoBehaviour
     [SerializeField] private int id;
 
     public void Awake(){
-        if (id != null)
+        if (id != 0)
         {
             TextData textData = DataSystem.System.SystemTextData.Find(a => a.Id == id);
             TextMeshProUGUI textMeshPro = gameObject.GetComponent<TextMeshProUGUI>();

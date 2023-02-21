@@ -15,6 +15,8 @@ public class BattleDamage : MonoBehaviour
     [SerializeField] private GameObject hpHealPrefab;
     [SerializeField] private GameObject mpHealRoot;
     [SerializeField] private GameObject mpHealPrefab;
+    [SerializeField] private GameObject stateRoot;
+    [SerializeField] private GameObject statePrefab;
     //[SerializeField] private List<TextMeshProUGUI> mpHealList;
 
     private bool _busy = false;
@@ -31,6 +33,7 @@ public class BattleDamage : MonoBehaviour
         DestroyChild(hpCriticalRoot);
         DestroyChild(hpHealRoot);
         DestroyChild(mpHealRoot);
+        DestroyChild(stateRoot);
     }
 
     private void DestroyChild(GameObject gameObject)
@@ -97,7 +100,7 @@ public class BattleDamage : MonoBehaviour
             Sequence sequence = DOTween.Sequence()
                 .SetDelay(i * 0.05f)
                 .Append(textMeshProUGUI.DOFade(1.0f, 0.1f))
-                .Append(textMeshProUGUI.gameObject.transform.DOLocalMoveY(16, 0.1f))
+                .Join(textMeshProUGUI.gameObject.transform.DOLocalMoveY(16, 0.1f))
                 .Append(textMeshProUGUI.gameObject.transform.DOLocalMoveY(0, 0.2f))
                 .SetDelay(0.05f)
                 .Append(textMeshProUGUI.gameObject.transform.DOLocalMoveY(4, 0.05f))
@@ -108,6 +111,24 @@ public class BattleDamage : MonoBehaviour
                     textMeshProUGUI.DOFade(0.0f, 0.2f);
                 });
         }
+    }
+
+    public void StartStatePopup(DamageType damageType,string stateName,float delay)
+    {
+        GameObject prefab = Instantiate(GetPrefabType(damageType));
+        prefab.transform.SetParent(GetRootType(damageType).transform, false);
+        TextMeshProUGUI textMeshProUGUI = prefab.GetComponent<TextMeshProUGUI>();
+        textMeshProUGUI.text = stateName;
+
+        textMeshProUGUI.alpha = 0;
+        Sequence sequence = DOTween.Sequence()
+            .SetDelay(delay * 0.7f)
+            .Append(textMeshProUGUI.DOFade(1.0f, 0.1f))
+            .Join(textMeshProUGUI.gameObject.transform.DOLocalMoveY(8, 0.2f))
+            .Append(textMeshProUGUI.gameObject.transform.DOLocalMoveY(8, 1.0f))
+            .Append(textMeshProUGUI.gameObject.transform.DOLocalMoveY(24, 0.2f))
+            .Join(textMeshProUGUI.DOFade(0.0f, 0.1f))
+            .SetEase(Ease.InOutQuad);
     }
 
     private GameObject GetPrefabType(DamageType damageType)
@@ -122,6 +143,8 @@ public class BattleDamage : MonoBehaviour
             return hpHealPrefab;
             case DamageType.MpHeal:
             return mpHealPrefab;
+            case DamageType.State:
+            return statePrefab;
         }
         return null;
     }
@@ -138,6 +161,8 @@ public class BattleDamage : MonoBehaviour
             return hpHealRoot;
             case DamageType.MpHeal:
             return mpHealRoot;
+            case DamageType.State:
+            return stateRoot;
         }
         return null;
     }

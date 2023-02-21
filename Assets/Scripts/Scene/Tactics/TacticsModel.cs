@@ -65,7 +65,7 @@ public class TacticsModel : BaseModel
         return attributeTypes;
     }
 
-    public new List<SystemData.MenuCommandData> TacticsCommand
+    public List<SystemData.MenuCommandData> TacticsCommand
     {
         get { return DataSystem.TacticsCommand;}
     }

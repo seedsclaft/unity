@@ -41,12 +41,13 @@ MonoBehaviour:
     X: 0
     Y: 0
     Scale: 0.8
-    AwakenX: 0
-    AwakenY: -24
+    AwakenX: -32
+    AwakenY: 264
     AwakenScale: 0.75
     LearningSkills:
     - SkillId: 11
     - SkillId: 21
+    - SkillId: 31
     - SkillId: 101
     - SkillId: 103
     - SkillId: 111
@@ -79,14 +80,14 @@ MonoBehaviour:
     X: 0
     Y: -24
     Scale: 0.95
-    AwakenX: 24
-    AwakenY: -160
+    AwakenX: 0
+    AwakenY: 40
     AwakenScale: 0.8
     LearningSkills:
     - SkillId: 11
     - SkillId: 21
+    - SkillId: 31
     - SkillId: 201
-    - SkillId: 202
     - SkillId: 211
     - SkillId: 212
   - Id: 3
@@ -118,11 +119,12 @@ MonoBehaviour:
     Y: -16
     Scale: 0.9
     AwakenX: 80
-    AwakenY: -96
+    AwakenY: 200
     AwakenScale: 0.7
     LearningSkills:
     - SkillId: 11
     - SkillId: 21
+    - SkillId: 31
     - SkillId: 301
     - SkillId: 311
     - SkillId: 312
@@ -154,12 +156,13 @@ MonoBehaviour:
     X: 0
     Y: -8
     Scale: 0.85
-    AwakenX: 40
-    AwakenY: -160
+    AwakenX: 24
+    AwakenY: 80
     AwakenScale: 0.8
     LearningSkills:
     - SkillId: 11
     - SkillId: 21
+    - SkillId: 31
     - SkillId: 401
     - SkillId: 411
     - SkillId: 412
@@ -191,12 +194,13 @@ MonoBehaviour:
     X: 24
     Y: -40
     Scale: 0.95
-    AwakenX: 240
-    AwakenY: 16
+    AwakenX: 264
+    AwakenY: 96
     AwakenScale: 1
     LearningSkills:
     - SkillId: 11
     - SkillId: 21
+    - SkillId: 31
     - SkillId: 501
     - SkillId: 502
     - SkillId: 511

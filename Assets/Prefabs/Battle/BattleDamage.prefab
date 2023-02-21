@@ -1,5 +1,41 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1012381070648083543
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 835241966537522290}
+  m_Layer: 5
+  m_Name: State
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &835241966537522290
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1012381070648083543}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2722085750895542015}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 12}
+  m_SizeDelta: {x: 0, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1787456025739594925
 GameObject:
   m_ObjectHideFlags: 0
@@ -34,6 +70,7 @@ RectTransform:
   - {fileID: 559082859027281749}
   - {fileID: 1542152472538129484}
   - {fileID: 2722984055998121672}
+  - {fileID: 835241966537522290}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -74,22 +111,9 @@ MonoBehaviour:
   mpHealRoot: {fileID: 5503829442406459653}
   mpHealPrefab: {fileID: 8837246241013923840, guid: 30cfea2c22905744dbfba5e51e5b2aee,
     type: 3}
-  hpDamageList:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  hpCriticalList:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  hpHealList:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  mpHealList:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  stateRoot: {fileID: 1012381070648083543}
+  statePrefab: {fileID: 9085896228052202250, guid: 2abf13aa327ee924aae43d5986e27abb,
+    type: 3}
 --- !u!1 &3811104681901500997
 GameObject:
   m_ObjectHideFlags: 0

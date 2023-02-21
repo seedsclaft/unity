@@ -8,7 +8,7 @@ using TMPro;
 public class EnemyInfoComponent : MonoBehaviour
 {
     [SerializeField] private Image mainThumb;
-    [SerializeField] private TextMeshProUGUI name;
+    [SerializeField] private TextMeshProUGUI nameText;
     [SerializeField] private TextMeshProUGUI lv;
     [SerializeField] private StatusInfoComponent statusInfoComponent;
     
@@ -22,8 +22,8 @@ public class EnemyInfoComponent : MonoBehaviour
         if (mainThumb != null){
             UpdateMainThumb(enemyData.ImagePath,0,0,1.0f);
         }
-        if (name != null){
-            name.text = enemyData.Name;
+        if (nameText != null){
+            nameText.text = enemyData.Name;
         }
         if (lv != null){
             lv.text = battlerInfo.Level.ToString();

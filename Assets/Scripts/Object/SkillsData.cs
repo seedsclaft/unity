@@ -101,7 +101,9 @@ public enum DamageType
     HpDamage = 1,
     HpCritical = 2,
     HpHeal = 3,    
-    MpHeal = 4
+    MpHeal = 4,
+    State = 5,
+
 }
 
 public enum TriggerType

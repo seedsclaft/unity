@@ -99,7 +99,7 @@ public class BattlePresenter
                 if (chainTargetIndexs.Count > 0)
                 {
                     // 拘束解除
-                    ActionInfo actionInfo = _model.MakeActionInfo(_model.CurrentBattler,202,false);
+                    ActionInfo actionInfo = _model.MakeActionInfo(_model.CurrentBattler,31,false);
                     CommandSelectIndex(chainTargetIndexs);
                 } 
                 else{
@@ -214,6 +214,7 @@ public class BattlePresenter
 
     private void StartSkillDamage(int targetIndex)
     {
+        _view.ClearDamagePopup();
         ActionInfo actionInfo = _model.CurrentActionInfo();
         if (actionInfo != null)
         {
@@ -241,6 +242,20 @@ public class BattlePresenter
                 if (actionResultInfos[i].ReHeal > 0)
                 {
                     _view.StartHeal(actionResultInfos[i].SubjectIndex,DamageType.HpHeal,actionResultInfos[i].ReHeal);
+                }
+                if (actionResultInfos[i].AddedStates.Count > 0)
+                {
+                    for (int j = 0;j < actionResultInfos[i].AddedStates.Count;j++)
+                    {
+                        _view.StartStatePopup(actionResultInfos[i].AddedStates[j].TargetIndex,DamageType.State,"+" + actionResultInfos[i].AddedStates[j].Master.Name);
+                    }
+                }
+                if (actionResultInfos[i].RemovedStates.Count > 0)
+                {
+                    for (int j = 0;j < actionResultInfos[i].RemovedStates.Count;j++)
+                    {
+                        _view.StartStatePopup(actionResultInfos[i].RemovedStates[j].TargetIndex,DamageType.State,"-" + actionResultInfos[i].RemovedStates[j].Master.Name);
+                    }
                 }
             }
         }

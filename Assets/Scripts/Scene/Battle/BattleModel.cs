@@ -120,7 +120,6 @@ public class BattleModel : BaseModel
     public List<int> CheckChainBattler()
     {
         List<int> targetIndexs = new List<int>();
-        List<BattlerInfo> battlerInfos = _battlers.FindAll(a => a.IsState(StateType.Chain));
         for (int i = 0; i < _battlers.Count;i++)
         {
             List<StateInfo> stateInfos = _battlers[i].GetStateInfoAll(StateType.Chain);
@@ -129,7 +128,7 @@ public class BattleModel : BaseModel
                 if (stateInfos[j].BattlerId == CurrentBattler.Index)
                 {
                     targetIndexs.Add(stateInfos[j].TargetIndex);
-                    _battlers[i].RemoveState(stateInfos[j]);
+                    //_battlers[i].RemoveState(stateInfos[j]);
                 }
             }
         }
@@ -138,6 +137,23 @@ public class BattleModel : BaseModel
             CurrentBattler.GainChainCount(1);
         }
         return targetIndexs;
+    }
+
+    public List<StateInfo> CheckChainedBattler(int targetIndex)
+    {
+        List<StateInfo> stateInfos = new List<StateInfo>();
+        for (int i = 0; i < _battlers.Count;i++)
+        {
+            List<StateInfo> chainStateInfos = _battlers[i].GetStateInfoAll(StateType.Chain);
+            for (int j = chainStateInfos.Count-1; 0 <= j;j--)
+            {
+                if (chainStateInfos[j].BattlerId == targetIndex)
+                {
+                    stateInfos.Add(chainStateInfos[j]);
+                }
+            }
+        }
+        return stateInfos;
     }
 
     public void ChangeActorIndex(int value){
@@ -173,7 +189,7 @@ public class BattleModel : BaseModel
         {
             _currentAttributeType = attributeType;
         }
-        List<SkillInfo> skillInfos = CurrentBattler.Skills.FindAll(a => a.Attribute == _currentAttributeType);
+        List<SkillInfo> skillInfos = CurrentBattler.Skills.FindAll(a => a.Attribute == _currentAttributeType && a.Master.SkillType != SkillType.None);
         for (int i = 0; i < skillInfos.Count;i++)
         {
             skillInfos[i].SetEnable();
@@ -307,6 +323,19 @@ public class BattleModel : BaseModel
             int targetIndex = Target.Index;
             ActionResultInfo actionResultInfo = new ActionResultInfo(CurrentBattler.Index,targetIndex,CurrentActionInfo());
             actionResultInfo.MakeResultData(CurrentBattler,Target);
+            if (actionResultInfo.HpDamage > 0)
+            {
+                List<StateInfo> chainStateInfos = CheckChainedBattler(actionResultInfo.TargetIndex);
+                if (chainStateInfos.Count > 0)
+                {
+                    for (int j = 0; j < chainStateInfos.Count;j++)
+                    {
+                        BattlerInfo chainedBattlerInfo = _battlers.Find(a => a.Index == chainStateInfos[j].TargetIndex);
+                        chainedBattlerInfo.RemoveState(chainStateInfos[j]);
+                        actionResultInfo.AddRemoveState(chainStateInfos[j]);
+                    }
+                }
+            }
             actionResultInfos.Add(actionResultInfo);
         }
         actionInfo.SetActionResult(actionResultInfos);

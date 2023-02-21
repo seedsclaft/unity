@@ -43,10 +43,7 @@ public class StatusModel : BaseModel
 
     public List<SkillInfo> SkillActionList(AttributeType attributeType)
     {
-        if (attributeType != null)
-        {
-            _currentAttributeType = attributeType;
-        }
+        _currentAttributeType = attributeType;
         return CurrentActor.Skills.FindAll(a => a.Attribute == _currentAttributeType);
     }
 
@@ -63,7 +60,7 @@ public class StatusModel : BaseModel
         return attributeTypes;
     }
 
-    public new List<SystemData.MenuCommandData> StatusCommand
+    public List<SystemData.MenuCommandData> StatusCommand
     {
         get { return DataSystem.StatusCommand;}
     }

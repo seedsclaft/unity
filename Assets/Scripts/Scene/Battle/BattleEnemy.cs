@@ -14,7 +14,7 @@ public class BattleEnemy : ListItem
     [SerializeField] private GameObject imageObject;
     [SerializeField] private Image enemyImage;
     [SerializeField] private EffekseerEmitter effekseerEmitter;
-    [SerializeField] private GameObject battleDamageRoot;
+    private GameObject _battleDamageRoot;
     [SerializeField] private GameObject battleDamagePrefab;
     [SerializeField] private _2dxFX_DestroyedFX deathAnimation;
     private float _deathAnimation = 0.0f;
@@ -38,6 +38,12 @@ public class BattleEnemy : ListItem
         _index = index;
     }
     
+    public void SetDamageRoot(GameObject damageRoot)
+    {
+        _battleDamageRoot = damageRoot;
+        _battleDamageRoot.SetActive(true);
+    }
+
     public void SetCallHandler(System.Action<int> handler)
     {
         if (_battlerInfo == null) return;
@@ -70,16 +76,31 @@ public class BattleEnemy : ListItem
 
     public void SetStartSkillDamage(int damageTiming,System.Action<int> callEvent)
     {
+        ClearDamagePopup();
+        _battleDamages.Clear();
         _damageTiming = damageTiming;
         _damageHandler = callEvent;
     }
 
-    public void StartDamage(DamageType damageType,int value)
+    private BattleDamage CreatePrefab()
     {
         GameObject prefab = Instantiate(battleDamagePrefab);
-        battleDamageRoot.SetActive(true);
-        prefab.transform.SetParent(battleDamageRoot.transform, false);
-        var battleDamage = prefab.GetComponent<BattleDamage>();
+        prefab.transform.SetParent(_battleDamageRoot.transform, false);
+        return prefab.GetComponent<BattleDamage>();
+    }
+
+    public void ClearDamagePopup()
+    {
+        foreach ( Transform n in _battleDamageRoot.transform )
+        {
+            GameObject.Destroy(n.gameObject);
+        }
+        _battleDamages.Clear();
+    }
+
+    public void StartDamage(DamageType damageType,int value)
+    {
+        var battleDamage = CreatePrefab();
         battleDamage.StartDamage(damageType,value);
         _battleDamages.Add(battleDamage);
         battlerInfoComponent.ChangeHp(value * -1 + _battlerInfo.Hp);
@@ -87,13 +108,16 @@ public class BattleEnemy : ListItem
 
     public void StartHeal(DamageType damageType,int value)
     {
-        GameObject prefab = Instantiate(battleDamagePrefab);
-        battleDamageRoot.SetActive(true);
-        prefab.transform.SetParent(battleDamageRoot.transform, false);
-        var battleDamage = prefab.GetComponent<BattleDamage>();
+        var battleDamage = CreatePrefab();
         battleDamage.StartHeal(damageType,value);
         _battleDamages.Add(battleDamage);
         battlerInfoComponent.ChangeHp(value + _battlerInfo.Hp);
+    }
+    
+    public void StartStatePopup(DamageType damageType,string stateName)
+    {
+        var battleDamage = CreatePrefab();
+        battleDamage.StartStatePopup(damageType,stateName,_battleDamages.Count);
     }
 
     public void StartDeathAnimation()

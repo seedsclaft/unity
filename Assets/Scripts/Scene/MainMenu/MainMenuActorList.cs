@@ -22,7 +22,7 @@ public class MainMenuActorList: ListWindow , IInputHandlerEvent
         }
         UpdateAllItems();
     }
-    public void InputHandler(InputKeyType keyType)
+    public new void InputHandler(InputKeyType keyType)
     {
         if (!IsInputEnable())
         {

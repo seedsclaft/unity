@@ -8,7 +8,7 @@ using TMPro;
 public class SkillInfoComponent : MonoBehaviour
 {
     [SerializeField] private Image icon;
-    [SerializeField] private TextMeshProUGUI name;
+    [SerializeField] private TextMeshProUGUI nameText;
     [SerializeField] private TextMeshProUGUI mpCost;
     [SerializeField] private Image lineImage;
     [SerializeField] private TextMeshProUGUI type;
@@ -24,9 +24,9 @@ public class SkillInfoComponent : MonoBehaviour
         if (icon != null){
             UpdateSkillIcon(skillData.IconIndex);
         }
-        if (name != null){
-            name.text = skillData.Name;
-            name.rectTransform.sizeDelta = new Vector2(name.preferredWidth,name.preferredHeight);
+        if (nameText != null){
+            nameText.text = skillData.Name;
+            nameText.rectTransform.sizeDelta = new Vector2(nameText.preferredWidth,nameText.preferredHeight);
         }
         if (mpCost != null){
             mpCost.text = "(" + skillData.MpCost.ToString() + ")";
@@ -57,7 +57,7 @@ public class SkillInfoComponent : MonoBehaviour
 
     private void UpdateLineImege()
     {
-        name.rectTransform.sizeDelta = new Vector2(name.preferredWidth,name.preferredHeight);
-        lineImage.rectTransform.sizeDelta = new Vector2(name.rectTransform.sizeDelta.x,lineImage.rectTransform.sizeDelta.y);
+        nameText.rectTransform.sizeDelta = new Vector2(nameText.preferredWidth,nameText.preferredHeight);
+        lineImage.rectTransform.sizeDelta = new Vector2(nameText.rectTransform.sizeDelta.x,lineImage.rectTransform.sizeDelta.y);
     }
 }

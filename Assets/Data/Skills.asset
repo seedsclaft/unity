@@ -73,6 +73,31 @@ MonoBehaviour:
       Param2: 0
       Param3: 0
     TriggerDatas: []
+  - Id: 31
+    Name: "\u62D8\u675F\u5236\u5FA1"
+    IconIndex: 1
+    AnimationName: MAGICALxSPIRAL/Thunder3
+    AnimationType: 1
+    DamageTiming: 26
+    MpCost: 0
+    Attribute: 2
+    Scope: 1
+    SkillType: 0
+    TargetType: 1
+    Help: '""'
+    Range: 2
+    FeatureDatas:
+    - SkillId: 31
+      FeatureType: 1
+      Param1: 100
+      Param2: 0
+      Param3: 0
+    - SkillId: 31
+      FeatureType: 22
+      Param1: 101
+      Param2: 0
+      Param3: 0
+    TriggerDatas: []
   - Id: 101
     Name: "\u30D5\u30A1\u30A4\u30A2\u30DC\u30FC\u30EB"
     IconIndex: 286
@@ -255,26 +280,6 @@ MonoBehaviour:
       Param1: 101
       Param2: 10
       Param3: 1
-    TriggerDatas: []
-  - Id: 202
-    Name: "\u62D8\u675F\u5236\u5FA1"
-    IconIndex: 1
-    AnimationName: MAGICALxSPIRAL/Thunder3
-    AnimationType: 1
-    DamageTiming: 26
-    MpCost: 0
-    Attribute: 2
-    Scope: 1
-    SkillType: 1
-    TargetType: 1
-    Help: '""'
-    Range: 2
-    FeatureDatas:
-    - SkillId: 202
-      FeatureType: 1
-      Param1: 100
-      Param2: 0
-      Param3: 0
     TriggerDatas: []
   - Id: 211
     Name: "\u30E9\u30A4\u30C8\u30CB\u30F3\u30B0\u30CF\u30A6\u30F3\u30C9"

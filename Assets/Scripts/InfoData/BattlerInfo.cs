@@ -187,6 +187,17 @@ public class BattlerInfo
         return _stateInfos.FindAll(a => a.StateId == (int)stateType);
     }
 
+    // ステートを消す
+    public void EraseStateInfo(StateType stateType)
+    {
+        List<StateInfo> getStateInfoAll = GetStateInfoAll(stateType);
+
+        for (int i = getStateInfoAll.Count-1;i >= 0;i--)
+        {
+            RemoveState(getStateInfoAll[i]);
+        }
+    }
+
     public int StateEffect(StateType stateType)
     {
         int effect = 0;
