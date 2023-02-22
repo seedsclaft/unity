@@ -192,8 +192,13 @@ public class BattlePresenter
 
     private async void StartAnimationSkill()
     {
-        _view.ClearDamagePopup();
+        //_view.ClearDamagePopup();
         ActionInfo actionInfo = _model.CurrentActionInfo();
+        if (actionInfo.actionResults.Count == 0)
+        {
+            CommandEndAnimation();
+            return;
+        }
         var animation = await _model.SkillActionAnimation(actionInfo.Master.AnimationName);
         if (actionInfo.Master.AnimationType == AnimationType.All)
         {
@@ -219,6 +224,13 @@ public class BattlePresenter
             List<ActionResultInfo> actionResultInfos = actionInfo.actionResults;
             for (int i = 0; i < actionResultInfos.Count; i++)
             {
+                if (actionResultInfos[i].Missed)
+                {
+                    if (actionResultInfos[i].TargetIndex == targetIndex)
+                    {
+                        _view.StartStatePopup(targetIndex,DamageType.State,"Miss!");    
+                    }
+                }
                 if (actionResultInfos[i].HpDamage > 0)
                 {
                     if (actionResultInfos[i].TargetIndex == targetIndex)

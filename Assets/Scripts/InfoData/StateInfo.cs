@@ -9,10 +9,10 @@ public class StateInfo {
     private int _stateId = 0;
     public int StateId{ get {return _stateId;}}
     private int _turns = 0;
-    public int Tunrs{ get {return _turns;}}
+    public int Turns{ get {return _turns;} set {_turns = value;}}
     private int _baseTurns = 0;
     private int _effect = 0;
-    public int Effect{ get {return _effect;}}
+    public int Effect{ get {return _effect;} }
     private int _battlerId = 0;
     public int BattlerId{ get {return _battlerId;}}
     private int _targetIndex = 0;

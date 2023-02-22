@@ -87,7 +87,9 @@ MonoBehaviour:
     - SkillId: 11
     - SkillId: 21
     - SkillId: 31
+    - SkillId: 32
     - SkillId: 201
+    - SkillId: 202
     - SkillId: 211
     - SkillId: 212
   - Id: 3
@@ -100,7 +102,7 @@ MonoBehaviour:
       _hp: 34
       _mp: 20
       _atk: 19
-      _def: 7
+      _def: 15
       _spd: 21
     PlusStatus:
       _hp: 0
@@ -112,7 +114,7 @@ MonoBehaviour:
       _hp: 2
       _mp: 2
       _atk: 4
-      _def: 1
+      _def: 2
       _spd: 2
     Attribute: 1e00000000000000640000003200000000000000
     X: 0

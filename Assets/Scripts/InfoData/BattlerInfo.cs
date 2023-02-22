@@ -41,6 +41,7 @@ public class BattlerInfo
 
     
     private int _chainSuccessCount = 0;
+    public int ChainSuccessCount {get {return _chainSuccessCount;} }
     private int _lastTargetIndex = 0;
     public void SetLastTargetIndex(int index){
         _lastTargetIndex = index;
@@ -90,9 +91,10 @@ public class BattlerInfo
 
     public void ResetAp(bool IsBattleStart)
     {
-        if (IsState(StateType.ReAct))
+        /* 再行動
+        if (IsState(StateType.ChainDamageUp))
         {
-            List <StateInfo> stateInfos = GetStateInfoAll(StateType.ReAct);
+            List <StateInfo> stateInfos = GetStateInfoAll(StateType.ChainDamageUp);
             for (var i = stateInfos.Count-1;i >= 0;i--)
             {
                 StateInfo stateInfo = stateInfos[i];
@@ -106,12 +108,18 @@ public class BattlerInfo
             _ap = 0;
             return;
         }
+        */
         int rand = new Random().Next(-10, 10);
         if (IsBattleStart == false)
         {
             rand = 0;
         }
         _ap = 400 - (Status.Spd + rand) * 4;
+        if (IsState(StateType.SetAfterAp))
+        {
+            _ap = StateEffect(StateType.SetAfterAp);
+            EraseStateInfo(StateType.SetAfterAp);
+        }
     }
 
     public void GainAp(int ap)
@@ -133,6 +141,11 @@ public class BattlerInfo
         if (IsState(StateType.Slow))
         {
             _ap -= 2;
+            return;
+        }
+        if (IsState(StateType.CounterOura))
+        {
+            _ap += 2;
             return;
         }
         //if (isActor == false) return;

@@ -27,6 +27,7 @@ public class BattleEnemyLayer : MonoBehaviour
         backEnemyRoots.ForEach(a => a.SetActive(false));
 
         int frontIndex = 0;
+        int backIndex = 0;
         for (int i = 0; i < battlerInfos.Count;i++)
         {
             GameObject prefab = Instantiate(battleEnemyPrefab);
@@ -39,10 +40,10 @@ public class BattleEnemyLayer : MonoBehaviour
                 _backStartIndex = battlerInfos[i].Index + 1;
             } else
             {
-                int backIndex = i - frontIndex;
                 backEnemyRoots[backIndex].SetActive(true);
                 prefab.transform.SetParent(backEnemyRoots[backIndex].transform, false);
                 battleEnemy.SetDamageRoot(backDamageRoots[backIndex]);
+                backIndex++;
             }
             battleEnemy.SetData(battlerInfos[i],i);
             battleEnemy.SetCallHandler((enemyIndex) => {

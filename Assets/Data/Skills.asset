@@ -25,7 +25,7 @@ MonoBehaviour:
     SkillType: 1
     TargetType: 1
     Help: '""'
-    Range: 2
+    Range: 1
     AliveOnly: 1
     FeatureDatas:
     - SkillId: 1
@@ -99,6 +99,27 @@ MonoBehaviour:
     - SkillId: 31
       FeatureType: 22
       Param1: 101
+      Param2: 0
+      Param3: 0
+    TriggerDatas: []
+  - Id: 32
+    Name: "\u62D8\u675F\u30C0\u30E1\u30FC\u30B8\u89E3\u9664"
+    IconIndex: 1
+    AnimationName: MAGICALxSPIRAL/Thunder3
+    AnimationType: 1
+    DamageTiming: 0
+    MpCost: 0
+    Attribute: 2
+    Scope: 4
+    SkillType: 0
+    TargetType: 4
+    Help: '""'
+    Range: 1
+    AliveOnly: 1
+    FeatureDatas:
+    - SkillId: 32
+      FeatureType: 22
+      Param1: 102
       Param2: 0
       Param3: 0
     TriggerDatas: []
@@ -241,6 +262,27 @@ MonoBehaviour:
       Param2: 10
       Param3: 1
     TriggerDatas: []
+  - Id: 202
+    Name: "\u30B7\u30E3\u30FC\u30D7\u30B3\u30FC\u30C9"
+    IconIndex: 1
+    AnimationName: MAGICALxSPIRAL/Thunder2
+    AnimationType: 1
+    DamageTiming: 26
+    MpCost: 5
+    Attribute: 2
+    Scope: 4
+    SkillType: 1
+    TargetType: 4
+    Help: "1\u30BF\u30FC\u30F3\u81EA\u8EAB\u306E\u56DE\u907F\u7387\u309250\u30A2\u30C3\u30D7"
+    Range: 1
+    AliveOnly: 1
+    FeatureDatas:
+    - SkillId: 202
+      FeatureType: 21
+      Param1: 52
+      Param2: 1
+      Param3: 50
+    TriggerDatas: []
   - Id: 211
     Name: "\u30E9\u30A4\u30C8\u30CB\u30F3\u30B0\u30CF\u30A6\u30F3\u30C9"
     IconIndex: 79
@@ -260,7 +302,7 @@ MonoBehaviour:
     - SkillId: 211
       FeatureType: 21
       Param1: 102
-      Param2: 2
+      Param2: 0
       Param3: 0
     - SkillId: 211
       FeatureType: 101
@@ -300,6 +342,11 @@ MonoBehaviour:
       Param1: 21
       Param2: 0
       Param3: 0
+    - SkillId: 212
+      FeatureType: 101
+      Param1: 32
+      Param2: 0
+      Param3: 0
     TriggerDatas: []
   - Id: 301
     Name: "\u30AB\u30A6\u30F3\u30BF\u30FC\u30AA\u30FC\u30E9"
@@ -309,9 +356,9 @@ MonoBehaviour:
     DamageTiming: 26
     MpCost: 0
     Attribute: 3
-    Scope: 1
+    Scope: 4
     SkillType: 1
-    TargetType: 2
+    TargetType: 4
     Help: "\u5473\u65B9\u4E00\u4EBA\u306BCA\u3092\u4ED8\u4E0E"
     Range: 1
     AliveOnly: 1
@@ -319,7 +366,12 @@ MonoBehaviour:
     - SkillId: 301
       FeatureType: 21
       Param1: 103
-      Param2: 1
+      Param2: 0
+      Param3: 0
+    - SkillId: 301
+      FeatureType: 21
+      Param1: 106
+      Param2: 0
       Param3: 0
     TriggerDatas: []
   - Id: 311

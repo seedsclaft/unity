@@ -199,10 +199,6 @@ public class BattleActorList : ListWindow , IInputHandlerEvent
             UpdateLineSelect(index);
             return;
         }
-        if (_targetScopeType != ScopeType.One)
-        {
-            return;
-        }
         for (int i = 0; i < ObjectList.Count;i++)
         {
             var listItem = ObjectList[i].GetComponent<ListItem>();

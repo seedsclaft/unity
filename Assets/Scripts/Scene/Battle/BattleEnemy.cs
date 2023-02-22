@@ -121,6 +121,7 @@ public class BattleEnemy : ListItem
     public void StartStatePopup(DamageType damageType,string stateName)
     {
         var battleDamage = CreatePrefab();
+        _battleDamages.Add(battleDamage);
         battleDamage.StartStatePopup(damageType,stateName,_battleDamages.Count);
     }
 

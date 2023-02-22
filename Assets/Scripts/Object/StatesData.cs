@@ -22,11 +22,13 @@ public enum StateType
     Death = 1,
     Demigod = 11,
     Slow = 21,
+    EvaUp = 52,
     Chain = 101,
-    ReAct = 102,
+    ChainDamageUp = 102,
     CounterOura = 103,
     NoDamage = 104,
     Regene = 105,
+    SetAfterAp = 106,
 }
 
 public enum RemovalTiming
@@ -35,6 +37,6 @@ public enum RemovalTiming
     UpdateTurn = 1,
     UpdateAp = 2,
     UpdateChain = 3,
-    UpdateCount = 4
+    UpdateCount = 4,
 
 }

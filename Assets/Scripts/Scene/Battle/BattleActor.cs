@@ -122,6 +122,7 @@ public class BattleActor : ListItem ,IListViewItem ,IClickHandlerEvent
     public void StartStatePopup(DamageType damageType,string stateName)
     {
         var battleDamage = CreatePrefab();
+        _battleDamages.Add(battleDamage);
         battleDamage.StartStatePopup(damageType,stateName,_battleDamages.Count);
     }
 

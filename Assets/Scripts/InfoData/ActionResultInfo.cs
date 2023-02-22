@@ -47,7 +47,15 @@ public class ActionResultInfo
     public bool IsDead {
         get {return _isDead;}
     }
+    private List<int> _deadIndexList = new List<int>();
+    public List<int> DeadIndexList {
+        get {return _deadIndexList;}
+    }
 
+    private bool _missed = false;
+    public bool Missed {
+        get {return _missed;}
+    }
     
     private List<StateInfo> _addedStates = new List<StateInfo>();
     public List<StateInfo> AddedStates {
@@ -99,8 +107,24 @@ public class ActionResultInfo
         }
     }
 
+    private bool IsHit(BattlerInfo subject,BattlerInfo target)
+    {
+        int hit = 100;
+        if (target.IsState(StateType.EvaUp))
+        {
+            hit -= target.StateEffect(StateType.EvaUp);
+        }
+        int rand = new System.Random().Next(0, 100);
+        return hit >= rand;
+    }
+
     private void MakeHpDamage(BattlerInfo subject,BattlerInfo target,SkillsData.FeatureData featureData)
     {
+        if (!IsHit(subject,target))
+        {
+            _missed = true;
+            return;
+        }
         if (target.IsState(StateType.NoDamage))
         {
             _execStateInfos[target.Index].Add(StateType.NoDamage);
@@ -123,6 +147,11 @@ public class ActionResultInfo
         if (_hpDamage >= target.Hp)
         {
             _isDead = true;
+            _deadIndexList.Add(target.Index);
+        }
+        if (_reDamage >= subject.Hp)
+        {
+            _deadIndexList.Add(subject.Index);
         }
     }
 
@@ -142,6 +171,10 @@ public class ActionResultInfo
     private void MakeAddState(BattlerInfo subject,BattlerInfo target,SkillsData.FeatureData featureData)
     {
         StateInfo stateInfo = new StateInfo(featureData.Param1,featureData.Param2,featureData.Param3,subject.Index,target.Index);
+        if (stateInfo.Master.Id == (int)StateType.CounterOura)
+        {
+            stateInfo.Turns = 200 - subject.Status.Spd * 2;
+        }
         bool IsAdded = target.AddState(stateInfo);
         if (IsAdded)
         {

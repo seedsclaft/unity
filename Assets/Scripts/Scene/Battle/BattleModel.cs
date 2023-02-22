@@ -78,12 +78,18 @@ public class BattleModel : BaseModel
             for (int j = 0;j < chainDamageStateInfos.Count;j++)
             {
                 StateInfo stateInfo = chainDamageStateInfos[j];
+                BattlerInfo subject = _battlers.Find(a => a.Index == stateInfo.BattlerId);
                 BattlerInfo target = _battlers.Find(a => a.Index == stateInfo.TargetIndex);
                 if (target != null)
                 {
-                    target.ChangeHp(stateInfo.Effect * -1);
+                    int chainDamage = stateInfo.Effect;
+                    if (subject.IsState(StateType.ChainDamageUp))
+                    {
+                        chainDamage += subject.ChainSuccessCount;
+                    }
+                    target.ChangeHp(chainDamage * -1);
                     ActionResultInfo actionResultInfo = new ActionResultInfo(_battlers[i].Index,stateInfo.TargetIndex,null);
-                    actionResultInfo.HpDamage = stateInfo.Effect;
+                    actionResultInfo.HpDamage = chainDamage;
                     actionResultInfos.Add(actionResultInfo);
                 }
             }
@@ -332,6 +338,14 @@ public class BattleModel : BaseModel
                     bool IsFrontAlive = BattlerEnemies().Find(a => a.IsAlive() && a.LineIndex == 0) != null;
                     if (IsFrontAlive)
                     {
+                        if (subject.LineIndex == 0)
+                        {
+                            List<BattlerInfo> battlerInfos = BattlerActors();
+                            for (int i = 0;i < battlerInfos.Count;i++)
+                            {
+                                targetIndexList.Add(battlerInfos[i].Index);
+                            }
+                        }
                     } else
                     {
                         List<BattlerInfo> battlerInfos = BattlerActors();
@@ -480,10 +494,9 @@ public class BattleModel : BaseModel
             List<ActionResultInfo> actionResultInfos = actionInfo.actionResults;
             for (int i = 0; i < actionResultInfos.Count; i++)
             {
-                BattlerInfo battlerInfo = _battlers.Find(a => a.Index == actionResultInfos[i].TargetIndex);
-                if (actionResultInfos[i].IsDead == true)
+                for (int j = 0; j < actionResultInfos[i].DeadIndexList.Count; j++)
                 {
-                    deathBattlerIndex.Add(battlerInfo.Index);
+                    deathBattlerIndex.Add(actionResultInfos[i].DeadIndexList[j]);
                 }
             }
         }
@@ -588,6 +601,10 @@ public class BattleModel : BaseModel
     public List<int> MakeAutoSelectIndex(ActionInfo actionInfo)
     {
         List<int> targetIndexList = MakeActionTarget(actionInfo.Master.Id,actionInfo.SubjectIndex);
+        if (targetIndexList.Count == 0)
+        {
+            return targetIndexList;
+        }
         List<int> indexList = new List<int>();
         
         int targetIndex = targetIndexList [UnityEngine.Random.Range (0, targetIndexList.Count)];

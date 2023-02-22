@@ -61,6 +61,30 @@ MonoBehaviour:
     AttributeType: 1
     LearningSkills:
     - SkillId: 1
+  - Id: 5
+    Name: '""'
+    ImagePath: NY_CJ_monster_018_1
+    BaseStatus:
+      _hp: 1
+      _mp: 1
+      _atk: 1
+      _def: 1
+      _spd: 1
+    AttributeType: 1
+    LearningSkills:
+    - SkillId: 1
+  - Id: 6
+    Name: '""'
+    ImagePath: NY_CJ_monster_018_1
+    BaseStatus:
+      _hp: 45
+      _mp: 20
+      _atk: 15
+      _def: 12
+      _spd: 17
+    AttributeType: 3
+    LearningSkills:
+    - SkillId: 301
   _textdata:
   - Id: 1
     Text: "\u30CD\u30EC\u30A4\u30C9\u30B8\u30A7\u30E0"
@@ -73,4 +97,10 @@ MonoBehaviour:
     Help: 
   - Id: 4
     Text: "\u30B1\u30EB\u30D9\u30ED\u30B9"
+    Help: 
+  - Id: 5
+    Text: '""'
+    Help: 
+  - Id: 6
+    Text: '""'
     Help: 
