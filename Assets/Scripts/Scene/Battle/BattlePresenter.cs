@@ -9,6 +9,7 @@ public class BattlePresenter
 
     private bool _busy = true;
     private Battle.CommandType _nextCommandType = Battle.CommandType.None;
+    private Battle.CommandType _backCommandType = Battle.CommandType.None;
     public BattlePresenter(BattleView view)
     {
         _view = view;
@@ -23,6 +24,7 @@ public class BattlePresenter
         _view.CreateObject();
         _view.SetHelpWindow();
         _view.SetUIButton();
+        _view.SetActiveBack(false);
         _view.SetEvent((type) => updateCommand(type));
 
         //List<ActorInfo> actorInfos = _model.Actors();
@@ -79,6 +81,16 @@ public class BattlePresenter
         {
             CommandRightActor();
         }
+        if (viewEvent.commandType == Battle.CommandType.Back)
+        {
+            CommandBack();
+        }
+    }
+
+    private void CommandBack()
+    {
+        var eventData = new BattleViewEvent(_backCommandType);
+        updateCommand(eventData);
     }
 
     private void CommandUpdateAp()
@@ -103,8 +115,7 @@ public class BattlePresenter
                     CommandSelectIndex(chainTargetIndexs);
                 } 
                 else{
-                    _view.ShowSkillActionList(_model.CurrentBattler);
-                    CommandAttributeType(_model.CurrentAttributeType);
+                    CommandDecideActor();
                 }
             } else
             {
@@ -136,11 +147,14 @@ public class BattlePresenter
             _view.RefreshBattlerPartyLayerTarget(actionInfo);
             _view.RefreshBattlerEnemyLayerTarget(actionInfo);
         }
+        _backCommandType = Battle.CommandType.DecideActor;
+        _view.SetActiveBack(true);
         //
     }
 
     private void CommandSelectIndex(List<int> indexList)
     {
+        _view.SetActiveBack(false);
         MakeActionResultInfo(indexList);
         ActionInfo actionInfo = _model.CurrentActionInfo();
         if (actionInfo != null)
@@ -328,7 +342,11 @@ public class BattlePresenter
 
     private void CommandDecideActor()
     {
-
+        _view.ShowSkillActionList(_model.CurrentBattler);
+        CommandAttributeType(_model.CurrentAttributeType);
+        _view.RefreshBattlerEnemyLayerTarget(null);
+        _view.RefreshBattlerPartyLayerTarget(null);
+        _view.SetActiveBack(false);
     }
     
     private void CommandLeftActor()

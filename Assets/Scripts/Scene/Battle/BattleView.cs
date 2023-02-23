@@ -3,10 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Battle;
-using TMPro;
 using Effekseer;
-using System.Threading;
-using System.Threading.Tasks;
 
 public class BattleView : BaseView
 {
@@ -22,6 +19,8 @@ public class BattleView : BaseView
     [SerializeField] private GameObject helpRoot = null;
     [SerializeField] private GameObject helpPrefab = null;
     [SerializeField] private GameObject backPrefab = null;
+
+    private Button _backCommand = null;
     
     [SerializeField] private EffekseerEmitter effekseerEmitter = null;
     private HelpWindow _helpWindow = null;
@@ -32,7 +31,6 @@ public class BattleView : BaseView
         _busy = isBusy;
     }
     private bool _animationBusy = false;
-
 
     protected void Awake()
     {
@@ -87,8 +85,21 @@ public class BattleView : BaseView
         GameObject prefab = Instantiate(backPrefab);
         prefab.transform.SetParent(helpRoot.transform, false);
         
+        _backCommand = prefab.GetComponent<Button>();
+        _backCommand.onClick.AddListener(() => OnClickBack());
         //_helpWindow = prefab.GetComponent<HelpWindow>();
 
+    }
+
+    public void SetActiveBack(bool IsActive)
+    {
+        _backCommand.gameObject.SetActive(IsActive);
+    }
+
+    private void OnClickBack()
+    {
+        var eventData = new BattleViewEvent(CommandType.Back);
+        _commandData(eventData);
     }
 
     public void SetHelpWindow()
@@ -339,6 +350,7 @@ namespace Battle
     public enum CommandType
     {
         None = 0,
+        Back,
         BattleCommand,
         AttributeType,
         DecideActor,

@@ -80,70 +80,6 @@ public class ActionResultInfo
         {
             MakeFeature(subject,target,featureDatas[i]);
         }
-    }
-
-    private void MakeFeature(BattlerInfo subject,BattlerInfo target,SkillsData.FeatureData featureData)
-    {
-        switch (featureData.FeatureType)
-        {
-            case FeatureType.HpDamage:
-                MakeHpDamage(subject,target,featureData);
-                return;
-            case FeatureType.HpHeal:
-                MakeHpHeal(subject,target,featureData);
-                return;
-            case FeatureType.HpDrain:
-                MakeHpDrain(subject,target,featureData);
-                return;
-            case FeatureType.AddState:
-                MakeAddState(subject,target,featureData);
-                return;
-            case FeatureType.RemoveState:
-                MakeRemoveState(subject,target,featureData);
-                return;
-            case FeatureType.PlusSkill:
-                return;
-
-        }
-    }
-
-    private bool IsHit(BattlerInfo subject,BattlerInfo target)
-    {
-        int hit = 100;
-        if (target.IsState(StateType.EvaUp))
-        {
-            hit -= target.StateEffect(StateType.EvaUp);
-        }
-        int rand = new System.Random().Next(0, 100);
-        return hit >= rand;
-    }
-
-    private void MakeHpDamage(BattlerInfo subject,BattlerInfo target,SkillsData.FeatureData featureData)
-    {
-        if (!IsHit(subject,target))
-        {
-            _missed = true;
-            return;
-        }
-        if (target.IsState(StateType.NoDamage))
-        {
-            _execStateInfos[target.Index].Add(StateType.NoDamage);
-            return;
-        }
-        int AtkValue = subject.CurrentAtk();
-        int DefValue = target.CurrentDef();
-        float SkillDamage = (featureData.Param1 * 0.01f * (AtkValue * 0.5f));
-        if (target.IsState(StateType.CounterOura))
-        {
-            _execStateInfos[target.Index].Add(StateType.CounterOura);
-            _reDamage = (int)SkillDamage;
-        }
-        SkillDamage -= (DefValue * 0.5f);
-        float DamageValue = Mathf.Max(1,SkillDamage);
-        _hpDamage = (int)Mathf.Round(DamageValue);
-        // 属性補正
-        // クリティカル
-        _hpDamage = ApplyVariance(_hpDamage);
         if (_hpDamage >= target.Hp)
         {
             _isDead = true;
@@ -155,16 +91,88 @@ public class ActionResultInfo
         }
     }
 
+    private void MakeFeature(BattlerInfo subject,BattlerInfo target,SkillsData.FeatureData featureData)
+    {
+        switch (featureData.FeatureType)
+        {
+            case FeatureType.HpDamage:
+                MakeHpDamage(subject,target,featureData,false);
+                return;
+            case FeatureType.HpHeal:
+                MakeHpHeal(subject,target,featureData);
+                return;
+            case FeatureType.HpDrain:
+                MakeHpDrain(subject,target,featureData);
+                return;
+            case FeatureType.NoEffectHpDamage:
+                MakeHpDamage(subject,target,featureData,true);
+                return;
+            case FeatureType.AddState:
+                MakeAddState(subject,target,featureData);
+                return;
+            case FeatureType.RemoveState:
+                MakeRemoveState(subject,target,featureData);
+                return;
+            case FeatureType.KindHeal:
+                MakeKindHeal(subject,target,featureData);
+                return;
+
+        }
+    }
+
+    private bool IsHit(BattlerInfo subject,BattlerInfo target)
+    {
+        int hit = 100;
+        if (target.IsState(StateType.EvaUp))
+        {
+            hit -= target.StateEffectAll(StateType.EvaUp);
+        }
+        int rand = new System.Random().Next(0, 100);
+        return hit >= rand;
+    }
+
+    private void MakeHpDamage(BattlerInfo subject,BattlerInfo target,SkillsData.FeatureData featureData,bool isNoEffect)
+    {
+        if (!IsHit(subject,target) && !isNoEffect)
+        {
+            _missed = true;
+            return;
+        }
+        if (target.IsState(StateType.NoDamage) && !isNoEffect)
+        {
+            _execStateInfos[target.Index].Add(StateType.NoDamage);
+            return;
+        }
+        int AtkValue = subject.CurrentAtk();
+        int DefValue = target.CurrentDef();
+        if (target.IsState(StateType.DefUp)  && !isNoEffect)
+        {
+            DefValue += target.StateEffectAll(StateType.DefUp);
+        }
+        float SkillDamage = (featureData.Param1 * 0.01f * (AtkValue * 0.5f));
+        if (target.IsState(StateType.CounterOura)  && !isNoEffect)
+        {
+            _execStateInfos[target.Index].Add(StateType.CounterOura);
+            _reDamage = (int)SkillDamage;
+        }
+        SkillDamage -= (DefValue * 0.5f);
+        float DamageValue = Mathf.Max(1,SkillDamage);
+        _hpDamage = (int)Mathf.Round(DamageValue);
+        // 属性補正
+        // クリティカル
+        _hpDamage = ApplyVariance(_hpDamage);
+    }
+
     private void MakeHpHeal(BattlerInfo subject,BattlerInfo target,SkillsData.FeatureData featureData)
     {
-        float HealValue = target.Status.Hp * featureData.Param1 * 0.01f;
+        float HealValue = featureData.Param1;
         _hpHeal = (int)Mathf.Round(HealValue);
         _hpHeal = ApplyVariance(_hpHeal);
     }
 
     private void MakeHpDrain(BattlerInfo subject,BattlerInfo target,SkillsData.FeatureData featureData)
     {
-        MakeHpDamage(subject,target,featureData);
+        MakeHpDamage(subject,target,featureData,false);
         _reHeal = (int)Mathf.Floor(HpDamage * featureData.Param3 * 0.01f);
     }
 
@@ -189,6 +197,15 @@ public class ActionResultInfo
         if (IsRemoved)
         {
             _removedStates.Add(stateInfo);
+        }
+    }
+
+    public void MakeKindHeal(BattlerInfo subject,BattlerInfo target,SkillsData.FeatureData featureData)
+    {
+        if (target.Kinds.IndexOf((KindType)featureData.Param1) != -1)
+        {
+            _hpDamage = (int)Mathf.Floor( _hpHeal * featureData.Param3 * 0.01f );
+            _hpHeal = 0;
         }
     }
 

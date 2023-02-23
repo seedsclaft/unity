@@ -94,6 +94,7 @@ public enum RangeType{
     S = 1,
     L = 2
 }
+
 public enum DamageType
 {
     None = 0,
@@ -121,4 +122,17 @@ public enum TriggerTiming
     Use = 1,
     After = 2,
     Interrupt = 3
+}
+
+public enum FeatureType
+{
+    None = 0,
+    HpDamage = 1,
+    HpHeal = 2,
+    HpDrain = 3,
+    NoEffectHpDamage = 11,
+    AddState = 21,
+    RemoveState = 22,
+    PlusSkill = 101,
+    KindHeal = 201,
 }

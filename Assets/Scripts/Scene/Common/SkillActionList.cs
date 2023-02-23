@@ -46,8 +46,8 @@ public class SkillActionList : ListWindow , IInputHandlerEvent
             ObjectList[i].SetActive(false);
             if (i < _data.Count) 
             {
-                var statusCommand = ObjectList[i].GetComponent<SkillAction>();
-                statusCommand.SetData(skillInfoData[i],i);
+                var skillAction = ObjectList[i].GetComponent<SkillAction>();
+                skillAction.SetData(skillInfoData[i],i);
                 ObjectList[i].SetActive(true);
             }
         }

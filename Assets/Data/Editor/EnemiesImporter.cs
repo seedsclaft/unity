@@ -19,7 +19,9 @@ public class EnemiesImporter : AssetPostprocessor {
 		Atk,
 		Def,
 		Spd,
-		AttributeType,
+		Kind1,
+		Kind2,
+		Kind3,
     }
     enum BaseLearningColumn
     {
@@ -110,8 +112,13 @@ public class EnemiesImporter : AssetPostprocessor {
 					int Atk = (int)Baserow.GetCell((int)BaseColumn.Atk)?.SafeNumericCellValue();
 					int Def = (int)Baserow.GetCell((int)BaseColumn.Def)?.SafeNumericCellValue();
 					int Spd = (int)Baserow.GetCell((int)BaseColumn.Spd)?.SafeNumericCellValue();
-					EnemyData.AttributeType = (AttributeType)Baserow.GetCell((int)BaseColumn.AttributeType)?.SafeNumericCellValue();
-					
+					EnemyData.Kinds = new List<KindType>();
+					KindType Kind1 = (KindType)Baserow.GetCell((int)BaseColumn.Kind1)?.SafeNumericCellValue();
+					if (Kind1 != 0) EnemyData.Kinds.Add(Kind1);
+					KindType Kind2 = (KindType)Baserow.GetCell((int)BaseColumn.Kind2)?.SafeNumericCellValue();
+					if (Kind2 != 0) EnemyData.Kinds.Add(Kind2);
+					KindType Kind3 = (KindType)Baserow.GetCell((int)BaseColumn.Kind3)?.SafeNumericCellValue();
+					if (Kind3 != 0) EnemyData.Kinds.Add(Kind3);
 					EnemyData.BaseStatus = new StatusInfo();
 					EnemyData.BaseStatus.SetParameter(Hp,Mp,Atk,Def,Spd);
 

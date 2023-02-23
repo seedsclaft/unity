@@ -140,7 +140,7 @@ MonoBehaviour:
     FeatureDatas:
     - SkillId: 101
       FeatureType: 1
-      Param1: 150
+      Param1: 200
       Param2: 0
       Param3: 0
     TriggerDatas: []
@@ -359,7 +359,7 @@ MonoBehaviour:
     Scope: 4
     SkillType: 1
     TargetType: 4
-    Help: "\u5473\u65B9\u4E00\u4EBA\u306BCA\u3092\u4ED8\u4E0E"
+    Help: "\u81EA\u8EAB\u306BCA\u3092\u4ED8\u4E0E"
     Range: 1
     AliveOnly: 1
     FeatureDatas:
@@ -373,6 +373,27 @@ MonoBehaviour:
       Param1: 106
       Param2: 0
       Param3: 0
+    TriggerDatas: []
+  - Id: 302
+    Name: "\u30B7\u30FC\u30EB\u30C9\u30B9\u30DA\u30EB"
+    IconIndex: 370
+    AnimationName: NA_Fire_001
+    AnimationType: 1
+    DamageTiming: 26
+    MpCost: 5
+    Attribute: 3
+    Scope: 1
+    SkillType: 1
+    TargetType: 2
+    Help: "\u5473\u65B9\u4E00\u4EBA\u306E\u9632\u5FA1\u30924\u30A2\u30C3\u30D7"
+    Range: 1
+    AliveOnly: 1
+    FeatureDatas:
+    - SkillId: 302
+      FeatureType: 21
+      Param1: 44
+      Param2: 999
+      Param3: 4
     TriggerDatas: []
   - Id: 311
     Name: "\u30D5\u30EA\u30B8\u30C3\u30C8\u30B7\u30A7\u30EB"
@@ -435,7 +456,7 @@ MonoBehaviour:
       Param3: 0
     TriggerDatas: []
   - Id: 401
-    Name: "\u30D2\u30FC\u30EA\u30F3\u30B0"
+    Name: "\u30DA\u30CD\u30C8\u30EC\u30A4\u30C8"
     IconIndex: 382
     AnimationName: NA_Fire_001
     AnimationType: 1
@@ -444,16 +465,42 @@ MonoBehaviour:
     Attribute: 4
     Scope: 1
     SkillType: 1
+    TargetType: 1
+    Help: "\u76F8\u624B\u306E\u52B9\u679C\u3092\u7121\u8996\u3057\u3066\u653B\u6483"
+    Range: 1
+    AliveOnly: 1
+    FeatureDatas:
+    - SkillId: 401
+      FeatureType: 11
+      Param1: 150
+      Param2: 0
+      Param3: 0
+    TriggerDatas: []
+  - Id: 402
+    Name: "\u30D2\u30FC\u30EA\u30F3\u30B0"
+    IconIndex: 382
+    AnimationName: NA_Fire_001
+    AnimationType: 1
+    DamageTiming: 26
+    MpCost: 5
+    Attribute: 4
+    Scope: 1
+    SkillType: 1
     TargetType: 3
     Help: "\u5473\u65B9\u4E00\u4EBA\u306EHp\u3092\u56DE\u5FA9"
     Range: 1
     AliveOnly: 1
     FeatureDatas:
-    - SkillId: 401
+    - SkillId: 402
       FeatureType: 2
-      Param1: 50
+      Param1: 15
       Param2: 0
       Param3: 0
+    - SkillId: 402
+      FeatureType: 201
+      Param1: 1
+      Param2: 0
+      Param3: 150
     TriggerDatas: []
   - Id: 411
     Name: "\u30A8\u30EA\u30AF\u30B7\u30FC\u30EB"
@@ -546,8 +593,8 @@ MonoBehaviour:
     IconIndex: 193
     AnimationName: tktk01/Dark3
     AnimationType: 1
-    DamageTiming: 26
-    MpCost: 0
+    DamageTiming: 20
+    MpCost: 5
     Attribute: 5
     Scope: 1
     SkillType: 1
@@ -558,7 +605,7 @@ MonoBehaviour:
     FeatureDatas:
     - SkillId: 502
       FeatureType: 3
-      Param1: 100
+      Param1: 150
       Param2: 0
       Param3: 25
     TriggerDatas: []

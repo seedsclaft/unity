@@ -27,7 +27,8 @@ public class BattlerInfo
     public ActorInfo ActorInfo {get {return _actorInfo;} }
     private EnemiesData.EnemyData _enemyData;
     public EnemiesData.EnemyData EnemyData {get {return _enemyData;} }
-
+    private List<KindType> _kinds = new List<KindType>();
+    public List<KindType> Kinds {get {return _kinds;} }
     private int _lastSkillId = 0;
     public SkillInfo LastSkill {get {return Skills.Find(a => a.Id == _lastSkillId);} }
     private List<StateInfo> _stateInfos = new List<StateInfo>();
@@ -80,6 +81,11 @@ public class BattlerInfo
         {
             _skills.Add(new SkillInfo(enemyData.LearningSkills[i].SkillId));
         }
+        for (int i = 0;i < enemyData.Kinds.Count;i++)
+        {
+            _kinds.Add(enemyData.Kinds[i]);
+        }
+
         ResetAp(true);
     }
 
@@ -220,6 +226,21 @@ public class BattlerInfo
         if (IsState(stateType))
         {
             effect += _stateInfos.Find(a => a.StateId == (int)stateType).Effect;
+        }
+        return effect;
+    }
+
+    public int StateEffectAll(StateType stateType)
+    {
+        int effect = 0;
+        if (IsState(stateType))
+        {
+            List<StateInfo> stateInfos = GetStateInfoAll(stateType);
+            
+            for (var i = 0;i < stateInfos.Count;i++)
+            {
+                effect += stateInfos[i].Effect;
+            }
         }
         return effect;
     }

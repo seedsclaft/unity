@@ -15,7 +15,7 @@ public class EnemiesData : ScriptableObject {
         public string Name;
         public string ImagePath;
         public StatusInfo BaseStatus;
-        public AttributeType AttributeType;
+        public List<KindType> Kinds;
         public List<LearningData> LearningSkills = new List<LearningData>();
         
         public int CurrentParam(StatusParamType growType,int level)
@@ -39,4 +39,10 @@ public class EnemiesData : ScriptableObject {
         }
     }
 
+}
+
+public enum KindType
+{
+    None = 0,
+    Undead = 1
 }

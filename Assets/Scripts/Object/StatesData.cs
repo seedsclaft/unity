@@ -22,6 +22,7 @@ public enum StateType
     Death = 1,
     Demigod = 11,
     Slow = 21,
+    DefUp = 44,
     EvaUp = 52,
     Chain = 101,
     ChainDamageUp = 102,

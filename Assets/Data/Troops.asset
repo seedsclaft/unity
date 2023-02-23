@@ -15,17 +15,17 @@ MonoBehaviour:
   _data:
   - Id: 1
     TroopId: 1
-    EnemyId: 3
+    EnemyId: 5
     Lv: 1
     Line: 0
   - Id: 2
     TroopId: 1
-    EnemyId: 3
+    EnemyId: 2
     Lv: 1
-    Line: 0
+    Line: 1
   - Id: 3
     TroopId: 1
-    EnemyId: 4
+    EnemyId: 2
     Lv: 1
     Line: 1
   - Id: 1
@@ -56,5 +56,30 @@ MonoBehaviour:
   - Id: 3
     TroopId: 20
     EnemyId: 3
+    Lv: 1
+    Line: 1
+  - Id: 1
+    TroopId: 30
+    EnemyId: 4
+    Lv: 1
+    Line: 0
+  - Id: 2
+    TroopId: 30
+    EnemyId: 4
+    Lv: 1
+    Line: 0
+  - Id: 3
+    TroopId: 30
+    EnemyId: 1
+    Lv: 1
+    Line: 1
+  - Id: 1
+    TroopId: 40
+    EnemyId: 2
+    Lv: 1
+    Line: 0
+  - Id: 2
+    TroopId: 40
+    EnemyId: 4
     Lv: 1
     Line: 1
