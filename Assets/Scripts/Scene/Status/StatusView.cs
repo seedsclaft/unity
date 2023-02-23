@@ -14,7 +14,6 @@ public class StatusView : BaseView
     private new System.Action<StatusViewEvent> _commandData = null;
     [SerializeField] private GameObject helpRoot = null;
     [SerializeField] private GameObject helpPrefab = null;
-    [SerializeField] private GameObject backPrefab = null;
     [SerializeField] private GameObject leftPrefab = null;
     [SerializeField] private GameObject rightPrefab = null;
     private HelpWindow _helpWindow = null;
@@ -44,8 +43,7 @@ public class StatusView : BaseView
     
     public void SetUIButton()
     {
-        GameObject prefab = Instantiate(backPrefab);
-        prefab.transform.SetParent(helpRoot.transform, false);
+        CreateBackCommand(() => OnClickDecide());
         
         GameObject prefab2 = Instantiate(leftPrefab);
         prefab2.transform.SetParent(helpRoot.transform, false);

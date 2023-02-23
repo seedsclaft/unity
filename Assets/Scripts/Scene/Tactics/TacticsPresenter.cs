@@ -8,6 +8,8 @@ public class TacticsPresenter
     TacticsView _view = null;
 
     private bool _busy = true;
+
+    private Tactics.CommandType _backCommand = Tactics.CommandType.None;
     public TacticsPresenter(TacticsView view)
     {
         _view = view;
@@ -20,6 +22,7 @@ public class TacticsPresenter
     {
         _view.SetHelpWindow();
         _view.SetUIButton();
+        _view.SetActiveBack(false);
         _view.SetEvent((type) => updateCommand(type));
 
         //List<ActorInfo> actorInfos = _model.Actors();
@@ -60,10 +63,19 @@ public class TacticsPresenter
         {
             CommandRightActor();
         }
+        if (viewEvent.commandType == Tactics.CommandType.SelectTrain)
+        {
+            CommandSelectTrain((int)viewEvent.templete);
+        }
     }
 
-    private void CommandTacticsCommand(TacticsComandType TacticsComandType)
+    private void CommandTacticsCommand(TacticsComandType tacticsComandType)
     {
+        if (tacticsComandType == TacticsComandType.Train)
+        {
+            _view.ShowTrainList();
+            _backCommand = Tactics.CommandType.None;
+        }
     }
 
     private void CommandAttributeType(AttributeType attributeType)
@@ -89,6 +101,17 @@ public class TacticsPresenter
          _model.ChangeActorIndex(1);
         _view.SetActorInfo(_model.CurrentActor);
         CommandAttributeType(_model.CurrentAttributeType);
+    }
+
+    private void CommandRefresh()
+    {
+        _view.CommandRefresh();
+    }
+
+    private void CommandSelectTrain(int actorId)
+    {
+        _model.SelectTrain(actorId);
+        CommandRefresh();
     }
 
 }

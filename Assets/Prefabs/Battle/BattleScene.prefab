@@ -535,6 +535,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7df352f20c168840aa85def7c0cc691, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  backPrefab: {fileID: 7406275377514555950, guid: 90d481bd6e0e8d74bab7d2e4bd65a7ae,
+    type: 3}
+  backRoot: {fileID: 326439070492828496}
   battleActorList: {fileID: 5802123124089651950}
   battleEnemyLayer: {fileID: 3640259203680643667}
   battleGridLayer: {fileID: 6667142068092059954}
@@ -543,8 +546,6 @@ MonoBehaviour:
   battleThumb: {fileID: 4458981522756006971}
   helpRoot: {fileID: 326439070492828496}
   helpPrefab: {fileID: 4660447992331240257, guid: fd198201f48424c4cbfbe909f658ea97,
-    type: 3}
-  backPrefab: {fileID: 7406275377514555950, guid: 90d481bd6e0e8d74bab7d2e4bd65a7ae,
     type: 3}
   effekseerEmitter: {fileID: 7748253186106057598}
 --- !u!1 &1353333580767393770

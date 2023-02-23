@@ -31,6 +31,11 @@ public class ActorInfo
     public int Mp {get {return _mp;}}
     private int _ap;
     public int Ap {get {return _ap;}}
+
+    private TacticsComandType _tacticsComandType = TacticsComandType.None;
+    public TacticsComandType TacticsComandType {get {return _tacticsComandType;}}
+
+
     public ActorInfo(ActorsData.ActorData actorData)
     {
         _actorId = actorData.Id;
@@ -70,5 +75,14 @@ public class ActorInfo
 
     public void UpdateStatus()
     {
+    }
+
+    public void SetTacticsCommand(TacticsComandType tacticsComandType)
+    {
+        _tacticsComandType = tacticsComandType;
+    }
+    public void ClearTacticsCommand()
+    {
+        _tacticsComandType = TacticsComandType.None;
     }
 }

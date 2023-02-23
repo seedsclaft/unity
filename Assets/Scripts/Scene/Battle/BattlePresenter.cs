@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BattlePresenter 
+public class BattlePresenter : BasePresenter
 {
     BattleModel _model = null;
     BattleView _view = null;

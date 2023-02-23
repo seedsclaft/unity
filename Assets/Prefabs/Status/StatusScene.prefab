@@ -3088,6 +3088,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b29204ba8ec1e8341b38c378a257dc06, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  backPrefab: {fileID: 7406275377514555950, guid: 90d481bd6e0e8d74bab7d2e4bd65a7ae,
+    type: 3}
+  backRoot: {fileID: 6004437273362368775}
   actorInfoComponent: {fileID: 2788684162253015153}
   commandList: {fileID: 1031873667854947517}
   skillActionList: {fileID: 4351522963840412646}
@@ -3095,8 +3098,6 @@ MonoBehaviour:
   decideButton: {fileID: 4543176366710301350}
   helpRoot: {fileID: 6004437273362368775}
   helpPrefab: {fileID: 4660447992331240257, guid: fd198201f48424c4cbfbe909f658ea97,
-    type: 3}
-  backPrefab: {fileID: 7406275377514555950, guid: 90d481bd6e0e8d74bab7d2e4bd65a7ae,
     type: 3}
   leftPrefab: {fileID: 433919834750711742, guid: 965c3749406212b4fad9e6c7da2b52e2,
     type: 3}

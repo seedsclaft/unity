@@ -95,6 +95,26 @@ public class TacticsModel : BaseModel
             result1,null
         };    
     }
+
+    public void SelectTrain(int actorId)
+    {
+        ActorInfo actorInfo = Actors().Find(a => a.ActorId == actorId);
+        if (actorInfo != null){
+            if (actorInfo.TacticsComandType == TacticsComandType.Train)
+            {
+                actorInfo.ClearTacticsCommand();
+            } else
+            {
+                actorInfo.SetTacticsCommand(TacticsComandType.Train);
+            }
+        }
+    }
+
+    public void RefreshData()
+    {
+        int trainCost = 0;
+        
+    }
 }
 
 namespace TacticsModelData{

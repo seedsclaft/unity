@@ -22,6 +22,7 @@ public class SystemData : ScriptableObject
 }
 
 public enum TacticsComandType {
+	None,
 	Train,
 	Alchemy,
 	Recover,

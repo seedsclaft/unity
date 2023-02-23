@@ -11,12 +11,14 @@ public class TacticsView : BaseView
     [SerializeField] private SkillAttributeList skillAttributeList = null;
     [SerializeField] private TacticsCharaLayer tacticsCharaLayer = null;
 
+    [SerializeField] private TacticsTrainList tacticsTrainList = null;
+
     [SerializeField] private TextMeshProUGUI turnText = null;
     [SerializeField] private TextMeshProUGUI numinousText = null;
     private new System.Action<TacticsViewEvent> _commandData = null;
     [SerializeField] private GameObject helpRoot = null;
     [SerializeField] private GameObject helpPrefab = null;
-    [SerializeField] private GameObject backPrefab = null;
+
     private HelpWindow _helpWindow = null;
 
 
@@ -34,11 +36,13 @@ public class TacticsView : BaseView
     
     public void SetUIButton()
     {
-        GameObject prefab = Instantiate(backPrefab);
-        prefab.transform.SetParent(helpRoot.transform, false);
-        
-        //_helpWindow = prefab.GetComponent<HelpWindow>();
+        CreateBackCommand(() => OnClickBack());
+    }
 
+    private void OnClickBack()
+    {
+        //var eventData = new BattleViewEvent(CommandType.Back);
+        //_commandData(eventData);
     }
 
     public void SetHelpWindow()
@@ -77,6 +81,31 @@ public class TacticsView : BaseView
         tacticsCharaLayer.Initialize(actorInfos,(actorinfo) => CallActorLayer(actorinfo));
         SetInputHandler(tacticsCharaLayer.GetComponent<IInputHandlerEvent>());
     
+        tacticsTrainList.Initialize(actorInfos,(actorinfo) => CallActorTrain(actorinfo));
+        SetInputHandler(tacticsCharaLayer.GetComponent<IInputHandlerEvent>());
+        HideTrainList();
+    }
+
+    public void CommandRefresh()
+    {
+        tacticsTrainList.Refresh(1);
+    }
+
+    private void CallActorTrain(int actorId)
+    {
+        var eventData = new TacticsViewEvent(CommandType.SelectTrain);
+        eventData.templete = actorId;
+        _commandData(eventData);
+    }
+
+    public void ShowTrainList()
+    {
+        tacticsTrainList.gameObject.SetActive(true);
+    }
+
+    public void HideTrainList()
+    {
+        tacticsTrainList.gameObject.SetActive(false);
     }
 
     private void CallActorLayer(ActorInfo actorInfo)
@@ -148,6 +177,7 @@ namespace Tactics
         LeftActor,
         RightActor,
         ActorLayer,
+        SelectTrain,
     }
 }
 

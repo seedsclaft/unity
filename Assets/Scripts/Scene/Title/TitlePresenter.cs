@@ -52,8 +52,8 @@ public class TitlePresenter
             case TitleComandType.NewGame:
             _view.CommandInitSaveInfo();
             //_view.CommandSceneChange(Scene.MainMenu);
-            //_view.CommandSceneChange(Scene.Tactics);
-            _view.CommandSceneChange(Scene.Battle);
+            _view.CommandSceneChange(Scene.Tactics);
+            //_view.CommandSceneChange(Scene.Battle);
             break;
             case TitleComandType.Continue:
             break;

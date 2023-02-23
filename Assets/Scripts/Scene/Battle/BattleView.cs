@@ -18,9 +18,7 @@ public class BattleView : BaseView
     private new System.Action<BattleViewEvent> _commandData = null;
     [SerializeField] private GameObject helpRoot = null;
     [SerializeField] private GameObject helpPrefab = null;
-    [SerializeField] private GameObject backPrefab = null;
 
-    private Button _backCommand = null;
     
     [SerializeField] private EffekseerEmitter effekseerEmitter = null;
     private HelpWindow _helpWindow = null;
@@ -82,19 +80,12 @@ public class BattleView : BaseView
     
     public void SetUIButton()
     {
-        GameObject prefab = Instantiate(backPrefab);
-        prefab.transform.SetParent(helpRoot.transform, false);
         
-        _backCommand = prefab.GetComponent<Button>();
-        _backCommand.onClick.AddListener(() => OnClickBack());
+        CreateBackCommand(() => OnClickBack());
         //_helpWindow = prefab.GetComponent<HelpWindow>();
 
     }
 
-    public void SetActiveBack(bool IsActive)
-    {
-        _backCommand.gameObject.SetActive(IsActive);
-    }
 
     private void OnClickBack()
     {
