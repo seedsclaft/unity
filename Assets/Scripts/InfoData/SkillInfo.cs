@@ -12,6 +12,10 @@ public class SkillInfo
     private bool _interrupt;
     public bool Interrupt {get {return _interrupt;}}
     public AttributeType Attribute {get {return Master.Attribute;}}
+    
+    private int _learingCost;
+    public int LearingCost {get {return _learingCost;} set {_learingCost = value;}}
+
     public SkillInfo(int id)
     {
         _id = id;

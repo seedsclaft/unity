@@ -25,16 +25,21 @@ public class ActorInfo
     public List<SkillInfo> Skills {get {return _skills;}}
 
 
-    private int _hp;
-    public int Hp {get {return _hp;}}
-    private int _mp;
-    public int Mp {get {return _mp;}}
+    private int _currentHp;
+    public int CurrentHp {get {return _currentHp;}}
+    private int _currentMp;
+    public int CurrentMp {get {return _currentMp;}}
     private int _ap;
     public int Ap {get {return _ap;}}
 
     private TacticsComandType _tacticsComandType = TacticsComandType.None;
     public TacticsComandType TacticsComandType {get {return _tacticsComandType;}}
 
+    private Dictionary<TacticsComandType,bool> _tacticsEnable = new Dictionary<TacticsComandType, bool>();
+    private int _tacticsCost = 0;
+    public int TacticsCost {get {return _tacticsCost;}}
+    private int _nextLearnSkillId = 0;
+    public int NextLearnSkillId {get {return _nextLearnSkillId;}}
 
     public ActorInfo(ActorsData.ActorData actorData)
     {
@@ -42,8 +47,9 @@ public class ActorInfo
         _status = actorData.InitStatus;
         _usePoint = actorData.NeedStatus;
         _attribute = actorData.Attribute;
-        _hp = _status.Hp;
-        _mp = _status.Mp;
+        _currentHp = _status.Hp;
+        _currentMp = _status.Mp;
+        _level = actorData.InitLv;
     }
 
     public void InitSkillInfo(List<LearningData> learningData)
@@ -77,12 +83,30 @@ public class ActorInfo
     {
     }
 
-    public void SetTacticsCommand(TacticsComandType tacticsComandType)
+    public void RefreshTacticsEnable(TacticsComandType tacticsComandType,bool enable)
+    {
+        _tacticsEnable[tacticsComandType] = enable;
+    }
+
+    public bool EnableTactics(TacticsComandType tacticsComandType)
+    {
+        return _tacticsEnable[tacticsComandType];
+    }
+
+    public void SetTacticsCommand(TacticsComandType tacticsComandType,int tacticsCost)
     {
         _tacticsComandType = tacticsComandType;
+        _tacticsCost = tacticsCost;
     }
+
     public void ClearTacticsCommand()
     {
         _tacticsComandType = TacticsComandType.None;
+        _tacticsCost = 0;
+    }
+
+    public void SetNextLearnSkillId(int skillId)
+    {
+        _nextLearnSkillId = skillId;
     }
 }

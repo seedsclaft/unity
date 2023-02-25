@@ -12,6 +12,8 @@ public class TacticsView : BaseView
     [SerializeField] private TacticsCharaLayer tacticsCharaLayer = null;
 
     [SerializeField] private TacticsTrainList tacticsTrainList = null;
+    [SerializeField] private TacticsAlchemyList tacticsAlchemyList = null;
+    [SerializeField] private SkillActionList skillAlchemyList = null;
 
     [SerializeField] private TextMeshProUGUI turnText = null;
     [SerializeField] private TextMeshProUGUI numinousText = null;
@@ -31,8 +33,17 @@ public class TacticsView : BaseView
     void Initialize()
     {
         new TacticsPresenter(this);
+        skillAlchemyList.Initialize(actorInfo => CallSkillAlchemy(actorInfo));
+        SetInputHandler(skillAlchemyList.GetComponent<IInputHandlerEvent>());
+        HideSkillAlchemyList();
     }
 
+    private void CallSkillAlchemy(int skillId)
+    {
+        var eventData = new TacticsViewEvent(CommandType.SkillAlchemy);
+        eventData.templete = skillId;
+        _commandData(eventData);
+    }
     
     public void SetUIButton()
     {
@@ -41,8 +52,8 @@ public class TacticsView : BaseView
 
     private void OnClickBack()
     {
-        //var eventData = new BattleViewEvent(CommandType.Back);
-        //_commandData(eventData);
+        var eventData = new TacticsViewEvent(CommandType.Back);
+        _commandData(eventData);
     }
 
     public void SetHelpWindow()
@@ -76,25 +87,39 @@ public class TacticsView : BaseView
         _commandData(eventData);
     }
 
-    public void SetActors(List<ActorInfo> actorInfos)
+    public void SetActors(List<ActorInfo> actorInfos,List<SystemData.MenuCommandData> confirmCommands)
     {
         tacticsCharaLayer.Initialize(actorInfos,(actorinfo) => CallActorLayer(actorinfo));
         SetInputHandler(tacticsCharaLayer.GetComponent<IInputHandlerEvent>());
     
         tacticsTrainList.Initialize(actorInfos,(actorinfo) => CallActorTrain(actorinfo));
         SetInputHandler(tacticsCharaLayer.GetComponent<IInputHandlerEvent>());
+        tacticsTrainList.InitializeConfirm(confirmCommands,(confirmCommands) => CallTrainCommand(confirmCommands));
         HideTrainList();
+
+        tacticsAlchemyList.Initialize(actorInfos,(actorinfo) => CallActorAlchemy(actorinfo));
+        SetInputHandler(tacticsCharaLayer.GetComponent<IInputHandlerEvent>());
+        tacticsAlchemyList.InitializeConfirm(confirmCommands,(confirmCommands) => CallAlchemyCommand(confirmCommands));
+        HideAlchemyList();
     }
 
     public void CommandRefresh()
     {
-        tacticsTrainList.Refresh(1);
+        tacticsTrainList.Refresh();
+        tacticsAlchemyList.Refresh();
     }
 
     private void CallActorTrain(int actorId)
     {
-        var eventData = new TacticsViewEvent(CommandType.SelectTrain);
+        var eventData = new TacticsViewEvent(CommandType.SelectActorTrain);
         eventData.templete = actorId;
+        _commandData(eventData);
+    }
+
+    private void CallTrainCommand(TacticsComandType commandType)
+    {
+        var eventData = new TacticsViewEvent(CommandType.TrainClose);
+        eventData.templete = commandType;
         _commandData(eventData);
     }
 
@@ -106,6 +131,46 @@ public class TacticsView : BaseView
     public void HideTrainList()
     {
         tacticsTrainList.gameObject.SetActive(false);
+    }
+
+    private void CallActorAlchemy(int actorId)
+    {
+        var eventData = new TacticsViewEvent(CommandType.SelectActorAlchemy);
+        eventData.templete = actorId;
+        _commandData(eventData);
+    }
+
+    private void CallAlchemyCommand(TacticsComandType commandType)
+    {
+        var eventData = new TacticsViewEvent(CommandType.AlchemyClose);
+        eventData.templete = commandType;
+        _commandData(eventData);
+    }
+
+    public void ShowAlchemyList()
+    {
+        tacticsAlchemyList.gameObject.SetActive(true);
+    }
+
+    public void HideAlchemyList()
+    {
+        tacticsAlchemyList.gameObject.SetActive(false);
+    }
+
+    public void ShowSkillAlchemyList(List<SkillInfo> skillInfos)
+    {
+        skillAlchemyList.gameObject.SetActive(true);
+        skillAlchemyList.Refresh(skillInfos);
+    }
+
+    public void HideSkillAlchemyList()
+    {
+        skillAlchemyList.gameObject.SetActive(false);
+    }
+
+    public void SetAlchemyCost(int trainCost)
+    {
+        //tacticsTrainList.Refresh(trainCost);
     }
 
     private void CallActorLayer(ActorInfo actorInfo)
@@ -177,7 +242,12 @@ namespace Tactics
         LeftActor,
         RightActor,
         ActorLayer,
-        SelectTrain,
+        SelectActorTrain,
+        TrainClose,
+        SelectActorAlchemy,
+        AlchemyClose,
+        SkillAlchemy,
+        Back
     }
 }
 

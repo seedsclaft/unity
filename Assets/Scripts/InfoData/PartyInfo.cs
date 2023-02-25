@@ -4,8 +4,11 @@ using UnityEngine;
 
 public class PartyInfo 
 {
-    public List<int> _actorIdList = new List<int>();
-    public Dictionary<int,int> _itemList = new Dictionary<int, int>();
+    private List<int> _actorIdList = new List<int>();
+    private int _currency = 0;
+    public int Currency {get {return _currency;}}
+    private List<int> _alchemyIdList = new List<int>();
+    public List<int> AlchemyIdList {get {return _alchemyIdList;}}
     public void AddActor(int actorId)
     {
         if (_actorIdList.IndexOf(actorId) == -1)
@@ -24,4 +27,8 @@ public class PartyInfo
         _actorIdList.Remove(actorId);
     }
 
+    public void ChangeCurrency(int currency)
+    {
+        _currency = currency;
+    }
 }

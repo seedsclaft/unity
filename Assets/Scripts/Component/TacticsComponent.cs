@@ -10,9 +10,14 @@ public class TacticsComponent : MonoBehaviour
 {    
     private ActorInfo _actorInfo = null;
     [SerializeField] private ActorInfoComponent actorInfoComponent;
+
     [SerializeField] private Toggle trainCheckToggle;
     [SerializeField] private TextMeshProUGUI afterLv;
     [SerializeField] private TextMeshProUGUI trainCost;
+
+
+    [SerializeField] private Toggle alchemyCheckToggle;
+    [SerializeField] private SkillInfoComponent skillInfoComponent;
 
     private EventTrigger eventTrigger;
     private EventTrigger.Entry entry1;
@@ -20,23 +25,47 @@ public class TacticsComponent : MonoBehaviour
     public void UpdateInfo(ActorInfo actorInfo)
     {
         _actorInfo = actorInfo;
-        actorInfoComponent.UpdateInfo(actorInfo);
+        if (actorInfoComponent != null)
+        {
+            actorInfoComponent.UpdateInfo(actorInfo);
+        }
         
-        if (trainCheckToggle != null){
+        if (trainCheckToggle != null)
+        {
             trainCheckToggle.isOn = (actorInfo.TacticsComandType == TacticsComandType.Train);
         }
-        if (afterLv != null){
+        if (afterLv != null)
+        {
             afterLv.gameObject.SetActive(trainCheckToggle.isOn);
             afterLv.text = (actorInfo.Level+1).ToString();
         }
-        if (trainCost != null){
-            trainCost.text = actorInfo.Level.ToString();
+        if (trainCost != null)
+        {
+            trainCost.text = TacticsUtility.TrainCost(actorInfo).ToString();
+        }
+
+        
+        if (alchemyCheckToggle != null)
+        {
+            alchemyCheckToggle.isOn = (actorInfo.TacticsComandType == TacticsComandType.Alchemy);
+        }
+        
+        if (skillInfoComponent != null)
+        {
+            skillInfoComponent.UpdateSkillData(actorInfo.NextLearnSkillId);
         }
     }
 
     public void SetToggleHandler(System.Action<int> handler){
-        //　EventTriggerコンポーネントを取り付ける
-		eventTrigger = trainCheckToggle.gameObject.AddComponent<EventTrigger> ();
+        if (trainCheckToggle != null)
+        {
+            //　EventTriggerコンポーネントを取り付ける
+	    	eventTrigger = trainCheckToggle.gameObject.AddComponent<EventTrigger> ();
+        }
+        if (alchemyCheckToggle != null)
+        {
+	    	eventTrigger = alchemyCheckToggle.gameObject.AddComponent<EventTrigger> ();
+        }
         //　ボタン内にマウスが入った時のイベントリスナー登録（ラムダ式で設定）
 		entry1 = new EventTrigger.Entry ();
 		entry1.eventID = EventTriggerType.PointerClick;

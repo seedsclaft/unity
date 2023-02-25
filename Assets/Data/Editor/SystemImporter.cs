@@ -149,6 +149,10 @@ public class SystemImporter : AssetPostprocessor
 							Data.InitActors.Add(int.Parse(item));
 						}
 					}
+					if (KeyName == "initCurrency")
+					{
+						Data.InitCurrency = (int)Baserow.GetCell((int)BaseDefineColumn.Param)?.SafeNumericCellValue();
+					}
 				}
 			}
 		}

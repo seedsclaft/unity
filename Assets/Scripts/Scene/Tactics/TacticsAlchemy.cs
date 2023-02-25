@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.Events;
 using TMPro;
 
-public class TacticsTrain : ListItem ,IListViewItem ,IClickHandlerEvent 
+public class TacticsAlchemy : ListItem ,IListViewItem ,IClickHandlerEvent 
 {
     [SerializeField] private TacticsComponent tacticsComponent;
 
@@ -46,7 +46,7 @@ public class TacticsTrain : ListItem ,IListViewItem ,IClickHandlerEvent
     {
         if (_data == null) return;
         tacticsComponent.UpdateInfo(_data);
-        Disable.SetActive(!_data.EnableTactics(TacticsComandType.Train));
+        Disable.SetActive(!_data.EnableTactics(TacticsComandType.Alchemy));
     }
 
     public void ClickHandler()

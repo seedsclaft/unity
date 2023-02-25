@@ -60,8 +60,8 @@ public class ActorInfoComponent : MonoBehaviour
         }
         if (statusInfoComponent != null){
             statusInfoComponent.UpdateInfo(actorInfo.Status);
-            statusInfoComponent.UpdateHp(actorInfo.Hp,actorInfo.MaxHp);
-            statusInfoComponent.UpdateMp(actorInfo.Mp,actorInfo.Mp);
+            statusInfoComponent.UpdateHp(actorInfo.CurrentHp,actorInfo.MaxHp);
+            statusInfoComponent.UpdateMp(actorInfo.CurrentMp,actorInfo.CurrentMp);
         }
         if (needStatusInfoComponent != null){
             needStatusInfoComponent.UpdateInfo(actorInfo.UsePoint);

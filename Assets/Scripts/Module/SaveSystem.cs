@@ -86,7 +86,8 @@ public class SavePlayInfo
 	
     private List<StageInfo> _stages = new List<StageInfo>();
     public List<StageInfo> Stages {get {return _stages;}}
-    public PartyInfo _party = null;
+    private PartyInfo _party = null;
+	public PartyInfo Party { get {return _party;}}
 	/// <summary>
 	/// 初期化
     /// </summary>
@@ -110,6 +111,8 @@ public class SavePlayInfo
     public void InitParty()
     {
         _party = new PartyInfo();
+		_party.ChangeCurrency(DataSystem.System.InitCurrency);
+		_party.AlchemyIdList.Add(101);
     }
 
 	public void InitSaveData()

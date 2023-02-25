@@ -17,9 +17,7 @@ public class TacticsCommandList : ListWindow , IInputHandlerEvent
     public void Initialize(List<SystemData.MenuCommandData> menuCommands ,System.Action<TacticsComandType> callEvent)
     {
         InitializeListView(menuCommands.Count);
-        for (var i = 0; i < menuCommands.Count;i++){
-            _data.Add(menuCommands[i]);
-        }
+        _data = menuCommands;
         for (int i = 0; i < ObjectList.Count;i++)
         {
             var TacticsCommand = ObjectList[i].GetComponent<TacticsCommand>();

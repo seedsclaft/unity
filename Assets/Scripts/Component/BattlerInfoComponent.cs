@@ -41,7 +41,7 @@ public class BattlerInfoComponent : MonoBehaviour
     {
         if (_battlerInfo.isActor)
         {
-            actorInfoComponent.ChangeMp(value,_battlerInfo.ActorInfo.Mp);
+            actorInfoComponent.ChangeMp(value,_battlerInfo.ActorInfo.CurrentMp);
         } else
         {
             enemyInfoComponent.ChangeMp(value,_battlerInfo.Status.Mp);

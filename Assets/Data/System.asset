@@ -63,7 +63,8 @@ MonoBehaviour:
     Key: OPTION
     Name: Option
     Help: "\u30B2\u30FC\u30E0\u306E\u8A2D\u5B9A\u3092\u5909\u66F4\u3057\u307E\u3059"
-  InitActors: 05000000
+  InitActors: 0100000002000000030000000400000005000000
+  InitCurrency: 10
   SystemTextData:
   - Id: 1
     Text: "\u795E\u683C\u878D\u5408"
@@ -103,6 +104,9 @@ MonoBehaviour:
     Help: '""'
   - Id: 1000
     Text: (Nu)
+    Help: '""'
+  - Id: 1010
+    Text: "\u7FD2\u5F97Cost"
     Help: '""'
   - Id: 11010
     Text: "\u7D42\u7109\u307E\u3067 :"

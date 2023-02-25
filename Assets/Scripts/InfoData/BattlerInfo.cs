@@ -58,8 +58,8 @@ public class BattlerInfo
         _isActor = true;
         
         _actorInfo = actorInfo;
-        _hp = actorInfo.Hp;
-        _mp = actorInfo.Mp;
+        _hp = actorInfo.CurrentHp;
+        _mp = actorInfo.CurrentMp;
         _lineIndex = 0;
         ResetAp(true);
     }

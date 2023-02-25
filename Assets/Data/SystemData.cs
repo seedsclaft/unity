@@ -8,6 +8,7 @@ public class SystemData : ScriptableObject
 	public List<MenuCommandData> StatusCommandData;
 	public List<MenuCommandData> TitleCommandData;
 	public List<int> InitActors;
+	public int InitCurrency;
 	public List<TextData> SystemTextData;
 
 	[System.SerializableAttribute]
@@ -42,4 +43,9 @@ public enum TitleComandType {
 public enum StatusComandType {
 	Strength = 1,
 	SkillActionList = 2,
+}
+
+public enum ConfirmComandType {
+	Yes = 0,
+	No = 1
 }
