@@ -15,16 +15,11 @@ public class EnemyInfoComponent : MonoBehaviour
     public void UpdateInfo(BattlerInfo battlerInfo)
     {
         if (battlerInfo == null){
+            Clear();
             return;
         }
         var enemyData = battlerInfo.EnemyData;
-        
-        if (mainThumb != null){
-            UpdateMainThumb(enemyData.ImagePath,0,0,1.0f);
-        }
-        if (nameText != null){
-            nameText.text = enemyData.Name;
-        }
+        UpdateData(enemyData);
         if (lv != null){
             lv.text = battlerInfo.Level.ToString();
         }
@@ -41,6 +36,7 @@ public class EnemyInfoComponent : MonoBehaviour
         Addressables.LoadAssetAsync<Sprite>(
             "Assets/Images/Enemies/" + imagePath + ".png"
         ).Completed += op => {
+            mainThumb.gameObject.SetActive(true);
             RectTransform rect = mainThumb.GetComponent < RectTransform > ();
             rect.localPosition = new Vector3(x, y, 0);
             rect.localScale = new Vector3(scale, scale, 1);
@@ -64,5 +60,30 @@ public class EnemyInfoComponent : MonoBehaviour
     {
         if (statusInfoComponent == null) return;
         statusInfoComponent.gameObject.SetActive(false);
+    }
+
+    public void UpdateData(EnemiesData.EnemyData enemyData)
+    {
+        if (enemyData == null)
+        {
+            Clear();
+            return;
+        }
+        if (mainThumb != null){
+            UpdateMainThumb(enemyData.ImagePath,0,0,1.0f);
+        }
+        if (nameText != null){
+            nameText.text = enemyData.Name;
+        }
+    }
+
+    public void Clear()
+    {
+        if (mainThumb != null){
+            mainThumb.gameObject.SetActive(false);
+        }
+        if (nameText != null){
+            nameText.text = "";
+        }
     }
 }

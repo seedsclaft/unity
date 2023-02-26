@@ -26,7 +26,7 @@ public enum TacticsComandType {
 	None,
 	Train,
 	Alchemy,
-	Recover,
+	Recovery,
 	Battle,
 	Resource,
 	Status,

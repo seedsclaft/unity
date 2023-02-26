@@ -29,6 +29,7 @@ public class TacticsPresenter
         //List<ActorInfo> actorInfos = _model.Actors();
         //_view.SetActorInfo(_model.CurrentActor);
         _view.SetActors(_model.Actors(),_model.ConfirmCommand());
+        _view.SetEnemies(_model.Enemies());
 
         _view.SetTacticsCommand(_model.TacticsCommand);
         _view.SetAttributeTypes(_model.AttributeTypes());
@@ -85,6 +86,46 @@ public class TacticsPresenter
         {
             CommandAlchemyClose((ConfirmComandType)viewEvent.templete);
         }
+        if (viewEvent.commandType == Tactics.CommandType.SelectActorRecovery)
+        {
+            CommandSelectActorRecovery((int)viewEvent.templete);
+        }
+        if (viewEvent.commandType == Tactics.CommandType.SelectRecoveryPlus)
+        {
+            CommandSelectRecoveryPlus((int)viewEvent.templete);
+        }
+        if (viewEvent.commandType == Tactics.CommandType.SelectRecoveryMinus)
+        {
+            CommandSelectRecoveryMinus((int)viewEvent.templete);
+        }
+        if (viewEvent.commandType == Tactics.CommandType.RecoveryClose)
+        {
+            CommandRecoveryClose((ConfirmComandType)viewEvent.templete);
+        }
+        if (viewEvent.commandType == Tactics.CommandType.SelectBattleEnemy)
+        {
+            CommandSelectBattleEnemy((int)viewEvent.templete);
+        }
+        if (viewEvent.commandType == Tactics.CommandType.SelectActorBattle)
+        {
+            CommandSelectActorBattle((int)viewEvent.templete);
+        }
+        if (viewEvent.commandType == Tactics.CommandType.BattleClose)
+        {
+            CommandBattleClose((ConfirmComandType)viewEvent.templete);
+        }
+        if (viewEvent.commandType == Tactics.CommandType.EnemyClose)
+        {
+            CommandEnemyClose();
+        }
+        if (viewEvent.commandType == Tactics.CommandType.SelectActorResource)
+        {
+            CommandSelectActorResource((int)viewEvent.templete);
+        }
+        if (viewEvent.commandType == Tactics.CommandType.ResourceClose)
+        {
+            CommandResourceClose((ConfirmComandType)viewEvent.templete);
+        }
         if (viewEvent.commandType == Tactics.CommandType.Back)
         {
             CommandBack();
@@ -105,6 +146,7 @@ public class TacticsPresenter
         {
             _model.SetTempData(tacticsComandType);
             _view.ShowTrainList();
+            _view.SetActiveBack(false);
             _backCommand = Tactics.CommandType.None;
         }
         if (tacticsComandType == TacticsComandType.Alchemy)
@@ -112,16 +154,37 @@ public class TacticsPresenter
             _model.SetTempData(tacticsComandType);
             _view.ShowAlchemyList();
             _view.HideSkillAlchemyList();
+            _view.SetActiveBack(false);
             _backCommand = Tactics.CommandType.None;
-            
-        }        
-        _view.SetActiveBack(false);
+        }
+        if (tacticsComandType == TacticsComandType.Recovery)
+        {
+            _model.SetTempData(tacticsComandType);
+            _view.ShowRecoveryList();
+            _view.SetActiveBack(false);
+            _backCommand = Tactics.CommandType.None;
+        }
+        if (tacticsComandType == TacticsComandType.Battle)
+        {
+            _model.SetTempData(tacticsComandType);
+            _view.ShowEnemyList();
+            _view.HideBattleList();
+            _view.SetActiveBack(true);
+            _backCommand = Tactics.CommandType.EnemyClose;
+        }
+        if (tacticsComandType == TacticsComandType.Resource)
+        {
+            _model.SetTempData(tacticsComandType);
+            _view.ShowResourceList();
+            _view.SetActiveBack(false);
+            _backCommand = Tactics.CommandType.None;
+        }
     }
 
     private void CommandAttributeType(AttributeType attributeType)
     {
-        List<SkillInfo> skillInfos = _model.SkillActionList(attributeType);
-        _view.RefreshSkillActionList(skillInfos);
+        List<SkillInfo> skillInfos = _model.SelectActorAlchemy(_model.CurrentActor.ActorId,attributeType);
+        _view.ShowSkillAlchemyList(skillInfos);
     }
 
     private void CommandDecideActor()
@@ -169,8 +232,8 @@ public class TacticsPresenter
 
         } else
         {
-            List<SkillInfo> skillInfos = _model.SelectActorAlchemy(actorId);
-            _view.ShowSkillAlchemyList(skillInfos);
+            _model.ChangeActorIndex(_model.ActorIndex(actorId));
+            CommandAttributeType(_model.CurrentAttributeType);
             _view.HideAlchemyList();
             _view.SetActiveBack(true);
             _backCommand = Tactics.CommandType.TacticsCommand;
@@ -195,6 +258,87 @@ public class TacticsPresenter
             _model.ResetTempData(TacticsComandType.Alchemy);
         }
         _view.HideAlchemyList();
+        CommandRefresh();
+    }
+
+    private void CommandSelectActorRecovery(int actorId)
+    {
+        _model.SelectActorRecovery(actorId);
+        CommandRefresh();
+    }
+
+    private void CommandSelectRecoveryPlus(int actorId)
+    {
+        _model.SelectRecoveryPlus(actorId);
+        CommandRefresh();
+    }
+
+    private void CommandSelectRecoveryMinus(int actorId)
+    {
+        _model.SelectRecoveryMinus(actorId);
+        CommandRefresh();
+    }
+
+    private void CommandRecoveryClose(ConfirmComandType confirmComandType)
+    {
+        if (confirmComandType == ConfirmComandType.Yes)
+        {
+        } else{
+            _model.ResetTempData(TacticsComandType.Recovery);
+        }
+        _view.HideRecoveryList();
+        CommandRefresh();
+    }
+
+    private void CommandSelectBattleEnemy(int enemyIndex)
+    {
+        _model.SetTempData(TacticsComandType.Battle);
+        _model.CurrentEnemyIndex = enemyIndex;
+        _view.ShowBattleList();
+        _view.HideEnemyList();
+        _view.SetActiveBack(false);
+    }
+
+    private void CommandSelectActorBattle(int actorId)
+    {
+        _model.SelectActorBattle(actorId);
+        CommandRefresh();
+    }
+
+    private void CommandBattleClose(ConfirmComandType confirmComandType)
+    {
+        if (confirmComandType == ConfirmComandType.Yes)
+        {
+        } else{
+            _model.ResetTempData(TacticsComandType.Battle);
+            _view.HideBattleList();
+            _view.ShowEnemyList();
+            _view.SetActiveBack(true);
+            _backCommand = Tactics.CommandType.EnemyClose;
+        }
+        CommandRefresh();
+    }
+
+    private void CommandEnemyClose()
+    {
+        _view.HideEnemyList();
+        _view.SetActiveBack(false);
+    }
+
+    private void CommandSelectActorResource(int actorId)
+    {
+        _model.SelectActorResource(actorId);
+        CommandRefresh();
+    }
+
+    private void CommandResourceClose(ConfirmComandType confirmComandType)
+    {
+        if (confirmComandType == ConfirmComandType.Yes)
+        {
+        } else{
+            _model.ResetTempData(TacticsComandType.Resource);
+        }
+        _view.HideResourceList();
         CommandRefresh();
     }
 

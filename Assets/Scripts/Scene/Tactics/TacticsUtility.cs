@@ -40,4 +40,14 @@ public class TacticsUtility
         }
         return cost;
     }
+    public static int RecoveryCost(ActorInfo actorInfo)
+    {
+        int hpCost = (int)Mathf.Ceil((actorInfo.MaxHp - actorInfo.CurrentHp) * 0.1f);
+        int mpCost = (int)Mathf.Ceil((actorInfo.MaxMp - actorInfo.CurrentMp) * 0.1f);
+        return hpCost > mpCost ? hpCost : mpCost;
+    }
+    public static int ResourceCost(ActorInfo actorInfo)
+    {
+        return actorInfo.Level;
+    }
 }

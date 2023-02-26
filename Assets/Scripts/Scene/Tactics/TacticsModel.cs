@@ -35,13 +35,33 @@ public class TacticsModel : BaseModel
         }
     }
 
+    public int ActorIndex(int actorId)
+    {
+        return Actors().FindIndex(a => a.ActorId == actorId);
+    }
+
     private TacticsComandType _commandType = TacticsComandType.Train;
     public TacticsComandType CommandType { get {return _commandType;} set {_commandType = value;}}
     private List<ActorInfo> _tempTacticsData = new List<ActorInfo>();
 
+    private int _currentEnemyIndex = -1; 
+    public int CurrentEnemyIndex
+    {
+        get {return _currentEnemyIndex;} set {_currentEnemyIndex = value;}
+    }
     
-    public List<ActorInfo> Actors(){
+    public List<ActorInfo> Actors()
+    {
         return GameSystem.CurrentData.Actors;
+    }
+
+    public List<BattlerInfo> Enemies()
+    {
+        List<BattlerInfo> battlerInfos = new List<BattlerInfo>();
+        EnemiesData.EnemyData enemyData = DataSystem.Enemies.Find(a => a.Id == 1);
+        BattlerInfo battlerInfo = new BattlerInfo(enemyData,1,0,0);
+        battlerInfos.Add(battlerInfo);
+        return battlerInfos;
     }
 
 
@@ -173,6 +193,18 @@ public class TacticsModel : BaseModel
         {
             return true;
         }
+        if (tacticsComandType == TacticsComandType.Recovery)
+        {
+            return Currency >= TacticsUtility.RecoveryCost(actorInfo);
+        }
+        if (tacticsComandType == TacticsComandType.Battle)
+        {
+            return true;
+        }
+        if (tacticsComandType == TacticsComandType.Resource)
+        {
+            return true;
+        }
         return false;
     }
 
@@ -221,9 +253,9 @@ public class TacticsModel : BaseModel
         return false;
     }
 
-    public List<SkillInfo> SelectActorAlchemy(int actorId)
+    public List<SkillInfo> SelectActorAlchemy(int actorId,AttributeType attributeType)
     {
-        _currentIndex = actorId;
+        _currentAttributeType = attributeType;
         ActorInfo actorInfo = Actors().Find(a => a.ActorId == actorId);
         
         List<SkillInfo> skillInfos = new List<SkillInfo>();
@@ -232,6 +264,7 @@ public class TacticsModel : BaseModel
             for (int i = 0;i < PartyInfo.AlchemyIdList.Count;i++)
             {
                 SkillInfo skillInfo = new SkillInfo(PartyInfo.AlchemyIdList[i]);
+                if (skillInfo.Attribute != _currentAttributeType) continue;
                 skillInfo.LearingCost = TacticsUtility.AlchemyCost(actorInfo,PartyInfo.AlchemyIdList[i]);
                 if (skillInfo.LearingCost > Currency)
                 {
@@ -255,6 +288,96 @@ public class TacticsModel : BaseModel
         }
     }
 
+    public void SelectActorRecovery(int actorId)
+    {
+        ActorInfo actorInfo = Actors().Find(a => a.ActorId == actorId);
+        if (actorInfo != null){
+            if (actorInfo.TacticsComandType == TacticsComandType.Recovery)
+            {   
+                PartyInfo.ChangeCurrency(Currency + actorInfo.TacticsCost);
+                actorInfo.ClearTacticsCommand();
+            } else
+            {
+                if (CanTacticsCommand(TacticsComandType.Recovery,actorInfo))
+                {   
+                    actorInfo.SetTacticsCommand(TacticsComandType.Recovery,TacticsUtility.RecoveryCost(actorInfo));
+                    PartyInfo.ChangeCurrency(Currency - actorInfo.TacticsCost);
+                }
+            }
+        }
+    }
+
+    public void SelectRecoveryPlus(int actorId)
+    {
+        ActorInfo actorInfo = Actors().Find(a => a.ActorId == actorId);
+        if (actorInfo != null){
+            if (CanTacticsCommand(TacticsComandType.Recovery,actorInfo))
+            {
+                if (TacticsUtility.RecoveryCost(actorInfo) > actorInfo.TacticsCost)
+                {
+                    actorInfo.SetTacticsCommand(TacticsComandType.Recovery,actorInfo.TacticsCost + 1);
+                    PartyInfo.ChangeCurrency(Currency - 1);
+                }
+            }
+        }
+    }
+
+    public void SelectRecoveryMinus(int actorId)
+    {
+        ActorInfo actorInfo = Actors().Find(a => a.ActorId == actorId);
+        if (actorInfo != null){
+            if (0 < actorInfo.TacticsCost)
+            {
+                if (actorInfo.TacticsComandType == TacticsComandType.Recovery)
+                {   
+                    PartyInfo.ChangeCurrency(Currency + 1);
+                    actorInfo.SetTacticsCommand(TacticsComandType.Recovery,actorInfo.TacticsCost - 1);
+                    if (actorInfo.TacticsCost == 0)
+                    {
+                        actorInfo.ClearTacticsCommand();
+                    }
+                }
+            }
+        }
+    }
+    
+    public void SelectActorBattle(int actorId)
+    {
+        ActorInfo actorInfo = Actors().Find(a => a.ActorId == actorId);
+        if (actorInfo != null){
+            if (actorInfo.TacticsComandType == TacticsComandType.Battle)
+            {   
+                actorInfo.ClearTacticsCommand();
+                actorInfo.SetNextBattleEnemyIndex(-1);
+            } else
+            {
+                if (CanTacticsCommand(TacticsComandType.Recovery,actorInfo))
+                {   
+                    actorInfo.SetTacticsCommand(TacticsComandType.Battle,0);
+                    actorInfo.SetNextBattleEnemyIndex(Enemies()[_currentEnemyIndex].EnemyData.Id);
+                }
+            }
+        }
+    }
+
+    public void SelectActorResource(int actorId)
+    {
+        ActorInfo actorInfo = Actors().Find(a => a.ActorId == actorId);
+        if (actorInfo != null){
+            if (actorInfo.TacticsComandType == TacticsComandType.Resource)
+            {   
+                //PartyInfo.ChangeCurrency(Currency + actorInfo.TacticsCost);
+                actorInfo.ClearTacticsCommand();
+            } else
+            {
+                if (CanTacticsCommand(TacticsComandType.Recovery,actorInfo))
+                {   
+                    actorInfo.SetTacticsCommand(TacticsComandType.Resource,TacticsUtility.RecoveryCost(actorInfo));
+                    //PartyInfo.ChangeCurrency(Currency - actorInfo.TacticsCost);
+                }
+            }
+        }
+    }
     public void RefreshData()
     {
         int trainCost = 0;

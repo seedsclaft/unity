@@ -18,6 +18,16 @@ public class TacticsComponent : MonoBehaviour
 
     [SerializeField] private Toggle alchemyCheckToggle;
     [SerializeField] private SkillInfoComponent skillInfoComponent;
+    
+
+    [SerializeField] private Toggle recoveryCheckToggle;
+    [SerializeField] private StatusInfoComponent statusInfoComponent;
+
+    [SerializeField] private Toggle battleCheckToggle;
+    [SerializeField] private EnemyInfoComponent enemyInfoComponent;
+
+    [SerializeField] private Toggle resourceCheckToggle;
+    [SerializeField] private TextMeshProUGUI resourceCost;
 
     private EventTrigger eventTrigger;
     private EventTrigger.Entry entry1;
@@ -49,10 +59,44 @@ public class TacticsComponent : MonoBehaviour
         {
             alchemyCheckToggle.isOn = (actorInfo.TacticsComandType == TacticsComandType.Alchemy);
         }
-        
         if (skillInfoComponent != null)
         {
             skillInfoComponent.UpdateSkillData(actorInfo.NextLearnSkillId);
+        }
+
+        
+        if (recoveryCheckToggle != null)
+        {
+            recoveryCheckToggle.isOn = (actorInfo.TacticsComandType == TacticsComandType.Recovery);
+        }
+        if (statusInfoComponent != null)
+        {
+            int Hp = Mathf.Min(actorInfo.CurrentHp + actorInfo.TacticsCost * 10,actorInfo.MaxHp);
+            int Mp = Mathf.Min(actorInfo.CurrentMp + actorInfo.TacticsCost * 10,actorInfo.MaxMp);
+            statusInfoComponent.UpdateHp(Hp,actorInfo.MaxHp);
+            statusInfoComponent.UpdateMp(Mp,actorInfo.MaxMp);
+        }
+
+        
+        if (battleCheckToggle != null)
+        {
+            battleCheckToggle.isOn = (actorInfo.TacticsComandType == TacticsComandType.Battle);
+        }
+        if (enemyInfoComponent != null)
+        {
+            EnemiesData.EnemyData enemyData = DataSystem.Enemies.Find(a => a.Id == actorInfo.NextBattleEnemyIndex);
+            enemyInfoComponent.UpdateData(enemyData);
+        }
+
+        
+        if (resourceCheckToggle != null)
+        {
+            resourceCheckToggle.isOn = (actorInfo.TacticsComandType == TacticsComandType.Resource);
+        }
+        if (resourceCost != null)
+        {
+            resourceCost.gameObject.SetActive(actorInfo.TacticsComandType == TacticsComandType.Resource);
+            resourceCost.text = TacticsUtility.ResourceCost(actorInfo).ToString();
         }
     }
 
@@ -65,6 +109,18 @@ public class TacticsComponent : MonoBehaviour
         if (alchemyCheckToggle != null)
         {
 	    	eventTrigger = alchemyCheckToggle.gameObject.AddComponent<EventTrigger> ();
+        }
+        if (recoveryCheckToggle != null)
+        {
+	    	eventTrigger = recoveryCheckToggle.gameObject.AddComponent<EventTrigger> ();
+        }
+        if (battleCheckToggle != null)
+        {
+	    	eventTrigger = battleCheckToggle.gameObject.AddComponent<EventTrigger> ();
+        }
+        if (resourceCheckToggle != null)
+        {
+	    	eventTrigger = resourceCheckToggle.gameObject.AddComponent<EventTrigger> ();
         }
         //　ボタン内にマウスが入った時のイベントリスナー登録（ラムダ式で設定）
 		entry1 = new EventTrigger.Entry ();

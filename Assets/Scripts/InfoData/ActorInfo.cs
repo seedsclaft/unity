@@ -8,7 +8,12 @@ public class ActorInfo
     public int ActorId {get {return _actorId;}}
     public int MaxHp { get
         {
-            return DataSystem.GetActor(_actorId).CurrentParam(StatusParamType.Hp,Level);
+            return _status._hp;
+        }
+    }
+    public int MaxMp { get
+        {
+            return _status._mp;
         }
     }
 
@@ -40,6 +45,8 @@ public class ActorInfo
     public int TacticsCost {get {return _tacticsCost;}}
     private int _nextLearnSkillId = 0;
     public int NextLearnSkillId {get {return _nextLearnSkillId;}}
+    private int _nextBattleEnemyIndex = 0;
+    public int NextBattleEnemyIndex {get {return _nextBattleEnemyIndex;}}
 
     public ActorInfo(ActorsData.ActorData actorData)
     {
@@ -108,5 +115,10 @@ public class ActorInfo
     public void SetNextLearnSkillId(int skillId)
     {
         _nextLearnSkillId = skillId;
+    }
+
+    public void SetNextBattleEnemyIndex(int enemyIndex)
+    {
+        _nextBattleEnemyIndex = enemyIndex;
     }
 }
