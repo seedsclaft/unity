@@ -103,6 +103,25 @@ public class SavePlayInfo
         _actors.Clear();
     }
 
+	public void MakeStageData(int actorId)
+	{
+		InitActors();
+		_party.InitActors();
+		AddActor(actorId);
+	}
+
+	public void AddActor(int actorId)
+	{
+		ActorsData.ActorData actorData = DataSystem.Actors.Find(actor => actor.Id == actorId);
+		if (actorData != null)
+		{
+			ActorInfo actorInfo = new ActorInfo(actorData);
+			actorInfo.InitSkillInfo(actorData.LearningSkills);
+			_actors.Add(actorInfo);
+			_party.AddActor(actorInfo.ActorId);
+		}
+	}
+
     public void InitStages()
     {
         _stages.Clear();

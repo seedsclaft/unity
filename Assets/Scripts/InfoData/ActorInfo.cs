@@ -4,6 +4,7 @@ using System.Collections.Generic;
 [Serializable]
 public class ActorInfo
 {
+    public ActorsData.ActorData Master {get {return DataSystem.Actors.Find(a => a.Id == ActorId);}}
     private int _actorId;
     public int ActorId {get {return _actorId;}}
     public int MaxHp { get

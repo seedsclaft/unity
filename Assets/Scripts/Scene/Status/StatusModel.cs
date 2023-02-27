@@ -92,6 +92,11 @@ public class StatusModel : BaseModel
             result1,result2
         };    
     }
+
+    public void MakeStageData()
+    {
+        GameSystem.CurrentData.MakeStageData(CurrentActor.ActorId);
+    }
 }
 
 namespace StatusModelData{

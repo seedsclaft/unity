@@ -27,6 +27,11 @@ public class PartyInfo
         _actorIdList.Remove(actorId);
     }
 
+    public void InitActors()
+    {
+        _actorIdList.Clear();
+    }
+
     public void ChangeCurrency(int currency)
     {
         _currency = currency;

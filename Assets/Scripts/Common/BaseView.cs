@@ -72,6 +72,19 @@ abstract public class BaseView : MonoBehaviour
         CallSceneChangeCommand(eventData);
     }
 
+    public void CommandCallPopup(PopupInfo popupInfo)
+    {
+        var eventData = new ViewEvent(Scene.Base, Base.CommandType.CallPopupView);
+        eventData.templete = popupInfo;
+        CallSceneChangeCommand(eventData);
+    }
+
+    public void CommandClosePopup()
+    {
+        var eventData = new ViewEvent(Scene.Base, Base.CommandType.ClosePopupView);
+        CallSceneChangeCommand(eventData);
+    }
+
     public void CreateBackCommand(System.Action callEvent)
     {
         GameObject prefab = Instantiate(backPrefab);
@@ -94,6 +107,8 @@ namespace Base
         SetTemplete,
         SceneChange,
         InitSaveInfo,
+        CallPopupView,
+        ClosePopupView
     }
 }
 

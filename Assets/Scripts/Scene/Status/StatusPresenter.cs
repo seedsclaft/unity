@@ -79,7 +79,19 @@ public class StatusPresenter
 
     private void CommandDecideActor()
     {
+        ActorInfo actorInfo = _model.CurrentActor;
+        var popupInfo = new PopupInfo(actorInfo.Master.Name + "をつれてシナリオを開始しますか？",(menuCommandInfo) => updatePopup((ConfirmComandType)menuCommandInfo));
+        _view.CommandCallPopup(popupInfo);
+    }
 
+    private void updatePopup(ConfirmComandType confirmComandType)
+    {
+        _view.CommandClosePopup();
+        if (confirmComandType == ConfirmComandType.Yes)
+        {
+            _model.MakeStageData();
+            _view.CommandSceneChange(Scene.Tactics);
+        }
     }
     
     private void CommandLeftActor()

@@ -7,12 +7,12 @@ using System;
 public class ViewEvent
 {
     public Scene scene;
-    public int commandType;
+    public Base.CommandType commandType;
     public object templete;
 
-    public ViewEvent(Scene scene, object type)
+    public ViewEvent(Scene scene, Base.CommandType type)
     {
-        commandType = (int)type;
+        commandType = type;
     }
     
 }
