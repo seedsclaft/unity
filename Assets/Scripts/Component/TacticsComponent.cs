@@ -29,12 +29,15 @@ public class TacticsComponent : MonoBehaviour
     [SerializeField] private Toggle resourceCheckToggle;
     [SerializeField] private TextMeshProUGUI resourceCost;
 
+    [SerializeField] private GameObject busyRoot;
+    [SerializeField] private TextMeshProUGUI busyText;
     private EventTrigger eventTrigger;
     private EventTrigger.Entry entry1;
     private System.Action<int> _selectHandler;
     public void UpdateInfo(ActorInfo actorInfo)
     {
         _actorInfo = actorInfo;
+        TacticsComandType currentTacticsComandType = TacticsComandType.None;
         if (actorInfoComponent != null)
         {
             actorInfoComponent.UpdateInfo(actorInfo);
@@ -43,6 +46,7 @@ public class TacticsComponent : MonoBehaviour
         if (trainCheckToggle != null)
         {
             trainCheckToggle.isOn = (actorInfo.TacticsComandType == TacticsComandType.Train);
+            currentTacticsComandType = TacticsComandType.Train;
         }
         if (afterLv != null)
         {
@@ -58,6 +62,7 @@ public class TacticsComponent : MonoBehaviour
         if (alchemyCheckToggle != null)
         {
             alchemyCheckToggle.isOn = (actorInfo.TacticsComandType == TacticsComandType.Alchemy);
+            currentTacticsComandType = TacticsComandType.Alchemy;
         }
         if (skillInfoComponent != null)
         {
@@ -68,6 +73,7 @@ public class TacticsComponent : MonoBehaviour
         if (recoveryCheckToggle != null)
         {
             recoveryCheckToggle.isOn = (actorInfo.TacticsComandType == TacticsComandType.Recovery);
+            currentTacticsComandType = TacticsComandType.Recovery;
         }
         if (statusInfoComponent != null)
         {
@@ -81,6 +87,7 @@ public class TacticsComponent : MonoBehaviour
         if (battleCheckToggle != null)
         {
             battleCheckToggle.isOn = (actorInfo.TacticsComandType == TacticsComandType.Battle);
+            currentTacticsComandType = TacticsComandType.Battle;
         }
         if (enemyInfoComponent != null)
         {
@@ -92,11 +99,24 @@ public class TacticsComponent : MonoBehaviour
         if (resourceCheckToggle != null)
         {
             resourceCheckToggle.isOn = (actorInfo.TacticsComandType == TacticsComandType.Resource);
+            currentTacticsComandType = TacticsComandType.Resource;
         }
         if (resourceCost != null)
         {
             resourceCost.gameObject.SetActive(actorInfo.TacticsComandType == TacticsComandType.Resource);
             resourceCost.text = TacticsUtility.ResourceCost(actorInfo).ToString();
+        }
+
+        if (busyRoot != null && busyText != null)
+        {
+            busyRoot.gameObject.SetActive(false);
+            if (currentTacticsComandType != actorInfo.TacticsComandType && actorInfo.TacticsComandType != TacticsComandType.None)
+            {
+                busyRoot.gameObject.SetActive(true);
+                TextData textData = DataSystem.System.SystemTextData.Find(a => a.Id == (int)actorInfo.TacticsComandType);
+                TextData subtextData = DataSystem.System.SystemTextData.Find(a => a.Id == 1020);
+                busyText.text = textData.Text + subtextData.Text;
+            }
         }
     }
 

@@ -111,6 +111,8 @@ public class ActorInfo
     {
         _tacticsComandType = TacticsComandType.None;
         _tacticsCost = 0;
+        _nextLearnSkillId = 0;
+        _nextBattleEnemyIndex = 0;
     }
 
     public void SetNextLearnSkillId(int skillId)

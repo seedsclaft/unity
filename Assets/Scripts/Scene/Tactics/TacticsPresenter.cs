@@ -58,17 +58,11 @@ public class TacticsPresenter
         {
             CommandDecideActor();
         }
-        if (viewEvent.commandType == Tactics.CommandType.LeftActor)
-        {
-            CommandLeftActor();
-        }
-        if (viewEvent.commandType == Tactics.CommandType.RightActor)
-        {
-            CommandRightActor();
-        }
         if (viewEvent.commandType == Tactics.CommandType.SelectActorTrain)
         {
-            CommandSelectActorTrain((int)viewEvent.templete);
+            int actorId = (int)viewEvent.templete;
+            if (CheckBusyOther(actorId,TacticsComandType.Train)) return;
+            CommandSelectActorTrain(actorId);
         }
         if (viewEvent.commandType == Tactics.CommandType.TrainClose)
         {
@@ -76,7 +70,9 @@ public class TacticsPresenter
         }
         if (viewEvent.commandType == Tactics.CommandType.SelectActorAlchemy)
         {
-            CommandSelectActorAlchemy((int)viewEvent.templete);
+            int actorId = (int)viewEvent.templete;
+            if (CheckBusyOther(actorId,TacticsComandType.Alchemy)) return;
+            CommandSelectActorAlchemy(actorId);
         }
         if (viewEvent.commandType == Tactics.CommandType.SkillAlchemy)
         {
@@ -88,15 +84,21 @@ public class TacticsPresenter
         }
         if (viewEvent.commandType == Tactics.CommandType.SelectActorRecovery)
         {
-            CommandSelectActorRecovery((int)viewEvent.templete);
+            int actorId = (int)viewEvent.templete;
+            if (CheckBusyOther(actorId,TacticsComandType.Recovery)) return;
+            CommandSelectActorRecovery(actorId);
         }
         if (viewEvent.commandType == Tactics.CommandType.SelectRecoveryPlus)
         {
-            CommandSelectRecoveryPlus((int)viewEvent.templete);
+            int actorId = (int)viewEvent.templete;
+            if (CheckBusyOther(actorId,TacticsComandType.Recovery)) return;
+            CommandSelectRecoveryPlus(actorId);
         }
         if (viewEvent.commandType == Tactics.CommandType.SelectRecoveryMinus)
         {
-            CommandSelectRecoveryMinus((int)viewEvent.templete);
+            int actorId = (int)viewEvent.templete;
+            if (CheckBusyOther(actorId,TacticsComandType.Recovery)) return;
+            CommandSelectRecoveryMinus(actorId);
         }
         if (viewEvent.commandType == Tactics.CommandType.RecoveryClose)
         {
@@ -108,7 +110,9 @@ public class TacticsPresenter
         }
         if (viewEvent.commandType == Tactics.CommandType.SelectActorBattle)
         {
-            CommandSelectActorBattle((int)viewEvent.templete);
+            int actorId = (int)viewEvent.templete;
+            if (CheckBusyOther(actorId,TacticsComandType.Battle)) return;
+            CommandSelectActorBattle(actorId);
         }
         if (viewEvent.commandType == Tactics.CommandType.BattleClose)
         {
@@ -120,7 +124,9 @@ public class TacticsPresenter
         }
         if (viewEvent.commandType == Tactics.CommandType.SelectActorResource)
         {
-            CommandSelectActorResource((int)viewEvent.templete);
+            int actorId = (int)viewEvent.templete;
+            if (CheckBusyOther(actorId,TacticsComandType.Resource)) return;
+            CommandSelectActorResource(actorId);
         }
         if (viewEvent.commandType == Tactics.CommandType.ResourceClose)
         {
@@ -130,6 +136,53 @@ public class TacticsPresenter
         {
             CommandBack();
         }
+    }
+
+    private bool CheckBusyOther(int actorId,TacticsComandType tacticsComandType)
+    {
+        bool IsBusyOther = _model.IsOtherBusy(actorId,tacticsComandType);
+        if (IsBusyOther == true)
+        {
+            _model.CurrentActorId = actorId;
+            _model.CommandType = tacticsComandType;
+            TextData mainTextData = DataSystem.System.SystemTextData.Find(a => a.Id == 1030);
+            TextData textData = DataSystem.System.SystemTextData.Find(a => a.Id == (int)tacticsComandType);
+            string mainText = mainTextData.Text.Replace("\\d",textData.Text);
+            var popupInfo = new PopupInfo(_model.TacticsActor(actorId).Master.Name + mainText,(menuCommandInfo) => UpdatePopup((ConfirmComandType)menuCommandInfo));
+            _view.CommandCallPopup(popupInfo);
+            return true;
+        }
+        return false;
+    }
+
+    private void UpdatePopup(ConfirmComandType confirmComandType)
+    {
+        if (confirmComandType == ConfirmComandType.Yes)
+        {
+            int actorId = _model.CurrentActorId;
+            _model.ResetTacticsCost(actorId);
+            if (_model.CommandType == TacticsComandType.Train)
+            {
+                CommandSelectActorTrain(actorId);
+            }
+            if (_model.CommandType == TacticsComandType.Alchemy)
+            {
+                CommandSelectActorAlchemy(actorId);
+            }
+            if (_model.CommandType == TacticsComandType.Recovery)
+            {
+                CommandSelectActorRecovery(actorId);
+            }
+            if (_model.CommandType == TacticsComandType.Battle)
+            {
+                CommandSelectActorBattle(actorId);
+            }
+            if (_model.CommandType == TacticsComandType.Resource)
+            {
+                CommandSelectActorResource(actorId);
+            }
+        }
+        _view.CommandClosePopup();
     }
 
     private void CommandBack()
@@ -192,19 +245,6 @@ public class TacticsPresenter
 
     }
     
-    private void CommandLeftActor()
-    {
-         _model.ChangeActorIndex(-1);
-        _view.SetActorInfo(_model.CurrentActor);
-        CommandAttributeType(_model.CurrentAttributeType);
-    }
-
-    private void CommandRightActor()
-    {
-         _model.ChangeActorIndex(1);
-        _view.SetActorInfo(_model.CurrentActor);
-        CommandAttributeType(_model.CurrentAttributeType);
-    }
 
 
     private void CommandSelectActorTrain(int actorId)
@@ -232,7 +272,7 @@ public class TacticsPresenter
 
         } else
         {
-            _model.ChangeActorIndex(_model.ActorIndex(actorId));
+            _model.CurrentActorId = actorId;
             CommandAttributeType(_model.CurrentAttributeType);
             _view.HideAlchemyList();
             _view.SetActiveBack(true);

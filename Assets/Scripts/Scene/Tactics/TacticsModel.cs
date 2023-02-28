@@ -9,10 +9,9 @@ using System.Threading.Tasks;
 
 public class TacticsModel : BaseModel
 {
-    private int _currentIndex = 0; 
-    public int CurrentIndex
-    {
-        get {return _currentIndex;}
+    private int _currentActorId = 0;
+    public int CurrentActorId {
+        get {return _currentActorId;} set{_currentActorId = value;}
     }
     private AttributeType _currentAttributeType = AttributeType.Fire;
     
@@ -22,22 +21,7 @@ public class TacticsModel : BaseModel
     }
     public ActorInfo CurrentActor
     {
-        get {return Actors()[_currentIndex];}
-    }
-
-    public void ChangeActorIndex(int value){
-        _currentIndex += value;
-        if (_currentIndex > Actors().Count-1){
-            _currentIndex = 0;
-        } else
-        if (_currentIndex < 0){
-            _currentIndex = Actors().Count-1;
-        }
-    }
-
-    public int ActorIndex(int actorId)
-    {
-        return Actors().FindIndex(a => a.ActorId == actorId);
+        get {return TacticsActor(_currentActorId);}
     }
 
     private TacticsComandType _commandType = TacticsComandType.Train;
@@ -53,6 +37,11 @@ public class TacticsModel : BaseModel
     public List<ActorInfo> Actors()
     {
         return GameSystem.CurrentData.Actors;
+    }
+
+    public ActorInfo TacticsActor(int actorId)
+    {
+        return Actors().Find(a => a.ActorId == actorId);
     }
 
     public List<BattlerInfo> Enemies()
@@ -133,15 +122,7 @@ public class TacticsModel : BaseModel
             {
                 if (_tempTacticsData.Find(a => a.ActorId == Actors()[i].ActorId) == null)
                 {
-                    if (tacticsComandType == TacticsComandType.Train)
-                    {
-                        PartyInfo.ChangeCurrency(Currency + Actors()[i].TacticsCost);
-                    }
-                    if (tacticsComandType == TacticsComandType.Alchemy)
-                    {
-                        PartyInfo.ChangeCurrency(Currency + Actors()[i].TacticsCost);
-                        Actors()[i].SetNextLearnSkillId(0);
-                    }
+                    PartyInfo.ChangeCurrency(Currency + Actors()[i].TacticsCost);
                     Actors()[i].ClearTacticsCommand();
                 }
             }
@@ -165,10 +146,6 @@ public class TacticsModel : BaseModel
 
     private bool CanTacticsCommand(TacticsComandType tacticsComandType,ActorInfo actorInfo)
     {
-        if (actorInfo.TacticsComandType != TacticsComandType.None && actorInfo.TacticsComandType != tacticsComandType)
-        {
-            return false;
-        }
         if (tacticsComandType == TacticsComandType.Train)
         {
             return Currency >= TacticsUtility.TrainCost(actorInfo);
@@ -192,9 +169,30 @@ public class TacticsModel : BaseModel
         return false;
     }
 
+    public bool IsOtherBusy(int actorId, TacticsComandType tacticsComandType)
+    {
+        ActorInfo actorInfo = TacticsActor(actorId);
+        if (actorInfo.TacticsComandType == TacticsComandType.None)
+        {
+            return false;
+        }
+        if (actorInfo.TacticsComandType != tacticsComandType)
+        {
+            return true;
+        }
+        return false;
+    }
+    
+    public void ResetTacticsCost(int actorId)
+    {
+        ActorInfo actorInfo = TacticsActor(actorId);
+        PartyInfo.ChangeCurrency(Currency + actorInfo.TacticsCost);
+        actorInfo.ClearTacticsCommand();
+    }
+
     public void SelectActorTrain(int actorId)
     {
-        ActorInfo actorInfo = Actors().Find(a => a.ActorId == actorId);
+        ActorInfo actorInfo = TacticsActor(actorId);
         if (actorInfo != null){
             if (actorInfo.TacticsComandType == TacticsComandType.Train)
             {   
@@ -227,7 +225,7 @@ public class TacticsModel : BaseModel
 
     public bool IsCheckAlchemy(int actorId)
     {
-        ActorInfo actorInfo = Actors().Find(a => a.ActorId == actorId);
+        ActorInfo actorInfo = TacticsActor(actorId);
         if (actorInfo.TacticsComandType == TacticsComandType.Alchemy)
         {   
             PartyInfo.ChangeCurrency(Currency + actorInfo.TacticsCost);
@@ -240,8 +238,7 @@ public class TacticsModel : BaseModel
     public List<SkillInfo> SelectActorAlchemy(int actorId,AttributeType attributeType)
     {
         _currentAttributeType = attributeType;
-        ActorInfo actorInfo = Actors().Find(a => a.ActorId == actorId);
-        
+        ActorInfo actorInfo = TacticsActor(actorId);
         List<SkillInfo> skillInfos = new List<SkillInfo>();
         
         {
@@ -264,7 +261,7 @@ public class TacticsModel : BaseModel
 
     public void SelectAlchemy(int skillId)
     {
-        ActorInfo actorInfo = Actors().Find(a => a.ActorId == _currentIndex);
+        ActorInfo actorInfo = CurrentActor;
         if (actorInfo != null){
             actorInfo.SetTacticsCommand(TacticsComandType.Alchemy,TacticsUtility.AlchemyCost(actorInfo,skillId));
             PartyInfo.ChangeCurrency(Currency - actorInfo.TacticsCost);
@@ -274,7 +271,7 @@ public class TacticsModel : BaseModel
 
     public void SelectActorRecovery(int actorId)
     {
-        ActorInfo actorInfo = Actors().Find(a => a.ActorId == actorId);
+        ActorInfo actorInfo = TacticsActor(actorId);
         if (actorInfo != null){
             if (actorInfo.TacticsComandType == TacticsComandType.Recovery)
             {   
@@ -293,7 +290,7 @@ public class TacticsModel : BaseModel
 
     public void SelectRecoveryPlus(int actorId)
     {
-        ActorInfo actorInfo = Actors().Find(a => a.ActorId == actorId);
+        ActorInfo actorInfo = TacticsActor(actorId);
         if (actorInfo != null){
             if (CanTacticsCommand(TacticsComandType.Recovery,actorInfo))
             {
@@ -308,7 +305,7 @@ public class TacticsModel : BaseModel
 
     public void SelectRecoveryMinus(int actorId)
     {
-        ActorInfo actorInfo = Actors().Find(a => a.ActorId == actorId);
+        ActorInfo actorInfo = TacticsActor(actorId);
         if (actorInfo != null){
             if (0 < actorInfo.TacticsCost)
             {
@@ -327,12 +324,11 @@ public class TacticsModel : BaseModel
     
     public void SelectActorBattle(int actorId)
     {
-        ActorInfo actorInfo = Actors().Find(a => a.ActorId == actorId);
+        ActorInfo actorInfo = TacticsActor(actorId);
         if (actorInfo != null){
             if (actorInfo.TacticsComandType == TacticsComandType.Battle)
             {   
                 actorInfo.ClearTacticsCommand();
-                actorInfo.SetNextBattleEnemyIndex(-1);
             } else
             {
                 if (CanTacticsCommand(TacticsComandType.Recovery,actorInfo))
@@ -346,7 +342,7 @@ public class TacticsModel : BaseModel
 
     public void SelectActorResource(int actorId)
     {
-        ActorInfo actorInfo = Actors().Find(a => a.ActorId == actorId);
+        ActorInfo actorInfo = TacticsActor(actorId);
         if (actorInfo != null){
             if (actorInfo.TacticsComandType == TacticsComandType.Resource)
             {   
@@ -364,7 +360,6 @@ public class TacticsModel : BaseModel
     }
     public void RefreshData()
     {
-        int trainCost = 0;
         
     }
 }
