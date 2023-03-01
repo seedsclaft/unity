@@ -48,6 +48,7 @@ public class MainMenuPresenter
             statusViewInfo.SetDisableStrength(true);
             _view.CommandCallStatus(statusViewInfo);
             _view.SetActiveUi(false);
+            _model.SetStageId((int)viewEvent.templete);
         }
     }
 

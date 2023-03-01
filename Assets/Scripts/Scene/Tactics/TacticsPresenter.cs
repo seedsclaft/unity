@@ -20,7 +20,10 @@ public class TacticsPresenter
 
     private async void Initialize()
     {
+        
         _model.RefreshTacticsEnable();
+
+
         _view.SetHelpWindow();
         _view.SetUIButton();
         _view.SetActiveBack(false);
@@ -38,6 +41,18 @@ public class TacticsPresenter
         SoundManager.Instance.PlayBgm(bgm,1.0f,true);
         //SoundManager.Instance.PlayBgm(bgm,1.0f,true);
 
+        // イベントチェック
+        var stageEvents = _model.StageEvents(EventTiming.StartTactics);
+        if (stageEvents.Count > 0)
+        {
+            for (int i = 0;i < stageEvents.Count;i++)
+            {
+                if (stageEvents[i].Type == StageEventType.CommandDisable)
+                {
+                    _view.SetCommandDisable(stageEvents[i].Param);
+                }
+            }
+        }
         _busy = false;
     }
 
@@ -168,31 +183,36 @@ public class TacticsPresenter
         if (confirmComandType == ConfirmComandType.Yes)
         {
             int actorId = _model.CurrentActorId;
-            _model.ResetTacticsCost(actorId);
             if (_model.CommandType == TacticsComandType.Train)
             {
+                _model.ResetTacticsCost(actorId);
                 CommandSelectActorTrain(actorId);
             }
             if (_model.CommandType == TacticsComandType.Alchemy)
             {
+                _model.ResetTacticsCost(actorId);
                 CommandSelectActorAlchemy(actorId);
             }
             if (_model.CommandType == TacticsComandType.Recovery)
             {
+                _model.ResetTacticsCost(actorId);
                 CommandSelectActorRecovery(actorId);
             }
             if (_model.CommandType == TacticsComandType.Battle)
             {
+                _model.ResetTacticsCost(actorId);
                 CommandSelectActorBattle(actorId);
             }
             if (_model.CommandType == TacticsComandType.Resource)
             {
+                _model.ResetTacticsCost(actorId);
                 CommandSelectActorResource(actorId);
             }
             if (_model.CommandType == TacticsComandType.Turnend)
             {
                 _model.TurnEnd();
-                _view.CommandSceneChange(Scene.Status);
+                SaveSystem.SaveStart(GameSystem.CurrentData);
+                //_view.CommandSceneChange(Scene.Status);
             }
         }
         _view.CommandConfirmClose();
@@ -265,7 +285,6 @@ public class TacticsPresenter
             }
             var popupInfo = new ConfirmInfo(mainText,(menuCommandInfo) => UpdatePopup((ConfirmComandType)menuCommandInfo));
             _view.CommandCallConfirm(popupInfo);
-            //SaveSystem.SaveStart(GameSystem.CurrentData);
         }
     }
 
@@ -419,6 +438,7 @@ public class TacticsPresenter
 
     private void CommandRefresh()
     {
+        _view.SetTurns(_model.Turns);
         _view.SetNuminous(_model.Currency);
         _view.CommandRefresh();
     }

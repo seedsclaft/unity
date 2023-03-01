@@ -15,6 +15,14 @@ public class StagesInfoImporter : AssetPostprocessor {
 		NameId,
         Turns
     }
+    enum BaseEventColumn
+    {
+		Id = 0,
+        Turns,
+		Timing,
+		Type,
+		Param
+    }
 	static readonly string ExcelPath = "Assets/Data";
 	static readonly string ExcelName = "Stages.xlsx";
 
@@ -68,14 +76,14 @@ public class StagesInfoImporter : AssetPostprocessor {
 			{
 				// エクセルブックを作成
 				CreateBook(asset, Mainstream, out IWorkbook Book);
-				List<TextData> textData = CreateText(Book.GetSheetAt(1));
+				List<TextData> textData = CreateText(Book.GetSheetAt(2));
 
 				// 情報の初期化
 				Data._data.Clear();
 
 				// エクセルシートからセル単位で読み込み
 				ISheet BaseSheet = Book.GetSheetAt(0);
-
+				ISheet EventSheet = Book.GetSheetAt(1);
 				for (int i = 1; i <= BaseSheet.LastRowNum; i++)
 				{
 					IRow Baserow = BaseSheet.GetRow(i);
@@ -85,9 +93,26 @@ public class StagesInfoImporter : AssetPostprocessor {
 					StageData.Name = textData.Find(a => a.Id == (int)Baserow.GetCell((int)BaseColumn.NameId).NumericCellValue).Text;
 					StageData.Help = textData.Find(a => a.Id == (int)Baserow.GetCell((int)BaseColumn.NameId).NumericCellValue).Help;
 					StageData.Turns = (int)Baserow.GetCell((int)BaseColumn.Turns)?.SafeNumericCellValue();
-					
+					StageData.StageEvents = new List<StagesData.StageEventData>();
+					for (int j = 1; j <= EventSheet.LastRowNum; j++)
+					{
+						IRow Eventrow = EventSheet.GetRow(j);
+						var EventData = new StagesData.StageEventData();
+						var StageId = (int)Eventrow.GetCell((int)BaseEventColumn.Id)?.SafeNumericCellValue();
+						
+						if (StageId == StageData.Id)
+						{
+							EventData.Turns = (int)Eventrow.GetCell((int)BaseEventColumn.Turns)?.SafeNumericCellValue();
+							EventData.Timing = (EventTiming)Eventrow.GetCell((int)BaseEventColumn.Timing)?.SafeNumericCellValue();
+							EventData.Type = (StageEventType)Eventrow.GetCell((int)BaseEventColumn.Type)?.SafeNumericCellValue();
+							EventData.Param = (int)Eventrow.GetCell((int)BaseEventColumn.Param)?.SafeNumericCellValue();
+							StageData.StageEvents.Add(EventData);
+						}
+					}
 					Data._data.Add(StageData);
 				}
+
+
 			}
 		}
 		catch (Exception ex)

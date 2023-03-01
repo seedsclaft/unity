@@ -12,6 +12,7 @@ public class BaseModel
 
     public int Currency{get {return PartyInfo.Currency;}}
 
+    public int Turns{get {return CurrentData.CurrentStage.Turns - CurrentData.CurrentStage.CurrentTurn - 1;}}
     
     public List<SystemData.MenuCommandData> ConfirmCommand()
     {

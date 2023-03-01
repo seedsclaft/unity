@@ -14,6 +14,7 @@ public class StagesData : ScriptableObject {
         public string Name;
         public string Help;
         public int Turns;
+        public List<StageEventData> StageEvents;
         
 
         public string GetName()
@@ -25,4 +26,23 @@ public class StagesData : ScriptableObject {
     }
 
 
+
+    [Serializable]
+    public class StageEventData
+    {
+        public int Turns;
+        public EventTiming Timing;
+        public StageEventType Type;
+        public int Param;
+    }
+}
+
+public enum EventTiming{
+    None = 0,
+    StartTactics = 1
+}
+
+public enum StageEventType{
+    None = 0,
+    CommandDisable = 1
 }

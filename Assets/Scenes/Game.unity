@@ -1185,7 +1185,7 @@ GameObject:
   m_Component:
   - component: {fileID: 847318505}
   m_Layer: 5
-  m_Name: PopupRoot
+  m_Name: ConfirmRoot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1204,7 +1204,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1931081345}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1592,8 +1592,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mainRoot: {fileID: 0}
   uiRoot: {fileID: 1848313489}
-  popupRoot: {fileID: 847318504}
-  popupPrefab: {fileID: 8697139063844289700, guid: 09fd0803910235646a2255379fd3f516,
+  confirmRoot: {fileID: 847318504}
+  confirmPrefab: {fileID: 8697139063844289700, guid: 09fd0803910235646a2255379fd3f516,
+    type: 3}
+  statusRoot: {fileID: 2135351731}
+  statusPrefab: {fileID: 3159241513173074780, guid: adf6a2b45475876438a38b6365311775,
     type: 3}
 --- !u!1 &1848313489
 GameObject:
@@ -1730,6 +1733,7 @@ RectTransform:
   - {fileID: 535536448}
   - {fileID: 1524364501}
   - {fileID: 1848313490}
+  - {fileID: 2135351732}
   - {fileID: 847318505}
   m_Father: {fileID: 805648168}
   m_RootOrder: 0
@@ -2483,6 +2487,42 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 47bd1ca0687aff849b862a1a349ded12, type: 3}
+--- !u!1 &2135351731
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2135351732}
+  m_Layer: 5
+  m_Name: StatusRoot
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &2135351732
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2135351731}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1931081345}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1001 &949598473067555869
 PrefabInstance:
   m_ObjectHideFlags: 0

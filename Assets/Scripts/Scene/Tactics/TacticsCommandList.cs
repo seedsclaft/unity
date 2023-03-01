@@ -35,4 +35,13 @@ public class TacticsCommandList : ListWindow , IInputHandlerEvent
             _helpWindow.SetHelpText(_data[Index].Help);
         }
     }
+
+    public void SetDisable(SystemData.MenuCommandData menuCommandData,bool IsDisable)
+    {
+        for (int i = 0; i < ObjectList.Count;i++)
+        {
+            var tacticsCommand = ObjectList[i].GetComponent<TacticsCommand>();
+            tacticsCommand.SetDisable(menuCommandData,IsDisable);
+        }
+    }
 }

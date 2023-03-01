@@ -49,4 +49,8 @@ public class MainMenuModel : BaseModel
         
     }
 
+    public void SetStageId(int stageId)
+    {
+        PartyInfo.SetStageId(stageId);
+    }
 }

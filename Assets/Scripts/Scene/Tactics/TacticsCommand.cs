@@ -55,4 +55,12 @@ public class TacticsCommand : ListItem ,IListViewItem ,IClickHandlerEvent
     void OnMyPointerEnter(BaseEventData data) {
         _selectHandler(_index);
 	}
+
+    public void SetDisable(SystemData.MenuCommandData menuCommandData,bool IsDisable)
+    {
+        if (_data.Id == menuCommandData.Id)
+        {
+            Disable.gameObject.SetActive(IsDisable);
+        }
+    }
 }

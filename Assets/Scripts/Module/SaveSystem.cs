@@ -88,6 +88,8 @@ public class SavePlayInfo
     public List<StageInfo> Stages {get {return _stages;}}
     private PartyInfo _party = null;
 	public PartyInfo Party { get {return _party;}}
+    private StageInfo _currentStage = null;
+	public StageInfo CurrentStage { get {return _currentStage;}}
 	/// <summary>
 	/// 初期化
     /// </summary>
@@ -108,6 +110,9 @@ public class SavePlayInfo
 		InitActors();
 		_party.InitActors();
 		AddActor(actorId);
+		int stageId = _party.StageId;
+		StagesData.StageData stageData = DataSystem.Stages.Find(a => a.Id == stageId);
+		_currentStage = new StageInfo(stageData);
 	}
 
 	public void AddActor(int actorId)
@@ -163,6 +168,4 @@ public class SavePlayInfo
 			_stages.Add(stageInfo);
 		}
 	}
-	
-
 }

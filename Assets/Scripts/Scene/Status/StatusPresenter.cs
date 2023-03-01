@@ -141,6 +141,7 @@ public class StatusPresenter
             if (_popupCommandType == Status.CommandType.DecideStage)
             {
                 _model.MakeStageData();
+                _view.CommandStatusClose();
                 _view.CommandSceneChange(Scene.Tactics);
             }
             if (_popupCommandType == Status.CommandType.StrengthClose)

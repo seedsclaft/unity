@@ -34,6 +34,12 @@ public class TacticsModel : BaseModel
         get {return _currentEnemyIndex;} set {_currentEnemyIndex = value;}
     }
     
+    public List<StagesData.StageEventData> StageEvents(EventTiming eventTiming)
+    {
+        int CurrentTurn = GameSystem.CurrentData.CurrentStage.CurrentTurn;
+        return GameSystem.CurrentData.CurrentStage.StageEvents.FindAll(a => a.Timing == eventTiming && a.Turns == CurrentTurn);
+    }
+
     public List<ActorInfo> Actors()
     {
         return GameSystem.CurrentData.Actors;
@@ -370,7 +376,7 @@ public class TacticsModel : BaseModel
 
     public void TurnEnd()
     {
-
+        GameSystem.CurrentData.CurrentStage.SeekStage();
     }
 }
 
