@@ -6,16 +6,19 @@ using UnityEngine.EventSystems;
 using UnityEngine.Events;
 using TMPro;
 
-public class StatusCommand : ListItem ,IListViewItem ,IClickHandlerEvent 
+public class StatusStrength : ListItem ,IListViewItem ,IClickHandlerEvent 
 {
-    [SerializeField] private TextMeshProUGUI commandName;
+    
+    [SerializeField] private StrengthComponent strengthComponent;
+    [SerializeField] private Button plusButton;
+    [SerializeField] private Button minusButton;
 
-    private SystemData.MenuCommandData _data; 
+    private ActorInfo _data; 
     private int _index; 
     private EventTrigger eventTrigger;
     private EventTrigger.Entry entry1;
     private System.Action<int> _selectHandler;
-    public void SetData(SystemData.MenuCommandData data,int index){
+    public void SetData(ActorInfo data,int index){
         _data = data;
         _index = index;
     }
@@ -24,14 +27,20 @@ public class StatusCommand : ListItem ,IListViewItem ,IClickHandlerEvent
         return _index;
     }
 
-    public void SetCallHandler(System.Action<StatusComandType> handler)
+    public void SetCallHandler(System.Action<int> handler)
     {
         if (_data == null) return;
-        clickButton.onClick.AddListener(() => 
-        {
-            if (Disable.gameObject.activeSelf) return;
-            handler((StatusComandType)_data.Id);
-        });
+        clickButton.onClick.AddListener(() => handler(_index));
+    }
+
+    public void SetPlusHandler(System.Action<int> handler)
+    {
+        plusButton.onClick.AddListener(() => handler(_index));
+    }
+
+    public void SetMinusHandler(System.Action<int> handler)
+    {
+        minusButton.onClick.AddListener(() => handler(_index));
     }
 
     public void SetSelectHandler(System.Action<int> handler){
@@ -49,7 +58,7 @@ public class StatusCommand : ListItem ,IListViewItem ,IClickHandlerEvent
     public void UpdateViewItem()
     {
         if (_data == null) return;
-        commandName.text = _data.Name;
+        strengthComponent.UpdateInfo(_data,_index);
     }
 
     public void ClickHandler()
@@ -59,12 +68,4 @@ public class StatusCommand : ListItem ,IListViewItem ,IClickHandlerEvent
     void OnMyPointerEnter(BaseEventData data) {
         _selectHandler(_index);
 	}
-
-    public void SetDisable(SystemData.MenuCommandData menuCommandData,bool IsDisable)
-    {
-        if (_data.Id == menuCommandData.Id)
-        {
-            Disable.gameObject.SetActive(IsDisable);
-        }
-    }
 }

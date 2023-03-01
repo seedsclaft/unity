@@ -51,7 +51,7 @@ public class BattlerInfo
         _charaId = actorInfo.ActorId;
         _level = actorInfo.Level;
         StatusInfo statusInfo = new StatusInfo();
-        statusInfo.SetParameter(actorInfo.Status.Hp,actorInfo.Status.Mp,actorInfo.Status.Atk,actorInfo.Status.Def,actorInfo.Status.Spd);
+        statusInfo.SetParameter(actorInfo.CurrentStatus.Hp,actorInfo.CurrentStatus.Mp,actorInfo.CurrentStatus.Atk,actorInfo.CurrentStatus.Def,actorInfo.CurrentStatus.Spd);
         _status = statusInfo;
         _index = index;
         _skills = actorInfo.Skills;

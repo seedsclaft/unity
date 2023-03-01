@@ -132,6 +132,14 @@ public class TacticsPresenter
         {
             CommandResourceClose((ConfirmComandType)viewEvent.templete);
         }
+        if (viewEvent.commandType == Tactics.CommandType.ShowUi)
+        {
+            CommandShowUi();
+        }
+        if (viewEvent.commandType == Tactics.CommandType.HideUi)
+        {
+            CommandHideUi();
+        }
         if (viewEvent.commandType == Tactics.CommandType.Back)
         {
             CommandBack();
@@ -148,8 +156,8 @@ public class TacticsPresenter
             TextData mainTextData = DataSystem.System.SystemTextData.Find(a => a.Id == 1030);
             TextData textData = DataSystem.System.SystemTextData.Find(a => a.Id == (int)tacticsComandType);
             string mainText = mainTextData.Text.Replace("\\d",textData.Text);
-            var popupInfo = new PopupInfo(_model.TacticsActor(actorId).Master.Name + mainText,(menuCommandInfo) => UpdatePopup((ConfirmComandType)menuCommandInfo));
-            _view.CommandCallPopup(popupInfo);
+            var popupInfo = new ConfirmInfo(_model.TacticsActor(actorId).Master.Name + mainText,(menuCommandInfo) => UpdatePopup((ConfirmComandType)menuCommandInfo));
+            _view.CommandCallConfirm(popupInfo);
             return true;
         }
         return false;
@@ -181,8 +189,13 @@ public class TacticsPresenter
             {
                 CommandSelectActorResource(actorId);
             }
+            if (_model.CommandType == TacticsComandType.Turnend)
+            {
+                _model.TurnEnd();
+                _view.CommandSceneChange(Scene.Status);
+            }
         }
-        _view.CommandClosePopup();
+        _view.CommandConfirmClose();
     }
 
     private void CommandBack()
@@ -231,6 +244,28 @@ public class TacticsPresenter
             _view.ShowResourceList();
             _view.SetActiveBack(false);
             _backCommand = Tactics.CommandType.None;
+        }
+        if (tacticsComandType == TacticsComandType.Status)
+        {
+            StatusViewInfo statusViewInfo = new StatusViewInfo(() => {
+                _view.CommandStatusClose();
+                CommandShowUi();
+            });
+            CommandHideUi();
+            _view.CommandCallStatus(statusViewInfo);
+        }
+        if (tacticsComandType == TacticsComandType.Turnend)
+        {
+            TextData textData = DataSystem.System.SystemTextData.Find(a => a.Id == 1040);
+            TextData subData = DataSystem.System.SystemTextData.Find(a => a.Id == 1050);
+            string mainText = textData.Text;
+            if (_model.CheckNonBusy())
+            {
+                mainText += "\n" + subData.Text;
+            }
+            var popupInfo = new ConfirmInfo(mainText,(menuCommandInfo) => UpdatePopup((ConfirmComandType)menuCommandInfo));
+            _view.CommandCallConfirm(popupInfo);
+            //SaveSystem.SaveStart(GameSystem.CurrentData);
         }
     }
 
@@ -386,5 +421,15 @@ public class TacticsPresenter
     {
         _view.SetNuminous(_model.Currency);
         _view.CommandRefresh();
+    }
+
+    private void CommandShowUi()
+    {
+        _view.SetActiveUi(true);
+    }
+
+    private void CommandHideUi()
+    {
+        _view.SetActiveUi(false);
     }
 }

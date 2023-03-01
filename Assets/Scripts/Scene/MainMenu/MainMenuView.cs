@@ -44,6 +44,7 @@ public class MainMenuView : BaseView
         eventData.templete = stage;
         _commandData(eventData);
     }
+
 }
 
 namespace MainMenu

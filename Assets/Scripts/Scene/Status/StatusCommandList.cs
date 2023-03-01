@@ -37,4 +37,13 @@ public class StatusCommandList : ListWindow , IInputHandlerEvent
             _helpWindow.SetHelpText(_data[Index].Help);
         }
     }
+
+    public void SetDisable(SystemData.MenuCommandData menuCommandData,bool IsDisable)
+    {
+        for (int i = 0; i < ObjectList.Count;i++)
+        {
+            var statusCommand = ObjectList[i].GetComponent<StatusCommand>();
+            statusCommand.SetDisable(menuCommandData,IsDisable);
+        }
+    }
 }

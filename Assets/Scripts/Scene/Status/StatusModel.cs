@@ -97,6 +97,34 @@ public class StatusModel : BaseModel
     {
         GameSystem.CurrentData.MakeStageData(CurrentActor.ActorId);
     }
+
+    public bool EnableParamUp(StatusParamType statusParamType)
+    {
+        return CurrentActor.Sp >= CurrentActor.UsePoint.GetParameter(statusParamType);
+    }
+
+    public bool EnableParamMinus(StatusParamType statusParamType)
+    {
+        return CurrentActor.TempStatus.GetParameter(statusParamType) > 0;
+    }
+
+    public void ChangeParameter(StatusParamType statusParamType,int value)
+    {
+        if (value > 0)
+        {
+            CurrentActor.ChangeSp(CurrentActor.Sp - CurrentActor.UsePointCost(statusParamType));
+            CurrentActor.TempStatus.AddParameter(statusParamType,value);
+        } else
+        {
+            CurrentActor.TempStatus.AddParameter(statusParamType,value);
+            CurrentActor.ChangeSp(CurrentActor.Sp + CurrentActor.UsePointCost(statusParamType));          
+        }
+    }
+
+    public void DecideStrength()
+    {
+        CurrentActor.DecideStrength();
+    }
 }
 
 namespace StatusModelData{

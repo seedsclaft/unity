@@ -343,6 +343,7 @@ public class TacticsView : BaseView
     {
         numinousText.text = numinous.ToString();
     }
+    
 
     public void SetAttributeTypes(List<AttributeType> attributeTypes)
     {
@@ -390,6 +391,8 @@ namespace Tactics
         EnemyClose,
         SelectActorResource,
         ResourceClose,
+        ShowUi,
+        HideUi,
         Back
     }
 }

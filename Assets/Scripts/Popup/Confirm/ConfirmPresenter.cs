@@ -23,14 +23,14 @@ public class ConfirmPresenter
     }
 }
 
-public class PopupInfo
+public class ConfirmInfo
 {
     private string _title = "";
     public string Title {get {return _title;}}
     private System.Action<ConfirmComandType> _callEvent = null;
     public System.Action<ConfirmComandType> CallEvent {get {return _callEvent;}}
 
-    public PopupInfo(string title,System.Action<ConfirmComandType> callEvent)
+    public ConfirmInfo(string title,System.Action<ConfirmComandType> callEvent)
     {
         _title = title;
         _callEvent = callEvent;

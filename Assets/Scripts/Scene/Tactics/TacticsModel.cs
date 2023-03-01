@@ -182,6 +182,11 @@ public class TacticsModel : BaseModel
         }
         return false;
     }
+
+    public bool CheckNonBusy()
+    {
+        return Actors().Find(a => a.TacticsComandType == TacticsComandType.None) != null;
+    }
     
     public void ResetTacticsCost(int actorId)
     {
@@ -361,6 +366,11 @@ public class TacticsModel : BaseModel
     public void RefreshData()
     {
         
+    }
+
+    public void TurnEnd()
+    {
+
     }
 }
 

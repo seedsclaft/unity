@@ -353,7 +353,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 379322865328907623}
   m_HandleRect: {fileID: 1098769133377250433}
   m_Direction: 2
-  m_Value: 0
+  m_Value: 1
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -705,7 +705,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e277cb526c023c458bf2fc8e6709026, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  name: {fileID: 0}
+  nameText: {fileID: 0}
   help: {fileID: 6186693444786132800}
   turns: {fileID: 0}
   clearCount: {fileID: 0}
@@ -1166,6 +1166,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 899b87a0a52b67848ba5697856a8302d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  uiRoot: {fileID: 1740006770950926252}
+  backPrefab: {fileID: 0}
+  backRoot: {fileID: 0}
   backGround: {fileID: 8075312227975281658}
   stageList: {fileID: 8066339791692466196}
   helpRoot: {fileID: 283208224390437601}

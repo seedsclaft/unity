@@ -33,7 +33,7 @@ abstract public class DataSystem
     
     public static List<SystemData.MenuCommandData> TitleCommand {get { return _system.TitleCommandData;}}
     public static List<SystemData.MenuCommandData> StatusCommand {get { return _system.StatusCommandData;}}
-        public static List<int> InitActors {get { return _system.InitActors;}}
+    public static List<int> InitActors {get { return _system.InitActors;}}
 
     
     private static StagesData _stages;

@@ -9,6 +9,7 @@ abstract public class BaseView : MonoBehaviour
     private List<IInputHandlerEvent> _inputHandler = new List<IInputHandlerEvent>();
     public System.Action<ViewEvent> _commandData = null;
     private Button _backCommand = null;
+    [SerializeField] private GameObject uiRoot = null;
     [SerializeField] private GameObject backPrefab = null;
     [SerializeField] private GameObject backRoot = null;
 
@@ -72,16 +73,29 @@ abstract public class BaseView : MonoBehaviour
         CallSceneChangeCommand(eventData);
     }
 
-    public void CommandCallPopup(PopupInfo popupInfo)
+    public void CommandCallConfirm(ConfirmInfo popupInfo)
     {
-        var eventData = new ViewEvent(Scene.Base, Base.CommandType.CallPopupView);
+        var eventData = new ViewEvent(Scene.Base, Base.CommandType.CallConfirmView);
         eventData.templete = popupInfo;
         CallSceneChangeCommand(eventData);
     }
 
-    public void CommandClosePopup()
+    public void CommandConfirmClose()
     {
-        var eventData = new ViewEvent(Scene.Base, Base.CommandType.ClosePopupView);
+        var eventData = new ViewEvent(Scene.Base, Base.CommandType.CloseConfirm);
+        CallSceneChangeCommand(eventData);
+    }
+
+    public void CommandCallStatus(StatusViewInfo statusViewInfo)
+    {
+        var eventData = new ViewEvent(Scene.Base, Base.CommandType.CallStatusView);
+        eventData.templete = statusViewInfo;
+        CallSceneChangeCommand(eventData);
+    }
+
+    public void CommandStatusClose()
+    {
+        var eventData = new ViewEvent(Scene.Base, Base.CommandType.CloseStatus);
         CallSceneChangeCommand(eventData);
     }
 
@@ -97,6 +111,11 @@ abstract public class BaseView : MonoBehaviour
     {
         _backCommand.gameObject.SetActive(IsActive);
     }
+
+    public void SetActiveUi(bool IsActive)
+    {
+        uiRoot.gameObject.SetActive(IsActive);
+    }
 }
 
 namespace Base
@@ -107,8 +126,11 @@ namespace Base
         SetTemplete,
         SceneChange,
         InitSaveInfo,
-        CallPopupView,
-        ClosePopupView
+        CallConfirmView,
+        CloseConfirm,  
+        CallStatusView,
+        CloseStatus,  
+
     }
 }
 

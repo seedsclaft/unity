@@ -9,20 +9,21 @@ public class ActorInfo
     public int ActorId {get {return _actorId;}}
     public int MaxHp { get
         {
-            return _status._hp;
+            return CurrentStatus.Hp;
         }
     }
     public int MaxMp { get
         {
-            return _status._mp;
+            return CurrentStatus.Mp;
         }
     }
 
     private int _level;
     public int Level {get {return _level;}}
     
-    private StatusInfo _status;
-    public StatusInfo Status {get {return _status;}}
+    private StatusInfo _baseStatus;
+    private StatusInfo _currentStatus;
+    public StatusInfo CurrentStatus {get {return _currentStatus;}}
     private StatusInfo _usePoint;
     public StatusInfo UsePoint {get {return _usePoint;}}
     private List<int> _attribute;
@@ -41,6 +42,7 @@ public class ActorInfo
     private TacticsComandType _tacticsComandType = TacticsComandType.None;
     public TacticsComandType TacticsComandType {get {return _tacticsComandType;}}
 
+// Tactics
     private Dictionary<TacticsComandType,bool> _tacticsEnable = new Dictionary<TacticsComandType, bool>();
     private int _tacticsCost = 0;
     public int TacticsCost {get {return _tacticsCost;}}
@@ -49,15 +51,27 @@ public class ActorInfo
     private int _nextBattleEnemyIndex = 0;
     public int NextBattleEnemyIndex {get {return _nextBattleEnemyIndex;}}
 
+// Status
+    private int _sp = 0;
+    public int Sp {get {return _sp;}}
+    private StatusInfo _plusStatus;
+    private StatusInfo _tempStatus;
+    public StatusInfo TempStatus {get {return _tempStatus;}}
+
     public ActorInfo(ActorsData.ActorData actorData)
     {
         _actorId = actorData.Id;
-        _status = actorData.InitStatus;
+        _baseStatus = actorData.InitStatus;
         _usePoint = actorData.NeedStatus;
         _attribute = actorData.Attribute;
-        _currentHp = _status.Hp;
-        _currentMp = _status.Mp;
+        _currentHp = _baseStatus.Hp;
+        _currentMp = _baseStatus.Mp;
         _level = actorData.InitLv;
+        _sp = 10;
+        _plusStatus = new StatusInfo();
+        _tempStatus = new StatusInfo();
+        _currentStatus = new StatusInfo();
+        _currentStatus.SetParameter(_baseStatus.Hp,_baseStatus.Mp,_baseStatus.Atk,_baseStatus.Def,_baseStatus.Spd);
     }
 
     public void InitSkillInfo(List<LearningData> learningData)
@@ -70,25 +84,6 @@ public class ActorInfo
             SkillInfo skillInfo = new SkillInfo(_learningData.SkillId);
             _skills.Add(skillInfo);
         }
-    }
-
-    public int GainHp(int value)
-    {
-        int tempHp = _status._hp + value;
-        int gainHp = tempHp < 0 ? _status._hp * -1 : value;
-        gainHp = tempHp > MaxHp ? MaxHp - value : gainHp;
-        _status._hp += gainHp;
-        CheckParameter();
-        return gainHp;
-    }
-
-    public void CheckParameter()
-    {
-        _status._hp = Math.Max(0,MaxHp);
-    }
-
-    public void UpdateStatus()
-    {
     }
 
     public void RefreshTacticsEnable(TacticsComandType tacticsComandType,bool enable)
@@ -123,5 +118,45 @@ public class ActorInfo
     public void SetNextBattleEnemyIndex(int enemyIndex)
     {
         _nextBattleEnemyIndex = enemyIndex;
+    }
+
+    public void ChangeSp(int value)
+    {
+        _sp = value;
+    }
+
+    public int UsePointCost(StatusParamType statusParamType)
+    {
+        int useCost = UsePoint.GetParameter(statusParamType);
+        useCost += (_plusStatus.GetParameter(statusParamType)+TempStatus.GetParameter(statusParamType)) / 5;
+        return useCost;
+    }
+
+    public void DecideStrength()
+    {
+        int addHp = TempStatus.GetParameter(StatusParamType.Hp);
+        _plusStatus.AddParameter(StatusParamType.Hp,addHp);
+        int addMp = TempStatus.GetParameter(StatusParamType.Mp);
+        _plusStatus.AddParameter(StatusParamType.Mp,addMp);
+        int addAtk = TempStatus.GetParameter(StatusParamType.Atk);
+        _plusStatus.AddParameter(StatusParamType.Atk,addAtk);
+        int addDef = TempStatus.GetParameter(StatusParamType.Def);
+        _plusStatus.AddParameter(StatusParamType.Def,addDef);
+        int addSpd = TempStatus.GetParameter(StatusParamType.Spd);
+        _plusStatus.AddParameter(StatusParamType.Spd,addSpd);
+        CurrentStatus.SetParameter(
+            CurrentParameter(StatusParamType.Hp),
+            CurrentParameter(StatusParamType.Mp),
+            CurrentParameter(StatusParamType.Atk),
+            CurrentParameter(StatusParamType.Def),
+            CurrentParameter(StatusParamType.Spd)
+        );
+        TempStatus.Clear();
+    }
+
+
+    private int CurrentParameter(StatusParamType statusParamType)
+    {
+        return _baseStatus.GetParameter(statusParamType) + _plusStatus.GetParameter(statusParamType);
     }
 }

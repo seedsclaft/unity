@@ -60,7 +60,7 @@ public class SaveSystem : MonoBehaviour
 			try 
 			{
 				//	指定したファイルストリームをオブジェクトにデシリアライズ。
-				var m_pSavePlayInfo = (SavePlayInfo)TempBinaryFormatter.Deserialize(TempFileStream);
+				GameSystem.CurrentData = (SavePlayInfo)TempBinaryFormatter.Deserialize(TempFileStream);
 			}
 			finally 
 			{

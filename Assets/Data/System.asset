@@ -63,7 +63,7 @@ MonoBehaviour:
     Key: OPTION
     Name: Option
     Help: "\u30B2\u30FC\u30E0\u306E\u8A2D\u5B9A\u3092\u5909\u66F4\u3057\u307E\u3059"
-  InitActors: 0100000002000000030000000400000005000000
+  InitActors: 01000000
   InitCurrency: 10
   SystemTextData:
   - Id: 1
@@ -102,6 +102,30 @@ MonoBehaviour:
   - Id: 202
     Text: "\u9B54\u6CD5\u78BA\u8A8D"
     Help: '""'
+  - Id: 300
+    Text: HP
+    Help: '""'
+  - Id: 301
+    Text: MP
+    Help: '""'
+  - Id: 302
+    Text: ATK
+    Help: '""'
+  - Id: 303
+    Text: DEF
+    Help: '""'
+  - Id: 304
+    Text: SPD
+    Help: '""'
+  - Id: 310
+    Text: UsePoint
+    Help: '""'
+  - Id: 311
+    Text: Parameters
+    Help: '""'
+  - Id: 312
+    Text: "\u6B8B\u308ASP"
+    Help: '""'
   - Id: 1000
     Text: (Nu)
     Help: '""'
@@ -113,6 +137,15 @@ MonoBehaviour:
     Help: '""'
   - Id: 1030
     Text: "\u306F\\d\u4E88\u5B9A\u3067\u3059\u3002\n\u4E88\u5B9A\u3092\u4E2D\u6B62\u3057\u307E\u3059\u304B\uFF1F"
+    Help: '""'
+  - Id: 1040
+    Text: "\u547D\u4EE4\u3092\u7D42\u4E86\u3057\u307E\u3059\u304B\uFF1F"
+    Help: '""'
+  - Id: 1050
+    Text: "\uFF01\u884C\u52D5\u4E88\u5B9A\u306E\u306A\u3044\u30A2\u30EB\u30B1\u30DF\u30B9\u30C8\u304C\u5B58\u5728\u3057\u307E\u3059\uFF01"
+    Help: '""'
+  - Id: 2000
+    Text: "\u7D44\u7E54\u958B\u767A\u3092\u78BA\u5B9A\u3057\u307E\u3059\u304B\uFF1F\n\uFF01\u4E00\u5EA6\u5272\u308A\u632F\u3063\u305FSP\u306F\u623B\u305B\u307E\u305B\u3093\uFF01"
     Help: '""'
   - Id: 11010
     Text: "\u7D42\u7109\u307E\u3067 :"

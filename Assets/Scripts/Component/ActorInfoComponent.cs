@@ -56,12 +56,12 @@ public class ActorInfoComponent : MonoBehaviour
             lv.text = actorInfo.Level.ToString();
         }
         if (sp != null){
-            //sp.text = actorData.Name;
+            sp.text = actorInfo.Sp.ToString();
         }
         if (statusInfoComponent != null){
-            statusInfoComponent.UpdateInfo(actorInfo.Status);
+            statusInfoComponent.UpdateInfo(actorInfo.CurrentStatus);
             statusInfoComponent.UpdateHp(actorInfo.CurrentHp,actorInfo.MaxHp);
-            statusInfoComponent.UpdateMp(actorInfo.CurrentMp,actorInfo.CurrentMp);
+            statusInfoComponent.UpdateMp(actorInfo.CurrentMp,actorInfo.MaxMp);
         }
         if (needStatusInfoComponent != null){
             needStatusInfoComponent.UpdateInfo(actorInfo.UsePoint);

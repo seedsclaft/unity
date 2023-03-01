@@ -7,11 +7,14 @@ public class GameSystem : MonoBehaviour
     
     [SerializeField] private GameObject mainRoot = null;
     [SerializeField] private GameObject uiRoot = null;
-    [SerializeField] private GameObject popupRoot = null;
-    [SerializeField] private GameObject popupPrefab = null;
+    [SerializeField] private GameObject confirmRoot = null;
+    [SerializeField] private GameObject confirmPrefab = null;
+    [SerializeField] private GameObject statusRoot = null;
+    [SerializeField] private GameObject statusPrefab = null;
     
     private BaseView _currentScene = null;
-    private ConfirmView _popupView = null;
+    private ConfirmView _confirmView = null;
+    private StatusView _statusView = null;
     private BaseModel _model = null;
     
     public static SavePlayInfo CurrentData = null;
@@ -24,15 +27,23 @@ public class GameSystem : MonoBehaviour
     {
         _model = new BaseModel();
         CommandSceneChange(Scene.Boot);
-        CreatePopup();
+        CreateConfirm();
     }
 
-    private void CreatePopup()
+    private void CreateConfirm()
     {
-        var prefab = Instantiate(popupPrefab);
-        prefab.transform.SetParent(popupRoot.transform, false);
-        _popupView = prefab.GetComponent<ConfirmView>();
-        popupRoot.gameObject.SetActive(false);
+        var prefab = Instantiate(confirmPrefab);
+        prefab.transform.SetParent(confirmRoot.transform, false);
+        _confirmView = prefab.GetComponent<ConfirmView>();
+        confirmRoot.gameObject.SetActive(false);
+    }
+    
+    private void CreateStatus()
+    {
+        var prefab = Instantiate(statusPrefab);
+        prefab.transform.SetParent(statusRoot.transform, false);
+        _statusView = prefab.GetComponent<StatusView>();
+        statusRoot.gameObject.SetActive(false);
     }
 
     private void updateCommand(ViewEvent viewEvent)
@@ -56,16 +67,35 @@ public class GameSystem : MonoBehaviour
             CurrentData = playInfo;
             Debug.Log("InitSaveInfo");
         }
-        if (viewEvent.commandType == Base.CommandType.CallPopupView)
+        if (viewEvent.commandType == Base.CommandType.CallConfirmView)
         {
-            popupRoot.gameObject.SetActive(true);
-            var popupInfo = (PopupInfo)viewEvent.templete;
-            _popupView.SetTitle(popupInfo.Title);
-            _popupView.SetEvent(popupInfo.CallEvent);
+            confirmRoot.gameObject.SetActive(true);
+            var popupInfo = (ConfirmInfo)viewEvent.templete;
+            _confirmView.SetTitle(popupInfo.Title);
+            _confirmView.SetEvent(popupInfo.CallEvent);
         }
-        if (viewEvent.commandType == Base.CommandType.ClosePopupView)
+        if (viewEvent.commandType == Base.CommandType.CloseConfirm)
         {
-            popupRoot.gameObject.SetActive(false);
+            confirmRoot.gameObject.SetActive(false);
+        }
+        if (viewEvent.commandType == Base.CommandType.CallStatusView)
+        {
+            if (_statusView != null)
+            {
+                DestroyImmediate(_statusView.gameObject);
+            }
+            CreateStatus();
+            statusRoot.gameObject.SetActive(true);
+            var popupInfo = (StatusViewInfo)viewEvent.templete;
+            _statusView.DisplayDecideButton(popupInfo.DisplayDecideButton);
+            _statusView.DisableStrength(popupInfo.DisableStrength);
+            _statusView.SetBackEvent(popupInfo.BackEvent);
+            _statusView.SetEvent((type) => updateCommand(type));
+        }
+        if (viewEvent.commandType == Base.CommandType.CloseStatus)
+        {
+            DestroyImmediate(_statusView.gameObject);
+            statusRoot.gameObject.SetActive(false);
         }
     }
 

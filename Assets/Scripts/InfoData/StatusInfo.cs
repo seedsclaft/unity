@@ -47,6 +47,11 @@ public class StatusInfo
             case StatusParamType.Spd: _spd += param; break;
         }
     }
+
+    public void Clear()
+    {
+        SetParameter(0,0,0,0,0);
+    }
 }
 
 public enum StatusParamType

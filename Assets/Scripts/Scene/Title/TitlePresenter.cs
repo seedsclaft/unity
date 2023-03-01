@@ -51,11 +51,12 @@ public class TitlePresenter
         switch ((TitleComandType)_view.titleCommandIndex){
             case TitleComandType.NewGame:
             _view.CommandInitSaveInfo();
-            //_view.CommandSceneChange(Scene.MainMenu);
-            _view.CommandSceneChange(Scene.Tactics);
+            _view.CommandSceneChange(Scene.MainMenu);
             //_view.CommandSceneChange(Scene.Battle);
             break;
             case TitleComandType.Continue:
+            SaveSystem.LoadStart();
+            _view.CommandSceneChange(Scene.Tactics);
             break;
             case TitleComandType.Option:
             break;

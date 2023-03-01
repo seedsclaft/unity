@@ -40,11 +40,14 @@ public class MainMenuPresenter
         }
         if (viewEvent.commandType == CommandType.StageSelect)
         {
-            if (viewEvent.templete != null)
-            {
-                
-                _view.CommandSceneChange(Scene.Status);
-            }
+            StatusViewInfo statusViewInfo = new StatusViewInfo(() => {
+                _view.CommandStatusClose();
+                _view.SetActiveUi(true);
+            });
+            statusViewInfo.SetDisplayDecideButton(true);
+            statusViewInfo.SetDisableStrength(true);
+            _view.CommandCallStatus(statusViewInfo);
+            _view.SetActiveUi(false);
         }
     }
 
