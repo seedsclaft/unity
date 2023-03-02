@@ -1,0 +1,119 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+using Strategy;
+using Effekseer;
+
+public class StrategyView : BaseView
+{
+    [SerializeField] private StrategyActorList strategyActorList = null; 
+    [SerializeField] private StrategyResultList strategyResultList = null; 
+    [SerializeField] private TacticsEnemyList tacticsEnemyList = null; 
+    [SerializeField] private EffekseerEmitter effekseerEmitter = null; 
+    [SerializeField] private SpriteRenderer backGround = null; 
+    [SerializeField] private GameObject helpRoot = null;
+    [SerializeField] private GameObject helpPrefab = null;
+    private HelpWindow _helpWindow = null;
+
+    private new System.Action<StrategyViewEvent> _commandData = null;
+
+    protected void Awake(){
+        InitializeInput();
+        Initialize();
+    }
+
+    void Initialize(){
+        new StrategyPresenter(this);
+    }
+
+    public void SetHelpWindow(){
+        GameObject prefab = Instantiate(helpPrefab);
+        prefab.transform.SetParent(helpRoot.transform, false);
+        _helpWindow = prefab.GetComponent<HelpWindow>();
+        _helpWindow.SetHelpText(DataSystem.System.SystemTextData.Find(a => a.Id == 11040).Text);
+    }
+
+    public void SetActors(List<ActorInfo> actorInfos)
+    {
+        strategyActorList.Initialize(actorInfos,null);
+        strategyActorList.gameObject.SetActive(false);
+    }
+
+    public void SetEvent(System.Action<StrategyViewEvent> commandData)
+    {
+        _commandData = commandData;
+        CallStrategyStart();
+    }
+    
+    private void CallStrategyStart(){
+        var eventData = new StrategyViewEvent(CommandType.StartStretegy);
+        _commandData(eventData);
+    }
+
+    public void StartResultAnimation(List<ActorInfo> actorInfos)
+    {
+        strategyActorList.StartResultAnimation(actorInfos,() => {
+            CallEndAnimation();
+        });
+    }
+
+    private void CallEndAnimation(){
+        var eventData = new StrategyViewEvent(CommandType.EndAnimation);
+        _commandData(eventData);
+    }
+
+    public void ShowResultList(List<GetItemInfo> getItemInfos,List<SystemData.MenuCommandData> confirmCommands)
+    {
+        strategyResultList.Initialize(getItemInfos);
+        SetInputHandler(strategyResultList.GetComponent<IInputHandlerEvent>());
+        strategyResultList.InitializeConfirm(confirmCommands,(confirmCommands) => CallResultCommand(confirmCommands));
+        
+        strategyResultList.gameObject.SetActive(true);
+    }
+
+    private void CallResultCommand(TacticsComandType commandType)
+    {
+        var eventData = new StrategyViewEvent(CommandType.ResultClose);
+        eventData.templete = commandType;
+        _commandData(eventData);
+    }
+
+    public void ShowEnemyList(List<BattlerInfo> enemyInfos,List<SystemData.MenuCommandData> confirmCommands)
+    {
+        tacticsEnemyList.Initialize(enemyInfos,null);
+        SetInputHandler(tacticsEnemyList.GetComponent<IInputHandlerEvent>());
+        tacticsEnemyList.InitializeConfirm(confirmCommands,(confirmCommands) => CallBattleCommand(confirmCommands));
+        
+        tacticsEnemyList.gameObject.SetActive(true);
+    }
+
+    private void CallBattleCommand(TacticsComandType commandType)
+    {
+        var eventData = new StrategyViewEvent(CommandType.BattleClose);
+        eventData.templete = commandType;
+        _commandData(eventData);
+    }
+}
+
+namespace Strategy
+{
+    public enum CommandType
+    {
+        None = 0,
+        StartStretegy = 1,
+        EndAnimation = 2,
+        ResultClose = 3,
+        BattleClose = 4
+    }
+}
+public class StrategyViewEvent
+{
+    public Strategy.CommandType commandType;
+    public object templete;
+
+    public StrategyViewEvent(Strategy.CommandType type)
+    {
+        commandType = type;
+    }
+}

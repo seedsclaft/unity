@@ -22,23 +22,24 @@ public class StatusModel : BaseModel
     }
     public ActorInfo CurrentActor
     {
-        get {return Actors()[_currentIndex];}
+        get {return StatusActors()[_currentIndex];}
     }
 
     public void ChangeActorIndex(int value){
         _currentIndex += value;
-        if (_currentIndex > Actors().Count-1){
+        if (_currentIndex > StatusActors().Count-1){
             _currentIndex = 0;
         } else
         if (_currentIndex < 0){
-            _currentIndex = Actors().Count-1;
+            _currentIndex = StatusActors().Count-1;
         }
     }
 
 
     
-    public List<ActorInfo> Actors(){
-        return GameSystem.CurrentData.Actors;
+    public List<ActorInfo> StatusActors(){
+        List<int> StatusActorIds = PartyInfo.ActorIdList;
+        return Actors().FindAll(a => StatusActorIds.Contains(a.ActorId));
     }
 
     public List<SkillInfo> SkillActionList(AttributeType attributeType)

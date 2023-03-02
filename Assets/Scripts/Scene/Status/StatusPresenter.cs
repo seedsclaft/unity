@@ -94,7 +94,7 @@ public class StatusPresenter
         {
             _backCommandType = Status.CommandType.None;
             _view.HideSkillActionList();
-            if (_model.Actors().Count > 1) _view.ShowArrows();
+            if (_model.StatusActors().Count > 1) _view.ShowArrows();
             _view.ShowCommandList();
             _view.ShowDecideButton();
         }
@@ -203,7 +203,7 @@ public class StatusPresenter
             ConfirmInfo confirmInfo = new ConfirmInfo(textData.Text,(menuCommandInfo) => updatePopup((ConfirmComandType)menuCommandInfo));
             _view.CommandCallConfirm(confirmInfo);
         } else{
-            if (_model.Actors().Count > 1) _view.ShowArrows();
+            if (_model.StatusActors().Count > 1) _view.ShowArrows();
             _view.ShowCommandList();
             _view.ShowDecideButton();
             _view.HideStrength();

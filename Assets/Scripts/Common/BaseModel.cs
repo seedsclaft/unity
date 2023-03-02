@@ -14,6 +14,10 @@ public class BaseModel
 
     public int Turns{get {return CurrentData.CurrentStage.Turns - CurrentData.CurrentStage.CurrentTurn - 1;}}
     
+    public List<ActorInfo> Actors()
+    {
+        return GameSystem.CurrentData.Actors;
+    }
     public List<SystemData.MenuCommandData> ConfirmCommand()
     {
         List<SystemData.MenuCommandData> menuCommandDatas = new List<SystemData.MenuCommandData>();

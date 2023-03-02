@@ -6,6 +6,9 @@ using UnityEngine;
 public class PartyInfo 
 {
     private List<int> _actorIdList = new List<int>();
+    public List<int> ActorIdList {
+        get {return _actorIdList;}
+    }
     private int _currency = 0;
     public int Currency {get {return _currency;}}
     private List<int> _alchemyIdList = new List<int>();

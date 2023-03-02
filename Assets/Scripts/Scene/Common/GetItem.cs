@@ -9,7 +9,9 @@ using TMPro;
 public class GetItem : ListItem ,IListViewItem ,IClickHandlerEvent 
 {
     [SerializeField] private Image iconImage;
-    [SerializeField] private TextMeshProUGUI nameText;
+    [SerializeField] private TextMeshProUGUI titleName;
+    [SerializeField] private TextMeshProUGUI skillName;
+    [SerializeField] private TextMeshProUGUI resultName;
     private GetItemInfo _data; 
     private int _index; 
     private EventTrigger eventTrigger;

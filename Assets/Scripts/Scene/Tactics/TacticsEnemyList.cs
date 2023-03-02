@@ -9,6 +9,7 @@ using TMPro;
 
 public class TacticsEnemyList : ListWindow , IInputHandlerEvent
 {
+    [SerializeField] private TacticsCommandList tacticsCommandList;
     [SerializeField] private int rows = 0;
     [SerializeField] private int cols = 0;
     private List<BattlerInfo> _enemyInfos = new List<BattlerInfo>();
@@ -39,7 +40,9 @@ public class TacticsEnemyList : ListWindow , IInputHandlerEvent
 
     public void InitializeConfirm(List<SystemData.MenuCommandData> confirmCommands ,System.Action<TacticsComandType> callEvent)
     {
+        tacticsCommandList.Initialize(confirmCommands,callEvent);
     }
+
 
     public void Refresh()
     {

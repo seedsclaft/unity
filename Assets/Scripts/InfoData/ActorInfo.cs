@@ -51,6 +51,8 @@ public class ActorInfo
     private int _nextBattleEnemyIndex = 0;
     public int NextBattleEnemyIndex {get {return _nextBattleEnemyIndex;}}
 
+    private bool _inBattle = false;
+    public bool InBattle {get {return _inBattle;} set {_inBattle = value;}}
 // Status
     private int _sp = 0;
     public int Sp {get {return _sp;}}
@@ -84,6 +86,18 @@ public class ActorInfo
             SkillInfo skillInfo = new SkillInfo(_learningData.SkillId);
             _skills.Add(skillInfo);
         }
+    }
+
+    public void LevelUp()
+    {
+        _level++;
+        _sp += 10;
+    }
+
+    public void LearnSkill(int skillId)
+    {
+        SkillInfo skillInfo = new SkillInfo(skillId);
+        _skills.Add(skillInfo);
     }
 
     public void RefreshTacticsEnable(TacticsComandType tacticsComandType,bool enable)
@@ -158,5 +172,15 @@ public class ActorInfo
     private int CurrentParameter(StatusParamType statusParamType)
     {
         return _baseStatus.GetParameter(statusParamType) + _plusStatus.GetParameter(statusParamType);
+    }
+
+    public void ChangeHp(int hp)
+    {
+        _currentHp = hp;
+    }
+
+    public void ChangeMp(int mp)
+    {
+        _currentMp = mp;
     }
 }
