@@ -18,7 +18,7 @@ public class PartyInfo
 
     public void AddActor(int actorId)
     {
-        if (_actorIdList.IndexOf(actorId) == -1)
+        if (_actorIdList.IndexOf(actorId) != -1)
         {
             return;
         }
@@ -27,7 +27,7 @@ public class PartyInfo
 
     public void RemoveActor(int actorId)
     {
-        if (_actorIdList.IndexOf(actorId) != -1)
+        if (_actorIdList.IndexOf(actorId) == -1)
         {
             return;
         }

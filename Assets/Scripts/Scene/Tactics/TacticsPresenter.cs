@@ -168,8 +168,8 @@ public class TacticsPresenter
         {
             _model.CurrentActorId = actorId;
             _model.CommandType = tacticsComandType;
-            TextData mainTextData = DataSystem.System.SystemTextData.Find(a => a.Id == 1030);
-            TextData textData = DataSystem.System.SystemTextData.Find(a => a.Id == (int)tacticsComandType);
+            TextData mainTextData = DataSystem.System.GetTextData(1030);
+            TextData textData = DataSystem.System.GetTextData((int)tacticsComandType);
             string mainText = mainTextData.Text.Replace("\\d",textData.Text);
             var popupInfo = new ConfirmInfo(_model.TacticsActor(actorId).Master.Name + mainText,(menuCommandInfo) => UpdatePopup((ConfirmComandType)menuCommandInfo));
             _view.CommandCallConfirm(popupInfo);
@@ -211,8 +211,7 @@ public class TacticsPresenter
             if (_model.CommandType == TacticsComandType.Turnend)
             {
                 _model.TurnEnd();
-                SaveSystem.SaveStart(GameSystem.CurrentData);
-                //_view.CommandSceneChange(Scene.Status);
+                _view.CommandSceneChange(Scene.Strategy);
             }
         }
         _view.CommandConfirmClose();
@@ -273,11 +272,12 @@ public class TacticsPresenter
             });
             CommandHideUi();
             _view.CommandCallStatus(statusViewInfo);
+            SaveSystem.SaveStart(GameSystem.CurrentData);
         }
         if (tacticsComandType == TacticsComandType.Turnend)
         {
-            TextData textData = DataSystem.System.SystemTextData.Find(a => a.Id == 1040);
-            TextData subData = DataSystem.System.SystemTextData.Find(a => a.Id == 1050);
+            TextData textData = DataSystem.System.GetTextData(1040);
+            TextData subData = DataSystem.System.GetTextData(1050);
             string mainText = textData.Text;
             if (_model.CheckNonBusy())
             {

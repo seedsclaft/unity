@@ -44,41 +44,38 @@ public class StrategyModel : BaseModel
             GetItemInfo getItemInfo = new GetItemInfo();
             if (actorInfos[i].TacticsComandType == TacticsComandType.Train)
             {
+                getItemInfo.SetTitleData(DataSystem.System.GetTextData(3000).Text.Replace("\\d",actorInfos[i].Master.Name));
                 actorInfos[i].LevelUp();
-                getItemInfo.SetTitleData(actorInfos[i].Master.Name);
-                getItemInfo.SetResultData("レベルアップ！");
+                getItemInfo.SetResultData(DataSystem.System.GetTextData(3001).Text.Replace("\\d",actorInfos[i].Level.ToString()));
                 actorInfos[i].ClearTacticsCommand();
-                PartyInfo.AddActor(actorInfos[i].ActorId);
             }
             if (actorInfos[i].TacticsComandType == TacticsComandType.Alchemy)
             {
+                getItemInfo.SetTitleData(DataSystem.System.GetTextData(3000).Text.Replace("\\d",actorInfos[i].Master.Name));
                 actorInfos[i].LearnSkill(actorInfos[i].NextLearnSkillId);
-                getItemInfo.SetTitleData(actorInfos[i].Master.Name);
                 SkillsData.SkillData skillData = DataSystem.Skills.Find(a => a.Id == actorInfos[i].NextLearnSkillId);
-                getItemInfo.SetSkillData((int)skillData.Attribute,skillData.Name);
-                getItemInfo.SetResultData("を習得！");
+                getItemInfo.SetAttributeType((int)skillData.Attribute);
+                getItemInfo.SetResultData(skillData.Name + DataSystem.System.GetTextData(3002).Text);
                 actorInfos[i].ClearTacticsCommand();
-                PartyInfo.AddActor(actorInfos[i].ActorId);
             }
             if (actorInfos[i].TacticsComandType == TacticsComandType.Recovery)
             {
-                getItemInfo.SetTitleData(actorInfos[i].Master.Name);
+                getItemInfo.SetTitleData(DataSystem.System.GetTextData(3010).Text.Replace("\\d",actorInfos[i].Master.Name));
                 int Hp = Mathf.Min(actorInfos[i].CurrentHp + actorInfos[i].TacticsCost * 10,actorInfos[i].MaxHp);
                 int Mp = Mathf.Min(actorInfos[i].CurrentMp + actorInfos[i].TacticsCost * 10,actorInfos[i].MaxMp);
                 actorInfos[i].ChangeHp(Hp);
                 actorInfos[i].ChangeMp(Mp);
-                getItemInfo.SetResultData("回復！");
+                getItemInfo.SetResultData(DataSystem.System.GetTextData(3011).Text);
                 actorInfos[i].ClearTacticsCommand();
-                PartyInfo.AddActor(actorInfos[i].ActorId);
             }
             if (actorInfos[i].TacticsComandType == TacticsComandType.Resource)
             {
-                getItemInfo.SetTitleData(actorInfos[i].Master.Name);
+                getItemInfo.SetTitleData(DataSystem.System.GetTextData(3020).Text.Replace("\\d",actorInfos[i].Master.Name));
                 PartyInfo.ChangeCurrency(Currency + TacticsUtility.ResourceCost(actorInfos[i]));
-                getItemInfo.SetResultData("Numinouseが回復！");
+                getItemInfo.SetResultData(DataSystem.System.GetTextData(3021).Text.Replace("\\d",TacticsUtility.ResourceCost(actorInfos[i]).ToString()));
                 actorInfos[i].ClearTacticsCommand();
-                PartyInfo.AddActor(actorInfos[i].ActorId);
             }
+            PartyInfo.AddActor(actorInfos[i].ActorId);
             getItemInfos.Add(getItemInfo);
         }
         return getItemInfos;

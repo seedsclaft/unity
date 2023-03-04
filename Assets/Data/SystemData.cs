@@ -11,6 +11,11 @@ public class SystemData : ScriptableObject
 	public int InitCurrency;
 	public List<TextData> SystemTextData;
 
+	public TextData GetTextData(int id)
+	{
+		return SystemTextData.Find(a => a.Id == id);
+	}
+
 	[System.SerializableAttribute]
 	public class MenuCommandData
 	{

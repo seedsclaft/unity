@@ -17,7 +17,7 @@ public class StrengthComponent : MonoBehaviour
         
         if (nameText != null)
         {
-            TextData textData = DataSystem.System.SystemTextData.Find(a => a.Id == statusId + 300);
+            TextData textData = DataSystem.System.GetTextData(300 + statusId);
             nameText.text = textData.Text;
         }
         if (currentStatus != null)

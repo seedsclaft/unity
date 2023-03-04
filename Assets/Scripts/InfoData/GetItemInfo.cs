@@ -4,19 +4,26 @@ using UnityEngine;
 
 public class GetItemInfo 
 {
-    private int _attributeType = -1;
+    private int _attributeType = 0;
+    public int AttributeType{
+        get {return _attributeType;}
+    }
     private string _titleName = "";
-    private string _itemName = "";
+    public string TitleName{
+        get {return _titleName;}
+    }
     private string _resultName = "";
+    public string ResultName{
+        get {return _resultName;}
+    }
 
     public GetItemInfo()
     {
     }
 
-    public void SetSkillData(int attributeType,string itemName)
+    public void SetAttributeType(int attributeType)
     {
         _attributeType = attributeType;
-        _itemName = itemName;
     }
     public void SetTitleData(string titleName)
     {
@@ -34,8 +41,4 @@ public class GetItemInfo
         return _attributeType > 0;
     }
 
-    public string GetItemName()
-    {
-        return _itemName;
-    }
 }

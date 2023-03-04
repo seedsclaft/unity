@@ -199,7 +199,7 @@ public class StatusPresenter
         if (confirmComandType == ConfirmComandType.Yes)
         {
             _popupCommandType = Status.CommandType.StrengthClose;
-            TextData textData = DataSystem.System.SystemTextData.Find(a => a.Id == 2000);
+            TextData textData = DataSystem.System.GetTextData(2000);
             ConfirmInfo confirmInfo = new ConfirmInfo(textData.Text,(menuCommandInfo) => updatePopup((ConfirmComandType)menuCommandInfo));
             _view.CommandCallConfirm(confirmInfo);
         } else{

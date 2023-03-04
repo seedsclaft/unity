@@ -10,6 +10,7 @@ public class GetItemList : ListWindow , IInputHandlerEvent
     [SerializeField] private int cols = 0;
     private List<GetItemInfo> _data = new List<GetItemInfo>();
 
+    [SerializeField] private TacticsCommandList tacticsCommandList;
     public int selectIndex{
         get {return Index;}
     }
@@ -53,5 +54,10 @@ public class GetItemList : ListWindow , IInputHandlerEvent
         {
             //_helpWindow.SetHelpText(_data[Index].Help);
         }
+    }
+    
+    public void InitializeConfirm(List<SystemData.MenuCommandData> confirmCommands ,System.Action<TacticsComandType> callEvent)
+    {
+        tacticsCommandList.Initialize(confirmCommands,callEvent);
     }
 }

@@ -1,51 +1,40 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class StrategyActorList: ListWindow , IInputHandlerEvent
+public class StrategyActorList : MonoBehaviour
 {   
     [SerializeField] private int rows = 0;
-    [SerializeField] private int cols = 0;
+    [SerializeField] private GameObject actorPrefab = null;
+    [SerializeField] private List<GameObject> actorRoots = null;
+
     private List<ActorInfo> _data = new List<ActorInfo>();
 
-    public void Initialize(List<ActorInfo> actors,System.Action<ActorInfo> callEvent)
+    private List<StrategyActor> _comps = new List<StrategyActor>();
+    public void Initialize()
     {
-        InitializeListView(cols);
-        for (int i = 0; i < ObjectList.Count;i++)
+        for (int i = 0; i < rows;i++)
         {
-            ObjectList[i].SetActive(false);
-            if (i < actors.Count)
-            {
-                var actor = ObjectList[i].GetComponent<StrategyActor>();
-                actor.SetData(actors[i]);
-                ObjectList[i].SetActive(true);
-            }
+            var prefab = Instantiate(actorPrefab);
+            prefab.transform.SetParent(actorRoots[i].transform, false);
+            _comps.Add(prefab.GetComponent<StrategyActor>());
         }
-        UpdateAllItems();
-    }
-    public new void InputHandler(InputKeyType keyType)
-    {
-        if (!IsInputEnable())
-        {
-            return;
-        }
-        ResetInputFrame();
     }
 
     public void StartResultAnimation(List<ActorInfo> actors,System.Action callEvent)
     {
-        for (int i = 0; i < ObjectList.Count;i++)
+        for (int i = 0; i < _comps.Count;i++)
         {
-            ObjectList[i].SetActive(false);
+            _comps[i].gameObject.SetActive(false);
             if (i < actors.Count)
             {
-                ObjectList[i].SetActive(true);
-                var actor = ObjectList[i].GetComponent<StrategyActor>();
-                actor.SetData(actors[i]);
-                actor.StartResultAnimation(i);
-                if (i == ObjectList.Count-1)
+                _comps[i].SetData(actors[i]);
+                _comps[i].StartResultAnimation(i);
+                _comps[i].gameObject.SetActive(true);
+                if (i == actors.Count-1)
                 {
-                    actor.SetEndCallEvent(callEvent);
+                    _comps[i].SetEndCallEvent(callEvent);
                 }
             }
         }

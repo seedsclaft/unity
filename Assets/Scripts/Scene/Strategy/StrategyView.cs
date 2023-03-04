@@ -8,7 +8,7 @@ using Effekseer;
 public class StrategyView : BaseView
 {
     [SerializeField] private StrategyActorList strategyActorList = null; 
-    [SerializeField] private StrategyResultList strategyResultList = null; 
+    [SerializeField] private GetItemList strategyResultList = null; 
     [SerializeField] private TacticsEnemyList tacticsEnemyList = null; 
     [SerializeField] private EffekseerEmitter effekseerEmitter = null; 
     [SerializeField] private SpriteRenderer backGround = null; 
@@ -31,19 +31,25 @@ public class StrategyView : BaseView
         GameObject prefab = Instantiate(helpPrefab);
         prefab.transform.SetParent(helpRoot.transform, false);
         _helpWindow = prefab.GetComponent<HelpWindow>();
-        _helpWindow.SetHelpText(DataSystem.System.SystemTextData.Find(a => a.Id == 11040).Text);
+        _helpWindow.SetHelpText(DataSystem.System.GetTextData(11040).Text);
     }
 
     public void SetActors(List<ActorInfo> actorInfos)
     {
-        strategyActorList.Initialize(actorInfos,null);
+        strategyActorList.Initialize();
         strategyActorList.gameObject.SetActive(false);
+    }
+
+    public void SetResultList(List<SystemData.MenuCommandData> confirmCommands)
+    {
+        strategyResultList.Initialize();
+        strategyResultList.gameObject.SetActive(false);
+        strategyResultList.InitializeConfirm(confirmCommands,(confirmCommands) => CallResultCommand(confirmCommands));
     }
 
     public void SetEvent(System.Action<StrategyViewEvent> commandData)
     {
         _commandData = commandData;
-        CallStrategyStart();
     }
     
     private void CallStrategyStart(){
@@ -53,6 +59,7 @@ public class StrategyView : BaseView
 
     public void StartResultAnimation(List<ActorInfo> actorInfos)
     {
+        strategyActorList.gameObject.SetActive(true);
         strategyActorList.StartResultAnimation(actorInfos,() => {
             CallEndAnimation();
         });
@@ -63,12 +70,10 @@ public class StrategyView : BaseView
         _commandData(eventData);
     }
 
-    public void ShowResultList(List<GetItemInfo> getItemInfos,List<SystemData.MenuCommandData> confirmCommands)
+    public void ShowResultList(List<GetItemInfo> getItemInfos)
     {
-        strategyResultList.Initialize(getItemInfos);
-        SetInputHandler(strategyResultList.GetComponent<IInputHandlerEvent>());
-        strategyResultList.InitializeConfirm(confirmCommands,(confirmCommands) => CallResultCommand(confirmCommands));
-        
+        //SetInputHandler(strategyResultList.GetComponent<IInputHandlerEvent>());
+        strategyResultList.Refresh(getItemInfos);
         strategyResultList.gameObject.SetActive(true);
     }
 

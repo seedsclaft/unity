@@ -63,7 +63,7 @@ MonoBehaviour:
     Key: OPTION
     Name: Option
     Help: "\u30B2\u30FC\u30E0\u306E\u8A2D\u5B9A\u3092\u5909\u66F4\u3057\u307E\u3059"
-  InitActors: 01000000
+  InitActors: 0100000002000000030000000400000005000000
   InitCurrency: 10
   SystemTextData:
   - Id: 1
@@ -146,6 +146,27 @@ MonoBehaviour:
     Help: '""'
   - Id: 2000
     Text: "\u7D44\u7E54\u958B\u767A\u3092\u78BA\u5B9A\u3057\u307E\u3059\u304B\uFF1F\n\uFF01\u4E00\u5EA6\u5272\u308A\u632F\u3063\u305FSP\u306F\u623B\u305B\u307E\u305B\u3093\uFF01"
+    Help: '""'
+  - Id: 3000
+    Text: "\\d\u306F"
+    Help: '""'
+  - Id: 3001
+    Text: "Lv.\\d\u306B\u30EC\u30D9\u30EB\u30A2\u30C3\u30D7\uFF01"
+    Help: '""'
+  - Id: 3002
+    Text: "\u3092\u7FD2\u5F97\uFF01"
+    Help: '""'
+  - Id: 3010
+    Text: "\\d\u306E"
+    Help: '""'
+  - Id: 3011
+    Text: "HP\u3068MP\u304C\u56DE\u5FA9\u3057\u305F\uFF01"
+    Help: '""'
+  - Id: 3020
+    Text: "\\d\u306B\u3088\u308A"
+    Help: '""'
+  - Id: 3021
+    Text: "Numinous\u304C\\d\u56DE\u5FA9\u3057\u305F\uFF01"
     Help: '""'
   - Id: 11010
     Text: "\u7D42\u7109\u307E\u3067 :"

@@ -4,13 +4,13 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using UnityEngine.Events;
+using UnityEngine.AddressableAssets;
 using TMPro;
 
 public class GetItem : ListItem ,IListViewItem ,IClickHandlerEvent 
 {
     [SerializeField] private Image iconImage;
     [SerializeField] private TextMeshProUGUI titleName;
-    [SerializeField] private TextMeshProUGUI skillName;
     [SerializeField] private TextMeshProUGUI resultName;
     private GetItemInfo _data; 
     private int _index; 
@@ -46,6 +46,22 @@ public class GetItem : ListItem ,IListViewItem ,IClickHandlerEvent
     public void UpdateViewItem()
     {
         if (_data == null) return;
+        if (iconImage != null)
+        {
+            iconImage.gameObject.SetActive(_data.IsSkill());
+            if (_data.IsSkill()) UpdateElementIcon(_data.AttributeType);
+        }
+        if (titleName != null)
+        {
+            titleName.gameObject.SetActive(_data.TitleName != "");
+            titleName.text = _data.TitleName;
+        }
+        if (resultName != null)
+        {
+            resultName.gameObject.SetActive(_data.ResultName != "");
+            resultName.text = _data.ResultName;
+            resultName.rectTransform.sizeDelta = new Vector2(resultName.preferredWidth,resultName.preferredHeight);
+        }
     }
 
     public void ClickHandler()
@@ -55,4 +71,13 @@ public class GetItem : ListItem ,IListViewItem ,IClickHandlerEvent
     void OnMyPointerEnter(BaseEventData data) {
         _selectHandler(_index);
 	}
+
+    private void UpdateElementIcon(int index)
+    {
+        Addressables.LoadAssetAsync<IList<Sprite>>(
+            "Assets/Images/System/ElementIcon.png"
+        ).Completed += op => {
+            iconImage.sprite = op.Result[index];
+        };
+    }
 }

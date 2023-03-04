@@ -26,7 +26,7 @@ public class MainMenuView : BaseView
         GameObject prefab = Instantiate(helpPrefab);
         prefab.transform.SetParent(helpRoot.transform, false);
         _helpWindow = prefab.GetComponent<HelpWindow>();
-        _helpWindow.SetHelpText(DataSystem.System.SystemTextData.Find(a => a.Id == 11040).Text);
+        _helpWindow.SetHelpText(DataSystem.System.GetTextData(11040).Text);
     }
 
     public void SetEvent(System.Action<MainMenuViewEvent> commandData)

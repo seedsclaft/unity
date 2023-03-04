@@ -107,9 +107,9 @@ public class SavePlayInfo
 
 	public void MakeStageData(int actorId)
 	{
-		InitActors();
-		_party.InitActors();
-		AddActor(actorId);
+		//InitActors();
+		//_party.InitActors();
+		//AddActor(actorId);
 		int stageId = _party.StageId;
 		StagesData.StageData stageData = DataSystem.Stages.Find(a => a.Id == stageId);
 		_currentStage = new StageInfo(stageData);

@@ -10,7 +10,7 @@ public class SystemTextComponent : MonoBehaviour
     public void Awake(){
         if (id != 0)
         {
-            TextData textData = DataSystem.System.SystemTextData.Find(a => a.Id == id);
+            TextData textData = DataSystem.System.GetTextData(id);
             TextMeshProUGUI textMeshPro = gameObject.GetComponent<TextMeshProUGUI>();
             if (textMeshPro != null)
             {
