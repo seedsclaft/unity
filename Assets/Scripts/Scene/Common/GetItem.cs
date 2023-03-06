@@ -77,7 +77,7 @@ public class GetItem : ListItem ,IListViewItem ,IClickHandlerEvent
         Addressables.LoadAssetAsync<IList<Sprite>>(
             "Assets/Images/System/ElementIcon.png"
         ).Completed += op => {
-            iconImage.sprite = op.Result[index];
+            iconImage.sprite = op.Result[index-1];
         };
     }
 }

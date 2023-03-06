@@ -8,28 +8,8 @@ using System.Threading.Tasks;
 
 public class MainMenuModel : BaseModel
 {
-    
-    public List<ActorInfo> MenuActors(){
-        return GameSystem.CurrentData.Actors;
-    }
-
     public List<StageInfo> Stages(){
         return GameSystem.CurrentData.Stages;
-    }
-
-    public List<Sprite> ActorsImage(List<ActorInfo> actors){
-        var sprites = new List<Sprite>();
-        for (var i = 0;i < actors.Count;i++)
-        {
-            var actorData = DataSystem.Actors.Find(actor => actor.Id == actors[i].ActorId);
-            var asset = Addressables.LoadAssetAsync<Sprite>(
-                "Assets/Images/Actors/" + actorData.ImagePath + "/main.png"
-            );
-            asset.WaitForCompletion();
-            sprites.Add(asset.Result);
-            Addressables.Release(asset);
-        }
-        return sprites;
     }
     
     public async Task<List<AudioClip>> BgmData(){

@@ -17,18 +17,21 @@ public class TacticsEnemyList : ListWindow , IInputHandlerEvent
     public int selectIndex{
         get {return Index;}
     }
-
-
-    public void Initialize(List<BattlerInfo> enemyDatas,System.Action<int> callEvent)
+    public void Initialize()
     {
-        InitializeListView(rows);
+        InitializeListView(cols);
+    }
+
+    public void Refresh(List<BattlerInfo> enemyDatas,List<List<GetItemInfo>> getItemInfoLists,System.Action<int> callEvent)
+    {
         _enemyInfos = enemyDatas;
-        for (int i = 0; i < rows;i++)
+        for (int i = 0; i < cols;i++)
         {
             var tacticsEnemy = ObjectList[i].GetComponent<TacticsEnemy>();
             if (i < _enemyInfos.Count)
             {
                 tacticsEnemy.SetData(enemyDatas[i],i);
+                tacticsEnemy.SetGetItemList(getItemInfoLists[i]);
             }
             tacticsEnemy.SetCallHandler(callEvent);
             tacticsEnemy.SetSelectHandler((data) => UpdateSelectIndex(data));

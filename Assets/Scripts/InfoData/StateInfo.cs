@@ -11,6 +11,7 @@ public class StateInfo {
     private int _turns = 0;
     public int Turns{ get {return _turns;} set {_turns = value;}}
     private int _baseTurns = 0;
+    public int BaseTurns{ get {return _baseTurns;}}
     private int _effect = 0;
     public int Effect{ get {return _effect;} }
     private int _battlerId = 0;

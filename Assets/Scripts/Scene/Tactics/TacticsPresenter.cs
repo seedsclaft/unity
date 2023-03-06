@@ -32,7 +32,7 @@ public class TacticsPresenter
         //List<ActorInfo> actorInfos = _model.Actors();
         //_view.SetActorInfo(_model.CurrentActor);
         _view.SetActors(_model.Actors(),_model.ConfirmCommand());
-        _view.SetEnemies(_model.Enemies());
+        _view.SetEnemies(_model.TacticsEnemies(),_model.TacticsGetItemInfos());
 
         _view.SetTacticsCommand(_model.TacticsCommand);
         _view.SetAttributeTypes(_model.AttributeTypes());
@@ -50,6 +50,10 @@ public class TacticsPresenter
                 if (stageEvents[i].Type == StageEventType.CommandDisable)
                 {
                     _view.SetCommandDisable(stageEvents[i].Param);
+                }
+                if (stageEvents[i].Type == StageEventType.TutorialBattle)
+                {
+                    _view.SetEnemies(_model.TacticsTutorialEnemies(),_model.TacticsTutorialGetItemInfos());
                 }
             }
         }
@@ -403,6 +407,10 @@ public class TacticsPresenter
     {
         if (confirmComandType == ConfirmComandType.Yes)
         {
+            _view.HideBattleList();
+            _view.ShowEnemyList();
+            _view.SetActiveBack(true);
+            _backCommand = Tactics.CommandType.EnemyClose;
         } else{
             _model.ResetTempData(TacticsComandType.Battle);
             _view.HideBattleList();

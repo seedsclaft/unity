@@ -40,25 +40,93 @@ public class TacticsModel : BaseModel
         return GameSystem.CurrentData.CurrentStage.StageEvents.FindAll(a => a.Timing == eventTiming && a.Turns == CurrentTurn);
     }
 
-    public List<ActorInfo> Actors()
-    {
-        return GameSystem.CurrentData.Actors;
-    }
-
     public ActorInfo TacticsActor(int actorId)
     {
         return Actors().Find(a => a.ActorId == actorId);
     }
 
-    public List<BattlerInfo> Enemies()
+    private List<BattlerInfo> _tacticalEnemies = new List<BattlerInfo>();
+    public List<BattlerInfo> TacticsEnemies()
     {
+        if (_tacticalEnemies.Count > 0) return _tacticalEnemies;
         List<BattlerInfo> battlerInfos = new List<BattlerInfo>();
-        EnemiesData.EnemyData enemyData = DataSystem.Enemies.Find(a => a.Id == 1);
-        BattlerInfo battlerInfo = new BattlerInfo(enemyData,1,0,0);
-        battlerInfos.Add(battlerInfo);
+        List<TroopsData.TroopData> tacticsEnemyDatas = GameSystem.CurrentData.CurrentStage.TacticsEnemies();
+        for (int i = 0;i < tacticsEnemyDatas.Count;i++)
+        {
+            EnemiesData.EnemyData enemyData = DataSystem.Enemies.Find(a => a.Id == tacticsEnemyDatas[i].EnemyId);
+            BattlerInfo battlerInfo = new BattlerInfo(enemyData,tacticsEnemyDatas[i].Lv,0,0);
+            battlerInfos.Add(battlerInfo);
+        }
+        _tacticalEnemies = battlerInfos;
         return battlerInfos;
     }
 
+    public List<List<GetItemInfo>> TacticsGetItemInfos()
+    {
+        List<List<GetItemInfo>> getItemDataLists = new List<List<GetItemInfo>>();
+        List<TroopsData.TroopData> tacticsEnemyDatas = GameSystem.CurrentData.CurrentStage.TacticsEnemies();
+        for (int i = 0;i < tacticsEnemyDatas.Count;i++)
+        {
+            List<GetItemInfo> getItemInfos = new List<GetItemInfo>();
+            List<GetItemData> getItemDatas = tacticsEnemyDatas[i].GetItemDatas;
+            for (int j = 0;j < getItemDatas.Count;j++)
+            {
+                GetItemInfo getItemInfo = new GetItemInfo();
+                if (getItemDatas[j].Type == GetItemType.Skill)
+                {
+                    getItemInfo.SetAttributeType((int)getItemDatas[j].Type);
+                    SkillsData.SkillData skillData = DataSystem.Skills.Find(a => a.Id == getItemDatas[j].Param1);
+                    getItemInfo.SetResultData(skillData.Name);
+                }
+                getItemInfos.Add(getItemInfo);
+            }
+            getItemDataLists.Add(getItemInfos);
+        }
+        return getItemDataLists;
+    }
+
+    public List<BattlerInfo> TacticsTutorialEnemies()
+    {
+        List<BattlerInfo> battlerInfos = new List<BattlerInfo>();
+        TroopsData.TroopData troopData = DataSystem.Troops.Find(a => a.TroopId == CurrentData.CurrentStage.SelectActorIds[0] * 10 && a.Line == 1);
+        List<TroopsData.TroopData> tacticsEnemyDatas = new List<TroopsData.TroopData>();
+        tacticsEnemyDatas.Add(troopData);
+        for (int i = 0;i < tacticsEnemyDatas.Count;i++)
+        {
+            EnemiesData.EnemyData enemyData = DataSystem.Enemies.Find(a => a.Id == tacticsEnemyDatas[i].EnemyId);
+            BattlerInfo battlerInfo = new BattlerInfo(enemyData,tacticsEnemyDatas[i].Lv,0,0);
+            battlerInfos.Add(battlerInfo);
+        }
+        _tacticalEnemies = battlerInfos;
+        return battlerInfos;
+    }
+
+    public List<List<GetItemInfo>> TacticsTutorialGetItemInfos()
+    {
+        List<List<GetItemInfo>> getItemDataLists = new List<List<GetItemInfo>>();
+        
+        List<TroopsData.TroopData> tacticsEnemyDatas = new List<TroopsData.TroopData>();
+        TroopsData.TroopData troopData = DataSystem.Troops.Find(a => a.TroopId == CurrentData.CurrentStage.SelectActorIds[0] * 10 && a.Line == 1);
+        tacticsEnemyDatas.Add(troopData);
+        for (int i = 0;i < tacticsEnemyDatas.Count;i++)
+        {
+            List<GetItemInfo> getItemInfos = new List<GetItemInfo>();
+            List<GetItemData> getItemDatas = tacticsEnemyDatas[i].GetItemDatas;
+            for (int j = 0;j < getItemDatas.Count;j++)
+            {
+                GetItemInfo getItemInfo = new GetItemInfo();
+                if (getItemDatas[j].Type == GetItemType.Skill)
+                {
+                    getItemInfo.SetAttributeType((int)getItemDatas[j].Type);
+                    SkillsData.SkillData skillData = DataSystem.Skills.Find(a => a.Id == getItemDatas[j].Param1);
+                    getItemInfo.SetResultData(skillData.Name);
+                }
+                getItemInfos.Add(getItemInfo);
+            }
+            getItemDataLists.Add(getItemInfos);
+        }
+        return getItemDataLists;
+    }
 
     public List<SkillInfo> SkillActionList(AttributeType attributeType)
     {
@@ -69,37 +137,9 @@ public class TacticsModel : BaseModel
         return CurrentActor.Skills.FindAll(a => a.Attribute == _currentAttributeType);
     }
 
-    public List<AttributeType> AttributeTypes()
-    {
-        List<AttributeType> attributeTypes = new List<AttributeType>();
-        foreach(var attribute in Enum.GetValues(typeof(AttributeType)))
-        {
-            if ((int)attribute != 0)
-            {
-                attributeTypes.Add((AttributeType)attribute);
-            }
-        } 
-        return attributeTypes;
-    }
-
     public List<SystemData.MenuCommandData> TacticsCommand
     {
         get { return DataSystem.TacticsCommand;}
-    }
-
-    public List<Sprite> ActorsImage(List<ActorInfo> actors){
-        var sprites = new List<Sprite>();
-        for (var i = 0;i < actors.Count;i++)
-        {
-            var actorData = DataSystem.Actors.Find(actor => actor.Id == actors[i].ActorId);
-            var asset = Addressables.LoadAssetAsync<Sprite>(
-                "Assets/Images/Actors/" + actorData.ImagePath + "/main.png"
-            );
-            asset.WaitForCompletion();
-            sprites.Add(asset.Result);
-            Addressables.Release(asset);
-        }
-        return sprites;
     }
     
     public async Task<List<AudioClip>> BgmData(){
@@ -345,7 +385,7 @@ public class TacticsModel : BaseModel
                 if (CanTacticsCommand(TacticsComandType.Recovery,actorInfo))
                 {   
                     actorInfo.SetTacticsCommand(TacticsComandType.Battle,0);
-                    actorInfo.SetNextBattleEnemyIndex(Enemies()[_currentEnemyIndex].EnemyData.Id);
+                    actorInfo.SetNextBattleEnemyIndex(TacticsEnemies()[_currentEnemyIndex].EnemyData.Id);
                 }
             }
         }

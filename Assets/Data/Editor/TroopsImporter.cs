@@ -17,6 +17,14 @@ public class TroopsImporter : AssetPostprocessor {
 		Lv,
 		Line,
     }
+	enum BaseGetItemColumn
+    {		
+		Id,
+		TroopId,
+		Type,
+		Param1,
+		Param2,
+    }
 	static readonly string ExcelPath = "Assets/Data";
 	static readonly string ExcelName = "Troops.xlsx";
 
@@ -87,9 +95,26 @@ public class TroopsImporter : AssetPostprocessor {
 					TroopData.EnemyId = (int)Baserow.GetCell((int)BaseColumn.EnemyId)?.SafeNumericCellValue();
 					TroopData.Lv = (int)Baserow.GetCell((int)BaseColumn.Lv)?.SafeNumericCellValue();
 					TroopData.Line = (int)Baserow.GetCell((int)BaseColumn.Line)?.SafeNumericCellValue();
+					TroopData.GetItemDatas = new List<GetItemData>();
 					Data._data.Add(TroopData);
 				}
 
+				BaseSheet = Book.GetSheetAt(1);
+				for (int i = 1; i <= BaseSheet.LastRowNum; i++)
+				{
+					IRow Baserow = BaseSheet.GetRow(i);
+					int Id = (int)Baserow.GetCell((int)BaseGetItemColumn.Id)?.SafeNumericCellValue();
+					int TroopId = (int)Baserow.GetCell((int)BaseGetItemColumn.TroopId)?.SafeNumericCellValue();
+					var troopData = Data._data.Find(a => a.TroopId == TroopId && a.Line == 1);
+					if (troopData != null)
+					{
+						var getItemData = new GetItemData();
+						getItemData.Type = (GetItemType)Baserow.GetCell((int)BaseGetItemColumn.Type)?.SafeNumericCellValue();
+						getItemData.Param1 = (int)Baserow.GetCell((int)BaseGetItemColumn.Param1)?.SafeNumericCellValue();
+						getItemData.Param2 = (int)Baserow.GetCell((int)BaseGetItemColumn.Param2)?.SafeNumericCellValue();
+						troopData.GetItemDatas.Add(getItemData);
+					}
+				}
 			}
 		}
 		catch (Exception ex)

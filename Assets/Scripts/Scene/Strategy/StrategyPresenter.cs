@@ -74,6 +74,8 @@ public class StrategyPresenter
                     _isBattled = true;
                     _model.ClearBattleData(battledMembers);
                     _view.StartResultAnimation(battledMembers);
+                } else{
+                    EndStrategy();
                 }
             }
         }
@@ -109,7 +111,7 @@ public class StrategyPresenter
                     _isBattle = true;
                     _view.StartResultAnimation(battleMembers);
                 } else{
-                    _view.CommandSceneChange(Scene.Tactics);
+                    EndStrategy();
                 }
             }
         } else
@@ -125,7 +127,7 @@ public class StrategyPresenter
                     _view.StartResultAnimation(battleMembers);
                 } else
                 {                
-                    _view.CommandSceneChange(Scene.Tactics);
+                    EndStrategy();
                 }
             }
         }
@@ -155,5 +157,11 @@ public class StrategyPresenter
         statusViewInfo.SetDisplayDecideButton(false);
         _view.CommandCallStatus(statusViewInfo);
         _view.SetActiveUi(false);
+    }
+
+    private void EndStrategy()
+    {
+        _model.EndStrategy();
+        _view.CommandSceneChange(Scene.Tactics);
     }
 }

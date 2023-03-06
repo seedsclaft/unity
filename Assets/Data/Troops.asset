@@ -18,68 +18,251 @@ MonoBehaviour:
     EnemyId: 5
     Lv: 1
     Line: 0
+    GetItemDatas: []
   - Id: 2
     TroopId: 1
     EnemyId: 2
     Lv: 1
     Line: 1
+    GetItemDatas: []
   - Id: 3
     TroopId: 1
     EnemyId: 2
     Lv: 1
     Line: 1
+    GetItemDatas: []
   - Id: 1
     TroopId: 10
     EnemyId: 3
     Lv: 1
     Line: 0
+    GetItemDatas: []
   - Id: 2
     TroopId: 10
     EnemyId: 3
     Lv: 1
     Line: 0
+    GetItemDatas: []
   - Id: 3
     TroopId: 10
     EnemyId: 4
     Lv: 1
     Line: 1
+    GetItemDatas:
+    - Type: 1
+      Param1: 105
+      Param2: 1
   - Id: 1
     TroopId: 20
     EnemyId: 6
     Lv: 1
     Line: 0
+    GetItemDatas: []
   - Id: 2
     TroopId: 20
     EnemyId: 3
     Lv: 1
     Line: 1
+    GetItemDatas:
+    - Type: 1
+      Param1: 205
+      Param2: 1
   - Id: 3
     TroopId: 20
     EnemyId: 3
     Lv: 1
     Line: 1
+    GetItemDatas: []
   - Id: 1
     TroopId: 30
     EnemyId: 4
     Lv: 1
     Line: 0
+    GetItemDatas: []
   - Id: 2
     TroopId: 30
     EnemyId: 4
     Lv: 1
     Line: 0
+    GetItemDatas: []
   - Id: 3
     TroopId: 30
     EnemyId: 1
     Lv: 1
     Line: 1
+    GetItemDatas:
+    - Type: 1
+      Param1: 305
+      Param2: 1
   - Id: 1
     TroopId: 40
     EnemyId: 2
     Lv: 1
     Line: 0
+    GetItemDatas: []
   - Id: 2
     TroopId: 40
     EnemyId: 4
     Lv: 1
     Line: 1
+    GetItemDatas:
+    - Type: 1
+      Param1: 405
+      Param2: 1
+  - Id: 1
+    TroopId: 50
+    EnemyId: 5
+    Lv: 1
+    Line: 0
+    GetItemDatas: []
+  - Id: 2
+    TroopId: 50
+    EnemyId: 2
+    Lv: 1
+    Line: 1
+    GetItemDatas:
+    - Type: 1
+      Param1: 505
+      Param2: 1
+  - Id: 3
+    TroopId: 50
+    EnemyId: 2
+    Lv: 1
+    Line: 1
+    GetItemDatas: []
+  - Id: 1
+    TroopId: 1001
+    EnemyId: 1
+    Lv: 1
+    Line: 1
+    GetItemDatas:
+    - Type: 1
+      Param1: 304
+      Param2: 1
+  - Id: 1
+    TroopId: 1002
+    EnemyId: 2
+    Lv: 1
+    Line: 1
+    GetItemDatas:
+    - Type: 1
+      Param1: 504
+      Param2: 1
+  - Id: 1
+    TroopId: 1003
+    EnemyId: 3
+    Lv: 1
+    Line: 1
+    GetItemDatas:
+    - Type: 1
+      Param1: 204
+      Param2: 1
+  - Id: 1
+    TroopId: 1004
+    EnemyId: 4
+    Lv: 1
+    Line: 1
+    GetItemDatas:
+    - Type: 1
+      Param1: 104
+      Param2: 1
+  - Id: 1
+    TroopId: 1005
+    EnemyId: 5
+    Lv: 1
+    Line: 1
+    GetItemDatas:
+    - Type: 1
+      Param1: 205
+      Param2: 1
+  - Id: 1
+    TroopId: 1006
+    EnemyId: 6
+    Lv: 1
+    Line: 1
+    GetItemDatas:
+    - Type: 1
+      Param1: 403
+      Param2: 1
+  - Id: 1
+    TroopId: 1007
+    EnemyId: 7
+    Lv: 1
+    Line: 1
+    GetItemDatas:
+    - Type: 1
+      Param1: 503
+      Param2: 1
+  - Id: 1
+    TroopId: 1008
+    EnemyId: 8
+    Lv: 1
+    Line: 1
+    GetItemDatas:
+    - Type: 1
+      Param1: 305
+      Param2: 1
+  - Id: 1
+    TroopId: 1009
+    EnemyId: 9
+    Lv: 1
+    Line: 1
+    GetItemDatas:
+    - Type: 1
+      Param1: 103
+      Param2: 1
+  - Id: 1
+    TroopId: 1010
+    EnemyId: 10
+    Lv: 1
+    Line: 1
+    GetItemDatas:
+    - Type: 1
+      Param1: 203
+      Param2: 1
+  - Id: 1
+    TroopId: 1011
+    EnemyId: 11
+    Lv: 1
+    Line: 1
+    GetItemDatas:
+    - Type: 1
+      Param1: 303
+      Param2: 1
+  - Id: 1
+    TroopId: 1012
+    EnemyId: 12
+    Lv: 1
+    Line: 1
+    GetItemDatas:
+    - Type: 1
+      Param1: 505
+      Param2: 1
+  - Id: 1
+    TroopId: 1013
+    EnemyId: 13
+    Lv: 1
+    Line: 1
+    GetItemDatas:
+    - Type: 1
+      Param1: 404
+      Param2: 1
+  - Id: 1
+    TroopId: 1014
+    EnemyId: 14
+    Lv: 1
+    Line: 1
+    GetItemDatas:
+    - Type: 1
+      Param1: 405
+      Param2: 1
+  - Id: 1
+    TroopId: 1015
+    EnemyId: 15
+    Lv: 1
+    Line: 1
+    GetItemDatas:
+    - Type: 1
+      Param1: 105
+      Param2: 1
+  _getItemData: []

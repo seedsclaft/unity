@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class TroopsData : ScriptableObject {
     [SerializeField] public List<TroopData> _data = new List<TroopData>();
+    [SerializeField] public List<GetItemData> _getItemData = new List<GetItemData>();
 
 
     [Serializable]
@@ -16,7 +17,7 @@ public class TroopsData : ScriptableObject {
         public int EnemyId;
         public int Lv;
         public int Line;
-        
+        public List<GetItemData> GetItemDatas;
     }
 
 }

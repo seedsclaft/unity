@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 
 public class BaseModel
 {
@@ -32,5 +33,33 @@ public class BaseModel
         noCommand.Id = 1;
         menuCommandDatas.Add(noCommand);
         return menuCommandDatas;
+    }
+    
+    public List<AttributeType> AttributeTypes()
+    {
+        List<AttributeType> attributeTypes = new List<AttributeType>();
+        foreach(var attribute in Enum.GetValues(typeof(AttributeType)))
+        {
+            if ((int)attribute != 0)
+            {
+                attributeTypes.Add((AttributeType)attribute);
+            }
+        } 
+        return attributeTypes;
+    }
+    
+    public List<Sprite> ActorsImage(List<ActorInfo> actors){
+        var sprites = new List<Sprite>();
+        for (var i = 0;i < actors.Count;i++)
+        {
+            var actorData = DataSystem.Actors.Find(actor => actor.Id == actors[i].ActorId);
+            var asset = Addressables.LoadAssetAsync<Sprite>(
+                "Assets/Images/Actors/" + actorData.ImagePath + "/main.png"
+            );
+            asset.WaitForCompletion();
+            sprites.Add(asset.Result);
+            Addressables.Release(asset);
+        }
+        return sprites;
     }
 }

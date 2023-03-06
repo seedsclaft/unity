@@ -149,13 +149,21 @@ public class BattlerInfo
             _ap -= 2;
             return;
         }
-        if (IsState(StateType.CounterOura))
+        if (IsState(StateType.CounterOura) || IsState(StateType.Benediction))
         {
             _ap += 2;
             return;
         }
         //if (isActor == false) return;
         _ap -= 4;
+    }
+
+    public void ChangeAp(int value)
+    {
+        _ap += value;
+        if (_ap < 0){
+            _ap = 0;
+        }
     }
 
     public int LastTargetIndex()
@@ -248,6 +256,13 @@ public class BattlerInfo
     public bool AddState(StateInfo stateInfo)
     {
         bool IsAdded = false;
+        if (IsState(StateType.Barrier))
+        {
+            if (stateInfo.Master.Id == (int)StateType.Stun || stateInfo.Master.Id == (int)StateType.Slow || stateInfo.Master.Id == (int)StateType.Chain || stateInfo.Master.Id == (int)StateType.Curse)
+            {
+                return false;
+            }
+        }
         if (_stateInfos.Find(a => a.CheckOverWriteState(stateInfo) == true) == null)
         {
             _stateInfos.Add(stateInfo);
@@ -307,6 +322,7 @@ public class BattlerInfo
         return stateInfos;
     }
 
+
     public int CurrentAtk()
     {
         int atk = Status.Atk;
@@ -325,6 +341,24 @@ public class BattlerInfo
             def += StateEffect(StateType.Demigod);
         }
         return def;
+    }
+
+    public int TargetRate()
+    {
+        int rate = 100;
+        if (IsState(StateType.TargetRateDown))
+        {
+            rate -= StateEffectAll(StateType.TargetRateDown);
+        }
+        if (IsState(StateType.TargetRateUp))
+        {
+            rate += StateEffectAll(StateType.TargetRateUp);
+        }
+        if (rate < 0)
+        {
+            rate = 0;
+        }
+        return rate;
     }
 
     public void SetAwaken()
@@ -352,6 +386,13 @@ public class BattlerInfo
             {
                 for (var j = 0;j < triggerDatas.Count;j++)
                 {
+                    if (triggerDatas[j].TriggerType == TriggerType.HpRateUnder)
+                    {
+                        if ( TriggerdHpRateUnderSkillInfos(triggerDatas[j]) )
+                        {
+                            triggeredSkills.Add(skillInfo);
+                        }
+                    }
                     if (triggerDatas[j].TriggerType == TriggerType.AfterMp)
                     {
                         if ( TriggerdAfterMpSkillInfos(triggerDatas[j],actionInfo) )
@@ -392,6 +433,16 @@ public class BattlerInfo
             }
         }
         return triggeredSkills;
+    }
+
+    private bool TriggerdHpRateUnderSkillInfos(SkillsData.TriggerData triggerData)
+    {
+        bool IsTriggered = false;
+        if (triggerData.Param1 >= Hp)
+        {
+            IsTriggered = true;
+        }
+        return IsTriggered;
     }
 
     private bool TriggerdAfterMpSkillInfos(SkillsData.TriggerData triggerData,ActionInfo actionInfo)

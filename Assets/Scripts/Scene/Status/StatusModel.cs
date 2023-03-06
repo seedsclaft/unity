@@ -34,8 +34,6 @@ public class StatusModel : BaseModel
             _currentIndex = StatusActors().Count-1;
         }
     }
-
-
     
     public List<ActorInfo> StatusActors(){
         List<int> StatusActorIds = PartyInfo.ActorIdList;
@@ -48,37 +46,9 @@ public class StatusModel : BaseModel
         return CurrentActor.Skills.FindAll(a => a.Attribute == _currentAttributeType);
     }
 
-    public List<AttributeType> AttributeTypes()
-    {
-        List<AttributeType> attributeTypes = new List<AttributeType>();
-        foreach(var attribute in Enum.GetValues(typeof(AttributeType)))
-        {
-            if ((int)attribute != 0)
-            {
-                attributeTypes.Add((AttributeType)attribute);
-            }
-        } 
-        return attributeTypes;
-    }
-
     public List<SystemData.MenuCommandData> StatusCommand
     {
         get { return DataSystem.StatusCommand;}
-    }
-
-    public List<Sprite> ActorsImage(List<ActorInfo> actors){
-        var sprites = new List<Sprite>();
-        for (var i = 0;i < actors.Count;i++)
-        {
-            var actorData = DataSystem.Actors.Find(actor => actor.Id == actors[i].ActorId);
-            var asset = Addressables.LoadAssetAsync<Sprite>(
-                "Assets/Images/Actors/" + actorData.ImagePath + "/main.png"
-            );
-            asset.WaitForCompletion();
-            sprites.Add(asset.Result);
-            Addressables.Release(asset);
-        }
-        return sprites;
     }
     
     public async Task<List<AudioClip>> BgmData(){

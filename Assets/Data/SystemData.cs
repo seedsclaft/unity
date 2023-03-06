@@ -1,4 +1,5 @@
 using UnityEngine;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -53,4 +54,18 @@ public enum StatusComandType {
 public enum ConfirmComandType {
 	Yes = 0,
 	No = 1
+}
+
+[Serializable]
+public class GetItemData
+{   
+	public GetItemType Type;
+	public int Param1;
+	public int Param2;
+}
+
+public enum GetItemType
+{
+	None = 0,
+	Skill = 1
 }

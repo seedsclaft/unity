@@ -90,6 +90,9 @@ public class SavePlayInfo
 	public PartyInfo Party { get {return _party;}}
     private StageInfo _currentStage = null;
 	public StageInfo CurrentStage { get {return _currentStage;}}
+
+	private List<TroopsData.TroopData> _troopDatas = new List<TroopsData.TroopData>();
+	public List<TroopsData.TroopData> TroopDatas { get {return _troopDatas;}}
 	/// <summary>
 	/// 初期化
     /// </summary>
@@ -113,7 +116,9 @@ public class SavePlayInfo
 		int stageId = _party.StageId;
 		StagesData.StageData stageData = DataSystem.Stages.Find(a => a.Id == stageId);
 		_currentStage = new StageInfo(stageData);
+		_currentStage.AddSelectActorId(actorId);
 	}
+
 
 	public void AddActor(int actorId)
 	{

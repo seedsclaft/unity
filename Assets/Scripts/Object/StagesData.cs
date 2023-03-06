@@ -44,5 +44,6 @@ public enum EventTiming{
 
 public enum StageEventType{
     None = 0,
-    CommandDisable = 1
+    CommandDisable = 1,
+    TutorialBattle = 2
 }

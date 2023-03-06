@@ -35,6 +35,14 @@ public class ActionResultInfo
     public int MpDamage {
         get {return _mpDamage;}
     }
+    private int _mpHeal = 0;
+    public int MpHeal {
+        get {return _mpHeal;} set{_mpHeal = value;}
+    }
+    private int _apHeal = 0;
+    public int ApHeal {
+        get {return _apHeal;} set{_apHeal = value;}
+    }
     private int _reDamage = 0;
     public int ReDamage {
         get {return _reDamage;} set{_reDamage = value;}
@@ -91,6 +99,12 @@ public class ActionResultInfo
         }
     }
 
+    public void AddDeathId(int index)
+    {
+        _isDead = true;
+        _deadIndexList.Add(index);
+    }
+
     private void MakeFeature(BattlerInfo subject,BattlerInfo target,SkillsData.FeatureData featureData)
     {
         switch (featureData.FeatureType)
@@ -107,11 +121,17 @@ public class ActionResultInfo
             case FeatureType.NoEffectHpDamage:
                 MakeHpDamage(subject,target,featureData,true);
                 return;
+            case FeatureType.MpHeal:
+                MakeMpHeal(subject,target,featureData);
+                return;
             case FeatureType.AddState:
                 MakeAddState(subject,target,featureData);
                 return;
             case FeatureType.RemoveState:
                 MakeRemoveState(subject,target,featureData);
+                return;
+            case FeatureType.ApHeal:
+                MakeApHeal(subject,target,featureData);
                 return;
             case FeatureType.KindHeal:
                 MakeKindHeal(subject,target,featureData);
@@ -145,12 +165,17 @@ public class ActionResultInfo
         }
         int AtkValue = subject.CurrentAtk();
         int DefValue = target.CurrentDef();
-        if (target.IsState(StateType.DefUp)  && !isNoEffect)
+        if (target.IsState(StateType.DefUp) && !isNoEffect)
         {
             DefValue += target.StateEffectAll(StateType.DefUp);
         }
-        float SkillDamage = (featureData.Param1 * 0.01f * (AtkValue * 0.5f));
-        if (target.IsState(StateType.CounterOura)  && !isNoEffect)
+        float DamageRate = featureData.Param1;
+        if (subject.IsState(StateType.DamageUp))
+        {
+            DamageRate *= subject.StateEffectAll(StateType.DamageUp);
+        }
+        float SkillDamage = (DamageRate * 0.01f * (AtkValue * 0.5f));
+        if (target.IsState(StateType.CounterOura) && !isNoEffect)
         {
             _execStateInfos[target.Index].Add(StateType.CounterOura);
             _reDamage = (int)SkillDamage;
@@ -161,13 +186,17 @@ public class ActionResultInfo
         // 属性補正
         // クリティカル
         _hpDamage = ApplyVariance(_hpDamage);
+        if (subject.IsState(StateType.Drain))
+        {
+            _reHeal = (int)Mathf.Floor(_hpDamage * subject.StateEffectAll(StateType.Drain) * 0.01f);
+        }
     }
 
     private void MakeHpHeal(BattlerInfo subject,BattlerInfo target,SkillsData.FeatureData featureData)
     {
         float HealValue = featureData.Param1;
         _hpHeal = (int)Mathf.Round(HealValue);
-        _hpHeal = ApplyVariance(_hpHeal);
+        //_hpHeal = ApplyVariance(_hpHeal);
     }
 
     private void MakeHpDrain(BattlerInfo subject,BattlerInfo target,SkillsData.FeatureData featureData)
@@ -176,10 +205,17 @@ public class ActionResultInfo
         _reHeal = (int)Mathf.Floor(HpDamage * featureData.Param3 * 0.01f);
     }
 
+    private void MakeMpHeal(BattlerInfo subject,BattlerInfo target,SkillsData.FeatureData featureData)
+    {
+        float HealValue = featureData.Param1;
+        _mpHeal = (int)Mathf.Round(HealValue);
+        //_hpHeal = ApplyVariance(_hpHeal);
+    }
+
     private void MakeAddState(BattlerInfo subject,BattlerInfo target,SkillsData.FeatureData featureData)
     {
         StateInfo stateInfo = new StateInfo(featureData.Param1,featureData.Param2,featureData.Param3,subject.Index,target.Index);
-        if (stateInfo.Master.Id == (int)StateType.CounterOura)
+        if (stateInfo.Master.Id == (int)StateType.CounterOura || stateInfo.Master.Id == (int)StateType.Benediction)
         {
             stateInfo.Turns = 200 - subject.Status.Spd * 2;
         }
@@ -198,6 +234,12 @@ public class ActionResultInfo
         {
             _removedStates.Add(stateInfo);
         }
+    }
+
+    private void MakeApHeal(BattlerInfo subject,BattlerInfo target,SkillsData.FeatureData featureData)
+    {
+        float HealValue = featureData.Param1;
+        _apHeal = (int)Mathf.Round(HealValue);
     }
 
     public void MakeKindHeal(BattlerInfo subject,BattlerInfo target,SkillsData.FeatureData featureData)

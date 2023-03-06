@@ -52,6 +52,7 @@ public class TacticsView : BaseView
     public void SetUIButton()
     {
         CreateBackCommand(() => OnClickBack());
+        tacticsEnemyList.Initialize();
     }
 
     private void OnClickBack()
@@ -133,9 +134,9 @@ public class TacticsView : BaseView
         HideResourceList();
     }
 
-    public void SetEnemies(List<BattlerInfo> enemyInfos)
+    public void SetEnemies(List<BattlerInfo> enemyInfos,List<List<GetItemInfo>> getItemInfos)
     {
-        tacticsEnemyList.Initialize(enemyInfos,(enemyInfo) => CallBattleEnemy(enemyInfo));
+        tacticsEnemyList.Refresh(enemyInfos,getItemInfos,(enemyInfo) => CallBattleEnemy(enemyInfo));
         SetInputHandler(tacticsCharaLayer.GetComponent<IInputHandlerEvent>());
         //tacticsEnemyList.InitializeConfirm(confirmCommands,(confirmCommands) => CallBattleCommand(confirmCommands));
         HideEnemyList();

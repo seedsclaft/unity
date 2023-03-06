@@ -97,6 +97,39 @@ public class BattleModel : BaseModel
         return actionResultInfos;
     }
 
+    public List<ActionResultInfo> UpdateBenedictionState()
+    {
+        List<ActionResultInfo> actionResultInfos = new List<ActionResultInfo>();
+        for (int i = 0;i < _battlers.Count;i++)
+        {
+            List<StateInfo> benedictionStateInfos = _battlers[i].GetStateInfoAll(StateType.Benediction);
+            for (int j = 0;j < benedictionStateInfos.Count;j++)
+            {
+                StateInfo stateInfo = benedictionStateInfos[j];
+                if (stateInfo.Turns % stateInfo.BaseTurns == 0)
+                {
+                    BattlerInfo subject = _battlers.Find(a => a.Index == stateInfo.BattlerId);
+                    List<BattlerInfo> targets = new List<BattlerInfo>();
+                    if (subject.isActor)
+                    {
+                        targets = BattlerActors().FindAll(a => a.Index != subject.Index && a.IsAlive());
+                    } else{
+                        targets = BattlerEnemies().FindAll(a => a.Index != subject.Index && a.IsAlive());
+                    }
+                    foreach (var target in targets)
+                    {
+                        int healValue = stateInfo.Effect;
+                        target.ChangeHp(healValue * -1);
+                        ActionResultInfo actionResultInfo = new ActionResultInfo(_battlers[i].Index,stateInfo.TargetIndex,null);
+                        actionResultInfo.HpHeal = healValue;
+                        actionResultInfos.Add(actionResultInfo);
+                    }
+                }
+            }
+        }
+        return actionResultInfos;
+    }
+
     public void MackActionBattler()
     {
         for (int i = 0;i < _battlers.Count;i++)
@@ -162,6 +195,23 @@ public class BattleModel : BaseModel
         return stateInfos;
     }
 
+    public List<StateInfo> CheckCursedBattler(int targetIndex)
+    {
+        List<StateInfo> stateInfos = new List<StateInfo>();
+        for (int i = 0; i < _battlers.Count;i++)
+        {
+            List<StateInfo> curseStateInfos = _battlers[i].GetStateInfoAll(StateType.Curse);
+            for (int j = curseStateInfos.Count-1; 0 <= j;j--)
+            {
+                if (curseStateInfos[j].BattlerId == targetIndex)
+                {
+                    stateInfos.Add(curseStateInfos[j]);
+                }
+            }
+        }
+        return stateInfos;
+    }
+
     public void ChangeActorIndex(int value){
         _currentIndex += value;
         if (_currentIndex > Actors().Count-1){
@@ -183,10 +233,6 @@ public class BattleModel : BaseModel
     public BattlerInfo GetBattlerInfo(int index)
     {
         return _battlers.Find(a => a.Index == index);
-    }
-    
-    public List<ActorInfo> Actors(){
-        return GameSystem.CurrentData.Actors;
     }
 
     public List<SkillInfo> SkillActionList(AttributeType attributeType)
@@ -228,12 +274,28 @@ public class BattleModel : BaseModel
                 return false;
             }
         }
+        if (battlerInfo.IsState(StateType.Banish))
+        {
+            if (skillInfo.Master.MpCost > 0)
+            {
+                return false;
+            }
+        }
         return true;
     }
 
     public void ClearActionInfo()
     {
         _actionInfos.Clear();
+    }
+
+    public bool EnableCurrentBattler()
+    {
+        if (CurrentBattler.IsState(StateType.Stun))
+        {
+            return false;
+        }
+        return true;
     }
 
     public ActionInfo MakeActionInfo(BattlerInfo subject, int skillId,bool IsInterrupt)
@@ -255,6 +317,15 @@ public class BattleModel : BaseModel
             }
         }
         List<int> targetIndexList = MakeActionTarget(skillId,subject.Index);
+        if (subject.IsState(StateType.Substitute))
+        {
+            int substituteId = subject.GetStateInfoAll(StateType.Substitute)[0].BattlerId;
+            if (targetIndexList.Contains(substituteId))
+            {
+                targetIndexList.Clear();
+                targetIndexList.Add(substituteId);
+            }
+        }
         ActionInfo actionInfo = new ActionInfo(skillId,subject.Index,LastTargetIndex,targetIndexList);
         if (IsInterrupt)
         {
@@ -434,6 +505,23 @@ public class BattleModel : BaseModel
                 }
             }
             actionResultInfos.Add(actionResultInfo);
+            // 呪い
+            List<StateInfo> curseStateInfos = CheckCursedBattler(actionResultInfo.TargetIndex);
+            if (actionResultInfo.HpDamage > 0 && curseStateInfos.Count > 0)
+            {
+                for (int j = 0; j < curseStateInfos.Count;j++)
+                {
+                    BattlerInfo curseBattlerInfo = _battlers.Find(a => a.Index == curseStateInfos[j].TargetIndex);
+                    ActionResultInfo curseActionResultInfo = new ActionResultInfo(curseStateInfos[j].BattlerId,curseBattlerInfo.Index,null);
+                    curseActionResultInfo.HpDamage = actionResultInfo.HpDamage;
+                    actionResultInfos.Add(curseActionResultInfo);
+                    
+                    if (curseActionResultInfo.HpDamage >= curseBattlerInfo.Hp)
+                    {
+                        curseActionResultInfo.AddDeathId(curseBattlerInfo.Index);
+                    }
+                }
+            }
         }
         actionInfo.SetActionResult(actionResultInfos);
     }
@@ -464,6 +552,14 @@ public class BattleModel : BaseModel
                 if (actionResultInfos[i].HpHeal != 0)
                 {
                     target.ChangeHp(actionResultInfos[i].HpHeal);
+                }
+                if (actionResultInfos[i].MpHeal != 0)
+                {
+                    target.ChangeMp(actionResultInfos[i].MpHeal);
+                }
+                if (actionResultInfos[i].ApHeal != 0)
+                {
+                    subject.ChangeAp(actionResultInfos[i].ApHeal * -1);
                 }
                 if (actionResultInfos[i].ReDamage != 0)
                 {
@@ -607,7 +703,37 @@ public class BattleModel : BaseModel
         }
         List<int> indexList = new List<int>();
         
-        int targetIndex = targetIndexList [UnityEngine.Random.Range (0, targetIndexList.Count)];
+        int targetRand = 0;
+        for (int i = 0;i < targetIndexList.Count;i++)
+        {
+            BattlerInfo battlerInfo = GetBattlerInfo(targetIndexList[i]);
+            targetRand += battlerInfo.TargetRate();
+        }
+        targetRand = UnityEngine.Random.Range (0,targetRand);
+        int targetIndex = -1;
+        for (int i = 0;i < targetIndexList.Count;i++)
+        {
+            BattlerInfo battlerInfo = GetBattlerInfo(targetIndexList[i]);
+            targetRand -= battlerInfo.TargetRate();
+            if (targetRand <= 0 && targetIndex == -1)
+            {
+                targetIndex = targetIndexList[i];
+            }
+        }
+        // 挑発
+        if (CurrentBattler.IsState(StateType.Substitute))
+        {
+            int substituteId = CurrentBattler.GetStateInfoAll(StateType.Substitute)[0].BattlerId;
+            if (targetIndexList.Contains(substituteId))
+            {
+                targetIndex = substituteId;
+            }
+        }
+        if (targetIndex == -1)
+        {
+            targetIndex = targetIndexList [UnityEngine.Random.Range (0, targetIndexList.Count)];
+        }
+        //int targetIndex = targetIndexList [UnityEngine.Random.Range (0, targetIndexList.Count)];
             
         if (actionInfo.Master.Scope == ScopeType.All)
         {
@@ -650,35 +776,6 @@ public class BattleModel : BaseModel
     {
         List<SkillInfo> skillInfos = battlerInfo.Skills.FindAll(a => CheckCanUse(a,battlerInfo) && a.Master.SkillType != SkillType.None);
         return skillInfos [UnityEngine.Random.Range (0, skillInfos.Count)].Id;
-    }
-
-    public List<AttributeType> AttributeTypes()
-    {
-        List<AttributeType> attributeTypes = new List<AttributeType>();
-        foreach(var attribute in Enum.GetValues(typeof(AttributeType)))
-        {
-            if ((int)attribute != 0)
-            {
-                attributeTypes.Add((AttributeType)attribute);
-            }
-        } 
-        return attributeTypes;
-    }
-
-
-    public List<Sprite> ActorsImage(List<ActorInfo> actors){
-        var sprites = new List<Sprite>();
-        for (var i = 0;i < actors.Count;i++)
-        {
-            var actorData = DataSystem.Actors.Find(actor => actor.Id == actors[i].ActorId);
-            var asset = Addressables.LoadAssetAsync<Sprite>(
-                "Assets/Images/Actors/" + actorData.ImagePath + "/main.png"
-            );
-            asset.WaitForCompletion();
-            sprites.Add(asset.Result);
-            Addressables.Release(asset);
-        }
-        return sprites;
     }
     
     public async Task<List<AudioClip>> BgmData(){

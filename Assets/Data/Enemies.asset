@@ -15,7 +15,7 @@ MonoBehaviour:
   _data:
   - Id: 1
     Name: "\u30CD\u30EC\u30A4\u30C9\u30B8\u30A7\u30E0"
-    ImagePath: NY_CJ_monster_013_1
+    ImagePath: Jelslime
     BaseStatus:
       _hp: 42
       _mp: 20
@@ -26,8 +26,8 @@ MonoBehaviour:
     LearningSkills:
     - SkillId: 1
   - Id: 2
-    Name: '""'
-    ImagePath: NY_CJ_monster_018_1
+    Name: "\u30AB\u30FC\u30B9\u30C9"
+    ImagePath: Cursed
     BaseStatus:
       _hp: 32
       _mp: 20
@@ -38,7 +38,7 @@ MonoBehaviour:
     LearningSkills:
     - SkillId: 1
   - Id: 3
-    Name: "\u30CD\u30FC\u30E0\u30EC\u30B9"
+    Name: "\u30D3\u30FC"
     ImagePath: Bee
     BaseStatus:
       _hp: 39
@@ -50,8 +50,8 @@ MonoBehaviour:
     LearningSkills:
     - SkillId: 1
   - Id: 4
-    Name: "\u30B1\u30EB\u30D9\u30ED\u30B9"
-    ImagePath: NY_CJ_monster_002_4
+    Name: "\u30A6\u30EB\u30D5"
+    ImagePath: Wolf
     BaseStatus:
       _hp: 49
       _mp: 20
@@ -62,8 +62,8 @@ MonoBehaviour:
     LearningSkills:
     - SkillId: 1
   - Id: 5
-    Name: '""'
-    ImagePath: NY_CJ_monster_018_1
+    Name: "\u30AF\u30ED\u30A6"
+    ImagePath: Crow
     BaseStatus:
       _hp: 53
       _mp: 20
@@ -74,8 +74,8 @@ MonoBehaviour:
     LearningSkills:
     - SkillId: 1
   - Id: 6
-    Name: '""'
-    ImagePath: NY_CJ_monster_018_1
+    Name: "\u30CD\u30FC\u30E0\u30EC\u30B9"
+    ImagePath: Nameless
     BaseStatus:
       _hp: 45
       _mp: 20
@@ -85,22 +85,148 @@ MonoBehaviour:
     Kinds: 
     LearningSkills:
     - SkillId: 301
+  - Id: 7
+    Name: "\u30B5\u30FC\u30C1\u30E3\u30FC"
+    ImagePath: Seacher
+    BaseStatus:
+      _hp: 36
+      _mp: 20
+      _atk: 17
+      _def: 8
+      _spd: 32
+    Kinds: 
+    LearningSkills: []
+  - Id: 8
+    Name: "\u30B7\u30FC\u30EB\u30C9"
+    ImagePath: Shiled
+    BaseStatus:
+      _hp: 37
+      _mp: 20
+      _atk: 12
+      _def: 16
+      _spd: 14
+    Kinds: 
+    LearningSkills: []
+  - Id: 9
+    Name: "\u30C9\u30E9\u30A4\u30A2\u30C9"
+    ImagePath: Dryad
+    BaseStatus:
+      _hp: 48
+      _mp: 20
+      _atk: 15
+      _def: 10
+      _spd: 12
+    Kinds: 
+    LearningSkills: []
+  - Id: 10
+    Name: "\u30B9\u30B3\u30FC\u30D4\u30AA\u30F3"
+    ImagePath: Scorpion
+    BaseStatus:
+      _hp: 35
+      _mp: 20
+      _atk: 19
+      _def: 9
+      _spd: 35
+    Kinds: 
+    LearningSkills: []
+  - Id: 11
+    Name: "\u30B9\u30AF\u30A4\u30C3\u30C9"
+    ImagePath: Squid
+    BaseStatus:
+      _hp: 44
+      _mp: 20
+      _atk: 18
+      _def: 13
+      _spd: 26
+    Kinds: 
+    LearningSkills: []
+  - Id: 12
+    Name: "\u30AF\u30EA\u30FC\u30D1\u30FC"
+    ImagePath: Creeper
+    BaseStatus:
+      _hp: 40
+      _mp: 20
+      _atk: 16
+      _def: 9
+      _spd: 23
+    Kinds: 
+    LearningSkills: []
+  - Id: 13
+    Name: "\u30A4\u30F3\u30D7"
+    ImagePath: Imp
+    BaseStatus:
+      _hp: 42
+      _mp: 20
+      _atk: 20
+      _def: 5
+      _spd: 30
+    Kinds: 
+    LearningSkills: []
+  - Id: 14
+    Name: "\u30B4\u30FC\u30B9\u30C8\u30A2\u30FC\u30DE\u30FC"
+    ImagePath: Armor
+    BaseStatus:
+      _hp: 50
+      _mp: 20
+      _atk: 17
+      _def: 14
+      _spd: 11
+    Kinds: 01000000
+    LearningSkills: []
+  - Id: 15
+    Name: "\u30BD\u30FC\u30C9"
+    ImagePath: Sword
+    BaseStatus:
+      _hp: 35
+      _mp: 20
+      _atk: 25
+      _def: 10
+      _spd: 24
+    Kinds: 
+    LearningSkills: []
   _textdata:
   - Id: 1
     Text: "\u30CD\u30EC\u30A4\u30C9\u30B8\u30A7\u30E0"
     Help: 
   - Id: 2
-    Text: '""'
+    Text: "\u30AB\u30FC\u30B9\u30C9"
     Help: 
   - Id: 3
-    Text: "\u30CD\u30FC\u30E0\u30EC\u30B9"
+    Text: "\u30D3\u30FC"
     Help: 
   - Id: 4
-    Text: "\u30B1\u30EB\u30D9\u30ED\u30B9"
+    Text: "\u30A6\u30EB\u30D5"
     Help: 
   - Id: 5
-    Text: '""'
+    Text: "\u30AF\u30ED\u30A6"
     Help: 
   - Id: 6
-    Text: '""'
+    Text: "\u30CD\u30FC\u30E0\u30EC\u30B9"
+    Help: 
+  - Id: 7
+    Text: "\u30B5\u30FC\u30C1\u30E3\u30FC"
+    Help: 
+  - Id: 8
+    Text: "\u30B7\u30FC\u30EB\u30C9"
+    Help: 
+  - Id: 9
+    Text: "\u30C9\u30E9\u30A4\u30A2\u30C9"
+    Help: 
+  - Id: 10
+    Text: "\u30B9\u30B3\u30FC\u30D4\u30AA\u30F3"
+    Help: 
+  - Id: 11
+    Text: "\u30B9\u30AF\u30A4\u30C3\u30C9"
+    Help: 
+  - Id: 12
+    Text: "\u30AF\u30EA\u30FC\u30D1\u30FC"
+    Help: 
+  - Id: 13
+    Text: "\u30A4\u30F3\u30D7"
+    Help: 
+  - Id: 14
+    Text: "\u30B4\u30FC\u30B9\u30C8\u30A2\u30FC\u30DE\u30FC"
+    Help: 
+  - Id: 15
+    Text: "\u30BD\u30FC\u30C9"
     Help: 

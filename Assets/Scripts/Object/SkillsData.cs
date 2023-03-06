@@ -109,6 +109,7 @@ public enum DamageType
 public enum TriggerType
 {
     None = 0,
+    HpRateUnder = 1, // Hpが〇%以下
     AfterMp = 101, // Mpが〇になる
     ChainCount = 102, // 拘束成功回数
     ActionResultDeath = 103, // 攻撃を受けると戦闘不能になる
@@ -130,9 +131,11 @@ public enum FeatureType
     HpDamage = 1,
     HpHeal = 2,
     HpDrain = 3,
+    MpHeal = 7,
     NoEffectHpDamage = 11,
     AddState = 21,
     RemoveState = 22,
+    ApHeal = 32,
     PlusSkill = 101,
     KindHeal = 201,
 }

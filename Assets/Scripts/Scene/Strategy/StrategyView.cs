@@ -86,7 +86,7 @@ public class StrategyView : BaseView
 
     public void ShowEnemyList(List<BattlerInfo> enemyInfos,List<SystemData.MenuCommandData> confirmCommands)
     {
-        tacticsEnemyList.Initialize(enemyInfos,null);
+        tacticsEnemyList.Refresh(enemyInfos,null,null);
         SetInputHandler(tacticsEnemyList.GetComponent<IInputHandlerEvent>());
         tacticsEnemyList.InitializeConfirm(confirmCommands,(confirmCommands) => CallBattleCommand(confirmCommands));
         

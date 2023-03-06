@@ -25,7 +25,12 @@ public class SkillAction : ListItem ,IListViewItem ,IClickHandlerEvent
 
     public void SetCallHandler(System.Action<int> handler)
     {
-        clickButton.onClick.AddListener(() => handler((int)_data.Id));
+        clickButton.onClick.AddListener(() =>
+            {
+                if (Disable.gameObject.activeSelf) return;
+                handler((int)_data.Id);
+            }
+        );
     }
 
     public void SetSelectHandler(System.Action<int> handler){

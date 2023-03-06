@@ -100,11 +100,23 @@ public class BattlePresenter : BasePresenter
         {
             _view.StartDamage(chainActionResults[i].TargetIndex,DamageType.HpDamage,chainActionResults[i].HpDamage);
         }
+        var benedictionActionResults = _model.UpdateBenedictionState();
+        for (int i = 0; i < benedictionActionResults.Count; i++)
+        {
+            _view.StartDamage(benedictionActionResults[i].TargetIndex,DamageType.HpHeal,benedictionActionResults[i].HpHeal);
+        }
         _model.UpdateAp();
         _view.UpdateAp();
         if (_model.CurrentBattler != null)
         {
             _view.SetBusy(true);
+            if (!_model.EnableCurrentBattler())
+            {
+                int skillId = 0;
+                ActionInfo actionInfo = _model.MakeActionInfo(_model.CurrentBattler,skillId,false);
+                CommandSelectIndex(_model.MakeAutoSelectIndex(actionInfo));
+                return;
+            }
             if (_model.CurrentBattler.isActor)
             {
                 List<int> chainTargetIndexs = _model.CheckChainBattler();
@@ -257,6 +269,20 @@ public class BattlePresenter : BasePresenter
                     if (actionResultInfos[i].TargetIndex == targetIndex)
                     {
                         _view.StartHeal(targetIndex,DamageType.HpHeal,actionResultInfos[i].HpHeal);
+                    }
+                }
+                if (actionResultInfos[i].MpHeal > 0)
+                {
+                    if (actionResultInfos[i].TargetIndex == targetIndex)
+                    {
+                        _view.StartHeal(targetIndex,DamageType.MpHeal,actionResultInfos[i].MpHeal);
+                    }
+                }
+                if (actionResultInfos[i].ApHeal > 0)
+                {
+                    if (actionResultInfos[i].TargetIndex == targetIndex)
+                    {
+                        _view.StartStatePopup(targetIndex,DamageType.State,"+行動可能");
                     }
                 }
                 if (actionResultInfos[i].ReDamage > 0)

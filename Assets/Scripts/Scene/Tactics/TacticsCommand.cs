@@ -26,8 +26,13 @@ public class TacticsCommand : ListItem ,IListViewItem ,IClickHandlerEvent
 
     public void SetCallHandler(System.Action<TacticsComandType> handler)
     {
-        if (_data == null) return;
-        clickButton.onClick.AddListener(() => handler((TacticsComandType)_data.Id));
+        if (_data == null) return;        
+        clickButton.onClick.AddListener(() =>
+            {
+                if (Disable.gameObject.activeSelf) return;
+                handler((TacticsComandType)_data.Id);
+            }
+        );
     }
 
     public void SetSelectHandler(System.Action<int> handler){
