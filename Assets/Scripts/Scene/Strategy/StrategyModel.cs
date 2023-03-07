@@ -87,7 +87,7 @@ public class StrategyModel : BaseModel
         return getItemInfos;
     }
 
-    public List<ActorInfo> CheckNonBattleActors()
+    public List<ActorInfo> CheckNextBattleActors()
     {
         int enemyIndex = -1;
         List<ActorInfo> actorInfos = TacticsBattleActors();
@@ -114,13 +114,12 @@ public class StrategyModel : BaseModel
         return TacticsBattleActors().FindAll(a => a.InBattle);
     }
 
-    public List<BattlerInfo> EnemyInfo()
+    public void SetBattleMembers(List<ActorInfo> actorInfos)
     {
-        List<BattlerInfo> battlerInfos = new List<BattlerInfo>();
-        EnemiesData.EnemyData enemyData = DataSystem.Enemies.Find(a => a.Id == 1);
-        BattlerInfo battlerInfo = new BattlerInfo(enemyData,1,0,0);
-        battlerInfos.Add(battlerInfo);
-        return battlerInfos;
+        PartyInfo.InitActors();
+        actorInfos.ForEach(a => PartyInfo.AddActor(a.ActorId));
+        actorInfos.ForEach(a => a.SetNextBattleEnemyIndex(0));
+        actorInfos.ForEach(a => a.InBattle = true);
     }
 
     public void SetBattleData(List<ActorInfo> actorInfos)

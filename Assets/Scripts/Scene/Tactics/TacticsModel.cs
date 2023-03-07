@@ -45,10 +45,8 @@ public class TacticsModel : BaseModel
         return Actors().Find(a => a.ActorId == actorId);
     }
 
-    private List<BattlerInfo> _tacticalEnemies = new List<BattlerInfo>();
     public List<BattlerInfo> TacticsEnemies()
     {
-        if (_tacticalEnemies.Count > 0) return _tacticalEnemies;
         List<BattlerInfo> battlerInfos = new List<BattlerInfo>();
         List<TroopsData.TroopData> tacticsEnemyDatas = GameSystem.CurrentData.CurrentStage.TacticsEnemies();
         for (int i = 0;i < tacticsEnemyDatas.Count;i++)
@@ -57,7 +55,6 @@ public class TacticsModel : BaseModel
             BattlerInfo battlerInfo = new BattlerInfo(enemyData,tacticsEnemyDatas[i].Lv,0,0);
             battlerInfos.Add(battlerInfo);
         }
-        _tacticalEnemies = battlerInfos;
         return battlerInfos;
     }
 
@@ -97,7 +94,7 @@ public class TacticsModel : BaseModel
             BattlerInfo battlerInfo = new BattlerInfo(enemyData,tacticsEnemyDatas[i].Lv,0,0);
             battlerInfos.Add(battlerInfo);
         }
-        _tacticalEnemies = battlerInfos;
+        CurrentData.CurrentStage.SetTacticsEnemies(tacticsEnemyDatas);
         return battlerInfos;
     }
 

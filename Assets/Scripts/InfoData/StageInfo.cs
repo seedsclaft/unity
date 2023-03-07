@@ -84,6 +84,11 @@ public class StageInfo
         }     
         return _currentEnemyData;
     }
+
+    public void SetTacticsEnemies(List<TroopsData.TroopData> troopDatas)
+    {
+        _currentEnemyData = troopDatas;
+    }
     
     public void ClearTacticsEnemies()
     {

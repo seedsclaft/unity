@@ -451,7 +451,6 @@ MonoBehaviour:
   disable: {fileID: 0}
   battlerInfoComponent: {fileID: 4697524623951567476}
   effekseerEmitter: {fileID: 3151704133158308794}
-  battleDamageRoot: {fileID: 4732905842953686603}
   battleDamagePrefab: {fileID: 1787456025739594925, guid: 39a4f8424bdfa3c469946a6405fb012c,
     type: 3}
   deathAnimation: {fileID: 0}
@@ -471,7 +470,7 @@ MonoBehaviour:
   awakenThumb: {fileID: 0}
   faceThumb: {fileID: 5137127734168495587}
   awakenFaceThumb: {fileID: 6974606010871547513}
-  name: {fileID: 0}
+  nameText: {fileID: 0}
   element: {fileID: 0}
   demigod: {fileID: 0}
   lv: {fileID: 0}
@@ -1027,7 +1026,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 54d08e472ddea3e4aa39cfa5fea696a3, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1896,7 +1895,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 54d08e472ddea3e4aa39cfa5fea696a3, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

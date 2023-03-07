@@ -41,8 +41,16 @@ abstract public class ListWindow : MonoBehaviour
         _active = false;
     }
 
+    private void DestroyListChildrens()
+    {
+        foreach(Transform child in scrollRect.content.transform){
+            Destroy(child.gameObject);
+        }
+    }
+
     public void InitializeListView(int count)
     {
+        DestroyListChildrens();
         SetValueChangedEvent();
         SetDataCount(count);
         SetItemCount();

@@ -62,4 +62,42 @@ public class BaseModel
         }
         return sprites;
     }
+
+    
+    public List<BattlerInfo> TacticsEnemies()
+    {
+        List<BattlerInfo> battlerInfos = new List<BattlerInfo>();
+        List<TroopsData.TroopData> tacticsEnemyDatas = GameSystem.CurrentData.CurrentStage.TacticsEnemies();
+        for (int i = 0;i < tacticsEnemyDatas.Count;i++)
+        {
+            EnemiesData.EnemyData enemyData = DataSystem.Enemies.Find(a => a.Id == tacticsEnemyDatas[i].EnemyId);
+            BattlerInfo battlerInfo = new BattlerInfo(enemyData,tacticsEnemyDatas[i].Lv,0,0);
+            battlerInfos.Add(battlerInfo);
+        }
+        return battlerInfos;
+    }
+
+    public List<List<GetItemInfo>> TacticsGetItemInfos()
+    {
+        List<List<GetItemInfo>> getItemDataLists = new List<List<GetItemInfo>>();
+        List<TroopsData.TroopData> tacticsEnemyDatas = GameSystem.CurrentData.CurrentStage.TacticsEnemies();
+        for (int i = 0;i < tacticsEnemyDatas.Count;i++)
+        {
+            List<GetItemInfo> getItemInfos = new List<GetItemInfo>();
+            List<GetItemData> getItemDatas = tacticsEnemyDatas[i].GetItemDatas;
+            for (int j = 0;j < getItemDatas.Count;j++)
+            {
+                GetItemInfo getItemInfo = new GetItemInfo();
+                if (getItemDatas[j].Type == GetItemType.Skill)
+                {
+                    getItemInfo.SetAttributeType((int)getItemDatas[j].Type);
+                    SkillsData.SkillData skillData = DataSystem.Skills.Find(a => a.Id == getItemDatas[j].Param1);
+                    getItemInfo.SetResultData(skillData.Name);
+                }
+                getItemInfos.Add(getItemInfo);
+            }
+            getItemDataLists.Add(getItemInfos);
+        }
+        return getItemDataLists;
+    }
 }

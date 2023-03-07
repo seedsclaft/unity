@@ -27,6 +27,12 @@ public class StrategyView : BaseView
         new StrategyPresenter(this);
     }
 
+    public void SetUiView()
+    {
+        tacticsEnemyList.Initialize();
+        tacticsEnemyList.gameObject.SetActive(false);
+    }
+
     public void SetHelpWindow(){
         GameObject prefab = Instantiate(helpPrefab);
         prefab.transform.SetParent(helpRoot.transform, false);
@@ -84,9 +90,9 @@ public class StrategyView : BaseView
         _commandData(eventData);
     }
 
-    public void ShowEnemyList(List<BattlerInfo> enemyInfos,List<SystemData.MenuCommandData> confirmCommands)
+    public void ShowEnemyList(List<BattlerInfo> enemyInfos,List<List<GetItemInfo>> getItemInfos,List<SystemData.MenuCommandData> confirmCommands)
     {
-        tacticsEnemyList.Refresh(enemyInfos,null,null);
+        tacticsEnemyList.Refresh(enemyInfos,getItemInfos,null);
         SetInputHandler(tacticsEnemyList.GetComponent<IInputHandlerEvent>());
         tacticsEnemyList.InitializeConfirm(confirmCommands,(confirmCommands) => CallBattleCommand(confirmCommands));
         

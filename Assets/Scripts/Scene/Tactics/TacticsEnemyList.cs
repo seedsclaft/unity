@@ -33,8 +33,11 @@ public class TacticsEnemyList : ListWindow , IInputHandlerEvent
                 tacticsEnemy.SetData(enemyDatas[i],i);
                 tacticsEnemy.SetGetItemList(getItemInfoLists[i]);
             }
-            tacticsEnemy.SetCallHandler(callEvent);
-            tacticsEnemy.SetSelectHandler((data) => UpdateSelectIndex(data));
+            if (callEvent != null)
+            {
+                tacticsEnemy.SetCallHandler(callEvent);
+                tacticsEnemy.SetSelectHandler((data) => UpdateSelectIndex(data));
+            }
             ObjectList[i].SetActive(i < _enemyInfos.Count);
         }
         UpdateSelectIndex(-1);

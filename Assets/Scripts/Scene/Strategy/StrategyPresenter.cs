@@ -11,7 +11,7 @@ public class StrategyPresenter
     private bool _busy = true;
 
     private bool _isBattle = false;
-    private bool _isBattled = false;
+    private bool _isBattleEnded = false;
     public StrategyPresenter(StrategyView view)
     {
         _view = view;
@@ -23,6 +23,7 @@ public class StrategyPresenter
     private async void Initialize()
     {
         _view.SetHelpWindow();
+        _view.SetUiView();
 
         _view.SetActors(_model.Actors());
         _view.SetResultList(_model.ResultCommand());
@@ -62,16 +63,15 @@ public class StrategyPresenter
         {
             _view.StartResultAnimation(tacticsActors);
         } else{
-            List<ActorInfo> battleMembers = _model.CheckNonBattleActors();
+            List<ActorInfo> battleMembers = _model.CheckNextBattleActors();
             if (battleMembers != null && battleMembers.Count > 0)
             {
-                _isBattle = true;
-                _view.StartResultAnimation(battleMembers);
+                StartNextBattle(battleMembers);
             } else{
                 List<ActorInfo> battledMembers = _model.CheckInBattleActors();
                 if (battledMembers != null && battledMembers.Count > 0)
                 {
-                    _isBattled = true;
+                    _isBattleEnded = true;
                     _model.ClearBattleData(battledMembers);
                     _view.StartResultAnimation(battledMembers);
                 } else{
@@ -87,29 +87,28 @@ public class StrategyPresenter
             List<GetItemInfo> getItemInfos = _model.SetResult();
             _view.ShowResultList(getItemInfos);
         } else{
-            if (_isBattled == false)
+            if (_isBattleEnded == true)
             {
-                _view.ShowEnemyList(_model.EnemyInfo(),_model.ResultCommand());
-            } else{        
                 List<GetItemInfo> getItemInfos = _model.SetBattleResult();
                 _view.ShowResultList(getItemInfos);
+            } else{
+                _view.ShowEnemyList(_model.TacticsEnemies(),_model.TacticsGetItemInfos(),_model.ResultCommand());
             }
         }
     }
 
     private void CommandResultClose(ConfirmComandType confirmComandType)
     {
-        if (_isBattled == false)
+        if (_isBattleEnded == false)
         {
             if (confirmComandType == ConfirmComandType.Yes)
             {
                 ShowStatus();
             } else{
-                List<ActorInfo> battleMembers = _model.CheckNonBattleActors();
+                List<ActorInfo> battleMembers = _model.CheckNextBattleActors();
                 if (battleMembers != null && battleMembers.Count > 0)
                 {
-                    _isBattle = true;
-                    _view.StartResultAnimation(battleMembers);
+                    StartNextBattle(battleMembers);
                 } else{
                     EndStrategy();
                 }
@@ -120,11 +119,10 @@ public class StrategyPresenter
             {
                 ShowStatus();
             } else{
-                List<ActorInfo> battleMembers = _model.CheckNonBattleActors();
+                List<ActorInfo> battleMembers = _model.CheckNextBattleActors();
                 if (battleMembers != null && battleMembers.Count > 0)
                 {
-                    _isBattle = true;
-                    _view.StartResultAnimation(battleMembers);
+                    StartNextBattle(battleMembers);
                 } else
                 {                
                     EndStrategy();
@@ -139,12 +137,7 @@ public class StrategyPresenter
         {
             ShowStatus();
         } else{
-            List<ActorInfo> battleMembers = _model.CheckNonBattleActors();
-            _model.SetBattleData(battleMembers);
-            if (battleMembers != null && battleMembers.Count > 0)
-            {
-                _view.CommandSceneChange(Scene.Battle);
-            }
+            _view.CommandSceneChange(Scene.Battle);
         }
     }
 
@@ -157,6 +150,13 @@ public class StrategyPresenter
         statusViewInfo.SetDisplayDecideButton(false);
         _view.CommandCallStatus(statusViewInfo);
         _view.SetActiveUi(false);
+    }
+
+    private void StartNextBattle(List<ActorInfo> battleMembers)
+    {
+        _isBattle = true;
+        _model.SetBattleMembers(battleMembers);
+        _view.StartResultAnimation(battleMembers);
     }
 
     private void EndStrategy()

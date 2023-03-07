@@ -140,7 +140,7 @@ public class BattleEnemy : ListItem
         if (_sizeInit == false && enemyImage.sprite != null)
         {
             UpdateSizeDelta();
-            _sizeInit = true;
+            //_sizeInit = true;
         }
         UpdateDamageTiming();
         UpdateDeathAnimation();

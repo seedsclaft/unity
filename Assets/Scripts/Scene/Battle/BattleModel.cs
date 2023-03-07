@@ -44,17 +44,17 @@ public class BattleModel : BaseModel
         _battlers.Clear();
         for (int i = 0;i < Actors().Count;i++)
         {
-            BattlerInfo battlerInfo = new BattlerInfo(Actors()[i],i);
-            _battlers.Add(battlerInfo);
+            if (Actors()[i].InBattle == true)
+            {
+                BattlerInfo battlerInfo = new BattlerInfo(Actors()[i],i);
+                _battlers.Add(battlerInfo);
+            }
         }
-        int troopId = 1;
-        var enemies = DataSystem.Troops.FindAll(a => a.TroopId == troopId);
+        var enemies = TacticsEnemies();
         
         for (int i = 0;i < enemies.Count;i++)
         {
-            EnemiesData.EnemyData enemyData = DataSystem.Enemies.Find(a => a.Id == enemies[i].EnemyId);
-            BattlerInfo battlerInfo = new BattlerInfo(enemyData,enemies[i].Lv,i,enemies[i].Line);
-            _battlers.Add(battlerInfo);
+            _battlers.Add(enemies[i]);
         }
     }
 
