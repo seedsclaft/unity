@@ -45,43 +45,6 @@ public class TacticsModel : BaseModel
         return Actors().Find(a => a.ActorId == actorId);
     }
 
-    public List<BattlerInfo> TacticsEnemies()
-    {
-        List<BattlerInfo> battlerInfos = new List<BattlerInfo>();
-        List<TroopsData.TroopData> tacticsEnemyDatas = GameSystem.CurrentData.CurrentStage.TacticsEnemies();
-        for (int i = 0;i < tacticsEnemyDatas.Count;i++)
-        {
-            EnemiesData.EnemyData enemyData = DataSystem.Enemies.Find(a => a.Id == tacticsEnemyDatas[i].EnemyId);
-            BattlerInfo battlerInfo = new BattlerInfo(enemyData,tacticsEnemyDatas[i].Lv,0,0);
-            battlerInfos.Add(battlerInfo);
-        }
-        return battlerInfos;
-    }
-
-    public List<List<GetItemInfo>> TacticsGetItemInfos()
-    {
-        List<List<GetItemInfo>> getItemDataLists = new List<List<GetItemInfo>>();
-        List<TroopsData.TroopData> tacticsEnemyDatas = GameSystem.CurrentData.CurrentStage.TacticsEnemies();
-        for (int i = 0;i < tacticsEnemyDatas.Count;i++)
-        {
-            List<GetItemInfo> getItemInfos = new List<GetItemInfo>();
-            List<GetItemData> getItemDatas = tacticsEnemyDatas[i].GetItemDatas;
-            for (int j = 0;j < getItemDatas.Count;j++)
-            {
-                GetItemInfo getItemInfo = new GetItemInfo();
-                if (getItemDatas[j].Type == GetItemType.Skill)
-                {
-                    getItemInfo.SetAttributeType((int)getItemDatas[j].Type);
-                    SkillsData.SkillData skillData = DataSystem.Skills.Find(a => a.Id == getItemDatas[j].Param1);
-                    getItemInfo.SetResultData(skillData.Name);
-                }
-                getItemInfos.Add(getItemInfo);
-            }
-            getItemDataLists.Add(getItemInfos);
-        }
-        return getItemDataLists;
-    }
-
     public List<BattlerInfo> TacticsTutorialEnemies()
     {
         List<BattlerInfo> battlerInfos = new List<BattlerInfo>();
@@ -111,12 +74,16 @@ public class TacticsModel : BaseModel
             List<GetItemData> getItemDatas = tacticsEnemyDatas[i].GetItemDatas;
             for (int j = 0;j < getItemDatas.Count;j++)
             {
-                GetItemInfo getItemInfo = new GetItemInfo();
+                GetItemInfo getItemInfo = new GetItemInfo(getItemDatas[j]);
                 if (getItemDatas[j].Type == GetItemType.Skill)
                 {
-                    getItemInfo.SetAttributeType((int)getItemDatas[j].Type);
                     SkillsData.SkillData skillData = DataSystem.Skills.Find(a => a.Id == getItemDatas[j].Param1);
                     getItemInfo.SetResultData(skillData.Name);
+                    getItemInfo.SetSkillElementId((int)skillData.Attribute);
+                }
+                if (getItemDatas[j].Type == GetItemType.Numinous)
+                {
+                    getItemInfo.SetResultData("+" + getItemDatas[j].Param1.ToString() + DataSystem.System.GetTextData(1000).Text);
                 }
                 getItemInfos.Add(getItemInfo);
             }
@@ -146,7 +113,7 @@ public class TacticsModel : BaseModel
         
         var result1 = await ResourceSystem.LoadAsset<AudioClip>(data[0]);
         return new List<AudioClip>(){
-            result1,null
+            result1
         };    
     }
 
@@ -289,20 +256,18 @@ public class TacticsModel : BaseModel
         ActorInfo actorInfo = TacticsActor(actorId);
         List<SkillInfo> skillInfos = new List<SkillInfo>();
         
+        for (int i = 0;i < PartyInfo.AlchemyIdList.Count;i++)
         {
-            for (int i = 0;i < PartyInfo.AlchemyIdList.Count;i++)
+            SkillInfo skillInfo = new SkillInfo(PartyInfo.AlchemyIdList[i]);
+            if (skillInfo.Attribute != _currentAttributeType) continue;
+            skillInfo.LearingCost = TacticsUtility.AlchemyCost(actorInfo,PartyInfo.AlchemyIdList[i]);
+            if (skillInfo.LearingCost > Currency)
             {
-                SkillInfo skillInfo = new SkillInfo(PartyInfo.AlchemyIdList[i]);
-                if (skillInfo.Attribute != _currentAttributeType) continue;
-                skillInfo.LearingCost = TacticsUtility.AlchemyCost(actorInfo,PartyInfo.AlchemyIdList[i]);
-                if (skillInfo.LearingCost > Currency)
-                {
-                    skillInfo.SetDisable();
-                } else{
-                    skillInfo.SetEnable();
-                }
-                skillInfos.Add(skillInfo);
+                skillInfo.SetDisable();
+            } else{
+                skillInfo.SetEnable();
             }
+            skillInfos.Add(skillInfo);
         }
         return skillInfos;
     }
@@ -382,7 +347,7 @@ public class TacticsModel : BaseModel
                 if (CanTacticsCommand(TacticsComandType.Recovery,actorInfo))
                 {   
                     actorInfo.SetTacticsCommand(TacticsComandType.Battle,0);
-                    actorInfo.SetNextBattleEnemyIndex(TacticsEnemies()[_currentEnemyIndex].EnemyData.Id);
+                    actorInfo.SetNextBattleEnemyIndex(_currentEnemyIndex,TacticsEnemies()[_currentEnemyIndex].EnemyData.Id);
                 }
             }
         }

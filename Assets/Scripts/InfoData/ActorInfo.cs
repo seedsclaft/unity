@@ -48,8 +48,10 @@ public class ActorInfo
     public int TacticsCost {get {return _tacticsCost;}}
     private int _nextLearnSkillId = 0;
     public int NextLearnSkillId {get {return _nextLearnSkillId;}}
-    private int _nextBattleEnemyIndex = 0;
+    private int _nextBattleEnemyIndex = -1;
     public int NextBattleEnemyIndex {get {return _nextBattleEnemyIndex;}}
+    private int _nextBattleEnemyId = -1;
+    public int NextBattleEnemyId {get {return _nextBattleEnemyId;}}
 
     private bool _inBattle = false;
     public bool InBattle {get {return _inBattle;} set {_inBattle = value;}}
@@ -121,7 +123,8 @@ public class ActorInfo
         _tacticsComandType = TacticsComandType.None;
         _tacticsCost = 0;
         _nextLearnSkillId = 0;
-        _nextBattleEnemyIndex = 0;
+        _nextBattleEnemyIndex = -1;
+        _nextBattleEnemyId = 0;
     }
 
     public void SetNextLearnSkillId(int skillId)
@@ -129,9 +132,10 @@ public class ActorInfo
         _nextLearnSkillId = skillId;
     }
 
-    public void SetNextBattleEnemyIndex(int enemyIndex)
+    public void SetNextBattleEnemyIndex(int enemyIndex,int enemyId)
     {
         _nextBattleEnemyIndex = enemyIndex;
+        _nextBattleEnemyId = enemyId;
     }
 
     public void ChangeSp(int value)

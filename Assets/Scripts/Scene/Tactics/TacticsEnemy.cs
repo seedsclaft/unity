@@ -15,6 +15,10 @@ public class TacticsEnemy : ListItem ,IListViewItem ,IClickHandlerEvent
     private EventTrigger eventTrigger;
     private EventTrigger.Entry entry1;
     private System.Action<int> _selectHandler;
+    private new void Awake() {
+        getItemList.Initialize();
+    }
+
     public void SetData(BattlerInfo data,int index){
         _enemyInfo = data;
         _index = index;
@@ -22,7 +26,6 @@ public class TacticsEnemy : ListItem ,IListViewItem ,IClickHandlerEvent
 
     public void SetGetItemList(List<GetItemInfo> getItemInfos)
     {
-        getItemList.Initialize();
         getItemList.Refresh(getItemInfos);
         //SetInputHandler(skillAttributeList.GetComponent<IInputHandlerEvent>());
         getItemList.gameObject.SetActive(true);

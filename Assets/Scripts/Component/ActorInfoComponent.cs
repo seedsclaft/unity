@@ -89,10 +89,13 @@ public class ActorInfoComponent : MonoBehaviour
         Addressables.LoadAssetAsync<Sprite>(
             "Assets/Images/Actors/" + imagePath + "/Main.png"
         ).Completed += op => {
-            RectTransform rect = mainThumb.GetComponent < RectTransform > ();
-            rect.localPosition = new Vector3(x, y, 0);
-            rect.localScale = new Vector3(scale, scale, 1);
-            mainThumb.sprite = op.Result;
+            if (mainThumb != null)
+            {
+                RectTransform rect = mainThumb.GetComponent < RectTransform > ();
+                rect.localPosition = new Vector3(x, y, 0);
+                rect.localScale = new Vector3(scale, scale, 1);
+                mainThumb.sprite = op.Result;
+            }
         };
     }
 

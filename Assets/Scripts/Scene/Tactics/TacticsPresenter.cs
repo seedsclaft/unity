@@ -35,6 +35,7 @@ public class TacticsPresenter
         _view.SetEnemies(_model.TacticsEnemies(),_model.TacticsGetItemInfos());
 
         _view.SetTacticsCommand(_model.TacticsCommand);
+        _view.ShowCommandList();
         _view.SetAttributeTypes(_model.AttributeTypes());
         CommandRefresh();
         var bgm = await _model.BgmData();
@@ -217,6 +218,11 @@ public class TacticsPresenter
                 _model.TurnEnd();
                 _view.CommandSceneChange(Scene.Strategy);
             }
+        } else{
+            if (_model.CommandType == TacticsComandType.Turnend)
+            {
+                _view.ShowCommandList();
+            }
         }
         _view.CommandConfirmClose();
     }
@@ -236,6 +242,7 @@ public class TacticsPresenter
             _model.SetTempData(tacticsComandType);
             _view.ShowTrainList();
             _view.SetActiveBack(false);
+            _view.HideCommandList();
             _backCommand = Tactics.CommandType.None;
         }
         if (tacticsComandType == TacticsComandType.Alchemy)
@@ -244,6 +251,7 @@ public class TacticsPresenter
             _view.ShowAlchemyList();
             _view.HideSkillAlchemyList();
             _view.SetActiveBack(false);
+            _view.HideCommandList();
             _backCommand = Tactics.CommandType.None;
         }
         if (tacticsComandType == TacticsComandType.Recovery)
@@ -251,6 +259,7 @@ public class TacticsPresenter
             _model.SetTempData(tacticsComandType);
             _view.ShowRecoveryList();
             _view.SetActiveBack(false);
+            _view.HideCommandList();
             _backCommand = Tactics.CommandType.None;
         }
         if (tacticsComandType == TacticsComandType.Battle)
@@ -259,6 +268,7 @@ public class TacticsPresenter
             _view.ShowEnemyList();
             _view.HideBattleList();
             _view.SetActiveBack(true);
+            _view.HideCommandList();
             _backCommand = Tactics.CommandType.EnemyClose;
         }
         if (tacticsComandType == TacticsComandType.Resource)
@@ -266,6 +276,7 @@ public class TacticsPresenter
             _model.SetTempData(tacticsComandType);
             _view.ShowResourceList();
             _view.SetActiveBack(false);
+            _view.HideCommandList();
             _backCommand = Tactics.CommandType.None;
         }
         if (tacticsComandType == TacticsComandType.Status)
@@ -289,6 +300,7 @@ public class TacticsPresenter
             }
             var popupInfo = new ConfirmInfo(mainText,(menuCommandInfo) => UpdatePopup((ConfirmComandType)menuCommandInfo));
             _view.CommandCallConfirm(popupInfo);
+            _view.HideCommandList();
         }
     }
 
@@ -318,6 +330,7 @@ public class TacticsPresenter
         } else{
             _model.ResetTempData(TacticsComandType.Train);
         }
+        _view.ShowCommandList();
         _view.HideTrainList();
         CommandRefresh();
     }
@@ -355,6 +368,7 @@ public class TacticsPresenter
         } else{
             _model.ResetTempData(TacticsComandType.Alchemy);
         }
+        _view.ShowCommandList();
         _view.HideAlchemyList();
         CommandRefresh();
     }
@@ -384,6 +398,7 @@ public class TacticsPresenter
         } else{
             _model.ResetTempData(TacticsComandType.Recovery);
         }
+        _view.ShowCommandList();
         _view.HideRecoveryList();
         CommandRefresh();
     }
@@ -407,17 +422,13 @@ public class TacticsPresenter
     {
         if (confirmComandType == ConfirmComandType.Yes)
         {
-            _view.HideBattleList();
-            _view.ShowEnemyList();
-            _view.SetActiveBack(true);
-            _backCommand = Tactics.CommandType.EnemyClose;
         } else{
             _model.ResetTempData(TacticsComandType.Battle);
-            _view.HideBattleList();
-            _view.ShowEnemyList();
-            _view.SetActiveBack(true);
-            _backCommand = Tactics.CommandType.EnemyClose;
         }
+        _view.HideBattleList();
+        _view.ShowEnemyList();
+        _view.SetActiveBack(true);
+        _backCommand = Tactics.CommandType.EnemyClose;
         CommandRefresh();
     }
 
@@ -425,6 +436,7 @@ public class TacticsPresenter
     {
         _view.HideEnemyList();
         _view.SetActiveBack(false);
+        _view.ShowCommandList();
     }
 
     private void CommandSelectActorResource(int actorId)
@@ -440,6 +452,7 @@ public class TacticsPresenter
         } else{
             _model.ResetTempData(TacticsComandType.Resource);
         }
+        _view.ShowCommandList();
         _view.HideResourceList();
         CommandRefresh();
     }

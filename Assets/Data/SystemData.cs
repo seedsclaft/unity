@@ -67,5 +67,6 @@ public class GetItemData
 public enum GetItemType
 {
 	None = 0,
-	Skill = 1
+	Skill = 1,
+	Numinous = 2
 }

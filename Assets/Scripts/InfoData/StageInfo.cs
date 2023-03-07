@@ -78,7 +78,7 @@ public class StageInfo
             int rand = new Random().Next(0, troopDatas.Count);
             if (!_currentEnemyData.Contains(troopDatas[rand]))
             {
-                troopDatas[rand].Lv = _currentTurn - 4;
+                troopDatas[rand].Lv = _clearTroopIds.Count + 1;
                 _currentEnemyData.Add(troopDatas[rand]);
             }
         }     

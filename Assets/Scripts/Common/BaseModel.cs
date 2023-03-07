@@ -87,12 +87,16 @@ public class BaseModel
             List<GetItemData> getItemDatas = tacticsEnemyDatas[i].GetItemDatas;
             for (int j = 0;j < getItemDatas.Count;j++)
             {
-                GetItemInfo getItemInfo = new GetItemInfo();
+                GetItemInfo getItemInfo = new GetItemInfo(getItemDatas[j]);
                 if (getItemDatas[j].Type == GetItemType.Skill)
                 {
-                    getItemInfo.SetAttributeType((int)getItemDatas[j].Type);
                     SkillsData.SkillData skillData = DataSystem.Skills.Find(a => a.Id == getItemDatas[j].Param1);
                     getItemInfo.SetResultData(skillData.Name);
+                    getItemInfo.SetSkillElementId((int)skillData.Attribute);
+                }
+                if (getItemDatas[j].Type == GetItemType.Numinous)
+                {
+                    getItemInfo.SetResultData("+" + getItemDatas[j].Param1.ToString() + DataSystem.System.GetTextData(1000).Text);
                 }
                 getItemInfos.Add(getItemInfo);
             }

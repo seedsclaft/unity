@@ -36,11 +36,14 @@ public class EnemyInfoComponent : MonoBehaviour
         Addressables.LoadAssetAsync<Sprite>(
             "Assets/Images/Enemies/" + imagePath + ".png"
         ).Completed += op => {
-            mainThumb.gameObject.SetActive(true);
-            RectTransform rect = mainThumb.GetComponent < RectTransform > ();
-            rect.localPosition = new Vector3(x, y, 0);
-            rect.localScale = new Vector3(scale, scale, 1);
-            mainThumb.sprite = op.Result;
+            if (mainThumb != null)
+            {
+                mainThumb.gameObject.SetActive(true);
+                RectTransform rect = mainThumb.GetComponent < RectTransform > ();
+                rect.localPosition = new Vector3(x, y, 0);
+                rect.localScale = new Vector3(scale, scale, 1);
+                mainThumb.sprite = op.Result;
+            }
         };
     }
 

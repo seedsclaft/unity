@@ -64,7 +64,7 @@ public class IntroLoopAudio : MonoBehaviour
     }
   }
 
-  public void SetClip(List<AudioClip> clip){
+  public void SetClip(List<AudioClip> clip,bool isLoop){
     if (clip.Count == 2){
       _introAudioSource.clip = clip[0];
       _introAudioSource.loop = false;
@@ -80,8 +80,14 @@ public class IntroLoopAudio : MonoBehaviour
         _loopAudioSources[1].playOnAwake = false;
       }
     } else{
+      _introAudioSource.clip = clip[0];
+      _introAudioSource.loop = isLoop;
+      _introAudioSource.playOnAwake = false;
+      _loopAudioSources[0].Stop();
+      if (_loopAudioSources[1] != null) _loopAudioSources[1].Stop();
+      /*
       _loopAudioSources[0].clip = clip[0];
-      _loopAudioSources[0].loop = _loopSourceCount == 1;
+      _loopAudioSources[0].loop = isLoop;
       _loopAudioSources[0].playOnAwake = false;
       if (_loopAudioSources[1] != null)
       {
@@ -89,6 +95,7 @@ public class IntroLoopAudio : MonoBehaviour
         _loopAudioSources[1].loop = false;
         _loopAudioSources[1].playOnAwake = false;
       }
+      */
     }
   }
 

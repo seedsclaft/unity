@@ -58,22 +58,22 @@ public class StrategyPresenter
     }
 
     private void CommandStartStretegy(){
-        List<ActorInfo> tacticsActors = _model.TacticsActors();
-        if (tacticsActors.Count > 0)
+        List<ActorInfo> battledMembers = _model.CheckInBattleActors();
+        if (battledMembers != null && battledMembers.Count > 0)
         {
-            _view.StartResultAnimation(tacticsActors);
-        } else{
-            List<ActorInfo> battleMembers = _model.CheckNextBattleActors();
-            if (battleMembers != null && battleMembers.Count > 0)
+            _isBattleEnded = true;
+            _view.StartResultAnimation(battledMembers);
+        } else
+        {
+            List<ActorInfo> tacticsActors = _model.TacticsActors();
+            if (tacticsActors.Count > 0)
             {
-                StartNextBattle(battleMembers);
+                _view.StartResultAnimation(tacticsActors);
             } else{
-                List<ActorInfo> battledMembers = _model.CheckInBattleActors();
-                if (battledMembers != null && battledMembers.Count > 0)
+                List<ActorInfo> battleMembers = _model.CheckNextBattleActors();
+                if (battleMembers != null && battleMembers.Count > 0)
                 {
-                    _isBattleEnded = true;
-                    _model.ClearBattleData(battledMembers);
-                    _view.StartResultAnimation(battledMembers);
+                    StartNextBattle(battleMembers);
                 } else{
                     EndStrategy();
                 }
@@ -83,49 +83,62 @@ public class StrategyPresenter
 
     private void CommandEndAnimation()
     {
+        if (_isBattleEnded == true)
+        {
+            List<GetItemInfo> getItemInfos = _model.SetBattleResult();
+            _view.ShowResultList(getItemInfos);
+        } else 
         if (_isBattle == false){
             List<GetItemInfo> getItemInfos = _model.SetResult();
             _view.ShowResultList(getItemInfos);
         } else{
-            if (_isBattleEnded == true)
-            {
-                List<GetItemInfo> getItemInfos = _model.SetBattleResult();
-                _view.ShowResultList(getItemInfos);
-            } else{
-                _view.ShowEnemyList(_model.TacticsEnemies(),_model.TacticsGetItemInfos(),_model.ResultCommand());
-            }
+            int enemyIndex = _model.BattleEnemyIndex(true);
+            _view.ShowEnemyList(_model.TacticsEnemies()[enemyIndex],_model.TacticsGetItemInfos()[enemyIndex],_model.ResultCommand());
         }
     }
 
     private void CommandResultClose(ConfirmComandType confirmComandType)
     {
-        if (_isBattleEnded == false)
+        if (confirmComandType == ConfirmComandType.Yes)
         {
-            if (confirmComandType == ConfirmComandType.Yes)
-            {
-                ShowStatus();
-            } else{
-                List<ActorInfo> battleMembers = _model.CheckNextBattleActors();
-                if (battleMembers != null && battleMembers.Count > 0)
-                {
-                    StartNextBattle(battleMembers);
-                } else{
-                    EndStrategy();
-                }
-            }
+            ShowStatus();
         } else
         {
-            if (confirmComandType == ConfirmComandType.Yes)
+            if (_isBattleEnded == true)
             {
-                ShowStatus();
-            } else{
-                List<ActorInfo> battleMembers = _model.CheckNextBattleActors();
-                if (battleMembers != null && battleMembers.Count > 0)
+                List<ActorInfo> battledMembers = _model.CheckInBattleActors();
+                if (battledMembers != null && battledMembers.Count > 0)
                 {
-                    StartNextBattle(battleMembers);
-                } else
-                {                
-                    EndStrategy();
+                    _model.ClearBattleData(battledMembers);
+                }
+                
+                List<ActorInfo> tacticsActors = _model.TacticsActors();
+                if (tacticsActors.Count > 0)
+                {
+                    _view.StartResultAnimation(tacticsActors);
+                } else{
+                    List<ActorInfo> battleMembers = _model.CheckNextBattleActors();
+                    if (battleMembers != null && battleMembers.Count > 0)
+                    {
+                        StartNextBattle(battleMembers);
+                    } else{
+                        EndStrategy();
+                    }
+                }
+            } else
+            {
+                List<ActorInfo> tacticsActors = _model.TacticsActors();
+                if (tacticsActors.Count > 0)
+                {
+                    _view.StartResultAnimation(tacticsActors);
+                } else{
+                    List<ActorInfo> battleMembers = _model.CheckNextBattleActors();
+                    if (battleMembers != null && battleMembers.Count > 0)
+                    {
+                        StartNextBattle(battleMembers);
+                    } else{
+                        EndStrategy();
+                    }
                 }
             }
         }
@@ -155,6 +168,7 @@ public class StrategyPresenter
     private void StartNextBattle(List<ActorInfo> battleMembers)
     {
         _isBattle = true;
+        _view.HideResultList();
         _model.SetBattleMembers(battleMembers);
         _view.StartResultAnimation(battleMembers);
     }

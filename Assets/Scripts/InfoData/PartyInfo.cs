@@ -16,6 +16,9 @@ public class PartyInfo
     private int _stageId = 0;
     public int StageId {get {return _stageId;}}
 
+    private bool _battleResult = false;
+    public bool BattleResult {get {return _battleResult;}}
+
     public void AddActor(int actorId)
     {
         if (_actorIdList.IndexOf(actorId) != -1)
@@ -47,5 +50,19 @@ public class PartyInfo
     public void SetStageId(int stageId)
     {
         _stageId = stageId;
+    }
+
+    public void SetBattleResult(bool isVictory)
+    {
+        _battleResult = isVictory;
+    }
+
+    public void AddAlchemy(int skillId)
+    {
+        if (_alchemyIdList.IndexOf(skillId) == -1)
+        {
+            return;
+        }
+        _alchemyIdList.Remove(skillId);
     }
 }

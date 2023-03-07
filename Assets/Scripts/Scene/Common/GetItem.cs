@@ -49,7 +49,7 @@ public class GetItem : ListItem ,IListViewItem ,IClickHandlerEvent
         if (iconImage != null)
         {
             iconImage.gameObject.SetActive(_data.IsSkill());
-            if (_data.IsSkill()) UpdateElementIcon(_data.AttributeType);
+            if (_data.IsSkill()) UpdateElementIcon((int)_data.GetItemType);
         }
         if (titleName != null)
         {

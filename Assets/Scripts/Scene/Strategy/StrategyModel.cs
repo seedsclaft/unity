@@ -41,7 +41,7 @@ public class StrategyModel : BaseModel
         List<ActorInfo> actorInfos = TacticsActors();
         for (int i = 0;i < actorInfos.Count;i++)
         {
-            GetItemInfo getItemInfo = new GetItemInfo();
+            GetItemInfo getItemInfo = new GetItemInfo(null);
             if (actorInfos[i].TacticsComandType == TacticsComandType.Train)
             {
                 getItemInfo.SetTitleData(DataSystem.System.GetTextData(3000).Text.Replace("\\d",actorInfos[i].Master.Name));
@@ -54,7 +54,7 @@ public class StrategyModel : BaseModel
                 getItemInfo.SetTitleData(DataSystem.System.GetTextData(3000).Text.Replace("\\d",actorInfos[i].Master.Name));
                 actorInfos[i].LearnSkill(actorInfos[i].NextLearnSkillId);
                 SkillsData.SkillData skillData = DataSystem.Skills.Find(a => a.Id == actorInfos[i].NextLearnSkillId);
-                getItemInfo.SetAttributeType((int)skillData.Attribute);
+                getItemInfo.SetSkillElementId((int)skillData.Attribute);
                 getItemInfo.SetResultData(skillData.Name + DataSystem.System.GetTextData(3002).Text);
                 actorInfos[i].ClearTacticsCommand();
             }
@@ -83,25 +83,51 @@ public class StrategyModel : BaseModel
 
     public List<GetItemInfo> SetBattleResult()
     {
-        List<GetItemInfo> getItemInfos = new List<GetItemInfo>();
-        return getItemInfos;
+        List<GetItemInfo> strategyGetItemInfos = new List<GetItemInfo>();
+        int enemyIndex = BattleEnemyIndex(true);
+        foreach (GetItemInfo getItemInfo in TacticsGetItemInfos()[enemyIndex])
+        {
+            if (getItemInfo.GetItemType == GetItemType.Skill)
+            {
+                PartyInfo.AddAlchemy(getItemInfo.Param1);
+                getItemInfo.SetTitleData("新たな魔法技術を獲得！");
+            }
+            if (getItemInfo.GetItemType == GetItemType.Numinous)
+            {
+                PartyInfo.ChangeCurrency(PartyInfo.Currency + getItemInfo.Param1);
+                getItemInfo.SetTitleData("Numinousを獲得！");
+            }
+        }
+
+
+        return TacticsGetItemInfos()[enemyIndex];
     }
 
-    public List<ActorInfo> CheckNextBattleActors()
+    public int BattleEnemyIndex(bool inBattle)
     {
         int enemyIndex = -1;
         List<ActorInfo> actorInfos = TacticsBattleActors();
         for (int i = 0;i < actorInfos.Count;i++)
         {
-            if (actorInfos[i].TacticsComandType == TacticsComandType.Battle)
+            if (enemyIndex == -1)
             {
-                if (actorInfos[i].InBattle == false && actorInfos[i].NextBattleEnemyIndex > enemyIndex)
+                if (actorInfos[i].TacticsComandType == TacticsComandType.Battle)
                 {
-                    enemyIndex = actorInfos[i].NextBattleEnemyIndex;
+                    if (actorInfos[i].InBattle == inBattle && actorInfos[i].NextBattleEnemyIndex > enemyIndex)
+                    {
+                        enemyIndex = actorInfos[i].NextBattleEnemyIndex;
+                    }
                 }
             }
         }
-        if (enemyIndex > 0)
+        return enemyIndex;
+    }
+
+    public List<ActorInfo> CheckNextBattleActors()
+    {
+        int enemyIndex = BattleEnemyIndex(false);
+        List<ActorInfo> actorInfos = TacticsBattleActors();
+        if (enemyIndex >= 0)
         {
             return actorInfos.FindAll(a => a.NextBattleEnemyIndex == enemyIndex);
         }
@@ -110,7 +136,6 @@ public class StrategyModel : BaseModel
 
     public List<ActorInfo> CheckInBattleActors()
     {
-        
         return TacticsBattleActors().FindAll(a => a.InBattle);
     }
 
@@ -118,20 +143,12 @@ public class StrategyModel : BaseModel
     {
         PartyInfo.InitActors();
         actorInfos.ForEach(a => PartyInfo.AddActor(a.ActorId));
-        actorInfos.ForEach(a => a.SetNextBattleEnemyIndex(0));
-        actorInfos.ForEach(a => a.InBattle = true);
-    }
-
-    public void SetBattleData(List<ActorInfo> actorInfos)
-    {
-        PartyInfo.InitActors();
-        actorInfos.ForEach(a => PartyInfo.AddActor(a.ActorId));
-        actorInfos.ForEach(a => a.SetNextBattleEnemyIndex(0));
         actorInfos.ForEach(a => a.InBattle = true);
     }
 
     public void ClearBattleData(List<ActorInfo> actorInfos)
     {
+        actorInfos.ForEach(a => a.SetNextBattleEnemyIndex(-1,0));
         actorInfos.ForEach(a => a.InBattle = false);
     }
 

@@ -303,8 +303,9 @@ public class SoundManager : SingletonMonoBehaviour<SoundManager>
                 data.Stop();
             }
         }
+        _currentBgm.Stop();
 
-        _currentBgm.SetClip(clip);
+        _currentBgm.SetClip(clip,loop);
         _currentBgm.Play();
         if (clip.Count == 0){
             var playData = _bgmData[0];
@@ -319,8 +320,8 @@ public class SoundManager : SingletonMonoBehaviour<SoundManager>
             */
             return _bgmData[0].ToAudioSourceHandler();
         } else{
-                var playData = _bgmData[0];
-                return _bgmData[0].ToAudioSourceHandler();
+            var playData = _bgmData[0];
+            return _bgmData[0].ToAudioSourceHandler();
         }
     }
 

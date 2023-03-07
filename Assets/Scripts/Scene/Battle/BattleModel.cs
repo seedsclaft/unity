@@ -790,11 +790,17 @@ public class BattleModel : BaseModel
             result1,result2
         };    
     }
-}
 
-namespace BattleModelData{
-    public class CommandData{
-        public string key = "";
-        public string name;
+    public bool CheckVictory()
+    {
+        PartyInfo.SetBattleResult(true);
+        return true;
+        return BattlerEnemies().Find(a => a.IsAlive()) == null;
+    }
+
+    public bool CheckDefeat()
+    {
+        PartyInfo.SetBattleResult(false);
+        return BattlerActors().Find(a => a.IsAlive()) == null;
     }
 }

@@ -342,6 +342,20 @@ public class BattlePresenter : BasePresenter
         // TriggerAfter
         var result = _model.CheckTriggerSkillInfos(TriggerTiming.After);
         _model.TurnEnd();
+
+        // 勝敗判定
+        if (_model.CheckVictory())
+        {
+            _view.CommandSceneChange(Scene.Strategy);
+            return;
+        } else
+        if (_model.CheckDefeat())
+        {
+            _view.CommandSceneChange(Scene.Strategy);
+            return;
+        }
+
+
         // 次の行動者がいれば続ける
         if (_model.CurrentActionInfo() != null)
         {

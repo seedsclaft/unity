@@ -91,6 +91,16 @@ public class TacticsView : BaseView
         tacticsCommandList.SetDisable(DataSystem.TacticsCommand[commandId],true);
     }
 
+    public void ShowCommandList()
+    {
+        tacticsCommandList.gameObject.SetActive(true);
+    }
+
+    public void HideCommandList()
+    {
+        tacticsCommandList.gameObject.SetActive(false);
+    }
+
     private void CallTacticsCommand(TacticsComandType commandType)
     {
         var eventData = new TacticsViewEvent(CommandType.TacticsCommand);
