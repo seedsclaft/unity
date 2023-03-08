@@ -95,13 +95,11 @@ public class StrategyView : BaseView
         strategyResultList.gameObject.SetActive(false);
     }
 
-    public void ShowEnemyList(BattlerInfo enemyInfos,List<GetItemInfo> getItemInfos,List<SystemData.MenuCommandData> confirmCommands)
+    public void ShowEnemyList(TroopInfo troopInfo,List<SystemData.MenuCommandData> confirmCommands)
     {
-        List<BattlerInfo> battlerInfos = new List<BattlerInfo>();
-        battlerInfos.Add(enemyInfos);
-        List<List<GetItemInfo>> getItemInfoLists = new List<List<GetItemInfo>>();
-        getItemInfoLists.Add(getItemInfos);
-        tacticsEnemyList.Refresh(battlerInfos,getItemInfoLists,null);
+        List<TroopInfo> troopInfos = new List<TroopInfo>();
+        troopInfos.Add(troopInfo);
+        tacticsEnemyList.Refresh(troopInfos,null);
         SetInputHandler(tacticsEnemyList.GetComponent<IInputHandlerEvent>());
         tacticsEnemyList.InitializeConfirm(confirmCommands,(confirmCommands) => CallBattleCommand(confirmCommands));
         

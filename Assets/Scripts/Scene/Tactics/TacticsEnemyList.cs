@@ -12,7 +12,7 @@ public class TacticsEnemyList : ListWindow , IInputHandlerEvent
     [SerializeField] private TacticsCommandList tacticsCommandList;
     [SerializeField] private int rows = 0;
     [SerializeField] private int cols = 0;
-    private List<BattlerInfo> _enemyInfos = new List<BattlerInfo>();
+    private List<TroopInfo> _troopInfos = new List<TroopInfo>();
 
     public int selectIndex{
         get {return Index;}
@@ -22,23 +22,23 @@ public class TacticsEnemyList : ListWindow , IInputHandlerEvent
         InitializeListView(cols);
     }
 
-    public void Refresh(List<BattlerInfo> enemyDatas,List<List<GetItemInfo>> getItemInfoLists,System.Action<int> callEvent)
+    public void Refresh(List<TroopInfo> troopInfos,System.Action<int> callEvent)
     {
-        _enemyInfos = enemyDatas;
+        _troopInfos = troopInfos;
         for (int i = 0; i < cols;i++)
         {
             var tacticsEnemy = ObjectList[i].GetComponent<TacticsEnemy>();
-            if (i < _enemyInfos.Count)
+            if (i < _troopInfos.Count)
             {
-                tacticsEnemy.SetData(enemyDatas[i],i);
-                tacticsEnemy.SetGetItemList(getItemInfoLists[i]);
+                tacticsEnemy.SetData(_troopInfos[i].BossEnemy,i);
+                tacticsEnemy.SetGetItemList(_troopInfos[i].GetItemInfos);
             }
             if (callEvent != null)
             {
                 tacticsEnemy.SetCallHandler(callEvent);
                 tacticsEnemy.SetSelectHandler((data) => UpdateSelectIndex(data));
             }
-            ObjectList[i].SetActive(i < _enemyInfos.Count);
+            ObjectList[i].SetActive(i < _troopInfos.Count);
         }
         UpdateSelectIndex(-1);
         Refresh();

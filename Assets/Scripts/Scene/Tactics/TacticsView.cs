@@ -144,9 +144,9 @@ public class TacticsView : BaseView
         HideResourceList();
     }
 
-    public void SetEnemies(List<BattlerInfo> enemyInfos,List<List<GetItemInfo>> getItemInfos)
+    public void SetEnemies(List<TroopInfo> troopInfos)
     {
-        tacticsEnemyList.Refresh(enemyInfos,getItemInfos,(enemyInfo) => CallBattleEnemy(enemyInfo));
+        tacticsEnemyList.Refresh(troopInfos,(enemyInfo) => CallBattleEnemy(enemyInfo));
         SetInputHandler(tacticsCharaLayer.GetComponent<IInputHandlerEvent>());
         //tacticsEnemyList.InitializeConfirm(confirmCommands,(confirmCommands) => CallBattleCommand(confirmCommands));
         HideEnemyList();

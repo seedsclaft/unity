@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
 public class StateInfo {
     public StatesData.StateData Master {
         get {return DataSystem.States.Find(a => a.Id == _stateId);}

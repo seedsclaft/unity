@@ -8,12 +8,6 @@ using System.Threading.Tasks;
 
 public class StrategyModel : BaseModel
 {
-
-    private TacticsComandType _currentCommandType = TacticsComandType.None;
-    public TacticsComandType CurrentCommandType{
-        get { return _currentCommandType;}
-    }
-
     private List<ActorInfo> StrategyActors()
     {
         return Actors();
@@ -25,13 +19,11 @@ public class StrategyModel : BaseModel
         return actorInfos;
     }
 
-
     public List<ActorInfo> TacticsBattleActors()
     {
         List<ActorInfo> actorInfos = StrategyActors().FindAll(a => a.TacticsComandType == TacticsComandType.Battle);
         return actorInfos;
     }
-
 
     public List<GetItemInfo> SetResult()
     {
@@ -83,9 +75,7 @@ public class StrategyModel : BaseModel
 
     public List<GetItemInfo> SetBattleResult()
     {
-        List<GetItemInfo> strategyGetItemInfos = new List<GetItemInfo>();
-        int enemyIndex = BattleEnemyIndex(true);
-        foreach (GetItemInfo getItemInfo in TacticsGetItemInfos()[enemyIndex])
+        foreach (GetItemInfo getItemInfo in CurrentTroopInfo().GetItemInfos)
         {
             if (getItemInfo.GetItemType == GetItemType.Skill)
             {
@@ -99,8 +89,7 @@ public class StrategyModel : BaseModel
             }
         }
 
-
-        return TacticsGetItemInfos()[enemyIndex];
+        return CurrentTroopInfo().GetItemInfos;
     }
 
     public int BattleEnemyIndex(bool inBattle)
@@ -129,6 +118,7 @@ public class StrategyModel : BaseModel
         List<ActorInfo> actorInfos = TacticsBattleActors();
         if (enemyIndex >= 0)
         {
+            CurrentData.CurrentStage.SetBattleIndex(enemyIndex);
             return actorInfos.FindAll(a => a.NextBattleEnemyIndex == enemyIndex);
         }
         return null;
@@ -183,5 +173,4 @@ public class StrategyModel : BaseModel
     {
         GameSystem.CurrentData.CurrentStage.ClearTacticsEnemies();
     }
-
 }

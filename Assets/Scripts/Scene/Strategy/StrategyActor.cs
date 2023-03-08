@@ -31,7 +31,7 @@ public class StrategyActor : ListItem ,IListViewItem
     public void StartResultAnimation(int animId)
     {
         //gameObject.transform.DOLocalMoveX(80,0.0f);
-        int initPosy = (animId % 2 == 1) ? 80 : -80;
+        int initPosy = (animId % 2 == 1) ? -80 : 80;
         Sequence sequence = DOTween.Sequence()
             .Append(gameObject.transform.DOLocalMoveY(initPosy,0.0f))
             .Append(gameObject.transform.DOLocalMoveY(0,1.0f))

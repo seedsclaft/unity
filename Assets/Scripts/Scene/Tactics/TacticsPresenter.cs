@@ -32,7 +32,7 @@ public class TacticsPresenter
         //List<ActorInfo> actorInfos = _model.Actors();
         //_view.SetActorInfo(_model.CurrentActor);
         _view.SetActors(_model.Actors(),_model.ConfirmCommand());
-        _view.SetEnemies(_model.TacticsEnemies(),_model.TacticsGetItemInfos());
+        _view.SetEnemies(_model.TacticsTroops());
 
         _view.SetTacticsCommand(_model.TacticsCommand);
         _view.ShowCommandList();
@@ -54,7 +54,7 @@ public class TacticsPresenter
                 }
                 if (stageEvents[i].Type == StageEventType.TutorialBattle)
                 {
-                    _view.SetEnemies(_model.TacticsTutorialEnemies(),_model.TacticsTutorialGetItemInfos());
+                    _view.SetEnemies(_model.ResetTroopData());
                 }
             }
         }

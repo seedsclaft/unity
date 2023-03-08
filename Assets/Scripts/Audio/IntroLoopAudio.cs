@@ -84,7 +84,9 @@ public class IntroLoopAudio : MonoBehaviour
       _introAudioSource.loop = isLoop;
       _introAudioSource.playOnAwake = false;
       _loopAudioSources[0].Stop();
+      _loopAudioSources[0].clip = null;
       if (_loopAudioSources[1] != null) _loopAudioSources[1].Stop();
+      if (_loopAudioSources[1] != null) _loopAudioSources[1].clip = null;
       /*
       _loopAudioSources[0].clip = clip[0];
       _loopAudioSources[0].loop = isLoop;

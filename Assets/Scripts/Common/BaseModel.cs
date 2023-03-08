@@ -64,44 +64,13 @@ public class BaseModel
     }
 
     
-    public List<BattlerInfo> TacticsEnemies()
+    public List<TroopInfo> TacticsTroops()
     {
-        List<BattlerInfo> battlerInfos = new List<BattlerInfo>();
-        List<TroopsData.TroopData> tacticsEnemyDatas = GameSystem.CurrentData.CurrentStage.TacticsEnemies();
-        for (int i = 0;i < tacticsEnemyDatas.Count;i++)
-        {
-            EnemiesData.EnemyData enemyData = DataSystem.Enemies.Find(a => a.Id == tacticsEnemyDatas[i].EnemyId);
-            BattlerInfo battlerInfo = new BattlerInfo(enemyData,tacticsEnemyDatas[i].Lv,0,0);
-            battlerInfos.Add(battlerInfo);
-        }
-        return battlerInfos;
+        return CurrentData.CurrentStage.TacticsTroops();
     }
 
-    public List<List<GetItemInfo>> TacticsGetItemInfos()
+    public TroopInfo CurrentTroopInfo()
     {
-        List<List<GetItemInfo>> getItemDataLists = new List<List<GetItemInfo>>();
-        List<TroopsData.TroopData> tacticsEnemyDatas = GameSystem.CurrentData.CurrentStage.TacticsEnemies();
-        for (int i = 0;i < tacticsEnemyDatas.Count;i++)
-        {
-            List<GetItemInfo> getItemInfos = new List<GetItemInfo>();
-            List<GetItemData> getItemDatas = tacticsEnemyDatas[i].GetItemDatas;
-            for (int j = 0;j < getItemDatas.Count;j++)
-            {
-                GetItemInfo getItemInfo = new GetItemInfo(getItemDatas[j]);
-                if (getItemDatas[j].Type == GetItemType.Skill)
-                {
-                    SkillsData.SkillData skillData = DataSystem.Skills.Find(a => a.Id == getItemDatas[j].Param1);
-                    getItemInfo.SetResultData(skillData.Name);
-                    getItemInfo.SetSkillElementId((int)skillData.Attribute);
-                }
-                if (getItemDatas[j].Type == GetItemType.Numinous)
-                {
-                    getItemInfo.SetResultData("+" + getItemDatas[j].Param1.ToString() + DataSystem.System.GetTextData(1000).Text);
-                }
-                getItemInfos.Add(getItemInfo);
-            }
-            getItemDataLists.Add(getItemInfos);
-        }
-        return getItemDataLists;
+        return CurrentData.CurrentStage.CurrentTroopInfo();
     }
 }

@@ -834,7 +834,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 0.30588236, g: 0.69803923, b: 0.69803923, a: 0.78431374}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -926,7 +926,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 0.30588236, g: 0.69803923, b: 0.69803923, a: 0.78431374}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -1236,6 +1236,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   clickButton: {fileID: 7759860869189205476}
   cursor: {fileID: 2938785911709144659}
+  disable: {fileID: 0}
   component: {fileID: 555983641208344323}
 --- !u!114 &555983641208344323
 MonoBehaviour:
@@ -1249,7 +1250,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e277cb526c023c458bf2fc8e6709026, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  name: {fileID: 2574400300739040841}
+  nameText: {fileID: 0}
   help: {fileID: 0}
   turns: {fileID: 951185238614652023}
   clearCount: {fileID: 2872644522367559213}

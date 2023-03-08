@@ -13,19 +13,14 @@ public class SoundManager : SingletonMonoBehaviour<SoundManager>
     readonly int SeChannel = 16;
     public float _bgmVolume = 1.0f;
     public float _seVolume = 1.0f;
-    AudioData[] _bgmData;
     AudioData[] _seData;
     
     private IntroLoopAudio _currentBgm;
+    private string _lastPlayAudio = "";
 
     void Awake()
     {
         _currentBgm = gameObject.AddComponent<IntroLoopAudio>();
-        _bgmData = new AudioData[2];
-        for (int i = 0; i < _bgmData.Length; i++)
-        {
-            _bgmData[i] = new AudioData(gameObject.AddComponent<AudioSource>());
-        }
 
         _seData = new AudioData[SeChannel];
         for (int i = 0; i < _seData.Length; i++)
@@ -164,7 +159,6 @@ public class SoundManager : SingletonMonoBehaviour<SoundManager>
 
     void LateUpdate()
     {
-        UpdateVolume(_bgmData, _bgmVolume);
         UpdateVolume(_seData, _seVolume);
 
         if (_crossFadeData != null)
@@ -217,14 +211,6 @@ public class SoundManager : SingletonMonoBehaviour<SoundManager>
 
     bool TryGetAudioSourceData(AudioDataHandler handler, out AudioData outData)
     {
-        foreach (var data in _bgmData)
-        {
-            if (handler._guid == data.Guid)
-            {
-                outData = data;
-                return true;
-            }
-        }
 
         foreach (var data in _seData)
         {
@@ -294,66 +280,22 @@ public class SoundManager : SingletonMonoBehaviour<SoundManager>
     }
     */
 
-    public AudioDataHandler PlayBgm(List<AudioClip> clip, float volume = 1.0f, bool loop = true)
+    public void PlayBgm(List<AudioClip> clip, float volume = 1.0f, bool loop = true)
     {
-        foreach (var data in _bgmData)
-        {
-            if (data.IsPlaying() || data.Paused())
-            {
-                data.Stop();
-            }
-        }
+        if (clip[0].name == _lastPlayAudio) return;
         _currentBgm.Stop();
-
         _currentBgm.SetClip(clip,loop);
         _currentBgm.Play();
-        if (clip.Count == 0){
-            var playData = _bgmData[0];
-            /*
-            playData.SetClip(clip);
-            playData.SetVolume(_bgmVolume * volume);
-            playData.Play(loop);
-
-            playData._audioLength = clip.length;
-            playData.SetInitVolume(volume);
-            playData.SetGuid();
-            */
-            return _bgmData[0].ToAudioSourceHandler();
-        } else{
-            var playData = _bgmData[0];
-            return _bgmData[0].ToAudioSourceHandler();
-        }
+        _lastPlayAudio = clip[0].name;
     }
 
-    public AudioDataHandler CrossFadeBgm(string name, float volume = 1.0f, bool loop = true, float fadeTime = 0.5f)
+    public void StopBgm()
     {
-        if (TryGetAudioClip(name, out var clip))
-        {
-            return CrossFadeBgm(clip, volume, loop, fadeTime);
-        }
-        return default;
+        _currentBgm.Stop();
+        _lastPlayAudio = null;
     }
 
-    public AudioDataHandler CrossFadeBgm(AudioClip clip, float volume = 1.0f, bool loop = true, float fadeTime = 0.5f)
-    {
-        var src = _bgmData.FirstOrDefault(x => x.IsPlaying());
-        var dst = _bgmData.FirstOrDefault(x => !x.IsPlaying());
 
-        dst.SetClip(clip);
-        dst.SetVolume(0);
-        dst.Play(loop);
-
-        dst._audioLength = clip.length;
-        dst.SetVolume(volume);
-        dst.SetGuid();
-
-        _crossFadeData = new CrossFadeData();
-        _crossFadeData._srcAudioData = src;
-        _crossFadeData._dstAudioData = dst;
-        _crossFadeData._fadeCompleteTime = fadeTime;
-
-        return dst.ToAudioSourceHandler();
-    }
 
     /// <summary>
     /// 再生されていなければfalseを返します
@@ -441,13 +383,6 @@ public class SoundManager : SingletonMonoBehaviour<SoundManager>
 
     public void AllPause()
     {
-        foreach (var data in _bgmData)
-        {
-            if (data.IsPlaying())
-            {
-                data.Pause();
-            }
-        }
 
         foreach (var data in _seData)
         {
@@ -460,13 +395,6 @@ public class SoundManager : SingletonMonoBehaviour<SoundManager>
 
     public void AllUnPause()
     {
-        foreach (var data in _bgmData)
-        {
-            if (data.IsPlaying())
-            {
-                data.UnPause();
-            }
-        }
 
         foreach (var data in _seData)
         {

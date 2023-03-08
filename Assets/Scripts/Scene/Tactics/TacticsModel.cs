@@ -45,51 +45,9 @@ public class TacticsModel : BaseModel
         return Actors().Find(a => a.ActorId == actorId);
     }
 
-    public List<BattlerInfo> TacticsTutorialEnemies()
+    public List<TroopInfo> ResetTroopData()
     {
-        List<BattlerInfo> battlerInfos = new List<BattlerInfo>();
-        TroopsData.TroopData troopData = DataSystem.Troops.Find(a => a.TroopId == CurrentData.CurrentStage.SelectActorIds[0] * 10 && a.Line == 1);
-        List<TroopsData.TroopData> tacticsEnemyDatas = new List<TroopsData.TroopData>();
-        tacticsEnemyDatas.Add(troopData);
-        for (int i = 0;i < tacticsEnemyDatas.Count;i++)
-        {
-            EnemiesData.EnemyData enemyData = DataSystem.Enemies.Find(a => a.Id == tacticsEnemyDatas[i].EnemyId);
-            BattlerInfo battlerInfo = new BattlerInfo(enemyData,tacticsEnemyDatas[i].Lv,0,0);
-            battlerInfos.Add(battlerInfo);
-        }
-        CurrentData.CurrentStage.SetTacticsEnemies(tacticsEnemyDatas);
-        return battlerInfos;
-    }
-
-    public List<List<GetItemInfo>> TacticsTutorialGetItemInfos()
-    {
-        List<List<GetItemInfo>> getItemDataLists = new List<List<GetItemInfo>>();
-        
-        List<TroopsData.TroopData> tacticsEnemyDatas = new List<TroopsData.TroopData>();
-        TroopsData.TroopData troopData = DataSystem.Troops.Find(a => a.TroopId == CurrentData.CurrentStage.SelectActorIds[0] * 10 && a.Line == 1);
-        tacticsEnemyDatas.Add(troopData);
-        for (int i = 0;i < tacticsEnemyDatas.Count;i++)
-        {
-            List<GetItemInfo> getItemInfos = new List<GetItemInfo>();
-            List<GetItemData> getItemDatas = tacticsEnemyDatas[i].GetItemDatas;
-            for (int j = 0;j < getItemDatas.Count;j++)
-            {
-                GetItemInfo getItemInfo = new GetItemInfo(getItemDatas[j]);
-                if (getItemDatas[j].Type == GetItemType.Skill)
-                {
-                    SkillsData.SkillData skillData = DataSystem.Skills.Find(a => a.Id == getItemDatas[j].Param1);
-                    getItemInfo.SetResultData(skillData.Name);
-                    getItemInfo.SetSkillElementId((int)skillData.Attribute);
-                }
-                if (getItemDatas[j].Type == GetItemType.Numinous)
-                {
-                    getItemInfo.SetResultData("+" + getItemDatas[j].Param1.ToString() + DataSystem.System.GetTextData(1000).Text);
-                }
-                getItemInfos.Add(getItemInfo);
-            }
-            getItemDataLists.Add(getItemInfos);
-        }
-        return getItemDataLists;
+        return CurrentData.CurrentStage.MakeTutorialTroopData(CurrentData.CurrentStage.SelectActorIds[0]);
     }
 
     public List<SkillInfo> SkillActionList(AttributeType attributeType)
@@ -347,7 +305,7 @@ public class TacticsModel : BaseModel
                 if (CanTacticsCommand(TacticsComandType.Recovery,actorInfo))
                 {   
                     actorInfo.SetTacticsCommand(TacticsComandType.Battle,0);
-                    actorInfo.SetNextBattleEnemyIndex(_currentEnemyIndex,TacticsEnemies()[_currentEnemyIndex].EnemyData.Id);
+                    actorInfo.SetNextBattleEnemyIndex(_currentEnemyIndex,TacticsTroops()[_currentEnemyIndex].BossEnemy.EnemyData.Id);
                 }
             }
         }

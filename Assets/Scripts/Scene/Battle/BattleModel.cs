@@ -50,7 +50,7 @@ public class BattleModel : BaseModel
                 _battlers.Add(battlerInfo);
             }
         }
-        var enemies = TacticsEnemies();
+        var enemies = CurrentData.CurrentStage.CurrentBattleInfos();
         
         for (int i = 0;i < enemies.Count;i++)
         {
