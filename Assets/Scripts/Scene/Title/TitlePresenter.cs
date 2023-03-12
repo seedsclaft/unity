@@ -34,7 +34,7 @@ public class TitlePresenter
         }
         if (viewEvent.commandType == CommandType.TitleCommand)
         {
-            CommandTitle();
+            CommandTitle((int) viewEvent.templete);
 
             /*
             _view.CommandInitSaveInfo();
@@ -46,9 +46,9 @@ public class TitlePresenter
         }
     }
 
-    void CommandTitle(){
+    void CommandTitle(int commandIndex){
         _busy = true;
-        switch ((TitleComandType)_view.titleCommandIndex){
+        switch ((TitleComandType)commandIndex){
             case TitleComandType.NewGame:
             _view.CommandInitSaveInfo();
             _view.CommandSceneChange(Scene.MainMenu);

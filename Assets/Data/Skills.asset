@@ -32,7 +32,7 @@ MonoBehaviour:
   - Id: 1
     Name: "\u653B\u6483"
     IconIndex: 1
-    AnimationName: tktk01/Fire2
+    AnimationName: tktk01/Sword5
     AnimationType: 1
     DamageTiming: 32
     MpCost: 0
@@ -74,7 +74,7 @@ MonoBehaviour:
   - Id: 21
     Name: "\u795E\u5316\u89E3\u9664"
     IconIndex: 1
-    AnimationName: tktk01/Magic2
+    AnimationName: tktk02/Dark1
     AnimationType: 1
     DamageTiming: 0
     MpCost: 0
@@ -95,7 +95,7 @@ MonoBehaviour:
   - Id: 31
     Name: "\u62D8\u675F\u5236\u5FA1"
     IconIndex: 1
-    AnimationName: MAGICALxSPIRAL/Thunder3
+    AnimationName: NA_Effekseer/NA_shooting_002
     AnimationType: 1
     DamageTiming: 26
     MpCost: 0
@@ -121,7 +121,7 @@ MonoBehaviour:
   - Id: 32
     Name: "\u62D8\u675F\u30C0\u30E1\u30FC\u30B8\u89E3\u9664"
     IconIndex: 1
-    AnimationName: MAGICALxSPIRAL/Thunder3
+    AnimationName: 
     AnimationType: 1
     DamageTiming: 0
     MpCost: 0
@@ -142,7 +142,7 @@ MonoBehaviour:
   - Id: 101
     Name: "\u30D5\u30A1\u30A4\u30A2\u30DC\u30FC\u30EB"
     IconIndex: 286
-    AnimationName: NA_Fire_001
+    AnimationName: tktk01/Fire2
     AnimationType: 1
     DamageTiming: 32
     MpCost: 0
@@ -163,7 +163,7 @@ MonoBehaviour:
   - Id: 102
     Name: "\u30D0\u30FC\u30F3\u30B9\u30C8\u30FC\u30E0"
     IconIndex: 19
-    AnimationName: NA_Fire_001
+    AnimationName: NA_Effekseer/NA_Fire_001
     AnimationType: 2
     DamageTiming: 32
     MpCost: 5
@@ -182,9 +182,9 @@ MonoBehaviour:
       Param3: 0
     TriggerDatas: []
   - Id: 103
-    Name: "\u30D2\u30FC\u30C8\u30A6\u30A7\u30FC\u30D6"
+    Name: "\u30D2\u30FC\u30C8\u30B9\u30BF\u30F3\u30D7"
     IconIndex: 57
-    AnimationName: NA_Fire_001
+    AnimationName: tktk02/Gun5
     AnimationType: 1
     DamageTiming: 32
     MpCost: 5
@@ -203,9 +203,9 @@ MonoBehaviour:
       Param3: 0
     TriggerDatas: []
   - Id: 104
-    Name: "\u30A2\u30D5\u30BF\u30FC\u30D0\u30FC\u30CA\u30FC"
+    Name: "\u30BD\u30FC\u30C9\u30A2\u30C0\u30D7\u30C8"
     IconIndex: 57
-    AnimationName: NA_Fire_001
+    AnimationName: NA_Effekseer/NA_sword_001
     AnimationType: 1
     DamageTiming: 32
     MpCost: 5
@@ -226,7 +226,7 @@ MonoBehaviour:
   - Id: 105
     Name: "\u30D7\u30EA\u30C7\u30A3\u30AB\u30E1\u30F3\u30C8"
     IconIndex: 57
-    AnimationName: NA_Fire_001
+    AnimationName: 
     AnimationType: 1
     DamageTiming: 32
     MpCost: 0
@@ -253,7 +253,7 @@ MonoBehaviour:
   - Id: 111
     Name: "\u30A4\u30F3\u30D5\u30A7\u30EB\u30CE"
     IconIndex: 138
-    AnimationName: NA_Fire_001
+    AnimationName: NA_Effekseer/NA_magic_006_c1
     AnimationType: 1
     DamageTiming: 32
     MpCost: 0
@@ -286,7 +286,7 @@ MonoBehaviour:
   - Id: 112
     Name: "\u30B9\u30D9\u30C6\u30E2\u30E4\u30B7\u30C4\u30AF\u30B9"
     IconIndex: 83
-    AnimationName: NA_Fire_001
+    AnimationName: NA_Effekseer/NA_magic_004_c1
     AnimationType: 1
     DamageTiming: 32
     MpCost: 0
@@ -311,9 +311,9 @@ MonoBehaviour:
       Param3: 0
     TriggerDatas: []
   - Id: 201
-    Name: "\u30DC\u30EB\u30C8\u30A2\u30F3\u30AB\u30FC"
+    Name: "\u30E9\u30A4\u30C8\u30CB\u30F3\u30B0\u30A6\u30A7\u30D6"
     IconIndex: 1
-    AnimationName: MAGICALxSPIRAL/Thunder2
+    AnimationName: NA_Effekseer/NA_net_001
     AnimationType: 1
     DamageTiming: 26
     MpCost: 0
@@ -334,7 +334,7 @@ MonoBehaviour:
   - Id: 202
     Name: "\u30B7\u30E3\u30FC\u30D7\u30B3\u30FC\u30C9"
     IconIndex: 1
-    AnimationName: MAGICALxSPIRAL/Thunder2
+    AnimationName: NA_Effekseer/NA_status_005
     AnimationType: 1
     DamageTiming: 26
     MpCost: 5
@@ -355,7 +355,7 @@ MonoBehaviour:
   - Id: 203
     Name: "\u30B7\u30E7\u30C3\u30AF\u30A4\u30F3\u30D1\u30EB\u30B9"
     IconIndex: 1
-    AnimationName: MAGICALxSPIRAL/Thunder2
+    AnimationName: NA_Effekseer/NA_magic_003
     AnimationType: 1
     DamageTiming: 26
     MpCost: 5
@@ -376,7 +376,7 @@ MonoBehaviour:
   - Id: 204
     Name: "\u30C8\u30E9\u30B9\u30C8\u30C1\u30A7\u30A4\u30F3"
     IconIndex: 1
-    AnimationName: MAGICALxSPIRAL/Thunder2
+    AnimationName: NA_Effekseer/NA_exchange_001
     AnimationType: 1
     DamageTiming: 26
     MpCost: 5
@@ -397,7 +397,7 @@ MonoBehaviour:
   - Id: 205
     Name: "\u30B9\u30D1\u30FC\u30AF\u30D5\u30A9\u30B0"
     IconIndex: 1
-    AnimationName: MAGICALxSPIRAL/Thunder2
+    AnimationName: 
     AnimationType: 1
     DamageTiming: 26
     MpCost: 0
@@ -416,9 +416,9 @@ MonoBehaviour:
       Param3: 50
     TriggerDatas: []
   - Id: 211
-    Name: "\u30E9\u30A4\u30C8\u30CB\u30F3\u30B0\u30CF\u30A6\u30F3\u30C9"
+    Name: "\u30B9\u30C6\u30C3\u30D7\u30EA\u30FC\u30C0\u30FC"
     IconIndex: 79
-    AnimationName: MAGICALxSPIRAL/Thunder3
+    AnimationName: tktk01/Blow10
     AnimationType: 1
     DamageTiming: 26
     MpCost: 0
@@ -426,7 +426,7 @@ MonoBehaviour:
     Scope: 4
     SkillType: 3
     TargetType: 4
-    Help: "(\u6761\u4EF6)\u62D8\u675F\u89E3\u9664\u30923\u56DE\u6210\u529F\n\u81EA\u8EAB\u306B\u518D\u884C\u52D5\u3092\u4ED8\u4E0E
+    Help: "(\u6761\u4EF6)\u62D8\u675F\u89E3\u9664\u30923\u56DE\u6210\u529F\n\u62D8\u675F\u30C0\u30E1\u30FC\u30B8\u52B9\u679C\u30A2\u30C3\u30D7
       \u795E\u5316\u72B6\u614B\u306B\u79FB\u884C"
     Range: 1
     AliveOnly: 1
@@ -451,7 +451,7 @@ MonoBehaviour:
   - Id: 212
     Name: "\u30E6\u30D3\u30B5\u30AD\u30C7\u30AB\u30E9\u30E1\u30C8\u30EB"
     IconIndex: 216
-    AnimationName: MAGICALxSPIRAL/Thunder3
+    AnimationName: NA_Effekseer/NA_net_002
     AnimationType: 1
     DamageTiming: 26
     MpCost: 0
@@ -483,7 +483,7 @@ MonoBehaviour:
   - Id: 301
     Name: "\u30AB\u30A6\u30F3\u30BF\u30FC\u30AA\u30FC\u30E9"
     IconIndex: 370
-    AnimationName: NA_Fire_001
+    AnimationName: tktk02/Light1
     AnimationType: 1
     DamageTiming: 26
     MpCost: 0
@@ -509,7 +509,7 @@ MonoBehaviour:
   - Id: 302
     Name: "\u30B7\u30FC\u30EB\u30C9\u30B9\u30DA\u30EB"
     IconIndex: 370
-    AnimationName: NA_Fire_001
+    AnimationName: tktk02/Gun2
     AnimationType: 1
     DamageTiming: 26
     MpCost: 5
@@ -530,7 +530,7 @@ MonoBehaviour:
   - Id: 303
     Name: "\u30A8\u30B9\u30B3\u30FC\u30C8\u30BD\u30FC\u30EB"
     IconIndex: 370
-    AnimationName: NA_Fire_001
+    AnimationName: NA_Effekseer/NA_wave_001
     AnimationType: 1
     DamageTiming: 26
     MpCost: 5
@@ -551,7 +551,7 @@ MonoBehaviour:
   - Id: 304
     Name: "\u30B9\u30DA\u30EB\u30D0\u30CB\u30C3\u30B7\u30E5"
     IconIndex: 370
-    AnimationName: NA_Fire_001
+    AnimationName: NA_Effekseer/NA_magic_006
     AnimationType: 1
     DamageTiming: 26
     MpCost: 5
@@ -572,7 +572,7 @@ MonoBehaviour:
   - Id: 305
     Name: "\u30AC\u30FC\u30C7\u30A3\u30A2\u30F3\u30BD\u30A6\u30EB"
     IconIndex: 370
-    AnimationName: NA_Fire_001
+    AnimationName: 
     AnimationType: 1
     DamageTiming: 26
     MpCost: 0
@@ -593,7 +593,7 @@ MonoBehaviour:
   - Id: 311
     Name: "\u30D5\u30EA\u30B8\u30C3\u30C8\u30B7\u30A7\u30EB"
     IconIndex: 145
-    AnimationName: NA_Fire_001
+    AnimationName: NA_Effekseer/NA_barrier_001
     AnimationType: 1
     DamageTiming: 26
     MpCost: 0
@@ -626,7 +626,7 @@ MonoBehaviour:
   - Id: 312
     Name: "\u30CE\u30ED\u30DE\u30CA\u30AB\u30E1\u30CB\u30CA\u30EC"
     IconIndex: 40
-    AnimationName: NA_Fire_001
+    AnimationName: NA_Effekseer/NA_magic_008_c3
     AnimationType: 1
     DamageTiming: 26
     MpCost: 0
@@ -653,7 +653,7 @@ MonoBehaviour:
   - Id: 401
     Name: "\u30DA\u30CD\u30C8\u30EC\u30A4\u30C8"
     IconIndex: 382
-    AnimationName: NA_Fire_001
+    AnimationName: tktk01/Sword7
     AnimationType: 1
     DamageTiming: 26
     MpCost: 0
@@ -674,7 +674,7 @@ MonoBehaviour:
   - Id: 402
     Name: "\u30D2\u30FC\u30EA\u30F3\u30B0"
     IconIndex: 382
-    AnimationName: NA_Fire_001
+    AnimationName: NA_Effekseer/NA_healing_001
     AnimationType: 1
     DamageTiming: 26
     MpCost: 5
@@ -700,7 +700,7 @@ MonoBehaviour:
   - Id: 403
     Name: "\u30EA\u30D5\u30EC\u30C3\u30B7\u30E5"
     IconIndex: 382
-    AnimationName: NA_Fire_001
+    AnimationName: tktk01/Light2
     AnimationType: 1
     DamageTiming: 26
     MpCost: 5
@@ -736,7 +736,7 @@ MonoBehaviour:
   - Id: 404
     Name: "\u3079\u30CD\u30C7\u30A3\u30AF\u30B7\u30E7\u30F3"
     IconIndex: 382
-    AnimationName: NA_Fire_001
+    AnimationName: tktk02/Light3
     AnimationType: 1
     DamageTiming: 26
     MpCost: 5
@@ -757,7 +757,7 @@ MonoBehaviour:
   - Id: 405
     Name: "\u30C7\u30A3\u30D0\u30A4\u30F3\u30B7\u30FC\u30EB\u30C9"
     IconIndex: 382
-    AnimationName: NA_Fire_001
+    AnimationName: 
     AnimationType: 1
     DamageTiming: 26
     MpCost: 0
@@ -778,7 +778,7 @@ MonoBehaviour:
   - Id: 411
     Name: "\u30A8\u30EA\u30AF\u30B7\u30FC\u30EB"
     IconIndex: 577
-    AnimationName: NA_Fire_001
+    AnimationName: tktk01/Cure2
     AnimationType: 1
     DamageTiming: 26
     MpCost: 0
@@ -816,7 +816,7 @@ MonoBehaviour:
   - Id: 412
     Name: "\u30A8\u30F3\u30B8\u30A7\u30EB\u30D5\u30A7\u30B6\u30FC"
     IconIndex: 548
-    AnimationName: NA_Fire_001
+    AnimationName: NA_Effekseer/NA_aura_005
     AnimationType: 1
     DamageTiming: 26
     MpCost: 0
@@ -885,7 +885,7 @@ MonoBehaviour:
   - Id: 503
     Name: "\u30C7\u30EA\u30FC\u30C8\u30DE\u30B8\u30C3\u30AF"
     IconIndex: 193
-    AnimationName: tktk01/Dark3
+    AnimationName: NA_Effekseer/NA_magic_002
     AnimationType: 1
     DamageTiming: 20
     MpCost: 5
@@ -946,7 +946,7 @@ MonoBehaviour:
   - Id: 504
     Name: "\u30C7\u30A3\u30D7\u30E9\u30F4\u30A3\u30C6\u30A3"
     IconIndex: 193
-    AnimationName: tktk01/Dark3
+    AnimationName: NA_Effekseer/NA_curse_001
     AnimationType: 1
     DamageTiming: 20
     MpCost: 5
@@ -967,7 +967,7 @@ MonoBehaviour:
   - Id: 505
     Name: "\u30CD\u30AC\u30C6\u30A3\u30D6\u30C9\u30EC\u30A4\u30F3"
     IconIndex: 193
-    AnimationName: tktk01/Dark3
+    AnimationName: 
     AnimationType: 1
     DamageTiming: 20
     MpCost: 5
@@ -994,7 +994,7 @@ MonoBehaviour:
   - Id: 511
     Name: "\u30C7\u30A3\u30B9\u30C8\u30E9\u30AF\u30B7\u30E7\u30F3"
     IconIndex: 129
-    AnimationName: tktk01/Dark2
+    AnimationName: NA_Effekseer/NA_smoke_003_c7
     AnimationType: 1
     DamageTiming: 26
     MpCost: 0
@@ -1027,7 +1027,7 @@ MonoBehaviour:
   - Id: 512
     Name: "\u30AB\u30AA\u30B9\u30DA\u30A4\u30F3"
     IconIndex: 129
-    AnimationName: tktk01/Dark2
+    AnimationName: NA_Effekseer/NA_magic_009
     AnimationType: 1
     DamageTiming: 26
     MpCost: 0

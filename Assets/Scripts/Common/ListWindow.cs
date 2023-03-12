@@ -11,7 +11,7 @@ abstract public class ListWindow : MonoBehaviour
 
     private int _index = 0;
     public int Index {get{return _index;}}
-    public int _defaultInputFrame = 30;
+    private int _defaultInputFrame = 6;
     private int _inputBusyFrame = 0;
 
     [SerializeField] private bool horizontal = false; 
@@ -29,6 +29,8 @@ abstract public class ListWindow : MonoBehaviour
     public LinkedList<IListViewItem> ItemList {get {return _itemList;}}
     private List<GameObject> _objectList = new List<GameObject>();
     public List<GameObject> ObjectList {get {return _objectList;}}
+
+    private System.Action<InputKeyType> _inputCallHandler = null;
 
     public HelpWindow _helpWindow = null;
     public void Activate()
@@ -57,6 +59,7 @@ abstract public class ListWindow : MonoBehaviour
         CreatePrevObject();
         CreateList();
         CreateLastObject();
+        _inputCallHandler = null;
     }
 
     private void SetValueChangedEvent()
@@ -343,25 +346,33 @@ abstract public class ListWindow : MonoBehaviour
             return;
         }
         InputSelectIndex(keyType);
+        InputCallEvent(keyType);
         UpdateSelectIndex(Index);
         ResetInputFrame();
     }
 
     public void InputSelectIndex(InputKeyType keyType){
-        int selectIndex = -1;
-        if (keyType == InputKeyType.Down){
+        int currentIndex = Index;
+        int selectIndex = Index;
+        var plusKey = (horizontal == true) ? InputKeyType.Right : InputKeyType.Down;
+        var minusKey = (horizontal == true) ? InputKeyType.Left : InputKeyType.Up;
+
+        if (keyType == plusKey){
             selectIndex = Index + 1;
             if (selectIndex > ObjectList.Count-1){
                 selectIndex = 0;
             }
         } else
-        if (keyType == InputKeyType.Up){
+        if (keyType == minusKey){
             selectIndex = Index - 1;
             if (selectIndex < 0){
                 selectIndex = ObjectList.Count-1;
             }
         }
-        SelectIndex(selectIndex);
+        if (currentIndex != selectIndex){
+            SoundManager.Instance.PlaySe(null,1);
+            SelectIndex(selectIndex);
+        }
     }
 
     public void UpdateSelectIndex(int index){
@@ -376,6 +387,16 @@ abstract public class ListWindow : MonoBehaviour
                 listItem.SetUnSelect();
             }
         }
+    }
+
+    public void SetInputHandler(System.Action<InputKeyType> callHandler)
+    {
+        _inputCallHandler = callHandler;
+    }
+    
+    private void InputCallEvent(InputKeyType keyType){
+        if (_inputCallHandler == null) return;
+        _inputCallHandler(keyType);
     }
 
     public virtual void UpdateHelpWindow(){

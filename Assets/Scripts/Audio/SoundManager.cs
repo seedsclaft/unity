@@ -15,12 +15,12 @@ public class SoundManager : SingletonMonoBehaviour<SoundManager>
     public float _seVolume = 1.0f;
     AudioData[] _seData;
     
-    private IntroLoopAudio _currentBgm;
+    private IntroLoopAudio _bgm;
     private string _lastPlayAudio = "";
 
     void Awake()
     {
-        _currentBgm = gameObject.AddComponent<IntroLoopAudio>();
+        _bgm = gameObject.AddComponent<IntroLoopAudio>();
 
         _seData = new AudioData[SeChannel];
         for (int i = 0; i < _seData.Length; i++)
@@ -283,18 +283,22 @@ public class SoundManager : SingletonMonoBehaviour<SoundManager>
     public void PlayBgm(List<AudioClip> clip, float volume = 1.0f, bool loop = true)
     {
         if (clip[0].name == _lastPlayAudio) return;
-        _currentBgm.Stop();
-        _currentBgm.SetClip(clip,loop);
-        _currentBgm.Play();
+        _bgm.Stop();
+        _bgm.SetClip(clip,loop);
+        _bgm.Play();
         _lastPlayAudio = clip[0].name;
     }
 
     public void StopBgm()
     {
-        _currentBgm.Stop();
+        _bgm.Stop();
         _lastPlayAudio = null;
     }
 
+
+    public void PlaySe(List<AudioClip> clip, float volume = 1.0f)
+    {
+    }
 
 
     /// <summary>
