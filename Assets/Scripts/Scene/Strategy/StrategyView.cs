@@ -99,10 +99,10 @@ public class StrategyView : BaseView
     {
         List<TroopInfo> troopInfos = new List<TroopInfo>();
         troopInfos.Add(troopInfo);
-        tacticsEnemyList.Refresh(troopInfos,null);
+        tacticsEnemyList.Refresh(troopInfos,null,null);
         SetInputHandler(tacticsEnemyList.GetComponent<IInputHandlerEvent>());
         tacticsEnemyList.InitializeConfirm(confirmCommands,(confirmCommands) => CallBattleCommand(confirmCommands));
-        
+        SetInputHandler(tacticsEnemyList.TacticsCommandList.GetComponent<IInputHandlerEvent>());
         tacticsEnemyList.gameObject.SetActive(true);
     }
 

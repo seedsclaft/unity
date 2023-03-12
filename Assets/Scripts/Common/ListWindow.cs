@@ -328,8 +328,11 @@ abstract public class ListWindow : MonoBehaviour
 
     public bool IsInputEnable()
     {
+        if (this == null) return false;
         if (_inputBusyFrame > 0) return false;
         if (_active == false) return false;
+        if (!gameObject) return false;
+        if (gameObject.activeSelf == false) return false;
         return true;
     }
 
@@ -401,7 +404,10 @@ abstract public class ListWindow : MonoBehaviour
     }
     
     private void InputCallEvent(InputKeyType keyType){
-        if (_inputCallHandler == null) return;
+        if (!IsInputEnable())
+        {
+            return;
+        }
         _inputCallHandler(keyType);
     }
 

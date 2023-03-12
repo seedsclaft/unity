@@ -27,6 +27,7 @@ public class TacticsView : BaseView
 
     private HelpWindow _helpWindow = null;
 
+    private CommandType _lastCallEventType = CommandType.None;
 
     protected void Awake()
     {
@@ -37,16 +38,18 @@ public class TacticsView : BaseView
     void Initialize()
     {
         new TacticsPresenter(this);
-        skillAlchemyList.Initialize(actorInfo => CallSkillAlchemy(actorInfo));
+        skillAlchemyList.Initialize(actorInfo => CallSkillAlchemy(actorInfo),() => OnClickBack());
         SetInputHandler(skillAlchemyList.GetComponent<IInputHandlerEvent>());
         HideSkillAlchemyList();
     }
 
     private void CallSkillAlchemy(int skillId)
     {
+        if (_lastCallEventType != CommandType.None) return;
         var eventData = new TacticsViewEvent(CommandType.SkillAlchemy);
         eventData.templete = skillId;
         _commandData(eventData);
+        _lastCallEventType = eventData.commandType;
     }
     
     public void SetUIButton()
@@ -57,8 +60,10 @@ public class TacticsView : BaseView
 
     private void OnClickBack()
     {
+        if (_lastCallEventType != CommandType.None) return;
         var eventData = new TacticsViewEvent(CommandType.Back);
         _commandData(eventData);
+        _lastCallEventType = eventData.commandType;
     }
 
     public void SetHelpWindow()
@@ -103,9 +108,11 @@ public class TacticsView : BaseView
 
     private void CallTacticsCommand(TacticsComandType commandType)
     {
+        if (_lastCallEventType != CommandType.None) return;
         var eventData = new TacticsViewEvent(CommandType.TacticsCommand);
         eventData.templete = commandType;
         _commandData(eventData);
+        _lastCallEventType = eventData.commandType;
     }
 
     public void SetActors(List<ActorInfo> actorInfos,List<SystemData.MenuCommandData> confirmCommands)
@@ -114,12 +121,12 @@ public class TacticsView : BaseView
         SetInputHandler(tacticsCharaLayer.GetComponent<IInputHandlerEvent>());
     
         tacticsTrainList.Initialize(actorInfos,(actorinfo) => CallActorTrain(actorinfo));
-        SetInputHandler(tacticsCharaLayer.GetComponent<IInputHandlerEvent>());
+        SetInputHandler(tacticsTrainList.GetComponent<IInputHandlerEvent>());
         tacticsTrainList.InitializeConfirm(confirmCommands,(confirmCommands) => CallTrainCommand(confirmCommands));
         HideTrainList();
 
         tacticsAlchemyList.Initialize(actorInfos,(actorinfo) => CallActorAlchemy(actorinfo));
-        SetInputHandler(tacticsCharaLayer.GetComponent<IInputHandlerEvent>());
+        SetInputHandler(tacticsAlchemyList.GetComponent<IInputHandlerEvent>());
         tacticsAlchemyList.InitializeConfirm(confirmCommands,(confirmCommands) => CallAlchemyCommand(confirmCommands));
         HideAlchemyList();
 
@@ -128,26 +135,26 @@ public class TacticsView : BaseView
             (actorinfo) => CallRecoveryPlus(actorinfo),
             (actorinfo) => CallRecoveryMinus(actorinfo)
         );
-        SetInputHandler(tacticsCharaLayer.GetComponent<IInputHandlerEvent>());
+        SetInputHandler(tacticsRecoveryList.GetComponent<IInputHandlerEvent>());
         tacticsRecoveryList.InitializeConfirm(confirmCommands,(confirmCommands) => CallRecoveryCommand(confirmCommands));
         HideRecoveryList();
 
         
         tacticsBattleList.Initialize(actorInfos,(actorinfo) => CallActorBattle(actorinfo));
-        SetInputHandler(tacticsCharaLayer.GetComponent<IInputHandlerEvent>());
+        SetInputHandler(tacticsBattleList.GetComponent<IInputHandlerEvent>());
         tacticsBattleList.InitializeConfirm(confirmCommands,(confirmCommands) => CallBattleCommand(confirmCommands));
         HideBattleList();
 
         tacticsResourceList.Initialize(actorInfos,(actorinfo) => CallActorResource(actorinfo));
-        SetInputHandler(tacticsCharaLayer.GetComponent<IInputHandlerEvent>());
+        SetInputHandler(tacticsResourceList.GetComponent<IInputHandlerEvent>());
         tacticsResourceList.InitializeConfirm(confirmCommands,(confirmCommands) => CallResourceCommand(confirmCommands));
         HideResourceList();
     }
 
     public void SetEnemies(List<TroopInfo> troopInfos)
     {
-        tacticsEnemyList.Refresh(troopInfos,(enemyInfo) => CallBattleEnemy(enemyInfo));
-        SetInputHandler(tacticsCharaLayer.GetComponent<IInputHandlerEvent>());
+        tacticsEnemyList.Refresh(troopInfos,(enemyInfo) => CallBattleEnemy(enemyInfo),() => OnClickBack());
+        SetInputHandler(tacticsEnemyList.GetComponent<IInputHandlerEvent>());
         //tacticsEnemyList.InitializeConfirm(confirmCommands,(confirmCommands) => CallBattleCommand(confirmCommands));
         HideEnemyList();
     }
@@ -163,16 +170,20 @@ public class TacticsView : BaseView
 
     private void CallActorTrain(int actorId)
     {
+        if (_lastCallEventType != CommandType.None) return;
         var eventData = new TacticsViewEvent(CommandType.SelectActorTrain);
         eventData.templete = actorId;
         _commandData(eventData);
+        _lastCallEventType = eventData.commandType;
     }
 
     private void CallTrainCommand(TacticsComandType commandType)
     {
+        if (_lastCallEventType != CommandType.None) return;
         var eventData = new TacticsViewEvent(CommandType.TrainClose);
         eventData.templete = commandType;
         _commandData(eventData);
+        _lastCallEventType = eventData.commandType;
     }
 
     public void ShowTrainList()
@@ -187,16 +198,20 @@ public class TacticsView : BaseView
 
     private void CallActorAlchemy(int actorId)
     {
+        if (_lastCallEventType != CommandType.None) return;
         var eventData = new TacticsViewEvent(CommandType.SelectActorAlchemy);
         eventData.templete = actorId;
         _commandData(eventData);
+        _lastCallEventType = eventData.commandType;
     }
 
     private void CallAlchemyCommand(TacticsComandType commandType)
     {
+        if (_lastCallEventType != CommandType.None) return;
         var eventData = new TacticsViewEvent(CommandType.AlchemyClose);
         eventData.templete = commandType;
         _commandData(eventData);
+        _lastCallEventType = eventData.commandType;
     }
 
     public void ShowAlchemyList()
@@ -224,30 +239,38 @@ public class TacticsView : BaseView
 
     private void CallRecoveryCommand(TacticsComandType commandType)
     {
+        if (_lastCallEventType != CommandType.None) return;
         var eventData = new TacticsViewEvent(CommandType.RecoveryClose);
         eventData.templete = commandType;
         _commandData(eventData);
+        _lastCallEventType = eventData.commandType;
     }
 
     private void CallActorRecovery(int actorId)
     {
+        if (_lastCallEventType != CommandType.None) return;
         var eventData = new TacticsViewEvent(CommandType.SelectActorRecovery);
         eventData.templete = actorId;
         _commandData(eventData);
+        _lastCallEventType = eventData.commandType;
     }
 
     private void CallRecoveryPlus(int actorId)
     {
+        if (_lastCallEventType != CommandType.None) return;
         var eventData = new TacticsViewEvent(CommandType.SelectRecoveryPlus);
         eventData.templete = actorId;
         _commandData(eventData);
+        _lastCallEventType = eventData.commandType;
     }
 
     private void CallRecoveryMinus(int actorId)
     {
+        if (_lastCallEventType != CommandType.None) return;
         var eventData = new TacticsViewEvent(CommandType.SelectRecoveryMinus);
         eventData.templete = actorId;
         _commandData(eventData);
+        _lastCallEventType = eventData.commandType;
     }
 
     public void ShowRecoveryList()
@@ -263,9 +286,11 @@ public class TacticsView : BaseView
 
     private void CallBattleEnemy(int enemyIndex)
     {
+        if (_lastCallEventType != CommandType.None) return;
         var eventData = new TacticsViewEvent(CommandType.SelectBattleEnemy);
         eventData.templete = enemyIndex;
         _commandData(eventData);
+        _lastCallEventType = eventData.commandType;
     }
 
     public void ShowEnemyList()
@@ -280,9 +305,11 @@ public class TacticsView : BaseView
 
     private void CallBattleCommand(TacticsComandType commandType)
     {
+        if (_lastCallEventType != CommandType.None) return;
         var eventData = new TacticsViewEvent(CommandType.BattleClose);
         eventData.templete = commandType;
         _commandData(eventData);
+        _lastCallEventType = eventData.commandType;
     }
 
     public void ShowBattleList()
@@ -297,16 +324,20 @@ public class TacticsView : BaseView
 
     private void CallActorBattle(int actorId)
     {
+        if (_lastCallEventType != CommandType.None) return;
         var eventData = new TacticsViewEvent(CommandType.SelectActorBattle);
         eventData.templete = actorId;
         _commandData(eventData);
+        _lastCallEventType = eventData.commandType;
     }
 
     private void CallActorResource(int actorId)
     {
+        if (_lastCallEventType != CommandType.None) return;
         var eventData = new TacticsViewEvent(CommandType.SelectActorResource);
         eventData.templete = actorId;
         _commandData(eventData);
+        _lastCallEventType = eventData.commandType;
     }
 
     public void ShowResourceList()
@@ -321,33 +352,43 @@ public class TacticsView : BaseView
 
     private void CallResourceCommand(TacticsComandType commandType)
     {
+        if (_lastCallEventType != CommandType.None) return;
         var eventData = new TacticsViewEvent(CommandType.ResourceClose);
         eventData.templete = commandType;
         _commandData(eventData);
+        _lastCallEventType = eventData.commandType;
     }
     private void CallActorLayer(ActorInfo actorInfo)
     {
+        if (_lastCallEventType != CommandType.None) return;
         var eventData = new TacticsViewEvent(CommandType.ActorLayer);
         eventData.templete = actorInfo;
         _commandData(eventData);
+        _lastCallEventType = eventData.commandType;
     }
 
     private void OnClickLeft()
     {
+        if (_lastCallEventType != CommandType.None) return;
         var eventData = new TacticsViewEvent(CommandType.LeftActor);
         _commandData(eventData);
+        _lastCallEventType = eventData.commandType;
     }
 
     private void OnClickRight()
     {
+        if (_lastCallEventType != CommandType.None) return;
         var eventData = new TacticsViewEvent(CommandType.RightActor);
         _commandData(eventData);
+        _lastCallEventType = eventData.commandType;
     }
 
     private void OnClickDecide()
     {
+        if (_lastCallEventType != CommandType.None) return;
         var eventData = new TacticsViewEvent(CommandType.DecideActor);
         _commandData(eventData);
+        _lastCallEventType = eventData.commandType;
     }
 
     public void SetTurns(int turns)
@@ -370,14 +411,22 @@ public class TacticsView : BaseView
 
     private void CallAttributeTypes(AttributeType attributeType)
     {
+        if (_lastCallEventType != CommandType.None) return;
         var eventData = new TacticsViewEvent(CommandType.AttributeType);
         eventData.templete = attributeType;
         _commandData(eventData);
+        _lastCallEventType = eventData.commandType;
     }
 
     public void CommandAttributeType(AttributeType attributeType)
     {
         
+    }
+
+    void LateUpdate() {
+        if (_lastCallEventType != CommandType.None){
+            _lastCallEventType = CommandType.None;
+        }
     }
 }
 

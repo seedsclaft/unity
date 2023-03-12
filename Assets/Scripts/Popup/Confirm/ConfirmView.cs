@@ -40,6 +40,7 @@ public class ConfirmView : BaseView
 
     private void CallConfirmCommand(ConfirmComandType commandType)
     {
+        SoundManager.Instance.PlayStaticSe(SEType.Decide);
         _commandData(commandType);
     }
 }

@@ -44,7 +44,7 @@ public class BattleView : BaseView
 
     private void InitializeSkillActionList()
     {
-        skillActionList.Initialize(actorInfo => CallSkillAction(actorInfo));
+        skillActionList.Initialize(actorInfo => CallSkillAction(actorInfo),() => OnClickBack());
         SetInputHandler(skillActionList.GetComponent<IInputHandlerEvent>());
         skillActionList.gameObject.SetActive(false);
         skillAttributeList.gameObject.SetActive(false);

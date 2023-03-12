@@ -13,10 +13,10 @@ public class StatusActorList : ListWindow , IInputHandlerEvent
         get {return Index;}
     }
 
-    public void Initialize(System.Action leftEvent,System.Action rightEvent)
+    public void Initialize(System.Action leftEvent,System.Action rightEvent,System.Action decideEvent,System.Action cancelEvent)
     {
         InitializeListView(1);
-        SetInputHandler((a) => CallInputHandler(a,leftEvent,rightEvent));
+        SetInputHandler((a) => CallInputHandler(a,leftEvent,rightEvent,decideEvent,cancelEvent));
         SetInputFrame(30);
     }
 
@@ -29,7 +29,7 @@ public class StatusActorList : ListWindow , IInputHandlerEvent
         }
     }
     
-    private void CallInputHandler(InputKeyType keyType, System.Action leftEvent, System.Action rightEvent)
+    private void CallInputHandler(InputKeyType keyType, System.Action leftEvent, System.Action rightEvent,System.Action decideEvent,System.Action cancelEvent)
     {
         if (keyType == InputKeyType.SideLeft1)
         {
@@ -38,6 +38,14 @@ public class StatusActorList : ListWindow , IInputHandlerEvent
         if (keyType == InputKeyType.SideRight1)
         {
             rightEvent();
+        }
+        if (keyType == InputKeyType.Start)
+        {
+            decideEvent();
+        }
+        if (keyType == InputKeyType.Cancel)
+        {
+            cancelEvent();
         }
     }
 }

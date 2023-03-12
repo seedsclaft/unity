@@ -27,7 +27,26 @@ public class SkillAttributeList : ListWindow , IInputHandlerEvent
             skillAttribute.SetCallHandler(callEvent);
             //skillAttribute.SetSelectHandler((data) => UpdateSelectIndex(data));
         }
+        SetInputHandler((a) => CallInputHandler(a,callEvent));
         UpdateAllItems();
         UpdateSelectIndex(0);
+    }
+
+    private void CallInputHandler(InputKeyType keyType, System.Action<AttributeType> callEvent)
+    {
+        if (keyType == InputKeyType.SideLeft1)
+        {
+            int index = Index - 1;
+            if (index < 0) index = _data.Count-1;
+            callEvent(_data[index]);
+            UpdateSelectIndex(index);
+        }
+        if (keyType == InputKeyType.SideRight1)
+        {
+            int index = Index + 1;
+            if (index > _data.Count-1) index = 0;
+            callEvent(_data[index]);
+            UpdateSelectIndex(index);
+        }
     }
 }

@@ -10,6 +10,7 @@ using TMPro;
 public class TacticsEnemyList : ListWindow , IInputHandlerEvent
 {
     [SerializeField] private TacticsCommandList tacticsCommandList;
+    public TacticsCommandList TacticsCommandList {get {return tacticsCommandList;}}
     [SerializeField] private int rows = 0;
     [SerializeField] private int cols = 0;
     private List<TroopInfo> _troopInfos = new List<TroopInfo>();
@@ -22,7 +23,7 @@ public class TacticsEnemyList : ListWindow , IInputHandlerEvent
         InitializeListView(cols);
     }
 
-    public void Refresh(List<TroopInfo> troopInfos,System.Action<int> callEvent)
+    public void Refresh(List<TroopInfo> troopInfos,System.Action<int> callEvent,System.Action cancelEvent)
     {
         _troopInfos = troopInfos;
         for (int i = 0; i < cols;i++)
@@ -40,7 +41,8 @@ public class TacticsEnemyList : ListWindow , IInputHandlerEvent
             }
             ObjectList[i].SetActive(i < _troopInfos.Count);
         }
-        UpdateSelectIndex(-1);
+        SetInputHandler((a) => CallInputHandler(a,callEvent,cancelEvent));
+        UpdateSelectIndex(0);
         Refresh();
     }
 
@@ -59,6 +61,20 @@ public class TacticsEnemyList : ListWindow , IInputHandlerEvent
         if (_helpWindow != null)
         {
             //_helpWindow.SetHelpText(_data[Index].Help);
+        }
+    }
+
+    private void CallInputHandler(InputKeyType keyType, System.Action<int> callEvent,System.Action cancelEvent)
+    {
+        if (keyType == InputKeyType.Decide)
+        {
+            if (callEvent != null)
+            callEvent(Index);
+        }
+        if (keyType == InputKeyType.Cancel)
+        {
+            if (cancelEvent != null)
+            cancelEvent();
         }
     }
 }

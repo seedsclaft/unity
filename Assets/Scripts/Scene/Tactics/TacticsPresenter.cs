@@ -232,6 +232,7 @@ public class TacticsPresenter
         var eventData = new TacticsViewEvent(_backCommand);
         eventData.templete = _model.CommandType;
         updateCommand(eventData);
+        SoundManager.Instance.PlayStaticSe(SEType.Cancel);
     }
 
     private void CommandTacticsCommand(TacticsComandType tacticsComandType)
@@ -265,10 +266,10 @@ public class TacticsPresenter
         if (tacticsComandType == TacticsComandType.Battle)
         {
             _model.SetTempData(tacticsComandType);
-            _view.ShowEnemyList();
             _view.HideBattleList();
             _view.SetActiveBack(true);
             _view.HideCommandList();
+            _view.ShowEnemyList();
             _backCommand = Tactics.CommandType.EnemyClose;
         }
         if (tacticsComandType == TacticsComandType.Resource)
@@ -302,6 +303,7 @@ public class TacticsPresenter
             _view.CommandCallConfirm(popupInfo);
             _view.HideCommandList();
         }
+        SoundManager.Instance.PlayStaticSe(SEType.Decide);
     }
 
     private void CommandAttributeType(AttributeType attributeType)
@@ -410,6 +412,7 @@ public class TacticsPresenter
         _view.ShowBattleList();
         _view.HideEnemyList();
         _view.SetActiveBack(false);
+        SoundManager.Instance.PlayStaticSe(SEType.Decide);
     }
 
     private void CommandSelectActorBattle(int actorId)
@@ -422,8 +425,10 @@ public class TacticsPresenter
     {
         if (confirmComandType == ConfirmComandType.Yes)
         {
+            SoundManager.Instance.PlayStaticSe(SEType.Decide);
         } else{
             _model.ResetTempData(TacticsComandType.Battle);
+            SoundManager.Instance.PlayStaticSe(SEType.Cancel);
         }
         _view.HideBattleList();
         _view.ShowEnemyList();

@@ -47,8 +47,8 @@ public enum TitleComandType {
 
 
 public enum StatusComandType {
-	Strength = 1,
-	SkillActionList = 2,
+	Strength = 0,
+	SkillActionList = 1,
 }
 
 public enum ConfirmComandType {

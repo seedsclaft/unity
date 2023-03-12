@@ -73,10 +73,14 @@ public class GameSystem : MonoBehaviour
             var popupInfo = (ConfirmInfo)viewEvent.templete;
             _confirmView.SetTitle(popupInfo.Title);
             _confirmView.SetEvent(popupInfo.CallEvent);
+            if (!statusRoot.gameObject.activeSelf) _currentScene.SetBusy(true);
+            _statusView.SetBusy(true);
         }
         if (viewEvent.commandType == Base.CommandType.CloseConfirm)
         {
             confirmRoot.gameObject.SetActive(false);
+            if (!statusRoot.gameObject.activeSelf) _currentScene.SetBusy(false);
+            _statusView.SetBusy(false);
         }
         if (viewEvent.commandType == Base.CommandType.CallStatusView)
         {
@@ -91,11 +95,13 @@ public class GameSystem : MonoBehaviour
             _statusView.DisableStrength(popupInfo.DisableStrength);
             _statusView.SetBackEvent(popupInfo.BackEvent);
             _statusView.SetEvent((type) => updateCommand(type));
+            _currentScene.SetBusy(true);
         }
         if (viewEvent.commandType == Base.CommandType.CloseStatus)
         {
             DestroyImmediate(_statusView.gameObject);
             statusRoot.gameObject.SetActive(false);
+            _currentScene.SetBusy(false);
         }
     }
 

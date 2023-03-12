@@ -30,7 +30,7 @@ public class StatusCommand : ListItem ,IListViewItem ,IClickHandlerEvent
         clickButton.onClick.AddListener(() => 
         {
             if (Disable.gameObject.activeSelf) return;
-            handler((StatusComandType)_data.Id);
+            handler((StatusComandType)_index);
         });
     }
 

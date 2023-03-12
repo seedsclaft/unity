@@ -7,6 +7,8 @@ abstract public class BaseView : MonoBehaviour
 {
     private InputSystem _input;
     private List<IInputHandlerEvent> _inputHandler = new List<IInputHandlerEvent>();
+    private bool _busy = false;
+    public bool Busy { get {return _busy;}}
     public System.Action<ViewEvent> _commandData = null;
     private Button _backCommand = null;
     [SerializeField] private GameObject uiRoot = null;
@@ -27,8 +29,15 @@ abstract public class BaseView : MonoBehaviour
     {
         foreach (var handler in _inputHandler)
         {
-            handler.InputHandler(keyType);
+            if (handler != null){
+                handler.InputHandler(keyType);
+            }
         }
+    }
+
+    public void SetBusy(bool isBusy)
+    {
+        _busy = isBusy;
     }
 
     private void Update()
@@ -104,7 +113,10 @@ abstract public class BaseView : MonoBehaviour
         GameObject prefab = Instantiate(backPrefab);
         prefab.transform.SetParent(backRoot.transform, false);
         _backCommand = prefab.GetComponent<Button>();
-        _backCommand.onClick.AddListener(() => callEvent());
+        _backCommand.onClick.AddListener(() => {        
+            if (!_backCommand.gameObject.activeSelf) return;
+            callEvent();
+        });
     }
 
     public void SetActiveBack(bool IsActive)

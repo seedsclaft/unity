@@ -39,10 +39,11 @@ public class StatusView : BaseView
 
     private void InitializeSkillActionList()
     {
-        skillActionList.Initialize(null);
+        skillActionList.Initialize(null,() => OnClickBack());
         SetInputHandler(skillActionList.GetComponent<IInputHandlerEvent>());
         skillActionList.gameObject.SetActive(false);
         skillAttributeList.gameObject.SetActive(false);
+        SetInputHandler(skillAttributeList.GetComponent<IInputHandlerEvent>());
     }
     
     public void SetUIButton()
@@ -60,7 +61,11 @@ public class StatusView : BaseView
 
         decideButton.onClick.AddListener(() => OnClickDecide());
 
-        actorList.Initialize(() => OnClickLeft(),() => OnClickRight());
+        actorList.Initialize(
+            () => OnClickLeft(),
+            () => OnClickRight(),
+            () => OnClickDecide(),
+            () => OnClickBack());
         SetInputHandler(actorList.GetComponent<IInputHandlerEvent>());
     }
 
@@ -170,6 +175,16 @@ public class StatusView : BaseView
         commandList.gameObject.SetActive(false);
     }
 
+    public void ActivateCommandList()
+    {
+        commandList.Activate();
+    }
+
+    public void DeactivateCommandList()
+    {
+        commandList.Deactivate();
+    }
+
     private void OnClickBack()
     {
         var eventData = new StatusViewEvent(CommandType.Back);
@@ -192,6 +207,7 @@ public class StatusView : BaseView
 
     private void OnClickDecide()
     {
+        if (!decideButton.gameObject.activeSelf) return;
         var eventData = new StatusViewEvent(CommandType.DecideActor);
         _commandData(eventData);
     }

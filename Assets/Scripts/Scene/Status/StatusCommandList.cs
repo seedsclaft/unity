@@ -27,6 +27,7 @@ public class StatusCommandList : ListWindow , IInputHandlerEvent
             statusCommand.SetCallHandler(callEvent);
             statusCommand.SetSelectHandler((data) => UpdateSelectIndex(data));
         }
+        SetInputHandler((a) => CallInputHandler(a,callEvent));
         UpdateAllItems();
         UpdateSelectIndex(0);
     }
@@ -44,6 +45,15 @@ public class StatusCommandList : ListWindow , IInputHandlerEvent
         {
             var statusCommand = ObjectList[i].GetComponent<StatusCommand>();
             statusCommand.SetDisable(menuCommandData,IsDisable);
+        }
+    }
+
+    private void CallInputHandler(InputKeyType keyType, System.Action<StatusComandType> callEvent)
+    {
+        if (keyType == InputKeyType.Decide)
+        {
+            if (ObjectList[Index].GetComponent<StatusCommand>().Disable.gameObject.activeSelf) return;
+            callEvent((StatusComandType)Index);
         }
     }
 }

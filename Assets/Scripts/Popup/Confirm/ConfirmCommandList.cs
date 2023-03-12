@@ -27,6 +27,7 @@ public class ConfirmCommandList : ListWindow , IInputHandlerEvent
             statusCommand.SetCallHandler(callEvent);
             statusCommand.SetSelectHandler((data) => UpdateSelectIndex(data));
         }
+        SetInputHandler((a) => CallInputHandler(a,callEvent));
         UpdateAllItems();
         UpdateSelectIndex(0);
     }
@@ -35,6 +36,18 @@ public class ConfirmCommandList : ListWindow , IInputHandlerEvent
         if (_helpWindow != null)
         {
             _helpWindow.SetHelpText(_data[Index].Help);
+        }
+    }
+
+    private void CallInputHandler(InputKeyType keyType, System.Action<ConfirmComandType> callEvent)
+    {
+        if (keyType == InputKeyType.Decide)
+        {
+            callEvent((ConfirmComandType)Index);
+        }
+        if (keyType == InputKeyType.Cancel)
+        {
+            callEvent(ConfirmComandType.No);
         }
     }
 }

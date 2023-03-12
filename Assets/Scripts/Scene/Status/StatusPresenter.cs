@@ -7,7 +7,6 @@ public class StatusPresenter
     StatusModel _model = null;
     StatusView _view = null;
 
-    private bool _busy = true;
 
     private Status.CommandType _backCommandType = Status.CommandType.None;
     private Status.CommandType _popupCommandType = Status.CommandType.None;
@@ -36,12 +35,11 @@ public class StatusPresenter
         //SoundManager.Instance.PlayBgm(bgm,1.0f,true);
         //SoundManager.Instance.PlayBgm(bgm,1.0f,true);
         CommandRefresh();
-        _busy = false;
     }
 
     private void updateCommand(StatusViewEvent viewEvent)
     {
-        if (_busy){
+        if (_view.Busy){
             return;
         }
         if (viewEvent.commandType == Status.CommandType.StatusCommand)
@@ -98,6 +96,7 @@ public class StatusPresenter
             _view.ShowCommandList();
             _view.ShowDecideButton();
         }
+        SoundManager.Instance.PlayStaticSe(SEType.Cancel);
     }
 
     private void CommandStatusCommand(StatusComandType statusComandType)
@@ -114,6 +113,7 @@ public class StatusPresenter
             _view.ShowSkillActionList();
             CommandAttributeType(_model.CurrentAttributeType);
         }
+        SoundManager.Instance.PlayStaticSe(SEType.Decide);
         _view.HideDecideButton();
         _view.HideArrows();
         _view.HideCommandList();
@@ -121,6 +121,7 @@ public class StatusPresenter
 
     private void CommandAttributeType(AttributeType attributeType)
     {
+        SoundManager.Instance.PlayStaticSe(SEType.Cursor);
         List<SkillInfo> skillInfos = _model.SkillActionList(attributeType);
         _view.RefreshSkillActionList(skillInfos);
     }
@@ -130,6 +131,7 @@ public class StatusPresenter
         ActorInfo actorInfo = _model.CurrentActor;
         var popupInfo = new ConfirmInfo(actorInfo.Master.Name + "をつれてシナリオを開始しますか？",(menuCommandInfo) => updatePopup((ConfirmComandType)menuCommandInfo));
         _view.CommandCallConfirm(popupInfo);
+        _view.DeactivateCommandList();
         _popupCommandType = Status.CommandType.DecideStage;
     }
 
@@ -150,6 +152,8 @@ public class StatusPresenter
                 _view.SetActorInfo(_model.CurrentActor);
                 CommandRefresh();
             }
+        } else{
+            _view.ActivateCommandList();
         }
     }
     
@@ -174,6 +178,7 @@ public class StatusPresenter
         bool enableParamUp = _model.EnableParamUp(statusId);
         if (enableParamUp == true)
         {
+            SoundManager.Instance.PlayStaticSe(SEType.Cursor);
             _model.ChangeParameter(statusId,1);
         } else
         {
@@ -188,6 +193,7 @@ public class StatusPresenter
         bool enableParamMinus = _model.EnableParamMinus(statusId);
         if (enableParamMinus == true)
         {
+            SoundManager.Instance.PlayStaticSe(SEType.Cursor);
             _model.ChangeParameter(statusId,-1);
         } else
         {
@@ -204,9 +210,11 @@ public class StatusPresenter
             TextData textData = DataSystem.System.GetTextData(2000);
             ConfirmInfo confirmInfo = new ConfirmInfo(textData.Text,(menuCommandInfo) => updatePopup((ConfirmComandType)menuCommandInfo));
             _view.CommandCallConfirm(confirmInfo);
+            _view.DeactivateCommandList();
         } else{
             if (_model.StatusActors().Count > 1) _view.ShowArrows();
             _view.ShowCommandList();
+            _view.ActivateCommandList();
             _view.ShowDecideButton();
             _view.HideStrength();
             _view.SetActiveBack(true);

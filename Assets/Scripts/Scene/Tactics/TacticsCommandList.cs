@@ -25,8 +25,9 @@ public class TacticsCommandList : ListWindow , IInputHandlerEvent
             TacticsCommand.SetCallHandler(callEvent);
             TacticsCommand.SetSelectHandler((data) => UpdateSelectIndex(data));
         }
+        SetInputHandler((a) => CallInputHandler(a,callEvent));
         UpdateAllItems();
-        UpdateSelectIndex(0);
+        UpdateSelectIndex(-1);
     }
 
     public override void UpdateHelpWindow(){
@@ -42,6 +43,15 @@ public class TacticsCommandList : ListWindow , IInputHandlerEvent
         {
             var tacticsCommand = ObjectList[i].GetComponent<TacticsCommand>();
             tacticsCommand.SetDisable(menuCommandData,IsDisable);
+        }
+    }
+    private void CallInputHandler(InputKeyType keyType, System.Action<TacticsComandType> callEvent)
+    {
+        if (keyType == InputKeyType.Decide)
+        {
+            TacticsCommand tacticsCommand = ObjectList[Index].GetComponent<TacticsCommand>();
+            if (tacticsCommand.Disable.gameObject.activeSelf) return;
+            callEvent((TacticsComandType)_data[Index].Id);
         }
     }
 }
