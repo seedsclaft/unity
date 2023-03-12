@@ -36,6 +36,26 @@ public class InputSystem
         {
             Debug.Log("cancel");
             return InputKeyType.Cancel;
+        } else
+        if(Keyboard.current[Key.A].isPressed) 
+        {
+            Debug.Log("option1");
+            return InputKeyType.Option1;
+        } else
+        if(Keyboard.current[Key.S].isPressed) 
+        {
+            Debug.Log("option2");
+            return InputKeyType.Option2;
+        } else
+        if(Keyboard.current[Key.Q].isPressed) 
+        {
+            Debug.Log("sideLeft1");
+            return InputKeyType.SideLeft1;
+        } else
+        if(Keyboard.current[Key.W].isPressed) 
+        {
+            Debug.Log("sideRight1");
+            return InputKeyType.SideRight1;
         }
         return InputKeyType.None;
     }
@@ -45,7 +65,6 @@ public class InputSystem
         var gamepad = Gamepad.current;
         if (gamepad == null)
         {
-            Debug.Log("ゲームパッドがありません。");
             return;
         }
         if (gamepad.aButton.isPressed) Debug.Log($"A");
@@ -84,5 +103,11 @@ public enum InputKeyType{
     Left,
     Right,
     Decide,
-    Cancel
+    Cancel,
+    Option1, // □,Akey
+    Option2, // △,Skey
+    SideLeft1, // L1
+    SideRight1, // R1
+    SideLeft2, // L2
+    SideRight2, // R2
 }

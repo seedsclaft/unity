@@ -1,0 +1,43 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.Events;
+
+public class StatusActorList : ListWindow , IInputHandlerEvent
+{
+    [SerializeField] private int rows = 0;
+    [SerializeField] private int cols = 0;
+
+    public int selectIndex{
+        get {return Index;}
+    }
+
+    public void Initialize(System.Action leftEvent,System.Action rightEvent)
+    {
+        InitializeListView(1);
+        SetInputHandler((a) => CallInputHandler(a,leftEvent,rightEvent));
+        SetInputFrame(30);
+    }
+
+    public void Refresh(ActorInfo actorInfo)
+    {
+        for (int i = 0; i < ObjectList.Count;i++)
+        {
+            var StatusActor = ObjectList[i].GetComponent<ActorInfoComponent>();
+            StatusActor.UpdateInfo(actorInfo);
+        }
+    }
+    
+    private void CallInputHandler(InputKeyType keyType, System.Action leftEvent, System.Action rightEvent)
+    {
+        if (keyType == InputKeyType.SideLeft1)
+        {
+            leftEvent();
+        }
+        if (keyType == InputKeyType.SideRight1)
+        {
+            rightEvent();
+        }
+    }
+}

@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Threading.Tasks;
 
 public class DataManager : ScriptableObject
 {
@@ -17,12 +18,9 @@ public class DataManager : ScriptableObject
         return null;
     }
     
-    public SEData GetSE(string key){
-        SEData seData = SE.Find(a => a.Key == key);
-        if (seData != null)
-        {
-            return seData;
-        }
-        return null;
+    public async Task<AudioClip> GetSE(string fileName){
+        string sePath = "Assets/Audios/SE/" + fileName + ".ogg";
+        var result = await ResourceSystem.LoadAsset<AudioClip>(sePath);
+        return result;
     }
 }

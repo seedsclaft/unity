@@ -27,7 +27,7 @@ public class TitleCommand : ListItem ,IListViewItem ,IClickHandlerEvent
     public void SetCallHandler(System.Action<TitleComandType> handler)
     {
         if (_data == null) return;
-        clickButton.onClick.AddListener(() => handler((TitleComandType)_data.Id));
+        clickButton.onClick.AddListener(() => handler((TitleComandType)_index));
     }
 
     public void SetSelectHandler(System.Action<int> handler){

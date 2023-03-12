@@ -35,14 +35,6 @@ public class TitlePresenter
         if (viewEvent.commandType == CommandType.TitleCommand)
         {
             CommandTitle((int) viewEvent.templete);
-
-            /*
-            _view.CommandInitSaveInfo();
-            var temp = DataSystem.Enemies;
-            TempInfo info = new TempInfo(temp);
-            _view.CommandSetTemplete(info);
-            _view.CommandSceneChange(Scene.Map);
-            */
         }
     }
 
@@ -52,11 +44,13 @@ public class TitlePresenter
             case TitleComandType.NewGame:
             _view.CommandInitSaveInfo();
             _view.CommandSceneChange(Scene.MainMenu);
+            SoundManager.Instance.PlayStaticSe(SEType.Decide);
             //_view.CommandSceneChange(Scene.Battle);
             break;
             case TitleComandType.Continue:
             SaveSystem.LoadStart();
             _view.CommandSceneChange(Scene.Tactics);
+            SoundManager.Instance.PlayStaticSe(SEType.Decide);
             break;
             case TitleComandType.Option:
             break;

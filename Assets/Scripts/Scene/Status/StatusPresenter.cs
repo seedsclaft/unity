@@ -155,6 +155,7 @@ public class StatusPresenter
     
     private void CommandLeftActor()
     {
+        SoundManager.Instance.PlayStaticSe(SEType.Cursor);
          _model.ChangeActorIndex(-1);
         _view.SetActorInfo(_model.CurrentActor);
         CommandAttributeType(_model.CurrentAttributeType);
@@ -162,6 +163,7 @@ public class StatusPresenter
 
     private void CommandRightActor()
     {
+        SoundManager.Instance.PlayStaticSe(SEType.Cursor);
          _model.ChangeActorIndex(1);
         _view.SetActorInfo(_model.CurrentActor);
         CommandAttributeType(_model.CurrentAttributeType);

@@ -12,6 +12,10 @@ abstract public class ListWindow : MonoBehaviour
     private int _index = 0;
     public int Index {get{return _index;}}
     private int _defaultInputFrame = 6;
+    public void SetInputFrame(int frame)
+    {
+        _defaultInputFrame = frame;
+    }
     private int _inputBusyFrame = 0;
 
     [SerializeField] private bool horizontal = false; 
@@ -370,7 +374,7 @@ abstract public class ListWindow : MonoBehaviour
             }
         }
         if (currentIndex != selectIndex){
-            SoundManager.Instance.PlaySe(null,1);
+            SoundManager.Instance.PlayStaticSe(SEType.Cursor);
             SelectIndex(selectIndex);
         }
     }
@@ -380,7 +384,9 @@ abstract public class ListWindow : MonoBehaviour
         UpdateHelpWindow();
         for (int i = 0; i < ObjectList.Count;i++)
         {
+            if (ObjectList[i] == null) continue;
             var listItem = ObjectList[i].GetComponent<ListItem>();
+            if (listItem == null) continue;
             if (index == i){
                 listItem.SetSelect();
             } else{

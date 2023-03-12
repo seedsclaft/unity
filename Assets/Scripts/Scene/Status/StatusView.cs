@@ -7,6 +7,7 @@ using Status;
 public class StatusView : BaseView
 {
     [SerializeField] private ActorInfoComponent actorInfoComponent = null;
+    [SerializeField] private StatusActorList actorList = null;
     [SerializeField] private StatusCommandList commandList = null;
     [SerializeField] private SkillActionList skillActionList = null;
     [SerializeField] private SkillAttributeList skillAttributeList = null;
@@ -58,6 +59,9 @@ public class StatusView : BaseView
         //_helpWindow = prefab.GetComponent<HelpWindow>();
 
         decideButton.onClick.AddListener(() => OnClickDecide());
+
+        actorList.Initialize(() => OnClickLeft(),() => OnClickRight());
+        SetInputHandler(actorList.GetComponent<IInputHandlerEvent>());
     }
 
     public void ShowArrows()
@@ -128,6 +132,7 @@ public class StatusView : BaseView
     
     public void SetActorInfo(ActorInfo actorInfo)
     {
+        actorList.Refresh(actorInfo);
         actorInfoComponent.UpdateInfo(actorInfo);
     }
 
@@ -173,12 +178,14 @@ public class StatusView : BaseView
 
     private void OnClickLeft()
     {
+        if (!_leftButton.gameObject.activeSelf) return;
         var eventData = new StatusViewEvent(CommandType.LeftActor);
         _commandData(eventData);
     }
 
     private void OnClickRight()
     {
+        if (!_rightButton.gameObject.activeSelf) return;
         var eventData = new StatusViewEvent(CommandType.RightActor);
         _commandData(eventData);
     }

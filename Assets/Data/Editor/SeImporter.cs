@@ -16,7 +16,7 @@ public class SeImporter : AssetPostprocessor {
 		Loop,
     }
 	static readonly string ExcelPath = "Assets/Data";
-	static readonly string ExcelName = "Se.xlsx";
+	static readonly string ExcelName = "SE.xlsx";
 
 	// アセット更新があると呼ばれる
 	static void OnPostprocessAllAssets(string[] importedAssets, string[] deletedAssets, string[] movedAssets, string[] movedFromAssetPaths) {
@@ -50,7 +50,7 @@ public class SeImporter : AssetPostprocessor {
 		string FileName = Path.GetFileNameWithoutExtension(asset);
 
 		// ディレクトリ情報とファイル名の文字列を結合してアセット名を指定
-		string ExportPath = $"{Path.Combine(Path.GetDirectoryName(asset), FileName)}.asset";
+		string ExportPath = $"{Path.Combine(Path.GetDirectoryName(asset), "MainData")}.asset";
 
 		DataManager Data = AssetDatabase.LoadAssetAtPath<DataManager>(ExportPath);
 		if (!Data)

@@ -16,15 +16,14 @@ public class MainMenuStageList: ListWindow , IInputHandlerEvent
     public void Initialize(List<StageInfo> stages,System.Action<StageInfo> callEvent)
     {
         InitializeListView(stages.Count);
-        for (var i = 0; i < stages.Count;i++){
-            _data.Add(stages[i]);
-        }
+        _data = stages;
         for (int i = 0; i < ObjectList.Count;i++)
         {
             var stage = ObjectList[i].GetComponent<MainMenuStage>();
             stage.SetData(stages[i],i);
             stage.SetCallHandler(callEvent);
         }
+        SetInputHandler((a) => CallInputHandler(a,callEvent));
         UpdateAllItems();
         UpdateSelectIndex(0);
         component.UpdateInfo(_data[Index]);
@@ -33,6 +32,14 @@ public class MainMenuStageList: ListWindow , IInputHandlerEvent
     public override void UpdateHelpWindow(){
         if (component != null){
             component.UpdateInfo(_data[Index]);
+        }
+    }
+
+    private void CallInputHandler(InputKeyType keyType, System.Action<StageInfo> callEvent)
+    {
+        if (keyType == InputKeyType.Decide)
+        {
+            callEvent(_data[Index]);
         }
     }
 }

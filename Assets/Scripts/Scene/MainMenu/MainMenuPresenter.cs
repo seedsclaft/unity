@@ -40,6 +40,7 @@ public class MainMenuPresenter
         }
         if (viewEvent.commandType == CommandType.StageSelect)
         {
+            SoundManager.Instance.PlayStaticSe(SEType.Decide);
             StatusViewInfo statusViewInfo = new StatusViewInfo(() => {
                 _view.CommandStatusClose();
                 _view.SetActiveUi(true);
