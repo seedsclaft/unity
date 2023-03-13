@@ -535,6 +535,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7df352f20c168840aa85def7c0cc691, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  uiRoot: {fileID: 0}
   backPrefab: {fileID: 7406275377514555950, guid: 90d481bd6e0e8d74bab7d2e4bd65a7ae,
     type: 3}
   backRoot: {fileID: 326439070492828496}
@@ -666,7 +667,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22888821d56c7c34e87ef66dfa380511, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _defaultInputFrame: 30
   horizontal: 0
   scrollRect: {fileID: 8077211400942439864}
   itemPrefab: {fileID: 968043006584562322, guid: 69257f6d565ed274b8849a75225cb996,
@@ -761,7 +761,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a46418bbf02c96a43a1fa153172ac222, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _defaultInputFrame: 30
   horizontal: 0
   scrollRect: {fileID: 5620544488709496214}
   itemPrefab: {fileID: 2230353275163966702, guid: 52be6b3606271254583499e7e8ca2617,
@@ -890,7 +889,7 @@ RectTransform:
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 1280, y: 1280}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_Pivot: {x: 0.5, y: 1}
 --- !u!222 &5652918918785356754
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1217,7 +1216,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10c3d545f62e00d4b937c0d943cc1c1f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _defaultInputFrame: 30
   horizontal: 1
   scrollRect: {fileID: 2349974586489469867}
   itemPrefab: {fileID: 5723993701910172595, guid: 8ea14062e026a1847baa868e21e3e74f,
@@ -1914,8 +1912,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4433775142421044443}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -344, y: -240, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: -344, y: 280, z: 0}
+  m_LocalScale: {x: 0.9, y: 0.9, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8006550933056136895}
@@ -3104,7 +3102,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -120}
+  m_AnchoredPosition: {x: 0, y: -96}
   m_SizeDelta: {x: 560, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1717439042802128091
@@ -3214,6 +3212,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65c9c5050a98db64d89c9e00d281b592, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  horizontal: 0
+  scrollRect: {fileID: 0}
+  itemPrefab: {fileID: 0}
+  _helpWindow: {fileID: 0}
   frontEnemyRoots:
   - {fileID: 2435815657420939067}
   - {fileID: 4670468886391419655}
@@ -3565,7 +3567,7 @@ RectTransform:
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 1280, y: 1280}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_Pivot: {x: 0.5, y: 1}
 --- !u!222 &1033615137562970292
 CanvasRenderer:
   m_ObjectHideFlags: 0

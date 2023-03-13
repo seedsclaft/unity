@@ -26,10 +26,16 @@ public class BattleThumb : MonoBehaviour
     {
         mainThumbRoot.SetActive(false);   
         awakenThumbRoot.SetActive(false);
+        Clear();
     }
 
-    private  void UpdateThumb(ActorInfo actorInfo)
+    private void UpdateThumb(ActorInfo actorInfo)
     {
         actorInfoComponent.UpdateInfo(actorInfo);
+    }
+
+    private void Clear()
+    {
+        actorInfoComponent.Clear();
     }
 }

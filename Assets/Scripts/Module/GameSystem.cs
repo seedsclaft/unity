@@ -74,13 +74,13 @@ public class GameSystem : MonoBehaviour
             _confirmView.SetTitle(popupInfo.Title);
             _confirmView.SetEvent(popupInfo.CallEvent);
             if (!statusRoot.gameObject.activeSelf) _currentScene.SetBusy(true);
-            _statusView.SetBusy(true);
+            if (_statusView) _statusView.SetBusy(true);
         }
         if (viewEvent.commandType == Base.CommandType.CloseConfirm)
         {
             confirmRoot.gameObject.SetActive(false);
             if (!statusRoot.gameObject.activeSelf) _currentScene.SetBusy(false);
-            _statusView.SetBusy(false);
+            if (_statusView) _statusView.SetBusy(false);
         }
         if (viewEvent.commandType == Base.CommandType.CallStatusView)
         {

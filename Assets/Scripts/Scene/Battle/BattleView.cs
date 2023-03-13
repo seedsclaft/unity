@@ -23,10 +23,10 @@ public class BattleView : BaseView
     [SerializeField] private EffekseerEmitter effekseerEmitter = null;
     private HelpWindow _helpWindow = null;
 
-    private bool _busy = false;
-    public void SetBusy(bool isBusy)
+    private bool _battleBusy = false;
+    public void SetBattleBusy(bool isBusy)
     {
-        _busy = isBusy;
+        _battleBusy = isBusy;
     }
     private bool _animationBusy = false;
 
@@ -74,7 +74,8 @@ public class BattleView : BaseView
 
     public void CreateObject()
     {
-        battleActorList.Initialize(actorInfo => CallActorList(actorInfo));
+        battleActorList.Initialize(actorInfo => CallActorList(actorInfo),() => OnClickBack());
+        SetInputHandler(battleActorList.GetComponent<IInputHandlerEvent>());
     }
 
     
@@ -124,7 +125,8 @@ public class BattleView : BaseView
     
     public void SetEnemies(List<BattlerInfo> battlerInfos)
     {
-        battleEnemyLayer.Initialize(battlerInfos,(batterInfo) => CallEnemyInfo(batterInfo));
+        battleEnemyLayer.Initialize(battlerInfos,(batterInfo) => CallEnemyInfo(batterInfo),() => OnClickBack());
+        SetInputHandler(battleEnemyLayer.GetComponent<IInputHandlerEvent>());
         battleGridLayer.SetEnemyInfo(battlerInfos);
     }
 
@@ -181,31 +183,55 @@ public class BattleView : BaseView
     
     public void RefreshSkillActionList(List<SkillInfo> skillInfos)
     {
+        DeactivateActorList();
+        DeactivateEnemyList();
         skillActionList.Refresh(skillInfos);
+    }
+
+    public void ActivateEnemyList()
+    {
+        battleEnemyLayer.Activate();
+    }
+
+    public void DeactivateEnemyList()
+    {
+        battleEnemyLayer.Deactivate();
+    }
+
+    public void ActivateActorList()
+    {
+        battleActorList.Activate();
+    }
+
+    public void DeactivateActorList()
+    {
+        battleActorList.Deactivate();
     }
 
     public void RefreshBattlerEnemyLayerTarget(ActionInfo actionInfo)
     {
+        if (actionInfo != null){
+            ActivateEnemyList();
+        }
         battleEnemyLayer.RefreshTarget(actionInfo);
     }
 
     public void RefreshBattlerPartyLayerTarget(ActionInfo actionInfo)
     {
+        if (actionInfo != null){
+            ActivateActorList();
+        }
         battleActorList.RefreshTarget(actionInfo);
     }
 
-    public void StartSkillActionAnimation(List<int> indexList,EffekseerEffectAsset effekseerEffectAsset)
+    public void StartAnimation(int targetIndex,EffekseerEffectAsset effekseerEffectAsset,int animationPosition)
     {
-        _animationBusy = true;
-        battleEnemyLayer.StartAnimation(indexList,effekseerEffectAsset);
-    }
-
-    public void StartAnimation(int targetIndex,EffekseerEffectAsset effekseerEffectAsset)
-    {
+        DeactivateActorList();
+        DeactivateEnemyList();
         _animationBusy = true;
         if (targetIndex >= 100)
         {
-            battleEnemyLayer.StartAnimation(targetIndex - 100,effekseerEffectAsset);
+            battleEnemyLayer.StartAnimation(targetIndex - 100,effekseerEffectAsset,animationPosition);
         } else
         {
             battleActorList.StartAnimation(targetIndex,effekseerEffectAsset);
@@ -252,6 +278,16 @@ public class BattleView : BaseView
         }
     }
 
+    public void StartBlink(int targetIndex)
+    {
+        if (targetIndex >= 100)
+        {
+            battleEnemyLayer.StartBlink(targetIndex - 100);
+        } else{
+            battleActorList.StartBlink(targetIndex);
+        }
+    }
+
     public void StartHeal(int targetIndex,DamageType damageType,int value)
     {
         if (targetIndex >= 100)
@@ -290,7 +326,7 @@ public class BattleView : BaseView
     public void SetAttributeTypes(List<AttributeType> attributeTypes)
     {
         skillAttributeList.Initialize(attributeTypes ,(attribute) => CallAttributeTypes(attribute));
-        //SetInputHandler(skillAttributeList.GetComponent<IInputHandlerEvent>());
+        SetInputHandler(skillAttributeList.GetComponent<IInputHandlerEvent>());
     }
 
     private void CallAttributeTypes(AttributeType attributeType)
@@ -305,14 +341,15 @@ public class BattleView : BaseView
         
     }
 
-    private void Update() 
+    private new void Update() 
     {
         if (_animationBusy == true)
         {
             CheckAnimationBusy();
             return;
         }
-        if (_busy == true) return;
+        base.Update();
+        if (_battleBusy == true) return;
         var eventData = new BattleViewEvent(CommandType.UpdateAp);
         _commandData(eventData);
     }

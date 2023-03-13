@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using DG.Tweening;
 
 public class BattlerInfoComponent : MonoBehaviour
@@ -71,5 +72,26 @@ public class BattlerInfoComponent : MonoBehaviour
         {
             enemyInfoComponent.HideUI();
         }
+    }
+
+    public void StartBlink()
+    {
+        Image image;
+        if (_battlerInfo.isActor)
+        {
+            if (_battlerInfo.IsAwaken)
+            {
+                image = actorInfoComponent.AwakenFaceThumb;
+            } else{
+                image = actorInfoComponent.FaceThumb;
+            }
+        } else
+        {
+            image = enemyInfoComponent.MainThumb;
+        }
+        Sequence sequence = DOTween.Sequence()
+            .Append(image.DOFade(0f, 0.05f))
+            .Append(image.DOFade(1f, 0.05f))
+            .SetLoops(3);
     }
 }

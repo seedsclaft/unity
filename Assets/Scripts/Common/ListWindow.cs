@@ -313,7 +313,7 @@ abstract public class ListWindow : MonoBehaviour
         _index = selectIndex;
     }
 
-    private void Update()
+    public void Update()
     {
         UpdateInputFrame();
     }

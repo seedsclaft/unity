@@ -99,17 +99,35 @@ public class BattlePresenter : BasePresenter
         for (int i = 0; i < chainActionResults.Count; i++)
         {
             _view.StartDamage(chainActionResults[i].TargetIndex,DamageType.HpDamage,chainActionResults[i].HpDamage);
+            if (chainActionResults[i].IsDead)
+            {
+                _view.StartDeathAnimation(chainActionResults[i].TargetIndex);
+            }
         }
         var benedictionActionResults = _model.UpdateBenedictionState();
         for (int i = 0; i < benedictionActionResults.Count; i++)
         {
             _view.StartDamage(benedictionActionResults[i].TargetIndex,DamageType.HpHeal,benedictionActionResults[i].HpHeal);
+            if (benedictionActionResults[i].IsDead)
+            {
+                _view.StartDeathAnimation(benedictionActionResults[i].TargetIndex);
+            }
+        }
+        if (_model.CheckVictory())
+        {
+            _view.CommandSceneChange(Scene.Strategy);
+            return;
+        } else
+        if (_model.CheckDefeat())
+        {
+            _view.CommandSceneChange(Scene.Strategy);
+            return;
         }
         _model.UpdateAp();
         _view.UpdateAp();
         if (_model.CurrentBattler != null)
         {
-            _view.SetBusy(true);
+            _view.SetBattleBusy(true);
             if (!_model.EnableCurrentBattler())
             {
                 int skillId = 0;
@@ -141,6 +159,8 @@ public class BattlePresenter : BasePresenter
     private void CommandSkillAction(int skillId)
     {
         _model.ClearActionInfo();
+        _model.SetLastSkill(skillId);
+        SoundManager.Instance.PlayStaticSe(SEType.Decide);
         ActionInfo actionInfo = _model.MakeActionInfo(_model.CurrentBattler,skillId,false);
         _view.HideSkillActionList();
         if (actionInfo.TargetType == TargetType.Opponent)
@@ -166,6 +186,7 @@ public class BattlePresenter : BasePresenter
 
     private void CommandSelectIndex(List<int> indexList)
     {
+        SoundManager.Instance.PlayStaticSe(SEType.Decide);
         _view.SetActiveBack(false);
         MakeActionResultInfo(indexList);
         ActionInfo actionInfo = _model.CurrentActionInfo();
@@ -210,7 +231,7 @@ public class BattlePresenter : BasePresenter
         var animation = await _model.SkillActionAnimation("tktk01/Cure1");
         for (int i = 0; i < regeneActionResults.Count; i++)
         {
-            _view.StartAnimation(regeneActionResults[i].TargetIndex,animation);
+            _view.StartAnimation(regeneActionResults[i].TargetIndex,animation,0);
             _view.StartHeal(regeneActionResults[i].TargetIndex,DamageType.HpHeal,regeneActionResults[i].HpHeal);
         }
         _nextCommandType = Battle.CommandType.EndRegeneAnimation;
@@ -234,7 +255,7 @@ public class BattlePresenter : BasePresenter
         {
             if (actionInfo.Master.AnimationType != AnimationType.All)
             {
-                _view.StartAnimation(actionInfo.actionResults[i].TargetIndex,animation);
+                _view.StartAnimation(actionInfo.actionResults[i].TargetIndex,animation,actionInfo.Master.AnimationPosition);
             }
             _view.StartSkillDamage(actionInfo.actionResults[i].TargetIndex,actionInfo.Master.DamageTiming,(targetIndex) => StartSkillDamage(targetIndex));
         }
@@ -261,7 +282,9 @@ public class BattlePresenter : BasePresenter
                 {
                     if (actionResultInfos[i].TargetIndex == targetIndex)
                     {
+                        SoundManager.Instance.PlayStaticSe(SEType.Damage);
                         _view.StartDamage(targetIndex,DamageType.HpDamage,actionResultInfos[i].HpDamage);
+                        _view.StartBlink(targetIndex);
                     }
                 }
                 if (actionResultInfos[i].HpHeal > 0)
@@ -288,6 +311,7 @@ public class BattlePresenter : BasePresenter
                 if (actionResultInfos[i].ReDamage > 0)
                 {
                     _view.StartDamage(actionResultInfos[i].SubjectIndex,DamageType.HpDamage,actionResultInfos[i].ReDamage);
+                    _view.StartBlink(actionResultInfos[i].SubjectIndex);
                 }
                 if (actionResultInfos[i].ReHeal > 0)
                 {
@@ -320,7 +344,7 @@ public class BattlePresenter : BasePresenter
         }
         if (_nextCommandType == Battle.CommandType.EndRegeneAnimation)
         {
-            _view.SetBusy(false);
+            _view.SetBattleBusy(false);
             return;
         }
         // ダメージなどを適用
@@ -331,6 +355,7 @@ public class BattlePresenter : BasePresenter
             //var animation = await _model.SkillActionAnimation("");
             for (int i = 0; i < deathBattlerIndex.Count; i++)
             {
+                SoundManager.Instance.PlayStaticSe(SEType.Defeat);
                 _view.StartDeathAnimation(deathBattlerIndex[i]);
             }
         }
@@ -371,7 +396,7 @@ public class BattlePresenter : BasePresenter
             return;
         }
 
-        _view.SetBusy(false);
+        _view.SetBattleBusy(false);
     }
 
     private void CommandAttributeType(AttributeType attributeType)

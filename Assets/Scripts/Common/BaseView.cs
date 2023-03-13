@@ -40,7 +40,7 @@ abstract public class BaseView : MonoBehaviour
         _busy = isBusy;
     }
 
-    private void Update()
+    public void Update()
     {
         if (_input != null)
         {

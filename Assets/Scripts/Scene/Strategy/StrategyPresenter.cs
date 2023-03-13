@@ -101,6 +101,7 @@ public class StrategyPresenter
             }
             CheckTacticsActors();
         }
+        SoundManager.Instance.PlayStaticSe(SEType.Decide);
     }
 
     private void CommandBattleClose(ConfirmComandType confirmComandType)

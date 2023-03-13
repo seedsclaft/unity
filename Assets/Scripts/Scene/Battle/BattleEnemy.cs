@@ -6,6 +6,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.Events;
 using TMPro;
 using Effekseer;
+using DG.Tweening;
 
 public class BattleEnemy : ListItem 
 {
@@ -21,7 +22,6 @@ public class BattleEnemy : ListItem
     public bool IsBusy {
         get {return effekseerEmitter.exists || _damageTiming > 0 || _battleDamages.Find(a => a.IsBusy);}
     }
-    private bool _sizeInit = false;
     private List<BattleDamage> _battleDamages = new List<BattleDamage>();
 
     private BattlerInfo _battlerInfo;
@@ -31,6 +31,7 @@ public class BattleEnemy : ListItem
     private System.Action<int> _selectHandler;
     private System.Action<int> _damageHandler;
     private int _damageTiming = 0;
+    private string textureName = null;
 
     public int EnemyIndex{
         get {return _battlerInfo.Index;}
@@ -40,6 +41,7 @@ public class BattleEnemy : ListItem
         battlerInfoComponent.UpdateInfo(battlerInfo);
         _battlerInfo = battlerInfo;
         _index = index;
+        deathAnimation.enabled = false;
     }
     
     public void SetDamageRoot(GameObject damageRoot)
@@ -73,8 +75,17 @@ public class BattleEnemy : ListItem
 	}
 
 
-    public void StartAnimation(EffekseerEffectAsset effectAsset)
-    {
+    public void StartAnimation(EffekseerEffectAsset effectAsset,int animationPosition)
+    { 
+        RectTransform imagerect = imageObject.gameObject.GetComponent < RectTransform > ();
+        RectTransform effectRect = effekseerEmitter.gameObject.GetComponent < RectTransform > ();
+        if (animationPosition == 0){
+            effectRect.localPosition = new Vector2(0,imagerect.sizeDelta.y / 2);
+        } else
+        if (animationPosition == 1)
+        {
+            effectRect.localPosition = new Vector2(0,0);
+        }
         effekseerEmitter.Play(effectAsset);
     }
 
@@ -110,6 +121,11 @@ public class BattleEnemy : ListItem
         battlerInfoComponent.ChangeHp(value * -1 + _battlerInfo.Hp);
     }
 
+    public void StartBlink()
+    {
+        battlerInfoComponent.StartBlink();
+    }
+
     public void StartHeal(DamageType damageType,int value)
     {
         var battleDamage = CreatePrefab();
@@ -127,6 +143,7 @@ public class BattleEnemy : ListItem
 
     public void StartDeathAnimation()
     {
+        deathAnimation.enabled = true;
         _deathAnimation = 0.01f;
         battlerInfoComponent.HideUI();
     }
@@ -137,10 +154,10 @@ public class BattleEnemy : ListItem
     }
 
     private void Update() {
-        if (_sizeInit == false && enemyImage.sprite != null)
+        if (enemyImage.mainTexture != null && textureName != enemyImage.mainTexture.name)
         {
             UpdateSizeDelta();
-            //_sizeInit = true;
+            textureName = enemyImage.mainTexture.name;
         }
         UpdateDamageTiming();
         UpdateDeathAnimation();
@@ -151,8 +168,10 @@ public class BattleEnemy : ListItem
         RectTransform objectRect = gameObject.GetComponent < RectTransform > ();
         RectTransform rect = cursorObject.gameObject.GetComponent < RectTransform > ();
         RectTransform imagerect = imageObject.gameObject.GetComponent < RectTransform > ();
-        rect.sizeDelta = new Vector2(imagerect.sizeDelta.x,rect.sizeDelta.y);
-        objectRect.sizeDelta = new Vector2(imagerect.sizeDelta.x,rect.sizeDelta.y);
+        RectTransform effectRect = effekseerEmitter.gameObject.GetComponent < RectTransform > ();
+        rect.sizeDelta = new Vector2(imagerect.sizeDelta.x - 80,imagerect.sizeDelta.y - 80);
+        objectRect.sizeDelta = new Vector2(imagerect.sizeDelta.x - 80,imagerect.sizeDelta.y - 80);
+        effectRect.sizeDelta = new Vector2(imagerect.sizeDelta.x / 2,imagerect.sizeDelta.y / 2);
     }
 
     private void UpdateDamageTiming()
@@ -178,6 +197,8 @@ public class BattleEnemy : ListItem
         {
             _deathAnimation = 0;
             enemyImage.enabled = false;
+            deathAnimation.enabled = false;
+            gameObject.SetActive(false);
         } 
         else
         {

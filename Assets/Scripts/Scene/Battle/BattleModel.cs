@@ -66,7 +66,7 @@ public class BattleModel : BaseModel
             _battlers[i].UpdateAp();
             _battlers[i].UpdateState(RemovalTiming.UpdateAp);
         }
-        MackActionBattler();
+        MakeActionBattler();
     }
     
     public List<ActionResultInfo> UpdateChainState()
@@ -90,6 +90,11 @@ public class BattleModel : BaseModel
                     target.ChangeHp(chainDamage * -1);
                     ActionResultInfo actionResultInfo = new ActionResultInfo(_battlers[i].Index,stateInfo.TargetIndex,null);
                     actionResultInfo.HpDamage = chainDamage;
+                    if (actionResultInfo.HpDamage > target.Hp)
+                    {
+                        actionResultInfo.IsDead = true;
+                        _battlers[i].RemoveState(stateInfo);
+                    }
                     actionResultInfos.Add(actionResultInfo);
                 }
             }
@@ -130,7 +135,12 @@ public class BattleModel : BaseModel
         return actionResultInfos;
     }
 
-    public void MackActionBattler()
+    public void SetLastSkill(int skillId)
+    {
+        CurrentBattler.SetLastSkillIndex(skillId);
+    }
+
+    public void MakeActionBattler()
     {
         for (int i = 0;i < _battlers.Count;i++)
         {
@@ -166,8 +176,13 @@ public class BattleModel : BaseModel
             {
                 if (stateInfos[j].BattlerId == CurrentBattler.Index)
                 {
-                    targetIndexs.Add(stateInfos[j].TargetIndex);
-                    //_battlers[i].RemoveState(stateInfos[j]);
+                    if (_battlers[i].IsAlive())
+                    {
+                        targetIndexs.Add(stateInfos[j].TargetIndex);
+                    } else
+                    {
+                        CurrentBattler.RemoveState(stateInfos[j]);
+                    }
                 }
             }
         }
@@ -307,9 +322,10 @@ public class BattleModel : BaseModel
             LastTargetIndex = subject.LastTargetIndex();
             if (skill.TargetType == TargetType.Opponent || skill.TargetType == TargetType.All)
             {
-                if (BattlerEnemies()[LastTargetIndex] == null || BattlerEnemies()[LastTargetIndex].IsAlive() == false)
+                BattlerInfo targetBattler = BattlerEnemies().Find(a => a.Index == LastTargetIndex);
+                if (targetBattler == null || targetBattler.IsAlive() == false)
                 {
-                    LastTargetIndex = BattlerEnemies().FindIndex(a => a.IsAlive());
+                    LastTargetIndex = BattlerEnemies().Find(a => a.IsAlive()).Index;
                 }
             } else
             {
@@ -569,6 +585,10 @@ public class BattleModel : BaseModel
                 {
                     subject.ChangeHp(actionResultInfos[i].ReHeal);
                 }
+                if (actionResultInfos[i].IsDead)
+                {
+
+                }
                 foreach (var targetIndex in actionResultInfos[i].ExecStateInfos)
                 {
                     BattlerInfo execTarget = _battlers.Find(a => a.Index == targetIndex.Key);
@@ -794,7 +814,6 @@ public class BattleModel : BaseModel
     public bool CheckVictory()
     {
         PartyInfo.SetBattleResult(true);
-        return true;
         return BattlerEnemies().Find(a => a.IsAlive()) == null;
     }
 

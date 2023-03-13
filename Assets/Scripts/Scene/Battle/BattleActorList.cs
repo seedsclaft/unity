@@ -22,7 +22,7 @@ public class BattleActorList : ListWindow , IInputHandlerEvent
     }
 
 
-    public void Initialize(System.Action<List<int>> callEvent)
+    public void Initialize(System.Action<List<int>> callEvent,System.Action cancelEvent)
     {
         damageRoots.ForEach(a => a.SetActive(false));
         InitializeListView(rows);
@@ -61,6 +61,7 @@ public class BattleActorList : ListWindow , IInputHandlerEvent
             battleActor.SetDamageRoot(damageRoots[i]);
             ObjectList[i].SetActive(false);
         }
+        SetInputHandler((a) => CallInputHandler(a,callEvent,cancelEvent));
     }
 
     public void Refresh(List<BattlerInfo> battlerInfos)
@@ -120,6 +121,12 @@ public class BattleActorList : ListWindow , IInputHandlerEvent
     {        
         BattleActor battleActor = ObjectList[targetIndex].GetComponent<BattleActor>();
         battleActor.StartDamage(damageType,value);
+    }
+
+    public void StartBlink(int targetIndex)
+    {
+        BattleActor battleActor = ObjectList[targetIndex].GetComponent<BattleActor>();
+        battleActor.StartBlink();
     }
 
     public void StartHeal(int targetIndex , DamageType damageType , int value)
@@ -222,7 +229,8 @@ public class BattleActorList : ListWindow , IInputHandlerEvent
         }
     }
     
-    private void Update() {
+    private new void Update() {
+        base.Update();
         if (_animationBusy == true)
         {
             if (CheckAnimationBusy() == false)
@@ -245,5 +253,43 @@ public class BattleActorList : ListWindow , IInputHandlerEvent
             }
         }
         return isBusy;
+    }
+    
+    private void CallInputHandler(InputKeyType keyType, System.Action<List<int>> callEvent,System.Action cancelEvent)
+    {
+        if (keyType == InputKeyType.Decide)
+        {
+            int actorIndex = _battleInfos[Index].Index;
+            BattlerInfo battlerInfo = _battleInfos.Find(a => a.Index == _battleInfos[Index].Index);
+            if (_targetIndexList.IndexOf(actorIndex) == -1)
+            {
+                return;
+            }
+            List<int> indexList = new List<int>();
+            if (_targetScopeType == ScopeType.All)
+            {
+                for (int i = 0; i < ObjectList.Count;i++)
+                {
+                    indexList.Add(i);
+                }
+            } else
+            if (_targetScopeType == ScopeType.Line)
+            {
+                indexList.Add(actorIndex);
+            } else
+            if (_targetScopeType == ScopeType.One)
+            {
+                indexList.Add(actorIndex);
+            } else
+            if (_targetScopeType == ScopeType.Self)
+            {
+                indexList.Add(actorIndex);
+            }
+            callEvent(indexList);
+        }
+        if (keyType == InputKeyType.Cancel)
+        {
+            cancelEvent();
+        }
     }
 }

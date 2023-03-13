@@ -14,5 +14,7 @@ public enum SEType {
     None,
     Decide,
     Cancel,
-    Cursor
+    Cursor,
+    Damage,
+    Defeat
 }

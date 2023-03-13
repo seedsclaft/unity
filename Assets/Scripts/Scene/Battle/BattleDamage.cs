@@ -67,7 +67,6 @@ public class BattleDamage : MonoBehaviour
                 .Append(textMeshProUGUI.DOFade(1.0f, 0.1f))
                 .Append(textMeshProUGUI.gameObject.transform.DOLocalMoveY(16, 0.1f))
                 .Append(textMeshProUGUI.gameObject.transform.DOLocalMoveY(0, 0.2f))
-                .SetDelay(0.05f)
                 .Append(textMeshProUGUI.gameObject.transform.DOLocalMoveY(4, 0.05f))
                 .Append(textMeshProUGUI.gameObject.transform.DOLocalMoveY(0, 0.05f))
                 .SetEase(Ease.InOutQuad)

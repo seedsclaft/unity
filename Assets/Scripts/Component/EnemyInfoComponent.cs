@@ -8,6 +8,7 @@ using TMPro;
 public class EnemyInfoComponent : MonoBehaviour
 {
     [SerializeField] private Image mainThumb;
+    public Image MainThumb {get {return mainThumb;}}
     [SerializeField] private TextMeshProUGUI nameText;
     [SerializeField] private TextMeshProUGUI lv;
     [SerializeField] private StatusInfoComponent statusInfoComponent;

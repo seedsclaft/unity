@@ -98,11 +98,11 @@ public class StageInfo
 			{
         		int rand = new System.Random().Next(1, DataSystem.Enemies.Count);
                 EnemiesData.EnemyData enemyData = DataSystem.Enemies.Find(a => a.Id == rand);
-                BattlerInfo enemy = new BattlerInfo(enemyData,j,0,0);
+                BattlerInfo enemy = new BattlerInfo(enemyData,1,j,0);
                 troopInfo.AddEnemy(enemy);
             }
             EnemiesData.EnemyData bossEnemyData = DataSystem.Enemies.Find(a => a.Id == _currentEnemyData[i].EnemyId);
-            BattlerInfo bossEnemy = new BattlerInfo(bossEnemyData,2,_currentEnemyData[i].Lv,_currentEnemyData[i].Line);
+            BattlerInfo bossEnemy = new BattlerInfo(bossEnemyData,_currentEnemyData[i].Lv,2,_currentEnemyData[i].Line);
             troopInfo.AddEnemy(bossEnemy);
             
             List<GetItemData> getItemDatas = _currentEnemyData[i].GetItemDatas;

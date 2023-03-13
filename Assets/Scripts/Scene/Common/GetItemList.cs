@@ -11,6 +11,8 @@ public class GetItemList : ListWindow , IInputHandlerEvent
     private List<GetItemInfo> _data = new List<GetItemInfo>();
 
     [SerializeField] private TacticsCommandList tacticsCommandList;
+    public TacticsCommandList TacticsCommandList {get {return tacticsCommandList;}}
+    private System.Action<TacticsComandType> _confirmEvent = null;
     public int selectIndex{
         get {return Index;}
     }
@@ -31,10 +33,7 @@ public class GetItemList : ListWindow , IInputHandlerEvent
     public void Refresh(List<GetItemInfo> skillInfoData)
     {
         _data.Clear();
-        for (var i = 0; i < skillInfoData.Count;i++)
-        {
-            _data.Add(skillInfoData[i]);
-        }
+        _data = skillInfoData;
         for (int i = 0; i < ObjectList.Count;i++)
         {
             ObjectList[i].SetActive(false);
@@ -58,6 +57,21 @@ public class GetItemList : ListWindow , IInputHandlerEvent
     
     public void InitializeConfirm(List<SystemData.MenuCommandData> confirmCommands ,System.Action<TacticsComandType> callEvent)
     {
+        _confirmEvent = callEvent;
+        SetInputHandler((a) => CallInputHandler(a,callEvent));
         tacticsCommandList.Initialize(confirmCommands,callEvent);
+        tacticsCommandList.UpdateSelectIndex(0);
+    }
+    
+    private void CallInputHandler(InputKeyType keyType, System.Action<TacticsComandType> callEvent)
+    {
+        if (keyType == InputKeyType.Decide)
+        {
+            _confirmEvent((TacticsComandType)tacticsCommandList.Index);
+        }
+        if (keyType == InputKeyType.Cancel)
+        {
+            _confirmEvent(TacticsComandType.Train);
+        }
     }
 }

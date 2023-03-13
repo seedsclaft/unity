@@ -10,7 +10,9 @@ public class ActorInfoComponent : MonoBehaviour
     [SerializeField] private Image mainThumb;
     [SerializeField] private Image awakenThumb;
     [SerializeField] private Image faceThumb;
+    public Image FaceThumb {get {return faceThumb;}}
     [SerializeField] private Image awakenFaceThumb;
+    public Image AwakenFaceThumb {get {return awakenFaceThumb;}}
     [SerializeField] private TextMeshProUGUI nameText;
     [SerializeField] private TextMeshProUGUI element;
     [SerializeField] private TextMeshProUGUI demigod;
@@ -178,6 +180,16 @@ public class ActorInfoComponent : MonoBehaviour
         {
             faceThumb.gameObject.SetActive(!IsAwaken);
             awakenFaceThumb.gameObject.SetActive(IsAwaken);
+        }
+    }
+
+    public void Clear()
+    {
+        if (mainThumb != null){
+            mainThumb.sprite = null;
+        }
+        if (awakenThumb != null){
+            awakenThumb.sprite = null;
         }
     }
 }

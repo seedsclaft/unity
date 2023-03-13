@@ -11,6 +11,7 @@ public class SkillsData : ScriptableObject {
         public string Name;
         public int IconIndex;
         public string AnimationName;
+        public int AnimationPosition;
         public AnimationType AnimationType;
         public int DamageTiming;
         public int MpCost;

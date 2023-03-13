@@ -42,7 +42,7 @@ public class TacticsEnemyList : ListWindow , IInputHandlerEvent
             ObjectList[i].SetActive(i < _troopInfos.Count);
         }
         SetInputHandler((a) => CallInputHandler(a,callEvent,cancelEvent));
-        UpdateSelectIndex(0);
+        UpdateSelectIndex(-1);
         Refresh();
     }
 

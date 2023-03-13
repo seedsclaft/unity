@@ -32,6 +32,9 @@ public class BattlerInfo
     public List<KindType> Kinds {get {return _kinds;} }
     private int _lastSkillId = 0;
     public SkillInfo LastSkill {get {return Skills.Find(a => a.Id == _lastSkillId);} }
+    public void SetLastSkillIndex(int index){
+        _lastSkillId = index;
+    }
     private List<StateInfo> _stateInfos = new List<StateInfo>();
     public List<StateInfo> StateInfos {get {return _stateInfos;} }
 
@@ -62,6 +65,10 @@ public class BattlerInfo
         _hp = actorInfo.CurrentHp;
         _mp = actorInfo.CurrentMp;
         _lineIndex = 0;
+        if (_lastSkillId == 0)
+        {
+            _lastSkillId = _skills.Find(a => a.Id > 100).Id;
+        }
         ResetAp(true);
     }
 

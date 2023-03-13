@@ -50,6 +50,10 @@ public class BattleGridLayer : MonoBehaviour
         foreach (var data in _data)
         {
             data.Value.RefreshStatus();
+            if (!data.Key.IsAlive())
+            {
+                data.Value.gameObject.SetActive(false);
+            }
         }
     }
 }

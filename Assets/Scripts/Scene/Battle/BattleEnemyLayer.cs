@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Effekseer;
 
-public class BattleEnemyLayer : MonoBehaviour
+public class BattleEnemyLayer : ListWindow , IInputHandlerEvent
 {
     [SerializeField] private List<GameObject> frontEnemyRoots;
     [SerializeField] private List<GameObject> backEnemyRoots;
@@ -18,9 +18,12 @@ public class BattleEnemyLayer : MonoBehaviour
     public bool AnimationBusy {
         get {return _animationBusy;}
     }
+    private List<BattlerInfo> _battleInfos = new List<BattlerInfo>();
+    private int _selectIndex = -1;
 
-    public void Initialize(List<BattlerInfo> battlerInfos ,System.Action<List<int>> callEvent)
+    public void Initialize(List<BattlerInfo> battlerInfos ,System.Action<List<int>> callEvent,System.Action cancelEvent)
     {
+        _battleInfos = battlerInfos;
         frontDamageRoots.ForEach(a => a.SetActive(false));
         backDamageRoots.ForEach(a => a.SetActive(false));
         frontEnemyRoots.ForEach(a => a.SetActive(false));
@@ -96,10 +99,11 @@ public class BattleEnemyLayer : MonoBehaviour
                 }
                 callEvent(indexList);
             });
-            battleEnemy.SetSelectHandler((data) => UpdateSelectIndex(data));
+            battleEnemy.SetSelectHandler((data) => UpdateEnemyIndex(data));
             battleEnemies.Add(battleEnemy);
             frontIndex++;
         }
+        SetInputHandler((a) => CallInputHandler(a,callEvent,cancelEvent));
         UpdateAllUnSelect();
     }
 
@@ -122,11 +126,11 @@ public class BattleEnemyLayer : MonoBehaviour
         } else
         if (_targetScopeType == ScopeType.One)
         {
-            UpdateSelectIndex(actionInfo.LastTargetIndex);
+            UpdateEnemyIndex(actionInfo.LastTargetIndex);
         } else
         if (_targetScopeType == ScopeType.Self)
         {
-            UpdateSelectIndex(actionInfo.SubjectIndex);
+            UpdateEnemyIndex(actionInfo.SubjectIndex);
         }
     }
 
@@ -146,11 +150,12 @@ public class BattleEnemyLayer : MonoBehaviour
         }
     }
     
-    private void UpdateSelectIndex(int index){
+    private void UpdateEnemyIndex(int index){
         if (_targetIndexList.IndexOf(index) == -1)
         {
             return;
         }
+        _selectIndex = index;
         if (_targetScopeType == ScopeType.All)
         {
             UpdateAllSelect();
@@ -202,18 +207,18 @@ public class BattleEnemyLayer : MonoBehaviour
         }
     }
 
-    public void StartAnimation(List<int> indexList, EffekseerEffectAsset effectAsset)
+    public void StartAnimation(List<int> indexList, EffekseerEffectAsset effectAsset,int animationPosition)
     {
         for (int i = 0; i < indexList.Count;i++)
         {
-            battleEnemies[indexList[i]].StartAnimation(effectAsset);
+            battleEnemies[indexList[i]].StartAnimation(effectAsset,animationPosition);
         }
         _animationBusy = true;
     }
 
-    public void StartAnimation(int targetIndex, EffekseerEffectAsset effectAsset)
+    public void StartAnimation(int targetIndex, EffekseerEffectAsset effectAsset,int animationPosition)
     {
-        battleEnemies[targetIndex].StartAnimation(effectAsset);
+        battleEnemies[targetIndex].StartAnimation(effectAsset,animationPosition);
         _animationBusy = true;
     }
 
@@ -228,12 +233,17 @@ public class BattleEnemyLayer : MonoBehaviour
         battleEnemies.ForEach(a => a.ClearDamagePopup());
     }
 
-    public void StartDamage(int targetIndex , DamageType damageType , int value)
+    public void StartDamage(int targetIndex,DamageType damageType,int value)
     {        
         battleEnemies[targetIndex].StartDamage(damageType,value);
     }
 
-    public void StartHeal(int targetIndex , DamageType damageType , int value)
+    public void StartBlink(int targetIndex)
+    {
+        battleEnemies[targetIndex].StartBlink();
+    }
+
+    public void StartHeal(int targetIndex,DamageType damageType,int value)
     {        
         battleEnemies[targetIndex].StartHeal(damageType,value);
     }
@@ -256,7 +266,8 @@ public class BattleEnemyLayer : MonoBehaviour
         }
     }
 
-    private void Update() {
+    private new void Update() {
+        base.Update();
         if (_animationBusy == true)
         {
             if (CheckAnimationBusy() == false)
@@ -279,4 +290,126 @@ public class BattleEnemyLayer : MonoBehaviour
         }
         return isBusy;
     }
+    
+    private void CallInputHandler(InputKeyType keyType, System.Action<List<int>> callEvent,System.Action cancelEvent)
+    {
+        if (keyType == InputKeyType.Decide)
+        {
+            BattlerInfo battlerInfo = _battleInfos.Find(a => a.Index == _selectIndex);
+            if (battlerInfo.IsAlive() == false)
+            {
+                return;
+            }
+            if (_targetIndexList.IndexOf(_selectIndex) == -1)
+            {
+                return;
+            }
+            List<int> indexList = new List<int>();
+            if (_targetScopeType == ScopeType.All)
+            {
+                for (int i = 0; i < battleEnemies.Count;i++)
+                {
+                    if (_battleInfos[i].IsAlive())
+                    {
+                        indexList.Add(_battleInfos[i].Index);
+                    }
+                }
+            } else
+            if (_targetScopeType == ScopeType.Line)
+            {
+                for (int i = 0; i < battleEnemies.Count;i++)
+                {
+                    if (battlerInfo.LineIndex == _battleInfos[i].LineIndex)
+                    {
+                        if (_battleInfos[i].IsAlive())
+                        {
+                            indexList.Add(_battleInfos[i].Index);
+                        }
+                    }
+                }
+            } else
+            if (_targetScopeType == ScopeType.One)
+            {
+                if (battlerInfo.IsAlive())
+                {
+                    indexList.Add(battlerInfo.Index);
+                }
+            } else
+            if (_targetScopeType == ScopeType.Self)
+            {
+                if (battlerInfo.IsAlive())
+                {
+                    indexList.Add(battlerInfo.Index);
+                }
+            }
+            callEvent(indexList);
+        }
+        if (keyType == InputKeyType.Cancel)
+        {
+            cancelEvent();
+        }
+        if (keyType == InputKeyType.Right)
+        {
+            BattlerInfo current = _battleInfos.Find(a => a.Index == _selectIndex);
+            if (current != null)
+            {
+                BattlerInfo target = _battleInfos.Find(a => a.Index > current.Index && a.IsAlive());
+                if (target != null)
+                {
+                    if (current.LineIndex == target.LineIndex)
+                    {
+                        SoundManager.Instance.PlayStaticSe(SEType.Cursor);
+                        UpdateEnemyIndex(target.Index);
+                    }
+                }
+            }
+        }
+        if (keyType == InputKeyType.Left)
+        {
+            BattlerInfo current = _battleInfos.Find(a => a.Index == _selectIndex);
+            if (current != null)
+            {
+                BattlerInfo target = _battleInfos.Find(a => a.Index < current.Index && a.IsAlive());
+                if (target != null)
+                {
+                    if (current.LineIndex == target.LineIndex)
+                    {
+                        SoundManager.Instance.PlayStaticSe(SEType.Cursor);
+                        UpdateEnemyIndex(target.Index);
+                    }
+                }
+            }
+        }
+        if (keyType == InputKeyType.Up)
+        {
+            BattlerInfo current = _battleInfos.Find(a => a.Index == _selectIndex);
+            if (current != null)
+            {
+                BattlerInfo target = _battleInfos.Find(a => a.Index > current.Index && a.IsAlive() && a.LineIndex == 1);
+                if (target != null)
+                {
+                    if (current != target)
+                    {
+                        UpdateEnemyIndex(target.Index);
+                    }
+                }
+            }
+        }
+        if (keyType == InputKeyType.Down)
+        {
+            BattlerInfo current = _battleInfos.Find(a => a.Index == _selectIndex);
+            if (current != null)
+            {
+                BattlerInfo target = _battleInfos.Find(a => a.Index < current.Index && a.IsAlive() && a.LineIndex == 0);
+                if (target != null)
+                {
+                    if (current != target)
+                    {
+                        UpdateEnemyIndex(target.Index);
+                    }
+                }
+            }
+        }
+    }
+
 }

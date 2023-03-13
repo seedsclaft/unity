@@ -329,7 +329,9 @@ public class TacticsPresenter
     {
         if (confirmComandType == ConfirmComandType.Yes)
         {
+            SoundManager.Instance.PlayStaticSe(SEType.Decide);
         } else{
+            SoundManager.Instance.PlayStaticSe(SEType.Cancel);
             _model.ResetTempData(TacticsComandType.Train);
         }
         _view.ShowCommandList();
@@ -356,6 +358,7 @@ public class TacticsPresenter
 
     private void CommandSkillAlchemy(int skillId)
     {
+        SoundManager.Instance.PlayStaticSe(SEType.Decide);
         _model.SelectAlchemy(skillId);
         _view.HideSkillAlchemyList();
         _view.SetActiveBack(false);
@@ -367,8 +370,10 @@ public class TacticsPresenter
     {
         if (confirmComandType == ConfirmComandType.Yes)
         {
+            SoundManager.Instance.PlayStaticSe(SEType.Decide);
         } else{
             _model.ResetTempData(TacticsComandType.Alchemy);
+            SoundManager.Instance.PlayStaticSe(SEType.Cancel);
         }
         _view.ShowCommandList();
         _view.HideAlchemyList();
@@ -397,8 +402,10 @@ public class TacticsPresenter
     {
         if (confirmComandType == ConfirmComandType.Yes)
         {
+            SoundManager.Instance.PlayStaticSe(SEType.Decide);
         } else{
             _model.ResetTempData(TacticsComandType.Recovery);
+            SoundManager.Instance.PlayStaticSe(SEType.Cancel);
         }
         _view.ShowCommandList();
         _view.HideRecoveryList();
@@ -454,8 +461,10 @@ public class TacticsPresenter
     {
         if (confirmComandType == ConfirmComandType.Yes)
         {
+            SoundManager.Instance.PlayStaticSe(SEType.Decide);
         } else{
             _model.ResetTempData(TacticsComandType.Resource);
+            SoundManager.Instance.PlayStaticSe(SEType.Cancel);
         }
         _view.ShowCommandList();
         _view.HideResourceList();

@@ -6,6 +6,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.Events;
 using TMPro;
 using Effekseer;
+using DG.Tweening;
 
 public class BattleActor : ListItem ,IListViewItem ,IClickHandlerEvent 
 {
@@ -109,6 +110,11 @@ public class BattleActor : ListItem ,IListViewItem ,IClickHandlerEvent
         battleDamage.StartDamage(damageType,value);
         _battleDamages.Add(battleDamage);
         battlerInfoComponent.ChangeHp(value * -1 + _data.Hp);
+    }
+
+    public void StartBlink()
+    {
+        battlerInfoComponent.StartBlink();
     }
 
     public void StartHeal(DamageType damageType,int value)

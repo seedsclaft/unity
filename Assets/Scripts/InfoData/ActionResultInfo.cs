@@ -53,7 +53,7 @@ public class ActionResultInfo
     }
     private bool _isDead = false;
     public bool IsDead {
-        get {return _isDead;}
+        get {return _isDead;} set{_isDead = value;}
     }
     private List<int> _deadIndexList = new List<int>();
     public List<int> DeadIndexList {
