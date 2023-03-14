@@ -34,6 +34,14 @@ public class TacticsModel : BaseModel
         get {return _currentEnemyIndex;} set {_currentEnemyIndex = value;}
     }
     
+
+    private bool _needAllTacticsCommand = false;
+    public bool NeedAllTacticsCommand { get {return _needAllTacticsCommand;}}
+    public void SetNeedAllTacticsCommand(bool isNeed)
+    {
+        _needAllTacticsCommand = isNeed;
+    }
+
     public List<StagesData.StageEventData> StageEvents(EventTiming eventTiming)
     {
         int CurrentTurn = GameSystem.CurrentData.CurrentStage.CurrentTurn;

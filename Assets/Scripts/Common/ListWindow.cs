@@ -366,14 +366,14 @@ abstract public class ListWindow : MonoBehaviour
 
         if (keyType == plusKey){
             selectIndex = Index + 1;
-            if (selectIndex > ObjectList.Count-1){
+            if (selectIndex > ObjectList.FindAll(a => a.activeSelf).Count-1){
                 selectIndex = 0;
             }
         } else
         if (keyType == minusKey){
             selectIndex = Index - 1;
             if (selectIndex < 0){
-                selectIndex = ObjectList.Count-1;
+                selectIndex = ObjectList.FindAll(a => a.activeSelf).Count-1;
             }
         }
         if (currentIndex != selectIndex){

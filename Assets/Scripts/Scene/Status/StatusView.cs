@@ -42,8 +42,10 @@ public class StatusView : BaseView
         skillActionList.Initialize(null,() => OnClickBack());
         SetInputHandler(skillActionList.GetComponent<IInputHandlerEvent>());
         skillActionList.gameObject.SetActive(false);
+        skillActionList.Deactivate();
         skillAttributeList.gameObject.SetActive(false);
         SetInputHandler(skillAttributeList.GetComponent<IInputHandlerEvent>());
+        skillAttributeList.Deactivate();
     }
     
     public void SetUIButton()
@@ -141,6 +143,16 @@ public class StatusView : BaseView
         actorInfoComponent.UpdateInfo(actorInfo);
     }
 
+    public void ActivateActorList()
+    {
+        actorList.Activate();
+    }
+
+    public void DeactivateActorList()
+    {
+        actorList.Deactivate();
+    }
+
     public void SetStrengthInfo(ActorInfo actorInfo,List<SystemData.MenuCommandData> confirmCommands)
     {
         statusStrengthList.Initialize(actorInfo,
@@ -214,14 +226,18 @@ public class StatusView : BaseView
 
     public void ShowSkillActionList()
     {
+        skillActionList.Activate();
         skillActionList.gameObject.SetActive(true);
+        skillAttributeList.Activate();
         skillAttributeList.gameObject.SetActive(true);
     }
 
 
     public void HideSkillActionList()
     {
+        skillActionList.Deactivate();
         skillActionList.gameObject.SetActive(false);
+        skillAttributeList.Deactivate();
         skillAttributeList.gameObject.SetActive(false);
     }
     
@@ -271,11 +287,13 @@ public class StatusView : BaseView
 
     public void ShowStrength()
     {
+        statusStrengthList.Activate();
         statusStrengthList.gameObject.SetActive(true);
     }
 
     public void HideStrength()
     {
+        statusStrengthList.Deactivate();
         statusStrengthList.gameObject.SetActive(false);
     }
 

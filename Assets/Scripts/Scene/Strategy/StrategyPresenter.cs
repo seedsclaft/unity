@@ -62,6 +62,7 @@ public class StrategyPresenter
         if (battledMembers != null && battledMembers.Count > 0)
         {
             _isBattleEnded = true;
+            _view.SetTitle(DataSystem.System.GetTextData(14030).Text);
             _view.StartResultAnimation(battledMembers);
         } else
         {
@@ -130,6 +131,7 @@ public class StrategyPresenter
         List<ActorInfo> tacticsActors = _model.TacticsActors();
         if (tacticsActors.Count > 0)
         {
+            _view.SetTitle(DataSystem.System.GetTextData(14020).Text);
             _view.StartResultAnimation(tacticsActors);
         } else{
             CheckNextBattle();
@@ -152,6 +154,7 @@ public class StrategyPresenter
         _isBattle = true;
         _view.HideResultList();
         _model.SetBattleMembers(battleMembers);
+        _view.SetTitle(DataSystem.System.GetTextData(4).Text);
         _view.StartResultAnimation(battleMembers);
     }
 

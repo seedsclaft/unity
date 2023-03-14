@@ -44,6 +44,7 @@ public enum EventTiming{
 
 public enum StageEventType{
     None = 0,
-    CommandDisable = 1,
-    TutorialBattle = 2
+    CommandDisable = 1, // コマンドを制限する
+    TutorialBattle = 2, // バトルをチュートリアルで固定する
+    NeedAllTactics = 3 // 全員コマンドを選ばないと進まない
 }

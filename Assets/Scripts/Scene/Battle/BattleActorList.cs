@@ -11,16 +11,12 @@ public class BattleActorList : ListWindow , IInputHandlerEvent
     [SerializeField] private int cols = 0;
     [SerializeField] private List<GameObject> damageRoots;
     private List<BattlerInfo> _battleInfos = new List<BattlerInfo>();
-    private bool _animationBusy = false;
-    public bool AnimationBusy {
-        get {return _animationBusy;}
-    }
+    private List<BattleActor> _battleActors = new List<BattleActor>();
     private ScopeType _targetScopeType = ScopeType.None;
     private List<int> _targetIndexList = new List<int>();
     public int selectIndex{
         get {return Index;}
     }
-
 
     public void Initialize(System.Action<List<int>> callEvent,System.Action cancelEvent)
     {
@@ -35,30 +31,11 @@ public class BattleActorList : ListWindow , IInputHandlerEvent
                 {
                     return;
                 }
-                List<int> indexList = new List<int>();
-                if (_targetScopeType == ScopeType.All)
-                {
-                    for (int i = 0; i < ObjectList.Count;i++)
-                    {
-                        indexList.Add(i);
-                    }
-                } else
-                if (_targetScopeType == ScopeType.Line)
-                {
-                    indexList.Add(actorIndex);
-                } else
-                if (_targetScopeType == ScopeType.One)
-                {
-                    indexList.Add(actorIndex);
-                } else
-                if (_targetScopeType == ScopeType.Self)
-                {
-                    indexList.Add(actorIndex);
-                }
-                callEvent(indexList);
+                callEvent(MakeTargetIndexs(actorIndex));
             });
             battleActor.SetSelectHandler((data) => UpdateSelectIndex(data));
             battleActor.SetDamageRoot(damageRoots[i]);
+            _battleActors.Add(battleActor);
             ObjectList[i].SetActive(false);
         }
         SetInputHandler((a) => CallInputHandler(a,callEvent,cancelEvent));
@@ -83,64 +60,7 @@ public class BattleActorList : ListWindow , IInputHandlerEvent
         }
         UpdateAllItems();
     }
-
-    public void StartAnimation(List<int> indexList, EffekseerEffectAsset effectAsset)
-    {
-        for (int i = 0; i < indexList.Count;i++)
-        {
-            BattleActor battleActor = ObjectList[indexList[i]].GetComponent<BattleActor>();
-            battleActor.StartAnimation(effectAsset);
-        }
-        _animationBusy = true;
-    }
-
-    public void StartAnimation(int targetIndex, EffekseerEffectAsset effectAsset)
-    {
-        BattleActor battleActor = ObjectList[targetIndex].GetComponent<BattleActor>();
-        battleActor.StartAnimation(effectAsset);
-        _animationBusy = true;
-    }
-
-    public void StartSkillDamage(int targetIndex,int damageTiming, System.Action<int> callEvent)
-    {
-        BattleActor battleActor = ObjectList[targetIndex].GetComponent<BattleActor>();
-        battleActor.SetStartSkillDamage(damageTiming,callEvent);
-        _animationBusy = true;
-    }
-
-    public void ClearDamagePopup()
-    {
-        for (int i = 0; i < ObjectList.Count;i++)
-        {
-            var battleActor = ObjectList[i].GetComponent<BattleActor>();
-            battleActor.ClearDamagePopup();
-        }
-    }
     
-    public void StartDamage(int targetIndex , DamageType damageType , int value)
-    {        
-        BattleActor battleActor = ObjectList[targetIndex].GetComponent<BattleActor>();
-        battleActor.StartDamage(damageType,value);
-    }
-
-    public void StartBlink(int targetIndex)
-    {
-        BattleActor battleActor = ObjectList[targetIndex].GetComponent<BattleActor>();
-        battleActor.StartBlink();
-    }
-
-    public void StartHeal(int targetIndex , DamageType damageType , int value)
-    {        
-        BattleActor battleActor = ObjectList[targetIndex].GetComponent<BattleActor>();
-        battleActor.StartHeal(damageType,value);
-    }
-    
-    public void StartStatePopup(int targetIndex , DamageType damageType ,string stateName)
-    {        
-        BattleActor battleActor = ObjectList[targetIndex].GetComponent<BattleActor>();
-        battleActor.StartStatePopup(damageType,stateName);
-    }
-
     public override void UpdateHelpWindow(){
         if (_helpWindow != null)
         {
@@ -180,6 +100,7 @@ public class BattleActorList : ListWindow , IInputHandlerEvent
         {
             var listItem = ObjectList[i].GetComponent<ListItem>();
             listItem.SetSelect();
+            _battleActors[i].BattlerInfoComponent.SetSelectable(true);
         }
     }
 
@@ -214,45 +135,16 @@ public class BattleActorList : ListWindow , IInputHandlerEvent
             } else{
                 listItem.SetUnSelect();
             }
+            _battleActors[i].BattlerInfoComponent.SetSelectable(index == i);
         }
     }
 
     private void UpdateLineSelect(int index){
     }
     
-    public void RefreshStatus()
+    public BattlerInfoComponent GetBattlerInfoComp(int index)
     {
-        for (int i = 0; i < ObjectList.Count;i++)
-        {
-            BattleActor battleActor = ObjectList[i].GetComponent<BattleActor>();
-            battleActor.RefreshStatus();
-        }
-    }
-    
-    private new void Update() {
-        base.Update();
-        if (_animationBusy == true)
-        {
-            if (CheckAnimationBusy() == false)
-            {
-                _animationBusy = false;
-            }
-        }
-    }
-
-    private bool CheckAnimationBusy()
-    {
-        bool isBusy = false;
-        for (int i = 0; i < ObjectList.Count;i++)
-        {
-            BattleActor battleActor = ObjectList[i].GetComponent<BattleActor>();
-            if (battleActor.IsBusy)
-            {
-                isBusy = true;
-                break;
-            }
-        }
-        return isBusy;
+        return _battleActors[index].BattlerInfoComponent;
     }
     
     private void CallInputHandler(InputKeyType keyType, System.Action<List<int>> callEvent,System.Action cancelEvent)
@@ -265,31 +157,36 @@ public class BattleActorList : ListWindow , IInputHandlerEvent
             {
                 return;
             }
-            List<int> indexList = new List<int>();
-            if (_targetScopeType == ScopeType.All)
-            {
-                for (int i = 0; i < ObjectList.Count;i++)
-                {
-                    indexList.Add(i);
-                }
-            } else
-            if (_targetScopeType == ScopeType.Line)
-            {
-                indexList.Add(actorIndex);
-            } else
-            if (_targetScopeType == ScopeType.One)
-            {
-                indexList.Add(actorIndex);
-            } else
-            if (_targetScopeType == ScopeType.Self)
-            {
-                indexList.Add(actorIndex);
-            }
-            callEvent(indexList);
+            callEvent(MakeTargetIndexs(actorIndex));
         }
         if (keyType == InputKeyType.Cancel)
         {
             cancelEvent();
         }
+    }
+
+    private List<int> MakeTargetIndexs(int actorIndex)
+    {
+        List<int> indexList = new List<int>();
+        if (_targetScopeType == ScopeType.All)
+        {
+            for (int i = 0; i < ObjectList.Count;i++)
+            {
+                indexList.Add(i);
+            }
+        } else
+        if (_targetScopeType == ScopeType.Line)
+        {
+            indexList.Add(actorIndex);
+        } else
+        if (_targetScopeType == ScopeType.One)
+        {
+            indexList.Add(actorIndex);
+        } else
+        if (_targetScopeType == ScopeType.Self)
+        {
+            indexList.Add(actorIndex);
+        }
+        return indexList;
     }
 }

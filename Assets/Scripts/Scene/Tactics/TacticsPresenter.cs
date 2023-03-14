@@ -9,6 +9,7 @@ public class TacticsPresenter
 
     private bool _busy = true;
 
+
     private Tactics.CommandType _backCommand = Tactics.CommandType.None;
     public TacticsPresenter(TacticsView view)
     {
@@ -55,6 +56,11 @@ public class TacticsPresenter
                 if (stageEvents[i].Type == StageEventType.TutorialBattle)
                 {
                     _view.SetEnemies(_model.ResetTroopData());
+                }
+                if (stageEvents[i].Type == StageEventType.NeedAllTactics)
+                {
+                    _model.SetNeedAllTacticsCommand(true);
+                    _view.SetCommandDisable(DataSystem.TacticsCommand.Count-1);
                 }
             }
         }
@@ -163,6 +169,16 @@ public class TacticsPresenter
         if (viewEvent.commandType == Tactics.CommandType.Back)
         {
             CommandBack();
+        }
+        if (_model.NeedAllTacticsCommand)
+        {
+            if (_model.CheckNonBusy())
+            {
+                _view.SetCommandDisable(DataSystem.TacticsCommand.Count-1);
+                
+            } else{
+                _view.SetCommandAble(DataSystem.TacticsCommand.Count-1);
+            }
         }
     }
 

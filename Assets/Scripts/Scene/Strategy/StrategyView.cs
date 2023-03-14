@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Strategy;
 using Effekseer;
+using TMPro;
 
 public class StrategyView : BaseView
 {
@@ -14,6 +15,7 @@ public class StrategyView : BaseView
     [SerializeField] private SpriteRenderer backGround = null; 
     [SerializeField] private GameObject helpRoot = null;
     [SerializeField] private GameObject helpPrefab = null;
+    [SerializeField] private TextMeshProUGUI title = null; 
     private HelpWindow _helpWindow = null;
 
     private new System.Action<StrategyViewEvent> _commandData = null;
@@ -27,6 +29,11 @@ public class StrategyView : BaseView
         new StrategyPresenter(this);
     }
 
+    public void SetTitle(string text)
+    {
+        title.text = text;
+    }
+
     public void SetUiView()
     {
         tacticsEnemyList.Initialize();
@@ -37,7 +44,7 @@ public class StrategyView : BaseView
         GameObject prefab = Instantiate(helpPrefab);
         prefab.transform.SetParent(helpRoot.transform, false);
         _helpWindow = prefab.GetComponent<HelpWindow>();
-        _helpWindow.SetHelpText(DataSystem.System.GetTextData(11040).Text);
+        _helpWindow.SetHelpText(DataSystem.System.GetTextData(14010).Text);
     }
 
     public void SetActors(List<ActorInfo> actorInfos)

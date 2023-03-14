@@ -450,10 +450,6 @@ MonoBehaviour:
   cursor: {fileID: 4789936322500513493}
   disable: {fileID: 0}
   battlerInfoComponent: {fileID: 4697524623951567476}
-  effekseerEmitter: {fileID: 3151704133158308794}
-  battleDamagePrefab: {fileID: 1787456025739594925, guid: 39a4f8424bdfa3c469946a6405fb012c,
-    type: 3}
-  deathAnimation: {fileID: 0}
 --- !u!114 &3569719491236088226
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -496,6 +492,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   actorInfoComponent: {fileID: 3569719491236088226}
   enemyInfoComponent: {fileID: 0}
+  effekseerEmitter: {fileID: 8793950979201513816}
+  deathAnimation: {fileID: 0}
+  battleDamagePrefab: {fileID: 1787456025739594925, guid: 39a4f8424bdfa3c469946a6405fb012c,
+    type: 3}
 --- !u!1 &2485161313225115955
 GameObject:
   m_ObjectHideFlags: 0
@@ -1841,7 +1841,7 @@ GameObject:
   - component: {fileID: 6974606010871547513}
   - component: {fileID: 8793950979201513816}
   m_Layer: 5
-  m_Name: FaceImage (1)
+  m_Name: Emitter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

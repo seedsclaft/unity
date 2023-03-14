@@ -10,14 +10,10 @@ public class BattleEnemyLayer : ListWindow , IInputHandlerEvent
     [SerializeField] private GameObject battleEnemyPrefab;
     [SerializeField] private List<GameObject> frontDamageRoots;
     [SerializeField] private List<GameObject> backDamageRoots;
-    private List<BattleEnemy> battleEnemies = new List<BattleEnemy>();
+    private List<BattleEnemy> _battleEnemies = new List<BattleEnemy>();
     private ScopeType _targetScopeType = ScopeType.None;
     private List<int> _targetIndexList = new List<int>();
     private int _backStartIndex = 0;
-    private bool _animationBusy = false;
-    public bool AnimationBusy {
-        get {return _animationBusy;}
-    }
     private List<BattlerInfo> _battleInfos = new List<BattlerInfo>();
     private int _selectIndex = -1;
 
@@ -59,48 +55,10 @@ public class BattleEnemyLayer : ListWindow , IInputHandlerEvent
                 {
                     return;
                 }
-                List<int> indexList = new List<int>();
-                if (_targetScopeType == ScopeType.All)
-                {
-                    for (int i = 0; i < battleEnemies.Count;i++)
-                    {
-                        if (battlerInfos[i].IsAlive())
-                        {
-                            indexList.Add(battlerInfos[i].Index);
-                        }
-                    }
-                } else
-                if (_targetScopeType == ScopeType.Line)
-                {
-                    for (int i = 0; i < battleEnemies.Count;i++)
-                    {
-                        if (battlerInfo.LineIndex == battlerInfos[i].LineIndex)
-                        {
-                            if (battlerInfos[i].IsAlive())
-                            {
-                                indexList.Add(battlerInfos[i].Index);
-                            }
-                        }
-                    }
-                } else
-                if (_targetScopeType == ScopeType.One)
-                {
-                    if (battlerInfo.IsAlive())
-                    {
-                        indexList.Add(battlerInfo.Index);
-                    }
-                } else
-                if (_targetScopeType == ScopeType.Self)
-                {
-                    if (battlerInfo.IsAlive())
-                    {
-                        indexList.Add(battlerInfo.Index);
-                    }
-                }
-                callEvent(indexList);
+                callEvent(MakeTargetIndexs(battlerInfo));
             });
             battleEnemy.SetSelectHandler((data) => UpdateEnemyIndex(data));
-            battleEnemies.Add(battleEnemy);
+            _battleEnemies.Add(battleEnemy);
             frontIndex++;
         }
         SetInputHandler((a) => CallInputHandler(a,callEvent,cancelEvent));
@@ -114,6 +72,7 @@ public class BattleEnemyLayer : ListWindow , IInputHandlerEvent
             _targetScopeType = ScopeType.None;
             return;
         }
+        _selectIndex = actionInfo.LastTargetIndex;
         _targetIndexList = actionInfo.TargetIndexList;
         _targetScopeType = actionInfo.ScopeType;
         if (_targetScopeType == ScopeType.All)
@@ -135,17 +94,23 @@ public class BattleEnemyLayer : ListWindow , IInputHandlerEvent
     }
 
     private void UpdateAllSelect(){
-        for (int i = 0; i < battleEnemies.Count;i++)
+        for (int i = 0; i < _battleEnemies.Count;i++)
         {
-            var listItem = battleEnemies[i].GetComponent<ListItem>();
-            listItem.SetSelect();
+            if (_battleInfos[i].IsAlive())
+            {
+                var listItem = _battleEnemies[i].GetComponent<ListItem>();
+                listItem.SetSelect();
+                var emitter = listItem.GetComponentInChildren<EffekseerEmitter>();
+                emitter.Play();
+                _battleEnemies[i].BattlerInfoComponent.SetSelectable(true);
+            }
         }
     }
 
     private void UpdateAllUnSelect(){
-        for (int i = 0; i < battleEnemies.Count;i++)
+        for (int i = 0; i < _battleEnemies.Count;i++)
         {
-            var listItem = battleEnemies[i].GetComponent<ListItem>();
+            var listItem = _battleEnemies[i].GetComponent<ListItem>();
             listItem.SetUnSelect();
         }
     }
@@ -170,14 +135,20 @@ public class BattleEnemyLayer : ListWindow , IInputHandlerEvent
         {
             return;
         }
-        for (int i = 0; i < battleEnemies.Count;i++)
+        for (int i = 0; i < _battleEnemies.Count;i++)
         {
-            var listItem = battleEnemies[i].GetComponent<ListItem>();
-            if (index == battleEnemies[i].EnemyIndex){
-                listItem.SetSelect();
+            var listItem = _battleEnemies[i].GetComponent<ListItem>();
+            if (index == _battleEnemies[i].EnemyIndex){
+                if (_battleInfos[i].IsAlive())
+                {
+                    listItem.SetSelect();
+                    var emitter = listItem.GetComponentInChildren<EffekseerEmitter>();
+                    emitter.Play();
+                }
             } else{
                 listItem.SetUnSelect();
             }
+            _battleEnemies[i].BattlerInfoComponent.SetSelectable((index == _battleEnemies[i].EnemyIndex));
         }
     }
 
@@ -186,109 +157,42 @@ public class BattleEnemyLayer : ListWindow , IInputHandlerEvent
             return;
         }
         bool isFront = index < _backStartIndex;
-        for (int i = 0; i < battleEnemies.Count;i++)
+        for (int i = 0; i < _battleEnemies.Count;i++)
         {
-            var listItem = battleEnemies[i].GetComponent<ListItem>();
+            var listItem = _battleEnemies[i].GetComponent<ListItem>();
             if (isFront)
             {
-                if (battleEnemies[i].EnemyIndex < _backStartIndex){
-                    listItem.SetSelect();
+                if (_battleEnemies[i].EnemyIndex < _backStartIndex){
+                    if (_battleInfos[i].IsAlive())
+                    {
+                        listItem.SetSelect();
+                        var emitter = listItem.GetComponentInChildren<EffekseerEmitter>();
+                        emitter.Play();
+                    }
                 } else{
                     listItem.SetUnSelect();
                 }
+                _battleEnemies[i].BattlerInfoComponent.SetSelectable(_battleEnemies[i].EnemyIndex < _backStartIndex);
             } else
             {
-                if (battleEnemies[i].EnemyIndex >= _backStartIndex){
-                    listItem.SetSelect();
+                if (_battleEnemies[i].EnemyIndex >= _backStartIndex){
+                    if (_battleInfos[i].IsAlive())
+                    {
+                        listItem.SetSelect();
+                        var emitter = listItem.GetComponentInChildren<EffekseerEmitter>();
+                        emitter.Play();
+                    }
                 } else{
                     listItem.SetUnSelect();
                 }
+                _battleEnemies[i].BattlerInfoComponent.SetSelectable(_battleEnemies[i].EnemyIndex >= _backStartIndex);
             }
         }
     }
 
-    public void StartAnimation(List<int> indexList, EffekseerEffectAsset effectAsset,int animationPosition)
+    public BattlerInfoComponent GetBattlerInfoComp(int index)
     {
-        for (int i = 0; i < indexList.Count;i++)
-        {
-            battleEnemies[indexList[i]].StartAnimation(effectAsset,animationPosition);
-        }
-        _animationBusy = true;
-    }
-
-    public void StartAnimation(int targetIndex, EffekseerEffectAsset effectAsset,int animationPosition)
-    {
-        battleEnemies[targetIndex].StartAnimation(effectAsset,animationPosition);
-        _animationBusy = true;
-    }
-
-    public void StartSkillDamage(int targetIndex,int damageTiming, System.Action<int> callEvent)
-    {
-        battleEnemies[targetIndex].SetStartSkillDamage(damageTiming,callEvent);
-        _animationBusy = true;
-    }
-
-    public void ClearDamagePopup()
-    {
-        battleEnemies.ForEach(a => a.ClearDamagePopup());
-    }
-
-    public void StartDamage(int targetIndex,DamageType damageType,int value)
-    {        
-        battleEnemies[targetIndex].StartDamage(damageType,value);
-    }
-
-    public void StartBlink(int targetIndex)
-    {
-        battleEnemies[targetIndex].StartBlink();
-    }
-
-    public void StartHeal(int targetIndex,DamageType damageType,int value)
-    {        
-        battleEnemies[targetIndex].StartHeal(damageType,value);
-    }
-
-    public void StartStatePopup(int targetIndex , DamageType damageType ,string stateName)
-    {        
-        battleEnemies[targetIndex].StartStatePopup(damageType,stateName);
-    }
-
-    public void StartDeathAnimation(int targetIndex)
-    {
-        battleEnemies[targetIndex].StartDeathAnimation();
-    }
-
-    public void RefreshStatus()
-    {
-        for (int i = 0; i < battleEnemies.Count;i++)
-        {
-            battleEnemies[i].RefreshStatus();
-        }
-    }
-
-    private new void Update() {
-        base.Update();
-        if (_animationBusy == true)
-        {
-            if (CheckAnimationBusy() == false)
-            {
-                _animationBusy = false;
-            }
-        }
-    }
-
-    private bool CheckAnimationBusy()
-    {
-        bool isBusy = false;
-        for (int i = 0; i < battleEnemies.Count;i++)
-        {
-            if (battleEnemies[i].IsBusy)
-            {
-                isBusy = true;
-                break;
-            }
-        }
-        return isBusy;
+        return _battleEnemies[index - 100].BattlerInfoComponent;
     }
     
     private void CallInputHandler(InputKeyType keyType, System.Action<List<int>> callEvent,System.Action cancelEvent)
@@ -304,45 +208,7 @@ public class BattleEnemyLayer : ListWindow , IInputHandlerEvent
             {
                 return;
             }
-            List<int> indexList = new List<int>();
-            if (_targetScopeType == ScopeType.All)
-            {
-                for (int i = 0; i < battleEnemies.Count;i++)
-                {
-                    if (_battleInfos[i].IsAlive())
-                    {
-                        indexList.Add(_battleInfos[i].Index);
-                    }
-                }
-            } else
-            if (_targetScopeType == ScopeType.Line)
-            {
-                for (int i = 0; i < battleEnemies.Count;i++)
-                {
-                    if (battlerInfo.LineIndex == _battleInfos[i].LineIndex)
-                    {
-                        if (_battleInfos[i].IsAlive())
-                        {
-                            indexList.Add(_battleInfos[i].Index);
-                        }
-                    }
-                }
-            } else
-            if (_targetScopeType == ScopeType.One)
-            {
-                if (battlerInfo.IsAlive())
-                {
-                    indexList.Add(battlerInfo.Index);
-                }
-            } else
-            if (_targetScopeType == ScopeType.Self)
-            {
-                if (battlerInfo.IsAlive())
-                {
-                    indexList.Add(battlerInfo.Index);
-                }
-            }
-            callEvent(indexList);
+            callEvent(MakeTargetIndexs(battlerInfo));
         }
         if (keyType == InputKeyType.Cancel)
         {
@@ -412,4 +278,46 @@ public class BattleEnemyLayer : ListWindow , IInputHandlerEvent
         }
     }
 
+    private List<int> MakeTargetIndexs(BattlerInfo battlerInfo)
+    {
+        List<int> indexList = new List<int>();
+        if (_targetScopeType == ScopeType.All)
+        {
+            for (int i = 0; i < _battleEnemies.Count;i++)
+            {
+                if (_battleInfos[i].IsAlive())
+                {
+                    indexList.Add(_battleInfos[i].Index);
+                }
+            }
+        } else
+        if (_targetScopeType == ScopeType.Line)
+        {
+            for (int i = 0; i < _battleEnemies.Count;i++)
+            {
+                if (battlerInfo.LineIndex == _battleInfos[i].LineIndex)
+                {
+                    if (_battleInfos[i].IsAlive())
+                    {
+                        indexList.Add(_battleInfos[i].Index);
+                    }
+                }
+            }
+        } else
+        if (_targetScopeType == ScopeType.One)
+        {
+            if (battlerInfo.IsAlive())
+            {
+                indexList.Add(battlerInfo.Index);
+            }
+        } else
+        if (_targetScopeType == ScopeType.Self)
+        {
+            if (battlerInfo.IsAlive())
+            {
+                indexList.Add(battlerInfo.Index);
+            }
+        }
+        return indexList;
+    }
 }

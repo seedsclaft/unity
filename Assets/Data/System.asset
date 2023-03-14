@@ -15,7 +15,7 @@ MonoBehaviour:
   TacticsCommandData:
   - Id: 1
     Key: TRAIN
-    Name: "\u795E\u683C\u878D\u5408"
+    Name: "\u4EBA\u4F53\u932C\u6210"
     Help: "Numinous\u3092\u4F7F\u7528\u3057\u3066\u8853\u8005(Alchemist)\u306ELv\u3092\u30A2\u30C3\u30D7\u3057\u307E\u3059"
   - Id: 2
     Key: ALCHEMY
@@ -67,7 +67,7 @@ MonoBehaviour:
   InitCurrency: 10
   SystemTextData:
   - Id: 1
-    Text: "\u795E\u683C\u878D\u5408"
+    Text: "\u4EBA\u4F53\u932C\u6210"
     Help: "Numinous\u3092\u4F7F\u7528\u3057\u3066\u8853\u8005(Alchemist)\u306ELv\u3092\u30A2\u30C3\u30D7\u3057\u307E\u3059"
   - Id: 2
     Text: "\u9B54\u6CD5\u9023\u7D50"
@@ -188,4 +188,13 @@ MonoBehaviour:
     Help: '""'
   - Id: 13010
     Text: "\u7D42\u7109\u307E\u3067"
+    Help: '""'
+  - Id: 14010
+    Text: "\u4F5C\u6226\u9042\u884C\u4E2D\u2026"
+    Help: '""'
+  - Id: 14020
+    Text: "\u7D4C\u904E\u5831\u544A"
+    Help: '""'
+  - Id: 14030
+    Text: "\u6226\u679C\u5831\u544A"
     Help: '""'

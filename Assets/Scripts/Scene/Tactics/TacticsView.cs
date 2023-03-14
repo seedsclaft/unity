@@ -91,6 +91,11 @@ public class TacticsView : BaseView
         tacticsCommandList.SetHelpWindow(_helpWindow);
     }
 
+    public void SetCommandAble(int commandId)
+    {
+        tacticsCommandList.SetDisable(DataSystem.TacticsCommand[commandId],false);
+    }
+
     public void SetCommandDisable(int commandId)
     {
         tacticsCommandList.SetDisable(DataSystem.TacticsCommand[commandId],true);

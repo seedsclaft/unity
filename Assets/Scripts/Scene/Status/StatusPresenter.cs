@@ -92,6 +92,7 @@ public class StatusPresenter
         {
             _backCommandType = Status.CommandType.None;
             _view.HideSkillActionList();
+            _view.ActivateActorList();
             if (_model.StatusActors().Count > 1) _view.ShowArrows();
             _view.ShowCommandList();
             _view.ShowDecideButton();
@@ -103,7 +104,9 @@ public class StatusPresenter
     {
         if (statusComandType == StatusComandType.Strength)
         {
+            _backCommandType = Status.CommandType.StatusCommand;
             _view.ShowStrength();
+            _view.DeactivateActorList();
             _view.SetActiveBack(false);
         }
         if (statusComandType == StatusComandType.SkillActionList)
@@ -111,6 +114,7 @@ public class StatusPresenter
             _backCommandType = Status.CommandType.StatusCommand;
             _view.SetActiveBack(true);
             _view.ShowSkillActionList();
+            _view.DeactivateActorList();
             CommandAttributeType(_model.CurrentAttributeType);
         }
         SoundManager.Instance.PlayStaticSe(SEType.Decide);
@@ -217,8 +221,10 @@ public class StatusPresenter
             _view.ActivateCommandList();
             _view.ShowDecideButton();
             _view.HideStrength();
+            _view.ActivateActorList();
             _view.SetActiveBack(true);
         }
+        SoundManager.Instance.PlayStaticSe(SEType.Cancel);
     }
 
     private void CommandRefresh()

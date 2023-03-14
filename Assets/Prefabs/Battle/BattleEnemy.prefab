@@ -923,9 +923,6 @@ MonoBehaviour:
   imageObject: {fileID: 2129568889956389992}
   enemyImage: {fileID: 6987941350644293425}
   effekseerEmitter: {fileID: 7290315929492038248}
-  battleDamagePrefab: {fileID: 1787456025739594925, guid: 39a4f8424bdfa3c469946a6405fb012c,
-    type: 3}
-  deathAnimation: {fileID: 5630908159455198646}
 --- !u!114 &7386022236450824358
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -940,6 +937,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   actorInfoComponent: {fileID: 0}
   enemyInfoComponent: {fileID: 8931612411976862959}
+  effekseerEmitter: {fileID: 7290315929492038248}
+  deathAnimation: {fileID: 5630908159455198646}
+  battleDamagePrefab: {fileID: 1787456025739594925, guid: 39a4f8424bdfa3c469946a6405fb012c,
+    type: 3}
 --- !u!114 &8931612411976862959
 MonoBehaviour:
   m_ObjectHideFlags: 0

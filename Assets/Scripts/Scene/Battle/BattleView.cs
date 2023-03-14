@@ -21,6 +21,11 @@ public class BattleView : BaseView
 
     
     [SerializeField] private EffekseerEmitter effekseerEmitter = null;
+
+    [SerializeField] private GameObject animRoot = null;
+    [SerializeField] private GameObject animPrefab = null;
+    private BattleStartAnim _battleStartAnim = null;
+
     private HelpWindow _helpWindow = null;
 
     private bool _battleBusy = false;
@@ -29,6 +34,8 @@ public class BattleView : BaseView
         _battleBusy = isBusy;
     }
     private bool _animationBusy = false;
+
+    private Dictionary<int,BattlerInfoComponent> _battlerComps = new Dictionary<int, BattlerInfoComponent>();
 
     protected void Awake()
     {
@@ -76,9 +83,19 @@ public class BattleView : BaseView
     {
         battleActorList.Initialize(actorInfo => CallActorList(actorInfo),() => OnClickBack());
         SetInputHandler(battleActorList.GetComponent<IInputHandlerEvent>());
+        
+        GameObject prefab = Instantiate(animPrefab);
+        prefab.transform.SetParent(animRoot.transform, false);
+        _battleStartAnim = prefab.GetComponent<BattleStartAnim>();
     }
 
-    
+    public void StartBattleStartAnim(string text)
+    {
+        _battleStartAnim.SetText(text);
+        _battleStartAnim.StartAnim();
+        _animationBusy = true;
+    }
+
     public void SetUIButton()
     {
         
@@ -120,6 +137,10 @@ public class BattleView : BaseView
     public void SetActors(List<BattlerInfo> battlerInfos)
     {
         battleActorList.Refresh(battlerInfos);
+        foreach (var item in battlerInfos)
+        {
+            _battlerComps[item.Index] = battleActorList.GetBattlerInfoComp(item.Index);
+        }
         battleGridLayer.SetActorInfo(battlerInfos);
     }
     
@@ -127,6 +148,10 @@ public class BattleView : BaseView
     {
         battleEnemyLayer.Initialize(battlerInfos,(batterInfo) => CallEnemyInfo(batterInfo),() => OnClickBack());
         SetInputHandler(battleEnemyLayer.GetComponent<IInputHandlerEvent>());
+        foreach (var item in battlerInfos)
+        {
+            _battlerComps[item.Index] = battleEnemyLayer.GetBattlerInfoComp(item.Index);
+        }
         battleGridLayer.SetEnemyInfo(battlerInfos);
     }
 
@@ -229,13 +254,7 @@ public class BattleView : BaseView
         DeactivateActorList();
         DeactivateEnemyList();
         _animationBusy = true;
-        if (targetIndex >= 100)
-        {
-            battleEnemyLayer.StartAnimation(targetIndex - 100,effekseerEffectAsset,animationPosition);
-        } else
-        {
-            battleActorList.StartAnimation(targetIndex,effekseerEffectAsset);
-        }
+        _battlerComps[targetIndex].StartAnimation(effekseerEffectAsset,animationPosition);
     }
 
     public void StartAnimationAll(EffekseerEffectAsset effekseerEffectAsset)
@@ -250,77 +269,51 @@ public class BattleView : BaseView
         effekseerEmitter.Play(effekseerEffectAsset);
     }
 
-
     public void StartSkillDamage(int targetIndex,int damageTiming,System.Action<int> callEvent)
     {
-        if (targetIndex >= 100)
-        {
-            battleEnemyLayer.StartSkillDamage(targetIndex - 100,damageTiming,callEvent);
-        } else{
-            battleActorList.StartSkillDamage(targetIndex,damageTiming,callEvent);
-        }
+        _battlerComps[targetIndex].SetStartSkillDamage(damageTiming,callEvent);
     }
 
     public void ClearDamagePopup()
     {
-        
-        battleEnemyLayer.ClearDamagePopup();
-        battleActorList.ClearDamagePopup();
+        foreach (var item in _battlerComps)
+        {
+            item.Value.ClearDamagePopup();
+        }
     }
 
     public void StartDamage(int targetIndex,DamageType damageType,int value)
     {
-        if (targetIndex >= 100)
-        {
-            battleEnemyLayer.StartDamage(targetIndex - 100,damageType,value);
-        } else{
-            battleActorList.StartDamage(targetIndex,damageType,value);
-        }
+        _battlerComps[targetIndex].StartDamage(damageType,value);
     }
 
     public void StartBlink(int targetIndex)
     {
-        if (targetIndex >= 100)
-        {
-            battleEnemyLayer.StartBlink(targetIndex - 100);
-        } else{
-            battleActorList.StartBlink(targetIndex);
-        }
+        _battlerComps[targetIndex].StartBlink();
     }
 
     public void StartHeal(int targetIndex,DamageType damageType,int value)
     {
-        if (targetIndex >= 100)
-        {
-            battleEnemyLayer.StartHeal(targetIndex - 100,damageType,value);
-        } else{
-            battleActorList.StartHeal(targetIndex,damageType,value);
-        }
+        _battlerComps[targetIndex].StartHeal(damageType,value);
     }
 
     public void StartStatePopup(int targetIndex,DamageType damageType,string stateName)
     {
-        if (targetIndex >= 100)
-        {
-            battleEnemyLayer.StartStatePopup(targetIndex - 100,damageType,stateName);
-        } else{
-            battleActorList.StartStatePopup(targetIndex,damageType,stateName);
-        }
+        _battlerComps[targetIndex].StartStatePopup(damageType,stateName);
     }
 
     public void StartDeathAnimation(int targetIndex)
     {
-        if (targetIndex >= 100)
-        {
-            battleEnemyLayer.StartDeathAnimation(targetIndex - 100);
-        }
+        _battlerComps[targetIndex].StartDeathAnimation();
     }
 
     public void RefreshStatus()
     {
         battleGridLayer.RefreshStatus();
-        battleActorList.RefreshStatus();
-        battleEnemyLayer.RefreshStatus();
+        foreach (var item in _battlerComps)
+        {
+            item.Value.RefreshStatus();
+        }
     }
 
     public void SetAttributeTypes(List<AttributeType> attributeTypes)
@@ -363,7 +356,15 @@ public class BattleView : BaseView
     {
         if (_animationBusy == true)
         {
-            if (battleEnemyLayer.AnimationBusy == false && battleActorList.AnimationBusy == false && !effekseerEmitter.exists)
+            bool IsBusy = false;
+            foreach (var item in _battlerComps)
+            {
+                if (item.Value.IsBusy == true)
+                {
+                    IsBusy = true;
+                }
+            }
+            if (IsBusy == false && !effekseerEmitter.exists && _battleStartAnim.IsBusy == false)
             {
                 _animationBusy = false;
                 var eventData = new BattleViewEvent(CommandType.EndAnimation);

@@ -40,6 +40,7 @@ abstract public class ListItem : MonoBehaviour
     private Color _selectedColor;
     private Color _disableColor;
     [SerializeField] private GameObject cursor;
+    public GameObject Cursor { get {return cursor;}}
     [SerializeField] private GameObject disable;
     public GameObject Disable{ get {return disable;}}
     public void Awake()

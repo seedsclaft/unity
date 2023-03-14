@@ -37,6 +37,7 @@ public class BattlePresenter : BasePresenter
         SoundManager.Instance.PlayBgm(bgm,1.0f,true);
         //SoundManager.Instance.PlayBgm(bgm,1.0f,true);
 
+        _view.StartBattleStartAnim(DataSystem.System.GetTextData(4).Text);
         _busy = false;
     }
 
@@ -220,7 +221,7 @@ public class BattlePresenter : BasePresenter
 
     private async void StartAnimationDemigod()
     {
-        var demigod = await _model.SkillActionAnimation("NA_cut-in_002");
+        var demigod = await _model.SkillActionAnimation("NA_cut-in_002_" + _model.CurrentBattler.ActorInfo.ActorId.ToString());
         _view.StartAnimationDemigod(demigod);
         _nextCommandType = Battle.CommandType.EndDemigodAnimation;
     }
@@ -337,6 +338,10 @@ public class BattlePresenter : BasePresenter
 
     private void CommandEndAnimation()
     {
+        if (_nextCommandType == Battle.CommandType.None)
+        {
+            return;
+        }
         if (_nextCommandType == Battle.CommandType.EndDemigodAnimation)
         {
             StartAnimationSkill();

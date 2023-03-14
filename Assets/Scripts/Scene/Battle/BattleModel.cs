@@ -325,7 +325,10 @@ public class BattleModel : BaseModel
                 BattlerInfo targetBattler = BattlerEnemies().Find(a => a.Index == LastTargetIndex);
                 if (targetBattler == null || targetBattler.IsAlive() == false)
                 {
-                    LastTargetIndex = BattlerEnemies().Find(a => a.IsAlive()).Index;
+                    if (BattlerEnemies().Count > 0)
+                    {
+                        LastTargetIndex = BattlerEnemies().Find(a => a.IsAlive()).Index;
+                    }
                 }
             } else
             {
