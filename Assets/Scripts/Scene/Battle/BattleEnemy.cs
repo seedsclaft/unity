@@ -74,12 +74,13 @@ public class BattleEnemy : ListItem
 
     private void UpdateSizeDelta()
     {
+        int width = enemyImage.mainTexture.width - 40;
+        int height = enemyImage.mainTexture.height - 40;
         RectTransform objectRect = gameObject.GetComponent < RectTransform > ();
         RectTransform rect = cursorObject.gameObject.GetComponent < RectTransform > ();
-        RectTransform imagerect = imageObject.gameObject.GetComponent < RectTransform > ();
         RectTransform effectRect = effekseerEmitter.gameObject.GetComponent < RectTransform > ();
-        rect.sizeDelta = new Vector2(imagerect.sizeDelta.x - 80,imagerect.sizeDelta.y - 80);
-        objectRect.sizeDelta = new Vector2(imagerect.sizeDelta.x - 80,imagerect.sizeDelta.y - 80);
-        effectRect.sizeDelta = new Vector2(imagerect.sizeDelta.x / 2,imagerect.sizeDelta.y / 2);
+        rect.sizeDelta = new Vector2(width,height);
+        objectRect.sizeDelta = new Vector2(width,height);
+        effectRect.sizeDelta = new Vector2(width,height);
     }
 }

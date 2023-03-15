@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 
 public class BaseModel
 {
+    public Scene CurrentScene {get { return _currentScene;} set {_currentScene = value;}}
+    private Scene _currentScene = Scene.None;
     public SavePlayInfo CurrentData{get {return GameSystem.CurrentData;}}
     public TempInfo CurrentTempData{get {return GameSystem.CurrentTempData;}}
 
@@ -19,6 +22,29 @@ public class BaseModel
     {
         return GameSystem.CurrentData.Actors;
     }
+
+    public async Task<List<AudioClip>> GetBgmData(string bgmKey){
+        BGMData bGMData = DataSystem.Data.GetBGM(bgmKey);
+        List<string> data = new List<string>();
+        if (bGMData.Loop)
+        {
+            data.Add("BGM/" + bGMData.FileName + "_intro.ogg");
+            data.Add("BGM/" + bGMData.FileName + "_loop.ogg");
+        } else{
+            data.Add("BGM/" + bGMData.FileName + ".ogg");
+        }
+        AudioClip result1 = null;
+        AudioClip result2 = null;
+        result1 = await ResourceSystem.LoadAsset<AudioClip>(data[0]);
+        if (data.Count > 1)
+        {
+             result2 = await ResourceSystem.LoadAsset<AudioClip>(data[1]);
+        }
+        return new List<AudioClip>(){
+            result1,result2
+        };    
+    }
+
     public List<SystemData.MenuCommandData> ConfirmCommand()
     {
         List<SystemData.MenuCommandData> menuCommandDatas = new List<SystemData.MenuCommandData>();

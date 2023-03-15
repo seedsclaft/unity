@@ -15,7 +15,7 @@ public class SkillActionList : ListWindow , IInputHandlerEvent
     }
 
 
-    public void Initialize(System.Action<int> callEvent,System.Action cancelEvent)
+    public void Initialize(System.Action<int> callEvent,System.Action cancelEvent,System.Action conditionEvent)
     {
         InitializeListView(rows);
         for (int i = 0; i < rows;i++)
@@ -32,7 +32,7 @@ public class SkillActionList : ListWindow , IInputHandlerEvent
             skillAction.SetSelectHandler((data) => UpdateSelectIndex(data));
             ObjectList[i].SetActive(false);
         }
-        SetInputHandler((a) => CallInputHandler(a,callEvent,cancelEvent));
+        SetInputHandler((a) => CallInputHandler(a,callEvent,cancelEvent,conditionEvent));
     }
 
     public void Refresh(List<SkillInfo> skillInfoData)
@@ -63,7 +63,7 @@ public class SkillActionList : ListWindow , IInputHandlerEvent
         }
     }
 
-    private void CallInputHandler(InputKeyType keyType, System.Action<int> callEvent,System.Action cancelEvent)
+    private void CallInputHandler(InputKeyType keyType, System.Action<int> callEvent,System.Action cancelEvent,System.Action conditionEvent)
     {
         if (keyType == InputKeyType.Decide)
         {
@@ -77,6 +77,13 @@ public class SkillActionList : ListWindow , IInputHandlerEvent
         if (keyType == InputKeyType.Cancel)
         {
             cancelEvent();
+        }
+        if (keyType == InputKeyType.Option1)
+        {
+            if (conditionEvent != null)
+            {
+                conditionEvent();
+            }
         }
     }
 }

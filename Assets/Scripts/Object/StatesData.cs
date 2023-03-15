@@ -12,6 +12,8 @@ public class StatesData : ScriptableObject
     {   
         public int Id;
         public string Name;
+        public string Help;
+        public int IconIndex;
         public RemovalTiming RemovalTiming;
     }
 }

@@ -39,7 +39,7 @@ public class TacticsPresenter
         _view.ShowCommandList();
         _view.SetAttributeTypes(_model.AttributeTypes());
         CommandRefresh();
-        var bgm = await _model.BgmData();
+        var bgm = await _model.GetBgmData("TACTICS1");
         SoundManager.Instance.PlayBgm(bgm,1.0f,true);
         //SoundManager.Instance.PlayBgm(bgm,1.0f,true);
 
@@ -60,7 +60,13 @@ public class TacticsPresenter
                 if (stageEvents[i].Type == StageEventType.NeedAllTactics)
                 {
                     _model.SetNeedAllTacticsCommand(true);
-                    _view.SetCommandDisable(DataSystem.TacticsCommand.Count-1);
+                    if (_model.CheckNonBusy())
+                    {
+                        _view.SetCommandDisable(DataSystem.TacticsCommand.Count-1);
+                        
+                    } else{
+                        _view.SetCommandAble(DataSystem.TacticsCommand.Count-1);
+                    }
                 }
             }
         }
@@ -303,6 +309,7 @@ public class TacticsPresenter
                 CommandShowUi();
             });
             CommandHideUi();
+            statusViewInfo.SetDisplayDecideButton(false);
             _view.CommandCallStatus(statusViewInfo);
             SaveSystem.SaveStart(GameSystem.CurrentData);
         }

@@ -135,7 +135,7 @@ public class StageInfo
         for (int i = 0;i < troopDatas.Count;i++)
         {
             EnemiesData.EnemyData enemyData = DataSystem.Enemies.Find(a => a.Id == troopDatas[i].EnemyId);
-            BattlerInfo enemy = new BattlerInfo(enemyData,i,troopDatas[i].Lv,troopDatas[i].Line);
+            BattlerInfo enemy = new BattlerInfo(enemyData,troopDatas[i].Lv,i,troopDatas[i].Line);
             troopInfo.AddEnemy(enemy);
         }
         

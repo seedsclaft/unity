@@ -39,6 +39,7 @@ abstract public class ListWindow : MonoBehaviour
     public HelpWindow _helpWindow = null;
     public void Activate()
     {
+        ResetInputFrame();
         _active = true;
     }
     

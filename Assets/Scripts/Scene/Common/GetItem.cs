@@ -49,7 +49,7 @@ public class GetItem : ListItem ,IListViewItem ,IClickHandlerEvent
         if (iconImage != null)
         {
             iconImage.gameObject.SetActive(_data.IsSkill());
-            if (_data.IsSkill()) UpdateElementIcon((int)_data.GetItemType);
+            if (_data.IsSkill()) UpdateElementIcon((int)_data.SkillElementId);
         }
         if (titleName != null)
         {
@@ -77,7 +77,10 @@ public class GetItem : ListItem ,IListViewItem ,IClickHandlerEvent
         Addressables.LoadAssetAsync<IList<Sprite>>(
             "Assets/Images/System/ElementIcon.png"
         ).Completed += op => {
-            iconImage.sprite = op.Result[index-1];
+            if (iconImage != null)
+            {
+                iconImage.sprite = op.Result[index-1];
+            }
         };
     }
 }

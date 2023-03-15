@@ -26,7 +26,7 @@ public class MainMenuPresenter
         _view.SetStagesData(stages);
 
 
-        var bgm = await _model.BgmData();
+        var bgm = await _model.GetBgmData("MAINMENU");
         SoundManager.Instance.PlayBgm(bgm,1.0f,true);
         //SoundManager.Instance.PlayBgm(bgm,1.0f,true);
 

@@ -33,7 +33,7 @@ public class BattlePresenter : BasePresenter
         _view.SetEnemies(_model.BattlerEnemies());
 
         _view.SetAttributeTypes(_model.AttributeTypes());
-        var bgm = await _model.BgmData();
+        var bgm = await _model.GetBgmData("BATTLE4");
         SoundManager.Instance.PlayBgm(bgm,1.0f,true);
         //SoundManager.Instance.PlayBgm(bgm,1.0f,true);
 
@@ -82,6 +82,10 @@ public class BattlePresenter : BasePresenter
         {
             CommandRightActor();
         }
+        if (viewEvent.commandType == Battle.CommandType.Condition)
+        {
+            CommandCondition();
+        }
         if (viewEvent.commandType == Battle.CommandType.Back)
         {
             CommandBack();
@@ -114,14 +118,8 @@ public class BattlePresenter : BasePresenter
                 _view.StartDeathAnimation(benedictionActionResults[i].TargetIndex);
             }
         }
-        if (_model.CheckVictory())
+        if (CheckBattleEnd())
         {
-            _view.CommandSceneChange(Scene.Strategy);
-            return;
-        } else
-        if (_model.CheckDefeat())
-        {
-            _view.CommandSceneChange(Scene.Strategy);
             return;
         }
         _model.UpdateAp();
@@ -164,6 +162,8 @@ public class BattlePresenter : BasePresenter
         SoundManager.Instance.PlayStaticSe(SEType.Decide);
         ActionInfo actionInfo = _model.MakeActionInfo(_model.CurrentBattler,skillId,false);
         _view.HideSkillActionList();
+        _view.HideSkillAtribute();
+        _view.HideBattleThumb();
         if (actionInfo.TargetType == TargetType.Opponent)
         {
             _view.ShowEnemyTarget();
@@ -187,7 +187,7 @@ public class BattlePresenter : BasePresenter
 
     private void CommandSelectIndex(List<int> indexList)
     {
-        SoundManager.Instance.PlayStaticSe(SEType.Decide);
+        _view.SetHelpText("");
         _view.SetActiveBack(false);
         MakeActionResultInfo(indexList);
         ActionInfo actionInfo = _model.CurrentActionInfo();
@@ -221,8 +221,9 @@ public class BattlePresenter : BasePresenter
 
     private async void StartAnimationDemigod()
     {
-        var demigod = await _model.SkillActionAnimation("NA_cut-in_002_" + _model.CurrentBattler.ActorInfo.ActorId.ToString());
+        var demigod = await _model.SkillActionAnimation("NA_Effekseer/NA_cut-in_002_" + _model.CurrentBattler.ActorInfo.ActorId.ToString());
         _view.StartAnimationDemigod(demigod);
+        _view.SetAnimationEndTiming(90);
         _nextCommandType = Battle.CommandType.EndDemigodAnimation;
     }
 
@@ -342,6 +343,11 @@ public class BattlePresenter : BasePresenter
         {
             return;
         }
+        if (_nextCommandType == Battle.CommandType.EndBattle)
+        {
+            _view.CommandSceneChange(Scene.Strategy);
+            return;
+        }
         if (_nextCommandType == Battle.CommandType.EndDemigodAnimation)
         {
             StartAnimationSkill();
@@ -369,21 +375,15 @@ public class BattlePresenter : BasePresenter
         _view.RefreshStatus();
         // PlusSkill
         _model.CheckPlusSkill();
+        // 勝敗判定
+        if (CheckBattleEnd())
+        {
+            return;
+        }
         // TriggerAfter
         var result = _model.CheckTriggerSkillInfos(TriggerTiming.After);
         _model.TurnEnd();
 
-        // 勝敗判定
-        if (_model.CheckVictory())
-        {
-            _view.CommandSceneChange(Scene.Strategy);
-            return;
-        } else
-        if (_model.CheckDefeat())
-        {
-            _view.CommandSceneChange(Scene.Strategy);
-            return;
-        }
 
 
         // 次の行動者がいれば続ける
@@ -408,11 +408,15 @@ public class BattlePresenter : BasePresenter
     {
         List<SkillInfo> skillInfos = _model.SkillActionList(attributeType);
         _view.RefreshSkillActionList(skillInfos);
+        SoundManager.Instance.PlayStaticSe(SEType.Cursor);
     }
 
     private void CommandDecideActor()
     {
+        // 行動選択開始
+        _view.SetHelpText(DataSystem.System.GetTextData(15010).Text);
         _view.ShowSkillActionList(_model.CurrentBattler);
+        _view.ShowConditionTab();
         CommandAttributeType(_model.CurrentAttributeType);
         _view.RefreshBattlerEnemyLayerTarget(null);
         _view.RefreshBattlerPartyLayerTarget(null);
@@ -433,4 +437,32 @@ public class BattlePresenter : BasePresenter
         CommandAttributeType(_model.CurrentAttributeType);
     }
 
+    private bool CheckBattleEnd()
+    {
+        bool isEnd = false;
+        if (_model.CheckVictory())
+        {
+            _view.StartBattleStartAnim(DataSystem.System.GetTextData(15020).Text);
+            _view.SetAnimationEndTiming(180);
+            _nextCommandType = Battle.CommandType.EndBattle;
+            isEnd = true;
+        } else
+        if (_model.CheckDefeat())
+        {
+            _view.StartBattleStartAnim(DataSystem.System.GetTextData(15030).Text);
+            _view.SetAnimationEndTiming(180);
+            _nextCommandType = Battle.CommandType.EndBattle;
+            isEnd = true;
+        }
+        return isEnd;
+    }
+
+    public void CommandCondition()
+    {
+        _view.HideSkillActionList();
+        _view.ActivateConditionList();
+        _view.SetCondition(_model.CurrentBattler.StateInfos);
+        _view.ShowConditionAll();
+        SoundManager.Instance.PlayStaticSe(SEType.Cursor);
+    }
 }

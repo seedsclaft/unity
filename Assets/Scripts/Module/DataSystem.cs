@@ -12,12 +12,6 @@ abstract public class DataSystem
     public static DataManager Data {get{return _data;}}
     private static List<ActorsData.ActorData> _actors;
     public static List<ActorsData.ActorData> Actors {get{return _actors;}}
-    
-    public static ActorsData.ActorData GetActor (int actorId)
-    {
-        return _actors.Find(actor => actor.Id == actorId);
-    }
-
     private static SystemData _system;
     public static SystemData System {get{return _system;}}
 
@@ -30,19 +24,15 @@ abstract public class DataSystem
     private static SkillsData _skills;
     public static List<SkillsData.SkillData> Skills {get{return _skills._data;}}
     public static List<SystemData.MenuCommandData> TacticsCommand {get { return _system.TacticsCommandData;}}
-    
     public static List<SystemData.MenuCommandData> TitleCommand {get { return _system.TitleCommandData;}}
     public static List<SystemData.MenuCommandData> StatusCommand {get { return _system.StatusCommandData;}}
     public static List<int> InitActors {get { return _system.InitActors;}}
-
     
     private static StagesData _stages;
     public static List<StagesData.StageData> Stages {get{return _stages._data;}}
-
     
     private static TroopsData _troops;
     public static List<TroopsData.TroopData> Troops {get{return _troops._data;}}
-
     
     private static StatesData _states;
     public static List<StatesData.StateData> States {get{return _states._data;}}

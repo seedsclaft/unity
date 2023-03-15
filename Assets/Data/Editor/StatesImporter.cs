@@ -13,6 +13,7 @@ public class StatesImporter : AssetPostprocessor {
     {
 		Id = 0,
 		NameId,
+		IconIndex,
         RemovalTiming
     }
 	static readonly string ExcelPath = "Assets/Data";
@@ -83,6 +84,8 @@ public class StatesImporter : AssetPostprocessor {
 					var StateData = new StatesData.StateData();
 					StateData.Id = (int)Baserow.GetCell((int)BaseColumn.Id).NumericCellValue;
 					StateData.Name = textData.Find(a => a.Id == (int)Baserow.GetCell((int)BaseColumn.NameId).NumericCellValue).Text;
+					StateData.Help = textData.Find(a => a.Id == (int)Baserow.GetCell((int)BaseColumn.NameId).NumericCellValue).Help;
+					StateData.IconIndex = (int)Baserow.GetCell((int)BaseColumn.IconIndex).NumericCellValue;
 					StateData.RemovalTiming = (RemovalTiming)Baserow.GetCell((int)BaseColumn.RemovalTiming).NumericCellValue;
 					
 					
@@ -126,6 +129,7 @@ public class StatesImporter : AssetPostprocessor {
 
 			TextData.Id = (int)Baserow.GetCell((int)BaseTextColumn.Id)?.NumericCellValue;
 			TextData.Text = Baserow.GetCell((int)BaseTextColumn.Text).ToString();
+			TextData.Help = Baserow.GetCell((int)BaseTextColumn.Help).ToString();
 			
 			textData.Add(TextData);
 		}

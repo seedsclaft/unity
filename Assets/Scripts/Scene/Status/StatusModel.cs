@@ -1,11 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.AddressableAssets;
-using UnityEngine.ResourceManagement.AsyncOperations;
-using System;
-using System.Threading;
-using System.Threading.Tasks;
 
 public class StatusModel : BaseModel
 {
@@ -51,19 +45,6 @@ public class StatusModel : BaseModel
         get { return DataSystem.StatusCommand;}
     }
     
-    public async Task<List<AudioClip>> BgmData(){
-        BGMData bGMData = DataSystem.Data.GetBGM("Status");
-        List<string> data = new List<string>();
-        data.Add("BGM/" + bGMData.FileName + "_intro.ogg");
-        data.Add("BGM/" + bGMData.FileName + "_loop.ogg");
-        
-        var result1 = await ResourceSystem.LoadAsset<AudioClip>(data[0]);
-        var result2 = await ResourceSystem.LoadAsset<AudioClip>(data[1]);
-        return new List<AudioClip>(){
-            result1,result2
-        };    
-    }
-
     public void MakeStageData()
     {
         GameSystem.CurrentData.MakeStageData(CurrentActor.ActorId);
@@ -95,12 +76,5 @@ public class StatusModel : BaseModel
     public void DecideStrength()
     {
         CurrentActor.DecideStrength();
-    }
-}
-
-namespace StatusModelData{
-    public class CommandData{
-        public string key = "";
-        public string name;
     }
 }

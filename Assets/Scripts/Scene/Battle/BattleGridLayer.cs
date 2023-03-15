@@ -30,6 +30,18 @@ public class BattleGridLayer : MonoBehaviour
             prefab.transform.SetParent(enemyRoot.transform, false);
             var comp = prefab.GetComponent<BattlerInfoComponent>();
             comp.UpdateInfo(battlerInfos[i]);
+            int gridKey = 0;
+            foreach (var item in _data)
+            {
+                if (item.Key.EnemyData != null)
+                {
+                    if (item.Key.EnemyData.Id == battlerInfos[i].EnemyData.Id)
+                    {
+                        gridKey++;
+                    }
+                }
+            }
+            comp.SetEnemyGridKey(gridKey);
             _data[battlerInfos[i]] = comp;
         }
         UpdatePosition();
@@ -38,10 +50,18 @@ public class BattleGridLayer : MonoBehaviour
 
     public void UpdatePosition()
     {
+        List<BattlerInfo> battlerInfos = new List<BattlerInfo>();
         foreach (var data in _data)
         {
             RectTransform rect = data.Value.gameObject.GetComponent < RectTransform > ();
             rect.localPosition = new Vector3(rect.localPosition.x, data.Key.Ap, 0);
+            battlerInfos.Add(data.Key);
+        }
+        battlerInfos.Sort((a,b)=> a.Ap - b.Ap);
+        foreach (var data in _data)
+        {
+            int index = battlerInfos.FindIndex(a => a.Index == data.Key.Index);
+            data.Value.gameObject.transform.SetSiblingIndex(index);
         }
     }
 

@@ -13,6 +13,7 @@ public class BattleView : BaseView
     [SerializeField] private BattleGridLayer battleGridLayer = null;
     [SerializeField] private SkillActionList skillActionList = null;
     [SerializeField] private SkillAttributeList skillAttributeList = null;
+    [SerializeField] private StatusConditionList statusConditionList = null;
     [SerializeField] private BattleThumb battleThumb = null;
 
     private new System.Action<BattleViewEvent> _commandData = null;
@@ -36,6 +37,11 @@ public class BattleView : BaseView
     private bool _animationBusy = false;
 
     private Dictionary<int,BattlerInfoComponent> _battlerComps = new Dictionary<int, BattlerInfoComponent>();
+    private int _animationEndTiming = 0;
+    public void SetAnimationEndTiming(int value)
+    {
+        _animationEndTiming = value;
+    }
 
     protected void Awake()
     {
@@ -47,11 +53,15 @@ public class BattleView : BaseView
     {
         new BattlePresenter(this);
         InitializeSkillActionList();
+        statusConditionList.Initialize(() => OnClickCondition());
+        SetInputHandler(statusConditionList.GetComponent<IInputHandlerEvent>());
+        DeactivateConditionList();
+        HideConditionAll();
     }
 
     private void InitializeSkillActionList()
     {
-        skillActionList.Initialize(actorInfo => CallSkillAction(actorInfo),() => OnClickBack());
+        skillActionList.Initialize(actorInfo => CallSkillAction(actorInfo),() => OnClickBack(),() => OnClickCondition());
         SetInputHandler(skillActionList.GetComponent<IInputHandlerEvent>());
         skillActionList.gameObject.SetActive(false);
         skillAttributeList.gameObject.SetActive(false);
@@ -105,6 +115,12 @@ public class BattleView : BaseView
     }
 
 
+    private void OnClickCondition()
+    {
+        var eventData = new BattleViewEvent(CommandType.Condition);
+        _commandData(eventData);
+    }
+
     private void OnClickBack()
     {
         var eventData = new BattleViewEvent(CommandType.Back);
@@ -116,6 +132,11 @@ public class BattleView : BaseView
         GameObject prefab = Instantiate(helpPrefab);
         prefab.transform.SetParent(helpRoot.transform, false);
         _helpWindow = prefab.GetComponent<HelpWindow>();
+    }
+
+    public void SetHelpText(string text)
+    {
+        _helpWindow.SetHelpText(text);
     }
 
     public void SetEvent(System.Action<BattleViewEvent> commandData)
@@ -131,8 +152,6 @@ public class BattleView : BaseView
     public void SetBattleCommand(List<SystemData.MenuCommandData> menuCommands)
     {
     }
-
-
 
     public void SetActors(List<BattlerInfo> battlerInfos)
     {
@@ -190,6 +209,7 @@ public class BattleView : BaseView
     public void ShowSkillActionList(BattlerInfo battlerInfo)
     {
         skillActionList.gameObject.SetActive(true);
+        skillActionList.Activate();
         skillAttributeList.gameObject.SetActive(true);
         if (battlerInfo.IsState(StateType.Demigod))
         {
@@ -202,15 +222,67 @@ public class BattleView : BaseView
     public void HideSkillActionList()
     {
         skillActionList.gameObject.SetActive(false);
-        skillAttributeList.gameObject.SetActive(false);
+        skillActionList.Deactivate();
+    }
+
+    public void HideBattleThumb()
+    {
         battleThumb.HideThumb();
+    }
+
+    public void HideSkillAtribute()
+    {
+        skillAttributeList.gameObject.SetActive(false);
     }
     
     public void RefreshSkillActionList(List<SkillInfo> skillInfos)
     {
         DeactivateActorList();
         DeactivateEnemyList();
+        skillActionList.Activate();
+        skillActionList.gameObject.SetActive(true);
         skillActionList.Refresh(skillInfos);
+    }
+
+    public void SetCondition(List<StateInfo> stateInfos)
+    {
+        statusConditionList.Refresh(stateInfos,() => OnClickBack(),() => {
+            skillActionList.gameObject.SetActive(true);
+            skillActionList.Activate();
+            HideCondition();
+        });
+    }
+
+    public void ShowConditionTab()
+    {
+        ShowConditionAll();
+        HideCondition();
+    }
+
+    public void ShowConditionAll()
+    {
+        statusConditionList.gameObject.SetActive(true);
+        statusConditionList.ShowMainView();
+    }
+
+    public void HideCondition()
+    {
+        statusConditionList.HideMainView();
+    }
+
+    public void HideConditionAll()
+    {
+        statusConditionList.gameObject.SetActive(false);
+    }
+    
+    public void ActivateConditionList()
+    {
+        statusConditionList.Activate();
+    }
+
+    public void DeactivateConditionList()
+    {
+        statusConditionList.Deactivate();
     }
 
     public void ActivateEnemyList()
@@ -364,7 +436,11 @@ public class BattleView : BaseView
                     IsBusy = true;
                 }
             }
-            if (IsBusy == false && !effekseerEmitter.exists && _battleStartAnim.IsBusy == false)
+            if (_animationEndTiming > 0)
+            {
+                _animationEndTiming--;
+            }
+            if (IsBusy == false && _animationEndTiming <= 0 && _battleStartAnim.IsBusy == false)
             {
                 _animationBusy = false;
                 var eventData = new BattleViewEvent(CommandType.EndAnimation);
@@ -392,7 +468,9 @@ namespace Battle
         EndAnimation,
         EndDemigodAnimation,
         EndRegeneAnimation,
-        StartDamage
+        StartDamage,
+        Condition,
+        EndBattle
     }
 }
 

@@ -12,6 +12,7 @@ public class EnemyInfoComponent : MonoBehaviour
     [SerializeField] private TextMeshProUGUI nameText;
     [SerializeField] private TextMeshProUGUI lv;
     [SerializeField] private StatusInfoComponent statusInfoComponent;
+    [SerializeField] private TextMeshProUGUI gridKey;
     
     public void UpdateInfo(BattlerInfo battlerInfo)
     {
@@ -78,6 +79,31 @@ public class EnemyInfoComponent : MonoBehaviour
         }
         if (nameText != null){
             nameText.text = enemyData.Name;
+        }
+    }
+
+    public void SetGridKey(int index)
+    {
+        if (index == 0){
+            gridKey.text = "A";
+        } else
+        if (index == 1){
+            gridKey.text = "B";
+        } else
+        if (index == 2){
+            gridKey.text = "C";
+        } else
+        if (index == 3){
+            gridKey.text = "D";
+        } else
+        if (index == 4){
+            gridKey.text = "E";
+        } else
+        if (index == 5){
+            gridKey.text = "F";
+        } else
+        if (index == 6){
+            gridKey.text = "G";
         }
     }
 

@@ -16,11 +16,14 @@ public class BattlerInfoComponent : MonoBehaviour
     [SerializeField] private GameObject battleDamagePrefab;
     private BattlerInfo _battlerInfo = null;
 
+
     public bool IsBusy {
-        get {return effekseerEmitter.exists || _damageTiming > 0 || _battleDamages.Find(a => a.IsBusy);}
+        get {return _animationEndTiming > 0 || _damageTiming > 0 || _battleDamages.Find(a => a.IsBusy);}
     }
+
     private System.Action<int> _damageHandler;
-    private int _damageTiming = 0; 
+    private int _damageTiming = 0;
+    private int _animationEndTiming = 0;
     private List<BattleDamage> _battleDamages = new List<BattleDamage>();
     private float _deathAnimation = 0.0f;
     public void UpdateInfo(BattlerInfo battlerInfo)
@@ -177,6 +180,17 @@ public class BattlerInfoComponent : MonoBehaviour
         }
     }
 
+    public void SetEnemyGridKey(int index)
+    {
+        enemyInfoComponent.SetGridKey(index);
+    }
+
+
+    private void Update() {
+        UpdateDamageTiming();
+        UpdateDeathAnimation();
+    }
+
     private void UpdateDamageTiming()
     {
         if (_damageTiming > 0)
@@ -186,7 +200,12 @@ public class BattlerInfoComponent : MonoBehaviour
             {
                 _damageHandler(_battlerInfo.Index);
                 _damageHandler = null;
+                _animationEndTiming = 48;
             }
+        }
+        if (_animationEndTiming > 0)
+        {
+            _animationEndTiming--;
         }
     }
     
@@ -207,12 +226,7 @@ public class BattlerInfoComponent : MonoBehaviour
             _deathAnimation += 0.01f;
         }
     }
-
-    private void Update() {
-        UpdateDamageTiming();
-        UpdateDeathAnimation();
-    }
-
+    
     private Image BattleImage()
     {
         Image image;

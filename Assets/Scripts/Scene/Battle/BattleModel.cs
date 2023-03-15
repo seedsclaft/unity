@@ -1,8 +1,5 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.AddressableAssets;
-using UnityEngine.ResourceManagement.AsyncOperations;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
@@ -10,6 +7,10 @@ using Effekseer;
 
 public class BattleModel : BaseModel
 {
+    public BattleModel()
+    {
+        CurrentScene = Scene.Battle;
+    }
     private List<BattlerInfo> _battlers = new List<BattlerInfo>();
     public List<BattlerInfo> Battlers
     {
@@ -322,10 +323,10 @@ public class BattleModel : BaseModel
             LastTargetIndex = subject.LastTargetIndex();
             if (skill.TargetType == TargetType.Opponent || skill.TargetType == TargetType.All)
             {
-                BattlerInfo targetBattler = BattlerEnemies().Find(a => a.Index == LastTargetIndex);
+                BattlerInfo targetBattler = BattlerEnemies().Find(a => a.Index == LastTargetIndex && a.IsAlive());
                 if (targetBattler == null || targetBattler.IsAlive() == false)
                 {
-                    if (BattlerEnemies().Count > 0)
+                    if (BattlerEnemies().Count > 0 && BattlerEnemies().Find(a => a.IsAlive()) != null)
                     {
                         LastTargetIndex = BattlerEnemies().Find(a => a.IsAlive()).Index;
                     }
@@ -799,19 +800,6 @@ public class BattleModel : BaseModel
     {
         List<SkillInfo> skillInfos = battlerInfo.Skills.FindAll(a => CheckCanUse(a,battlerInfo) && a.Master.SkillType != SkillType.None);
         return skillInfos [UnityEngine.Random.Range (0, skillInfos.Count)].Id;
-    }
-    
-    public async Task<List<AudioClip>> BgmData(){
-        BGMData bGMData = DataSystem.Data.GetBGM("BATTLE1");
-        List<string> data = new List<string>();
-        data.Add("BGM/" + bGMData.FileName + "_intro.ogg");
-        data.Add("BGM/" + bGMData.FileName + "_loop.ogg");
-        
-        var result1 = await ResourceSystem.LoadAsset<AudioClip>(data[0]);
-        var result2 = await ResourceSystem.LoadAsset<AudioClip>(data[1]);
-        return new List<AudioClip>(){
-            result1,result2
-        };    
     }
 
     public bool CheckVictory()

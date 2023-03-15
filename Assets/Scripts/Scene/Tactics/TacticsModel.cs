@@ -1,11 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
-using UnityEngine.ResourceManagement.AsyncOperations;
 using System;
-using System.Threading;
-using System.Threading.Tasks;
 
 public class TacticsModel : BaseModel
 {
@@ -70,17 +66,6 @@ public class TacticsModel : BaseModel
     public List<SystemData.MenuCommandData> TacticsCommand
     {
         get { return DataSystem.TacticsCommand;}
-    }
-    
-    public async Task<List<AudioClip>> BgmData(){
-        BGMData bGMData = DataSystem.Data.GetBGM("TACTICS1");
-        List<string> data = new List<string>();
-        data.Add("BGM/" + bGMData.FileName + ".ogg");
-        
-        var result1 = await ResourceSystem.LoadAsset<AudioClip>(data[0]);
-        return new List<AudioClip>(){
-            result1
-        };    
     }
 
     public void SetTempData(TacticsComandType tacticsComandType)
@@ -344,13 +329,6 @@ public class TacticsModel : BaseModel
 
     public void TurnEnd()
     {
-        GameSystem.CurrentData.CurrentStage.SeekStage();
-    }
-}
-
-namespace TacticsModelData{
-    public class CommandData{
-        public string key = "";
-        public string name;
+        CurrentData.CurrentStage.SeekStage();
     }
 }

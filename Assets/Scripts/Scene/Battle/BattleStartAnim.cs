@@ -40,6 +40,7 @@ public class BattleStartAnim : MonoBehaviour
     public void StartAnim()
     {
         _busy = true;
+        Reset();
         mainText.transform.DOScaleY(0.95f,0);
         Sequence main = DOTween.Sequence()
             .SetDelay(0.1f)

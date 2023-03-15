@@ -4,8 +4,6 @@ using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using System;
-using System.Threading;
-using System.Threading.Tasks;
 
 public class ConfirmModel : BaseModel
 {
@@ -14,8 +12,5 @@ public class ConfirmModel : BaseModel
     {
         get {return _currentIndex;}
     }
-
-
-
 }
 

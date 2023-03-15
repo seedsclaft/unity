@@ -39,7 +39,7 @@ public class StatusView : BaseView
 
     private void InitializeSkillActionList()
     {
-        skillActionList.Initialize(null,() => OnClickBack());
+        skillActionList.Initialize(null,() => OnClickBack(),null);
         SetInputHandler(skillActionList.GetComponent<IInputHandlerEvent>());
         skillActionList.gameObject.SetActive(false);
         skillActionList.Deactivate();
@@ -197,6 +197,16 @@ public class StatusView : BaseView
         commandList.Deactivate();
     }
 
+    public void ActivateStrengthList()
+    {
+        statusStrengthList.Activate();
+    }
+
+    public void DeactivateStrengthList()
+    {
+        statusStrengthList.Deactivate();
+    }
+
     private void OnClickBack()
     {
         var eventData = new StatusViewEvent(CommandType.Back);
@@ -287,13 +297,11 @@ public class StatusView : BaseView
 
     public void ShowStrength()
     {
-        statusStrengthList.Activate();
         statusStrengthList.gameObject.SetActive(true);
     }
 
     public void HideStrength()
     {
-        statusStrengthList.Deactivate();
         statusStrengthList.gameObject.SetActive(false);
     }
 

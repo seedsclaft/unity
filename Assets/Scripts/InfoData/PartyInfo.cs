@@ -59,10 +59,10 @@ public class PartyInfo
 
     public void AddAlchemy(int skillId)
     {
-        if (_alchemyIdList.IndexOf(skillId) == -1)
+        if (_alchemyIdList.Contains(skillId))
         {
             return;
         }
-        _alchemyIdList.Remove(skillId);
+        _alchemyIdList.Add(skillId);
     }
 }

@@ -38,7 +38,7 @@ public class TacticsView : BaseView
     void Initialize()
     {
         new TacticsPresenter(this);
-        skillAlchemyList.Initialize(actorInfo => CallSkillAlchemy(actorInfo),() => OnClickBack());
+        skillAlchemyList.Initialize(actorInfo => CallSkillAlchemy(actorInfo),() => OnClickBack(),null);
         SetInputHandler(skillAlchemyList.GetComponent<IInputHandlerEvent>());
         HideSkillAlchemyList();
     }

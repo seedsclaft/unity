@@ -1,10 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
-using UnityEngine.ResourceManagement.AsyncOperations;
-using System.Threading;
-using System.Threading.Tasks;
 
 public class StrategyModel : BaseModel
 {
@@ -140,6 +136,7 @@ public class StrategyModel : BaseModel
     {
         actorInfos.ForEach(a => a.SetNextBattleEnemyIndex(-1,0));
         actorInfos.ForEach(a => a.InBattle = false);
+        actorInfos.ForEach(a => a.ClearTacticsCommand());
     }
 
     public List<SystemData.MenuCommandData> ResultCommand()
@@ -158,19 +155,8 @@ public class StrategyModel : BaseModel
         return menuCommandDatas;
     }
     
-    public async Task<List<AudioClip>> BgmData(){
-        BGMData bGMData = DataSystem.Data.GetBGM("TACTICS1");
-        List<string> data = new List<string>();
-        data.Add("BGM/" + bGMData.FileName + ".ogg");
-        
-        var result1 = await ResourceSystem.LoadAsset<AudioClip>(data[0]);
-        return new List<AudioClip>(){
-            result1,null
-        };
-    }
-    
     public void EndStrategy()
     {
-        GameSystem.CurrentData.CurrentStage.ClearTacticsEnemies();
+        CurrentData.CurrentStage.ClearTacticsEnemies();
     }
 }

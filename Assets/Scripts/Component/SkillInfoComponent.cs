@@ -18,7 +18,7 @@ public class SkillInfoComponent : MonoBehaviour
 
     public void SetInfoData(SkillInfo skillInfo){
         if (skillInfo == null){
-            Claer();
+            Clear();
             return;
         }
         UpdateSkillData(skillInfo.Id);
@@ -32,7 +32,7 @@ public class SkillInfoComponent : MonoBehaviour
     {
         if (skillId == 0)
         {
-            Claer();
+            Clear();
             return;
         }
         var skillData = DataSystem.Skills.Find(skill => skill.Id == skillId);
@@ -81,7 +81,7 @@ public class SkillInfoComponent : MonoBehaviour
         lineImage.rectTransform.sizeDelta = new Vector2(nameText.rectTransform.sizeDelta.x,lineImage.rectTransform.sizeDelta.y);
     }
 
-    private void Claer()
+    private void Clear()
     {
         if (icon != null)
         {

@@ -22,7 +22,7 @@ public class TitlePresenter
         _view.SetEvent((type) => updateCommand(type));
         _view.SetTitleCommand(_model.TitleCommand);
 
-        var bgm = await _model.BgmData();
+        var bgm = await _model.GetBgmData("TITLE");
         SoundManager.Instance.PlayBgm(bgm,1.0f,false);
         _busy = false;
     }

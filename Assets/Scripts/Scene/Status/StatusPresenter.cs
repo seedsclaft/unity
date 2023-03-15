@@ -105,6 +105,7 @@ public class StatusPresenter
         if (statusComandType == StatusComandType.Strength)
         {
             _backCommandType = Status.CommandType.StatusCommand;
+            _view.ActivateStrengthList();
             _view.ShowStrength();
             _view.DeactivateActorList();
             _view.SetActiveBack(false);
@@ -215,13 +216,15 @@ public class StatusPresenter
             ConfirmInfo confirmInfo = new ConfirmInfo(textData.Text,(menuCommandInfo) => updatePopup((ConfirmComandType)menuCommandInfo));
             _view.CommandCallConfirm(confirmInfo);
             _view.DeactivateCommandList();
+            _view.DeactivateStrengthList();
         } else{
             if (_model.StatusActors().Count > 1) _view.ShowArrows();
             _view.ShowCommandList();
-            _view.ActivateCommandList();
             _view.ShowDecideButton();
             _view.HideStrength();
+            _view.DeactivateStrengthList();
             _view.ActivateActorList();
+            _view.ActivateCommandList();
             _view.SetActiveBack(true);
         }
         SoundManager.Instance.PlayStaticSe(SEType.Cancel);

@@ -21,7 +21,7 @@ public class SaveSystem : MonoBehaviour
             //pSourceSavePlayInfo.SavePointSet(savePointType);
 
 
-            #if UNITY_EDITOR_WIN || UNITY_STANDALONE_WIN
+            //#if UNITY_EDITOR_WIN || UNITY_STANDALONE_WIN
             {
                 //	バイナリ形式でシリアル化
                 BinaryFormatter	TempBinaryFormatter = new BinaryFormatter();
@@ -44,13 +44,13 @@ public class SaveSystem : MonoBehaviour
                     }
                 }
             }
-		#endif
+		//#endif
 	}
 
 		
 	public static void LoadStart()
 	{
-		#if UNITY_EDITOR_WIN || UNITY_STANDALONE_WIN
+		//#if UNITY_EDITOR_WIN || UNITY_STANDALONE_WIN
 		{
 			//	バイナリ形式でデシリアライズ
 			BinaryFormatter	TempBinaryFormatter = new BinaryFormatter();
@@ -71,7 +71,7 @@ public class SaveSystem : MonoBehaviour
 				}
 			}
 		}
-		#endif
+		//#endif
     }
 }
 
