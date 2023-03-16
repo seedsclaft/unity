@@ -23,6 +23,12 @@ public class StageInfo
     private int _currentBattleIndex = -1;
     public int CurrentBattleIndex { get {return _currentBattleIndex;}}
 
+    private bool _IsSubordinate;
+    public bool IsSubordinate {get {return _IsSubordinate;}}
+
+    private int _subordinateValue = 0;
+    public int SubordinateValue {get {return _subordinateValue;}}
+
 
 	private List<int> _clearTroopIds = new List<int>();
     
@@ -35,6 +41,8 @@ public class StageInfo
         _turns = stageInfo.Turns;
         _stageEvents = stageInfo.StageEvents;
         _currentTurn = 1;
+        _IsSubordinate = false;
+        _subordinateValue = 50;
 		MakeTroopData();
     }
 
@@ -182,5 +190,16 @@ public class StageInfo
     public void SeekStage()
     {
         _currentTurn++;
+    }
+
+    public void SetIsSubordinate(bool isSubordinate)
+    {
+        _IsSubordinate = isSubordinate;
+    }
+
+    public void ChangeSubordinate(int value)
+    {
+        if (_IsSubordinate == false) return;
+        _subordinateValue += value;
     }
 };

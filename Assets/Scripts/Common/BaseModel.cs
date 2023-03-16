@@ -60,6 +60,17 @@ public class BaseModel
         menuCommandDatas.Add(noCommand);
         return menuCommandDatas;
     }
+
+    public List<SystemData.MenuCommandData> NoChoiceConfirmCommand()
+    {
+        List<SystemData.MenuCommandData> menuCommandDatas = new List<SystemData.MenuCommandData>();
+        SystemData.MenuCommandData yesCommand = new SystemData.MenuCommandData();
+        yesCommand.Key = "Yes";
+        yesCommand.Name = "確認";
+        yesCommand.Id = 0;
+        menuCommandDatas.Add(yesCommand);
+        return menuCommandDatas;
+    }
     
     public List<AttributeType> AttributeTypes()
     {

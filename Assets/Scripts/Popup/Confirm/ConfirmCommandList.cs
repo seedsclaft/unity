@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using UnityEngine.Events;
 
@@ -17,8 +18,13 @@ public class ConfirmCommandList : ListWindow , IInputHandlerEvent
     public void Initialize(List<SystemData.MenuCommandData> menuCommands ,System.Action<ConfirmComandType> callEvent)
     {
         InitializeListView(menuCommands.Count);
-        for (var i = 0; i < menuCommands.Count;i++){
-            _data.Add(menuCommands[i]);
+        _data.Clear();
+        _data = menuCommands;
+        if (menuCommands.Count == 1)
+        {
+            HorizontalLayoutGroup horizontalLayoutGroup = gameObject.GetComponentInChildren<HorizontalLayoutGroup>();
+            horizontalLayoutGroup.spacing = 0;
+            horizontalLayoutGroup.padding.left = 120;
         }
         for (int i = 0; i < ObjectList.Count;i++)
         {
@@ -49,5 +55,9 @@ public class ConfirmCommandList : ListWindow , IInputHandlerEvent
         {
             callEvent(ConfirmComandType.No);
         }
+    }
+
+    public void SetIsNoChoice(bool isNoChoice)
+    {
     }
 }

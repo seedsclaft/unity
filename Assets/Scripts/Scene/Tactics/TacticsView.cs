@@ -18,6 +18,7 @@ public class TacticsView : BaseView
     [SerializeField] private TacticsEnemyList tacticsEnemyList = null;
     [SerializeField] private TacticsBattleList tacticsBattleList = null;
     [SerializeField] private TacticsResourceList tacticsResourceList = null;
+    [SerializeField] private StageInfoComponent stageInfoComponent = null;
 
     [SerializeField] private TextMeshProUGUI turnText = null;
     [SerializeField] private TextMeshProUGUI numinousText = null;
@@ -78,9 +79,9 @@ public class TacticsView : BaseView
         _commandData = commandData;
     }
     
-    public void SetActorInfo(ActorInfo actorInfo)
+    public void SetStageInfo(StageInfo stageInfo)
     {
-        
+        stageInfoComponent.UpdateInfo(stageInfo);
     }
 
     

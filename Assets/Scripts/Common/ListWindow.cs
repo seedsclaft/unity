@@ -53,6 +53,7 @@ abstract public class ListWindow : MonoBehaviour
         foreach(Transform child in scrollRect.content.transform){
             Destroy(child.gameObject);
         }
+        _objectList = new List<GameObject>();
     }
 
     public void InitializeListView(int count)

@@ -32,6 +32,7 @@ public class TacticsPresenter
 
         //List<ActorInfo> actorInfos = _model.Actors();
         //_view.SetActorInfo(_model.CurrentActor);
+        _view.SetStageInfo(_model.CurrentData.CurrentStage);
         _view.SetActors(_model.Actors(),_model.ConfirmCommand());
         _view.SetEnemies(_model.TacticsTroops());
 

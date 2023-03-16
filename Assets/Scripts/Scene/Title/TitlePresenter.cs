@@ -43,7 +43,7 @@ public class TitlePresenter
         switch ((TitleComandType)commandIndex){
             case TitleComandType.NewGame:
             _view.CommandInitSaveInfo();
-            _view.CommandSceneChange(Scene.MainMenu);
+            _view.CommandSceneChange(Scene.NameEntry);
             SoundManager.Instance.PlayStaticSe(SEType.Decide);
             //_view.CommandSceneChange(Scene.Battle);
             break;

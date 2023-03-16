@@ -49,6 +49,8 @@ public class ResourceSystem : MonoBehaviour
             return "Assets/Prefabs/Boot/BootScene.prefab";
             case Scene.Title:
             return "Assets/Prefabs/Title/TitleScene.prefab";
+            case Scene.NameEntry:
+            return "Assets/Prefabs/NameEntry/NameEntryScene.prefab";
             case Scene.MainMenu:
             return "Assets/Prefabs/MainMenu/MainMenuScene.prefab";
             case Scene.Battle:
@@ -74,6 +76,7 @@ public enum Scene
 
     Boot,
     Title,
+    NameEntry,
     MainMenu,
     Battle,
     Map,

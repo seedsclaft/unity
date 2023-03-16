@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Confirm;
 
 public class ConfirmPresenter 
 {
@@ -18,8 +19,26 @@ public class ConfirmPresenter
 
     private void Initialize()
     {
+        _view.SetEvent((type) => updateCommand(type));
         _view.SetConfirmCommand(_model.ConfirmCommand());
         _busy = false;
+    }
+
+    
+    private void updateCommand(ConfirmViewEvent viewEvent)
+    {
+        if (_busy){
+            return;
+        }
+        if (viewEvent.commandType == CommandType.IsNoChoise)
+        {
+           CommandIsNoChoise();
+        }
+    }
+
+    private void CommandIsNoChoise()
+    {
+        _view.SetConfirmCommand(_model.NoChoiceConfirmCommand());
     }
 }
 
@@ -29,6 +48,12 @@ public class ConfirmInfo
     public string Title {get {return _title;}}
     private System.Action<ConfirmComandType> _callEvent = null;
     public System.Action<ConfirmComandType> CallEvent {get {return _callEvent;}}
+    private bool _isNoChoise = false;
+    public bool IsNoChoise {get {return _isNoChoise;}}
+    public void SetIsNoChoise(bool isNoChoice)
+    {
+        _isNoChoise = isNoChoice;
+    }
 
     public ConfirmInfo(string title,System.Action<ConfirmComandType> callEvent)
     {

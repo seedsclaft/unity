@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Utage;
+using UtageExtensions;
 
 public class GameSystem : MonoBehaviour
 {
@@ -11,6 +13,7 @@ public class GameSystem : MonoBehaviour
     [SerializeField] private GameObject confirmPrefab = null;
     [SerializeField] private GameObject statusRoot = null;
     [SerializeField] private GameObject statusPrefab = null;
+    [SerializeField] private AdvEngine advEngine = null;
     
     private BaseView _currentScene = null;
     private ConfirmView _confirmView = null;
@@ -27,7 +30,6 @@ public class GameSystem : MonoBehaviour
     {
         _model = new BaseModel();
         CommandSceneChange(Scene.Boot);
-        CreateConfirm();
     }
 
     private void CreateConfirm()
@@ -59,6 +61,7 @@ public class GameSystem : MonoBehaviour
         {
             CommandSceneChange((Scene)viewEvent.templete);
             Debug.Log("Start Change Scene");
+            //advEngine.JumpScenario("Start");
         }
         if (viewEvent.commandType == Base.CommandType.InitSaveInfo)
         {
@@ -69,10 +72,16 @@ public class GameSystem : MonoBehaviour
         }
         if (viewEvent.commandType == Base.CommandType.CallConfirmView)
         {
+            if (_confirmView != null)
+            {
+                DestroyImmediate(_confirmView.gameObject);
+            }
+            CreateConfirm();
             confirmRoot.gameObject.SetActive(true);
             var popupInfo = (ConfirmInfo)viewEvent.templete;
+            _confirmView.SetIsNoChoice(popupInfo.IsNoChoise);
             _confirmView.SetTitle(popupInfo.Title);
-            _confirmView.SetEvent(popupInfo.CallEvent);
+            _confirmView.SetConfirmEvent(popupInfo.CallEvent);
             if (!statusRoot.gameObject.activeSelf) _currentScene.SetBusy(true);
             if (_statusView) _statusView.SetBusy(true);
         }
@@ -103,6 +112,30 @@ public class GameSystem : MonoBehaviour
             statusRoot.gameObject.SetActive(false);
             _currentScene.SetBusy(false);
         }
+        if (viewEvent.commandType == Base.CommandType.CallAdvScene)
+        {
+            statusRoot.gameObject.SetActive(false);
+            AdvCallInfo advCallInfo = viewEvent.templete as AdvCallInfo;
+            _currentScene.SetBusy(true);
+            JumpScenarioAsync(advCallInfo.Label,advCallInfo.CallEvent);
+        }
+        if (viewEvent.commandType == Base.CommandType.DecidePlayerName)
+        {
+            string playerName = (string)advEngine.Param.GetParameter("PlayerName");
+            advEngine.Param.SetParameterString("PlayerName",(string)viewEvent.templete);
+        }
+    }
+
+    IEnumerator JumpScenarioAsync(string label, System.Action onComplete)
+    {
+        _busy = true;
+        advEngine.JumpScenario(label);
+        while (!advEngine.IsEndOrPauseScenario)
+        {
+            yield return null;
+        }
+        _busy = false;
+        if(onComplete !=null) onComplete();
     }
 
     private async void CommandSceneChange(Scene scene)
@@ -123,3 +156,18 @@ public class GameSystem : MonoBehaviour
     }
 }
 
+
+public class AdvCallInfo{
+    private string _label;
+    public string Label { get {return _label;}}
+    public void SetLabel(string label)
+    {
+        _label = label;
+    }
+    private System.Action _callEvent;
+    public System.Action CallEvent { get {return _callEvent;}}
+    public void SetCallEvent(System.Action callEvent)
+    {
+        _callEvent = callEvent;
+    }
+}

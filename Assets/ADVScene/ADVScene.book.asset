@@ -1,0 +1,876 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 8
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9856eecfcd6b8df42ac2ebd73cc36dff, type: 3}
+  m_Name: ADVScene.book
+  m_EditorClassIdentifier: 
+  importVersion: 0
+  importGridList:
+  - rows:
+    - rowIndex: 0
+      debugIndex: 0
+      strings:
+      - Command
+      - Arg1
+      - Arg2
+      - Arg3
+      - Arg4
+      - Arg5
+      - Arg6
+      - WaitType
+      - Text
+      - PageCtrl
+      - Voice
+      - WindowType
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 1
+      debugIndex: 1
+      strings:
+      - ChangeMessageWindow
+      - MessageWindowAll
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 2
+      debugIndex: 2
+      strings:
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 3986b
+      - Next
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 3
+      debugIndex: 3
+      strings:
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - InputBr
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 4
+      debugIndex: 4
+      strings:
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\n\u6804\u83EF\u3092\u6975\u3081\u305F\u6587\u660E\u30FB\u30D1\u30A4\u30EA\u30A2\u306F\n\u6D2A\u6C34\u306B\u3088\u308A\u8DE1\u5F62\u3082\u306A\u304F\u6D88\u3048\u53BB\u3063\u305F\u3002"
+      - Next
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 5
+      debugIndex: 5
+      strings:
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - InputBr
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 6
+      debugIndex: 6
+      strings:
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\n\u4E0A\u4F4D\u8005\u306B\u3088\u308B\u6D44\u5316(Cleansing)\u304C\u884C\u308F\u308C\u305F\u306E\u3060\u3002"
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 7
+      debugIndex: 8
+      strings:
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u6D44\u5316\u306B\u3088\u308A\u4EBA\u985E\u306F\u65B0\u305F\u306A\u9032\u5316\u3092\u9042\u3052\u305F\u3002"
+      - Next
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 8
+      debugIndex: 9
+      strings:
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - InputBr
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 9
+      debugIndex: 10
+      strings:
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\n\u3057\u304B\u3057\u4E0A\u4F4D\u4E16\u754C\u306B\u7570\u5F62\u306E\u5B58\u5728\n\u6210\u3089\u3056\u308B\u8005(Disguised)\u304C\u73FE\u308C\u308B\u3088\u3046\u306B\u306A\u308B\u3002"
+      - Next
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 10
+      debugIndex: 11
+      strings:
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - InputBr
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 11
+      debugIndex: 12
+      strings:
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\n\u4E0A\u4F4D\u8005\u306F\u4E8B\u614B\u3092\u53CE\u62FE\u3059\u3079\u304F\n\u5C0E\u304F\u8005(Magister)<param=PlayerName>\n\u6210\u3089\u3056\u308B\u8005(Disguised)\u8A0E\u4F10\u3092\u547D\u3058\u305F\u3002"
+      - Next
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 12
+      debugIndex: 13
+      strings:
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - InputBr
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 13
+      debugIndex: 14
+      strings:
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\n\u751F\u5F92\u3067\u3042\u308B\u30A2\u30EB\u30B1\u30DF\u30B9\u30C8\n<param=Select1>\u3092\u5F15\u304D\u9023\u308C\u3066\u2026"
+      - Input
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 14
+      debugIndex: 15
+      strings:
+      - EndScenario
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    name: Assets/ADVScene/ADVScene.xls:Start
+    type: 1
+    textLength: 400
+    headerRow: 0
+    sourceAssetInEditor: {fileID: 0}
+    entityIndexTbl: 
+    entityDataList: []
+  gridList:
+  - rows:
+    - rowIndex: 0
+      debugIndex: 0
+      strings:
+      - CharacterName
+      - NameText
+      - Pattern
+      - X
+      - Y
+      - Z
+      - Pivot
+      - Scale
+      - Conditional
+      - FileName
+      - SubFileName
+      - FileType
+      - Animation
+      - RenderTexture
+      - RenderRect
+      - EyeBlink
+      - LipSynch
+      - Icon
+      - IconSubFileName
+      - IconRect
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    name: Assets/ADVScene/ADVScene.xls:Character
+    type: 1
+    textLength: 154
+    headerRow: 0
+    sourceAssetInEditor: {fileID: 0}
+  - rows:
+    - rowIndex: 0
+      debugIndex: 0
+      strings:
+      - Label
+      - Type
+      - X
+      - Y
+      - Z
+      - Pivot
+      - Scale
+      - Conditional
+      - FileName
+      - FileType
+      - SubFileName
+      - Animation
+      - RenderTexture
+      - RenderRect
+      - Thumbnail
+      - CgCategolly
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    name: Assets/ADVScene/ADVScene.xls:Texture
+    type: 1
+    textLength: 112
+    headerRow: 0
+    sourceAssetInEditor: {fileID: 0}
+  - rows:
+    - rowIndex: 0
+      debugIndex: 0
+      strings:
+      - Label
+      - FileName
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    name: Assets/ADVScene/ADVScene.xls:Particle
+    type: 1
+    textLength: 13
+    headerRow: 0
+    sourceAssetInEditor: {fileID: 0}
+  - rows:
+    - rowIndex: 0
+      debugIndex: 0
+      strings:
+      - LayerName
+      - Type
+      - X
+      - Y
+      - Order
+      - LayerMask
+      - ScaleX
+      - ScaleY
+      - FlipX
+      - FlipY
+      - Width
+      - Height
+      - BorderLeft
+      - BorderRight
+      - BorderTop
+      - BorderBottom
+      - Align
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    name: Assets/ADVScene/ADVScene.xls:Layer
+    type: 1
+    textLength: 109
+    headerRow: 0
+    sourceAssetInEditor: {fileID: 0}
+  - rows:
+    - rowIndex: 0
+      debugIndex: 0
+      strings:
+      - Label
+      - IntervalMin
+      - IntervalMax
+      - RandomDouble
+      - Tag
+      - Name0
+      - Duration0
+      - Name1
+      - Duration1
+      - Name2
+      - Duration2
+      - Name3
+      - Duration3
+      - Name4
+      - Duration4
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    name: Assets/ADVScene/ADVScene.xls:EyeBlink
+    type: 1
+    textLength: 112
+    headerRow: 0
+    sourceAssetInEditor: {fileID: 0}
+  - rows:
+    - rowIndex: 0
+      debugIndex: 0
+      strings:
+      - Label
+      - Type
+      - Interval
+      - Tag
+      - ScaleVoiceVolume
+      - Name0
+      - Duration0
+      - Name1
+      - Duration1
+      - Name2
+      - Duration2
+      - Name3
+      - Duration3
+      - Name4
+      - Duration4
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    name: Assets/ADVScene/ADVScene.xls:LipSynch
+    type: 1
+    textLength: 106
+    headerRow: 0
+    sourceAssetInEditor: {fileID: 0}
+  - rows:
+    - rowIndex: 0
+      debugIndex: 0
+      strings:
+      - '*SampleAnimation'
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 1
+      debugIndex: 1
+      strings:
+      - Time
+      - 0
+      - .5
+      - 1
+      - 1.5
+      - 2
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 2
+      debugIndex: 2
+      strings:
+      - X
+      - 0
+      - 
+      - 0
+      - 0
+      - 100
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 3
+      debugIndex: 3
+      strings:
+      - Y
+      - -50
+      - 50
+      - 0
+      - 0
+      - 0
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 4
+      debugIndex: 4
+      strings:
+      - Angle
+      - 0
+      - 
+      - 0
+      - 0
+      - 360
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 5
+      debugIndex: 5
+      strings:
+      - ScaleX
+      - .2
+      - 1.2
+      - 1
+      - 1
+      - 1
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 6
+      debugIndex: 6
+      strings:
+      - ScaleY
+      - .2
+      - 1.2
+      - 1
+      - 1
+      - 1
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 7
+      debugIndex: 7
+      strings:
+      - Alpha
+      - 0
+      - 1
+      - 1
+      - 1
+      - 1
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    name: Assets/ADVScene/ADVScene.xls:Animation
+    type: 1
+    textLength: 93
+    headerRow: 0
+    sourceAssetInEditor: {fileID: 0}
+  - rows:
+    - rowIndex: 0
+      debugIndex: 0
+      strings:
+      - Label
+      - Title
+      - Type
+      - FileName
+      - IntroTime
+      - Volume
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    name: Assets/ADVScene/ADVScene.xls:Sound
+    type: 1
+    textLength: 37
+    headerRow: 0
+    sourceAssetInEditor: {fileID: 0}
+  - rows:
+    - rowIndex: 0
+      debugIndex: 0
+      strings:
+      - Label
+      - Type
+      - Value
+      - FileType
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 1
+      debugIndex: 1
+      strings:
+      - PlayerName
+      - String
+      - "\u540D\u524D"
+      - Default
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 2
+      debugIndex: 2
+      strings:
+      - Select1
+      - String
+      - "\u30D8\u30AB\u30C6\u30FC"
+      - Default
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    name: Assets/ADVScene/ADVScene.xls:Param
+    type: 1
+    textLength: 71
+    headerRow: 0
+    sourceAssetInEditor: {fileID: 0}
+  - rows:
+    - rowIndex: 0
+      debugIndex: 0
+      strings:
+      - Name
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 1
+      debugIndex: 1
+      strings:
+      - Type
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 2
+      debugIndex: 2
+      strings:
+      - FileType
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    name: Assets/ADVScene/ADVScene.xls:ParamTbl{}
+    type: 1
+    textLength: 16
+    headerRow: 0
+    sourceAssetInEditor: {fileID: 0}
+  - rows:
+    - rowIndex: 0
+      debugIndex: 0
+      strings:
+      - ScenarioLabel
+      - Title
+      - Thumbnail
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    name: Assets/ADVScene/ADVScene.xls:SceneGallery
+    type: 1
+    textLength: 27
+    headerRow: 0
+    sourceAssetInEditor: {fileID: 0}
+  - rows:
+    - rowIndex: 0
+      debugIndex: 0
+      strings:
+      - Key
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    name: Assets/ADVScene/ADVScene.xls:Localize
+    type: 1
+    textLength: 3
+    headerRow: 0
+    sourceAssetInEditor: {fileID: 0}
+  - rows:
+    - rowIndex: 0
+      debugIndex: 0
+      strings:
+      - Command
+      - Arg1
+      - Arg2
+      - Arg3
+      - Arg4
+      - Arg5
+      - Arg6
+      - WaitType
+      - Text
+      - PageCtrl
+      - Voice
+      - WindowType
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    name: Assets/ADVScene/ADVScene.xls:Macro
+    type: 1
+    textLength: 66
+    headerRow: 0
+    sourceAssetInEditor: {fileID: 0}
+  - rows:
+    - rowIndex: 0
+      debugIndex: 0
+      strings:
+      - Command
+      - Arg1
+      - Arg2
+      - Arg3
+      - Arg4
+      - Arg5
+      - Arg6
+      - WaitType
+      - Text
+      - PageCtrl
+      - Voice
+      - WindowType
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 1
+      debugIndex: 1
+      strings:
+      - ChangeMessageWindow
+      - MessageWindowAll
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 2
+      debugIndex: 2
+      strings:
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 3986b
+      - Next
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 3
+      debugIndex: 3
+      strings:
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - InputBr
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 4
+      debugIndex: 4
+      strings:
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\n\u6804\u83EF\u3092\u6975\u3081\u305F\u6587\u660E\u30FB\u30D1\u30A4\u30EA\u30A2\u306F\n\u6D2A\u6C34\u306B\u3088\u308A\u8DE1\u5F62\u3082\u306A\u304F\u6D88\u3048\u53BB\u3063\u305F\u3002"
+      - Next
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 5
+      debugIndex: 5
+      strings:
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - InputBr
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 6
+      debugIndex: 6
+      strings:
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\n\u4E0A\u4F4D\u8005\u306B\u3088\u308B\u6D44\u5316(Cleansing)\u304C\u884C\u308F\u308C\u305F\u306E\u3060\u3002"
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 7
+      debugIndex: 7
+      strings: []
+      isEmpty: 1
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 8
+      debugIndex: 8
+      strings:
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u6D44\u5316\u306B\u3088\u308A\u4EBA\u985E\u306F\u65B0\u305F\u306A\u9032\u5316\u3092\u9042\u3052\u305F\u3002"
+      - Next
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 9
+      debugIndex: 9
+      strings:
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - InputBr
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 10
+      debugIndex: 10
+      strings:
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\n\u3057\u304B\u3057\u4E0A\u4F4D\u4E16\u754C\u306B\u7570\u5F62\u306E\u5B58\u5728\n\u6210\u3089\u3056\u308B\u8005(Disguised)\u304C\u73FE\u308C\u308B\u3088\u3046\u306B\u306A\u308B\u3002"
+      - Next
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 11
+      debugIndex: 11
+      strings:
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - InputBr
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 12
+      debugIndex: 12
+      strings:
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\n\u4E0A\u4F4D\u8005\u306F\u4E8B\u614B\u3092\u53CE\u62FE\u3059\u3079\u304F\n\u5C0E\u304F\u8005(Magister)<param=PlayerName>\n\u6210\u3089\u3056\u308B\u8005(Disguised)\u8A0E\u4F10\u3092\u547D\u3058\u305F\u3002"
+      - Next
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 13
+      debugIndex: 13
+      strings:
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - InputBr
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 14
+      debugIndex: 14
+      strings:
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\n\u751F\u5F92\u3067\u3042\u308B\u30A2\u30EB\u30B1\u30DF\u30B9\u30C8\n<param=Select1>\u3092\u5F15\u304D\u9023\u308C\u3066\u2026"
+      - Input
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 15
+      debugIndex: 15
+      strings:
+      - EndScenario
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    name: Assets/ADVScene/ADVScene.xls:Start
+    type: 1
+    textLength: 400
+    headerRow: 0
+    sourceAssetInEditor: {fileID: 0}

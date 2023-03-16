@@ -108,6 +108,20 @@ abstract public class BaseView : MonoBehaviour
         CallSceneChangeCommand(eventData);
     }
 
+    public void CommandCallAdv(AdvCallInfo advCallInfo)
+    {
+        var eventData = new ViewEvent(Scene.Base, Base.CommandType.CallAdvScene);
+        eventData.templete = advCallInfo;
+        CallSceneChangeCommand(eventData);
+    }
+
+    public void CommandDecidePlayerName(string nameText)
+    {
+        var eventData = new ViewEvent(Scene.Base, Base.CommandType.DecidePlayerName);
+        eventData.templete = nameText;
+        CallSceneChangeCommand(eventData);
+    }
+
     public void CreateBackCommand(System.Action callEvent)
     {
         GameObject prefab = Instantiate(backPrefab);
@@ -141,7 +155,9 @@ namespace Base
         CallConfirmView,
         CloseConfirm,  
         CallStatusView,
-        CloseStatus,  
+        CloseStatus,
+        CallAdvScene,
+        DecidePlayerName
 
     }
 }

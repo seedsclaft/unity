@@ -158,5 +158,6 @@ public class StrategyModel : BaseModel
     public void EndStrategy()
     {
         CurrentData.CurrentStage.ClearTacticsEnemies();
+        CurrentData.CurrentStage.ChangeSubordinate(-5);
     }
 }

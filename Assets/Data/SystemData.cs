@@ -53,7 +53,7 @@ public enum StatusComandType {
 
 public enum ConfirmComandType {
 	Yes = 0,
-	No = 1
+	No = 1,
 }
 
 [Serializable]
