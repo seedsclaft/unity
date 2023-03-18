@@ -14,7 +14,7 @@ public class TacticsCommandList : ListWindow , IInputHandlerEvent
         get {return Index;}
     }
 
-    public void Initialize(List<SystemData.MenuCommandData> menuCommands ,System.Action<TacticsComandType> callEvent)
+    public void Initialize(List<SystemData.MenuCommandData> menuCommands ,System.Action<TacticsComandType> callEvent,System.Action alcanaEvent = null)
     {
         InitializeListView(menuCommands.Count);
         _data = menuCommands;
@@ -25,13 +25,13 @@ public class TacticsCommandList : ListWindow , IInputHandlerEvent
             TacticsCommand.SetCallHandler(callEvent);
             TacticsCommand.SetSelectHandler((data) => UpdateSelectIndex(data));
         }
-        SetInputHandler((a) => CallInputHandler(a,callEvent));
+        SetInputHandler((a) => CallInputHandler(a,callEvent,alcanaEvent));
         UpdateAllItems();
         UpdateSelectIndex(-1);
     }
 
     public override void UpdateHelpWindow(){
-        if (_helpWindow != null)
+        if (_helpWindow != null && Index >= 0)
         {
             _helpWindow.SetHelpText(_data[Index].Help);
         }
@@ -45,13 +45,17 @@ public class TacticsCommandList : ListWindow , IInputHandlerEvent
             tacticsCommand.SetDisable(menuCommandData,IsDisable);
         }
     }
-    private void CallInputHandler(InputKeyType keyType, System.Action<TacticsComandType> callEvent)
+    private void CallInputHandler(InputKeyType keyType, System.Action<TacticsComandType> callEvent,System.Action alcanaEvent)
     {
         if (keyType == InputKeyType.Decide)
         {
             TacticsCommand tacticsCommand = ObjectList[Index].GetComponent<TacticsCommand>();
             if (tacticsCommand.Disable.gameObject.activeSelf) return;
             callEvent((TacticsComandType)_data[Index].Id);
+        }
+        if (keyType == InputKeyType.Option1)
+        {
+            alcanaEvent();
         }
     }
 }

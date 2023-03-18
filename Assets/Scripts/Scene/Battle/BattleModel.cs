@@ -813,4 +813,14 @@ public class BattleModel : BaseModel
         PartyInfo.SetBattleResult(false);
         return BattlerActors().Find(a => a.IsAlive()) == null;
     }
+
+    public void EndBattle()
+    {
+        foreach (var battler in BattlerActors())
+        {
+            ActorInfo actorInfo = battler.ActorInfo;
+            actorInfo.ChangeHp(battler.Hp);
+            actorInfo.ChangeMp(battler.Mp);
+        }
+    }
 }

@@ -37,6 +37,8 @@ abstract public class DataSystem
     private static StatesData _states;
     public static List<StatesData.StateData> States {get{return _states._data;}}
 
+    private static AlcanaData _alcana;
+    public static List<AlcanaData.Alcana> Alcana {get{return _alcana._data;}}
     /*
     public async Task LoadData()
     {
@@ -69,6 +71,8 @@ abstract public class DataSystem
         DataSystem._troops = asset7;
         var asset8 = await Addressables.LoadAssetAsync<StatesData>("Assets/Data/States.asset").Task;
         DataSystem._states = asset8;
+        var asset9 = await Addressables.LoadAssetAsync<AlcanaData>("Assets/Data/Alcana.asset").Task;
+        DataSystem._alcana = asset9;
        
         AddressablesKey.LoadAssetAsync<DataManager>("Assets/Data/MainData.asset",(data) => {DataSystem._data = data;});
     }

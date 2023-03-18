@@ -157,6 +157,7 @@ public class StrategyModel : BaseModel
     
     public void EndStrategy()
     {
+        CurrentData.CurrentStage.UseAlcana(false);
         CurrentData.CurrentStage.ClearTacticsEnemies();
         CurrentData.CurrentStage.ChangeSubordinate(-5);
     }

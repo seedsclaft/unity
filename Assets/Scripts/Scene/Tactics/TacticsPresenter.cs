@@ -69,7 +69,29 @@ public class TacticsPresenter
                         _view.SetCommandAble(DataSystem.TacticsCommand.Count-1);
                     }
                 }
+                if (stageEvents[i].Type == StageEventType.IsSubordinate)
+                {
+                    _model.SetIsSubordinate(stageEvents[i].Param == 1);
+                    if (stageEvents[i].Param == 1)
+                    {        
+                        CommandRefresh();
+                    }
+                }
+                if (stageEvents[i].Type == StageEventType.IsAlcana)
+                {
+                    _model.SetIsAlcana(stageEvents[i].Param == 1);
+                    if (stageEvents[i].Param == 1)
+                    {        
+                        CommandRefresh();
+                    }
+                }
             }
+        }
+
+        // アルカナ配布
+        if (_model.CheckIsAlcana())
+        {
+            CommandAddAlcana();
         }
         _busy = false;
     }
@@ -78,6 +100,10 @@ public class TacticsPresenter
     {
         if (_busy){
             return;
+        }
+        if (viewEvent.commandType == Tactics.CommandType.AddAlcana)
+        {
+            CommandAddAlcana();
         }
         if (viewEvent.commandType == Tactics.CommandType.TacticsCommand)
         {
@@ -173,6 +199,10 @@ public class TacticsPresenter
         {
             CommandHideUi();
         }
+        if (viewEvent.commandType == Tactics.CommandType.OpenAlcana)
+        {
+            CommandOpenAlcana();
+        }
         if (viewEvent.commandType == Tactics.CommandType.Back)
         {
             CommandBack();
@@ -250,12 +280,43 @@ public class TacticsPresenter
         _view.CommandConfirmClose();
     }
 
+    private void UpdatePopupOpenAlcana(ConfirmComandType confirmComandType)
+    {
+        if (confirmComandType == ConfirmComandType.Yes)
+        {
+            _model.OpenAlcana();
+            CommandCheckAlcana();
+        } else{
+            _view.ActivateCommandList();
+            _view.CommandConfirmClose();
+        }
+    }
+
+    private void UpdatePopupUseAlcana(ConfirmComandType confirmComandType)
+    {
+        if (confirmComandType == ConfirmComandType.Yes)
+        {
+            CommandUseAlcana();
+        } else{
+            CommandDeleteAlcana();
+        }
+        _view.ActivateCommandList();
+        _view.CommandConfirmClose();
+    }
+
     private void CommandBack()
     {
         var eventData = new TacticsViewEvent(_backCommand);
         eventData.templete = _model.CommandType;
         updateCommand(eventData);
         SoundManager.Instance.PlayStaticSe(SEType.Cancel);
+    }
+
+    private void CommandAddAlcana()
+    {
+        _model.MakeAlcana();
+        _view.AddAlcana();
+        CommandRefresh();
     }
 
     private void CommandTacticsCommand(TacticsComandType tacticsComandType)
@@ -499,6 +560,7 @@ public class TacticsPresenter
     {
         _view.SetTurns(_model.Turns);
         _view.SetNuminous(_model.Currency);
+        _view.SetStageInfo(_model.CurrentData.CurrentStage);
         _view.CommandRefresh();
     }
 
@@ -510,5 +572,36 @@ public class TacticsPresenter
     private void CommandHideUi()
     {
         _view.SetActiveUi(false);
+    }
+
+    private void CommandOpenAlcana()
+    {
+        if (_model.CheckIsAlcana())
+        {
+            _view.DeactivateCommandList();
+            var popupInfo = new ConfirmInfo(DataSystem.System.GetTextData(1070).Text,(menuCommandInfo) => UpdatePopupOpenAlcana((ConfirmComandType)menuCommandInfo));
+            _view.CommandCallConfirm(popupInfo);
+        }
+    }
+
+    private void CommandCheckAlcana()
+    {
+        _view.DeactivateCommandList();
+        var alcana = _model.CurrentAlcana();
+        TextData textData = DataSystem.System.GetTextData(1080);
+        var popupInfo = new ConfirmInfo(alcana.Name + alcana.Help + textData.Text,(menuCommandInfo) => UpdatePopupUseAlcana((ConfirmComandType)menuCommandInfo));
+        _view.CommandCallConfirm(popupInfo);
+    }
+
+    private void CommandUseAlcana()
+    {
+        _model.UseAlcana();
+        _view.UseAlcana();
+        CommandRefresh();
+    }
+
+    private void CommandDeleteAlcana()
+    {
+        _model.DeleteAlcana();
     }
 }

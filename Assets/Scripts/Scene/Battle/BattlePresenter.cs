@@ -442,6 +442,7 @@ public class BattlePresenter : BasePresenter
         bool isEnd = false;
         if (_model.CheckVictory())
         {
+            _model.EndBattle();
             _view.StartBattleStartAnim(DataSystem.System.GetTextData(15020).Text);
             _view.SetAnimationEndTiming(180);
             _nextCommandType = Battle.CommandType.EndBattle;
@@ -449,6 +450,7 @@ public class BattlePresenter : BasePresenter
         } else
         if (_model.CheckDefeat())
         {
+            _model.EndBattle();
             _view.StartBattleStartAnim(DataSystem.System.GetTextData(15030).Text);
             _view.SetAnimationEndTiming(180);
             _nextCommandType = Battle.CommandType.EndBattle;

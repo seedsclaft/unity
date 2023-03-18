@@ -46,5 +46,7 @@ public enum StageEventType{
     None = 0,
     CommandDisable = 1, // コマンドを制限する
     TutorialBattle = 2, // バトルをチュートリアルで固定する
-    NeedAllTactics = 3 // 全員コマンドを選ばないと進まない
+    NeedAllTactics = 3, // 全員コマンドを選ばないと進まない
+    IsSubordinate = 4, // 隷従属度フラグを管理
+    IsAlcana = 5 // アルカナフラグを管理
 }

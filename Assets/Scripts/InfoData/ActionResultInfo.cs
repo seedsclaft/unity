@@ -80,22 +80,28 @@ public class ActionResultInfo
 
     public void MakeResultData(BattlerInfo subject,BattlerInfo target)
     {
-        _targetIndex = target.Index;
-        _execStateInfos[subject.Index] = new List<StateType>();
-        _execStateInfos[_targetIndex] = new List<StateType>();
+        if (subject != null && target != null)
+        {
+            _targetIndex = target.Index;
+            _execStateInfos[subject.Index] = new List<StateType>();
+            _execStateInfos[_targetIndex] = new List<StateType>();
+        }
         List<SkillsData.FeatureData> featureDatas = _actionInfo.Master.FeatureDatas;
         for (int i = 0; i < featureDatas.Count; i++)
         {
             MakeFeature(subject,target,featureDatas[i]);
         }
-        if (_hpDamage >= target.Hp)
+        if (subject != null && target != null)
         {
-            _isDead = true;
-            _deadIndexList.Add(target.Index);
-        }
-        if (_reDamage >= subject.Hp)
-        {
-            _deadIndexList.Add(subject.Index);
+            if (_hpDamage >= target.Hp)
+            {
+                _isDead = true;
+                _deadIndexList.Add(target.Index);
+            }
+            if (_reDamage >= subject.Hp)
+            {
+                _deadIndexList.Add(subject.Index);
+            }
         }
     }
 

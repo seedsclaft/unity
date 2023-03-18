@@ -110,4 +110,86 @@ public class BaseModel
     {
         return CurrentData.CurrentStage.CurrentTroopInfo();
     }
+
+    public void SetIsSubordinate(bool isSubordinate)
+    {
+        CurrentData.CurrentStage.SetIsSubordinate(isSubordinate);
+    }
+
+    public void SetIsAlcana(bool isAlcana)
+    {
+        CurrentData.CurrentStage.SetIsAlcana(isAlcana);
+    }
+
+    public bool CheckIsAlcana()
+    {
+        var stage = CurrentData.CurrentStage;
+        return stage.IsAlcana && stage.AlcanaIds.Count > 0 && stage.UsedAlcana == false;
+    }
+
+    public void MakeAlcana()
+    {
+        int alcanaId = CurrentData.CurrentStage.AlcanaIds[0];
+        CurrentData.CurrentStage.AlcanaIds.RemoveAt(0);
+        CurrentData.CurrentStage.AddAlcanaId(alcanaId);
+    }
+
+    public void OpenAlcana()
+    {
+        CurrentData.CurrentStage.OpenAlcana();
+    }
+
+    public AlcanaData.Alcana CurrentAlcana()
+    {
+        return CurrentData.CurrentStage.CurrentAlcana();
+    }
+
+    public void UseAlcana()
+    {
+        CurrentData.CurrentStage.UseAlcana(true);
+        var skill = new SkillInfo(1003);
+        if (skill.Master.SkillType == SkillType.UseAlcana)
+        {
+            // 基本的に味方全員
+            List<int> targetIndexs = new List<int>();
+            if (skill.Master.TargetType == TargetType.Friend)
+            {
+                foreach (var item in Actors())
+                {
+                    targetIndexs.Add(item.ActorId);
+                }
+            }
+            ActionInfo actionInfo = new ActionInfo(skill.Master.Id,0,-1,targetIndexs);
+        
+            List<ActionResultInfo> actionResultInfos = new List<ActionResultInfo>();
+            for (int i = 0; i < targetIndexs.Count;i++)
+            {
+                ActorInfo Target = Actors().Find(a => a.ActorId == targetIndexs[i]);
+                ActionResultInfo actionResultInfo = new ActionResultInfo(0,Target.ActorId,actionInfo);
+                actionResultInfo.MakeResultData(null,null);
+                actionResultInfos.Add(actionResultInfo);
+            }
+            actionInfo.SetActionResult(actionResultInfos);
+
+            
+            for (int i = 0; i < actionResultInfos.Count; i++)
+            {
+                ActorInfo target = Actors().Find(a => a.ActorId == actionResultInfos[i].TargetIndex);
+                if (actionResultInfos[i].HpHeal != 0)
+                {
+                    target.ChangeHp(actionResultInfos[i].HpHeal);
+                }
+                if (actionResultInfos[i].MpHeal != 0)
+                {
+                    target.ChangeMp(actionResultInfos[i].MpHeal);
+                }
+            }
+        }
+        
+    }
+
+    public void DeleteAlcana()
+    {
+        CurrentData.CurrentStage.DeleteAlcana();
+    }
 }

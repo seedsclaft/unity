@@ -35,6 +35,16 @@ public class StageInfo
 	private List<int> _selectActorIds = new List<int>();
 	public List<int> SelectActorIds { get {return _selectActorIds;}}
 
+    private bool _IsAlcana;
+    public bool IsAlcana {get {return _IsAlcana;}}
+	private List<int> _alcanaIds = new List<int>();
+    public List<int> AlcanaIds {get {return _alcanaIds;}}
+    private AlcanaType _currentAlcanaId;
+    private List<int> _ownAlcanaIds = new List<int>();
+    public List<int> OwnAlcanaIds {get {return _ownAlcanaIds;}}
+    private bool _usedAlcana = false;
+    public bool UsedAlcana {get {return _usedAlcana;}}
+
     public StageInfo(StagesData.StageData stageInfo)
     {
         _id = stageInfo.Id;
@@ -42,8 +52,12 @@ public class StageInfo
         _stageEvents = stageInfo.StageEvents;
         _currentTurn = 1;
         _IsSubordinate = false;
+        _IsAlcana = false;
+        _ownAlcanaIds.Clear();
         _subordinateValue = 50;
+        _usedAlcana = false;
 		MakeTroopData();
+		MakeAlcanaData();
     }
 
     public void AddSelectActorId(int actorId)
@@ -171,6 +185,7 @@ public class StageInfo
     {
         _currentBattleIndex = battleIndex;
     }
+
     public TroopInfo CurrentTroopInfo()
     {
         return _currentTroopInfos[_currentBattleIndex];
@@ -201,5 +216,51 @@ public class StageInfo
     {
         if (_IsSubordinate == false) return;
         _subordinateValue += value;
+    }
+
+    public void SetIsAlcana(bool isAlcana)
+    {
+        _IsAlcana = isAlcana;
+    }
+
+	private void MakeAlcanaData()
+    {
+        _alcanaIds.Clear();
+        List<AlcanaData.Alcana> alcana = DataSystem.Alcana;
+        while (_alcanaIds.Count < alcana.Count-1)
+        {
+            int rand = new Random().Next(0, alcana.Count-1);
+            if (_alcanaIds.FindIndex(a => a == rand) == -1)
+            {
+                _alcanaIds.Add(rand);
+            }
+        }
+    }
+
+    public void AddAlcanaId(int id)
+    {
+        _ownAlcanaIds.Add(id);
+    }
+
+    public void OpenAlcana()
+    {
+        int id = _ownAlcanaIds[0];
+        _ownAlcanaIds.RemoveAt(0);
+        _currentAlcanaId = (AlcanaType)id;
+    }
+
+    public AlcanaData.Alcana CurrentAlcana()
+    {
+        return DataSystem.Alcana.Find(a => a.Id == (int)_currentAlcanaId);
+    }
+
+    public void UseAlcana(bool isUse)
+    {
+        _usedAlcana = isUse;
+    }
+
+    public void DeleteAlcana()
+    {
+        _currentAlcanaId = (AlcanaType)(-1);
     }
 };

@@ -25,6 +25,7 @@ public class TacticsView : BaseView
     private new System.Action<TacticsViewEvent> _commandData = null;
     [SerializeField] private GameObject helpRoot = null;
     [SerializeField] private GameObject helpPrefab = null;
+    [SerializeField] private TacticsAlcana tacticsAlcana = null;
 
     private HelpWindow _helpWindow = null;
 
@@ -87,7 +88,7 @@ public class TacticsView : BaseView
     
     public void SetTacticsCommand(List<SystemData.MenuCommandData> menuCommands)
     {
-        tacticsCommandList.Initialize(menuCommands,(menuCommandInfo) => CallTacticsCommand(menuCommandInfo));
+        tacticsCommandList.Initialize(menuCommands,(menuCommandInfo) => CallTacticsCommand(menuCommandInfo),() => CallAlcanaEvent());
         SetInputHandler(tacticsCommandList.GetComponent<IInputHandlerEvent>());
         tacticsCommandList.SetHelpWindow(_helpWindow);
     }
@@ -119,6 +120,12 @@ public class TacticsView : BaseView
         eventData.templete = commandType;
         _commandData(eventData);
         _lastCallEventType = eventData.commandType;
+    }
+
+    private void CallAlcanaEvent()
+    {
+        var eventData = new TacticsViewEvent(CommandType.OpenAlcana);
+        _commandData(eventData);
     }
 
     public void SetActors(List<ActorInfo> actorInfos,List<SystemData.MenuCommandData> confirmCommands)
@@ -172,6 +179,16 @@ public class TacticsView : BaseView
         tacticsRecoveryList.Refresh();
         tacticsBattleList.Refresh();
         tacticsResourceList.Refresh();
+    }
+
+    public void AddAlcana()
+    {
+        tacticsAlcana.StartAnim();
+    }
+
+    public void UseAlcana()
+    {
+        tacticsAlcana.UseAnim();
     }
 
     private void CallActorTrain(int actorId)
@@ -429,6 +446,16 @@ public class TacticsView : BaseView
         
     }
 
+    public void ActivateCommandList()
+    {
+        tacticsCommandList.Activate();
+    }
+
+    public void DeactivateCommandList()
+    {
+        tacticsCommandList.Deactivate();
+    }
+
     void LateUpdate() {
         if (_lastCallEventType != CommandType.None){
             _lastCallEventType = CommandType.None;
@@ -441,6 +468,7 @@ namespace Tactics
     public enum CommandType
     {
         None = 0,
+        AddAlcana,
         TacticsCommand,
         AttributeType,
         DecideActor,
@@ -464,6 +492,7 @@ namespace Tactics
         ResourceClose,
         ShowUi,
         HideUi,
+        OpenAlcana,
         Back
     }
 }
