@@ -18,7 +18,7 @@ public class BattleActorList : ListWindow , IInputHandlerEvent
         get {return Index;}
     }
 
-    public void Initialize(System.Action<List<int>> callEvent,System.Action cancelEvent)
+    public void Initialize(System.Action<List<int>> callEvent,System.Action cancelEvent,System.Action enemySelectEvent)
     {
         damageRoots.ForEach(a => a.SetActive(false));
         InitializeListView(rows);
@@ -38,7 +38,7 @@ public class BattleActorList : ListWindow , IInputHandlerEvent
             _battleActors.Add(battleActor);
             ObjectList[i].SetActive(false);
         }
-        SetInputHandler((a) => CallInputHandler(a,callEvent,cancelEvent));
+        SetInputHandler((a) => CallInputHandler(a,callEvent,cancelEvent,enemySelectEvent));
     }
 
     public void Refresh(List<BattlerInfo> battlerInfos)
@@ -147,7 +147,7 @@ public class BattleActorList : ListWindow , IInputHandlerEvent
         return _battleActors[index].BattlerInfoComponent;
     }
     
-    private void CallInputHandler(InputKeyType keyType, System.Action<List<int>> callEvent,System.Action cancelEvent)
+    private void CallInputHandler(InputKeyType keyType, System.Action<List<int>> callEvent,System.Action cancelEvent,System.Action enemySelectEvent)
     {
         if (keyType == InputKeyType.Decide)
         {
@@ -162,6 +162,10 @@ public class BattleActorList : ListWindow , IInputHandlerEvent
         if (keyType == InputKeyType.Cancel)
         {
             cancelEvent();
+        }
+        if (keyType == InputKeyType.SideLeft1)
+        {
+            enemySelectEvent();
         }
     }
 

@@ -85,6 +85,22 @@ public class BattlerInfoComponent : MonoBehaviour
         }
         ChangeHp(_battlerInfo.Hp);
         ChangeMp(_battlerInfo.Mp);
+        if (_battlerInfo.IsAlive())
+        {
+            gameObject.SetActive(true);
+            ShowUI();
+        }
+    }
+    
+    public void ShowUI()
+    {
+        if (_battlerInfo.isActor)
+        {
+            actorInfoComponent.ShowUI();
+        } else
+        {
+            enemyInfoComponent.ShowUI();
+        }
     }
 
     public void HideUI()
@@ -125,6 +141,7 @@ public class BattlerInfoComponent : MonoBehaviour
     public void StartBlink()
     {
         Image image = BattleImage();
+        if (image == null) return;
         Sequence sequence = DOTween.Sequence()
             .Append(image.DOFade(0f, 0.05f))
             .Append(image.DOFade(1f, 0.05f))
@@ -142,22 +159,29 @@ public class BattlerInfoComponent : MonoBehaviour
     public void StartStatePopup(DamageType damageType,string stateName)
     {
         var battleDamage = CreatePrefab();
-        _battleDamages.Add(battleDamage);
         battleDamage.StartStatePopup(damageType,stateName,_battleDamages.Count);
+        _battleDamages.Add(battleDamage);
     }
 
     public void StartDeathAnimation()
     {
-        deathAnimation.enabled = true;
-        _deathAnimation = 0.01f;
-        HideUI();
+        if (_battlerInfo.isActor)
+        {
+
+        } else{
+            deathAnimation.enabled = true;
+            _deathAnimation = 0.01f;
+            HideUI();
+        }
     }
     
     public void StartAnimation(EffekseerEffectAsset effectAsset,int animationPosition)
     {
+        Image image = BattleImage();
+        if (image == null) return;
         if (!_battlerInfo.isActor)
         {
-            RectTransform imagerect = BattleImage().gameObject.GetComponent < RectTransform > ();
+            RectTransform imagerect = image.gameObject.GetComponent < RectTransform > ();
             RectTransform effectRect = effekseerEmitter.gameObject.GetComponent < RectTransform > ();
             if (animationPosition == 0){
                 effectRect.localPosition = new Vector2(0,imagerect.sizeDelta.y / 2);
@@ -172,11 +196,13 @@ public class BattlerInfoComponent : MonoBehaviour
 
     public void SetSelectable(bool isSelectable)
     {
+        Image image = BattleImage();
+        if (image == null) return;
         if (isSelectable)
         {
-            BattleImage().color = new Color(255,255,255,255);
+            image.color = new Color(255,255,255,255);
         } else{
-            BattleImage().color = new Color(255,255,255,128);
+            image.color = new Color(255,255,255,128);
         }
     }
 
@@ -229,6 +255,7 @@ public class BattlerInfoComponent : MonoBehaviour
     
     private Image BattleImage()
     {
+        if (_battlerInfo == null) return null;
         Image image;
         if (_battlerInfo.isActor)
         {

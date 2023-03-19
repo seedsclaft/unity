@@ -168,6 +168,12 @@ public class ActorInfoComponent : MonoBehaviour
         statusInfoComponent.UpdateMp(value,maxMp);
     }
 
+    public void ShowUI()
+    {
+        if (statusInfoComponent == null) return;
+        statusInfoComponent.gameObject.SetActive(true);
+    }
+
     public void HideUI()
     {
         if (statusInfoComponent == null) return;

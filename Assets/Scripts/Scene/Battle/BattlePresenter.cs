@@ -86,6 +86,14 @@ public class BattlePresenter : BasePresenter
         {
             CommandCondition();
         }
+        if (viewEvent.commandType == Battle.CommandType.SelectEnemy)
+        {
+            CommandSelectEnemy();
+        }
+        if (viewEvent.commandType == Battle.CommandType.SelectParty)
+        {
+            CommandSelectParty();
+        }
         if (viewEvent.commandType == Battle.CommandType.Back)
         {
             CommandBack();
@@ -106,6 +114,7 @@ public class BattlePresenter : BasePresenter
             _view.StartDamage(chainActionResults[i].TargetIndex,DamageType.HpDamage,chainActionResults[i].HpDamage);
             if (chainActionResults[i].IsDead)
             {
+                SoundManager.Instance.PlayStaticSe(SEType.Defeat);
                 _view.StartDeathAnimation(chainActionResults[i].TargetIndex);
             }
         }
@@ -115,6 +124,7 @@ public class BattlePresenter : BasePresenter
             _view.StartDamage(benedictionActionResults[i].TargetIndex,DamageType.HpHeal,benedictionActionResults[i].HpHeal);
             if (benedictionActionResults[i].IsDead)
             {
+                SoundManager.Instance.PlayStaticSe(SEType.Defeat);
                 _view.StartDeathAnimation(benedictionActionResults[i].TargetIndex);
             }
         }
@@ -175,10 +185,16 @@ public class BattlePresenter : BasePresenter
             _view.RefreshBattlerPartyLayerTarget(actionInfo);
         } else
         {
-            _view.ShowEnemyTarget();
-            _view.ShowPartyTarget();
-            _view.RefreshBattlerPartyLayerTarget(actionInfo);
             _view.RefreshBattlerEnemyLayerTarget(actionInfo);
+            _view.RefreshBattlerPartyLayerTarget(actionInfo);
+            if (_model.CurrentBattler.isActor)
+            {
+                _view.ShowEnemyTarget();
+                _view.DeactivateActorList();
+            } else{
+                _view.ShowPartyTarget();
+                _view.DeactivateEnemyList();
+            }
         }
         _backCommandType = Battle.CommandType.DecideActor;
         _view.SetActiveBack(true);
@@ -245,6 +261,7 @@ public class BattlePresenter : BasePresenter
         ActionInfo actionInfo = _model.CurrentActionInfo();
         if (actionInfo.actionResults.Count == 0)
         {
+            _nextCommandType = Battle.CommandType.SkillAction;
             CommandEndAnimation();
             return;
         }
@@ -312,6 +329,7 @@ public class BattlePresenter : BasePresenter
                 }
                 if (actionResultInfos[i].ReDamage > 0)
                 {
+                    SoundManager.Instance.PlayStaticSe(SEType.Damage);
                     _view.StartDamage(actionResultInfos[i].SubjectIndex,DamageType.HpDamage,actionResultInfos[i].ReDamage);
                     _view.StartBlink(actionResultInfos[i].SubjectIndex);
                 }
@@ -375,16 +393,20 @@ public class BattlePresenter : BasePresenter
         _view.RefreshStatus();
         // PlusSkill
         _model.CheckPlusSkill();
-        // 勝敗判定
-        if (CheckBattleEnd())
-        {
-            return;
-        }
         // TriggerAfter
         var result = _model.CheckTriggerSkillInfos(TriggerTiming.After);
         _model.TurnEnd();
 
 
+        // 勝敗判定
+        if (CheckBattleEnd() && result == false)
+        {
+            return;
+        }
+        if (result == true)
+        {        
+            _view.RefreshStatus();
+        }
 
         // 次の行動者がいれば続ける
         if (_model.CurrentActionInfo() != null)
@@ -466,5 +488,47 @@ public class BattlePresenter : BasePresenter
         _view.SetCondition(_model.CurrentBattler.StateInfos);
         _view.ShowConditionAll();
         SoundManager.Instance.PlayStaticSe(SEType.Cursor);
+    }
+
+    private void CommandSelectEnemy()
+    {
+        ActionInfo actionInfo = _model.CurrentActionInfo();
+        if (actionInfo.TargetType == TargetType.Opponent)
+        {
+            //_view.ShowEnemyTarget();
+            //_view.RefreshBattlerEnemyLayerTarget(actionInfo);
+        } else
+        if (actionInfo.TargetType == TargetType.Friend || actionInfo.TargetType == TargetType.Self)
+        {
+            //_view.ShowPartyTarget();
+            //_view.RefreshBattlerPartyLayerTarget(actionInfo);
+        } else
+        {
+            _view.RefreshBattlerEnemyLayerTarget(actionInfo);
+            _view.RefreshBattlerPartyLayerTarget(actionInfo);
+            _view.ShowEnemyTarget();
+            _view.DeactivateActorList();
+        }
+    }
+
+    private void CommandSelectParty()
+    {
+        ActionInfo actionInfo = _model.CurrentActionInfo();
+        if (actionInfo.TargetType == TargetType.Opponent)
+        {
+            //_view.ShowEnemyTarget();
+            //_view.RefreshBattlerEnemyLayerTarget(actionInfo);
+        } else
+        if (actionInfo.TargetType == TargetType.Friend || actionInfo.TargetType == TargetType.Self)
+        {
+            //_view.ShowPartyTarget();
+            //_view.RefreshBattlerPartyLayerTarget(actionInfo);
+        } else
+        {
+            _view.RefreshBattlerEnemyLayerTarget(actionInfo);
+            _view.RefreshBattlerPartyLayerTarget(actionInfo);
+            _view.ShowPartyTarget();
+            _view.DeactivateEnemyList();
+        }
     }
 }

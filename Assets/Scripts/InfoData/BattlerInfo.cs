@@ -57,7 +57,13 @@ public class BattlerInfo
         _charaId = actorInfo.ActorId;
         _level = actorInfo.Level;
         StatusInfo statusInfo = new StatusInfo();
-        statusInfo.SetParameter(actorInfo.CurrentStatus.Hp,actorInfo.CurrentStatus.Mp,actorInfo.CurrentStatus.Atk,actorInfo.CurrentStatus.Def,actorInfo.CurrentStatus.Spd);
+        statusInfo.SetParameter(
+            actorInfo.CurrentParameter(StatusParamType.Hp),
+            actorInfo.CurrentParameter(StatusParamType.Mp),
+            actorInfo.CurrentParameter(StatusParamType.Atk),
+            actorInfo.CurrentParameter(StatusParamType.Def),
+            actorInfo.CurrentParameter(StatusParamType.Spd)
+        );
         _status = statusInfo;
         _index = index;
         _skills = actorInfo.Skills;
@@ -78,7 +84,13 @@ public class BattlerInfo
         _charaId = enemyData.Id;
         _level = lv;
         StatusInfo statusInfo = new StatusInfo();
-        statusInfo.SetParameter(enemyData.BaseStatus.Hp,enemyData.BaseStatus.Mp,enemyData.BaseStatus.Atk,enemyData.BaseStatus.Def,enemyData.BaseStatus.Spd);
+        statusInfo.SetParameter(
+            enemyData.BaseStatus.Hp + (int)Math.Floor(lv * enemyData.BaseStatus.Hp * 0.1f),
+            enemyData.BaseStatus.Mp + (int)Math.Floor(lv * enemyData.BaseStatus.Mp * 0.1f),
+            enemyData.BaseStatus.Atk + (int)Math.Floor(lv * enemyData.BaseStatus.Atk * 0.05f),
+            enemyData.BaseStatus.Def + (int)Math.Floor(lv * enemyData.BaseStatus.Def * 0.05f),
+            enemyData.BaseStatus.Spd + (int)Math.Floor(lv * enemyData.BaseStatus.Spd * 0.05f)
+        );
         _status = statusInfo;
         _index = index + 100;
         _isActor = false;
@@ -130,7 +142,7 @@ public class BattlerInfo
         {
             rand = 0;
         }
-        _ap = 400 - (Status.Spd + rand) * 4;
+        _ap = 500 - (Status.Spd + rand) * 4;
         if (IsState(StateType.SetAfterAp))
         {
             _ap = StateEffect(StateType.SetAfterAp);
@@ -435,7 +447,7 @@ public class BattlerInfo
                     }
                     if (triggerDatas[j].TriggerType == TriggerType.SelfDead)
                     {
-                        if ( TriggerdSelfDeadSkillInfos(triggerDatas[j],actionInfo) )
+                        if ( TriggerdSelfDeadSkillInfos(triggerDatas[j],actionInfo.actionResults) )
                         {
                             triggeredSkills.Add(skillInfo);
                         }
@@ -533,9 +545,8 @@ public class BattlerInfo
         return IsTriggered;
     }
 
-    private bool TriggerdSelfDeadSkillInfos(SkillsData.TriggerData triggerData,ActionInfo actionInfo){
+    private bool TriggerdSelfDeadSkillInfos(SkillsData.TriggerData triggerData,List<ActionResultInfo> actionResultInfos){
         bool IsTriggered = false;
-        List<ActionResultInfo> actionResultInfos = actionInfo.actionResults;
         if (actionResultInfos.Find(a => a.IsDead && a.TargetIndex == Index) != null)
         {
             IsTriggered = true;

@@ -188,7 +188,7 @@ public class ActionResultInfo
         if (target.IsState(StateType.CounterOura) && !isNoEffect)
         {
             _execStateInfos[target.Index].Add(StateType.CounterOura);
-            _reDamage = (int)SkillDamage;
+            _reDamage = (int)Mathf.Floor(SkillDamage * target.StateEffectAll(StateType.CounterOura) * 0.01f);
         }
         SkillDamage -= (DefValue * 0.5f);
         float DamageValue = Mathf.Max(1,SkillDamage);
@@ -196,6 +196,7 @@ public class ActionResultInfo
         // 属性補正
         // クリティカル
         _hpDamage = ApplyVariance(_hpDamage);
+        _hpDamage = Mathf.Max(1,_hpDamage);
         if (subject.IsState(StateType.Drain))
         {
             _reHeal = (int)Mathf.Floor(_hpDamage * subject.StateEffectAll(StateType.Drain) * 0.01f);
@@ -256,7 +257,7 @@ public class ActionResultInfo
     {
         if (target.Kinds.IndexOf((KindType)featureData.Param1) != -1)
         {
-            _hpDamage = (int)Mathf.Floor( _hpHeal * featureData.Param3 * 0.01f );
+            _hpDamage = (int)Mathf.Floor( _hpHeal * featureData.Param3 * 0.01f);
             _hpHeal = 0;
         }
     }

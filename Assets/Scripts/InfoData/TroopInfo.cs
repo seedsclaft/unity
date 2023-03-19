@@ -23,7 +23,10 @@ public class TroopInfo
 
     public void RemoveAtEnemyIndex(int enemyIndex){
         var battler = _battlerInfos.Find(a => a.Index == enemyIndex);
-        _battlerInfos.Remove(battler);
+        if (battler != null)
+        {
+            _battlerInfos.Remove(battler);
+        }
     }
     
     public void AddGetItemInfo(GetItemInfo getItemInfo){

@@ -102,7 +102,7 @@ MonoBehaviour:
     AnimationName: NA_Effekseer/NA_shooting_002
     AnimationPosition: 0
     AnimationType: 1
-    DamageTiming: 26
+    DamageTiming: 36
     MpCost: 0
     Attribute: 2
     Scope: 1
@@ -174,7 +174,7 @@ MonoBehaviour:
     AnimationPosition: 1
     AnimationType: 2
     DamageTiming: 48
-    MpCost: 10
+    MpCost: 5
     Attribute: 1
     Scope: 2
     SkillType: 1
@@ -185,7 +185,7 @@ MonoBehaviour:
     FeatureDatas:
     - SkillId: 102
       FeatureType: 1
-      Param1: 250
+      Param1: 150
       Param2: 0
       Param3: 0
     TriggerDatas: []
@@ -520,7 +520,7 @@ MonoBehaviour:
       FeatureType: 21
       Param1: 103
       Param2: 0
-      Param3: 0
+      Param3: 150
     - SkillId: 301
       FeatureType: 21
       Param1: 106
@@ -717,7 +717,7 @@ MonoBehaviour:
     FeatureDatas:
     - SkillId: 402
       FeatureType: 2
-      Param1: 15
+      Param1: 25
       Param2: 0
       Param3: 0
     - SkillId: 402
@@ -1036,7 +1036,7 @@ MonoBehaviour:
     AnimationName: NA_Effekseer/NA_smoke_003_c7
     AnimationPosition: 0
     AnimationType: 1
-    DamageTiming: 26
+    DamageTiming: 110
     MpCost: 0
     Attribute: 5
     Scope: 3

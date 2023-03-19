@@ -23,7 +23,13 @@ public class BootPresenter
         _busy = false;
         Debug.Log("Boot Success");
         Application.targetFrameRate = 60;
-        _view.CommandSceneChange(Scene.Title);
+        if (_view.TestMode)
+        {
+            _view.CommandInitSaveInfo();
+            _view.CommandSceneChange(Scene.Battle);
+        } else{
+            _view.CommandSceneChange(Scene.Title);
+        }
         //SaveSystem.SaveStart();
     }
 }

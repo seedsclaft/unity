@@ -104,7 +104,7 @@ public class BattleModel : BaseModel
                     target.GainHp(chainDamage * -1);
                     ActionResultInfo actionResultInfo = new ActionResultInfo(_battlers[i].Index,stateInfo.TargetIndex,null);
                     actionResultInfo.HpDamage = chainDamage;
-                    if (actionResultInfo.HpDamage > target.Hp)
+                    if (target.Hp <= 0)
                     {
                         actionResultInfo.IsDead = true;
                         _battlers[i].RemoveState(stateInfo);
@@ -417,7 +417,7 @@ public class BattleModel : BaseModel
                     }
                 } else
                 {
-                    List<BattlerInfo> battlerInfos = BattlerEnemies();
+                    List<BattlerInfo> battlerInfos = BattlerEnemies().FindAll(a => a.IsAlive());
                     for (int i = 0;i < battlerInfos.Count;i++)
                     {
                         targetIndexList.Add(battlerInfos[i].Index);

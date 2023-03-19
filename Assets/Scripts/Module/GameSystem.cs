@@ -6,7 +6,8 @@ using UtageExtensions;
 
 public class GameSystem : MonoBehaviour
 {
-    
+    [SerializeField] private bool testMode = false;
+    public bool TestMode {get {return testMode;}}
     [SerializeField] private GameObject mainRoot = null;
     [SerializeField] private GameObject uiRoot = null;
     [SerializeField] private GameObject confirmRoot = null;
@@ -14,6 +15,7 @@ public class GameSystem : MonoBehaviour
     [SerializeField] private GameObject statusRoot = null;
     [SerializeField] private GameObject statusPrefab = null;
     [SerializeField] private AdvEngine advEngine = null;
+    [SerializeField] private DebugBattleData debugBattleData = null;
     
     private BaseView _currentScene = null;
     private ConfirmView _confirmView = null;
@@ -60,7 +62,10 @@ public class GameSystem : MonoBehaviour
         if (viewEvent.commandType == Base.CommandType.SceneChange)
         {
             CommandSceneChange((Scene)viewEvent.templete);
-            Debug.Log("Start Change Scene");
+            if (testMode && (Scene)viewEvent.templete == Scene.Battle)
+            {
+                debugBattleData.MakeBattleActor();
+            }
             //advEngine.JumpScenario("Start");
         }
         if (viewEvent.commandType == Base.CommandType.InitSaveInfo)
@@ -149,6 +154,7 @@ public class GameSystem : MonoBehaviour
         prefab.transform.SetParent(uiRoot.transform, false);
         _currentScene = prefab.GetComponent<BaseView>();
         _currentScene.SetEvent((type) => updateCommand(type));
+        _currentScene.SetTestMode(testMode);
     }
 
     private void CommandSetTemplete(TempInfo templete){

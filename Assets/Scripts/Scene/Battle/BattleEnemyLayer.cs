@@ -17,7 +17,7 @@ public class BattleEnemyLayer : ListWindow , IInputHandlerEvent
     private List<BattlerInfo> _battleInfos = new List<BattlerInfo>();
     private int _selectIndex = -1;
 
-    public void Initialize(List<BattlerInfo> battlerInfos ,System.Action<List<int>> callEvent,System.Action cancelEvent)
+    public void Initialize(List<BattlerInfo> battlerInfos ,System.Action<List<int>> callEvent,System.Action cancelEvent,System.Action selectPartyEvent)
     {
         _battleInfos = battlerInfos;
         frontDamageRoots.ForEach(a => a.SetActive(false));
@@ -61,7 +61,7 @@ public class BattleEnemyLayer : ListWindow , IInputHandlerEvent
             _battleEnemies.Add(battleEnemy);
             frontIndex++;
         }
-        SetInputHandler((a) => CallInputHandler(a,callEvent,cancelEvent));
+        SetInputHandler((a) => CallInputHandler(a,callEvent,cancelEvent,selectPartyEvent));
         UpdateAllUnSelect();
     }
 
@@ -195,7 +195,7 @@ public class BattleEnemyLayer : ListWindow , IInputHandlerEvent
         return _battleEnemies[index - 100].BattlerInfoComponent;
     }
     
-    private void CallInputHandler(InputKeyType keyType, System.Action<List<int>> callEvent,System.Action cancelEvent)
+    private void CallInputHandler(InputKeyType keyType, System.Action<List<int>> callEvent,System.Action cancelEvent,System.Action selectPartyEvent)
     {
         if (keyType == InputKeyType.Decide)
         {
@@ -275,6 +275,10 @@ public class BattleEnemyLayer : ListWindow , IInputHandlerEvent
                     }
                 }
             }
+        }
+        if (keyType == InputKeyType.SideRight1)
+        {
+            selectPartyEvent();
         }
     }
 

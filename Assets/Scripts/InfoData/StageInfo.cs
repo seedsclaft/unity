@@ -297,6 +297,23 @@ public class StageInfo
             }
         }
     }
+    
+    public void TestTroops(int troopId)
+    {
+        _currentTroopInfos.Clear();
+        List<TroopsData.TroopData> troopDatas = DataSystem.Troops.FindAll(a => a.TroopId == troopId);
+        
+        TroopInfo troopInfo = new TroopInfo(troopDatas[0].TroopId);
+        for (int i = 0;i < troopDatas.Count;i++)
+        {
+            EnemiesData.EnemyData enemyData = DataSystem.Enemies.Find(a => a.Id == troopDatas[i].EnemyId);
+            BattlerInfo enemy = new BattlerInfo(enemyData,troopDatas[i].Lv,i,troopDatas[i].Line);
+            troopInfo.AddEnemy(enemy);
+        }
+        _currentTroopInfos.Add(troopInfo);
+        _currentBattleIndex = 0;
+    }
+
     public void SeekStage()
     {
         _currentTurn++;

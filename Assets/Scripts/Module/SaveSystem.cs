@@ -108,12 +108,19 @@ public class SavePlayInfo
         _actors.Clear();
     }
 
-	public void MakeStageData(int actorId)
+	public void MakeStageData(int actorId,int debugStageId = 0)
 	{
 		InitActors();
 		_party.InitActors();
 		AddActor(actorId);
-		int stageId = _party.StageId;
+		int stageId = 0;
+		if (debugStageId != 0)
+		{
+			stageId = debugStageId;
+		} else
+		{
+			stageId = _party.StageId;;
+		}
 		StagesData.StageData stageData = DataSystem.Stages.Find(a => a.Id == stageId);
 		_currentStage = new StageInfo(stageData);
 		_currentStage.AddSelectActorId(actorId);
@@ -123,6 +130,17 @@ public class SavePlayInfo
 	public void AddActor(int actorId)
 	{
 		ActorsData.ActorData actorData = DataSystem.Actors.Find(actor => actor.Id == actorId);
+		if (actorData != null)
+		{
+			ActorInfo actorInfo = new ActorInfo(actorData);
+			actorInfo.InitSkillInfo(actorData.LearningSkills);
+			_actors.Add(actorInfo);
+			_party.AddActor(actorInfo.ActorId);
+		}
+	}
+	
+	public void AddTestActor(ActorsData.ActorData actorData)
+	{
 		if (actorData != null)
 		{
 			ActorInfo actorInfo = new ActorInfo(actorData);

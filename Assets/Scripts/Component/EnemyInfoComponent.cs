@@ -61,6 +61,12 @@ public class EnemyInfoComponent : MonoBehaviour
         statusInfoComponent.UpdateMp(value,maxHp);
     }
 
+    public void ShowUI()
+    {
+        if (statusInfoComponent == null) return;
+        statusInfoComponent.gameObject.SetActive(true);
+    }
+
     public void HideUI()
     {
         if (statusInfoComponent == null) return;

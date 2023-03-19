@@ -91,7 +91,7 @@ public class BattleView : BaseView
 
     public void CreateObject()
     {
-        battleActorList.Initialize(actorInfo => CallActorList(actorInfo),() => OnClickBack());
+        battleActorList.Initialize(actorInfo => CallActorList(actorInfo),() => OnClickBack(),() => OnClickSelectEnemy());
         SetInputHandler(battleActorList.GetComponent<IInputHandlerEvent>());
         
         GameObject prefab = Instantiate(animPrefab);
@@ -165,7 +165,7 @@ public class BattleView : BaseView
     
     public void SetEnemies(List<BattlerInfo> battlerInfos)
     {
-        battleEnemyLayer.Initialize(battlerInfos,(batterInfo) => CallEnemyInfo(batterInfo),() => OnClickBack());
+        battleEnemyLayer.Initialize(battlerInfos,(batterInfo) => CallEnemyInfo(batterInfo),() => OnClickBack(),() => OnClickSelectParty());
         SetInputHandler(battleEnemyLayer.GetComponent<IInputHandlerEvent>());
         foreach (var item in battlerInfos)
         {
@@ -303,6 +303,18 @@ public class BattleView : BaseView
     public void DeactivateActorList()
     {
         battleActorList.Deactivate();
+    }
+
+    private void OnClickSelectEnemy()
+    {
+        var eventData = new BattleViewEvent(CommandType.SelectEnemy);
+        _commandData(eventData);
+    }
+
+    private void OnClickSelectParty()
+    {
+        var eventData = new BattleViewEvent(CommandType.SelectParty);
+        _commandData(eventData);
     }
 
     public void RefreshBattlerEnemyLayerTarget(ActionInfo actionInfo)
@@ -470,6 +482,8 @@ namespace Battle
         EndRegeneAnimation,
         StartDamage,
         Condition,
+        SelectEnemy,
+        SelectParty,
         EndBattle
     }
 }

@@ -493,7 +493,7 @@ MonoBehaviour:
   actorInfoComponent: {fileID: 3569719491236088226}
   enemyInfoComponent: {fileID: 0}
   effekseerEmitter: {fileID: 8793950979201513816}
-  deathAnimation: {fileID: 0}
+  deathAnimation: {fileID: 1665973487209770148}
   battleDamagePrefab: {fileID: 1787456025739594925, guid: 39a4f8424bdfa3c469946a6405fb012c,
     type: 3}
 --- !u!1 &2485161313225115955
@@ -971,6 +971,7 @@ GameObject:
   - component: {fileID: 4518572166421839395}
   - component: {fileID: 5137127734168495587}
   - component: {fileID: 3151704133158308794}
+  - component: {fileID: 1665973487209770148}
   m_Layer: 5
   m_Name: FaceImage
   m_TagString: Untagged
@@ -1054,6 +1055,25 @@ MonoBehaviour:
   effectAsset: {fileID: 0}
   playOnStart: 0
   isLooping: 0
+--- !u!114 &1665973487209770148
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4196552526076833466}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5d453a206e2a154495150809124168f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ForceMaterial: {fileID: 0}
+  ActiveChange: 1
+  _Alpha: 1
+  Seed: 1
+  Destroyed: 0
+  ShaderChange: 0
+  ActiveUpdate: 1
 --- !u!1 &4544290193371194933
 GameObject:
   m_ObjectHideFlags: 0

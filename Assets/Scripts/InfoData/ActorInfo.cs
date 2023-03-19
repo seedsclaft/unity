@@ -77,6 +77,7 @@ public class ActorInfo
         _level = actorData.InitLv;
         _sp = 10;
         _plusStatus = new StatusInfo();
+        _plusStatus.SetParameter(actorData.PlusStatus.Hp,actorData.PlusStatus.Mp,actorData.PlusStatus.Atk,actorData.PlusStatus.Def,actorData.PlusStatus.Spd);
         _tempStatus = new StatusInfo();
         _currentStatus = new StatusInfo();
         _currentStatus.SetParameter(_baseStatus.Hp,_baseStatus.Mp,_baseStatus.Atk,_baseStatus.Def,_baseStatus.Spd);
@@ -182,7 +183,7 @@ public class ActorInfo
     }
 
 
-    private int CurrentParameter(StatusParamType statusParamType)
+    public int CurrentParameter(StatusParamType statusParamType)
     {
         return _baseStatus.GetParameter(statusParamType) + _plusStatus.GetParameter(statusParamType);
     }
