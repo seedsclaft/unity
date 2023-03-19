@@ -14,112 +14,132 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _data:
   - Id: 1
-    Name: "\u611A\u8005"
-    Help: "\u920D\u8DB3\u4ED8\u4E0E"
+    Name: "\u3010\u611A\u8005\u3011"
+    Help: "\u6551\u6E08\u57F7\u884C\u306E\u6575\u306B\u920D\u8DB3\u4ED8\u4E0E"
     FilePath: 0_fool
     SkillId: 1001
   - Id: 2
-    Name: "\u9B54\u8853\u5E2B"
-    Help: "\u708E\u30A2\u30C3\u30D7"
+    Name: "\u3010\u9B54\u8853\u5E2B\u3011"
+    Help: "\u30E6\u30CB\u30C3\u30C8\u5168\u54E1\u306ESP\u309220\u5165\u624B\u3059\u308B"
     FilePath: 1_magician
     SkillId: 1002
   - Id: 3
     Name: "\u3010\u5973\u6559\u7687\u3011"
-    Help: "HP\u56DE\u5FA9"
+    Help: "HP\u3068MP\u309230\u56DE\u5FA9\u3059\u308B"
     FilePath: 2_high_priestess
     SkillId: 1003
   - Id: 4
-    Name: "\u5973\u5E1D"
-    Help: "\u6700\u5927MP\u30A2\u30C3\u30D7"
+    Name: "\u3010\u5973\u5E1D\u3011"
+    Help: "HP\u3092\u5168\u56DE\u5FA9\u3059\u308B"
     FilePath: 3_empress
     SkillId: 1004
   - Id: 5
-    Name: "\u7687\u5E1D"
-    Help: "\u6700\u5927HP\u30A2\u30C3\u30D7"
+    Name: "\u3010\u7687\u5E1D\u3011"
+    Help: "Numinous\u306E\u6D88\u8CBB\u30B3\u30B9\u30C8\u3092\u534A\u5206\u306B\u3059\u308B"
     FilePath: 4_emperor
     SkillId: 1005
   - Id: 6
-    Name: "\u6CD5\u738B"
-    Help: "MP\u56DE\u5FA9"
+    Name: "\u3010\u6CD5\u738B\u3011"
+    Help: "MP\u3092\u5168\u56DE\u5FA9\u3059\u308B"
     FilePath: 5_hierophant
     SkillId: 1006
   - Id: 7
-    Name: "\u604B\u611B"
-    Help: "\u30E6\u30CB\u30C3\u30C8\u3092\u8607\u751F\u3059\u308B"
+    Name: "\u3010\u604B\u611B\u3011"
+    Help: "\u30ED\u30B9\u30C8\u3057\u305F\u30E6\u30CB\u30C3\u30C8\u3092\u8607\u751F\u3059\u308B"
     FilePath: 6_lovers
     SkillId: 1007
   - Id: 8
-    Name: "\u6226\u8ECA"
-    Help: "\u706B\u50B7\u4ED8\u4E0E"
+    Name: "\u3010\u6226\u8ECA\u3011"
+    Help: "\u6551\u6E08\u57F7\u884C\u6642\u30E6\u30CB\u30C3\u30C8\u5168\u54E1\u306E\u6700\u5927HP\u3068HP\u309220\u30A2\u30C3\u30D7"
     FilePath: 7_chariot
     SkillId: 1008
   - Id: 9
-    Name: "\u6B63\u7FA9"
-    Help: "\u6C37\u30A2\u30C3\u30D7"
+    Name: "\u3010\u6B63\u7FA9\u3011"
+    Help: "\u96B7\u5F93\u5C5E\u5EA6\u309230\u30A2\u30C3\u30D7\u3059\u308B"
     FilePath: 8_strength
     SkillId: 1009
   - Id: 10
-    Name: "\u96A0\u8005"
-    Help: "\u96F7\u30A2\u30C3\u30D7"
+    Name: "\u3010\u96A0\u8005\u3011"
+    Help: "\u6551\u6E08\u57F7\u884C\u6642\u30E6\u30CB\u30C3\u30C8\u5168\u54E1\u306E\u56DE\u907F\u7387\u309250\u30A2\u30C3\u30D7"
     FilePath: 9_hermit
     SkillId: 1010
   - Id: 11
-    Name: "\u904B\u547D"
-    Help: "2\u56DE\u884C\u52D5\u4ED8\u4E0E"
+    Name: "\u3010\u904B\u547D\u3011"
+    Help: "\u6B21\u306B\u958B\u793A\u3059\u308B\u30A2\u30EB\u30AB\u30CA\u304C\u5927\u30A2\u30EB\u30AB\u30CA\u306B\u306A\u308B"
     FilePath: 10_fortune
     SkillId: 1011
   - Id: 12
-    Name: "\u525B\u6BC5"
-    Help: "ATK\u30A2\u30C3\u30D7"
+    Name: "\u3010\u525B\u6BC5\u3011"
+    Help: "\u6551\u6E08\u57F7\u884C\u6642\u30E6\u30CB\u30C3\u30C8\u5168\u54E1\u306EATK\u30928\u30A2\u30C3\u30D7"
     FilePath: 11_justice
     SkillId: 1012
   - Id: 13
-    Name: "\u5211\u6B7B\u8005"
-    Help: "\u547D\u4E2D\u7387\u30C0\u30A6\u30F3"
+    Name: "\u3010\u5211\u6B7B\u8005\u3011"
+    Help: "\u6551\u6E08\u57F7\u884C\u306E\u6575\u306B10\u30C0\u30E1\u30FC\u30B8\u306E\u706B\u50B7\u4ED8\u4E0E"
     FilePath: 12_hangedman
     SkillId: 1013
   - Id: 14
-    Name: "\u6B7B\u795E"
-    Help: "\u30E6\u30CB\u30C3\u30C8\u3092\u6B7B\u6EC5\u3055\u305B\u308B"
+    Name: "\u3010\u6B7B\u795E\u3011"
+    Help: "\u6551\u6E08\u57F7\u884C\u306E\u524D\u885B\u306E\u6575\u3092\u6D88\u6EC5\u3055\u305B\u308B"
     FilePath: 13_death
     SkillId: 1014
   - Id: 15
-    Name: "\u7BC0\u5236"
-    Help: "\u72B6\u614B\u7570\u5E38\u8010\u6027"
+    Name: "\u3010\u7BC0\u5236\u3011"
+    Help: "\u6551\u6E08\u57F7\u884C\u6642\u30E6\u30CB\u30C3\u30C8\u5168\u54E1\u306B\u72B6\u614B\u7570\u5E38\u8010\u6027\u3092\u4ED8\u4E0E"
     FilePath: 14_temperance
     SkillId: 1015
   - Id: 16
-    Name: "\u60AA\u9B54"
-    Help: "\u95C7\u30A2\u30C3\u30D7"
+    Name: "\u3010\u60AA\u9B54\u3011"
+    Help: "\u6551\u6E08\u57F7\u884C\u306E\u6575\u306EHP\u3092\u534A\u6E1B\u3059\u308B"
     FilePath: 15_devil
     SkillId: 1016
   - Id: 17
-    Name: "\u5854"
-    Help: "DEF\u30A2\u30C3\u30D7"
+    Name: "\u3010\u5854\u3011"
+    Help: "\u6551\u6E08\u57F7\u884C\u6642\u30E6\u30CB\u30C3\u30C8\u5168\u54E1\u306EDEF\u30928\u30A2\u30C3\u30D7"
     FilePath: 16_tower
     SkillId: 1017
   - Id: 18
-    Name: "\u661F"
-    Help: "SPD\u30A2\u30C3\u30D7"
+    Name: "\u3010\u661F\u3011"
+    Help: "Numinous\u309220\u5165\u624B\u3059\u308B"
     FilePath: 17_star
     SkillId: 1018
   - Id: 19
-    Name: "\u6708"
-    Help: "\u6575\u306E\u524D\u5F8C\u3092\u5165\u308C\u66FF\u3048\u308B"
+    Name: "\u3010\u6708\u3011"
+    Help: "\u6551\u6E08\u57F7\u884C\u306E\u6575\u306E\u524D\u5F8C\u3092\u5165\u308C\u66FF\u3048\u308B"
     FilePath: 18_moon
     SkillId: 1019
   - Id: 20
-    Name: "\u592A\u967D"
-    Help: "\u6575\u306ELv\u3092\u4E0B\u3052\u308B"
+    Name: "\u3010\u592A\u967D\u3011"
+    Help: "\u6551\u6E08\u57F7\u884C\u306E\u6575Lv\u3092\u4E0B\u3052\u308B"
     FilePath: 19_sun
     SkillId: 1020
   - Id: 21
-    Name: "\u5BE9\u5224"
-    Help: "\u5149\u30A2\u30C3\u30D7"
+    Name: "\u3010\u5BE9\u5224\u3011"
+    Help: "\u6551\u6E08\u57F7\u884C\u6642\u30E6\u30CB\u30C3\u30C8\u5168\u54E1\u306E\u6700\u5927MP\u3068Mp\u309220\u30A2\u30C3\u30D7"
     FilePath: 20_judgement
     SkillId: 1021
   - Id: 22
-    Name: "\u4E16\u754C"
+    Name: "\u3010\u4E16\u754C\u3011"
     Help: "\u30B7\u30CA\u30EA\u30AA\u9650\u5B9A"
     FilePath: 21_world
     SkillId: 1022
+  - Id: 23
+    Name: "\u3010\u6756\u3011"
+    Help: "\u30E6\u30CB\u30C3\u30C8\u5168\u54E1\u306ESP\u30922\u5165\u624B\u3059\u308B"
+    FilePath: base
+    SkillId: 1023
+  - Id: 24
+    Name: "\u3010\u5668\u3011"
+    Help: "HP\u3068MP\u309210\u56DE\u5FA9\u3059\u308B"
+    FilePath: base
+    SkillId: 1024
+  - Id: 25
+    Name: "\u3010\u5263\u3011"
+    Help: "\u6551\u6E08\u57F7\u884C\u6642\u30E6\u30CB\u30C3\u30C8\u5168\u54E1\u306EATK\u30922\u30A2\u30C3\u30D7"
+    FilePath: base
+    SkillId: 1025
+  - Id: 26
+    Name: "\u3010\u8CA8\u5E63\u3011"
+    Help: "Numinous\u30924\u5165\u624B\u3059\u308B"
+    FilePath: base
+    SkillId: 1026

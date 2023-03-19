@@ -32,7 +32,7 @@ public class TacticsPresenter
 
         //List<ActorInfo> actorInfos = _model.Actors();
         //_view.SetActorInfo(_model.CurrentActor);
-        _view.SetStageInfo(_model.CurrentData.CurrentStage);
+        _view.SetStageInfo(_model.CurrentStage);
         _view.SetActors(_model.Actors(),_model.ConfirmCommand());
         _view.SetEnemies(_model.TacticsTroops());
 
@@ -560,7 +560,7 @@ public class TacticsPresenter
     {
         _view.SetTurns(_model.Turns);
         _view.SetNuminous(_model.Currency);
-        _view.SetStageInfo(_model.CurrentData.CurrentStage);
+        _view.SetStageInfo(_model.CurrentStage);
         _view.CommandRefresh();
     }
 

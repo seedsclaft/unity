@@ -89,6 +89,7 @@ public enum TargetType{
     Friend = 2,
     All = 3,
     Self = 4,
+    Party = 101
 }
 
 public enum RangeType{
@@ -140,4 +141,13 @@ public enum FeatureType
     ApHeal = 32,
     PlusSkill = 101,
     KindHeal = 201,
+    Numinous = 301,
+    TacticsCost = 302,
+    EnemyLv = 303,
+    AddSp = 304,
+    Subordinate = 305,
+    Alcana = 306,
+    LineChange = 307,
+    LineZeroErase = 308,
+    EnemyHp = 309,
 }

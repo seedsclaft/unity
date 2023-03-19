@@ -1092,6 +1092,77 @@ MonoBehaviour:
       Param2: 0
       Param3: 0
     TriggerDatas: []
+  - Id: 1000
+    Name: "\u611A\u8005"
+    IconIndex: 1
+    AnimationName: 
+    AnimationPosition: 0
+    AnimationType: 0
+    DamageTiming: 0
+    MpCost: 0
+    Attribute: 0
+    Scope: 3
+    SkillType: 11
+    TargetType: 1
+    Help: '""'
+    Range: 1
+    AliveOnly: 1
+    FeatureDatas:
+    - SkillId: 1000
+      FeatureType: 21
+      Param1: 21
+      Param2: 999
+      Param3: 0
+    TriggerDatas: []
+  - Id: 1001
+    Name: "\u9B54\u8853\u5E2B"
+    IconIndex: 1
+    AnimationName: 
+    AnimationPosition: 0
+    AnimationType: 0
+    DamageTiming: 0
+    MpCost: 0
+    Attribute: 0
+    Scope: 3
+    SkillType: 11
+    TargetType: 2
+    Help: '""'
+    Range: 1
+    AliveOnly: 1
+    FeatureDatas:
+    - SkillId: 1001
+      FeatureType: 304
+      Param1: 20
+      Param2: 0
+      Param3: 0
+    TriggerDatas: []
+  - Id: 1002
+    Name: "\u5973\u5E1D"
+    IconIndex: 1
+    AnimationName: 
+    AnimationPosition: 0
+    AnimationType: 0
+    DamageTiming: 0
+    MpCost: 0
+    Attribute: 0
+    Scope: 3
+    SkillType: 11
+    TargetType: 2
+    Help: '""'
+    Range: 1
+    AliveOnly: 1
+    FeatureDatas:
+    - SkillId: 1002
+      FeatureType: 2
+      Param1: 30
+      Param2: 0
+      Param3: 0
+    - SkillId: 1002
+      FeatureType: 7
+      Param1: 30
+      Param2: 0
+      Param3: 0
+    TriggerDatas: []
   - Id: 1003
     Name: "\u5973\u6559\u7687"
     IconIndex: 1
@@ -1113,4 +1184,466 @@ MonoBehaviour:
       Param1: 999
       Param2: 0
       Param3: 0
+    TriggerDatas: []
+  - Id: 1004
+    Name: "\u7687\u5E1D"
+    IconIndex: 1
+    AnimationName: 
+    AnimationPosition: 0
+    AnimationType: 0
+    DamageTiming: 0
+    MpCost: 0
+    Attribute: 0
+    Scope: 3
+    SkillType: 11
+    TargetType: 2
+    Help: '""'
+    Range: 1
+    AliveOnly: 1
+    FeatureDatas:
+    - SkillId: 1004
+      FeatureType: 302
+      Param1: 50
+      Param2: 0
+      Param3: 0
+    TriggerDatas: []
+  - Id: 1005
+    Name: "\u6CD5\u738B"
+    IconIndex: 1
+    AnimationName: 
+    AnimationPosition: 0
+    AnimationType: 0
+    DamageTiming: 0
+    MpCost: 0
+    Attribute: 0
+    Scope: 3
+    SkillType: 11
+    TargetType: 2
+    Help: '""'
+    Range: 1
+    AliveOnly: 1
+    FeatureDatas:
+    - SkillId: 1005
+      FeatureType: 7
+      Param1: 999
+      Param2: 0
+      Param3: 0
+    TriggerDatas: []
+  - Id: 1006
+    Name: "\u604B\u611B"
+    IconIndex: 1
+    AnimationName: 
+    AnimationPosition: 0
+    AnimationType: 0
+    DamageTiming: 0
+    MpCost: 0
+    Attribute: 0
+    Scope: 3
+    SkillType: 11
+    TargetType: 2
+    Help: '""'
+    Range: 1
+    AliveOnly: 1
+    FeatureDatas:
+    - SkillId: 1006
+      FeatureType: 22
+      Param1: 1
+      Param2: 0
+      Param3: 0
+    TriggerDatas: []
+  - Id: 1007
+    Name: "\u6226\u8ECA"
+    IconIndex: 1
+    AnimationName: 
+    AnimationPosition: 0
+    AnimationType: 0
+    DamageTiming: 0
+    MpCost: 0
+    Attribute: 0
+    Scope: 3
+    SkillType: 11
+    TargetType: 2
+    Help: '""'
+    Range: 1
+    AliveOnly: 1
+    FeatureDatas:
+    - SkillId: 1007
+      FeatureType: 21
+      Param1: 41
+      Param2: 999
+      Param3: 20
+    TriggerDatas: []
+  - Id: 1008
+    Name: "\u6B63\u7FA9"
+    IconIndex: 1
+    AnimationName: 
+    AnimationPosition: 0
+    AnimationType: 0
+    DamageTiming: 0
+    MpCost: 0
+    Attribute: 0
+    Scope: 0
+    SkillType: 11
+    TargetType: 101
+    Help: '""'
+    Range: 1
+    AliveOnly: 1
+    FeatureDatas:
+    - SkillId: 1008
+      FeatureType: 305
+      Param1: 30
+      Param2: 0
+      Param3: 0
+    TriggerDatas: []
+  - Id: 1009
+    Name: "\u96A0\u8005"
+    IconIndex: 1
+    AnimationName: 
+    AnimationPosition: 0
+    AnimationType: 0
+    DamageTiming: 0
+    MpCost: 0
+    Attribute: 0
+    Scope: 3
+    SkillType: 11
+    TargetType: 2
+    Help: '""'
+    Range: 1
+    AliveOnly: 1
+    FeatureDatas:
+    - SkillId: 1009
+      FeatureType: 21
+      Param1: 52
+      Param2: 999
+      Param3: 50
+    TriggerDatas: []
+  - Id: 1010
+    Name: "\u904B\u547D"
+    IconIndex: 1
+    AnimationName: 
+    AnimationPosition: 0
+    AnimationType: 0
+    DamageTiming: 0
+    MpCost: 0
+    Attribute: 0
+    Scope: 0
+    SkillType: 11
+    TargetType: 101
+    Help: '""'
+    Range: 1
+    AliveOnly: 1
+    FeatureDatas:
+    - SkillId: 1010
+      FeatureType: 306
+      Param1: 0
+      Param2: 0
+      Param3: 0
+    TriggerDatas: []
+  - Id: 1011
+    Name: "\u525B\u6BC5"
+    IconIndex: 1
+    AnimationName: 
+    AnimationPosition: 0
+    AnimationType: 0
+    DamageTiming: 0
+    MpCost: 0
+    Attribute: 0
+    Scope: 3
+    SkillType: 11
+    TargetType: 2
+    Help: '""'
+    Range: 1
+    AliveOnly: 1
+    FeatureDatas:
+    - SkillId: 1011
+      FeatureType: 21
+      Param1: 43
+      Param2: 999
+      Param3: 8
+    TriggerDatas: []
+  - Id: 1012
+    Name: "\u5211\u6B7B\u8005"
+    IconIndex: 1
+    AnimationName: 
+    AnimationPosition: 0
+    AnimationType: 0
+    DamageTiming: 0
+    MpCost: 0
+    Attribute: 0
+    Scope: 3
+    SkillType: 11
+    TargetType: 1
+    Help: '""'
+    Range: 1
+    AliveOnly: 1
+    FeatureDatas:
+    - SkillId: 1012
+      FeatureType: 21
+      Param1: 23
+      Param2: 999
+      Param3: 10
+    TriggerDatas: []
+  - Id: 1013
+    Name: "\u6B7B\u795E"
+    IconIndex: 1
+    AnimationName: 
+    AnimationPosition: 0
+    AnimationType: 0
+    DamageTiming: 0
+    MpCost: 0
+    Attribute: 0
+    Scope: 0
+    SkillType: 11
+    TargetType: 101
+    Help: '""'
+    Range: 1
+    AliveOnly: 1
+    FeatureDatas:
+    - SkillId: 1013
+      FeatureType: 308
+      Param1: 0
+      Param2: 0
+      Param3: 0
+    TriggerDatas: []
+  - Id: 1014
+    Name: "\u7BC0\u5236"
+    IconIndex: 1
+    AnimationName: 
+    AnimationPosition: 0
+    AnimationType: 0
+    DamageTiming: 0
+    MpCost: 0
+    Attribute: 0
+    Scope: 3
+    SkillType: 11
+    TargetType: 2
+    Help: '""'
+    Range: 1
+    AliveOnly: 1
+    FeatureDatas:
+    - SkillId: 1014
+      FeatureType: 21
+      Param1: 31
+      Param2: 999
+      Param3: 0
+    TriggerDatas: []
+  - Id: 1015
+    Name: "\u60AA\u9B54"
+    IconIndex: 1
+    AnimationName: 
+    AnimationPosition: 0
+    AnimationType: 0
+    DamageTiming: 0
+    MpCost: 0
+    Attribute: 0
+    Scope: 0
+    SkillType: 11
+    TargetType: 101
+    Help: '""'
+    Range: 1
+    AliveOnly: 1
+    FeatureDatas:
+    - SkillId: 1015
+      FeatureType: 309
+      Param1: 50
+      Param2: 0
+      Param3: 0
+    TriggerDatas: []
+  - Id: 1016
+    Name: "\u5854"
+    IconIndex: 1
+    AnimationName: 
+    AnimationPosition: 0
+    AnimationType: 0
+    DamageTiming: 0
+    MpCost: 0
+    Attribute: 0
+    Scope: 3
+    SkillType: 11
+    TargetType: 2
+    Help: '""'
+    Range: 1
+    AliveOnly: 1
+    FeatureDatas:
+    - SkillId: 1016
+      FeatureType: 21
+      Param1: 44
+      Param2: 999
+      Param3: 8
+    TriggerDatas: []
+  - Id: 1017
+    Name: "\u661F"
+    IconIndex: 1
+    AnimationName: 
+    AnimationPosition: 0
+    AnimationType: 0
+    DamageTiming: 0
+    MpCost: 0
+    Attribute: 0
+    Scope: 0
+    SkillType: 11
+    TargetType: 101
+    Help: '""'
+    Range: 1
+    AliveOnly: 1
+    FeatureDatas:
+    - SkillId: 1017
+      FeatureType: 301
+      Param1: 20
+      Param2: 0
+      Param3: 0
+    TriggerDatas: []
+  - Id: 1018
+    Name: "\u6708"
+    IconIndex: 1
+    AnimationName: 
+    AnimationPosition: 0
+    AnimationType: 0
+    DamageTiming: 0
+    MpCost: 0
+    Attribute: 0
+    Scope: 0
+    SkillType: 11
+    TargetType: 101
+    Help: '""'
+    Range: 1
+    AliveOnly: 1
+    FeatureDatas:
+    - SkillId: 1018
+      FeatureType: 307
+      Param1: 0
+      Param2: 0
+      Param3: 0
+    TriggerDatas: []
+  - Id: 1019
+    Name: "\u592A\u967D"
+    IconIndex: 1
+    AnimationName: 
+    AnimationPosition: 0
+    AnimationType: 0
+    DamageTiming: 0
+    MpCost: 0
+    Attribute: 0
+    Scope: 0
+    SkillType: 11
+    TargetType: 101
+    Help: '""'
+    Range: 1
+    AliveOnly: 1
+    FeatureDatas:
+    - SkillId: 1019
+      FeatureType: 303
+      Param1: 75
+      Param2: 0
+      Param3: 0
+    TriggerDatas: []
+  - Id: 1020
+    Name: "\u5BE9\u5224"
+    IconIndex: 1
+    AnimationName: 
+    AnimationPosition: 0
+    AnimationType: 0
+    DamageTiming: 0
+    MpCost: 0
+    Attribute: 0
+    Scope: 3
+    SkillType: 11
+    TargetType: 2
+    Help: '""'
+    Range: 1
+    AliveOnly: 1
+    FeatureDatas:
+    - SkillId: 1020
+      FeatureType: 21
+      Param1: 42
+      Param2: 999
+      Param3: 20
+    TriggerDatas: []
+  - Id: 1022
+    Name: "\u6756"
+    IconIndex: 1
+    AnimationName: 
+    AnimationPosition: 0
+    AnimationType: 0
+    DamageTiming: 0
+    MpCost: 0
+    Attribute: 0
+    Scope: 0
+    SkillType: 11
+    TargetType: 101
+    Help: '""'
+    Range: 1
+    AliveOnly: 1
+    FeatureDatas:
+    - SkillId: 1022
+      FeatureType: 304
+      Param1: 2
+      Param2: 0
+      Param3: 0
+    TriggerDatas: []
+  - Id: 1023
+    Name: "\u5668"
+    IconIndex: 1
+    AnimationName: 
+    AnimationPosition: 0
+    AnimationType: 0
+    DamageTiming: 0
+    MpCost: 0
+    Attribute: 0
+    Scope: 0
+    SkillType: 11
+    TargetType: 101
+    Help: '""'
+    Range: 1
+    AliveOnly: 1
+    FeatureDatas:
+    - SkillId: 1023
+      FeatureType: 2
+      Param1: 10
+      Param2: 0
+      Param3: 0
+    - SkillId: 1023
+      FeatureType: 7
+      Param1: 10
+      Param2: 0
+      Param3: 0
+    TriggerDatas: []
+  - Id: 1024
+    Name: "\u5263"
+    IconIndex: 1
+    AnimationName: 
+    AnimationPosition: 0
+    AnimationType: 0
+    DamageTiming: 0
+    MpCost: 0
+    Attribute: 0
+    Scope: 3
+    SkillType: 11
+    TargetType: 2
+    Help: '""'
+    Range: 1
+    AliveOnly: 1
+    FeatureDatas:
+    - SkillId: 1024
+      FeatureType: 21
+      Param1: 43
+      Param2: 999
+      Param3: 2
+    TriggerDatas: []
+  - Id: 1025
+    Name: "\u8CA8\u5E63"
+    IconIndex: 1
+    AnimationName: 
+    AnimationPosition: 0
+    AnimationType: 0
+    DamageTiming: 0
+    MpCost: 0
+    Attribute: 0
+    Scope: 0
+    SkillType: 11
+    TargetType: 101
+    Help: '""'
+    Range: 1
+    AliveOnly: 1
+    FeatureDatas: []
     TriggerDatas: []

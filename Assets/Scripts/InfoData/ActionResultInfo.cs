@@ -170,6 +170,10 @@ public class ActionResultInfo
             return;
         }
         int AtkValue = subject.CurrentAtk();
+        if (target.IsState(StateType.AtkUp) && !isNoEffect)
+        {
+            AtkValue += target.StateEffectAll(StateType.AtkUp);
+        }
         int DefValue = target.CurrentDef();
         if (target.IsState(StateType.DefUp) && !isNoEffect)
         {

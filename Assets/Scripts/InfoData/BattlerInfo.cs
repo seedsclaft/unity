@@ -15,6 +15,8 @@ public class BattlerInfo
     public int CharaId {get {return _charaId;}}
     private int _level;
     public int Level {get {return _level;}}
+    public int MaxHp {get {return _status.GetParameter(StatusParamType.Hp) + StateEffectAll(StateType.MaxHpUp);}}
+    public int MaxMp {get {return _status.GetParameter(StatusParamType.Mp) + StateEffectAll(StateType.MaxMpUp);}}
     private int _hp;
     public int Hp {get {return _hp;}}
     private int _mp;
@@ -181,15 +183,16 @@ public class BattlerInfo
         }
         return -1;
     }
+    
 
-    public void ChangeHp(int value)
+    public void GainHp(int value)
     {
         _hp += value;
         if (_hp < 0){
             _hp = 0;
         }
-        if (_hp > _status.Hp){
-            _hp = _status.Hp;
+        if (_hp > MaxHp){
+            _hp = MaxHp;
         }
         if (_hp <= 0)
         {
@@ -198,14 +201,14 @@ public class BattlerInfo
         }
     }
 
-    public void ChangeMp(int value)
+    public void GainMp(int value)
     {
         _mp += value;
         if (_mp < 0){
             _mp = 0;
         }
-        if (_mp > _status.Mp){
-            _mp = _status.Mp;
+        if (_mp > MaxMp){
+            _mp = MaxMp;
         }
     }
 

@@ -44,6 +44,8 @@ public class StageInfo
     public List<int> OwnAlcanaIds {get {return _ownAlcanaIds;}}
     private bool _usedAlcana = false;
     public bool UsedAlcana {get {return _usedAlcana;}}
+    private StateInfo _alcanaState = null;
+    public StateInfo AlcanaState {get {return _alcanaState;}}
 
     public StageInfo(StagesData.StageData stageInfo)
     {
@@ -202,6 +204,99 @@ public class StageInfo
         _currentTroopInfos.Clear();
     }
 
+    public void ChengeCurrentTroopLevel(float rate)
+    {
+        if (_currentTroopInfos.Count == 0) return;
+        
+        for (int i = 0;i < _currentTroopInfos.Count;i++)
+        {
+            for (int j = _currentTroopInfos[i].BattlerInfos.Count-1;j >= 0;j--)
+            {
+                EnemiesData.EnemyData enemyData = _currentTroopInfos[i].BattlerInfos[j].EnemyData;
+                int lv = (int)MathF.Floor(_currentTroopInfos[i].BattlerInfos[j].Level * rate);
+                int line = _currentTroopInfos[i].BattlerInfos[j].LineIndex;
+                BattlerInfo enemy = new BattlerInfo(enemyData,lv,j,line);
+                _currentTroopInfos[i].RemoveAtEnemyIndex(_currentTroopInfos[i].BattlerInfos[j].Index);
+                _currentTroopInfos[i].AddEnemy(enemy);
+            }
+
+        }
+    }
+
+    public void ChengeCurrentTroopLine()
+    {
+        if (_currentTroopInfos.Count == 0) return;
+        
+        for (int i = 0;i < _currentTroopInfos.Count;i++)
+        {
+            for (int j = _currentTroopInfos[i].BattlerInfos.Count-1;j >= 0;j--)
+            {
+                EnemiesData.EnemyData enemyData = _currentTroopInfos[i].BattlerInfos[j].EnemyData;
+                int lv = _currentTroopInfos[i].BattlerInfos[j].Level;
+                int line = _currentTroopInfos[i].BattlerInfos[j].LineIndex;
+                if (line == 0) 
+                {
+                     line = 1;
+                }
+                else
+                {
+                     line = 0;
+                }
+                BattlerInfo enemy = new BattlerInfo(enemyData,lv,j,line);
+                _currentTroopInfos[i].RemoveAtEnemyIndex(_currentTroopInfos[i].BattlerInfos[j].Index);
+                _currentTroopInfos[i].AddEnemy(enemy);
+            }
+
+        }
+    }
+
+    public void ChengeCurrentTroopLineZeroErase()
+    {
+        if (_currentTroopInfos.Count == 0) return;
+        
+        for (int i = 0;i < _currentTroopInfos.Count;i++)
+        {
+            for (int j = _currentTroopInfos[i].BattlerInfos.Count-1;j >= 0;j--)
+            {
+                if (_currentTroopInfos[i].BattlerInfos[j].LineIndex == 0)
+                {
+                    _currentTroopInfos[i].RemoveAtEnemyIndex(_currentTroopInfos[i].BattlerInfos[j].Index);
+                }
+            }
+        }
+    }
+
+    public void ChengeCurrentTroopHp(float rate)
+    {
+        if (_currentTroopInfos.Count == 0) return;
+        
+        for (int i = 0;i < _currentTroopInfos.Count;i++)
+        {
+            for (int j = _currentTroopInfos[i].BattlerInfos.Count-1;j >= 0;j--)
+            {
+                EnemiesData.EnemyData enemyData = _currentTroopInfos[i].BattlerInfos[j].EnemyData;
+                int lv = _currentTroopInfos[i].BattlerInfos[j].Level;
+                int line = _currentTroopInfos[i].BattlerInfos[j].LineIndex;
+                BattlerInfo enemy = new BattlerInfo(enemyData,lv,j,line);
+                enemy.GainHp((int)MathF.Floor(enemy.Hp * rate));
+                _currentTroopInfos[i].RemoveAtEnemyIndex(_currentTroopInfos[i].BattlerInfos[j].Index);
+                _currentTroopInfos[i].AddEnemy(enemy);
+            }
+        }
+    }
+
+    public void ChengeCurrentTroopAddState(StateInfo stateInfo)
+    {
+        if (_currentTroopInfos.Count == 0) return;
+        
+        for (int i = 0;i < _currentTroopInfos.Count;i++)
+        {
+            for (int j = _currentTroopInfos[i].BattlerInfos.Count-1;j >= 0;j--)
+            {
+                _currentTroopInfos[i].BattlerInfos[j].AddState(stateInfo);
+            }
+        }
+    }
     public void SeekStage()
     {
         _currentTurn++;
@@ -237,9 +332,16 @@ public class StageInfo
         }
     }
 
-    public void AddAlcanaId(int id)
+    public void SetAlacanaState(StateInfo stateInfo)
     {
-        _ownAlcanaIds.Add(id);
+        _alcanaState = stateInfo;
+    }
+
+    public void AddAlcanaId()
+    {
+        int alcanaId = _alcanaIds[0];
+        _alcanaIds.RemoveAt(0);
+        _ownAlcanaIds.Add(alcanaId);
     }
 
     public void OpenAlcana()
@@ -262,5 +364,12 @@ public class StageInfo
     public void DeleteAlcana()
     {
         _currentAlcanaId = (AlcanaType)(-1);
+    }
+
+    public void ChangeNextAlcana()
+    {
+        List<AlcanaData.Alcana> alcana = DataSystem.Alcana;
+        int rand = new Random().Next(0, alcana.Count-1);
+        _alcanaIds[0] = rand;
     }
 };

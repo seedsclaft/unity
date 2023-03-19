@@ -40,8 +40,8 @@ public class TacticsModel : BaseModel
 
     public List<StagesData.StageEventData> StageEvents(EventTiming eventTiming)
     {
-        int CurrentTurn = GameSystem.CurrentData.CurrentStage.CurrentTurn;
-        return GameSystem.CurrentData.CurrentStage.StageEvents.FindAll(a => a.Timing == eventTiming && a.Turns == CurrentTurn);
+        int CurrentTurn = CurrentStage.CurrentTurn;
+        return CurrentStage.StageEvents.FindAll(a => a.Timing == eventTiming && a.Turns == CurrentTurn);
     }
 
     public ActorInfo TacticsActor(int actorId)
@@ -51,7 +51,7 @@ public class TacticsModel : BaseModel
 
     public List<TroopInfo> ResetTroopData()
     {
-        return CurrentData.CurrentStage.MakeTutorialTroopData(CurrentData.CurrentStage.SelectActorIds[0]);
+        return CurrentStage.MakeTutorialTroopData(CurrentStage.SelectActorIds[0]);
     }
 
     public List<SkillInfo> SkillActionList(AttributeType attributeType)
@@ -329,6 +329,6 @@ public class TacticsModel : BaseModel
 
     public void TurnEnd()
     {
-        CurrentData.CurrentStage.SeekStage();
+        CurrentStage.SeekStage();
     }
 }

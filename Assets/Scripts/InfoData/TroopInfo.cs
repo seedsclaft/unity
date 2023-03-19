@@ -20,9 +20,15 @@ public class TroopInfo
     public void AddEnemy(BattlerInfo battlerInfo){
         _battlerInfos.Add(battlerInfo);
     }
+
+    public void RemoveAtEnemyIndex(int enemyIndex){
+        var battler = _battlerInfos.Find(a => a.Index == enemyIndex);
+        _battlerInfos.Remove(battler);
+    }
     
     public void AddGetItemInfo(GetItemInfo getItemInfo){
         _getItemInfos.Add(getItemInfo);
     }
+
 
 }

@@ -11,12 +11,13 @@ public class BaseModel
     private Scene _currentScene = Scene.None;
     public SavePlayInfo CurrentData{get {return GameSystem.CurrentData;}}
     public TempInfo CurrentTempData{get {return GameSystem.CurrentTempData;}}
+    public StageInfo CurrentStage{get {return GameSystem.CurrentData.CurrentStage;}}
 
     public PartyInfo PartyInfo{get {return CurrentData.Party;}}
 
     public int Currency{get {return PartyInfo.Currency;}}
 
-    public int Turns{get {return CurrentData.CurrentStage.Turns - CurrentData.CurrentStage.CurrentTurn - 1;}}
+    public int Turns{get {return CurrentStage.Turns - CurrentStage.CurrentTurn - 1;}}
     
     public List<ActorInfo> Actors()
     {
@@ -103,85 +104,142 @@ public class BaseModel
     
     public List<TroopInfo> TacticsTroops()
     {
-        return CurrentData.CurrentStage.TacticsTroops();
+        return CurrentStage.TacticsTroops();
     }
 
     public TroopInfo CurrentTroopInfo()
     {
-        return CurrentData.CurrentStage.CurrentTroopInfo();
+        return CurrentStage.CurrentTroopInfo();
     }
 
     public void SetIsSubordinate(bool isSubordinate)
     {
-        CurrentData.CurrentStage.SetIsSubordinate(isSubordinate);
+        CurrentStage.SetIsSubordinate(isSubordinate);
     }
 
     public void SetIsAlcana(bool isAlcana)
     {
-        CurrentData.CurrentStage.SetIsAlcana(isAlcana);
+        CurrentStage.SetIsAlcana(isAlcana);
     }
 
     public bool CheckIsAlcana()
     {
-        var stage = CurrentData.CurrentStage;
+        var stage = CurrentStage;
         return stage.IsAlcana && stage.AlcanaIds.Count > 0 && stage.UsedAlcana == false;
     }
 
     public void MakeAlcana()
     {
-        int alcanaId = CurrentData.CurrentStage.AlcanaIds[0];
-        CurrentData.CurrentStage.AlcanaIds.RemoveAt(0);
-        CurrentData.CurrentStage.AddAlcanaId(alcanaId);
+        CurrentStage.AddAlcanaId();
     }
 
     public void OpenAlcana()
     {
-        CurrentData.CurrentStage.OpenAlcana();
+        CurrentStage.OpenAlcana();
     }
 
     public AlcanaData.Alcana CurrentAlcana()
     {
-        return CurrentData.CurrentStage.CurrentAlcana();
+        return CurrentStage.CurrentAlcana();
     }
 
     public void UseAlcana()
     {
-        CurrentData.CurrentStage.UseAlcana(true);
-        var skill = new SkillInfo(1003);
+        CurrentStage.UseAlcana(true);
+        SkillInfo skill = new SkillInfo(CurrentStage.CurrentAlcana().SkillId);
         if (skill.Master.SkillType == SkillType.UseAlcana)
         {
             // 基本的に味方全員
-            List<int> targetIndexs = new List<int>();
             if (skill.Master.TargetType == TargetType.Friend)
             {
-                foreach (var item in Actors())
+                List<int> targetIndexs = new List<int>();
+                if (skill.Master.Scope == ScopeType.All)
                 {
-                    targetIndexs.Add(item.ActorId);
+                    foreach (var item in Actors())
+                    {
+                        targetIndexs.Add(item.ActorId);
+                    }
                 }
-            }
-            ActionInfo actionInfo = new ActionInfo(skill.Master.Id,0,-1,targetIndexs);
-        
-            List<ActionResultInfo> actionResultInfos = new List<ActionResultInfo>();
-            for (int i = 0; i < targetIndexs.Count;i++)
-            {
-                ActorInfo Target = Actors().Find(a => a.ActorId == targetIndexs[i]);
-                ActionResultInfo actionResultInfo = new ActionResultInfo(0,Target.ActorId,actionInfo);
-                actionResultInfo.MakeResultData(null,null);
-                actionResultInfos.Add(actionResultInfo);
-            }
-            actionInfo.SetActionResult(actionResultInfos);
+                
+                for (int i = 0; i < targetIndexs.Count; i++)
+                {
+                    foreach (var featureData in skill.Master.FeatureDatas)
+                    {
+                        ActorInfo target = Actors()[i];
+                        if (featureData.FeatureType == FeatureType.AddState)
+                        {
+                            StateInfo stateInfo = new StateInfo(featureData.Param1,featureData.Param2,featureData.Param3,-1,0);
+                            CurrentStage.SetAlacanaState(stateInfo);
+                        }
+                        if (featureData.FeatureType == FeatureType.HpHeal)
+                        {
+                            target.ChangeHp(featureData.Param1);
+                        }
+                        if (featureData.FeatureType == FeatureType.MpHeal)
+                        {
+                            target.ChangeMp(featureData.Param1);
+                        }
+                        if (featureData.FeatureType == FeatureType.RemoveState)
+                        {
+                            if (featureData.Param1 == (int)StateType.Death)
+                            {
+                                target.ChangeLost(false);
+                            }
+                        }
+                        if (featureData.FeatureType == FeatureType.TacticsCost)
+                        {
+                            target.ChangeTacticsCostRate((int)Mathf.Floor(featureData.Param1 * 0.01f));
+                        }
+                        if (featureData.FeatureType == FeatureType.AddSp)
+                        {
+                            target.ChangeSp(target.Sp + featureData.Param1);
+                        }
+                    }
+                }
 
-            
-            for (int i = 0; i < actionResultInfos.Count; i++)
+            }
+
+            // パーティに影響
+            if (skill.Master.TargetType == TargetType.Party)
             {
-                ActorInfo target = Actors().Find(a => a.ActorId == actionResultInfos[i].TargetIndex);
-                if (actionResultInfos[i].HpHeal != 0)
+                foreach (var featureData in skill.Master.FeatureDatas)
                 {
-                    target.ChangeHp(actionResultInfos[i].HpHeal);
-                }
-                if (actionResultInfos[i].MpHeal != 0)
-                {
-                    target.ChangeMp(actionResultInfos[i].MpHeal);
+                    if (featureData.FeatureType == FeatureType.AddState)
+                    {
+                        if (skill.Master.TargetType == TargetType.Opponent)
+                        {
+                            StateInfo stateInfo = new StateInfo(featureData.Param1,featureData.Param2,featureData.Param3,-1,0);
+                            CurrentStage.ChengeCurrentTroopAddState(stateInfo);
+                        }
+                    }
+                    if (featureData.FeatureType == FeatureType.Numinous)
+                    {
+                        PartyInfo.ChangeCurrency(Currency + featureData.Param1);
+                    }
+                    if (featureData.FeatureType == FeatureType.EnemyLv)
+                    {
+                        CurrentStage.ChengeCurrentTroopLevel(featureData.Param1 * 0.01f);
+                    }
+                    if (featureData.FeatureType == FeatureType.Subordinate)
+                    {
+                        CurrentStage.ChangeSubordinate(featureData.Param1);
+                    }
+                    if (featureData.FeatureType == FeatureType.Alcana)
+                    {
+                        CurrentStage.ChangeNextAlcana();
+                    }
+                    if (featureData.FeatureType == FeatureType.LineChange)
+                    {
+                        CurrentStage.ChengeCurrentTroopLine();
+                    }
+                    if (featureData.FeatureType == FeatureType.LineZeroErase)
+                    {
+                        CurrentStage.ChengeCurrentTroopLineZeroErase();
+                    }
+                    if (featureData.FeatureType == FeatureType.EnemyHp)
+                    {
+                        CurrentStage.ChengeCurrentTroopHp(featureData.Param1 * 0.01f);
+                    }
                 }
             }
         }

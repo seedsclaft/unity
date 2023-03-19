@@ -48,10 +48,23 @@ public class BattleModel : BaseModel
             if (Actors()[i].InBattle == true)
             {
                 BattlerInfo battlerInfo = new BattlerInfo(Actors()[i],i);
+                if (CurrentStage.AlcanaState != null)
+                {
+                    StateInfo stateInfo = CurrentStage.AlcanaState;
+                    battlerInfo.AddState(stateInfo);
+                    if (stateInfo.Master.Id == (int)StateType.MaxHpUp)
+                    {
+                        battlerInfo.GainHp(stateInfo.Effect);
+                    }
+                    if (stateInfo.Master.Id == (int)StateType.MaxMpUp)
+                    {
+                        battlerInfo.GainMp(stateInfo.Effect);
+                    }
+                }
                 _battlers.Add(battlerInfo);
             }
         }
-        var enemies = CurrentData.CurrentStage.CurrentBattleInfos();
+        var enemies = CurrentStage.CurrentBattleInfos();
         
         for (int i = 0;i < enemies.Count;i++)
         {
@@ -88,7 +101,7 @@ public class BattleModel : BaseModel
                     {
                         chainDamage += subject.ChainSuccessCount;
                     }
-                    target.ChangeHp(chainDamage * -1);
+                    target.GainHp(chainDamage * -1);
                     ActionResultInfo actionResultInfo = new ActionResultInfo(_battlers[i].Index,stateInfo.TargetIndex,null);
                     actionResultInfo.HpDamage = chainDamage;
                     if (actionResultInfo.HpDamage > target.Hp)
@@ -125,7 +138,7 @@ public class BattleModel : BaseModel
                     foreach (var target in targets)
                     {
                         int healValue = stateInfo.Effect;
-                        target.ChangeHp(healValue * -1);
+                        target.GainHp(healValue * -1);
                         ActionResultInfo actionResultInfo = new ActionResultInfo(_battlers[i].Index,stateInfo.TargetIndex,null);
                         actionResultInfo.HpHeal = healValue;
                         actionResultInfos.Add(actionResultInfo);
@@ -559,7 +572,7 @@ public class BattleModel : BaseModel
         if (actionInfo != null)
         {
             // Mpの支払い
-            CurrentBattler.ChangeMp(actionInfo.Master.MpCost * -1);
+            CurrentBattler.GainMp(actionInfo.Master.MpCost * -1);
             List<ActionResultInfo> actionResultInfos = actionInfo.actionResults;
             for (int i = 0; i < actionResultInfos.Count; i++)
             {
@@ -567,15 +580,15 @@ public class BattleModel : BaseModel
                 BattlerInfo target = _battlers.Find(a => a.Index == actionResultInfos[i].TargetIndex);
                 if (actionResultInfos[i].HpDamage != 0)
                 {
-                    target.ChangeHp(-1 * actionResultInfos[i].HpDamage);
+                    target.GainHp(-1 * actionResultInfos[i].HpDamage);
                 }
                 if (actionResultInfos[i].HpHeal != 0)
                 {
-                    target.ChangeHp(actionResultInfos[i].HpHeal);
+                    target.GainHp(actionResultInfos[i].HpHeal);
                 }
                 if (actionResultInfos[i].MpHeal != 0)
                 {
-                    target.ChangeMp(actionResultInfos[i].MpHeal);
+                    target.GainMp(actionResultInfos[i].MpHeal);
                 }
                 if (actionResultInfos[i].ApHeal != 0)
                 {
@@ -583,11 +596,11 @@ public class BattleModel : BaseModel
                 }
                 if (actionResultInfos[i].ReDamage != 0)
                 {
-                    subject.ChangeHp(-1 * actionResultInfos[i].ReDamage);
+                    subject.GainHp(-1 * actionResultInfos[i].ReDamage);
                 }
                 if (actionResultInfos[i].ReHeal != 0)
                 {
-                    subject.ChangeHp(actionResultInfos[i].ReHeal);
+                    subject.GainHp(actionResultInfos[i].ReHeal);
                 }
                 if (actionResultInfos[i].IsDead)
                 {
@@ -654,7 +667,7 @@ public class BattleModel : BaseModel
             
             for (int j = 0;j < stateInfos.Count;j++)
             {
-                regeneBattlers[i].ChangeHp(stateInfos[j].Effect);
+                regeneBattlers[i].GainHp(stateInfos[j].Effect);
                 ActionResultInfo actionResultInfo = new ActionResultInfo(stateInfos[j].BattlerId,stateInfos[j].TargetIndex,null);
                 actionResultInfo.HpHeal = stateInfos[j].Effect;
                 actionResultInfos.Add(actionResultInfo);

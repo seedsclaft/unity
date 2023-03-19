@@ -114,7 +114,7 @@ public class StrategyModel : BaseModel
         List<ActorInfo> actorInfos = TacticsBattleActors();
         if (enemyIndex >= 0)
         {
-            CurrentData.CurrentStage.SetBattleIndex(enemyIndex);
+            CurrentStage.SetBattleIndex(enemyIndex);
             return actorInfos.FindAll(a => a.NextBattleEnemyIndex == enemyIndex);
         }
         return null;
@@ -157,8 +157,13 @@ public class StrategyModel : BaseModel
     
     public void EndStrategy()
     {
-        CurrentData.CurrentStage.UseAlcana(false);
-        CurrentData.CurrentStage.ClearTacticsEnemies();
-        CurrentData.CurrentStage.ChangeSubordinate(-5);
+        CurrentStage.UseAlcana(false);
+        foreach (var actorInfo in Actors())
+        {
+            actorInfo.ChangeTacticsCostRate(1);
+        }
+        CurrentStage.ClearTacticsEnemies();
+        CurrentStage.ChangeSubordinate(-5);
+        CurrentStage.SetAlacanaState(null);
     }
 }

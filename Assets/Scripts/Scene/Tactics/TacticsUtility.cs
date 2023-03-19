@@ -4,9 +4,13 @@ using UnityEngine;
 
 public class TacticsUtility 
 {
+    private static int TacticsCostRate(ActorInfo actorInfo)
+    {
+        return actorInfo.TacticsCostRate;
+    }
     public static int TrainCost(ActorInfo actorInfo)
     {
-        return actorInfo.Level;
+        return actorInfo.Level * TacticsCostRate(actorInfo);
     }
     public static int AlchemyCost(ActorInfo actorInfo,int skillId)
     {
@@ -38,12 +42,12 @@ public class TacticsUtility
                 cost = 20;
             }
         }
-        return cost;
+        return cost * TacticsCostRate(actorInfo);
     }
     public static int RecoveryCost(ActorInfo actorInfo)
     {
-        int hpCost = (int)Mathf.Ceil((actorInfo.MaxHp - actorInfo.CurrentHp) * 0.1f);
-        int mpCost = (int)Mathf.Ceil((actorInfo.MaxMp - actorInfo.CurrentMp) * 0.1f);
+        int hpCost = (int)Mathf.Ceil((actorInfo.MaxHp - actorInfo.CurrentHp) * 0.1f) * TacticsCostRate(actorInfo);
+        int mpCost = (int)Mathf.Ceil((actorInfo.MaxMp - actorInfo.CurrentMp) * 0.1f) * TacticsCostRate(actorInfo);
         return hpCost > mpCost ? hpCost : mpCost;
     }
     public static int ResourceCost(ActorInfo actorInfo)

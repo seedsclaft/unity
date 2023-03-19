@@ -55,10 +55,10 @@ public class BattlerInfoComponent : MonoBehaviour
     {
         if (_battlerInfo.isActor)
         {
-            actorInfoComponent.ChangeHp(value,_battlerInfo.ActorInfo.MaxHp);
+            actorInfoComponent.ChangeHp(value,_battlerInfo.MaxHp);
         } else
         {
-            enemyInfoComponent.ChangeHp(value,_battlerInfo.Status.Hp);
+            enemyInfoComponent.ChangeHp(value,_battlerInfo.MaxHp);
         }
     }
 
@@ -66,10 +66,10 @@ public class BattlerInfoComponent : MonoBehaviour
     {
         if (_battlerInfo.isActor)
         {
-            actorInfoComponent.ChangeMp(value,_battlerInfo.ActorInfo.CurrentMp);
+            actorInfoComponent.ChangeMp(value,_battlerInfo.MaxMp);
         } else
         {
-            enemyInfoComponent.ChangeMp(value,_battlerInfo.Status.Mp);
+            enemyInfoComponent.ChangeMp(value,_battlerInfo.MaxMp);
         }
     }
 

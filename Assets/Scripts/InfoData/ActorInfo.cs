@@ -46,6 +46,8 @@ public class ActorInfo
     private Dictionary<TacticsComandType,bool> _tacticsEnable = new Dictionary<TacticsComandType, bool>();
     private int _tacticsCost = 0;
     public int TacticsCost {get {return _tacticsCost;}}
+    private int _tacticsCostRate = 1;
+    public int TacticsCostRate {get {return _tacticsCostRate;}}
     private int _nextLearnSkillId = 0;
     public int NextLearnSkillId {get {return _nextLearnSkillId;}}
     private int _nextBattleEnemyIndex = -1;
@@ -55,6 +57,8 @@ public class ActorInfo
 
     private bool _inBattle = false;
     public bool InBattle {get {return _inBattle;} set {_inBattle = value;}}
+    private bool _lost = false;
+    public bool Lost {get {return _lost;}}
 // Status
     private int _sp = 0;
     public int Sp {get {return _sp;}}
@@ -110,6 +114,11 @@ public class ActorInfo
     public bool EnableTactics(TacticsComandType tacticsComandType)
     {
         return _tacticsEnable[tacticsComandType];
+    }
+
+    public void ChangeTacticsCostRate(int tacticsCostRate)
+    {
+        _tacticsCostRate = tacticsCostRate;
     }
 
     public void SetTacticsCommand(TacticsComandType tacticsComandType,int tacticsCost)
@@ -186,5 +195,14 @@ public class ActorInfo
     public void ChangeMp(int mp)
     {
         _currentMp = mp;
+    }
+    
+    public void ChangeLost(bool isLost)
+    {
+        if (isLost == false && _lost == true)
+        {
+            ChangeHp(1);
+        }
+        _lost = isLost;
     }
 }

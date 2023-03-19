@@ -27,8 +27,8 @@ public class EnemyInfoComponent : MonoBehaviour
         }
         if (statusInfoComponent != null){
             statusInfoComponent.UpdateInfo(battlerInfo.Status);
-            statusInfoComponent.UpdateHp(battlerInfo.Hp,battlerInfo.Status.Hp);
-            statusInfoComponent.UpdateMp(battlerInfo.Mp,battlerInfo.Status.Mp);
+            statusInfoComponent.UpdateHp(battlerInfo.Hp,battlerInfo.MaxHp);
+            statusInfoComponent.UpdateMp(battlerInfo.Mp,battlerInfo.MaxMp);
         }
         
     }
