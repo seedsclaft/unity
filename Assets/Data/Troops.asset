@@ -111,7 +111,7 @@ MonoBehaviour:
     GetItemDatas: []
   - Id: 2
     TroopId: 40
-    EnemyId: 4
+    EnemyId: 6
     Lv: 5
     Line: 1
     GetItemDatas:
@@ -280,4 +280,28 @@ MonoBehaviour:
     - Type: 1
       Param1: 105
       Param2: 1
+  - Id: 1
+    TroopId: 100
+    EnemyId: 13
+    Lv: 3
+    Line: 0
+    GetItemDatas: []
+  - Id: 2
+    TroopId: 100
+    EnemyId: 13
+    Lv: 3
+    Line: 0
+    GetItemDatas: []
+  - Id: 3
+    TroopId: 100
+    EnemyId: 13
+    Lv: 3
+    Line: 0
+    GetItemDatas: []
+  - Id: 4
+    TroopId: 100
+    EnemyId: 101
+    Lv: 1
+    Line: 1
+    GetItemDatas: []
   _getItemData: []

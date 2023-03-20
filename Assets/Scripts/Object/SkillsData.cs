@@ -113,6 +113,7 @@ public enum TriggerType
 {
     None = 0,
     HpRateUnder = 1, // Hpが〇%以下
+    IsExistDeathMember = 11, // 戦闘不能が〇以上存在する
     AfterMp = 101, // Mpが〇になる
     ChainCount = 102, // 拘束成功回数
     ActionResultDeath = 103, // 攻撃を受けると戦闘不能になる

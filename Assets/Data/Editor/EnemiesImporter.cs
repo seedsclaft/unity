@@ -28,6 +28,21 @@ public class EnemiesImporter : AssetPostprocessor {
 
 		ActorId = 0,
 		SkillId,
+		_SkillName,
+		Level,
+		Weight,
+	}
+    enum BaseTriggersColumn
+    {
+
+		ActorId = 0,
+		SkillId,
+		TriggerType,
+		TriggerTiming,
+		Param1,
+		Param2,
+		Param3
+
 	}
     enum BaseTextColumn
     {
@@ -89,7 +104,7 @@ public class EnemiesImporter : AssetPostprocessor {
 			{
 				// エクセルブックを作成
 				CreateBook(asset, Mainstream, out IWorkbook Book);
-				List<TextData> textData = CreateText(Book.GetSheetAt(2));
+				List<TextData> textData = CreateText(Book.GetSheetAt(3));
 
 				// 情報の初期化
 				Data._data.Clear();
@@ -136,9 +151,34 @@ public class EnemiesImporter : AssetPostprocessor {
 					EnemiesData.EnemyData Enemy = Data._data.Find(a => a.Id == ActorId);
 					
 					LearningData.SkillId = (int)Baserow.GetCell((int)BaseLearningColumn.SkillId)?.NumericCellValue;
+					LearningData.Level = (int)Baserow.GetCell((int)BaseLearningColumn.Level)?.NumericCellValue;
+					LearningData.Weight = (int)Baserow.GetCell((int)BaseLearningColumn.Weight)?.NumericCellValue;
+					LearningData.TriggerDatas = new List<SkillsData.TriggerData>();
 					Enemy.LearningSkills.Add(LearningData);
 				}
 
+				
+				BaseSheet = Book.GetSheetAt(2);
+
+				for (int i = 1; i <= BaseSheet.LastRowNum; i++)
+				{
+					IRow Baserow = BaseSheet.GetRow(i);
+
+					int ActorId = (int)Baserow.GetCell((int)BaseTriggersColumn.ActorId)?.NumericCellValue;
+					EnemiesData.EnemyData Enemy = Data._data.Find(a => a.Id == ActorId);
+					int SkillId = (int)Baserow.GetCell((int)BaseTriggersColumn.SkillId)?.NumericCellValue;
+					LearningData learningData = Enemy.LearningSkills.Find(a => a.SkillId == SkillId);
+					if (learningData != null)
+					{
+						SkillsData.TriggerData triggerData = new SkillsData.TriggerData();
+						triggerData.TriggerType = (TriggerType)Baserow.GetCell((int)BaseTriggersColumn.TriggerType)?.NumericCellValue;
+						triggerData.TriggerTiming = (TriggerTiming)Baserow.GetCell((int)BaseTriggersColumn.TriggerTiming)?.NumericCellValue;
+						triggerData.Param1 = (int)Baserow.GetCell((int)BaseTriggersColumn.Param1)?.NumericCellValue;
+						triggerData.Param2 = (int)Baserow.GetCell((int)BaseTriggersColumn.Param2)?.NumericCellValue;
+						triggerData.Param3 = (int)Baserow.GetCell((int)BaseTriggersColumn.Param3)?.NumericCellValue;
+						learningData.TriggerDatas.Add(triggerData);
+					}
+				}
 				// 情報の初期化
 				Data._textdata.Clear();
 

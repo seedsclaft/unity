@@ -25,6 +25,9 @@ MonoBehaviour:
     Kinds: 
     LearningSkills:
     - SkillId: 1
+      Level: 1
+      Weight: 100
+      TriggerDatas: []
   - Id: 2
     Name: "\u30AB\u30FC\u30B9\u30C9"
     ImagePath: Cursed
@@ -37,6 +40,9 @@ MonoBehaviour:
     Kinds: 01000000
     LearningSkills:
     - SkillId: 1
+      Level: 1
+      Weight: 100
+      TriggerDatas: []
   - Id: 3
     Name: "\u30D3\u30FC"
     ImagePath: Bee
@@ -49,6 +55,9 @@ MonoBehaviour:
     Kinds: 
     LearningSkills:
     - SkillId: 1
+      Level: 1
+      Weight: 100
+      TriggerDatas: []
   - Id: 4
     Name: "\u30A6\u30EB\u30D5"
     ImagePath: Wolf
@@ -61,6 +70,9 @@ MonoBehaviour:
     Kinds: 
     LearningSkills:
     - SkillId: 1
+      Level: 1
+      Weight: 100
+      TriggerDatas: []
   - Id: 5
     Name: "\u30AF\u30ED\u30A6"
     ImagePath: Crow
@@ -73,6 +85,9 @@ MonoBehaviour:
     Kinds: 
     LearningSkills:
     - SkillId: 1
+      Level: 1
+      Weight: 100
+      TriggerDatas: []
   - Id: 6
     Name: "\u30CD\u30FC\u30E0\u30EC\u30B9"
     ImagePath: Nameless
@@ -85,6 +100,9 @@ MonoBehaviour:
     Kinds: 
     LearningSkills:
     - SkillId: 1
+      Level: 1
+      Weight: 100
+      TriggerDatas: []
   - Id: 7
     Name: "\u30B5\u30FC\u30C1\u30E3\u30FC"
     ImagePath: Seacher
@@ -97,6 +115,9 @@ MonoBehaviour:
     Kinds: 
     LearningSkills:
     - SkillId: 1
+      Level: 1
+      Weight: 100
+      TriggerDatas: []
   - Id: 8
     Name: "\u30B7\u30FC\u30EB\u30C9"
     ImagePath: Shiled
@@ -109,6 +130,9 @@ MonoBehaviour:
     Kinds: 
     LearningSkills:
     - SkillId: 1
+      Level: 1
+      Weight: 100
+      TriggerDatas: []
   - Id: 9
     Name: "\u30C9\u30E9\u30A4\u30A2\u30C9"
     ImagePath: Dryad
@@ -121,6 +145,9 @@ MonoBehaviour:
     Kinds: 
     LearningSkills:
     - SkillId: 1
+      Level: 1
+      Weight: 100
+      TriggerDatas: []
   - Id: 10
     Name: "\u30B9\u30B3\u30FC\u30D4\u30AA\u30F3"
     ImagePath: Scorpion
@@ -133,6 +160,9 @@ MonoBehaviour:
     Kinds: 
     LearningSkills:
     - SkillId: 1
+      Level: 1
+      Weight: 100
+      TriggerDatas: []
   - Id: 11
     Name: "\u30B9\u30AF\u30A4\u30C3\u30C9"
     ImagePath: Squid
@@ -145,6 +175,9 @@ MonoBehaviour:
     Kinds: 
     LearningSkills:
     - SkillId: 1
+      Level: 1
+      Weight: 100
+      TriggerDatas: []
   - Id: 12
     Name: "\u30AF\u30EA\u30FC\u30D1\u30FC"
     ImagePath: Creeper
@@ -157,6 +190,9 @@ MonoBehaviour:
     Kinds: 
     LearningSkills:
     - SkillId: 1
+      Level: 1
+      Weight: 100
+      TriggerDatas: []
   - Id: 13
     Name: "\u30A4\u30F3\u30D7"
     ImagePath: Imp
@@ -169,6 +205,19 @@ MonoBehaviour:
     Kinds: 
     LearningSkills:
     - SkillId: 1
+      Level: 1
+      Weight: 20
+      TriggerDatas: []
+    - SkillId: 421
+      Level: 3
+      Weight: 80
+      TriggerDatas:
+      - SkillId: 0
+        TriggerType: 11
+        TriggerTiming: 1
+        Param1: 1
+        Param2: 0
+        Param3: 0
   - Id: 14
     Name: "\u30B4\u30FC\u30B9\u30C8\u30A2\u30FC\u30DE\u30FC"
     ImagePath: Armor
@@ -181,6 +230,9 @@ MonoBehaviour:
     Kinds: 01000000
     LearningSkills:
     - SkillId: 1
+      Level: 1
+      Weight: 100
+      TriggerDatas: []
   - Id: 15
     Name: "\u30BD\u30FC\u30C9"
     ImagePath: Sword
@@ -193,49 +245,85 @@ MonoBehaviour:
     Kinds: 
     LearningSkills:
     - SkillId: 1
+      Level: 1
+      Weight: 100
+      TriggerDatas: []
+  - Id: 101
+    Name: "\u30D3\u30D5\u30ED\u30F3\u30B9"
+    ImagePath: Bifrons
+    BaseStatus:
+      _hp: 100
+      _mp: 20
+      _atk: 40
+      _def: 20
+      _spd: 30
+    Kinds: 
+    LearningSkills:
+    - SkillId: 1
+      Level: 1
+      Weight: 100
+      TriggerDatas: []
+  - Id: 102
+    Name: "\u30A2\u30F3\u30C9\u30E9\u30B9"
+    ImagePath: Andras
+    BaseStatus:
+      _hp: 100
+      _mp: 20
+      _atk: 40
+      _def: 20
+      _spd: 30
+    Kinds: 
+    LearningSkills:
+    - SkillId: 1
+      Level: 1
+      Weight: 100
+      TriggerDatas: []
+  - Id: 103
+    Name: "\u30A2\u30E2\u30F3"
+    ImagePath: Ammon
+    BaseStatus:
+      _hp: 100
+      _mp: 20
+      _atk: 40
+      _def: 20
+      _spd: 30
+    Kinds: 
+    LearningSkills:
+    - SkillId: 1
+      Level: 1
+      Weight: 100
+      TriggerDatas: []
+  - Id: 104
+    Name: "\u30D9\u30EA\u30C8"
+    ImagePath: Berith
+    BaseStatus:
+      _hp: 100
+      _mp: 20
+      _atk: 40
+      _def: 20
+      _spd: 30
+    Kinds: 
+    LearningSkills:
+    - SkillId: 1
+      Level: 1
+      Weight: 100
+      TriggerDatas: []
+  - Id: 105
+    Name: "\u30D1\u30A4\u30E2\u30F3"
+    ImagePath: Paimon
+    BaseStatus:
+      _hp: 100
+      _mp: 20
+      _atk: 40
+      _def: 20
+      _spd: 30
+    Kinds: 
+    LearningSkills:
+    - SkillId: 1
+      Level: 1
+      Weight: 100
+      TriggerDatas: []
   _textdata:
-  - Id: 1
-    Text: "\u30CD\u30EC\u30A4\u30C9\u30B8\u30A7\u30E0"
-    Help: 
-  - Id: 2
-    Text: "\u30AB\u30FC\u30B9\u30C9"
-    Help: 
-  - Id: 3
-    Text: "\u30D3\u30FC"
-    Help: 
-  - Id: 4
-    Text: "\u30A6\u30EB\u30D5"
-    Help: 
-  - Id: 5
-    Text: "\u30AF\u30ED\u30A6"
-    Help: 
-  - Id: 6
-    Text: "\u30CD\u30FC\u30E0\u30EC\u30B9"
-    Help: 
-  - Id: 7
-    Text: "\u30B5\u30FC\u30C1\u30E3\u30FC"
-    Help: 
-  - Id: 8
-    Text: "\u30B7\u30FC\u30EB\u30C9"
-    Help: 
-  - Id: 9
-    Text: "\u30C9\u30E9\u30A4\u30A2\u30C9"
-    Help: 
-  - Id: 10
-    Text: "\u30B9\u30B3\u30FC\u30D4\u30AA\u30F3"
-    Help: 
-  - Id: 11
-    Text: "\u30B9\u30AF\u30A4\u30C3\u30C9"
-    Help: 
-  - Id: 12
-    Text: "\u30AF\u30EA\u30FC\u30D1\u30FC"
-    Help: 
   - Id: 13
-    Text: "\u30A4\u30F3\u30D7"
-    Help: 
-  - Id: 14
-    Text: "\u30B4\u30FC\u30B9\u30C8\u30A2\u30FC\u30DE\u30FC"
-    Help: 
-  - Id: 15
-    Text: "\u30BD\u30FC\u30C9"
+    Text: 421
     Help: 

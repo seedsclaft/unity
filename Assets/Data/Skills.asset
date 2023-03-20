@@ -705,7 +705,7 @@ MonoBehaviour:
     AnimationName: NA_Effekseer/NA_healing_001
     AnimationPosition: 0
     AnimationType: 1
-    DamageTiming: 26
+    DamageTiming: 40
     MpCost: 5
     Attribute: 4
     Scope: 1
@@ -871,6 +871,33 @@ MonoBehaviour:
     - SkillId: 412
       FeatureType: 101
       Param1: 21
+      Param2: 0
+      Param3: 0
+    TriggerDatas: []
+  - Id: 421
+    Name: "\u30DB\u30FC\u30EA\u30FC\u30B0\u30EC\u30A4\u30B9"
+    IconIndex: 577
+    AnimationName: tktk01/Cure1
+    AnimationPosition: 0
+    AnimationType: 1
+    DamageTiming: 40
+    MpCost: 5
+    Attribute: 4
+    Scope: 1
+    SkillType: 1
+    TargetType: 2
+    Help: "\u5473\u65B9\u4E00\u4EBA\u3092\u8607\u751F\u3059\u308B"
+    Range: 1
+    AliveOnly: 0
+    FeatureDatas:
+    - SkillId: 421
+      FeatureType: 22
+      Param1: 1
+      Param2: 0
+      Param3: 0
+    - SkillId: 421
+      FeatureType: 2
+      Param1: 25
       Param2: 0
       Param3: 0
     TriggerDatas: []

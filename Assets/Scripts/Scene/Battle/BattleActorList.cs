@@ -33,7 +33,7 @@ public class BattleActorList : ListWindow , IInputHandlerEvent
                 }
                 callEvent(MakeTargetIndexs(actorIndex));
             });
-            battleActor.SetSelectHandler((data) => UpdateSelectIndex(data));
+            battleActor.SetSelectHandler((data) => UpdateTargetIndex(data));
             battleActor.SetDamageRoot(damageRoots[i]);
             _battleActors.Add(battleActor);
             ObjectList[i].SetActive(false);
@@ -68,30 +68,31 @@ public class BattleActorList : ListWindow , IInputHandlerEvent
         }
     }
     
-    public void RefreshTarget(ActionInfo actionInfo)
+    public void RefreshTarget(int selectIndex,List<int> targetIndexList,ScopeType scopeType)
     {
         UpdateAllUnSelect();
-        if (actionInfo == null) {
+        if (selectIndex == -1) {
+            UpdateSelectIndex(-1);
             _targetScopeType = ScopeType.None;
             return;
         }
-        _targetIndexList = actionInfo.TargetIndexList;
-        _targetScopeType = actionInfo.ScopeType;
+        _targetIndexList = targetIndexList;
+        _targetScopeType = scopeType;
         if (_targetScopeType == ScopeType.All)
         {
             UpdateAllSelect();
         } else
         if (_targetScopeType == ScopeType.Line)
         {
-            UpdateLineSelect(actionInfo.LastTargetIndex);
+            UpdateLineSelect(selectIndex);
         } else
         if (_targetScopeType == ScopeType.One)
         {
-            UpdateSelectIndex(actionInfo.LastTargetIndex);
+            UpdateTargetIndex(selectIndex);
         } else
         if (_targetScopeType == ScopeType.Self)
         {
-            UpdateSelectIndex(actionInfo.SubjectIndex);
+            UpdateTargetIndex(selectIndex);
         }
     }
     
@@ -112,11 +113,12 @@ public class BattleActorList : ListWindow , IInputHandlerEvent
         }
     }
     
-    private new void UpdateSelectIndex(int index){
+    private void UpdateTargetIndex(int index){
         if (_targetIndexList.IndexOf(index) == -1)
         {
             return;
         }
+        UpdateSelectIndex(index);
         if (_targetScopeType == ScopeType.All)
         {
             UpdateAllSelect();

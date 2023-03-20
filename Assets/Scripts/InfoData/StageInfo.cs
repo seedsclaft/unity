@@ -47,6 +47,8 @@ public class StageInfo
     private StateInfo _alcanaState = null;
     public StateInfo AlcanaState {get {return _alcanaState;}}
 
+    readonly int _randomTroopCout = 15;
+
     public StageInfo(StagesData.StageData stageInfo)
     {
         _id = stageInfo.Id;
@@ -69,7 +71,7 @@ public class StageInfo
 
 	private void MakeTroopData()
 	{
-		for (int i = 0;i < DataSystem.Enemies.Count;i++)
+		for (int i = 0;i < _randomTroopCout;i++)
 		{
 			TroopsData.TroopData BossTroopData = new TroopsData.TroopData();
 			BossTroopData.Id = i + 1001;
@@ -77,8 +79,12 @@ public class StageInfo
 			BossTroopData.EnemyId = i + 1;
 			BossTroopData.Lv = 1;
 			BossTroopData.Line = 1;
-            BossTroopData.GetItemDatas = DataSystem.Troops.Find(a => a.TroopId == BossTroopData.Id).GetItemDatas;
-			_troopDatas.Add(BossTroopData);
+            TroopsData.TroopData troopData = DataSystem.Troops.Find(a => a.TroopId == BossTroopData.Id);
+            if (troopData != null && troopData.GetItemDatas != null)
+            {
+                BossTroopData.GetItemDatas = troopData.GetItemDatas;
+            }
+            _troopDatas.Add(BossTroopData);
             /*
 			for (int j = 0;j < 2;j++)
 			{
@@ -120,7 +126,7 @@ public class StageInfo
             TroopInfo troopInfo = new TroopInfo(_currentEnemyData[i].TroopId);
 			for (int j = 0;j < 2;j++)
 			{
-        		int rand = new System.Random().Next(1, DataSystem.Enemies.Count);
+        		int rand = new System.Random().Next(1, _randomTroopCout);
                 EnemiesData.EnemyData enemyData = DataSystem.Enemies.Find(a => a.Id == rand);
                 BattlerInfo enemy = new BattlerInfo(enemyData,1,j,0);
                 troopInfo.AddEnemy(enemy);

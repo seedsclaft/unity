@@ -65,31 +65,32 @@ public class BattleEnemyLayer : ListWindow , IInputHandlerEvent
         UpdateAllUnSelect();
     }
 
-    public void RefreshTarget(ActionInfo actionInfo)
+    public void RefreshTarget(int selectIndex,List<int> targetIndexList,ScopeType scopeType)
     {
         UpdateAllUnSelect();
-        if (actionInfo == null) {
+        if (selectIndex == -1) {
+            UpdateSelectIndex(-1);
             _targetScopeType = ScopeType.None;
             return;
         }
-        _selectIndex = actionInfo.LastTargetIndex;
-        _targetIndexList = actionInfo.TargetIndexList;
-        _targetScopeType = actionInfo.ScopeType;
+        _selectIndex = selectIndex;
+        _targetIndexList = targetIndexList;
+        _targetScopeType = scopeType;
         if (_targetScopeType == ScopeType.All)
         {
             UpdateAllSelect();
         } else
         if (_targetScopeType == ScopeType.Line)
         {
-            UpdateLineSelect(actionInfo.LastTargetIndex);
+            UpdateLineSelect(_selectIndex);
         } else
         if (_targetScopeType == ScopeType.One)
         {
-            UpdateEnemyIndex(actionInfo.LastTargetIndex);
+            UpdateEnemyIndex(_selectIndex);
         } else
         if (_targetScopeType == ScopeType.Self)
         {
-            UpdateEnemyIndex(actionInfo.SubjectIndex);
+            UpdateEnemyIndex(_selectIndex);
         }
     }
 

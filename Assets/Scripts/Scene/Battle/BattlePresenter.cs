@@ -177,24 +177,18 @@ public class BattlePresenter : BasePresenter
         if (actionInfo.TargetType == TargetType.Opponent)
         {
             _view.ShowEnemyTarget();
-            _view.RefreshBattlerEnemyLayerTarget(actionInfo);
+            _view.RefreshBattlerEnemyLayerTarget(actionInfo.LastTargetIndex,actionInfo.TargetIndexList,actionInfo.ScopeType);
         } else
         if (actionInfo.TargetType == TargetType.Friend || actionInfo.TargetType == TargetType.Self)
         {
             _view.ShowPartyTarget();
-            _view.RefreshBattlerPartyLayerTarget(actionInfo);
+            _view.RefreshBattlerPartyLayerTarget(actionInfo.LastTargetIndex,actionInfo.TargetIndexList,actionInfo.ScopeType);
         } else
         {
-            _view.RefreshBattlerEnemyLayerTarget(actionInfo);
-            _view.RefreshBattlerPartyLayerTarget(actionInfo);
-            if (_model.CurrentBattler.isActor)
-            {
-                _view.ShowEnemyTarget();
-                _view.DeactivateActorList();
-            } else{
-                _view.ShowPartyTarget();
-                _view.DeactivateEnemyList();
-            }
+            _view.RefreshBattlerEnemyLayerTarget(-1);
+            _view.RefreshBattlerPartyLayerTarget(actionInfo.LastTargetIndex,actionInfo.TargetIndexList,actionInfo.ScopeType);
+            _view.ShowPartyTarget();
+            _view.DeactivateEnemyList();
         }
         _backCommandType = Battle.CommandType.DecideActor;
         _view.SetActiveBack(true);
@@ -223,8 +217,8 @@ public class BattlePresenter : BasePresenter
         ActionInfo actionInfo = _model.CurrentActionInfo();
         if (actionInfo != null)
         {
-            _view.RefreshBattlerEnemyLayerTarget(null);
-            _view.RefreshBattlerPartyLayerTarget(null);
+            _view.RefreshBattlerEnemyLayerTarget(-1);
+            _view.RefreshBattlerPartyLayerTarget(-1);
             _model.MakeActionResultInfo(actionInfo,indexList);
             var result = _model.CheckTriggerSkillInfos(TriggerTiming.Interrupt);
             if (result)
@@ -440,8 +434,8 @@ public class BattlePresenter : BasePresenter
         _view.ShowSkillActionList(_model.CurrentBattler);
         _view.ShowConditionTab();
         CommandAttributeType(_model.CurrentAttributeType);
-        _view.RefreshBattlerEnemyLayerTarget(null);
-        _view.RefreshBattlerPartyLayerTarget(null);
+        _view.RefreshBattlerEnemyLayerTarget(-1);
+        _view.RefreshBattlerPartyLayerTarget(-1);
         _view.SetActiveBack(false);
     }
     
@@ -504,8 +498,8 @@ public class BattlePresenter : BasePresenter
             //_view.RefreshBattlerPartyLayerTarget(actionInfo);
         } else
         {
-            _view.RefreshBattlerEnemyLayerTarget(actionInfo);
-            _view.RefreshBattlerPartyLayerTarget(actionInfo);
+            _view.RefreshBattlerEnemyLayerTarget(actionInfo.TargetIndexList.Find(a => a >= 100),actionInfo.TargetIndexList,actionInfo.ScopeType);
+            _view.RefreshBattlerPartyLayerTarget(-1);
             _view.ShowEnemyTarget();
             _view.DeactivateActorList();
         }
@@ -525,8 +519,8 @@ public class BattlePresenter : BasePresenter
             //_view.RefreshBattlerPartyLayerTarget(actionInfo);
         } else
         {
-            _view.RefreshBattlerEnemyLayerTarget(actionInfo);
-            _view.RefreshBattlerPartyLayerTarget(actionInfo);
+            _view.RefreshBattlerEnemyLayerTarget(-1);
+            _view.RefreshBattlerPartyLayerTarget(actionInfo.TargetIndexList.Find(a => a < 100),actionInfo.TargetIndexList,actionInfo.ScopeType);
             _view.ShowPartyTarget();
             _view.DeactivateEnemyList();
         }

@@ -85,11 +85,11 @@ public class BattlerInfo
         _level = lv;
         StatusInfo statusInfo = new StatusInfo();
         statusInfo.SetParameter(
-            enemyData.BaseStatus.Hp + (int)Math.Floor(lv * enemyData.BaseStatus.Hp * 0.1f),
-            enemyData.BaseStatus.Mp + (int)Math.Floor(lv * enemyData.BaseStatus.Mp * 0.1f),
-            enemyData.BaseStatus.Atk + (int)Math.Floor(lv * enemyData.BaseStatus.Atk * 0.05f),
-            enemyData.BaseStatus.Def + (int)Math.Floor(lv * enemyData.BaseStatus.Def * 0.05f),
-            enemyData.BaseStatus.Spd + (int)Math.Floor(lv * enemyData.BaseStatus.Spd * 0.05f)
+            enemyData.BaseStatus.Hp + (int)Math.Floor(lv * enemyData.BaseStatus.Hp * 0.04f),
+            enemyData.BaseStatus.Mp + (int)Math.Floor(lv * enemyData.BaseStatus.Mp * 0.04f),
+            enemyData.BaseStatus.Atk + (int)Math.Floor(lv * enemyData.BaseStatus.Atk * 0.04f),
+            enemyData.BaseStatus.Def + (int)Math.Floor(lv * enemyData.BaseStatus.Def * 0.04f),
+            enemyData.BaseStatus.Spd + (int)Math.Floor(lv * enemyData.BaseStatus.Spd * 0.04f)
         );
         _status = statusInfo;
         _index = index + 100;
@@ -101,7 +101,12 @@ public class BattlerInfo
         _skills = new List<SkillInfo>();
         for (int i = 0;i < enemyData.LearningSkills.Count;i++)
         {
-            _skills.Add(new SkillInfo(enemyData.LearningSkills[i].SkillId));
+            if (_level >= enemyData.LearningSkills[i].Level)
+            {
+                SkillInfo skillInfo = new SkillInfo(enemyData.LearningSkills[i].SkillId);
+                skillInfo.SetTriggerDatas(enemyData.LearningSkills[i].TriggerDatas);
+                _skills.Add(skillInfo);
+            }
         }
         for (int i = 0;i < enemyData.Kinds.Count;i++)
         {

@@ -310,6 +310,10 @@ public class BattleModel : BaseModel
                 return false;
             }
         }
+        if (skillInfo.CanUseTrigger(battlerInfo,BattlerActors(),BattlerEnemies()) == false)
+        {
+            return false;
+        }
         return true;
     }
 
@@ -334,7 +338,7 @@ public class BattleModel : BaseModel
         if (subject.isActor)
         {
             LastTargetIndex = subject.LastTargetIndex();
-            if (skill.TargetType == TargetType.Opponent || skill.TargetType == TargetType.All)
+            if (skill.TargetType == TargetType.Opponent)
             {
                 BattlerInfo targetBattler = BattlerEnemies().Find(a => a.Index == LastTargetIndex && a.IsAlive());
                 if (targetBattler == null || targetBattler.IsAlive() == false)
@@ -812,7 +816,24 @@ public class BattleModel : BaseModel
     public int MakeAutoSkillId(BattlerInfo battlerInfo)
     {
         List<SkillInfo> skillInfos = battlerInfo.Skills.FindAll(a => CheckCanUse(a,battlerInfo) && a.Master.SkillType != SkillType.None);
-        return skillInfos [UnityEngine.Random.Range (0, skillInfos.Count)].Id;
+        
+        int weight = 0;
+        for (int i = 0;i < skillInfos.Count;i++)
+        {
+            weight += skillInfos[i].Weight;
+        }
+        weight = UnityEngine.Random.Range (0,weight);
+        int skillIndex = -1;
+        for (int i = 0;i < skillInfos.Count;i++)
+        {
+            weight -= skillInfos[i].Weight;
+            if (weight <= 0 && skillIndex == -1)
+            {
+                skillIndex = i;
+            }
+        }
+        
+        return skillInfos[skillIndex].Id;
     }
 
     public bool CheckVictory()

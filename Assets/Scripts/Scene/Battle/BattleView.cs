@@ -317,20 +317,20 @@ public class BattleView : BaseView
         _commandData(eventData);
     }
 
-    public void RefreshBattlerEnemyLayerTarget(ActionInfo actionInfo)
+    public void RefreshBattlerEnemyLayerTarget(int selectIndex,List<int> targetIndexList = null,ScopeType scopeType = ScopeType.None)
     {
-        if (actionInfo != null){
+        if (selectIndex != -1){
             ActivateEnemyList();
         }
-        battleEnemyLayer.RefreshTarget(actionInfo);
+        battleEnemyLayer.RefreshTarget(selectIndex,targetIndexList,scopeType);
     }
 
-    public void RefreshBattlerPartyLayerTarget(ActionInfo actionInfo)
+    public void RefreshBattlerPartyLayerTarget(int selectIndex,List<int> targetIndexList = null,ScopeType scopeType = ScopeType.None)
     {
-        if (actionInfo != null){
+        if (selectIndex != -1){
             ActivateActorList();
         }
-        battleActorList.RefreshTarget(actionInfo);
+        battleActorList.RefreshTarget(selectIndex,targetIndexList,scopeType);
     }
 
     public void StartAnimation(int targetIndex,EffekseerEffectAsset effekseerEffectAsset,int animationPosition)

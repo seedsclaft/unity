@@ -41,6 +41,9 @@ public class ActorsData : ScriptableObject {
 public class LearningData
 {   
     public int SkillId;
+    public int Level;
+    public int Weight;
+    public List<SkillsData.TriggerData> TriggerDatas;
 }
 
 [Serializable]
