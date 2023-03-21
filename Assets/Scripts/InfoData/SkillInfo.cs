@@ -69,6 +69,18 @@ public class SkillInfo
                     CanUse = false;
                 }
                 break;
+                case TriggerType.HpRateUnder:
+                if (((float)battlerInfo.Hp / (float)battlerInfo.MaxHp) > triggerData.Param1 * 0.01f)
+                {
+                    CanUse = false;
+                }
+                break;
+                case TriggerType.HpRateUpper:
+                if (((float)battlerInfo.Hp / (float)battlerInfo.MaxHp) < triggerData.Param1 * 0.01f)
+                {
+                    CanUse = false;
+                }
+                break;
             }
         }
 

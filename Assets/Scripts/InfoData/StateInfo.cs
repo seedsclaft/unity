@@ -14,7 +14,7 @@ public class StateInfo {
     private int _baseTurns = 0;
     public int BaseTurns{ get {return _baseTurns;}}
     private int _effect = 0;
-    public int Effect{ get {return _effect;} }
+    public int Effect{ get {return _effect;} set {_effect = value;} }
     private int _battlerId = 0;
     public int BattlerId{ get {return _battlerId;}}
     private int _targetIndex = 0;

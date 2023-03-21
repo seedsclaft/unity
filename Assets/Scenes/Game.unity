@@ -5280,7 +5280,7 @@ MonoBehaviour:
   TimingOfUpdate: 0
   EmitterScale: 0
   TimeScale: 0
-  effectAsset: {fileID: 0}
+  effectAsset: {fileID: 11400000, guid: fda056b415ae87b4eb6010d04a34ae19, type: 2}
   playOnStart: 0
   isLooping: 0
 --- !u!1 &1561513542
@@ -5763,8 +5763,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc34738223829f44c9a2b752c153bbcc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inBattleActorIds: 0100000002000000
-  troopId: 100
+  inBattleActorIds: 0200000005000000
+  troopId: 200
   actorDatas:
   - Id: 1
     Name: "\u30D8\u30AB\u30C6\u30FC"

@@ -185,7 +185,7 @@ public class ActionResultInfo
             DamageRate *= subject.StateEffectAll(StateType.DamageUp);
         }
         float SkillDamage = (DamageRate * 0.01f * (AtkValue * 0.5f));
-        if (target.IsState(StateType.CounterOura) && !isNoEffect)
+        if (target.IsState(StateType.CounterOura) && target.CanMove() && !isNoEffect)
         {
             _execStateInfos[target.Index].Add(StateType.CounterOura);
             _reDamage = (int)Mathf.Floor(SkillDamage * target.StateEffectAll(StateType.CounterOura) * 0.01f);

@@ -53,6 +53,9 @@ public class BattlerInfo
     public void SetLastTargetIndex(int index){
         _lastTargetIndex = index;
     }
+
+    private int _turnCount = 0;
+
     public BattlerInfo(ActorInfo actorInfo,int index){
         _charaId = actorInfo.ActorId;
         _level = actorInfo.Level;
@@ -105,6 +108,7 @@ public class BattlerInfo
             {
                 SkillInfo skillInfo = new SkillInfo(enemyData.LearningSkills[i].SkillId);
                 skillInfo.SetTriggerDatas(enemyData.LearningSkills[i].TriggerDatas);
+                skillInfo.SetWeight(enemyData.LearningSkills[i].Weight);
                 _skills.Add(skillInfo);
             }
         }
@@ -147,7 +151,7 @@ public class BattlerInfo
         {
             rand = 0;
         }
-        _ap = 500 - (Status.Spd + rand) * 4;
+        _ap = 500 - (CurrentSpd() + rand) * 4;
         if (IsState(StateType.SetAfterAp))
         {
             _ap = StateEffect(StateType.SetAfterAp);
@@ -166,19 +170,19 @@ public class BattlerInfo
         {
             return;
         }
-        if (IsState(StateType.Chain))
+        if (IsState(StateType.CounterOura) || IsState(StateType.Benediction))
         {
             _ap += 2;
+            return;
+        }
+        if (IsState(StateType.Chain))
+        {
+            _ap += 3;
             return;
         }
         if (IsState(StateType.Slow))
         {
-            _ap -= 2;
-            return;
-        }
-        if (IsState(StateType.CounterOura) || IsState(StateType.Benediction))
-        {
-            _ap += 2;
+            _ap -= 3;
             return;
         }
         //if (isActor == false) return;
@@ -234,10 +238,33 @@ public class BattlerInfo
         return _hp > 0;
     }
 
+    public bool CanMove()
+    {
+        bool CanMove = true;
+        if (IsState(StateType.Death))
+        {
+            CanMove = false;
+        }
+        if (IsState(StateType.Stun))
+        {
+            CanMove = false;
+        }
+        if (IsState(StateType.Chain))
+        {
+            CanMove = false;
+        }
+        return CanMove;
+    }
+
 
     public bool IsState(StateType stateType)
     {
         return _stateInfos.Find(a => a.StateId == (int)stateType) != null;
+    }
+
+    public StateInfo GetStateInfo(StateType stateType)
+    {
+        return _stateInfos.Find(a => a.StateId == (int)stateType);
     }
 
     public List<StateInfo> GetStateInfoAll(StateType stateType)
@@ -254,6 +281,16 @@ public class BattlerInfo
         {
             RemoveState(getStateInfoAll[i]);
         }
+    }
+
+    public int StateTurn(StateType stateType)
+    {
+        int turns = 0;
+        if (IsState(stateType))
+        {
+            turns += _stateInfos.Find(a => a.StateId == (int)stateType).Turns;
+        }
+        return turns;
     }
 
     public int StateEffect(StateType stateType)
@@ -370,6 +407,20 @@ public class BattlerInfo
         }
         return def;
     }
+    
+    public int CurrentSpd()
+    {
+        int spd = Status.Spd;
+        if (IsState(StateType.Demigod))
+        {
+            spd += StateEffect(StateType.Demigod);
+        }
+        if (IsState(StateType.Accel))
+        {
+            spd += StateEffect(StateType.Accel) * StateTurn(StateType.Accel);
+        }
+        return spd;
+    }
 
     public int TargetRate()
     {
@@ -397,6 +448,17 @@ public class BattlerInfo
     public void GainChainCount(int value)
     {
         _chainSuccessCount += value;
+    }
+
+    public void TurnEnd()
+    {
+        _turnCount += 1;
+        // アクセル
+        if (IsState(StateType.Accel))
+        {
+            StateInfo stateInfo = GetStateInfo(StateType.Accel);
+            stateInfo.Turns += 1;
+        }
     }
 
     // Triggerを満たすSkillInfoを取得
@@ -466,7 +528,7 @@ public class BattlerInfo
     private bool TriggerdHpRateUnderSkillInfos(SkillsData.TriggerData triggerData)
     {
         bool IsTriggered = false;
-        if (triggerData.Param1 >= Hp)
+        if (triggerData.Param1 * 0.01f >= ((float)Hp / (float)MaxHp))
         {
             IsTriggered = true;
         }
@@ -552,7 +614,7 @@ public class BattlerInfo
 
     private bool TriggerdSelfDeadSkillInfos(SkillsData.TriggerData triggerData,List<ActionResultInfo> actionResultInfos){
         bool IsTriggered = false;
-        if (actionResultInfos.Find(a => a.IsDead && a.TargetIndex == Index) != null)
+        if (actionResultInfos.Find(a => a.DeadIndexList.Contains(Index) == true) != null)
         {
             IsTriggered = true;
         }

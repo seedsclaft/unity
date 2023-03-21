@@ -314,6 +314,11 @@ public class BattleModel : BaseModel
         {
             return false;
         }
+        List<int> targetIndexList = MakeActionTarget(skillInfo.Master.Id,battlerInfo.Index);
+        if (targetIndexList.Count == 0)
+        {
+            return false;
+        }
         return true;
     }
 
@@ -487,7 +492,61 @@ public class BattleModel : BaseModel
         {
             targetIndexList = targetIndexList.FindAll(a => !_battlers.Find(b => a == b.Index).IsAlive());
         }
+        for (int i = targetIndexList.Count-1;i >= 0;i--)
+        {
+            if (CanUseCondition(skillId,targetIndexList[i]) == false)
+            {
+                targetIndexList.Remove(targetIndexList[i]);
+            }
+        }
         return targetIndexList;
+    }
+
+    public bool CanUseCondition(int skillId,int targetIndex)
+    {
+        bool IsEnable = false;
+        SkillsData.SkillData skill = DataSystem.Skills.Find(a => a.Id == skillId);
+        BattlerInfo target = GetBattlerInfo(targetIndex);
+        foreach (var featureData in skill.FeatureDatas)
+        {
+            switch (featureData.FeatureType)
+            {
+                case FeatureType.HpDamage:
+                if (target.Hp > 0)
+                {
+                    IsEnable = true;
+                }
+                break;
+                case FeatureType.HpHeal:
+                if (target.Hp < target.MaxHp)
+                {
+                    IsEnable = true;
+                }
+                break;
+                case FeatureType.MpHeal:
+                if (target.Mp < target.MaxMp)
+                {
+                    IsEnable = true;
+                }
+                break;
+                case FeatureType.AddState:
+                if (!target.IsState((StateType)featureData.Param1))
+                {
+                    IsEnable = true;
+                }
+                break;
+                case FeatureType.RemoveState:
+                if (target.IsState((StateType)featureData.Param1))
+                {
+                    IsEnable = true;
+                }
+                break;
+                default:
+                IsEnable = true;
+                break;
+            }
+        }
+        return IsEnable;
     }
 
     public ActionInfo CurrentActionInfo()
@@ -645,6 +704,7 @@ public class BattleModel : BaseModel
         _actionInfos.RemoveAt(0);
         CurrentBattler.ResetAp(false);
         CurrentBattler.UpdateState(RemovalTiming.UpdateTurn);
+        CurrentBattler.TurnEnd();
         _currentBattler = null;
     }
 
@@ -816,7 +876,10 @@ public class BattleModel : BaseModel
     public int MakeAutoSkillId(BattlerInfo battlerInfo)
     {
         List<SkillInfo> skillInfos = battlerInfo.Skills.FindAll(a => CheckCanUse(a,battlerInfo) && a.Master.SkillType != SkillType.None);
-        
+        if (skillInfos.Count == 0)
+        {
+            return 0;
+        }
         int weight = 0;
         for (int i = 0;i < skillInfos.Count;i++)
         {

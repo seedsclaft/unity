@@ -131,7 +131,11 @@ MonoBehaviour:
     LearningSkills:
     - SkillId: 1
       Level: 1
-      Weight: 100
+      Weight: 25
+      TriggerDatas: []
+    - SkillId: 301
+      Level: 3
+      Weight: 75
       TriggerDatas: []
   - Id: 9
     Name: "\u30C9\u30E9\u30A4\u30A2\u30C9"
@@ -199,7 +203,7 @@ MonoBehaviour:
     BaseStatus:
       _hp: 42
       _mp: 20
-      _atk: 20
+      _atk: 18
       _def: 5
       _spd: 30
     Kinds: 
@@ -213,7 +217,7 @@ MonoBehaviour:
       Weight: 80
       TriggerDatas:
       - SkillId: 0
-        TriggerType: 11
+        TriggerType: 21
         TriggerTiming: 1
         Param1: 1
         Param2: 0
@@ -261,8 +265,18 @@ MonoBehaviour:
     LearningSkills:
     - SkillId: 1
       Level: 1
-      Weight: 100
+      Weight: 30
       TriggerDatas: []
+    - SkillId: 321
+      Level: 1
+      Weight: 70
+      TriggerDatas:
+      - SkillId: 0
+        TriggerType: 2
+        TriggerTiming: 1
+        Param1: 50
+        Param2: 0
+        Param3: 0
   - Id: 102
     Name: "\u30A2\u30F3\u30C9\u30E9\u30B9"
     ImagePath: Andras
@@ -276,8 +290,18 @@ MonoBehaviour:
     LearningSkills:
     - SkillId: 1
       Level: 1
-      Weight: 100
+      Weight: 50
       TriggerDatas: []
+    - SkillId: 221
+      Level: 1
+      Weight: 50
+      TriggerDatas:
+      - SkillId: 0
+        TriggerType: 2
+        TriggerTiming: 1
+        Param1: 50
+        Param2: 0
+        Param3: 0
   - Id: 103
     Name: "\u30A2\u30E2\u30F3"
     ImagePath: Ammon
@@ -326,4 +350,10 @@ MonoBehaviour:
   _textdata:
   - Id: 13
     Text: 421
+    Help: 
+  - Id: 101
+    Text: 321
+    Help: 
+  - Id: 102
+    Text: 221
     Help: 

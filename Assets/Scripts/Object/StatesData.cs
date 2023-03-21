@@ -33,6 +33,7 @@ public enum StateType
     DefUp = 44,
     DamageUp = 46,
     EvaUp = 52,
+    Accel = 53,
     TargetRateUp = 61,
     TargetRateDown = 62,
     Chain = 101,
