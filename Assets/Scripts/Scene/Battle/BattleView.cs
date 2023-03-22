@@ -480,6 +480,7 @@ namespace Battle
         EndAnimation,
         EndDemigodAnimation,
         EndRegeneAnimation,
+        EndSlipDamageAnimation,
         StartDamage,
         Condition,
         SelectEnemy,

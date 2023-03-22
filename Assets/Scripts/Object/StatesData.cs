@@ -26,6 +26,7 @@ public enum StateType
     Slow = 21,
     Stun = 22,
     SlipDamage = 23,
+    Blind = 24,
     Barrier = 31,
     MaxHpUp = 41,
     MaxMpUp = 42,

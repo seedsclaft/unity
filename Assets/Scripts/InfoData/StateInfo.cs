@@ -40,7 +40,7 @@ public class StateInfo {
     public bool UpdateTurn()
     {
         _turns--;
-        if (_turns < 0)
+        if (_turns <= 0)
         {
             return true;
         }

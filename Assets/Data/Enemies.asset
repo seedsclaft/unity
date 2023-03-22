@@ -86,7 +86,7 @@ MonoBehaviour:
     LearningSkills:
     - SkillId: 1
       Level: 1
-      Weight: 100
+      Weight: 50
       TriggerDatas: []
   - Id: 6
     Name: "\u30CD\u30FC\u30E0\u30EC\u30B9"
@@ -116,7 +116,11 @@ MonoBehaviour:
     LearningSkills:
     - SkillId: 1
       Level: 1
-      Weight: 100
+      Weight: 50
+      TriggerDatas: []
+    - SkillId: 521
+      Level: 3
+      Weight: 50
       TriggerDatas: []
   - Id: 8
     Name: "\u30B7\u30FC\u30EB\u30C9"
@@ -150,8 +154,18 @@ MonoBehaviour:
     LearningSkills:
     - SkillId: 1
       Level: 1
-      Weight: 100
+      Weight: 50
       TriggerDatas: []
+    - SkillId: 402
+      Level: 3
+      Weight: 50
+      TriggerDatas:
+      - SkillId: 0
+        TriggerType: 6
+        TriggerTiming: 1
+        Param1: 50
+        Param2: 0
+        Param3: 0
   - Id: 10
     Name: "\u30B9\u30B3\u30FC\u30D4\u30AA\u30F3"
     ImagePath: Scorpion
@@ -313,10 +327,36 @@ MonoBehaviour:
       _spd: 30
     Kinds: 
     LearningSkills:
-    - SkillId: 1
+    - SkillId: 2
       Level: 1
-      Weight: 100
+      Weight: 10
       TriggerDatas: []
+    - SkillId: 104
+      Level: 1
+      Weight: 90
+      TriggerDatas:
+      - SkillId: 0
+        TriggerType: 22
+        TriggerTiming: 1
+        Param1: 1
+        Param2: 0
+        Param3: 0
+      - SkillId: 0
+        TriggerType: 13
+        TriggerTiming: 1
+        Param1: 3
+        Param2: 0
+        Param3: 0
+    - SkillId: 102
+      Level: 1
+      Weight: 90
+      TriggerDatas:
+      - SkillId: 0
+        TriggerType: 13
+        TriggerTiming: 1
+        Param1: 3
+        Param2: 1
+        Param3: 0
   - Id: 104
     Name: "\u30D9\u30EA\u30C8"
     ImagePath: Berith
@@ -330,7 +370,11 @@ MonoBehaviour:
     LearningSkills:
     - SkillId: 1
       Level: 1
-      Weight: 100
+      Weight: 20
+      TriggerDatas: []
+    - SkillId: 121
+      Level: 1
+      Weight: 80
       TriggerDatas: []
   - Id: 105
     Name: "\u30D1\u30A4\u30E2\u30F3"
@@ -348,6 +392,9 @@ MonoBehaviour:
       Weight: 100
       TriggerDatas: []
   _textdata:
+  - Id: 9
+    Text: 402
+    Help: 
   - Id: 13
     Text: 421
     Help: 
@@ -356,4 +403,13 @@ MonoBehaviour:
     Help: 
   - Id: 102
     Text: 221
+    Help: 
+  - Id: 103
+    Text: 104
+    Help: 
+  - Id: 103
+    Text: 104
+    Help: 
+  - Id: 103
+    Text: 102
     Help: 

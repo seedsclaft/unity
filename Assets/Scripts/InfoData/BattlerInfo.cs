@@ -55,6 +55,7 @@ public class BattlerInfo
     }
 
     private int _turnCount = 0;
+    public int TurnCount {get {return _turnCount;}}
 
     public BattlerInfo(ActorInfo actorInfo,int index){
         _charaId = actorInfo.ActorId;
@@ -146,17 +147,17 @@ public class BattlerInfo
             return;
         }
         */
+        if (IsState(StateType.CounterOura))
+        {
+            _ap = 1;
+            return;
+        }
         int rand = new Random().Next(-10, 10);
         if (IsBattleStart == false)
         {
             rand = 0;
         }
         _ap = 500 - (CurrentSpd() + rand) * 4;
-        if (IsState(StateType.SetAfterAp))
-        {
-            _ap = StateEffect(StateType.SetAfterAp);
-            EraseStateInfo(StateType.SetAfterAp);
-        }
     }
 
     public void GainAp(int ap)
@@ -172,7 +173,7 @@ public class BattlerInfo
         }
         if (IsState(StateType.CounterOura) || IsState(StateType.Benediction))
         {
-            _ap += 2;
+            _ap = 1;
             return;
         }
         if (IsState(StateType.Chain))
@@ -368,6 +369,22 @@ public class BattlerInfo
         }
     }
 
+    public void UpdateStateCount(RemovalTiming removalTiming,int stateId)
+    {
+        for (var i = _stateInfos.Count-1;i >= 0;i--)
+        {
+            StateInfo stateInfo = _stateInfos[i];
+            if (stateInfo.Master.RemovalTiming == removalTiming && stateInfo.StateId == stateId)
+            {
+                bool IsRemove = stateInfo.UpdateTurn();
+                if (IsRemove)
+                {
+                    RemoveState(stateInfo);
+                }
+            }
+        }
+    }
+
     public List<StateInfo> UpdateChainState()
     {
         List<StateInfo> stateInfos = new List<StateInfo>();
@@ -499,7 +516,7 @@ public class BattlerInfo
                     }
                     if (triggerDatas[j].TriggerType == TriggerType.ActionResultDeath)
                     {
-                        if ( TriggerdActionResultDeathSkillInfos(triggerDatas[j],actionInfo) )
+                        if ( TriggerdActionResultDeathSkillInfos(triggerDatas[j],actionInfo,battlers) )
                         {
                             skillInfo.SetInterrupt(true);
                             triggeredSkills.Add(skillInfo);
@@ -566,11 +583,11 @@ public class BattlerInfo
         return IsTriggered;
     }
 
-    private bool TriggerdActionResultDeathSkillInfos(SkillsData.TriggerData triggerData,ActionInfo actionInfo)
+    private bool TriggerdActionResultDeathSkillInfos(SkillsData.TriggerData triggerData,ActionInfo actionInfo,List<BattlerInfo> battlerInfos)
     {
         bool IsTriggered = false;
         List<ActionResultInfo> actionResultInfos = actionInfo.actionResults;
-        if (actionResultInfos.Find(a => a.IsDead && a.TargetIndex == Index) != null)
+        if (actionResultInfos.Find(a => a.IsDead && battlerInfos.Find(b => b.Index == a.TargetIndex && b.isActor) != null) != null)
         {
             IsTriggered = true;
         }

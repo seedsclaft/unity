@@ -52,6 +52,28 @@ MonoBehaviour:
       Param2: 0
       Param3: 0
     TriggerDatas: []
+  - Id: 2
+    Name: "\u653B\u6483"
+    IconIndex: 1
+    AnimationName: tktk01/Sword5
+    AnimationPosition: 0
+    AnimationType: 1
+    DamageTiming: 48
+    MpCost: 0
+    Attribute: 0
+    Scope: 1
+    SkillType: 1
+    TargetType: 1
+    Help: '""'
+    Range: 2
+    AliveOnly: 1
+    FeatureDatas:
+    - SkillId: 2
+      FeatureType: 1
+      Param1: 50
+      Param2: 0
+      Param3: 0
+    TriggerDatas: []
   - Id: 11
     Name: "\u795E\u5316"
     IconIndex: 1
@@ -230,7 +252,7 @@ MonoBehaviour:
     - SkillId: 104
       FeatureType: 21
       Param1: 46
-      Param2: 1
+      Param2: 2
       Param3: 2
     TriggerDatas: []
   - Id: 105
@@ -323,6 +345,28 @@ MonoBehaviour:
       Param2: 0
       Param3: 0
     TriggerDatas: []
+  - Id: 121
+    Name: "\u30E1\u30EB\u30C8\u30D0\u30FC\u30B9\u30C8"
+    IconIndex: 286
+    AnimationName: tktk02/Fire7
+    AnimationPosition: 0
+    AnimationType: 2
+    DamageTiming: 48
+    MpCost: 0
+    Attribute: 1
+    Scope: 2
+    SkillType: 1
+    TargetType: 1
+    Help: "\u6575\u4E00\u5217\u306B\u706B\u50B7\u4ED8\u4E0E"
+    Range: 1
+    AliveOnly: 1
+    FeatureDatas:
+    - SkillId: 121
+      FeatureType: 21
+      Param1: 23
+      Param2: 2
+      Param3: 10
+    TriggerDatas: []
   - Id: 201
     Name: "\u30E9\u30A4\u30C8\u30CB\u30F3\u30B0\u30A6\u30A7\u30D6"
     IconIndex: 1
@@ -386,7 +430,7 @@ MonoBehaviour:
     - SkillId: 203
       FeatureType: 21
       Param1: 22
-      Param2: 1
+      Param2: 2
       Param3: 50
     TriggerDatas: []
   - Id: 204
@@ -543,11 +587,6 @@ MonoBehaviour:
       Param1: 103
       Param2: 0
       Param3: 150
-    - SkillId: 301
-      FeatureType: 21
-      Param1: 106
-      Param2: 0
-      Param3: 0
     TriggerDatas: []
   - Id: 302
     Name: "\u30B7\u30FC\u30EB\u30C9\u30B9\u30DA\u30EB"
@@ -1162,6 +1201,28 @@ MonoBehaviour:
       Param1: 21
       Param2: 0
       Param3: 0
+    TriggerDatas: []
+  - Id: 521
+    Name: "\u30C0\u30FC\u30AF\u30CD\u30B9"
+    IconIndex: 122
+    AnimationName: NA_Effekseer/NA_magic_006_c8
+    AnimationPosition: 0
+    AnimationType: 1
+    DamageTiming: 26
+    MpCost: 5
+    Attribute: 5
+    Scope: 1
+    SkillType: 1
+    TargetType: 1
+    Help: "\u6575\u5358\u4F53\u306B\u6697\u95C7\u3092\u4ED8\u4E0E"
+    Range: 1
+    AliveOnly: 1
+    FeatureDatas:
+    - SkillId: 521
+      FeatureType: 21
+      Param1: 24
+      Param2: 2
+      Param3: 50
     TriggerDatas: []
   - Id: 1000
     Name: "\u611A\u8005"

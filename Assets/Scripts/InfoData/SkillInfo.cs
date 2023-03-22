@@ -69,6 +69,18 @@ public class SkillInfo
                     CanUse = false;
                 }
                 break;
+                case TriggerType.IsExistAliveMember:
+                if (troops.FindAll(a => !a.IsState(StateType.Death)).Count > triggerData.Param1)
+                {
+                    CanUse = false;
+                }
+                break;
+                case TriggerType.TurnNumPer:
+                if ((battlerInfo.TurnCount % triggerData.Param1) - triggerData.Param2 != 0)
+                {
+                    CanUse = false;
+                }
+                break;
                 case TriggerType.HpRateUnder:
                 if (((float)battlerInfo.Hp / (float)battlerInfo.MaxHp) > triggerData.Param1 * 0.01f)
                 {
@@ -77,6 +89,13 @@ public class SkillInfo
                 break;
                 case TriggerType.HpRateUpper:
                 if (((float)battlerInfo.Hp / (float)battlerInfo.MaxHp) < triggerData.Param1 * 0.01f)
+                {
+                    CanUse = false;
+                }
+                break;
+                case TriggerType.PartyHpRateUnder:
+                var filter = troops.FindAll(a => ((float)battlerInfo.Hp / (float)battlerInfo.MaxHp) <= triggerData.Param1 * 0.01f);
+                if (filter.Count == 0)
                 {
                     CanUse = false;
                 }

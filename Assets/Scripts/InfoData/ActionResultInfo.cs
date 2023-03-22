@@ -149,6 +149,10 @@ public class ActionResultInfo
     private bool IsHit(BattlerInfo subject,BattlerInfo target)
     {
         int hit = 100;
+        if (subject.IsState(StateType.Blind))
+        {
+            hit -= subject.StateEffectAll(StateType.Blind);
+        }
         if (target.IsState(StateType.EvaUp))
         {
             hit -= target.StateEffectAll(StateType.EvaUp);
@@ -162,11 +166,6 @@ public class ActionResultInfo
         if (!IsHit(subject,target) && !isNoEffect)
         {
             _missed = true;
-            return;
-        }
-        if (target.IsState(StateType.NoDamage) && !isNoEffect)
-        {
-            _execStateInfos[target.Index].Add(StateType.NoDamage);
             return;
         }
         int AtkValue = subject.CurrentAtk();
@@ -197,6 +196,11 @@ public class ActionResultInfo
         // クリティカル
         _hpDamage = ApplyVariance(_hpDamage);
         _hpDamage = Mathf.Max(1,_hpDamage);
+        if (target.IsState(StateType.NoDamage) && !isNoEffect)
+        {
+            _execStateInfos[target.Index].Add(StateType.NoDamage);
+            _hpDamage = 0;
+        }
         if (subject.IsState(StateType.Drain))
         {
             _reHeal = (int)Mathf.Floor(_hpDamage * subject.StateEffectAll(StateType.Drain) * 0.01f);

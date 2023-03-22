@@ -114,7 +114,10 @@ public enum TriggerType
     None = 0,
     HpRateUnder = 1, // Hpが〇%以下
     HpRateUpper = 2, // Hpが〇%以上
+    PartyHpRateUnder = 6, // 味方にHpが〇%以下がいる
+    TurnNumPer = 13, // ターン数がparam1 x ターン数 + param2
     IsExistDeathMember = 21, // 戦闘不能が〇以上存在する
+    IsExistAliveMember = 22, // 生存者が〇以上存在する
     AfterMp = 101, // Mpが〇になる
     ChainCount = 102, // 拘束成功回数
     ActionResultDeath = 103, // 攻撃を受けると戦闘不能になる

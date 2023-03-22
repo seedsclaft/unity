@@ -57,7 +57,7 @@ public class BattleGridLayer : MonoBehaviour
             rect.localPosition = new Vector3(rect.localPosition.x, data.Key.Ap, 0);
             battlerInfos.Add(data.Key);
         }
-        battlerInfos.Sort((a,b)=> a.Ap - b.Ap);
+        battlerInfos.Sort((a,b)=> a.Ap + b.Ap);
         foreach (var data in _data)
         {
             int index = battlerInfos.FindIndex(a => a.Index == data.Key.Index);
