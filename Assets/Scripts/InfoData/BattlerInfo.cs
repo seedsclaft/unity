@@ -77,6 +77,8 @@ public class BattlerInfo
         _hp = actorInfo.CurrentHp;
         _mp = actorInfo.CurrentMp;
         _lineIndex = 0;
+
+        MakePassiveSkills();
         if (_lastSkillId == 0)
         {
             _lastSkillId = _skills.Find(a => a.Id > 100).Id;
@@ -118,9 +120,26 @@ public class BattlerInfo
             _kinds.Add(enemyData.Kinds[i]);
         }
 
+        MakePassiveSkills();
         ResetAp(true);
     }
 
+    private void MakePassiveSkills()
+    {
+        _stateInfos.Clear();
+        List<SkillInfo> passiveSkills = _skills.FindAll(a => a.Master.SkillType == SkillType.Passive);
+        foreach (var passiveSkill in passiveSkills)
+        {
+            foreach (var featureData in passiveSkill.Master.FeatureDatas)
+            {
+                if (featureData.FeatureType == FeatureType.AddState)
+                {
+                    StateInfo stateInfo = new StateInfo(featureData.Param1,featureData.Param2,featureData.Param3,Index,Index);
+                    _stateInfos.Add(stateInfo);
+                }
+            }
+        }
+    }
 
     public bool IsActor()
     {
@@ -340,7 +359,7 @@ public class BattlerInfo
     public bool RemoveState(StateInfo stateInfo)
     {
         bool IsRemoved = false;
-        int RemoveIndex = _stateInfos.FindIndex(a => a.CheckOverWriteState(stateInfo) == true);
+        int RemoveIndex = _stateInfos.FindIndex(a => a.StateId == stateInfo.StateId);
         if (RemoveIndex > -1)
         {
             _stateInfos.RemoveAt(RemoveIndex);
@@ -607,7 +626,7 @@ public class BattlerInfo
                     count++;
                 }
             }
-            if (count > 0 && (count+1) >= battlerInfos.FindAll(a => a.isActor).Count)
+            if (IsAlive() && count > 0 && (count+1) >= battlerInfos.FindAll(a => a.isActor).Count)
             {
                 IsTriggered = true;
             }
@@ -621,7 +640,7 @@ public class BattlerInfo
                     count++;
                 }
             }
-            if (count > 0 && (count+1) >= battlerInfos.FindAll(a => !a.isActor).Count)
+            if (IsAlive() && count > 0 && (count+1) >= battlerInfos.FindAll(a => !a.isActor).Count)
             {
                 IsTriggered = true;
             }

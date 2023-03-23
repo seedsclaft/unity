@@ -14,6 +14,7 @@ public class BattleActorList : ListWindow , IInputHandlerEvent
     private List<BattleActor> _battleActors = new List<BattleActor>();
     private ScopeType _targetScopeType = ScopeType.None;
     private List<int> _targetIndexList = new List<int>();
+    private int _selectIndex = -1;
     public int selectIndex{
         get {return Index;}
     }
@@ -31,7 +32,7 @@ public class BattleActorList : ListWindow , IInputHandlerEvent
                 {
                     return;
                 }
-                callEvent(MakeTargetIndexs(actorIndex));
+                callEvent(MakeTargetIndexs(battlerInfo));
             });
             battleActor.SetSelectHandler((data) => UpdateTargetIndex(data));
             battleActor.SetDamageRoot(damageRoots[i]);
@@ -44,10 +45,7 @@ public class BattleActorList : ListWindow , IInputHandlerEvent
     public void Refresh(List<BattlerInfo> battlerInfos)
     {
         _battleInfos.Clear();
-        for (var i = 0; i < battlerInfos.Count;i++)
-        {
-            _battleInfos.Add(battlerInfos[i]);
-        }
+        _battleInfos = battlerInfos;
         for (int i = 0; i < ObjectList.Count;i++)
         {
             ObjectList[i].SetActive(false);
@@ -76,6 +74,7 @@ public class BattleActorList : ListWindow , IInputHandlerEvent
             _targetScopeType = ScopeType.None;
             return;
         }
+        _selectIndex = selectIndex;
         _targetIndexList = targetIndexList;
         _targetScopeType = scopeType;
         if (_targetScopeType == ScopeType.All)
@@ -84,15 +83,15 @@ public class BattleActorList : ListWindow , IInputHandlerEvent
         } else
         if (_targetScopeType == ScopeType.Line)
         {
-            UpdateLineSelect(selectIndex);
+            UpdateLineSelect(_selectIndex);
         } else
         if (_targetScopeType == ScopeType.One)
         {
-            UpdateTargetIndex(selectIndex);
+            UpdateTargetIndex(_selectIndex);
         } else
         if (_targetScopeType == ScopeType.Self)
         {
-            UpdateTargetIndex(selectIndex);
+            UpdateTargetIndex(_selectIndex);
         }
     }
     
@@ -118,6 +117,7 @@ public class BattleActorList : ListWindow , IInputHandlerEvent
         {
             return;
         }
+        _selectIndex = index;
         UpdateSelectIndex(index);
         if (_targetScopeType == ScopeType.All)
         {
@@ -153,13 +153,12 @@ public class BattleActorList : ListWindow , IInputHandlerEvent
     {
         if (keyType == InputKeyType.Decide)
         {
-            int actorIndex = _battleInfos[Index].Index;
-            BattlerInfo battlerInfo = _battleInfos.Find(a => a.Index == _battleInfos[Index].Index);
-            if (_targetIndexList.IndexOf(actorIndex) == -1)
+            BattlerInfo battlerInfo = _battleInfos.Find(a => a.Index == _selectIndex);
+            if (_targetIndexList.IndexOf(_selectIndex) == -1)
             {
                 return;
             }
-            callEvent(MakeTargetIndexs(actorIndex));
+            callEvent(MakeTargetIndexs(battlerInfo));
         }
         if (keyType == InputKeyType.Cancel)
         {
@@ -169,29 +168,79 @@ public class BattleActorList : ListWindow , IInputHandlerEvent
         {
             enemySelectEvent();
         }
+        if (keyType == InputKeyType.Down)
+        {
+            BattlerInfo current = _battleInfos.Find(a => a.Index == _selectIndex);
+            if (current != null)
+            {
+                BattlerInfo target = _battleInfos.Find(a => a.Index > current.Index && a.IsAlive());
+                if (target != null)
+                {
+                    if (current.LineIndex == target.LineIndex)
+                    {
+                        SoundManager.Instance.PlayStaticSe(SEType.Cursor);
+                        UpdateTargetIndex(target.Index);
+                    }
+                }
+            }
+        }
+        if (keyType == InputKeyType.Up)
+        {
+            BattlerInfo current = _battleInfos.Find(a => a.Index == _selectIndex);
+            if (current != null)
+            {
+                BattlerInfo target = _battleInfos.Find(a => a.Index < current.Index && a.IsAlive());
+                if (target != null)
+                {
+                    if (current.LineIndex == target.LineIndex)
+                    {
+                        SoundManager.Instance.PlayStaticSe(SEType.Cursor);
+                        UpdateTargetIndex(target.Index);
+                    }
+                }
+            }
+        }
     }
 
-    private List<int> MakeTargetIndexs(int actorIndex)
+    private List<int> MakeTargetIndexs(BattlerInfo battlerInfo)
     {
         List<int> indexList = new List<int>();
         if (_targetScopeType == ScopeType.All)
         {
-            for (int i = 0; i < ObjectList.Count;i++)
+            for (int i = 0; i < _battleInfos.Count;i++)
             {
-                indexList.Add(i);
+                if (_battleInfos[i].IsAlive())
+                {
+                    indexList.Add(_battleInfos[i].Index);
+                }
             }
         } else
         if (_targetScopeType == ScopeType.Line)
         {
-            indexList.Add(actorIndex);
+            for (int i = 0; i < _battleInfos.Count;i++)
+            {
+                if (battlerInfo.LineIndex == _battleInfos[i].LineIndex)
+                {
+                    if (_battleInfos[i].IsAlive())
+                    {
+                        indexList.Add(_battleInfos[i].Index);
+                    }
+                }
+            }
         } else
         if (_targetScopeType == ScopeType.One)
         {
-            indexList.Add(actorIndex);
+            if (battlerInfo.IsAlive())
+            {
+                indexList.Add(battlerInfo.Index);
+            }
         } else
         if (_targetScopeType == ScopeType.Self)
         {
-            indexList.Add(actorIndex);
+            if (battlerInfo.IsAlive())
+            {
+                indexList.Add(battlerInfo.Index);
+            }
         }
         return indexList;
     }

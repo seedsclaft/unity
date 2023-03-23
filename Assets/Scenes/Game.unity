@@ -1273,16 +1273,16 @@ RectTransform:
   m_GameObject: {fileID: 378581529}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -9}
-  m_LocalScale: {x: 0.01, y: 0.01, z: 0.01}
+  m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1383592014}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 960, y: 540}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &378581531
 MonoBehaviour:
@@ -5244,7 +5244,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1524364501
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5280,7 +5280,7 @@ MonoBehaviour:
   TimingOfUpdate: 0
   EmitterScale: 0
   TimeScale: 0
-  effectAsset: {fileID: 11400000, guid: 8e966684ab0a2984c80befbcdd257b53, type: 2}
+  effectAsset: {fileID: 11400000, guid: 86e6dcda8106f7e46bb75040f3ea60cd, type: 2}
   playOnStart: 0
   isLooping: 0
 --- !u!1 &1561513542
@@ -5763,7 +5763,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc34738223829f44c9a2b752c153bbcc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inBattleActorIds: 0400000001000000
+  inBattleActorIds: 0500000004000000
   troopId: 400
   actorDatas:
   - Id: 1

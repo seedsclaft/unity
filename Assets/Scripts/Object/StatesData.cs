@@ -28,6 +28,7 @@ public enum StateType
     SlipDamage = 23,
     Blind = 24,
     Barrier = 31,
+    Extension = 32,
     MaxHpUp = 41,
     MaxMpUp = 42,
     AtkUp = 43,

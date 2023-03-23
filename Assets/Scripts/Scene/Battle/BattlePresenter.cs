@@ -264,11 +264,11 @@ public class BattlePresenter : BasePresenter
     private async void StartAnimationSlipDamage()
     {
         var slipDamageActionResults = _model.UpdateSlipDamageState();
-        var animation = await _model.SkillActionAnimation("NA_Effekseer/NA_poison_001");
+        var animation = await _model.SkillActionAnimation("NA_Effekseer/NA_Fire_001");
         for (int i = 0; i < slipDamageActionResults.Count; i++)
         {
-            _view.StartAnimation(slipDamageActionResults[i].TargetIndex,animation,0);
             _view.StartDamage(slipDamageActionResults[i].TargetIndex,DamageType.HpDamage,slipDamageActionResults[i].HpDamage);
+            _view.StartAnimation(slipDamageActionResults[i].TargetIndex,animation,0);
             
             if (slipDamageActionResults[i].HpDamage != 0)
             {            
@@ -369,7 +369,10 @@ public class BattlePresenter : BasePresenter
                 {
                     for (int j = 0;j < actionResultInfos[i].AddedStates.Count;j++)
                     {
-                        _view.StartStatePopup(actionResultInfos[i].AddedStates[j].TargetIndex,DamageType.State,"+" + actionResultInfos[i].AddedStates[j].Master.Name);
+                        if (actionResultInfos[i].TargetIndex == targetIndex)
+                        {
+                            _view.StartStatePopup(actionResultInfos[i].AddedStates[j].TargetIndex,DamageType.State,"+" + actionResultInfos[i].AddedStates[j].Master.Name);
+                        }
                     }
                 }
                 if (actionResultInfos[i].RemovedStates.Count > 0)
@@ -401,7 +404,7 @@ public class BattlePresenter : BasePresenter
         }
         if (_nextCommandType == Battle.CommandType.EndRegeneAnimation)
         {
-            _view.SetBattleBusy(false);
+            CommandEndRegeneAnimation();
             return;
         }
         if (_nextCommandType == Battle.CommandType.EndSlipDamageAnimation)
@@ -421,11 +424,62 @@ public class BattlePresenter : BasePresenter
                 _view.StartDeathAnimation(deathBattlerIndex[i]);
             }
         }
-        // ステートなどを適用
-        var slipDamage = _model.CheckSlipDamage();
-        if (slipDamage == true)
+        ActionInfo actionInfo = _model.CurrentActionInfo();
+        if (actionInfo != null)
         {
-            StartAnimationSlipDamage();
+            if (actionInfo.Master.SkillType != SkillType.Demigod)
+            {
+                // ステートなどを適用
+                var slipDamage = _model.CheckSlipDamage();
+                if (slipDamage == true)
+                {
+                    StartAnimationSlipDamage();
+                    return;
+                }
+                // リジェネ
+                var regene = _model.CheckRegene();
+                if (regene)
+                {
+                    StartAnimationRegene();
+                    return;
+                }
+            }
+        }
+        // ターン終了
+        _view.RefreshStatus();
+        // PlusSkill
+        _model.CheckPlusSkill();
+        // TriggerAfter
+        var result = _model.CheckTriggerSkillInfos(TriggerTiming.After);
+        _model.TurnEnd();
+
+        // 勝敗判定
+        if (CheckBattleEnd() && result == false)
+        {
+            return;
+        }
+        if (result == true)
+        {        
+            _view.RefreshStatus();
+        }
+
+        // 次の行動者がいれば続ける
+        if (_model.CurrentActionInfo() != null)
+        {
+            _model.SetActionBattler(_model.CurrentActionInfo().SubjectIndex);
+            CommandSelectIndex(_model.MakeAutoSelectIndex(_model.CurrentActionInfo()));
+            return;
+        }
+
+        _view.SetBattleBusy(false);
+    }
+
+    private void CommandEndSlipDamageAnimation()
+    {
+        var regene = _model.CheckRegene();
+        if (regene)
+        {
+            StartAnimationRegene();
             return;
         }
         // ターン終了
@@ -453,18 +507,11 @@ public class BattlePresenter : BasePresenter
             CommandSelectIndex(_model.MakeAutoSelectIndex(_model.CurrentActionInfo()));
             return;
         }
-        // リジェネ
-        var regene = _model.CheckRegeneBattlers();
-        if (regene.Count > 0)
-        {
-            StartAnimationRegene();
-            return;
-        }
 
         _view.SetBattleBusy(false);
     }
 
-    private void CommandEndSlipDamageAnimation()
+    private void CommandEndRegeneAnimation()
     {
         // ターン終了
         _view.RefreshStatus();
@@ -489,13 +536,6 @@ public class BattlePresenter : BasePresenter
         {
             _model.SetActionBattler(_model.CurrentActionInfo().SubjectIndex);
             CommandSelectIndex(_model.MakeAutoSelectIndex(_model.CurrentActionInfo()));
-            return;
-        }
-        // リジェネ
-        var regene = _model.CheckRegeneBattlers();
-        if (regene.Count > 0)
-        {
-            StartAnimationRegene();
             return;
         }
 

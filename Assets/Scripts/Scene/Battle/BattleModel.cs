@@ -367,6 +367,10 @@ public class BattleModel : BaseModel
             }
         }
         ActionInfo actionInfo = new ActionInfo(skillId,subject.Index,LastTargetIndex,targetIndexList);
+        if (subject.IsState(StateType.Extension))
+        {
+            actionInfo.SetRangeType(RangeType.L);
+        }
         if (IsInterrupt)
         {
             _actionInfos.Insert(0,actionInfo);
@@ -382,6 +386,12 @@ public class BattleModel : BaseModel
         SkillsData.SkillData skill = DataSystem.Skills.Find(a => a.Id == skillId);
         BattlerInfo subject = _battlers.Find(a => a.Index == subjectIndex);
         
+        RangeType rangeType = skill.Range;
+        if (subject.IsState(StateType.Extension))
+        {
+            rangeType = RangeType.L;
+        }
+
         List<int> targetIndexList = new List<int>();
         if (skill.TargetType == TargetType.All)
         {
@@ -400,7 +410,7 @@ public class BattleModel : BaseModel
         {
             if (skill.TargetType == TargetType.Opponent)
             {
-                if (skill.Range == RangeType.S)
+                if (rangeType == RangeType.S)
                 {
                     // 最前列は
                     bool IsFrontAlive = BattlerEnemies().Find(a => a.IsAlive() && a.LineIndex == 0) != null;
@@ -443,7 +453,7 @@ public class BattleModel : BaseModel
         {
             if (skill.TargetType == TargetType.Opponent)
             {
-                if (skill.Range == RangeType.S)
+                if (rangeType == RangeType.S)
                 {
                     // 最前列は
                     bool IsFrontAlive = BattlerEnemies().Find(a => a.IsAlive() && a.LineIndex == 0) != null;
@@ -721,22 +731,27 @@ public class BattleModel : BaseModel
     {
         ActionInfo actionInfo = CurrentActionInfo();
         List<ActionInfo> actionInfos = actionInfo.CheckPlusSkill();
-        
+        if (GetBattlerInfo(actionInfo.SubjectIndex).IsState(StateType.Extension))
+        {
+            foreach (var item in actionInfos)
+            {
+                item.SetRangeType(RangeType.L); 
+            }
+        }
         _actionInfos.AddRange(actionInfos);
     }
 
-    public List<BattlerInfo> CheckRegeneBattlers()
+    public bool CheckRegene()
     {
-        return _battlers.FindAll(a => a.IsState(StateType.Regene));
+        return CurrentBattler != null && CurrentBattler.IsState(StateType.Regene);
     }
 
     public List<ActionResultInfo> UpdateRegeneState()
     {
         List<ActionResultInfo> actionResultInfos = new List<ActionResultInfo>();
-        List<BattlerInfo> regeneBattlers = CheckRegeneBattlers();
-        for (int i = 0;i < regeneBattlers.Count;i++)
+        if (CheckRegene())
         {
-            List<StateInfo> stateInfos = regeneBattlers[i].GetStateInfoAll(StateType.Regene);
+            List<StateInfo> stateInfos = CurrentBattler.GetStateInfoAll(StateType.Regene);
             
             for (int j = 0;j < stateInfos.Count;j++)
             {
