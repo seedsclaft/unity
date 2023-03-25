@@ -88,6 +88,10 @@ MonoBehaviour:
       Level: 1
       Weight: 50
       TriggerDatas: []
+    - SkillId: 203
+      Level: 3
+      Weight: 50
+      TriggerDatas: []
   - Id: 6
     Name: "\u30CD\u30FC\u30E0\u30EC\u30B9"
     ImagePath: Nameless
@@ -387,8 +391,18 @@ MonoBehaviour:
     LearningSkills:
     - SkillId: 1
       Level: 1
-      Weight: 100
+      Weight: 20
       TriggerDatas: []
+    - SkillId: 404
+      Level: 1
+      Weight: 80
+      TriggerDatas:
+      - SkillId: 0
+        TriggerType: 22
+        TriggerTiming: 1
+        Param1: 2
+        Param2: 0
+        Param3: 0
   _textdata:
   - Id: 9
     Text: 402
@@ -410,4 +424,7 @@ MonoBehaviour:
     Help: 
   - Id: 103
     Text: 102
+    Help: 
+  - Id: 105
+    Text: 404
     Help: 

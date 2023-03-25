@@ -92,8 +92,8 @@ public class BattleModel : BaseModel
             for (int j = 0;j < chainDamageStateInfos.Count;j++)
             {
                 StateInfo stateInfo = chainDamageStateInfos[j];
-                BattlerInfo subject = _battlers.Find(a => a.Index == stateInfo.BattlerId);
-                BattlerInfo target = _battlers.Find(a => a.Index == stateInfo.TargetIndex);
+                BattlerInfo subject = GetBattlerInfo(stateInfo.BattlerId);
+                BattlerInfo target = GetBattlerInfo(stateInfo.TargetIndex);
                 if (target != null)
                 {
                     int chainDamage = stateInfo.Effect;
@@ -101,11 +101,15 @@ public class BattleModel : BaseModel
                     {
                         chainDamage += subject.ChainSuccessCount;
                     }
-                    ActionResultInfo actionResultInfo = new ActionResultInfo(_battlers[i].Index,stateInfo.TargetIndex,null);
-                    actionResultInfo.HpDamage = chainDamage;
-                    if (target.Hp <= 0)
+                    SkillsData.FeatureData featureData = new SkillsData.FeatureData();
+                    featureData.FeatureType = FeatureType.HpDamage;
+                    featureData.Param1 = chainDamage;
+                    
+                    ActionResultInfo actionResultInfo = new ActionResultInfo();
+                    actionResultInfo.MakeResultData(_battlers[i],target,new List<SkillsData.FeatureData>(){featureData});
+                        
+                    if ((target.Hp - chainDamage) <= 0)
                     {
-                        actionResultInfo.IsDead = true;
                         _battlers[i].RemoveState(stateInfo);
                     }
                     actionResultInfos.Add(actionResultInfo);
@@ -134,11 +138,13 @@ public class BattleModel : BaseModel
                     } else{
                         targets = BattlerEnemies().FindAll(a => a.Index != subject.Index && a.IsAlive());
                     }
+                    SkillsData.FeatureData featureData = new SkillsData.FeatureData();
+                    featureData.FeatureType = FeatureType.HpHeal;
+                    featureData.Param1 = stateInfo.Effect;
                     foreach (var target in targets)
                     {
-                        int healValue = stateInfo.Effect;
-                        ActionResultInfo actionResultInfo = new ActionResultInfo(_battlers[i].Index,stateInfo.TargetIndex,null);
-                        actionResultInfo.HpHeal = healValue;
+                        ActionResultInfo actionResultInfo = new ActionResultInfo();
+                        actionResultInfo.MakeResultData(_battlers[i],target,new List<SkillsData.FeatureData>(){featureData});
                         actionResultInfos.Add(actionResultInfo);
                     }
                 }
@@ -205,7 +211,7 @@ public class BattleModel : BaseModel
         return targetIndexs;
     }
 
-    public List<StateInfo> CheckChainedBattler(int targetIndex)
+    private List<StateInfo> CheckChainedBattler(int targetIndex)
     {
         List<StateInfo> stateInfos = new List<StateInfo>();
         for (int i = 0; i < _battlers.Count;i++)
@@ -221,6 +227,7 @@ public class BattleModel : BaseModel
         }
         return stateInfos;
     }
+    
 
     public List<StateInfo> CheckCursedBattler(int targetIndex)
     {
@@ -384,7 +391,7 @@ public class BattleModel : BaseModel
     public List<int> MakeActionTarget(int skillId,int subjectIndex)
     {
         SkillsData.SkillData skill = DataSystem.Skills.Find(a => a.Id == skillId);
-        BattlerInfo subject = _battlers.Find(a => a.Index == subjectIndex);
+        BattlerInfo subject = GetBattlerInfo(subjectIndex);
         
         RangeType rangeType = skill.Range;
         if (subject.IsState(StateType.Extension))
@@ -600,19 +607,40 @@ public class BattleModel : BaseModel
         List<ActionResultInfo> actionResultInfos = new List<ActionResultInfo>();
         for (int i = 0; i < indexList.Count;i++)
         {
-            BattlerInfo Target = _battlers.Find(a => a.Index == indexList[i]);
-            ActionResultInfo actionResultInfo = new ActionResultInfo(CurrentBattler.Index,Target.Index,CurrentActionInfo());
-            actionResultInfo.MakeResultData(CurrentBattler,Target);
-            if (actionResultInfo.HpDamage > 0)
+            BattlerInfo Target = GetBattlerInfo(indexList[i]);
+            ActionResultInfo actionResultInfo = new ActionResultInfo();
+            actionResultInfo.MakeResultData(CurrentBattler,Target,actionInfo.Master.FeatureDatas);
+            if (actionResultInfo.HpDamage > 0 
+             || actionResultInfo.AddedStates.Find(a => a.Master.Id == (int)StateType.Stun) != null
+             || actionResultInfo.DeadIndexList.Contains(actionResultInfo.TargetIndex))            
             {
                 List<StateInfo> chainStateInfos = CheckChainedBattler(actionResultInfo.TargetIndex);
                 if (chainStateInfos.Count > 0)
                 {
                     for (int j = 0; j < chainStateInfos.Count;j++)
                     {
-                        BattlerInfo chainedBattlerInfo = _battlers.Find(a => a.Index == chainStateInfos[j].TargetIndex);
+                        BattlerInfo chainedBattlerInfo = GetBattlerInfo(chainStateInfos[j].TargetIndex);
                         chainedBattlerInfo.RemoveState(chainStateInfos[j]);
                         actionResultInfo.AddRemoveState(chainStateInfos[j]);
+                    }
+                }
+                if (Target.IsState(StateType.Benediction))
+                {
+                    List<StateInfo> benedictStateInfos = Target.GetStateInfoAll(StateType.Benediction);
+                    for (int j = 0; j < benedictStateInfos.Count;j++)
+                    {
+                        Target.RemoveState(benedictStateInfos[j]);
+                        Target.ResetAp(false);
+                        actionResultInfo.AddRemoveState(benedictStateInfos[j]);
+                    }
+                }
+                if (Target.IsState(StateType.CounterOura))
+                {
+                    List<StateInfo> counterOuraStateInfos = Target.GetStateInfoAll(StateType.CounterOura);
+                    for (int j = 0; j < counterOuraStateInfos.Count;j++)
+                    {
+                        Target.RemoveState(counterOuraStateInfos[j]);
+                        actionResultInfo.AddRemoveState(counterOuraStateInfos[j]);
                     }
                 }
             }
@@ -621,17 +649,15 @@ public class BattleModel : BaseModel
             List<StateInfo> curseStateInfos = CheckCursedBattler(actionResultInfo.TargetIndex);
             if (actionResultInfo.HpDamage > 0 && curseStateInfos.Count > 0)
             {
+                SkillsData.FeatureData featureData = new SkillsData.FeatureData();
+                featureData.FeatureType = FeatureType.HpDamage;
+                featureData.Param1 = actionResultInfo.HpDamage;
                 for (int j = 0; j < curseStateInfos.Count;j++)
                 {
-                    BattlerInfo curseBattlerInfo = _battlers.Find(a => a.Index == curseStateInfos[j].TargetIndex);
-                    ActionResultInfo curseActionResultInfo = new ActionResultInfo(curseStateInfos[j].BattlerId,curseBattlerInfo.Index,null);
-                    curseActionResultInfo.HpDamage = actionResultInfo.HpDamage;
+                    BattlerInfo curseBattlerInfo = GetBattlerInfo(curseStateInfos[j].TargetIndex);
+                    ActionResultInfo curseActionResultInfo = new ActionResultInfo();
+                    curseActionResultInfo.MakeResultData(GetBattlerInfo(curseStateInfos[j].BattlerId),curseBattlerInfo,new List<SkillsData.FeatureData>(){featureData});
                     actionResultInfos.Add(curseActionResultInfo);
-                    
-                    if (curseActionResultInfo.HpDamage >= curseBattlerInfo.Hp)
-                    {
-                        curseActionResultInfo.AddDeathId(curseBattlerInfo.Index);
-                    }
                 }
             }
         }
@@ -655,64 +681,60 @@ public class BattleModel : BaseModel
             List<ActionResultInfo> actionResultInfos = actionInfo.actionResults;
             for (int i = 0; i < actionResultInfos.Count; i++)
             {
-                BattlerInfo subject = _battlers.Find(a => a.Index == actionResultInfos[i].SubjectIndex);
-                BattlerInfo target = _battlers.Find(a => a.Index == actionResultInfos[i].TargetIndex);
-                if (actionResultInfos[i].HpDamage != 0)
-                {
-                    target.GainHp(-1 * actionResultInfos[i].HpDamage);
-                }
-                if (actionResultInfos[i].HpHeal != 0)
-                {
-                    target.GainHp(actionResultInfos[i].HpHeal);
-                }
-                if (actionResultInfos[i].MpHeal != 0)
-                {
-                    target.GainMp(actionResultInfos[i].MpHeal);
-                }
-                if (actionResultInfos[i].ApHeal != 0)
-                {
-                    subject.ChangeAp(actionResultInfos[i].ApHeal * -1);
-                }
-                if (actionResultInfos[i].ReDamage != 0)
-                {
-                    subject.GainHp(-1 * actionResultInfos[i].ReDamage);
-                }
-                if (actionResultInfos[i].ReHeal != 0)
-                {
-                    subject.GainHp(actionResultInfos[i].ReHeal);
-                }
-                if (actionResultInfos[i].IsDead)
-                {
+                ExecActionResultInfo(actionResultInfos[i]);
+            }
+        }
+    }
 
-                }
-                foreach (var targetIndex in actionResultInfos[i].ExecStateInfos)
+    public void ExecActionResultInfo(ActionResultInfo actionResultInfo)
+    {
+        BattlerInfo subject = GetBattlerInfo(actionResultInfo.SubjectIndex);
+        BattlerInfo target = GetBattlerInfo(actionResultInfo.TargetIndex);
+        if (actionResultInfo.HpDamage != 0)
+        {
+            target.GainHp(-1 * actionResultInfo.HpDamage);
+        }
+        if (actionResultInfo.HpHeal != 0)
+        {
+            target.GainHp(actionResultInfo.HpHeal);
+        }
+        if (actionResultInfo.MpHeal != 0)
+        {
+            target.GainMp(actionResultInfo.MpHeal);
+        }
+        if (actionResultInfo.ApHeal != 0)
+        {
+            subject.ChangeAp(actionResultInfo.ApHeal * -1);
+        }
+        if (actionResultInfo.ReDamage != 0)
+        {
+            subject.GainHp(-1 * actionResultInfo.ReDamage);
+        }
+        if (actionResultInfo.ReHeal != 0)
+        {
+            subject.GainHp(actionResultInfo.ReHeal);
+        }
+        foreach (var targetIndex in actionResultInfo.ExecStateInfos)
+        {
+            BattlerInfo execTarget = GetBattlerInfo(targetIndex.Key);
+            if (execTarget != null)
+            {
+                foreach (var stateId in targetIndex.Value)
                 {
-                    BattlerInfo execTarget = _battlers.Find(a => a.Index == targetIndex.Key);
-                    if (execTarget != null)
-                    {
-                        foreach (var stateId in targetIndex.Value)
-                        {
-                            execTarget.UpdateStateCount(RemovalTiming.UpdateCount,(int)stateId);
-                        }
-                    }
+                    execTarget.UpdateStateCount(RemovalTiming.UpdateCount,(int)stateId);
                 }
             }
         }
     }
     
-    public List<int> DeathBattlerIndex()
+    public List<int> DeathBattlerIndex(List<ActionResultInfo> actionResultInfos)
     {
         List<int> deathBattlerIndex = new List<int>();
-        ActionInfo actionInfo = CurrentActionInfo();
-        if (actionInfo != null)
+        for (int i = 0; i < actionResultInfos.Count; i++)
         {
-            List<ActionResultInfo> actionResultInfos = actionInfo.actionResults;
-            for (int i = 0; i < actionResultInfos.Count; i++)
+            for (int j = 0; j < actionResultInfos[i].DeadIndexList.Count; j++)
             {
-                for (int j = 0; j < actionResultInfos[i].DeadIndexList.Count; j++)
-                {
-                    deathBattlerIndex.Add(actionResultInfos[i].DeadIndexList[j]);
-                }
+                deathBattlerIndex.Add(actionResultInfos[i].DeadIndexList[j]);
             }
         }
         return deathBattlerIndex;
@@ -748,19 +770,7 @@ public class BattleModel : BaseModel
 
     public List<ActionResultInfo> UpdateRegeneState()
     {
-        List<ActionResultInfo> actionResultInfos = new List<ActionResultInfo>();
-        if (CheckRegene())
-        {
-            List<StateInfo> stateInfos = CurrentBattler.GetStateInfoAll(StateType.Regene);
-            
-            for (int j = 0;j < stateInfos.Count;j++)
-            {
-                ActionResultInfo actionResultInfo = new ActionResultInfo(stateInfos[j].BattlerId,stateInfos[j].TargetIndex,null);
-                actionResultInfo.HpHeal = stateInfos[j].Effect;
-                actionResultInfos.Add(actionResultInfo);
-            }
-        }
-        return actionResultInfos;
+        return MakeStateActionResult(CurrentBattler,StateType.Regene,FeatureType.HpHeal);
     }
 
     public bool CheckSlipDamage()
@@ -770,16 +780,22 @@ public class BattleModel : BaseModel
 
     public List<ActionResultInfo> UpdateSlipDamageState()
     {
+        return MakeStateActionResult(CurrentBattler,StateType.SlipDamage,FeatureType.HpDamage);
+    }
+
+    public List<ActionResultInfo> MakeStateActionResult(BattlerInfo battlerInfo,StateType stateType,FeatureType featureType)
+    {
         List<ActionResultInfo> actionResultInfos = new List<ActionResultInfo>();
-        List<StateInfo> stateInfos = CurrentBattler.GetStateInfoAll(StateType.SlipDamage);
-        for (int j = 0;j < stateInfos.Count;j++)
+        List<StateInfo> stateInfos = battlerInfo.GetStateInfoAll(stateType);
+        
+        SkillsData.FeatureData featureData = new SkillsData.FeatureData();
+        featureData.FeatureType = featureType;
+
+        for (int i = 0;i < stateInfos.Count;i++)
         {
-            ActionResultInfo actionResultInfo = new ActionResultInfo(stateInfos[j].BattlerId,stateInfos[j].TargetIndex,null);
-            actionResultInfo.HpDamage = stateInfos[j].Effect;
-            if (actionResultInfo.HpDamage >= CurrentBattler.Hp)
-            {
-                actionResultInfo.AddDeathId(CurrentBattler.Index);
-            }
+            featureData.Param1 = stateInfos[i].Effect;
+            ActionResultInfo actionResultInfo = new ActionResultInfo();
+            actionResultInfo.MakeResultData(GetBattlerInfo(stateInfos[i].BattlerId),GetBattlerInfo(stateInfos[i].TargetIndex),new List<SkillsData.FeatureData>(){featureData});
             actionResultInfos.Add(actionResultInfo);
         }
         return actionResultInfos;
@@ -810,7 +826,7 @@ public class BattleModel : BaseModel
         List<ActionResultInfo> actionResultInfos = CurrentActionInfo().actionResults;
         for (var i = 0;i < actionResultInfos.Count;i++)
         {
-            BattlerInfo target = _battlers.Find(a => a.Index == actionResultInfos[i].TargetIndex);
+            BattlerInfo target = GetBattlerInfo(actionResultInfos[i].TargetIndex);
             triggeredSkills = target.TriggerdSkillInfos(triggerTiming,CurrentActionInfo(),_battlers);
             if (triggeredSkills.Count > 0)
             {
@@ -901,7 +917,7 @@ public class BattleModel : BaseModel
         if (actionInfo.Master.Scope == ScopeType.Line)
         {
             indexList.Add (targetIndex);
-            BattlerInfo battlerInfo = _battlers.Find(a => a.Index == targetIndex);
+            BattlerInfo battlerInfo = GetBattlerInfo(targetIndex);
             for (int i = 0;i < _battlers.Count;i++)
             {
                 if (battlerInfo.isActor && _battlers[i].isActor)

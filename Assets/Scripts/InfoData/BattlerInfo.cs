@@ -190,6 +190,10 @@ public class BattlerInfo
         {
             return;
         }
+        if (IsState(StateType.Stun))
+        {
+            return;
+        }
         if (IsState(StateType.CounterOura) || IsState(StateType.Benediction))
         {
             _ap = 1;
@@ -606,7 +610,8 @@ public class BattlerInfo
     {
         bool IsTriggered = false;
         List<ActionResultInfo> actionResultInfos = actionInfo.actionResults;
-        if (actionResultInfos.Find(a => a.IsDead && battlerInfos.Find(b => b.Index == a.TargetIndex && b.isActor) != null) != null)
+        List<BattlerInfo> targetBattlers = battlerInfos.FindAll(a => a.isActor);
+        if (actionResultInfos.Find(a => targetBattlers.Find(b => a.DeadIndexList.Contains(b.Index)) != null) != null)
         {
             IsTriggered = true;
         }

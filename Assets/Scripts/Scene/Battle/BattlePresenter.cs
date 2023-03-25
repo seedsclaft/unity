@@ -110,32 +110,24 @@ public class BattlePresenter : BasePresenter
     {
         var chainActionResults = _model.UpdateChainState();
         for (int i = 0; i < chainActionResults.Count; i++)
-        {
-            _view.StartDamage(chainActionResults[i].TargetIndex,DamageType.HpDamage,chainActionResults[i].HpDamage);
-            if (chainActionResults[i].HpDamage != 0)
-            {
-                _model.gainHpTargetIndex(chainActionResults[i].TargetIndex,chainActionResults[i].HpDamage * -1);
-            }
-            if (chainActionResults[i].IsDead)
-            {
-                SoundManager.Instance.PlayStaticSe(SEType.Defeat);
-                _view.StartDeathAnimation(chainActionResults[i].TargetIndex);
-            }
+        {    
+            PopupActionResult(chainActionResults[i],chainActionResults[i].TargetIndex,false);
         }
+        for (int i = 0; i < chainActionResults.Count; i++)
+        {    
+            _model.ExecActionResultInfo(chainActionResults[i]);
+        }
+        StartDeathAnimation(chainActionResults);
         var benedictionActionResults = _model.UpdateBenedictionState();
         for (int i = 0; i < benedictionActionResults.Count; i++)
         {
-            _view.StartDamage(benedictionActionResults[i].TargetIndex,DamageType.HpHeal,benedictionActionResults[i].HpHeal);
-            if (benedictionActionResults[i].HpHeal != 0)
-            {
-                _model.gainHpTargetIndex(benedictionActionResults[i].TargetIndex,benedictionActionResults[i].HpHeal * -1);
-            }
-            if (benedictionActionResults[i].IsDead)
-            {
-                SoundManager.Instance.PlayStaticSe(SEType.Defeat);
-                _view.StartDeathAnimation(benedictionActionResults[i].TargetIndex);
-            }
+            PopupActionResult(benedictionActionResults[i],benedictionActionResults[i].TargetIndex);
         }
+        for (int i = 0; i < benedictionActionResults.Count; i++)
+        {
+            _model.ExecActionResultInfo(benedictionActionResults[i]);
+        }
+        StartDeathAnimation(benedictionActionResults);
         if (CheckBattleEnd())
         {
             return;
@@ -152,18 +144,17 @@ public class BattlePresenter : BasePresenter
                 CommandSelectIndex(_model.MakeAutoSelectIndex(actionInfo));
                 return;
             }
+            List<int> chainTargetIndexs = _model.CheckChainBattler();
+            if (chainTargetIndexs.Count > 0)
+            {
+                // 拘束解除
+                ActionInfo actionInfo = _model.MakeActionInfo(_model.CurrentBattler,31,false);
+                CommandSelectIndex(chainTargetIndexs);
+                return;
+            } 
             if (_model.CurrentBattler.isActor)
             {
-                List<int> chainTargetIndexs = _model.CheckChainBattler();
-                if (chainTargetIndexs.Count > 0)
-                {
-                    // 拘束解除
-                    ActionInfo actionInfo = _model.MakeActionInfo(_model.CurrentBattler,31,false);
-                    CommandSelectIndex(chainTargetIndexs);
-                } 
-                else{
-                    CommandDecideActor();
-                }
+                CommandDecideActor();
             } else
             {
                 int autoSkillId = _model.MakeAutoSkillId(_model.CurrentBattler);
@@ -274,7 +265,7 @@ public class BattlePresenter : BasePresenter
             {            
                 _model.gainHpTargetIndex(slipDamageActionResults[i].TargetIndex,slipDamageActionResults[i].HpDamage * -1);
             }
-            if (slipDamageActionResults[i].IsDead)
+            if (slipDamageActionResults[i].DeadIndexList.Contains(slipDamageActionResults[i].TargetIndex))
             {
                 SoundManager.Instance.PlayStaticSe(SEType.Defeat);
                 _view.StartDeathAnimation(slipDamageActionResults[i].TargetIndex);
@@ -318,70 +309,92 @@ public class BattlePresenter : BasePresenter
             List<ActionResultInfo> actionResultInfos = actionInfo.actionResults;
             for (int i = 0; i < actionResultInfos.Count; i++)
             {
-                if (actionResultInfos[i].Missed)
-                {
-                    if (actionResultInfos[i].TargetIndex == targetIndex)
-                    {
-                        _view.StartStatePopup(targetIndex,DamageType.State,"Miss!");    
-                    }
-                }
-                if (actionResultInfos[i].HpDamage > 0)
-                {
-                    if (actionResultInfos[i].TargetIndex == targetIndex)
-                    {
-                        SoundManager.Instance.PlayStaticSe(SEType.Damage);
-                        _view.StartDamage(targetIndex,DamageType.HpDamage,actionResultInfos[i].HpDamage);
-                        _view.StartBlink(targetIndex);
-                    }
-                }
-                if (actionResultInfos[i].HpHeal > 0)
-                {
-                    if (actionResultInfos[i].TargetIndex == targetIndex)
-                    {
-                        _view.StartHeal(targetIndex,DamageType.HpHeal,actionResultInfos[i].HpHeal);
-                    }
-                }
-                if (actionResultInfos[i].MpHeal > 0)
-                {
-                    if (actionResultInfos[i].TargetIndex == targetIndex)
-                    {
-                        _view.StartHeal(targetIndex,DamageType.MpHeal,actionResultInfos[i].MpHeal);
-                    }
-                }
-                if (actionResultInfos[i].ApHeal > 0)
-                {
-                    if (actionResultInfos[i].TargetIndex == targetIndex)
-                    {
-                        _view.StartStatePopup(targetIndex,DamageType.State,"+行動可能");
-                    }
-                }
-                if (actionResultInfos[i].ReDamage > 0)
-                {
+                PopupActionResult(actionResultInfos[i],targetIndex);
+            }
+        }
+    }
+
+    private void PopupActionResult(ActionResultInfo actionResultInfo,int targetIndex,bool needDamageBlink = true)
+    {
+        if (actionResultInfo.Missed)
+        {
+            if (actionResultInfo.TargetIndex == targetIndex)
+            {
+                _view.StartStatePopup(targetIndex,DamageType.State,"Miss!");    
+            }
+        }
+        if (actionResultInfo.HpDamage > 0)
+        {
+            if (actionResultInfo.TargetIndex == targetIndex)
+            {
+                _view.StartDamage(targetIndex,DamageType.HpDamage,actionResultInfo.HpDamage);
+                if (needDamageBlink){
+                    _view.StartBlink(targetIndex);
                     SoundManager.Instance.PlayStaticSe(SEType.Damage);
-                    _view.StartDamage(actionResultInfos[i].SubjectIndex,DamageType.HpDamage,actionResultInfos[i].ReDamage);
-                    _view.StartBlink(actionResultInfos[i].SubjectIndex);
                 }
-                if (actionResultInfos[i].ReHeal > 0)
+            }
+        }
+        if (actionResultInfo.HpHeal > 0)
+        {
+            if (actionResultInfo.TargetIndex == targetIndex)
+            {
+                _view.StartHeal(targetIndex,DamageType.HpHeal,actionResultInfo.HpHeal);
+            }
+        }
+        if (actionResultInfo.MpHeal > 0)
+        {
+            if (actionResultInfo.TargetIndex == targetIndex)
+            {
+                _view.StartHeal(targetIndex,DamageType.MpHeal,actionResultInfo.MpHeal);
+            }
+        }
+        if (actionResultInfo.ApHeal > 0)
+        {
+            if (actionResultInfo.TargetIndex == targetIndex)
+            {
+                _view.StartStatePopup(targetIndex,DamageType.State,"+行動可能");
+            }
+        }
+        if (actionResultInfo.ReDamage > 0)
+        {
+            SoundManager.Instance.PlayStaticSe(SEType.Damage);
+            _view.StartDamage(actionResultInfo.SubjectIndex,DamageType.HpDamage,actionResultInfo.ReDamage);
+            _view.StartBlink(actionResultInfo.SubjectIndex);
+        }
+        if (actionResultInfo.ReHeal > 0)
+        {
+            _view.StartHeal(actionResultInfo.SubjectIndex,DamageType.HpHeal,actionResultInfo.ReHeal);
+        }
+        if (actionResultInfo.AddedStates.Count > 0)
+        {
+            for (int j = 0;j < actionResultInfo.AddedStates.Count;j++)
+            {
+                if (actionResultInfo.TargetIndex == targetIndex)
                 {
-                    _view.StartHeal(actionResultInfos[i].SubjectIndex,DamageType.HpHeal,actionResultInfos[i].ReHeal);
+                    _view.StartStatePopup(actionResultInfo.AddedStates[j].TargetIndex,DamageType.State,"+" + actionResultInfo.AddedStates[j].Master.Name);
                 }
-                if (actionResultInfos[i].AddedStates.Count > 0)
-                {
-                    for (int j = 0;j < actionResultInfos[i].AddedStates.Count;j++)
-                    {
-                        if (actionResultInfos[i].TargetIndex == targetIndex)
-                        {
-                            _view.StartStatePopup(actionResultInfos[i].AddedStates[j].TargetIndex,DamageType.State,"+" + actionResultInfos[i].AddedStates[j].Master.Name);
-                        }
-                    }
+            }
+        }
+        if (actionResultInfo.RemovedStates.Count > 0)
+        {
+            for (int j = 0;j < actionResultInfo.RemovedStates.Count;j++)
+            {
+                if (actionResultInfo.TargetIndex == targetIndex){
+                    _view.StartStatePopup(actionResultInfo.RemovedStates[j].TargetIndex,DamageType.State,"-" + actionResultInfo.RemovedStates[j].Master.Name);
                 }
-                if (actionResultInfos[i].RemovedStates.Count > 0)
-                {
-                    for (int j = 0;j < actionResultInfos[i].RemovedStates.Count;j++)
-                    {
-                        _view.StartStatePopup(actionResultInfos[i].RemovedStates[j].TargetIndex,DamageType.State,"-" + actionResultInfos[i].RemovedStates[j].Master.Name);
-                    }
-                }
+            }
+        }
+    }
+
+    private void StartDeathAnimation(List<ActionResultInfo> actionResultInfos)
+    {
+        List<int> deathBattlerIndex = _model.DeathBattlerIndex(actionResultInfos);
+        if (deathBattlerIndex.Count > 0)
+        {
+            for (int i = 0; i < deathBattlerIndex.Count; i++)
+            {
+                SoundManager.Instance.PlayStaticSe(SEType.Defeat);
+                _view.StartDeathAnimation(deathBattlerIndex[i]);
             }
         }
     }
@@ -414,16 +427,7 @@ public class BattlePresenter : BasePresenter
         }
         // ダメージなどを適用
         _model.ExecActionResult();
-        List<int> deathBattlerIndex = _model.DeathBattlerIndex();
-        if (deathBattlerIndex.Count > 0)
-        {
-            //var animation = await _model.SkillActionAnimation("");
-            for (int i = 0; i < deathBattlerIndex.Count; i++)
-            {
-                SoundManager.Instance.PlayStaticSe(SEType.Defeat);
-                _view.StartDeathAnimation(deathBattlerIndex[i]);
-            }
-        }
+        StartDeathAnimation(_model.CurrentActionInfo().actionResults);
         ActionInfo actionInfo = _model.CurrentActionInfo();
         if (actionInfo != null)
         {

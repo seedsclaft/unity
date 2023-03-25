@@ -13,14 +13,9 @@ public class ActionResultInfo
         get { return _targetIndex;}
     }
 
-    private ActionInfo _actionInfo = null;
 
-
-    public ActionResultInfo(int subjectIndex,int targetIndex,ActionInfo actionInfo)
+    public ActionResultInfo()
     {
-        _subjectIndex = subjectIndex;
-        _targetIndex = targetIndex;
-        _actionInfo = actionInfo;
     }
 
     private int _hpDamage = 0;
@@ -51,10 +46,6 @@ public class ActionResultInfo
     public int ReHeal {
         get {return _reHeal;} set{_reHeal = value;}
     }
-    private bool _isDead = false;
-    public bool IsDead {
-        get {return _isDead;} set{_isDead = value;}
-    }
     private List<int> _deadIndexList = new List<int>();
     public List<int> DeadIndexList {
         get {return _deadIndexList;}
@@ -78,15 +69,15 @@ public class ActionResultInfo
         get {return _execStateInfos;}
     }
 
-    public void MakeResultData(BattlerInfo subject,BattlerInfo target)
+    public void MakeResultData(BattlerInfo subject,BattlerInfo target,List<SkillsData.FeatureData> featureDatas)
     {
         if (subject != null && target != null)
         {
+            _subjectIndex = subject.Index;
             _targetIndex = target.Index;
             _execStateInfos[subject.Index] = new List<StateType>();
             _execStateInfos[_targetIndex] = new List<StateType>();
         }
-        List<SkillsData.FeatureData> featureDatas = _actionInfo.Master.FeatureDatas;
         for (int i = 0; i < featureDatas.Count; i++)
         {
             MakeFeature(subject,target,featureDatas[i]);
@@ -95,7 +86,6 @@ public class ActionResultInfo
         {
             if (_hpDamage >= target.Hp)
             {
-                _isDead = true;
                 _deadIndexList.Add(target.Index);
             }
             if (_reDamage >= subject.Hp)
@@ -103,12 +93,6 @@ public class ActionResultInfo
                 _deadIndexList.Add(subject.Index);
             }
         }
-    }
-
-    public void AddDeathId(int index)
-    {
-        _isDead = true;
-        _deadIndexList.Add(index);
     }
 
     private void MakeFeature(BattlerInfo subject,BattlerInfo target,SkillsData.FeatureData featureData)
@@ -268,7 +252,9 @@ public class ActionResultInfo
 
     public void AddRemoveState(StateInfo stateInfo)
     {
-        _removedStates.Add(stateInfo);
+        if (_removedStates.IndexOf(stateInfo) == -1){
+            _removedStates.Add(stateInfo);
+        }
     }
 
 

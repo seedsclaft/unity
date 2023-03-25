@@ -70,7 +70,7 @@ public class SkillInfo
                 }
                 break;
                 case TriggerType.IsExistAliveMember:
-                if (troops.FindAll(a => !a.IsState(StateType.Death)).Count > triggerData.Param1)
+                if (troops.FindAll(a => !a.IsState(StateType.Death)).Count < triggerData.Param1)
                 {
                     CanUse = false;
                 }
