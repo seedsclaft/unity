@@ -14,8 +14,30 @@ public class ActionResultInfo
     }
 
 
-    public ActionResultInfo()
+    public ActionResultInfo(BattlerInfo subject,BattlerInfo target,List<SkillsData.FeatureData> featureDatas)
     {
+        if (subject != null && target != null)
+        {
+            _subjectIndex = subject.Index;
+            _targetIndex = target.Index;
+            _execStateInfos[subject.Index] = new List<StateType>();
+            _execStateInfos[_targetIndex] = new List<StateType>();
+        }
+        for (int i = 0; i < featureDatas.Count; i++)
+        {
+            MakeFeature(subject,target,featureDatas[i]);
+        }
+        if (subject != null && target != null)
+        {
+            if (_hpDamage >= target.Hp)
+            {
+                _deadIndexList.Add(target.Index);
+            }
+            if (_reDamage >= subject.Hp)
+            {
+                _deadIndexList.Add(subject.Index);
+            }
+        }
     }
 
     private int _hpDamage = 0;
@@ -67,32 +89,6 @@ public class ActionResultInfo
     private Dictionary<int,List<StateType>> _execStateInfos = new Dictionary<int, List<StateType>>();
     public  Dictionary<int,List<StateType>> ExecStateInfos{
         get {return _execStateInfos;}
-    }
-
-    public void MakeResultData(BattlerInfo subject,BattlerInfo target,List<SkillsData.FeatureData> featureDatas)
-    {
-        if (subject != null && target != null)
-        {
-            _subjectIndex = subject.Index;
-            _targetIndex = target.Index;
-            _execStateInfos[subject.Index] = new List<StateType>();
-            _execStateInfos[_targetIndex] = new List<StateType>();
-        }
-        for (int i = 0; i < featureDatas.Count; i++)
-        {
-            MakeFeature(subject,target,featureDatas[i]);
-        }
-        if (subject != null && target != null)
-        {
-            if (_hpDamage >= target.Hp)
-            {
-                _deadIndexList.Add(target.Index);
-            }
-            if (_reDamage >= subject.Hp)
-            {
-                _deadIndexList.Add(subject.Index);
-            }
-        }
     }
 
     private void MakeFeature(BattlerInfo subject,BattlerInfo target,SkillsData.FeatureData featureData)

@@ -5549,6 +5549,7 @@ GameObject:
   - component: {fileID: 6807061459671420635}
   - component: {fileID: 8193697340826540009}
   - component: {fileID: 5107604720269001434}
+  - component: {fileID: 8859497075744789478}
   m_Layer: 0
   m_Name: TacticsScene
   m_TagString: Untagged
@@ -5600,6 +5601,7 @@ MonoBehaviour:
   tacticsBattleList: {fileID: 8717033008116606450}
   tacticsResourceList: {fileID: 7861151768770013685}
   stageInfoComponent: {fileID: 5107604720269001434}
+  alcanaInfoComponent: {fileID: 8859497075744789478}
   turnText: {fileID: 2889574095661719501}
   numinousText: {fileID: 7198515403953804944}
   helpRoot: {fileID: 6807662686030312123}
@@ -5625,6 +5627,18 @@ MonoBehaviour:
   subordinate: {fileID: 3271323482851939172}
   subordinateValue: {fileID: 3107365608749156643}
   subordinateBorder: {fileID: 7144822595459273673}
+--- !u!114 &8859497075744789478
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2808636126732810464}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8700fb2ab35dc746b0862e2998b4a35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   alcana: {fileID: 2641249294217410963}
   alcanaValue: {fileID: 7545106059026821149}
 --- !u!1 &2825611372370991011

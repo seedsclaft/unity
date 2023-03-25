@@ -587,7 +587,7 @@ public class TacticsPresenter
     private void CommandCheckAlcana()
     {
         _view.DeactivateCommandList();
-        var alcana = _model.CurrentAlcana();
+        var alcana = _model.CurrentAlcana.CurrentSelectAlcana();
         TextData textData = DataSystem.System.GetTextData(1080);
         var popupInfo = new ConfirmInfo(alcana.Name + alcana.Help + textData.Text,(menuCommandInfo) => UpdatePopupUseAlcana((ConfirmComandType)menuCommandInfo));
         _view.CommandCallConfirm(popupInfo);

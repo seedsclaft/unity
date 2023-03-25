@@ -42,6 +42,7 @@ public class ActionInfo
         _lastTargetIndex = lastTargetIndex;
         _targetIndexList = targetIndexList;
     }
+
     public void SetRangeType(RangeType rangeType)
     {
         _rangeType = rangeType;

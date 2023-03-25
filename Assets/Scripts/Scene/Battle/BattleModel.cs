@@ -48,9 +48,9 @@ public class BattleModel : BaseModel
             if (Actors()[i].InBattle == true)
             {
                 BattlerInfo battlerInfo = new BattlerInfo(Actors()[i],i);
-                if (CurrentStage.AlcanaState != null)
+                if (CurrentAlcana.AlcanaState != null)
                 {
-                    StateInfo stateInfo = CurrentStage.AlcanaState;
+                    StateInfo stateInfo = CurrentAlcana.AlcanaState;
                     battlerInfo.AddState(stateInfo);
                     if (stateInfo.Master.Id == (int)StateType.MaxHpUp)
                     {
@@ -105,8 +105,7 @@ public class BattleModel : BaseModel
                     featureData.FeatureType = FeatureType.HpDamage;
                     featureData.Param1 = chainDamage;
                     
-                    ActionResultInfo actionResultInfo = new ActionResultInfo();
-                    actionResultInfo.MakeResultData(_battlers[i],target,new List<SkillsData.FeatureData>(){featureData});
+                    ActionResultInfo actionResultInfo = new ActionResultInfo(_battlers[i],target,new List<SkillsData.FeatureData>(){featureData});
                         
                     if ((target.Hp - chainDamage) <= 0)
                     {
@@ -143,8 +142,7 @@ public class BattleModel : BaseModel
                     featureData.Param1 = stateInfo.Effect;
                     foreach (var target in targets)
                     {
-                        ActionResultInfo actionResultInfo = new ActionResultInfo();
-                        actionResultInfo.MakeResultData(_battlers[i],target,new List<SkillsData.FeatureData>(){featureData});
+                        ActionResultInfo actionResultInfo = new ActionResultInfo(_battlers[i],target,new List<SkillsData.FeatureData>(){featureData});
                         actionResultInfos.Add(actionResultInfo);
                     }
                 }
@@ -608,8 +606,7 @@ public class BattleModel : BaseModel
         for (int i = 0; i < indexList.Count;i++)
         {
             BattlerInfo Target = GetBattlerInfo(indexList[i]);
-            ActionResultInfo actionResultInfo = new ActionResultInfo();
-            actionResultInfo.MakeResultData(CurrentBattler,Target,actionInfo.Master.FeatureDatas);
+            ActionResultInfo actionResultInfo = new ActionResultInfo(CurrentBattler,Target,actionInfo.Master.FeatureDatas);
             if (actionResultInfo.HpDamage > 0 
              || actionResultInfo.AddedStates.Find(a => a.Master.Id == (int)StateType.Stun) != null
              || actionResultInfo.DeadIndexList.Contains(actionResultInfo.TargetIndex))            
@@ -655,8 +652,7 @@ public class BattleModel : BaseModel
                 for (int j = 0; j < curseStateInfos.Count;j++)
                 {
                     BattlerInfo curseBattlerInfo = GetBattlerInfo(curseStateInfos[j].TargetIndex);
-                    ActionResultInfo curseActionResultInfo = new ActionResultInfo();
-                    curseActionResultInfo.MakeResultData(GetBattlerInfo(curseStateInfos[j].BattlerId),curseBattlerInfo,new List<SkillsData.FeatureData>(){featureData});
+                    ActionResultInfo curseActionResultInfo = new ActionResultInfo(GetBattlerInfo(curseStateInfos[j].BattlerId),curseBattlerInfo,new List<SkillsData.FeatureData>(){featureData});
                     actionResultInfos.Add(curseActionResultInfo);
                 }
             }
@@ -794,8 +790,7 @@ public class BattleModel : BaseModel
         for (int i = 0;i < stateInfos.Count;i++)
         {
             featureData.Param1 = stateInfos[i].Effect;
-            ActionResultInfo actionResultInfo = new ActionResultInfo();
-            actionResultInfo.MakeResultData(GetBattlerInfo(stateInfos[i].BattlerId),GetBattlerInfo(stateInfos[i].TargetIndex),new List<SkillsData.FeatureData>(){featureData});
+            ActionResultInfo actionResultInfo = new ActionResultInfo(GetBattlerInfo(stateInfos[i].BattlerId),GetBattlerInfo(stateInfos[i].TargetIndex),new List<SkillsData.FeatureData>(){featureData});
             actionResultInfos.Add(actionResultInfo);
         }
         return actionResultInfos;

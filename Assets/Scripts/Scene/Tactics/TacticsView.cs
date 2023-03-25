@@ -19,6 +19,7 @@ public class TacticsView : BaseView
     [SerializeField] private TacticsBattleList tacticsBattleList = null;
     [SerializeField] private TacticsResourceList tacticsResourceList = null;
     [SerializeField] private StageInfoComponent stageInfoComponent = null;
+    [SerializeField] private AlcanaInfoComponent alcanaInfoComponent = null;
 
     [SerializeField] private TextMeshProUGUI turnText = null;
     [SerializeField] private TextMeshProUGUI numinousText = null;
@@ -83,6 +84,11 @@ public class TacticsView : BaseView
     public void SetStageInfo(StageInfo stageInfo)
     {
         stageInfoComponent.UpdateInfo(stageInfo);
+    }
+
+    public void SetAlcanaInfo(AlcanaInfo alcanaInfo)
+    {
+        alcanaInfoComponent.UpdateInfo(alcanaInfo);
     }
 
     

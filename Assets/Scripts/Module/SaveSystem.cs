@@ -90,12 +90,11 @@ public class SavePlayInfo
 	public PartyInfo Party { get {return _party;}}
     private StageInfo _currentStage = null;
 	public StageInfo CurrentStage { get {return _currentStage;}}
+    private AlcanaInfo _currentAlcana = null;
+	public AlcanaInfo CurrentAlcana { get {return _currentAlcana;}}
 
 	private List<TroopsData.TroopData> _troopDatas = new List<TroopsData.TroopData>();
 	public List<TroopsData.TroopData> TroopDatas { get {return _troopDatas;}}
-	/// <summary>
-	/// 初期化
-    /// </summary>
     public SavePlayInfo()
     {
 		this.InitActors();
@@ -124,6 +123,8 @@ public class SavePlayInfo
 		StagesData.StageData stageData = DataSystem.Stages.Find(a => a.Id == stageId);
 		_currentStage = new StageInfo(stageData);
 		_currentStage.AddSelectActorId(actorId);
+		_currentAlcana = new AlcanaInfo();
+		_currentAlcana.InitData();
 	}
 
 

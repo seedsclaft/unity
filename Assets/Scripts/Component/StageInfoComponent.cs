@@ -14,8 +14,6 @@ public class StageInfoComponent : MonoBehaviour
     [SerializeField] private GameObject subordinate;
     [SerializeField] private TextMeshProUGUI subordinateValue;
     [SerializeField] private Image subordinateBorder;
-    [SerializeField] private GameObject alcana;
-    [SerializeField] private TextMeshProUGUI alcanaValue;
 
     public void UpdateInfo(StageInfo stageInfo)
     {
@@ -47,11 +45,5 @@ public class StageInfoComponent : MonoBehaviour
             borderRect.localScale = new Vector3(stageInfo.SubordinateValue * 0.01f,1,1);
         }
         
-        if (alcana != null){
-            alcana.gameObject.SetActive(stageInfo.IsAlcana == true);
-        }
-        if (alcanaValue != null){
-            alcanaValue.text = stageInfo.OwnAlcanaIds.Count.ToString();
-        }
     }
 }

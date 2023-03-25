@@ -157,13 +157,13 @@ public class StrategyModel : BaseModel
     
     public void EndStrategy()
     {
-        CurrentStage.UseAlcana(false);
+        CurrentAlcana.UseAlcana(false);
         foreach (var actorInfo in Actors())
         {
             actorInfo.ChangeTacticsCostRate(1);
         }
         CurrentStage.ClearTacticsEnemies();
         CurrentStage.ChangeSubordinate(-5);
-        CurrentStage.SetAlacanaState(null);
+        CurrentAlcana.SetAlacanaState(null);
     }
 }

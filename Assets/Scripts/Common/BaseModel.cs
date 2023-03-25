@@ -12,6 +12,7 @@ public class BaseModel
     public SavePlayInfo CurrentData{get {return GameSystem.CurrentData;}}
     public TempInfo CurrentTempData{get {return GameSystem.CurrentTempData;}}
     public StageInfo CurrentStage{get {return GameSystem.CurrentData.CurrentStage;}}
+    public AlcanaInfo CurrentAlcana{get {return GameSystem.CurrentData.CurrentAlcana;}}
 
     public PartyInfo PartyInfo{get {return CurrentData.Party;}}
 
@@ -119,34 +120,33 @@ public class BaseModel
 
     public void SetIsAlcana(bool isAlcana)
     {
-        CurrentStage.SetIsAlcana(isAlcana);
+        CurrentAlcana.SetIsAlcana(isAlcana);
     }
 
     public bool CheckIsAlcana()
     {
-        var stage = CurrentStage;
-        return stage.IsAlcana && stage.AlcanaIds.Count > 0 && stage.UsedAlcana == false;
+        return CurrentAlcana.IsAlcana && CurrentAlcana.AlcanaIds.Count > 0 && CurrentAlcana.UsedAlcana == false;
     }
 
     public void MakeAlcana()
     {
-        CurrentStage.AddAlcanaId();
+        CurrentAlcana.AddAlcanaId();
     }
 
     public void OpenAlcana()
     {
-        CurrentStage.OpenAlcana();
+        CurrentAlcana.OpenAlcana();
     }
 
-    public AlcanaData.Alcana CurrentAlcana()
+    public void CurrentSelectAlcana()
     {
-        return CurrentStage.CurrentAlcana();
+        CurrentAlcana.OpenAlcana();
     }
 
     public void UseAlcana()
     {
-        CurrentStage.UseAlcana(true);
-        SkillInfo skill = new SkillInfo(CurrentStage.CurrentAlcana().SkillId);
+        CurrentAlcana.UseAlcana(true);
+        SkillInfo skill = new SkillInfo(CurrentAlcana.CurrentSelectAlcana().SkillId);
         if (skill.Master.SkillType == SkillType.UseAlcana)
         {
             // 基本的に味方全員
@@ -169,7 +169,7 @@ public class BaseModel
                         if (featureData.FeatureType == FeatureType.AddState)
                         {
                             StateInfo stateInfo = new StateInfo(featureData.Param1,featureData.Param2,featureData.Param3,-1,0);
-                            CurrentStage.SetAlacanaState(stateInfo);
+                            CurrentAlcana.SetAlacanaState(stateInfo);
                         }
                         if (featureData.FeatureType == FeatureType.HpHeal)
                         {
@@ -226,7 +226,7 @@ public class BaseModel
                     }
                     if (featureData.FeatureType == FeatureType.Alcana)
                     {
-                        CurrentStage.ChangeNextAlcana();
+                        CurrentAlcana.ChangeNextAlcana();
                     }
                     if (featureData.FeatureType == FeatureType.LineChange)
                     {
@@ -248,6 +248,6 @@ public class BaseModel
 
     public void DeleteAlcana()
     {
-        CurrentData.CurrentStage.DeleteAlcana();
+        CurrentData.CurrentAlcana.DeleteAlcana();
     }
 }
