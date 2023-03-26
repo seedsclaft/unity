@@ -18,7 +18,7 @@ public class SkillActionList : ListWindow , IInputHandlerEvent
     public void Initialize(System.Action<int> callEvent,System.Action cancelEvent,System.Action conditionEvent)
     {
         InitializeListView(rows);
-        for (int i = 0; i < rows;i++)
+        for (int i = 0; i < rows + 1;i++)
         {
             var skillAction = ObjectList[i].GetComponent<SkillAction>();
             skillAction.SetCallHandler((d) => {
@@ -39,9 +39,10 @@ public class SkillActionList : ListWindow , IInputHandlerEvent
     {
         _data.Clear();
         _data = skillInfoData;
+        SetDataCount(skillInfoData.Count);
         for (int i = 0; i < ObjectList.Count;i++)
         {
-            //ObjectList[i].SetActive(false);
+            ObjectList[i].SetActive(false);
             if (i < _data.Count) 
             {
                 var skillAction = ObjectList[i].GetComponent<SkillAction>();
@@ -49,8 +50,9 @@ public class SkillActionList : ListWindow , IInputHandlerEvent
                 ObjectList[i].SetActive(true);
             }
         }
-        UpdateAllItems();
+        ResetScrollPosition();
         UpdateSelectIndex(0);
+        UpdateAllItems();
     }
 
     public override void UpdateHelpWindow(){
@@ -82,5 +84,13 @@ public class SkillActionList : ListWindow , IInputHandlerEvent
                 conditionEvent();
             }
         }
+    }
+
+    public override void RefreshListItem(GameObject gameObject, int itemIndex)
+    {
+        base.RefreshListItem(gameObject,itemIndex);
+        var skillAction = gameObject.GetComponent<SkillAction>();
+        skillAction.SetData(_data[itemIndex],itemIndex);
+        skillAction.UpdateViewItem();
     }
 }

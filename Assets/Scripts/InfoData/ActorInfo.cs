@@ -93,6 +93,12 @@ public class ActorInfo
             SkillInfo skillInfo = new SkillInfo(_learningData.SkillId);
             _skills.Add(skillInfo);
         }
+        for (int i = 0;i < learningData.Count;i++)
+        {
+            LearningData _learningData = learningData[i];
+            SkillInfo skillInfo = new SkillInfo(_learningData.SkillId);
+            _skills.Add(skillInfo);
+        }
     }
 
     public void LevelUp()

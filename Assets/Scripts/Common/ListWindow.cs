@@ -28,7 +28,7 @@ abstract public class ListWindow : MonoBehaviour
     private int _dataCount = 0;
     private RectTransform _prevRect;
     private RectTransform _lastRect;
-    private int _lastStartIndex = -1;
+    private int _lastStartIndex = 0;
     private LinkedList<IListViewItem> _itemList = new LinkedList<IListViewItem>();
     public LinkedList<IListViewItem> ItemList {get {return _itemList;}}
     private List<GameObject> _objectList = new List<GameObject>();
@@ -77,7 +77,7 @@ abstract public class ListWindow : MonoBehaviour
     {
         if (EnableValueChanged())
         {
-            UpdateItemViews(scrollPosition,false);
+            UpdateItemViews(false);
             UpdateSizeDelta();
             _lastStartIndex = GetStartIndex();
         }
@@ -108,7 +108,7 @@ abstract public class ListWindow : MonoBehaviour
         _itemCount = (int)Math.Floor( scrollSize / itemSize);
     }
 
-    private void SetDataCount(int count)
+    public void SetDataCount(int count)
     {
         _dataCount = count;
     }
@@ -117,7 +117,7 @@ abstract public class ListWindow : MonoBehaviour
     {
         for (var i = 0; i < _itemCount + 1;i++){
             if (_dataCount <= i){
-                continue;
+                //continue;
             }
             GameObject prefab = Instantiate(itemPrefab);
             prefab.transform.SetParent(scrollRect.content, false);
@@ -177,12 +177,40 @@ abstract public class ListWindow : MonoBehaviour
         return (scrollRect.content.rect.height - GetViewPortHeight()) * (1.0f - scrollRect.normalizedPosition.y);
     }
 
-    private int GetStartIndex()
+    private float ItemSpace()
     {
-        return (int)Math.Truncate( (GetScrolledHeight() - _margin) / (_itemSize + _space) );
+        if (horizontal)
+        {
+            return GetComponentInChildren<HorizontalLayoutGroup>().spacing;
+        } else
+        {
+            return GetComponentInChildren<VerticalLayoutGroup>().spacing;
+        }
     }
 
-    private void UpdateItemViews(Vector2 scrollPosition, bool forceRepaint)
+    private float ListMargin()
+    {
+        if (horizontal)
+        {
+            return GetComponentInChildren<HorizontalLayoutGroup>().padding.left;
+        } else
+        {
+            return GetComponentInChildren<VerticalLayoutGroup>().padding.top + GetComponentInChildren<VerticalLayoutGroup>().padding.bottom;
+        }
+    }
+
+    private int GetStartIndex()
+    {
+        if (horizontal)
+        {
+            return (int)Math.Truncate( (GetScrolledWidth() - ListMargin()) / (_itemSize + ItemSpace()) );
+        } else
+        {
+            return (int)Math.Truncate( (GetScrolledHeight() - ListMargin()) / (_itemSize + ItemSpace()) );
+        }
+    }
+
+    private void UpdateItemViews(bool forceRepaint)
     {
         int startIndex = GetStartIndex();
         //if (!forceRepaint && _itemCount == 0) return;    
@@ -208,10 +236,12 @@ abstract public class ListWindow : MonoBehaviour
 
         if (startIndex > _lastStartIndex)
         {
+            Debug.LogError("downer");
             UpdateListDown();
         }
         else if (itemIndex < _lastStartIndex)
         {
+            Debug.LogError("upper");
             UpdateListUp();
         }
     }
@@ -222,22 +252,25 @@ abstract public class ListWindow : MonoBehaviour
         float scrolledSize;
         if (horizontal == true)
         {
-            scrolledSize = (GetScrolledWidth() - _margin);
+            scrolledSize = (GetScrolledWidth() - ListMargin() - ItemSpace() / 2);
         } else
         {
-            scrolledSize = (GetScrolledHeight() - _margin);
+            scrolledSize = (GetScrolledHeight() - ListMargin() - ItemSpace() / 2);
         }
 
         float prevSize;
         float lastSize;
+        float rectHeight = (_itemSize+ItemSpace());
         if (startIndex > _lastStartIndex)
         {
-            prevSize = Math.Max(0, Math.Min(scrolledSize, (_dataCount - _itemCount-1) * _itemSize));
-            lastSize = Math.Max(0, (_dataCount - _itemCount-1) * _itemSize - scrolledSize);
+            prevSize = Math.Max(0, Math.Min(scrolledSize, (_dataCount - _itemCount) * rectHeight));
+            lastSize = Math.Max(0, (_dataCount - _itemCount - 1) * rectHeight  - scrolledSize);
         } else
         {
-            prevSize = Math.Min(scrolledSize - _itemSize, (_dataCount - _itemCount) * _itemSize);
-            lastSize = Math.Max(0, (_dataCount - _itemCount) * _itemSize - scrolledSize + _itemSize);
+            prevSize = Math.Min(scrolledSize - rectHeight, (_dataCount - _itemCount) * rectHeight);
+            prevSize = Math.Max(0,prevSize);
+            lastSize = Math.Max(0, (_dataCount - _itemCount) * rectHeight - scrolledSize);
+            //lastSize = Math.Max(0,lastSize);
         }
 
         if (horizontal == true)
@@ -261,12 +294,13 @@ abstract public class ListWindow : MonoBehaviour
         }
     }
 
-    private void UpdateItemView(int itemIndex, LinkedListNode<IListViewItem> item)
+    private void UpdateItemView(GameObject gameObject, int itemIndex, LinkedListNode<IListViewItem> item)
     {
         if (itemIndex < 0 || itemIndex > _dataCount-1){
             return;
         }
-        item.Value.UpdateViewItem();
+        RefreshListItem(gameObject,itemIndex);
+        //item.Value.UpdateViewItem(itemIndex);
     }
 
     private void UpdateListDown()
@@ -277,7 +311,7 @@ abstract public class ListWindow : MonoBehaviour
         {
             var itemView = _itemList.First;
             _itemList.RemoveFirst();
-            UpdateItemView(itemIndex + 1, itemView);
+            UpdateItemView(_objectList[0], itemIndex + 1, itemView);
             _itemList.AddLast(itemView);
             var targetObj = _objectList[0];
             targetObj.transform.SetSiblingIndex(itemIndex + 1);
@@ -296,7 +330,7 @@ abstract public class ListWindow : MonoBehaviour
         {
             var itemView = _itemList.Last;
             _itemList.RemoveLast();
-            UpdateItemView(itemIndex, itemView);
+            UpdateItemView(_objectList[ObjectList.Count-1], itemIndex, itemView);
             _itemList.AddFirst(itemView);
             var targetObj = _objectList[_objectList.Count - 1];
             targetObj.transform.SetSiblingIndex(1);
@@ -368,17 +402,57 @@ abstract public class ListWindow : MonoBehaviour
 
         if (keyType == plusKey){
             selectIndex = Index + 1;
-            if (selectIndex > ObjectList.FindAll(a => a.activeSelf).Count-1){
+            if (selectIndex >= _dataCount){
                 selectIndex = 0;
             }
         } else
         if (keyType == minusKey){
             selectIndex = Index - 1;
             if (selectIndex < 0){
-                selectIndex = ObjectList.FindAll(a => a.activeSelf).Count-1;
+                selectIndex = _dataCount-1;
             }
         }
         if (currentIndex != selectIndex){
+            int startIndex = GetStartIndex();
+            var h = (scrollRect.content.rect.height - GetViewPortHeight());
+            var rectHei = _itemSize+ItemSpace();
+
+            if (((_itemCount+startIndex) - selectIndex) <= 0)
+            {
+                var nom = (selectIndex - (_itemCount-1)) * (float)rectHei / (float)h;
+                nom = 1f - nom;
+                scrollRect.normalizedPosition = new Vector2(0,nom);
+                
+                int tempIndex = GetStartIndex();
+                while (tempIndex == startIndex)
+                {
+                    nom -= 0.000001f;
+                    scrollRect.normalizedPosition = new Vector2(0,nom);
+                    tempIndex = GetStartIndex();
+                }
+                ValueChanged(new Vector2(0,nom));
+            } else
+            if ((keyType == minusKey) && selectIndex <= startIndex && (_dataCount - _itemCount) > selectIndex)
+            {
+                var nom = ((selectIndex)) * (float)rectHei / (float)h;
+                nom = 1f - nom;
+                scrollRect.normalizedPosition = new Vector2(0,nom);
+                int tempIndex = GetStartIndex();
+                if (tempIndex == 0 && startIndex == 0)
+                {
+
+                } else
+                {
+                    while (tempIndex == startIndex)
+                    {
+                        nom += 0.000001f;
+                        scrollRect.normalizedPosition = new Vector2(0,nom);
+                        tempIndex = GetStartIndex();
+                    }
+                }
+                ValueChanged(new Vector2(0,nom));
+            }
+            
             SoundManager.Instance.PlayStaticSe(SEType.Cursor);
             SelectIndex(selectIndex);
         }
@@ -392,7 +466,7 @@ abstract public class ListWindow : MonoBehaviour
             if (ObjectList[i] == null) continue;
             var listItem = ObjectList[i].GetComponent<ListItem>();
             if (listItem == null) continue;
-            if (index == i){
+            if (index == listItem.Index){
                 listItem.SetSelect();
             } else{
                 listItem.SetUnSelect();
@@ -414,5 +488,27 @@ abstract public class ListWindow : MonoBehaviour
     }
 
     public virtual void UpdateHelpWindow(){
+    }
+
+    public virtual void RefreshListItem(GameObject gameObject,int itemIndex)
+    {
+        var listItem = gameObject.GetComponent<ListItem>();
+        listItem.SetUnSelect();
+    }
+
+    public void ResetScrollPosition()
+    {
+        if (horizontal == true)
+        {
+            _prevRect.sizeDelta = new Vector2( 0, 0 );
+            _lastRect.sizeDelta = new Vector2( 0, 0 );
+        } else
+        {
+            _prevRect.sizeDelta = new Vector2( 0, 0 );
+            _lastRect.sizeDelta = new Vector2( 0, (_dataCount - _itemCount - 1) * _itemSize );
+        }
+        LayoutRebuilder.MarkLayoutForRebuild(_prevRect);
+        LayoutRebuilder.MarkLayoutForRebuild(_lastRect);
+        _lastStartIndex = 0;
     }
 }

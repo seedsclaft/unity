@@ -7,8 +7,7 @@ using TMPro;
 public class TitleCommand : ListItem ,IListViewItem 
 {
     [SerializeField] private TextMeshProUGUI commandName;
-
-    private SystemData.MenuCommandData _data; 
+    private SystemData.MenuCommandData _data;
     public void SetData(SystemData.MenuCommandData data,int index){
         _data = data;
         SetIndex(index);

@@ -18,7 +18,7 @@ public class SkillAttributeList : ListWindow , IInputHandlerEvent
     {
         InitializeListView(attributeTypes.Count);
         _data = attributeTypes;
-        for (int i = 0; i < ObjectList.Count;i++)
+        for (int i = 0; i < attributeTypes.Count;i++)
         {
             var skillAttribute = ObjectList[i].GetComponent<SkillAttribute>();
             skillAttribute.SetData(attributeTypes[i],"",(int)attributeTypes[i]);

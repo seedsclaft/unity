@@ -16,7 +16,7 @@ public class TitleCommandList : ListWindow , IInputHandlerEvent
 
     public void Initialize(List<SystemData.MenuCommandData> menuCommands ,System.Action<TitleComandType> callEvent)
     {
-        InitializeListView(menuCommands.Count);
+        InitializeListView(rows);
         _data = menuCommands;
         for (int i = 0; i < ObjectList.Count;i++)
         {
@@ -43,5 +43,13 @@ public class TitleCommandList : ListWindow , IInputHandlerEvent
         {
             callEvent((TitleComandType)Index);
         }
+    }
+
+    public override void RefreshListItem(GameObject gameObject, int itemIndex)
+    {
+        base.RefreshListItem(gameObject,itemIndex);
+        var titleCommand = gameObject.GetComponent<TitleCommand>();
+        titleCommand.SetData(_data[itemIndex],itemIndex);
+        titleCommand.UpdateViewItem();
     }
 }
