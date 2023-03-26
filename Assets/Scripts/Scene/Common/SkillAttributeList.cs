@@ -17,9 +17,7 @@ public class SkillAttributeList : ListWindow , IInputHandlerEvent
     public void Initialize(List<AttributeType> attributeTypes ,System.Action<AttributeType> callEvent)
     {
         InitializeListView(attributeTypes.Count);
-        for (var i = 0; i < attributeTypes.Count;i++){
-            _data.Add(attributeTypes[i]);
-        }
+        _data = attributeTypes;
         for (int i = 0; i < ObjectList.Count;i++)
         {
             var skillAttribute = ObjectList[i].GetComponent<SkillAttribute>();
@@ -47,6 +45,21 @@ public class SkillAttributeList : ListWindow , IInputHandlerEvent
             if (index > _data.Count-1) index = 0;
             callEvent(_data[index]);
             UpdateSelectIndex(index);
+        }
+    }
+
+    private new void UpdateSelectIndex(int index){
+        base.UpdateSelectIndex(index);
+        for (int i = 0; i < ObjectList.Count;i++)
+        {
+            if (ObjectList[i] == null) continue;
+            var skillAttribute = ObjectList[i].GetComponent<SkillAttribute>();
+            if (skillAttribute == null) continue;
+            if (index == i){
+                skillAttribute.SetSelect();
+            } else{
+                skillAttribute.SetUnSelect();
+            }
         }
     }
 }

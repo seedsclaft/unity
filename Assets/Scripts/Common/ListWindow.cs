@@ -28,7 +28,7 @@ abstract public class ListWindow : MonoBehaviour
     private int _dataCount = 0;
     private RectTransform _prevRect;
     private RectTransform _lastRect;
-    private int _lastStartIndex = 0;
+    private int _lastStartIndex = -1;
     private LinkedList<IListViewItem> _itemList = new LinkedList<IListViewItem>();
     public LinkedList<IListViewItem> ItemList {get {return _itemList;}}
     private List<GameObject> _objectList = new List<GameObject>();
@@ -164,7 +164,7 @@ abstract public class ListWindow : MonoBehaviour
 
     private float GetViewPortHeight()
     {
-        return scrollRect.viewport.rect.width;
+        return scrollRect.viewport.rect.height;
     }
 
     private float GetScrolledWidth()

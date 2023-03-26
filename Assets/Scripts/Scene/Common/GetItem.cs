@@ -7,40 +7,21 @@ using UnityEngine.Events;
 using UnityEngine.AddressableAssets;
 using TMPro;
 
-public class GetItem : ListItem ,IListViewItem ,IClickHandlerEvent 
+public class GetItem : ListItem ,IListViewItem  
 {
     [SerializeField] private Image iconImage;
     [SerializeField] private TextMeshProUGUI titleName;
     [SerializeField] private TextMeshProUGUI resultName;
     private GetItemInfo _data; 
-    private int _index; 
-    private EventTrigger eventTrigger;
-    private EventTrigger.Entry entry1;
-    private System.Action<int> _selectHandler;
+
     public void SetData(GetItemInfo data,int index){
         _data = data;
-        _index = index;
-    }
-
-    public int listIndex(){
-        return _index;
+        SetIndex(index);
     }
 
     public void SetCallHandler(System.Action<int> handler)
     {
         //clickButton.onClick.AddListener(() => handler((int)_data.Id));
-    }
-
-    public void SetSelectHandler(System.Action<int> handler){
-        //　EventTriggerコンポーネントを取り付ける
-		eventTrigger = clickButton.gameObject.AddComponent<EventTrigger> ();
-        //　ボタン内にマウスが入った時のイベントリスナー登録（ラムダ式で設定）
-		entry1 = new EventTrigger.Entry ();
-		entry1.eventID = EventTriggerType.PointerEnter;
-		entry1.callback.AddListener (data => OnMyPointerEnter((BaseEventData) data));
-		eventTrigger.triggers.Add (entry1);
-
-        _selectHandler = handler;
     }
 
     public void UpdateViewItem()
@@ -63,14 +44,6 @@ public class GetItem : ListItem ,IListViewItem ,IClickHandlerEvent
             resultName.rectTransform.sizeDelta = new Vector2(resultName.preferredWidth,resultName.preferredHeight);
         }
     }
-
-    public void ClickHandler()
-    {
-    }
-
-    void OnMyPointerEnter(BaseEventData data) {
-        _selectHandler(_index);
-	}
 
     private void UpdateElementIcon(int index)
     {

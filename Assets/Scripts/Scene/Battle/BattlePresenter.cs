@@ -172,6 +172,7 @@ public class BattlePresenter : BasePresenter
         ActionInfo actionInfo = _model.MakeActionInfo(_model.CurrentBattler,skillId,false);
         _view.HideSkillActionList();
         _view.HideSkillAtribute();
+        _view.HideConditionAll();
         _view.HideBattleThumb();
         if (actionInfo.TargetType == TargetType.Opponent)
         {
@@ -550,6 +551,7 @@ public class BattlePresenter : BasePresenter
     {
         List<SkillInfo> skillInfos = _model.SkillActionList(attributeType);
         _view.RefreshSkillActionList(skillInfos);
+        _view.HideCondition();
         SoundManager.Instance.PlayStaticSe(SEType.Cursor);
     }
 

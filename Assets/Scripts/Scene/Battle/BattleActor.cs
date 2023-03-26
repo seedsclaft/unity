@@ -8,19 +8,15 @@ using TMPro;
 using Effekseer;
 using DG.Tweening;
 
-public class BattleActor : ListItem ,IListViewItem ,IClickHandlerEvent 
+public class BattleActor : ListItem ,IListViewItem  
 {
     [SerializeField] private BattlerInfoComponent battlerInfoComponent;
     public BattlerInfoComponent BattlerInfoComponent{get { return battlerInfoComponent;}}
     private BattlerInfo _data; 
-    private int _index; 
-    private EventTrigger eventTrigger;
-    private EventTrigger.Entry entry1;
-    private System.Action<int> _selectHandler;
 
     public void SetData(BattlerInfo data,int index){
         _data = data;
-        _index = index;
+        SetIndex(index);
     }
 
     public void SetDamageRoot(GameObject damageRoot)
@@ -28,25 +24,9 @@ public class BattleActor : ListItem ,IListViewItem ,IClickHandlerEvent
         battlerInfoComponent.SetDamageRoot(damageRoot);
     }
 
-    public int listIndex(){
-        return _index;
-    }
-
     public void SetCallHandler(System.Action<int> handler)
     {
         clickButton.onClick.AddListener(() => handler((int)_data.Index));
-    }
-
-    public void SetSelectHandler(System.Action<int> handler){
-        //　EventTriggerコンポーネントを取り付ける
-		eventTrigger = clickButton.gameObject.AddComponent<EventTrigger> ();
-        //　ボタン内にマウスが入った時のイベントリスナー登録（ラムダ式で設定）
-		entry1 = new EventTrigger.Entry ();
-		entry1.eventID = EventTriggerType.PointerEnter;
-		entry1.callback.AddListener (data => OnMyPointerEnter((BaseEventData) data));
-		eventTrigger.triggers.Add (entry1);
-
-        _selectHandler = handler;
     }
 
     public void UpdateViewItem()
@@ -55,12 +35,4 @@ public class BattleActor : ListItem ,IListViewItem ,IClickHandlerEvent
         battlerInfoComponent.UpdateInfo(_data);
         battlerInfoComponent.RefreshStatus();
     }
-
-    public void ClickHandler()
-    {
-    }
-
-    void OnMyPointerEnter(BaseEventData data) {
-        _selectHandler(_data.Index);
-	}
 }

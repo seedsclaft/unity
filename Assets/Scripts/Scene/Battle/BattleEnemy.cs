@@ -21,20 +21,17 @@ public class BattleEnemy : ListItem
     private List<BattleDamage> _battleDamages = new List<BattleDamage>();
 
     private BattlerInfo _battlerInfo;
-    private int _index; 
-    private EventTrigger eventTrigger;
-    private EventTrigger.Entry entry1;
-    private System.Action<int> _selectHandler;
     private string textureName = null;
 
     public int EnemyIndex{
         get {return _battlerInfo.Index;}
     }
+
     public void SetData(BattlerInfo battlerInfo,int index)
     {
         battlerInfoComponent.UpdateInfo(battlerInfo);
         _battlerInfo = battlerInfo;
-        _index = index;
+        SetIndex(index);
     }
     
     public void SetDamageRoot(GameObject damageRoot)
@@ -48,21 +45,10 @@ public class BattleEnemy : ListItem
         clickButton.onClick.AddListener(() => handler(_battlerInfo.Index));
     }
     
-    public void SetSelectHandler(System.Action<int> handler){
-        //　EventTriggerコンポーネントを取り付ける
-		eventTrigger = clickButton.gameObject.AddComponent<EventTrigger> ();
-        //　ボタン内にマウスが入った時のイベントリスナー登録（ラムダ式で設定）
-		entry1 = new EventTrigger.Entry ();
-		entry1.eventID = EventTriggerType.PointerEnter;
-		entry1.callback.AddListener (data => OnMyPointerEnter((BaseEventData) data));
-		eventTrigger.triggers.Add (entry1);
-        _selectHandler = handler;
+    public new void SetSelectHandler(System.Action<int> handler){
+		ContentEnterListener enterListener = clickButton.gameObject.AddComponent<ContentEnterListener> ();
+        enterListener.SetEnterEvent(() => handler(_battlerInfo.Index));
     }
-
-    void OnMyPointerEnter(BaseEventData data) {
-        if (_battlerInfo.IsAlive() == false) return;
-        _selectHandler(_battlerInfo.Index);
-	}
 
     private void Update() {
         if (enemyImage.mainTexture != null && textureName != enemyImage.mainTexture.name)

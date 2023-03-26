@@ -31,9 +31,6 @@ public class TacticsComponent : MonoBehaviour
 
     [SerializeField] private GameObject busyRoot;
     [SerializeField] private TextMeshProUGUI busyText;
-    private EventTrigger eventTrigger;
-    private EventTrigger.Entry entry1;
-    private System.Action<int> _selectHandler;
     public void UpdateInfo(ActorInfo actorInfo)
     {
         _actorInfo = actorInfo;
@@ -121,37 +118,28 @@ public class TacticsComponent : MonoBehaviour
     }
 
     public void SetToggleHandler(System.Action<int> handler){
+        GameObject toggleObject = null;
         if (trainCheckToggle != null)
         {
-            //　EventTriggerコンポーネントを取り付ける
-	    	eventTrigger = trainCheckToggle.gameObject.AddComponent<EventTrigger> ();
+	    	toggleObject = trainCheckToggle.gameObject;
         }
         if (alchemyCheckToggle != null)
         {
-	    	eventTrigger = alchemyCheckToggle.gameObject.AddComponent<EventTrigger> ();
+	    	toggleObject = alchemyCheckToggle.gameObject;
         }
         if (recoveryCheckToggle != null)
         {
-	    	eventTrigger = recoveryCheckToggle.gameObject.AddComponent<EventTrigger> ();
+	    	toggleObject = recoveryCheckToggle.gameObject;
         }
         if (battleCheckToggle != null)
         {
-	    	eventTrigger = battleCheckToggle.gameObject.AddComponent<EventTrigger> ();
+	    	toggleObject = battleCheckToggle.gameObject;
         }
         if (resourceCheckToggle != null)
         {
-	    	eventTrigger = resourceCheckToggle.gameObject.AddComponent<EventTrigger> ();
+	    	toggleObject = resourceCheckToggle.gameObject;
         }
-        //　ボタン内にマウスが入った時のイベントリスナー登録（ラムダ式で設定）
-		entry1 = new EventTrigger.Entry ();
-		entry1.eventID = EventTriggerType.PointerClick;
-		entry1.callback.AddListener (data => OnMyPointerClick((BaseEventData) data));
-		eventTrigger.triggers.Add (entry1);
-
-        _selectHandler = handler;
+		ContentEnterListener enterListener = toggleObject.AddComponent<ContentEnterListener> ();
+        enterListener.SetEnterEvent(() => handler(_actorInfo.ActorId));
     }
-
-    void OnMyPointerClick(BaseEventData data) {
-        _selectHandler(_actorInfo.ActorId);
-	}
 }

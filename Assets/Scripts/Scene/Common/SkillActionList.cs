@@ -38,13 +38,10 @@ public class SkillActionList : ListWindow , IInputHandlerEvent
     public void Refresh(List<SkillInfo> skillInfoData)
     {
         _data.Clear();
-        for (var i = 0; i < skillInfoData.Count;i++)
-        {
-            _data.Add(skillInfoData[i]);
-        }
+        _data = skillInfoData;
         for (int i = 0; i < ObjectList.Count;i++)
         {
-            ObjectList[i].SetActive(false);
+            //ObjectList[i].SetActive(false);
             if (i < _data.Count) 
             {
                 var skillAction = ObjectList[i].GetComponent<SkillAction>();

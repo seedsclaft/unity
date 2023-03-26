@@ -39,6 +39,8 @@ abstract public class ListItem : MonoBehaviour
     private Color _normalColor;
     private Color _selectedColor;
     private Color _disableColor;
+    private int _index;
+    public int Index{get {return _index;}}
     [SerializeField] private GameObject cursor;
     public GameObject Cursor { get {return cursor;}}
     [SerializeField] private GameObject disable;
@@ -77,5 +79,15 @@ abstract public class ListItem : MonoBehaviour
         cb.normalColor = _normalColor;
         clickButton.colors = cb;
         */
+    }
+
+    public void SetIndex(int index)
+    {
+        _index = index;
+    }
+    
+    public void SetSelectHandler(System.Action<int> handler){
+		ContentEnterListener enterListener = clickButton.gameObject.AddComponent<ContentEnterListener> ();
+        enterListener.SetEnterEvent(() => handler(_index));
     }
 }

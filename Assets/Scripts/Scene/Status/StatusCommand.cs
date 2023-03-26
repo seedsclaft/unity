@@ -2,26 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.EventSystems;
-using UnityEngine.Events;
 using TMPro;
 
-public class StatusCommand : ListItem ,IListViewItem ,IClickHandlerEvent 
+public class StatusCommand : ListItem ,IListViewItem 
 {
     [SerializeField] private TextMeshProUGUI commandName;
 
     private SystemData.MenuCommandData _data; 
-    private int _index; 
-    private EventTrigger eventTrigger;
-    private EventTrigger.Entry entry1;
-    private System.Action<int> _selectHandler;
     public void SetData(SystemData.MenuCommandData data,int index){
         _data = data;
-        _index = index;
-    }
-
-    public int listIndex(){
-        return _index;
+        SetIndex(index);
     }
 
     public void SetCallHandler(System.Action<StatusComandType> handler)
@@ -30,20 +20,8 @@ public class StatusCommand : ListItem ,IListViewItem ,IClickHandlerEvent
         clickButton.onClick.AddListener(() => 
         {
             if (Disable.gameObject.activeSelf) return;
-            handler((StatusComandType)_index);
+            handler((StatusComandType)Index);
         });
-    }
-
-    public void SetSelectHandler(System.Action<int> handler){
-        //　EventTriggerコンポーネントを取り付ける
-		eventTrigger = clickButton.gameObject.AddComponent<EventTrigger> ();
-        //　ボタン内にマウスが入った時のイベントリスナー登録（ラムダ式で設定）
-		entry1 = new EventTrigger.Entry ();
-		entry1.eventID = EventTriggerType.PointerEnter;
-		entry1.callback.AddListener (data => OnMyPointerEnter((BaseEventData) data));
-		eventTrigger.triggers.Add (entry1);
-
-        _selectHandler = handler;
     }
 
     public void UpdateViewItem()
@@ -51,14 +29,6 @@ public class StatusCommand : ListItem ,IListViewItem ,IClickHandlerEvent
         if (_data == null) return;
         commandName.text = _data.Name;
     }
-
-    public void ClickHandler()
-    {
-    }
-
-    void OnMyPointerEnter(BaseEventData data) {
-        _selectHandler(_index);
-	}
 
     public void SetDisable(SystemData.MenuCommandData menuCommandData,bool IsDisable)
     {

@@ -10,7 +10,6 @@ public class DebugBattleData : MonoBehaviour
 
     public void MakeBattleActor()
     {
-
         GameSystem.CurrentData.MakeStageData(1,1);
         GameSystem.CurrentData.CurrentStage.TacticsTroops();
         GameSystem.CurrentData.InitActors();     
