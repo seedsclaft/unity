@@ -18,7 +18,7 @@ public class TitleCommandList : ListWindow , IInputHandlerEvent
     {
         InitializeListView(rows);
         _data = menuCommands;
-        for (int i = 0; i < ObjectList.Count;i++)
+        for (int i = 0; i < menuCommands.Count;i++)
         {
             var titleCommand = ObjectList[i].GetComponent<TitleCommand>();
             titleCommand.SetData(menuCommands[i],i);

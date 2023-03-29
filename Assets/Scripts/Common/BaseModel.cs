@@ -25,6 +25,18 @@ public class BaseModel
         return GameSystem.CurrentData.Actors;
     }
 
+    public List<ActorInfo> StageMembers()
+    {
+        List<int> SelectActorIds = CurrentStage.SelectActorIds;
+        return Actors().FindAll(a => SelectActorIds.Contains(a.ActorId));
+    }
+
+    public List<ActorInfo> PartyMembers()
+    {
+        List<int> PartyMembersIds = PartyInfo.ActorIdList;
+        return Actors().FindAll(a => PartyMembersIds.Contains(a.ActorId));
+    }
+
     public async Task<List<AudioClip>> GetBgmData(string bgmKey){
         BGMData bGMData = DataSystem.Data.GetBGM(bgmKey);
         List<string> data = new List<string>();
@@ -155,7 +167,7 @@ public class BaseModel
                 List<int> targetIndexs = new List<int>();
                 if (skill.Master.Scope == ScopeType.All)
                 {
-                    foreach (var item in Actors())
+                    foreach (var item in StageMembers())
                     {
                         targetIndexs.Add(item.ActorId);
                     }
@@ -165,7 +177,7 @@ public class BaseModel
                 {
                     foreach (var featureData in skill.Master.FeatureDatas)
                     {
-                        ActorInfo target = Actors()[i];
+                        ActorInfo target = StageMembers()[i];
                         if (featureData.FeatureType == FeatureType.AddState)
                         {
                             StateInfo stateInfo = new StateInfo(featureData.Param1,featureData.Param2,featureData.Param3,-1,0);
@@ -250,4 +262,42 @@ public class BaseModel
     {
         CurrentData.CurrentAlcana.DeleteAlcana();
     }
+
+    public string SelectAddActorConfirmText(string actorName)
+    {
+        int textId = 0;
+        if (CurrentStage == null)
+        {
+            textId = 11060;
+        } else
+        {
+            textId = 11070;
+        }
+        return DataSystem.System.GetTextData(textId).Text.Replace("\\d",actorName);
+    }
+
+    public void SetStageActor()
+    {
+        //　加入しているパーティを生成
+        List<ActorInfo> selectActorIds = Actors().FindAll(a => StageMembers().Contains(a));
+        
+        PartyInfo.InitActors();
+        foreach (var actorInfo in selectActorIds)
+        {
+            PartyInfo.AddActor(actorInfo.ActorId);
+        }
+    }
+
+    public void SetSelectAddActor()
+    {
+        //　加入していないパーティを生成
+        List<ActorInfo> selectActorIds = Actors().FindAll(a => !StageMembers().Contains(a));
+        
+        PartyInfo.InitActors();
+        foreach (var actorInfo in selectActorIds)
+        {
+            PartyInfo.AddActor(actorInfo.ActorId);
+        }
+    }
+
 }

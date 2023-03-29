@@ -30,10 +30,8 @@ public class TacticsPresenter
         _view.SetActiveBack(false);
         _view.SetEvent((type) => updateCommand(type));
 
-        //List<ActorInfo> actorInfos = _model.Actors();
-        //_view.SetActorInfo(_model.CurrentActor);
+        _view.SetActors(_model.StageMembers(),_model.ConfirmCommand());
         _view.SetStageInfo(_model.CurrentStage);
-        _view.SetActors(_model.Actors(),_model.ConfirmCommand());
         _view.SetEnemies(_model.TacticsTroops());
 
         _view.SetTacticsCommand(_model.TacticsCommand);
@@ -46,6 +44,7 @@ public class TacticsPresenter
 
         // イベントチェック
         var stageEvents = _model.StageEvents(EventTiming.StartTactics);
+        var isAbort = false;
         if (stageEvents.Count > 0)
         {
             for (int i = 0;i < stageEvents.Count;i++)
@@ -76,6 +75,7 @@ public class TacticsPresenter
                     {        
                         CommandRefresh();
                     }
+                    _model.AddEventReadFlag(stageEvents[i]);
                 }
                 if (stageEvents[i].Type == StageEventType.IsAlcana)
                 {
@@ -84,10 +84,33 @@ public class TacticsPresenter
                     {        
                         CommandRefresh();
                     }
+                    _model.AddEventReadFlag(stageEvents[i]);
+                }
+                if (stageEvents[i].Type == StageEventType.SelectAddActor)
+                {
+                    var popupInfo = new ConfirmInfo(DataSystem.System.GetTextData(11050).Text,(menuCommandInfo) => UpdatePopupSelectAddActor((ConfirmComandType)menuCommandInfo));
+                    popupInfo.SetIsNoChoise(true);
+                    _view.CommandCallConfirm(popupInfo);
+                    _model.AddEventReadFlag(stageEvents[i]);
+                    _view.SetActiveUi(false);
+                    isAbort = true;
+                    break;
+                }
+                if (stageEvents[i].Type == StageEventType.SaveCommand)
+                {
+                    var popupInfo = new ConfirmInfo(DataSystem.System.GetTextData(11080).Text,(menuCommandInfo) => UpdatePopupSaveCommand((ConfirmComandType)menuCommandInfo));
+                    _view.CommandCallConfirm(popupInfo);
+                    _model.AddEventReadFlag(stageEvents[i]);
+                    _view.SetActiveUi(false);
+                    isAbort = true;
+                    break;
                 }
             }
         }
-
+        if (isAbort)
+        {
+            return;
+        }
         // アルカナ配布
         if (_model.CheckIsAlcana())
         {
@@ -304,6 +327,29 @@ public class TacticsPresenter
         _view.CommandConfirmClose();
     }
 
+    private void UpdatePopupSelectAddActor(ConfirmComandType confirmComandType)
+    {
+        _model.SetSelectAddActor();
+        _view.CommandConfirmClose();
+        StatusViewInfo statusViewInfo = new StatusViewInfo(() => {
+            _view.CommandSceneChange(Scene.Tactics);
+        });
+        statusViewInfo.SetDisplayDecideButton(true);
+        statusViewInfo.SetDisplayBackButton(false);
+        statusViewInfo.SetDisableStrength(true);
+        _view.CommandCallStatus(statusViewInfo);
+    }
+
+    private void UpdatePopupSaveCommand(ConfirmComandType confirmComandType)
+    {
+        _view.CommandConfirmClose();
+        if (confirmComandType == ConfirmComandType.Yes)
+        {
+            SaveSystem.SaveStart(GameSystem.CurrentData);
+        }
+        _view.CommandSceneChange(Scene.Tactics);
+    }
+
     private void CommandBack()
     {
         var eventData = new TacticsViewEvent(_backCommand);
@@ -366,6 +412,7 @@ public class TacticsPresenter
         }
         if (tacticsComandType == TacticsComandType.Status)
         {
+            _model.SetStageActor();
             StatusViewInfo statusViewInfo = new StatusViewInfo(() => {
                 _view.CommandStatusClose();
                 CommandShowUi();
@@ -373,7 +420,6 @@ public class TacticsPresenter
             CommandHideUi();
             statusViewInfo.SetDisplayDecideButton(false);
             _view.CommandCallStatus(statusViewInfo);
-            SaveSystem.SaveStart(GameSystem.CurrentData);
         }
         if (tacticsComandType == TacticsComandType.Turnend)
         {

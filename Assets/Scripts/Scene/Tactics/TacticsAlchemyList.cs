@@ -21,9 +21,9 @@ public class TacticsAlchemyList : ListWindow , IInputHandlerEvent
 
     public void Initialize(List<ActorInfo> actorInfos,System.Action<int> callEvent)
     {
-        InitializeListView(rows);
+        InitializeListView(actorInfos.Count);
         _actorInfos = actorInfos;
-        for (int i = 0; i < rows;i++)
+        for (int i = 0; i < actorInfos.Count;i++)
         {
             var tacticsAlchemy = ObjectList[i].GetComponent<TacticsAlchemy>();
             if (i < _actorInfos.Count)

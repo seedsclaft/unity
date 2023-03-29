@@ -25,7 +25,7 @@ public class StrategyPresenter
         _view.SetHelpWindow();
         _view.SetUiView();
 
-        _view.SetActors(_model.Actors());
+        _view.SetActors(_model.StageMembers());
         _view.SetResultList(_model.ResultCommand());
         var bgm = await _model.GetBgmData("TACTICS1");
         SoundManager.Instance.PlayBgm(bgm,1.0f,true);

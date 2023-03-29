@@ -118,7 +118,7 @@ public enum TriggerType
     TurnNumPer = 13, // ターン数がparam1 x ターン数 + param2
     IsExistDeathMember = 21, // 戦闘不能が〇以上存在する
     IsExistAliveMember = 22, // 生存者が〇以上存在する
-    AfterMp = 101, // Mpが〇になる
+    PayBattleMp = 101, // Mpを〇消費する
     ChainCount = 102, // 拘束成功回数
     ActionResultDeath = 103, // 攻撃を受けると戦闘不能になる
     DeadWithoutSelf = 104, // 自身以外が戦闘不能

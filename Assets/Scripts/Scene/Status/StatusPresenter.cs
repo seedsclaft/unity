@@ -134,7 +134,8 @@ public class StatusPresenter
     private void CommandDecideActor()
     {
         ActorInfo actorInfo = _model.CurrentActor;
-        var popupInfo = new ConfirmInfo(actorInfo.Master.Name + "をつれてシナリオを開始しますか？",(menuCommandInfo) => updatePopup((ConfirmComandType)menuCommandInfo));
+        var text = _model.SelectAddActorConfirmText(actorInfo.Master.Name);
+        var popupInfo = new ConfirmInfo(text,(menuCommandInfo) => updatePopup((ConfirmComandType)menuCommandInfo));
         _view.CommandCallConfirm(popupInfo);
         _view.DeactivateCommandList();
         _popupCommandType = Status.CommandType.DecideStage;
@@ -147,7 +148,7 @@ public class StatusPresenter
         {
             if (_popupCommandType == Status.CommandType.DecideStage)
             {
-                _model.MakeStageData();
+                _model.SelectAddActor();
                 _view.CommandStatusClose();
                 _view.CommandSceneChange(Scene.Tactics);
             }
@@ -158,7 +159,12 @@ public class StatusPresenter
                 CommandRefresh();
             }
         } else{
-            _view.ActivateCommandList();
+            if (_popupCommandType == Status.CommandType.StrengthClose)
+            {
+                _view.ActivateStrengthList();
+            } else{
+                _view.ActivateCommandList();
+            }
         }
     }
     
@@ -218,6 +224,7 @@ public class StatusPresenter
             _view.DeactivateCommandList();
             _view.DeactivateStrengthList();
         } else{
+            _backCommandType = Status.CommandType.None;
             if (_model.StatusActors().Count > 1) _view.ShowArrows();
             _view.ShowCommandList();
             _view.ShowDecideButton();

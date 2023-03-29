@@ -109,9 +109,9 @@ public class SavePlayInfo
 
 	public void MakeStageData(int actorId,int debugStageId = 0)
 	{
-		InitActors();
+		//InitActors();
 		_party.InitActors();
-		AddActor(actorId);
+		//AddActor(actorId);
 		int stageId = 0;
 		if (debugStageId != 0)
 		{
@@ -133,10 +133,10 @@ public class SavePlayInfo
 		ActorsData.ActorData actorData = DataSystem.Actors.Find(actor => actor.Id == actorId);
 		if (actorData != null)
 		{
-			ActorInfo actorInfo = new ActorInfo(actorData);
-			actorInfo.InitSkillInfo(actorData.LearningSkills);
-			_actors.Add(actorInfo);
-			_party.AddActor(actorInfo.ActorId);
+			//ActorInfo actorInfo = new ActorInfo(actorData);
+			//actorInfo.InitSkillInfo(actorData.LearningSkills);
+			//_actors.Add(actorInfo);
+			_party.AddActor(actorId);
 		}
 	}
 	

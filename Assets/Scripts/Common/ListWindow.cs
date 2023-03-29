@@ -77,7 +77,7 @@ abstract public class ListWindow : MonoBehaviour
     {
         if (EnableValueChanged())
         {
-            UpdateItemViews(false);
+            UpdateListItem(false);
             UpdateSizeDelta();
             _lastStartIndex = GetStartIndex();
         }
@@ -87,7 +87,7 @@ abstract public class ListWindow : MonoBehaviour
     {
         int startIndex = GetStartIndex();
         if (startIndex < 0) return false;    
-        if (startIndex >= (_dataCount - _itemCount)) return false; 
+        if (startIndex > (_dataCount - _itemCount)) return false; 
         if (_lastStartIndex == startIndex) return false;
         return true;
     }
@@ -104,8 +104,8 @@ abstract public class ListWindow : MonoBehaviour
             itemSize = itemPrefab.GetComponent<RectTransform>().sizeDelta.y;
             scrollSize = scrollRect.GetComponent<RectTransform>().sizeDelta.y;
         }
-        _itemSize = itemSize;
-        _itemCount = (int)Math.Floor( scrollSize / itemSize);
+        _itemSize = itemSize + ItemSpace();
+        _itemCount = (int)Math.Floor( scrollSize / _itemSize);
     }
 
     public void SetDataCount(int count)
@@ -116,14 +116,16 @@ abstract public class ListWindow : MonoBehaviour
     private void CreateList()
     {
         for (var i = 0; i < _itemCount + 1;i++){
-            if (_dataCount <= i){
-                //continue;
-            }
             GameObject prefab = Instantiate(itemPrefab);
             prefab.transform.SetParent(scrollRect.content, false);
             _objectList.Add(prefab);
             IListViewItem view = prefab.GetComponent<IListViewItem>();
             _itemList.AddLast(view);
+        }
+        for (var i = 0; i < _objectList.Count;i++){
+            if (_dataCount <= i){
+                _objectList[i].SetActive(false);
+            }
         }
     }
 
@@ -210,7 +212,7 @@ abstract public class ListWindow : MonoBehaviour
         }
     }
 
-    private void UpdateItemViews(bool forceRepaint)
+    private void UpdateListItem(bool forceRepaint)
     {
         int startIndex = GetStartIndex();
         //if (!forceRepaint && _itemCount == 0) return;    
@@ -246,6 +248,16 @@ abstract public class ListWindow : MonoBehaviour
         }
     }
 
+    private void UpdateItemViews(bool forceRepaint)
+    {
+        int startIndex = GetStartIndex();
+        var itemIndex = startIndex;
+        for (int i = 0;i < _itemCount;i++)
+        {
+            RefreshListItem(_objectList[i], itemIndex + i);
+        }
+    }
+
     private void UpdateSizeDelta()
     {
         int startIndex = GetStartIndex();
@@ -257,6 +269,7 @@ abstract public class ListWindow : MonoBehaviour
         {
             scrolledSize = (GetScrolledHeight() - ListMargin() - ItemSpace() / 2);
         }
+        Debug.Log(startIndex.ToString());
 
         float prevSize;
         float lastSize;
@@ -318,8 +331,10 @@ abstract public class ListWindow : MonoBehaviour
             _objectList.Remove(targetObj);
             _objectList.Add(targetObj);
             SetLastRectSetSiblingIndex(9999);
+            targetObj.gameObject.SetActive(itemIndex < (_dataCount - 1));
             itemIndex++;
         }
+        UpdateItemViews(false);
     }
 
     private void UpdateListUp()
@@ -337,8 +352,10 @@ abstract public class ListWindow : MonoBehaviour
             _objectList.Remove(targetObj);
             _objectList.Insert(0,targetObj);
             SetPrevRectSetSiblingIndex(0);
+            targetObj.gameObject.SetActive(true);
             itemIndex--;
         }
+        UpdateItemViews(false);
     }
     public void SetSelect()
     {
@@ -392,6 +409,7 @@ abstract public class ListWindow : MonoBehaviour
         InputCallEvent(keyType);
         UpdateSelectIndex(Index);
         ResetInputFrame();
+        Debug.Log(this.gameObject.name);
     }
 
     public void InputSelectIndex(InputKeyType keyType){
@@ -413,46 +431,67 @@ abstract public class ListWindow : MonoBehaviour
             }
         }
         if (currentIndex != selectIndex){
-            int startIndex = GetStartIndex();
-            var h = (scrollRect.content.rect.height - GetViewPortHeight());
-            var rectHei = _itemSize+ItemSpace();
-
-            if (((_itemCount+startIndex) - selectIndex) <= 0)
+            if (_dataCount > _itemCount)
             {
-                var nom = (selectIndex - (_itemCount-1)) * (float)rectHei / (float)h;
-                nom = 1f - nom;
-                scrollRect.normalizedPosition = new Vector2(0,nom);
-                
-                int tempIndex = GetStartIndex();
-                while (tempIndex == startIndex)
-                {
-                    nom -= 0.000001f;
-                    scrollRect.normalizedPosition = new Vector2(0,nom);
-                    tempIndex = GetStartIndex();
-                }
-                ValueChanged(new Vector2(0,nom));
-            } else
-            if ((keyType == minusKey) && selectIndex <= startIndex && (_dataCount - _itemCount) > selectIndex)
-            {
-                var nom = ((selectIndex)) * (float)rectHei / (float)h;
-                nom = 1f - nom;
-                scrollRect.normalizedPosition = new Vector2(0,nom);
-                int tempIndex = GetStartIndex();
-                if (tempIndex == 0 && startIndex == 0)
-                {
+                int startIndex = GetStartIndex();
+                var h = (scrollRect.content.rect.height - GetViewPortHeight());
+                var rectHei = _itemSize+ItemSpace();
 
-                } else
+                if (((_itemCount+startIndex) - selectIndex) <= 0)
                 {
-                    while (tempIndex == startIndex)
+                    var nom = (selectIndex - (_itemCount-1)) * ((float)rectHei / (float)h);
+                    nom = 1.0f - nom;
+                    if (selectIndex == _dataCount-1)
                     {
-                        nom += 0.000001f;
+                        nom = 0;
                         scrollRect.normalizedPosition = new Vector2(0,nom);
-                        tempIndex = GetStartIndex();
+                    
+                        int tempIndex = GetStartIndex();
+                        while (tempIndex != (_dataCount-_itemCount))
+                        {
+                            nom += 0.000001f;
+                            scrollRect.normalizedPosition = new Vector2(0,nom);
+                            tempIndex = GetStartIndex();
+                        }
+                    } else{
+                        scrollRect.normalizedPosition = new Vector2(0,nom);
+                    
+                        int tempIndex = GetStartIndex();
+                        while (tempIndex == startIndex)
+                        {
+                            nom -= 0.000001f;
+                            scrollRect.normalizedPosition = new Vector2(0,nom);
+                            tempIndex = GetStartIndex();
+                        }
                     }
+                    ValueChanged(new Vector2(0,nom));
+                } else
+                if ((keyType == minusKey) && selectIndex <= startIndex && (_dataCount - _itemCount) >= selectIndex)
+                {
+                    var nom = ((selectIndex)) * ((float)rectHei / (float)h);
+                    nom = 1.0f - nom;
+                    scrollRect.normalizedPosition = new Vector2(0,nom);
+                    int tempIndex = GetStartIndex();
+                    if (tempIndex == 0 && startIndex == 0)
+                    {
+
+                    } else
+                    {
+                        while (tempIndex == startIndex)
+                        {
+                            nom += 0.000001f;
+                            scrollRect.normalizedPosition = new Vector2(0,nom);
+                            tempIndex = GetStartIndex();
+                        }
+                    }
+                    ValueChanged(new Vector2(0,nom));
+                } else
+                if ((keyType == plusKey) && selectIndex == 0)
+                {
+                    scrollRect.normalizedPosition = new Vector2(0,1);
+                    ValueChanged(new Vector2(0,1));
                 }
-                ValueChanged(new Vector2(0,nom));
             }
-            
             SoundManager.Instance.PlayStaticSe(SEType.Cursor);
             SelectIndex(selectIndex);
         }

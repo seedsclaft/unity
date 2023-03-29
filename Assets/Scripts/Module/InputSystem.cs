@@ -9,12 +9,12 @@ public class InputSystem
         UpdateGamePad();
         if(Keyboard.current.upArrowKey.wasPressedThisFrame) 
         {
-            //Debug.Log("up");
+            Debug.Log("up");
             return InputKeyType.Up;
         } else
         if(Keyboard.current.downArrowKey.wasPressedThisFrame) 
         {
-            //Debug.Log("down");
+            Debug.Log("down");
             return InputKeyType.Down;
         } else
         if(Keyboard.current.leftArrowKey.wasPressedThisFrame) 

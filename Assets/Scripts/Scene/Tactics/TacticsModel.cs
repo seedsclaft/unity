@@ -41,12 +41,29 @@ public class TacticsModel : BaseModel
     public List<StagesData.StageEventData> StageEvents(EventTiming eventTiming)
     {
         int CurrentTurn = CurrentStage.CurrentTurn;
-        return CurrentStage.StageEvents.FindAll(a => a.Timing == eventTiming && a.Turns == CurrentTurn);
+        List<string> eventKeys = CurrentStage.ReadEventKeys;
+        return CurrentStage.StageEvents.FindAll(a => a.Timing == eventTiming && a.Turns == CurrentTurn && !eventKeys.Contains(a.EventKey));
+    }
+
+    public void AddEventsReadFlag(List<StagesData.StageEventData> stageEventDatas)
+    {
+        foreach (var eventData in stageEventDatas)
+        {
+            AddEventReadFlag(eventData);
+        }
+    }
+
+    public void AddEventReadFlag(StagesData.StageEventData stageEventDatas)
+    {
+        if (stageEventDatas.ReadFlag)
+        {
+            CurrentStage.AddEventReadFlag(stageEventDatas.EventKey);
+        }
     }
 
     public ActorInfo TacticsActor(int actorId)
     {
-        return Actors().Find(a => a.ActorId == actorId);
+        return StageMembers().Find(a => a.ActorId == actorId);
     }
 
     public List<TroopInfo> ResetTroopData()
@@ -70,7 +87,7 @@ public class TacticsModel : BaseModel
 
     public void SetTempData(TacticsComandType tacticsComandType)
     {
-        _tempTacticsData = Actors().FindAll(a => a.TacticsComandType == tacticsComandType);
+        _tempTacticsData = StageMembers().FindAll(a => a.TacticsComandType == tacticsComandType);
     }
 
     public void ResetTempData(TacticsComandType tacticsComandType)
@@ -79,12 +96,12 @@ public class TacticsModel : BaseModel
         {
             List<ActorInfo> removeActors = new List<ActorInfo>();
             
-            for (int i = 0;i < Actors().Count;i++)
+            for (int i = 0;i < StageMembers().Count;i++)
             {
-                if (_tempTacticsData.Find(a => a.ActorId == Actors()[i].ActorId) == null)
+                if (_tempTacticsData.Find(a => a.ActorId == StageMembers()[i].ActorId) == null)
                 {
-                    PartyInfo.ChangeCurrency(Currency + Actors()[i].TacticsCost);
-                    Actors()[i].ClearTacticsCommand();
+                    PartyInfo.ChangeCurrency(Currency + StageMembers()[i].TacticsCost);
+                    StageMembers()[i].ClearTacticsCommand();
                 }
             }
             _tempTacticsData.Clear();
@@ -93,13 +110,13 @@ public class TacticsModel : BaseModel
 
     public void RefreshTacticsEnable()
     {
-        for (int i = 0;i < Actors().Count;i++)
+        for (int i = 0;i < StageMembers().Count;i++)
         {
             foreach(var tacticsComandType in Enum.GetValues(typeof(TacticsComandType)))
             {
                 if ((int)tacticsComandType != 0)
                 {
-                    Actors()[i].RefreshTacticsEnable((TacticsComandType)tacticsComandType,CanTacticsCommand((TacticsComandType)tacticsComandType,Actors()[i]));
+                    StageMembers()[i].RefreshTacticsEnable((TacticsComandType)tacticsComandType,CanTacticsCommand((TacticsComandType)tacticsComandType,StageMembers()[i]));
                 }       
             }
         }
@@ -146,7 +163,7 @@ public class TacticsModel : BaseModel
 
     public bool CheckNonBusy()
     {
-        return Actors().Find(a => a.TacticsComandType == TacticsComandType.None) != null;
+        return StageMembers().Find(a => a.TacticsComandType == TacticsComandType.None) != null;
     }
     
     public void ResetTacticsCost(int actorId)
@@ -178,14 +195,14 @@ public class TacticsModel : BaseModel
     public int TacticsCost(TacticsComandType tacticsComandType)
     {
         int trainCost = 0;
-        foreach (var actorInfo in Actors()) if (actorInfo.TacticsComandType == tacticsComandType) trainCost += actorInfo.TacticsCost;
+        foreach (var actorInfo in StageMembers()) if (actorInfo.TacticsComandType == tacticsComandType) trainCost += actorInfo.TacticsCost;
         return trainCost;
     }
     
     public int TacticsTotalCost()
     {
         int totalCost = 0;
-        foreach (var actorInfo in Actors()) totalCost += actorInfo.TacticsCost;
+        foreach (var actorInfo in StageMembers()) totalCost += actorInfo.TacticsCost;
         return totalCost;
     }
 

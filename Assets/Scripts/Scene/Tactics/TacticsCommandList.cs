@@ -18,7 +18,7 @@ public class TacticsCommandList : ListWindow , IInputHandlerEvent
     {
         InitializeListView(menuCommands.Count);
         _data = menuCommands;
-        for (int i = 0; i < ObjectList.Count;i++)
+        for (int i = 0; i < menuCommands.Count;i++)
         {
             var TacticsCommand = ObjectList[i].GetComponent<TacticsCommand>();
             TacticsCommand.SetData(menuCommands[i],i);
@@ -39,7 +39,7 @@ public class TacticsCommandList : ListWindow , IInputHandlerEvent
 
     public void SetDisable(SystemData.MenuCommandData menuCommandData,bool IsDisable)
     {
-        for (int i = 0; i < ObjectList.Count;i++)
+        for (int i = 0; i < _data.Count;i++)
         {
             var tacticsCommand = ObjectList[i].GetComponent<TacticsCommand>();
             tacticsCommand.SetDisable(menuCommandData,IsDisable);

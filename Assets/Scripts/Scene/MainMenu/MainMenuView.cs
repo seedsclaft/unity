@@ -22,6 +22,7 @@ public class MainMenuView : BaseView
     void Initialize(){
         new MainMenuPresenter(this);
     }
+
     public void SetHelpWindow(){
         GameObject prefab = Instantiate(helpPrefab);
         prefab.transform.SetParent(helpRoot.transform, false);

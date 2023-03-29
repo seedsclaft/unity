@@ -22,9 +22,9 @@ public class TacticsRecoveryList : ListWindow , IInputHandlerEvent
 
     public void Initialize(List<ActorInfo> actorInfos,System.Action<int> callEvent,System.Action<int> plusEvent,System.Action<int> minusEvent)
     {
-        InitializeListView(rows);
+        InitializeListView(actorInfos.Count);
         _actorInfos = actorInfos;
-        for (int i = 0; i < rows;i++)
+        for (int i = 0; i < actorInfos.Count;i++)
         {
             var tacticsRecovery = ObjectList[i].GetComponent<TacticsRecovery>();
             if (i < _actorInfos.Count)

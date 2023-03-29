@@ -35,7 +35,8 @@ public class StageInfo
 	private List<int> _selectActorIds = new List<int>();
 	public List<int> SelectActorIds { get {return _selectActorIds;}}
 
-
+    private List<string> _readEventKeys = new List<string>();
+    public List<string> ReadEventKeys { get {return _readEventKeys;}}
 
     readonly int _randomTroopCout = 15;
 
@@ -139,6 +140,32 @@ public class StageInfo
             }
             _currentTroopInfos.Add(troopInfo);
         }
+
+        // 確定中ボス情報
+        int selectIdx = 0;
+        if (MathF.Floor(Turns / 6) > 0)
+        {
+            selectIdx = 6 - (int)MathF.Floor(Turns / 6);
+        }
+        if (selectIdx > 0 && _selectActorIds.Count > selectIdx)
+        {
+            int bossTroopId = _selectActorIds[selectIdx-1] * 100;
+            if (selectIdx == 1)
+            {
+                bossTroopId = _selectActorIds[0] * 100;
+            }
+            troopDatas = DataSystem.Troops.FindAll(a => a.TroopId == bossTroopId);
+        
+            TroopInfo troopInfo = new TroopInfo(bossTroopId);
+            for (int i = 0;i < troopDatas.Count;i++)
+            {
+                EnemiesData.EnemyData enemyData = DataSystem.Enemies.Find(a => a.Id == troopDatas[i].EnemyId);
+                BattlerInfo enemy = new BattlerInfo(enemyData,troopDatas[i].Lv,i,troopDatas[i].Line);
+                troopInfo.AddEnemy(enemy);
+            }
+            _currentTroopInfos[_currentTroopInfos.Count-1] = troopInfo;
+        }
+
         return _currentTroopInfos;
     }
 
@@ -320,5 +347,10 @@ public class StageInfo
     {
         if (_IsSubordinate == false) return;
         _subordinateValue += value;
+    }
+
+    public void AddEventReadFlag(string key)
+    {
+        _readEventKeys.Add(key);
     }
 };

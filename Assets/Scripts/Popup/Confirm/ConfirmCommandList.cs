@@ -26,7 +26,7 @@ public class ConfirmCommandList : ListWindow , IInputHandlerEvent
             horizontalLayoutGroup.spacing = 0;
             horizontalLayoutGroup.padding.left = 120;
         }
-        for (int i = 0; i < ObjectList.Count;i++)
+        for (int i = 0; i < menuCommands.Count;i++)
         {
             var statusCommand = ObjectList[i].GetComponent<ConfirmCommand>();
             statusCommand.SetData(menuCommands[i],i);

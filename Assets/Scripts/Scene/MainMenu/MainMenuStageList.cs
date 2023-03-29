@@ -17,7 +17,7 @@ public class MainMenuStageList: ListWindow , IInputHandlerEvent
     {
         InitializeListView(stages.Count);
         _data = stages;
-        for (int i = 0; i < ObjectList.Count;i++)
+        for (int i = 0; i < stages.Count;i++)
         {
             var stage = ObjectList[i].GetComponent<MainMenuStage>();
             stage.SetData(stages[i],i);

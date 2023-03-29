@@ -21,7 +21,8 @@ public class StagesInfoImporter : AssetPostprocessor {
         Turns,
 		Timing,
 		Type,
-		Param
+		Param,
+		ReadFlag
     }
 	static readonly string ExcelPath = "Assets/Data";
 	static readonly string ExcelName = "Stages.xlsx";
@@ -106,6 +107,10 @@ public class StagesInfoImporter : AssetPostprocessor {
 							EventData.Timing = (EventTiming)Eventrow.GetCell((int)BaseEventColumn.Timing)?.SafeNumericCellValue();
 							EventData.Type = (StageEventType)Eventrow.GetCell((int)BaseEventColumn.Type)?.SafeNumericCellValue();
 							EventData.Param = (int)Eventrow.GetCell((int)BaseEventColumn.Param)?.SafeNumericCellValue();
+							EventData.ReadFlag = (bool)(Eventrow.GetCell((int)BaseEventColumn.ReadFlag)?.SafeNumericCellValue() == 1);
+							
+							EventData.EventKey = EventData.Turns.ToString() + EventData.Timing.ToString() + EventData.Type.ToString() + EventData.Param.ToString();
+
 							StageData.StageEvents.Add(EventData);
 						}
 					}

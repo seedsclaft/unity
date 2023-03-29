@@ -30,7 +30,7 @@ public class BattleModel : BaseModel
     }
     public ActorInfo CurrentActor
     {
-        get {return Actors()[_currentIndex];}
+        get {return PartyMembers()[_currentIndex];}
     }
 
     private BattlerInfo _currentBattler = null;
@@ -43,11 +43,12 @@ public class BattleModel : BaseModel
     public void CreateBattleData()
     {
         _battlers.Clear();
-        for (int i = 0;i < Actors().Count;i++)
+        var battleMembers = PartyMembers();
+        for (int i = 0;i < battleMembers.Count;i++)
         {
-            if (Actors()[i].InBattle == true)
+            if (battleMembers[i].InBattle == true)
             {
-                BattlerInfo battlerInfo = new BattlerInfo(Actors()[i],i);
+                BattlerInfo battlerInfo = new BattlerInfo(battleMembers[i],i);
                 if (CurrentAlcana.AlcanaState != null)
                 {
                     StateInfo stateInfo = CurrentAlcana.AlcanaState;
@@ -246,11 +247,11 @@ public class BattleModel : BaseModel
 
     public void ChangeActorIndex(int value){
         _currentIndex += value;
-        if (_currentIndex > Actors().Count-1){
+        if (_currentIndex > PartyMembers().Count-1){
             _currentIndex = 0;
         } else
         if (_currentIndex < 0){
-            _currentIndex = Actors().Count-1;
+            _currentIndex = PartyMembers().Count-1;
         }
     }
 
@@ -673,7 +674,8 @@ public class BattleModel : BaseModel
         if (actionInfo != null)
         {
             // Mpの支払い
-            CurrentBattler.GainMp(actionInfo.Master.MpCost * -1);
+            CurrentBattler.GainMp(actionInfo.MpCost * -1);
+            CurrentBattler.GainPaybattleMp(actionInfo.MpCost);
             List<ActionResultInfo> actionResultInfos = actionInfo.actionResults;
             for (int i = 0; i < actionResultInfos.Count; i++)
             {

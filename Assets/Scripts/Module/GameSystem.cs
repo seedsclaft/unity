@@ -106,6 +106,7 @@ public class GameSystem : MonoBehaviour
             statusRoot.gameObject.SetActive(true);
             var popupInfo = (StatusViewInfo)viewEvent.templete;
             _statusView.DisplayDecideButton(popupInfo.DisplayDecideButton);
+            _statusView.DisplayBackButton(popupInfo.DisplayBackButton);
             _statusView.DisableStrength(popupInfo.DisableStrength);
             _statusView.SetBackEvent(popupInfo.BackEvent);
             _statusView.SetEvent((type) => updateCommand(type));

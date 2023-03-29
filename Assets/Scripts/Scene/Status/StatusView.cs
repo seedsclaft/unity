@@ -25,6 +25,7 @@ public class StatusView : BaseView
 
     private System.Action _backEvent = null;
     private bool _isDisplayDecide = false;
+    private bool _isDisplayBack = true;
     protected void Awake()
     {
         InitializeInput();
@@ -116,6 +117,7 @@ public class StatusView : BaseView
             var eventData = new StatusViewEvent(CommandType.Back);
             _commandData(eventData);
         });
+        SetActiveBack(_isDisplayBack);
     }
 
     public void CommandBack()
@@ -130,6 +132,17 @@ public class StatusView : BaseView
     {
         _isDisplayDecide = isDisplay;
         decideButton.gameObject.SetActive(isDisplay);
+    }
+
+    public void DisplayBackButton(bool isDisplay)
+    {
+        _isDisplayBack = isDisplay;
+    }
+
+    public new void SetActiveBack(bool IsActive)
+    {
+        if (_isDisplayBack == false) IsActive = false;
+        base.SetActiveBack(IsActive);
     }
 
     public void DisableStrength(bool IsDisable)
@@ -345,6 +358,8 @@ public class StatusViewInfo{
     public System.Action BackEvent {get {return _backEvent;}}
     private bool _displayDecideButton = false;
     public bool DisplayDecideButton {get {return _displayDecideButton;}}
+    private bool _displayBackButton = true;
+    public bool DisplayBackButton {get {return _displayBackButton;}}
     private bool _disableStrength = false;
     public bool DisableStrength {get {return _disableStrength;}}
     
@@ -358,6 +373,11 @@ public class StatusViewInfo{
         _displayDecideButton = isDisplay;
     }
     
+    public void SetDisplayBackButton(bool isDisplay)
+    {
+        _displayBackButton = isDisplay;
+    }
+
     public void SetDisableStrength(bool IsDisable)
     {
         _disableStrength = IsDisable;

@@ -6,7 +6,7 @@ public class StrategyModel : BaseModel
 {
     private List<ActorInfo> StrategyActors()
     {
-        return Actors();
+        return StageMembers();
     }
 
     public List<ActorInfo> TacticsActors()
@@ -158,7 +158,7 @@ public class StrategyModel : BaseModel
     public void EndStrategy()
     {
         CurrentAlcana.UseAlcana(false);
-        foreach (var actorInfo in Actors())
+        foreach (var actorInfo in StageMembers())
         {
             actorInfo.ChangeTacticsCostRate(1);
         }

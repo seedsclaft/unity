@@ -11,10 +11,8 @@ public class MainMenuActorList: ListWindow , IInputHandlerEvent
     public void Initialize(List<ActorInfo> actors,System.Action<ActorInfo> callEvent)
     {
         InitializeListView(actors.Count);
-        for (var i = 0; i < actors.Count;i++){
-            _data.Add(actors[i]);
-        }
-        for (int i = 0; i < ObjectList.Count;i++)
+        _data = actors;
+        for (int i = 0; i < _data.Count;i++)
         {
             var actor = ObjectList[i].GetComponent<MainMenuActor>();
             actor.SetData(actors[i]);

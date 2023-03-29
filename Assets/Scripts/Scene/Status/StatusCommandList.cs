@@ -17,10 +17,8 @@ public class StatusCommandList : ListWindow , IInputHandlerEvent
     public void Initialize(List<SystemData.MenuCommandData> menuCommands ,System.Action<StatusComandType> callEvent)
     {
         InitializeListView(menuCommands.Count);
-        for (var i = 0; i < menuCommands.Count;i++){
-            _data.Add(menuCommands[i]);
-        }
-        for (int i = 0; i < ObjectList.Count;i++)
+        _data = menuCommands;
+        for (int i = 0; i < menuCommands.Count;i++)
         {
             var statusCommand = ObjectList[i].GetComponent<StatusCommand>();
             statusCommand.SetData(menuCommands[i],i);
@@ -41,7 +39,7 @@ public class StatusCommandList : ListWindow , IInputHandlerEvent
 
     public void SetDisable(SystemData.MenuCommandData menuCommandData,bool IsDisable)
     {
-        for (int i = 0; i < ObjectList.Count;i++)
+        for (int i = 0; i < _data.Count;i++)
         {
             var statusCommand = ObjectList[i].GetComponent<StatusCommand>();
             statusCommand.SetDisable(menuCommandData,IsDisable);

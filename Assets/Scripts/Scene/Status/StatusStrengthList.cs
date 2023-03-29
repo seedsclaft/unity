@@ -26,7 +26,7 @@ public class StatusStrengthList : ListWindow , IInputHandlerEvent
         _actorInfo = actorInfo;
         _statusStrengths.Clear();
         InitializeListView(rows);
-        for (int i = 0; i < ObjectList.Count;i++)
+        for (int i = 0; i < rows;i++)
         {
             var statusStrength = ObjectList[i].GetComponent<StatusStrength>();
             statusStrength.SetData(actorInfo,i);

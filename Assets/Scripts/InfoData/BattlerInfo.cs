@@ -49,6 +49,7 @@ public class BattlerInfo
     
     private int _chainSuccessCount = 0;
     public int ChainSuccessCount {get {return _chainSuccessCount;} }
+    private int _payBattleMp = 0;
     private int _lastTargetIndex = 0;
     public void SetLastTargetIndex(int index){
         _lastTargetIndex = index;
@@ -490,6 +491,11 @@ public class BattlerInfo
         _chainSuccessCount += value;
     }
 
+    public void GainPaybattleMp(int value)
+    {
+        _payBattleMp += value;
+    }
+
     public void TurnEnd()
     {
         _turnCount += 1;
@@ -523,9 +529,9 @@ public class BattlerInfo
                             triggeredSkills.Add(skillInfo);
                         }
                     }
-                    if (triggerDatas[j].TriggerType == TriggerType.AfterMp)
+                    if (triggerDatas[j].TriggerType == TriggerType.PayBattleMp)
                     {
-                        if ( TriggerdAfterMpSkillInfos(triggerDatas[j],actionInfo) )
+                        if ( TriggerdPayBattleMpSkillInfos(triggerDatas[j],actionInfo) )
                         {
                             triggeredSkills.Add(skillInfo);
                         }
@@ -575,23 +581,12 @@ public class BattlerInfo
         return IsTriggered;
     }
 
-    private bool TriggerdAfterMpSkillInfos(SkillsData.TriggerData triggerData,ActionInfo actionInfo)
+    private bool TriggerdPayBattleMpSkillInfos(SkillsData.TriggerData triggerData,ActionInfo actionInfo)
     {
         bool IsTriggered = false;
-        if (triggerData.Param1 == Mp)
+        if (triggerData.Param1 >= _payBattleMp)
         {
-            if (actionInfo.SubjectIndex == Index && actionInfo.MpCost > 0)
-            {
-                IsTriggered = true;
-            } else
-            {
-                var results = actionInfo.actionResults.FindAll(a => a.TargetIndex == Index);
-                var find = results.Find(a => a.MpDamage > 0);
-                if (find != null)
-                {              
-                    IsTriggered = true;
-                }
-            }
+            IsTriggered = true;
         }
         return IsTriggered;
     }

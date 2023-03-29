@@ -45,9 +45,14 @@ public class StatusModel : BaseModel
         get { return DataSystem.StatusCommand;}
     }
     
-    public void MakeStageData()
+    public void SelectAddActor()
     {
-        GameSystem.CurrentData.MakeStageData(CurrentActor.ActorId);
+        if (CurrentStage == null)
+        {
+            GameSystem.CurrentData.MakeStageData(CurrentActor.ActorId);
+        } else{
+            CurrentStage.AddSelectActorId(CurrentActor.ActorId);
+        }
     }
 
     public bool EnableParamUp(StatusParamType statusParamType)
