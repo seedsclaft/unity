@@ -92,7 +92,7 @@ public class TacticsModel : BaseModel
 
     public void ResetTempData(TacticsComandType tacticsComandType)
     {
-        if (_tempTacticsData != null)
+        if (_tempTacticsData.Count > 0)
         {
             List<ActorInfo> removeActors = new List<ActorInfo>();
             
@@ -100,8 +100,11 @@ public class TacticsModel : BaseModel
             {
                 if (_tempTacticsData.Find(a => a.ActorId == StageMembers()[i].ActorId) == null)
                 {
-                    PartyInfo.ChangeCurrency(Currency + StageMembers()[i].TacticsCost);
-                    StageMembers()[i].ClearTacticsCommand();
+                    if (StageMembers()[i].TacticsComandType == tacticsComandType)
+                    {
+                        PartyInfo.ChangeCurrency(Currency + StageMembers()[i].TacticsCost);
+                        StageMembers()[i].ClearTacticsCommand();
+                    }
                 }
             }
             _tempTacticsData.Clear();

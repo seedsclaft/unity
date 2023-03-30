@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 public class StatusModel : BaseModel
 {
+    private int _useNuminous = 0;
     private int _currentIndex = 0; 
     public int CurrentIndex
     {
@@ -57,7 +58,8 @@ public class StatusModel : BaseModel
 
     public bool EnableParamUp(StatusParamType statusParamType)
     {
-        return CurrentActor.Sp >= CurrentActor.UsePoint.GetParameter(statusParamType);
+        int Numinous = Currency - _useNuminous;
+        return (CurrentActor.Sp + Numinous) >= CurrentActor.UsePoint.GetParameter(statusParamType);
     }
 
     public bool EnableParamMinus(StatusParamType statusParamType)
@@ -69,17 +71,48 @@ public class StatusModel : BaseModel
     {
         if (value > 0)
         {
-            CurrentActor.ChangeSp(CurrentActor.Sp - CurrentActor.UsePointCost(statusParamType));
+            int Cost = CurrentActor.UsePointCost(statusParamType);
+            if (CurrentActor.Sp >= Cost)
+            {
+                CurrentActor.ChangeSp(CurrentActor.Sp - Cost);
+            }else{
+                int CostNuminous = Cost - CurrentActor.Sp;
+                _useNuminous += CostNuminous;
+                CurrentActor.ChangeSp(0);
+            }
             CurrentActor.TempStatus.AddParameter(statusParamType,value);
         } else
         {
             CurrentActor.TempStatus.AddParameter(statusParamType,value);
-            CurrentActor.ChangeSp(CurrentActor.Sp + CurrentActor.UsePointCost(statusParamType));          
+            int BackPoint = CurrentActor.UsePointCost(statusParamType);
+            if (_useNuminous >= BackPoint)
+            {
+                _useNuminous -= BackPoint;
+            } else
+            {
+                CurrentActor.ChangeSp((CurrentActor.Sp - _useNuminous) + BackPoint);
+                _useNuminous = 0;
+            }
         }
     }
 
     public void DecideStrength()
     {
-        CurrentActor.DecideStrength();
+        CurrentActor.DecideStrength(_useNuminous);
+        PartyInfo.ChangeCurrency(Currency - _useNuminous);
+        _useNuminous = 0;
+    }
+
+    public void StrengthReset()
+    {
+        int Numinous = CurrentActor.Numinous;
+        PartyInfo.ChangeCurrency(Currency + Numinous);
+        CurrentActor.StrengthReset();
+        _useNuminous = 0;
+    }
+
+    public int StrengthNuminous()
+    {
+        return Currency - _useNuminous;
     }
 }

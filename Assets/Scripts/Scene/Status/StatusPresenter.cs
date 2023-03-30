@@ -72,6 +72,11 @@ public class StatusPresenter
             StatusParamType statusId = (StatusParamType)viewEvent.templete;
             CommandSelectStrengthMinus(statusId);
         }
+        
+        if (viewEvent.commandType == Status.CommandType.SelectStrengthReset)
+        {
+            CommandSelectStrengthReset();
+        }
         if (viewEvent.commandType == Status.CommandType.StrengthClose)
         {
             CommandStrengthClose((ConfirmComandType)viewEvent.templete);
@@ -144,24 +149,40 @@ public class StatusPresenter
     private void updatePopup(ConfirmComandType confirmComandType)
     {
         _view.CommandConfirmClose();
-        if (confirmComandType == ConfirmComandType.Yes)
+        if (_popupCommandType == Status.CommandType.SelectStrengthReset)
         {
-            if (_popupCommandType == Status.CommandType.DecideStage)
+            if (confirmComandType == ConfirmComandType.Yes)
             {
-                _model.SelectAddActor();
-                _view.CommandStatusClose();
-                _view.CommandSceneChange(Scene.Tactics);
+                _model.StrengthReset();
+                _view.SetActorInfo(_model.CurrentActor);
+                CommandRefresh();
+                _view.ActivateStrengthList();
+            } else
+            {
+                _view.ActivateStrengthList();
             }
-            if (_popupCommandType == Status.CommandType.StrengthClose)
+        }
+        
+        if (_popupCommandType == Status.CommandType.StrengthClose)
+        {
+            if (confirmComandType == ConfirmComandType.Yes)
             {
                 _model.DecideStrength();
                 _view.SetActorInfo(_model.CurrentActor);
                 CommandRefresh();
-            }
-        } else{
-            if (_popupCommandType == Status.CommandType.StrengthClose)
+                _view.ActivateStrengthList();
+            } else
             {
                 _view.ActivateStrengthList();
+            }
+        }
+        if (_popupCommandType == Status.CommandType.DecideStage)
+        {
+            if (confirmComandType == ConfirmComandType.Yes)
+            {
+                _model.SelectAddActor();
+                _view.CommandStatusClose();
+                _view.CommandSceneChange(Scene.Tactics);
             } else{
                 _view.ActivateCommandList();
             }
@@ -213,6 +234,15 @@ public class StatusPresenter
         CommandRefresh();
     }
 
+    private void CommandSelectStrengthReset()
+    {
+        string text = DataSystem.System.GetTextData(2010).Text;
+        var popupInfo = new ConfirmInfo(text,(menuCommandInfo) => updatePopup((ConfirmComandType)menuCommandInfo));
+        _view.CommandCallConfirm(popupInfo);
+        _view.DeactivateStrengthList();
+        _popupCommandType = Status.CommandType.SelectStrengthReset;
+    }
+
     private void CommandStrengthClose(ConfirmComandType confirmComandType)
     {
         if (confirmComandType == ConfirmComandType.Yes)
@@ -239,6 +269,6 @@ public class StatusPresenter
 
     private void CommandRefresh()
     {
-        _view.CommandRefresh(_model.CurrentActor.Sp);
+        _view.CommandRefresh(_model.CurrentActor.Sp,_model.StrengthNuminous());
     }
 }

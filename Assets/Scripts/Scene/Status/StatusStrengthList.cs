@@ -12,6 +12,7 @@ public class StatusStrengthList : ListWindow , IInputHandlerEvent
     [SerializeField] private int cols = 0;
 
     [SerializeField] private TextMeshProUGUI remainSp;
+    [SerializeField] private TextMeshProUGUI remainNuminous;
     [SerializeField] private TacticsCommandList tacticsCommandList;
     private System.Action<TacticsComandType> _confirmEvent = null;
     private ActorInfo _actorInfo = null;
@@ -21,7 +22,7 @@ public class StatusStrengthList : ListWindow , IInputHandlerEvent
         get {return Index;}
     }
 
-    public void Initialize(ActorInfo actorInfo ,System.Action<int> plusEvent,System.Action<int> minusEvent)
+    public void Initialize(ActorInfo actorInfo ,System.Action<int> plusEvent,System.Action<int> minusEvent,System.Action resetEvent)
     {
         _actorInfo = actorInfo;
         _statusStrengths.Clear();
@@ -36,7 +37,7 @@ public class StatusStrengthList : ListWindow , IInputHandlerEvent
             statusStrength.SetSelectHandler((data) => UpdateSelectIndex(data));
             _statusStrengths.Add(statusStrength);
         }
-        SetInputHandler((a) => CallInputHandler(a,plusEvent,minusEvent));
+        SetInputHandler((a) => CallInputHandler(a,plusEvent,minusEvent,resetEvent));
         UpdateAllItems();
         UpdateSelectIndex(0);
     }
@@ -48,9 +49,10 @@ public class StatusStrengthList : ListWindow , IInputHandlerEvent
         _confirmEvent = callEvent;
     }
 
-    public void Refresh(int sp)
+    public void Refresh(int sp,int numinous)
     {
         remainSp.text = sp.ToString();
+        remainNuminous.text = numinous.ToString();
         UpdateAllItems();
     }
 
@@ -61,7 +63,7 @@ public class StatusStrengthList : ListWindow , IInputHandlerEvent
         }
     }
     
-    private void CallInputHandler(InputKeyType keyType,System.Action<int> plusEvent,System.Action<int> minusEvent)
+    private void CallInputHandler(InputKeyType keyType,System.Action<int> plusEvent,System.Action<int> minusEvent,System.Action resetEvent)
     {
         if (keyType == InputKeyType.Decide)
         {
@@ -109,6 +111,10 @@ public class StatusStrengthList : ListWindow , IInputHandlerEvent
             } else{
                 minusEvent(_statusStrengths[Index].listIndex());
             }
+        }
+        if (keyType == InputKeyType.Option1)
+        {
+            resetEvent();
         }
     }
 }

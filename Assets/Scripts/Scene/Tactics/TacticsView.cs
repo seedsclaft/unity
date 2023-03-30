@@ -467,6 +467,24 @@ public class TacticsView : BaseView
             _lastCallEventType = CommandType.None;
         }
     }
+
+    public void ActivateTacticsCommand()
+    {
+        if (tacticsTrainList.gameObject.activeSelf) tacticsTrainList.Activate();
+        if (tacticsAlchemyList.gameObject.activeSelf) tacticsAlchemyList.Activate();
+        if (tacticsRecoveryList.gameObject.activeSelf) tacticsRecoveryList.Activate();
+        if (tacticsResourceList.gameObject.activeSelf) tacticsResourceList.Activate();
+        if (tacticsBattleList.gameObject.activeSelf) tacticsBattleList.Activate();
+    }
+
+    public void DeactivateTacticsCommand()
+    {
+        if (tacticsTrainList.gameObject.activeSelf) tacticsTrainList.Deactivate();
+        if (tacticsAlchemyList.gameObject.activeSelf) tacticsAlchemyList.Deactivate();
+        if (tacticsRecoveryList.gameObject.activeSelf) tacticsRecoveryList.Deactivate();
+        if (tacticsResourceList.gameObject.activeSelf) tacticsResourceList.Deactivate();
+        if (tacticsBattleList.gameObject.activeSelf) tacticsBattleList.Deactivate();
+    }
 }
 
 namespace Tactics

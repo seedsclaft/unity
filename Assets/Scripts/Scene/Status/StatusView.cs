@@ -170,7 +170,8 @@ public class StatusView : BaseView
     {
         statusStrengthList.Initialize(actorInfo,
             (actorinfo) => CallStrengthPlus(actorinfo),
-            (actorinfo) => CallStrengthMinus(actorinfo)
+            (actorinfo) => CallStrengthMinus(actorinfo),
+            () => CallStatusReset()
         );
         SetInputHandler(statusStrengthList.GetComponent<IInputHandlerEvent>());
         statusStrengthList.InitializeConfirm(confirmCommands,(confirmCommands) => CallStrengthCommand(confirmCommands));
@@ -308,6 +309,13 @@ public class StatusView : BaseView
         _commandData(eventData);
     }
 
+    private void CallStatusReset()
+    {
+
+        var eventData = new StatusViewEvent(CommandType.SelectStrengthReset);
+        _commandData(eventData);
+    }
+
     public void ShowStrength()
     {
         statusStrengthList.gameObject.SetActive(true);
@@ -318,9 +326,9 @@ public class StatusView : BaseView
         statusStrengthList.gameObject.SetActive(false);
     }
 
-    public void CommandRefresh(int remainSp)
+    public void CommandRefresh(int remainSp,int remainNuminous)
     {
-        statusStrengthList.Refresh(remainSp);
+        statusStrengthList.Refresh(remainSp,remainNuminous);
     }
 }
 
@@ -336,6 +344,7 @@ namespace Status
         RightActor,
         SelectStrengthPlus,
         SelectStrengthMinus,
+        SelectStrengthReset,
         StrengthClose,
         DecideStage,
         Back

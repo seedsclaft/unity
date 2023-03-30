@@ -48,6 +48,12 @@ MonoBehaviour:
       Type: 3
       Param: 0
       ReadFlag: 0
+    - EventKey: 2StartTacticsCommandDisable0
+      Turns: 2
+      Timing: 1
+      Type: 1
+      Param: 0
+      ReadFlag: 0
     - EventKey: 2StartTacticsCommandDisable1
       Turns: 2
       Timing: 1
@@ -66,44 +72,8 @@ MonoBehaviour:
       Type: 1
       Param: 3
       ReadFlag: 0
-    - EventKey: 2StartTacticsCommandDisable4
-      Turns: 2
-      Timing: 1
-      Type: 1
-      Param: 4
-      ReadFlag: 0
     - EventKey: 2StartTacticsNeedAllTactics0
       Turns: 2
-      Timing: 1
-      Type: 3
-      Param: 0
-      ReadFlag: 0
-    - EventKey: 3StartTacticsCommandDisable1
-      Turns: 3
-      Timing: 1
-      Type: 1
-      Param: 1
-      ReadFlag: 0
-    - EventKey: 3StartTacticsCommandDisable2
-      Turns: 3
-      Timing: 1
-      Type: 1
-      Param: 2
-      ReadFlag: 0
-    - EventKey: 3StartTacticsCommandDisable3
-      Turns: 3
-      Timing: 1
-      Type: 1
-      Param: 3
-      ReadFlag: 0
-    - EventKey: 3StartTacticsCommandDisable4
-      Turns: 3
-      Timing: 1
-      Type: 1
-      Param: 4
-      ReadFlag: 0
-    - EventKey: 3StartTacticsNeedAllTactics0
-      Turns: 3
       Timing: 1
       Type: 3
       Param: 0

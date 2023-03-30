@@ -62,6 +62,8 @@ public class ActorInfo
 // Status
     private int _sp = 0;
     public int Sp {get {return _sp;}}
+    private int _numinous = 0;
+    public int Numinous {get {return _numinous;}}
     private StatusInfo _plusStatus;
     private StatusInfo _tempStatus;
     public StatusInfo TempStatus {get {return _tempStatus;}}
@@ -69,13 +71,18 @@ public class ActorInfo
     public ActorInfo(ActorsData.ActorData actorData)
     {
         _actorId = actorData.Id;
-        _baseStatus = actorData.InitStatus;
-        _usePoint = actorData.NeedStatus;
         _attribute = actorData.Attribute;
-        _currentHp = _baseStatus.Hp;
-        _currentMp = _baseStatus.Mp;
         _level = actorData.InitLv;
         _sp = 10;
+        _usePoint = actorData.NeedStatus; 
+        SetInitialParameter(actorData);
+        _currentHp = _baseStatus.Hp;
+        _currentMp = _baseStatus.Mp;   
+    }
+
+    private void SetInitialParameter(ActorsData.ActorData actorData)
+    {
+        _baseStatus = actorData.InitStatus;
         _plusStatus = new StatusInfo();
         _plusStatus.SetParameter(actorData.PlusStatus.Hp,actorData.PlusStatus.Mp,actorData.PlusStatus.Atk,actorData.PlusStatus.Def,actorData.PlusStatus.Spd);
         _tempStatus = new StatusInfo();
@@ -160,7 +167,7 @@ public class ActorInfo
         return useCost;
     }
 
-    public void DecideStrength()
+    public void DecideStrength(int useNuminous)
     {
         int addHp = TempStatus.GetParameter(StatusParamType.Hp);
         _plusStatus.AddParameter(StatusParamType.Hp,addHp);
@@ -180,6 +187,17 @@ public class ActorInfo
             CurrentParameter(StatusParamType.Spd)
         );
         TempStatus.Clear();
+        _numinous += useNuminous;
+    }
+
+    public void StrengthReset()
+    {
+        ActorsData.ActorData actorData = DataSystem.Actors.Find(a => a.Id == _actorId);
+        SetInitialParameter(actorData);
+        ChangeHp(_currentHp);
+        ChangeMp(_currentMp);
+        ChangeSp(_level * 10);
+        _numinous = 0;
     }
 
 
@@ -191,11 +209,17 @@ public class ActorInfo
     public void ChangeHp(int hp)
     {
         _currentHp = hp;
+        if (_currentHp > CurrentParameter(StatusParamType.Hp)){
+            _currentHp = CurrentParameter(StatusParamType.Hp);
+        }
     }
 
     public void ChangeMp(int mp)
     {
         _currentMp = mp;
+        if (_currentMp > CurrentParameter(StatusParamType.Mp)){
+            _currentMp = CurrentParameter(StatusParamType.Mp);
+        }
     }
     
     public void ChangeLost(bool isLost)

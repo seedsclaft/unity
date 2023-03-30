@@ -250,10 +250,11 @@ public class TacticsPresenter
             _model.CurrentActorId = actorId;
             _model.CommandType = tacticsComandType;
             TextData mainTextData = DataSystem.System.GetTextData(1030);
-            TextData textData = DataSystem.System.GetTextData((int)tacticsComandType);
+            TextData textData = DataSystem.System.GetTextData((int)_model.TacticsActor(actorId).TacticsComandType);
             string mainText = mainTextData.Text.Replace("\\d",textData.Text);
             var popupInfo = new ConfirmInfo(_model.TacticsActor(actorId).Master.Name + mainText,(menuCommandInfo) => UpdatePopup((ConfirmComandType)menuCommandInfo));
             _view.CommandCallConfirm(popupInfo);
+            _view.DeactivateTacticsCommand();
             return true;
         }
         return false;
@@ -267,6 +268,7 @@ public class TacticsPresenter
             if (_model.CommandType == TacticsComandType.Train)
             {
                 _model.ResetTacticsCost(actorId);
+                _view.ActivateTacticsCommand();
                 CommandSelectActorTrain(actorId);
             }
             if (_model.CommandType == TacticsComandType.Alchemy)
@@ -277,16 +279,19 @@ public class TacticsPresenter
             if (_model.CommandType == TacticsComandType.Recovery)
             {
                 _model.ResetTacticsCost(actorId);
+                _view.ActivateTacticsCommand();
                 CommandSelectActorRecovery(actorId);
             }
             if (_model.CommandType == TacticsComandType.Battle)
             {
                 _model.ResetTacticsCost(actorId);
+                _view.ActivateTacticsCommand();
                 CommandSelectActorBattle(actorId);
             }
             if (_model.CommandType == TacticsComandType.Resource)
             {
                 _model.ResetTacticsCost(actorId);
+                _view.ActivateTacticsCommand();
                 CommandSelectActorResource(actorId);
             }
             if (_model.CommandType == TacticsComandType.Turnend)
@@ -299,6 +304,10 @@ public class TacticsPresenter
             {
                 _view.ShowCommandList();
             }
+        }
+        if (confirmComandType == ConfirmComandType.No && _model.CommandType != TacticsComandType.Turnend)
+        {        
+            _view.ActivateTacticsCommand();
         }
         _view.CommandConfirmClose();
     }
@@ -372,6 +381,7 @@ public class TacticsPresenter
         {
             _model.SetTempData(tacticsComandType);
             _view.ShowTrainList();
+            _view.ActivateTacticsCommand();
             _view.SetActiveBack(false);
             _view.HideCommandList();
             _backCommand = Tactics.CommandType.None;
@@ -380,6 +390,7 @@ public class TacticsPresenter
         {
             _model.SetTempData(tacticsComandType);
             _view.ShowAlchemyList();
+            _view.ActivateTacticsCommand();
             _view.HideSkillAlchemyList();
             _view.SetActiveBack(false);
             _view.HideCommandList();
@@ -389,6 +400,7 @@ public class TacticsPresenter
         {
             _model.SetTempData(tacticsComandType);
             _view.ShowRecoveryList();
+            _view.ActivateTacticsCommand();
             _view.SetActiveBack(false);
             _view.HideCommandList();
             _backCommand = Tactics.CommandType.None;
@@ -406,6 +418,7 @@ public class TacticsPresenter
         {
             _model.SetTempData(tacticsComandType);
             _view.ShowResourceList();
+            _view.ActivateTacticsCommand();
             _view.SetActiveBack(false);
             _view.HideCommandList();
             _backCommand = Tactics.CommandType.None;
@@ -415,6 +428,7 @@ public class TacticsPresenter
             _model.SetStageActor();
             StatusViewInfo statusViewInfo = new StatusViewInfo(() => {
                 _view.CommandStatusClose();
+                _view.SetNuminous(_model.Currency);
                 CommandShowUi();
             });
             CommandHideUi();
@@ -494,6 +508,7 @@ public class TacticsPresenter
         _view.HideSkillAlchemyList();
         _view.SetActiveBack(false);
         _view.ShowAlchemyList();
+        _view.ActivateTacticsCommand();
         CommandRefresh();
     }
 
@@ -548,6 +563,7 @@ public class TacticsPresenter
         _model.SetTempData(TacticsComandType.Battle);
         _model.CurrentEnemyIndex = enemyIndex;
         _view.ShowBattleList();
+        _view.ActivateTacticsCommand();
         _view.HideEnemyList();
         _view.SetActiveBack(false);
         SoundManager.Instance.PlayStaticSe(SEType.Decide);
