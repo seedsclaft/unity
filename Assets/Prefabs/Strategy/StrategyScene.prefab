@@ -51,6 +51,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e93cbabf2965604fa8a9173b0116522, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isScrollList: 0
   horizontal: 1
   scrollRect: {fileID: 2983796649019580252}
   itemPrefab: {fileID: 2067777905309005909, guid: 7f16ce87c45057340ae8b484e81013e9,
@@ -109,6 +110,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 372065ab05427f749ac23e06a82ff321, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isScrollList: 0
   horizontal: 1
   scrollRect: {fileID: 380263536244888802}
   itemPrefab: {fileID: 963735004683801063, guid: f81fc10b69d708f4fb1d5f3d45cec6e1,
@@ -2609,6 +2611,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e93cbabf2965604fa8a9173b0116522, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isScrollList: 1
   horizontal: 1
   scrollRect: {fileID: 2556443680556233826}
   itemPrefab: {fileID: 2067777905309005909, guid: 7f16ce87c45057340ae8b484e81013e9,
@@ -3847,6 +3850,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3f792cc0ef0b4248bfbe7d2db796789, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isScrollList: 1
   horizontal: 0
   scrollRect: {fileID: 449765015497031103}
   itemPrefab: {fileID: 6696074532365261693, guid: 9b6cb7964ebe3dd488cb788b05699e4b,
@@ -4956,12 +4960,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Padding:
-    m_Left: -40
+    m_Left: 0
     m_Right: 0
     m_Top: 0
     m_Bottom: 0
   m_ChildAlignment: 3
-  m_Spacing: 40
+  m_Spacing: 0
   m_ChildForceExpandWidth: 0
   m_ChildForceExpandHeight: 0
   m_ChildControlWidth: 0
@@ -6168,7 +6172,7 @@ PrefabInstance:
     - target: {fileID: 3483328398092755893, guid: f81fc10b69d708f4fb1d5f3d45cec6e1,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -40
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3483328398092755893, guid: f81fc10b69d708f4fb1d5f3d45cec6e1,
         type: 3}

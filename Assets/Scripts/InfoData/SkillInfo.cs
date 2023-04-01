@@ -9,14 +9,16 @@ public class SkillInfo
     private int _id;
     public int Id {get {return _id;}}
     
-    private bool _enabel;
-    public bool Enabel {get {return _enabel;}}
+    private bool _enable;
+    public bool Enable {get {return _enable;}}
     private bool _interrupt;
     public bool Interrupt {get {return _interrupt;}}
+    private bool _forget;
+    public bool Forget {get {return _forget;}}
     public AttributeType Attribute {get {return Master.Attribute;}}
     
     private int _learingCost;
-    public int LearingCost {get {return _learingCost;} set {_learingCost = value;}}
+    public int LearingCost {get {return _learingCost;}}
 
     private List<SkillsData.TriggerData> _triggerDatas = new List<SkillsData.TriggerData>();
     public List<SkillsData.TriggerData> TriggerDatas {get {return _triggerDatas;}}
@@ -40,19 +42,24 @@ public class SkillInfo
         _weight = weight;
     }
 
-    public void SetEnable()
+    public void SetEnable(bool IsEnable)
     {
-        _enabel = true;
-    }
-
-    public void SetDisable()
-    {
-        _enabel = false;
+        _enable = IsEnable;
     }
 
     public void SetInterrupt(bool IsInterrupt)
     {
         _interrupt = IsInterrupt;
+    }
+    
+    public void SetForget(bool forget)
+    {
+        _forget = forget;
+    }
+
+    public void SetLearingCost(int learningCost)
+    {
+        _learingCost = learningCost;
     }
 
     public bool CanUseTrigger(BattlerInfo battlerInfo,List<BattlerInfo> party,List<BattlerInfo> troops)

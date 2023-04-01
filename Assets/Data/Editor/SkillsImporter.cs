@@ -21,6 +21,7 @@ public class SkillsImporter : AssetPostprocessor {
 		_AnimationType,
 		DamageTiming,
 		MpCost,
+		Rank,
 		Attribute,
 		_Attribute,
 		SkillType,
@@ -125,6 +126,7 @@ public class SkillsImporter : AssetPostprocessor {
                     SkillData.AnimationType = (AnimationType)Baserow.GetCell((int)BaseColumn.AnimationType)?.NumericCellValue;
                     SkillData.DamageTiming = (int)Baserow.GetCell((int)BaseColumn.DamageTiming)?.NumericCellValue;
                     SkillData.MpCost = (int)Baserow.GetCell((int)BaseColumn.MpCost)?.NumericCellValue;
+					SkillData.Rank = (int)Baserow.GetCell((int)BaseColumn.Rank)?.NumericCellValue;
 					SkillData.Attribute = (AttributeType)Baserow.GetCell((int)BaseColumn.Attribute)?.NumericCellValue;
 					SkillData.SkillType = (SkillType)Baserow.GetCell((int)BaseColumn.SkillType)?.NumericCellValue;
                     SkillData.TargetType = (TargetType)Baserow.GetCell((int)BaseColumn.TargetType)?.NumericCellValue;

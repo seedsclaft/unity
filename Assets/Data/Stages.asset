@@ -48,12 +48,6 @@ MonoBehaviour:
       Type: 3
       Param: 0
       ReadFlag: 0
-    - EventKey: 2StartTacticsCommandDisable0
-      Turns: 2
-      Timing: 1
-      Type: 1
-      Param: 0
-      ReadFlag: 0
     - EventKey: 2StartTacticsCommandDisable1
       Turns: 2
       Timing: 1
@@ -72,10 +66,52 @@ MonoBehaviour:
       Type: 1
       Param: 3
       ReadFlag: 0
+    - EventKey: 2StartTacticsCommandDisable4
+      Turns: 2
+      Timing: 1
+      Type: 1
+      Param: 4
+      ReadFlag: 0
     - EventKey: 2StartTacticsNeedAllTactics0
       Turns: 2
       Timing: 1
       Type: 3
+      Param: 0
+      ReadFlag: 0
+    - EventKey: 3StartTacticsCommandDisable0
+      Turns: 3
+      Timing: 1
+      Type: 1
+      Param: 0
+      ReadFlag: 0
+    - EventKey: 3StartTacticsCommandDisable1
+      Turns: 3
+      Timing: 1
+      Type: 1
+      Param: 1
+      ReadFlag: 0
+    - EventKey: 3StartTacticsCommandDisable2
+      Turns: 3
+      Timing: 1
+      Type: 1
+      Param: 2
+      ReadFlag: 0
+    - EventKey: 3StartTacticsCommandDisable3
+      Turns: 3
+      Timing: 1
+      Type: 1
+      Param: 3
+      ReadFlag: 0
+    - EventKey: 3StartTacticsNeedAllTactics0
+      Turns: 3
+      Timing: 1
+      Type: 3
+      Param: 0
+      ReadFlag: 0
+    - EventKey: 4StartTacticsCommandDisable0
+      Turns: 4
+      Timing: 1
+      Type: 1
       Param: 0
       ReadFlag: 0
     - EventKey: 4StartTacticsCommandDisable1
@@ -90,17 +126,17 @@ MonoBehaviour:
       Type: 1
       Param: 2
       ReadFlag: 0
-    - EventKey: 4StartTacticsCommandDisable3
-      Turns: 4
-      Timing: 1
-      Type: 1
-      Param: 3
-      ReadFlag: 0
     - EventKey: 4StartTacticsCommandDisable4
       Turns: 4
       Timing: 1
       Type: 1
       Param: 4
+      ReadFlag: 0
+    - EventKey: 4StartTacticsTutorialBattle0
+      Turns: 4
+      Timing: 1
+      Type: 2
+      Param: 0
       ReadFlag: 0
     - EventKey: 4StartTacticsNeedAllTactics0
       Turns: 4
@@ -108,96 +144,30 @@ MonoBehaviour:
       Type: 3
       Param: 0
       ReadFlag: 0
-    - EventKey: 5StartTacticsCommandDisable0
+    - EventKey: 5StartTacticsSelectAddActor1
       Turns: 5
-      Timing: 1
-      Type: 1
-      Param: 0
-      ReadFlag: 0
-    - EventKey: 5StartTacticsCommandDisable1
-      Turns: 5
-      Timing: 1
-      Type: 1
-      Param: 1
-      ReadFlag: 0
-    - EventKey: 5StartTacticsCommandDisable2
-      Turns: 5
-      Timing: 1
-      Type: 1
-      Param: 2
-      ReadFlag: 0
-    - EventKey: 5StartTacticsCommandDisable3
-      Turns: 5
-      Timing: 1
-      Type: 1
-      Param: 3
-      ReadFlag: 0
-    - EventKey: 5StartTacticsNeedAllTactics0
-      Turns: 5
-      Timing: 1
-      Type: 3
-      Param: 0
-      ReadFlag: 0
-    - EventKey: 6StartTacticsCommandDisable0
-      Turns: 6
-      Timing: 1
-      Type: 1
-      Param: 0
-      ReadFlag: 0
-    - EventKey: 6StartTacticsCommandDisable1
-      Turns: 6
-      Timing: 1
-      Type: 1
-      Param: 1
-      ReadFlag: 0
-    - EventKey: 6StartTacticsCommandDisable2
-      Turns: 6
-      Timing: 1
-      Type: 1
-      Param: 2
-      ReadFlag: 0
-    - EventKey: 6StartTacticsCommandDisable4
-      Turns: 6
-      Timing: 1
-      Type: 1
-      Param: 4
-      ReadFlag: 0
-    - EventKey: 6StartTacticsTutorialBattle0
-      Turns: 6
-      Timing: 1
-      Type: 2
-      Param: 0
-      ReadFlag: 0
-    - EventKey: 6StartTacticsNeedAllTactics0
-      Turns: 6
-      Timing: 1
-      Type: 3
-      Param: 0
-      ReadFlag: 0
-    - EventKey: 7StartTacticsIsSubordinate1
-      Turns: 7
-      Timing: 1
-      Type: 4
-      Param: 1
-      ReadFlag: 0
-    - EventKey: 7StartTacticsIsAlcana1
-      Turns: 7
-      Timing: 1
-      Type: 5
-      Param: 1
-      ReadFlag: 0
-    - EventKey: 8StartTacticsSelectAddActor1
-      Turns: 8
       Timing: 1
       Type: 6
       Param: 1
       ReadFlag: 1
-    - EventKey: 8StartTacticsSaveCommand1
-      Turns: 8
+    - EventKey: 5StartTacticsSaveCommand1
+      Turns: 5
       Timing: 1
       Type: 7
       Param: 1
       ReadFlag: 1
+    - EventKey: 12StartTacticsIsSubordinate1
+      Turns: 12
+      Timing: 1
+      Type: 4
+      Param: 1
+      ReadFlag: 0
+    - EventKey: 12StartTacticsIsAlcana1
+      Turns: 12
+      Timing: 1
+      Type: 5
+      Param: 1
+      ReadFlag: 0
     - EventKey: 14StartTacticsSelectAddActor1
       Turns: 14
       Timing: 1

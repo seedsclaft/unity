@@ -8,47 +8,46 @@ public class SkillActionList : ListWindow , IInputHandlerEvent
 {
     [SerializeField] private int rows = 0;
     [SerializeField] private int cols = 0;
-    private List<SkillInfo> _data = new List<SkillInfo>();
-
-    public int selectIndex{
-        get {return Index;}
-    }
-
+    private List<SkillInfo> _skillInfos = new List<SkillInfo>();
 
     public void Initialize(System.Action<int> callEvent,System.Action cancelEvent,System.Action conditionEvent)
     {
         InitializeListView(rows);
         for (int i = 0; i < rows + 1;i++)
         {
-            var skillAction = ObjectList[i].GetComponent<SkillAction>();
+            SkillAction skillAction = ObjectList[i].GetComponent<SkillAction>();
             skillAction.SetCallHandler((d) => {
-                SkillInfo skillInfo = _data.Find(a => a.Id == d);
-                if (skillInfo.Enabel == false)
+                SkillInfo skillInfo = _skillInfos.Find(a => a.Id == d);
+                if (skillInfo.Enable == false)
                 {
                     return;
                 }
                 callEvent(d);
-            } );
+            });
             skillAction.SetSelectHandler((data) => UpdateSelectIndex(data));
-            ObjectList[i].SetActive(false);
+            //ObjectList[i].SetActive(false);
         }
         SetInputHandler((a) => CallInputHandler(a,callEvent,cancelEvent,conditionEvent));
     }
 
-    public void Refresh(List<SkillInfo> skillInfoData)
+    
+    public void SetSkillInfos(List<SkillInfo> skillInfoData)
     {
-        _data.Clear();
-        _data = skillInfoData;
+        _skillInfos.Clear();
+        _skillInfos = skillInfoData;
         SetDataCount(skillInfoData.Count);
+    }
+
+    public void Refresh()
+    {
         for (int i = 0; i < ObjectList.Count;i++)
         {
-            ObjectList[i].SetActive(false);
-            if (i < _data.Count) 
+            if (i < _skillInfos.Count) 
             {
-                var skillAction = ObjectList[i].GetComponent<SkillAction>();
-                skillAction.SetData(skillInfoData[i],i);
-                ObjectList[i].SetActive(true);
+                SkillAction skillAction = ObjectList[i].GetComponent<SkillAction>();
+                skillAction.SetData(_skillInfos[i],i);
             }
+            ObjectList[i].SetActive(i < _skillInfos.Count);
         }
         ResetScrollPosition();
         UpdateSelectIndex(0);
@@ -66,12 +65,12 @@ public class SkillActionList : ListWindow , IInputHandlerEvent
     {
         if (keyType == InputKeyType.Decide)
         {
-            SkillInfo skillInfo = _data.Find(a => a.Id == _data[Index].Id);
-            if (skillInfo.Enabel == false)
+            SkillInfo skillInfo = _skillInfos.Find(a => a.Id == _skillInfos[Index].Id);
+            if (skillInfo.Enable == false)
             {
                 return;
             }
-            callEvent(_data[Index].Id);
+            callEvent(_skillInfos[Index].Id);
         }
         if (keyType == InputKeyType.Cancel)
         {
@@ -90,7 +89,7 @@ public class SkillActionList : ListWindow , IInputHandlerEvent
     {
         base.RefreshListItem(gameObject,itemIndex);
         var skillAction = gameObject.GetComponent<SkillAction>();
-        skillAction.SetData(_data[itemIndex],itemIndex);
+        skillAction.SetData(_skillInfos[itemIndex],itemIndex);
         skillAction.UpdateViewItem();
     }
 }

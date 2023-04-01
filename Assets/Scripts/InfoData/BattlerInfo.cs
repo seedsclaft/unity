@@ -71,7 +71,7 @@ public class BattlerInfo
         );
         _status = statusInfo;
         _index = index;
-        _skills = actorInfo.Skills;
+        _skills = actorInfo.Skills.FindAll(a => a.Forget == false);
         _isActor = true;
         
         _actorInfo = actorInfo;
@@ -584,7 +584,7 @@ public class BattlerInfo
     private bool TriggerdPayBattleMpSkillInfos(SkillsData.TriggerData triggerData,ActionInfo actionInfo)
     {
         bool IsTriggered = false;
-        if (triggerData.Param1 >= _payBattleMp)
+        if (triggerData.Param1 <= _payBattleMp)
         {
             IsTriggered = true;
         }

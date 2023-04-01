@@ -231,13 +231,8 @@ public class TacticsModel : BaseModel
         {
             SkillInfo skillInfo = new SkillInfo(PartyInfo.AlchemyIdList[i]);
             if (skillInfo.Attribute != _currentAttributeType) continue;
-            skillInfo.LearingCost = TacticsUtility.AlchemyCost(actorInfo,PartyInfo.AlchemyIdList[i]);
-            if (skillInfo.LearingCost > Currency)
-            {
-                skillInfo.SetDisable();
-            } else{
-                skillInfo.SetEnable();
-            }
+            skillInfo.SetLearingCost(TacticsUtility.AlchemyCost(actorInfo,PartyInfo.AlchemyIdList[i]));
+            skillInfo.SetEnable(skillInfo.LearingCost <= Currency);
             skillInfos.Add(skillInfo);
         }
         return skillInfos;

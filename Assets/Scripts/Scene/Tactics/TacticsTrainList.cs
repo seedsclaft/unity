@@ -16,34 +16,40 @@ public class TacticsTrainList : ListWindow , IInputHandlerEvent
     [SerializeField] private TacticsCommandList tacticsCommandList;
     private System.Action<TacticsComandType> _confirmEvent = null;
 
-    public int selectIndex{
-        get {return Index;}
+    public void Initialize(System.Action<int> callEvent) {
+        InitializeListView(rows);
+        for (int i = 0; i < rows;i++)
+        {
+            TacticsTrain tacticsTrain = ObjectList[i].GetComponent<TacticsTrain>();
+            tacticsTrain.SetCallHandler(callEvent);
+            tacticsTrain.SetSelectHandler((data) => UpdateSelectIndex(data));
+        }
+        SetInputHandler((a) => CallInputHandler(a,callEvent));
     }
 
-
-    public void Initialize(List<ActorInfo> actorInfos,System.Action<int> callEvent)
+    public void Refresh(List<ActorInfo> actorInfos)
     {
-        InitializeListView(actorInfos.Count);
+        ResetInputFrame();
+        SetDataCount(actorInfos.Count);
         _actorInfos = actorInfos;
-        for (int i = 0; i < actorInfos.Count;i++)
+        for (int i = 0; i < ObjectList.Count;i++)
         {
             var tacticsTrain = ObjectList[i].GetComponent<TacticsTrain>();
             if (i < _actorInfos.Count)
             {
                 tacticsTrain.SetData(_actorInfos[i],i);
             }
-            tacticsTrain.SetCallHandler(callEvent);
             tacticsTrain.SetSelectHandler((data) => UpdateSelectIndex(data));
             ObjectList[i].SetActive(i < _actorInfos.Count);
         }
-        SetInputHandler((a) => CallInputHandler(a,callEvent));
         UpdateSelectIndex(-1);
     }
 
     public void InitializeConfirm(List<SystemData.MenuCommandData> confirmCommands ,System.Action<TacticsComandType> callEvent)
     {
         _confirmEvent = callEvent;
-        tacticsCommandList.Initialize(confirmCommands,callEvent);
+        tacticsCommandList.Initialize(callEvent);
+        tacticsCommandList.Refresh(confirmCommands);
         tacticsCommandList.UpdateSelectIndex(-1);
     }
 

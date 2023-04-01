@@ -21,6 +21,29 @@ public class TroopInfo
         _battlerInfos.Add(battlerInfo);
     }
 
+    public void MakeEnemyData(TroopsData.TroopData troopData,int index,int gainLevel){
+        EnemiesData.EnemyData enemyData = DataSystem.Enemies.Find(a => a.Id == troopData.EnemyId);
+        BattlerInfo battlerInfo = new BattlerInfo(enemyData,troopData.Lv + gainLevel,index,troopData.Line);
+        AddEnemy(battlerInfo);
+        
+        List<GetItemData> getItemDatas = troopData.GetItemDatas;
+        for (int i = 0;i < getItemDatas.Count;i++)
+        {
+            GetItemInfo getItemInfo = new GetItemInfo(getItemDatas[i]);
+            if (getItemDatas[i].Type == GetItemType.Skill)
+            {
+                SkillsData.SkillData skillData = DataSystem.Skills.Find(a => a.Id == getItemDatas[i].Param1);
+                getItemInfo.SetResultData(skillData.Name);
+                getItemInfo.SetSkillElementId((int)skillData.Attribute);
+            }
+            if (getItemDatas[i].Type == GetItemType.Numinous)
+            {
+                getItemInfo.SetResultData("+" + getItemDatas[i].Param1.ToString() + DataSystem.System.GetTextData(1000).Text);
+            }
+            AddGetItemInfo(getItemInfo);
+        }
+    }
+
     public void RemoveAtEnemyIndex(int enemyIndex){
         var battler = _battlerInfos.Find(a => a.Index == enemyIndex);
         if (battler != null)

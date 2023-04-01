@@ -137,6 +137,7 @@ public class StrategyModel : BaseModel
         actorInfos.ForEach(a => a.SetNextBattleEnemyIndex(-1,0));
         actorInfos.ForEach(a => a.InBattle = false);
         actorInfos.ForEach(a => a.ClearTacticsCommand());
+        CurrentStage.GainClearCount(1);
     }
 
     public List<SystemData.MenuCommandData> ResultCommand()

@@ -45,7 +45,8 @@ public class TacticsRecoveryList : ListWindow , IInputHandlerEvent
     public void InitializeConfirm(List<SystemData.MenuCommandData> confirmCommands ,System.Action<TacticsComandType> callEvent)
     {
         _confirmEvent = callEvent;
-        tacticsCommandList.Initialize(confirmCommands,callEvent);
+        tacticsCommandList.Initialize(callEvent);
+        tacticsCommandList.Refresh(confirmCommands);
         tacticsCommandList.UpdateSelectIndex(-1);
     }
 

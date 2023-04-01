@@ -277,11 +277,7 @@ public class BattleModel : BaseModel
         List<SkillInfo> skillInfos = CurrentBattler.Skills.FindAll(a => a.Attribute == _currentAttributeType && a.Master.SkillType != SkillType.None);
         for (int i = 0; i < skillInfos.Count;i++)
         {
-            skillInfos[i].SetEnable();
-            if (!CheckCanUse(skillInfos[i],CurrentBattler))
-            {
-                skillInfos[i].SetDisable();
-            }
+            skillInfos[i].SetEnable(CheckCanUse(skillInfos[i],CurrentBattler));
         }
         return skillInfos;
     }

@@ -38,7 +38,9 @@ public class StatusModel : BaseModel
     public List<SkillInfo> SkillActionList(AttributeType attributeType)
     {
         _currentAttributeType = attributeType;
-        return CurrentActor.Skills.FindAll(a => a.Attribute == _currentAttributeType);
+        List<SkillInfo> skillInfos = CurrentActor.Skills.FindAll(a => a.Attribute == _currentAttributeType);
+        skillInfos.ForEach(a => a.SetEnable(true));
+        return skillInfos;
     }
 
     public List<SystemData.MenuCommandData> StatusCommand
@@ -53,6 +55,17 @@ public class StatusModel : BaseModel
             GameSystem.CurrentData.MakeStageData(CurrentActor.ActorId);
         } else{
             CurrentStage.AddSelectActorId(CurrentActor.ActorId);
+        }
+    }
+
+    public void ForgetSkill(int skillId)
+    {
+        SkillInfo skillInfo = CurrentActor.Skills.Find(a => a.Id == skillId);
+        if (skillInfo.LearingCost > 0)
+        {
+            int gainCurrency = CurrentActor.Skills.Find(a => a.Id == skillId).LearingCost;
+            PartyInfo.ChangeCurrency(Currency + gainCurrency);
+            CurrentActor.ForgetSkill(skillId);
         }
     }
 

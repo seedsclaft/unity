@@ -40,10 +40,14 @@ public class TacticsView : BaseView
 
     void Initialize()
     {
-        new TacticsPresenter(this);
         skillAlchemyList.Initialize(actorInfo => CallSkillAlchemy(actorInfo),() => OnClickBack(),null);
         SetInputHandler(skillAlchemyList.GetComponent<IInputHandlerEvent>());
         HideSkillAlchemyList();
+
+        tacticsTrainList.Initialize((actorinfo) => CallActorTrain(actorinfo));
+        SetInputHandler(tacticsTrainList.GetComponent<IInputHandlerEvent>());
+        
+        new TacticsPresenter(this);
     }
 
     private void CallSkillAlchemy(int skillId)
@@ -94,7 +98,8 @@ public class TacticsView : BaseView
     
     public void SetTacticsCommand(List<SystemData.MenuCommandData> menuCommands)
     {
-        tacticsCommandList.Initialize(menuCommands,(menuCommandInfo) => CallTacticsCommand(menuCommandInfo),() => CallAlcanaEvent());
+        tacticsCommandList.Initialize((menuCommandInfo) => CallTacticsCommand(menuCommandInfo),() => CallAlcanaEvent());
+        tacticsCommandList.Refresh(menuCommands);
         SetInputHandler(tacticsCommandList.GetComponent<IInputHandlerEvent>());
         tacticsCommandList.SetHelpWindow(_helpWindow);
     }
@@ -139,8 +144,7 @@ public class TacticsView : BaseView
         tacticsCharaLayer.Initialize(actorInfos,(actorinfo) => CallActorLayer(actorinfo));
         SetInputHandler(tacticsCharaLayer.GetComponent<IInputHandlerEvent>());
     
-        tacticsTrainList.Initialize(actorInfos,(actorinfo) => CallActorTrain(actorinfo));
-        SetInputHandler(tacticsTrainList.GetComponent<IInputHandlerEvent>());
+        tacticsTrainList.Refresh(actorInfos);
         tacticsTrainList.InitializeConfirm(confirmCommands,(confirmCommands) => CallTrainCommand(confirmCommands));
         HideTrainList();
 
@@ -256,7 +260,8 @@ public class TacticsView : BaseView
     public void ShowSkillAlchemyList(List<SkillInfo> skillInfos)
     {
         skillAlchemyList.gameObject.SetActive(true);
-        skillAlchemyList.Refresh(skillInfos);
+        skillAlchemyList.SetSkillInfos(skillInfos);
+        skillAlchemyList.Refresh();
         skillAttributeList.gameObject.SetActive(true);
     }
 

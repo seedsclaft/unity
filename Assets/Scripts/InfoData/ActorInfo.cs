@@ -73,7 +73,7 @@ public class ActorInfo
         _actorId = actorData.Id;
         _attribute = actorData.Attribute;
         _level = actorData.InitLv;
-        _sp = 10;
+        _sp = 0;
         _usePoint = actorData.NeedStatus; 
         SetInitialParameter(actorData);
         _currentHp = _baseStatus.Hp;
@@ -112,6 +112,12 @@ public class ActorInfo
     {
         SkillInfo skillInfo = new SkillInfo(skillId);
         _skills.Add(skillInfo);
+    }
+
+    public void ForgetSkill(int skillId)
+    {
+        SkillInfo skillInfo = _skills.Find(a => a.Id == skillId);
+        skillInfo.SetForget(true);
     }
 
     public void RefreshTacticsEnable(TacticsComandType tacticsComandType,bool enable)
@@ -196,7 +202,7 @@ public class ActorInfo
         SetInitialParameter(actorData);
         ChangeHp(_currentHp);
         ChangeMp(_currentMp);
-        ChangeSp(_level * 10);
+        ChangeSp((_level-1) * 10);
         _numinous = 0;
     }
 

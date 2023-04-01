@@ -34,13 +34,13 @@ public class StatusView : BaseView
 
     void Initialize()
     {
-        new StatusPresenter(this);
         InitializeSkillActionList();
+        new StatusPresenter(this);
     }
 
     private void InitializeSkillActionList()
     {
-        skillActionList.Initialize(null,() => OnClickBack(),null);
+        skillActionList.Initialize((a) => CallSkillAction(a),() => OnClickBack(),null);
         SetInputHandler(skillActionList.GetComponent<IInputHandlerEvent>());
         skillActionList.gameObject.SetActive(false);
         skillActionList.Deactivate();
@@ -248,6 +248,13 @@ public class StatusView : BaseView
         _commandData(eventData);
     }
 
+    private void CallSkillAction(int skillId)
+    {
+        var eventData = new StatusViewEvent(CommandType.SelectSkillAction);
+        eventData.templete = skillId;
+        _commandData(eventData);
+    }
+
     public void ShowSkillActionList()
     {
         skillActionList.Activate();
@@ -255,7 +262,6 @@ public class StatusView : BaseView
         skillAttributeList.Activate();
         skillAttributeList.gameObject.SetActive(true);
     }
-
 
     public void HideSkillActionList()
     {
@@ -267,7 +273,8 @@ public class StatusView : BaseView
     
     public void RefreshSkillActionList(List<SkillInfo> skillInfos)
     {
-        skillActionList.Refresh(skillInfos);
+        skillActionList.SetSkillInfos(skillInfos);
+        skillActionList.Refresh();
     }
 
     public void SetAttributeTypes(List<AttributeType> attributeTypes)
@@ -329,7 +336,9 @@ public class StatusView : BaseView
     public void CommandRefresh(int remainSp,int remainNuminous)
     {
         statusStrengthList.Refresh(remainSp,remainNuminous);
+        skillActionList.Refresh();
     }
+
 }
 
 namespace Status
@@ -342,6 +351,7 @@ namespace Status
         DecideActor,
         LeftActor,
         RightActor,
+        SelectSkillAction,
         SelectStrengthPlus,
         SelectStrengthMinus,
         SelectStrengthReset,

@@ -50,7 +50,7 @@ MonoBehaviour:
     Line: 1
     GetItemDatas:
     - Type: 1
-      Param1: 105
+      Param1: 101
       Param2: 1
     - Type: 2
       Param1: 10
@@ -68,7 +68,7 @@ MonoBehaviour:
     Line: 1
     GetItemDatas:
     - Type: 1
-      Param1: 205
+      Param1: 202
       Param2: 1
     - Type: 2
       Param1: 10
@@ -98,7 +98,7 @@ MonoBehaviour:
     Line: 1
     GetItemDatas:
     - Type: 1
-      Param1: 305
+      Param1: 302
       Param2: 1
     - Type: 2
       Param1: 10
@@ -116,7 +116,7 @@ MonoBehaviour:
     Line: 1
     GetItemDatas:
     - Type: 1
-      Param1: 405
+      Param1: 401
       Param2: 1
     - Type: 2
       Param1: 10
@@ -140,7 +140,7 @@ MonoBehaviour:
     Line: 1
     GetItemDatas:
     - Type: 1
-      Param1: 505
+      Param1: 502
       Param2: 1
     - Type: 2
       Param1: 10
@@ -303,7 +303,10 @@ MonoBehaviour:
     EnemyId: 101
     Lv: 1
     Line: 1
-    GetItemDatas: []
+    GetItemDatas:
+    - Type: 2
+      Param1: 25
+      Param2: 1
   - Id: 1
     TroopId: 200
     EnemyId: 8
@@ -321,7 +324,10 @@ MonoBehaviour:
     EnemyId: 102
     Lv: 1
     Line: 1
-    GetItemDatas: []
+    GetItemDatas:
+    - Type: 2
+      Param1: 25
+      Param2: 1
   - Id: 1
     TroopId: 300
     EnemyId: 7
@@ -339,7 +345,10 @@ MonoBehaviour:
     EnemyId: 103
     Lv: 1
     Line: 1
-    GetItemDatas: []
+    GetItemDatas:
+    - Type: 2
+      Param1: 25
+      Param2: 1
   - Id: 1
     TroopId: 400
     EnemyId: 9
@@ -357,7 +366,10 @@ MonoBehaviour:
     EnemyId: 104
     Lv: 1
     Line: 1
-    GetItemDatas: []
+    GetItemDatas:
+    - Type: 2
+      Param1: 25
+      Param2: 1
   - Id: 1
     TroopId: 500
     EnemyId: 5
@@ -381,5 +393,8 @@ MonoBehaviour:
     EnemyId: 105
     Lv: 1
     Line: 1
-    GetItemDatas: []
+    GetItemDatas:
+    - Type: 2
+      Param1: 25
+      Param2: 1
   _getItemData: []

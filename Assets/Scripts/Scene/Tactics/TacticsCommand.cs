@@ -15,8 +15,7 @@ public class TacticsCommand : ListItem ,IListViewItem
     }
 
     public void SetCallHandler(System.Action<TacticsComandType> handler)
-    {
-        if (_data == null) return;        
+    {    
         clickButton.onClick.AddListener(() =>
             {
                 if (Disable.gameObject.activeSelf) return;

@@ -51,12 +51,12 @@ public class BattleView : BaseView
 
     void Initialize()
     {
-        new BattlePresenter(this);
         InitializeSkillActionList();
         statusConditionList.Initialize(() => OnClickCondition());
         SetInputHandler(statusConditionList.GetComponent<IInputHandlerEvent>());
         DeactivateConditionList();
         HideConditionAll();
+        new BattlePresenter(this);
     }
 
     private void InitializeSkillActionList()
@@ -241,7 +241,8 @@ public class BattleView : BaseView
         DeactivateEnemyList();
         skillActionList.Activate();
         skillActionList.gameObject.SetActive(true);
-        skillActionList.Refresh(skillInfos);
+        skillActionList.SetSkillInfos(skillInfos);
+        skillActionList.Refresh();
     }
 
     public void SetCondition(List<StateInfo> stateInfos)

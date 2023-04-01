@@ -59,7 +59,8 @@ public class GetItemList : ListWindow , IInputHandlerEvent
     {
         _confirmEvent = callEvent;
         SetInputHandler((a) => CallInputHandler(a,callEvent));
-        tacticsCommandList.Initialize(confirmCommands,callEvent);
+        tacticsCommandList.Initialize(callEvent);
+        tacticsCommandList.Refresh(confirmCommands);
         tacticsCommandList.UpdateSelectIndex(0);
     }
     

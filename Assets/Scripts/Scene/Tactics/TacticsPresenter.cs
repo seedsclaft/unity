@@ -425,6 +425,7 @@ public class TacticsPresenter
         }
         if (tacticsComandType == TacticsComandType.Status)
         {
+            SaveSystem.SaveStart(GameSystem.CurrentData);
             _model.SetStageActor();
             StatusViewInfo statusViewInfo = new StatusViewInfo(() => {
                 _view.CommandStatusClose();

@@ -62,6 +62,10 @@ public class StatusPresenter
         {
             CommandRightActor();
         }
+        if (viewEvent.commandType == Status.CommandType.SelectSkillAction)
+        {
+            CommandSelectSkillAction((int) viewEvent.templete);
+        }
         if (viewEvent.commandType == Status.CommandType.SelectStrengthPlus)
         {
             StatusParamType statusId = (StatusParamType)viewEvent.templete;
@@ -203,6 +207,12 @@ public class StatusPresenter
          _model.ChangeActorIndex(1);
         _view.SetActorInfo(_model.CurrentActor);
         CommandAttributeType(_model.CurrentAttributeType);
+    }
+
+    private void CommandSelectSkillAction(int skillId)
+    {
+        _model.ForgetSkill(skillId);
+        CommandRefresh();
     }
 
     private void CommandSelectStrengthPlus(StatusParamType statusId)
