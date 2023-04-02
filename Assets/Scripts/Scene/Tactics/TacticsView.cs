@@ -515,6 +515,7 @@ namespace Tactics
         TrainClose,
         SelectActorAlchemy,
         AlchemyClose,
+        SelectAlchemyClose,
         SkillAlchemy,
         SelectActorRecovery,
         SelectRecoveryPlus,

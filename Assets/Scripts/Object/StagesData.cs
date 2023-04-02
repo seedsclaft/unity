@@ -52,5 +52,6 @@ public enum StageEventType{
     IsSubordinate = 4, // 隷従属度フラグを管理
     IsAlcana = 5, // アルカナフラグを管理
     SelectAddActor = 6, // 仲間を選んで加入する
-    SaveCommand = 7 // セーブを行う
+    SaveCommand = 7, // セーブを行う,
+    SetDefineBossIndex = 8 // ボスの選択番号を設定する
 }

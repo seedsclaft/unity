@@ -87,16 +87,17 @@ public class BattlerInfo
         ResetAp(true);
     }
 
-    public BattlerInfo(EnemiesData.EnemyData enemyData,int lv,int index,int lineIndex){
+    public BattlerInfo(EnemiesData.EnemyData enemyData,int lv,int index,int lineIndex,bool isBoss){
         _charaId = enemyData.Id;
         _level = lv;
         StatusInfo statusInfo = new StatusInfo();
+        int plusHpParam = isBoss == true ? 50 : 0;
         statusInfo.SetParameter(
-            enemyData.BaseStatus.Hp + (int)Math.Floor(lv * enemyData.BaseStatus.Hp * 0.04f),
-            enemyData.BaseStatus.Mp + (int)Math.Floor(lv * enemyData.BaseStatus.Mp * 0.04f),
-            enemyData.BaseStatus.Atk + (int)Math.Floor(lv * enemyData.BaseStatus.Atk * 0.04f),
-            enemyData.BaseStatus.Def + (int)Math.Floor(lv * enemyData.BaseStatus.Def * 0.04f),
-            enemyData.BaseStatus.Spd + (int)Math.Floor(lv * enemyData.BaseStatus.Spd * 0.04f)
+            enemyData.BaseStatus.Hp + (int)Math.Floor(plusHpParam + lv + lv * enemyData.BaseStatus.Hp * 0.05f),
+            enemyData.BaseStatus.Mp + (int)Math.Floor(lv * enemyData.BaseStatus.Mp * 0.05f),
+            enemyData.BaseStatus.Atk + (int)Math.Floor(lv * enemyData.BaseStatus.Atk * 0.05f),
+            enemyData.BaseStatus.Def + (int)Math.Floor(lv * enemyData.BaseStatus.Def * 0.05f),
+            enemyData.BaseStatus.Spd + (int)Math.Floor(lv * enemyData.BaseStatus.Spd * 0.05f)
         );
         _status = statusInfo;
         _index = index + 100;
@@ -195,19 +196,19 @@ public class BattlerInfo
         {
             return;
         }
-        if (IsState(StateType.CounterOura) || IsState(StateType.Benediction))
-        {
-            _ap = 1;
-            return;
-        }
         if (IsState(StateType.Chain))
         {
             _ap += 3;
             return;
         }
+        if (IsState(StateType.CounterOura) || IsState(StateType.Benediction))
+        {
+            _ap = 1;
+            return;
+        }
         if (IsState(StateType.Slow))
         {
-            _ap -= 3;
+            _ap -= 2;
             return;
         }
         //if (isActor == false) return;

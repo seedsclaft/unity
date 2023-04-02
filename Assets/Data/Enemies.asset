@@ -26,7 +26,11 @@ MonoBehaviour:
     LearningSkills:
     - SkillId: 1
       Level: 1
-      Weight: 100
+      Weight: 50
+      TriggerDatas: []
+    - SkillId: 321
+      Level: 3
+      Weight: 50
       TriggerDatas: []
   - Id: 2
     Name: "\u30AB\u30FC\u30B9\u30C9"
@@ -106,6 +110,10 @@ MonoBehaviour:
     - SkillId: 1
       Level: 1
       Weight: 100
+      TriggerDatas: []
+    - SkillId: 404
+      Level: 3
+      Weight: 50
       TriggerDatas: []
   - Id: 7
     Name: "\u30B5\u30FC\u30C1\u30E3\u30FC"
@@ -404,6 +412,9 @@ MonoBehaviour:
         Param2: 0
         Param3: 0
   _textdata:
+  - Id: 5
+    Text: 404
+    Help: 
   - Id: 9
     Text: 402
     Help: 

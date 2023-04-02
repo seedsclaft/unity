@@ -13,6 +13,8 @@ public class SeImporter : AssetPostprocessor {
 		Id = 0,
 		Key,
 		FileName,
+		Volume,
+		Pitch,
 		Loop,
     }
 	static readonly string ExcelPath = "Assets/Data";
@@ -83,6 +85,8 @@ public class SeImporter : AssetPostprocessor {
 					SE.Id = (int)Baserow.GetCell((int)BaseColumn.Id).NumericCellValue;
 					SE.Key = Baserow.GetCell((int)BaseColumn.Key)?.SafeStringCellValue();
 					SE.FileName = Baserow.GetCell((int)BaseColumn.FileName)?.SafeStringCellValue();
+					SE.Volume = (float)Baserow.GetCell((int)BaseColumn.Volume)?.SafeNumericCellValue();
+					SE.Pitch = (float)Baserow.GetCell((int)BaseColumn.Pitch)?.SafeNumericCellValue();
 					Data.SE.Add(SE);
 				}
 

@@ -56,6 +56,11 @@ public class BattleView : BaseView
         SetInputHandler(statusConditionList.GetComponent<IInputHandlerEvent>());
         DeactivateConditionList();
         HideConditionAll();
+
+        skillAttributeList.Initialize((attribute) => CallAttributeTypes(attribute));
+        SetInputHandler(skillAttributeList.GetComponent<IInputHandlerEvent>());
+        skillAttributeList.gameObject.SetActive(false);
+
         new BattlePresenter(this);
     }
 
@@ -404,7 +409,7 @@ public class BattleView : BaseView
     public void SetAttributeTypes(List<AttributeType> attributeTypes)
     {
         skillAttributeList.Refresh(attributeTypes);
-        SetInputHandler(skillAttributeList.GetComponent<IInputHandlerEvent>());
+        //SetInputHandler(skillAttributeList.GetComponent<IInputHandlerEvent>());
     }
 
     private void CallAttributeTypes(AttributeType attributeType)

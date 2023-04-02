@@ -171,7 +171,7 @@ public class ActionResultInfo
         if (target.IsState(StateType.CounterOura) && target.CanMove() && !isNoEffect)
         {
             _execStateInfos[target.Index].Add(StateType.CounterOura);
-            _reDamage = (int)Mathf.Floor(SkillDamage * target.StateEffectAll(StateType.CounterOura) * 0.01f);
+            _reDamage = (int)Mathf.Floor((DefValue * 0.5f) * target.StateEffectAll(StateType.CounterOura) * 0.01f);
         }
         SkillDamage -= (DefValue * 0.5f);
         float DamageValue = Mathf.Max(1,SkillDamage);

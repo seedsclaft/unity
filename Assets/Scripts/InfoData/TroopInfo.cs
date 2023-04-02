@@ -22,9 +22,9 @@ public class TroopInfo
         _battlerInfos.Add(battlerInfo);
     }
 
-    public void MakeEnemyData(TroopsData.TroopData troopData,int index,int gainLevel){
+    public void MakeEnemyData(TroopsData.TroopData troopData,int index,int gainLevel,bool isBoss){
         EnemiesData.EnemyData enemyData = DataSystem.Enemies.Find(a => a.Id == troopData.EnemyId);
-        BattlerInfo battlerInfo = new BattlerInfo(enemyData,troopData.Lv + gainLevel,index,troopData.Line);
+        BattlerInfo battlerInfo = new BattlerInfo(enemyData,troopData.Lv + gainLevel,index,troopData.Line,isBoss);
         AddEnemy(battlerInfo);
         
         List<GetItemData> getItemDatas = troopData.GetItemDatas;

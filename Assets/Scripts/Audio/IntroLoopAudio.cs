@@ -67,11 +67,11 @@ public class IntroLoopAudio : MonoBehaviour
   public void SetClip(List<AudioClip> clip,bool isLoop){
     if (clip.Count == 2){
       _introAudioSource.clip = clip[0];
-      _introAudioSource.loop = false;
+      _introAudioSource.loop = clip[1] == null ? isLoop : false;
       _introAudioSource.playOnAwake = false;
 
       _loopAudioSources[0].clip = clip[1];
-      _loopAudioSources[0].loop = _loopSourceCount == 1;
+      _loopAudioSources[0].loop = clip[1] == null ? false :_loopSourceCount == 1;
       _loopAudioSources[0].playOnAwake = false;
       if (_loopAudioSources[1] != null)
       {

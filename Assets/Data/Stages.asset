@@ -162,51 +162,75 @@ MonoBehaviour:
       Type: 4
       Param: 1
       ReadFlag: 0
-    - EventKey: 12StartTacticsIsSubordinate1
-      Turns: 12
+    - EventKey: 5StartTacticsSetDefineBossIndex1
+      Turns: 5
       Timing: 1
-      Type: 4
+      Type: 8
       Param: 1
       ReadFlag: 0
-    - EventKey: 12StartTacticsIsAlcana1
-      Turns: 12
+    - EventKey: 11StartTacticsIsAlcana1
+      Turns: 11
       Timing: 1
       Type: 5
       Param: 1
       ReadFlag: 0
-    - EventKey: 14StartTacticsSelectAddActor1
-      Turns: 14
+    - EventKey: 11StartTacticsSelectAddActor1
+      Turns: 11
       Timing: 1
       Type: 6
       Param: 1
       ReadFlag: 1
-    - EventKey: 14StartTacticsSaveCommand1
-      Turns: 14
+    - EventKey: 11StartTacticsSaveCommand1
+      Turns: 11
       Timing: 1
       Type: 7
       Param: 1
       ReadFlag: 1
-    - EventKey: 20StartTacticsSelectAddActor1
-      Turns: 20
+    - EventKey: 11StartTacticsSetDefineBossIndex2
+      Turns: 11
+      Timing: 1
+      Type: 8
+      Param: 2
+      ReadFlag: 0
+    - EventKey: 17StartTacticsSelectAddActor1
+      Turns: 17
       Timing: 1
       Type: 6
       Param: 1
       ReadFlag: 1
-    - EventKey: 20StartTacticsSaveCommand1
-      Turns: 20
+    - EventKey: 17StartTacticsSaveCommand1
+      Turns: 17
       Timing: 1
       Type: 7
       Param: 1
       ReadFlag: 1
-    - EventKey: 26StartTacticsSelectAddActor1
-      Turns: 26
+    - EventKey: 17StartTacticsSetDefineBossIndex3
+      Turns: 17
+      Timing: 1
+      Type: 8
+      Param: 3
+      ReadFlag: 0
+    - EventKey: 23StartTacticsSelectAddActor1
+      Turns: 23
       Timing: 1
       Type: 6
       Param: 1
       ReadFlag: 1
-    - EventKey: 26StartTacticsSaveCommand1
-      Turns: 26
+    - EventKey: 23StartTacticsSaveCommand1
+      Turns: 23
       Timing: 1
       Type: 7
       Param: 1
       ReadFlag: 1
+    - EventKey: 23StartTacticsSetDefineBossIndex4
+      Turns: 23
+      Timing: 1
+      Type: 8
+      Param: 4
+      ReadFlag: 0
+    - EventKey: 29StartTacticsSetDefineBossIndex5
+      Turns: 29
+      Timing: 1
+      Type: 8
+      Param: 5
+      ReadFlag: 0

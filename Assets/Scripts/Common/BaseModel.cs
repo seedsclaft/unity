@@ -304,4 +304,8 @@ public class BaseModel
         }
     }
 
+    public void SetDefineBossIndex(int index)
+    {
+        CurrentStage.SetDefineBossIndex(index);
+    }
 }

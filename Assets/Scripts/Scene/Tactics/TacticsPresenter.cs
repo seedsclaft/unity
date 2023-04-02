@@ -105,6 +105,10 @@ public class TacticsPresenter
                     isAbort = true;
                     break;
                 }
+                if (stageEvents[i].Type == StageEventType.SetDefineBossIndex)
+                {
+                    _model.SetDefineBossIndex(stageEvents[i].Param);
+                }
             }
         }
         if (isAbort)
@@ -163,6 +167,10 @@ public class TacticsPresenter
         if (viewEvent.commandType == Tactics.CommandType.AlchemyClose)
         {
             CommandAlchemyClose((ConfirmComandType)viewEvent.templete);
+        }
+        if (viewEvent.commandType == Tactics.CommandType.SelectAlchemyClose)
+        {
+            CommandSelectAlchemyClose();
         }
         if (viewEvent.commandType == Tactics.CommandType.SelectActorRecovery)
         {
@@ -388,13 +396,7 @@ public class TacticsPresenter
         }
         if (tacticsComandType == TacticsComandType.Alchemy)
         {
-            _model.SetTempData(tacticsComandType);
-            _view.ShowAlchemyList();
-            _view.ActivateTacticsCommand();
-            _view.HideSkillAlchemyList();
-            _view.SetActiveBack(false);
-            _view.HideCommandList();
-            _backCommand = Tactics.CommandType.None;
+            CommandSelectAlchemyClose();
         }
         if (tacticsComandType == TacticsComandType.Recovery)
         {
@@ -496,7 +498,8 @@ public class TacticsPresenter
             CommandAttributeType(_model.CurrentAttributeType);
             _view.HideAlchemyList();
             _view.SetActiveBack(true);
-            _backCommand = Tactics.CommandType.TacticsCommand;
+            _backCommand = Tactics.CommandType.SelectAlchemyClose;        
+            SoundManager.Instance.PlayStaticSe(SEType.Decide);
         }
         CommandRefresh();
     }
@@ -524,6 +527,17 @@ public class TacticsPresenter
         _view.ShowCommandList();
         _view.HideAlchemyList();
         CommandRefresh();
+    }
+
+    private void CommandSelectAlchemyClose()
+    {
+        _model.SetTempData(TacticsComandType.Alchemy);
+        _view.ShowAlchemyList();
+        _view.ActivateTacticsCommand();
+        _view.HideSkillAlchemyList();
+        _view.SetActiveBack(false);
+        _view.HideCommandList();
+        _backCommand = Tactics.CommandType.None;
     }
 
     private void CommandSelectActorRecovery(int actorId)

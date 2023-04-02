@@ -33,7 +33,7 @@ public class SoundManager : SingletonMonoBehaviour<SoundManager>
         {
             AudioSource audioSource = gameObject.AddComponent<AudioSource>();
             _seData.Add(audioSource);
-            SetSeAudio(audioSource,sEDatas[i].FileName);
+            SetSeAudio(audioSource,sEDatas[i].FileName,sEDatas[i].Volume,sEDatas[i].Pitch);
         }
         /*
         AudioSource audioSource = gameObject.AddComponent<AudioSource>();
@@ -42,7 +42,7 @@ public class SoundManager : SingletonMonoBehaviour<SoundManager>
     }
 
 
-    private void SetSeAudio(AudioSource audioSource,string sePath)
+    private void SetSeAudio(AudioSource audioSource,string sePath,float volume,float pitch)
     {
         Addressables.LoadAssetAsync<AudioClip>(
             "Assets/Audios/SE/" + sePath + ".ogg"
@@ -50,14 +50,15 @@ public class SoundManager : SingletonMonoBehaviour<SoundManager>
             if (audioSource != null)
             {
                 audioSource.clip = op.Result;
+                audioSource.pitch = pitch;
+                audioSource.volume = volume;
             }
         };
     }
 
     void LateUpdate()
     {
-        UpdateVolume(_seData, _seVolume);
-
+        //UpdateVolume(_seData, _seVolume);
     }
 
     void UpdateVolume(List<AudioSource> audioData, float volume)
@@ -98,7 +99,7 @@ public class SoundManager : SingletonMonoBehaviour<SoundManager>
 
     public void PlayStaticSe(SEType sEType, float volume = 1.0f)
     {
-        int seIndex = DataSystem.Data.SE.FindIndex(a => a.Id == (int)sEType);
+        var seIndex = DataSystem.Data.SE.FindIndex(a => a.Id == (int)sEType);
         if (seIndex > -1)
         {
             _seData[seIndex].Play();
