@@ -13,7 +13,7 @@ public class SkillActionList : ListWindow , IInputHandlerEvent
     public void Initialize(System.Action<int> callEvent,System.Action cancelEvent,System.Action conditionEvent)
     {
         InitializeListView(rows);
-        for (int i = 0; i < rows + 1;i++)
+        for (int i = 0; i < rows;i++)
         {
             SkillAction skillAction = ObjectList[i].GetComponent<SkillAction>();
             skillAction.SetCallHandler((d) => {

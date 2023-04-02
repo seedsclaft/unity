@@ -103,10 +103,10 @@ public class BattleModel : BaseModel
                         chainDamage += subject.ChainSuccessCount;
                     }
                     SkillsData.FeatureData featureData = new SkillsData.FeatureData();
-                    featureData.FeatureType = FeatureType.HpDamage;
+                    featureData.FeatureType = FeatureType.HpDefineDamage;
                     featureData.Param1 = chainDamage;
                     
-                    ActionResultInfo actionResultInfo = new ActionResultInfo(_battlers[i],target,new List<SkillsData.FeatureData>(){featureData});
+                    ActionResultInfo actionResultInfo = new ActionResultInfo(subject,target,new List<SkillsData.FeatureData>(){featureData});
                         
                     if ((target.Hp - chainDamage) <= 0)
                     {

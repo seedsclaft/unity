@@ -76,14 +76,17 @@ public class StrategyModel : BaseModel
             if (getItemInfo.GetItemType == GetItemType.Skill)
             {
                 PartyInfo.AddAlchemy(getItemInfo.Param1);
-                getItemInfo.SetTitleData("新たな魔法技術を獲得！");
+                getItemInfo.SetTitleData(DataSystem.System.GetTextData(14040).Text);
             }
             if (getItemInfo.GetItemType == GetItemType.Numinous)
             {
                 PartyInfo.ChangeCurrency(PartyInfo.Currency + getItemInfo.Param1);
-                getItemInfo.SetTitleData("Numinousを獲得！");
+                getItemInfo.SetTitleData(DataSystem.System.GetTextData(14041).Text);
             }
         }
+        CurrentStage.AddClearTroopId(CurrentTroopInfo().TroopId);
+        CurrentStage.GainClearCount(1);
+        CurrentStage.ChangeSubordinate(15);
 
         return CurrentTroopInfo().GetItemInfos;
     }
@@ -137,7 +140,6 @@ public class StrategyModel : BaseModel
         actorInfos.ForEach(a => a.SetNextBattleEnemyIndex(-1,0));
         actorInfos.ForEach(a => a.InBattle = false);
         actorInfos.ForEach(a => a.ClearTacticsCommand());
-        CurrentStage.GainClearCount(1);
     }
 
     public List<SystemData.MenuCommandData> ResultCommand()

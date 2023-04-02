@@ -428,10 +428,10 @@ public class BattlePresenter : BasePresenter
         }
         // ダメージなどを適用
         _model.ExecActionResult();
-        StartDeathAnimation(_model.CurrentActionInfo().actionResults);
         ActionInfo actionInfo = _model.CurrentActionInfo();
         if (actionInfo != null)
         {
+            StartDeathAnimation(_model.CurrentActionInfo().actionResults);
             if (actionInfo.Master.SkillType != SkillType.Demigod)
             {
                 // ステートなどを適用

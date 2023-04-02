@@ -403,7 +403,7 @@ public class BattleView : BaseView
 
     public void SetAttributeTypes(List<AttributeType> attributeTypes)
     {
-        skillAttributeList.Initialize(attributeTypes ,(attribute) => CallAttributeTypes(attribute));
+        skillAttributeList.Refresh(attributeTypes);
         SetInputHandler(skillAttributeList.GetComponent<IInputHandlerEvent>());
     }
 

@@ -456,6 +456,7 @@ public class TacticsPresenter
     {
         List<SkillInfo> skillInfos = _model.SelectActorAlchemy(_model.CurrentActor.ActorId,attributeType);
         _view.ShowSkillAlchemyList(skillInfos);
+        CommandRefresh();
     }
 
     private void CommandDecideActor()
@@ -463,8 +464,6 @@ public class TacticsPresenter
 
     }
     
-
-
     private void CommandSelectActorTrain(int actorId)
     {
         _model.SelectActorTrain(actorId);
@@ -624,6 +623,8 @@ public class TacticsPresenter
         _view.SetTurns(_model.Turns);
         _view.SetNuminous(_model.Currency);
         _view.SetStageInfo(_model.CurrentStage);
+        
+        if (_model.CurrentActor != null) _view.SetAttributeValues(_model.CurrentActor.AttirbuteValues());
         _view.CommandRefresh();
     }
 

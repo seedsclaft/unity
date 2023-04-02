@@ -19,7 +19,6 @@ public class SkillAttribute : ListItem ,IListViewItem
 
     public void SetCallHandler(System.Action<AttributeType> handler)
     {
-        if (_data == AttributeType.None) return;
         clickButton.onClick.AddListener(() => handler((AttributeType)Index));
     }
 

@@ -42,7 +42,7 @@ public class TacticsModel : BaseModel
     {
         int CurrentTurn = CurrentStage.CurrentTurn;
         List<string> eventKeys = CurrentStage.ReadEventKeys;
-        return CurrentStage.StageEvents.FindAll(a => a.Timing == eventTiming && a.Turns == CurrentTurn && !eventKeys.Contains(a.EventKey));
+        return StageEventDatas.FindAll(a => a.Timing == eventTiming && a.Turns == CurrentTurn && !eventKeys.Contains(a.EventKey));
     }
 
     public void AddEventsReadFlag(List<StagesData.StageEventData> stageEventDatas)

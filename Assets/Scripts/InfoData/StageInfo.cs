@@ -11,8 +11,6 @@ public class StageInfo
     public int Turns {get {return _turns;}}
     private int _currentTurn;
     public int CurrentTurn {get {return _currentTurn;}}
-    private List<StagesData.StageEventData> _stageEvents;
-    public List<StagesData.StageEventData> StageEvents {get {return _stageEvents;}}
     private int _clearCount;
     public int ClearCount {get {return _clearCount;}}
 
@@ -28,26 +26,24 @@ public class StageInfo
 
     private int _subordinateValue = 0;
     public int SubordinateValue {get {return _subordinateValue;}}
-
-
 	private List<int> _clearTroopIds = new List<int>();
-    
 	private List<int> _selectActorIds = new List<int>();
 	public List<int> SelectActorIds { get {return _selectActorIds;}}
 
     private List<string> _readEventKeys = new List<string>();
     public List<string> ReadEventKeys { get {return _readEventKeys;}}
 
-    readonly int _randomTroopCout = 15;
+    readonly int _randomTroopCount = 14;
 
     public StageInfo(StagesData.StageData stageInfo)
     {
         _id = stageInfo.Id;
         _turns = stageInfo.Turns;
-        _stageEvents = stageInfo.StageEvents;
         _currentTurn = 1;
         _IsSubordinate = false;
         _subordinateValue = 50;
+        _clearCount = 0;
+        _clearTroopIds.Clear();
 		MakeTroopData();
     }
 
@@ -58,7 +54,7 @@ public class StageInfo
 
 	private void MakeTroopData()
 	{
-		for (int i = 0;i < _randomTroopCout;i++)
+		for (int i = 0;i < _randomTroopCount;i++)
 		{
 			TroopsData.TroopData BossTroopData = new TroopsData.TroopData();
 			BossTroopData.Id = i + 1001;
@@ -91,59 +87,68 @@ public class StageInfo
     public List<TroopInfo> TacticsTroops()
     {
         if (_currentTroopInfos.Count > 0) return _currentTroopInfos;
+        _currentTroopInfos.Clear();
         List<TroopsData.TroopData> troopDatas = _troopDatas.FindAll(a => !_clearTroopIds.Contains(a.Id) && a.Line == 1);
         int max = 2;
         if (troopDatas.Count < 2)
         {
             max = troopDatas.Count;
         }
-        List<TroopsData.TroopData> _currentTroopsData = new List<TroopsData.TroopData>();
-        while (_currentTroopsData.Count <= max)
+        List<TroopsData.TroopData> troopsData = new List<TroopsData.TroopData>();
+        while (troopsData.Count <= max)
         {
             int rand = new Random().Next(0, troopDatas.Count);
-            if (!_currentTroopsData.Contains(troopDatas[rand]))
+            if (!troopsData.Contains(troopDatas[rand]))
             {
                 troopDatas[rand].Lv = _clearTroopIds.Count + 1;
-                _currentTroopsData.Add(troopDatas[rand]);
+                troopsData.Add(troopDatas[rand]);
             }
         }
-        _currentTroopInfos.Clear();
-        for (int i = 0;i < _currentTroopsData.Count;i++)
+        for (int i = 0;i < troopsData.Count;i++)
         {
-            TroopInfo troopInfo = new TroopInfo(_currentTroopsData[i].TroopId);
+            TroopInfo troopInfo = new TroopInfo(troopsData[i].TroopId);
 			for (int j = 0;j < 2;j++)
 			{
-        		int rand = new System.Random().Next(1, _randomTroopCout);
+        		int rand = new System.Random().Next(0, _randomTroopCount) + 1;
                 EnemiesData.EnemyData enemyData = DataSystem.Enemies.Find(a => a.Id == rand);
                 BattlerInfo enemy = new BattlerInfo(enemyData,1,j,0);
                 troopInfo.AddEnemy(enemy);
             }
-            troopInfo.MakeEnemyData(_currentTroopsData[i],i,_clearCount);
+            troopInfo.MakeEnemyData(troopsData[i],i,_clearCount);
             _currentTroopInfos.Add(troopInfo);
         }
 
         // 確定中ボス情報
         int selectIdx = 0;
-        if (MathF.Floor(CurrentTurn / 6) > 0)
+        int turns = _currentTurn + 1;
+        if (MathF.Floor(turns / 6) > 0)
         {
-            selectIdx = (int)MathF.Floor(CurrentTurn / 6);
+            selectIdx = (int)MathF.Floor(turns / 6);
         }
-        if (selectIdx > 0 && _selectActorIds.Count > selectIdx)
+        if (selectIdx > 0 && selectIdx < 5 && _selectActorIds.Count > selectIdx)
         {
             int bossTroopId = _selectActorIds[selectIdx] * 100;
-            if (selectIdx == 1)
+            int tutorialId = _selectActorIds[selectIdx] * 10;
+            if (!_clearTroopIds.Contains(tutorialId))
+            {
+                bossTroopId = tutorialId;
+            }
+            if (selectIdx == 4)
             {
                 bossTroopId = _selectActorIds[0] * 100;
             }
-            troopDatas = DataSystem.Troops.FindAll(a => a.TroopId == bossTroopId);
-        
-            TroopInfo troopInfo = new TroopInfo(bossTroopId);
-            for (int i = 0;i < troopDatas.Count;i++)
+            if (!_clearTroopIds.Contains(bossTroopId))
             {
-                troopInfo.MakeEnemyData(troopDatas[i],i,_clearCount);
-            }
+                troopDatas = DataSystem.Troops.FindAll(a => a.TroopId == bossTroopId);
+            
+                TroopInfo troopInfo = new TroopInfo(bossTroopId);
+                for (int i = 0;i < troopDatas.Count;i++)
+                {
+                    troopInfo.MakeEnemyData(troopDatas[i],i,_clearCount);
+                }
 
-            _currentTroopInfos[_currentTroopInfos.Count-1] = troopInfo;
+                _currentTroopInfos[_currentTroopInfos.Count-1] = troopInfo;
+            }
         }
 
         return _currentTroopInfos;
@@ -318,5 +323,10 @@ public class StageInfo
     public void GainClearCount(int value)
     {
         _clearCount += value;
+    }
+
+    public void AddClearTroopId(int troopId)
+    {
+        _clearTroopIds.Add(troopId);
     }
 };

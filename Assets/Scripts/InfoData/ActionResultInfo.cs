@@ -105,6 +105,9 @@ public class ActionResultInfo
             case FeatureType.HpDrain:
                 MakeHpDrain(subject,target,featureData);
                 return;
+            case FeatureType.HpDefineDamage:
+                MakeHpDefineDamage(subject,target,featureData,false);
+                return;
             case FeatureType.NoEffectHpDamage:
                 MakeHpDamage(subject,target,featureData,true);
                 return;
@@ -199,6 +202,39 @@ public class ActionResultInfo
     {
         MakeHpDamage(subject,target,featureData,false);
         _reHeal = (int)Mathf.Floor(HpDamage * featureData.Param3 * 0.01f);
+    }
+
+    private void MakeHpDefineDamage(BattlerInfo subject,BattlerInfo target,SkillsData.FeatureData featureData,bool isNoEffect)
+    {
+        if (!IsHit(subject,target) && !isNoEffect)
+        {
+            _missed = true;
+            return;
+        }
+        int AtkValue = featureData.Param1;
+        float DamageRate = 100;
+        if (subject.IsState(StateType.DamageUp))
+        {
+            DamageRate *= subject.StateEffectAll(StateType.DamageUp);
+        }
+        float SkillDamage = (DamageRate * 0.01f * AtkValue);
+        if (target.IsState(StateType.CounterOura) && target.CanMove() && !isNoEffect)
+        {
+            _execStateInfos[target.Index].Add(StateType.CounterOura);
+            _reDamage = (int)Mathf.Floor(SkillDamage * target.StateEffectAll(StateType.CounterOura) * 0.01f);
+        }
+        float DamageValue = Mathf.Max(1,SkillDamage);
+        _hpDamage = (int)Mathf.Round(DamageValue);
+        _hpDamage = Mathf.Max(1,_hpDamage);
+        if (target.IsState(StateType.NoDamage) && !isNoEffect)
+        {
+            _execStateInfos[target.Index].Add(StateType.NoDamage);
+            _hpDamage = 0;
+        }
+        if (subject.IsState(StateType.Drain))
+        {
+            _reHeal = (int)Mathf.Floor(_hpDamage * subject.StateEffectAll(StateType.Drain) * 0.01f);
+        }
     }
 
     private void MakeMpHeal(BattlerInfo subject,BattlerInfo target,SkillsData.FeatureData featureData)

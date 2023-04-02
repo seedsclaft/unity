@@ -236,4 +236,38 @@ public class ActorInfo
         }
         _lost = isLost;
     }
+
+    public List<string> AttirbuteValues()
+    {
+        List<string> attributeValues = new List<string>();
+        foreach (var attribute in Attribute)
+        {
+            int textId = 320;
+            if (attribute > 100){
+                textId += 1;
+            } else
+            if (attribute > 80){
+                textId += 2;
+            } else
+            if (attribute > 60){
+                textId += 3;
+            } else
+            if (attribute > 40){
+                textId += 4;
+            } else
+            if (attribute > 20){
+                textId += 5;
+            } else
+            if (attribute > 10){
+                textId += 6;
+            } else
+            if (attribute > 0){
+                textId += 7;
+            } else{
+                textId += 8;
+            }
+            attributeValues.Add(DataSystem.System.GetTextData(textId).Text);
+        }
+        return attributeValues;
+    }
 }

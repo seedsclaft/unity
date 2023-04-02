@@ -6,6 +6,7 @@ using UnityEngine;
 public class TroopInfo 
 {
     private int _troopId = 0;
+    public int TroopId { get {return _troopId;}}
     private List<BattlerInfo> _battlerInfos = new List<BattlerInfo>(); 
     public List<BattlerInfo> BattlerInfos {get {return _battlerInfos;}}
     public BattlerInfo BossEnemy {get {return _battlerInfos[_battlerInfos.Count-1];}}

@@ -140,6 +140,7 @@ public enum FeatureType
     HpDamage = 1,
     HpHeal = 2,
     HpDrain = 3,
+    HpDefineDamage = 4,
     MpHeal = 7,
     NoEffectHpDamage = 11,
     AddState = 21,

@@ -35,6 +35,8 @@ public class StatusView : BaseView
     void Initialize()
     {
         InitializeSkillActionList();
+        skillAttributeList.Initialize((attribute) => CallAttributeTypes(attribute));
+        
         new StatusPresenter(this);
     }
 
@@ -279,7 +281,7 @@ public class StatusView : BaseView
 
     public void SetAttributeTypes(List<AttributeType> attributeTypes)
     {
-        skillAttributeList.Initialize(attributeTypes ,(attribute) => CallAttributeTypes(attribute));
+        skillAttributeList.Refresh(attributeTypes);
         //SetInputHandler(skillAttributeList.GetComponent<IInputHandlerEvent>());
     }
 

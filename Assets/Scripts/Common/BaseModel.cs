@@ -37,6 +37,10 @@ public class BaseModel
         return Actors().FindAll(a => PartyMembersIds.Contains(a.ActorId));
     }
 
+    public List<StagesData.StageEventData> StageEventDatas{ 
+        get{ return DataSystem.Stages.Find(a => a.Id == CurrentStage.Id).StageEvents;}
+    }
+
     public async Task<List<AudioClip>> GetBgmData(string bgmKey){
         BGMData bGMData = DataSystem.Data.GetBGM(bgmKey);
         List<string> data = new List<string>();

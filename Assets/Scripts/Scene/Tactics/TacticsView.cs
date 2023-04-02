@@ -44,6 +44,10 @@ public class TacticsView : BaseView
         SetInputHandler(skillAlchemyList.GetComponent<IInputHandlerEvent>());
         HideSkillAlchemyList();
 
+        skillAttributeList.Initialize((attribute) => CallAttributeTypes(attribute));
+        SetInputHandler(skillAttributeList.GetComponent<IInputHandlerEvent>());
+        skillAttributeList.gameObject.SetActive(false);
+
         tacticsTrainList.Initialize((actorinfo) => CallActorTrain(actorinfo));
         SetInputHandler(tacticsTrainList.GetComponent<IInputHandlerEvent>());
         
@@ -438,9 +442,12 @@ public class TacticsView : BaseView
 
     public void SetAttributeTypes(List<AttributeType> attributeTypes)
     {
-        skillAttributeList.Initialize(attributeTypes ,(attribute) => CallAttributeTypes(attribute));
-        SetInputHandler(skillAttributeList.GetComponent<IInputHandlerEvent>());
-        skillAttributeList.gameObject.SetActive(false);
+        skillAttributeList.Refresh(attributeTypes);
+    }
+
+    public void SetAttributeValues(List<string> attributeValues)
+    {
+        skillAttributeList.RefreshValues(attributeValues);
     }
 
     private void CallAttributeTypes(AttributeType attributeType)
