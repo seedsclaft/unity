@@ -24,11 +24,11 @@ public class TacticsModel : BaseModel
     {
         if (CurrentStage != null)
         {
-            if (CurrentStage.Turns < 12)
+            if (CurrentStage.Turns > 24)
             {        
                 return "TACTICS1";
             }
-            if (CurrentStage.Turns < 24)
+            if (CurrentStage.Turns > 12)
             {        
                 return "TACTICS2";
             }

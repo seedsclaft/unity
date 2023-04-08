@@ -193,7 +193,7 @@ MonoBehaviour:
     FeatureDatas:
     - SkillId: 101
       FeatureType: 1
-      Param1: 200
+      Param1: 100
       Param2: 0
       Param3: 0
     TriggerDatas: []
@@ -486,13 +486,36 @@ MonoBehaviour:
       Param3: 30
     TriggerDatas: []
   - Id: 201
+    Name: "\u30C7\u30A3\u30B9\u30C1\u30E3\u30FC\u30B8"
+    IconIndex: 1
+    AnimationName: NA_Effekseer/NA_shooting_002
+    AnimationPosition: 0
+    AnimationType: 1
+    DamageTiming: 26
+    MpCost: 0
+    Rank: 0
+    Attribute: 2
+    Scope: 1
+    SkillType: 1
+    TargetType: 1
+    Help: "\u6575\u5358\u4F53\u306B\u30C0\u30E1\u30FC\u30B8"
+    Range: 2
+    AliveOnly: 1
+    FeatureDatas:
+    - SkillId: 201
+      FeatureType: 1
+      Param1: 100
+      Param2: 0
+      Param3: 0
+    TriggerDatas: []
+  - Id: 202
     Name: "\u30E9\u30A4\u30C8\u30CB\u30F3\u30B0\u30A6\u30A7\u30D6"
     IconIndex: 1
     AnimationName: NA_Effekseer/NA_net_001
     AnimationPosition: 0
     AnimationType: 1
     DamageTiming: 26
-    MpCost: 0
+    MpCost: 5
     Rank: 2
     Attribute: 2
     Scope: 1
@@ -502,13 +525,13 @@ MonoBehaviour:
     Range: 2
     AliveOnly: 1
     FeatureDatas:
-    - SkillId: 201
+    - SkillId: 202
       FeatureType: 21
       Param1: 101
       Param2: 10
       Param3: 1
     TriggerDatas: []
-  - Id: 202
+  - Id: 203
     Name: "\u30B7\u30E3\u30FC\u30D7\u30B3\u30FC\u30C9"
     IconIndex: 1
     AnimationName: NA_Effekseer/NA_status_005
@@ -525,13 +548,13 @@ MonoBehaviour:
     Range: 1
     AliveOnly: 1
     FeatureDatas:
-    - SkillId: 202
+    - SkillId: 203
       FeatureType: 21
       Param1: 52
       Param2: 999
       Param3: 50
     TriggerDatas: []
-  - Id: 203
+  - Id: 204
     Name: "\u30B7\u30E7\u30C3\u30AF\u30A4\u30F3\u30D1\u30EB\u30B9"
     IconIndex: 1
     AnimationName: NA_Effekseer/NA_magic_003
@@ -548,13 +571,13 @@ MonoBehaviour:
     Range: 2
     AliveOnly: 1
     FeatureDatas:
-    - SkillId: 203
+    - SkillId: 204
       FeatureType: 21
       Param1: 22
       Param2: 50
       Param3: 0
     TriggerDatas: []
-  - Id: 204
+  - Id: 205
     Name: "\u30C8\u30E9\u30B9\u30C8\u30C1\u30A7\u30A4\u30F3"
     IconIndex: 1
     AnimationName: NA_Effekseer/NA_exchange_001
@@ -571,7 +594,7 @@ MonoBehaviour:
     Range: 1
     AliveOnly: 1
     FeatureDatas:
-    - SkillId: 204
+    - SkillId: 205
       FeatureType: 32
       Param1: 999
       Param2: 0
@@ -814,6 +837,29 @@ MonoBehaviour:
       Param3: 30
     TriggerDatas: []
   - Id: 301
+    Name: "\u30A2\u30A4\u30B9\u30D6\u30EC\u30A4\u30C9"
+    IconIndex: 370
+    AnimationName: NA_Effekseer/NA_slash_003_c3
+    AnimationPosition: 0
+    AnimationType: 1
+    DamageTiming: 26
+    MpCost: 0
+    Rank: 0
+    Attribute: 3
+    Scope: 1
+    SkillType: 1
+    TargetType: 1
+    Help: "\u6575\u5358\u4F53\u306B\u30C0\u30E1\u30FC\u30B8"
+    Range: 1
+    AliveOnly: 1
+    FeatureDatas:
+    - SkillId: 301
+      FeatureType: 1
+      Param1: 100
+      Param2: 0
+      Param3: 0
+    TriggerDatas: []
+  - Id: 302
     Name: "\u30AB\u30A6\u30F3\u30BF\u30FC\u30AA\u30FC\u30E9"
     IconIndex: 370
     AnimationName: tktk02/Light1
@@ -830,13 +876,13 @@ MonoBehaviour:
     Range: 1
     AliveOnly: 1
     FeatureDatas:
-    - SkillId: 301
+    - SkillId: 302
       FeatureType: 21
       Param1: 103
       Param2: 0
       Param3: 150
     TriggerDatas: []
-  - Id: 302
+  - Id: 303
     Name: "\u30B7\u30FC\u30EB\u30C9\u30B9\u30DA\u30EB"
     IconIndex: 370
     AnimationName: tktk02/Gun2
@@ -853,13 +899,13 @@ MonoBehaviour:
     Range: 1
     AliveOnly: 1
     FeatureDatas:
-    - SkillId: 302
+    - SkillId: 303
       FeatureType: 21
       Param1: 44
       Param2: 999
       Param3: 4
     TriggerDatas: []
-  - Id: 303
+  - Id: 304
     Name: "\u30A8\u30B9\u30B3\u30FC\u30C8\u30BD\u30FC\u30EB"
     IconIndex: 370
     AnimationName: NA_Effekseer/NA_wave_001
@@ -876,13 +922,13 @@ MonoBehaviour:
     Range: 1
     AliveOnly: 1
     FeatureDatas:
-    - SkillId: 303
+    - SkillId: 304
       FeatureType: 21
       Param1: 107
       Param2: 2
       Param3: 0
     TriggerDatas: []
-  - Id: 304
+  - Id: 305
     Name: "\u30B9\u30DA\u30EB\u30D0\u30CB\u30C3\u30B7\u30E5"
     IconIndex: 370
     AnimationName: NA_Effekseer/NA_magic_006
@@ -899,7 +945,7 @@ MonoBehaviour:
     Range: 1
     AliveOnly: 1
     FeatureDatas:
-    - SkillId: 304
+    - SkillId: 305
       FeatureType: 21
       Param1: 108
       Param2: 2
@@ -1114,6 +1160,29 @@ MonoBehaviour:
       Param3: 30
     TriggerDatas: []
   - Id: 401
+    Name: "\u30BB\u30A4\u30F3\u30C8\u30EC\u30FC\u30B6\u30FC"
+    IconIndex: 382
+    AnimationName: NA_Effekseer/NA_magic_007
+    AnimationPosition: 0
+    AnimationType: 1
+    DamageTiming: 26
+    MpCost: 0
+    Rank: 2
+    Attribute: 4
+    Scope: 1
+    SkillType: 1
+    TargetType: 1
+    Help: "\u6575\u5358\u4F53\u306B\u30C0\u30E1\u30FC\u30B8"
+    Range: 1
+    AliveOnly: 1
+    FeatureDatas:
+    - SkillId: 401
+      FeatureType: 1
+      Param1: 100
+      Param2: 0
+      Param3: 0
+    TriggerDatas: []
+  - Id: 402
     Name: "\u30DA\u30CD\u30C8\u30EC\u30A4\u30C8"
     IconIndex: 382
     AnimationName: tktk01/Sword7
@@ -1130,13 +1199,13 @@ MonoBehaviour:
     Range: 1
     AliveOnly: 1
     FeatureDatas:
-    - SkillId: 401
+    - SkillId: 402
       FeatureType: 11
       Param1: 150
       Param2: 0
       Param3: 0
     TriggerDatas: []
-  - Id: 402
+  - Id: 403
     Name: "\u30D2\u30FC\u30EA\u30F3\u30B0"
     IconIndex: 382
     AnimationName: NA_Effekseer/NA_healing_001
@@ -1153,18 +1222,18 @@ MonoBehaviour:
     Range: 1
     AliveOnly: 1
     FeatureDatas:
-    - SkillId: 402
+    - SkillId: 403
       FeatureType: 2
       Param1: 25
       Param2: 0
       Param3: 0
-    - SkillId: 402
+    - SkillId: 403
       FeatureType: 201
       Param1: 1
       Param2: 0
       Param3: 150
     TriggerDatas: []
-  - Id: 403
+  - Id: 404
     Name: "\u30EA\u30D5\u30EC\u30C3\u30B7\u30E5"
     IconIndex: 382
     AnimationName: tktk01/Light2
@@ -1181,28 +1250,28 @@ MonoBehaviour:
     Range: 1
     AliveOnly: 1
     FeatureDatas:
-    - SkillId: 403
+    - SkillId: 404
       FeatureType: 22
       Param1: 21
       Param2: 0
       Param3: 0
-    - SkillId: 403
+    - SkillId: 404
       FeatureType: 22
       Param1: 22
       Param2: 0
       Param3: 0
-    - SkillId: 403
+    - SkillId: 404
       FeatureType: 22
       Param1: 101
       Param2: 0
       Param3: 0
-    - SkillId: 403
+    - SkillId: 404
       FeatureType: 22
       Param1: 110
       Param2: 0
       Param3: 0
     TriggerDatas: []
-  - Id: 404
+  - Id: 405
     Name: "\u3079\u30CD\u30C7\u30A3\u30AF\u30B7\u30E7\u30F3"
     IconIndex: 382
     AnimationName: tktk02/Light3
@@ -1219,7 +1288,7 @@ MonoBehaviour:
     Range: 1
     AliveOnly: 1
     FeatureDatas:
-    - SkillId: 404
+    - SkillId: 405
       FeatureType: 21
       Param1: 109
       Param2: 10
@@ -1433,6 +1502,29 @@ MonoBehaviour:
       Param3: 30
     TriggerDatas: []
   - Id: 501
+    Name: "\u30C0\u30FC\u30AF\u30D7\u30EA\u30BA\u30F3"
+    IconIndex: 122
+    AnimationName: tktk02/Dark1
+    AnimationPosition: 0
+    AnimationType: 1
+    DamageTiming: 26
+    MpCost: 0
+    Rank: 0
+    Attribute: 5
+    Scope: 1
+    SkillType: 1
+    TargetType: 1
+    Help: "\u6575\u5358\u4F53\u306B\u30C0\u30E1\u30FC\u30B8"
+    Range: 1
+    AliveOnly: 1
+    FeatureDatas:
+    - SkillId: 501
+      FeatureType: 1
+      Param1: 100
+      Param2: 0
+      Param3: 0
+    TriggerDatas: []
+  - Id: 502
     Name: "\u30E6\u30FC\u30B5\u30CD\u30A4\u30B8\u30A2"
     IconIndex: 122
     AnimationName: tktk01/Dark1
@@ -1449,13 +1541,13 @@ MonoBehaviour:
     Range: 2
     AliveOnly: 1
     FeatureDatas:
-    - SkillId: 501
+    - SkillId: 502
       FeatureType: 1
       Param1: 100
       Param2: 0
       Param3: 0
     TriggerDatas: []
-  - Id: 502
+  - Id: 503
     Name: "\u30C9\u30EC\u30A4\u30F3\u30D2\u30FC\u30EB"
     IconIndex: 193
     AnimationName: tktk01/Dark3
@@ -1472,13 +1564,13 @@ MonoBehaviour:
     Range: 1
     AliveOnly: 1
     FeatureDatas:
-    - SkillId: 502
+    - SkillId: 503
       FeatureType: 3
       Param1: 150
       Param2: 0
       Param3: 25
     TriggerDatas: []
-  - Id: 503
+  - Id: 504
     Name: "\u30C7\u30EA\u30FC\u30C8\u30DE\u30B8\u30C3\u30AF"
     IconIndex: 193
     AnimationName: NA_Effekseer/NA_magic_002
@@ -1495,53 +1587,53 @@ MonoBehaviour:
     Range: 1
     AliveOnly: 1
     FeatureDatas:
-    - SkillId: 503
+    - SkillId: 504
       FeatureType: 22
       Param1: 43
       Param2: 0
       Param3: 0
-    - SkillId: 503
+    - SkillId: 504
       FeatureType: 22
       Param1: 44
       Param2: 0
       Param3: 0
-    - SkillId: 503
+    - SkillId: 504
       FeatureType: 22
       Param1: 46
       Param2: 0
       Param3: 0
-    - SkillId: 503
+    - SkillId: 504
       FeatureType: 22
       Param1: 52
       Param2: 0
       Param3: 0
-    - SkillId: 503
+    - SkillId: 504
       FeatureType: 22
       Param1: 103
       Param2: 0
       Param3: 0
-    - SkillId: 503
+    - SkillId: 504
       FeatureType: 22
       Param1: 104
       Param2: 0
       Param3: 0
-    - SkillId: 503
+    - SkillId: 504
       FeatureType: 22
       Param1: 105
       Param2: 0
       Param3: 0
-    - SkillId: 503
+    - SkillId: 504
       FeatureType: 22
       Param1: 108
       Param2: 0
       Param3: 0
-    - SkillId: 503
+    - SkillId: 504
       FeatureType: 22
       Param1: 109
       Param2: 0
       Param3: 0
     TriggerDatas: []
-  - Id: 504
+  - Id: 505
     Name: "\u30C7\u30A3\u30D7\u30E9\u30F4\u30A3\u30C6\u30A3"
     IconIndex: 193
     AnimationName: NA_Effekseer/NA_curse_001
@@ -1558,7 +1650,7 @@ MonoBehaviour:
     Range: 1
     AliveOnly: 1
     FeatureDatas:
-    - SkillId: 504
+    - SkillId: 505
       FeatureType: 21
       Param1: 110
       Param2: 0

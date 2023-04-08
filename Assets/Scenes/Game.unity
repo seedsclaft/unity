@@ -5579,7 +5579,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1524364501
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5615,8 +5615,8 @@ MonoBehaviour:
   TimingOfUpdate: 0
   EmitterScale: 0
   TimeScale: 0
-  effectAsset: {fileID: 11400000, guid: 86e6dcda8106f7e46bb75040f3ea60cd, type: 2}
-  playOnStart: 0
+  effectAsset: {fileID: 11400000, guid: 7af008ca61f1a6740860b748d1603269, type: 2}
+  playOnStart: 1
   isLooping: 0
 --- !u!1 &1561513542
 GameObject:
