@@ -184,7 +184,7 @@ public class BaseModel
                         ActorInfo target = StageMembers()[i];
                         if (featureData.FeatureType == FeatureType.AddState)
                         {
-                            StateInfo stateInfo = new StateInfo(featureData.Param1,featureData.Param2,featureData.Param3,-1,0);
+                            StateInfo stateInfo = new StateInfo(featureData.Param1,featureData.Param2,featureData.Param3,-1,0,false);
                             CurrentAlcana.SetAlacanaState(stateInfo);
                         }
                         if (featureData.FeatureType == FeatureType.HpHeal)
@@ -224,7 +224,7 @@ public class BaseModel
                     {
                         if (skill.Master.TargetType == TargetType.Opponent)
                         {
-                            StateInfo stateInfo = new StateInfo(featureData.Param1,featureData.Param2,featureData.Param3,-1,0);
+                            StateInfo stateInfo = new StateInfo(featureData.Param1,featureData.Param2,featureData.Param3,-1,0,false);
                             CurrentStage.ChengeCurrentTroopAddState(stateInfo);
                         }
                     }

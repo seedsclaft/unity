@@ -37,7 +37,7 @@ public class TacticsComponent : MonoBehaviour
         TacticsComandType currentTacticsComandType = TacticsComandType.None;
         if (actorInfoComponent != null)
         {
-            actorInfoComponent.UpdateInfo(actorInfo);
+            actorInfoComponent.UpdateInfo(actorInfo,null);
         }
         
         if (trainCheckToggle != null)

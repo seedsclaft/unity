@@ -128,6 +128,7 @@ public class BattlePresenter : BasePresenter
             _model.ExecActionResultInfo(benedictionActionResults[i]);
         }
         StartDeathAnimation(benedictionActionResults);
+        _view.RefreshStatus();
         if (CheckBattleEnd())
         {
             return;

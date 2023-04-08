@@ -429,6 +429,7 @@ abstract public class ListWindow : MonoBehaviour
                     var h = (scrollRect.content.rect.height - GetViewPortHeight());
                     var rectHei = _itemSize+ItemSpace();
 
+                    int count = 0;
                     if (((_itemCount+startIndex) - selectIndex) <= 0)
                     {
                         var nom = (selectIndex - (_itemCount-1)) * ((float)rectHei / (float)h);
@@ -444,6 +445,8 @@ abstract public class ListWindow : MonoBehaviour
                                 nom += 0.000001f;
                                 scrollRect.normalizedPosition = new Vector2(0,nom);
                                 tempIndex = GetStartIndex();
+                                count++;
+                                if (count > 1000) tempIndex = (_dataCount-_itemCount);
                             }
                         } else{
                             scrollRect.normalizedPosition = new Vector2(0,nom);
@@ -454,6 +457,8 @@ abstract public class ListWindow : MonoBehaviour
                                 nom -= 0.000001f;
                                 scrollRect.normalizedPosition = new Vector2(0,nom);
                                 tempIndex = GetStartIndex();
+                                count++;
+                                if (count > 1000) tempIndex = startIndex;
                             }
                         }
                         ValueChanged(new Vector2(0,nom));
@@ -474,6 +479,8 @@ abstract public class ListWindow : MonoBehaviour
                                 nom += 0.000001f;
                                 scrollRect.normalizedPosition = new Vector2(0,nom);
                                 tempIndex = GetStartIndex();
+                                count++;
+                                if (count > 1000) tempIndex = startIndex;
                             }
                         }
                         ValueChanged(new Vector2(0,nom));

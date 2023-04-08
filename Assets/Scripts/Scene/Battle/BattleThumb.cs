@@ -31,7 +31,7 @@ public class BattleThumb : MonoBehaviour
 
     private void UpdateThumb(ActorInfo actorInfo)
     {
-        actorInfoComponent.UpdateInfo(actorInfo);
+        actorInfoComponent.UpdateInfo(actorInfo,null);
     }
 
     private void Clear()

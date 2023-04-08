@@ -18,28 +18,32 @@ public class StatusStrengthList : ListWindow , IInputHandlerEvent
     private ActorInfo _actorInfo = null;
     private List<StatusStrength> _statusStrengths = new List<StatusStrength>();
 
-    public int selectIndex{
-        get {return Index;}
-    }
-
-    public void Initialize(ActorInfo actorInfo ,System.Action<int> plusEvent,System.Action<int> minusEvent,System.Action resetEvent)
+    public void Initialize(System.Action<int> plusEvent,System.Action<int> minusEvent,System.Action resetEvent)
     {
-        _actorInfo = actorInfo;
         _statusStrengths.Clear();
         InitializeListView(rows);
         for (int i = 0; i < rows;i++)
         {
-            var statusStrength = ObjectList[i].GetComponent<StatusStrength>();
-            statusStrength.SetData(actorInfo,i);
-            //statusStrength.SetCallHandler(callEvent);
+            StatusStrength statusStrength = ObjectList[i].GetComponent<StatusStrength>();
             statusStrength.SetPlusHandler(plusEvent);
             statusStrength.SetMinusHandler(minusEvent);
             statusStrength.SetSelectHandler((data) => UpdateSelectIndex(data));
             _statusStrengths.Add(statusStrength);
         }
         SetInputHandler((a) => CallInputHandler(a,plusEvent,minusEvent,resetEvent));
+        UpdateSelectIndex(-1);
+    }
+
+    public void Refresh(ActorInfo actorInfo)
+    {
+        _actorInfo = actorInfo;
+        for (int i = 0; i < ObjectList.Count;i++)
+        {
+            StatusStrength statusStrength = ObjectList[i].GetComponent<StatusStrength>();
+            statusStrength.SetData(actorInfo,i);
+        }
         UpdateAllItems();
-        UpdateSelectIndex(0);
+        if (Index == -1) UpdateSelectIndex(0);
     }
 
     public void InitializeConfirm(List<SystemData.MenuCommandData> confirmCommands ,System.Action<TacticsComandType> callEvent)
@@ -50,7 +54,7 @@ public class StatusStrengthList : ListWindow , IInputHandlerEvent
         _confirmEvent = callEvent;
     }
 
-    public void Refresh(int sp,int numinous)
+    public void RefreshCostInfo(int sp,int numinous)
     {
         remainSp.text = sp.ToString();
         remainNuminous.text = numinous.ToString();

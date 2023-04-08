@@ -71,24 +71,31 @@ public class StrategyModel : BaseModel
 
     public List<GetItemInfo> SetBattleResult()
     {
+        List<GetItemInfo> getItemInfos = new List<GetItemInfo>();
         foreach (GetItemInfo getItemInfo in CurrentTroopInfo().GetItemInfos)
         {
             if (getItemInfo.GetItemType == GetItemType.Skill)
             {
-                PartyInfo.AddAlchemy(getItemInfo.Param1);
-                getItemInfo.SetTitleData(DataSystem.System.GetTextData(14040).Text);
+                int rand = UnityEngine.Random.Range (0,100);
+                if ((int)(getItemInfo.Param2 * 0.01f) > rand)
+                {
+                    PartyInfo.AddAlchemy(getItemInfo.Param1);
+                    getItemInfo.SetTitleData(DataSystem.System.GetTextData(14040).Text);
+                    getItemInfos.Add(getItemInfo);
+                }
             }
             if (getItemInfo.GetItemType == GetItemType.Numinous)
             {
                 PartyInfo.ChangeCurrency(PartyInfo.Currency + getItemInfo.Param1);
                 getItemInfo.SetTitleData(DataSystem.System.GetTextData(14041).Text);
+                getItemInfos.Add(getItemInfo);
             }
         }
         CurrentStage.AddClearTroopId(CurrentTroopInfo().TroopId);
         CurrentStage.GainClearCount(1);
         CurrentStage.ChangeSubordinate(15);
 
-        return CurrentTroopInfo().GetItemInfos;
+        return getItemInfos;
     }
 
     public int BattleEnemyIndex(bool inBattle)

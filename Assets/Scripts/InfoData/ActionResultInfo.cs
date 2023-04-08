@@ -171,19 +171,35 @@ public class ActionResultInfo
         if (target.IsState(StateType.CounterOura) && target.CanMove() && !isNoEffect)
         {
             _execStateInfos[target.Index].Add(StateType.CounterOura);
-            _reDamage = (int)Mathf.Floor((DefValue * 0.5f) * target.StateEffectAll(StateType.CounterOura) * 0.01f);
+            _reDamage = ReDamageValue(target);
         }
         SkillDamage -= (DefValue * 0.5f);
         float DamageValue = Mathf.Max(1,SkillDamage);
         _hpDamage = (int)Mathf.Round(DamageValue);
         // 属性補正
         // クリティカル
+        if (subject.IsState(StateType.CriticalRateUp))
+        {
+            int CriticalRate = subject.StateEffectAll(StateType.CriticalRateUp);
+            int rand = new System.Random().Next(0, 100);
+            if (CriticalRate >= rand)
+            {        
+                _hpDamage = ApplyCritical(_hpDamage);
+            }
+        }
         _hpDamage = ApplyVariance(_hpDamage);
         _hpDamage = Mathf.Max(1,_hpDamage);
         if (target.IsState(StateType.NoDamage) && !isNoEffect)
         {
             _execStateInfos[target.Index].Add(StateType.NoDamage);
             _hpDamage = 0;
+        }
+        if (subject.IsState(StateType.DamageAddState))
+        {
+            int rand = new System.Random().Next(0, 100);
+            if (subject.StateEffectAll(StateType.DamageAddState) >= rand){
+                _hpDamage = target.Hp;
+            }
         }
         if (subject.IsState(StateType.Drain))
         {
@@ -195,7 +211,6 @@ public class ActionResultInfo
     {
         float HealValue = featureData.Param1;
         _hpHeal = (int)Mathf.Round(HealValue);
-        //_hpHeal = ApplyVariance(_hpHeal);
     }
 
     private void MakeHpDrain(BattlerInfo subject,BattlerInfo target,SkillsData.FeatureData featureData)
@@ -221,7 +236,7 @@ public class ActionResultInfo
         if (target.IsState(StateType.CounterOura) && target.CanMove() && !isNoEffect)
         {
             _execStateInfos[target.Index].Add(StateType.CounterOura);
-            _reDamage = (int)Mathf.Floor(SkillDamage * target.StateEffectAll(StateType.CounterOura) * 0.01f);
+            _reDamage = ReDamageValue(target);
         }
         float DamageValue = Mathf.Max(1,SkillDamage);
         _hpDamage = (int)Mathf.Round(DamageValue);
@@ -246,7 +261,7 @@ public class ActionResultInfo
 
     private void MakeAddState(BattlerInfo subject,BattlerInfo target,SkillsData.FeatureData featureData)
     {
-        StateInfo stateInfo = new StateInfo(featureData.Param1,featureData.Param2,featureData.Param3,subject.Index,target.Index);
+        StateInfo stateInfo = new StateInfo(featureData.Param1,featureData.Param2,featureData.Param3,subject.Index,target.Index,false);
         if (stateInfo.Master.Id == (int)StateType.CounterOura || stateInfo.Master.Id == (int)StateType.Benediction)
         {
             stateInfo.Turns = 200 - subject.Status.Spd * 2;
@@ -260,7 +275,7 @@ public class ActionResultInfo
     
     private void MakeRemoveState(BattlerInfo subject,BattlerInfo target,SkillsData.FeatureData featureData)
     {
-        StateInfo stateInfo = new StateInfo(featureData.Param1,featureData.Param2,featureData.Param3,subject.Index,target.Index);
+        StateInfo stateInfo = new StateInfo(featureData.Param1,featureData.Param2,featureData.Param3,subject.Index,target.Index,false);
         bool IsRemoved = target.RemoveState(stateInfo);
         if (IsRemoved)
         {
@@ -290,6 +305,17 @@ public class ActionResultInfo
         }
     }
 
+    private int ReDamageValue(BattlerInfo target)
+    {
+        int ReDamage = (int)Mathf.Floor((target.CurrentDef() * 0.5f) * target.StateEffectAll(StateType.CounterOura) * 0.01f);
+        ReDamage += target.StateEffectAll(StateType.CounterOuraDamage);
+        return ReDamage;
+    }
+
+    private int ApplyCritical(int value)
+    {
+        return Mathf.FloorToInt( value * 1.5f );
+    }
 
     private int ApplyVariance(int value)
     {

@@ -36,7 +36,7 @@ public class StrategyView : BaseView
 
     public void SetUiView()
     {
-        tacticsEnemyList.Initialize();
+        tacticsEnemyList.Initialize(null,null);
         tacticsEnemyList.gameObject.SetActive(false);
     }
 
@@ -107,7 +107,7 @@ public class StrategyView : BaseView
     {
         List<TroopInfo> troopInfos = new List<TroopInfo>();
         troopInfos.Add(troopInfo);
-        tacticsEnemyList.Refresh(troopInfos,null,null);
+        tacticsEnemyList.Refresh(troopInfos);
         //SetInputHandler(tacticsEnemyList.GetComponent<IInputHandlerEvent>());
         tacticsEnemyList.InitializeConfirm(confirmCommands,(confirmCommands) => CallBattleCommand(confirmCommands));
         SetInputHandler(tacticsEnemyList.TacticsCommandList.GetComponent<IInputHandlerEvent>());

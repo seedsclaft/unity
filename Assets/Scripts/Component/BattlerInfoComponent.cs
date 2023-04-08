@@ -31,7 +31,7 @@ public class BattlerInfoComponent : MonoBehaviour
         _battlerInfo = battlerInfo;
         if (battlerInfo.isActor)
         {
-            actorInfoComponent.UpdateInfo(battlerInfo.ActorInfo);
+            actorInfoComponent.UpdateInfo(battlerInfo.ActorInfo,null);
         } else
         {
             enemyInfoComponent.UpdateInfo(battlerInfo);
@@ -77,7 +77,7 @@ public class BattlerInfoComponent : MonoBehaviour
     {
         if (_battlerInfo.isActor)
         {
-            actorInfoComponent.UpdateInfo(_battlerInfo.ActorInfo);
+            actorInfoComponent.UpdateInfo(_battlerInfo.ActorInfo,null);
             actorInfoComponent.SetAwakeMode(_battlerInfo.IsState(StateType.Demigod));
         } else
         {
@@ -85,7 +85,7 @@ public class BattlerInfoComponent : MonoBehaviour
         }
         ChangeHp(_battlerInfo.Hp);
         ChangeMp(_battlerInfo.Mp);
-        if (_battlerInfo.IsAlive())
+        if (_battlerInfo.IsAlive() && _battlerInfo.isActor == false)
         {
             BattleImage().gameObject.SetActive(true);
             ShowUI();

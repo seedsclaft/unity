@@ -34,6 +34,7 @@ public enum StateType
     AtkUp = 43,
     DefUp = 44,
     DamageUp = 46,
+    CriticalRateUp = 47,
     EvaUp = 52,
     Accel = 53,
     TargetRateUp = 61,
@@ -49,6 +50,9 @@ public enum StateType
     Benediction  = 109,
     Curse  = 110,
     Drain  = 111,
+    AfterHeal = 112,
+    CounterOuraDamage = 113,
+    DamageAddState = 114,
 }
 
 public enum RemovalTiming

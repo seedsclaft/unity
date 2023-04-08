@@ -192,8 +192,13 @@ public class ActorInfo
             CurrentParameter(StatusParamType.Def),
             CurrentParameter(StatusParamType.Spd)
         );
-        TempStatus.Clear();
+        ClearStrength();
         _numinous += useNuminous;
+    }
+
+    public void ClearStrength()
+    {
+        TempStatus.Clear();
     }
 
     public void StrengthReset()
@@ -204,6 +209,7 @@ public class ActorInfo
         ChangeMp(_currentMp);
         ChangeSp((_level-1) * 10);
         _numinous = 0;
+        ClearStrength();
     }
 
 
@@ -237,11 +243,46 @@ public class ActorInfo
         _lost = isLost;
     }
 
-    public List<string> AttirbuteValues()
+    public List<int> AttirbuteParams(List<ActorInfo> actorInfos)
     {
+        List<SkillsData.FeatureData> alchemyFeatures = new List<SkillsData.FeatureData>();
+        foreach (var actorInfo in actorInfos)
+        {
+            List<SkillInfo> skillInfos = actorInfo.Skills.FindAll(a => a.Master.FeatureDatas.Find(b => b.Param1 == (int)FeatureType.MagicAlchemy)!= null);
+            foreach (var skillInfo in skillInfos)
+            {
+                foreach (var featureData in skillInfo.Master.FeatureDatas)
+                {
+                    if (featureData.FeatureType == FeatureType.MagicAlchemy)
+                    {
+                        alchemyFeatures.Add(featureData);
+                    }
+                }
+            }
+        }
+        List<int> attributeValues = new List<int>();
+        foreach (var attribute in Attribute)
+        {
+            int attributeValue = attribute;
+            foreach (var alchemyFeature in alchemyFeatures)
+            {
+                if (alchemyFeature.Param2 == attribute)
+                {
+                    attributeValue += alchemyFeature.Param3;
+                }
+            }
+            attributeValues.Add(attributeValue);
+        }
+        return attributeValues;
+    }
+
+    public List<string> AttirbuteValues(List<ActorInfo> actorInfos)
+    {
+        List<int> attributeParams = AttirbuteParams(actorInfos);
         List<string> attributeValues = new List<string>();
         foreach (var attribute in Attribute)
         {
+            int attributeValue = attributeParams[attribute];
             int textId = 320;
             if (attribute > 100){
                 textId += 1;

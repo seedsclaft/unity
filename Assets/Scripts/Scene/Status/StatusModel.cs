@@ -15,6 +15,7 @@ public class StatusModel : BaseModel
     {
         get {return _currentAttributeType;}
     }
+
     public ActorInfo CurrentActor
     {
         get {return StatusActors()[_currentIndex];}
@@ -38,7 +39,7 @@ public class StatusModel : BaseModel
     public List<SkillInfo> SkillActionList(AttributeType attributeType)
     {
         _currentAttributeType = attributeType;
-        List<SkillInfo> skillInfos = CurrentActor.Skills.FindAll(a => a.Attribute == _currentAttributeType);
+        List<SkillInfo> skillInfos = CurrentActor.Skills.FindAll(a => a.Attribute == _currentAttributeType && a.Id > 100);
         skillInfos.ForEach(a => a.SetEnable(true));
         return skillInfos;
     }
@@ -122,6 +123,11 @@ public class StatusModel : BaseModel
         PartyInfo.ChangeCurrency(Currency + Numinous);
         CurrentActor.StrengthReset();
         _useNuminous = 0;
+    }
+
+    public void ClearStrength()
+    {
+        CurrentActor.ClearStrength();
     }
 
     public int StrengthNuminous()

@@ -66,7 +66,8 @@ public class TacticsView : BaseView
     public void SetUIButton()
     {
         CreateBackCommand(() => OnClickBack());
-        tacticsEnemyList.Initialize();
+        tacticsEnemyList.Initialize((enemyInfo) => CallBattleEnemy(enemyInfo),() => OnClickBack());
+        SetInputHandler(tacticsEnemyList.GetComponent<IInputHandlerEvent>());
     }
 
     private void OnClickBack()
@@ -180,9 +181,7 @@ public class TacticsView : BaseView
 
     public void SetEnemies(List<TroopInfo> troopInfos)
     {
-        tacticsEnemyList.Refresh(troopInfos,(enemyInfo) => CallBattleEnemy(enemyInfo),() => OnClickBack());
-        SetInputHandler(tacticsEnemyList.GetComponent<IInputHandlerEvent>());
-        //tacticsEnemyList.InitializeConfirm(confirmCommands,(confirmCommands) => CallBattleCommand(confirmCommands));
+        tacticsEnemyList.Refresh(troopInfos);
         HideEnemyList();
     }
 

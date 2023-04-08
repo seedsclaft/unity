@@ -252,7 +252,7 @@ public class BattleEnemyLayer : ListWindow , IInputHandlerEvent
             BattlerInfo current = _battleInfos.Find(a => a.Index == _selectIndex);
             if (current != null)
             {
-                BattlerInfo target = _battleInfos.Find(a => a.Index > current.Index && a.IsAlive() && a.LineIndex == 1);
+                BattlerInfo target = _battleInfos.Find(a => a.Index > current.Index && a.IsAlive() && a.LineIndex == LineType.Back);
                 if (target != null)
                 {
                     if (current != target)

@@ -20,6 +20,22 @@ public class TacticsModel : BaseModel
         get {return TacticsActor(_currentActorId);}
     }
 
+    public string TacticsBgmFilename()
+    {
+        if (CurrentStage != null)
+        {
+            if (CurrentStage.Turns < 12)
+            {        
+                return "TACTICS1";
+            }
+            if (CurrentStage.Turns < 24)
+            {        
+                return "TACTICS2";
+            }
+            return "TACTICS3";
+        }
+        return "TACTICS1";
+    }
     private TacticsComandType _commandType = TacticsComandType.Train;
     public TacticsComandType CommandType { get {return _commandType;} set {_commandType = value;}}
     private List<ActorInfo> _tempTacticsData = new List<ActorInfo>();
@@ -78,6 +94,11 @@ public class TacticsModel : BaseModel
             _currentAttributeType = attributeType;
         }
         return CurrentActor.Skills.FindAll(a => a.Attribute == _currentAttributeType);
+    }
+
+    public List<string> AttirbuteValues()
+    {
+        return CurrentActor.AttirbuteValues(StageMembers());
     }
 
     public List<SystemData.MenuCommandData> TacticsCommand
@@ -231,7 +252,7 @@ public class TacticsModel : BaseModel
         {
             SkillInfo skillInfo = new SkillInfo(PartyInfo.AlchemyIdList[i]);
             if (skillInfo.Attribute != _currentAttributeType) continue;
-            skillInfo.SetLearingCost(TacticsUtility.AlchemyCost(actorInfo,PartyInfo.AlchemyIdList[i]));
+            skillInfo.SetLearingCost(TacticsUtility.AlchemyCost(actorInfo,PartyInfo.AlchemyIdList[i],StageMembers()));
             skillInfo.SetEnable(skillInfo.LearingCost <= Currency);
             skillInfos.Add(skillInfo);
         }
@@ -242,7 +263,7 @@ public class TacticsModel : BaseModel
     {
         ActorInfo actorInfo = CurrentActor;
         if (actorInfo != null){
-            actorInfo.SetTacticsCommand(TacticsComandType.Alchemy,TacticsUtility.AlchemyCost(actorInfo,skillId));
+            actorInfo.SetTacticsCommand(TacticsComandType.Alchemy,TacticsUtility.AlchemyCost(actorInfo,skillId,StageMembers()));
             PartyInfo.ChangeCurrency(Currency - actorInfo.TacticsCost);
             actorInfo.SetNextLearnSkillId(skillId);
         }

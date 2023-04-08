@@ -71,6 +71,12 @@ public class BattleModel : BaseModel
         {
             _battlers.Add(enemies[i]);
         }
+
+        foreach (var battler in _battlers)
+        {
+            battler.SetBattleData(BattlerActors(),BattlerEnemies());
+            battler.MakePassiveSkills();
+        }
     }
 
     public void UpdateAp()
@@ -428,7 +434,7 @@ public class BattleModel : BaseModel
                         }
                     } else
                     {
-                        List<BattlerInfo> backBattlerInfos = BattlerEnemies().FindAll(a => a.IsAlive() && a.LineIndex == 1);
+                        List<BattlerInfo> backBattlerInfos = BattlerEnemies().FindAll(a => a.IsAlive() && a.LineIndex == LineType.Back);
                         for (int i = 0;i < backBattlerInfos.Count;i++)
                         {
                             targetIndexList.Add(backBattlerInfos[i].Index);

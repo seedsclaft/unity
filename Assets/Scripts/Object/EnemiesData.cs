@@ -46,3 +46,9 @@ public enum KindType
     None = 0,
     Undead = 1
 }
+
+public enum LineType
+{
+    Front = 0,
+    Back = 1
+}

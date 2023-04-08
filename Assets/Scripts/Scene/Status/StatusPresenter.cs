@@ -25,10 +25,9 @@ public class StatusPresenter
         _view.SetEvent((type) => updateCommand(type));
 
         //List<ActorInfo> actorInfos = _model.Actors();
-        _view.SetActorInfo(_model.CurrentActor);
+        _view.SetActorInfo(_model.CurrentActor,_model.StatusActors());
 
-        _view.SetStrengthInfo(_model.CurrentActor,_model.ConfirmCommand());
-
+        _view.SetStrengthInfo(_model.ConfirmCommand());
         _view.SetStatusCommand(_model.StatusCommand);
         _view.SetAttributeTypes(_model.AttributeTypes());
         //var bgm = await _model.BgmData();
@@ -114,6 +113,7 @@ public class StatusPresenter
         if (statusComandType == StatusComandType.Strength)
         {
             _backCommandType = Status.CommandType.StatusCommand;
+            _model.ClearStrength();
             _view.ActivateStrengthList();
             _view.ShowStrength();
             _view.DeactivateActorList();
@@ -158,7 +158,7 @@ public class StatusPresenter
             if (confirmComandType == ConfirmComandType.Yes)
             {
                 _model.StrengthReset();
-                _view.SetActorInfo(_model.CurrentActor);
+                _view.SetActorInfo(_model.CurrentActor,_model.StatusActors());
                 CommandRefresh();
                 _view.ActivateStrengthList();
             } else
@@ -172,7 +172,7 @@ public class StatusPresenter
             if (confirmComandType == ConfirmComandType.Yes)
             {
                 _model.DecideStrength();
-                _view.SetActorInfo(_model.CurrentActor);
+                _view.SetActorInfo(_model.CurrentActor,_model.StatusActors());
                 CommandRefresh();
                 _view.ActivateStrengthList();
             } else
@@ -197,7 +197,7 @@ public class StatusPresenter
     {
         SoundManager.Instance.PlayStaticSe(SEType.Cursor);
          _model.ChangeActorIndex(-1);
-        _view.SetActorInfo(_model.CurrentActor);
+        _view.SetActorInfo(_model.CurrentActor,_model.StatusActors());
         CommandAttributeType(_model.CurrentAttributeType);
     }
 
@@ -205,7 +205,7 @@ public class StatusPresenter
     {
         SoundManager.Instance.PlayStaticSe(SEType.Cursor);
          _model.ChangeActorIndex(1);
-        _view.SetActorInfo(_model.CurrentActor);
+        _view.SetActorInfo(_model.CurrentActor,_model.StatusActors());
         CommandAttributeType(_model.CurrentAttributeType);
     }
 
@@ -279,6 +279,7 @@ public class StatusPresenter
 
     private void CommandRefresh()
     {
+        _view.RefreshActor(_model.CurrentActor);
         _view.CommandRefresh(_model.CurrentActor.Sp,_model.StrengthNuminous());
     }
 }

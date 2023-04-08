@@ -20,12 +20,12 @@ public class StatusActorList : ListWindow , IInputHandlerEvent
         SetInputFrame(30);
     }
 
-    public void Refresh(ActorInfo actorInfo)
+    public void Refresh(ActorInfo actorInfo,List<ActorInfo> actorInfos)
     {
         for (int i = 0; i < ObjectList.Count;i++)
         {
             var StatusActor = ObjectList[i].GetComponent<ActorInfoComponent>();
-            StatusActor.UpdateInfo(actorInfo);
+            StatusActor.UpdateInfo(actorInfo,actorInfos);
         }
     }
     

@@ -11,7 +11,7 @@ public class TacticsChara : MonoBehaviour
     private ActorInfo _data;
     public void SetData(ActorInfo actorInfo)
     {
-        actorInfoComponent.UpdateInfo(actorInfo);
+        actorInfoComponent.UpdateInfo(actorInfo,null);
         _data = actorInfo;
         
     }

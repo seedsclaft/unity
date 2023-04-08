@@ -100,6 +100,7 @@ public class StrategyPresenter
                     _model.ClearBattleData(battledMembers);
                 }
             }
+            _isBattleEnded = false;
             CheckTacticsActors();
         }
         SoundManager.Instance.PlayStaticSe(SEType.Decide);

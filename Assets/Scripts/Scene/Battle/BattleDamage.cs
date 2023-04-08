@@ -71,8 +71,15 @@ public class BattleDamage : MonoBehaviour
                 .Append(textMeshProUGUI.gameObject.transform.DOLocalMoveY(0, 0.05f))
                 .SetEase(Ease.InOutQuad)
                 .OnComplete(() => {
-                    _busy = false;
-                    textMeshProUGUI.DOFade(0.0f, 0.2f);
+                    Sequence sequence = DOTween.Sequence()
+                        .Append(textMeshProUGUI.DOFade(0.0f, 0.2f))
+                        .OnComplete(() => {
+                            _busy = false;
+                            if (gameObject.transform.parent != null)
+                            {                    
+                                GameObject.Destroy(gameObject);
+                            }
+                        });
                 });
         }
     }
@@ -106,8 +113,15 @@ public class BattleDamage : MonoBehaviour
                 .Append(textMeshProUGUI.gameObject.transform.DOLocalMoveY(0, 0.05f))
                 .SetEase(Ease.InOutQuad)
                 .OnComplete(() => {
-                    _busy = false;
-                    textMeshProUGUI.DOFade(0.0f, 0.2f);
+                    Sequence sequence = DOTween.Sequence()
+                        .Append(textMeshProUGUI.DOFade(0.0f, 0.2f))
+                        .OnComplete(() => {
+                            _busy = false;
+                            if (gameObject.transform.parent != null)
+                            {                    
+                                GameObject.Destroy(gameObject);
+                            }
+                        });
                 });
         }
     }
@@ -127,7 +141,17 @@ public class BattleDamage : MonoBehaviour
             .Append(textMeshProUGUI.gameObject.transform.DOLocalMoveY(8, 1.0f))
             .Append(textMeshProUGUI.gameObject.transform.DOLocalMoveY(24, 0.2f))
             .Join(textMeshProUGUI.DOFade(0.0f, 0.1f))
-            .SetEase(Ease.InOutQuad);
+            .SetEase(Ease.InOutQuad)
+            .OnComplete(() => {
+                Sequence sequence = DOTween.Sequence()
+                    .OnComplete(() => {
+                        _busy = false;
+                        if (gameObject.transform.parent != null)
+                        {                    
+                            GameObject.Destroy(gameObject);
+                        }
+                    });
+            });
     }
 
     private GameObject GetPrefabType(DamageType damageType)

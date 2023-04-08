@@ -32,7 +32,6 @@ public class GetItemList : ListWindow , IInputHandlerEvent
 
     public void Refresh(List<GetItemInfo> skillInfoData)
     {
-        _data.Clear();
         _data = skillInfoData;
         for (int i = 0; i < ObjectList.Count;i++)
         {

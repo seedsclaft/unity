@@ -14,14 +14,14 @@ public class TacticsUtility
         return actorInfo.Level * TacticsCostRate(actorInfo);
     }
 
-    public static int AlchemyCost(ActorInfo actorInfo,int skillId)
+    public static int AlchemyCost(ActorInfo actorInfo,int skillId,List<ActorInfo> stageMembers)
     {
         SkillsData.SkillData skillData = DataSystem.Skills.Find(a => a.Id == skillId);
         int cost = skillData.Rank;
         if (skillData != null)
         {
             AttributeType attributeType = skillData.Attribute;
-            var param = actorInfo.Attribute[(int)attributeType-1];
+            var param = actorInfo.AttirbuteParams(stageMembers)[(int)attributeType-1];
             if (param > 100){
                 //cost *= 1;
             } else

@@ -94,7 +94,7 @@ public class TroopsImporter : AssetPostprocessor {
 					TroopData.TroopId = (int)Baserow.GetCell((int)BaseColumn.TroopId)?.SafeNumericCellValue();
 					TroopData.EnemyId = (int)Baserow.GetCell((int)BaseColumn.EnemyId)?.SafeNumericCellValue();
 					TroopData.Lv = (int)Baserow.GetCell((int)BaseColumn.Lv)?.SafeNumericCellValue();
-					TroopData.Line = (int)Baserow.GetCell((int)BaseColumn.Line)?.SafeNumericCellValue();
+					TroopData.Line = (LineType)Baserow.GetCell((int)BaseColumn.Line)?.SafeNumericCellValue();
 					TroopData.GetItemDatas = new List<GetItemData>();
 					Data._data.Add(TroopData);
 				}
@@ -105,7 +105,7 @@ public class TroopsImporter : AssetPostprocessor {
 					IRow Baserow = BaseSheet.GetRow(i);
 					int Id = (int)Baserow.GetCell((int)BaseGetItemColumn.Id)?.SafeNumericCellValue();
 					int TroopId = (int)Baserow.GetCell((int)BaseGetItemColumn.TroopId)?.SafeNumericCellValue();
-					var troopData = Data._data.Find(a => a.TroopId == TroopId && a.Line == 1);
+					var troopData = Data._data.Find(a => a.TroopId == TroopId && a.Line == LineType.Back);
 					if (troopData != null)
 					{
 						var getItemData = new GetItemData();

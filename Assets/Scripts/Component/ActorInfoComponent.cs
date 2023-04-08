@@ -26,7 +26,7 @@ public class ActorInfoComponent : MonoBehaviour
     [SerializeField] private TextMeshProUGUI element3;
     [SerializeField] private TextMeshProUGUI element4;
     [SerializeField] private TextMeshProUGUI element5;
-    public void UpdateInfo(ActorInfo actorInfo)
+    public void UpdateInfo(ActorInfo actorInfo,List<ActorInfo> actorInfos)
     {
         if (actorInfo == null){
             return;

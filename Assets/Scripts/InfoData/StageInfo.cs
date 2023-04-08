@@ -63,7 +63,7 @@ public class StageInfo
 			BossTroopData.TroopId = i + 1001;
 			BossTroopData.EnemyId = i + 1;
 			BossTroopData.Lv = 1;
-			BossTroopData.Line = 1;
+			BossTroopData.Line = LineType.Back;
             TroopsData.TroopData troopData = DataSystem.Troops.Find(a => a.TroopId == BossTroopData.Id);
             if (troopData != null && troopData.GetItemDatas != null)
             {
@@ -90,7 +90,7 @@ public class StageInfo
     {
         if (_currentTroopInfos.Count > 0) return _currentTroopInfos;
         _currentTroopInfos.Clear();
-        List<TroopsData.TroopData> troopDatas = _troopDatas.FindAll(a => !_clearTroopIds.Contains(a.Id) && a.Line == 1);
+        List<TroopsData.TroopData> troopDatas = _troopDatas.FindAll(a => !_clearTroopIds.Contains(a.Id) && a.Line == LineType.Back);
         int max = 2;
         if (troopDatas.Count < 2)
         {
@@ -102,21 +102,22 @@ public class StageInfo
             int rand = new Random().Next(0, troopDatas.Count);
             if (!troopsData.Contains(troopDatas[rand]))
             {
-                troopDatas[rand].Lv = _clearCount + 1;
+                troopDatas[rand].Lv = _clearCount + 4;
                 troopsData.Add(troopDatas[rand]);
             }
         }
+        int enemyCount = 2;
         for (int i = 0;i < troopsData.Count;i++)
         {
             TroopInfo troopInfo = new TroopInfo(troopsData[i].TroopId);
-			for (int j = 0;j < 3;j++)
+			for (int j = 0;j < enemyCount;j++)
 			{
         		int rand = new System.Random().Next(0, _randomTroopCount) + 1;
                 EnemiesData.EnemyData enemyData = DataSystem.Enemies.Find(a => a.Id == rand);
                 BattlerInfo enemy = new BattlerInfo(enemyData,_clearCount + 1,j,0,false);
                 troopInfo.AddEnemy(enemy);
             }
-            troopInfo.MakeEnemyData(troopsData[i],3,_clearCount + 5,true);
+            troopInfo.MakeEnemyData(troopsData[i],enemyCount,0,true);
             _currentTroopInfos.Add(troopInfo);
         }
 
@@ -146,7 +147,7 @@ public class StageInfo
                 TroopInfo troopInfo = new TroopInfo(bossTroopId);
                 for (int i = 0;i < troopDatas.Count;i++)
                 {
-                    troopInfo.MakeEnemyData(troopDatas[i],i,_clearCount + 1,troopDatas[i].Line == 1);
+                    troopInfo.MakeEnemyData(troopDatas[i],i,_clearCount + 1,troopDatas[i].Line == LineType.Back);
                 }
 
                 _currentTroopInfos[_currentTroopInfos.Count-1] = troopInfo;
@@ -199,8 +200,8 @@ public class StageInfo
             {
                 EnemiesData.EnemyData enemyData = _currentTroopInfos[i].BattlerInfos[j].EnemyData;
                 int lv = (int)MathF.Floor(_currentTroopInfos[i].BattlerInfos[j].Level * rate);
-                int line = _currentTroopInfos[i].BattlerInfos[j].LineIndex;
-                bool isBoss = line == 1;
+                LineType line = _currentTroopInfos[i].BattlerInfos[j].LineIndex;
+                bool isBoss = line == LineType.Back;
                 BattlerInfo enemy = new BattlerInfo(enemyData,lv,j,line,isBoss);
                 _currentTroopInfos[i].RemoveAtEnemyIndex(_currentTroopInfos[i].BattlerInfos[j].Index);
                 _currentTroopInfos[i].AddEnemy(enemy);
@@ -219,15 +220,15 @@ public class StageInfo
             {
                 EnemiesData.EnemyData enemyData = _currentTroopInfos[i].BattlerInfos[j].EnemyData;
                 int lv = _currentTroopInfos[i].BattlerInfos[j].Level;
-                int line = _currentTroopInfos[i].BattlerInfos[j].LineIndex;
-                bool isBoss = line == 1;
-                if (line == 0) 
+                LineType line = _currentTroopInfos[i].BattlerInfos[j].LineIndex;
+                bool isBoss = line == LineType.Back;
+                if (line == LineType.Front) 
                 {
-                     line = 1;
+                     line = LineType.Back;
                 }
                 else
                 {
-                     line = 0;
+                     line = LineType.Front;
                 }
                 BattlerInfo enemy = new BattlerInfo(enemyData,lv,j,line,isBoss);
                 _currentTroopInfos[i].RemoveAtEnemyIndex(_currentTroopInfos[i].BattlerInfos[j].Index);
@@ -263,8 +264,8 @@ public class StageInfo
             {
                 EnemiesData.EnemyData enemyData = _currentTroopInfos[i].BattlerInfos[j].EnemyData;
                 int lv = _currentTroopInfos[i].BattlerInfos[j].Level;
-                int line = _currentTroopInfos[i].BattlerInfos[j].LineIndex;
-                bool isBoss = line == 1;
+                LineType line = _currentTroopInfos[i].BattlerInfos[j].LineIndex;
+                bool isBoss = line == LineType.Back;
                 BattlerInfo enemy = new BattlerInfo(enemyData,lv,j,line,isBoss);
                 enemy.GainHp((int)MathF.Floor(enemy.Hp * rate));
                 _currentTroopInfos[i].RemoveAtEnemyIndex(_currentTroopInfos[i].BattlerInfos[j].Index);
@@ -295,7 +296,7 @@ public class StageInfo
         for (int i = 0;i < troopDatas.Count;i++)
         {
             EnemiesData.EnemyData enemyData = DataSystem.Enemies.Find(a => a.Id == troopDatas[i].EnemyId);
-            bool isBoss = troopDatas[i].Line == 1;
+            bool isBoss = troopDatas[i].Line == LineType.Back;
             BattlerInfo enemy = new BattlerInfo(enemyData,troopDatas[i].Lv,i,troopDatas[i].Line,isBoss);
             troopInfo.AddEnemy(enemy);
         }

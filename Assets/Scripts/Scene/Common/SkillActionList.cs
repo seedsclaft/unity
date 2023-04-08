@@ -13,7 +13,8 @@ public class SkillActionList : ListWindow , IInputHandlerEvent
     public void Initialize(System.Action<int> callEvent,System.Action cancelEvent,System.Action conditionEvent)
     {
         InitializeListView(rows);
-        for (int i = 0; i < rows;i++)
+        // スクロールするものはObjectList.CountでSetSelectHandlerを登録する
+        for (int i = 0; i < ObjectList.Count;i++)
         {
             SkillAction skillAction = ObjectList[i].GetComponent<SkillAction>();
             skillAction.SetCallHandler((d) => {

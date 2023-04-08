@@ -152,10 +152,10 @@ public class StatusView : BaseView
         commandList.SetDisable(DataSystem.StatusCommand[0],IsDisable);
     }
     
-    public void SetActorInfo(ActorInfo actorInfo)
+    public void SetActorInfo(ActorInfo actorInfo,List<ActorInfo> actorInfos)
     {
-        actorList.Refresh(actorInfo);
-        actorInfoComponent.UpdateInfo(actorInfo);
+        actorList.Refresh(actorInfo,actorInfos);
+        actorInfoComponent.UpdateInfo(actorInfo,actorInfos);
     }
 
     public void ActivateActorList()
@@ -168,16 +168,21 @@ public class StatusView : BaseView
         actorList.Deactivate();
     }
 
-    public void SetStrengthInfo(ActorInfo actorInfo,List<SystemData.MenuCommandData> confirmCommands)
+    public void SetStrengthInfo(List<SystemData.MenuCommandData> confirmCommands)
     {
-        statusStrengthList.Initialize(actorInfo,
-            (actorinfo) => CallStrengthPlus(actorinfo),
-            (actorinfo) => CallStrengthMinus(actorinfo),
+        statusStrengthList.Initialize(
+            (a) => CallStrengthPlus(a),
+            (a) => CallStrengthMinus(a),
             () => CallStatusReset()
         );
         SetInputHandler(statusStrengthList.GetComponent<IInputHandlerEvent>());
         statusStrengthList.InitializeConfirm(confirmCommands,(confirmCommands) => CallStrengthCommand(confirmCommands));
         HideStrength();
+    }
+
+    public void RefreshActor(ActorInfo actorInfo)
+    {
+        statusStrengthList.Refresh(actorInfo);
     }
     
     public void SetStatusCommand(List<SystemData.MenuCommandData> menuCommands)
@@ -337,7 +342,7 @@ public class StatusView : BaseView
 
     public void CommandRefresh(int remainSp,int remainNuminous)
     {
-        statusStrengthList.Refresh(remainSp,remainNuminous);
+        statusStrengthList.RefreshCostInfo(remainSp,remainNuminous);
         skillActionList.Refresh();
     }
 

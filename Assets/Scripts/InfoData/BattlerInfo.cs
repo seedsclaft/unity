@@ -43,8 +43,8 @@ public class BattlerInfo
     private bool _isAwaken = false;
     public bool IsAwaken {get {return _isAwaken;} }
 
-    private int _lineIndex = 0;
-    public int LineIndex {get {return _lineIndex;} }
+    private LineType _lineIndex = 0;
+    public LineType LineIndex {get {return _lineIndex;} }
 
     
     private int _chainSuccessCount = 0;
@@ -57,6 +57,9 @@ public class BattlerInfo
 
     private int _turnCount = 0;
     public int TurnCount {get {return _turnCount;}}
+
+    private List<BattlerInfo> _party = new List<BattlerInfo>();
+    private List<BattlerInfo> _troops = new List<BattlerInfo>();
 
     public BattlerInfo(ActorInfo actorInfo,int index){
         _charaId = actorInfo.ActorId;
@@ -79,7 +82,6 @@ public class BattlerInfo
         _mp = actorInfo.CurrentMp;
         _lineIndex = 0;
 
-        MakePassiveSkills();
         if (_lastSkillId == 0)
         {
             _lastSkillId = _skills.Find(a => a.Id > 100).Id;
@@ -87,7 +89,7 @@ public class BattlerInfo
         ResetAp(true);
     }
 
-    public BattlerInfo(EnemiesData.EnemyData enemyData,int lv,int index,int lineIndex,bool isBoss){
+    public BattlerInfo(EnemiesData.EnemyData enemyData,int lv,int index,LineType lineIndex,bool isBoss){
         _charaId = enemyData.Id;
         _level = lv;
         StatusInfo statusInfo = new StatusInfo();
@@ -122,11 +124,16 @@ public class BattlerInfo
             _kinds.Add(enemyData.Kinds[i]);
         }
 
-        MakePassiveSkills();
         ResetAp(true);
     }
 
-    private void MakePassiveSkills()
+    public void SetBattleData(List<BattlerInfo> party,List<BattlerInfo> troops)
+    {
+        _party = party;
+        _troops = troops;
+    }
+
+    public void MakePassiveSkills()
     {
         _stateInfos.Clear();
         List<SkillInfo> passiveSkills = _skills.FindAll(a => a.Master.SkillType == SkillType.Passive);
@@ -136,7 +143,8 @@ public class BattlerInfo
             {
                 if (featureData.FeatureType == FeatureType.AddState)
                 {
-                    StateInfo stateInfo = new StateInfo(featureData.Param1,featureData.Param2,featureData.Param3,Index,Index);
+                    StateInfo stateInfo = new StateInfo(featureData.Param1,featureData.Param2,featureData.Param3,Index,Index,true);
+                    stateInfo.SetPassiveTrigger(passiveSkill.TriggerDatas);
                     _stateInfos.Add(stateInfo);
                 }
             }
@@ -179,6 +187,7 @@ public class BattlerInfo
             rand = 0;
         }
         _ap = 500 - (CurrentSpd() + rand) * 4;
+        _ap = Math.Max(_ap,80);
     }
 
     public void GainAp(int ap)
@@ -243,7 +252,7 @@ public class BattlerInfo
         }
         if (_hp <= 0)
         {
-            StateInfo stateInfo = new StateInfo((int)StateType.Death,0,0,Index,Index);
+            StateInfo stateInfo = new StateInfo((int)StateType.Death,0,0,Index,Index,false);
             AddState(stateInfo);
         }
     }
@@ -285,17 +294,17 @@ public class BattlerInfo
 
     public bool IsState(StateType stateType)
     {
-        return _stateInfos.Find(a => a.StateId == (int)stateType) != null;
+        return _stateInfos.Find(a => a.StateId == (int)stateType && a.IsCanPassiveTriggered(this,_party,_troops)) != null;
     }
 
     public StateInfo GetStateInfo(StateType stateType)
     {
-        return _stateInfos.Find(a => a.StateId == (int)stateType);
+        return _stateInfos.Find(a => a.StateId == (int)stateType && a.IsCanPassiveTriggered(this,_party,_troops));
     }
 
     public List<StateInfo> GetStateInfoAll(StateType stateType)
     {
-        return _stateInfos.FindAll(a => a.StateId == (int)stateType);
+        return _stateInfos.FindAll(a => a.StateId == (int)stateType && a.IsCanPassiveTriggered(this,_party,_troops));
     }
 
     // ステートを消す
@@ -314,7 +323,7 @@ public class BattlerInfo
         int turns = 0;
         if (IsState(stateType))
         {
-            turns += _stateInfos.Find(a => a.StateId == (int)stateType).Turns;
+            turns += _stateInfos.Find(a => a.StateId == (int)stateType && a.IsCanPassiveTriggered(this,_party,_troops)).Turns;
         }
         return turns;
     }
@@ -324,7 +333,7 @@ public class BattlerInfo
         int effect = 0;
         if (IsState(stateType))
         {
-            effect += _stateInfos.Find(a => a.StateId == (int)stateType).Effect;
+            effect += _stateInfos.Find(a => a.StateId == (int)stateType && a.IsCanPassiveTriggered(this,_party,_troops)).Effect;
         }
         return effect;
     }

@@ -18,30 +18,34 @@ public class TacticsEnemyList : ListWindow , IInputHandlerEvent
     public int selectIndex{
         get {return Index;}
     }
-    public void Initialize()
+    public void Initialize(System.Action<int> callEvent,System.Action cancelEvent)
     {
         InitializeListView(cols);
-    }
-
-    public void Refresh(List<TroopInfo> troopInfos,System.Action<int> callEvent,System.Action cancelEvent)
-    {
-        _troopInfos = troopInfos;
         for (int i = 0; i < cols;i++)
         {
-            var tacticsEnemy = ObjectList[i].GetComponent<TacticsEnemy>();
-            if (i < _troopInfos.Count)
-            {
-                tacticsEnemy.SetData(_troopInfos[i].BossEnemy,i);
-                tacticsEnemy.SetGetItemList(_troopInfos[i].GetItemInfos);
-            }
+            TacticsEnemy tacticsEnemy = ObjectList[i].GetComponent<TacticsEnemy>();
             if (callEvent != null)
             {
                 tacticsEnemy.SetCallHandler(callEvent);
                 tacticsEnemy.SetSelectHandler((data) => UpdateSelectIndex(data));
             }
-            ObjectList[i].SetActive(i < _troopInfos.Count);
         }
         SetInputHandler((a) => CallInputHandler(a,callEvent,cancelEvent));
+    }
+
+    public void Refresh(List<TroopInfo> troopInfos)
+    {
+        _troopInfos = troopInfos;
+        for (int i = 0; i < ObjectList.Count;i++)
+        {
+            TacticsEnemy tacticsEnemy = ObjectList[i].GetComponent<TacticsEnemy>();
+            if (i < _troopInfos.Count)
+            {
+                tacticsEnemy.SetData(_troopInfos[i].BossEnemy,i);
+                tacticsEnemy.SetGetItemList(_troopInfos[i].GetItemInfos);
+            }
+            ObjectList[i].SetActive(i < _troopInfos.Count);
+        }
         UpdateSelectIndex(-1);
         Refresh();
     }

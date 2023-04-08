@@ -28,8 +28,18 @@ MonoBehaviour:
       Level: 1
       Weight: 50
       TriggerDatas: []
+    - SkillId: 2
+      Level: 5
+      Weight: 50
+      TriggerDatas:
+      - SkillId: 0
+        TriggerType: 32
+        TriggerTiming: 1
+        Param1: 0
+        Param2: 0
+        Param3: 0
     - SkillId: 321
-      Level: 3
+      Level: 5
       Weight: 50
       TriggerDatas: []
   - Id: 2
@@ -47,6 +57,16 @@ MonoBehaviour:
       Level: 1
       Weight: 100
       TriggerDatas: []
+    - SkillId: 2
+      Level: 5
+      Weight: 100
+      TriggerDatas:
+      - SkillId: 0
+        TriggerType: 32
+        TriggerTiming: 1
+        Param1: 0
+        Param2: 0
+        Param3: 0
   - Id: 3
     Name: "\u30D3\u30FC"
     ImagePath: Bee
@@ -62,6 +82,16 @@ MonoBehaviour:
       Level: 1
       Weight: 100
       TriggerDatas: []
+    - SkillId: 2
+      Level: 5
+      Weight: 100
+      TriggerDatas:
+      - SkillId: 0
+        TriggerType: 32
+        TriggerTiming: 1
+        Param1: 0
+        Param2: 0
+        Param3: 0
   - Id: 4
     Name: "\u30A6\u30EB\u30D5"
     ImagePath: Wolf
@@ -75,6 +105,24 @@ MonoBehaviour:
     LearningSkills:
     - SkillId: 1
       Level: 1
+      Weight: 100
+      TriggerDatas: []
+    - SkillId: 2
+      Level: 5
+      Weight: 100
+      TriggerDatas:
+      - SkillId: 0
+        TriggerType: 32
+        TriggerTiming: 1
+        Param1: 0
+        Param2: 0
+        Param3: 0
+    - SkillId: 131
+      Level: 5
+      Weight: 100
+      TriggerDatas: []
+    - SkillId: 132
+      Level: 10
       Weight: 100
       TriggerDatas: []
   - Id: 5
@@ -92,6 +140,16 @@ MonoBehaviour:
       Level: 1
       Weight: 50
       TriggerDatas: []
+    - SkillId: 2
+      Level: 5
+      Weight: 50
+      TriggerDatas:
+      - SkillId: 0
+        TriggerType: 32
+        TriggerTiming: 1
+        Param1: 0
+        Param2: 0
+        Param3: 0
     - SkillId: 203
       Level: 3
       Weight: 50
@@ -111,10 +169,26 @@ MonoBehaviour:
       Level: 1
       Weight: 100
       TriggerDatas: []
+    - SkillId: 2
+      Level: 5
+      Weight: 100
+      TriggerDatas:
+      - SkillId: 0
+        TriggerType: 32
+        TriggerTiming: 1
+        Param1: 0
+        Param2: 0
+        Param3: 0
     - SkillId: 404
-      Level: 3
+      Level: 5
       Weight: 50
-      TriggerDatas: []
+      TriggerDatas:
+      - SkillId: 0
+        TriggerType: 6
+        TriggerTiming: 1
+        Param1: 50
+        Param2: 0
+        Param3: 0
   - Id: 7
     Name: "\u30B5\u30FC\u30C1\u30E3\u30FC"
     ImagePath: Seacher
@@ -130,6 +204,16 @@ MonoBehaviour:
       Level: 1
       Weight: 50
       TriggerDatas: []
+    - SkillId: 2
+      Level: 5
+      Weight: 50
+      TriggerDatas:
+      - SkillId: 0
+        TriggerType: 32
+        TriggerTiming: 1
+        Param1: 0
+        Param2: 0
+        Param3: 0
     - SkillId: 521
       Level: 3
       Weight: 50
@@ -149,6 +233,16 @@ MonoBehaviour:
       Level: 1
       Weight: 25
       TriggerDatas: []
+    - SkillId: 2
+      Level: 5
+      Weight: 25
+      TriggerDatas:
+      - SkillId: 0
+        TriggerType: 32
+        TriggerTiming: 1
+        Param1: 0
+        Param2: 0
+        Param3: 0
     - SkillId: 301
       Level: 3
       Weight: 75
@@ -168,8 +262,18 @@ MonoBehaviour:
       Level: 1
       Weight: 50
       TriggerDatas: []
-    - SkillId: 403
-      Level: 3
+    - SkillId: 2
+      Level: 5
+      Weight: 50
+      TriggerDatas:
+      - SkillId: 0
+        TriggerType: 32
+        TriggerTiming: 1
+        Param1: 0
+        Param2: 0
+        Param3: 0
+    - SkillId: 103
+      Level: 5
       Weight: 50
       TriggerDatas: []
   - Id: 10
@@ -187,6 +291,16 @@ MonoBehaviour:
       Level: 1
       Weight: 100
       TriggerDatas: []
+    - SkillId: 2
+      Level: 5
+      Weight: 100
+      TriggerDatas:
+      - SkillId: 0
+        TriggerType: 32
+        TriggerTiming: 1
+        Param1: 0
+        Param2: 0
+        Param3: 0
   - Id: 11
     Name: "\u30B9\u30AF\u30A4\u30C3\u30C9"
     ImagePath: Squid
@@ -202,6 +316,16 @@ MonoBehaviour:
       Level: 1
       Weight: 100
       TriggerDatas: []
+    - SkillId: 2
+      Level: 5
+      Weight: 100
+      TriggerDatas:
+      - SkillId: 0
+        TriggerType: 32
+        TriggerTiming: 1
+        Param1: 0
+        Param2: 0
+        Param3: 0
   - Id: 12
     Name: "\u30AF\u30EA\u30FC\u30D1\u30FC"
     ImagePath: Creeper
@@ -217,6 +341,16 @@ MonoBehaviour:
       Level: 1
       Weight: 100
       TriggerDatas: []
+    - SkillId: 2
+      Level: 5
+      Weight: 100
+      TriggerDatas:
+      - SkillId: 0
+        TriggerType: 32
+        TriggerTiming: 1
+        Param1: 0
+        Param2: 0
+        Param3: 0
   - Id: 13
     Name: "\u30A4\u30F3\u30D7"
     ImagePath: Imp
@@ -230,6 +364,10 @@ MonoBehaviour:
     LearningSkills:
     - SkillId: 1
       Level: 1
+      Weight: 20
+      TriggerDatas: []
+    - SkillId: 2
+      Level: 5
       Weight: 20
       TriggerDatas: []
     - SkillId: 421
@@ -255,7 +393,21 @@ MonoBehaviour:
     LearningSkills:
     - SkillId: 1
       Level: 1
-      Weight: 100
+      Weight: 50
+      TriggerDatas: []
+    - SkillId: 2
+      Level: 5
+      Weight: 50
+      TriggerDatas:
+      - SkillId: 0
+        TriggerType: 32
+        TriggerTiming: 1
+        Param1: 0
+        Param2: 0
+        Param3: 0
+    - SkillId: 403
+      Level: 3
+      Weight: 50
       TriggerDatas: []
   - Id: 15
     Name: "\u30BD\u30FC\u30C9"
@@ -270,6 +422,24 @@ MonoBehaviour:
     LearningSkills:
     - SkillId: 1
       Level: 1
+      Weight: 50
+      TriggerDatas: []
+    - SkillId: 2
+      Level: 5
+      Weight: 50
+      TriggerDatas:
+      - SkillId: 0
+        TriggerType: 32
+        TriggerTiming: 1
+        Param1: 0
+        Param2: 0
+        Param3: 0
+    - SkillId: 104
+      Level: 5
+      Weight: 50
+      TriggerDatas: []
+    - SkillId: 133
+      Level: 100
       Weight: 100
       TriggerDatas: []
   - Id: 101
@@ -412,14 +582,53 @@ MonoBehaviour:
         Param2: 0
         Param3: 0
   _textdata:
+  - Id: 1
+    Text: 2
+    Help: 
+  - Id: 2
+    Text: 2
+    Help: 
+  - Id: 3
+    Text: 2
+    Help: 
+  - Id: 4
+    Text: 2
+    Help: 
   - Id: 5
+    Text: 2
+    Help: 
+  - Id: 6
+    Text: 2
+    Help: 
+  - Id: 6
     Text: 404
     Help: 
+  - Id: 7
+    Text: 2
+    Help: 
+  - Id: 8
+    Text: 2
+    Help: 
   - Id: 9
-    Text: 402
+    Text: 2
+    Help: 
+  - Id: 10
+    Text: 2
+    Help: 
+  - Id: 11
+    Text: 2
+    Help: 
+  - Id: 12
+    Text: 2
     Help: 
   - Id: 13
     Text: 421
+    Help: 
+  - Id: 14
+    Text: 2
+    Help: 
+  - Id: 15
+    Text: 2
     Help: 
   - Id: 101
     Text: 321

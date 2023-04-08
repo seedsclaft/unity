@@ -38,7 +38,7 @@ public class TacticsPresenter
         _view.ShowCommandList();
         _view.SetAttributeTypes(_model.AttributeTypes());
         CommandRefresh();
-        var bgm = await _model.GetBgmData("TACTICS1");
+        var bgm = await _model.GetBgmData(_model.TacticsBgmFilename());
         SoundManager.Instance.PlayBgm(bgm,1.0f,true);
         //SoundManager.Instance.PlayBgm(bgm,1.0f,true);
 
@@ -108,6 +108,7 @@ public class TacticsPresenter
                 if (stageEvents[i].Type == StageEventType.SetDefineBossIndex)
                 {
                     _model.SetDefineBossIndex(stageEvents[i].Param);
+                    _view.SetEnemies(_model.TacticsTroops());
                 }
             }
         }
@@ -638,7 +639,7 @@ public class TacticsPresenter
         _view.SetNuminous(_model.Currency);
         _view.SetStageInfo(_model.CurrentStage);
         
-        if (_model.CurrentActor != null) _view.SetAttributeValues(_model.CurrentActor.AttirbuteValues());
+        if (_model.CurrentActor != null) _view.SetAttributeValues(_model.AttirbuteValues());
         _view.CommandRefresh();
     }
 
