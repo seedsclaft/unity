@@ -63,7 +63,11 @@ public class StatusPresenter
         }
         if (viewEvent.commandType == Status.CommandType.SelectSkillAction)
         {
-            CommandSelectSkillAction((int) viewEvent.templete);
+            CommandSelectSkillAction((SkillInfo) viewEvent.templete);
+        }
+        if (viewEvent.commandType == Status.CommandType.SelectSkillLearning)
+        {
+            CommandSelectSkillLearning((SkillInfo) viewEvent.templete);
         }
         if (viewEvent.commandType == Status.CommandType.SelectStrengthPlus)
         {
@@ -144,8 +148,8 @@ public class StatusPresenter
     {
         ActorInfo actorInfo = _model.CurrentActor;
         var text = _model.SelectAddActorConfirmText(actorInfo.Master.Name);
-        var popupInfo = new ConfirmInfo(text,(menuCommandInfo) => updatePopup((ConfirmComandType)menuCommandInfo));
-        _view.CommandCallConfirm(popupInfo);
+        ConfirmInfo confirmInfo = new ConfirmInfo(text,(menuCommandInfo) => updatePopup((ConfirmComandType)menuCommandInfo));
+        _view.CommandCallConfirm(confirmInfo);
         _view.DeactivateCommandList();
         _popupCommandType = Status.CommandType.DecideStage;
     }
@@ -153,6 +157,33 @@ public class StatusPresenter
     private void updatePopup(ConfirmComandType confirmComandType)
     {
         _view.CommandConfirmClose();
+
+        if (_popupCommandType == Status.CommandType.SelectSkillAction)
+        {
+            if (confirmComandType == ConfirmComandType.Yes)
+            {
+                _model.ForgetSkill();
+                _view.ActivateSkillActionList();
+                CommandRefresh();
+            } else
+            {
+                _view.ActivateSkillActionList();
+            }
+        }
+
+        if (_popupCommandType == Status.CommandType.SelectSkillLearning)
+        {
+            if (confirmComandType == ConfirmComandType.Yes)
+            {
+                _model.LearnSkillInfo();
+                _view.ActivateSkillActionList();
+                CommandRefresh();
+            } else
+            {
+                _view.ActivateSkillActionList();
+            }
+        }
+
         if (_popupCommandType == Status.CommandType.SelectStrengthReset)
         {
             if (confirmComandType == ConfirmComandType.Yes)
@@ -180,6 +211,7 @@ public class StatusPresenter
                 _view.ActivateStrengthList();
             }
         }
+
         if (_popupCommandType == Status.CommandType.DecideStage)
         {
             if (confirmComandType == ConfirmComandType.Yes)
@@ -209,10 +241,28 @@ public class StatusPresenter
         CommandAttributeType(_model.CurrentAttributeType);
     }
 
-    private void CommandSelectSkillAction(int skillId)
+    private void CommandSelectSkillAction(SkillInfo skillInfo)
     {
-        _model.ForgetSkill(skillId);
-        CommandRefresh();
+        if (skillInfo.LearingCost == 0) return;
+        _model.SetLearnSkillInfo(skillInfo);
+        string text = DataSystem.System.GetTextData(4010).Text.Replace("\\d",skillInfo.Master.Name) + "\n" + DataSystem.System.GetTextData(4011).Text.Replace("\\d",skillInfo.LearingCost.ToString());
+        ConfirmInfo confirmInfo = new ConfirmInfo(text,(menuCommandInfo) => updatePopup((ConfirmComandType)menuCommandInfo));
+        _view.CommandCallConfirm(confirmInfo);
+        _view.DeactivateSkillActionList();
+        _popupCommandType = Status.CommandType.SelectSkillAction;
+        SoundManager.Instance.PlayStaticSe(SEType.Decide);
+    }
+
+    private void CommandSelectSkillLearning(SkillInfo skillInfo)
+    {
+        if (_model.EnableLearing(skillInfo) == false) return;
+        _model.SetLearnSkillInfo(skillInfo);
+        string text = DataSystem.System.GetTextData(4000).Text.Replace("\\d",skillInfo.LearingCost.ToString()).Replace("\\e",skillInfo.Master.Name);
+        ConfirmInfo confirmInfo = new ConfirmInfo(text,(menuCommandInfo) => updatePopup((ConfirmComandType)menuCommandInfo));
+        _view.CommandCallConfirm(confirmInfo);
+        _view.DeactivateSkillActionList();
+        _popupCommandType = Status.CommandType.SelectSkillLearning;
+        SoundManager.Instance.PlayStaticSe(SEType.Decide);
     }
 
     private void CommandSelectStrengthPlus(StatusParamType statusId)
@@ -247,8 +297,8 @@ public class StatusPresenter
     private void CommandSelectStrengthReset()
     {
         string text = DataSystem.System.GetTextData(2010).Text;
-        var popupInfo = new ConfirmInfo(text,(menuCommandInfo) => updatePopup((ConfirmComandType)menuCommandInfo));
-        _view.CommandCallConfirm(popupInfo);
+        ConfirmInfo confirmInfo = new ConfirmInfo(text,(menuCommandInfo) => updatePopup((ConfirmComandType)menuCommandInfo));
+        _view.CommandCallConfirm(confirmInfo);
         _view.DeactivateStrengthList();
         _popupCommandType = Status.CommandType.SelectStrengthReset;
     }

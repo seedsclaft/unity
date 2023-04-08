@@ -3,14 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.Events;
+using TMPro;
 
 public class SkillActionList : ListWindow , IInputHandlerEvent
 {
     [SerializeField] private int rows = 0;
     [SerializeField] private int cols = 0;
+    [SerializeField] private GameObject numinousObj;
+    [SerializeField] private TextMeshProUGUI remainNuminous;
     private List<SkillInfo> _skillInfos = new List<SkillInfo>();
 
-    public void Initialize(System.Action<int> callEvent,System.Action cancelEvent,System.Action conditionEvent)
+    public void Initialize(System.Action<SkillInfo> callEvent,System.Action cancelEvent,System.Action conditionEvent,System.Action<SkillInfo> learningEvent)
     {
         InitializeListView(rows);
         // スクロールするものはObjectList.CountでSetSelectHandlerを登録する
@@ -23,15 +26,19 @@ public class SkillActionList : ListWindow , IInputHandlerEvent
                 {
                     return;
                 }
-                callEvent(d);
+                if (skillInfo.LearningState == LearningState.Notlearned){
+                    learningEvent(skillInfo);
+                } else{
+                    callEvent(skillInfo);
+                }
             });
             skillAction.SetSelectHandler((data) => UpdateSelectIndex(data));
             //ObjectList[i].SetActive(false);
         }
         SetInputHandler((a) => CallInputHandler(a,callEvent,cancelEvent,conditionEvent));
+        if (numinousObj != null) numinousObj.SetActive(true);
     }
 
-    
     public void SetSkillInfos(List<SkillInfo> skillInfoData)
     {
         _skillInfos.Clear();
@@ -55,6 +62,12 @@ public class SkillActionList : ListWindow , IInputHandlerEvent
         UpdateAllItems();
     }
 
+    public void RefreshCostInfo(int numinous)
+    {
+        remainNuminous.text = numinous.ToString();
+        UpdateAllItems();
+    }
+
     public override void UpdateHelpWindow(){
         if (_helpWindow != null)
         {
@@ -62,7 +75,7 @@ public class SkillActionList : ListWindow , IInputHandlerEvent
         }
     }
 
-    private void CallInputHandler(InputKeyType keyType, System.Action<int> callEvent,System.Action cancelEvent,System.Action conditionEvent)
+    private void CallInputHandler(InputKeyType keyType, System.Action<SkillInfo> callEvent,System.Action cancelEvent,System.Action conditionEvent)
     {
         if (keyType == InputKeyType.Decide)
         {
@@ -71,7 +84,7 @@ public class SkillActionList : ListWindow , IInputHandlerEvent
             {
                 return;
             }
-            callEvent(_skillInfos[Index].Id);
+            callEvent(_skillInfos[Index]);
         }
         if (keyType == InputKeyType.Cancel)
         {

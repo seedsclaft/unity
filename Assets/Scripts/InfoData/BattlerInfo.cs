@@ -74,7 +74,7 @@ public class BattlerInfo
         );
         _status = statusInfo;
         _index = index;
-        _skills = actorInfo.Skills.FindAll(a => a.Forget == false);
+        _skills = actorInfo.Skills.FindAll(a => a.LearningState == LearningState.Learned);
         _isActor = true;
         
         _actorInfo = actorInfo;

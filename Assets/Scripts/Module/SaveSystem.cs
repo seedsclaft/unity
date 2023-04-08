@@ -160,7 +160,6 @@ public class SavePlayInfo
     {
         _party = new PartyInfo();
 		_party.ChangeCurrency(DataSystem.System.InitCurrency);
-		_party.AlchemyIdList.Add(101);
     }
 
 	public void InitSaveData()

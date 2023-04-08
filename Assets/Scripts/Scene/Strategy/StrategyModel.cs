@@ -40,10 +40,12 @@ public class StrategyModel : BaseModel
             if (actorInfos[i].TacticsComandType == TacticsComandType.Alchemy)
             {
                 getItemInfo.SetTitleData(DataSystem.System.GetTextData(3000).Text.Replace("\\d",actorInfos[i].Master.Name));
-                actorInfos[i].LearnSkill(actorInfos[i].NextLearnSkillId);
+                //actorInfos[i].LearnSkill(actorInfos[i].NextLearnSkillId);
                 SkillsData.SkillData skillData = DataSystem.Skills.Find(a => a.Id == actorInfos[i].NextLearnSkillId);
                 getItemInfo.SetSkillElementId((int)skillData.Attribute);
-                getItemInfo.SetResultData(skillData.Name + DataSystem.System.GetTextData(3002).Text);
+                int hintLv = PartyInfo.SkillHintLevel(skillData.Id);
+                getItemInfo.SetResultData(skillData.Name + DataSystem.System.GetTextData(3002).Text.Replace("\\d",(hintLv+1).ToString()));
+                PartyInfo.PlusSkillHintLv(skillData.Id);
                 actorInfos[i].ClearTacticsCommand();
             }
             if (actorInfos[i].TacticsComandType == TacticsComandType.Recovery)
@@ -76,8 +78,8 @@ public class StrategyModel : BaseModel
         {
             if (getItemInfo.GetItemType == GetItemType.Skill)
             {
-                int rand = UnityEngine.Random.Range (0,100);
-                if ((int)(getItemInfo.Param2 * 0.01f) > rand)
+                int rand = UnityEngine.Random.Range(0,100);
+                if (getItemInfo.Param2 >= rand)
                 {
                     PartyInfo.AddAlchemy(getItemInfo.Param1);
                     getItemInfo.SetTitleData(DataSystem.System.GetTextData(14040).Text);

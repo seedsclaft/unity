@@ -19,8 +19,8 @@ MonoBehaviour:
     Help: "Numinous\u3092\u4F7F\u7528\u3057\u3066\u8853\u8005(Alchemist)\u306ELv\u3092\u30A2\u30C3\u30D7\u3057\u307E\u3059"
   - Id: 2
     Key: ALCHEMY
-    Name: "\u9B54\u6CD5\u9023\u7D50"
-    Help: "Numinous\u3092\u4F7F\u7528\u3057\u3066\u8853\u8005(Alchemist)\u306B\u9B54\u6CD5\u3092\u7FD2\u5F97\u3055\u305B\u307E\u3059"
+    Name: "\u4ED8\u546A\u5F37\u5316"
+    Help: "\u5165\u624B\u3057\u305F\u9B54\u6CD5\u306E\u7FD2\u719F\u5EA6\u3092\u30A2\u30C3\u30D7\u3057\u307E\u3059"
   - Id: 3
     Key: RECOVER
     Name: "\u5B58\u5728\u4FEE\u5FA9"
@@ -35,8 +35,8 @@ MonoBehaviour:
     Help: "Numinous\u3092\u751F\u6210\u3057\u307E\u3059"
   - Id: 6
     Key: STATUS
-    Name: "\u60C5\u5831\u78BA\u8A8D"
-    Help: "\u8853\u8005(Alchemist)\u306E\u5F37\u5316\u3084\u7FD2\u719F\u9B54\u6CD5\u3092\u78BA\u8A8D\u3057\u307E\u3059"
+    Name: "\u8853\u8005\u78BA\u8A8D"
+    Help: "\u8853\u8005(Alchemist)\u306E\u30B9\u30C6\u30FC\u30BF\u30B9\u78BA\u8A8D\u3084\u5F37\u5316\u3084\u9B54\u6CD5\u3092\u7FD2\u5F97\u3057\u307E\u3059"
   - Id: 7
     Key: TURNEND
     Name: "\u4F5C\u6226\u958B\u59CB"
@@ -45,11 +45,11 @@ MonoBehaviour:
   - Id: 1
     Key: STRENGTH
     Name: "\u7D44\u7E54\u958B\u767A"
-    Help: '""'
+    Help: "\u30EC\u30D9\u30EB\u30A2\u30C3\u30D7\u3067\u5165\u624B\u3057\u305FSP\u3068Numinous\u3092\u4F7F\u7528\u3057\u3066\u8853\u8005(Alchemist)\u306E\u30B9\u30C6\u30FC\u30BF\u30B9\u3092\u5F37\u5316\u3057\u307E\u3059"
   - Id: 2
     Key: SKILLLIST
-    Name: "\u9B54\u6CD5\u78BA\u8A8D"
-    Help: '""'
+    Name: "\u9B54\u6CD5\u9023\u7D50"
+    Help: "Numinous\u3092\u4F7F\u7528\u3057\u3066\u8853\u8005(Alchemist)\u306B\u9B54\u6CD5\u3092\u7FD2\u5F97\u3057\u307E\u3059"
   TitleCommandData:
   - Id: 1
     Key: NEWGAME
@@ -70,8 +70,8 @@ MonoBehaviour:
     Text: "\u4EBA\u4F53\u932C\u6210"
     Help: "Numinous\u3092\u4F7F\u7528\u3057\u3066\u8853\u8005(Alchemist)\u306ELv\u3092\u30A2\u30C3\u30D7\u3057\u307E\u3059"
   - Id: 2
-    Text: "\u9B54\u6CD5\u9023\u7D50"
-    Help: "Numinous\u3092\u4F7F\u7528\u3057\u3066\u8853\u8005(Alchemist)\u306B\u9B54\u6CD5\u3092\u7FD2\u5F97\u3055\u305B\u307E\u3059"
+    Text: "\u4ED8\u546A\u5F37\u5316"
+    Help: "\u5165\u624B\u3057\u305F\u9B54\u6CD5\u306E\u7FD2\u719F\u5EA6\u3092\u30A2\u30C3\u30D7\u3057\u307E\u3059"
   - Id: 3
     Text: "\u5B58\u5728\u4FEE\u5FA9"
     Help: "Numinous\u3092\u4F7F\u7528\u3057\u3066\u8853\u8005(Alchemist)\u306EHP\u3092\u56DE\u5FA9\u3057\u307E\u3059"
@@ -82,8 +82,8 @@ MonoBehaviour:
     Text: "\u7D20\u5B50\u88DC\u5145"
     Help: "Numinous\u3092\u751F\u6210\u3057\u307E\u3059"
   - Id: 6
-    Text: "\u60C5\u5831\u78BA\u8A8D"
-    Help: "\u8853\u8005(Alchemist)\u306E\u5F37\u5316\u3084\u7FD2\u719F\u9B54\u6CD5\u3092\u78BA\u8A8D\u3057\u307E\u3059"
+    Text: "\u8853\u8005\u78BA\u8A8D"
+    Help: "\u8853\u8005(Alchemist)\u306E\u30B9\u30C6\u30FC\u30BF\u30B9\u78BA\u8A8D\u3084\u5F37\u5316\u3084\u9B54\u6CD5\u3092\u7FD2\u5F97\u3057\u307E\u3059"
   - Id: 7
     Text: "\u4F5C\u6226\u958B\u59CB"
     Help: "\u547D\u4EE4\u3092\u7D42\u4E86\u3057\u4F5C\u6226\u3092\u958B\u59CB\u3057\u307E\u3059"
@@ -98,10 +98,10 @@ MonoBehaviour:
     Help: "\u30B2\u30FC\u30E0\u306E\u8A2D\u5B9A\u3092\u5909\u66F4\u3057\u307E\u3059"
   - Id: 201
     Text: "\u7D44\u7E54\u958B\u767A"
-    Help: '""'
+    Help: "\u30EC\u30D9\u30EB\u30A2\u30C3\u30D7\u3067\u5165\u624B\u3057\u305FSP\u3068Numinous\u3092\u4F7F\u7528\u3057\u3066\u8853\u8005(Alchemist)\u306E\u30B9\u30C6\u30FC\u30BF\u30B9\u3092\u5F37\u5316\u3057\u307E\u3059"
   - Id: 202
-    Text: "\u9B54\u6CD5\u78BA\u8A8D"
-    Help: '""'
+    Text: "\u9B54\u6CD5\u9023\u7D50"
+    Help: "Numinous\u3092\u4F7F\u7528\u3057\u3066\u8853\u8005(Alchemist)\u306B\u9B54\u6CD5\u3092\u7FD2\u5F97\u3057\u307E\u3059"
   - Id: 300
     Text: HP
     Help: '""'
@@ -125,6 +125,9 @@ MonoBehaviour:
     Help: '""'
   - Id: 312
     Text: "\u6B8B\u308ASP"
+    Help: '""'
+  - Id: 313
+    Text: "\u6B8B\u308A"
     Help: '""'
   - Id: 321
     Text: S
@@ -199,7 +202,7 @@ MonoBehaviour:
     Text: "Lv.\\d\u306B\u30EC\u30D9\u30EB\u30A2\u30C3\u30D7\uFF01"
     Help: '""'
   - Id: 3002
-    Text: "\u3092\u7FD2\u5F97\uFF01"
+    Text: "\u306E\u30D2\u30F3\u30C8Lv\u304C\\d\u306B\u30A2\u30C3\u30D7\uFF01"
     Help: '""'
   - Id: 3010
     Text: "\\d\u306E"
@@ -212,6 +215,15 @@ MonoBehaviour:
     Help: '""'
   - Id: 3021
     Text: "Numinous\u304C\\d\u56DE\u5FA9\u3057\u305F\uFF01"
+    Help: '""'
+  - Id: 4000
+    Text: "Numinous\u3092\\d\u6D88\u8CBB\u3057\u3066\\e\u3092\u7FD2\u5F97\u3057\u307E\u3059\u304B\uFF1F"
+    Help: '""'
+  - Id: 4010
+    Text: "\\d\u3092\u5FD8\u308C\u307E\u3059\u304B\uFF1F"
+    Help: '""'
+  - Id: 4011
+    Text: "\u7FD2\u5F97\u30B3\u30B9\u30C8\u306E\\d\u304C\u9084\u5143\u3055\u308C\u307E\u3059"
     Help: '""'
   - Id: 11010
     Text: "\u7D42\u7109\u307E\u3067 :"

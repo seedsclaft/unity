@@ -10,7 +10,6 @@ public class StatusModel : BaseModel
         get {return _currentIndex;}
     }
     private AttributeType _currentAttributeType = AttributeType.Fire;
-    
     public AttributeType CurrentAttributeType
     {
         get {return _currentAttributeType;}
@@ -36,11 +35,52 @@ public class StatusModel : BaseModel
         return Actors().FindAll(a => StatusActorIds.Contains(a.ActorId));
     }
 
+    private SkillInfo _learnSkillInfo = null;
+    public SkillInfo LlearnSkillInfo
+    {
+        get {return _learnSkillInfo;}
+    }
+
+    public void SetLearnSkillInfo(SkillInfo skillInfo){
+        _learnSkillInfo = skillInfo;
+    }
+
+    public bool EnableLearing(SkillInfo skillInfo)
+    {
+        return Currency >= skillInfo.LearingCost;
+    }
+
+    public void LearnSkillInfo()
+    {
+        if (_learnSkillInfo != null)
+        {
+            PartyInfo.ChangeCurrency(Currency - _learnSkillInfo.LearingCost);
+            CurrentActor.LearnSkill(_learnSkillInfo.Id,_learnSkillInfo.LearingCost);
+            _learnSkillInfo = null;
+        }
+    }
+
     public List<SkillInfo> SkillActionList(AttributeType attributeType)
     {
         _currentAttributeType = attributeType;
         List<SkillInfo> skillInfos = CurrentActor.Skills.FindAll(a => a.Attribute == _currentAttributeType && a.Id > 100);
         skillInfos.ForEach(a => a.SetEnable(true));
+        List<int> alchemyIds = PartyInfo.AlchemyIdList;
+        foreach (var alchemyId in alchemyIds)
+        {
+            if (skillInfos.Find(a => a.Id == alchemyId) == null)
+            {
+                SkillInfo skillInfo = new SkillInfo(alchemyId);
+                if (skillInfo.Master.Attribute == _currentAttributeType)
+                {
+                    skillInfo.SetLearningState(LearningState.Notlearned);
+                    skillInfo.SetLearingCost(TacticsUtility.AlchemyCost(CurrentActor,alchemyId,StageMembers(),PartyInfo.SkillHintLevel(alchemyId)));
+                    skillInfo.SetEnable(true);
+                    skillInfos.Add(skillInfo);
+                }
+            }
+        }
+        skillInfos.Sort((a,b) => {return a.Id - b.Id;});
         return skillInfos;
     }
 
@@ -59,14 +99,14 @@ public class StatusModel : BaseModel
         }
     }
 
-    public void ForgetSkill(int skillId)
+    public void ForgetSkill()
     {
-        SkillInfo skillInfo = CurrentActor.Skills.Find(a => a.Id == skillId);
+        SkillInfo skillInfo = _learnSkillInfo;
         if (skillInfo.LearingCost > 0)
         {
-            int gainCurrency = CurrentActor.Skills.Find(a => a.Id == skillId).LearingCost;
+            int gainCurrency = _learnSkillInfo.LearingCost;
             PartyInfo.ChangeCurrency(Currency + gainCurrency);
-            CurrentActor.ForgetSkill(skillId);
+            CurrentActor.ForgetSkill(_learnSkillInfo.Id);
         }
     }
 

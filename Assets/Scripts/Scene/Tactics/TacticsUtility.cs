@@ -14,7 +14,7 @@ public class TacticsUtility
         return actorInfo.Level * TacticsCostRate(actorInfo);
     }
 
-    public static int AlchemyCost(ActorInfo actorInfo,int skillId,List<ActorInfo> stageMembers)
+    public static int AlchemyCost(ActorInfo actorInfo,int skillId,List<ActorInfo> stageMembers,int hintLv)
     {
         SkillsData.SkillData skillData = DataSystem.Skills.Find(a => a.Id == skillId);
         int cost = skillData.Rank;
@@ -44,7 +44,7 @@ public class TacticsUtility
                 cost *= 64;
             }
         }
-        return cost * TacticsCostRate(actorInfo);
+        return Mathf.FloorToInt( cost * TacticsCostRate(actorInfo) * (1 - hintLv * 0.1f));
     }
     public static int RecoveryCost(ActorInfo actorInfo)
     {

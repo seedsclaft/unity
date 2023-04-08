@@ -42,7 +42,7 @@ public class StatusView : BaseView
 
     private void InitializeSkillActionList()
     {
-        skillActionList.Initialize((a) => CallSkillAction(a),() => OnClickBack(),null);
+        skillActionList.Initialize((a) => CallSkillAction(a),() => OnClickBack(),null,(a) => CallSkillLearning(a));
         SetInputHandler(skillActionList.GetComponent<IInputHandlerEvent>());
         skillActionList.gameObject.SetActive(false);
         skillActionList.Deactivate();
@@ -255,27 +255,44 @@ public class StatusView : BaseView
         _commandData(eventData);
     }
 
-    private void CallSkillAction(int skillId)
+    private void CallSkillAction(SkillInfo skillInfo)
     {
         var eventData = new StatusViewEvent(CommandType.SelectSkillAction);
-        eventData.templete = skillId;
+        eventData.templete = skillInfo;
+        _commandData(eventData);
+    }
+
+    private void CallSkillLearning(SkillInfo skillInfo)
+    {
+        var eventData = new StatusViewEvent(CommandType.SelectSkillLearning);
+        eventData.templete = skillInfo;
         _commandData(eventData);
     }
 
     public void ShowSkillActionList()
     {
-        skillActionList.Activate();
         skillActionList.gameObject.SetActive(true);
-        skillAttributeList.Activate();
         skillAttributeList.gameObject.SetActive(true);
+        ActivateSkillActionList();
     }
 
     public void HideSkillActionList()
     {
-        skillActionList.Deactivate();
+        DeactivateSkillActionList();
         skillActionList.gameObject.SetActive(false);
-        skillAttributeList.Deactivate();
         skillAttributeList.gameObject.SetActive(false);
+    }
+    
+    public void ActivateSkillActionList()
+    {
+        skillActionList.Activate();
+        skillAttributeList.Activate();
+    }
+
+    public void DeactivateSkillActionList()
+    {
+        skillActionList.Deactivate();
+        skillAttributeList.Deactivate();
     }
     
     public void RefreshSkillActionList(List<SkillInfo> skillInfos)
@@ -344,6 +361,7 @@ public class StatusView : BaseView
     {
         statusStrengthList.RefreshCostInfo(remainSp,remainNuminous);
         skillActionList.Refresh();
+        skillActionList.RefreshCostInfo(remainNuminous);
     }
 
 }
@@ -359,6 +377,7 @@ namespace Status
         LeftActor,
         RightActor,
         SelectSkillAction,
+        SelectSkillLearning,
         SelectStrengthPlus,
         SelectStrengthMinus,
         SelectStrengthReset,

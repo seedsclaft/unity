@@ -1460,7 +1460,7 @@ MonoBehaviour:
       Param2: 999
       Param3: 4
     TriggerDatas: []
-  - Id: 433
+  - Id: 434
     Name: "\u30EA\u30B8\u30A7\u30CD\u30EC\u30FC\u30B7\u30E7\u30F3"
     IconIndex: 382
     AnimationName: 
@@ -1476,7 +1476,12 @@ MonoBehaviour:
     Help: "\u884C\u52D5\u5F8C\u81EA\u8EAB\u306EHp\u3092\u56DE\u5FA9\u3059\u308B"
     Range: 1
     AliveOnly: 1
-    FeatureDatas: []
+    FeatureDatas:
+    - SkillId: 434
+      FeatureType: 21
+      Param1: 105
+      Param2: 999
+      Param3: 4
     TriggerDatas: []
   - Id: 441
     Name: "\u30DB\u30FC\u30EA\u30FC\u30A8\u30F3\u30C1\u30E3\u30F3\u30C8"

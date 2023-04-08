@@ -98,6 +98,7 @@ public class ActorInfo
             LearningData _learningData = learningData[i];
             if (_skills.Find(a =>a.Id == _learningData.SkillId) != null) continue;
             SkillInfo skillInfo = new SkillInfo(_learningData.SkillId);
+            skillInfo.SetLearningState(LearningState.Learned);
             _skills.Add(skillInfo);
         }
     }
@@ -108,16 +109,18 @@ public class ActorInfo
         _sp += 10;
     }
 
-    public void LearnSkill(int skillId)
+    public void LearnSkill(int skillId,int learningCost)
     {
         SkillInfo skillInfo = new SkillInfo(skillId);
+        skillInfo.SetLearningState(LearningState.Learned);
+        skillInfo.SetLearingCost(learningCost);
         _skills.Add(skillInfo);
     }
 
     public void ForgetSkill(int skillId)
     {
         SkillInfo skillInfo = _skills.Find(a => a.Id == skillId);
-        skillInfo.SetForget(true);
+        skillInfo.SetLearningState(LearningState.Notlearned);
     }
 
     public void RefreshTacticsEnable(TacticsComandType tacticsComandType,bool enable)
@@ -282,7 +285,6 @@ public class ActorInfo
         List<string> attributeValues = new List<string>();
         foreach (var attribute in Attribute)
         {
-            int attributeValue = attributeParams[attribute];
             int textId = 320;
             if (attribute > 100){
                 textId += 1;

@@ -252,8 +252,9 @@ public class TacticsModel : BaseModel
         {
             SkillInfo skillInfo = new SkillInfo(PartyInfo.AlchemyIdList[i]);
             if (skillInfo.Attribute != _currentAttributeType) continue;
-            skillInfo.SetLearingCost(TacticsUtility.AlchemyCost(actorInfo,PartyInfo.AlchemyIdList[i],StageMembers()));
-            skillInfo.SetEnable(skillInfo.LearingCost <= Currency);
+            skillInfo.SetLearingCost(TacticsUtility.AlchemyCost(actorInfo,PartyInfo.AlchemyIdList[i],StageMembers(),PartyInfo.SkillHintLevel(PartyInfo.AlchemyIdList[i])));
+            skillInfo.SetEnable(true);
+            skillInfo.SetHintLv(PartyInfo.SkillHintLevel(PartyInfo.AlchemyIdList[i]));
             skillInfos.Add(skillInfo);
         }
         return skillInfos;
@@ -263,7 +264,7 @@ public class TacticsModel : BaseModel
     {
         ActorInfo actorInfo = CurrentActor;
         if (actorInfo != null){
-            actorInfo.SetTacticsCommand(TacticsComandType.Alchemy,TacticsUtility.AlchemyCost(actorInfo,skillId,StageMembers()));
+            actorInfo.SetTacticsCommand(TacticsComandType.Alchemy,TacticsUtility.AlchemyCost(actorInfo,skillId,StageMembers(),PartyInfo.SkillHintLevel(skillId)));
             PartyInfo.ChangeCurrency(Currency - actorInfo.TacticsCost);
             actorInfo.SetNextLearnSkillId(skillId);
         }

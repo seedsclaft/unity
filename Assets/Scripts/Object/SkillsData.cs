@@ -221,3 +221,9 @@ public enum FeatureType
     EnemyHp = 309,
     MagicAlchemy = 310
 }
+
+public enum LearningState{
+    None = 0,
+    Learned = 1,
+    Notlearned = 2
+}

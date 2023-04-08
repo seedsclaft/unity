@@ -66,16 +66,16 @@ public class BattleView : BaseView
 
     private void InitializeSkillActionList()
     {
-        skillActionList.Initialize(actorInfo => CallSkillAction(actorInfo),() => OnClickBack(),() => OnClickCondition());
+        skillActionList.Initialize(a => CallSkillAction(a),() => OnClickBack(),() => OnClickCondition(),null);
         SetInputHandler(skillActionList.GetComponent<IInputHandlerEvent>());
         skillActionList.gameObject.SetActive(false);
         skillAttributeList.gameObject.SetActive(false);
     }
     
-    private void CallSkillAction(int skillId)
+    private void CallSkillAction(SkillInfo skillInfo)
     {
         var eventData = new BattleViewEvent(CommandType.SkillAction);
-        eventData.templete = skillId;
+        eventData.templete = skillInfo;
         _commandData(eventData);
     }
 

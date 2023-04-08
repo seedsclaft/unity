@@ -40,7 +40,7 @@ public class TacticsView : BaseView
 
     void Initialize()
     {
-        skillAlchemyList.Initialize(actorInfo => CallSkillAlchemy(actorInfo),() => OnClickBack(),null);
+        skillAlchemyList.Initialize(actorInfo => CallSkillAlchemy(actorInfo),() => OnClickBack(),null,null);
         SetInputHandler(skillAlchemyList.GetComponent<IInputHandlerEvent>());
         HideSkillAlchemyList();
 
@@ -54,11 +54,11 @@ public class TacticsView : BaseView
         new TacticsPresenter(this);
     }
 
-    private void CallSkillAlchemy(int skillId)
+    private void CallSkillAlchemy(SkillInfo skillInfo)
     {
         if (_lastCallEventType != CommandType.None) return;
         var eventData = new TacticsViewEvent(CommandType.SkillAlchemy);
-        eventData.templete = skillId;
+        eventData.templete = skillInfo.Master.Id;
         _commandData(eventData);
         _lastCallEventType = eventData.commandType;
     }
