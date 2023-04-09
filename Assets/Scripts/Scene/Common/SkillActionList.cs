@@ -37,6 +37,7 @@ public class SkillActionList : ListWindow , IInputHandlerEvent
         }
         SetInputHandler((a) => CallInputHandler(a,callEvent,cancelEvent,conditionEvent));
         if (numinousObj != null) numinousObj.SetActive(true);
+        remainNuminous.transform.parent.gameObject.SetActive(false);
     }
 
     public void SetSkillInfos(List<SkillInfo> skillInfoData)
@@ -64,6 +65,7 @@ public class SkillActionList : ListWindow , IInputHandlerEvent
 
     public void RefreshCostInfo(int numinous)
     {
+        remainNuminous.transform.parent.gameObject.SetActive(true);
         remainNuminous.text = numinous.ToString();
         UpdateAllItems();
     }

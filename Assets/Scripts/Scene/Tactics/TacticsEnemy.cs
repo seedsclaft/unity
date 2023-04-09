@@ -21,7 +21,6 @@ public class TacticsEnemy : ListItem ,IListViewItem
     public void SetGetItemList(List<GetItemInfo> getItemInfos)
     {
         getItemList.Refresh(getItemInfos);
-        //SetInputHandler(skillAttributeList.GetComponent<IInputHandlerEvent>());
         getItemList.gameObject.SetActive(true);
     }
 
@@ -30,9 +29,27 @@ public class TacticsEnemy : ListItem ,IListViewItem
         clickButton.onClick.AddListener(() => handler((int)Index));
     }
 
+    public void SetGetItemCallHandler(System.Action<int> handler)
+    {
+        foreach (var gameObjectList in getItemList.ObjectList)
+        {
+            GetItem getItem = gameObjectList.GetComponent<GetItem>();
+            getItem.SetCallHandler((a) => {
+                if (a.IsSkill()){
+                    handler(a.Param1);
+                }
+            });
+        }
+    }
+
     public void UpdateViewItem()
     {
         if (_enemyInfo == null) return;
         enemyInfoComponent.UpdateInfo(_enemyInfo);
+    }
+
+    public void SetSelectGetItem(int getItemIndex)
+    {
+        getItemList.UpdateSelectIndex(getItemIndex);
     }
 }

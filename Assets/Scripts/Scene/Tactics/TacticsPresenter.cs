@@ -199,6 +199,10 @@ public class TacticsPresenter
         {
             CommandSelectBattleEnemy((int)viewEvent.templete);
         }
+        if (viewEvent.commandType == Tactics.CommandType.PopupSkillInfo)
+        {
+            CommandPopupSkillInfo((int)viewEvent.templete);
+        }
         if (viewEvent.commandType == Tactics.CommandType.SelectActorBattle)
         {
             int actorId = (int)viewEvent.templete;
@@ -366,6 +370,11 @@ public class TacticsPresenter
             SaveSystem.SaveStart(GameSystem.CurrentData);
         }
         _view.CommandSceneChange(Scene.Tactics);
+    }
+
+    private void UpdatePopupSkillInfo(ConfirmComandType confirmComandType)
+    {
+        _view.CommandConfirmClose();
     }
 
     private void CommandBack()
@@ -584,6 +593,14 @@ public class TacticsPresenter
         SoundManager.Instance.PlayStaticSe(SEType.Decide);
     }
 
+    private void CommandPopupSkillInfo(int skillId)
+    {
+        ConfirmInfo popupInfo = new ConfirmInfo("",(menuCommandInfo) => UpdatePopupSkillInfo((ConfirmComandType)menuCommandInfo));
+        popupInfo.SetSkillInfo(_model.BasicSkillInfo(skillId));
+        popupInfo.SetIsNoChoise(true);
+        _view.CommandCallConfirm(popupInfo);
+    }
+
     private void CommandSelectActorBattle(int actorId)
     {
         _model.SelectActorBattle(actorId);
@@ -658,7 +675,7 @@ public class TacticsPresenter
         if (_model.CheckIsAlcana())
         {
             _view.DeactivateCommandList();
-            var popupInfo = new ConfirmInfo(DataSystem.System.GetTextData(1070).Text,(menuCommandInfo) => UpdatePopupOpenAlcana((ConfirmComandType)menuCommandInfo));
+            ConfirmInfo popupInfo = new ConfirmInfo(DataSystem.System.GetTextData(1070).Text,(menuCommandInfo) => UpdatePopupOpenAlcana((ConfirmComandType)menuCommandInfo));
             _view.CommandCallConfirm(popupInfo);
         }
     }

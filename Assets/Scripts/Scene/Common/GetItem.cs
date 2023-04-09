@@ -19,9 +19,9 @@ public class GetItem : ListItem ,IListViewItem
         SetIndex(index);
     }
 
-    public void SetCallHandler(System.Action<int> handler)
+    public void SetCallHandler(System.Action<GetItemInfo> handler)
     {
-        //clickButton.onClick.AddListener(() => handler((int)_data.Id));
+        clickButton.onClick.AddListener(() => handler((GetItemInfo)_data));
     }
 
     public void UpdateViewItem()

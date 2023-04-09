@@ -17,7 +17,7 @@ public class SkillInfo
     
     private int _learingCost;
     public int LearingCost {get {return _learingCost;}}
-    private int _hintLv;
+    private int _hintLv = -1;
     public int HintLv {get {return _hintLv;}}
 
     private LearningState _learningState;

@@ -11,8 +11,7 @@ public class BattleView : BaseView
     [SerializeField] private BattleActorList battleActorList = null;
     [SerializeField] private BattleEnemyLayer battleEnemyLayer = null;
     [SerializeField] private BattleGridLayer battleGridLayer = null;
-    [SerializeField] private SkillActionList skillActionList = null;
-    [SerializeField] private SkillAttributeList skillAttributeList = null;
+    [SerializeField] private SkillList skillList = null;
     [SerializeField] private StatusConditionList statusConditionList = null;
     [SerializeField] private BattleThumb battleThumb = null;
 
@@ -51,25 +50,26 @@ public class BattleView : BaseView
 
     void Initialize()
     {
+        skillList.Initialize();
         InitializeSkillActionList();
         statusConditionList.Initialize(() => OnClickCondition());
         SetInputHandler(statusConditionList.GetComponent<IInputHandlerEvent>());
         DeactivateConditionList();
         HideConditionAll();
 
-        skillAttributeList.Initialize((attribute) => CallAttributeTypes(attribute));
-        SetInputHandler(skillAttributeList.GetComponent<IInputHandlerEvent>());
-        skillAttributeList.gameObject.SetActive(false);
+        skillList.InitializeAttribute((attribute) => CallAttributeTypes(attribute));
+        SetInputHandler(skillList.skillAttributeList.GetComponent<IInputHandlerEvent>());
+        skillList.HideAttributeList();
 
         new BattlePresenter(this);
     }
 
     private void InitializeSkillActionList()
     {
-        skillActionList.Initialize(a => CallSkillAction(a),() => OnClickBack(),() => OnClickCondition(),null);
-        SetInputHandler(skillActionList.GetComponent<IInputHandlerEvent>());
-        skillActionList.gameObject.SetActive(false);
-        skillAttributeList.gameObject.SetActive(false);
+        skillList.InitializeAction(a => CallSkillAction(a),() => OnClickBack(),() => OnClickCondition(),null);
+        SetInputHandler(skillList.skillActionList.GetComponent<IInputHandlerEvent>());
+        skillList.HideActionList();
+        skillList.HideAttributeList();
     }
     
     private void CallSkillAction(SkillInfo skillInfo)
@@ -213,9 +213,9 @@ public class BattleView : BaseView
 
     public void ShowSkillActionList(BattlerInfo battlerInfo)
     {
-        skillActionList.gameObject.SetActive(true);
-        skillActionList.Activate();
-        skillAttributeList.gameObject.SetActive(true);
+        skillList.ShowActionList();
+        skillList.ShowAttributeList();
+        skillList.ActivateActionList();
         if (battlerInfo.IsState(StateType.Demigod))
         {
             battleThumb.ShowAwakenThumb(battlerInfo.ActorInfo);
@@ -226,8 +226,8 @@ public class BattleView : BaseView
 
     public void HideSkillActionList()
     {
-        skillActionList.gameObject.SetActive(false);
-        skillActionList.Deactivate();
+        skillList.HideActionList();
+        skillList.DeactivateActionList();
     }
 
     public void HideBattleThumb()
@@ -237,24 +237,24 @@ public class BattleView : BaseView
 
     public void HideSkillAtribute()
     {
-        skillAttributeList.gameObject.SetActive(false);
+        skillList.HideAttributeList();
     }
     
     public void RefreshSkillActionList(List<SkillInfo> skillInfos)
     {
         DeactivateActorList();
         DeactivateEnemyList();
-        skillActionList.Activate();
-        skillActionList.gameObject.SetActive(true);
-        skillActionList.SetSkillInfos(skillInfos);
-        skillActionList.Refresh();
+        skillList.ActivateActionList();
+        skillList.ShowActionList();
+        skillList.SetSkillInfos(skillInfos);
+        skillList.RefreshAction();
     }
 
     public void SetCondition(List<StateInfo> stateInfos)
     {
         statusConditionList.Refresh(stateInfos,() => OnClickBack(),() => {
-            skillActionList.gameObject.SetActive(true);
-            skillActionList.Activate();
+            skillList.ShowActionList();
+            skillList.ActivateActionList();
             HideCondition();
         });
     }
@@ -408,7 +408,7 @@ public class BattleView : BaseView
 
     public void SetAttributeTypes(List<AttributeType> attributeTypes)
     {
-        skillAttributeList.Refresh(attributeTypes);
+        skillList.RefreshAttribute(attributeTypes);
         //SetInputHandler(skillAttributeList.GetComponent<IInputHandlerEvent>());
     }
 

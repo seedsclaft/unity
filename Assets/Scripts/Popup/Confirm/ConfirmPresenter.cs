@@ -50,14 +50,22 @@ public class ConfirmInfo
     public System.Action<ConfirmComandType> CallEvent {get {return _callEvent;}}
     private bool _isNoChoise = false;
     public bool IsNoChoise {get {return _isNoChoise;}}
-    public void SetIsNoChoise(bool isNoChoice)
-    {
-        _isNoChoise = isNoChoice;
-    }
+    private SkillInfo _skillInfo = null;
+    public SkillInfo SkillInfo {get {return _skillInfo;}}
 
     public ConfirmInfo(string title,System.Action<ConfirmComandType> callEvent)
     {
         _title = title;
         _callEvent = callEvent;
+    }
+
+    public void SetIsNoChoise(bool isNoChoice)
+    {
+        _isNoChoise = isNoChoice;
+    }
+
+    public void SetSkillInfo(SkillInfo skillInfo)
+    {
+        _skillInfo = skillInfo;
     }
 }

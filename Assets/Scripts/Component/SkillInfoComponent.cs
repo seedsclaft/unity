@@ -35,11 +35,13 @@ public class SkillInfoComponent : MonoBehaviour
                 learingcost.text = skillInfo.LearingCost.ToString();
             }
         }
-        if (hintObj != null)
+        if (hintObj != null && skillInfo.HintLv != -1)
         {
             hintObj.SetActive(true);
             hintLvBefore.text = (skillInfo.HintLv).ToString();
             hintLvAfter.text = (skillInfo.HintLv+1).ToString();
+        } else{
+            if (hintObj != null) hintObj.SetActive(false);
         }
     }
 

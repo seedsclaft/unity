@@ -118,6 +118,13 @@ public class BaseModel
         return sprites;
     }
 
+    public SkillInfo BasicSkillInfo(int skillId)
+    {
+        SkillInfo skillInfo = new SkillInfo(skillId);
+        skillInfo.SetEnable(true);
+        return skillInfo;
+    }
+
     
     public List<TroopInfo> TacticsTroops()
     {

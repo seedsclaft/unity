@@ -52,7 +52,7 @@ public class BattlePresenter : BasePresenter
         }
         if (viewEvent.commandType == Battle.CommandType.SkillAction)
         {
-            CommandSkillAction((int)viewEvent.templete);
+            CommandSkillAction((SkillInfo)viewEvent.templete);
         }
         if (viewEvent.commandType == Battle.CommandType.EnemyLayer)
         {
@@ -165,12 +165,12 @@ public class BattlePresenter : BasePresenter
         }
     }
 
-    private void CommandSkillAction(int skillId)
+    private void CommandSkillAction(SkillInfo skillInfo)
     {
         _model.ClearActionInfo();
-        _model.SetLastSkill(skillId);
+        _model.SetLastSkill(skillInfo.Id);
         SoundManager.Instance.PlayStaticSe(SEType.Decide);
-        ActionInfo actionInfo = _model.MakeActionInfo(_model.CurrentBattler,skillId,false);
+        ActionInfo actionInfo = _model.MakeActionInfo(_model.CurrentBattler,skillInfo.Id,false);
         _view.HideSkillActionList();
         _view.HideSkillAtribute();
         _view.HideConditionAll();

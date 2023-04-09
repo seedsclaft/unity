@@ -141,7 +141,7 @@ public class StatusPresenter
     {
         SoundManager.Instance.PlayStaticSe(SEType.Cursor);
         List<SkillInfo> skillInfos = _model.SkillActionList(attributeType);
-        _view.RefreshSkillActionList(skillInfos);
+        _view.RefreshSkillActionList(skillInfos,_model.AttributeTypes());
     }
 
     private void CommandDecideActor()
@@ -331,5 +331,7 @@ public class StatusPresenter
     {
         _view.RefreshActor(_model.CurrentActor);
         _view.CommandRefresh(_model.CurrentActor.Sp,_model.StrengthNuminous());
+        List<SkillInfo> skillInfos = _model.SkillActionList(_model.CurrentAttributeType);
+        _view.RefreshSkillActionList(skillInfos,_model.AttributeTypes());
     }
 }

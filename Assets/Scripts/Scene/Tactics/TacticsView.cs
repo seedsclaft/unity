@@ -8,12 +8,11 @@ using TMPro;
 public class TacticsView : BaseView
 {
     [SerializeField] private TacticsCommandList tacticsCommandList = null;
-    [SerializeField] private SkillAttributeList skillAttributeList = null;
+    [SerializeField] private SkillList skillList = null;
     [SerializeField] private TacticsCharaLayer tacticsCharaLayer = null;
 
     [SerializeField] private TacticsTrainList tacticsTrainList = null;
     [SerializeField] private TacticsAlchemyList tacticsAlchemyList = null;
-    [SerializeField] private SkillActionList skillAlchemyList = null;
     [SerializeField] private TacticsRecoveryList tacticsRecoveryList = null;
     [SerializeField] private TacticsEnemyList tacticsEnemyList = null;
     [SerializeField] private TacticsBattleList tacticsBattleList = null;
@@ -40,13 +39,14 @@ public class TacticsView : BaseView
 
     void Initialize()
     {
-        skillAlchemyList.Initialize(actorInfo => CallSkillAlchemy(actorInfo),() => OnClickBack(),null,null);
-        SetInputHandler(skillAlchemyList.GetComponent<IInputHandlerEvent>());
+        skillList.Initialize();
+        skillList.InitializeAction(actorInfo => CallSkillAlchemy(actorInfo),() => OnClickBack(),null,null);
+        SetInputHandler(skillList.skillActionList.GetComponent<IInputHandlerEvent>());
         HideSkillAlchemyList();
 
-        skillAttributeList.Initialize((attribute) => CallAttributeTypes(attribute));
-        SetInputHandler(skillAttributeList.GetComponent<IInputHandlerEvent>());
-        skillAttributeList.gameObject.SetActive(false);
+        skillList.InitializeAttribute((attribute) => CallAttributeTypes(attribute));
+        SetInputHandler(skillList.skillAttributeList.GetComponent<IInputHandlerEvent>());
+        skillList.HideAttributeList();
 
         tacticsTrainList.Initialize((actorinfo) => CallActorTrain(actorinfo));
         SetInputHandler(tacticsTrainList.GetComponent<IInputHandlerEvent>());
@@ -66,7 +66,7 @@ public class TacticsView : BaseView
     public void SetUIButton()
     {
         CreateBackCommand(() => OnClickBack());
-        tacticsEnemyList.Initialize((enemyInfo) => CallBattleEnemy(enemyInfo),() => OnClickBack());
+        tacticsEnemyList.Initialize((a) => CallBattleEnemy(a),() => OnClickBack(),(a) => CallPopupSkillInfo(a));
         SetInputHandler(tacticsEnemyList.GetComponent<IInputHandlerEvent>());
     }
 
@@ -262,16 +262,17 @@ public class TacticsView : BaseView
 
     public void ShowSkillAlchemyList(List<SkillInfo> skillInfos)
     {
-        skillAlchemyList.gameObject.SetActive(true);
-        skillAlchemyList.SetSkillInfos(skillInfos);
-        skillAlchemyList.Refresh();
-        skillAttributeList.gameObject.SetActive(true);
+        
+        skillList.ShowActionList();
+        skillList.SetSkillInfos(skillInfos);
+        skillList.RefreshAction();
+        skillList.ShowAttributeList();
     }
 
     public void HideSkillAlchemyList()
     {
-        skillAlchemyList.gameObject.SetActive(false);
-        skillAttributeList.gameObject.SetActive(false);
+        skillList.HideActionList();
+        skillList.HideAttributeList();
     }
 
     private void CallRecoveryCommand(TacticsComandType commandType)
@@ -328,6 +329,13 @@ public class TacticsView : BaseView
         eventData.templete = enemyIndex;
         _commandData(eventData);
         _lastCallEventType = eventData.commandType;
+    }
+
+    private void CallPopupSkillInfo(int skillId)
+    {
+        var eventData = new TacticsViewEvent(CommandType.PopupSkillInfo);
+        eventData.templete = skillId;
+        _commandData(eventData);
     }
 
     public void ShowEnemyList()
@@ -441,12 +449,12 @@ public class TacticsView : BaseView
 
     public void SetAttributeTypes(List<AttributeType> attributeTypes)
     {
-        skillAttributeList.Refresh(attributeTypes);
+        skillList.RefreshAttribute(attributeTypes);
     }
 
     public void SetAttributeValues(List<string> attributeValues)
     {
-        skillAttributeList.RefreshValues(attributeValues);
+        skillList.RefreshValues(attributeValues);
     }
 
     private void CallAttributeTypes(AttributeType attributeType)
@@ -521,6 +529,7 @@ namespace Tactics
         SelectRecoveryMinus,
         RecoveryClose,
         SelectBattleEnemy,
+        PopupSkillInfo,
         BattleClose,
         SelectActorBattle,
         EnemyClose,

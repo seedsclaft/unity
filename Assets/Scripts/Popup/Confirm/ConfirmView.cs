@@ -10,6 +10,8 @@ public class ConfirmView : BaseView
     [SerializeField] private ConfirmCommandList commandList = null;
     [SerializeField] private TextMeshProUGUI titleText = null;
     [SerializeField] private TextMeshProUGUI subText = null;
+    [SerializeField] private GameObject skillInfoRoot = null;
+    [SerializeField] private GameObject skillInfoPrefab = null;
     private System.Action<ConfirmComandType> _confirmEvent = null;
     private new System.Action<ConfirmViewEvent> _commandData = null;
     protected void Awake()
@@ -26,6 +28,16 @@ public class ConfirmView : BaseView
     public void SetTitle(string title)
     {
         titleText.text = title;
+    }
+
+    public void SetSkillInfo(SkillInfo skillInfo)
+    {
+        if (skillInfo == null) return;
+        GameObject prefab = Instantiate(skillInfoPrefab);
+        prefab.transform.SetParent(skillInfoRoot.transform, false);
+        SkillAction skillAction = prefab.GetComponent<SkillAction>();
+        skillAction.SetData(skillInfo,0);
+        skillAction.UpdateViewItem();
     }
 
     public void SetIsNoChoice(bool isNoChoice)

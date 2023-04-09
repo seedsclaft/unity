@@ -9,8 +9,7 @@ public class StatusView : BaseView
     [SerializeField] private ActorInfoComponent actorInfoComponent = null;
     [SerializeField] private StatusActorList actorList = null;
     [SerializeField] private StatusCommandList commandList = null;
-    [SerializeField] private SkillActionList skillActionList = null;
-    [SerializeField] private SkillAttributeList skillAttributeList = null;
+    [SerializeField] private SkillList skillList = null;
     [SerializeField] private StatusStrengthList statusStrengthList = null;
     [SerializeField] private Button decideButton = null;
     private new System.Action<StatusViewEvent> _commandData = null;
@@ -34,21 +33,20 @@ public class StatusView : BaseView
 
     void Initialize()
     {
+        skillList.Initialize();
         InitializeSkillActionList();
-        skillAttributeList.Initialize((attribute) => CallAttributeTypes(attribute));
+        skillList.InitializeAttribute((attribute) => CallAttributeTypes(attribute));
         
         new StatusPresenter(this);
     }
 
     private void InitializeSkillActionList()
     {
-        skillActionList.Initialize((a) => CallSkillAction(a),() => OnClickBack(),null,(a) => CallSkillLearning(a));
-        SetInputHandler(skillActionList.GetComponent<IInputHandlerEvent>());
-        skillActionList.gameObject.SetActive(false);
-        skillActionList.Deactivate();
-        skillAttributeList.gameObject.SetActive(false);
-        SetInputHandler(skillAttributeList.GetComponent<IInputHandlerEvent>());
-        skillAttributeList.Deactivate();
+        skillList.InitializeAction((a) => CallSkillAction(a),() => OnClickBack(),null,(a) => CallSkillLearning(a));
+        SetInputHandler(skillList.skillActionList.GetComponent<IInputHandlerEvent>());
+        SetInputHandler(skillList.skillAttributeList.GetComponent<IInputHandlerEvent>());
+        skillList.HideActionList();
+        skillList.HideAttributeList();
     }
     
     public void SetUIButton()
@@ -271,40 +269,40 @@ public class StatusView : BaseView
 
     public void ShowSkillActionList()
     {
-        skillActionList.gameObject.SetActive(true);
-        skillAttributeList.gameObject.SetActive(true);
+        skillList.ShowActionList();
+        skillList.ShowAttributeList();
         ActivateSkillActionList();
     }
 
     public void HideSkillActionList()
     {
+        skillList.HideActionList();
+        skillList.HideAttributeList();
         DeactivateSkillActionList();
-        skillActionList.gameObject.SetActive(false);
-        skillAttributeList.gameObject.SetActive(false);
     }
     
     public void ActivateSkillActionList()
     {
-        skillActionList.Activate();
-        skillAttributeList.Activate();
+        skillList.ActivateActionList();
+        skillList.ActivateAttributeList();
     }
 
     public void DeactivateSkillActionList()
     {
-        skillActionList.Deactivate();
-        skillAttributeList.Deactivate();
+        skillList.DeactivateActionList();
+        skillList.DeactivateAttributeList();
     }
     
-    public void RefreshSkillActionList(List<SkillInfo> skillInfos)
+    public void RefreshSkillActionList(List<SkillInfo> skillInfos,List<AttributeType> attributeTypes)
     {
-        skillActionList.SetSkillInfos(skillInfos);
-        skillActionList.Refresh();
+        skillList.SetSkillInfos(skillInfos);
+        skillList.RefreshAction();
+        skillList.RefreshAttribute(attributeTypes);
     }
 
     public void SetAttributeTypes(List<AttributeType> attributeTypes)
     {
-        skillAttributeList.Refresh(attributeTypes);
-        //SetInputHandler(skillAttributeList.GetComponent<IInputHandlerEvent>());
+        skillList.RefreshAttribute(attributeTypes);
     }
 
     private void CallAttributeTypes(AttributeType attributeType)
@@ -360,8 +358,8 @@ public class StatusView : BaseView
     public void CommandRefresh(int remainSp,int remainNuminous)
     {
         statusStrengthList.RefreshCostInfo(remainSp,remainNuminous);
-        skillActionList.Refresh();
-        skillActionList.RefreshCostInfo(remainNuminous);
+        skillList.RefreshAction();
+        skillList.RefreshCostInfo(remainNuminous);
     }
 
 }

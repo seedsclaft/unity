@@ -42,7 +42,6 @@ public class GetItemInfo
         _titleName = titleName;
     }
 
-
     public void SetResultData(string resultName)
     {
         _resultName = resultName;
