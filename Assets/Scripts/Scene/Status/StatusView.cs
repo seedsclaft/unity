@@ -405,6 +405,8 @@ public class StatusViewInfo{
     public bool DisplayBackButton {get {return _displayBackButton;}}
     private bool _disableStrength = false;
     public bool DisableStrength {get {return _disableStrength;}}
+    private List<BattlerInfo> _enemyInfos = null;
+    public List<BattlerInfo> EnemyInfos {get {return _enemyInfos;}}
     
     public StatusViewInfo(System.Action backEvent)
     {
@@ -424,5 +426,10 @@ public class StatusViewInfo{
     public void SetDisableStrength(bool IsDisable)
     {
         _disableStrength = IsDisable;
+    }
+    
+    public void SetEnemyInfos(List<BattlerInfo> enemyInfos)
+    {
+        _enemyInfos = enemyInfos;
     }
 }

@@ -239,6 +239,10 @@ public class TacticsPresenter
         {
             CommandOpenAlcana();
         }
+        if (viewEvent.commandType == Tactics.CommandType.CallEnemyInfo)
+        {
+            CommandCallEnemyInfo((int)viewEvent.templete);
+        }
         if (viewEvent.commandType == Tactics.CommandType.Back)
         {
             CommandBack();
@@ -678,6 +682,17 @@ public class TacticsPresenter
             ConfirmInfo popupInfo = new ConfirmInfo(DataSystem.System.GetTextData(1070).Text,(menuCommandInfo) => UpdatePopupOpenAlcana((ConfirmComandType)menuCommandInfo));
             _view.CommandCallConfirm(popupInfo);
         }
+    }
+
+    private void CommandCallEnemyInfo(int enemyIndex)
+    {
+        List<BattlerInfo> enemyInfos = _model.TacticsTroops()[enemyIndex].BattlerInfos;
+        
+        StatusViewInfo statusViewInfo = new StatusViewInfo(() => {
+            _view.CommandEnemyInfoClose();
+        });
+        statusViewInfo.SetEnemyInfos(enemyInfos);
+        _view.CommandCallEnemyInfo(statusViewInfo);
     }
 
     private void CommandCheckAlcana()

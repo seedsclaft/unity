@@ -14,12 +14,14 @@ public class GameSystem : MonoBehaviour
     [SerializeField] private GameObject confirmPrefab = null;
     [SerializeField] private GameObject statusRoot = null;
     [SerializeField] private GameObject statusPrefab = null;
+    [SerializeField] private GameObject enemyInfoPrefab = null;
     [SerializeField] private AdvEngine advEngine = null;
     [SerializeField] private DebugBattleData debugBattleData = null;
     
     private BaseView _currentScene = null;
     private ConfirmView _confirmView = null;
     private StatusView _statusView = null;
+    private EnemyInfoView _enemyInfoView = null;
     private BaseModel _model = null;
     
     public static SavePlayInfo CurrentData = null;
@@ -47,6 +49,14 @@ public class GameSystem : MonoBehaviour
         var prefab = Instantiate(statusPrefab);
         prefab.transform.SetParent(statusRoot.transform, false);
         _statusView = prefab.GetComponent<StatusView>();
+        statusRoot.gameObject.SetActive(false);
+    }
+
+    private void CreateEnemyInfo()
+    {
+        var prefab = Instantiate(enemyInfoPrefab);
+        prefab.transform.SetParent(statusRoot.transform, false);
+        _enemyInfoView = prefab.GetComponent<EnemyInfoView>();
         statusRoot.gameObject.SetActive(false);
     }
 
@@ -90,12 +100,14 @@ public class GameSystem : MonoBehaviour
             _confirmView.SetConfirmEvent(popupInfo.CallEvent);
             if (!statusRoot.gameObject.activeSelf) _currentScene.SetBusy(true);
             if (_statusView) _statusView.SetBusy(true);
+            if (_enemyInfoView) _enemyInfoView.SetBusy(true);
         }
         if (viewEvent.commandType == Base.CommandType.CloseConfirm)
         {
             confirmRoot.gameObject.SetActive(false);
             if (!statusRoot.gameObject.activeSelf) _currentScene.SetBusy(false);
             if (_statusView) _statusView.SetBusy(false);
+            if (_enemyInfoView) _enemyInfoView.SetBusy(false);
         }
         if (viewEvent.commandType == Base.CommandType.CallStatusView)
         {
@@ -116,6 +128,26 @@ public class GameSystem : MonoBehaviour
         if (viewEvent.commandType == Base.CommandType.CloseStatus)
         {
             DestroyImmediate(_statusView.gameObject);
+            statusRoot.gameObject.SetActive(false);
+            _currentScene.SetBusy(false);
+        }
+        if (viewEvent.commandType == Base.CommandType.CallEnemyInfoView)
+        {
+            if (_enemyInfoView != null)
+            {
+                DestroyImmediate(_enemyInfoView.gameObject);
+            }
+            CreateEnemyInfo();
+            statusRoot.gameObject.SetActive(true);
+            var popupInfo = (StatusViewInfo)viewEvent.templete;
+            _enemyInfoView.Initialize(popupInfo.EnemyInfos);
+            _enemyInfoView.SetBackEvent(popupInfo.BackEvent);
+            _enemyInfoView.SetEvent((type) => updateCommand(type));
+            _currentScene.SetBusy(true);
+        }
+        if (viewEvent.commandType == Base.CommandType.CloseEnemyInfo)
+        {
+            DestroyImmediate(_enemyInfoView.gameObject);
             statusRoot.gameObject.SetActive(false);
             _currentScene.SetBusy(false);
         }

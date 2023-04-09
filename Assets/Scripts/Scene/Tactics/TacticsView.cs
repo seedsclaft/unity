@@ -66,7 +66,7 @@ public class TacticsView : BaseView
     public void SetUIButton()
     {
         CreateBackCommand(() => OnClickBack());
-        tacticsEnemyList.Initialize((a) => CallBattleEnemy(a),() => OnClickBack(),(a) => CallPopupSkillInfo(a));
+        tacticsEnemyList.Initialize((a) => CallBattleEnemy(a),() => OnClickBack(),(a) => CallPopupSkillInfo(a),(a) => OnClickEnemyInfo(a));
         SetInputHandler(tacticsEnemyList.GetComponent<IInputHandlerEvent>());
     }
 
@@ -338,6 +338,13 @@ public class TacticsView : BaseView
         _commandData(eventData);
     }
 
+    private void OnClickEnemyInfo(int enemyIndex)
+    {
+        var eventData = new TacticsViewEvent(CommandType.CallEnemyInfo);
+        eventData.templete = enemyIndex;
+        _commandData(eventData);
+    }
+
     public void ShowEnemyList()
     {
         tacticsEnemyList.gameObject.SetActive(true);
@@ -538,6 +545,7 @@ namespace Tactics
         ShowUi,
         HideUi,
         OpenAlcana,
+        CallEnemyInfo,
         Back
     }
 }

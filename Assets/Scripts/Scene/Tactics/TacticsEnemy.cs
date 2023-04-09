@@ -8,6 +8,7 @@ public class TacticsEnemy : ListItem ,IListViewItem
 {
     [SerializeField] private EnemyInfoComponent enemyInfoComponent;
     [SerializeField] private GetItemList getItemList = null;
+    [SerializeField] private Button enemyInfoButton;
     private BattlerInfo _enemyInfo; 
     private new void Awake() {
         getItemList.Initialize();
@@ -40,6 +41,11 @@ public class TacticsEnemy : ListItem ,IListViewItem
                 }
             });
         }
+    }
+
+    public void SetEnemyInfoCallHandler(System.Action<int> handler)
+    {
+        enemyInfoButton.onClick.AddListener(() => handler((int)Index));
     }
 
     public void UpdateViewItem()

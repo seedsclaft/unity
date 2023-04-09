@@ -36,7 +36,7 @@ public class StrategyView : BaseView
 
     public void SetUiView()
     {
-        tacticsEnemyList.Initialize(null,null,null);
+        tacticsEnemyList.Initialize(null,null,null,null);
         tacticsEnemyList.gameObject.SetActive(false);
     }
 
