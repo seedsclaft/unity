@@ -47,6 +47,14 @@ public class StrategyPresenter
         {
             CommandEndAnimation();
         }
+        if (viewEvent.commandType == CommandType.CallEnemyInfo)
+        {
+            CommandCallEnemyInfo((int)viewEvent.templete);
+        }
+        if (viewEvent.commandType == CommandType.PopupSkillInfo)
+        {
+            CommandPopupSkillInfo((int)viewEvent.templete);
+        }
         if (viewEvent.commandType == CommandType.ResultClose)
         {
             CommandResultClose((ConfirmComandType)viewEvent.templete);
@@ -55,6 +63,11 @@ public class StrategyPresenter
         {
             CommandBattleClose((ConfirmComandType)viewEvent.templete);
         }
+    }
+
+    private void UpdatePopupSkillInfo(ConfirmComandType confirmComandType)
+    {
+        _view.CommandConfirmClose();
     }
 
     private void CommandStartStretegy(){
@@ -148,6 +161,27 @@ public class StrategyPresenter
         } else{
             EndStrategy();
         }
+    }
+
+    private void CommandPopupSkillInfo(int skillId)
+    {
+        ConfirmInfo popupInfo = new ConfirmInfo("",(menuCommandInfo) => UpdatePopupSkillInfo((ConfirmComandType)menuCommandInfo));
+        popupInfo.SetSkillInfo(_model.BasicSkillInfo(skillId));
+        popupInfo.SetIsNoChoise(true);
+        _view.CommandCallConfirm(popupInfo);
+    }
+
+    private void CommandCallEnemyInfo(int enemyIndex)
+    {
+        List<BattlerInfo> enemyInfos = _model.TacticsTroops()[enemyIndex].BattlerInfos;
+        
+        StatusViewInfo statusViewInfo = new StatusViewInfo(() => {
+            _view.CommandEnemyInfoClose();
+            _view.SetActiveUi(true);
+        });
+        statusViewInfo.SetEnemyInfos(enemyInfos);
+        _view.CommandCallEnemyInfo(statusViewInfo);
+        _view.SetActiveUi(false);
     }
 
     private void StartNextBattle(List<ActorInfo> battleMembers)

@@ -6,6 +6,7 @@ public class EnemyInfoModel : BaseModel
     public EnemyInfoModel(List<BattlerInfo> enemyInfos)
     {
         _enemies = enemyInfos;
+        _currentIndex = enemyInfos.Count - 1;
     }
     
     private List<BattlerInfo> _enemies = new List<BattlerInfo>();

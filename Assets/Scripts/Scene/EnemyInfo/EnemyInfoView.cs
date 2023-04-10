@@ -10,6 +10,8 @@ public class EnemyInfoView : BaseView
     [SerializeField] private SkillList skillList = null;
     [SerializeField] private EnemyInfoComponent enemyInfoComponent = null;
     [SerializeField] private GameObject helpRoot = null;
+    [SerializeField] private GameObject leftRoot = null;
+    [SerializeField] private GameObject rightRoot = null;
     [SerializeField] private GameObject leftPrefab = null;
     [SerializeField] private GameObject rightPrefab = null;
 
@@ -27,12 +29,12 @@ public class EnemyInfoView : BaseView
         skillList.InitializeAttribute((attribute) => CallAttributeTypes(attribute));
 
         GameObject prefab2 = Instantiate(leftPrefab);
-        prefab2.transform.SetParent(helpRoot.transform, false);
+        prefab2.transform.SetParent(leftRoot.transform, false);
         _leftButton = prefab2.GetComponent<Button>();
         _leftButton.onClick.AddListener(() => OnClickLeft());
         
         GameObject prefab3 = Instantiate(rightPrefab);
-        prefab3.transform.SetParent(helpRoot.transform, false);
+        prefab3.transform.SetParent(rightRoot.transform, false);
         _rightButton = prefab3.GetComponent<Button>();
         _rightButton.onClick.AddListener(() => OnClickRight());
         new EnemyInfoPresenter(this,enemyInfos);

@@ -535,13 +535,15 @@ public class BattleModel : BaseModel
                 break;
                 case FeatureType.HpHeal:
                 case FeatureType.KindHeal:
-                if (target.Hp < target.MaxHp)
+                if (CurrentBattler.isActor)
                 {
-                    if (CurrentBattler.isActor)
                     {
                         IsEnable = true;
-                    } else
-                    if (!target.isActor && !CurrentBattler.isActor)
+                    }
+                } else 
+                if (target.Hp < target.MaxHp)
+                {
+                    if (!target.isActor)
                     {
                         IsEnable = true;
                     }

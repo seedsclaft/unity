@@ -690,9 +690,11 @@ public class TacticsPresenter
         
         StatusViewInfo statusViewInfo = new StatusViewInfo(() => {
             _view.CommandEnemyInfoClose();
+            _view.SetActiveUi(true);
         });
         statusViewInfo.SetEnemyInfos(enemyInfos);
         _view.CommandCallEnemyInfo(statusViewInfo);
+        _view.SetActiveUi(false);
     }
 
     private void CommandCheckAlcana()

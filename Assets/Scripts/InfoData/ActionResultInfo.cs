@@ -171,7 +171,7 @@ public class ActionResultInfo
         if (target.IsState(StateType.CounterOura) && target.CanMove() && !isNoEffect)
         {
             _execStateInfos[target.Index].Add(StateType.CounterOura);
-            _reDamage = ReDamageValue(target);
+            _reDamage = ReDamageValue(target,SkillDamage);
         }
         SkillDamage -= (DefValue * 0.5f);
         float DamageValue = Mathf.Max(1,SkillDamage);
@@ -236,7 +236,7 @@ public class ActionResultInfo
         if (target.IsState(StateType.CounterOura) && target.CanMove() && !isNoEffect)
         {
             _execStateInfos[target.Index].Add(StateType.CounterOura);
-            _reDamage = ReDamageValue(target);
+            _reDamage = ReDamageValue(target,SkillDamage);
         }
         float DamageValue = Mathf.Max(1,SkillDamage);
         _hpDamage = (int)Mathf.Round(DamageValue);
@@ -305,9 +305,9 @@ public class ActionResultInfo
         }
     }
 
-    private int ReDamageValue(BattlerInfo target)
+    private int ReDamageValue(BattlerInfo target,float skillDamage)
     {
-        int ReDamage = (int)Mathf.Floor((target.CurrentDef() * 0.5f) * target.StateEffectAll(StateType.CounterOura) * 0.01f);
+        int ReDamage = (int)Mathf.Floor(skillDamage + (target.CurrentDef() * 0.5f) * target.StateEffectAll(StateType.CounterOura) * 0.01f);
         ReDamage += target.StateEffectAll(StateType.CounterOuraDamage);
         return ReDamage;
     }

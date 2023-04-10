@@ -186,10 +186,10 @@ public class BattlePresenter : BasePresenter
             _view.RefreshBattlerPartyLayerTarget(actionInfo.LastTargetIndex,actionInfo.TargetIndexList,actionInfo.ScopeType);
         } else
         {
-            _view.RefreshBattlerEnemyLayerTarget(-1);
+            _view.RefreshBattlerEnemyLayerTarget(actionInfo.LastTargetIndex,actionInfo.TargetIndexList,actionInfo.ScopeType);
             _view.RefreshBattlerPartyLayerTarget(actionInfo.LastTargetIndex,actionInfo.TargetIndexList,actionInfo.ScopeType);
             _view.ShowPartyTarget();
-            _view.DeactivateEnemyList();
+            _view.ShowEnemyTarget();
         }
         _backCommandType = Battle.CommandType.DecideActor;
         _view.SetActiveBack(true);

@@ -87,7 +87,7 @@ public class BattlerInfoComponent : MonoBehaviour
         ChangeMp(_battlerInfo.Mp);
         if (_battlerInfo.IsAlive() && _battlerInfo.isActor == false)
         {
-            BattleImage().gameObject.SetActive(true);
+            //BattleImage().gameObject.SetActive(true);
             ShowUI();
         }
     }
@@ -244,7 +244,7 @@ public class BattlerInfoComponent : MonoBehaviour
         if (_deathAnimation >= 1)
         {
             _deathAnimation = 0;
-            BattleImage().gameObject.SetActive(false);
+            gameObject.SetActive(false);
             deathAnimation.enabled = false;
             deathAnimation.Destroyed = 0;
         } 

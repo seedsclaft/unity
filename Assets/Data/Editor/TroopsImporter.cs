@@ -15,6 +15,7 @@ public class TroopsImporter : AssetPostprocessor {
 		TroopId,
 		EnemyId,
 		Lv,
+		BossFlag,
 		Line,
     }
 	enum BaseGetItemColumn
@@ -94,6 +95,7 @@ public class TroopsImporter : AssetPostprocessor {
 					TroopData.TroopId = (int)Baserow.GetCell((int)BaseColumn.TroopId)?.SafeNumericCellValue();
 					TroopData.EnemyId = (int)Baserow.GetCell((int)BaseColumn.EnemyId)?.SafeNumericCellValue();
 					TroopData.Lv = (int)Baserow.GetCell((int)BaseColumn.Lv)?.SafeNumericCellValue();
+					TroopData.BossFlag = Baserow.GetCell((int)BaseColumn.BossFlag)?.SafeNumericCellValue() == 1;
 					TroopData.Line = (LineType)Baserow.GetCell((int)BaseColumn.Line)?.SafeNumericCellValue();
 					TroopData.GetItemDatas = new List<GetItemData>();
 					Data._data.Add(TroopData);

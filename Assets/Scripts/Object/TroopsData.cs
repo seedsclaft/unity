@@ -16,6 +16,7 @@ public class TroopsData : ScriptableObject {
         public int TroopId;
         public int EnemyId;
         public int Lv;
+        public bool BossFlag;
         public LineType Line;
         public List<GetItemData> GetItemDatas;
     }

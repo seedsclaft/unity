@@ -9,7 +9,7 @@ public class TroopInfo
     public int TroopId { get {return _troopId;}}
     private List<BattlerInfo> _battlerInfos = new List<BattlerInfo>(); 
     public List<BattlerInfo> BattlerInfos {get {return _battlerInfos;}}
-    public BattlerInfo BossEnemy {get {return _battlerInfos.Find(a => a.LineIndex == LineType.Back);}}
+    public BattlerInfo BossEnemy {get {return _battlerInfos.Find(a => a.BossFlag == true);}}
     private List<GetItemInfo> _getItemInfos = new List<GetItemInfo>(); 
     public List<GetItemInfo> GetItemInfos {get {return _getItemInfos;}} 
     public TroopInfo(int troopId){
@@ -22,9 +22,9 @@ public class TroopInfo
         _battlerInfos.Add(battlerInfo);
     }
 
-    public void MakeEnemyData(TroopsData.TroopData troopData,int index,int gainLevel,bool isBoss){
+    public void MakeEnemyData(TroopsData.TroopData troopData,int index,int gainLevel){
         EnemiesData.EnemyData enemyData = DataSystem.Enemies.Find(a => a.Id == troopData.EnemyId);
-        BattlerInfo battlerInfo = new BattlerInfo(enemyData,troopData.Lv + gainLevel,index,troopData.Line,isBoss);
+        BattlerInfo battlerInfo = new BattlerInfo(enemyData,troopData.Lv + gainLevel,index,troopData.Line,troopData.BossFlag);
         AddEnemy(battlerInfo);
         
         List<GetItemData> getItemDatas = troopData.GetItemDatas;

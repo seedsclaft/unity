@@ -46,6 +46,8 @@ public class BattlerInfo
     private LineType _lineIndex = 0;
     public LineType LineIndex {get {return _lineIndex;} }
 
+    private bool _bossFlag = false;
+    public bool BossFlag {get {return _bossFlag;} }
     
     private int _chainSuccessCount = 0;
     public int ChainSuccessCount {get {return _chainSuccessCount;} }
@@ -92,6 +94,7 @@ public class BattlerInfo
     public BattlerInfo(EnemiesData.EnemyData enemyData,int lv,int index,LineType lineIndex,bool isBoss){
         _charaId = enemyData.Id;
         _level = lv;
+        _bossFlag = isBoss;
         StatusInfo statusInfo = new StatusInfo();
         int plusHpParam = isBoss == true ? 50 : 0;
         statusInfo.SetParameter(

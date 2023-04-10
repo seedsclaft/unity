@@ -27,9 +27,15 @@ public class SkillActionList : ListWindow , IInputHandlerEvent
                     return;
                 }
                 if (skillInfo.LearningState == LearningState.Notlearned){
-                    learningEvent(skillInfo);
+                    if (learningEvent != null)
+                    {
+                        learningEvent(skillInfo);
+                    }
                 } else{
-                    callEvent(skillInfo);
+                    if (callEvent != null)
+                    {
+                        callEvent(skillInfo);
+                    }
                 }
             });
             skillAction.SetSelectHandler((data) => UpdateSelectIndex(data));

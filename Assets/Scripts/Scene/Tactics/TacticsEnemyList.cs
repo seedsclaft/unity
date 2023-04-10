@@ -25,9 +25,15 @@ public class TacticsEnemyList : ListWindow , IInputHandlerEvent
             if (callEvent != null)
             {
                 tacticsEnemy.SetCallHandler(callEvent);
-                tacticsEnemy.SetGetItemCallHandler(getItemEvent);
-                tacticsEnemy.SetEnemyInfoCallHandler(enemyInfoEvent);
                 tacticsEnemy.SetSelectHandler((data) => UpdateSelectIndex(data));
+            }
+            if (getItemEvent != null)
+            {
+                tacticsEnemy.SetGetItemCallHandler(getItemEvent);
+            }
+            if (enemyInfoEvent != null)
+            {
+                tacticsEnemy.SetEnemyInfoCallHandler(enemyInfoEvent);
             }
         }
         SetInputHandler((a) => CallInputHandler(a,callEvent,cancelEvent,getItemEvent,enemyInfoEvent));

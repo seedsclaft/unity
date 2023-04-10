@@ -36,7 +36,7 @@ public class StrategyView : BaseView
 
     public void SetUiView()
     {
-        tacticsEnemyList.Initialize(null,null,null,null);
+        tacticsEnemyList.Initialize(null,null,(a) => CallPopupSkillInfo(a),(a) => OnClickEnemyInfo(a));
         tacticsEnemyList.gameObject.SetActive(false);
     }
 
@@ -114,6 +114,20 @@ public class StrategyView : BaseView
         tacticsEnemyList.gameObject.SetActive(true);
     }
 
+    private void CallPopupSkillInfo(int skillId)
+    {
+        var eventData = new StrategyViewEvent(CommandType.PopupSkillInfo);
+        eventData.templete = skillId;
+        _commandData(eventData);
+    }
+
+    private void OnClickEnemyInfo(int enemyIndex)
+    {
+        var eventData = new StrategyViewEvent(CommandType.CallEnemyInfo);
+        eventData.templete = enemyIndex;
+        _commandData(eventData);
+    }
+
     private void CallBattleCommand(TacticsComandType commandType)
     {
         var eventData = new StrategyViewEvent(CommandType.BattleClose);
@@ -129,8 +143,10 @@ namespace Strategy
         None = 0,
         StartStretegy = 1,
         EndAnimation = 2,
-        ResultClose = 3,
-        BattleClose = 4
+        PopupSkillInfo = 3,
+        CallEnemyInfo = 4,
+        ResultClose = 5,
+        BattleClose = 6
     }
 }
 public class StrategyViewEvent
