@@ -62,7 +62,7 @@ abstract public class ListWindow : MonoBehaviour
         DestroyListChildrens();
         SetValueChangedEvent();
         SetDataCount(count);
-        SetItemCount();
+        SetItemCount(count);
         CreatePrevObject();
         CreateList(count);
         CreateLastObject();
@@ -78,6 +78,8 @@ abstract public class ListWindow : MonoBehaviour
     {
         if (EnableValueChanged())
         {
+            Debug.Log(scrollRect.content.rect.height.ToString());
+            Debug.Log(scrollPosition.y.ToString());
             UpdateListItem(false);
             UpdateSizeDelta();
             _lastStartIndex = GetStartIndex();
@@ -93,7 +95,7 @@ abstract public class ListWindow : MonoBehaviour
         return true;
     }
 
-    private void SetItemCount()
+    private void SetItemCount(int itemCount)
     {
         float itemSize;
         float scrollSize;
@@ -105,8 +107,8 @@ abstract public class ListWindow : MonoBehaviour
             itemSize = itemPrefab.GetComponent<RectTransform>().sizeDelta.y;
             scrollSize = scrollRect.GetComponent<RectTransform>().sizeDelta.y;
         }
-        _itemSize = itemSize + ItemSpace();
-        _itemCount = (int)Math.Floor( scrollSize / _itemSize);
+        _itemSize = itemSize;
+        _itemCount = itemCount;//(int)Math.Floor( scrollSize / _itemSize);
     }
 
     public void SetDataCount(int count)
@@ -254,10 +256,10 @@ abstract public class ListWindow : MonoBehaviour
         float scrolledSize;
         if (horizontal == true)
         {
-            scrolledSize = (GetScrolledWidth() - ListMargin() - ItemSpace() / 2);
+            scrolledSize = (GetScrolledWidth() - ListMargin());
         } else
         {
-            scrolledSize = (GetScrolledHeight() - ListMargin() - ItemSpace() / 2);
+            scrolledSize = (GetScrolledHeight() - ListMargin());
         }
 
         float prevSize;
@@ -398,7 +400,7 @@ abstract public class ListWindow : MonoBehaviour
         InputCallEvent(keyType);
         UpdateSelectIndex(Index);
         ResetInputFrame();
-        Debug.Log(this.gameObject.name);
+        //Debug.Log(this.gameObject.name);
     }
 
     public void InputSelectIndex(InputKeyType keyType){
@@ -426,9 +428,9 @@ abstract public class ListWindow : MonoBehaviour
                 if (_dataCount > _itemCount)
                 {
                     int startIndex = GetStartIndex();
-                    var h = (scrollRect.content.rect.height - GetViewPortHeight());
                     var rectHei = _itemSize+ItemSpace();
-
+                    var h = (scrollRect.content.rect.height - GetViewPortHeight());
+                    
                     int count = 0;
                     if (((_itemCount+startIndex) - selectIndex) <= 0)
                     {
@@ -436,6 +438,22 @@ abstract public class ListWindow : MonoBehaviour
                         nom = 1.0f - nom;
                         if (selectIndex == _dataCount-1)
                         {
+                            scrollRect.normalizedPosition = new Vector2(0,nom);
+                        
+                            int tempIndex = GetStartIndex();
+                            while (tempIndex == startIndex)
+                            {
+                                nom -= 0.000001f;
+                                scrollRect.normalizedPosition = new Vector2(0,nom);
+                                tempIndex = GetStartIndex();
+                                count++;
+                                if (count > 1000) 
+                                {
+                                    tempIndex = startIndex;
+                                    break;
+                                }
+                            }
+                            /*
                             nom = 0;
                             scrollRect.normalizedPosition = new Vector2(0,nom);
                         
@@ -446,8 +464,13 @@ abstract public class ListWindow : MonoBehaviour
                                 scrollRect.normalizedPosition = new Vector2(0,nom);
                                 tempIndex = GetStartIndex();
                                 count++;
-                                if (count > 1000) tempIndex = (_dataCount-_itemCount);
+                                if (count > 1000) 
+                                {
+                                    tempIndex = (_dataCount-_itemCount);
+                                    break;
+                                }
                             }
+                            */
                         } else{
                             scrollRect.normalizedPosition = new Vector2(0,nom);
                         
@@ -458,7 +481,11 @@ abstract public class ListWindow : MonoBehaviour
                                 scrollRect.normalizedPosition = new Vector2(0,nom);
                                 tempIndex = GetStartIndex();
                                 count++;
-                                if (count > 1000) tempIndex = startIndex;
+                                if (count > 1000) 
+                                {
+                                    tempIndex = startIndex;
+                                    break;
+                                }
                             }
                         }
                         ValueChanged(new Vector2(0,nom));
@@ -480,7 +507,11 @@ abstract public class ListWindow : MonoBehaviour
                                 scrollRect.normalizedPosition = new Vector2(0,nom);
                                 tempIndex = GetStartIndex();
                                 count++;
-                                if (count > 1000) tempIndex = startIndex;
+                                if (count > 1000) 
+                                {
+                                    tempIndex = startIndex;
+                                    break;
+                                }
                             }
                         }
                         ValueChanged(new Vector2(0,nom));

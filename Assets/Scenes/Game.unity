@@ -6738,8 +6738,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc34738223829f44c9a2b752c153bbcc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inBattleActorIds: 02000000
-  troopId: 20
+  inBattleActorIds: 04000000
+  troopId: 40
   actorDatas:
   - Id: 1
     Name: "\u30D8\u30AB\u30C6\u30FC"
@@ -6982,6 +6982,14 @@ MonoBehaviour:
       Weight: 0
       TriggerDatas: []
     - SkillId: 412
+      Level: 0
+      Weight: 0
+      TriggerDatas: []
+    - SkillId: 402
+      Level: 0
+      Weight: 0
+      TriggerDatas: []
+    - SkillId: 404
       Level: 0
       Weight: 0
       TriggerDatas: []
