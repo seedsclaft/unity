@@ -436,23 +436,24 @@ abstract public class ListWindow : MonoBehaviour
                     {
                         var nom = (selectIndex - (_itemCount-1)) * ((float)rectHei / (float)h);
                         nom = 1.0f - nom;
+
+                        scrollRect.normalizedPosition = new Vector2(0,nom);
+                    
+                        int tempIndex = GetStartIndex();
+                        while (tempIndex == startIndex)
+                        {
+                            nom -= 0.000001f;
+                            scrollRect.normalizedPosition = new Vector2(0,nom);
+                            tempIndex = GetStartIndex();
+                            count++;
+                            if (count > 1000) 
+                            {
+                                tempIndex = startIndex;
+                                break;
+                            }
+                        }
                         if (selectIndex == _dataCount-1)
                         {
-                            scrollRect.normalizedPosition = new Vector2(0,nom);
-                        
-                            int tempIndex = GetStartIndex();
-                            while (tempIndex == startIndex)
-                            {
-                                nom -= 0.000001f;
-                                scrollRect.normalizedPosition = new Vector2(0,nom);
-                                tempIndex = GetStartIndex();
-                                count++;
-                                if (count > 1000) 
-                                {
-                                    tempIndex = startIndex;
-                                    break;
-                                }
-                            }
                             /*
                             nom = 0;
                             scrollRect.normalizedPosition = new Vector2(0,nom);
@@ -471,22 +472,6 @@ abstract public class ListWindow : MonoBehaviour
                                 }
                             }
                             */
-                        } else{
-                            scrollRect.normalizedPosition = new Vector2(0,nom);
-                        
-                            int tempIndex = GetStartIndex();
-                            while (tempIndex == startIndex)
-                            {
-                                nom -= 0.000001f;
-                                scrollRect.normalizedPosition = new Vector2(0,nom);
-                                tempIndex = GetStartIndex();
-                                count++;
-                                if (count > 1000) 
-                                {
-                                    tempIndex = startIndex;
-                                    break;
-                                }
-                            }
                         }
                         ValueChanged(new Vector2(0,nom));
                     } else

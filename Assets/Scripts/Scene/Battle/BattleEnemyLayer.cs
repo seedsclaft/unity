@@ -103,7 +103,6 @@ public class BattleEnemyLayer : ListWindow , IInputHandlerEvent
                 listItem.SetSelect();
                 var emitter = listItem.GetComponentInChildren<EffekseerEmitter>();
                 emitter.Play();
-                _battleEnemies[i].BattlerInfoComponent.SetSelectable(true);
             }
         }
     }
@@ -138,18 +137,17 @@ public class BattleEnemyLayer : ListWindow , IInputHandlerEvent
         }
         for (int i = 0; i < _battleEnemies.Count;i++)
         {
-            var listItem = _battleEnemies[i].GetComponent<ListItem>();
+            ListItem listItem = _battleEnemies[i].GetComponent<ListItem>();
             if (index == _battleEnemies[i].EnemyIndex){
                 if (_battleInfos[i].IsAlive())
                 {
                     listItem.SetSelect();
-                    var emitter = listItem.GetComponentInChildren<EffekseerEmitter>();
+                    EffekseerEmitter emitter = listItem.GetComponentInChildren<EffekseerEmitter>();
                     emitter.Play();
                 }
             } else{
                 listItem.SetUnSelect();
             }
-            _battleEnemies[i].BattlerInfoComponent.SetSelectable((index == _battleEnemies[i].EnemyIndex));
         }
     }
 
@@ -160,20 +158,19 @@ public class BattleEnemyLayer : ListWindow , IInputHandlerEvent
         bool isFront = index < _backStartIndex;
         for (int i = 0; i < _battleEnemies.Count;i++)
         {
-            var listItem = _battleEnemies[i].GetComponent<ListItem>();
+            ListItem listItem = _battleEnemies[i].GetComponent<ListItem>();
             if (isFront)
             {
                 if (_battleEnemies[i].EnemyIndex < _backStartIndex){
                     if (_battleInfos[i].IsAlive())
                     {
                         listItem.SetSelect();
-                        var emitter = listItem.GetComponentInChildren<EffekseerEmitter>();
+                        EffekseerEmitter emitter = listItem.GetComponentInChildren<EffekseerEmitter>();
                         emitter.Play();
                     }
                 } else{
                     listItem.SetUnSelect();
                 }
-                _battleEnemies[i].BattlerInfoComponent.SetSelectable(_battleEnemies[i].EnemyIndex < _backStartIndex);
             } else
             {
                 if (_battleEnemies[i].EnemyIndex >= _backStartIndex){
@@ -186,7 +183,6 @@ public class BattleEnemyLayer : ListWindow , IInputHandlerEvent
                 } else{
                     listItem.SetUnSelect();
                 }
-                _battleEnemies[i].BattlerInfoComponent.SetSelectable(_battleEnemies[i].EnemyIndex >= _backStartIndex);
             }
         }
     }

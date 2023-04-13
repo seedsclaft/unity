@@ -278,7 +278,7 @@ public class BattlePresenter : BasePresenter
 
     private async void StartAnimationSkill()
     {
-        //_view.ClearDamagePopup();
+        _view.SetBattlerSelectable(true);
         ActionInfo actionInfo = _model.CurrentActionInfo();
         if (actionInfo.actionResults.Count == 0)
         {
@@ -566,6 +566,7 @@ public class BattlePresenter : BasePresenter
         _view.RefreshBattlerEnemyLayerTarget(-1);
         _view.RefreshBattlerPartyLayerTarget(-1);
         _view.SetActiveBack(false);
+        _view.SetBattlerSelectable(true);
     }
     
     private void CommandLeftActor()

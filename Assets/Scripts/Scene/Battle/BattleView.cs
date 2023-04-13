@@ -329,6 +329,14 @@ public class BattleView : BaseView
             ActivateEnemyList();
         }
         battleEnemyLayer.RefreshTarget(selectIndex,targetIndexList,scopeType);
+        if (targetIndexList != null)
+        {
+            SetBattlerSelectable(false);
+            foreach (var idx in targetIndexList)
+            {
+                _battlerComps[idx].SetSelectable(true);
+            }
+        }
     }
 
     public void RefreshBattlerPartyLayerTarget(int selectIndex,List<int> targetIndexList = null,ScopeType scopeType = ScopeType.None)
@@ -337,6 +345,14 @@ public class BattleView : BaseView
             ActivateActorList();
         }
         battleActorList.RefreshTarget(selectIndex,targetIndexList,scopeType);
+        if (targetIndexList != null)
+        {
+            SetBattlerSelectable(false);
+            foreach (var idx in targetIndexList)
+            {
+                _battlerComps[idx].SetSelectable(true);
+            }
+        }
     }
 
     public void StartAnimation(int targetIndex,EffekseerEffectAsset effekseerEffectAsset,int animationPosition)
@@ -403,6 +419,14 @@ public class BattleView : BaseView
         foreach (var item in _battlerComps)
         {
             item.Value.RefreshStatus();
+        }
+    }
+
+    public void SetBattlerSelectable(bool selectable)
+    {
+        foreach (var item in _battlerComps)
+        {
+            item.Value.SetSelectable(selectable);
         }
     }
 

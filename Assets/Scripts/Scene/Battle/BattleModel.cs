@@ -403,104 +403,21 @@ public class BattleModel : BaseModel
         List<int> targetIndexList = new List<int>();
         if (skill.TargetType == TargetType.All)
         {
-            List<BattlerInfo> battlerInfos = _battlers;
-            for (int i = 0;i < battlerInfos.Count;i++)
-            {
-                targetIndexList.Add(battlerInfos[i].Index);
-            }
-        }
+            targetIndexList = TargetIndexAll(subject.isActor,targetIndexList,rangeType);
+        } else
+        if (skill.TargetType == TargetType.Opponent)
+        {
+            targetIndexList = TargetIndexOpponent(subject.isActor,targetIndexList,rangeType);
+        } else
+        if (skill.TargetType == TargetType.Friend)
+        {
+            targetIndexList = TargetIndexFriend(subject.isActor,targetIndexList);
+        } else 
         if (skill.TargetType == TargetType.Self)
         {
             targetIndexList.Add(subject.Index);
         }
 
-        if (subject.isActor)
-        {
-            if (skill.TargetType == TargetType.Opponent)
-            {
-                if (rangeType == RangeType.S)
-                {
-                    // 最前列は
-                    bool IsFrontAlive = BattlerEnemies().Find(a => a.IsAlive() && a.LineIndex == 0) != null;
-                    if (IsFrontAlive)
-                    {
-                        List<BattlerInfo> frontBattlerInfos = BattlerEnemies().FindAll(a => a.IsAlive() && a.LineIndex == 0);
-                        for (int i = 0;i < frontBattlerInfos.Count;i++)
-                        {
-                            if (frontBattlerInfos[i].IsAlive())
-                            {
-                                targetIndexList.Add(frontBattlerInfos[i].Index);
-                            }
-                        }
-                    } else
-                    {
-                        List<BattlerInfo> backBattlerInfos = BattlerEnemies().FindAll(a => a.IsAlive() && a.LineIndex == LineType.Back);
-                        for (int i = 0;i < backBattlerInfos.Count;i++)
-                        {
-                            targetIndexList.Add(backBattlerInfos[i].Index);
-                        }
-                    }
-                } else
-                {
-                    List<BattlerInfo> battlerInfos = BattlerEnemies().FindAll(a => a.IsAlive());
-                    for (int i = 0;i < battlerInfos.Count;i++)
-                    {
-                        targetIndexList.Add(battlerInfos[i].Index);
-                    }
-                }
-            } else
-            if (skill.TargetType == TargetType.Friend)
-            {
-                List<BattlerInfo> battlerInfos = BattlerActors();
-                for (int i = 0;i < battlerInfos.Count;i++)
-                {
-                    targetIndexList.Add(battlerInfos[i].Index);
-                }
-            }
-        } else
-        {
-            if (skill.TargetType == TargetType.Opponent)
-            {
-                if (rangeType == RangeType.S)
-                {
-                    // 最前列は
-                    bool IsFrontAlive = BattlerEnemies().Find(a => a.IsAlive() && a.LineIndex == 0) != null;
-                    if (IsFrontAlive)
-                    {
-                        if (subject.LineIndex == 0)
-                        {
-                            List<BattlerInfo> battlerInfos = BattlerActors();
-                            for (int i = 0;i < battlerInfos.Count;i++)
-                            {
-                                targetIndexList.Add(battlerInfos[i].Index);
-                            }
-                        }
-                    } else
-                    {
-                        List<BattlerInfo> battlerInfos = BattlerActors();
-                        for (int i = 0;i < battlerInfos.Count;i++)
-                        {
-                            targetIndexList.Add(battlerInfos[i].Index);
-                        }
-                    }
-                } else
-                {
-                    List<BattlerInfo> battlerInfos = BattlerActors();
-                    for (int i = 0;i < battlerInfos.Count;i++)
-                    {
-                        targetIndexList.Add(battlerInfos[i].Index);
-                    }
-                }
-            } else
-            if (skill.TargetType == TargetType.Friend)
-            {
-                List<BattlerInfo> battlerInfos = BattlerEnemies();
-                for (int i = 0;i < battlerInfos.Count;i++)
-                {
-                    targetIndexList.Add(battlerInfos[i].Index);
-                }
-            }
-        }
         if (skill.AliveOnly)
         {
             targetIndexList = targetIndexList.FindAll(a => _battlers.Find(b => a == b.Index).IsAlive());
@@ -513,6 +430,120 @@ public class BattleModel : BaseModel
             if (CanUseCondition(skillId,targetIndexList[i]) == false)
             {
                 targetIndexList.Remove(targetIndexList[i]);
+            }
+        }
+        return targetIndexList;
+    }
+
+    private List<int> TargetIndexAll(bool isActor,List<int> targetIndexList,RangeType rangeType)
+    {
+        if (isActor)
+        {
+            List<BattlerInfo> battlerInfos = BattlerActors();
+            for (int i = 0;i < battlerInfos.Count;i++)
+            {
+                targetIndexList.Add(battlerInfos[i].Index);
+            }
+            if (rangeType == RangeType.S)
+            {
+                // 最前列は
+                bool IsFrontAlive = BattlerEnemies().Find(a => a.IsAlive() && a.LineIndex == LineType.Front) != null;
+                if (IsFrontAlive)
+                {
+                    List<BattlerInfo> frontBattlerInfos = BattlerEnemies().FindAll(a => a.IsAlive() && a.LineIndex == LineType.Front);
+                    for (int i = 0;i < frontBattlerInfos.Count;i++)
+                    {
+                        if (frontBattlerInfos[i].IsAlive())
+                        {
+                            targetIndexList.Add(frontBattlerInfos[i].Index);
+                        }
+                    }
+                } else
+                {
+                    List<BattlerInfo> backBattlerInfos = BattlerEnemies().FindAll(a => a.IsAlive() && a.LineIndex == LineType.Back);
+                    for (int i = 0;i < backBattlerInfos.Count;i++)
+                    {
+                        targetIndexList.Add(backBattlerInfos[i].Index);
+                    }
+                }
+            } else
+            {
+                List<BattlerInfo> backBattlerInfos = BattlerEnemies().FindAll(a => a.IsAlive() && a.LineIndex == LineType.Back);
+                for (int i = 0;i < backBattlerInfos.Count;i++)
+                {
+                    targetIndexList.Add(backBattlerInfos[i].Index);
+                }
+            }
+        } else
+        {
+            List<BattlerInfo> battlerInfos = _battlers;
+            for (int i = 0;i < battlerInfos.Count;i++)
+            {
+                targetIndexList.Add(battlerInfos[i].Index);
+            }
+        }
+        return targetIndexList;
+    }
+
+    private List<int> TargetIndexOpponent(bool isActor,List<int> targetIndexList,RangeType rangeType)
+    {   
+        if (isActor)
+        {
+            if (rangeType == RangeType.S)
+            {
+                // 最前列は
+                bool IsFrontAlive = BattlerEnemies().Find(a => a.IsAlive() && a.LineIndex == 0) != null;
+                if (IsFrontAlive)
+                {
+                    List<BattlerInfo> frontBattlerInfos = BattlerEnemies().FindAll(a => a.IsAlive() && a.LineIndex == 0);
+                    for (int i = 0;i < frontBattlerInfos.Count;i++)
+                    {
+                        if (frontBattlerInfos[i].IsAlive())
+                        {
+                            targetIndexList.Add(frontBattlerInfos[i].Index);
+                        }
+                    }
+                } else
+                {
+                    List<BattlerInfo> backBattlerInfos = BattlerEnemies().FindAll(a => a.IsAlive() && a.LineIndex == LineType.Back);
+                    for (int i = 0;i < backBattlerInfos.Count;i++)
+                    {
+                        targetIndexList.Add(backBattlerInfos[i].Index);
+                    }
+                }
+            } else
+            {
+                List<BattlerInfo> battlerInfos = BattlerEnemies().FindAll(a => a.IsAlive());
+                for (int i = 0;i < battlerInfos.Count;i++)
+                {
+                    targetIndexList.Add(battlerInfos[i].Index);
+                }
+            }
+        } else{
+            List<BattlerInfo> battlerInfos = BattlerActors();
+            for (int i = 0;i < battlerInfos.Count;i++)
+            {
+                targetIndexList.Add(battlerInfos[i].Index);
+            }
+        }
+        return targetIndexList;
+    }
+
+    private List<int> TargetIndexFriend(bool isActor,List<int> targetIndexList)
+    {
+        if (isActor)
+        {
+            List<BattlerInfo> battlerInfos = BattlerActors();
+            for (int i = 0;i < battlerInfos.Count;i++)
+            {
+                targetIndexList.Add(battlerInfos[i].Index);
+            }
+        } else
+        {
+            List<BattlerInfo> battlerInfos = BattlerEnemies();
+            for (int i = 0;i < battlerInfos.Count;i++)
+            {
+                targetIndexList.Add(battlerInfos[i].Index);
             }
         }
         return targetIndexList;

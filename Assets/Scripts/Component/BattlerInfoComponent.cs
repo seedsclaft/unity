@@ -198,12 +198,8 @@ public class BattlerInfoComponent : MonoBehaviour
     {
         Image image = BattleImage();
         if (image == null) return;
-        if (isSelectable)
-        {
-            image.color = new Color(255,255,255,255);
-        } else{
-            image.color = new Color(255,255,255,128);
-        }
+        float alpha = isSelectable == true ? 1 : 0.25f;
+        image.color = new Color(255,255,255,alpha);
     }
 
     public void SetEnemyGridKey(int index)

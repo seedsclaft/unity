@@ -100,7 +100,6 @@ public class BattleActorList : ListWindow , IInputHandlerEvent
         {
             var listItem = ObjectList[i].GetComponent<ListItem>();
             listItem.SetSelect();
-            _battleActors[i].BattlerInfoComponent.SetSelectable(true);
         }
     }
 
@@ -137,7 +136,6 @@ public class BattleActorList : ListWindow , IInputHandlerEvent
             } else{
                 listItem.SetUnSelect();
             }
-            _battleActors[i].BattlerInfoComponent.SetSelectable(index == i);
         }
     }
 
