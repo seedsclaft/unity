@@ -407,7 +407,7 @@ public class BattleModel : BaseModel
         } else
         if (skill.TargetType == TargetType.Opponent)
         {
-            targetIndexList = TargetIndexOpponent(subject.isActor,targetIndexList,rangeType);
+            targetIndexList = TargetIndexOpponent(subject.isActor,targetIndexList,rangeType,subject.LineIndex);
         } else
         if (skill.TargetType == TargetType.Friend)
         {
@@ -485,7 +485,7 @@ public class BattleModel : BaseModel
         return targetIndexList;
     }
 
-    private List<int> TargetIndexOpponent(bool isActor,List<int> targetIndexList,RangeType rangeType)
+    private List<int> TargetIndexOpponent(bool isActor,List<int> targetIndexList,RangeType rangeType,LineType lineType)
     {   
         if (isActor)
         {
@@ -520,10 +520,34 @@ public class BattleModel : BaseModel
                 }
             }
         } else{
-            List<BattlerInfo> battlerInfos = BattlerActors();
-            for (int i = 0;i < battlerInfos.Count;i++)
+            if (rangeType == RangeType.S)
             {
-                targetIndexList.Add(battlerInfos[i].Index);
+                // 最前列は
+                bool IsFrontLine = lineType == LineType.Front;
+                if (IsFrontLine)
+                {
+                    List<BattlerInfo> battlerInfos = BattlerActors();
+                    for (int i = 0;i < battlerInfos.Count;i++)
+                    {
+                        targetIndexList.Add(battlerInfos[i].Index);
+                    }
+                } else{
+                    if (BattlerEnemies().Find(a => a.IsAlive() && a.LineIndex == LineType.Front) == null)
+                    {
+                        List<BattlerInfo> battlerInfos = BattlerActors();
+                        for (int i = 0;i < battlerInfos.Count;i++)
+                        {
+                            targetIndexList.Add(battlerInfos[i].Index);
+                        }
+                    }
+                }
+            } else
+            { 
+                List<BattlerInfo> battlerInfos = BattlerActors();
+                for (int i = 0;i < battlerInfos.Count;i++)
+                {
+                    targetIndexList.Add(battlerInfos[i].Index);
+                }
             }
         }
         return targetIndexList;

@@ -292,6 +292,16 @@ public class StatusView : BaseView
         skillList.DeactivateActionList();
         skillList.DeactivateAttributeList();
     }
+
+    public void ShowAttributeList()
+    {
+        skillList.ShowAttributeList();
+    }
+
+    public void HideAttributeList()
+    {
+        skillList.HideAttributeList();
+    }
     
     public void RefreshSkillActionList(List<SkillInfo> skillInfos,List<AttributeType> attributeTypes)
     {

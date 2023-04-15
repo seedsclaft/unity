@@ -26,7 +26,7 @@ public class SkillActionList : ListWindow , IInputHandlerEvent
                 {
                     return;
                 }
-                if (skillInfo.LearningState == LearningState.Notlearned){
+                if (skillInfo.LearningState == LearningState.Notlearned || skillInfo.LearningState == LearningState.SelectLearn){
                     if (learningEvent != null)
                     {
                         learningEvent(skillInfo);

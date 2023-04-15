@@ -17,7 +17,8 @@ public class TacticsComponent : MonoBehaviour
 
 
     [SerializeField] private Toggle alchemyCheckToggle;
-    [SerializeField] private SkillInfoComponent skillInfoComponent;
+    [SerializeField] private TextMeshProUGUI attributeType;
+    [SerializeField] private TextMeshProUGUI attributeLearnCost;
     
 
     [SerializeField] private Toggle recoveryCheckToggle;
@@ -61,9 +62,13 @@ public class TacticsComponent : MonoBehaviour
             alchemyCheckToggle.isOn = (actorInfo.TacticsComandType == TacticsComandType.Alchemy);
             currentTacticsComandType = TacticsComandType.Alchemy;
         }
-        if (skillInfoComponent != null)
+        if (attributeType != null)
         {
-            skillInfoComponent.UpdateSkillData(actorInfo.NextLearnSkillId);
+            attributeType.text = actorInfo.NextLearnAttribute.ToString();
+        }
+        if (attributeLearnCost != null)
+        {
+            attributeLearnCost.text = actorInfo.NextLearnCost.ToString();
         }
 
         

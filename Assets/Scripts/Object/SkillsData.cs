@@ -225,5 +225,6 @@ public enum FeatureType
 public enum LearningState{
     None = 0,
     Learned = 1,
-    Notlearned = 2
+    Notlearned = 2,
+    SelectLearn = 3
 }

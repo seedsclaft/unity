@@ -14,14 +14,12 @@ public class SkillInfo
     private bool _interrupt;
     public bool Interrupt {get {return _interrupt;}}
     public AttributeType Attribute {get {return Master.Attribute;}}
-    
-    private int _learingCost;
-    public int LearingCost {get {return _learingCost;}}
-    private int _hintLv = -1;
-    public int HintLv {get {return _hintLv;}}
 
     private LearningState _learningState;
     public LearningState LearningState {get {return _learningState;}}
+
+    private AttributeType _learnAttributeType;
+    public AttributeType LearnAttributeType {get {return _learnAttributeType;}}
 
     private List<SkillsData.TriggerData> _triggerDatas = new List<SkillsData.TriggerData>();
     public List<SkillsData.TriggerData> TriggerDatas {get {return _triggerDatas;}}
@@ -56,19 +54,14 @@ public class SkillInfo
         _interrupt = IsInterrupt;
     }
 
-    public void SetLearingCost(int learningCost)
-    {
-        _learingCost = learningCost;
-    }
-    
-    public void SetHintLv(int hintLv)
-    {
-        _hintLv = hintLv;
-    }
-
     public void SetLearningState(LearningState learningState)
     {
         _learningState = learningState;
+    }
+
+    public void SetLearnAttribute(AttributeType attributeType)
+    {
+        _learnAttributeType = attributeType;
     }
 
     public bool CanUseTrigger(BattlerInfo battlerInfo,List<BattlerInfo> party,List<BattlerInfo> troops)

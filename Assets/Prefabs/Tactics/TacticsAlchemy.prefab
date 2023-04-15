@@ -482,7 +482,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &7618651244806737877
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1217,7 +1217,8 @@ MonoBehaviour:
   afterLv: {fileID: 0}
   trainCost: {fileID: 0}
   alchemyCheckToggle: {fileID: 4559348638628754027}
-  skillInfoComponent: {fileID: 5969821688827546205}
+  attributeType: {fileID: 2152984182471629363}
+  attributeLearnCost: {fileID: 3535460788340704239}
   recoveryCheckToggle: {fileID: 0}
   statusInfoComponent: {fileID: 0}
   battleCheckToggle: {fileID: 0}
@@ -1273,7 +1274,6 @@ MonoBehaviour:
   type: {fileID: 0}
   value: {fileID: 0}
   description: {fileID: 0}
-  learingcost: {fileID: 0}
 --- !u!1 &8415254190965423419
 GameObject:
   m_ObjectHideFlags: 0

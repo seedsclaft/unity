@@ -34,7 +34,12 @@ public class BattleActorList : ListWindow , IInputHandlerEvent
                 }
                 callEvent(MakeTargetIndexs(battlerInfo));
             });
-            battleActor.SetSelectHandler((data) => UpdateTargetIndex(data));
+            battleActor.SetSelectHandler((data) => 
+                {        
+                    if (IsInputEnable() == false) return;
+                    UpdateTargetIndex(data);
+                }
+            );
             battleActor.SetDamageRoot(damageRoots[i]);
             _battleActors.Add(battleActor);
             ObjectList[i].SetActive(false);

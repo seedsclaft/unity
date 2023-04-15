@@ -9,7 +9,13 @@ public class TroopInfo
     public int TroopId { get {return _troopId;}}
     private List<BattlerInfo> _battlerInfos = new List<BattlerInfo>(); 
     public List<BattlerInfo> BattlerInfos {get {return _battlerInfos;}}
-    public BattlerInfo BossEnemy {get {return _battlerInfos.Find(a => a.BossFlag == true);}}
+    public BattlerInfo BossEnemy {
+        get {
+            var boss = _battlerInfos.Find(a => a.BossFlag == true);
+            if (boss != null) return _battlerInfos.Find(a => a.BossFlag == true);
+            return _battlerInfos[_battlerInfos.Count-1];
+        }
+    }
     private List<GetItemInfo> _getItemInfos = new List<GetItemInfo>(); 
     public List<GetItemInfo> GetItemInfos {get {return _getItemInfos;}} 
     public TroopInfo(int troopId){

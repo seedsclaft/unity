@@ -137,10 +137,6 @@ public class TacticsPresenter
         {
             CommandTacticsCommand((TacticsComandType)viewEvent.templete);
         }
-        if (viewEvent.commandType == Tactics.CommandType.AttributeType)
-        {
-            CommandAttributeType((AttributeType)viewEvent.templete);
-        }
         if (viewEvent.commandType == Tactics.CommandType.DecideActor)
         {
             CommandDecideActor();
@@ -163,7 +159,7 @@ public class TacticsPresenter
         }
         if (viewEvent.commandType == Tactics.CommandType.SkillAlchemy)
         {
-            CommandSkillAlchemy((int)viewEvent.templete);
+            CommandSkillAlchemy((AttributeType)viewEvent.templete);
         }
         if (viewEvent.commandType == Tactics.CommandType.AlchemyClose)
         {
@@ -468,11 +464,18 @@ public class TacticsPresenter
         SoundManager.Instance.PlayStaticSe(SEType.Decide);
     }
 
-    private void CommandAttributeType(AttributeType attributeType)
+    private void CommandSkillAlchemy(AttributeType attributeType)
     {
-        List<SkillInfo> skillInfos = _model.SelectActorAlchemy(_model.CurrentActor.ActorId,attributeType);
-        _view.ShowSkillAlchemyList(skillInfos);
-        CommandRefresh();
+        if (_model.CheckCanSelectAlchemy(attributeType))
+        {
+            _model.SelectAlchemy(attributeType);
+            _view.ShowAlchemyList();
+            _view.HideAttributeList();
+            CommandRefresh();
+            SoundManager.Instance.PlayStaticSe(SEType.Decide);
+        } else{
+            SoundManager.Instance.PlayStaticSe(SEType.Decide);
+        }
     }
 
     private void CommandDecideActor()
@@ -508,24 +511,16 @@ public class TacticsPresenter
 
         } else
         {
-            _model.CurrentActorId = actorId;
+            /*
             CommandAttributeType(_model.CurrentAttributeType);
+            */
+            _model.CurrentActorId = actorId;
+            _view.ShowAttributeList();
             _view.HideAlchemyList();
             _view.SetActiveBack(true);
             _backCommand = Tactics.CommandType.SelectAlchemyClose;        
             SoundManager.Instance.PlayStaticSe(SEType.Decide);
         }
-        CommandRefresh();
-    }
-
-    private void CommandSkillAlchemy(int skillId)
-    {
-        SoundManager.Instance.PlayStaticSe(SEType.Decide);
-        _model.SelectAlchemy(skillId);
-        _view.HideSkillAlchemyList();
-        _view.SetActiveBack(false);
-        _view.ShowAlchemyList();
-        _view.ActivateTacticsCommand();
         CommandRefresh();
     }
 
@@ -538,6 +533,7 @@ public class TacticsPresenter
             _model.ResetTempData(TacticsComandType.Alchemy);
             SoundManager.Instance.PlayStaticSe(SEType.Cancel);
         }
+        _view.SetActiveBack(false);
         _view.ShowCommandList();
         _view.HideAlchemyList();
         CommandRefresh();
@@ -548,7 +544,7 @@ public class TacticsPresenter
         _model.SetTempData(TacticsComandType.Alchemy);
         _view.ShowAlchemyList();
         _view.ActivateTacticsCommand();
-        _view.HideSkillAlchemyList();
+        _view.HideAttributeList();
         _view.SetActiveBack(false);
         _view.HideCommandList();
         _backCommand = Tactics.CommandType.None;
@@ -660,7 +656,7 @@ public class TacticsPresenter
         _view.SetNuminous(_model.Currency);
         _view.SetStageInfo(_model.CurrentStage);
         
-        if (_model.CurrentActor != null) _view.SetAttributeValues(_model.AttirbuteValues());
+        if (_model.CurrentActor != null) _view.SetAttributeValues(_model.AttirbuteValues(),_model.AttirbutesLearingCosts(),_model.Currency);
         _view.CommandRefresh();
     }
 

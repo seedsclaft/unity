@@ -175,8 +175,8 @@ public class StatusPresenter
         {
             if (confirmComandType == ConfirmComandType.Yes)
             {
-                _model.LearnSkillInfo();
-                _view.ActivateSkillActionList();
+                //_model.LearnSkillInfo();
+                //_view.ActivateSkillActionList();
                 CommandRefresh();
             } else
             {
@@ -243,25 +243,24 @@ public class StatusPresenter
 
     private void CommandSelectSkillAction(SkillInfo skillInfo)
     {
-        if (skillInfo.LearingCost == 0) return;
-        _model.SetLearnSkillInfo(skillInfo);
-        string text = DataSystem.System.GetTextData(4010).Text.Replace("\\d",skillInfo.Master.Name) + "\n" + DataSystem.System.GetTextData(4011).Text.Replace("\\d",skillInfo.LearingCost.ToString());
-        ConfirmInfo confirmInfo = new ConfirmInfo(text,(menuCommandInfo) => updatePopup((ConfirmComandType)menuCommandInfo));
-        _view.CommandCallConfirm(confirmInfo);
-        _view.DeactivateSkillActionList();
-        _popupCommandType = Status.CommandType.SelectSkillAction;
         SoundManager.Instance.PlayStaticSe(SEType.Decide);
     }
 
     private void CommandSelectSkillLearning(SkillInfo skillInfo)
     {
-        if (_model.EnableLearing(skillInfo) == false) return;
-        _model.SetLearnSkillInfo(skillInfo);
-        string text = DataSystem.System.GetTextData(4000).Text.Replace("\\d",skillInfo.LearingCost.ToString()).Replace("\\e",skillInfo.Master.Name);
-        ConfirmInfo confirmInfo = new ConfirmInfo(text,(menuCommandInfo) => updatePopup((ConfirmComandType)menuCommandInfo));
-        _view.CommandCallConfirm(confirmInfo);
-        _view.DeactivateSkillActionList();
-        _popupCommandType = Status.CommandType.SelectSkillLearning;
+        if (skillInfo.LearningState == LearningState.Notlearned)
+        {
+            _model.SetLearnSkillInfo(skillInfo);
+            var leariningSkillList = _model.LearningSkillList(skillInfo.Attribute);
+            _view.RefreshSkillActionList(leariningSkillList,_model.AttributeTypes());
+            _view.HideAttributeList();
+        }
+        if (skillInfo.LearningState == LearningState.SelectLearn)
+        {
+            _model.LearnSkillInfo(skillInfo);
+            _view.ShowAttributeList();
+            CommandAttributeType(_model.CurrentAttributeType);
+        }
         SoundManager.Instance.PlayStaticSe(SEType.Decide);
     }
 

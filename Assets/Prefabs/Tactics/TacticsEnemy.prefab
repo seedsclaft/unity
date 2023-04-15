@@ -596,7 +596,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 78, y: 106}
+  m_AnchoredPosition: {x: 74, y: 106}
   m_SizeDelta: {x: 32, y: 32}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1550597496337441716
@@ -883,7 +883,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 100, y: -8}
+  m_AnchoredPosition: {x: 96, y: -8}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
 --- !u!114 &3645796501884205690
@@ -904,7 +904,7 @@ MonoBehaviour:
   itemPrefab: {fileID: 6145794166525957040, guid: ca4965df58f92f54a810c5e6f49b6098,
     type: 3}
   _helpWindow: {fileID: 0}
-  rows: 3
+  rows: 4
   cols: 1
   tacticsCommandList: {fileID: 0}
 --- !u!1 &3589651004894536762
@@ -943,7 +943,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 112, y: 68}
-  m_SizeDelta: {x: 200, y: 120}
+  m_SizeDelta: {x: 192, y: 120}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2862880689218047204
 CanvasRenderer:
@@ -1521,7 +1521,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 184, y: 32}
+  m_SizeDelta: {x: 160, y: 32}
   m_Pivot: {x: 0, y: 1}
 --- !u!222 &6481918088155953156
 CanvasRenderer:
@@ -1895,7 +1895,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 200, y: 120}
+  m_SizeDelta: {x: 196, y: 120}
   m_Pivot: {x: 1, y: 1}
 --- !u!222 &4070322074140178070
 CanvasRenderer:
@@ -2246,12 +2246,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Padding:
-    m_Left: 8
+    m_Left: 4
     m_Right: 0
-    m_Top: 8
-    m_Bottom: 4
+    m_Top: 0
+    m_Bottom: 0
   m_ChildAlignment: 0
-  m_Spacing: 0
+  m_Spacing: 2
   m_ChildForceExpandWidth: 0
   m_ChildForceExpandHeight: 0
   m_ChildControlWidth: 0

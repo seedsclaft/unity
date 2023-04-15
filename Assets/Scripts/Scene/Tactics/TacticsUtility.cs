@@ -14,37 +14,32 @@ public class TacticsUtility
         return actorInfo.Level * TacticsCostRate(actorInfo);
     }
 
-    public static int AlchemyCost(ActorInfo actorInfo,int skillId,List<ActorInfo> stageMembers,int hintLv)
+    public static int AlchemyCost(ActorInfo actorInfo,AttributeType attributeType,List<ActorInfo> stageMembers)
     {
-        SkillsData.SkillData skillData = DataSystem.Skills.Find(a => a.Id == skillId);
-        int cost = skillData.Rank;
-        if (skillData != null)
+        int cost = 4;
+        int param = actorInfo.AttirbuteParams(stageMembers)[(int)attributeType-1];
+        if (param > 100){
+            //cost *= 1;
+        } else
+        if (param > 80){
+            cost *= 2;
+        } else
+        if (param > 60){
+            cost *= 4;
+        } else
+        if (param > 40){
+            cost *= 8;
+        } else
+        if (param > 20){
+            cost *= 16;
+        } else
+        if (param > 10){
+            cost *= 32;
+        } else
         {
-            AttributeType attributeType = skillData.Attribute;
-            var param = actorInfo.AttirbuteParams(stageMembers)[(int)attributeType-1];
-            if (param > 100){
-                //cost *= 1;
-            } else
-            if (param > 80){
-                cost *= 2;
-            } else
-            if (param > 60){
-                cost *= 4;
-            } else
-            if (param > 40){
-                cost *= 8;
-            } else
-            if (param > 20){
-                cost *= 16;
-            } else
-            if (param > 10){
-                cost *= 32;
-            } else
-            if (param > 0){
-                cost *= 64;
-            }
+            cost *= 64;
         }
-        return Mathf.FloorToInt( cost * TacticsCostRate(actorInfo) * (1 - hintLv * 0.1f));
+        return Mathf.FloorToInt( cost * TacticsCostRate(actorInfo));
     }
     public static int RecoveryCost(ActorInfo actorInfo)
     {

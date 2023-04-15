@@ -12,7 +12,11 @@ public class TacticsView : BaseView
     [SerializeField] private TacticsCharaLayer tacticsCharaLayer = null;
 
     [SerializeField] private TacticsTrainList tacticsTrainList = null;
+
     [SerializeField] private TacticsAlchemyList tacticsAlchemyList = null;
+
+    [SerializeField] private TacticsAttributeList tacticsAttributeList = null;
+    
     [SerializeField] private TacticsRecoveryList tacticsRecoveryList = null;
     [SerializeField] private TacticsEnemyList tacticsEnemyList = null;
     [SerializeField] private TacticsBattleList tacticsBattleList = null;
@@ -39,6 +43,7 @@ public class TacticsView : BaseView
 
     void Initialize()
     {
+        /*
         skillList.Initialize();
         skillList.InitializeAction(actorInfo => CallSkillAlchemy(actorInfo),() => OnClickBack(),null,null);
         SetInputHandler(skillList.skillActionList.GetComponent<IInputHandlerEvent>());
@@ -47,20 +52,12 @@ public class TacticsView : BaseView
         skillList.InitializeAttribute((attribute) => CallAttributeTypes(attribute));
         SetInputHandler(skillList.skillAttributeList.GetComponent<IInputHandlerEvent>());
         skillList.HideAttributeList();
+        */
 
         tacticsTrainList.Initialize((actorinfo) => CallActorTrain(actorinfo));
         SetInputHandler(tacticsTrainList.GetComponent<IInputHandlerEvent>());
         
         new TacticsPresenter(this);
-    }
-
-    private void CallSkillAlchemy(SkillInfo skillInfo)
-    {
-        if (_lastCallEventType != CommandType.None) return;
-        var eventData = new TacticsViewEvent(CommandType.SkillAlchemy);
-        eventData.templete = skillInfo.Master.Id;
-        _commandData(eventData);
-        _lastCallEventType = eventData.commandType;
     }
     
     public void SetUIButton()
@@ -100,7 +97,6 @@ public class TacticsView : BaseView
         alcanaInfoComponent.UpdateInfo(alcanaInfo);
     }
 
-    
     public void SetTacticsCommand(List<SystemData.MenuCommandData> menuCommands)
     {
         tacticsCommandList.Initialize((menuCommandInfo) => CallTacticsCommand(menuCommandInfo),() => CallAlcanaEvent());
@@ -260,19 +256,32 @@ public class TacticsView : BaseView
         tacticsAlchemyList.gameObject.SetActive(false);
     }
 
+    public void ShowAttributeList()
+    {
+        tacticsAttributeList.gameObject.SetActive(true);
+    }
+
+    public void HideAttributeList()
+    {
+        tacticsAttributeList.gameObject.SetActive(false);
+    }
+
     public void ShowSkillAlchemyList(List<SkillInfo> skillInfos)
     {
-        
+        /*
         skillList.ShowActionList();
         skillList.SetSkillInfos(skillInfos);
         skillList.RefreshAction();
         skillList.ShowAttributeList();
+        */
     }
 
     public void HideSkillAlchemyList()
     {
+        /*
         skillList.HideActionList();
         skillList.HideAttributeList();
+        */
     }
 
     private void CallRecoveryCommand(TacticsComandType commandType)
@@ -456,18 +465,20 @@ public class TacticsView : BaseView
 
     public void SetAttributeTypes(List<AttributeType> attributeTypes)
     {
-        skillList.RefreshAttribute(attributeTypes);
+        //skillList.RefreshAttribute(attributeTypes);
+        tacticsAttributeList.Initialize(attributeTypes,(a) => CallSkillAlchemy(a));
+        SetInputHandler(tacticsAttributeList.GetComponent<IInputHandlerEvent>());
     }
 
-    public void SetAttributeValues(List<string> attributeValues)
+    public void SetAttributeValues(List<string> attributeValues,List<int> learningCosts,int currensy)
     {
-        skillList.RefreshValues(attributeValues);
+        tacticsAttributeList.Refresh(attributeValues,learningCosts,currensy);
     }
 
-    private void CallAttributeTypes(AttributeType attributeType)
+    private void CallSkillAlchemy(AttributeType attributeType)
     {
         if (_lastCallEventType != CommandType.None) return;
-        var eventData = new TacticsViewEvent(CommandType.AttributeType);
+        var eventData = new TacticsViewEvent(CommandType.SkillAlchemy);
         eventData.templete = attributeType;
         _commandData(eventData);
         _lastCallEventType = eventData.commandType;
@@ -520,7 +531,6 @@ namespace Tactics
         None = 0,
         AddAlcana,
         TacticsCommand,
-        AttributeType,
         DecideActor,
         LeftActor,
         RightActor,

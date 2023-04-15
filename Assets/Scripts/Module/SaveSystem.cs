@@ -8,13 +8,12 @@ using System.Runtime.Serialization.Formatters.Binary;
 public class SaveSystem : MonoBehaviour
 {
 
-	private static readonly string debugFilePath = Application.persistentDataPath + "/Autosave.dat";
-    public static void SaveStart(SavePlayInfo pSourceSavePlayInfo = null)
+	private static readonly string debugFilePath = Application.persistentDataPath;
+        public static void SaveStart(SavePlayInfo pSourceSavePlayInfo = null,int fileId = 0)
         {
             //	保存情報
             if( pSourceSavePlayInfo == null )
             {
-                //GameInstance.Get.SavePlayInfo.CardImportFromWork();	//	カード情報をワークからインポート
                 pSourceSavePlayInfo = new SavePlayInfo();
 				pSourceSavePlayInfo.InitSaveData();
             }
@@ -27,7 +26,7 @@ public class SaveSystem : MonoBehaviour
                 BinaryFormatter	TempBinaryFormatter = new BinaryFormatter();
 
 			    //	指定したパスにファイルを作成
-                FileStream TempFileStream = File.Create(debugFilePath);
+                FileStream TempFileStream = File.Create(debugFilePath + "/Autosave" + fileId.ToString() + ".dat");
 
                 //	Closeが確実に呼ばれるように例外処理を用いる
                 try
@@ -48,7 +47,7 @@ public class SaveSystem : MonoBehaviour
 	}
 
 		
-	public static void LoadStart()
+	public static void LoadStart(int fileId = 0)
 	{
 		//#if UNITY_EDITOR_WIN || UNITY_STANDALONE_WIN
 		{
@@ -56,7 +55,7 @@ public class SaveSystem : MonoBehaviour
 			BinaryFormatter	TempBinaryFormatter = new BinaryFormatter();
 
 			//	指定したパスのファイルストリームを開く
-			FileStream	TempFileStream = File.Open(debugFilePath, FileMode.Open);
+			FileStream	TempFileStream = File.Open(debugFilePath + "/Autosave" + fileId.ToString() + ".dat", FileMode.Open);
 			try 
 			{
 				//	指定したファイルストリームをオブジェクトにデシリアライズ。

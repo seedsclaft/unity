@@ -80,57 +80,63 @@ public class TacticsEnemyList : ListWindow , IInputHandlerEvent
         if (keyType == InputKeyType.Decide)
         {
             if (callEvent != null)
-            callEvent(Index);
+            {
+                callEvent(Index);
+            }
+
+            if (getItemEvent != null && _getItemIndex > -1)
+            {
+                if (_troopInfos[Index].GetItemInfos[_getItemIndex].IsSkill())
+                {
+                    getItemEvent(_troopInfos[Index].GetItemInfos[_getItemIndex].Param1);  
+                }
+            }
         }
         if (keyType == InputKeyType.Cancel)
         {
             if (cancelEvent != null)
             cancelEvent();
         }
-        if (getItemEvent != null)
+
+        if (keyType == InputKeyType.Option1)
         {
-            if (keyType == InputKeyType.Option1)
+            if (_getItemIndex < 0)
             {
-                if (_getItemIndex == -1)
+                if (enemyInfoEvent != null)
                 {
-                    if (enemyInfoEvent != null)
-                    {
-                        enemyInfoEvent(Index);
-                    }
-                }
-                if (_troopInfos[Index].GetItemInfos[_getItemIndex].IsSkill())
-                {
-                    if (getItemEvent != null)
-                    {
-                        getItemEvent(_troopInfos[Index].GetItemInfos[_getItemIndex].Param1);
-                    }
+                    enemyInfoEvent(Index);
                 }
             }
-            if (keyType == InputKeyType.Left || keyType == InputKeyType.Right)
-            {            
-                _getItemIndex = -1;
-                SetAllUnselectGetItem();
-                UpdateSelectIndex(Index);
-            }
-            if (keyType == InputKeyType.Up)
+        }
+        if (keyType == InputKeyType.Left || keyType == InputKeyType.Right)
+        {            
+            _getItemIndex = -1;
+            SetAllUnselectGetItem();
+            UpdateSelectIndex(Index);
+        }
+        if (keyType == InputKeyType.Up)
+        {
+            SetAllUnselect();
+            if (Index >= 0)
             {
-                SetAllUnselect();
                 _getItemIndex--;
                 TacticsEnemy tacticsEnemy = ObjectList[Index].GetComponent<TacticsEnemy>();
                 if (_getItemIndex < 0)
                 {
-                    _getItemIndex = _troopInfos[Index].GetItemInfos.Count;
-                } else{
-                    if (_getItemIndex == -1)
-                    {
-                        UpdateSelectIndex(Index);
-                    }
+                    UpdateSelectIndex(Index);
                 }
                 tacticsEnemy.SetSelectGetItem(_getItemIndex);
+                if (_getItemIndex < 0)
+                {
+                    _getItemIndex = _troopInfos[Index].GetItemInfos.Count;
+                }
             }
-            if (keyType == InputKeyType.Down)
+        }
+        if (keyType == InputKeyType.Down)
+        {
+            SetAllUnselect();
+            if (Index >= 0)
             {
-                SetAllUnselect();
                 _getItemIndex++;
                 TacticsEnemy tacticsEnemy = ObjectList[Index].GetComponent<TacticsEnemy>();
                 if (_troopInfos[Index].GetItemInfos.Count > _getItemIndex)

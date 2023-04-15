@@ -14,11 +14,7 @@ public class SkillInfoComponent : MonoBehaviour
     [SerializeField] private TextMeshProUGUI type;
     [SerializeField] private TextMeshProUGUI value;
     [SerializeField] private TextMeshProUGUI description;
-    [SerializeField] private GameObject learingObj;
-    [SerializeField] private TextMeshProUGUI learingcost;
-    [SerializeField] private GameObject hintObj;
-    [SerializeField] private TextMeshProUGUI hintLvBefore;
-    [SerializeField] private TextMeshProUGUI hintLvAfter;
+    [SerializeField] private GameObject selectable;
 
     public void SetInfoData(SkillInfo skillInfo){
         if (skillInfo == null){
@@ -26,22 +22,9 @@ public class SkillInfoComponent : MonoBehaviour
             return;
         }
         UpdateSkillData(skillInfo.Id);
-        if (learingcost != null && learingObj != null)
+        if (selectable != null)
         {
-            learingObj.SetActive(false);
-            if (skillInfo.LearningState == LearningState.Notlearned)
-            {
-                learingObj.SetActive(true);
-                learingcost.text = skillInfo.LearingCost.ToString();
-            }
-        }
-        if (hintObj != null && skillInfo.HintLv != -1)
-        {
-            hintObj.SetActive(true);
-            hintLvBefore.text = (skillInfo.HintLv).ToString();
-            hintLvAfter.text = (skillInfo.HintLv+1).ToString();
-        } else{
-            if (hintObj != null) hintObj.SetActive(false);
+            selectable.SetActive(skillInfo.LearningState == LearningState.SelectLearn);
         }
     }
 

@@ -24,15 +24,15 @@ public class TacticsModel : BaseModel
     {
         if (CurrentStage != null)
         {
-            if (CurrentStage.Turns > 24)
+            if (CurrentStage.CurrentTurn > 24)
             {        
-                return "TACTICS1";
+                return "TACTICS3";
             }
-            if (CurrentStage.Turns > 12)
+            if (CurrentStage.CurrentTurn > 12)
             {        
                 return "TACTICS2";
             }
-            return "TACTICS3";
+            return "TACTICS1";
         }
         return "TACTICS1";
     }
@@ -99,6 +99,15 @@ public class TacticsModel : BaseModel
     public List<string> AttirbuteValues()
     {
         return CurrentActor.AttirbuteValues(StageMembers());
+    }
+
+    public List<int> AttirbutesLearingCosts(){
+        List<int> LaerningCost = new List<int>();
+        foreach (var attributeType in AttributeTypes())
+        {
+            LaerningCost.Add(TacticsUtility.AlchemyCost(CurrentActor,attributeType,StageMembers()));
+        }
+        return LaerningCost;
     }
 
     public List<SystemData.MenuCommandData> TacticsCommand
@@ -252,21 +261,26 @@ public class TacticsModel : BaseModel
         {
             SkillInfo skillInfo = new SkillInfo(PartyInfo.AlchemyIdList[i]);
             if (skillInfo.Attribute != _currentAttributeType) continue;
-            skillInfo.SetLearingCost(TacticsUtility.AlchemyCost(actorInfo,PartyInfo.AlchemyIdList[i],StageMembers(),PartyInfo.SkillHintLevel(PartyInfo.AlchemyIdList[i])));
             skillInfo.SetEnable(true);
-            skillInfo.SetHintLv(PartyInfo.SkillHintLevel(PartyInfo.AlchemyIdList[i]));
             skillInfos.Add(skillInfo);
         }
         return skillInfos;
     }
 
-    public void SelectAlchemy(int skillId)
+    public bool CheckCanSelectAlchemy(AttributeType attributeType)
+    {
+        ActorInfo actorInfo = CurrentActor;
+        return Currency >= TacticsUtility.AlchemyCost(actorInfo,attributeType,StageMembers());
+    }
+
+    public void SelectAlchemy(AttributeType attributeType)
     {
         ActorInfo actorInfo = CurrentActor;
         if (actorInfo != null){
-            actorInfo.SetTacticsCommand(TacticsComandType.Alchemy,TacticsUtility.AlchemyCost(actorInfo,skillId,StageMembers(),PartyInfo.SkillHintLevel(skillId)));
+            actorInfo.SetTacticsCommand(TacticsComandType.Alchemy,TacticsUtility.AlchemyCost(actorInfo,attributeType,StageMembers()));
             PartyInfo.ChangeCurrency(Currency - actorInfo.TacticsCost);
-            actorInfo.SetNextLearnSkillId(skillId);
+            actorInfo.SetNextLearnAttribute(attributeType);
+            actorInfo.SetNextLearnCost(TacticsUtility.AlchemyCost(actorInfo,attributeType,StageMembers()));
         }
     }
 

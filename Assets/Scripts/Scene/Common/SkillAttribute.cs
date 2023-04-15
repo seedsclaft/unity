@@ -9,11 +9,14 @@ public class SkillAttribute : ListItem ,IListViewItem
 {
     [SerializeField] private Image icon;
     [SerializeField] private TextMeshProUGUI valueText;
+    [SerializeField] private TextMeshProUGUI learnCost;
     private AttributeType _data; 
     private string _valueText; 
-    public void SetData(AttributeType data,string valueText,int index){
+    private int _learnCost; 
+    public void SetData(AttributeType data,string valueText,int index,int learnCost = -1){
         _data = data;
         _valueText = valueText;
+        _learnCost = learnCost;
         SetIndex(index);
     }
 
@@ -33,6 +36,10 @@ public class SkillAttribute : ListItem ,IListViewItem
         if (valueText != null && _valueText != null)
         {
             valueText.text = _valueText;
+        }
+        if (learnCost != null && _learnCost != -1)
+        {
+            learnCost.text = _learnCost.ToString();
         }
     }
     

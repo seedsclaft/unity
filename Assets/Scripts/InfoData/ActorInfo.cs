@@ -48,8 +48,10 @@ public class ActorInfo
     public int TacticsCost {get {return _tacticsCost;}}
     private int _tacticsCostRate = 1;
     public int TacticsCostRate {get {return _tacticsCostRate;}}
-    private int _nextLearnSkillId = 0;
-    public int NextLearnSkillId {get {return _nextLearnSkillId;}}
+    private AttributeType _nextLearnAttribute = AttributeType.None;
+    public AttributeType NextLearnAttribute {get {return _nextLearnAttribute;}}
+    private int _nextLearnCost = 0;
+    public int NextLearnCost {get {return _nextLearnCost;}}
     private int _nextBattleEnemyIndex = -1;
     public int NextBattleEnemyIndex {get {return _nextBattleEnemyIndex;}}
     private int _nextBattleEnemyId = -1;
@@ -109,18 +111,28 @@ public class ActorInfo
         _sp += 10;
     }
 
-    public void LearnSkill(int skillId,int learningCost)
+    public void LearnSkillAttribute(int skillId,int learningCost,AttributeType attributeType)
     {
         SkillInfo skillInfo = new SkillInfo(skillId);
-        skillInfo.SetLearningState(LearningState.Learned);
-        skillInfo.SetLearingCost(learningCost);
+        skillInfo.SetLearningState(LearningState.Notlearned);
+        skillInfo.SetLearnAttribute(attributeType);
         _skills.Add(skillInfo);
     }
 
-    public void ForgetSkill(int skillId)
+    public void LearnSkill(int skillId)
     {
-        SkillInfo skillInfo = _skills.Find(a => a.Id == skillId);
+        SkillInfo skillInfo = new SkillInfo(skillId);
         skillInfo.SetLearningState(LearningState.Notlearned);
+        _skills.Add(skillInfo);
+    }
+
+    public void ForgetSkill(SkillInfo skillInfo)
+    {
+        int skillIdx = _skills.FindIndex(a => a == skillInfo);
+        if (skillIdx > 0)
+        {
+            _skills.RemoveAt(skillIdx);
+        }
     }
 
     public void RefreshTacticsEnable(TacticsComandType tacticsComandType,bool enable)
@@ -148,14 +160,20 @@ public class ActorInfo
     {
         _tacticsComandType = TacticsComandType.None;
         _tacticsCost = 0;
-        _nextLearnSkillId = 0;
+        _nextLearnAttribute = 0;
+        _nextLearnCost = 0;
         _nextBattleEnemyIndex = -1;
         _nextBattleEnemyId = 0;
     }
 
-    public void SetNextLearnSkillId(int skillId)
+    public void SetNextLearnAttribute(AttributeType attributeType)
     {
-        _nextLearnSkillId = skillId;
+        _nextLearnAttribute = attributeType;
+    }
+    
+    public void SetNextLearnCost(int leariningCost)
+    {
+        _nextLearnCost = leariningCost;
     }
 
     public void SetNextBattleEnemyIndex(int enemyIndex,int enemyId)

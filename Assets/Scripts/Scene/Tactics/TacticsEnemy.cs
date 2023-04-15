@@ -9,7 +9,8 @@ public class TacticsEnemy : ListItem ,IListViewItem
     [SerializeField] private EnemyInfoComponent enemyInfoComponent;
     [SerializeField] private GetItemList getItemList = null;
     [SerializeField] private Button enemyInfoButton;
-    private BattlerInfo _enemyInfo; 
+    private BattlerInfo _enemyInfo;
+    private bool _cursorDeactive = false;
     private new void Awake() {
         getItemList.Initialize();
     }
@@ -57,5 +58,17 @@ public class TacticsEnemy : ListItem ,IListViewItem
     public void SetSelectGetItem(int getItemIndex)
     {
         getItemList.UpdateSelectIndex(getItemIndex);
+        if (getItemIndex >= 0)
+        {
+            _cursorDeactive = true;
+        }
+    }
+
+    private void LateUpdate() {
+        if (_cursorDeactive == true)
+        {
+            _cursorDeactive = false;
+            Cursor.SetActive(false);
+        }
     }
 }

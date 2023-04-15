@@ -168,10 +168,18 @@ public class ActionResultInfo
             DamageRate *= subject.StateEffectAll(StateType.DamageUp);
         }
         float SkillDamage = (DamageRate * 0.01f * (AtkValue * 0.5f));
-        if (target.IsState(StateType.CounterOura) && target.CanMove() && !isNoEffect)
+        if (target.CanMove() && !isNoEffect)
         {
-            _execStateInfos[target.Index].Add(StateType.CounterOura);
-            _reDamage = ReDamageValue(target,SkillDamage);
+            if (target.IsState(StateType.CounterOura))
+            {
+                _execStateInfos[target.Index].Add(StateType.CounterOura);
+                _reDamage += CounterDamageValue(target);
+            }
+        }
+        if (subject.IsState(StateType.Freeze))
+        {
+            _execStateInfos[subject.Index].Add(StateType.Freeze);
+            _reDamage += FreezeDamageValue(subject,SkillDamage);
         }
         SkillDamage -= (DefValue * 0.5f);
         float DamageValue = Mathf.Max(1,SkillDamage);
@@ -233,10 +241,18 @@ public class ActionResultInfo
             DamageRate *= subject.StateEffectAll(StateType.DamageUp);
         }
         float SkillDamage = (DamageRate * 0.01f * AtkValue);
-        if (target.IsState(StateType.CounterOura) && target.CanMove() && !isNoEffect)
+        if (target.CanMove() && !isNoEffect)
         {
-            _execStateInfos[target.Index].Add(StateType.CounterOura);
-            _reDamage = ReDamageValue(target,SkillDamage);
+            if (target.IsState(StateType.CounterOura))
+            {
+                _execStateInfos[target.Index].Add(StateType.CounterOura);
+                _reDamage += CounterDamageValue(target);
+            }
+        }
+        if (subject.IsState(StateType.Freeze))
+        {
+            _execStateInfos[subject.Index].Add(StateType.Freeze);
+            _reDamage += FreezeDamageValue(subject,SkillDamage);
         }
         float DamageValue = Mathf.Max(1,SkillDamage);
         _hpDamage = (int)Mathf.Round(DamageValue);
@@ -305,9 +321,15 @@ public class ActionResultInfo
         }
     }
 
-    private int ReDamageValue(BattlerInfo target,float skillDamage)
+    private int FreezeDamageValue(BattlerInfo subject,float skillDamage)
     {
-        int ReDamage = (int)Mathf.Floor(skillDamage + (target.CurrentDef() * 0.5f) * target.StateEffectAll(StateType.CounterOura) * 0.01f);
+        int ReDamage = (int)Mathf.Floor(skillDamage * subject.StateEffectAll(StateType.Freeze) * 0.01f);
+        return ReDamage;
+    }
+
+    private int CounterDamageValue(BattlerInfo target)
+    {
+        int ReDamage = (int)Mathf.Floor((target.CurrentDef() * 0.5f) * target.StateEffectAll(StateType.CounterOura) * 0.01f);
         ReDamage += target.StateEffectAll(StateType.CounterOuraDamage);
         return ReDamage;
     }
