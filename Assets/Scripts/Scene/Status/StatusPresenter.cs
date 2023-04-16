@@ -152,6 +152,7 @@ public class StatusPresenter
         _view.CommandCallConfirm(confirmInfo);
         _view.DeactivateCommandList();
         _popupCommandType = Status.CommandType.DecideStage;
+        SoundManager.Instance.PlayStaticSe(SEType.Decide);
     }
 
     private void updatePopup(ConfirmComandType confirmComandType)

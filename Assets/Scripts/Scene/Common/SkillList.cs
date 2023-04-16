@@ -46,9 +46,9 @@ public class SkillList : MonoBehaviour
         skillAttributeList.RefreshValues(attributeValues);
     }
 
-    public void RefreshCostInfo(int numinous)
+    public void RefreshCostInfo()
     {
-        skillActionList.RefreshCostInfo(numinous);
+        skillActionList.RefreshCostInfo();
     }
 
     public void ActivateActionList()

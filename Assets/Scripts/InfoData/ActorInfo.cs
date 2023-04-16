@@ -105,10 +105,15 @@ public class ActorInfo
         }
     }
 
-    public void LevelUp()
+    public void LevelUp(int bonus)
     {
         _level++;
         _sp += 10;
+        for (int i = 0;i < bonus;i++)
+        {
+            _level++;
+            _sp += 10;
+        }
     }
 
     public void LearnSkillAttribute(int skillId,int learningCost,AttributeType attributeType)

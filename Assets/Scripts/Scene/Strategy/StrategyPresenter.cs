@@ -125,6 +125,7 @@ public class StrategyPresenter
         {
             ShowStatus();
         } else{
+            SoundManager.Instance.PlayStaticSe(SEType.Decide);
             _view.CommandSceneChange(Scene.Battle);
         }
     }
@@ -169,6 +170,7 @@ public class StrategyPresenter
         popupInfo.SetSkillInfo(_model.BasicSkillInfo(skillId));
         popupInfo.SetIsNoChoise(true);
         _view.CommandCallConfirm(popupInfo);
+        SoundManager.Instance.PlayStaticSe(SEType.Decide);
     }
 
     private void CommandCallEnemyInfo(int enemyIndex)
@@ -182,6 +184,7 @@ public class StrategyPresenter
         statusViewInfo.SetEnemyInfos(enemyInfos);
         _view.CommandCallEnemyInfo(statusViewInfo);
         _view.SetActiveUi(false);
+        SoundManager.Instance.PlayStaticSe(SEType.Decide);    
     }
 
     private void StartNextBattle(List<ActorInfo> battleMembers)

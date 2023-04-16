@@ -369,7 +369,7 @@ public class StatusView : BaseView
     {
         statusStrengthList.RefreshCostInfo(remainSp,remainNuminous);
         skillList.RefreshAction();
-        skillList.RefreshCostInfo(remainNuminous);
+        skillList.RefreshCostInfo();
     }
 
 }

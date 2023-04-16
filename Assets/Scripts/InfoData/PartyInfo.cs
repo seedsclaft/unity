@@ -14,14 +14,15 @@ public class PartyInfo
     private List<int> _alchemyIdList = new List<int>();
     public List<int> AlchemyIdList {get {return _alchemyIdList;}}
 
-    private Dictionary<int,int> _alchemyHintList = new Dictionary<int, int>();
-    public Dictionary<int, int> AlchemyHintList {get {return _alchemyHintList;}}
     private int _stageId = 0;
     public int StageId {get {return _stageId;}}
 
     private bool _battleResult = false;
     public bool BattleResult {get {return _battleResult;}}
 
+    private Dictionary<TacticsComandType,int> _commandCountInfo = new Dictionary<TacticsComandType, int>();
+    private Dictionary<TacticsComandType,int> _commandRankInfo = new Dictionary<TacticsComandType, int>();
+    public Dictionary<TacticsComandType,int> CommandRankInfo { get {return _commandRankInfo;}}
     public void AddActor(int actorId)
     {
         if (_actorIdList.IndexOf(actorId) != -1)
@@ -66,21 +67,90 @@ public class PartyInfo
         {
             return;
         }
-        if (_alchemyHintList.ContainsKey(skillId) == false)
-        {
-            _alchemyHintList[skillId] = 0;
-        }
         _alchemyIdList.Add(skillId);
     }
 
-    public int SkillHintLevel(int skillId)
+    public bool AddCommandCountInfo(TacticsComandType commandType)
     {
-        if (_alchemyHintList.ContainsKey(skillId) == false) return 0;
-        return _alchemyHintList[skillId];
+        if (_commandCountInfo.ContainsKey(commandType) == false)
+        {
+            _commandCountInfo[commandType] = 0;
+        }
+        int value = _commandCountInfo[commandType] / 4;
+        _commandCountInfo[commandType] += 1;
+        if (_commandCountInfo[commandType] / 4 != value)
+        {
+            return true;
+        }
+        return false;
+    }
+    
+    public void AddCommandRank(TacticsComandType commandType)
+    {
+        if (_commandRankInfo.ContainsKey(commandType) == false)
+        {
+            _commandRankInfo[commandType] = 0;
+        }
+        _commandRankInfo[commandType] += 1;
     }
 
-    public void PlusSkillHintLv(int skillId)
+    public int GetTrainNuminosValue()
     {
-        _alchemyHintList[skillId] += 1;
+        int value = 0;
+        if (_commandRankInfo.ContainsKey(TacticsComandType.Train))
+        {
+            value -= (_commandRankInfo[TacticsComandType.Train]+2) / 2;
+        }
+        return value;
+    }
+
+    public int GetTrainLevelBonusValue()
+    {
+        int value = 0;
+        if (_commandRankInfo.ContainsKey(TacticsComandType.Train))
+        {
+            value += (_commandRankInfo[TacticsComandType.Train]+1) / 2;
+        }
+        return value;
+    }
+    
+    public int GetAlchemyNuminosValue()
+    {
+        int value = 0;
+        if (_commandRankInfo.ContainsKey(TacticsComandType.Alchemy))
+        {
+            value += _commandRankInfo[TacticsComandType.Alchemy];
+        }
+        return value;
+    }
+
+    public int GetRecoveryBonusValue()
+    {
+        int value = 0;
+        if (_commandRankInfo.ContainsKey(TacticsComandType.Recovery))
+        {
+            value += _commandRankInfo[TacticsComandType.Recovery] * 2;
+        }
+        return value;
+    }
+
+    public int GetResourceBonusValue()
+    {
+        int value = 0;
+        if (_commandRankInfo.ContainsKey(TacticsComandType.Resource))
+        {
+            value += _commandRankInfo[TacticsComandType.Resource];
+        }
+        return value;
+    }
+
+    public int GetBattleBonusValue()
+    {
+        int value = 0;
+        if (_commandRankInfo.ContainsKey(TacticsComandType.Battle))
+        {
+            value += _commandRankInfo[TacticsComandType.Battle];
+        }
+        return value;
     }
 }

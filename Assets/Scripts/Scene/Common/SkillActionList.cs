@@ -9,8 +9,7 @@ public class SkillActionList : ListWindow , IInputHandlerEvent
 {
     [SerializeField] private int rows = 0;
     [SerializeField] private int cols = 0;
-    [SerializeField] private GameObject numinousObj;
-    [SerializeField] private TextMeshProUGUI remainNuminous;
+
     private List<SkillInfo> _skillInfos = new List<SkillInfo>();
 
     public void Initialize(System.Action<SkillInfo> callEvent,System.Action cancelEvent,System.Action conditionEvent,System.Action<SkillInfo> learningEvent)
@@ -42,8 +41,6 @@ public class SkillActionList : ListWindow , IInputHandlerEvent
             //ObjectList[i].SetActive(false);
         }
         SetInputHandler((a) => CallInputHandler(a,callEvent,cancelEvent,conditionEvent));
-        if (numinousObj != null) numinousObj.SetActive(true);
-        remainNuminous.transform.parent.gameObject.SetActive(false);
     }
 
     public void SetSkillInfos(List<SkillInfo> skillInfoData)
@@ -69,10 +66,8 @@ public class SkillActionList : ListWindow , IInputHandlerEvent
         UpdateAllItems();
     }
 
-    public void RefreshCostInfo(int numinous)
+    public void RefreshCostInfo()
     {
-        remainNuminous.transform.parent.gameObject.SetActive(true);
-        remainNuminous.text = numinous.ToString();
         UpdateAllItems();
     }
 

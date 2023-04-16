@@ -32,10 +32,19 @@ public class StrategyModel : BaseModel
             GetItemInfo getItemInfo = new GetItemInfo(null);
             if (actorInfos[i].TacticsComandType == TacticsComandType.Train)
             {
+                int levelBonus = PartyInfo.GetTrainLevelBonusValue();
+                actorInfos[i].LevelUp(levelBonus);
                 getItemInfo.SetTitleData(DataSystem.System.GetTextData(3000).Text.Replace("\\d",actorInfos[i].Master.Name));
-                actorInfos[i].LevelUp();
                 getItemInfo.SetResultData(DataSystem.System.GetTextData(3001).Text.Replace("\\d",actorInfos[i].Level.ToString()));
                 actorInfos[i].ClearTacticsCommand();
+                if (PartyInfo.AddCommandCountInfo(TacticsComandType.Train))
+                {
+                    GetItemInfo partyGetItemInfo = new GetItemInfo(null);
+                    partyGetItemInfo.SetTitleData("");
+                    partyGetItemInfo.SetResultData(DataSystem.System.GetTextData(3030).Text.Replace("\\d",DataSystem.System.GetTextData(1).Text));
+                    PartyInfo.AddCommandRank(TacticsComandType.Train);
+                    getItemInfos.Add(partyGetItemInfo);
+                }
             }
             if (actorInfos[i].TacticsComandType == TacticsComandType.Alchemy)
             {
@@ -48,16 +57,33 @@ public class StrategyModel : BaseModel
                 //PartyInfo.PlusSkillHintLv(skillData.Id);
                 actorInfos[i].LearnSkillAttribute((int)attributeType + 2000,actorInfos[i].NextLearnCost,attributeType);
                 actorInfos[i].ClearTacticsCommand();
+                if (PartyInfo.AddCommandCountInfo(TacticsComandType.Alchemy))
+                {
+                    GetItemInfo partyGetItemInfo = new GetItemInfo(null);
+                    partyGetItemInfo.SetTitleData("");
+                    partyGetItemInfo.SetResultData(DataSystem.System.GetTextData(3030).Text.Replace("\\d",DataSystem.System.GetTextData(2).Text));
+                    PartyInfo.AddCommandRank(TacticsComandType.Alchemy);
+                    getItemInfos.Add(partyGetItemInfo);
+                }
             }
             if (actorInfos[i].TacticsComandType == TacticsComandType.Recovery)
             {
                 getItemInfo.SetTitleData(DataSystem.System.GetTextData(3010).Text.Replace("\\d",actorInfos[i].Master.Name));
-                int Hp = Mathf.Min(actorInfos[i].CurrentHp + actorInfos[i].TacticsCost * 10,actorInfos[i].MaxHp);
-                int Mp = Mathf.Min(actorInfos[i].CurrentMp + actorInfos[i].TacticsCost * 10,actorInfos[i].MaxMp);
+                int changeValue = 10 + PartyInfo.GetRecoveryBonusValue();
+                int Hp = Mathf.Min(actorInfos[i].CurrentHp + actorInfos[i].TacticsCost * changeValue,actorInfos[i].MaxHp);
+                int Mp = Mathf.Min(actorInfos[i].CurrentMp + actorInfos[i].TacticsCost * changeValue,actorInfos[i].MaxMp);
                 actorInfos[i].ChangeHp(Hp);
                 actorInfos[i].ChangeMp(Mp);
                 getItemInfo.SetResultData(DataSystem.System.GetTextData(3011).Text);
                 actorInfos[i].ClearTacticsCommand();
+                if (PartyInfo.AddCommandCountInfo(TacticsComandType.Recovery))
+                {
+                    GetItemInfo partyGetItemInfo = new GetItemInfo(null);
+                    partyGetItemInfo.SetTitleData("");
+                    partyGetItemInfo.SetResultData(DataSystem.System.GetTextData(3030).Text.Replace("\\d",DataSystem.System.GetTextData(3).Text));
+                    PartyInfo.AddCommandRank(TacticsComandType.Recovery);
+                    getItemInfos.Add(partyGetItemInfo);
+                }
             }
             if (actorInfos[i].TacticsComandType == TacticsComandType.Resource)
             {
@@ -65,6 +91,14 @@ public class StrategyModel : BaseModel
                 PartyInfo.ChangeCurrency(Currency + TacticsUtility.ResourceCost(actorInfos[i]));
                 getItemInfo.SetResultData(DataSystem.System.GetTextData(3021).Text.Replace("\\d",TacticsUtility.ResourceCost(actorInfos[i]).ToString()));
                 actorInfos[i].ClearTacticsCommand();
+                if (PartyInfo.AddCommandCountInfo(TacticsComandType.Resource))
+                {
+                    GetItemInfo partyGetItemInfo = new GetItemInfo(null);
+                    partyGetItemInfo.SetTitleData("");
+                    partyGetItemInfo.SetResultData(DataSystem.System.GetTextData(3030).Text.Replace("\\d",DataSystem.System.GetTextData(5).Text));
+                    PartyInfo.AddCommandRank(TacticsComandType.Resource);
+                    getItemInfos.Add(partyGetItemInfo);
+                }
             }
             PartyInfo.AddActor(actorInfos[i].ActorId);
             getItemInfos.Add(getItemInfo);
@@ -89,8 +123,10 @@ public class StrategyModel : BaseModel
             }
             if (getItemInfo.GetItemType == GetItemType.Numinous)
             {
-                PartyInfo.ChangeCurrency(PartyInfo.Currency + getItemInfo.Param1);
+                int bonus = PartyInfo.GetBattleBonusValue();
+                PartyInfo.ChangeCurrency(PartyInfo.Currency + getItemInfo.Param1 + bonus);
                 getItemInfo.SetTitleData(DataSystem.System.GetTextData(14041).Text);
+                getItemInfo.SetResultData("+" + (getItemInfo.Param1+bonus).ToString() + DataSystem.System.GetTextData(1000).Text);
                 getItemInfos.Add(getItemInfo);
             }
         }
@@ -98,6 +134,20 @@ public class StrategyModel : BaseModel
         CurrentStage.GainClearCount(1);
         CurrentStage.ChangeSubordinate(15);
 
+        foreach (var actorInfo in CheckInBattleActors())
+        {
+            if (actorInfo.InBattle == true)
+            {
+                if (PartyInfo.AddCommandCountInfo(TacticsComandType.Battle))
+                {
+                    GetItemInfo partyGetItemInfo = new GetItemInfo(null);
+                    partyGetItemInfo.SetTitleData("");
+                    partyGetItemInfo.SetResultData(DataSystem.System.GetTextData(3030).Text.Replace("\\d",DataSystem.System.GetTextData(4).Text));
+                    PartyInfo.AddCommandRank(TacticsComandType.Battle);
+                    getItemInfos.Add(partyGetItemInfo);
+                }
+            }
+        }
         return getItemInfos;
     }
 
@@ -147,9 +197,15 @@ public class StrategyModel : BaseModel
 
     public void ClearBattleData(List<ActorInfo> actorInfos)
     {
-        actorInfos.ForEach(a => a.SetNextBattleEnemyIndex(-1,0));
-        actorInfos.ForEach(a => a.InBattle = false);
-        actorInfos.ForEach(a => a.ClearTacticsCommand());
+        foreach (var actorInfo in actorInfos)
+        {
+            actorInfo.SetNextBattleEnemyIndex(-1,0);
+            if (actorInfo.InBattle == true)
+            {
+                actorInfo.InBattle = false;
+            }
+            actorInfo.ClearTacticsCommand();
+        }
     }
 
     public List<SystemData.MenuCommandData> ResultCommand()
