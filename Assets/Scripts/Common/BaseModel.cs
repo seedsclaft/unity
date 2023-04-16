@@ -315,4 +315,9 @@ public class BaseModel
     {
         CurrentStage.SetDefineBossIndex(index);
     }
+
+    public string GetAdvFile(int id)
+    {
+        return DataSystem.Advs.Find(a => a.Id == id).AdvName;
+    }
 }

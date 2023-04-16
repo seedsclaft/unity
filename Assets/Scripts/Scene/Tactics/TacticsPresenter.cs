@@ -110,6 +110,17 @@ public class TacticsPresenter
                     _model.SetDefineBossIndex(stageEvents[i].Param);
                     _view.SetEnemies(_model.TacticsTroops());
                 }
+                if (stageEvents[i].Type == StageEventType.AdvStart)
+                {
+                    AdvCallInfo advInfo = new AdvCallInfo();
+                    advInfo.SetLabel(_model.GetAdvFile(stageEvents[i].Param));
+                    advInfo.SetCallEvent(() => {                
+                        _view.CommandSceneChange(Scene.Tactics);
+                    });
+                    _view.CommandCallAdv(advInfo);
+                    isAbort = true;
+                    break;
+                }
             }
         }
         if (isAbort)

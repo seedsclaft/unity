@@ -15,6 +15,8 @@ public class GameSystem : MonoBehaviour
     [SerializeField] private GameObject statusRoot = null;
     [SerializeField] private GameObject statusPrefab = null;
     [SerializeField] private GameObject enemyInfoPrefab = null;
+    [SerializeField] private GameObject tutorialRoot = null;
+    [SerializeField] private GameObject tutorialPrefab = null;
     [SerializeField] private AdvEngine advEngine = null;
     [SerializeField] private DebugBattleData debugBattleData = null;
     
@@ -74,9 +76,14 @@ public class GameSystem : MonoBehaviour
             CommandSceneChange((Scene)viewEvent.templete);
             if (testMode && (Scene)viewEvent.templete == Scene.Battle)
             {
-                debugBattleData.MakeBattleActor();
+                if (debugBattleData.AdvName != "")
+                {
+                    StartCoroutine(JumpScenarioAsync(debugBattleData.AdvName,null));
+                } else
+                {
+                    debugBattleData.MakeBattleActor();
+                }
             }
-            //advEngine.JumpScenario("Start");
         }
         if (viewEvent.commandType == Base.CommandType.InitSaveInfo)
         {
@@ -154,9 +161,12 @@ public class GameSystem : MonoBehaviour
         if (viewEvent.commandType == Base.CommandType.CallAdvScene)
         {
             statusRoot.gameObject.SetActive(false);
+            if (!statusRoot.gameObject.activeSelf) _currentScene.SetBusy(true);
+            if (_statusView) _statusView.SetBusy(true);
+            if (_enemyInfoView) _enemyInfoView.SetBusy(true);
             AdvCallInfo advCallInfo = viewEvent.templete as AdvCallInfo;
             _currentScene.SetBusy(true);
-            JumpScenarioAsync(advCallInfo.Label,advCallInfo.CallEvent);
+            StartCoroutine(JumpScenarioAsync(advCallInfo.Label,advCallInfo.CallEvent));
         }
         if (viewEvent.commandType == Base.CommandType.DecidePlayerName)
         {
@@ -173,6 +183,9 @@ public class GameSystem : MonoBehaviour
         {
             yield return null;
         }
+        if (!statusRoot.gameObject.activeSelf) _currentScene.SetBusy(false);
+        if (_statusView) _statusView.SetBusy(false);
+        if (_enemyInfoView) _enemyInfoView.SetBusy(false);
         _busy = false;
         if(onComplete !=null) onComplete();
     }

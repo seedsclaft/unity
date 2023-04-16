@@ -19,9 +19,10 @@ public class MainMenuStageList: ListWindow , IInputHandlerEvent
         _data = stages;
         for (int i = 0; i < stages.Count;i++)
         {
-            var stage = ObjectList[i].GetComponent<MainMenuStage>();
-            stage.SetData(stages[i],i);
-            stage.SetCallHandler(callEvent);
+            MainMenuStage mainMenuStage = ObjectList[i].GetComponent<MainMenuStage>();
+            mainMenuStage.SetData(stages[i],i);
+            mainMenuStage.SetCallHandler(callEvent);
+            mainMenuStage.SetSelectHandler((data) => UpdateSelectIndex(data));
         }
         SetInputHandler((a) => CallInputHandler(a,callEvent));
         UpdateAllItems();

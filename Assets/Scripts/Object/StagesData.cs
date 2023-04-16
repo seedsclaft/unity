@@ -53,5 +53,6 @@ public enum StageEventType{
     IsAlcana = 5, // アルカナフラグを管理
     SelectAddActor = 6, // 仲間を選んで加入する
     SaveCommand = 7, // セーブを行う,
-    SetDefineBossIndex = 8 // ボスの選択番号を設定する
+    SetDefineBossIndex = 8, // ボスの選択番号を設定する
+    AdvStart = 11 // ボスの選択番号を設定する
 }
