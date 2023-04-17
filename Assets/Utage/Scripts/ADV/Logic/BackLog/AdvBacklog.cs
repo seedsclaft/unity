@@ -11,7 +11,7 @@ namespace Utage
 	public class AdvBacklog
 	{
 		//ページ内でテキストが複数に分かれている場合の各データ
-		class AdvBacklogDataInPage
+		public class AdvBacklogDataInPage
 		{
 			//バックログテキスト（パラメーターなどで変更される可能性もあるので、記録時のテキストを残す）
 			public string LogText { get; private set; }
@@ -76,7 +76,7 @@ namespace Utage
 
 		};
 		List<AdvBacklogDataInPage> dataList = new List<AdvBacklogDataInPage>();
-		
+		public List<AdvBacklogDataInPage> DataList {get {return dataList;}}
 		//データの追加
 		internal void AddData(AdvCommandText log, AdvCharacterInfo characterInfo)
 		{

@@ -36,7 +36,13 @@ public class StrategyView : BaseView
 
     public void SetUiView()
     {
+    }
+
+    public void SetEnemyList(List<SystemData.MenuCommandData> confirmCommands)
+    {
         tacticsEnemyList.Initialize(null,null,(a) => CallPopupSkillInfo(a),(a) => OnClickEnemyInfo(a));
+        tacticsEnemyList.InitializeConfirm(confirmCommands,(confirmCommands) => CallBattleCommand(confirmCommands));
+        SetInputHandler(tacticsEnemyList.TacticsCommandList.GetComponent<IInputHandlerEvent>());
         tacticsEnemyList.gameObject.SetActive(false);
     }
 
@@ -66,6 +72,18 @@ public class StrategyView : BaseView
         _commandData = commandData;
     }
     
+
+    public void SetCommandAble(SystemData.MenuCommandData commandData)
+    {
+        strategyResultList.TacticsCommandList.SetDisable(commandData,false);
+        tacticsEnemyList.TacticsCommandList.SetDisable(commandData,false);
+    }
+    public void SetCommandDisable(SystemData.MenuCommandData commandData)
+    {
+        strategyResultList.TacticsCommandList.SetDisable(commandData,true);
+        tacticsEnemyList.TacticsCommandList.SetDisable(commandData,true);
+    }
+
     private void CallStrategyStart(){
         var eventData = new StrategyViewEvent(CommandType.StartStretegy);
         _commandData(eventData);
@@ -103,14 +121,11 @@ public class StrategyView : BaseView
         strategyResultList.gameObject.SetActive(false);
     }
 
-    public void ShowEnemyList(TroopInfo troopInfo,List<SystemData.MenuCommandData> confirmCommands)
+    public void ShowEnemyList(TroopInfo troopInfo)
     {
         List<TroopInfo> troopInfos = new List<TroopInfo>();
         troopInfos.Add(troopInfo);
         tacticsEnemyList.Refresh(troopInfos);
-        //SetInputHandler(tacticsEnemyList.GetComponent<IInputHandlerEvent>());
-        tacticsEnemyList.InitializeConfirm(confirmCommands,(confirmCommands) => CallBattleCommand(confirmCommands));
-        SetInputHandler(tacticsEnemyList.TacticsCommandList.GetComponent<IInputHandlerEvent>());
         tacticsEnemyList.gameObject.SetActive(true);
     }
 

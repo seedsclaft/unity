@@ -24,14 +24,50 @@ public class StrategyPresenter
     {
         _view.SetHelpWindow();
         _view.SetUiView();
+        _view.SetEnemyList(_model.ResultCommand());
 
         _view.SetActors(_model.StageMembers());
         _view.SetResultList(_model.ResultCommand());
         var bgm = await _model.GetBgmData("TACTICS1");
         SoundManager.Instance.PlayBgm(bgm,1.0f,true);
         _view.SetEvent((type) => updateCommand(type));
-        _busy = false;
+        _busy = true;
+
+        var stageEvents = _model.StageEvents(EventTiming.StartStarategy);
+        var isAbort = false;
+        if (stageEvents.Count > 0)
+        {
+            for (int i = 0;i < stageEvents.Count;i++)
+            {
+                if (stageEvents[i].Type == StageEventType.CommandDisable)
+                {
+                    _view.SetCommandDisable(_model.ResultCommand()[stageEvents[i].Param]);
+                }
+                if (stageEvents[i].Type == StageEventType.NeedUseSp)
+                {
+                    _model.SetNeedUseSpCommand(true);
+                }
+                if (stageEvents[i].Type == StageEventType.AdvStart)
+                {
+                    AdvCallInfo advInfo = new AdvCallInfo();
+                    advInfo.SetLabel(_model.GetAdvFile(stageEvents[i].Param));
+                    advInfo.SetCallEvent(() => {                
+                        CommandStartStretegy();
+                        _busy = false;
+                    });
+                    _view.CommandCallAdv(advInfo);
+                    _model.AddEventReadFlag(stageEvents[i]);
+                    isAbort = true;
+                    break;
+                }
+            }
+        }
+        if (isAbort)
+        {
+            return;
+        }
         CommandStartStretegy();
+        _busy = false;
     }
 
     private void updateCommand(StrategyViewEvent viewEvent)
@@ -94,7 +130,7 @@ public class StrategyPresenter
             List<GetItemInfo> getItemInfos = _model.SetResult();
             _view.ShowResultList(getItemInfos);
         } else{
-            _view.ShowEnemyList(_model.CurrentTroopInfo(),_model.ResultCommand());
+            _view.ShowEnemyList(_model.CurrentTroopInfo());
         }
     }
 
@@ -134,6 +170,15 @@ public class StrategyPresenter
     {
         StatusViewInfo statusViewInfo = new StatusViewInfo(() => {
             _view.CommandStatusClose();
+            if (_model.NeedUseSpCommand)
+            {
+                if (_model.CheckUseSp())
+                {
+                    _view.SetCommandAble(_model.ResultCommand()[1]);
+                } else{
+                    _view.SetCommandDisable(_model.ResultCommand()[1]);
+                }
+            }
             _view.SetActiveUi(true);
         });
         statusViewInfo.SetDisplayDecideButton(false);

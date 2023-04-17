@@ -54,28 +54,6 @@ public class TacticsModel : BaseModel
         _needAllTacticsCommand = isNeed;
     }
 
-    public List<StagesData.StageEventData> StageEvents(EventTiming eventTiming)
-    {
-        int CurrentTurn = CurrentStage.CurrentTurn;
-        List<string> eventKeys = CurrentStage.ReadEventKeys;
-        return StageEventDatas.FindAll(a => a.Timing == eventTiming && a.Turns == CurrentTurn && !eventKeys.Contains(a.EventKey));
-    }
-
-    public void AddEventsReadFlag(List<StagesData.StageEventData> stageEventDatas)
-    {
-        foreach (var eventData in stageEventDatas)
-        {
-            AddEventReadFlag(eventData);
-        }
-    }
-
-    public void AddEventReadFlag(StagesData.StageEventData stageEventDatas)
-    {
-        if (stageEventDatas.ReadFlag)
-        {
-            CurrentStage.AddEventReadFlag(stageEventDatas.EventKey);
-        }
-    }
 
     public ActorInfo TacticsActor(int actorId)
     {
@@ -380,6 +358,5 @@ public class TacticsModel : BaseModel
 
     public void TurnEnd()
     {
-        CurrentStage.SeekStage();
     }
 }

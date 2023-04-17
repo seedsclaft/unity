@@ -4,6 +4,19 @@ using UnityEngine;
 
 public class StrategyModel : BaseModel
 {
+    private bool _needUseSpCommand = false;
+    public bool NeedUseSpCommand { get {return _needUseSpCommand;}}
+    public void SetNeedUseSpCommand(bool isNeed)
+    {
+        _needUseSpCommand = isNeed;
+    }
+
+    public bool CheckUseSp()
+    {
+        ActorInfo actorInfo = StrategyActors()[0];
+        return (actorInfo.Sp < 10);
+    }
+
     private List<ActorInfo> StrategyActors()
     {
         return StageMembers();
@@ -226,6 +239,7 @@ public class StrategyModel : BaseModel
     
     public void EndStrategy()
     {
+        CurrentStage.SeekStage();
         CurrentAlcana.UseAlcana(false);
         foreach (var actorInfo in StageMembers())
         {

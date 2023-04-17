@@ -73,7 +73,6 @@ public class GameSystem : MonoBehaviour
         }
         if (viewEvent.commandType == Base.CommandType.SceneChange)
         {
-            CommandSceneChange((Scene)viewEvent.templete);
             if (testMode && (Scene)viewEvent.templete == Scene.Battle)
             {
                 if (debugBattleData.AdvName != "")
@@ -82,7 +81,10 @@ public class GameSystem : MonoBehaviour
                 } else
                 {
                     debugBattleData.MakeBattleActor();
+                    CommandSceneChange((Scene)viewEvent.templete);
                 }
+            } else{
+                CommandSceneChange((Scene)viewEvent.templete);
             }
         }
         if (viewEvent.commandType == Base.CommandType.InitSaveInfo)
@@ -166,6 +168,7 @@ public class GameSystem : MonoBehaviour
             if (_enemyInfoView) _enemyInfoView.SetBusy(true);
             AdvCallInfo advCallInfo = viewEvent.templete as AdvCallInfo;
             _currentScene.SetBusy(true);
+            //_currentScene.SetActiveUi(false);
             StartCoroutine(JumpScenarioAsync(advCallInfo.Label,advCallInfo.CallEvent));
         }
         if (viewEvent.commandType == Base.CommandType.DecidePlayerName)
@@ -186,6 +189,8 @@ public class GameSystem : MonoBehaviour
         if (!statusRoot.gameObject.activeSelf) _currentScene.SetBusy(false);
         if (_statusView) _statusView.SetBusy(false);
         if (_enemyInfoView) _enemyInfoView.SetBusy(false);
+        
+        //_currentScene.SetActiveUi(true);
         _busy = false;
         if(onComplete !=null) onComplete();
     }

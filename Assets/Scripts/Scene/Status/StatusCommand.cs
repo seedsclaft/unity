@@ -34,7 +34,7 @@ public class StatusCommand : ListItem ,IListViewItem
     {
         if (_data.Id == menuCommandData.Id)
         {
-            Disable.gameObject.SetActive(IsDisable);
+            Disable.SetActive(IsDisable);
         }
     }
 }

@@ -515,6 +515,7 @@ namespace Battle
         Condition,
         SelectEnemy,
         SelectParty,
+        EventCheck,
         EndBattle
     }
 }

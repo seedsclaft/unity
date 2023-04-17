@@ -41,6 +41,29 @@ public class BaseModel
         get{ return DataSystem.Stages.Find(a => a.Id == CurrentStage.Id).StageEvents;}
     }
 
+    public List<StagesData.StageEventData> StageEvents(EventTiming eventTiming)
+    {
+        int CurrentTurn = CurrentStage.CurrentTurn;
+        List<string> eventKeys = CurrentStage.ReadEventKeys;
+        return StageEventDatas.FindAll(a => a.Timing == eventTiming && a.Turns == CurrentTurn && !eventKeys.Contains(a.EventKey));
+    }
+    
+    public void AddEventsReadFlag(List<StagesData.StageEventData> stageEventDatas)
+    {
+        foreach (var eventData in stageEventDatas)
+        {
+            AddEventReadFlag(eventData);
+        }
+    }
+
+    public void AddEventReadFlag(StagesData.StageEventData stageEventDatas)
+    {
+        if (stageEventDatas.ReadFlag)
+        {
+            CurrentStage.AddEventReadFlag(stageEventDatas.EventKey);
+        }
+    }
+
     public async Task<List<AudioClip>> GetBgmData(string bgmKey){
         BGMData bGMData = DataSystem.Data.GetBGM(bgmKey);
         List<string> data = new List<string>();

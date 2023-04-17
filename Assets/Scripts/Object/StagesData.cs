@@ -41,7 +41,10 @@ public class StagesData : ScriptableObject {
 
 public enum EventTiming{
     None = 0,
-    StartTactics = 1
+    StartTactics = 1,
+    StartStarategy = 2,
+    StartBattle = 3,
+    TurnedBattle = 4
 }
 
 public enum StageEventType{
@@ -54,5 +57,6 @@ public enum StageEventType{
     SelectAddActor = 6, // 仲間を選んで加入する
     SaveCommand = 7, // セーブを行う,
     SetDefineBossIndex = 8, // ボスの選択番号を設定する
+    NeedUseSp = 9, // SPを消費しないと進まない
     AdvStart = 11 // ボスの選択番号を設定する
 }

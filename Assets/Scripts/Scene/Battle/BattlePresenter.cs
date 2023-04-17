@@ -38,6 +38,7 @@ public class BattlePresenter : BasePresenter
         //SoundManager.Instance.PlayBgm(bgm,1.0f,true);
 
         _view.StartBattleStartAnim(DataSystem.System.GetTextData(4).Text);
+        _nextCommandType = Battle.CommandType.EventCheck;
         _busy = false;
     }
 
@@ -407,6 +408,34 @@ public class BattlePresenter : BasePresenter
         {
             return;
         }
+        if (_nextCommandType == Battle.CommandType.EventCheck)
+        {
+            var stageEvents = _model.StageEvents(EventTiming.StartBattle);
+            var isAbort = false;
+            if (stageEvents.Count > 0)
+            {
+                for (int i = 0;i < stageEvents.Count;i++)
+                {
+                    if (stageEvents[i].Type == StageEventType.AdvStart)
+                    {
+                        AdvCallInfo advInfo = new AdvCallInfo();
+                        advInfo.SetLabel(_model.GetAdvFile(stageEvents[i].Param));
+                        advInfo.SetCallEvent(() => {                
+                            _view.SetBattleBusy(false);
+                        });
+                        _view.CommandCallAdv(advInfo);
+                        _model.AddEventReadFlag(stageEvents[i]);
+                        isAbort = true;
+                        break;
+                    }
+                }
+            }
+            if (isAbort)
+            {
+                _view.SetBattleBusy(true);
+                return;
+            }
+        }
         if (_nextCommandType == Battle.CommandType.EndBattle)
         {
             _view.CommandSceneChange(Scene.Strategy);
@@ -558,6 +587,32 @@ public class BattlePresenter : BasePresenter
 
     private void CommandDecideActor()
     {
+        var stageEvents = _model.StageEvents(EventTiming.TurnedBattle);
+        var isAbort = false;
+        if (stageEvents.Count > 0)
+        {
+            for (int i = 0;i < stageEvents.Count;i++)
+            {
+                if (stageEvents[i].Type == StageEventType.AdvStart)
+                {
+                    AdvCallInfo advInfo = new AdvCallInfo();
+                    advInfo.SetLabel(_model.GetAdvFile(stageEvents[i].Param));
+                    advInfo.SetCallEvent(() => {                
+                        _view.SetBattleBusy(false);
+                        CommandDecideActor();
+                    });
+                    _view.CommandCallAdv(advInfo);
+                    _model.AddEventReadFlag(stageEvents[i]);
+                    isAbort = true;
+                    break;
+                }
+            }
+        }
+        if (isAbort)
+        {
+            _view.SetBattleBusy(true);
+            return;
+        }
         // 行動選択開始
         _view.SetHelpText(DataSystem.System.GetTextData(15010).Text);
         _view.ShowSkillActionList(_model.CurrentBattler);

@@ -118,6 +118,7 @@ public class TacticsPresenter
                         _view.CommandSceneChange(Scene.Tactics);
                     });
                     _view.CommandCallAdv(advInfo);
+                    _model.AddEventReadFlag(stageEvents[i]);
                     isAbort = true;
                     break;
                 }
