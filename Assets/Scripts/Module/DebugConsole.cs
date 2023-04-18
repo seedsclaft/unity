@@ -23,6 +23,10 @@ public class DebugConsole : MonoBehaviour
         {
             SceneManager.LoadScene(0);
         }
+        if (consoleInputField.text == "S0")
+        {
+            SaveSystem.SaveStart(GameSystem.CurrentData,0);
+        }
         if (consoleInputField.text == "S1")
         {
             SaveSystem.SaveStart(GameSystem.CurrentData,1);

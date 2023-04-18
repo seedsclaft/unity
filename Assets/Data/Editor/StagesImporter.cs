@@ -13,14 +13,17 @@ public class StagesInfoImporter : AssetPostprocessor {
     {
 		Id = 0,
 		NameId,
-        Turns
+        Turns,
+		InitMembers
     }
     enum BaseEventColumn
     {
 		Id = 0,
         Turns,
 		Timing,
+		_TIming,
 		Type,
+		_Type,
 		Param,
 		ReadFlag
     }
@@ -94,6 +97,12 @@ public class StagesInfoImporter : AssetPostprocessor {
 					StageData.Name = textData.Find(a => a.Id == (int)Baserow.GetCell((int)BaseColumn.NameId).NumericCellValue).Text;
 					StageData.Help = textData.Find(a => a.Id == (int)Baserow.GetCell((int)BaseColumn.NameId).NumericCellValue).Help;
 					StageData.Turns = (int)Baserow.GetCell((int)BaseColumn.Turns)?.SafeNumericCellValue();
+					StageData.InitMembers = new List<int>();
+					string[] list = Baserow.GetCell((int)BaseColumn.InitMembers)?.SafeStringCellValue().Split(',');
+					foreach (string item in list)
+					{
+						StageData.InitMembers.Add(int.Parse(item));
+					}
 					StageData.StageEvents = new List<StagesData.StageEventData>();
 					for (int j = 1; j <= EventSheet.LastRowNum; j++)
 					{

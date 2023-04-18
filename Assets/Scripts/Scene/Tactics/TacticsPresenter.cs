@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TacticsPresenter 
+public class TacticsPresenter :BasePresenter
 {
     TacticsModel _model = null;
     TacticsView _view = null;
@@ -14,7 +14,9 @@ public class TacticsPresenter
     public TacticsPresenter(TacticsView view)
     {
         _view = view;
+        SetView(_view);
         _model = new TacticsModel();
+        SetModel(_model);
 
         Initialize();
     }
@@ -121,6 +123,11 @@ public class TacticsPresenter
                     _model.AddEventReadFlag(stageEvents[i]);
                     isAbort = true;
                     break;
+                }
+                if (stageEvents[i].Type == StageEventType.AbortStage)
+                {
+                    isAbort = true;
+                    _view.CommandSceneChange(Scene.MainMenu);
                 }
             }
         }
@@ -611,6 +618,7 @@ public class TacticsPresenter
         popupInfo.SetSkillInfo(_model.BasicSkillInfo(skillId));
         popupInfo.SetIsNoChoise(true);
         _view.CommandCallConfirm(popupInfo);
+        SoundManager.Instance.PlayStaticSe(SEType.Decide);
     }
 
     private void CommandSelectActorBattle(int actorId)
@@ -703,6 +711,7 @@ public class TacticsPresenter
         statusViewInfo.SetEnemyInfos(enemyInfos);
         _view.CommandCallEnemyInfo(statusViewInfo);
         _view.SetActiveUi(false);
+        SoundManager.Instance.PlayStaticSe(SEType.Decide);
     }
 
     private void CommandCheckAlcana()

@@ -91,12 +91,12 @@ public class BaseModel
         List<SystemData.MenuCommandData> menuCommandDatas = new List<SystemData.MenuCommandData>();
         SystemData.MenuCommandData yesCommand = new SystemData.MenuCommandData();
         yesCommand.Key = "Yes";
-        yesCommand.Name = "決定";
+        yesCommand.Name = DataSystem.System.GetTextData(3050).Text;
         yesCommand.Id = 0;
         menuCommandDatas.Add(yesCommand);
         SystemData.MenuCommandData noCommand = new SystemData.MenuCommandData();
         noCommand.Key = "No";
-        noCommand.Name = "中止";
+        noCommand.Name = DataSystem.System.GetTextData(3051).Text;
         noCommand.Id = 1;
         menuCommandDatas.Add(noCommand);
         return menuCommandDatas;
@@ -107,7 +107,7 @@ public class BaseModel
         List<SystemData.MenuCommandData> menuCommandDatas = new List<SystemData.MenuCommandData>();
         SystemData.MenuCommandData yesCommand = new SystemData.MenuCommandData();
         yesCommand.Key = "Yes";
-        yesCommand.Name = "確認";
+        yesCommand.Name = DataSystem.System.GetTextData(3052).Text;
         yesCommand.Id = 0;
         menuCommandDatas.Add(yesCommand);
         return menuCommandDatas;

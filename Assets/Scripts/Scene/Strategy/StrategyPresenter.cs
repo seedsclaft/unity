@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Strategy;
 
-public class StrategyPresenter 
+public class StrategyPresenter : BasePresenter
 {
     StrategyModel _model = null;
     StrategyView _view = null;
@@ -15,8 +15,9 @@ public class StrategyPresenter
     public StrategyPresenter(StrategyView view)
     {
         _view = view;
+        SetView(_view);
         _model = new StrategyModel();
-
+        SetModel(_model);
         Initialize();
     }
 
@@ -33,39 +34,6 @@ public class StrategyPresenter
         _view.SetEvent((type) => updateCommand(type));
         _busy = true;
 
-        var stageEvents = _model.StageEvents(EventTiming.StartStarategy);
-        var isAbort = false;
-        if (stageEvents.Count > 0)
-        {
-            for (int i = 0;i < stageEvents.Count;i++)
-            {
-                if (stageEvents[i].Type == StageEventType.CommandDisable)
-                {
-                    _view.SetCommandDisable(_model.ResultCommand()[stageEvents[i].Param]);
-                }
-                if (stageEvents[i].Type == StageEventType.NeedUseSp)
-                {
-                    _model.SetNeedUseSpCommand(true);
-                }
-                if (stageEvents[i].Type == StageEventType.AdvStart)
-                {
-                    AdvCallInfo advInfo = new AdvCallInfo();
-                    advInfo.SetLabel(_model.GetAdvFile(stageEvents[i].Param));
-                    advInfo.SetCallEvent(() => {                
-                        CommandStartStretegy();
-                        _busy = false;
-                    });
-                    _view.CommandCallAdv(advInfo);
-                    _model.AddEventReadFlag(stageEvents[i]);
-                    isAbort = true;
-                    break;
-                }
-            }
-        }
-        if (isAbort)
-        {
-            return;
-        }
         CommandStartStretegy();
         _busy = false;
     }
@@ -132,6 +100,33 @@ public class StrategyPresenter
         } else{
             _view.ShowEnemyList(_model.CurrentTroopInfo());
         }
+        var stageEvents = _model.StageEvents(EventTiming.StartStarategy);
+        if (stageEvents.Count > 0)
+        {
+            for (int i = 0;i < stageEvents.Count;i++)
+            {
+                if (stageEvents[i].Type == StageEventType.CommandDisable)
+                {
+                    _view.SetCommandDisable(_model.ResultCommand()[stageEvents[i].Param]);
+                }
+                if (stageEvents[i].Type == StageEventType.NeedUseSp)
+                {
+                    _model.SetNeedUseSpCommand(true);
+                }
+                if (stageEvents[i].Type == StageEventType.AdvStart)
+                {
+                    AdvCallInfo advInfo = new AdvCallInfo();
+                    advInfo.SetLabel(_model.GetAdvFile(stageEvents[i].Param));
+                    advInfo.SetCallEvent(() => {   
+                        _busy = false;
+                    });
+                    _view.CommandCallAdv(advInfo);
+                    _model.AddEventReadFlag(stageEvents[i]);
+                    _busy = true;
+                    break;
+                }
+            }
+        }
     }
 
     private void CommandResultClose(ConfirmComandType confirmComandType)
@@ -184,6 +179,7 @@ public class StrategyPresenter
         statusViewInfo.SetDisplayDecideButton(false);
         _view.CommandCallStatus(statusViewInfo);
         _view.SetActiveUi(false);
+        SoundManager.Instance.PlayStaticSe(SEType.Decide);
     }
 
     private void CheckTacticsActors()

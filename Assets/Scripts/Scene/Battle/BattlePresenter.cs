@@ -13,7 +13,9 @@ public class BattlePresenter : BasePresenter
     public BattlePresenter(BattleView view)
     {
         _view = view;
+        SetView(_view);
         _model = new BattleModel();
+        SetModel(_model);
 
         Initialize();
     }
@@ -410,28 +412,13 @@ public class BattlePresenter : BasePresenter
         }
         if (_nextCommandType == Battle.CommandType.EventCheck)
         {
-            var stageEvents = _model.StageEvents(EventTiming.StartBattle);
-            var isAbort = false;
-            if (stageEvents.Count > 0)
-            {
-                for (int i = 0;i < stageEvents.Count;i++)
-                {
-                    if (stageEvents[i].Type == StageEventType.AdvStart)
-                    {
-                        AdvCallInfo advInfo = new AdvCallInfo();
-                        advInfo.SetLabel(_model.GetAdvFile(stageEvents[i].Param));
-                        advInfo.SetCallEvent(() => {                
-                            _view.SetBattleBusy(false);
-                        });
-                        _view.CommandCallAdv(advInfo);
-                        _model.AddEventReadFlag(stageEvents[i]);
-                        isAbort = true;
-                        break;
-                    }
-                }
-            }
+            var isAbort = CheckAdvStageEvent(EventTiming.StartBattle,() => {
+                _view.SetBattleBusy(false);
+                _busy = false;
+            });
             if (isAbort)
             {
+                _busy = true;
                 _view.SetBattleBusy(true);
                 return;
             }
@@ -486,6 +473,8 @@ public class BattlePresenter : BasePresenter
         _model.CheckPlusSkill();
         // TriggerAfter
         var result = _model.CheckTriggerSkillInfos(TriggerTiming.After);
+        
+        bool isDemigodActor = _model.CurrentBattler.IsState(StateType.Demigod);
         _model.TurnEnd();
 
         // 勝敗判定
@@ -506,6 +495,18 @@ public class BattlePresenter : BasePresenter
             return;
         }
 
+        if (isDemigodActor == true)
+        {
+            var isAbort = CheckAdvStageEvent(EventTiming.AfterDemigod,() => {   
+                _view.SetBattleBusy(false);
+                _busy = false;
+            });
+            if (isAbort)
+            {
+                _busy = true;
+                return;
+            }
+        }
         _view.SetBattleBusy(false);
     }
 
@@ -587,32 +588,6 @@ public class BattlePresenter : BasePresenter
 
     private void CommandDecideActor()
     {
-        var stageEvents = _model.StageEvents(EventTiming.TurnedBattle);
-        var isAbort = false;
-        if (stageEvents.Count > 0)
-        {
-            for (int i = 0;i < stageEvents.Count;i++)
-            {
-                if (stageEvents[i].Type == StageEventType.AdvStart)
-                {
-                    AdvCallInfo advInfo = new AdvCallInfo();
-                    advInfo.SetLabel(_model.GetAdvFile(stageEvents[i].Param));
-                    advInfo.SetCallEvent(() => {                
-                        _view.SetBattleBusy(false);
-                        CommandDecideActor();
-                    });
-                    _view.CommandCallAdv(advInfo);
-                    _model.AddEventReadFlag(stageEvents[i]);
-                    isAbort = true;
-                    break;
-                }
-            }
-        }
-        if (isAbort)
-        {
-            _view.SetBattleBusy(true);
-            return;
-        }
         // 行動選択開始
         _view.SetHelpText(DataSystem.System.GetTextData(15010).Text);
         _view.ShowSkillActionList(_model.CurrentBattler);
@@ -622,6 +597,17 @@ public class BattlePresenter : BasePresenter
         _view.RefreshBattlerPartyLayerTarget(-1);
         _view.SetActiveBack(false);
         _view.SetBattlerSelectable(true);
+        var isAbort = CheckAdvStageEvent(EventTiming.TurnedBattle,() => {   
+            _view.SetBattleBusy(false);
+            _busy = false;
+            CommandDecideActor();
+        });
+        if (isAbort)
+        {
+            _view.SetBattleBusy(true);
+            _busy = true;
+            return;
+        }
     }
     
     private void CommandLeftActor()

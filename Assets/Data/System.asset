@@ -28,7 +28,7 @@ MonoBehaviour:
   - Id: 4
     Key: BATTLE
     Name: "\u6551\u6E08\u57F7\u884C"
-    Help: "\u6210\u3089\u3056\u308B\u8005(Disguised)\u3092\u8A0E\u4F10\u3057\u6551\u6E08\u3092\u4E0E\u3048\u307E\u3059"
+    Help: "\u9053\u306A\u304D\u8005(The Pathless)\u3092\u8A0E\u4F10\u3057\u6551\u6E08\u3092\u4E0E\u3048\u307E\u3059"
   - Id: 5
     Key: RESOURCE
     Name: "\u7D20\u5B50\u88DC\u5145"
@@ -64,7 +64,7 @@ MonoBehaviour:
     Name: Option
     Help: "\u30B2\u30FC\u30E0\u306E\u8A2D\u5B9A\u3092\u5909\u66F4\u3057\u307E\u3059"
   InitActors: 0100000002000000030000000400000005000000
-  InitCurrency: 10
+  InitCurrency: 2
   SystemTextData:
   - Id: 1
     Text: "\u4EBA\u4F53\u932C\u6210"
@@ -77,7 +77,7 @@ MonoBehaviour:
     Help: "Numinous\u3092\u4F7F\u7528\u3057\u3066\u8853\u8005(Alchemist)\u306EHP\u3092\u56DE\u5FA9\u3057\u307E\u3059"
   - Id: 4
     Text: "\u6551\u6E08\u57F7\u884C"
-    Help: "\u6210\u3089\u3056\u308B\u8005(Disguised)\u3092\u8A0E\u4F10\u3057\u6551\u6E08\u3092\u4E0E\u3048\u307E\u3059"
+    Help: "\u9053\u306A\u304D\u8005(The Pathless)\u3092\u8A0E\u4F10\u3057\u6551\u6E08\u3092\u4E0E\u3048\u307E\u3059"
   - Id: 5
     Text: "\u7D20\u5B50\u88DC\u5145"
     Help: "Numinous\u3092\u751F\u6210\u3057\u307E\u3059"
@@ -221,6 +221,18 @@ MonoBehaviour:
     Help: '""'
   - Id: 3030
     Text: "\\d\u306E\u547D\u4EE4\u30E9\u30F3\u30AF\u304C\u30A2\u30C3\u30D7\uFF01"
+    Help: '""'
+  - Id: 3040
+    Text: "\u6B21\u3078"
+    Help: '""'
+  - Id: 3050
+    Text: "\u6C7A\u5B9A"
+    Help: '""'
+  - Id: 3051
+    Text: "\u4E2D\u6B62"
+    Help: '""'
+  - Id: 3052
+    Text: "\u78BA\u8A8D"
     Help: '""'
   - Id: 4000
     Text: "Numinous\u3092\\d\u6D88\u8CBB\u3057\u3066\\e\u3092\u7FD2\u5F97\u3057\u307E\u3059\u304B\uFF1F"
