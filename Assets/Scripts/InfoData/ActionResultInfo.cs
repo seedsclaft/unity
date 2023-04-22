@@ -181,7 +181,9 @@ public class ActionResultInfo
             _execStateInfos[subject.Index].Add(StateType.Freeze);
             _reDamage += FreezeDamageValue(subject,SkillDamage);
         }
-        SkillDamage -= (DefValue * 0.5f);
+
+        SkillDamage *= GetDeffenseRateValue((AtkValue * 0.5f),DefValue);
+        //SkillDamage -= (DefValue * 0.5f);
         float DamageValue = Mathf.Max(1,SkillDamage);
         _hpDamage = (int)Mathf.Round(DamageValue);
         // 属性補正
@@ -319,6 +321,17 @@ public class ActionResultInfo
         if (_removedStates.IndexOf(stateInfo) == -1){
             _removedStates.Add(stateInfo);
         }
+    }
+    
+    private float GetDeffenseRateValue(float atk,float def){
+        // 防御率 ＝ 1 - 防御 / (攻撃 + 防御)　※攻撃 + 防御 < 1の時、1
+        float _deffenceRateValue;
+        if ((atk + def) < 1){
+            _deffenceRateValue = 1;
+        } else{
+            _deffenceRateValue = 1 - (def / (atk + def));
+        }
+        return _deffenceRateValue;
     }
 
     private int FreezeDamageValue(BattlerInfo subject,float skillDamage)

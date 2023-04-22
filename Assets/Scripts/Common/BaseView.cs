@@ -29,6 +29,7 @@ abstract public class BaseView : MonoBehaviour
 
     private void InputHandler(InputKeyType keyType)
     {
+        if (_busy) return;
         foreach (var handler in _inputHandler)
         {
             if (handler != null){

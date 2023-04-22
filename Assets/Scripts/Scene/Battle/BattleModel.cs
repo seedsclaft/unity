@@ -809,15 +809,18 @@ public class BattleModel : BaseModel
     public void CheckPlusSkill()
     {
         ActionInfo actionInfo = CurrentActionInfo();
-        List<ActionInfo> actionInfos = actionInfo.CheckPlusSkill();
-        if (GetBattlerInfo(actionInfo.SubjectIndex).IsState(StateType.Extension))
+        if (actionInfo != null)
         {
-            foreach (var item in actionInfos)
+            List<ActionInfo> actionInfos = actionInfo.CheckPlusSkill();
+            if (GetBattlerInfo(actionInfo.SubjectIndex).IsState(StateType.Extension))
             {
-                item.SetRangeType(RangeType.L); 
+                foreach (var item in actionInfos)
+                {
+                    item.SetRangeType(RangeType.L); 
+                }
             }
+            _actionInfos.AddRange(actionInfos);
         }
-        _actionInfos.AddRange(actionInfos);
     }
 
     public bool CheckRegene()
@@ -866,6 +869,10 @@ public class BattleModel : BaseModel
     {
         bool IsTriggered = false;
         List<ActionInfo> actionInfos = new List<ActionInfo>();
+        if (CurrentBattler == null)
+        {
+            return false;
+        }
         List <SkillInfo> triggeredSkills = CurrentBattler.TriggerdSkillInfos(triggerTiming,CurrentActionInfo(),_battlers);
         if (triggeredSkills.Count > 0)
         {

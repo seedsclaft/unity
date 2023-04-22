@@ -144,7 +144,7 @@ public class StrategyModel : BaseModel
             }
         }
         CurrentStage.AddClearTroopId(CurrentTroopInfo().TroopId);
-        CurrentStage.GainClearCount(1);
+        CurrentStage.GainTroopClearCount(1);
         CurrentStage.ChangeSubordinate(15);
 
         foreach (var actorInfo in CheckInBattleActors())

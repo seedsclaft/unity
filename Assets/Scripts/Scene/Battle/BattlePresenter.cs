@@ -422,6 +422,7 @@ public class BattlePresenter : BasePresenter
                 _view.SetBattleBusy(true);
                 return;
             }
+            return;
         }
         if (_nextCommandType == Battle.CommandType.EndBattle)
         {

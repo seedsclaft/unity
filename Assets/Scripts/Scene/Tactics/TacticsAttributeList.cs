@@ -33,7 +33,7 @@ public class TacticsAttributeList : ListWindow , IInputHandlerEvent
         for (int i = 0; i < _attributeTypesData.Count;i++)
         {
             SkillAttribute skillAttribute = ObjectList[i].GetComponent<SkillAttribute>();
-            skillAttribute.SetData(_attributeTypesData[i],attributeValues[i],(int)_attributeTypesData[i],learningCosts[i]);
+            skillAttribute.SetData(_attributeTypesData[i],attributeValues[i],(int)_attributeTypesData[i] - 1,learningCosts[i]);
             if (learningCosts[i] > currensy)
             {            
                 ListItem listItem = ObjectList[i].GetComponent<ListItem>();
@@ -52,7 +52,7 @@ public class TacticsAttributeList : ListWindow , IInputHandlerEvent
 
     private void CallInputHandler(InputKeyType keyType, System.Action<AttributeType> callEvent)
     {
-        if (keyType == InputKeyType.Decide)
+        if (keyType == InputKeyType.Decide && Index > -1)
         {
             callEvent(_attributeTypesData[Index]);
         }

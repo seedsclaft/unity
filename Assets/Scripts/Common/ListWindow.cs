@@ -398,7 +398,10 @@ abstract public class ListWindow : MonoBehaviour
         }
         InputSelectIndex(keyType);
         InputCallEvent(keyType);
-        UpdateSelectIndex(Index);
+        if (keyType == InputKeyType.Up || keyType == InputKeyType.Down || keyType == InputKeyType.Left || keyType == InputKeyType.Right)
+        {
+            UpdateSelectIndex(Index);
+        }
         ResetInputFrame();
         //Debug.Log(this.gameObject.name);
     }

@@ -30,7 +30,7 @@ public class SkillAttribute : ListItem ,IListViewItem
         if (_data == AttributeType.None) return;
         if (icon != null)
         {
-            UpdateSkillIcon(Index-1);
+            UpdateSkillIcon(Index);
         }
         
         if (valueText != null && _valueText != null)

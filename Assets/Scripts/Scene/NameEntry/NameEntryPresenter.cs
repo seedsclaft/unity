@@ -59,19 +59,21 @@ public class NameEntryPresenter
 
     private void CommandStartEntry()
     {
-        ConfirmInfo popupInfo = new ConfirmInfo("あなたの名前を聞かせてください",(menuCommandInfo) => updatePopup((ConfirmComandType)menuCommandInfo));
+        ConfirmInfo popupInfo = new ConfirmInfo(DataSystem.System.GetTextData(5000).Text,(menuCommandInfo) => updatePopup((ConfirmComandType)menuCommandInfo));
         popupInfo.SetIsNoChoise(true);
         _view.CommandCallConfirm(popupInfo);
+        _view.ShowNameEntry(DataSystem.System.GetTextData(5001).Text);
     }
 
     private void CommandEntryEnd(string nameText)
     {
         if (nameText == "")
         {
-            ConfirmInfo popupInfo = new ConfirmInfo("名前を入力してください",(menuCommandInfo) => updatePopup((ConfirmComandType)menuCommandInfo));
+            ConfirmInfo popupInfo = new ConfirmInfo(DataSystem.System.GetTextData(5002).Text,(menuCommandInfo) => updatePopup((ConfirmComandType)menuCommandInfo));
             popupInfo.SetIsNoChoise(true);
             _view.CommandCallConfirm(popupInfo);
         } else{
+            _model.SetPlayerName(nameText);
             _view.CommandDecidePlayerName(nameText);
             _view.CommandSceneChange(Scene.MainMenu);
         }

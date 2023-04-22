@@ -36,7 +36,7 @@ public class SkillAttributeList : ListWindow , IInputHandlerEvent
         for (int i = 0; i < attributeTypes.Count;i++)
         {
             var skillAttribute = ObjectList[i].GetComponent<SkillAttribute>();
-            skillAttribute.SetData(attributeTypes[i],"",(int)attributeTypes[i]);
+            skillAttribute.SetData(attributeTypes[i],"",(int)attributeTypes[i] - 1);
         }
         UpdateAllItems();
         UpdateSelectIndex(0);
@@ -47,7 +47,7 @@ public class SkillAttributeList : ListWindow , IInputHandlerEvent
         for (int i = 0; i < _attributeTypesData.Count;i++)
         {
             var skillAttribute = ObjectList[i].GetComponent<SkillAttribute>();
-            skillAttribute.SetData(_attributeTypesData[i],attributeValues[i],(int)_attributeTypesData[i]);
+            skillAttribute.SetData(_attributeTypesData[i],attributeValues[i],(int)_attributeTypesData[i] - 1);
         }
         UpdateAllItems();
     }

@@ -17,7 +17,7 @@ public class TacticsUtility
 
     public static int AlchemyCost(ActorInfo actorInfo,AttributeType attributeType,List<ActorInfo> stageMembers)
     {
-        int cost = 4;
+        int cost = 2;
         int param = actorInfo.AttirbuteParams(stageMembers)[(int)attributeType-1];
         if (param > 100){
             //cost *= 1;

@@ -40,10 +40,10 @@ public class TacticsPresenter :BasePresenter
         _view.ShowCommandList();
         _view.SetAttributeTypes(_model.AttributeTypes());
         CommandRefresh();
-        var bgm = await _model.GetBgmData(_model.TacticsBgmFilename());
-        SoundManager.Instance.PlayBgm(bgm,1.0f,true);
         //SoundManager.Instance.PlayBgm(bgm,1.0f,true);
 
+        var bgm = await _model.GetBgmData(_model.TacticsBgmFilename());
+        SoundManager.Instance.PlayBgm(bgm,1.0f,true);
         // イベントチェック
         var stageEvents = _model.StageEvents(EventTiming.StartTactics);
         var isAbort = false;
@@ -127,6 +127,7 @@ public class TacticsPresenter :BasePresenter
                 if (stageEvents[i].Type == StageEventType.AbortStage)
                 {
                     isAbort = true;
+                    _model.StageClaer();
                     _view.CommandSceneChange(Scene.MainMenu);
                 }
             }

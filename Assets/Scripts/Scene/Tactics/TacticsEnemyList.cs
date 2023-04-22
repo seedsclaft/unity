@@ -79,7 +79,7 @@ public class TacticsEnemyList : ListWindow , IInputHandlerEvent
     {
         if (keyType == InputKeyType.Decide)
         {
-            if (callEvent != null)
+            if (callEvent != null && Index > -1 && _getItemIndex == -1)
             {
                 callEvent(Index);
             }
@@ -88,7 +88,7 @@ public class TacticsEnemyList : ListWindow , IInputHandlerEvent
             {
                 if (_troopInfos[Index].GetItemInfos[_getItemIndex].IsSkill())
                 {
-                    getItemEvent(_troopInfos[Index].GetItemInfos[_getItemIndex].Param1);  
+                    getItemEvent(_troopInfos[Index].GetItemInfos[_getItemIndex].Param1);
                 }
             }
         }
@@ -120,16 +120,16 @@ public class TacticsEnemyList : ListWindow , IInputHandlerEvent
             if (Index >= 0)
             {
                 _getItemIndex--;
+                if (_getItemIndex == -2)
+                {
+                    _getItemIndex = _troopInfos[Index].GetItemInfos.Count - 1;
+                }
                 TacticsEnemy tacticsEnemy = ObjectList[Index].GetComponent<TacticsEnemy>();
                 if (_getItemIndex < 0)
                 {
                     UpdateSelectIndex(Index);
                 }
                 tacticsEnemy.SetSelectGetItem(_getItemIndex);
-                if (_getItemIndex < 0)
-                {
-                    _getItemIndex = _troopInfos[Index].GetItemInfos.Count;
-                }
             }
         }
         if (keyType == InputKeyType.Down)
@@ -148,6 +148,7 @@ public class TacticsEnemyList : ListWindow , IInputHandlerEvent
                 tacticsEnemy.SetSelectGetItem(_getItemIndex);
             }
         }
+        Debug.Log(_getItemIndex.ToString());
     }
 
     private void SetAllUnselect()

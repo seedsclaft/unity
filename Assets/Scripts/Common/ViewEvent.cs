@@ -88,6 +88,12 @@ abstract public class ListItem : MonoBehaviour
     
     public void SetSelectHandler(System.Action<int> handler){
 		ContentEnterListener enterListener = clickButton.gameObject.AddComponent<ContentEnterListener> ();
-        enterListener.SetEnterEvent(() => handler(_index));
+        enterListener.SetEnterEvent(() => 
+        {
+            if (disable == null || disable.activeSelf == false)
+            {
+                handler(_index);
+            }
+        });
     }
 }

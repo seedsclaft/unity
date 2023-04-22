@@ -79,7 +79,8 @@ public class SavePlayInfo
 {
 	public	const	int		SAVEDATA_VER = 100;
 
-	public PlayerInfo _playerInfo = null;
+	private PlayerInfo _playerInfo = null;
+    public PlayerInfo PlayerInfo {get {return _playerInfo;}}
     private List<ActorInfo> _actors = new List<ActorInfo>();
     public List<ActorInfo> Actors {get {return _actors;}}
 	
@@ -92,13 +93,12 @@ public class SavePlayInfo
     private AlcanaInfo _currentAlcana = null;
 	public AlcanaInfo CurrentAlcana { get {return _currentAlcana;}}
 
-	private List<TroopsData.TroopData> _troopDatas = new List<TroopsData.TroopData>();
-	public List<TroopsData.TroopData> TroopDatas { get {return _troopDatas;}}
     public SavePlayInfo()
     {
 		this.InitActors();
 		this.InitStages();
 		this.InitParty();
+		_playerInfo = new PlayerInfo();
 	}
 
     public void InitActors()
@@ -189,5 +189,16 @@ public class SavePlayInfo
 			StageInfo stageInfo = new StageInfo(DataSystem.Stages[i]);
 			_stages.Add(stageInfo);
 		}
+	}
+
+	public void StageClaer()
+	{
+		StageInfo stageInfo = _stages.Find(a => a.Id == CurrentStage.Id);
+		stageInfo.GainClearCount();
+	}
+
+	public void SetPlayerName(string name)
+	{
+		_playerInfo.SetPlayerName(name);
 	}
 }

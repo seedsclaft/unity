@@ -55,7 +55,7 @@ public class TacticsCommandList : ListWindow , IInputHandlerEvent
     }
     private void CallInputHandler(InputKeyType keyType, System.Action<TacticsComandType> callEvent,System.Action alcanaEvent)
     {
-        if (keyType == InputKeyType.Decide)
+        if (keyType == InputKeyType.Decide && Index > -1)
         {
             TacticsCommand tacticsCommand = ObjectList[Index].GetComponent<TacticsCommand>();
             if (tacticsCommand.Disable.gameObject.activeSelf) return;

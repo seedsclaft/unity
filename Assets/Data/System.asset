@@ -64,7 +64,7 @@ MonoBehaviour:
     Name: Option
     Help: "\u30B2\u30FC\u30E0\u306E\u8A2D\u5B9A\u3092\u5909\u66F4\u3057\u307E\u3059"
   InitActors: 0100000002000000030000000400000005000000
-  InitCurrency: 2
+  InitCurrency: 5
   SystemTextData:
   - Id: 1
     Text: "\u4EBA\u4F53\u932C\u6210"
@@ -242,6 +242,15 @@ MonoBehaviour:
     Help: '""'
   - Id: 4011
     Text: "\u7FD2\u5F97\u30B3\u30B9\u30C8\u306E\\d\u304C\u9084\u5143\u3055\u308C\u307E\u3059"
+    Help: '""'
+  - Id: 5000
+    Text: "\u3042\u306A\u305F\u306E\u540D\u524D\u3092\u805E\u304B\u305B\u3066\u304F\u3060\u3055\u3044"
+    Help: '""'
+  - Id: 5001
+    Text: "\u30A2\u30EC\u30B9"
+    Help: '""'
+  - Id: 5002
+    Text: "1\u6587\u5B57\u4EE5\u4E0A\u306E\u540D\u524D\u3092\u5165\u529B\u3057\u3066\u304F\u3060\u3055\u3044"
     Help: '""'
   - Id: 11010
     Text: "\u7D42\u7109\u307E\u3067 :"

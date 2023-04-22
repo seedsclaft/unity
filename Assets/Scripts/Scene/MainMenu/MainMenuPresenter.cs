@@ -40,7 +40,7 @@ public class MainMenuPresenter
         }
         if (viewEvent.commandType == CommandType.StageSelect)
         {
-            SoundManager.Instance.PlayStaticSe(SEType.Decide);
+            _model.SetStageId((int)viewEvent.templete);
             StatusViewInfo statusViewInfo = new StatusViewInfo(() => {
                 _view.CommandStatusClose();
                 _view.SetActiveUi(true);
@@ -49,7 +49,7 @@ public class MainMenuPresenter
             statusViewInfo.SetDisableStrength(true);
             _view.CommandCallStatus(statusViewInfo);
             _view.SetActiveUi(false);
-            _model.SetStageId((int)viewEvent.templete);
+            SoundManager.Instance.PlayStaticSe(SEType.Decide);
         }
     }
 

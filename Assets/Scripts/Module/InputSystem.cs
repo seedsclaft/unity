@@ -1,8 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.UI;
 
-public class InputSystem 
+public class InputSystem
 {
     public InputKeyType Update()
     {

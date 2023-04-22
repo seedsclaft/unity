@@ -197,6 +197,10 @@ public class BattleEnemyLayer : ListWindow , IInputHandlerEvent
         if (keyType == InputKeyType.Decide)
         {
             BattlerInfo battlerInfo = _battleInfos.Find(a => a.Index == _selectIndex);
+            if (battlerInfo == null)
+            {
+                return;
+            }
             if (battlerInfo.IsAlive() == false)
             {
                 return;

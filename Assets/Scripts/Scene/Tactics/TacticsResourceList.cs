@@ -66,7 +66,12 @@ public class TacticsResourceList : ListWindow , IInputHandlerEvent
         {
             if (Index == -1)
             {
-                _confirmEvent((TacticsComandType)tacticsCommandList.Index);
+                TacticsComandType tacticsComandType = TacticsComandType.None;
+                if (tacticsCommandList.Index == 1)
+                {
+                    tacticsComandType = TacticsComandType.Train;
+                }
+                _confirmEvent(tacticsComandType);
             } else
             {
                 callEvent(_actorInfos[Index].ActorId);

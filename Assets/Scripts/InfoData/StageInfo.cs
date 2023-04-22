@@ -13,6 +13,8 @@ public class StageInfo
     public int CurrentTurn {get {return _currentTurn;}}
     private int _clearCount;
     public int ClearCount {get {return _clearCount;}}
+    private int _troopClearCount;
+    public int TroopClearCount {get {return _troopClearCount;}}
 
 	private List<TroopsData.TroopData> _troopDatas = new List<TroopsData.TroopData>();
 	public List<TroopsData.TroopData> TroopDatas { get {return _troopDatas;}}
@@ -44,7 +46,7 @@ public class StageInfo
         _currentTurn = 1;
         _IsSubordinate = false;
         _subordinateValue = 50;
-        _clearCount = 0;
+        _troopClearCount = 0;
         _clearTroopIds.Clear();
 		MakeTroopData();
     }
@@ -52,6 +54,11 @@ public class StageInfo
     public void AddSelectActorId(int actorId)
     {
         _selectActorIds.Add(actorId);
+    }
+
+    public void GainClearCount()
+    {
+        _clearCount += 1;
     }
 
 	private void MakeTroopData()
@@ -103,7 +110,7 @@ public class StageInfo
             int rand = new Random().Next(0, troopDatas.Count);
             if (!troopsData.Contains(troopDatas[rand]))
             {
-                troopDatas[rand].Lv = _clearCount + 4;
+                troopDatas[rand].Lv = _troopClearCount + 4;
                 troopsData.Add(troopDatas[rand]);
             }
         }
@@ -115,7 +122,7 @@ public class StageInfo
 			{
         		int rand = new System.Random().Next(0, _randomTroopCount) + 1;
                 EnemiesData.EnemyData enemyData = DataSystem.Enemies.Find(a => a.Id == rand);
-                BattlerInfo enemy = new BattlerInfo(enemyData,_clearCount + 1,j,0,false);
+                BattlerInfo enemy = new BattlerInfo(enemyData,_troopClearCount + 1,j,0,false);
                 troopInfo.AddEnemy(enemy);
             }
             troopInfo.MakeEnemyData(troopsData[i],enemyCount,0);
@@ -148,7 +155,7 @@ public class StageInfo
                 TroopInfo troopInfo = new TroopInfo(bossTroopId);
                 for (int i = 0;i < troopDatas.Count;i++)
                 {
-                    troopInfo.MakeEnemyData(troopDatas[i],i,_clearCount + 1);
+                    troopInfo.MakeEnemyData(troopDatas[i],i,_troopClearCount + 1);
                 }
 
                 _currentTroopInfos[_currentTroopInfos.Count-1] = troopInfo;
@@ -164,7 +171,7 @@ public class StageInfo
         TroopInfo troopInfo = new TroopInfo(selectIndex * 10);
         for (int i = 0;i < troopDatas.Count;i++)
         {
-            troopInfo.MakeEnemyData(troopDatas[i],i,_clearCount);
+            troopInfo.MakeEnemyData(troopDatas[i],i,_troopClearCount);
         }
         _currentTroopInfos.Add(troopInfo);
         return _currentTroopInfos;
@@ -326,9 +333,9 @@ public class StageInfo
         _readEventKeys.Add(key);
     }
 
-    public void GainClearCount(int value)
+    public void GainTroopClearCount(int value)
     {
-        _clearCount += value;
+        _troopClearCount += value;
     }
 
     public void AddClearTroopId(int troopId)

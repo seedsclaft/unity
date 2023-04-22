@@ -18,7 +18,7 @@ public class BaseModel
 
     public int Currency{get {return PartyInfo.Currency;}}
 
-    public int Turns{get {return CurrentStage.Turns - CurrentStage.CurrentTurn - 1;}}
+    public int Turns{get {return CurrentStage.Turns - (CurrentStage.CurrentTurn);}}
     
     public List<ActorInfo> Actors()
     {
@@ -342,5 +342,10 @@ public class BaseModel
     public string GetAdvFile(int id)
     {
         return DataSystem.Advs.Find(a => a.Id == id).AdvName;
+    }
+
+    public void StageClaer()
+    {
+        CurrentData.StageClaer();
     }
 }

@@ -108,10 +108,12 @@ public class StrategyPresenter : BasePresenter
                 if (stageEvents[i].Type == StageEventType.CommandDisable)
                 {
                     _view.SetCommandDisable(_model.ResultCommand()[stageEvents[i].Param]);
+                    _model.AddEventReadFlag(stageEvents[i]);
                 }
                 if (stageEvents[i].Type == StageEventType.NeedUseSp)
                 {
                     _model.SetNeedUseSpCommand(true);
+                    _model.AddEventReadFlag(stageEvents[i]);
                 }
                 if (stageEvents[i].Type == StageEventType.AdvStart)
                 {

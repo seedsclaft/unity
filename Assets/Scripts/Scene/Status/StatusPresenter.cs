@@ -30,6 +30,7 @@ public class StatusPresenter
         _view.SetStrengthInfo(_model.ConfirmCommand());
         _view.SetStatusCommand(_model.StatusCommand);
         _view.SetAttributeTypes(_model.AttributeTypes());
+        if (_model.StatusActors().Count == 1) _view.HideArrows();
         //var bgm = await _model.BgmData();
         //SoundManager.Instance.PlayBgm(bgm,1.0f,true);
         //SoundManager.Instance.PlayBgm(bgm,1.0f,true);

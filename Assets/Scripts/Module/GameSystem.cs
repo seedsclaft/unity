@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using Utage;
 using UtageExtensions;
 
@@ -18,6 +19,7 @@ public class GameSystem : MonoBehaviour
     [SerializeField] private GameObject tutorialRoot = null;
     [SerializeField] private GameObject tutorialPrefab = null;
     [SerializeField] private AdvEngine advEngine = null;
+    [SerializeField] private AdvController advController = null;
     [SerializeField] private DebugBattleData debugBattleData = null;
     
     private BaseView _currentScene = null;
@@ -107,14 +109,14 @@ public class GameSystem : MonoBehaviour
             _confirmView.SetTitle(popupInfo.Title);
             _confirmView.SetSkillInfo(popupInfo.SkillInfo);
             _confirmView.SetConfirmEvent(popupInfo.CallEvent);
-            if (!statusRoot.gameObject.activeSelf) _currentScene.SetBusy(true);
+            _currentScene.SetBusy(true);
             if (_statusView) _statusView.SetBusy(true);
             if (_enemyInfoView) _enemyInfoView.SetBusy(true);
         }
         if (viewEvent.commandType == Base.CommandType.CloseConfirm)
         {
             confirmRoot.gameObject.SetActive(false);
-            if (!statusRoot.gameObject.activeSelf) _currentScene.SetBusy(false);
+            _currentScene.SetBusy(false);
             if (_statusView) _statusView.SetBusy(false);
             if (_enemyInfoView) _enemyInfoView.SetBusy(false);
         }
@@ -182,6 +184,7 @@ public class GameSystem : MonoBehaviour
     {
         _busy = true;
         advEngine.JumpScenario(label);
+        advController.StartAdv();
         while (!advEngine.IsEndOrPauseScenario)
         {
             yield return null;
@@ -189,6 +192,7 @@ public class GameSystem : MonoBehaviour
         if (!statusRoot.gameObject.activeSelf) _currentScene.SetBusy(false);
         if (_statusView) _statusView.SetBusy(false);
         if (_enemyInfoView) _enemyInfoView.SetBusy(false);
+        advController.EndAdv();
         
         //_currentScene.SetActiveUi(true);
         _busy = false;

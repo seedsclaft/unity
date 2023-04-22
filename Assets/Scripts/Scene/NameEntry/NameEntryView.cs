@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using NameEntry;
 using TMPro;
 
-public class NameEntryView : BaseView
+public class NameEntryView : BaseView, IInputHandlerEvent
 {
     [SerializeField] private TMP_InputField inputField = null;
     [SerializeField] private Button decideButton = null;
@@ -15,6 +15,7 @@ public class NameEntryView : BaseView
 
     private new System.Action<NameEntryViewEvent> _commandData = null;
 
+    private int _inputLateUpdate = -1;
     protected void Awake(){
         InitializeInput();
         Initialize();
@@ -25,6 +26,7 @@ public class NameEntryView : BaseView
         decideButton.onClick.AddListener(() => OnClickDecide());
         inputField.gameObject.SetActive(false);
         decideButton.gameObject.SetActive(false);
+        SetInputHandler(gameObject.GetComponent<IInputHandlerEvent>());
     }
 
     public void SetHelpWindow(){
@@ -44,11 +46,40 @@ public class NameEntryView : BaseView
         if (decideButton != null) decideButton.gameObject.SetActive(false);
     }
 
-    public void StartNameEntry(){
-        inputField.gameObject.SetActive(true);
-        decideButton.gameObject.SetActive(true);
+    public void ShowNameEntry(string defaultName){
+        inputField.text = defaultName;
     }
 
+    public void StartNameEntry(){
+        decideButton.gameObject.SetActive(true);
+        inputField.gameObject.SetActive(true);
+        inputField.Select();
+        _inputLateUpdate = 1;
+    }
+
+    public void InputHandler(InputKeyType keyType)
+    {
+        if (inputField.gameObject.activeSelf == true && inputField.IsActive())
+        {
+            if (keyType == InputKeyType.Start)
+            {
+                OnClickDecide();
+            }
+        }
+    }
+
+    private new void Update() {
+        if (_inputLateUpdate > -1)
+        {
+            _inputLateUpdate--;
+            if (_inputLateUpdate == -1)
+            {
+                inputField.MoveTextEnd(true);
+            }
+        } else{        
+            base.Update();
+        }
+    }
 }
 
 namespace NameEntry
