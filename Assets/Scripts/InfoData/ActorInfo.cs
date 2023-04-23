@@ -127,7 +127,7 @@ public class ActorInfo
     public void LearnSkill(int skillId)
     {
         SkillInfo skillInfo = new SkillInfo(skillId);
-        skillInfo.SetLearningState(LearningState.Notlearned);
+        skillInfo.SetLearningState(LearningState.SelectLearn);
         _skills.Add(skillInfo);
     }
 

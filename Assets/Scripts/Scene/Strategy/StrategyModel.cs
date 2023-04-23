@@ -66,7 +66,8 @@ public class StrategyModel : BaseModel
                 AttributeType attributeType = actorInfos[i].NextLearnAttribute;
                 getItemInfo.SetSkillElementId((int)attributeType);
                 //int hintLv = PartyInfo.SkillHintLevel(skillData.Id);
-                getItemInfo.SetResultData(DataSystem.System.GetTextData(3002).Text);
+                string magicAlchemy = DataSystem.Skills.Find(a => a.Id == (int)attributeType + 2000).Name;
+                getItemInfo.SetResultData(DataSystem.System.GetTextData(3002).Text.Replace("\\d",magicAlchemy));
                 //PartyInfo.PlusSkillHintLv(skillData.Id);
                 actorInfos[i].LearnSkillAttribute((int)attributeType + 2000,actorInfos[i].NextLearnCost,attributeType);
                 actorInfos[i].ClearTacticsCommand();

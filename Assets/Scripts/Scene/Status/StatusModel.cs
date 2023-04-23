@@ -173,7 +173,7 @@ public class StatusModel : BaseModel
                 }
             }
         }
-        SkillInfo removeSkillInfo = new SkillInfo(59);
+        SkillInfo removeSkillInfo = new SkillInfo(2009);
         removeSkillInfo.SetLearningState(LearningState.SelectLearn);
         removeSkillInfo.SetEnable(true);
         skillInfos.Add(removeSkillInfo);

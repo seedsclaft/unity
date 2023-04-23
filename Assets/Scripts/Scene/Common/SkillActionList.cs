@@ -40,7 +40,7 @@ public class SkillActionList : ListWindow , IInputHandlerEvent
             skillAction.SetSelectHandler((data) => UpdateSelectIndex(data));
             //ObjectList[i].SetActive(false);
         }
-        SetInputHandler((a) => CallInputHandler(a,callEvent,cancelEvent,conditionEvent));
+        SetInputHandler((a) => CallInputHandler(a,callEvent,cancelEvent,conditionEvent,learningEvent));
     }
 
     public void SetSkillInfos(List<SkillInfo> skillInfoData)
@@ -78,7 +78,7 @@ public class SkillActionList : ListWindow , IInputHandlerEvent
         }
     }
 
-    private void CallInputHandler(InputKeyType keyType, System.Action<SkillInfo> callEvent,System.Action cancelEvent,System.Action conditionEvent)
+    private void CallInputHandler(InputKeyType keyType, System.Action<SkillInfo> callEvent,System.Action cancelEvent,System.Action conditionEvent,System.Action<SkillInfo> learningEvent)
     {
         if (keyType == InputKeyType.Decide)
         {
@@ -87,7 +87,17 @@ public class SkillActionList : ListWindow , IInputHandlerEvent
             {
                 return;
             }
-            callEvent(_skillInfos[Index]);
+            if (skillInfo.LearningState == LearningState.Notlearned || skillInfo.LearningState == LearningState.SelectLearn){
+                if (learningEvent != null)
+                {
+                    learningEvent(skillInfo);
+                }
+            } else{
+                if (callEvent != null)
+                {
+                    callEvent(skillInfo);
+                }
+            }
         }
         if (keyType == InputKeyType.Cancel)
         {
