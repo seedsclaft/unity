@@ -14,7 +14,7 @@ public class TacticsAttributeList : ListWindow , IInputHandlerEvent
     private List<AttributeType> _attributeTypesData = new List<AttributeType>();
 
 
-    public void Initialize(List<AttributeType> attributes,System.Action<AttributeType> callEvent)
+    public void Initialize(List<AttributeType> attributes,System.Action<AttributeType> callEvent,System.Action cancelEvent)
     {
         InitializeListView(attributes.Count);
         _attributeTypesData = attributes;
@@ -24,7 +24,7 @@ public class TacticsAttributeList : ListWindow , IInputHandlerEvent
             skillAttribute.SetCallHandler(callEvent);
             skillAttribute.SetSelectHandler((data) => UpdateSelectIndex(data));
         }
-        SetInputHandler((a) => CallInputHandler(a,callEvent));
+        SetInputHandler((a) => CallInputHandler(a,callEvent,cancelEvent));
         UpdateSelectIndex(-1);
     }
 
@@ -50,11 +50,15 @@ public class TacticsAttributeList : ListWindow , IInputHandlerEvent
         }
     }
 
-    private void CallInputHandler(InputKeyType keyType, System.Action<AttributeType> callEvent)
+    private void CallInputHandler(InputKeyType keyType, System.Action<AttributeType> callEvent,System.Action cancelEvent)
     {
         if (keyType == InputKeyType.Decide && Index > -1)
         {
             callEvent(_attributeTypesData[Index]);
+        }
+        if (keyType == InputKeyType.Cancel)
+        {
+            cancelEvent();
         }
     }
 }

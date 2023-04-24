@@ -466,7 +466,7 @@ public class TacticsView : BaseView
     public void SetAttributeTypes(List<AttributeType> attributeTypes)
     {
         //skillList.RefreshAttribute(attributeTypes);
-        tacticsAttributeList.Initialize(attributeTypes,(a) => CallSkillAlchemy(a));
+        tacticsAttributeList.Initialize(attributeTypes,(a) => CallSkillAlchemy(a),() => OnClickBack());
         SetInputHandler(tacticsAttributeList.GetComponent<IInputHandlerEvent>());
     }
 

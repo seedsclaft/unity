@@ -57,7 +57,7 @@ public class TacticsPresenter :BasePresenter
                 }
                 if (stageEvents[i].Type == StageEventType.TutorialBattle)
                 {
-                    _view.SetEnemies(_model.ResetTroopData());
+                    _view.SetEnemies(_model.TutorialTroopData());
                 }
                 if (stageEvents[i].Type == StageEventType.NeedAllTactics)
                 {

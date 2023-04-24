@@ -60,11 +60,6 @@ public class TacticsModel : BaseModel
         return StageMembers().Find(a => a.ActorId == actorId);
     }
 
-    public List<TroopInfo> ResetTroopData()
-    {
-        return CurrentStage.MakeTutorialTroopData(CurrentStage.SelectActorIds[0]);
-    }
-
     public List<SkillInfo> SkillActionList(AttributeType attributeType)
     {
         if (attributeType != AttributeType.None)

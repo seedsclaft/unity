@@ -72,6 +72,10 @@ public class SaveSystem : MonoBehaviour
 		}
 		//#endif
     }
+	public static bool ExistsLoadFile(int fileId = 0)
+	{
+		return File.Exists(debugFilePath + "/Autosave" + fileId.ToString() + ".dat");;
+    }
 }
 
 [Serializable]

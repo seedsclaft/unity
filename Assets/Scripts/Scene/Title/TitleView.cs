@@ -41,6 +41,11 @@ public class TitleView : BaseView
         SetInputHandler(commandList.GetComponent<IInputHandlerEvent>());
     }
 
+    public void RefreshCommandIndex(int selectIndex)
+    {
+        commandList.Refresh(selectIndex);
+    }
+
     private void CallTitleCommand(TitleComandType commandType){
         var eventData = new TitleViewEvent(CommandType.TitleCommand);
         eventData.templete = commandType;

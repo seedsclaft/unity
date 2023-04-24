@@ -30,6 +30,11 @@ public class TitleCommandList : ListWindow , IInputHandlerEvent
         UpdateSelectIndex(0);
     }
 
+    public void Refresh(int selectIndex = 0)
+    {
+        UpdateSelectIndex(selectIndex);
+    }
+
     public override void UpdateHelpWindow(){
         if (_helpWindow != null && Index > 0)
         {

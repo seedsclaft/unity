@@ -12,4 +12,9 @@ public class TitleModel : BaseModel
     {
         get { return DataSystem.TitleCommand;}
     }
+
+    public bool ExistsLoadFile()
+    {
+        return SaveSystem.ExistsLoadFile();
+    }
 }

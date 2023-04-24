@@ -151,7 +151,16 @@ public class BaseModel
     
     public List<TroopInfo> TacticsTroops()
     {
+        if (CurrentStage.TroopClearCount == 0 && CurrentStage.SelectActorIds.Count > 0)
+        {
+            return TutorialTroopData();
+        }
         return CurrentStage.TacticsTroops();
+    }
+
+    public List<TroopInfo> TutorialTroopData()
+    {
+        return CurrentStage.MakeTutorialTroopData(CurrentStage.SelectActorIds[0]);
     }
 
     public TroopInfo CurrentTroopInfo()

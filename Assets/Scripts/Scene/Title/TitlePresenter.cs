@@ -24,6 +24,8 @@ public class TitlePresenter
 
         var bgm = await _model.GetBgmData("TITLE");
         SoundManager.Instance.PlayBgm(bgm,1.0f,false);
+
+        CommandRefresh();
         _busy = false;
     }
 
@@ -38,7 +40,7 @@ public class TitlePresenter
         }
     }
 
-    void CommandTitle(int commandIndex){
+    private void CommandTitle(int commandIndex){
         _busy = true;
         switch ((TitleComandType)commandIndex){
             case TitleComandType.NewGame:
@@ -55,5 +57,14 @@ public class TitlePresenter
             case TitleComandType.Option:
             break;
         }
+    }
+
+    private void CommandRefresh(){
+        int selectIndex = (int)TitleComandType.NewGame;
+        if (_model.ExistsLoadFile())
+        {
+            selectIndex = (int)TitleComandType.Continue;
+        }
+        _view.RefreshCommandIndex(selectIndex);
     }
 }

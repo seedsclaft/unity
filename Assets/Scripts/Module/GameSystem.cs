@@ -16,8 +16,8 @@ public class GameSystem : MonoBehaviour
     [SerializeField] private GameObject statusRoot = null;
     [SerializeField] private GameObject statusPrefab = null;
     [SerializeField] private GameObject enemyInfoPrefab = null;
-    [SerializeField] private GameObject tutorialRoot = null;
-    [SerializeField] private GameObject tutorialPrefab = null;
+    [SerializeField] private GameObject loadingRoot = null;
+    [SerializeField] private GameObject loadingPrefab = null;
     [SerializeField] private AdvEngine advEngine = null;
     [SerializeField] private AdvController advController = null;
     [SerializeField] private DebugBattleData debugBattleData = null;
@@ -26,6 +26,7 @@ public class GameSystem : MonoBehaviour
     private ConfirmView _confirmView = null;
     private StatusView _statusView = null;
     private EnemyInfoView _enemyInfoView = null;
+    private LoadingView _loadingView = null;
     private BaseModel _model = null;
     
     public static SavePlayInfo CurrentData = null;
@@ -62,6 +63,15 @@ public class GameSystem : MonoBehaviour
         prefab.transform.SetParent(statusRoot.transform, false);
         _enemyInfoView = prefab.GetComponent<EnemyInfoView>();
         statusRoot.gameObject.SetActive(false);
+    }
+
+    private void CreateLoading()
+    {
+        var prefab = Instantiate(loadingPrefab);
+        prefab.transform.SetParent(loadingRoot.transform, false);
+        _loadingView = prefab.GetComponent<LoadingView>();
+        _loadingView.Initialize();
+        loadingRoot.gameObject.SetActive(false);
     }
 
     private void updateCommand(ViewEvent viewEvent)
@@ -177,6 +187,18 @@ public class GameSystem : MonoBehaviour
         {
             string playerName = (string)advEngine.Param.GetParameter("PlayerName");
             advEngine.Param.SetParameterString("PlayerName",(string)viewEvent.templete);
+        }
+        if (viewEvent.commandType == Base.CommandType.CallLoading)
+        {
+            CreateLoading();
+            loadingRoot.gameObject.SetActive(true);
+            _currentScene.SetBusy(true);
+        }
+        if (viewEvent.commandType == Base.CommandType.CloseLoading)
+        {
+            DestroyImmediate(_loadingView.gameObject);
+            loadingRoot.gameObject.SetActive(false);
+            _currentScene.SetBusy(false);
         }
     }
 

@@ -138,6 +138,18 @@ abstract public class BaseView : MonoBehaviour
         CallSceneChangeCommand(eventData);
     }
 
+    public void CommandCallLoading()
+    {
+        var eventData = new ViewEvent(Scene.Base, Base.CommandType.CallLoading);
+        CallSceneChangeCommand(eventData);
+    }
+
+    public void CommandLoadingClose()
+    {
+        var eventData = new ViewEvent(Scene.Base, Base.CommandType.CloseLoading);
+        CallSceneChangeCommand(eventData);
+    }
+
     public void CreateBackCommand(System.Action callEvent)
     {
         GameObject prefab = Instantiate(backPrefab);
@@ -180,7 +192,9 @@ namespace Base
         CallAdvScene,
         CallEnemyInfoView,
         CloseEnemyInfo,
-        DecidePlayerName
+        DecidePlayerName,
+        CallLoading,
+        CloseLoading
 
     }
 }

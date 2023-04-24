@@ -346,6 +346,9 @@ public class StageInfo
     public void SetDefineBossIndex(int index)
     {
         _defineBossIndex = index;
-        MakeDefineBossTroop();
+        if (_troopClearCount > 0)
+        {
+            MakeDefineBossTroop();
+        }
     }
 };

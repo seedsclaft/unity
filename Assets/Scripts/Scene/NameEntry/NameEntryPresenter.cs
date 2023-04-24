@@ -27,6 +27,7 @@ public class NameEntryPresenter
         var bgm = await _model.GetBgmData("MAINMENU");
         SoundManager.Instance.PlayBgm(bgm,1.0f,true);
 
+        _view.CommandLoadingClose();
         // 
         CommandStartEntry();
         _busy = false;
