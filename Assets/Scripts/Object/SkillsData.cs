@@ -9,7 +9,7 @@ public class SkillsData : ScriptableObject {
     {   
         public int Id;
         public string Name;
-        public int IconIndex;
+        public MagicIconType IconIndex;
         public string AnimationName;
         public int AnimationPosition;
         public AnimationType AnimationType;
@@ -139,8 +139,8 @@ public enum AttributeType{
     Fire = 1,
     Thunder = 2,
     Ice = 3,
-    White = 4,
-    Black = 5
+    Shine = 4,
+    Dark = 5
 }
 
 public enum TargetType{
@@ -227,4 +227,19 @@ public enum LearningState{
     Learned = 1,
     Notlearned = 2,
     SelectLearn = 3
+}
+
+public enum MagicIconType
+{
+    None = 0,
+    Elementarism = 1, // 元素術
+    LightMagic = 2, // 光魔術
+    Entropy = 3, // 理術
+    Mentalism = 4, // 精神術
+    Psionics = 5, // 超次元
+    Enchanting = 6, // 自己強化
+    Craft = 7, // 工作
+    Demigod = 10, //半神
+    Awaken = 11, // 覚醒
+    
 }

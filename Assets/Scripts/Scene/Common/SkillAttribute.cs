@@ -22,7 +22,7 @@ public class SkillAttribute : ListItem ,IListViewItem
 
     public void SetCallHandler(System.Action<AttributeType> handler)
     {
-        clickButton.onClick.AddListener(() => handler((AttributeType)Index));
+        clickButton.onClick.AddListener(() => handler((AttributeType)_data));
     }
 
     public void UpdateViewItem()

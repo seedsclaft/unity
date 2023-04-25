@@ -15,6 +15,7 @@ public class SkillsImporter : AssetPostprocessor {
 		NameId,
 		_Name,
         IconIndex,
+        _IconIndex,
 		AnimationName,
 		AnimationPosition,
 		AnimationType,
@@ -120,7 +121,7 @@ public class SkillsImporter : AssetPostprocessor {
 					var SkillData = new SkillsData.SkillData();
 					SkillData.Id = (int)Baserow.GetCell((int)BaseColumn.Id)?.NumericCellValue;
 					SkillData.Name = textData.Find(a => a.Id == (int)Baserow.GetCell((int)BaseColumn.NameId)?.NumericCellValue).Text;
-					SkillData.IconIndex = (int)Baserow.GetCell((int)BaseColumn.IconIndex)?.NumericCellValue;
+					SkillData.IconIndex = (MagicIconType)Baserow.GetCell((int)BaseColumn.IconIndex)?.NumericCellValue;
 					SkillData.AnimationName = Baserow.GetCell((int)BaseColumn.AnimationName)?.SafeStringCellValue();
                     SkillData.AnimationPosition = (int)Baserow.GetCell((int)BaseColumn.AnimationPosition)?.NumericCellValue;
                     SkillData.AnimationType = (AnimationType)Baserow.GetCell((int)BaseColumn.AnimationType)?.NumericCellValue;

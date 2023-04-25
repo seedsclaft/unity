@@ -11,6 +11,7 @@ public class BattleModel : BaseModel
     {
         CurrentScene = Scene.Battle;
     }
+
     private List<BattlerInfo> _battlers = new List<BattlerInfo>();
     public List<BattlerInfo> Battlers
     {
@@ -22,12 +23,13 @@ public class BattleModel : BaseModel
     {
         get {return _currentIndex;}
     }
-    private AttributeType _currentAttributeType = AttributeType.Fire;
-    
+
+    private AttributeType _currentAttributeType = AttributeType.Fire;    
     public AttributeType CurrentAttributeType
     {
         get {return _currentAttributeType;}
     }
+
     public ActorInfo CurrentActor
     {
         get {return PartyMembers()[_currentIndex];}
@@ -40,6 +42,13 @@ public class BattleModel : BaseModel
     }
 
     private List<ActionInfo> _actionInfos = new List<ActionInfo>();
+
+    public Task<List<UnityEngine.AudioClip>> GetBattleBgm()
+    {
+        var battleMembers = PartyMembers();
+        return GetBgmData("BATTLE" + (battleMembers[0].ActorId).ToString());
+    }
+
     public void CreateBattleData()
     {
         _battlers.Clear();

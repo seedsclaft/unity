@@ -78,8 +78,6 @@ abstract public class ListWindow : MonoBehaviour
     {
         if (EnableValueChanged())
         {
-            Debug.Log(scrollRect.content.rect.height.ToString());
-            Debug.Log(scrollPosition.y.ToString());
             UpdateListItem(false);
             UpdateSizeDelta();
             _lastStartIndex = GetStartIndex();

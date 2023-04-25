@@ -8,6 +8,7 @@ using TMPro;
 public class SkillInfoComponent : MonoBehaviour
 {
     [SerializeField] private Image icon;
+    [SerializeField] private Image iconBack;
     [SerializeField] private TextMeshProUGUI nameText;
     [SerializeField] private TextMeshProUGUI mpCost;
     [SerializeField] private Image lineImage;
@@ -40,6 +41,10 @@ public class SkillInfoComponent : MonoBehaviour
         {
             UpdateSkillIcon(skillData.IconIndex);
         }
+        if (iconBack != null)
+        {
+            UpdateSkillIconBack(skillData.Attribute);
+        }
         if (nameText != null)
         {
             nameText.text = skillData.Name;
@@ -63,14 +68,23 @@ public class SkillInfoComponent : MonoBehaviour
         }
     }
 
-    private void UpdateSkillIcon(int iconIndex)
+    private void UpdateSkillIcon(MagicIconType iconIndex)
     {
         icon.gameObject.SetActive(true);
-        Addressables.LoadAssetAsync<IList<Sprite>>(
-            "Assets/Images/System/IconSet.png"
-            //"Assets/Images/System/IconSet_" + iconIndex.ToString()
+        Addressables.LoadAssetAsync<Sprite>(
+            "Assets/Images/Spells/" + iconIndex.ToString() + ".png"
         ).Completed += op => {
-            icon.sprite = op.Result[iconIndex];
+            icon.sprite = op.Result;
+        };
+    }
+
+    private void UpdateSkillIconBack(AttributeType attributeType)
+    {
+        iconBack.gameObject.SetActive(true);
+        Addressables.LoadAssetAsync<Sprite>(
+            "Assets/Images/Spells/" + attributeType.ToString() + ".png"
+        ).Completed += op => {
+            iconBack.sprite = op.Result;
         };
     }
 

@@ -9,7 +9,6 @@ public class GameSystem : MonoBehaviour
 {
     [SerializeField] private bool testMode = false;
     public bool TestMode {get {return testMode;}}
-    [SerializeField] private GameObject mainRoot = null;
     [SerializeField] private GameObject uiRoot = null;
     [SerializeField] private GameObject confirmRoot = null;
     [SerializeField] private GameObject confirmPrefab = null;
@@ -196,7 +195,10 @@ public class GameSystem : MonoBehaviour
         }
         if (viewEvent.commandType == Base.CommandType.CloseLoading)
         {
-            DestroyImmediate(_loadingView.gameObject);
+            if (_loadingView != null)
+            {
+                DestroyImmediate(_loadingView.gameObject);
+            }
             loadingRoot.gameObject.SetActive(false);
             _currentScene.SetBusy(false);
         }

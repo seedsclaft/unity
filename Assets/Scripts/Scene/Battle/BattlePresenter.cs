@@ -35,7 +35,7 @@ public class BattlePresenter : BasePresenter
         _view.SetEnemies(_model.BattlerEnemies());
 
         _view.SetAttributeTypes(_model.AttributeTypes());
-        var bgm = await _model.GetBgmData("BATTLE4");
+        var bgm = await _model.GetBattleBgm();
         SoundManager.Instance.PlayBgm(bgm,1.0f,true);
         //SoundManager.Instance.PlayBgm(bgm,1.0f,true);
 
