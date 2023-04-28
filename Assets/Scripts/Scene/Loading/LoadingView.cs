@@ -9,7 +9,7 @@ public class LoadingView : BaseView
     [SerializeField] private Image spriteImage = null;
     [SerializeField] private TMP_Text tipsText = null;
     private new System.Action<LoadingViewEvent> _commandData = null;
-    public void Initialize(){
+    public override void Initialize(){
         new LoadingPresenter(this);
     }
     

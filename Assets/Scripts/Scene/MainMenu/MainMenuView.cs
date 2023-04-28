@@ -14,12 +14,10 @@ public class MainMenuView : BaseView
 
     private new System.Action<MainMenuViewEvent> _commandData = null;
 
-    protected void Awake(){
+    public override void Initialize() 
+    {
+        base.Initialize();
         InitializeInput();
-        Initialize();
-    }
-
-    void Initialize(){
         new MainMenuPresenter(this);
     }
 

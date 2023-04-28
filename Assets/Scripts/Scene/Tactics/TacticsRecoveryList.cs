@@ -103,7 +103,7 @@ public class TacticsRecoveryList : ListWindow , IInputHandlerEvent
         {
             if (Index == -1)
             {
-                SoundManager.Instance.PlayStaticSe(SEType.Cursor);
+                Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cursor);
                 tacticsCommandList.UpdateSelectIndex(1);
             } else{
                 plusEvent(_actorInfos[Index].ActorId);
@@ -113,7 +113,7 @@ public class TacticsRecoveryList : ListWindow , IInputHandlerEvent
         {
             if (Index == -1)
             {
-                SoundManager.Instance.PlayStaticSe(SEType.Cursor);
+                Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cursor);
                 tacticsCommandList.UpdateSelectIndex(0);
             } else{
                 minusEvent(_actorInfos[Index].ActorId);

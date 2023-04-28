@@ -27,8 +27,8 @@ public class MainMenuPresenter
 
 
         var bgm = await _model.GetBgmData("MAINMENU");
-        SoundManager.Instance.PlayBgm(bgm,1.0f,true);
-        //SoundManager.Instance.PlayBgm(bgm,1.0f,true);
+        Ryneus.SoundManager.Instance.PlayBgm(bgm,1.0f,true);
+        //Ryneus.SoundManager.Instance.PlayBgm(bgm,1.0f,true);
 
         _busy = false;
     }
@@ -49,7 +49,7 @@ public class MainMenuPresenter
             statusViewInfo.SetDisableStrength(true);
             _view.CommandCallStatus(statusViewInfo);
             _view.SetActiveUi(false);
-            SoundManager.Instance.PlayStaticSe(SEType.Decide);
+            Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
         }
     }
 

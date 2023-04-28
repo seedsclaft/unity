@@ -510,7 +510,7 @@ abstract public class ListWindow : MonoBehaviour
                 }
             }
             
-            SoundManager.Instance.PlayStaticSe(SEType.Cursor);
+            Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cursor);
             SelectIndex(selectIndex);
         }
     }

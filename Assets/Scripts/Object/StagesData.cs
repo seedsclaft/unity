@@ -46,7 +46,8 @@ public enum EventTiming{
     StartStarategy = 2,
     StartBattle = 3,
     TurnedBattle = 4,
-    AfterDemigod = 5
+    AfterDemigod = 5,
+    BeforeTactics = 11,
 }
 
 public enum StageEventType{

@@ -20,12 +20,10 @@ public class StrategyView : BaseView
 
     private new System.Action<StrategyViewEvent> _commandData = null;
 
-    protected void Awake(){
+    public override void Initialize() 
+    {
+        base.Initialize();
         InitializeInput();
-        Initialize();
-    }
-
-    void Initialize(){
         new StrategyPresenter(this);
     }
 

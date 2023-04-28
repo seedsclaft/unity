@@ -25,7 +25,7 @@ public class NameEntryPresenter
 
 
         var bgm = await _model.GetBgmData("MAINMENU");
-        SoundManager.Instance.PlayBgm(bgm,1.0f,true);
+        Ryneus.SoundManager.Instance.PlayBgm(bgm,1.0f,true);
 
         //_view.CommandLoadingClose();
         // 
@@ -44,7 +44,7 @@ public class NameEntryPresenter
         }
         if (viewEvent.commandType == CommandType.EntryEnd)
         {
-            SoundManager.Instance.PlayStaticSe(SEType.Decide);
+            Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
             CommandEntryEnd((string)viewEvent.templete);
         }
     }

@@ -10,13 +10,11 @@ public class AdvController : BaseView, IInputHandlerEvent
     [SerializeField] private Button advInputButton = null;
 
     private bool _advPlaying = false;
-    protected void Awake(){
-        InitializeInput();
-        Initialize();
-    }
 
-    private void Initialize() 
+    public override void Initialize() 
     {
+        base.Initialize();
+        InitializeInput();
         advInputButton.onClick.AddListener(() => {advUguiManager.OnInput();});
         SetInputHandler(gameObject.GetComponent<IInputHandlerEvent>());
     }

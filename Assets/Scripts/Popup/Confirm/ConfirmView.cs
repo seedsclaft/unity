@@ -14,14 +14,11 @@ public class ConfirmView : BaseView
     [SerializeField] private GameObject skillInfoPrefab = null;
     private System.Action<ConfirmComandType> _confirmEvent = null;
     private new System.Action<ConfirmViewEvent> _commandData = null;
-    protected void Awake()
-    {
-        InitializeInput();
-        Initialize();
-    }
 
-    void Initialize()
+    public override void Initialize() 
     {
+        base.Initialize();
+        InitializeInput();
         new ConfirmPresenter(this);
     }
     
@@ -67,7 +64,7 @@ public class ConfirmView : BaseView
 
     private void CallConfirmCommand(ConfirmComandType commandType)
     {
-        SoundManager.Instance.PlayStaticSe(SEType.Decide);
+        Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
         _confirmEvent(commandType);
     }
 }

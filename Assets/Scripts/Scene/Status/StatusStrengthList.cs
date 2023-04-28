@@ -101,7 +101,7 @@ public class StatusStrengthList : ListWindow , IInputHandlerEvent
         {
             if (Index == -1)
             {
-                SoundManager.Instance.PlayStaticSe(SEType.Cursor);
+                Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cursor);
                 tacticsCommandList.UpdateSelectIndex(1);
             } else{
                 plusEvent(_statusStrengths[Index].listIndex());
@@ -111,7 +111,7 @@ public class StatusStrengthList : ListWindow , IInputHandlerEvent
         {
             if (Index == -1)
             {
-                SoundManager.Instance.PlayStaticSe(SEType.Cursor);
+                Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cursor);
                 tacticsCommandList.UpdateSelectIndex(0);
             } else{
                 minusEvent(_statusStrengths[Index].listIndex());

@@ -51,7 +51,7 @@ public class EnemyInfoPresenter
 
     private void CommandLeftActor()
     {
-        SoundManager.Instance.PlayStaticSe(SEType.Cursor);
+        Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cursor);
          _model.ChangeActorIndex(-1);
         _view.StartEnemyInfo(_model.CurrentActor);
         CommandAttributeType(_model.CurrentAttributeType);
@@ -59,7 +59,7 @@ public class EnemyInfoPresenter
 
     private void CommandRightActor()
     {
-        SoundManager.Instance.PlayStaticSe(SEType.Cursor);
+        Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cursor);
          _model.ChangeActorIndex(1);
         _view.StartEnemyInfo(_model.CurrentActor);
         CommandAttributeType(_model.CurrentAttributeType);
@@ -67,7 +67,7 @@ public class EnemyInfoPresenter
 
     private void CommandAttributeType(AttributeType attributeType)
     {
-        SoundManager.Instance.PlayStaticSe(SEType.Cursor);
+        Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cursor);
         List<SkillInfo> skillInfos = _model.SkillActionList(attributeType);
         _view.RefreshSkillActionList(skillInfos);
     }

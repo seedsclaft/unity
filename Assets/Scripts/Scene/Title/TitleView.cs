@@ -15,12 +15,10 @@ public class TitleView : BaseView
         get {return commandList.selectIndex;}
     }
     
-    protected void Awake(){
+    public override void Initialize() 
+    {
+        base.Initialize();
         InitializeInput();
-        Initialize();
-    }
-
-    void Initialize(){
         new TitlePresenter(this);
     }
 

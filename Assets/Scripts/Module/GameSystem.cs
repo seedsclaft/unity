@@ -36,6 +36,7 @@ public class GameSystem : MonoBehaviour
     public bool Busy {get {return _busy;}}
     private void Awake() 
     {
+        advController.Initialize();
         _model = new BaseModel();
         CommandSceneChange(Scene.Boot);
     }
@@ -45,6 +46,7 @@ public class GameSystem : MonoBehaviour
         var prefab = Instantiate(confirmPrefab);
         prefab.transform.SetParent(confirmRoot.transform, false);
         _confirmView = prefab.GetComponent<ConfirmView>();
+        _confirmView.Initialize();
         confirmRoot.gameObject.SetActive(false);
     }
     
@@ -53,6 +55,7 @@ public class GameSystem : MonoBehaviour
         var prefab = Instantiate(statusPrefab);
         prefab.transform.SetParent(statusRoot.transform, false);
         _statusView = prefab.GetComponent<StatusView>();
+        _statusView.Initialize();
         statusRoot.gameObject.SetActive(false);
     }
 
@@ -61,6 +64,7 @@ public class GameSystem : MonoBehaviour
         var prefab = Instantiate(enemyInfoPrefab);
         prefab.transform.SetParent(statusRoot.transform, false);
         _enemyInfoView = prefab.GetComponent<EnemyInfoView>();
+        _enemyInfoView.Initialize();
         statusRoot.gameObject.SetActive(false);
     }
 
@@ -234,6 +238,7 @@ public class GameSystem : MonoBehaviour
         prefab.transform.SetParent(uiRoot.transform, false);
         _currentScene = prefab.GetComponent<BaseView>();
         _currentScene.SetEvent((type) => updateCommand(type));
+        _currentScene.Initialize();
         _currentScene.SetTestMode(testMode);
     }
 

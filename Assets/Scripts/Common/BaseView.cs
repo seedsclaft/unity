@@ -17,6 +17,11 @@ abstract public class BaseView : MonoBehaviour
     [SerializeField] private GameObject backPrefab = null;
     [SerializeField] private GameObject backRoot = null;
 
+    public virtual void Initialize()
+    {
+        
+    }
+
     public void InitializeInput()
     {    
         _input = new InputSystem();

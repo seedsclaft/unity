@@ -30,7 +30,7 @@ public class StrategyPresenter : BasePresenter
         _view.SetActors(_model.StageMembers());
         _view.SetResultList(_model.ResultCommand());
         var bgm = await _model.GetBgmData("TACTICS1");
-        SoundManager.Instance.PlayBgm(bgm,1.0f,true);
+        Ryneus.SoundManager.Instance.PlayBgm(bgm,1.0f,true);
         _view.SetEvent((type) => updateCommand(type));
         _busy = true;
 
@@ -177,7 +177,7 @@ public class StrategyPresenter : BasePresenter
             _isBattleEnded = false;
             CheckTacticsActors();
         }
-        SoundManager.Instance.PlayStaticSe(SEType.Decide);
+        Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
     }
 
     private void CommandBattleClose(ConfirmComandType confirmComandType)
@@ -186,7 +186,7 @@ public class StrategyPresenter : BasePresenter
         {
             ShowStatus();
         } else{
-            SoundManager.Instance.PlayStaticSe(SEType.Decide);
+            Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
             _view.CommandSceneChange(Scene.Battle);
         }
     }
@@ -209,7 +209,7 @@ public class StrategyPresenter : BasePresenter
         statusViewInfo.SetDisplayDecideButton(false);
         _view.CommandCallStatus(statusViewInfo);
         _view.SetActiveUi(false);
-        SoundManager.Instance.PlayStaticSe(SEType.Decide);
+        Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
     }
 
     private void CheckTacticsActors()
@@ -241,7 +241,7 @@ public class StrategyPresenter : BasePresenter
         popupInfo.SetSkillInfo(_model.BasicSkillInfo(skillId));
         popupInfo.SetIsNoChoise(true);
         _view.CommandCallConfirm(popupInfo);
-        SoundManager.Instance.PlayStaticSe(SEType.Decide);
+        Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
     }
 
     private void CommandCallEnemyInfo(int enemyIndex)
@@ -255,7 +255,7 @@ public class StrategyPresenter : BasePresenter
         statusViewInfo.SetEnemyInfos(enemyInfos);
         _view.CommandCallEnemyInfo(statusViewInfo);
         _view.SetActiveUi(false);
-        SoundManager.Instance.PlayStaticSe(SEType.Decide);    
+        Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);    
     }
 
     private void StartNextBattle(List<ActorInfo> battleMembers)

@@ -44,14 +44,10 @@ public class BattleView : BaseView
         _animationEndTiming = value;
     }
 
-    protected void Awake()
+    public override void Initialize() 
     {
+        base.Initialize();
         InitializeInput();
-        Initialize();
-    }
-
-    void Initialize()
-    {
         skillList.Initialize();
         InitializeSkillActionList();
         statusConditionList.Initialize(() => OnClickCondition());

@@ -16,12 +16,10 @@ public class NameEntryView : BaseView, IInputHandlerEvent
     private new System.Action<NameEntryViewEvent> _commandData = null;
 
     private int _inputLateUpdate = -1;
-    protected void Awake(){
+    public override void Initialize() 
+    {
+        base.Initialize();
         InitializeInput();
-        Initialize();
-    }
-
-    void Initialize(){
         new NameEntryPresenter(this);
         decideButton.onClick.AddListener(() => OnClickDecide());
         inputField.gameObject.SetActive(false);

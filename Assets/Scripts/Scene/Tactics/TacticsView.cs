@@ -35,24 +35,11 @@ public class TacticsView : BaseView
 
     private CommandType _lastCallEventType = CommandType.None;
 
-    protected void Awake()
+
+    public override void Initialize()
     {
+        base.Initialize();
         InitializeInput();
-        Initialize();
-    }
-
-    void Initialize()
-    {
-        /*
-        skillList.Initialize();
-        skillList.InitializeAction(actorInfo => CallSkillAlchemy(actorInfo),() => OnClickBack(),null,null);
-        SetInputHandler(skillList.skillActionList.GetComponent<IInputHandlerEvent>());
-        HideSkillAlchemyList();
-
-        skillList.InitializeAttribute((attribute) => CallAttributeTypes(attribute));
-        SetInputHandler(skillList.skillAttributeList.GetComponent<IInputHandlerEvent>());
-        skillList.HideAttributeList();
-        */
 
         tacticsTrainList.Initialize((actorinfo) => CallActorTrain(actorinfo));
         SetInputHandler(tacticsTrainList.GetComponent<IInputHandlerEvent>());

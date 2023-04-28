@@ -181,7 +181,7 @@ public class BattleActorList : ListWindow , IInputHandlerEvent
                 {
                     if (current.LineIndex == target.LineIndex)
                     {
-                        SoundManager.Instance.PlayStaticSe(SEType.Cursor);
+                        Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cursor);
                         UpdateTargetIndex(target.Index);
                     }
                 }
@@ -197,7 +197,7 @@ public class BattleActorList : ListWindow , IInputHandlerEvent
                 {
                     if (current.LineIndex == target.LineIndex)
                     {
-                        SoundManager.Instance.PlayStaticSe(SEType.Cursor);
+                        Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cursor);
                         UpdateTargetIndex(target.Index);
                     }
                 }

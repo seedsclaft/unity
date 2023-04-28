@@ -229,7 +229,7 @@ public class BattleEnemyLayer : ListWindow , IInputHandlerEvent
                 {
                     if (current.LineIndex == target.LineIndex)
                     {
-                        SoundManager.Instance.PlayStaticSe(SEType.Cursor);
+                        Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cursor);
                         UpdateEnemyIndex(target.Index);
                     }
                 }
@@ -245,7 +245,7 @@ public class BattleEnemyLayer : ListWindow , IInputHandlerEvent
                 {
                     if (current.LineIndex == target.LineIndex)
                     {
-                        SoundManager.Instance.PlayStaticSe(SEType.Cursor);
+                        Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cursor);
                         UpdateEnemyIndex(target.Index);
                     }
                 }

@@ -52,6 +52,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mainThumb: {fileID: 0}
   awakenThumb: {fileID: 8211303023091351528}
+  grayscale: {fileID: 0}
   faceThumb: {fileID: 0}
   awakenFaceThumb: {fileID: 0}
   nameText: {fileID: 0}
@@ -126,13 +127,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 54d08e472ddea3e4aa39cfa5fea696a3, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

@@ -24,7 +24,7 @@ public class TitlePresenter
 
         CommandRefresh();
         var bgm = await _model.GetBgmData("TITLE");
-        SoundManager.Instance.PlayBgm(bgm,1.0f,false);
+        Ryneus.SoundManager.Instance.PlayBgm(bgm,1.0f,false);
 
         _busy = false;
     }
@@ -46,13 +46,13 @@ public class TitlePresenter
             case TitleComandType.NewGame:
             _view.CommandInitSaveInfo();
             _view.CommandSceneChange(Scene.NameEntry);
-            SoundManager.Instance.PlayStaticSe(SEType.Decide);
+            Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
             //_view.CommandSceneChange(Scene.Battle);
             break;
             case TitleComandType.Continue:
             SaveSystem.LoadStart();
             _view.CommandSceneChange(Scene.Tactics);
-            SoundManager.Instance.PlayStaticSe(SEType.Decide);
+            Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
             break;
             case TitleComandType.Option:
             break;

@@ -303,6 +303,12 @@ MonoBehaviour:
       Type: 1
       Param: 3
       ReadFlag: 0
+    - EventKey: 1BeforeTacticsAdvStart101
+      Turns: 1
+      Timing: 11
+      Type: 11
+      Param: 101
+      ReadFlag: 1
     - EventKey: 2StartTacticsCommandDisable3
       Turns: 2
       Timing: 1

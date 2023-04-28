@@ -25,14 +25,10 @@ public class StatusView : BaseView
     private System.Action _backEvent = null;
     private bool _isDisplayDecide = false;
     private bool _isDisplayBack = true;
-    protected void Awake()
+    public override void Initialize() 
     {
+        base.Initialize();
         InitializeInput();
-        Initialize();
-    }
-
-    void Initialize()
-    {
         skillList.Initialize();
         InitializeSkillActionList();
         skillList.InitializeAttribute((attribute) => CallAttributeTypes(attribute));

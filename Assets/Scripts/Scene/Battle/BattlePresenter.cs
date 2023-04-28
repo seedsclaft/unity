@@ -36,7 +36,7 @@ public class BattlePresenter : BasePresenter
 
         _view.SetAttributeTypes(_model.AttributeTypes(),_model.CurrentAttributeType);
         var bgm = await _model.GetBattleBgm();
-        SoundManager.Instance.PlayBgm(bgm,1.0f,true);
+        Ryneus.SoundManager.Instance.PlayBgm(bgm,1.0f,true);
         //SoundManager.Instance.PlayBgm(bgm,1.0f,true);
 
         _view.StartBattleStartAnim(DataSystem.System.GetTextData(4).Text);
@@ -195,7 +195,7 @@ public class BattlePresenter : BasePresenter
     {
         _model.ClearActionInfo();
         _model.SetLastSkill(skillInfo.Id);
-        SoundManager.Instance.PlayStaticSe(SEType.Decide);
+        Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
         ActionInfo actionInfo = _model.MakeActionInfo(_model.CurrentBattler,skillInfo.Id,false);
         _view.HideSkillActionList();
         _view.SetEscapeButton(false);
@@ -296,7 +296,7 @@ public class BattlePresenter : BasePresenter
             }
             if (slipDamageActionResults[i].DeadIndexList.Contains(slipDamageActionResults[i].TargetIndex))
             {
-                SoundManager.Instance.PlayStaticSe(SEType.Defeat);
+                Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Defeat);
                 _view.StartDeathAnimation(slipDamageActionResults[i].TargetIndex);
             }
         }
@@ -359,7 +359,7 @@ public class BattlePresenter : BasePresenter
                 _view.StartDamage(targetIndex,DamageType.HpDamage,actionResultInfo.HpDamage);
                 if (needDamageBlink){
                     _view.StartBlink(targetIndex);
-                    SoundManager.Instance.PlayStaticSe(SEType.Damage);
+                    Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Damage);
                 }
             }
         }
@@ -386,7 +386,7 @@ public class BattlePresenter : BasePresenter
         }
         if (actionResultInfo.ReDamage > 0)
         {
-            SoundManager.Instance.PlayStaticSe(SEType.Damage);
+            Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Damage);
             _view.StartDamage(actionResultInfo.SubjectIndex,DamageType.HpDamage,actionResultInfo.ReDamage);
             _view.StartBlink(actionResultInfo.SubjectIndex);
         }
@@ -422,7 +422,7 @@ public class BattlePresenter : BasePresenter
         {
             for (int i = 0; i < deathBattlerIndex.Count; i++)
             {
-                SoundManager.Instance.PlayStaticSe(SEType.Defeat);
+                Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Defeat);
                 _view.StartDeathAnimation(deathBattlerIndex[i]);
             }
         }
@@ -613,7 +613,7 @@ public class BattlePresenter : BasePresenter
         List<SkillInfo> skillInfos = _model.SkillActionList(attributeType);
         _view.RefreshSkillActionList(skillInfos);
         _view.HideCondition();
-        SoundManager.Instance.PlayStaticSe(SEType.Cursor);
+        Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cursor);
     }
 
     private void CommandDecideActor()
@@ -685,7 +685,7 @@ public class BattlePresenter : BasePresenter
         _view.ActivateConditionList();
         _view.SetCondition(_model.CurrentBattler.StateInfos);
         _view.ShowConditionAll();
-        SoundManager.Instance.PlayStaticSe(SEType.Cursor);
+        Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cursor);
     }
 
     private void CommandSelectEnemy()

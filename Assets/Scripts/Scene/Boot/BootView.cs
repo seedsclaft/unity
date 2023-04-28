@@ -4,11 +4,9 @@ using UnityEngine;
 
 public class BootView : BaseView
 {
-    protected void Start(){
-        Initialize();
-    }
-
-    void Initialize(){
+    public override void Initialize() 
+    {
+        base.Initialize();
         new BootPresenter(this);
     }
 

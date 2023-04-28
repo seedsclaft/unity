@@ -32,8 +32,8 @@ public class StatusPresenter
         _view.SetAttributeTypes(_model.AttributeTypes(),_model.CurrentAttributeType);
         if (_model.StatusActors().Count == 1) _view.HideArrows();
         //var bgm = await _model.BgmData();
-        //SoundManager.Instance.PlayBgm(bgm,1.0f,true);
-        //SoundManager.Instance.PlayBgm(bgm,1.0f,true);
+        //Ryneus.SoundManager.Instance.PlayBgm(bgm,1.0f,true);
+        //Ryneus.SoundManager.Instance.PlayBgm(bgm,1.0f,true);
         CommandRefresh();
     }
 
@@ -110,7 +110,7 @@ public class StatusPresenter
             _view.ShowCommandList();
             _view.ShowDecideButton();
         }
-        SoundManager.Instance.PlayStaticSe(SEType.Cancel);
+        Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cancel);
     }
 
     private void CommandStatusCommand(StatusComandType statusComandType)
@@ -132,7 +132,7 @@ public class StatusPresenter
             _view.DeactivateActorList();
             CommandAttributeType(_model.CurrentAttributeType);
         }
-        SoundManager.Instance.PlayStaticSe(SEType.Decide);
+        Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
         _view.HideDecideButton();
         _view.HideArrows();
         _view.HideCommandList();
@@ -140,7 +140,7 @@ public class StatusPresenter
 
     private void CommandAttributeType(AttributeType attributeType)
     {
-        SoundManager.Instance.PlayStaticSe(SEType.Cursor);
+        Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cursor);
         List<SkillInfo> skillInfos = _model.SkillActionList(attributeType);
         _view.RefreshSkillActionList(skillInfos,_model.AttributeTypes(),attributeType);
     }
@@ -153,7 +153,7 @@ public class StatusPresenter
         _view.CommandCallConfirm(confirmInfo);
         _view.DeactivateCommandList();
         _popupCommandType = Status.CommandType.DecideStage;
-        SoundManager.Instance.PlayStaticSe(SEType.Decide);
+        Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
     }
 
     private void updatePopup(ConfirmComandType confirmComandType)
@@ -229,7 +229,7 @@ public class StatusPresenter
     
     private void CommandLeftActor()
     {
-        SoundManager.Instance.PlayStaticSe(SEType.Cursor);
+        Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cursor);
          _model.ChangeActorIndex(-1);
         _view.SetActorInfo(_model.CurrentActor,_model.StatusActors());
         CommandAttributeType(_model.CurrentAttributeType);
@@ -237,7 +237,7 @@ public class StatusPresenter
 
     private void CommandRightActor()
     {
-        SoundManager.Instance.PlayStaticSe(SEType.Cursor);
+        Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cursor);
          _model.ChangeActorIndex(1);
         _view.SetActorInfo(_model.CurrentActor,_model.StatusActors());
         CommandAttributeType(_model.CurrentAttributeType);
@@ -245,7 +245,7 @@ public class StatusPresenter
 
     private void CommandSelectSkillAction(SkillInfo skillInfo)
     {
-        //SoundManager.Instance.PlayStaticSe(SEType.Decide);
+        //Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
     }
 
     private void CommandSelectSkillLearning(SkillInfo skillInfo)
@@ -264,7 +264,7 @@ public class StatusPresenter
             CommandAttributeType(_model.CurrentAttributeType);
         }
         _model.SetActorLastSkillId(skillInfo.Id);
-        SoundManager.Instance.PlayStaticSe(SEType.Decide);
+        Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
     }
 
     private void CommandSelectStrengthPlus(StatusParamType statusId)
@@ -272,7 +272,7 @@ public class StatusPresenter
         bool enableParamUp = _model.EnableParamUp(statusId);
         if (enableParamUp == true)
         {
-            SoundManager.Instance.PlayStaticSe(SEType.Cursor);
+            Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cursor);
             _model.ChangeParameter(statusId,1);
         } else
         {
@@ -287,7 +287,7 @@ public class StatusPresenter
         bool enableParamMinus = _model.EnableParamMinus(statusId);
         if (enableParamMinus == true)
         {
-            SoundManager.Instance.PlayStaticSe(SEType.Cursor);
+            Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cursor);
             _model.ChangeParameter(statusId,-1);
         } else
         {
@@ -326,7 +326,7 @@ public class StatusPresenter
             _view.ActivateCommandList();
             _view.SetActiveBack(true);
         }
-        SoundManager.Instance.PlayStaticSe(SEType.Cancel);
+        Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cancel);
     }
 
     private void CommandRefresh()
