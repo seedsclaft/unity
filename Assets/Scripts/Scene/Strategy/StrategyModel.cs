@@ -123,6 +123,10 @@ public class StrategyModel : BaseModel
     public List<GetItemInfo> SetBattleResult()
     {
         List<GetItemInfo> getItemInfos = new List<GetItemInfo>();
+        if (PartyInfo.BattleResult == false)
+        {
+            return getItemInfos;
+        }
         foreach (GetItemInfo getItemInfo in CurrentTroopInfo().GetItemInfos)
         {
             if (getItemInfo.GetItemType == GetItemType.Skill)
@@ -220,6 +224,11 @@ public class StrategyModel : BaseModel
             }
             actorInfo.ClearTacticsCommand();
         }
+    }
+
+    public List<ActorInfo> LostMembers()
+    {
+        return TacticsBattleActors().FindAll(a => a.InBattle && a.CurrentHp == 0);
     }
 
     public List<SystemData.MenuCommandData> ResultCommand()

@@ -15,12 +15,12 @@ MonoBehaviour:
   _data:
   - Id: 1
     Name: "\u3010\u611A\u8005\u3011"
-    Help: "\u6551\u6E08\u57F7\u884C\u306E\u6575\u306B\u920D\u8DB3\u4ED8\u4E0E"
+    Help: "Numinos\u309210\u5165\u624B\u3059\u308B"
     FilePath: 0_fool
     SkillId: 1001
   - Id: 2
     Name: "\u3010\u9B54\u8853\u5E2B\u3011"
-    Help: "\u30E6\u30CB\u30C3\u30C8\u5168\u54E1\u306ESP\u309220\u5165\u624B\u3059\u308B"
+    Help: "\u8853\u8005\u5168\u54E1\u306ESP\u309210\u5165\u624B\u3059\u308B"
     FilePath: 1_magician
     SkillId: 1002
   - Id: 3
@@ -35,7 +35,7 @@ MonoBehaviour:
     SkillId: 1004
   - Id: 5
     Name: "\u3010\u7687\u5E1D\u3011"
-    Help: "Numinous\u306E\u6D88\u8CBB\u30B3\u30B9\u30C8\u3092\u534A\u5206\u306B\u3059\u308B"
+    Help: "\u547D\u4EE4\u5B9F\u884C\u306B\u5FC5\u8981\u306ANuminos\u306E\u6D88\u8CBB\u3092\u534A\u5206\u306B\u3059\u308B"
     FilePath: 4_emperor
     SkillId: 1005
   - Id: 6
@@ -75,7 +75,7 @@ MonoBehaviour:
     SkillId: 1012
   - Id: 13
     Name: "\u3010\u5211\u6B7B\u8005\u3011"
-    Help: "\u6551\u6E08\u57F7\u884C\u306E\u6575\u306B10\u30C0\u30E1\u30FC\u30B8\u306E\u706B\u50B7\u4ED8\u4E0E"
+    Help: "\u6551\u6E08\u57F7\u884C\u306E\u6575\u306EHP\u30921\u306B\u306A\u308B\u304C\u3001\u96B7\u5F93\u5C5E\u5EA6\u304C0\u306B\u306A\u308B"
     FilePath: 12_hangedman
     SkillId: 1013
   - Id: 14
@@ -100,12 +100,12 @@ MonoBehaviour:
     SkillId: 1017
   - Id: 18
     Name: "\u3010\u661F\u3011"
-    Help: "Numinous\u309220\u5165\u624B\u3059\u308B"
+    Help: "Numinos\u309220\u5165\u624B\u3059\u308B\u304C\u3001\u547D\u4EE4\u3067\u304D\u306A\u304F\u306A\u308B"
     FilePath: 17_star
     SkillId: 1018
   - Id: 19
     Name: "\u3010\u6708\u3011"
-    Help: "\u6551\u6E08\u57F7\u884C\u306E\u6575\u306E\u524D\u5F8C\u3092\u5165\u308C\u66FF\u3048\u308B"
+    Help: "\u8853\u8005\u5168\u54E1\u306ESP\u309220\u5165\u624B\u3059\u308B\u304C\u3001\u547D\u4EE4\u3067\u304D\u306A\u304F\u306A\u308B"
     FilePath: 18_moon
     SkillId: 1019
   - Id: 20
@@ -125,21 +125,21 @@ MonoBehaviour:
     SkillId: 1022
   - Id: 23
     Name: "\u3010\u6756\u3011"
-    Help: "\u30E6\u30CB\u30C3\u30C8\u5168\u54E1\u306ESP\u30922\u5165\u624B\u3059\u308B"
+    Help: "\u8853\u8005\u5168\u54E1\u306ESP\u30921\u5165\u624B\u3059\u308B"
     FilePath: base
     SkillId: 1023
   - Id: 24
     Name: "\u3010\u5668\u3011"
-    Help: "HP\u3068MP\u309210\u56DE\u5FA9\u3059\u308B"
+    Help: "MP\u309210\u56DE\u5FA9\u3059\u308B"
     FilePath: base
     SkillId: 1024
   - Id: 25
     Name: "\u3010\u5263\u3011"
-    Help: "\u6551\u6E08\u57F7\u884C\u6642\u30E6\u30CB\u30C3\u30C8\u5168\u54E1\u306EATK\u30922\u30A2\u30C3\u30D7"
+    Help: "HP\u309210\u56DE\u5FA9\u3059\u308B"
     FilePath: base
     SkillId: 1025
   - Id: 26
     Name: "\u3010\u8CA8\u5E63\u3011"
-    Help: "Numinous\u30924\u5165\u624B\u3059\u308B"
+    Help: "Numinos\u30922\u5165\u624B\u3059\u308B"
     FilePath: base
     SkillId: 1026

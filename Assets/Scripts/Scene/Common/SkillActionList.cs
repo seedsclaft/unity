@@ -12,7 +12,7 @@ public class SkillActionList : ListWindow , IInputHandlerEvent
 
     private List<SkillInfo> _skillInfos = new List<SkillInfo>();
 
-    public void Initialize(System.Action<SkillInfo> callEvent,System.Action cancelEvent,System.Action conditionEvent,System.Action<SkillInfo> learningEvent)
+    public void Initialize(System.Action<SkillInfo> callEvent,System.Action cancelEvent,System.Action conditionEvent,System.Action<SkillInfo> learningEvent,System.Action escapeEvent)
     {
         InitializeListView(rows);
         // スクロールするものはObjectList.CountでSetSelectHandlerを登録する
@@ -40,7 +40,7 @@ public class SkillActionList : ListWindow , IInputHandlerEvent
             skillAction.SetSelectHandler((data) => UpdateSelectIndex(data));
             //ObjectList[i].SetActive(false);
         }
-        SetInputHandler((a) => CallInputHandler(a,callEvent,cancelEvent,conditionEvent,learningEvent));
+        SetInputHandler((a) => CallInputHandler(a,callEvent,cancelEvent,conditionEvent,learningEvent,escapeEvent));
     }
 
     public void SetSkillInfos(List<SkillInfo> skillInfoData)
@@ -78,7 +78,7 @@ public class SkillActionList : ListWindow , IInputHandlerEvent
         }
     }
 
-    private void CallInputHandler(InputKeyType keyType, System.Action<SkillInfo> callEvent,System.Action cancelEvent,System.Action conditionEvent,System.Action<SkillInfo> learningEvent)
+    private void CallInputHandler(InputKeyType keyType, System.Action<SkillInfo> callEvent,System.Action cancelEvent,System.Action conditionEvent,System.Action<SkillInfo> learningEvent,System.Action escapeEvent)
     {
         if (keyType == InputKeyType.Decide)
         {
@@ -108,6 +108,13 @@ public class SkillActionList : ListWindow , IInputHandlerEvent
             if (conditionEvent != null)
             {
                 conditionEvent();
+            }
+        }
+        if (keyType == InputKeyType.Option2)
+        {
+            if (escapeEvent != null)
+            {
+                escapeEvent();
             }
         }
     }

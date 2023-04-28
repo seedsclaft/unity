@@ -169,7 +169,7 @@ public class BattleModel : BaseModel
 
     public void SetLastSkill(int skillId)
     {
-        CurrentBattler.SetLastSkillIndex(skillId);
+        CurrentBattler.SetLastSelectSkillId(skillId);
     }
 
     public void MakeActionBattler()
@@ -180,9 +180,9 @@ public class BattleModel : BaseModel
             if (battlerInfo.Ap <= 0)
             {
                 _currentBattler = battlerInfo;
-                if (battlerInfo.LastSkill != null)
+                if (battlerInfo.LastSelectSkillId > 0)
                 {
-                    _currentAttributeType = battlerInfo.LastSkill.Attribute;
+                    _currentAttributeType = battlerInfo.GetSkillAttribute();
                 }
                 break;
             }
@@ -1045,14 +1045,32 @@ public class BattleModel : BaseModel
 
     public bool CheckVictory()
     {
-        PartyInfo.SetBattleResult(true);
-        return BattlerEnemies().Find(a => a.IsAlive()) == null;
+        bool isVictory = BattlerEnemies().Find(a => a.IsAlive()) == null;
+        if (isVictory)
+        {
+            PartyInfo.SetBattleResult(true);
+        }
+        return isVictory;
     }
 
     public bool CheckDefeat()
     {
+        bool isDefeat = BattlerActors().Find(a => a.IsAlive()) == null;
+        if (isDefeat)
+        {
+            PartyInfo.SetBattleResult(false);
+        }
+        return isDefeat;
+    }
+
+    public bool EnableEspape()
+    {
+        return CurrentTroopInfo().TroopId < 2000;
+    }
+
+    public void EscapeBattle()
+    {
         PartyInfo.SetBattleResult(false);
-        return BattlerActors().Find(a => a.IsAlive()) == null;
     }
 
     public void EndBattle()

@@ -9,6 +9,7 @@ public class ActorInfoComponent : MonoBehaviour
 {
     [SerializeField] private Image mainThumb;
     [SerializeField] private Image awakenThumb;
+    [SerializeField] private Material grayscale;
     [SerializeField] private Image faceThumb;
     public Image FaceThumb {get {return faceThumb;}}
     [SerializeField] private Image awakenFaceThumb;
@@ -35,6 +36,10 @@ public class ActorInfoComponent : MonoBehaviour
         
         if (mainThumb != null){
             UpdateMainThumb(actorData.ImagePath,actorData.X,actorData.Y,actorData.Scale);
+            if (actorInfo.CurrentHp == 0 && actorInfo.InBattle || actorInfo.Lost)
+            {
+                UpdateLostMainThumb();
+            }
         }
         if (awakenThumb != null){
             UpdateAwakenThumb(actorData.ImagePath,actorData.AwakenX,actorData.AwakenY,actorData.AwakenScale);
@@ -186,6 +191,14 @@ public class ActorInfoComponent : MonoBehaviour
         {
             faceThumb.gameObject.SetActive(!IsAwaken);
             awakenFaceThumb.gameObject.SetActive(IsAwaken);
+        }
+    }
+
+    private void UpdateLostMainThumb()
+    {
+        if (mainThumb != null && grayscale != null)
+        {
+            mainThumb.material = grayscale;
         }
     }
 

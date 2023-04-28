@@ -24,6 +24,8 @@ public class BattleView : BaseView
 
     [SerializeField] private GameObject animRoot = null;
     [SerializeField] private GameObject animPrefab = null;
+
+    [SerializeField] private Button escapeButton = null;
     private BattleStartAnim _battleStartAnim = null;
 
     private HelpWindow _helpWindow = null;
@@ -66,7 +68,7 @@ public class BattleView : BaseView
 
     private void InitializeSkillActionList()
     {
-        skillList.InitializeAction(a => CallSkillAction(a),() => OnClickBack(),() => OnClickCondition(),null);
+        skillList.InitializeAction(a => CallSkillAction(a),() => OnClickBack(),() => OnClickCondition(),null,() => OnClickEscape());
         SetInputHandler(skillList.skillActionList.GetComponent<IInputHandlerEvent>());
         skillList.HideActionList();
         skillList.HideAttributeList();
@@ -115,8 +117,14 @@ public class BattleView : BaseView
     {
         
         CreateBackCommand(() => OnClickBack());
+        escapeButton.onClick.AddListener(() => OnClickEscape());
+        SetEscapeButton(false);
         //_helpWindow = prefab.GetComponent<HelpWindow>();
+    }
 
+    public void SetEscapeButton(bool isEscape)
+    {
+        escapeButton.gameObject.SetActive(isEscape);
     }
 
 
@@ -129,6 +137,12 @@ public class BattleView : BaseView
     private void OnClickBack()
     {
         var eventData = new BattleViewEvent(CommandType.Back);
+        _commandData(eventData);
+    }
+
+    private void OnClickEscape()
+    {
+        var eventData = new BattleViewEvent(CommandType.Escape);
         _commandData(eventData);
     }
 
@@ -355,6 +369,14 @@ public class BattleView : BaseView
         }
     }
 
+    public void HideEnemyStatus()
+    {
+        foreach (var item in _battlerComps)
+        {
+            item.Value.SetActiveStatus(false);
+        }
+    }
+
     public void StartAnimation(int targetIndex,EffekseerEffectAsset effekseerEffectAsset,int animationPosition)
     {
         DeactivateActorList();
@@ -430,9 +452,9 @@ public class BattleView : BaseView
         }
     }
 
-    public void SetAttributeTypes(List<AttributeType> attributeTypes)
+    public void SetAttributeTypes(List<AttributeType> attributeTypes,AttributeType currentAttibuteType)
     {
-        skillList.RefreshAttribute(attributeTypes);
+        skillList.RefreshAttribute(attributeTypes,currentAttibuteType);
         //SetInputHandler(skillAttributeList.GetComponent<IInputHandlerEvent>());
     }
 
@@ -498,6 +520,7 @@ namespace Battle
     {
         None = 0,
         Back,
+        Escape,
         BattleCommand,
         AttributeType,
         DecideActor,

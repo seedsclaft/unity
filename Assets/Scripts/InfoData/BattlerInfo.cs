@@ -32,10 +32,14 @@ public class BattlerInfo
     public EnemiesData.EnemyData EnemyData {get {return _enemyData;} }
     private List<KindType> _kinds = new List<KindType>();
     public List<KindType> Kinds {get {return _kinds;} }
-    private int _lastSkillId = 0;
-    public SkillInfo LastSkill {get {return Skills.Find(a => a.Id == _lastSkillId);} }
-    public void SetLastSkillIndex(int index){
-        _lastSkillId = index;
+    private int _lastSelectSkillId = 0;
+    public int LastSelectSkillId {get {return _lastSelectSkillId;} }
+    public void SetLastSelectSkillId(int selectSkillId){
+        _lastSelectSkillId = selectSkillId;
+    }
+    public AttributeType GetSkillAttribute()
+    {
+        return Skills.Find(a => a.Id == _lastSelectSkillId).Attribute;
     }
     private List<StateInfo> _stateInfos = new List<StateInfo>();
     public List<StateInfo> StateInfos {get {return _stateInfos;} }
@@ -84,9 +88,9 @@ public class BattlerInfo
         _mp = actorInfo.CurrentMp;
         _lineIndex = 0;
 
-        if (_lastSkillId == 0)
+        if (_lastSelectSkillId == 0)
         {
-            _lastSkillId = _skills.Find(a => a.Id > 100).Id;
+            _lastSelectSkillId = _skills.Find(a => a.Id > 100).Id;
         }
         ResetAp(true);
     }

@@ -34,7 +34,7 @@ public class BattlePresenter : BasePresenter
         _view.SetActors(_model.BattlerActors());
         _view.SetEnemies(_model.BattlerEnemies());
 
-        _view.SetAttributeTypes(_model.AttributeTypes());
+        _view.SetAttributeTypes(_model.AttributeTypes(),_model.CurrentAttributeType);
         var bgm = await _model.GetBattleBgm();
         SoundManager.Instance.PlayBgm(bgm,1.0f,true);
         //SoundManager.Instance.PlayBgm(bgm,1.0f,true);
@@ -101,12 +101,35 @@ public class BattlePresenter : BasePresenter
         {
             CommandBack();
         }
+        if (viewEvent.commandType == Battle.CommandType.Escape)
+        {
+            CommandEscape();
+        }
+    }
+
+    private void UpdatePopup(ConfirmComandType confirmComandType)
+    {
+        _view.CommandConfirmClose();
+        if (confirmComandType == ConfirmComandType.Yes)
+        {
+            _model.EndBattle();
+            _model.EscapeBattle();
+            _view.StartBattleStartAnim(DataSystem.System.GetTextData(15030).Text);
+            _view.SetAnimationEndTiming(180);
+            _nextCommandType = Battle.CommandType.EndBattle;
+        }
     }
 
     private void CommandBack()
     {
         var eventData = new BattleViewEvent(_backCommandType);
         updateCommand(eventData);
+    }
+
+    private void CommandEscape()
+    {
+        ConfirmInfo popupInfo = new ConfirmInfo(DataSystem.System.GetTextData(410).Text,(menuCommandInfo) => UpdatePopup((ConfirmComandType)menuCommandInfo));
+        _view.CommandCallConfirm(popupInfo);
     }
 
     private void CommandUpdateAp()
@@ -175,6 +198,7 @@ public class BattlePresenter : BasePresenter
         SoundManager.Instance.PlayStaticSe(SEType.Decide);
         ActionInfo actionInfo = _model.MakeActionInfo(_model.CurrentBattler,skillInfo.Id,false);
         _view.HideSkillActionList();
+        _view.SetEscapeButton(false);
         _view.HideSkillAtribute();
         _view.HideConditionAll();
         _view.HideBattleThumb();
@@ -413,6 +437,7 @@ public class BattlePresenter : BasePresenter
         if (_nextCommandType == Battle.CommandType.EventCheck)
         {
             var isAbort = CheckAdvStageEvent(EventTiming.StartBattle,() => {
+                _view.HideEnemyStatus();
                 _view.SetBattleBusy(false);
                 _busy = false;
             });
@@ -498,7 +523,8 @@ public class BattlePresenter : BasePresenter
 
         if (isDemigodActor == true)
         {
-            var isAbort = CheckAdvStageEvent(EventTiming.AfterDemigod,() => {   
+            var isAbort = CheckAdvStageEvent(EventTiming.AfterDemigod,() => { 
+                _view.HideEnemyStatus();  
                 _view.SetBattleBusy(false);
                 _busy = false;
             });
@@ -508,6 +534,7 @@ public class BattlePresenter : BasePresenter
                 return;
             }
         }
+        _view.HideEnemyStatus();
         _view.SetBattleBusy(false);
     }
 
@@ -545,6 +572,7 @@ public class BattlePresenter : BasePresenter
             return;
         }
 
+        _view.HideEnemyStatus();
         _view.SetBattleBusy(false);
     }
 
@@ -576,6 +604,7 @@ public class BattlePresenter : BasePresenter
             return;
         }
 
+        _view.HideEnemyStatus();
         _view.SetBattleBusy(false);
     }
 
@@ -592,13 +621,15 @@ public class BattlePresenter : BasePresenter
         // 行動選択開始
         _view.SetHelpText(DataSystem.System.GetTextData(15010).Text);
         _view.ShowSkillActionList(_model.CurrentBattler);
+        _view.SetEscapeButton(_model.EnableEspape());
         _view.ShowConditionTab();
         CommandAttributeType(_model.CurrentAttributeType);
         _view.RefreshBattlerEnemyLayerTarget(-1);
         _view.RefreshBattlerPartyLayerTarget(-1);
         _view.SetActiveBack(false);
         _view.SetBattlerSelectable(true);
-        var isAbort = CheckAdvStageEvent(EventTiming.TurnedBattle,() => {   
+        var isAbort = CheckAdvStageEvent(EventTiming.TurnedBattle,() => {  
+            _view.HideEnemyStatus(); 
             _view.SetBattleBusy(false);
             _busy = false;
             CommandDecideActor();
@@ -650,6 +681,7 @@ public class BattlePresenter : BasePresenter
     public void CommandCondition()
     {
         _view.HideSkillActionList();
+        _view.SetEscapeButton(false);
         _view.ActivateConditionList();
         _view.SetCondition(_model.CurrentBattler.StateInfos);
         _view.ShowConditionAll();

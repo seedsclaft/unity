@@ -42,7 +42,7 @@ public class StatusView : BaseView
 
     private void InitializeSkillActionList()
     {
-        skillList.InitializeAction((a) => CallSkillAction(a),() => OnClickBack(),null,(a) => CallSkillLearning(a));
+        skillList.InitializeAction((a) => CallSkillAction(a),() => OnClickBack(),null,(a) => CallSkillLearning(a),null);
         SetInputHandler(skillList.skillActionList.GetComponent<IInputHandlerEvent>());
         SetInputHandler(skillList.skillAttributeList.GetComponent<IInputHandlerEvent>());
         skillList.HideActionList();
@@ -303,16 +303,16 @@ public class StatusView : BaseView
         skillList.HideAttributeList();
     }
     
-    public void RefreshSkillActionList(List<SkillInfo> skillInfos,List<AttributeType> attributeTypes)
+    public void RefreshSkillActionList(List<SkillInfo> skillInfos,List<AttributeType> attributeTypes,AttributeType currentAttibuteType)
     {
         skillList.SetSkillInfos(skillInfos);
         skillList.RefreshAction();
-        skillList.RefreshAttribute(attributeTypes);
+        skillList.RefreshAttribute(attributeTypes,currentAttibuteType);
     }
 
-    public void SetAttributeTypes(List<AttributeType> attributeTypes)
+    public void SetAttributeTypes(List<AttributeType> attributeTypes,AttributeType currentAttibuteType)
     {
-        skillList.RefreshAttribute(attributeTypes);
+        skillList.RefreshAttribute(attributeTypes,currentAttibuteType);
     }
 
     private void CallAttributeTypes(AttributeType attributeType)

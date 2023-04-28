@@ -28,8 +28,17 @@ public class StatusModel : BaseModel
         if (_currentIndex < 0){
             _currentIndex = StatusActors().Count-1;
         }
+        if (CurrentActor.LastSelectSkillId > 0)
+        {
+            _currentAttributeType = CurrentActor.Skills.Find(a => a.Id == CurrentActor.LastSelectSkillId).Attribute;
+        }
     }
     
+    public void SetActorLastSkillId(int selectSkillId)
+    {
+        CurrentActor.SetLastSelectSkillId(selectSkillId);
+    }
+
     public List<ActorInfo> StatusActors(){
         List<int> StatusActorIds = PartyInfo.ActorIdList;
         return Actors().FindAll(a => StatusActorIds.Contains(a.ActorId));

@@ -29,7 +29,7 @@ public class StatusPresenter
 
         _view.SetStrengthInfo(_model.ConfirmCommand());
         _view.SetStatusCommand(_model.StatusCommand);
-        _view.SetAttributeTypes(_model.AttributeTypes());
+        _view.SetAttributeTypes(_model.AttributeTypes(),_model.CurrentAttributeType);
         if (_model.StatusActors().Count == 1) _view.HideArrows();
         //var bgm = await _model.BgmData();
         //SoundManager.Instance.PlayBgm(bgm,1.0f,true);
@@ -142,7 +142,7 @@ public class StatusPresenter
     {
         SoundManager.Instance.PlayStaticSe(SEType.Cursor);
         List<SkillInfo> skillInfos = _model.SkillActionList(attributeType);
-        _view.RefreshSkillActionList(skillInfos,_model.AttributeTypes());
+        _view.RefreshSkillActionList(skillInfos,_model.AttributeTypes(),attributeType);
     }
 
     private void CommandDecideActor()
@@ -245,7 +245,7 @@ public class StatusPresenter
 
     private void CommandSelectSkillAction(SkillInfo skillInfo)
     {
-        SoundManager.Instance.PlayStaticSe(SEType.Decide);
+        //SoundManager.Instance.PlayStaticSe(SEType.Decide);
     }
 
     private void CommandSelectSkillLearning(SkillInfo skillInfo)
@@ -254,7 +254,7 @@ public class StatusPresenter
         {
             _model.SetLearnSkillInfo(skillInfo);
             var leariningSkillList = _model.LearningSkillList(skillInfo.Attribute);
-            _view.RefreshSkillActionList(leariningSkillList,_model.AttributeTypes());
+            _view.RefreshSkillActionList(leariningSkillList,_model.AttributeTypes(),_model.CurrentAttributeType);
             _view.HideAttributeList();
         }
         if (skillInfo.LearningState == LearningState.SelectLearn)
@@ -263,6 +263,7 @@ public class StatusPresenter
             _view.ShowAttributeList();
             CommandAttributeType(_model.CurrentAttributeType);
         }
+        _model.SetActorLastSkillId(skillInfo.Id);
         SoundManager.Instance.PlayStaticSe(SEType.Decide);
     }
 
@@ -333,6 +334,6 @@ public class StatusPresenter
         _view.RefreshActor(_model.CurrentActor);
         _view.CommandRefresh(_model.CurrentActor.Sp,_model.StrengthNuminous());
         List<SkillInfo> skillInfos = _model.SkillActionList(_model.CurrentAttributeType);
-        _view.RefreshSkillActionList(skillInfos,_model.AttributeTypes());
+        _view.RefreshSkillActionList(skillInfos,_model.AttributeTypes(),_model.CurrentAttributeType);
     }
 }

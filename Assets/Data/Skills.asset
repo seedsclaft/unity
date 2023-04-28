@@ -1536,7 +1536,7 @@ MonoBehaviour:
     AnimationPosition: 0
     AnimationType: 3
     DamageTiming: 26
-    MpCost: 0
+    MpCost: 5
     Rank: 2
     Attribute: 5
     Scope: 3
@@ -1899,9 +1899,9 @@ MonoBehaviour:
     AliveOnly: 1
     FeatureDatas:
     - SkillId: 1000
-      FeatureType: 21
-      Param1: 21
-      Param2: 999
+      FeatureType: 301
+      Param1: 10
+      Param2: 0
       Param3: 0
     TriggerDatas: []
   - Id: 1001
@@ -1923,7 +1923,7 @@ MonoBehaviour:
     FeatureDatas:
     - SkillId: 1001
       FeatureType: 304
-      Param1: 20
+      Param1: 10
       Param2: 0
       Param3: 0
     TriggerDatas: []
@@ -2180,10 +2180,10 @@ MonoBehaviour:
     AliveOnly: 1
     FeatureDatas:
     - SkillId: 1012
-      FeatureType: 21
-      Param1: 23
-      Param2: 999
-      Param3: 10
+      FeatureType: 305
+      Param1: -30
+      Param2: 0
+      Param3: 0
     TriggerDatas: []
   - Id: 1013
     Name: "\u6B7B\u795E"
@@ -2318,8 +2318,8 @@ MonoBehaviour:
     AliveOnly: 1
     FeatureDatas:
     - SkillId: 1018
-      FeatureType: 307
-      Param1: 0
+      FeatureType: 304
+      Param1: 20
       Param2: 0
       Param3: 0
     TriggerDatas: []
@@ -2388,7 +2388,7 @@ MonoBehaviour:
     FeatureDatas:
     - SkillId: 1022
       FeatureType: 304
-      Param1: 2
+      Param1: 1
       Param2: 0
       Param3: 0
     TriggerDatas: []
@@ -2409,11 +2409,6 @@ MonoBehaviour:
     Range: 1
     AliveOnly: 1
     FeatureDatas:
-    - SkillId: 1023
-      FeatureType: 2
-      Param1: 10
-      Param2: 0
-      Param3: 0
     - SkillId: 1023
       FeatureType: 7
       Param1: 10
@@ -2438,10 +2433,10 @@ MonoBehaviour:
     AliveOnly: 1
     FeatureDatas:
     - SkillId: 1024
-      FeatureType: 21
-      Param1: 43
-      Param2: 999
-      Param3: 2
+      FeatureType: 2
+      Param1: 10
+      Param2: 0
+      Param3: 0
     TriggerDatas: []
   - Id: 1025
     Name: "\u8CA8\u5E63"
@@ -2462,7 +2457,7 @@ MonoBehaviour:
     FeatureDatas:
     - SkillId: 1025
       FeatureType: 301
-      Param1: 4
+      Param1: 2
       Param2: 0
       Param3: 0
     TriggerDatas: []

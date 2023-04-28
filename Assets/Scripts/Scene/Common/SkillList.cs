@@ -21,9 +21,9 @@ public class SkillList : MonoBehaviour
         skillAttributeList.Initialize(callEvent);
     }
 
-    public void InitializeAction(System.Action<SkillInfo> callEvent,System.Action cancelEvent,System.Action conditionEvent,System.Action<SkillInfo> learningEvent)
+    public void InitializeAction(System.Action<SkillInfo> callEvent,System.Action cancelEvent,System.Action conditionEvent,System.Action<SkillInfo> learningEvent,System.Action escapeEvent)
     {
-        skillActionList.Initialize(callEvent,cancelEvent,conditionEvent,learningEvent);
+        skillActionList.Initialize(callEvent,cancelEvent,conditionEvent,learningEvent,escapeEvent);
     }
 
     public void SetSkillInfos(List<SkillInfo> skillInfoData)
@@ -36,9 +36,9 @@ public class SkillList : MonoBehaviour
         skillActionList.Refresh();
     }
 
-    public void RefreshAttribute(List<AttributeType> attributeTypes)
+    public void RefreshAttribute(List<AttributeType> attributeTypes,AttributeType currentAttibuteType)
     {
-        skillAttributeList.Refresh(attributeTypes);
+        skillAttributeList.Refresh(attributeTypes,currentAttibuteType);
     }
 
     public void RefreshValues(List<string> attributeValues)

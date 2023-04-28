@@ -10,6 +10,8 @@ public class BattleEnemyLayer : ListWindow , IInputHandlerEvent
     [SerializeField] private GameObject battleEnemyPrefab;
     [SerializeField] private List<GameObject> frontDamageRoots;
     [SerializeField] private List<GameObject> backDamageRoots;
+    [SerializeField] private List<GameObject> frontStatusRoots;
+    [SerializeField] private List<GameObject> backStatusRoots;
     private List<BattleEnemy> _battleEnemies = new List<BattleEnemy>();
     private ScopeType _targetScopeType = ScopeType.None;
     private List<int> _targetIndexList = new List<int>();
@@ -36,12 +38,14 @@ public class BattleEnemyLayer : ListWindow , IInputHandlerEvent
                 frontEnemyRoots[i].SetActive(true);
                 prefab.transform.SetParent(frontEnemyRoots[i].transform, false);
                 battleEnemy.SetDamageRoot(frontDamageRoots[i]);
+                battleEnemy.SetStatusRoot(frontStatusRoots[i]);
                 _backStartIndex = battlerInfos[i].Index + 1;
             } else
             {
                 backEnemyRoots[backIndex].SetActive(true);
                 prefab.transform.SetParent(backEnemyRoots[backIndex].transform, false);
                 battleEnemy.SetDamageRoot(backDamageRoots[backIndex]);
+                battleEnemy.SetStatusRoot(backStatusRoots[backIndex]);
                 backIndex++;
             }
             battleEnemy.SetData(battlerInfos[i],i);
@@ -102,7 +106,7 @@ public class BattleEnemyLayer : ListWindow , IInputHandlerEvent
                 var listItem = _battleEnemies[i].GetComponent<ListItem>();
                 listItem.SetSelect();
                 var emitter = listItem.GetComponentInChildren<EffekseerEmitter>();
-                emitter.Play();
+                //emitter.Play();
             }
         }
     }
@@ -143,7 +147,7 @@ public class BattleEnemyLayer : ListWindow , IInputHandlerEvent
                 {
                     listItem.SetSelect();
                     EffekseerEmitter emitter = listItem.GetComponentInChildren<EffekseerEmitter>();
-                    emitter.Play();
+                    //emitter.Play();
                 }
             } else{
                 listItem.SetUnSelect();
@@ -166,7 +170,7 @@ public class BattleEnemyLayer : ListWindow , IInputHandlerEvent
                     {
                         listItem.SetSelect();
                         EffekseerEmitter emitter = listItem.GetComponentInChildren<EffekseerEmitter>();
-                        emitter.Play();
+                        //emitter.Play();
                     }
                 } else{
                     listItem.SetUnSelect();

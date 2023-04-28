@@ -41,7 +41,7 @@ public class EnemyInfoView : BaseView
     }
     private void InitializeSkillActionList()
     {
-        skillList.InitializeAction(null,null,null,null);
+        skillList.InitializeAction(null,null,null,null,null);
         SetInputHandler(skillList.skillActionList.GetComponent<IInputHandlerEvent>());
         SetInputHandler(skillList.skillAttributeList.GetComponent<IInputHandlerEvent>());
         skillList.HideActionList();
@@ -97,9 +97,9 @@ public class EnemyInfoView : BaseView
         skillList.RefreshAction();
     }
 
-    public void SetAttributeTypes(List<AttributeType> attributeTypes)
+    public void SetAttributeTypes(List<AttributeType> attributeTypes,AttributeType currentAttibuteType)
     {
-        skillList.RefreshAttribute(attributeTypes);
+        skillList.RefreshAttribute(attributeTypes,currentAttibuteType);
     }
 
     public void SetBackEvent(System.Action backEvent)

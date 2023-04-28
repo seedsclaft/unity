@@ -30,7 +30,7 @@ public class SkillAttributeList : ListWindow , IInputHandlerEvent
         SetInputHandler((a) => CallInputHandler(a,callEvent));
     }
 
-    public void Refresh(List<AttributeType> attributeTypes)
+    public void Refresh(List<AttributeType> attributeTypes,AttributeType currentAttibuteType)
     {
         _attributeTypesData = attributeTypes;
         for (int i = 0; i < attributeTypes.Count;i++)
@@ -39,7 +39,7 @@ public class SkillAttributeList : ListWindow , IInputHandlerEvent
             skillAttribute.SetData(attributeTypes[i],"",(int)attributeTypes[i] - 1);
         }
         UpdateAllItems();
-        UpdateSelectIndex(0);
+        UpdateSelectIndex((int)currentAttibuteType-1);
     }
 
     public void RefreshValues(List<string> attributeValues)

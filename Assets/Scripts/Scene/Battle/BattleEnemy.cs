@@ -16,6 +16,7 @@ public class BattleEnemy : ListItem
     [SerializeField] private GameObject imageObject;
     [SerializeField] private Image enemyImage;
     [SerializeField] private EffekseerEmitter effekseerEmitter;
+    [SerializeField] private GameObject statusObject;
     private float _deathAnimation = 0.0f;
 
     private List<BattleDamage> _battleDamages = new List<BattleDamage>();
@@ -37,6 +38,12 @@ public class BattleEnemy : ListItem
     public void SetDamageRoot(GameObject damageRoot)
     {
         battlerInfoComponent.SetDamageRoot(damageRoot);
+    }
+
+    public void SetStatusRoot(GameObject statusRoot)
+    {
+        statusObject.transform.SetParent(statusRoot.transform, false);
+        battlerInfoComponent.SetStatusRoot(statusRoot);
     }
 
     public void SetCallHandler(System.Action<int> handler)

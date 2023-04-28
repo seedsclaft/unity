@@ -74,6 +74,15 @@ public class StrategyPresenter : BasePresenter
         _view.CommandConfirmClose();
     }
 
+    private void UpdatePopup(ConfirmComandType confirmComandType)
+    {
+        _view.CommandConfirmClose();
+        if (confirmComandType == ConfirmComandType.Yes)
+        {
+        }
+        _model.LostActors(_model.LostMembers());
+    }
+
     private void CommandStartStretegy(){
         List<ActorInfo> battledMembers = _model.CheckInBattleActors();
         if (battledMembers != null && battledMembers.Count > 0)
@@ -93,6 +102,25 @@ public class StrategyPresenter : BasePresenter
         {
             List<GetItemInfo> getItemInfos = _model.SetBattleResult();
             _view.ShowResultList(getItemInfos);
+            // ロスト判定
+            List<ActorInfo> lostMembers = _model.LostMembers();
+            if (lostMembers.Count > 0)
+            {
+                string text = DataSystem.System.GetTextData(3060).Text;
+                string lostMembersText = "";
+                for (int i = 0;i < lostMembers.Count;i++)
+                {
+                    lostMembersText += lostMembers[i].Master.Name;
+                    if (i != lostMembers.Count)
+                    {
+                        lostMembersText += ",";
+                    }
+                }
+                text = text.Replace("\\d",lostMembersText);
+                ConfirmInfo popupInfo = new ConfirmInfo(text,(a) => UpdatePopup((ConfirmComandType)a));
+                popupInfo.SetIsNoChoise(true);
+                _view.CommandCallConfirm(popupInfo);
+            }
         } else 
         if (_isBattle == false){
             List<GetItemInfo> getItemInfos = _model.SetResult();

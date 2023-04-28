@@ -25,10 +25,15 @@ public class BaseModel
         return GameSystem.CurrentData.Actors;
     }
 
+    public void LostActors(List<ActorInfo> lostMembers)
+    {
+        lostMembers.ForEach(a => a.ChangeLost(true));
+    }
+
     public List<ActorInfo> StageMembers()
     {
         List<int> SelectActorIds = CurrentStage.SelectActorIds;
-        return Actors().FindAll(a => SelectActorIds.Contains(a.ActorId));
+        return Actors().FindAll(a => SelectActorIds.Contains(a.ActorId) && a.Lost == false);
     }
 
     public List<ActorInfo> PartyMembers()

@@ -13,6 +13,7 @@ public class BattlerInfoComponent : MonoBehaviour
     [SerializeField] private EffekseerEmitter effekseerEmitter;
     [SerializeField] private _2dxFX_DestroyedFX deathAnimation;
     private GameObject _battleDamageRoot;
+    private GameObject _battleStatusRoot = null;
     [SerializeField] private GameObject battleDamagePrefab;
     private BattlerInfo _battlerInfo = null;
 
@@ -42,6 +43,12 @@ public class BattlerInfoComponent : MonoBehaviour
     {
         _battleDamageRoot = damageRoot;
         _battleDamageRoot.SetActive(true);
+    }
+
+    public void SetStatusRoot(GameObject statusRoot)
+    {
+        _battleStatusRoot = statusRoot;
+        _battleStatusRoot.SetActive(false);
     }
     
     public void SetStartSkillDamage(int damageTiming,System.Action<int> callEvent)
@@ -200,6 +207,15 @@ public class BattlerInfoComponent : MonoBehaviour
         if (image == null) return;
         float alpha = isSelectable == true ? 1 : 0.25f;
         image.color = new Color(255,255,255,alpha);
+        SetActiveStatus(isSelectable);
+    }
+
+    public void SetActiveStatus(bool isSelectable)
+    {
+        if (_battleStatusRoot && !_battlerInfo.isActor)
+        {
+            _battleStatusRoot.SetActive(isSelectable);
+        }
     }
 
     public void SetEnemyGridKey(int index)

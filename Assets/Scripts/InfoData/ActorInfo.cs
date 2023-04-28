@@ -31,6 +31,12 @@ public class ActorInfo
     private List<SkillInfo> _skills;
     public List<SkillInfo> Skills {get {return _skills;}}
 
+    private int _lastSelectSkillId = 0;
+    public int LastSelectSkillId {get {return _lastSelectSkillId;}}
+    public void SetLastSelectSkillId(int selectSkillId)
+    {
+        _lastSelectSkillId = selectSkillId;
+    }
 
     private int _currentHp;
     public int CurrentHp {get {return _currentHp;}}
@@ -79,7 +85,7 @@ public class ActorInfo
         _usePoint = actorData.NeedStatus; 
         SetInitialParameter(actorData);
         _currentHp = _baseStatus.Hp;
-        _currentMp = _baseStatus.Mp;   
+        _currentMp = _baseStatus.Mp;
     }
 
     private void SetInitialParameter(ActorsData.ActorData actorData)
@@ -102,6 +108,11 @@ public class ActorInfo
             SkillInfo skillInfo = new SkillInfo(_learningData.SkillId);
             skillInfo.SetLearningState(LearningState.Learned);
             _skills.Add(skillInfo);
+        }
+        _lastSelectSkillId = 0;
+        var selectSkill = _skills.Find(a => a.Id >= 100);
+        if (selectSkill != null){
+            _lastSelectSkillId = selectSkill.Id;
         }
     }
 
