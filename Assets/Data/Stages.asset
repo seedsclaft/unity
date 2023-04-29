@@ -309,6 +309,12 @@ MonoBehaviour:
       Type: 11
       Param: 101
       ReadFlag: 1
+    - EventKey: 1StartTacticsSelectActorAdvStart110
+      Turns: 1
+      Timing: 1
+      Type: 12
+      Param: 110
+      ReadFlag: 1
     - EventKey: 2StartTacticsCommandDisable3
       Turns: 2
       Timing: 1
@@ -357,6 +363,18 @@ MonoBehaviour:
       Type: 3
       Param: 0
       ReadFlag: 0
+    - EventKey: 5StartTacticsSelectActorAdvStart120
+      Turns: 5
+      Timing: 1
+      Type: 12
+      Param: 120
+      ReadFlag: 1
+    - EventKey: 6BeforeTacticsAdvStart131
+      Turns: 6
+      Timing: 11
+      Type: 11
+      Param: 131
+      ReadFlag: 1
     - EventKey: 6StartTacticsSelectAddActor1
       Turns: 6
       Timing: 1
@@ -375,16 +393,22 @@ MonoBehaviour:
       Type: 8
       Param: 1
       ReadFlag: 0
-    - EventKey: 6StartTacticsIsAlcana1
+    - EventKey: 6StartTacticsIsSubordinate1
       Turns: 6
       Timing: 1
-      Type: 5
+      Type: 4
       Param: 1
       ReadFlag: 0
-    - EventKey: 12StartTacticsIsSubordinate1
+    - EventKey: 6StartTacticsAdvStart12
+      Turns: 6
+      Timing: 1
+      Type: 11
+      Param: 12
+      ReadFlag: 1
+    - EventKey: 12StartTacticsIsAlcana1
       Turns: 12
       Timing: 1
-      Type: 4
+      Type: 5
       Param: 1
       ReadFlag: 0
     - EventKey: 12StartTacticsSelectAddActor1

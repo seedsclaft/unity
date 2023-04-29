@@ -61,6 +61,7 @@ public enum StageEventType{
     SaveCommand = 7, // セーブを行う,
     SetDefineBossIndex = 8, // ボスの選択番号を設定する
     NeedUseSp = 9, // SPを消費しないと進まない
-    AdvStart = 11, // ボスの選択番号を設定する
+    AdvStart = 11, // ADV再生
+    SelectActorAdvStart = 12, // IDにActorIDを加算してADV再生
     AbortStage = 21 // ステージを中断する
 }

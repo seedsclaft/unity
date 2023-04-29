@@ -105,17 +105,19 @@ public class IntroLoopAudio : MonoBehaviour
   {
     // WebGL のためのループ切り替え処理
     #if UNITY_WEBGL
+    if (AudioClipLoop != null)
     {
-    // 終了する１秒前から次の再生のスケジュールを登録する
-    if (_nowPlayIndex == 0 && _loopAudioSources[0].time >= AudioClipLoop.length - 1)
-    {
-      _loopAudioSources[1].PlayScheduled(AudioSettings.dspTime + (AudioClipLoop.length - _loopAudioSources[0].time));
-      _nowPlayIndex = 1;
-    }
-    else if (_nowPlayIndex == 1 && _loopAudioSources[1].time >= AudioClipLoop.length - 1)
-    {
-      _loopAudioSources[0].PlayScheduled(AudioSettings.dspTime + (AudioClipLoop.length - _loopAudioSources[1].time));
-      _nowPlayIndex = 0;
+      // 終了する１秒前から次の再生のスケジュールを登録する
+      if (_nowPlayIndex == 0 && _loopAudioSources[0].time >= AudioClipLoop.length - 1)
+      {
+        _loopAudioSources[1].PlayScheduled(AudioSettings.dspTime + (AudioClipLoop.length - _loopAudioSources[0].time));
+        _nowPlayIndex = 1;
+      }
+      else if (_nowPlayIndex == 1 && _loopAudioSources[1].time >= AudioClipLoop.length - 1)
+      {
+        _loopAudioSources[0].PlayScheduled(AudioSettings.dspTime + (AudioClipLoop.length - _loopAudioSources[1].time));
+        _nowPlayIndex = 0;
+      }
     }
     #endif
   }

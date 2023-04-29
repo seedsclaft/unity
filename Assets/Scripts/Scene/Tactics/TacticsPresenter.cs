@@ -26,17 +26,18 @@ public class TacticsPresenter :BasePresenter
         _model.RefreshTacticsEnable();
 
         _view.SetHelpWindow();
-        _view.SetUIButton();
-        _view.SetActiveBack(false);
-        _view.SetEvent((type) => updateCommand(type));
 
         var isAbort = CheckAdvStageEvent(EventTiming.BeforeTactics,() => {
             _view.CommandSceneChange(Scene.Tactics);
-        });
+        },_model.CurrentStage.SelectActorIds[0]);
         if (isAbort)
         {
+            _view.SetActiveUi(false);
             return;
         }
+        _view.SetUIButton();
+        _view.SetActiveBack(false);
+        _view.SetEvent((type) => updateCommand(type));
         _view.SetActors(_model.StageMembers(),_model.ConfirmCommand());
         _view.SetStageInfo(_model.CurrentStage);
         _view.SetEnemies(_model.TacticsTroops());
@@ -116,31 +117,22 @@ public class TacticsPresenter :BasePresenter
                     _model.SetDefineBossIndex(stageEvents[i].Param);
                     _view.SetEnemies(_model.TacticsTroops());
                 }
-                /*
-                if (stageEvents[i].Type == StageEventType.AdvStart)
-                {
-                    AdvCallInfo advInfo = new AdvCallInfo();
-                    advInfo.SetLabel(_model.GetAdvFile(stageEvents[i].Param));
-                    advInfo.SetCallEvent(() => {                
-                        _view.CommandSceneChange(Scene.Tactics);
-                    });
-                    _view.CommandCallAdv(advInfo);
-                    _model.AddEventReadFlag(stageEvents[i]);
-                    isAbort = true;
-                    break;
-                }
-                */
                 if (stageEvents[i].Type == StageEventType.AbortStage)
                 {
                     isAbort = true;
                     _model.StageClaer();
+                    _model.AddEventReadFlag(stageEvents[i]);
                     _view.CommandSceneChange(Scene.MainMenu);
                 }
             }
         }
+        if (isAbort)
+        {
+            return;
+        }
         isAbort = CheckAdvStageEvent(EventTiming.StartTactics,() => {
             _view.CommandSceneChange(Scene.Tactics);
-        });
+        },_model.CurrentStage.SelectActorIds[0]);
         if (isAbort)
         {
             return;

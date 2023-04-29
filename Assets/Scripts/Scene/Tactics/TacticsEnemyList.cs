@@ -25,11 +25,16 @@ public class TacticsEnemyList : ListWindow , IInputHandlerEvent
             if (callEvent != null)
             {
                 tacticsEnemy.SetCallHandler(callEvent);
-                tacticsEnemy.SetSelectHandler((data) => UpdateSelectIndex(data));
+                tacticsEnemy.SetSelectHandler((data) => 
+                {
+                    SetUnselectGetItem();
+                    UpdateSelectIndex(data);
+                });
             }
             if (getItemEvent != null)
             {
                 tacticsEnemy.SetGetItemCallHandler(getItemEvent);
+                tacticsEnemy.SetGetItemSelectHandler((a,b) => UpdateGetItemIndex(a,b));
             }
             if (enemyInfoEvent != null)
             {
@@ -111,7 +116,7 @@ public class TacticsEnemyList : ListWindow , IInputHandlerEvent
         if (keyType == InputKeyType.Left || keyType == InputKeyType.Right)
         {            
             _getItemIndex = -1;
-            SetAllUnselectGetItem();
+            UpdateSelectGetItem();
             UpdateSelectIndex(Index);
         }
         if (keyType == InputKeyType.Up)
@@ -162,7 +167,7 @@ public class TacticsEnemyList : ListWindow , IInputHandlerEvent
         }
     }
 
-    private void SetAllUnselectGetItem()
+    private void UpdateSelectGetItem()
     {
         for (int i = 0; i < ObjectList.Count;i++)
         {
@@ -171,5 +176,25 @@ public class TacticsEnemyList : ListWindow , IInputHandlerEvent
             if (tacticsEnemy == null) continue;
             tacticsEnemy.SetSelectGetItem(_getItemIndex);
         }
+    }
+
+    private void SetUnselectGetItem()
+    {
+        for (int i = 0; i < ObjectList.Count;i++)
+        {
+            if (ObjectList[i] == null) continue;
+            TacticsEnemy tacticsEnemy = ObjectList[i].GetComponent<TacticsEnemy>();
+            if (tacticsEnemy == null) continue;
+            tacticsEnemy.SetSelectGetItem(-1);
+        }
+    }
+
+    private void UpdateGetItemIndex(TacticsEnemy thisTacticsEnemy ,int index)
+    {
+        SetAllUnselect();
+        _getItemIndex = index;
+        
+        SetUnselectGetItem();
+        thisTacticsEnemy.SetSelectGetItem(_getItemIndex);
     }
 }

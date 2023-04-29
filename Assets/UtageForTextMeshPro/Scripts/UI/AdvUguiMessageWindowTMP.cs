@@ -55,6 +55,7 @@ namespace Utage
 				TextPro.SetNovelTextData(window.Text, window.TextLength);
 			}
 
+			NameTextPro.gameObject.SetActive(window.NameText != "");
 			if (NameTextPro)
 			{
 				NameTextPro.SetText(window.NameText);

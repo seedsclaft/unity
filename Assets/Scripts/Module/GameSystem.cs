@@ -8,7 +8,6 @@ using UtageExtensions;
 public class GameSystem : MonoBehaviour
 {
     [SerializeField] private bool testMode = false;
-    public bool TestMode {get {return testMode;}}
     [SerializeField] private GameObject uiRoot = null;
     [SerializeField] private GameObject confirmRoot = null;
     [SerializeField] private GameObject confirmPrefab = null;

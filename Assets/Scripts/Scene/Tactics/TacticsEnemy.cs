@@ -44,6 +44,17 @@ public class TacticsEnemy : ListItem ,IListViewItem
         }
     }
 
+    public void SetGetItemSelectHandler(System.Action<TacticsEnemy,int> handler)
+    {
+        foreach (var gameObjectList in getItemList.ObjectList)
+        {
+            GetItem getItem = gameObjectList.GetComponent<GetItem>();
+            getItem.SetSelectHandler((a) => {
+                handler(this,a);
+            });
+        }
+    }
+
     public void SetEnemyInfoCallHandler(System.Action<int> handler)
     {
         enemyInfoButton.onClick.AddListener(() => handler((int)Index));

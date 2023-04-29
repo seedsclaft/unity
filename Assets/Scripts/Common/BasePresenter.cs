@@ -15,7 +15,7 @@ public class BasePresenter
         _model = model;
     }
 
-    public bool CheckAdvStageEvent(EventTiming eventTiming,System.Action endCall)
+    public bool CheckAdvStageEvent(EventTiming eventTiming,System.Action endCall,int selectActorId = 0)
     {
         bool isAbort = false;
         var stageEvents = _model.StageEvents(eventTiming);
@@ -27,6 +27,18 @@ public class BasePresenter
                 {
                     AdvCallInfo advInfo = new AdvCallInfo();
                     advInfo.SetLabel(_model.GetAdvFile(stageEvents[i].Param));
+                    advInfo.SetCallEvent(() => {                
+                        if (endCall != null) endCall();
+                    });
+                    _view.CommandCallAdv(advInfo);
+                    _model.AddEventReadFlag(stageEvents[i]);
+                    isAbort = true;
+                    break;
+                }
+                if (stageEvents[i].Type == StageEventType.SelectActorAdvStart)
+                {
+                    AdvCallInfo advInfo = new AdvCallInfo();
+                    advInfo.SetLabel(_model.GetAdvFile(stageEvents[i].Param + selectActorId));
                     advInfo.SetCallEvent(() => {                
                         if (endCall != null) endCall();
                     });
