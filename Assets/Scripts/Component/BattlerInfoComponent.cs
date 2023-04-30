@@ -13,7 +13,7 @@ public class BattlerInfoComponent : MonoBehaviour
     [SerializeField] private EffekseerEmitter effekseerEmitter;
     [SerializeField] private _2dxFX_DestroyedFX deathAnimation;
     private GameObject _battleDamageRoot;
-    private GameObject _battleStatusRoot = null;
+    private GameObject _battleStatusRoot;
     [SerializeField] private GameObject battleDamagePrefab;
     private BattlerInfo _battlerInfo = null;
 
@@ -92,11 +92,6 @@ public class BattlerInfoComponent : MonoBehaviour
         }
         ChangeHp(_battlerInfo.Hp);
         ChangeMp(_battlerInfo.Mp);
-        if (_battlerInfo.IsAlive() && _battlerInfo.isActor == false)
-        {
-            //BattleImage().gameObject.SetActive(true);
-            ShowUI();
-        }
     }
     
     public void ShowUI()
@@ -207,12 +202,11 @@ public class BattlerInfoComponent : MonoBehaviour
         if (image == null) return;
         float alpha = isSelectable == true ? 1 : 0.25f;
         image.color = new Color(255,255,255,alpha);
-        SetActiveStatus(isSelectable);
     }
 
     public void SetActiveStatus(bool isSelectable)
     {
-        if (_battleStatusRoot && !_battlerInfo.isActor)
+        if (_battleStatusRoot != null && !_battlerInfo.isActor)
         {
             _battleStatusRoot.SetActive(isSelectable);
         }

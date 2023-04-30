@@ -37,7 +37,7 @@ public class TacticsRecovery : ListItem ,IListViewItem
     public void UpdateViewItem()
     {
         if (_data == null) return;
-        tacticsComponent.UpdateInfo(_data);
+        tacticsComponent.UpdateInfo(_data,TacticsComandType.Recovery);
         Disable.SetActive(!_data.EnableTactics(TacticsComandType.Recovery));
     }
 }

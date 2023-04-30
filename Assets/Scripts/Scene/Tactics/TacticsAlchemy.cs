@@ -23,7 +23,7 @@ public class TacticsAlchemy : ListItem ,IListViewItem
     public void UpdateViewItem()
     {
         if (_data == null) return;
-        tacticsComponent.UpdateInfo(_data);
+        tacticsComponent.UpdateInfo(_data,TacticsComandType.Alchemy);
         Disable.SetActive(!_data.EnableTactics(TacticsComandType.Alchemy));
     }
 }

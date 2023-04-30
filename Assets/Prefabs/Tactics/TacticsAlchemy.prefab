@@ -276,7 +276,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -1213,17 +1213,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   actorInfoComponent: {fileID: 3797567682976237486}
-  trainCheckToggle: {fileID: 0}
+  checkToggle: {fileID: 4559348638628754027}
   afterLv: {fileID: 0}
   trainCost: {fileID: 0}
-  alchemyCheckToggle: {fileID: 4559348638628754027}
   attributeType: {fileID: 2152984182471629363}
   attributeLearnCost: {fileID: 3535460788340704239}
-  recoveryCheckToggle: {fileID: 0}
   statusInfoComponent: {fileID: 0}
-  battleCheckToggle: {fileID: 0}
   enemyInfoComponent: {fileID: 0}
-  resourceCheckToggle: {fileID: 0}
   resourceCost: {fileID: 0}
   busyRoot: {fileID: 3797623896044286216}
   busyText: {fileID: 1225195941448232223}
@@ -1241,6 +1237,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mainThumb: {fileID: 0}
   awakenThumb: {fileID: 0}
+  grayscale: {fileID: 0}
   faceThumb: {fileID: 0}
   awakenFaceThumb: {fileID: 0}
   nameText: {fileID: 2792855634059982974}
@@ -1268,12 +1265,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   icon: {fileID: 7328452238983663719}
+  iconBack: {fileID: 0}
   nameText: {fileID: 2152984182471629363}
   mpCost: {fileID: 3535460788340704239}
   lineImage: {fileID: 0}
   type: {fileID: 0}
   value: {fileID: 0}
   description: {fileID: 0}
+  selectable: {fileID: 0}
 --- !u!1 &8415254190965423419
 GameObject:
   m_ObjectHideFlags: 0

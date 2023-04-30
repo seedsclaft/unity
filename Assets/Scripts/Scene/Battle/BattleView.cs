@@ -342,9 +342,11 @@ public class BattleView : BaseView
         if (targetIndexList != null)
         {
             SetBattlerSelectable(false);
+            HideEnemyStatus();
             foreach (var idx in targetIndexList)
             {
                 _battlerComps[idx].SetSelectable(true);
+                _battlerComps[idx].SetActiveStatus(true);
             }
         }
     }

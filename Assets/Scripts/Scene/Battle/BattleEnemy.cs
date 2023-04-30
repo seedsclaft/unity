@@ -43,7 +43,8 @@ public class BattleEnemy : ListItem
     public void SetStatusRoot(GameObject statusRoot)
     {
         statusObject.transform.SetParent(statusRoot.transform, false);
-        battlerInfoComponent.SetStatusRoot(statusRoot);
+        statusRoot.SetActive(true);
+        battlerInfoComponent.SetStatusRoot(statusObject);
     }
 
     public void SetCallHandler(System.Action<int> handler)
@@ -67,8 +68,8 @@ public class BattleEnemy : ListItem
 
     private void UpdateSizeDelta()
     {
-        int width = enemyImage.mainTexture.width - 40;
-        int height = enemyImage.mainTexture.height - 40;
+        int width = enemyImage.mainTexture.width;
+        int height = enemyImage.mainTexture.height;
         RectTransform objectRect = gameObject.GetComponent < RectTransform > ();
         RectTransform rect = cursorObject.gameObject.GetComponent < RectTransform > ();
         RectTransform effectRect = effekseerEmitter.gameObject.GetComponent < RectTransform > ();

@@ -24,7 +24,7 @@ public class TacticsBattle : ListItem ,IListViewItem
     public void UpdateViewItem()
     {
         if (_data == null) return;
-        tacticsComponent.UpdateInfo(_data);
+        tacticsComponent.UpdateInfo(_data,TacticsComandType.Battle);
         Disable.SetActive(!_data.EnableTactics(TacticsComandType.Battle));
     }
 }

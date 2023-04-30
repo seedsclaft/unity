@@ -11,72 +11,60 @@ public class TacticsComponent : MonoBehaviour
     private ActorInfo _actorInfo = null;
     [SerializeField] private ActorInfoComponent actorInfoComponent;
 
-    [SerializeField] private Toggle trainCheckToggle;
+    [SerializeField] private Toggle checkToggle;
     [SerializeField] private TextMeshProUGUI afterLv;
     [SerializeField] private TextMeshProUGUI trainCost;
 
 
-    [SerializeField] private Toggle alchemyCheckToggle;
     [SerializeField] private TextMeshProUGUI attributeType;
     [SerializeField] private TextMeshProUGUI attributeLearnCost;
     
 
-    [SerializeField] private Toggle recoveryCheckToggle;
+
     [SerializeField] private StatusInfoComponent statusInfoComponent;
 
-    [SerializeField] private Toggle battleCheckToggle;
     [SerializeField] private EnemyInfoComponent enemyInfoComponent;
 
-    [SerializeField] private Toggle resourceCheckToggle;
+
     [SerializeField] private TextMeshProUGUI resourceCost;
 
     [SerializeField] private GameObject busyRoot;
     [SerializeField] private TextMeshProUGUI busyText;
-    public void UpdateInfo(ActorInfo actorInfo)
+    public void UpdateInfo(ActorInfo actorInfo,TacticsComandType tacticsComandType)
     {
         _actorInfo = actorInfo;
-        TacticsComandType currentTacticsComandType = TacticsComandType.None;
+        TacticsComandType currentTacticsComandType = actorInfo.TacticsComandType;
         if (actorInfoComponent != null)
         {
             actorInfoComponent.UpdateInfo(actorInfo,null);
         }
         
-        if (trainCheckToggle != null)
+        if (checkToggle != null)
         {
-            trainCheckToggle.isOn = (actorInfo.TacticsComandType == TacticsComandType.Train);
-            currentTacticsComandType = TacticsComandType.Train;
+            checkToggle.isOn = (actorInfo.TacticsComandType == tacticsComandType);
         }
-        if (afterLv != null)
+
+        if (afterLv != null && tacticsComandType == TacticsComandType.Train)
         {
-            afterLv.gameObject.SetActive(trainCheckToggle.isOn);
+            afterLv.gameObject.SetActive(checkToggle.isOn);
             afterLv.text = (actorInfo.Level+1).ToString();
         }
+
         if (trainCost != null)
         {
             trainCost.text = TacticsUtility.TrainCost(actorInfo).ToString();
         }
-
         
-        if (alchemyCheckToggle != null)
-        {
-            alchemyCheckToggle.isOn = (actorInfo.TacticsComandType == TacticsComandType.Alchemy);
-            currentTacticsComandType = TacticsComandType.Alchemy;
-        }
         if (attributeType != null)
         {
             attributeType.text = actorInfo.NextLearnAttribute.ToString();
         }
+
         if (attributeLearnCost != null)
         {
             attributeLearnCost.text = actorInfo.NextLearnCost.ToString();
         }
-
         
-        if (recoveryCheckToggle != null)
-        {
-            recoveryCheckToggle.isOn = (actorInfo.TacticsComandType == TacticsComandType.Recovery);
-            currentTacticsComandType = TacticsComandType.Recovery;
-        }
         if (statusInfoComponent != null)
         {
             int Hp = Mathf.Min(actorInfo.CurrentHp + actorInfo.TacticsCost * 10,actorInfo.MaxHp);
@@ -85,24 +73,12 @@ public class TacticsComponent : MonoBehaviour
             statusInfoComponent.UpdateMp(Mp,actorInfo.MaxMp);
         }
 
-        
-        if (battleCheckToggle != null)
-        {
-            battleCheckToggle.isOn = (actorInfo.TacticsComandType == TacticsComandType.Battle);
-            currentTacticsComandType = TacticsComandType.Battle;
-        }
         if (enemyInfoComponent != null)
         {
             EnemiesData.EnemyData enemyData = DataSystem.Enemies.Find(a => a.Id == actorInfo.NextBattleEnemyId);
             enemyInfoComponent.UpdateData(enemyData);
         }
 
-        
-        if (resourceCheckToggle != null)
-        {
-            resourceCheckToggle.isOn = (actorInfo.TacticsComandType == TacticsComandType.Resource);
-            currentTacticsComandType = TacticsComandType.Resource;
-        }
         if (resourceCost != null)
         {
             resourceCost.gameObject.SetActive(actorInfo.TacticsComandType == TacticsComandType.Resource);
@@ -123,28 +99,6 @@ public class TacticsComponent : MonoBehaviour
     }
 
     public void SetToggleHandler(System.Action<int> handler){
-        GameObject toggleObject = null;
-        if (trainCheckToggle != null)
-        {
-	    	toggleObject = trainCheckToggle.gameObject;
-        }
-        if (alchemyCheckToggle != null)
-        {
-	    	toggleObject = alchemyCheckToggle.gameObject;
-        }
-        if (recoveryCheckToggle != null)
-        {
-	    	toggleObject = recoveryCheckToggle.gameObject;
-        }
-        if (battleCheckToggle != null)
-        {
-	    	toggleObject = battleCheckToggle.gameObject;
-        }
-        if (resourceCheckToggle != null)
-        {
-	    	toggleObject = resourceCheckToggle.gameObject;
-        }
-		ContentEnterListener enterListener = toggleObject.AddComponent<ContentEnterListener> ();
-        enterListener.SetEnterEvent(() => handler(_actorInfo.ActorId));
+        checkToggle.onValueChanged.AddListener((a) => handler(_actorInfo.ActorId));
     }
 }

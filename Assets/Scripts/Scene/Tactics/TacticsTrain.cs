@@ -23,7 +23,7 @@ public class TacticsTrain : ListItem ,IListViewItem
     public void UpdateViewItem()
     {
         if (_data == null) return;
-        tacticsComponent.UpdateInfo(_data);
+        tacticsComponent.UpdateInfo(_data,TacticsComandType.Train);
         Disable.SetActive(!_data.EnableTactics(TacticsComandType.Train));
     }
 }

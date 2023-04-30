@@ -23,7 +23,7 @@ public class TacticsResource : ListItem ,IListViewItem
     public void UpdateViewItem()
     {
         if (_data == null) return;
-        tacticsComponent.UpdateInfo(_data);
+        tacticsComponent.UpdateInfo(_data,TacticsComandType.Resource);
         Disable.SetActive(!_data.EnableTactics(TacticsComandType.Resource));
     }
 }

@@ -387,7 +387,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -1034,16 +1034,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   actorInfoComponent: {fileID: 3304391213648754877}
-  trainCheckToggle: {fileID: 0}
+  checkToggle: {fileID: 2751183207290981752}
   afterLv: {fileID: 0}
   trainCost: {fileID: 0}
-  alchemyCheckToggle: {fileID: 0}
-  skillInfoComponent: {fileID: 0}
-  recoveryCheckToggle: {fileID: 0}
+  attributeType: {fileID: 0}
+  attributeLearnCost: {fileID: 0}
   statusInfoComponent: {fileID: 0}
-  battleCheckToggle: {fileID: 0}
   enemyInfoComponent: {fileID: 0}
-  resourceCheckToggle: {fileID: 2751183207290981752}
   resourceCost: {fileID: 1023823680502464004}
   busyRoot: {fileID: 2219163333850369008}
   busyText: {fileID: 2037463238843322566}
@@ -1061,6 +1058,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mainThumb: {fileID: 0}
   awakenThumb: {fileID: 0}
+  grayscale: {fileID: 0}
   faceThumb: {fileID: 0}
   awakenFaceThumb: {fileID: 0}
   nameText: {fileID: 4587499529433909101}
