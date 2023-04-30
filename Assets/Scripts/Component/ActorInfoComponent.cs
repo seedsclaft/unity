@@ -57,7 +57,7 @@ public class ActorInfoComponent : MonoBehaviour
             //element.text = actorData.Name;
         }
         if (demigod != null){
-            //demigod.text = actorData.Name;
+            demigod.text = actorInfo.DemigodParam.ToString();
         }
         if (lv != null){
             lv.text = actorInfo.Level.ToString();
@@ -71,7 +71,35 @@ public class ActorInfoComponent : MonoBehaviour
             statusInfoComponent.UpdateMp(actorInfo.CurrentMp,actorInfo.MaxMp);
         }
         if (needStatusInfoComponent != null){
-            needStatusInfoComponent.UpdateInfo(actorInfo.UsePoint);
+            StatusInfo statusInfo = new StatusInfo();
+            statusInfo.SetParameter(
+                actorInfo.UsePoint.GetParameter(StatusParamType.Hp),
+                actorInfo.UsePoint.GetParameter(StatusParamType.Mp),
+                actorInfo.UsePoint.GetParameter(StatusParamType.Atk),
+                actorInfo.UsePoint.GetParameter(StatusParamType.Def),
+                actorInfo.UsePoint.GetParameter(StatusParamType.Spd)
+            );
+            if (GameSystem.CurrentData.CurrentAlcana.IsStatusCostDown(StatusParamType.Hp))
+            {
+                statusInfo.AddParameter(StatusParamType.Hp,-1);
+            } else
+            if (GameSystem.CurrentData.CurrentAlcana.IsStatusCostDown(StatusParamType.Mp))
+            {
+                statusInfo.AddParameter(StatusParamType.Mp,-1);
+            } else
+            if (GameSystem.CurrentData.CurrentAlcana.IsStatusCostDown(StatusParamType.Atk))
+            {
+                statusInfo.AddParameter(StatusParamType.Atk,-1);
+            } else
+            if (GameSystem.CurrentData.CurrentAlcana.IsStatusCostDown(StatusParamType.Def))
+            {
+                statusInfo.AddParameter(StatusParamType.Def,-1);
+            } else
+            if (GameSystem.CurrentData.CurrentAlcana.IsStatusCostDown(StatusParamType.Spd))
+            {
+                statusInfo.AddParameter(StatusParamType.Spd,-1);
+            }
+            needStatusInfoComponent.UpdateInfo(statusInfo);
         }
         if (element1 != null){
             UpdateAttributeParam(element1,actorInfo.Attribute[0]);

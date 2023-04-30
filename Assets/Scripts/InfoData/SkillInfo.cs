@@ -26,7 +26,8 @@ public class SkillInfo
 
     private int _weight = 100;
     public int Weight {get {return _weight;}}
-
+    private bool _isUsed = false;
+    public bool IsUsed {get {return _isUsed;}}
     public SkillInfo(int id)
     {
         _id = id;
@@ -62,6 +63,11 @@ public class SkillInfo
     public void SetLearnAttribute(AttributeType attributeType)
     {
         _learnAttributeType = attributeType;
+    }
+
+    public void SetIsUsed(bool isUsed)
+    {
+        _isUsed = isUsed;
     }
 
     public bool CanUseTrigger(BattlerInfo battlerInfo,List<BattlerInfo> party,List<BattlerInfo> troops)

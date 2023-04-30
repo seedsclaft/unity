@@ -44,6 +44,8 @@ public class ActorInfo
     public int CurrentMp {get {return _currentMp;}}
     private int _ap;
     public int Ap {get {return _ap;}}
+    private int _demigodParam;
+    public int DemigodParam {get {return _demigodParam;}}
 
     private TacticsComandType _tacticsComandType = TacticsComandType.None;
     public TacticsComandType TacticsComandType {get {return _tacticsComandType;}}
@@ -86,6 +88,7 @@ public class ActorInfo
         SetInitialParameter(actorData);
         _currentHp = _baseStatus.Hp;
         _currentMp = _baseStatus.Mp;
+        _demigodParam = 5;
     }
 
     private void SetInitialParameter(ActorsData.ActorData actorData)
@@ -205,9 +208,9 @@ public class ActorInfo
 
     public int UsePointCost(StatusParamType statusParamType)
     {
-        int useCost = UsePoint.GetParameter(statusParamType);
-        useCost += (_plusStatus.GetParameter(statusParamType)+TempStatus.GetParameter(statusParamType)) / 5;
-        return useCost;
+        int UseCost = UsePoint.GetParameter(statusParamType);
+        UseCost += (_plusStatus.GetParameter(statusParamType)+TempStatus.GetParameter(statusParamType)) / 5;
+        return UseCost;
     }
 
     public void DecideStrength(int useNuminous)
@@ -346,5 +349,10 @@ public class ActorInfo
             attributeValues.Add(DataSystem.System.GetTextData(textId).Text);
         }
         return attributeValues;
+    }
+
+    public void GainDemigod(int param)
+    {
+        _demigodParam += param;
     }
 }

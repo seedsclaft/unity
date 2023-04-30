@@ -68,5 +68,6 @@ public enum GetItemType
 {
 	None = 0,
 	Skill = 1,
-	Numinous = 2
+	Numinous = 2,
+	Demigod = 3
 }

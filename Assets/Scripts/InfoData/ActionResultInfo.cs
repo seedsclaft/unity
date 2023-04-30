@@ -174,6 +174,13 @@ public class ActionResultInfo
             {
                 _execStateInfos[target.Index].Add(StateType.CounterOura);
                 _reDamage += CounterDamageValue(target);
+                if (target.IsState(StateType.CounterOuraHeal))
+                {
+                    SkillsData.FeatureData counterOuraHeal = new SkillsData.FeatureData();
+                    counterOuraHeal.FeatureType = FeatureType.HpHeal;
+                    counterOuraHeal.Param1 = target.StateEffectAll(StateType.CounterOuraHeal);
+                    MakeHpHeal(target,target,counterOuraHeal);
+                }
             }
         }
         if (subject.IsState(StateType.Freeze))
@@ -221,6 +228,16 @@ public class ActionResultInfo
     {
         float HealValue = featureData.Param1;
         _hpHeal = (int)Mathf.Round(HealValue);
+        if (subject != target)
+        {
+            if (subject.IsState(StateType.HealActionSelfHeal))
+            {
+                SkillsData.FeatureData healActionSelfHeal = new SkillsData.FeatureData();
+                healActionSelfHeal.FeatureType = FeatureType.HpHeal;
+                healActionSelfHeal.Param1 = target.StateEffectAll(StateType.HealActionSelfHeal);
+                MakeHpHeal(subject,subject,healActionSelfHeal);
+            }
+        }
     }
 
     private void MakeHpDrain(BattlerInfo subject,BattlerInfo target,SkillsData.FeatureData featureData)
@@ -249,6 +266,13 @@ public class ActionResultInfo
             {
                 _execStateInfos[target.Index].Add(StateType.CounterOura);
                 _reDamage += CounterDamageValue(target);
+                if (target.IsState(StateType.CounterOuraHeal))
+                {
+                    SkillsData.FeatureData counterOuraHeal = new SkillsData.FeatureData();
+                    counterOuraHeal.FeatureType = FeatureType.HpHeal;
+                    counterOuraHeal.Param1 = target.StateEffectAll(StateType.CounterOuraHeal);
+                    MakeHpHeal(target,target,counterOuraHeal);
+                }
             }
         }
         if (subject.IsState(StateType.Freeze))

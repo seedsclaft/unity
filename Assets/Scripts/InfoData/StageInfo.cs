@@ -198,54 +198,6 @@ public class StageInfo
         _currentTroopInfos.Clear();
     }
 
-    public void ChengeCurrentTroopLevel(float rate)
-    {
-        if (_currentTroopInfos.Count == 0) return;
-        
-        for (int i = 0;i < _currentTroopInfos.Count;i++)
-        {
-            for (int j = _currentTroopInfos[i].BattlerInfos.Count-1;j >= 0;j--)
-            {
-                EnemiesData.EnemyData enemyData = _currentTroopInfos[i].BattlerInfos[j].EnemyData;
-                int lv = (int)MathF.Floor(_currentTroopInfos[i].BattlerInfos[j].Level * rate);
-                LineType line = _currentTroopInfos[i].BattlerInfos[j].LineIndex;
-                bool isBoss = _currentTroopInfos[i].BattlerInfos[j].BossFlag;
-                BattlerInfo enemy = new BattlerInfo(enemyData,lv,j,line,isBoss);
-                _currentTroopInfos[i].RemoveAtEnemyIndex(_currentTroopInfos[i].BattlerInfos[j].Index);
-                _currentTroopInfos[i].AddEnemy(enemy);
-            }
-
-        }
-    }
-
-    public void ChengeCurrentTroopLine()
-    {
-        if (_currentTroopInfos.Count == 0) return;
-        
-        for (int i = 0;i < _currentTroopInfos.Count;i++)
-        {
-            for (int j = _currentTroopInfos[i].BattlerInfos.Count-1;j >= 0;j--)
-            {
-                EnemiesData.EnemyData enemyData = _currentTroopInfos[i].BattlerInfos[j].EnemyData;
-                int lv = _currentTroopInfos[i].BattlerInfos[j].Level;
-                LineType line = _currentTroopInfos[i].BattlerInfos[j].LineIndex;
-                bool isBoss = _currentTroopInfos[i].BattlerInfos[j].BossFlag;
-                if (line == LineType.Front) 
-                {
-                     line = LineType.Back;
-                }
-                else
-                {
-                     line = LineType.Front;
-                }
-                BattlerInfo enemy = new BattlerInfo(enemyData,lv,j,line,isBoss);
-                _currentTroopInfos[i].RemoveAtEnemyIndex(_currentTroopInfos[i].BattlerInfos[j].Index);
-                _currentTroopInfos[i].AddEnemy(enemy);
-            }
-
-        }
-    }
-
     public void ChengeCurrentTroopLineZeroErase()
     {
         if (_currentTroopInfos.Count == 0) return;
@@ -258,26 +210,6 @@ public class StageInfo
                 {
                     _currentTroopInfos[i].RemoveAtEnemyIndex(_currentTroopInfos[i].BattlerInfos[j].Index);
                 }
-            }
-        }
-    }
-
-    public void ChengeCurrentTroopHp(float rate)
-    {
-        if (_currentTroopInfos.Count == 0) return;
-        
-        for (int i = 0;i < _currentTroopInfos.Count;i++)
-        {
-            for (int j = _currentTroopInfos[i].BattlerInfos.Count-1;j >= 0;j--)
-            {
-                EnemiesData.EnemyData enemyData = _currentTroopInfos[i].BattlerInfos[j].EnemyData;
-                int lv = _currentTroopInfos[i].BattlerInfos[j].Level;
-                LineType line = _currentTroopInfos[i].BattlerInfos[j].LineIndex;
-                bool isBoss = _currentTroopInfos[i].BattlerInfos[j].BossFlag;
-                BattlerInfo enemy = new BattlerInfo(enemyData,lv,j,line,isBoss);
-                enemy.GainHp((int)MathF.Floor(enemy.Hp * rate));
-                _currentTroopInfos[i].RemoveAtEnemyIndex(_currentTroopInfos[i].BattlerInfos[j].Index);
-                _currentTroopInfos[i].AddEnemy(enemy);
             }
         }
     }

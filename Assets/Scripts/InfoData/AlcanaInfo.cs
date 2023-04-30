@@ -87,4 +87,49 @@ public class AlcanaInfo{
         int rand = new Random().Next(0, alcana.Count-1);
         _alcanaIds[0] = rand;
     }
+
+    public bool IsStatusCostDown(StatusParamType statusParamType)
+    {
+        if (_usedAlcana == true)
+        {
+            SkillsData.SkillData skillData = DataSystem.Skills.Find(a => a.Id == CurrentSelectAlcana().SkillId);
+            SkillsData.FeatureData featureData = skillData.FeatureDatas.Find(a => a.FeatureType == FeatureType.StatusUpCostDown);
+            if (featureData != null)
+            {
+                if (featureData.Param1 == (int)statusParamType)
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+    
+    public int VictoryGainSpValue()
+    {
+        if (_usedAlcana == true)
+        {
+            SkillsData.SkillData skillData = DataSystem.Skills.Find(a => a.Id == CurrentSelectAlcana().SkillId);
+            SkillsData.FeatureData featureData = skillData.FeatureDatas.Find(a => a.FeatureType == FeatureType.VictoryGainSp);
+            if (featureData != null)
+            {
+                return featureData.Param1;
+            }
+        }
+        return 0;
+    }
+
+    public bool IsDisableTactics()
+    {
+        if (_usedAlcana == true)
+        {
+            SkillsData.SkillData skillData = DataSystem.Skills.Find(a => a.Id == CurrentSelectAlcana().SkillId);
+            SkillsData.FeatureData featureData = skillData.FeatureDatas.Find(a => a.FeatureType == FeatureType.DisableTactics);
+            if (featureData != null)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
 }

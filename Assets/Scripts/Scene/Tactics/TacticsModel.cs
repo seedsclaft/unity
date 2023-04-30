@@ -206,6 +206,14 @@ public class TacticsModel : BaseModel
         actorInfo.ClearTacticsCommand();
     }
 
+    public void ResetTacticsCostAll()
+    {
+        foreach (var member in StageMembers())
+        {
+            ResetTacticsCost(member.ActorId);
+        }
+    }
+
     public void SelectActorTrain(int actorId)
     {
         ActorInfo actorInfo = TacticsActor(actorId);

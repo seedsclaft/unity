@@ -20,7 +20,7 @@ MonoBehaviour:
     SkillId: 1001
   - Id: 2
     Name: "\u3010\u9B54\u8853\u5E2B\u3011"
-    Help: "\u8853\u8005\u5168\u54E1\u306ESP\u309210\u5165\u624B\u3059\u308B"
+    Help: "\u8853\u8005\u5168\u54E1\u306ESP\u30925\u5165\u624B\u3059\u308B"
     FilePath: 1_magician
     SkillId: 1002
   - Id: 3
@@ -35,12 +35,12 @@ MonoBehaviour:
     SkillId: 1004
   - Id: 5
     Name: "\u3010\u7687\u5E1D\u3011"
-    Help: "\u547D\u4EE4\u5B9F\u884C\u306B\u5FC5\u8981\u306ANuminos\u306E\u6D88\u8CBB\u3092\u534A\u5206\u306B\u3059\u308B"
+    Help: "\u547D\u4EE4\u5B9F\u884C\u306B\u5FC5\u8981\u306A\u6D88\u8CBBNuminos\u3092\u534A\u5206\u306B\u3059\u308B"
     FilePath: 4_emperor
     SkillId: 1005
   - Id: 6
     Name: "\u3010\u6CD5\u738B\u3011"
-    Help: "MP\u3092\u5168\u56DE\u5FA9\u3059\u308B"
+    Help: "\u6551\u6E08\u57F7\u884C\u6210\u529F\u6642\u306B(Nu)\u30925\u5165\u624B\u3059\u308B"
     FilePath: 5_hierophant
     SkillId: 1006
   - Id: 7
@@ -50,7 +50,7 @@ MonoBehaviour:
     SkillId: 1007
   - Id: 8
     Name: "\u3010\u6226\u8ECA\u3011"
-    Help: "\u6551\u6E08\u57F7\u884C\u6642\u30E6\u30CB\u30C3\u30C8\u5168\u54E1\u306E\u6700\u5927HP\u3068HP\u309220\u30A2\u30C3\u30D7"
+    Help: "\u30BF\u30FC\u30F3\u4E2D\u6700\u5927HP\u30A2\u30C3\u30D7\u306E\u6D88\u8CBB\u30921\u30C0\u30A6\u30F3"
     FilePath: 7_chariot
     SkillId: 1008
   - Id: 9
@@ -60,7 +60,7 @@ MonoBehaviour:
     SkillId: 1009
   - Id: 10
     Name: "\u3010\u96A0\u8005\u3011"
-    Help: "\u6551\u6E08\u57F7\u884C\u6642\u30E6\u30CB\u30C3\u30C8\u5168\u54E1\u306E\u56DE\u907F\u7387\u309250\u30A2\u30C3\u30D7"
+    Help: "\u30BF\u30FC\u30F3\u4E2DSPD\u30A2\u30C3\u30D7\u306E\u6D88\u8CBB\u30921\u30C0\u30A6\u30F3"
     FilePath: 9_hermit
     SkillId: 1010
   - Id: 11
@@ -70,7 +70,7 @@ MonoBehaviour:
     SkillId: 1011
   - Id: 12
     Name: "\u3010\u525B\u6BC5\u3011"
-    Help: "\u6551\u6E08\u57F7\u884C\u6642\u30E6\u30CB\u30C3\u30C8\u5168\u54E1\u306EATK\u30928\u30A2\u30C3\u30D7"
+    Help: "\u30BF\u30FC\u30F3\u4E2DATK\u30A2\u30C3\u30D7\u306E\u6D88\u8CBB\u30921\u30C0\u30A6\u30F3"
     FilePath: 11_justice
     SkillId: 1012
   - Id: 13
@@ -90,12 +90,12 @@ MonoBehaviour:
     SkillId: 1015
   - Id: 16
     Name: "\u3010\u60AA\u9B54\u3011"
-    Help: "\u6551\u6E08\u57F7\u884C\u306E\u6575\u306EHP\u3092\u534A\u6E1B\u3059\u308B"
+    Help: "\u30BF\u30FC\u30F3\u4E2D\u6700\u5927MP\u30A2\u30C3\u30D7\u306E\u6D88\u8CBB\u30921\u30C0\u30A6\u30F3"
     FilePath: 15_devil
     SkillId: 1016
   - Id: 17
     Name: "\u3010\u5854\u3011"
-    Help: "\u6551\u6E08\u57F7\u884C\u6642\u30E6\u30CB\u30C3\u30C8\u5168\u54E1\u306EDEF\u30928\u30A2\u30C3\u30D7"
+    Help: "\u30BF\u30FC\u30F3\u4E2DDEF\u30A2\u30C3\u30D7\u306E\u6D88\u8CBB\u30921\u30C0\u30A6\u30F3"
     FilePath: 16_tower
     SkillId: 1017
   - Id: 18
@@ -110,12 +110,12 @@ MonoBehaviour:
     SkillId: 1019
   - Id: 20
     Name: "\u3010\u592A\u967D\u3011"
-    Help: "\u6551\u6E08\u57F7\u884C\u306E\u6575Lv\u3092\u4E0B\u3052\u308B"
+    Help: "\u8853\u8005\u5168\u54E1\u306ESP\u309210\u5165\u624B\u3059\u308B"
     FilePath: 19_sun
     SkillId: 1020
   - Id: 21
     Name: "\u3010\u5BE9\u5224\u3011"
-    Help: "\u6551\u6E08\u57F7\u884C\u6642\u30E6\u30CB\u30C3\u30C8\u5168\u54E1\u306E\u6700\u5927MP\u3068Mp\u309220\u30A2\u30C3\u30D7"
+    Help: "\u6551\u6E08\u57F7\u884C\u6210\u529F\u6642\u306B(Nu)\u309210\u5165\u624B\u3059\u308B"
     FilePath: 20_judgement
     SkillId: 1021
   - Id: 22

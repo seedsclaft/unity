@@ -142,10 +142,22 @@ public class StrategyModel : BaseModel
             if (getItemInfo.GetItemType == GetItemType.Numinous)
             {
                 int bonus = PartyInfo.GetBattleBonusValue();
-                PartyInfo.ChangeCurrency(PartyInfo.Currency + getItemInfo.Param1 + bonus);
+                int alcanaBonus = CurrentAlcana.VictoryGainSpValue();
+                PartyInfo.ChangeCurrency(PartyInfo.Currency + getItemInfo.Param1 + bonus + alcanaBonus);
                 getItemInfo.SetTitleData(DataSystem.System.GetTextData(14041).Text);
                 getItemInfo.SetResultData("+" + (getItemInfo.Param1+bonus).ToString() + DataSystem.System.GetTextData(1000).Text);
                 getItemInfos.Add(getItemInfo);
+            }
+            if (getItemInfo.GetItemType == GetItemType.Demigod)
+            {
+                getItemInfo.SetTitleData(DataSystem.System.GetTextData(14042).Text);
+                getItemInfo.SetResultData("+" + (getItemInfo.Param1).ToString());
+                getItemInfos.Add(getItemInfo);
+            
+                foreach (var actorInfo in CheckInBattleActors())
+                {
+                    actorInfo.GainDemigod(getItemInfo.Param1);
+                }
             }
         }
         CurrentStage.AddClearTroopId(CurrentTroopInfo().TroopId);

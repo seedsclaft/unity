@@ -146,6 +146,7 @@ public class TacticsPresenter :BasePresenter
         {
             CommandAddAlcana();
         }
+        DisableTacticsCommand();
         _busy = false;
     }
 
@@ -734,10 +735,23 @@ public class TacticsPresenter :BasePresenter
         _model.UseAlcana();
         _view.UseAlcana();
         CommandRefresh();
+        DisableTacticsCommand();
     }
 
     private void CommandDeleteAlcana()
     {
         _model.DeleteAlcana();
+    }
+
+    private void DisableTacticsCommand()
+    {
+        if (_model.CurrentAlcana.IsDisableTactics())
+        {
+            _model.ResetTacticsCostAll();
+            for (int i = 0;i < 5;i++)
+            {
+                _view.SetCommandDisable(i);
+            }
+        }
     }
 }

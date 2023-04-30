@@ -63,6 +63,8 @@ public class BattlerInfo
 
     private int _turnCount = 0;
     public int TurnCount {get {return _turnCount;}}
+    private int _demigodParam = 0;
+    public int DemigodParam {get {return _demigodParam;}}
 
     private List<BattlerInfo> _party = new List<BattlerInfo>();
     private List<BattlerInfo> _troops = new List<BattlerInfo>();
@@ -81,6 +83,11 @@ public class BattlerInfo
         _status = statusInfo;
         _index = index;
         _skills = actorInfo.Skills.FindAll(a => a.LearningState == LearningState.Learned);
+        foreach (var skill in _skills)
+        {
+            skill.SetIsUsed(false);
+        }
+        _demigodParam = actorInfo.DemigodParam;
         _isActor = true;
         
         _actorInfo = actorInfo;
@@ -374,6 +381,14 @@ public class BattlerInfo
         {
             _stateInfos.Add(stateInfo);
             IsAdded = true;
+            if (stateInfo.Master.Id == (int)StateType.MaxHpUp)
+            {
+                GainHp(stateInfo.Effect);
+            }
+            if (stateInfo.Master.Id == (int)StateType.MaxMpUp)
+            {
+                GainMp(stateInfo.Effect);
+            }
         }
         return IsAdded;
     }
@@ -451,7 +466,7 @@ public class BattlerInfo
         int atk = Status.Atk;
         if (IsState(StateType.Demigod))
         {
-            atk += StateEffect(StateType.Demigod);
+            atk += _demigodParam;
         }
         return atk;
     }
@@ -461,7 +476,7 @@ public class BattlerInfo
         int def = Status.Def;
         if (IsState(StateType.Demigod))
         {
-            def += StateEffect(StateType.Demigod);
+            def += _demigodParam;
         }
         return def;
     }
@@ -471,7 +486,7 @@ public class BattlerInfo
         int spd = Status.Spd;
         if (IsState(StateType.Demigod))
         {
-            spd += StateEffect(StateType.Demigod);
+            spd += _demigodParam;
         }
         if (IsState(StateType.Accel))
         {
@@ -539,9 +554,24 @@ public class BattlerInfo
             {
                 for (var j = 0;j < triggerDatas.Count;j++)
                 {
+                    if (triggeredSkills.Contains(skillInfo)) continue;
                     if (triggerDatas[j].TriggerType == TriggerType.HpRateUnder)
                     {
                         if ( TriggerdHpRateUnderSkillInfos(triggerDatas[j]) )
+                        {
+                            triggeredSkills.Add(skillInfo);
+                        }
+                    }
+                    if (triggerDatas[j].TriggerType == TriggerType.HpRateUpper)
+                    {
+                        if ( TriggerdHpRateUpperSkillInfos(triggerDatas[j]) )
+                        {
+                            triggeredSkills.Add(skillInfo);
+                        }
+                    }
+                    if (triggerDatas[j].TriggerType == TriggerType.HpValue)
+                    {
+                        if ( Hp == triggerDatas[j].Param1 )
                         {
                             triggeredSkills.Add(skillInfo);
                         }
@@ -577,7 +607,32 @@ public class BattlerInfo
                     }
                     if (triggerDatas[j].TriggerType == TriggerType.SelfDead)
                     {
-                        if ( TriggerdSelfDeadSkillInfos(triggerDatas[j],actionInfo.actionResults) )
+                        if ( TriggerdSelfDeadSkillInfos(triggerDatas[j],actionInfo.ActionResults) )
+                        {
+                            triggeredSkills.Add(skillInfo);
+                        }
+                    }
+                    if (triggerDatas[j].TriggerType == TriggerType.IsState)
+                    {
+                        if ( IsState((StateType)triggerDatas[j].Param1) )
+                        {
+                            triggeredSkills.Add(skillInfo);
+                        }
+                    }
+                    if (triggerDatas[j].TriggerType == TriggerType.LessTroopMembers)
+                    {
+                        var troops = battlers.FindAll(a => !a.isActor);
+                        var party = battlers.FindAll(a => a.isActor);
+                        if ( troops.Count >= party.Count )
+                        {
+                            triggeredSkills.Add(skillInfo);
+                        }
+                    }
+                    if (triggerDatas[j].TriggerType == TriggerType.MoreTroopMembers)
+                    {
+                        var troops = battlers.FindAll(a => !a.isActor);
+                        var party = battlers.FindAll(a => a.isActor);
+                        if ( troops.Count <= party.Count )
                         {
                             triggeredSkills.Add(skillInfo);
                         }
@@ -585,6 +640,21 @@ public class BattlerInfo
                 }
             }
         }
+
+        // IsUsed
+        for (int i = triggeredSkills.Count-1;0 <= i;i--)
+        {
+            if (triggeredSkills[i].Master.SkillType == SkillType.UsedPassive)
+            {
+                if (triggeredSkills[i].IsUsed == true)
+                {
+                    triggeredSkills.RemoveAt(i);
+                } else{
+                    triggeredSkills[i].SetIsUsed(true);
+                }
+            }
+        }
+
         return triggeredSkills;
     }
 
@@ -592,6 +662,16 @@ public class BattlerInfo
     {
         bool IsTriggered = false;
         if (triggerData.Param1 * 0.01f >= ((float)Hp / (float)MaxHp))
+        {
+            IsTriggered = true;
+        }
+        return IsTriggered;
+    }
+
+    private bool TriggerdHpRateUpperSkillInfos(SkillsData.TriggerData triggerData)
+    {
+        bool IsTriggered = false;
+        if (triggerData.Param1 * 0.01f <= ((float)Hp / (float)MaxHp))
         {
             IsTriggered = true;
         }
@@ -621,7 +701,7 @@ public class BattlerInfo
     private bool TriggerdActionResultDeathSkillInfos(SkillsData.TriggerData triggerData,ActionInfo actionInfo,List<BattlerInfo> battlerInfos)
     {
         bool IsTriggered = false;
-        List<ActionResultInfo> actionResultInfos = actionInfo.actionResults;
+        List<ActionResultInfo> actionResultInfos = actionInfo.ActionResults;
         List<BattlerInfo> targetBattlers = battlerInfos.FindAll(a => a.isActor);
         if (actionResultInfos.Find(a => targetBattlers.Find(b => a.DeadIndexList.Contains(b.Index)) != null) != null)
         {
@@ -680,5 +760,4 @@ public class BattlerInfo
         }
         return IsTriggered;
     }
-    
 }

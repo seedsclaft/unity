@@ -66,6 +66,12 @@ public class SkillsData : ScriptableObject {
                     CanUse = false;
                 }
                 break;
+                case TriggerType.TurnNumUnder:
+                if (battlerInfo.TurnCount > Param1)
+                {
+                    CanUse = false;
+                }
+                break;
                 case TriggerType.TurnNumPer:
                 if ((battlerInfo.TurnCount % Param1) - Param2 != 0)
                 {
@@ -131,6 +137,7 @@ public enum SkillType{
     Passive = 2, // パッシブ
     Demigod = 3, // 神化
     Awaken = 4, // 覚醒
+    UsedPassive = 5, // 一度切りパッシブ
     UseAlcana = 11 // アルカナ使用
 }
 
@@ -174,6 +181,7 @@ public enum TriggerType
     None = 0,
     HpRateUnder = 1, // Hpが〇%以下
     HpRateUpper = 2, // Hpが〇%以上
+    HpValue = 3, // Hpが〇
     PartyHpRateUnder = 6, // 味方にHpが〇%以下がいる
     TurnNumUnder = 11, // ターン数が〇以内
     TurnNumPer = 13, // ターン数がparam1 x ターン数 + param2
@@ -181,6 +189,9 @@ public enum TriggerType
     IsExistAliveMember = 22, // 生存者が〇以上存在する
     SelfLineFront = 31, // 自分が前列にいる
     SelfLineBack = 32, // 自分が後列にいる
+    IsState = 41, // StateId状態になっている
+    LessTroopMembers = 51, // 味方より敵が多い
+    MoreTroopMembers = 52, // 味方より敵が少ない
     PayBattleMp = 101, // Mpを〇消費する
     ChainCount = 102, // 拘束成功回数
     ActionResultDeath = 103, // 攻撃を受けると戦闘不能になる
@@ -193,7 +204,8 @@ public enum TriggerTiming
     None = 0,
     Use = 1,
     After = 2,
-    Interrupt = 3
+    Interrupt = 3,
+    StartBattle = 4
 }
 
 public enum FeatureType
@@ -216,10 +228,11 @@ public enum FeatureType
     AddSp = 304,
     Subordinate = 305,
     Alcana = 306,
-    LineChange = 307,
+    StatusUpCostDown = 307,
     LineZeroErase = 308,
-    EnemyHp = 309,
-    MagicAlchemy = 310
+    VictoryGainSp = 309,
+    MagicAlchemy = 310,
+    DisableTactics = 311
 }
 
 public enum LearningState{

@@ -276,10 +276,6 @@ public class BaseModel
                     {
                         PartyInfo.ChangeCurrency(Currency + featureData.Param1);
                     }
-                    if (featureData.FeatureType == FeatureType.EnemyLv)
-                    {
-                        CurrentStage.ChengeCurrentTroopLevel(featureData.Param1 * 0.01f);
-                    }
                     if (featureData.FeatureType == FeatureType.Subordinate)
                     {
                         CurrentStage.ChangeSubordinate(featureData.Param1);
@@ -288,17 +284,9 @@ public class BaseModel
                     {
                         CurrentAlcana.ChangeNextAlcana();
                     }
-                    if (featureData.FeatureType == FeatureType.LineChange)
-                    {
-                        CurrentStage.ChengeCurrentTroopLine();
-                    }
                     if (featureData.FeatureType == FeatureType.LineZeroErase)
                     {
                         CurrentStage.ChengeCurrentTroopLineZeroErase();
-                    }
-                    if (featureData.FeatureType == FeatureType.EnemyHp)
-                    {
-                        CurrentStage.ChengeCurrentTroopHp(featureData.Param1 * 0.01f);
                     }
                 }
             }

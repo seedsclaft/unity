@@ -62,14 +62,6 @@ public class BattleModel : BaseModel
                 {
                     StateInfo stateInfo = CurrentAlcana.AlcanaState;
                     battlerInfo.AddState(stateInfo);
-                    if (stateInfo.Master.Id == (int)StateType.MaxHpUp)
-                    {
-                        battlerInfo.GainHp(stateInfo.Effect);
-                    }
-                    if (stateInfo.Master.Id == (int)StateType.MaxMpUp)
-                    {
-                        battlerInfo.GainMp(stateInfo.Effect);
-                    }
                 }
                 _battlers.Add(battlerInfo);
             }
@@ -744,7 +736,7 @@ public class BattleModel : BaseModel
             // Mpの支払い
             CurrentBattler.GainMp(actionInfo.MpCost * -1);
             CurrentBattler.GainPaybattleMp(actionInfo.MpCost);
-            List<ActionResultInfo> actionResultInfos = actionInfo.actionResults;
+            List<ActionResultInfo> actionResultInfos = actionInfo.ActionResults;
             for (int i = 0; i < actionResultInfos.Count; i++)
             {
                 ExecActionResultInfo(actionResultInfos[i]);
@@ -832,6 +824,36 @@ public class BattleModel : BaseModel
         }
     }
 
+    public List<ActionResultInfo> StartBattleAction()
+    {
+        List<ActionResultInfo> resultActionResultInfos = new List<ActionResultInfo>();
+        for (int i = 0;i < _battlers.Count;i++)
+        {
+            _currentBattler = _battlers[i];
+            List<SkillInfo> triggeredSkills = _battlers[i].TriggerdSkillInfos(TriggerTiming.StartBattle,null,_battlers);
+            if (triggeredSkills.Count > 0)
+            {
+                for (int j = 0;j < triggeredSkills.Count;j++)
+                {
+                    ActionInfo makeActionInfo = MakeActionInfo(_battlers[i],triggeredSkills[j].Id,false);
+                    if (triggeredSkills[i].Master.SkillType == SkillType.Demigod){
+                        _battlers[i].SetAwaken();
+                    }
+                    MakeActionResultInfo(makeActionInfo,MakeAutoSelectIndex(makeActionInfo));
+                    List<ActionResultInfo> actionResultInfos = makeActionInfo.ActionResults;
+
+                    foreach (var actionResultInfo in actionResultInfos)
+                    {
+                        ExecActionResultInfo(actionResultInfo);
+                        resultActionResultInfos.Add(actionResultInfo);                        
+                    }
+                }
+            }
+        }
+        _currentBattler = null;
+        return resultActionResultInfos;
+    }
+
     public bool CheckRegene()
     {
         return CurrentBattler != null && CurrentBattler.IsState(StateType.Regene);
@@ -895,7 +917,7 @@ public class BattleModel : BaseModel
             }
         }
 
-        List<ActionResultInfo> actionResultInfos = CurrentActionInfo().actionResults;
+        List<ActionResultInfo> actionResultInfos = CurrentActionInfo().ActionResults;
         for (var i = 0;i < actionResultInfos.Count;i++)
         {
             BattlerInfo target = GetBattlerInfo(actionResultInfos[i].TargetIndex);
@@ -1065,7 +1087,8 @@ public class BattleModel : BaseModel
 
     public bool EnableEspape()
     {
-        return CurrentTroopInfo().TroopId < 2000;
+        int troopId = CurrentTroopInfo().TroopId;
+        return troopId >= 100 && troopId < 2000;
     }
 
     public void EscapeBattle()

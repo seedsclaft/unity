@@ -37,7 +37,6 @@ public class BattlePresenter : BasePresenter
         _view.SetAttributeTypes(_model.AttributeTypes(),_model.CurrentAttributeType);
         var bgm = await _model.GetBattleBgm();
         Ryneus.SoundManager.Instance.PlayBgm(bgm,1.0f,true);
-        //SoundManager.Instance.PlayBgm(bgm,1.0f,true);
 
         _view.StartBattleStartAnim(DataSystem.System.GetTextData(4).Text);
         _nextCommandType = Battle.CommandType.EventCheck;
@@ -307,7 +306,7 @@ public class BattlePresenter : BasePresenter
     {
         _view.SetBattlerSelectable(true);
         ActionInfo actionInfo = _model.CurrentActionInfo();
-        if (actionInfo.actionResults.Count == 0)
+        if (actionInfo.ActionResults.Count == 0)
         {
             _nextCommandType = Battle.CommandType.SkillAction;
             CommandEndAnimation();
@@ -318,13 +317,13 @@ public class BattlePresenter : BasePresenter
         {
             _view.StartAnimationAll(animation);
         }
-        for (int i = 0; i < actionInfo.actionResults.Count; i++)
+        for (int i = 0; i < actionInfo.ActionResults.Count; i++)
         {
             if (actionInfo.Master.AnimationType != AnimationType.All)
             {
-                _view.StartAnimation(actionInfo.actionResults[i].TargetIndex,animation,actionInfo.Master.AnimationPosition);
+                _view.StartAnimation(actionInfo.ActionResults[i].TargetIndex,animation,actionInfo.Master.AnimationPosition);
             }
-            _view.StartSkillDamage(actionInfo.actionResults[i].TargetIndex,actionInfo.Master.DamageTiming,(targetIndex) => StartSkillDamage(targetIndex));
+            _view.StartSkillDamage(actionInfo.ActionResults[i].TargetIndex,actionInfo.Master.DamageTiming,(targetIndex) => StartSkillDamage(targetIndex));
         }
         _nextCommandType = Battle.CommandType.EndAnimation;
     }
@@ -335,7 +334,7 @@ public class BattlePresenter : BasePresenter
         ActionInfo actionInfo = _model.CurrentActionInfo();
         if (actionInfo != null)
         {
-            List<ActionResultInfo> actionResultInfos = actionInfo.actionResults;
+            List<ActionResultInfo> actionResultInfos = actionInfo.ActionResults;
             for (int i = 0; i < actionResultInfos.Count; i++)
             {
                 PopupActionResult(actionResultInfos[i],targetIndex);
@@ -439,6 +438,7 @@ public class BattlePresenter : BasePresenter
             var isAbort = CheckAdvStageEvent(EventTiming.StartBattle,() => {
                 _view.HideEnemyStatus();
                 _view.SetBattleBusy(false);
+                CommandStartBattleAction();
                 _busy = false;
             });
             if (isAbort)
@@ -447,6 +447,7 @@ public class BattlePresenter : BasePresenter
                 _view.SetBattleBusy(true);
                 return;
             }
+            CommandStartBattleAction();
             return;
         }
         if (_nextCommandType == Battle.CommandType.EndBattle)
@@ -474,7 +475,7 @@ public class BattlePresenter : BasePresenter
         ActionInfo actionInfo = _model.CurrentActionInfo();
         if (actionInfo != null)
         {
-            StartDeathAnimation(_model.CurrentActionInfo().actionResults);
+            StartDeathAnimation(_model.CurrentActionInfo().ActionResults);
             if (actionInfo.Master.SkillType != SkillType.Demigod)
             {
                 // ステートなどを適用
@@ -536,6 +537,15 @@ public class BattlePresenter : BasePresenter
         }
         _view.HideEnemyStatus();
         _view.SetBattleBusy(false);
+    }
+
+    private void CommandStartBattleAction()
+    {
+        var actionResultInfos = _model.StartBattleAction();
+        foreach (var actionResultInfo in actionResultInfos)
+        {
+            PopupActionResult(actionResultInfo,actionResultInfo.TargetIndex);
+        }
     }
 
     private void CommandEndSlipDamageAnimation()

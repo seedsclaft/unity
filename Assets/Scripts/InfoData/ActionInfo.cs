@@ -21,7 +21,7 @@ public class ActionInfo
     public ScopeType ScopeType {get {return _scopeType;}}
 
     private List<ActionResultInfo> _actionResult = new List<ActionResultInfo>();
-    public List<ActionResultInfo> actionResults {get {return _actionResult;}}
+    public List<ActionResultInfo> ActionResults {get {return _actionResult;}}
 
     private int _mpCost;
     public int MpCost{

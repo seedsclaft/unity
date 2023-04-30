@@ -102,8 +102,13 @@ public class StatusModel : BaseModel
 
     public bool EnableParamUp(StatusParamType statusParamType)
     {
+        int UseCost = CurrentActor.UsePoint.GetParameter(statusParamType);
+        if (CurrentAlcana.IsStatusCostDown(statusParamType))
+        {
+            UseCost -= 1;
+        }
         int Numinous = Currency - _useNuminous;
-        return (CurrentActor.Sp + Numinous) >= CurrentActor.UsePoint.GetParameter(statusParamType);
+        return (CurrentActor.Sp + Numinous) >= UseCost;
     }
 
     public bool EnableParamMinus(StatusParamType statusParamType)
@@ -116,6 +121,10 @@ public class StatusModel : BaseModel
         if (value > 0)
         {
             int Cost = CurrentActor.UsePointCost(statusParamType);
+            if (CurrentAlcana.IsStatusCostDown(statusParamType))
+            {
+                Cost -= 1;
+            }
             if (CurrentActor.Sp >= Cost)
             {
                 CurrentActor.ChangeSp(CurrentActor.Sp - Cost);
@@ -129,6 +138,10 @@ public class StatusModel : BaseModel
         {
             CurrentActor.TempStatus.AddParameter(statusParamType,value);
             int BackPoint = CurrentActor.UsePointCost(statusParamType);
+            if (CurrentAlcana.IsStatusCostDown(statusParamType))
+            {
+                BackPoint -= 1;
+            }
             if (_useNuminous >= BackPoint)
             {
                 _useNuminous -= BackPoint;
