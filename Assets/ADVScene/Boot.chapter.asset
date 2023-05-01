@@ -57,6 +57,14 @@ MonoBehaviour:
       strings:
       - Chara2
       - "\u30AD\u30E3\u30ED\u30E9\u30A4\u30F3"
+      - 
+      - 
+      - -240
+      - 
+      - 
+      - .75
+      - 
+      - 0002/Main.png
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
@@ -65,6 +73,14 @@ MonoBehaviour:
       strings:
       - Chara3
       - "\u30A2\u30EA\u30B9"
+      - 
+      - 
+      - -240
+      - 
+      - 
+      - .75
+      - 
+      - 0003/Main.png
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
@@ -73,6 +89,14 @@ MonoBehaviour:
       strings:
       - Chara4
       - "\u30D5\u30EA\u30EB"
+      - 
+      - 
+      - -240
+      - 
+      - 
+      - .75
+      - 
+      - 0004/Main.png
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
@@ -86,7 +110,7 @@ MonoBehaviour:
       debugInfo: 
     name: Assets/ADVScene/ADVScene.xls:Character
     type: 1
-    textLength: 204
+    textLength: 264
     headerRow: 0
     sourceAssetInEditor: {fileID: 0}
   - rows:
@@ -112,9 +136,69 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
+    - rowIndex: 1
+      debugIndex: 1
+      strings:
+      - Event1
+      - Bg
+      - 
+      - 
+      - 
+      - 
+      - .6
+      - 
+      - white_377.jpg
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 2
+      debugIndex: 2
+      strings:
+      - Event2
+      - Bg
+      - 
+      - 
+      - 
+      - 
+      - .6
+      - 
+      - blue_230.jpg
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 3
+      debugIndex: 3
+      strings:
+      - Tactics
+      - Bg
+      - 
+      - 
+      - 
+      - 
+      - 1
+      - 
+      - 274.png
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 4
+      debugIndex: 4
+      strings:
+      - Event3
+      - Bg
+      - 
+      - 
+      - 
+      - 
+      - .6
+      - 
+      - yellow_177.jpg
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
     name: Assets/ADVScene/ADVScene.xls:Texture
     type: 1
-    textLength: 112
+    textLength: 198
     headerRow: 0
     sourceAssetInEditor: {fileID: 0}
   - rows:

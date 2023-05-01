@@ -28,6 +28,9 @@ namespace Utage
                 case "PlayBgm":
                     command = new AdvCommandPlayBgm(row);
                     break;
+                case "StopBgm2":
+                    command = new AdvCommandStopBgm2(row);
+                    break;
             }
         }
     }
@@ -69,6 +72,19 @@ namespace Utage
         {
             var bgm = await GetBgmData(bgmKey);
             Ryneus.SoundManager.Instance.PlayBgm(bgm,1.0f,true);
+        }
+    }
+
+    public class AdvCommandStopBgm2 : AdvCommand
+    {
+        public AdvCommandStopBgm2(StringGridRow row)
+            :base(row)
+        {
+        }
+    
+        public override void DoCommand(AdvEngine engine)
+        {
+            Ryneus.SoundManager.Instance.StopBgm();
         }
     }
 }
