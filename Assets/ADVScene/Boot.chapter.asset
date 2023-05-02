@@ -49,6 +49,14 @@ MonoBehaviour:
       strings:
       - Chara1
       - "\u30D8\u30AB\u30C6\u30FC"
+      - 
+      - 
+      - -240
+      - 
+      - 
+      - .75
+      - 
+      - 0001/Main.png
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
@@ -105,12 +113,20 @@ MonoBehaviour:
       strings:
       - Chara5
       - "\u30CB\u30E5\u30AF\u30B9"
+      - 
+      - 
+      - -240
+      - 
+      - 
+      - .75
+      - 
+      - 0005/Main.png
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
     name: Assets/ADVScene/ADVScene.xls:Character
     type: 1
-    textLength: 264
+    textLength: 304
     headerRow: 0
     sourceAssetInEditor: {fileID: 0}
   - rows:
@@ -196,9 +212,54 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
+    - rowIndex: 5
+      debugIndex: 5
+      strings:
+      - Event4
+      - Bg
+      - 
+      - 
+      - 
+      - 
+      - .6
+      - 
+      - purple_110.jpg
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 6
+      debugIndex: 6
+      strings:
+      - Event5
+      - Bg
+      - 
+      - 
+      - 
+      - 
+      - .6
+      - 
+      - red_229.jpg
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 7
+      debugIndex: 7
+      strings:
+      - Event6
+      - Bg
+      - 
+      - 
+      - 
+      - 
+      - .6
+      - 
+      - purple_18.jpg
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
     name: Assets/ADVScene/ADVScene.xls:Texture
     type: 1
-    textLength: 198
+    textLength: 266
     headerRow: 0
     sourceAssetInEditor: {fileID: 0}
   - rows:
