@@ -79,25 +79,29 @@ public class ActorInfoComponent : MonoBehaviour
                 actorInfo.UsePoint.GetParameter(StatusParamType.Def),
                 actorInfo.UsePoint.GetParameter(StatusParamType.Spd)
             );
-            if (GameSystem.CurrentData.CurrentAlcana.IsStatusCostDown(StatusParamType.Hp))
+            var _currentAlcana = GameSystem.CurrentData.CurrentAlcana;
+            if (_currentAlcana != null)
             {
-                statusInfo.AddParameter(StatusParamType.Hp,-1);
-            } else
-            if (GameSystem.CurrentData.CurrentAlcana.IsStatusCostDown(StatusParamType.Mp))
-            {
-                statusInfo.AddParameter(StatusParamType.Mp,-1);
-            } else
-            if (GameSystem.CurrentData.CurrentAlcana.IsStatusCostDown(StatusParamType.Atk))
-            {
-                statusInfo.AddParameter(StatusParamType.Atk,-1);
-            } else
-            if (GameSystem.CurrentData.CurrentAlcana.IsStatusCostDown(StatusParamType.Def))
-            {
-                statusInfo.AddParameter(StatusParamType.Def,-1);
-            } else
-            if (GameSystem.CurrentData.CurrentAlcana.IsStatusCostDown(StatusParamType.Spd))
-            {
-                statusInfo.AddParameter(StatusParamType.Spd,-1);
+                if (_currentAlcana.IsStatusCostDown(StatusParamType.Hp))
+                {
+                    statusInfo.AddParameter(StatusParamType.Hp,-1);
+                } else
+                if (_currentAlcana.IsStatusCostDown(StatusParamType.Mp))
+                {
+                    statusInfo.AddParameter(StatusParamType.Mp,-1);
+                } else
+                if (_currentAlcana.IsStatusCostDown(StatusParamType.Atk))
+                {
+                    statusInfo.AddParameter(StatusParamType.Atk,-1);
+                } else
+                if (_currentAlcana.IsStatusCostDown(StatusParamType.Def))
+                {
+                    statusInfo.AddParameter(StatusParamType.Def,-1);
+                } else
+                if (_currentAlcana.IsStatusCostDown(StatusParamType.Spd))
+                {
+                    statusInfo.AddParameter(StatusParamType.Spd,-1);
+                }
             }
             needStatusInfoComponent.UpdateInfo(statusInfo);
         }

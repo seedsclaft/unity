@@ -45,21 +45,6 @@ abstract public class DataSystem
 
     private static TipsData _tips;
     public static List<TipsData.TipData> Tips {get{return _tips._data;}}
-    /*
-    public async Task LoadData()
-    {
-        var asset = Addressables.LoadAssetAsync<ActorsInfo>("Assets/Data/Actors.asset");
-        asset.WaitForCompletion();
-        DataSystem._actors = asset.Result._actors;
-        Addressables.Release(asset);
-        
-        var asset2 = Addressables.LoadAssetAsync<SystemInfo>("Assets/Data/System.asset");
-        asset2.WaitForCompletion();
-        DataSystem._system = asset2.Result;
-        Addressables.Release(asset2);
-
-    }
-    */
     public async Task LoadData(){
         var asset = await Addressables.LoadAssetAsync<ActorsData>("Assets/Data/Actors.asset").Task;
         DataSystem._actors = asset._data;
