@@ -43,13 +43,13 @@ public class SkillAttribute : ListItem ,IListViewItem
         }
     }
     
-    private void UpdateSkillIcon(int index)
+    private async void UpdateSkillIcon(int index)
     {
-        Addressables.LoadAssetAsync<IList<Sprite>>(
-            "Assets/Images/System/ElementIcon.png"
-        ).Completed += op => {
-            icon.sprite = op.Result[index];
-        };
+        var handle = await ResourceSystem.LoadAsset<IList<Sprite>>("Assets/Images/System/ElementIcon.png");
+        if (icon != null)
+        {
+            icon.sprite = handle[index];
+        }
     }
 
     public new void SetSelect()

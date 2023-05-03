@@ -9,10 +9,6 @@ public class StatusActorList : ListWindow , IInputHandlerEvent
     [SerializeField] private int rows = 0;
     [SerializeField] private int cols = 0;
 
-    public int selectIndex{
-        get {return Index;}
-    }
-
     public void Initialize(System.Action leftEvent,System.Action rightEvent,System.Action decideEvent,System.Action cancelEvent)
     {
         InitializeListView(1);

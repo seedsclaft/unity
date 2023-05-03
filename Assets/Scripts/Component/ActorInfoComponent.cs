@@ -123,48 +123,43 @@ public class ActorInfoComponent : MonoBehaviour
         
     }
 
-    private void UpdateMainThumb(string imagePath,int x,int y,float scale)
+    private async void UpdateMainThumb(string imagePath,int x,int y,float scale)
     {
-        Addressables.LoadAssetAsync<Sprite>(
-            "Actors/" + imagePath + "/Main.png"
-        ).Completed += op => {
-            if (mainThumb != null)
-            {
-                RectTransform rect = mainThumb.GetComponent < RectTransform > ();
-                rect.localPosition = new Vector3(x, y, 0);
-                rect.localScale = new Vector3(scale, scale, 1);
-                mainThumb.sprite = op.Result;
-            }
-        };
+        var handle = await ResourceSystem.LoadAsset<Sprite>("Actors/" + imagePath + "/Main");
+        if (mainThumb != null)
+        {
+            RectTransform rect = mainThumb.GetComponent < RectTransform > ();
+            rect.localPosition = new Vector3(x, y, 0);
+            rect.localScale = new Vector3(scale, scale, 1);
+            mainThumb.sprite = handle;
+        }
     }
 
-    private void UpdateAwakenThumb(string imagePath,int x,int y,float scale)
+    private async void UpdateAwakenThumb(string imagePath,int x,int y,float scale)
     {
-        Addressables.LoadAssetAsync<Sprite>(
-            "Actors/" + imagePath + "/Awaken"
-        ).Completed += op => {
+        var handle = await ResourceSystem.LoadAsset<Sprite>("Actors/" + imagePath + "/Awaken");
+        if (awakenThumb != null)
+        {
             RectTransform rect = awakenThumb.GetComponent < RectTransform > ();
             rect.localPosition = new Vector3(x, y, 0);
             rect.localScale = new Vector3(scale, scale, 1);
-            awakenThumb.sprite = op.Result;
-        };
+            awakenThumb.sprite = handle;
+        }
     }
 
-    private void UpdateMainFaceThumb(string imagePath)
+    private async void UpdateMainFaceThumb(string imagePath)
     {
-        Addressables.LoadAssetAsync<Sprite>(
-            "Actors/" + imagePath + "/MainFace"
-        ).Completed += op => {
-            faceThumb.sprite = op.Result;
-        };
+        var handle = await ResourceSystem.LoadAsset<Sprite>("Actors/" + imagePath + "/MainFace");
+        if (faceThumb != null) faceThumb.sprite = handle;
     }
-    private void UpdateAwakenFaceThumb(string imagePath)
+
+    private async void UpdateAwakenFaceThumb(string imagePath)
     {
-        Addressables.LoadAssetAsync<Sprite>(
-            "Actors/" + imagePath + "/AwakenFace"
-        ).Completed += op => {
-            awakenFaceThumb.sprite = op.Result;
-        };
+        var handle = await ResourceSystem.LoadAsset<Sprite>("Actors/" + imagePath + "/AwakenFace");
+        if (awakenFaceThumb != null)
+        {
+            awakenFaceThumb.sprite = handle;
+        }
     }
 
     private void UpdateAttributeParam(TextMeshProUGUI textMeshProUGUI,int param){

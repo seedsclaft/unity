@@ -20,11 +20,13 @@ MonoBehaviour:
   - m_GUID: 370416ce0e2abf54faebb4fe9066d63a
     m_Address: Assets/Data/Actors.asset
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - Data
   - m_GUID: 2640b180968255944a30b01416df8b9c
     m_Address: Assets/Data/System.asset
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - Data
   - m_GUID: c2c85e39b81ea8448833223ad13ea8c7
     m_Address: BootScene
     m_ReadOnly: 0
@@ -40,15 +42,18 @@ MonoBehaviour:
   - m_GUID: a03b8c6d5b5a5ce4cb2b88fd9688f8b5
     m_Address: Assets/Data/Items.asset
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - Data
   - m_GUID: 7012ac7791b5b4947a39464047329da6
     m_Address: Assets/Data/Enemies.asset
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - Data
   - m_GUID: be40a770e59156e4ea606d45096e9b76
     m_Address: Assets/Data/Classes.asset
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - Data
   - m_GUID: 47bd1ca0687aff849b862a1a349ded12
     m_Address: BattleScene
     m_ReadOnly: 0
@@ -56,19 +61,23 @@ MonoBehaviour:
   - m_GUID: 0263f7dc039047f4d8d5430c1d3e2a60
     m_Address: Assets/Data/Skills.asset
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - Data
   - m_GUID: 4fbb88198d3f911489f4d481adb54aa4
     m_Address: Assets/Data/MainData.asset
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - Data
   - m_GUID: dc81dc81f213d2749b0797aaaa155fc9
     m_Address: BGM/Rest-in-Peace_loop.ogg
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - Scene
   - m_GUID: f0fc6e92bc5f0034895da8c4cc0cbd95
     m_Address: BGM/Rest-in-Peace_intro.ogg
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - Scene
   - m_GUID: bc2b2977c1a1adf468baec820938cffa
     m_Address: Assets/Data/Stages.asset
     m_ReadOnly: 0
@@ -76,11 +85,13 @@ MonoBehaviour:
   - m_GUID: 42e27d839cf28d444970c7503b9e4358
     m_Address: BGM/dark-theme_wind_intro.ogg
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - Scene
   - m_GUID: 19ba90bc250d0ae45b39a74412f623ec
     m_Address: BGM/dark-theme_wind_loop.ogg
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - Scene
   - m_GUID: 45962001062ecdf4c9467de4fdb21f0d
     m_Address: Actors/0001/Awaken
     m_ReadOnly: 0
@@ -176,11 +187,13 @@ MonoBehaviour:
   - m_GUID: 2092e8430cf43294eb061f20e9342898
     m_Address: BGM/maoudamashii_healing_02.ogg
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - Scene
   - m_GUID: 5169cf53e55b4944abdf2433304b48c3
     m_Address: Assets/Data/Troops.asset
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - Data
   - m_GUID: 838b27fba88b00a4ab57dde9b21a8317
     m_Address: Enemies/Cursed
     m_ReadOnly: 0
@@ -188,27 +201,33 @@ MonoBehaviour:
   - m_GUID: 240d8d9f99208544d888c999179a5a6b
     m_Address: BGM/paradox_intro.ogg
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - Scene
   - m_GUID: 4fa09dc7200196d47a22152bd68d92d8
     m_Address: BGM/paradox_loop.ogg
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - Scene
   - m_GUID: f468ba79a51566449a5402a82a09a9e6
     m_Address: BGM/Disorder_intro.ogg
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - Scene
   - m_GUID: 3374cfa29e817c64ab34b10d44f499f4
     m_Address: BGM/Disorder_loop.ogg
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - Scene
   - m_GUID: 13c7448a764d7644fad0a9e0fa1c42a7
     m_Address: BGM/memento_intro.ogg
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - Scene
   - m_GUID: 35385a31313db874d8d70ae39f30181c
     m_Address: BGM/memento_loop.ogg
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - Scene
   - m_GUID: 1aabb1c28a70fd2409ed50426350317a
     m_Address: Assets/Animations/NA_Effekseer/NA_magic_008_c5.asset
     m_ReadOnly: 0
@@ -1268,7 +1287,8 @@ MonoBehaviour:
   - m_GUID: 6f9240ed7353d1049aa361fe97cadb8c
     m_Address: Assets/Data/States.asset
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - Data
   - m_GUID: 4c9153a762e857546a5e7a15fe7a5ce6
     m_Address: Enemies/Wolf
     m_ReadOnly: 0
@@ -1608,11 +1628,13 @@ MonoBehaviour:
   - m_GUID: ea01f6de9367faf40ae1afd9ef4a2c0f
     m_Address: BGM/scarlet_intro.ogg
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - Scene
   - m_GUID: fd8d2391900d2724aa1b5aa41b15888b
     m_Address: BGM/scarlet_loop.ogg
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - Scene
   - m_GUID: 2f23b22568e36134db5c7a01b1c74633
     m_Address: NameEntryScene
     m_ReadOnly: 0
@@ -1752,11 +1774,13 @@ MonoBehaviour:
   - m_GUID: f3f65ccdf6a299b4b9d2005636fa3bab
     m_Address: BGM/maoudamashii_healing_03.ogg
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - Scene
   - m_GUID: 314b2577fdc4a64498ba02299a52a678
     m_Address: BGM/maoudamashii_cyber_12.ogg
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - Scene
   - m_GUID: e7e876c7613318f4c82d0076cbdcedb9
     m_Address: Assets/Data/Advs.asset
     m_ReadOnly: 0
@@ -1822,7 +1846,7 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
   - m_GUID: 897eaa886b266414890498cf5dca3d66
-    m_Address: Assets/Images/Spells/Thunder.png
+    m_Address: Spells/Thunder
     m_ReadOnly: 0
     m_SerializedLabels: []
   - m_GUID: 4a9c1b30c1cf93743a8cf9ab3d62de23
@@ -1832,35 +1856,43 @@ MonoBehaviour:
   - m_GUID: 13fa3c3029c027c429951c2f6c3e9fcb
     m_Address: BGM/flamingo_intro.ogg
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - Scene
   - m_GUID: 5a4081ab2b7c6504caaabd20f512dbab
     m_Address: BGM/flamingo_loop.ogg
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - Scene
   - m_GUID: 47069b195f37cf24ba7c20524ba189fc
     m_Address: BGM/vOicE_intro.ogg
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - Scene
   - m_GUID: 315c95353be7b2d4f9cd50fa31dfe03a
     m_Address: BGM/vOicE_loop.ogg
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - Scene
   - m_GUID: 06987cdb3552ece4d8b515a237c865cc
     m_Address: BGM/Ruined_intro.ogg
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - Scene
   - m_GUID: 35a841c509fccf24da9607aec215ecf5
     m_Address: BGM/Ruined_loop.ogg
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - Scene
   - m_GUID: 5932bb06d54479342a650116185cd278
     m_Address: BGM/Remotest-Liblary_intro.ogg
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - Scene
   - m_GUID: 441f88ed66182f24bb232912d5ed23b1
     m_Address: BGM/Remotest-Liblary_loop.ogg
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - Scene
   - m_GUID: 7e4a224fd7bafa5439ca6589ed00f3c1
     m_Address: Assets/AssetsData/Texture/BG/purple_18.jpg
     m_ReadOnly: 0
@@ -1895,6 +1927,18 @@ MonoBehaviour:
     m_SerializedLabels: []
   - m_GUID: 3fd17af27f456ee4194d307fdd33a9be
     m_Address: Assets/AssetsData/Texture/BG/blue_230.jpg
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: b6a45762804e1914fbe4aed5f1a67eca
+    m_Address: BGM/saikai637.ogg
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 7dfdbe3bac2adc4429a60ac91657777d
+    m_Address: BGM/Farewell_intro.ogg
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 338e8c5988bcf6b4da9a59bb4caac52c
+    m_Address: BGM/Farewell_loop.ogg
     m_ReadOnly: 0
     m_SerializedLabels: []
   m_ReadOnly: 0

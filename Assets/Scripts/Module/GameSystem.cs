@@ -231,9 +231,11 @@ public class GameSystem : MonoBehaviour
         if (_currentScene != null)
         { 
             DestroyImmediate(_currentScene.gameObject);
+            ResourceSystem.ReleaseAssets();
+            ResourceSystem.ReleaseScene();
         }
-        var loadScene = await ResourceSystem.LoadScene<GameObject>(scene);
-        var prefab = Instantiate(loadScene);
+        GameObject loadScene = await ResourceSystem.CreateScene<GameObject>(scene);
+        GameObject prefab = Instantiate(loadScene);
         prefab.transform.SetParent(uiRoot.transform, false);
         _currentScene = prefab.GetComponent<BaseView>();
         _currentScene.SetEvent((type) => updateCommand(type));

@@ -33,20 +33,17 @@ public class EnemyInfoComponent : MonoBehaviour
         
     }
 
-    private void UpdateMainThumb(string imagePath,int x,int y,float scale)
+    private async void UpdateMainThumb(string imagePath,int x,int y,float scale)
     {
-        Addressables.LoadAssetAsync<Sprite>(
-            "Enemies/" + imagePath
-        ).Completed += op => {
-            if (mainThumb != null)
-            {
-                mainThumb.gameObject.SetActive(true);
-                RectTransform rect = mainThumb.GetComponent < RectTransform > ();
-                rect.localPosition = new Vector3(x, y, 0);
-                rect.localScale = new Vector3(scale, scale, 1);
-                mainThumb.sprite = op.Result;
-            }
-        };
+        var handle = await ResourceSystem.LoadAsset<Sprite>("Enemies/" + imagePath);
+        if (mainThumb != null)
+        {
+            mainThumb.gameObject.SetActive(true);
+            RectTransform rect = mainThumb.GetComponent < RectTransform > ();
+            rect.localPosition = new Vector3(x, y, 0);
+            rect.localScale = new Vector3(scale, scale, 1);
+            mainThumb.sprite = handle;
+        }
     }
 
     public void ChangeHp(int value,int maxHp)

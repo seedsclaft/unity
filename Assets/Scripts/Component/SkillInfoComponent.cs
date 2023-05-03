@@ -68,24 +68,24 @@ public class SkillInfoComponent : MonoBehaviour
         }
     }
 
-    private void UpdateSkillIcon(MagicIconType iconIndex)
+    private async void UpdateSkillIcon(MagicIconType iconIndex)
     {
         icon.gameObject.SetActive(true);
-        Addressables.LoadAssetAsync<Sprite>(
-            "Spells/" + iconIndex.ToString()
-        ).Completed += op => {
-            icon.sprite = op.Result;
-        };
+        var handle = await ResourceSystem.LoadAsset<Sprite>("Spells/" + iconIndex.ToString());
+        if (icon != null)
+        {
+            icon.sprite = handle;
+        }
     }
 
-    private void UpdateSkillIconBack(AttributeType attributeType)
+    private async void UpdateSkillIconBack(AttributeType attributeType)
     {
         iconBack.gameObject.SetActive(true);
-        Addressables.LoadAssetAsync<Sprite>(
-            "Spells/" + attributeType.ToString()
-        ).Completed += op => {
-            iconBack.sprite = op.Result;
-        };
+        var handle = await ResourceSystem.LoadAsset<Sprite>("Spells/" + attributeType.ToString());
+        if (iconBack != null)
+        {
+            iconBack.sprite = handle;
+        }
     }
 
     private void UpdateLineImege()

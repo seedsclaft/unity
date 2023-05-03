@@ -45,15 +45,12 @@ public class GetItem : ListItem ,IListViewItem
         }
     }
 
-    private void UpdateElementIcon(int index)
+    private async void UpdateElementIcon(int index)
     {
-        Addressables.LoadAssetAsync<IList<Sprite>>(
-            "Assets/Images/System/ElementIcon.png"
-        ).Completed += op => {
-            if (iconImage != null)
-            {
-                iconImage.sprite = op.Result[index-1];
-            }
-        };
+        var handle = await ResourceSystem.LoadAsset<IList<Sprite>>("Assets/Images/System/ElementIcon.png");
+        if (iconImage != null)
+        {
+            iconImage.sprite = handle[index-1];
+        }
     }
 }

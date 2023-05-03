@@ -70,25 +70,7 @@ public class BaseModel
     }
 
     public async Task<List<AudioClip>> GetBgmData(string bgmKey){
-        BGMData bGMData = DataSystem.Data.GetBGM(bgmKey);
-        List<string> data = new List<string>();
-        if (bGMData.Loop)
-        {
-            data.Add("BGM/" + bGMData.FileName + "_intro.ogg");
-            data.Add("BGM/" + bGMData.FileName + "_loop.ogg");
-        } else{
-            data.Add("BGM/" + bGMData.FileName + ".ogg");
-        }
-        AudioClip result1 = null;
-        AudioClip result2 = null;
-        result1 = await ResourceSystem.LoadAsset<AudioClip>(data[0]);
-        if (data.Count > 1)
-        {
-             result2 = await ResourceSystem.LoadAsset<AudioClip>(data[1]);
-        }
-        return new List<AudioClip>(){
-            result1,result2
-        };    
+        return await ResourceSystem.LoadBGMAsset(bgmKey);
     }
 
     public List<SystemData.MenuCommandData> ConfirmCommand()
