@@ -125,7 +125,7 @@ public class ActorInfoComponent : MonoBehaviour
 
     private async void UpdateMainThumb(string imagePath,int x,int y,float scale)
     {
-        var handle = await ResourceSystem.LoadAsset<Sprite>("Actors/" + imagePath + "/Main");
+        var handle = await ResourceSystem.LoadAsset<Sprite>("Texture/Character/Actors/" + imagePath + "/Main.png");
         if (mainThumb != null)
         {
             RectTransform rect = mainThumb.GetComponent < RectTransform > ();
@@ -137,7 +137,7 @@ public class ActorInfoComponent : MonoBehaviour
 
     private async void UpdateAwakenThumb(string imagePath,int x,int y,float scale)
     {
-        var handle = await ResourceSystem.LoadAsset<Sprite>("Actors/" + imagePath + "/Awaken");
+        var handle = await ResourceSystem.LoadAsset<Sprite>("Texture/Character/Actors/" + imagePath + "/Awaken.png");
         if (awakenThumb != null)
         {
             RectTransform rect = awakenThumb.GetComponent < RectTransform > ();
@@ -149,13 +149,13 @@ public class ActorInfoComponent : MonoBehaviour
 
     private async void UpdateMainFaceThumb(string imagePath)
     {
-        var handle = await ResourceSystem.LoadAsset<Sprite>("Actors/" + imagePath + "/MainFace");
+        var handle = await ResourceSystem.LoadAsset<Sprite>("Texture/Character/Actors/" + imagePath + "/MainFace.png");
         if (faceThumb != null) faceThumb.sprite = handle;
     }
 
     private async void UpdateAwakenFaceThumb(string imagePath)
     {
-        var handle = await ResourceSystem.LoadAsset<Sprite>("Actors/" + imagePath + "/AwakenFace");
+        var handle = await ResourceSystem.LoadAsset<Sprite>("Texture/Character/Actors/" + imagePath + "/AwakenFace.png");
         if (awakenFaceThumb != null)
         {
             awakenFaceThumb.sprite = handle;
