@@ -46,26 +46,10 @@ public class StateInfoComponent : MonoBehaviour
         
         if (icon != null)
         {
-            UpdateStateIcon(stateData.IconIndex);
         }
         if (nameText != null)
         {
             nameText.text = stateData.Name;
         }
-    }
-
-    
-    private void UpdateStateIcon(int iconIndex)
-    {
-        icon.gameObject.SetActive(true);
-        Addressables.LoadAssetAsync<IList<Sprite>>(
-            "Assets/Images/System/IconSet.png"
-            //"Assets/Images/System/IconSet_" + iconIndex.ToString()
-        ).Completed += op => {
-            if (icon != null)
-            {
-                icon.sprite = op.Result[iconIndex];
-            }
-        };
     }
 }

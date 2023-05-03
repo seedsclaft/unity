@@ -36,7 +36,7 @@ public class EnemyInfoComponent : MonoBehaviour
     private void UpdateMainThumb(string imagePath,int x,int y,float scale)
     {
         Addressables.LoadAssetAsync<Sprite>(
-            "Assets/Images/Enemies/" + imagePath + ".png"
+            "Enemies/" + imagePath
         ).Completed += op => {
             if (mainThumb != null)
             {

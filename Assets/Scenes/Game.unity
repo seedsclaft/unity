@@ -1276,6 +1276,7 @@ GameObject:
   - component: {fileID: 325824991}
   - component: {fileID: 325824992}
   - component: {fileID: 325824993}
+  - component: {fileID: 325824994}
   m_Layer: 0
   m_Name: FileManager
   m_TagString: Untagged
@@ -1433,6 +1434,19 @@ MonoBehaviour:
   cacheDirectoryName: Cache
   cacheLoad: 1
   assetFileManager: {fileID: 325824990}
+--- !u!114 &325824994
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 325824987}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc030566f06d90d4582d58e30ac82fcf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rootAddress: Assets/AssetsData/
 --- !u!1 &361682495
 GameObject:
   m_ObjectHideFlags: 0
@@ -2939,7 +2953,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 669243365}
-  - component: {fileID: 669243364}
+  - component: {fileID: 669243366}
   m_Layer: 0
   m_Name: AdvEngine Starter
   m_TagString: Untagged
@@ -2947,32 +2961,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &669243364
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 669243363}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9dcdab4be6e5e9147b5310f3fe3be25a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isLoadOnAwake: 1
-  isAutomaticPlay: 0
-  startScenario: 
-  engine: {fileID: 456724002}
-  strageType: 0
-  scenarios: {fileID: 11400000, guid: 612f0a1cceed4894f9a564c9acac3b08, type: 2}
-  rootResourceDir: ADVScene
-  serverUrl: 
-  scenariosName: 
-  useChapter: 0
-  chapterNames: []
-  version: 1
-  scenarioDataProject: {fileID: 11400000, guid: e783cb7a508e722478a5960e76cadbd6,
-    type: 2}
 --- !u!4 &669243365
 Transform:
   m_ObjectHideFlags: 0
@@ -2988,6 +2976,24 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &669243366
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 669243363}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c0203eb820c5b4846b413d6f0fbdf9e0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startScenario: 
+  enableDownload: 0
+  localScenarios: {fileID: 11400000, guid: 612f0a1cceed4894f9a564c9acac3b08, type: 2}
+  chapterKeyList: []
+  rootResourceDir: 
+  engine: {fileID: 456724002}
 --- !u!1 &692468936
 GameObject:
   m_ObjectHideFlags: 0

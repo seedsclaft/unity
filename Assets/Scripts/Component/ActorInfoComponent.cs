@@ -126,7 +126,7 @@ public class ActorInfoComponent : MonoBehaviour
     private void UpdateMainThumb(string imagePath,int x,int y,float scale)
     {
         Addressables.LoadAssetAsync<Sprite>(
-            "Assets/Images/Actors/" + imagePath + "/Main.png"
+            "Actors/" + imagePath + "/Main.png"
         ).Completed += op => {
             if (mainThumb != null)
             {
@@ -141,7 +141,7 @@ public class ActorInfoComponent : MonoBehaviour
     private void UpdateAwakenThumb(string imagePath,int x,int y,float scale)
     {
         Addressables.LoadAssetAsync<Sprite>(
-            "Assets/Images/Actors/" + imagePath + "/Awaken.png"
+            "Actors/" + imagePath + "/Awaken"
         ).Completed += op => {
             RectTransform rect = awakenThumb.GetComponent < RectTransform > ();
             rect.localPosition = new Vector3(x, y, 0);
@@ -153,7 +153,7 @@ public class ActorInfoComponent : MonoBehaviour
     private void UpdateMainFaceThumb(string imagePath)
     {
         Addressables.LoadAssetAsync<Sprite>(
-            "Assets/Images/Actors/" + imagePath + "/MainFace.png"
+            "Actors/" + imagePath + "/MainFace"
         ).Completed += op => {
             faceThumb.sprite = op.Result;
         };
@@ -161,7 +161,7 @@ public class ActorInfoComponent : MonoBehaviour
     private void UpdateAwakenFaceThumb(string imagePath)
     {
         Addressables.LoadAssetAsync<Sprite>(
-            "Assets/Images/Actors/" + imagePath + "/AwakenFace.png"
+            "Actors/" + imagePath + "/AwakenFace"
         ).Completed += op => {
             awakenFaceThumb.sprite = op.Result;
         };

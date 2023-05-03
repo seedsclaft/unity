@@ -72,7 +72,7 @@ public class SkillInfoComponent : MonoBehaviour
     {
         icon.gameObject.SetActive(true);
         Addressables.LoadAssetAsync<Sprite>(
-            "Assets/Images/Spells/" + iconIndex.ToString() + ".png"
+            "Spells/" + iconIndex.ToString()
         ).Completed += op => {
             icon.sprite = op.Result;
         };
@@ -82,7 +82,7 @@ public class SkillInfoComponent : MonoBehaviour
     {
         iconBack.gameObject.SetActive(true);
         Addressables.LoadAssetAsync<Sprite>(
-            "Assets/Images/Spells/" + attributeType.ToString() + ".png"
+            "Spells/" + attributeType.ToString()
         ).Completed += op => {
             iconBack.sprite = op.Result;
         };

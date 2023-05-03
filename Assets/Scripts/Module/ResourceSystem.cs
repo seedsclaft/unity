@@ -32,21 +32,19 @@ public class ResourceSystem : MonoBehaviour
             case Scene.Boot:
             return "BootScene";
             case Scene.Title:
-            return "Assets/Prefabs/Title/TitleScene.prefab";
+            return "TitleScene";
             case Scene.NameEntry:
-            return "Assets/Prefabs/NameEntry/NameEntryScene.prefab";
+            return "NameEntryScene";
             case Scene.MainMenu:
-            return "Assets/Prefabs/MainMenu/MainMenuScene.prefab";
+            return "MainMenuScene";
             case Scene.Battle:
-            return "Assets/Prefabs/Battle/BattleScene.prefab";
+            return "BattleScene";
             case Scene.Status:
-            return "Assets/Prefabs/Status/StatusScene.prefab";
+            return "StatusScene";
             case Scene.Tactics:
-            return "Assets/Prefabs/Tactics/TacticsScene.prefab";
+            return "TacticsScene";
             case Scene.Strategy:
-            return "Assets/Prefabs/Strategy/StrategyScene.prefab";
-
-            
+            return "StrategyScene";
         }
         return "";
     }
@@ -55,9 +53,7 @@ public class ResourceSystem : MonoBehaviour
 public enum Scene
 {
     None,
-
     Base,
-
     Boot,
     Title,
     NameEntry,
