@@ -210,6 +210,9 @@ public class GameSystem : MonoBehaviour
     IEnumerator JumpScenarioAsync(string label, System.Action onComplete)
     {
         _busy = true;
+        while (advEngine.IsWaitBootLoading) yield return null;
+        while (advEngine.GraphicManager.IsLoading) yield return null;
+        while (advEngine.SoundManager.IsLoading) yield return null;
         advEngine.JumpScenario(label);
         advController.StartAdv();
         while (!advEngine.IsEndOrPauseScenario)
@@ -238,9 +241,9 @@ public class GameSystem : MonoBehaviour
         GameObject prefab = Instantiate(loadScene);
         prefab.transform.SetParent(uiRoot.transform, false);
         _currentScene = prefab.GetComponent<BaseView>();
+        _currentScene.SetTestMode(testMode);
         _currentScene.SetEvent((type) => updateCommand(type));
         _currentScene.Initialize();
-        _currentScene.SetTestMode(testMode);
     }
 
     private void CommandSetTemplete(TempInfo templete){
