@@ -47,7 +47,8 @@ public class GetItem : ListItem ,IListViewItem
 
     private async void UpdateElementIcon(int index)
     {
-        var handle = await ResourceSystem.LoadAsset<IList<Sprite>>("Assets/Images/System/ElementIcon.png");
+        //var handle = await ResourceSystem.LoadAsset<IList<Sprite>>("Assets/Images/System/ElementIcon.png");
+        var handle = Resources.LoadAll<Sprite>("System/ElementIcon");
         if (iconImage != null)
         {
             iconImage.sprite = handle[index-1];

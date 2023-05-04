@@ -20,7 +20,7 @@ public class ItemsImporter : AssetPostprocessor {
 		Target,
 		Value,
     }
-	static readonly string ExcelPath = "Assets/Data";
+	static readonly string ExcelPath = "Assets/Resources/Data";
 	static readonly string ExcelName = "Items.xlsx";
 
 	// アセット更新があると呼ばれる

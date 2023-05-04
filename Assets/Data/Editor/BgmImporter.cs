@@ -15,7 +15,7 @@ public class BgmImporter : AssetPostprocessor {
 		FileName,
 		Loop,
     }
-	static readonly string ExcelPath = "Assets/Data";
+	static readonly string ExcelPath = "Assets/Resources/Data";
 	static readonly string ExcelName = "BGM.xlsx";
 
 	// アセット更新があると呼ばれる

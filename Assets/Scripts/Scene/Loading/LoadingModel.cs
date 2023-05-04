@@ -23,7 +23,8 @@ public class LoadingModel : BaseModel
     public async Task<Sprite> TipsImage()
     {
         string path = "Texture/BG/" + _currentTips.ImagePath;
-        var result = await ResourceSystem.LoadAsset<Sprite>(path);
+        //var result = await ResourceSystem.LoadAsset<Sprite>(path);
+        var result = Resources.Load<Sprite>(path);
         return result;
     }
 }

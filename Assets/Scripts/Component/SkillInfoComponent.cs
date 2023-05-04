@@ -71,7 +71,8 @@ public class SkillInfoComponent : MonoBehaviour
     private async void UpdateSkillIcon(MagicIconType iconIndex)
     {
         icon.gameObject.SetActive(true);
-        var handle = await ResourceSystem.LoadAsset<Sprite>("Spells/" + iconIndex.ToString());
+        //var handle = await ResourceSystem.LoadAsset<Sprite>("Spells/" + iconIndex.ToString());
+        var handle = Resources.Load<Sprite>("Texture/Spells/" + iconIndex.ToString());
         if (icon != null)
         {
             icon.sprite = handle;
@@ -81,7 +82,8 @@ public class SkillInfoComponent : MonoBehaviour
     private async void UpdateSkillIconBack(AttributeType attributeType)
     {
         iconBack.gameObject.SetActive(true);
-        var handle = await ResourceSystem.LoadAsset<Sprite>("Spells/" + attributeType.ToString());
+        //var handle = await ResourceSystem.LoadAsset<Sprite>("Spells/" + attributeType.ToString());
+        var handle = Resources.Load<Sprite>("Texture/Spells/" + attributeType.ToString());
         if (iconBack != null)
         {
             iconBack.sprite = handle;

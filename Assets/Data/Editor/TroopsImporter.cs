@@ -26,7 +26,7 @@ public class TroopsImporter : AssetPostprocessor {
 		Param1,
 		Param2,
     }
-	static readonly string ExcelPath = "Assets/Data";
+	static readonly string ExcelPath = "Assets/Resources/Data";
 	static readonly string ExcelName = "Troops.xlsx";
 
 	// アセット更新があると呼ばれる

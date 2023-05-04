@@ -27,7 +27,7 @@ public class StagesInfoImporter : AssetPostprocessor {
 		Param,
 		ReadFlag
     }
-	static readonly string ExcelPath = "Assets/Data";
+	static readonly string ExcelPath = "Assets/Resources/Data";
 	static readonly string ExcelName = "Stages.xlsx";
 
 	// アセット更新があると呼ばれる

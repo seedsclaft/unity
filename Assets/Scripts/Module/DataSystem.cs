@@ -46,6 +46,7 @@ abstract public class DataSystem
     private static TipsData _tips;
     public static List<TipsData.TipData> Tips {get{return _tips._data;}}
     public async Task LoadData(){
+        /*
         var asset = await Addressables.LoadAssetAsync<ActorsData>("Assets/Data/Actors.asset").Task;
         DataSystem._actors = asset._data;
         var asset2 = await Addressables.LoadAssetAsync<SystemData>("Assets/Data/System.asset").Task;
@@ -70,5 +71,18 @@ abstract public class DataSystem
         DataSystem._tips = asset11;
         
         AddressablesKey.LoadAssetAsync<DataManager>("Assets/Data/MainData.asset",(data) => {DataSystem._data = data;});
+        */
+        DataSystem._actors = Resources.Load<ActorsData>("Data/Actors")._data;
+        DataSystem._system = Resources.Load<SystemData>("Data/System");
+        DataSystem._classes = Resources.Load<ClassesData>("Data/Classes");
+        DataSystem._enemies = Resources.Load<EnemiesData>("Data/Enemies");
+        DataSystem._skills = Resources.Load<SkillsData>("Data/Skills");
+        DataSystem._stages = Resources.Load<StagesData>("Data/Stages");
+        DataSystem._troops = Resources.Load<TroopsData>("Data/Troops");
+        DataSystem._states = Resources.Load<StatesData>("Data/States");
+        DataSystem._alcana = Resources.Load<AlcanaData>("Data/Alcana");
+        DataSystem._advs = Resources.Load<AdvsData>("Data/Advs");
+        DataSystem._tips = Resources.Load<TipsData>("Data/Tips");
+        DataSystem._data = Resources.Load<DataManager>("Data/MainData");
     }
 }

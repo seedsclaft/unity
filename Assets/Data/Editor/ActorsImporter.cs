@@ -46,7 +46,7 @@ public class ActorsImporter : AssetPostprocessor {
 		ActorId = 0,
 		SkillId,
 	}
-	static readonly string ExcelPath = "Assets/Data";
+	static readonly string ExcelPath = "Assets/Resources/Data";
 	static readonly string ExcelName = "Actors.xlsx";
 
 	// アセット更新があると呼ばれる

@@ -26,7 +26,7 @@ public class SystemImporter : AssetPostprocessor
     }
 
 
-	static readonly string ExcelPath = "Assets/Data";
+	static readonly string ExcelPath = "Assets/Resources/Data";
 	static readonly string ExcelName = "System.xlsx";
     
 	// アセット更新があると呼ばれる

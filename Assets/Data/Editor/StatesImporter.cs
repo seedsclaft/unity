@@ -16,7 +16,7 @@ public class StatesImporter : AssetPostprocessor {
 		IconIndex,
         RemovalTiming
     }
-	static readonly string ExcelPath = "Assets/Data";
+	static readonly string ExcelPath = "Assets/Resources/Data";
 	static readonly string ExcelName = "States.xlsx";
 
 	// アセット更新があると呼ばれる

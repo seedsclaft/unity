@@ -13,7 +13,7 @@ public class ClassesInfoImporter : AssetPostprocessor {
 		Id = 0,
 		Name,
     }
-	static readonly string ExcelPath = "Assets/Data";
+	static readonly string ExcelPath = "Assets/Resources/Data";
 	static readonly string ExcelName = "Classes.xlsx";
 
 	// アセット更新があると呼ばれる

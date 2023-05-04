@@ -14,7 +14,7 @@ public class AdvImporter : AssetPostprocessor {
 		Id = 0,
 		AdvName,
     }
-	static readonly string ExcelPath = "Assets/Data";
+	static readonly string ExcelPath = "Assets/Resources/Data";
 	static readonly string ExcelName = "Advs.xlsx";
 
 	// アセット更新があると呼ばれる

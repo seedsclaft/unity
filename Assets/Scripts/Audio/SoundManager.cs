@@ -44,8 +44,17 @@ namespace Ryneus{
         }
 
 
-        private void SetSeAudio(AudioSource audioSource,string sePath,float volume,float pitch)
+        private async void SetSeAudio(AudioSource audioSource,string sePath,float volume,float pitch)
         {
+            var handle = await ResourceSystem.LoadBGMResources("Audios/SE/" + sePath + "");
+            
+            if (audioSource != null)
+            {
+                audioSource.clip = handle;
+                audioSource.pitch = pitch;
+                audioSource.volume = volume;
+            }
+                /*
             Addressables.LoadAssetAsync<AudioClip>(
                 "Assets/Audios/SE/" + sePath + ".ogg"
             ).Completed += op => {
@@ -56,6 +65,7 @@ namespace Ryneus{
                     audioSource.volume = volume;
                 }
             };
+            */
         }
 
         void LateUpdate()

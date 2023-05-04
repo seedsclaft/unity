@@ -51,7 +51,7 @@ public class EnemiesImporter : AssetPostprocessor {
 		Text,
 		Help
 	}
-	static readonly string ExcelPath = "Assets/Data";
+	static readonly string ExcelPath = "Assets/Resources/Data";
 	static readonly string ExcelName = "Enemies.xlsx";
 
 	// アセット更新があると呼ばれる

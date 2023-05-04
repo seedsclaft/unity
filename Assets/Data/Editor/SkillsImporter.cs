@@ -54,7 +54,7 @@ public class SkillsImporter : AssetPostprocessor {
 		Param2,
 		Param3
 	}
-	static readonly string ExcelPath = "Assets/Data";
+	static readonly string ExcelPath = "Assets/Resources/Data";
 	static readonly string ExcelName = "Skills.xlsx";
 
 	// アセット更新があると呼ばれる

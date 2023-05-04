@@ -5,6 +5,7 @@ using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Runtime.CompilerServices;
 
 public class ResourceSystem : MonoBehaviour
 {
@@ -13,8 +14,9 @@ public class ResourceSystem : MonoBehaviour
     public static async Task<GameObject> CreateScene<T>(Scene scene)
     {
         string address = GetScenePrefab(scene);
-        var handle = await Addressables.InstantiateAsync(address).Task;
-        _lastScene = handle;
+        //var handle = await Addressables.InstantiateAsync(address).Task;
+        var handle = Resources.Load<GameObject>(address);
+        //_lastScene = handle;
         return handle;
     }
 
@@ -29,24 +31,25 @@ public class ResourceSystem : MonoBehaviour
 
     private static string GetScenePrefab(Scene scene)
     {
+        string path = "Prefabs/";
         switch (scene)
         {
             case Scene.Boot:
-            return "BootScene";
+            return path + "Boot/BootScene";
             case Scene.Title:
-            return "TitleScene";
+            return path + "Title/TitleScene";
             case Scene.NameEntry:
-            return "NameEntryScene";
+            return path + "NameEntry/NameEntryScene";
             case Scene.MainMenu:
-            return "MainMenuScene";
+            return path + "MainMenu/MainMenuScene";
             case Scene.Battle:
-            return "BattleScene";
+            return path + "Battle/BattleScene";
             case Scene.Status:
-            return "StatusScene";
+            return path + "Status/StatusScene";
             case Scene.Tactics:
-            return "TacticsScene";
+            return path + "Tactics/TacticsScene";
             case Scene.Strategy:
-            return "StrategyScene";
+            return path + "Strategy/StrategyScene";
         }
         return "";
     }
@@ -72,24 +75,49 @@ public class ResourceSystem : MonoBehaviour
         List<string> data = new List<string>();
         if (bGMData.Loop)
         {
-            data.Add("BGM/" + bGMData.FileName + "_intro.ogg");
-            data.Add("BGM/" + bGMData.FileName + "_loop.ogg");
+            data.Add("Audios/BGM/" + bGMData.FileName + "_intro");
+            data.Add("Audios/BGM/" + bGMData.FileName + "_loop");
         } else{
-            data.Add("BGM/" + bGMData.FileName + ".ogg");
+            data.Add("Audios/BGM/" + bGMData.FileName + "");
         }
         AudioClip result1 = null;
         AudioClip result2 = null;
-        result1 = await LoadAsset<AudioClip>(data[0]);
+        //result1 = await LoadAsset<AudioClip>(data[0]);
+        result1 = await LoadBGMResources(data[0]);
         if (bGMData.Loop)
         {
-            result2 = await LoadAsset<AudioClip>(data[1]);
+            //result2 = await LoadAsset<AudioClip>(data[1]);
+            result2 = await LoadBGMResources(data[1]);
         }
         return new List<AudioClip>(){
             result1,result2
         };
     }
+
+    public static async Task<AudioClip> LoadBGMResources(string address)
+    {
+        var handle = Resources.LoadAsync<AudioClip>(address);
+        await handle;
+        return handle.asset as AudioClip;
+    }
 }
 
+public static class ResourceRequestExtenion
+{
+    // Resources.LoadAsyncの戻り値であるResourceRequestにGetAwaiter()を追加する
+    public static TaskAwaiter<Object> GetAwaiter(this ResourceRequest resourceRequest)
+    {
+        var tcs = new TaskCompletionSource<Object>();
+        resourceRequest.completed += operation =>
+        {
+            // ロードが終わった時点でTaskCompletionSource.TrySetResult
+            tcs.TrySetResult(resourceRequest.asset);
+        };
+
+        // TaskCompletionSource.Task.GetAwaiter()を返す
+        return tcs.Task.GetAwaiter();
+    }
+}
 public enum Scene
 {
     None,

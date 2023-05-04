@@ -16,7 +16,7 @@ public class AlcanaInfoImporter : AssetPostprocessor {
         FilePath,
         SkillId
     }
-	static readonly string ExcelPath = "Assets/Data";
+	static readonly string ExcelPath = "Assets/Resources/Data";
 	static readonly string ExcelName = "Alcana.xlsx";
 
 	// アセット更新があると呼ばれる

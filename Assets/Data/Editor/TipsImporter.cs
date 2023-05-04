@@ -15,7 +15,7 @@ public class TipsImporter : AssetPostprocessor {
 		NameId,
 		ImagePath,
     }
-	static readonly string ExcelPath = "Assets/Data";
+	static readonly string ExcelPath = "Assets/Resources/Data";
 	static readonly string ExcelName = "Tips.xlsx";
 
 	// アセット更新があると呼ばれる

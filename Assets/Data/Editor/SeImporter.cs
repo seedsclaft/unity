@@ -17,7 +17,7 @@ public class SeImporter : AssetPostprocessor {
 		Pitch,
 		Loop,
     }
-	static readonly string ExcelPath = "Assets/Data";
+	static readonly string ExcelPath = "Assets/Resources/Data";
 	static readonly string ExcelName = "SE.xlsx";
 
 	// アセット更新があると呼ばれる
