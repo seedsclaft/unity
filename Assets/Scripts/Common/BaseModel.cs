@@ -69,8 +69,8 @@ public class BaseModel
         }
     }
 
-    public async Task<List<AudioClip>> GetBgmData(string bgmKey){
-        return await ResourceSystem.LoadBGMAsset(bgmKey);
+    public List<AudioClip> GetBgmData(string bgmKey){
+        return ResourceSystem.LoadBGMAsset(bgmKey);
     }
 
     public List<SystemData.MenuCommandData> ConfirmCommand()
@@ -316,5 +316,10 @@ public class BaseModel
     public void StageClaer()
     {
         CurrentData.StageClaer();
+    }
+
+    public Dictionary<TacticsComandType, int> CommandRankInfo()
+    {
+        return PartyInfo.CommandRankInfo;
     }
 }

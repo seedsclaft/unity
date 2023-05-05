@@ -44,9 +44,9 @@ namespace Ryneus{
         }
 
 
-        private async void SetSeAudio(AudioSource audioSource,string sePath,float volume,float pitch)
+        private void SetSeAudio(AudioSource audioSource,string sePath,float volume,float pitch)
         {
-            var handle = await ResourceSystem.LoadBGMResources("Audios/SE/" + sePath + "");
+            var handle = Resources.Load<AudioClip>("Audios/SE/" + sePath + "");
             
             if (audioSource != null)
             {

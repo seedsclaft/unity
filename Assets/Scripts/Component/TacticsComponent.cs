@@ -99,6 +99,6 @@ public class TacticsComponent : MonoBehaviour
     }
 
     public void SetToggleHandler(System.Action<int> handler){
-        checkToggle.onValueChanged.AddListener((a) => handler(_actorInfo.ActorId));
+        //checkToggle.onValueChanged.AddListener((a) => handler(_actorInfo.ActorId));
     }
 }

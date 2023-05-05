@@ -127,16 +127,16 @@ public class TacticsView : BaseView
         _commandData(eventData);
     }
 
-    public void SetActors(List<ActorInfo> actorInfos,List<SystemData.MenuCommandData> confirmCommands)
+    public void SetActors(List<ActorInfo> actorInfos,List<SystemData.MenuCommandData> confirmCommands,Dictionary<TacticsComandType, int> commandRankInfo)
     {
         tacticsCharaLayer.Initialize(actorInfos,(actorinfo) => CallActorLayer(actorinfo));
         SetInputHandler(tacticsCharaLayer.GetComponent<IInputHandlerEvent>());
     
-        tacticsTrainList.Refresh(actorInfos);
+        tacticsTrainList.Refresh(actorInfos,commandRankInfo[TacticsComandType.Train]);
         tacticsTrainList.InitializeConfirm(confirmCommands,(confirmCommands) => CallTrainCommand(confirmCommands));
         HideTrainList();
 
-        tacticsAlchemyList.Initialize(actorInfos,(actorinfo) => CallActorAlchemy(actorinfo));
+        tacticsAlchemyList.Initialize(actorInfos,(actorinfo) => CallActorAlchemy(actorinfo),commandRankInfo[TacticsComandType.Alchemy]);
         SetInputHandler(tacticsAlchemyList.GetComponent<IInputHandlerEvent>());
         tacticsAlchemyList.InitializeConfirm(confirmCommands,(confirmCommands) => CallAlchemyCommand(confirmCommands));
         HideAlchemyList();
@@ -144,19 +144,20 @@ public class TacticsView : BaseView
         tacticsRecoveryList.Initialize(actorInfos,
             (actorinfo) => CallActorRecovery(actorinfo),
             (actorinfo) => CallRecoveryPlus(actorinfo),
-            (actorinfo) => CallRecoveryMinus(actorinfo)
+            (actorinfo) => CallRecoveryMinus(actorinfo),
+            commandRankInfo[TacticsComandType.Recovery]
         );
         SetInputHandler(tacticsRecoveryList.GetComponent<IInputHandlerEvent>());
         tacticsRecoveryList.InitializeConfirm(confirmCommands,(confirmCommands) => CallRecoveryCommand(confirmCommands));
         HideRecoveryList();
 
         
-        tacticsBattleList.Initialize(actorInfos,(actorinfo) => CallActorBattle(actorinfo));
+        tacticsBattleList.Initialize(actorInfos,(actorinfo) => CallActorBattle(actorinfo),commandRankInfo[TacticsComandType.Battle]);
         SetInputHandler(tacticsBattleList.GetComponent<IInputHandlerEvent>());
         tacticsBattleList.InitializeConfirm(confirmCommands,(confirmCommands) => CallBattleCommand(confirmCommands));
         HideBattleList();
 
-        tacticsResourceList.Initialize(actorInfos,(actorinfo) => CallActorResource(actorinfo));
+        tacticsResourceList.Initialize(actorInfos,(actorinfo) => CallActorResource(actorinfo),commandRankInfo[TacticsComandType.Resource]);
         SetInputHandler(tacticsResourceList.GetComponent<IInputHandlerEvent>());
         tacticsResourceList.InitializeConfirm(confirmCommands,(confirmCommands) => CallResourceCommand(confirmCommands));
         HideResourceList();
@@ -168,13 +169,26 @@ public class TacticsView : BaseView
         HideEnemyList();
     }
 
-    public void CommandRefresh()
+    public void CommandRefresh(TacticsComandType tacticsComandType)
     {
-        tacticsTrainList.Refresh();
-        tacticsAlchemyList.Refresh();
-        tacticsRecoveryList.Refresh();
-        tacticsBattleList.Refresh();
-        tacticsResourceList.Refresh();
+        switch (tacticsComandType)
+        {
+            case TacticsComandType.Train:
+            tacticsTrainList.Refresh();
+            return;
+            case TacticsComandType.Alchemy:
+            tacticsAlchemyList.Refresh();
+            return;
+            case TacticsComandType.Recovery:
+            tacticsRecoveryList.Refresh();
+            return;
+            case TacticsComandType.Battle:
+            tacticsBattleList.Refresh();
+            return;
+            case TacticsComandType.Resource:
+            tacticsResourceList.Refresh();
+            return;
+        }
     }
 
     public void AddAlcana()

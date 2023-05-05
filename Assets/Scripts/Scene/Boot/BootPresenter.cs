@@ -15,10 +15,10 @@ public class BootPresenter
         Initialize();
     }
 
-    private async void Initialize()
+    private void Initialize()
     {
 
-        await _model.LoadData();
+        _model.LoadData();
 
         _busy = false;
         Debug.Log("Boot Success");

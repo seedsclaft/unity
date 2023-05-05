@@ -21,7 +21,7 @@ public class TacticsPresenter :BasePresenter
         Initialize();
     }
 
-    private async void Initialize()
+    private void Initialize()
     {
         _model.RefreshTacticsEnable();
 
@@ -38,7 +38,7 @@ public class TacticsPresenter :BasePresenter
         _view.SetUIButton();
         _view.SetActiveBack(false);
         _view.SetEvent((type) => updateCommand(type));
-        _view.SetActors(_model.StageMembers(),_model.ConfirmCommand());
+        _view.SetActors(_model.StageMembers(),_model.ConfirmCommand(),_model.CommandRankInfo());
         _view.SetStageInfo(_model.CurrentStage);
         _view.SetEnemies(_model.TacticsTroops());
 
@@ -48,7 +48,7 @@ public class TacticsPresenter :BasePresenter
         CommandRefresh();
         //Ryneus.SoundManager.Instance.PlayBgm(bgm,1.0f,true);
 
-        var bgm = await _model.GetBgmData(_model.TacticsBgmFilename());
+        var bgm = _model.GetBgmData(_model.TacticsBgmFilename());
         Ryneus.SoundManager.Instance.PlayBgm(bgm,1.0f,true);
         // イベントチェック
         var stageEvents = _model.StageEvents(EventTiming.StartTactics);
@@ -684,7 +684,7 @@ public class TacticsPresenter :BasePresenter
         _view.SetStageInfo(_model.CurrentStage);
         
         if (_model.CurrentActor != null) _view.SetAttributeValues(_model.AttirbuteValues(),_model.AttirbutesLearingCosts(),_model.Currency);
-        _view.CommandRefresh();
+        _view.CommandRefresh(_model.CommandType);
     }
 
     private void CommandShowUi()

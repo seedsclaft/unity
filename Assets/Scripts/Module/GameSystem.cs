@@ -229,7 +229,7 @@ public class GameSystem : MonoBehaviour
         if(onComplete !=null) onComplete();
     }
 
-    private async void CommandSceneChange(Scene scene)
+    private void CommandSceneChange(Scene scene)
     {
         if (_currentScene != null)
         { 
@@ -237,7 +237,7 @@ public class GameSystem : MonoBehaviour
             ResourceSystem.ReleaseAssets();
             ResourceSystem.ReleaseScene();
         }
-        GameObject loadScene = await ResourceSystem.CreateScene<GameObject>(scene);
+        GameObject loadScene = ResourceSystem.CreateScene<GameObject>(scene);
         GameObject prefab = Instantiate(loadScene);
         prefab.transform.SetParent(uiRoot.transform, false);
         _currentScene = prefab.GetComponent<BaseView>();

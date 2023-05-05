@@ -17,14 +17,14 @@ public class NameEntryPresenter
         Initialize();
     }
 
-    private async void Initialize()
+    private void Initialize()
     {
         _view.SetHelpWindow();
         _view.SetEvent((type) => updateCommand(type));
 
 
 
-        var bgm = await _model.GetBgmData("MAINMENU");
+        var bgm = _model.GetBgmData("MAINMENU");
         Ryneus.SoundManager.Instance.PlayBgm(bgm,1.0f,true);
 
         //_view.CommandLoadingClose();
@@ -63,7 +63,7 @@ public class NameEntryPresenter
         ConfirmInfo popupInfo = new ConfirmInfo(DataSystem.System.GetTextData(5000).Text,(menuCommandInfo) => updatePopup((ConfirmComandType)menuCommandInfo));
         popupInfo.SetIsNoChoise(true);
         _view.CommandCallConfirm(popupInfo);
-        _view.ShowNameEntry(DataSystem.System.GetTextData(5001).Text);
+        _view.ShowNameEntry("");
     }
 
     private void CommandEntryEnd(string nameText)

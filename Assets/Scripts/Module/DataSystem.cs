@@ -45,7 +45,7 @@ abstract public class DataSystem
 
     private static TipsData _tips;
     public static List<TipsData.TipData> Tips {get{return _tips._data;}}
-    public async Task LoadData(){
+    public void LoadData(){
         /*
         var asset = await Addressables.LoadAssetAsync<ActorsData>("Assets/Data/Actors.asset").Task;
         DataSystem._actors = asset._data;

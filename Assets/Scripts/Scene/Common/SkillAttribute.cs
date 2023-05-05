@@ -43,7 +43,7 @@ public class SkillAttribute : ListItem ,IListViewItem
         }
     }
     
-    private async void UpdateSkillIcon(int index)
+    private void UpdateSkillIcon(int index)
     {
         //var handle = await ResourceSystem.LoadAsset<IList<Sprite>>("Assets/Images/System/ElementIcon.png");
         var handle = Resources.LoadAll<Sprite>("System/ElementIcon");

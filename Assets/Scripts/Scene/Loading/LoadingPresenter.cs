@@ -31,10 +31,10 @@ public class LoadingPresenter
         }
     }
 
-    private async void CommandRefresh()
+    private void CommandRefresh()
     {
         _model.RefreshTips();
-        var sprite = await _model.TipsImage();
+        var sprite = _model.TipsImage();
         _view.SetTips(sprite,_model.TipsText());
     }
 }

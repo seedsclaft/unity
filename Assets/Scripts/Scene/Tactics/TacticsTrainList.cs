@@ -12,7 +12,8 @@ public class TacticsTrainList : ListWindow , IInputHandlerEvent
     [SerializeField] private int rows = 0;
     [SerializeField] private int cols = 0;
     private List<ActorInfo> _actorInfos = new List<ActorInfo>();
-    [SerializeField] private TextMeshProUGUI costValue;
+    [SerializeField] private TextMeshProUGUI commandLv;
+    [SerializeField] private TextMeshProUGUI commandDescription;
     [SerializeField] private TacticsCommandList tacticsCommandList;
     private System.Action<TacticsComandType> _confirmEvent = null;
 
@@ -27,7 +28,7 @@ public class TacticsTrainList : ListWindow , IInputHandlerEvent
         SetInputHandler((a) => CallInputHandler(a,callEvent));
     }
 
-    public void Refresh(List<ActorInfo> actorInfos)
+    public void Refresh(List<ActorInfo> actorInfos,int rank)
     {
         ResetInputFrame();
         SetDataCount(actorInfos.Count);
@@ -43,6 +44,12 @@ public class TacticsTrainList : ListWindow , IInputHandlerEvent
             ObjectList[i].SetActive(i < _actorInfos.Count);
         }
         UpdateSelectIndex(-1);
+        commandLv.text = rank.ToString();
+        commandDescription.text = "";
+        if (rank > 0)
+        {
+            commandDescription.text = DataSystem.System.GetTextData(11).Text.Replace("\\d",(rank * 10).ToString());
+        }
     }
 
     public void InitializeConfirm(List<SystemData.MenuCommandData> confirmCommands ,System.Action<TacticsComandType> callEvent)

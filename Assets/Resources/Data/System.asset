@@ -87,6 +87,21 @@ MonoBehaviour:
   - Id: 7
     Text: "\u4F5C\u6226\u958B\u59CB"
     Help: "\u547D\u4EE4\u3092\u7D42\u4E86\u3057\u4F5C\u6226\u3092\u958B\u59CB\u3057\u307E\u3059"
+  - Id: 11
+    Text: "\\d%\u306E\u78BA\u7387\u3067\u3055\u3089\u306BLv\u30A2\u30C3\u30D7"
+    Help: '""'
+  - Id: 12
+    Text: "\\d%\u306E\u78BA\u7387\u3067\u6D88\u8CBB(Nu)\u534A\u6E1B"
+    Help: '""'
+  - Id: 13
+    Text: "\\d%\u306E\u78BA\u7387\u3067\u5168\u30B9\u30C6\u30FC\u30BF\u30B91\u4E0A\u6607"
+    Help: '""'
+  - Id: 14
+    Text: "\u7372\u5F97(Nu)\u304C\\d\u30A2\u30C3\u30D7"
+    Help: '""'
+  - Id: 15
+    Text: "\\d%\u306E\u78BA\u7387\u3067\u7372\u5F97(Nu)\u91CF2\u500D"
+    Help: '""'
   - Id: 101
     Text: NewGame
     Help: "\u521D\u3081\u304B\u3089\u30B2\u30FC\u30E0\u3092\u958B\u59CB\u3057\u307E\u3059"
@@ -234,11 +249,23 @@ MonoBehaviour:
   - Id: 3002
     Text: "\u5C5E\u6027\u306B\u300C\\d\u300D\u3092\u62E1\u5F35\uFF01"
     Help: '""'
+  - Id: 3003
+    Text: "\u7406\u6027\u62E1\u5F35\u30DC\u30FC\u30CA\u30B9\uFF01"
+    Help: '""'
+  - Id: 3004
+    Text: "\\d(Nu)\u3092\u9084\u5143\uFF01"
+    Help: '""'
   - Id: 3010
     Text: "\\d\u306E"
     Help: '""'
   - Id: 3011
     Text: "HP\u3068MP\u304C\u56DE\u5FA9\u3057\u305F\uFF01"
+    Help: '""'
+  - Id: 3012
+    Text: "\u5B58\u5728\u4FEE\u5FA9\u30DC\u30FC\u30CA\u30B9\uFF01"
+    Help: '""'
+  - Id: 3013
+    Text: "\u5168\u30B9\u30C6\u30FC\u30BF\u30B91\u4E0A\u6607\uFF01"
     Help: '""'
   - Id: 3020
     Text: "\\d\u306B\u3088\u308A"
@@ -248,6 +275,9 @@ MonoBehaviour:
     Help: '""'
   - Id: 3030
     Text: "\\d\u306E\u547D\u4EE4\u30E9\u30F3\u30AF\u304C\u30A2\u30C3\u30D7\uFF01"
+    Help: '""'
+  - Id: 3031
+    Text: Bonus!
     Help: '""'
   - Id: 3040
     Text: "\u6B21\u3078"
@@ -277,7 +307,7 @@ MonoBehaviour:
     Text: "\u3042\u306A\u305F\u306E\u540D\u524D\u3092\u805E\u304B\u305B\u3066\u304F\u3060\u3055\u3044"
     Help: '""'
   - Id: 5001
-    Text: "\u30B8\u30E3\u30AB\u30EB"
+    Text: '""'
     Help: '""'
   - Id: 5002
     Text: "1\u6587\u5B57\u4EE5\u4E0A\u306E\u540D\u524D\u3092\u5165\u529B\u3057\u3066\u304F\u3060\u3055\u3044"

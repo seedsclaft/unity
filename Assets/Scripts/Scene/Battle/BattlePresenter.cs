@@ -20,7 +20,7 @@ public class BattlePresenter : BasePresenter
         Initialize();
     }
 
-    private async void Initialize()
+    private void Initialize()
     {
         _model.CreateBattleData();
         _view.CreateObject();
@@ -35,7 +35,7 @@ public class BattlePresenter : BasePresenter
         _view.SetEnemies(_model.BattlerEnemies());
 
         _view.SetAttributeTypes(_model.AttributeTypes(),_model.CurrentAttributeType);
-        var bgm = await _model.GetBattleBgm();
+        var bgm = _model.GetBattleBgm();
         Ryneus.SoundManager.Instance.PlayBgm(bgm,1.0f,true);
 
         _view.StartBattleStartAnim(DataSystem.System.GetTextData(4).Text);
@@ -256,18 +256,18 @@ public class BattlePresenter : BasePresenter
         }
     }
 
-    private async void StartAnimationDemigod()
+    private void StartAnimationDemigod()
     {
-        var demigod = await _model.SkillActionAnimation("NA_Effekseer/NA_cut-in_002_" + _model.CurrentBattler.ActorInfo.ActorId.ToString());
+        var demigod = _model.SkillActionAnimation("NA_Effekseer/NA_cut-in_002_" + _model.CurrentBattler.ActorInfo.ActorId.ToString());
         _view.StartAnimationDemigod(demigod);
         _view.SetAnimationEndTiming(90);
         _nextCommandType = Battle.CommandType.EndDemigodAnimation;
     }
 
-    private async void StartAnimationRegene()
+    private void StartAnimationRegene()
     {
         var regeneActionResults = _model.UpdateRegeneState();
-        var animation = await _model.SkillActionAnimation("tktk01/Cure1");
+        var animation = _model.SkillActionAnimation("tktk01/Cure1");
         for (int i = 0; i < regeneActionResults.Count; i++)
         {
             _view.StartAnimation(regeneActionResults[i].TargetIndex,animation,0);
@@ -280,10 +280,10 @@ public class BattlePresenter : BasePresenter
         _nextCommandType = Battle.CommandType.EndRegeneAnimation;
     }
 
-    private async void StartAnimationSlipDamage()
+    private void StartAnimationSlipDamage()
     {
         var slipDamageActionResults = _model.UpdateSlipDamageState();
-        var animation = await _model.SkillActionAnimation("NA_Effekseer/NA_Fire_001");
+        var animation = _model.SkillActionAnimation("NA_Effekseer/NA_Fire_001");
         for (int i = 0; i < slipDamageActionResults.Count; i++)
         {
             _view.StartDamage(slipDamageActionResults[i].TargetIndex,DamageType.HpDamage,slipDamageActionResults[i].HpDamage);
@@ -302,7 +302,7 @@ public class BattlePresenter : BasePresenter
         _nextCommandType = Battle.CommandType.EndSlipDamageAnimation;
     }
 
-    private async void StartAnimationSkill()
+    private void StartAnimationSkill()
     {
         _view.SetBattlerSelectable(true);
         ActionInfo actionInfo = _model.CurrentActionInfo();
@@ -312,7 +312,7 @@ public class BattlePresenter : BasePresenter
             CommandEndAnimation();
             return;
         }
-        var animation = await _model.SkillActionAnimation(actionInfo.Master.AnimationName);
+        var animation = _model.SkillActionAnimation(actionInfo.Master.AnimationName);
         if (actionInfo.Master.AnimationType == AnimationType.All)
         {
             _view.StartAnimationAll(animation);

@@ -43,7 +43,7 @@ public class BattleModel : BaseModel
 
     private List<ActionInfo> _actionInfos = new List<ActionInfo>();
 
-    public Task<List<UnityEngine.AudioClip>> GetBattleBgm()
+    public List<UnityEngine.AudioClip> GetBattleBgm()
     {
         var battleMembers = PartyMembers();
         return GetBgmData("BATTLE" + (battleMembers[0].ActorId).ToString());
@@ -721,7 +721,7 @@ public class BattleModel : BaseModel
         actionInfo.SetActionResult(actionResultInfos);
     }
 
-    public async Task<EffekseerEffectAsset> SkillActionAnimation(string animationName)
+    public EffekseerEffectAsset SkillActionAnimation(string animationName)
     {
         //string path = "Assets/Animations/" + animationName + ".asset";
         //var result = await ResourceSystem.LoadAsset<EffekseerEffectAsset>(path);

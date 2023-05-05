@@ -11,8 +11,7 @@ public class TacticsUtility
 
     public static int TrainCost(ActorInfo actorInfo)
     {
-        int bonus = GameSystem.CurrentData.Party.GetTrainNuminosValue();
-        return actorInfo.Level * TacticsCostRate(actorInfo) + bonus;
+        return actorInfo.Level * TacticsCostRate(actorInfo);
     }
 
     public static int AlchemyCost(ActorInfo actorInfo,AttributeType attributeType,List<ActorInfo> stageMembers)
@@ -41,11 +40,6 @@ public class TacticsUtility
             cost *= 64;
         }
         
-        int bonus = GameSystem.CurrentData.Party.GetAlchemyNuminosValue();
-        if (bonus > 0)
-        {
-            cost = (int)Mathf.Floor(cost * (1f - bonus * 0.1f));
-        }
         return Mathf.FloorToInt( cost * TacticsCostRate(actorInfo));
     }
     public static int RecoveryCost(ActorInfo actorInfo)
@@ -56,7 +50,6 @@ public class TacticsUtility
     }
     public static int ResourceCost(ActorInfo actorInfo)
     {
-        int bonus = GameSystem.CurrentData.Party.GetResourceBonusValue();
-        return actorInfo.Level + bonus;
+        return actorInfo.Level;
     }
 }

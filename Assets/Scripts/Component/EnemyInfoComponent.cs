@@ -33,7 +33,7 @@ public class EnemyInfoComponent : MonoBehaviour
         
     }
 
-    private async void UpdateMainThumb(string imagePath,int x,int y,float scale)
+    private void UpdateMainThumb(string imagePath,int x,int y,float scale)
     {
         //var handle = await ResourceSystem.LoadAsset<Sprite>("Enemies/" + imagePath);
         var handle = Resources.Load<Sprite>("Enemies/" + imagePath);

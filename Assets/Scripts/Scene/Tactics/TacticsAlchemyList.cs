@@ -13,13 +13,15 @@ public class TacticsAlchemyList : ListWindow , IInputHandlerEvent
     [SerializeField] private int cols = 0;
     private List<ActorInfo> _actorInfos = new List<ActorInfo>();
     [SerializeField] private TacticsCommandList tacticsCommandList;
+    [SerializeField] private TextMeshProUGUI commandLv;
+    [SerializeField] private TextMeshProUGUI commandDescription;
     private System.Action<TacticsComandType> _confirmEvent = null;
     public int selectIndex{
         get {return Index;}
     }
 
 
-    public void Initialize(List<ActorInfo> actorInfos,System.Action<int> callEvent)
+    public void Initialize(List<ActorInfo> actorInfos,System.Action<int> callEvent,int rank)
     {
         InitializeListView(actorInfos.Count);
         _actorInfos = actorInfos;
@@ -36,6 +38,12 @@ public class TacticsAlchemyList : ListWindow , IInputHandlerEvent
         }
         SetInputHandler((a) => CallInputHandler(a,callEvent));
         UpdateSelectIndex(-1);
+        commandLv.text = rank.ToString();
+        commandDescription.text = "";
+        if (rank > 0)
+        {
+            commandDescription.text = DataSystem.System.GetTextData(12).Text.Replace("\\d",(rank * 10).ToString());
+        }
         Refresh();
     }
 

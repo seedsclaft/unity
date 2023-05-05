@@ -14,6 +14,8 @@ public class TacticsResourceList : ListWindow , IInputHandlerEvent
     private List<ActorInfo> _actorInfos = new List<ActorInfo>();
 
     [SerializeField] private TacticsCommandList tacticsCommandList;
+    [SerializeField] private TextMeshProUGUI commandLv;
+    [SerializeField] private TextMeshProUGUI commandDescription;
     private System.Action<TacticsComandType> _confirmEvent = null;
 
     public int selectIndex{
@@ -21,7 +23,7 @@ public class TacticsResourceList : ListWindow , IInputHandlerEvent
     }
 
 
-    public void Initialize(List<ActorInfo> actorInfos,System.Action<int> callEvent)
+    public void Initialize(List<ActorInfo> actorInfos,System.Action<int> callEvent,int rank)
     {
         InitializeListView(actorInfos.Count);
         _actorInfos = actorInfos;
@@ -37,7 +39,14 @@ public class TacticsResourceList : ListWindow , IInputHandlerEvent
             ObjectList[i].SetActive(i < _actorInfos.Count);
         }
         SetInputHandler((a) => CallInputHandler(a,callEvent));
+        commandLv.text = rank.ToString();
+        commandDescription.text = "";
+        if (rank > 0)
+        {
+            commandDescription.text = DataSystem.System.GetTextData(13).Text.Replace("\\d",(rank * 10).ToString());
+        }
         UpdateSelectIndex(-1);
+        Refresh();
     }
 
     public void InitializeConfirm(List<SystemData.MenuCommandData> confirmCommands ,System.Action<TacticsComandType> callEvent)
