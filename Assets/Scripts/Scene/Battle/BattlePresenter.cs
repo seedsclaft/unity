@@ -20,7 +20,7 @@ public class BattlePresenter : BasePresenter
         Initialize();
     }
 
-    private void Initialize()
+    private async void Initialize()
     {
         _model.CreateBattleData();
         _view.CreateObject();
@@ -35,7 +35,7 @@ public class BattlePresenter : BasePresenter
         _view.SetEnemies(_model.BattlerEnemies());
 
         _view.SetAttributeTypes(_model.AttributeTypes(),_model.CurrentAttributeType);
-        var bgm = _model.GetBattleBgm();
+        var bgm = await _model.GetBattleBgm();
         Ryneus.SoundManager.Instance.PlayBgm(bgm,1.0f,true);
 
         _view.StartBattleStartAnim(DataSystem.System.GetTextData(4).Text);

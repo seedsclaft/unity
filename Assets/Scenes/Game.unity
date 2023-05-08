@@ -6087,7 +6087,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 26}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1524364502
@@ -6097,7 +6097,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1524364500}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 35d396bcb8480c24eb784eebe6096a99, type: 3}
   m_Name: 
@@ -6105,8 +6105,8 @@ MonoBehaviour:
   TimingOfUpdate: 0
   EmitterScale: 0
   TimeScale: 0
-  effectAsset: {fileID: 11400000, guid: 19a7541858fb0d14f99be906ad67b942, type: 2}
-  playOnStart: 1
+  effectAsset: {fileID: 0}
+  playOnStart: 0
   isLooping: 0
 --- !u!1 &1527172635
 GameObject:
@@ -6706,8 +6706,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc34738223829f44c9a2b752c153bbcc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inBattleActorIds: 04000000
-  troopId: 40
+  inBattleActorIds: 02000000
+  troopId: 20
   actorDatas:
   - Id: 1
     Name: "\u30D8\u30AB\u30C6\u30FC"
@@ -7021,7 +7021,7 @@ MonoBehaviour:
       Level: 0
       Weight: 0
       TriggerDatas: []
-  advName: Event3_3
+  advName: 
 --- !u!1 &1651359293
 GameObject:
   m_ObjectHideFlags: 0

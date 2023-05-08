@@ -52,7 +52,7 @@ public class SkillsImporter : AssetPostprocessor {
 		TriggerTiming,
 		Param1,
 		Param2,
-		Param3
+		Param3 
 	}
 	static readonly string ExcelPath = "Assets/Resources/Data";
 	static readonly string ExcelName = "Skills.xlsx";

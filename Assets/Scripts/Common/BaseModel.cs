@@ -69,8 +69,8 @@ public class BaseModel
         }
     }
 
-    public List<AudioClip> GetBgmData(string bgmKey){
-        return ResourceSystem.LoadBGMAsset(bgmKey);
+    public async Task<List<AudioClip>> GetBgmData(string bgmKey){
+        return await ResourceSystem.LoadBGMAsset(bgmKey);
     }
 
     public List<SystemData.MenuCommandData> ConfirmCommand()

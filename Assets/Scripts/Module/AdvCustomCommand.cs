@@ -46,9 +46,9 @@ namespace Utage
         }
         
         //コマンド実行
-        public override void DoCommand(AdvEngine engine)
+        public override async void DoCommand(AdvEngine engine)
         {
-            var bgm = ResourceSystem.LoadBGMAsset(bgmKey);
+            var bgm = await ResourceSystem.LoadBGMAsset(bgmKey);
             Ryneus.SoundManager.Instance.PlayBgm(bgm,1.0f,true);
         }
     }

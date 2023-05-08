@@ -16,14 +16,14 @@ public class TitlePresenter
         Initialize();
     }
 
-    private void Initialize()
+    private async void Initialize()
     {
         _view.SetHelpWindow();
         _view.SetEvent((type) => updateCommand(type));
         _view.SetTitleCommand(_model.TitleCommand);
 
         CommandRefresh();
-        var bgm = _model.GetBgmData("TITLE");
+        var bgm = await _model.GetBgmData("TITLE");
         Ryneus.SoundManager.Instance.PlayBgm(bgm,1.0f,false);
 
         _busy = false;

@@ -69,7 +69,7 @@ public class ResourceSystem : MonoBehaviour
         _lastLoadAssets.Clear();
     }
 
-    public static List<AudioClip>LoadBGMAsset(string bgmKey)
+    public async static Task<List<AudioClip>>LoadBGMAsset(string bgmKey)
     {    
         BGMData bGMData = DataSystem.Data.GetBGM(bgmKey);
         List<string> data = new List<string>();
@@ -82,16 +82,40 @@ public class ResourceSystem : MonoBehaviour
         }
         AudioClip result1 = null;
         AudioClip result2 = null;
-        //result1 = await LoadAsset<AudioClip>(data[0]);
-        result1 = Resources.Load<AudioClip>(data[0]);
+        result1 = await LoadAssetResources<AudioClip>(data[0]);
+        //result1 = Resources.Load<AudioClip>(data[0]);
         if (bGMData.Loop)
         {
-            //result2 = await LoadAsset<AudioClip>(data[1]);
-            result2 = Resources.Load<AudioClip>(data[1]);
+            result2 = await LoadAssetResources<AudioClip>(data[1]);
+            //result2 = Resources.Load<AudioClip>(data[1]);
         }
         return new List<AudioClip>(){
             result1,result2
         };
+    }
+
+
+    public static async Task<AudioClip> LoadAssetResources<T>(string address){
+        var handle = Resources.LoadAsync<AudioClip>(address);
+        await handle;
+        return handle.asset as AudioClip;
+    }
+}
+
+public static class ResourceRequestExtenion
+{
+    // Resources.LoadAsyncの戻り値であるResourceRequestにGetAwaiter()を追加する
+    public static TaskAwaiter<Object> GetAwaiter(this ResourceRequest resourceRequest)
+    {
+        var tcs = new TaskCompletionSource<Object>();
+        resourceRequest.completed += operation =>
+        {
+            // ロードが終わった時点でTaskCompletionSource.TrySetResult
+            tcs.TrySetResult(resourceRequest.asset);
+        };
+
+        // TaskCompletionSource.Task.GetAwaiter()を返す
+        return tcs.Task.GetAwaiter();
     }
 }
 

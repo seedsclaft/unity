@@ -17,14 +17,14 @@ public class NameEntryPresenter
         Initialize();
     }
 
-    private void Initialize()
+    private async void Initialize()
     {
         _view.SetHelpWindow();
         _view.SetEvent((type) => updateCommand(type));
 
 
 
-        var bgm = _model.GetBgmData("MAINMENU");
+        var bgm = await _model.GetBgmData("MAINMENU");
         Ryneus.SoundManager.Instance.PlayBgm(bgm,1.0f,true);
 
         //_view.CommandLoadingClose();

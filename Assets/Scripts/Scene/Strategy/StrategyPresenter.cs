@@ -21,7 +21,7 @@ public class StrategyPresenter : BasePresenter
         Initialize();
     }
 
-    private void Initialize()
+    private async void Initialize()
     {
         _view.SetHelpWindow();
         _view.SetUiView();
@@ -29,7 +29,7 @@ public class StrategyPresenter : BasePresenter
 
         _view.SetActors(_model.StageMembers());
         _view.SetResultList(_model.ResultCommand());
-        var bgm = _model.GetBgmData("TACTICS1");
+        var bgm = await _model.GetBgmData("TACTICS1");
         Ryneus.SoundManager.Instance.PlayBgm(bgm,1.0f,true);
         _view.SetEvent((type) => updateCommand(type));
         _busy = true;

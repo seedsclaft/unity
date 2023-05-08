@@ -43,7 +43,7 @@ public class BattleModel : BaseModel
 
     private List<ActionInfo> _actionInfos = new List<ActionInfo>();
 
-    public List<UnityEngine.AudioClip> GetBattleBgm()
+    public Task<List<UnityEngine.AudioClip>> GetBattleBgm()
     {
         var battleMembers = PartyMembers();
         return GetBgmData("BATTLE" + (battleMembers[0].ActorId).ToString());

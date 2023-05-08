@@ -21,7 +21,7 @@ public class TacticsPresenter :BasePresenter
         Initialize();
     }
 
-    private void Initialize()
+    private async void Initialize()
     {
         _model.RefreshTacticsEnable();
 
@@ -48,7 +48,7 @@ public class TacticsPresenter :BasePresenter
         CommandRefresh();
         //Ryneus.SoundManager.Instance.PlayBgm(bgm,1.0f,true);
 
-        var bgm = _model.GetBgmData(_model.TacticsBgmFilename());
+        var bgm = await _model.GetBgmData(_model.TacticsBgmFilename());
         Ryneus.SoundManager.Instance.PlayBgm(bgm,1.0f,true);
         // イベントチェック
         var stageEvents = _model.StageEvents(EventTiming.StartTactics);
