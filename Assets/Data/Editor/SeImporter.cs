@@ -17,7 +17,7 @@ public class SeImporter : AssetPostprocessor {
 		Pitch,
 		Loop,
     }
-	static readonly string ExcelPath = "Assets/Resources/Data";
+	//static readonly string ExcelPath = "Assets/Resources/Data";
 	static readonly string ExcelName = "SE.xlsx";
 
 	// アセット更新があると呼ばれる
@@ -34,7 +34,7 @@ public class SeImporter : AssetPostprocessor {
 			// 同じパスのみ
 			string filePath = Path.GetDirectoryName(asset);
 			filePath = filePath.Replace("\\", "/");
-			if (filePath != ExcelPath) { continue; }
+			//if (filePath != ExcelPath) { continue; }
 
 			// 同じファイルのみ
 			if (fileName != ExcelName) { continue; }
@@ -52,7 +52,7 @@ public class SeImporter : AssetPostprocessor {
 		string FileName = Path.GetFileNameWithoutExtension(asset);
 
 		// ディレクトリ情報とファイル名の文字列を結合してアセット名を指定
-		string ExportPath = $"{Path.Combine(Path.GetDirectoryName(asset), "MainData")}.asset";
+		string ExportPath = $"Assets\\Resources\\Data\\MainData.asset";
 
 		DataManager Data = AssetDatabase.LoadAssetAtPath<DataManager>(ExportPath);
 		if (!Data)

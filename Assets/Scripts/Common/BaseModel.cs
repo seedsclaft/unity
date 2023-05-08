@@ -33,15 +33,50 @@ public class BaseModel
     public List<ActorInfo> StageMembers()
     {
         List<int> SelectActorIds = CurrentStage.SelectActorIds;
-        return Actors().FindAll(a => SelectActorIds.Contains(a.ActorId) && a.Lost == false);
+        var members = new List<ActorInfo>();
+        for (int i = 0;i < SelectActorIds.Count ;i++)
+        {
+            var temp = Actors().Find(a => a.ActorId == SelectActorIds[i] && a.Lost == false);
+            if (temp != null)
+            {
+                members.Add(temp);
+            }
+        }
+        return members;
     }
 
     public List<ActorInfo> PartyMembers()
     {
         List<int> PartyMembersIds = PartyInfo.ActorIdList;
-        return Actors().FindAll(a => PartyMembersIds.Contains(a.ActorId));
+        var members = new List<ActorInfo>();
+        for (int i = 0;i < PartyMembersIds.Count ;i++)
+        {
+            var temp = Actors().Find(a => a.ActorId == PartyMembersIds[i]);
+            if (temp != null)
+            {
+                members.Add(temp);
+            }
+        }
+        return members;
     }
 
+    public string TacticsBgmFilename()
+    {
+        if (CurrentStage != null)
+        {
+            if (CurrentStage.CurrentTurn >= 24)
+            {        
+                return "TACTICS3";
+            }
+            if (CurrentStage.CurrentTurn >= 12)
+            {        
+                return "TACTICS2";
+            }
+            return "TACTICS1";
+        }
+        return "TACTICS1";
+    }
+    
     public List<StagesData.StageEventData> StageEventDatas{ 
         get{ return DataSystem.Stages.Find(a => a.Id == CurrentStage.Id).StageEvents;}
     }
@@ -282,10 +317,8 @@ public class BaseModel
     public void SetStageActor()
     {
         //　加入しているパーティを生成
-        List<ActorInfo> selectActorIds = Actors().FindAll(a => StageMembers().Contains(a));
-        
         PartyInfo.InitActors();
-        foreach (var actorInfo in selectActorIds)
+        foreach (var actorInfo in StageMembers())
         {
             PartyInfo.AddActor(actorInfo.ActorId);
         }

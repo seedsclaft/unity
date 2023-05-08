@@ -47,6 +47,10 @@ public class TroopInfo
             {
                 getItemInfo.SetResultData("+" + getItemDatas[i].Param1.ToString() + DataSystem.System.GetTextData(1000).Text);
             }
+            if (getItemDatas[i].Type == GetItemType.Demigod)
+            {
+                getItemInfo.SetResultData(DataSystem.System.GetTextData(14042).Text + "+" + (getItemInfo.Param1).ToString());
+            }
             AddGetItemInfo(getItemInfo);
         }
     }

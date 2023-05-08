@@ -258,7 +258,7 @@ public class BattlePresenter : BasePresenter
 
     private void StartAnimationDemigod()
     {
-        var demigod = _model.SkillActionAnimation("NA_Effekseer/NA_cut-in_002_" + _model.CurrentBattler.ActorInfo.ActorId.ToString());
+        var demigod = _model.SkillActionAnimation("NA_Effekseer/NA_cut-in_002_" + _model.CurrentBattler.CharaId.ToString());
         _view.StartAnimationDemigod(demigod);
         _view.SetAnimationEndTiming(90);
         _nextCommandType = Battle.CommandType.EndDemigodAnimation;
@@ -630,7 +630,7 @@ public class BattlePresenter : BasePresenter
     {
         // 行動選択開始
         _view.SetHelpText(DataSystem.System.GetTextData(15010).Text);
-        _view.ShowSkillActionList(_model.CurrentBattler);
+        _view.ShowSkillActionList(_model.CurrentBattler,_model.CurrentBattlerActorData());
         _view.SetEscapeButton(_model.EnableEspape());
         _view.ShowConditionTab();
         CommandAttributeType(_model.CurrentAttributeType);

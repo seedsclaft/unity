@@ -42,7 +42,7 @@ public class TacticsBattleList : ListWindow , IInputHandlerEvent
         tacticsCommandList.UpdateSelectIndex(-1);
         
         commandLv.text = rank.ToString();
-        commandDescription.text = "";
+        commandDescription.text = DataSystem.System.GetTextData(10).Text;
         if (rank > 0)
         {
             commandDescription.text = DataSystem.System.GetTextData(14).Text.Replace("\\d",(rank * 5).ToString());

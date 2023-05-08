@@ -428,11 +428,13 @@ public class TacticsPresenter :BasePresenter
             _view.ActivateTacticsCommand();
             _view.SetActiveBack(false);
             _view.HideCommandList();
+            CommandRefresh();
             _backCommand = Tactics.CommandType.None;
         }
         if (tacticsComandType == TacticsComandType.Alchemy)
         {
             CommandSelectAlchemyClose();
+            CommandRefresh();
         }
         if (tacticsComandType == TacticsComandType.Recovery)
         {
@@ -441,6 +443,7 @@ public class TacticsPresenter :BasePresenter
             _view.ActivateTacticsCommand();
             _view.SetActiveBack(false);
             _view.HideCommandList();
+            CommandRefresh();
             _backCommand = Tactics.CommandType.None;
         }
         if (tacticsComandType == TacticsComandType.Battle)
@@ -450,6 +453,7 @@ public class TacticsPresenter :BasePresenter
             _view.SetActiveBack(true);
             _view.HideCommandList();
             _view.ShowEnemyList();
+            CommandRefresh();
             _backCommand = Tactics.CommandType.EnemyClose;
         }
         if (tacticsComandType == TacticsComandType.Resource)
@@ -459,6 +463,7 @@ public class TacticsPresenter :BasePresenter
             _view.ActivateTacticsCommand();
             _view.SetActiveBack(false);
             _view.HideCommandList();
+            CommandRefresh();
             _backCommand = Tactics.CommandType.None;
         }
         if (tacticsComandType == TacticsComandType.Status)

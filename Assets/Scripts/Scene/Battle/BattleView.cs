@@ -221,16 +221,16 @@ public class BattleView : BaseView
         _commandData(eventData);
     }
 
-    public void ShowSkillActionList(BattlerInfo battlerInfo)
+    public void ShowSkillActionList(BattlerInfo battlerInfo,ActorsData.ActorData actorData)
     {
         skillList.ShowActionList();
         skillList.ShowAttributeList();
         skillList.ActivateActionList();
         if (battlerInfo.IsState(StateType.Demigod))
         {
-            battleThumb.ShowAwakenThumb(battlerInfo.ActorInfo);
+            battleThumb.ShowAwakenThumb(actorData);
         } else{
-            battleThumb.ShowMainThumb(battlerInfo.ActorInfo);
+            battleThumb.ShowMainThumb(actorData);
         }
     }
 

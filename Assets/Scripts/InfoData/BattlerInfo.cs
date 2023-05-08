@@ -66,8 +66,8 @@ public class BattlerInfo
     private int _demigodParam = 0;
     public int DemigodParam {get {return _demigodParam;}}
 
-    private List<BattlerInfo> _party = new List<BattlerInfo>();
-    private List<BattlerInfo> _troops = new List<BattlerInfo>();
+    private UnitInfo _party = null;
+    private UnitInfo _troops = null;
 
     public BattlerInfo(ActorInfo actorInfo,int index){
         _charaId = actorInfo.ActorId;
@@ -141,7 +141,7 @@ public class BattlerInfo
         ResetAp(true);
     }
 
-    public void SetBattleData(List<BattlerInfo> party,List<BattlerInfo> troops)
+    public void SetBattleData(UnitInfo party,UnitInfo troops)
     {
         _party = party;
         _troops = troops;
@@ -158,7 +158,7 @@ public class BattlerInfo
                 if (featureData.FeatureType == FeatureType.AddState)
                 {
                     StateInfo stateInfo = new StateInfo(featureData.Param1,featureData.Param2,featureData.Param3,Index,Index,true);
-                    stateInfo.SetPassiveTrigger(passiveSkill.TriggerDatas);
+                    //stateInfo.SetPassiveTrigger(passiveSkill.TriggerDatas);
                     _stateInfos.Add(stateInfo);
                 }
             }

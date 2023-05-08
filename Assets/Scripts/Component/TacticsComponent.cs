@@ -88,7 +88,7 @@ public class TacticsComponent : MonoBehaviour
         if (busyRoot != null && busyText != null)
         {
             busyRoot.gameObject.SetActive(false);
-            if (currentTacticsComandType != actorInfo.TacticsComandType && actorInfo.TacticsComandType != TacticsComandType.None)
+            if (tacticsComandType != actorInfo.TacticsComandType && actorInfo.TacticsComandType != TacticsComandType.None)
             {
                 busyRoot.gameObject.SetActive(true);
                 TextData textData = DataSystem.System.GetTextData((int)actorInfo.TacticsComandType);

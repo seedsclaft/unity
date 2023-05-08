@@ -40,7 +40,7 @@ public class StateInfo {
         }
     }
 
-    public bool IsCanPassiveTriggered(BattlerInfo battlerInfo,List<BattlerInfo> party,List<BattlerInfo> troops)
+    public bool IsCanPassiveTriggered(BattlerInfo battlerInfo,UnitInfo party,UnitInfo troops)
     {
         if (_isPassive == false) return true;
         if (_triggerDatas == null) return true;

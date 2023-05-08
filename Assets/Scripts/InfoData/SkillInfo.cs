@@ -70,7 +70,7 @@ public class SkillInfo
         _isUsed = isUsed;
     }
 
-    public bool CanUseTrigger(BattlerInfo battlerInfo,List<BattlerInfo> party,List<BattlerInfo> troops)
+    public bool CanUseTrigger(BattlerInfo battlerInfo,UnitInfo party,UnitInfo troops)
     {
         if (_triggerDatas.Count == 0) return true;
         bool CanUse = true;

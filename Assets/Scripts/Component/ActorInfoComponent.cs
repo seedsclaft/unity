@@ -34,27 +34,12 @@ public class ActorInfoComponent : MonoBehaviour
         }
         var actorData = DataSystem.Actors.Find(actor => actor.Id == actorInfo.ActorId);
         
+        UpdateData(actorData);
         if (mainThumb != null){
-            UpdateMainThumb(actorData.ImagePath,actorData.X,actorData.Y,actorData.Scale);
             if (actorInfo.CurrentHp == 0 && actorInfo.InBattle || actorInfo.Lost)
             {
                 UpdateLostMainThumb();
             }
-        }
-        if (awakenThumb != null){
-            UpdateAwakenThumb(actorData.ImagePath,actorData.AwakenX,actorData.AwakenY,actorData.AwakenScale);
-        }
-        if (faceThumb != null){
-            UpdateMainFaceThumb(actorData.ImagePath);
-        }
-        if (awakenFaceThumb != null){
-            UpdateAwakenFaceThumb(actorData.ImagePath);
-        }
-        if (nameText != null){
-            nameText.text = actorData.Name;
-        }
-        if (element != null){
-            //element.text = actorData.Name;
         }
         if (demigod != null){
             demigod.text = actorInfo.DemigodParam.ToString();
@@ -123,6 +108,30 @@ public class ActorInfoComponent : MonoBehaviour
         
     }
 
+
+    public void UpdateData(ActorsData.ActorData actorData)
+    {
+
+        if (mainThumb != null){
+            UpdateMainThumb(actorData.ImagePath,actorData.X,actorData.Y,actorData.Scale);
+
+        }
+        if (awakenThumb != null){
+            UpdateAwakenThumb(actorData.ImagePath,actorData.AwakenX,actorData.AwakenY,actorData.AwakenScale);
+        }
+        if (faceThumb != null){
+            UpdateMainFaceThumb(actorData.ImagePath);
+        }
+        if (awakenFaceThumb != null){
+            UpdateAwakenFaceThumb(actorData.ImagePath);
+        }
+        if (nameText != null){
+            nameText.text = actorData.Name;
+        }
+        if (element != null){
+            //element.text = actorData.Name;
+        }
+    }
     private void UpdateMainThumb(string imagePath,int x,int y,float scale)
     {
         //var handle = await ResourceSystem.LoadAsset<Sprite>("Texture/Character/Actors/" + imagePath + "/Main.png");

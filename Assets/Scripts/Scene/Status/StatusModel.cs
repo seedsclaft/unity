@@ -42,7 +42,16 @@ public class StatusModel : BaseModel
 
     public List<ActorInfo> StatusActors(){
         List<int> StatusActorIds = PartyInfo.ActorIdList;
-        return Actors().FindAll(a => StatusActorIds.Contains(a.ActorId));
+        var members = new List<ActorInfo>();
+        for (int i = 0;i< StatusActorIds.Count;i++)
+        {
+            var temp = Actors().Find(a => a.ActorId == StatusActorIds[i]);
+            if (temp != null)
+            {
+                members.Add(temp);
+            }
+        }
+        return members;
     }
 
     private SkillInfo _learnSkillInfo = null;

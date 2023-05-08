@@ -20,22 +20,6 @@ public class TacticsModel : BaseModel
         get {return TacticsActor(_currentActorId);}
     }
 
-    public string TacticsBgmFilename()
-    {
-        if (CurrentStage != null)
-        {
-            if (CurrentStage.CurrentTurn > 24)
-            {        
-                return "TACTICS3";
-            }
-            if (CurrentStage.CurrentTurn > 12)
-            {        
-                return "TACTICS2";
-            }
-            return "TACTICS1";
-        }
-        return "TACTICS1";
-    }
     private TacticsComandType _commandType = TacticsComandType.Train;
     public TacticsComandType CommandType { get {return _commandType;} set {_commandType = value;}}
     private List<ActorInfo> _tempTacticsData = new List<ActorInfo>();
@@ -354,7 +338,7 @@ public class TacticsModel : BaseModel
                 actorInfo.ClearTacticsCommand();
             } else
             {
-                if (CanTacticsCommand(TacticsComandType.Recovery,actorInfo))
+                if (CanTacticsCommand(TacticsComandType.Battle,actorInfo))
                 {   
                     actorInfo.SetTacticsCommand(TacticsComandType.Battle,0);
                     actorInfo.SetNextBattleEnemyIndex(_currentEnemyIndex,TacticsTroops()[_currentEnemyIndex].BossEnemy.EnemyData.Id);
@@ -373,7 +357,7 @@ public class TacticsModel : BaseModel
                 actorInfo.ClearTacticsCommand();
             } else
             {
-                if (CanTacticsCommand(TacticsComandType.Recovery,actorInfo))
+                if (CanTacticsCommand(TacticsComandType.Resource,actorInfo))
                 {   
                     actorInfo.SetTacticsCommand(TacticsComandType.Resource,TacticsUtility.ResourceCost(actorInfo));
                     //PartyInfo.ChangeCurrency(Currency - actorInfo.TacticsCost);

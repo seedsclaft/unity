@@ -40,6 +40,10 @@ public class BattleModel : BaseModel
     {
         get {return _currentBattler;}
     }
+    public ActorsData.ActorData CurrentBattlerActorData()
+    {
+        return DataSystem.Actors.Find(a => a.Id == _currentBattler.CharaId);
+    }
 
     private List<ActionInfo> _actionInfos = new List<ActionInfo>();
 
@@ -73,9 +77,11 @@ public class BattleModel : BaseModel
             _battlers.Add(enemies[i]);
         }
 
+        var party = MakeUnitInfo(BattlerActors());
+        var troop = MakeUnitInfo(BattlerEnemies());
         foreach (var battler in _battlers)
         {
-            battler.SetBattleData(BattlerActors(),BattlerEnemies());
+            battler.SetBattleData(party,troop);
             battler.MakePassiveSkills();
         }
     }
@@ -317,7 +323,9 @@ public class BattleModel : BaseModel
                 return false;
             }
         }
-        if (skillInfo.CanUseTrigger(battlerInfo,BattlerActors(),BattlerEnemies()) == false)
+        var party = MakeUnitInfo(BattlerActors());
+        var troop = MakeUnitInfo(BattlerEnemies());
+        if (skillInfo.CanUseTrigger(battlerInfo,party,troop) == false)
         {
             return false;
         }
@@ -1102,9 +1110,31 @@ public class BattleModel : BaseModel
     {
         foreach (var battler in BattlerActors())
         {
-            ActorInfo actorInfo = battler.ActorInfo;
+            ActorInfo actorInfo = Actors().Find(a => a.ActorId == battler.CharaId);
             actorInfo.ChangeHp(battler.Hp);
             actorInfo.ChangeMp(battler.Mp);
         }
+    }
+
+    private UnitInfo MakeUnitInfo(List<BattlerInfo> battlerInfos)
+    {
+        int deathMemberCount = battlerInfos.FindAll(a => a.IsAlive() == false).Count;
+        float minHpRate = 1.0f;
+        foreach (var battlerInfo in battlerInfos)
+        {
+            if (battlerInfo.IsAlive())
+            {
+                if (minHpRate < ((float)battlerInfo.Hp / (float)battlerInfo.MaxHp))
+                {
+                    minHpRate = ((float)battlerInfo.Hp / (float)battlerInfo.MaxHp);
+                }
+            }
+        }
+                
+        var unitInfo = new UnitInfo(
+            deathMemberCount,
+            minHpRate
+        );
+        return unitInfo;
     }
 }

@@ -31,9 +31,6 @@ public class StatusPresenter
         _view.SetStatusCommand(_model.StatusCommand);
         _view.SetAttributeTypes(_model.AttributeTypes(),_model.CurrentAttributeType);
         if (_model.StatusActors().Count == 1) _view.HideArrows();
-        //var bgm = await _model.BgmData();
-        //Ryneus.SoundManager.Instance.PlayBgm(bgm,1.0f,true);
-        //Ryneus.SoundManager.Instance.PlayBgm(bgm,1.0f,true);
         CommandRefresh();
     }
 
@@ -233,6 +230,7 @@ public class StatusPresenter
          _model.ChangeActorIndex(-1);
         _view.SetActorInfo(_model.CurrentActor,_model.StatusActors());
         CommandAttributeType(_model.CurrentAttributeType);
+        CommandRefresh();
     }
 
     private void CommandRightActor()
@@ -241,6 +239,7 @@ public class StatusPresenter
          _model.ChangeActorIndex(1);
         _view.SetActorInfo(_model.CurrentActor,_model.StatusActors());
         CommandAttributeType(_model.CurrentAttributeType);
+        CommandRefresh();
     }
 
     private void CommandSelectSkillAction(SkillInfo skillInfo)

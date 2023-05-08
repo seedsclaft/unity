@@ -48,20 +48,20 @@ public class SkillsData : ScriptableObject {
         public int Param2;
         public int Param3;
 
-        public bool CanUseTrigger(BattlerInfo battlerInfo,List<BattlerInfo> party,List<BattlerInfo> troops)
+        public bool CanUseTrigger(BattlerInfo battlerInfo,UnitInfo party,UnitInfo troops)
         {
             bool CanUse = true;
             
             switch (TriggerType)
             {
                 case TriggerType.IsExistDeathMember:
-                if (troops.FindAll(a => a.IsState(StateType.Death)).Count < Param1)
+                if (troops.DeathMemberCount() < Param1)
                 {
                     CanUse = false;
                 }
                 break;
                 case TriggerType.IsExistAliveMember:
-                if (troops.FindAll(a => !a.IsState(StateType.Death)).Count < Param1)
+                if (troops.DeathMemberCount() < Param1)
                 {
                     CanUse = false;
                 }
@@ -91,8 +91,8 @@ public class SkillsData : ScriptableObject {
                 }
                 break;
                 case TriggerType.PartyHpRateUnder:
-                var filter = troops.FindAll(a => ((float)battlerInfo.Hp / (float)battlerInfo.MaxHp) <= Param1 * 0.01f);
-                if (filter.Count == 0)
+                var filter = troops.FindHpRateUnder(Param1);
+                if (filter == false)
                 {
                     CanUse = false;
                 }
