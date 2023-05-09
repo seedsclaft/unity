@@ -191,6 +191,10 @@ public class TacticsPresenter :BasePresenter
         {
             CommandAlchemyClose((ConfirmComandType)viewEvent.templete);
         }
+        if (viewEvent.commandType == Tactics.CommandType.SelectAlchemySkill)
+        {
+            CommandSelectAlchemySkill((int)viewEvent.templete);
+        }
         if (viewEvent.commandType == Tactics.CommandType.SelectAlchemyClose)
         {
             CommandSelectAlchemyClose();
@@ -406,7 +410,12 @@ public class TacticsPresenter :BasePresenter
     private void CommandBack()
     {
         var eventData = new TacticsViewEvent(_backCommand);
-        eventData.templete = _model.CommandType;
+        if (_backCommand == Tactics.CommandType.SelectActorAlchemy)
+        {
+            eventData.templete = _model.CurrentActorId;
+        } else{
+            eventData.templete = _model.CommandType;
+        }
         updateCommand(eventData);
         Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cancel);
     }
@@ -499,14 +508,30 @@ public class TacticsPresenter :BasePresenter
     {
         if (_model.CheckCanSelectAlchemy(attributeType))
         {
+            List<SkillInfo> skillInfos = _model.SelectActorAlchemy(_model.CurrentActorId,attributeType);
+            _view.ShowSkillAlchemyList(skillInfos);
+            _view.HideAttributeList();
+            _backCommand = Tactics.CommandType.SelectActorAlchemy;
+            //CommandRefresh();
+            /*
             _model.SelectAlchemy(attributeType);
             _view.ShowAlchemyList();
             _view.HideAttributeList();
-            CommandRefresh();
-            Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
-        } else{
-            Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
+            */
         }
+        Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
+    }
+
+    private void CommandSelectAlchemySkill(int skillId)
+    {
+        _model.SelectAlchemySkill(skillId);
+        _view.ShowAlchemyList();
+        _view.HideAttributeList();
+        _view.HideSkillAlchemyList();
+        _view.SetActiveBack(false);
+        CommandRefresh();
+        _backCommand = Tactics.CommandType.SelectAlchemyClose;
+        Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
     }
 
     private void CommandDecideActor()
@@ -548,6 +573,7 @@ public class TacticsPresenter :BasePresenter
             _model.CurrentActorId = actorId;
             _view.ShowAttributeList();
             _view.HideAlchemyList();
+            _view.HideSkillAlchemyList();
             _view.SetActiveBack(true);
             _backCommand = Tactics.CommandType.SelectAlchemyClose;        
             Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);

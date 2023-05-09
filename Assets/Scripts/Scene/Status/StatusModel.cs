@@ -112,7 +112,7 @@ public class StatusModel : BaseModel
 
     public bool EnableParamUp(StatusParamType statusParamType)
     {
-        int UseCost = CurrentActor.UsePoint.GetParameter(statusParamType);
+        int UseCost = CurrentActor.UsePointCost(statusParamType);
         if (CurrentAlcana.IsStatusCostDown(statusParamType))
         {
             UseCost -= 1;

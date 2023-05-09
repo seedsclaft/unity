@@ -41,12 +41,25 @@ public class TacticsView : BaseView
         base.Initialize();
         InitializeInput();
 
+        skillList.Initialize();
+        InitializeSkillActionList();
+        //skillList.InitializeAttribute((attribute) => CallAttributeTypes(attribute));
+        
         tacticsTrainList.Initialize((actorinfo) => CallActorTrain(actorinfo));
         SetInputHandler(tacticsTrainList.GetComponent<IInputHandlerEvent>());
         
         new TacticsPresenter(this);
     }
     
+    private void InitializeSkillActionList()
+    {
+        skillList.InitializeAction((a) => CallSkillAction(a),() => OnClickBack(),null,null,null);
+        SetInputHandler(skillList.skillActionList.GetComponent<IInputHandlerEvent>());
+        //SetInputHandler(skillList.skillAttributeList.GetComponent<IInputHandlerEvent>());
+        skillList.HideActionList();
+        skillList.HideAttributeList();
+    }
+
     public void SetUIButton()
     {
         CreateBackCommand(() => OnClickBack());
@@ -269,20 +282,16 @@ public class TacticsView : BaseView
 
     public void ShowSkillAlchemyList(List<SkillInfo> skillInfos)
     {
-        /*
         skillList.ShowActionList();
         skillList.SetSkillInfos(skillInfos);
         skillList.RefreshAction();
-        skillList.ShowAttributeList();
-        */
+        //skillList.ShowAttributeList();
     }
 
     public void HideSkillAlchemyList()
     {
-        /*
         skillList.HideActionList();
         skillList.HideAttributeList();
-        */
     }
 
     private void CallRecoveryCommand(TacticsComandType commandType)
@@ -485,6 +494,13 @@ public class TacticsView : BaseView
         _lastCallEventType = eventData.commandType;
     }
 
+    private void CallSkillAction(SkillInfo skillInfo)
+    {
+        var eventData = new TacticsViewEvent(CommandType.SelectAlchemySkill);
+        eventData.templete = skillInfo.Id;
+        _commandData(eventData);
+    }
+
     public void CommandAttributeType(AttributeType attributeType)
     {
         
@@ -542,6 +558,7 @@ namespace Tactics
         AlchemyClose,
         SelectAlchemyClose,
         SkillAlchemy,
+        SelectAlchemySkill,
         SelectActorRecovery,
         SelectRecoveryPlus,
         SelectRecoveryMinus,

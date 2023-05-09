@@ -25,7 +25,6 @@ public class ActorInfo
     private StatusInfo _currentStatus;
     public StatusInfo CurrentStatus {get {return _currentStatus;}}
     private StatusInfo _usePoint;
-    public StatusInfo UsePoint {get {return _usePoint;}}
     private List<int> _attribute;
     public List<int> Attribute {get {return _attribute;}}
     private List<SkillInfo> _skills;
@@ -58,6 +57,8 @@ public class ActorInfo
     public int TacticsCostRate {get {return _tacticsCostRate;}}
     private AttributeType _nextLearnAttribute = AttributeType.None;
     public AttributeType NextLearnAttribute {get {return _nextLearnAttribute;}}
+    private int _nextLearnSkillId = 0;
+    public int NextLearnSkillId {get {return _nextLearnSkillId;}}
     private int _nextLearnCost = 0;
     public int NextLearnCost {get {return _nextLearnCost;}}
     private int _nextBattleEnemyIndex = -1;
@@ -138,10 +139,15 @@ public class ActorInfo
         _skills.Add(skillInfo);
     }
 
+    public bool IsLearnedSkill(int skillId)
+    {
+        return _skills.Find(a => a.Id == skillId) != null;
+    }
+
     public void LearnSkill(int skillId)
     {
         SkillInfo skillInfo = new SkillInfo(skillId);
-        skillInfo.SetLearningState(LearningState.SelectLearn);
+        skillInfo.SetLearningState(LearningState.Learned);
         _skills.Add(skillInfo);
     }
 
@@ -180,6 +186,7 @@ public class ActorInfo
         _tacticsComandType = TacticsComandType.None;
         _tacticsCost = 0;
         _nextLearnAttribute = 0;
+        _nextLearnSkillId = 0;
         _nextLearnCost = 0;
         _nextBattleEnemyIndex = -1;
         _nextBattleEnemyId = 0;
@@ -190,6 +197,11 @@ public class ActorInfo
         _nextLearnAttribute = attributeType;
     }
     
+    public void SetNextLearnSkillId(int skillId)
+    {
+        _nextLearnSkillId = skillId;
+    }
+
     public void SetNextLearnCost(int leariningCost)
     {
         _nextLearnCost = leariningCost;
@@ -208,7 +220,7 @@ public class ActorInfo
 
     public int UsePointCost(StatusParamType statusParamType)
     {
-        int UseCost = UsePoint.GetParameter(statusParamType);
+        int UseCost = _usePoint.GetParameter(statusParamType);
         UseCost += (_plusStatus.GetParameter(statusParamType)+TempStatus.GetParameter(statusParamType)) / 5;
         return UseCost;
     }

@@ -82,7 +82,8 @@ public class TacticsModel : BaseModel
             actorInfo.SetTacticsCommand(stageMember.TacticsComandType,stageMember.TacticsCost);
             actorInfo.SetNextBattleEnemyIndex(stageMember.NextBattleEnemyIndex,stageMember.NextBattleEnemyId);
             actorInfo.SetNextLearnCost(stageMember.NextLearnCost);
-            actorInfo.SetNextLearnAttribute(stageMember.NextLearnAttribute);
+            //actorInfo.SetNextLearnAttribute(stageMember.NextLearnAttribute);
+            actorInfo.SetNextLearnSkillId(stageMember.NextLearnSkillId);
             _tempTacticsData.Add(actorInfo);
         }
         //_tempTacticsData = StageMembers().FindAll(a => a.TacticsComandType == tacticsComandType);
@@ -116,7 +117,8 @@ public class TacticsModel : BaseModel
                             }
                             stageMember.SetNextBattleEnemyIndex(tempData.NextBattleEnemyIndex,tempData.NextBattleEnemyId);
                             stageMember.SetNextLearnCost(tempData.NextLearnCost);
-                            stageMember.SetNextLearnAttribute(tempData.NextLearnAttribute);
+                            //stageMember.SetNextLearnAttribute(tempData.NextLearnAttribute);
+                            stageMember.SetNextLearnSkillId(tempData.NextLearnSkillId);
                         }
                     }
                 }
@@ -253,6 +255,7 @@ public class TacticsModel : BaseModel
         {
             SkillInfo skillInfo = new SkillInfo(PartyInfo.AlchemyIdList[i]);
             if (skillInfo.Attribute != _currentAttributeType) continue;
+            if (actorInfo.IsLearnedSkill(skillInfo.Id)) continue;
             skillInfo.SetEnable(true);
             skillInfos.Add(skillInfo);
         }
@@ -273,6 +276,17 @@ public class TacticsModel : BaseModel
             PartyInfo.ChangeCurrency(Currency - actorInfo.TacticsCost);
             actorInfo.SetNextLearnAttribute(attributeType);
             actorInfo.SetNextLearnCost(TacticsUtility.AlchemyCost(actorInfo,attributeType,StageMembers()));
+        }
+    }
+    
+    public void SelectAlchemySkill(int skillId)
+    {
+        ActorInfo actorInfo = CurrentActor;
+        if (actorInfo != null){
+            actorInfo.SetTacticsCommand(TacticsComandType.Alchemy,TacticsUtility.AlchemyCost(actorInfo,_currentAttributeType,StageMembers()));
+            PartyInfo.ChangeCurrency(Currency - actorInfo.TacticsCost);
+            actorInfo.SetNextLearnSkillId(skillId);
+            actorInfo.SetNextLearnCost(TacticsUtility.AlchemyCost(actorInfo,_currentAttributeType,StageMembers()));
         }
     }
 

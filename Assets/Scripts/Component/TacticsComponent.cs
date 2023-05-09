@@ -57,7 +57,12 @@ public class TacticsComponent : MonoBehaviour
         
         if (attributeType != null)
         {
-            attributeType.text = actorInfo.NextLearnAttribute.ToString();
+            if (actorInfo.NextLearnSkillId > 0)
+            {
+                attributeType.text = DataSystem.Skills.Find(a => a.Id == actorInfo.NextLearnSkillId).Name;
+            } else{
+                attributeType.text = "";
+            }
         }
 
         if (attributeLearnCost != null)

@@ -58,11 +58,11 @@ public class ActorInfoComponent : MonoBehaviour
         if (needStatusInfoComponent != null){
             StatusInfo statusInfo = new StatusInfo();
             statusInfo.SetParameter(
-                actorInfo.UsePoint.GetParameter(StatusParamType.Hp),
-                actorInfo.UsePoint.GetParameter(StatusParamType.Mp),
-                actorInfo.UsePoint.GetParameter(StatusParamType.Atk),
-                actorInfo.UsePoint.GetParameter(StatusParamType.Def),
-                actorInfo.UsePoint.GetParameter(StatusParamType.Spd)
+                actorInfo.UsePointCost(StatusParamType.Hp),
+                actorInfo.UsePointCost(StatusParamType.Mp),
+                actorInfo.UsePointCost(StatusParamType.Atk),
+                actorInfo.UsePointCost(StatusParamType.Def),
+                actorInfo.UsePointCost(StatusParamType.Spd)
             );
             var _currentAlcana = GameSystem.CurrentData.CurrentAlcana;
             if (_currentAlcana != null)

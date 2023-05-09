@@ -34,11 +34,9 @@ public class TacticsAttributeList : ListWindow , IInputHandlerEvent
         {
             SkillAttribute skillAttribute = ObjectList[i].GetComponent<SkillAttribute>();
             skillAttribute.SetData(_attributeTypesData[i],attributeValues[i],(int)_attributeTypesData[i] - 1,learningCosts[i]);
-            if (learningCosts[i] > currensy)
-            {            
-                ListItem listItem = ObjectList[i].GetComponent<ListItem>();
-                listItem.Disable.SetActive(true);
-            }
+            
+            ListItem listItem = ObjectList[i].GetComponent<ListItem>();
+            listItem.Disable.SetActive(learningCosts[i] > currensy);
         }
         UpdateAllItems();
     }

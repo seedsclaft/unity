@@ -59,16 +59,16 @@ public class StrategyModel : BaseModel
             if (actorInfos[i].TacticsComandType == TacticsComandType.Alchemy)
             {
                 getItemInfo.SetTitleData(DataSystem.System.GetTextData(3000).Text.Replace("\\d",actorInfos[i].Master.Name));
-                AttributeType attributeType = actorInfos[i].NextLearnAttribute;
-                getItemInfo.SetSkillElementId((int)attributeType);
-                string magicAlchemy = DataSystem.Skills.Find(a => a.Id == (int)attributeType + 2000).Name;
+                SkillsData.SkillData skillData = DataSystem.Skills.Find(a => a.Id == actorInfos[i].NextLearnSkillId);
+                getItemInfo.SetSkillElementId((int)skillData.Attribute);
+                string magicAlchemy = skillData.Name;
                 getItemInfo.SetResultData(DataSystem.System.GetTextData(3002).Text.Replace("\\d",magicAlchemy));
-                actorInfos[i].LearnSkillAttribute((int)attributeType + 2000,actorInfos[i].NextLearnCost,attributeType);
-                
+                //actorInfos[i].LearnSkillAttribute((int)attributeType + 2000,actorInfos[i].NextLearnCost,attributeType);
+                actorInfos[i].LearnSkill(actorInfos[i].NextLearnSkillId);
                 bool returnAlchemyCost = PartyInfo.GetAlchemyNuminosValue();
                 if (returnAlchemyCost)
                 {
-                    int cost = TacticsUtility.AlchemyCost(actorInfos[i],attributeType,StageMembers());
+                    int cost = TacticsUtility.AlchemyCost(actorInfos[i],skillData.Attribute,StageMembers());
                     GetItemInfo bonusGetItemInfo = new GetItemInfo(null);
                     bonusGetItemInfo.SetTitleData(DataSystem.System.GetTextData(3003).Text);
                     bonusGetItemInfo.SetResultData(DataSystem.System.GetTextData(3004).Text.Replace("\\d",(cost/2).ToString()));
