@@ -501,7 +501,11 @@ public class BattlePresenter : BasePresenter
         // TriggerAfter
         var result = _model.CheckTriggerSkillInfos(TriggerTiming.After);
         
-        bool isDemigodActor = _model.CurrentBattler.IsState(StateType.Demigod);
+        bool isDemigodActor = false;
+        if (_model.CurrentBattler != null)
+        {
+            isDemigodActor = _model.CurrentBattler.IsState(StateType.Demigod);
+        }
         _model.TurnEnd();
 
         // 勝敗判定

@@ -300,7 +300,7 @@ public class ActorInfo
         List<SkillsData.FeatureData> alchemyFeatures = new List<SkillsData.FeatureData>();
         foreach (var actorInfo in actorInfos)
         {
-            List<SkillInfo> skillInfos = actorInfo.Skills.FindAll(a => a.Master.FeatureDatas.Find(b => b.Param1 == (int)FeatureType.MagicAlchemy)!= null);
+            List<SkillInfo> skillInfos = actorInfo.Skills.FindAll(a => a.Master.FeatureDatas.Find(b => b.FeatureType == FeatureType.MagicAlchemy)!= null);
             foreach (var skillInfo in skillInfos)
             {
                 foreach (var featureData in skillInfo.Master.FeatureDatas)
@@ -313,17 +313,19 @@ public class ActorInfo
             }
         }
         List<int> attributeValues = new List<int>();
+        int idx = 1;
         foreach (var attribute in Attribute)
         {
             int attributeValue = attribute;
             foreach (var alchemyFeature in alchemyFeatures)
             {
-                if (alchemyFeature.Param2 == attribute)
+                if (alchemyFeature.Param2 == idx)
                 {
                     attributeValue += alchemyFeature.Param3;
                 }
             }
             attributeValues.Add(attributeValue);
+            idx++;
         }
         return attributeValues;
     }

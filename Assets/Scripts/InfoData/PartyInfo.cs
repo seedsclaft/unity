@@ -169,7 +169,7 @@ public class PartyInfo
         int value = baseValue;
         if (_commandRankInfo.ContainsKey(TacticsComandType.Battle))
         {
-            value += _commandRankInfo[TacticsComandType.Battle] * 5;
+            value += _commandRankInfo[TacticsComandType.Battle] * 2;
         }
         return value;
     }

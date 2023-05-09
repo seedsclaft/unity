@@ -45,7 +45,7 @@ public class TacticsBattleList : ListWindow , IInputHandlerEvent
         commandDescription.text = DataSystem.System.GetTextData(10).Text;
         if (rank > 0)
         {
-            commandDescription.text = DataSystem.System.GetTextData(14).Text.Replace("\\d",(rank * 5).ToString());
+            commandDescription.text = DataSystem.System.GetTextData(14).Text.Replace("\\d",(rank * 2).ToString());
         }
         Refresh();
     }

@@ -343,7 +343,7 @@ MonoBehaviour:
     Scope: 2
     SkillType: 1
     TargetType: 1
-    Help: "\u6575\u4E00\u5217\u306B\u706B\u50B7\u4ED8\u4E0E"
+    Help: "\u6575\u4E00\u5217\u306B10\u30C0\u30E1\u30FC\u30B8\u306E\u706B\u50B7\u4ED8\u4E0E"
     Range: 1
     AliveOnly: 1
     FeatureDatas:
@@ -541,7 +541,7 @@ MonoBehaviour:
       FeatureType: 310
       Param1: 201
       Param2: 1
-      Param3: 30
+      Param3: 20
     TriggerDatas: []
   - Id: 201
     Name: "\u30C7\u30A3\u30B9\u30C1\u30E3\u30FC\u30B8"
@@ -625,14 +625,14 @@ MonoBehaviour:
     Scope: 1
     SkillType: 1
     TargetType: 1
-    Help: "\u6575\u5358\u4F53\u306B1\u30BF\u30FC\u30F3\u306E\u30B9\u30BF\u30F3\u4ED8\u4E0E"
+    Help: "\u6575\u5358\u4F53\u306B\u30B9\u30BF\u30F3\u4ED8\u4E0E"
     Range: 2
     AliveOnly: 1
     FeatureDatas:
     - SkillId: 204
       FeatureType: 21
       Param1: 22
-      Param2: 50
+      Param2: 150
       Param3: 0
     TriggerDatas: []
   - Id: 205
@@ -921,7 +921,7 @@ MonoBehaviour:
       FeatureType: 310
       Param1: 202
       Param2: 2
-      Param3: 30
+      Param3: 20
     TriggerDatas: []
   - Id: 301
     Name: "\u30A2\u30A4\u30B9\u30D6\u30EC\u30A4\u30C9"
@@ -1308,7 +1308,7 @@ MonoBehaviour:
       FeatureType: 310
       Param1: 203
       Param2: 3
-      Param3: 30
+      Param3: 20
     TriggerDatas: []
   - Id: 401
     Name: "\u30BB\u30A4\u30F3\u30C8\u30EC\u30FC\u30B6\u30FC"
@@ -1707,7 +1707,7 @@ MonoBehaviour:
       FeatureType: 310
       Param1: 204
       Param2: 4
-      Param3: 30
+      Param3: 20
     TriggerDatas: []
   - Id: 501
     Name: "\u30C0\u30FC\u30AF\u30D7\u30EA\u30BA\u30F3"
@@ -1941,14 +1941,14 @@ MonoBehaviour:
     Scope: 1
     SkillType: 1
     TargetType: 1
-    Help: "\u6575\u5358\u4F53\u306B\u6697\u95C7\u3092\u4ED8\u4E0E"
+    Help: "\u6575\u5358\u4F53\u306B\u6697\u95C7\u3092\u4ED8\u4E0E(\u6C38\u7D9A)"
     Range: 1
     AliveOnly: 1
     FeatureDatas:
     - SkillId: 521
       FeatureType: 21
       Param1: 24
-      Param2: 2
+      Param2: 999
       Param3: 50
     TriggerDatas: []
   - Id: 531
@@ -2140,7 +2140,7 @@ MonoBehaviour:
       FeatureType: 310
       Param1: 205
       Param2: 5
-      Param3: 30
+      Param3: 20
     TriggerDatas: []
   - Id: 1000
     Name: "\u611A\u8005"

@@ -881,7 +881,7 @@ public class BattleModel : BaseModel
 
     public List<ActionResultInfo> UpdateSlipDamageState()
     {
-        return MakeStateActionResult(CurrentBattler,StateType.SlipDamage,FeatureType.HpDamage);
+        return MakeStateActionResult(CurrentBattler,StateType.SlipDamage,FeatureType.HpDefineDamage);
     }
 
     public List<ActionResultInfo> MakeStateActionResult(BattlerInfo battlerInfo,StateType stateType,FeatureType featureType)
