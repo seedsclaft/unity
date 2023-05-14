@@ -10,6 +10,10 @@ public class StrategyModel : BaseModel
     {
         _needUseSpCommand = isNeed;
     }
+    
+    private List<ActorInfo> _levelUpData = new List<ActorInfo>();
+    private List<ActorInfo> _levelUpBonusData = new List<ActorInfo>();
+    public List<ActorInfo> LevelUpData { get {return _levelUpData;}}
 
     public bool CheckUseSp()
     {
@@ -34,6 +38,34 @@ public class StrategyModel : BaseModel
         return actorInfos;
     }
 
+    public void SetLvup()
+    {
+        List<ActorInfo> actorInfos = TacticsActors();
+        var lvupList = new List<ActorInfo>();
+        // 結果出力
+        for (int i = 0;i < actorInfos.Count;i++)
+        {
+            if (actorInfos[i].TacticsComandType == TacticsComandType.Train)
+            {
+                int levelBonus = PartyInfo.GetTrainLevelBonusValue();
+                var statusInfo = actorInfos[i].LevelUp(levelBonus);
+                actorInfos[i].TempStatus.SetParameter(
+                    statusInfo.Hp,
+                    statusInfo.Mp,
+                    statusInfo.Atk,
+                    statusInfo.Def,
+                    statusInfo.Spd
+                );
+                lvupList.Add(actorInfos[i]);
+                if (levelBonus > 0)
+                {
+                    _levelUpBonusData.Add(actorInfos[i]);
+                }
+            }
+        }
+        _levelUpData = lvupList;
+    }
+
     public List<GetItemInfo> SetResult()
     {
         // Party初期化
@@ -46,11 +78,9 @@ public class StrategyModel : BaseModel
             GetItemInfo getItemInfo = new GetItemInfo(null);
             if (actorInfos[i].TacticsComandType == TacticsComandType.Train)
             {
-                int levelBonus = PartyInfo.GetTrainLevelBonusValue();
-                actorInfos[i].LevelUp(levelBonus);
                 getItemInfo.SetTitleData(DataSystem.System.GetTextData(3000).Text.Replace("\\d",actorInfos[i].Master.Name));
                 var trainResult = DataSystem.System.GetTextData(3001).Text.Replace("\\d",actorInfos[i].Level.ToString());
-                if (levelBonus > 0)
+                if (_levelUpBonusData.Find(a => a == actorInfos[i]) != null)
                 {
                     trainResult += " " + DataSystem.System.GetTextData(3031).Text;
                 }
@@ -175,6 +205,13 @@ public class StrategyModel : BaseModel
         }
 
         return getItemInfos;
+    }
+
+    public void SetLevelUpStatus()
+    {
+        var actorInfo = _levelUpData[0];
+        actorInfo.DecideStrength(0);
+        _levelUpData.RemoveAt(0);
     }
 
     public List<GetItemInfo> SetBattleResult()

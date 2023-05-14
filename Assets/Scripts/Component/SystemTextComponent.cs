@@ -11,6 +11,10 @@ public class SystemTextComponent : MonoBehaviour
         if (id != 0)
         {
             TextData textData = DataSystem.System.GetTextData(id);
+            if (textData == null)
+            {
+                Debug.Log("error" + gameObject.name);
+            }
             TextMeshProUGUI textMeshPro = gameObject.GetComponent<TextMeshProUGUI>();
             if (textMeshPro != null)
             {

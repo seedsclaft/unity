@@ -11,11 +11,19 @@ public class StrategyView : BaseView
     [SerializeField] private StrategyActorList strategyActorList = null; 
     [SerializeField] private GetItemList strategyResultList = null; 
     [SerializeField] private TacticsEnemyList tacticsEnemyList = null; 
+    [SerializeField] private StrategyStrengthList strategyStrengthList = null; 
     [SerializeField] private EffekseerEmitter effekseerEmitter = null; 
     [SerializeField] private SpriteRenderer backGround = null; 
     [SerializeField] private GameObject helpRoot = null;
     [SerializeField] private GameObject helpPrefab = null;
     [SerializeField] private TextMeshProUGUI title = null; 
+    [SerializeField] private ActorInfoComponent actorInfoComponent = null;
+    [SerializeField] private Button lvUpStatusButton = null;
+    [SerializeField] private GameObject animRoot = null;
+    [SerializeField] private GameObject animPrefab = null;
+
+    private BattleStartAnim _battleStartAnim = null;
+    private bool _animationBusy = false;
     private HelpWindow _helpWindow = null;
 
     private new System.Action<StrategyViewEvent> _commandData = null;
@@ -24,8 +32,40 @@ public class StrategyView : BaseView
     {
         base.Initialize();
         InitializeInput();
+        strategyStrengthList.Initialize(() => CallLvUpNext());
+        GameObject prefab = Instantiate(animPrefab);
+        prefab.transform.SetParent(animRoot.transform, false);
+        _battleStartAnim = prefab.GetComponent<BattleStartAnim>();
+        lvUpStatusButton.onClick.AddListener(() => CallLvUpNext());
         new StrategyPresenter(this);
     }
+
+    private void CallLvUpNext()
+    {
+        lvUpStatusButton.gameObject.SetActive(false);
+        actorInfoComponent.gameObject.SetActive(false);
+        strategyStrengthList.gameObject.SetActive(false);
+        var eventData = new StrategyViewEvent(CommandType.LvUpNext);
+        _commandData(eventData);
+    }
+
+    public void StartLvUpAnimation()
+    {
+        _battleStartAnim.SetText("LevelUp!");
+        _battleStartAnim.StartAnim();
+        _animationBusy = true;
+    }
+
+    public void ShowLvUpActor(ActorInfo actorInfo)
+    {
+        strategyStrengthList.gameObject.SetActive(true);
+        lvUpStatusButton.gameObject.SetActive(true);
+        actorInfoComponent.gameObject.SetActive(true);
+        actorInfoComponent.UpdateInfo(actorInfo,null);
+        strategyStrengthList.Refresh(actorInfo);
+    }
+
+    
 
     public void SetTitle(string text)
     {
@@ -147,6 +187,25 @@ public class StrategyView : BaseView
         eventData.templete = commandType;
         _commandData(eventData);
     }
+
+    private new void Update() {
+        
+        if (_animationBusy == true)
+        {
+            CheckAnimationBusy();
+            return;
+        }
+    }
+
+    private void CheckAnimationBusy()
+    {
+        if (_battleStartAnim.IsBusy == false)
+        {
+            _animationBusy = false;
+            var eventData = new StrategyViewEvent(CommandType.EndLvupAnimation);
+            _commandData(eventData);
+        }
+    }
 }
 
 namespace Strategy
@@ -159,7 +218,11 @@ namespace Strategy
         PopupSkillInfo = 3,
         CallEnemyInfo = 4,
         ResultClose = 5,
-        BattleClose = 6
+        BattleClose = 6,
+        LvUpNext = 7,
+        LvUpActor = 8,
+        
+        EndLvupAnimation = 9,
     }
 }
 public class StrategyViewEvent

@@ -67,6 +67,14 @@ public class StrategyPresenter : BasePresenter
         {
             CommandBattleClose((ConfirmComandType)viewEvent.templete);
         }
+        if (viewEvent.commandType == CommandType.EndLvupAnimation)
+        {
+            CommandEndLvupAnimation();
+        }
+        if (viewEvent.commandType == CommandType.LvUpNext)
+        {
+            CommandLvUpNext();
+        }
     }
 
     private void UpdatePopupSkillInfo(ConfirmComandType confirmComandType)
@@ -123,8 +131,15 @@ public class StrategyPresenter : BasePresenter
             }
         } else 
         if (_isBattle == false){
-            List<GetItemInfo> getItemInfos = _model.SetResult();
-            _view.ShowResultList(getItemInfos);
+            _model.SetLvup();
+            if (_model.LevelUpData.Count > 0)
+            {
+                _view.StartLvUpAnimation();
+                return;
+            } else{
+                List<GetItemInfo> getItemInfos = _model.SetResult();
+                _view.ShowResultList(getItemInfos);
+            }
         } else{
             _view.ShowEnemyList(_model.CurrentTroopInfo());
         }
@@ -156,6 +171,24 @@ public class StrategyPresenter : BasePresenter
                     break;
                 }
             }
+        }
+    }
+
+    private void CommandEndLvupAnimation()
+    {
+        _view.ShowLvUpActor(_model.LevelUpData[0]);
+    }
+
+    private void CommandLvUpNext()
+    {
+        _model.SetLevelUpStatus();
+        if (_model.LevelUpData.Count > 0)
+        {
+            CommandEndLvupAnimation();
+        } else
+        {
+            List<GetItemInfo> getItemInfos = _model.SetResult();
+            _view.ShowResultList(getItemInfos);
         }
     }
 

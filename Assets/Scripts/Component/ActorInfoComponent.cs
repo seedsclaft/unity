@@ -64,30 +64,6 @@ public class ActorInfoComponent : MonoBehaviour
                 actorInfo.UsePointCost(StatusParamType.Def),
                 actorInfo.UsePointCost(StatusParamType.Spd)
             );
-            var _currentAlcana = GameSystem.CurrentData.CurrentAlcana;
-            if (_currentAlcana != null)
-            {
-                if (_currentAlcana.IsStatusCostDown(StatusParamType.Hp))
-                {
-                    statusInfo.AddParameter(StatusParamType.Hp,-1);
-                } else
-                if (_currentAlcana.IsStatusCostDown(StatusParamType.Mp))
-                {
-                    statusInfo.AddParameter(StatusParamType.Mp,-1);
-                } else
-                if (_currentAlcana.IsStatusCostDown(StatusParamType.Atk))
-                {
-                    statusInfo.AddParameter(StatusParamType.Atk,-1);
-                } else
-                if (_currentAlcana.IsStatusCostDown(StatusParamType.Def))
-                {
-                    statusInfo.AddParameter(StatusParamType.Def,-1);
-                } else
-                if (_currentAlcana.IsStatusCostDown(StatusParamType.Spd))
-                {
-                    statusInfo.AddParameter(StatusParamType.Spd,-1);
-                }
-            }
             needStatusInfoComponent.UpdateInfo(statusInfo);
         }
         if (element1 != null){

@@ -143,7 +143,7 @@ public class StatusView : BaseView
 
     public void DisableStrength(bool IsDisable)
     {
-        commandList.SetDisable(DataSystem.StatusCommand[0],IsDisable);
+        //commandList.SetDisable(DataSystem.StatusCommand[0],IsDisable);
     }
     
     public void SetActorInfo(ActorInfo actorInfo,List<ActorInfo> actorInfos)

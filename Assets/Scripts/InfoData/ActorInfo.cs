@@ -120,15 +120,40 @@ public class ActorInfo
         }
     }
 
-    public void LevelUp(int bonus)
+    public StatusInfo LevelUp(int bonus)
     {
+        var lvUpstatus = new StatusInfo();
+        lvUpstatus.SetParameter(0,0,0,0,0);
         _level++;
+        CalcLevelUpStatusInfo(lvUpstatus);
         _sp += 10;
         for (int i = 0;i < bonus;i++)
         {
             _level++;
+            CalcLevelUpStatusInfo(lvUpstatus);
             _sp += 10;
         }
+        return lvUpstatus;
+    }
+
+    private void CalcLevelUpStatusInfo(StatusInfo statusInfo)
+    {
+        if (IsLevelUpStatus(StatusParamType.Hp)) statusInfo.AddParameter(StatusParamType.Hp,1);
+        if (IsLevelUpStatus(StatusParamType.Mp)) statusInfo.AddParameter(StatusParamType.Mp,1);
+        if (IsLevelUpStatus(StatusParamType.Atk)) statusInfo.AddParameter(StatusParamType.Atk,1);
+        if (IsLevelUpStatus(StatusParamType.Def)) statusInfo.AddParameter(StatusParamType.Def,1);
+        if (IsLevelUpStatus(StatusParamType.Spd)) statusInfo.AddParameter(StatusParamType.Spd,1);
+    }
+
+    private bool IsLevelUpStatus(StatusParamType statusParamType)
+    {
+        bool IsLevelUpStatus = false;
+        int rate = UnityEngine.Random.Range(0,100);
+        if (rate < _usePoint.GetParameter(statusParamType))
+        {
+            IsLevelUpStatus = true;
+        }
+        return IsLevelUpStatus;
     }
 
     public void LearnSkillAttribute(int skillId,int learningCost,AttributeType attributeType)
@@ -222,6 +247,14 @@ public class ActorInfo
     {
         int UseCost = _usePoint.GetParameter(statusParamType);
         UseCost += (_plusStatus.GetParameter(statusParamType)+TempStatus.GetParameter(statusParamType)) / 5;
+        var _currentAlcana = GameSystem.CurrentData.CurrentAlcana;
+        if (_currentAlcana != null)
+        {
+            if (_currentAlcana.IsStatusCostDown(statusParamType))
+            {
+                UseCost += 20;
+            }
+        }
         return UseCost;
     }
 
