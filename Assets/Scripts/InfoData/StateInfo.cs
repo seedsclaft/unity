@@ -19,41 +19,13 @@ public class StateInfo {
     public int BattlerId{ get {return _battlerId;}}
     private int _targetIndex = 0;
     public int TargetIndex{ get {return _targetIndex;}}
-    private bool _isPassive = false;
-    private List<SkillsData.TriggerData> _triggerDatas = null;
-    public StateInfo(int stateId,int turns,int effect,int battlerId,int targetIndex,bool isPassive){
+    public StateInfo(int stateId,int turns,int effect,int battlerId,int targetIndex){
         _stateId = stateId;
         _turns = turns;
         _baseTurns = turns;
         _effect = effect;
         _battlerId = battlerId;
         _targetIndex = targetIndex;
-        _isPassive = isPassive;
-    }
-
-    public void SetPassiveTrigger(List<SkillsData.TriggerData> triggerDatas)
-    {
-        _triggerDatas = new List<SkillsData.TriggerData>();
-        foreach (var triggerData in triggerDatas)
-        {
-            _triggerDatas.Add(triggerData);
-        }
-    }
-
-    public bool IsCanPassiveTriggered(BattlerInfo battlerInfo,UnitInfo party,UnitInfo troops)
-    {
-        if (_isPassive == false) return true;
-        if (_triggerDatas == null) return true;
-        if (_triggerDatas.Count == 0) return true;
-        bool CanUse = true;
-        foreach (var triggerData in _triggerDatas)
-        {
-            if (triggerData.CanUseTrigger(battlerInfo,party,troops) == false)
-            {
-                CanUse = false;
-            }
-        }
-        return CanUse;
     }
 
     public bool CheckOverWriteState(StateInfo stateInfo)

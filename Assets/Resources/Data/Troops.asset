@@ -37,26 +37,26 @@ MonoBehaviour:
   - Id: 1
     TroopId: 10
     EnemyId: 3
-    Lv: 2
+    Lv: 1
     BossFlag: 0
     Line: 0
     GetItemDatas: []
   - Id: 2
     TroopId: 10
     EnemyId: 3
-    Lv: 2
+    Lv: 1
     BossFlag: 0
     Line: 0
     GetItemDatas: []
   - Id: 3
     TroopId: 10
     EnemyId: 4
-    Lv: 5
+    Lv: 3
     BossFlag: 0
     Line: 1
     GetItemDatas:
     - Type: 1
-      Param1: 132
+      Param1: 137
       Param2: 100
     - Type: 2
       Param1: 10
@@ -67,14 +67,14 @@ MonoBehaviour:
   - Id: 1
     TroopId: 20
     EnemyId: 6
-    Lv: 2
+    Lv: 1
     BossFlag: 0
     Line: 0
     GetItemDatas: []
   - Id: 2
     TroopId: 20
     EnemyId: 3
-    Lv: 2
+    Lv: 1
     BossFlag: 0
     Line: 1
     GetItemDatas:
@@ -90,28 +90,28 @@ MonoBehaviour:
   - Id: 3
     TroopId: 20
     EnemyId: 3
-    Lv: 5
+    Lv: 3
     BossFlag: 0
     Line: 1
     GetItemDatas: []
   - Id: 1
     TroopId: 30
     EnemyId: 4
-    Lv: 2
+    Lv: 1
     BossFlag: 0
     Line: 0
     GetItemDatas: []
   - Id: 2
     TroopId: 30
     EnemyId: 4
-    Lv: 2
+    Lv: 1
     BossFlag: 0
     Line: 0
     GetItemDatas: []
   - Id: 3
     TroopId: 30
     EnemyId: 1
-    Lv: 5
+    Lv: 3
     BossFlag: 0
     Line: 1
     GetItemDatas:
@@ -127,14 +127,14 @@ MonoBehaviour:
   - Id: 1
     TroopId: 40
     EnemyId: 2
-    Lv: 2
+    Lv: 1
     BossFlag: 0
     Line: 0
     GetItemDatas: []
   - Id: 2
     TroopId: 40
     EnemyId: 12
-    Lv: 2
+    Lv: 1
     BossFlag: 0
     Line: 1
     GetItemDatas:
@@ -150,28 +150,28 @@ MonoBehaviour:
   - Id: 3
     TroopId: 40
     EnemyId: 12
-    Lv: 5
+    Lv: 3
     BossFlag: 0
     Line: 1
     GetItemDatas: []
   - Id: 1
     TroopId: 50
     EnemyId: 5
-    Lv: 2
+    Lv: 1
     BossFlag: 0
     Line: 0
     GetItemDatas: []
   - Id: 2
     TroopId: 50
     EnemyId: 5
-    Lv: 2
+    Lv: 1
     BossFlag: 0
     Line: 0
     GetItemDatas: []
   - Id: 3
     TroopId: 50
     EnemyId: 2
-    Lv: 5
+    Lv: 3
     BossFlag: 0
     Line: 1
     GetItemDatas:
@@ -194,14 +194,8 @@ MonoBehaviour:
     - Type: 1
       Param1: 321
       Param2: 100
-    - Type: 1
-      Param1: 332
-      Param2: 30
-    - Type: 1
-      Param1: 333
-      Param2: 30
-    - Type: 1
-      Param1: 336
+    - Type: 13
+      Param1: 1
       Param2: 30
     - Type: 2
       Param1: 5
@@ -216,14 +210,8 @@ MonoBehaviour:
     - Type: 1
       Param1: 505
       Param2: 100
-    - Type: 1
-      Param1: 521
-      Param2: 30
-    - Type: 1
-      Param1: 534
-      Param2: 30
-    - Type: 1
-      Param1: 536
+    - Type: 15
+      Param1: 1
       Param2: 30
     - Type: 2
       Param1: 5
@@ -238,14 +226,8 @@ MonoBehaviour:
     - Type: 1
       Param1: 205
       Param2: 100
-    - Type: 1
-      Param1: 234
-      Param2: 30
-    - Type: 1
-      Param1: 221
-      Param2: 30
-    - Type: 1
-      Param1: 236
+    - Type: 12
+      Param1: 1
       Param2: 30
     - Type: 2
       Param1: 5
@@ -260,14 +242,8 @@ MonoBehaviour:
     - Type: 1
       Param1: 131
       Param2: 100
-    - Type: 1
-      Param1: 132
-      Param2: 30
-    - Type: 1
-      Param1: 134
-      Param2: 30
-    - Type: 1
-      Param1: 135
+    - Type: 11
+      Param1: 1
       Param2: 30
     - Type: 2
       Param1: 5
@@ -282,14 +258,8 @@ MonoBehaviour:
     - Type: 1
       Param1: 232
       Param2: 100
-    - Type: 1
-      Param1: 231
-      Param2: 30
-    - Type: 1
-      Param1: 235
-      Param2: 30
-    - Type: 1
-      Param1: 236
+    - Type: 12
+      Param1: 1
       Param2: 30
     - Type: 2
       Param1: 5
@@ -304,14 +274,8 @@ MonoBehaviour:
     - Type: 1
       Param1: 405
       Param2: 100
-    - Type: 1
-      Param1: 432
-      Param2: 30
-    - Type: 1
-      Param1: 441
-      Param2: 30
-    - Type: 1
-      Param1: 435
+    - Type: 14
+      Param1: 1
       Param2: 30
     - Type: 2
       Param1: 5
@@ -326,14 +290,8 @@ MonoBehaviour:
     - Type: 1
       Param1: 504
       Param2: 100
-    - Type: 1
-      Param1: 531
-      Param2: 30
-    - Type: 1
-      Param1: 532
-      Param2: 30
-    - Type: 1
-      Param1: 535
+    - Type: 15
+      Param1: 1
       Param2: 30
     - Type: 2
       Param1: 5
@@ -348,21 +306,12 @@ MonoBehaviour:
     - Type: 1
       Param1: 331
       Param2: 100
-    - Type: 1
-      Param1: 334
-      Param2: 30
-    - Type: 1
-      Param1: 341
-      Param2: 30
-    - Type: 1
-      Param1: 335
+    - Type: 13
+      Param1: 1
       Param2: 30
     - Type: 2
       Param1: 5
       Param2: 100
-    - Type: 1
-      Param1: 335
-      Param2: 30
   - Id: 1
     TroopId: 1009
     EnemyId: 9
@@ -373,14 +322,8 @@ MonoBehaviour:
     - Type: 1
       Param1: 103
       Param2: 100
-    - Type: 1
-      Param1: 135
-      Param2: 30
-    - Type: 1
-      Param1: 134
-      Param2: 30
-    - Type: 1
-      Param1: 136
+    - Type: 11
+      Param1: 1
       Param2: 30
     - Type: 2
       Param1: 5
@@ -395,14 +338,8 @@ MonoBehaviour:
     - Type: 1
       Param1: 204
       Param2: 100
-    - Type: 1
-      Param1: 233
-      Param2: 30
-    - Type: 1
-      Param1: 241
-      Param2: 30
-    - Type: 1
-      Param1: 231
+    - Type: 12
+      Param1: 1
       Param2: 30
     - Type: 2
       Param1: 5
@@ -417,11 +354,8 @@ MonoBehaviour:
     - Type: 1
       Param1: 303
       Param2: 100
-    - Type: 1
-      Param1: 332
-      Param2: 30
-    - Type: 1
-      Param1: 333
+    - Type: 13
+      Param1: 1
       Param2: 30
     - Type: 2
       Param1: 5
@@ -436,14 +370,8 @@ MonoBehaviour:
     - Type: 1
       Param1: 505
       Param2: 100
-    - Type: 1
-      Param1: 534
-      Param2: 30
-    - Type: 1
-      Param1: 541
-      Param2: 30
-    - Type: 1
-      Param1: 536
+    - Type: 15
+      Param1: 1
       Param2: 30
     - Type: 2
       Param1: 5
@@ -458,14 +386,8 @@ MonoBehaviour:
     - Type: 1
       Param1: 404
       Param2: 100
-    - Type: 1
-      Param1: 431
-      Param2: 30
-    - Type: 1
-      Param1: 434
-      Param2: 30
-    - Type: 1
-      Param1: 436
+    - Type: 14
+      Param1: 1
       Param2: 30
     - Type: 2
       Param1: 5
@@ -480,14 +402,8 @@ MonoBehaviour:
     - Type: 1
       Param1: 431
       Param2: 100
-    - Type: 1
-      Param1: 432
-      Param2: 30
-    - Type: 1
-      Param1: 433
-      Param2: 30
-    - Type: 1
-      Param1: 435
+    - Type: 14
+      Param1: 1
       Param2: 30
     - Type: 2
       Param1: 5
@@ -502,14 +418,8 @@ MonoBehaviour:
     - Type: 1
       Param1: 104
       Param2: 100
-    - Type: 1
-      Param1: 133
-      Param2: 30
-    - Type: 1
-      Param1: 141
-      Param2: 30
-    - Type: 1
-      Param1: 136
+    - Type: 11
+      Param1: 1
       Param2: 30
     - Type: 2
       Param1: 5

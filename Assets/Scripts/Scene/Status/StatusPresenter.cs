@@ -106,6 +106,10 @@ public class StatusPresenter
             if (_model.StatusActors().Count > 1) _view.ShowArrows();
             _view.ShowCommandList();
             _view.ShowDecideButton();
+            if (_view.IsDisplayBack == false)
+            {
+                _view.SetActiveBack(false);
+            }
         }
         Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cancel);
     }

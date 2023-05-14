@@ -51,6 +51,12 @@ public class TroopInfo
             {
                 getItemInfo.SetResultData(DataSystem.System.GetTextData(14042).Text + "+" + (getItemInfo.Param1).ToString());
             }
+            if ((int)getItemDatas[i].Type >= (int)GetItemType.AttributeFire && (int)getItemDatas[i].Type <= (int)GetItemType.AttributeDark)
+            {
+                string text = DataSystem.System.GetTextData(14051).Text.Replace("\\d", DataSystem.System.GetTextData(330 + (int)getItemDatas[i].Type - 11).Text);
+                getItemInfo.SetResultData(text);
+                getItemInfo.SetSkillElementId((int)AttributeType.Fire + (int)getItemDatas[i].Type - 11);
+            }
             AddGetItemInfo(getItemInfo);
         }
     }

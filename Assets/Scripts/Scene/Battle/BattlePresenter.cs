@@ -38,6 +38,7 @@ public class BattlePresenter : BasePresenter
         var bgm = await _model.GetBattleBgm();
         Ryneus.SoundManager.Instance.PlayBgm(bgm,1.0f,true);
 
+
         _view.StartBattleStartAnim(DataSystem.System.GetTextData(4).Text);
         _nextCommandType = Battle.CommandType.EventCheck;
         _busy = false;
@@ -176,6 +177,11 @@ public class BattlePresenter : BasePresenter
                 // 拘束解除
                 ActionInfo actionInfo = _model.MakeActionInfo(_model.CurrentBattler,31,false);
                 CommandSelectIndex(chainTargetIndexs);
+                // 成功して入ればカウント
+                if (actionInfo.ActionResults.Find(a => !a.Missed) != null)
+                {
+                    _model.CurrentBattler.GainChainCount(1);
+                }
                 return;
             } 
             if (_model.CurrentBattler.isActor)
@@ -462,7 +468,7 @@ public class BattlePresenter : BasePresenter
         }
         if (_nextCommandType == Battle.CommandType.EndRegeneAnimation)
         {
-            CommandEndRegeneAnimation();
+            EndTurn();
             return;
         }
         if (_nextCommandType == Battle.CommandType.EndSlipDamageAnimation)
@@ -494,10 +500,50 @@ public class BattlePresenter : BasePresenter
                 }
             }
         }
+        EndTurn();
+    }
+
+    private void CommandStartBattleAction()
+    {
+        var PassiveResults = _model.CheckTriggerPassiveInfos(TriggerTiming.StartBattle);
+        foreach (var PassiveResult in PassiveResults)
+        {
+            PopupActionResult(PassiveResult,PassiveResult.TargetIndex,true);
+        }
+    }
+
+    private void CommandEndSlipDamageAnimation()
+    {
+        var regene = _model.CheckRegene();
+        if (regene)
+        {
+            StartAnimationRegene();
+            return;
+        }
+        EndTurn();
+    }
+
+    private void EndTurn()
+    {
         // ターン終了
         _view.RefreshStatus();
         // PlusSkill
         _model.CheckPlusSkill();
+        // Passive
+        var PassiveResults = _model.CheckTriggerPassiveInfos(TriggerTiming.After);
+        foreach (var PassiveResult in PassiveResults)
+        {
+            PopupActionResult(PassiveResult,PassiveResult.TargetIndex,true);
+        }
+        for (int i = 0; i < PassiveResults.Count; i++)
+        {    
+            _model.ExecActionResultInfo(PassiveResults[i]);
+        }
+        var RemovePassiveResults = _model.CheckRemovePassiveInfos();
+        foreach (var RemovePassiveResult in RemovePassiveResults)
+        {
+            PopupActionResult(RemovePassiveResult,RemovePassiveResult.TargetIndex,true);
+        }
         // TriggerAfter
         var result = _model.CheckTriggerSkillInfos(TriggerTiming.After);
         
@@ -505,6 +551,10 @@ public class BattlePresenter : BasePresenter
         if (_model.CurrentBattler != null)
         {
             isDemigodActor = _model.CurrentBattler.IsState(StateType.Demigod);
+        }
+        if (result == false)
+        {
+            _model.UpdateTurn();
         }
         _model.TurnEnd();
 
@@ -539,85 +589,6 @@ public class BattlePresenter : BasePresenter
                 return;
             }
         }
-        _view.HideEnemyStatus();
-        _view.SetBattleBusy(false);
-    }
-
-    private void CommandStartBattleAction()
-    {
-        var actionResultInfos = _model.StartBattleAction();
-        foreach (var actionResultInfo in actionResultInfos)
-        {
-            PopupActionResult(actionResultInfo,actionResultInfo.TargetIndex);
-        }
-    }
-
-    private void CommandEndSlipDamageAnimation()
-    {
-        var regene = _model.CheckRegene();
-        if (regene)
-        {
-            StartAnimationRegene();
-            return;
-        }
-        // ターン終了
-        _view.RefreshStatus();
-        // PlusSkill
-        _model.CheckPlusSkill();
-        // TriggerAfter
-        var result = _model.CheckTriggerSkillInfos(TriggerTiming.After);
-        _model.TurnEnd();
-
-        // 勝敗判定
-        if (CheckBattleEnd() && result == false)
-        {
-            return;
-        }
-        if (result == true)
-        {        
-            _view.RefreshStatus();
-        }
-
-        // 次の行動者がいれば続ける
-        if (_model.CurrentActionInfo() != null)
-        {
-            _model.SetActionBattler(_model.CurrentActionInfo().SubjectIndex);
-            CommandSelectIndex(_model.MakeAutoSelectIndex(_model.CurrentActionInfo()));
-            return;
-        }
-
-        _view.HideEnemyStatus();
-        _view.SetBattleBusy(false);
-    }
-
-    private void CommandEndRegeneAnimation()
-    {
-        // ターン終了
-        _view.RefreshStatus();
-        // PlusSkill
-        _model.CheckPlusSkill();
-        // TriggerAfter
-        var result = _model.CheckTriggerSkillInfos(TriggerTiming.After);
-        _model.TurnEnd();
-
-        // 勝敗判定
-        if (CheckBattleEnd() && result == false)
-        {
-            return;
-        }
-        if (result == true)
-        {        
-            _view.RefreshStatus();
-        }
-
-        // 次の行動者がいれば続ける
-        if (_model.CurrentActionInfo() != null)
-        {
-            _model.SetActionBattler(_model.CurrentActionInfo().SubjectIndex);
-            CommandSelectIndex(_model.MakeAutoSelectIndex(_model.CurrentActionInfo()));
-            return;
-        }
-
         _view.HideEnemyStatus();
         _view.SetBattleBusy(false);
     }

@@ -25,6 +25,7 @@ public class ActorInfo
     private StatusInfo _currentStatus;
     public StatusInfo CurrentStatus {get {return _currentStatus;}}
     private StatusInfo _usePoint;
+    private StatusInfo _upperRate;
     private List<int> _attribute;
     public List<int> Attribute {get {return _attribute;}}
     private List<SkillInfo> _skills;
@@ -85,7 +86,8 @@ public class ActorInfo
         _attribute = actorData.Attribute;
         _level = actorData.InitLv;
         _sp = 0;
-        _usePoint = actorData.NeedStatus; 
+        //_usePoint = actorData.NeedStatus; 
+        _upperRate = actorData.NeedStatus;
         SetInitialParameter(actorData);
         _currentHp = _baseStatus.Hp;
         _currentMp = _baseStatus.Mp;
@@ -124,13 +126,13 @@ public class ActorInfo
     {
         var lvUpstatus = new StatusInfo();
         lvUpstatus.SetParameter(0,0,0,0,0);
-        _level++;
         CalcLevelUpStatusInfo(lvUpstatus);
+        _level++;
         _sp += 10;
         for (int i = 0;i < bonus;i++)
         {
-            _level++;
             CalcLevelUpStatusInfo(lvUpstatus);
+            _level++;
             _sp += 10;
         }
         return lvUpstatus;
@@ -138,20 +140,29 @@ public class ActorInfo
 
     private void CalcLevelUpStatusInfo(StatusInfo statusInfo)
     {
-        if (IsLevelUpStatus(StatusParamType.Hp)) statusInfo.AddParameter(StatusParamType.Hp,1);
-        if (IsLevelUpStatus(StatusParamType.Mp)) statusInfo.AddParameter(StatusParamType.Mp,1);
-        if (IsLevelUpStatus(StatusParamType.Atk)) statusInfo.AddParameter(StatusParamType.Atk,1);
-        if (IsLevelUpStatus(StatusParamType.Def)) statusInfo.AddParameter(StatusParamType.Def,1);
-        if (IsLevelUpStatus(StatusParamType.Spd)) statusInfo.AddParameter(StatusParamType.Spd,1);
+        statusInfo.AddParameter(StatusParamType.Hp,IsLevelUpStatus(StatusParamType.Hp)); 
+        statusInfo.AddParameter(StatusParamType.Mp,IsLevelUpStatus(StatusParamType.Mp));  
+        statusInfo.AddParameter(StatusParamType.Atk,IsLevelUpStatus(StatusParamType.Atk));  
+        statusInfo.AddParameter(StatusParamType.Def,IsLevelUpStatus(StatusParamType.Def));  
+        statusInfo.AddParameter(StatusParamType.Spd,IsLevelUpStatus(StatusParamType.Spd));     
     }
 
-    private bool IsLevelUpStatus(StatusParamType statusParamType)
+    private int IsLevelUpStatus(StatusParamType statusParamType)
     {
-        bool IsLevelUpStatus = false;
-        int rate = UnityEngine.Random.Range(0,100);
-        if (rate < _usePoint.GetParameter(statusParamType))
+        int IsLevelUpStatus = 0;
+        int upperRate = _upperRate.GetParameter(statusParamType) + ((_level-1) * 10);
+        while (upperRate >= 0)
         {
-            IsLevelUpStatus = true;
+            int rate = UnityEngine.Random.Range(0,100);
+            if (rate < upperRate)
+            {
+                IsLevelUpStatus += 1;
+            }
+            upperRate -= 100;
+            if (upperRate < 0)
+            {
+                break;
+            }
         }
         return IsLevelUpStatus;
     }
@@ -245,7 +256,8 @@ public class ActorInfo
 
     public int UsePointCost(StatusParamType statusParamType)
     {
-        int UseCost = _usePoint.GetParameter(statusParamType);
+        int UseCost = _upperRate.GetParameter(statusParamType) + ((_level-1) * 10);
+        /*
         UseCost += (_plusStatus.GetParameter(statusParamType)+TempStatus.GetParameter(statusParamType)) / 5;
         var _currentAlcana = GameSystem.CurrentData.CurrentAlcana;
         if (_currentAlcana != null)
@@ -255,6 +267,7 @@ public class ActorInfo
                 UseCost += 20;
             }
         }
+        */
         return UseCost;
     }
 

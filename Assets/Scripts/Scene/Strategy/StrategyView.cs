@@ -33,9 +33,12 @@ public class StrategyView : BaseView
         base.Initialize();
         InitializeInput();
         strategyStrengthList.Initialize(() => CallLvUpNext());
+        SetInputHandler(strategyStrengthList.GetComponent<IInputHandlerEvent>());
+        
         GameObject prefab = Instantiate(animPrefab);
         prefab.transform.SetParent(animRoot.transform, false);
         _battleStartAnim = prefab.GetComponent<BattleStartAnim>();
+        _battleStartAnim.gameObject.SetActive(false);
         lvUpStatusButton.onClick.AddListener(() => CallLvUpNext());
         new StrategyPresenter(this);
     }
@@ -45,6 +48,7 @@ public class StrategyView : BaseView
         lvUpStatusButton.gameObject.SetActive(false);
         actorInfoComponent.gameObject.SetActive(false);
         strategyStrengthList.gameObject.SetActive(false);
+        strategyResultList.TacticsCommandList.Activate();
         var eventData = new StrategyViewEvent(CommandType.LvUpNext);
         _commandData(eventData);
     }
@@ -53,19 +57,19 @@ public class StrategyView : BaseView
     {
         _battleStartAnim.SetText("LevelUp!");
         _battleStartAnim.StartAnim();
+        _battleStartAnim.gameObject.SetActive(true);
         _animationBusy = true;
     }
 
     public void ShowLvUpActor(ActorInfo actorInfo)
     {
+        strategyResultList.TacticsCommandList.Deactivate();
         strategyStrengthList.gameObject.SetActive(true);
         lvUpStatusButton.gameObject.SetActive(true);
         actorInfoComponent.gameObject.SetActive(true);
         actorInfoComponent.UpdateInfo(actorInfo,null);
         strategyStrengthList.Refresh(actorInfo);
     }
-
-    
 
     public void SetTitle(string text)
     {
@@ -189,12 +193,12 @@ public class StrategyView : BaseView
     }
 
     private new void Update() {
-        
         if (_animationBusy == true)
         {
             CheckAnimationBusy();
             return;
         }
+        base.Update();
     }
 
     private void CheckAnimationBusy()

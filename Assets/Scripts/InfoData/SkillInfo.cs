@@ -69,18 +69,4 @@ public class SkillInfo
     {
         _isUsed = isUsed;
     }
-
-    public bool CanUseTrigger(BattlerInfo battlerInfo,UnitInfo party,UnitInfo troops)
-    {
-        if (_triggerDatas.Count == 0) return true;
-        bool CanUse = true;
-        foreach (var triggerData in _triggerDatas)
-        {
-            if (triggerData.CanUseTrigger(battlerInfo,party,troops) == false)
-            {
-                CanUse = false;
-            }
-        }
-        return CanUse;
-    }
 }

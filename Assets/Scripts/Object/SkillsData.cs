@@ -48,65 +48,104 @@ public class SkillsData : ScriptableObject {
         public int Param2;
         public int Param3;
 
-        public bool CanUseTrigger(BattlerInfo battlerInfo,UnitInfo party,UnitInfo troops)
+        public bool IsTriggerdSkillInfo(BattlerInfo battlerInfo,List<BattlerInfo> party,List<BattlerInfo> troops)
         {
-            bool CanUse = true;
+            bool CanUse = false;
             
             switch (TriggerType)
             {
-                case TriggerType.IsExistDeathMember:
-                if (troops.DeathMemberCount() < Param1)
-                {
-                    CanUse = false;
-                }
-                break;
-                case TriggerType.IsExistAliveMember:
-                if (troops.DeathMemberCount() < Param1)
-                {
-                    CanUse = false;
-                }
-                break;
-                case TriggerType.TurnNumUnder:
-                if (battlerInfo.TurnCount > Param1)
-                {
-                    CanUse = false;
-                }
-                break;
-                case TriggerType.TurnNumPer:
-                if ((battlerInfo.TurnCount % Param1) - Param2 != 0)
-                {
-                    CanUse = false;
-                }
+                case TriggerType.None:
+                    CanUse = true;
                 break;
                 case TriggerType.HpRateUnder:
-                if (((float)battlerInfo.Hp / (float)battlerInfo.MaxHp) > Param1 * 0.01f)
+                if (((float)battlerInfo.Hp / (float)battlerInfo.MaxHp) < Param1 * 0.01f)
                 {
-                    CanUse = false;
+                    CanUse = true;
                 }
                 break;
                 case TriggerType.HpRateUpper:
-                if (((float)battlerInfo.Hp / (float)battlerInfo.MaxHp) < Param1 * 0.01f)
+                if (((float)battlerInfo.Hp / (float)battlerInfo.MaxHp) > Param1 * 0.01f)
                 {
-                    CanUse = false;
+                    CanUse = true;
+                }
+                break;
+                case TriggerType.HpValue:
+                if (battlerInfo.Hp == Param1)
+                {
+                    CanUse = true;
+                }
+                break;
+                case TriggerType.MpUnder:
+                if (battlerInfo.Mp <= Param1)
+                {
+                    CanUse = true;
+                }
+                break;
+                case TriggerType.MpUpper:
+                if (battlerInfo.Mp >= Param1)
+                {
+                    CanUse = true;
+                }
+                break;
+                case TriggerType.IsExistDeathMember:
+                if (troops.FindAll(a => !a.IsAlive()).Count >= Param1)
+                {
+                    CanUse = true;
+                }
+                break;
+                case TriggerType.IsExistAliveMember:
+                if (troops.FindAll(a => a.IsAlive()).Count >= Param1)
+                {
+                    CanUse = true;
+                }
+                break;
+                case TriggerType.TurnNumUnder:
+                if (battlerInfo.TurnCount < Param1)
+                {
+                    CanUse = true;
+                }
+                break;
+                case TriggerType.TurnNumPer:
+                if ((battlerInfo.TurnCount % Param1) - Param2 == 0)
+                {
+                    CanUse = true;
                 }
                 break;
                 case TriggerType.PartyHpRateUnder:
-                var filter = troops.FindHpRateUnder(Param1);
+                var filter = false;//troops.FindAll(a => a.IsAlive())(Param1);
                 if (filter == false)
                 {
                     CanUse = false;
                 }
                 break;
                 case TriggerType.SelfLineFront:
-                if (battlerInfo.LineIndex == LineType.Back)
+                if (battlerInfo.LineIndex == LineType.Front)
                 {
-                    CanUse = false;
+                    CanUse = true;
                 }
                 break;
                 case TriggerType.SelfLineBack:
-                if (battlerInfo.LineIndex == LineType.Front)
+                if (battlerInfo.LineIndex == LineType.Back)
                 {
-                    CanUse = false;
+                    CanUse = true;
+                }
+                break;
+                case TriggerType.IsState:
+                if (battlerInfo.IsState((StateType)Param1))
+                {
+                    CanUse = true;
+                }
+                break;
+                case TriggerType.IsNotState:
+                if (!battlerInfo.IsState((StateType)Param1))
+                {
+                    CanUse = true;
+                }
+                break;
+                case TriggerType.ChainCount:
+                if (battlerInfo.ChainSuccessCount >= Param1)
+                {
+                    CanUse = true;
                 }
                 break;
             }
@@ -183,15 +222,18 @@ public enum TriggerType
     HpRateUpper = 2, // Hpが〇%以上
     HpValue = 3, // Hpが〇
     PartyHpRateUnder = 6, // 味方にHpが〇%以下がいる
-    TurnNumUnder = 11, // ターン数が〇以内
-    TurnNumPer = 13, // ターン数がparam1 x ターン数 + param2
+    MpUnder = 11, // Mpが〇以下
+    MpUpper = 12, // Mpが〇以上
     IsExistDeathMember = 21, // 戦闘不能が〇以上存在する
     IsExistAliveMember = 22, // 生存者が〇以上存在する
     SelfLineFront = 31, // 自分が前列にいる
     SelfLineBack = 32, // 自分が後列にいる
     IsState = 41, // StateId状態になっている
+    IsNotState = 42, // StateId状態になっていない
     LessTroopMembers = 51, // 味方より敵が多い
     MoreTroopMembers = 52, // 味方より敵が少ない
+    TurnNumUnder = 61, // ターン数が〇以内
+    TurnNumPer = 63, // ターン数がparam1 x ターン数 + param2
     PayBattleMp = 101, // Mpを〇消費する
     ChainCount = 102, // 拘束成功回数
     ActionResultDeath = 103, // 攻撃を受けると戦闘不能になる

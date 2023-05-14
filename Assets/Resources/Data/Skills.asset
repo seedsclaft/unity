@@ -204,7 +204,7 @@ MonoBehaviour:
     AnimationPosition: 1
     AnimationType: 2
     DamageTiming: 40
-    MpCost: 5
+    MpCost: 4
     Rank: 0
     Attribute: 1
     Scope: 2
@@ -227,7 +227,7 @@ MonoBehaviour:
     AnimationPosition: 0
     AnimationType: 1
     DamageTiming: 32
-    MpCost: 5
+    MpCost: 4
     Rank: 2
     Attribute: 1
     Scope: 1
@@ -250,7 +250,7 @@ MonoBehaviour:
     AnimationPosition: 0
     AnimationType: 1
     DamageTiming: 32
-    MpCost: 5
+    MpCost: 4
     Rank: 2
     Attribute: 1
     Scope: 4
@@ -279,7 +279,7 @@ MonoBehaviour:
     Scope: 1
     SkillType: 3
     TargetType: 1
-    Help: "(\u6761\u4EF6)\u30D0\u30C8\u30EB\u4E2DMp\u309220\u6D88\u8CBB\u3059\u308B\n\u6575\u5358\u4F53\u306B\u30C0\u30E1\u30FC\u30B8
+    Help: "(\u6761\u4EF6)\u30D0\u30C8\u30EB\u4E2DMp\u309215\u6D88\u8CBB\u3059\u308B\n\u6575\u5358\u4F53\u306B\u30C0\u30E1\u30FC\u30B8
       \u795E\u5316\u72B6\u614B\u306B\u79FB\u884C"
     Range: 2
     AliveOnly: 1
@@ -296,9 +296,15 @@ MonoBehaviour:
       Param3: 0
     TriggerDatas:
     - SkillId: 111
+      TriggerType: 42
+      TriggerTiming: 2
+      Param1: 11
+      Param2: 0
+      Param3: 1
+    - SkillId: 111
       TriggerType: 101
       TriggerTiming: 2
-      Param1: 20
+      Param1: 15
       Param2: 0
       Param3: 0
   - Id: 112
@@ -306,7 +312,7 @@ MonoBehaviour:
     IconIndex: 11
     AnimationName: NA_Effekseer/NA_magic_004_c1
     AnimationPosition: 0
-    AnimationType: 1
+    AnimationType: 3
     DamageTiming: 88
     MpCost: 0
     Rank: 2
@@ -337,7 +343,7 @@ MonoBehaviour:
     AnimationPosition: 0
     AnimationType: 2
     DamageTiming: 48
-    MpCost: 5
+    MpCost: 4
     Rank: 3
     Attribute: 1
     Scope: 2
@@ -457,8 +463,8 @@ MonoBehaviour:
       Param3: 6
     TriggerDatas:
     - SkillId: 134
-      TriggerType: 11
-      TriggerTiming: 2
+      TriggerType: 61
+      TriggerTiming: 4
       Param1: 3
       Param2: 0
       Param3: 0
@@ -475,13 +481,13 @@ MonoBehaviour:
     Scope: 4
     SkillType: 2
     TargetType: 4
-    Help: "(\u6761\u4EF6)\u6226\u95D8\u958B\u59CB\u6642\nMP\u304C5\u56DE\u5FA9"
+    Help: "(\u6761\u4EF6)\u6226\u95D8\u958B\u59CB\u6642\nMP\u304C4\u56DE\u5FA9"
     Range: 1
     AliveOnly: 1
     FeatureDatas:
     - SkillId: 135
       FeatureType: 7
-      Param1: 5
+      Param1: 4
       Param2: 0
       Param3: 0
     TriggerDatas:
@@ -504,13 +510,13 @@ MonoBehaviour:
     Scope: 4
     SkillType: 5
     TargetType: 4
-    Help: "(\u6761\u4EF6)\u795E\u5316\u72B6\u614B\u306B\u306A\u3063\u305F\u6642\nMP\u304C5\u56DE\u5FA9"
+    Help: "(\u6761\u4EF6)\u795E\u5316\u72B6\u614B\u306B\u306A\u3063\u305F\u6642\nMP\u304C4\u56DE\u5FA9"
     Range: 1
     AliveOnly: 1
     FeatureDatas:
     - SkillId: 136
       FeatureType: 7
-      Param1: 5
+      Param1: 4
       Param2: 0
       Param3: 0
     TriggerDatas:
@@ -518,6 +524,35 @@ MonoBehaviour:
       TriggerType: 41
       TriggerTiming: 2
       Param1: 11
+      Param2: 0
+      Param3: 0
+  - Id: 137
+    Name: "\u30A2\u30D5\u30BF\u30FC\u30D0\u30FC\u30CA\u30FC"
+    IconIndex: 6
+    AnimationName: 
+    AnimationPosition: 0
+    AnimationType: 1
+    DamageTiming: 0
+    MpCost: 0
+    Rank: 1
+    Attribute: 1
+    Scope: 4
+    SkillType: 2
+    TargetType: 4
+    Help: "(\u6761\u4EF6)Mp4\u672A\u6E80\u306E\u72B6\u614B\u3067\u884C\u52D5\u5F8C\nMP\u304C4\u56DE\u5FA9"
+    Range: 1
+    AliveOnly: 1
+    FeatureDatas:
+    - SkillId: 137
+      FeatureType: 7
+      Param1: 4
+      Param2: 0
+      Param3: 0
+    TriggerDatas:
+    - SkillId: 137
+      TriggerType: 11
+      TriggerTiming: 2
+      Param1: 5
       Param2: 0
       Param3: 0
   - Id: 141
@@ -531,7 +566,7 @@ MonoBehaviour:
     Rank: 1
     Attribute: 1
     Scope: 4
-    SkillType: 5
+    SkillType: 2
     TargetType: 4
     Help: "\u5473\u65B9\u5168\u54E1\u306E\u708E\u5C5E\u6027\u9069\u6027\u304C\u30A2\u30C3\u30D7"
     Range: 1
@@ -573,7 +608,7 @@ MonoBehaviour:
     AnimationPosition: 0
     AnimationType: 1
     DamageTiming: 26
-    MpCost: 0
+    MpCost: 2
     Rank: 2
     Attribute: 2
     Scope: 1
@@ -596,13 +631,13 @@ MonoBehaviour:
     AnimationPosition: 0
     AnimationType: 1
     DamageTiming: 26
-    MpCost: 5
+    MpCost: 4
     Rank: 2
     Attribute: 2
-    Scope: 4
+    Scope: 1
     SkillType: 1
-    TargetType: 4
-    Help: "\u81EA\u8EAB\u306B\u56DE\u907F\u738725\u30A2\u30C3\u30D7\u3092\u6C38\u7D9A\u4ED8\u4E0E"
+    TargetType: 2
+    Help: "\u5473\u65B9\u4E00\u4EBA\u306B\u56DE\u907F\u738740%\u30A2\u30C3\u30D7\u3092\u4ED8\u4E0E(\u6C38\u7D9A)"
     Range: 1
     AliveOnly: 1
     FeatureDatas:
@@ -610,7 +645,7 @@ MonoBehaviour:
       FeatureType: 21
       Param1: 52
       Param2: 999
-      Param3: 25
+      Param3: 40
     TriggerDatas: []
   - Id: 204
     Name: "\u30B7\u30E7\u30C3\u30AF\u30A4\u30F3\u30D1\u30EB\u30B9"
@@ -619,7 +654,7 @@ MonoBehaviour:
     AnimationPosition: 0
     AnimationType: 1
     DamageTiming: 26
-    MpCost: 5
+    MpCost: 4
     Rank: 2
     Attribute: 2
     Scope: 1
@@ -642,7 +677,7 @@ MonoBehaviour:
     AnimationPosition: 0
     AnimationType: 1
     DamageTiming: 26
-    MpCost: 5
+    MpCost: 4
     Rank: 2
     Attribute: 2
     Scope: 1
@@ -729,12 +764,12 @@ MonoBehaviour:
     TriggerDatas: []
   - Id: 221
     Name: "\u30A2\u30AF\u30BB\u30E9\u30EC\u30A4\u30C8"
-    IconIndex: 6
+    IconIndex: 4
     AnimationName: NA_Effekseer/NA_magic_006_c5
     AnimationPosition: 0
     AnimationType: 3
     DamageTiming: 26
-    MpCost: 5
+    MpCost: 4
     Rank: 3
     Attribute: 2
     Scope: 1
@@ -781,7 +816,7 @@ MonoBehaviour:
     AnimationType: 1
     DamageTiming: 0
     MpCost: 0
-    Rank: 2
+    Rank: 1
     Attribute: 2
     Scope: 4
     SkillType: 2
@@ -804,7 +839,7 @@ MonoBehaviour:
     AnimationType: 1
     DamageTiming: 0
     MpCost: 0
-    Rank: 2
+    Rank: 1
     Attribute: 2
     Scope: 4
     SkillType: 2
@@ -827,7 +862,7 @@ MonoBehaviour:
     AnimationType: 1
     DamageTiming: 0
     MpCost: 0
-    Rank: 2
+    Rank: 1
     Attribute: 2
     Scope: 4
     SkillType: 2
@@ -861,7 +896,7 @@ MonoBehaviour:
     AnimationType: 1
     DamageTiming: 0
     MpCost: 0
-    Rank: 2
+    Rank: 1
     Attribute: 2
     Scope: 4
     SkillType: 2
@@ -879,7 +914,7 @@ MonoBehaviour:
     AnimationType: 1
     DamageTiming: 0
     MpCost: 0
-    Rank: 2
+    Rank: 1
     Attribute: 2
     Scope: 4
     SkillType: 5
@@ -953,7 +988,7 @@ MonoBehaviour:
     AnimationPosition: 0
     AnimationType: 1
     DamageTiming: 26
-    MpCost: 0
+    MpCost: 2
     Rank: 2
     Attribute: 3
     Scope: 4
@@ -976,7 +1011,7 @@ MonoBehaviour:
     AnimationPosition: 0
     AnimationType: 1
     DamageTiming: 26
-    MpCost: 5
+    MpCost: 4
     Rank: 2
     Attribute: 3
     Scope: 1
@@ -999,7 +1034,7 @@ MonoBehaviour:
     AnimationPosition: 0
     AnimationType: 1
     DamageTiming: 26
-    MpCost: 5
+    MpCost: 4
     Rank: 2
     Attribute: 3
     Scope: 1
@@ -1022,7 +1057,7 @@ MonoBehaviour:
     AnimationPosition: 0
     AnimationType: 1
     DamageTiming: 26
-    MpCost: 5
+    MpCost: 4
     Rank: 2
     Attribute: 3
     Scope: 1
@@ -1109,8 +1144,8 @@ MonoBehaviour:
     AnimationPosition: 0
     AnimationType: 1
     DamageTiming: 26
-    MpCost: 5
-    Rank: 2
+    MpCost: 4
+    Rank: 1
     Attribute: 3
     Scope: 1
     SkillType: 1
@@ -1133,7 +1168,7 @@ MonoBehaviour:
     AnimationType: 1
     DamageTiming: 26
     MpCost: 0
-    Rank: 2
+    Rank: 1
     Attribute: 3
     Scope: 4
     SkillType: 2
@@ -1156,7 +1191,7 @@ MonoBehaviour:
     AnimationType: 1
     DamageTiming: 26
     MpCost: 0
-    Rank: 2
+    Rank: 1
     Attribute: 3
     Scope: 4
     SkillType: 2
@@ -1179,7 +1214,7 @@ MonoBehaviour:
     AnimationType: 1
     DamageTiming: 26
     MpCost: 0
-    Rank: 2
+    Rank: 1
     Attribute: 3
     Scope: 4
     SkillType: 2
@@ -1208,7 +1243,7 @@ MonoBehaviour:
     AnimationType: 1
     DamageTiming: 26
     MpCost: 0
-    Rank: 2
+    Rank: 1
     Attribute: 3
     Scope: 4
     SkillType: 2
@@ -1231,7 +1266,7 @@ MonoBehaviour:
     AnimationType: 1
     DamageTiming: 26
     MpCost: 0
-    Rank: 2
+    Rank: 1
     Attribute: 3
     Scope: 4
     SkillType: 2
@@ -1254,7 +1289,7 @@ MonoBehaviour:
     AnimationType: 1
     DamageTiming: 26
     MpCost: 0
-    Rank: 2
+    Rank: 1
     Attribute: 3
     Scope: 4
     SkillType: 2
@@ -1295,7 +1330,7 @@ MonoBehaviour:
     AnimationType: 1
     DamageTiming: 26
     MpCost: 0
-    Rank: 2
+    Rank: 1
     Attribute: 3
     Scope: 4
     SkillType: 2
@@ -1363,7 +1398,7 @@ MonoBehaviour:
     AnimationPosition: 0
     AnimationType: 1
     DamageTiming: 40
-    MpCost: 5
+    MpCost: 4
     Rank: 2
     Attribute: 4
     Scope: 1
@@ -1391,7 +1426,7 @@ MonoBehaviour:
     AnimationPosition: 0
     AnimationType: 1
     DamageTiming: 26
-    MpCost: 5
+    MpCost: 4
     Rank: 2
     Attribute: 4
     Scope: 1
@@ -1429,7 +1464,7 @@ MonoBehaviour:
     AnimationPosition: 0
     AnimationType: 1
     DamageTiming: 26
-    MpCost: 5
+    MpCost: 4
     Rank: 2
     Attribute: 4
     Scope: 4
@@ -1521,8 +1556,8 @@ MonoBehaviour:
     AnimationPosition: 0
     AnimationType: 1
     DamageTiming: 40
-    MpCost: 5
-    Rank: 2
+    MpCost: 4
+    Rank: 1
     Attribute: 4
     Scope: 1
     SkillType: 1
@@ -1550,7 +1585,7 @@ MonoBehaviour:
     AnimationType: 1
     DamageTiming: 26
     MpCost: 0
-    Rank: 2
+    Rank: 1
     Attribute: 4
     Scope: 4
     SkillType: 2
@@ -1573,7 +1608,7 @@ MonoBehaviour:
     AnimationType: 1
     DamageTiming: 26
     MpCost: 0
-    Rank: 2
+    Rank: 1
     Attribute: 4
     Scope: 4
     SkillType: 2
@@ -1596,7 +1631,7 @@ MonoBehaviour:
     AnimationType: 1
     DamageTiming: 26
     MpCost: 0
-    Rank: 2
+    Rank: 1
     Attribute: 4
     Scope: 4
     SkillType: 2
@@ -1619,7 +1654,7 @@ MonoBehaviour:
     AnimationType: 1
     DamageTiming: 26
     MpCost: 0
-    Rank: 2
+    Rank: 1
     Attribute: 4
     Scope: 4
     SkillType: 2
@@ -1642,7 +1677,7 @@ MonoBehaviour:
     AnimationType: 1
     DamageTiming: 26
     MpCost: 0
-    Rank: 2
+    Rank: 1
     Attribute: 4
     Scope: 4
     SkillType: 5
@@ -1671,7 +1706,7 @@ MonoBehaviour:
     AnimationType: 1
     DamageTiming: 26
     MpCost: 0
-    Rank: 2
+    Rank: 1
     Attribute: 4
     Scope: 4
     SkillType: 2
@@ -1694,7 +1729,7 @@ MonoBehaviour:
     AnimationType: 1
     DamageTiming: 26
     MpCost: 0
-    Rank: 2
+    Rank: 1
     Attribute: 4
     Scope: 4
     SkillType: 2
@@ -1739,7 +1774,7 @@ MonoBehaviour:
     AnimationPosition: 0
     AnimationType: 3
     DamageTiming: 26
-    MpCost: 5
+    MpCost: 4
     Rank: 2
     Attribute: 5
     Scope: 3
@@ -1762,7 +1797,7 @@ MonoBehaviour:
     AnimationPosition: 0
     AnimationType: 1
     DamageTiming: 20
-    MpCost: 5
+    MpCost: 4
     Rank: 2
     Attribute: 5
     Scope: 1
@@ -1785,7 +1820,7 @@ MonoBehaviour:
     AnimationPosition: 0
     AnimationType: 1
     DamageTiming: 20
-    MpCost: 5
+    MpCost: 4
     Rank: 2
     Attribute: 5
     Scope: 1
@@ -1848,7 +1883,7 @@ MonoBehaviour:
     AnimationPosition: 0
     AnimationType: 1
     DamageTiming: 20
-    MpCost: 5
+    MpCost: 4
     Rank: 2
     Attribute: 5
     Scope: 1
@@ -1935,8 +1970,8 @@ MonoBehaviour:
     AnimationPosition: 0
     AnimationType: 1
     DamageTiming: 26
-    MpCost: 5
-    Rank: 2
+    MpCost: 4
+    Rank: 1
     Attribute: 5
     Scope: 1
     SkillType: 1

@@ -110,7 +110,7 @@ public class StageInfo
             int rand = new Random().Next(0, troopDatas.Count);
             if (!troopsData.Contains(troopDatas[rand]))
             {
-                troopDatas[rand].Lv = _troopClearCount + 4;
+                troopDatas[rand].Lv = _troopClearCount + 1;
                 troopsData.Add(troopDatas[rand]);
             }
         }

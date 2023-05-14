@@ -131,12 +131,8 @@ public class StrategyPresenter : BasePresenter
             }
         } else 
         if (_isBattle == false){
-            _model.SetLvup();
-            if (_model.LevelUpData.Count > 0)
+            if (_model.LevelUpData.Count == 0)
             {
-                _view.StartLvUpAnimation();
-                return;
-            } else{
                 List<GetItemInfo> getItemInfos = _model.SetResult();
                 _view.ShowResultList(getItemInfos);
             }
@@ -252,6 +248,11 @@ public class StrategyPresenter : BasePresenter
         {
             _view.SetTitle(DataSystem.System.GetTextData(14020).Text);
             _view.StartResultAnimation(tacticsActors);
+            _model.SetLvup();
+            if (_model.LevelUpData.Count > 0)
+            {
+                _view.StartLvUpAnimation();
+            }
         } else{
             CheckNextBattle();
         }

@@ -379,6 +379,12 @@ public class TacticsModel : BaseModel
             }
         }
     }
+
+    public bool IsBusyAll()
+    {
+        return StageMembers().Find(a => a.TacticsComandType == TacticsComandType.None) == null;
+    }
+
     public void RefreshData()
     {
         

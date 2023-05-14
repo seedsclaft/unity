@@ -56,6 +56,7 @@ public class BattlerInfo
     private int _chainSuccessCount = 0;
     public int ChainSuccessCount {get {return _chainSuccessCount;} }
     private int _payBattleMp = 0;
+    public int PayBattleMp { get {return _payBattleMp;}}
     private int _lastTargetIndex = 0;
     public void SetLastTargetIndex(int index){
         _lastTargetIndex = index;
@@ -66,8 +67,6 @@ public class BattlerInfo
     private int _demigodParam = 0;
     public int DemigodParam {get {return _demigodParam;}}
 
-    private UnitInfo _party = null;
-    private UnitInfo _troops = null;
 
     public BattlerInfo(ActorInfo actorInfo,int index){
         _charaId = actorInfo.ActorId;
@@ -139,30 +138,6 @@ public class BattlerInfo
         }
 
         ResetAp(true);
-    }
-
-    public void SetBattleData(UnitInfo party,UnitInfo troops)
-    {
-        _party = party;
-        _troops = troops;
-    }
-
-    public void MakePassiveSkills()
-    {
-        _stateInfos.Clear();
-        List<SkillInfo> passiveSkills = _skills.FindAll(a => a.Master.SkillType == SkillType.Passive);
-        foreach (var passiveSkill in passiveSkills)
-        {
-            foreach (var featureData in passiveSkill.Master.FeatureDatas)
-            {
-                if (featureData.FeatureType == FeatureType.AddState)
-                {
-                    StateInfo stateInfo = new StateInfo(featureData.Param1,featureData.Param2,featureData.Param3,Index,Index,true);
-                    //stateInfo.SetPassiveTrigger(passiveSkill.TriggerDatas);
-                    _stateInfos.Add(stateInfo);
-                }
-            }
-        }
     }
 
     public bool IsActor()
@@ -266,7 +241,7 @@ public class BattlerInfo
         }
         if (_hp <= 0)
         {
-            StateInfo stateInfo = new StateInfo((int)StateType.Death,0,0,Index,Index,false);
+            StateInfo stateInfo = new StateInfo((int)StateType.Death,0,0,Index,Index);
             AddState(stateInfo);
         }
     }
@@ -308,17 +283,17 @@ public class BattlerInfo
 
     public bool IsState(StateType stateType)
     {
-        return _stateInfos.Find(a => a.StateId == (int)stateType && a.IsCanPassiveTriggered(this,_party,_troops)) != null;
+        return _stateInfos.Find(a => a.StateId == (int)stateType) != null;
     }
 
     public StateInfo GetStateInfo(StateType stateType)
     {
-        return _stateInfos.Find(a => a.StateId == (int)stateType && a.IsCanPassiveTriggered(this,_party,_troops));
+        return _stateInfos.Find(a => a.StateId == (int)stateType);
     }
 
     public List<StateInfo> GetStateInfoAll(StateType stateType)
     {
-        return _stateInfos.FindAll(a => a.StateId == (int)stateType && a.IsCanPassiveTriggered(this,_party,_troops));
+        return _stateInfos.FindAll(a => a.StateId == (int)stateType);
     }
 
     // ステートを消す
@@ -337,7 +312,7 @@ public class BattlerInfo
         int turns = 0;
         if (IsState(stateType))
         {
-            turns += _stateInfos.Find(a => a.StateId == (int)stateType && a.IsCanPassiveTriggered(this,_party,_troops)).Turns;
+            turns += _stateInfos.Find(a => a.StateId == (int)stateType).Turns;
         }
         return turns;
     }
@@ -347,7 +322,7 @@ public class BattlerInfo
         int effect = 0;
         if (IsState(stateType))
         {
-            effect += _stateInfos.Find(a => a.StateId == (int)stateType && a.IsCanPassiveTriggered(this,_party,_troops)).Effect;
+            effect += _stateInfos.Find(a => a.StateId == (int)stateType).Effect;
         }
         return effect;
     }
@@ -538,226 +513,13 @@ public class BattlerInfo
             stateInfo.Turns += 1;
         }
     }
-
-    // Triggerを満たすSkillInfoを取得
-    public List<SkillInfo> TriggerdSkillInfos(TriggerTiming triggerTiming,ActionInfo actionInfo,List<BattlerInfo> battlers)
+    public List<SkillInfo> ActiveSkills()
     {
-        List <SkillInfo> triggeredSkills = new List<SkillInfo>();
-        for (var i = 0;i < Skills.Count;i++)
-        {
-            SkillInfo skillInfo = Skills[i];
-            if (skillInfo.Master.SkillType == SkillType.Demigod && _isAwaken){
-                continue;
-            }
-            var triggerDatas = skillInfo.Master.TriggerDatas.FindAll(a => a.TriggerTiming == triggerTiming);
-            if (triggerDatas.Count > 0)
-            {
-                for (var j = 0;j < triggerDatas.Count;j++)
-                {
-                    if (triggeredSkills.Contains(skillInfo)) continue;
-                    if (triggerDatas[j].TriggerType == TriggerType.HpRateUnder)
-                    {
-                        if ( TriggerdHpRateUnderSkillInfos(triggerDatas[j]) )
-                        {
-                            triggeredSkills.Add(skillInfo);
-                        }
-                    }
-                    if (triggerDatas[j].TriggerType == TriggerType.HpRateUpper)
-                    {
-                        if ( TriggerdHpRateUpperSkillInfos(triggerDatas[j]) )
-                        {
-                            triggeredSkills.Add(skillInfo);
-                        }
-                    }
-                    if (triggerDatas[j].TriggerType == TriggerType.HpValue)
-                    {
-                        if ( Hp == triggerDatas[j].Param1 )
-                        {
-                            triggeredSkills.Add(skillInfo);
-                        }
-                    }
-                    if (triggerDatas[j].TriggerType == TriggerType.PayBattleMp)
-                    {
-                        if ( TriggerdPayBattleMpSkillInfos(triggerDatas[j],actionInfo) )
-                        {
-                            triggeredSkills.Add(skillInfo);
-                        }
-                    }
-                    if (triggerDatas[j].TriggerType == TriggerType.ChainCount)
-                    {
-                        if ( TriggerdChainCountSkillInfos(triggerDatas[j],actionInfo) )
-                        {
-                            triggeredSkills.Add(skillInfo);
-                        }
-                    }
-                    if (triggerDatas[j].TriggerType == TriggerType.ActionResultDeath)
-                    {
-                        if ( TriggerdActionResultDeathSkillInfos(triggerDatas[j],actionInfo,battlers) )
-                        {
-                            skillInfo.SetInterrupt(true);
-                            triggeredSkills.Add(skillInfo);
-                        }
-                    }
-                    if (triggerDatas[j].TriggerType == TriggerType.DeadWithoutSelf)
-                    {
-                        if ( TriggerdDeadWithoutSelfSkillInfos(triggerDatas[j],battlers) )
-                        {
-                            triggeredSkills.Add(skillInfo);
-                        }
-                    }
-                    if (triggerDatas[j].TriggerType == TriggerType.SelfDead)
-                    {
-                        if ( TriggerdSelfDeadSkillInfos(triggerDatas[j],actionInfo.ActionResults) )
-                        {
-                            triggeredSkills.Add(skillInfo);
-                        }
-                    }
-                    if (triggerDatas[j].TriggerType == TriggerType.IsState)
-                    {
-                        if ( IsState((StateType)triggerDatas[j].Param1) )
-                        {
-                            triggeredSkills.Add(skillInfo);
-                        }
-                    }
-                    if (triggerDatas[j].TriggerType == TriggerType.LessTroopMembers)
-                    {
-                        var troops = battlers.FindAll(a => !a.isActor);
-                        var party = battlers.FindAll(a => a.isActor);
-                        if ( troops.Count >= party.Count )
-                        {
-                            triggeredSkills.Add(skillInfo);
-                        }
-                    }
-                    if (triggerDatas[j].TriggerType == TriggerType.MoreTroopMembers)
-                    {
-                        var troops = battlers.FindAll(a => !a.isActor);
-                        var party = battlers.FindAll(a => a.isActor);
-                        if ( troops.Count <= party.Count )
-                        {
-                            triggeredSkills.Add(skillInfo);
-                        }
-                    }
-                }
-            }
-        }
-
-        // IsUsed
-        for (int i = triggeredSkills.Count-1;0 <= i;i--)
-        {
-            if (triggeredSkills[i].Master.SkillType == SkillType.UsedPassive)
-            {
-                if (triggeredSkills[i].IsUsed == true)
-                {
-                    triggeredSkills.RemoveAt(i);
-                } else{
-                    triggeredSkills[i].SetIsUsed(true);
-                }
-            }
-        }
-
-        return triggeredSkills;
+        return Skills.FindAll(a => a.Master.SkillType != SkillType.Passive);
     }
 
-    private bool TriggerdHpRateUnderSkillInfos(SkillsData.TriggerData triggerData)
+    public List<SkillInfo> PassiveSkills()
     {
-        bool IsTriggered = false;
-        if (triggerData.Param1 * 0.01f >= ((float)Hp / (float)MaxHp))
-        {
-            IsTriggered = true;
-        }
-        return IsTriggered;
-    }
-
-    private bool TriggerdHpRateUpperSkillInfos(SkillsData.TriggerData triggerData)
-    {
-        bool IsTriggered = false;
-        if (triggerData.Param1 * 0.01f <= ((float)Hp / (float)MaxHp))
-        {
-            IsTriggered = true;
-        }
-        return IsTriggered;
-    }
-
-    private bool TriggerdPayBattleMpSkillInfos(SkillsData.TriggerData triggerData,ActionInfo actionInfo)
-    {
-        bool IsTriggered = false;
-        if (triggerData.Param1 <= _payBattleMp)
-        {
-            IsTriggered = true;
-        }
-        return IsTriggered;
-    }
-
-    private bool TriggerdChainCountSkillInfos(SkillsData.TriggerData triggerData,ActionInfo actionInfo)
-    {
-        bool IsTriggered = false;
-        if (_chainSuccessCount >= triggerData.Param1)
-        {
-            IsTriggered = true;
-        }
-        return IsTriggered;
-    }
-
-    private bool TriggerdActionResultDeathSkillInfos(SkillsData.TriggerData triggerData,ActionInfo actionInfo,List<BattlerInfo> battlerInfos)
-    {
-        bool IsTriggered = false;
-        List<ActionResultInfo> actionResultInfos = actionInfo.ActionResults;
-        List<BattlerInfo> targetBattlers = battlerInfos.FindAll(a => a.isActor);
-        if (actionResultInfos.Find(a => targetBattlers.Find(b => a.DeadIndexList.Contains(b.Index)) != null) != null)
-        {
-            IsTriggered = true;
-        }
-        return IsTriggered;
-    }
-
-    private bool TriggerdDeadWithoutSelfSkillInfos(SkillsData.TriggerData triggerData,List<BattlerInfo> battlerInfos)
-    {
-        bool IsTriggered = false;
-        if (isActor)
-        {
-            int count = 0;
-            for (var i = 0;i < battlerInfos.Count;i++)
-            {
-                if (battlerInfos[i].isActor && battlerInfos[i].IsState(StateType.Death))
-                {
-                    count++;
-                }
-            }
-            if (IsAlive() && count > 0 && (count+1) >= battlerInfos.FindAll(a => a.isActor).Count)
-            {
-                IsTriggered = true;
-            }
-        } else
-        {
-            int count = 0;
-            for (var i = 0;i < battlerInfos.Count;i++)
-            {
-                if (!battlerInfos[i].isActor && battlerInfos[i].IsState(StateType.Death))
-                {
-                    count++;
-                }
-            }
-            if (IsAlive() && count > 0 && (count+1) >= battlerInfos.FindAll(a => !a.isActor).Count)
-            {
-                IsTriggered = true;
-            }
-        } 
-        return IsTriggered;
-    }
-
-    private bool TriggerdSelfDeadSkillInfos(SkillsData.TriggerData triggerData,List<ActionResultInfo> actionResultInfos){
-        bool IsTriggered = false;
-        if (actionResultInfos.Find(a => a.DeadIndexList.Contains(Index) == true) != null)
-        {
-            IsTriggered = true;
-        }
-        if (IsTriggered)
-        {
-            List<StateInfo> stateInfos = GetStateInfoAll(StateType.Death);
-            for (var i = 0;i < stateInfos.Count;i++){
-                RemoveState(stateInfos[i]);
-            }
-        }
-        return IsTriggered;
+        return Skills.FindAll(a => a.Master.SkillType == SkillType.Passive);
     }
 }

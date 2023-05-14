@@ -40,6 +40,7 @@ public class StrategyModel : BaseModel
 
     public void SetLvup()
     {
+        if (_levelUpData.Count > 0) return;
         List<ActorInfo> actorInfos = TacticsActors();
         var lvupList = new List<ActorInfo>();
         // 結果出力
@@ -251,6 +252,24 @@ public class StrategyModel : BaseModel
                 foreach (var actorInfo in CheckInBattleActors())
                 {
                     actorInfo.GainDemigod(getItemInfo.Param1);
+                }
+            }
+            if ((int)getItemInfo.GetItemType >= (int)GetItemType.AttributeFire && (int)getItemInfo.GetItemType <= (int)GetItemType.AttributeDark)
+            {
+                int rand = UnityEngine.Random.Range(0,100);
+                if (getItemInfo.Param2 >= rand)
+                {
+                    List< SkillsData.SkillData> getSkillDatas = DataSystem.Skills.FindAll(a => a.Rank == getItemInfo.Param1 && (int)a.Attribute == (int)getItemInfo.GetItemType - 11); 
+
+                    int rand2 = UnityEngine.Random.Range(0,getSkillDatas.Count);
+                    PartyInfo.AddAlchemy(getSkillDatas[rand2].Id);
+                    getItemInfo.SetTitleData(DataSystem.System.GetTextData(14040).Text);
+                    getItemInfos.Add(getItemInfo);
+
+                    string text = DataSystem.System.GetTextData(14051).Text.Replace("\\d", DataSystem.System.GetTextData(330 + (int)getItemInfo.GetItemType - 11).Text);
+                    getItemInfo.SetResultData(text);
+                    getItemInfo.SetSkillElementId((int)AttributeType.Fire + (int)getItemInfo.GetItemType - 11);
+
                 }
             }
         }

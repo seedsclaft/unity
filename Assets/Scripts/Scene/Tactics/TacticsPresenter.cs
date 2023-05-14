@@ -383,9 +383,7 @@ public class TacticsPresenter :BasePresenter
     {
         _model.SetSelectAddActor();
         _view.CommandConfirmClose();
-        StatusViewInfo statusViewInfo = new StatusViewInfo(() => {
-            _view.CommandSceneChange(Scene.Tactics);
-        });
+        StatusViewInfo statusViewInfo = new StatusViewInfo(null);
         statusViewInfo.SetDisplayDecideButton(true);
         statusViewInfo.SetDisplayBackButton(false);
         statusViewInfo.SetDisableStrength(true);
@@ -557,6 +555,10 @@ public class TacticsPresenter :BasePresenter
         _view.ShowCommandList();
         _view.HideTrainList();
         CommandRefresh();
+        if (_model.IsBusyAll())
+        {
+            CommandTacticsCommand(TacticsComandType.Turnend);
+        }
     }
 
     private void CommandSelectActorAlchemy(int actorId)
@@ -594,6 +596,10 @@ public class TacticsPresenter :BasePresenter
         _view.ShowCommandList();
         _view.HideAlchemyList();
         CommandRefresh();
+        if (_model.IsBusyAll())
+        {
+            CommandTacticsCommand(TacticsComandType.Turnend);
+        }
     }
 
     private void CommandSelectAlchemyClose()
@@ -637,6 +643,10 @@ public class TacticsPresenter :BasePresenter
         _view.ShowCommandList();
         _view.HideRecoveryList();
         CommandRefresh();
+        if (_model.IsBusyAll())
+        {
+            CommandTacticsCommand(TacticsComandType.Turnend);
+        }
     }
 
     private void CommandSelectBattleEnemy(int enemyIndex)
@@ -686,6 +696,10 @@ public class TacticsPresenter :BasePresenter
         _view.HideEnemyList();
         _view.SetActiveBack(false);
         _view.ShowCommandList();
+        if (_model.IsBusyAll())
+        {
+            CommandTacticsCommand(TacticsComandType.Turnend);
+        }
     }
 
     private void CommandSelectActorResource(int actorId)
@@ -706,6 +720,10 @@ public class TacticsPresenter :BasePresenter
         _view.ShowCommandList();
         _view.HideResourceList();
         CommandRefresh();
+        if (_model.IsBusyAll())
+        {
+            CommandTacticsCommand(TacticsComandType.Turnend);
+        }
     }
 
     private void CommandRefresh()

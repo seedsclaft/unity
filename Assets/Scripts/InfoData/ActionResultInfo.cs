@@ -153,9 +153,9 @@ public class ActionResultInfo
             return;
         }
         int AtkValue = subject.CurrentAtk();
-        if (target.IsState(StateType.AtkUp) && !isNoEffect)
+        if (subject.IsState(StateType.AtkUp) && !isNoEffect)
         {
-            AtkValue += target.StateEffectAll(StateType.AtkUp);
+            AtkValue += subject.StateEffectAll(StateType.AtkUp);
         }
         int DefValue = target.CurrentDef();
         if (target.IsState(StateType.DefUp) && !isNoEffect)
@@ -303,7 +303,7 @@ public class ActionResultInfo
 
     private void MakeAddState(BattlerInfo subject,BattlerInfo target,SkillsData.FeatureData featureData)
     {
-        StateInfo stateInfo = new StateInfo(featureData.Param1,featureData.Param2,featureData.Param3,subject.Index,target.Index,false);
+        StateInfo stateInfo = new StateInfo(featureData.Param1,featureData.Param2,featureData.Param3,subject.Index,target.Index);
         if (stateInfo.Master.Id == (int)StateType.CounterOura || stateInfo.Master.Id == (int)StateType.Benediction)
         {
             stateInfo.Turns = 200 - subject.Status.Spd * 2;
@@ -317,7 +317,7 @@ public class ActionResultInfo
     
     private void MakeRemoveState(BattlerInfo subject,BattlerInfo target,SkillsData.FeatureData featureData)
     {
-        StateInfo stateInfo = new StateInfo(featureData.Param1,featureData.Param2,featureData.Param3,subject.Index,target.Index,false);
+        StateInfo stateInfo = new StateInfo(featureData.Param1,featureData.Param2,featureData.Param3,subject.Index,target.Index);
         bool IsRemoved = target.RemoveState(stateInfo);
         if (IsRemoved)
         {

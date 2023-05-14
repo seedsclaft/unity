@@ -69,5 +69,10 @@ public enum GetItemType
 	None = 0,
 	Skill = 1,
 	Numinous = 2,
-	Demigod = 3
+	Demigod = 3,
+	AttributeFire = 11,
+	AttributeThunder = 12,
+	AttributeIce = 13,
+	AttributeShine = 14,
+	AttributeDark = 15,
 }

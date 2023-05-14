@@ -25,6 +25,7 @@ public class StatusView : BaseView
     private System.Action _backEvent = null;
     private bool _isDisplayDecide = false;
     private bool _isDisplayBack = true;
+    public bool IsDisplayBack{ get { return _isDisplayBack;}}
     public override void Initialize() 
     {
         base.Initialize();
@@ -109,7 +110,7 @@ public class StatusView : BaseView
     {
         _backEvent = backEvent;
         CreateBackCommand(() => 
-        {    
+        {
             var eventData = new StatusViewEvent(CommandType.Back);
             _commandData(eventData);
         });
@@ -137,7 +138,7 @@ public class StatusView : BaseView
 
     public new void SetActiveBack(bool IsActive)
     {
-        if (_isDisplayBack == false) IsActive = false;
+        //if (_isDisplayBack == false) IsActive = false;
         base.SetActiveBack(IsActive);
     }
 
