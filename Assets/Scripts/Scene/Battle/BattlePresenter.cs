@@ -143,6 +143,7 @@ public class BattlePresenter : BasePresenter
         {    
             _model.ExecActionResultInfo(chainActionResults[i]);
         }
+        StartAliveAnimation(chainActionResults);
         StartDeathAnimation(chainActionResults);
         var benedictionActionResults = _model.UpdateBenedictionState();
         for (int i = 0; i < benedictionActionResults.Count; i++)
@@ -154,6 +155,7 @@ public class BattlePresenter : BasePresenter
             _model.ExecActionResultInfo(benedictionActionResults[i]);
         }
         StartDeathAnimation(benedictionActionResults);
+        StartAliveAnimation(benedictionActionResults);
         _view.RefreshStatus();
         if (CheckBattleEnd())
         {
@@ -259,6 +261,16 @@ public class BattlePresenter : BasePresenter
                 _model.SetActionBattler(_model.CurrentActionInfo().SubjectIndex);
                 _model.MakeActionResultInfo(_model.CurrentActionInfo(),_model.MakeAutoSelectIndex(_model.CurrentActionInfo()));
             }
+            
+            var PassiveResults = _model.CheckTriggerPassiveInfos(TriggerTiming.Use);
+            foreach (var PassiveResult in PassiveResults)
+            {
+                PopupActionResult(PassiveResult,PassiveResult.TargetIndex,true);
+            }
+            for (int i = 0; i < PassiveResults.Count; i++)
+            {    
+                _model.ExecActionResultInfo(PassiveResults[i]);
+            }
         }
     }
 
@@ -331,6 +343,7 @@ public class BattlePresenter : BasePresenter
             }
             _view.StartSkillDamage(actionInfo.ActionResults[i].TargetIndex,actionInfo.Master.DamageTiming,(targetIndex) => StartSkillDamage(targetIndex));
         }
+        StartAliveAnimation(_model.CurrentActionInfo().ActionResults);
         _nextCommandType = Battle.CommandType.EndAnimation;
     }
     
@@ -429,6 +442,19 @@ public class BattlePresenter : BasePresenter
             {
                 Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Defeat);
                 _view.StartDeathAnimation(deathBattlerIndex[i]);
+            }
+        }
+    }
+
+    private void StartAliveAnimation(List<ActionResultInfo> actionResultInfos)
+    {
+        List<int> aliveBattlerIndex = _model.AliveBattlerIndex(actionResultInfos);
+        if (aliveBattlerIndex.Count > 0)
+        {
+            for (int i = 0; i < aliveBattlerIndex.Count; i++)
+            {
+                //Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Defeat);
+                _view.StartAliveAnimation(aliveBattlerIndex[i]);
             }
         }
     }

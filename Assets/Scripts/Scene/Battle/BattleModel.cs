@@ -799,6 +799,19 @@ public class BattleModel : BaseModel
         return deathBattlerIndex;
     }
 
+    public List<int> AliveBattlerIndex(List<ActionResultInfo> actionResultInfos)
+    {
+        List<int> aliveBattlerIndex = new List<int>();
+        for (int i = 0; i < actionResultInfos.Count; i++)
+        {
+            for (int j = 0; j < actionResultInfos[i].AliveIndexList.Count; j++)
+            {
+                aliveBattlerIndex.Add(actionResultInfos[i].AliveIndexList[j]);
+            }
+        }
+        return aliveBattlerIndex;
+    }
+
     public void UpdateTurn()
     {
         CurrentBattler.UpdateState(RemovalTiming.UpdateTurn);
@@ -999,19 +1012,22 @@ public class BattleModel : BaseModel
         {
             for (var j = 0;j < triggerDatas.Count;j++)
             {
+                if (triggerTiming == TriggerTiming.Use)
+                {
+                    if (CurrentActionInfo() == null)
+                    {
+                        IsTriggered = false;
+                        break;
+                    }
+                    if (CurrentActionInfo().SubjectIndex != battlerInfo.Index)
+                    {
+                        IsTriggered = false;
+                        break;
+                    }
+                }
                 if (triggerDatas[j].IsTriggerdSkillInfo(battlerInfo,BattlerActors(),BattlerEnemies()))
                 {
                     IsTriggered = true;
-                }
-                if (triggerDatas[j].TriggerType == TriggerType.MpUnder)
-                {
-                    if (CurrentActionInfo() != null)
-                    {
-                        if ((battlerInfo.Mp + CurrentActionInfo().MpCost) > triggerDatas[j].Param1)
-                        {
-                            IsTriggered = false;
-                        }
-                    }
                 }
                 if (triggerTiming == TriggerTiming.After && triggerDatas[j].TriggerType == TriggerType.PayBattleMp)
                 {

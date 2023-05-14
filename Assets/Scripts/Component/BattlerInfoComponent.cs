@@ -176,6 +176,20 @@ public class BattlerInfoComponent : MonoBehaviour
             HideUI();
         }
     }
+
+    public void StartAliveAnimation()
+    {
+        if (_battlerInfo.isActor)
+        {
+
+        } else{
+            gameObject.SetActive(true);
+            Image image = BattleImage();
+            Sequence sequence = DOTween.Sequence()
+                .Append(image.DOFade(0f, 0))
+                .Append(image.DOFade(1f, 0.5f));
+            }
+    }
     
     public void StartAnimation(EffekseerEffectAsset effectAsset,int animationPosition)
     {

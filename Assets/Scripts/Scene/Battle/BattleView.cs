@@ -433,6 +433,11 @@ public class BattleView : BaseView
         _battlerComps[targetIndex].StartDeathAnimation();
     }
 
+    public void StartAliveAnimation(int targetIndex)
+    {
+        _battlerComps[targetIndex].StartAliveAnimation();
+    }
+
     public void RefreshStatus()
     {
         battleGridLayer.RefreshStatus();

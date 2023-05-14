@@ -38,6 +38,13 @@ public class ActionResultInfo
             {
                 _deadIndexList.Add(subject.Index);
             }
+            foreach (var removeState in _removedStates)
+            {
+                if (removeState.StateId == (int)StateType.Death)
+                {
+                    _aliveIndexList.Add(removeState.TargetIndex);
+                }
+            }
         }
     }
 
@@ -72,6 +79,10 @@ public class ActionResultInfo
     private List<int> _deadIndexList = new List<int>();
     public List<int> DeadIndexList {
         get {return _deadIndexList;}
+    }
+    private List<int> _aliveIndexList = new List<int>();
+    public List<int> AliveIndexList {
+        get {return _aliveIndexList;}
     }
 
     private bool _missed = false;

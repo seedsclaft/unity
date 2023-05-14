@@ -551,8 +551,8 @@ MonoBehaviour:
     TriggerDatas:
     - SkillId: 137
       TriggerType: 11
-      TriggerTiming: 2
-      Param1: 5
+      TriggerTiming: 1
+      Param1: 4
       Param2: 0
       Param3: 0
   - Id: 141
@@ -722,6 +722,12 @@ MonoBehaviour:
       Param2: 0
       Param3: 0
     TriggerDatas:
+    - SkillId: 211
+      TriggerType: 42
+      TriggerTiming: 2
+      Param1: 11
+      Param2: 0
+      Param3: 1
     - SkillId: 211
       TriggerType: 102
       TriggerTiming: 2
@@ -1102,6 +1108,12 @@ MonoBehaviour:
       Param2: 0
       Param3: 0
     TriggerDatas:
+    - SkillId: 311
+      TriggerType: 42
+      TriggerTiming: 11
+      Param1: 0
+      Param2: 0
+      Param3: 1
     - SkillId: 311
       TriggerType: 103
       TriggerTiming: 3
@@ -1514,6 +1526,12 @@ MonoBehaviour:
       Param2: 0
       Param3: 0
     TriggerDatas:
+    - SkillId: 411
+      TriggerType: 42
+      TriggerTiming: 2
+      Param1: 11
+      Param2: 0
+      Param3: 1
     - SkillId: 411
       TriggerType: 104
       TriggerTiming: 2
@@ -1928,6 +1946,12 @@ MonoBehaviour:
       Param2: 0
       Param3: 0
     TriggerDatas:
+    - SkillId: 511
+      TriggerType: 42
+      TriggerTiming: 2
+      Param1: 11
+      Param2: 0
+      Param3: 1
     - SkillId: 511
       TriggerType: 105
       TriggerTiming: 2

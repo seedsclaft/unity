@@ -137,29 +137,29 @@ public class StageInfo
 
     private void MakeDefineBossTroop()
     {
-        if (_defineBossIndex > 0 && _defineBossIndex <= 5)
+        int bossTroopId = 0;
+        if (_defineBossIndex > 0 && _defineBossIndex < 5)
         {
-            int bossTroopId = _selectActorIds[_defineBossIndex] * 100;
+            bossTroopId = _selectActorIds[_defineBossIndex] * 100;
             int tutorialId = _selectActorIds[_defineBossIndex] * 10;
             if (!_clearTroopIds.Contains(tutorialId))
             {
                 bossTroopId = tutorialId;
             }
-            if (_defineBossIndex == 5)
+        } else if (_defineBossIndex == 5)
+        {
+            bossTroopId = _selectActorIds[0] * 100;
+        }
+        if (!_clearTroopIds.Contains(bossTroopId))
+        {
+            List<TroopsData.TroopData> troopDatas = DataSystem.Troops.FindAll(a => a.TroopId == bossTroopId);
+            TroopInfo troopInfo = new TroopInfo(bossTroopId);
+            for (int i = 0;i < troopDatas.Count;i++)
             {
-                bossTroopId = _selectActorIds[0] * 100;
+                troopInfo.MakeEnemyData(troopDatas[i],i,_troopClearCount + 1);
             }
-            if (!_clearTroopIds.Contains(bossTroopId))
-            {
-                List<TroopsData.TroopData> troopDatas = DataSystem.Troops.FindAll(a => a.TroopId == bossTroopId);
-                TroopInfo troopInfo = new TroopInfo(bossTroopId);
-                for (int i = 0;i < troopDatas.Count;i++)
-                {
-                    troopInfo.MakeEnemyData(troopDatas[i],i,_troopClearCount + 1);
-                }
 
-                _currentTroopInfos[_currentTroopInfos.Count-1] = troopInfo;
-            }
+            _currentTroopInfos[_currentTroopInfos.Count-1] = troopInfo;
         }
     }
 
