@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using Utage;
 using UtageExtensions;
+using Firebase.Firestore;
+using Firebase.Extensions;
 
 public class GameSystem : MonoBehaviour
 {
@@ -30,7 +32,7 @@ public class GameSystem : MonoBehaviour
     public static SavePlayInfo CurrentData = null;
     public static TempInfo CurrentTempData = null;
 
-
+    FirebaseFirestore db;
     private bool _busy = false;
     public bool Busy {get {return _busy;}}
     private void Awake() 
@@ -38,6 +40,7 @@ public class GameSystem : MonoBehaviour
         advController.Initialize();
         _model = new BaseModel();
         CommandSceneChange(Scene.Boot);
+        db = FirebaseFirestore.DefaultInstance;
     }
 
     private void CreateConfirm()
@@ -248,6 +251,21 @@ public class GameSystem : MonoBehaviour
 
     private void CommandSetTemplete(TempInfo templete){
         CurrentTempData = templete;
+    }
+
+    private void SendRankingData()
+    {
+        string ranking = "ranking";
+        string userName = CurrentData.PlayerInfo.PlayerId.ToString();
+        int score = 0;
+        DocumentReference docRef = db.Collection(ranking).Document(userName);
+        Dictionary<string, object> user = new Dictionary<string, object>
+        {
+                { "Score", score },
+        };
+        docRef.SetAsync(user).ContinueWithOnMainThread(task => {
+                Debug.Log("Added data to the alovelace document in the users collection.");
+        });
     }
 }
 

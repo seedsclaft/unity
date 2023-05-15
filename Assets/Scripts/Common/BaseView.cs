@@ -199,7 +199,8 @@ namespace Base
         CloseEnemyInfo,
         DecidePlayerName,
         CallLoading,
-        CloseLoading
+        CloseLoading,
+        SendRankingData
 
     }
 }

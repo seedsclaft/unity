@@ -204,5 +204,6 @@ public class SavePlayInfo
 	public void SetPlayerName(string name)
 	{
 		_playerInfo.SetPlayerName(name);
+		_playerInfo.SetPlayerId();
 	}
 }

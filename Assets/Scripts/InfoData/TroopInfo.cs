@@ -12,8 +12,12 @@ public class TroopInfo
     public BattlerInfo BossEnemy {
         get {
             var boss = _battlerInfos.Find(a => a.BossFlag == true);
-            if (boss != null) return _battlerInfos.Find(a => a.BossFlag == true);
-            return _battlerInfos[_battlerInfos.Count-1];
+            if (boss != null) return boss;
+            if (_battlerInfos.Count > 0)
+            {
+                return _battlerInfos[_battlerInfos.Count-1];
+            }
+            return null;
         }
     }
     private List<GetItemInfo> _getItemInfos = new List<GetItemInfo>(); 

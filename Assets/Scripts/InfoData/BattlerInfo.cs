@@ -441,7 +441,7 @@ public class BattlerInfo
         int atk = Status.Atk;
         if (IsState(StateType.Demigod))
         {
-            atk = (int)(atk * (1 + _demigodParam * 0.01f));
+            atk += _demigodParam;
         }
         return atk;
     }
@@ -451,7 +451,7 @@ public class BattlerInfo
         int def = Status.Def;
         if (IsState(StateType.Demigod))
         {
-            def = (int)(def * (1 + _demigodParam * 0.01f));
+            def += _demigodParam;
         }
         return def;
     }
@@ -461,7 +461,7 @@ public class BattlerInfo
         int spd = Status.Spd;
         if (IsState(StateType.Demigod))
         {
-            spd = (int)(spd * (1 + _demigodParam * 0.01f));
+            spd += _demigodParam;
         }
         if (IsState(StateType.Accel))
         {

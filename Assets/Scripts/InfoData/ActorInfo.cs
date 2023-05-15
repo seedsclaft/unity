@@ -91,7 +91,7 @@ public class ActorInfo
         SetInitialParameter(actorData);
         _currentHp = _baseStatus.Hp;
         _currentMp = _baseStatus.Mp;
-        _demigodParam = 5;
+        _demigodParam = 10;
     }
 
     private void SetInitialParameter(ActorsData.ActorData actorData)

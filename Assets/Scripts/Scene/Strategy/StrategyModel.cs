@@ -259,16 +259,16 @@ public class StrategyModel : BaseModel
                 int rand = UnityEngine.Random.Range(0,100);
                 if (getItemInfo.Param2 >= rand)
                 {
-                    List< SkillsData.SkillData> getSkillDatas = DataSystem.Skills.FindAll(a => a.Rank == getItemInfo.Param1 && (int)a.Attribute == (int)getItemInfo.GetItemType - 11); 
+                    List< SkillsData.SkillData> getSkillDatas = DataSystem.Skills.FindAll(a => a.Rank == getItemInfo.Param1 && (int)a.Attribute == (int)getItemInfo.GetItemType - 10); 
 
-                    int rand2 = UnityEngine.Random.Range(0,getSkillDatas.Count);
+                    int rand2 = UnityEngine.Random.Range(0,getSkillDatas.Count-1);
                     PartyInfo.AddAlchemy(getSkillDatas[rand2].Id);
                     getItemInfo.SetTitleData(DataSystem.System.GetTextData(14040).Text);
                     getItemInfos.Add(getItemInfo);
 
-                    string text = DataSystem.System.GetTextData(14051).Text.Replace("\\d", DataSystem.System.GetTextData(330 + (int)getItemInfo.GetItemType - 11).Text);
-                    getItemInfo.SetResultData(text);
-                    getItemInfo.SetSkillElementId((int)AttributeType.Fire + (int)getItemInfo.GetItemType - 11);
+                    //string text = DataSystem.System.GetTextData(14051).Text.Replace("\\d", DataSystem.System.GetTextData(330 + (int)getItemInfo.GetItemType - 11).Text);
+                    getItemInfo.SetResultData(getSkillDatas[rand2].Name);
+                    getItemInfo.SetSkillElementId((int)getItemInfo.GetItemType - 10);
 
                 }
             }

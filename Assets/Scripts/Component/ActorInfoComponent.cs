@@ -15,7 +15,7 @@ public class ActorInfoComponent : MonoBehaviour
     [SerializeField] private Image awakenFaceThumb;
     public Image AwakenFaceThumb {get {return awakenFaceThumb;}}
     [SerializeField] private TextMeshProUGUI nameText;
-    [SerializeField] private TextMeshProUGUI element;
+    [SerializeField] private TextMeshProUGUI evaluate;
     [SerializeField] private TextMeshProUGUI demigod;
     [SerializeField] private TextMeshProUGUI lv;
     [SerializeField] private TextMeshProUGUI sp;
@@ -82,6 +82,9 @@ public class ActorInfoComponent : MonoBehaviour
             UpdateAttributeParam(element5,actorInfo.Attribute[4]);
         }
         
+        if (evaluate != null){
+            evaluate.text = CalcActorEvaluate(actorInfo).ToString();
+        }
     }
 
 
@@ -103,9 +106,6 @@ public class ActorInfoComponent : MonoBehaviour
         }
         if (nameText != null){
             nameText.text = actorData.Name;
-        }
-        if (element != null){
-            //element.text = actorData.Name;
         }
     }
     private void UpdateMainThumb(string imagePath,int x,int y,float scale)
@@ -226,5 +226,26 @@ public class ActorInfoComponent : MonoBehaviour
         if (awakenThumb != null){
             awakenThumb.sprite = null;
         }
+    }
+
+    private int CalcActorEvaluate(ActorInfo actorInfo)
+    {
+        int evaluate = 0;
+        int statusParam = actorInfo.CurrentParameter(StatusParamType.Hp) * 1
+        + actorInfo.CurrentParameter(StatusParamType.Mp) * 1
+        + actorInfo.CurrentParameter(StatusParamType.Atk) * 2
+        + actorInfo.CurrentParameter(StatusParamType.Def) * 2
+        + actorInfo.CurrentParameter(StatusParamType.Spd) * 2;
+        int magicParam = 0;
+        foreach (var skillInfo in actorInfo.Skills)
+        {
+            magicParam += skillInfo.Master.Rank * 40;
+        }
+        int attibuteParam = 0;
+        foreach (var attribute in actorInfo.Attribute)
+        {
+            attibuteParam += attribute / 5;
+        }
+        return evaluate + statusParam + magicParam + attibuteParam + actorInfo.DemigodParam * 5;
     }
 }
