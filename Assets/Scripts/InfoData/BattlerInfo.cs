@@ -176,7 +176,7 @@ public class BattlerInfo
             rand = 0;
         }
         _ap = 500 - (CurrentSpd() + rand) * 4;
-        _ap = Math.Max(_ap,80);
+        _ap = Math.Max(_ap,100);
     }
 
     public void GainAp(int ap)
@@ -441,7 +441,7 @@ public class BattlerInfo
         int atk = Status.Atk;
         if (IsState(StateType.Demigod))
         {
-            atk += _demigodParam;
+            atk = (int)(atk * (1 + _demigodParam * 0.01f));
         }
         return atk;
     }
@@ -451,7 +451,7 @@ public class BattlerInfo
         int def = Status.Def;
         if (IsState(StateType.Demigod))
         {
-            def += _demigodParam;
+            def = (int)(def * (1 + _demigodParam * 0.01f));
         }
         return def;
     }
@@ -461,7 +461,7 @@ public class BattlerInfo
         int spd = Status.Spd;
         if (IsState(StateType.Demigod))
         {
-            spd += _demigodParam;
+            spd = (int)(spd * (1 + _demigodParam * 0.01f));
         }
         if (IsState(StateType.Accel))
         {

@@ -183,6 +183,9 @@ public class BattlerInfoComponent : MonoBehaviour
         {
 
         } else{
+            _deathAnimation = 0;
+            deathAnimation.enabled = false;
+            deathAnimation.Destroyed = 0;
             gameObject.SetActive(true);
             Image image = BattleImage();
             Sequence sequence = DOTween.Sequence()

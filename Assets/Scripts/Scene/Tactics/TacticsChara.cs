@@ -6,19 +6,23 @@ using UnityEngine.UI;
 public class TacticsChara : MonoBehaviour
 {
     [SerializeField] private ActorInfoComponent actorInfoComponent;
-    
-    [SerializeField] private Button clickButton;
-    private ActorInfo _data;
+    [SerializeField] private GameObject statusRoot;
+    [SerializeField] private GameObject statusPrefab;
+    private StatusInfoComponent _statusInfoComponent;
+
+    public void Initialize(GameObject root,float x,float y,float scale)
+    {
+        GameObject prefab = Instantiate(statusPrefab);
+        prefab.transform.SetParent(root.transform, false);
+        prefab.GetComponent<RectTransform>().localPosition = new Vector3(x, y - (200 * scale), 0);
+        _statusInfoComponent = prefab.GetComponent<StatusInfoComponent>();
+    }
+
     public void SetData(ActorInfo actorInfo)
     {
         actorInfoComponent.UpdateInfo(actorInfo,null);
-        _data = actorInfo;
-        
-    }
-    
-    public void SetCallHandler(System.Action<ActorInfo> handler)
-    {
-        if (_data == null) return;
-        clickButton.onClick.AddListener(() => handler((ActorInfo)_data));
+        _statusInfoComponent.UpdateInfo(actorInfo.CurrentStatus);
+        _statusInfoComponent.UpdateHp(actorInfo.CurrentHp,actorInfo.MaxHp);
+        _statusInfoComponent.UpdateMp(actorInfo.CurrentMp,actorInfo.MaxMp);
     }
 }

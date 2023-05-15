@@ -6,18 +6,18 @@ public class TacticsCharaLayer : MonoBehaviour
 {
     [SerializeField] private List<GameObject> tacticsCharaRoots;
     [SerializeField] private GameObject tacticsCharaPrefab;
-    private List<TacticsChara> tacticsCharas = new List<TacticsChara>();
+    [SerializeField] private GameObject statusPrefab;
 
-    public void Initialize(List<ActorInfo> actorInfos ,System.Action<ActorInfo> callEvent)
+    public void Initialize(List<ActorInfo> actorInfos)
     {
         for (int i = 0; i < actorInfos.Count;i++)
         {
             GameObject prefab = Instantiate(tacticsCharaPrefab);
             prefab.transform.SetParent(tacticsCharaRoots[i].transform, false);
-            var comp = prefab.GetComponent<TacticsChara>();
+            TacticsChara comp = prefab.GetComponent<TacticsChara>();
+            RectTransform rectTransform = tacticsCharaRoots[i].GetComponent<RectTransform>();
+            comp.Initialize(gameObject,rectTransform.localPosition.x,rectTransform.localPosition.y,rectTransform.localScale.x);
             comp.SetData(actorInfos[i]);
-            comp.SetCallHandler(callEvent);
-            tacticsCharas.Add(comp);
         }
     }
 }

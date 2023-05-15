@@ -49,6 +49,6 @@ public class GetItemInfo
     
     public bool IsSkill()
     {
-        return _skillElementId > 0;
+        return _getItemType == GetItemType.Skill;
     }
 }

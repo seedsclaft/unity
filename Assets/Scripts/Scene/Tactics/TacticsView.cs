@@ -142,7 +142,7 @@ public class TacticsView : BaseView
 
     public void SetActors(List<ActorInfo> actorInfos,List<SystemData.MenuCommandData> confirmCommands,Dictionary<TacticsComandType, int> commandRankInfo)
     {
-        tacticsCharaLayer.Initialize(actorInfos,(actorinfo) => CallActorLayer(actorinfo));
+        tacticsCharaLayer.Initialize(actorInfos);
         SetInputHandler(tacticsCharaLayer.GetComponent<IInputHandlerEvent>());
     
         tacticsTrainList.Refresh(actorInfos,commandRankInfo[TacticsComandType.Train]);
@@ -429,14 +429,6 @@ public class TacticsView : BaseView
         _commandData(eventData);
         _lastCallEventType = eventData.commandType;
     }
-    private void CallActorLayer(ActorInfo actorInfo)
-    {
-        if (_lastCallEventType != CommandType.None) return;
-        var eventData = new TacticsViewEvent(CommandType.ActorLayer);
-        eventData.templete = actorInfo;
-        _commandData(eventData);
-        _lastCallEventType = eventData.commandType;
-    }
 
     private void OnClickLeft()
     {
@@ -551,7 +543,6 @@ namespace Tactics
         DecideActor,
         LeftActor,
         RightActor,
-        ActorLayer,
         SelectActorTrain,
         TrainClose,
         SelectActorAlchemy,

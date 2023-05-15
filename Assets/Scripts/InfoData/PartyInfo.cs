@@ -106,6 +106,7 @@ public class PartyInfo
             _commandRankInfo[commandType] = 0;
         }
         _commandRankInfo[commandType] += 1;
+        _commandRankInfo[commandType] = Mathf.Max(_commandRankInfo[commandType],10);
     }
 
     public int GetTrainLevelBonusValue()
@@ -113,8 +114,8 @@ public class PartyInfo
         int value = 0;
         if (_commandRankInfo.ContainsKey(TacticsComandType.Train))
         {
-            int rand = Random.Range(0,10);
-            if (_commandRankInfo[TacticsComandType.Train] > rand)
+            int rand = Random.Range(0,9);
+            if (_commandRankInfo[TacticsComandType.Train]*10 > rand)
             {
                 value += 1;
             }
@@ -127,8 +128,8 @@ public class PartyInfo
         bool value = false;
         if (_commandRankInfo.ContainsKey(TacticsComandType.Alchemy))
         {
-            int rand = Random.Range(0,10);
-            if (_commandRankInfo[TacticsComandType.Alchemy] > rand)
+            int rand = Random.Range(0,100);
+            if (_commandRankInfo[TacticsComandType.Alchemy]*10 > rand)
             {
                 value = true;
             }
@@ -141,8 +142,8 @@ public class PartyInfo
         bool value = false;
         if (_commandRankInfo.ContainsKey(TacticsComandType.Recovery))
         {
-            int rand = Random.Range(0,10);
-            if (_commandRankInfo[TacticsComandType.Recovery] > rand)
+            int rand = Random.Range(0,100);
+            if (_commandRankInfo[TacticsComandType.Recovery]*10 > rand)
             {
                 value = true;
             }
@@ -155,8 +156,8 @@ public class PartyInfo
         bool value = false;
         if (_commandRankInfo.ContainsKey(TacticsComandType.Resource))
         {
-            int rand = Random.Range(0,10);
-            if (_commandRankInfo[TacticsComandType.Resource] > rand)
+            int rand = Random.Range(0,100);
+            if (_commandRankInfo[TacticsComandType.Resource]*10 > rand)
             {
                 value = true;
             }
