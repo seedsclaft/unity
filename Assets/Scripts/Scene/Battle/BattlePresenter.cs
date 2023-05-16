@@ -23,6 +23,7 @@ public class BattlePresenter : BasePresenter
     private async void Initialize()
     {
         _model.CreateBattleData();
+        _view.ClearCurrentSkillData();
         _view.CreateObject();
         _view.SetHelpWindow();
         _view.SetUIButton();
@@ -331,6 +332,7 @@ public class BattlePresenter : BasePresenter
             return;
         }
         var animation = _model.SkillActionAnimation(actionInfo.Master.AnimationName);
+        _view.SetCurrentSkillData(actionInfo.Master);
         if (actionInfo.Master.AnimationType == AnimationType.All)
         {
             _view.StartAnimationAll(animation);
@@ -504,6 +506,8 @@ public class BattlePresenter : BasePresenter
         }
         // ダメージなどを適用
         _model.ExecActionResult();
+        
+        _view.ClearCurrentSkillData();
         ActionInfo actionInfo = _model.CurrentActionInfo();
         if (actionInfo != null)
         {

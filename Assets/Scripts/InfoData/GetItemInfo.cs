@@ -51,4 +51,9 @@ public class GetItemInfo
     {
         return _getItemType == GetItemType.Skill;
     }
+
+    public bool IsAttributeSkill()
+    {
+        return (int)_getItemType >= (int)GetItemType.AttributeFire && (int)_getItemType <= (int)GetItemType.AttributeDark;
+    }
 }

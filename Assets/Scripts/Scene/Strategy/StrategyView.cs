@@ -171,10 +171,10 @@ public class StrategyView : BaseView
         tacticsEnemyList.gameObject.SetActive(true);
     }
 
-    private void CallPopupSkillInfo(int skillId)
+    private void CallPopupSkillInfo(GetItemInfo getItemInfo)
     {
         var eventData = new StrategyViewEvent(CommandType.PopupSkillInfo);
-        eventData.templete = skillId;
+        eventData.templete = getItemInfo;
         _commandData(eventData);
     }
 

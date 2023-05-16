@@ -16,7 +16,7 @@ public class TacticsEnemyList : ListWindow , IInputHandlerEvent
     private List<TroopInfo> _troopInfos = new List<TroopInfo>();
 
     private int _getItemIndex = -1;
-    public void Initialize(System.Action<int> callEvent,System.Action cancelEvent,System.Action<int> getItemEvent,System.Action<int> enemyInfoEvent)
+    public void Initialize(System.Action<int> callEvent,System.Action cancelEvent,System.Action<GetItemInfo> getItemEvent,System.Action<int> enemyInfoEvent)
     {
         InitializeListView(cols);
         for (int i = 0; i < cols;i++)
@@ -80,7 +80,7 @@ public class TacticsEnemyList : ListWindow , IInputHandlerEvent
         }
     }
 
-    private void CallInputHandler(InputKeyType keyType, System.Action<int> callEvent,System.Action cancelEvent,System.Action<int> getItemEvent,System.Action<int> enemyInfoEvent)
+    private void CallInputHandler(InputKeyType keyType, System.Action<int> callEvent,System.Action cancelEvent,System.Action<GetItemInfo> getItemEvent,System.Action<int> enemyInfoEvent)
     {
         if (keyType == InputKeyType.Decide)
         {
@@ -93,7 +93,11 @@ public class TacticsEnemyList : ListWindow , IInputHandlerEvent
             {
                 if (_troopInfos[Index].GetItemInfos[_getItemIndex].IsSkill())
                 {
-                    getItemEvent(_troopInfos[Index].GetItemInfos[_getItemIndex].Param1);
+                    getItemEvent(_troopInfos[Index].GetItemInfos[_getItemIndex]);
+                }
+                if (_troopInfos[Index].GetItemInfos[_getItemIndex].IsAttributeSkill())
+                {
+                    getItemEvent(_troopInfos[Index].GetItemInfos[_getItemIndex]);
                 }
             }
         }

@@ -25,19 +25,19 @@ public class TacticsUtility
             cost *= 2;
         } else
         if (param > 60){
-            cost *= 4;
+            cost *= 3;
         } else
         if (param > 40){
-            cost *= 8;
+            cost *= 4;
         } else
         if (param > 20){
-            cost *= 16;
+            cost *= 6;
         } else
         if (param > 10){
-            cost *= 32;
+            cost *= 8;
         } else
         {
-            cost *= 64;
+            cost *= 16;
         }
         
         return Mathf.FloorToInt( cost * TacticsCostRate(actorInfo));

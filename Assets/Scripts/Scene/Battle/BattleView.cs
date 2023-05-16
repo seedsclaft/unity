@@ -26,6 +26,7 @@ public class BattleView : BaseView
     [SerializeField] private GameObject animPrefab = null;
 
     [SerializeField] private Button escapeButton = null;
+    [SerializeField] private SkillInfoComponent skillInfoComponent = null;
     private BattleStartAnim _battleStartAnim = null;
 
     private HelpWindow _helpWindow = null;
@@ -373,6 +374,21 @@ public class BattleView : BaseView
         {
             item.Value.SetActiveStatus(false);
         }
+    }
+
+    public void SetCurrentSkillData(SkillsData.SkillData skillData)
+    {
+        if (skillData.Id >= 100)
+        {
+            skillInfoComponent.gameObject.SetActive(true);
+            skillInfoComponent.UpdateSkillData(skillData.Id);
+        }
+    }
+
+    public void ClearCurrentSkillData()
+    {
+        skillInfoComponent.gameObject.SetActive(false);
+        skillInfoComponent.Clear();
     }
 
     public void StartAnimation(int targetIndex,EffekseerEffectAsset effekseerEffectAsset,int animationPosition)

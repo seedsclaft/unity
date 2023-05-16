@@ -97,11 +97,15 @@ public class SkillInfoComponent : MonoBehaviour
         lineImage.rectTransform.sizeDelta = new Vector2(nameText.rectTransform.sizeDelta.x,lineImage.rectTransform.sizeDelta.y);
     }
 
-    private void Clear()
+    public void Clear()
     {
         if (icon != null)
         {
             icon.gameObject.SetActive(false);
+        }
+        if (iconBack != null)
+        {
+            iconBack.gameObject.SetActive(false);
         }
         if (nameText != null)
         {

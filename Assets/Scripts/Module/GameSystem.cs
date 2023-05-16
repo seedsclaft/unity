@@ -122,7 +122,7 @@ public class GameSystem : MonoBehaviour
             var popupInfo = (ConfirmInfo)viewEvent.templete;
             _confirmView.SetIsNoChoice(popupInfo.IsNoChoise);
             _confirmView.SetTitle(popupInfo.Title);
-            _confirmView.SetSkillInfo(popupInfo.SkillInfo);
+            _confirmView.SetSkillInfo(popupInfo.SkillInfos);
             _confirmView.SetConfirmEvent(popupInfo.CallEvent);
             _currentScene.SetBusy(true);
             if (_statusView) _statusView.SetBusy(true);

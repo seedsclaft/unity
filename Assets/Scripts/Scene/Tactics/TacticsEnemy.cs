@@ -31,14 +31,14 @@ public class TacticsEnemy : ListItem ,IListViewItem
         clickButton.onClick.AddListener(() => handler((int)Index));
     }
 
-    public void SetGetItemCallHandler(System.Action<int> handler)
+    public void SetGetItemCallHandler(System.Action<GetItemInfo> handler)
     {
         foreach (var gameObjectList in getItemList.ObjectList)
         {
             GetItem getItem = gameObjectList.GetComponent<GetItem>();
             getItem.SetCallHandler((a) => {
-                if (a.IsSkill()){
-                    handler(a.Param1);
+                if (a.IsSkill() || a.IsAttributeSkill()){
+                    handler(a);
                 }
             });
         }

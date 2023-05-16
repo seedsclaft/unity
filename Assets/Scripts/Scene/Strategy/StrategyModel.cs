@@ -96,15 +96,31 @@ public class StrategyModel : BaseModel
                 getItemInfo.SetResultData(DataSystem.System.GetTextData(3002).Text.Replace("\\d",magicAlchemy));
                 //actorInfos[i].LearnSkillAttribute((int)attributeType + 2000,actorInfos[i].NextLearnCost,attributeType);
                 actorInfos[i].LearnSkill(actorInfos[i].NextLearnSkillId);
-                bool returnAlchemyCost = PartyInfo.GetAlchemyNuminosValue();
-                if (returnAlchemyCost)
+                bool alchemyBonus = PartyInfo.GetAlchemyNuminosValue();
+                if (alchemyBonus)
                 {
+                    /*
                     int cost = TacticsUtility.AlchemyCost(actorInfos[i],skillData.Attribute,StageMembers());
                     GetItemInfo bonusGetItemInfo = new GetItemInfo(null);
                     bonusGetItemInfo.SetTitleData(DataSystem.System.GetTextData(3003).Text);
                     bonusGetItemInfo.SetResultData(DataSystem.System.GetTextData(3004).Text.Replace("\\d",(cost/2).ToString()));
                     PartyInfo.ChangeCurrency(Currency + (cost/2));
                     getItemInfos.Add(bonusGetItemInfo);
+                    */
+                    
+                    List<SkillsData.SkillData> getSkillDatas = DataSystem.Skills.FindAll(a => a.Rank == skillData.Rank && (int)a.Attribute == (int)skillData.Attribute && !PartyInfo.AlchemyIdList.Contains(a.Id));
+                    if (getSkillDatas.Count > 0)
+                    {
+                        GetItemInfo bonusGetItemInfo = new GetItemInfo(null);
+                        int rand2 = UnityEngine.Random.Range(0,getSkillDatas.Count-1);
+                        PartyInfo.AddAlchemy(getSkillDatas[rand2].Id);
+                        bonusGetItemInfo.SetTitleData(DataSystem.System.GetTextData(14040).Text);
+                        getItemInfos.Add(bonusGetItemInfo);
+
+                        bonusGetItemInfo.SetResultData(getSkillDatas[rand2].Name);
+                        bonusGetItemInfo.SetSkillElementId((int)skillData.Attribute);
+                    }
+                    
                 }
             }
             if (actorInfos[i].TacticsComandType == TacticsComandType.Recovery)
@@ -259,16 +275,18 @@ public class StrategyModel : BaseModel
                 int rand = UnityEngine.Random.Range(0,100);
                 if (getItemInfo.Param2 >= rand)
                 {
-                    List< SkillsData.SkillData> getSkillDatas = DataSystem.Skills.FindAll(a => a.Rank == getItemInfo.Param1 && (int)a.Attribute == (int)getItemInfo.GetItemType - 10); 
+                    List< SkillsData.SkillData> getSkillDatas = DataSystem.Skills.FindAll(a => a.Rank == getItemInfo.Param1 && (int)a.Attribute == (int)getItemInfo.GetItemType - 10 && !PartyInfo.AlchemyIdList.Contains(a.Id)); 
+                    if (getSkillDatas.Count > 0)
+                    {
+                        int rand2 = UnityEngine.Random.Range(0,getSkillDatas.Count-1);
+                        PartyInfo.AddAlchemy(getSkillDatas[rand2].Id);
+                        getItemInfo.SetTitleData(DataSystem.System.GetTextData(14040).Text);
+                        getItemInfos.Add(getItemInfo);
 
-                    int rand2 = UnityEngine.Random.Range(0,getSkillDatas.Count-1);
-                    PartyInfo.AddAlchemy(getSkillDatas[rand2].Id);
-                    getItemInfo.SetTitleData(DataSystem.System.GetTextData(14040).Text);
-                    getItemInfos.Add(getItemInfo);
-
-                    //string text = DataSystem.System.GetTextData(14051).Text.Replace("\\d", DataSystem.System.GetTextData(330 + (int)getItemInfo.GetItemType - 11).Text);
-                    getItemInfo.SetResultData(getSkillDatas[rand2].Name);
-                    getItemInfo.SetSkillElementId((int)getItemInfo.GetItemType - 10);
+                        //string text = DataSystem.System.GetTextData(14051).Text.Replace("\\d", DataSystem.System.GetTextData(330 + (int)getItemInfo.GetItemType - 11).Text);
+                        getItemInfo.SetResultData(getSkillDatas[rand2].Name);
+                        getItemInfo.SetSkillElementId((int)getItemInfo.GetItemType - 10);
+                    }
 
                 }
             }

@@ -27,14 +27,20 @@ public class ConfirmView : BaseView
         titleText.text = title;
     }
 
-    public void SetSkillInfo(SkillInfo skillInfo)
+    public void SetSkillInfo(List<SkillInfo> skillInfos)
     {
-        if (skillInfo == null) return;
-        GameObject prefab = Instantiate(skillInfoPrefab);
-        prefab.transform.SetParent(skillInfoRoot.transform, false);
-        SkillAction skillAction = prefab.GetComponent<SkillAction>();
-        skillAction.SetData(skillInfo,0);
-        skillAction.UpdateViewItem();
+        if (skillInfos == null) return;
+        foreach(Transform child in skillInfoRoot.transform){
+            Destroy(child.gameObject);
+        }
+        foreach (var skillInfo in skillInfos)
+        {
+            GameObject prefab = Instantiate(skillInfoPrefab);
+            prefab.transform.SetParent(skillInfoRoot.transform, false);
+            SkillAction skillAction = prefab.GetComponent<SkillAction>();
+            skillAction.SetData(skillInfo,0);
+            skillAction.UpdateViewItem();
+        }
     }
 
     public void SetIsNoChoice(bool isNoChoice)

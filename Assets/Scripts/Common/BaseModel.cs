@@ -148,11 +148,26 @@ public class BaseModel
         return attributeTypes;
     }
 
-    public SkillInfo BasicSkillInfo(int skillId)
+    public List<SkillInfo> BasicSkillInfos(GetItemInfo getItemInfo)
     {
-        SkillInfo skillInfo = new SkillInfo(skillId);
-        skillInfo.SetEnable(true);
-        return skillInfo;
+        List<SkillInfo> skillInfos = new List<SkillInfo>();
+        if (getItemInfo.IsSkill())
+        {
+            SkillInfo skillInfo = new SkillInfo(getItemInfo.Param1);
+            skillInfo.SetEnable(true);
+            skillInfos.Add(skillInfo);
+        }
+        if (getItemInfo.IsAttributeSkill())
+        {
+            List<SkillsData.SkillData> skillDatas = DataSystem.Skills.FindAll(a => a.Rank == getItemInfo.Param1 && a.Attribute == (AttributeType)((int)getItemInfo.GetItemType - 10));
+            foreach (var skillData in skillDatas)
+            {
+                SkillInfo skillInfo = new SkillInfo(skillData.Id);
+                skillInfo.SetEnable(true);
+                skillInfos.Add(skillInfo);
+            }
+        }
+        return skillInfos;
     }
 
     

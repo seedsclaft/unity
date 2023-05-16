@@ -350,10 +350,10 @@ public class TacticsView : BaseView
         _lastCallEventType = eventData.commandType;
     }
 
-    private void CallPopupSkillInfo(int skillId)
+    private void CallPopupSkillInfo(GetItemInfo getItemInfo)
     {
         var eventData = new TacticsViewEvent(CommandType.PopupSkillInfo);
-        eventData.templete = skillId;
+        eventData.templete = getItemInfo;
         _commandData(eventData);
     }
 

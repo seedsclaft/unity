@@ -12,12 +12,9 @@ public class BattleEnemy : ListItem
 {
     [SerializeField] private BattlerInfoComponent battlerInfoComponent;
     public BattlerInfoComponent BattlerInfoComponent {get {return battlerInfoComponent;}}
-    [SerializeField] private GameObject cursorObject;
-    [SerializeField] private GameObject imageObject;
     [SerializeField] private Image enemyImage;
     [SerializeField] private EffekseerEmitter effekseerEmitter;
     [SerializeField] private GameObject statusObject;
-    private float _deathAnimation = 0.0f;
 
     private List<BattleDamage> _battleDamages = new List<BattleDamage>();
 
@@ -68,10 +65,10 @@ public class BattleEnemy : ListItem
 
     private void UpdateSizeDelta()
     {
-        int width = enemyImage.mainTexture.width;
-        int height = enemyImage.mainTexture.height;
+        int width = Mathf.Max(240,enemyImage.mainTexture.width);
+        int height = Mathf.Max(240,enemyImage.mainTexture.height);
         RectTransform objectRect = gameObject.GetComponent < RectTransform > ();
-        RectTransform rect = cursorObject.gameObject.GetComponent < RectTransform > ();
+        RectTransform rect = Cursor.GetComponent < RectTransform > ();
         RectTransform effectRect = effekseerEmitter.gameObject.GetComponent < RectTransform > ();
         rect.sizeDelta = new Vector2(width,height);
         objectRect.sizeDelta = new Vector2(width,height);

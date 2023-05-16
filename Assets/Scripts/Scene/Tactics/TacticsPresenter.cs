@@ -227,7 +227,7 @@ public class TacticsPresenter :BasePresenter
         }
         if (viewEvent.commandType == Tactics.CommandType.PopupSkillInfo)
         {
-            CommandPopupSkillInfo((int)viewEvent.templete);
+            CommandPopupSkillInfo((GetItemInfo)viewEvent.templete);
         }
         if (viewEvent.commandType == Tactics.CommandType.SelectActorBattle)
         {
@@ -660,10 +660,10 @@ public class TacticsPresenter :BasePresenter
         Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
     }
 
-    private void CommandPopupSkillInfo(int skillId)
+    private void CommandPopupSkillInfo(GetItemInfo getItemInfo)
     {
         ConfirmInfo popupInfo = new ConfirmInfo("",(menuCommandInfo) => UpdatePopupSkillInfo((ConfirmComandType)menuCommandInfo));
-        popupInfo.SetSkillInfo(_model.BasicSkillInfo(skillId));
+        popupInfo.SetSkillInfo(_model.BasicSkillInfos(getItemInfo));
         popupInfo.SetIsNoChoise(true);
         _view.CommandCallConfirm(popupInfo);
         Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
