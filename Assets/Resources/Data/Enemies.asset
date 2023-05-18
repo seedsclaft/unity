@@ -61,6 +61,14 @@ MonoBehaviour:
       Level: 1
       Weight: 50
       TriggerDatas: []
+    - SkillId: 41
+      Level: 1
+      Weight: 50
+      TriggerDatas: []
+    - SkillId: 42
+      Level: 1
+      Weight: 50
+      TriggerDatas: []
     - SkillId: 2
       Level: 5
       Weight: 50
@@ -397,6 +405,14 @@ MonoBehaviour:
       Level: 1
       Weight: 100
       TriggerDatas: []
+    - SkillId: 41
+      Level: 1
+      Weight: 50
+      TriggerDatas: []
+    - SkillId: 42
+      Level: 1
+      Weight: 50
+      TriggerDatas: []
     - SkillId: 2
       Level: 5
       Weight: 100
@@ -457,9 +473,17 @@ MonoBehaviour:
       _atk: 17
       _def: 14
       _spd: 11
-    Kinds: 
+    Kinds: 01000000
     LearningSkills:
     - SkillId: 1
+      Level: 1
+      Weight: 50
+      TriggerDatas: []
+    - SkillId: 41
+      Level: 1
+      Weight: 50
+      TriggerDatas: []
+    - SkillId: 42
       Level: 1
       Weight: 50
       TriggerDatas: []
@@ -637,7 +661,7 @@ MonoBehaviour:
       _atk: 40
       _def: 20
       _spd: 30
-    Kinds: 
+    Kinds: 01000000
     LearningSkills:
     - SkillId: 1
       Level: 1
@@ -653,6 +677,14 @@ MonoBehaviour:
         Param1: 2
         Param2: 0
         Param3: 0
+    - SkillId: 41
+      Level: 1
+      Weight: 50
+      TriggerDatas: []
+    - SkillId: 42
+      Level: 1
+      Weight: 50
+      TriggerDatas: []
   _textdata:
   - Id: 1
     Text: 2

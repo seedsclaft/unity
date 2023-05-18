@@ -11,8 +11,6 @@ public class SkillInfo
     
     private bool _enable;
     public bool Enable {get {return _enable;}}
-    private bool _interrupt;
-    public bool Interrupt {get {return _interrupt;}}
     public AttributeType Attribute {get {return Master.Attribute;}}
 
     private LearningState _learningState;
@@ -31,7 +29,6 @@ public class SkillInfo
     public SkillInfo(int id)
     {
         _id = id;
-        _interrupt = false;
         _learningState = LearningState.None;
     }
     
@@ -48,11 +45,6 @@ public class SkillInfo
     public void SetEnable(bool IsEnable)
     {
         _enable = IsEnable;
-    }
-
-    public void SetInterrupt(bool IsInterrupt)
-    {
-        _interrupt = IsInterrupt;
     }
 
     public void SetLearningState(LearningState learningState)

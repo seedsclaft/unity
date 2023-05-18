@@ -32,11 +32,31 @@ public class ActionResultInfo
         {
             if (_hpDamage >= target.Hp)
             {
-                _deadIndexList.Add(target.Index);
+                if (target.IsState(StateType.Undead) && featureDatas.Find(a => a.FeatureType == FeatureType.BreakUndead) == null)
+                {
+                    SkillsData.FeatureData undeadFeature = new SkillsData.FeatureData();
+                    undeadFeature.FeatureType = FeatureType.RemoveState;
+                    undeadFeature.Param1 = (int)StateType.Undead;
+                    MakeRemoveState(target,target,undeadFeature);
+                    _hpDamage = target.Hp - 1;
+                } else
+                {
+                    _deadIndexList.Add(target.Index);
+                }
             }
             if (_reDamage >= subject.Hp)
             {
-                _deadIndexList.Add(subject.Index);
+                if (subject.IsState(StateType.Undead) && featureDatas.Find(a => a.FeatureType == FeatureType.BreakUndead) == null)
+                {
+                    SkillsData.FeatureData undeadFeature = new SkillsData.FeatureData();
+                    undeadFeature.FeatureType = FeatureType.RemoveState;
+                    undeadFeature.Param1 = (int)StateType.Undead;
+                    MakeRemoveState(subject,subject,undeadFeature);
+                    _reDamage = subject.Hp - 1;
+                } else
+                {
+                    _deadIndexList.Add(subject.Index);
+                }
             }
             foreach (var removeState in _removedStates)
             {
@@ -137,6 +157,9 @@ public class ActionResultInfo
             case FeatureType.KindHeal:
                 MakeKindHeal(subject,target,featureData);
                 return;
+            case FeatureType.BreakUndead:
+                MakeBreakUndead(subject,target,featureData);
+                return;
 
         }
     }
@@ -221,6 +244,11 @@ public class ActionResultInfo
         {
             _execStateInfos[target.Index].Add(StateType.NoDamage);
             _hpDamage = 0;
+            int count = target.StateTurn(StateType.NoDamage);
+            if (count <= 1)
+            {
+                _removedStates.Add(target.GetStateInfo(StateType.NoDamage));
+            }
         }
         if (subject.IsState(StateType.DamageAddState))
         {
@@ -298,6 +326,11 @@ public class ActionResultInfo
         {
             _execStateInfos[target.Index].Add(StateType.NoDamage);
             _hpDamage = 0;
+            int count = target.StateTurn(StateType.NoDamage);
+            if (count <= 1)
+            {
+                _removedStates.Add(target.GetStateInfo(StateType.NoDamage));
+            }
         }
         if (subject.IsState(StateType.Drain))
         {
@@ -347,6 +380,15 @@ public class ActionResultInfo
         if (target.Kinds.IndexOf((KindType)featureData.Param1) != -1)
         {
             _hpDamage = (int)Mathf.Floor( _hpHeal * featureData.Param3 * 0.01f);
+            _hpHeal = 0;
+        }
+    }
+
+    public void MakeBreakUndead(BattlerInfo subject,BattlerInfo target,SkillsData.FeatureData featureData)
+    {
+        if (target.Kinds.IndexOf((KindType)featureData.Param1) != -1)
+        {
+            _hpDamage = (int)Mathf.Floor( _hpDamage * featureData.Param3 * 0.01f);
             _hpHeal = 0;
         }
     }

@@ -264,6 +264,7 @@ public enum FeatureType
     ApHeal = 32,
     PlusSkill = 101,
     KindHeal = 201,
+    BreakUndead = 202,
     Numinous = 301,
     TacticsCost = 302,
     EnemyLv = 303,

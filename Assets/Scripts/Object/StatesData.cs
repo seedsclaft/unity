@@ -57,6 +57,7 @@ public enum StateType
     DamageAddState = 114,
     CounterOuraHeal = 115,
     HealActionSelfHeal = 116,
+    Undead = 117
 }
 
 public enum RemovalTiming

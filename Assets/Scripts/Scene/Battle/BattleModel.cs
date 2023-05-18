@@ -593,14 +593,22 @@ public class BattleModel : BaseModel
                 if (CurrentBattler.isActor)
                 {
                     {
-                        IsEnable = true;
+                        if (!target.isActor)
+                        {
+                            IsEnable = target.Kinds.Contains(KindType.Undead);
+                        } else
+                        {
+                            IsEnable = true;
+                        }
                     }
                 } else 
-                if (target.Hp < target.MaxHp)
                 {
-                    if (!target.isActor)
+                    if (target.Hp < target.MaxHp)
                     {
-                        IsEnable = true;
+                        if (!target.isActor)
+                        {
+                            IsEnable = true;
+                        }
                     }
                 }
                 break;
@@ -935,12 +943,12 @@ public class BattleModel : BaseModel
                         if (target.IsAwaken == false)
                         {
                             target.SetAwaken();
-                            ActionInfo makeActionInfo = MakeActionInfo(target,triggeredSkills[j].Id,triggeredSkills[j].Interrupt);
+                            ActionInfo makeActionInfo = MakeActionInfo(target,triggeredSkills[j].Id,triggerTiming == TriggerTiming.Interrupt);
                         } else{
 
                         }
                     } else{
-                        ActionInfo makeActionInfo = MakeActionInfo(target,triggeredSkills[j].Id,triggeredSkills[j].Interrupt);
+                        ActionInfo makeActionInfo = MakeActionInfo(target,triggeredSkills[j].Id,triggerTiming == TriggerTiming.Interrupt);
                     }
                 }
             }
@@ -956,7 +964,7 @@ public class BattleModel : BaseModel
         {
             BattlerInfo battlerInfo = _battlers[i];
             List<SkillInfo> passiveSkills = battlerInfo.PassiveSkills();
-            for (int j = 0;i < passiveSkills.Count;i++)
+            for (int j = 0;j < passiveSkills.Count;j++)
             {
                 SkillInfo passiveInfo = passiveSkills[j];
                 if (IsTriggerdSkillInfo(battlerInfo,passiveInfo,triggerTiming))
@@ -1036,7 +1044,7 @@ public class BattleModel : BaseModel
                         IsTriggered = true;
                     }
                 }
-                if (triggerTiming == TriggerTiming.After && triggerDatas[j].TriggerType == TriggerType.ActionResultDeath)
+                if (triggerTiming == TriggerTiming.Interrupt && triggerDatas[j].TriggerType == TriggerType.ActionResultDeath)
                 {
                     List<ActionResultInfo> actionResultInfos = CurrentActionInfo().ActionResults;
                     if (actionResultInfos.Find(a => BattlerActors().Find(b => a.DeadIndexList.Contains(b.Index)) != null) != null)
