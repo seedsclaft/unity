@@ -51,4 +51,10 @@ public class StateInfo {
     {
         _turns = _baseTurns;
     }
+
+    public bool IsBarrierStateType()
+    {
+        return _stateId == (int)StateType.Stun || _stateId == (int)StateType.Slow || _stateId == (int)StateType.Curse || _stateId == (int)StateType.SlipDamage;
+                
+    }
 }

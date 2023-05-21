@@ -347,7 +347,7 @@ public class BattlerInfo
         bool IsAdded = false;
         if (IsState(StateType.Barrier))
         {
-            if (stateInfo.Master.Id == (int)StateType.Stun || stateInfo.Master.Id == (int)StateType.Slow || stateInfo.Master.Id == (int)StateType.Chain || stateInfo.Master.Id == (int)StateType.Curse)
+            if (stateInfo.IsBarrierStateType())
             {
                 return false;
             }
