@@ -414,23 +414,25 @@ public class BattlePresenter : BasePresenter
         {
             _view.StartHeal(actionResultInfo.SubjectIndex,DamageType.HpHeal,actionResultInfo.ReHeal);
         }
-        if (actionResultInfo.AddedStates.Count > 0)
+        foreach (var addedState in actionResultInfo.AddedStates)
         {
-            for (int j = 0;j < actionResultInfo.AddedStates.Count;j++)
+            if (actionResultInfo.TargetIndex == targetIndex)
             {
-                if (actionResultInfo.TargetIndex == targetIndex)
-                {
-                    _view.StartStatePopup(actionResultInfo.AddedStates[j].TargetIndex,DamageType.State,"+" + actionResultInfo.AddedStates[j].Master.Name);
-                }
+                _view.StartStatePopup(addedState.TargetIndex,DamageType.State,"+" + addedState.Master.Name);
             }
         }
-        if (actionResultInfo.RemovedStates.Count > 0)
+        foreach (var removedState in actionResultInfo.RemovedStates)
         {
-            for (int j = 0;j < actionResultInfo.RemovedStates.Count;j++)
+            if (actionResultInfo.TargetIndex == targetIndex)
             {
-                if (actionResultInfo.TargetIndex == targetIndex){
-                    _view.StartStatePopup(actionResultInfo.RemovedStates[j].TargetIndex,DamageType.State,"-" + actionResultInfo.RemovedStates[j].Master.Name);
-                }
+                _view.StartStatePopup(removedState.TargetIndex,DamageType.State,"-" + removedState.Master.Name);
+            }
+        }
+        foreach (var displayState in actionResultInfo.DisplayStates)
+        {
+            if (actionResultInfo.TargetIndex == targetIndex)
+            {
+                _view.StartStatePopup(displayState.TargetIndex,DamageType.State,displayState.Master.Name);
             }
         }
     }

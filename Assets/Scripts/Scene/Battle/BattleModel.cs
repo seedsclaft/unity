@@ -771,7 +771,7 @@ public class BattleModel : BaseModel
         }
         if (actionResultInfo.ApHeal != 0)
         {
-            subject.ChangeAp(actionResultInfo.ApHeal * -1);
+            target.ChangeAp(actionResultInfo.ApHeal * -1);
         }
         if (actionResultInfo.ReDamage != 0)
         {
@@ -1148,6 +1148,13 @@ public class BattleModel : BaseModel
         for (int i = 0;i < targetIndexList.Count;i++)
         {
             BattlerInfo battlerInfo = GetBattlerInfo(targetIndexList[i]);
+            if (actionInfo.Master.Scope == ScopeType.WithoutSelfOne)
+            {
+                if (battlerInfo.Index == actionInfo.SubjectIndex)
+                {
+                    continue;
+                }
+            }
             targetRand += battlerInfo.TargetRate();
         }
         targetRand = UnityEngine.Random.Range (0,targetRand);
@@ -1155,6 +1162,10 @@ public class BattleModel : BaseModel
         for (int i = 0;i < targetIndexList.Count;i++)
         {
             BattlerInfo battlerInfo = GetBattlerInfo(targetIndexList[i]);
+            if (battlerInfo.Index == actionInfo.SubjectIndex)
+            {
+                continue;
+            }
             targetRand -= battlerInfo.TargetRate();
             if (targetRand <= 0 && targetIndex == -1)
             {
@@ -1185,6 +1196,10 @@ public class BattleModel : BaseModel
             indexList = targetIndexList;
         }
         if (actionInfo.Master.Scope == ScopeType.One)
+        {
+            indexList.Add (targetIndex);
+        }
+        if (actionInfo.Master.Scope == ScopeType.WithoutSelfOne)
         {
             indexList.Add (targetIndex);
         }

@@ -90,7 +90,7 @@ public class BattleActorList : ListWindow , IInputHandlerEvent
         {
             UpdateLineSelect(_selectIndex);
         } else
-        if (_targetScopeType == ScopeType.One)
+        if (_targetScopeType == ScopeType.One || _targetScopeType == ScopeType.WithoutSelfOne)
         {
             UpdateTargetIndex(_selectIndex);
         } else
@@ -231,7 +231,7 @@ public class BattleActorList : ListWindow , IInputHandlerEvent
                 }
             }
         } else
-        if (_targetScopeType == ScopeType.One)
+        if (_targetScopeType == ScopeType.One || _targetScopeType == ScopeType.WithoutSelfOne)
         {
             if (battlerInfo.IsAlive())
             {

@@ -88,7 +88,7 @@ public class BattleEnemyLayer : ListWindow , IInputHandlerEvent
         {
             UpdateLineSelect(_selectIndex);
         } else
-        if (_targetScopeType == ScopeType.One)
+        if (_targetScopeType == ScopeType.One || _targetScopeType == ScopeType.WithoutSelfOne)
         {
             UpdateEnemyIndex(_selectIndex);
         } else
@@ -135,7 +135,7 @@ public class BattleEnemyLayer : ListWindow , IInputHandlerEvent
             UpdateLineSelect(index);
             return;
         }
-        if (_targetScopeType != ScopeType.One)
+        if (_targetScopeType != ScopeType.One && _targetScopeType != ScopeType.WithoutSelfOne)
         {
             return;
         }
@@ -313,7 +313,7 @@ public class BattleEnemyLayer : ListWindow , IInputHandlerEvent
                 }
             }
         } else
-        if (_targetScopeType == ScopeType.One)
+        if (_targetScopeType == ScopeType.One || _targetScopeType == ScopeType.WithoutSelfOne)
         {
             if (battlerInfo.IsAlive())
             {

@@ -118,6 +118,10 @@ public class ActionResultInfo
     public List<StateInfo> RemovedStates {
         get {return _removedStates;}
     }
+    private List<StateInfo> _displayStates = new List<StateInfo>();
+    public List<StateInfo> DisplayStates {
+        get {return _displayStates;}
+    }
     private Dictionary<int,List<StateType>> _execStateInfos = new Dictionary<int, List<StateType>>();
     public  Dictionary<int,List<StateType>> ExecStateInfos{
         get {return _execStateInfos;}
@@ -356,6 +360,16 @@ public class ActionResultInfo
         if (IsAdded)
         {
             _addedStates.Add(stateInfo);
+        } else
+        {
+            if (target.IsState(StateType.Barrier))
+            {
+                if (stateInfo.IsBarrierStateType())
+                {
+                    StateInfo barrierState = new StateInfo((int)StateType.Barrier,0,0,0,target.Index);
+                    _displayStates.Add(barrierState);
+                }
+            }
         }
     }
     
