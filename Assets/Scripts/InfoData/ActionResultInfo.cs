@@ -69,8 +69,10 @@ public class ActionResultInfo
     }
 
     private int _hpDamage = 0;
-    public int HpDamage {
-        get {return _hpDamage;} set{_hpDamage = value;}
+    public int HpDamage {get {return _hpDamage;}}
+    public void SetHpDamage(int hpDamage)
+    {
+        _hpDamage = hpDamage;
     }
     private int _hpHeal = 0;
     public int HpHeal {
@@ -89,12 +91,16 @@ public class ActionResultInfo
         get {return _apHeal;} set{_apHeal = value;}
     }
     private int _reDamage = 0;
-    public int ReDamage {
-        get {return _reDamage;} set{_reDamage = value;}
+    public int ReDamage {get {return _reDamage;}}
+    public void SetReDamage(int reDamage)
+    {
+        _reDamage = reDamage;
     }
     private int _reHeal = 0;
-    public int ReHeal {
-        get {return _reHeal;} set{_reHeal = value;}
+    public int ReHeal {get {return _reHeal;}}
+    public void SetReHeal(int reHeal)
+    {
+        _reHeal = reHeal;
     }
     private List<int> _deadIndexList = new List<int>();
     public List<int> DeadIndexList {

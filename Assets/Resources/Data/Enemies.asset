@@ -504,7 +504,13 @@ MonoBehaviour:
     - SkillId: 403
       Level: 10
       Weight: 80
-      TriggerDatas: []
+      TriggerDatas:
+      - SkillId: 0
+        TriggerType: 6
+        TriggerTiming: 1
+        Param1: 50
+        Param2: 0
+        Param3: 0
   - Id: 15
     Name: "\u30BD\u30FC\u30C9"
     ImagePath: Sword
@@ -742,6 +748,9 @@ MonoBehaviour:
     Help: 
   - Id: 14
     Text: 2
+    Help: 
+  - Id: 14
+    Text: 403
     Help: 
   - Id: 15
     Text: 2

@@ -342,7 +342,7 @@ public class BattleModel : BaseModel
         return true;
     }
 
-    public ActionInfo MakeActionInfo(BattlerInfo subject, int skillId,bool IsInterrupt)
+    public ActionInfo MakeActionInfo(BattlerInfo subject, int skillId,bool IsInterrupt,bool IsTriggerd)
     {
         SkillsData.SkillData skill = DataSystem.Skills.Find(a => a.Id == skillId);
         int LastTargetIndex = -1;
@@ -378,6 +378,10 @@ public class BattleModel : BaseModel
         if (subject.IsState(StateType.Extension))
         {
             actionInfo.SetRangeType(RangeType.L);
+        }
+        if (IsTriggerd)
+        {
+            actionInfo.SetTriggerSkill(true);
         }
         if (IsInterrupt)
         {
@@ -753,6 +757,34 @@ public class BattleModel : BaseModel
         }
     }
 
+    public void PopupActionResultInfo(List<ActionResultInfo> actionResultInfos)
+    {
+        // ドレイン回復をまとめる
+        List<ActionResultInfo> reHealResults = actionResultInfos.FindAll(a => a.ReHeal > 0);
+        if (reHealResults.Count > 1)
+        {
+            int reHeal = 0;
+            foreach (var reHealResult in reHealResults)
+            {
+                reHeal += reHealResult.ReHeal;
+                reHealResult.SetReHeal(0);
+            }
+            reHealResults[reHealResults.Count-1].SetReHeal(reHeal);
+        }
+        // カウンターダメージをまとめる
+        List<ActionResultInfo> counterResults = actionResultInfos.FindAll(a => a.ReDamage > 0);
+        if (counterResults.Count > 1)
+        {
+            int reDamage = 0;
+            foreach (var counterResult in counterResults)
+            {
+                reDamage += counterResult.ReDamage;
+                counterResult.SetReDamage(0);
+            }
+            counterResults[counterResults.Count-1].SetReDamage(reDamage);
+        }
+    }
+
     public void ExecActionResultInfo(ActionResultInfo actionResultInfo)
     {
         BattlerInfo subject = GetBattlerInfo(actionResultInfo.SubjectIndex);
@@ -828,8 +860,11 @@ public class BattleModel : BaseModel
 
     public void TurnEnd()
     {
+        if (CurrentActionInfo().TriggeredSkill == false)
+        {
+            CurrentBattler.ResetAp(false);
+        }
         _actionInfos.RemoveAt(0);
-        CurrentBattler.ResetAp(false);
         _currentBattler = null;
     }
 
@@ -928,7 +963,8 @@ public class BattleModel : BaseModel
             {
                 if (CurrentActionInfo().Master.Id != skillInfo.Id)
                 {
-                    if (IsTriggerdSkillInfo(target,skillInfo,triggerTiming))
+                    var triggerDatas = skillInfo.Master.TriggerDatas.FindAll(a => a.TriggerTiming == triggerTiming);
+                    if (IsTriggerdSkillInfo(target,triggerDatas,triggerTiming))
                     {
                         triggeredSkills.Add(skillInfo);
                     }
@@ -943,12 +979,12 @@ public class BattleModel : BaseModel
                         if (target.IsAwaken == false)
                         {
                             target.SetAwaken();
-                            ActionInfo makeActionInfo = MakeActionInfo(target,triggeredSkills[j].Id,triggerTiming == TriggerTiming.Interrupt);
+                            ActionInfo makeActionInfo = MakeActionInfo(target,triggeredSkills[j].Id,triggerTiming == TriggerTiming.Interrupt,true);
                         } else{
 
                         }
                     } else{
-                        ActionInfo makeActionInfo = MakeActionInfo(target,triggeredSkills[j].Id,triggerTiming == TriggerTiming.Interrupt);
+                        ActionInfo makeActionInfo = MakeActionInfo(target,triggeredSkills[j].Id,triggerTiming == TriggerTiming.Interrupt,true);
                     }
                 }
             }
@@ -967,7 +1003,8 @@ public class BattleModel : BaseModel
             for (int j = 0;j < passiveSkills.Count;j++)
             {
                 SkillInfo passiveInfo = passiveSkills[j];
-                if (IsTriggerdSkillInfo(battlerInfo,passiveInfo,triggerTiming))
+                var triggerDatas = passiveInfo.Master.TriggerDatas.FindAll(a => a.TriggerTiming == triggerTiming);
+                if (IsTriggerdSkillInfo(battlerInfo,triggerDatas,triggerTiming))
                 {                
                     ActionResultInfo actionResultInfo = new ActionResultInfo(battlerInfo,battlerInfo,passiveInfo.Master.FeatureDatas);
                     actionResultInfos.Add(actionResultInfo);
@@ -1012,10 +1049,10 @@ public class BattleModel : BaseModel
         return actionResultInfos;
     }
 
-    private bool IsTriggerdSkillInfo(BattlerInfo battlerInfo,SkillInfo skillInfo,TriggerTiming triggerTiming)
+    private bool IsTriggerdSkillInfo(BattlerInfo battlerInfo,List<SkillsData.TriggerData> triggerDatas,TriggerTiming triggerTiming)
     {
         bool IsTriggered = false;
-        var triggerDatas = skillInfo.Master.TriggerDatas.FindAll(a => a.TriggerTiming == triggerTiming);
+        //var triggerDatas = skillInfo.Master.TriggerDatas.FindAll(a => a.TriggerTiming == triggerTiming);
         if (triggerDatas.Count > 0)
         {
             for (var j = 0;j < triggerDatas.Count;j++)
@@ -1132,6 +1169,11 @@ public class BattleModel : BaseModel
     private bool CanUseTrigger(SkillInfo skillInfo,BattlerInfo battlerInfo)
     {
         bool CanUse = true;
+        if (skillInfo.TriggerDatas.Count > 0)
+        {
+            CanUse = false;
+            CanUse = IsTriggerdSkillInfo(battlerInfo,skillInfo.TriggerDatas,TriggerTiming.None);
+        }
         return CanUse;
     }
 

@@ -24,7 +24,7 @@ public class ConfirmCommandList : ListWindow , IInputHandlerEvent
         {
             HorizontalLayoutGroup horizontalLayoutGroup = gameObject.GetComponentInChildren<HorizontalLayoutGroup>();
             horizontalLayoutGroup.spacing = 0;
-            horizontalLayoutGroup.padding.left = 120;
+            horizontalLayoutGroup.padding.left = 0;
         }
         for (int i = 0; i < menuCommands.Count;i++)
         {

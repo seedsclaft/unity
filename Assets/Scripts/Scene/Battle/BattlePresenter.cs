@@ -8,6 +8,7 @@ public class BattlePresenter : BasePresenter
     BattleView _view = null;
 
     private bool _busy = true;
+    private bool _triggerAfterChecked = false;
     private Battle.CommandType _nextCommandType = Battle.CommandType.None;
     private Battle.CommandType _backCommandType = Battle.CommandType.None;
     public BattlePresenter(BattleView view)
@@ -136,6 +137,7 @@ public class BattlePresenter : BasePresenter
     private void CommandUpdateAp()
     {
         var chainActionResults = _model.UpdateChainState();
+        _model.PopupActionResultInfo(chainActionResults);
         for (int i = 0; i < chainActionResults.Count; i++)
         {    
             PopupActionResult(chainActionResults[i],chainActionResults[i].TargetIndex,false);
@@ -147,6 +149,7 @@ public class BattlePresenter : BasePresenter
         StartAliveAnimation(chainActionResults);
         StartDeathAnimation(chainActionResults);
         var benedictionActionResults = _model.UpdateBenedictionState();
+        _model.PopupActionResultInfo(benedictionActionResults);
         for (int i = 0; i < benedictionActionResults.Count; i++)
         {
             PopupActionResult(benedictionActionResults[i],benedictionActionResults[i].TargetIndex);
@@ -170,7 +173,7 @@ public class BattlePresenter : BasePresenter
             if (!_model.EnableCurrentBattler())
             {
                 int skillId = 0;
-                ActionInfo actionInfo = _model.MakeActionInfo(_model.CurrentBattler,skillId,false);
+                ActionInfo actionInfo = _model.MakeActionInfo(_model.CurrentBattler,skillId,false,false);
                 CommandSelectIndex(_model.MakeAutoSelectIndex(actionInfo));
                 return;
             }
@@ -178,7 +181,7 @@ public class BattlePresenter : BasePresenter
             if (chainTargetIndexs.Count > 0)
             {
                 // 拘束解除
-                ActionInfo actionInfo = _model.MakeActionInfo(_model.CurrentBattler,31,false);
+                ActionInfo actionInfo = _model.MakeActionInfo(_model.CurrentBattler,31,false,false);
                 CommandSelectIndex(chainTargetIndexs);
                 // 成功して入ればカウント
                 if (actionInfo.ActionResults.Find(a => !a.Missed) != null)
@@ -193,7 +196,7 @@ public class BattlePresenter : BasePresenter
             } else
             {
                 int autoSkillId = _model.MakeAutoSkillId(_model.CurrentBattler);
-                ActionInfo actionInfo = _model.MakeActionInfo(_model.CurrentBattler,autoSkillId,false);
+                ActionInfo actionInfo = _model.MakeActionInfo(_model.CurrentBattler,autoSkillId,false,false);
                 CommandSelectIndex(_model.MakeAutoSelectIndex(actionInfo));
             }
         }
@@ -204,7 +207,7 @@ public class BattlePresenter : BasePresenter
         _model.ClearActionInfo();
         _model.SetLastSkill(skillInfo.Id);
         Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
-        ActionInfo actionInfo = _model.MakeActionInfo(_model.CurrentBattler,skillInfo.Id,false);
+        ActionInfo actionInfo = _model.MakeActionInfo(_model.CurrentBattler,skillInfo.Id,false,false);
         _view.HideSkillActionList();
         _view.SetEscapeButton(false);
         _view.HideSkillAtribute();
@@ -264,6 +267,7 @@ public class BattlePresenter : BasePresenter
             }
             
             var PassiveResults = _model.CheckTriggerPassiveInfos(TriggerTiming.Use);
+            _model.PopupActionResultInfo(PassiveResults);
             foreach (var PassiveResult in PassiveResults)
             {
                 PopupActionResult(PassiveResult,PassiveResult.TargetIndex,true);
@@ -356,6 +360,7 @@ public class BattlePresenter : BasePresenter
         if (actionInfo != null)
         {
             List<ActionResultInfo> actionResultInfos = actionInfo.ActionResults;
+            _model.PopupActionResultInfo(actionResultInfos);
             for (int i = 0; i < actionResultInfos.Count; i++)
             {
                 PopupActionResult(actionResultInfos[i],targetIndex);
@@ -538,6 +543,7 @@ public class BattlePresenter : BasePresenter
     private void CommandStartBattleAction()
     {
         var PassiveResults = _model.CheckTriggerPassiveInfos(TriggerTiming.StartBattle);
+        _model.PopupActionResultInfo(PassiveResults);
         foreach (var PassiveResult in PassiveResults)
         {
             PopupActionResult(PassiveResult,PassiveResult.TargetIndex,true);
@@ -563,6 +569,7 @@ public class BattlePresenter : BasePresenter
         _model.CheckPlusSkill();
         // Passive
         var PassiveResults = _model.CheckTriggerPassiveInfos(TriggerTiming.After);
+        _model.PopupActionResultInfo(PassiveResults);
         foreach (var PassiveResult in PassiveResults)
         {
             PopupActionResult(PassiveResult,PassiveResult.TargetIndex,true);
@@ -572,6 +579,7 @@ public class BattlePresenter : BasePresenter
             _model.ExecActionResultInfo(PassiveResults[i]);
         }
         var RemovePassiveResults = _model.CheckRemovePassiveInfos();
+        _model.PopupActionResultInfo(RemovePassiveResults);
         foreach (var RemovePassiveResult in RemovePassiveResults)
         {
             PopupActionResult(RemovePassiveResult,RemovePassiveResult.TargetIndex,true);
@@ -584,11 +592,12 @@ public class BattlePresenter : BasePresenter
         {
             isDemigodActor = _model.CurrentBattler.IsState(StateType.Demigod);
         }
-        if (result == false)
+        if (result == false && _triggerAfterChecked == false)
         {
             _model.UpdateTurn();
         }
         _model.TurnEnd();
+        _triggerAfterChecked = true;
 
         // 勝敗判定
         if (CheckBattleEnd() && result == false)
@@ -622,6 +631,7 @@ public class BattlePresenter : BasePresenter
             }
         }
         _view.HideEnemyStatus();
+        _triggerAfterChecked = false;
         _view.SetBattleBusy(false);
     }
 

@@ -32,6 +32,9 @@ public class ActionInfo
         get {return _targetIndexList;}
     }
 
+    private bool _triggeredSkill = false;
+    public bool TriggeredSkill {get {return _triggeredSkill;}}
+
     public ActionInfo(int skillId,int subjectIndex,int lastTargetIndex,List<int> targetIndexList)
     {
         _skillId = skillId;
@@ -66,8 +69,14 @@ public class ActionInfo
         List<ActionInfo> actionInfos = new List<ActionInfo>();
         for (var i = 0;i < PlusSkill.Count;i++){
             ActionInfo actionInfo = new ActionInfo(PlusSkill[i].Param1,SubjectIndex,-1,null);
+            actionInfo.SetTriggerSkill(true);
             actionInfos.Add(actionInfo);
         }
         return actionInfos;
+    }
+
+    public void SetTriggerSkill(bool triggeredSkill)
+    {
+        _triggeredSkill = triggeredSkill;
     }
 }
