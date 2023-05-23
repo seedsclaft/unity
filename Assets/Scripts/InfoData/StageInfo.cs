@@ -222,7 +222,7 @@ public class StageInfo
         {
             for (int j = _currentTroopInfos[i].BattlerInfos.Count-1;j >= 0;j--)
             {
-                _currentTroopInfos[i].BattlerInfos[j].AddState(stateInfo);
+                _currentTroopInfos[i].BattlerInfos[j].AddState(stateInfo,true);
             }
         }
     }

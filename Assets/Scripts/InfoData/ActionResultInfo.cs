@@ -176,6 +176,10 @@ public class ActionResultInfo
 
     private bool IsHit(BattlerInfo subject,BattlerInfo target)
     {
+        if (subject.IsState(StateType.AbsoluteHit))
+        {
+            return true;
+        }
         int hit = 100;
         if (subject.IsState(StateType.Blind))
         {
@@ -362,7 +366,7 @@ public class ActionResultInfo
         {
             stateInfo.Turns = 200 - subject.Status.Spd * 2;
         }
-        bool IsAdded = target.AddState(stateInfo);
+        bool IsAdded = target.AddState(stateInfo,false);
         if (IsAdded)
         {
             _addedStates.Add(stateInfo);
@@ -382,7 +386,7 @@ public class ActionResultInfo
     private void MakeRemoveState(BattlerInfo subject,BattlerInfo target,SkillsData.FeatureData featureData)
     {
         StateInfo stateInfo = new StateInfo(featureData.Param1,featureData.Param2,featureData.Param3,subject.Index,target.Index);
-        bool IsRemoved = target.RemoveState(stateInfo);
+        bool IsRemoved = target.RemoveState(stateInfo,false);
         if (IsRemoved)
         {
             _removedStates.Add(stateInfo);

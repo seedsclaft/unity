@@ -241,8 +241,9 @@ public class BattlerInfo
         }
         if (_hp <= 0)
         {
+            _stateInfos.Clear();
             StateInfo stateInfo = new StateInfo((int)StateType.Death,0,0,Index,Index);
-            AddState(stateInfo);
+            AddState(stateInfo,true);
         }
     }
 
@@ -303,7 +304,7 @@ public class BattlerInfo
 
         for (int i = getStateInfoAll.Count-1;i >= 0;i--)
         {
-            RemoveState(getStateInfoAll[i]);
+            RemoveState(getStateInfoAll[i],true);
         }
     }
 
@@ -342,7 +343,7 @@ public class BattlerInfo
         return effect;
     }
 
-    public bool AddState(StateInfo stateInfo)
+    public bool AddState(StateInfo stateInfo,bool doAdd)
     {
         bool IsAdded = false;
         if (IsState(StateType.Barrier))
@@ -354,32 +355,38 @@ public class BattlerInfo
         }
         if (_stateInfos.Find(a => a.CheckOverWriteState(stateInfo) == true) == null)
         {
-            _stateInfos.Add(stateInfo);
+            if (doAdd)
+            {
+                _stateInfos.Add(stateInfo);
+                if (stateInfo.Master.Id == (int)StateType.MaxHpUp)
+                {
+                    GainHp(stateInfo.Effect);
+                }
+                if (stateInfo.Master.Id == (int)StateType.MaxMpUp)
+                {
+                    GainMp(stateInfo.Effect);
+                }
+            }
             IsAdded = true;
-            if (stateInfo.Master.Id == (int)StateType.MaxHpUp)
-            {
-                GainHp(stateInfo.Effect);
-            }
-            if (stateInfo.Master.Id == (int)StateType.MaxMpUp)
-            {
-                GainMp(stateInfo.Effect);
-            }
         }
         return IsAdded;
     }
 
-    public bool RemoveState(StateInfo stateInfo)
+    public bool RemoveState(StateInfo stateInfo,bool doRemove)
     {
         bool IsRemoved = false;
         int RemoveIndex = _stateInfos.FindIndex(a => a.StateId == stateInfo.StateId);
         if (RemoveIndex > -1)
         {
-            _stateInfos.RemoveAt(RemoveIndex);
-            IsRemoved = true;
-            if (stateInfo.StateId == (int)StateType.Death)
+            if (doRemove)
             {
-                _hp = 1;
+                _stateInfos.RemoveAt(RemoveIndex);
+                if (stateInfo.StateId == (int)StateType.Death)
+                {
+                    _hp = 1;
+                }
             }
+            IsRemoved = true;
         }
         return IsRemoved;
     }
@@ -394,7 +401,7 @@ public class BattlerInfo
                 bool IsRemove = stateInfo.UpdateTurn();
                 if (IsRemove)
                 {
-                    RemoveState(stateInfo);
+                    RemoveState(stateInfo,true);
                 }
             }
         }
@@ -410,7 +417,7 @@ public class BattlerInfo
                 bool IsRemove = stateInfo.UpdateTurn();
                 if (IsRemove)
                 {
-                    RemoveState(stateInfo);
+                    RemoveState(stateInfo,true);
                 }
             }
         }

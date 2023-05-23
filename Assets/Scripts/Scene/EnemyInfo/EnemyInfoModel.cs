@@ -45,7 +45,7 @@ public class EnemyInfoModel : BaseModel
     public List<SkillInfo> SkillActionList(AttributeType attributeType)
     {
         _currentAttributeType = attributeType;
-        List<SkillInfo> skillInfos = CurrentActor.Skills.FindAll(a => a.Id > 100);
+        List<SkillInfo> skillInfos = CurrentActor.Skills.FindAll(a => a.Master.Attribute != AttributeType.None);
         skillInfos.ForEach(a => a.SetEnable(true));
         skillInfos.Sort((a,b) => {return a.Id - b.Id;});
         return skillInfos;

@@ -29,8 +29,8 @@ public class GetItem : ListItem ,IListViewItem
         if (_data == null) return;
         if (iconImage != null)
         {
-            iconImage.gameObject.SetActive(_data.IsSkill());
-            if (_data.IsSkill()) UpdateElementIcon((int)_data.SkillElementId);
+            iconImage.gameObject.SetActive(_data.IsSkill() || _data.IsAttributeSkill());
+            if (_data.IsSkill() || _data.IsAttributeSkill()) UpdateElementIcon((int)_data.SkillElementId);
         }
         if (titleName != null)
         {
