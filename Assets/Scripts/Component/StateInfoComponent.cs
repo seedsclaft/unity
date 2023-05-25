@@ -46,10 +46,20 @@ public class StateInfoComponent : MonoBehaviour
         
         if (icon != null)
         {
+            UpdateStateIcon(stateData.IconPath);
         }
         if (nameText != null)
         {
             nameText.text = stateData.Name;
+        }
+    }
+
+    private void UpdateStateIcon(string iconPath)
+    {
+        var handle = Resources.Load<Sprite>("Texture/Icon/" + iconPath);
+        if (icon != null)
+        {
+            icon.sprite = handle;
         }
     }
 }

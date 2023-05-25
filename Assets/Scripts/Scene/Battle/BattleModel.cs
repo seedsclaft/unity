@@ -66,7 +66,7 @@ public class BattleModel : BaseModel
                 if (CurrentAlcana.AlcanaState != null)
                 {
                     StateInfo stateInfo = CurrentAlcana.AlcanaState;
-                    battlerInfo.AddState(stateInfo);
+                    battlerInfo.AddState(stateInfo,true);
                 }
                 _battlers.Add(battlerInfo);
             }
@@ -120,7 +120,7 @@ public class BattleModel : BaseModel
                         
                     if ((target.Hp - chainDamage) <= 0)
                     {
-                        _battlers[i].RemoveState(stateInfo);
+                        _battlers[i].RemoveState(stateInfo,true);
                     }
                     actionResultInfos.Add(actionResultInfo);
                 }
@@ -208,7 +208,7 @@ public class BattleModel : BaseModel
                         targetIndexs.Add(stateInfos[j].TargetIndex);
                     } else
                     {
-                        CurrentBattler.RemoveState(stateInfos[j]);
+                        CurrentBattler.RemoveState(stateInfos[j],true);
                     }
                 }
             }
@@ -689,7 +689,7 @@ public class BattleModel : BaseModel
                     for (int j = 0; j < chainStateInfos.Count;j++)
                     {
                         BattlerInfo chainedBattlerInfo = GetBattlerInfo(chainStateInfos[j].TargetIndex);
-                        chainedBattlerInfo.RemoveState(chainStateInfos[j]);
+                        chainedBattlerInfo.RemoveState(chainStateInfos[j],true);
                         actionResultInfo.AddRemoveState(chainStateInfos[j]);
                     }
                 }
@@ -698,18 +698,9 @@ public class BattleModel : BaseModel
                     List<StateInfo> benedictStateInfos = Target.GetStateInfoAll(StateType.Benediction);
                     for (int j = 0; j < benedictStateInfos.Count;j++)
                     {
-                        Target.RemoveState(benedictStateInfos[j]);
+                        Target.RemoveState(benedictStateInfos[j],true);
                         Target.ResetAp(false);
                         actionResultInfo.AddRemoveState(benedictStateInfos[j]);
-                    }
-                }
-                if (Target.IsState(StateType.CounterOura))
-                {
-                    List<StateInfo> counterOuraStateInfos = Target.GetStateInfoAll(StateType.CounterOura);
-                    for (int j = 0; j < counterOuraStateInfos.Count;j++)
-                    {
-                        Target.RemoveState(counterOuraStateInfos[j]);
-                        actionResultInfo.AddRemoveState(counterOuraStateInfos[j]);
                     }
                 }
             }
@@ -789,6 +780,16 @@ public class BattleModel : BaseModel
     {
         BattlerInfo subject = GetBattlerInfo(actionResultInfo.SubjectIndex);
         BattlerInfo target = GetBattlerInfo(actionResultInfo.TargetIndex);
+        foreach (var addState in actionResultInfo.AddedStates)
+        {
+            BattlerInfo addTarget = GetBattlerInfo(addState.TargetIndex);
+            addTarget.AddState(addState,true);
+        }
+        foreach (var removeState in actionResultInfo.RemovedStates)
+        {
+            BattlerInfo removeTarget = GetBattlerInfo(removeState.TargetIndex);
+            removeTarget.RemoveState(removeState,true);
+        }
         if (actionResultInfo.HpDamage != 0)
         {
             target.GainHp(-1 * actionResultInfo.HpDamage);
@@ -821,6 +822,20 @@ public class BattleModel : BaseModel
                 foreach (var stateId in targetIndex.Value)
                 {
                     execTarget.UpdateStateCount(RemovalTiming.UpdateCount,(int)stateId);
+                }
+            }
+        }
+        //if (actionResultInfo.AddedStates.Find(a => a.Master.Id == (int)StateType.Stun) != null
+        //    || actionResultInfo.DeadIndexList.Contains(actionResultInfo.TargetIndex))  
+        if (actionResultInfo.HpDamage > 0 || actionResultInfo.ExecStateInfos[target.Index].Contains(StateType.CounterOura))
+        {
+            if (target.IsState(StateType.CounterOura))
+            {
+                List<StateInfo> counterOuraStateInfos = target.GetStateInfoAll(StateType.CounterOura);
+                for (int j = 0; j < counterOuraStateInfos.Count;j++)
+                {
+                    target.RemoveState(counterOuraStateInfos[j],true);
+                    actionResultInfo.AddRemoveState(counterOuraStateInfos[j]);
                 }
             }
         }
@@ -916,8 +931,12 @@ public class BattleModel : BaseModel
         for (int i = 0;i < stateInfos.Count;i++)
         {
             featureData.Param1 = stateInfos[i].Effect;
-            ActionResultInfo actionResultInfo = new ActionResultInfo(GetBattlerInfo(stateInfos[i].BattlerId),GetBattlerInfo(stateInfos[i].TargetIndex),new List<SkillsData.FeatureData>(){featureData});
-            actionResultInfos.Add(actionResultInfo);
+            BattlerInfo target = GetBattlerInfo(stateInfos[i].BattlerId);
+            if (target.IsAlive())
+            {
+                ActionResultInfo actionResultInfo = new ActionResultInfo(GetBattlerInfo(stateInfos[i].BattlerId),GetBattlerInfo(stateInfos[i].TargetIndex),new List<SkillsData.FeatureData>(){featureData});
+                actionResultInfos.Add(actionResultInfo);
+            }
         }
         return actionResultInfos;
     }
@@ -1022,7 +1041,7 @@ public class BattleModel : BaseModel
         {
             BattlerInfo battlerInfo = _battlers[i];
             List<SkillInfo> passiveSkills = _passiveSkillInfos[battlerInfo.Index];
-            for (int j = 0;i < passiveSkills.Count;i++)
+            for (int j = 0;j < passiveSkills.Count;j++)
             {
                 SkillInfo passiveInfo = passiveSkills[j];
                 bool IsRemove = false;
@@ -1081,7 +1100,7 @@ public class BattleModel : BaseModel
                         IsTriggered = true;
                     }
                 }
-                if (triggerTiming == TriggerTiming.Interrupt && triggerDatas[j].TriggerType == TriggerType.ActionResultDeath)
+                if (battlerInfo.IsAwaken == false && triggerTiming == TriggerTiming.Interrupt && triggerDatas[j].TriggerType == TriggerType.ActionResultDeath)
                 {
                     List<ActionResultInfo> actionResultInfos = CurrentActionInfo().ActionResults;
                     if (actionResultInfos.Find(a => BattlerActors().Find(b => a.DeadIndexList.Contains(b.Index)) != null) != null)
@@ -1121,14 +1140,14 @@ public class BattleModel : BaseModel
                         }
                     } 
                 }
-                if (triggerDatas[j].TriggerType == TriggerType.SelfDead)
+                if (battlerInfo.IsAwaken == false && triggerDatas[j].TriggerType == TriggerType.SelfDead)
                 {
                     if (CurrentActionInfo().ActionResults.Find(a => a.DeadIndexList.Contains(battlerInfo.Index) == true) != null)
                     {
                         IsTriggered = true;
                         List<StateInfo> stateInfos = battlerInfo.GetStateInfoAll(StateType.Death);
                         for (var i = 0;i < stateInfos.Count;i++){
-                            battlerInfo.RemoveState(stateInfos[i]);
+                            battlerInfo.RemoveState(stateInfos[i],true);
                         }
                     }
                 }
@@ -1179,12 +1198,20 @@ public class BattleModel : BaseModel
 
     public List<int> MakeAutoSelectIndex(ActionInfo actionInfo)
     {
+        List<int> indexList = new List<int>();
+        if (actionInfo.ActionResults.Count > 0)
+        {
+            foreach (var actionResultInfo in actionInfo.ActionResults)
+            {
+                indexList.Add(actionResultInfo.TargetIndex);
+            }
+            return indexList;
+        }
         List<int> targetIndexList = MakeActionTarget(actionInfo.Master.Id,actionInfo.SubjectIndex);
         if (targetIndexList.Count == 0)
         {
             return targetIndexList;
         }
-        List<int> indexList = new List<int>();
         
         int targetRand = 0;
         for (int i = 0;i < targetIndexList.Count;i++)

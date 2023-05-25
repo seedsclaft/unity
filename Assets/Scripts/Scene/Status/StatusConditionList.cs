@@ -26,7 +26,6 @@ public class StatusConditionList : ListWindow , IInputHandlerEvent
     public void Refresh(List<StateInfo> stateInfos ,System.Action cancelEvent,System.Action skillEvent)
     {
         ResetInputFrame();
-        _stateInfos.Clear();
         _stateInfos = stateInfos;
         for (int i = 0; i < ObjectList.Count;i++)
         {

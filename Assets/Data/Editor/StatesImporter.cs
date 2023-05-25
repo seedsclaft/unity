@@ -85,7 +85,7 @@ public class StatesImporter : AssetPostprocessor {
 					StateData.Id = (int)Baserow.GetCell((int)BaseColumn.Id).NumericCellValue;
 					StateData.Name = textData.Find(a => a.Id == (int)Baserow.GetCell((int)BaseColumn.NameId).NumericCellValue).Text;
 					StateData.Help = textData.Find(a => a.Id == (int)Baserow.GetCell((int)BaseColumn.NameId).NumericCellValue).Help;
-					StateData.IconIndex = Baserow.GetCell((int)BaseColumn.IconIndex)?.SafeStringCellValue();
+					StateData.IconPath = Baserow.GetCell((int)BaseColumn.IconIndex)?.SafeStringCellValue();
 					StateData.RemovalTiming = (RemovalTiming)Baserow.GetCell((int)BaseColumn.RemovalTiming).NumericCellValue;
 					
 					

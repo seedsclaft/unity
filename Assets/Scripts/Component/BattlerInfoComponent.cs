@@ -155,7 +155,14 @@ public class BattlerInfoComponent : MonoBehaviour
         var battleDamage = CreatePrefab();
         battleDamage.StartHeal(damageType,value);
         _battleDamages.Add(battleDamage);
-        ChangeHp(value + _battlerInfo.Hp);
+        if (damageType == DamageType.HpHeal)
+        {
+            ChangeHp(value + _battlerInfo.Hp);
+        } else
+        if (damageType == DamageType.MpHeal)
+        {
+            ChangeMp(value + _battlerInfo.Mp);
+        }
     }
 
     public void StartStatePopup(DamageType damageType,string stateName)

@@ -383,7 +383,7 @@ public class BattlerInfo
                 _stateInfos.RemoveAt(RemoveIndex);
                 if (stateInfo.StateId == (int)StateType.Death)
                 {
-                    _hp = 1;
+                    if (_hp == 0)_hp = 1;
                 }
             }
             IsRemoved = true;

@@ -13,7 +13,7 @@ public class StatesData : ScriptableObject
         public int Id;
         public string Name;
         public string Help;
-        public int IconIndex;
+        public string IconPath;
         public RemovalTiming RemovalTiming;
     }
 }
@@ -57,7 +57,8 @@ public enum StateType
     DamageAddState = 114,
     CounterOuraHeal = 115,
     HealActionSelfHeal = 116,
-    Undead = 117
+    Undead = 117,
+    AbsoluteHit = 118
 }
 
 public enum RemovalTiming

@@ -30,7 +30,7 @@ public class ActionResultInfo
         }
         if (subject != null && target != null)
         {
-            if (_hpDamage >= target.Hp)
+            if (_hpDamage >= target.Hp && target.IsAlive())
             {
                 if (target.IsState(StateType.Undead) && featureDatas.Find(a => a.FeatureType == FeatureType.BreakUndead) == null)
                 {
@@ -44,7 +44,7 @@ public class ActionResultInfo
                     _deadIndexList.Add(target.Index);
                 }
             }
-            if (_reDamage >= subject.Hp)
+            if (_reDamage >= subject.Hp && subject.IsAlive())
             {
                 if (subject.IsState(StateType.Undead) && featureDatas.Find(a => a.FeatureType == FeatureType.BreakUndead) == null)
                 {
@@ -262,6 +262,8 @@ public class ActionResultInfo
             if (count <= 1)
             {
                 _removedStates.Add(target.GetStateInfo(StateType.NoDamage));
+            } else{
+                _displayStates.Add(target.GetStateInfo(StateType.NoDamage));
             }
         }
         if (subject.IsState(StateType.DamageAddState))
@@ -344,6 +346,8 @@ public class ActionResultInfo
             if (count <= 1)
             {
                 _removedStates.Add(target.GetStateInfo(StateType.NoDamage));
+            } else{
+                _displayStates.Add(target.GetStateInfo(StateType.NoDamage));
             }
         }
         if (subject.IsState(StateType.Drain))

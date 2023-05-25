@@ -174,8 +174,8 @@ public class StrategyModel : BaseModel
                 if (PartyInfo.AddCommandCountInfo(TacticsComandType.Train))
                 {
                     GetItemInfo partyGetItemInfo = new GetItemInfo(null);
-                    partyGetItemInfo.SetTitleData("");
-                    partyGetItemInfo.SetResultData(DataSystem.System.GetTextData(3030).Text.Replace("\\d",DataSystem.System.GetTextData(1).Text));
+                    partyGetItemInfo.SetTitleData(DataSystem.System.GetTextData(3030).Text.Replace("\\d",DataSystem.System.GetTextData(1).Text));
+                    partyGetItemInfo.SetResultData("Lv." + PartyInfo.CommandRankInfo[TacticsComandType.Train] + " ⇒ " + (PartyInfo.CommandRankInfo[TacticsComandType.Train]+1).ToString());
                     PartyInfo.AddCommandRank(TacticsComandType.Train);
                     getItemInfos.Add(partyGetItemInfo);
                 }
@@ -185,8 +185,8 @@ public class StrategyModel : BaseModel
                 if (PartyInfo.AddCommandCountInfo(TacticsComandType.Alchemy))
                 {
                     GetItemInfo partyGetItemInfo = new GetItemInfo(null);
-                    partyGetItemInfo.SetTitleData("");
-                    partyGetItemInfo.SetResultData(DataSystem.System.GetTextData(3030).Text.Replace("\\d",DataSystem.System.GetTextData(2).Text));
+                    partyGetItemInfo.SetTitleData(DataSystem.System.GetTextData(3030).Text.Replace("\\d",DataSystem.System.GetTextData(2).Text));
+                    partyGetItemInfo.SetResultData("Lv." + PartyInfo.CommandRankInfo[TacticsComandType.Alchemy] + " ⇒ " + (PartyInfo.CommandRankInfo[TacticsComandType.Alchemy]+1).ToString());
                     PartyInfo.AddCommandRank(TacticsComandType.Alchemy);
                     getItemInfos.Add(partyGetItemInfo);
                 }
@@ -196,8 +196,8 @@ public class StrategyModel : BaseModel
                 if (PartyInfo.AddCommandCountInfo(TacticsComandType.Recovery))
                 {
                     GetItemInfo partyGetItemInfo = new GetItemInfo(null);
-                    partyGetItemInfo.SetTitleData("");
-                    partyGetItemInfo.SetResultData(DataSystem.System.GetTextData(3030).Text.Replace("\\d",DataSystem.System.GetTextData(3).Text));
+                    partyGetItemInfo.SetTitleData(DataSystem.System.GetTextData(3030).Text.Replace("\\d",DataSystem.System.GetTextData(3).Text));
+                    partyGetItemInfo.SetResultData("Lv." + PartyInfo.CommandRankInfo[TacticsComandType.Recovery] + " ⇒ " + (PartyInfo.CommandRankInfo[TacticsComandType.Recovery]+1).ToString());
                     PartyInfo.AddCommandRank(TacticsComandType.Recovery);
                     getItemInfos.Add(partyGetItemInfo);
                 }
@@ -207,8 +207,8 @@ public class StrategyModel : BaseModel
                 if (PartyInfo.AddCommandCountInfo(TacticsComandType.Resource))
                 {
                     GetItemInfo partyGetItemInfo = new GetItemInfo(null);
-                    partyGetItemInfo.SetTitleData("");
-                    partyGetItemInfo.SetResultData(DataSystem.System.GetTextData(3030).Text.Replace("\\d",DataSystem.System.GetTextData(5).Text));
+                    partyGetItemInfo.SetTitleData(DataSystem.System.GetTextData(3030).Text.Replace("\\d",DataSystem.System.GetTextData(5).Text));
+                    partyGetItemInfo.SetResultData("Lv." + PartyInfo.CommandRankInfo[TacticsComandType.Resource] + " ⇒ " + (PartyInfo.CommandRankInfo[TacticsComandType.Resource]+1).ToString());
                     PartyInfo.AddCommandRank(TacticsComandType.Resource);
                     getItemInfos.Add(partyGetItemInfo);
                 }
@@ -302,8 +302,8 @@ public class StrategyModel : BaseModel
                 if (PartyInfo.AddCommandCountInfo(TacticsComandType.Battle))
                 {
                     GetItemInfo partyGetItemInfo = new GetItemInfo(null);
-                    partyGetItemInfo.SetTitleData("");
-                    partyGetItemInfo.SetResultData(DataSystem.System.GetTextData(3030).Text.Replace("\\d",DataSystem.System.GetTextData(4).Text));
+                    partyGetItemInfo.SetTitleData(DataSystem.System.GetTextData(3030).Text.Replace("\\d",DataSystem.System.GetTextData(4).Text));
+                    partyGetItemInfo.SetResultData("Lv." + PartyInfo.CommandRankInfo[TacticsComandType.Battle] + " ⇒ " + (PartyInfo.CommandRankInfo[TacticsComandType.Battle]+1).ToString());
                     PartyInfo.AddCommandRank(TacticsComandType.Battle);
                     getItemInfos.Add(partyGetItemInfo);
                 }

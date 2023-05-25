@@ -135,7 +135,7 @@ public class BattleDamage : MonoBehaviour
 
         textMeshProUGUI.alpha = 0;
         Sequence sequence = DOTween.Sequence()
-            .SetDelay(delay * 0.7f)
+            //.SetDelay(delay * 0.7f)
             .Append(textMeshProUGUI.DOFade(1.0f, 0.1f))
             .Join(textMeshProUGUI.gameObject.transform.DOLocalMoveY(8, 0.2f))
             .Append(textMeshProUGUI.gameObject.transform.DOLocalMoveY(8, 1.0f))

@@ -519,7 +519,7 @@ public class BattlePresenter : BasePresenter
         if (actionInfo != null)
         {
             StartDeathAnimation(_model.CurrentActionInfo().ActionResults);
-            if (actionInfo.Master.SkillType != SkillType.Demigod)
+            if (_triggerAfterChecked == false)
             {
                 // ステートなどを適用
                 var slipDamage = _model.CheckSlipDamage();
@@ -546,6 +546,7 @@ public class BattlePresenter : BasePresenter
         _model.PopupActionResultInfo(PassiveResults);
         foreach (var PassiveResult in PassiveResults)
         {
+            _model.ExecActionResultInfo(PassiveResult);
             PopupActionResult(PassiveResult,PassiveResult.TargetIndex,true);
         }
     }
@@ -553,7 +554,7 @@ public class BattlePresenter : BasePresenter
     private void CommandEndSlipDamageAnimation()
     {
         var regene = _model.CheckRegene();
-        if (regene)
+        if (regene && _triggerAfterChecked == false)
         {
             StartAnimationRegene();
             return;
@@ -584,6 +585,10 @@ public class BattlePresenter : BasePresenter
         {
             PopupActionResult(RemovePassiveResult,RemovePassiveResult.TargetIndex,true);
         }
+        foreach (var RemovePassiveResult in RemovePassiveResults)
+        {
+            _model.ExecActionResultInfo(RemovePassiveResult);
+        }
         // TriggerAfter
         var result = _model.CheckTriggerSkillInfos(TriggerTiming.After);
         
@@ -592,12 +597,16 @@ public class BattlePresenter : BasePresenter
         {
             isDemigodActor = _model.CurrentBattler.IsState(StateType.Demigod);
         }
-        if (result == false && _triggerAfterChecked == false)
+        bool isTriggeredSkill = _model.CurrentActionInfo().TriggeredSkill;
+        if (result == false && _triggerAfterChecked == false && isTriggeredSkill == false)
         {
             _model.UpdateTurn();
         }
         _model.TurnEnd();
-        _triggerAfterChecked = true;
+        if (isTriggeredSkill == false)
+        {
+            _triggerAfterChecked = true;
+        }
 
         // 勝敗判定
         if (CheckBattleEnd() && result == false)
@@ -610,10 +619,11 @@ public class BattlePresenter : BasePresenter
         }
 
         // 次の行動者がいれば続ける
-        if (_model.CurrentActionInfo() != null)
+        ActionInfo CurrentActionInfo = _model.CurrentActionInfo();
+        if (CurrentActionInfo != null)
         {
-            _model.SetActionBattler(_model.CurrentActionInfo().SubjectIndex);
-            CommandSelectIndex(_model.MakeAutoSelectIndex(_model.CurrentActionInfo()));
+            _model.SetActionBattler(CurrentActionInfo.SubjectIndex);
+            CommandSelectIndex(_model.MakeAutoSelectIndex(CurrentActionInfo));
             return;
         }
 
@@ -639,6 +649,7 @@ public class BattlePresenter : BasePresenter
     {
         List<SkillInfo> skillInfos = _model.SkillActionList(attributeType);
         _view.RefreshSkillActionList(skillInfos);
+        _view.SetAttributeTypes(_model.AttributeTypes(),_model.CurrentAttributeType);
         _view.HideCondition();
         Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cursor);
     }

@@ -192,6 +192,7 @@ public class BattleView : BaseView
 
     private void CallEnemyInfo(List<int> indexList)
     {
+        if (_animationBusy) return;
         var eventData = new BattleViewEvent(CommandType.EnemyLayer);
         eventData.templete = indexList;
         _commandData(eventData);
@@ -199,6 +200,7 @@ public class BattleView : BaseView
 
     private void CallActorList(List<int> indexList)
     {
+        if (_animationBusy) return;
         var eventData = new BattleViewEvent(CommandType.ActorList);
         eventData.templete = indexList;
         _commandData(eventData);
