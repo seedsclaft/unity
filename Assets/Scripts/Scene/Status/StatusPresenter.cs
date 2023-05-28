@@ -19,7 +19,7 @@ public class StatusPresenter
     }
 
     private void Initialize()
-    {
+    { 
         _view.SetHelpWindow(_model.HelpText());
         _view.SetUIButton();
         _view.SetEvent((type) => updateCommand(type));
