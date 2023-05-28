@@ -6,6 +6,7 @@ using UnityEngine.ResourceManagement.AsyncOperations;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Runtime.CompilerServices;
+using Cysharp.Threading.Tasks;
 
 public class ResourceSystem : MonoBehaviour
 {
@@ -54,7 +55,7 @@ public class ResourceSystem : MonoBehaviour
         return "";
     }
 
-    public static async Task<T> LoadAsset<T>(string address){
+    public static async UniTask<T> LoadAsset<T>(string address){
         var handle = await Addressables.LoadAssetAsync<T>(address).Task;
         _lastLoadAssets.Add(handle as Object);
         return handle;
@@ -69,7 +70,7 @@ public class ResourceSystem : MonoBehaviour
         _lastLoadAssets.Clear();
     }
 
-    public async static Task<List<AudioClip>>LoadBGMAsset(string bgmKey)
+    public async static UniTask<List<AudioClip>>LoadBGMAsset(string bgmKey)
     {    
         BGMData bGMData = DataSystem.Data.GetBGM(bgmKey);
         List<string> data = new List<string>();
@@ -95,7 +96,7 @@ public class ResourceSystem : MonoBehaviour
     }
 
 
-    public static async Task<AudioClip> LoadAssetResources<T>(string address){
+    public static async UniTask<AudioClip> LoadAssetResources<T>(string address){
         var handle = Resources.LoadAsync<AudioClip>(address);
         await handle;
         return handle.asset as AudioClip;

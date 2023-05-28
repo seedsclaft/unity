@@ -52,7 +52,13 @@ public class SkillInfoComponent : MonoBehaviour
         }
         if (mpCost != null)
         {
-            mpCost.text = "(" + skillData.MpCost.ToString() + ")";
+            if (skillData.SkillType != SkillType.Passive)
+            {
+                mpCost.text = "(" + skillData.MpCost.ToString() + ")";
+            } else
+            {
+                mpCost.text = "";
+            }
         }
         if (lineImage != null)
         {

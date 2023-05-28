@@ -177,7 +177,6 @@ public enum SkillType{
     Passive = 2, // パッシブ
     Demigod = 3, // 神化
     Awaken = 4, // 覚醒
-    UsedPassive = 5, // 一度切りパッシブ
     UseAlcana = 11 // アルカナ使用
 }
 

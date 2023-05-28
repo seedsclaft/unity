@@ -4,6 +4,24 @@ using UnityEngine;
 
 public class StatusModel : BaseModel
 {
+    public string HelpText()
+    {
+        int textId = -1;
+        if (CurrentStage == null)
+        {
+            textId = 11090;
+        } else
+        {
+            textId = 11050;
+        }
+
+        if (textId >= 0)
+        {
+            return DataSystem.System.GetTextData(textId).Text;
+        }
+        return "";
+    }
+
     private int _useNuminous = 0;
     private int _currentIndex = 0; 
     public int CurrentIndex

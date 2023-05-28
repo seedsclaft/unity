@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+using Cysharp.Threading.Tasks;
 
 public class BaseModel
 {
@@ -104,7 +104,7 @@ public class BaseModel
         }
     }
 
-    public async Task<List<AudioClip>> GetBgmData(string bgmKey){
+    public async UniTask<List<AudioClip>> GetBgmData(string bgmKey){
         return await ResourceSystem.LoadBGMAsset(bgmKey);
     }
 

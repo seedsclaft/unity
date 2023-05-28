@@ -26,7 +26,13 @@ public class StateInfoComponent : MonoBehaviour
         }
         if (turns != null)
         {
-            turns.text = stateInfo.Turns.ToString();
+            if (stateInfo.Turns > 100)
+            {
+                turns.text = DataSystem.System.GetTextData(403).Text;
+            } else
+            {
+                turns.text = stateInfo.Turns.ToString();
+            }
         }
     }
 

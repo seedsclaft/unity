@@ -776,7 +776,7 @@ MonoBehaviour:
     Scope: 4
     SkillType: 3
     TargetType: 4
-    Help: "(\u6761\u4EF6)\u62D8\u675F\u89E3\u9664\u653B\u6483\u30923\u56DE\u6210\u529F\n\u62D8\u675F\u6210\u529F\u5024\u62D8\u675F\u30C0\u30E1\u30FC\u30B8\u30A2\u30C3\u30D7
+    Help: "(\u6761\u4EF6)\u62D8\u675F\u89E3\u9664\u653B\u6483\u30923\u56DE\u6210\u529F\n\u62D8\u675F\u6210\u529F\u6570\u5206\u62D8\u675F\u30C0\u30E1\u30FC\u30B8\u30A2\u30C3\u30D7
       \u795E\u5316\u72B6\u614B\u306B\u79FB\u884C"
     Range: 1
     AliveOnly: 1
@@ -1017,7 +1017,7 @@ MonoBehaviour:
     Rank: 1
     Attribute: 2
     Scope: 4
-    SkillType: 5
+    SkillType: 2
     TargetType: 4
     Help: "(\u6761\u4EF6)\u6226\u95D8\u958B\u59CB\u6642\u5473\u65B9\u3088\u308A\u6575\u304C\u591A\u3044\nSPD\u304C8\u30A2\u30C3\u30D7"
     Range: 1
@@ -1680,7 +1680,7 @@ MonoBehaviour:
     Scope: 3
     SkillType: 4
     TargetType: 2
-    Help: "(\u6761\u4EF6)\u795E\u5316\u72B6\u614B\n\u5473\u65B9\u5168\u54E1\u306B10\u56DE\u5FA9\u306E\u30EA\u30B8\u30A7\u30CD\u4ED8\u4E0E
+    Help: "(\u6761\u4EF6)\u795E\u5316\u72B6\u614B\n\u5473\u65B9\u5168\u54E1\u306B10\u56DE\u5FA9\u306E\u30EA\u30B8\u30A7\u30CD\u4ED8\u4E0E(\u6C38\u7D9A)
       \u795E\u5316\u89E3\u9664"
     Range: 1
     AliveOnly: 1
@@ -2073,11 +2073,6 @@ MonoBehaviour:
       Param3: 0
     - SkillId: 504
       FeatureType: 22
-      Param1: 108
-      Param2: 0
-      Param3: 0
-    - SkillId: 504
-      FeatureType: 22
       Param1: 109
       Param2: 0
       Param3: 0
@@ -2325,7 +2320,7 @@ MonoBehaviour:
     Rank: 1
     Attribute: 5
     Scope: 4
-    SkillType: 5
+    SkillType: 2
     TargetType: 4
     Help: "(\u6761\u4EF6)\u6226\u95D8\u958B\u59CB\u6642Hp\u304C50%\u4EE5\u4E0B\nHp\u304C10\u56DE\u5FA9"
     Range: 1

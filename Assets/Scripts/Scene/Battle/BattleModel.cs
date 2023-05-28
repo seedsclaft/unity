@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System;
 using System.Threading;
-using System.Threading.Tasks;
 using Effekseer;
+using Cysharp.Threading.Tasks;
 
 public class BattleModel : BaseModel
 {
@@ -48,7 +48,7 @@ public class BattleModel : BaseModel
     private List<ActionInfo> _actionInfos = new List<ActionInfo>();
     private Dictionary<int,List<SkillInfo>> _passiveSkillInfos = new Dictionary<int,List<SkillInfo>>();
 
-    public Task<List<UnityEngine.AudioClip>> GetBattleBgm()
+    public UniTask<List<UnityEngine.AudioClip>> GetBattleBgm()
     {
         var battleMembers = PartyMembers();
         return GetBgmData("BATTLE" + (battleMembers[0].ActorId).ToString());
@@ -305,13 +305,6 @@ public class BattleModel : BaseModel
         if (skillInfo.Master.SkillType == SkillType.Awaken)
         {
             if (!battlerInfo.IsState(StateType.Demigod))
-            {
-                return false;
-            }
-        }
-        if (battlerInfo.IsState(StateType.Banish))
-        {
-            if (skillInfo.Master.MpCost > 0)
             {
                 return false;
             }

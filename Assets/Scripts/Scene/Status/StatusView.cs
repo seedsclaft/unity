@@ -24,6 +24,7 @@ public class StatusView : BaseView
 
     private System.Action _backEvent = null;
     private bool _isDisplayDecide = false;
+    private string _helpText;
     private bool _isDisplayBack = true;
     public bool IsDisplayBack{ get { return _isDisplayBack;}}
     public override void Initialize() 
@@ -94,11 +95,12 @@ public class StatusView : BaseView
         decideButton.gameObject.SetActive(false);
     }
 
-    public void SetHelpWindow()
+    public void SetHelpWindow(string helpText)
     {
         GameObject prefab = Instantiate(helpPrefab);
         prefab.transform.SetParent(helpRoot.transform, false);
         _helpWindow = prefab.GetComponent<HelpWindow>();
+        _helpText = helpText;
     }
 
     public void SetEvent(System.Action<StatusViewEvent> commandData)
@@ -129,6 +131,10 @@ public class StatusView : BaseView
     {
         _isDisplayDecide = isDisplay;
         decideButton.gameObject.SetActive(isDisplay);
+        if (_isDisplayDecide)
+        {
+            _helpWindow.SetHelpText(_helpText);
+        }
     }
 
     public void DisplayBackButton(bool isDisplay)

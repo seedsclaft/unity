@@ -119,7 +119,7 @@ public class StrategyPresenter : BasePresenter
                 for (int i = 0;i < lostMembers.Count;i++)
                 {
                     lostMembersText += lostMembers[i].Master.Name;
-                    if (i != lostMembers.Count)
+                    if (i != lostMembers.Count-1)
                     {
                         lostMembersText += ",";
                     }
