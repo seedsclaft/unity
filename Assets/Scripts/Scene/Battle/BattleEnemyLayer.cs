@@ -105,8 +105,7 @@ public class BattleEnemyLayer : ListWindow , IInputHandlerEvent
             {
                 var listItem = _battleEnemies[i].GetComponent<ListItem>();
                 listItem.SetSelect();
-                var emitter = listItem.GetComponentInChildren<EffekseerEmitter>();
-                //emitter.Play();
+                _battleEnemies[i].EnableClick();
             }
         }
     }
@@ -116,6 +115,7 @@ public class BattleEnemyLayer : ListWindow , IInputHandlerEvent
         {
             var listItem = _battleEnemies[i].GetComponent<ListItem>();
             listItem.SetUnSelect();
+            _battleEnemies[i].DisableClick();
         }
     }
     
@@ -146,11 +146,11 @@ public class BattleEnemyLayer : ListWindow , IInputHandlerEvent
                 if (_battleInfos[i].IsAlive())
                 {
                     listItem.SetSelect();
-                    EffekseerEmitter emitter = listItem.GetComponentInChildren<EffekseerEmitter>();
-                    //emitter.Play();
+                    _battleEnemies[i].EnableClick();
                 }
             } else{
                 listItem.SetUnSelect();
+                _battleEnemies[i].DisableClick();
             }
         }
     }
@@ -169,11 +169,11 @@ public class BattleEnemyLayer : ListWindow , IInputHandlerEvent
                     if (_battleInfos[i].IsAlive())
                     {
                         listItem.SetSelect();
-                        EffekseerEmitter emitter = listItem.GetComponentInChildren<EffekseerEmitter>();
-                        //emitter.Play();
+                        _battleEnemies[i].EnableClick();
                     }
                 } else{
                     listItem.SetUnSelect();
+                    _battleEnemies[i].DisableClick();
                 }
             } else
             {
@@ -181,11 +181,11 @@ public class BattleEnemyLayer : ListWindow , IInputHandlerEvent
                     if (_battleInfos[i].IsAlive())
                     {
                         listItem.SetSelect();
-                        var emitter = listItem.GetComponentInChildren<EffekseerEmitter>();
-                        emitter.Play();
+                        _battleEnemies[i].EnableClick();
                     }
                 } else{
                     listItem.SetUnSelect();
+                    _battleEnemies[i].DisableClick();
                 }
             }
         }

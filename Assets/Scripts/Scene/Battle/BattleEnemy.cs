@@ -74,4 +74,14 @@ public class BattleEnemy : ListItem
         objectRect.sizeDelta = new Vector2(width,height);
         effectRect.sizeDelta = new Vector2(width,height);
     }
+
+    public void EnableClick()
+    {
+        clickButton.enabled = true;
+    }
+
+    public void DisableClick()
+    {
+        clickButton.enabled = false;
+    }
 }

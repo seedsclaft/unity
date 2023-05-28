@@ -50,6 +50,14 @@ public class BattleModel : BaseModel
 
     public UniTask<List<UnityEngine.AudioClip>> GetBattleBgm()
     {
+        if (CurrentStage != null)
+        {
+            var troops = CurrentStage.CurrentTroopInfo();
+            if (troops.TroopId >= 100 && troops.TroopId <= 500)
+            {
+                return GetBgmData("BOSS1");
+            }
+        }
         var battleMembers = PartyMembers();
         return GetBgmData("BATTLE" + (battleMembers[0].ActorId).ToString());
     }
@@ -602,7 +610,7 @@ public class BattleModel : BaseModel
                 {
                     if (target.Hp < target.MaxHp)
                     {
-                        if (!target.isActor)
+                        if (!target.isActor && !target.Kinds.Contains(KindType.Undead))
                         {
                             IsEnable = true;
                         }

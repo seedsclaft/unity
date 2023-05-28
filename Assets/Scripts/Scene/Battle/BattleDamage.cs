@@ -43,7 +43,7 @@ public class BattleDamage : MonoBehaviour
         }
     }
 
-    public void StartDamage(DamageType damageType,int value)
+    public void StartDamage(DamageType damageType,int value,System.Action endEvent)
     {
         UpdateAllHide();
         _busy = true;
@@ -76,7 +76,8 @@ public class BattleDamage : MonoBehaviour
                         .OnComplete(() => {
                             _busy = false;
                             if (gameObject.transform.parent != null)
-                            {                    
+                            {              
+                                if (endEvent != null) endEvent();      
                                 GameObject.Destroy(gameObject);
                             }
                         });
@@ -84,7 +85,7 @@ public class BattleDamage : MonoBehaviour
         }
     }
 
-    public void StartHeal(DamageType damageType,int value)
+    public void StartHeal(DamageType damageType,int value,System.Action endEvent)
     {
         UpdateAllHide();
         _busy = true;
@@ -119,6 +120,7 @@ public class BattleDamage : MonoBehaviour
                             _busy = false;
                             if (gameObject.transform.parent != null)
                             {                    
+                                if (endEvent != null) endEvent();
                                 GameObject.Destroy(gameObject);
                             }
                         });
@@ -126,7 +128,7 @@ public class BattleDamage : MonoBehaviour
         }
     }
 
-    public void StartStatePopup(DamageType damageType,string stateName,float delay)
+    public void StartStatePopup(DamageType damageType,string stateName,float delay,System.Action endEvent)
     {
         GameObject prefab = Instantiate(GetPrefabType(damageType));
         prefab.transform.SetParent(GetRootType(damageType).transform, false);
@@ -135,7 +137,7 @@ public class BattleDamage : MonoBehaviour
 
         textMeshProUGUI.alpha = 0;
         Sequence sequence = DOTween.Sequence()
-            //.SetDelay(delay * 0.7f)
+            .SetDelay(delay * 0.7f)
             .Append(textMeshProUGUI.DOFade(1.0f, 0.1f))
             .Join(textMeshProUGUI.gameObject.transform.DOLocalMoveY(8, 0.2f))
             .Append(textMeshProUGUI.gameObject.transform.DOLocalMoveY(8, 1.0f))
@@ -147,7 +149,8 @@ public class BattleDamage : MonoBehaviour
                     .OnComplete(() => {
                         _busy = false;
                         if (gameObject.transform.parent != null)
-                        {                    
+                        {
+                            if (endEvent != null) endEvent();
                             GameObject.Destroy(gameObject);
                         }
                     });

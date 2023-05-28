@@ -135,7 +135,12 @@ public class BattlerInfoComponent : MonoBehaviour
     public void StartDamage(DamageType damageType,int value)
     {
         var battleDamage = CreatePrefab();
-        battleDamage.StartDamage(damageType,value);
+        battleDamage.StartDamage(damageType,value,() => {
+            if (_battleDamages.Contains(battleDamage))
+            {
+                _battleDamages.Remove(battleDamage);
+            }
+        });
         _battleDamages.Add(battleDamage);
         ChangeHp(value * -1 + _battlerInfo.Hp);
     }
@@ -153,7 +158,12 @@ public class BattlerInfoComponent : MonoBehaviour
     public void StartHeal(DamageType damageType,int value)
     {
         var battleDamage = CreatePrefab();
-        battleDamage.StartHeal(damageType,value);
+        battleDamage.StartHeal(damageType,value,() => {
+            if (_battleDamages.Contains(battleDamage))
+            {
+                _battleDamages.Remove(battleDamage);
+            }
+        });
         _battleDamages.Add(battleDamage);
         if (damageType == DamageType.HpHeal)
         {
@@ -168,7 +178,12 @@ public class BattlerInfoComponent : MonoBehaviour
     public void StartStatePopup(DamageType damageType,string stateName)
     {
         var battleDamage = CreatePrefab();
-        battleDamage.StartStatePopup(damageType,stateName,_battleDamages.Count);
+        battleDamage.StartStatePopup(damageType,stateName,_battleDamages.Count,() => {
+            if (_battleDamages.Contains(battleDamage))
+            {
+                _battleDamages.Remove(battleDamage);
+            }
+        });
         _battleDamages.Add(battleDamage);
     }
 
