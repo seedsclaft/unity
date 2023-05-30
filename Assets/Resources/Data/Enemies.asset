@@ -703,6 +703,96 @@ MonoBehaviour:
       Level: 1
       Weight: 50
       TriggerDatas: []
+  - Id: 201
+    Name: "\u30D6\u30A8\u30EB"
+    ImagePath: Buer
+    BaseStatus:
+      _hp: 200
+      _mp: 40
+      _atk: 40
+      _def: 20
+      _spd: 30
+    Kinds: 
+    LearningSkills:
+    - SkillId: 1
+      Level: 1
+      Weight: 30
+      TriggerDatas: []
+  - Id: 202
+    Name: "\u30C7\u30AB\u30E9\u30D3\u30A2"
+    ImagePath: Decarabia
+    BaseStatus:
+      _hp: 200
+      _mp: 40
+      _atk: 40
+      _def: 20
+      _spd: 30
+    Kinds: 
+    LearningSkills:
+    - SkillId: 1
+      Level: 1
+      Weight: 30
+      TriggerDatas: []
+  - Id: 203
+    Name: "\u30B6\u30AC\u30F3"
+    ImagePath: Zagan
+    BaseStatus:
+      _hp: 200
+      _mp: 40
+      _atk: 40
+      _def: 20
+      _spd: 30
+    Kinds: 
+    LearningSkills:
+    - SkillId: 1
+      Level: 1
+      Weight: 30
+      TriggerDatas: []
+  - Id: 204
+    Name: "\u30E1\u30D5\u30A3\u30B9\u30C8\u30D5\u30A7\u30EC\u30B9"
+    ImagePath: Mephisto
+    BaseStatus:
+      _hp: 400
+      _mp: 40
+      _atk: 40
+      _def: 20
+      _spd: 30
+    Kinds: 
+    LearningSkills:
+    - SkillId: 1
+      Level: 1
+      Weight: 30
+      TriggerDatas: []
+  - Id: 205
+    Name: "\u30A2\u30B9\u30BF\u30ED\u30C8"
+    ImagePath: Astaroth
+    BaseStatus:
+      _hp: 200
+      _mp: 40
+      _atk: 40
+      _def: 20
+      _spd: 30
+    Kinds: 01000000
+    LearningSkills:
+    - SkillId: 1
+      Level: 1
+      Weight: 30
+      TriggerDatas: []
+  - Id: 206
+    Name: "\u30C7\u30D3\u30EB\u30C9\u30E9\u30B4\u30F3"
+    ImagePath: Devildragon
+    BaseStatus:
+      _hp: 400
+      _mp: 40
+      _atk: 40
+      _def: 20
+      _spd: 30
+    Kinds: 
+    LearningSkills:
+    - SkillId: 1
+      Level: 1
+      Weight: 30
+      TriggerDatas: []
   _textdata:
   - Id: 1
     Text: 2

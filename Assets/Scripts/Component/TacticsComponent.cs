@@ -19,6 +19,7 @@ public class TacticsComponent : MonoBehaviour
     [SerializeField] private TextMeshProUGUI attributeType;
     [SerializeField] private TextMeshProUGUI attributeLearnCost;
     
+    [SerializeField] private SkillInfoComponent skillInfoComponent;
 
 
     [SerializeField] private StatusInfoComponent statusInfoComponent;
@@ -59,15 +60,24 @@ public class TacticsComponent : MonoBehaviour
         {
             if (actorInfo.NextLearnSkillId > 0)
             {
-                attributeType.text = DataSystem.Skills.Find(a => a.Id == actorInfo.NextLearnSkillId).Name;
+                skillInfoComponent.UpdateSkillData(actorInfo.NextLearnSkillId);
+                //attributeType.text = DataSystem.Skills.Find(a => a.Id == actorInfo.NextLearnSkillId).Name;
             } else{
-                attributeType.text = "";
+                skillInfoComponent.Clear();
+                //attributeType.text = "";
             }
         }
 
         if (attributeLearnCost != null)
         {
-            attributeLearnCost.text = actorInfo.NextLearnCost.ToString();
+            attributeLearnCost.gameObject.SetActive(actorInfo.NextLearnCost > 0);
+            if (actorInfo.NextLearnCost > 0)
+            {
+                attributeLearnCost.text = actorInfo.NextLearnCost.ToString();
+            } else
+            {
+                attributeLearnCost.text = "";
+            }
         }
         
         if (statusInfoComponent != null)

@@ -52,7 +52,7 @@ public class SkillInfoComponent : MonoBehaviour
         }
         if (mpCost != null)
         {
-            if (skillData.SkillType != SkillType.Passive)
+            if (skillData.SkillType == SkillType.Magic)
             {
                 mpCost.text = "(" + skillData.MpCost.ToString() + ")";
             } else

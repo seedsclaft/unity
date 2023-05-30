@@ -8397,8 +8397,8 @@ MonoBehaviour:
     - rowIndex: 44
       debugIndex: 44
       strings:
-      - '*Selection4_Event5_1'
-      - 
+      - Param
+      - RouteSelect=1
       - 
       - 
       - 
@@ -8412,6 +8412,81 @@ MonoBehaviour:
     - rowIndex: 45
       debugIndex: 45
       strings:
+      - Jump
+      - '*Selection5_Event5_1'
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 46
+      debugIndex: 46
+      strings:
+      - '*Selection4_Event5_1'
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 47
+      debugIndex: 47
+      strings:
+      - Param
+      - RouteSelect=2
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 48
+      debugIndex: 48
+      strings:
+      - Jump
+      - '*Selection5_Event5_1'
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 49
+      debugIndex: 49
+      strings:
+      - '*Selection5_Event5_1'
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 50
+      debugIndex: 50
+      strings:
       - 
       - Chara1
       - 
@@ -8424,8 +8499,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 46
-      debugIndex: 46
+    - rowIndex: 51
+      debugIndex: 51
       strings:
       - EndScenario
       isEmpty: 0
@@ -8433,7 +8508,7 @@ MonoBehaviour:
       debugInfo: 
     name: Assets/ADVScene/AdvFile.xls:Event5_1
     type: 1
-    textLength: 1241
+    textLength: 1345
     headerRow: 0
     sourceAssetInEditor: {fileID: 0}
     entityIndexTbl: 
@@ -8782,16 +8857,15 @@ MonoBehaviour:
     - rowIndex: 23
       debugIndex: 23
       strings:
-      - 
-      - Chara2
-      - 
-      - 
+      - Param
+      - RouteSelect=1
       - 
       - 
       - 
       - 
-      - "\u3055\u3063\u304D\u3082\u8A00\u3063\u305F\u3051\u3069\u2026<speed=0.5>
-        </speed>\n\u30A2\u30BF\u30B7\u306F\u3069\u3063\u3061\u3067\u3082\u826F\u3044\u3093\u3060"
+      - 
+      - 
+      - 
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
@@ -8806,12 +8880,28 @@ MonoBehaviour:
       - 
       - 
       - 
-      - "\u3060\u3063\u3066<speed=0.5> </speed>\n\u30A2\u30BF\u30B7\u306E\u601D\u3044\u306F\u2026"
+      - "\u3055\u3063\u304D\u3082\u8A00\u3063\u305F\u3051\u3069\u2026<speed=0.5>
+        </speed>\n\u30A2\u30BF\u30B7\u306F\u3069\u3063\u3061\u3067\u3082\u826F\u3044\u3093\u3060"
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
     - rowIndex: 25
       debugIndex: 25
+      strings:
+      - 
+      - Chara2
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u3060\u3063\u3066<speed=0.5> </speed>\n\u30A2\u30BF\u30B7\u306E\u601D\u3044\u306F\u2026"
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 26
+      debugIndex: 26
       strings:
       - Jump
       - '*SelectionEnd_Event5_2'
@@ -8825,8 +8915,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 26
-      debugIndex: 26
+    - rowIndex: 27
+      debugIndex: 27
       strings:
       - '*Selection2_Event5_2'
       - 
@@ -8840,34 +8930,18 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 27
-      debugIndex: 27
-      strings:
-      - 
-      - Chara2
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      - "\u3055\u3063\u304D\u3082\u8A00\u3063\u305F\u3051\u3069\u2026<speed=0.5>
-        </speed>\n\u30A2\u30BF\u30B7\u306F\u3069\u3063\u3061\u3067\u3082\u826F\u3044\u3093\u3060"
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
     - rowIndex: 28
       debugIndex: 28
       strings:
-      - 
-      - Chara2
-      - 
-      - 
+      - Param
+      - RouteSelect=2
       - 
       - 
       - 
       - 
-      - "\u3067\u3082\u304D\u3063\u3068\u5927\u5909\u3060\u3088<speed=0.5> </speed>\n\u76F8\u624B\u306F\u4E0A\u4F4D\u8005\u3060\u3057"
+      - 
+      - 
+      - 
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
@@ -8882,12 +8956,43 @@ MonoBehaviour:
       - 
       - 
       - 
-      - "\u305F\u3076\u3093\u30A2\u30BF\u30B7\u3089\u2026<speed=0.5> </speed>\n\u4E00\u5EA6\u8CA0\u3051\u3066\u308B\u304B\u3089"
+      - "\u3055\u3063\u304D\u3082\u8A00\u3063\u305F\u3051\u3069\u2026<speed=0.5>
+        </speed>\n\u30A2\u30BF\u30B7\u306F\u3069\u3063\u3061\u3067\u3082\u826F\u3044\u3093\u3060"
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
     - rowIndex: 30
       debugIndex: 30
+      strings:
+      - 
+      - Chara2
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u3067\u3082\u304D\u3063\u3068\u5927\u5909\u3060\u3088<speed=0.5> </speed>\n\u76F8\u624B\u306F\u4E0A\u4F4D\u8005\u3060\u3057"
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 31
+      debugIndex: 31
+      strings:
+      - 
+      - Chara2
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u305F\u3076\u3093\u30A2\u30BF\u30B7\u3089\u2026<speed=0.5> </speed>\n\u4E00\u5EA6\u8CA0\u3051\u3066\u308B\u304B\u3089"
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 32
+      debugIndex: 32
       strings:
       - '*SelectionEnd_Event5_2'
       - 
@@ -8901,8 +9006,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 31
-      debugIndex: 31
+    - rowIndex: 33
+      debugIndex: 33
       strings:
       - EndScenario
       isEmpty: 0
@@ -8910,7 +9015,7 @@ MonoBehaviour:
       debugInfo: 
     name: Assets/ADVScene/AdvFile.xls:Event5_2
     type: 1
-    textLength: 1020
+    textLength: 1056
     headerRow: 0
     sourceAssetInEditor: {fileID: 0}
     entityIndexTbl: 
@@ -9706,8 +9811,8 @@ MonoBehaviour:
     - rowIndex: 53
       debugIndex: 53
       strings:
-      - '*Selection7_Event5_3'
-      - 
+      - Param
+      - RouteSelect=1
       - 
       - 
       - 
@@ -9721,6 +9826,81 @@ MonoBehaviour:
     - rowIndex: 54
       debugIndex: 54
       strings:
+      - Jump
+      - '*Selection8_Event5_3'
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 55
+      debugIndex: 55
+      strings:
+      - '*Selection7_Event5_3'
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 56
+      debugIndex: 56
+      strings:
+      - Param
+      - RouteSelect=2
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 57
+      debugIndex: 57
+      strings:
+      - Jump
+      - '*Selection8_Event5_3'
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 58
+      debugIndex: 58
+      strings:
+      - '*Selection8_Event5_3'
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 59
+      debugIndex: 59
+      strings:
       - 
       - Chara3
       - 
@@ -9733,8 +9913,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 55
-      debugIndex: 55
+    - rowIndex: 60
+      debugIndex: 60
       strings:
       - 
       - Chara3
@@ -9748,8 +9928,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 56
-      debugIndex: 56
+    - rowIndex: 61
+      debugIndex: 61
       strings:
       - 
       - Chara3
@@ -9763,8 +9943,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 57
-      debugIndex: 57
+    - rowIndex: 62
+      debugIndex: 62
       strings:
       - 
       - Chara3
@@ -9778,8 +9958,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 58
-      debugIndex: 58
+    - rowIndex: 63
+      debugIndex: 63
       strings:
       - EndScenario
       isEmpty: 0
@@ -9787,7 +9967,7 @@ MonoBehaviour:
       debugInfo: 
     name: Assets/ADVScene/AdvFile.xls:Event5_3
     type: 1
-    textLength: 1699
+    textLength: 1803
     headerRow: 0
     sourceAssetInEditor: {fileID: 0}
     entityIndexTbl: 
@@ -10101,15 +10281,15 @@ MonoBehaviour:
     - rowIndex: 21
       debugIndex: 21
       strings:
-      - 
-      - Chara4
-      - 
-      - 
+      - Param
+      - RouteSelect=1
       - 
       - 
       - 
       - 
-      - "\u3046\u3093\uFF01\u308F\u304B\u3063\u305F"
+      - 
+      - 
+      - 
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
@@ -10124,7 +10304,7 @@ MonoBehaviour:
       - 
       - 
       - 
-      - "<param=PlayerName>\u3055\u3093\u306E\u8A00\u3046\u901A\u308A\u306B\u3059\u308B\u306D"
+      - "\u3046\u3093\uFF01\u308F\u304B\u3063\u305F"
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
@@ -10139,8 +10319,7 @@ MonoBehaviour:
       - 
       - 
       - 
-      - "\u305D\u3046\u3059\u308C\u3070\u304A\u7236\u3055\u3093\u306B\u2026<speed=0.5>
-        </speed>\n\u4F1A\u3048\u308B\u3093\u3060\u3088\u306D\uFF01"
+      - "<param=PlayerName>\u3055\u3093\u306E\u8A00\u3046\u901A\u308A\u306B\u3059\u308B\u306D"
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
@@ -10155,7 +10334,8 @@ MonoBehaviour:
       - 
       - 
       - 
-      - "\u3042\u308C\u2026\u3067\u3082\uFF1F"
+      - "\u305D\u3046\u3059\u308C\u3070\u304A\u7236\u3055\u3093\u306B\u2026<speed=0.5>
+        </speed>\n\u4F1A\u3048\u308B\u3093\u3060\u3088\u306D\uFF01"
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
@@ -10170,8 +10350,7 @@ MonoBehaviour:
       - 
       - 
       - 
-      - "\u4ECA\u307E\u3067\u5012\u3057\u305F\u9053\u306A\u304D\u8005\u306E\u4E2D\u306B<speed=0.5>
-        </speed>\n\u304A\u7236\u3055\u3093\u306E\u611F\u89E6\u3092\u898B\u305F\u3088\u3046\u306A\u6C17\u304C\u3059\u308B\u2026"
+      - "\u3042\u308C\u2026\u3067\u3082\uFF1F"
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
@@ -10186,12 +10365,28 @@ MonoBehaviour:
       - 
       - 
       - 
-      - "\u305D\u308C\u3063\u3066\u2026<speed=0.5> </speed>\n\u4F55\u3067\u3060\u308D\u3046"
+      - "\u4ECA\u307E\u3067\u5012\u3057\u305F\u9053\u306A\u304D\u8005\u306E\u4E2D\u306B<speed=0.5>
+        </speed>\n\u304A\u7236\u3055\u3093\u306E\u611F\u89E6\u3092\u898B\u305F\u3088\u3046\u306A\u6C17\u304C\u3059\u308B\u2026"
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
     - rowIndex: 27
       debugIndex: 27
+      strings:
+      - 
+      - Chara4
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u305D\u308C\u3063\u3066\u2026<speed=0.5> </speed>\n\u4F55\u3067\u3060\u308D\u3046"
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 28
+      debugIndex: 28
       strings:
       - Jump
       - '*SelectionEnd_Event5_4'
@@ -10205,8 +10400,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 28
-      debugIndex: 28
+    - rowIndex: 29
+      debugIndex: 29
       strings:
       - '*Selection2_Event5_4'
       - 
@@ -10220,33 +10415,18 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 29
-      debugIndex: 29
-      strings:
-      - 
-      - Chara4
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      - "\u3046\u3093\uFF01\u308F\u304B\u3063\u305F"
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
     - rowIndex: 30
       debugIndex: 30
       strings:
-      - 
-      - Chara4
-      - 
-      - 
+      - Param
+      - RouteSelect=2
       - 
       - 
       - 
       - 
-      - "<param=PlayerName>\u3055\u3093\u306E\u8A00\u3046\u901A\u308A\u306B\u3059\u308B\u306D"
+      - 
+      - 
+      - 
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
@@ -10261,13 +10441,43 @@ MonoBehaviour:
       - 
       - 
       - 
-      - "\u305D\u3046\u3059\u308C\u3070\u304A\u7236\u3055\u3093\u306B\u2026<speed=0.5>
-        </speed>\n\u4F1A\u3048\u308B\u3093\u3060\u3088\u306D\uFF01"
+      - "\u3046\u3093\uFF01\u308F\u304B\u3063\u305F"
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
     - rowIndex: 32
       debugIndex: 32
+      strings:
+      - 
+      - Chara4
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "<param=PlayerName>\u3055\u3093\u306E\u8A00\u3046\u901A\u308A\u306B\u3059\u308B\u306D"
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 33
+      debugIndex: 33
+      strings:
+      - 
+      - Chara4
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u305D\u3046\u3059\u308C\u3070\u304A\u7236\u3055\u3093\u306B\u2026<speed=0.5>
+        </speed>\n\u4F1A\u3048\u308B\u3093\u3060\u3088\u306D\uFF01"
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 34
+      debugIndex: 34
       strings:
       - '*SelectionEnd_Event5_4'
       - 
@@ -10281,8 +10491,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 33
-      debugIndex: 33
+    - rowIndex: 35
+      debugIndex: 35
       strings:
       - EndScenario
       isEmpty: 0
@@ -10290,7 +10500,7 @@ MonoBehaviour:
       debugInfo: 
     name: Assets/ADVScene/AdvFile.xls:Event5_4
     type: 1
-    textLength: 908
+    textLength: 944
     headerRow: 0
     sourceAssetInEditor: {fileID: 0}
     entityIndexTbl: 
@@ -10386,6 +10596,7 @@ MonoBehaviour:
       - 
       - 
       - "\u307E\u3060\u2026\u4F55\u3082\u601D\u3044\u51FA\u3057\u307E\u305B\u3093\u304B\uFF1F"
+      - Input
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
@@ -10401,7 +10612,6 @@ MonoBehaviour:
       - -80
       - 
       - ">>\u2026"
-      - Input
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
@@ -10984,15 +11194,15 @@ MonoBehaviour:
     - rowIndex: 46
       debugIndex: 46
       strings:
-      - 
-      - Chara5
-      - 
-      - 
+      - Param
+      - RouteSelect=1
       - 
       - 
       - 
       - 
-      - "\u2026"
+      - 
+      - 
+      - 
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
@@ -11007,7 +11217,7 @@ MonoBehaviour:
       - 
       - 
       - 
-      - "\u305D\u3046\u3067\u3057\u305F\u306D"
+      - "\u2026"
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
@@ -11022,7 +11232,7 @@ MonoBehaviour:
       - 
       - 
       - 
-      - "\u3042\u304F\u307E\u3067\u3082<speed=0.5> </speed>\n\u79C1\u305F\u3061\u306F\u4E0A\u4F4D\u8005\u306E\u5C16\u5175"
+      - "\u305D\u3046\u3067\u3057\u305F\u306D"
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
@@ -11037,12 +11247,27 @@ MonoBehaviour:
       - 
       - 
       - 
-      - "\u4F7F\u547D\u3092\u5168\u3046\u3059\u308B\u3053\u3068\u306B\u81F4\u3057\u307E\u3057\u3087\u3046"
+      - "\u3042\u304F\u307E\u3067\u3082<speed=0.5> </speed>\n\u79C1\u305F\u3061\u306F\u4E0A\u4F4D\u8005\u306E\u5C16\u5175"
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
     - rowIndex: 50
       debugIndex: 50
+      strings:
+      - 
+      - Chara5
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u4F7F\u547D\u3092\u5168\u3046\u3059\u308B\u3053\u3068\u306B\u81F4\u3057\u307E\u3057\u3087\u3046"
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 51
+      debugIndex: 51
       strings:
       - Jump
       - '*SelectionEnd'
@@ -11056,8 +11281,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 51
-      debugIndex: 51
+    - rowIndex: 52
+      debugIndex: 52
       strings:
       - '*Selection4'
       - 
@@ -11071,8 +11296,23 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 52
-      debugIndex: 52
+    - rowIndex: 53
+      debugIndex: 53
+      strings:
+      - Param
+      - RouteSelect=2
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 54
+      debugIndex: 54
       strings:
       - 
       - Chara5
@@ -11083,36 +11323,6 @@ MonoBehaviour:
       - 
       - 
       - "\u2026\uFF01"
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 53
-      debugIndex: 53
-      strings:
-      - 
-      - Chara5
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      - "\u8CB4\u65B9\u3068\u4E91\u3046\u65B9\u306F\u2026"
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 54
-      debugIndex: 54
-      strings:
-      - Wait
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 1
-      - 
-      - 
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
@@ -11127,12 +11337,42 @@ MonoBehaviour:
       - 
       - 
       - 
-      - "\u9032\u307F\u307E\u3057\u3087\u3046\u2026<speed=0.5> </speed>\n\u8CB4\u65B9\u306E\u9B42\u304C\u884C\u304D\u3064\u304F\u5834\u6240\u3078"
+      - "\u8CB4\u65B9\u3068\u4E91\u3046\u65B9\u306F\u2026"
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
     - rowIndex: 56
       debugIndex: 56
+      strings:
+      - Wait
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 1
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 57
+      debugIndex: 57
+      strings:
+      - 
+      - Chara5
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u9032\u307F\u307E\u3057\u3087\u3046\u2026<speed=0.5> </speed>\n\u8CB4\u65B9\u306E\u9B42\u304C\u884C\u304D\u3064\u304F\u5834\u6240\u3078"
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 58
+      debugIndex: 58
       strings:
       - 
       - Chara5
@@ -11146,8 +11386,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 57
-      debugIndex: 57
+    - rowIndex: 59
+      debugIndex: 59
       strings:
       - Jump
       - '*SelectionEnd'
@@ -11161,8 +11401,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 58
-      debugIndex: 58
+    - rowIndex: 60
+      debugIndex: 60
       strings:
       - '*SelectionEnd'
       - 
@@ -11176,8 +11416,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 59
-      debugIndex: 59
+    - rowIndex: 61
+      debugIndex: 61
       strings:
       - EndScenario
       isEmpty: 0
@@ -11185,7 +11425,7 @@ MonoBehaviour:
       debugInfo: 
     name: Assets/ADVScene/AdvFile.xls:Event5_5
     type: 1
-    textLength: 1316
+    textLength: 1352
     headerRow: 0
     sourceAssetInEditor: {fileID: 0}
     entityIndexTbl: 
@@ -11971,6 +12211,649 @@ MonoBehaviour:
     name: Assets/ADVScene/AdvFile.xls:Tutorial13
     type: 1
     textLength: 315
+    headerRow: 0
+    sourceAssetInEditor: {fileID: 0}
+    entityIndexTbl: 
+    entityDataList: []
+  - rows:
+    - rowIndex: 0
+      debugIndex: 0
+      strings:
+      - Command
+      - Arg1
+      - Arg2
+      - Arg3
+      - Arg4
+      - Arg5
+      - Arg6
+      - WaitType
+      - Text
+      - PageCtrl
+      - Voice
+      - WindowType
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 1
+      debugIndex: 1
+      strings:
+      - PlayBgm
+      - OPENING
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 2
+      debugIndex: 2
+      strings:
+      - Wait
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 1
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 3
+      debugIndex: 3
+      strings:
+      - ChangeMessageWindow
+      - MessageWindowAll
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 4
+      debugIndex: 4
+      strings:
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u4EF2\u9593\u306E\u8853\u8005\u9054\u306E\u304A\u304B\u3052\u3067\n\u9053\u306A\u304D\u8005(The
+        Pathless)\u306E\u547D\u904B\u3082\u5C3D\u304D\u3088\u3046\u3068\u3057\u3066\u3044\u308B\u3002"
+      - Next
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 5
+      debugIndex: 5
+      strings:
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - InputBr
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 6
+      debugIndex: 6
+      strings:
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\n\u6575\u306F\u6B8B\u3059\u3068\u3053\u308D\u6570\u3048\u308B\u3070\u304B\u308A\u3002\n\u4E0A\u4F4D\u4E16\u754C\u306E\u305F\u3081\u8CB4\u65B9\u306F\u901F\u3084\u304B\u306B\u8A0E\u4F10\u3092\u547D\u3058\u305F\u3002"
+      - Input
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 7
+      debugIndex: 7
+      strings:
+      - EndScenario
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    name: Assets/ADVScene/AdvFile.xls:RouteSelect1
+    type: 1
+    textLength: 228
+    headerRow: 0
+    sourceAssetInEditor: {fileID: 0}
+    entityIndexTbl: 
+    entityDataList: []
+  - rows:
+    - rowIndex: 0
+      debugIndex: 0
+      strings:
+      - Command
+      - Arg1
+      - Arg2
+      - Arg3
+      - Arg4
+      - Arg5
+      - Arg6
+      - WaitType
+      - Text
+      - PageCtrl
+      - Voice
+      - WindowType
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 1
+      debugIndex: 1
+      strings:
+      - PlayBgm
+      - OPENING
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 2
+      debugIndex: 2
+      strings:
+      - Wait
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 1
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 3
+      debugIndex: 3
+      strings:
+      - 
+      - HighOnes1
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 4
+      debugIndex: 4
+      strings:
+      - Wait
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 1
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 5
+      debugIndex: 5
+      strings:
+      - 
+      - HighOnes1
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u3053\u308C\u306F\u3053\u308C\u306F\u2026\n\u904B\u547D\u306B\u6297\u3063\u305F\u30D1\u30A4\u30EA\u30A2\u306E\u82F1\u96C4\u69D8\u3067\u306F\u306A\u3044\u304B"
+      - Input
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 6
+      debugIndex: 6
+      strings:
+      - Selection
+      - '*Route2_Selection1'
+      - 
+      - 
+      - 
+      - 280
+      - -80
+      - 
+      - ">>\u304A\u524D\u306F\u4F55\u8005\u3060\uFF1F"
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 7
+      debugIndex: 7
+      strings:
+      - '*Route2_Selection1'
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 8
+      debugIndex: 8
+      strings:
+      - 
+      - HighOnes1
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u304A\u3084\u2026\n\u307E\u3060\u8A18\u61B6\u306F\u5B8C\u5168\u306B\u899A\u9192\u3057\u3066\u3044\u306A\u3044\u3068\u898B\u3048\u308B"
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 9
+      debugIndex: 9
+      strings:
+      - 
+      - HighOnes1
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u7532\u6590\u7532\u6590\u3057\u304F\u3082\u6211\u3005\u4E0A\u4F4D\u8005\u306E\u305F\u3081\u306B\n\u9053\u306A\u304D\u8005(The
+        Pathless)\u3092\u6D44\u5316\u3057\u3066\u3044\u308B\u3068\u3044\u3046\u306E\u306B"
+      - Input
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 10
+      debugIndex: 10
+      strings:
+      - Selection
+      - '*Route2_Selection2'
+      - 
+      - 
+      - 
+      - 280
+      - -80
+      - 
+      - ">>\u304A\u524D\u304C\u4E0A\u4F4D\u8005\u3060\u3068\u3044\u3046\u306E\u304B\uFF1F"
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 11
+      debugIndex: 11
+      strings:
+      - '*Route2_Selection2'
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 12
+      debugIndex: 12
+      strings:
+      - 
+      - HighOnes1
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u30D5\u30D5\u30D5\u2026\n\u6069\u306B\u5831\u3044\u308B\u3079\u304F\u7D20\u76F4\u306B\u7B54\u3048\u308B\u3068\u3057\u3088\u3046\u304B"
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 13
+      debugIndex: 13
+      strings:
+      - 
+      - HighOnes1
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u305D\u306E\u901A\u308A\u3060\n\u305D\u3057\u3066\u304A\u524D\u304C\u2026"
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 14
+      debugIndex: 14
+      strings:
+      - 
+      - HighOnes1
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u304B\u3064\u3066\u3053\u306E\u30B2\u30FC\u30E0\u3067\u552F\u4E00\u306E\u9375\u3092\u63E1\u3063\u3066\u3044\u305F\n\u30D1\u30A4\u30EA\u30A2\u306E\u300C\u9810\u8A00\u8005(Prophet)\u300D\u305D\u306E\u4EBA\u3060"
+      - Input
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 15
+      debugIndex: 15
+      strings:
+      - Selection
+      - '*Route2_Selection3'
+      - 
+      - 
+      - 
+      - 280
+      - -80
+      - 
+      - ">>\u9810\u8A00\u8005\u306F\u706F\u6A19(beacon)\u3092\u7834\u58CA\u3057\u305F"
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 16
+      debugIndex: 16
+      strings:
+      - '*Route2_Selection3'
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 17
+      debugIndex: 17
+      strings:
+      - 
+      - HighOnes1
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u306A\u308B\u307B\u3069\n\u5730\u4E0A\u3067\u306E\u51FA\u6765\u4E8B\u306F\u899A\u3048\u3066\u3044\u308B\u308F\u3051\u304B"
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 18
+      debugIndex: 18
+      strings:
+      - 
+      - HighOnes1
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u305D\u306E\u901A\u308A\u3060\n\u611A\u304B\u306A\u5C06\u8ECD\u30B8\u30E3\u30AB\u30EB\u304C\u8D77\u52D5\u3057\u305F\u706F\u6A19(beacon)\u306F\u2026"
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 19
+      debugIndex: 19
+      strings:
+      - 
+      - HighOnes1
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u4E0A\u4F4D\u8005\u306E\u672C\u8CEA(Numinos)\u3092\u6301\u305F\u305A\u66B4\u8D70\u3057\n\u30D1\u30A4\u30EA\u30A2\u3092\u58CA\u3057\u3064\u304F\u3059\u306F\u305A\u3060\u3063\u305F"
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 20
+      debugIndex: 20
+      strings:
+      - 
+      - HighOnes1
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u3057\u304B\u3057\u30D1\u30A4\u30EA\u30A2\u306F\u6D2A\u6C34\u306B\u898B\u821E\u308F\u308C\n\u706F\u6A19(beacon)\u3082\u7834\u58CA\u3055\u308C\u305F"
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 21
+      debugIndex: 21
+      strings:
+      - 
+      - HighOnes1
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u305D\u308C\u306F\u306A\u305C\u304B\uFF1F"
+      - Input
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 22
+      debugIndex: 22
+      strings:
+      - Selection
+      - '*Route2_Selection4'
+      - 
+      - 
+      - 
+      - 280
+      - -80
+      - 
+      - ">>\u2026"
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 23
+      debugIndex: 23
+      strings:
+      - '*Route2_Selection4'
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 24
+      debugIndex: 24
+      strings:
+      - 
+      - HighOnes1
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u307E\u3055\u304B\u6D44\u5316\u3092\u7D42\u3048\u3066\u306A\u304A\u970A\u4F53\u3068\u306A\u3063\u3066\u307E\u3067\n\u6211\u3005\u3092\u6253\u5012\u3059\u308B\u3068\u306F\u826F\u304F\u8003\u3048\u305F\u3082\u306E\u3060"
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 25
+      debugIndex: 25
+      strings:
+      - 
+      - HighOnes1
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u305D\u308C\u3082\u6D44\u5316\u3092\u5B8C\u5168\u306A\u3082\u306E\u306B\u3059\u3079\u304F\n\u6D17\u8133\u307E\u3067\u65BD\u3057\u305F\u306E\u306B\u305D\u308C\u3082\u8DF3\u306D\u306E\u3051\u308B\u3068\u306F"
+      - Input
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 26
+      debugIndex: 26
+      strings:
+      - Selection
+      - '*Route2_Selection5'
+      - 
+      - 
+      - 
+      - 280
+      - -80
+      - 
+      - ">>\u3082\u306F\u3084\u304A\u524D\u306F\u6050\u308C\u308B\u306B\u8DB3\u3089\u306A\u3044"
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 27
+      debugIndex: 27
+      strings:
+      - '*Route2_Selection5'
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 28
+      debugIndex: 28
+      strings:
+      - 
+      - HighOnes1
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u305D\u3046\u8FF0\u3079\u305F\u300C\u9810\u8A00\u8005(Prophet)\u300D\u306F\u6570\u591A\u304F\u3044\u305F"
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 29
+      debugIndex: 29
+      strings:
+      - 
+      - HighOnes1
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u3060\u304C\u672A\u3060\u6211\u3005\u306F\u5B58\u5728\u3057\u7D9A\u3051\u3066\u3044\u308B\n\u305D\u308C\u3092\u304A\u524D\u306F\u3069\u3046\u6349\u3048\u308B\u3068\u3044\u3046\u306E\u3060\uFF1F"
+      - Input
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 30
+      debugIndex: 30
+      strings:
+      - Selection
+      - '*Route2_Selection6'
+      - 
+      - 
+      - 
+      - 280
+      - -80
+      - 
+      - ">>\u306A\u3089\u3070\u3088\u308A\u5F37\u529B\u306A\u5B58\u5728\u306B\u306A\u308C\u3070\u826F\u3044"
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 31
+      debugIndex: 31
+      strings:
+      - '*Route2_Selection6'
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 32
+      debugIndex: 32
+      strings:
+      - 
+      - HighOnes1
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u30D5\u30D5\u30D5\u2026\n\u3053\u308C\u4EE5\u4E0A\u306F\u622F\u8A00\u3068\u3044\u3046\u3082\u306E"
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 33
+      debugIndex: 33
+      strings:
+      - 
+      - HighOnes1
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u6211\u3005\u304C\u76F4\u3005\u306B\u76F8\u624B\u3092\u3057\u3066\u3084\u308D\u3046"
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 34
+      debugIndex: 34
+      strings:
+      - EndScenario
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    name: Assets/ADVScene/AdvFile.xls:RouteSelect2
+    type: 1
+    textLength: 1148
     headerRow: 0
     sourceAssetInEditor: {fileID: 0}
     entityIndexTbl: 
@@ -20310,8 +21193,8 @@ MonoBehaviour:
     - rowIndex: 44
       debugIndex: 44
       strings:
-      - '*Selection4_Event5_1'
-      - 
+      - Param
+      - RouteSelect=1
       - 
       - 
       - 
@@ -20325,6 +21208,81 @@ MonoBehaviour:
     - rowIndex: 45
       debugIndex: 45
       strings:
+      - Jump
+      - '*Selection5_Event5_1'
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 46
+      debugIndex: 46
+      strings:
+      - '*Selection4_Event5_1'
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 47
+      debugIndex: 47
+      strings:
+      - Param
+      - RouteSelect=2
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 48
+      debugIndex: 48
+      strings:
+      - Jump
+      - '*Selection5_Event5_1'
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 49
+      debugIndex: 49
+      strings:
+      - '*Selection5_Event5_1'
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 50
+      debugIndex: 50
+      strings:
       - 
       - Chara1
       - 
@@ -20337,8 +21295,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 46
-      debugIndex: 46
+    - rowIndex: 51
+      debugIndex: 51
       strings:
       - EndScenario
       isEmpty: 0
@@ -20346,7 +21304,7 @@ MonoBehaviour:
       debugInfo: 
     name: Assets/ADVScene/AdvFile.xls:Event5_1
     type: 1
-    textLength: 1241
+    textLength: 1345
     headerRow: 0
     sourceAssetInEditor: {fileID: 0}
   - rows:
@@ -20693,16 +21651,15 @@ MonoBehaviour:
     - rowIndex: 23
       debugIndex: 23
       strings:
-      - 
-      - Chara2
-      - 
-      - 
+      - Param
+      - RouteSelect=1
       - 
       - 
       - 
       - 
-      - "\u3055\u3063\u304D\u3082\u8A00\u3063\u305F\u3051\u3069\u2026<speed=0.5>
-        </speed>\n\u30A2\u30BF\u30B7\u306F\u3069\u3063\u3061\u3067\u3082\u826F\u3044\u3093\u3060"
+      - 
+      - 
+      - 
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
@@ -20717,12 +21674,28 @@ MonoBehaviour:
       - 
       - 
       - 
-      - "\u3060\u3063\u3066<speed=0.5> </speed>\n\u30A2\u30BF\u30B7\u306E\u601D\u3044\u306F\u2026"
+      - "\u3055\u3063\u304D\u3082\u8A00\u3063\u305F\u3051\u3069\u2026<speed=0.5>
+        </speed>\n\u30A2\u30BF\u30B7\u306F\u3069\u3063\u3061\u3067\u3082\u826F\u3044\u3093\u3060"
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
     - rowIndex: 25
       debugIndex: 25
+      strings:
+      - 
+      - Chara2
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u3060\u3063\u3066<speed=0.5> </speed>\n\u30A2\u30BF\u30B7\u306E\u601D\u3044\u306F\u2026"
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 26
+      debugIndex: 26
       strings:
       - Jump
       - '*SelectionEnd_Event5_2'
@@ -20736,8 +21709,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 26
-      debugIndex: 26
+    - rowIndex: 27
+      debugIndex: 27
       strings:
       - '*Selection2_Event5_2'
       - 
@@ -20751,34 +21724,18 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 27
-      debugIndex: 27
-      strings:
-      - 
-      - Chara2
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      - "\u3055\u3063\u304D\u3082\u8A00\u3063\u305F\u3051\u3069\u2026<speed=0.5>
-        </speed>\n\u30A2\u30BF\u30B7\u306F\u3069\u3063\u3061\u3067\u3082\u826F\u3044\u3093\u3060"
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
     - rowIndex: 28
       debugIndex: 28
       strings:
-      - 
-      - Chara2
-      - 
-      - 
+      - Param
+      - RouteSelect=2
       - 
       - 
       - 
       - 
-      - "\u3067\u3082\u304D\u3063\u3068\u5927\u5909\u3060\u3088<speed=0.5> </speed>\n\u76F8\u624B\u306F\u4E0A\u4F4D\u8005\u3060\u3057"
+      - 
+      - 
+      - 
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
@@ -20793,12 +21750,43 @@ MonoBehaviour:
       - 
       - 
       - 
-      - "\u305F\u3076\u3093\u30A2\u30BF\u30B7\u3089\u2026<speed=0.5> </speed>\n\u4E00\u5EA6\u8CA0\u3051\u3066\u308B\u304B\u3089"
+      - "\u3055\u3063\u304D\u3082\u8A00\u3063\u305F\u3051\u3069\u2026<speed=0.5>
+        </speed>\n\u30A2\u30BF\u30B7\u306F\u3069\u3063\u3061\u3067\u3082\u826F\u3044\u3093\u3060"
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
     - rowIndex: 30
       debugIndex: 30
+      strings:
+      - 
+      - Chara2
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u3067\u3082\u304D\u3063\u3068\u5927\u5909\u3060\u3088<speed=0.5> </speed>\n\u76F8\u624B\u306F\u4E0A\u4F4D\u8005\u3060\u3057"
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 31
+      debugIndex: 31
+      strings:
+      - 
+      - Chara2
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u305F\u3076\u3093\u30A2\u30BF\u30B7\u3089\u2026<speed=0.5> </speed>\n\u4E00\u5EA6\u8CA0\u3051\u3066\u308B\u304B\u3089"
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 32
+      debugIndex: 32
       strings:
       - '*SelectionEnd_Event5_2'
       - 
@@ -20812,8 +21800,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 31
-      debugIndex: 31
+    - rowIndex: 33
+      debugIndex: 33
       strings:
       - EndScenario
       isEmpty: 0
@@ -20821,7 +21809,7 @@ MonoBehaviour:
       debugInfo: 
     name: Assets/ADVScene/AdvFile.xls:Event5_2
     type: 1
-    textLength: 1020
+    textLength: 1056
     headerRow: 0
     sourceAssetInEditor: {fileID: 0}
   - rows:
@@ -21615,8 +22603,8 @@ MonoBehaviour:
     - rowIndex: 53
       debugIndex: 53
       strings:
-      - '*Selection7_Event5_3'
-      - 
+      - Param
+      - RouteSelect=1
       - 
       - 
       - 
@@ -21630,6 +22618,81 @@ MonoBehaviour:
     - rowIndex: 54
       debugIndex: 54
       strings:
+      - Jump
+      - '*Selection8_Event5_3'
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 55
+      debugIndex: 55
+      strings:
+      - '*Selection7_Event5_3'
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 56
+      debugIndex: 56
+      strings:
+      - Param
+      - RouteSelect=2
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 57
+      debugIndex: 57
+      strings:
+      - Jump
+      - '*Selection8_Event5_3'
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 58
+      debugIndex: 58
+      strings:
+      - '*Selection8_Event5_3'
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 59
+      debugIndex: 59
+      strings:
       - 
       - Chara3
       - 
@@ -21642,8 +22705,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 55
-      debugIndex: 55
+    - rowIndex: 60
+      debugIndex: 60
       strings:
       - 
       - Chara3
@@ -21657,8 +22720,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 56
-      debugIndex: 56
+    - rowIndex: 61
+      debugIndex: 61
       strings:
       - 
       - Chara3
@@ -21672,8 +22735,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 57
-      debugIndex: 57
+    - rowIndex: 62
+      debugIndex: 62
       strings:
       - 
       - Chara3
@@ -21687,8 +22750,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 58
-      debugIndex: 58
+    - rowIndex: 63
+      debugIndex: 63
       strings:
       - EndScenario
       isEmpty: 0
@@ -21696,7 +22759,7 @@ MonoBehaviour:
       debugInfo: 
     name: Assets/ADVScene/AdvFile.xls:Event5_3
     type: 1
-    textLength: 1699
+    textLength: 1803
     headerRow: 0
     sourceAssetInEditor: {fileID: 0}
   - rows:
@@ -22008,15 +23071,15 @@ MonoBehaviour:
     - rowIndex: 21
       debugIndex: 21
       strings:
-      - 
-      - Chara4
-      - 
-      - 
+      - Param
+      - RouteSelect=1
       - 
       - 
       - 
       - 
-      - "\u3046\u3093\uFF01\u308F\u304B\u3063\u305F"
+      - 
+      - 
+      - 
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
@@ -22031,7 +23094,7 @@ MonoBehaviour:
       - 
       - 
       - 
-      - "<param=PlayerName>\u3055\u3093\u306E\u8A00\u3046\u901A\u308A\u306B\u3059\u308B\u306D"
+      - "\u3046\u3093\uFF01\u308F\u304B\u3063\u305F"
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
@@ -22046,8 +23109,7 @@ MonoBehaviour:
       - 
       - 
       - 
-      - "\u305D\u3046\u3059\u308C\u3070\u304A\u7236\u3055\u3093\u306B\u2026<speed=0.5>
-        </speed>\n\u4F1A\u3048\u308B\u3093\u3060\u3088\u306D\uFF01"
+      - "<param=PlayerName>\u3055\u3093\u306E\u8A00\u3046\u901A\u308A\u306B\u3059\u308B\u306D"
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
@@ -22062,7 +23124,8 @@ MonoBehaviour:
       - 
       - 
       - 
-      - "\u3042\u308C\u2026\u3067\u3082\uFF1F"
+      - "\u305D\u3046\u3059\u308C\u3070\u304A\u7236\u3055\u3093\u306B\u2026<speed=0.5>
+        </speed>\n\u4F1A\u3048\u308B\u3093\u3060\u3088\u306D\uFF01"
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
@@ -22077,8 +23140,7 @@ MonoBehaviour:
       - 
       - 
       - 
-      - "\u4ECA\u307E\u3067\u5012\u3057\u305F\u9053\u306A\u304D\u8005\u306E\u4E2D\u306B<speed=0.5>
-        </speed>\n\u304A\u7236\u3055\u3093\u306E\u611F\u89E6\u3092\u898B\u305F\u3088\u3046\u306A\u6C17\u304C\u3059\u308B\u2026"
+      - "\u3042\u308C\u2026\u3067\u3082\uFF1F"
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
@@ -22093,12 +23155,28 @@ MonoBehaviour:
       - 
       - 
       - 
-      - "\u305D\u308C\u3063\u3066\u2026<speed=0.5> </speed>\n\u4F55\u3067\u3060\u308D\u3046"
+      - "\u4ECA\u307E\u3067\u5012\u3057\u305F\u9053\u306A\u304D\u8005\u306E\u4E2D\u306B<speed=0.5>
+        </speed>\n\u304A\u7236\u3055\u3093\u306E\u611F\u89E6\u3092\u898B\u305F\u3088\u3046\u306A\u6C17\u304C\u3059\u308B\u2026"
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
     - rowIndex: 27
       debugIndex: 27
+      strings:
+      - 
+      - Chara4
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u305D\u308C\u3063\u3066\u2026<speed=0.5> </speed>\n\u4F55\u3067\u3060\u308D\u3046"
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 28
+      debugIndex: 28
       strings:
       - Jump
       - '*SelectionEnd_Event5_4'
@@ -22112,8 +23190,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 28
-      debugIndex: 28
+    - rowIndex: 29
+      debugIndex: 29
       strings:
       - '*Selection2_Event5_4'
       - 
@@ -22127,33 +23205,18 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 29
-      debugIndex: 29
-      strings:
-      - 
-      - Chara4
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      - "\u3046\u3093\uFF01\u308F\u304B\u3063\u305F"
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
     - rowIndex: 30
       debugIndex: 30
       strings:
-      - 
-      - Chara4
-      - 
-      - 
+      - Param
+      - RouteSelect=2
       - 
       - 
       - 
       - 
-      - "<param=PlayerName>\u3055\u3093\u306E\u8A00\u3046\u901A\u308A\u306B\u3059\u308B\u306D"
+      - 
+      - 
+      - 
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
@@ -22168,13 +23231,43 @@ MonoBehaviour:
       - 
       - 
       - 
-      - "\u305D\u3046\u3059\u308C\u3070\u304A\u7236\u3055\u3093\u306B\u2026<speed=0.5>
-        </speed>\n\u4F1A\u3048\u308B\u3093\u3060\u3088\u306D\uFF01"
+      - "\u3046\u3093\uFF01\u308F\u304B\u3063\u305F"
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
     - rowIndex: 32
       debugIndex: 32
+      strings:
+      - 
+      - Chara4
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "<param=PlayerName>\u3055\u3093\u306E\u8A00\u3046\u901A\u308A\u306B\u3059\u308B\u306D"
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 33
+      debugIndex: 33
+      strings:
+      - 
+      - Chara4
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u305D\u3046\u3059\u308C\u3070\u304A\u7236\u3055\u3093\u306B\u2026<speed=0.5>
+        </speed>\n\u4F1A\u3048\u308B\u3093\u3060\u3088\u306D\uFF01"
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 34
+      debugIndex: 34
       strings:
       - '*SelectionEnd_Event5_4'
       - 
@@ -22188,8 +23281,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 33
-      debugIndex: 33
+    - rowIndex: 35
+      debugIndex: 35
       strings:
       - EndScenario
       isEmpty: 0
@@ -22197,7 +23290,7 @@ MonoBehaviour:
       debugInfo: 
     name: Assets/ADVScene/AdvFile.xls:Event5_4
     type: 1
-    textLength: 908
+    textLength: 944
     headerRow: 0
     sourceAssetInEditor: {fileID: 0}
   - rows:
@@ -22291,6 +23384,7 @@ MonoBehaviour:
       - 
       - 
       - "\u307E\u3060\u2026\u4F55\u3082\u601D\u3044\u51FA\u3057\u307E\u305B\u3093\u304B\uFF1F"
+      - Input
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
@@ -22306,7 +23400,6 @@ MonoBehaviour:
       - -80
       - 
       - ">>\u2026"
-      - Input
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
@@ -22889,15 +23982,15 @@ MonoBehaviour:
     - rowIndex: 46
       debugIndex: 46
       strings:
-      - 
-      - Chara5
-      - 
-      - 
+      - Param
+      - RouteSelect=1
       - 
       - 
       - 
       - 
-      - "\u2026"
+      - 
+      - 
+      - 
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
@@ -22912,7 +24005,7 @@ MonoBehaviour:
       - 
       - 
       - 
-      - "\u305D\u3046\u3067\u3057\u305F\u306D"
+      - "\u2026"
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
@@ -22927,7 +24020,7 @@ MonoBehaviour:
       - 
       - 
       - 
-      - "\u3042\u304F\u307E\u3067\u3082<speed=0.5> </speed>\n\u79C1\u305F\u3061\u306F\u4E0A\u4F4D\u8005\u306E\u5C16\u5175"
+      - "\u305D\u3046\u3067\u3057\u305F\u306D"
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
@@ -22942,12 +24035,27 @@ MonoBehaviour:
       - 
       - 
       - 
-      - "\u4F7F\u547D\u3092\u5168\u3046\u3059\u308B\u3053\u3068\u306B\u81F4\u3057\u307E\u3057\u3087\u3046"
+      - "\u3042\u304F\u307E\u3067\u3082<speed=0.5> </speed>\n\u79C1\u305F\u3061\u306F\u4E0A\u4F4D\u8005\u306E\u5C16\u5175"
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
     - rowIndex: 50
       debugIndex: 50
+      strings:
+      - 
+      - Chara5
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u4F7F\u547D\u3092\u5168\u3046\u3059\u308B\u3053\u3068\u306B\u81F4\u3057\u307E\u3057\u3087\u3046"
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 51
+      debugIndex: 51
       strings:
       - Jump
       - '*SelectionEnd'
@@ -22961,8 +24069,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 51
-      debugIndex: 51
+    - rowIndex: 52
+      debugIndex: 52
       strings:
       - '*Selection4'
       - 
@@ -22976,8 +24084,23 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 52
-      debugIndex: 52
+    - rowIndex: 53
+      debugIndex: 53
+      strings:
+      - Param
+      - RouteSelect=2
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 54
+      debugIndex: 54
       strings:
       - 
       - Chara5
@@ -22988,36 +24111,6 @@ MonoBehaviour:
       - 
       - 
       - "\u2026\uFF01"
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 53
-      debugIndex: 53
-      strings:
-      - 
-      - Chara5
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      - "\u8CB4\u65B9\u3068\u4E91\u3046\u65B9\u306F\u2026"
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 54
-      debugIndex: 54
-      strings:
-      - Wait
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 1
-      - 
-      - 
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
@@ -23032,12 +24125,42 @@ MonoBehaviour:
       - 
       - 
       - 
-      - "\u9032\u307F\u307E\u3057\u3087\u3046\u2026<speed=0.5> </speed>\n\u8CB4\u65B9\u306E\u9B42\u304C\u884C\u304D\u3064\u304F\u5834\u6240\u3078"
+      - "\u8CB4\u65B9\u3068\u4E91\u3046\u65B9\u306F\u2026"
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
     - rowIndex: 56
       debugIndex: 56
+      strings:
+      - Wait
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 1
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 57
+      debugIndex: 57
+      strings:
+      - 
+      - Chara5
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u9032\u307F\u307E\u3057\u3087\u3046\u2026<speed=0.5> </speed>\n\u8CB4\u65B9\u306E\u9B42\u304C\u884C\u304D\u3064\u304F\u5834\u6240\u3078"
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 58
+      debugIndex: 58
       strings:
       - 
       - Chara5
@@ -23051,8 +24174,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 57
-      debugIndex: 57
+    - rowIndex: 59
+      debugIndex: 59
       strings:
       - Jump
       - '*SelectionEnd'
@@ -23066,8 +24189,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 58
-      debugIndex: 58
+    - rowIndex: 60
+      debugIndex: 60
       strings:
       - '*SelectionEnd'
       - 
@@ -23081,8 +24204,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 59
-      debugIndex: 59
+    - rowIndex: 61
+      debugIndex: 61
       strings:
       - EndScenario
       isEmpty: 0
@@ -23090,7 +24213,7 @@ MonoBehaviour:
       debugInfo: 
     name: Assets/ADVScene/AdvFile.xls:Event5_5
     type: 1
-    textLength: 1316
+    textLength: 1352
     headerRow: 0
     sourceAssetInEditor: {fileID: 0}
   - rows:
@@ -23868,5 +24991,644 @@ MonoBehaviour:
     name: Assets/ADVScene/AdvFile.xls:Tutorial13
     type: 1
     textLength: 315
+    headerRow: 0
+    sourceAssetInEditor: {fileID: 0}
+  - rows:
+    - rowIndex: 0
+      debugIndex: 0
+      strings:
+      - Command
+      - Arg1
+      - Arg2
+      - Arg3
+      - Arg4
+      - Arg5
+      - Arg6
+      - WaitType
+      - Text
+      - PageCtrl
+      - Voice
+      - WindowType
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 1
+      debugIndex: 1
+      strings:
+      - PlayBgm
+      - OPENING
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 2
+      debugIndex: 2
+      strings:
+      - Wait
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 1
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 3
+      debugIndex: 3
+      strings:
+      - ChangeMessageWindow
+      - MessageWindowAll
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 4
+      debugIndex: 4
+      strings:
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u4EF2\u9593\u306E\u8853\u8005\u9054\u306E\u304A\u304B\u3052\u3067\n\u9053\u306A\u304D\u8005(The
+        Pathless)\u306E\u547D\u904B\u3082\u5C3D\u304D\u3088\u3046\u3068\u3057\u3066\u3044\u308B\u3002"
+      - Next
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 5
+      debugIndex: 5
+      strings:
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - InputBr
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 6
+      debugIndex: 6
+      strings:
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\n\u6575\u306F\u6B8B\u3059\u3068\u3053\u308D\u6570\u3048\u308B\u3070\u304B\u308A\u3002\n\u4E0A\u4F4D\u4E16\u754C\u306E\u305F\u3081\u8CB4\u65B9\u306F\u901F\u3084\u304B\u306B\u8A0E\u4F10\u3092\u547D\u3058\u305F\u3002"
+      - Input
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 7
+      debugIndex: 7
+      strings:
+      - EndScenario
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    name: Assets/ADVScene/AdvFile.xls:RouteSelect1
+    type: 1
+    textLength: 228
+    headerRow: 0
+    sourceAssetInEditor: {fileID: 0}
+  - rows:
+    - rowIndex: 0
+      debugIndex: 0
+      strings:
+      - Command
+      - Arg1
+      - Arg2
+      - Arg3
+      - Arg4
+      - Arg5
+      - Arg6
+      - WaitType
+      - Text
+      - PageCtrl
+      - Voice
+      - WindowType
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 1
+      debugIndex: 1
+      strings:
+      - PlayBgm
+      - OPENING
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 2
+      debugIndex: 2
+      strings:
+      - Wait
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 1
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 3
+      debugIndex: 3
+      strings:
+      - 
+      - HighOnes1
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 4
+      debugIndex: 4
+      strings:
+      - Wait
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 1
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 5
+      debugIndex: 5
+      strings:
+      - 
+      - HighOnes1
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u3053\u308C\u306F\u3053\u308C\u306F\u2026\n\u904B\u547D\u306B\u6297\u3063\u305F\u30D1\u30A4\u30EA\u30A2\u306E\u82F1\u96C4\u69D8\u3067\u306F\u306A\u3044\u304B"
+      - Input
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 6
+      debugIndex: 6
+      strings:
+      - Selection
+      - '*Route2_Selection1'
+      - 
+      - 
+      - 
+      - 280
+      - -80
+      - 
+      - ">>\u304A\u524D\u306F\u4F55\u8005\u3060\uFF1F"
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 7
+      debugIndex: 7
+      strings:
+      - '*Route2_Selection1'
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 8
+      debugIndex: 8
+      strings:
+      - 
+      - HighOnes1
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u304A\u3084\u2026\n\u307E\u3060\u8A18\u61B6\u306F\u5B8C\u5168\u306B\u899A\u9192\u3057\u3066\u3044\u306A\u3044\u3068\u898B\u3048\u308B"
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 9
+      debugIndex: 9
+      strings:
+      - 
+      - HighOnes1
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u7532\u6590\u7532\u6590\u3057\u304F\u3082\u6211\u3005\u4E0A\u4F4D\u8005\u306E\u305F\u3081\u306B\n\u9053\u306A\u304D\u8005(The
+        Pathless)\u3092\u6D44\u5316\u3057\u3066\u3044\u308B\u3068\u3044\u3046\u306E\u306B"
+      - Input
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 10
+      debugIndex: 10
+      strings:
+      - Selection
+      - '*Route2_Selection2'
+      - 
+      - 
+      - 
+      - 280
+      - -80
+      - 
+      - ">>\u304A\u524D\u304C\u4E0A\u4F4D\u8005\u3060\u3068\u3044\u3046\u306E\u304B\uFF1F"
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 11
+      debugIndex: 11
+      strings:
+      - '*Route2_Selection2'
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 12
+      debugIndex: 12
+      strings:
+      - 
+      - HighOnes1
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u30D5\u30D5\u30D5\u2026\n\u6069\u306B\u5831\u3044\u308B\u3079\u304F\u7D20\u76F4\u306B\u7B54\u3048\u308B\u3068\u3057\u3088\u3046\u304B"
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 13
+      debugIndex: 13
+      strings:
+      - 
+      - HighOnes1
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u305D\u306E\u901A\u308A\u3060\n\u305D\u3057\u3066\u304A\u524D\u304C\u2026"
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 14
+      debugIndex: 14
+      strings:
+      - 
+      - HighOnes1
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u304B\u3064\u3066\u3053\u306E\u30B2\u30FC\u30E0\u3067\u552F\u4E00\u306E\u9375\u3092\u63E1\u3063\u3066\u3044\u305F\n\u30D1\u30A4\u30EA\u30A2\u306E\u300C\u9810\u8A00\u8005(Prophet)\u300D\u305D\u306E\u4EBA\u3060"
+      - Input
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 15
+      debugIndex: 15
+      strings:
+      - Selection
+      - '*Route2_Selection3'
+      - 
+      - 
+      - 
+      - 280
+      - -80
+      - 
+      - ">>\u9810\u8A00\u8005\u306F\u706F\u6A19(beacon)\u3092\u7834\u58CA\u3057\u305F"
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 16
+      debugIndex: 16
+      strings:
+      - '*Route2_Selection3'
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 17
+      debugIndex: 17
+      strings:
+      - 
+      - HighOnes1
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u306A\u308B\u307B\u3069\n\u5730\u4E0A\u3067\u306E\u51FA\u6765\u4E8B\u306F\u899A\u3048\u3066\u3044\u308B\u308F\u3051\u304B"
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 18
+      debugIndex: 18
+      strings:
+      - 
+      - HighOnes1
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u305D\u306E\u901A\u308A\u3060\n\u611A\u304B\u306A\u5C06\u8ECD\u30B8\u30E3\u30AB\u30EB\u304C\u8D77\u52D5\u3057\u305F\u706F\u6A19(beacon)\u306F\u2026"
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 19
+      debugIndex: 19
+      strings:
+      - 
+      - HighOnes1
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u4E0A\u4F4D\u8005\u306E\u672C\u8CEA(Numinos)\u3092\u6301\u305F\u305A\u66B4\u8D70\u3057\n\u30D1\u30A4\u30EA\u30A2\u3092\u58CA\u3057\u3064\u304F\u3059\u306F\u305A\u3060\u3063\u305F"
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 20
+      debugIndex: 20
+      strings:
+      - 
+      - HighOnes1
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u3057\u304B\u3057\u30D1\u30A4\u30EA\u30A2\u306F\u6D2A\u6C34\u306B\u898B\u821E\u308F\u308C\n\u706F\u6A19(beacon)\u3082\u7834\u58CA\u3055\u308C\u305F"
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 21
+      debugIndex: 21
+      strings:
+      - 
+      - HighOnes1
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u305D\u308C\u306F\u306A\u305C\u304B\uFF1F"
+      - Input
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 22
+      debugIndex: 22
+      strings:
+      - Selection
+      - '*Route2_Selection4'
+      - 
+      - 
+      - 
+      - 280
+      - -80
+      - 
+      - ">>\u2026"
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 23
+      debugIndex: 23
+      strings:
+      - '*Route2_Selection4'
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 24
+      debugIndex: 24
+      strings:
+      - 
+      - HighOnes1
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u307E\u3055\u304B\u6D44\u5316\u3092\u7D42\u3048\u3066\u306A\u304A\u970A\u4F53\u3068\u306A\u3063\u3066\u307E\u3067\n\u6211\u3005\u3092\u6253\u5012\u3059\u308B\u3068\u306F\u826F\u304F\u8003\u3048\u305F\u3082\u306E\u3060"
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 25
+      debugIndex: 25
+      strings:
+      - 
+      - HighOnes1
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u305D\u308C\u3082\u6D44\u5316\u3092\u5B8C\u5168\u306A\u3082\u306E\u306B\u3059\u3079\u304F\n\u6D17\u8133\u307E\u3067\u65BD\u3057\u305F\u306E\u306B\u305D\u308C\u3082\u8DF3\u306D\u306E\u3051\u308B\u3068\u306F"
+      - Input
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 26
+      debugIndex: 26
+      strings:
+      - Selection
+      - '*Route2_Selection5'
+      - 
+      - 
+      - 
+      - 280
+      - -80
+      - 
+      - ">>\u3082\u306F\u3084\u304A\u524D\u306F\u6050\u308C\u308B\u306B\u8DB3\u3089\u306A\u3044"
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 27
+      debugIndex: 27
+      strings:
+      - '*Route2_Selection5'
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 28
+      debugIndex: 28
+      strings:
+      - 
+      - HighOnes1
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u305D\u3046\u8FF0\u3079\u305F\u300C\u9810\u8A00\u8005(Prophet)\u300D\u306F\u6570\u591A\u304F\u3044\u305F"
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 29
+      debugIndex: 29
+      strings:
+      - 
+      - HighOnes1
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u3060\u304C\u672A\u3060\u6211\u3005\u306F\u5B58\u5728\u3057\u7D9A\u3051\u3066\u3044\u308B\n\u305D\u308C\u3092\u304A\u524D\u306F\u3069\u3046\u6349\u3048\u308B\u3068\u3044\u3046\u306E\u3060\uFF1F"
+      - Input
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 30
+      debugIndex: 30
+      strings:
+      - Selection
+      - '*Route2_Selection6'
+      - 
+      - 
+      - 
+      - 280
+      - -80
+      - 
+      - ">>\u306A\u3089\u3070\u3088\u308A\u5F37\u529B\u306A\u5B58\u5728\u306B\u306A\u308C\u3070\u826F\u3044"
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 31
+      debugIndex: 31
+      strings:
+      - '*Route2_Selection6'
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 32
+      debugIndex: 32
+      strings:
+      - 
+      - HighOnes1
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u30D5\u30D5\u30D5\u2026\n\u3053\u308C\u4EE5\u4E0A\u306F\u622F\u8A00\u3068\u3044\u3046\u3082\u306E"
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 33
+      debugIndex: 33
+      strings:
+      - 
+      - HighOnes1
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u6211\u3005\u304C\u76F4\u3005\u306B\u76F8\u624B\u3092\u3057\u3066\u3084\u308D\u3046"
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 34
+      debugIndex: 34
+      strings:
+      - EndScenario
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    name: Assets/ADVScene/AdvFile.xls:RouteSelect2
+    type: 1
+    textLength: 1148
     headerRow: 0
     sourceAssetInEditor: {fileID: 0}

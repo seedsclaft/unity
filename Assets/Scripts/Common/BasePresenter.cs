@@ -47,6 +47,18 @@ public class BasePresenter
                     isAbort = true;
                     break;
                 }
+                if (stageEvents[i].Type == StageEventType.RouteSelectEvent)
+                {
+                    AdvCallInfo advInfo = new AdvCallInfo();
+                    advInfo.SetLabel(_model.GetAdvFile(stageEvents[i].Param + GameSystem.CurrentData.CurrentStage.RouteSelect));
+                    advInfo.SetCallEvent(() => {                
+                        if (endCall != null) endCall();
+                    });
+                    _view.CommandCallAdv(advInfo);
+                    _model.AddEventReadFlag(stageEvents[i]);
+                    isAbort = true;
+                    break;
+                }
             }
         }
         return isAbort;

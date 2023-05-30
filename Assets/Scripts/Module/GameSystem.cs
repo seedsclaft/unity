@@ -208,6 +208,11 @@ public class GameSystem : MonoBehaviour
             loadingRoot.gameObject.SetActive(false);
             _currentScene.SetBusy(false);
         }
+        if (viewEvent.commandType == Base.CommandType.SetRouteSelect)
+        {
+            int routeSelect = (int)advEngine.Param.GetParameter("RouteSelect");
+            CurrentData.CurrentStage.SetRouteSelect(routeSelect);
+        }
     }
 
     IEnumerator JumpScenarioAsync(string label, System.Action onComplete)

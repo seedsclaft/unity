@@ -117,12 +117,26 @@ public class TacticsPresenter :BasePresenter
                     _model.SetDefineBossIndex(stageEvents[i].Param);
                     _view.SetEnemies(_model.TacticsTroops());
                 }
+                if (stageEvents[i].Type == StageEventType.SetRouteSelectParam)
+                {
+                    _view.CommandSetRouteSelect();
+                }
                 if (stageEvents[i].Type == StageEventType.AbortStage)
                 {
                     isAbort = true;
                     _model.StageClaer();
                     _model.AddEventReadFlag(stageEvents[i]);
                     _view.CommandSceneChange(Scene.MainMenu);
+                }
+                if (stageEvents[i].Type == StageEventType.ChangeRouteSelectStage)
+                {
+                    _model.ChangeRouteSelectStage(stageEvents[i].Param);
+                    _model.AddEventReadFlag(stageEvents[i]);
+                    _view.CommandSceneChange(Scene.Tactics);
+                }
+                if (stageEvents[i].Type == StageEventType.RouteSelectBattle)
+                {
+                    _view.SetEnemies(_model.RouteSelectTroopData());
                 }
             }
         }

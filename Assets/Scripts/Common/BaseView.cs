@@ -155,6 +155,12 @@ abstract public class BaseView : MonoBehaviour
         CallSceneChangeCommand(eventData);
     }
 
+    public void CommandSetRouteSelect()
+    {
+        var eventData = new ViewEvent(Scene.Base, Base.CommandType.SetRouteSelect);
+        CallSceneChangeCommand(eventData);
+    }
+
     public void CreateBackCommand(System.Action callEvent)
     {
         GameObject prefab = Instantiate(backPrefab);
@@ -200,8 +206,8 @@ namespace Base
         DecidePlayerName,
         CallLoading,
         CloseLoading,
-        SendRankingData
-
+        SendRankingData,
+        SetRouteSelect
     }
 }
 

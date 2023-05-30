@@ -15,15 +15,9 @@ public class StagesData : ScriptableObject {
         public string Help;
         public int Turns;
         public List<int> InitMembers;
+        public int RandomTroopCount;
+        public List<int> BGMId;
         public List<StageEventData> StageEvents;
-        
-
-        public string GetName()
-        {
-            string name = Name;
-            return name;
-        }
-
     }
 
 
@@ -63,5 +57,9 @@ public enum StageEventType{
     NeedUseSp = 9, // SPを消費しないと進まない
     AdvStart = 11, // ADV再生
     SelectActorAdvStart = 12, // IDにActorIDを加算してADV再生
-    AbortStage = 21 // ステージを中断する
+    RouteSelectEvent = 13, // ルート分岐イベント
+    SetRouteSelectParam = 14, // ルート分岐パラメータを保存
+    AbortStage = 21, // ステージを中断する
+    ChangeRouteSelectStage = 31, // ルート分岐でステージに移動
+    RouteSelectBattle = 32 // ルート分岐敵グループを生成
 }

@@ -18,6 +18,8 @@ MonoBehaviour:
     Help: "\u5B9F\u969B\u306B\u30D7\u30EC\u30A4\u3057\u306A\u304C\u3089\n\u57FA\u672C\u7684\u306A\u904A\u3073\u65B9\u3092\u5B66\u3073\u307E\u3059\u3002"
     Turns: 7
     InitMembers: 01000000
+    RandomTroopCount: 14
+    BGMId: 03000000
     StageEvents:
     - EventKey: 1StartTacticsCommandDisable1
       Turns: 1
@@ -296,6 +298,8 @@ MonoBehaviour:
       Pathless)\u8A0E\u4F10\u3092\u547D\u3058\u305F\u3002"
     Turns: 37
     InitMembers: 0100000002000000030000000400000005000000
+    RandomTroopCount: 14
+    BGMId: 030000000400000005000000
     StageEvents:
     - EventKey: 1StartTacticsCommandDisable3
       Turns: 1
@@ -501,3 +505,69 @@ MonoBehaviour:
       Type: 12
       Param: 160
       ReadFlag: 1
+    - EventKey: 36StartTacticsSetRouteSelectParam0
+      Turns: 36
+      Timing: 1
+      Type: 14
+      Param: 0
+      ReadFlag: 0
+    - EventKey: 37BeforeTacticsRouteSelectEvent200
+      Turns: 37
+      Timing: 11
+      Type: 13
+      Param: 200
+      ReadFlag: 1
+    - EventKey: 37StartTacticsSaveCommand1
+      Turns: 37
+      Timing: 1
+      Type: 7
+      Param: 1
+      ReadFlag: 1
+    - EventKey: 37StartTacticsChangeRouteSelectStage11
+      Turns: 37
+      Timing: 1
+      Type: 31
+      Param: 11
+      ReadFlag: 1
+  - Id: 11
+    Name: "C\u30EB\u30FC\u30C8\u7528"
+    Help: '""'
+    Turns: 1
+    InitMembers: 00000000
+    RandomTroopCount: 1
+    BGMId: 05000000
+    StageEvents:
+    - EventKey: 1StartTacticsRouteSelectBattle0
+      Turns: 1
+      Timing: 1
+      Type: 32
+      Param: 0
+      ReadFlag: 0
+  - Id: 12
+    Name: "B\u30EB\u30FC\u30C8\u7528"
+    Help: '""'
+    Turns: 7
+    InitMembers: 00000000
+    RandomTroopCount: 3
+    BGMId: 05000000
+    StageEvents:
+    - EventKey: 1StartTacticsRouteSelectBattle0
+      Turns: 1
+      Timing: 1
+      Type: 32
+      Param: 0
+      ReadFlag: 0
+  - Id: 13
+    Name: "A\u30EB\u30FC\u30C8\u7528"
+    Help: '""'
+    Turns: 7
+    InitMembers: 00000000
+    RandomTroopCount: 3
+    BGMId: 05000000
+    StageEvents:
+    - EventKey: 1StartTacticsRouteSelectBattle0
+      Turns: 1
+      Timing: 1
+      Type: 32
+      Param: 0
+      ReadFlag: 0

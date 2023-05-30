@@ -74,6 +74,7 @@ public class EnemyInfoPresenter
 
     private void CommandBack()
     {
+        Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cancel);
         _view.CommandBack();
     }
 

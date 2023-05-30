@@ -624,7 +624,7 @@ public class BattleModel : BaseModel
                 }
                 break;
                 case FeatureType.AddState:
-                if (!target.IsState((StateType)featureData.Param1))
+                if (CurrentBattler.isActor || !target.IsState((StateType)featureData.Param1))
                 {
                     IsEnable = true;
                 }
@@ -807,13 +807,13 @@ public class BattleModel : BaseModel
         {
             target.ChangeAp(actionResultInfo.ApHeal * -1);
         }
-        if (actionResultInfo.ReDamage != 0)
-        {
-            subject.GainHp(-1 * actionResultInfo.ReDamage);
-        }
         if (actionResultInfo.ReHeal != 0)
         {
             subject.GainHp(actionResultInfo.ReHeal);
+        }
+        if (actionResultInfo.ReDamage != 0)
+        {
+            subject.GainHp(-1 * actionResultInfo.ReDamage);
         }
         foreach (var targetIndex in actionResultInfo.ExecStateInfos)
         {
@@ -1059,7 +1059,12 @@ public class BattleModel : BaseModel
                                 featureData.FeatureType = FeatureType.RemoveState;
                                 featureData.Param1 = feature.Param1;
                                 ActionResultInfo actionResultInfo = new ActionResultInfo(battlerInfo,battlerInfo,new List<SkillsData.FeatureData>(){featureData});
-                                actionResultInfos.Add(actionResultInfo);
+                                if (actionResultInfos.Find(a => a.RemovedStates.Find(b => b.Master.Id == (int)featureData.FeatureType) != null) != null)
+                                {
+                                    
+                                } else{
+                                    actionResultInfos.Add(actionResultInfo);
+                                }
                             }
                         }
                     }

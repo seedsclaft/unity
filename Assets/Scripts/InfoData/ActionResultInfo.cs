@@ -44,7 +44,7 @@ public class ActionResultInfo
                     _deadIndexList.Add(target.Index);
                 }
             }
-            if (_reDamage >= subject.Hp && subject.IsAlive())
+            if ((_reDamage - _reHeal) >= subject.Hp && subject.IsAlive())
             {
                 if (subject.IsState(StateType.Undead) && featureDatas.Find(a => a.FeatureType == FeatureType.BreakUndead) == null)
                 {

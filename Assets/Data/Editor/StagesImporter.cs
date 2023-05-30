@@ -14,7 +14,9 @@ public class StagesInfoImporter : AssetPostprocessor {
 		Id = 0,
 		NameId,
         Turns,
-		InitMembers
+		InitMembers,
+		RandomTroopCount,
+		BGMId
     }
     enum BaseEventColumn
     {
@@ -102,6 +104,13 @@ public class StagesInfoImporter : AssetPostprocessor {
 					foreach (string item in list)
 					{
 						StageData.InitMembers.Add(int.Parse(item));
+					}
+					StageData.RandomTroopCount = (int)Baserow.GetCell((int)BaseColumn.RandomTroopCount)?.SafeNumericCellValue();
+					StageData.BGMId = new List<int>();
+					string[] bgmlist = Baserow.GetCell((int)BaseColumn.BGMId)?.SafeStringCellValue().Split(',');
+					foreach (string item in bgmlist)
+					{
+						StageData.BGMId.Add(int.Parse(item));
 					}
 					StageData.StageEvents = new List<StagesData.StageEventData>();
 					for (int j = 1; j <= EventSheet.LastRowNum; j++)

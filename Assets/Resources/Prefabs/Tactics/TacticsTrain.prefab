@@ -325,7 +325,7 @@ MonoBehaviour:
   faceThumb: {fileID: 0}
   awakenFaceThumb: {fileID: 0}
   nameText: {fileID: 6842404624556914423}
-  element: {fileID: 0}
+  evaluate: {fileID: 0}
   demigod: {fileID: 0}
   lv: {fileID: 7505832771055862547}
   sp: {fileID: 0}
@@ -347,6 +347,7 @@ GameObject:
   - component: {fileID: 6908700650552266132}
   - component: {fileID: 785936810964677181}
   - component: {fileID: 5466436508967131848}
+  - component: {fileID: 3050845872840586757}
   m_Layer: 5
   m_Name: CostCaption
   m_TagString: Untagged
@@ -472,6 +473,19 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &3050845872840586757
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 957041328488910443}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f44f7c136c1dcf4b86a8b7fad1fad41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  id: 1000
 --- !u!1 &1123416836492671025
 GameObject:
   m_ObjectHideFlags: 0

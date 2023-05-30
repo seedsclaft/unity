@@ -35,9 +35,13 @@ public class StageInfo
     private List<string> _readEventKeys = new List<string>();
     public List<string> ReadEventKeys { get {return _readEventKeys;}}
 
+    private int _routeSelect;
+    public int RouteSelect {get {return 1;}}
     private int _defineBossIndex = 0;
 
-    readonly int _randomTroopCount = 14;
+    private int _randomTroopCount = 14;
+
+    private int _baseTroopId = 1000;
 
     public StageInfo(StagesData.StageData stageInfo)
     {
@@ -47,6 +51,7 @@ public class StageInfo
         _IsSubordinate = false;
         _subordinateValue = 50;
         _troopClearCount = 0;
+        _randomTroopCount = stageInfo.RandomTroopCount;
         _clearTroopIds.Clear();
 		MakeTroopData();
     }
@@ -66,8 +71,8 @@ public class StageInfo
 		for (int i = 0;i < _randomTroopCount;i++)
 		{
 			TroopsData.TroopData BossTroopData = new TroopsData.TroopData();
-			BossTroopData.Id = i + 1001;
-			BossTroopData.TroopId = i + 1001;
+			BossTroopData.Id = i + _baseTroopId + 1;
+			BossTroopData.TroopId = i + _baseTroopId + 1;
 			BossTroopData.EnemyId = i + 1;
 			BossTroopData.Lv = 1;
 			BossTroopData.Line = LineType.Back;
@@ -78,19 +83,6 @@ public class StageInfo
                 BossTroopData.GetItemDatas = troopData.GetItemDatas;
             }
             _troopDatas.Add(BossTroopData);
-            /*
-			for (int j = 0;j < 2;j++)
-			{
-				TroopsData.TroopData TroopData = new TroopsData.TroopData();
-				TroopData.Id = i + 1001;
-				TroopData.TroopId = i + 1001;
-        		int rand = new System.Random().Next(1, DataSystem.Enemies.Count);
-				TroopData.EnemyId = rand;
-				TroopData.Lv = 1;
-				TroopData.Line = 0;
-				_troopDatas.Add(TroopData);
-			}
-            */
 		}
 	}
 
@@ -176,6 +168,63 @@ public class StageInfo
         _currentTroopInfos.Add(troopInfo);
         return _currentTroopInfos;
     }
+
+    public List<TroopInfo> MakeRouteSelectTroopData(int routeSelect)
+    {
+        _currentTroopInfos.Clear();
+        var enemyIds = new List<int>();
+        if (routeSelect == 0)
+        {
+            enemyIds.Add(2600);
+        } else
+        if (routeSelect == 1)
+        {
+            enemyIds.Add(2600);
+            while (enemyIds.Count <= 2)
+            {
+                int rand = new Random().Next(1, 5);
+                rand *= 100;
+                rand += 2000;
+                if (rand != 2400)
+                {
+                    if (!enemyIds.Contains(rand))
+                    {
+                        enemyIds.Add(rand);
+                    }
+                }
+            }
+        } else
+        if (routeSelect == 2)
+        {
+            enemyIds.Add(2400);
+            while (enemyIds.Count <= 2)
+            {
+                int rand = new Random().Next(1, 5);
+                rand *= 100;
+                rand += 2000;
+                if (rand != 2600)
+                {
+                    if (!enemyIds.Contains(rand))
+                    {
+                        enemyIds.Add(rand);
+                    }
+                }
+            }
+        }
+        
+        for (int i = 0;i < enemyIds.Count;i++)
+        {
+            if (_clearTroopIds.Contains(enemyIds[i])) continue;
+            TroopInfo troopInfo = new TroopInfo(enemyIds[i]);
+            List<TroopsData.TroopData> troopDatas = DataSystem.Troops.FindAll(a => a.TroopId == enemyIds[i]);
+            for (int j = 0;j < troopDatas.Count;j++)
+            {
+                troopInfo.MakeEnemyData(troopDatas[j],j,_troopClearCount + j);
+            }
+            _currentTroopInfos.Add(troopInfo);
+        }
+        return _currentTroopInfos;
+    } 
 
     public void SetBattleIndex(int battleIndex)
     {
@@ -282,5 +331,17 @@ public class StageInfo
         {
             MakeDefineBossTroop();
         }
+    }
+
+    public void SetRouteSelect(int routeSelect)
+    {
+        _routeSelect = routeSelect;
+    }
+
+    public void RouteSelectData(StageInfo stageInfo)
+    {
+        _selectActorIds = stageInfo.SelectActorIds;
+        _clearCount = stageInfo.ClearCount;
+        _troopClearCount = stageInfo._troopClearCount;
     }
 };

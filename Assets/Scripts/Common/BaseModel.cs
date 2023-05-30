@@ -64,15 +64,16 @@ public class BaseModel
     {
         if (CurrentStage != null)
         {
+            var stageData = DataSystem.Stages.Find(a => a.Id == CurrentStage.Id);
             if (CurrentStage.CurrentTurn >= 24)
             {        
-                return "TACTICS3";
+                return DataSystem.Data.GetBGM(stageData.BGMId[2]).Key;
             }
             if (CurrentStage.CurrentTurn >= 12)
             {        
-                return "TACTICS2";
+                return DataSystem.Data.GetBGM(stageData.BGMId[1]).Key;
             }
-            return "TACTICS1";
+            return DataSystem.Data.GetBGM(stageData.BGMId[0]).Key;
         }
         return "TACTICS1";
     }
@@ -183,6 +184,11 @@ public class BaseModel
     public List<TroopInfo> TutorialTroopData()
     {
         return CurrentStage.MakeTutorialTroopData(CurrentStage.SelectActorIds[0]);
+    }
+
+    public List<TroopInfo> RouteSelectTroopData()
+    {
+        return CurrentStage.MakeRouteSelectTroopData(CurrentStage.RouteSelect);
     }
 
     public TroopInfo CurrentTroopInfo()
@@ -364,6 +370,12 @@ public class BaseModel
     public void StageClaer()
     {
         CurrentData.StageClaer();
+    }
+
+    public void ChangeRouteSelectStage(int stageBaseId)
+    {
+        int stageId = stageBaseId + CurrentStage.RouteSelect;
+		GameSystem.CurrentData.ChangeRouteSelectStage(stageId);
     }
 
     public Dictionary<TacticsComandType, int> CommandRankInfo()

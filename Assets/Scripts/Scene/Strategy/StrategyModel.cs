@@ -141,7 +141,7 @@ public class StrategyModel : BaseModel
                     actorInfos[i].DecideStrength(0);
                     GetItemInfo bonusGetItemInfo = new GetItemInfo(null);
                     bonusGetItemInfo.SetTitleData(DataSystem.System.GetTextData(3012).Text);
-                    bonusGetItemInfo.SetResultData(DataSystem.System.GetTextData(3013).Text);
+                    bonusGetItemInfo.SetResultData(DataSystem.System.GetTextData(3013).Text.Replace("\\d",actorInfos[i].Master.Name));
                     getItemInfos.Add(bonusGetItemInfo);
                 }
             }

@@ -206,4 +206,13 @@ public class SavePlayInfo
 		_playerInfo.SetPlayerName(name);
 		_playerInfo.SetPlayerId();
 	}
+
+	public void ChangeRouteSelectStage(int stageId)
+	{
+		StagesData.StageData stageData = DataSystem.Stages.Find(a => a.Id == stageId);
+		var current = _currentStage;
+		var currentStage = new StageInfo(stageData);
+		currentStage.RouteSelectData(current);
+		_currentStage = currentStage;
+	}
 }

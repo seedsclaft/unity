@@ -18,6 +18,15 @@ public class DataManager : ScriptableObject
         return null;
     }
     
+    public BGMData GetBGM(int bgmId){
+        BGMData bGMData = BGM.Find(a => a.Id == bgmId);
+        if (bGMData != null)
+        {
+            return bGMData;
+        }
+        return null;
+    }
+
     public async UniTask<AudioClip> GetSE(string fileName){
         string sePath = "Assets/Audios/SE/" + fileName + ".ogg";
         var result = await ResourceSystem.LoadAsset<AudioClip>(sePath);
