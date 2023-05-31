@@ -36,7 +36,7 @@ public class StageInfo
     public List<string> ReadEventKeys { get {return _readEventKeys;}}
 
     private int _routeSelect;
-    public int RouteSelect {get {return 1;}}
+    public int RouteSelect {get {return _routeSelect;}}
     private int _defineBossIndex = 0;
 
     private int _randomTroopCount = 14;

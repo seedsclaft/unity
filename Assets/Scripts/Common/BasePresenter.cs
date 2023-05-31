@@ -50,7 +50,8 @@ public class BasePresenter
                 if (stageEvents[i].Type == StageEventType.RouteSelectEvent)
                 {
                     AdvCallInfo advInfo = new AdvCallInfo();
-                    advInfo.SetLabel(_model.GetAdvFile(stageEvents[i].Param + GameSystem.CurrentData.CurrentStage.RouteSelect));
+                    int route = GameSystem.CurrentData.CurrentStage.RouteSelect;
+                    advInfo.SetLabel(_model.GetAdvFile(stageEvents[i].Param + route));
                     advInfo.SetCallEvent(() => {                
                         if (endCall != null) endCall();
                     });

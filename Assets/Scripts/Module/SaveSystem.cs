@@ -11,6 +11,16 @@ public class SaveSystem : MonoBehaviour
 	private static readonly string debugFilePath = Application.persistentDataPath;
         public static void SaveStart(SavePlayInfo pSourceSavePlayInfo = null,int fileId = 0)
         {
+			#if UNITY_WEBGL
+			
+			//	バイナリ形式でシリアル化
+	        BinaryFormatter TempBinaryFormatter = new BinaryFormatter ();
+    	    MemoryStream    memoryStream    = new MemoryStream ();
+        	TempBinaryFormatter.Serialize (memoryStream , pSourceSavePlayInfo);
+        	var saveData = Convert.ToBase64String (memoryStream   .GetBuffer ());
+			PlayerPrefs.SetString("PlayerData", AESManager.Encrypt(saveData));
+
+			#else
             //	保存情報
             if( pSourceSavePlayInfo == null )
             {
@@ -43,12 +53,33 @@ public class SaveSystem : MonoBehaviour
                     }
                 }
             }
+			#endif
 		//#endif
 	}
 
 		
 	public static void LoadStart(int fileId = 0)
 	{
+		#if UNITY_WEBGL
+				
+		try
+			{
+				//	バイナリ形式でデシリアライズ
+				BinaryFormatter	TempBinaryFormatter = new BinaryFormatter();
+				string saveData = PlayerPrefs.GetString("PlayerData");
+				saveData = AESManager.Decrypt(saveData);
+        		MemoryStream    memoryStream    = new MemoryStream (Convert.FromBase64String (saveData));
+        		GameSystem.CurrentData = (SavePlayInfo)TempBinaryFormatter.Deserialize (memoryStream);
+			}
+			// Jsonへの展開失敗　改ざんの可能性あり
+			catch(Exception e)
+			{
+				// 例外が発生するのでここで処理
+				Debug.LogException(e);
+				Debug.Log("改ざんされたため　冒険の書は消えてしまいました");
+				GameSystem.CurrentData  = new SavePlayInfo();
+			}
+		#else
 		//#if UNITY_EDITOR_WIN || UNITY_STANDALONE_WIN
 		{
 			//	バイナリ形式でデシリアライズ
@@ -70,6 +101,7 @@ public class SaveSystem : MonoBehaviour
 				}
 			}
 		}
+		#endif
 		//#endif
     }
 	public static bool ExistsLoadFile(int fileId = 0)
@@ -190,6 +222,7 @@ public class SavePlayInfo
 	{
 		for (int i = 0;i < DataSystem.Stages.Count;i++)
 		{
+			if (DataSystem.Stages[i].Id > 3) continue;
 			StageInfo stageInfo = new StageInfo(DataSystem.Stages[i]);
 			_stages.Add(stageInfo);
 		}
