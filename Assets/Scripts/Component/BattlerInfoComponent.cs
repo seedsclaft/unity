@@ -140,6 +140,10 @@ public class BattlerInfoComponent : MonoBehaviour
             {
                 _battleDamages.Remove(battleDamage);
             }
+            if (battleDamage != null)
+            {
+                Destroy(battleDamage);
+            }
         });
         _battleDamages.Add(battleDamage);
         ChangeHp(value * -1 + _battlerInfo.Hp);
@@ -163,6 +167,10 @@ public class BattlerInfoComponent : MonoBehaviour
             {
                 _battleDamages.Remove(battleDamage);
             }
+            if (battleDamage != null)
+            {
+                Destroy(battleDamage);
+            }
         });
         _battleDamages.Add(battleDamage);
         if (damageType == DamageType.HpHeal)
@@ -182,6 +190,10 @@ public class BattlerInfoComponent : MonoBehaviour
             if (_battleDamages.Contains(battleDamage))
             {
                 _battleDamages.Remove(battleDamage);
+            }
+            if (battleDamage != null)
+            {
+                Destroy(battleDamage);
             }
         });
         _battleDamages.Add(battleDamage);
@@ -241,6 +253,7 @@ public class BattlerInfoComponent : MonoBehaviour
         if (image == null) return;
         float alpha = isSelectable == true ? 1 : 0.25f;
         image.color = new Color(255,255,255,alpha);
+        effekseerEmitter.enabled = isSelectable;
     }
 
     public void SetActiveStatus(bool isSelectable)

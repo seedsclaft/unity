@@ -75,11 +75,7 @@ public class BattleDamage : MonoBehaviour
                         .Append(textMeshProUGUI.DOFade(0.0f, 0.2f))
                         .OnComplete(() => {
                             _busy = false;
-                            if (gameObject.transform.parent != null)
-                            {              
-                                if (endEvent != null) endEvent();      
-                                GameObject.Destroy(gameObject);
-                            }
+                            if (endEvent != null) endEvent(); 
                         });
                 });
         }
@@ -118,11 +114,7 @@ public class BattleDamage : MonoBehaviour
                         .Append(textMeshProUGUI.DOFade(0.0f, 0.2f))
                         .OnComplete(() => {
                             _busy = false;
-                            if (gameObject.transform.parent != null)
-                            {                    
-                                if (endEvent != null) endEvent();
-                                GameObject.Destroy(gameObject);
-                            }
+                            if (endEvent != null) endEvent();
                         });
                 });
         }
@@ -148,11 +140,7 @@ public class BattleDamage : MonoBehaviour
                 Sequence sequence = DOTween.Sequence()
                     .OnComplete(() => {
                         _busy = false;
-                        if (gameObject.transform.parent != null)
-                        {
-                            if (endEvent != null) endEvent();
-                            GameObject.Destroy(gameObject);
-                        }
+                        if (endEvent != null) endEvent();
                     });
             });
     }

@@ -103,7 +103,7 @@ public class BattleEnemyLayer : ListWindow , IInputHandlerEvent
         {
             if (_battleInfos[i].IsAlive())
             {
-                var listItem = _battleEnemies[i].GetComponent<ListItem>();
+                BattleEnemy listItem = _battleEnemies[i].GetComponent<BattleEnemy>();
                 listItem.SetSelect();
                 _battleEnemies[i].EnableClick();
             }
@@ -113,7 +113,7 @@ public class BattleEnemyLayer : ListWindow , IInputHandlerEvent
     private void UpdateAllUnSelect(){
         for (int i = 0; i < _battleEnemies.Count;i++)
         {
-            var listItem = _battleEnemies[i].GetComponent<ListItem>();
+            BattleEnemy listItem = _battleEnemies[i].GetComponent<BattleEnemy>();
             listItem.SetUnSelect();
             _battleEnemies[i].DisableClick();
         }
@@ -141,7 +141,7 @@ public class BattleEnemyLayer : ListWindow , IInputHandlerEvent
         }
         for (int i = 0; i < _battleEnemies.Count;i++)
         {
-            ListItem listItem = _battleEnemies[i].GetComponent<ListItem>();
+            BattleEnemy listItem = _battleEnemies[i].GetComponent<BattleEnemy>();
             if (index == _battleEnemies[i].EnemyIndex){
                 if (_battleInfos[i].IsAlive())
                 {
@@ -162,7 +162,7 @@ public class BattleEnemyLayer : ListWindow , IInputHandlerEvent
         bool isFront = index < _backStartIndex;
         for (int i = 0; i < _battleEnemies.Count;i++)
         {
-            ListItem listItem = _battleEnemies[i].GetComponent<ListItem>();
+            BattleEnemy listItem = _battleEnemies[i].GetComponent<BattleEnemy>();
             if (isFront)
             {
                 if (_battleEnemies[i].EnemyIndex < _backStartIndex){

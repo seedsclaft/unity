@@ -84,4 +84,30 @@ public class BattleEnemy : ListItem
     {
         clickButton.enabled = false;
     }
+    
+    public new void SetSelect()
+    {
+        if (Cursor == null) return;
+        Cursor.SetActive(true);
+        var emitter = Cursor.GetComponentsInChildren<EffekseerEmitter>();
+        foreach (var emit in emitter)
+        {
+            emit.enabled = true;
+            emit.playOnStart = true;
+            emit.isLooping = true;
+        }
+    }
+
+    public new void SetUnSelect()
+    {
+        if (Cursor == null) return;
+        Cursor.SetActive(false);
+        var emitter = Cursor.GetComponentsInChildren<EffekseerEmitter>();
+        foreach (var emit in emitter)
+        {
+            emit.enabled = false;
+            emit.playOnStart = false;
+            emit.isLooping = false;
+        }
+    }
 }

@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1571673163396944335}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: HelpRoot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -416,7 +416,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1188596127407656361}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: UI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1181,7 +1181,7 @@ GameObject:
   - component: {fileID: 566689517963179218}
   - component: {fileID: 4800319167822804971}
   - component: {fileID: 8893361893026786654}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1256,7 +1256,7 @@ GameObject:
   m_Component:
   - component: {fileID: 17939760707783327}
   - component: {fileID: 4838627862544669063}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: PopupConfirm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1309,6 +1309,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6432180777247548654}
     m_Modifications:
+    - target: {fileID: 2572500643109044808, guid: 534e6ffa744b03e42a94ccfb83a0271a,
+        type: 3}
+      propertyPath: m_Layer
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 6118619501588000351, guid: 534e6ffa744b03e42a94ccfb83a0271a,
         type: 3}
       propertyPath: m_Pivot.x
@@ -1414,6 +1419,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6156403295359052240, guid: 534e6ffa744b03e42a94ccfb83a0271a,
+        type: 3}
+      propertyPath: m_Layer
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7458528736431697529, guid: 534e6ffa744b03e42a94ccfb83a0271a,
+        type: 3}
+      propertyPath: m_Layer
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 7629431321772612621, guid: 534e6ffa744b03e42a94ccfb83a0271a,
         type: 3}
       propertyPath: m_Name
@@ -1439,6 +1454,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6432180777247548654}
     m_Modifications:
+    - target: {fileID: 2572500643109044808, guid: 534e6ffa744b03e42a94ccfb83a0271a,
+        type: 3}
+      propertyPath: m_Layer
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 6118619501588000351, guid: 534e6ffa744b03e42a94ccfb83a0271a,
         type: 3}
       propertyPath: m_Pivot.x
@@ -1543,6 +1563,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6156403295359052240, guid: 534e6ffa744b03e42a94ccfb83a0271a,
+        type: 3}
+      propertyPath: m_Layer
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7458528736431697529, guid: 534e6ffa744b03e42a94ccfb83a0271a,
+        type: 3}
+      propertyPath: m_Layer
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 7629431321772612621, guid: 534e6ffa744b03e42a94ccfb83a0271a,
         type: 3}

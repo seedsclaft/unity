@@ -37,6 +37,7 @@ public class GameSystem : MonoBehaviour
     public bool Busy {get {return _busy;}}
     private void Awake() 
     {
+        Application.targetFrameRate = 60;
         advController.Initialize();
         _model = new BaseModel();
         CommandSceneChange(Scene.Boot);
