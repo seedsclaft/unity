@@ -228,12 +228,12 @@ abstract public class ListWindow : MonoBehaviour
 
         if (startIndex > _lastStartIndex)
         {
-            Debug.LogError("downer");
+            //Debug.LogError("downer");
             UpdateListDown();
         }
         else if (0 < _lastStartIndex)
         {
-            Debug.LogError("upper");
+            //Debug.LogError("upper");
             UpdateListUp();
         }
     }

@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.AddressableAssets;
 using TMPro;
+using UnityEngine.U2D;
 
 public class StateInfoComponent : MonoBehaviour
 {
@@ -62,10 +63,10 @@ public class StateInfoComponent : MonoBehaviour
 
     private void UpdateStateIcon(string iconPath)
     {
-        var handle = Resources.Load<Sprite>("Texture/Icon/" + iconPath);
+        var spriteAtlas = Resources.Load<SpriteAtlas>("Texture/Icons");
         if (icon != null)
         {
-            icon.sprite = handle;
+            icon.sprite = spriteAtlas.GetSprite(iconPath);
         }
     }
 }

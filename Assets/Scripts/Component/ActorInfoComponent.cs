@@ -222,9 +222,19 @@ public class ActorInfoComponent : MonoBehaviour
     {
         if (mainThumb != null){
             mainThumb.sprite = null;
+            mainThumb.gameObject.SetActive(false);
         }
         if (awakenThumb != null){
             awakenThumb.sprite = null;
+            awakenThumb.gameObject.SetActive(false);
+        }
+        if (faceThumb != null){
+            faceThumb.sprite = null;
+            faceThumb.gameObject.SetActive(false);
+        }
+        if (awakenFaceThumb != null){
+            awakenFaceThumb.sprite = null;
+            awakenFaceThumb.gameObject.SetActive(false);
         }
     }
 

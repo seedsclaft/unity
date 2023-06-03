@@ -136,44 +136,6 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
---- !u!1 &1820550603097886823
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 203336048070041724}
-  m_Layer: 0
-  m_Name: HpGauge
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &203336048070041724
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1820550603097886823}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 8352315425314279521}
-  - {fileID: 536094236916156697}
-  m_Father: {fileID: 1187212930649479885}
-  m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 48, y: -76}
-  m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1840111333491768082
 GameObject:
   m_ObjectHideFlags: 0
@@ -322,7 +284,7 @@ GameObject:
   - component: {fileID: 7821535476684313085}
   - component: {fileID: 7361131363862019429}
   m_Layer: 5
-  m_Name: Image (1)
+  m_Name: Hp
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -340,12 +302,12 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 203336048070041724}
-  m_RootOrder: 1
+  m_Father: {fileID: 3958783442876360716}
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: -1, y: 0}
+  m_AnchoredPosition: {x: -1, y: -29.999996}
   m_SizeDelta: {x: 78, y: 6}
   m_Pivot: {x: 1, y: 0.5}
 --- !u!222 &7821535476684313085
@@ -398,7 +360,7 @@ GameObject:
   - component: {fileID: 8486287540627003132}
   - component: {fileID: 5469409490241168326}
   m_Layer: 0
-  m_Name: Image
+  m_Name: MpBack
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -767,7 +729,7 @@ RectTransform:
   - {fileID: 2321703585639865121}
   - {fileID: 6624937040281234722}
   m_Father: {fileID: 1187212930649479885}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
@@ -888,7 +850,7 @@ GameObject:
   - component: {fileID: 4421488539907644008}
   - component: {fileID: 6560092336414670050}
   m_Layer: 0
-  m_Name: Image (1)
+  m_Name: Mp
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -907,7 +869,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3958783442876360716}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
@@ -964,7 +926,7 @@ GameObject:
   - component: {fileID: 1254819592548734282}
   - component: {fileID: 6905644865381206121}
   m_Layer: 5
-  m_Name: Image
+  m_Name: HpBack
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -982,12 +944,12 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 203336048070041724}
-  m_RootOrder: 0
+  m_Father: {fileID: 3958783442876360716}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: -29.999996}
   m_SizeDelta: {x: 80, y: 8}
   m_Pivot: {x: 1, y: 0.5}
 --- !u!222 &1254819592548734282
@@ -1060,7 +1022,6 @@ RectTransform:
   - {fileID: 6968767486288298428}
   - {fileID: 3958783442876360716}
   - {fileID: 5901491615550098601}
-  - {fileID: 203336048070041724}
   - {fileID: 7539732589391563507}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -1103,7 +1064,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3958783442876360716}
   m_Layer: 0
-  m_Name: MpGauge
+  m_Name: Gauge
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1122,7 +1083,9 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 793200262393994635}
+  - {fileID: 8352315425314279521}
   - {fileID: 6045491630806112434}
+  - {fileID: 536094236916156697}
   m_Father: {fileID: 1187212930649479885}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

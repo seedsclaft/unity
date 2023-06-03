@@ -17,6 +17,7 @@ public class BattleGridLayer : MonoBehaviour
             var comp = prefab.GetComponent<BattlerInfoComponent>();
             comp.UpdateInfo(battlerInfos[i]);
             _data[battlerInfos[i]] = comp;
+            prefab.GetComponentInChildren<EnemyInfoComponent>().Clear();
         }
         UpdatePosition();
         RefreshStatus();
@@ -43,6 +44,7 @@ public class BattleGridLayer : MonoBehaviour
             }
             comp.SetEnemyGridKey(gridKey);
             _data[battlerInfos[i]] = comp;
+            prefab.GetComponentInChildren<ActorInfoComponent>().Clear();
         }
         UpdatePosition();
         RefreshStatus();

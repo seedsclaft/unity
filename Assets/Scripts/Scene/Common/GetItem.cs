@@ -6,6 +6,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.Events;
 using UnityEngine.AddressableAssets;
 using TMPro;
+using UnityEngine.U2D;
 
 public class GetItem : ListItem ,IListViewItem  
 {
@@ -47,11 +48,10 @@ public class GetItem : ListItem ,IListViewItem
 
     private void UpdateElementIcon(int index)
     {
-        //var handle = await ResourceSystem.LoadAsset<IList<Sprite>>("Assets/Images/System/ElementIcon.png");
-        var handle = Resources.LoadAll<Sprite>("System/ElementIcon");
+        var spriteAtlas = Resources.Load<SpriteAtlas>("Texture/Systems");
         if (iconImage != null)
         {
-            iconImage.sprite = handle[index-1];
+            iconImage.sprite = spriteAtlas.GetSprite("ElementIcon_" + (index-1).ToString());
         }
     }
 }

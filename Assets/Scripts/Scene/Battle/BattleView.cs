@@ -336,12 +336,12 @@ public class BattleView : BaseView
         _commandData(eventData);
     }
 
-    public void RefreshBattlerEnemyLayerTarget(int selectIndex,List<int> targetIndexList = null,ScopeType scopeType = ScopeType.None)
+    public void RefreshBattlerEnemyLayerTarget(int selectIndex,List<int> targetIndexList = null,ScopeType scopeType = ScopeType.None,AttributeType attributeType = AttributeType.None)
     {
         if (selectIndex != -1){
             ActivateEnemyList();
         }
-        battleEnemyLayer.RefreshTarget(selectIndex,targetIndexList,scopeType);
+        battleEnemyLayer.RefreshTarget(selectIndex,targetIndexList,scopeType,attributeType);
         if (targetIndexList != null)
         {
             SetBattlerSelectable(false);
@@ -404,12 +404,14 @@ public class BattleView : BaseView
     public void StartAnimationAll(EffekseerEffectAsset effekseerEffectAsset)
     {
         _animationBusy = true;
+        effekseerEmitter.Stop();
         effekseerEmitter.Play(effekseerEffectAsset);
     }
 
     public void StartAnimationDemigod(EffekseerEffectAsset effekseerEffectAsset)
     {
         _animationBusy = true;
+        effekseerEmitter.Stop();
         effekseerEmitter.Play(effekseerEffectAsset);
     }
 

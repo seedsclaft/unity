@@ -20,15 +20,17 @@ public class BattleEnemy : ListItem
 
     private BattlerInfo _battlerInfo;
     private string textureName = null;
+    private bool _isFront = false;
 
     public int EnemyIndex{
         get {return _battlerInfo.Index;}
     }
 
-    public void SetData(BattlerInfo battlerInfo,int index)
+    public void SetData(BattlerInfo battlerInfo,int index,bool isFront)
     {
-        battlerInfoComponent.UpdateInfo(battlerInfo);
         _battlerInfo = battlerInfo;
+        _isFront = isFront;
+        battlerInfoComponent.UpdateInfo(battlerInfo);
         SetIndex(index);
     }
     
@@ -65,8 +67,9 @@ public class BattleEnemy : ListItem
 
     private void UpdateSizeDelta()
     {
-        int width = Mathf.Max(240,enemyImage.mainTexture.width);
-        int height = Mathf.Max(240,enemyImage.mainTexture.height);
+        int size = _isFront == true ? 200 : 240;
+        int width = Mathf.Max(size,enemyImage.mainTexture.width);
+        int height = Mathf.Max(size,enemyImage.mainTexture.height);
         RectTransform objectRect = gameObject.GetComponent < RectTransform > ();
         RectTransform rect = Cursor.GetComponent < RectTransform > ();
         RectTransform effectRect = effekseerEmitter.gameObject.GetComponent < RectTransform > ();
@@ -85,13 +88,15 @@ public class BattleEnemy : ListItem
         clickButton.enabled = false;
     }
     
-    public new void SetSelect()
+    public void SetSelect(EffekseerEffectAsset effekseerEffectAsset)
     {
         if (Cursor == null) return;
         Cursor.SetActive(true);
         var emitter = Cursor.GetComponentsInChildren<EffekseerEmitter>();
         foreach (var emit in emitter)
         {
+            emit.Stop();
+            emit.Play(effekseerEffectAsset);
             emit.enabled = true;
             emit.playOnStart = true;
             emit.isLooping = true;

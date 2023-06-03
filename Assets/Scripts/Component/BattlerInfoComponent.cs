@@ -244,6 +244,7 @@ public class BattlerInfoComponent : MonoBehaviour
                 effectRect.localPosition = new Vector2(0,0);
             }
         }
+        effekseerEmitter.Stop();
         effekseerEmitter.Play(effectAsset);
     }
 

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System;
 using System.Threading;
+using UnityEngine;
 using Effekseer;
 using Cysharp.Threading.Tasks;
 
@@ -89,6 +90,18 @@ public class BattleModel : BaseModel
         {
             _passiveSkillInfos[battlerInfo1.Index] = new List<SkillInfo>();
         }
+    }
+
+    public async UniTask LoadResources()
+    {
+        var filePaths = BattleUtility.AnimationResourcePaths(_battlers);
+        int count = filePaths.Count;
+        foreach (var filePath in filePaths)
+        {
+            await Resources.LoadAsync<Sprite>( filePath );
+            count -= 1;
+        }
+        await UniTask.WaitUntil( () => count == 0 );
     }
 
     public void UpdateAp()
@@ -624,7 +637,7 @@ public class BattleModel : BaseModel
                 }
                 break;
                 case FeatureType.AddState:
-                if (CurrentBattler.isActor || !target.IsState((StateType)featureData.Param1))
+                if (CurrentBattler.isActor || (!target.IsState((StateType)featureData.Param1) && !target.IsState(StateType.Barrier)))
                 {
                     IsEnable = true;
                 }

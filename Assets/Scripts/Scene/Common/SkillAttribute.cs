@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.AddressableAssets;
 using TMPro;
+using UnityEngine.U2D;
 
 public class SkillAttribute : ListItem ,IListViewItem  
 {
@@ -45,11 +46,10 @@ public class SkillAttribute : ListItem ,IListViewItem
     
     private void UpdateSkillIcon(int index)
     {
-        //var handle = await ResourceSystem.LoadAsset<IList<Sprite>>("Assets/Images/System/ElementIcon.png");
-        var handle = Resources.LoadAll<Sprite>("System/ElementIcon");
+        var spriteAtlas = Resources.Load<SpriteAtlas>("Texture/Systems");
         if (icon != null)
         {
-            icon.sprite = handle[index];
+            icon.sprite = spriteAtlas.GetSprite("ElementIcon_" + (index).ToString());
         }
     }
 

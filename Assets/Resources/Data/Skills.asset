@@ -407,14 +407,14 @@ MonoBehaviour:
     Scope: 2
     SkillType: 1
     TargetType: 1
-    Help: "\u6575\u4E00\u5217\u306B10\u30C0\u30E1\u30FC\u30B8\u306E\u706B\u50B7\u4ED8\u4E0E"
+    Help: "\u6575\u4E00\u5217\u306B10\u30C0\u30E1\u30FC\u30B8\u306E\u706B\u50B7\u4ED8\u4E0E(\u6C38\u7D9A)"
     Range: 1
     AliveOnly: 1
     FeatureDatas:
     - SkillId: 121
       FeatureType: 21
       Param1: 23
-      Param2: 2
+      Param2: 999
       Param3: 10
     TriggerDatas: []
   - Id: 131
@@ -1627,7 +1627,7 @@ MonoBehaviour:
     AnimationName: tktk01/Cure2
     AnimationPosition: 0
     AnimationType: 1
-    DamageTiming: 26
+    DamageTiming: 40
     MpCost: 0
     Rank: 2
     Attribute: 4
@@ -1673,7 +1673,7 @@ MonoBehaviour:
     AnimationName: NA_Effekseer/NA_aura_005
     AnimationPosition: 0
     AnimationType: 1
-    DamageTiming: 26
+    DamageTiming: 40
     MpCost: 0
     Rank: 2
     Attribute: 4

@@ -4,12 +4,20 @@ using UnityEngine;
 
 public class BattleUtility
 {
-    public static List<BattlerInfo> CalcNextBattler(List<BattlerInfo> battlers)
+    public static List<string> AnimationResourcePaths(List<BattlerInfo> battlerInfos)
     {
-        int ap = battlers[0].Ap;
-        for (int i = 0;i < battlers.Count;i++){
-            battlers[i].GainAp(-1 * ap);
+        var list = new List<string>();
+        foreach (var battlerInfo in battlerInfos)
+        {
+            foreach (var skillInfo in battlerInfo.Skills)
+            {
+                var skillData = skillInfo.Master;
+                if (!list.Contains(skillData.AnimationName))
+                {
+                    list.Add(skillData.AnimationName);
+                }
+            }
         }
-        return battlers;
+        return list;
     }
 }

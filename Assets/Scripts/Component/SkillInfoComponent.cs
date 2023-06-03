@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.AddressableAssets;
 using TMPro;
+using UnityEngine.U2D;
 
 public class SkillInfoComponent : MonoBehaviour
 {
@@ -77,22 +78,21 @@ public class SkillInfoComponent : MonoBehaviour
     private void UpdateSkillIcon(MagicIconType iconIndex)
     {
         icon.gameObject.SetActive(true);
-        //var handle = await ResourceSystem.LoadAsset<Sprite>("Spells/" + iconIndex.ToString());
-        var handle = Resources.Load<Sprite>("Texture/Spells/" + iconIndex.ToString());
+        var spriteAtlas = Resources.Load<SpriteAtlas>("Texture/SpellIcons");
         if (icon != null)
         {
-            icon.sprite = handle;
+            icon.sprite = spriteAtlas.GetSprite(iconIndex.ToString());
         }
     }
 
     private void UpdateSkillIconBack(AttributeType attributeType)
     {
         iconBack.gameObject.SetActive(true);
-        //var handle = await ResourceSystem.LoadAsset<Sprite>("Spells/" + attributeType.ToString());
-        var handle = Resources.Load<Sprite>("Texture/Spells/" + attributeType.ToString());
+
+        var spriteAtlas = Resources.Load<SpriteAtlas>("Texture/SpellIcons");
         if (iconBack != null)
         {
-            iconBack.sprite = handle;
+            iconBack.sprite = spriteAtlas.GetSprite(attributeType.ToString());
         }
     }
 

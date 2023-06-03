@@ -315,6 +315,7 @@ public class ActionResultInfo
             DamageRate *= subject.StateEffectAll(StateType.DamageUp);
         }
         float SkillDamage = (DamageRate * 0.01f * AtkValue);
+        /*
         if (target.CanMove() && !isNoEffect)
         {
             if (target.IsState(StateType.CounterOura))
@@ -330,14 +331,18 @@ public class ActionResultInfo
                 }
             }
         }
+        */
+        /*
         if (subject.IsState(StateType.Freeze))
         {
             _execStateInfos[subject.Index].Add(StateType.Freeze);
             _reDamage += FreezeDamageValue(subject,SkillDamage);
         }
+        */
         float DamageValue = Mathf.Max(1,SkillDamage);
         _hpDamage = (int)Mathf.Round(DamageValue);
         _hpDamage = Mathf.Max(1,_hpDamage);
+        /*
         if (target.IsState(StateType.NoDamage) && !isNoEffect)
         {
             _execStateInfos[target.Index].Add(StateType.NoDamage);
@@ -350,6 +355,7 @@ public class ActionResultInfo
                 _displayStates.Add(target.GetStateInfo(StateType.NoDamage));
             }
         }
+        */
         if (subject.IsState(StateType.Drain))
         {
             _reHeal = (int)Mathf.Floor(_hpDamage * subject.StateEffectAll(StateType.Drain) * 0.01f);
