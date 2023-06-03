@@ -23,10 +23,13 @@ public class BattlePresenter : BasePresenter
 
     private async void Initialize()
     {
+        _view.SetBattleBusy(true);
         _model.CreateBattleData();
-#if !UNITY_EDITOR
+        _view.CommandCallLoading();
+//#if !UNITY_EDITOR
         await _model.LoadResources();
-#endif
+//#endif
+        _view.CommandLoadingClose();
         _view.ClearCurrentSkillData();
         _view.CreateObject();
         _view.SetHelpWindow();
@@ -491,6 +494,7 @@ public class BattlePresenter : BasePresenter
                 _view.SetBattleBusy(true);
                 return;
             }
+            _view.SetBattleBusy(false);
             CommandStartBattleAction();
             return;
         }

@@ -12,7 +12,7 @@ public class BattleUtility
             foreach (var skillInfo in battlerInfo.Skills)
             {
                 var skillData = skillInfo.Master;
-                if (!list.Contains(skillData.AnimationName))
+                if (!list.Contains(skillData.AnimationName) && skillData.AnimationName != "")
                 {
                     list.Add(skillData.AnimationName);
                 }

@@ -11,8 +11,7 @@ using System.Collections.Generic;
 public class IntroLoopAudio : MonoBehaviour
 {
 
-  /// <summary>BGM のループ部分の音声データ。</summary>
-  private AudioClip AudioClipLoop;
+  private float _audioClipLoopLength = -1;
 
   /// <summary>BGM のイントロ部分の AudioSource。</summary>
   private AudioSource _introAudioSource;
@@ -65,6 +64,7 @@ public class IntroLoopAudio : MonoBehaviour
   }
 
   public void SetClip(List<AudioClip> clip,bool isLoop){
+    _audioClipLoopLength = -1;
     if (clip.Count == 2){
       _introAudioSource.clip = clip[0];
       _introAudioSource.loop = clip[1] == null ? isLoop : false;
@@ -78,6 +78,10 @@ public class IntroLoopAudio : MonoBehaviour
         _loopAudioSources[1].clip = clip[1];
         _loopAudioSources[1].loop = false;
         _loopAudioSources[1].playOnAwake = false;
+        if (clip[1] != null)
+        {
+          _audioClipLoopLength = clip[1].length;
+        }
       }
     } else{
       _introAudioSource.clip = clip[0];
@@ -105,17 +109,17 @@ public class IntroLoopAudio : MonoBehaviour
   {
     // WebGL のためのループ切り替え処理
     #if UNITY_WEBGL
-    if (AudioClipLoop != null)
+    if (_audioClipLoopLength != -1)
     {
       // 終了する１秒前から次の再生のスケジュールを登録する
-      if (_nowPlayIndex == 0 && _loopAudioSources[0].time >= AudioClipLoop.length - 1)
+      if (_nowPlayIndex == 0 && _loopAudioSources[0].time >= _audioClipLoopLength - 1)
       {
-        _loopAudioSources[1].PlayScheduled(AudioSettings.dspTime + (AudioClipLoop.length - _loopAudioSources[0].time));
+        _loopAudioSources[1].PlayScheduled(AudioSettings.dspTime + (_audioClipLoopLength - _loopAudioSources[0].time));
         _nowPlayIndex = 1;
       }
-      else if (_nowPlayIndex == 1 && _loopAudioSources[1].time >= AudioClipLoop.length - 1)
+      else if (_nowPlayIndex == 1 && _loopAudioSources[1].time >= _audioClipLoopLength - 1)
       {
-        _loopAudioSources[0].PlayScheduled(AudioSettings.dspTime + (AudioClipLoop.length - _loopAudioSources[1].time));
+        _loopAudioSources[0].PlayScheduled(AudioSettings.dspTime + (_audioClipLoopLength - _loopAudioSources[1].time));
         _nowPlayIndex = 0;
       }
     }
@@ -145,20 +149,20 @@ public class IntroLoopAudio : MonoBehaviour
           if (_loopAudioSources[0].time > 0)
           {
             _loopAudioSources[0].UnPause();
-            if (_loopAudioSources[0].time >= AudioClipLoop.length - 1)
+            if (_loopAudioSources[0].time >= _audioClipLoopLength - 1)
             {
               _loopAudioSources[1].Stop();
-              _loopAudioSources[1].PlayScheduled(AudioSettings.dspTime + (AudioClipLoop.length - _loopAudioSources[0].time));
+              _loopAudioSources[1].PlayScheduled(AudioSettings.dspTime + (_audioClipLoopLength - _loopAudioSources[0].time));
               _nowPlayIndex = 1;
             }
           }
           else
           {
             _loopAudioSources[1].UnPause();
-            if (_loopAudioSources[1].time >= AudioClipLoop.length - 1)
+            if (_loopAudioSources[1].time >= _audioClipLoopLength - 1)
             {
               _loopAudioSources[0].Stop();
-              _loopAudioSources[0].PlayScheduled(AudioSettings.dspTime + (AudioClipLoop.length - _loopAudioSources[0].time));
+              _loopAudioSources[0].PlayScheduled(AudioSettings.dspTime + (_audioClipLoopLength - _loopAudioSources[0].time));
               _nowPlayIndex = 0;
             }
           }
@@ -202,7 +206,6 @@ public class IntroLoopAudio : MonoBehaviour
     _introAudioSource.Stop();
     _loopAudioSources[0].Stop();
     if (_loopAudioSources[1] != null) _loopAudioSources[1].Stop();
-
     _isPause = false;
   }
 }

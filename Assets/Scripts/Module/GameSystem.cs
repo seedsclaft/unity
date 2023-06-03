@@ -196,16 +196,21 @@ public class GameSystem : MonoBehaviour
         }
         if (viewEvent.commandType == Base.CommandType.CallLoading)
         {
-            CreateLoading();
+            if (_loadingView == null)
+            {
+                CreateLoading();
+            }
             loadingRoot.gameObject.SetActive(true);
             _currentScene.SetBusy(true);
         }
         if (viewEvent.commandType == Base.CommandType.CloseLoading)
         {
+            /*
             if (_loadingView != null)
             {
                 DestroyImmediate(_loadingView.gameObject);
             }
+            */
             loadingRoot.gameObject.SetActive(false);
             _currentScene.SetBusy(false);
         }

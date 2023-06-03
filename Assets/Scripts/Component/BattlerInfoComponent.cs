@@ -142,7 +142,7 @@ public class BattlerInfoComponent : MonoBehaviour
             }
             if (battleDamage != null)
             {
-                Destroy(battleDamage);
+                Destroy(battleDamage.gameObject);
             }
         });
         _battleDamages.Add(battleDamage);
@@ -169,7 +169,7 @@ public class BattlerInfoComponent : MonoBehaviour
             }
             if (battleDamage != null)
             {
-                Destroy(battleDamage);
+                Destroy(battleDamage.gameObject);
             }
         });
         _battleDamages.Add(battleDamage);
@@ -193,7 +193,7 @@ public class BattlerInfoComponent : MonoBehaviour
             }
             if (battleDamage != null)
             {
-                Destroy(battleDamage);
+                Destroy(battleDamage.gameObject);
             }
         });
         _battleDamages.Add(battleDamage);
