@@ -25,11 +25,13 @@ public class BattlePresenter : BasePresenter
     {
         _view.SetBattleBusy(true);
         _model.CreateBattleData();
+        // load
         _view.CommandCallLoading();
-//#if !UNITY_EDITOR
         await _model.LoadResources();
-//#endif
+        var bgm = await _model.GetBattleBgm();
+        Ryneus.SoundManager.Instance.PlayBgm(bgm,1.0f,true);
         _view.CommandLoadingClose();
+
         _view.ClearCurrentSkillData();
         _view.CreateObject();
         _view.SetHelpWindow();
@@ -43,8 +45,6 @@ public class BattlePresenter : BasePresenter
         _view.SetEnemies(_model.BattlerEnemies());
 
         _view.SetAttributeTypes(_model.AttributeTypes(),_model.CurrentAttributeType);
-        var bgm = await _model.GetBattleBgm();
-        Ryneus.SoundManager.Instance.PlayBgm(bgm,1.0f,true);
 
 
         _view.StartBattleStartAnim(DataSystem.System.GetTextData(4).Text);

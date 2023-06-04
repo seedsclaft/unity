@@ -25,9 +25,6 @@ public class IntroLoopAudio : MonoBehaviour
   /// <summary>現在の再生するループ部分のインデックス。</summary>
   private int _nowPlayIndex = 0;
 
-  /// <summary>ループ部分に使用する AudioSource の数。</summary>
-  private int _loopSourceCount = 0;
-
   /// <summary>再生中であるかどうか。一時停止、非アクティブの場合は false を返す。</summary>
   private bool IsPlaying
     => (_introAudioSource.isPlaying || _introAudioSource.time > 0)
@@ -48,19 +45,12 @@ public class IntroLoopAudio : MonoBehaviour
 
   void Awake()
   {
-    #if UNITY_WEBGL
-      _loopSourceCount = 2;   
-    #else 
-      _loopSourceCount = 1; // WebGL でなければ 1
-    #endif
-
     // AudioSource を自身に追加
     _introAudioSource = gameObject.AddComponent<AudioSource>();
     _loopAudioSources[0] = gameObject.AddComponent<AudioSource>();
-    if (_loopSourceCount >= 2)
-    {
-      _loopAudioSources[1] = gameObject.AddComponent<AudioSource>();
-    }
+#if UNITY_WEBGL
+    _loopAudioSources[1] = gameObject.AddComponent<AudioSource>();
+#endif
   }
 
   public void SetClip(List<AudioClip> clip,bool isLoop){
@@ -71,7 +61,7 @@ public class IntroLoopAudio : MonoBehaviour
       _introAudioSource.playOnAwake = false;
 
       _loopAudioSources[0].clip = clip[1];
-      _loopAudioSources[0].loop = clip[1] == null ? false :_loopSourceCount == 1;
+      _loopAudioSources[0].loop = clip[1] == null ? false : _loopAudioSources[1] == null;
       _loopAudioSources[0].playOnAwake = false;
       if (_loopAudioSources[1] != null)
       {
@@ -91,17 +81,6 @@ public class IntroLoopAudio : MonoBehaviour
       _loopAudioSources[0].clip = null;
       if (_loopAudioSources[1] != null) _loopAudioSources[1].Stop();
       if (_loopAudioSources[1] != null) _loopAudioSources[1].clip = null;
-      /*
-      _loopAudioSources[0].clip = clip[0];
-      _loopAudioSources[0].loop = isLoop;
-      _loopAudioSources[0].playOnAwake = false;
-      if (_loopAudioSources[1] != null)
-      {
-        _loopAudioSources[1].clip = clip[0];
-        _loopAudioSources[1].loop = false;
-        _loopAudioSources[1].playOnAwake = false;
-      }
-      */
     }
   }
 

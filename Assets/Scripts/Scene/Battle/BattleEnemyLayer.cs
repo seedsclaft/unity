@@ -62,6 +62,11 @@ public class BattleEnemyLayer : ListWindow , IInputHandlerEvent
                 {
                     return;
                 }
+                if (Index != enemyIndex)
+                {
+                    UpdateEnemyIndex(enemyIndex);
+                    return;
+                }
                 callEvent(MakeTargetIndexs(battlerInfo));
             });
             battleEnemy.SetSelectHandler((data) => UpdateEnemyIndex(data));

@@ -15,9 +15,6 @@ public class BattleActorList : ListWindow , IInputHandlerEvent
     private ScopeType _targetScopeType = ScopeType.None;
     private List<int> _targetIndexList = new List<int>();
     private int _selectIndex = -1;
-    public int selectIndex{
-        get {return Index;}
-    }
 
     public void Initialize(System.Action<List<int>> callEvent,System.Action cancelEvent,System.Action enemySelectEvent)
     {
@@ -30,6 +27,11 @@ public class BattleActorList : ListWindow , IInputHandlerEvent
                 BattlerInfo battlerInfo = _battleInfos.Find(a => a.Index == actorIndex);
                 if (_targetIndexList.IndexOf(actorIndex) == -1)
                 {
+                    return;
+                }
+                if (Index != actorIndex)
+                {
+                    UpdateTargetIndex(actorIndex);
                     return;
                 }
                 callEvent(MakeTargetIndexs(battlerInfo));
