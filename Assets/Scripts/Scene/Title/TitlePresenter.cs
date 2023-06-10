@@ -18,6 +18,8 @@ public class TitlePresenter
 
     private async void Initialize()
     {
+        _model.ApllyConfigData();
+
         _view.SetHelpWindow();
         _view.SetEvent((type) => updateCommand(type));
         _view.SetTitleCommand(_model.TitleCommand);
@@ -46,17 +48,17 @@ public class TitlePresenter
             case TitleComandType.NewGame:
             _view.CommandInitSaveInfo();
             _view.CommandSceneChange(Scene.NameEntry);
-            Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
             //_view.CommandSceneChange(Scene.Battle);
             break;
             case TitleComandType.Continue:
             SaveSystem.LoadStart();
             _view.CommandSceneChange(Scene.Tactics);
-            Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
             break;
             case TitleComandType.Option:
+            _view.CommandCallOption(null);
             break;
         }
+            Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
     }
 
     private void CommandRefresh(){

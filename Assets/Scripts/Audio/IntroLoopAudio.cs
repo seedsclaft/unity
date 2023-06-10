@@ -187,4 +187,12 @@ public class IntroLoopAudio : MonoBehaviour
     if (_loopAudioSources[1] != null) _loopAudioSources[1].Stop();
     _isPause = false;
   }
+
+  public void ChangeVolume(float volume)
+  {
+    if (_introAudioSource == null || _loopAudioSources == null) return;
+    _introAudioSource.volume = volume;
+    _loopAudioSources[0].volume = volume;
+    if (_loopAudioSources[1] != null) _loopAudioSources[1].volume = volume;
+  }
 }

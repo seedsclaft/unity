@@ -23,6 +23,13 @@ public class BootPresenter
         _busy = false;
         Debug.Log("Boot Success");
         Application.targetFrameRate = 60;
+        if (SaveSystem.ExistsConfigFile())
+        {
+            SaveSystem.LoadConfigStart();
+        } else
+        {
+            _view.CommandInitConfigInfo();
+        }
         if (_view.TestMode)
         {
             _view.CommandInitSaveInfo();

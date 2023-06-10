@@ -7,6 +7,7 @@ public class SystemData : ScriptableObject
 {	
 	public List<MenuCommandData> TacticsCommandData;
 	public List<MenuCommandData> StatusCommandData;
+	public List<MenuCommandData> OptionCommandData;
 	public List<MenuCommandData> TitleCommandData;
 	public List<int> InitActors;
 	public int InitCurrency;

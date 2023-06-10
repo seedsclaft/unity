@@ -14,6 +14,7 @@ public class GameSystem : MonoBehaviour
     [SerializeField] private GameObject confirmRoot = null;
     [SerializeField] private GameObject confirmPrefab = null;
     [SerializeField] private GameObject rulingPrefab = null;
+    [SerializeField] private GameObject optionPrefab = null;
     [SerializeField] private GameObject statusRoot = null;
     [SerializeField] private GameObject statusPrefab = null;
     [SerializeField] private GameObject enemyInfoPrefab = null;
@@ -32,6 +33,7 @@ public class GameSystem : MonoBehaviour
     private BaseModel _model = null;
     
     public static SavePlayInfo CurrentData = null;
+    public static SaveConfigInfo ConfigData = null;
     public static TempInfo CurrentTempData = null;
 
     FirebaseFirestore db;
@@ -57,6 +59,14 @@ public class GameSystem : MonoBehaviour
     private GameObject CreateRuling()
     {
         var prefab = Instantiate(rulingPrefab);
+        prefab.transform.SetParent(confirmRoot.transform, false);
+        confirmRoot.gameObject.SetActive(false);
+        return prefab;
+    }
+
+    private GameObject CreateOption()
+    {
+        var prefab = Instantiate(optionPrefab);
         prefab.transform.SetParent(confirmRoot.transform, false);
         confirmRoot.gameObject.SetActive(false);
         return prefab;
@@ -121,6 +131,12 @@ public class GameSystem : MonoBehaviour
             CurrentData = playInfo;
             Debug.Log("InitSaveInfo");
         }
+        if (viewEvent.commandType == Base.CommandType.InitConfigInfo)
+        {
+            var configInfo = new SaveConfigInfo();
+            ConfigData = configInfo;
+            Debug.Log("InitConfigInfo");
+        }
         if (viewEvent.commandType == Base.CommandType.CallConfirmView)
         {
             if (_popupView != null)
@@ -160,6 +176,34 @@ public class GameSystem : MonoBehaviour
             rulingView.Initialize();
             rulingView.SetBackEvent(() => 
             {
+                updateCommand(new ViewEvent(Scene.Base,Base.CommandType.CloseConfirm));
+                var endEvent = (System.Action)viewEvent.templete;
+                if ((System.Action)viewEvent.templete != null) endEvent();
+            });
+            confirmRoot.gameObject.SetActive(true);
+            _currentScene.SetBusy(true);
+            if (_statusView) _statusView.SetBusy(true);
+            if (_enemyInfoView) _enemyInfoView.SetBusy(true);
+        }
+        if (viewEvent.commandType == Base.CommandType.CallOptionView)
+        {
+            if (_popupView != null)
+            {
+                DestroyImmediate(_popupView.gameObject);
+            }
+            var prefab = CreateOption();
+            _popupView = prefab.GetComponent<OptionView>();
+            var optionView = (_popupView as OptionView);
+            optionView.Initialize();
+            optionView.SetBackEvent(() => 
+            {
+                GameSystem.ConfigData.UpdateSoundParameter(
+                    Ryneus.SoundManager.Instance._bgmVolume,
+                    Ryneus.SoundManager.Instance._bgmMute,
+                    Ryneus.SoundManager.Instance._seVolume,
+                    Ryneus.SoundManager.Instance._seMute
+                );
+                SaveSystem.SaveConfigStart(GameSystem.ConfigData);
                 updateCommand(new ViewEvent(Scene.Base,Base.CommandType.CloseConfirm));
                 var endEvent = (System.Action)viewEvent.templete;
                 if ((System.Action)viewEvent.templete != null) endEvent();

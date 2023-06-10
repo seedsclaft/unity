@@ -14,10 +14,13 @@ namespace Ryneus{
     {
         public float _bgmVolume = 1.0f;
         public float _seVolume = 1.0f;
+        public bool _bgmMute = false;
+        public bool _seMute = false;
         private List<AudioSource> _seData;
         
         private IntroLoopAudio _bgm;
         private string _lastPlayAudio = "";
+        private float _lastBgmVolume = 0f;
 
         void Awake()
         {
@@ -73,14 +76,39 @@ namespace Ryneus{
             //UpdateVolume(_seData, _seVolume);
         }
 
-        void UpdateVolume(List<AudioSource> audioData, float volume)
+        public void UpdateBgmVolume()
         {
-            foreach (var data in audioData)
+            var volume = _bgmVolume * _lastBgmVolume;
+            _bgm.ChangeVolume(volume);
+        }
+
+        public void UpdateBgmMute()
+        {
+            if (_bgmMute)
             {
-                if (data.isPlaying)
-                {
-                    data.volume = (volume * 1);
-                }
+                _bgm.ChangeVolume(0);
+            } else
+            {
+                UpdateBgmVolume();
+            }
+        }
+
+        public void UpdateSeVolume()
+        {
+            var volume = _seVolume;
+            foreach (var seData in _seData)
+            {
+                seData.volume = volume;
+            }
+        }
+
+        public void UpdateSeMute()
+        {
+            if (_seMute)
+            {
+            } else
+            {
+                UpdateSeMute();
             }
         }
 
@@ -89,6 +117,8 @@ namespace Ryneus{
             if (clip[0].name == _lastPlayAudio) return;
             _bgm.Stop();
             _bgm.SetClip(clip,loop);
+            _lastBgmVolume = volume;
+            UpdateBgmMute();
             _bgm.Play();
             _lastPlayAudio = clip[0].name;
         }
@@ -111,6 +141,7 @@ namespace Ryneus{
 
         public void PlayStaticSe(SEType sEType, float volume = 1.0f)
         {
+            if (_seMute) return;
             var seIndex = DataSystem.Data.SE.FindIndex(a => a.Id == (int)sEType);
             if (seIndex > -1)
             {

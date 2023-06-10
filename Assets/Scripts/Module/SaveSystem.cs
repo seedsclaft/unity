@@ -106,14 +106,118 @@ public class SaveSystem : MonoBehaviour
     }
 	public static bool ExistsLoadFile(int fileId = 0)
 	{
+#if UNITY_WEBGL
+		return PlayerPrefs.GetString("PlayerData") != "";
+#else
 		return File.Exists(debugFilePath + "/Autosave" + fileId.ToString() + ".dat");;
+#endif
+	}
+
+	public static void SaveConfigStart(SaveConfigInfo pSourceSavePlayInfo = null,int fileId = 0)
+    {
+#if UNITY_WEBGL
+		
+		//	バイナリ形式でシリアル化
+		BinaryFormatter TempBinaryFormatter = new BinaryFormatter ();
+		MemoryStream    memoryStream    = new MemoryStream ();
+		TempBinaryFormatter.Serialize (memoryStream , pSourceSavePlayInfo);
+		var saveData = Convert.ToBase64String (memoryStream   .GetBuffer ());
+		PlayerPrefs.SetString("ConfigData", AESManager.Encrypt(saveData));
+
+#else
+		//	保存情報
+		if( pSourceSavePlayInfo == null )
+		{
+			pSourceSavePlayInfo = new SaveConfigInfo();
+		}
+
+
+		//#if UNITY_EDITOR_WIN || UNITY_STANDALONE_WIN
+		{
+			//	バイナリ形式でシリアル化
+			BinaryFormatter	TempBinaryFormatter = new BinaryFormatter();
+
+			//	指定したパスにファイルを作成
+			FileStream TempFileStream = File.Create(debugFilePath + "/Autoconfig" + fileId.ToString() + ".dat");
+
+			//	Closeが確実に呼ばれるように例外処理を用いる
+			try
+			{
+				//	指定したオブジェクトを上で作成したストリームにシリアル化する
+				TempBinaryFormatter.Serialize(TempFileStream, pSourceSavePlayInfo);
+			}
+			finally
+			{
+				//	ファイル操作には明示的な破棄が必要です。Closeを忘れないように。
+				if( TempFileStream != null )
+				{
+					TempFileStream.Close();
+				}
+			}
+		}
+#endif
+	}
+
+
+	public static void LoadConfigStart()
+	{
+		#if UNITY_WEBGL
+				
+		try
+			{
+				//	バイナリ形式でデシリアライズ
+				BinaryFormatter	TempBinaryFormatter = new BinaryFormatter();
+				string saveData = PlayerPrefs.GetString("ConfigData");
+				saveData = AESManager.Decrypt(saveData);
+        		MemoryStream    memoryStream    = new MemoryStream (Convert.FromBase64String (saveData));
+        		GameSystem.ConfigData = (SaveConfigInfo)TempBinaryFormatter.Deserialize (memoryStream);
+			}
+			// Jsonへの展開失敗　改ざんの可能性あり
+			catch(Exception e)
+			{
+				// 例外が発生するのでここで処理
+				Debug.LogException(e);
+				Debug.Log("改ざんされたため　冒険の書は消えてしまいました");
+				GameSystem.ConfigData  = new SaveConfigInfo();
+			}
+		#else
+		//#if UNITY_EDITOR_WIN || UNITY_STANDALONE_WIN
+		{
+			//	バイナリ形式でデシリアライズ
+			BinaryFormatter	TempBinaryFormatter = new BinaryFormatter();
+
+			//	指定したパスのファイルストリームを開く
+			FileStream	TempFileStream = File.Open(debugFilePath + "/Autoconfig" + fileId.ToString() + ".dat", FileMode.Open);
+			try 
+			{
+				//	指定したファイルストリームをオブジェクトにデシリアライズ。
+				GameSystem.ConfigData = (SaveConfigInfo)TempBinaryFormatter.Deserialize(TempFileStream);
+			}
+			finally 
+			{
+				//	ファイル操作には明示的な破棄が必要です。Closeを忘れないように。
+				if( TempFileStream != null )
+				{
+					TempFileStream.Close();
+				}
+			}
+		}
+		#endif
     }
+	public static bool ExistsConfigFile()
+	{
+#if UNITY_WEBGL
+		return PlayerPrefs.GetString("ConfigData") != "";
+#else
+		return File.Exists(debugFilePath + "/Autoconfig" + fileId.ToString() + ".dat");;
+#endif
+	}
 }
 
 [Serializable]
 public class SavePlayInfo
 {
-	public	const	int		SAVEDATA_VER = 100;
+	public const int SAVEDATA_VER = 100;
 
 	private PlayerInfo _playerInfo = null;
     public PlayerInfo PlayerInfo {get {return _playerInfo;}}
@@ -247,5 +351,34 @@ public class SavePlayInfo
 		var currentStage = new StageInfo(stageData);
 		currentStage.RouteSelectData(current);
 		_currentStage = currentStage;
+	}
+}
+
+[Serializable]
+public class SaveConfigInfo
+{
+	public float _bgmVolume;
+	public bool _bgmMute;
+	public float _seVolume;
+	public bool _seMute;
+    public SaveConfigInfo()
+    {
+		this.InitParameter();
+	}
+
+	public void InitParameter()
+	{
+		_bgmVolume = 1.0f;
+		_bgmMute = false;
+		_seVolume = 1.0f;
+		_seMute = false;
+	}
+
+	public void UpdateSoundParameter(float bgmVolume,bool bgmMute,float seVolume,bool seMute)
+	{
+		_bgmVolume = bgmVolume;
+		_bgmMute = bgmMute;
+		_seVolume = seVolume;
+		_seMute = seMute;
 	}
 }

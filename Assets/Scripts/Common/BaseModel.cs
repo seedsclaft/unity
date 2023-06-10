@@ -77,7 +77,41 @@ public class BaseModel
         }
         return "TACTICS1";
     }
+
+    public void ApllyConfigData()
+    {
+        SaveConfigInfo saveConfigInfo = GameSystem.ConfigData;
+        ChangeBGMValue(saveConfigInfo._bgmVolume);
+        Ryneus.SoundManager.Instance._bgmMute = saveConfigInfo._bgmMute;
+        ChangeSEValue(saveConfigInfo._seVolume);
+        Ryneus.SoundManager.Instance._seMute = saveConfigInfo._seMute;
+    }
+
+    public float BGMVolume(){ return Ryneus.SoundManager.Instance._bgmVolume;}
+    public bool BGMMute() { return Ryneus.SoundManager.Instance._bgmMute;}
+    public void ChangeBGMValue(float bgmVolume)
+    {
+        Ryneus.SoundManager.Instance._bgmVolume = bgmVolume;
+        Ryneus.SoundManager.Instance.UpdateBgmVolume();
+    }
+    public void ChangeBGMMute(bool bgmMute)
+    {
+        Ryneus.SoundManager.Instance._bgmMute = bgmMute;
+        Ryneus.SoundManager.Instance.UpdateBgmMute();
+    }
+    public float SEVolume(){ return Ryneus.SoundManager.Instance._seVolume;}
+    public bool SEMute() { return Ryneus.SoundManager.Instance._seMute;}
     
+    public void ChangeSEValue(float seVolume)
+    {
+        Ryneus.SoundManager.Instance._seVolume = seVolume;
+        Ryneus.SoundManager.Instance.UpdateSeVolume();
+    }
+    public void ChangeSEMute(bool seMute)
+    {
+        Ryneus.SoundManager.Instance._seMute = seMute;
+    }
+
     public List<StagesData.StageEventData> StageEventDatas{ 
         get{ return DataSystem.Stages.Find(a => a.Id == CurrentStage.Id).StageEvents;}
     }

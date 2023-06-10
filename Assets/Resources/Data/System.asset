@@ -46,6 +46,23 @@ MonoBehaviour:
     Key: SKILLLIST
     Name: "\u9B54\u6CD5\u78BA\u8A8D"
     Help: "\u8853\u8005(Alchemist)\u306B\u9B54\u6CD5\u3092\u78BA\u8A8D\u3057\u307E\u3059"
+  OptionCommandData:
+  - Id: 1
+    Key: SYSTEM
+    Name: System
+    Help: '""'
+  - Id: 2
+    Key: TACTICS
+    Name: Tactics
+    Help: '""'
+  - Id: 3
+    Key: BATTLE
+    Name: Battle
+    Help: '""'
+  - Id: 4
+    Key: DATA
+    Name: Data
+    Help: '""'
   TitleCommandData:
   - Id: 1
     Key: NEWGAME
@@ -208,6 +225,18 @@ MonoBehaviour:
     Help: '""'
   - Id: 410
     Text: "\u6551\u6E08\u57F7\u884C\u3092\u8AE6\u3081\u3066\u64A4\u9000\u3057\u307E\u3059\u304B\uFF1F"
+    Help: '""'
+  - Id: 501
+    Text: System
+    Help: '""'
+  - Id: 502
+    Text: Tactics
+    Help: '""'
+  - Id: 503
+    Text: Battle
+    Help: '""'
+  - Id: 504
+    Text: Data
     Help: '""'
   - Id: 1000
     Text: (Nu)

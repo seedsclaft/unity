@@ -26,6 +26,7 @@ abstract public class DataSystem
     public static List<SystemData.MenuCommandData> TacticsCommand {get { return _system.TacticsCommandData;}}
     public static List<SystemData.MenuCommandData> TitleCommand {get { return _system.TitleCommandData;}}
     public static List<SystemData.MenuCommandData> StatusCommand {get { return _system.StatusCommandData;}}
+    public static List<SystemData.MenuCommandData> OptionCommand {get { return _system.OptionCommandData;}}
     public static List<int> InitActors {get { return _system.InitActors;}}
     
     private static StagesData _stages;
