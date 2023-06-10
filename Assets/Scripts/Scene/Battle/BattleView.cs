@@ -7,7 +7,6 @@ using Effekseer;
 
 public class BattleView : BaseView
 {
-
     [SerializeField] private BattleActorList battleActorList = null;
     [SerializeField] private BattleEnemyLayer battleEnemyLayer = null;
     [SerializeField] private BattleGridLayer battleGridLayer = null;
@@ -26,6 +25,7 @@ public class BattleView : BaseView
     [SerializeField] private GameObject animPrefab = null;
 
     [SerializeField] private Button escapeButton = null;
+    [SerializeField] private Button ruleButton = null;
     [SerializeField] private SkillInfoComponent skillInfoComponent = null;
     private BattleStartAnim _battleStartAnim = null;
 
@@ -116,12 +116,19 @@ public class BattleView : BaseView
         CreateBackCommand(() => OnClickBack());
         escapeButton.onClick.AddListener(() => OnClickEscape());
         SetEscapeButton(false);
+        ruleButton.onClick.AddListener(() => OnClickRuling());
+        SetRuleButton(false);
         //_helpWindow = prefab.GetComponent<HelpWindow>();
     }
 
     public void SetEscapeButton(bool isEscape)
     {
         escapeButton.gameObject.SetActive(isEscape);
+    }
+
+    public void SetRuleButton(bool isActive)
+    {
+        ruleButton.gameObject.SetActive(isActive);
     }
 
 
@@ -140,6 +147,12 @@ public class BattleView : BaseView
     private void OnClickEscape()
     {
         var eventData = new BattleViewEvent(CommandType.Escape);
+        _commandData(eventData);
+    }
+
+    private void OnClickRuling()
+    {
+        var eventData = new BattleViewEvent(CommandType.Rule);
         _commandData(eventData);
     }
 
@@ -521,6 +534,9 @@ public class BattleView : BaseView
                 if (item.Value.IsBusy == true)
                 {
                     IsBusy = true;
+                } else
+                {
+                    item.Value.DisableEmitter();
                 }
             }
             if (_animationEndTiming > 0)
@@ -544,6 +560,7 @@ namespace Battle
         None = 0,
         Back,
         Escape,
+        Rule,
         BattleCommand,
         AttributeType,
         DecideActor,

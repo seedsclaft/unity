@@ -13,6 +13,7 @@ public class GameSystem : MonoBehaviour
     [SerializeField] private GameObject uiRoot = null;
     [SerializeField] private GameObject confirmRoot = null;
     [SerializeField] private GameObject confirmPrefab = null;
+    [SerializeField] private GameObject rulingPrefab = null;
     [SerializeField] private GameObject statusRoot = null;
     [SerializeField] private GameObject statusPrefab = null;
     [SerializeField] private GameObject enemyInfoPrefab = null;
@@ -24,6 +25,7 @@ public class GameSystem : MonoBehaviour
     
     private BaseView _currentScene = null;
     private ConfirmView _confirmView = null;
+    private BaseView _popupView = null;
     private StatusView _statusView = null;
     private EnemyInfoView _enemyInfoView = null;
     private LoadingView _loadingView = null;
@@ -44,13 +46,20 @@ public class GameSystem : MonoBehaviour
         db = FirebaseFirestore.DefaultInstance;
     }
 
-    private void CreateConfirm()
+    private GameObject CreateConfirm()
     {
         var prefab = Instantiate(confirmPrefab);
         prefab.transform.SetParent(confirmRoot.transform, false);
-        _confirmView = prefab.GetComponent<ConfirmView>();
-        _confirmView.Initialize();
         confirmRoot.gameObject.SetActive(false);
+        return prefab;
+    }
+
+    private GameObject CreateRuling()
+    {
+        var prefab = Instantiate(rulingPrefab);
+        prefab.transform.SetParent(confirmRoot.transform, false);
+        confirmRoot.gameObject.SetActive(false);
+        return prefab;
     }
     
     private void CreateStatus()
@@ -114,17 +123,20 @@ public class GameSystem : MonoBehaviour
         }
         if (viewEvent.commandType == Base.CommandType.CallConfirmView)
         {
-            if (_confirmView != null)
+            if (_popupView != null)
             {
-                DestroyImmediate(_confirmView.gameObject);
+                DestroyImmediate(_popupView.gameObject);
             }
-            CreateConfirm();
+            var prefab = CreateConfirm();
+            _popupView = prefab.GetComponent<ConfirmView>();
+            var confirmView = (_popupView as ConfirmView);
+            confirmView.Initialize();
             confirmRoot.gameObject.SetActive(true);
             var popupInfo = (ConfirmInfo)viewEvent.templete;
-            _confirmView.SetIsNoChoice(popupInfo.IsNoChoise);
-            _confirmView.SetTitle(popupInfo.Title);
-            _confirmView.SetSkillInfo(popupInfo.SkillInfos);
-            _confirmView.SetConfirmEvent(popupInfo.CallEvent);
+            confirmView.SetIsNoChoice(popupInfo.IsNoChoise);
+            confirmView.SetTitle(popupInfo.Title);
+            confirmView.SetSkillInfo(popupInfo.SkillInfos);
+            confirmView.SetConfirmEvent(popupInfo.CallEvent);
             _currentScene.SetBusy(true);
             if (_statusView) _statusView.SetBusy(true);
             if (_enemyInfoView) _enemyInfoView.SetBusy(true);
@@ -135,6 +147,27 @@ public class GameSystem : MonoBehaviour
             _currentScene.SetBusy(false);
             if (_statusView) _statusView.SetBusy(false);
             if (_enemyInfoView) _enemyInfoView.SetBusy(false);
+        }
+        if (viewEvent.commandType == Base.CommandType.CallRulingView)
+        {
+            if (_popupView != null)
+            {
+                DestroyImmediate(_popupView.gameObject);
+            }
+            var prefab = CreateRuling();
+            _popupView = prefab.GetComponent<RulingView>();
+            var rulingView = (_popupView as RulingView);
+            rulingView.Initialize();
+            rulingView.SetBackEvent(() => 
+            {
+                updateCommand(new ViewEvent(Scene.Base,Base.CommandType.CloseConfirm));
+                var endEvent = (System.Action)viewEvent.templete;
+                if ((System.Action)viewEvent.templete != null) endEvent();
+            });
+            confirmRoot.gameObject.SetActive(true);
+            _currentScene.SetBusy(true);
+            if (_statusView) _statusView.SetBusy(true);
+            if (_enemyInfoView) _enemyInfoView.SetBusy(true);
         }
         if (viewEvent.commandType == Base.CommandType.CallStatusView)
         {

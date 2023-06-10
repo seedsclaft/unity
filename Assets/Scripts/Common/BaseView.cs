@@ -103,6 +103,13 @@ abstract public class BaseView : MonoBehaviour
         CallSceneChangeCommand(eventData);
     }
 
+    public void CommandCallRuling(System.Action endEvent)
+    {
+        var eventData = new ViewEvent(Scene.Base, Base.CommandType.CallRulingView);
+        eventData.templete = endEvent;
+        CallSceneChangeCommand(eventData);
+    }
+
     public void CommandCallStatus(StatusViewInfo statusViewInfo)
     {
         var eventData = new ViewEvent(Scene.Base, Base.CommandType.CallStatusView);
@@ -197,7 +204,8 @@ namespace Base
         SceneChange,
         InitSaveInfo,
         CallConfirmView,
-        CloseConfirm,  
+        CloseConfirm,
+        CallRulingView,
         CallStatusView,
         CloseStatus,
         CallAdvScene,

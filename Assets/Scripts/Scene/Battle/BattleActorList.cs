@@ -29,7 +29,7 @@ public class BattleActorList : ListWindow , IInputHandlerEvent
                 {
                     return;
                 }
-                if (Index != actorIndex)
+                if (_selectIndex != actorIndex)
                 {
                     UpdateTargetIndex(actorIndex);
                     return;

@@ -62,7 +62,7 @@ public class BattleEnemyLayer : ListWindow , IInputHandlerEvent
                 {
                     return;
                 }
-                if (Index != enemyIndex)
+                if (_selectIndex != enemyIndex)
                 {
                     UpdateEnemyIndex(enemyIndex);
                     return;

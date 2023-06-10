@@ -15,6 +15,7 @@ public class StatesData : ScriptableObject
         public string Help;
         public string IconPath;
         public RemovalTiming RemovalTiming;
+        public string EffectPath;
     }
 }
 

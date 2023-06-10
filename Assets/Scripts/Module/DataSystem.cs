@@ -45,6 +45,10 @@ abstract public class DataSystem
 
     private static TipsData _tips;
     public static List<TipsData.TipData> Tips {get{return _tips._data;}}
+
+
+    private static RulesData _rules;
+    public static List<RulesData.RuleData> Rules {get{return _rules._data;}}
     public void LoadData(){
         /*
         var asset = await Addressables.LoadAssetAsync<ActorsData>("Assets/Data/Actors.asset").Task;
@@ -83,6 +87,7 @@ abstract public class DataSystem
         DataSystem._alcana = Resources.Load<AlcanaData>("Data/Alcana");
         DataSystem._advs = Resources.Load<AdvsData>("Data/Advs");
         DataSystem._tips = Resources.Load<TipsData>("Data/Tips");
+        DataSystem._rules = Resources.Load<RulesData>("Data/Rules");
         DataSystem._data = Resources.Load<DataManager>("Data/MainData");
     }
 }

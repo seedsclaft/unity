@@ -31,7 +31,8 @@ public class BattlePresenter : BasePresenter
         var bgm = await _model.GetBattleBgm();
         Ryneus.SoundManager.Instance.PlayBgm(bgm,1.0f,true);
         _view.CommandLoadingClose();
-
+        //_view.CommandCallCRuling();
+    
         _view.ClearCurrentSkillData();
         _view.CreateObject();
         _view.SetHelpWindow();
@@ -113,6 +114,10 @@ public class BattlePresenter : BasePresenter
         {
             CommandEscape();
         }
+        if (viewEvent.commandType == Battle.CommandType.Rule)
+        {
+            CommandRule();
+        }
     }
 
     private void UpdatePopup(ConfirmComandType confirmComandType)
@@ -138,6 +143,16 @@ public class BattlePresenter : BasePresenter
     {
         ConfirmInfo popupInfo = new ConfirmInfo(DataSystem.System.GetTextData(410).Text,(menuCommandInfo) => UpdatePopup((ConfirmComandType)menuCommandInfo));
         _view.CommandCallConfirm(popupInfo);
+    }
+
+    private void CommandRule()
+    {
+        _view.SetBattleBusy(true);
+        Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
+        _view.CommandCallRuling(() => {
+            _view.SetBattleBusy(false);
+            Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cancel);
+        });
     }
 
     private void CommandUpdateAp()
@@ -333,6 +348,7 @@ public class BattlePresenter : BasePresenter
 
     private void StartAnimationSkill()
     {
+        _view.SetRuleButton(false);
         _view.SetBattlerSelectable(true);
         ActionInfo actionInfo = _model.CurrentActionInfo();
         if (actionInfo.ActionResults.Count == 0)
@@ -667,6 +683,7 @@ public class BattlePresenter : BasePresenter
         _view.SetHelpText(DataSystem.System.GetTextData(15010).Text);
         _view.ShowSkillActionList(_model.CurrentBattler,_model.CurrentBattlerActorData());
         _view.SetEscapeButton(_model.EnableEspape());
+        _view.SetRuleButton(true);
         _view.ShowConditionTab();
         CommandAttributeType(_model.CurrentAttributeType);
         _view.RefreshBattlerEnemyLayerTarget(-1);

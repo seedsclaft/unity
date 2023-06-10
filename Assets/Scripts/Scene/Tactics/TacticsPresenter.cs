@@ -27,6 +27,33 @@ public class TacticsPresenter :BasePresenter
 
         _view.SetHelpWindow();
 
+        var isEndStage = (_model.CurrentStage.SubordinateValue <= 0);
+        if (isEndStage)
+        {
+            AdvCallInfo advInfo = new AdvCallInfo();
+            advInfo.SetLabel(_model.GetAdvFile(171));
+            advInfo.SetCallEvent(() => {             
+                _view.CommandSceneChange(Scene.Tactics);
+            });
+            _view.CommandCallAdv(advInfo);
+            _model.SetIsSubordinate(false);
+            _model.ChangeRouteSelectStage(11);
+            _view.SetActiveUi(false);
+            return;
+        }
+        var isGameOver = (_model.Actors().Find(a => a.ActorId == _model.CurrentStage.SelectActorIds[0])).Lost;
+        if (isGameOver)
+        {
+            AdvCallInfo advInfo = new AdvCallInfo();
+            advInfo.SetLabel(_model.GetAdvFile(203));
+            advInfo.SetCallEvent(() => {             
+                _view.CommandSceneChange(Scene.MainMenu);
+            });
+            _view.CommandCallAdv(advInfo);
+            _view.SetActiveUi(false);
+            return;
+        }
+
         var isAbort = CheckAdvStageEvent(EventTiming.BeforeTactics,() => {
             _view.CommandSceneChange(Scene.Tactics);
         },_model.CurrentStage.SelectActorIds[0]);
@@ -282,6 +309,10 @@ public class TacticsPresenter :BasePresenter
         if (viewEvent.commandType == Tactics.CommandType.CallEnemyInfo)
         {
             CommandCallEnemyInfo((int)viewEvent.templete);
+        }
+        if (viewEvent.commandType == Tactics.CommandType.Rule)
+        {
+            CommandRule();
         }
         if (viewEvent.commandType == Tactics.CommandType.Back)
         {
@@ -804,6 +835,14 @@ public class TacticsPresenter :BasePresenter
     private void CommandDeleteAlcana()
     {
         _model.DeleteAlcana();
+    }
+
+    private void CommandRule()
+    {
+        Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
+        _view.CommandCallRuling(() => {
+            Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cancel);
+        });
     }
 
     private void DisableTacticsCommand()

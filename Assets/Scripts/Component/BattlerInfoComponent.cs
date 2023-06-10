@@ -15,6 +15,9 @@ public class BattlerInfoComponent : MonoBehaviour
     private GameObject _battleDamageRoot;
     private GameObject _battleStatusRoot;
     [SerializeField] private GameObject battleDamagePrefab;
+    [SerializeField] private BattleStateOverlay battleStateOverlay;
+    [SerializeField] private CanvasGroup canvasGroup;
+    
     private BattlerInfo _battlerInfo = null;
 
 
@@ -92,6 +95,8 @@ public class BattlerInfoComponent : MonoBehaviour
         }
         ChangeHp(_battlerInfo.Hp);
         ChangeMp(_battlerInfo.Mp);
+        if (battleStateOverlay != null) battleStateOverlay.SetStates(_battlerInfo.StateInfos);
+        
     }
     
     public void ShowUI()
@@ -244,17 +249,20 @@ public class BattlerInfoComponent : MonoBehaviour
                 effectRect.localPosition = new Vector2(0,0);
             }
         }
+        effekseerEmitter.enabled = true;
         effekseerEmitter.Stop();
         effekseerEmitter.Play(effectAsset);
     }
 
     public void SetSelectable(bool isSelectable)
     {
+        
         Image image = BattleImage();
         if (image == null) return;
         float alpha = isSelectable == true ? 1 : 0.25f;
-        image.color = new Color(255,255,255,alpha);
-        effekseerEmitter.enabled = isSelectable;
+        canvasGroup.alpha = alpha;
+        //image.color = new Color(255,255,255,alpha);
+        //effekseerEmitter.enabled = isSelectable;
     }
 
     public void SetActiveStatus(bool isSelectable)
@@ -330,5 +338,11 @@ public class BattlerInfoComponent : MonoBehaviour
             image = enemyInfoComponent.MainThumb;
         }
         return image;
+    }
+
+    public void DisableEmitter()
+    {
+        effekseerEmitter.Stop();
+        effekseerEmitter.enabled = false;
     }
 }

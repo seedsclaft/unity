@@ -60,4 +60,9 @@ public class ConfirmCommandList : ListWindow , IInputHandlerEvent
     public void SetIsNoChoice(bool isNoChoice)
     {
     }
+
+    public void Refresh(List<SystemData.MenuCommandData> menuCommands)
+    {
+        
+    }
 }

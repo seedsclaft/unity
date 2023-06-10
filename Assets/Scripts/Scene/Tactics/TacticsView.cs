@@ -30,6 +30,7 @@ public class TacticsView : BaseView
     [SerializeField] private GameObject helpRoot = null;
     [SerializeField] private GameObject helpPrefab = null;
     [SerializeField] private TacticsAlcana tacticsAlcana = null;
+    [SerializeField] private Button ruleButton = null;
 
     private HelpWindow _helpWindow = null;
 
@@ -48,6 +49,9 @@ public class TacticsView : BaseView
         tacticsTrainList.Initialize((actorinfo) => CallActorTrain(actorinfo));
         SetInputHandler(tacticsTrainList.GetComponent<IInputHandlerEvent>());
         
+        ruleButton.onClick.AddListener(() => OnClickRuling());
+        SetRuleButton(true);
+
         new TacticsPresenter(this);
     }
     
@@ -86,7 +90,18 @@ public class TacticsView : BaseView
     {
         _commandData = commandData;
     }
+
+    private void SetRuleButton(bool isActive)
+    {
+        ruleButton.gameObject.SetActive(isActive);
+    }
     
+    private void OnClickRuling()
+    {
+        var eventData = new TacticsViewEvent(CommandType.Rule);
+        _commandData(eventData);
+    }
+
     public void SetStageInfo(StageInfo stageInfo)
     {
         stageInfoComponent.UpdateInfo(stageInfo);
@@ -565,7 +580,8 @@ namespace Tactics
         HideUi,
         OpenAlcana,
         CallEnemyInfo,
-        Back
+        Back,
+        Rule
     }
 }
 

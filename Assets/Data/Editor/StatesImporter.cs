@@ -14,7 +14,8 @@ public class StatesImporter : AssetPostprocessor {
 		Id = 0,
 		NameId,
 		IconIndex,
-        RemovalTiming
+        RemovalTiming,
+		EffectPath
     }
 	static readonly string ExcelPath = "Assets/Resources/Data";
 	static readonly string ExcelName = "States.xlsx";
@@ -87,6 +88,7 @@ public class StatesImporter : AssetPostprocessor {
 					StateData.Help = textData.Find(a => a.Id == (int)Baserow.GetCell((int)BaseColumn.NameId).NumericCellValue).Help;
 					StateData.IconPath = Baserow.GetCell((int)BaseColumn.IconIndex)?.SafeStringCellValue();
 					StateData.RemovalTiming = (RemovalTiming)Baserow.GetCell((int)BaseColumn.RemovalTiming).NumericCellValue;
+					StateData.EffectPath = Baserow.GetCell((int)BaseColumn.EffectPath)?.SafeStringCellValue();
 					
 					
 					Data._data.Add(StateData);

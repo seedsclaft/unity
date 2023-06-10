@@ -543,6 +543,36 @@ MonoBehaviour:
       Type: 32
       Param: 0
       ReadFlag: 0
+    - EventKey: 1StartTacticsCommandDisable0
+      Turns: 1
+      Timing: 1
+      Type: 1
+      Param: 0
+      ReadFlag: 0
+    - EventKey: 1StartTacticsCommandDisable1
+      Turns: 1
+      Timing: 1
+      Type: 1
+      Param: 1
+      ReadFlag: 0
+    - EventKey: 1StartTacticsCommandDisable2
+      Turns: 1
+      Timing: 1
+      Type: 1
+      Param: 2
+      ReadFlag: 0
+    - EventKey: 1StartTacticsCommandDisable4
+      Turns: 1
+      Timing: 1
+      Type: 1
+      Param: 4
+      ReadFlag: 0
+    - EventKey: 1StartTacticsNeedAllTactics0
+      Turns: 1
+      Timing: 1
+      Type: 3
+      Param: 0
+      ReadFlag: 0
   - Id: 12
     Name: "B\u30EB\u30FC\u30C8\u7528"
     Help: '""'
