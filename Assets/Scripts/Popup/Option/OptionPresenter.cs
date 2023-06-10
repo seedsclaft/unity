@@ -22,6 +22,7 @@ public class OptionPresenter
         _view.SetEvent((type) => updateCommand(type));
         _view.SetOptionCommand(_model.OptionCommand());
         _view.InitializeVolume(_model.BGMVolume(),_model.BGMMute(),_model.SEVolume(),_model.SEMute());
+        _view.InitializeGraphic(_model.GraphicIndex());
         _busy = false;
     }
 
@@ -51,6 +52,10 @@ public class OptionPresenter
         {
            CommandChangeSEMute((bool)viewEvent.templete);
         }
+        if (viewEvent.commandType == CommandType.ChangeGraphicIndex)
+        {
+           CommandChangeGraphicIndex((int)viewEvent.templete);
+        }
     }
 
     private void CommandSelectCategory(OptionCategory optionCategory)
@@ -77,6 +82,11 @@ public class OptionPresenter
     private void CommandChangeSEMute(bool seMute)
     {
         _model.ChangeSEMute(seMute);
+    }
+
+    private void CommandChangeGraphicIndex(int graphicIndex)
+    {
+        _model.ChangeGraphicIndex(graphicIndex);
     }
 }
 

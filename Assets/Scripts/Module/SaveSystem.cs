@@ -361,6 +361,7 @@ public class SaveConfigInfo
 	public bool _bgmMute;
 	public float _seVolume;
 	public bool _seMute;
+	public int _graphicIndex;
     public SaveConfigInfo()
     {
 		this.InitParameter();
@@ -372,6 +373,7 @@ public class SaveConfigInfo
 		_bgmMute = false;
 		_seVolume = 1.0f;
 		_seMute = false;
+		_graphicIndex = 2;
 	}
 
 	public void UpdateSoundParameter(float bgmVolume,bool bgmMute,float seVolume,bool seMute)

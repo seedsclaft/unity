@@ -118,6 +118,10 @@ public class BattlePresenter : BasePresenter
         {
             CommandRule();
         }
+        if (viewEvent.commandType == Battle.CommandType.Option)
+        {
+            CommandOption();
+        }
     }
 
     private void UpdatePopup(ConfirmComandType confirmComandType)
@@ -155,6 +159,14 @@ public class BattlePresenter : BasePresenter
         });
     }
 
+    private void CommandOption()
+    {
+        _busy = true;
+        _view.CommandCallOption(() => {
+            _busy = false;
+        });
+    }
+    
     private void CommandUpdateAp()
     {
         var chainActionResults = _model.UpdateChainState();

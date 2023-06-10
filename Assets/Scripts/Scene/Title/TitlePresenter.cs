@@ -55,7 +55,9 @@ public class TitlePresenter
             _view.CommandSceneChange(Scene.Tactics);
             break;
             case TitleComandType.Option:
-            _view.CommandCallOption(null);
+            _view.CommandCallOption(() => {
+                _busy = false;
+            });
             break;
         }
             Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);

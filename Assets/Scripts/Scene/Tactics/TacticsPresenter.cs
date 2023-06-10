@@ -314,6 +314,10 @@ public class TacticsPresenter :BasePresenter
         {
             CommandRule();
         }
+        if (viewEvent.commandType == Tactics.CommandType.Option)
+        {
+            CommandOption();
+        }
         if (viewEvent.commandType == Tactics.CommandType.Back)
         {
             CommandBack();
@@ -842,6 +846,14 @@ public class TacticsPresenter :BasePresenter
         Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
         _view.CommandCallRuling(() => {
             Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cancel);
+        });
+    }
+
+    private void CommandOption()
+    {
+        _busy = true;
+        _view.CommandCallOption(() => {
+            _busy = false;
         });
     }
 

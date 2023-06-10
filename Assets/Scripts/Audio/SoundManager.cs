@@ -17,6 +17,7 @@ namespace Ryneus{
         public bool _bgmMute = false;
         public bool _seMute = false;
         private List<AudioSource> _seData;
+        private List<SEData> _seMaster;
         
         private IntroLoopAudio _bgm;
         private string _lastPlayAudio = "";
@@ -33,12 +34,12 @@ namespace Ryneus{
         void LoadDefaultSound()
         {
             _seData = new List<AudioSource>();
-            List<SEData> sEDatas = DataSystem.Data.SE.FindAll(a => a != null);
-            for (int i = 0;i < sEDatas.Count;i++)
+            _seMaster = DataSystem.Data.SE.FindAll(a => a != null);
+            for (int i = 0;i < _seMaster.Count;i++)
             {
                 AudioSource audioSource = gameObject.AddComponent<AudioSource>();
                 _seData.Add(audioSource);
-                SetSeAudio(audioSource,sEDatas[i].FileName,sEDatas[i].Volume,sEDatas[i].Pitch);
+                SetSeAudio(audioSource,_seMaster[i].FileName,_seMaster[i].Volume,_seMaster[i].Pitch);
             }
             /*
             AudioSource audioSource = gameObject.AddComponent<AudioSource>();
@@ -95,10 +96,11 @@ namespace Ryneus{
 
         public void UpdateSeVolume()
         {
-            var volume = _seVolume;
             foreach (var seData in _seData)
             {
-                seData.volume = volume;
+                float baseVolume = _seMaster.Find(a => a.FileName == seData.clip.name).Volume;
+                seData.rolloffMode = AudioRolloffMode.Linear;
+                seData.volume = _seVolume * baseVolume;
             }
         }
 

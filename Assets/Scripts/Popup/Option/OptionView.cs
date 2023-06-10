@@ -14,11 +14,13 @@ public class OptionView : BaseView
     [SerializeField] private OptionVolume optionBgmVolume = null;
     [SerializeField] private OptionVolume optionSeVolume = null;
 
+    [SerializeField] private List<Toggle> graphicToggles = null;
     public override void Initialize() 
     {
         base.Initialize();
         InitializeInput();
         new OptionPresenter(this);
+        Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
     }
     
     public void InitializeVolume(float bgmVolume,bool bgmMute,float seVolume,bool seMute)
@@ -26,6 +28,17 @@ public class OptionView : BaseView
         optionBgmVolume.Initialize(bgmVolume,bgmMute,(a) => CallChangeBGMVolume(a),(a) => CallChangeBGMMute(a));
         optionSeVolume.Initialize(seVolume,seMute,(a) => CallChangeSEVolume(a),(a) => CallChangeSEMute(a));
     }
+    
+    public void InitializeGraphic(int graphicIndex)
+    {
+        UpdateGraphicIndex(graphicIndex);
+        for (int i = 0;i < graphicToggles.Count;i++)
+        {
+            int j = graphicToggles.Count-i;
+            graphicToggles[i].onValueChanged.AddListener((a) => ChangeGraphicIndex(a,j));
+        }
+    }
+
 
     public void SetEvent(System.Action<OptionViewEvent> commandData)
     {
@@ -36,6 +49,7 @@ public class OptionView : BaseView
     {
         CreateBackCommand(() => 
         {    
+            Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cancel);
             if (backEvent != null) backEvent();
         });
         SetActiveBack(true);
@@ -82,6 +96,24 @@ public class OptionView : BaseView
         _commandData(eventData);
     }
 
+    private void ChangeGraphicIndex(bool isChange,int toggleIndex)
+    {
+        if (isChange == false) return;
+        var eventData = new OptionViewEvent(CommandType.ChangeGraphicIndex);
+        eventData.templete = toggleIndex;
+        _commandData(eventData);
+    }
+
+
+    private void UpdateGraphicIndex(int graphicIndex)
+    {
+        for (int i = 0;i < graphicToggles.Count;i++)
+        {
+            graphicToggles[i].isOn = (graphicToggles.Count-i) == graphicIndex;
+        }
+    }
+
+
     public void CommandSelectCategory(int optionIndex)
     {
         for (int i = 0;i < optionObjs.Count ; i++)
@@ -102,6 +134,7 @@ namespace Option
         ChangeBGMMute = 1002,
         ChangeSEValue = 1011,
         ChangeSEMute = 1012,
+        ChangeGraphicIndex = 1021,
     }
 }
 public class OptionViewEvent

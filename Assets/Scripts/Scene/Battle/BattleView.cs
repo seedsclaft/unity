@@ -26,6 +26,7 @@ public class BattleView : BaseView
 
     [SerializeField] private Button escapeButton = null;
     [SerializeField] private Button ruleButton = null;
+    [SerializeField] private Button optionButton = null;
     [SerializeField] private SkillInfoComponent skillInfoComponent = null;
     private BattleStartAnim _battleStartAnim = null;
 
@@ -117,6 +118,7 @@ public class BattleView : BaseView
         escapeButton.onClick.AddListener(() => OnClickEscape());
         SetEscapeButton(false);
         ruleButton.onClick.AddListener(() => OnClickRuling());
+        optionButton.onClick.AddListener(() => OnClickOption());
         SetRuleButton(false);
         //_helpWindow = prefab.GetComponent<HelpWindow>();
     }
@@ -153,6 +155,12 @@ public class BattleView : BaseView
     private void OnClickRuling()
     {
         var eventData = new BattleViewEvent(CommandType.Rule);
+        _commandData(eventData);
+    }
+
+    private void OnClickOption()
+    {
+        var eventData = new BattleViewEvent(CommandType.Option);
         _commandData(eventData);
     }
 
@@ -561,6 +569,7 @@ namespace Battle
         Back,
         Escape,
         Rule,
+        Option,
         BattleCommand,
         AttributeType,
         DecideActor,

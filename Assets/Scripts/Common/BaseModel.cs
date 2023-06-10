@@ -85,6 +85,7 @@ public class BaseModel
         Ryneus.SoundManager.Instance._bgmMute = saveConfigInfo._bgmMute;
         ChangeSEValue(saveConfigInfo._seVolume);
         Ryneus.SoundManager.Instance._seMute = saveConfigInfo._seMute;
+        ChangeGraphicIndex(saveConfigInfo._graphicIndex);
     }
 
     public float BGMVolume(){ return Ryneus.SoundManager.Instance._bgmVolume;}
@@ -110,6 +111,13 @@ public class BaseModel
     public void ChangeSEMute(bool seMute)
     {
         Ryneus.SoundManager.Instance._seMute = seMute;
+    }
+
+    public int GraphicIndex() { return GameSystem.ConfigData._graphicIndex; }
+    public void ChangeGraphicIndex(int graphicIndex)
+    {
+        GameSystem.ConfigData._graphicIndex = graphicIndex;
+        QualitySettings.SetQualityLevel(graphicIndex);
     }
 
     public List<StagesData.StageEventData> StageEventDatas{ 

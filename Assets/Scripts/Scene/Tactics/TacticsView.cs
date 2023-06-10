@@ -32,6 +32,8 @@ public class TacticsView : BaseView
     [SerializeField] private TacticsAlcana tacticsAlcana = null;
     [SerializeField] private Button ruleButton = null;
 
+    [SerializeField] private Button optionButton = null;
+
     private HelpWindow _helpWindow = null;
 
     private CommandType _lastCallEventType = CommandType.None;
@@ -50,6 +52,7 @@ public class TacticsView : BaseView
         SetInputHandler(tacticsTrainList.GetComponent<IInputHandlerEvent>());
         
         ruleButton.onClick.AddListener(() => OnClickRuling());
+        optionButton.onClick.AddListener(() => OnClickOption());
         SetRuleButton(true);
 
         new TacticsPresenter(this);
@@ -99,6 +102,12 @@ public class TacticsView : BaseView
     private void OnClickRuling()
     {
         var eventData = new TacticsViewEvent(CommandType.Rule);
+        _commandData(eventData);
+    }
+
+    private void OnClickOption()
+    {
+        var eventData = new TacticsViewEvent(CommandType.Option);
         _commandData(eventData);
     }
 
@@ -581,7 +590,8 @@ namespace Tactics
         OpenAlcana,
         CallEnemyInfo,
         Back,
-        Rule
+        Rule,
+        Option
     }
 }
 
