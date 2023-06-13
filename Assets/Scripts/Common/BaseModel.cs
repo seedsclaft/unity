@@ -60,6 +60,21 @@ public class BaseModel
         return members;
     }
 
+    public List<ActorInfo> ResultMembers()
+    {
+        List<int> SelectActorIds = CurrentStage.SelectActorIds;
+        var members = new List<ActorInfo>();
+        for (int i = 0;i < SelectActorIds.Count ;i++)
+        {
+            var temp = Actors().Find(a => a.ActorId == SelectActorIds[i]);
+            if (temp != null)
+            {
+                members.Add(temp);
+            }
+        }
+        return members;
+    }
+
     public string TacticsBgmFilename()
     {
         if (CurrentStage != null)
@@ -118,6 +133,11 @@ public class BaseModel
     {
         GameSystem.ConfigData._graphicIndex = graphicIndex;
         QualitySettings.SetQualityLevel(graphicIndex);
+    }
+
+    public string PlayerName()
+    {
+        return CurrentData.PlayerInfo.PlayerName;
     }
 
     public List<StagesData.StageEventData> StageEventDatas{ 

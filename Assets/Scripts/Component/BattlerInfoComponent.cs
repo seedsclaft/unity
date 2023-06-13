@@ -293,7 +293,7 @@ public class BattlerInfoComponent : MonoBehaviour
             {
                 _damageHandler(_battlerInfo.Index);
                 _damageHandler = null;
-                _animationEndTiming = 48;
+                _animationEndTiming = 60;
             }
         }
         if (_animationEndTiming > 0)

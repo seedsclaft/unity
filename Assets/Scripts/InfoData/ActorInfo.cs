@@ -415,4 +415,25 @@ public class ActorInfo
     {
         _demigodParam += param;
     }
+
+    public int Evaluate()
+    {
+        int evaluate = 0;
+        int statusParam = CurrentParameter(StatusParamType.Hp) * 1
+        + CurrentParameter(StatusParamType.Mp) * 1
+        + CurrentParameter(StatusParamType.Atk) * 2
+        + CurrentParameter(StatusParamType.Def) * 2
+        + CurrentParameter(StatusParamType.Spd) * 2;
+        int magicParam = 0;
+        foreach (var skillInfo in Skills)
+        {
+            magicParam += skillInfo.Master.Rank * 40;
+        }
+        int attibuteParam = 0;
+        foreach (var attribute in Attribute)
+        {
+            attibuteParam += attribute / 5;
+        }
+        return evaluate + statusParam + magicParam + attibuteParam + DemigodParam * 5;
+    }
 }

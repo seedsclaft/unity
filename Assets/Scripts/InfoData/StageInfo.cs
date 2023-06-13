@@ -42,6 +42,9 @@ public class StageInfo
     private int _randomTroopCount = 14;
 
     private int _baseTroopId = 1000;
+    private EndingType _endingType = EndingType.D;
+    public EndingType EndingType { get { return _endingType;}}
+    public void SetEndingType(EndingType endingType) {_endingType = endingType;}
 
     public StageInfo(StagesData.StageData stageInfo)
     {

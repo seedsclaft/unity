@@ -51,6 +51,8 @@ public class ResourceSystem : MonoBehaviour
             return path + "Tactics/TacticsScene";
             case Scene.Strategy:
             return path + "Strategy/StrategyScene";
+            case Scene.Result:
+            return path + "Result/ResultScene";
         }
         return "";
     }
@@ -132,5 +134,6 @@ public enum Scene
     Map,
     Status,
     Tactics,
-    Strategy
+    Strategy,
+    Result
 }

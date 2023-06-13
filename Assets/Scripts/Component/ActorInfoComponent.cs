@@ -83,7 +83,7 @@ public class ActorInfoComponent : MonoBehaviour
         }
         
         if (evaluate != null){
-            evaluate.text = CalcActorEvaluate(actorInfo).ToString();
+            evaluate.text = actorInfo.Evaluate().ToString();
         }
     }
 
@@ -236,26 +236,5 @@ public class ActorInfoComponent : MonoBehaviour
             awakenFaceThumb.sprite = null;
             awakenFaceThumb.gameObject.SetActive(false);
         }
-    }
-
-    private int CalcActorEvaluate(ActorInfo actorInfo)
-    {
-        int evaluate = 0;
-        int statusParam = actorInfo.CurrentParameter(StatusParamType.Hp) * 1
-        + actorInfo.CurrentParameter(StatusParamType.Mp) * 1
-        + actorInfo.CurrentParameter(StatusParamType.Atk) * 2
-        + actorInfo.CurrentParameter(StatusParamType.Def) * 2
-        + actorInfo.CurrentParameter(StatusParamType.Spd) * 2;
-        int magicParam = 0;
-        foreach (var skillInfo in actorInfo.Skills)
-        {
-            magicParam += skillInfo.Master.Rank * 40;
-        }
-        int attibuteParam = 0;
-        foreach (var attribute in actorInfo.Attribute)
-        {
-            attibuteParam += attribute / 5;
-        }
-        return evaluate + statusParam + magicParam + attibuteParam + actorInfo.DemigodParam * 5;
     }
 }

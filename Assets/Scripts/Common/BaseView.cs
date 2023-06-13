@@ -124,6 +124,13 @@ abstract public class BaseView : MonoBehaviour
         CallSceneChangeCommand(eventData);
     }
 
+    public void CommandCallRanking(System.Action endEvent)
+    {
+        var eventData = new ViewEvent(Scene.Base, Base.CommandType.CallRankingView);
+        eventData.templete = endEvent;
+        CallSceneChangeCommand(eventData);
+    }
+
     public void CommandCallStatus(StatusViewInfo statusViewInfo)
     {
         var eventData = new ViewEvent(Scene.Base, Base.CommandType.CallStatusView);
@@ -182,6 +189,13 @@ abstract public class BaseView : MonoBehaviour
         CallSceneChangeCommand(eventData);
     }
 
+    public void CommandSendRankingData(System.Action<string> endEvent)
+    {
+        var eventData = new ViewEvent(Scene.Base, Base.CommandType.SendRankingData);
+        eventData.templete = endEvent;
+        CallSceneChangeCommand(eventData);
+    }
+
     public void CreateBackCommand(System.Action callEvent)
     {
         GameObject prefab = Instantiate(backPrefab);
@@ -222,6 +236,7 @@ namespace Base
         CloseConfirm,
         CallRulingView,
         CallOptionView,
+        CallRankingView,
         CallStatusView,
         CloseStatus,
         CallAdvScene,
@@ -231,6 +246,7 @@ namespace Base
         CallLoading,
         CloseLoading,
         SendRankingData,
+        SendRankingEnd,
         SetRouteSelect
     }
 }

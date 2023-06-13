@@ -32,11 +32,11 @@ public class BattleStateOverlay : MonoBehaviour
             return;
         }
         float delay = 0.5f;
-        float duation = 2.0f;
+        float duation = 1.0f;
         if (_iconAnimIndex < 0 || _iconAnimIndex > (_stateInfos.Count-1))
         {
-            delay = 0;
-            duation = 0;
+            //delay = 0;
+            //duation = 0;
             _iconAnimIndex = 0;
         }
         UpdateStateIcon();
@@ -44,13 +44,26 @@ public class BattleStateOverlay : MonoBehaviour
         {
             if (_iconSequence == null)
             {
-                Sequence _sequence = DOTween.Sequence()
+                _iconSequence = DOTween.Sequence()
+                    .SetDelay(delay + duation)
+                    .OnComplete(() => {
+                        _iconAnimIndex += 1;
+                        IconAnimation();
+                    });
+            } else
+            {
+                _iconSequence.Kill(false);
+                _iconSequence = DOTween.Sequence()
                     .SetDelay(delay + duation)
                     .OnComplete(() => {
                         _iconAnimIndex += 1;
                         IconAnimation();
                     });
             }
+        } else
+        {
+            StopAnimation();
+            _iconAnimIndex = 0;
         }
     }
 
@@ -95,7 +108,6 @@ public class BattleStateOverlay : MonoBehaviour
     private void UpdateStateOverlay()
     {
         effekseerEmitter.enabled = true;
-        effekseerEmitter.isLooping = true;
         string path = "Animations/" + _overlayEffectPath;
         var result = UnityEngine.Resources.Load<EffekseerEffectAsset>(path);
         if (result != null) effekseerEmitter.Play(result);

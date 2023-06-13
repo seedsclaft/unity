@@ -6,6 +6,7 @@ using Utage;
 using UtageExtensions;
 using Firebase.Firestore;
 using Firebase.Extensions;
+using Cysharp.Threading.Tasks;
 
 public class GameSystem : MonoBehaviour
 {
@@ -15,6 +16,7 @@ public class GameSystem : MonoBehaviour
     [SerializeField] private GameObject confirmPrefab = null;
     [SerializeField] private GameObject rulingPrefab = null;
     [SerializeField] private GameObject optionPrefab = null;
+    [SerializeField] private GameObject rankingPrefab = null;
     [SerializeField] private GameObject statusRoot = null;
     [SerializeField] private GameObject statusPrefab = null;
     [SerializeField] private GameObject enemyInfoPrefab = null;
@@ -36,7 +38,7 @@ public class GameSystem : MonoBehaviour
     public static SaveConfigInfo ConfigData = null;
     public static TempInfo CurrentTempData = null;
 
-    FirebaseFirestore db;
+    public static FirebaseFirestore db;
     private bool _busy = false;
     public bool Busy {get {return _busy;}}
     private void Awake() 
@@ -67,6 +69,14 @@ public class GameSystem : MonoBehaviour
     private GameObject CreateOption()
     {
         var prefab = Instantiate(optionPrefab);
+        prefab.transform.SetParent(confirmRoot.transform, false);
+        confirmRoot.gameObject.SetActive(false);
+        return prefab;
+    }
+
+    private GameObject CreateRanking()
+    {
+        var prefab = Instantiate(rankingPrefab);
         prefab.transform.SetParent(confirmRoot.transform, false);
         confirmRoot.gameObject.SetActive(false);
         return prefab;
@@ -213,6 +223,27 @@ public class GameSystem : MonoBehaviour
             if (_statusView) _statusView.SetBusy(true);
             if (_enemyInfoView) _enemyInfoView.SetBusy(true);
         }
+        if (viewEvent.commandType == Base.CommandType.CallRankingView)
+        {
+            if (_popupView != null)
+            {
+                DestroyImmediate(_popupView.gameObject);
+            }
+            var prefab = CreateRanking();
+            _popupView = prefab.GetComponent<RankingView>();
+            var rankingView = (_popupView as RankingView);
+            rankingView.Initialize();
+            rankingView.SetBackEvent(() => 
+            {
+                updateCommand(new ViewEvent(Scene.Base,Base.CommandType.CloseConfirm));
+                var endEvent = (System.Action)viewEvent.templete;
+                if ((System.Action)viewEvent.templete != null) endEvent();
+            });
+            confirmRoot.gameObject.SetActive(true);
+            _currentScene.SetBusy(true);
+            if (_statusView) _statusView.SetBusy(true);
+            if (_enemyInfoView) _enemyInfoView.SetBusy(true);
+        }
         if (viewEvent.commandType == Base.CommandType.CallStatusView)
         {
             if (_statusView != null)
@@ -296,6 +327,11 @@ public class GameSystem : MonoBehaviour
             int routeSelect = (int)advEngine.Param.GetParameter("RouteSelect");
             CurrentData.CurrentStage.SetRouteSelect(routeSelect);
         }
+        if (viewEvent.commandType == Base.CommandType.SendRankingData)
+        {
+            _currentScene.SetBusy(true);
+            SendRankingData((System.Action<string>)viewEvent.templete);
+        }
     }
 
     IEnumerator JumpScenarioAsync(string label, System.Action onComplete)
@@ -341,19 +377,76 @@ public class GameSystem : MonoBehaviour
         CurrentTempData = templete;
     }
 
-    private void SendRankingData()
+    private void SendRankingData(System.Action<string> endEvent)
     {
         string ranking = "ranking";
         string userName = CurrentData.PlayerInfo.PlayerId.ToString();
-        int score = 0;
+        int evaluate = 0;
+        List<int> SelectActorIds = CurrentData.CurrentStage.SelectActorIds;
+        var members = new List<ActorInfo>();
+        var selectIdx = new List<int>();
+        var selectIdrank = new List<int>();
+        for (int i = 0;i < SelectActorIds.Count ;i++)
+        {
+            var temp = CurrentData.Actors.Find(a => a.ActorId == SelectActorIds[i] && a.Lost == false);
+            if (temp != null)
+            {
+                members.Add(temp);
+            }
+        }
+        foreach (var actorInfo in members)
+        {
+            evaluate += actorInfo.Evaluate();
+            selectIdx.Add(actorInfo.ActorId);
+            selectIdrank.Add(actorInfo.Evaluate());
+        }
         DocumentReference docRef = db.Collection(ranking).Document(userName);
         Dictionary<string, object> user = new Dictionary<string, object>
         {
-                { "Score", score },
+            { "Score", evaluate },
+            { "Name", GameSystem.CurrentData.PlayerInfo.PlayerName },
+            { "SelectIdx", selectIdx },
+            { "SelectRank", selectIdrank },
         };
         docRef.SetAsync(user).ContinueWithOnMainThread(task => {
-                Debug.Log("Added data to the alovelace document in the users collection.");
+            GetRankingData(evaluate,endEvent);
+            Debug.Log("Added data to the alovelace document in the users collection.");
         });
+    }
+
+    
+    private async void GetRankingData(int evaluate,System.Action<string> endEvent)
+    {
+        string ranking = "ranking";
+        var countRef = db.Collection(ranking);
+        var snapshot = await countRef.GetSnapshotAsync();
+        var all = snapshot.Count;
+        var rankAll = await countRef.OrderBy("Score").Limit(100).GetSnapshotAsync();
+        int rank = 0;
+        foreach (var document in rankAll.Documents)
+        {
+            rank += 1;
+            if (document.Id == GameSystem.CurrentData.PlayerInfo.PlayerId.ToString())
+            {
+                Dictionary<string, object> docDictionary = document.ToDictionary();
+                if (docDictionary.ContainsKey("Score"))
+                {
+                    Debug.Log($"Score:{docDictionary["Score"]}");
+                }
+                if (docDictionary.ContainsKey("Name"))
+                {
+                    Debug.Log($"Name:{docDictionary["Name"]}");
+                }
+                break;
+            }
+        }
+        string rankStr = "圏外";
+        if (rank != 0)
+        {
+            rankStr = rank.ToString();
+        }
+        string rankingData = rankStr + " / " + all.ToString() + "位";
+        if (endEvent != null) endEvent(rankingData);
     }
 }
 

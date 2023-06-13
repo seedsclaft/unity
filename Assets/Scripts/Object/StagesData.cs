@@ -63,3 +63,11 @@ public enum StageEventType{
     ChangeRouteSelectStage = 31, // ルート分岐でステージに移動
     RouteSelectBattle = 32 // ルート分岐敵グループを生成
 }
+
+
+public enum EndingType{
+    A,
+    B,
+    C,
+    D
+}

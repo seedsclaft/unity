@@ -8,6 +8,9 @@ public class MainMenuView : BaseView
 {
     [SerializeField] private SpriteRenderer backGround = null; 
     [SerializeField] private MainMenuStageList stageList = null;
+    [SerializeField] private Button rankingButton = null;
+    [SerializeField] private Button ruleButton = null;
+    [SerializeField] private Button optionButton = null;
     [SerializeField] private GameObject helpRoot = null;
     [SerializeField] private GameObject helpPrefab = null;
     private HelpWindow _helpWindow = null;
@@ -18,6 +21,9 @@ public class MainMenuView : BaseView
     {
         base.Initialize();
         InitializeInput();
+        rankingButton.onClick.AddListener(() => OnClickRanking());
+        ruleButton.onClick.AddListener(() => OnClickRuling());
+        optionButton.onClick.AddListener(() => OnClickOption());
         new MainMenuPresenter(this);
     }
 
@@ -44,6 +50,21 @@ public class MainMenuView : BaseView
         _commandData(eventData);
     }
 
+    private void OnClickRuling(){
+        var eventData = new MainMenuViewEvent(CommandType.Rule);
+        _commandData(eventData);
+    }
+
+    private void OnClickOption(){
+        var eventData = new MainMenuViewEvent(CommandType.Option);
+        _commandData(eventData);
+    }
+
+    private void OnClickRanking()
+    {
+        var eventData = new MainMenuViewEvent(CommandType.Ranking);
+        _commandData(eventData);
+    }
 }
 
 namespace MainMenu
@@ -52,6 +73,9 @@ namespace MainMenu
     {
         None = 0,
         StageSelect = 101,
+        Rule = 102,
+        Option = 103,
+        Ranking = 104,
     }
 }
 public class MainMenuViewEvent

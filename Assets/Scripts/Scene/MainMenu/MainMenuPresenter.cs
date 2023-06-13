@@ -51,6 +51,58 @@ public class MainMenuPresenter
             _view.SetActiveUi(false);
             Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
         }
+        if (viewEvent.commandType == CommandType.Rule)
+        {
+            CommandRule();
+        }
+        if (viewEvent.commandType == CommandType.Option)
+        {
+            CommandOption();
+        }
+        if (viewEvent.commandType == CommandType.Ranking)
+        {
+            CommandRanking();
+        }
     }
 
+    private void CommandRule()
+    {
+        Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
+        _view.CommandCallRuling(() => {
+            Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cancel);
+        });
+    }
+
+    private void CommandOption()
+    {
+        _busy = true;
+        _view.CommandCallOption(() => {
+            _busy = false;
+        });
+    }
+
+    private void CommandRanking()
+    {
+        var popupInfo = new ConfirmInfo(DataSystem.System.GetTextData(11100).Text,(menuCommandInfo) => UpdatePopup((ConfirmComandType)menuCommandInfo));
+        _view.CommandCallConfirm(popupInfo);
+    }
+
+    private void UpdatePopup(ConfirmComandType confirmComandType)
+    {
+        if (confirmComandType == ConfirmComandType.Yes)
+        {
+            CommandRankingPopup();
+        } else
+        {
+            _view.CommandConfirmClose();
+        }
+    }
+    
+    private void CommandRankingPopup()
+    {
+        _busy = true;
+        _view.CommandCallRanking(() => {
+            _busy = false;
+        });
+    }
 }
