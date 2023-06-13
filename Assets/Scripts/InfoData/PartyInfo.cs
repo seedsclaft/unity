@@ -90,9 +90,26 @@ public class PartyInfo
         {
             _commandCountInfo[commandType] = 0;
         }
-        int value = _commandCountInfo[commandType] / 4;
+        int needLvUpCount = DataSystem.System.TrainCount;
+        if (commandType == TacticsComandType.Alchemy)
+        {
+            needLvUpCount = DataSystem.System.AlchemyCount;
+        }
+        if (commandType == TacticsComandType.Resource)
+        {
+            needLvUpCount = DataSystem.System.ResourceCount;
+        }
+        if (commandType == TacticsComandType.Recovery)
+        {
+            needLvUpCount = DataSystem.System.RecoveryCount;
+        }
+        if (commandType == TacticsComandType.Battle)
+        {
+            needLvUpCount = DataSystem.System.BattleCount;
+        }
+        int value = _commandCountInfo[commandType] / needLvUpCount;
         _commandCountInfo[commandType] += 1;
-        if (_commandCountInfo[commandType] / 4 != value)
+        if (_commandCountInfo[commandType] / needLvUpCount != value)
         {
             return true;
         }

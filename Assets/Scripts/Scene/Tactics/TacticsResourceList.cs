@@ -40,7 +40,7 @@ public class TacticsResourceList : ListWindow , IInputHandlerEvent
         }
         SetInputHandler((a) => CallInputHandler(a,callEvent));
         commandLv.text = rank.ToString();
-        commandDescription.text = DataSystem.System.GetTextData(10).Text;
+        commandDescription.text = DataSystem.System.GetTextData(10).Text.Replace("\\d",DataSystem.System.ResourceCount.ToString());
         if (rank > 0)
         {
             commandDescription.text = DataSystem.System.GetTextData(15).Text.Replace("\\d",(rank * 10).ToString());

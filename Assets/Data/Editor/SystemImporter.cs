@@ -167,6 +167,26 @@ public class SystemImporter : AssetPostprocessor
 					{
 						Data.InitCurrency = (int)Baserow.GetCell((int)BaseDefineColumn.Param)?.SafeNumericCellValue();
 					}
+					if (KeyName == "trainCount")
+					{
+						Data.TrainCount = (int)Baserow.GetCell((int)BaseDefineColumn.Param)?.SafeNumericCellValue();
+					}
+					if (KeyName == "alchemyCount")
+					{
+						Data.AlchemyCount = (int)Baserow.GetCell((int)BaseDefineColumn.Param)?.SafeNumericCellValue();
+					}
+					if (KeyName == "recoveryCount")
+					{
+						Data.RecoveryCount = (int)Baserow.GetCell((int)BaseDefineColumn.Param)?.SafeNumericCellValue();
+					}
+					if (KeyName == "battleCount")
+					{
+						Data.BattleCount = (int)Baserow.GetCell((int)BaseDefineColumn.Param)?.SafeNumericCellValue();
+					}
+					if (KeyName == "resourceCount")
+					{
+						Data.ResourceCount = (int)Baserow.GetCell((int)BaseDefineColumn.Param)?.SafeNumericCellValue();
+					}
 				}
 			}
 		}

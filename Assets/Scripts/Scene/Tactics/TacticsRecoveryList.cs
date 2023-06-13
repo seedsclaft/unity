@@ -42,7 +42,7 @@ public class TacticsRecoveryList : ListWindow , IInputHandlerEvent
         SetInputHandler((a) => CallInputHandler(a,callEvent,plusEvent,minusEvent));
         UpdateSelectIndex(-1);
         commandLv.text = rank.ToString();
-        commandDescription.text = DataSystem.System.GetTextData(10).Text;
+        commandDescription.text = DataSystem.System.GetTextData(10).Text.Replace("\\d",DataSystem.System.RecoveryCount.ToString());
         if (rank > 0)
         {
             commandDescription.text = DataSystem.System.GetTextData(13).Text.Replace("\\d",(rank * 10).ToString());

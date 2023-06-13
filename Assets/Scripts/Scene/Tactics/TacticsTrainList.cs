@@ -45,7 +45,7 @@ public class TacticsTrainList : ListWindow , IInputHandlerEvent
         }
         UpdateSelectIndex(-1);
         commandLv.text = rank.ToString();
-        commandDescription.text = DataSystem.System.GetTextData(10).Text;
+        commandDescription.text = DataSystem.System.GetTextData(10).Text.Replace("\\d",DataSystem.System.TrainCount.ToString());
         if (rank > 0)
         {
             commandDescription.text = DataSystem.System.GetTextData(11).Text.Replace("\\d",(rank * 10).ToString());

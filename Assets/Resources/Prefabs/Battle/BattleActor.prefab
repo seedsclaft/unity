@@ -419,6 +419,7 @@ RectTransform:
   - {fileID: 2814288687453028742}
   - {fileID: 8059898921914919045}
   - {fileID: 1632968922118462039}
+  - {fileID: 3039710119085652211}
   - {fileID: 9053424838481287344}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -1302,7 +1303,7 @@ RectTransform:
   m_Children:
   - {fileID: 1713284128086726546}
   m_Father: {fileID: 9053424838481287344}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
@@ -1391,12 +1392,12 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 9053424838481287344}
+  m_Father: {fileID: 2592759628661395132}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -60, y: -44}
+  m_AnchoredPosition: {x: -30, y: -12}
   m_SizeDelta: {x: 144, y: 144}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8286948844531953973
@@ -1422,7 +1423,7 @@ MonoBehaviour:
   TimingOfUpdate: 0
   EmitterScale: 0
   TimeScale: 0
-  effectAsset: {fileID: 0}
+  effectAsset: {fileID: 11400000, guid: b1e97a42aafb87241b8820393b5938b9, type: 2}
   playOnStart: 0
   isLooping: 1
 --- !u!1 &5876384369634483897
@@ -1610,10 +1611,9 @@ RectTransform:
   - {fileID: 2683355460053151259}
   - {fileID: 7411407903582184497}
   - {fileID: 783437180757059680}
-  - {fileID: 3039710119085652211}
   - {fileID: 2353558754906936970}
   m_Father: {fileID: 2592759628661395132}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}

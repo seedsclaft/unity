@@ -90,26 +90,30 @@ public class BattleStateOverlay : MonoBehaviour
 
     private void OverlayAnimation()
     {
-        var overlayState = _stateInfos.Find(a => a.Master.EffectPath != "");
+        var overlayState = _stateInfos.Find(a => a.Master.EffectPath != "" && a.Master.EffectPath != "\"\"");
         if (overlayState == null)
         {
             _overlayEffectPath = null;
             effekseerEmitter.Stop();
-            effekseerEmitter.enabled = false;
+            //effekseerEmitter.enabled = false;
             return;
         }
         if (_overlayEffectPath != overlayState.Master.EffectPath)
         {
             _overlayEffectPath = overlayState.Master.EffectPath;
-            UpdateStateOverlay();
+            var asset = UpdateStateOverlay();
+            //effekseerEmitter.enabled = true;
+            if (asset != null) {
+                effekseerEmitter.effectAsset = asset;
+                effekseerEmitter.Play();
+            }
         }
     }
     
-    private void UpdateStateOverlay()
+    private EffekseerEffectAsset UpdateStateOverlay()
     {
-        effekseerEmitter.enabled = true;
         string path = "Animations/" + _overlayEffectPath;
         var result = UnityEngine.Resources.Load<EffekseerEffectAsset>(path);
-        if (result != null) effekseerEmitter.Play(result);
+        return result;
     }
 }

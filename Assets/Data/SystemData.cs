@@ -11,6 +11,11 @@ public class SystemData : ScriptableObject
 	public List<MenuCommandData> TitleCommandData;
 	public List<int> InitActors;
 	public int InitCurrency;
+	public int TrainCount;
+	public int AlchemyCount;
+	public int RecoveryCount;
+	public int BattleCount;
+	public int ResourceCount;
 	public List<TextData> SystemTextData;
 
 	public TextData GetTextData(int id)
