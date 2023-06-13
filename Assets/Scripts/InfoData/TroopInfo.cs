@@ -61,6 +61,10 @@ public class TroopInfo
                 getItemInfo.SetResultData(text);
                 getItemInfo.SetSkillElementId((int)AttributeType.Fire + (int)getItemDatas[i].Type - 11);
             }
+            if (getItemDatas[i].Type == GetItemType.Ending)
+            {
+                getItemInfo.SetResultData(DataSystem.System.GetTextData(14060).Text);
+            }
             AddGetItemInfo(getItemInfo);
         }
     }

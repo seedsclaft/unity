@@ -351,6 +351,15 @@ public class SavePlayInfo
 		var currentStage = new StageInfo(stageData);
 		currentStage.RouteSelectData(current);
 		_currentStage = currentStage;
+		if (stageId == 11){
+			_currentStage.SetEndingType(EndingType.C);
+		} else
+		if (stageId == 12){
+			_currentStage.SetEndingType(EndingType.B);
+		} else
+		if (stageId == 12){
+			_currentStage.SetEndingType(EndingType.A);
+		}
 	}
 }
 

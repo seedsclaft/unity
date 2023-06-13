@@ -115,7 +115,6 @@ namespace Effekseer
 		/// </summary>
 		public EffekseerHandle Play(EffekseerEffectAsset effectAsset)
 		{
-			Debug.LogError(effectAsset.name);
 			var h = EffekseerSystem.PlayEffect(effectAsset, transform.position);
 
 			// must run after loading

@@ -15,10 +15,10 @@ public class RankingInfoComponent : ListItem ,IListViewItem
     [SerializeField] private List<TextMeshProUGUI> actorEvaluates;
 
     private RankingInfo _data; 
-    private int _index; 
+    private int _rankingIndex; 
     public void SetData(RankingInfo data,int index){
         _data = data;
-        _index = index;
+        _rankingIndex = index;
         SetIndex(index);
         UpdateViewItem();
     }
@@ -28,7 +28,7 @@ public class RankingInfoComponent : ListItem ,IListViewItem
         if (_data == null) return;
         playerName.text = _data.Name;
         score.text = _data.Score.ToString();
-        rank.text = (_index+1).ToString() + "位";
+        rank.text = (_rankingIndex+1).ToString() + "位";
         for (int i = 0;i < actorImages.Count;i++)
         {
             if (_data.SelectIdx.Count > i)

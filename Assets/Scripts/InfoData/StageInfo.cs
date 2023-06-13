@@ -46,6 +46,10 @@ public class StageInfo
     public EndingType EndingType { get { return _endingType;}}
     public void SetEndingType(EndingType endingType) {_endingType = endingType;}
 
+    private bool _stageClear = false;
+    public bool StageClaer => _stageClear;
+    public void SetStageClaer(bool stageClear) {_stageClear = stageClear;}
+
     public StageInfo(StagesData.StageData stageInfo)
     {
         _id = stageInfo.Id;
@@ -97,7 +101,7 @@ public class StageInfo
         int max = 2;
         if (troopDatas.Count < 2)
         {
-            max = troopDatas.Count;
+            max = troopDatas.Count - 1;
         }
         List<TroopsData.TroopData> troopsData = new List<TroopsData.TroopData>();
         while (troopsData.Count <= max)

@@ -26,6 +26,27 @@ public class TacticsPresenter :BasePresenter
         _model.RefreshTacticsEnable();
 
         _view.SetHelpWindow();
+        var isGameClear = (_model.CurrentStage.StageClaer);
+        if (isGameClear)
+        {
+            AdvCallInfo advInfo = new AdvCallInfo();
+            int advId = 171;
+            if (_model.CurrentStage.EndingType == EndingType.A)
+            {
+                advId = 173;
+            } else
+            if (_model.CurrentStage.EndingType == EndingType.B)
+            {
+                advId = 172;
+            }
+            advInfo.SetLabel(_model.GetAdvFile(advId));
+            advInfo.SetCallEvent(() => {             
+                _view.CommandSceneChange(Scene.Result);
+            });
+            _view.CommandCallAdv(advInfo);
+            _view.SetActiveUi(false);
+            return;
+        }
 
         var isEndStage = (_model.CurrentStage.SubordinateValue <= 0);
         if (isEndStage)
@@ -44,10 +65,24 @@ public class TacticsPresenter :BasePresenter
         var isGameOver = (_model.Actors().Find(a => a.ActorId == _model.CurrentStage.SelectActorIds[0])).Lost;
         if (isGameOver)
         {
+            _model.CurrentStage.SetEndingType(EndingType.D);
             AdvCallInfo advInfo = new AdvCallInfo();
             advInfo.SetLabel(_model.GetAdvFile(203));
             advInfo.SetCallEvent(() => {             
-                _view.CommandSceneChange(Scene.MainMenu);
+                _view.CommandSceneChange(Scene.Result);
+            });
+            _view.CommandCallAdv(advInfo);
+            _view.SetActiveUi(false);
+            return;
+        }
+        var isTurnOver = (_model.Turns < 0);
+        if (isTurnOver)
+        {
+            _model.CurrentStage.SetEndingType(EndingType.D);
+            AdvCallInfo advInfo = new AdvCallInfo();
+            advInfo.SetLabel(_model.GetAdvFile(204));
+            advInfo.SetCallEvent(() => {             
+                _view.CommandSceneChange(Scene.Result);
             });
             _view.CommandCallAdv(advInfo);
             _view.SetActiveUi(false);

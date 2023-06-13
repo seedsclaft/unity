@@ -36,7 +36,7 @@ public class ResultModel : BaseModel
     public int TotalEvaluate()
     {
         int evaluate = 0;
-        foreach (var actorInfo in StageMembers())
+        foreach (var actorInfo in ResultMembers())
         {
             evaluate += actorInfo.Evaluate();
         }
@@ -71,16 +71,5 @@ public class ResultModel : BaseModel
 
     
     
-    public void EndResult()
-    {
-        CurrentStage.SeekStage();
-        CurrentAlcana.UseAlcana(false);
-        foreach (var actorInfo in StageMembers())
-        {
-            actorInfo.ChangeTacticsCostRate(1);
-        }
-        CurrentStage.ClearTacticsEnemies();
-        CurrentStage.ChangeSubordinate(-5);
-        CurrentAlcana.SetAlacanaState(null);
-    }
+
 }

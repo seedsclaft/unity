@@ -605,6 +605,9 @@ MonoBehaviour:
     - Type: 2
       Param1: 50
       Param2: 100
+    - Type: 3
+      Param1: 5
+      Param2: 100
   - Id: 1
     TroopId: 2200
     EnemyId: 8
@@ -628,6 +631,9 @@ MonoBehaviour:
     GetItemDatas:
     - Type: 2
       Param1: 50
+      Param2: 100
+    - Type: 3
+      Param1: 5
       Param2: 100
   - Id: 1
     TroopId: 2300
@@ -653,6 +659,9 @@ MonoBehaviour:
     - Type: 2
       Param1: 50
       Param2: 100
+    - Type: 3
+      Param1: 5
+      Param2: 100
   - Id: 1
     TroopId: 2400
     EnemyId: 14
@@ -677,6 +686,12 @@ MonoBehaviour:
     - Type: 2
       Param1: 50
       Param2: 100
+    - Type: 3
+      Param1: 5
+      Param2: 100
+    - Type: 21
+      Param1: 0
+      Param2: 0
   - Id: 1
     TroopId: 2500
     EnemyId: 5
@@ -708,6 +723,9 @@ MonoBehaviour:
     - Type: 2
       Param1: 50
       Param2: 100
+    - Type: 3
+      Param1: 5
+      Param2: 100
   - Id: 1
     TroopId: 2600
     EnemyId: 14
@@ -732,4 +750,10 @@ MonoBehaviour:
     - Type: 2
       Param1: 50
       Param2: 100
+    - Type: 3
+      Param1: 5
+      Param2: 100
+    - Type: 21
+      Param1: 0
+      Param2: 0
   _getItemData: []

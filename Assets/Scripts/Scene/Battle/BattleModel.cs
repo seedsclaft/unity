@@ -58,6 +58,10 @@ public class BattleModel : BaseModel
             {
                 return GetBgmData("BOSS1");
             }
+            if (troops.TroopId >= 2000)
+            {
+                return GetBgmData("LAST_BOSS");
+            }
         }
         var battleMembers = PartyMembers();
         return GetBgmData("BATTLE" + (battleMembers[0].ActorId).ToString());

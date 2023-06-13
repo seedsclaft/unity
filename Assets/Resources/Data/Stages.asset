@@ -532,7 +532,7 @@ MonoBehaviour:
   - Id: 11
     Name: "C\u30EB\u30FC\u30C8\u7528"
     Help: '""'
-    Turns: 1
+    Turns: 2
     InitMembers: 00000000
     RandomTroopCount: 1
     BGMId: 05000000
@@ -576,9 +576,9 @@ MonoBehaviour:
   - Id: 12
     Name: "B\u30EB\u30FC\u30C8\u7528"
     Help: '""'
-    Turns: 7
+    Turns: 3
     InitMembers: 00000000
-    RandomTroopCount: 3
+    RandomTroopCount: 1
     BGMId: 05000000
     StageEvents:
     - EventKey: 1StartTacticsRouteSelectBattle0
@@ -590,9 +590,9 @@ MonoBehaviour:
   - Id: 13
     Name: "A\u30EB\u30FC\u30C8\u7528"
     Help: '""'
-    Turns: 7
+    Turns: 3
     InitMembers: 00000000
-    RandomTroopCount: 3
+    RandomTroopCount: 1
     BGMId: 05000000
     StageEvents:
     - EventKey: 1StartTacticsRouteSelectBattle0

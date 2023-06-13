@@ -81,4 +81,5 @@ public enum GetItemType
 	AttributeIce = 13,
 	AttributeShine = 14,
 	AttributeDark = 15,
+	Ending = 21,
 }
