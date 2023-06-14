@@ -2089,14 +2089,14 @@ MonoBehaviour:
     Scope: 1
     SkillType: 1
     TargetType: 1
-    Help: "\u6575\u5358\u4F53\u306B\u546A\u3044\u3092\u4ED8\u4E0E\n\u81EA\u8EAB\u306E\u30C0\u30E1\u30FC\u30B8\u3092\u4ED8\u4E0E\u8005\u306B\u3082\u4E0E\u3048\u308B"
+    Help: "\u6575\u5358\u4F53\u306B\u546A\u3044\u3092\u4ED8\u4E0E(\u6C38\u7D9A)\n\u81EA\u8EAB\u306E\u30C0\u30E1\u30FC\u30B8\u3092\u4ED8\u4E0E\u8005\u306B\u3082\u4E0E\u3048\u308B"
     Range: 1
     AliveOnly: 1
     FeatureDatas:
     - SkillId: 505
       FeatureType: 21
       Param1: 110
-      Param2: 0
+      Param2: 999
       Param3: 0
     TriggerDatas: []
   - Id: 511
@@ -2338,7 +2338,7 @@ MonoBehaviour:
       Param2: 0
       Param3: 0
   - Id: 536
-    Name: "\u30AB\u30BF\u30B9\u30C8\u30ED\u30D5"
+    Name: "\u30A2\u30F3\u30C7\u30C3\u30C9\u30DA\u30A4\u30F3"
     IconIndex: 6
     AnimationName: 
     AnimationPosition: 0
@@ -2350,20 +2350,25 @@ MonoBehaviour:
     Scope: 4
     SkillType: 2
     TargetType: 4
-    Help: "(\u6761\u4EF6)Hp\u304C42\u306E\u6642\n25%\u306E\u78BA\u7387\u3067\u5373\u6B7B\u4ED8\u4E0E"
+    Help: "\u5E38\u6642\u30A2\u30F3\u30C7\u30C3\u30C8\u72B6\u614B\u306B\u306A\u308B"
     Range: 1
     AliveOnly: 1
     FeatureDatas:
     - SkillId: 536
       FeatureType: 21
-      Param1: 114
+      Param1: 117
       Param2: 999
-      Param3: 25
+      Param3: 10
+    - SkillId: 536
+      FeatureType: 2
+      Param1: 5
+      Param2: 0
+      Param3: 0
     TriggerDatas:
     - SkillId: 536
-      TriggerType: 3
-      TriggerTiming: 2
-      Param1: 42
+      TriggerType: 41
+      TriggerTiming: 1
+      Param1: 117
       Param2: 0
       Param3: 0
   - Id: 541
@@ -2388,6 +2393,29 @@ MonoBehaviour:
       Param1: 205
       Param2: 5
       Param3: 20
+    TriggerDatas: []
+  - Id: 601
+    Name: "\u30A8\u30F3\u30C9\u30AA\u30D6\u30E9\u30A4\u30D5"
+    IconIndex: 5
+    AnimationName: NA_Effekseer/NA_magic_009
+    AnimationPosition: 0
+    AnimationType: 3
+    DamageTiming: 56
+    MpCost: 0
+    Rank: 2
+    Attribute: 5
+    Scope: 3
+    SkillType: 1
+    TargetType: 1
+    Help: "\u9B42\u3092\u6D44\u5316\u3059\u308B"
+    Range: 1
+    AliveOnly: 1
+    FeatureDatas:
+    - SkillId: 601
+      FeatureType: 21
+      Param1: 1
+      Param2: 999
+      Param3: 0
     TriggerDatas: []
   - Id: 1000
     Name: "\u611A\u8005"

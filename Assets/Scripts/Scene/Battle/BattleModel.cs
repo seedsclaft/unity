@@ -728,7 +728,7 @@ public class BattleModel : BaseModel
             if (actionResultInfo.HpDamage > 0 && curseStateInfos.Count > 0)
             {
                 SkillsData.FeatureData featureData = new SkillsData.FeatureData();
-                featureData.FeatureType = FeatureType.HpDamage;
+                featureData.FeatureType = FeatureType.HpDefineDamage;
                 featureData.Param1 = actionResultInfo.HpDamage;
                 for (int j = 0; j < curseStateInfos.Count;j++)
                 {

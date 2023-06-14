@@ -393,4 +393,41 @@ public class TacticsModel : BaseModel
     public void TurnEnd()
     {
     }
+
+    
+    public int StartTacticsAdvId()
+    {
+        var isGameClear = CurrentStage.StageClaer;
+        if (isGameClear)
+        {
+            if (CurrentStage.EndingType == EndingType.A)
+            {
+                return 173;
+            } else
+            if (CurrentStage.EndingType == EndingType.B)
+            {
+                return 172;
+            }
+        }
+        var isEndStage = (CurrentStage.SubordinateValue <= 0);
+        if (isEndStage)
+        {
+            SetIsSubordinate(false);
+            ChangeRouteSelectStage(11);
+            return 171;
+        }
+        var isGameOver = (Actors().Find(a => a.ActorId == CurrentStage.SelectActorIds[0])).Lost;
+        if (isGameOver)
+        {
+            CurrentStage.SetEndingType(EndingType.D);
+            return 203;
+        }
+        var isTurnOver = (Turns < 0);
+        if (isTurnOver)
+        {
+            CurrentStage.SetEndingType(EndingType.D);
+            return 204;
+        }
+        return -1;
+    }
 }

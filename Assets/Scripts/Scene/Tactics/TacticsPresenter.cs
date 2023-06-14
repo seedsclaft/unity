@@ -26,69 +26,25 @@ public class TacticsPresenter :BasePresenter
         _model.RefreshTacticsEnable();
 
         _view.SetHelpWindow();
-        var isGameClear = (_model.CurrentStage.StageClaer);
-        if (isGameClear)
+        var StartTacticsAdvId = _model.StartTacticsAdvId();
+        if (StartTacticsAdvId > -1)
         {
             AdvCallInfo advInfo = new AdvCallInfo();
-            int advId = 171;
-            if (_model.CurrentStage.EndingType == EndingType.A)
-            {
-                advId = 173;
-            } else
-            if (_model.CurrentStage.EndingType == EndingType.B)
-            {
-                advId = 172;
-            }
-            advInfo.SetLabel(_model.GetAdvFile(advId));
-            advInfo.SetCallEvent(() => {             
-                _view.CommandSceneChange(Scene.Result);
+            advInfo.SetLabel(_model.GetAdvFile(StartTacticsAdvId));
+            advInfo.SetCallEvent(() => {
+                if (StartTacticsAdvId == 171)
+                {
+                    _view.CommandSceneChange(Scene.Tactics);
+                } else
+                {
+                    _view.CommandSceneChange(Scene.Result);
+                }    
             });
             _view.CommandCallAdv(advInfo);
             _view.SetActiveUi(false);
             return;
         }
-
-        var isEndStage = (_model.CurrentStage.SubordinateValue <= 0);
-        if (isEndStage)
-        {
-            AdvCallInfo advInfo = new AdvCallInfo();
-            advInfo.SetLabel(_model.GetAdvFile(171));
-            advInfo.SetCallEvent(() => {             
-                _view.CommandSceneChange(Scene.Tactics);
-            });
-            _view.CommandCallAdv(advInfo);
-            _model.SetIsSubordinate(false);
-            _model.ChangeRouteSelectStage(11);
-            _view.SetActiveUi(false);
-            return;
-        }
-        var isGameOver = (_model.Actors().Find(a => a.ActorId == _model.CurrentStage.SelectActorIds[0])).Lost;
-        if (isGameOver)
-        {
-            _model.CurrentStage.SetEndingType(EndingType.D);
-            AdvCallInfo advInfo = new AdvCallInfo();
-            advInfo.SetLabel(_model.GetAdvFile(203));
-            advInfo.SetCallEvent(() => {             
-                _view.CommandSceneChange(Scene.Result);
-            });
-            _view.CommandCallAdv(advInfo);
-            _view.SetActiveUi(false);
-            return;
-        }
-        var isTurnOver = (_model.Turns < 0);
-        if (isTurnOver)
-        {
-            _model.CurrentStage.SetEndingType(EndingType.D);
-            AdvCallInfo advInfo = new AdvCallInfo();
-            advInfo.SetLabel(_model.GetAdvFile(204));
-            advInfo.SetCallEvent(() => {             
-                _view.CommandSceneChange(Scene.Result);
-            });
-            _view.CommandCallAdv(advInfo);
-            _view.SetActiveUi(false);
-            return;
-        }
-
+        
         var isAbort = CheckAdvStageEvent(EventTiming.BeforeTactics,() => {
             _view.CommandSceneChange(Scene.Tactics);
         },_model.CurrentStage.SelectActorIds[0]);

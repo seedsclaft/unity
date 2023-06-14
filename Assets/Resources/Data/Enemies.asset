@@ -712,11 +712,31 @@ MonoBehaviour:
       _atk: 40
       _def: 20
       _spd: 30
-    Kinds: 
+    Kinds: 01000000
     LearningSkills:
     - SkillId: 1
       Level: 1
       Weight: 30
+      TriggerDatas: []
+    - SkillId: 41
+      Level: 1
+      Weight: 50
+      TriggerDatas: []
+    - SkillId: 42
+      Level: 1
+      Weight: 50
+      TriggerDatas: []
+    - SkillId: 505
+      Level: 1
+      Weight: 50
+      TriggerDatas: []
+    - SkillId: 511
+      Level: 1
+      Weight: 50
+      TriggerDatas: []
+    - SkillId: 512
+      Level: 1
+      Weight: 50
       TriggerDatas: []
   - Id: 202
     Name: "\u30C7\u30AB\u30E9\u30D3\u30A2"
@@ -730,6 +750,18 @@ MonoBehaviour:
     Kinds: 
     LearningSkills:
     - SkillId: 1
+      Level: 1
+      Weight: 30
+      TriggerDatas: []
+    - SkillId: 202
+      Level: 1
+      Weight: 30
+      TriggerDatas: []
+    - SkillId: 211
+      Level: 1
+      Weight: 30
+      TriggerDatas: []
+    - SkillId: 212
       Level: 1
       Weight: 30
       TriggerDatas: []
@@ -748,6 +780,18 @@ MonoBehaviour:
       Level: 1
       Weight: 30
       TriggerDatas: []
+    - SkillId: 305
+      Level: 1
+      Weight: 30
+      TriggerDatas: []
+    - SkillId: 311
+      Level: 1
+      Weight: 30
+      TriggerDatas: []
+    - SkillId: 312
+      Level: 1
+      Weight: 30
+      TriggerDatas: []
   - Id: 204
     Name: "\u30E1\u30D5\u30A3\u30B9\u30C8\u30D5\u30A7\u30EC\u30B9"
     ImagePath: Mephisto
@@ -763,6 +807,18 @@ MonoBehaviour:
       Level: 1
       Weight: 30
       TriggerDatas: []
+    - SkillId: 434
+      Level: 1
+      Weight: 30
+      TriggerDatas: []
+    - SkillId: 411
+      Level: 1
+      Weight: 30
+      TriggerDatas: []
+    - SkillId: 412
+      Level: 1
+      Weight: 30
+      TriggerDatas: []
   - Id: 205
     Name: "\u30A2\u30B9\u30BF\u30ED\u30C8"
     ImagePath: Astaroth
@@ -772,9 +828,21 @@ MonoBehaviour:
       _atk: 40
       _def: 20
       _spd: 30
-    Kinds: 01000000
+    Kinds: 
     LearningSkills:
     - SkillId: 1
+      Level: 1
+      Weight: 30
+      TriggerDatas: []
+    - SkillId: 102
+      Level: 1
+      Weight: 30
+      TriggerDatas: []
+    - SkillId: 111
+      Level: 1
+      Weight: 30
+      TriggerDatas: []
+    - SkillId: 112
       Level: 1
       Weight: 30
       TriggerDatas: []
@@ -793,6 +861,16 @@ MonoBehaviour:
       Level: 1
       Weight: 30
       TriggerDatas: []
+    - SkillId: 601
+      Level: 1
+      Weight: 30
+      TriggerDatas:
+      - SkillId: 0
+        TriggerType: 1
+        TriggerTiming: 1
+        Param1: 50
+        Param2: 0
+        Param3: 0
   _textdata:
   - Id: 1
     Text: 2
@@ -868,4 +946,7 @@ MonoBehaviour:
     Help: 
   - Id: 105
     Text: 405
+    Help: 
+  - Id: 206
+    Text: 601
     Help: 
