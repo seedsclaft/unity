@@ -7,12 +7,16 @@ using DG.Tweening;
 public class StrategyActor : ListItem ,IListViewItem  
 {   
     [SerializeField] private ActorInfoComponent component;
-    private ActorInfo _data; 
+    [SerializeField] private _2dxFX_Shiny_Reflect shinyReflect;
+    [SerializeField] private Image bonusImage;    
+    private ActorInfo _data;    
+    private bool _isBonus; 
 
     private System.Action _callEvent = null;
 
-    public void SetData(ActorInfo data){
+    public void SetData(ActorInfo data,bool isBonus){
         _data = data;
+        _isBonus = isBonus;
         UpdateViewItem();
     }
 
@@ -37,7 +41,29 @@ public class StrategyActor : ListItem ,IListViewItem
             .Append(gameObject.transform.DOLocalMoveY(0,1.0f))
             .SetEase(Ease.OutQuad)
             .OnComplete(() => {
+                if (_isBonus) 
+                {
+                    StartBonusAnimation();
+                }
                 if (_callEvent != null) _callEvent();
+            });
+    }
+
+    private void StartBonusAnimation()
+    {
+        int rand = Random.Range(1,100);
+        bonusImage.transform.DOScaleY(0,0.0f);
+        Sequence sequence = DOTween.Sequence()
+            .Append(bonusImage.transform.DOScaleY(1.5f,0.4f))
+            .Join(bonusImage.DOFade(0.75f,0.1f))
+            .Append(bonusImage.DOFade(0.0f,0.3f))
+            .SetEase(Ease.OutQuad)
+            .OnComplete(() => {
+                Sequence sequence = DOTween.Sequence()
+                .SetDelay(rand * 0.01f)
+                .OnComplete(() => {
+                    shinyReflect.enabled = true;
+                });
             });
     }
 

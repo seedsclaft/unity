@@ -17,6 +17,9 @@ public class StrategyModel : BaseModel
     private List<ActorInfo> _levelUpBonusData = new List<ActorInfo>();
     public List<ActorInfo> LevelUpData { get {return _levelUpData;}}
 
+    private List<GetItemInfo> _resultItemInfos = new ();
+    public List<GetItemInfo> ResultGetItemInfos { get {return _resultItemInfos;}}
+
     public bool CheckUseSp()
     {
         ActorInfo actorInfo = StageMembers()[0];
@@ -64,7 +67,7 @@ public class StrategyModel : BaseModel
         _levelUpData = lvupList;
     }
 
-    public List<GetItemInfo> SetResult()
+    public void SetResult()
     {
         // Party初期化
         PartyInfo.InitActors();
@@ -193,7 +196,7 @@ public class StrategyModel : BaseModel
             actorInfos[i].ClearTacticsCommand();
         }
 
-        return getItemInfos;
+        _resultItemInfos = getItemInfos;
     }
 
     public void SetLevelUpStatus()
@@ -363,6 +366,16 @@ public class StrategyModel : BaseModel
         noCommand.Id = 1;
         menuCommandDatas.Add(noCommand);
         return menuCommandDatas;
+    }
+
+    public bool IsBonusTactics(int actorId)
+    {
+        var result = _resultInfos.Find(a => a.ActorId == actorId);
+        if (result != null)
+        {
+            return result.IsBonus;
+        }
+        return false;
     }
     
     public void EndStrategy()

@@ -131,10 +131,10 @@ public class StrategyView : BaseView
         _commandData(eventData);
     }
 
-    public void StartResultAnimation(List<ActorInfo> actorInfos)
+    public void StartResultAnimation(List<ActorInfo> actorInfos,List<bool> isBonusList = null)
     {
         strategyActorList.gameObject.SetActive(true);
-        strategyActorList.StartResultAnimation(actorInfos,() => {
+        strategyActorList.StartResultAnimation(actorInfos,isBonusList,() => {
             CallEndAnimation();
         });
     }

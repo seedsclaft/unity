@@ -122,8 +122,13 @@ public class ResultView : BaseView
     
     public void StartResultAnimation(List<ActorInfo> actorInfos)
     {
+        var bonusDummy = new List<bool>();
+        foreach (var item in actorInfos)
+        {
+            bonusDummy.Add(false);
+        }
         strategyActorList.gameObject.SetActive(true);
-        strategyActorList.StartResultAnimation(actorInfos,() => {
+        strategyActorList.StartResultAnimation(actorInfos,bonusDummy,() => {
         });
     }
 

@@ -95,9 +95,15 @@ public class StrategyPresenter : BasePresenter
         List<ActorInfo> battledMembers = _model.CheckInBattleActors();
         if (battledMembers != null && battledMembers.Count > 0)
         {
+            _model.SetResult();
+            var bonusList = new List<bool>();
+            foreach (var item in battledMembers)
+            {
+                bonusList.Add(_model.PartyInfo.CommandRankInfo[TacticsComandType.Battle] > 0);
+            }
             _isBattleEnded = true;
             _view.SetTitle(DataSystem.System.GetTextData(14030).Text);
-            _view.StartResultAnimation(battledMembers);
+            _view.StartResultAnimation(battledMembers,bonusList);
         } else
         {
             CheckTacticsActors();
@@ -133,8 +139,7 @@ public class StrategyPresenter : BasePresenter
         if (_isBattle == false){
             if (_model.LevelUpData.Count == 0)
             {
-                List<GetItemInfo> getItemInfos = _model.SetResult();
-                _view.ShowResultList(getItemInfos);
+                _view.ShowResultList(_model.ResultGetItemInfos);
             }
         } else{
             _view.ShowEnemyList(_model.CurrentTroopInfo());
@@ -183,8 +188,7 @@ public class StrategyPresenter : BasePresenter
             CommandEndLvupAnimation();
         } else
         {
-            List<GetItemInfo> getItemInfos = _model.SetResult();
-            _view.ShowResultList(getItemInfos);
+            _view.ShowResultList(_model.ResultGetItemInfos);
         }
     }
 
@@ -246,9 +250,15 @@ public class StrategyPresenter : BasePresenter
         List<ActorInfo> tacticsActors = _model.TacticsActors();
         if (tacticsActors.Count > 0)
         {
-            _view.SetTitle(DataSystem.System.GetTextData(14020).Text);
-            _view.StartResultAnimation(tacticsActors);
             _model.SetLvup();
+            _model.SetResult();
+            var bonusList = new List<bool>();
+            foreach (var item in tacticsActors)
+            {
+                bonusList.Add(_model.IsBonusTactics(item.ActorId));
+            }
+            _view.SetTitle(DataSystem.System.GetTextData(14020).Text);
+            _view.StartResultAnimation(tacticsActors,bonusList);
             if (_model.LevelUpData.Count > 0)
             {
                 _view.StartLvUpAnimation();

@@ -22,14 +22,15 @@ public class StrategyActorList : MonoBehaviour
         }
     }
 
-    public void StartResultAnimation(List<ActorInfo> actors,System.Action callEvent)
+    public void StartResultAnimation(List<ActorInfo> actors,List<bool> isBonusList,System.Action callEvent)
     {
         for (int i = 0; i < _comps.Count;i++)
         {
+            bool isBonus = (isBonusList != null && isBonusList.Count > i) ? isBonusList[i] : false;
             _comps[i].gameObject.SetActive(false);
             if (i < actors.Count)
             {
-                _comps[i].SetData(actors[i]);
+                _comps[i].SetData(actors[i],isBonus);
                 _comps[i].StartResultAnimation(i);
                 _comps[i].gameObject.SetActive(true);
                 if (i == actors.Count-1)
