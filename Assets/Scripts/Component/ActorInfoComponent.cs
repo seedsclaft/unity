@@ -14,6 +14,7 @@ public class ActorInfoComponent : MonoBehaviour
     public Image FaceThumb {get {return faceThumb;}}
     [SerializeField] private Image awakenFaceThumb;
     public Image AwakenFaceThumb {get {return awakenFaceThumb;}}
+    [SerializeField] private Image clipingThumb;
     [SerializeField] private TextMeshProUGUI nameText;
     [SerializeField] private TextMeshProUGUI evaluate;
     [SerializeField] private TextMeshProUGUI demigod;
@@ -98,6 +99,9 @@ public class ActorInfoComponent : MonoBehaviour
         if (awakenThumb != null){
             UpdateAwakenThumb(actorData.ImagePath,actorData.AwakenX,actorData.AwakenY,actorData.AwakenScale);
         }
+        if (clipingThumb != null){
+            UpdateClipingThumb(actorData.ImagePath);
+        }
         if (faceThumb != null){
             UpdateMainFaceThumb(actorData.ImagePath);
         }
@@ -132,6 +136,12 @@ public class ActorInfoComponent : MonoBehaviour
             rect.localScale = new Vector3(scale, scale, 1);
             awakenThumb.sprite = handle;
         }
+    }
+
+    private void UpdateClipingThumb(string imagePath)
+    {
+        var handle = Resources.Load<Sprite>("Texture/Character/Actors/" + imagePath + "/Cliping");
+        if (clipingThumb != null) clipingThumb.sprite = handle;
     }
 
     private void UpdateMainFaceThumb(string imagePath)

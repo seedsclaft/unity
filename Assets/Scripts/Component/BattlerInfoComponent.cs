@@ -28,7 +28,7 @@ public class BattlerInfoComponent : MonoBehaviour
     private System.Action<int> _damageHandler;
     private int _damageTiming = 0;
     private int _animationEndTiming = 0;
-    private List<BattleDamage> _battleDamages = new List<BattleDamage>();
+    private List<BattleDamage> _battleDamages = new ();
     private float _deathAnimation = 0.0f;
     public void UpdateInfo(BattlerInfo battlerInfo)
     {

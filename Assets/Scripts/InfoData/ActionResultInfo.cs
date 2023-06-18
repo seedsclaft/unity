@@ -6,13 +6,9 @@ using UnityEngine;
 public class ActionResultInfo 
 {
     private int _subjectIndex = 0;
-    public int SubjectIndex{
-        get { return _subjectIndex;}
-    }
+    public int SubjectIndex => _subjectIndex;
     private int _targetIndex = 0;
-    public int TargetIndex{
-        get { return _targetIndex;}
-    }
+    public int TargetIndex => _targetIndex;
 
 
     public ActionResultInfo(BattlerInfo subject,BattlerInfo target,List<SkillsData.FeatureData> featureDatas)
@@ -69,7 +65,7 @@ public class ActionResultInfo
     }
 
     private int _hpDamage = 0;
-    public int HpDamage {get {return _hpDamage;}}
+    public int HpDamage => _hpDamage;
     public void SetHpDamage(int hpDamage)
     {
         _hpDamage = hpDamage;
@@ -79,9 +75,7 @@ public class ActionResultInfo
         get {return _hpHeal;} set{_hpHeal = value;}
     }
     private int _mpDamage = 0;
-    public int MpDamage {
-        get {return _mpDamage;}
-    }
+    public int MpDamage => _mpDamage;
     private int _mpHeal = 0;
     public int MpHeal {
         get {return _mpHeal;} set{_mpHeal = value;}
@@ -91,47 +85,33 @@ public class ActionResultInfo
         get {return _apHeal;} set{_apHeal = value;}
     }
     private int _reDamage = 0;
-    public int ReDamage {get {return _reDamage;}}
+    public int ReDamage => _reDamage;
     public void SetReDamage(int reDamage)
     {
         _reDamage = reDamage;
     }
     private int _reHeal = 0;
-    public int ReHeal {get {return _reHeal;}}
+    public int ReHeal => _reHeal;
     public void SetReHeal(int reHeal)
     {
         _reHeal = reHeal;
     }
-    private List<int> _deadIndexList = new List<int>();
-    public List<int> DeadIndexList {
-        get {return _deadIndexList;}
-    }
-    private List<int> _aliveIndexList = new List<int>();
-    public List<int> AliveIndexList {
-        get {return _aliveIndexList;}
-    }
+    private List<int> _deadIndexList = new ();
+    public List<int> DeadIndexList => _deadIndexList;
+    private List<int> _aliveIndexList = new ();
+    public List<int> AliveIndexList => _aliveIndexList;
 
     private bool _missed = false;
-    public bool Missed {
-        get {return _missed;}
-    }
+    public bool Missed => _missed;
     
-    private List<StateInfo> _addedStates = new List<StateInfo>();
-    public List<StateInfo> AddedStates {
-        get {return _addedStates;}
-    }
-    private List<StateInfo> _removedStates = new List<StateInfo>();
-    public List<StateInfo> RemovedStates {
-        get {return _removedStates;}
-    }
-    private List<StateInfo> _displayStates = new List<StateInfo>();
-    public List<StateInfo> DisplayStates {
-        get {return _displayStates;}
-    }
-    private Dictionary<int,List<StateType>> _execStateInfos = new Dictionary<int, List<StateType>>();
-    public  Dictionary<int,List<StateType>> ExecStateInfos{
-        get {return _execStateInfos;}
-    }
+    private List<StateInfo> _addedStates = new ();
+    public List<StateInfo> AddedStates => _addedStates;
+    private List<StateInfo> _removedStates = new ();
+    public List<StateInfo> RemovedStates => _removedStates;
+    private List<StateInfo> _displayStates = new ();
+    public List<StateInfo> DisplayStates => _displayStates;
+    private Dictionary<int,List<StateType>> _execStateInfos = new ();
+    public  Dictionary<int,List<StateType>> ExecStateInfos => _execStateInfos;
 
     private void MakeFeature(BattlerInfo subject,BattlerInfo target,SkillsData.FeatureData featureData)
     {

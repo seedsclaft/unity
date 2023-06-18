@@ -6,7 +6,6 @@ using MainMenu;
 
 public class MainMenuView : BaseView
 {
-    [SerializeField] private SpriteRenderer backGround = null; 
     [SerializeField] private MainMenuStageList stageList = null;
     [SerializeField] private Button rankingButton = null;
     [SerializeField] private Button ruleButton = null;

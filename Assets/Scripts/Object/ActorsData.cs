@@ -26,13 +26,6 @@ public class ActorsData : ScriptableObject {
         public int AwakenY;
         public float AwakenScale;
         public List<LearningData> LearningSkills = new List<LearningData>();
-        
-        public int CurrentParam(StatusParamType growType,int level)
-        {
-            int init = InitStatus.GetParameter(growType);
-            return init;
-        }
-
     }
 
 }

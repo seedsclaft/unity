@@ -6,6 +6,14 @@ public class MainMenuModel : BaseModel
     public List<StageInfo> Stages(){
         return GameSystem.CurrentData.Stages;
     }
+
+    public void InitPartyInfo()
+    {
+        CurrentData.InitActors();
+        CurrentData.InitPlayer();
+        PartyInfo.InitActors();
+        GameSystem.CurrentData.ClearStageInfo();
+    }
     
     public void SetStageId(int stageId)
     {

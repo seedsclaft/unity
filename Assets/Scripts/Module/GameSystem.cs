@@ -117,7 +117,7 @@ public class GameSystem : MonoBehaviour
         if (viewEvent.commandType == Base.CommandType.SetTemplete)
         {
             CommandSetTemplete((TempInfo)viewEvent.templete);
-        }
+        } else
         if (viewEvent.commandType == Base.CommandType.SceneChange)
         {
             if (testMode && (Scene)viewEvent.templete == Scene.Battle)
@@ -133,20 +133,7 @@ public class GameSystem : MonoBehaviour
             } else{
                 CommandSceneChange((Scene)viewEvent.templete);
             }
-        }
-        if (viewEvent.commandType == Base.CommandType.InitSaveInfo)
-        {
-            var playInfo = new SavePlayInfo();
-            playInfo.InitSaveData();
-            CurrentData = playInfo;
-            Debug.Log("InitSaveInfo");
-        }
-        if (viewEvent.commandType == Base.CommandType.InitConfigInfo)
-        {
-            var configInfo = new SaveConfigInfo();
-            ConfigData = configInfo;
-            Debug.Log("InitConfigInfo");
-        }
+        } else
         if (viewEvent.commandType == Base.CommandType.CallConfirmView)
         {
             if (_popupView != null)
@@ -166,14 +153,14 @@ public class GameSystem : MonoBehaviour
             _currentScene.SetBusy(true);
             if (_statusView) _statusView.SetBusy(true);
             if (_enemyInfoView) _enemyInfoView.SetBusy(true);
-        }
+        } else
         if (viewEvent.commandType == Base.CommandType.CloseConfirm)
         {
             confirmRoot.gameObject.SetActive(false);
             _currentScene.SetBusy(false);
             if (_statusView) _statusView.SetBusy(false);
             if (_enemyInfoView) _enemyInfoView.SetBusy(false);
-        }
+        } else
         if (viewEvent.commandType == Base.CommandType.CallRulingView)
         {
             if (_popupView != null)
@@ -194,7 +181,7 @@ public class GameSystem : MonoBehaviour
             _currentScene.SetBusy(true);
             if (_statusView) _statusView.SetBusy(true);
             if (_enemyInfoView) _enemyInfoView.SetBusy(true);
-        }
+        } else
         if (viewEvent.commandType == Base.CommandType.CallOptionView)
         {
             if (_popupView != null)
@@ -222,7 +209,7 @@ public class GameSystem : MonoBehaviour
             _currentScene.SetBusy(true);
             if (_statusView) _statusView.SetBusy(true);
             if (_enemyInfoView) _enemyInfoView.SetBusy(true);
-        }
+        } else
         if (viewEvent.commandType == Base.CommandType.CallRankingView)
         {
             if (_popupView != null)
@@ -243,7 +230,7 @@ public class GameSystem : MonoBehaviour
             _currentScene.SetBusy(true);
             if (_statusView) _statusView.SetBusy(true);
             if (_enemyInfoView) _enemyInfoView.SetBusy(true);
-        }
+        } else
         if (viewEvent.commandType == Base.CommandType.CallStatusView)
         {
             if (_statusView != null)
@@ -259,13 +246,13 @@ public class GameSystem : MonoBehaviour
             _statusView.SetBackEvent(popupInfo.BackEvent);
             _statusView.SetEvent((type) => updateCommand(type));
             _currentScene.SetBusy(true);
-        }
+        } else
         if (viewEvent.commandType == Base.CommandType.CloseStatus)
         {
             DestroyImmediate(_statusView.gameObject);
             statusRoot.gameObject.SetActive(false);
             _currentScene.SetBusy(false);
-        }
+        } else
         if (viewEvent.commandType == Base.CommandType.CallEnemyInfoView)
         {
             if (_enemyInfoView != null)
@@ -279,13 +266,13 @@ public class GameSystem : MonoBehaviour
             _enemyInfoView.SetBackEvent(popupInfo.BackEvent);
             _enemyInfoView.SetEvent((type) => updateCommand(type));
             _currentScene.SetBusy(true);
-        }
+        } else
         if (viewEvent.commandType == Base.CommandType.CloseEnemyInfo)
         {
             DestroyImmediate(_enemyInfoView.gameObject);
             statusRoot.gameObject.SetActive(false);
             _currentScene.SetBusy(false);
-        }
+        } else
         if (viewEvent.commandType == Base.CommandType.CallAdvScene)
         {
             statusRoot.gameObject.SetActive(false);
@@ -296,12 +283,12 @@ public class GameSystem : MonoBehaviour
             _currentScene.SetBusy(true);
             //_currentScene.SetActiveUi(false);
             StartCoroutine(JumpScenarioAsync(advCallInfo.Label,advCallInfo.CallEvent));
-        }
+        } else
         if (viewEvent.commandType == Base.CommandType.DecidePlayerName)
         {
             string playerName = (string)advEngine.Param.GetParameter("PlayerName");
             advEngine.Param.SetParameterString("PlayerName",(string)viewEvent.templete);
-        }
+        } else
         if (viewEvent.commandType == Base.CommandType.CallLoading)
         {
             if (_loadingView == null)
@@ -310,7 +297,7 @@ public class GameSystem : MonoBehaviour
             }
             loadingRoot.gameObject.SetActive(true);
             _currentScene.SetBusy(true);
-        }
+        } else
         if (viewEvent.commandType == Base.CommandType.CloseLoading)
         {
             /*
@@ -321,12 +308,12 @@ public class GameSystem : MonoBehaviour
             */
             loadingRoot.gameObject.SetActive(false);
             _currentScene.SetBusy(false);
-        }
+        } else
         if (viewEvent.commandType == Base.CommandType.SetRouteSelect)
         {
             int routeSelect = (int)advEngine.Param.GetParameter("RouteSelect");
             CurrentData.CurrentStage.SetRouteSelect(routeSelect);
-        }
+        } else
         if (viewEvent.commandType == Base.CommandType.SendRankingData)
         {
             _currentScene.SetBusy(true);
@@ -388,7 +375,7 @@ public class GameSystem : MonoBehaviour
         var selectIdrank = new List<int>();
         for (int i = 0;i < SelectActorIds.Count ;i++)
         {
-            var temp = CurrentData.Actors.Find(a => a.ActorId == SelectActorIds[i] && a.Lost == false);
+            var temp = CurrentData.Actors.Find(a => a.ActorId == SelectActorIds[i]);
             if (temp != null)
             {
                 members.Add(temp);

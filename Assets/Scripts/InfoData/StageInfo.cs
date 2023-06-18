@@ -6,44 +6,44 @@ using System.Collections.Generic;
 public class StageInfo
 {
     private int _id;
-    public int Id {get {return _id;}}
+    public int Id => _id;
     private int _turns;
-    public int Turns {get {return _turns;}}
+    public int Turns => _turns;
     private int _currentTurn;
-    public int CurrentTurn {get {return _currentTurn;}}
+    public int CurrentTurn => _currentTurn;
     private int _clearCount;
-    public int ClearCount {get {return _clearCount;}}
+    public int ClearCount => _clearCount;
     private int _troopClearCount;
-    public int TroopClearCount {get {return _troopClearCount;}}
+    public int TroopClearCount => _troopClearCount;
 
-	private List<TroopsData.TroopData> _troopDatas = new List<TroopsData.TroopData>();
-	public List<TroopsData.TroopData> TroopDatas { get {return _troopDatas;}}
-	private List<TroopInfo> _currentTroopInfos = new List<TroopInfo>();
+	private List<TroopsData.TroopData> _troopDatas = new ();
+	public List<TroopsData.TroopData> TroopDatas => _troopDatas;
+	private List<TroopInfo> _currentTroopInfos = new ();
 	
     private int _currentBattleIndex = -1;
-    public int CurrentBattleIndex { get {return _currentBattleIndex;}}
+    public int CurrentBattleIndex => _currentBattleIndex;
 
     private bool _IsSubordinate;
-    public bool IsSubordinate {get {return _IsSubordinate;}}
+    public bool IsSubordinate => _IsSubordinate;
 
     private int _subordinateValue = 0;
-    public int SubordinateValue {get {return _subordinateValue;}}
-	private List<int> _clearTroopIds = new List<int>();
-	private List<int> _selectActorIds = new List<int>();
-	public List<int> SelectActorIds { get {return _selectActorIds;}}
+    public int SubordinateValue => _subordinateValue;
+	private List<int> _clearTroopIds = new ();
+	private List<int> _selectActorIds = new ();
+	public List<int> SelectActorIds => _selectActorIds;
 
-    private List<string> _readEventKeys = new List<string>();
-    public List<string> ReadEventKeys { get {return _readEventKeys;}}
+    private List<string> _readEventKeys = new ();
+    public List<string> ReadEventKeys => _readEventKeys;
 
     private int _routeSelect;
-    public int RouteSelect {get {return _routeSelect;}}
+    public int RouteSelect => _routeSelect;
     private int _defineBossIndex = 0;
 
     private int _randomTroopCount = 14;
 
     private int _baseTroopId = 1000;
     private EndingType _endingType = EndingType.D;
-    public EndingType EndingType { get { return _endingType;}}
+    public EndingType EndingType => _endingType;
     public void SetEndingType(EndingType endingType) {_endingType = endingType;}
 
     private bool _stageClear = false;

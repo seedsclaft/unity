@@ -11,7 +11,5 @@ public class AdvsData : ScriptableObject {
     {   
         public int Id;
         public string AdvName;
-
     }
-
 }

@@ -6,9 +6,9 @@ using UnityEngine;
 public class TroopInfo 
 {
     private int _troopId = 0;
-    public int TroopId { get {return _troopId;}}
-    private List<BattlerInfo> _battlerInfos = new List<BattlerInfo>(); 
-    public List<BattlerInfo> BattlerInfos {get {return _battlerInfos;}}
+    public int TroopId => _troopId;
+    private List<BattlerInfo> _battlerInfos = new (); 
+    public List<BattlerInfo> BattlerInfos => _battlerInfos;
     public BattlerInfo BossEnemy {
         get {
             var boss = _battlerInfos.Find(a => a.BossFlag == true);
@@ -20,19 +20,22 @@ public class TroopInfo
             return null;
         }
     }
-    private List<GetItemInfo> _getItemInfos = new List<GetItemInfo>(); 
-    public List<GetItemInfo> GetItemInfos {get {return _getItemInfos;}} 
-    public TroopInfo(int troopId){
+    private List<GetItemInfo> _getItemInfos = new (); 
+    public List<GetItemInfo> GetItemInfos => _getItemInfos;
+    public TroopInfo(int troopId)
+    {
         _troopId = troopId;
         _battlerInfos.Clear();
         _getItemInfos.Clear();
     }
 
-    public void AddEnemy(BattlerInfo battlerInfo){
+    public void AddEnemy(BattlerInfo battlerInfo)
+    {
         _battlerInfos.Add(battlerInfo);
     }
 
-    public void MakeEnemyData(TroopsData.TroopData troopData,int index,int gainLevel){
+    public void MakeEnemyData(TroopsData.TroopData troopData,int index,int gainLevel)
+    {
         EnemiesData.EnemyData enemyData = DataSystem.Enemies.Find(a => a.Id == troopData.EnemyId);
         BattlerInfo battlerInfo = new BattlerInfo(enemyData,troopData.Lv + gainLevel,index,troopData.Line,troopData.BossFlag);
         AddEnemy(battlerInfo);
@@ -69,7 +72,8 @@ public class TroopInfo
         }
     }
 
-    public void RemoveAtEnemyIndex(int enemyIndex){
+    public void RemoveAtEnemyIndex(int enemyIndex)
+    {
         var battler = _battlerInfos.Find(a => a.Index == enemyIndex);
         if (battler != null)
         {
@@ -77,9 +81,8 @@ public class TroopInfo
         }
     }
     
-    public void AddGetItemInfo(GetItemInfo getItemInfo){
+    public void AddGetItemInfo(GetItemInfo getItemInfo)
+    {
         _getItemInfos.Add(getItemInfo);
     }
-
-
 }

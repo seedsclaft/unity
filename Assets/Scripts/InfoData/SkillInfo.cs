@@ -7,25 +7,25 @@ public class SkillInfo
 {
     public SkillsData.SkillData Master {get {return DataSystem.Skills.Find(a => a.Id == _id);}}
     private int _id;
-    public int Id {get {return _id;}}
+    public int Id => _id;
     
     private bool _enable;
-    public bool Enable {get {return _enable;}}
+    public bool Enable => _enable;
     public AttributeType Attribute {get {return Master.Attribute;}}
 
     private LearningState _learningState;
-    public LearningState LearningState {get {return _learningState;}}
+    public LearningState LearningState => _learningState;
 
     private AttributeType _learnAttributeType;
-    public AttributeType LearnAttributeType {get {return _learnAttributeType;}}
+    public AttributeType LearnAttributeType => _learnAttributeType;
 
     private List<SkillsData.TriggerData> _triggerDatas = new List<SkillsData.TriggerData>();
-    public List<SkillsData.TriggerData> TriggerDatas {get {return _triggerDatas;}}
+    public List<SkillsData.TriggerData> TriggerDatas => _triggerDatas;
 
     private int _weight = 100;
-    public int Weight {get {return _weight;}}
+    public int Weight => _weight;
     private bool _isUsed = false;
-    public bool IsUsed {get {return _isUsed;}}
+    public bool IsUsed => _isUsed;
     public SkillInfo(int id)
     {
         _id = id;

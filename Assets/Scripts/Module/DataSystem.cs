@@ -15,9 +15,6 @@ abstract public class DataSystem
     private static SystemData _system;
     public static SystemData System {get{return _system;}}
 
-    private static ClassesData _classes;
-    public static List<ClassesData.ClassData> Classes {get{return _classes._data;}}
-    
     private static EnemiesData _enemies;
     public static List<EnemiesData.EnemyData> Enemies {get{return _enemies._data;}}
 
@@ -47,10 +44,9 @@ abstract public class DataSystem
     private static TipsData _tips;
     public static List<TipsData.TipData> Tips {get{return _tips._data;}}
 
-
     private static RulesData _rules;
     public static List<RulesData.RuleData> Rules {get{return _rules._data;}}
-    public void LoadData(){
+    public static void LoadData(){
         /*
         var asset = await Addressables.LoadAssetAsync<ActorsData>("Assets/Data/Actors.asset").Task;
         DataSystem._actors = asset._data;
@@ -79,7 +75,6 @@ abstract public class DataSystem
         */
         DataSystem._actors = Resources.Load<ActorsData>("Data/Actors")._data;
         DataSystem._system = Resources.Load<SystemData>("Data/System");
-        DataSystem._classes = Resources.Load<ClassesData>("Data/Classes");
         DataSystem._enemies = Resources.Load<EnemiesData>("Data/Enemies");
         DataSystem._skills = Resources.Load<SkillsData>("Data/Skills");
         DataSystem._stages = Resources.Load<StagesData>("Data/Stages");

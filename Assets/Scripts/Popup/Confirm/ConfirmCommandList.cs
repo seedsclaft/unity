@@ -11,10 +11,6 @@ public class ConfirmCommandList : ListWindow , IInputHandlerEvent
     [SerializeField] private int cols = 0;
     private List<SystemData.MenuCommandData> _data = new List<SystemData.MenuCommandData>();
 
-    public int selectIndex{
-        get {return Index;}
-    }
-
     public void Initialize(List<SystemData.MenuCommandData> menuCommands ,System.Action<ConfirmComandType> callEvent)
     {
         InitializeListView(menuCommands.Count);

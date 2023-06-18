@@ -140,11 +140,6 @@ public class BattlerInfo
         ResetAp(true);
     }
 
-    public bool IsActor()
-    {
-        return _isActor;
-    }
-
     public void ResetAp(bool IsBattleStart)
     {
         /* 再行動
@@ -179,11 +174,6 @@ public class BattlerInfo
         _ap = Math.Max(_ap,100);
     }
 
-    public void GainAp(int ap)
-    {
-        _ap += ap;
-    }
-
     public void UpdateAp()
     {
         if (IsState(StateType.Death))
@@ -209,7 +199,6 @@ public class BattlerInfo
             _ap -= 2;
             return;
         }
-        //if (isActor == false) return;
         _ap -= 4;
     }
 
@@ -265,20 +254,19 @@ public class BattlerInfo
 
     public bool CanMove()
     {
-        bool CanMove = true;
         if (IsState(StateType.Death))
         {
-            CanMove = false;
+            return false;
         }
         if (IsState(StateType.Stun))
         {
-            CanMove = false;
+            return false;
         }
         if (IsState(StateType.Chain))
         {
-            CanMove = false;
+            return false;
         }
-        return CanMove;
+        return true;
     }
 
 
@@ -520,6 +508,7 @@ public class BattlerInfo
             stateInfo.Turns += 1;
         }
     }
+
     public List<SkillInfo> ActiveSkills()
     {
         return Skills.FindAll(a => a.Master.SkillType != SkillType.Passive);

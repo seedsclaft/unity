@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 
 public class StatusModel : BaseModel
 {
@@ -24,10 +23,6 @@ public class StatusModel : BaseModel
 
     private int _useNuminous = 0;
     private int _currentIndex = 0; 
-    public int CurrentIndex
-    {
-        get {return _currentIndex;}
-    }
     private AttributeType _currentAttributeType = AttributeType.Fire;
     public AttributeType CurrentAttributeType
     {

@@ -20,23 +20,20 @@ public class PartyInfo
     }
 
     private List<int> _actorIdList = new List<int>();
-    public List<int> ActorIdList {
-        get {return _actorIdList;}
-    }
+    public List<int> ActorIdList => _actorIdList;
     private int _currency = 0;
-    public int Currency {get {return _currency;}}
-    private List<int> _alchemyIdList = new List<int>();
-    public List<int> AlchemyIdList {get {return _alchemyIdList;}}
+    public int Currency => _currency;
+    private List<int> _alchemyIdList = new ();
+    public List<int> AlchemyIdList => _alchemyIdList;
 
     private int _stageId = 0;
-    public int StageId {get {return _stageId;}}
-
+    public int StageId => _stageId;
     private bool _battleResult = false;
-    public bool BattleResult {get {return _battleResult;}}
+    public bool BattleResult => _battleResult;
 
-    private Dictionary<TacticsComandType,int> _commandCountInfo = new Dictionary<TacticsComandType, int>();
-    private Dictionary<TacticsComandType,int> _commandRankInfo = new Dictionary<TacticsComandType, int>();
-    public Dictionary<TacticsComandType,int> CommandRankInfo { get {return _commandRankInfo;}}
+    private Dictionary<TacticsComandType,int> _commandCountInfo = new ();
+    private Dictionary<TacticsComandType,int> _commandRankInfo = new ();
+    public Dictionary<TacticsComandType,int> CommandRankInfo => _commandRankInfo;
     public void AddActor(int actorId)
     {
         if (_actorIdList.IndexOf(actorId) != -1)

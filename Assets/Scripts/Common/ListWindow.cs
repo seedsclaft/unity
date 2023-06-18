@@ -23,8 +23,6 @@ abstract public class ListWindow : MonoBehaviour
     [SerializeField] private ScrollRect scrollRect = null; 
     [SerializeField] private GameObject itemPrefab = null; 
     private float _itemSize = 0.0f;
-    private float _margin = 0.0f;
-    private float _space = 0.0f;
     private int _itemCount = 0;
     private int _dataCount = 0;
     private RectTransform _prevRect;

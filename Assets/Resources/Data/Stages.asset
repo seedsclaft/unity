@@ -165,18 +165,6 @@ MonoBehaviour:
       Type: 11
       Param: 3
       ReadFlag: 1
-    - EventKey: 3StartStarategyCommandDisable1
-      Turns: 3
-      Timing: 2
-      Type: 1
-      Param: 1
-      ReadFlag: 1
-    - EventKey: 3StartStarategyNeedUseSp0
-      Turns: 3
-      Timing: 2
-      Type: 9
-      Param: 0
-      ReadFlag: 1
     - EventKey: 3StartStarategyAdvStart4
       Turns: 3
       Timing: 2
@@ -279,9 +267,9 @@ MonoBehaviour:
       Type: 11
       Param: 10
       ReadFlag: 1
-    - EventKey: 6StartTacticsAdvStart11
+    - EventKey: 6BeforeTacticsAdvStart11
       Turns: 6
-      Timing: 1
+      Timing: 11
       Type: 11
       Param: 11
       ReadFlag: 1

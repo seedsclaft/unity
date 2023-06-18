@@ -6,79 +6,69 @@ public class ActorInfo
 {
     public ActorsData.ActorData Master {get {return DataSystem.Actors.Find(a => a.Id == ActorId);}}
     private int _actorId;
-    public int ActorId {get {return _actorId;}}
-    public int MaxHp { get
-        {
-            return CurrentStatus.Hp;
-        }
-    }
-    public int MaxMp { get
-        {
-            return CurrentStatus.Mp;
-        }
-    }
-
+    public int ActorId => _actorId;
+    public int MaxHp => CurrentStatus.Hp;
+    public int MaxMp => CurrentStatus.Mp;
     private int _level;
-    public int Level {get {return _level;}}
+    public int Level => _level;
     
     private StatusInfo _baseStatus;
     private StatusInfo _currentStatus;
-    public StatusInfo CurrentStatus {get {return _currentStatus;}}
+    public StatusInfo CurrentStatus => _currentStatus;
     private StatusInfo _usePoint;
     private StatusInfo _upperRate;
     private List<int> _attribute;
-    public List<int> Attribute {get {return _attribute;}}
+    public List<int> Attribute => _attribute;
     private List<SkillInfo> _skills;
-    public List<SkillInfo> Skills {get {return _skills;}}
+    public List<SkillInfo> Skills => _skills;
 
     private int _lastSelectSkillId = 0;
-    public int LastSelectSkillId {get {return _lastSelectSkillId;}}
+    public int LastSelectSkillId => _lastSelectSkillId;
     public void SetLastSelectSkillId(int selectSkillId)
     {
         _lastSelectSkillId = selectSkillId;
     }
 
     private int _currentHp;
-    public int CurrentHp {get {return _currentHp;}}
+    public int CurrentHp => _currentHp;
     private int _currentMp;
-    public int CurrentMp {get {return _currentMp;}}
+    public int CurrentMp => _currentMp;
     private int _ap;
-    public int Ap {get {return _ap;}}
+    public int Ap => _ap;
     private int _demigodParam;
-    public int DemigodParam {get {return _demigodParam;}}
+    public int DemigodParam => _demigodParam;
 
     private TacticsComandType _tacticsComandType = TacticsComandType.None;
-    public TacticsComandType TacticsComandType {get {return _tacticsComandType;}}
+    public TacticsComandType TacticsComandType => _tacticsComandType;
 
 // Tactics
-    private Dictionary<TacticsComandType,bool> _tacticsEnable = new Dictionary<TacticsComandType, bool>();
+    private Dictionary<TacticsComandType,bool> _tacticsEnable = new ();
     private int _tacticsCost = 0;
-    public int TacticsCost {get {return _tacticsCost;}}
+    public int TacticsCost => _tacticsCost;
     private int _tacticsCostRate = 1;
-    public int TacticsCostRate {get {return _tacticsCostRate;}}
+    public int TacticsCostRate => _tacticsCostRate;
     private AttributeType _nextLearnAttribute = AttributeType.None;
-    public AttributeType NextLearnAttribute {get {return _nextLearnAttribute;}}
+    public AttributeType NextLearnAttribute => _nextLearnAttribute;
     private int _nextLearnSkillId = 0;
-    public int NextLearnSkillId {get {return _nextLearnSkillId;}}
+    public int NextLearnSkillId => _nextLearnSkillId;
     private int _nextLearnCost = 0;
-    public int NextLearnCost {get {return _nextLearnCost;}}
+    public int NextLearnCost => _nextLearnCost;
     private int _nextBattleEnemyIndex = -1;
-    public int NextBattleEnemyIndex {get {return _nextBattleEnemyIndex;}}
+    public int NextBattleEnemyIndex => _nextBattleEnemyIndex;
     private int _nextBattleEnemyId = -1;
-    public int NextBattleEnemyId {get {return _nextBattleEnemyId;}}
+    public int NextBattleEnemyId => _nextBattleEnemyId;
 
     private bool _inBattle = false;
     public bool InBattle {get {return _inBattle;} set {_inBattle = value;}}
     private bool _lost = false;
-    public bool Lost {get {return _lost;}}
-// Status
+    public bool Lost => _lost;
     private int _sp = 0;
-    public int Sp {get {return _sp;}}
+    public int Sp => _sp;
     private int _numinous = 0;
-    public int Numinous {get {return _numinous;}}
+    public int Numinous => _numinous;
     private StatusInfo _plusStatus;
     private StatusInfo _tempStatus;
-    public StatusInfo TempStatus {get {return _tempStatus;}}
+    public StatusInfo TempStatus => _tempStatus;
 
     public ActorInfo(ActorsData.ActorData actorData)
     {
@@ -309,7 +299,6 @@ public class ActorInfo
         _numinous = 0;
         ClearStrength();
     }
-
 
     public int CurrentParameter(StatusParamType statusParamType)
     {

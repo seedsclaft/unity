@@ -307,7 +307,7 @@ public class SavePlayInfo
 		this.InitStageInfo();
 	}
 
-	private void InitPlayer()
+	public void InitPlayer()
 	{
 		for (int i = 0;i < DataSystem.InitActors.Count;i++)
 		{
@@ -360,6 +360,11 @@ public class SavePlayInfo
 		if (stageId == 12){
 			_currentStage.SetEndingType(EndingType.A);
 		}
+	}
+
+	public void ClearStageInfo()
+	{
+		_currentStage = null;
 	}
 }
 

@@ -19,7 +19,18 @@ public class BaseModel
     public int Currency{get {return PartyInfo.Currency;}}
 
     public int Turns{get {return CurrentStage.Turns - (CurrentStage.CurrentTurn);}}
-    
+    public void InitSaveInfo()
+    {
+        var playInfo = new SavePlayInfo();
+        playInfo.InitSaveData();
+        GameSystem.CurrentData = playInfo;
+    }
+
+    public void InitConfigInfo()
+    {
+        GameSystem.ConfigData = new SaveConfigInfo();
+    }
+
     public List<ActorInfo> Actors()
     {
         return GameSystem.CurrentData.Actors;

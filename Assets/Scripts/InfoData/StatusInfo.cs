@@ -5,15 +5,15 @@
 public class StatusInfo
 {
     public int _hp = 0;
+    public int Hp => _hp;
     public int _mp = 0;
+    public int Mp => _mp;
     public int _atk = 0;
+    public int Atk => _atk;
     public int _def = 0;
+    public int Def => _def;
     public int _spd = 0;
-    public int Hp {get { return _hp;}}
-    public int Mp {get { return _mp;}}
-    public int Atk {get { return _atk;}}
-    public int Def {get { return _def;}}
-    public int Spd {get { return _spd;}}
+    public int Spd => _spd;
     public void SetParameter(int hp,int mp,int atk,int def,int spd)
     {
         _hp = hp;
@@ -46,6 +46,15 @@ public class StatusInfo
             case StatusParamType.Def: _def += param; break;
             case StatusParamType.Spd: _spd += param; break;
         }
+    }
+
+    public void AddParameterAll(int param)
+    {
+        _hp += param;
+        _mp += param;
+        _atk += param;
+        _def += param;
+        _spd += param;
     }
 
     public void Clear()

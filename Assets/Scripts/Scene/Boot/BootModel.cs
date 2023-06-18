@@ -1,3 +1,5 @@
-﻿public class BootModel : DataSystem
+﻿public class BootModel : BaseModel
 {
+
+
 }

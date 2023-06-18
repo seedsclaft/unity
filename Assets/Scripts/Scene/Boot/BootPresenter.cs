@@ -17,9 +17,7 @@ public class BootPresenter
 
     private void Initialize()
     {
-
-        _model.LoadData();
-
+        DataSystem.LoadData();
         _busy = false;
         Debug.Log("Boot Success");
         Application.targetFrameRate = 60;
@@ -28,11 +26,11 @@ public class BootPresenter
             SaveSystem.LoadConfigStart();
         } else
         {
-            _view.CommandInitConfigInfo();
+            _model.InitConfigInfo();
         }
         if (_view.TestMode)
         {
-            _view.CommandInitSaveInfo();
+            _model.InitSaveInfo();
             _view.CommandSceneChange(Scene.Battle);
         } else{
             _view.CommandSceneChange(Scene.Title);

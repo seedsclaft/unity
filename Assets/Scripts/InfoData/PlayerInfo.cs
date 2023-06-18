@@ -1,17 +1,14 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 
 [Serializable]
 public class PlayerInfo
 {
     private int _playerId = -1;
-    public int PlayerId {get {return _playerId;}}
+    public int PlayerId => _playerId;
     private string _playerName = "";
-    public string PlayerName {get {return _playerName;}}
+    public string PlayerName => _playerName;
     private int _bestScore = -1;
-    public int BestScore {get {return _bestScore;}}
+    public int BestScore => _bestScore;
 
     public void SetPlayerName(string name)
     {

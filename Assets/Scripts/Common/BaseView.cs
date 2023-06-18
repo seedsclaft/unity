@@ -84,18 +84,6 @@ abstract public class BaseView : MonoBehaviour
         CallSceneChangeCommand(eventData);
     }
     
-    public void CommandInitSaveInfo()
-    {
-        var eventData = new ViewEvent(Scene.Base, Base.CommandType.InitSaveInfo);
-        CallSceneChangeCommand(eventData);
-    }
-
-    public void CommandInitConfigInfo()
-    {
-        var eventData = new ViewEvent(Scene.Base, Base.CommandType.InitConfigInfo);
-        CallSceneChangeCommand(eventData);
-    }
-
 
     public void CommandCallConfirm(ConfirmInfo popupInfo)
     {
@@ -230,8 +218,6 @@ namespace Base
         None = 0,
         SetTemplete,
         SceneChange,
-        InitSaveInfo,
-        InitConfigInfo,
         CallConfirmView,
         CloseConfirm,
         CallRulingView,

@@ -8,17 +8,17 @@ public class StateInfo {
         get {return DataSystem.States.Find(a => a.Id == _stateId);}
     }
     private int _stateId = 0;
-    public int StateId{ get {return _stateId;}}
+    public int StateId => _stateId;
     private int _turns = 0;
     public int Turns{ get {return _turns;} set {_turns = value;}}
     private int _baseTurns = 0;
-    public int BaseTurns{ get {return _baseTurns;}}
+    public int BaseTurns => _baseTurns;
     private int _effect = 0;
     public int Effect{ get {return _effect;} set {_effect = value;} }
     private int _battlerId = 0;
-    public int BattlerId{ get {return _battlerId;}}
+    public int BattlerId => _battlerId;
     private int _targetIndex = 0;
-    public int TargetIndex{ get {return _targetIndex;}}
+    public int TargetIndex => _targetIndex;
     public StateInfo(int stateId,int turns,int effect,int battlerId,int targetIndex){
         _stateId = stateId;
         _turns = turns;
@@ -55,6 +55,5 @@ public class StateInfo {
     public bool IsBarrierStateType()
     {
         return _stateId == (int)StateType.Stun || _stateId == (int)StateType.Slow || _stateId == (int)StateType.Curse || _stateId == (int)StateType.SlipDamage;
-                
     }
 }

@@ -46,7 +46,7 @@ public class TitlePresenter
         _busy = true;
         switch ((TitleComandType)commandIndex){
             case TitleComandType.NewGame:
-            _view.CommandInitSaveInfo();
+            _model.InitSaveInfo();
             _view.CommandSceneChange(Scene.NameEntry);
             //_view.CommandSceneChange(Scene.Battle);
             break;

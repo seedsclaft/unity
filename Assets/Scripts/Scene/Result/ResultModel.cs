@@ -1,12 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 
 public class ResultModel : BaseModel
 {
     public List<string> GetStageResult()
     {
-
         return new List<string>();
     }
 
