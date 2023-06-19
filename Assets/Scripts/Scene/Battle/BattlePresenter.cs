@@ -31,26 +31,27 @@ public class BattlePresenter : BasePresenter
         var bgm = await _model.GetBattleBgm();
         Ryneus.SoundManager.Instance.PlayBgm(bgm,1.0f,true);
         _view.CommandLoadingClose();
-        //_view.CommandCallCRuling();
-    
+
         _view.ClearCurrentSkillData();
         _view.CreateObject();
         _view.SetHelpWindow();
         _view.SetUIButton();
         _view.SetActiveBack(false);
-        _view.SetEvent((type) => updateCommand(type));
 
-        //List<ActorInfo> actorInfos = _model.Actors();
-        //_view.SetActorInfo(_model.CurrentActor);
-        _view.SetActors(_model.BattlerActors());
-        _view.SetEnemies(_model.BattlerEnemies());
+        _view.CommandStartTransition(() => {
 
-        _view.SetAttributeTypes(_model.AttributeTypes(),_model.CurrentAttributeType);
+        
+            _view.SetEvent((type) => updateCommand(type));
 
+            _view.SetActors(_model.BattlerActors());
+            _view.SetEnemies(_model.BattlerEnemies());
 
-        _view.StartBattleStartAnim(DataSystem.System.GetTextData(4).Text);
-        _nextCommandType = Battle.CommandType.EventCheck;
-        _busy = false;
+            _view.SetAttributeTypes(_model.AttributeTypes(),_model.CurrentAttributeType);
+
+            _view.StartBattleStartAnim(DataSystem.System.GetTextData(4).Text);
+            _nextCommandType = Battle.CommandType.EventCheck;
+            _busy = false;
+        });
     }
 
     private void updateCommand(BattleViewEvent viewEvent)

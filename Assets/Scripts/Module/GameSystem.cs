@@ -17,6 +17,8 @@ public class GameSystem : MonoBehaviour
     [SerializeField] private GameObject rulingPrefab = null;
     [SerializeField] private GameObject optionPrefab = null;
     [SerializeField] private GameObject rankingPrefab = null;
+    [SerializeField] private GameObject transitionRoot = null;
+    [SerializeField] private Fade transitionFade = null;
     [SerializeField] private GameObject statusRoot = null;
     [SerializeField] private GameObject statusPrefab = null;
     [SerializeField] private GameObject enemyInfoPrefab = null;
@@ -37,6 +39,7 @@ public class GameSystem : MonoBehaviour
     public static SavePlayInfo CurrentData = null;
     public static SaveConfigInfo ConfigData = null;
     public static TempInfo CurrentTempData = null;
+    public static Texture2D SnapShot;
 
     public static FirebaseFirestore db;
     private bool _busy = false;
@@ -318,6 +321,22 @@ public class GameSystem : MonoBehaviour
         {
             _currentScene.SetBusy(true);
             SendRankingData((System.Action<string>)viewEvent.templete);
+        } else
+        if (viewEvent.commandType == Base.CommandType.ChangeViewToTransition)
+        {
+            _currentScene.gameObject.transform.SetParent(transitionRoot.transform, false);
+            _currentScene = null;
+        } else
+        if (viewEvent.commandType == Base.CommandType.StartTransition)
+        {
+            transitionFade.FadeIn(0.8f,() => {
+                foreach(Transform child in transitionRoot.transform){
+                    var endEvent = (System.Action)viewEvent.templete;
+                    if ((System.Action)viewEvent.templete != null) endEvent();
+                    Destroy(child.gameObject);
+                    transitionFade.FadeOut(0);
+                }
+            });
         }
     }
 

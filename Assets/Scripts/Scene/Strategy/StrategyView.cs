@@ -5,9 +5,11 @@ using UnityEngine.UI;
 using Strategy;
 using Effekseer;
 using TMPro;
+using DG.Tweening;
 
 public class StrategyView : BaseView
 {
+    [SerializeField] private Image backgroundImage = null; 
     [SerializeField] private StrategyActorList strategyActorList = null; 
     [SerializeField] private GetItemList strategyResultList = null; 
     [SerializeField] private TacticsEnemyList tacticsEnemyList = null; 
@@ -40,6 +42,7 @@ public class StrategyView : BaseView
         _battleStartAnim = prefab.GetComponent<BattleStartAnim>();
         _battleStartAnim.gameObject.SetActive(false);
         lvUpStatusButton.onClick.AddListener(() => CallLvUpNext());
+        lvUpStatusButton.gameObject.SetActive(false);
         new StrategyPresenter(this);
     }
 
@@ -209,6 +212,11 @@ public class StrategyView : BaseView
             var eventData = new StrategyViewEvent(CommandType.EndLvupAnimation);
             _commandData(eventData);
         }
+    }
+
+    public void FadeOut()
+    {
+        backgroundImage.DOFade(0,0.4f);
     }
 }
 

@@ -184,6 +184,20 @@ abstract public class BaseView : MonoBehaviour
         CallSceneChangeCommand(eventData);
     }
 
+    public void CommandChangeViewToTransition(System.Action<string> endEvent)
+    {
+        var eventData = new ViewEvent(Scene.Base, Base.CommandType.ChangeViewToTransition);
+        eventData.templete = endEvent;
+        CallSceneChangeCommand(eventData);
+    }
+
+    public void CommandStartTransition(System.Action endEvent)
+    {
+        var eventData = new ViewEvent(Scene.Base, Base.CommandType.StartTransition);
+        eventData.templete = endEvent;
+        CallSceneChangeCommand(eventData);
+    }
+
     public void CreateBackCommand(System.Action callEvent)
     {
         GameObject prefab = Instantiate(backPrefab);
@@ -233,7 +247,9 @@ namespace Base
         CloseLoading,
         SendRankingData,
         SendRankingEnd,
-        SetRouteSelect
+        SetRouteSelect,
+        ChangeViewToTransition,
+        StartTransition,
     }
 }
 
