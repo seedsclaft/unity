@@ -49,6 +49,11 @@ public class TitleView : BaseView
         eventData.templete = commandType;
         _commandData(eventData);
     }
+
+    public void SetCommandDisable(int commandId)
+    {
+        commandList.SetDisable(DataSystem.TacticsCommand[commandId],true);
+    }
 }
 
 namespace Title

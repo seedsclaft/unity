@@ -16,12 +16,24 @@ public class TitleCommand : ListItem ,IListViewItem
     public void SetCallHandler(System.Action<TitleComandType> handler)
     {
         if (_data == null) return;
-        clickButton.onClick.AddListener(() => handler((TitleComandType)Index));
+        clickButton.onClick.AddListener(() => 
+        {
+            if (Disable.activeSelf) return;
+            handler((TitleComandType)Index);
+        });
     }
 
     public void UpdateViewItem()
     {
         if (_data == null) return;
         commandName.text = _data.Name;
+    }
+
+    public void SetDisable(SystemData.MenuCommandData menuCommandData,bool IsDisable)
+    {
+        if (_data.Id == menuCommandData.Id)
+        {
+            Disable.gameObject.SetActive(IsDisable);
+        }
     }
 }

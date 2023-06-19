@@ -33,10 +33,11 @@ public class TitleCommandList : ListWindow , IInputHandlerEvent
     public void Refresh(int selectIndex = 0)
     {
         UpdateSelectIndex(selectIndex);
+        UpdateHelpWindow();
     }
 
     public override void UpdateHelpWindow(){
-        if (_helpWindow != null && Index > 0)
+        if (_helpWindow != null && Index >= 0)
         {
             _helpWindow.SetHelpText(_data[Index].Help);
         }
@@ -56,5 +57,15 @@ public class TitleCommandList : ListWindow , IInputHandlerEvent
         var titleCommand = gameObject.GetComponent<TitleCommand>();
         titleCommand.SetData(_data[itemIndex],itemIndex);
         titleCommand.UpdateViewItem();
+    }
+
+
+    public void SetDisable(SystemData.MenuCommandData menuCommandData,bool IsDisable)
+    {
+        for (int i = 0; i < _data.Count;i++)
+        {
+            var titleCommand = ObjectList[i].GetComponent<TitleCommand>();
+            titleCommand.SetDisable(menuCommandData,IsDisable);
+        }
     }
 }

@@ -109,11 +109,11 @@ public class SaveSystem : MonoBehaviour
 #if UNITY_WEBGL
 		return PlayerPrefs.GetString("PlayerData") != "";
 #else
-		return File.Exists(debugFilePath + "/Autosave" + fileId.ToString() + ".dat");;
+		return File.Exists(debugFilePath + "/Autosave" + fileId.ToString() + ".dat");
 #endif
 	}
 
-	public static void SaveConfigStart(SaveConfigInfo pSourceSavePlayInfo = null,int fileId = 0)
+	public static void SaveConfigStart(SaveConfigInfo pSourceSavePlayInfo = null)
     {
 #if UNITY_WEBGL
 		
@@ -138,7 +138,7 @@ public class SaveSystem : MonoBehaviour
 			BinaryFormatter	TempBinaryFormatter = new BinaryFormatter();
 
 			//	指定したパスにファイルを作成
-			FileStream TempFileStream = File.Create(debugFilePath + "/Autoconfig" + fileId.ToString() + ".dat");
+			FileStream TempFileStream = File.Create(debugFilePath + "/Autoconfig.dat");
 
 			//	Closeが確実に呼ばれるように例外処理を用いる
 			try
@@ -187,7 +187,7 @@ public class SaveSystem : MonoBehaviour
 			BinaryFormatter	TempBinaryFormatter = new BinaryFormatter();
 
 			//	指定したパスのファイルストリームを開く
-			FileStream	TempFileStream = File.Open(debugFilePath + "/Autoconfig" + fileId.ToString() + ".dat", FileMode.Open);
+			FileStream	TempFileStream = File.Open(debugFilePath + "/Autoconfig.dat", FileMode.Open);
 			try 
 			{
 				//	指定したファイルストリームをオブジェクトにデシリアライズ。
@@ -209,7 +209,7 @@ public class SaveSystem : MonoBehaviour
 #if UNITY_WEBGL
 		return PlayerPrefs.GetString("ConfigData") != "";
 #else
-		return File.Exists(debugFilePath + "/Autoconfig" + fileId.ToString() + ".dat");;
+		return File.Exists(debugFilePath + "/Autoconfig.dat");
 #endif
 	}
 }
@@ -257,7 +257,7 @@ public class SavePlayInfo
 			stageId = debugStageId;
 		} else
 		{
-			stageId = _party.StageId;;
+			stageId = _party.StageId;
 		}
 		StagesData.StageData stageData = DataSystem.Stages.Find(a => a.Id == stageId);
 		_currentStage = new StageInfo(stageData);

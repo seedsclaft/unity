@@ -53,6 +53,7 @@ public class TacticsCommandList : ListWindow , IInputHandlerEvent
             tacticsCommand.SetDisable(menuCommandData,IsDisable);
         }
     }
+
     private void CallInputHandler(InputKeyType keyType, System.Action<TacticsComandType> callEvent,System.Action alcanaEvent)
     {
         if (keyType == InputKeyType.Decide && Index > -1)

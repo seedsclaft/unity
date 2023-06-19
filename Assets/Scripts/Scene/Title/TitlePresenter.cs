@@ -68,6 +68,9 @@ public class TitlePresenter
         if (_model.ExistsLoadFile())
         {
             selectIndex = (int)TitleComandType.Continue;
+        } else
+        {
+            _view.SetCommandDisable(1);
         }
         _view.RefreshCommandIndex(selectIndex);
     }
