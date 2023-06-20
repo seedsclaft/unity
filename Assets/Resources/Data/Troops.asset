@@ -576,21 +576,21 @@ MonoBehaviour:
       Param2: 100
   - Id: 1
     TroopId: 2100
-    EnemyId: 13
+    EnemyId: 2
     Lv: 3
     BossFlag: 0
     Line: 0
     GetItemDatas: []
   - Id: 2
     TroopId: 2100
-    EnemyId: 13
+    EnemyId: 12
     Lv: 3
     BossFlag: 0
     Line: 0
     GetItemDatas: []
   - Id: 3
     TroopId: 2100
-    EnemyId: 13
+    EnemyId: 2
     Lv: 3
     BossFlag: 0
     Line: 0
@@ -602,15 +602,15 @@ MonoBehaviour:
     BossFlag: 1
     Line: 1
     GetItemDatas:
-    - Type: 2
-      Param1: 50
+    - Type: 22
+      Param1: 5
       Param2: 100
     - Type: 3
       Param1: 5
       Param2: 100
   - Id: 1
     TroopId: 2200
-    EnemyId: 8
+    EnemyId: 10
     Lv: 3
     BossFlag: 0
     Line: 0
@@ -623,14 +623,21 @@ MonoBehaviour:
     Line: 0
     GetItemDatas: []
   - Id: 3
+    TroopId: 2200
+    EnemyId: 10
+    Lv: 3
+    BossFlag: 0
+    Line: 0
+    GetItemDatas: []
+  - Id: 4
     TroopId: 2200
     EnemyId: 202
     Lv: 1
     BossFlag: 1
     Line: 1
     GetItemDatas:
-    - Type: 2
-      Param1: 50
+    - Type: 22
+      Param1: 5
       Param2: 100
     - Type: 3
       Param1: 5
@@ -644,47 +651,61 @@ MonoBehaviour:
     GetItemDatas: []
   - Id: 2
     TroopId: 2300
-    EnemyId: 7
+    EnemyId: 15
     Lv: 3
     BossFlag: 0
     Line: 0
     GetItemDatas: []
   - Id: 3
+    TroopId: 2300
+    EnemyId: 7
+    Lv: 3
+    BossFlag: 0
+    Line: 0
+    GetItemDatas: []
+  - Id: 4
     TroopId: 2300
     EnemyId: 203
     Lv: 1
     BossFlag: 1
     Line: 1
     GetItemDatas:
-    - Type: 2
-      Param1: 50
+    - Type: 22
+      Param1: 5
       Param2: 100
     - Type: 3
       Param1: 5
       Param2: 100
   - Id: 1
     TroopId: 2400
-    EnemyId: 14
+    EnemyId: 1
     Lv: 3
     BossFlag: 0
     Line: 0
     GetItemDatas: []
   - Id: 2
     TroopId: 2400
-    EnemyId: 14
+    EnemyId: 5
     Lv: 3
     BossFlag: 0
     Line: 0
     GetItemDatas: []
   - Id: 3
     TroopId: 2400
+    EnemyId: 14
+    Lv: 3
+    BossFlag: 0
+    Line: 0
+    GetItemDatas: []
+  - Id: 4
+    TroopId: 2400
     EnemyId: 204
     Lv: 1
     BossFlag: 1
     Line: 1
     GetItemDatas:
-    - Type: 2
-      Param1: 50
+    - Type: 22
+      Param1: 5
       Param2: 100
     - Type: 3
       Param1: 5
@@ -694,21 +715,21 @@ MonoBehaviour:
       Param2: 0
   - Id: 1
     TroopId: 2500
-    EnemyId: 5
+    EnemyId: 4
     Lv: 3
     BossFlag: 0
     Line: 0
     GetItemDatas: []
   - Id: 2
     TroopId: 2500
-    EnemyId: 5
+    EnemyId: 9
     Lv: 3
     BossFlag: 0
     Line: 0
     GetItemDatas: []
   - Id: 3
     TroopId: 2500
-    EnemyId: 5
+    EnemyId: 4
     Lv: 3
     BossFlag: 0
     Line: 0
@@ -720,8 +741,8 @@ MonoBehaviour:
     BossFlag: 1
     Line: 1
     GetItemDatas:
-    - Type: 2
-      Param1: 50
+    - Type: 22
+      Param1: 5
       Param2: 100
     - Type: 3
       Param1: 5
@@ -747,8 +768,8 @@ MonoBehaviour:
     BossFlag: 1
     Line: 1
     GetItemDatas:
-    - Type: 2
-      Param1: 50
+    - Type: 22
+      Param1: 5
       Param2: 100
     - Type: 3
       Param1: 5

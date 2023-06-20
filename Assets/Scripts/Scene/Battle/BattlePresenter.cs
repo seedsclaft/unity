@@ -186,6 +186,8 @@ public class BattlePresenter : BasePresenter
         {    
             _model.ExecActionResultInfo(chainActionResults[i]);
         }
+        _model.CheckTriggerSkillInfos(TriggerTiming.After,chainActionResults,false);
+        
         StartAliveAnimation(chainActionResults);
         StartDeathAnimation(chainActionResults);
         var benedictionActionResults = _model.UpdateBenedictionState();
@@ -200,7 +202,17 @@ public class BattlePresenter : BasePresenter
         }
         StartDeathAnimation(benedictionActionResults);
         StartAliveAnimation(benedictionActionResults);
+        _model.CheckTriggerSkillInfos(TriggerTiming.After,benedictionActionResults,false);
+        
         _view.RefreshStatus();
+
+        ActionInfo CurrentActionInfo = _model.CurrentActionInfo();
+        if (CurrentActionInfo != null)
+        {
+            _model.SetActionBattler(CurrentActionInfo.SubjectIndex);
+            CommandSelectIndex(_model.MakeAutoSelectIndex(CurrentActionInfo));
+            return;
+        }
         if (CheckBattleEnd())
         {
             return;
@@ -299,7 +311,7 @@ public class BattlePresenter : BasePresenter
             _view.RefreshBattlerEnemyLayerTarget(-1);
             _view.RefreshBattlerPartyLayerTarget(-1);
             _model.MakeActionResultInfo(actionInfo,indexList);
-            var result = _model.CheckTriggerSkillInfos(TriggerTiming.Interrupt);
+            var result = _model.CheckTriggerSkillInfos(TriggerTiming.Interrupt,actionInfo.ActionResults);
             if (result)
             {
                 _model.SetActionBattler(_model.CurrentActionInfo().SubjectIndex);
@@ -321,10 +333,16 @@ public class BattlePresenter : BasePresenter
 
     private void StartAnimationDemigod()
     {
-        var demigod = _model.SkillActionAnimation("NA_Effekseer/NA_cut-in_002_" + _model.CurrentBattler.CharaId.ToString());
-        _view.StartAnimationDemigod(demigod);
-        _view.SetAnimationEndTiming(90);
-        _nextCommandType = Battle.CommandType.EndDemigodAnimation;
+        if (_model.CurrentBattler.isActor == false)
+        {
+            StartAnimationSkill();
+        } else
+        {
+            var demigod = _model.SkillActionAnimation("NA_Effekseer/NA_cut-in_002_" + _model.CurrentBattler.CharaId.ToString());
+            _view.StartAnimationDemigod(demigod);
+            _view.SetAnimationEndTiming(90);
+            _nextCommandType = Battle.CommandType.EndDemigodAnimation;
+        }
     }
 
     private void StartAnimationRegene()
@@ -561,7 +579,7 @@ public class BattlePresenter : BasePresenter
         if (actionInfo != null)
         {
             StartDeathAnimation(_model.CurrentActionInfo().ActionResults);
-            if (_triggerAfterChecked == false && CheckBattleEnd() == false)
+            if (_triggerAfterChecked == false)
             {
                 // ステートなどを適用
                 var slipDamage = _model.CheckSlipDamage();
@@ -594,12 +612,16 @@ public class BattlePresenter : BasePresenter
     }
 
     private void CommandEndSlipDamageAnimation()
-    {
-        var regene = _model.CheckRegene();
-        if (regene && _triggerAfterChecked == false)
+    {    
+        var result = _model.CheckTriggerSkillInfos(TriggerTiming.After,_model.UpdateSlipDamageState());
+        if (CheckBattleEnd() == false && result == false)
         {
-            StartAnimationRegene();
-            return;
+            var regene = _model.CheckRegene();
+            if (regene && _triggerAfterChecked == false)
+            {
+                StartAnimationRegene();
+                return;
+            }
         }
         EndTurn();
     }
@@ -632,7 +654,7 @@ public class BattlePresenter : BasePresenter
             _model.ExecActionResultInfo(RemovePassiveResult);
         }
         // TriggerAfter
-        var result = _model.CheckTriggerSkillInfos(TriggerTiming.After);
+        var result = _model.CheckTriggerSkillInfos(TriggerTiming.After,_model.CurrentActionInfo().ActionResults);
         
         bool isDemigodActor = false;
         if (_model.CurrentBattler != null)
@@ -658,6 +680,13 @@ public class BattlePresenter : BasePresenter
         if (result == true)
         {        
             _view.RefreshStatus();
+        }
+
+        // 敵の蘇生を繁栄
+        var aliveEnemies = _model.PreservedAliveEnemies();
+        foreach (var aliveEnemy in aliveEnemies)
+        {
+            _view.StartAliveAnimation(aliveEnemy.Index);                
         }
 
         // 次の行動者がいれば続ける

@@ -268,6 +268,17 @@ public class StrategyModel : BaseModel
                 getItemInfos.Add(getItemInfo);
                 CurrentStage.SetStageClaer(true);
             }
+            if (getItemInfo.GetItemType == GetItemType.StatusUp)
+            {
+                getItemInfo.SetTitleData(DataSystem.System.GetTextData(14070).Text.Replace("\\d", getItemInfo.Param1.ToString()));
+                getItemInfos.Add(getItemInfo);
+                
+                foreach (var actorInfo in CheckInBattleActors())
+                {
+                    actorInfo.TempStatus.AddParameterAll(getItemInfo.Param1);
+                    actorInfo.DecideStrength(0);
+                }
+            }
 
         }
         CurrentStage.AddClearTroopId(CurrentTroopInfo().TroopId);

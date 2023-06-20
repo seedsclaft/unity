@@ -747,7 +747,7 @@ public class BattleModel : BaseModel
             // Mpの支払い
             CurrentBattler.GainMp(actionInfo.MpCost * -1);
             CurrentBattler.GainPaybattleMp(actionInfo.MpCost);
-            List<ActionResultInfo> actionResultInfos = actionInfo.ActionResults;
+            List<ActionResultInfo> actionResultInfos = CalcDeathIndexList(actionInfo.ActionResults);
             for (int i = 0; i < actionResultInfos.Count; i++)
             {
                 ExecActionResultInfo(actionResultInfos[i]);
@@ -953,18 +953,20 @@ public class BattleModel : BaseModel
         GetBattlerInfo(index).GainHp(value);
     }
 
-    public bool CheckTriggerSkillInfos(TriggerTiming triggerTiming)
+    public bool CheckTriggerSkillInfos(TriggerTiming triggerTiming,List<ActionResultInfo> actionResultInfos,bool checkCurrent = true)
     {
         bool IsTriggered = false;
-        if (CurrentBattler == null)
+        if (CurrentBattler == null && checkCurrent == true)
         {
             return false;
         }
         List<ActionInfo> actionInfos = new List<ActionInfo>();
         List<SkillInfo> triggeredSkills = new List<SkillInfo>();
         List<BattlerInfo> TargetBattlerInfos = new List<BattlerInfo>();
-        TargetBattlerInfos.Add(CurrentBattler);
-        List<ActionResultInfo> actionResultInfos = CurrentActionInfo().ActionResults;
+        if (checkCurrent)
+        {
+            TargetBattlerInfos.Add(CurrentBattler);
+        }
         for (var i = 0;i < actionResultInfos.Count;i++)
         {
             BattlerInfo target = GetBattlerInfo(actionResultInfos[i].TargetIndex);
@@ -987,10 +989,10 @@ public class BattleModel : BaseModel
             triggeredSkills.Clear();
             foreach (var skillInfo in target.ActiveSkills())
             {
-                if (CurrentActionInfo().Master.Id != skillInfo.Id)
+                if (checkCurrent == false || CurrentActionInfo().Master.Id != skillInfo.Id)
                 {
                     var triggerDatas = skillInfo.Master.TriggerDatas.FindAll(a => a.TriggerTiming == triggerTiming);
-                    if (IsTriggerdSkillInfo(target,triggerDatas,triggerTiming))
+                    if (IsTriggerdSkillInfo(target,triggerDatas,triggerTiming,actionResultInfos))
                     {
                         triggeredSkills.Add(skillInfo);
                     }
@@ -1030,7 +1032,7 @@ public class BattleModel : BaseModel
             {
                 SkillInfo passiveInfo = passiveSkills[j];
                 var triggerDatas = passiveInfo.Master.TriggerDatas.FindAll(a => a.TriggerTiming == triggerTiming);
-                if (IsTriggerdSkillInfo(battlerInfo,triggerDatas,triggerTiming))
+                if (IsTriggerdSkillInfo(battlerInfo,triggerDatas,triggerTiming,new List<ActionResultInfo>()))
                 {                
                     ActionResultInfo actionResultInfo = new ActionResultInfo(battlerInfo,battlerInfo,passiveInfo.Master.FeatureDatas);
                     actionResultInfos.Add(actionResultInfo);
@@ -1083,7 +1085,7 @@ public class BattleModel : BaseModel
         return actionResultInfos;
     }
 
-    private bool IsTriggerdSkillInfo(BattlerInfo battlerInfo,List<SkillsData.TriggerData> triggerDatas,TriggerTiming triggerTiming)
+    private bool IsTriggerdSkillInfo(BattlerInfo battlerInfo,List<SkillsData.TriggerData> triggerDatas,TriggerTiming triggerTiming,List<ActionResultInfo> actionResultInfos)
     {
         bool IsTriggered = false;
         //var triggerDatas = skillInfo.Master.TriggerDatas.FindAll(a => a.TriggerTiming == triggerTiming);
@@ -1117,10 +1119,18 @@ public class BattleModel : BaseModel
                 }
                 if (battlerInfo.IsAwaken == false && triggerTiming == TriggerTiming.Interrupt && triggerDatas[j].TriggerType == TriggerType.ActionResultDeath)
                 {
-                    List<ActionResultInfo> actionResultInfos = CurrentActionInfo().ActionResults;
-                    if (actionResultInfos.Find(a => BattlerActors().Find(b => a.DeadIndexList.Contains(b.Index)) != null) != null)
+                    if (battlerInfo.isActor)
                     {
-                        IsTriggered = true;
+                        if (actionResultInfos.Find(a => BattlerActors().Find(b => a.DeadIndexList.Contains(b.Index)) != null) != null)
+                        {
+                            IsTriggered = true;
+                        }
+                    } else
+                    {
+                        if (actionResultInfos.Find(a => BattlerEnemies().Find(b => a.DeadIndexList.Contains(b.Index)) != null) != null)
+                        {
+                            IsTriggered = true;
+                        }  
                     }
                 }
                 if (triggerDatas[j].TriggerType == TriggerType.DeadWithoutSelf)
@@ -1157,12 +1167,13 @@ public class BattleModel : BaseModel
                 }
                 if (battlerInfo.IsAwaken == false && triggerDatas[j].TriggerType == TriggerType.SelfDead)
                 {
-                    if (CurrentActionInfo().ActionResults.Find(a => a.DeadIndexList.Contains(battlerInfo.Index) == true) != null)
+                    if (actionResultInfos.Find(a => a.DeadIndexList.Contains(battlerInfo.Index) == true) != null)
                     {
                         IsTriggered = true;
                         List<StateInfo> stateInfos = battlerInfo.GetStateInfoAll(StateType.Death);
                         for (var i = 0;i < stateInfos.Count;i++){
                             battlerInfo.RemoveState(stateInfos[i],true);
+                            battlerInfo.SetPreserveAlive(true);
                         }
                     }
                 }
@@ -1206,7 +1217,7 @@ public class BattleModel : BaseModel
         if (skillInfo.TriggerDatas.Count > 0)
         {
             CanUse = false;
-            CanUse = IsTriggerdSkillInfo(battlerInfo,skillInfo.TriggerDatas,TriggerTiming.None);
+            CanUse = IsTriggerdSkillInfo(battlerInfo,skillInfo.TriggerDatas,TriggerTiming.None,new List<ActionResultInfo>());
         }
         return CanUse;
     }
@@ -1342,6 +1353,72 @@ public class BattleModel : BaseModel
         }
         
         return skillInfos[skillIndex].Id;
+    }
+
+    public List<ActionResultInfo> CalcDeathIndexList(List<ActionResultInfo> actionResultInfos)
+    {
+        // 複数回ダメージで戦闘不能になるかチェック
+        var deathIndexs = new List<int>();
+        var damageData = new Dictionary<int,int>();
+        foreach (var actionResultInfo in actionResultInfos)
+        {
+            if (!damageData.TryGetValue(actionResultInfo.TargetIndex ,out var value))
+            {
+                damageData[actionResultInfo.TargetIndex] = 0;
+            }
+            if (!damageData.TryGetValue(actionResultInfo.SubjectIndex ,out var value2))
+            {
+                damageData[actionResultInfo.SubjectIndex] = 0;
+            }
+            if (actionResultInfo.HpDamage != 0)
+            {
+                damageData[actionResultInfo.TargetIndex] += actionResultInfo.HpDamage;
+            }
+            if (actionResultInfo.ReDamage != 0)
+            {
+                damageData[actionResultInfo.SubjectIndex] += actionResultInfo.ReDamage;
+            }
+            foreach (var battlerInfo in _battlers)
+            {
+                if (actionResultInfo.TargetIndex == battlerInfo.Index)
+                {
+                    if (damageData[actionResultInfo.TargetIndex] >= battlerInfo.Hp)
+                    {
+                        if (!deathIndexs.Contains(battlerInfo.Index) && !actionResultInfo.DeadIndexList.Contains(battlerInfo.Index))
+                        {
+                            deathIndexs.Add(battlerInfo.Index);
+                            actionResultInfo.DeadIndexList.Add(battlerInfo.Index);
+                        }
+                    }
+                }
+                if (actionResultInfo.SubjectIndex == battlerInfo.Index)
+                {
+                    if (damageData[actionResultInfo.SubjectIndex] >= battlerInfo.Hp)
+                    {
+                        if (!deathIndexs.Contains(battlerInfo.Index) && !actionResultInfo.DeadIndexList.Contains(battlerInfo.Index))
+                        {
+                            deathIndexs.Add(battlerInfo.Index);
+                            actionResultInfo.DeadIndexList.Add(battlerInfo.Index);
+                        }
+                    }
+                }
+            }
+        }
+        return actionResultInfos;
+    }
+
+    public List<BattlerInfo> PreservedAliveEnemies()
+    {
+        var list = new List<BattlerInfo>();
+        foreach (var battlerInfo in _battlers)
+        {
+            if (battlerInfo.PreserveAlive)
+            {
+                list.Add(battlerInfo);
+                battlerInfo.SetPreserveAlive(false);
+            }
+        }
+        return list;
     }
 
     public bool CheckVictory()

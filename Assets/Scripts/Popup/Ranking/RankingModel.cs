@@ -12,7 +12,7 @@ public class RankingModel : BaseModel
         var countRef = GameSystem.db.Collection(ranking);
         var snapshot = await countRef.GetSnapshotAsync();
         var all = snapshot.Count;
-        var rankAll = await countRef.OrderBy("Score").Limit(100).GetSnapshotAsync();
+        var rankAll = await countRef.OrderByDescending("Score").Limit(100).GetSnapshotAsync();
         
         foreach (var document in rankAll.Documents)
         {

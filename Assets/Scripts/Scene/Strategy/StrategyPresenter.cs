@@ -312,7 +312,12 @@ public class StrategyPresenter : BasePresenter
         _view.HideResultList();
         _model.SetBattleMembers(battleMembers);
         _view.SetTitle(DataSystem.System.GetTextData(4).Text);
-        _view.StartResultAnimation(battleMembers);
+        var bonusList = new List<bool>();
+        foreach (var item in battleMembers)
+        {
+            bonusList.Add(false);
+        }
+        _view.StartResultAnimation(battleMembers,bonusList);
     }
 
     private void EndStrategy()

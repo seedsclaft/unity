@@ -40,7 +40,9 @@ public class ActionResultInfo
                     _deadIndexList.Add(target.Index);
                 }
             }
-            if ((_reDamage - _reHeal) >= subject.Hp && subject.IsAlive())
+            int resuceHp = subject.MaxHp - subject.Hp;
+            int recoveryHp = Mathf.Min(_reHeal,resuceHp);
+            if ((_reDamage - recoveryHp) >= subject.Hp && subject.IsAlive())
             {
                 if (subject.IsState(StateType.Undead) && featureDatas.Find(a => a.FeatureType == FeatureType.BreakUndead) == null)
                 {
@@ -72,7 +74,7 @@ public class ActionResultInfo
     }
     private int _hpHeal = 0;
     public int HpHeal {
-        get {return _hpHeal;} set{_hpHeal = value;}
+        get { return _hpHeal;} set{_hpHeal = value;}
     }
     private int _mpDamage = 0;
     public int MpDamage => _mpDamage;
@@ -157,6 +159,10 @@ public class ActionResultInfo
     private bool IsHit(BattlerInfo subject,BattlerInfo target)
     {
         if (subject.IsState(StateType.AbsoluteHit))
+        {
+            return true;
+        }
+        if (target.IsState(StateType.Chain))
         {
             return true;
         }
@@ -267,10 +273,7 @@ public class ActionResultInfo
         {
             if (subject.IsState(StateType.HealActionSelfHeal))
             {
-                SkillsData.FeatureData healActionSelfHeal = new SkillsData.FeatureData();
-                healActionSelfHeal.FeatureType = FeatureType.HpHeal;
-                healActionSelfHeal.Param1 = target.StateEffectAll(StateType.HealActionSelfHeal);
-                MakeHpHeal(subject,subject,healActionSelfHeal);
+                _reHeal = (int)Mathf.Round(HealValue);
             }
         }
     }
@@ -448,4 +451,5 @@ public class ActionResultInfo
         int rand = new System.Random().Next(-10, 10);
         return (int) Mathf.Floor(value * (1 + rand * 0.01f));
     }
+
 }

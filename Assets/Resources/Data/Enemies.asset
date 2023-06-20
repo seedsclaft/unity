@@ -83,7 +83,7 @@ MonoBehaviour:
       Level: 5
       Weight: 50
       TriggerDatas: []
-    - SkillId: 533
+    - SkillId: 504
       Level: 10
       Weight: 50
       TriggerDatas: []
@@ -707,7 +707,7 @@ MonoBehaviour:
     Name: "\u30D6\u30A8\u30EB"
     ImagePath: Buer
     BaseStatus:
-      _hp: 200
+      _hp: 1
       _mp: 40
       _atk: 40
       _def: 20
@@ -726,9 +726,9 @@ MonoBehaviour:
       Level: 1
       Weight: 50
       TriggerDatas: []
-    - SkillId: 505
+    - SkillId: 533
       Level: 1
-      Weight: 50
+      Weight: 0
       TriggerDatas: []
     - SkillId: 511
       Level: 1
@@ -742,7 +742,7 @@ MonoBehaviour:
     Name: "\u30C7\u30AB\u30E9\u30D3\u30A2"
     ImagePath: Decarabia
     BaseStatus:
-      _hp: 200
+      _hp: 100
       _mp: 40
       _atk: 40
       _def: 20
@@ -751,25 +751,25 @@ MonoBehaviour:
     LearningSkills:
     - SkillId: 1
       Level: 1
-      Weight: 30
+      Weight: 10
       TriggerDatas: []
     - SkillId: 202
       Level: 1
-      Weight: 30
+      Weight: 50
       TriggerDatas: []
     - SkillId: 211
       Level: 1
-      Weight: 30
+      Weight: 0
       TriggerDatas: []
     - SkillId: 212
       Level: 1
-      Weight: 30
+      Weight: 80
       TriggerDatas: []
   - Id: 203
     Name: "\u30B6\u30AC\u30F3"
     ImagePath: Zagan
     BaseStatus:
-      _hp: 200
+      _hp: 100
       _mp: 40
       _atk: 40
       _def: 20
@@ -778,25 +778,25 @@ MonoBehaviour:
     LearningSkills:
     - SkillId: 1
       Level: 1
-      Weight: 30
+      Weight: 10
       TriggerDatas: []
     - SkillId: 305
       Level: 1
-      Weight: 30
+      Weight: 50
       TriggerDatas: []
     - SkillId: 311
       Level: 1
-      Weight: 30
+      Weight: 50
       TriggerDatas: []
     - SkillId: 312
       Level: 1
-      Weight: 30
+      Weight: 50
       TriggerDatas: []
   - Id: 204
     Name: "\u30E1\u30D5\u30A3\u30B9\u30C8\u30D5\u30A7\u30EC\u30B9"
     ImagePath: Mephisto
     BaseStatus:
-      _hp: 400
+      _hp: 200
       _mp: 40
       _atk: 40
       _def: 20
@@ -819,11 +819,39 @@ MonoBehaviour:
       Level: 1
       Weight: 30
       TriggerDatas: []
+    - SkillId: 431
+      Level: 1
+      Weight: 30
+      TriggerDatas: []
+    - SkillId: 231
+      Level: 1
+      Weight: 0
+      TriggerDatas: []
+    - SkillId: 405
+      Level: 1
+      Weight: 30
+      TriggerDatas:
+      - SkillId: 0
+        TriggerType: 22
+        TriggerTiming: 1
+        Param1: 2
+        Param2: 0
+        Param3: 1
+      - SkillId: 0
+        TriggerType: 63
+        TriggerTiming: 1
+        Param1: 3
+        Param2: 1
+        Param3: 0
+    - SkillId: 422
+      Level: 1
+      Weight: 30
+      TriggerDatas: []
   - Id: 205
     Name: "\u30A2\u30B9\u30BF\u30ED\u30C8"
     ImagePath: Astaroth
     BaseStatus:
-      _hp: 200
+      _hp: 100
       _mp: 40
       _atk: 40
       _def: 20
@@ -846,11 +874,15 @@ MonoBehaviour:
       Level: 1
       Weight: 30
       TriggerDatas: []
+    - SkillId: 231
+      Level: 1
+      Weight: 0
+      TriggerDatas: []
   - Id: 206
     Name: "\u30C7\u30D3\u30EB\u30C9\u30E9\u30B4\u30F3"
     ImagePath: Devildragon
     BaseStatus:
-      _hp: 400
+      _hp: 500
       _mp: 40
       _atk: 40
       _def: 20
@@ -945,6 +977,12 @@ MonoBehaviour:
     Text: 405
     Help: 
   - Id: 105
+    Text: 405
+    Help: 
+  - Id: 204
+    Text: 405
+    Help: 
+  - Id: 204
     Text: 405
     Help: 
   - Id: 206

@@ -564,7 +564,7 @@ MonoBehaviour:
   - Id: 12
     Name: "B\u30EB\u30FC\u30C8\u7528"
     Help: '""'
-    Turns: 3
+    Turns: 7
     InitMembers: 00000000
     RandomTroopCount: 1
     BGMId: 05000000
@@ -575,16 +575,76 @@ MonoBehaviour:
       Type: 32
       Param: 0
       ReadFlag: 0
+    - EventKey: 2StartTacticsRouteSelectBattle0
+      Turns: 2
+      Timing: 1
+      Type: 32
+      Param: 0
+      ReadFlag: 0
+    - EventKey: 3StartTacticsRouteSelectBattle0
+      Turns: 3
+      Timing: 1
+      Type: 32
+      Param: 0
+      ReadFlag: 0
+    - EventKey: 4StartTacticsRouteSelectBattle0
+      Turns: 4
+      Timing: 1
+      Type: 32
+      Param: 0
+      ReadFlag: 0
+    - EventKey: 5StartTacticsRouteSelectBattle0
+      Turns: 5
+      Timing: 1
+      Type: 32
+      Param: 0
+      ReadFlag: 0
+    - EventKey: 6StartTacticsRouteSelectBattle0
+      Turns: 6
+      Timing: 1
+      Type: 32
+      Param: 0
+      ReadFlag: 0
   - Id: 13
     Name: "A\u30EB\u30FC\u30C8\u7528"
     Help: '""'
-    Turns: 3
+    Turns: 7
     InitMembers: 00000000
     RandomTroopCount: 1
     BGMId: 05000000
     StageEvents:
     - EventKey: 1StartTacticsRouteSelectBattle0
       Turns: 1
+      Timing: 1
+      Type: 32
+      Param: 0
+      ReadFlag: 0
+    - EventKey: 2StartTacticsRouteSelectBattle0
+      Turns: 2
+      Timing: 1
+      Type: 32
+      Param: 0
+      ReadFlag: 0
+    - EventKey: 3StartTacticsRouteSelectBattle0
+      Turns: 3
+      Timing: 1
+      Type: 32
+      Param: 0
+      ReadFlag: 0
+    - EventKey: 4StartTacticsRouteSelectBattle0
+      Turns: 4
+      Timing: 1
+      Type: 32
+      Param: 0
+      ReadFlag: 0
+    - EventKey: 5StartTacticsRouteSelectBattle0
+      Turns: 5
+      Timing: 1
+      Type: 32
+      Param: 0
+      ReadFlag: 0
+    - EventKey: 6StartTacticsRouteSelectBattle0
+      Turns: 6
       Timing: 1
       Type: 32
       Param: 0

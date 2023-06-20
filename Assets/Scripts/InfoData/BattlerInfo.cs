@@ -67,6 +67,8 @@ public class BattlerInfo
     private int _demigodParam = 0;
     public int DemigodParam {get {return _demigodParam;}}
 
+    private bool _preserveAlive = false;
+    public bool PreserveAlive => _preserveAlive;
 
     public BattlerInfo(ActorInfo actorInfo,int index){
         _charaId = actorInfo.ActorId;
@@ -371,6 +373,7 @@ public class BattlerInfo
                 _stateInfos.RemoveAt(RemoveIndex);
                 if (stateInfo.StateId == (int)StateType.Death)
                 {
+                    _preserveAlive = true;
                     if (_hp == 0)_hp = 1;
                 }
             }
@@ -530,5 +533,10 @@ public class BattlerInfo
             }
         }
         return iconstates;
+    }
+
+    public void SetPreserveAlive(bool preserveAlive)
+    {
+        _preserveAlive = preserveAlive;
     }
 }

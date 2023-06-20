@@ -355,7 +355,7 @@ public class SavePlayInfo
 		if (stageId == 12){
 			_currentStage.SetEndingType(EndingType.B);
 		} else
-		if (stageId == 12){
+		if (stageId == 13){
 			_currentStage.SetEndingType(EndingType.A);
 		}
 	}

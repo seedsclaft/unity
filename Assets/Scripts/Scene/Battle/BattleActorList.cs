@@ -216,8 +216,8 @@ public class BattleActorList : ListWindow , IInputHandlerEvent
             {
                 if (_battleInfos[i].IsAlive())
                 {
-                    indexList.Add(_battleInfos[i].Index);
                 }
+                indexList.Add(_battleInfos[i].Index);
             }
         } else
         if (_targetScopeType == ScopeType.Line)
@@ -228,8 +228,8 @@ public class BattleActorList : ListWindow , IInputHandlerEvent
                 {
                     if (_battleInfos[i].IsAlive())
                     {
-                        indexList.Add(_battleInfos[i].Index);
                     }
+                    indexList.Add(_battleInfos[i].Index);
                 }
             }
         } else
@@ -237,15 +237,15 @@ public class BattleActorList : ListWindow , IInputHandlerEvent
         {
             if (battlerInfo.IsAlive())
             {
-                indexList.Add(battlerInfo.Index);
             }
+            indexList.Add(battlerInfo.Index);
         } else
         if (_targetScopeType == ScopeType.Self)
         {
             if (battlerInfo.IsAlive())
             {
-                indexList.Add(battlerInfo.Index);
             }
+            indexList.Add(battlerInfo.Index);
         }
         return indexList;
     }

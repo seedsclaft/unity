@@ -67,7 +67,13 @@ public class ResultModel : BaseModel
         return menuCommandDatas;
     }
 
-    
-    
-
+    public void SetActors()
+    {
+        // Party初期化
+        PartyInfo.InitActors();
+        for (int i = 0;i < StageMembers().Count;i++)
+        {
+            PartyInfo.AddActor(StageMembers()[i].ActorId);
+        }
+    }
 }

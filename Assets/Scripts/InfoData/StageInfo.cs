@@ -189,7 +189,7 @@ public class StageInfo
             enemyIds.Add(2600);
             while (enemyIds.Count <= 2)
             {
-                int rand = new Random().Next(1, 5);
+                int rand = new Random().Next(1, 6);
                 rand *= 100;
                 rand += 2000;
                 if (rand != 2400)
@@ -206,7 +206,7 @@ public class StageInfo
             enemyIds.Add(2400);
             while (enemyIds.Count <= 2)
             {
-                int rand = new Random().Next(1, 5);
+                int rand = new Random().Next(1, 6);
                 rand *= 100;
                 rand += 2000;
                 if (rand != 2600)
@@ -219,6 +219,7 @@ public class StageInfo
             }
         }
         
+        int lv = 15;
         for (int i = 0;i < enemyIds.Count;i++)
         {
             if (_clearTroopIds.Contains(enemyIds[i])) continue;
@@ -226,7 +227,7 @@ public class StageInfo
             List<TroopsData.TroopData> troopDatas = DataSystem.Troops.FindAll(a => a.TroopId == enemyIds[i]);
             for (int j = 0;j < troopDatas.Count;j++)
             {
-                troopInfo.MakeEnemyData(troopDatas[j],j,_troopClearCount + j);
+                troopInfo.MakeEnemyData(troopDatas[j],j,lv);
             }
             _currentTroopInfos.Add(troopInfo);
         }
@@ -350,5 +351,6 @@ public class StageInfo
         _selectActorIds = stageInfo.SelectActorIds;
         _clearCount = stageInfo.ClearCount;
         _troopClearCount = stageInfo._troopClearCount;
+        _routeSelect = stageInfo.RouteSelect;
     }
 };

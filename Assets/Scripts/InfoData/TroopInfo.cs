@@ -68,6 +68,10 @@ public class TroopInfo
             {
                 getItemInfo.SetResultData(DataSystem.System.GetTextData(14060).Text);
             }
+            if (getItemDatas[i].Type == GetItemType.StatusUp)
+            {
+                getItemInfo.SetResultData(DataSystem.System.GetTextData(14070).Text.Replace("\\d",getItemDatas[i].Param1.ToString()));
+            }
             AddGetItemInfo(getItemInfo);
         }
     }

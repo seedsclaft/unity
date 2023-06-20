@@ -21,30 +21,32 @@ public class GetItemList : ListWindow , IInputHandlerEvent
     public void Initialize()
     {
         InitializeListView(rows);
-        for (int i = 0; i < rows;i++)
+        // スクロールするものはObjectList.CountでSetSelectHandlerを登録する
+        for (int i = 0; i < ObjectList.Count;i++)
         {
             var getItem = ObjectList[i].GetComponent<GetItem>();
-
             getItem.SetSelectHandler((data) => UpdateSelectIndex(data));
             ObjectList[i].SetActive(false);
         }
     }
 
-    public void Refresh(List<GetItemInfo> skillInfoData)
+    public void Refresh(List<GetItemInfo> getItemData)
     {
-        _data = skillInfoData;
+        _data = getItemData;
+        SetDataCount(_data.Count);
         for (int i = 0; i < ObjectList.Count;i++)
         {
             ObjectList[i].SetActive(false);
             if (i < _data.Count) 
             {
                 var getItem = ObjectList[i].GetComponent<GetItem>();
-                getItem.SetData(skillInfoData[i],i);
+                getItem.SetData(getItemData[i],i);
                 ObjectList[i].SetActive(true);
             }
         }
-        UpdateAllItems();
+        ResetScrollPosition();
         //UpdateSelectIndex(0);
+        UpdateAllItems();
     }
 
     public override void UpdateHelpWindow(){
@@ -73,5 +75,13 @@ public class GetItemList : ListWindow , IInputHandlerEvent
         {
             _confirmEvent(TacticsComandType.Train);
         }
+    }
+    
+    public override void RefreshListItem(GameObject gameObject, int itemIndex)
+    {
+        base.RefreshListItem(gameObject,itemIndex);
+        var getItem = gameObject.GetComponent<GetItem>();
+        getItem.SetData(_data[itemIndex],itemIndex);
+        getItem.UpdateViewItem();
     }
 }

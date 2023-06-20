@@ -44,6 +44,9 @@ public class StrategyActor : ListItem ,IListViewItem
                 if (_isBonus) 
                 {
                     StartBonusAnimation();
+                } else
+                {
+                    shinyReflect.enabled = false;
                 }
                 if (_callEvent != null) _callEvent();
             });

@@ -480,7 +480,7 @@ public class GameSystem : MonoBehaviour
         var countRef = db.Collection(ranking);
         var snapshot = await countRef.GetSnapshotAsync();
         var all = snapshot.Count;
-        var rankAll = await countRef.OrderBy("Score").Limit(100).GetSnapshotAsync();
+        var rankAll = await countRef.OrderByDescending("Score").Limit(100).GetSnapshotAsync();
         int rank = 0;
         foreach (var document in rankAll.Documents)
         {

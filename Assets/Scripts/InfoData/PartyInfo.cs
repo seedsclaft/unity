@@ -108,6 +108,10 @@ public class PartyInfo
         _commandCountInfo[commandType] += 1;
         if (_commandCountInfo[commandType] / needLvUpCount != value)
         {
+            if ((_commandCountInfo[commandType] / needLvUpCount) > 10)
+            {
+                return false;
+            }
             return true;
         }
         return false;

@@ -222,6 +222,7 @@ public class BattlerInfoComponent : MonoBehaviour
         {
 
         } else{
+            _damageHandler = null;
             _deathAnimation = 0;
             deathAnimation.enabled = false;
             deathAnimation.Destroyed = 0;

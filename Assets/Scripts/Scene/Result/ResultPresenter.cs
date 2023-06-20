@@ -109,6 +109,7 @@ public class ResultPresenter : BasePresenter
 
     private void ShowStatus()
     {
+        _model.SetActors();
         StatusViewInfo statusViewInfo = new StatusViewInfo(() => {
             _view.CommandStatusClose();
             _view.SetActiveUi(true);
