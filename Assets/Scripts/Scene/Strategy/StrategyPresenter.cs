@@ -101,7 +101,7 @@ public class StrategyPresenter : BasePresenter
             var bonusList = new List<bool>();
             foreach (var item in battledMembers)
             {
-                bonusList.Add(_model.PartyInfo.CommandRankInfo[TacticsComandType.Battle] > 0);
+                bonusList.Add(false);
             }
             _isBattleEnded = true;
             _view.SetTitle(DataSystem.System.GetTextData(14030).Text);

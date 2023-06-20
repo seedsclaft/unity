@@ -36,9 +36,18 @@ public class BattlePresenter : BasePresenter
         _view.SetUIButton();
         _view.SetActiveBack(false);
 
+        if (_view.TestMode == true)
+        {
+            BattleInitialized();
+            return;
+        }
         _view.CommandStartTransition(() => {
+            BattleInitialized();
+        });
+    }
 
-        
+    private void BattleInitialized()
+    {
             _view.SetEvent((type) => updateCommand(type));
 
             _view.SetActors(_model.BattlerActors());
@@ -49,7 +58,6 @@ public class BattlePresenter : BasePresenter
             _view.StartBattleStartAnim(DataSystem.System.GetTextData(4).Text);
             _nextCommandType = Battle.CommandType.EventCheck;
             _busy = false;
-        });
     }
 
     private void updateCommand(BattleViewEvent viewEvent)
@@ -553,7 +561,7 @@ public class BattlePresenter : BasePresenter
         if (actionInfo != null)
         {
             StartDeathAnimation(_model.CurrentActionInfo().ActionResults);
-            if (_triggerAfterChecked == false)
+            if (_triggerAfterChecked == false && CheckBattleEnd() == false)
             {
                 // ステートなどを適用
                 var slipDamage = _model.CheckSlipDamage();

@@ -6,7 +6,7 @@ using UnityEngine.UI;
 abstract public class BaseView : MonoBehaviour
 {
     private bool _testMode = false;
-    public bool TestMode { get {return _testMode;}}
+    public bool TestMode => _testMode;
     private InputSystem _input;
     private List<IInputHandlerEvent> _inputHandler = new List<IInputHandlerEvent>();
     private bool _busy = false;

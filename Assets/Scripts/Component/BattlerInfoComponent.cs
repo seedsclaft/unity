@@ -95,7 +95,7 @@ public class BattlerInfoComponent : MonoBehaviour
         }
         ChangeHp(_battlerInfo.Hp);
         ChangeMp(_battlerInfo.Mp);
-        if (battleStateOverlay != null) battleStateOverlay.SetStates(_battlerInfo.StateInfos);
+        if (battleStateOverlay != null) battleStateOverlay.SetStates(_battlerInfo.IconStateInfos());
         
     }
     
@@ -235,6 +235,10 @@ public class BattlerInfoComponent : MonoBehaviour
     
     public void StartAnimation(EffekseerEffectAsset effectAsset,int animationPosition)
     {
+        if (effectAsset == null){    
+            effekseerEmitter.Stop();
+            return;
+        } 
         Image image = BattleImage();
         if (image == null) return;
         if (!_battlerInfo.isActor)

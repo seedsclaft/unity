@@ -1034,7 +1034,10 @@ public class BattleModel : BaseModel
                 {                
                     ActionResultInfo actionResultInfo = new ActionResultInfo(battlerInfo,battlerInfo,passiveInfo.Master.FeatureDatas);
                     actionResultInfos.Add(actionResultInfo);
-                    _passiveSkillInfos[battlerInfo.Index].Add(passiveInfo);
+                    if (_passiveSkillInfos[battlerInfo.Index].Find(a => a.Master.Id == passiveInfo.Master.Id) == null)
+                    {
+                        _passiveSkillInfos[battlerInfo.Index].Add(passiveInfo);
+                    }
                 }
             }
         }

@@ -518,4 +518,17 @@ public class BattlerInfo
     {
         return Skills.FindAll(a => a.Master.SkillType == SkillType.Passive);
     }
+
+    public List<StateInfo> IconStateInfos()
+    {
+        var iconstates = new List<StateInfo>();
+        foreach (var stateInfo in _stateInfos)
+        {
+            if (stateInfo.Master.EffectPath != "" && stateInfo.Master.EffectPath != "\"\"")
+            {
+                iconstates.Add(stateInfo);
+            }
+        }
+        return iconstates;
+    }
 }

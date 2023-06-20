@@ -152,23 +152,7 @@ public class GameSystem : MonoBehaviour
         } else
         if (viewEvent.commandType == Base.CommandType.CallConfirmView)
         {
-            if (_popupView != null)
-            {
-                DestroyImmediate(_popupView.gameObject);
-            }
-            var prefab = CreateConfirm();
-            _popupView = prefab.GetComponent<ConfirmView>();
-            var confirmView = (_popupView as ConfirmView);
-            confirmView.Initialize();
-            confirmRoot.gameObject.SetActive(true);
-            var popupInfo = (ConfirmInfo)viewEvent.templete;
-            confirmView.SetIsNoChoice(popupInfo.IsNoChoise);
-            confirmView.SetTitle(popupInfo.Title);
-            confirmView.SetSkillInfo(popupInfo.SkillInfos);
-            confirmView.SetConfirmEvent(popupInfo.CallEvent);
-            _currentScene.SetBusy(true);
-            if (_statusView) _statusView.SetBusy(true);
-            if (_enemyInfoView) _enemyInfoView.SetBusy(true);
+            CommandConfirmView((ConfirmInfo)viewEvent.templete);
         } else
         if (viewEvent.commandType == Base.CommandType.CloseConfirm)
         {
@@ -179,92 +163,19 @@ public class GameSystem : MonoBehaviour
         } else
         if (viewEvent.commandType == Base.CommandType.CallRulingView)
         {
-            if (_popupView != null)
-            {
-                DestroyImmediate(_popupView.gameObject);
-            }
-            var prefab = CreateRuling();
-            _popupView = prefab.GetComponent<RulingView>();
-            var rulingView = (_popupView as RulingView);
-            rulingView.Initialize();
-            rulingView.SetBackEvent(() => 
-            {
-                updateCommand(new ViewEvent(Scene.Base,Base.CommandType.CloseConfirm));
-                var endEvent = (System.Action)viewEvent.templete;
-                if ((System.Action)viewEvent.templete != null) endEvent();
-            });
-            confirmRoot.gameObject.SetActive(true);
-            _currentScene.SetBusy(true);
-            if (_statusView) _statusView.SetBusy(true);
-            if (_enemyInfoView) _enemyInfoView.SetBusy(true);
+            CommandRulingView((System.Action)viewEvent.templete);
         } else
         if (viewEvent.commandType == Base.CommandType.CallOptionView)
         {
-            if (_popupView != null)
-            {
-                DestroyImmediate(_popupView.gameObject);
-            }
-            var prefab = CreateOption();
-            _popupView = prefab.GetComponent<OptionView>();
-            var optionView = (_popupView as OptionView);
-            optionView.Initialize();
-            optionView.SetBackEvent(() => 
-            {
-                GameSystem.ConfigData.UpdateSoundParameter(
-                    Ryneus.SoundManager.Instance._bgmVolume,
-                    Ryneus.SoundManager.Instance._bgmMute,
-                    Ryneus.SoundManager.Instance._seVolume,
-                    Ryneus.SoundManager.Instance._seMute
-                );
-                SaveSystem.SaveConfigStart(GameSystem.ConfigData);
-                updateCommand(new ViewEvent(Scene.Base,Base.CommandType.CloseConfirm));
-                var endEvent = (System.Action)viewEvent.templete;
-                if ((System.Action)viewEvent.templete != null) endEvent();
-            });
-            confirmRoot.gameObject.SetActive(true);
-            _currentScene.SetBusy(true);
-            if (_statusView) _statusView.SetBusy(true);
-            if (_enemyInfoView) _enemyInfoView.SetBusy(true);
+            CommandOptionView((System.Action)viewEvent.templete);
         } else
         if (viewEvent.commandType == Base.CommandType.CallRankingView)
         {
-            if (_popupView != null)
-            {
-                DestroyImmediate(_popupView.gameObject);
-            }
-            var prefab = CreateRanking();
-            _popupView = prefab.GetComponent<RankingView>();
-            var rankingView = (_popupView as RankingView);
-            rankingView.Initialize();
-            rankingView.SetBackEvent(() => 
-            {
-                updateCommand(new ViewEvent(Scene.Base,Base.CommandType.CloseConfirm));
-                var endEvent = (System.Action)viewEvent.templete;
-                if ((System.Action)viewEvent.templete != null) endEvent();
-            });
-            confirmRoot.gameObject.SetActive(true);
-            _currentScene.SetBusy(true);
-            if (_statusView) _statusView.SetBusy(true);
-            if (_enemyInfoView) _enemyInfoView.SetBusy(true);
+            CommandRankingView((System.Action)viewEvent.templete);
         } else
         if (viewEvent.commandType == Base.CommandType.CallCreditView)
         { 
-            if (_popupView != null)
-            {
-                DestroyImmediate(_popupView.gameObject);
-            }
-            var prefab = CreateCredit();
-            _popupView = prefab.GetComponent<CreditView>();
-            var creditView = (_popupView as CreditView);
-            creditView.Initialize();
-            creditView.SetBackEvent(() => 
-            {
-                updateCommand(new ViewEvent(Scene.Base,Base.CommandType.CloseConfirm));
-                var endEvent = (System.Action)viewEvent.templete;
-                if ((System.Action)viewEvent.templete != null) endEvent();
-            });
-            confirmRoot.gameObject.SetActive(true);
-            _currentScene.SetBusy(true);
+            CommandCreditView((System.Action)viewEvent.templete);
         } else
         if (viewEvent.commandType == Base.CommandType.CallStatusView)
         {
@@ -370,6 +281,116 @@ public class GameSystem : MonoBehaviour
                 }
             });
         }
+    }
+
+    private void CommandConfirmView(ConfirmInfo confirmInfo)
+    {
+        if (_popupView != null)
+        {
+            DestroyImmediate(_popupView.gameObject);
+        }
+        var prefab = CreateConfirm();
+        _popupView = prefab.GetComponent<ConfirmView>();
+        var confirmView = (_popupView as ConfirmView);
+        confirmView.Initialize();
+        confirmRoot.gameObject.SetActive(true);
+        var popupInfo = confirmInfo;
+        confirmView.SetIsNoChoice(popupInfo.IsNoChoise);
+        confirmView.SetTitle(popupInfo.Title);
+        confirmView.SetSkillInfo(popupInfo.SkillInfos);
+        confirmView.SetConfirmEvent(popupInfo.CallEvent);
+        _currentScene.SetBusy(true);
+        if (_statusView) _statusView.SetBusy(true);
+        if (_enemyInfoView) _enemyInfoView.SetBusy(true);
+    }
+
+    private void CommandRulingView(System.Action endEvent)
+    {
+        if (_popupView != null)
+        {
+            DestroyImmediate(_popupView.gameObject);
+        }
+        var prefab = CreateRuling();
+        _popupView = prefab.GetComponent<RulingView>();
+        var rulingView = (_popupView as RulingView);
+        rulingView.Initialize();
+        rulingView.SetBackEvent(() => 
+        {
+            updateCommand(new ViewEvent(Scene.Base,Base.CommandType.CloseConfirm));
+            if (endEvent != null) endEvent();
+        });
+        confirmRoot.gameObject.SetActive(true);
+        _currentScene.SetBusy(true);
+        if (_statusView) _statusView.SetBusy(true);
+        if (_enemyInfoView) _enemyInfoView.SetBusy(true);
+    }
+    
+    private void CommandOptionView(System.Action endEvent)
+    {
+        if (_popupView != null)
+        {
+            DestroyImmediate(_popupView.gameObject);
+        }
+        var prefab = CreateOption();
+        _popupView = prefab.GetComponent<OptionView>();
+        var optionView = (_popupView as OptionView);
+        optionView.Initialize();
+        optionView.SetBackEvent(() => 
+        {
+            GameSystem.ConfigData.UpdateSoundParameter(
+                Ryneus.SoundManager.Instance._bgmVolume,
+                Ryneus.SoundManager.Instance._bgmMute,
+                Ryneus.SoundManager.Instance._seVolume,
+                Ryneus.SoundManager.Instance._seMute
+            );
+            SaveSystem.SaveConfigStart(GameSystem.ConfigData);
+            updateCommand(new ViewEvent(Scene.Base,Base.CommandType.CloseConfirm));
+            if (endEvent != null) endEvent();
+        });
+        confirmRoot.gameObject.SetActive(true);
+        _currentScene.SetBusy(true);
+        if (_statusView) _statusView.SetBusy(true);
+        if (_enemyInfoView) _enemyInfoView.SetBusy(true);
+    }
+    
+    private void CommandRankingView(System.Action endEvent)
+    {
+        if (_popupView != null)
+        {
+            DestroyImmediate(_popupView.gameObject);
+        }
+        var prefab = CreateRanking();
+        _popupView = prefab.GetComponent<RankingView>();
+        var rankingView = (_popupView as RankingView);
+        rankingView.Initialize();
+        rankingView.SetBackEvent(() => 
+        {
+            updateCommand(new ViewEvent(Scene.Base,Base.CommandType.CloseConfirm));
+            if (endEvent != null) endEvent();
+        });
+        confirmRoot.gameObject.SetActive(true);
+        _currentScene.SetBusy(true);
+        if (_statusView) _statusView.SetBusy(true);
+        if (_enemyInfoView) _enemyInfoView.SetBusy(true);
+    }
+
+    private void CommandCreditView(System.Action endEvent)
+    {
+        if (_popupView != null)
+        {
+            DestroyImmediate(_popupView.gameObject);
+        }
+        var prefab = CreateCredit();
+        _popupView = prefab.GetComponent<CreditView>();
+        var creditView = (_popupView as CreditView);
+        creditView.Initialize();
+        creditView.SetBackEvent(() => 
+        {
+            updateCommand(new ViewEvent(Scene.Base,Base.CommandType.CloseConfirm));
+            if (endEvent != null) endEvent();
+        });
+        confirmRoot.gameObject.SetActive(true);
+        _currentScene.SetBusy(true);
     }
 
     IEnumerator JumpScenarioAsync(string label, System.Action onComplete)
