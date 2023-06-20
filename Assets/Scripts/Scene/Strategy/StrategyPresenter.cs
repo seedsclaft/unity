@@ -23,6 +23,8 @@ public class StrategyPresenter : BasePresenter
 
     private async void Initialize()
     {
+        _model.LoadActorResources();
+        _model.LoadEnemyResources();
         _view.SetHelpWindow();
         _view.SetUiView();
         _view.SetEnemyList(_model.ResultCommand());
@@ -220,6 +222,7 @@ public class StrategyPresenter : BasePresenter
             ShowStatus();
         } else{
             Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
+            _view.CommandCallLoading();
             _view.CommandChangeViewToTransition(null);
             _view.CommandSceneChange(Scene.Battle);
         }

@@ -1,10 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 using Title;
 
 public class TitleView : BaseView
 {
+    [SerializeField] private Button creditButton = null;
+    [SerializeField] private TextMeshProUGUI versionText = null;
     [SerializeField] private TitleCommandList commandList = null;
     private new System.Action<TitleViewEvent> _commandData = null;
     [SerializeField] private GameObject helpRoot = null;
@@ -20,6 +24,13 @@ public class TitleView : BaseView
         base.Initialize();
         InitializeInput();
         new TitlePresenter(this);
+        creditButton.onClick.AddListener(() => CallCredit());
+    }
+
+    private void CallCredit()
+    {
+        var eventData = new TitleViewEvent(CommandType.Credit);
+        _commandData(eventData);
     }
 
     public void SetHelpWindow(){
@@ -34,6 +45,10 @@ public class TitleView : BaseView
         _commandData = commandData;
     }
 
+    public void SetVersion(string text)
+    {
+        versionText.text = text;
+    }
     public void SetTitleCommand(List<SystemData.MenuCommandData> menuCommands){
         commandList.Initialize(menuCommands,(menuCommandInfo) => CallTitleCommand(menuCommandInfo));
         SetInputHandler(commandList.GetComponent<IInputHandlerEvent>());
@@ -62,6 +77,7 @@ namespace Title
     {
         None = 0,
         TitleCommand,
+        Credit,
     }
 }
 

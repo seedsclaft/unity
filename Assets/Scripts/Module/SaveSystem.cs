@@ -217,21 +217,19 @@ public class SaveSystem : MonoBehaviour
 [Serializable]
 public class SavePlayInfo
 {
-	public const int SAVEDATA_VER = 100;
-
 	private PlayerInfo _playerInfo = null;
-    public PlayerInfo PlayerInfo {get {return _playerInfo;}}
-    private List<ActorInfo> _actors = new List<ActorInfo>();
-    public List<ActorInfo> Actors {get {return _actors;}}
+    public PlayerInfo PlayerInfo => _playerInfo;
+    private List<ActorInfo> _actors = new ();
+    public List<ActorInfo> Actors => _actors;
 	
-    private List<StageInfo> _stages = new List<StageInfo>();
-    public List<StageInfo> Stages {get {return _stages;}}
+    private List<StageInfo> _stages = new ();
+    public List<StageInfo> Stages => _stages;
     private PartyInfo _party = null;
-	public PartyInfo Party { get {return _party;}}
+	public PartyInfo Party => _party;
     private StageInfo _currentStage = null;
-	public StageInfo CurrentStage { get {return _currentStage;}}
+	public StageInfo CurrentStage => _currentStage;
     private AlcanaInfo _currentAlcana = null;
-	public AlcanaInfo CurrentAlcana { get {return _currentAlcana;}}
+	public AlcanaInfo CurrentAlcana => _currentAlcana;
 
     public SavePlayInfo()
     {

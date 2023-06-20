@@ -96,17 +96,6 @@ public class BattleModel : BaseModel
         }
     }
 
-    public async UniTask LoadResources()
-    {
-        var filePaths = BattleUtility.AnimationResourcePaths(_battlers);
-        int count = filePaths.Count;
-        foreach (var filePath in filePaths)
-        {
-            await Resources.LoadAsync<Sprite>( filePath );
-            count -= 1;
-        }
-        await UniTask.WaitUntil( () => count == 0 );
-    }
 
     public void UpdateAp()
     {

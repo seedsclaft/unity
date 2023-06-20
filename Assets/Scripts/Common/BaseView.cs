@@ -119,6 +119,13 @@ abstract public class BaseView : MonoBehaviour
         CallSceneChangeCommand(eventData);
     }
 
+    public void CommandCallCredit(System.Action endEvent)
+    {
+        var eventData = new ViewEvent(Scene.Base, Base.CommandType.CallCreditView);
+        eventData.templete = endEvent;
+        CallSceneChangeCommand(eventData);
+    }
+
     public void CommandCallStatus(StatusViewInfo statusViewInfo)
     {
         var eventData = new ViewEvent(Scene.Base, Base.CommandType.CallStatusView);
@@ -237,6 +244,7 @@ namespace Base
         CallRulingView,
         CallOptionView,
         CallRankingView,
+        CallCreditView,
         CallStatusView,
         CloseStatus,
         CallAdvScene,

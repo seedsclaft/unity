@@ -10,6 +10,7 @@ using Cysharp.Threading.Tasks;
 
 public class GameSystem : MonoBehaviour
 {
+    [SerializeField] private float version = 0.01f;
     [SerializeField] private bool testMode = false;
     [SerializeField] private GameObject uiRoot = null;
     [SerializeField] private GameObject confirmRoot = null;
@@ -17,6 +18,7 @@ public class GameSystem : MonoBehaviour
     [SerializeField] private GameObject rulingPrefab = null;
     [SerializeField] private GameObject optionPrefab = null;
     [SerializeField] private GameObject rankingPrefab = null;
+    [SerializeField] private GameObject creditPrefab = null;
     [SerializeField] private GameObject transitionRoot = null;
     [SerializeField] private Fade transitionFade = null;
     [SerializeField] private GameObject statusRoot = null;
@@ -44,11 +46,14 @@ public class GameSystem : MonoBehaviour
     public static FirebaseFirestore db;
     private bool _busy = false;
     public bool Busy {get {return _busy;}}
+
+    public static float Version;
     private void Awake() 
     {
         Application.targetFrameRate = 60;
         advController.Initialize();
         _model = new BaseModel();
+        GameSystem.Version = version;
         CommandSceneChange(Scene.Boot);
         db = FirebaseFirestore.DefaultInstance;
     }
@@ -80,6 +85,14 @@ public class GameSystem : MonoBehaviour
     private GameObject CreateRanking()
     {
         var prefab = Instantiate(rankingPrefab);
+        prefab.transform.SetParent(confirmRoot.transform, false);
+        confirmRoot.gameObject.SetActive(false);
+        return prefab;
+    }
+    
+    private GameObject CreateCredit()
+    {
+        var prefab = Instantiate(creditPrefab);
         prefab.transform.SetParent(confirmRoot.transform, false);
         confirmRoot.gameObject.SetActive(false);
         return prefab;
@@ -233,6 +246,25 @@ public class GameSystem : MonoBehaviour
             _currentScene.SetBusy(true);
             if (_statusView) _statusView.SetBusy(true);
             if (_enemyInfoView) _enemyInfoView.SetBusy(true);
+        } else
+        if (viewEvent.commandType == Base.CommandType.CallCreditView)
+        { 
+            if (_popupView != null)
+            {
+                DestroyImmediate(_popupView.gameObject);
+            }
+            var prefab = CreateCredit();
+            _popupView = prefab.GetComponent<CreditView>();
+            var creditView = (_popupView as CreditView);
+            creditView.Initialize();
+            creditView.SetBackEvent(() => 
+            {
+                updateCommand(new ViewEvent(Scene.Base,Base.CommandType.CloseConfirm));
+                var endEvent = (System.Action)viewEvent.templete;
+                if ((System.Action)viewEvent.templete != null) endEvent();
+            });
+            confirmRoot.gameObject.SetActive(true);
+            _currentScene.SetBusy(true);
         } else
         if (viewEvent.commandType == Base.CommandType.CallStatusView)
         {

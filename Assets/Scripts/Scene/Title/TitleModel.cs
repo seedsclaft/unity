@@ -11,4 +11,9 @@ public class TitleModel : BaseModel
     {
         return SaveSystem.ExistsLoadFile();
     }
+
+    public string VersionText()
+    {
+        return GameSystem.Version.ToString();
+    }
 }

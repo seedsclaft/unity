@@ -377,6 +377,26 @@ public class StrategyModel : BaseModel
         }
         return false;
     }
+
+    public void LoadActorResources()
+    {
+        var filePaths = BattleUtility.AnimationResourcePaths(TacticsBattleActors());
+        int count = filePaths.Count;
+        foreach (var filePath in filePaths)
+        {
+            Resources.LoadAsync<Sprite>( filePath );
+        }
+    }
+
+    public void LoadEnemyResources()
+    {
+        var filePaths = BattleUtility.AnimationResourcePaths(TacticsBattleActors());
+        int count = filePaths.Count;
+        foreach (var filePath in filePaths)
+        {
+            Resources.LoadAsync<Sprite>( filePath );
+        }
+    }
     
     public void EndStrategy()
     {

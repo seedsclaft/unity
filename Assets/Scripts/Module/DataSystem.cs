@@ -9,43 +9,44 @@ using Cysharp.Threading.Tasks;
 abstract public class DataSystem 
 {
     private static DataManager _data;
-    public static DataManager Data {get{return _data;}}
+    public static DataManager Data => _data;
     private static List<ActorsData.ActorData> _actors;
-    public static List<ActorsData.ActorData> Actors {get{return _actors;}}
+    public static List<ActorsData.ActorData> Actors => _actors;
     private static SystemData _system;
-    public static SystemData System {get{return _system;}}
+    public static SystemData System => _system;
 
     private static EnemiesData _enemies;
-    public static List<EnemiesData.EnemyData> Enemies {get{return _enemies._data;}}
+    public static List<EnemiesData.EnemyData> Enemies => _enemies._data;
 
     private static SkillsData _skills;
-    public static List<SkillsData.SkillData> Skills {get{return _skills._data;}}
-    public static List<SystemData.MenuCommandData> TacticsCommand {get { return _system.TacticsCommandData;}}
-    public static List<SystemData.MenuCommandData> TitleCommand {get { return _system.TitleCommandData;}}
-    public static List<SystemData.MenuCommandData> StatusCommand {get { return _system.StatusCommandData;}}
-    public static List<SystemData.MenuCommandData> OptionCommand {get { return _system.OptionCommandData;}}
-    public static List<int> InitActors {get { return _system.InitActors;}}
+    public static List<SkillsData.SkillData> Skills => _skills._data;
+    public static List<SystemData.MenuCommandData> TacticsCommand => _system.TacticsCommandData;
+    public static List<SystemData.MenuCommandData> TitleCommand => _system.TitleCommandData;
+    public static List<SystemData.MenuCommandData> StatusCommand => _system.StatusCommandData;
+    public static List<SystemData.MenuCommandData> OptionCommand => _system.OptionCommandData;
+    public static List<int> InitActors => _system.InitActors;
     
     private static StagesData _stages;
-    public static List<StagesData.StageData> Stages {get{return _stages._data;}}
+    public static List<StagesData.StageData> Stages => _stages._data;
     
     private static TroopsData _troops;
-    public static List<TroopsData.TroopData> Troops {get{return _troops._data;}}
+    public static List<TroopsData.TroopData> Troops => _troops._data;
     
     private static StatesData _states;
-    public static List<StatesData.StateData> States {get{return _states._data;}}
+    public static List<StatesData.StateData> States => _states._data;
 
     private static AlcanaData _alcana;
-    public static List<AlcanaData.Alcana> Alcana {get{return _alcana._data;}}
+    public static List<AlcanaData.Alcana> Alcana => _alcana._data;
 
     private static AdvsData _advs;
-    public static List<AdvsData.AdvData> Advs {get{return _advs._data;}}
+    public static List<AdvsData.AdvData> Advs => _advs._data;
 
     private static TipsData _tips;
-    public static List<TipsData.TipData> Tips {get{return _tips._data;}}
+    public static List<TipsData.TipData> Tips => _tips._data;
 
     private static RulesData _rules;
-    public static List<RulesData.RuleData> Rules {get{return _rules._data;}}
+    public static List<RulesData.RuleData> Rules => _rules._data;
+
     public static void LoadData(){
         /*
         var asset = await Addressables.LoadAssetAsync<ActorsData>("Assets/Data/Actors.asset").Task;

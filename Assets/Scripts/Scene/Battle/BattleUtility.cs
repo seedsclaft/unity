@@ -20,4 +20,21 @@ public class BattleUtility
         }
         return list;
     }
+
+    public static List<string> AnimationResourcePaths(List<ActorInfo> actorInfos)
+    {
+        var list = new List<string>();
+        foreach (var actorInfo in actorInfos)
+        {
+            foreach (var skillInfo in actorInfo.Skills)
+            {
+                var skillData = skillInfo.Master;
+                if (!list.Contains(skillData.AnimationName) && skillData.AnimationName != "")
+                {
+                    list.Add(skillData.AnimationName);
+                }
+            }
+        }
+        return list;
+    }
 }

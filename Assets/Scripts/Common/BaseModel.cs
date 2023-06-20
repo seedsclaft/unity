@@ -455,4 +455,16 @@ public class BaseModel
     {
         return PartyInfo.CommandRankInfo;
     }
+
+    public async UniTask LoadBattleResources(List<BattlerInfo> battlers)
+    {
+        var filePaths = BattleUtility.AnimationResourcePaths(battlers);
+        int count = filePaths.Count;
+        foreach (var filePath in filePaths)
+        {
+            await Resources.LoadAsync<Sprite>( filePath );
+            count -= 1;
+        }
+        await UniTask.WaitUntil( () => count == 0 );
+    }
 }

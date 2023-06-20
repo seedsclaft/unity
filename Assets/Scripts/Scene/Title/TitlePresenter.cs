@@ -23,6 +23,7 @@ public class TitlePresenter
         _view.SetHelpWindow();
         _view.SetEvent((type) => updateCommand(type));
         _view.SetTitleCommand(_model.TitleCommand);
+        _view.SetVersion(_model.VersionText());
 
         CommandRefresh();
         var bgm = await _model.GetBgmData("TITLE");
@@ -39,6 +40,10 @@ public class TitlePresenter
         if (viewEvent.commandType == CommandType.TitleCommand)
         {
             CommandTitle((int) viewEvent.templete);
+        }
+        if (viewEvent.commandType == CommandType.Credit)
+        {
+            CommandCredit();
         }
     }
 
@@ -61,6 +66,14 @@ public class TitlePresenter
             break;
         }
             Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
+    }
+
+    private void CommandCredit()
+    {
+        _busy = true;
+        _view.CommandCallCredit(() => {
+            _busy = false;
+        });
     }
 
     private void CommandRefresh(){

@@ -25,9 +25,7 @@ public class BattlePresenter : BasePresenter
     {
         _view.SetBattleBusy(true);
         _model.CreateBattleData();
-        // load
-        _view.CommandCallLoading();
-        await _model.LoadResources();
+        await _model.LoadBattleResources(_model.Battlers);
         var bgm = await _model.GetBattleBgm();
         Ryneus.SoundManager.Instance.PlayBgm(bgm,1.0f,true);
         _view.CommandLoadingClose();

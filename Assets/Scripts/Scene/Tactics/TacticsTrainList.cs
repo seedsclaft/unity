@@ -1,10 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
-using UnityEngine.Events;
 using UnityEngine.UI;
-using UnityEngine.AddressableAssets;
 using TMPro;
 
 public class TacticsTrainList : ListWindow , IInputHandlerEvent
