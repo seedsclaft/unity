@@ -40,11 +40,11 @@ MonoBehaviour:
         Param3: 0
     - SkillId: 321
       Level: 5
-      Weight: 50
+      Weight: 70
       TriggerDatas: []
     - SkillId: 305
       Level: 10
-      Weight: 50
+      Weight: 100
       TriggerDatas: []
   - Id: 2
     Name: "\u30AB\u30FC\u30B9\u30C9"
@@ -707,7 +707,7 @@ MonoBehaviour:
     Name: "\u30D6\u30A8\u30EB"
     ImagePath: Buer
     BaseStatus:
-      _hp: 1
+      _hp: 100
       _mp: 40
       _atk: 40
       _def: 20
@@ -843,7 +843,7 @@ MonoBehaviour:
         Param1: 3
         Param2: 1
         Param3: 0
-    - SkillId: 422
+    - SkillId: 421
       Level: 1
       Weight: 30
       TriggerDatas: []

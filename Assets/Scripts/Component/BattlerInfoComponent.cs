@@ -296,7 +296,10 @@ public class BattlerInfoComponent : MonoBehaviour
             _damageTiming--;
             if (_damageTiming == 0)
             {
-                _damageHandler(_battlerInfo.Index);
+                if (_damageHandler != null)
+                {
+                   _damageHandler(_battlerInfo.Index);
+                }
                 _damageHandler = null;
                 _animationEndTiming = 60;
             }

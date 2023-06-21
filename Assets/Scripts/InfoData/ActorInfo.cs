@@ -408,15 +408,15 @@ public class ActorInfo
     public int Evaluate()
     {
         int evaluate = 0;
-        int statusParam = CurrentParameter(StatusParamType.Hp) * 1
-        + CurrentParameter(StatusParamType.Mp) * 1
-        + CurrentParameter(StatusParamType.Atk) * 2
-        + CurrentParameter(StatusParamType.Def) * 2
-        + CurrentParameter(StatusParamType.Spd) * 2;
+        int statusParam = CurrentParameter(StatusParamType.Hp) * 2
+        + CurrentParameter(StatusParamType.Mp) * 2
+        + CurrentParameter(StatusParamType.Atk) * 3
+        + CurrentParameter(StatusParamType.Def) * 3
+        + CurrentParameter(StatusParamType.Spd) * 3;
         int magicParam = 0;
         foreach (var skillInfo in Skills)
         {
-            magicParam += skillInfo.Master.Rank * 40;
+            magicParam += 1 * 25;
         }
         int attibuteParam = 0;
         foreach (var attribute in Attribute)

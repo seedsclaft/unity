@@ -527,7 +527,7 @@ public class BattlerInfo
         var iconstates = new List<StateInfo>();
         foreach (var stateInfo in _stateInfos)
         {
-            if (stateInfo.Master.EffectPath != "" && stateInfo.Master.EffectPath != "\"\"")
+            if (stateInfo.Master.IconPath != "" && stateInfo.Master.IconPath != "\"\"")
             {
                 iconstates.Add(stateInfo);
             }

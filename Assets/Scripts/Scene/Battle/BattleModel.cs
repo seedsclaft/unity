@@ -855,7 +855,14 @@ public class BattleModel : BaseModel
         {
             for (int j = 0; j < actionResultInfos[i].DeadIndexList.Count; j++)
             {
-                deathBattlerIndex.Add(actionResultInfos[i].DeadIndexList[j]);
+                // 例外
+                if (!GetBattlerInfo(actionResultInfos[i].DeadIndexList[j]).IsState(StateType.Death))
+                {
+
+                } else
+                {
+                    deathBattlerIndex.Add(actionResultInfos[i].DeadIndexList[j]);
+                }
             }
         }
         return deathBattlerIndex;
@@ -1112,7 +1119,7 @@ public class BattleModel : BaseModel
                 }
                 if (triggerTiming == TriggerTiming.After && triggerDatas[j].TriggerType == TriggerType.PayBattleMp)
                 {
-                    if ( battlerInfo.PayBattleMp >= triggerDatas[j].Param1)
+                    if (battlerInfo.IsAlive() && battlerInfo.PayBattleMp >= triggerDatas[j].Param1)
                     {
                         IsTriggered = true;
                     }
