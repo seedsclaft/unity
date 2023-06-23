@@ -112,6 +112,9 @@ public class BaseModel
         ChangeSEValue(saveConfigInfo._seVolume);
         Ryneus.SoundManager.Instance._seMute = saveConfigInfo._seMute;
         ChangeGraphicIndex(saveConfigInfo._graphicIndex);
+        ChangeEventSkipIndex(saveConfigInfo._eventSkipIndex);
+        ChangeCommandEndCheck(saveConfigInfo._commandEndCheck);
+        ChangeBattleWait(saveConfigInfo._battleWait);
     }
 
     public float BGMVolume(){ return Ryneus.SoundManager.Instance._bgmVolume;}
@@ -144,6 +147,21 @@ public class BaseModel
     {
         GameSystem.ConfigData._graphicIndex = graphicIndex;
         QualitySettings.SetQualityLevel(graphicIndex);
+    }
+
+    public void ChangeEventSkipIndex(bool eventSkipIndex)
+    {
+        GameSystem.ConfigData._eventSkipIndex = eventSkipIndex;
+    }
+
+    public void ChangeCommandEndCheck(bool commandEndCheck)
+    {
+        GameSystem.ConfigData._commandEndCheck = commandEndCheck;
+    }
+
+    public void ChangeBattleWait(bool battleWait)
+    {
+        GameSystem.ConfigData._battleWait = battleWait;
     }
 
     public string PlayerName()
@@ -443,6 +461,11 @@ public class BaseModel
     public void StageClaer()
     {
         CurrentData.StageClaer();
+    }
+
+    public void StageClaer(int stageId)
+    {
+        CurrentData.StageClaer(stageId);
     }
 
     public void ChangeRouteSelectStage(int stageBaseId)

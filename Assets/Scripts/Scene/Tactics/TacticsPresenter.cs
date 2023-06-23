@@ -155,6 +155,7 @@ public class TacticsPresenter :BasePresenter
                 if (stageEvents[i].Type == StageEventType.RouteSelectBattle)
                 {
                     _view.SetEnemies(_model.RouteSelectTroopData());
+                    _model.AddEventReadFlag(stageEvents[i]);
                 }
             }
         }

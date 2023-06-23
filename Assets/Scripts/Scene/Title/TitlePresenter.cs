@@ -19,6 +19,10 @@ public class TitlePresenter
     private async void Initialize()
     {
         _model.ApllyConfigData();
+        if (GameSystem.ConfigData._eventSkipIndex)
+        {
+            _view.CommandChangeEventSkipIndex(true);
+        }
 
         _view.SetHelpWindow();
         _view.SetEvent((type) => updateCommand(type));

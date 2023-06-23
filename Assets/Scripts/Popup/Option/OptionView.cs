@@ -15,6 +15,9 @@ public class OptionView : BaseView
     [SerializeField] private OptionVolume optionSeVolume = null;
 
     [SerializeField] private List<Toggle> graphicToggles = null;
+    [SerializeField] private List<Toggle> eventSkipToggles = null;
+    [SerializeField] private List<Toggle> commandEndCheckToggles = null;
+    [SerializeField] private List<Toggle> battleWaitToggles = null;
     public override void Initialize() 
     {
         base.Initialize();
@@ -39,6 +42,35 @@ public class OptionView : BaseView
         }
     }
 
+    public void InitializeEventSkip(int eventSkipIndex)
+    {
+        UpdateEventSkipIndex(eventSkipIndex);
+        for (int i = 0;i < eventSkipToggles.Count;i++)
+        {
+            int j = eventSkipToggles.Count-i;
+            eventSkipToggles[i].onValueChanged.AddListener((a) => ChangeEventSkipIndex(a,j));
+        }
+    }
+
+    public void InitializeCommandEndCheck(int commandEndCheckIndex)
+    {
+        UpdateCommandEndCheck(commandEndCheckIndex);
+        for (int i = 0;i < commandEndCheckToggles.Count;i++)
+        {
+            int j = commandEndCheckToggles.Count-i;
+            commandEndCheckToggles[i].onValueChanged.AddListener((a) => ChangeCommandEndCheck(a,j));
+        }
+    }
+
+    public void InitializeBattleWait(int battleWaitIndex)
+    {
+        UpdateBattleWait(battleWaitIndex);
+        for (int i = 0;i < battleWaitToggles.Count;i++)
+        {
+            int j = battleWaitToggles.Count-i;
+            battleWaitToggles[i].onValueChanged.AddListener((a) => ChangeBattleWait(a,j));
+        }
+    }
 
     public void SetEvent(System.Action<OptionViewEvent> commandData)
     {
@@ -113,6 +145,53 @@ public class OptionView : BaseView
         }
     }
 
+    private void ChangeEventSkipIndex(bool isChange,int toggleIndex)
+    {
+        if (isChange == false) return;
+        var eventData = new OptionViewEvent(CommandType.ChangeEventSkipIndex);
+        eventData.templete = toggleIndex;
+        _commandData(eventData);
+    }
+
+    private void UpdateEventSkipIndex(int eventSkipIndex)
+    {
+        for (int i = 0;i < eventSkipToggles.Count;i++)
+        {
+            eventSkipToggles[i].isOn = (eventSkipToggles.Count-i) == eventSkipIndex;
+        }
+    }
+
+    private void ChangeCommandEndCheck(bool isChange,int toggleIndex)
+    {
+        if (isChange == false) return;
+        var eventData = new OptionViewEvent(CommandType.ChangeCommandEndCheck);
+        eventData.templete = toggleIndex;
+        _commandData(eventData);
+    }
+
+    private void UpdateCommandEndCheck(int eventSkipIndex)
+    {
+        for (int i = 0;i < commandEndCheckToggles.Count;i++)
+        {
+            commandEndCheckToggles[i].isOn = (commandEndCheckToggles.Count-i) == eventSkipIndex;
+        }
+    }
+
+    private void ChangeBattleWait(bool isChange,int toggleIndex)
+    {
+        if (isChange == false) return;
+        var eventData = new OptionViewEvent(CommandType.ChangeBattleWait);
+        eventData.templete = toggleIndex;
+        _commandData(eventData);
+    }
+
+    private void UpdateBattleWait(int battleWaitIndex)
+    {
+        for (int i = 0;i < battleWaitToggles.Count;i++)
+        {
+            battleWaitToggles[i].isOn = (battleWaitToggles.Count-i) == battleWaitIndex;
+        }
+    }
 
     public void CommandSelectCategory(int optionIndex)
     {
@@ -135,6 +214,9 @@ namespace Option
         ChangeSEValue = 1011,
         ChangeSEMute = 1012,
         ChangeGraphicIndex = 1021,
+        ChangeEventSkipIndex = 1031,
+        ChangeCommandEndCheck = 1041,
+        ChangeBattleWait = 1051,
     }
 }
 public class OptionViewEvent

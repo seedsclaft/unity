@@ -280,6 +280,10 @@ public class GameSystem : MonoBehaviour
                     transitionFade.FadeOut(0);
                 }
             });
+        } else
+        if (viewEvent.commandType == Base.CommandType.ChangeEventSkipIndex)
+        {
+            advEngine.Config.IsSkip = (bool)viewEvent.templete;
         }
     }
 
@@ -347,6 +351,7 @@ public class GameSystem : MonoBehaviour
             updateCommand(new ViewEvent(Scene.Base,Base.CommandType.CloseConfirm));
             if (endEvent != null) endEvent();
         });
+        optionView.SetEvent((type) => updateCommand(type));
         confirmRoot.gameObject.SetActive(true);
         _currentScene.SetBusy(true);
         if (_statusView) _statusView.SetBusy(true);

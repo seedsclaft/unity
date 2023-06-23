@@ -641,6 +641,18 @@ public class BattleModel : BaseModel
                     IsEnable = true;
                 }
                 break;
+                case FeatureType.BreakUndead:
+                if (CurrentBattler.isActor)
+                {
+                    IsEnable = true;
+                } else 
+                {
+                    if (!target.isActor && !target.Kinds.Contains(KindType.Undead))
+                    {
+                        IsEnable = true;
+                    }
+                }
+                break;
                 default:
                 IsEnable = true;
                 break;

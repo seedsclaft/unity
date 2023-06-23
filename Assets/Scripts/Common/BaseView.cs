@@ -205,6 +205,13 @@ abstract public class BaseView : MonoBehaviour
         CallSceneChangeCommand(eventData);
     }
 
+    public void CommandChangeEventSkipIndex(bool isSkip)
+    {
+        var eventData = new ViewEvent(Scene.Base, Base.CommandType.ChangeEventSkipIndex);
+        eventData.templete = isSkip;
+        CallSceneChangeCommand(eventData);
+    }
+
     public void CreateBackCommand(System.Action callEvent)
     {
         GameObject prefab = Instantiate(backPrefab);
@@ -258,6 +265,7 @@ namespace Base
         SetRouteSelect,
         ChangeViewToTransition,
         StartTransition,
+        ChangeEventSkipIndex,
     }
 }
 

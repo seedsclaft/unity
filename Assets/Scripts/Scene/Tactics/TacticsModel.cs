@@ -382,7 +382,7 @@ public class TacticsModel : BaseModel
 
     public bool IsBusyAll()
     {
-        return StageMembers().Find(a => a.TacticsComandType == TacticsComandType.None) == null;
+        return StageMembers().Find(a => a.TacticsComandType == TacticsComandType.None) == null && GameSystem.ConfigData._commandEndCheck;
     }
 
     public void RefreshData()
@@ -397,17 +397,17 @@ public class TacticsModel : BaseModel
     
     public int StartTacticsAdvId()
     {
-        var isGameClear = CurrentStage.StageClaer;
-        if (isGameClear)
+        var isAendGameClear = CurrentStage.StageClaer;
+        if (isAendGameClear)
         {
-            if (CurrentStage.EndingType == EndingType.A)
-            {
-                return 173;
-            } else
-            if (CurrentStage.EndingType == EndingType.B)
-            {
-                return 172;
-            }
+            StageClaer(2);
+            return 173;
+        }
+        var isBendGameClear = CurrentStage.RouteSelect == 1 && CurrentStage.TacticsTroops().Count == 0;
+        if (isBendGameClear)
+        {
+            StageClaer(2);
+            return 172;
         }
         var isEndStage = (CurrentStage.SubordinateValue <= 0);
         if (isEndStage)

@@ -186,7 +186,7 @@ public class StageInfo
         } else
         if (routeSelect == 1)
         {
-            enemyIds.Add(2600);
+            //enemyIds.Add(2600);
             while (enemyIds.Count <= 2)
             {
                 int rand = new Random().Next(1, 6);

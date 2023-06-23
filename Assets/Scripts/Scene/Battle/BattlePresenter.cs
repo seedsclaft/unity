@@ -176,49 +176,42 @@ public class BattlePresenter : BasePresenter
     
     private void CommandUpdateAp()
     {
-        var chainActionResults = _model.UpdateChainState();
-        _model.PopupActionResultInfo(chainActionResults);
-        for (int i = 0; i < chainActionResults.Count; i++)
-        {    
-            PopupActionResult(chainActionResults[i],chainActionResults[i].TargetIndex,false);
-        }
-        for (int i = 0; i < chainActionResults.Count; i++)
-        {    
-            _model.ExecActionResultInfo(chainActionResults[i]);
-        }
-        _model.CheckTriggerSkillInfos(TriggerTiming.After,chainActionResults,false);
-        
-        StartAliveAnimation(chainActionResults);
-        StartDeathAnimation(chainActionResults);
-        var benedictionActionResults = _model.UpdateBenedictionState();
-        _model.PopupActionResultInfo(benedictionActionResults);
-        for (int i = 0; i < benedictionActionResults.Count; i++)
+        if (GameSystem.ConfigData._battleWait == false)
         {
-            PopupActionResult(benedictionActionResults[i],benedictionActionResults[i].TargetIndex);
-        }
-        for (int i = 0; i < benedictionActionResults.Count; i++)
+            while (_model.CurrentBattler == null)
+            {
+                BeforeUpdateAp();
+                ActionInfo CurrentActionInfo = _model.CurrentActionInfo();
+                if (CurrentActionInfo != null)
+                {
+                    _model.SetActionBattler(CurrentActionInfo.SubjectIndex);
+                    CommandSelectIndex(_model.MakeAutoSelectIndex(CurrentActionInfo));
+                    return;
+                }
+                if (CheckBattleEnd())
+                {
+                    return;
+                }
+                _model.UpdateAp();
+                _view.UpdateAp();
+            }
+        } else
         {
-            _model.ExecActionResultInfo(benedictionActionResults[i]);
+            BeforeUpdateAp();
+            ActionInfo CurrentActionInfo = _model.CurrentActionInfo();
+            if (CurrentActionInfo != null)
+            {
+                _model.SetActionBattler(CurrentActionInfo.SubjectIndex);
+                CommandSelectIndex(_model.MakeAutoSelectIndex(CurrentActionInfo));
+                return;
+            }
+            if (CheckBattleEnd())
+            {
+                return;
+            }
+            _model.UpdateAp();
+            _view.UpdateAp();
         }
-        StartDeathAnimation(benedictionActionResults);
-        StartAliveAnimation(benedictionActionResults);
-        _model.CheckTriggerSkillInfos(TriggerTiming.After,benedictionActionResults,false);
-        
-        _view.RefreshStatus();
-
-        ActionInfo CurrentActionInfo = _model.CurrentActionInfo();
-        if (CurrentActionInfo != null)
-        {
-            _model.SetActionBattler(CurrentActionInfo.SubjectIndex);
-            CommandSelectIndex(_model.MakeAutoSelectIndex(CurrentActionInfo));
-            return;
-        }
-        if (CheckBattleEnd())
-        {
-            return;
-        }
-        _model.UpdateAp();
-        _view.UpdateAp();
         if (_model.CurrentBattler != null)
         {
             _view.SetBattleBusy(true);
@@ -252,6 +245,39 @@ public class BattlePresenter : BasePresenter
                 CommandSelectIndex(_model.MakeAutoSelectIndex(actionInfo));
             }
         }
+    }
+
+    private void BeforeUpdateAp()
+    {
+        var chainActionResults = _model.UpdateChainState();
+        _model.PopupActionResultInfo(chainActionResults);
+        for (int i = 0; i < chainActionResults.Count; i++)
+        {    
+            PopupActionResult(chainActionResults[i],chainActionResults[i].TargetIndex,false);
+        }
+        for (int i = 0; i < chainActionResults.Count; i++)
+        {    
+            _model.ExecActionResultInfo(chainActionResults[i]);
+        }
+        _model.CheckTriggerSkillInfos(TriggerTiming.After,chainActionResults,false);
+        
+        StartAliveAnimation(chainActionResults);
+        StartDeathAnimation(chainActionResults);
+        var benedictionActionResults = _model.UpdateBenedictionState();
+        _model.PopupActionResultInfo(benedictionActionResults);
+        for (int i = 0; i < benedictionActionResults.Count; i++)
+        {
+            PopupActionResult(benedictionActionResults[i],benedictionActionResults[i].TargetIndex);
+        }
+        for (int i = 0; i < benedictionActionResults.Count; i++)
+        {
+            _model.ExecActionResultInfo(benedictionActionResults[i]);
+        }
+        StartDeathAnimation(benedictionActionResults);
+        StartAliveAnimation(benedictionActionResults);
+        _model.CheckTriggerSkillInfos(TriggerTiming.After,benedictionActionResults,false);
+        
+        _view.RefreshStatus();
     }
 
     private void CommandSkillAction(SkillInfo skillInfo)

@@ -23,6 +23,9 @@ public class OptionPresenter
         _view.SetOptionCommand(_model.OptionCommand());
         _view.InitializeVolume(_model.BGMVolume(),_model.BGMMute(),_model.SEVolume(),_model.SEMute());
         _view.InitializeGraphic(_model.GraphicIndex());
+        _view.InitializeEventSkip(GameSystem.ConfigData._eventSkipIndex ? 1 : 2);
+        _view.InitializeCommandEndCheck(GameSystem.ConfigData._commandEndCheck ? 2 : 1);
+        _view.InitializeBattleWait(GameSystem.ConfigData._battleWait ? 2 : 1);
         _busy = false;
     }
 
@@ -56,6 +59,18 @@ public class OptionPresenter
         {
            CommandChangeGraphicIndex((int)viewEvent.templete);
         }
+        if (viewEvent.commandType == CommandType.ChangeEventSkipIndex)
+        {
+           CommandChangeEventSkipIndex((int)viewEvent.templete);
+        }
+        if (viewEvent.commandType == CommandType.ChangeCommandEndCheck)
+        {
+           CommandChangeCommandEndCheck((int)viewEvent.templete);
+        }
+        if (viewEvent.commandType == CommandType.ChangeBattleWait)
+        {
+           CommandChangeBattleWait((int)viewEvent.templete);
+        }
     }
 
     private void CommandSelectCategory(OptionCategory optionCategory)
@@ -87,6 +102,22 @@ public class OptionPresenter
     private void CommandChangeGraphicIndex(int graphicIndex)
     {
         _model.ChangeGraphicIndex(graphicIndex);
+    }
+
+    private void CommandChangeEventSkipIndex(int eventSkipIndex)
+    {
+        GameSystem.ConfigData._eventSkipIndex = (eventSkipIndex == 1);
+        _view.CommandChangeEventSkipIndex(eventSkipIndex == 1);
+    }
+
+    private void CommandChangeCommandEndCheck(int commandEndCheckIndex)
+    {
+        GameSystem.ConfigData._commandEndCheck = (commandEndCheckIndex == 2);
+    }
+
+    private void CommandChangeBattleWait(int battleWaitIndex)
+    {
+        GameSystem.ConfigData._battleWait = (battleWaitIndex == 2);
     }
 }
 

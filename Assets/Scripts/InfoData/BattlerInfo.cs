@@ -111,10 +111,10 @@ public class BattlerInfo
         int plusHpParam = isBoss == true ? 50 : 0;
         statusInfo.SetParameter(
             enemyData.BaseStatus.Hp + (int)Math.Floor(plusHpParam + lv + lv * enemyData.BaseStatus.Hp * 0.1f),
-            enemyData.BaseStatus.Mp + (int)Math.Floor(lv + lv * enemyData.BaseStatus.Mp * 0.05f),
+            Math.Min(50, enemyData.BaseStatus.Mp + (int)Math.Floor(lv + lv * enemyData.BaseStatus.Mp * 0.05f)),
             enemyData.BaseStatus.Atk + (int)Math.Floor(lv + lv * enemyData.BaseStatus.Atk * 0.05f),
             enemyData.BaseStatus.Def + (int)Math.Floor(lv + lv * enemyData.BaseStatus.Def * 0.05f),
-            enemyData.BaseStatus.Spd + (int)Math.Floor(lv + lv * enemyData.BaseStatus.Spd * 0.05f)
+            Math.Min(100, enemyData.BaseStatus.Spd + (int)Math.Floor(lv + lv * enemyData.BaseStatus.Spd * 0.05f))
         );
         _status = statusInfo;
         _index = index + 100;

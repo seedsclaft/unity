@@ -336,6 +336,12 @@ public class SavePlayInfo
 		stageInfo.GainClearCount();
 	}
 
+	public void StageClaer(int stageId)
+	{
+		StageInfo stageInfo = _stages.Find(a => a.Id == stageId);
+		stageInfo.GainClearCount();
+	}
+
 	public void SetPlayerName(string name)
 	{
 		_playerInfo.SetPlayerName(name);
@@ -374,6 +380,9 @@ public class SaveConfigInfo
 	public float _seVolume;
 	public bool _seMute;
 	public int _graphicIndex;
+	public bool _eventSkipIndex;
+	public bool _commandEndCheck;
+	public bool _battleWait;
     public SaveConfigInfo()
     {
 		this.InitParameter();
@@ -386,6 +395,9 @@ public class SaveConfigInfo
 		_seVolume = 1.0f;
 		_seMute = false;
 		_graphicIndex = 2;
+		_eventSkipIndex = false;
+		_commandEndCheck = true;
+		_battleWait = true;
 	}
 
 	public void UpdateSoundParameter(float bgmVolume,bool bgmMute,float seVolume,bool seMute)
