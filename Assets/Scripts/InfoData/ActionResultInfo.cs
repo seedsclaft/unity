@@ -152,7 +152,6 @@ public class ActionResultInfo
             case FeatureType.BreakUndead:
                 MakeBreakUndead(subject,target,featureData);
                 return;
-
         }
     }
 

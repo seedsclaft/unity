@@ -11,10 +11,7 @@ public class TacticsModel : BaseModel
     }
     private AttributeType _currentAttributeType = AttributeType.Fire;
     
-    public AttributeType CurrentAttributeType
-    {
-        get {return _currentAttributeType;}
-    }
+    public AttributeType CurrentAttributeType => _currentAttributeType;
     public ActorInfo CurrentActor
     {
         get {return TacticsActor(_currentActorId);}
@@ -22,7 +19,7 @@ public class TacticsModel : BaseModel
 
     private TacticsComandType _commandType = TacticsComandType.Train;
     public TacticsComandType CommandType { get {return _commandType;} set {_commandType = value;}}
-    private List<ActorInfo> _tempTacticsData = new List<ActorInfo>();
+    private List<ActorInfo> _tempTacticsData = new();
 
     private int _currentEnemyIndex = -1; 
     public int CurrentEnemyIndex
@@ -32,13 +29,11 @@ public class TacticsModel : BaseModel
     
 
     private bool _needAllTacticsCommand = false;
-    public bool NeedAllTacticsCommand { get {return _needAllTacticsCommand;}}
+    public bool NeedAllTacticsCommand => _needAllTacticsCommand;
     public void SetNeedAllTacticsCommand(bool isNeed)
     {
         _needAllTacticsCommand = isNeed;
     }
-
-
     public ActorInfo TacticsActor(int actorId)
     {
         return StageMembers().Find(a => a.ActorId == actorId);
@@ -385,15 +380,9 @@ public class TacticsModel : BaseModel
         return StageMembers().Find(a => a.TacticsComandType == TacticsComandType.None) == null && GameSystem.ConfigData._commandEndCheck;
     }
 
-    public void RefreshData()
-    {
-        
-    }
-
     public void TurnEnd()
     {
     }
-
     
     public int StartTacticsAdvId()
     {

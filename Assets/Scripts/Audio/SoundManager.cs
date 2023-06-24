@@ -151,8 +151,6 @@ namespace Ryneus{
             }
         }
 
-
-
         public void AllPause()
         {
 
@@ -177,6 +175,4 @@ namespace Ryneus{
             }
         }
     }
-
-
 }

@@ -5,6 +5,7 @@ public class InputSystem
 {
     public InputKeyType Update()
     {
+        /*
         UpdateGamePad();
         if(Keyboard.current.upArrowKey.wasPressedThisFrame) 
         {
@@ -66,6 +67,7 @@ public class InputSystem
             Debug.Log("select");
             return InputKeyType.Select;
         }
+        */
         return InputKeyType.None;
     }
 

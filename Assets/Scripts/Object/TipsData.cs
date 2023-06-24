@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class TipsData : ScriptableObject
 {
-    [SerializeField] public List<TipData> _data = new List<TipData>();
+    [SerializeField] public List<TipData> _data = new();
     
     [Serializable]
     public class TipData

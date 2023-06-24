@@ -7,13 +7,7 @@ using UnityEngine.Events;
 
 public class RankingInfoList : ListWindow , IInputHandlerEvent
 {
-    [SerializeField] private int rows = 0;
-    [SerializeField] private int cols = 0;
     private List<RankingInfo> _data = new List<RankingInfo>();
-
-    public int selectIndex{
-        get {return Index;}
-    }
 
     public void Initialize(List<RankingInfo> rankingInfos ,System.Action cancelEvent)
     {

@@ -6,7 +6,6 @@ using UnityEngine.Events;
 
 public class SkillAttributeList : ListWindow , IInputHandlerEvent
 {
-    [SerializeField] private int rows = 0;
     [SerializeField] private int cols = 0;
     private List<AttributeType> _attributeTypesData = new List<AttributeType>();
 

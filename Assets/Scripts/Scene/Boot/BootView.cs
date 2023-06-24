@@ -9,6 +9,4 @@ public class BootView : BaseView
         base.Initialize();
         new BootPresenter(this);
     }
-
-
 }

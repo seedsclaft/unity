@@ -7,7 +7,6 @@ using TMPro;
 public class TacticsTrainList : ListWindow , IInputHandlerEvent
 {
     [SerializeField] private int rows = 0;
-    [SerializeField] private int cols = 0;
     private List<ActorInfo> _actorInfos = new List<ActorInfo>();
     [SerializeField] private TextMeshProUGUI commandLv;
     [SerializeField] private TextMeshProUGUI commandDescription;

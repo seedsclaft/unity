@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class ActorsData : ScriptableObject {
-    [SerializeField] public List<ActorData> _data = new List<ActorData>();
+    [SerializeField] public List<ActorData> _data = new();
 
     [Serializable]
     public class ActorData
@@ -25,7 +25,7 @@ public class ActorsData : ScriptableObject {
         public int AwakenX;
         public int AwakenY;
         public float AwakenScale;
-        public List<LearningData> LearningSkills = new List<LearningData>();
+        public List<LearningData> LearningSkills = new();
     }
 
 }

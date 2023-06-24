@@ -9,18 +9,12 @@ public class EnemyInfoModel : BaseModel
         _currentIndex = enemyInfos.Count - 1;
     }
     
-    private List<BattlerInfo> _enemies = new List<BattlerInfo>();
+    private List<BattlerInfo> _enemies = new();
 
     private int _currentIndex = 0; 
-    public int CurrentIndex
-    {
-        get {return _currentIndex;}
-    }
+    public int CurrentIndex => _currentIndex;
     private AttributeType _currentAttributeType = AttributeType.Fire;
-    public AttributeType CurrentAttributeType
-    {
-        get {return _currentAttributeType;}
-    }
+    public AttributeType CurrentAttributeType => _currentAttributeType;
 
     public List<BattlerInfo> Enemies(){
         return _enemies;
@@ -30,7 +24,6 @@ public class EnemyInfoModel : BaseModel
     {
         get {return Enemies()[_currentIndex];}
     }
-
 
     public void ChangeActorIndex(int value){
         _currentIndex += value;

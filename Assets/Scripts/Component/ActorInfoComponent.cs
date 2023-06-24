@@ -11,9 +11,9 @@ public class ActorInfoComponent : MonoBehaviour
     [SerializeField] private Image awakenThumb;
     [SerializeField] private Material grayscale;
     [SerializeField] private Image faceThumb;
-    public Image FaceThumb {get {return faceThumb;}}
+    public Image FaceThumb => faceThumb;
     [SerializeField] private Image awakenFaceThumb;
-    public Image AwakenFaceThumb {get {return awakenFaceThumb;}}
+    public Image AwakenFaceThumb => awakenFaceThumb;
     [SerializeField] private Image clipingThumb;
     [SerializeField] private TextMeshProUGUI nameText;
     [SerializeField] private TextMeshProUGUI evaluate;
@@ -33,7 +33,7 @@ public class ActorInfoComponent : MonoBehaviour
         if (actorInfo == null){
             return;
         }
-        var actorData = DataSystem.Actors.Find(actor => actor.Id == actorInfo.ActorId);
+        var actorData = actorInfo.Master;
         
         UpdateData(actorData);
         if (mainThumb != null){
@@ -91,10 +91,8 @@ public class ActorInfoComponent : MonoBehaviour
 
     public void UpdateData(ActorsData.ActorData actorData)
     {
-
         if (mainThumb != null){
             UpdateMainThumb(actorData.ImagePath,actorData.X,actorData.Y,actorData.Scale);
-
         }
         if (awakenThumb != null){
             UpdateAwakenThumb(actorData.ImagePath,actorData.AwakenX,actorData.AwakenY,actorData.AwakenScale);

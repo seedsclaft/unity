@@ -7,18 +7,18 @@ public class StrategyModel : BaseModel
     private List<TacticsResultInfo> _resultInfos = new();
 
     private bool _needUseSpCommand = false;
-    public bool NeedUseSpCommand { get {return _needUseSpCommand;}}
+    public bool NeedUseSpCommand => _needUseSpCommand;
     public void SetNeedUseSpCommand(bool isNeed)
     {
         _needUseSpCommand = isNeed;
     }
     
-    private List<ActorInfo> _levelUpData = new List<ActorInfo>();
-    private List<ActorInfo> _levelUpBonusData = new List<ActorInfo>();
-    public List<ActorInfo> LevelUpData { get {return _levelUpData;}}
+    private List<ActorInfo> _levelUpData = new();
+    private List<ActorInfo> _levelUpBonusData = new();
+    public List<ActorInfo> LevelUpData => _levelUpData;
 
-    private List<GetItemInfo> _resultItemInfos = new ();
-    public List<GetItemInfo> ResultGetItemInfos { get {return _resultItemInfos;}}
+    private List<GetItemInfo> _resultItemInfos = new();
+    public List<GetItemInfo> ResultGetItemInfos => _resultItemInfos;
 
     public bool CheckUseSp()
     {

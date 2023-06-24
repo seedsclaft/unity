@@ -1480,5 +1480,4 @@ public class BattleModel : BaseModel
             actorInfo.ChangeMp(battler.Mp);
         }
     }
-
 }

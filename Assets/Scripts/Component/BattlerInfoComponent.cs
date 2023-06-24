@@ -20,7 +20,6 @@ public class BattlerInfoComponent : MonoBehaviour
     
     private BattlerInfo _battlerInfo = null;
 
-
     public bool IsBusy {
         get {return _animationEndTiming > 0 || _damageTiming > 0 || _battleDamages.Find(a => a.IsBusy);}
     }

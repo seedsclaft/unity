@@ -41,10 +41,6 @@ namespace Loading
     public enum CommandType
     {
         None = 0,
-        Back,
-        LeftActor,
-        RightActor,
-        AttributeType,
     }
 }
 public class LoadingViewEvent

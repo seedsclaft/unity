@@ -51,5 +51,4 @@ public class RankingInfoComponent : ListItem ,IListViewItem
         var handle = Resources.Load<Sprite>("Texture/Character/Actors/000" + actorId.ToString() + "/MainFace");
         if (image != null) image.sprite = handle;
     }
-
 }

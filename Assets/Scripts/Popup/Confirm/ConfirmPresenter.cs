@@ -45,13 +45,13 @@ public class ConfirmPresenter
 public class ConfirmInfo
 {
     private string _title = "";
-    public string Title {get {return _title;}}
+    public string Title => _title;
     private System.Action<ConfirmComandType> _callEvent = null;
-    public System.Action<ConfirmComandType> CallEvent {get {return _callEvent;}}
+    public System.Action<ConfirmComandType> CallEvent => _callEvent;
     private bool _isNoChoise = false;
-    public bool IsNoChoise {get {return _isNoChoise;}}
+    public bool IsNoChoise => _isNoChoise;
     private List<SkillInfo> _skillInfos = null;
-    public List<SkillInfo> SkillInfos {get {return _skillInfos;}}
+    public List<SkillInfo> SkillInfos => _skillInfos;
 
     public ConfirmInfo(string title,System.Action<ConfirmComandType> callEvent)
     {

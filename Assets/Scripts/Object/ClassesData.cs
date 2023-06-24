@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class ClassesData : ScriptableObject {
-    [SerializeField] public List<ClassData> _data = new List<ClassData>();
+    [SerializeField] public List<ClassData> _data = new();
 
 
     [Serializable]

@@ -19,7 +19,7 @@ public class SkillInfo
     private AttributeType _learnAttributeType;
     public AttributeType LearnAttributeType => _learnAttributeType;
 
-    private List<SkillsData.TriggerData> _triggerDatas = new List<SkillsData.TriggerData>();
+    private List<SkillsData.TriggerData> _triggerDatas = new();
     public List<SkillsData.TriggerData> TriggerDatas => _triggerDatas;
 
     private int _weight = 100;

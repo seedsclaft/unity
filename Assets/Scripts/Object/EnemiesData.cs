@@ -4,8 +4,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemiesData : ScriptableObject {
-    [SerializeField] public List<EnemyData> _data = new List<EnemyData>();
-    [SerializeField] public List<TextData> _textdata = new List<TextData>();
+    [SerializeField] public List<EnemyData> _data = new();
+    [SerializeField] public List<TextData> _textdata = new();
 
 
     [Serializable]
@@ -16,7 +16,7 @@ public class EnemiesData : ScriptableObject {
         public string ImagePath;
         public StatusInfo BaseStatus;
         public List<KindType> Kinds;
-        public List<LearningData> LearningSkills = new List<LearningData>();
+        public List<LearningData> LearningSkills = new();
         
         public int CurrentParam(StatusParamType growType,int level)
         {

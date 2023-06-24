@@ -9,14 +9,14 @@ public class BaseModel
 {
     public Scene CurrentScene {get { return _currentScene;} set {_currentScene = value;}}
     private Scene _currentScene = Scene.None;
-    public SavePlayInfo CurrentData{get {return GameSystem.CurrentData;}}
-    public TempInfo CurrentTempData{get {return GameSystem.CurrentTempData;}}
-    public StageInfo CurrentStage{get {return GameSystem.CurrentData.CurrentStage;}}
-    public AlcanaInfo CurrentAlcana{get {return GameSystem.CurrentData.CurrentAlcana;}}
+    public SavePlayInfo CurrentData => GameSystem.CurrentData;
+    public TempInfo CurrentTempData => GameSystem.CurrentTempData;
+    public StageInfo CurrentStage => CurrentData.CurrentStage;
+    public AlcanaInfo CurrentAlcana => CurrentData.CurrentAlcana;
 
-    public PartyInfo PartyInfo{get {return CurrentData.Party;}}
+    public PartyInfo PartyInfo => CurrentData.Party;
 
-    public int Currency{get {return PartyInfo.Currency;}}
+    public int Currency => PartyInfo.Currency;
 
     public int Turns{get {return CurrentStage.Turns - (CurrentStage.CurrentTurn);}}
     public void InitSaveInfo()
@@ -90,7 +90,7 @@ public class BaseModel
     {
         if (CurrentStage != null)
         {
-            var stageData = DataSystem.Stages.Find(a => a.Id == CurrentStage.Id);
+            var stageData = CurrentStage.Master;
             if (CurrentStage.CurrentTurn >= 24)
             {        
                 return DataSystem.Data.GetBGM(stageData.BGMId[2]).Key;
@@ -118,7 +118,7 @@ public class BaseModel
     }
 
     public float BGMVolume(){ return Ryneus.SoundManager.Instance._bgmVolume;}
-    public bool BGMMute() { return Ryneus.SoundManager.Instance._bgmMute;}
+    public bool BGMMute(){ return Ryneus.SoundManager.Instance._bgmMute;}
     public void ChangeBGMValue(float bgmVolume)
     {
         Ryneus.SoundManager.Instance._bgmVolume = bgmVolume;
@@ -130,7 +130,7 @@ public class BaseModel
         Ryneus.SoundManager.Instance.UpdateBgmMute();
     }
     public float SEVolume(){ return Ryneus.SoundManager.Instance._seVolume;}
-    public bool SEMute() { return Ryneus.SoundManager.Instance._seMute;}
+    public bool SEMute(){ return Ryneus.SoundManager.Instance._seMute;}
     
     public void ChangeSEValue(float seVolume)
     {
@@ -142,7 +142,7 @@ public class BaseModel
         Ryneus.SoundManager.Instance._seMute = seMute;
     }
 
-    public int GraphicIndex() { return GameSystem.ConfigData._graphicIndex; }
+    public int GraphicIndex(){ return GameSystem.ConfigData._graphicIndex; }
     public void ChangeGraphicIndex(int graphicIndex)
     {
         GameSystem.ConfigData._graphicIndex = graphicIndex;
@@ -405,7 +405,6 @@ public class BaseModel
                 }
             }
         }
-        
     }
 
     public void DeleteAlcana()

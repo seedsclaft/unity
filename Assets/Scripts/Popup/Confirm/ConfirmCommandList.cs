@@ -7,8 +7,6 @@ using UnityEngine.Events;
 
 public class ConfirmCommandList : ListWindow , IInputHandlerEvent
 {
-    [SerializeField] private int rows = 0;
-    [SerializeField] private int cols = 0;
     private List<SystemData.MenuCommandData> _data = new List<SystemData.MenuCommandData>();
 
     public void Initialize(List<SystemData.MenuCommandData> menuCommands ,System.Action<ConfirmComandType> callEvent)

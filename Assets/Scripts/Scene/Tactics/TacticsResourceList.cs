@@ -9,8 +9,6 @@ using TMPro;
 
 public class TacticsResourceList : ListWindow , IInputHandlerEvent
 {
-    [SerializeField] private int rows = 0;
-    [SerializeField] private int cols = 0;
     private List<ActorInfo> _actorInfos = new List<ActorInfo>();
 
     [SerializeField] private TacticsCommandList tacticsCommandList;
@@ -18,9 +16,6 @@ public class TacticsResourceList : ListWindow , IInputHandlerEvent
     [SerializeField] private TextMeshProUGUI commandDescription;
     private System.Action<TacticsComandType> _confirmEvent = null;
 
-    public int selectIndex{
-        get {return Index;}
-    }
 
 
     public void Initialize(List<ActorInfo> actorInfos,System.Action<int> callEvent,int rank)

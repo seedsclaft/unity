@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class SkillsData : ScriptableObject {
-    [SerializeField] public List<SkillData> _data = new List<SkillData>();
+    [SerializeField] public List<SkillData> _data = new();
     [Serializable]
     public class SkillData
     {   

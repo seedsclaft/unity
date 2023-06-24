@@ -24,10 +24,7 @@ public class StatusModel : BaseModel
     private int _useNuminous = 0;
     private int _currentIndex = 0; 
     private AttributeType _currentAttributeType = AttributeType.Fire;
-    public AttributeType CurrentAttributeType
-    {
-        get {return _currentAttributeType;}
-    }
+    public AttributeType CurrentAttributeType => _currentAttributeType;
 
     public ActorInfo CurrentActor
     {

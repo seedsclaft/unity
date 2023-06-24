@@ -14,8 +14,6 @@ public class StrategyView : BaseView
     [SerializeField] private GetItemList strategyResultList = null; 
     [SerializeField] private TacticsEnemyList tacticsEnemyList = null; 
     [SerializeField] private StrategyStrengthList strategyStrengthList = null; 
-    [SerializeField] private EffekseerEmitter effekseerEmitter = null; 
-    [SerializeField] private SpriteRenderer backGround = null; 
     [SerializeField] private GameObject helpRoot = null;
     [SerializeField] private GameObject helpPrefab = null;
     [SerializeField] private TextMeshProUGUI title = null; 

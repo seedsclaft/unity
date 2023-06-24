@@ -8,7 +8,6 @@ using TMPro;
 public class SkillActionList : ListWindow , IInputHandlerEvent
 {
     [SerializeField] private int rows = 0;
-    [SerializeField] private int cols = 0;
 
     private List<SkillInfo> _skillInfos = new List<SkillInfo>();
 

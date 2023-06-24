@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class RulesData : ScriptableObject
 {
-    [SerializeField] public List<RuleData> _data = new List<RuleData>();
+    [SerializeField] public List<RuleData> _data = new();
     
     [Serializable]
     public class RuleData

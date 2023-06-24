@@ -20,7 +20,6 @@ public class CreditPresenter
         _busy = false;
     }
 
-    
     private void updateCommand(CreditViewEvent viewEvent)
     {
         if (_busy){
@@ -31,6 +30,4 @@ public class CreditPresenter
 
 public class CreditInfo
 {
-    private string _title = "";
-    public string Title {get {return _title;}}
 }

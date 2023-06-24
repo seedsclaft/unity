@@ -9,17 +9,12 @@ using TMPro;
 
 public class TacticsRecoveryList : ListWindow , IInputHandlerEvent
 {
-    [SerializeField] private int rows = 0;
-    [SerializeField] private int cols = 0;
     private List<ActorInfo> _actorInfos = new List<ActorInfo>();
     [SerializeField] private TacticsCommandList tacticsCommandList;
     [SerializeField] private TextMeshProUGUI commandLv;
     [SerializeField] private TextMeshProUGUI commandDescription;
     private System.Action<TacticsComandType> _confirmEvent = null;
 
-    public int selectIndex{
-        get {return Index;}
-    }
 
 
     public void Initialize(List<ActorInfo> actorInfos,System.Action<int> callEvent,System.Action<int> plusEvent,System.Action<int> minusEvent,int rank)

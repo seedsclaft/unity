@@ -5,7 +5,6 @@ using UnityEngine.UI;
 
 public class RuleList : ListWindow , IInputHandlerEvent
 {
-    [SerializeField] private int rows = 0;
     [SerializeField] private int cols = 0;
 
     public void Initialize()

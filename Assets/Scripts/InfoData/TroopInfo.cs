@@ -7,7 +7,7 @@ public class TroopInfo
 {
     private int _troopId = 0;
     public int TroopId => _troopId;
-    private List<BattlerInfo> _battlerInfos = new (); 
+    private List<BattlerInfo> _battlerInfos = new(); 
     public List<BattlerInfo> BattlerInfos => _battlerInfos;
     public BattlerInfo BossEnemy {
         get {

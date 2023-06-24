@@ -10,8 +10,7 @@ using TMPro;
 public class TacticsEnemyList : ListWindow , IInputHandlerEvent
 {
     [SerializeField] private TacticsCommandList tacticsCommandList;
-    public TacticsCommandList TacticsCommandList {get {return tacticsCommandList;}}
-    [SerializeField] private int rows = 0;
+    public TacticsCommandList TacticsCommandList => tacticsCommandList;
     [SerializeField] private int cols = 0;
     private List<TroopInfo> _troopInfos = new List<TroopInfo>();
 

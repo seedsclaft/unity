@@ -9,7 +9,6 @@ public class OptionView : BaseView
 {
     [SerializeField] private ConfirmCommandList commandList = null;
     [SerializeField] private List<GameObject> optionObjs = null;
-    [SerializeField] private TextMeshProUGUI subText = null;
     private new System.Action<OptionViewEvent> _commandData = null;
     [SerializeField] private OptionVolume optionBgmVolume = null;
     [SerializeField] private OptionVolume optionSeVolume = null;

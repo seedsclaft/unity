@@ -4,14 +4,8 @@ using UnityEngine;
 
 public class MainMenuStageList: ListWindow , IInputHandlerEvent
 {   
-    [SerializeField] private int rows = 0;
-    [SerializeField] private int cols = 0;
     private List<StageInfo> _data = new List<StageInfo>();
     [SerializeField] private StageInfoComponent component;
-
-    public int selectIndex{
-        get {return Index;}
-    }
 
     public void Initialize(List<StageInfo> stages,System.Action<StageInfo> callEvent)
     {

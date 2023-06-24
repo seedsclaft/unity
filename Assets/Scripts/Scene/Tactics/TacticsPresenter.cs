@@ -9,7 +9,6 @@ public class TacticsPresenter :BasePresenter
 
     private bool _busy = true;
 
-
     private Tactics.CommandType _backCommand = Tactics.CommandType.None;
     public TacticsPresenter(TacticsView view)
     {

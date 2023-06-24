@@ -5,6 +5,7 @@ using System.Collections.Generic;
 [Serializable]
 public class StageInfo
 {
+    public StagesData.StageData Master {get {return DataSystem.Stages.Find(a => a.Id == _id);}}
     private int _id;
     public int Id => _id;
     private int _turns;
@@ -16,9 +17,9 @@ public class StageInfo
     private int _troopClearCount;
     public int TroopClearCount => _troopClearCount;
 
-	private List<TroopsData.TroopData> _troopDatas = new ();
+	private List<TroopsData.TroopData> _troopDatas = new();
 	public List<TroopsData.TroopData> TroopDatas => _troopDatas;
-	private List<TroopInfo> _currentTroopInfos = new ();
+	private List<TroopInfo> _currentTroopInfos = new();
 	
     private int _currentBattleIndex = -1;
     public int CurrentBattleIndex => _currentBattleIndex;

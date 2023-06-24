@@ -4,8 +4,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class TroopsData : ScriptableObject {
-    [SerializeField] public List<TroopData> _data = new List<TroopData>();
-    [SerializeField] public List<GetItemData> _getItemData = new List<GetItemData>();
+    [SerializeField] public List<TroopData> _data = new();
+    [SerializeField] public List<GetItemData> _getItemData = new();
 
 
     [Serializable]

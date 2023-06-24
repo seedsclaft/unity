@@ -123,21 +123,4 @@ public class OptionPresenter
 
 public class OptionInfo
 {
-    private string _title = "";
-    public string Title {get {return _title;}}
-    private bool _isNoChoise = false;
-    public bool IsNoChoise {get {return _isNoChoise;}}
-    private List<SkillInfo> _skillInfos = null;
-    public List<SkillInfo> SkillInfos {get {return _skillInfos;}}
-
-
-    public void SetIsNoChoise(bool isNoChoice)
-    {
-        _isNoChoise = isNoChoice;
-    }
-
-    public void SetSkillInfo(List<SkillInfo> skillInfos)
-    {
-        _skillInfos = skillInfos;
-    }
 }

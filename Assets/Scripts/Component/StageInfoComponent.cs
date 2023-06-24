@@ -20,7 +20,7 @@ public class StageInfoComponent : MonoBehaviour
         if (stageInfo == null){
             return;
         }
-        var stageData = DataSystem.Stages.Find(stage => stage.Id == stageInfo.Id);
+        var stageData = stageInfo.Master;
         
         if (nameText != null){
             nameText.text = stageData.Name;
@@ -44,6 +44,5 @@ public class StageInfoComponent : MonoBehaviour
             RectTransform borderRect = subordinateBorder.GetComponent<RectTransform>();
             borderRect.localScale = new Vector3(stageInfo.SubordinateValue * 0.01f,1,1);
         }
-        
     }
 }

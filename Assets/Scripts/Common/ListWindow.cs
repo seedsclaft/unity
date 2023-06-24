@@ -28,10 +28,10 @@ abstract public class ListWindow : MonoBehaviour
     private RectTransform _prevRect;
     private RectTransform _lastRect;
     private int _lastStartIndex = 0;
-    private LinkedList<IListViewItem> _itemList = new LinkedList<IListViewItem>();
-    public LinkedList<IListViewItem> ItemList {get {return _itemList;}}
-    private List<GameObject> _objectList = new List<GameObject>();
-    public List<GameObject> ObjectList {get {return _objectList;}}
+    private LinkedList<IListViewItem> _itemList = new();
+    public LinkedList<IListViewItem> ItemList => _itemList;
+    private List<GameObject> _objectList = new ();
+    public List<GameObject> ObjectList => _objectList;
 
     private System.Action<InputKeyType> _inputCallHandler = null;
 
@@ -141,7 +141,7 @@ abstract public class ListWindow : MonoBehaviour
         prevObject.transform.SetParent(scrollRect.content, false);
         prevObject.transform.SetSiblingIndex(-1);
         _prevRect = prevObject.GetComponent<RectTransform>();
-        _prevRect.sizeDelta = new Vector2( 0, 0 );
+        _prevRect.sizeDelta = new Vector2(0,0);
     }
 
     private void SetPrevRectSetSiblingIndex(int index)
@@ -157,7 +157,7 @@ abstract public class ListWindow : MonoBehaviour
         lastObject.AddComponent<RectTransform>();
         lastObject.transform.SetParent(scrollRect.content, false);
         _lastRect = lastObject.GetComponent<RectTransform>();
-        _lastRect.sizeDelta = new Vector2( 0, (_dataCount - _itemCount) * _itemSize );
+        _lastRect.sizeDelta = new Vector2(0, (_dataCount - _itemCount) * _itemSize );
         lastObject.transform.SetSiblingIndex(9999);
     }
 

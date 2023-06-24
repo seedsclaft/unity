@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class MainMenuActorList: ListWindow , IInputHandlerEvent
 {   
-    [SerializeField] private int rows = 0;
-    [SerializeField] private int cols = 0;
     private List<ActorInfo> _data = new List<ActorInfo>();
 
     public void Initialize(List<ActorInfo> actors,System.Action<ActorInfo> callEvent)

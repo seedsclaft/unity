@@ -6,34 +6,34 @@ using System.Collections.Generic;
 public class BattlerInfo 
 {
     private StatusInfo _status = null;
-    public StatusInfo Status {get {return _status;}}
+    public StatusInfo Status => _status;
     private int _index = 0;
-    public int Index{get {return _index;}}
+    public int Index => _index;
     private bool _isActor = false;
-    public bool isActor{get {return _isActor;}}
+    public bool isActor => _isActor;
     private int _charaId;
-    public int CharaId {get {return _charaId;}}
+    public int CharaId => _charaId;
     private int _level;
-    public int Level {get {return _level;}}
+    public int Level => _level;
     public int MaxHp {get {return _status.GetParameter(StatusParamType.Hp) + StateEffectAll(StateType.MaxHpUp);}}
     public int MaxMp {get {return _status.GetParameter(StatusParamType.Mp) + StateEffectAll(StateType.MaxMpUp);}}
     private int _hp;
-    public int Hp {get {return _hp;}}
+    public int Hp => _hp;
     private int _mp;
-    public int Mp {get {return _mp;}}
+    public int Mp => _mp;
     private int _ap;
-    public int Ap {get {return _ap;}}
+    public int Ap => _ap;
     
     private List<SkillInfo> _skills;
-    public List<SkillInfo> Skills {get {return _skills;}}
+    public List<SkillInfo> Skills => _skills;
     private ActorInfo _actorInfo;
-    public ActorInfo ActorInfo {get {return _actorInfo;} }
+    public ActorInfo ActorInfo => _actorInfo;
     private EnemiesData.EnemyData _enemyData;
-    public EnemiesData.EnemyData EnemyData {get {return _enemyData;} }
-    private List<KindType> _kinds = new List<KindType>();
-    public List<KindType> Kinds {get {return _kinds;} }
+    public EnemiesData.EnemyData EnemyData => _enemyData;
+    private List<KindType> _kinds = new ();
+    public List<KindType> Kinds => _kinds;
     private int _lastSelectSkillId = 0;
-    public int LastSelectSkillId {get {return _lastSelectSkillId;} }
+    public int LastSelectSkillId => _lastSelectSkillId;
     public void SetLastSelectSkillId(int selectSkillId){
         _lastSelectSkillId = selectSkillId;
     }
@@ -41,31 +41,31 @@ public class BattlerInfo
     {
         return Skills.Find(a => a.Id == _lastSelectSkillId).Attribute;
     }
-    private List<StateInfo> _stateInfos = new List<StateInfo>();
-    public List<StateInfo> StateInfos {get {return _stateInfos;} }
+    private List<StateInfo> _stateInfos = new ();
+    public List<StateInfo> StateInfos => _stateInfos;
 
     private bool _isAwaken = false;
-    public bool IsAwaken {get {return _isAwaken;} }
+    public bool IsAwaken => _isAwaken;
 
     private LineType _lineIndex = 0;
-    public LineType LineIndex {get {return _lineIndex;} }
+    public LineType LineIndex => _lineIndex;
 
     private bool _bossFlag = false;
-    public bool BossFlag {get {return _bossFlag;} }
+    public bool BossFlag => _bossFlag;
     
     private int _chainSuccessCount = 0;
-    public int ChainSuccessCount {get {return _chainSuccessCount;} }
+    public int ChainSuccessCount =>  _chainSuccessCount;
     private int _payBattleMp = 0;
-    public int PayBattleMp { get {return _payBattleMp;}}
+    public int PayBattleMp => _payBattleMp;
     private int _lastTargetIndex = 0;
     public void SetLastTargetIndex(int index){
         _lastTargetIndex = index;
     }
 
     private int _turnCount = 0;
-    public int TurnCount {get {return _turnCount;}}
+    public int TurnCount => _turnCount;
     private int _demigodParam = 0;
-    public int DemigodParam {get {return _demigodParam;}}
+    public int DemigodParam => _demigodParam;
 
     private bool _preserveAlive = false;
     public bool PreserveAlive => _preserveAlive;
@@ -224,12 +224,8 @@ public class BattlerInfo
     public void GainHp(int value)
     {
         _hp += value;
-        if (_hp < 0){
-            _hp = 0;
-        }
-        if (_hp > MaxHp){
-            _hp = MaxHp;
-        }
+        _hp = Math.Max(0,_hp);
+        _hp = Math.Min(_hp,MaxHp);
         if (_hp <= 0)
         {
             _stateInfos.Clear();
@@ -241,12 +237,8 @@ public class BattlerInfo
     public void GainMp(int value)
     {
         _mp += value;
-        if (_mp < 0){
-            _mp = 0;
-        }
-        if (_mp > MaxMp){
-            _mp = MaxMp;
-        }
+        _mp = Math.Max(0,_mp);
+        _mp = Math.Min(_mp,MaxMp);
     }
 
     public bool IsAlive()
@@ -479,10 +471,7 @@ public class BattlerInfo
         {
             rate += StateEffectAll(StateType.TargetRateUp);
         }
-        if (rate < 0)
-        {
-            rate = 0;
-        }
+        rate = Math.Max(0,rate);
         return rate;
     }
 

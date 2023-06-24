@@ -11,7 +11,6 @@ public class ResultPresenter : BasePresenter
     private bool _busy = true;
 
     private bool _isRankingEnd = false;
-    private bool _isBattleEnded = false;
     public ResultPresenter(ResultView view)
     {
         _view = view;

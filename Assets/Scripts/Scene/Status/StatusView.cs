@@ -26,7 +26,7 @@ public class StatusView : BaseView
     private bool _isDisplayDecide = false;
     private string _helpText;
     private bool _isDisplayBack = true;
-    public bool IsDisplayBack{ get { return _isDisplayBack;}}
+    public bool IsDisplayBack => _isDisplayBack;
     public override void Initialize() 
     {
         base.Initialize();
@@ -119,6 +119,14 @@ public class StatusView : BaseView
         SetActiveBack(_isDisplayBack);
     }
 
+    public void SetViewInfo(StatusViewInfo statusViewInfo)
+    {
+        DisplayDecideButton(statusViewInfo.DisplayDecideButton);
+        DisplayBackButton(statusViewInfo.DisplayBackButton);
+        DisableStrength(statusViewInfo.DisableStrength);
+        SetBackEvent(statusViewInfo.BackEvent);
+    }
+
     public void CommandBack()
     {
         if (_backEvent != null)
@@ -127,7 +135,7 @@ public class StatusView : BaseView
         }
     }
 
-    public void DisplayDecideButton(bool isDisplay)
+    private void DisplayDecideButton(bool isDisplay)
     {
         _isDisplayDecide = isDisplay;
         decideButton.gameObject.SetActive(isDisplay);
@@ -137,7 +145,7 @@ public class StatusView : BaseView
         }
     }
 
-    public void DisplayBackButton(bool isDisplay)
+    private void DisplayBackButton(bool isDisplay)
     {
         _isDisplayBack = isDisplay;
     }
@@ -148,7 +156,7 @@ public class StatusView : BaseView
         base.SetActiveBack(IsActive);
     }
 
-    public void DisableStrength(bool IsDisable)
+    private void DisableStrength(bool IsDisable)
     {
         //commandList.SetDisable(DataSystem.StatusCommand[0],IsDisable);
     }
@@ -411,15 +419,15 @@ public class StatusViewEvent
 
 public class StatusViewInfo{
     private System.Action _backEvent = null;
-    public System.Action BackEvent {get {return _backEvent;}}
+    public System.Action BackEvent => _backEvent;
     private bool _displayDecideButton = false;
-    public bool DisplayDecideButton {get {return _displayDecideButton;}}
+    public bool DisplayDecideButton => _displayDecideButton;
     private bool _displayBackButton = true;
-    public bool DisplayBackButton {get {return _displayBackButton;}}
+    public bool DisplayBackButton => _displayBackButton;
     private bool _disableStrength = false;
-    public bool DisableStrength {get {return _disableStrength;}}
+    public bool DisableStrength => _disableStrength;
     private List<BattlerInfo> _enemyInfos = null;
-    public List<BattlerInfo> EnemyInfos {get {return _enemyInfos;}}
+    public List<BattlerInfo> EnemyInfos => _enemyInfos;
     
     public StatusViewInfo(System.Action backEvent)
     {

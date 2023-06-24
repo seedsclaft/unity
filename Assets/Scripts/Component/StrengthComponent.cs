@@ -39,7 +39,5 @@ public class StrengthComponent : MonoBehaviour
             }
             usePoint.text = UseCost.ToString();
         }
-
-        
     }
 }

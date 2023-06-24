@@ -8,7 +8,6 @@ using Effekseer;
 public class BattleActorList : ListWindow , IInputHandlerEvent
 {
     [SerializeField] private int rows = 0;
-    [SerializeField] private int cols = 0;
     [SerializeField] private List<GameObject> damageRoots;
     private List<BattlerInfo> _battleInfos = new List<BattlerInfo>();
     private List<BattleActor> _battleActors = new List<BattleActor>();

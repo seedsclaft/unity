@@ -19,11 +19,11 @@ public class PartyInfo
         _commandRankInfo[TacticsComandType.Resource] = 0;
     }
 
-    private List<int> _actorIdList = new List<int>();
+    private List<int> _actorIdList = new();
     public List<int> ActorIdList => _actorIdList;
     private int _currency = 0;
     public int Currency => _currency;
-    private List<int> _alchemyIdList = new ();
+    private List<int> _alchemyIdList = new();
     public List<int> AlchemyIdList => _alchemyIdList;
 
     private int _stageId = 0;
@@ -31,8 +31,8 @@ public class PartyInfo
     private bool _battleResult = false;
     public bool BattleResult => _battleResult;
 
-    private Dictionary<TacticsComandType,int> _commandCountInfo = new ();
-    private Dictionary<TacticsComandType,int> _commandRankInfo = new ();
+    private Dictionary<TacticsComandType,int> _commandCountInfo = new();
+    private Dictionary<TacticsComandType,int> _commandRankInfo = new();
     public Dictionary<TacticsComandType,int> CommandRankInfo => _commandRankInfo;
     public void AddActor(int actorId)
     {

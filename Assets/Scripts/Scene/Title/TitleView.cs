@@ -14,10 +14,6 @@ public class TitleView : BaseView
     [SerializeField] private GameObject helpRoot = null;
     [SerializeField] private GameObject helpPrefab = null;
     private HelpWindow _helpWindow = null;
-
-    public int titleCommandIndex{
-        get {return commandList.selectIndex;}
-    }
     
     public override void Initialize() 
     {

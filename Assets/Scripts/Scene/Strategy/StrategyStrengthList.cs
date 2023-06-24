@@ -9,8 +9,6 @@ using TMPro;
 public class StrategyStrengthList : ListWindow , IInputHandlerEvent
 {
     [SerializeField] private int rows = 0;
-    [SerializeField] private int cols = 0;
-
 
     private ActorInfo _actorInfo = null;
     private List<StrategyStrength> _statusStrengths = new List<StrategyStrength>();

@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class StatesData : ScriptableObject
 {
-    [SerializeField] public List<StateData> _data = new List<StateData>();
+    [SerializeField] public List<StateData> _data = new();
     
     [Serializable]
     public class StateData

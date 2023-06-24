@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class AlcanaData : ScriptableObject {
-    [SerializeField] public List<Alcana> _data = new List<Alcana>();
+    [SerializeField] public List<Alcana> _data = new();
 
     [Serializable]
     public class Alcana

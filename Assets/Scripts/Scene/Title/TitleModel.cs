@@ -2,10 +2,7 @@
 
 public class TitleModel : BaseModel
 {
-    public List<SystemData.MenuCommandData> TitleCommand
-    {
-        get { return DataSystem.TitleCommand;}
-    }
+    public List<SystemData.MenuCommandData> TitleCommand => DataSystem.TitleCommand;
 
     public bool ExistsLoadFile()
     {

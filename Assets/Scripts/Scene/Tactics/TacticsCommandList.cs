@@ -6,7 +6,6 @@ using UnityEngine.Events;
 
 public class TacticsCommandList : ListWindow , IInputHandlerEvent
 {
-    [SerializeField] private int rows = 0;
     [SerializeField] private int cols = 0;
     private List<SystemData.MenuCommandData> _menuCommands = new List<SystemData.MenuCommandData>();
 

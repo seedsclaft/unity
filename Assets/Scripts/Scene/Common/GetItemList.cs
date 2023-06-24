@@ -7,15 +7,11 @@ using UnityEngine.Events;
 public class GetItemList : ListWindow , IInputHandlerEvent
 {
     [SerializeField] private int rows = 0;
-    [SerializeField] private int cols = 0;
     private List<GetItemInfo> _data = new List<GetItemInfo>();
 
     [SerializeField] private TacticsCommandList tacticsCommandList;
     public TacticsCommandList TacticsCommandList {get {return tacticsCommandList;}}
     private System.Action<TacticsComandType> _confirmEvent = null;
-    public int selectIndex{
-        get {return Index;}
-    }
 
 
     public void Initialize()

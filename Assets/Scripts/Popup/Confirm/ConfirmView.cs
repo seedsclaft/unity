@@ -9,7 +9,6 @@ public class ConfirmView : BaseView
 {
     [SerializeField] private ConfirmCommandList commandList = null;
     [SerializeField] private TextMeshProUGUI titleText = null;
-    [SerializeField] private TextMeshProUGUI subText = null;
     [SerializeField] private GameObject skillInfoRoot = null;
     [SerializeField] private GameObject skillInfoPrefab = null;
     private System.Action<ConfirmComandType> _confirmEvent = null;
@@ -55,6 +54,14 @@ public class ConfirmView : BaseView
     public void SetConfirmEvent(System.Action<ConfirmComandType> commandData)
     {
         _confirmEvent = commandData;
+    }
+
+    public void  SetViewInfo(ConfirmInfo confirmInfo)
+    {
+        SetIsNoChoice(confirmInfo.IsNoChoise);
+        SetTitle(confirmInfo.Title);
+        SetSkillInfo(confirmInfo.SkillInfos);
+        SetConfirmEvent(confirmInfo.CallEvent);
     }
 
     public void SetEvent(System.Action<ConfirmViewEvent> commandData)

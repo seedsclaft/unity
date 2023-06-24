@@ -9,7 +9,6 @@ using TMPro;
 public class StatusStrengthList : ListWindow , IInputHandlerEvent
 {
     [SerializeField] private int rows = 0;
-    [SerializeField] private int cols = 0;
 
     [SerializeField] private TextMeshProUGUI remainSp;
     [SerializeField] private TextMeshProUGUI remainNuminous;

@@ -7,15 +7,10 @@ using UnityEngine.UI;
 public class StatusConditionList : ListWindow , IInputHandlerEvent
 {
     [SerializeField] private int rows = 0;
-    [SerializeField] private int cols = 0;
     [SerializeField] private Button conditionButton = null;
     [SerializeField] private GameObject mainView = null;
 
     private List<StateInfo> _stateInfos = new List<StateInfo>();
-
-    public int selectIndex{
-        get {return Index;}
-    }
 
     public void Initialize(System.Action conditionEvent)
     {

@@ -31,7 +31,6 @@ public class GameSystem : MonoBehaviour
     [SerializeField] private DebugBattleData debugBattleData = null;
     
     private BaseView _currentScene = null;
-    private ConfirmView _confirmView = null;
     private BaseView _popupView = null;
     private StatusView _statusView = null;
     private EnemyInfoView _enemyInfoView = null;
@@ -45,7 +44,7 @@ public class GameSystem : MonoBehaviour
 
     public static FirebaseFirestore db;
     private bool _busy = false;
-    public bool Busy {get {return _busy;}}
+    public bool Busy => _busy;
 
     public static float Version;
     private void Awake() 
@@ -186,10 +185,7 @@ public class GameSystem : MonoBehaviour
             CreateStatus();
             statusRoot.gameObject.SetActive(true);
             var popupInfo = (StatusViewInfo)viewEvent.templete;
-            _statusView.DisplayDecideButton(popupInfo.DisplayDecideButton);
-            _statusView.DisplayBackButton(popupInfo.DisplayBackButton);
-            _statusView.DisableStrength(popupInfo.DisableStrength);
-            _statusView.SetBackEvent(popupInfo.BackEvent);
+            _statusView.SetViewInfo(popupInfo);
             _statusView.SetEvent((type) => updateCommand(type));
             _currentScene.SetBusy(true);
         } else
@@ -298,11 +294,7 @@ public class GameSystem : MonoBehaviour
         var confirmView = (_popupView as ConfirmView);
         confirmView.Initialize();
         confirmRoot.gameObject.SetActive(true);
-        var popupInfo = confirmInfo;
-        confirmView.SetIsNoChoice(popupInfo.IsNoChoise);
-        confirmView.SetTitle(popupInfo.Title);
-        confirmView.SetSkillInfo(popupInfo.SkillInfos);
-        confirmView.SetConfirmEvent(popupInfo.CallEvent);
+        confirmView.SetViewInfo(confirmInfo);
         _currentScene.SetBusy(true);
         if (_statusView) _statusView.SetBusy(true);
         if (_enemyInfoView) _enemyInfoView.SetBusy(true);

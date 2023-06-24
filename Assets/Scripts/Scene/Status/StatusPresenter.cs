@@ -6,8 +6,6 @@ public class StatusPresenter
 {
     StatusModel _model = null;
     StatusView _view = null;
-
-
     private Status.CommandType _backCommandType = Status.CommandType.None;
     private Status.CommandType _popupCommandType = Status.CommandType.None;
     public StatusPresenter(StatusView view)
