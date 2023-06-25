@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Status;
 
-public class StatusView : BaseView
+public class StatusView : BaseView ,IInputHandlerEvent
 {
     [SerializeField] private ActorInfoComponent actorInfoComponent = null;
     [SerializeField] private StatusActorList actorList = null;
@@ -117,6 +117,7 @@ public class StatusView : BaseView
             _commandData(eventData);
         });
         SetActiveBack(_isDisplayBack);
+        SetInputHandler(gameObject.GetComponent<IInputHandlerEvent>());
     }
 
     public void SetViewInfo(StatusViewInfo statusViewInfo)
@@ -383,6 +384,16 @@ public class StatusView : BaseView
         skillList.RefreshCostInfo();
     }
 
+    public void InputHandler(InputKeyType keyType)
+    {
+
+    }
+
+    public new void MouseCancelHandler()
+    {
+        var eventData = new StatusViewEvent(CommandType.Back);
+        _commandData(eventData);
+    }
 }
 
 namespace Status

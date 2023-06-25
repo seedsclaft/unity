@@ -43,6 +43,17 @@ abstract public class BaseView : MonoBehaviour
         }
     }
 
+    private void CallMouseCancel()
+    {
+        if (_busy) return;
+        foreach (var handler in _inputHandler)
+        {
+            if (handler != null){
+                handler.MouseCancelHandler();
+            }
+        }
+    }
+
     public void SetBusy(bool isBusy)
     {
         _busy = isBusy;
@@ -56,6 +67,10 @@ abstract public class BaseView : MonoBehaviour
             if (keyType != InputKeyType.None)
             {
                 InputHandler(keyType);
+            }
+            if (InputSystem.IsMouseRightButtonDown())
+            {
+                CallMouseCancel();
             }
         }
     }
@@ -236,6 +251,11 @@ abstract public class BaseView : MonoBehaviour
     public void SetTestMode(bool isTest)
     {
         _testMode = isTest;
+    }
+
+    public void MouseCancelHandler()
+    {
+
     }
 }
 

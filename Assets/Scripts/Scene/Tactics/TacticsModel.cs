@@ -148,7 +148,7 @@ public class TacticsModel : BaseModel
         }
         if (tacticsComandType == TacticsComandType.Recovery)
         {
-            return Currency >= TacticsUtility.RecoveryCost(actorInfo);
+            return Currency > 0;
         }
         if (tacticsComandType == TacticsComandType.Battle)
         {

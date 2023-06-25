@@ -105,6 +105,41 @@ public class InputSystem
         if (gamepad.leftShoulder.isPressed) Debug.Log($"LeftShoulder");
         if (gamepad.rightShoulder.isPressed) Debug.Log($"RightShoulder");
     }
+
+    public static bool IsMouseRightButtonDown()
+    {
+        if ( IsPlatformStandAloneOrEditor() || EnableWebGLInput())
+        { 
+            return Input.GetMouseButtonDown(1);
+        }
+        else
+        {
+            return false;
+        }
+    }
+    
+    public static bool EnableWebGLInput()
+    {
+        return (Application.platform == RuntimePlatform.WebGLPlayer);
+    }
+
+    public static bool IsPlatformStandAloneOrEditor()
+    {
+        return Application.isEditor || IsPlatformStandAlone();
+    }
+
+    public static bool IsPlatformStandAlone()
+    {
+        switch (Application.platform)
+        {
+            case RuntimePlatform.WindowsPlayer:
+            case RuntimePlatform.OSXPlayer:
+            case RuntimePlatform.LinuxPlayer:
+                return true;
+            default:
+                return false;
+        }
+    }
 }
 
 public enum InputKeyType{

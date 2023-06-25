@@ -48,6 +48,7 @@ public class TacticsAlchemyList : ListWindow , IInputHandlerEvent
         tacticsCommandList.Initialize(callEvent);
         tacticsCommandList.Refresh(confirmCommands);
         tacticsCommandList.UpdateSelectIndex(-1);
+        SetCancelEvent(() => _confirmEvent(TacticsComandType.Train));
     }
 
     public void Refresh()

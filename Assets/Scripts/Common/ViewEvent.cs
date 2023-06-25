@@ -31,6 +31,7 @@ public interface IListViewItem
 public interface IInputHandlerEvent
 {
     void InputHandler(InputKeyType keyType);
+    void MouseCancelHandler();
 }
 
 abstract public class ListItem : MonoBehaviour

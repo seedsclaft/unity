@@ -96,7 +96,7 @@ public class StrategyModel : BaseModel
                     if (getSkillDatas.Count > 0)
                     {
                         GetItemInfo bonusGetItemInfo = new GetItemInfo(null);
-                        int rand2 = UnityEngine.Random.Range(0,getSkillDatas.Count-1);
+                        int rand2 = UnityEngine.Random.Range(0,getSkillDatas.Count);
                         PartyInfo.AddAlchemy(getSkillDatas[rand2].Id);
                         SkillsData.SkillData randSkillData = DataSystem.Skills.Find(a => a.Id == getSkillDatas[rand2].Id);
                         bonusGetItemInfo.MakeAlchemyBonusResult(randSkillData);
@@ -251,7 +251,7 @@ public class StrategyModel : BaseModel
                     List< SkillsData.SkillData> getSkillDatas = DataSystem.Skills.FindAll(a => a.Rank == getItemInfo.Param1 && (int)a.Attribute == (int)getItemInfo.GetItemType - 10 && !PartyInfo.AlchemyIdList.Contains(a.Id)); 
                     if (getSkillDatas.Count > 0)
                     {
-                        int rand2 = UnityEngine.Random.Range(0,getSkillDatas.Count-1);
+                        int rand2 = UnityEngine.Random.Range(0,getSkillDatas.Count);
                         PartyInfo.AddAlchemy(getSkillDatas[rand2].Id);
                         getItemInfo.SetTitleData(DataSystem.System.GetTextData(14040).Text);
                         

@@ -342,7 +342,7 @@ public class BattleModel : BaseModel
 
     public bool EnableCurrentBattler()
     {
-        if (CurrentBattler.IsState(StateType.Stun))
+        if (CurrentBattler.CanMove() == false)
         {
             return false;
         }

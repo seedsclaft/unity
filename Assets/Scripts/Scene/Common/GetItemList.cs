@@ -59,6 +59,7 @@ public class GetItemList : ListWindow , IInputHandlerEvent
         tacticsCommandList.Initialize(callEvent);
         tacticsCommandList.Refresh(confirmCommands);
         tacticsCommandList.UpdateSelectIndex(0);
+        SetCancelEvent(() => _confirmEvent(TacticsComandType.Train));
     }
     
     private void CallInputHandler(InputKeyType keyType, System.Action<TacticsComandType> callEvent)

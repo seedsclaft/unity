@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using EnemyInfo;
 using TMPro;
 
-public class EnemyInfoView : BaseView
+public class EnemyInfoView : BaseView,IInputHandlerEvent
 {
     [SerializeField] private SkillList skillList = null;
     [SerializeField] private EnemyInfoComponent enemyInfoComponent = null;
@@ -38,6 +38,7 @@ public class EnemyInfoView : BaseView
         _rightButton = prefab3.GetComponent<Button>();
         _rightButton.onClick.AddListener(() => OnClickRight());
         new EnemyInfoPresenter(this,enemyInfos);
+        SetInputHandler(gameObject.GetComponent<IInputHandlerEvent>());
     }
     private void InitializeSkillActionList()
     {
@@ -76,12 +77,6 @@ public class EnemyInfoView : BaseView
     {
         _commandData = commandData;
     }
-    
-    private void OnClickBack()
-    {
-        var eventData = new EnemyInfoViewEvent(CommandType.Back);
-        _commandData(eventData);
-    }
 
     public void StartEnemyInfo(BattlerInfo battlerInfo){
         enemyInfoComponent.UpdateInfo(battlerInfo);
@@ -119,6 +114,16 @@ public class EnemyInfoView : BaseView
         {
             _backEvent();
         }
+    }
+
+    public void InputHandler(InputKeyType keyType)
+    {
+
+    }
+
+    public new void MouseCancelHandler()
+    {
+        CommandBack();
     }
 }
 

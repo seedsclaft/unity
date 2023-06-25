@@ -41,6 +41,7 @@ public class TacticsEnemyList : ListWindow , IInputHandlerEvent
             }
         }
         SetInputHandler((a) => CallInputHandler(a,callEvent,cancelEvent,getItemEvent,enemyInfoEvent));
+        SetCancelEvent(() => cancelEvent());
     }
 
     public void Refresh(List<TroopInfo> troopInfos)

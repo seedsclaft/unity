@@ -10,7 +10,7 @@ abstract public class ListWindow : MonoBehaviour
     private bool _active = true;
 
     private int _index = 0;
-    public int Index {get{return _index;}}
+    public int Index => _index;
     private int _defaultInputFrame = 6;
     public void SetInputFrame(int frame)
     {
@@ -36,6 +36,14 @@ abstract public class ListWindow : MonoBehaviour
     private System.Action<InputKeyType> _inputCallHandler = null;
 
     public HelpWindow _helpWindow = null;
+
+    private System.Action _cancelEvent = null;
+    public System.Action CancelEvent => _cancelEvent;
+    public void SetCancelEvent(System.Action cancelEvent)
+    {
+        _cancelEvent = cancelEvent;
+    }
+
     public void Activate()
     {
         ResetInputFrame();
@@ -540,6 +548,18 @@ abstract public class ListWindow : MonoBehaviour
             return;
         }
         _inputCallHandler(keyType);
+    }
+
+    public void MouseCancelHandler()
+    {
+        if (!IsInputEnable())
+        {
+            return;
+        }
+        if (_cancelEvent != null)
+        {
+            _cancelEvent();
+        }
     }
 
     public virtual void UpdateHelpWindow(){

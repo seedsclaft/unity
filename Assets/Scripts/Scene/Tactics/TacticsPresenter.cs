@@ -137,6 +137,7 @@ public class TacticsPresenter :BasePresenter
                 if (stageEvents[i].Type == StageEventType.SetRouteSelectParam)
                 {
                     _view.CommandSetRouteSelect();
+                    _model.AddEventReadFlag(stageEvents[i]);
                 }
                 if (stageEvents[i].Type == StageEventType.AbortStage)
                 {

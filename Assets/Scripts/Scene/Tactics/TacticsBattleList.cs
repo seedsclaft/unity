@@ -51,6 +51,7 @@ public class TacticsBattleList : ListWindow , IInputHandlerEvent
         tacticsCommandList.Initialize(callEvent);
         tacticsCommandList.Refresh(confirmCommands);
         tacticsCommandList.SelectIndex(-1);
+        SetCancelEvent(() => _confirmEvent(TacticsComandType.Train));
     }
 
     public void Refresh()

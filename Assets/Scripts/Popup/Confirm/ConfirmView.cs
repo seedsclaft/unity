@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using TMPro;
 using Confirm;
 
-public class ConfirmView : BaseView
+public class ConfirmView : BaseView,IInputHandlerEvent
 {
     [SerializeField] private ConfirmCommandList commandList = null;
     [SerializeField] private TextMeshProUGUI titleText = null;
@@ -13,12 +13,14 @@ public class ConfirmView : BaseView
     [SerializeField] private GameObject skillInfoPrefab = null;
     private System.Action<ConfirmComandType> _confirmEvent = null;
     private new System.Action<ConfirmViewEvent> _commandData = null;
+    private ConfirmInfo _confirmInfo = null;
 
     public override void Initialize() 
     {
         base.Initialize();
         InitializeInput();
         new ConfirmPresenter(this);
+        SetInputHandler(gameObject.GetComponent<IInputHandlerEvent>());
     }
     
     public void SetTitle(string title)
@@ -58,6 +60,7 @@ public class ConfirmView : BaseView
 
     public void  SetViewInfo(ConfirmInfo confirmInfo)
     {
+        _confirmInfo = confirmInfo;
         SetIsNoChoice(confirmInfo.IsNoChoise);
         SetTitle(confirmInfo.Title);
         SetSkillInfo(confirmInfo.SkillInfos);
@@ -79,6 +82,22 @@ public class ConfirmView : BaseView
     {
         Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
         _confirmEvent(commandType);
+    }
+
+    public void InputHandler(InputKeyType keyType)
+    {
+
+    }
+
+    public new void MouseCancelHandler()
+    {
+        if (_confirmInfo.IsNoChoise)
+        {
+            CallConfirmCommand(ConfirmComandType.Yes);
+        } else
+        {
+            CallConfirmCommand(ConfirmComandType.No);
+        }
     }
 }
 
