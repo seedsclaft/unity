@@ -169,6 +169,7 @@ public enum ScopeType{
     All = 3,
     Self = 4,
     WithoutSelfOne = 11,
+    WithoutSelfAll = 13,
 }
 
 public enum SkillType{

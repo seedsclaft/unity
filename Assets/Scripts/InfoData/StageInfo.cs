@@ -285,7 +285,7 @@ public class StageInfo
         }
     }
     
-    public void TestTroops(int troopId)
+    public void TestTroops(int troopId,int troopLv)
     {
         _currentTroopInfos.Clear();
         List<TroopsData.TroopData> troopDatas = DataSystem.Troops.FindAll(a => a.TroopId == troopId);
@@ -295,7 +295,7 @@ public class StageInfo
         {
             EnemiesData.EnemyData enemyData = DataSystem.Enemies.Find(a => a.Id == troopDatas[i].EnemyId);
             bool isBoss = troopDatas[i].BossFlag;
-            BattlerInfo enemy = new BattlerInfo(enemyData,troopDatas[i].Lv,i,troopDatas[i].Line,isBoss);
+            BattlerInfo enemy = new BattlerInfo(enemyData,troopDatas[i].Lv + troopLv,i,troopDatas[i].Line,isBoss);
             troopInfo.AddEnemy(enemy);
         }
         _currentTroopInfos.Add(troopInfo);

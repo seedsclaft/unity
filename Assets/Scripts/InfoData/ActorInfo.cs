@@ -423,6 +423,11 @@ public class ActorInfo
         {
             attibuteParam += attribute / 5;
         }
-        return evaluate + statusParam + magicParam + attibuteParam + DemigodParam * 5;
+        int total = evaluate + statusParam + magicParam + attibuteParam + DemigodParam * 5;
+        if (Lost == true)
+        {
+            total = total / 2;
+        }
+        return total;
     }
 }

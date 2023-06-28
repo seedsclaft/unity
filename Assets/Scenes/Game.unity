@@ -8140,8 +8140,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc34738223829f44c9a2b752c153bbcc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inBattleActorIds: 01000000
-  troopId: 10
+  inBattleActorIds: 020000000300000004000000
+  troopId: 2200
+  troopLv: 10
   actorDatas:
   - Id: 1
     Name: "\u30D8\u30AB\u30C6\u30FC"
@@ -8422,9 +8423,9 @@ MonoBehaviour:
     InitLv: 1
     MaxLv: 40
     InitStatus:
-      _hp: 70
+      _hp: 40
       _mp: 20
-      _atk: 200
+      _atk: 40
       _def: 6
       _spd: 14
     PlusStatus:

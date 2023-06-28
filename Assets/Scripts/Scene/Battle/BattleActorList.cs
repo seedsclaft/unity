@@ -83,7 +83,7 @@ public class BattleActorList : ListWindow , IInputHandlerEvent
         _selectIndex = selectIndex;
         _targetIndexList = targetIndexList;
         _targetScopeType = scopeType;
-        if (_targetScopeType == ScopeType.All)
+        if (_targetScopeType == ScopeType.All || _targetScopeType == ScopeType.WithoutSelfAll)
         {
             UpdateAllSelect();
         } else
@@ -209,7 +209,7 @@ public class BattleActorList : ListWindow , IInputHandlerEvent
     private List<int> MakeTargetIndexs(BattlerInfo battlerInfo)
     {
         List<int> indexList = new List<int>();
-        if (_targetScopeType == ScopeType.All)
+        if (_targetScopeType == ScopeType.All || _targetScopeType == ScopeType.WithoutSelfAll)
         {
             for (int i = 0; i < _battleInfos.Count;i++)
             {

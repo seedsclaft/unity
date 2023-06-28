@@ -89,7 +89,7 @@ public class BattleEnemyLayer : ListWindow , IInputHandlerEvent
         _targetIndexList = targetIndexList;
         _targetScopeType = scopeType;
         _attributeType = attributeType;
-        if (_targetScopeType == ScopeType.All)
+        if (_targetScopeType == ScopeType.All || _targetScopeType == ScopeType.WithoutSelfAll)
         {
             UpdateAllSelect();
         } else
@@ -134,7 +134,7 @@ public class BattleEnemyLayer : ListWindow , IInputHandlerEvent
             return;
         }
         _selectIndex = index;
-        if (_targetScopeType == ScopeType.All)
+        if (_targetScopeType == ScopeType.All || _targetScopeType == ScopeType.WithoutSelfAll)
         {
             UpdateAllSelect();
             return;
@@ -299,7 +299,7 @@ public class BattleEnemyLayer : ListWindow , IInputHandlerEvent
     private List<int> MakeTargetIndexs(BattlerInfo battlerInfo)
     {
         List<int> indexList = new List<int>();
-        if (_targetScopeType == ScopeType.All)
+        if (_targetScopeType == ScopeType.All || _targetScopeType == ScopeType.WithoutSelfAll)
         {
             for (int i = 0; i < _battleEnemies.Count;i++)
             {

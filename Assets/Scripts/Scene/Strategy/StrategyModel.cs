@@ -92,7 +92,7 @@ public class StrategyModel : BaseModel
                 actorInfos[i].LearnSkill(actorInfos[i].NextLearnSkillId);
                 if (alchemyBonus)
                 {
-                    List<SkillsData.SkillData> getSkillDatas = DataSystem.Skills.FindAll(a => a.Rank == skillData.Rank && (int)a.Attribute == (int)skillData.Attribute && !PartyInfo.AlchemyIdList.Contains(a.Id));
+                    List<SkillsData.SkillData> getSkillDatas = DataSystem.Skills.FindAll(a => a.Rank == 1 && (int)a.Attribute == (int)skillData.Attribute && !PartyInfo.AlchemyIdList.Contains(a.Id));
                     if (getSkillDatas.Count > 0)
                     {
                         GetItemInfo bonusGetItemInfo = new GetItemInfo(null);
@@ -208,6 +208,13 @@ public class StrategyModel : BaseModel
 
     public List<GetItemInfo> SetBattleResult()
     {
+        // Party初期化
+        PartyInfo.InitActors();
+        List<ActorInfo> actorInfos = TacticsBattleActors();
+        foreach (var actorInfo in actorInfos)
+        {
+            PartyInfo.AddActor(actorInfo.ActorId);
+        }
         List<GetItemInfo> getItemInfos = new List<GetItemInfo>();
         if (PartyInfo.BattleResult == false)
         {

@@ -39,6 +39,18 @@ public class StateInfo {
 
     public bool UpdateTurn()
     {
+        // 挑発は確率でターンを終える
+        if ((int)StateType.Substitute == Master.Id)
+        {
+            var per = 100 - (_turns * _effect);
+            var rand = UnityEngine.Random.Range(0,100);
+            if (rand > per)
+            {
+                return true;
+            }
+            _turns--;
+            return false;
+        }
         _turns--;
         if (_turns <= 0)
         {

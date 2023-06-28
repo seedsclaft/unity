@@ -9,6 +9,8 @@ public class BattlePresenter : BasePresenter
 
     private bool _busy = true;
     private bool _triggerAfterChecked = false;
+    private bool _slipDamageChecked = false;
+    private List<ActionResultInfo> _slipDamageResults = new List<ActionResultInfo>();
     private Battle.CommandType _nextCommandType = Battle.CommandType.None;
     private Battle.CommandType _backCommandType = Battle.CommandType.None;
     public BattlePresenter(BattleView view)
@@ -389,21 +391,21 @@ public class BattlePresenter : BasePresenter
 
     private void StartAnimationSlipDamage()
     {
-        var slipDamageActionResults = _model.UpdateSlipDamageState();
+        _slipDamageResults = _model.UpdateSlipDamageState();
         var animation = _model.SkillActionAnimation("NA_Effekseer/NA_Fire_001");
-        for (int i = 0; i < slipDamageActionResults.Count; i++)
+        for (int i = 0; i < _slipDamageResults.Count; i++)
         {
-            _view.StartDamage(slipDamageActionResults[i].TargetIndex,DamageType.HpDamage,slipDamageActionResults[i].HpDamage);
-            _view.StartAnimation(slipDamageActionResults[i].TargetIndex,animation,0);
+            _view.StartDamage(_slipDamageResults[i].TargetIndex,DamageType.HpDamage,_slipDamageResults[i].HpDamage);
+            _view.StartAnimation(_slipDamageResults[i].TargetIndex,animation,0);
             
-            if (slipDamageActionResults[i].HpDamage != 0)
+            if (_slipDamageResults[i].HpDamage != 0)
             {            
-                _model.gainHpTargetIndex(slipDamageActionResults[i].TargetIndex,slipDamageActionResults[i].HpDamage * -1);
+                _model.gainHpTargetIndex(_slipDamageResults[i].TargetIndex,_slipDamageResults[i].HpDamage * -1);
             }
-            if (slipDamageActionResults[i].DeadIndexList.Contains(slipDamageActionResults[i].TargetIndex))
+            if (_slipDamageResults[i].DeadIndexList.Contains(_slipDamageResults[i].TargetIndex))
             {
                 Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Defeat);
-                _view.StartDeathAnimation(slipDamageActionResults[i].TargetIndex);
+                _view.StartDeathAnimation(_slipDamageResults[i].TargetIndex);
             }
         }
         _nextCommandType = Battle.CommandType.EndSlipDamageAnimation;
@@ -491,7 +493,7 @@ public class BattlePresenter : BasePresenter
         {
             if (actionResultInfo.TargetIndex == targetIndex)
             {
-                _view.StartStatePopup(targetIndex,DamageType.State,"+行動可能");
+                _view.StartStatePopup(targetIndex,DamageType.State,"+行動短縮");
             }
         }
         if (actionResultInfo.ReDamage > 0)
@@ -608,11 +610,14 @@ public class BattlePresenter : BasePresenter
             if (_triggerAfterChecked == false)
             {
                 // ステートなどを適用
-                var slipDamage = _model.CheckSlipDamage();
-                if (slipDamage == true)
+                if (_slipDamageChecked == false)
                 {
-                    StartAnimationSlipDamage();
-                    return;
+                    var slipDamage = _model.CheckSlipDamage();
+                    if (slipDamage == true)
+                    {
+                        StartAnimationSlipDamage();
+                        return;
+                    }
                 }
                 // リジェネ
                 var regene = _model.CheckRegene();
@@ -639,7 +644,18 @@ public class BattlePresenter : BasePresenter
 
     private void CommandEndSlipDamageAnimation()
     {    
-        var result = _model.CheckTriggerSkillInfos(TriggerTiming.After,_model.UpdateSlipDamageState());
+        _slipDamageChecked = true;
+        var result = _model.CheckTriggerSkillInfos(TriggerTiming.After,_slipDamageResults);
+        if (result)
+        {    
+            ActionInfo CurrentActionInfo = _model.CurrentActionInfo();
+            if (CurrentActionInfo != null)
+            {
+                _model.SetActionBattler(_model.CurrentActionInfo().SubjectIndex);
+                CommandSelectIndex(_model.MakeAutoSelectIndex(CurrentActionInfo));
+            }
+            return;
+        }
         if (CheckBattleEnd() == false && result == false)
         {
             var regene = _model.CheckRegene();
@@ -690,7 +706,11 @@ public class BattlePresenter : BasePresenter
         bool isTriggeredSkill = _model.CurrentActionInfo().TriggeredSkill;
         if (result == false && _triggerAfterChecked == false && isTriggeredSkill == false)
         {
-            _model.UpdateTurn();
+            var removed =_model.UpdateTurn();
+            foreach (var removedState in removed)
+            {
+                _view.StartStatePopup(removedState.TargetIndex,DamageType.State,"-" + removedState.Master.Name);
+            }
         }
         _model.TurnEnd();
         if (isTriggeredSkill == false)
@@ -713,6 +733,12 @@ public class BattlePresenter : BasePresenter
         foreach (var aliveEnemy in aliveEnemies)
         {
             _view.StartAliveAnimation(aliveEnemy.Index);                
+        }
+        // Hp０以上の戦闘不能を回復
+        var notDeadMembers = _model.NotDeadMembers();
+        foreach (var notDeadMember in notDeadMembers)
+        {
+            _view.StartAliveAnimation(notDeadMember.Index);                
         }
 
         // 次の行動者がいれば続ける
@@ -739,6 +765,7 @@ public class BattlePresenter : BasePresenter
         }
         _view.HideEnemyStatus();
         _triggerAfterChecked = false;
+        _slipDamageChecked = false;
         _view.SetBattleBusy(false);
     }
 

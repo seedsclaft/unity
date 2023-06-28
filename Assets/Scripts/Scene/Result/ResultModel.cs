@@ -71,9 +71,9 @@ public class ResultModel : BaseModel
     {
         // Party初期化
         PartyInfo.InitActors();
-        for (int i = 0;i < StageMembers().Count;i++)
+        for (int i = 0;i < ResultMembers().Count;i++)
         {
-            PartyInfo.AddActor(StageMembers()[i].ActorId);
+            PartyInfo.AddActor(ResultMembers()[i].ActorId);
         }
     }
 }

@@ -374,8 +374,9 @@ public class BattlerInfo
         return IsRemoved;
     }
 
-    public void UpdateState(RemovalTiming removalTiming)
+    public List<StateInfo> UpdateState(RemovalTiming removalTiming)
     {
+        var stateInfos = new List<StateInfo>();
         for (var i = _stateInfos.Count-1;i >= 0;i--)
         {
             StateInfo stateInfo = _stateInfos[i];
@@ -385,9 +386,14 @@ public class BattlerInfo
                 if (IsRemove)
                 {
                     RemoveState(stateInfo,true);
+                    if (stateInfo.Master.Id == (int)StateType.Substitute)
+                    {
+                        stateInfos.Add(stateInfo);
+                    }
                 }
             }
         }
+        return stateInfos;
     }
 
     public void UpdateStateCount(RemovalTiming removalTiming,int stateId)

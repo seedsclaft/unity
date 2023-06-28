@@ -291,13 +291,13 @@ MonoBehaviour:
     Scope: 1
     SkillType: 1
     TargetType: 2
-    Help: "\u5473\u65B9\u4E00\u4EBA\u306EMp\u30925\u56DE\u5FA9"
+    Help: "\u5473\u65B9\u4E00\u4EBA\u306EMp\u30928\u56DE\u5FA9"
     Range: 1
     AliveOnly: 1
     FeatureDatas:
     - SkillId: 103
       FeatureType: 7
-      Param1: 5
+      Param1: 8
       Param2: 0
       Param3: 0
     TriggerDatas: []
@@ -430,7 +430,7 @@ MonoBehaviour:
     Scope: 4
     SkillType: 2
     TargetType: 4
-    Help: "\u5E38\u6642ATK4\u304C\u30A2\u30C3\u30D7"
+    Help: "\u5E38\u6642ATK8\u304C\u30A2\u30C3\u30D7"
     Range: 1
     AliveOnly: 1
     FeatureDatas:
@@ -438,7 +438,7 @@ MonoBehaviour:
       FeatureType: 21
       Param1: 43
       Param2: 999
-      Param3: 4
+      Param3: 8
     TriggerDatas:
     - SkillId: 131
       TriggerType: 0
@@ -459,7 +459,7 @@ MonoBehaviour:
     Scope: 4
     SkillType: 2
     TargetType: 4
-    Help: "(\u6761\u4EF6)Hp\u304C25%\u4EE5\u4E0B\nATK\u304C8\u30A2\u30C3\u30D7"
+    Help: "(\u6761\u4EF6)Hp\u304C25%\u4EE5\u4E0B\nATK\u304C16\u30A2\u30C3\u30D7"
     Range: 1
     AliveOnly: 1
     FeatureDatas:
@@ -467,7 +467,7 @@ MonoBehaviour:
       FeatureType: 21
       Param1: 43
       Param2: 999
-      Param3: 8
+      Param3: 16
     TriggerDatas:
     - SkillId: 132
       TriggerType: 1
@@ -488,7 +488,7 @@ MonoBehaviour:
     Scope: 4
     SkillType: 2
     TargetType: 4
-    Help: "DEF\u304C10\u30C0\u30A6\u30F3\u3057ATK\u304C10\u30A2\u30C3\u30D7"
+    Help: "DEF\u304C12\u30C0\u30A6\u30F3\u3057ATK\u304C12\u30A2\u30C3\u30D7"
     Range: 1
     AliveOnly: 1
     FeatureDatas:
@@ -496,12 +496,12 @@ MonoBehaviour:
       FeatureType: 21
       Param1: 43
       Param2: 999
-      Param3: 10
+      Param3: 12
     - SkillId: 133
       FeatureType: 21
       Param1: 44
       Param2: 999
-      Param3: -10
+      Param3: -12
     TriggerDatas:
     - SkillId: 133
       TriggerType: 0
@@ -522,7 +522,7 @@ MonoBehaviour:
     Scope: 4
     SkillType: 2
     TargetType: 4
-    Help: "(\u6761\u4EF6)3\u30BF\u30FC\u30F3\u4EE5\u5185\nATK\u304C20\u30A2\u30C3\u30D7"
+    Help: "(\u6761\u4EF6)3\u30BF\u30FC\u30F3\u4EE5\u5185\nATK\u304C24\u30A2\u30C3\u30D7"
     Range: 1
     AliveOnly: 1
     FeatureDatas:
@@ -530,7 +530,7 @@ MonoBehaviour:
       FeatureType: 21
       Param1: 43
       Param2: 999
-      Param3: 10
+      Param3: 20
     TriggerDatas:
     - SkillId: 134
       TriggerType: 61
@@ -750,16 +750,16 @@ MonoBehaviour:
     MpCost: 4
     Rank: 2
     Attribute: 2
-    Scope: 11
+    Scope: 13
     SkillType: 1
     TargetType: 2
-    Help: "\u5473\u65B9\u4E00\u4EBA\u3092\u6B21\u306B\u884C\u52D5\u3059\u308B\u72B6\u614B\u306B\u3059\u308B"
+    Help: "\u81EA\u8EAB\u4EE5\u5916\u306E\u884C\u52D5\u9806\u307E\u3067\u306E\u6642\u9593\u3092\u77ED\u7E2E\u3059\u308B"
     Range: 1
     AliveOnly: 1
     FeatureDatas:
     - SkillId: 205
       FeatureType: 32
-      Param1: 999
+      Param1: 100
       Param2: 0
       Param3: 0
     TriggerDatas: []
@@ -1137,7 +1137,7 @@ MonoBehaviour:
     MpCost: 2
     Rank: 2
     Attribute: 3
-    Scope: 1
+    Scope: 3
     SkillType: 1
     TargetType: 1
     Help: "\u6575\u5168\u4F53\u3092\u6311\u767A\u3059\u308B"
@@ -1147,8 +1147,8 @@ MonoBehaviour:
     - SkillId: 304
       FeatureType: 21
       Param1: 107
-      Param2: 2
-      Param3: 0
+      Param2: 5
+      Param3: 10
     TriggerDatas: []
   - Id: 305
     Name: "\u30C7\u30A3\u30FC\u30D7\u30D5\u30EA\u30FC\u30BA"
@@ -1219,7 +1219,7 @@ MonoBehaviour:
     IconIndex: 11
     AnimationName: NA_Effekseer/NA_magic_008_c3
     AnimationPosition: 0
-    AnimationType: 1
+    AnimationType: 3
     DamageTiming: 48
     MpCost: 0
     Rank: 2
@@ -1235,7 +1235,7 @@ MonoBehaviour:
     - SkillId: 312
       FeatureType: 21
       Param1: 21
-      Param2: 999
+      Param2: 9999999
       Param3: 0
     - SkillId: 312
       FeatureType: 101
@@ -1263,7 +1263,7 @@ MonoBehaviour:
     - SkillId: 321
       FeatureType: 21
       Param1: 21
-      Param2: 2
+      Param2: 300
       Param3: 0
     TriggerDatas: []
   - Id: 331
@@ -2104,7 +2104,7 @@ MonoBehaviour:
     IconIndex: 10
     AnimationName: NA_Effekseer/NA_smoke_003_c7
     AnimationPosition: 0
-    AnimationType: 1
+    AnimationType: 3
     DamageTiming: 110
     MpCost: 0
     Rank: 2

@@ -585,6 +585,9 @@ abstract public class ListWindow : MonoBehaviour
         }
         LayoutRebuilder.MarkLayoutForRebuild(_prevRect);
         LayoutRebuilder.MarkLayoutForRebuild(_lastRect);
+        scrollRect.normalizedPosition = new Vector2(0,1);
+        ValueChanged(new Vector2(0,1));
         _lastStartIndex = 0;
+        SelectIndex(0);
     }
 }

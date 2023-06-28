@@ -6,6 +6,7 @@ public class DebugBattleData : MonoBehaviour
 {
     [SerializeField] private List<int> inBattleActorIds = null;
     [SerializeField] private int troopId = 0;
+    [SerializeField] private int troopLv = 0;
     [SerializeField] private List<ActorsData.ActorData> actorDatas = null;
     [SerializeField] private string advName = "";
     public string AdvName { get {return advName;}}
@@ -24,6 +25,6 @@ public class DebugBattleData : MonoBehaviour
         }
         GameSystem.CurrentData.Actors.ForEach(a => a.InBattle = true);
 
-        GameSystem.CurrentData.CurrentStage.TestTroops(troopId);
+        GameSystem.CurrentData.CurrentStage.TestTroops(troopId,troopLv);
     }
 }
