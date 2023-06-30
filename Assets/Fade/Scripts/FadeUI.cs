@@ -40,6 +40,10 @@ public class FadeUI : UnityEngine.UI.Graphic, IFade
 	private void UpdateMaskCutout (float range)
 	{
 		mat.SetFloat ("_Range", range);
+		rt.Release();
+		rt.width = Screen.width;
+		rt.height = Screen.height;
+		rt.Create();
 		
 		UnityEngine.Graphics.Blit (texture, rt, mat);
 		

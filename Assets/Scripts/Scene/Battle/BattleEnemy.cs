@@ -2,11 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.EventSystems;
-using UnityEngine.Events;
-using TMPro;
 using Effekseer;
-using DG.Tweening;
 
 public class BattleEnemy : ListItem 
 {
@@ -15,8 +11,6 @@ public class BattleEnemy : ListItem
     [SerializeField] private Image enemyImage;
     [SerializeField] private EffekseerEmitter effekseerEmitter;
     [SerializeField] private GameObject statusObject;
-
-    private List<BattleDamage> _battleDamages = new List<BattleDamage>();
 
     private BattlerInfo _battlerInfo;
     private string textureName = null;
@@ -73,9 +67,17 @@ public class BattleEnemy : ListItem
         RectTransform objectRect = gameObject.GetComponent < RectTransform > ();
         RectTransform rect = Cursor.GetComponent < RectTransform > ();
         RectTransform effectRect = effekseerEmitter.gameObject.GetComponent < RectTransform > ();
+        RectTransform statusRect = statusObject.GetComponent < RectTransform > ();
+        RectTransform damageRect = battlerInfoComponent.BattleDamageRoot.gameObject.GetComponent < RectTransform > ();
         rect.sizeDelta = new Vector2(width,height);
         objectRect.sizeDelta = new Vector2(width,height);
         effectRect.sizeDelta = new Vector2(width,height);
+        if (_isFront == false)
+        {
+
+            statusRect.sizeDelta = new Vector2(0,height/2);
+            damageRect.sizeDelta = new Vector2(0,height/2);
+        }
     }
 
     public void EnableClick()

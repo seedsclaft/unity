@@ -13,6 +13,7 @@ public class BattlerInfoComponent : MonoBehaviour
     [SerializeField] private EffekseerEmitter effekseerEmitter;
     [SerializeField] private _2dxFX_DestroyedFX deathAnimation;
     private GameObject _battleDamageRoot;
+    public GameObject BattleDamageRoot => _battleDamageRoot;
     private GameObject _battleStatusRoot;
     [SerializeField] private GameObject battleDamagePrefab;
     [SerializeField] private BattleStateOverlay battleStateOverlay;

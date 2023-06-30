@@ -173,7 +173,7 @@ public class BattlerInfo
             rand = 0;
         }
         _ap = 500 - (CurrentSpd() + rand) * 4;
-        _ap = Math.Max(_ap,100);
+        _ap = Math.Max(_ap,160);
     }
 
     public void UpdateAp()

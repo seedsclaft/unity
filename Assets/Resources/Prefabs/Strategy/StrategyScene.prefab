@@ -57,7 +57,6 @@ MonoBehaviour:
   itemPrefab: {fileID: 2067777905309005909, guid: 7f16ce87c45057340ae8b484e81013e9,
     type: 3}
   _helpWindow: {fileID: 0}
-  rows: 1
   cols: 2
 --- !u!1 &173197529344788299
 GameObject:
@@ -117,7 +116,6 @@ MonoBehaviour:
     type: 3}
   _helpWindow: {fileID: 0}
   tacticsCommandList: {fileID: 5317443866069777047}
-  rows: 1
   cols: 1
 --- !u!1 &207127003218800608
 GameObject:
@@ -597,7 +595,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 445992753427037911}
+  m_Father: {fileID: 3276720209711201072}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &540823602114038002
@@ -666,7 +664,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 445992753427037911}
+  m_Father: {fileID: 3276720209711201072}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -1645,7 +1643,7 @@ Transform:
   - {fileID: 2413060967058827417}
   - {fileID: 547188117934993874}
   - {fileID: 2395079449060266150}
-  m_Father: {fileID: 445992753427037911}
+  m_Father: {fileID: 3276720209711201072}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2257470511390887844
@@ -2231,7 +2229,6 @@ MonoBehaviour:
   itemPrefab: {fileID: 2067777905309005909, guid: 7f16ce87c45057340ae8b484e81013e9,
     type: 3}
   _helpWindow: {fileID: 0}
-  rows: 1
   cols: 2
 --- !u!1 &3722787397025497017
 GameObject:
@@ -2401,7 +2398,6 @@ MonoBehaviour:
     type: 3}
   _helpWindow: {fileID: 0}
   rows: 5
-  cols: 1
 --- !u!1 &4146491586019469417
 GameObject:
   m_ObjectHideFlags: 0
@@ -3310,7 +3306,6 @@ MonoBehaviour:
     type: 3}
   _helpWindow: {fileID: 0}
   rows: 5
-  cols: 1
   tacticsCommandList: {fileID: 4848777650402258680}
 --- !u!1 &6190800377602257344
 GameObject:
@@ -4478,7 +4473,7 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 445992753427037911}
+  - component: {fileID: 3276720209711201072}
   - component: {fileID: 9169736418671621084}
   m_Layer: 5
   m_Name: StrategyScene
@@ -4487,8 +4482,8 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &445992753427037911
-Transform:
+--- !u!224 &3276720209711201072
+RectTransform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -4505,6 +4500,11 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &9169736418671621084
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4526,8 +4526,6 @@ MonoBehaviour:
   strategyResultList: {fileID: 4010056106303172039}
   tacticsEnemyList: {fileID: 1920970282033351754}
   strategyStrengthList: {fileID: 1885708720887750034}
-  effekseerEmitter: {fileID: 7382019176374350069}
-  backGround: {fileID: 0}
   helpRoot: {fileID: 449897592933417655}
   helpPrefab: {fileID: 4660447992331240257, guid: fd198201f48424c4cbfbe909f658ea97,
     type: 3}

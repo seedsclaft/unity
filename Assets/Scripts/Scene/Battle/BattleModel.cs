@@ -299,6 +299,28 @@ public class BattleModel : BaseModel
         {
             skillInfos[i].SetEnable(CheckCanUse(skillInfos[i],CurrentBattler));
         }
+        var sortList1 = new List<SkillInfo>();
+        var sortList2 = new List<SkillInfo>();
+        var sortList3 = new List<SkillInfo>();
+        skillInfos.Sort((a,b) => {return a.Master.Id > b.Master.Id ? 1 : -1;});
+        foreach (var skillInfo in skillInfos)
+        {
+            if (skillInfo.Master.IconIndex <= MagicIconType.Psionics)
+            {
+                sortList1.Add(skillInfo);
+            } else
+            if (skillInfo.Master.IconIndex >= MagicIconType.Demigod)
+            {
+                sortList2.Add(skillInfo);
+            } else
+            {
+                sortList3.Add(skillInfo);
+            }
+        }
+        skillInfos.Clear();
+        skillInfos.AddRange(sortList1);
+        skillInfos.AddRange(sortList2);
+        skillInfos.AddRange(sortList3);
         return skillInfos;
     }
 
@@ -624,9 +646,18 @@ public class BattleModel : BaseModel
                 }
                 break;
                 case FeatureType.MpHeal:
-                if (target.Mp < target.MaxMp)
+                if (CurrentBattler != null)
                 {
-                    IsEnable = true;
+                    if (CurrentBattler.isActor)
+                    {
+                        IsEnable = true;
+                    } else
+                    {
+                        if (target.Mp < target.MaxMp)
+                        {
+                            IsEnable = true;
+                        }
+                    }
                 }
                 break;
                 case FeatureType.AddState:
