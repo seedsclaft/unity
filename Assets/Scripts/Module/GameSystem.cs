@@ -4,8 +4,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using Utage;
 using UtageExtensions;
-using Firebase.Firestore;
-using Firebase.Extensions;
 using Cysharp.Threading.Tasks;
 
 public class GameSystem : MonoBehaviour
@@ -42,7 +40,6 @@ public class GameSystem : MonoBehaviour
     public static TempInfo CurrentTempData = null;
     public static Texture2D SnapShot;
 
-    public static FirebaseFirestore db;
     private bool _busy = false;
     public bool Busy => _busy;
 
@@ -54,7 +51,6 @@ public class GameSystem : MonoBehaviour
         _model = new BaseModel();
         GameSystem.Version = version;
         CommandSceneChange(Scene.Boot);
-        db = FirebaseFirestore.DefaultInstance;
     }
 
     private GameObject CreateConfirm()
@@ -256,11 +252,6 @@ public class GameSystem : MonoBehaviour
             int routeSelect = (int)advEngine.Param.GetParameter("RouteSelect");
             CurrentData.CurrentStage.SetRouteSelect(routeSelect);
         } else
-        if (viewEvent.commandType == Base.CommandType.SendRankingData)
-        {
-            _currentScene.SetBusy(true);
-            SendRankingData((System.Action<string>)viewEvent.templete);
-        } else
         if (viewEvent.commandType == Base.CommandType.ChangeViewToTransition)
         {
             _currentScene.gameObject.transform.SetParent(transitionRoot.transform, false);
@@ -431,78 +422,6 @@ public class GameSystem : MonoBehaviour
 
     private void CommandSetTemplete(TempInfo templete){
         CurrentTempData = templete;
-    }
-
-    private void SendRankingData(System.Action<string> endEvent)
-    {
-        string ranking = "ranking";
-        string userName = CurrentData.PlayerInfo.PlayerId.ToString();
-        int evaluate = 0;
-        List<int> SelectActorIds = CurrentData.CurrentStage.SelectActorIds;
-        var members = new List<ActorInfo>();
-        var selectIdx = new List<int>();
-        var selectIdrank = new List<int>();
-        for (int i = 0;i < SelectActorIds.Count ;i++)
-        {
-            var temp = CurrentData.Actors.Find(a => a.ActorId == SelectActorIds[i]);
-            if (temp != null)
-            {
-                members.Add(temp);
-            }
-        }
-        foreach (var actorInfo in members)
-        {
-            evaluate += actorInfo.Evaluate();
-            selectIdx.Add(actorInfo.ActorId);
-            selectIdrank.Add(actorInfo.Evaluate());
-        }
-        DocumentReference docRef = db.Collection(ranking).Document(userName);
-        Dictionary<string, object> user = new Dictionary<string, object>
-        {
-            { "Score", evaluate },
-            { "Name", GameSystem.CurrentData.PlayerInfo.PlayerName },
-            { "SelectIdx", selectIdx },
-            { "SelectRank", selectIdrank },
-        };
-        docRef.SetAsync(user).ContinueWithOnMainThread(task => {
-            GetRankingData(evaluate,endEvent);
-            Debug.Log("Added data to the alovelace document in the users collection.");
-        });
-    }
-
-    
-    private async void GetRankingData(int evaluate,System.Action<string> endEvent)
-    {
-        string ranking = "ranking";
-        var countRef = db.Collection(ranking);
-        var snapshot = await countRef.GetSnapshotAsync();
-        var all = snapshot.Count;
-        var rankAll = await countRef.OrderByDescending("Score").Limit(100).GetSnapshotAsync();
-        int rank = 0;
-        foreach (var document in rankAll.Documents)
-        {
-            rank += 1;
-            if (document.Id == GameSystem.CurrentData.PlayerInfo.PlayerId.ToString())
-            {
-                Dictionary<string, object> docDictionary = document.ToDictionary();
-                if (docDictionary.ContainsKey("Score"))
-                {
-                    Debug.Log($"Score:{docDictionary["Score"]}");
-                }
-                if (docDictionary.ContainsKey("Name"))
-                {
-                    Debug.Log($"Name:{docDictionary["Name"]}");
-                }
-                break;
-            }
-        }
-        string rankStr = "圏外";
-        if (rank != 0)
-        {
-            rankStr = rank.ToString();
-        }
-        string rankingData = rankStr + " / " + all.ToString() + "位";
-        if (endEvent != null) endEvent(rankingData);
     }
 }
 

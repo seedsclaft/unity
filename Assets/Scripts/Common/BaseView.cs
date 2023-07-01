@@ -199,13 +199,6 @@ abstract public class BaseView : MonoBehaviour
         CallSceneChangeCommand(eventData);
     }
 
-    public void CommandSendRankingData(System.Action<string> endEvent)
-    {
-        var eventData = new ViewEvent(Scene.Base, Base.CommandType.SendRankingData);
-        eventData.templete = endEvent;
-        CallSceneChangeCommand(eventData);
-    }
-
     public void CommandChangeViewToTransition(System.Action<string> endEvent)
     {
         var eventData = new ViewEvent(Scene.Base, Base.CommandType.ChangeViewToTransition);
@@ -280,8 +273,6 @@ namespace Base
         DecidePlayerName,
         CallLoading,
         CloseLoading,
-        SendRankingData,
-        SendRankingEnd,
         SetRouteSelect,
         ChangeViewToTransition,
         StartTransition,

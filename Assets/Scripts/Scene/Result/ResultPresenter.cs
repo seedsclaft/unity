@@ -87,12 +87,24 @@ public class ResultPresenter : BasePresenter
     {
         if (confirmComandType == ConfirmComandType.Yes)
         {
+            _model.SendRankingData(() => 
+            {
+                _model.GetRankingData((a) => 
+                {
+                    _isRankingEnd = true;
+                    _view.CommandConfirmClose();
+                    _view.SetRanking(a);
+                    UpdateResultCommand();
+                });
+            });
+            /*
             _view.CommandSendRankingData((a) => {
                 _isRankingEnd = true;
                 _view.CommandConfirmClose();
                 _view.SetRanking(a);
                 UpdateResultCommand();
             });
+            */
         } else
         {
         _isRankingEnd = true;

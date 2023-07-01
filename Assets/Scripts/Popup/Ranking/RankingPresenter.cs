@@ -17,12 +17,13 @@ public class RankingPresenter
         Initialize();
     }
 
-    private async void Initialize()
+    private void Initialize()
     {
         _view.SetEvent((type) => updateCommand(type));
-        var res = await _model.RankingInfos();
-        _view.SetRankingInfo(res);
-        _busy = false;
+        _model.RankingInfos((res) => {
+            _view.SetRankingInfo(res);
+            _busy = false;
+        });
     }
 
     private void updateCommand(RankingViewEvent viewEvent)
