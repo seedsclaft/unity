@@ -616,24 +616,14 @@ MonoBehaviour:
       - SkillId: 0
         TriggerType: 22
         TriggerTiming: 1
-        Param1: 1
+        Param1: 2
         Param2: 0
-        Param3: 0
+        Param3: 1
       - SkillId: 0
-        TriggerType: 13
+        TriggerType: 2
         TriggerTiming: 1
-        Param1: 3
+        Param1: 75
         Param2: 0
-        Param3: 0
-    - SkillId: 102
-      Level: 1
-      Weight: 90
-      TriggerDatas:
-      - SkillId: 0
-        TriggerType: 13
-        TriggerTiming: 1
-        Param1: 3
-        Param2: 1
         Param3: 0
   - Id: 104
     Name: "\u30D9\u30EA\u30C8"
@@ -970,9 +960,6 @@ MonoBehaviour:
     Help: 
   - Id: 103
     Text: 104
-    Help: 
-  - Id: 103
-    Text: 102
     Help: 
   - Id: 104
     Text: 121

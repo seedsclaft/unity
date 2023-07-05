@@ -34,6 +34,7 @@ public class StrategyActor : ListItem ,IListViewItem
 
     public void StartResultAnimation(int animId)
     {
+        shinyReflect.enabled = false;
         //gameObject.transform.DOLocalMoveX(80,0.0f);
         int initPosy = (animId % 2 == 1) ? -80 : 80;
         Sequence sequence = DOTween.Sequence()
@@ -46,7 +47,6 @@ public class StrategyActor : ListItem ,IListViewItem
                     StartBonusAnimation();
                 } else
                 {
-                    shinyReflect.enabled = false;
                 }
                 if (_callEvent != null) _callEvent();
             });

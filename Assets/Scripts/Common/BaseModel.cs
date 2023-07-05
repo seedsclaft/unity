@@ -7,10 +7,7 @@ using Cysharp.Threading.Tasks;
 
 public class BaseModel
 {
-    public Scene CurrentScene {get { return _currentScene;} set {_currentScene = value;}}
-    private Scene _currentScene = Scene.None;
     public SavePlayInfo CurrentData => GameSystem.CurrentData;
-    public TempInfo CurrentTempData => GameSystem.CurrentTempData;
     public StageInfo CurrentStage => CurrentData.CurrentStage;
     public AlcanaInfo CurrentAlcana => CurrentData.CurrentAlcana;
 

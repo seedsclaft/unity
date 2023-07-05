@@ -1,7 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
 [System.Serializable]
 public class StateInfo {
     public StatesData.StateData Master {
@@ -30,6 +26,11 @@ public class StateInfo {
 
     public bool CheckOverWriteState(StateInfo stateInfo)
     {
+        // 重複可能スキルはfalse
+        if (CanOverWrite())
+        {
+            return false;
+        }
         if (stateInfo.StateId == (int)StateType.Death)
         {
             return (stateInfo.StateId == _stateId);
@@ -67,5 +68,10 @@ public class StateInfo {
     public bool IsBarrierStateType()
     {
         return _stateId == (int)StateType.Stun || _stateId == (int)StateType.Slow || _stateId == (int)StateType.Curse || _stateId == (int)StateType.SlipDamage;
+    }
+
+    public bool CanOverWrite()
+    {
+        return _stateId == (int)StateType.DamageUp;
     }
 }

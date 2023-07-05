@@ -1,8 +1,5 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using System;
-using System.Threading;
-using UnityEngine;
 using Effekseer;
 using Cysharp.Threading.Tasks;
 
@@ -10,26 +7,19 @@ public class BattleModel : BaseModel
 {
     public BattleModel()
     {
-        CurrentScene = Scene.Battle;
     }
 
     private List<BattlerInfo> _battlers = new List<BattlerInfo>();
-    public List<BattlerInfo> Battlers
-    {
-        get {return _battlers;}
-    }
+    public List<BattlerInfo> Battlers => _battlers;
     
     private int _currentIndex = 0; 
-    public int CurrentIndex
-    {
-        get {return _currentIndex;}
-    }
+    public int CurrentIndex => _currentIndex;
+
+    private List<BattleRecord> _battleRecords = new ();
+    public List<BattleRecord> BattleRecords => _battleRecords;
 
     private AttributeType _currentAttributeType = AttributeType.Fire;    
-    public AttributeType CurrentAttributeType
-    {
-        get {return _currentAttributeType;}
-    }
+    public AttributeType CurrentAttributeType => _currentAttributeType;
 
     public ActorInfo CurrentActor
     {
@@ -37,17 +27,16 @@ public class BattleModel : BaseModel
     }
 
     private BattlerInfo _currentBattler = null;
-    public BattlerInfo CurrentBattler
-    {
-        get {return _currentBattler;}
-    }
+    public BattlerInfo CurrentBattler => _currentBattler;
+
     public ActorsData.ActorData CurrentBattlerActorData()
     {
         return DataSystem.Actors.Find(a => a.Id == _currentBattler.CharaId);
     }
 
-    private List<ActionInfo> _actionInfos = new List<ActionInfo>();
+    private List<ActionInfo> _actionInfos = new ();
     private Dictionary<int,List<SkillInfo>> _passiveSkillInfos = new Dictionary<int,List<SkillInfo>>();
+    private Dictionary<int,List<SkillInfo>> _usedPassiveSkillInfos = new Dictionary<int,List<SkillInfo>>();
 
     public UniTask<List<UnityEngine.AudioClip>> GetBattleBgm()
     {
@@ -92,25 +81,24 @@ public class BattleModel : BaseModel
         }
         foreach (var battlerInfo1 in _battlers)
         {
-            _passiveSkillInfos[battlerInfo1.Index] = new List<SkillInfo>();
+            _passiveSkillInfos[battlerInfo1.Index] = new ();
+            _usedPassiveSkillInfos[battlerInfo1.Index] = new ();
         }
     }
 
 
     public void UpdateAp()
     {
-        for (int i = 0;i < _battlers.Count;i++)
-        {
-            BattlerInfo battlerInfo = _battlers[i];
-            _battlers[i].UpdateAp();
-            _battlers[i].UpdateState(RemovalTiming.UpdateAp);
-        }
+        _battlers.ForEach(battler => {
+            battler.UpdateAp();
+            battler.UpdateState(RemovalTiming.UpdateAp);
+        });
         MakeActionBattler();
     }
     
     public List<ActionResultInfo> UpdateChainState()
     {
-        List<ActionResultInfo> actionResultInfos = new List<ActionResultInfo>();
+        List<ActionResultInfo> actionResultInfos = new ();
         for (int i = 0;i < _battlers.Count;i++)
         {
             List<StateInfo> chainDamageStateInfos = _battlers[i].UpdateChainState();
@@ -145,7 +133,7 @@ public class BattleModel : BaseModel
 
     public List<ActionResultInfo> UpdateBenedictionState()
     {
-        List<ActionResultInfo> actionResultInfos = new List<ActionResultInfo>();
+        List<ActionResultInfo> actionResultInfos = new ();
         for (int i = 0;i < _battlers.Count;i++)
         {
             List<StateInfo> benedictionStateInfos = _battlers[i].GetStateInfoAll(StateType.Benediction);
@@ -183,6 +171,7 @@ public class BattleModel : BaseModel
 
     public void MakeActionBattler()
     {
+        _battlers.Sort((a,b) => a.Ap - b.Ap);
         for (int i = 0;i < _battlers.Count;i++)
         {
             BattlerInfo battlerInfo = _battlers[i];
@@ -209,7 +198,7 @@ public class BattleModel : BaseModel
 
     public List<int> CheckChainBattler()
     {
-        List<int> targetIndexs = new List<int>();
+        List<int> targetIndexs = new ();
         for (int i = 0; i < _battlers.Count;i++)
         {
             List<StateInfo> stateInfos = _battlers[i].GetStateInfoAll(StateType.Chain);
@@ -232,7 +221,7 @@ public class BattleModel : BaseModel
 
     private List<StateInfo> CheckChainedBattler(int targetIndex)
     {
-        List<StateInfo> stateInfos = new List<StateInfo>();
+        List<StateInfo> stateInfos = new ();
         for (int i = 0; i < _battlers.Count;i++)
         {
             List<StateInfo> chainStateInfos = _battlers[i].GetStateInfoAll(StateType.Chain);
@@ -250,7 +239,7 @@ public class BattleModel : BaseModel
 
     public List<StateInfo> CheckCursedBattler(int targetIndex)
     {
-        List<StateInfo> stateInfos = new List<StateInfo>();
+        List<StateInfo> stateInfos = new ();
         for (int i = 0; i < _battlers.Count;i++)
         {
             List<StateInfo> curseStateInfos = _battlers[i].GetStateInfoAll(StateType.Curse);
@@ -349,7 +338,7 @@ public class BattleModel : BaseModel
         {
             return false;
         }
-        List<int> targetIndexList = MakeActionTarget(skillInfo.Master.Id,battlerInfo.Index);
+        List<int> targetIndexList = MakeActionTarget(skillInfo.Master.Id,battlerInfo.Index,true);
         if (targetIndexList.Count == 0)
         {
             return false;
@@ -393,7 +382,7 @@ public class BattleModel : BaseModel
                 LastTargetIndex = subject.Index;
             }
         }
-        List<int> targetIndexList = MakeActionTarget(skillId,subject.Index);
+        List<int> targetIndexList = MakeActionTarget(skillId,subject.Index,true);
         if (subject.IsState(StateType.Substitute))
         {
             int substituteId = subject.GetStateInfo(StateType.Substitute).BattlerId;
@@ -401,6 +390,13 @@ public class BattleModel : BaseModel
             {
                 targetIndexList.Clear();
                 targetIndexList.Add(substituteId);
+            } else{
+                List<int> tempIndexList = MakeActionTarget(skillId,subject.Index,false);
+                if (tempIndexList.Contains(substituteId))
+                {
+                    targetIndexList.Clear();
+                    targetIndexList.Add(substituteId);
+                }
             }
         }
         ActionInfo actionInfo = new ActionInfo(skillId,subject.Index,LastTargetIndex,targetIndexList);
@@ -422,7 +418,7 @@ public class BattleModel : BaseModel
         return actionInfo;
     }
 
-    public List<int> MakeActionTarget(int skillId,int subjectIndex)
+    public List<int> MakeActionTarget(int skillId,int subjectIndex,bool checkCondition)
     {
         SkillsData.SkillData skill = DataSystem.Skills.Find(a => a.Id == skillId);
         BattlerInfo subject = GetBattlerInfo(subjectIndex);
@@ -458,11 +454,14 @@ public class BattleModel : BaseModel
         {
             targetIndexList = targetIndexList.FindAll(a => !_battlers.Find(b => a == b.Index).IsAlive());
         }
-        for (int i = targetIndexList.Count-1;i >= 0;i--)
+        if (checkCondition == true)
         {
-            if (CanUseCondition(skillId,targetIndexList[i]) == false)
+            for (int i = targetIndexList.Count-1;i >= 0;i--)
             {
-                targetIndexList.Remove(targetIndexList[i]);
+                if (CanUseCondition(skillId,targetIndexList[i]) == false)
+                {
+                    targetIndexList.Remove(targetIndexList[i]);
+                }
             }
         }
         return targetIndexList;
@@ -588,20 +587,10 @@ public class BattleModel : BaseModel
 
     private List<int> TargetIndexFriend(bool isActor,List<int> targetIndexList)
     {
-        if (isActor)
+        List<BattlerInfo> battlerInfos = isActor ? BattlerActors() : BattlerEnemies();
+        for (int i = 0;i < battlerInfos.Count;i++)
         {
-            List<BattlerInfo> battlerInfos = BattlerActors();
-            for (int i = 0;i < battlerInfos.Count;i++)
-            {
-                targetIndexList.Add(battlerInfos[i].Index);
-            }
-        } else
-        {
-            List<BattlerInfo> battlerInfos = BattlerEnemies();
-            for (int i = 0;i < battlerInfos.Count;i++)
-            {
-                targetIndexList.Add(battlerInfos[i].Index);
-            }
+            targetIndexList.Add(battlerInfos[i].Index);
         }
         return targetIndexList;
     }
@@ -661,7 +650,7 @@ public class BattleModel : BaseModel
                 }
                 break;
                 case FeatureType.AddState:
-                if (CurrentBattler.isActor || (!target.IsState((StateType)featureData.Param1) && !target.IsState(StateType.Barrier)))
+                if (CurrentBattler.isActor || (!target.IsState((StateType)featureData.Param1) && !target.IsState(StateType.Barrier) || (StateType)featureData.Param1 == StateType.DamageUp))
                 {
                     IsEnable = true;
                 }
@@ -784,7 +773,7 @@ public class BattleModel : BaseModel
         return result;
     }
 
-    public void ExecActionResult()
+    public void ExecCurrentActionResult()
     {
         ActionInfo actionInfo = CurrentActionInfo();
         if (actionInfo != null)
@@ -906,11 +895,12 @@ public class BattleModel : BaseModel
                 }
             }
         }
+        _battleRecords.Add(new BattleRecord(actionResultInfo));
     }
     
     public List<int> DeathBattlerIndex(List<ActionResultInfo> actionResultInfos)
     {
-        List<int> deathBattlerIndex = new List<int>();
+        List<int> deathBattlerIndex = new ();
         for (int i = 0; i < actionResultInfos.Count; i++)
         {
             for (int j = 0; j < actionResultInfos[i].DeadIndexList.Count; j++)
@@ -930,7 +920,7 @@ public class BattleModel : BaseModel
 
     public List<int> AliveBattlerIndex(List<ActionResultInfo> actionResultInfos)
     {
-        List<int> aliveBattlerIndex = new List<int>();
+        List<int> aliveBattlerIndex = new ();
         for (int i = 0; i < actionResultInfos.Count; i++)
         {
             for (int j = 0; j < actionResultInfos[i].AliveIndexList.Count; j++)
@@ -997,7 +987,7 @@ public class BattleModel : BaseModel
 
     public List<ActionResultInfo> MakeStateActionResult(BattlerInfo battlerInfo,StateType stateType,FeatureType featureType)
     {
-        List<ActionResultInfo> actionResultInfos = new List<ActionResultInfo>();
+        List<ActionResultInfo> actionResultInfos = new ();
         List<StateInfo> stateInfos = battlerInfo.GetStateInfoAll(stateType);
         
         SkillsData.FeatureData featureData = new SkillsData.FeatureData();
@@ -1016,7 +1006,7 @@ public class BattleModel : BaseModel
         return actionResultInfos;
     }
 
-    public void gainHpTargetIndex(int index,int value)
+    public void GainHpTargetIndex(int index,int value)
     {
         GetBattlerInfo(index).GainHp(value);
     }
@@ -1103,10 +1093,25 @@ public class BattleModel : BaseModel
                 if (IsTriggerdSkillInfo(battlerInfo,triggerDatas,triggerTiming,new List<ActionResultInfo>()))
                 {                
                     ActionResultInfo actionResultInfo = new ActionResultInfo(battlerInfo,battlerInfo,passiveInfo.Master.FeatureDatas);
-                    actionResultInfos.Add(actionResultInfo);
-                    if (_passiveSkillInfos[battlerInfo.Index].Find(a => a.Master.Id == passiveInfo.Master.Id) == null)
+                    bool usable = true;
+                    // トリガーのParam2を使用回数制限にする
+                    if (triggerDatas.Find(a => a.Param2 == 1) != null)
                     {
-                        _passiveSkillInfos[battlerInfo.Index].Add(passiveInfo);
+                        if (_usedPassiveSkillInfos[battlerInfo.Index].Find(a => a.Master.Id == passiveInfo.Master.Id) == null)
+                        {
+                            _usedPassiveSkillInfos[battlerInfo.Index].Add(passiveInfo);
+                        } else
+                        {
+                            usable = false;
+                        }
+                    }
+                    if (usable)
+                    {
+                        actionResultInfos.Add(actionResultInfo);
+                        if (_passiveSkillInfos[battlerInfo.Index].Find(a => a.Master.Id == passiveInfo.Master.Id) == null)
+                        {
+                            _passiveSkillInfos[battlerInfo.Index].Add(passiveInfo);
+                        }
                     }
                 }
             }
@@ -1304,7 +1309,7 @@ public class BattleModel : BaseModel
             }
             return indexList;
         }
-        List<int> targetIndexList = MakeActionTarget(actionInfo.Master.Id,actionInfo.SubjectIndex);
+        List<int> targetIndexList = MakeActionTarget(actionInfo.Master.Id,actionInfo.SubjectIndex,true);
         if (targetIndexList.Count == 0)
         {
             return targetIndexList;
@@ -1345,6 +1350,13 @@ public class BattleModel : BaseModel
             if (targetIndexList.Contains(substituteId))
             {
                 targetIndex = substituteId;
+            } else
+            {
+                List<int> tempIndexList = MakeActionTarget(actionInfo.Master.Id,actionInfo.SubjectIndex,false);
+                if (tempIndexList.Contains(substituteId))
+                {
+                    targetIndex = substituteId;
+                }
             }
         }
         if (targetIndex == -1)

@@ -281,7 +281,7 @@ MonoBehaviour:
   - Id: 103
     Name: "\u30D2\u30FC\u30C8\u30B9\u30BF\u30F3\u30D7"
     IconIndex: 2
-    AnimationName: tktk02/Gun5
+    AnimationName: NA_Effekseer/NA_aura_003_c1
     AnimationPosition: 0
     AnimationType: 1
     DamageTiming: 32
@@ -314,15 +314,15 @@ MonoBehaviour:
     Scope: 4
     SkillType: 1
     TargetType: 4
-    Help: "1\u30BF\u30FC\u30F3\u81EA\u8EAB\u306E\u30C0\u30E1\u30FC\u30B8\u52B9\u679C\u3092100%\u30A2\u30C3\u30D7"
+    Help: "\u4E0E\u30C0\u30E1\u30FC\u30B8\u309210%\u30A2\u30C3\u30D7 \u52B9\u679C\u91CD\u8907\u53EF\u80FD(\u6C38\u7D9A)"
     Range: 1
     AliveOnly: 1
     FeatureDatas:
     - SkillId: 104
       FeatureType: 21
       Param1: 46
-      Param2: 2
-      Param3: 2
+      Param2: 999
+      Param3: 1
     TriggerDatas: []
   - Id: 111
     Name: "\u30A4\u30F3\u30D5\u30A7\u30EB\u30CE"
@@ -397,9 +397,9 @@ MonoBehaviour:
   - Id: 121
     Name: "\u30E1\u30EB\u30C8\u30D0\u30FC\u30B9\u30C8"
     IconIndex: 1
-    AnimationName: tktk02/Fire7
+    AnimationName: NA_Effekseer_Vol_2/NA_v2_2.5d_element reservoir_fire
     AnimationPosition: 0
-    AnimationType: 2
+    AnimationType: 3
     DamageTiming: 48
     MpCost: 4
     Rank: 2
@@ -578,9 +578,10 @@ MonoBehaviour:
     Rank: 1
     Attribute: 1
     Scope: 4
-    SkillType: 5
+    SkillType: 2
     TargetType: 4
-    Help: "(\u6761\u4EF6)\u795E\u5316\u72B6\u614B\u306B\u306A\u3063\u305F\u6642\nMP\u304C12\u56DE\u5FA9"
+    Help: "(\u6761\u4EF6)\u795E\u5316\u72B6\u614B\u306B\u306A\u3063\u305F\u6642\nMP\u304C12\u56DE\u5FA9
+      \u30D0\u30C8\u30EB\u4E2D\uFF11\u56DE\u306E\u307F"
     Range: 1
     AliveOnly: 1
     FeatureDatas:
@@ -594,7 +595,7 @@ MonoBehaviour:
       TriggerType: 41
       TriggerTiming: 2
       Param1: 11
-      Param2: 0
+      Param2: 1
       Param3: 0
   - Id: 137
     Name: "\u30A2\u30D5\u30BF\u30FC\u30D0\u30FC\u30CA\u30FC"
@@ -1625,7 +1626,7 @@ MonoBehaviour:
     IconIndex: 10
     AnimationName: tktk01/Cure2
     AnimationPosition: 0
-    AnimationType: 1
+    AnimationType: 3
     DamageTiming: 40
     MpCost: 0
     Rank: 2
@@ -1975,10 +1976,10 @@ MonoBehaviour:
   - Id: 502
     Name: "\u30E6\u30FC\u30B5\u30CD\u30A4\u30B8\u30A2"
     IconIndex: 5
-    AnimationName: tktk01/Dark1
+    AnimationName: NA_Effekseer/NA_wave_003
     AnimationPosition: 0
     AnimationType: 3
-    DamageTiming: 40
+    DamageTiming: 56
     MpCost: 4
     Rank: 2
     Attribute: 5

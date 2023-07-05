@@ -125,10 +125,6 @@ public class GameSystem : MonoBehaviour
         if (_busy){
             return;
         }
-        if (viewEvent.commandType == Base.CommandType.SetTemplete)
-        {
-            CommandSetTemplete((TempInfo)viewEvent.templete);
-        } else
         if (viewEvent.commandType == Base.CommandType.SceneChange)
         {
             if (testMode && (Scene)viewEvent.templete == Scene.Battle)

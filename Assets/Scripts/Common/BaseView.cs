@@ -92,14 +92,6 @@ abstract public class BaseView : MonoBehaviour
         CallSceneChangeCommand(eventData);
     }
 
-    public void CommandSetTemplete(TempInfo temp)
-    {
-        var eventData = new ViewEvent(Scene.Base, Base.CommandType.SetTemplete);
-        eventData.templete = temp;
-        CallSceneChangeCommand(eventData);
-    }
-    
-
     public void CommandCallConfirm(ConfirmInfo popupInfo)
     {
         var eventData = new ViewEvent(Scene.Base, Base.CommandType.CallConfirmView);
@@ -257,7 +249,6 @@ namespace Base
     public enum CommandType
     {
         None = 0,
-        SetTemplete,
         SceneChange,
         CallConfirmView,
         CloseConfirm,

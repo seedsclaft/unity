@@ -252,32 +252,18 @@ public class BattlePresenter : BasePresenter
     private void BeforeUpdateAp()
     {
         var chainActionResults = _model.UpdateChainState();
-        _model.PopupActionResultInfo(chainActionResults);
-        for (int i = 0; i < chainActionResults.Count; i++)
-        {    
-            PopupActionResult(chainActionResults[i],chainActionResults[i].TargetIndex,false);
-        }
-        for (int i = 0; i < chainActionResults.Count; i++)
-        {    
-            _model.ExecActionResultInfo(chainActionResults[i]);
-        }
+        ExecActionResult(chainActionResults);
         _model.CheckTriggerSkillInfos(TriggerTiming.After,chainActionResults,false);
         
         StartAliveAnimation(chainActionResults);
         StartDeathAnimation(chainActionResults);
+
         var benedictionActionResults = _model.UpdateBenedictionState();
-        _model.PopupActionResultInfo(benedictionActionResults);
-        for (int i = 0; i < benedictionActionResults.Count; i++)
-        {
-            PopupActionResult(benedictionActionResults[i],benedictionActionResults[i].TargetIndex);
-        }
-        for (int i = 0; i < benedictionActionResults.Count; i++)
-        {
-            _model.ExecActionResultInfo(benedictionActionResults[i]);
-        }
+        ExecActionResult(benedictionActionResults);
+        _model.CheckTriggerSkillInfos(TriggerTiming.After,benedictionActionResults,false);
+        
         StartDeathAnimation(benedictionActionResults);
         StartAliveAnimation(benedictionActionResults);
-        _model.CheckTriggerSkillInfos(TriggerTiming.After,benedictionActionResults,false);
         
         _view.RefreshStatus();
     }
@@ -347,15 +333,7 @@ public class BattlePresenter : BasePresenter
             }
             
             var PassiveResults = _model.CheckTriggerPassiveInfos(TriggerTiming.Use);
-            _model.PopupActionResultInfo(PassiveResults);
-            foreach (var PassiveResult in PassiveResults)
-            {
-                PopupActionResult(PassiveResult,PassiveResult.TargetIndex,true);
-            }
-            for (int i = 0; i < PassiveResults.Count; i++)
-            {    
-                _model.ExecActionResultInfo(PassiveResults[i]);
-            }
+            ExecActionResult(PassiveResults);
         }
     }
 
@@ -376,6 +354,11 @@ public class BattlePresenter : BasePresenter
     private void StartAnimationRegene()
     {
         var regeneActionResults = _model.UpdateRegeneState();
+        if (regeneActionResults.Count == 0)
+        {
+            EndTurn();
+            return;
+        }
         var animation = _model.SkillActionAnimation("tktk01/Cure1");
         for (int i = 0; i < regeneActionResults.Count; i++)
         {
@@ -383,7 +366,7 @@ public class BattlePresenter : BasePresenter
             _view.StartHeal(regeneActionResults[i].TargetIndex,DamageType.HpHeal,regeneActionResults[i].HpHeal);
             if (regeneActionResults[i].HpHeal != 0)
             {
-                _model.gainHpTargetIndex(regeneActionResults[i].TargetIndex,regeneActionResults[i].HpHeal);
+                _model.GainHpTargetIndex(regeneActionResults[i].TargetIndex,regeneActionResults[i].HpHeal);
             }
         }
         _nextCommandType = Battle.CommandType.EndRegeneAnimation;
@@ -392,6 +375,11 @@ public class BattlePresenter : BasePresenter
     private void StartAnimationSlipDamage()
     {
         _slipDamageResults = _model.UpdateSlipDamageState();
+        if (_slipDamageResults.Count == 0)
+        {
+            CommandEndSlipDamageAnimation();
+            return;
+        }
         var animation = _model.SkillActionAnimation("NA_Effekseer/NA_Fire_001");
         for (int i = 0; i < _slipDamageResults.Count; i++)
         {
@@ -400,7 +388,7 @@ public class BattlePresenter : BasePresenter
             
             if (_slipDamageResults[i].HpDamage != 0)
             {            
-                _model.gainHpTargetIndex(_slipDamageResults[i].TargetIndex,_slipDamageResults[i].HpDamage * -1);
+                _model.GainHpTargetIndex(_slipDamageResults[i].TargetIndex,_slipDamageResults[i].HpDamage * -1);
             }
             if (_slipDamageResults[i].DeadIndexList.Contains(_slipDamageResults[i].TargetIndex))
             {
@@ -589,18 +577,18 @@ public class BattlePresenter : BasePresenter
             StartAnimationSkill();
             return;
         }
-        if (_nextCommandType == Battle.CommandType.EndRegeneAnimation)
-        {
-            EndTurn();
-            return;
-        }
         if (_nextCommandType == Battle.CommandType.EndSlipDamageAnimation)
         {
             CommandEndSlipDamageAnimation();
             return;
         }
+        if (_nextCommandType == Battle.CommandType.EndRegeneAnimation)
+        {
+            EndTurn();
+            return;
+        }
         // ダメージなどを適用
-        _model.ExecActionResult();
+        _model.ExecCurrentActionResult();
         
         _view.ClearCurrentSkillData();
         ActionInfo actionInfo = _model.CurrentActionInfo();
@@ -631,15 +619,24 @@ public class BattlePresenter : BasePresenter
         EndTurn();
     }
 
+    private void ExecActionResult(List<ActionResultInfo> resultInfos)
+    {
+        _model.PopupActionResultInfo(resultInfos);
+        for (int i = 0; i < resultInfos.Count; i++)
+        {    
+            // ダメージ表現をしない
+            PopupActionResult(resultInfos[i],resultInfos[i].TargetIndex,false);
+        }
+        for (int i = 0; i < resultInfos.Count; i++)
+        {    
+            _model.ExecActionResultInfo(resultInfos[i]);
+        }
+    }
+
     private void CommandStartBattleAction()
     {
         var PassiveResults = _model.CheckTriggerPassiveInfos(TriggerTiming.StartBattle);
-        _model.PopupActionResultInfo(PassiveResults);
-        foreach (var PassiveResult in PassiveResults)
-        {
-            _model.ExecActionResultInfo(PassiveResult);
-            PopupActionResult(PassiveResult,PassiveResult.TargetIndex,true);
-        }
+        ExecActionResult(PassiveResults);
     }
 
     private void CommandEndSlipDamageAnimation()
@@ -674,27 +671,13 @@ public class BattlePresenter : BasePresenter
         _view.RefreshStatus();
         // PlusSkill
         _model.CheckPlusSkill();
-        // Passive
+        // Passive付与
         var PassiveResults = _model.CheckTriggerPassiveInfos(TriggerTiming.After);
-        _model.PopupActionResultInfo(PassiveResults);
-        foreach (var PassiveResult in PassiveResults)
-        {
-            PopupActionResult(PassiveResult,PassiveResult.TargetIndex,true);
-        }
-        for (int i = 0; i < PassiveResults.Count; i++)
-        {    
-            _model.ExecActionResultInfo(PassiveResults[i]);
-        }
+        ExecActionResult(PassiveResults);
+        // Passive解除
         var RemovePassiveResults = _model.CheckRemovePassiveInfos();
-        _model.PopupActionResultInfo(RemovePassiveResults);
-        foreach (var RemovePassiveResult in RemovePassiveResults)
-        {
-            PopupActionResult(RemovePassiveResult,RemovePassiveResult.TargetIndex,true);
-        }
-        foreach (var RemovePassiveResult in RemovePassiveResults)
-        {
-            _model.ExecActionResultInfo(RemovePassiveResult);
-        }
+        ExecActionResult(RemovePassiveResults);
+
         // TriggerAfter
         var result = _model.CheckTriggerSkillInfos(TriggerTiming.After,_model.CurrentActionInfo().ActionResults);
         
@@ -734,7 +717,7 @@ public class BattlePresenter : BasePresenter
         {
             _view.StartAliveAnimation(aliveEnemy.Index);                
         }
-        // Hp０以上の戦闘不能を回復
+        // Hp0以上の戦闘不能を回復
         var notDeadMembers = _model.NotDeadMembers();
         foreach (var notDeadMember in notDeadMembers)
         {
@@ -856,13 +839,9 @@ public class BattlePresenter : BasePresenter
         ActionInfo actionInfo = _model.CurrentActionInfo();
         if (actionInfo.TargetType == TargetType.Opponent)
         {
-            //_view.ShowEnemyTarget();
-            //_view.RefreshBattlerEnemyLayerTarget(actionInfo);
         } else
         if (actionInfo.TargetType == TargetType.Friend || actionInfo.TargetType == TargetType.Self)
         {
-            //_view.ShowPartyTarget();
-            //_view.RefreshBattlerPartyLayerTarget(actionInfo);
         } else
         {
             _view.RefreshBattlerEnemyLayerTarget(actionInfo.TargetIndexList.Find(a => a >= 100),actionInfo.TargetIndexList,actionInfo.ScopeType,actionInfo.Master.Attribute);
@@ -877,13 +856,9 @@ public class BattlePresenter : BasePresenter
         ActionInfo actionInfo = _model.CurrentActionInfo();
         if (actionInfo.TargetType == TargetType.Opponent)
         {
-            //_view.ShowEnemyTarget();
-            //_view.RefreshBattlerEnemyLayerTarget(actionInfo);
         } else
         if (actionInfo.TargetType == TargetType.Friend || actionInfo.TargetType == TargetType.Self)
         {
-            //_view.ShowPartyTarget();
-            //_view.RefreshBattlerPartyLayerTarget(actionInfo);
         } else
         {
             _view.RefreshBattlerEnemyLayerTarget(-1);
