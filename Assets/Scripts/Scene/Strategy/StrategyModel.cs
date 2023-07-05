@@ -277,7 +277,7 @@ public class StrategyModel : BaseModel
             }
             if (getItemInfo.GetItemType == GetItemType.StatusUp)
             {
-                getItemInfo.SetTitleData(DataSystem.System.GetTextData(14070).Text.Replace("\\d", getItemInfo.Param1.ToString()));
+                //getItemInfo.SetTitleData(DataSystem.System.GetTextData(14070).Text.Replace("\\d", getItemInfo.Param1.ToString()));
                 getItemInfos.Add(getItemInfo);
                 
                 foreach (var actorInfo in CheckInBattleActors())

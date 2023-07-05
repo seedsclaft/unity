@@ -1427,7 +1427,7 @@ public class BattleModel : BaseModel
 
     public int MakeAutoSkillId(BattlerInfo battlerInfo)
     {
-        List<SkillInfo> skillInfos = battlerInfo.Skills.FindAll(a => CheckCanUse(a,battlerInfo) && a.Master.SkillType != SkillType.None);
+        List<SkillInfo> skillInfos = battlerInfo.ActiveSkills().FindAll(a => CheckCanUse(a,battlerInfo));
         if (skillInfos.Count == 0)
         {
             return 0;

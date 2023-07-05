@@ -112,8 +112,8 @@ public class SkillsData : ScriptableObject {
                 }
                 break;
                 case TriggerType.PartyHpRateUnder:
-                var filter = false;//troops.FindAll(a => a.IsAlive())(Param1);
-                if (filter == false)
+                var filter = troops.Find(a => ((float)a.Hp / (float)a.MaxHp) < Param1 * 0.01f);
+                if (filter == null)
                 {
                     CanUse = false;
                 }
