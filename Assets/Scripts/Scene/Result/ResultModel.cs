@@ -34,13 +34,56 @@ public class ResultModel : BaseModel
     }
 
     public int TotalEvaluate()
-    {
+    {        
         int evaluate = 0;
-        foreach (var actorInfo in ResultMembers())
+        foreach (var actorInfo in EvaluateMembers())
         {
             evaluate += actorInfo.Evaluate();
         }
+        if (CurrentStage.EndingType == global::EndingType.A)
+        {
+            evaluate += 1000;
+        }
+        if (CurrentStage.EndingType == global::EndingType.B)
+        {
+            evaluate += 500;
+        }
         return evaluate;
+    }
+
+    public List<int> SelectIdxList()
+    {
+        var selectIdx = new List<int>();
+        foreach (var actorInfo in EvaluateMembers())
+        {
+            selectIdx.Add(actorInfo.ActorId);
+        }
+        return selectIdx;
+    }
+
+    public List<int> SelectRankList()
+    {
+        var selectIdrank = new List<int>();
+        foreach (var actorInfo in EvaluateMembers())
+        {
+            selectIdrank.Add(actorInfo.Evaluate());
+        }
+        return selectIdrank;
+    }
+
+    private List<ActorInfo> EvaluateMembers()
+    {
+        List<int> SelectActorIds = CurrentData.CurrentStage.SelectActorIds;
+        var members = new List<ActorInfo>();
+        for (int i = 0;i < SelectActorIds.Count ;i++)
+        {
+            var temp = CurrentData.Actors.Find(a => a.ActorId == SelectActorIds[i]);
+            if (temp != null)
+            {
+                members.Add(temp);
+            }
+        }
+        return members;
     }
 
     public bool IsNewRecord()
@@ -51,6 +94,12 @@ public class ResultModel : BaseModel
     public void ApllyScore()
     {
         CurrentData.PlayerInfo.SetBestScore(TotalEvaluate());
+    }
+
+    public void SetResumeStageFalse()
+    {
+        SetResumeStage(false);
+        SaveSystem.SaveStart();
     }
 
     public List<SystemData.MenuCommandData> StageEndCommand()
@@ -81,45 +130,35 @@ public class ResultModel : BaseModel
 
     public void SendRankingData(System.Action endEvent)
     {
-        string userName = CurrentData.PlayerInfo.PlayerId.ToString();
-        int evaluate = 0;
-        List<int> SelectActorIds = CurrentData.CurrentStage.SelectActorIds;
-        var members = new List<ActorInfo>();
-        var selectIdx = new List<int>();
-        var selectIdrank = new List<int>();
-        for (int i = 0;i < SelectActorIds.Count ;i++)
-        {
-            var temp = CurrentData.Actors.Find(a => a.ActorId == SelectActorIds[i]);
-            if (temp != null)
-            {
-                members.Add(temp);
-            }
-        }
-        foreach (var actorInfo in members)
-        {
-            evaluate += actorInfo.Evaluate();
-            selectIdx.Add(actorInfo.ActorId);
-            selectIdrank.Add(actorInfo.Evaluate());
-        }
-        Dictionary<string, object> user = new Dictionary<string, object>
-        {
-            { "Score", evaluate },
-            { "Name", GameSystem.CurrentData.PlayerInfo.PlayerName },
-            { "SelectIdx", selectIdx },
-            { "SelectRank", selectIdrank },
-        };
         NCMBObject obj = new NCMBObject("ranking");
-            obj["Name"]  = userName;
-            obj["Score"] = evaluate;
-            obj["SelectIdx"]  = selectIdx;
-            obj["SelectRank"] = selectIdrank;
+            obj["UserId"]  = CurrentData.PlayerInfo.PlayerId.ToString();
+            obj["Name"]  = GameSystem.CurrentData.PlayerInfo.PlayerName;
+            obj["Score"] = TotalEvaluate();
+            obj["SelectIdx"]  = SelectIdxList();
+            obj["SelectRank"] = SelectRankList();
             obj.SaveAsync((res) => {
                 if (endEvent != null) endEvent();
             });
     }
 
-    public async void GetRankingData(System.Action<string> endEvent)
+    public void UpdateRankingData(string objectId,System.Action endEvent)
     {
+        NCMBObject obj = new NCMBObject("ranking");
+            obj["UserId"]  = CurrentData.PlayerInfo.PlayerId.ToString();
+            obj["Name"]  = GameSystem.CurrentData.PlayerInfo.PlayerName;
+            obj["Score"] = TotalEvaluate();
+            obj["SelectIdx"]  = SelectIdxList();
+            obj["SelectRank"] = SelectRankList();
+            obj.ObjectId = objectId;
+            obj.SaveAsync((res) => {
+                if (endEvent != null) endEvent();
+            });
+    }
+    
+    public async void GetSelfRankingData(System.Action<string> endEvent)
+    {
+        int evaluate = TotalEvaluate();
+
         NCMBQuery<NCMBObject> query = new NCMBQuery<NCMBObject> ("ranking");
 
         //Scoreフィールドの降順でデータを取得
@@ -128,34 +167,68 @@ public class ResultModel : BaseModel
         //検索件数を5件に設定
         query.Limit = 100;
 
-        int rank = 0;
+        var rank = 1;
         var isEnd = false;
+        var count = 0;
+        long selfScore = -1;
+        long lineScore = -1;
+        string objectId = "";
         //データストアでの検索を行う
         query.FindAsync ((List<NCMBObject> objList ,NCMBException e) => {
             if (e != null) {
                 //検索失敗時の処理
                 isEnd = true;
             } else {
+                count = objList.Count;
                 //検索成功時の処理
                 foreach (NCMBObject obj in objList) {
-                    if ((string)obj["Name"] == GameSystem.CurrentData.PlayerInfo.PlayerId.ToString())
+                    if (isEnd == false)
                     {
-                        isEnd = true;
-                    } else
+                        if ((string)obj["UserId"] == GameSystem.CurrentData.PlayerInfo.PlayerId.ToString())
+                        {
+                            selfScore = (long)obj["Score"];
+                            objectId = obj.ObjectId;
+                            isEnd = true;
+                        } else
+                        {
+                            var otherScore = (long)obj["Score"];
+                            if (otherScore > evaluate)
+                            {
+                                rank++;
+                            }
+                        }
+                    }
+                    if (obj.ContainsKey("Score"))
                     {
-                        rank++;
+                        lineScore = (long)obj["Score"];
                     }
                 }
                 isEnd = true;
             }
         });
         await UniTask.WaitUntil(() => isEnd == true);
-        if (rank != 0)
+        if (selfScore > evaluate)
         {
-            if (endEvent != null) endEvent(rank.ToString());
-        } else
+            if (endEvent != null) endEvent("記録更新なし");
+        }
+        if (evaluate < lineScore && count >= 100)
         {
             if (endEvent != null) endEvent("圏外");
         }
+
+        if (selfScore > -1)
+        {
+            UpdateRankingData(objectId,() => {
+                if (endEvent != null) endEvent(rank.ToString() + "位" + " / " + count.ToString());
+            });
+        } else
+        {
+            count += 1;
+            SendRankingData(() => {
+                if (endEvent != null) endEvent(rank.ToString() + "位" + " / " + count.ToString());
+            });
+        }
+
     }
+
 }

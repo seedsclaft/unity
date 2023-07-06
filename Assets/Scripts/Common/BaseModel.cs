@@ -486,4 +486,9 @@ public class BaseModel
         }
         await UniTask.WaitUntil( () => count == 0 );
     }
+
+    public void SetResumeStage(bool resumeStage)
+    {
+        
+    }
 }

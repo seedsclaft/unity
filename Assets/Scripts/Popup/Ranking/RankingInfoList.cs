@@ -21,7 +21,7 @@ public class RankingInfoList : ListWindow , IInputHandlerEvent
         }
         SetInputHandler((a) => CallInputHandler(a,cancelEvent));
         UpdateAllItems();
-        UpdateSelectIndex(0);
+        UpdateSelectIndex(-1);
     }
 
     private void CallInputHandler(InputKeyType keyType, System.Action callEvent)

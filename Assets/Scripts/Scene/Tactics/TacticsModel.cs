@@ -389,12 +389,14 @@ public class TacticsModel : BaseModel
         var isAendGameClear = CurrentStage.StageClaer;
         if (isAendGameClear)
         {
+            CurrentStage.SetEndingType(EndingType.A);
             StageClaer(2);
             return 173;
         }
-        var isBendGameClear = CurrentStage.RouteSelect == 1 && CurrentStage.TacticsTroops().Count == 0;
+        var isBendGameClear = CurrentStage.RouteSelect == 1 && CurrentStage.IsBendGameClear();
         if (isBendGameClear)
         {
+            CurrentStage.SetEndingType(EndingType.B);
             StageClaer(2);
             return 172;
         }

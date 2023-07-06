@@ -61,7 +61,12 @@ public class TitlePresenter
             break;
             case TitleComandType.Continue:
             SaveSystem.LoadStart();
-            _view.CommandSceneChange(Scene.Tactics);
+            if (GameSystem.CurrentData.ResumeStage)
+            {
+                _view.CommandSceneChange(Scene.Tactics);
+            } else{
+                _view.CommandSceneChange(Scene.MainMenu);
+            }
             break;
             case TitleComandType.Option:
             _view.CommandCallOption(() => {

@@ -231,6 +231,12 @@ public class SavePlayInfo
     private AlcanaInfo _currentAlcana = null;
 	public AlcanaInfo CurrentAlcana => _currentAlcana;
 
+	private bool _resumeStage = true;
+	public bool ResumeStage => _resumeStage;
+	public void SetResumeStage(bool resumeStage)
+	{
+		_resumeStage = resumeStage;
+	}
     public SavePlayInfo()
     {
 		this.InitActors();

@@ -54,6 +54,7 @@ public class ResultPresenter : BasePresenter
     private void CommandEndAnimation()
     {
         _model.ApllyScore();
+        _model.SetResumeStageFalse();
         _view.SetEndingType(_model.EndingType());
         _view.SetEvaluate(_model.TotalEvaluate(),_model.IsNewRecord());
         _view.SetPlayerName(_model.PlayerName());
@@ -87,27 +88,16 @@ public class ResultPresenter : BasePresenter
     {
         if (confirmComandType == ConfirmComandType.Yes)
         {
-            _model.SendRankingData(() => 
+            _model.GetSelfRankingData((a) => 
             {
-                _model.GetRankingData((a) => 
-                {
-                    _isRankingEnd = true;
-                    _view.CommandConfirmClose();
-                    _view.SetRanking(a);
-                    UpdateResultCommand();
-                });
-            });
-            /*
-            _view.CommandSendRankingData((a) => {
                 _isRankingEnd = true;
                 _view.CommandConfirmClose();
                 _view.SetRanking(a);
                 UpdateResultCommand();
             });
-            */
         } else
         {
-        _isRankingEnd = true;
+            _isRankingEnd = true;
             _view.CommandConfirmClose();
             UpdateResultCommand();
         }

@@ -109,6 +109,8 @@ public class StatusModel : BaseModel
         if (CurrentStage == null)
         {
             GameSystem.CurrentData.MakeStageData(CurrentActor.ActorId);
+            GameSystem.CurrentData.SetResumeStage(true);
+		    GameSystem.CurrentData.Party.ChangeCurrency(DataSystem.System.InitCurrency);
         } else{
             CurrentStage.AddSelectActorId(CurrentActor.ActorId);
         }

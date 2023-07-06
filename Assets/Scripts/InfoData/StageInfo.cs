@@ -354,4 +354,9 @@ public class StageInfo
         _troopClearCount = stageInfo._troopClearCount;
         _routeSelect = stageInfo.RouteSelect;
     }
+
+    public bool IsBendGameClear()
+    {
+        return _clearTroopIds.Contains(2100) && _clearTroopIds.Contains(2200) && _clearTroopIds.Contains(2300) && _clearTroopIds.Contains(2500);
+    }
 };
