@@ -60,7 +60,7 @@ public class TroopInfo
             }
             if ((int)getItemDatas[i].Type >= (int)GetItemType.AttributeFire && (int)getItemDatas[i].Type <= (int)GetItemType.AttributeDark)
             {
-                string text = DataSystem.System.GetTextData(14051).Text.Replace("\\d", DataSystem.System.GetTextData(330 + (int)getItemDatas[i].Type - 11).Text);
+                string text = DataSystem.System.GetReplaceText(14051,DataSystem.System.GetTextData(330 + (int)getItemDatas[i].Type - 11).Text);
                 getItemInfo.SetResultData(text);
                 getItemInfo.SetSkillElementId((int)AttributeType.Fire + (int)getItemDatas[i].Type - 11);
             }
@@ -70,7 +70,7 @@ public class TroopInfo
             }
             if (getItemDatas[i].Type == GetItemType.StatusUp)
             {
-                getItemInfo.SetResultData(DataSystem.System.GetTextData(14070).Text.Replace("\\d",getItemDatas[i].Param1.ToString()));
+                getItemInfo.SetResultData(DataSystem.System.GetReplaceText(14070,getItemDatas[i].Param1.ToString()));
             }
             AddGetItemInfo(getItemInfo);
         }

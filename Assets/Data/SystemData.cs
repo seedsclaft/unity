@@ -20,7 +20,22 @@ public class SystemData : ScriptableObject
 
 	public TextData GetTextData(int id)
 	{
-		return SystemTextData.Find(a => a.Id == id);
+		TextData textData = SystemTextData.Find(a => a.Id == id);
+		if (textData != null) 
+		{
+			return textData;
+		}
+		return null;
+	}
+
+	public string GetReplaceText(int id,string replace)
+	{
+		TextData textData = SystemTextData.Find(a => a.Id == id);
+		if (textData != null) 
+		{
+			return textData.Text.Replace("\\d",replace);
+		}
+		return "";
 	}
 
 	[System.SerializableAttribute]

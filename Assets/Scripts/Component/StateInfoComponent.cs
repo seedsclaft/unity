@@ -27,12 +27,25 @@ public class StateInfoComponent : MonoBehaviour
         }
         if (turns != null)
         {
-            if (stateInfo.Turns > 100)
+            turns.text = "";
+            RemovalTiming removalTiming = stateInfo.Master.RemovalTiming;
+            if (removalTiming == RemovalTiming.UpdateTurn)
             {
-                turns.text = DataSystem.System.GetTextData(403).Text;
+                if (stateInfo.Turns > 100)
+                {
+                    turns.text = DataSystem.System.GetTextData(403).Text;
+                } else
+                {
+                    turns.text = DataSystem.System.GetReplaceText(401,stateInfo.Turns.ToString());
+                }
             } else
+            if (removalTiming == RemovalTiming.UpdateCount)
             {
-                turns.text = stateInfo.Turns.ToString();
+                turns.text = DataSystem.System.GetReplaceText(404,stateInfo.Turns.ToString());
+            } else
+            if (removalTiming == RemovalTiming.UpdateAp)
+            {
+                turns.text = DataSystem.System.GetReplaceText(405,stateInfo.Turns.ToString());
             }
         }
     }

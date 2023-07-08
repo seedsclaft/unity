@@ -9,6 +9,8 @@ public class EnemyInfoView : BaseView,IInputHandlerEvent
 {
     [SerializeField] private SkillList skillList = null;
     [SerializeField] private EnemyInfoComponent enemyInfoComponent = null;
+    [SerializeField] private StatusConditionList statusConditionList = null;
+    [SerializeField] private Button skillButton = null;
     [SerializeField] private GameObject helpRoot = null;
     [SerializeField] private GameObject leftRoot = null;
     [SerializeField] private GameObject rightRoot = null;
@@ -37,6 +39,13 @@ public class EnemyInfoView : BaseView,IInputHandlerEvent
         prefab3.transform.SetParent(rightRoot.transform, false);
         _rightButton = prefab3.GetComponent<Button>();
         _rightButton.onClick.AddListener(() => OnClickRight());
+
+        statusConditionList.Initialize(() => OnClickCondition());
+        SetInputHandler(statusConditionList.GetComponent<IInputHandlerEvent>());
+        DeactivateConditionList();
+
+        skillButton.onClick.AddListener(() => OnClickSkill());
+
         new EnemyInfoPresenter(this,enemyInfos);
         SetInputHandler(gameObject.GetComponent<IInputHandlerEvent>());
     }
@@ -70,6 +79,18 @@ public class EnemyInfoView : BaseView,IInputHandlerEvent
         _commandData(eventData);
     }
 
+    private void OnClickCondition()
+    {
+        var eventData = new EnemyInfoViewEvent(CommandType.Condition);
+        _commandData(eventData);
+    }
+
+    private void OnClickSkill()
+    {
+        var eventData = new EnemyInfoViewEvent(CommandType.Skill);
+        _commandData(eventData);
+    }
+
     public void SetHelpWindow(){
     }
 
@@ -90,6 +111,7 @@ public class EnemyInfoView : BaseView,IInputHandlerEvent
         skillList.DeactivateAttributeList();
         skillList.SetSkillInfos(skillInfos);
         skillList.RefreshAction();
+        HideCondition();
     }
 
     public void SetAttributeTypes(List<AttributeType> attributeTypes,AttributeType currentAttibuteType)
@@ -121,6 +143,42 @@ public class EnemyInfoView : BaseView,IInputHandlerEvent
 
     }
 
+    public void HideSkillActionList()
+    {
+        skillList.HideActionList();
+        skillList.DeactivateActionList();
+    }
+    
+    public void ActivateConditionList()
+    {
+        statusConditionList.Activate();
+    }
+    
+    public void DeactivateConditionList()
+    {
+        statusConditionList.Deactivate();
+    }
+
+    public void SetCondition(List<StateInfo> stateInfos)
+    {
+        statusConditionList.Refresh(stateInfos,() => CommandBack(),() => {
+            skillList.ShowActionList();
+            skillList.ActivateActionList();
+            HideCondition();
+        });
+    }
+    
+    public void ShowConditionAll()
+    {
+        statusConditionList.gameObject.SetActive(true);
+        statusConditionList.ShowMainView();
+    }
+
+    public void HideCondition()
+    {
+        statusConditionList.HideMainView();
+    }
+
     public new void MouseCancelHandler()
     {
         CommandBack();
@@ -136,6 +194,8 @@ namespace EnemyInfo
         LeftActor,
         RightActor,
         AttributeType,
+        Condition,
+        Skill
     }
 }
 public class EnemyInfoViewEvent

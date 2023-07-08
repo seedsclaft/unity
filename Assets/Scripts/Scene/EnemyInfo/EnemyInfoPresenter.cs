@@ -43,6 +43,14 @@ public class EnemyInfoPresenter
         {
             CommandRightActor();
         }
+        if (viewEvent.commandType == CommandType.Condition)
+        {
+            CommandCondition();
+        }
+        if (viewEvent.commandType == CommandType.Skill)
+        {
+            CommandSkill();
+        }
         if (viewEvent.commandType == CommandType.Back)
         {
             CommandBack();
@@ -63,6 +71,21 @@ public class EnemyInfoPresenter
          _model.ChangeActorIndex(1);
         _view.StartEnemyInfo(_model.CurrentActor);
         CommandAttributeType(_model.CurrentAttributeType);
+    }
+
+    public void CommandCondition()
+    {
+        _view.HideSkillActionList();
+        _view.ActivateConditionList();
+        _view.SetCondition(_model.CurrentActor.StateInfos);
+        _view.ShowConditionAll();
+        Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cursor);
+    }
+
+    public void CommandSkill()
+    {
+        _view.HideCondition();
+        CommandRefresh();
     }
 
     private void CommandAttributeType(AttributeType attributeType)

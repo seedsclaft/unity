@@ -50,16 +50,16 @@ public class BattlePresenter : BasePresenter
 
     private void BattleInitialized()
     {
-            _view.SetEvent((type) => updateCommand(type));
+        _view.SetEvent((type) => updateCommand(type));
 
-            _view.SetActors(_model.BattlerActors());
-            _view.SetEnemies(_model.BattlerEnemies());
+        _view.SetActors(_model.BattlerActors());
+        _view.SetEnemies(_model.BattlerEnemies());
 
-            _view.SetAttributeTypes(_model.AttributeTypes(),_model.CurrentAttributeType);
+        _view.SetAttributeTypes(_model.AttributeTypes(),_model.CurrentAttributeType);
 
-            _view.StartBattleStartAnim(DataSystem.System.GetTextData(4).Text);
-            _nextCommandType = Battle.CommandType.EventCheck;
-            _busy = false;
+        _view.StartBattleStartAnim(DataSystem.System.GetTextData(4).Text);
+        _nextCommandType = Battle.CommandType.EventCheck;
+        _busy = false;
     }
 
     private void updateCommand(BattleViewEvent viewEvent)
@@ -131,6 +131,10 @@ public class BattlePresenter : BasePresenter
         {
             CommandOption();
         }
+        if (viewEvent.commandType == Battle.CommandType.EnemyDetail)
+        {
+            CommandEnemyDetail((int)viewEvent.templete);
+        }
     }
 
     private void UpdatePopup(ConfirmComandType confirmComandType)
@@ -174,6 +178,23 @@ public class BattlePresenter : BasePresenter
         _view.CommandCallOption(() => {
             _busy = false;
         });
+    }
+
+    private void CommandEnemyDetail(int enemyIndex)
+    {
+        if (_model.CurrentActor == null) return;
+        if (_view.SkillList.skillActionList.gameObject.activeSelf) return;
+        _busy = true;
+        BattlerInfo enemyInfo = _model.GetBattlerInfo(enemyIndex);
+        
+        StatusViewInfo statusViewInfo = new StatusViewInfo(() => {
+            _view.CommandEnemyInfoClose();
+            _busy = false;
+        });
+        statusViewInfo.SetEnemyInfos(new List<BattlerInfo>(){enemyInfo});
+        _view.CommandCallEnemyInfo(statusViewInfo);
+        //_view.SetActiveUi(false);
+        Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);    
     }
     
     private void CommandUpdateAp()

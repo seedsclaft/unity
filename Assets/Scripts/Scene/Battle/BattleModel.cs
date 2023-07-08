@@ -77,7 +77,7 @@ public class BattleModel : BaseModel
         
         for (int i = 0;i < enemies.Count;i++)
         {
-            //_battlers.Add(enemies[i]);
+            _battlers.Add(enemies[i]);
         }
         foreach (var battlerInfo1 in _battlers)
         {

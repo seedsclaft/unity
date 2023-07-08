@@ -11,6 +11,7 @@ public class BattleView : BaseView
     [SerializeField] private BattleEnemyLayer battleEnemyLayer = null;
     [SerializeField] private BattleGridLayer battleGridLayer = null;
     [SerializeField] private SkillList skillList = null;
+    public SkillList SkillList => skillList;
     [SerializeField] private StatusConditionList statusConditionList = null;
     [SerializeField] private BattleThumb battleThumb = null;
 
@@ -202,7 +203,7 @@ public class BattleView : BaseView
     
     public void SetEnemies(List<BattlerInfo> battlerInfos)
     {
-        battleEnemyLayer.Initialize(battlerInfos,(batterInfo) => CallEnemyInfo(batterInfo),() => OnClickBack(),() => OnClickSelectParty());
+        battleEnemyLayer.Initialize(battlerInfos,(a) => CallEnemyInfo(a),() => OnClickBack(),() => OnClickSelectParty(),(a) => CallEnemyDetailInfo(a));
         SetInputHandler(battleEnemyLayer.GetComponent<IInputHandlerEvent>());
         foreach (var item in battlerInfos)
         {
@@ -216,6 +217,14 @@ public class BattleView : BaseView
         if (_animationBusy) return;
         var eventData = new BattleViewEvent(CommandType.EnemyLayer);
         eventData.templete = indexList;
+        _commandData(eventData);
+    }
+
+    private void CallEnemyDetailInfo(int enemyIndex)
+    {
+        if (_animationBusy) return;
+        var eventData = new BattleViewEvent(CommandType.EnemyDetail);
+        eventData.templete = enemyIndex;
         _commandData(eventData);
     }
 
@@ -587,6 +596,7 @@ namespace Battle
         Condition,
         SelectEnemy,
         SelectParty,
+        EnemyDetail,
         EventCheck,
         EndBattle
     }

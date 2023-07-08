@@ -34,10 +34,10 @@ public class TacticsAlchemyList : ListWindow , IInputHandlerEvent
         SetInputHandler((a) => CallInputHandler(a,callEvent));
         UpdateSelectIndex(-1);
         commandLv.text = rank.ToString();
-        commandDescription.text = DataSystem.System.GetTextData(10).Text.Replace("\\d",DataSystem.System.AlchemyCount.ToString());
+        commandDescription.text = DataSystem.System.GetReplaceText(10,DataSystem.System.AlchemyCount.ToString());
         if (rank > 0)
         {
-            commandDescription.text = DataSystem.System.GetTextData(12).Text.Replace("\\d",(rank * 10).ToString());
+            commandDescription.text = DataSystem.System.GetReplaceText(12,(rank * 10).ToString());
         }
         Refresh();
     }

@@ -22,7 +22,7 @@ public class BattleEnemyLayer : ListWindow , IInputHandlerEvent
     private int _selectIndex = -1;
     private AttributeType _attributeType = AttributeType.None;
 
-    public void Initialize(List<BattlerInfo> battlerInfos ,System.Action<List<int>> callEvent,System.Action cancelEvent,System.Action selectPartyEvent)
+    public void Initialize(List<BattlerInfo> battlerInfos ,System.Action<List<int>> callEvent,System.Action cancelEvent,System.Action selectPartyEvent,System.Action<int> detailEvent)
     {
         _battleInfos = battlerInfos;
         frontDamageRoots.ForEach(a => a.SetActive(false));
@@ -70,6 +70,9 @@ public class BattleEnemyLayer : ListWindow , IInputHandlerEvent
                 callEvent(MakeTargetIndexs(battlerInfo));
             });
             battleEnemy.SetSelectHandler((data) => UpdateEnemyIndex(data));
+            battleEnemy.SetPressHandler((enemyIndex) => {
+                detailEvent(enemyIndex);
+            });
             _battleEnemies.Add(battleEnemy);
             frontIndex++;
         }

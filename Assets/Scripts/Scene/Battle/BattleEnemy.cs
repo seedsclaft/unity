@@ -46,12 +46,20 @@ public class BattleEnemy : ListItem
         clickButton.onClick.AddListener(() => handler(_battlerInfo.Index));
     }
     
-    public new void SetSelectHandler(System.Action<int> handler){
+    public new void SetSelectHandler(System.Action<int> handler)
+    {
 		ContentEnterListener enterListener = clickButton.gameObject.AddComponent<ContentEnterListener> ();
         enterListener.SetEnterEvent(() => handler(_battlerInfo.Index));
     }
 
-    private void Update() {
+    public void SetPressHandler(System.Action<int> handler)
+    {
+		ContentPressListener pressListener = clickButton.gameObject.AddComponent<ContentPressListener> ();
+        pressListener.SetPressEvent(() => handler(_battlerInfo.Index));
+    }
+
+    private void Update() 
+    {
         if (enemyImage.mainTexture != null && textureName != enemyImage.mainTexture.name)
         {
             UpdateSizeDelta();

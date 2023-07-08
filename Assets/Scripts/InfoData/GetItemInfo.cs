@@ -55,8 +55,8 @@ public class GetItemInfo
 
     public void MakeTrainResult(string name,int lv,bool isBonus)
     {
-        SetTitleData(DataSystem.System.GetTextData(3000).Text.Replace("\\d",name));
-        var trainResult = DataSystem.System.GetTextData(3001).Text.Replace("\\d",lv.ToString());
+        SetTitleData(DataSystem.System.GetReplaceText(3000,name));
+        var trainResult = DataSystem.System.GetReplaceText(3001,lv.ToString());
         if (isBonus)
         {
             trainResult += " " + DataSystem.System.GetTextData(3031).Text;
@@ -66,10 +66,10 @@ public class GetItemInfo
 
     public void MakeAlchemyResult(string name,SkillsData.SkillData skillData)
     {
-        SetTitleData(DataSystem.System.GetTextData(3000).Text.Replace("\\d",name));
+        SetTitleData(DataSystem.System.GetReplaceText(3000,name));
         SetSkillElementId((int)skillData.Attribute);
         string magicAlchemy = skillData.Name;
-        SetResultData(DataSystem.System.GetTextData(3002).Text.Replace("\\d",magicAlchemy));    
+        SetResultData(DataSystem.System.GetReplaceText(3002,magicAlchemy));    
     }
 
     public void MakeAlchemyBonusResult(SkillsData.SkillData skillData)
@@ -81,43 +81,43 @@ public class GetItemInfo
 
     public void MakeRecoveryResult(string name)
     {
-        SetTitleData(DataSystem.System.GetTextData(3010).Text.Replace("\\d",name));
+        SetTitleData(DataSystem.System.GetReplaceText(3010,name));
         SetResultData(DataSystem.System.GetTextData(3011).Text);
     }
 
     public void MakeRecoveryBonusResult(string name)
     {
         SetTitleData(DataSystem.System.GetTextData(3012).Text);
-        SetResultData(DataSystem.System.GetTextData(3013).Text.Replace("\\d",name));
+        SetResultData(DataSystem.System.GetReplaceText(3013,name));
     }
 
     public void MakeTrainCommandResult(int commandLv)
     {
-        SetTitleData(DataSystem.System.GetTextData(3030).Text.Replace("\\d",DataSystem.System.GetTextData(1).Text));
+        SetTitleData(DataSystem.System.GetReplaceText(3030,DataSystem.System.GetTextData(1).Text));
         SetResultData("Lv." + commandLv.ToString() + " ⇒ " + (commandLv+1).ToString());
     }
 
     public void MakeAlchemyCommandResult(int commandLv)
     {
-        SetTitleData(DataSystem.System.GetTextData(3030).Text.Replace("\\d",DataSystem.System.GetTextData(2).Text));
+        SetTitleData(DataSystem.System.GetReplaceText(3030,DataSystem.System.GetTextData(2).Text));
         SetResultData("Lv." + commandLv.ToString() + " ⇒ " + (commandLv+1).ToString());
     }
 
     public void MakeRecoveryCommandResult(int commandLv)
     {
-        SetTitleData(DataSystem.System.GetTextData(3030).Text.Replace("\\d",DataSystem.System.GetTextData(3).Text));
+        SetTitleData(DataSystem.System.GetReplaceText(3030,DataSystem.System.GetTextData(3).Text));
         SetResultData("Lv." + commandLv + " ⇒ " + (commandLv+1).ToString());
     }
 
     public void MakeResourceCommandResult(int commandLv)
     {
-        SetTitleData(DataSystem.System.GetTextData(3030).Text.Replace("\\d",DataSystem.System.GetTextData(5).Text));
+        SetTitleData(DataSystem.System.GetReplaceText(3030,DataSystem.System.GetTextData(5).Text));
         SetResultData("Lv." + commandLv.ToString() + " ⇒ " + (commandLv+1).ToString());
     }
 
     public void MakeBattleCommandResult(int commandLv)
     {
-        SetTitleData(DataSystem.System.GetTextData(3030).Text.Replace("\\d",DataSystem.System.GetTextData(4).Text));
+        SetTitleData(DataSystem.System.GetReplaceText(3030,DataSystem.System.GetTextData(4).Text));
         SetResultData("Lv." + commandLv + " ⇒ " + (commandLv+1).ToString());
     }
 

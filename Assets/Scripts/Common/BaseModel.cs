@@ -419,7 +419,7 @@ public class BaseModel
         {
             textId = 11070;
         }
-        return DataSystem.System.GetTextData(textId).Text.Replace("\\d",actorName);
+        return DataSystem.System.GetReplaceText(textId,actorName);
     }
 
     public void SetStageActor()
@@ -440,7 +440,10 @@ public class BaseModel
         PartyInfo.InitActors();
         foreach (var actorInfo in selectActorIds)
         {
-            PartyInfo.AddActor(actorInfo.ActorId);
+            if (actorInfo.Lost == false)
+            {
+                PartyInfo.AddActor(actorInfo.ActorId);
+            }
         }
     }
 

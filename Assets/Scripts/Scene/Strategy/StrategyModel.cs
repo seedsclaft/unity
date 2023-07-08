@@ -126,14 +126,14 @@ public class StrategyModel : BaseModel
             if (actorInfos[i].TacticsComandType == TacticsComandType.Resource)
             {
                 bool resourceBonus = PartyInfo.GetResourceBonusValue();
-                getItemInfo.SetTitleData(DataSystem.System.GetTextData(3020).Text.Replace("\\d",actorInfos[i].Master.Name));
+                getItemInfo.SetTitleData(DataSystem.System.GetReplaceText(3020,actorInfos[i].Master.Name));
                 int resource = TacticsUtility.ResourceCost(actorInfos[i]);
                 if (resourceBonus)
                 {
                     resource *= 2;
                 }
                 PartyInfo.ChangeCurrency(Currency + resource);
-                var resourceResult = DataSystem.System.GetTextData(3021).Text.Replace("\\d",resource.ToString());
+                var resourceResult = DataSystem.System.GetReplaceText(3021,resource.ToString());
                 if (resourceBonus)
                 {
                     resourceResult += " " + DataSystem.System.GetTextData(3031).Text;
