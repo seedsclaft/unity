@@ -22,11 +22,15 @@ public class TroopInfo
     }
     private List<GetItemInfo> _getItemInfos = new (); 
     public List<GetItemInfo> GetItemInfos => _getItemInfos;
-    public TroopInfo(int troopId)
+
+    private bool _escapeEnable = false;
+    public bool EscapeEnable => _escapeEnable;
+    public TroopInfo(int troopId,bool escapeEnable)
     {
         _troopId = troopId;
         _battlerInfos.Clear();
         _getItemInfos.Clear();
+        _escapeEnable = escapeEnable;
     }
 
     public void AddEnemy(BattlerInfo battlerInfo)

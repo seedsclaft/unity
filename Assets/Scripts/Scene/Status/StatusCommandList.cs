@@ -21,7 +21,7 @@ public class StatusCommandList : ListWindow , IInputHandlerEvent
         }
         SetInputHandler((a) => CallInputHandler(a,callEvent));
         UpdateAllItems();
-        UpdateSelectIndex(0);
+        //UpdateSelectIndex(0);
     }
 
     public override void UpdateHelpWindow(){

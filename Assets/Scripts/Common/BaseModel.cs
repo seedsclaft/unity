@@ -494,4 +494,10 @@ public class BaseModel
     {
         
     }
+    
+    public void SetResumeStageFalse()
+    {
+        SetResumeStage(false);
+        SaveSystem.SaveStart(GameSystem.CurrentData);
+    }
 }

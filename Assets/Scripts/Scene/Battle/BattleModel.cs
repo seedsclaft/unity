@@ -1557,8 +1557,12 @@ public class BattleModel : BaseModel
 
     public bool EnableEspape()
     {
-        int troopId = CurrentTroopInfo().TroopId;
-        return troopId >= 100 && troopId < 2000;
+        var troopData = CurrentTroopInfo();
+        if (troopData != null)
+        {
+            return troopData.EscapeEnable;
+        }
+        return false;
     }
 
     public void EscapeBattle()

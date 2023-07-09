@@ -60,7 +60,7 @@ public class TacticsPresenter :BasePresenter
         _view.SetEnemies(_model.TacticsTroops());
 
         _view.SetTacticsCommand(_model.TacticsCommand);
-        _view.ShowCommandList();
+        _view.HideCommandList();
         _view.SetAttributeTypes(_model.AttributeTypes());
         CommandRefresh();
         //Ryneus.SoundManager.Instance.PlayBgm(bgm,1.0f,true);
@@ -170,16 +170,13 @@ public class TacticsPresenter :BasePresenter
         {
             return;
         }
-        if (isAbort)
-        {
-            return;
-        }
         // アルカナ配布
         if (_model.CheckIsAlcana())
         {
             CommandAddAlcana();
         }
         DisableTacticsCommand();
+        _view.ShowCommandList();
         _busy = false;
     }
 
@@ -306,6 +303,10 @@ public class TacticsPresenter :BasePresenter
         {
             CommandRule();
         }
+        if (viewEvent.commandType == Tactics.CommandType.Dropout)
+        {
+            CommandDropout();
+        }
         if (viewEvent.commandType == Tactics.CommandType.Option)
         {
             CommandOption();
@@ -419,6 +420,19 @@ public class TacticsPresenter :BasePresenter
         _view.ActivateCommandList();
         _view.CommandConfirmClose();
     }
+
+    private void UpdatePopupDropout(ConfirmComandType confirmComandType)
+    {
+        if (confirmComandType == ConfirmComandType.Yes)
+        {
+            _model.SetResumeStageFalse();
+            _view.CommandSceneChange(Scene.MainMenu);
+        } else{
+        }
+        _view.ActivateCommandList();
+        _view.CommandConfirmClose();
+    }
+
 
     private void UpdatePopupSelectAddActor(ConfirmComandType confirmComandType)
     {
@@ -839,6 +853,13 @@ public class TacticsPresenter :BasePresenter
         _view.CommandCallRuling(() => {
             Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cancel);
         });
+    }
+
+    private void CommandDropout()
+    {  
+        Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
+        var popupInfo = new ConfirmInfo(DataSystem.System.GetTextData(1100).Text,(a) => UpdatePopupDropout((ConfirmComandType)a));
+        _view.CommandCallConfirm(popupInfo);
     }
 
     private void CommandOption()

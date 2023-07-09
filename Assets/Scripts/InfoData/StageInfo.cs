@@ -117,7 +117,7 @@ public class StageInfo
         int enemyCount = 2;
         for (int i = 0;i < troopsData.Count;i++)
         {
-            TroopInfo troopInfo = new TroopInfo(troopsData[i].TroopId);
+            TroopInfo troopInfo = new TroopInfo(troopsData[i].TroopId,true);
 			for (int j = 0;j < enemyCount;j++)
 			{
         		int rand = new System.Random().Next(0, _randomTroopCount) + 1;
@@ -153,7 +153,7 @@ public class StageInfo
         if (!_clearTroopIds.Contains(bossTroopId))
         {
             List<TroopsData.TroopData> troopDatas = DataSystem.Troops.FindAll(a => a.TroopId == bossTroopId);
-            TroopInfo troopInfo = new TroopInfo(bossTroopId);
+            TroopInfo troopInfo = new TroopInfo(bossTroopId,true);
             for (int i = 0;i < troopDatas.Count;i++)
             {
                 troopInfo.MakeEnemyData(troopDatas[i],i,_troopClearCount + 1);
@@ -168,7 +168,7 @@ public class StageInfo
         _currentTroopInfos.Clear();
         List<TroopsData.TroopData> troopDatas = DataSystem.Troops.FindAll(a => a.TroopId == selectIndex * 10);
         
-        TroopInfo troopInfo = new TroopInfo(selectIndex * 10);
+        TroopInfo troopInfo = new TroopInfo(selectIndex * 10,false);
         for (int i = 0;i < troopDatas.Count;i++)
         {
             troopInfo.MakeEnemyData(troopDatas[i],i,_troopClearCount);
@@ -224,7 +224,7 @@ public class StageInfo
         for (int i = 0;i < enemyIds.Count;i++)
         {
             if (_clearTroopIds.Contains(enemyIds[i])) continue;
-            TroopInfo troopInfo = new TroopInfo(enemyIds[i]);
+            TroopInfo troopInfo = new TroopInfo(enemyIds[i],false);
             List<TroopsData.TroopData> troopDatas = DataSystem.Troops.FindAll(a => a.TroopId == enemyIds[i]);
             for (int j = 0;j < troopDatas.Count;j++)
             {
@@ -290,7 +290,7 @@ public class StageInfo
         _currentTroopInfos.Clear();
         List<TroopsData.TroopData> troopDatas = DataSystem.Troops.FindAll(a => a.TroopId == troopId);
         
-        TroopInfo troopInfo = new TroopInfo(troopDatas[0].TroopId);
+        TroopInfo troopInfo = new TroopInfo(troopDatas[0].TroopId,true);
         for (int i = 0;i < troopDatas.Count;i++)
         {
             EnemiesData.EnemyData enemyData = DataSystem.Enemies.Find(a => a.Id == troopDatas[i].EnemyId);

@@ -96,12 +96,6 @@ public class ResultModel : BaseModel
         CurrentData.PlayerInfo.SetBestScore(TotalEvaluate());
     }
 
-    public void SetResumeStageFalse()
-    {
-        SetResumeStage(false);
-        SaveSystem.SaveStart();
-    }
-
     public List<SystemData.MenuCommandData> StageEndCommand()
     {
         List<SystemData.MenuCommandData> menuCommandDatas = new List<SystemData.MenuCommandData>();

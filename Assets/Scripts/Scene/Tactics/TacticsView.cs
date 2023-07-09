@@ -31,6 +31,7 @@ public class TacticsView : BaseView
     [SerializeField] private GameObject helpPrefab = null;
     [SerializeField] private TacticsAlcana tacticsAlcana = null;
     [SerializeField] private Button ruleButton = null;
+    [SerializeField] private Button dropoutButton = null;
 
     [SerializeField] private Button optionButton = null;
 
@@ -52,8 +53,10 @@ public class TacticsView : BaseView
         SetInputHandler(tacticsTrainList.GetComponent<IInputHandlerEvent>());
         
         ruleButton.onClick.AddListener(() => OnClickRuling());
+        dropoutButton.onClick.AddListener(() => OnClickDropout());
         optionButton.onClick.AddListener(() => OnClickOption());
         SetRuleButton(true);
+        SetDropoutButton(true);
 
         new TacticsPresenter(this);
     }
@@ -102,6 +105,17 @@ public class TacticsView : BaseView
     private void OnClickRuling()
     {
         var eventData = new TacticsViewEvent(CommandType.Rule);
+        _commandData(eventData);
+    }
+
+    private void SetDropoutButton(bool isActive)
+    {
+        dropoutButton.gameObject.SetActive(isActive);
+    }
+
+    private void OnClickDropout()
+    {
+        var eventData = new TacticsViewEvent(CommandType.Dropout);
         _commandData(eventData);
     }
 
@@ -591,6 +605,7 @@ namespace Tactics
         CallEnemyInfo,
         Back,
         Rule,
+        Dropout,
         Option
     }
 }

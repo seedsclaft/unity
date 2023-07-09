@@ -142,6 +142,12 @@ public class BattlePresenter : BasePresenter
         _view.CommandConfirmClose();
         if (confirmComandType == ConfirmComandType.Yes)
         {
+            _view.HideSkillActionList();
+            _view.HideSkillAtribute();
+            _view.HideConditionAll();
+            _view.HideBattleThumb();
+            _view.SetEscapeButton(false);
+            _view.SetBattleBusy(true);
             _model.EndBattle();
             _model.EscapeBattle();
             _view.StartBattleStartAnim(DataSystem.System.GetTextData(15030).Text);
@@ -423,6 +429,7 @@ public class BattlePresenter : BasePresenter
     private void StartAnimationSkill()
     {
         _view.SetRuleButton(false);
+        _view.SetEscapeButton(false);
         _view.SetBattlerSelectable(true);
         ActionInfo actionInfo = _model.CurrentActionInfo();
         if (actionInfo.ActionResults.Count == 0)
@@ -590,6 +597,7 @@ public class BattlePresenter : BasePresenter
         }
         if (_nextCommandType == Battle.CommandType.EndBattle)
         {
+            _view.SetBattleBusy(false);
             _view.CommandSceneChange(Scene.Strategy);
             return;
         }
@@ -848,7 +856,7 @@ public class BattlePresenter : BasePresenter
     public void CommandCondition()
     {
         _view.HideSkillActionList();
-        _view.SetEscapeButton(false);
+        _view.SetEscapeButton(_model.EnableEspape());
         _view.ActivateConditionList();
         _view.SetCondition(_model.CurrentBattler.StateInfos);
         _view.ShowConditionAll();

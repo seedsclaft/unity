@@ -18,6 +18,7 @@ public class BasePresenter
     public bool CheckAdvStageEvent(EventTiming eventTiming,System.Action endCall,int selectActorId = 0)
     {
         bool isAbort = false;
+        int advId = -1;
         var stageEvents = _model.StageEvents(eventTiming);
         if (stageEvents.Count > 0)
         {
@@ -25,41 +26,35 @@ public class BasePresenter
             {
                 if (stageEvents[i].Type == StageEventType.AdvStart)
                 {
-                    AdvCallInfo advInfo = new AdvCallInfo();
-                    advInfo.SetLabel(_model.GetAdvFile(stageEvents[i].Param));
-                    advInfo.SetCallEvent(() => {                
-                        if (endCall != null) endCall();
-                    });
-                    _view.CommandCallAdv(advInfo);
+                    advId = stageEvents[i].Param;
                     _model.AddEventReadFlag(stageEvents[i]);
                     isAbort = true;
                     break;
                 }
                 if (stageEvents[i].Type == StageEventType.SelectActorAdvStart)
                 {
-                    AdvCallInfo advInfo = new AdvCallInfo();
-                    advInfo.SetLabel(_model.GetAdvFile(stageEvents[i].Param + selectActorId));
-                    advInfo.SetCallEvent(() => {                
-                        if (endCall != null) endCall();
-                    });
-                    _view.CommandCallAdv(advInfo);
+                    advId = stageEvents[i].Param + selectActorId;
                     _model.AddEventReadFlag(stageEvents[i]);
                     isAbort = true;
                     break;
                 }
                 if (stageEvents[i].Type == StageEventType.RouteSelectEvent)
                 {
-                    AdvCallInfo advInfo = new AdvCallInfo();
                     int route = GameSystem.CurrentData.CurrentStage.RouteSelect;
-                    advInfo.SetLabel(_model.GetAdvFile(stageEvents[i].Param + route));
-                    advInfo.SetCallEvent(() => {                
-                        if (endCall != null) endCall();
-                    });
-                    _view.CommandCallAdv(advInfo);
+                    advId = stageEvents[i].Param + route;
                     _model.AddEventReadFlag(stageEvents[i]);
                     isAbort = true;
                     break;
                 }
+            }
+            if (isAbort)
+            {
+                AdvCallInfo advInfo = new AdvCallInfo();
+                advInfo.SetLabel(_model.GetAdvFile(advId));
+                advInfo.SetCallEvent(() => {                
+                    if (endCall != null) endCall();
+                });
+                _view.CommandCallAdv(advInfo);
             }
         }
         return isAbort;

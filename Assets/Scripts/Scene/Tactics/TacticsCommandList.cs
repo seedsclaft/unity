@@ -26,7 +26,7 @@ public class TacticsCommandList : ListWindow , IInputHandlerEvent
         _menuCommands = menuCommands;
         for (int i = 0; i < ObjectList.Count;i++)
         {
-            var TacticsCommand = ObjectList[i].GetComponent<TacticsCommand>();
+            TacticsCommand TacticsCommand = ObjectList[i].GetComponent<TacticsCommand>();
             if (i < _menuCommands.Count)
             {
                 TacticsCommand.SetData(_menuCommands[i],i);
