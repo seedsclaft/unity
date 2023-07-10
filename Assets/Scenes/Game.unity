@@ -6890,7 +6890,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc34738223829f44c9a2b752c153bbcc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inBattleActorIds: 05000000
+  inBattleActorIds: 0500000004000000
   troopId: 50
   troopLv: 1
   actorDatas:
@@ -7179,7 +7179,7 @@ MonoBehaviour:
       _def: 6
       _spd: 14
     PlusStatus:
-      _hp: 3
+      _hp: 8
       _mp: 5
       _atk: 8
       _def: 2
@@ -7222,8 +7222,8 @@ MonoBehaviour:
       Level: 0
       Weight: 0
       TriggerDatas: []
-    - SkillId: 512
-      Level: 0
+    - SkillId: 531
+      Level: 1
       Weight: 0
       TriggerDatas: []
   advName: 

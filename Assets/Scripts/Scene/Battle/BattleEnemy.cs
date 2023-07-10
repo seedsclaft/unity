@@ -80,7 +80,7 @@ public class BattleEnemy : ListItem
         rect.sizeDelta = new Vector2(width,height);
         objectRect.sizeDelta = new Vector2(width,height);
         effectRect.sizeDelta = new Vector2(width,height);
-        if (_isFront == false && height > 400)
+        if (_isFront == false && height > 394)
         {
             statusRect.sizeDelta = new Vector2(0,height/2);
             damageRect.sizeDelta = new Vector2(0,height/2);

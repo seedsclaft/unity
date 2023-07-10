@@ -403,9 +403,10 @@ public class GameSystem : MonoBehaviour
     {
         if (_currentScene != null)
         { 
-            DestroyImmediate(_currentScene.gameObject);
+            Destroy(_currentScene.gameObject);
             ResourceSystem.ReleaseAssets();
             ResourceSystem.ReleaseScene();
+            Resources.UnloadUnusedAssets();
         }
         GameObject loadScene = ResourceSystem.CreateScene<GameObject>(scene);
         GameObject prefab = Instantiate(loadScene);

@@ -243,6 +243,7 @@ public class ActionResultInfo
         {
             _execStateInfos[target.Index].Add(StateType.NoDamage);
             _hpDamage = 0;
+            _reDamage = 0;
             int count = target.StateTurn(StateType.NoDamage);
             if (count <= 1)
             {

@@ -492,7 +492,7 @@ public class BaseModel
 
     public void SetResumeStage(bool resumeStage)
     {
-        
+        CurrentData.SetResumeStage(resumeStage);
     }
     
     public void SetResumeStageFalse()

@@ -100,6 +100,10 @@ public class BattlerInfo
         {
             _lastSelectSkillId = _skills.Find(a => a.Id > 100).Id;
         }
+        if (_skills.Find(a => a.Master.FeatureDatas.Find(b => b.FeatureType == FeatureType.AddState && b.Param1 == (int)StateType.Undead) != null) != null)
+        {
+            _kinds.Add(KindType.Undead);
+        }
         ResetAp(true);
     }
 
