@@ -11,6 +11,7 @@ public class BattleEnemy : ListItem
     [SerializeField] private Image enemyImage;
     [SerializeField] private EffekseerEmitter effekseerEmitter;
     [SerializeField] private GameObject statusObject;
+    [SerializeField] private EffekseerEmitter cursorEffekseerEmitter;
 
     private BattlerInfo _battlerInfo;
     private string textureName = null;
@@ -101,27 +102,19 @@ public class BattleEnemy : ListItem
     {
         if (Cursor == null) return;
         Cursor.SetActive(true);
-        var emitter = Cursor.GetComponentsInChildren<EffekseerEmitter>();
-        foreach (var emit in emitter)
-        {
-            emit.Stop();
-            emit.Play(effekseerEffectAsset);
-            emit.enabled = true;
-            emit.playOnStart = true;
-            emit.isLooping = true;
-        }
+        cursorEffekseerEmitter.Stop();
+        cursorEffekseerEmitter.Play(effekseerEffectAsset);
+        cursorEffekseerEmitter.enabled = true;
+        cursorEffekseerEmitter.playOnStart = true;
+        cursorEffekseerEmitter.isLooping = true;
     }
 
     public new void SetUnSelect()
     {
         if (Cursor == null) return;
         Cursor.SetActive(false);
-        var emitter = Cursor.GetComponentsInChildren<EffekseerEmitter>();
-        foreach (var emit in emitter)
-        {
-            emit.enabled = false;
-            emit.playOnStart = false;
-            emit.isLooping = false;
-        }
+        cursorEffekseerEmitter.enabled = false;
+        cursorEffekseerEmitter.playOnStart = false;
+        cursorEffekseerEmitter.isLooping = false;
     }
 }

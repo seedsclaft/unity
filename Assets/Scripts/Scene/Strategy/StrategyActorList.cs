@@ -40,4 +40,12 @@ public class StrategyActorList : MonoBehaviour
             }
         }
     }
+
+    public void SetShinyRefrect(bool isEnable)
+    {
+        for (int i = 0; i < _comps.Count;i++)
+        {
+            _comps[i].SetShinyRefrect(isEnable);
+        }
+    }
 }

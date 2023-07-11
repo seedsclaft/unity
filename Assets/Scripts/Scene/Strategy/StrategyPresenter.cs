@@ -323,6 +323,7 @@ public class StrategyPresenter : BasePresenter
     private void EndStrategy()
     {
         _model.EndStrategy();
+        _view.EndShinyEffect();
         _view.CommandSceneChange(Scene.Tactics);
     }
 }

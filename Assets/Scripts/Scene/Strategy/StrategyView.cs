@@ -212,6 +212,11 @@ public class StrategyView : BaseView
         }
     }
 
+    public void EndShinyEffect()
+    {
+        strategyActorList.SetShinyRefrect(false);
+    }
+
     public void FadeOut()
     {
         backgroundImage.DOFade(0,0.4f);

@@ -70,6 +70,11 @@ public class StrategyActor : ListItem ,IListViewItem
             });
     }
 
+    public void SetShinyRefrect(bool isEnable)
+    {
+        shinyReflect.enabled = isEnable;
+    }
+
     public void SetEndCallEvent(System.Action callEvent)
     {
         _callEvent = callEvent;
