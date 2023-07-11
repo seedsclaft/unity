@@ -12,11 +12,15 @@ public class PartyInfo
 
     public void ClearData()
     {
+        _commandCountInfo = new();
         _commandRankInfo[TacticsComandType.Train] = 0;
         _commandRankInfo[TacticsComandType.Alchemy] = 0;
         _commandRankInfo[TacticsComandType.Recovery] = 0;
         _commandRankInfo[TacticsComandType.Battle] = 0;
         _commandRankInfo[TacticsComandType.Resource] = 0;
+    
+        _alchemyIdList = new();
+        _battleResult = false;
     }
 
     private List<int> _actorIdList = new();

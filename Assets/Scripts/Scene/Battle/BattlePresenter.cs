@@ -352,6 +352,7 @@ public class BattlePresenter : BasePresenter
             _view.RefreshBattlerEnemyLayerTarget(-1);
             _view.RefreshBattlerPartyLayerTarget(-1);
             _model.MakeActionResultInfo(actionInfo,indexList);
+            _model.PopupActionResultInfo(actionInfo.ActionResults);
             var result = _model.CheckTriggerSkillInfos(TriggerTiming.Interrupt,actionInfo.ActionResults);
             if (result)
             {

@@ -206,7 +206,14 @@ public class ActionResultInfo
             if (target.IsState(StateType.CounterOura))
             {
                 _execStateInfos[target.Index].Add(StateType.CounterOura);
-                _reDamage += CounterDamageValue(target);
+                if (subject.IsState(StateType.NoDamage))
+                {
+                    _execStateInfos[subject.Index].Add(StateType.NoDamage);
+                    SeekNoDamage(subject);
+                } else
+                {
+                    _reDamage += CounterDamageValue(target);
+                }
                 if (target.IsState(StateType.CounterOuraHeal))
                 {
                     SkillsData.FeatureData counterOuraHeal = new SkillsData.FeatureData();
@@ -219,7 +226,14 @@ public class ActionResultInfo
         if (subject.IsState(StateType.Freeze))
         {
             _execStateInfos[subject.Index].Add(StateType.Freeze);
-            _reDamage += FreezeDamageValue(subject,SkillDamage);
+            if (subject.IsState(StateType.NoDamage))
+            {
+                _execStateInfos[subject.Index].Add(StateType.NoDamage);
+                SeekNoDamage(subject);
+            } else
+            {
+                _reDamage += FreezeDamageValue(subject,SkillDamage);
+            }
         }
 
         SkillDamage *= GetDeffenseRateValue((AtkValue * 0.5f),DefValue);
@@ -243,14 +257,7 @@ public class ActionResultInfo
         {
             _execStateInfos[target.Index].Add(StateType.NoDamage);
             _hpDamage = 0;
-            _reDamage = 0;
-            int count = target.StateTurn(StateType.NoDamage);
-            if (count <= 1)
-            {
-                _removedStates.Add(target.GetStateInfo(StateType.NoDamage));
-            } else{
-                _displayStates.Add(target.GetStateInfo(StateType.NoDamage));
-            }
+            SeekNoDamage(target);
         }
         if (subject.IsState(StateType.DamageAddState))
         {
@@ -450,6 +457,17 @@ public class ActionResultInfo
     {
         int rand = new System.Random().Next(-10, 10);
         return (int) Mathf.Floor(value * (1 + rand * 0.01f));
+    }
+
+    private void SeekNoDamage(BattlerInfo battlerInfo)
+    {
+        int count = battlerInfo.StateTurn(StateType.NoDamage);
+        if (count <= 1)
+        {
+            _removedStates.Add(battlerInfo.GetStateInfo(StateType.NoDamage));
+        } else{
+            _displayStates.Add(battlerInfo.GetStateInfo(StateType.NoDamage));
+        }
     }
 
 }

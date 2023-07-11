@@ -13,6 +13,7 @@ public class TitleView : BaseView
     private new System.Action<TitleViewEvent> _commandData = null;
     [SerializeField] private GameObject helpRoot = null;
     [SerializeField] private GameObject helpPrefab = null;
+    [SerializeField] private Button logoButton = null;
     private HelpWindow _helpWindow = null;
     
     public override void Initialize() 
@@ -21,11 +22,19 @@ public class TitleView : BaseView
         InitializeInput();
         new TitlePresenter(this);
         creditButton.onClick.AddListener(() => CallCredit());
+        logoButton.onClick.AddListener(() => CallLogoClick());
+        logoButton.gameObject.SetActive(true);
     }
 
     private void CallCredit()
     {
         var eventData = new TitleViewEvent(CommandType.Credit);
+        _commandData(eventData);
+    }
+
+    private void CallLogoClick()
+    {
+        var eventData = new TitleViewEvent(CommandType.LogoClick);
         _commandData(eventData);
     }
 
@@ -65,6 +74,11 @@ public class TitleView : BaseView
     {
         commandList.SetDisable(DataSystem.TacticsCommand[commandId],true);
     }
+
+    public void CommandLogoClick()
+    {
+        logoButton.gameObject.SetActive(false);
+    }
 }
 
 namespace Title
@@ -74,6 +88,7 @@ namespace Title
         None = 0,
         TitleCommand,
         Credit,
+        LogoClick
     }
 }
 

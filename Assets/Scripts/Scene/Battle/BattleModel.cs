@@ -830,6 +830,15 @@ public class BattleModel : BaseModel
                 counterResults[counterResults.Count-1].SetReDamage(damage - heal);
             }
         }
+        // ReDamageによってDeadIndexを変更
+        if (counterResults.Count > 0)
+        {
+            var result = counterResults[counterResults.Count-1];
+            if (result.ReDamage > GetBattlerInfo(result.SubjectIndex).Hp && !result.DeadIndexList.Contains(result.SubjectIndex))
+            {
+                counterResults[counterResults.Count-1].DeadIndexList.Add(result.SubjectIndex);
+            }
+        }
     }
 
     public void ExecActionResultInfo(ActionResultInfo actionResultInfo)

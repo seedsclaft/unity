@@ -110,6 +110,7 @@ public class StatusModel : BaseModel
         {
             GameSystem.CurrentData.MakeStageData(CurrentActor.ActorId);
             GameSystem.CurrentData.SetResumeStage(true);
+            GameSystem.CurrentData.Party.ClearData();
 		    GameSystem.CurrentData.Party.ChangeCurrency(DataSystem.System.InitCurrency);
         } else{
             CurrentStage.AddSelectActorId(CurrentActor.ActorId);

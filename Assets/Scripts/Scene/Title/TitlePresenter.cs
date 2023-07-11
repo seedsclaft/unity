@@ -31,7 +31,7 @@ public class TitlePresenter
 
         CommandRefresh();
         var bgm = await _model.GetBgmData("TITLE");
-        Ryneus.SoundManager.Instance.PlayBgm(bgm,1.0f,false);
+        //Ryneus.SoundManager.Instance.PlayBgm(bgm,1.0f,false);
 
         _busy = false;
     }
@@ -48,6 +48,10 @@ public class TitlePresenter
         if (viewEvent.commandType == CommandType.Credit)
         {
             CommandCredit();
+        }
+        if (viewEvent.commandType == CommandType.LogoClick)
+        {
+            CommandLogoClick();
         }
     }
 
@@ -95,5 +99,12 @@ public class TitlePresenter
             _view.SetCommandDisable(1);
         }
         _view.RefreshCommandIndex(selectIndex);
+    }
+
+    private async void CommandLogoClick()
+    {
+        _view.CommandLogoClick();
+        var bgm = await _model.GetBgmData("TITLE");
+        Ryneus.SoundManager.Instance.PlayBgm(bgm,1.0f,false);
     }
 }
