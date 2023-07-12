@@ -17,6 +17,7 @@ public class OptionView : BaseView
     [SerializeField] private List<Toggle> eventSkipToggles = null;
     [SerializeField] private List<Toggle> commandEndCheckToggles = null;
     [SerializeField] private List<Toggle> battleWaitToggles = null;
+    [SerializeField] private List<Toggle> battleAnimationToggles = null;
     public override void Initialize() 
     {
         base.Initialize();
@@ -68,6 +69,16 @@ public class OptionView : BaseView
         {
             int j = battleWaitToggles.Count-i;
             battleWaitToggles[i].onValueChanged.AddListener((a) => ChangeBattleWait(a,j));
+        }
+    }
+
+    public void InitializeBattleAnimation(int animationIndex)
+    {
+        UpdateBattleAnimation(animationIndex);
+        for (int i = 0;i < battleAnimationToggles.Count;i++)
+        {
+            int j = battleAnimationToggles.Count-i;
+            battleAnimationToggles[i].onValueChanged.AddListener((a) => ChangeBattleAnimation(a,j));
         }
     }
 
@@ -192,6 +203,22 @@ public class OptionView : BaseView
         }
     }
 
+    private void ChangeBattleAnimation(bool isChange,int toggleIndex)
+    {
+        if (isChange == false) return;
+        var eventData = new OptionViewEvent(CommandType.ChangeBattleAnimation);
+        eventData.templete = toggleIndex;
+        _commandData(eventData);
+    }
+
+    private void UpdateBattleAnimation(int battleAnimationIndex)
+    {
+        for (int i = 0;i < battleAnimationToggles.Count;i++)
+        {
+            battleAnimationToggles[i].isOn = (battleAnimationToggles.Count-i) == battleAnimationIndex;
+        }
+    }
+
     public void CommandSelectCategory(int optionIndex)
     {
         for (int i = 0;i < optionObjs.Count ; i++)
@@ -216,6 +243,7 @@ namespace Option
         ChangeEventSkipIndex = 1031,
         ChangeCommandEndCheck = 1041,
         ChangeBattleWait = 1051,
+        ChangeBattleAnimation = 1061,
     }
 }
 public class OptionViewEvent

@@ -389,6 +389,7 @@ public class SaveConfigInfo
 	public bool _eventSkipIndex;
 	public bool _commandEndCheck;
 	public bool _battleWait;
+	public bool _battleAnimationSkip;
     public SaveConfigInfo()
     {
 		this.InitParameter();
@@ -404,6 +405,7 @@ public class SaveConfigInfo
 		_eventSkipIndex = false;
 		_commandEndCheck = true;
 		_battleWait = true;
+		_battleAnimationSkip = false;
 	}
 
 	public void UpdateSoundParameter(float bgmVolume,bool bgmMute,float seVolume,bool seMute)

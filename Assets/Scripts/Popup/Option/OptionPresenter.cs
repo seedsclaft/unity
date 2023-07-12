@@ -26,6 +26,7 @@ public class OptionPresenter
         _view.InitializeEventSkip(GameSystem.ConfigData._eventSkipIndex ? 1 : 2);
         _view.InitializeCommandEndCheck(GameSystem.ConfigData._commandEndCheck ? 2 : 1);
         _view.InitializeBattleWait(GameSystem.ConfigData._battleWait ? 2 : 1);
+        _view.InitializeBattleAnimation(GameSystem.ConfigData._battleAnimationSkip ? 1 : 2);
         _busy = false;
     }
 
@@ -70,6 +71,10 @@ public class OptionPresenter
         if (viewEvent.commandType == CommandType.ChangeBattleWait)
         {
            CommandChangeBattleWait((int)viewEvent.templete);
+        }
+        if (viewEvent.commandType == CommandType.ChangeBattleAnimation)
+        {
+           CommandChangeBattleAnimation((int)viewEvent.templete);
         }
     }
 
@@ -118,6 +123,11 @@ public class OptionPresenter
     private void CommandChangeBattleWait(int battleWaitIndex)
     {
         GameSystem.ConfigData._battleWait = (battleWaitIndex == 2);
+    }
+
+    private void CommandChangeBattleAnimation(int animationIndex)
+    {
+        GameSystem.ConfigData._battleAnimationSkip = (animationIndex == 1);
     }
 }
 

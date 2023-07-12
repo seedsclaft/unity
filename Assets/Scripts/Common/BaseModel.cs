@@ -104,14 +104,18 @@ public class BaseModel
     public void ApllyConfigData()
     {
         SaveConfigInfo saveConfigInfo = GameSystem.ConfigData;
-        ChangeBGMValue(saveConfigInfo._bgmVolume);
-        Ryneus.SoundManager.Instance._bgmMute = saveConfigInfo._bgmMute;
-        ChangeSEValue(saveConfigInfo._seVolume);
-        Ryneus.SoundManager.Instance._seMute = saveConfigInfo._seMute;
-        ChangeGraphicIndex(saveConfigInfo._graphicIndex);
-        ChangeEventSkipIndex(saveConfigInfo._eventSkipIndex);
-        ChangeCommandEndCheck(saveConfigInfo._commandEndCheck);
-        ChangeBattleWait(saveConfigInfo._battleWait);
+        if (saveConfigInfo != null)
+        {
+            ChangeBGMValue(saveConfigInfo._bgmVolume);
+            Ryneus.SoundManager.Instance._bgmMute = saveConfigInfo._bgmMute;
+            ChangeSEValue(saveConfigInfo._seVolume);
+            Ryneus.SoundManager.Instance._seMute = saveConfigInfo._seMute;
+            ChangeGraphicIndex(saveConfigInfo._graphicIndex);
+            ChangeEventSkipIndex(saveConfigInfo._eventSkipIndex);
+            ChangeCommandEndCheck(saveConfigInfo._commandEndCheck);
+            ChangeBattleWait(saveConfigInfo._battleWait);
+            ChangeBattleAnimation(saveConfigInfo._battleAnimationSkip);
+        }
     }
 
     public float BGMVolume(){ return Ryneus.SoundManager.Instance._bgmVolume;}
@@ -159,6 +163,11 @@ public class BaseModel
     public void ChangeBattleWait(bool battleWait)
     {
         GameSystem.ConfigData._battleWait = battleWait;
+    }
+
+    public void ChangeBattleAnimation(bool battleAnimation)
+    {
+        GameSystem.ConfigData._battleAnimationSkip = battleAnimation;
     }
 
     public string PlayerName()

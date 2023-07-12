@@ -428,12 +428,22 @@ public class BattleView : BaseView
         DeactivateActorList();
         DeactivateEnemyList();
         _animationBusy = true;
+        if (GameSystem.ConfigData._battleAnimationSkip == true) 
+        {
+            _animationEndTiming = 1;
+            return;
+        }
         _battlerComps[targetIndex].StartAnimation(effekseerEffectAsset,animationPosition);
     }
 
     public void StartAnimationAll(EffekseerEffectAsset effekseerEffectAsset)
     {
         _animationBusy = true;
+        if (GameSystem.ConfigData._battleAnimationSkip == true) 
+        {
+            _animationEndTiming = 1;
+            return;
+        }
         effekseerEmitter.Stop();
         effekseerEmitter.Play(effekseerEffectAsset);
     }
