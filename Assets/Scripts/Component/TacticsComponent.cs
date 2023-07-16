@@ -97,7 +97,7 @@ public class TacticsComponent : MonoBehaviour
         if (resourceCost != null)
         {
             resourceCost.gameObject.SetActive(actorInfo.TacticsComandType == TacticsComandType.Resource);
-            resourceCost.text = TacticsUtility.ResourceCost(actorInfo).ToString();
+            resourceCost.text = TacticsUtility.ResourceGain(actorInfo).ToString();
         }
 
         if (busyRoot != null && busyText != null)

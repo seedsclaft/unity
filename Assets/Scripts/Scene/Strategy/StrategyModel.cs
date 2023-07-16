@@ -127,7 +127,7 @@ public class StrategyModel : BaseModel
             {
                 bool resourceBonus = PartyInfo.GetResourceBonusValue();
                 getItemInfo.SetTitleData(DataSystem.System.GetReplaceText(3020,actorInfos[i].Master.Name));
-                int resource = TacticsUtility.ResourceCost(actorInfos[i]);
+                int resource = TacticsUtility.ResourceGain(actorInfos[i]);
                 if (resourceBonus)
                 {
                     resource *= 2;

@@ -98,7 +98,7 @@ public class TacticsModel : BaseModel
                 if (tempData != null)
                 {
                     if (stageMember.TacticsComandType != tempData.TacticsComandType)
-                    {
+                    {   
                         PartyInfo.ChangeCurrency(Currency + stageMember.TacticsCost);
                         //stageMember.ClearTacticsCommand();
                         if (tempData.TacticsComandType == TacticsComandType.None)

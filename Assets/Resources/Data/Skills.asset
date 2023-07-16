@@ -1778,10 +1778,10 @@ MonoBehaviour:
     MpCost: 0
     Rank: 1
     Attribute: 4
-    Scope: 4
+    Scope: 13
     SkillType: 2
-    TargetType: 4
-    Help: "\u884C\u52D5\u5F8C\u81EA\u8EAB\u4EE5\u5916\u306EHp\u309210\u56DE\u5FA9\u3059\u308B"
+    TargetType: 2
+    Help: "\u884C\u52D5\u5F8C\u81EA\u8EAB\u4EE5\u5916\u306EHp\u30922\u56DE\u5FA9\u3059\u308B"
     Range: 1
     AliveOnly: 1
     FeatureDatas:
@@ -1789,7 +1789,7 @@ MonoBehaviour:
       FeatureType: 21
       Param1: 112
       Param2: 999
-      Param3: 10
+      Param3: 2
     TriggerDatas:
     - SkillId: 432
       TriggerType: 0

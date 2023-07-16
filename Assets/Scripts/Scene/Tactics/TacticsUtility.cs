@@ -50,6 +50,10 @@ public class TacticsUtility
     }
     public static int ResourceCost(ActorInfo actorInfo)
     {
+        return 0;
+    }
+    public static int ResourceGain(ActorInfo actorInfo)
+    {
         return actorInfo.Level;
     }
 }

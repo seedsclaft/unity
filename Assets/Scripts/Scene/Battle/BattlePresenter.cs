@@ -8,8 +8,16 @@ public class BattlePresenter : BasePresenter
     BattleView _view = null;
 
     private bool _busy = true;
+#if UNITY_EDITOR
+    private bool _debug = false;
+    public void SetDebug(bool busy)
+    {
+        _debug = busy;
+    }
+#endif
     private bool _triggerAfterChecked = false;
     private bool _slipDamageChecked = false;
+    private bool _regeneChecked = false;
     private List<ActionResultInfo> _slipDamageResults = new List<ActionResultInfo>();
     private Battle.CommandType _nextCommandType = Battle.CommandType.None;
     private Battle.CommandType _backCommandType = Battle.CommandType.None;
@@ -20,6 +28,12 @@ public class BattlePresenter : BasePresenter
         _model = new BattleModel();
         SetModel(_model);
 
+#if UNITY_EDITOR
+        _view.gameObject.AddComponent<DebugBattleData>();
+        var debgugger = _view.gameObject.GetComponent<DebugBattleData>();
+        debgugger.SetDebugger(_model,this,_view);
+        debgugger.consoleInputField = GameSystem.DebugBattleData.consoleInputField;
+#endif
         Initialize();
     }
 
@@ -205,6 +219,9 @@ public class BattlePresenter : BasePresenter
     
     private void CommandUpdateAp()
     {
+#if UNITY_EDITOR
+        if (_debug == true) return;
+#endif
         if (GameSystem.ConfigData._battleWait == false)
         {
             while (_model.CurrentBattler == null)
@@ -327,7 +344,7 @@ public class BattlePresenter : BasePresenter
         //
     }
 
-    private void CommandSelectIndex(List<int> indexList)
+    public void CommandSelectIndex(List<int> indexList)
     {
         _view.SetHelpText("");
         _view.SetActiveBack(false);
@@ -381,7 +398,9 @@ public class BattlePresenter : BasePresenter
 
     private void StartAnimationRegene()
     {
-        var regeneActionResults = _model.UpdateRegeneState();
+        _regeneChecked = true;
+        var regeneActionResults = _model.RegeneActionResults();
+        regeneActionResults.AddRange(_model.AfterHealActionResults());
         if (regeneActionResults.Count == 0)
         {
             EndTurn();
@@ -638,11 +657,14 @@ public class BattlePresenter : BasePresenter
                     }
                 }
                 // リジェネ
-                var regene = _model.CheckRegene();
-                if (regene)
+                if (_regeneChecked == false)
                 {
-                    StartAnimationRegene();
-                    return;
+                    var regene = _model.CheckRegene();
+                    if (regene)
+                    {
+                        StartAnimationRegene();
+                        return;
+                    }
                 }
             }
         }
@@ -675,6 +697,10 @@ public class BattlePresenter : BasePresenter
         var result = _model.CheckTriggerSkillInfos(TriggerTiming.After,_slipDamageResults);
         if (result)
         {    
+            if (_model.CurrentActionInfo() != null)
+            {
+                _model.RemoveActionInfo(_model.CurrentActionInfo());
+            }
             ActionInfo CurrentActionInfo = _model.CurrentActionInfo();
             if (CurrentActionInfo != null)
             {
@@ -779,6 +805,7 @@ public class BattlePresenter : BasePresenter
         _view.HideEnemyStatus();
         _triggerAfterChecked = false;
         _slipDamageChecked = false;
+        _regeneChecked = false;
         _view.SetBattleBusy(false);
     }
 

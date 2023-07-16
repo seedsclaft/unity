@@ -38,18 +38,21 @@ public class GameSystem : MonoBehaviour
     public static SavePlayInfo CurrentData = null;
     public static SaveConfigInfo ConfigData = null;
     public static TempInfo CurrentTempData = null;
-    public static Texture2D SnapShot;
 
     private bool _busy = false;
     public bool Busy => _busy;
 
     public static float Version;
+    public static DebugBattleData DebugBattleData;
     private void Awake() 
     {
         Application.targetFrameRate = 60;
         advController.Initialize();
         _model = new BaseModel();
         GameSystem.Version = version;
+#if UNITY_EDITOR
+        GameSystem.DebugBattleData = debugBattleData;
+#endif
         CommandSceneChange(Scene.Boot);
     }
 

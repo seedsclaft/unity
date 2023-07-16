@@ -78,6 +78,7 @@ public class BattleActorList : ListWindow , IInputHandlerEvent
         if (selectIndex == -1) {
             UpdateSelectIndex(-1);
             _targetScopeType = ScopeType.None;
+            _targetIndexList = new ();
             return;
         }
         _selectIndex = selectIndex;

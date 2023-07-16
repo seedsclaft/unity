@@ -6851,7 +6851,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d0de51f5a4eb6d43a019f404ad730a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  version: 0.02
+  version: 0.03
   testMode: 0
   uiRoot: {fileID: 1848313489}
   confirmRoot: {fileID: 847318504}
@@ -6890,9 +6890,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc34738223829f44c9a2b752c153bbcc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inBattleActorIds: 01000000
-  troopId: 10
-  troopLv: 1
+  consoleInputField: {fileID: 1447284014}
+  inBattleActorIds: 0400000005000000
+  troopId: 400
+  troopLv: 4
   actorDatas:
   - Id: 1
     Name: "\u30D8\u30AB\u30C6\u30FC"
@@ -6901,7 +6902,7 @@ MonoBehaviour:
     InitLv: 1
     MaxLv: 40
     InitStatus:
-      _hp: 45
+      _hp: 10
       _mp: 20
       _atk: 28
       _def: 10
@@ -7154,15 +7155,11 @@ MonoBehaviour:
       Level: 0
       Weight: 0
       TriggerDatas: []
-    - SkillId: 402
-      Level: 0
-      Weight: 0
-      TriggerDatas: []
-    - SkillId: 404
-      Level: 0
-      Weight: 0
-      TriggerDatas: []
     - SkillId: 431
+      Level: 0
+      Weight: 0
+      TriggerDatas: []
+    - SkillId: 432
       Level: 0
       Weight: 0
       TriggerDatas: []
@@ -7223,6 +7220,10 @@ MonoBehaviour:
       Weight: 0
       TriggerDatas: []
     - SkillId: 531
+      Level: 1
+      Weight: 0
+      TriggerDatas: []
+    - SkillId: 434
       Level: 1
       Weight: 0
       TriggerDatas: []

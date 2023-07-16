@@ -689,6 +689,14 @@ public class BattleModel : BaseModel
         return _actionInfos[0];
     }
 
+    public void RemoveActionInfo(ActionInfo actionInfo)
+    {
+        var findIndex = _actionInfos.FindIndex(a => a == actionInfo);
+        if (findIndex > -1){
+            _actionInfos.RemoveAt(findIndex);
+        }
+    }
+
     public void MakeActionResultInfo(ActionInfo actionInfo,List<int> indexList)
     {   
         if (actionInfo.SubjectIndex < 100)
@@ -976,12 +984,42 @@ public class BattleModel : BaseModel
 
     public bool CheckRegene()
     {
-        return CurrentBattler != null && CurrentBattler.IsState(StateType.Regene);
+        var regene = CurrentBattler != null && CurrentBattler.IsState(StateType.Regene);
+        var afterHeal = CurrentBattler != null && CurrentBattler.IsState(StateType.AfterHeal);
+        return regene || afterHeal;
     }
 
-    public List<ActionResultInfo> UpdateRegeneState()
+    public List<ActionResultInfo> RegeneActionResults()
     {
-        return MakeStateActionResult(CurrentBattler,StateType.Regene,FeatureType.HpHeal);
+        var regeneResults = MakeStateActionResult(CurrentBattler,StateType.Regene,FeatureType.HpHeal);
+        return regeneResults;
+    }
+
+    public List<ActionResultInfo> AfterHealActionResults()
+    {
+        var afterHealResults = new List<ActionResultInfo>();
+        var afterSkillInfo = CurrentBattler.Skills.Find(a => a.Master.FeatureDatas.Find(b => b.FeatureType == FeatureType.AddState && (StateType)b.Param1 == StateType.AfterHeal) != null);
+        if (CurrentBattler.IsState(StateType.AfterHeal) && afterSkillInfo != null)
+        {
+            var stateInfo = CurrentBattler.GetStateInfo(StateType.AfterHeal);
+            var actionInfo = MakeActionInfo(CurrentBattler,afterSkillInfo.Id,false,false);
+            
+            if (actionInfo != null)
+            {
+                _actionInfos.Remove(actionInfo);
+                var targetIndexs = MakeAutoSelectIndex(actionInfo);
+                foreach (var targetIndex in targetIndexs)
+                {
+                    SkillsData.FeatureData featureData = new SkillsData.FeatureData();
+                    featureData.FeatureType = FeatureType.HpHeal;
+                    featureData.Param1 = stateInfo.Effect;
+
+                    ActionResultInfo actionResultInfo = new ActionResultInfo(GetBattlerInfo(targetIndex),GetBattlerInfo(targetIndex),new List<SkillsData.FeatureData>(){featureData});
+                    afterHealResults.Add(actionResultInfo);
+                }
+            }
+        }
+        return afterHealResults;
     }
 
     public bool CheckSlipDamage()
