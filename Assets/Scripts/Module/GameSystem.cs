@@ -218,6 +218,10 @@ public class GameSystem : MonoBehaviour
             if (_enemyInfoView) _enemyInfoView.SetBusy(true);
             AdvCallInfo advCallInfo = viewEvent.templete as AdvCallInfo;
             _currentScene.SetBusy(true);
+            if (!this.gameObject.activeSelf)
+            {
+                this.gameObject.SetActive(true);
+            }
             //_currentScene.SetActiveUi(false);
             StartCoroutine(JumpScenarioAsync(advCallInfo.Label,advCallInfo.CallEvent));
         } else

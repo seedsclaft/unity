@@ -38,7 +38,7 @@ public class DebugBattleData : MonoBehaviour
 
         GameSystem.CurrentData.CurrentStage.TestTroops(troopId,troopLv);
     }
-
+#if UNITY_EDITOR
     private BattleModel _model;
     private BattlePresenter _presenter;
     private BattleView _view;
@@ -75,4 +75,5 @@ public class DebugBattleData : MonoBehaviour
             _presenter.CommandSelectIndex(_model.MakeAutoSelectIndex(actionInfo));
         }
     }
+#endif
 }
