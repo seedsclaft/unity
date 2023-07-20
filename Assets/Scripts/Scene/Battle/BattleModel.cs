@@ -107,7 +107,7 @@ public class BattleModel : BaseModel
                 StateInfo stateInfo = chainDamageStateInfos[j];
                 BattlerInfo subject = GetBattlerInfo(stateInfo.BattlerId);
                 BattlerInfo target = GetBattlerInfo(stateInfo.TargetIndex);
-                if (target != null)
+                if (subject.IsAlive() && target != null)
                 {
                     int chainDamage = stateInfo.Effect;
                     if (subject.IsState(StateType.ChainDamageUp))
@@ -143,20 +143,23 @@ public class BattleModel : BaseModel
                 if (stateInfo.Turns % stateInfo.BaseTurns == 0)
                 {
                     BattlerInfo subject = _battlers.Find(a => a.Index == stateInfo.BattlerId);
-                    List<BattlerInfo> targets = new List<BattlerInfo>();
-                    if (subject.isActor)
+                    if (subject.IsAlive())
                     {
-                        targets = BattlerActors().FindAll(a => a.Index != subject.Index && a.IsAlive());
-                    } else{
-                        targets = BattlerEnemies().FindAll(a => a.Index != subject.Index && a.IsAlive());
-                    }
-                    SkillsData.FeatureData featureData = new SkillsData.FeatureData();
-                    featureData.FeatureType = FeatureType.HpHeal;
-                    featureData.Param1 = stateInfo.Effect;
-                    foreach (var target in targets)
-                    {
-                        ActionResultInfo actionResultInfo = new ActionResultInfo(_battlers[i],target,new List<SkillsData.FeatureData>(){featureData});
-                        actionResultInfos.Add(actionResultInfo);
+                        List<BattlerInfo> targets = new List<BattlerInfo>();
+                        if (subject.isActor)
+                        {
+                            targets = BattlerActors().FindAll(a => a.Index != subject.Index && a.IsAlive());
+                        } else{
+                            targets = BattlerEnemies().FindAll(a => a.Index != subject.Index && a.IsAlive());
+                        }
+                        SkillsData.FeatureData featureData = new SkillsData.FeatureData();
+                        featureData.FeatureType = FeatureType.HpHeal;
+                        featureData.Param1 = stateInfo.Effect;
+                        foreach (var target in targets)
+                        {
+                            ActionResultInfo actionResultInfo = new ActionResultInfo(_battlers[i],target,new List<SkillsData.FeatureData>(){featureData});
+                            actionResultInfos.Add(actionResultInfo);
+                        }
                     }
                 }
             }
@@ -1580,6 +1583,50 @@ public class BattleModel : BaseModel
             }
         }
         return list;
+    }
+
+    public List<StateInfo> EndRemoveChainState()
+    {
+        List<StateInfo> removeStateInfos = new ();
+        for (int i = 0;i < _battlers.Count;i++)
+        {
+            var stateInfos = _battlers[i].GetStateInfoAll(StateType.Chain);
+            if (stateInfos.Count > 0)
+            {
+                foreach (var stateInfo in stateInfos)
+                {
+                    BattlerInfo subject = GetBattlerInfo(stateInfo.BattlerId);
+                    if (subject.IsAlive() == false)
+                    {
+                         _battlers[i].RemoveState(stateInfo,true);
+                        removeStateInfos.Add(stateInfo);
+                    }
+                }
+            }
+        }
+        return removeStateInfos;
+    }
+
+    public List<StateInfo> EndRemoveBenedictState()
+    {
+        List<StateInfo> removeStateInfos = new ();
+        for (int i = 0;i < _battlers.Count;i++)
+        {
+            var stateInfos = _battlers[i].GetStateInfoAll(StateType.Benediction);
+            if (stateInfos.Count > 0)
+            {
+                foreach (var stateInfo in stateInfos)
+                {
+                    BattlerInfo subject = GetBattlerInfo(stateInfo.BattlerId);
+                    if (subject.IsAlive() == false)
+                    {
+                         _battlers[i].RemoveState(stateInfo,true);
+                        removeStateInfos.Add(stateInfo);
+                    }
+                }
+            }
+        }
+        return removeStateInfos;
     }
 
     public bool CheckVictory()

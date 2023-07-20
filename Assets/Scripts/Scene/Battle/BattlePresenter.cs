@@ -779,6 +779,17 @@ public class BattlePresenter : BasePresenter
         {
             _view.StartAliveAnimation(notDeadMember.Index);                
         }
+        // 戦闘不能の拘束ステートを解除する
+        var removeChainStates = _model.EndRemoveChainState();
+        foreach (var removeChainState in removeChainStates)
+        {
+            _view.StartStatePopup(removeChainState.TargetIndex,DamageType.State,"-" + removeChainState.Master.Name);
+        }
+        var removeBenedictStates = _model.EndRemoveBenedictState();
+        foreach (var removeBenedictState in removeBenedictStates)
+        {
+            _view.StartStatePopup(removeBenedictState.TargetIndex,DamageType.State,"-" + removeBenedictState.Master.Name);
+        }
 
         // 次の行動者がいれば続ける
         ActionInfo CurrentActionInfo = _model.CurrentActionInfo();

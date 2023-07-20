@@ -291,13 +291,16 @@ public class ActionResultInfo
         _reHeal = (int)Mathf.Floor(HpDamage * featureData.Param3 * 0.01f);
     }
 
+    // スリップダメージ計算
     private void MakeHpDefineDamage(BattlerInfo subject,BattlerInfo target,SkillsData.FeatureData featureData,bool isNoEffect)
     {
+        /*
         if (!IsHit(subject,target) && !isNoEffect)
         {
             _missed = true;
             return;
         }
+        */
         int AtkValue = featureData.Param1;
         float DamageRate = 100;
         if (subject.IsState(StateType.DamageUp))

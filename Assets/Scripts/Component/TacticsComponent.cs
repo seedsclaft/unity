@@ -82,8 +82,13 @@ public class TacticsComponent : MonoBehaviour
         
         if (statusInfoComponent != null)
         {
-            int Hp = Mathf.Min(actorInfo.CurrentHp + actorInfo.TacticsCost * 10,actorInfo.MaxHp);
-            int Mp = Mathf.Min(actorInfo.CurrentMp + actorInfo.TacticsCost * 10,actorInfo.MaxMp);
+            int RecoveryCost = 0;
+            if (actorInfo.TacticsComandType == TacticsComandType.Recovery)
+            {
+                RecoveryCost = actorInfo.TacticsCost;
+            }
+            int Hp = Mathf.Min(actorInfo.CurrentHp + RecoveryCost * 10,actorInfo.MaxHp);
+            int Mp = Mathf.Min(actorInfo.CurrentMp + RecoveryCost * 10,actorInfo.MaxMp);
             statusInfoComponent.UpdateHp(Hp,actorInfo.MaxHp);
             statusInfoComponent.UpdateMp(Mp,actorInfo.MaxMp);
         }
