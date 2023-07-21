@@ -538,4 +538,18 @@ public class BattlerInfo
     {
         _preserveAlive = preserveAlive;
     }
+
+    // バフ解除効果で解除するstateを取得
+    public List<StateInfo> GetRemovalBuffStates()
+    {
+        var list = new List<StateInfo>();
+        foreach (var stateInfo in _stateInfos)
+        {
+            if (stateInfo.RemovalBuffState())
+            {
+                list.Add(stateInfo);
+            }
+        }
+        return list;
+    }
 }

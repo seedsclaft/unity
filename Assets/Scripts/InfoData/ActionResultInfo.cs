@@ -259,10 +259,10 @@ public class ActionResultInfo
             _hpDamage = 0;
             SeekNoDamage(target);
         }
-        if (subject.IsState(StateType.DamageAddState))
+        if (subject.IsState(StateType.Deadly))
         {
             int rand = new System.Random().Next(0, 100);
-            if (subject.StateEffectAll(StateType.DamageAddState) >= rand){
+            if (subject.StateEffectAll(StateType.Deadly) >= rand){
                 _hpDamage = target.Hp;
             }
         }
@@ -368,11 +368,28 @@ public class ActionResultInfo
         if (stateInfo.Master.Id == (int)StateType.CounterOura || stateInfo.Master.Id == (int)StateType.Benediction)
         {
             stateInfo.Turns = 200 - subject.Status.Spd * 2;
+        } else
+        if (stateInfo.Master.Id == (int)StateType.Demigod)
+        {
+            stateInfo.Effect = subject.DemigodParam;
         }
         bool IsAdded = target.AddState(stateInfo,false);
         if (IsAdded)
         {
-            _addedStates.Add(stateInfo);
+            if (stateInfo.Master.Id == (int)StateType.RemoveBuff)
+            {
+                var removeStates = target.GetRemovalBuffStates();
+                foreach (var removeState in removeStates)
+                {
+                    SkillsData.FeatureData removeFeature = new SkillsData.FeatureData();
+                    removeFeature.FeatureType = FeatureType.RemoveState;
+                    removeFeature.Param1 = removeState.Master.Id;
+                    MakeRemoveState(subject,target,removeFeature);
+                }
+            } else
+            {
+                _addedStates.Add(stateInfo);
+            }
         } else
         {
             if (target.IsState(StateType.Barrier))

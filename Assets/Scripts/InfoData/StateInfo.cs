@@ -74,4 +74,21 @@ public class StateInfo {
     {
         return _stateId == (int)StateType.DamageUp;
     }
+
+    public bool RemovalBuffState()
+    {
+        if (_stateId >= (int)StateType.Barrier && _stateId <= (int)StateType.TargetRateDown)
+        {
+            return true;
+        } else
+        if (_stateId >= (int)StateType.ChainDamageUp && _stateId <= (int)StateType.HealActionSelfHeal)
+        {
+            return true;
+        } else
+        if (_stateId >= (int)StateType.AbsoluteHit)
+        {
+            return true;
+        }
+        return false;
+    }
 }

@@ -45,7 +45,13 @@ public class StateInfoComponent : MonoBehaviour
             } else
             if (removalTiming == RemovalTiming.UpdateAp)
             {
-                turns.text = DataSystem.System.GetReplaceText(405,stateInfo.Turns.ToString());
+                if (stateInfo.Turns > 100)
+                {
+                    turns.text = DataSystem.System.GetTextData(403).Text;
+                } else
+                {
+                    turns.text = DataSystem.System.GetReplaceText(405,stateInfo.Turns.ToString());
+                }
             }
         }
     }
