@@ -53,15 +53,24 @@ public class ConfirmView : BaseView,IInputHandlerEvent
         }
     }
 
+    public void SetSelectIndex(int selectIndex)
+    {
+        if (selectIndex > -1)
+        {
+            commandList.UpdateSelectIndex(selectIndex);
+        }
+    }
+
     public void SetConfirmEvent(System.Action<ConfirmComandType> commandData)
     {
         _confirmEvent = commandData;
     }
 
-    public void  SetViewInfo(ConfirmInfo confirmInfo)
+    public void SetViewInfo(ConfirmInfo confirmInfo)
     {
         _confirmInfo = confirmInfo;
         SetIsNoChoice(confirmInfo.IsNoChoise);
+        SetSelectIndex(confirmInfo.SelectIndex);
         SetTitle(confirmInfo.Title);
         SetSkillInfo(confirmInfo.SkillInfos);
         SetConfirmEvent(confirmInfo.CallEvent);

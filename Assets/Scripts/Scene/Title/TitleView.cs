@@ -14,6 +14,7 @@ public class TitleView : BaseView
     [SerializeField] private GameObject helpRoot = null;
     [SerializeField] private GameObject helpPrefab = null;
     [SerializeField] private Button logoButton = null;
+    [SerializeField] private Button optionButton = null;
     private HelpWindow _helpWindow = null;
     
     public override void Initialize() 
@@ -24,6 +25,7 @@ public class TitleView : BaseView
         creditButton.onClick.AddListener(() => CallCredit());
         logoButton.onClick.AddListener(() => CallLogoClick());
         logoButton.gameObject.SetActive(true);
+        optionButton.onClick.AddListener(() => OnClickOption());
     }
 
     private void CallCredit()
@@ -35,6 +37,12 @@ public class TitleView : BaseView
     private void CallLogoClick()
     {
         var eventData = new TitleViewEvent(CommandType.LogoClick);
+        _commandData(eventData);
+    }
+
+    private void OnClickOption()
+    {
+        var eventData = new TitleViewEvent(CommandType.Option);
         _commandData(eventData);
     }
 
@@ -88,7 +96,8 @@ namespace Title
         None = 0,
         TitleCommand,
         Credit,
-        LogoClick
+        LogoClick,
+        Option
     }
 }
 

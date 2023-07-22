@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class BasePresenter 
 {
+    private bool _busy = true;
     private BaseView _view = null;
     public void SetView(BaseView view)
     {
@@ -58,5 +59,13 @@ public class BasePresenter
             }
         }
         return isAbort;
+    }
+    
+    public void CommandOption()
+    {
+        _busy = true;
+        _view.CommandCallOption(() => {
+            _busy = false;
+        });
     }
 }

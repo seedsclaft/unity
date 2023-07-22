@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Title;
 
-public class TitlePresenter
+public class TitlePresenter : BasePresenter
 {
     TitleModel _model = null;
     TitleView _view = null;
@@ -52,6 +52,10 @@ public class TitlePresenter
         if (viewEvent.commandType == CommandType.LogoClick)
         {
             CommandLogoClick();
+        }
+        if (viewEvent.commandType == CommandType.Option)
+        {
+            CommandOption();
         }
     }
 

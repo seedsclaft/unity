@@ -213,12 +213,12 @@ public class BaseModel
         yesCommand.Key = "Yes";
         yesCommand.Name = DataSystem.System.GetTextData(3050).Text;
         yesCommand.Id = 0;
-        menuCommandDatas.Add(yesCommand);
         SystemData.MenuCommandData noCommand = new SystemData.MenuCommandData();
         noCommand.Key = "No";
         noCommand.Name = DataSystem.System.GetTextData(3051).Text;
         noCommand.Id = 1;
         menuCommandDatas.Add(noCommand);
+        menuCommandDatas.Add(yesCommand);
         return menuCommandDatas;
     }
 

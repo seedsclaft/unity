@@ -1858,8 +1858,6 @@ MonoBehaviour:
   itemPrefab: {fileID: 5132306753832205738, guid: 7975e6cd8326d034dafa0a822b7917d0,
     type: 3}
   _helpWindow: {fileID: 0}
-  rows: 0
-  cols: 0
 --- !u!1 &1667220725396083129
 GameObject:
   m_ObjectHideFlags: 0
@@ -3479,7 +3477,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2956381053157071151}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1aa08ab6e0800fa44ae55d278d1423e3, type: 3}
   m_Name: 
@@ -3948,6 +3946,7 @@ MonoBehaviour:
   grayscale: {fileID: 0}
   faceThumb: {fileID: 217123871360161791}
   awakenFaceThumb: {fileID: 0}
+  clipingThumb: {fileID: 0}
   nameText: {fileID: 2577329202854423670}
   evaluate: {fileID: 9030965544282246059}
   demigod: {fileID: 4608807198319855725}
@@ -7168,7 +7167,6 @@ MonoBehaviour:
   itemPrefab: {fileID: 2067777905309005909, guid: 7f16ce87c45057340ae8b484e81013e9,
     type: 3}
   _helpWindow: {fileID: 0}
-  rows: 1
   cols: 2
 --- !u!1 &5332208222951309073
 GameObject:
@@ -9926,8 +9924,6 @@ MonoBehaviour:
   itemPrefab: {fileID: 3937397960619196402, guid: 51774309c6bb3d843a5ad96af0e910f0,
     type: 3}
   _helpWindow: {fileID: 0}
-  rows: 1
-  cols: 1
 --- !u!1 &8318355220453933994
 GameObject:
   m_ObjectHideFlags: 0
@@ -10424,7 +10420,6 @@ MonoBehaviour:
     type: 3}
   _helpWindow: {fileID: 0}
   rows: 5
-  cols: 1
   remainSp: {fileID: 8360701588849371337}
   remainNuminous: {fileID: 4183983541325561340}
   tacticsCommandList: {fileID: 2507033101609995897}

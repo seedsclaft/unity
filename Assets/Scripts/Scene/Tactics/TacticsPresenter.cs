@@ -337,7 +337,7 @@ public class TacticsPresenter :BasePresenter
             TextData mainTextData = DataSystem.System.GetTextData(1030);
             TextData textData = DataSystem.System.GetTextData((int)_model.TacticsActor(actorId).TacticsComandType);
             string mainText = mainTextData.Text.Replace("\\d",textData.Text);
-            var popupInfo = new ConfirmInfo(_model.TacticsActor(actorId).Master.Name + mainText,(menuCommandInfo) => UpdatePopup((ConfirmComandType)menuCommandInfo));
+            var popupInfo = new ConfirmInfo(_model.TacticsActor(actorId).Master.Name + mainText,(a) => UpdatePopup((ConfirmComandType)a));
             _view.CommandCallConfirm(popupInfo);
             _view.DeactivateTacticsCommand();
             return true;
@@ -550,7 +550,8 @@ public class TacticsPresenter :BasePresenter
             {
                 mainText += "\n" + subData.Text;
             }
-            var popupInfo = new ConfirmInfo(mainText,(menuCommandInfo) => UpdatePopup((ConfirmComandType)menuCommandInfo));
+            var popupInfo = new ConfirmInfo(mainText,(a) => UpdatePopup((ConfirmComandType)a));
+            popupInfo.SetSelectIndex(_model.CheckNonBusy() ? (int)ConfirmComandType.No : (int)ConfirmComandType.Yes);
             _view.CommandCallConfirm(popupInfo);
             _view.HideCommandList();
         }
@@ -860,14 +861,6 @@ public class TacticsPresenter :BasePresenter
         Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
         var popupInfo = new ConfirmInfo(DataSystem.System.GetTextData(1100).Text,(a) => UpdatePopupDropout((ConfirmComandType)a));
         _view.CommandCallConfirm(popupInfo);
-    }
-
-    private void CommandOption()
-    {
-        _busy = true;
-        _view.CommandCallOption(() => {
-            _busy = false;
-        });
     }
 
     private void DisableTacticsCommand()

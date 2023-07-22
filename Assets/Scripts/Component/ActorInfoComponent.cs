@@ -8,7 +8,9 @@ using TMPro;
 public class ActorInfoComponent : MonoBehaviour
 {
     [SerializeField] private Image mainThumb;
+    public Image MainThumb => mainThumb;
     [SerializeField] private Image awakenThumb;
+    public Image AwakenThumb => awakenThumb;
     [SerializeField] private Material grayscale;
     [SerializeField] private Image faceThumb;
     public Image FaceThumb => faceThumb;

@@ -168,6 +168,16 @@ public class StatusView : BaseView ,IInputHandlerEvent
         actorInfoComponent.UpdateInfo(actorInfo,actorInfos);
     }
 
+    public void MoveActorLeft(System.Action endEvent)
+    {
+        actorList.MoveActorLeft(endEvent);
+    }
+
+    public void MoveActorRight(System.Action endEvent)
+    {
+        actorList.MoveActorRight(endEvent);
+    }
+
     public void ActivateActorList()
     {
         actorList.Activate();
@@ -203,6 +213,7 @@ public class StatusView : BaseView ,IInputHandlerEvent
 
     private void CallStatusCommand(StatusComandType commandType)
     {
+        if (actorList.AnimationBusy) return;
         var eventData = new StatusViewEvent(CommandType.StatusCommand);
         eventData.templete = commandType;
         _commandData(eventData);
@@ -247,6 +258,7 @@ public class StatusView : BaseView ,IInputHandlerEvent
     private void OnClickLeft()
     {
         if (!_leftButton.gameObject.activeSelf) return;
+        if (actorList.AnimationBusy) return;
         var eventData = new StatusViewEvent(CommandType.LeftActor);
         _commandData(eventData);
     }
@@ -254,6 +266,7 @@ public class StatusView : BaseView ,IInputHandlerEvent
     private void OnClickRight()
     {
         if (!_rightButton.gameObject.activeSelf) return;
+        if (actorList.AnimationBusy) return;
         var eventData = new StatusViewEvent(CommandType.RightActor);
         _commandData(eventData);
     }
@@ -261,6 +274,7 @@ public class StatusView : BaseView ,IInputHandlerEvent
     private void OnClickDecide()
     {
         if (!decideButton.gameObject.activeSelf) return;
+        if (actorList.AnimationBusy) return;
         var eventData = new StatusViewEvent(CommandType.DecideActor);
         _commandData(eventData);
     }

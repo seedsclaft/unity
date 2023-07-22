@@ -8,7 +8,8 @@ public class StrategyActor : ListItem ,IListViewItem
 {   
     [SerializeField] private ActorInfoComponent component;
     [SerializeField] private _2dxFX_Shiny_Reflect shinyReflect;
-    [SerializeField] private Image bonusImage;    
+    [SerializeField] private Image bonusImage;
+    [SerializeField] private Image shinyClip;
     private ActorInfo _data;    
     private bool _isBonus; 
 
@@ -34,7 +35,7 @@ public class StrategyActor : ListItem ,IListViewItem
 
     public void StartResultAnimation(int animId)
     {
-        shinyReflect.enabled = false;
+        KillShinyRefrect();
         //gameObject.transform.DOLocalMoveX(80,0.0f);
         int initPosy = (animId % 2 == 1) ? -80 : 80;
         Sequence sequence = DOTween.Sequence()
@@ -73,10 +74,24 @@ public class StrategyActor : ListItem ,IListViewItem
     public void SetShinyRefrect(bool isEnable)
     {
         shinyReflect.enabled = isEnable;
+        if (isEnable == false)
+        {
+            KillShinyRefrect();
+        }
     }
 
     public void SetEndCallEvent(System.Action callEvent)
     {
         _callEvent = callEvent;
+    }
+
+    public void KillShinyRefrect()
+    {
+        shinyReflect.enabled = false;
+        if (shinyClip.material != null)
+        {
+            shinyClip.material = null;
+            shinyClip.SetMaterialDirty();
+        }
     }
 }

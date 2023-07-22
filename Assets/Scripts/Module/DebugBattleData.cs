@@ -42,7 +42,7 @@ public class DebugBattleData : MonoBehaviour
     private BattleModel _model;
     private BattlePresenter _presenter;
     private BattleView _view;
-
+    [SerializeField] private bool saveActorData = false;
     public void SetDebugger(BattleModel model,BattlePresenter presenter,BattleView view)
     {
         _model = model;
@@ -73,6 +73,14 @@ public class DebugBattleData : MonoBehaviour
             _model.SetActionBattler(battlerInfo.Index);
             ActionInfo actionInfo = _model.MakeActionInfo(battlerInfo,skillInfo.Id,false,false);
             _presenter.CommandSelectIndex(_model.MakeAutoSelectIndex(actionInfo));
+        }
+    }
+
+    private void Update() {
+        if (saveActorData == true)
+        {
+            saveActorData = false;
+            actorDatas = DataSystem.Actors;
         }
     }
 #endif

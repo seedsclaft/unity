@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using MainMenu;
 
-public class MainMenuPresenter 
+public class MainMenuPresenter : BasePresenter
 {
     MainMenuModel _model = null;
     MainMenuView _view = null;
@@ -70,14 +70,6 @@ public class MainMenuPresenter
         Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
         _view.CommandCallRuling(() => {
             Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cancel);
-        });
-    }
-
-    private void CommandOption()
-    {
-        _busy = true;
-        _view.CommandCallOption(() => {
-            _busy = false;
         });
     }
 

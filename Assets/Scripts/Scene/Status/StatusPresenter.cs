@@ -230,18 +230,22 @@ public class StatusPresenter
     {
         Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cursor);
          _model.ChangeActorIndex(-1);
-        _view.SetActorInfo(_model.CurrentActor,_model.StatusActors());
-        CommandAttributeType(_model.CurrentAttributeType);
-        CommandRefresh();
+        _view.MoveActorLeft(() => {
+            _view.SetActorInfo(_model.CurrentActor,_model.StatusActors());
+            CommandAttributeType(_model.CurrentAttributeType);
+            CommandRefresh();
+        });
     }
 
     private void CommandRightActor()
     {
         Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cursor);
          _model.ChangeActorIndex(1);
-        _view.SetActorInfo(_model.CurrentActor,_model.StatusActors());
-        CommandAttributeType(_model.CurrentAttributeType);
-        CommandRefresh();
+        _view.MoveActorRight(() => {
+            _view.SetActorInfo(_model.CurrentActor,_model.StatusActors());
+            CommandAttributeType(_model.CurrentAttributeType);
+            CommandRefresh();
+        });
     }
 
     private void CommandSelectSkillAction(SkillInfo skillInfo)

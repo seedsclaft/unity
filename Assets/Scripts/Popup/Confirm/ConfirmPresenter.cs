@@ -52,6 +52,8 @@ public class ConfirmInfo
     public bool IsNoChoise => _isNoChoise;
     private List<SkillInfo> _skillInfos = null;
     public List<SkillInfo> SkillInfos => _skillInfos;
+    private int _selectIndex = -1;
+    public int SelectIndex => _selectIndex;
 
     public ConfirmInfo(string title,System.Action<ConfirmComandType> callEvent)
     {
@@ -67,5 +69,10 @@ public class ConfirmInfo
     public void SetSkillInfo(List<SkillInfo> skillInfos)
     {
         _skillInfos = skillInfos;
+    }
+
+    public void SetSelectIndex(int selectIndex)
+    {
+        _selectIndex = selectIndex;
     }
 }

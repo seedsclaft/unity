@@ -192,14 +192,6 @@ public class BattlePresenter : BasePresenter
         });
     }
 
-    private void CommandOption()
-    {
-        _busy = true;
-        _view.CommandCallOption(() => {
-            _busy = false;
-        });
-    }
-
     private void CommandEnemyDetail(int enemyIndex)
     {
         if (_model.CurrentActor == null) return;
