@@ -9,7 +9,7 @@ public class OptionModel : BaseModel
 
     }
 
-    public List<SystemData.MenuCommandData> OptionCommand()
+    public List<SystemData.OptionCommand> OptionCommand()
     {
         return DataSystem.OptionCommand;
     }

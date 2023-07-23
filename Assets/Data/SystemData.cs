@@ -7,7 +7,7 @@ public class SystemData : ScriptableObject
 {	
 	public List<MenuCommandData> TacticsCommandData;
 	public List<MenuCommandData> StatusCommandData;
-	public List<MenuCommandData> OptionCommandData;
+	public List<OptionCommand> OptionCommandData;
 	public List<MenuCommandData> TitleCommandData;
 	public List<int> InitActors;
 	public int InitCurrency;
@@ -18,6 +18,7 @@ public class SystemData : ScriptableObject
 	public int ResourceCount;
 	public List<TextData> SystemTextData;
 
+	public List<InputData> InputDataList;
 	public TextData GetTextData(int id)
 	{
 		TextData textData = SystemTextData.Find(a => a.Id == id);
@@ -46,6 +47,26 @@ public class SystemData : ScriptableObject
 		public string Key;
 		public string Name;
 		public string Help;
+	}
+
+	[System.SerializableAttribute]
+	public class OptionCommand
+	{
+		public int Id;
+		public string Key;
+		public string Name;
+		public string Help;
+		public bool Toggles;
+		public int ToggleText1;
+		public int ToggleText2;
+	}
+
+	[System.SerializableAttribute]
+	public class InputData
+	{
+		public string Key;
+		public int KeyId;
+		public string Name;
 	}
 }
 

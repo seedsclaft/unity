@@ -13,6 +13,8 @@ abstract public class BaseView : MonoBehaviour
     public bool Busy { get {return _busy;}}
     public System.Action<ViewEvent> _commandData = null;
     private Button _backCommand = null;
+    private System.Action _backEvent = null;
+    public System.Action BackEvent => _backEvent;
     [SerializeField] private GameObject uiRoot = null;
     [SerializeField] private GameObject backPrefab = null;
     [SerializeField] private GameObject backRoot = null;
@@ -221,6 +223,7 @@ abstract public class BaseView : MonoBehaviour
             if (!_backCommand.gameObject.activeSelf) return;
             callEvent();
         });
+        _backEvent = callEvent;
     }
 
     public void SetActiveBack(bool IsActive)

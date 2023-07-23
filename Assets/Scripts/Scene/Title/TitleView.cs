@@ -63,7 +63,7 @@ public class TitleView : BaseView
         versionText.text = text;
     }
     public void SetTitleCommand(List<SystemData.MenuCommandData> menuCommands){
-        commandList.Initialize(menuCommands,(menuCommandInfo) => CallTitleCommand(menuCommandInfo));
+        commandList.Initialize(menuCommands,(a) => CallTitleCommand(a),() => OnClickOption());
         SetInputHandler(commandList.GetComponent<IInputHandlerEvent>());
     }
 

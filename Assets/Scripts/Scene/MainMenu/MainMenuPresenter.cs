@@ -12,7 +12,9 @@ public class MainMenuPresenter : BasePresenter
     public MainMenuPresenter(MainMenuView view)
     {
         _view = view;
+        SetView(_view);
         _model = new MainMenuModel();
+        SetModel(_model);
 
         Initialize();
     }

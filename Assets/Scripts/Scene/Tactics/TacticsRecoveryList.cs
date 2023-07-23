@@ -35,7 +35,7 @@ public class TacticsRecoveryList : ListWindow , IInputHandlerEvent
             ObjectList[i].SetActive(i < _actorInfos.Count);
         }
         SetInputHandler((a) => CallInputHandler(a,callEvent,plusEvent,minusEvent));
-        UpdateSelectIndex(-1);
+        UpdateSelectIndex(0);
         commandLv.text = rank.ToString();
         commandDescription.text = DataSystem.System.GetReplaceText(10,DataSystem.System.RecoveryCount.ToString());
         if (rank > 0)
@@ -73,7 +73,7 @@ public class TacticsRecoveryList : ListWindow , IInputHandlerEvent
             if (Index == -1)
             {
                 TacticsComandType tacticsComandType = TacticsComandType.None;
-                if (tacticsCommandList.Index == 1)
+                if (tacticsCommandList.Index == 2)
                 {
                     tacticsComandType = TacticsComandType.Train;
                 }

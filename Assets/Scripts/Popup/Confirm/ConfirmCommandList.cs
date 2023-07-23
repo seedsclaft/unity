@@ -43,7 +43,7 @@ public class ConfirmCommandList : ListWindow , IInputHandlerEvent
     {
         if (keyType == InputKeyType.Decide)
         {
-            callEvent((ConfirmComandType)Index);
+            callEvent((ConfirmComandType)_data[Index].Id);
         }
         if (keyType == InputKeyType.Cancel)
         {

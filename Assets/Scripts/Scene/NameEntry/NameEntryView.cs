@@ -28,6 +28,9 @@ public class NameEntryView : BaseView, IInputHandlerEvent
     }
 
     public void SetHelpWindow(){
+        GameObject prefab = Instantiate(helpPrefab);
+        prefab.transform.SetParent(helpRoot.transform, false);
+        _helpWindow = prefab.GetComponent<HelpWindow>();
     }
 
     public void SetEvent(System.Action<NameEntryViewEvent> commandData)
@@ -53,6 +56,8 @@ public class NameEntryView : BaseView, IInputHandlerEvent
         inputField.gameObject.SetActive(true);
         inputField.Select();
         _inputLateUpdate = 1;
+        _helpWindow.SetHelpText(DataSystem.System.GetTextData(5000).Text);
+        _helpWindow.SetInputInfo("NAMEENTRY");
     }
 
     public void InputHandler(InputKeyType keyType)

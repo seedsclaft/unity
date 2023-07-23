@@ -137,10 +137,10 @@ public class TacticsView : BaseView
 
     public void SetTacticsCommand(List<SystemData.MenuCommandData> menuCommands)
     {
-        tacticsCommandList.Initialize((menuCommandInfo) => CallTacticsCommand(menuCommandInfo),() => CallAlcanaEvent());
+        tacticsCommandList.Initialize((a) => CallTacticsCommand(a),() => OnClickOption(),() => OnClickDropout(),() => CallAlcanaEvent());
+        tacticsCommandList.SetHelpWindow(_helpWindow);
         tacticsCommandList.Refresh(menuCommands);
         SetInputHandler(tacticsCommandList.GetComponent<IInputHandlerEvent>());
-        tacticsCommandList.SetHelpWindow(_helpWindow);
     }
 
     public void SetCommandAble(int commandId)

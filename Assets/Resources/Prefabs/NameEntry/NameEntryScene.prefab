@@ -306,7 +306,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &3352121521451954154
 Transform:
   m_ObjectHideFlags: 0
@@ -315,7 +315,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4286036816562948314}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 20, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -374,8 +374,9 @@ MonoBehaviour:
   backRoot: {fileID: 0}
   inputField: {fileID: 3136091203260075027}
   decideButton: {fileID: 1514393271473029590}
-  helpRoot: {fileID: 0}
-  helpPrefab: {fileID: 0}
+  helpRoot: {fileID: 4286036816562948314}
+  helpPrefab: {fileID: 4660447992331240257, guid: fd198201f48424c4cbfbe909f658ea97,
+    type: 3}
 --- !u!1 &5742980938285988646
 GameObject:
   m_ObjectHideFlags: 0

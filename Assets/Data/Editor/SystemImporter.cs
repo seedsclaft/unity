@@ -17,6 +17,9 @@ public class SystemImporter : AssetPostprocessor
 		Id = 0,
 		Key,
 		NameTextId,
+		Toggle,
+		ToggleText1,
+		ToggleText2,
     }
 
     enum BaseDefineColumn
@@ -81,16 +84,17 @@ public class SystemImporter : AssetPostprocessor
 			{
 				// エクセルブックを作成
 				CreateBook(asset, Mainstream, out IWorkbook Book);
-				List<TextData> textData = CreateText(Book.GetSheetAt(5));
+				List<TextData> textData = CreateText(Book.GetSheetAt(6));
 
 				// 情報の初期化
-				Data.TacticsCommandData = new List<SystemData.MenuCommandData>();
-				Data.StatusCommandData = new List<SystemData.MenuCommandData>();
-				Data.OptionCommandData = new List<SystemData.MenuCommandData>();
-				Data.TitleCommandData = new List<SystemData.MenuCommandData>();
-				Data.InitActors = new List<int>();
-				Data.SystemTextData = new List<TextData>();
+				Data.TacticsCommandData = new ();
+				Data.StatusCommandData = new ();
+				Data.OptionCommandData = new ();
+				Data.TitleCommandData = new ();
+				Data.InitActors = new ();
+				Data.SystemTextData = new ();
 				Data.SystemTextData = textData;
+				Data.InputDataList = new ();
 
 				// エクセルシートからセル単位で読み込み
 				ISheet BaseSheet = Book.GetSheetAt(0);
@@ -141,14 +145,31 @@ public class SystemImporter : AssetPostprocessor
 				{
 					IRow Baserow = BaseSheet.GetRow(i);
 
-					var StatusCommandInfo = new SystemData.MenuCommandData();
+					var StatusCommandInfo = new SystemData.OptionCommand();
 					StatusCommandInfo.Id = (int)Baserow.GetCell((int)BaseColumn.Id)?.SafeNumericCellValue();
 					StatusCommandInfo.Key = Baserow.GetCell((int)BaseColumn.Key)?.SafeStringCellValue();
 					StatusCommandInfo.Name = textData.Find(a => a.Id == (int)Baserow.GetCell((int)BaseColumn.NameTextId).NumericCellValue).Text;
 					StatusCommandInfo.Help = textData.Find(a => a.Id == (int)Baserow.GetCell((int)BaseColumn.NameTextId).NumericCellValue).Help;
+					StatusCommandInfo.Toggles = Baserow.GetCell((int)BaseColumn.Toggle)?.SafeNumericCellValue() == 1;
+					StatusCommandInfo.ToggleText1 = (int)Baserow.GetCell((int)BaseColumn.ToggleText1)?.SafeNumericCellValue();
+					StatusCommandInfo.ToggleText2 = (int)Baserow.GetCell((int)BaseColumn.ToggleText2)?.SafeNumericCellValue();
 					Data.OptionCommandData.Add(StatusCommandInfo);
 				}
+				
 				BaseSheet = Book.GetSheetAt(4);
+
+				for (int i = 1; i <= BaseSheet.LastRowNum; i++)
+				{
+					IRow Baserow = BaseSheet.GetRow(i);
+					var inputData = new SystemData.InputData();
+					inputData.Key = Baserow.GetCell((int)BaseColumn.Id)?.SafeStringCellValue();
+					inputData.KeyId = (int)Baserow.GetCell((int)BaseColumn.Key)?.SafeNumericCellValue();
+					inputData.Name = textData.Find(a => a.Id == (int)Baserow.GetCell((int)BaseColumn.NameTextId).NumericCellValue).Text;
+					
+					Data.InputDataList.Add(inputData);
+				}
+
+				BaseSheet = Book.GetSheetAt(5);
 
 				for (int i = 1; i <= BaseSheet.LastRowNum; i++)
 				{

@@ -5,44 +5,43 @@ public class InputSystem
 {
     public InputKeyType Update()
     {
-        /*
         UpdateGamePad();
-        if(Keyboard.current.upArrowKey.wasPressedThisFrame) 
+        if(Keyboard.current.upArrowKey.isPressed || Keyboard.current[Key.W].isPressed) 
         {
             Debug.Log("up");
             return InputKeyType.Up;
         } else
-        if(Keyboard.current.downArrowKey.wasPressedThisFrame) 
+        if(Keyboard.current.downArrowKey.isPressed || Keyboard.current[Key.S].isPressed) 
         {
             Debug.Log("down");
             return InputKeyType.Down;
         } else
-        if(Keyboard.current.leftArrowKey.wasPressedThisFrame) 
+        if(Keyboard.current.leftArrowKey.isPressed || Keyboard.current[Key.A].isPressed) 
         {
             Debug.Log("left");
             return InputKeyType.Left;
         } else
-        if(Keyboard.current.rightArrowKey.wasPressedThisFrame) 
+        if(Keyboard.current.rightArrowKey.isPressed || Keyboard.current[Key.D].isPressed) 
         {
             Debug.Log("right");
             return InputKeyType.Right;
         } else
-        if(Keyboard.current[Key.Z].wasPressedThisFrame) 
+        if(Keyboard.current[Key.Space].wasPressedThisFrame) 
         {
             Debug.Log("decide");
             return InputKeyType.Decide;
         } else
-        if(Keyboard.current[Key.X].wasPressedThisFrame) 
+        if(Keyboard.current[Key.LeftShift].wasPressedThisFrame) 
         {
             Debug.Log("cancel");
             return InputKeyType.Cancel;
         } else
-        if(Keyboard.current[Key.A].wasPressedThisFrame) 
+        if(Keyboard.current[Key.R].wasPressedThisFrame) 
         {
             Debug.Log("option1");
             return InputKeyType.Option1;
         } else
-        if(Keyboard.current[Key.S].wasPressedThisFrame) 
+        if(Keyboard.current[Key.T].wasPressedThisFrame) 
         {
             Debug.Log("option2");
             return InputKeyType.Option2;
@@ -52,22 +51,21 @@ public class InputSystem
             Debug.Log("sideLeft1");
             return InputKeyType.SideLeft1;
         } else
-        if(Keyboard.current[Key.W].wasPressedThisFrame) 
+        if(Keyboard.current[Key.E].wasPressedThisFrame) 
         {
             Debug.Log("sideRight1");
             return InputKeyType.SideRight1;
         } else
-        if(Keyboard.current[Key.Space].wasPressedThisFrame) 
+        if(Keyboard.current[Key.Enter].wasPressedThisFrame) 
         {
             Debug.Log("start");
             return InputKeyType.Start;
         } else
-        if(Keyboard.current[Key.Enter].wasPressedThisFrame) 
+        if(Keyboard.current[Key.RightShift].wasPressedThisFrame) 
         {
             Debug.Log("select");
             return InputKeyType.Select;
         }
-        */
         return InputKeyType.None;
     }
 

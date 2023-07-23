@@ -48,21 +48,54 @@ MonoBehaviour:
     Help: "\u8853\u8005(Alchemist)\u306B\u9B54\u6CD5\u3092\u78BA\u8A8D\u3057\u307E\u3059"
   OptionCommandData:
   - Id: 1
-    Key: SYSTEM
-    Name: System
-    Help: '""'
+    Key: BGM_VOLUME
+    Name: BGM Volume
+    Help: " - BGM\u306E\u97F3\u91CF\u3092\u5909\u66F4\u3057\u307E\u3059"
+    Toggles: 0
+    ToggleText1: 0
+    ToggleText2: 0
   - Id: 2
-    Key: TACTICS
-    Name: Tactics
-    Help: '""'
+    Key: SE_VOLUME
+    Name: SE Volume
+    Help: " - SE\u306E\u97F3\u91CF\u3092\u5909\u66F4\u3057\u307E\u3059"
+    Toggles: 0
+    ToggleText1: 0
+    ToggleText2: 0
   - Id: 3
-    Key: BATTLE
-    Name: Battle
-    Help: '""'
+    Key: GRAPHIC_QUALITY
+    Name: Graphic Quality
+    Help: " - \u753B\u8CEA\u306E\u30AF\u30AA\u30EA\u30C6\u30A3\u3092\u5909\u66F4\u3057\u307E\u3059"
+    Toggles: 1
+    ToggleText1: 521
+    ToggleText2: 522
   - Id: 4
-    Key: DATA
-    Name: Data
-    Help: '""'
+    Key: EVENT_SKIP
+    Name: Event Skip
+    Help: " - \u9078\u629E\u80A2\u3092\u9664\u304D\u30A4\u30D9\u30F3\u30C8\u3092\u30B9\u30AD\u30C3\u30D7\u3059\u308B\u304B\u5909\u66F4\u3057\u307E\u3059"
+    Toggles: 1
+    ToggleText1: 526
+    ToggleText2: 527
+  - Id: 5
+    Key: COMMAND_END_CHECK
+    Name: Command Check
+    Help: " - \u5168\u3066\u306E\u30A2\u30EB\u30B1\u30DF\u30B9\u30C8\u306B\u547D\u4EE4\u3092\u7D42\u3048\u305F\u6642\u306B\u547D\u4EE4\u7D42\u4E86\u30B3\u30DE\u30F3\u30C9\u3092\u547C\u3076\u304B\u5909\u66F4\u3057\u307E\u3059"
+    Toggles: 1
+    ToggleText1: 531
+    ToggleText2: 532
+  - Id: 6
+    Key: BATTLE_WAIT
+    Name: Battle Wait
+    Help: " - \u30D0\u30C8\u30EB\u3067\u884C\u52D5\u9806\u756A\u5F85\u3061\u6642\u9593\u3092\u8868\u793A\u3059\u308B\u304B\u30B9\u30AD\u30C3\u30D7\u3059\u308B\u5909\u66F4\u3057\u307E\u3059"
+    Toggles: 1
+    ToggleText1: 536
+    ToggleText2: 527
+  - Id: 7
+    Key: BATTLE_ANIMATION
+    Name: Battle Animation
+    Help: " - \u30D0\u30C8\u30EB\u30A2\u30CB\u30E1\u30FC\u30B7\u30E7\u30F3\u6F14\u51FA\u8868\u793A\u306E\u6709\u7121\u3092\u5207\u308A\u66FF\u3048\u307E\u3059"
+    Toggles: 1
+    ToggleText1: 536
+    ToggleText2: 527
   TitleCommandData:
   - Id: 1
     Key: NEWGAME
@@ -240,16 +273,67 @@ MonoBehaviour:
     Text: "\u6551\u6E08\u57F7\u884C\u3092\u8AE6\u3081\u3066\u64A4\u9000\u3057\u307E\u3059\u304B\uFF1F"
     Help: '""'
   - Id: 501
-    Text: System
-    Help: '""'
+    Text: BGM Volume
+    Help: " - BGM\u306E\u97F3\u91CF\u3092\u5909\u66F4\u3057\u307E\u3059"
   - Id: 502
-    Text: Tactics
-    Help: '""'
+    Text: SE Volume
+    Help: " - SE\u306E\u97F3\u91CF\u3092\u5909\u66F4\u3057\u307E\u3059"
   - Id: 503
-    Text: Battle
-    Help: '""'
+    Text: Graphic Quality
+    Help: " - \u753B\u8CEA\u306E\u30AF\u30AA\u30EA\u30C6\u30A3\u3092\u5909\u66F4\u3057\u307E\u3059"
   - Id: 504
-    Text: Data
+    Text: Event Skip
+    Help: " - \u9078\u629E\u80A2\u3092\u9664\u304D\u30A4\u30D9\u30F3\u30C8\u3092\u30B9\u30AD\u30C3\u30D7\u3059\u308B\u304B\u5909\u66F4\u3057\u307E\u3059"
+  - Id: 505
+    Text: Command Check
+    Help: " - \u5168\u3066\u306E\u30A2\u30EB\u30B1\u30DF\u30B9\u30C8\u306B\u547D\u4EE4\u3092\u7D42\u3048\u305F\u6642\u306B\u547D\u4EE4\u7D42\u4E86\u30B3\u30DE\u30F3\u30C9\u3092\u547C\u3076\u304B\u5909\u66F4\u3057\u307E\u3059"
+  - Id: 506
+    Text: Battle Wait
+    Help: " - \u30D0\u30C8\u30EB\u3067\u884C\u52D5\u9806\u756A\u5F85\u3061\u6642\u9593\u3092\u8868\u793A\u3059\u308B\u304B\u30B9\u30AD\u30C3\u30D7\u3059\u308B\u5909\u66F4\u3057\u307E\u3059"
+  - Id: 507
+    Text: Battle Animation
+    Help: " - \u30D0\u30C8\u30EB\u30A2\u30CB\u30E1\u30FC\u30B7\u30E7\u30F3\u6F14\u51FA\u8868\u793A\u306E\u6709\u7121\u3092\u5207\u308A\u66FF\u3048\u307E\u3059"
+  - Id: 521
+    Text: Normal
+    Help: '""'
+  - Id: 522
+    Text: Low
+    Help: '""'
+  - Id: 526
+    Text: "\u30B9\u30AD\u30C3\u30D7\u3057\u306A\u3044"
+    Help: '""'
+  - Id: 527
+    Text: "\u30B9\u30AD\u30C3\u30D7\u3059\u308B"
+    Help: '""'
+  - Id: 531
+    Text: "\u547C\u3073\u51FA\u3059"
+    Help: '""'
+  - Id: 532
+    Text: "\u547C\u3070\u306A\u3044"
+    Help: '""'
+  - Id: 536
+    Text: "\u8868\u793A\u3059\u308B"
+    Help: '""'
+  - Id: 800
+    Text: '""'
+    Help: '""'
+  - Id: 801
+    Text: "\u30AB\u30FC\u30BD\u30EB\u79FB\u52D5"
+    Help: '""'
+  - Id: 802
+    Text: "\u6C7A\u5B9A"
+    Help: '""'
+  - Id: 803
+    Text: "\u30AA\u30D7\u30B7\u30E7\u30F3"
+    Help: '""'
+  - Id: 804
+    Text: "\u623B\u308B"
+    Help: '""'
+  - Id: 805
+    Text: "\u5024\u5909\u66F4"
+    Help: '""'
+  - Id: 806
+    Text: "\u30EA\u30BF\u30A4\u30A2"
     Help: '""'
   - Id: 1000
     Text: (Nu)
@@ -443,3 +527,58 @@ MonoBehaviour:
   - Id: 16030
     Text: "\u8EE2\u751F\u4E2D\u2026"
     Help: '""'
+  InputDataList:
+  - Key: TITLE
+    KeyId: 4
+    Name: "\u6C7A\u5B9A"
+  - Key: TITLE
+    KeyId: 6
+    Name: "\u30AA\u30D7\u30B7\u30E7\u30F3"
+  - Key: TITLE
+    KeyId: 2
+    Name: "\u30AB\u30FC\u30BD\u30EB\u79FB\u52D5"
+  - Key: TITLE
+    KeyId: 3
+    Name: '""'
+  - Key: OPTION
+    KeyId: 5
+    Name: "\u623B\u308B"
+  - Key: OPTION
+    KeyId: 2
+    Name: "\u5024\u5909\u66F4"
+  - Key: OPTION
+    KeyId: 3
+    Name: "\u5024\u5909\u66F4"
+  - Key: OPTION
+    KeyId: 0
+    Name: "\u30AB\u30FC\u30BD\u30EB\u79FB\u52D5"
+  - Key: OPTION
+    KeyId: 1
+    Name: '""'
+  - Key: TACTICS
+    KeyId: 4
+    Name: "\u6C7A\u5B9A"
+  - Key: TACTICS
+    KeyId: 6
+    Name: "\u30AA\u30D7\u30B7\u30E7\u30F3"
+  - Key: TACTICS
+    KeyId: 8
+    Name: "\u30EA\u30BF\u30A4\u30A2"
+  - Key: TACTICS
+    KeyId: 2
+    Name: "\u30AB\u30FC\u30BD\u30EB\u79FB\u52D5"
+  - Key: TACTICS
+    KeyId: 3
+    Name: '""'
+  - Key: NAMEENTRY
+    KeyId: 12
+    Name: "\u6C7A\u5B9A"
+  - Key: MAINMENU
+    KeyId: 0
+    Name: "\u30AB\u30FC\u30BD\u30EB\u79FB\u52D5"
+  - Key: MAINMENU
+    KeyId: 1
+    Name: '""'
+  - Key: MAINMENU
+    KeyId: 4
+    Name: "\u6C7A\u5B9A"

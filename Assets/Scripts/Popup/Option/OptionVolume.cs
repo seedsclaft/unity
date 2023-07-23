@@ -43,6 +43,13 @@ public class OptionVolume : MonoBehaviour
         volumeValue.text = ((int)(_silderValue * 100)).ToString("D");
     }
 
+    public void ChangeValue(float sliderValue)
+    {
+        _silderValue = sliderValue;
+        UpdateValue();
+        volumeSlider.value = sliderValue;
+    }
+
     private void UpdateMute()
     {
         if (_isMute)
@@ -52,5 +59,11 @@ public class OptionVolume : MonoBehaviour
         {
             muteButton.image.sprite = muteSprites[1];
         }
+    }
+
+    public void ChangeMute()
+    {
+        _isMute = !_isMute;
+        UpdateMute();
     }
 }

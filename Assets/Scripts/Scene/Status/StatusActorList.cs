@@ -13,7 +13,7 @@ public class StatusActorList : ListWindow , IInputHandlerEvent
     {
         InitializeListView(1);
         SetInputHandler((a) => CallInputHandler(a,leftEvent,rightEvent,decideEvent,cancelEvent));
-        SetInputFrame(30);
+        SetInputFrame(24);
         SetDragHandler(ObjectList[0],leftEvent,rightEvent);
     }
 
@@ -34,13 +34,13 @@ public class StatusActorList : ListWindow , IInputHandlerEvent
             if (x > 15)
             {
                 leftEvent();
-                ResetInputFrame();
+                ResetInputFrame(15);
                 dragListener.OnEndDrag();
             } else
             if (x < -15)
             {
                 rightEvent();
-                ResetInputFrame();
+                ResetInputFrame(15);
                 dragListener.OnEndDrag();
             } else
             {

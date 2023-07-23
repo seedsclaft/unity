@@ -40,7 +40,7 @@ public class TacticsResourceList : ListWindow , IInputHandlerEvent
         {
             commandDescription.text = DataSystem.System.GetReplaceText(15,(rank * 10).ToString());
         }
-        UpdateSelectIndex(-1);
+        UpdateSelectIndex(0);
         Refresh();
     }
 
@@ -72,7 +72,7 @@ public class TacticsResourceList : ListWindow , IInputHandlerEvent
             if (Index == -1)
             {
                 TacticsComandType tacticsComandType = TacticsComandType.None;
-                if (tacticsCommandList.Index == 1)
+                if (tacticsCommandList.Index == 2)
                 {
                     tacticsComandType = TacticsComandType.Train;
                 }

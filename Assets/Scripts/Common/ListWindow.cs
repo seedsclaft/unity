@@ -11,7 +11,8 @@ abstract public class ListWindow : MonoBehaviour
 
     private int _index = 0;
     public int Index => _index;
-    private int _defaultInputFrame = 6;
+    private int _defaultInputFrame = 0;
+    private int _listMoveInputFrame = 6;
     public void SetInputFrame(int frame)
     {
         _defaultInputFrame = frame;
@@ -46,7 +47,7 @@ abstract public class ListWindow : MonoBehaviour
 
     public void Activate()
     {
-        ResetInputFrame();
+        ResetInputFrame(1);
         _active = true;
     }
     
@@ -384,9 +385,9 @@ abstract public class ListWindow : MonoBehaviour
         return true;
     }
 
-    public void ResetInputFrame()
+    public void ResetInputFrame(int plusValue)
     {
-        _inputBusyFrame = _defaultInputFrame;
+        _inputBusyFrame = _defaultInputFrame + plusValue;
     }
     
     public void SetHelpWindow(HelpWindow helpWindow){
@@ -402,11 +403,13 @@ abstract public class ListWindow : MonoBehaviour
         }
         InputSelectIndex(keyType);
         InputCallEvent(keyType);
+        int plusValue = 0;
         if (keyType == InputKeyType.Up || keyType == InputKeyType.Down || keyType == InputKeyType.Left || keyType == InputKeyType.Right)
         {
+            plusValue = _listMoveInputFrame;
             UpdateSelectIndex(Index);
         }
-        ResetInputFrame();
+        ResetInputFrame(plusValue);
         //Debug.Log(this.gameObject.name);
     }
 
@@ -589,5 +592,10 @@ abstract public class ListWindow : MonoBehaviour
         ValueChanged(new Vector2(0,1));
         _lastStartIndex = 0;
         SelectIndex(0);
+    }
+
+    public void SetNormalizedPosition(float normalizedPosition)
+    {
+        scrollRect.normalizedPosition = new Vector2(0,normalizedPosition);
     }
 }

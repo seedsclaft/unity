@@ -26,7 +26,6 @@ public class TacticsTrainList : ListWindow , IInputHandlerEvent
 
     public void Refresh(List<ActorInfo> actorInfos,int rank)
     {
-        ResetInputFrame();
         SetDataCount(actorInfos.Count);
         _actorInfos = actorInfos;
         for (int i = 0; i < ObjectList.Count;i++)
@@ -39,7 +38,7 @@ public class TacticsTrainList : ListWindow , IInputHandlerEvent
             tacticsTrain.SetSelectHandler((data) => UpdateSelectIndex(data));
             ObjectList[i].SetActive(i < _actorInfos.Count);
         }
-        UpdateSelectIndex(-1);
+        UpdateSelectIndex(0);
         commandLv.text = rank.ToString();
         commandDescription.text = DataSystem.System.GetReplaceText(10,DataSystem.System.TrainCount.ToString());
         if (rank > 0)
@@ -76,7 +75,7 @@ public class TacticsTrainList : ListWindow , IInputHandlerEvent
             if (Index == -1)
             {
                 TacticsComandType tacticsComandType = TacticsComandType.None;
-                if (tacticsCommandList.Index == 1)
+                if (tacticsCommandList.Index == 2)
                 {
                     tacticsComandType = TacticsComandType.Train;
                 }

@@ -23,7 +23,7 @@ abstract public class DataSystem
     public static List<SystemData.MenuCommandData> TacticsCommand => _system.TacticsCommandData;
     public static List<SystemData.MenuCommandData> TitleCommand => _system.TitleCommandData;
     public static List<SystemData.MenuCommandData> StatusCommand => _system.StatusCommandData;
-    public static List<SystemData.MenuCommandData> OptionCommand => _system.OptionCommandData;
+    public static List<SystemData.OptionCommand> OptionCommand => _system.OptionCommandData;
     public static List<int> InitActors => _system.InitActors;
     
     private static StagesData _stages;

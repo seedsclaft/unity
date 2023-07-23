@@ -147,7 +147,6 @@ public class StrategyView : BaseView
 
     public void ShowResultList(List<GetItemInfo> getItemInfos)
     {
-        //SetInputHandler(strategyResultList.GetComponent<IInputHandlerEvent>());
         strategyResultList.Refresh(getItemInfos);
         strategyResultList.gameObject.SetActive(true);
     }

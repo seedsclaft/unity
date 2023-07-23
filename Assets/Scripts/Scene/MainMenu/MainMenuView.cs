@@ -31,6 +31,7 @@ public class MainMenuView : BaseView
         prefab.transform.SetParent(helpRoot.transform, false);
         _helpWindow = prefab.GetComponent<HelpWindow>();
         _helpWindow.SetHelpText(DataSystem.System.GetTextData(11040).Text);
+        _helpWindow.SetInputInfo("MAINMENU");
     }
 
     public void SetEvent(System.Action<MainMenuViewEvent> commandData)

@@ -8,10 +8,13 @@ public class TitlePresenter : BasePresenter
     TitleModel _model = null;
     TitleView _view = null;
     private bool _busy = true;
+    private bool _logoChecked = false;
     public TitlePresenter(TitleView view)
     {
         _view = view;
+        SetView(_view);
         _model = new TitleModel();
+        SetModel(_model);
 
         Initialize();
     }
@@ -55,11 +58,25 @@ public class TitlePresenter : BasePresenter
         }
         if (viewEvent.commandType == CommandType.Option)
         {
-            CommandOption();
+            if (_logoChecked == false)
+            {
+                CommandLogoClick();
+                _logoChecked = true;
+                return;
+            } else
+            {
+                CommandOption();
+            }
         }
     }
 
     private void CommandTitle(int commandIndex){
+        if (_logoChecked == false)
+        {
+            CommandLogoClick();
+            _logoChecked = true;
+            return;
+        }
         _busy = true;
         switch ((TitleComandType)commandIndex){
             case TitleComandType.NewGame:
@@ -107,6 +124,7 @@ public class TitlePresenter : BasePresenter
 
     private async void CommandLogoClick()
     {
+        _logoChecked = true;
         _view.CommandLogoClick();
         var bgm = await _model.GetBgmData("TITLE");
         Ryneus.SoundManager.Instance.PlayBgm(bgm,1.0f,false);

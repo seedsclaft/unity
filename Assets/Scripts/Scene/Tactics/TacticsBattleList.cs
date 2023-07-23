@@ -74,7 +74,7 @@ public class TacticsBattleList : ListWindow , IInputHandlerEvent
             if (Index == -1)
             {
                 TacticsComandType tacticsComandType = TacticsComandType.None;
-                if (tacticsCommandList.Index == 1)
+                if (tacticsCommandList.Index == 2)
                 {
                     tacticsComandType = TacticsComandType.Train;
                 }

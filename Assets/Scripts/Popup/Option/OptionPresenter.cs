@@ -20,13 +20,16 @@ public class OptionPresenter
     private void Initialize()
     {
         _view.SetEvent((type) => updateCommand(type));
-        _view.SetOptionCommand(_model.OptionCommand());
+        _view.SetOptionCommand(_model.OptionCommand(),() => 
+        {
         _view.InitializeVolume(_model.BGMVolume(),_model.BGMMute(),_model.SEVolume(),_model.SEMute());
         _view.InitializeGraphic(_model.GraphicIndex());
         _view.InitializeEventSkip(GameSystem.ConfigData._eventSkipIndex ? 1 : 2);
         _view.InitializeCommandEndCheck(GameSystem.ConfigData._commandEndCheck ? 2 : 1);
         _view.InitializeBattleWait(GameSystem.ConfigData._battleWait ? 2 : 1);
         _view.InitializeBattleAnimation(GameSystem.ConfigData._battleAnimationSkip ? 1 : 2);
+        });
+        _view.SetHelpWindow();
         _busy = false;
     }
 

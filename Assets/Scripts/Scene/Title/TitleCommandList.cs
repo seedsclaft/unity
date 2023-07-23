@@ -7,7 +7,7 @@ public class TitleCommandList : ListWindow , IInputHandlerEvent
     [SerializeField] private int rows = 0;
     private List<SystemData.MenuCommandData> _data = new List<SystemData.MenuCommandData>();
 
-    public void Initialize(List<SystemData.MenuCommandData> menuCommands ,System.Action<TitleComandType> callEvent)
+    public void Initialize(List<SystemData.MenuCommandData> menuCommands ,System.Action<TitleComandType> callEvent,System.Action optionEvent)
     {
         InitializeListView(rows);
         _data = menuCommands;
@@ -18,7 +18,7 @@ public class TitleCommandList : ListWindow , IInputHandlerEvent
             titleCommand.SetCallHandler(callEvent);
             titleCommand.SetSelectHandler((data) => UpdateSelectIndex(data));
         }
-        SetInputHandler((a) => CallInputHandler(a,callEvent));
+        SetInputHandler((a) => CallInputHandler(a,callEvent,optionEvent));
         UpdateAllItems();
         UpdateSelectIndex(0);
     }
@@ -33,14 +33,19 @@ public class TitleCommandList : ListWindow , IInputHandlerEvent
         if (_helpWindow != null && Index >= 0)
         {
             _helpWindow.SetHelpText(_data[Index].Help);
+            _helpWindow.SetInputInfo("TITLE");
         }
     }
 
-    private void CallInputHandler(InputKeyType keyType, System.Action<TitleComandType> callEvent)
+    private void CallInputHandler(InputKeyType keyType, System.Action<TitleComandType> callEvent,System.Action optionEvent)
     {
         if (keyType == InputKeyType.Decide)
         {
             callEvent((TitleComandType)Index);
+        }
+        if (keyType == InputKeyType.Option1)
+        {
+            optionEvent();
         }
     }
 

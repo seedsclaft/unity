@@ -9,7 +9,7 @@ public class TacticsCommandList : ListWindow , IInputHandlerEvent
     [SerializeField] private int cols = 0;
     private List<SystemData.MenuCommandData> _menuCommands = new List<SystemData.MenuCommandData>();
 
-    public void Initialize(System.Action<TacticsComandType> callEvent,System.Action alcanaEvent = null)
+    public void Initialize(System.Action<TacticsComandType> callEvent,System.Action optionEvent = null,System.Action retireEvent = null,System.Action alcanaEvent = null)
     {
         InitializeListView(cols);
         for (int i = 0; i < cols;i++)
@@ -18,7 +18,7 @@ public class TacticsCommandList : ListWindow , IInputHandlerEvent
             TacticsCommand.SetCallHandler(callEvent);
             TacticsCommand.SetSelectHandler((data) => UpdateSelectIndex(data));
         }
-        SetInputHandler((a) => CallInputHandler(a,callEvent,alcanaEvent));
+        SetInputHandler((a) => CallInputHandler(a,callEvent,optionEvent,retireEvent,alcanaEvent));
     }
 
     public void Refresh(List<SystemData.MenuCommandData> menuCommands)
@@ -34,13 +34,14 @@ public class TacticsCommandList : ListWindow , IInputHandlerEvent
             ObjectList[i].SetActive(i < _menuCommands.Count);
         }
         UpdateAllItems();
-        UpdateSelectIndex(-1);
+        UpdateSelectIndex(0);
     }
 
     public override void UpdateHelpWindow(){
         if (_helpWindow != null && Index >= 0)
         {
             _helpWindow.SetHelpText(_menuCommands[Index].Help);
+            _helpWindow.SetInputInfo("TACTICS");
         }
     }
 
@@ -53,7 +54,7 @@ public class TacticsCommandList : ListWindow , IInputHandlerEvent
         }
     }
 
-    private void CallInputHandler(InputKeyType keyType, System.Action<TacticsComandType> callEvent,System.Action alcanaEvent)
+    private void CallInputHandler(InputKeyType keyType, System.Action<TacticsComandType> callEvent,System.Action optionEvent,System.Action retireEvent,System.Action alcanaEvent)
     {
         if (keyType == InputKeyType.Decide && Index > -1)
         {
@@ -62,6 +63,14 @@ public class TacticsCommandList : ListWindow , IInputHandlerEvent
             callEvent((TacticsComandType)_menuCommands[Index].Id);
         }
         if (keyType == InputKeyType.Option1)
+        {
+            optionEvent();
+        }
+        if (keyType == InputKeyType.SideLeft1)
+        {
+            retireEvent();
+        }
+        if (keyType == InputKeyType.Option2)
         {
             alcanaEvent();
         }

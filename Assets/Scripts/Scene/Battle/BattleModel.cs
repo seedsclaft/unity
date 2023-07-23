@@ -366,25 +366,6 @@ public class BattleModel : BaseModel
     public ActionInfo MakeActionInfo(BattlerInfo subject, int skillId,bool IsInterrupt,bool IsTriggerd)
     {
         SkillsData.SkillData skill = DataSystem.Skills.Find(a => a.Id == skillId);
-        int LastTargetIndex = -1;
-        if (subject.isActor)
-        {
-            LastTargetIndex = subject.LastTargetIndex();
-            if (skill.TargetType == TargetType.Opponent)
-            {
-                BattlerInfo targetBattler = BattlerEnemies().Find(a => a.Index == LastTargetIndex && a.IsAlive());
-                if (targetBattler == null || targetBattler.IsAlive() == false)
-                {
-                    if (BattlerEnemies().Count > 0 && BattlerEnemies().Find(a => a.IsAlive()) != null)
-                    {
-                        LastTargetIndex = BattlerEnemies().Find(a => a.IsAlive()).Index;
-                    }
-                }
-            } else
-            {
-                LastTargetIndex = subject.Index;
-            }
-        }
         List<int> targetIndexList = MakeActionTarget(skillId,subject.Index,true);
         if (subject.IsState(StateType.Substitute))
         {
@@ -400,6 +381,25 @@ public class BattleModel : BaseModel
                     targetIndexList.Clear();
                     targetIndexList.Add(substituteId);
                 }
+            }
+        }
+        int LastTargetIndex = -1;
+        if (subject.isActor)
+        {
+            LastTargetIndex = subject.LastTargetIndex();
+            if (skill.TargetType == TargetType.Opponent)
+            {
+                BattlerInfo targetBattler = BattlerEnemies().Find(a => a.Index == LastTargetIndex && a.IsAlive() && targetIndexList.Contains(LastTargetIndex));
+                if (targetBattler == null || targetBattler.IsAlive() == false)
+                {
+                    if (BattlerEnemies().Count > 0 && BattlerEnemies().Find(a => a.IsAlive() && targetIndexList.Contains(a.Index)) != null)
+                    {
+                        LastTargetIndex = BattlerEnemies().Find(a => a.IsAlive() && targetIndexList.Contains(a.Index)).Index;
+                    }
+                }
+            } else
+            {
+                LastTargetIndex = subject.Index;
             }
         }
         ActionInfo actionInfo = new ActionInfo(skillId,subject.Index,LastTargetIndex,targetIndexList);
@@ -708,7 +708,7 @@ public class BattleModel : BaseModel
             {
                 if (indexList.Count > 0)
                 {
-                    CurrentBattler.SetLastTargetIndex(indexList[0] - 100);
+                    CurrentBattler.SetLastTargetIndex(indexList[0]);
                 }
             }
         }
@@ -718,7 +718,7 @@ public class BattleModel : BaseModel
             {
                 if (indexList[0] > 100)
                 {
-                    CurrentBattler.SetLastTargetIndex(indexList[0] - 100);
+                    CurrentBattler.SetLastTargetIndex(indexList[0]);
                 }
             }
         }
