@@ -26,9 +26,8 @@ public class BattleView : BaseView
     [SerializeField] private GameObject animPrefab = null;
 
     [SerializeField] private Button escapeButton = null;
-    [SerializeField] private Button ruleButton = null;
-    [SerializeField] private Button optionButton = null;
     [SerializeField] private SkillInfoComponent skillInfoComponent = null;
+    [SerializeField] private SideMenuList sideMenuList = null;
     private BattleStartAnim _battleStartAnim = null;
 
     private HelpWindow _helpWindow = null;
@@ -58,7 +57,7 @@ public class BattleView : BaseView
         DeactivateConditionList();
         HideConditionAll();
 
-        skillList.InitializeAttribute((attribute) => CallAttributeTypes(attribute));
+        skillList.InitializeAttribute((attribute) => CallAttributeTypes(attribute),() => OnClickCondition());
         SetInputHandler(skillList.skillAttributeList.GetComponent<IInputHandlerEvent>());
         skillList.HideAttributeList();
 
@@ -67,7 +66,7 @@ public class BattleView : BaseView
 
     private void InitializeSkillActionList()
     {
-        skillList.InitializeAction(a => CallSkillAction(a),() => OnClickBack(),() => OnClickCondition(),null,() => OnClickEscape());
+        skillList.InitializeAction(a => CallSkillAction(a),() => OnClickBack(),null,() => OnClickEscape(),() => CallOpenSideMenu());
         SetInputHandler(skillList.skillActionList.GetComponent<IInputHandlerEvent>());
         skillList.HideActionList();
         skillList.HideAttributeList();
@@ -88,11 +87,13 @@ public class BattleView : BaseView
     public void ShowEnemyTarget()
     {
         battleEnemyLayer.gameObject.SetActive(true);
+        _helpWindow.SetInputInfo("BATTLE_ENEMY");
     }
 
     public void ShowPartyTarget()
     {
         battleActorList.gameObject.SetActive(true);
+        _helpWindow.SetInputInfo("BATTLE_PARTY");
     }
 
     public void CreateObject()
@@ -118,10 +119,7 @@ public class BattleView : BaseView
         CreateBackCommand(() => OnClickBack());
         escapeButton.onClick.AddListener(() => OnClickEscape());
         SetEscapeButton(false);
-        ruleButton.onClick.AddListener(() => OnClickRuling());
-        optionButton.onClick.AddListener(() => OnClickOption());
         SetRuleButton(false);
-        //_helpWindow = prefab.GetComponent<HelpWindow>();
     }
 
     public void SetEscapeButton(bool isEscape)
@@ -131,7 +129,7 @@ public class BattleView : BaseView
 
     public void SetRuleButton(bool isActive)
     {
-        ruleButton.gameObject.SetActive(isActive);
+        sideMenuList.gameObject.SetActive(isActive);
     }
 
 
@@ -175,6 +173,13 @@ public class BattleView : BaseView
     public void SetHelpText(string text)
     {
         _helpWindow.SetHelpText(text);
+        if (text != "")
+        {        
+            _helpWindow.SetInputInfo("BATTLE");
+        } else
+        {
+            _helpWindow.SetInputInfo("BATTLE_NO");
+        }
     }
 
     public void SetEvent(System.Action<BattleViewEvent> commandData)
@@ -578,6 +583,63 @@ public class BattleView : BaseView
             }
         }
     }
+    public void SetSideMenu(List<SystemData.MenuCommandData> menuCommands){
+        sideMenuList.Initialize(menuCommands,(a) => CallSideMenu(a),() => OnClickOption(),() => CallCloseSideMenu());
+        SetInputHandler(sideMenuList.GetComponent<IInputHandlerEvent>());
+        sideMenuList.Deactivate();
+    }
+    
+    public void ActivateSideMenu()
+    {
+        _helpWindow.SetInputInfo("SIDEMENU");
+        sideMenuList.Activate();
+    }
+
+    public void DeactivateSideMenu()
+    {
+        _helpWindow.SetInputInfo("BATTLE");
+        sideMenuList.Deactivate();
+    }
+
+    public void CommandOpenSideMenu()
+    {
+        _helpWindow.SetInputInfo("SIDEMENU");
+        _helpWindow.SetHelpText(DataSystem.System.GetTextData(701).Help);
+        skillList.DeactivateActionList();
+        skillList.DeactivateAttributeList();
+        sideMenuList.Activate();
+        sideMenuList.OpenSideMenu();
+    }
+
+    public void CommandCloseSideMenu()
+    {
+        _helpWindow.SetInputInfo("BATTLE");
+        skillList.ActivateActionList();
+        skillList.ActivateAttributeList();
+        sideMenuList.Deactivate();
+        sideMenuList.CloseSideMenu();
+        skillList.skillActionList.UpdateHelpWindow();
+        _helpWindow.SetHelpText(DataSystem.System.GetTextData(15010).Text);
+    }
+
+    private void CallOpenSideMenu()
+    {
+        var eventData = new BattleViewEvent(CommandType.OpenSideMenu);
+        _commandData(eventData);
+    }
+
+    private void CallSideMenu(SystemData.MenuCommandData sideMenu)
+    {
+        var eventData = new BattleViewEvent(CommandType.SelectSideMenu);
+        eventData.templete = sideMenu;
+        _commandData(eventData);
+    }
+
+    private void CallCloseSideMenu()
+    {
+        var eventData = new BattleViewEvent(CommandType.CloseSideMenu);
+        _commandData(eventData);
+    }
 }
 
 namespace Battle
@@ -589,6 +651,9 @@ namespace Battle
         Escape,
         Rule,
         Option,
+        OpenSideMenu,
+        SelectSideMenu,
+        CloseSideMenu,
         BattleCommand,
         AttributeType,
         DecideActor,

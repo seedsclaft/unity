@@ -61,9 +61,9 @@ public class TacticsEnemyList : ListWindow , IInputHandlerEvent
         Refresh();
     }
 
-    public void InitializeConfirm(List<SystemData.MenuCommandData> confirmCommands ,System.Action<TacticsComandType> callEvent)
+    public void InitializeConfirm(List<SystemData.MenuCommandData> confirmCommands ,System.Action<TacticsComandType> callEvent,System.Action<int> enemyInfoEvent)
     {
-        tacticsCommandList.Initialize(callEvent);
+        tacticsCommandList.Initialize(callEvent,null,null,null,enemyInfoEvent);
         tacticsCommandList.Refresh(confirmCommands);
     }
 
@@ -111,7 +111,7 @@ public class TacticsEnemyList : ListWindow , IInputHandlerEvent
         {
             if (_getItemIndex < 0)
             {
-                if (enemyInfoEvent != null)
+                if (enemyInfoEvent != null && Index >= 0)
                 {
                     enemyInfoEvent(Index);
                 }
@@ -131,6 +131,10 @@ public class TacticsEnemyList : ListWindow , IInputHandlerEvent
                 _getItemIndex--;
                 if (_getItemIndex == -2)
                 {
+                    if (_troopInfos.Count <= Index)
+                    {
+                        return;
+                    }
                     _getItemIndex = _troopInfos[Index].GetItemInfos.Count - 1;
                 }
                 TacticsEnemy tacticsEnemy = ObjectList[Index].GetComponent<TacticsEnemy>();
@@ -148,6 +152,11 @@ public class TacticsEnemyList : ListWindow , IInputHandlerEvent
             {
                 _getItemIndex++;
                 TacticsEnemy tacticsEnemy = ObjectList[Index].GetComponent<TacticsEnemy>();
+                
+                if (_troopInfos.Count <= Index)
+                {
+                    return;
+                }
                 if (_troopInfos[Index].GetItemInfos.Count > _getItemIndex)
                 {
                 } else{

@@ -9,7 +9,7 @@ public class SkillAttributeList : ListWindow , IInputHandlerEvent
     [SerializeField] private int cols = 0;
     private List<AttributeType> _attributeTypesData = new List<AttributeType>();
 
-    public void Initialize(System.Action<AttributeType> callEvent)
+    public void Initialize(System.Action<AttributeType> callEvent,System.Action conditionEvent)
     {
         InitializeListView(cols);
         for (int i = 0; i < cols;i++)
@@ -26,7 +26,7 @@ public class SkillAttributeList : ListWindow , IInputHandlerEvent
                 //UpdateSelectIndex(data-1);
             });
         }
-        SetInputHandler((a) => CallInputHandler(a,callEvent));
+        SetInputHandler((a) => CallInputHandler(a,callEvent,conditionEvent));
     }
 
     public void Refresh(List<AttributeType> attributeTypes,AttributeType currentAttibuteType)
@@ -51,19 +51,44 @@ public class SkillAttributeList : ListWindow , IInputHandlerEvent
         UpdateAllItems();
     }
 
-    private void CallInputHandler(InputKeyType keyType, System.Action<AttributeType> callEvent)
+    private void CallInputHandler(InputKeyType keyType, System.Action<AttributeType> callEvent,System.Action conditionEvent)
     {
         if (keyType == InputKeyType.SideLeft1)
         {
             int index = Index - 1;
-            if (index < 0) index = _attributeTypesData.Count-1;
+            if (index == -2)
+            {
+                index = _attributeTypesData.Count-1;
+            } else
+            if (index < 0 && conditionEvent != null) 
+            {
+                index = -1;//_attributeTypesData.Count-1;
+                UpdateSelectIndex(index);
+                conditionEvent();
+                return;
+            } else
+            if (index < 0 && conditionEvent == null) 
+            {
+                index = _attributeTypesData.Count-1;
+            }
             callEvent(_attributeTypesData[index]);
             UpdateSelectIndex(index);
         }
         if (keyType == InputKeyType.SideRight1)
         {
             int index = Index + 1;
-            if (index > _attributeTypesData.Count-1) index = 0;
+            if (index > _attributeTypesData.Count-1 && conditionEvent != null) 
+            {
+                index = -1;//_attributeTypesData.Count-1;
+                UpdateSelectIndex(index);
+                conditionEvent();
+                return;
+                //index = 0;
+            } else
+            if (index > _attributeTypesData.Count-1 && conditionEvent == null) 
+            {
+                index = 0;
+            }
             callEvent(_attributeTypesData[index]);
             UpdateSelectIndex(index);
         }

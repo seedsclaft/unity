@@ -300,7 +300,7 @@ public class StrategyPresenter : BasePresenter
             _view.CommandEnemyInfoClose();
             _view.SetActiveUi(true);
         });
-        statusViewInfo.SetEnemyInfos(enemyInfos);
+        statusViewInfo.SetEnemyInfos(enemyInfos,false);
         _view.CommandCallEnemyInfo(statusViewInfo);
         _view.SetActiveUi(false);
         Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);    

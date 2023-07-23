@@ -16,14 +16,14 @@ public class SkillList : MonoBehaviour
         skillAttributeList = prefab.GetComponentInChildren<SkillAttributeList>();
     }
 
-    public void InitializeAttribute(System.Action<AttributeType> callEvent)
+    public void InitializeAttribute(System.Action<AttributeType> callEvent,System.Action conditionEvent)
     {
-        skillAttributeList.Initialize(callEvent);
+        skillAttributeList.Initialize(callEvent,conditionEvent);
     }
 
-    public void InitializeAction(System.Action<SkillInfo> callEvent,System.Action cancelEvent,System.Action conditionEvent,System.Action<SkillInfo> learningEvent,System.Action escapeEvent)
+    public void InitializeAction(System.Action<SkillInfo> callEvent,System.Action cancelEvent,System.Action<SkillInfo> learningEvent,System.Action escapeEvent,System.Action optionEvent)
     {
-        skillActionList.Initialize(callEvent,cancelEvent,conditionEvent,learningEvent,escapeEvent);
+        skillActionList.Initialize(callEvent,cancelEvent,learningEvent,escapeEvent,optionEvent);
     }
 
     public void SetSkillInfos(List<SkillInfo> skillInfoData)

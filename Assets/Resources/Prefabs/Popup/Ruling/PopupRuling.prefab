@@ -865,11 +865,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isScrollList: 1
   horizontal: 0
+  reverse: 0
+  warpMode: 1
   scrollRect: {fileID: 4678043196069511410}
   itemPrefab: {fileID: 8392877692630870211, guid: 333d8fb4229e20c41acdab3c483356ae,
     type: 3}
   _helpWindow: {fileID: 0}
-  rows: 1
   cols: 12
 --- !u!1 &6497011380736205618
 GameObject:
@@ -971,7 +972,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2112994802282504723}
-  - component: {fileID: 3161371904775703965}
+  - component: {fileID: 3568114223444537513}
   m_Layer: 5
   m_Name: CommandList
   m_TagString: Untagged
@@ -1000,7 +1001,7 @@ RectTransform:
   m_AnchoredPosition: {x: -264, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0}
---- !u!114 &3161371904775703965
+--- !u!114 &3568114223444537513
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1009,17 +1010,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 6833638537268313010}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f1dc64a97d2c7dc4fa5d6402e0b0675a, type: 3}
+  m_Script: {fileID: 11500000, guid: 69b25f03edffea6408cf3335a7105eef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   isScrollList: 1
   horizontal: 0
+  reverse: 0
+  warpMode: 1
   scrollRect: {fileID: 1759086458509444231}
   itemPrefab: {fileID: 7566512813713077172, guid: 3b9658fb80669c0458357932a906b860,
     type: 3}
   _helpWindow: {fileID: 0}
-  rows: 1
-  cols: 10
+  rows: 8
 --- !u!1 &6966856887993791612
 GameObject:
   m_ObjectHideFlags: 0
@@ -1070,7 +1072,7 @@ MonoBehaviour:
   backPrefab: {fileID: 6783263795755603185, guid: 6b914cf925ad6d14eb3325bbfc390299,
     type: 3}
   backRoot: {fileID: 1742002333855923751}
-  confirmCommandList: {fileID: 3161371904775703965}
+  confirmCommandList: {fileID: 3568114223444537513}
   ruleList: {fileID: 3202137263332825756}
   titleText: {fileID: 0}
 --- !u!1 &7020774200258942859

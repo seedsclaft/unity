@@ -199,7 +199,7 @@ public class GameSystem : MonoBehaviour
             CreateEnemyInfo();
             statusRoot.gameObject.SetActive(true);
             var popupInfo = (StatusViewInfo)viewEvent.templete;
-            _enemyInfoView.Initialize(popupInfo.EnemyInfos);
+            _enemyInfoView.Initialize(popupInfo.EnemyInfos,popupInfo.IsBattle);
             _enemyInfoView.SetBackEvent(popupInfo.BackEvent);
             _enemyInfoView.SetEvent((type) => updateCommand(type));
             _currentScene.SetBusy(true);

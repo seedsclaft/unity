@@ -7,7 +7,8 @@ using Ruling;
 
 public class RulingView : BaseView
 {
-    [SerializeField] private ConfirmCommandList confirmCommandList = null;
+    [SerializeField] private RuleCommandList confirmCommandList = null;
+    
     [SerializeField] private RuleList ruleList = null;
     [SerializeField] private TextMeshProUGUI titleText = null;
     private new System.Action<RulingViewEvent> _commandData = null;
@@ -41,7 +42,7 @@ public class RulingView : BaseView
     
     public void SetRulingCommand(List<SystemData.MenuCommandData> menuCommands)
     {
-        confirmCommandList.Initialize(menuCommands,(menuCommandInfo) => CallRulingCommand(menuCommandInfo));
+        confirmCommandList.Initialize(menuCommands,(a) => CallRulingCommand(a),() => BackEvent());
         SetInputHandler(confirmCommandList.GetComponent<IInputHandlerEvent>());
     }
 
@@ -52,9 +53,14 @@ public class RulingView : BaseView
         _commandData(eventData);
     }
 
+    public void CommandSelectTitle(List<string> helpList )
+    {
+        ruleList.Refresh(helpList);
+    }
+
     public void CommandRefresh(List<SystemData.MenuCommandData> menuCommands,List<string> helpList)
     {
-        confirmCommandList.Refresh(menuCommands);
+        confirmCommandList.Refresh();
         ruleList.Refresh(helpList);
     }
 }

@@ -44,7 +44,7 @@ public class RulingPresenter
     private void CommandSelectTitle(int id)
     {
         _model.SetId(id);
-        CommandRefresh();
+        _view.CommandSelectTitle(_model.RuleHelp());
     }
 
     private void CommandSelectCategory(int id)

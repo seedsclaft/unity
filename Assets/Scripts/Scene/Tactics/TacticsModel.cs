@@ -421,4 +421,20 @@ public class TacticsModel : BaseModel
         }
         return -1;
     }
+
+    public List<SystemData.MenuCommandData> SideMenu()
+    {
+        var list = new List<SystemData.MenuCommandData>();
+        var retire = new SystemData.MenuCommandData();
+        retire.Id = 1;
+        retire.Name = DataSystem.System.GetTextData(704).Text;
+        retire.Key = "Retire";
+        list.Add(retire);
+        var menucommand = new SystemData.MenuCommandData();
+        menucommand.Id = 2;
+        menucommand.Name = DataSystem.System.GetTextData(703).Text;
+        menucommand.Key = "Help";
+        list.Add(menucommand);
+        return list;
+    }
 }

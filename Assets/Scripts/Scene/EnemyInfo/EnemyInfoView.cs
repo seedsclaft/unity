@@ -12,6 +12,7 @@ public class EnemyInfoView : BaseView,IInputHandlerEvent
     [SerializeField] private StatusConditionList statusConditionList = null;
     [SerializeField] private Button skillButton = null;
     [SerializeField] private GameObject helpRoot = null;
+    [SerializeField] private GameObject helpPrefab = null;
     [SerializeField] private GameObject leftRoot = null;
     [SerializeField] private GameObject rightRoot = null;
     [SerializeField] private GameObject leftPrefab = null;
@@ -21,14 +22,18 @@ public class EnemyInfoView : BaseView,IInputHandlerEvent
     private Button _leftButton = null;
     private Button _rightButton = null;
     private System.Action _backEvent = null;
+
+    private HelpWindow _helpWindow;
+    private bool _isBattle = false;
     protected void Awake(){
         InitializeInput();
     }
 
-    public void Initialize(List<BattlerInfo> enemyInfos){
+    public void Initialize(List<BattlerInfo> enemyInfos,bool isBattle){
+        _isBattle = isBattle;
         skillList.Initialize();
         InitializeSkillActionList();
-        skillList.InitializeAttribute((attribute) => CallAttributeTypes(attribute));
+        skillList.InitializeAttribute((attribute) => CallAttributeTypes(attribute),null);
 
         GameObject prefab2 = Instantiate(leftPrefab);
         prefab2.transform.SetParent(leftRoot.transform, false);
@@ -40,15 +45,24 @@ public class EnemyInfoView : BaseView,IInputHandlerEvent
         _rightButton = prefab3.GetComponent<Button>();
         _rightButton.onClick.AddListener(() => OnClickRight());
 
-        statusConditionList.Initialize(() => OnClickCondition());
-        SetInputHandler(statusConditionList.GetComponent<IInputHandlerEvent>());
-        DeactivateConditionList();
+        if (_isBattle)
+        {
+            statusConditionList.Initialize(() => OnClickCondition());
+            SetInputHandler(statusConditionList.GetComponent<IInputHandlerEvent>());
+            DeactivateConditionList();
+            _rightButton.gameObject.SetActive(false);
+            _leftButton.gameObject.SetActive(false);
+        } else
+        {
+            statusConditionList.gameObject.SetActive(false);
+        }
 
         skillButton.onClick.AddListener(() => OnClickSkill());
 
         new EnemyInfoPresenter(this,enemyInfos);
         SetInputHandler(gameObject.GetComponent<IInputHandlerEvent>());
     }
+
     private void InitializeSkillActionList()
     {
         skillList.InitializeAction(null,() => BackEvent(),null,null,null);
@@ -91,7 +105,20 @@ public class EnemyInfoView : BaseView,IInputHandlerEvent
         _commandData(eventData);
     }
 
-    public void SetHelpWindow(){
+
+    public void SetHelpWindow()
+    {
+        GameObject prefab = Instantiate(helpPrefab);
+        prefab.transform.SetParent(helpRoot.transform, false);
+        _helpWindow = prefab.GetComponent<HelpWindow>();
+        _helpWindow.SetHelpText(DataSystem.System.GetTextData(809).Help);
+        if (_isBattle)
+        {
+            _helpWindow.SetInputInfo("ENEMYINFO_BATTLE");
+        } else
+        {
+            _helpWindow.SetInputInfo("ENEMYINFO");
+        }
     }
 
     public void SetEvent(System.Action<EnemyInfoViewEvent> commandData)
@@ -140,7 +167,26 @@ public class EnemyInfoView : BaseView,IInputHandlerEvent
 
     public void InputHandler(InputKeyType keyType)
     {
-
+        if (keyType == InputKeyType.SideLeft1)
+        {
+            if (_isBattle)
+            {
+                OnClickSkill();
+            } else
+            {
+                OnClickLeft();
+            }
+        }
+        if (keyType == InputKeyType.SideRight1)
+        {
+            if (_isBattle)
+            {
+                OnClickCondition();
+            } else
+            {
+                OnClickRight();
+            }
+        }
     }
 
     public void HideSkillActionList()
@@ -151,32 +197,48 @@ public class EnemyInfoView : BaseView,IInputHandlerEvent
     
     public void ActivateConditionList()
     {
-        statusConditionList.Activate();
+        if (_isBattle)
+        {
+            statusConditionList.Activate();
+        }
     }
     
     public void DeactivateConditionList()
     {
-        statusConditionList.Deactivate();
+        if (_isBattle)
+        {
+            statusConditionList.Deactivate();
+        }
     }
 
     public void SetCondition(List<StateInfo> stateInfos)
     {
-        statusConditionList.Refresh(stateInfos,() => CommandBack(),() => {
-            skillList.ShowActionList();
-            skillList.ActivateActionList();
-            HideCondition();
-        });
+        if (_isBattle)
+        {
+            statusConditionList.Refresh(stateInfos,() => CommandBack(),() => {
+                skillList.ShowActionList();
+                skillList.ActivateActionList();
+                HideCondition();
+            });
+        }
     }
     
     public void ShowConditionAll()
     {
-        statusConditionList.gameObject.SetActive(true);
-        statusConditionList.ShowMainView();
+        if (_isBattle)
+        {
+            statusConditionList.gameObject.SetActive(true);
+            statusConditionList.ShowMainView();
+        }
+        
     }
 
     public void HideCondition()
     {
-        statusConditionList.HideMainView();
+        if (_isBattle)
+        {
+            statusConditionList.HideMainView();
+        }
     }
 
     public new void MouseCancelHandler()

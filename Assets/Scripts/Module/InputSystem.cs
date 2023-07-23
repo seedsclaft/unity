@@ -55,6 +55,16 @@ public class InputSystem
         {
             Debug.Log("sideRight1");
             return InputKeyType.SideRight1;
+        }  else
+        if(Keyboard.current[Key.PageUp].wasPressedThisFrame) 
+        {
+            Debug.Log("sideLeft2");
+            return InputKeyType.SideLeft2;
+        } else
+        if(Keyboard.current[Key.PageDown].wasPressedThisFrame) 
+        {
+            Debug.Log("sideRight2");
+            return InputKeyType.SideRight2;
         } else
         if(Keyboard.current[Key.Enter].wasPressedThisFrame) 
         {

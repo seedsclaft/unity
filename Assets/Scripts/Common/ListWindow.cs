@@ -21,6 +21,8 @@ abstract public class ListWindow : MonoBehaviour
 
     [SerializeField] private bool isScrollList = true; // 表示数が初期プレハブ数より多くなるか
     [SerializeField] private bool horizontal = false; 
+    [SerializeField] private bool reverse = false; 
+    [SerializeField] private bool warpMode = true; 
     [SerializeField] private ScrollRect scrollRect = null; 
     public ScrollRect ScrollRect => scrollRect; 
     [SerializeField] private GameObject itemPrefab = null; 
@@ -419,17 +421,31 @@ abstract public class ListWindow : MonoBehaviour
         int selectIndex = Index;
         var plusKey = (horizontal == true) ? InputKeyType.Right : InputKeyType.Down;
         var minusKey = (horizontal == true) ? InputKeyType.Left : InputKeyType.Up;
-
+        if (reverse)
+        {
+            plusKey = (horizontal == true) ? InputKeyType.Left : InputKeyType.Up;
+            minusKey = (horizontal == true) ? InputKeyType.Right : InputKeyType.Down;
+        }
         if (keyType == plusKey){
             selectIndex = Index + 1;
             if (selectIndex >= _dataCount){
-                selectIndex = 0;
+                if (warpMode)
+                {
+                    selectIndex = 0;
+                } else
+                {
+                }
             }
         } else
         if (keyType == minusKey){
             selectIndex = Index - 1;
             if (selectIndex < 0){
-                selectIndex = _dataCount-1;
+                if (warpMode)
+                {
+                    selectIndex = _dataCount-1;
+                } else
+                {
+                }
             }
         }
         if (currentIndex != selectIndex){

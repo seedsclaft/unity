@@ -27,4 +27,20 @@ public class MainMenuModel : BaseModel
             PartyInfo.AddActor(stageMembers[i]);
         }
     }
+
+    public List<SystemData.MenuCommandData> SideMenu()
+    {
+        var list = new List<SystemData.MenuCommandData>();
+        var menucommand = new SystemData.MenuCommandData();
+        menucommand.Id = 2;
+        menucommand.Name = DataSystem.System.GetTextData(703).Text;
+        menucommand.Key = "Help";
+        list.Add(menucommand);
+        var ranking = new SystemData.MenuCommandData();
+        ranking.Id = 1;
+        ranking.Name = DataSystem.System.GetTextData(702).Text;
+        ranking.Key = "Ranking";
+        list.Add(ranking);
+        return list;
+    }
 }

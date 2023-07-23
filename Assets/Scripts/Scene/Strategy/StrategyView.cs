@@ -70,6 +70,7 @@ public class StrategyView : BaseView
         actorInfoComponent.gameObject.SetActive(true);
         actorInfoComponent.UpdateInfo(actorInfo,null);
         strategyStrengthList.Refresh(actorInfo);
+        _helpWindow.SetInputInfo("LEVELUP");
     }
 
     public void SetTitle(string text)
@@ -84,7 +85,7 @@ public class StrategyView : BaseView
     public void SetEnemyList(List<SystemData.MenuCommandData> confirmCommands)
     {
         tacticsEnemyList.Initialize(null,null,(a) => CallPopupSkillInfo(a),(a) => OnClickEnemyInfo(a));
-        tacticsEnemyList.InitializeConfirm(confirmCommands,(confirmCommands) => CallBattleCommand(confirmCommands));
+        tacticsEnemyList.InitializeConfirm(confirmCommands,(a) => CallBattleCommand(a),(a) => OnClickEnemyInfo(a));
         SetInputHandler(tacticsEnemyList.TacticsCommandList.GetComponent<IInputHandlerEvent>());
         tacticsEnemyList.gameObject.SetActive(false);
     }
@@ -121,6 +122,7 @@ public class StrategyView : BaseView
         strategyResultList.TacticsCommandList.SetDisable(commandData,false);
         tacticsEnemyList.TacticsCommandList.SetDisable(commandData,false);
     }
+
     public void SetCommandDisable(SystemData.MenuCommandData commandData)
     {
         strategyResultList.TacticsCommandList.SetDisable(commandData,true);
@@ -149,6 +151,7 @@ public class StrategyView : BaseView
     {
         strategyResultList.Refresh(getItemInfos);
         strategyResultList.gameObject.SetActive(true);
+        _helpWindow.SetInputInfo("STRATEGY");
     }
 
     private void CallResultCommand(TacticsComandType commandType)
@@ -169,6 +172,7 @@ public class StrategyView : BaseView
         troopInfos.Add(troopInfo);
         tacticsEnemyList.Refresh(troopInfos);
         tacticsEnemyList.gameObject.SetActive(true);
+        _helpWindow.SetInputInfo("STRATEGY_BATTLE");
     }
 
     private void CallPopupSkillInfo(GetItemInfo getItemInfo)

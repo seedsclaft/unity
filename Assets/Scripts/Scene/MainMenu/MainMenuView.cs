@@ -7,11 +7,9 @@ using MainMenu;
 public class MainMenuView : BaseView
 {
     [SerializeField] private MainMenuStageList stageList = null;
-    [SerializeField] private Button rankingButton = null;
-    [SerializeField] private Button ruleButton = null;
-    [SerializeField] private Button optionButton = null;
     [SerializeField] private GameObject helpRoot = null;
     [SerializeField] private GameObject helpPrefab = null;
+    [SerializeField] private SideMenuList sideMenuList = null;
     private HelpWindow _helpWindow = null;
 
     private new System.Action<MainMenuViewEvent> _commandData = null;
@@ -20,9 +18,6 @@ public class MainMenuView : BaseView
     {
         base.Initialize();
         InitializeInput();
-        rankingButton.onClick.AddListener(() => OnClickRanking());
-        ruleButton.onClick.AddListener(() => OnClickRuling());
-        optionButton.onClick.AddListener(() => OnClickOption());
         new MainMenuPresenter(this);
     }
 
@@ -40,7 +35,7 @@ public class MainMenuView : BaseView
     }
     
     public void SetStagesData(List<StageInfo> stages){
-        stageList.Initialize(stages,(stageInfo) => CallMainMenuStage(stageInfo));
+        stageList.Initialize(stages,(stageInfo) => CallMainMenuStage(stageInfo),() => CallOpenSideMenu());
         SetInputHandler(stageList.GetComponent<IInputHandlerEvent>());
     }
     
@@ -65,6 +60,60 @@ public class MainMenuView : BaseView
         var eventData = new MainMenuViewEvent(CommandType.Ranking);
         _commandData(eventData);
     }
+
+    public void SetSideMenu(List<SystemData.MenuCommandData> menuCommands){
+        sideMenuList.Initialize(menuCommands,(a) => CallSideMenu(a),() => OnClickOption(),() => CallCloseSideMenu());
+        SetInputHandler(sideMenuList.GetComponent<IInputHandlerEvent>());
+        sideMenuList.Deactivate();
+    }
+    
+    public void ActivateSideMenu()
+    {
+        _helpWindow.SetInputInfo("SIDEMENU");
+        sideMenuList.Activate();
+    }
+
+    public void DeactivateSideMenu()
+    {
+        _helpWindow.SetInputInfo("MAINMENU");
+        sideMenuList.Deactivate();
+    }
+
+    public void CommandOpenSideMenu()
+    {
+        _helpWindow.SetInputInfo("SIDEMENU");
+        _helpWindow.SetHelpText(DataSystem.System.GetTextData(701).Help);
+        stageList.Deactivate();
+        sideMenuList.Activate();
+        sideMenuList.OpenSideMenu();
+    }
+
+    public void CommandCloseSideMenu()
+    {
+        _helpWindow.SetInputInfo("MAINMENU");
+        stageList.Activate();
+        sideMenuList.Deactivate();
+        sideMenuList.CloseSideMenu();
+        stageList.UpdateHelpWindow();
+    }
+    private void CallOpenSideMenu()
+    {
+        var eventData = new MainMenuViewEvent(CommandType.OpenSideMenu);
+        _commandData(eventData);
+    }
+
+    private void CallSideMenu(SystemData.MenuCommandData sideMenu)
+    {
+        var eventData = new MainMenuViewEvent(CommandType.SelectSideMenu);
+        eventData.templete = sideMenu;
+        _commandData(eventData);
+    }
+
+    private void CallCloseSideMenu()
+    {
+        var eventData = new MainMenuViewEvent(CommandType.CloseSideMenu);
+        _commandData(eventData);
+    }
 }
 
 namespace MainMenu
@@ -76,6 +125,9 @@ namespace MainMenu
         Rule = 102,
         Option = 103,
         Ranking = 104,
+        OpenSideMenu,
+        SelectSideMenu,
+        CloseSideMenu
     }
 }
 public class MainMenuViewEvent

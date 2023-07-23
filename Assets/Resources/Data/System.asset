@@ -45,7 +45,7 @@ MonoBehaviour:
   - Id: 1
     Key: SKILLLIST
     Name: "\u9B54\u6CD5\u78BA\u8A8D"
-    Help: "\u8853\u8005(Alchemist)\u306B\u9B54\u6CD5\u3092\u78BA\u8A8D\u3057\u307E\u3059"
+    Help: "\u8853\u8005(Alchemist)\u306E\u9B54\u6CD5\u3092\u78BA\u8A8D\u3057\u307E\u3059"
   OptionCommandData:
   - Id: 1
     Key: BGM_VOLUME
@@ -172,7 +172,7 @@ MonoBehaviour:
     Help: "\u30EC\u30D9\u30EB\u30A2\u30C3\u30D7\u3067\u5165\u624B\u3057\u305FSP\u3068Numinos\u3092\u4F7F\u7528\u3057\u3066\u8853\u8005(Alchemist)\u306E\u30B9\u30C6\u30FC\u30BF\u30B9\u3092\u5F37\u5316\u3057\u307E\u3059"
   - Id: 202
     Text: "\u9B54\u6CD5\u78BA\u8A8D"
-    Help: "\u8853\u8005(Alchemist)\u306B\u9B54\u6CD5\u3092\u78BA\u8A8D\u3057\u307E\u3059"
+    Help: "\u8853\u8005(Alchemist)\u306E\u9B54\u6CD5\u3092\u78BA\u8A8D\u3057\u307E\u3059"
   - Id: 300
     Text: HP
     Help: '""'
@@ -320,6 +320,15 @@ MonoBehaviour:
   - Id: 701
     Text: "\u30AA\u30D7\u30B7\u30E7\u30F3"
     Help: "\u30AA\u30D7\u30B7\u30E7\u30F3\u3084\u305D\u306E\u4ED6\u306E\u9805\u76EE\u3092\u78BA\u8A8D\u3057\u307E\u3059"
+  - Id: 702
+    Text: "\u5168\u4F53\u9806\u4F4D"
+    Help: '""'
+  - Id: 703
+    Text: "\u88C1\u5B9A\u771F\u7406"
+    Help: '""'
+  - Id: 704
+    Text: "\u9694\u4E16\u96E2\u8131"
+    Help: '""'
   - Id: 800
     Text: '""'
     Help: '""'
@@ -339,7 +348,31 @@ MonoBehaviour:
     Text: "\u5024\u5909\u66F4"
     Help: '""'
   - Id: 806
-    Text: "\u30EA\u30BF\u30A4\u30A2"
+    Text: "\u5C5E\u6027\u5207\u66FF"
+    Help: '""'
+  - Id: 807
+    Text: "\u64A4\u9000\u3059\u308B"
+    Help: '""'
+  - Id: 808
+    Text: "\u5217\u5909\u66F4"
+    Help: '""'
+  - Id: 809
+    Text: "\u6575\u8A73\u7D30"
+    Help: "\u6575\u306E\u9B54\u6CD5\u3084\u30B9\u30C6\u30FC\u30BF\u30B9\u3092\u78BA\u8A8D\u3057\u307E\u3059"
+  - Id: 810
+    Text: "\u8853\u8005\u5207\u66FF"
+    Help: '""'
+  - Id: 811
+    Text: "\u9B54\u6CD5\u78BA\u8A8D"
+    Help: '""'
+  - Id: 812
+    Text: "\u9B54\u6CD5\u6709\u52B9\u5207\u66FF"
+    Help: '""'
+  - Id: 813
+    Text: "\u6575\u5207\u66FF"
+    Help: '""'
+  - Id: 814
+    Text: "\u9805\u76EE\u5207\u66FF"
     Help: '""'
   - Id: 1000
     Text: (Nu)
@@ -541,10 +574,10 @@ MonoBehaviour:
     KeyId: 6
     Name: "\u30AA\u30D7\u30B7\u30E7\u30F3"
   - Key: TITLE
-    KeyId: 2
+    KeyId: 1
     Name: "\u30AB\u30FC\u30BD\u30EB\u79FB\u52D5"
   - Key: TITLE
-    KeyId: 3
+    KeyId: 0
     Name: '""'
   - Key: SIDEMENU
     KeyId: 4
@@ -553,25 +586,25 @@ MonoBehaviour:
     KeyId: 5
     Name: "\u623B\u308B"
   - Key: SIDEMENU
-    KeyId: 2
+    KeyId: 3
     Name: "\u30AB\u30FC\u30BD\u30EB\u79FB\u52D5"
   - Key: SIDEMENU
-    KeyId: 3
+    KeyId: 2
     Name: '""'
   - Key: OPTION
     KeyId: 5
     Name: "\u623B\u308B"
   - Key: OPTION
-    KeyId: 2
-    Name: "\u5024\u5909\u66F4"
-  - Key: OPTION
     KeyId: 3
     Name: "\u5024\u5909\u66F4"
   - Key: OPTION
-    KeyId: 0
-    Name: "\u30AB\u30FC\u30BD\u30EB\u79FB\u52D5"
+    KeyId: 2
+    Name: "\u5024\u5909\u66F4"
   - Key: OPTION
     KeyId: 1
+    Name: "\u30AB\u30FC\u30BD\u30EB\u79FB\u52D5"
+  - Key: OPTION
+    KeyId: 0
     Name: '""'
   - Key: CREDIT
     KeyId: 5
@@ -583,23 +616,302 @@ MonoBehaviour:
     KeyId: 6
     Name: "\u30AA\u30D7\u30B7\u30E7\u30F3"
   - Key: TACTICS
-    KeyId: 8
-    Name: "\u30EA\u30BF\u30A4\u30A2"
-  - Key: TACTICS
-    KeyId: 2
+    KeyId: 3
     Name: "\u30AB\u30FC\u30BD\u30EB\u79FB\u52D5"
   - Key: TACTICS
+    KeyId: 2
+    Name: '""'
+  - Key: TRAIN
+    KeyId: 4
+    Name: "\u6C7A\u5B9A"
+  - Key: TRAIN
+    KeyId: 5
+    Name: "\u623B\u308B"
+  - Key: TRAIN
+    KeyId: 1
+    Name: "\u30AB\u30FC\u30BD\u30EB\u79FB\u52D5"
+  - Key: TRAIN
+    KeyId: 0
+    Name: '""'
+  - Key: ALCHEMY
+    KeyId: 4
+    Name: "\u6C7A\u5B9A"
+  - Key: ALCHEMY
+    KeyId: 5
+    Name: "\u623B\u308B"
+  - Key: ALCHEMY
+    KeyId: 1
+    Name: "\u30AB\u30FC\u30BD\u30EB\u79FB\u52D5"
+  - Key: ALCHEMY
+    KeyId: 0
+    Name: '""'
+  - Key: ALCHEMY_ATTRIBUTE
+    KeyId: 4
+    Name: "\u6C7A\u5B9A"
+  - Key: ALCHEMY_ATTRIBUTE
+    KeyId: 5
+    Name: "\u623B\u308B"
+  - Key: ALCHEMY_ATTRIBUTE
     KeyId: 3
+    Name: "\u30AB\u30FC\u30BD\u30EB\u79FB\u52D5"
+  - Key: ALCHEMY_ATTRIBUTE
+    KeyId: 2
+    Name: '""'
+  - Key: ALCHEMY_SKILL
+    KeyId: 4
+    Name: "\u6C7A\u5B9A"
+  - Key: ALCHEMY_SKILL
+    KeyId: 5
+    Name: "\u623B\u308B"
+  - Key: ALCHEMY_SKILL
+    KeyId: 1
+    Name: "\u30AB\u30FC\u30BD\u30EB\u79FB\u52D5"
+  - Key: ALCHEMY_SKILL
+    KeyId: 0
+    Name: '""'
+  - Key: RECOVERY
+    KeyId: 4
+    Name: "\u6C7A\u5B9A"
+  - Key: RECOVERY
+    KeyId: 5
+    Name: "\u623B\u308B"
+  - Key: RECOVERY
+    KeyId: 3
+    Name: "\u5024\u5909\u66F4"
+  - Key: RECOVERY
+    KeyId: 2
+    Name: "\u5024\u5909\u66F4"
+  - Key: RECOVERY
+    KeyId: 1
+    Name: "\u30AB\u30FC\u30BD\u30EB\u79FB\u52D5"
+  - Key: RECOVERY
+    KeyId: 0
+    Name: '""'
+  - Key: ENEMY_SELECT
+    KeyId: 4
+    Name: "\u6C7A\u5B9A"
+  - Key: ENEMY_SELECT
+    KeyId: 5
+    Name: "\u623B\u308B"
+  - Key: ENEMY_SELECT
+    KeyId: 6
+    Name: "\u6575\u8A73\u7D30"
+  - Key: ENEMY_SELECT
+    KeyId: 3
+    Name: "\u30AB\u30FC\u30BD\u30EB\u79FB\u52D5"
+  - Key: ENEMY_SELECT
+    KeyId: 2
+    Name: '""'
+  - Key: ENEMY_SELECT
+    KeyId: 1
+    Name: '""'
+  - Key: ENEMY_SELECT
+    KeyId: 0
+    Name: '""'
+  - Key: ENEMY_BATTLE
+    KeyId: 4
+    Name: "\u6C7A\u5B9A"
+  - Key: ENEMY_BATTLE
+    KeyId: 5
+    Name: "\u623B\u308B"
+  - Key: ENEMY_BATTLE
+    KeyId: 1
+    Name: "\u30AB\u30FC\u30BD\u30EB\u79FB\u52D5"
+  - Key: ENEMY_BATTLE
+    KeyId: 0
+    Name: '""'
+  - Key: RESOURCE
+    KeyId: 4
+    Name: "\u6C7A\u5B9A"
+  - Key: RESOURCE
+    KeyId: 5
+    Name: "\u623B\u308B"
+  - Key: RESOURCE
+    KeyId: 1
+    Name: "\u30AB\u30FC\u30BD\u30EB\u79FB\u52D5"
+  - Key: RESOURCE
+    KeyId: 0
     Name: '""'
   - Key: NAMEENTRY
     KeyId: 12
     Name: "\u6C7A\u5B9A"
   - Key: MAINMENU
-    KeyId: 0
-    Name: "\u30AB\u30FC\u30BD\u30EB\u79FB\u52D5"
-  - Key: MAINMENU
-    KeyId: 1
-    Name: '""'
-  - Key: MAINMENU
     KeyId: 4
     Name: "\u6C7A\u5B9A"
+  - Key: MAINMENU
+    KeyId: 6
+    Name: "\u30AA\u30D7\u30B7\u30E7\u30F3"
+  - Key: MAINMENU
+    KeyId: 1
+    Name: "\u30AB\u30FC\u30BD\u30EB\u79FB\u52D5"
+  - Key: MAINMENU
+    KeyId: 0
+    Name: '""'
+  - Key: STRATEGY
+    KeyId: 4
+    Name: "\u6C7A\u5B9A"
+  - Key: STRATEGY
+    KeyId: 3
+    Name: "\u30AB\u30FC\u30BD\u30EB\u79FB\u52D5"
+  - Key: STRATEGY
+    KeyId: 2
+    Name: '""'
+  - Key: LEVELUP
+    KeyId: 4
+    Name: "\u6C7A\u5B9A"
+  - Key: STRATEGY_BATTLE
+    KeyId: 4
+    Name: "\u6C7A\u5B9A"
+  - Key: STRATEGY_BATTLE
+    KeyId: 6
+    Name: "\u30AA\u30D7\u30B7\u30E7\u30F3"
+  - Key: STRATEGY_BATTLE
+    KeyId: 3
+    Name: "\u30AB\u30FC\u30BD\u30EB\u79FB\u52D5"
+  - Key: STRATEGY_BATTLE
+    KeyId: 2
+    Name: '""'
+  - Key: BATTLE
+    KeyId: 4
+    Name: "\u6C7A\u5B9A"
+  - Key: BATTLE
+    KeyId: 7
+    Name: "\u64A4\u9000\u3059\u308B"
+  - Key: BATTLE
+    KeyId: 6
+    Name: "\u30AA\u30D7\u30B7\u30E7\u30F3"
+  - Key: BATTLE
+    KeyId: 9
+    Name: "\u5C5E\u6027\u5207\u66FF"
+  - Key: BATTLE
+    KeyId: 8
+    Name: '""'
+  - Key: BATTLE
+    KeyId: 1
+    Name: "\u30AB\u30FC\u30BD\u30EB\u79FB\u52D5"
+  - Key: BATTLE
+    KeyId: 0
+    Name: '""'
+  - Key: BATTLE_ENEMY
+    KeyId: 4
+    Name: "\u6C7A\u5B9A"
+  - Key: BATTLE_ENEMY
+    KeyId: 5
+    Name: "\u623B\u308B"
+  - Key: BATTLE_ENEMY
+    KeyId: 6
+    Name: "\u6575\u8A73\u7D30"
+  - Key: BATTLE_ENEMY
+    KeyId: 1
+    Name: "\u5217\u5909\u66F4"
+  - Key: BATTLE_ENEMY
+    KeyId: 0
+    Name: '""'
+  - Key: BATTLE_ENEMY
+    KeyId: 3
+    Name: "\u30AB\u30FC\u30BD\u30EB\u79FB\u52D5"
+  - Key: BATTLE_ENEMY
+    KeyId: 2
+    Name: '""'
+  - Key: BATTLE_PARTY
+    KeyId: 4
+    Name: "\u6C7A\u5B9A"
+  - Key: BATTLE_PARTY
+    KeyId: 5
+    Name: "\u623B\u308B"
+  - Key: BATTLE_PARTY
+    KeyId: 1
+    Name: "\u30AB\u30FC\u30BD\u30EB\u79FB\u52D5"
+  - Key: BATTLE_PARTY
+    KeyId: 0
+    Name: '""'
+  - Key: STATUS
+    KeyId: 4
+    Name: "\u9B54\u6CD5\u78BA\u8A8D"
+  - Key: STATUS
+    KeyId: 5
+    Name: "\u623B\u308B"
+  - Key: STATUS
+    KeyId: 9
+    Name: "\u8853\u8005\u5207\u66FF"
+  - Key: STATUS
+    KeyId: 8
+    Name: '""'
+  - Key: SELECT_HEROINE
+    KeyId: 4
+    Name: "\u9B54\u6CD5\u78BA\u8A8D"
+  - Key: SELECT_HEROINE
+    KeyId: 12
+    Name: "\u6C7A\u5B9A"
+  - Key: SELECT_HEROINE
+    KeyId: 5
+    Name: "\u623B\u308B"
+  - Key: SELECT_HEROINE
+    KeyId: 9
+    Name: "\u8853\u8005\u5207\u66FF"
+  - Key: SELECT_HEROINE
+    KeyId: 8
+    Name: '""'
+  - Key: STATUS_SKILL
+    KeyId: 4
+    Name: "\u9B54\u6CD5\u6709\u52B9\u5207\u66FF"
+  - Key: STATUS_SKILL
+    KeyId: 5
+    Name: "\u623B\u308B"
+  - Key: STATUS_SKILL
+    KeyId: 9
+    Name: "\u5C5E\u6027\u5207\u66FF"
+  - Key: STATUS_SKILL
+    KeyId: 8
+    Name: '""'
+  - Key: STATUS_SKILL
+    KeyId: 1
+    Name: "\u30AB\u30FC\u30BD\u30EB\u79FB\u52D5"
+  - Key: STATUS_SKILL
+    KeyId: 0
+    Name: '""'
+  - Key: HEROINE_SKILL
+    KeyId: 5
+    Name: "\u623B\u308B"
+  - Key: HEROINE_SKILL
+    KeyId: 9
+    Name: "\u5C5E\u6027\u5207\u66FF"
+  - Key: HEROINE_SKILL
+    KeyId: 8
+    Name: '""'
+  - Key: HEROINE_SKILL
+    KeyId: 1
+    Name: "\u30AB\u30FC\u30BD\u30EB\u79FB\u52D5"
+  - Key: HEROINE_SKILL
+    KeyId: 0
+    Name: '""'
+  - Key: ENEMYINFO
+    KeyId: 5
+    Name: "\u623B\u308B"
+  - Key: ENEMYINFO
+    KeyId: 9
+    Name: "\u6575\u5207\u66FF"
+  - Key: ENEMYINFO
+    KeyId: 8
+    Name: '""'
+  - Key: ENEMYINFO
+    KeyId: 1
+    Name: "\u30AB\u30FC\u30BD\u30EB\u79FB\u52D5"
+  - Key: ENEMYINFO
+    KeyId: 0
+    Name: '""'
+  - Key: ENEMYINFO_BATTLE
+    KeyId: 5
+    Name: "\u623B\u308B"
+  - Key: ENEMYINFO_BATTLE
+    KeyId: 9
+    Name: "\u9805\u76EE\u5207\u66FF"
+  - Key: ENEMYINFO_BATTLE
+    KeyId: 8
+    Name: '""'
+  - Key: ENEMYINFO_BATTLE
+    KeyId: 1
+    Name: "\u30AB\u30FC\u30BD\u30EB\u79FB\u52D5"
+  - Key: ENEMYINFO_BATTLE
+    KeyId: 0
+    Name: '""'

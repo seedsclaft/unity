@@ -76,7 +76,7 @@ public class BattleEnemyLayer : ListWindow , IInputHandlerEvent
             _battleEnemies.Add(battleEnemy);
             frontIndex++;
         }
-        SetInputHandler((a) => CallInputHandler(a,callEvent,cancelEvent,selectPartyEvent));
+        SetInputHandler((a) => CallInputHandler(a,callEvent,cancelEvent,selectPartyEvent,detailEvent));
         UpdateAllUnSelect();
     }
 
@@ -209,7 +209,7 @@ public class BattleEnemyLayer : ListWindow , IInputHandlerEvent
         return _battleEnemies[index - 100].BattlerInfoComponent;
     }
     
-    private void CallInputHandler(InputKeyType keyType, System.Action<List<int>> callEvent,System.Action cancelEvent,System.Action selectPartyEvent)
+    private void CallInputHandler(InputKeyType keyType, System.Action<List<int>> callEvent,System.Action cancelEvent,System.Action selectPartyEvent,System.Action<int> detailEvent)
     {
         if (keyType == InputKeyType.Decide)
         {
@@ -297,6 +297,17 @@ public class BattleEnemyLayer : ListWindow , IInputHandlerEvent
         if (keyType == InputKeyType.SideRight1)
         {
             selectPartyEvent();
+        }
+        if (keyType == InputKeyType.Option1)
+        {
+            if (detailEvent != null)
+            {
+                BattlerInfo battlerInfo = _battleInfos.Find(a => a.Index == _selectIndex);
+                if (battlerInfo != null)
+                {
+                    detailEvent(_selectIndex);
+                }
+            }
         }
     }
 

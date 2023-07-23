@@ -55,6 +55,7 @@ public class TacticsPresenter :BasePresenter
         _view.SetUIButton();
         _view.SetActiveBack(false);
         _view.SetEvent((type) => updateCommand(type));
+        _view.SetSideMenu(_model.SideMenu());
         _view.SetActors(_model.StageMembers(),_model.ConfirmCommand(),_model.CommandRankInfo());
         _view.SetStageInfo(_model.CurrentStage);
         _view.SetEnemies(_model.TacticsTroops());
@@ -315,6 +316,18 @@ public class TacticsPresenter :BasePresenter
         {
             CommandBack();
         }
+        if (viewEvent.commandType == Tactics.CommandType.OpenSideMenu)
+        {
+            CommandOpenSideMenu();
+        }
+        if (viewEvent.commandType == Tactics.CommandType.CloseSideMenu)
+        {
+            CommandCloseSideMenu();
+        }
+        if (viewEvent.commandType == Tactics.CommandType.SelectSideMenu)
+        {
+            CommandSelectSideMenu((SystemData.MenuCommandData)viewEvent.templete);
+        }
         if (_model.NeedAllTacticsCommand)
         {
             if (_model.CheckNonBusy())
@@ -429,7 +442,7 @@ public class TacticsPresenter :BasePresenter
             _view.CommandSceneChange(Scene.MainMenu);
         } else{
         }
-        _view.ActivateCommandList();
+        //_view.ActivateCommandList();
         _view.CommandConfirmClose();
     }
 
@@ -709,9 +722,9 @@ public class TacticsPresenter :BasePresenter
     {
         _model.SetTempData(TacticsComandType.Battle);
         _model.CurrentEnemyIndex = enemyIndex;
+        _view.HideEnemyList();
         _view.ShowBattleList();
         _view.ActivateTacticsCommand();
-        _view.HideEnemyList();
         _view.SetActiveBack(false);
         Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
     }
@@ -814,13 +827,17 @@ public class TacticsPresenter :BasePresenter
 
     private void CommandCallEnemyInfo(int enemyIndex)
     {
+        if (_model.TacticsTroops().Count < enemyIndex)
+        {
+            return;
+        }
         List<BattlerInfo> enemyInfos = _model.TacticsTroops()[enemyIndex].BattlerInfos;
         
         StatusViewInfo statusViewInfo = new StatusViewInfo(() => {
             _view.CommandEnemyInfoClose();
             _view.SetActiveUi(true);
         });
-        statusViewInfo.SetEnemyInfos(enemyInfos);
+        statusViewInfo.SetEnemyInfos(enemyInfos,false);
         _view.CommandCallEnemyInfo(statusViewInfo);
         _view.SetActiveUi(false);
         Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
@@ -872,6 +889,28 @@ public class TacticsPresenter :BasePresenter
             {
                 _view.SetCommandDisable(i);
             }
+        }
+    }
+
+    private void CommandOpenSideMenu()
+    {
+        _view.CommandOpenSideMenu();
+    }
+
+    private void CommandCloseSideMenu()
+    {
+        _view.CommandCloseSideMenu();
+    }
+
+    private void CommandSelectSideMenu(SystemData.MenuCommandData sideMenu)
+    {
+        if (sideMenu.Key == "Retire")
+        {
+            CommandDropout();
+        }
+        if (sideMenu.Key == "Help")
+        {
+            CommandRule();
         }
     }
 }

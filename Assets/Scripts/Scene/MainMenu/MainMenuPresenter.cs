@@ -26,6 +26,7 @@ public class MainMenuPresenter : BasePresenter
 
         List<StageInfo> stages = _model.Stages();
         _view.SetStagesData(stages);
+        _view.SetSideMenu(_model.SideMenu());
         _model.InitPartyInfo();
 
         var bgm = await _model.GetBgmData("MAINMENU");
@@ -65,12 +66,26 @@ public class MainMenuPresenter : BasePresenter
         {
             CommandRanking();
         }
+        if (viewEvent.commandType == CommandType.OpenSideMenu)
+        {
+            CommandOpenSideMenu();
+        }
+        if (viewEvent.commandType == CommandType.CloseSideMenu)
+        {
+            CommandCloseSideMenu();
+        }
+        if (viewEvent.commandType == CommandType.SelectSideMenu)
+        {
+            CommandSelectSideMenu((SystemData.MenuCommandData)viewEvent.templete);
+        }
     }
 
     private void CommandRule()
     {
         Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
+        _view.DeactivateSideMenu();
         _view.CommandCallRuling(() => {
+            _view.ActivateSideMenu();
             Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cancel);
         });
     }
@@ -95,8 +110,32 @@ public class MainMenuPresenter : BasePresenter
     private void CommandRankingPopup()
     {
         _busy = true;
+        _view.DeactivateSideMenu();
         _view.CommandCallRanking(() => {
+            _view.ActivateSideMenu();
             _busy = false;
         });
+    }
+
+    private void CommandOpenSideMenu()
+    {
+        _view.CommandOpenSideMenu();
+    }
+
+    private void CommandCloseSideMenu()
+    {
+        _view.CommandCloseSideMenu();
+    }
+
+    private void CommandSelectSideMenu(SystemData.MenuCommandData sideMenu)
+    {
+        if (sideMenu.Key == "Help")
+        {
+            CommandRule();
+        }
+        if (sideMenu.Key == "Ranking")
+        {
+            CommandRankingPopup();
+        }
     }
 }

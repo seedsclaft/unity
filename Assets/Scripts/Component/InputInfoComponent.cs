@@ -21,6 +21,7 @@ public class InputInfoComponent : MonoBehaviour
         }
         if (inputData.Name == "\"\"")
         {
+            guideText.text = "";
             var sizeDelta = guideText.GetComponent<RectTransform>().sizeDelta;
             guideText.GetComponent<RectTransform>().sizeDelta = new Vector2(-16,sizeDelta.y);
          

@@ -7,7 +7,7 @@ public class MainMenuStageList: ListWindow , IInputHandlerEvent
     private List<StageInfo> _data = new List<StageInfo>();
     [SerializeField] private StageInfoComponent component;
 
-    public void Initialize(List<StageInfo> stages,System.Action<StageInfo> callEvent)
+    public void Initialize(List<StageInfo> stages,System.Action<StageInfo> callEvent,System.Action sideMenuEvent)
     {
         InitializeListView(stages.Count);
         _data = stages;
@@ -18,7 +18,7 @@ public class MainMenuStageList: ListWindow , IInputHandlerEvent
             mainMenuStage.SetCallHandler(callEvent);
             mainMenuStage.SetSelectHandler((data) => UpdateSelectIndex(data));
         }
-        SetInputHandler((a) => CallInputHandler(a,callEvent));
+        SetInputHandler((a) => CallInputHandler(a,callEvent,sideMenuEvent));
         UpdateAllItems();
         UpdateSelectIndex(0);
         component.UpdateInfo(_data[Index]);
@@ -30,11 +30,15 @@ public class MainMenuStageList: ListWindow , IInputHandlerEvent
         }
     }
 
-    private void CallInputHandler(InputKeyType keyType, System.Action<StageInfo> callEvent)
+    private void CallInputHandler(InputKeyType keyType, System.Action<StageInfo> callEvent,System.Action sideMenuEvent)
     {
         if (keyType == InputKeyType.Decide)
         {
             callEvent(_data[Index]);
+        }
+        if (keyType == InputKeyType.Option1)
+        {
+            sideMenuEvent();
         }
     }
 }

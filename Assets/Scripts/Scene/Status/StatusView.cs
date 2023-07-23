@@ -33,14 +33,14 @@ public class StatusView : BaseView ,IInputHandlerEvent
         InitializeInput();
         skillList.Initialize();
         InitializeSkillActionList();
-        skillList.InitializeAttribute((attribute) => CallAttributeTypes(attribute));
+        skillList.InitializeAttribute((attribute) => CallAttributeTypes(attribute),null);
         
         new StatusPresenter(this);
     }
 
     private void InitializeSkillActionList()
     {
-        skillList.InitializeAction((a) => CallSkillAction(a),() => OnClickBack(),null,(a) => CallSkillLearning(a),null);
+        skillList.InitializeAction((a) => CallSkillAction(a),() => OnClickBack(),(a) => CallSkillLearning(a),null,null);
         SetInputHandler(skillList.skillActionList.GetComponent<IInputHandlerEvent>());
         SetInputHandler(skillList.skillAttributeList.GetComponent<IInputHandlerEvent>());
         skillList.HideActionList();
@@ -87,6 +87,8 @@ public class StatusView : BaseView ,IInputHandlerEvent
         if (_isDisplayDecide)
         {
             decideButton.gameObject.SetActive(true);
+            _helpWindow.SetHelpText(_helpText);
+            _helpWindow.SetInputInfo("SELECT_HEROINE");
         }
     }
 
@@ -143,6 +145,11 @@ public class StatusView : BaseView ,IInputHandlerEvent
         if (_isDisplayDecide)
         {
             _helpWindow.SetHelpText(_helpText);
+            _helpWindow.SetInputInfo("SELECT_HEROINE");
+        } else
+        {
+            _helpWindow.SetHelpText(DataSystem.System.GetTextData(202).Help);
+            _helpWindow.SetInputInfo("STATUS");
         }
     }
 
@@ -298,6 +305,13 @@ public class StatusView : BaseView ,IInputHandlerEvent
         skillList.ShowActionList();
         skillList.ShowAttributeList();
         ActivateSkillActionList();
+        if (_isDisplayDecide)
+        {
+            _helpWindow.SetInputInfo("HEROINE_SKILL");
+        } else
+        {
+            _helpWindow.SetInputInfo("STATUS_SKILL");
+        }
     }
 
     public void HideSkillActionList()
@@ -305,6 +319,13 @@ public class StatusView : BaseView ,IInputHandlerEvent
         skillList.HideActionList();
         skillList.HideAttributeList();
         DeactivateSkillActionList();
+        if (_isDisplayDecide)
+        {
+            _helpWindow.SetInputInfo("SELECT_HEROINE");
+        } else
+        {
+            _helpWindow.SetInputInfo("STATUS");
+        }
     }
     
     public void ActivateSkillActionList()
@@ -453,6 +474,8 @@ public class StatusViewInfo{
     public bool DisableStrength => _disableStrength;
     private List<BattlerInfo> _enemyInfos = null;
     public List<BattlerInfo> EnemyInfos => _enemyInfos;
+    private bool _isBattle = false;
+    public bool IsBattle => _isBattle;
     
     public StatusViewInfo(System.Action backEvent)
     {
@@ -474,8 +497,9 @@ public class StatusViewInfo{
         _disableStrength = IsDisable;
     }
     
-    public void SetEnemyInfos(List<BattlerInfo> enemyInfos)
+    public void SetEnemyInfos(List<BattlerInfo> enemyInfos,bool isBattle)
     {
         _enemyInfos = enemyInfos;
+        _isBattle = isBattle;
     }
 }

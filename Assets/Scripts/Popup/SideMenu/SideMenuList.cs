@@ -1,15 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
-using UnityEngine.Events;
 using UnityEngine.UI;
-using UnityEngine.AddressableAssets;
 using TMPro;
 
 public class SideMenuList : ListWindow , IInputHandlerEvent
 {
-
     [SerializeField] private Button openButton = null;
     [SerializeField] private Button closeButton = null;
     [SerializeField] private GameObject optionPrefab = null;
@@ -91,16 +87,22 @@ public class SideMenuList : ListWindow , IInputHandlerEvent
     {
         if (keyType == InputKeyType.Right)
         {
-            if (Index == 0)
+            if (Index < 0)
             {
                 UpdateSelectIndex(-1);
+            } else
+            {
+                UpdateSelectIndex(Index);
             }
         }
         if (keyType == InputKeyType.Left)
         {
-            if (Index == 0)
+            if (Index >= (_sideMenus.Count))
             {
-                UpdateSelectIndex(0);
+                UpdateSelectIndex(_sideMenus.Count-1);
+            } else
+            {
+                UpdateSelectIndex(Index);
             }
         }
         if (keyType == InputKeyType.Decide)

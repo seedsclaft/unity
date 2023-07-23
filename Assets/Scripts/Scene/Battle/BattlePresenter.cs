@@ -68,6 +68,7 @@ public class BattlePresenter : BasePresenter
 
         _view.SetActors(_model.BattlerActors());
         _view.SetEnemies(_model.BattlerEnemies());
+        _view.SetSideMenu(_model.SideMenu());
 
         _view.SetAttributeTypes(_model.AttributeTypes(),_model.CurrentAttributeType);
 
@@ -149,6 +150,18 @@ public class BattlePresenter : BasePresenter
         {
             CommandEnemyDetail((int)viewEvent.templete);
         }
+        if (viewEvent.commandType == Battle.CommandType.OpenSideMenu)
+        {
+            CommandOpenSideMenu();
+        }
+        if (viewEvent.commandType == Battle.CommandType.CloseSideMenu)
+        {
+            CommandCloseSideMenu();
+        }
+        if (viewEvent.commandType == Battle.CommandType.SelectSideMenu)
+        {
+            CommandSelectSideMenu((SystemData.MenuCommandData)viewEvent.templete);
+        }
     }
 
     private void UpdatePopup(ConfirmComandType confirmComandType)
@@ -203,7 +216,7 @@ public class BattlePresenter : BasePresenter
             _view.CommandEnemyInfoClose();
             _busy = false;
         });
-        statusViewInfo.SetEnemyInfos(new List<BattlerInfo>(){enemyInfo});
+        statusViewInfo.SetEnemyInfos(new List<BattlerInfo>(){enemyInfo},true);
         _view.CommandCallEnemyInfo(statusViewInfo);
         //_view.SetActiveUi(false);
         Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);    
@@ -925,6 +938,24 @@ public class BattlePresenter : BasePresenter
             _view.RefreshBattlerPartyLayerTarget(actionInfo.TargetIndexList.Find(a => a < 100),actionInfo.TargetIndexList,actionInfo.ScopeType);
             _view.ShowPartyTarget();
             _view.DeactivateEnemyList();
+        }
+    }
+
+    private void CommandOpenSideMenu()
+    {
+        _view.CommandOpenSideMenu();
+    }
+
+    private void CommandCloseSideMenu()
+    {
+        _view.CommandCloseSideMenu();
+    }
+
+    private void CommandSelectSideMenu(SystemData.MenuCommandData sideMenu)
+    {
+        if (sideMenu.Key == "Help")
+        {
+            CommandRule();
         }
     }
 }

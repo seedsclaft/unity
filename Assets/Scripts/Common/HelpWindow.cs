@@ -39,9 +39,9 @@ public class HelpWindow : MonoBehaviour
             infoComp.SetData(inputInfos[i]);
             //infoComp.gameObject.SetActive(true);
         }
-        _lastKey = key;
         inputCanvasGroup.alpha = 0;
-        await UniTask.WaitUntil( () => _inputPrefabs.Count >=  inputInfos.Count );
+        await UniTask.Yield( );
+        _lastKey = key;
         foreach(var prefab in _inputPrefabs){
             //prefab.SetActive(false);
         }

@@ -11,7 +11,7 @@ public class SkillActionList : ListWindow , IInputHandlerEvent
 
     private List<SkillInfo> _skillInfos = new List<SkillInfo>();
 
-    public void Initialize(System.Action<SkillInfo> callEvent,System.Action cancelEvent,System.Action conditionEvent,System.Action<SkillInfo> learningEvent,System.Action escapeEvent)
+    public void Initialize(System.Action<SkillInfo> callEvent,System.Action cancelEvent,System.Action<SkillInfo> learningEvent,System.Action escapeEvent,System.Action optionEvent)
     {
         InitializeListView(rows);
         // スクロールするものはObjectList.CountでSetSelectHandlerを登録する
@@ -39,7 +39,7 @@ public class SkillActionList : ListWindow , IInputHandlerEvent
             skillAction.SetSelectHandler((data) => UpdateSelectIndex(data));
             //ObjectList[i].SetActive(false);
         }
-        SetInputHandler((a) => CallInputHandler(a,callEvent,cancelEvent,conditionEvent,learningEvent,escapeEvent));
+        SetInputHandler((a) => CallInputHandler(a,callEvent,cancelEvent,learningEvent,escapeEvent,optionEvent));
     }
 
     public void SetSkillInfos(List<SkillInfo> skillInfoData)
@@ -77,10 +77,14 @@ public class SkillActionList : ListWindow , IInputHandlerEvent
         }
     }
 
-    private void CallInputHandler(InputKeyType keyType, System.Action<SkillInfo> callEvent,System.Action cancelEvent,System.Action conditionEvent,System.Action<SkillInfo> learningEvent,System.Action escapeEvent)
+    private void CallInputHandler(InputKeyType keyType, System.Action<SkillInfo> callEvent,System.Action cancelEvent,System.Action<SkillInfo> learningEvent,System.Action escapeEvent,System.Action optionEvent)
     {
         if (keyType == InputKeyType.Decide)
         {
+            if (Index < 0)
+            {
+                return;
+            }
             SkillInfo skillInfo = _skillInfos.Find(a => a.Id == _skillInfos[Index].Id);
             if (skillInfo.Enable == false)
             {
@@ -104,9 +108,9 @@ public class SkillActionList : ListWindow , IInputHandlerEvent
         }
         if (keyType == InputKeyType.Option1)
         {
-            if (conditionEvent != null)
+            if (optionEvent != null)
             {
-                conditionEvent();
+                optionEvent();
             }
         }
         if (keyType == InputKeyType.Option2)

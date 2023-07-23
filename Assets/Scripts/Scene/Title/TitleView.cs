@@ -7,14 +7,12 @@ using Title;
 
 public class TitleView : BaseView
 {
-    [SerializeField] private Button creditButton = null;
     [SerializeField] private TextMeshProUGUI versionText = null;
     [SerializeField] private TitleCommandList commandList = null;
     private new System.Action<TitleViewEvent> _commandData = null;
     [SerializeField] private GameObject helpRoot = null;
     [SerializeField] private GameObject helpPrefab = null;
     [SerializeField] private Button logoButton = null;
-    [SerializeField] private Button optionButton = null;
     [SerializeField] private SideMenuList sideMenuList = null;
     private HelpWindow _helpWindow = null;
     
@@ -23,10 +21,8 @@ public class TitleView : BaseView
         base.Initialize();
         InitializeInput();
         new TitlePresenter(this);
-        creditButton.onClick.AddListener(() => CallCredit());
         logoButton.onClick.AddListener(() => CallLogoClick());
         logoButton.gameObject.SetActive(true);
-        optionButton.onClick.AddListener(() => OnClickOption());
     }
 
     private void CallCredit()
