@@ -22,6 +22,7 @@ abstract public class ListWindow : MonoBehaviour
     [SerializeField] private bool isScrollList = true; // 表示数が初期プレハブ数より多くなるか
     [SerializeField] private bool horizontal = false; 
     [SerializeField] private ScrollRect scrollRect = null; 
+    public ScrollRect ScrollRect => scrollRect; 
     [SerializeField] private GameObject itemPrefab = null; 
     private float _itemSize = 0.0f;
     private int _itemCount = 0;

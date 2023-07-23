@@ -5,8 +5,9 @@ using UnityEngine.UI;
 using TMPro;
 using Credit;
 
-public class CreditView : BaseView
+public class CreditView : BaseView,IInputHandlerEvent
 {
+    [SerializeField] private ScrollRect scrollRect = null;
     private new System.Action<CreditViewEvent> _commandData = null;
     public override void Initialize() 
     {
@@ -14,6 +15,7 @@ public class CreditView : BaseView
         InitializeInput();
         new CreditPresenter(this);
         Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
+        SetInputHandler(gameObject.GetComponent<IInputHandlerEvent>());
     }
 
     public void SetEvent(System.Action<CreditViewEvent> commandData)
@@ -29,6 +31,33 @@ public class CreditView : BaseView
             if (backEvent != null) backEvent();
         });
         SetActiveBack(true);
+    }
+
+
+    public void InputHandler(InputKeyType keyType)
+    {
+        if (keyType == InputKeyType.Cancel)
+        {
+            BackEvent();
+        }
+        if (keyType == InputKeyType.Down)
+        {
+            var value = scrollRect.normalizedPosition.y - 0.025f;
+            scrollRect.normalizedPosition = new Vector2(0,value);
+            if (scrollRect.normalizedPosition.y < 0)
+            {
+                scrollRect.normalizedPosition = new Vector2(0,0);
+            }
+        }
+        if (keyType == InputKeyType.Up)
+        {
+            var value = scrollRect.normalizedPosition.y + 0.025f;
+            scrollRect.normalizedPosition = new Vector2(0,value);
+            if (scrollRect.normalizedPosition.y > 1)
+            {
+                scrollRect.normalizedPosition = new Vector2(0,1);
+            }
+        }
     }
 }
 

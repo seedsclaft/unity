@@ -30,6 +30,7 @@ public class TitlePresenter : BasePresenter
         _view.SetHelpWindow();
         _view.SetEvent((type) => updateCommand(type));
         _view.SetTitleCommand(_model.TitleCommand);
+        _view.SetSideMenu(_model.SideMenu());
         _view.SetVersion(_model.VersionText());
 
         CommandRefresh();
@@ -55,6 +56,18 @@ public class TitlePresenter : BasePresenter
         if (viewEvent.commandType == CommandType.LogoClick)
         {
             CommandLogoClick();
+        }
+        if (viewEvent.commandType == CommandType.OpenSideMenu)
+        {
+            CommandOpenSideMenu();
+        }
+        if (viewEvent.commandType == CommandType.CloseSideMenu)
+        {
+            CommandCloseSideMenu();
+        }
+        if (viewEvent.commandType == CommandType.SelectSideMenu)
+        {
+            CommandSelectSideMenu((SystemData.MenuCommandData)viewEvent.templete);
         }
         if (viewEvent.commandType == CommandType.Option)
         {
@@ -105,8 +118,20 @@ public class TitlePresenter : BasePresenter
     private void CommandCredit()
     {
         _busy = true;
+        _view.DeactivateSideMenu();
         _view.CommandCallCredit(() => {
             _busy = false;
+            _view.ActivateSideMenu();
+        });
+    }
+
+    public new void CommandOption()
+    {
+        _busy = true;
+        _view.DeactivateSideMenu();
+        _view.CommandCallOption(() => {
+            _busy = false;
+            _view.ActivateSideMenu();
         });
     }
 
@@ -128,5 +153,23 @@ public class TitlePresenter : BasePresenter
         _view.CommandLogoClick();
         var bgm = await _model.GetBgmData("TITLE");
         Ryneus.SoundManager.Instance.PlayBgm(bgm,1.0f,false);
+    }
+
+    private void CommandOpenSideMenu()
+    {
+        _view.CommandOpenSideMenu();
+    }
+
+    private void CommandCloseSideMenu()
+    {
+        _view.CommandCloseSideMenu();
+    }
+
+    private void CommandSelectSideMenu(SystemData.MenuCommandData sideMenu)
+    {
+        if (sideMenu.Key == "Licence")
+        {
+            CommandCredit();
+        }
     }
 }

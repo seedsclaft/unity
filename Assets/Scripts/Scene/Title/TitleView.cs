@@ -15,6 +15,7 @@ public class TitleView : BaseView
     [SerializeField] private GameObject helpPrefab = null;
     [SerializeField] private Button logoButton = null;
     [SerializeField] private Button optionButton = null;
+    [SerializeField] private SideMenuList sideMenuList = null;
     private HelpWindow _helpWindow = null;
     
     public override void Initialize() 
@@ -62,9 +63,16 @@ public class TitleView : BaseView
     {
         versionText.text = text;
     }
+
     public void SetTitleCommand(List<SystemData.MenuCommandData> menuCommands){
-        commandList.Initialize(menuCommands,(a) => CallTitleCommand(a),() => OnClickOption());
+        commandList.Initialize(menuCommands,(a) => CallTitleCommand(a),() => CallOpenSideMenu());
         SetInputHandler(commandList.GetComponent<IInputHandlerEvent>());
+    }
+
+    public void SetSideMenu(List<SystemData.MenuCommandData> menuCommands){
+        sideMenuList.Initialize(menuCommands,(a) => CallSideMenu(a),() => OnClickOption(),() => CallCloseSideMenu());
+        SetInputHandler(sideMenuList.GetComponent<IInputHandlerEvent>());
+        sideMenuList.Deactivate();
     }
 
     public void RefreshCommandIndex(int selectIndex)
@@ -72,9 +80,58 @@ public class TitleView : BaseView
         commandList.Refresh(selectIndex);
     }
 
+    public void ActivateSideMenu()
+    {
+        _helpWindow.SetInputInfo("SIDEMENU");
+        sideMenuList.Activate();
+    }
+
+    public void DeactivateSideMenu()
+    {
+        _helpWindow.SetInputInfo("CREDIT");
+        sideMenuList.Deactivate();
+    }
+
+    public void CommandOpenSideMenu()
+    {
+        _helpWindow.SetInputInfo("SIDEMENU");
+        _helpWindow.SetHelpText(DataSystem.System.GetTextData(701).Help);
+        commandList.Deactivate();
+        sideMenuList.Activate();
+        sideMenuList.OpenSideMenu();
+    }
+
+    public void CommandCloseSideMenu()
+    {
+        _helpWindow.SetInputInfo("TITLE");
+        commandList.Activate();
+        sideMenuList.Deactivate();
+        sideMenuList.CloseSideMenu();
+        commandList.UpdateHelpWindow();
+    }
+
     private void CallTitleCommand(TitleComandType commandType){
         var eventData = new TitleViewEvent(CommandType.TitleCommand);
         eventData.templete = commandType;
+        _commandData(eventData);
+    }
+
+    private void CallOpenSideMenu()
+    {
+        var eventData = new TitleViewEvent(CommandType.OpenSideMenu);
+        _commandData(eventData);
+    }
+
+    private void CallSideMenu(SystemData.MenuCommandData sideMenu)
+    {
+        var eventData = new TitleViewEvent(CommandType.SelectSideMenu);
+        eventData.templete = sideMenu;
+        _commandData(eventData);
+    }
+
+    private void CallCloseSideMenu()
+    {
+        var eventData = new TitleViewEvent(CommandType.CloseSideMenu);
         _commandData(eventData);
     }
 
@@ -97,7 +154,10 @@ namespace Title
         TitleCommand,
         Credit,
         LogoClick,
-        Option
+        Option,
+        OpenSideMenu,
+        SelectSideMenu,
+        CloseSideMenu,
     }
 }
 
