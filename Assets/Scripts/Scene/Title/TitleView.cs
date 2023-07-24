@@ -63,6 +63,7 @@ public class TitleView : BaseView
     public void SetTitleCommand(List<SystemData.MenuCommandData> menuCommands){
         commandList.Initialize(menuCommands,(a) => CallTitleCommand(a),() => CallOpenSideMenu());
         SetInputHandler(commandList.GetComponent<IInputHandlerEvent>());
+        commandList.Deactivate();
     }
 
     public void SetSideMenu(List<SystemData.MenuCommandData> menuCommands){
@@ -74,6 +75,7 @@ public class TitleView : BaseView
     public void RefreshCommandIndex(int selectIndex)
     {
         commandList.Refresh(selectIndex);
+        commandList.Activate();
     }
 
     public void ActivateSideMenu()
@@ -138,6 +140,7 @@ public class TitleView : BaseView
 
     public void CommandLogoClick()
     {
+        commandList.ResetInputFrame(1);
         logoButton.gameObject.SetActive(false);
     }
 }

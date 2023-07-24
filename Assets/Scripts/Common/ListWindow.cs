@@ -12,7 +12,9 @@ abstract public class ListWindow : MonoBehaviour
     private int _index = 0;
     public int Index => _index;
     private int _defaultInputFrame = 0;
+
     private int _listMoveInputFrame = 6;
+    private int _listMoveGamePadFrame = 9;
     public void SetInputFrame(int frame)
     {
         _defaultInputFrame = frame;
@@ -409,7 +411,13 @@ abstract public class ListWindow : MonoBehaviour
         int plusValue = 0;
         if (keyType == InputKeyType.Up || keyType == InputKeyType.Down || keyType == InputKeyType.Left || keyType == InputKeyType.Right)
         {
-            plusValue = _listMoveInputFrame;
+            if (InputSystem.IsGamePad)
+            {
+                plusValue = _listMoveGamePadFrame;
+            } else
+            {
+                plusValue = _listMoveInputFrame;
+            }
             UpdateSelectIndex(Index);
         }
         ResetInputFrame(plusValue);

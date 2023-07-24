@@ -431,12 +431,14 @@ public class TacticsView : BaseView
     public void ShowBattleList()
     {
         tacticsBattleList.gameObject.SetActive(true);
+        tacticsBattleList.Activate();
         _helpWindow.SetInputInfo("ENEMY_BATTLE");
     }
 
     public void HideBattleList()
     {
         tacticsBattleList.gameObject.SetActive(false);
+        tacticsBattleList.Deactivate();
         _helpWindow.SetInputInfo("ENEMY_SELECT");
     }
 
@@ -634,6 +636,11 @@ public class TacticsView : BaseView
     {
         var eventData = new TacticsViewEvent(CommandType.CloseSideMenu);
         _commandData(eventData);
+    }
+
+    public void SetHelpInputInfo(string key)
+    {
+        _helpWindow.SetInputInfo(key);
     }
 }
 

@@ -4,9 +4,10 @@ using UnityEngine;
 using UnityEngine.UI;
 using Ranking;
 
-public class RankingView : BaseView
+public class RankingView : BaseView,IInputHandlerEvent
 {
 
+    [SerializeField] private ScrollRect scrollRect = null;
     [SerializeField] private RankingInfoList rankingInfoList = null;
     private new System.Action<RankingViewEvent> _commandData = null;
 
@@ -15,6 +16,7 @@ public class RankingView : BaseView
         base.Initialize();
         InitializeInput();
         new RankingPresenter(this);
+        SetInputHandler(gameObject.GetComponent<IInputHandlerEvent>());
     }
 
 
@@ -41,6 +43,32 @@ public class RankingView : BaseView
     private void CallCancel()
     {
 
+    }
+
+    public void InputHandler(InputKeyType keyType)
+    {
+        if (keyType == InputKeyType.Cancel)
+        {
+            BackEvent();
+        }
+        if (keyType == InputKeyType.Down)
+        {
+            var value = scrollRect.normalizedPosition.y - 0.005f;
+            scrollRect.normalizedPosition = new Vector2(0,value);
+            if (scrollRect.normalizedPosition.y < 0)
+            {
+                scrollRect.normalizedPosition = new Vector2(0,0);
+            }
+        }
+        if (keyType == InputKeyType.Up)
+        {
+            var value = scrollRect.normalizedPosition.y + 0.005f;
+            scrollRect.normalizedPosition = new Vector2(0,value);
+            if (scrollRect.normalizedPosition.y > 1)
+            {
+                scrollRect.normalizedPosition = new Vector2(0,1);
+            }
+        }
     }
 }
 

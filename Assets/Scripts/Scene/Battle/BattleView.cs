@@ -640,6 +640,11 @@ public class BattleView : BaseView
         var eventData = new BattleViewEvent(CommandType.CloseSideMenu);
         _commandData(eventData);
     }
+    
+    public void SetHelpInputInfo(string key)
+    {
+        _helpWindow.SetInputInfo(key);
+    }
 }
 
 namespace Battle

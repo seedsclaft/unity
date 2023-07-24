@@ -46,6 +46,7 @@ public class TacticsEnemyList : ListWindow , IInputHandlerEvent
 
     public void Refresh(List<TroopInfo> troopInfos)
     {
+        SetDataCount(troopInfos.Count);
         _troopInfos = troopInfos;
         for (int i = 0; i < ObjectList.Count;i++)
         {
@@ -57,7 +58,7 @@ public class TacticsEnemyList : ListWindow , IInputHandlerEvent
             }
             ObjectList[i].SetActive(i < _troopInfos.Count);
         }
-        UpdateSelectIndex(-1);
+        UpdateSelectIndex(0);
         Refresh();
     }
 

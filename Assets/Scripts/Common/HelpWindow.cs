@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using Cysharp.Threading.Tasks;
+using DG.Tweening;
 
 public class HelpWindow : MonoBehaviour
 {
@@ -23,7 +24,14 @@ public class HelpWindow : MonoBehaviour
     {
         if (_lastKey == key) return;
         if (DataSystem.System.InputDataList == null) return;
-        List<SystemData.InputData> inputInfos = DataSystem.System.InputDataList.FindAll(a => a.Key == key);
+        List<SystemData.InputData> inputInfos;
+        if (InputSystem.IsGamePad)
+        {
+            inputInfos = DataSystem.System.InputDataList.FindAll(a => a.Key == key && a.KeyId != 0 &&a.KeyId != 2);
+        } else
+        {
+            inputInfos = DataSystem.System.InputDataList.FindAll(a => a.Key == key);
+        }
         foreach(var prefab in _inputPrefabs){
             prefab.SetActive(false);
         }
@@ -37,13 +45,13 @@ public class HelpWindow : MonoBehaviour
             }
             var infoComp = _inputPrefabs[i].GetComponent<InputInfoComponent>();
             infoComp.SetData(inputInfos[i]);
-            //infoComp.gameObject.SetActive(true);
+            infoComp.gameObject.SetActive(true);
         }
         inputCanvasGroup.alpha = 0;
         await UniTask.Yield( );
         _lastKey = key;
         foreach(var prefab in _inputPrefabs){
-            //prefab.SetActive(false);
+            prefab.SetActive(false);
         }
         for (int i = 0;i < inputInfos.Count;i++)
         {
@@ -52,6 +60,9 @@ public class HelpWindow : MonoBehaviour
                 _inputPrefabs[i].SetActive(true);
             }
         }
-        inputCanvasGroup.alpha = 1;
+        
+        Sequence main = DOTween.Sequence()
+            .Append(inputCanvasGroup.DOFade(1f,0.4f));
+        //inputCanvasGroup.alpha = 1;
     }
 }

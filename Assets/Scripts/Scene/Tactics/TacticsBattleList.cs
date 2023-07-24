@@ -50,14 +50,14 @@ public class TacticsBattleList : ListWindow , IInputHandlerEvent
         _confirmEvent = callEvent;
         tacticsCommandList.Initialize(callEvent);
         tacticsCommandList.Refresh(confirmCommands);
-        tacticsCommandList.SelectIndex(-1);
+        tacticsCommandList.UpdateSelectIndex(-1);
         SetCancelEvent(() => _confirmEvent(TacticsComandType.Train));
     }
 
     public void Refresh()
     {
         UpdateAllItems();
-        tacticsCommandList.SelectIndex(-1);
+        tacticsCommandList.UpdateSelectIndex(-1);
     }
 
     public override void UpdateHelpWindow(){

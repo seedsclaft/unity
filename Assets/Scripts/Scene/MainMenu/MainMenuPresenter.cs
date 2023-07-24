@@ -82,10 +82,14 @@ public class MainMenuPresenter : BasePresenter
 
     private void CommandRule()
     {
+        _busy = true;
         Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
         _view.DeactivateSideMenu();
+        _view.SetHelpInputInfo("RULING");
         _view.CommandCallRuling(() => {
+            _busy = false;
             _view.ActivateSideMenu();
+            _view.SetHelpInputInfo("OPTION");
             Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cancel);
         });
     }

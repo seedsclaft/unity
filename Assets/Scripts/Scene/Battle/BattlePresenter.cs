@@ -197,11 +197,15 @@ public class BattlePresenter : BasePresenter
 
     private void CommandRule()
     {
+        _busy = true;
+        _view.SetHelpInputInfo("RULING");
         _view.SetBattleBusy(true);
         Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
         _view.CommandCallRuling(() => {
             _view.SetBattleBusy(false);
+            _view.SetHelpInputInfo("OPTION");
             Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cancel);
+            _busy = false;
         });
     }
 

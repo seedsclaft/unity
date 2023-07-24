@@ -636,6 +636,7 @@ MonoBehaviour:
   backPrefab: {fileID: 6783263795755603185, guid: 6b914cf925ad6d14eb3325bbfc390299,
     type: 3}
   backRoot: {fileID: 4487747084334587601}
+  scrollRect: {fileID: 7386119266581667844}
   rankingInfoList: {fileID: 3739398088186242342}
 --- !u!1 &5117698008867518333
 GameObject:
@@ -920,9 +921,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isScrollList: 1
   horizontal: 0
+  reverse: 0
+  warpMode: 1
   scrollRect: {fileID: 7386119266581667844}
   itemPrefab: {fileID: 8805830986954552890, guid: 926a1a4866e627f449419013e85125cf,
     type: 3}
   _helpWindow: {fileID: 0}
-  rows: 5
-  cols: 1

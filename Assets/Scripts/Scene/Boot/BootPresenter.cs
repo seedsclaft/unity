@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class BootPresenter 
 {
@@ -21,6 +22,11 @@ public class BootPresenter
         _busy = false;
         Debug.Log("Boot Success");
         Application.targetFrameRate = 60;
+        var gamepad = Gamepad.current;
+        if (gamepad != null)
+        {
+            InputSystem.IsGamePad = true;
+        }
         if (SaveSystem.ExistsConfigFile())
         {
             SaveSystem.LoadConfigStart();

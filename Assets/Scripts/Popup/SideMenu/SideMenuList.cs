@@ -34,19 +34,24 @@ public class SideMenuList : ListWindow , IInputHandlerEvent
         UpdateSelectIndex(-1);
         
         Refresh();
-        CloseSideMenu();
+        CloseSideMenu(false);
     }
 
     public void OpenSideMenu()
     {
+        Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
         openButton.gameObject.SetActive(false);
         closeButton.gameObject.SetActive(true);
         optionRoot.SetActive(true);
         ScrollRect.gameObject.SetActive(true);
     }
 
-    public void CloseSideMenu()
+    public void CloseSideMenu(bool isSoundNeed = true)
     {
+        if (isSoundNeed)
+        {
+            Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cancel);
+        }
         openButton.gameObject.SetActive(true);
         closeButton.gameObject.SetActive(false);
         optionRoot.SetActive(false);

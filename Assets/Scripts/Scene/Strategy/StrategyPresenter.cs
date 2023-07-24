@@ -23,6 +23,7 @@ public class StrategyPresenter : BasePresenter
 
     private async void Initialize()
     {
+        _busy = true;
         _model.LoadActorResources();
         _model.LoadEnemyResources();
         _view.SetHelpWindow();
@@ -34,7 +35,6 @@ public class StrategyPresenter : BasePresenter
         var bgm = await _model.GetBgmData(_model.TacticsBgmFilename());
         Ryneus.SoundManager.Instance.PlayBgm(bgm,1.0f,true);
         _view.SetEvent((type) => updateCommand(type));
-        _busy = true;
 
         CommandStartStretegy();
         _busy = false;

@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
+using UnityEngine.UI;
 using UnityEngine.Events;
 
 public class GetItemList : ListWindow , IInputHandlerEvent
@@ -12,7 +12,7 @@ public class GetItemList : ListWindow , IInputHandlerEvent
     [SerializeField] private TacticsCommandList tacticsCommandList;
     public TacticsCommandList TacticsCommandList {get {return tacticsCommandList;}}
     private System.Action<TacticsComandType> _confirmEvent = null;
-
+    
 
     public void Initialize()
     {

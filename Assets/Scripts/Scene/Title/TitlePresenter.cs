@@ -21,6 +21,7 @@ public class TitlePresenter : BasePresenter
 
     private async void Initialize()
     {
+        _busy = true;
         _model.ApllyConfigData();
         if (GameSystem.ConfigData._eventSkipIndex)
         {
@@ -33,10 +34,10 @@ public class TitlePresenter : BasePresenter
         _view.SetSideMenu(_model.SideMenu());
         _view.SetVersion(_model.VersionText());
 
-        CommandRefresh();
         var bgm = await _model.GetBgmData("TITLE");
         //Ryneus.SoundManager.Instance.PlayBgm(bgm,1.0f,false);
 
+        CommandRefresh();
         _busy = false;
     }
 

@@ -867,8 +867,12 @@ public class TacticsPresenter :BasePresenter
 
     private void CommandRule()
     {
+        _busy = true;
         Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
+        _view.SetHelpInputInfo("RULING");
         _view.CommandCallRuling(() => {
+            _busy = false;
+            _view.SetHelpInputInfo("OPTION");
             Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cancel);
         });
     }

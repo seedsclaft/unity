@@ -59,12 +59,12 @@ public class StatusActorList : ListWindow , IInputHandlerEvent
 
     public void MoveActorLeft(System.Action endEvent)
     {
-        MoveAnimation(baseX * -1,960,endEvent);
+        MoveAnimation(baseX,-960,endEvent);
     }
 
     public void MoveActorRight(System.Action endEvent)
     {
-        MoveAnimation(baseX,-960,endEvent);
+        MoveAnimation(baseX * -1,960,endEvent);
     }
 
     private void MoveAnimation(int startX,int MoveX,System.Action endEvent)

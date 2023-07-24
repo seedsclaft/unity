@@ -49,7 +49,6 @@ public class StrategyView : BaseView
         lvUpStatusButton.gameObject.SetActive(false);
         actorInfoComponent.gameObject.SetActive(false);
         strategyStrengthList.gameObject.SetActive(false);
-        strategyResultList.TacticsCommandList.Activate();
         var eventData = new StrategyViewEvent(CommandType.LvUpNext);
         _commandData(eventData);
     }
@@ -88,6 +87,8 @@ public class StrategyView : BaseView
         tacticsEnemyList.InitializeConfirm(confirmCommands,(a) => CallBattleCommand(a),(a) => OnClickEnemyInfo(a));
         SetInputHandler(tacticsEnemyList.TacticsCommandList.GetComponent<IInputHandlerEvent>());
         tacticsEnemyList.gameObject.SetActive(false);
+        tacticsEnemyList.Deactivate();
+        tacticsEnemyList.TacticsCommandList.Deactivate();
     }
 
     public void SetHelpWindow(){
@@ -106,8 +107,9 @@ public class StrategyView : BaseView
     public void SetResultList(List<SystemData.MenuCommandData> confirmCommands)
     {
         strategyResultList.Initialize();
+        strategyResultList.Deactivate();
         strategyResultList.gameObject.SetActive(false);
-        strategyResultList.InitializeConfirm(confirmCommands,(confirmCommands) => CallResultCommand(confirmCommands));
+        strategyResultList.InitializeConfirm(confirmCommands,(a) => CallResultCommand(a));
         SetInputHandler(strategyResultList.TacticsCommandList.GetComponent<IInputHandlerEvent>());
     }
 
@@ -149,8 +151,11 @@ public class StrategyView : BaseView
 
     public void ShowResultList(List<GetItemInfo> getItemInfos)
     {
+        strategyResultList.Deactivate();
         strategyResultList.Refresh(getItemInfos);
         strategyResultList.gameObject.SetActive(true);
+        strategyResultList.Activate();
+        strategyResultList.TacticsCommandList.Activate();
         _helpWindow.SetInputInfo("STRATEGY");
     }
 
@@ -163,6 +168,7 @@ public class StrategyView : BaseView
 
     public void HideResultList()
     {
+        strategyResultList.Deactivate();
         strategyResultList.gameObject.SetActive(false);
     }
 
@@ -172,6 +178,9 @@ public class StrategyView : BaseView
         troopInfos.Add(troopInfo);
         tacticsEnemyList.Refresh(troopInfos);
         tacticsEnemyList.gameObject.SetActive(true);
+        tacticsEnemyList.Activate();
+        tacticsEnemyList.TacticsCommandList.Activate();
+        tacticsEnemyList.UpdateSelectIndex(-1);
         _helpWindow.SetInputInfo("STRATEGY_BATTLE");
     }
 

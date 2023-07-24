@@ -114,6 +114,11 @@ public class MainMenuView : BaseView
         var eventData = new MainMenuViewEvent(CommandType.CloseSideMenu);
         _commandData(eventData);
     }
+    
+    public void SetHelpInputInfo(string key)
+    {
+        _helpWindow.SetInputInfo(key);
+    }
 }
 
 namespace MainMenu
