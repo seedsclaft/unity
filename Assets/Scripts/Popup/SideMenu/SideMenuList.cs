@@ -8,10 +8,13 @@ public class SideMenuList : ListWindow , IInputHandlerEvent
 {
     [SerializeField] private Button openButton = null;
     [SerializeField] private Button closeButton = null;
+    [SerializeField] private Button backButton = null;
     [SerializeField] private GameObject optionPrefab = null;
     [SerializeField] private GameObject optionRoot = null;
     [SerializeField] private GameObject optionCursor = null;
     private List<SystemData.MenuCommandData> _sideMenus;
+    private System.Action _openEvent = null;
+    private System.Action _closeEvent = null;
     public void Initialize(List<SystemData.MenuCommandData> sideMenus,System.Action<SystemData.MenuCommandData> callEvent,System.Action optionEvent,System.Action cancelEvent)
     {
         var prefab = Instantiate(optionPrefab);
@@ -20,6 +23,7 @@ public class SideMenuList : ListWindow , IInputHandlerEvent
 
         openButton.onClick.AddListener(() => OpenSideMenu());
         closeButton.onClick.AddListener(() => CloseSideMenu());
+        backButton.onClick.AddListener(() => CloseSideMenu());
 
         InitializeListView(sideMenus.Count);
         _sideMenus = sideMenus;
@@ -37,13 +41,29 @@ public class SideMenuList : ListWindow , IInputHandlerEvent
         CloseSideMenu(false);
     }
 
+    public void SetOpenEvent(System.Action openEvent)
+    {
+        _openEvent = openEvent;
+    }
+
+    public void SetCloseEvent(System.Action closeEvent)
+    {
+        _closeEvent = closeEvent;
+    }
+
     public void OpenSideMenu()
     {
         Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
         openButton.gameObject.SetActive(false);
         closeButton.gameObject.SetActive(true);
+        backButton.gameObject.SetActive(true);
         optionRoot.SetActive(true);
         ScrollRect.gameObject.SetActive(true);
+        if (_helpWindow != null)
+        {
+            _helpWindow.SetInputInfo("SIDEMENU");
+            _helpWindow.SetHelpText(DataSystem.System.GetTextData(701).Help);
+        }
     }
 
     public void CloseSideMenu(bool isSoundNeed = true)
@@ -54,10 +74,14 @@ public class SideMenuList : ListWindow , IInputHandlerEvent
         }
         openButton.gameObject.SetActive(true);
         closeButton.gameObject.SetActive(false);
+        backButton.gameObject.SetActive(false);
         optionRoot.SetActive(false);
         ScrollRect.gameObject.SetActive(false);
+        if (_closeEvent != null)
+        {
+            _closeEvent();
+        }
     }
-
 
     public void Refresh()
     {

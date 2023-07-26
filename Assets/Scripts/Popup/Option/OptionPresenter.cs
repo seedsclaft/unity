@@ -28,6 +28,7 @@ public class OptionPresenter
         _view.InitializeCommandEndCheck(GameSystem.ConfigData._commandEndCheck ? 2 : 1);
         _view.InitializeBattleWait(GameSystem.ConfigData._battleWait ? 2 : 1);
         _view.InitializeBattleAnimation(GameSystem.ConfigData._battleAnimationSkip ? 1 : 2);
+        _view.InitializeInputType(GameSystem.ConfigData._inputType ? 1 : 2);
         });
         _view.SetHelpWindow();
         _busy = false;
@@ -78,6 +79,10 @@ public class OptionPresenter
         if (viewEvent.commandType == CommandType.ChangeBattleAnimation)
         {
            CommandChangeBattleAnimation((int)viewEvent.templete);
+        }
+        if (viewEvent.commandType == CommandType.ChangeInputType)
+        {
+           CommandChangeInputType((int)viewEvent.templete);
         }
     }
 
@@ -131,6 +136,11 @@ public class OptionPresenter
     private void CommandChangeBattleAnimation(int animationIndex)
     {
         GameSystem.ConfigData._battleAnimationSkip = (animationIndex == 1);
+    }
+
+    private void CommandChangeInputType(int inputTypeIndex)
+    {
+        GameSystem.ConfigData._inputType = (inputTypeIndex == 1);
     }
 }
 

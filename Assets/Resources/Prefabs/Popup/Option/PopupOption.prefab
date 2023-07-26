@@ -366,7 +366,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4195637143651081937}
-  m_RootOrder: 3
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -528,10 +528,10 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 6704231836124536294}
   - {fileID: 5216621852506923568}
   - {fileID: 3389182166868261299}
   - {fileID: 7762569491698028258}
-  - {fileID: 6704231836124536294}
   m_Father: {fileID: 3060446909691845095}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -657,7 +657,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4195637143651081937}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -755,9 +755,6 @@ MonoBehaviour:
   commandList: {fileID: 6886323067714527914}
   optionObjs:
   - {fileID: 9180038468546254074}
-  helpRoot: {fileID: 3059847737264366983}
-  helpPrefab: {fileID: 4660447992331240257, guid: fd198201f48424c4cbfbe909f658ea97,
-    type: 3}
 --- !u!1 &5995656995899149355
 GameObject:
   m_ObjectHideFlags: 0
@@ -1313,7 +1310,7 @@ RectTransform:
   m_Children:
   - {fileID: 5474603457353421029}
   m_Father: {fileID: 4195637143651081937}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1334,6 +1331,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isScrollList: 1
   horizontal: 0
+  reverse: 0
+  warpMode: 1
   scrollRect: {fileID: 3040934130430320423}
   itemPrefab: {fileID: 4045652630599765466, guid: 8072f4d4296ccd14a9fdaa7a342a5eda,
     type: 3}
@@ -1479,7 +1478,7 @@ RectTransform:
   - {fileID: 3356545364964916043}
   - {fileID: 1703620612957151148}
   m_Father: {fileID: 4195637143651081937}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1500,6 +1499,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isScrollList: 0
   horizontal: 0
+  reverse: 0
+  warpMode: 1
   scrollRect: {fileID: 8264572792891431762}
   itemPrefab: {fileID: 4045652630599765466, guid: 8072f4d4296ccd14a9fdaa7a342a5eda,
     type: 3}

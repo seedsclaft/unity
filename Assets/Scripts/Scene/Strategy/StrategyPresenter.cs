@@ -241,6 +241,12 @@ public class StrategyPresenter : BasePresenter
                     _view.SetCommandDisable(_model.ResultCommand()[1]);
                 }
             }
+            if (_isBattle == false){
+                _view.SetHelpInputInfo("STRATEGY");
+            } else{
+                _view.SetHelpInputInfo("STRATEGY_BATTLE");
+            }
+            _view.SetHelpText(DataSystem.System.GetTextData(14010).Text);
             _view.SetActiveUi(true);
         });
         statusViewInfo.SetDisplayDecideButton(false);
@@ -299,6 +305,12 @@ public class StrategyPresenter : BasePresenter
         StatusViewInfo statusViewInfo = new StatusViewInfo(() => {
             _view.CommandEnemyInfoClose();
             _view.SetActiveUi(true);
+            if (_isBattle == false){
+                _view.SetHelpInputInfo("STRATEGY");
+            } else{
+                _view.SetHelpInputInfo("STRATEGY_BATTLE");
+            }
+            _view.SetHelpText(DataSystem.System.GetTextData(14010).Text);
         });
         statusViewInfo.SetEnemyInfos(enemyInfos,false);
         _view.CommandCallEnemyInfo(statusViewInfo);

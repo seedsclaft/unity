@@ -27,6 +27,7 @@ public class GameSystem : MonoBehaviour
     [SerializeField] private AdvEngine advEngine = null;
     [SerializeField] private AdvController advController = null;
     [SerializeField] private DebugBattleData debugBattleData = null;
+    [SerializeField] private HelpWindow helpWindow = null;
     
     private BaseView _currentScene = null;
     private BaseView _popupView = null;
@@ -102,6 +103,7 @@ public class GameSystem : MonoBehaviour
         prefab.transform.SetParent(statusRoot.transform, false);
         _statusView = prefab.GetComponent<StatusView>();
         _statusView.Initialize();
+        _statusView.SetHelpWindow(helpWindow);
         statusRoot.gameObject.SetActive(false);
     }
 
@@ -285,6 +287,7 @@ public class GameSystem : MonoBehaviour
         }
         var prefab = CreateConfirm();
         _popupView = prefab.GetComponent<ConfirmView>();
+        _popupView.SetHelpWindow(helpWindow);
         var confirmView = (_popupView as ConfirmView);
         confirmView.Initialize();
         confirmRoot.gameObject.SetActive(true);
@@ -302,6 +305,7 @@ public class GameSystem : MonoBehaviour
         }
         var prefab = CreateRuling();
         _popupView = prefab.GetComponent<RulingView>();
+        _popupView.SetHelpWindow(helpWindow);
         var rulingView = (_popupView as RulingView);
         rulingView.Initialize();
         rulingView.SetBackEvent(() => 
@@ -323,6 +327,7 @@ public class GameSystem : MonoBehaviour
         }
         var prefab = CreateOption();
         _popupView = prefab.GetComponent<OptionView>();
+        _popupView.SetHelpWindow(helpWindow);
         var optionView = (_popupView as OptionView);
         optionView.Initialize();
         optionView.SetBackEvent(() => 
@@ -352,6 +357,7 @@ public class GameSystem : MonoBehaviour
         }
         var prefab = CreateRanking();
         _popupView = prefab.GetComponent<RankingView>();
+        _popupView.SetHelpWindow(helpWindow);
         var rankingView = (_popupView as RankingView);
         rankingView.Initialize();
         rankingView.SetBackEvent(() => 
@@ -373,6 +379,7 @@ public class GameSystem : MonoBehaviour
         }
         var prefab = CreateCredit();
         _popupView = prefab.GetComponent<CreditView>();
+        _popupView.SetHelpWindow(helpWindow);
         var creditView = (_popupView as CreditView);
         creditView.Initialize();
         creditView.SetBackEvent(() => 
@@ -420,6 +427,7 @@ public class GameSystem : MonoBehaviour
         prefab.transform.SetParent(uiRoot.transform, false);
         _currentScene = prefab.GetComponent<BaseView>();
         _currentScene.SetTestMode(testMode);
+        _currentScene.SetHelpWindow(helpWindow);
         _currentScene.SetEvent((type) => updateCommand(type));
         _currentScene.Initialize();
     }

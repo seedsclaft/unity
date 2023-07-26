@@ -19,6 +19,17 @@ abstract public class BaseView : MonoBehaviour
     [SerializeField] private GameObject backPrefab = null;
     [SerializeField] private GameObject backRoot = null;
 
+    private HelpWindow _helpWindow = null;
+    public HelpWindow HelpWindow => _helpWindow;
+    public void SetHelpInputInfo(string key)
+    {
+        HelpWindow.SetInputInfo(key);
+    }
+    public void SetHelpText(string text)
+    {
+        HelpWindow.SetHelpText(text);
+    }
+
     public virtual void Initialize()
     {
         
@@ -27,6 +38,11 @@ abstract public class BaseView : MonoBehaviour
     public void InitializeInput()
     {    
         _input = new InputSystem();
+    }
+
+    public void SetHelpWindow(HelpWindow helpWindow)
+    {
+        _helpWindow = helpWindow;
     }
 
     public void SetInputHandler(IInputHandlerEvent handler)

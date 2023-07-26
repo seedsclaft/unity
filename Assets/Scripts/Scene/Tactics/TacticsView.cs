@@ -27,13 +27,10 @@ public class TacticsView : BaseView
     [SerializeField] private TextMeshProUGUI turnText = null;
     [SerializeField] private TextMeshProUGUI numinousText = null;
     private new System.Action<TacticsViewEvent> _commandData = null;
-    [SerializeField] private GameObject helpRoot = null;
-    [SerializeField] private GameObject helpPrefab = null;
     [SerializeField] private TacticsAlcana tacticsAlcana = null;
 
     [SerializeField] private SideMenuList sideMenuList = null;
 
-    private HelpWindow _helpWindow = null;
 
     private CommandType _lastCallEventType = CommandType.None;
 
@@ -82,9 +79,11 @@ public class TacticsView : BaseView
 
     public void SetHelpWindow()
     {
-        GameObject prefab = Instantiate(helpPrefab);
-        prefab.transform.SetParent(helpRoot.transform, false);
-        _helpWindow = prefab.GetComponent<HelpWindow>();
+        sideMenuList.SetHelpWindow(HelpWindow);
+        sideMenuList.SetCloseEvent(() => {
+            HelpWindow.SetInputInfo("TACTICS");
+            tacticsCommandList.UpdateHelpWindow();
+        });
     }
 
     public void SetEvent(System.Action<TacticsViewEvent> commandData)
@@ -133,7 +132,7 @@ public class TacticsView : BaseView
     public void SetTacticsCommand(List<SystemData.MenuCommandData> menuCommands)
     {
         tacticsCommandList.Initialize((a) => CallTacticsCommand(a),() => CallOpenSideMenu(),() => OnClickDropout(),() => CallAlcanaEvent());
-        tacticsCommandList.SetHelpWindow(_helpWindow);
+        tacticsCommandList.SetHelpWindow(HelpWindow);
         tacticsCommandList.Refresh(menuCommands);
         SetInputHandler(tacticsCommandList.GetComponent<IInputHandlerEvent>());
     }
@@ -268,13 +267,13 @@ public class TacticsView : BaseView
     public void ShowTrainList()
     {
         tacticsTrainList.gameObject.SetActive(true);
-        _helpWindow.SetInputInfo("TRAIN");
+        HelpWindow.SetInputInfo("TRAIN");
     }
 
     public void HideTrainList()
     {
         tacticsTrainList.gameObject.SetActive(false);
-        _helpWindow.SetInputInfo("TACTICS");
+        HelpWindow.SetInputInfo("TACTICS");
     }
 
     private void CallActorAlchemy(int actorId)
@@ -298,25 +297,25 @@ public class TacticsView : BaseView
     public void ShowAlchemyList()
     {
         tacticsAlchemyList.gameObject.SetActive(true);
-        _helpWindow.SetInputInfo("ALCHEMY");
+        HelpWindow.SetInputInfo("ALCHEMY");
     }
 
     public void HideAlchemyList()
     {
         tacticsAlchemyList.gameObject.SetActive(false);
-        _helpWindow.SetInputInfo("TACTICS");
+        HelpWindow.SetInputInfo("TACTICS");
     }
 
     public void ShowAttributeList()
     {
         tacticsAttributeList.gameObject.SetActive(true);
-        _helpWindow.SetInputInfo("ALCHEMY_ATTRIBUTE");
+        HelpWindow.SetInputInfo("ALCHEMY_ATTRIBUTE");
     }
 
     public void HideAttributeList()
     {
         tacticsAttributeList.gameObject.SetActive(false);
-        _helpWindow.SetInputInfo("ALCHEMY");
+        HelpWindow.SetInputInfo("ALCHEMY");
     }
 
     public void ShowSkillAlchemyList(List<SkillInfo> skillInfos)
@@ -324,7 +323,7 @@ public class TacticsView : BaseView
         skillList.ShowActionList();
         skillList.SetSkillInfos(skillInfos);
         skillList.RefreshAction();
-        _helpWindow.SetInputInfo("ALCHEMY_SKILL");
+        HelpWindow.SetInputInfo("ALCHEMY_SKILL");
         //skillList.ShowAttributeList();
     }
 
@@ -332,7 +331,7 @@ public class TacticsView : BaseView
     {
         skillList.HideActionList();
         skillList.HideAttributeList();
-        _helpWindow.SetInputInfo("ALCHEMY_ATTRIBUTE");
+        HelpWindow.SetInputInfo("ALCHEMY_ATTRIBUTE");
     }
 
     private void CallRecoveryCommand(TacticsComandType commandType)
@@ -374,13 +373,13 @@ public class TacticsView : BaseView
     public void ShowRecoveryList()
     {
         tacticsRecoveryList.gameObject.SetActive(true);
-        _helpWindow.SetInputInfo("RECOVERY");
+        HelpWindow.SetInputInfo("RECOVERY");
     }
 
     public void HideRecoveryList()
     {
         tacticsRecoveryList.gameObject.SetActive(false);
-        _helpWindow.SetInputInfo("TACTICS");
+        HelpWindow.SetInputInfo("TACTICS");
     }
 
 
@@ -410,13 +409,13 @@ public class TacticsView : BaseView
     public void ShowEnemyList()
     {
         tacticsEnemyList.gameObject.SetActive(true);
-        _helpWindow.SetInputInfo("ENEMY_SELECT");
+        HelpWindow.SetInputInfo("ENEMY_SELECT");
     }
 
     public void HideEnemyList()
     {
         tacticsEnemyList.gameObject.SetActive(false);
-        _helpWindow.SetInputInfo("TACTICS");
+        HelpWindow.SetInputInfo("TACTICS");
     }
 
     private void CallBattleCommand(TacticsComandType commandType)
@@ -432,14 +431,14 @@ public class TacticsView : BaseView
     {
         tacticsBattleList.gameObject.SetActive(true);
         tacticsBattleList.Activate();
-        _helpWindow.SetInputInfo("ENEMY_BATTLE");
+        HelpWindow.SetInputInfo("ENEMY_BATTLE");
     }
 
     public void HideBattleList()
     {
         tacticsBattleList.gameObject.SetActive(false);
         tacticsBattleList.Deactivate();
-        _helpWindow.SetInputInfo("ENEMY_SELECT");
+        HelpWindow.SetInputInfo("ENEMY_SELECT");
     }
 
     private void CallActorBattle(int actorId)
@@ -463,13 +462,13 @@ public class TacticsView : BaseView
     public void ShowResourceList()
     {
         tacticsResourceList.gameObject.SetActive(true);
-        _helpWindow.SetInputInfo("RESOURCE");
+        HelpWindow.SetInputInfo("RESOURCE");
     }
 
     public void HideResourceList()
     {
         tacticsResourceList.gameObject.SetActive(false);
-        _helpWindow.SetInputInfo("TACTICS");
+        HelpWindow.SetInputInfo("TACTICS");
     }
 
     private void CallResourceCommand(TacticsComandType commandType)
@@ -591,20 +590,20 @@ public class TacticsView : BaseView
     
     public void ActivateSideMenu()
     {
-        _helpWindow.SetInputInfo("SIDEMENU");
+        HelpWindow.SetInputInfo("SIDEMENU");
         sideMenuList.Activate();
     }
 
     public void DeactivateSideMenu()
     {
-        _helpWindow.SetInputInfo("TACTICS");
+        HelpWindow.SetInputInfo("TACTICS");
         sideMenuList.Deactivate();
     }
 
     public void CommandOpenSideMenu()
     {
-        _helpWindow.SetInputInfo("SIDEMENU");
-        _helpWindow.SetHelpText(DataSystem.System.GetTextData(701).Help);
+        HelpWindow.SetInputInfo("SIDEMENU");
+        HelpWindow.SetHelpText(DataSystem.System.GetTextData(701).Help);
         tacticsCommandList.Deactivate();
         sideMenuList.Activate();
         sideMenuList.OpenSideMenu();
@@ -612,10 +611,10 @@ public class TacticsView : BaseView
 
     public void CommandCloseSideMenu()
     {
-        _helpWindow.SetInputInfo("TACTICS");
         tacticsCommandList.Activate();
         sideMenuList.Deactivate();
         sideMenuList.CloseSideMenu();
+        HelpWindow.SetInputInfo("TACTICS");
         tacticsCommandList.UpdateHelpWindow();
     }
 
@@ -636,11 +635,6 @@ public class TacticsView : BaseView
     {
         var eventData = new TacticsViewEvent(CommandType.CloseSideMenu);
         _commandData(eventData);
-    }
-
-    public void SetHelpInputInfo(string key)
-    {
-        _helpWindow.SetInputInfo(key);
     }
 }
 

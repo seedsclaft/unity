@@ -10,11 +10,8 @@ public class TitleView : BaseView
     [SerializeField] private TextMeshProUGUI versionText = null;
     [SerializeField] private TitleCommandList commandList = null;
     private new System.Action<TitleViewEvent> _commandData = null;
-    [SerializeField] private GameObject helpRoot = null;
-    [SerializeField] private GameObject helpPrefab = null;
     [SerializeField] private Button logoButton = null;
     [SerializeField] private SideMenuList sideMenuList = null;
-    private HelpWindow _helpWindow = null;
     
     public override void Initialize() 
     {
@@ -44,10 +41,12 @@ public class TitleView : BaseView
     }
 
     public void SetHelpWindow(){
-        GameObject prefab = Instantiate(helpPrefab);
-        prefab.transform.SetParent(helpRoot.transform, false);
-        _helpWindow = prefab.GetComponent<HelpWindow>();
-        commandList.SetHelpWindow(_helpWindow);
+        commandList.SetHelpWindow(HelpWindow);
+        sideMenuList.SetHelpWindow(HelpWindow);
+        sideMenuList.SetCloseEvent(() => {
+            HelpWindow.SetInputInfo("TITLE");
+            commandList.UpdateHelpWindow();
+        });
     }
 
     public void SetEvent(System.Action<TitleViewEvent> commandData)
@@ -80,20 +79,21 @@ public class TitleView : BaseView
 
     public void ActivateSideMenu()
     {
-        _helpWindow.SetInputInfo("SIDEMENU");
+        HelpWindow.SetInputInfo("SIDEMENU");
         sideMenuList.Activate();
+        commandList.UpdateHelpWindow();
     }
 
     public void DeactivateSideMenu()
     {
-        _helpWindow.SetInputInfo("CREDIT");
+        HelpWindow.SetInputInfo("CREDIT");
         sideMenuList.Deactivate();
     }
 
     public void CommandOpenSideMenu()
     {
-        _helpWindow.SetInputInfo("SIDEMENU");
-        _helpWindow.SetHelpText(DataSystem.System.GetTextData(701).Help);
+        HelpWindow.SetInputInfo("SIDEMENU");
+        HelpWindow.SetHelpText(DataSystem.System.GetTextData(701).Help);
         commandList.Deactivate();
         sideMenuList.Activate();
         sideMenuList.OpenSideMenu();
@@ -101,10 +101,10 @@ public class TitleView : BaseView
 
     public void CommandCloseSideMenu()
     {
-        _helpWindow.SetInputInfo("TITLE");
         commandList.Activate();
         sideMenuList.Deactivate();
         sideMenuList.CloseSideMenu();
+        HelpWindow.SetInputInfo("TITLE");
         commandList.UpdateHelpWindow();
     }
 

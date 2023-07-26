@@ -46,6 +46,7 @@ public class MainMenuPresenter : BasePresenter
             _model.SetStageId((int)viewEvent.templete);
             StatusViewInfo statusViewInfo = new StatusViewInfo(() => {
                 _view.CommandStatusClose();
+                _view.SetInitHelpText();
                 _view.SetActiveUi(true);
             });
             statusViewInfo.SetDisplayDecideButton(true);
@@ -141,5 +142,15 @@ public class MainMenuPresenter : BasePresenter
         {
             CommandRankingPopup();
         }
+    }    
+    
+    public void CommandOption()
+    {
+        _busy = true;
+        _view.DeactivateSideMenu();
+        _view.CommandCallOption(() => {
+            _busy = false;
+            _view.ActivateSideMenu();
+        });
     }
 }

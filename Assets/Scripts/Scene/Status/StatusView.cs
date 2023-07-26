@@ -14,10 +14,8 @@ public class StatusView : BaseView ,IInputHandlerEvent
     [SerializeField] private Button decideButton = null;
     private new System.Action<StatusViewEvent> _commandData = null;
     [SerializeField] private GameObject helpRoot = null;
-    [SerializeField] private GameObject helpPrefab = null;
     [SerializeField] private GameObject leftPrefab = null;
     [SerializeField] private GameObject rightPrefab = null;
-    private HelpWindow _helpWindow = null;
 
     private Button _leftButton = null;
     private Button _rightButton = null;
@@ -58,7 +56,6 @@ public class StatusView : BaseView ,IInputHandlerEvent
         prefab3.transform.SetParent(helpRoot.transform, false);
         _rightButton = prefab3.GetComponent<Button>();
         _rightButton.onClick.AddListener(() => OnClickRight());
-        //_helpWindow = prefab.GetComponent<HelpWindow>();
 
         decideButton.onClick.AddListener(() => OnClickDecide());
 
@@ -87,8 +84,8 @@ public class StatusView : BaseView ,IInputHandlerEvent
         if (_isDisplayDecide)
         {
             decideButton.gameObject.SetActive(true);
-            _helpWindow.SetHelpText(_helpText);
-            _helpWindow.SetInputInfo("SELECT_HEROINE");
+            HelpWindow.SetHelpText(_helpText);
+            HelpWindow.SetInputInfo("SELECT_HEROINE");
         }
     }
 
@@ -99,9 +96,6 @@ public class StatusView : BaseView ,IInputHandlerEvent
 
     public void SetHelpWindow(string helpText)
     {
-        GameObject prefab = Instantiate(helpPrefab);
-        prefab.transform.SetParent(helpRoot.transform, false);
-        _helpWindow = prefab.GetComponent<HelpWindow>();
         _helpText = helpText;
     }
 
@@ -144,12 +138,12 @@ public class StatusView : BaseView ,IInputHandlerEvent
         decideButton.gameObject.SetActive(isDisplay);
         if (_isDisplayDecide)
         {
-            _helpWindow.SetHelpText(_helpText);
-            _helpWindow.SetInputInfo("SELECT_HEROINE");
+            HelpWindow.SetHelpText(_helpText);
+            HelpWindow.SetInputInfo("SELECT_HEROINE");
         } else
         {
-            _helpWindow.SetHelpText(DataSystem.System.GetTextData(202).Help);
-            _helpWindow.SetInputInfo("STATUS");
+            HelpWindow.SetHelpText(DataSystem.System.GetTextData(202).Help);
+            HelpWindow.SetInputInfo("STATUS");
         }
     }
 
@@ -307,10 +301,10 @@ public class StatusView : BaseView ,IInputHandlerEvent
         ActivateSkillActionList();
         if (_isDisplayDecide)
         {
-            _helpWindow.SetInputInfo("HEROINE_SKILL");
+            HelpWindow.SetInputInfo("HEROINE_SKILL");
         } else
         {
-            _helpWindow.SetInputInfo("STATUS_SKILL");
+            HelpWindow.SetInputInfo("STATUS_SKILL");
         }
     }
 
@@ -321,10 +315,10 @@ public class StatusView : BaseView ,IInputHandlerEvent
         DeactivateSkillActionList();
         if (_isDisplayDecide)
         {
-            _helpWindow.SetInputInfo("SELECT_HEROINE");
+            HelpWindow.SetInputInfo("SELECT_HEROINE");
         } else
         {
-            _helpWindow.SetInputInfo("STATUS");
+            HelpWindow.SetInputInfo("STATUS");
         }
     }
     

@@ -6,6 +6,10 @@ public class InputSystem
     public static bool IsGamePad = false;
     public InputKeyType Update()
     {
+        if (GameSystem.ConfigData._inputType == false)
+        {
+            return InputKeyType.None;
+        }
         var gamePadKey = UpdateGamePad();
         if (gamePadKey != InputKeyType.None)
         {

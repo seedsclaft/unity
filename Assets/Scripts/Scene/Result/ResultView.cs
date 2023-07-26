@@ -19,14 +19,11 @@ public class ResultView : BaseView
     [SerializeField] private TextMeshProUGUI playerName = null; 
     [SerializeField] private GameObject rankingObj = null;
     [SerializeField] private TextMeshProUGUI rankingInfo = null; 
-    [SerializeField] private GameObject helpRoot = null;
-    [SerializeField] private GameObject helpPrefab = null;
     [SerializeField] private GameObject animRoot = null;
     [SerializeField] private GameObject animPrefab = null;
 
     private BattleStartAnim _battleStartAnim = null;
     private bool _animationBusy = false;
-    private HelpWindow _helpWindow = null;
 
     private new System.Action<ResultViewEvent> _commandData = null;
 
@@ -95,10 +92,7 @@ public class ResultView : BaseView
 
 
     public void SetHelpWindow(){
-        GameObject prefab = Instantiate(helpPrefab);
-        prefab.transform.SetParent(helpRoot.transform, false);
-        _helpWindow = prefab.GetComponent<HelpWindow>();
-        _helpWindow.SetHelpText(DataSystem.System.GetTextData(16030).Text);
+        HelpWindow.SetHelpText(DataSystem.System.GetTextData(16030).Text);
     }
 
 

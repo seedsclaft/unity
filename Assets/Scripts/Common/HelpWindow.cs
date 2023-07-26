@@ -22,6 +22,7 @@ public class HelpWindow : MonoBehaviour
 
     public async void SetInputInfo(string key)
     {
+        if (GameSystem.ConfigData._inputType == false) return;
         if (_lastKey == key) return;
         if (DataSystem.System.InputDataList == null) return;
         List<SystemData.InputData> inputInfos;
@@ -48,14 +49,17 @@ public class HelpWindow : MonoBehaviour
             infoComp.gameObject.SetActive(true);
         }
         inputCanvasGroup.alpha = 0;
-        await UniTask.Yield( );
+        await UniTask.Yield();
         _lastKey = key;
         foreach(var prefab in _inputPrefabs){
-            prefab.SetActive(false);
+            if (prefab != null)
+            {
+                prefab.SetActive(false);
+            }
         }
         for (int i = 0;i < inputInfos.Count;i++)
         {
-            if (_inputPrefabs.Count >= i)
+            if (_inputPrefabs.Count >= i && _inputPrefabs[i] != null)
             {            
                 _inputPrefabs[i].SetActive(true);
             }

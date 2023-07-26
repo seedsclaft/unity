@@ -9,9 +9,6 @@ public class NameEntryView : BaseView, IInputHandlerEvent
 {
     [SerializeField] private TMP_InputField inputField = null;
     [SerializeField] private Button decideButton = null;
-    [SerializeField] private GameObject helpRoot = null;
-    [SerializeField] private GameObject helpPrefab = null;
-    private HelpWindow _helpWindow = null;
 
     private new System.Action<NameEntryViewEvent> _commandData = null;
 
@@ -28,9 +25,8 @@ public class NameEntryView : BaseView, IInputHandlerEvent
     }
 
     public void SetHelpWindow(){
-        GameObject prefab = Instantiate(helpPrefab);
-        prefab.transform.SetParent(helpRoot.transform, false);
-        _helpWindow = prefab.GetComponent<HelpWindow>();
+        HelpWindow.SetHelpText("");
+        HelpWindow.SetInputInfo("");
     }
 
     public void SetEvent(System.Action<NameEntryViewEvent> commandData)
@@ -56,8 +52,8 @@ public class NameEntryView : BaseView, IInputHandlerEvent
         inputField.gameObject.SetActive(true);
         inputField.Select();
         _inputLateUpdate = 1;
-        _helpWindow.SetHelpText(DataSystem.System.GetTextData(5000).Text);
-        _helpWindow.SetInputInfo("NAMEENTRY");
+        HelpWindow.SetHelpText(DataSystem.System.GetTextData(5000).Text);
+        HelpWindow.SetInputInfo("NAMEENTRY");
     }
 
     public void InputHandler(InputKeyType keyType)

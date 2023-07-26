@@ -61,11 +61,4 @@ public class BasePresenter
         return isAbort;
     }
     
-    public void CommandOption()
-    {
-        _busy = true;
-        _view.CommandCallOption(() => {
-            _busy = false;
-        });
-    }
 }

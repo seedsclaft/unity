@@ -11,8 +11,6 @@ public class EnemyInfoView : BaseView,IInputHandlerEvent
     [SerializeField] private EnemyInfoComponent enemyInfoComponent = null;
     [SerializeField] private StatusConditionList statusConditionList = null;
     [SerializeField] private Button skillButton = null;
-    [SerializeField] private GameObject helpRoot = null;
-    [SerializeField] private GameObject helpPrefab = null;
     [SerializeField] private GameObject leftRoot = null;
     [SerializeField] private GameObject rightRoot = null;
     [SerializeField] private GameObject leftPrefab = null;
@@ -23,7 +21,6 @@ public class EnemyInfoView : BaseView,IInputHandlerEvent
     private Button _rightButton = null;
     private System.Action _backEvent = null;
 
-    private HelpWindow _helpWindow;
     private bool _isBattle = false;
     protected void Awake(){
         InitializeInput();
@@ -108,16 +105,13 @@ public class EnemyInfoView : BaseView,IInputHandlerEvent
 
     public void SetHelpWindow()
     {
-        GameObject prefab = Instantiate(helpPrefab);
-        prefab.transform.SetParent(helpRoot.transform, false);
-        _helpWindow = prefab.GetComponent<HelpWindow>();
-        _helpWindow.SetHelpText(DataSystem.System.GetTextData(809).Help);
+        HelpWindow.SetHelpText(DataSystem.System.GetTextData(809).Help);
         if (_isBattle)
         {
-            _helpWindow.SetInputInfo("ENEMYINFO_BATTLE");
+            HelpWindow.SetInputInfo("ENEMYINFO_BATTLE");
         } else
         {
-            _helpWindow.SetInputInfo("ENEMYINFO");
+            HelpWindow.SetInputInfo("ENEMYINFO");
         }
     }
 

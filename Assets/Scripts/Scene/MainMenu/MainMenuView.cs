@@ -7,10 +7,7 @@ using MainMenu;
 public class MainMenuView : BaseView
 {
     [SerializeField] private MainMenuStageList stageList = null;
-    [SerializeField] private GameObject helpRoot = null;
-    [SerializeField] private GameObject helpPrefab = null;
     [SerializeField] private SideMenuList sideMenuList = null;
-    private HelpWindow _helpWindow = null;
 
     private new System.Action<MainMenuViewEvent> _commandData = null;
 
@@ -21,12 +18,19 @@ public class MainMenuView : BaseView
         new MainMenuPresenter(this);
     }
 
+    public void SetInitHelpText()
+    {
+        HelpWindow.SetHelpText(DataSystem.System.GetTextData(11040).Text);
+        HelpWindow.SetInputInfo("MAINMENU");
+    }
+
     public void SetHelpWindow(){
-        GameObject prefab = Instantiate(helpPrefab);
-        prefab.transform.SetParent(helpRoot.transform, false);
-        _helpWindow = prefab.GetComponent<HelpWindow>();
-        _helpWindow.SetHelpText(DataSystem.System.GetTextData(11040).Text);
-        _helpWindow.SetInputInfo("MAINMENU");
+        SetInitHelpText();
+        sideMenuList.SetHelpWindow(HelpWindow);
+        sideMenuList.SetCloseEvent(() => {
+        SetInitHelpText();
+            stageList.UpdateHelpWindow();
+        });
     }
 
     public void SetEvent(System.Action<MainMenuViewEvent> commandData)
@@ -69,20 +73,20 @@ public class MainMenuView : BaseView
     
     public void ActivateSideMenu()
     {
-        _helpWindow.SetInputInfo("SIDEMENU");
+        HelpWindow.SetInputInfo("SIDEMENU");
         sideMenuList.Activate();
     }
 
     public void DeactivateSideMenu()
     {
-        _helpWindow.SetInputInfo("MAINMENU");
+        HelpWindow.SetInputInfo("MAINMENU");
         sideMenuList.Deactivate();
     }
 
     public void CommandOpenSideMenu()
     {
-        _helpWindow.SetInputInfo("SIDEMENU");
-        _helpWindow.SetHelpText(DataSystem.System.GetTextData(701).Help);
+        HelpWindow.SetInputInfo("SIDEMENU");
+        HelpWindow.SetHelpText(DataSystem.System.GetTextData(701).Help);
         stageList.Deactivate();
         sideMenuList.Activate();
         sideMenuList.OpenSideMenu();
@@ -90,10 +94,10 @@ public class MainMenuView : BaseView
 
     public void CommandCloseSideMenu()
     {
-        _helpWindow.SetInputInfo("MAINMENU");
         stageList.Activate();
         sideMenuList.Deactivate();
         sideMenuList.CloseSideMenu();
+        HelpWindow.SetInputInfo("MAINMENU");
         stageList.UpdateHelpWindow();
     }
     private void CallOpenSideMenu()
@@ -113,11 +117,6 @@ public class MainMenuView : BaseView
     {
         var eventData = new MainMenuViewEvent(CommandType.CloseSideMenu);
         _commandData(eventData);
-    }
-    
-    public void SetHelpInputInfo(string key)
-    {
-        _helpWindow.SetInputInfo(key);
     }
 }
 

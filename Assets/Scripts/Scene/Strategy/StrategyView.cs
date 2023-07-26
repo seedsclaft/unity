@@ -14,8 +14,6 @@ public class StrategyView : BaseView
     [SerializeField] private GetItemList strategyResultList = null; 
     [SerializeField] private TacticsEnemyList tacticsEnemyList = null; 
     [SerializeField] private StrategyStrengthList strategyStrengthList = null; 
-    [SerializeField] private GameObject helpRoot = null;
-    [SerializeField] private GameObject helpPrefab = null;
     [SerializeField] private TextMeshProUGUI title = null; 
     [SerializeField] private ActorInfoComponent actorInfoComponent = null;
     [SerializeField] private Button lvUpStatusButton = null;
@@ -24,7 +22,6 @@ public class StrategyView : BaseView
 
     private BattleStartAnim _battleStartAnim = null;
     private bool _animationBusy = false;
-    private HelpWindow _helpWindow = null;
 
     private new System.Action<StrategyViewEvent> _commandData = null;
 
@@ -69,7 +66,7 @@ public class StrategyView : BaseView
         actorInfoComponent.gameObject.SetActive(true);
         actorInfoComponent.UpdateInfo(actorInfo,null);
         strategyStrengthList.Refresh(actorInfo);
-        _helpWindow.SetInputInfo("LEVELUP");
+        HelpWindow.SetInputInfo("LEVELUP");
     }
 
     public void SetTitle(string text)
@@ -92,10 +89,8 @@ public class StrategyView : BaseView
     }
 
     public void SetHelpWindow(){
-        GameObject prefab = Instantiate(helpPrefab);
-        prefab.transform.SetParent(helpRoot.transform, false);
-        _helpWindow = prefab.GetComponent<HelpWindow>();
-        _helpWindow.SetHelpText(DataSystem.System.GetTextData(14010).Text);
+        HelpWindow.SetInputInfo("");
+        HelpWindow.SetHelpText(DataSystem.System.GetTextData(14010).Text);
     }
 
     public void SetActors(List<ActorInfo> actorInfos)
@@ -156,7 +151,7 @@ public class StrategyView : BaseView
         strategyResultList.gameObject.SetActive(true);
         strategyResultList.Activate();
         strategyResultList.TacticsCommandList.Activate();
-        _helpWindow.SetInputInfo("STRATEGY");
+        HelpWindow.SetInputInfo("STRATEGY");
     }
 
     private void CallResultCommand(TacticsComandType commandType)
@@ -181,7 +176,7 @@ public class StrategyView : BaseView
         tacticsEnemyList.Activate();
         tacticsEnemyList.TacticsCommandList.Activate();
         tacticsEnemyList.UpdateSelectIndex(-1);
-        _helpWindow.SetInputInfo("STRATEGY_BATTLE");
+        HelpWindow.SetInputInfo("STRATEGY_BATTLE");
     }
 
     private void CallPopupSkillInfo(GetItemInfo getItemInfo)

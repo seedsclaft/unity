@@ -96,6 +96,13 @@ MonoBehaviour:
     Toggles: 1
     ToggleText1: 536
     ToggleText2: 527
+  - Id: 8
+    Key: INPUT_TYPE
+    Name: Input Type
+    Help: " - \u30AD\u30FC\u30DC\u30FC\u30C9\u30FB\u30B2\u30FC\u30E0\u30D1\u30C3\u30C9\u64CD\u4F5C\u3092\u6709\u52B9\u306B\u3059\u308B\u304B\u5909\u66F4\u3057\u307E\u3059"
+    Toggles: 1
+    ToggleText1: 541
+    ToggleText2: 542
   TitleCommandData:
   - Id: 1
     Key: NEWGAME
@@ -272,6 +279,9 @@ MonoBehaviour:
   - Id: 410
     Text: "\u6551\u6E08\u57F7\u884C\u3092\u8AE6\u3081\u3066\u64A4\u9000\u3057\u307E\u3059\u304B\uFF1F"
     Help: '""'
+  - Id: 500
+    Text: '""'
+    Help: "\u30B2\u30FC\u30E0\u306E\u8A2D\u5B9A\u3092\u5909\u66F4\u3057\u307E\u3059"
   - Id: 501
     Text: BGM Volume
     Help: " - BGM\u306E\u97F3\u91CF\u3092\u5909\u66F4\u3057\u307E\u3059"
@@ -293,6 +303,9 @@ MonoBehaviour:
   - Id: 507
     Text: Battle Animation
     Help: " - \u30D0\u30C8\u30EB\u30A2\u30CB\u30E1\u30FC\u30B7\u30E7\u30F3\u6F14\u51FA\u8868\u793A\u306E\u6709\u7121\u3092\u5207\u308A\u66FF\u3048\u307E\u3059"
+  - Id: 508
+    Text: Input Type
+    Help: " - \u30AD\u30FC\u30DC\u30FC\u30C9\u30FB\u30B2\u30FC\u30E0\u30D1\u30C3\u30C9\u64CD\u4F5C\u3092\u6709\u52B9\u306B\u3059\u308B\u304B\u5909\u66F4\u3057\u307E\u3059"
   - Id: 521
     Text: Normal
     Help: '""'
@@ -313,6 +326,12 @@ MonoBehaviour:
     Help: '""'
   - Id: 536
     Text: "\u8868\u793A\u3059\u308B"
+    Help: '""'
+  - Id: 541
+    Text: "\u30DE\u30A6\u30B9"
+    Help: '""'
+  - Id: 542
+    Text: "\u30AD\u30FC\u30DC\u30FC\u30C9\u30FB\u30B2\u30FC\u30E0\u30D1\u30C3\u30C9"
     Help: '""'
   - Id: 700
     Text: "\u7248\u6A29\u8868\u793A"

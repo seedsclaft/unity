@@ -28,9 +28,7 @@ public class TitlePresenter : BasePresenter
             _view.CommandChangeEventSkipIndex(true);
         }
 
-        _view.SetHelpWindow();
         _view.SetEvent((type) => updateCommand(type));
-        _view.SetTitleCommand(_model.TitleCommand);
         _view.SetSideMenu(_model.SideMenu());
         _view.SetVersion(_model.VersionText());
 
@@ -152,6 +150,8 @@ public class TitlePresenter : BasePresenter
     {
         _logoChecked = true;
         _view.CommandLogoClick();
+        _view.SetHelpWindow();
+        _view.SetTitleCommand(_model.TitleCommand);
         var bgm = await _model.GetBgmData("TITLE");
         Ryneus.SoundManager.Instance.PlayBgm(bgm,1.0f,false);
     }

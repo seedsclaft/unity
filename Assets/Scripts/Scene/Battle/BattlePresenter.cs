@@ -48,7 +48,6 @@ public class BattlePresenter : BasePresenter
 
         _view.ClearCurrentSkillData();
         _view.CreateObject();
-        _view.SetHelpWindow();
         _view.SetUIButton();
         _view.SetActiveBack(false);
 
@@ -961,5 +960,15 @@ public class BattlePresenter : BasePresenter
         {
             CommandRule();
         }
+    }    
+    
+    public void CommandOption()
+    {
+        _busy = true;
+        _view.DeactivateSideMenu();
+        _view.CommandCallOption(() => {
+            _busy = false;
+            _view.ActivateSideMenu();
+        });
     }
 }

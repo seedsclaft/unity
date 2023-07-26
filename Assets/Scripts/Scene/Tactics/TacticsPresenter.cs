@@ -917,4 +917,14 @@ public class TacticsPresenter :BasePresenter
             CommandRule();
         }
     }
+
+    public void CommandOption()
+    {
+        _busy = true;
+        _view.DeactivateSideMenu();
+        _view.CommandCallOption(() => {
+            _busy = false;
+            _view.ActivateSideMenu();
+        });
+    }
 }

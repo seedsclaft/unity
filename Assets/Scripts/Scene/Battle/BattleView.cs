@@ -16,8 +16,6 @@ public class BattleView : BaseView
     [SerializeField] private BattleThumb battleThumb = null;
 
     private new System.Action<BattleViewEvent> _commandData = null;
-    [SerializeField] private GameObject helpRoot = null;
-    [SerializeField] private GameObject helpPrefab = null;
 
     
     [SerializeField] private EffekseerEmitter effekseerEmitter = null;
@@ -30,7 +28,7 @@ public class BattleView : BaseView
     [SerializeField] private SideMenuList sideMenuList = null;
     private BattleStartAnim _battleStartAnim = null;
 
-    private HelpWindow _helpWindow = null;
+
 
     private bool _battleBusy = false;
     public void SetBattleBusy(bool isBusy)
@@ -87,13 +85,13 @@ public class BattleView : BaseView
     public void ShowEnemyTarget()
     {
         battleEnemyLayer.gameObject.SetActive(true);
-        _helpWindow.SetInputInfo("BATTLE_ENEMY");
+        HelpWindow.SetInputInfo("BATTLE_ENEMY");
     }
 
     public void ShowPartyTarget()
     {
         battleActorList.gameObject.SetActive(true);
-        _helpWindow.SetInputInfo("BATTLE_PARTY");
+        HelpWindow.SetInputInfo("BATTLE_PARTY");
     }
 
     public void CreateObject()
@@ -163,22 +161,15 @@ public class BattleView : BaseView
         _commandData(eventData);
     }
 
-    public void SetHelpWindow()
+    public new void SetHelpText(string text)
     {
-        GameObject prefab = Instantiate(helpPrefab);
-        prefab.transform.SetParent(helpRoot.transform, false);
-        _helpWindow = prefab.GetComponent<HelpWindow>();
-    }
-
-    public void SetHelpText(string text)
-    {
-        _helpWindow.SetHelpText(text);
+        HelpWindow.SetHelpText(text);
         if (text != "")
         {        
-            _helpWindow.SetInputInfo("BATTLE");
+            HelpWindow.SetInputInfo("BATTLE");
         } else
         {
-            _helpWindow.SetInputInfo("BATTLE_NO");
+            HelpWindow.SetInputInfo("BATTLE_NO");
         }
     }
 
@@ -583,28 +574,34 @@ public class BattleView : BaseView
             }
         }
     }
+
     public void SetSideMenu(List<SystemData.MenuCommandData> menuCommands){
         sideMenuList.Initialize(menuCommands,(a) => CallSideMenu(a),() => OnClickOption(),() => CallCloseSideMenu());
         SetInputHandler(sideMenuList.GetComponent<IInputHandlerEvent>());
         sideMenuList.Deactivate();
+        sideMenuList.SetHelpWindow(HelpWindow);
+        sideMenuList.SetCloseEvent(() => {
+            HelpWindow.SetInputInfo("BATTLE");
+            HelpWindow.SetHelpText(DataSystem.System.GetTextData(15010).Text);
+        });
     }
     
     public void ActivateSideMenu()
     {
-        _helpWindow.SetInputInfo("SIDEMENU");
+        HelpWindow.SetInputInfo("SIDEMENU");
         sideMenuList.Activate();
     }
 
     public void DeactivateSideMenu()
     {
-        _helpWindow.SetInputInfo("BATTLE");
+        HelpWindow.SetInputInfo("BATTLE");
         sideMenuList.Deactivate();
     }
 
     public void CommandOpenSideMenu()
     {
-        _helpWindow.SetInputInfo("SIDEMENU");
-        _helpWindow.SetHelpText(DataSystem.System.GetTextData(701).Help);
+        HelpWindow.SetInputInfo("SIDEMENU");
+        HelpWindow.SetHelpText(DataSystem.System.GetTextData(701).Help);
         skillList.DeactivateActionList();
         skillList.DeactivateAttributeList();
         sideMenuList.Activate();
@@ -613,13 +610,13 @@ public class BattleView : BaseView
 
     public void CommandCloseSideMenu()
     {
-        _helpWindow.SetInputInfo("BATTLE");
+        HelpWindow.SetInputInfo("BATTLE");
         skillList.ActivateActionList();
         skillList.ActivateAttributeList();
         sideMenuList.Deactivate();
         sideMenuList.CloseSideMenu();
         skillList.skillActionList.UpdateHelpWindow();
-        _helpWindow.SetHelpText(DataSystem.System.GetTextData(15010).Text);
+        HelpWindow.SetHelpText(DataSystem.System.GetTextData(15010).Text);
     }
 
     private void CallOpenSideMenu()
@@ -639,11 +636,6 @@ public class BattleView : BaseView
     {
         var eventData = new BattleViewEvent(CommandType.CloseSideMenu);
         _commandData(eventData);
-    }
-    
-    public void SetHelpInputInfo(string key)
-    {
-        _helpWindow.SetInputInfo(key);
     }
 }
 

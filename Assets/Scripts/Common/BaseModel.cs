@@ -115,6 +115,7 @@ public class BaseModel
             ChangeCommandEndCheck(saveConfigInfo._commandEndCheck);
             ChangeBattleWait(saveConfigInfo._battleWait);
             ChangeBattleAnimation(saveConfigInfo._battleAnimationSkip);
+            ChangeInputType(saveConfigInfo._inputType);
         }
     }
 
@@ -168,6 +169,11 @@ public class BaseModel
     public void ChangeBattleAnimation(bool battleAnimation)
     {
         GameSystem.ConfigData._battleAnimationSkip = battleAnimation;
+    }
+
+    public void ChangeInputType(bool inputType)
+    {
+        GameSystem.ConfigData._inputType = inputType;
     }
 
     public string PlayerName()

@@ -9,9 +9,6 @@ public class OptionView : BaseView
 {
     [SerializeField] private OptionCommandList commandList = null;
     [SerializeField] private List<GameObject> optionObjs = null;
-    [SerializeField] private GameObject helpRoot = null;
-    [SerializeField] private GameObject helpPrefab = null;
-    private HelpWindow _helpWindow = null;
     private new System.Action<OptionViewEvent> _commandData = null;
     private OptionVolume _optionBgmVolume = null;
     private OptionVolume _optionSeVolume = null;
@@ -21,6 +18,7 @@ public class OptionView : BaseView
     private Toggle[] _commandEndCheckToggles = null;
     private Toggle[] _battleWaitToggles = null;
     private Toggle[] _battleAnimationToggles = null;
+    private Toggle[] _inputTypeToggles = null;
     public override void Initialize() 
     {
         base.Initialize();
@@ -31,11 +29,8 @@ public class OptionView : BaseView
     
     public void SetHelpWindow()
     {
-        GameObject prefab = Instantiate(helpPrefab);
-        prefab.transform.SetParent(helpRoot.transform, false);
-        _helpWindow = prefab.GetComponent<HelpWindow>();
-        //_helpWindow.SetHelpText(DataSystem.System.GetTextData(5000).Text);
-        _helpWindow.SetInputInfo("OPTION");
+        HelpWindow.SetHelpText(DataSystem.System.GetTextData(500).Help);
+        HelpWindow.SetInputInfo("OPTION");
     }
 
     public void InitializeVolume(float bgmVolume,bool bgmMute,float seVolume,bool seMute)
@@ -99,6 +94,17 @@ public class OptionView : BaseView
         {
             int j = _battleAnimationToggles.Length-i;
             _battleAnimationToggles[i].onValueChanged.AddListener((a) => ChangeBattleAnimation(a,j));
+        }
+    }
+
+    public void InitializeInputType(int InputTypeIndex)
+    {
+        _inputTypeToggles = commandList.ObjectList[7].GetComponentsInChildren<Toggle>();
+        UpdateInputType(InputTypeIndex);
+        for (int i = 0;i < _inputTypeToggles.Length;i++)
+        {
+            int j = _inputTypeToggles.Length-i;
+            _inputTypeToggles[i].onValueChanged.AddListener((a) => ChangeInputType(a,j));
         }
     }
 
@@ -239,6 +245,22 @@ public class OptionView : BaseView
         }
     }
 
+    private void ChangeInputType(bool isChange,int toggleIndex)
+    {
+        if (isChange == false) return;
+        var eventData = new OptionViewEvent(CommandType.ChangeInputType);
+        eventData.templete = toggleIndex;
+        _commandData(eventData);
+    }
+
+    private void UpdateInputType(int inputTypeIndex)
+    {
+        for (int i = 0;i < _inputTypeToggles.Length;i++)
+        {
+            _inputTypeToggles[i].isOn = (_inputTypeToggles.Length-i) == inputTypeIndex;
+        }
+    }
+
     public void CommandSelectCategory(int optionIndex)
     {
         for (int i = 0;i < optionObjs.Count ; i++)
@@ -372,6 +394,7 @@ namespace Option
         ChangeCommandEndCheck = 1041,
         ChangeBattleWait = 1051,
         ChangeBattleAnimation = 1061,
+        ChangeInputType = 1071
     }
 }
 public class OptionViewEvent
