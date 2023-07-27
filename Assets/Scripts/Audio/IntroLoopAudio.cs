@@ -10,96 +10,105 @@ using System.Collections.Generic;
 /// </remarks>
 public class IntroLoopAudio : MonoBehaviour
 {
-
-  private float _audioClipLoopLength = -1;
-
-  /// <summary>BGM のイントロ部分の AudioSource。</summary>
-  private AudioSource _introAudioSource;
+  private AudioSourceController _introAudioSource;
 
   /// <summary>BGM のループ部分の AudioSource。</summary>
-  private AudioSource[] _loopAudioSources = new AudioSource[2];
+  private AudioSourceController _loopAudioSource = null;
+  private AudioSourceController _loopWebGLAudioSource = null;
 
   /// <summary>一時停止中かどうか。</summary>
   private bool _isPause;
 
   /// <summary>現在の再生するループ部分のインデックス。</summary>
-  private int _nowPlayIndex = 0;
+  private int _nowPlayIndex = -1;
+
+  private float _reservedTime = 44100;
 
   /// <summary>再生中であるかどうか。一時停止、非アクティブの場合は false を返す。</summary>
   private bool IsPlaying
-    => (_introAudioSource.isPlaying || _introAudioSource.time > 0)
-      || (_loopAudioSources[0].isPlaying || _loopAudioSources[0].time > 0)
-      || (_loopAudioSources[1] != null && (_loopAudioSources[1].isPlaying || _loopAudioSources[1].time > 0));
+    => (_introAudioSource.isPlaying() || _introAudioSource.timeSamples() > 0)
+      || (_loopAudioSource.isPlaying() || _loopAudioSource.timeSamples() > 0)
+      || (_loopWebGLAudioSource != null && (_loopWebGLAudioSource.isPlaying() || _loopWebGLAudioSource.timeSamples() > 0));
 
+/*
   /// <summary>現在アクティブで再生しているループ側の AudioSource。</summary>
   private AudioSource LoopAudioSourceActive
-    => _loopAudioSources[1] != null && _loopAudioSources[1].time > 0 ? _loopAudioSources[1] : _loopAudioSources[0];
+    => _loopWebGLAudioSource != null && _loopWebGLAudioSource.timeSamples > 0 ? _loopWebGLAudioSource : _loopAudioSource;
 
   /// <summary>現在の再生時間 (s)。</summary>
   public float time
     => _introAudioSource == null ? 0
-      : _introAudioSource.time > 0 ? _introAudioSource.time
-      : LoopAudioSourceActive.time > 0 ? _introAudioSource.clip.length + LoopAudioSourceActive.time
+      : _introAudioSource.timeSamples > 0 ? _introAudioSource.timeSamples
+      : LoopAudioSourceActive.timeSamples > 0 ? _introAudioSource.clip.length + LoopAudioSourceActive.timeSamples
       : 0;
-
+*/
 
   void Awake()
   {
     // AudioSource を自身に追加
-    _introAudioSource = gameObject.AddComponent<AudioSource>();
-    _loopAudioSources[0] = gameObject.AddComponent<AudioSource>();
+    _introAudioSource = gameObject.AddComponent<AudioSourceController>();
+    _introAudioSource.Initialize();
+    _loopAudioSource = gameObject.AddComponent<AudioSourceController>();
+    _loopAudioSource.Initialize();
 #if UNITY_WEBGL
-    _loopAudioSources[1] = gameObject.AddComponent<AudioSource>();
+    _loopWebGLAudioSource = gameObject.AddComponent<AudioSourceController>();
+    _loopWebGLAudioSource.Initialize();
 #endif
   }
 
   public void SetClip(List<AudioClip> clip,bool isLoop){
-    _audioClipLoopLength = -1;
+    _introAudioSource.ResetReserveTimestamp();
+    _loopAudioSource.ResetReserveTimestamp();
+    if (_loopWebGLAudioSource) _loopWebGLAudioSource.ResetReserveTimestamp();
     if (clip.Count == 2){
-      _introAudioSource.clip = clip[0];
-      _introAudioSource.loop = clip[1] == null ? isLoop : false;
-      _introAudioSource.playOnAwake = false;
+      _introAudioSource.SetAudioData(clip[0],clip[1] == null ? isLoop : false,false);
+      _loopAudioSource.SetAudioData(clip[1],clip[1] == null ? false : _loopWebGLAudioSource == null,false);
 
-      _loopAudioSources[0].clip = clip[1];
-      _loopAudioSources[0].loop = clip[1] == null ? false : _loopAudioSources[1] == null;
-      _loopAudioSources[0].playOnAwake = false;
-      if (_loopAudioSources[1] != null)
+#if UNITY_WEBGL
+      _loopWebGLAudioSource.SetAudioData(clip[1]);
+      if (clip[1] != null)
       {
-        _loopAudioSources[1].clip = clip[1];
-        _loopAudioSources[1].loop = false;
-        _loopAudioSources[1].playOnAwake = false;
-        if (clip[1] != null)
-        {
-          _audioClipLoopLength = clip[1].length;
-        }
+        _loopAudioSource.SetReserveTimestamp();
+        _loopWebGLAudioSource.SetReserveTimestamp();
       }
+#endif
     } else{
-      _introAudioSource.clip = clip[0];
-      _introAudioSource.loop = isLoop;
-      _introAudioSource.playOnAwake = false;
-      _loopAudioSources[0].Stop();
-      _loopAudioSources[0].clip = null;
-      if (_loopAudioSources[1] != null) _loopAudioSources[1].Stop();
-      if (_loopAudioSources[1] != null) _loopAudioSources[1].clip = null;
+      _introAudioSource.SetAudioData(clip[0],isLoop,false);
+      _loopAudioSource.Stop();
+      _loopAudioSource.SetAudioData(null);
+#if UNITY_WEBGL
+      _loopWebGLAudioSource.Stop();
+      _loopWebGLAudioSource.SetAudioData(null);
+#endif
     }
   }
 
   void Update()
   {
+    if (_nowPlayIndex == 2 && _introAudioSource.timeSamples() >= (_introAudioSource.ReserveTimeSample - _reservedTime))
+    {
+      //_loopAudioSource.Play(0);
+      //_introAudioSource.Stop();
+      float reserve = _introAudioSource.ReserveTimeSample - _introAudioSource.timeSamples();
+      _nowPlayIndex = 0;
+      _loopAudioSource.PlayDelay((reserve) / 44100);
+        
+    }
     // WebGL のためのループ切り替え処理
     #if UNITY_WEBGL
-    if (_audioClipLoopLength != -1)
+    if (_loopAudioSource.ReserveTimeSample > -1 && _loopWebGLAudioSource.ReserveTimeSample > -1)
     {
-      // 終了する１秒前から次の再生のスケジュールを登録する
-      if (_nowPlayIndex == 0 && _loopAudioSources[0].time >= _audioClipLoopLength - 1)
+      if (_nowPlayIndex == 0 && _loopAudioSource.timeSamples() >= (_loopAudioSource.ReserveTimeSample - _reservedTime))
       {
-        _loopAudioSources[1].PlayScheduled(AudioSettings.dspTime + (_audioClipLoopLength - _loopAudioSources[0].time));
+        float reserve = _loopAudioSource.ReserveTimeSample - _loopAudioSource.timeSamples();
         _nowPlayIndex = 1;
+        _loopWebGLAudioSource.PlayDelay((reserve) / 44100);
       }
-      else if (_nowPlayIndex == 1 && _loopAudioSources[1].time >= _audioClipLoopLength - 1)
+      else if (_nowPlayIndex == 1 && _loopWebGLAudioSource.timeSamples() >= (_loopWebGLAudioSource.ReserveTimeSample - _reservedTime))
       {
-        _loopAudioSources[0].PlayScheduled(AudioSettings.dspTime + (_audioClipLoopLength - _loopAudioSources[1].time));
+        float reserve = _loopWebGLAudioSource.ReserveTimeSample - _loopWebGLAudioSource.timeSamples();
         _nowPlayIndex = 0;
+        _loopAudioSource.PlayDelay((reserve) / 44100);
       }
     }
     #endif
@@ -108,57 +117,61 @@ public class IntroLoopAudio : MonoBehaviour
   public void Play()
   {
     // クリップが設定されていない場合は何もしない
-    if (_introAudioSource == null || _loopAudioSources == null) return;
+    if (_introAudioSource == null || _loopAudioSource == null) return;
 
     // Pause 中は isPlaying は false
     // 標準機能だけでは一時停止中か判別不可能
     if (_isPause)
     {
+      /*
       _introAudioSource.UnPause();
       if (_introAudioSource.isPlaying)
       {
         // イントロ中ならループ開始時間を残り時間で再設定
-        _loopAudioSources[0].Stop();
-        _loopAudioSources[0].PlayScheduled(AudioSettings.dspTime + _introAudioSource.clip.length - _introAudioSource.time);
+        _loopAudioSource.Stop();
+        _loopAudioSource.PlayScheduled(AudioSettings.dspTime + _introAudioSource.clip.length - _introAudioSource.timeSamples);
       }
       else
       {
         #if UNITY_WEBGL
           // WebGL の場合は切り替え処理を実行
-          if (_loopAudioSources[0].time > 0)
+          if (_loopAudioSource.timeSamples > 0)
           {
-            _loopAudioSources[0].UnPause();
-            if (_loopAudioSources[0].time >= _audioClipLoopLength - 1)
+            _loopAudioSource.UnPause();
+            if (_loopAudioSource.timeSamples >= _loopTimeSample)
             {
-              _loopAudioSources[1].Stop();
-              _loopAudioSources[1].PlayScheduled(AudioSettings.dspTime + (_audioClipLoopLength - _loopAudioSources[0].time));
+              _loopWebGLAudioSource.Stop();
+              _loopWebGLAudioSource.PlayScheduled(AudioSettings.dspTime + (_loopTimeSample - _loopAudioSource.timeSamples));
               _nowPlayIndex = 1;
             }
           }
           else
           {
-            _loopAudioSources[1].UnPause();
-            if (_loopAudioSources[1].time >= _audioClipLoopLength - 1)
+            _loopWebGLAudioSource.UnPause();
+            if (_loopWebGLAudioSource.timeSamples >= _loopTimeSample - 1)
             {
-              _loopAudioSources[0].Stop();
-              _loopAudioSources[0].PlayScheduled(AudioSettings.dspTime + (_audioClipLoopLength - _loopAudioSources[0].time));
+              _loopAudioSource.Stop();
+              _loopAudioSource.PlayScheduled(AudioSettings.dspTime + (_loopTimeSample - _loopAudioSource.timeSamples));
               _nowPlayIndex = 0;
             }
           }
         #else
           // WebGL 以外は UnPause するだけ
-          _loopAudioSources[0].UnPause();
+          _loopAudioSource.UnPause();
         #endif
       }
+      */
     }
     else if (IsPlaying == false)
     {
       Stop();
-      if (_introAudioSource.clip != null){
+      if (_introAudioSource.Clip != null){
+        _introAudioSource.SetReserveTimestamp();
         _introAudioSource.Play();
-        _loopAudioSources[0].PlayScheduled(AudioSettings.dspTime + _introAudioSource.clip.length);
+        _nowPlayIndex = 2;
+        //_loopAudioSource.PlayScheduled(AudioSettings.dspTime + _introAudioSource.clip.length);
       } else{
-        _loopAudioSources[0].Play();
+        _loopAudioSource.Play();
       }
     }
 
@@ -168,11 +181,11 @@ public class IntroLoopAudio : MonoBehaviour
   /// <summary>BGM を一時停止します。</summary>
   public void Pause()
   {
-    if (_introAudioSource == null || _loopAudioSources == null) return;
+    if (_introAudioSource == null || _loopAudioSource == null) return;
 
     _introAudioSource.Pause();
-    _loopAudioSources[0].Pause();
-    if (_loopAudioSources[1] != null) _loopAudioSources[1].Pause();
+    _loopAudioSource.Pause();
+    if (_loopWebGLAudioSource != null) _loopWebGLAudioSource.Pause();
 
     _isPause = true;
   }
@@ -180,19 +193,19 @@ public class IntroLoopAudio : MonoBehaviour
   /// <summary>BGM を停止します。</summary>
   public void Stop()
   {
-    if (_introAudioSource == null || _loopAudioSources == null) return;
+    if (_introAudioSource == null || _loopAudioSource == null) return;
 
     _introAudioSource.Stop();
-    _loopAudioSources[0].Stop();
-    if (_loopAudioSources[1] != null) _loopAudioSources[1].Stop();
+    _loopAudioSource.Stop();
+    if (_loopWebGLAudioSource != null) _loopWebGLAudioSource.Stop();
     _isPause = false;
   }
 
   public void ChangeVolume(float volume)
   {
-    if (_introAudioSource == null || _loopAudioSources == null) return;
-    _introAudioSource.volume = volume;
-    _loopAudioSources[0].volume = volume;
-    if (_loopAudioSources[1] != null) _loopAudioSources[1].volume = volume;
+    if (_introAudioSource == null || _loopAudioSource == null) return;
+    _introAudioSource.ChangeVolume(volume);
+    _loopAudioSource.ChangeVolume(volume);
+    if (_loopWebGLAudioSource != null) _loopWebGLAudioSource.ChangeVolume(volume);
   }
 }

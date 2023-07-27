@@ -12,14 +12,6 @@ public class ResourceSystem : MonoBehaviour
 {
     private static GameObject _lastScene = null;
     private static List<Object> _lastLoadAssets = new List<Object>();
-    public static GameObject CreateScene<T>(Scene scene)
-    {
-        string address = GetScenePrefab(scene);
-        //var handle = await Addressables.InstantiateAsync(address).Task;
-        var handle = Resources.Load<GameObject>(address);
-        //_lastScene = handle;
-        return handle;
-    }
 
     public static void ReleaseScene()
     {
@@ -28,33 +20,6 @@ public class ResourceSystem : MonoBehaviour
             Addressables.ReleaseInstance(_lastScene);
             _lastScene = null;
         }
-    }
-
-    private static string GetScenePrefab(Scene scene)
-    {
-        string path = "Prefabs/";
-        switch (scene)
-        {
-            case Scene.Boot:
-            return path + "Boot/BootScene";
-            case Scene.Title:
-            return path + "Title/TitleScene";
-            case Scene.NameEntry:
-            return path + "NameEntry/NameEntryScene";
-            case Scene.MainMenu:
-            return path + "MainMenu/MainMenuScene";
-            case Scene.Battle:
-            return path + "Battle/BattleScene";
-            case Scene.Status:
-            return path + "Status/StatusScene";
-            case Scene.Tactics:
-            return path + "Tactics/TacticsScene";
-            case Scene.Strategy:
-            return path + "Strategy/StrategyScene";
-            case Scene.Result:
-            return path + "Result/ResultScene";
-        }
-        return "";
     }
 
     public static async UniTask<T> LoadAsset<T>(string address){

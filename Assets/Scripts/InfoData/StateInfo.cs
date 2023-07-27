@@ -15,13 +15,15 @@ public class StateInfo {
     public int BattlerId => _battlerId;
     private int _targetIndex = 0;
     public int TargetIndex => _targetIndex;
-    public StateInfo(int stateId,int turns,int effect,int battlerId,int targetIndex){
+    private int _skillId = 0;
+    public StateInfo(int stateId,int turns,int effect,int battlerId,int targetIndex,int skillId){
         _stateId = stateId;
         _turns = turns;
         _baseTurns = turns;
         _effect = effect;
         _battlerId = battlerId;
         _targetIndex = targetIndex;
+        _skillId = skillId;
     }
 
     public bool CheckOverWriteState(StateInfo stateInfo)
@@ -34,6 +36,10 @@ public class StateInfo {
         if (stateInfo.StateId == (int)StateType.Death)
         {
             return (stateInfo.StateId == _stateId);
+        }
+        if (stateInfo.Master.OverWrite)
+        {
+            return (stateInfo.StateId == _stateId) && (stateInfo.BattlerId == _battlerId) && (stateInfo._skillId == _skillId);
         }
         return (stateInfo.StateId == _stateId) && (stateInfo.BattlerId == _battlerId);
     }

@@ -115,6 +115,7 @@ public class TacticsPresenter :BasePresenter
                 {
                     var popupInfo = new ConfirmInfo(DataSystem.System.GetTextData(11050).Text,(menuCommandInfo) => UpdatePopupSelectAddActor((ConfirmComandType)menuCommandInfo));
                     popupInfo.SetIsNoChoise(true);
+                    popupInfo.SetSelectIndex(1);
                     _view.CommandCallConfirm(popupInfo);
                     _model.AddEventReadFlag(stageEvents[i]);
                     _view.SetActiveUi(false);
@@ -124,6 +125,7 @@ public class TacticsPresenter :BasePresenter
                 if (stageEvents[i].Type == StageEventType.SaveCommand)
                 {
                     var popupInfo = new ConfirmInfo(DataSystem.System.GetTextData(11080).Text,(menuCommandInfo) => UpdatePopupSaveCommand((ConfirmComandType)menuCommandInfo));
+                    popupInfo.SetSelectIndex(1);
                     _view.CommandCallConfirm(popupInfo);
                     _model.AddEventReadFlag(stageEvents[i]);
                     _view.SetActiveUi(false);
@@ -564,7 +566,7 @@ public class TacticsPresenter :BasePresenter
                 mainText += "\n" + subData.Text;
             }
             var popupInfo = new ConfirmInfo(mainText,(a) => UpdatePopup((ConfirmComandType)a));
-            popupInfo.SetSelectIndex(_model.CheckNonBusy() ? (int)ConfirmComandType.No : (int)ConfirmComandType.Yes);
+            popupInfo.SetSelectIndex(_model.CheckNonBusy() ? (int)ConfirmComandType.Yes : (int)ConfirmComandType.No);
             _view.CommandCallConfirm(popupInfo);
             _view.HideCommandList();
         }

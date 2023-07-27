@@ -15,7 +15,9 @@ public class StatesData : ScriptableObject
         public string Help;
         public string IconPath;
         public RemovalTiming RemovalTiming;
+        public bool OverWrite;
         public string EffectPath;
+        public EffectPositionType EffectPosition;
     }
 }
 
@@ -68,6 +70,10 @@ public enum RemovalTiming
     UpdateAp = 2,
     UpdateChain = 3,
     UpdateCount = 4,
+}
 
-
+public enum EffectPositionType
+{
+    Center = 0,
+    Down = 1
 }

@@ -222,6 +222,8 @@ public class StrategyPresenter : BasePresenter
             ShowStatus();
         } else{
             Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
+            _view.SetHelpText("");
+            _view.SetHelpInputInfo("");
             _view.CommandCallLoading();
             _view.CommandChangeViewToTransition(null);
             _view.CommandSceneChange(Scene.Battle);

@@ -11,12 +11,9 @@ public class GameSystem : MonoBehaviour
     [SerializeField] private float version = 0.01f;
     [SerializeField] private bool testMode = false;
     [SerializeField] private GameObject uiRoot = null;
+    [SerializeField] private SceneAssign sceneAssign = null;
+    [SerializeField] private PopupAssign popupAssign = null;
     [SerializeField] private GameObject confirmRoot = null;
-    [SerializeField] private GameObject confirmPrefab = null;
-    [SerializeField] private GameObject rulingPrefab = null;
-    [SerializeField] private GameObject optionPrefab = null;
-    [SerializeField] private GameObject rankingPrefab = null;
-    [SerializeField] private GameObject creditPrefab = null;
     [SerializeField] private GameObject transitionRoot = null;
     [SerializeField] private Fade transitionFade = null;
     [SerializeField] private GameObject statusRoot = null;
@@ -57,46 +54,6 @@ public class GameSystem : MonoBehaviour
         CommandSceneChange(Scene.Boot);
     }
 
-    private GameObject CreateConfirm()
-    {
-        var prefab = Instantiate(confirmPrefab);
-        prefab.transform.SetParent(confirmRoot.transform, false);
-        confirmRoot.gameObject.SetActive(false);
-        return prefab;
-    }
-
-    private GameObject CreateRuling()
-    {
-        var prefab = Instantiate(rulingPrefab);
-        prefab.transform.SetParent(confirmRoot.transform, false);
-        confirmRoot.gameObject.SetActive(false);
-        return prefab;
-    }
-
-    private GameObject CreateOption()
-    {
-        var prefab = Instantiate(optionPrefab);
-        prefab.transform.SetParent(confirmRoot.transform, false);
-        confirmRoot.gameObject.SetActive(false);
-        return prefab;
-    }
-
-    private GameObject CreateRanking()
-    {
-        var prefab = Instantiate(rankingPrefab);
-        prefab.transform.SetParent(confirmRoot.transform, false);
-        confirmRoot.gameObject.SetActive(false);
-        return prefab;
-    }
-    
-    private GameObject CreateCredit()
-    {
-        var prefab = Instantiate(creditPrefab);
-        prefab.transform.SetParent(confirmRoot.transform, false);
-        confirmRoot.gameObject.SetActive(false);
-        return prefab;
-    }
-    
     private void CreateStatus()
     {
         var prefab = Instantiate(statusPrefab);
@@ -113,6 +70,7 @@ public class GameSystem : MonoBehaviour
         prefab.transform.SetParent(statusRoot.transform, false);
         _enemyInfoView = prefab.GetComponent<EnemyInfoView>();
         _enemyInfoView.Initialize();
+        _enemyInfoView.SetHelpWindow(helpWindow);
         statusRoot.gameObject.SetActive(false);
     }
 
@@ -285,7 +243,7 @@ public class GameSystem : MonoBehaviour
         {
             DestroyImmediate(_popupView.gameObject);
         }
-        var prefab = CreateConfirm();
+        var prefab = popupAssign.CreatePopup(PopupType.Confirm);
         _popupView = prefab.GetComponent<ConfirmView>();
         _popupView.SetHelpWindow(helpWindow);
         var confirmView = (_popupView as ConfirmView);
@@ -303,7 +261,7 @@ public class GameSystem : MonoBehaviour
         {
             DestroyImmediate(_popupView.gameObject);
         }
-        var prefab = CreateRuling();
+        var prefab = popupAssign.CreatePopup(PopupType.Ruling);
         _popupView = prefab.GetComponent<RulingView>();
         _popupView.SetHelpWindow(helpWindow);
         var rulingView = (_popupView as RulingView);
@@ -325,7 +283,7 @@ public class GameSystem : MonoBehaviour
         {
             DestroyImmediate(_popupView.gameObject);
         }
-        var prefab = CreateOption();
+        var prefab = popupAssign.CreatePopup(PopupType.Option);
         _popupView = prefab.GetComponent<OptionView>();
         _popupView.SetHelpWindow(helpWindow);
         var optionView = (_popupView as OptionView);
@@ -355,7 +313,7 @@ public class GameSystem : MonoBehaviour
         {
             DestroyImmediate(_popupView.gameObject);
         }
-        var prefab = CreateRanking();
+        var prefab = popupAssign.CreatePopup(PopupType.Ranking);
         _popupView = prefab.GetComponent<RankingView>();
         _popupView.SetHelpWindow(helpWindow);
         var rankingView = (_popupView as RankingView);
@@ -377,7 +335,7 @@ public class GameSystem : MonoBehaviour
         {
             DestroyImmediate(_popupView.gameObject);
         }
-        var prefab = CreateCredit();
+        var prefab = popupAssign.CreatePopup(PopupType.Credit);
         _popupView = prefab.GetComponent<CreditView>();
         _popupView.SetHelpWindow(helpWindow);
         var creditView = (_popupView as CreditView);
@@ -422,9 +380,7 @@ public class GameSystem : MonoBehaviour
             ResourceSystem.ReleaseScene();
             Resources.UnloadUnusedAssets();
         }
-        GameObject loadScene = ResourceSystem.CreateScene<GameObject>(scene);
-        GameObject prefab = Instantiate(loadScene);
-        prefab.transform.SetParent(uiRoot.transform, false);
+        GameObject prefab = sceneAssign.CreateScene(scene);
         _currentScene = prefab.GetComponent<BaseView>();
         _currentScene.SetTestMode(testMode);
         _currentScene.SetHelpWindow(helpWindow);

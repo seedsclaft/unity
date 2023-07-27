@@ -145,6 +145,7 @@ public class TacticsView : BaseView
     public void SetCommandDisable(int commandId)
     {
         tacticsCommandList.SetDisable(DataSystem.TacticsCommand[commandId],true);
+        tacticsCommandList.SelectEnableIndex();
     }
 
     public void ShowCommandList()

@@ -54,6 +54,19 @@ public class TacticsCommandList : ListWindow , IInputHandlerEvent
         }
     }
 
+    public void SelectEnableIndex()
+    {
+        for (int i = 0; i < _menuCommands.Count;i++)
+        {
+            var tacticsCommand = ObjectList[i].GetComponent<ListItem>();
+            if (!tacticsCommand.Disable.activeSelf)
+            {
+                UpdateSelectIndex(i);
+                break;
+            }
+        }
+    }
+
     private void CallInputHandler(InputKeyType keyType, System.Action<TacticsComandType> callEvent,System.Action optionEvent,System.Action retireEvent,System.Action alcanaEvent,System.Action<int> enemyInfoEvent)
     {
         if (keyType == InputKeyType.Decide && Index > -1)

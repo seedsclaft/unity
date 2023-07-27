@@ -10,8 +10,8 @@ public class ActionResultInfo
     private int _targetIndex = 0;
     public int TargetIndex => _targetIndex;
 
-
-    public ActionResultInfo(BattlerInfo subject,BattlerInfo target,List<SkillsData.FeatureData> featureDatas)
+    private int _skillIndex = -1;
+    public ActionResultInfo(BattlerInfo subject,BattlerInfo target,List<SkillsData.FeatureData> featureDatas,int skillIndex)
     {
         if (subject != null && target != null)
         {
@@ -19,6 +19,7 @@ public class ActionResultInfo
             _targetIndex = target.Index;
             _execStateInfos[subject.Index] = new List<StateType>();
             _execStateInfos[_targetIndex] = new List<StateType>();
+            _skillIndex = skillIndex;
         }
         for (int i = 0; i < featureDatas.Count; i++)
         {
@@ -364,7 +365,7 @@ public class ActionResultInfo
 
     private void MakeAddState(BattlerInfo subject,BattlerInfo target,SkillsData.FeatureData featureData)
     {
-        StateInfo stateInfo = new StateInfo(featureData.Param1,featureData.Param2,featureData.Param3,subject.Index,target.Index);
+        StateInfo stateInfo = new StateInfo(featureData.Param1,featureData.Param2,featureData.Param3,subject.Index,target.Index,_skillIndex);
         if (stateInfo.Master.Id == (int)StateType.CounterOura || stateInfo.Master.Id == (int)StateType.Benediction)
         {
             stateInfo.Turns = 200 - subject.Status.Spd * 2;
@@ -396,7 +397,7 @@ public class ActionResultInfo
             {
                 if (stateInfo.IsBarrierStateType())
                 {
-                    StateInfo barrierState = new StateInfo((int)StateType.Barrier,0,0,0,target.Index);
+                    StateInfo barrierState = new StateInfo((int)StateType.Barrier,0,0,0,target.Index,-1);
                     _displayStates.Add(barrierState);
                 }
             }
@@ -405,7 +406,7 @@ public class ActionResultInfo
     
     private void MakeRemoveState(BattlerInfo subject,BattlerInfo target,SkillsData.FeatureData featureData)
     {
-        StateInfo stateInfo = new StateInfo(featureData.Param1,featureData.Param2,featureData.Param3,subject.Index,target.Index);
+        StateInfo stateInfo = new StateInfo(featureData.Param1,featureData.Param2,featureData.Param3,subject.Index,target.Index,_skillIndex);
         bool IsRemoved = target.RemoveState(stateInfo,false);
         if (IsRemoved)
         {

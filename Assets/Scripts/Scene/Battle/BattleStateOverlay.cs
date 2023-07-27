@@ -17,9 +17,11 @@ public class BattleStateOverlay : MonoBehaviour
 
     private int _iconAnimIndex = -1;
 
-    public void SetStates(List<StateInfo> stateInfos)
+    private bool _changeEffectPosition = false;
+    public void SetStates(List<StateInfo> stateInfos,bool changeEffectPosition)
     {
         _stateInfos = stateInfos;
+        _changeEffectPosition = changeEffectPosition;
         IconAnimation();
         OverlayAnimation();
     }
@@ -106,6 +108,18 @@ public class BattleStateOverlay : MonoBehaviour
             var asset = UpdateStateOverlay();
             //effekseerEmitter.enabled = true;
             if (asset != null) {
+                if (_changeEffectPosition)
+                {
+                    var rect = effekseerEmitter.gameObject.GetComponent<RectTransform>();
+                    if (overlayState.Master.EffectPosition == EffectPositionType.Center)
+                    {
+                        rect.localPosition = new Vector2(rect.localPosition.x,64);
+                    } else
+                    if (overlayState.Master.EffectPosition == EffectPositionType.Down)
+                    {
+                        rect.localPosition = new Vector2(rect.localPosition.x,-32);
+                    }
+                }
                 effekseerEmitter.effectAsset = asset;
                 effekseerEmitter.Play();
             }

@@ -95,7 +95,7 @@ public class BattlerInfoComponent : MonoBehaviour
         }
         ChangeHp(_battlerInfo.Hp);
         ChangeMp(_battlerInfo.Mp);
-        if (battleStateOverlay != null) battleStateOverlay.SetStates(_battlerInfo.IconStateInfos());
+        if (battleStateOverlay != null) battleStateOverlay.SetStates(_battlerInfo.IconStateInfos(),_battlerInfo.isActor == false);
         
     }
     

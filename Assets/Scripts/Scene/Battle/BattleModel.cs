@@ -118,7 +118,7 @@ public class BattleModel : BaseModel
                     featureData.FeatureType = FeatureType.HpDefineDamage;
                     featureData.Param1 = chainDamage;
                     
-                    ActionResultInfo actionResultInfo = new ActionResultInfo(subject,target,new List<SkillsData.FeatureData>(){featureData});
+                    ActionResultInfo actionResultInfo = new ActionResultInfo(subject,target,new List<SkillsData.FeatureData>(){featureData},-1);
                         
                     if ((target.Hp - chainDamage) <= 0)
                     {
@@ -157,7 +157,7 @@ public class BattleModel : BaseModel
                         featureData.Param1 = stateInfo.Effect;
                         foreach (var target in targets)
                         {
-                            ActionResultInfo actionResultInfo = new ActionResultInfo(_battlers[i],target,new List<SkillsData.FeatureData>(){featureData});
+                            ActionResultInfo actionResultInfo = new ActionResultInfo(_battlers[i],target,new List<SkillsData.FeatureData>(){featureData},-1);
                             actionResultInfos.Add(actionResultInfo);
                         }
                     }
@@ -728,7 +728,7 @@ public class BattleModel : BaseModel
         for (int i = 0; i < indexList.Count;i++)
         {
             BattlerInfo Target = GetBattlerInfo(indexList[i]);
-            ActionResultInfo actionResultInfo = new ActionResultInfo(CurrentBattler,Target,actionInfo.Master.FeatureDatas);
+            ActionResultInfo actionResultInfo = new ActionResultInfo(CurrentBattler,Target,actionInfo.Master.FeatureDatas,actionInfo.Master.Id);
             if (actionResultInfo.HpDamage > 0 
              || actionResultInfo.AddedStates.Find(a => a.Master.Id == (int)StateType.Stun) != null
              || actionResultInfo.AddedStates.Find(a => a.Master.Id == (int)StateType.Chain) != null
@@ -767,7 +767,7 @@ public class BattleModel : BaseModel
                 for (int j = 0; j < curseStateInfos.Count;j++)
                 {
                     BattlerInfo curseBattlerInfo = GetBattlerInfo(curseStateInfos[j].TargetIndex);
-                    ActionResultInfo curseActionResultInfo = new ActionResultInfo(GetBattlerInfo(curseStateInfos[j].BattlerId),curseBattlerInfo,new List<SkillsData.FeatureData>(){featureData});
+                    ActionResultInfo curseActionResultInfo = new ActionResultInfo(GetBattlerInfo(curseStateInfos[j].BattlerId),curseBattlerInfo,new List<SkillsData.FeatureData>(){featureData},-1);
                     actionResultInfos.Add(curseActionResultInfo);
                 }
             }
@@ -1017,7 +1017,7 @@ public class BattleModel : BaseModel
                     featureData.FeatureType = FeatureType.HpHeal;
                     featureData.Param1 = stateInfo.Effect;
 
-                    ActionResultInfo actionResultInfo = new ActionResultInfo(GetBattlerInfo(targetIndex),GetBattlerInfo(targetIndex),new List<SkillsData.FeatureData>(){featureData});
+                    ActionResultInfo actionResultInfo = new ActionResultInfo(GetBattlerInfo(targetIndex),GetBattlerInfo(targetIndex),new List<SkillsData.FeatureData>(){featureData},-1);
                     afterHealResults.Add(actionResultInfo);
                 }
             }
@@ -1049,7 +1049,7 @@ public class BattleModel : BaseModel
             BattlerInfo target = GetBattlerInfo(stateInfos[i].BattlerId);
             if (target.IsAlive())
             {
-                ActionResultInfo actionResultInfo = new ActionResultInfo(GetBattlerInfo(stateInfos[i].BattlerId),GetBattlerInfo(stateInfos[i].TargetIndex),new List<SkillsData.FeatureData>(){featureData});
+                ActionResultInfo actionResultInfo = new ActionResultInfo(GetBattlerInfo(stateInfos[i].BattlerId),GetBattlerInfo(stateInfos[i].TargetIndex),new List<SkillsData.FeatureData>(){featureData},-1);
                 actionResultInfos.Add(actionResultInfo);
             }
         }
@@ -1142,7 +1142,7 @@ public class BattleModel : BaseModel
                 var triggerDatas = passiveInfo.Master.TriggerDatas.FindAll(a => a.TriggerTiming == triggerTiming);
                 if (IsTriggerdSkillInfo(battlerInfo,triggerDatas,triggerTiming,new List<ActionResultInfo>()))
                 {                
-                    ActionResultInfo actionResultInfo = new ActionResultInfo(battlerInfo,battlerInfo,passiveInfo.Master.FeatureDatas);
+                    ActionResultInfo actionResultInfo = new ActionResultInfo(battlerInfo,battlerInfo,passiveInfo.Master.FeatureDatas,passiveInfo.Id);
                     bool usable = true;
                     // トリガーのParam2を使用回数制限にする
                     if (triggerDatas.Find(a => a.Param2 == 1) != null)
@@ -1192,7 +1192,7 @@ public class BattleModel : BaseModel
                                 SkillsData.FeatureData featureData = new SkillsData.FeatureData();
                                 featureData.FeatureType = FeatureType.RemoveState;
                                 featureData.Param1 = feature.Param1;
-                                ActionResultInfo actionResultInfo = new ActionResultInfo(battlerInfo,battlerInfo,new List<SkillsData.FeatureData>(){featureData});
+                                ActionResultInfo actionResultInfo = new ActionResultInfo(battlerInfo,battlerInfo,new List<SkillsData.FeatureData>(){featureData},passiveInfo.Id);
                                 if (actionResultInfos.Find(a => a.RemovedStates.Find(b => b.Master.Id == (int)featureData.FeatureType) != null) != null)
                                 {
                                     
