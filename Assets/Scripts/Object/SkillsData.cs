@@ -262,6 +262,7 @@ public enum FeatureType
     NoEffectHpDamage = 11,
     AddState = 21,
     RemoveState = 22,
+    RemoveStatePassive = 2022, // 制御用
     ApHeal = 32,
     PlusSkill = 101,
     KindHeal = 201,

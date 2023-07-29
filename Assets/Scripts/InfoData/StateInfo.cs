@@ -16,6 +16,7 @@ public class StateInfo {
     private int _targetIndex = 0;
     public int TargetIndex => _targetIndex;
     private int _skillId = 0;
+    public int SkillId => _skillId;
     public StateInfo(int stateId,int turns,int effect,int battlerId,int targetIndex,int skillId){
         _stateId = stateId;
         _turns = turns;

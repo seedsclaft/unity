@@ -18,6 +18,7 @@ public class BattlePresenter : BasePresenter
     private bool _triggerAfterChecked = false;
     private bool _slipDamageChecked = false;
     private bool _regeneChecked = false;
+    private bool _battleEnded = false;
     private List<ActionResultInfo> _slipDamageResults = new List<ActionResultInfo>();
     private Battle.CommandType _nextCommandType = Battle.CommandType.None;
     private Battle.CommandType _backCommandType = Battle.CommandType.None;
@@ -789,7 +790,8 @@ public class BattlePresenter : BasePresenter
             return;
         }
         if (result == true)
-        {        
+        {
+            _battleEnded = false;
         }
 
         // 敵の蘇生を反映
@@ -893,6 +895,7 @@ public class BattlePresenter : BasePresenter
 
     private bool CheckBattleEnd()
     {
+        if (_battleEnded == true) return false;
         bool isEnd = false;
         if (_model.CheckVictory())
         {
@@ -901,6 +904,7 @@ public class BattlePresenter : BasePresenter
             _view.SetAnimationEndTiming(180);
             _nextCommandType = Battle.CommandType.EndBattle;
             isEnd = true;
+            _battleEnded = true;
         } else
         if (_model.CheckDefeat())
         {
@@ -909,6 +913,7 @@ public class BattlePresenter : BasePresenter
             _view.SetAnimationEndTiming(180);
             _nextCommandType = Battle.CommandType.EndBattle;
             isEnd = true;
+            _battleEnded = true;
         }
         return isEnd;
     }

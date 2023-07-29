@@ -1405,7 +1405,13 @@ MonoBehaviour:
       Param1: 115
       Param2: 999
       Param3: 4
-    TriggerDatas: []
+    TriggerDatas:
+    - SkillId: 335
+      TriggerType: 0
+      TriggerTiming: 4
+      Param1: 0
+      Param2: 0
+      Param3: 0
   - Id: 336
     Name: "\u30DA\u30A4\u30B7\u30E3\u30F3\u30B9"
     IconIndex: 6

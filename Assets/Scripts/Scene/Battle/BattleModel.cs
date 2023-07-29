@@ -1184,7 +1184,6 @@ public class BattleModel : BaseModel
                 var triggerDatas = passiveInfo.Master.TriggerDatas.FindAll(a => a.TriggerTiming == triggerTiming);
                 if (IsTriggerdSkillInfo(battlerInfo,triggerDatas,triggerTiming,new List<ActionResultInfo>()))
                 {                
-                    ActionResultInfo actionResultInfo = new ActionResultInfo(battlerInfo,battlerInfo,passiveInfo.Master.FeatureDatas,passiveInfo.Id);
                     bool usable = true;
                     // トリガーのParam2を使用回数制限にする
                     if (triggerDatas.Find(a => a.Param2 == 1) != null)
@@ -1197,9 +1196,26 @@ public class BattleModel : BaseModel
                             usable = false;
                         }
                     }
+                    
                     if (usable)
                     {
-                        actionResultInfos.Add(actionResultInfo);
+                        if (passiveInfo.Master.Scope == ScopeType.Self)
+                        {
+                            ActionResultInfo actionResultInfo = new ActionResultInfo(battlerInfo,battlerInfo,passiveInfo.Master.FeatureDatas,passiveInfo.Id);
+                            actionResultInfos.Add(actionResultInfo);
+                        } else
+                        if (passiveInfo.Master.Scope == ScopeType.All)
+                        {
+                            var partyMember = battlerInfo.isActor ? BattlerActors() : BattlerEnemies();
+                            foreach (var member in partyMember)
+                            {
+                                if ((passiveInfo.Master.AliveOnly && member.IsAlive()) || (!passiveInfo.Master.AliveOnly && !member.IsAlive()) )
+                                {
+                                    ActionResultInfo actionResultInfo = new ActionResultInfo(battlerInfo,member,passiveInfo.Master.FeatureDatas,passiveInfo.Id);
+                                    actionResultInfos.Add(actionResultInfo);
+                                }
+                            }
+                        }
                         if (_passiveSkillInfos[battlerInfo.Index].Find(a => a.Master.Id == passiveInfo.Master.Id) == null)
                         {
                             _passiveSkillInfos[battlerInfo.Index].Add(passiveInfo);
@@ -1228,19 +1244,50 @@ public class BattleModel : BaseModel
                     {
                         foreach (var triggerData in passiveInfo.Master.TriggerDatas)
                         {
-                            if (IsRemove == false && !triggerData.IsTriggerdSkillInfo(battlerInfo,BattlerActors(),BattlerEnemies()))
+                            if (IsRemove == false &&
+                                (!triggerData.IsTriggerdSkillInfo(battlerInfo,BattlerActors(),BattlerEnemies()) || !battlerInfo.IsAlive()))
                             {
                                 IsRemove = true;
                                 SkillsData.FeatureData featureData = new SkillsData.FeatureData();
-                                featureData.FeatureType = FeatureType.RemoveState;
+                                featureData.FeatureType = FeatureType.RemoveStatePassive;
                                 featureData.Param1 = feature.Param1;
-                                ActionResultInfo actionResultInfo = new ActionResultInfo(battlerInfo,battlerInfo,new List<SkillsData.FeatureData>(){featureData},passiveInfo.Id);
-                                if (actionResultInfos.Find(a => a.RemovedStates.Find(b => b.Master.Id == (int)featureData.FeatureType) != null) != null)
+                                if (passiveInfo.Master.Scope == ScopeType.Self)
                                 {
-                                    
-                                } else{
-                                    actionResultInfos.Add(actionResultInfo);
+                                    ActionResultInfo actionResultInfo = new ActionResultInfo(battlerInfo,battlerInfo,new List<SkillsData.FeatureData>(){featureData},passiveInfo.Id);
+                                    if (actionResultInfos.Find(a => a.RemovedStates.Find(b => b.Master.Id == (int)featureData.FeatureType) != null) != null)
+                                    {
+                                        
+                                    } else{
+                                        var stateInfos = battlerInfo.GetStateInfoAll((StateType)feature.Param1);
+                                        if (battlerInfo.IsAlive() && stateInfos.Find(a => a.SkillId == passiveInfo.Id) != null)
+                                        {
+                                            actionResultInfos.Add(actionResultInfo);
+                                        }
+                                    }
+                                } else
+                                if (passiveInfo.Master.Scope == ScopeType.All)
+                                {
+                                    var partyMember = battlerInfo.isActor ? BattlerActors() : BattlerEnemies();
+                                    foreach (var member in partyMember)
+                                    {
+                                        if ((passiveInfo.Master.AliveOnly && member.IsAlive()) || (!passiveInfo.Master.AliveOnly && !member.IsAlive()))
+                                        {
+
+                                            ActionResultInfo actionResultInfo = new ActionResultInfo(battlerInfo,member,new List<SkillsData.FeatureData>(){featureData},passiveInfo.Id);
+                                            if (actionResultInfos.Find(a => a.RemovedStates.Find(b => b.Master.Id == (int)featureData.FeatureType) != null) != null)
+                                            {
+                                                
+                                            } else{
+                                                var stateInfos = battlerInfo.GetStateInfoAll((StateType)feature.Param1);
+                                                if (member.IsAlive() && stateInfos.Find(a => a.SkillId == passiveInfo.Id) != null)
+                                                {
+                                                    actionResultInfos.Add(actionResultInfo);
+                                                }
+                                            }
+                                        }
+                                    }
                                 }
+
                             }
                         }
                     }

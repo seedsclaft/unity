@@ -98,6 +98,8 @@ public class TitlePresenter : BasePresenter
             break;
             case TitleComandType.Continue:
             SaveSystem.LoadStart();
+            // プレイヤーネームを設定しなおし
+            _view.CommandDecidePlayerName(GameSystem.CurrentData.PlayerInfo.PlayerName);
             if (GameSystem.CurrentData.ResumeStage)
             {
                 _view.CommandSceneChange(Scene.Tactics);

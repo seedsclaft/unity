@@ -144,6 +144,9 @@ public class ActionResultInfo
             case FeatureType.RemoveState:
                 MakeRemoveState(subject,target,featureData);
                 return;
+            case FeatureType.RemoveStatePassive:
+                MakeRemoveStatePassive(subject,target,featureData);
+                return;
             case FeatureType.ApHeal:
                 MakeApHeal(subject,target,featureData);
                 return;
@@ -410,6 +413,18 @@ public class ActionResultInfo
     
     private void MakeRemoveState(BattlerInfo subject,BattlerInfo target,SkillsData.FeatureData featureData)
     {
+        // skillId -1のRemoveは強制で解除する
+        StateInfo stateInfo = new StateInfo(featureData.Param1,featureData.Param2,featureData.Param3,subject.Index,target.Index,-1);
+        bool IsRemoved = target.RemoveState(stateInfo,false);
+        if (IsRemoved)
+        {
+            _removedStates.Add(stateInfo);
+        }
+    }
+
+    private void MakeRemoveStatePassive(BattlerInfo subject,BattlerInfo target,SkillsData.FeatureData featureData)
+    {
+        // パッシブはそのパッシブスキルのみ解除する
         StateInfo stateInfo = new StateInfo(featureData.Param1,featureData.Param2,featureData.Param3,subject.Index,target.Index,_skillIndex);
         bool IsRemoved = target.RemoveState(stateInfo,false);
         if (IsRemoved)

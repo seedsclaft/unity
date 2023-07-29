@@ -361,12 +361,25 @@ public class BattlerInfo
     public bool RemoveState(StateInfo stateInfo,bool doRemove)
     {
         bool IsRemoved = false;
-        int RemoveIndex = _stateInfos.FindIndex(a => a.StateId == stateInfo.StateId);
+        int RemoveIndex = _stateInfos.FindIndex(a => a.StateId == stateInfo.StateId && (a.SkillId == stateInfo.SkillId || stateInfo.SkillId == -1));
         if (RemoveIndex > -1)
         {
             if (doRemove)
             {
-                _stateInfos.RemoveAt(RemoveIndex);
+                if (stateInfo.SkillId == -1)
+                {
+                    // 効果による解除は全て複数効果あっても全部解除する
+                    for (int i = _stateInfos.Count-1;0 <= i;i--)
+                    {
+                        if (_stateInfos[i].StateId == stateInfo.Master.Id)
+                        {
+                            _stateInfos.Remove(_stateInfos[i]);
+                        }
+                    }
+                } else
+                {
+                    _stateInfos.RemoveAt(RemoveIndex);
+                }
                 if (stateInfo.StateId == (int)StateType.Death)
                 {
                     _preserveAlive = true;
