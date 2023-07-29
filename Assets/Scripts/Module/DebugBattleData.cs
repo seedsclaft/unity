@@ -34,7 +34,7 @@ public class DebugBattleData : MonoBehaviour
                 GameSystem.CurrentData.AddTestActor(actor);
             }
         }
-        GameSystem.CurrentData.Actors.ForEach(a => a.InBattle = true);
+        GameSystem.CurrentData.Actors.ForEach(a => a.SetInBattle(true));
 
         GameSystem.CurrentData.CurrentStage.TestTroops(troopId,troopLv);
     }

@@ -380,6 +380,11 @@ public class TacticsModel : BaseModel
         return StageMembers().Find(a => a.TacticsComandType == TacticsComandType.None) == null && GameSystem.ConfigData._commandEndCheck;
     }
 
+    public void InitInBattle()
+    {
+        StageMembers().ForEach(a => a.SetInBattle(false));
+    }
+
     public void TurnEnd()
     {
     }

@@ -464,9 +464,9 @@ public class BattleView : BaseView
         }
     }
 
-    public void StartDamage(int targetIndex,DamageType damageType,int value)
+    public void StartDamage(int targetIndex,DamageType damageType,int value,bool needPopupDelay = true)
     {
-        _battlerComps[targetIndex].StartDamage(damageType,value);
+        _battlerComps[targetIndex].StartDamage(damageType,value,needPopupDelay);
     }
 
     public void StartBlink(int targetIndex)
@@ -474,9 +474,9 @@ public class BattleView : BaseView
         _battlerComps[targetIndex].StartBlink();
     }
 
-    public void StartHeal(int targetIndex,DamageType damageType,int value)
+    public void StartHeal(int targetIndex,DamageType damageType,int value,bool needPopupDelay = true)
     {
-        _battlerComps[targetIndex].StartHeal(damageType,value);
+        _battlerComps[targetIndex].StartHeal(damageType,value,needPopupDelay);
     }
 
     public void StartStatePopup(int targetIndex,DamageType damageType,string stateName)

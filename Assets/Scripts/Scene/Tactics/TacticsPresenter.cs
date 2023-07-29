@@ -397,6 +397,7 @@ public class TacticsPresenter :BasePresenter
             if (_model.CommandType == TacticsComandType.Turnend)
             {
                 _model.TurnEnd();
+                _model.InitInBattle();
                 _view.CommandSceneChange(Scene.Strategy);
             }
         } else{

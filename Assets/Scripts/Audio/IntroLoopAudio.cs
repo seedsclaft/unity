@@ -85,7 +85,7 @@ public class IntroLoopAudio : MonoBehaviour
 
   void Update()
   {
-    if (_nowPlayIndex == 2 && _introAudioSource.timeSamples() >= (_introAudioSource.ReserveTimeSample - _reservedTime))
+    if (_nowPlayIndex == 2 && _introAudioSource.IsLoopEnded(_reservedTime))
     {
       //_loopAudioSource.Play(0);
       //_introAudioSource.Stop();
@@ -98,13 +98,13 @@ public class IntroLoopAudio : MonoBehaviour
     #if UNITY_WEBGL
     if (_loopAudioSource.ReserveTimeSample > -1 && _loopWebGLAudioSource.ReserveTimeSample > -1)
     {
-      if (_nowPlayIndex == 0 && _loopAudioSource.timeSamples() >= (_loopAudioSource.ReserveTimeSample - _reservedTime))
+      if (_nowPlayIndex == 0 && _loopAudioSource.IsLoopEnded(_reservedTime))
       {
         float reserve = _loopAudioSource.ReserveTimeSample - _loopAudioSource.timeSamples();
         _nowPlayIndex = 1;
         _loopWebGLAudioSource.PlayDelay((reserve) / 44100);
       }
-      else if (_nowPlayIndex == 1 && _loopWebGLAudioSource.timeSamples() >= (_loopWebGLAudioSource.ReserveTimeSample - _reservedTime))
+      else if (_nowPlayIndex == 1 && _loopWebGLAudioSource.IsLoopEnded(_reservedTime))
       {
         float reserve = _loopWebGLAudioSource.ReserveTimeSample - _loopWebGLAudioSource.timeSamples();
         _nowPlayIndex = 0;
@@ -162,16 +162,16 @@ public class IntroLoopAudio : MonoBehaviour
       }
       */
     }
-    else if (IsPlaying == false)
+    else if (true)
     {
       Stop();
       if (_introAudioSource.Clip != null){
         _introAudioSource.SetReserveTimestamp();
-        _introAudioSource.Play();
+        _introAudioSource.Play(1);
         _nowPlayIndex = 2;
         //_loopAudioSource.PlayScheduled(AudioSettings.dspTime + _introAudioSource.clip.length);
       } else{
-        _loopAudioSource.Play();
+        _loopAudioSource.Play(1);
       }
     }
 

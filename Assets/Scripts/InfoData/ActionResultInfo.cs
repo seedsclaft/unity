@@ -175,6 +175,10 @@ public class ActionResultInfo
         {
             hit -= target.StateEffectAll(StateType.EvaUp);
         }
+        if (hit < 10)
+        {
+            hit = 10;
+        }
         int rand = new System.Random().Next(0, 100);
         return hit >= rand;
     }

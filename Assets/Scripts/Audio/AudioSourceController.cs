@@ -10,6 +10,8 @@ public class AudioSourceController :MonoBehaviour
     private int _reserveTimeSample = -1;
     public int ReserveTimeSample => _reserveTimeSample;
 
+
+    private bool _isPlay = false;
     public void Initialize()
     {
         _audioSource = gameObject.AddComponent<AudioSource>();
@@ -19,6 +21,7 @@ public class AudioSourceController :MonoBehaviour
     {
         _audioSource.timeSamples = timeSamples;
         _audioSource.Play();
+        _isPlay = true;
     }
 
     public void PlayDelay(float reseverTime)
@@ -34,6 +37,7 @@ public class AudioSourceController :MonoBehaviour
     public void Stop()
     {
         _audioSource.Stop();
+        _isPlay = false;
     }
 
     public void ChangeVolume(float volume)
@@ -66,5 +70,18 @@ public class AudioSourceController :MonoBehaviour
     public int timeSamples()
     {
         return _audioSource.timeSamples;
+    }
+
+    public bool IsLoopEnded(float _reservedTime)
+    {
+        if (timeSamples() >= (ReserveTimeSample - _reservedTime))
+        {
+            return true;
+        }
+        if (_isPlay && timeSamples() == 0)
+        {
+            return true;
+        }
+        return false;
     }
 }

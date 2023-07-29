@@ -39,9 +39,9 @@ public class StateInfo {
         }
         if (stateInfo.Master.OverWrite)
         {
-            return (stateInfo.StateId == _stateId) && (stateInfo.BattlerId == _battlerId) && (stateInfo._skillId == _skillId);
+            return (stateInfo.StateId == _stateId) && (stateInfo._skillId == _skillId);
         }
-        return (stateInfo.StateId == _stateId) && (stateInfo.BattlerId == _battlerId);
+        return (stateInfo.StateId == _stateId);
     }
 
     public bool UpdateTurn()

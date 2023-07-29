@@ -43,7 +43,7 @@ public class BattleDamage : MonoBehaviour
         }
     }
 
-    public void StartDamage(DamageType damageType,int value,System.Action endEvent)
+    public void StartDamage(DamageType damageType,int value,System.Action endEvent,int delayCount)
     {
         UpdateAllHide();
         _busy = true;
@@ -62,8 +62,9 @@ public class BattleDamage : MonoBehaviour
         {   
             TextMeshProUGUI textMeshProUGUI = _damageList[i].GetComponent<TextMeshProUGUI>();
             textMeshProUGUI.alpha = 0;
+            int delay = i + delayCount * 8;
             Sequence sequence = DOTween.Sequence()
-                .SetDelay(i * 0.05f)
+                .SetDelay(delay * 0.05f)
                 .Append(textMeshProUGUI.DOFade(1.0f, 0.1f))
                 .Append(textMeshProUGUI.gameObject.transform.DOLocalMoveY(16, 0.1f))
                 .Append(textMeshProUGUI.gameObject.transform.DOLocalMoveY(0, 0.2f))
@@ -81,7 +82,7 @@ public class BattleDamage : MonoBehaviour
         }
     }
 
-    public void StartHeal(DamageType damageType,int value,System.Action endEvent)
+    public void StartHeal(DamageType damageType,int value,System.Action endEvent,int delayCount)
     {
         UpdateAllHide();
         _busy = true;
@@ -100,8 +101,9 @@ public class BattleDamage : MonoBehaviour
         {   
             TextMeshProUGUI textMeshProUGUI = _damageList[i].GetComponent<TextMeshProUGUI>();
             textMeshProUGUI.alpha = 0;
+            int delay = i + delayCount * 8;
             Sequence sequence = DOTween.Sequence()
-                .SetDelay(i * 0.05f)
+                .SetDelay(delay * 0.05f)
                 .Append(textMeshProUGUI.DOFade(1.0f, 0.1f))
                 .Join(textMeshProUGUI.gameObject.transform.DOLocalMoveY(16, 0.1f))
                 .Append(textMeshProUGUI.gameObject.transform.DOLocalMoveY(0, 0.2f))

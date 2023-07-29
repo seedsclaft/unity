@@ -349,7 +349,7 @@ public class StrategyModel : BaseModel
     {
         PartyInfo.InitActors();
         actorInfos.ForEach(a => PartyInfo.AddActor(a.ActorId));
-        actorInfos.ForEach(a => a.InBattle = true);
+        actorInfos.ForEach(a => a.SetInBattle(true));
     }
 
     public void ClearBattleData(List<ActorInfo> actorInfos)
@@ -359,7 +359,7 @@ public class StrategyModel : BaseModel
             actorInfo.SetNextBattleEnemyIndex(-1,0);
             if (actorInfo.InBattle == true)
             {
-                actorInfo.InBattle = false;
+                actorInfo.SetInBattle(false);
             }
             actorInfo.ClearTacticsCommand();
         }

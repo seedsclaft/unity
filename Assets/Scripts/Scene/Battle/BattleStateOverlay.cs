@@ -77,13 +77,16 @@ public class BattleStateOverlay : MonoBehaviour
             _iconSequence.Kill(false);
             _iconSequence = null;
         }
-        icon.enabled = false;
+        if (_stateInfos.Count == 0)
+        {
+            icon.gameObject.SetActive(false);
+        }
     }
 
     private void UpdateStateIcon()
     {
         if (_stateInfos.Count < _iconAnimIndex) return;
-        icon.enabled = true;
+        icon.gameObject.SetActive(true);
         StateInfo stateInfo = _stateInfos[_iconAnimIndex];
         var spriteAtlas = Resources.Load<SpriteAtlas>("Texture/Icons");
         if (icon != null)

@@ -59,7 +59,8 @@ public class ActorInfo
     public int NextBattleEnemyId => _nextBattleEnemyId;
 
     private bool _inBattle = false;
-    public bool InBattle {get {return _inBattle;} set {_inBattle = value;}}
+    public bool InBattle {get {return _inBattle;} }
+    public void SetInBattle(bool inBattle) { _inBattle = inBattle;}
     private bool _lost = false;
     public bool Lost => _lost;
     private int _sp = 0;

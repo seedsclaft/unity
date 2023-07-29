@@ -84,13 +84,17 @@ public class BattleActorList : ListWindow , IInputHandlerEvent
         _selectIndex = selectIndex;
         _targetIndexList = targetIndexList;
         _targetScopeType = scopeType;
-        if (_targetScopeType == ScopeType.All || _targetScopeType == ScopeType.WithoutSelfAll)
+        if (_targetScopeType == ScopeType.All)
         {
             UpdateAllSelect();
         } else
+        if (_targetScopeType == ScopeType.WithoutSelfAll)
+        {
+            UpdateTargetIndex(_selectIndex);
+        } else
         if (_targetScopeType == ScopeType.Line)
         {
-            UpdateLineSelect(_selectIndex);
+            UpdateTargetIndex(_selectIndex);
         } else
         if (_targetScopeType == ScopeType.One || _targetScopeType == ScopeType.WithoutSelfOne)
         {

@@ -137,9 +137,14 @@ public class BattlerInfoComponent : MonoBehaviour
         _battleDamages.Clear();
     }
 
-    public void StartDamage(DamageType damageType,int value)
+    public void StartDamage(DamageType damageType,int value,bool needPopupDelay)
     {
         var battleDamage = CreatePrefab();
+        int delayCount = _battleDamages.Count;
+        if (needPopupDelay == false)
+        {
+            delayCount = 0;
+        }
         battleDamage.StartDamage(damageType,value,() => {
             if (_battleDamages.Contains(battleDamage))
             {
@@ -149,7 +154,7 @@ public class BattlerInfoComponent : MonoBehaviour
             {
                 Destroy(battleDamage.gameObject);
             }
-        });
+        },delayCount);
         _battleDamages.Add(battleDamage);
         ChangeHp(value * -1 + _battlerInfo.Hp);
     }
@@ -164,9 +169,14 @@ public class BattlerInfoComponent : MonoBehaviour
             .SetLoops(3);
     }
 
-    public void StartHeal(DamageType damageType,int value)
+    public void StartHeal(DamageType damageType,int value,bool needPopupDelay)
     {
         var battleDamage = CreatePrefab();
+        int delayCount = _battleDamages.Count;
+        if (needPopupDelay == false)
+        {
+            delayCount = 0;
+        }
         battleDamage.StartHeal(damageType,value,() => {
             if (_battleDamages.Contains(battleDamage))
             {
@@ -176,7 +186,7 @@ public class BattlerInfoComponent : MonoBehaviour
             {
                 Destroy(battleDamage.gameObject);
             }
-        });
+        },delayCount);
         _battleDamages.Add(battleDamage);
         if (damageType == DamageType.HpHeal)
         {

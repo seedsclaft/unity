@@ -984,21 +984,28 @@ public class BattleModel : BaseModel
             _actionInfos.AddRange(actionInfos);
         }
     }
-
+/*
     public bool CheckRegene()
     {
         var regene = CurrentBattler != null && CurrentBattler.IsState(StateType.Regene);
         var afterHeal = CurrentBattler != null && CurrentBattler.IsState(StateType.AfterHeal);
         return regene || afterHeal;
     }
+*/
+    public List<ActionResultInfo> CheckRegene()
+    {
+        var results = RegeneActionResults();
+        results.AddRange(AfterHealActionResults());
+        return results;
+    }
 
-    public List<ActionResultInfo> RegeneActionResults()
+    private List<ActionResultInfo> RegeneActionResults()
     {
         var regeneResults = MakeStateActionResult(CurrentBattler,StateType.Regene,FeatureType.HpHeal);
         return regeneResults;
     }
 
-    public List<ActionResultInfo> AfterHealActionResults()
+    private List<ActionResultInfo> AfterHealActionResults()
     {
         var afterHealResults = new List<ActionResultInfo>();
         var afterSkillInfo = CurrentBattler.Skills.Find(a => a.Master.FeatureDatas.Find(b => b.FeatureType == FeatureType.AddState && (StateType)b.Param1 == StateType.AfterHeal) != null);
@@ -1025,15 +1032,50 @@ public class BattleModel : BaseModel
         return afterHealResults;
     }
 
-    public bool CheckSlipDamage()
+    public List<ActionResultInfo> CheckSlipDamage()
     {
-        return CurrentBattler != null && CurrentBattler.IsState(StateType.SlipDamage);
+        var results = MakeStateActionResult(CurrentBattler,StateType.SlipDamage,FeatureType.HpDefineDamage);
+        // 対象ごとにHpダメージでまとめる
+        var targetIndexs = new List<int>();
+        foreach (var result in results)
+        {
+            if (!targetIndexs.Contains(result.TargetIndex))
+            {
+                targetIndexs.Add(result.TargetIndex);
+            }
+        }
+        foreach (var targetIndex in targetIndexs)
+        {
+            List<ActionResultInfo> damageResults = results.FindAll(a => a.HpDamage > 0 && a.TargetIndex == targetIndex);
+            if (damageResults.Count > 1)
+            {
+                int hpDamage = 0;
+                foreach (var damageResult in damageResults)
+                {
+                    hpDamage += damageResult.HpDamage;
+                    damageResult.SetHpDamage(0);
+                }
+                damageResults[damageResults.Count-1].SetHpDamage(hpDamage);
+            }
+        }
+        // HpDamageによってDeadIndexを変更
+        if (results.Count > 0)
+        {
+            var result = results[results.Count-1];
+            if (result.HpDamage > GetBattlerInfo(result.TargetIndex).Hp && !result.DeadIndexList.Contains(result.TargetIndex))
+            {
+                results[results.Count-1].DeadIndexList.Add(result.TargetIndex);
+            }
+        }
+        return results;
     }
 
+/*
     public List<ActionResultInfo> UpdateSlipDamageState()
     {
         return MakeStateActionResult(CurrentBattler,StateType.SlipDamage,FeatureType.HpDefineDamage);
     }
+    */
 
     public List<ActionResultInfo> MakeStateActionResult(BattlerInfo battlerInfo,StateType stateType,FeatureType featureType)
     {
@@ -1472,6 +1514,14 @@ public class BattleModel : BaseModel
                 }
             }
         }
+        // 生存判定
+        if (actionInfo.Master.AliveOnly)
+        {
+            indexList = indexList.FindAll(a => _battlers.Find(b => a == b.Index).IsAlive());
+        } else
+        {
+            indexList = indexList.FindAll(a => !_battlers.Find(b => a == b.Index).IsAlive());
+        }
         return indexList;
     }
 
@@ -1585,21 +1635,36 @@ public class BattleModel : BaseModel
         return list;
     }
 
-    public List<StateInfo> EndRemoveChainState()
+    private List<StateType> RemoveDeathStateTypes()
+    {
+        return new List<StateType>(){
+            StateType.Chain,
+            StateType.Benediction,
+            StateType.SlipDamage,
+            StateType.Regene
+        };
+    }
+
+    // 生存していない付与者の該当ステートを解除する
+    public List<StateInfo> EndRemoveState()
     {
         List<StateInfo> removeStateInfos = new ();
-        for (int i = 0;i < _battlers.Count;i++)
+        var StateTypes = RemoveDeathStateTypes();
+        foreach (var stateType in StateTypes)
         {
-            var stateInfos = _battlers[i].GetStateInfoAll(StateType.Chain);
-            if (stateInfos.Count > 0)
+            for (int i = 0;i < _battlers.Count;i++)
             {
-                foreach (var stateInfo in stateInfos)
+                var stateInfos = _battlers[i].GetStateInfoAll(stateType);
+                if (stateInfos.Count > 0)
                 {
-                    BattlerInfo subject = GetBattlerInfo(stateInfo.BattlerId);
-                    if (subject.IsAlive() == false)
+                    foreach (var stateInfo in stateInfos)
                     {
-                         _battlers[i].RemoveState(stateInfo,true);
-                        removeStateInfos.Add(stateInfo);
+                        BattlerInfo subject = GetBattlerInfo(stateInfo.BattlerId);
+                        if (subject.IsAlive() == false)
+                        {
+                            _battlers[i].RemoveState(stateInfo,true);
+                            removeStateInfos.Add(stateInfo);
+                        }
                     }
                 }
             }
@@ -1607,27 +1672,6 @@ public class BattleModel : BaseModel
         return removeStateInfos;
     }
 
-    public List<StateInfo> EndRemoveBenedictState()
-    {
-        List<StateInfo> removeStateInfos = new ();
-        for (int i = 0;i < _battlers.Count;i++)
-        {
-            var stateInfos = _battlers[i].GetStateInfoAll(StateType.Benediction);
-            if (stateInfos.Count > 0)
-            {
-                foreach (var stateInfo in stateInfos)
-                {
-                    BattlerInfo subject = GetBattlerInfo(stateInfo.BattlerId);
-                    if (subject.IsAlive() == false)
-                    {
-                         _battlers[i].RemoveState(stateInfo,true);
-                        removeStateInfos.Add(stateInfo);
-                    }
-                }
-            }
-        }
-        return removeStateInfos;
-    }
 
     public bool CheckVictory()
     {
