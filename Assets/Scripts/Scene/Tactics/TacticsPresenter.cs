@@ -115,7 +115,7 @@ public class TacticsPresenter :BasePresenter
                 {
                     var popupInfo = new ConfirmInfo(DataSystem.System.GetTextData(11050).Text,(menuCommandInfo) => UpdatePopupSelectAddActor((ConfirmComandType)menuCommandInfo));
                     popupInfo.SetIsNoChoise(true);
-                    popupInfo.SetSelectIndex(1);
+                    popupInfo.SetSelectIndex(0);
                     _view.CommandCallConfirm(popupInfo);
                     _model.AddEventReadFlag(stageEvents[i]);
                     _view.SetActiveUi(false);

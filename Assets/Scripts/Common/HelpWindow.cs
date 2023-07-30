@@ -15,7 +15,7 @@ public class HelpWindow : MonoBehaviour
     private List<GameObject> _inputPrefabs = new ();
 
     private string _lastKey = "";
-
+    public string LastKey => _lastKey;
     public void SetHelpText(string text){
         helpText.text = text;
     }

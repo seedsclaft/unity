@@ -41,6 +41,10 @@ public class ConfirmCommandList : ListWindow , IInputHandlerEvent
 
     private void CallInputHandler(InputKeyType keyType, System.Action<ConfirmComandType> callEvent)
     {
+        if (Index < 0)
+        {
+            return;
+        }
         if (keyType == InputKeyType.Decide)
         {
             callEvent((ConfirmComandType)_data[Index].Id);

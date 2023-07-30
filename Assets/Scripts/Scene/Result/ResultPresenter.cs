@@ -114,6 +114,7 @@ public class ResultPresenter : BasePresenter
         StatusViewInfo statusViewInfo = new StatusViewInfo(() => {
             _view.CommandStatusClose();
             _view.SetActiveUi(true);
+            _view.SetHelpInputInfo("RESULT");
         });
         statusViewInfo.SetDisplayDecideButton(false);
         _view.CommandCallStatus(statusViewInfo);

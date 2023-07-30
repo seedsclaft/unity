@@ -11,6 +11,7 @@ public class AdvController : BaseView, IInputHandlerEvent
 
     private bool _advPlaying = false;
 
+    private string _lastKey = "";
     public override void Initialize() 
     {
         base.Initialize();
@@ -37,6 +38,44 @@ public class AdvController : BaseView, IInputHandlerEvent
         if (keyType == InputKeyType.Decide || keyType == InputKeyType.Cancel)
         {
             advUguiManager.OnInput();
+        }
+        if (keyType == InputKeyType.SideLeft1)
+        {
+            if (advUguiManager.Engine.SelectionManager.TotalCount > 0)
+            {
+                advUguiManager.Engine.SelectionManager.Select(0);
+                Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
+            }
+        }
+        if (keyType == InputKeyType.SideRight1)
+        {
+            if (advUguiManager.Engine.SelectionManager.TotalCount > 1)
+            {
+                advUguiManager.Engine.SelectionManager.Select(1);
+                Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
+            }
+        }
+    }
+
+    private new void Update() {
+        base.Update();
+        if (advUguiManager.Engine.SelectionManager.IsWaitInput == true && (HelpWindow.LastKey != "ADV_SELECTING" || HelpWindow.LastKey != "ADV_SELECTING_ONE"))
+        {
+            _lastKey = HelpWindow.LastKey;
+            if (advUguiManager.Engine.SelectionManager.TotalCount == 1)
+            {
+                HelpWindow.SetInputInfo("ADV_SELECTING_ONE");
+
+            } else
+            {
+                HelpWindow.SetInputInfo("ADV_SELECTING");
+
+            }
+        }
+        if (advUguiManager.Engine.SelectionManager.IsWaitInput == false && HelpWindow.LastKey != "ADV_READING")
+        {
+            _lastKey = HelpWindow.LastKey;
+            HelpWindow.SetInputInfo("ADV_READING");
         }
     }
 }

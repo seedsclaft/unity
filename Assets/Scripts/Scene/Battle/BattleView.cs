@@ -98,6 +98,7 @@ public class BattleView : BaseView
     {
         battleActorList.Initialize(battleActorsCount,actorInfo => CallActorList(actorInfo),() => OnClickBack(),() => OnClickSelectEnemy());
         SetInputHandler(battleActorList.GetComponent<IInputHandlerEvent>());
+        battleActorList.Deactivate();
         
         GameObject prefab = Instantiate(animPrefab);
         prefab.transform.SetParent(animRoot.transform, false);

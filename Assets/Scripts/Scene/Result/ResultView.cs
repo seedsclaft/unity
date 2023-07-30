@@ -93,6 +93,7 @@ public class ResultView : BaseView
 
     public void SetHelpWindow(){
         HelpWindow.SetHelpText(DataSystem.System.GetTextData(16030).Text);
+        HelpWindow.SetInputInfo("RESULT");
     }
 
 

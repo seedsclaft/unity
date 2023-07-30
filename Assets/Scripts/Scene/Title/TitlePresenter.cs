@@ -155,9 +155,9 @@ public class TitlePresenter : BasePresenter
         _view.SetHelpWindow();
         _view.SetTitleCommand(_model.TitleCommand);
         _view.SetSideMenu(_model.SideMenu());
+        CommandRefresh();
         var bgm = await _model.GetBgmData("TITLE");
         Ryneus.SoundManager.Instance.PlayBgm(bgm,1.0f,false);
-        CommandRefresh();
     }
 
     private void CommandOpenSideMenu()

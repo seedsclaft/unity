@@ -947,20 +947,24 @@ MonoBehaviour:
       _spd: 30
     Kinds: 
     LearningSkills:
-    - SkillId: 1
+    - SkillId: 2
       Level: 1
       Weight: 30
       TriggerDatas: []
     - SkillId: 601
       Level: 1
-      Weight: 30
+      Weight: 80
       TriggerDatas:
       - SkillId: 0
         TriggerType: 1
         TriggerTiming: 1
-        Param1: 50
+        Param1: 100
         Param2: 0
         Param3: 0
+    - SkillId: 231
+      Level: 1
+      Weight: 0
+      TriggerDatas: []
   _textdata:
   - Id: 1
     Text: 2

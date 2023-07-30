@@ -380,6 +380,10 @@ public class ActionResultInfo
         if (stateInfo.Master.Id == (int)StateType.Demigod)
         {
             stateInfo.Effect = subject.DemigodParam;
+        } else
+        if (stateInfo.Master.Id == (int)StateType.Death)
+        {
+            _hpDamage = target.Hp;
         }
         bool IsAdded = target.AddState(stateInfo,false);
         if (IsAdded)

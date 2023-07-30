@@ -106,6 +106,7 @@ public class StrategyView : BaseView
         strategyResultList.gameObject.SetActive(false);
         strategyResultList.InitializeConfirm(confirmCommands,(a) => CallResultCommand(a));
         SetInputHandler(strategyResultList.TacticsCommandList.GetComponent<IInputHandlerEvent>());
+        strategyResultList.TacticsCommandList.Deactivate();
     }
 
     public void SetEvent(System.Action<StrategyViewEvent> commandData)
@@ -151,6 +152,7 @@ public class StrategyView : BaseView
         strategyResultList.gameObject.SetActive(true);
         strategyResultList.Activate();
         strategyResultList.TacticsCommandList.Activate();
+        strategyResultList.TacticsCommandList.UpdateSelectIndex(1);
         HelpWindow.SetInputInfo("STRATEGY");
     }
 
@@ -175,6 +177,7 @@ public class StrategyView : BaseView
         tacticsEnemyList.gameObject.SetActive(true);
         tacticsEnemyList.Activate();
         tacticsEnemyList.TacticsCommandList.Activate();
+        tacticsEnemyList.TacticsCommandList.UpdateSelectIndex(1);
         tacticsEnemyList.UpdateSelectIndex(-1);
         HelpWindow.SetInputInfo("STRATEGY_BATTLE");
     }

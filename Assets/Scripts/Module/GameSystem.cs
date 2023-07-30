@@ -25,6 +25,7 @@ public class GameSystem : MonoBehaviour
     [SerializeField] private AdvController advController = null;
     [SerializeField] private DebugBattleData debugBattleData = null;
     [SerializeField] private HelpWindow helpWindow = null;
+    [SerializeField] private HelpWindow advHelpWindow = null;
     
     private BaseView _currentScene = null;
     private BaseView _popupView = null;
@@ -46,6 +47,7 @@ public class GameSystem : MonoBehaviour
     {
         Application.targetFrameRate = 60;
         advController.Initialize();
+        advController.SetHelpWindow(advHelpWindow);
         _model = new BaseModel();
         GameSystem.Version = version;
 #if UNITY_EDITOR
@@ -352,6 +354,7 @@ public class GameSystem : MonoBehaviour
     IEnumerator JumpScenarioAsync(string label, System.Action onComplete)
     {
         _busy = true;
+        advHelpWindow.SetInputInfo("ADV_READING");
         while (advEngine.IsWaitBootLoading) yield return null;
         while (advEngine.GraphicManager.IsLoading) yield return null;
         while (advEngine.SoundManager.IsLoading) yield return null;
@@ -365,6 +368,7 @@ public class GameSystem : MonoBehaviour
         if (_statusView) _statusView.SetBusy(false);
         if (_enemyInfoView) _enemyInfoView.SetBusy(false);
         advController.EndAdv();
+        advHelpWindow.SetInputInfo("");
         
         //_currentScene.SetActiveUi(true);
         _busy = false;

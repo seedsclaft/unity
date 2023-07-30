@@ -46,7 +46,7 @@ public class InputSystem
             InputSystem.IsGamePad = false;
             return InputKeyType.Decide;
         } else
-        if(Keyboard.current[Key.LeftShift].wasPressedThisFrame) 
+        if(Keyboard.current[Key.LeftShift].wasPressedThisFrame || Keyboard.current[Key.Escape].wasPressedThisFrame) 
         {
             Debug.Log("cancel");
             InputSystem.IsGamePad = false;
