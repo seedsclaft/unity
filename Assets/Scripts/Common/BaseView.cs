@@ -53,10 +53,10 @@ abstract public class BaseView : MonoBehaviour
     private void InputHandler(InputKeyType keyType)
     {
         if (_busy) return;
-        foreach (var handler in _inputHandler)
+        for (int i = _inputHandler.Count-1;i >= 0;i--)
         {
-            if (handler != null){
-                handler.InputHandler(keyType);
+            if (_inputHandler[i] != null){
+                _inputHandler[i].InputHandler(keyType);
             }
         }
     }

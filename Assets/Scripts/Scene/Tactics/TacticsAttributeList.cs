@@ -45,6 +45,22 @@ public class TacticsAttributeList : ListWindow , IInputHandlerEvent
         }
     }
 
+    public void SelectEnableIndex()
+    {
+        if (Index == -1 || ObjectList[Index].GetComponent<ListItem>().Disable.activeSelf)
+        {
+            for (int i = 0; i < _attributeTypesData.Count;i++)
+            {
+                var skillAttribute = ObjectList[i].GetComponent<ListItem>();
+                if (!skillAttribute.Disable.activeSelf)
+                {
+                    UpdateSelectIndex(i);
+                    break;
+                }
+            }
+        }
+    }
+
     private void CallInputHandler(InputKeyType keyType, System.Action<AttributeType> callEvent,System.Action cancelEvent)
     {
         if (keyType == InputKeyType.Decide && Index > -1)

@@ -48,7 +48,7 @@ public class BattlePresenter : BasePresenter
         _view.CommandLoadingClose();
 
         _view.ClearCurrentSkillData();
-        _view.CreateObject();
+        _view.CreateObject(_model.BattlerActors().Count);
         _view.SetUIButton();
         _view.SetActiveBack(false);
 
@@ -846,7 +846,7 @@ public class BattlePresenter : BasePresenter
     private void CommandAttributeType(AttributeType attributeType)
     {
         List<SkillInfo> skillInfos = _model.SkillActionList(attributeType);
-        _view.RefreshSkillActionList(skillInfos);
+        _view.RefreshSkillActionList(skillInfos,_model.SelectSkillIndex(skillInfos));
         _view.SetAttributeTypes(_model.AttributeTypes(),_model.CurrentAttributeType);
         _view.HideCondition();
         Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cursor);

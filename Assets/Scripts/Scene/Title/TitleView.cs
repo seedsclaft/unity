@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using TMPro;
 using Title;
 
-public class TitleView : BaseView
+public class TitleView : BaseView ,IInputHandlerEvent
 {
     [SerializeField] private TextMeshProUGUI versionText = null;
     [SerializeField] private TitleCommandList commandList = null;
@@ -20,6 +20,7 @@ public class TitleView : BaseView
         new TitlePresenter(this);
         logoButton.onClick.AddListener(() => CallLogoClick());
         logoButton.gameObject.SetActive(true);
+        SetInputHandler(gameObject.GetComponent<IInputHandlerEvent>());
     }
 
     private void CallCredit()
@@ -142,6 +143,14 @@ public class TitleView : BaseView
     {
         commandList.ResetInputFrame(1);
         logoButton.gameObject.SetActive(false);
+    }    
+    
+    public void InputHandler(InputKeyType keyType)
+    {
+        if (keyType == InputKeyType.Decide || keyType == InputKeyType.Cancel || keyType == InputKeyType.Start)
+        {
+            CallLogoClick();
+        }
     }
 }
 

@@ -94,9 +94,9 @@ public class BattleView : BaseView
         HelpWindow.SetInputInfo("BATTLE_PARTY");
     }
 
-    public void CreateObject()
+    public void CreateObject(int battleActorsCount)
     {
-        battleActorList.Initialize(actorInfo => CallActorList(actorInfo),() => OnClickBack(),() => OnClickSelectEnemy());
+        battleActorList.Initialize(battleActorsCount,actorInfo => CallActorList(actorInfo),() => OnClickBack(),() => OnClickSelectEnemy());
         SetInputHandler(battleActorList.GetComponent<IInputHandlerEvent>());
         
         GameObject prefab = Instantiate(animPrefab);
@@ -279,14 +279,14 @@ public class BattleView : BaseView
         skillList.HideAttributeList();
     }
     
-    public void RefreshSkillActionList(List<SkillInfo> skillInfos)
+    public void RefreshSkillActionList(List<SkillInfo> skillInfos,int selectIndex)
     {
         DeactivateActorList();
         DeactivateEnemyList();
         skillList.ActivateActionList();
         skillList.ShowActionList();
         skillList.SetSkillInfos(skillInfos);
-        skillList.RefreshAction();
+        skillList.RefreshAction(selectIndex);
     }
 
     public void SetCondition(List<StateInfo> stateInfos)

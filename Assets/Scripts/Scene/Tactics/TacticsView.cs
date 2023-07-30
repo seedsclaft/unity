@@ -59,6 +59,7 @@ public class TacticsView : BaseView
         SetInputHandler(skillList.skillActionList.GetComponent<IInputHandlerEvent>());
         //SetInputHandler(skillList.skillAttributeList.GetComponent<IInputHandlerEvent>());
         skillList.HideActionList();
+        skillList.DeactivateActionList();
         skillList.HideAttributeList();
     }
 
@@ -309,18 +310,21 @@ public class TacticsView : BaseView
 
     public void ShowAttributeList()
     {
+        tacticsAttributeList.Activate();
         tacticsAttributeList.gameObject.SetActive(true);
         HelpWindow.SetInputInfo("ALCHEMY_ATTRIBUTE");
     }
 
     public void HideAttributeList()
     {
+        tacticsAttributeList.Deactivate();
         tacticsAttributeList.gameObject.SetActive(false);
         HelpWindow.SetInputInfo("ALCHEMY");
     }
 
     public void ShowSkillAlchemyList(List<SkillInfo> skillInfos)
     {
+        skillList.ActivateActionList();
         skillList.ShowActionList();
         skillList.SetSkillInfos(skillInfos);
         skillList.RefreshAction();
@@ -330,6 +334,7 @@ public class TacticsView : BaseView
 
     public void HideSkillAlchemyList()
     {
+        skillList.DeactivateActionList();
         skillList.HideActionList();
         skillList.HideAttributeList();
         HelpWindow.SetInputInfo("ALCHEMY_ATTRIBUTE");
@@ -521,11 +526,13 @@ public class TacticsView : BaseView
         //skillList.RefreshAttribute(attributeTypes);
         tacticsAttributeList.Initialize(attributeTypes,(a) => CallSkillAlchemy(a),() => OnClickBack());
         SetInputHandler(tacticsAttributeList.GetComponent<IInputHandlerEvent>());
+        tacticsAttributeList.Deactivate();
     }
 
     public void SetAttributeValues(List<string> attributeValues,List<int> learningCosts,int currensy)
     {
         tacticsAttributeList.Refresh(attributeValues,learningCosts,currensy);
+        tacticsAttributeList.SelectEnableIndex();
     }
 
     private void CallSkillAlchemy(AttributeType attributeType)

@@ -49,7 +49,7 @@ public class SkillActionList : ListWindow , IInputHandlerEvent
         SetDataCount(skillInfoData.Count);
     }
 
-    public void Refresh()
+    public void Refresh(int selectIndex = 0)
     {
         for (int i = 0; i < ObjectList.Count;i++)
         {
@@ -61,7 +61,7 @@ public class SkillActionList : ListWindow , IInputHandlerEvent
             ObjectList[i].SetActive(i < _skillInfos.Count);
         }
         ResetScrollPosition();
-        UpdateSelectIndex(0);
+        UpdateSelectIndex(selectIndex);
         UpdateAllItems();
     }
 
@@ -86,6 +86,10 @@ public class SkillActionList : ListWindow , IInputHandlerEvent
                 return;
             }
             SkillInfo skillInfo = _skillInfos.Find(a => a.Id == _skillInfos[Index].Id);
+            if (skillInfo == null)
+            {
+                return;
+            }
             if (skillInfo.Enable == false)
             {
                 return;

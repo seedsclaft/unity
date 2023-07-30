@@ -393,6 +393,9 @@ MonoBehaviour:
   - Id: 814
     Text: "\u9805\u76EE\u5207\u66FF"
     Help: '""'
+  - Id: 815
+    Text: "\u6575\u5473\u65B9\u5207\u66FF"
+    Help: '""'
   - Id: 1000
     Text: (Nu)
     Help: '""'
@@ -821,6 +824,12 @@ MonoBehaviour:
     KeyId: 6
     Name: "\u6575\u8A73\u7D30"
   - Key: BATTLE_ENEMY
+    KeyId: 9
+    Name: "\u6575\u5473\u65B9\u5207\u66FF"
+  - Key: BATTLE_ENEMY
+    KeyId: 8
+    Name: '""'
+  - Key: BATTLE_ENEMY
     KeyId: 1
     Name: "\u5217\u5909\u66F4"
   - Key: BATTLE_ENEMY
@@ -838,6 +847,12 @@ MonoBehaviour:
   - Key: BATTLE_PARTY
     KeyId: 5
     Name: "\u623B\u308B"
+  - Key: BATTLE_PARTY
+    KeyId: 9
+    Name: "\u6575\u5473\u65B9\u5207\u66FF"
+  - Key: BATTLE_PARTY
+    KeyId: 8
+    Name: '""'
   - Key: BATTLE_PARTY
     KeyId: 1
     Name: "\u30AB\u30FC\u30BD\u30EB\u79FB\u52D5"

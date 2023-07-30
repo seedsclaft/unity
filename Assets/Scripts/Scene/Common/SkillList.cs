@@ -31,9 +31,9 @@ public class SkillList : MonoBehaviour
         skillActionList.SetSkillInfos(skillInfoData);
     }
 
-    public void RefreshAction()
+    public void RefreshAction(int selectIndex = 0)
     {
-        skillActionList.Refresh();
+        skillActionList.Refresh(selectIndex);
     }
 
     public void RefreshAttribute(List<AttributeType> attributeTypes,AttributeType currentAttibuteType)

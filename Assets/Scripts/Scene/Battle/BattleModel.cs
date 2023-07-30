@@ -316,6 +316,20 @@ public class BattleModel : BaseModel
         return skillInfos;
     }
 
+    public int SelectSkillIndex(List<SkillInfo> skillInfos)
+    {
+        int selectIndex = 0;
+        if (CurrentBattler != null && CurrentBattler.isActor == true)
+        {
+            var skillIndex = skillInfos.FindIndex(a => a.Id == CurrentBattler.LastSelectSkillId);
+            if (skillIndex > -1)
+            {
+                selectIndex = skillIndex;
+            }
+        }
+        return selectIndex;
+    }
+
     private bool CheckCanUse(SkillInfo skillInfo,BattlerInfo battlerInfo)
     {
         if (skillInfo.Master.MpCost > battlerInfo.Mp)

@@ -144,6 +144,7 @@ public class TacticsEnemyList : ListWindow , IInputHandlerEvent
                     UpdateSelectIndex(Index);
                 }
                 tacticsEnemy.SetSelectGetItem(_getItemIndex);
+                Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cursor);
             }
         }
         if (keyType == InputKeyType.Down)
@@ -165,6 +166,7 @@ public class TacticsEnemyList : ListWindow , IInputHandlerEvent
                     UpdateSelectIndex(Index);
                 }
                 tacticsEnemy.SetSelectGetItem(_getItemIndex);
+                Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cursor);
             }
         }
         Debug.Log(_getItemIndex.ToString());

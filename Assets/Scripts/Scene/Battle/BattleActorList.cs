@@ -7,7 +7,6 @@ using Effekseer;
 
 public class BattleActorList : ListWindow , IInputHandlerEvent
 {
-    [SerializeField] private int rows = 0;
     [SerializeField] private List<GameObject> damageRoots;
     private List<BattlerInfo> _battleInfos = new List<BattlerInfo>();
     private List<BattleActor> _battleActors = new List<BattleActor>();
@@ -15,11 +14,11 @@ public class BattleActorList : ListWindow , IInputHandlerEvent
     private List<int> _targetIndexList = new List<int>();
     private int _selectIndex = -1;
 
-    public void Initialize(System.Action<List<int>> callEvent,System.Action cancelEvent,System.Action enemySelectEvent)
+    public void Initialize(int battleActorsCount,System.Action<List<int>> callEvent,System.Action cancelEvent,System.Action enemySelectEvent)
     {
         damageRoots.ForEach(a => a.SetActive(false));
-        InitializeListView(rows);
-        for (int i = 0; i < rows;i++)
+        InitializeListView(battleActorsCount);
+        for (int i = 0; i < battleActorsCount;i++)
         {
             var battleActor = ObjectList[i].GetComponent<BattleActor>();
             battleActor.SetCallHandler((actorIndex) => {
@@ -182,13 +181,14 @@ public class BattleActorList : ListWindow , IInputHandlerEvent
             BattlerInfo current = _battleInfos.Find(a => a.Index == _selectIndex);
             if (current != null)
             {
-                BattlerInfo target = _battleInfos.Find(a => a.Index > current.Index && a.IsAlive());
-                if (target != null)
+                List<BattlerInfo> targets = _battleInfos.FindAll(a => a.Index > current.Index);
+                for (int i = 0;i < targets.Count;i++)
                 {
-                    if (current.LineIndex == target.LineIndex)
+                    if (_targetIndexList.Contains(targets[i].Index))
                     {
                         Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cursor);
-                        UpdateTargetIndex(target.Index);
+                        UpdateTargetIndex(targets[i].Index);
+                        break;
                     }
                 }
             }
@@ -198,13 +198,14 @@ public class BattleActorList : ListWindow , IInputHandlerEvent
             BattlerInfo current = _battleInfos.Find(a => a.Index == _selectIndex);
             if (current != null)
             {
-                BattlerInfo target = _battleInfos.Find(a => a.Index < current.Index && a.IsAlive());
-                if (target != null)
+                List<BattlerInfo> targets = _battleInfos.FindAll(a => a.Index < current.Index);
+                for (int i = 0;i < targets.Count;i++)
                 {
-                    if (current.LineIndex == target.LineIndex)
+                    if (_targetIndexList.Contains(targets[i].Index))
                     {
                         Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cursor);
-                        UpdateTargetIndex(target.Index);
+                        UpdateTargetIndex(targets[i].Index);
+                        break;
                     }
                 }
             }
@@ -252,5 +253,9 @@ public class BattleActorList : ListWindow , IInputHandlerEvent
             indexList.Add(battlerInfo.Index);
         }
         return indexList;
+    }
+
+    private new void InputHandler(InputKeyType keyType)
+    {
     }
 }

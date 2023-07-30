@@ -72,10 +72,10 @@ public class TacticsRecoveryList : ListWindow , IInputHandlerEvent
         {
             if (Index == -1)
             {
-                TacticsComandType tacticsComandType = TacticsComandType.None;
-                if (tacticsCommandList.Index == 2)
+                TacticsComandType tacticsComandType = TacticsComandType.Train;
+                if (tacticsCommandList.Index == 1)
                 {
-                    tacticsComandType = TacticsComandType.Train;
+                    tacticsComandType = TacticsComandType.None;
                 }
                 _confirmEvent(tacticsComandType);
             } else

@@ -29,7 +29,6 @@ public class TitlePresenter : BasePresenter
         }
 
         _view.SetEvent((type) => updateCommand(type));
-        _view.SetSideMenu(_model.SideMenu());
         _view.SetVersion(_model.VersionText());
 
         var bgm = await _model.GetBgmData("TITLE");
@@ -126,7 +125,7 @@ public class TitlePresenter : BasePresenter
         });
     }
 
-    public new void CommandOption()
+    public void CommandOption()
     {
         _busy = true;
         _view.DeactivateSideMenu();
@@ -150,12 +149,15 @@ public class TitlePresenter : BasePresenter
 
     private async void CommandLogoClick()
     {
+        if (_logoChecked) return;
         _logoChecked = true;
         _view.CommandLogoClick();
         _view.SetHelpWindow();
         _view.SetTitleCommand(_model.TitleCommand);
+        _view.SetSideMenu(_model.SideMenu());
         var bgm = await _model.GetBgmData("TITLE");
         Ryneus.SoundManager.Instance.PlayBgm(bgm,1.0f,false);
+        CommandRefresh();
     }
 
     private void CommandOpenSideMenu()
