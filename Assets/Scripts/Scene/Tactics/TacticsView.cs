@@ -81,9 +81,15 @@ public class TacticsView : BaseView
     public void SetHelpWindow()
     {
         sideMenuList.SetHelpWindow(HelpWindow);
+        sideMenuList.SetOpenEvent(() => {
+            tacticsCommandList.Deactivate();
+            sideMenuList.Activate();
+        });
         sideMenuList.SetCloseEvent(() => {
             HelpWindow.SetInputInfo("TACTICS");
             tacticsCommandList.UpdateHelpWindow();
+            tacticsCommandList.Activate();
+            sideMenuList.Deactivate();
         });
     }
 
@@ -151,11 +157,13 @@ public class TacticsView : BaseView
 
     public void ShowCommandList()
     {
+        sideMenuList.gameObject.SetActive(true);
         tacticsCommandList.gameObject.SetActive(true);
     }
 
     public void HideCommandList()
     {
+        sideMenuList.gameObject.SetActive(false);
         tacticsCommandList.gameObject.SetActive(false);
     }
 

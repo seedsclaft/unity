@@ -19,6 +19,8 @@ public class OptionView : BaseView
     private Toggle[] _battleWaitToggles = null;
     private Toggle[] _battleAnimationToggles = null;
     private Toggle[] _inputTypeToggles = null;
+
+    private int _tempInputTypeIndex = -1;
     public override void Initialize() 
     {
         base.Initialize();
@@ -106,6 +108,7 @@ public class OptionView : BaseView
             int j = _inputTypeToggles.Length-i;
             _inputTypeToggles[i].onValueChanged.AddListener((a) => ChangeInputType(a,j));
         }
+        _tempInputTypeIndex = InputTypeIndex;
     }
 
     public void SetEvent(System.Action<OptionViewEvent> commandData)
@@ -118,6 +121,11 @@ public class OptionView : BaseView
         CreateBackCommand(() => 
         {    
             Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cancel);
+            GameSystem.ConfigData._inputType = (_tempInputTypeIndex == 1);
+            if (GameSystem.ConfigData._inputType == false)
+            {
+                SetHelpInputInfo("");
+            }
             if (backEvent != null) backEvent();
         });
         SetActiveBack(true);
@@ -373,8 +381,26 @@ public class OptionView : BaseView
                 UpdateBattleAnimation(2);
                 ChangeBattleAnimation(true,2);
             };
+        } else
+        if (optionCommand.Key == "INPUT_TYPE")
+        {
+            if (inputKeyType == InputKeyType.Right)
+            {
+                UpdateInputType(1);
+                ChangeInputType(true,1);
+            } else
+            if (inputKeyType == InputKeyType.Left)
+            {
+                UpdateInputType(2);
+                ChangeInputType(true,2);
+            };
         }
         
+    }
+
+    public void SetTempInputType(int tempInputTypeIndex)
+    {
+        _tempInputTypeIndex = tempInputTypeIndex;
     }
 
 }

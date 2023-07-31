@@ -39,6 +39,11 @@ public class StatusModel : BaseModel
         if (_currentIndex < 0){
             _currentIndex = StatusActors().Count-1;
         }
+        ChangeSkillAttributeType();
+    }
+
+    public void ChangeSkillAttributeType()
+    {
         if (CurrentActor.LastSelectSkillId > 0)
         {
             _currentAttributeType = CurrentActor.Skills.Find(a => a.Id == CurrentActor.LastSelectSkillId).Attribute;

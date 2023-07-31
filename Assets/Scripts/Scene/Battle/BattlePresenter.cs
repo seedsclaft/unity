@@ -191,18 +191,21 @@ public class BattlePresenter : BasePresenter
 
     private void CommandEscape()
     {
-        ConfirmInfo popupInfo = new ConfirmInfo(DataSystem.System.GetTextData(410).Text,(menuCommandInfo) => UpdatePopup((ConfirmComandType)menuCommandInfo));
-        _view.CommandCallConfirm(popupInfo);
+        if (_model.EnableEspape())
+        {
+            ConfirmInfo popupInfo = new ConfirmInfo(DataSystem.System.GetTextData(410).Text,(menuCommandInfo) => UpdatePopup((ConfirmComandType)menuCommandInfo));
+            _view.CommandCallConfirm(popupInfo);
+        }
     }
 
     private void CommandRule()
     {
         _busy = true;
         _view.SetHelpInputInfo("RULING");
-        _view.SetBattleBusy(true);
+        //_view.SetBattleBusy(true);
         Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
         _view.CommandCallRuling(() => {
-            _view.SetBattleBusy(false);
+            //_view.SetBattleBusy(false);
             _view.SetHelpInputInfo("OPTION");
             Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cancel);
             _busy = false;
@@ -920,7 +923,7 @@ public class BattlePresenter : BasePresenter
 
     public void CommandCondition()
     {
-        _view.HideSkillActionList();
+        _view.HideSkillActionList(false);
         _view.SetEscapeButton(_model.EnableEspape());
         _view.ActivateConditionList();
         _view.SetCondition(_model.CurrentBattler.StateInfos);

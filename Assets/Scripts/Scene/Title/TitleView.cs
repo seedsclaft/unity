@@ -44,7 +44,13 @@ public class TitleView : BaseView ,IInputHandlerEvent
     public void SetHelpWindow(){
         commandList.SetHelpWindow(HelpWindow);
         sideMenuList.SetHelpWindow(HelpWindow);
+        sideMenuList.SetOpenEvent(() => {
+            commandList.Deactivate();
+            sideMenuList.Activate();
+        });
         sideMenuList.SetCloseEvent(() => {
+            commandList.Activate();
+            sideMenuList.Deactivate();
             HelpWindow.SetInputInfo("TITLE");
             commandList.UpdateHelpWindow();
         });

@@ -22,7 +22,12 @@ public class HelpWindow : MonoBehaviour
 
     public async void SetInputInfo(string key)
     {
-        if (GameSystem.ConfigData._inputType == false) return;
+        if (GameSystem.ConfigData._inputType == false) {
+            foreach(var prefab in _inputPrefabs){
+                prefab.SetActive(false);
+            }
+            return;
+        };
         if (_lastKey == key) return;
         if (DataSystem.System.InputDataList == null) return;
         List<SystemData.InputData> inputInfos;

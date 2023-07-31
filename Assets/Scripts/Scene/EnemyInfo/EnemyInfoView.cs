@@ -209,7 +209,7 @@ public class EnemyInfoView : BaseView,IInputHandlerEvent
     {
         if (_isBattle)
         {
-            statusConditionList.Refresh(stateInfos,() => CommandBack(),() => {
+            statusConditionList.Refresh(stateInfos,() => CommandBack(),null,() => {
                 skillList.ShowActionList();
                 skillList.ActivateActionList();
                 HideCondition();

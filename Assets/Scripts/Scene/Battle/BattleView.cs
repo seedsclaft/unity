@@ -68,6 +68,7 @@ public class BattleView : BaseView
         SetInputHandler(skillList.skillActionList.GetComponent<IInputHandlerEvent>());
         skillList.HideActionList();
         skillList.HideAttributeList();
+        sideMenuList.gameObject.SetActive(false);
     }
     
     private void CallSkillAction(SkillInfo skillInfo)
@@ -254,6 +255,7 @@ public class BattleView : BaseView
     public void ShowSkillActionList(BattlerInfo battlerInfo,ActorsData.ActorData actorData)
     {
         skillList.ShowActionList();
+        sideMenuList.gameObject.SetActive(true);
         skillList.ShowAttributeList();
         skillList.ActivateActionList();
         if (battlerInfo.IsState(StateType.Demigod))
@@ -264,10 +266,14 @@ public class BattleView : BaseView
         }
     }
 
-    public void HideSkillActionList()
+    public void HideSkillActionList(bool isSideBenuClose = true)
     {
         skillList.HideActionList();
         skillList.DeactivateActionList();
+        if (isSideBenuClose)
+        {
+            sideMenuList.gameObject.SetActive(false);
+        }
     }
 
     public void HideBattleThumb()
@@ -286,17 +292,14 @@ public class BattleView : BaseView
         DeactivateEnemyList();
         skillList.ActivateActionList();
         skillList.ShowActionList();
+        sideMenuList.gameObject.SetActive(true);
         skillList.SetSkillInfos(skillInfos);
         skillList.RefreshAction(selectIndex);
     }
 
     public void SetCondition(List<StateInfo> stateInfos)
     {
-        statusConditionList.Refresh(stateInfos,() => OnClickBack(),() => {
-            skillList.ShowActionList();
-            skillList.ActivateActionList();
-            HideCondition();
-        });
+        statusConditionList.Refresh(stateInfos,() => OnClickBack(),() => CallOpenSideMenu(),null);
     }
 
     public void ShowConditionTab()
@@ -581,8 +584,17 @@ public class BattleView : BaseView
         SetInputHandler(sideMenuList.GetComponent<IInputHandlerEvent>());
         sideMenuList.Deactivate();
         sideMenuList.SetHelpWindow(HelpWindow);
+        sideMenuList.SetOpenEvent(() => {
+            skillList.DeactivateActionList();
+            skillList.DeactivateAttributeList();
+            sideMenuList.Activate();
+        });
         sideMenuList.SetCloseEvent(() => {
             HelpWindow.SetInputInfo("BATTLE");
+            skillList.ActivateActionList();
+            skillList.ActivateAttributeList();
+            sideMenuList.Deactivate();
+            skillList.skillActionList.UpdateHelpWindow();
             HelpWindow.SetHelpText(DataSystem.System.GetTextData(15010).Text);
         });
     }

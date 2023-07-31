@@ -405,6 +405,9 @@ MonoBehaviour:
   - Id: 818
     Text: "\u6587\u5B57\u9001\u308A"
     Help: '""'
+  - Id: 819
+    Text: "\u7D50\u679C\u8868\u793A\u5207\u66FF"
+    Help: '""'
   - Id: 1000
     Text: (Nu)
     Help: '""'
@@ -787,6 +790,12 @@ MonoBehaviour:
   - Key: STRATEGY
     KeyId: 2
     Name: '""'
+  - Key: STRATEGY
+    KeyId: 1
+    Name: "\u7D50\u679C\u8868\u793A\u5207\u66FF"
+  - Key: STRATEGY
+    KeyId: 0
+    Name: '""'
   - Key: LEVELUP
     KeyId: 4
     Name: "\u6C7A\u5B9A"
@@ -990,4 +999,13 @@ MonoBehaviour:
     Name: "\u30AB\u30FC\u30BD\u30EB\u79FB\u52D5"
   - Key: RESULT
     KeyId: 2
+    Name: '""'
+  - Key: RANKING
+    KeyId: 5
+    Name: "\u623B\u308B"
+  - Key: RANKING
+    KeyId: 1
+    Name: "\u30AB\u30FC\u30BD\u30EB\u79FB\u52D5"
+  - Key: RANKING
+    KeyId: 0
     Name: '""'

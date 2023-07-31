@@ -60,6 +60,7 @@ public class TacticsEnemyList : ListWindow , IInputHandlerEvent
         }
         UpdateSelectIndex(0);
         Refresh();
+        SetUnselectGetItem();
     }
 
     public void InitializeConfirm(List<SystemData.MenuCommandData> confirmCommands ,System.Action<TacticsComandType> callEvent,System.Action<int> enemyInfoEvent)

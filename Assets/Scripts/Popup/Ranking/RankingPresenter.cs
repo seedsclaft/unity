@@ -20,6 +20,7 @@ public class RankingPresenter
     private void Initialize()
     {
         _view.SetEvent((type) => updateCommand(type));
+        _view.SetHelpInputInfo("RANKING");
         _model.RankingInfos((res) => {
             _view.SetRankingInfo(res);
             _busy = false;

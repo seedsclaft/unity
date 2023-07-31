@@ -64,6 +64,10 @@ public class SideMenuList : ListWindow , IInputHandlerEvent
             _helpWindow.SetInputInfo("SIDEMENU");
             _helpWindow.SetHelpText(DataSystem.System.GetTextData(701).Help);
         }
+        if (_openEvent != null)
+        {
+            _openEvent();
+        }
     }
 
     public void CloseSideMenu(bool isSoundNeed = true)

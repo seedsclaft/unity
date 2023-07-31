@@ -8,12 +8,14 @@ using TMPro;
 public class RuleCommandList : ListWindow , IInputHandlerEvent
 {
     [SerializeField] private int rows = 0;
+    [SerializeField] private GameObject mouseBlocker = null;
 
     private List<SystemData.MenuCommandData> _data = new List<SystemData.MenuCommandData>();
 
     public void Initialize(List<SystemData.MenuCommandData> command,System.Action<ConfirmComandType> callEvent,System.Action cancelEvent)
     {
-        InitializeListView(rows);
+        mouseBlocker.SetActive(GameSystem.ConfigData._inputType);
+        InitializeListView(command.Count);
         // スクロールするものはObjectList.CountでSetSelectHandlerを登録する
         for (int i = 0; i < ObjectList.Count;i++)
         {
@@ -87,15 +89,17 @@ public class RuleCommandList : ListWindow , IInputHandlerEvent
         if (keyType == InputKeyType.Option2)
         {
         }
-        if (Index > 0)
+        if (Index >= 0)
         {
             if (keyType == InputKeyType.Down)
             {
                 callEvent((ConfirmComandType)_data[Index].Id);
+                UpdateScrollRect(keyType,rows,_data.Count);
             }
             if (keyType == InputKeyType.Up)
             {
                 callEvent((ConfirmComandType)_data[Index].Id);
+                UpdateScrollRect(keyType,rows,_data.Count);
             }
         }
     }

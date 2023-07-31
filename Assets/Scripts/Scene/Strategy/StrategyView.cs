@@ -102,6 +102,7 @@ public class StrategyView : BaseView
     public void SetResultList(List<SystemData.MenuCommandData> confirmCommands)
     {
         strategyResultList.Initialize();
+        SetInputHandler(strategyResultList.GetComponent<IInputHandlerEvent>());
         strategyResultList.Deactivate();
         strategyResultList.gameObject.SetActive(false);
         strategyResultList.InitializeConfirm(confirmCommands,(a) => CallResultCommand(a));

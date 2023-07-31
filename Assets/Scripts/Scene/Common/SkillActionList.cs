@@ -8,11 +8,13 @@ using TMPro;
 public class SkillActionList : ListWindow , IInputHandlerEvent
 {
     [SerializeField] private int rows = 0;
+    [SerializeField] private GameObject mouseBlocker = null;
 
     private List<SkillInfo> _skillInfos = new List<SkillInfo>();
 
     public void Initialize(System.Action<SkillInfo> callEvent,System.Action cancelEvent,System.Action<SkillInfo> learningEvent,System.Action escapeEvent,System.Action optionEvent)
     {
+        mouseBlocker.SetActive(GameSystem.ConfigData._inputType);
         InitializeListView(rows);
         // スクロールするものはObjectList.CountでSetSelectHandlerを登録する
         for (int i = 0; i < ObjectList.Count;i++)
@@ -44,7 +46,7 @@ public class SkillActionList : ListWindow , IInputHandlerEvent
 
     public void SetSkillInfos(List<SkillInfo> skillInfoData)
     {
-        _skillInfos.Clear();
+        //_skillInfos.Clear();
         _skillInfos = skillInfoData;
         SetDataCount(skillInfoData.Count);
     }
@@ -60,7 +62,12 @@ public class SkillActionList : ListWindow , IInputHandlerEvent
             }
             ObjectList[i].SetActive(i < _skillInfos.Count);
         }
-        ResetScrollPosition();
+        //ResetScrollPosition();
+        ResetScrollRect();
+        for (int i = 0;i < selectIndex;i++)
+        {
+            UpdateScrollRect(InputKeyType.Down,4,_skillInfos.Count);
+        }
         UpdateSelectIndex(selectIndex);
         UpdateAllItems();
     }
@@ -124,6 +131,17 @@ public class SkillActionList : ListWindow , IInputHandlerEvent
                 escapeEvent();
             }
         }
+        if (Index >= 0)
+        {
+            if (keyType == InputKeyType.Down)
+            {
+                UpdateScrollRect(keyType,4,_skillInfos.Count);
+            }
+            if (keyType == InputKeyType.Up)
+            {
+                UpdateScrollRect(keyType,4,_skillInfos.Count);
+            }
+        }
     }
 
     public override void RefreshListItem(GameObject gameObject, int itemIndex)
@@ -132,5 +150,15 @@ public class SkillActionList : ListWindow , IInputHandlerEvent
         var skillAction = gameObject.GetComponent<SkillAction>();
         skillAction.SetData(_skillInfos[itemIndex],itemIndex);
         skillAction.UpdateViewItem();
+    }
+
+    public int SelectedSkillId()
+    {
+        int skillId = -1;
+        if (Index >= 0 && _skillInfos.Count > Index && _skillInfos[Index] != null)
+        {
+            skillId = _skillInfos[Index].Id;
+        }
+        return skillId;
     }
 }

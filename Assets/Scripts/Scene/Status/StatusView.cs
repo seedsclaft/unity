@@ -321,6 +321,11 @@ public class StatusView : BaseView ,IInputHandlerEvent
             HelpWindow.SetInputInfo("STATUS");
         }
     }
+
+    public int SelectedSkillId()
+    {
+        return skillList.SelectedSkillId();
+    }
     
     public void ActivateSkillActionList()
     {
@@ -344,10 +349,10 @@ public class StatusView : BaseView ,IInputHandlerEvent
         skillList.HideAttributeList();
     }
     
-    public void RefreshSkillActionList(List<SkillInfo> skillInfos,List<AttributeType> attributeTypes,AttributeType currentAttibuteType)
+    public void RefreshSkillActionList(List<SkillInfo> skillInfos,List<AttributeType> attributeTypes,AttributeType currentAttibuteType,int lastSelectIndex)
     {
         skillList.SetSkillInfos(skillInfos);
-        skillList.RefreshAction();
+        skillList.RefreshAction(lastSelectIndex);
         skillList.RefreshAttribute(attributeTypes,currentAttibuteType);
     }
 
@@ -409,7 +414,7 @@ public class StatusView : BaseView ,IInputHandlerEvent
     public void CommandRefresh(int remainSp,int remainNuminous)
     {
         statusStrengthList.RefreshCostInfo(remainSp,remainNuminous);
-        skillList.RefreshAction();
+        //skillList.RefreshAction();
         skillList.RefreshCostInfo();
     }
 

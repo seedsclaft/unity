@@ -140,7 +140,8 @@ public class OptionPresenter
 
     private void CommandChangeInputType(int inputTypeIndex)
     {
-        GameSystem.ConfigData._inputType = (inputTypeIndex == 1);
+        _view.SetTempInputType(inputTypeIndex);
+        //GameSystem.ConfigData._inputType = (inputTypeIndex == 1);
     }
 }
 

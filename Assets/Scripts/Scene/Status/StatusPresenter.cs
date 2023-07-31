@@ -27,6 +27,7 @@ public class StatusPresenter
 
         _view.SetStrengthInfo(_model.ConfirmCommand());
         _view.SetStatusCommand(_model.StatusCommand);
+        _model.ChangeSkillAttributeType();
         _view.SetAttributeTypes(_model.AttributeTypes(),_model.CurrentAttributeType);
         if (_model.StatusActors().Count == 1) _view.HideArrows();
         CommandRefresh();
@@ -99,6 +100,7 @@ public class StatusPresenter
         if (_backCommandType == Status.CommandType.StatusCommand)
         {
             _backCommandType = Status.CommandType.None;
+            SaveSelectedSkillId();
             _view.HideSkillActionList();
             _view.ActivateActorList();
             if (_model.StatusActors().Count > 1) _view.ShowArrows();
@@ -141,7 +143,12 @@ public class StatusPresenter
     {
         Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cursor);
         List<SkillInfo> skillInfos = _model.SkillActionList(attributeType);
-        _view.RefreshSkillActionList(skillInfos,_model.AttributeTypes(),attributeType);
+        var lastSelectIndex = skillInfos.FindIndex(a => a.Id == _model.CurrentActor.LastSelectSkillId);
+        if (lastSelectIndex == -1)
+        {
+            lastSelectIndex = 0;
+        }
+        _view.RefreshSkillActionList(skillInfos,_model.AttributeTypes(),attributeType,lastSelectIndex);
     }
 
     private void CommandDecideActor()
@@ -229,7 +236,8 @@ public class StatusPresenter
     private void CommandLeftActor()
     {
         Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cursor);
-         _model.ChangeActorIndex(-1);
+        SaveSelectedSkillId();
+        _model.ChangeActorIndex(-1);
         _view.MoveActorLeft(() => {
             _view.SetActorInfo(_model.CurrentActor,_model.StatusActors());
             CommandAttributeType(_model.CurrentAttributeType);
@@ -240,7 +248,8 @@ public class StatusPresenter
     private void CommandRightActor()
     {
         Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cursor);
-         _model.ChangeActorIndex(1);
+        SaveSelectedSkillId();
+        _model.ChangeActorIndex(1);
         _view.MoveActorRight(() => {
             _view.SetActorInfo(_model.CurrentActor,_model.StatusActors());
             CommandAttributeType(_model.CurrentAttributeType);
@@ -259,7 +268,7 @@ public class StatusPresenter
         {
             _model.SetLearnSkillInfo(skillInfo);
             var leariningSkillList = _model.LearningSkillList(skillInfo.Attribute);
-            _view.RefreshSkillActionList(leariningSkillList,_model.AttributeTypes(),_model.CurrentAttributeType);
+            _view.RefreshSkillActionList(leariningSkillList,_model.AttributeTypes(),_model.CurrentAttributeType,0);
             _view.HideAttributeList();
         }
         if (skillInfo.LearningState == LearningState.SelectLearn)
@@ -268,7 +277,7 @@ public class StatusPresenter
             _view.ShowAttributeList();
             CommandAttributeType(_model.CurrentAttributeType);
         }
-        _model.SetActorLastSkillId(skillInfo.Id);
+        //_model.SetActorLastSkillId(skillInfo.Id);
         Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
     }
 
@@ -339,6 +348,20 @@ public class StatusPresenter
         _view.RefreshActor(_model.CurrentActor);
         _view.CommandRefresh(_model.CurrentActor.Sp,_model.StrengthNuminous());
         List<SkillInfo> skillInfos = _model.SkillActionList(_model.CurrentAttributeType);
-        _view.RefreshSkillActionList(skillInfos,_model.AttributeTypes(),_model.CurrentAttributeType);
+        var lastSelectIndex = skillInfos.FindIndex(a => a.Id == _model.CurrentActor.LastSelectSkillId);
+        if (lastSelectIndex == -1)
+        {
+            lastSelectIndex = 0;
+        }
+        _view.RefreshSkillActionList(skillInfos,_model.AttributeTypes(),_model.CurrentAttributeType,lastSelectIndex);
+    }
+
+    private void SaveSelectedSkillId()
+    {
+        var selectedSkillId = _view.SelectedSkillId();
+        if (selectedSkillId > -1)
+        {
+            _model.SetActorLastSkillId(selectedSkillId);
+        }
     }
 }

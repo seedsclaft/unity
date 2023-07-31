@@ -18,7 +18,7 @@ public class StatusConditionList : ListWindow , IInputHandlerEvent
         conditionButton.onClick.AddListener(() => conditionEvent());
     }
 
-    public void Refresh(List<StateInfo> stateInfos ,System.Action cancelEvent,System.Action skillEvent)
+    public void Refresh(List<StateInfo> stateInfos ,System.Action cancelEvent,System.Action optionEvent,System.Action skillEvent)
     {
         _stateInfos = stateInfos;
         for (int i = 0; i < ObjectList.Count;i++)
@@ -31,7 +31,7 @@ public class StatusConditionList : ListWindow , IInputHandlerEvent
                 ObjectList[i].SetActive(true);
             }
         }
-        SetInputHandler((a) => CallInputHandler(a,cancelEvent,skillEvent));
+        SetInputHandler((a) => CallInputHandler(a,cancelEvent,optionEvent,skillEvent));
         UpdateAllItems();
         UpdateSelectIndex(0);
     }
@@ -48,7 +48,7 @@ public class StatusConditionList : ListWindow , IInputHandlerEvent
         }
     }
     
-    private void CallInputHandler(InputKeyType keyType,System.Action cancelEVent,System.Action skillEvent)
+    private void CallInputHandler(InputKeyType keyType,System.Action cancelEVent,System.Action optionEvent,System.Action skillEvent)
     {
         if (keyType == InputKeyType.Cancel)
         {
@@ -56,6 +56,10 @@ public class StatusConditionList : ListWindow , IInputHandlerEvent
         }
         if (keyType == InputKeyType.Option1)
         {
+            if (optionEvent != null)
+            {
+                optionEvent();
+            } else
             if (skillEvent != null)
             {
                 skillEvent();

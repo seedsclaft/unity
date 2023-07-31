@@ -470,7 +470,7 @@ abstract public class ListWindow : MonoBehaviour
                     if (((_itemCount+startIndex) - selectIndex) <= 0)
                     {
                         var nom = (selectIndex - (_itemCount-1)) * ((float)rectHei / (float)h);
-                        nom = 1.0f - nom;
+                        nom = Math.Max(0,1.0f - nom);
 
                         scrollRect.normalizedPosition = new Vector2(0,nom);
                     
@@ -622,5 +622,41 @@ abstract public class ListWindow : MonoBehaviour
     public void SetNormalizedPosition(float normalizedPosition)
     {
         scrollRect.normalizedPosition = new Vector2(0,normalizedPosition);
+    }
+    
+    private int _dispDownCount = 0;
+    public void UpdateScrollRect(InputKeyType keyType,int listCount,int dataCount){
+        if (keyType == InputKeyType.Down){
+            if (Index == 0)
+            {
+                _dispDownCount = 0;
+                ScrollRect.normalizedPosition = new Vector2(0,1);
+            } else
+            if (Index > (listCount-1) && _dispDownCount == (listCount-1))
+            {
+                var num = 1.0f / (float)(dataCount - listCount);
+                ScrollRect.normalizedPosition = new Vector2(0,1.0f - (num * (Index - (listCount-1))));
+            } else{
+                _dispDownCount++;
+            }
+        } else
+        if (keyType == InputKeyType.Up){
+            if (Index == (_dataCount-1))
+            {
+                _dispDownCount = (listCount-1);
+                ScrollRect.normalizedPosition = new Vector2(0,0);
+            } else
+            if (Index < (dataCount-listCount) && _dispDownCount == 0)
+            {
+                var num = 1.0f / (float)(dataCount - listCount);
+                ScrollRect.normalizedPosition = new Vector2(0,1.0f - (num * Index));
+            } else{
+                _dispDownCount--;
+            }
+        }
+    }
+    public void ResetScrollRect(){
+        _dispDownCount = 0;
+        ScrollRect.normalizedPosition = new Vector2(0,1);
     }
 }

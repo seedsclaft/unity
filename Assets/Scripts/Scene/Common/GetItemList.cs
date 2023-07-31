@@ -6,7 +6,6 @@ using UnityEngine.Events;
 
 public class GetItemList : ListWindow , IInputHandlerEvent
 {
-    [SerializeField] private int rows = 0;
     private List<GetItemInfo> _data = new List<GetItemInfo>();
 
     [SerializeField] private TacticsCommandList tacticsCommandList;
@@ -14,8 +13,14 @@ public class GetItemList : ListWindow , IInputHandlerEvent
     private System.Action<TacticsComandType> _confirmEvent = null;
     
 
+    [SerializeField] private GameObject mouseBlocker = null;
     public void Initialize()
     {
+        if (mouseBlocker != null)
+        {
+            mouseBlocker.SetActive(GameSystem.ConfigData._inputType);
+        }
+        /*
         InitializeListView(rows);
         // スクロールするものはObjectList.CountでSetSelectHandlerを登録する
         for (int i = 0; i < ObjectList.Count;i++)
@@ -24,10 +29,19 @@ public class GetItemList : ListWindow , IInputHandlerEvent
             getItem.SetSelectHandler((data) => UpdateSelectIndex(data));
             ObjectList[i].SetActive(false);
         }
+        */
     }
 
     public void Refresh(List<GetItemInfo> getItemData)
     {
+        InitializeListView(getItemData.Count);
+        for (int i = 0; i < ObjectList.Count;i++)
+        {
+            var getItem = ObjectList[i].GetComponent<GetItem>();
+            getItem.SetSelectHandler((data) => UpdateSelectIndex(data));
+            ObjectList[i].SetActive(false);
+        }
+
         _data = getItemData;
         SetDataCount(_data.Count);
         for (int i = 0; i < ObjectList.Count;i++)
@@ -40,8 +54,11 @@ public class GetItemList : ListWindow , IInputHandlerEvent
                 ObjectList[i].SetActive(true);
             }
         }
-        ResetScrollPosition();
+        SetInputHandler((a) => CallSelectHandler(a));
+        //ResetScrollPosition();
         //UpdateSelectIndex(0);
+        ResetScrollRect();
+        UpdateSelectIndex(0);
         UpdateAllItems();
     }
 
@@ -55,7 +72,7 @@ public class GetItemList : ListWindow , IInputHandlerEvent
     public void InitializeConfirm(List<SystemData.MenuCommandData> confirmCommands ,System.Action<TacticsComandType> callEvent)
     {
         _confirmEvent = callEvent;
-        SetInputHandler((a) => CallInputHandler(a,callEvent));
+        tacticsCommandList.SetInputHandler((a) => CallInputHandler(a,callEvent));
         tacticsCommandList.Initialize(callEvent);
         tacticsCommandList.Refresh(confirmCommands);
         tacticsCommandList.UpdateSelectIndex(0);
@@ -71,6 +88,30 @@ public class GetItemList : ListWindow , IInputHandlerEvent
         if (keyType == InputKeyType.Cancel)
         {
             _confirmEvent(TacticsComandType.Train);
+        }
+    }    
+    
+    private void CallSelectHandler(InputKeyType keyType)
+    {
+        if (_data != null && _data.Count < 6) return;
+        var margin = 1.0f / (_data.Count - 5);
+        if (keyType == InputKeyType.Down)
+        {
+            var value = ScrollRect.normalizedPosition.y - margin;
+            ScrollRect.normalizedPosition = new Vector2(0,value);
+            if (ScrollRect.normalizedPosition.y < 0)
+            {
+                ScrollRect.normalizedPosition = new Vector2(0,0);
+            }
+        }
+        if (keyType == InputKeyType.Up)
+        {
+            var value = ScrollRect.normalizedPosition.y + margin;
+            ScrollRect.normalizedPosition = new Vector2(0,value);
+            if (ScrollRect.normalizedPosition.y > 1)
+            {
+                ScrollRect.normalizedPosition = new Vector2(0,1);
+            }
         }
     }
     

@@ -90,4 +90,9 @@ public class SkillList : MonoBehaviour
     {
         skillAttributeList.gameObject.SetActive(false);
     }
+
+    public int SelectedSkillId()
+    {
+        return skillActionList.SelectedSkillId();
+    }
 }

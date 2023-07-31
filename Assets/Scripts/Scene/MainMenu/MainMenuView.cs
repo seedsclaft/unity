@@ -27,8 +27,15 @@ public class MainMenuView : BaseView
     public void SetHelpWindow(){
         SetInitHelpText();
         sideMenuList.SetHelpWindow(HelpWindow);
+        sideMenuList.SetOpenEvent(() => {
+            stageList.Deactivate();
+            sideMenuList.Activate();
+        });
         sideMenuList.SetCloseEvent(() => {
         SetInitHelpText();
+            stageList.Activate();
+            sideMenuList.Deactivate();
+            HelpWindow.SetInputInfo("MAINMENU");
             stageList.UpdateHelpWindow();
         });
     }
