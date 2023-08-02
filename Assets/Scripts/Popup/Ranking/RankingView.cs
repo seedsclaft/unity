@@ -51,9 +51,11 @@ public class RankingView : BaseView,IInputHandlerEvent
         {
             BackEvent();
         }
+        if (rankingInfoList.Data != null && rankingInfoList.Data.Count < 5) return;
+        var margin = 1.0f / (rankingInfoList.Data.Count - 4);
         if (keyType == InputKeyType.Down)
         {
-            var value = scrollRect.normalizedPosition.y - 0.005f;
+            var value = scrollRect.normalizedPosition.y - margin;
             scrollRect.normalizedPosition = new Vector2(0,value);
             if (scrollRect.normalizedPosition.y < 0)
             {
@@ -62,7 +64,7 @@ public class RankingView : BaseView,IInputHandlerEvent
         }
         if (keyType == InputKeyType.Up)
         {
-            var value = scrollRect.normalizedPosition.y + 0.005f;
+            var value = scrollRect.normalizedPosition.y + margin;
             scrollRect.normalizedPosition = new Vector2(0,value);
             if (scrollRect.normalizedPosition.y > 1)
             {

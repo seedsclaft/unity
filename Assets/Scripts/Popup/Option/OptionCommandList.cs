@@ -22,6 +22,7 @@ public class OptionCommandList : ListWindow , IInputHandlerEvent
             optionCommand.SetSelectHandler((data) => UpdateSelectIndex(data));
         }
         SetInputHandler((a) => CallInputHandler(a,optionEvent));
+        ResetScrollPosition();
         UpdateSelectIndex(0);
         
         Refresh();
@@ -55,26 +56,15 @@ public class OptionCommandList : ListWindow , IInputHandlerEvent
         {
             return;
         }
-        if (keyType == InputKeyType.Down)
+        if (Index >= 0)
         {
-            if (Index > _optionCommands.Count - 3)
+            if (keyType == InputKeyType.Down)
             {
-                SetNormalizedPosition(1.0f - (float)(Index+1) / (float)_optionCommands.Count);
-            } else
-            if (Index == 0)
-            {
-                SetNormalizedPosition(1.0f - (float)Index / (float)_optionCommands.Count);
+                UpdateScrollRect(keyType,5,_optionCommands.Count);
             }
-        }
-        if (keyType == InputKeyType.Up)
-        {
-            if (Index < 2)
+            if (keyType == InputKeyType.Up)
             {
-                SetNormalizedPosition(1.0f - (float)Index / (float)_optionCommands.Count);
-            } else
-            if (Index == 6)
-            {
-                SetNormalizedPosition(1.0f - (float)(Index+1) / (float)_optionCommands.Count);
+                UpdateScrollRect(keyType,5,_optionCommands.Count);
             }
         }
         if (keyType == InputKeyType.Right)

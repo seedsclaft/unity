@@ -8,6 +8,7 @@ using UnityEngine.Events;
 public class RankingInfoList : ListWindow , IInputHandlerEvent
 {
     private List<RankingInfo> _data = new List<RankingInfo>();
+    public List<RankingInfo> Data => _data;
 
     public void Initialize(List<RankingInfo> rankingInfos ,System.Action cancelEvent)
     {

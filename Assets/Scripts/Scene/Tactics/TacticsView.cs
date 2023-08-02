@@ -423,6 +423,7 @@ public class TacticsView : BaseView
     public void ShowEnemyList()
     {
         tacticsEnemyList.gameObject.SetActive(true);
+        tacticsEnemyList.ResetInputFrame(1);
         HelpWindow.SetInputInfo("ENEMY_SELECT");
     }
 

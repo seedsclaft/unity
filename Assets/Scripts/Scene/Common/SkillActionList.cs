@@ -8,13 +8,11 @@ using TMPro;
 public class SkillActionList : ListWindow , IInputHandlerEvent
 {
     [SerializeField] private int rows = 0;
-    [SerializeField] private GameObject mouseBlocker = null;
 
     private List<SkillInfo> _skillInfos = new List<SkillInfo>();
 
     public void Initialize(System.Action<SkillInfo> callEvent,System.Action cancelEvent,System.Action<SkillInfo> learningEvent,System.Action escapeEvent,System.Action optionEvent)
     {
-        mouseBlocker.SetActive(GameSystem.ConfigData._inputType);
         InitializeListView(rows);
         // スクロールするものはObjectList.CountでSetSelectHandlerを登録する
         for (int i = 0; i < ObjectList.Count;i++)

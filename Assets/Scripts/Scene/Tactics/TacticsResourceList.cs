@@ -91,7 +91,7 @@ public class TacticsResourceList : ListWindow , IInputHandlerEvent
             if (Index == 0)
             {
                 UpdateSelectIndex(-1);
-                tacticsCommandList.UpdateSelectIndex(0);
+                tacticsCommandList.UpdateSelectIndex(1);
             }
         }
         if (keyType == InputKeyType.Up)

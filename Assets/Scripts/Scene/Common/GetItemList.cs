@@ -13,13 +13,8 @@ public class GetItemList : ListWindow , IInputHandlerEvent
     private System.Action<TacticsComandType> _confirmEvent = null;
     
 
-    [SerializeField] private GameObject mouseBlocker = null;
     public void Initialize()
     {
-        if (mouseBlocker != null)
-        {
-            mouseBlocker.SetActive(GameSystem.ConfigData._inputType);
-        }
         /*
         InitializeListView(rows);
         // スクロールするものはObjectList.CountでSetSelectHandlerを登録する

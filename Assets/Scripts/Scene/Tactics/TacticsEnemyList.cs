@@ -60,6 +60,7 @@ public class TacticsEnemyList : ListWindow , IInputHandlerEvent
         }
         UpdateSelectIndex(0);
         Refresh();
+        _getItemIndex = -1;
         SetUnselectGetItem();
     }
 
