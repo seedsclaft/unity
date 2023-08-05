@@ -312,16 +312,19 @@ public class BattleView : BaseView
     {
         statusConditionList.gameObject.SetActive(true);
         statusConditionList.ShowMainView();
+        statusConditionList.Activate();
     }
 
     public void HideCondition()
     {
         statusConditionList.HideMainView();
+        statusConditionList.Deactivate();
     }
 
     public void HideConditionAll()
     {
         statusConditionList.gameObject.SetActive(false);
+        statusConditionList.Deactivate();
     }
     
     public void ActivateConditionList()
@@ -545,8 +548,8 @@ public class BattleView : BaseView
             CheckAnimationBusy();
             return;
         }
-        if (_battleBusy == true) return;
         base.Update();
+        if (_battleBusy == true) return;
         var eventData = new BattleViewEvent(CommandType.UpdateAp);
         _commandData(eventData);
     }

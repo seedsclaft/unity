@@ -22,6 +22,7 @@ public class StatusActorList : ListWindow , IInputHandlerEvent
         for (int i = 0; i < ObjectList.Count;i++)
         {
             var StatusActor = ObjectList[i].GetComponent<ActorInfoComponent>();
+            StatusActor.Clear();
             StatusActor.UpdateInfo(actorInfo,actorInfos);
         }
     }

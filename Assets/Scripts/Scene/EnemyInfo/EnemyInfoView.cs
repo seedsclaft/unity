@@ -121,6 +121,7 @@ public class EnemyInfoView : BaseView,IInputHandlerEvent
     }
 
     public void StartEnemyInfo(BattlerInfo battlerInfo){
+        enemyInfoComponent.Clear();
         enemyInfoComponent.UpdateInfo(battlerInfo);
     }
 

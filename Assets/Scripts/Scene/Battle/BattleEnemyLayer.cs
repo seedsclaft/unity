@@ -253,14 +253,11 @@ public class BattleEnemyLayer : ListWindow , IInputHandlerEvent
             BattlerInfo current = _battleInfos.Find(a => a.Index == _selectIndex);
             if (current != null)
             {
-                BattlerInfo target = _battleInfos.Find(a => a.Index < current.Index && a.IsAlive());
-                if (target != null)
+                List<BattlerInfo> targets = _battleInfos.FindAll(a => a.Index < current.Index && a.IsAlive() && current.LineIndex == a.LineIndex);
+                if (targets.Count > 0)
                 {
-                    if (current.LineIndex == target.LineIndex)
-                    {
-                        Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cursor);
-                        UpdateEnemyIndex(target.Index);
-                    }
+                    Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cursor);
+                    UpdateEnemyIndex(targets[targets.Count-1].Index);
                 }
             }
         }

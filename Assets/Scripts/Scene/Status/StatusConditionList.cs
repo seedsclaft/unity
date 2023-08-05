@@ -14,12 +14,12 @@ public class StatusConditionList : ListWindow , IInputHandlerEvent
 
     public void Initialize(System.Action conditionEvent)
     {
-        InitializeListView(rows);
         conditionButton.onClick.AddListener(() => conditionEvent());
     }
 
     public void Refresh(List<StateInfo> stateInfos ,System.Action cancelEvent,System.Action optionEvent,System.Action skillEvent)
     {
+        InitializeListView(stateInfos.Count);
         _stateInfos = stateInfos;
         for (int i = 0; i < ObjectList.Count;i++)
         {
@@ -65,6 +65,25 @@ public class StatusConditionList : ListWindow , IInputHandlerEvent
                 skillEvent();
             }
         }
+        if (Index >= 0)
+        {
+            if (keyType == InputKeyType.Down)
+            {
+                UpdateScrollRect(keyType,4,_stateInfos.Count);
+            }
+            if (keyType == InputKeyType.Up)
+            {
+                UpdateScrollRect(keyType,4,_stateInfos.Count);
+            }
+        }
+    }
+
+    public override void RefreshListItem(GameObject gameObject, int itemIndex)
+    {
+        base.RefreshListItem(gameObject,itemIndex);
+        var skillAction = gameObject.GetComponent<StatusCondition>();
+        skillAction.SetData(_stateInfos[itemIndex],itemIndex);
+        skillAction.UpdateViewItem();
     }
 
     public void ShowMainView()

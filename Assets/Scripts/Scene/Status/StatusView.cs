@@ -166,6 +166,7 @@ public class StatusView : BaseView ,IInputHandlerEvent
     public void SetActorInfo(ActorInfo actorInfo,List<ActorInfo> actorInfos)
     {
         actorList.Refresh(actorInfo,actorInfos);
+        actorInfoComponent.Clear();
         actorInfoComponent.UpdateInfo(actorInfo,actorInfos);
     }
 

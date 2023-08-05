@@ -64,6 +64,7 @@ public class StrategyView : BaseView
         strategyStrengthList.gameObject.SetActive(true);
         lvUpStatusButton.gameObject.SetActive(true);
         actorInfoComponent.gameObject.SetActive(true);
+        actorInfoComponent.Clear();
         actorInfoComponent.UpdateInfo(actorInfo,null);
         strategyStrengthList.Refresh(actorInfo);
         HelpWindow.SetInputInfo("LEVELUP");

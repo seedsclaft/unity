@@ -153,7 +153,11 @@ public class ActorInfoComponent : MonoBehaviour
         if (_isMainFaceInit == true) return;
         //var handle = await ResourceSystem.LoadAsset<Sprite>("Texture/Character/Actors/" + imagePath + "/MainFace.png");
         var handle = Resources.Load<Sprite>("Texture/Character/Actors/" + imagePath + "/MainFace");
-        if (faceThumb != null) faceThumb.sprite = handle;
+        if (faceThumb != null) 
+        {
+            faceThumb.sprite = handle;
+            faceThumb.gameObject.SetActive(true);
+        }
         _isMainFaceInit = true;
     }
 
@@ -165,6 +169,7 @@ public class ActorInfoComponent : MonoBehaviour
         if (awakenFaceThumb != null)
         {
             awakenFaceThumb.sprite = handle;
+            awakenFaceThumb.gameObject.SetActive(true);
         }
         _isAwakeFaceInit = true;
     }
@@ -240,11 +245,11 @@ public class ActorInfoComponent : MonoBehaviour
     {
         if (mainThumb != null){
             mainThumb.sprite = null;
-            mainThumb.gameObject.SetActive(false);
+            //mainThumb.gameObject.SetActive(false);
         }
         if (awakenThumb != null){
             awakenThumb.sprite = null;
-            awakenThumb.gameObject.SetActive(false);
+            //awakenThumb.gameObject.SetActive(false);
         }
         if (faceThumb != null){
             faceThumb.sprite = null;
@@ -254,5 +259,7 @@ public class ActorInfoComponent : MonoBehaviour
             awakenFaceThumb.sprite = null;
             awakenFaceThumb.gameObject.SetActive(false);
         }
+        _isAwakeFaceInit = false;
+        _isMainFaceInit = false;
     }
 }

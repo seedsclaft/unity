@@ -198,15 +198,11 @@ public class BattleActorList : ListWindow , IInputHandlerEvent
             BattlerInfo current = _battleInfos.Find(a => a.Index == _selectIndex);
             if (current != null)
             {
-                List<BattlerInfo> targets = _battleInfos.FindAll(a => a.Index < current.Index);
-                for (int i = 0;i < targets.Count;i++)
+                List<BattlerInfo> targets = _battleInfos.FindAll(a => a.Index < current.Index && _targetIndexList.Contains(a.Index));
+                if (targets.Count > 0)
                 {
-                    if (_targetIndexList.Contains(targets[i].Index))
-                    {
-                        Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cursor);
-                        UpdateTargetIndex(targets[i].Index);
-                        break;
-                    }
+                    Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cursor);
+                    UpdateTargetIndex(targets[targets.Count-1].Index);
                 }
             }
         }

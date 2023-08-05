@@ -203,6 +203,10 @@ public class ActionResultInfo
         {
             DefValue += target.StateEffectAll(StateType.DefUp);
         }
+        if (target.IsState(StateType.DefDown) && !isNoEffect)
+        {
+            DefValue -= target.StateEffectAll(StateType.DefDown);
+        }
         float DamageRate = featureData.Param1;
         if (subject.IsState(StateType.DamageUp))
         {

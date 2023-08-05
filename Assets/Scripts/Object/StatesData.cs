@@ -44,6 +44,7 @@ public enum StateType
     TargetRateUp = 61,
     TargetRateDown = 62,
     RemoveBuff = 71,
+    DefDown = 84,
     Chain = 101,
     ChainDamageUp = 102,
     CounterOura = 103,

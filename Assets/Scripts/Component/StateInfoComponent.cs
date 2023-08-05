@@ -24,6 +24,11 @@ public class StateInfoComponent : MonoBehaviour
         {
             string effectText = stateInfo.Master.Help.Replace("\\d",stateInfo.Effect.ToString());
             description.text = effectText;
+            var skill = DataSystem.Skills.Find(a => a.Id == stateInfo.SkillId);
+            if (skill != null)
+            {
+                description.text = description.text + "(" + skill.Name + ")";
+            }
         }
         if (turns != null)
         {

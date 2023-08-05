@@ -320,10 +320,6 @@ public class BattlePresenter : BasePresenter
         
         StartDeathAnimation(benedictionActionResults);
         StartAliveAnimation(benedictionActionResults);
-        if (chainActionResults.Count > 0 || benedictionActionResults.Count > 0)
-        {
-            _view.RefreshStatus();
-        }
     }
 
     private void CommandSkillAction(SkillInfo skillInfo)
@@ -690,12 +686,18 @@ public class BattlePresenter : BasePresenter
         {    
             _model.ExecActionResultInfo(resultInfos[i]);
         }
+        if (resultInfos.Count > 0)
+        {
+            _view.RefreshStatus();
+        }
     }
 
     private void CommandStartBattleAction()
     {
         var PassiveResults = _model.CheckTriggerPassiveInfos(TriggerTiming.StartBattle);
         ExecActionResult(PassiveResults);
+        var AfterPassiveResults = _model.CheckTriggerPassiveInfos(TriggerTiming.After);
+        ExecActionResult(AfterPassiveResults);
     }
 
     private void CommandEndSlipDamageAnimation()
@@ -782,6 +784,12 @@ public class BattlePresenter : BasePresenter
             {
                 _view.StartStatePopup(removedState.TargetIndex,DamageType.State,"-" + removedState.Master.Name);
             }
+            // Passive付与
+            PassiveResults = _model.CheckTriggerPassiveInfos(TriggerTiming.After);
+            ExecActionResult(PassiveResults);
+            // Passive解除
+            RemovePassiveResults = _model.CheckRemovePassiveInfos();
+            ExecActionResult(RemovePassiveResults);
         }
         _model.TurnEnd();
         if (isTriggeredSkill == false)

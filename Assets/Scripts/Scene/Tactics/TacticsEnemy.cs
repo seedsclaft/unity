@@ -63,6 +63,7 @@ public class TacticsEnemy : ListItem ,IListViewItem
     public void UpdateViewItem()
     {
         if (_enemyInfo == null) return;
+        enemyInfoComponent.Clear();
         enemyInfoComponent.UpdateInfo(_enemyInfo);
     }
 

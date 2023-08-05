@@ -122,5 +122,6 @@ public class EnemyInfoComponent : MonoBehaviour
         if (nameText != null){
             nameText.text = "";
         }
+        _isMainThumbInit = false;
     }
 }

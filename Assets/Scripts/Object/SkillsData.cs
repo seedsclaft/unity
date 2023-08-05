@@ -142,6 +142,18 @@ public class SkillsData : ScriptableObject {
                     CanUse = true;
                 }
                 break;
+                case TriggerType.LessTroopMembers:
+                if ( troops.Count >= party.Count )
+                {
+                    CanUse = true;
+                }
+                break;
+                case TriggerType.MoreTroopMembers:
+                if ( troops.Count <= party.Count )
+                {
+                    CanUse = true;
+                }
+                break;
                 case TriggerType.ChainCount:
                 if (battlerInfo.ChainSuccessCount >= Param1)
                 {

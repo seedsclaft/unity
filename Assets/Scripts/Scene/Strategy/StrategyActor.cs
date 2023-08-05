@@ -30,6 +30,7 @@ public class StrategyActor : ListItem ,IListViewItem
     public void UpdateViewItem()
     {
         if (_data == null) return;
+        component.Clear();
         component.UpdateInfo(_data,null);
     }
 
