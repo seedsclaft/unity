@@ -17,15 +17,15 @@ public class BattleView : BaseView
 
     private new System.Action<BattleViewEvent> _commandData = null;
 
-    
-    [SerializeField] private EffekseerEmitter effekseerEmitter = null;
-
     [SerializeField] private GameObject animRoot = null;
     [SerializeField] private GameObject animPrefab = null;
 
     [SerializeField] private Button escapeButton = null;
     [SerializeField] private SkillInfoComponent skillInfoComponent = null;
     [SerializeField] private SideMenuList sideMenuList = null;
+
+    
+    [SerializeField] private GameObject centerAnimPosition = null;
     private BattleStartAnim _battleStartAnim = null;
 
 
@@ -444,19 +444,24 @@ public class BattleView : BaseView
             _animationEndTiming = 1;
             return;
         }
-        effekseerEmitter.Stop();
-        effekseerEmitter.Play(effekseerEffectAsset);
+        // transformの位置でエフェクトを再生する
+        EffekseerHandle handle = EffekseerSystem.PlayEffect(effekseerEffectAsset, centerAnimPosition.transform.position);
     }
 
     public void StartAnimationDemigod(EffekseerEffectAsset effekseerEffectAsset)
     {
         _animationBusy = true;
-        effekseerEmitter.Stop();
-        effekseerEmitter.Play(effekseerEffectAsset);
+        EffekseerHandle handle = EffekseerSystem.PlayEffect(effekseerEffectAsset, centerAnimPosition.transform.position);
     }
 
     public void StartSkillDamage(int targetIndex,int damageTiming,System.Action<int> callEvent)
     {
+        if (GameSystem.ConfigData._battleAnimationSkip == true) 
+        {            
+            _animationEndTiming = 1;
+        } else{
+            _animationEndTiming = damageTiming + 60;
+        }
         _battlerComps[targetIndex].SetStartSkillDamage(damageTiming,callEvent);
     }
 
@@ -540,8 +545,8 @@ public class BattleView : BaseView
             CheckAnimationBusy();
             return;
         }
-        base.Update();
         if (_battleBusy == true) return;
+        base.Update();
         var eventData = new BattleViewEvent(CommandType.UpdateAp);
         _commandData(eventData);
     }
@@ -556,23 +561,29 @@ public class BattleView : BaseView
         if (_animationBusy == true)
         {
             bool IsBusy = false;
+            if (_animationEndTiming > 0)
+            {
+                _animationEndTiming--;
+                return;
+            }
             foreach (var item in _battlerComps)
             {
                 if (item.Value.IsBusy == true)
                 {
                     IsBusy = true;
-                } else
-                {
-                    item.Value.DisableEmitter();
+                    break;
                 }
-            }
-            if (_animationEndTiming > 0)
-            {
-                _animationEndTiming--;
             }
             if (IsBusy == false && _animationEndTiming <= 0 && _battleStartAnim.IsBusy == false)
             {
                 _animationBusy = false;
+                foreach (var item in _battlerComps)
+                {
+                    if (item.Value.EffekseerEmitter.enabled)
+                    {
+                        item.Value.DisableEmitter();
+                    }
+                }
                 var eventData = new BattleViewEvent(CommandType.EndAnimation);
                 _commandData(eventData);
             }

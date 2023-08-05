@@ -30,6 +30,10 @@ public class ActorInfoComponent : MonoBehaviour
     [SerializeField] private TextMeshProUGUI element3;
     [SerializeField] private TextMeshProUGUI element4;
     [SerializeField] private TextMeshProUGUI element5;
+
+    private bool _isMainFaceInit = false;
+    private bool _isAwakeFaceInit = false;
+
     public void UpdateInfo(ActorInfo actorInfo,List<ActorInfo> actorInfos)
     {
         if (actorInfo == null){
@@ -145,20 +149,24 @@ public class ActorInfoComponent : MonoBehaviour
     }
 
     private void UpdateMainFaceThumb(string imagePath)
-    {
+    {   
+        if (_isMainFaceInit == true) return;
         //var handle = await ResourceSystem.LoadAsset<Sprite>("Texture/Character/Actors/" + imagePath + "/MainFace.png");
         var handle = Resources.Load<Sprite>("Texture/Character/Actors/" + imagePath + "/MainFace");
         if (faceThumb != null) faceThumb.sprite = handle;
+        _isMainFaceInit = true;
     }
 
     private void UpdateAwakenFaceThumb(string imagePath)
     {
+        if (_isAwakeFaceInit == true) return;
         //var handle = await ResourceSystem.LoadAsset<Sprite>("Texture/Character/Actors/" + imagePath + "/AwakenFace.png");
         var handle = Resources.Load<Sprite>("Texture/Character/Actors/" + imagePath + "/AwakenFace");
         if (awakenFaceThumb != null)
         {
             awakenFaceThumb.sprite = handle;
         }
+        _isAwakeFaceInit = true;
     }
 
     private void UpdateAttributeParam(TextMeshProUGUI textMeshProUGUI,int param){

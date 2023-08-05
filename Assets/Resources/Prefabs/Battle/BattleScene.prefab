@@ -999,13 +999,14 @@ MonoBehaviour:
   skillList: {fileID: 8984689578068240391}
   statusConditionList: {fileID: 7656708371438077581}
   battleThumb: {fileID: 4458981522756006971}
-  effekseerEmitter: {fileID: 7748253186106057598}
+  effekseerEmitter: {fileID: 0}
   animRoot: {fileID: 326439070492828496}
   animPrefab: {fileID: 4528099191295616540, guid: f995e7f6f504de94092347d3d2b7dbfd,
     type: 3}
   escapeButton: {fileID: 7168858512599393007}
   skillInfoComponent: {fileID: 8630252734445880215}
   sideMenuList: {fileID: 3839157626696394576}
+  centerAnimPosition: {fileID: 5515642636406081674}
 --- !u!1 &1317493989877193726
 GameObject:
   m_ObjectHideFlags: 0
@@ -1244,7 +1245,6 @@ MonoBehaviour:
   itemPrefab: {fileID: 2230353275163966702, guid: 52be6b3606271254583499e7e8ca2617,
     type: 3}
   _helpWindow: {fileID: 0}
-  rows: 5
   damageRoots:
   - {fileID: 7357160416466283532}
   - {fileID: 8481339093361544781}
@@ -3136,9 +3136,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8240870289867352443}
-  - component: {fileID: 7748253186106057598}
   m_Layer: 5
-  m_Name: Emitter
+  m_Name: oCenterAnimPOsition
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3159,24 +3158,6 @@ Transform:
   m_Father: {fileID: 9139274658626950551}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7748253186106057598
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5515642636406081674}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 35d396bcb8480c24eb784eebe6096a99, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  TimingOfUpdate: 0
-  EmitterScale: 0
-  TimeScale: 0
-  effectAsset: {fileID: 0}
-  playOnStart: 0
-  isLooping: 0
 --- !u!1 &5650521231191054787
 GameObject:
   m_ObjectHideFlags: 0

@@ -11,6 +11,7 @@ public class BattlerInfoComponent : MonoBehaviour
     [SerializeField] private ActorInfoComponent actorInfoComponent;
     [SerializeField] private EnemyInfoComponent enemyInfoComponent;
     [SerializeField] private EffekseerEmitter effekseerEmitter;
+    public EffekseerEmitter EffekseerEmitter => effekseerEmitter;
     [SerializeField] private _2dxFX_DestroyedFX deathAnimation;
     private GameObject _battleDamageRoot;
     public GameObject BattleDamageRoot => _battleDamageRoot;

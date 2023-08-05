@@ -320,8 +320,10 @@ public class BattlePresenter : BasePresenter
         
         StartDeathAnimation(benedictionActionResults);
         StartAliveAnimation(benedictionActionResults);
-        
-        _view.RefreshStatus();
+        if (chainActionResults.Count > 0 || benedictionActionResults.Count > 0)
+        {
+            _view.RefreshStatus();
+        }
     }
 
     private void CommandSkillAction(SkillInfo skillInfo)

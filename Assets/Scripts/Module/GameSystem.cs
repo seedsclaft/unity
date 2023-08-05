@@ -48,6 +48,7 @@ public class GameSystem : MonoBehaviour
         Application.targetFrameRate = 60;
         advController.Initialize();
         advController.SetHelpWindow(advHelpWindow);
+        transitionRoot.SetActive(false);
         _model = new BaseModel();
         GameSystem.Version = version;
 #if UNITY_EDITOR
@@ -219,6 +220,7 @@ public class GameSystem : MonoBehaviour
         } else
         if (viewEvent.commandType == Base.CommandType.ChangeViewToTransition)
         {
+            transitionRoot.SetActive(true);
             _currentScene.gameObject.transform.SetParent(transitionRoot.transform, false);
             _currentScene = null;
         } else
@@ -230,6 +232,7 @@ public class GameSystem : MonoBehaviour
                     if ((System.Action)viewEvent.templete != null) endEvent();
                     Destroy(child.gameObject);
                     transitionFade.FadeOut(0);
+                    transitionRoot.SetActive(false);
                 }
             });
         } else
