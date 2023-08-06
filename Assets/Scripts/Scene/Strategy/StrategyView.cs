@@ -136,6 +136,7 @@ public class StrategyView : BaseView
 
     public void StartResultAnimation(List<ActorInfo> actorInfos,List<bool> isBonusList = null)
     {
+        DeactivateAll();
         strategyActorList.gameObject.SetActive(true);
         strategyActorList.StartResultAnimation(actorInfos,isBonusList,() => {
             CallEndAnimation();
@@ -232,6 +233,15 @@ public class StrategyView : BaseView
     public void FadeOut()
     {
         backgroundImage.DOFade(0,0.4f);
+    }
+
+    private void DeactivateAll()
+    {
+        
+        tacticsEnemyList.Deactivate();
+        tacticsEnemyList.TacticsCommandList.Deactivate();
+        strategyResultList.Deactivate();
+        strategyResultList.TacticsCommandList.Deactivate();
     }
 }
 

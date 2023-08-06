@@ -414,6 +414,10 @@ public class BattleModel : BaseModel
             } else
             {
                 LastTargetIndex = subject.Index;
+                if (targetIndexList.Count > 0)
+                {
+                    LastTargetIndex = targetIndexList[0];
+                }
             }
         }
         ActionInfo actionInfo = new ActionInfo(skillId,subject.Index,LastTargetIndex,targetIndexList);

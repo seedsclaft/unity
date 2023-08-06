@@ -7186,9 +7186,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   consoleInputField: {fileID: 1447284014}
-  inBattleActorIds: 0400000005000000
-  troopId: 40
-  troopLv: 1
+  inBattleActorIds: 040000000500000001000000
+  troopId: 400
+  troopLv: 15
   actorDatas:
   - Id: 1
     Name: "\u30D8\u30AB\u30C6\u30FC"
@@ -7435,6 +7435,10 @@ MonoBehaviour:
       Weight: 0
       TriggerDatas: []
     - SkillId: 412
+      Level: 0
+      Weight: 0
+      TriggerDatas: []
+    - SkillId: 421
       Level: 0
       Weight: 0
       TriggerDatas: []
