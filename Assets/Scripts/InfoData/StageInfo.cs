@@ -94,7 +94,7 @@ public class StageInfo
 		}
 	}
 
-    public List<TroopInfo> TacticsTroops()
+    public List<TroopInfo> TacticsTroops(int stageTurn)
     {
         if (_currentTroopInfos.Count > 0) return _currentTroopInfos;
         _currentTroopInfos.Clear();
@@ -130,12 +130,12 @@ public class StageInfo
         }
 
         // 確定中ボス情報
-        MakeDefineBossTroop();
+        MakeDefineBossTroop(stageTurn);
 
         return _currentTroopInfos;
     }
 
-    private void MakeDefineBossTroop()
+    private void MakeDefineBossTroop(int stageTurn)
     {
         int bossTroopId = 0;
         if (_defineBossIndex > 0 && _defineBossIndex < 5)
@@ -154,9 +154,14 @@ public class StageInfo
         {
             List<TroopsData.TroopData> troopDatas = DataSystem.Troops.FindAll(a => a.TroopId == bossTroopId);
             TroopInfo troopInfo = new TroopInfo(bossTroopId,true);
+            int enemyIndex = 0;
             for (int i = 0;i < troopDatas.Count;i++)
             {
-                troopInfo.MakeEnemyData(troopDatas[i],i,_troopClearCount + 1);
+                if (stageTurn >= troopDatas[i].StageTurn)
+                {
+                    troopInfo.MakeEnemyData(troopDatas[i],enemyIndex,_troopClearCount + 1);
+                    enemyIndex++;
+                }
             }
 
             _currentTroopInfos[_currentTroopInfos.Count-1] = troopInfo;
@@ -333,12 +338,12 @@ public class StageInfo
         _clearTroopIds.Add(troopId);
     }
 
-    public void SetDefineBossIndex(int index)
+    public void SetDefineBossIndex(int index,int stageTurn)
     {
         _defineBossIndex = index;
         if (_troopClearCount > 0)
         {
-            MakeDefineBossTroop();
+            MakeDefineBossTroop(stageTurn);
         }
     }
 

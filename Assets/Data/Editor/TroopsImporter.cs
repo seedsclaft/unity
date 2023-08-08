@@ -17,6 +17,7 @@ public class TroopsImporter : AssetPostprocessor {
 		Lv,
 		BossFlag,
 		Line,
+		StageTurn
     }
 	enum BaseGetItemColumn
     {		
@@ -97,6 +98,7 @@ public class TroopsImporter : AssetPostprocessor {
 					TroopData.Lv = (int)Baserow.GetCell((int)BaseColumn.Lv)?.SafeNumericCellValue();
 					TroopData.BossFlag = Baserow.GetCell((int)BaseColumn.BossFlag)?.SafeNumericCellValue() == 1;
 					TroopData.Line = (LineType)Baserow.GetCell((int)BaseColumn.Line)?.SafeNumericCellValue();
+					TroopData.StageTurn = (int)Baserow.GetCell((int)BaseColumn.StageTurn)?.SafeNumericCellValue();
 					TroopData.GetItemDatas = new List<GetItemData>();
 					Data._data.Add(TroopData);
 				}

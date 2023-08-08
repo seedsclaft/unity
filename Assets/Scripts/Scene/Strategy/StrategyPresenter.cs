@@ -55,7 +55,7 @@ public class StrategyPresenter : BasePresenter
         }
         if (viewEvent.commandType == CommandType.CallEnemyInfo)
         {
-            CommandCallEnemyInfo((int)viewEvent.templete);
+            CommandCallEnemyInfo();
         }
         if (viewEvent.commandType == CommandType.PopupSkillInfo)
         {
@@ -300,8 +300,9 @@ public class StrategyPresenter : BasePresenter
         Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
     }
 
-    private void CommandCallEnemyInfo(int enemyIndex)
+    private void CommandCallEnemyInfo()
     {
+        var enemyIndex = _model.CurrentStage.CurrentBattleIndex;
         List<BattlerInfo> enemyInfos = _model.TacticsTroops()[enemyIndex].BattlerInfos;
         
         StatusViewInfo statusViewInfo = new StatusViewInfo(() => {

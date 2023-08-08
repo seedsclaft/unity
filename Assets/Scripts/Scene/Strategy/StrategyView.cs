@@ -195,7 +195,6 @@ public class StrategyView : BaseView
     private void OnClickEnemyInfo(int enemyIndex)
     {
         var eventData = new StrategyViewEvent(CommandType.CallEnemyInfo);
-        eventData.templete = enemyIndex;
         _commandData(eventData);
     }
 

@@ -281,7 +281,7 @@ public class BaseModel
         {
             return TutorialTroopData();
         }
-        return CurrentStage.TacticsTroops();
+        return CurrentStage.TacticsTroops(CurrentStage.CurrentTurn);
     }
 
     public List<TroopInfo> TutorialTroopData()
@@ -464,7 +464,7 @@ public class BaseModel
 
     public void SetDefineBossIndex(int index)
     {
-        CurrentStage.SetDefineBossIndex(index);
+        CurrentStage.SetDefineBossIndex(index,CurrentStage.CurrentTurn);
     }
 
     public string GetAdvFile(int id)
