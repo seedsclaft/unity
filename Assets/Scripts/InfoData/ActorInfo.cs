@@ -71,6 +71,8 @@ public class ActorInfo
     private StatusInfo _tempStatus;
     public StatusInfo TempStatus => _tempStatus;
 
+    private List<RebornSkillInfo> _rebornSkillInfos = new ();
+    public List<RebornSkillInfo> RebornSkillInfos => _rebornSkillInfos;
     public ActorInfo(ActorsData.ActorData actorData)
     {
         _actorId = actorData.Id;
@@ -430,5 +432,14 @@ public class ActorInfo
             total = total / 2;
         }
         return total;
+    }
+
+    public void AddRebornSkill(RebornSkillInfo rebornSkillInfo)
+    {
+        if (_rebornSkillInfos == null)
+        {
+            _rebornSkillInfos = new List<RebornSkillInfo>();
+        }
+        _rebornSkillInfos.Add(rebornSkillInfo);
     }
 }

@@ -11,6 +11,7 @@ public class ActorsData : ScriptableObject {
     {   
         public int Id;
         public string Name;
+        public string SubName;
         public int ClassId;
         public string ImagePath;
         public int InitLv;

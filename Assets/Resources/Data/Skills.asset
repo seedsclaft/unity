@@ -3108,3 +3108,256 @@ MonoBehaviour:
     AliveOnly: 1
     FeatureDatas: []
     TriggerDatas: []
+  - Id: 4001
+    Name: "\u4EBA\u4F53\u932C\u6210+\\d"
+    IconIndex: 1
+    AnimationName: 
+    AnimationPosition: 0
+    AnimationType: 0
+    DamageTiming: 0
+    MpCost: 0
+    Rank: 0
+    Attribute: 0
+    Scope: 0
+    SkillType: 12
+    TargetType: 101
+    Help: "\u4EBA\u4F53\u932C\u6210\u306E\u30B3\u30DE\u30F3\u30C9Lv\u3092\\d\u30A2\u30C3\u30D7"
+    Range: 1
+    AliveOnly: 1
+    FeatureDatas:
+    - SkillId: 4001
+      FeatureType: 401
+      Param1: 1
+      Param2: 1
+      Param3: 0
+    TriggerDatas: []
+  - Id: 4002
+    Name: "\u7406\u6027\u62E1\u5F35+\\d"
+    IconIndex: 1
+    AnimationName: 
+    AnimationPosition: 0
+    AnimationType: 0
+    DamageTiming: 0
+    MpCost: 0
+    Rank: 0
+    Attribute: 0
+    Scope: 0
+    SkillType: 12
+    TargetType: 101
+    Help: "\u7406\u6027\u62E1\u5F35\u306E\u30B3\u30DE\u30F3\u30C9Lv\u3092\\d\u30A2\u30C3\u30D7"
+    Range: 1
+    AliveOnly: 1
+    FeatureDatas:
+    - SkillId: 4002
+      FeatureType: 401
+      Param1: 2
+      Param2: 1
+      Param3: 0
+    TriggerDatas: []
+  - Id: 4003
+    Name: "\u5B58\u5728\u4FEE\u5FA9+\\d"
+    IconIndex: 1
+    AnimationName: 
+    AnimationPosition: 0
+    AnimationType: 0
+    DamageTiming: 0
+    MpCost: 0
+    Rank: 0
+    Attribute: 0
+    Scope: 0
+    SkillType: 12
+    TargetType: 101
+    Help: "\u5B58\u5728\u4FEE\u5FA9\u306E\u30B3\u30DE\u30F3\u30C9Lv\u3092\\d\u30A2\u30C3\u30D7"
+    Range: 1
+    AliveOnly: 1
+    FeatureDatas:
+    - SkillId: 4003
+      FeatureType: 401
+      Param1: 3
+      Param2: 1
+      Param3: 0
+    TriggerDatas: []
+  - Id: 4004
+    Name: "\u6551\u6E08\u57F7\u884C+\\d"
+    IconIndex: 1
+    AnimationName: 
+    AnimationPosition: 0
+    AnimationType: 0
+    DamageTiming: 0
+    MpCost: 0
+    Rank: 0
+    Attribute: 0
+    Scope: 0
+    SkillType: 12
+    TargetType: 101
+    Help: "\u6551\u6E08\u57F7\u884C\u306E\u30B3\u30DE\u30F3\u30C9Lv\u3092\\d\u30A2\u30C3\u30D7"
+    Range: 1
+    AliveOnly: 1
+    FeatureDatas:
+    - SkillId: 4004
+      FeatureType: 401
+      Param1: 4
+      Param2: 1
+      Param3: 0
+    TriggerDatas: []
+  - Id: 4005
+    Name: "\u7D20\u5B50\u88DC\u5145+\\d"
+    IconIndex: 1
+    AnimationName: 
+    AnimationPosition: 0
+    AnimationType: 0
+    DamageTiming: 0
+    MpCost: 0
+    Rank: 0
+    Attribute: 0
+    Scope: 0
+    SkillType: 12
+    TargetType: 101
+    Help: "\u7D20\u5B50\u88DC\u5145\u306E\u30B3\u30DE\u30F3\u30C9Lv\u3092\\d\u30A2\u30C3\u30D7"
+    Range: 1
+    AliveOnly: 1
+    FeatureDatas:
+    - SkillId: 4005
+      FeatureType: 401
+      Param1: 5
+      Param2: 1
+      Param3: 0
+    TriggerDatas: []
+  - Id: 4101
+    Name: "\u6700\u5927Hp+\\d"
+    IconIndex: 1
+    AnimationName: 
+    AnimationPosition: 0
+    AnimationType: 0
+    DamageTiming: 0
+    MpCost: 0
+    Rank: 0
+    Attribute: 0
+    Scope: 0
+    SkillType: 12
+    TargetType: 101
+    Help: "\u30D2\u30ED\u30A4\u30F3\u306E\u6700\u5927Hp\u3092\\d\u30A2\u30C3\u30D7"
+    Range: 1
+    AliveOnly: 1
+    FeatureDatas:
+    - SkillId: 4101
+      FeatureType: 402
+      Param1: 1
+      Param2: 2
+      Param3: 0
+    TriggerDatas: []
+  - Id: 4102
+    Name: "\u6700\u5927Mp+\\d"
+    IconIndex: 1
+    AnimationName: 
+    AnimationPosition: 0
+    AnimationType: 0
+    DamageTiming: 0
+    MpCost: 0
+    Rank: 0
+    Attribute: 0
+    Scope: 0
+    SkillType: 12
+    TargetType: 101
+    Help: "\u30D2\u30ED\u30A4\u30F3\u306E\u6700\u5927Mp\u3092\\d\u30A2\u30C3\u30D7"
+    Range: 1
+    AliveOnly: 1
+    FeatureDatas:
+    - SkillId: 4102
+      FeatureType: 402
+      Param1: 2
+      Param2: 2
+      Param3: 0
+    TriggerDatas: []
+  - Id: 4103
+    Name: ATK+\d
+    IconIndex: 1
+    AnimationName: 
+    AnimationPosition: 0
+    AnimationType: 0
+    DamageTiming: 0
+    MpCost: 0
+    Rank: 0
+    Attribute: 0
+    Scope: 0
+    SkillType: 12
+    TargetType: 101
+    Help: "\u30D2\u30ED\u30A4\u30F3\u306EATK\u3092\\d\u30A2\u30C3\u30D7"
+    Range: 1
+    AliveOnly: 1
+    FeatureDatas:
+    - SkillId: 4103
+      FeatureType: 402
+      Param1: 3
+      Param2: 2
+      Param3: 0
+    TriggerDatas: []
+  - Id: 4104
+    Name: DEF+\d
+    IconIndex: 1
+    AnimationName: 
+    AnimationPosition: 0
+    AnimationType: 0
+    DamageTiming: 0
+    MpCost: 0
+    Rank: 0
+    Attribute: 0
+    Scope: 0
+    SkillType: 12
+    TargetType: 101
+    Help: "\u30D2\u30ED\u30A4\u30F3\u306EDEF\u3092\\d\u30A2\u30C3\u30D7"
+    Range: 1
+    AliveOnly: 1
+    FeatureDatas:
+    - SkillId: 4104
+      FeatureType: 402
+      Param1: 4
+      Param2: 2
+      Param3: 0
+    TriggerDatas: []
+  - Id: 4105
+    Name: SPD+\d
+    IconIndex: 1
+    AnimationName: 
+    AnimationPosition: 0
+    AnimationType: 0
+    DamageTiming: 0
+    MpCost: 0
+    Rank: 0
+    Attribute: 0
+    Scope: 0
+    SkillType: 12
+    TargetType: 101
+    Help: "\u30D2\u30ED\u30A4\u30F3\u306ESPD\u3092\\d\u30A2\u30C3\u30D7"
+    Range: 1
+    AliveOnly: 1
+    FeatureDatas:
+    - SkillId: 4105
+      FeatureType: 402
+      Param1: 5
+      Param2: 2
+      Param3: 0
+    TriggerDatas: []
+  - Id: 4201
+    Name: \d
+    IconIndex: 1
+    AnimationName: 
+    AnimationPosition: 0
+    AnimationType: 0
+    DamageTiming: 0
+    MpCost: 0
+    Rank: 0
+    Attribute: 0
+    Scope: 0
+    SkillType: 12
+    TargetType: 101
+    Help: "\u30B9\u30C6\u30FC\u30B8\u958B\u59CB\u6642\u306B\\d\u3092\u5165\u624B\u3059\u308B"
+    Range: 1
+    AliveOnly: 1
+    FeatureDatas:
+    - SkillId: 4201
+      FeatureType: 403
+      Param1: 0
+      Param2: 0
+      Param3: 0
+    TriggerDatas: []

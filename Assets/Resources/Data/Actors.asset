@@ -15,6 +15,7 @@ MonoBehaviour:
   _data:
   - Id: 1
     Name: "\u30D8\u30AB\u30C6\u30FC"
+    SubName: "\u3010\u8C4A\u7A63\u306E\u6708\u5973\u795E\u3011"
     ClassId: 1
     ImagePath: 0001
     InitLv: 1
@@ -75,6 +76,7 @@ MonoBehaviour:
       TriggerDatas: []
   - Id: 2
     Name: "\u30AD\u30E3\u30ED\u30E9\u30A4\u30F3"
+    SubName: "\u3010\u30EF\u30A4\u30E4\u30FC\u30D7\u30EA\u30F3\u30BB\u30B9\u3011"
     ClassId: 2
     ImagePath: 0002
     InitLv: 1
@@ -143,6 +145,7 @@ MonoBehaviour:
       TriggerDatas: []
   - Id: 3
     Name: "\u30A2\u30EA\u30B9"
+    SubName: "\u3010\u4E0D\u601D\u8B70\u306E\u56FD\u306E\u5B88\u8B77\u795E\u3011"
     ClassId: 3
     ImagePath: 0003
     InitLv: 1
@@ -203,6 +206,7 @@ MonoBehaviour:
       TriggerDatas: []
   - Id: 4
     Name: "\u30D5\u30EA\u30EB"
+    SubName: "\u3010\u30A4\u30CE\u30BB\u30F3\u30B9\u30B9\u30DE\u30A4\u30EB\u3011"
     ClassId: 4
     ImagePath: 0004
     InitLv: 1
@@ -263,6 +267,7 @@ MonoBehaviour:
       TriggerDatas: []
   - Id: 5
     Name: "\u30CB\u30E5\u30AF\u30B9"
+    SubName: "\u3010Determination2Die\u3011"
     ClassId: 5
     ImagePath: 0005
     InitLv: 1

@@ -114,6 +114,7 @@ public class ActorsImporter : AssetPostprocessor {
 					var ActorData = new ActorsData.ActorData();
 					ActorData.Id = (int)Baserow.GetCell((int)BaseColumn.Id).NumericCellValue;
 					ActorData.Name = textData.Find(a => a.Id == (int)Baserow.GetCell((int)BaseColumn.NameId).NumericCellValue).Text;
+					ActorData.SubName = textData.Find(a => a.Id == (int)Baserow.GetCell((int)BaseColumn.NameId).NumericCellValue).Help;
 					
 					ActorData.ClassId = (int)Baserow.GetCell((int)BaseColumn.ClassId)?.NumericCellValue;
 					ActorData.ImagePath = Baserow.GetCell((int)BaseColumn.ImagePath).ToString();
@@ -217,6 +218,7 @@ public class ActorsImporter : AssetPostprocessor {
 
 			TextData.Id = (int)Baserow.GetCell((int)BaseTextColumn.Id)?.NumericCellValue;
 			TextData.Text = Baserow.GetCell((int)BaseTextColumn.Text).ToString();
+			TextData.Help = Baserow.GetCell((int)BaseTextColumn.Help).ToString();
 			
 			textData.Add(TextData);
 		}

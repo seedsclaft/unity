@@ -190,7 +190,8 @@ public enum SkillType{
     Passive = 2, // パッシブ
     Demigod = 3, // 神化
     Awaken = 4, // 覚醒
-    UseAlcana = 11 // アルカナ使用
+    UseAlcana = 11, // アルカナ使用
+    Reborn  = 12 // 転生
 }
 
 public enum AttributeType{
@@ -289,7 +290,10 @@ public enum FeatureType
     LineZeroErase = 308,
     VictoryGainSp = 309,
     MagicAlchemy = 310,
-    DisableTactics = 311
+    DisableTactics = 311,
+    RebornCommandLvUp = 401,
+    RebornStatusUp = 402,
+    RebornAddSkill = 403,
 }
 
 public enum LearningState{

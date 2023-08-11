@@ -103,6 +103,20 @@ public class SkillInfoComponent : MonoBehaviour
         lineImage.rectTransform.sizeDelta = new Vector2(nameText.rectTransform.sizeDelta.x,lineImage.rectTransform.sizeDelta.y);
     }
 
+    public void SetRebornInfoData(RebornSkillInfo rebornSkillInfo)
+    {
+        var skillData = DataSystem.Skills.Find(skill => skill.Id == rebornSkillInfo.Id);
+        if (nameText != null)
+        {
+            nameText.text = skillData.Name.Replace("\\d",rebornSkillInfo.Param2.ToString());
+            nameText.rectTransform.sizeDelta = new Vector2(nameText.preferredWidth,nameText.preferredHeight);
+        }
+        if (description != null)
+        {
+            description.text = skillData.Help.Replace("\\d",rebornSkillInfo.Param2.ToString());
+        }
+    }
+
     public void Clear()
     {
         if (icon != null)

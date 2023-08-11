@@ -116,6 +116,10 @@ public class PartyInfo
             {
                 return false;
             }
+            if (_commandRankInfo[commandType] >= 10)
+            {
+                return false;
+            }
             return true;
         }
         return false;

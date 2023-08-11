@@ -410,6 +410,8 @@ MonoBehaviour:
     type: 3}
   resultScene: {fileID: 3403940197331330835, guid: aa85d713500d03f4da6252ef2af7d9e2,
     type: 3}
+  rebornScene: {fileID: 2670755255175097210, guid: 12020dccddd1b0245809fb665f2f5dbe,
+    type: 3}
 --- !u!4 &64641777
 Transform:
   m_ObjectHideFlags: 0
@@ -7192,6 +7194,7 @@ MonoBehaviour:
   actorDatas:
   - Id: 1
     Name: "\u30D8\u30AB\u30C6\u30FC"
+    SubName: 
     ClassId: 1
     ImagePath: 0001
     InitLv: 1
@@ -7252,6 +7255,7 @@ MonoBehaviour:
       TriggerDatas: []
   - Id: 2
     Name: "\u30AD\u30E3\u30ED\u30E9\u30A4\u30F3"
+    SubName: 
     ClassId: 2
     ImagePath: 0002
     InitLv: 1
@@ -7320,6 +7324,7 @@ MonoBehaviour:
       TriggerDatas: []
   - Id: 3
     Name: "\u30A2\u30EA\u30B9"
+    SubName: 
     ClassId: 3
     ImagePath: 0003
     InitLv: 1
@@ -7380,6 +7385,7 @@ MonoBehaviour:
       TriggerDatas: []
   - Id: 4
     Name: "\u30D5\u30EA\u30EB"
+    SubName: 
     ClassId: 4
     ImagePath: 0004
     InitLv: 1
@@ -7444,6 +7450,7 @@ MonoBehaviour:
       TriggerDatas: []
   - Id: 5
     Name: "\u30CB\u30E5\u30AF\u30B9"
+    SubName: 
     ClassId: 5
     ImagePath: 0005
     InitLv: 1

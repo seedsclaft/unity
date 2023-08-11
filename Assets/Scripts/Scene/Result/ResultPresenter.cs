@@ -49,6 +49,14 @@ public class ResultPresenter : BasePresenter
         {
             CommandResultClose((ConfirmComandType)viewEvent.templete);
         }
+        if (viewEvent.commandType == CommandType.DecideActor)
+        {
+            CommandDecideActor(0);
+        }
+        if (viewEvent.commandType == CommandType.UpdateActor)
+        {
+            CommandUpdateActor();
+        }
     }
 
     private void CommandEndAnimation()
@@ -69,7 +77,7 @@ public class ResultPresenter : BasePresenter
         {
             if (_isRankingEnd)
             {
-                CommandEndGame();
+                CommandActorAssign();
             } else
             {
                 CommandRanking();
@@ -81,6 +89,7 @@ public class ResultPresenter : BasePresenter
     private void CommandRanking()
     {
         ConfirmInfo popupInfo = new ConfirmInfo(DataSystem.System.GetTextData(16010).Text,(menuCommandInfo) => UpdatePopup((ConfirmComandType)menuCommandInfo));
+        popupInfo.SetSelectIndex(1);
         _view.CommandCallConfirm(popupInfo);
     }
 
@@ -122,6 +131,65 @@ public class ResultPresenter : BasePresenter
         Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
     }
 
+    private void CommandActorAssign()
+    {
+        _model.GetRebornSkills();
+        int textId = 16040;
+        ConfirmInfo popupInfo = new ConfirmInfo(DataSystem.System.GetTextData(textId).Text,(a) => UpdatePopupReborn((ConfirmComandType)a));
+        popupInfo.SetIsNoChoise(true);
+        _view.CommandCallConfirm(popupInfo);
+        _model.SetResumeStageFalse();
+    }
+
+    private void UpdatePopupReborn(ConfirmComandType confirmComandType)
+    {
+        _view.CommandActorAssign();
+        _view.SetActorList(_model.ActorInfos());
+        CommandUpdateActor();
+        _view.CommandConfirmClose();
+        if (_model.ActorInfos().Count > 10)
+        {
+            ConfirmInfo popupInfo = new ConfirmInfo(DataSystem.System.GetTextData(16051).Text,(a) => UpdatePopupRebornEraseCheck((ConfirmComandType)a));
+            popupInfo.SetIsNoChoise(true);
+            _view.CommandCallConfirm(popupInfo);
+        }
+    }
+
+    private void UpdatePopupRebornEraseCheck(ConfirmComandType confirmComandType)
+    {
+        _view.CommandConfirmClose();
+    }
+    
+    private void CommandDecideActor(int index)
+    {
+        if (_model.ActorInfos().Count > 10)
+        {
+            ConfirmInfo popupInfo = new ConfirmInfo(DataSystem.System.GetTextData(16060).Text,(a) => UpdatePopupRebornErase((ConfirmComandType)a));
+            _view.CommandCallConfirm(popupInfo);
+            return;
+        }
+        CommandEndGame();
+    }
+
+    private void UpdatePopupRebornErase(ConfirmComandType confirmComandType)
+    {
+        _view.CommandConfirmClose();
+        if (confirmComandType == ConfirmComandType.Yes)
+        {
+            _model.EraseReborn();
+            CommandEndGame();
+        }
+    }
+
+    private void CommandUpdateActor()
+    {
+        _model.SetRebornActorIndex(_view.ActorInfoListIndex);
+        var rebornActor = _model.RebornActorInfo();
+        if (rebornActor != null)
+        {
+            _view.UpdateActor(rebornActor);
+        }
+    }
     private void CommandEndGame()
     {
         _view.CommandSceneChange(Scene.MainMenu);

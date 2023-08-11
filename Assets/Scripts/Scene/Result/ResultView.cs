@@ -22,6 +22,11 @@ public class ResultView : BaseView
     [SerializeField] private GameObject animRoot = null;
     [SerializeField] private GameObject animPrefab = null;
 
+    [SerializeField] private RebornActorList actorInfoList = null;
+    public int ActorInfoListIndex => actorInfoList.Index;
+
+    [SerializeField] private RebornSkillList rebornSkillList = null;    
+    [SerializeField] private ActorInfoComponent actorInfoComponent = null; 
     private BattleStartAnim _battleStartAnim = null;
     private bool _animationBusy = false;
 
@@ -127,9 +132,6 @@ public class ResultView : BaseView
         });
     }
 
-
-
-
     private void CallResultCommand(TacticsComandType commandType)
     {
         var eventData = new ResultViewEvent(CommandType.ResultClose);
@@ -156,6 +158,48 @@ public class ResultView : BaseView
             commandList.gameObject.SetActive(true);
         }
     }
+
+    public void CommandActorAssign()
+    {
+        actorInfoList.gameObject.SetActive(true);
+        actorInfoComponent.gameObject.SetActive(true);
+        rebornSkillList.gameObject.SetActive(true);
+    }
+    
+    public void SetActorList(List<ActorInfo> actorInfos) 
+    {
+        actorInfoList.Initialize(actorInfos,(a) => CallDecideActor(a),() => CallCancelActor(),() => CallUpdate());
+        actorInfoList.Refresh();
+        SetInputHandler(actorInfoList.GetComponent<IInputHandlerEvent>());
+        actorInfoList.Activate();
+    }
+
+    private void CallDecideActor(int index)
+    {
+        var eventData = new ResultViewEvent(CommandType.DecideActor);
+        eventData.templete = index;
+        _commandData(eventData);
+    }
+    
+    private void CallCancelActor()
+    {
+        var eventData = new ResultViewEvent(CommandType.CancelActor);
+        _commandData(eventData);
+    }
+
+    private void CallUpdate()
+    {
+        var eventData = new ResultViewEvent(CommandType.UpdateActor);
+        _commandData(eventData);
+    }
+
+    public void UpdateActor(ActorInfo actorInfo)
+    {
+        actorInfoComponent.Clear();
+        actorInfoComponent.UpdateInfo(actorInfo,null);
+        rebornSkillList.Initialize(actorInfo.RebornSkillInfos);
+        rebornSkillList.Refresh();
+    }
 }
 
 namespace Result
@@ -168,6 +212,9 @@ namespace Result
         ResultClose = 5,
         
         EndLvupAnimation = 9,
+        DecideActor = 11,
+        CancelActor = 12,
+        UpdateActor = 13
     }
 }
 public class ResultViewEvent

@@ -100,5 +100,6 @@ public enum Scene
     Status,
     Tactics,
     Strategy,
-    Result
+    Result,
+    Reborn,
 }

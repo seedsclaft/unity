@@ -18,6 +18,7 @@ public class ActorInfoComponent : MonoBehaviour
     public Image AwakenFaceThumb => awakenFaceThumb;
     [SerializeField] private Image clipingThumb;
     [SerializeField] private TextMeshProUGUI nameText;
+    [SerializeField] private TextMeshProUGUI subnameText;
     [SerializeField] private TextMeshProUGUI evaluate;
     [SerializeField] private TextMeshProUGUI demigod;
     [SerializeField] private TextMeshProUGUI lv;
@@ -114,6 +115,9 @@ public class ActorInfoComponent : MonoBehaviour
         }
         if (nameText != null){
             nameText.text = actorData.Name;
+        }
+        if (subnameText != null){
+            subnameText.text = actorData.SubName;
         }
     }
     private void UpdateMainThumb(string imagePath,int x,int y,float scale)

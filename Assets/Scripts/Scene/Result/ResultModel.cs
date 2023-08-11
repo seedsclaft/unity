@@ -225,4 +225,117 @@ public class ResultModel : BaseModel
 
     }
 
+    // 転生スキル習得
+    public void GetRebornSkills()
+    {
+        var actorInfo = EvaluateMembers()[0];
+        actorInfo.AddRebornSkill(AddCommandRebornSkill());
+        actorInfo.AddRebornSkill(AddStatusRebornSkill());
+        foreach (var rebornSkill in AddMagicRebornSkill())
+        {
+            actorInfo.AddRebornSkill(rebornSkill);
+        }
+        CurrentData.PlayerInfo.AddActorInfo(actorInfo);
+    }
+
+    private RebornSkillInfo AddCommandRebornSkill()
+    {
+        // コマンドLvアップ
+        var commandReborn = DataSystem.Skills.FindAll(a => a.FeatureDatas.Find(b => b.FeatureType == FeatureType.RebornCommandLvUp) != null);
+        var commandRand = UnityEngine.Random.Range(0,commandReborn.Count);
+        var param2 = 1;
+        var rank1 = 0;
+        if (CurrentStage.EndingType == global::EndingType.A || CurrentStage.EndingType == global::EndingType.B)
+        {
+            rank1 = 10;
+        }
+        var rank2 = 40;
+        var rank3 = 60 - rank1;
+
+        var rankRand = UnityEngine.Random.Range(0,rank1 + rank2 + rank3);
+        if (rankRand < rank1)
+        {
+            param2 = 3;
+        } else
+        if (rankRand < rank2)
+        {
+            param2 = 2;
+        }
+        return new RebornSkillInfo(commandReborn[commandRand].Id,commandRand+1,param2,0);
+    }    
+    
+    private RebornSkillInfo AddStatusRebornSkill()
+    {
+        var statusReborn = DataSystem.Skills.FindAll(a => a.FeatureDatas.Find(b => b.FeatureType == FeatureType.RebornStatusUp) != null);
+        var statusRand = UnityEngine.Random.Range(0,statusReborn.Count);
+        var param2 = 1;
+        var rank1 = 0;
+        if (CurrentStage.EndingType == global::EndingType.A || CurrentStage.EndingType == global::EndingType.B)
+        {
+            rank1 = 10;
+        }
+        var rank2 = 40;
+        var rank3 = 60 - rank1;
+
+        var rankRand = UnityEngine.Random.Range(0,rank1 + rank2 + rank3);
+        if (rankRand < rank1)
+        {
+            param2 = 3;
+        } else
+        if (rankRand < rank2)
+        {
+            param2 = 2;
+        }
+        return new RebornSkillInfo(statusReborn[statusRand].Id,statusRand+1,param2,0);
+    }
+
+    
+    private List<RebornSkillInfo> AddMagicRebornSkill()
+    {
+        var list = new List<RebornSkillInfo>();
+        var magicReborn = DataSystem.Skills.Find(a => a.FeatureDatas.Find(b => b.FeatureType == FeatureType.RebornAddSkill) != null);
+        
+        var actorInfo = EvaluateMembers()[0];
+        var skills = actorInfo.Skills.FindAll(a => a.Master.Rank == 1 && actorInfo.Master.LearningSkills.Find(b => b.SkillId == a.Master.Id) == null);
+        foreach (var skill in skills)
+        {
+            var rate = 10;
+            if (actorInfo.Attribute[(int)(skill.Attribute-1)] > 80)
+            {
+                rate = 20;
+            }
+            var skillRand = UnityEngine.Random.Range(0,100);
+            if (rate >= skillRand)
+            {
+                var rebornSkillInfo = new RebornSkillInfo(magicReborn.Id,skill.Id,0,0);
+                list.Add(rebornSkillInfo);
+            }
+        }
+        return list;
+    }
+    private int _rebornActorIndex = 0;
+    
+    public List<ActorInfo> ActorInfos(){
+        return CurrentData.PlayerInfo.SaveActorList;
+    }
+
+    public ActorInfo RebornActorInfo()
+    {
+        List<ActorInfo> actorInfos = ActorInfos();
+        if (actorInfos.Count > _rebornActorIndex)
+        {
+            return actorInfos[_rebornActorIndex];
+        }
+        return null;
+    }
+
+    public void SetRebornActorIndex(int index)
+    {
+        _rebornActorIndex = index;
+    }
+
+    public void EraseReborn()
+    {
+        CurrentData.PlayerInfo.EraseReborn(_rebornActorIndex);
+    }
 }

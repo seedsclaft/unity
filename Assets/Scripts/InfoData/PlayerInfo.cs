@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 
 [Serializable]
 public class PlayerInfo
@@ -9,6 +11,8 @@ public class PlayerInfo
     public string PlayerName => _playerName;
     private int _bestScore = -1;
     public int BestScore => _bestScore;
+    private List<ActorInfo> _saveActorList = new ();
+    public List<ActorInfo> SaveActorList => _saveActorList;
 
     public void SetPlayerName(string name)
     {
@@ -31,5 +35,19 @@ public class PlayerInfo
         {
             _bestScore = score;
         }
+    }
+
+    public void AddActorInfo(ActorInfo actorInfo)
+    {
+        if (_saveActorList == null)
+        {
+            _saveActorList = new ();
+        }
+        _saveActorList.Add(actorInfo);
+    }
+
+    public void EraseReborn(int index)
+    {
+        _saveActorList.RemoveAt(index);
     }
 }
