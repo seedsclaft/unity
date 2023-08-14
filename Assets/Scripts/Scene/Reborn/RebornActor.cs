@@ -19,7 +19,11 @@ public class RebornActor : ListItem ,IListViewItem
 
     public void SetCallHandler(System.Action<int> handler)
     {
-        clickButton.onClick.AddListener(() => handler(Index));
+        clickButton.onClick.AddListener(() => 
+        {   
+            if (Disable.activeSelf) return;
+            handler(Index);
+        });
     }
 
     public void UpdateViewItem()
@@ -38,7 +42,15 @@ public class RebornActor : ListItem ,IListViewItem
             var prefab = Instantiate(RebornPrefab);
             prefab.transform.SetParent(RebornRoot.transform,false);
             var rebornSkillInfo = prefab.GetComponent<SkillInfoComponent>();
-            rebornSkillInfo.SetRebornInfoData(rebornSkill);
+            rebornSkillInfo.SetInfoData(rebornSkill);
+        }
+    }
+
+    public void SetDisable(int index,bool IsDisable)
+    {
+        if (index == Index)
+        {
+            Disable.gameObject.SetActive(IsDisable);
         }
     }
 }

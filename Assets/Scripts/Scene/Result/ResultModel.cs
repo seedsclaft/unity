@@ -235,10 +235,14 @@ public class ResultModel : BaseModel
         {
             actorInfo.AddRebornSkill(rebornSkill);
         }
+        if (CurrentStage.EndingType == global::EndingType.A || CurrentStage.EndingType == global::EndingType.B)
+        {
+            actorInfo.AddRebornSkill(AddQuestRebornSkill());
+        }
         CurrentData.PlayerInfo.AddActorInfo(actorInfo);
     }
 
-    private RebornSkillInfo AddCommandRebornSkill()
+    private SkillInfo AddCommandRebornSkill()
     {
         // コマンドLvアップ
         var commandReborn = DataSystem.Skills.FindAll(a => a.FeatureDatas.Find(b => b.FeatureType == FeatureType.RebornCommandLvUp) != null);
@@ -261,14 +265,16 @@ public class ResultModel : BaseModel
         {
             param2 = 2;
         }
-        return new RebornSkillInfo(commandReborn[commandRand].Id,commandRand+1,param2,0);
+        var skill = new SkillInfo(commandReborn[commandRand].Id);
+        skill.SetParam(commandRand+1,param2,0);
+        return skill;
     }    
     
-    private RebornSkillInfo AddStatusRebornSkill()
+    private SkillInfo AddStatusRebornSkill()
     {
         var statusReborn = DataSystem.Skills.FindAll(a => a.FeatureDatas.Find(b => b.FeatureType == FeatureType.RebornStatusUp) != null);
         var statusRand = UnityEngine.Random.Range(0,statusReborn.Count);
-        var param2 = 1;
+        var param2 = 2;
         var rank1 = 0;
         if (CurrentStage.EndingType == global::EndingType.A || CurrentStage.EndingType == global::EndingType.B)
         {
@@ -280,19 +286,21 @@ public class ResultModel : BaseModel
         var rankRand = UnityEngine.Random.Range(0,rank1 + rank2 + rank3);
         if (rankRand < rank1)
         {
-            param2 = 3;
+            param2 = 6;
         } else
         if (rankRand < rank2)
         {
-            param2 = 2;
+            param2 = 4;
         }
-        return new RebornSkillInfo(statusReborn[statusRand].Id,statusRand+1,param2,0);
+        var skill = new SkillInfo(statusReborn[statusRand].Id);
+        skill.SetParam(statusRand+1,param2,0);
+        return skill;
     }
 
     
-    private List<RebornSkillInfo> AddMagicRebornSkill()
+    private List<SkillInfo> AddMagicRebornSkill()
     {
-        var list = new List<RebornSkillInfo>();
+        var list = new List<SkillInfo>();
         var magicReborn = DataSystem.Skills.Find(a => a.FeatureDatas.Find(b => b.FeatureType == FeatureType.RebornAddSkill) != null);
         
         var actorInfo = EvaluateMembers()[0];
@@ -307,16 +315,94 @@ public class ResultModel : BaseModel
             var skillRand = UnityEngine.Random.Range(0,100);
             if (rate >= skillRand)
             {
-                var rebornSkillInfo = new RebornSkillInfo(magicReborn.Id,skill.Id,0,0);
+                var rebornSkillInfo = new SkillInfo(magicReborn.Id);
+                rebornSkillInfo.SetParam(skill.Id,0,0);
                 list.Add(rebornSkillInfo);
             }
         }
         return list;
     }
+
+    private SkillInfo AddQuestRebornSkill()
+    {
+        var quedtReborn = DataSystem.Skills.Find(a => a.FeatureDatas.Find(b => b.FeatureType == FeatureType.RebornQuest) != null);
+        var param2 = 2;
+        var rank1 = 0;
+        if (CurrentStage.EndingType == global::EndingType.A || CurrentStage.EndingType == global::EndingType.B)
+        {
+            rank1 = 10;
+        }
+        var rank2 = 40;
+        var rank3 = 60 - rank1;
+
+        var rankRand = UnityEngine.Random.Range(0,rank1 + rank2 + rank3);
+        if (rankRand < rank1)
+        {
+            param2 = 6;
+        } else
+        if (rankRand < rank2)
+        {
+            param2 = 4;
+        }
+        var skill = new SkillInfo(quedtReborn.Id);
+        skill.SetParam(0,param2,0);
+        return skill;
+    }
+
     private int _rebornActorIndex = 0;
     
     public List<ActorInfo> ActorInfos(){
         return CurrentData.PlayerInfo.SaveActorList;
+    }
+
+    public List<int> DisableActorIndexs()
+    {
+        var list = new List<int>();
+        if (ActorInfos().Count > 10)
+        {
+
+        }
+        var actorListIndexs = new List<int>();
+        foreach (var actorInfo in ActorInfos())
+        {
+            if (!actorListIndexs.Contains(actorInfo.ActorId))
+            {
+                actorListIndexs.Add(actorInfo.ActorId);
+            }
+        }
+        if (actorListIndexs.Count == 2)
+        {
+            var minSize = ActorInfos().FindAll(a => a.ActorId == actorListIndexs[0]);
+            var maxSize = ActorInfos().FindAll(a => a.ActorId == actorListIndexs[1]);
+            if (minSize.Count == 1 || maxSize.Count == 1)
+            {
+                if (minSize.Count == 1)
+                {
+                    var idx = 0;
+                    foreach (var actorInfo in ActorInfos())
+                    {
+                        if (actorInfo.ActorId == actorListIndexs[0])
+                        {
+                            list.Add(idx);
+                        }
+                        idx++;
+                    }
+                } else
+                if (maxSize.Count == 1)
+                {
+                    var idx = 0;
+                    foreach (var actorInfo in ActorInfos())
+                    {
+                        if (actorInfo.ActorId == actorListIndexs[1])
+                        {
+                            list.Add(idx);
+                        }
+                        idx++;
+                    }
+                }
+            }
+        }
+        return list;
     }
 
     public ActorInfo RebornActorInfo()

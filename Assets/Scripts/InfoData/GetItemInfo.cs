@@ -132,4 +132,61 @@ public class GetItemInfo
         SetTitleData(DataSystem.System.GetTextData(14042).Text);
         SetResultData("+" + value.ToString());
     }
+
+    public void MakeCommandRebornResult(TacticsComandType tacticsComandType,int bonus)
+    {
+        switch (tacticsComandType)
+        {
+            case TacticsComandType.Train:
+            MakeTrainCommandResult(bonus);
+            break;
+            case TacticsComandType.Alchemy:
+            MakeAlchemyCommandResult(bonus);
+            break;
+            case TacticsComandType.Recovery:
+            MakeRecoveryCommandResult(bonus);
+            break;
+            case TacticsComandType.Battle:
+            MakeBattleCommandResult(bonus);
+            break;
+            case TacticsComandType.Resource:
+            MakeResourceCommandResult(bonus);
+            break;
+        }
+
+    }
+
+    public void MakeStatusRebornResult(string name, StatusParamType statusParamType,int bonus)
+    {
+        SetTitleData(DataSystem.System.GetReplaceText(3070,name));
+        var result = "";
+        switch (statusParamType)
+        {
+            case StatusParamType.Hp:
+            result += DataSystem.System.GetReplaceText(3071,DataSystem.System.GetTextData(300).Text);
+            break;
+            case StatusParamType.Mp:
+            result += DataSystem.System.GetReplaceText(3071,DataSystem.System.GetTextData(301).Text);
+            break;
+            case StatusParamType.Atk:
+            result += DataSystem.System.GetReplaceText(3071,DataSystem.System.GetTextData(302).Text);
+            break;
+            case StatusParamType.Def:
+            result += DataSystem.System.GetReplaceText(3071,DataSystem.System.GetTextData(303).Text);
+            break;
+            case StatusParamType.Spd:
+            result += DataSystem.System.GetReplaceText(3071,DataSystem.System.GetTextData(304).Text);
+            break;
+        }
+        SetResultData(result + DataSystem.System.GetReplaceText(3072,bonus.ToString()));
+
+    }
+    
+    public void MakeQuestRebornResult(string name, StatusParamType statusParamType,int bonus)
+    {
+        SetTitleData(DataSystem.System.GetReplaceText(3070,name));
+        SetResultData(DataSystem.System.GetReplaceText(3073,bonus.ToString()));
+    }
+
+    
 }

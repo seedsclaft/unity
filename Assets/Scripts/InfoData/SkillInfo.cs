@@ -9,6 +9,13 @@ public class SkillInfo
     private int _id;
     public int Id => _id;
     
+    private int _param1 = 0;
+    public int Param1 => _param1;
+    private int _param2 = 0;
+    public int Param2 => _param2;
+    private int _param3 = 0;
+    public int Param3 => _param3;
+
     private bool _enable;
     public bool Enable => _enable;
     public AttributeType Attribute {get {return Master.Attribute;}}
@@ -60,5 +67,12 @@ public class SkillInfo
     public void SetIsUsed(bool isUsed)
     {
         _isUsed = isUsed;
+    }
+    
+    public void SetParam(int param1,int param2,int param3)
+    {
+        _param1 = param1;
+        _param2 = param2;
+        _param3 = param3;
     }
 }

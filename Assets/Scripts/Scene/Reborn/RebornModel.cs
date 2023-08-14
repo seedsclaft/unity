@@ -6,6 +6,17 @@ using NCMB;
 public class RebornModel : BaseModel
 {
     private int _rebornActorIndex = 0;
+
+    public void ResetStage()
+    {
+        // Party初期化
+        PartyInfo.InitActors();
+        List<int> stageMembers = DataSystem.Stages.Find(a => a.Id == PartyInfo.StageId).InitMembers;
+        for (int i = 0;i < stageMembers.Count;i++)
+        {
+            PartyInfo.AddActor(stageMembers[i]);
+        }
+    }
     public List<ActorInfo> ActorInfos(){
         var actorInfos = CurrentData.PlayerInfo.SaveActorList;
         if (actorInfos == null || actorInfos.Count == 0)
@@ -15,13 +26,29 @@ public class RebornModel : BaseModel
                 var tempActor = new ActorInfo(DataSystem.Actors[i]);
                 tempActor.InitSkillInfo(DataSystem.Actors[i].LearningSkills);
                     
-                var rebornSkill = new RebornSkillInfo(4001+i,i+1,1,0);
+                var rebornSkill = new SkillInfo(4001+i); 
+                rebornSkill.SetParam(i+1,1,0);
                 tempActor.AddRebornSkill(rebornSkill);
                 CurrentData.PlayerInfo.AddActorInfo(tempActor);
 
             }
         }
         return CurrentData.PlayerInfo.SaveActorList;
+    }
+
+    public List<int> DisableActorIndexs()
+    {
+        var list = new List<int>();
+        var idx = 0;
+        foreach (var actorInfo in ActorInfos())
+        {
+            if (actorInfo.ActorId == CurrentStage.SelectActorIds[0])
+            {
+                list.Add(idx);
+            }
+            idx++;
+        }
+        return list;
     }
 
     public ActorInfo RebornActorInfo()
@@ -41,6 +68,7 @@ public class RebornModel : BaseModel
 
     public void OnRebornSkill()
     {
+        CurrentStage.SetRebornActorIndex(_rebornActorIndex);
         var actorInfo = RebornActorInfo();
         if (actorInfo == null) return;
         var commandRebornSkill = actorInfo.RebornSkillInfos.Find(a => a.Master.FeatureDatas.Find(b => b.FeatureType == FeatureType.RebornCommandLvUp) != null);
@@ -67,5 +95,13 @@ public class RebornModel : BaseModel
             PartyInfo.AddAlchemy(addSkill.Param1);
         }
         
+        var questRebornSkill = actorInfo.RebornSkillInfos.Find(a => a.Master.FeatureDatas.Find(b => b.FeatureType == FeatureType.RebornQuest) != null);
+        if (questRebornSkill != null)
+        {
+            var upStatusCount = questRebornSkill.Param2;
+            CurrentData.Actors[0].TempStatus.AddParameter(StatusParamType.Hp,upStatusCount);
+            CurrentData.Actors[0].TempStatus.AddParameter(StatusParamType.Mp,upStatusCount);
+            CurrentData.Actors[0].DecideStrength(0);
+        }
     }
 }

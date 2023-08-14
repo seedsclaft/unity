@@ -307,6 +307,18 @@ MonoBehaviour:
       Type: 12
       Param: 110
       ReadFlag: 1
+    - EventKey: 1BeforeTacticsAdvStart51
+      Turns: 1
+      Timing: 11
+      Type: 11
+      Param: 51
+      ReadFlag: 1
+    - EventKey: 1BeforeTacticsRebornSkillEffect0
+      Turns: 1
+      Timing: 11
+      Type: 41
+      Param: 0
+      ReadFlag: 1
     - EventKey: 2StartTacticsCommandDisable3
       Turns: 2
       Timing: 1

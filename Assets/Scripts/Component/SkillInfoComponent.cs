@@ -23,7 +23,13 @@ public class SkillInfoComponent : MonoBehaviour
             Clear();
             return;
         }
-        UpdateSkillData(skillInfo.Id);
+        if (skillInfo.Master.SkillType == SkillType.Reborn)
+        {
+            SetRebornInfoData(skillInfo);
+        } else
+        {
+            UpdateSkillData(skillInfo.Id);
+        }
         if (selectable != null)
         {
             selectable.SetActive(skillInfo.LearningState == LearningState.SelectLearn);
@@ -103,7 +109,7 @@ public class SkillInfoComponent : MonoBehaviour
         lineImage.rectTransform.sizeDelta = new Vector2(nameText.rectTransform.sizeDelta.x,lineImage.rectTransform.sizeDelta.y);
     }
 
-    public void SetRebornInfoData(RebornSkillInfo rebornSkillInfo)
+    public void SetRebornInfoData(SkillInfo rebornSkillInfo)
     {
         var skillData = DataSystem.Skills.Find(skill => skill.Id == rebornSkillInfo.Id);
         if (nameText != null)

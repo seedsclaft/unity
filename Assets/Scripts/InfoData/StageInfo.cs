@@ -51,6 +51,9 @@ public class StageInfo
     public bool StageClaer => _stageClear;
     public void SetStageClaer(bool stageClear) {_stageClear = stageClear;}
 
+    private int _rebornActorIndex = -1;
+    public int RebornActorIndex => _rebornActorIndex;
+    public void SetRebornActorIndex(int rebornActorIndex) {_rebornActorIndex = rebornActorIndex;}
     public StageInfo(StagesData.StageData stageInfo)
     {
         _id = stageInfo.Id;

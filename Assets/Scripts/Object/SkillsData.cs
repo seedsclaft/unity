@@ -294,6 +294,7 @@ public enum FeatureType
     RebornCommandLvUp = 401,
     RebornStatusUp = 402,
     RebornAddSkill = 403,
+    RebornQuest = 404,
 }
 
 public enum LearningState{

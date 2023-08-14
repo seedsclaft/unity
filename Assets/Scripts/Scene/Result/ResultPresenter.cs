@@ -106,6 +106,7 @@ public class ResultPresenter : BasePresenter
             });
         } else
         {
+            Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cancel);
             _isRankingEnd = true;
             _view.CommandConfirmClose();
             UpdateResultCommand();
@@ -144,7 +145,7 @@ public class ResultPresenter : BasePresenter
     private void UpdatePopupReborn(ConfirmComandType confirmComandType)
     {
         _view.CommandActorAssign();
-        _view.SetActorList(_model.ActorInfos());
+        _view.SetActorList(_model.ActorInfos(),_model.DisableActorIndexs());
         CommandUpdateActor();
         _view.CommandConfirmClose();
         if (_model.ActorInfos().Count > 10)
@@ -157,11 +158,19 @@ public class ResultPresenter : BasePresenter
 
     private void UpdatePopupRebornEraseCheck(ConfirmComandType confirmComandType)
     {
+        if (confirmComandType == ConfirmComandType.Yes)
+        {
+            Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
+        } else
+        {        
+            Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cancel);
+        }
         _view.CommandConfirmClose();
     }
     
     private void CommandDecideActor(int index)
     {
+        Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
         if (_model.ActorInfos().Count > 10)
         {
             ConfirmInfo popupInfo = new ConfirmInfo(DataSystem.System.GetTextData(16060).Text,(a) => UpdatePopupRebornErase((ConfirmComandType)a));
@@ -178,6 +187,8 @@ public class ResultPresenter : BasePresenter
         {
             _model.EraseReborn();
             CommandEndGame();
+        } else{        
+            Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cancel);
         }
     }
 

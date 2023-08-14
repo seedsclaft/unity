@@ -4,11 +4,18 @@ using UnityEngine;
 
 public class RebornSkillList : ListWindow , IInputHandlerEvent
 {
-    private List<RebornSkillInfo> _data = new List<RebornSkillInfo>();
-    public void Initialize(List<RebornSkillInfo> actorInfos)
+    private List<SkillInfo> _data = new List<SkillInfo>();
+    public void Initialize(List<SkillInfo> actorInfos)
     {
         _data = actorInfos;
         InitializeListView(actorInfos.Count);
+        for (int i = 0; i < ObjectList.Count;i++)
+        {
+            SkillAction skillAction = ObjectList[i].GetComponent<SkillAction>();
+            skillAction.SetCallHandler((d) => {
+            });
+            skillAction.SetSelectHandler((data) => UpdateSelectIndex(data));
+        }
         SetInputHandler((a) => CallInputHandler(a));
     }
 
@@ -18,8 +25,9 @@ public class RebornSkillList : ListWindow , IInputHandlerEvent
         {
             if (i < _data.Count) 
             {
-                SkillInfoComponent skillAction = ObjectList[i].GetComponent<SkillInfoComponent>();
-                skillAction.SetRebornInfoData(_data[i]);
+                SkillAction skillAction = ObjectList[i].GetComponent<SkillAction>();
+                //SkillInfoComponent skillAction = ObjectList[i].GetComponent<SkillInfoComponent>();
+                skillAction.SetData(_data[i],i);
             }
             ObjectList[i].SetActive(i < _data.Count);
         }
@@ -52,7 +60,8 @@ public class RebornSkillList : ListWindow , IInputHandlerEvent
     public override void RefreshListItem(GameObject gameObject, int itemIndex)
     {
         base.RefreshListItem(gameObject,itemIndex);
-        var skillInfoComponent = gameObject.GetComponent<SkillInfoComponent>();
-        skillInfoComponent.SetRebornInfoData(_data[itemIndex]);
+        var skillAction = gameObject.GetComponent<SkillAction>();
+        skillAction.SetData(_data[itemIndex],itemIndex);
+        skillAction.UpdateViewItem();
     }
 }

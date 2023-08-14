@@ -102,4 +102,5 @@ public enum Scene
     Strategy,
     Result,
     Reborn,
+    RebornResult,
 }

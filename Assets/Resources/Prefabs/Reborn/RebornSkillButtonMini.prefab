@@ -323,6 +323,7 @@ GameObject:
   - component: {fileID: 3064502445201972502}
   - component: {fileID: 840162006104312023}
   - component: {fileID: 8246158551081956239}
+  - component: {fileID: 3880130833820594620}
   m_Layer: 5
   m_Name: RebornSkillButtonMini
   m_TagString: Untagged
@@ -379,7 +380,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 0}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -460,6 +461,22 @@ MonoBehaviour:
   value: {fileID: 0}
   description: {fileID: 773810767336146180}
   selectable: {fileID: 0}
+--- !u!114 &3880130833820594620
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1466602562913653083}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 494b39c9712a0c24bb47e570736a68f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  clickButton: {fileID: 840162006104312023}
+  cursor: {fileID: 5246940453818983264}
+  disable: {fileID: 7843563834509969386}
+  skillInfoComponent: {fileID: 8246158551081956239}
 --- !u!1 &2942174584237991046
 GameObject:
   m_ObjectHideFlags: 0

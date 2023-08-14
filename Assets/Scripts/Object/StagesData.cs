@@ -61,7 +61,8 @@ public enum StageEventType{
     SetRouteSelectParam = 14, // ルート分岐パラメータを保存
     AbortStage = 21, // ステージを中断する
     ChangeRouteSelectStage = 31, // ルート分岐でステージに移動
-    RouteSelectBattle = 32 // ルート分岐敵グループを生成
+    RouteSelectBattle = 32, // ルート分岐敵グループを生成
+    RebornSkillEffect = 41 // 継承スキル演出再生
 }
 
 

@@ -424,9 +424,6 @@ public class TacticsModel : BaseModel
             CurrentStage.SetEndingType(EndingType.D);
             return 204;
         }
-            CurrentStage.SetEndingType(EndingType.B);
-            StageClaer(2);
-            return 172;
         return -1;
     }
 

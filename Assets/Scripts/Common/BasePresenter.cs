@@ -60,5 +60,29 @@ public class BasePresenter
         }
         return isAbort;
     }
+
+    public bool CheckRebornEvent(EventTiming eventTiming,System.Action endCall)
+    {
+        bool isReborn = false;
+        var stageEvents = _model.StageEvents(eventTiming);
+        if (stageEvents.Count > 0)
+        {
+            for (int i = 0;i < stageEvents.Count;i++)
+            {
+                if (stageEvents[i].Type == StageEventType.RebornSkillEffect)
+                {
+                    _model.AddEventReadFlag(stageEvents[i]);
+                    isReborn = true;
+                    break;
+                }
+            }
+            if (isReborn)
+            {
+                if (endCall != null) endCall();
+            }
+        }
+        return isReborn;
+    }
+    
     
 }

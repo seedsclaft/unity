@@ -36,9 +36,9 @@ public class RebornView : BaseView
         SetActiveBack(true);
     }
 
-    public void SetActorList(List<ActorInfo> actorInfos) 
+    public void SetActorList(List<ActorInfo> actorInfos,List<int> disableIndexs) 
     {
-        actorInfoList.Initialize(actorInfos,(a) => CallDecideActor(a),() => CallCancelActor(),() => CallUpdate());
+        actorInfoList.Initialize(actorInfos,disableIndexs,(a) => CallDecideActor(a),() => CallCancelActor(),() => CallUpdate());
         actorInfoList.Refresh();
         SetInputHandler(actorInfoList.GetComponent<IInputHandlerEvent>());
         actorInfoList.Activate();
@@ -63,6 +63,12 @@ public class RebornView : BaseView
         _commandData(eventData);
     }
 
+    private void OnClickBack()
+    {
+        var eventData = new RebornViewEvent(CommandType.Back);
+        _commandData(eventData);
+    }
+
     public void UpdateActor(ActorInfo actorInfo)
     {
         actorInfoComponent.Clear();
@@ -80,7 +86,8 @@ namespace Reborn
         None = 0,
         DecideActor = 1,
         CancelActor = 2,
-        UpdateActor = 3
+        UpdateActor = 3,
+        Back = 4
     }
 }
 public class RebornViewEvent

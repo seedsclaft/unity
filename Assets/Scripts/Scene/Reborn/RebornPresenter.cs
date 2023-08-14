@@ -23,9 +23,23 @@ public class RebornPresenter :BasePresenter
     {
         _view.SetEvent((type) => updateCommand(type));
         _view.SetHelpInputInfo("REBORN");
-        _view.SetActorList(_model.ActorInfos());
+        _view.SetActorList(_model.ActorInfos(),_model.DisableActorIndexs());
         CommandUpdateActor();
         _view.SetHelpText(DataSystem.System.GetTextData(17010).Text);
+        _view.SetBackEvent(() => {
+            _model.ResetStage();
+            StatusViewInfo statusViewInfo = new StatusViewInfo(() => {
+                _view.CommandStatusClose();
+                _view.CommandSceneChange(Scene.MainMenu);
+            });
+            statusViewInfo.SetDisplayDecideButton(true);
+            statusViewInfo.SetDisableStrength(true);
+            _view.SetActiveUi(false);
+            _view.CommandCallStatus(statusViewInfo);
+        });
+        ConfirmInfo confirmInfo = new ConfirmInfo(DataSystem.System.GetTextData(17010).Text,(a) => UpdatePopupStart(a));
+        confirmInfo.SetIsNoChoise(true);
+        _view.CommandCallConfirm(confirmInfo);
         _busy = false;
     }
 
@@ -48,6 +62,12 @@ public class RebornPresenter :BasePresenter
         }
     }
 
+    private void UpdatePopupStart(ConfirmComandType confirmComandType)
+    {
+        Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
+        _view.CommandConfirmClose();
+    }
+
     private void UpdatePopup(ConfirmComandType confirmComandType)
     {
         if (confirmComandType == ConfirmComandType.Yes)
@@ -55,6 +75,9 @@ public class RebornPresenter :BasePresenter
             _model.OnRebornSkill();
             _view.CommandConfirmClose();
             _view.CommandSceneChange(Scene.Tactics);
+            Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
+        } else{
+            Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cancel);
         }
         _view.CommandConfirmClose();
     }
@@ -65,8 +88,9 @@ public class RebornPresenter :BasePresenter
         var rebornActor = _model.RebornActorInfo();
         if (rebornActor != null)
         {
-            ConfirmInfo confirmInfo = new ConfirmInfo("継承しますか？",(a) => UpdatePopup(a));
+            ConfirmInfo confirmInfo = new ConfirmInfo(DataSystem.System.GetTextData(17020).Text,(a) => UpdatePopup(a));
             _view.CommandCallConfirm(confirmInfo);
+            Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
         }
     }
 

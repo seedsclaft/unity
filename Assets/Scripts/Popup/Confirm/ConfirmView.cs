@@ -89,7 +89,10 @@ public class ConfirmView : BaseView,IInputHandlerEvent
 
     private void CallConfirmCommand(ConfirmComandType commandType)
     {
-        Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
+        if (commandType == ConfirmComandType.Yes)
+        {
+            Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
+        }
         _confirmEvent(commandType);
     }
 

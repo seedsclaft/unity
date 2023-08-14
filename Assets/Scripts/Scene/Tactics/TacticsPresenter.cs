@@ -52,6 +52,15 @@ public class TacticsPresenter :BasePresenter
             _view.SetActiveUi(false);
             return;
         }
+        
+        var isReborn = CheckRebornEvent(EventTiming.BeforeTactics,() => {
+            _view.CommandSceneChange(Scene.RebornResult);
+        });
+        if (isReborn)
+        {
+            _view.SetActiveUi(false);
+            return;
+        }
         _view.SetUIButton();
         _view.SetActiveBack(false);
         _view.SetEvent((type) => updateCommand(type));

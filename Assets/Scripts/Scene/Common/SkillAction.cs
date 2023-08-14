@@ -7,9 +7,9 @@ using TMPro;
 public class SkillAction : ListItem ,IListViewItem  
 {
     [SerializeField] private SkillInfoComponent skillInfoComponent;
-    private SkillInfo _data; 
+    private SkillInfo _skillInfo; 
     public void SetData(SkillInfo data,int index){
-        _data = data;
+        _skillInfo = data;
         SetIndex(index);
     }
 
@@ -18,15 +18,15 @@ public class SkillAction : ListItem ,IListViewItem
         clickButton.onClick.AddListener(() =>
             {
                 if (Disable.gameObject.activeSelf) return;
-                handler((int)_data.Id);
+                handler((int)_skillInfo.Id);
             }
         );
     }
 
     public void UpdateViewItem()
     {
-        if (_data == null) return;
-        skillInfoComponent.SetInfoData(_data);
-        Disable.SetActive(_data.Enable == false);
+        if (_skillInfo == null) return;
+        skillInfoComponent.SetInfoData(_skillInfo);
+        if (Disable != null) Disable.SetActive(_skillInfo.Enable == false);
     }
 }

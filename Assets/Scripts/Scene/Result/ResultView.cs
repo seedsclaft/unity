@@ -164,11 +164,18 @@ public class ResultView : BaseView
         actorInfoList.gameObject.SetActive(true);
         actorInfoComponent.gameObject.SetActive(true);
         rebornSkillList.gameObject.SetActive(true);
+        endingTypeObj.SetActive(false);
+        evaluateObj.SetActive(false);
+        playerNameObj.SetActive(false);
+        rankingObj.SetActive(false);
+        rankingInfo.gameObject.SetActive(false);
+        evaluateNew.gameObject.SetActive(false);
+        commandList.gameObject.SetActive(false);
     }
     
-    public void SetActorList(List<ActorInfo> actorInfos) 
+    public void SetActorList(List<ActorInfo> actorInfos,List<int> disableIndexs) 
     {
-        actorInfoList.Initialize(actorInfos,(a) => CallDecideActor(a),() => CallCancelActor(),() => CallUpdate());
+        actorInfoList.Initialize(actorInfos,disableIndexs,(a) => CallDecideActor(a),() => CallCancelActor(),() => CallUpdate());
         actorInfoList.Refresh();
         SetInputHandler(actorInfoList.GetComponent<IInputHandlerEvent>());
         actorInfoList.Activate();

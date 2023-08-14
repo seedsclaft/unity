@@ -504,6 +504,18 @@ MonoBehaviour:
   - Id: 3060
     Text: "\\d\u304C\u30ED\u30B9\u30C8\u3057\u307E\u3057\u305F\u2026"
     Help: '""'
+  - Id: 3070
+    Text: "\\d\u306E"
+    Help: '""'
+  - Id: 3071
+    Text: "\\d\u304C"
+    Help: '""'
+  - Id: 3072
+    Text: "\\d\u30A2\u30C3\u30D7\uFF01"
+    Help: '""'
+  - Id: 3073
+    Text: "\u6700\u5927Hp\u3068Mp\u304C\\d\u30A2\u30C3\u30D7\uFF01"
+    Help: '""'
   - Id: 4000
     Text: "Numinos\u3092\\d\u6D88\u8CBB\u3057\u3066\\e\u3092\u7FD2\u5F97\u3057\u307E\u3059\u304B\uFF1F"
     Help: '""'
@@ -617,6 +629,12 @@ MonoBehaviour:
     Help: '""'
   - Id: 17010
     Text: "\u601D\u5FF5\u3092\u7D99\u627F\u3059\u308B\u30A2\u30EB\u30B1\u30DF\u30B9\u30C8\u3092\u9078\u3093\u3067\u304F\u3060\u3055\u3044"
+    Help: '""'
+  - Id: 17020
+    Text: "\u9078\u629E\u3057\u305F\u601D\u5FF5\u3092\u7D99\u627F\u3057\u307E\u3059\u304B\uFF1F"
+    Help: '""'
+  - Id: 17030
+    Text: "\u601D\u5FF5\u7D99\u627F\u4E2D\u2026"
     Help: '""'
   InputDataList:
   - Key: TITLE
@@ -1025,5 +1043,14 @@ MonoBehaviour:
     KeyId: 1
     Name: "\u30AB\u30FC\u30BD\u30EB\u79FB\u52D5"
   - Key: RANKING
+    KeyId: 0
+    Name: '""'
+  - Key: REBORN
+    KeyId: 4
+    Name: "\u6C7A\u5B9A"
+  - Key: REBORN
+    KeyId: 1
+    Name: "\u30AB\u30FC\u30BD\u30EB\u79FB\u52D5"
+  - Key: REBORN
     KeyId: 0
     Name: '""'
