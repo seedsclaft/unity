@@ -139,7 +139,6 @@ public class ResultPresenter : BasePresenter
         ConfirmInfo popupInfo = new ConfirmInfo(DataSystem.System.GetTextData(textId).Text,(a) => UpdatePopupReborn((ConfirmComandType)a));
         popupInfo.SetIsNoChoise(true);
         _view.CommandCallConfirm(popupInfo);
-        _model.SetResumeStageFalse();
     }
 
     private void UpdatePopupReborn(ConfirmComandType confirmComandType)
@@ -203,6 +202,7 @@ public class ResultPresenter : BasePresenter
     }
     private void CommandEndGame()
     {
+        _model.SetResumeStageFalse();
         _view.CommandSceneChange(Scene.MainMenu);
     }
 }

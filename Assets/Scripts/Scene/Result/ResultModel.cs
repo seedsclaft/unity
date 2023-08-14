@@ -229,7 +229,11 @@ public class ResultModel : BaseModel
     public void GetRebornSkills()
     {
         var actorInfo = EvaluateMembers()[0];
-        actorInfo.AddRebornSkill(AddCommandRebornSkill());
+        var commandReborn = AddCommandRebornSkill();
+        if (commandReborn != null)
+        {
+            actorInfo.AddRebornSkill(commandReborn);
+        }
         actorInfo.AddRebornSkill(AddStatusRebornSkill());
         foreach (var rebornSkill in AddMagicRebornSkill())
         {
@@ -247,7 +251,7 @@ public class ResultModel : BaseModel
         // コマンドLvアップ
         var commandReborn = DataSystem.Skills.FindAll(a => a.FeatureDatas.Find(b => b.FeatureType == FeatureType.RebornCommandLvUp) != null);
         var commandRand = UnityEngine.Random.Range(0,commandReborn.Count);
-        var param2 = 1;
+        var param2 = 0;
         var rank1 = 0;
         if (CurrentStage.EndingType == global::EndingType.A || CurrentStage.EndingType == global::EndingType.B)
         {
@@ -259,11 +263,15 @@ public class ResultModel : BaseModel
         var rankRand = UnityEngine.Random.Range(0,rank1 + rank2 + rank3);
         if (rankRand < rank1)
         {
-            param2 = 3;
+            param2 = 2;
         } else
         if (rankRand < rank2)
         {
-            param2 = 2;
+            param2 = 1;
+        }
+        if (param2 == 0)
+        {
+            return null;
         }
         var skill = new SkillInfo(commandReborn[commandRand].Id);
         skill.SetParam(commandRand+1,param2,0);
@@ -293,7 +301,7 @@ public class ResultModel : BaseModel
             param2 = 4;
         }
         var skill = new SkillInfo(statusReborn[statusRand].Id);
-        skill.SetParam(statusRand+1,param2,0);
+        skill.SetParam(statusRand,param2,0);
         return skill;
     }
 

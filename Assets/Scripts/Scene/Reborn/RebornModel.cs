@@ -9,6 +9,7 @@ public class RebornModel : BaseModel
 
     public void ResetStage()
     {
+        GameSystem.CurrentData.ClearStageInfo();
         // Party初期化
         PartyInfo.InitActors();
         List<int> stageMembers = DataSystem.Stages.Find(a => a.Id == PartyInfo.StageId).InitMembers;
@@ -69,9 +70,10 @@ public class RebornModel : BaseModel
     public void OnRebornSkill()
     {
         CurrentStage.SetRebornActorIndex(_rebornActorIndex);
-        var actorInfo = RebornActorInfo();
-        if (actorInfo == null) return;
-        var commandRebornSkill = actorInfo.RebornSkillInfos.Find(a => a.Master.FeatureDatas.Find(b => b.FeatureType == FeatureType.RebornCommandLvUp) != null);
+        var rebornActorInfo = RebornActorInfo();
+        if (rebornActorInfo == null) return;
+        var actorInfo = StageMembers()[0];
+        var commandRebornSkill = rebornActorInfo.RebornSkillInfos.Find(a => a.Master.FeatureDatas.Find(b => b.FeatureType == FeatureType.RebornCommandLvUp) != null);
         if (commandRebornSkill != null)
         {
             var upLvCount = commandRebornSkill.Param2;
@@ -81,27 +83,27 @@ public class RebornModel : BaseModel
             }
         }
 
-        var statusRebornSkill = actorInfo.RebornSkillInfos.Find(a => a.Master.FeatureDatas.Find(b => b.FeatureType == FeatureType.RebornStatusUp) != null);
+        var statusRebornSkill = rebornActorInfo.RebornSkillInfos.Find(a => a.Master.FeatureDatas.Find(b => b.FeatureType == FeatureType.RebornStatusUp) != null);
         if (statusRebornSkill != null)
         {
             var upStatusCount = statusRebornSkill.Param2;
-            CurrentData.Actors[0].TempStatus.AddParameter((StatusParamType)statusRebornSkill.Param1,upStatusCount);
-            CurrentData.Actors[0].DecideStrength(0);
+            actorInfo.TempStatus.AddParameter((StatusParamType)statusRebornSkill.Param1,upStatusCount);
+            actorInfo.DecideStrength(0);
         }
 
-        var addSkillRebornSkills = actorInfo.RebornSkillInfos.FindAll(a => a.Master.FeatureDatas.Find(b => b.FeatureType == FeatureType.RebornAddSkill) != null);
+        var addSkillRebornSkills = rebornActorInfo.RebornSkillInfos.FindAll(a => a.Master.FeatureDatas.Find(b => b.FeatureType == FeatureType.RebornAddSkill) != null);
         foreach (var addSkill in addSkillRebornSkills)
         {
             PartyInfo.AddAlchemy(addSkill.Param1);
         }
         
-        var questRebornSkill = actorInfo.RebornSkillInfos.Find(a => a.Master.FeatureDatas.Find(b => b.FeatureType == FeatureType.RebornQuest) != null);
+        var questRebornSkill = rebornActorInfo.RebornSkillInfos.Find(a => a.Master.FeatureDatas.Find(b => b.FeatureType == FeatureType.RebornQuest) != null);
         if (questRebornSkill != null)
         {
             var upStatusCount = questRebornSkill.Param2;
-            CurrentData.Actors[0].TempStatus.AddParameter(StatusParamType.Hp,upStatusCount);
-            CurrentData.Actors[0].TempStatus.AddParameter(StatusParamType.Mp,upStatusCount);
-            CurrentData.Actors[0].DecideStrength(0);
+            actorInfo.TempStatus.AddParameter(StatusParamType.Hp,upStatusCount);
+            actorInfo.TempStatus.AddParameter(StatusParamType.Mp,upStatusCount);
+            actorInfo.DecideStrength(0);
         }
     }
 }

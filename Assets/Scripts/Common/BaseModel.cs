@@ -510,6 +510,12 @@ public class BaseModel
         CurrentData.SetResumeStage(resumeStage);
     }
     
+    public void SetResumeStageTrue()
+    {
+        SetResumeStage(true);
+        SaveSystem.SaveStart(GameSystem.CurrentData);
+    }
+
     public void SetResumeStageFalse()
     {
         SetResumeStage(false);

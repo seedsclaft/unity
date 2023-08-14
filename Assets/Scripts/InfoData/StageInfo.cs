@@ -72,6 +72,11 @@ public class StageInfo
         _selectActorIds.Add(actorId);
     }
 
+    public void ClearSelectActorId()
+    {
+        _selectActorIds.Clear();
+    }
+
     public void GainClearCount()
     {
         _clearCount += 1;
