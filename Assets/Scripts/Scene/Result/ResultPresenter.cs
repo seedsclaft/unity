@@ -152,6 +152,9 @@ public class ResultPresenter : BasePresenter
             ConfirmInfo popupInfo = new ConfirmInfo(DataSystem.System.GetTextData(16051).Text,(a) => UpdatePopupRebornEraseCheck((ConfirmComandType)a));
             popupInfo.SetIsNoChoise(true);
             _view.CommandCallConfirm(popupInfo);
+        } else
+        {        
+            _model.SetResumeStageFalse();
         }
     }
 

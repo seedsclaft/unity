@@ -68,6 +68,10 @@ public class Fade : MonoBehaviour
 
 	IEnumerator FadeinCoroutine (float time, System.Action action)
 	{
+		if (cutoutRange == float.NaN)
+		{
+			cutoutRange = 0;
+		}
 		float endTime = Time.timeSinceLevelLoad + time * (1 - cutoutRange);
 		
 		var endFrame = new WaitForEndOfFrame ();

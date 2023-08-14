@@ -274,7 +274,7 @@ public class ResultModel : BaseModel
             return null;
         }
         var skill = new SkillInfo(commandReborn[commandRand].Id);
-        skill.SetParam(commandRand+1,param2,0);
+        skill.SetParam(param2.ToString(),param2,(commandRand+1));
         return skill;
     }    
     
@@ -301,7 +301,7 @@ public class ResultModel : BaseModel
             param2 = 4;
         }
         var skill = new SkillInfo(statusReborn[statusRand].Id);
-        skill.SetParam(statusRand,param2,0);
+        skill.SetParam(param2.ToString(),param2,statusRand);
         return skill;
     }
 
@@ -324,7 +324,7 @@ public class ResultModel : BaseModel
             if (rate >= skillRand)
             {
                 var rebornSkillInfo = new SkillInfo(magicReborn.Id);
-                rebornSkillInfo.SetParam(skill.Id,0,0);
+                rebornSkillInfo.SetParam(skill.Master.Name,0,skill.Master.Id);
                 list.Add(rebornSkillInfo);
             }
         }
@@ -353,7 +353,7 @@ public class ResultModel : BaseModel
             param2 = 4;
         }
         var skill = new SkillInfo(quedtReborn.Id);
-        skill.SetParam(0,param2,0);
+        skill.SetParam(param2.ToString(),param2,0);
         return skill;
     }
 

@@ -74,6 +74,7 @@ public class RebornView : BaseView
         actorInfoComponent.Clear();
         actorInfoComponent.UpdateInfo(actorInfo,null);
         rebornSkillList.Initialize(actorInfo.RebornSkillInfos,() => OnPageUpRebornSkill(),() => OnPageDownRebornSkill());
+        SetInputHandler(rebornSkillList.GetComponent<IInputHandlerEvent>());
         rebornSkillList.Refresh();
     }
     
@@ -83,6 +84,10 @@ public class RebornView : BaseView
         var margin = 1.0f / (rebornSkillList.Data.Count - 4);
 
         var value = rebornSkillList.ScrollRect.normalizedPosition.y - margin;
+        if ((rebornSkillList.Data.Count - 4) == 0)
+        {
+            value = 1;
+        }
         rebornSkillList.ScrollRect.normalizedPosition = new Vector2(0,value);
         if (rebornSkillList.ScrollRect.normalizedPosition.y < 0)
         {
@@ -96,6 +101,10 @@ public class RebornView : BaseView
         var margin = 1.0f / (rebornSkillList.Data.Count - 4);
 
         var value = rebornSkillList.ScrollRect.normalizedPosition.y + margin;
+        if ((rebornSkillList.Data.Count - 4) == 0)
+        {
+            value = 0;
+        }
         rebornSkillList.ScrollRect.normalizedPosition = new Vector2(0,value);
         if (rebornSkillList.ScrollRect.normalizedPosition.y > 1)
         {

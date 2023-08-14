@@ -17,6 +17,7 @@ public class StagesData : ScriptableObject {
         public List<int> InitMembers;
         public int RandomTroopCount;
         public List<int> BGMId;
+        public bool Reborn;
         public List<StageEventData> StageEvents;
     }
 

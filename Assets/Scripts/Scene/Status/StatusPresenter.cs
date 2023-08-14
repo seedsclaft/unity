@@ -226,7 +226,8 @@ public class StatusPresenter
             {
                 _model.SelectAddActor();
                 _view.CommandStatusClose();
-                if (_model.StageMembers().Count == 1)
+                var NeedReborn = _model.NeedReborn();
+                if (_model.StageMembers().Count == 1 && NeedReborn)
                 {
                     _view.CommandSceneChange(Scene.Reborn);
                 } else

@@ -20,6 +20,7 @@ MonoBehaviour:
     InitMembers: 01000000
     RandomTroopCount: 14
     BGMId: 03000000
+    Reborn: 0
     StageEvents:
     - EventKey: 1StartTacticsCommandDisable1
       Turns: 1
@@ -288,6 +289,7 @@ MonoBehaviour:
     InitMembers: 0100000002000000030000000400000005000000
     RandomTroopCount: 14
     BGMId: 030000000400000005000000
+    Reborn: 1
     StageEvents:
     - EventKey: 1StartTacticsCommandDisable3
       Turns: 1
@@ -536,6 +538,7 @@ MonoBehaviour:
     InitMembers: 00000000
     RandomTroopCount: 1
     BGMId: 05000000
+    Reborn: 0
     StageEvents:
     - EventKey: 1StartTacticsRouteSelectBattle0
       Turns: 1
@@ -580,6 +583,7 @@ MonoBehaviour:
     InitMembers: 00000000
     RandomTroopCount: 1
     BGMId: 05000000
+    Reborn: 0
     StageEvents:
     - EventKey: 1StartTacticsRouteSelectBattle0
       Turns: 1
@@ -630,6 +634,7 @@ MonoBehaviour:
     InitMembers: 00000000
     RandomTroopCount: 1
     BGMId: 05000000
+    Reborn: 0
     StageEvents:
     - EventKey: 1StartTacticsRouteSelectBattle0
       Turns: 1

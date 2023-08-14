@@ -16,7 +16,8 @@ public class StagesInfoImporter : AssetPostprocessor {
         Turns,
 		InitMembers,
 		RandomTroopCount,
-		BGMId
+		BGMId,
+		Reborn
     }
     enum BaseEventColumn
     {
@@ -112,6 +113,8 @@ public class StagesInfoImporter : AssetPostprocessor {
 					{
 						StageData.BGMId.Add(int.Parse(item));
 					}
+					StageData.Reborn = ((int)Baserow.GetCell((int)BaseColumn.Reborn)?.SafeNumericCellValue() == 1);
+					
 					StageData.StageEvents = new List<StagesData.StageEventData>();
 					for (int j = 1; j <= EventSheet.LastRowNum; j++)
 					{

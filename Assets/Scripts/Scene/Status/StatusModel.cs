@@ -122,6 +122,11 @@ public class StatusModel : BaseModel
         }
     }
 
+    public bool NeedReborn()
+    {
+        return CurrentStage.Master.Reborn;
+    }
+
     public void ForgetSkill()
     {
         SkillInfo skillInfo = _learnSkillInfo;

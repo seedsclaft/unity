@@ -36,7 +36,7 @@ public class RebornResultModel : BaseModel
         {
             var upLvCount = commandRebornSkill.Param2;
             GetItemInfo getItemInfo = new GetItemInfo(null);
-            getItemInfo.MakeCommandRebornResult((TacticsComandType)commandRebornSkill.Param1,upLvCount);
+            getItemInfo.MakeCommandRebornResult((TacticsComandType)commandRebornSkill.Param3,upLvCount);
             getItemInfos.Add(getItemInfo);
         }
 
@@ -46,7 +46,7 @@ public class RebornResultModel : BaseModel
             var upStatusCount = statusRebornSkill.Param2;
             GetItemInfo getItemInfo = new GetItemInfo(null);
             var actorName = DataSystem.Actors.Find(a => a.Id == CurrentStage.SelectActorIds[0]).Name;
-            getItemInfo.MakeStatusRebornResult(actorName,(StatusParamType)statusRebornSkill.Param1,upStatusCount);
+            getItemInfo.MakeStatusRebornResult(actorName,(StatusParamType)statusRebornSkill.Param3,upStatusCount);
             getItemInfos.Add(getItemInfo);
         }
 
@@ -54,7 +54,7 @@ public class RebornResultModel : BaseModel
         foreach (var addSkill in addSkillRebornSkills)
         {
             GetItemInfo getItemInfo = new GetItemInfo(null);
-            getItemInfo.MakeAlchemyBonusResult(DataSystem.Skills.Find(a => a.Id == addSkill.Id));
+            getItemInfo.MakeAlchemyBonusResult(DataSystem.Skills.Find(a => a.Id == addSkill.Param3));
             getItemInfos.Add(getItemInfo);
         }
 

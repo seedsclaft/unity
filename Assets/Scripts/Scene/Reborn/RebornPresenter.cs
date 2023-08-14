@@ -27,15 +27,7 @@ public class RebornPresenter :BasePresenter
         CommandUpdateActor();
         _view.SetHelpText(DataSystem.System.GetTextData(17010).Text);
         _view.SetBackEvent(() => {
-            _model.ResetStage();
-            StatusViewInfo statusViewInfo = new StatusViewInfo(() => {
-                _view.CommandStatusClose();
-                _view.CommandSceneChange(Scene.MainMenu);
-            });
-            statusViewInfo.SetDisplayDecideButton(true);
-            statusViewInfo.SetDisableStrength(true);
-            _view.SetActiveUi(false);
-            _view.CommandCallStatus(statusViewInfo);
+            CommandBackEvent();
         });
         ConfirmInfo confirmInfo = new ConfirmInfo(DataSystem.System.GetTextData(17010).Text,(a) => UpdatePopupStart(a));
         confirmInfo.SetIsNoChoise(true);
@@ -59,6 +51,10 @@ public class RebornPresenter :BasePresenter
         if (viewEvent.commandType == CommandType.UpdateActor)
         {
            CommandUpdateActor();
+        }
+        if (viewEvent.commandType == CommandType.Back)
+        {
+           CommandBackEvent();
         }
     }
 
@@ -96,7 +92,8 @@ public class RebornPresenter :BasePresenter
 
     private void CommandCancelActor()
     {
-
+        CommandBackEvent();
+        Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cancel);
     }
 
     private void CommandUpdateActor()
@@ -107,5 +104,18 @@ public class RebornPresenter :BasePresenter
         {
             _view.UpdateActor(rebornActor);
         }
+    }
+
+    public void CommandBackEvent()
+    {
+        _model.ResetStage();
+        StatusViewInfo statusViewInfo = new StatusViewInfo(() => {
+            _view.CommandStatusClose();
+            _view.CommandSceneChange(Scene.MainMenu);
+        });
+        statusViewInfo.SetDisplayDecideButton(true);
+        statusViewInfo.SetDisableStrength(true);
+        _view.SetActiveUi(false);
+        _view.CommandCallStatus(statusViewInfo);
     }
 }

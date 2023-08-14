@@ -9,8 +9,8 @@ public class SkillInfo
     private int _id;
     public int Id => _id;
     
-    private int _param1 = 0;
-    public int Param1 => _param1;
+    private string _param1 = "";
+    public string Param1 => _param1;
     private int _param2 = 0;
     public int Param2 => _param2;
     private int _param3 = 0;
@@ -69,7 +69,7 @@ public class SkillInfo
         _isUsed = isUsed;
     }
     
-    public void SetParam(int param1,int param2,int param3)
+    public void SetParam(string param1,int param2,int param3)
     {
         _param1 = param1;
         _param2 = param2;

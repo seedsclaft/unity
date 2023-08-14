@@ -28,7 +28,7 @@ public class RebornModel : BaseModel
                 tempActor.InitSkillInfo(DataSystem.Actors[i].LearningSkills);
                     
                 var rebornSkill = new SkillInfo(4001+i); 
-                rebornSkill.SetParam(i+1,1,0);
+                rebornSkill.SetParam((1).ToString(),1,i+1);
                 tempActor.AddRebornSkill(rebornSkill);
                 CurrentData.PlayerInfo.AddActorInfo(tempActor);
 
@@ -79,7 +79,7 @@ public class RebornModel : BaseModel
             var upLvCount = commandRebornSkill.Param2;
             for (int i = 0;i < upLvCount;i++)
             {
-                PartyInfo.AddCommandRank((TacticsComandType)commandRebornSkill.Param1);
+                PartyInfo.AddCommandRank((TacticsComandType)commandRebornSkill.Param3);
             }
         }
 
@@ -87,14 +87,14 @@ public class RebornModel : BaseModel
         if (statusRebornSkill != null)
         {
             var upStatusCount = statusRebornSkill.Param2;
-            actorInfo.TempStatus.AddParameter((StatusParamType)statusRebornSkill.Param1,upStatusCount);
+            actorInfo.TempStatus.AddParameter((StatusParamType)statusRebornSkill.Param3,upStatusCount);
             actorInfo.DecideStrength(0);
         }
 
         var addSkillRebornSkills = rebornActorInfo.RebornSkillInfos.FindAll(a => a.Master.FeatureDatas.Find(b => b.FeatureType == FeatureType.RebornAddSkill) != null);
         foreach (var addSkill in addSkillRebornSkills)
         {
-            PartyInfo.AddAlchemy(addSkill.Param1);
+            PartyInfo.AddAlchemy(addSkill.Param3);
         }
         
         var questRebornSkill = rebornActorInfo.RebornSkillInfos.Find(a => a.Master.FeatureDatas.Find(b => b.FeatureType == FeatureType.RebornQuest) != null);
