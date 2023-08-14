@@ -226,7 +226,13 @@ public class StatusPresenter
             {
                 _model.SelectAddActor();
                 _view.CommandStatusClose();
-                _view.CommandSceneChange(Scene.Reborn);
+                if (_model.StageMembers().Count == 1)
+                {
+                    _view.CommandSceneChange(Scene.Reborn);
+                } else
+                {
+                    _view.CommandSceneChange(Scene.Tactics);
+                }
             } else{
                 _view.ActivateCommandList();
             }

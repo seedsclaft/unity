@@ -412,6 +412,7 @@ public class TacticsPresenter :BasePresenter
         } else{
             if (_model.CommandType == TacticsComandType.Turnend)
             {
+                Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cancel);
                 _view.ShowCommandList();
             }
         }
@@ -453,6 +454,7 @@ public class TacticsPresenter :BasePresenter
             _model.SetResumeStageFalse();
             _view.CommandSceneChange(Scene.MainMenu);
         } else{
+            Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cancel);
         }
         //_view.ActivateCommandList();
         _view.CommandConfirmClose();
@@ -476,6 +478,9 @@ public class TacticsPresenter :BasePresenter
         if (confirmComandType == ConfirmComandType.Yes)
         {
             SaveSystem.SaveStart(GameSystem.CurrentData);
+        } else
+        {
+            Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cancel);
         }
         _view.CommandSceneChange(Scene.Tactics);
     }

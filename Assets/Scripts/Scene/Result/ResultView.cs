@@ -204,8 +204,34 @@ public class ResultView : BaseView
     {
         actorInfoComponent.Clear();
         actorInfoComponent.UpdateInfo(actorInfo,null);
-        rebornSkillList.Initialize(actorInfo.RebornSkillInfos);
+        rebornSkillList.Initialize(actorInfo.RebornSkillInfos,() => OnPageUpRebornSkill(),() => OnPageDownRebornSkill());
         rebornSkillList.Refresh();
+    }
+
+    private void OnPageUpRebornSkill()
+    {
+        if (rebornSkillList.Data != null && rebornSkillList.Data.Count < 4) return;
+        var margin = 1.0f / (rebornSkillList.Data.Count - 4);
+
+        var value = rebornSkillList.ScrollRect.normalizedPosition.y - margin;
+        rebornSkillList.ScrollRect.normalizedPosition = new Vector2(0,value);
+        if (rebornSkillList.ScrollRect.normalizedPosition.y < 0)
+        {
+            rebornSkillList.ScrollRect.normalizedPosition = new Vector2(0,0);
+        }
+    }
+
+    private void OnPageDownRebornSkill()
+    {
+        if (rebornSkillList.Data != null && rebornSkillList.Data.Count < 4) return;
+        var margin = 1.0f / (rebornSkillList.Data.Count - 4);
+
+        var value = rebornSkillList.ScrollRect.normalizedPosition.y + margin;
+        rebornSkillList.ScrollRect.normalizedPosition = new Vector2(0,value);
+        if (rebornSkillList.ScrollRect.normalizedPosition.y > 1)
+        {
+            rebornSkillList.ScrollRect.normalizedPosition = new Vector2(0,1);
+        }
     }
 }
 
@@ -221,7 +247,7 @@ namespace Result
         EndLvupAnimation = 9,
         DecideActor = 11,
         CancelActor = 12,
-        UpdateActor = 13
+        UpdateActor = 13,
     }
 }
 public class ResultViewEvent

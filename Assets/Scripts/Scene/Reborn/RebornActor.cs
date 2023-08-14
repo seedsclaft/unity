@@ -8,6 +8,9 @@ public class RebornActor : ListItem ,IListViewItem
     [SerializeField] private ActorInfoComponent actorInfoComponent;
     [SerializeField] private GameObject RebornPrefab;
     [SerializeField] private GameObject RebornRoot;
+    
+    [SerializeField] private GameObject LimitRebornPrefab;
+    [SerializeField] private bool LimitedSkillMax;
 
     private ActorInfo _data;
     private bool _rebornInit = false;
@@ -37,12 +40,20 @@ public class RebornActor : ListItem ,IListViewItem
     {
         if (_rebornInit) return;
         _rebornInit = true;
+        var idx = 0;
         foreach (var rebornSkill in _data.RebornSkillInfos)
         {
+            if (LimitedSkillMax && idx == 3)
+            {
+                var limitprefab = Instantiate(LimitRebornPrefab);
+                limitprefab.transform.SetParent(RebornRoot.transform,false);
+                return;
+            }
             var prefab = Instantiate(RebornPrefab);
             prefab.transform.SetParent(RebornRoot.transform,false);
             var rebornSkillInfo = prefab.GetComponent<SkillInfoComponent>();
             rebornSkillInfo.SetInfoData(rebornSkill);
+            idx++;
         }
     }
 
