@@ -21,7 +21,7 @@ public class TacticsTrainList : ListWindow , IInputHandlerEvent
             tacticsTrain.SetCallHandler(callEvent);
             tacticsTrain.SetSelectHandler((data) => UpdateSelectIndex(data));
         }
-        SetInputHandler((a) => CallInputHandler(a,callEvent));
+        SetInputCallHandler((a) => CallInputHandler(a,callEvent));
     }
 
     public void Refresh(List<ActorInfo> actorInfos,int rank)

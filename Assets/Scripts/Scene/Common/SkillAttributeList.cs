@@ -26,7 +26,7 @@ public class SkillAttributeList : ListWindow , IInputHandlerEvent
                 //UpdateSelectIndex(data-1);
             });
         }
-        SetInputHandler((a) => CallInputHandler(a,callEvent,conditionEvent));
+        SetInputCallHandler((a) => CallInputHandler(a,callEvent,conditionEvent));
     }
 
     public void Refresh(List<AttributeType> attributeTypes,AttributeType currentAttibuteType)

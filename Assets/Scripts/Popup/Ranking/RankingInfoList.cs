@@ -20,7 +20,7 @@ public class RankingInfoList : ListWindow , IInputHandlerEvent
             var rankingInfoComp = ObjectList[i].GetComponent<RankingInfoComponent>();
             rankingInfoComp.SetData(rankingInfos[i],i);
         }
-        SetInputHandler((a) => CallInputHandler(a,cancelEvent));
+        SetInputCallHandler((a) => CallInputHandler(a,cancelEvent));
         UpdateAllItems();
         UpdateSelectIndex(-1);
     }

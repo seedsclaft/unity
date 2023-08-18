@@ -44,7 +44,7 @@ public class BattleActorList : ListWindow , IInputHandlerEvent
             _battleActors.Add(battleActor);
             ObjectList[i].SetActive(false);
         }
-        SetInputHandler((a) => CallInputHandler(a,callEvent,cancelEvent,enemySelectEvent));
+        SetInputCallHandler((a) => CallInputHandler(a,callEvent,cancelEvent,enemySelectEvent));
     }
 
     public void Refresh(List<BattlerInfo> battlerInfos)

@@ -34,7 +34,7 @@ public class TacticsRecoveryList : ListWindow , IInputHandlerEvent
             tacticsRecovery.SetSelectHandler((data) => UpdateSelectIndex(data));
             ObjectList[i].SetActive(i < _actorInfos.Count);
         }
-        SetInputHandler((a) => CallInputHandler(a,callEvent,plusEvent,minusEvent));
+        SetInputCallHandler((a) => CallInputHandler(a,callEvent,plusEvent,minusEvent));
         UpdateSelectIndex(0);
         commandLv.text = rank.ToString();
         commandDescription.text = DataSystem.System.GetReplaceText(10,DataSystem.System.RecoveryCount.ToString());

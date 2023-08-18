@@ -25,7 +25,7 @@ public class RebornActorList : ListWindow , IInputHandlerEvent
                 });
             //ObjectList[i].SetActive(false);
         } 
-        SetInputHandler((a) => CallInputHandler(a,callEvent,cancelEvent,updateEvent));
+        SetInputCallHandler((a) => CallInputHandler(a,callEvent,cancelEvent,updateEvent));
     }
 
     public void Refresh()

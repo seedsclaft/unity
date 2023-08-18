@@ -12,7 +12,7 @@ public class StatusActorList : ListWindow , IInputHandlerEvent
     public void Initialize(System.Action leftEvent,System.Action rightEvent,System.Action decideEvent,System.Action cancelEvent)
     {
         InitializeListView(1);
-        SetInputHandler((a) => CallInputHandler(a,leftEvent,rightEvent,decideEvent,cancelEvent));
+        SetInputCallHandler((a) => CallInputHandler(a,leftEvent,rightEvent,decideEvent,cancelEvent));
         SetInputFrame(24);
         SetDragHandler(ObjectList[0],leftEvent,rightEvent);
     }

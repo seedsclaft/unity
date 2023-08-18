@@ -40,7 +40,7 @@ public class TacticsEnemyList : ListWindow , IInputHandlerEvent
                 tacticsEnemy.SetEnemyInfoCallHandler(enemyInfoEvent);
             }
         }
-        SetInputHandler((a) => CallInputHandler(a,callEvent,cancelEvent,getItemEvent,enemyInfoEvent));
+        SetInputCallHandler((a) => CallInputHandler(a,callEvent,cancelEvent,getItemEvent,enemyInfoEvent));
         SetCancelEvent(() => cancelEvent());
     }
 

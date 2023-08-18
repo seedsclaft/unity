@@ -29,7 +29,7 @@ public class StatusStrengthList : ListWindow , IInputHandlerEvent
             statusStrength.SetSelectHandler((data) => UpdateSelectIndex(data));
             _statusStrengths.Add(statusStrength);
         }
-        SetInputHandler((a) => CallInputHandler(a,plusEvent,minusEvent,resetEvent));
+        SetInputCallHandler((a) => CallInputHandler(a,plusEvent,minusEvent,resetEvent));
         UpdateSelectIndex(-1);
     }
 

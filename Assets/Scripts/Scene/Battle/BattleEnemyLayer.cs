@@ -76,7 +76,7 @@ public class BattleEnemyLayer : ListWindow , IInputHandlerEvent
             _battleEnemies.Add(battleEnemy);
             frontIndex++;
         }
-        SetInputHandler((a) => CallInputHandler(a,callEvent,cancelEvent,selectPartyEvent,detailEvent));
+        SetInputCallHandler((a) => CallInputHandler(a,callEvent,cancelEvent,selectPartyEvent,detailEvent));
         UpdateAllUnSelect();
     }
 

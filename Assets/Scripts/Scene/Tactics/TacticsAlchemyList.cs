@@ -31,7 +31,7 @@ public class TacticsAlchemyList : ListWindow , IInputHandlerEvent
             tacticsAlchemy.SetSelectHandler((data) => UpdateSelectIndex(data));
             ObjectList[i].SetActive(i < _actorInfos.Count);
         }
-        SetInputHandler((a) => CallInputHandler(a,callEvent));
+        SetInputCallHandler((a) => CallInputHandler(a,callEvent));
         UpdateSelectIndex(0);
         commandLv.text = rank.ToString();
         commandDescription.text = DataSystem.System.GetReplaceText(10,DataSystem.System.AlchemyCount.ToString());

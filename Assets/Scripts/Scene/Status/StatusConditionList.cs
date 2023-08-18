@@ -31,7 +31,7 @@ public class StatusConditionList : ListWindow , IInputHandlerEvent
                 ObjectList[i].SetActive(true);
             }
         }
-        SetInputHandler((a) => CallInputHandler(a,cancelEvent,optionEvent,skillEvent));
+        SetInputCallHandler((a) => CallInputHandler(a,cancelEvent,optionEvent,skillEvent));
         UpdateAllItems();
         UpdateSelectIndex(0);
     }

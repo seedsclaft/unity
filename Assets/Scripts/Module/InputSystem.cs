@@ -264,5 +264,5 @@ public enum InputKeyType{
     SideLeft2, // L2
     SideRight2, // R2
     Start,
-    Select
+    Select,
 }

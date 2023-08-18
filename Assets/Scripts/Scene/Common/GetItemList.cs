@@ -49,7 +49,7 @@ public class GetItemList : ListWindow , IInputHandlerEvent
                 ObjectList[i].SetActive(true);
             }
         }
-        SetInputHandler((a) => CallSelectHandler(a));
+        SetInputCallHandler((a) => CallSelectHandler(a));
         //ResetScrollPosition();
         //UpdateSelectIndex(0);
         ResetScrollRect();
@@ -67,7 +67,7 @@ public class GetItemList : ListWindow , IInputHandlerEvent
     public void InitializeConfirm(List<SystemData.MenuCommandData> confirmCommands ,System.Action<TacticsComandType> callEvent)
     {
         _confirmEvent = callEvent;
-        tacticsCommandList.SetInputHandler((a) => CallInputHandler(a,callEvent));
+        tacticsCommandList.SetInputCallHandler((a) => CallInputHandler(a,callEvent));
         tacticsCommandList.Initialize(callEvent);
         tacticsCommandList.Refresh(confirmCommands);
         tacticsCommandList.UpdateSelectIndex(0);

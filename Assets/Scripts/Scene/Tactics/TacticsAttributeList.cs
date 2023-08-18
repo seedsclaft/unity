@@ -21,7 +21,7 @@ public class TacticsAttributeList : ListWindow , IInputHandlerEvent
             skillAttribute.SetCallHandler(callEvent);
             skillAttribute.SetSelectHandler((data) => UpdateSelectIndex(data));
         }
-        SetInputHandler((a) => CallInputHandler(a,callEvent,cancelEvent));
+        SetInputCallHandler((a) => CallInputHandler(a,callEvent,cancelEvent));
         UpdateSelectIndex(-1);
     }
 

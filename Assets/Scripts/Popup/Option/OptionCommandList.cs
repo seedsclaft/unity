@@ -21,7 +21,7 @@ public class OptionCommandList : ListWindow , IInputHandlerEvent
             optionCommand.SetData(_optionCommands[i],i);
             optionCommand.SetSelectHandler((data) => UpdateSelectIndex(data));
         }
-        SetInputHandler((a) => CallInputHandler(a,optionEvent));
+        SetInputCallHandler((a) => CallInputHandler(a,optionEvent));
         ResetScrollPosition();
         UpdateSelectIndex(0);
         

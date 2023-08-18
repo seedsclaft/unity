@@ -17,7 +17,7 @@ public class RebornSkillList : ListWindow , IInputHandlerEvent
             });
             skillAction.SetSelectHandler((data) => UpdateSelectIndex(data));
         }
-        SetInputHandler((a) => CallInputHandler(a,pageUpEvent,pageDownEvent));
+        SetInputCallHandler((a) => CallInputHandler(a,pageUpEvent,pageDownEvent));
     }
 
     public void Refresh()

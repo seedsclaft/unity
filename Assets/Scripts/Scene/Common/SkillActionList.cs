@@ -39,7 +39,7 @@ public class SkillActionList : ListWindow , IInputHandlerEvent
             skillAction.SetSelectHandler((data) => UpdateSelectIndex(data));
             //ObjectList[i].SetActive(false);
         }
-        SetInputHandler((a) => CallInputHandler(a,callEvent,cancelEvent,learningEvent,escapeEvent,optionEvent));
+        SetInputCallHandler((a) => CallInputHandler(a,callEvent,cancelEvent,learningEvent,escapeEvent,optionEvent));
     }
 
     public void SetSkillInfos(List<SkillInfo> skillInfoData)

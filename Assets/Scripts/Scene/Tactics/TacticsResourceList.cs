@@ -33,7 +33,7 @@ public class TacticsResourceList : ListWindow , IInputHandlerEvent
             tacticsResource.SetSelectHandler((data) => UpdateSelectIndex(data));
             ObjectList[i].SetActive(i < _actorInfos.Count);
         }
-        SetInputHandler((a) => CallInputHandler(a,callEvent));
+        SetInputCallHandler((a) => CallInputHandler(a,callEvent));
         commandLv.text = rank.ToString();
         commandDescription.text = DataSystem.System.GetReplaceText(10,DataSystem.System.ResourceCount.ToString());
         if (rank > 0)

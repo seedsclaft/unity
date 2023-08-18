@@ -32,7 +32,7 @@ public class TacticsBattleList : ListWindow , IInputHandlerEvent
             tacticsBattle.SetSelectHandler((data) => UpdateSelectIndex(data));
             ObjectList[i].SetActive(i < _actorInfos.Count);
         }
-        SetInputHandler((a) => CallInputHandler(a,callEvent));
+        SetInputCallHandler((a) => CallInputHandler(a,callEvent));
         UpdateSelectIndex(0);
         tacticsCommandList.UpdateSelectIndex(-1);
         

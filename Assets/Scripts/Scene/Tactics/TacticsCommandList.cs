@@ -18,7 +18,7 @@ public class TacticsCommandList : ListWindow , IInputHandlerEvent
             TacticsCommand.SetCallHandler(callEvent);
             TacticsCommand.SetSelectHandler((data) => UpdateSelectIndex(data));
         }
-        SetInputHandler((a) => CallInputHandler(a,callEvent,optionEvent,retireEvent,alcanaEvent,enemyInfoEvent));
+        SetInputCallHandler((a) => CallInputHandler(a,callEvent,optionEvent,retireEvent,alcanaEvent,enemyInfoEvent));
     }
 
     public void Refresh(List<SystemData.MenuCommandData> menuCommands)

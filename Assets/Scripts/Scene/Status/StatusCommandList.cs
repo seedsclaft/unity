@@ -19,7 +19,7 @@ public class StatusCommandList : ListWindow , IInputHandlerEvent
             statusCommand.SetCallHandler(callEvent);
             statusCommand.SetSelectHandler((data) => UpdateSelectIndex(data));
         }
-        SetInputHandler((a) => CallInputHandler(a,callEvent));
+        SetInputCallHandler((a) => CallInputHandler(a,callEvent));
         UpdateAllItems();
         UpdateSelectIndex(0);
     }

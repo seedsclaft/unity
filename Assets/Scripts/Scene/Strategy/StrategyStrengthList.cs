@@ -22,7 +22,7 @@ public class StrategyStrengthList : ListWindow , IInputHandlerEvent
             StrategyStrength statusStrength = ObjectList[i].GetComponent<StrategyStrength>();
             _statusStrengths.Add(statusStrength);
         }
-        SetInputHandler((a) => CallInputHandler(a,callEvent));
+        SetInputCallHandler((a) => CallInputHandler(a,callEvent));
         UpdateSelectIndex(-1);
     }
 

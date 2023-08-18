@@ -18,7 +18,7 @@ public class TitleCommandList : ListWindow , IInputHandlerEvent
             titleCommand.SetCallHandler(callEvent);
             titleCommand.SetSelectHandler((data) => UpdateSelectIndex(data));
         }
-        SetInputHandler((a) => CallInputHandler(a,callEvent,optionEvent));
+        SetInputCallHandler((a) => CallInputHandler(a,callEvent,optionEvent));
         UpdateAllItems();
         UpdateSelectIndex(0);
     }

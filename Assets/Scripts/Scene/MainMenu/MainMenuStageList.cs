@@ -18,7 +18,7 @@ public class MainMenuStageList: ListWindow , IInputHandlerEvent
             mainMenuStage.SetCallHandler(callEvent);
             mainMenuStage.SetSelectHandler((data) => UpdateSelectIndex(data));
         }
-        SetInputHandler((a) => CallInputHandler(a,callEvent,sideMenuEvent));
+        SetInputCallHandler((a) => CallInputHandler(a,callEvent,sideMenuEvent));
         UpdateAllItems();
         UpdateSelectIndex(0);
         component.UpdateInfo(_data[Index]);

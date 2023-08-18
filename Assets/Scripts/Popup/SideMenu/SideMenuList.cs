@@ -34,7 +34,7 @@ public class SideMenuList : ListWindow , IInputHandlerEvent
             sideMenu.SetSelectHandler((data) => UpdateSelectIndex(data));
             sideMenu.SetCallHandler((a) => callEvent(a));
         }
-        SetInputHandler((a) => CallInputHandler(a,callEvent,optionEvent,cancelEvent));
+        SetInputCallHandler((a) => CallInputHandler(a,callEvent,optionEvent,cancelEvent));
         UpdateSelectIndex(-1);
         
         Refresh();
