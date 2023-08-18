@@ -42,15 +42,22 @@ public class RulingView : BaseView
     
     public void SetRulingCommand(List<SystemData.MenuCommandData> menuCommands)
     {
-        confirmCommandList.Initialize(menuCommands,(a) => CallRulingCommand(a),() => BackEvent());
+        confirmCommandList.Initialize(menuCommands,() => CallRulingCommand());
+        confirmCommandList.SetInputHandler(InputKeyType.Down,() => CallRulingCommand());
+        confirmCommandList.SetInputHandler(InputKeyType.Up,() => CallRulingCommand());
+        confirmCommandList.SetInputHandler(InputKeyType.Cancel,() => BackEvent());
         SetInputHandler(confirmCommandList.GetComponent<IInputHandlerEvent>());
     }
 
-    private void CallRulingCommand(ConfirmComandType command)
+    private void CallRulingCommand()
     {
         var eventData = new RulingViewEvent(CommandType.SelectTitle);
-        eventData.templete = command;
-        _commandData(eventData);
+        var item = confirmCommandList.Data;
+        if (item != null)
+        {
+            eventData.templete = item.Id;
+            _commandData(eventData);
+        }
     }
 
     public void CommandSelectTitle(List<string> helpList )

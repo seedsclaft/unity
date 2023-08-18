@@ -40,6 +40,7 @@ abstract public class ListWindow : MonoBehaviour
     public List<GameObject> ObjectList => _objectList;
 
     private System.Action<InputKeyType> _inputCallHandler = null;
+    private Dictionary<InputKeyType, System.Action> _inputHandler = new ();
 
     public HelpWindow _helpWindow = null;
 
@@ -565,17 +566,26 @@ abstract public class ListWindow : MonoBehaviour
         }
     }
 
-    public void SetInputHandler(System.Action<InputKeyType> callHandler)
+    public void SetInputCallHandler(System.Action<InputKeyType> callHandler)
     {
         _inputCallHandler = callHandler;
     }
     
+    public void SetInputHandler(InputKeyType keyType,System.Action handler)
+    {
+        _inputHandler[keyType] = handler;
+    }
+
     private void InputCallEvent(InputKeyType keyType){
         if (!IsInputEnable())
         {
             return;
         }
         _inputCallHandler(keyType);
+        if (_inputHandler.ContainsKey(keyType))
+        {
+            _inputHandler[keyType]();
+        }
     }
 
     public void MouseCancelHandler()
