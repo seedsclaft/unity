@@ -25,19 +25,16 @@ public class TacticsPresenter :BasePresenter
         _model.RefreshTacticsEnable();
 
         _view.SetHelpWindow();
-        var StartTacticsAdvId = _model.StartTacticsAdvId();
-        if (StartTacticsAdvId > -1)
+        var StartTacticsAdvData = _model.StartTacticsAdvData();
+        if (StartTacticsAdvData != null)
         {
             AdvCallInfo advInfo = new AdvCallInfo();
-            advInfo.SetLabel(_model.GetAdvFile(StartTacticsAdvId));
+            advInfo.SetLabel(_model.GetAdvFile(StartTacticsAdvData.Id));
             advInfo.SetCallEvent(() => {
-                if (StartTacticsAdvId == 171)
+                if (StartTacticsAdvData.EndJump != Scene.None)
                 {
-                    _view.CommandSceneChange(Scene.Tactics);
-                } else
-                {
-                    _view.CommandSceneChange(Scene.Result);
-                }    
+                    _view.CommandSceneChange(StartTacticsAdvData.EndJump);
+                }   
             });
             _view.CommandCallAdv(advInfo);
             _view.SetActiveUi(false);

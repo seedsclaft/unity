@@ -13,6 +13,7 @@ public class AdvImporter : AssetPostprocessor {
     {
 		Id = 0,
 		AdvName,
+		EndJump,
     }
 	static readonly string ExcelPath = "Assets/Resources/Data";
 	static readonly string ExcelName = "Advs.xlsx";
@@ -81,6 +82,7 @@ public class AdvImporter : AssetPostprocessor {
 					var AdvData = new AdvsData.AdvData();
 					AdvData.Id = (int)Baserow.GetCell((int)BaseColumn.Id).NumericCellValue;
 					AdvData.AdvName = Baserow.GetCell((int)BaseColumn.AdvName).SafeStringCellValue();
+					AdvData.EndJump = (Scene)Baserow.GetCell((int)BaseColumn.EndJump).NumericCellValue;
 					
 					Data._data.Add(AdvData);
 				}

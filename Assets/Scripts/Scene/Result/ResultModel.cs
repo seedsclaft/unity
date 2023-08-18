@@ -1,7 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using NCMB;
+using System.Threading;
+using UnityEngine;
 
 public class ResultModel : BaseModel
 {
@@ -200,28 +203,37 @@ public class ResultModel : BaseModel
                 isEnd = true;
             }
         });
-        await UniTask.WaitUntil(() => isEnd == true);
-        if (selfScore > evaluate)
-        {
-            if (endEvent != null) endEvent("記録更新なし");
-        }
-        if (evaluate < lineScore && count >= 100)
-        {
-            if (endEvent != null) endEvent("圏外");
-        }
 
-        if (selfScore > -1)
+        _cancellationTokenSource = new CancellationTokenSource();
+        
+        try {
+            await UniTask.WaitUntil(() => isEnd == true,PlayerLoopTiming.Update,_cancellationTokenSource.Token);
+            if (selfScore > evaluate)
+            {
+                if (endEvent != null) endEvent("記録更新なし");
+            }
+            if (evaluate < lineScore && count >= 100)
+            {
+                if (endEvent != null) endEvent("圏外");
+            }
+
+            if (selfScore > -1)
+            {
+                UpdateRankingData(objectId,() => {
+                    if (endEvent != null) endEvent(rank.ToString() + "位" + " / " + count.ToString());
+                });
+            } else
+            {
+                count += 1;
+                SendRankingData(() => {
+                    if (endEvent != null) endEvent(rank.ToString() + "位" + " / " + count.ToString());
+                });
+            }
+        } catch (OperationCanceledException e)
         {
-            UpdateRankingData(objectId,() => {
-                if (endEvent != null) endEvent(rank.ToString() + "位" + " / " + count.ToString());
-            });
-        } else
-        {
-            count += 1;
-            SendRankingData(() => {
-                if (endEvent != null) endEvent(rank.ToString() + "位" + " / " + count.ToString());
-            });
+            Debug.Log(e);
         }
+        
 
     }
 

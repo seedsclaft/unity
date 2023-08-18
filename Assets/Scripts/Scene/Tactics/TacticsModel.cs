@@ -389,42 +389,42 @@ public class TacticsModel : BaseModel
     {
     }
     
-    public int StartTacticsAdvId()
+    public AdvsData.AdvData StartTacticsAdvData()
     {
         var isAendGameClear = CurrentStage.StageClaer;
         if (isAendGameClear)
         {
             CurrentStage.SetEndingType(EndingType.A);
             StageClaer(2);
-            return 173;
+            return DataSystem.Advs.Find(a => a.Id == 173);
         }
         var isBendGameClear = CurrentStage.RouteSelect == 1 && CurrentStage.IsBendGameClear();
         if (isBendGameClear)
         {
             CurrentStage.SetEndingType(EndingType.B);
             StageClaer(2);
-            return 172;
+            return DataSystem.Advs.Find(a => a.Id == 172);
         }
         var isEndStage = (CurrentStage.SubordinateValue <= 0);
         if (isEndStage)
         {
             SetIsSubordinate(false);
             ChangeRouteSelectStage(11);
-            return 171;
+            return DataSystem.Advs.Find(a => a.Id == 171);
         }
         var isGameOver = (Actors().Find(a => a.ActorId == CurrentStage.SelectActorIds[0])).Lost;
         if (isGameOver)
         {
             CurrentStage.SetEndingType(EndingType.D);
-            return 203;
+            return DataSystem.Advs.Find(a => a.Id == 203);
         }
         var isTurnOver = (Turns < 0);
         if (isTurnOver)
         {
             CurrentStage.SetEndingType(EndingType.D);
-            return 204;
+            return DataSystem.Advs.Find(a => a.Id == 204);
         }
-        return -1;
+        return null;
     }
 
     public List<SystemData.MenuCommandData> SideMenu()

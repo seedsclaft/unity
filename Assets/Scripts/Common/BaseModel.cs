@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using Cysharp.Threading.Tasks;
+using System.Threading;
 
 public class BaseModel
 {
@@ -16,6 +17,8 @@ public class BaseModel
     public int Currency => PartyInfo.Currency;
 
     public int Turns{get {return CurrentStage.Turns - (CurrentStage.CurrentTurn);}}
+
+    public CancellationTokenSource _cancellationTokenSource;
     public void InitSaveInfo()
     {
         var playInfo = new SavePlayInfo();
@@ -495,6 +498,7 @@ public class BaseModel
 
     public async UniTask LoadBattleResources(List<BattlerInfo> battlers)
     {
+        _cancellationTokenSource = new CancellationTokenSource();
         var filePaths = BattleUtility.AnimationResourcePaths(battlers);
         int count = filePaths.Count;
         foreach (var filePath in filePaths)
@@ -502,7 +506,12 @@ public class BaseModel
             await Resources.LoadAsync<Sprite>( filePath );
             count -= 1;
         }
-        await UniTask.WaitUntil( () => count == 0 );
+        try {
+            await UniTask.WaitUntil( () => count == 0 ,PlayerLoopTiming.Update,_cancellationTokenSource.Token);
+        } catch (OperationCanceledException e)
+        {
+            Debug.Log(e);
+        }
     }
 
     public void SetResumeStage(bool resumeStage)

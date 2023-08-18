@@ -23,6 +23,10 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 using UnityEngine;
 using System.Collections;
 using UnityEngine.Assertions;
+using System.Threading;
+using Cysharp.Threading;
+using System.Runtime.CompilerServices;
+using Cysharp.Threading.Tasks;
 
 public class Fade : MonoBehaviour
 {
@@ -35,6 +39,8 @@ public class Fade : MonoBehaviour
 	}
 
 	float cutoutRange;
+
+	private CancellationTokenSource _cancellationTokenSource;
 
 	public void Init ()
 	{
@@ -66,14 +72,10 @@ public class Fade : MonoBehaviour
 		}
 	}
 
+/*
 	IEnumerator FadeinCoroutine (float time, System.Action action)
 	{
-		if (cutoutRange == float.NaN)
-		{
-			cutoutRange = 0;
-		}
 		float endTime = Time.timeSinceLevelLoad + time * (1 - cutoutRange);
-		
 		var endFrame = new WaitForEndOfFrame ();
 
 		while (Time.timeSinceLevelLoad <= endTime) {
@@ -88,6 +90,7 @@ public class Fade : MonoBehaviour
 			action ();
 		}
 	}
+*/
 
 	public Coroutine FadeOut (float time, System.Action action)
 	{
@@ -100,6 +103,7 @@ public class Fade : MonoBehaviour
 		return FadeOut (time, null);
 	}
 
+/*
 	public Coroutine FadeIn (float time, System.Action action)
 	{
 		StopAllCoroutines ();
@@ -110,4 +114,34 @@ public class Fade : MonoBehaviour
 	{
 		return FadeIn (time, null);
 	}
+*/
+	
+	public void FadeIn (float time, System.Action action)
+	{
+		_cancellationTokenSource = new CancellationTokenSource();  
+        UpdateLoop(time,action).Forget();
+	}
+
+	private async UniTaskVoid UpdateLoop(float time,System.Action action)
+    {
+        while (true)
+        {
+            await FadeIn(time);
+			if (action != null) {
+				action ();
+				_cancellationTokenSource.Cancel();
+				break;
+			}
+        }
+    }
+
+    private async UniTask FadeIn(float fadeTime)
+    {
+        for (var time = 0.0f; time < fadeTime; time += Time.deltaTime)
+        {
+			cutoutRange = 1 - (fadeTime - time);
+			fade.Range = cutoutRange;
+            await UniTask.Yield(PlayerLoopTiming.Update, _cancellationTokenSource.Token);
+        }
+    }
 }

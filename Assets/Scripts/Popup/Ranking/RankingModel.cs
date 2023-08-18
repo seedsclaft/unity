@@ -1,7 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using NCMB;
+using System.Threading;
+using UnityEngine;
 
 public class RankingModel : BaseModel
 {
@@ -65,7 +68,14 @@ public class RankingModel : BaseModel
                 }
             });
         }
-        await UniTask.WaitUntil(() => isEnd == true);
-        if (endEvent != null) endEvent(_rakingInfos);
+        _cancellationTokenSource = new CancellationTokenSource();
+        
+        try {
+            await UniTask.WaitUntil(() => isEnd == true,PlayerLoopTiming.Update,_cancellationTokenSource.Token);
+            if (endEvent != null) endEvent(_rakingInfos);
+        } catch (OperationCanceledException e)
+        {
+            Debug.Log(e);
+        }
     }
 }
