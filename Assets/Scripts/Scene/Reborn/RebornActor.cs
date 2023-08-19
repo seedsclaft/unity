@@ -20,12 +20,12 @@ public class RebornActor : ListItem ,IListViewItem
         SetIndex(index);
     }
 
-    public void SetCallHandler(System.Action<int> handler)
+    public void SetCallHandler(System.Action handler)
     {
         clickButton.onClick.AddListener(() => 
         {   
             if (Disable.activeSelf) return;
-            handler(Index);
+            handler();
         });
     }
 

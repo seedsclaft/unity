@@ -576,8 +576,12 @@ abstract public class ListWindow : MonoBehaviour
         _inputHandler[keyType] = handler;
     }
 
-    public void CallInputHandler(InputKeyType keyType)
+    public void CallListInputHandler(InputKeyType keyType)
     {
+        if (!IsInputEnable())
+        {
+            return;
+        }
         if (_inputHandler.ContainsKey(keyType))
         {
             _inputHandler[keyType]();
@@ -593,7 +597,7 @@ abstract public class ListWindow : MonoBehaviour
         {
             _inputCallHandler(keyType);
         }
-        CallInputHandler(keyType);
+        CallListInputHandler(keyType);
     }
 
     public void MouseCancelHandler()

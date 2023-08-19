@@ -18,7 +18,7 @@ public class SlotInfoList : ListWindow , IInputHandlerEvent
             {
                 UpdateSelectIndex(data);
             }); 
-            skillAction.SetCallHandler(() => CallInputHandler(InputKeyType.Decide));
+            skillAction.SetCallHandler(() => CallListInputHandler(InputKeyType.Decide));
         }
         SetInputCallHandler((a) => CallSelectHandler(a));
         _data = slotInfos;

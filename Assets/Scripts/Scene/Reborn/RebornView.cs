@@ -38,17 +38,24 @@ public class RebornView : BaseView
 
     public void SetActorList(List<ActorInfo> actorInfos,List<int> disableIndexs) 
     {
-        actorInfoList.Initialize(actorInfos,disableIndexs,(a) => CallDecideActor(a),() => CallCancelActor(),() => CallUpdate());
+        actorInfoList.Initialize(actorInfos,disableIndexs);
+        actorInfoList.SetInputHandler(InputKeyType.Decide,() => CallDecideActor(disableIndexs));
+        actorInfoList.SetInputHandler(InputKeyType.Cancel,() => CallCancelActor());
+        actorInfoList.SetInputHandler(InputKeyType.Down,() => CallUpdate());
+        actorInfoList.SetInputHandler(InputKeyType.Up,() => CallUpdate());
         actorInfoList.Refresh();
         SetInputHandler(actorInfoList.GetComponent<IInputHandlerEvent>());
         actorInfoList.Activate();
     }
 
-    private void CallDecideActor(int index)
+    private void CallDecideActor(List<int> disableIndexs)
     {
         var eventData = new RebornViewEvent(CommandType.DecideActor);
-        eventData.templete = index;
-        _commandData(eventData);
+        if (actorInfoList.Index > -1 &&!disableIndexs.Contains(actorInfoList.Index))
+        {
+            eventData.templete = actorInfoList.Index;
+            _commandData(eventData);
+        }
     }
     
     private void CallCancelActor()
@@ -73,7 +80,9 @@ public class RebornView : BaseView
     {
         actorInfoComponent.Clear();
         actorInfoComponent.UpdateInfo(actorInfo,null);
-        rebornSkillList.Initialize(actorInfo.RebornSkillInfos,() => OnPageUpRebornSkill(),() => OnPageDownRebornSkill());
+        rebornSkillList.Initialize(actorInfo.RebornSkillInfos);
+        rebornSkillList.SetInputHandler(InputKeyType.SideLeft1,() => OnPageUpRebornSkill());
+        rebornSkillList.SetInputHandler(InputKeyType.SideRight1,() => OnPageDownRebornSkill());
         SetInputHandler(rebornSkillList.GetComponent<IInputHandlerEvent>());
         rebornSkillList.Refresh();
     }

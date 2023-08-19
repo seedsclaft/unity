@@ -23,7 +23,7 @@ public class TitleCommandList : ListWindow , IInputHandlerEvent
         {
             var titleCommand = ObjectList[i].GetComponent<TitleCommand>();
             titleCommand.SetData(menuCommands[i],i);
-            titleCommand.SetCallHandler(() => CallInputHandler(InputKeyType.Decide));
+            titleCommand.SetCallHandler(() => CallListInputHandler(InputKeyType.Decide));
             titleCommand.SetSelectHandler((data) => UpdateSelectIndex(data));
         }
         UpdateAllItems();

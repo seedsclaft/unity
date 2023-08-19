@@ -9,12 +9,11 @@ public class StatusActorList : ListWindow , IInputHandlerEvent
     public bool AnimationBusy => _animationBusy;
 
     private int baseX = 480;
-    public void Initialize(System.Action leftEvent,System.Action rightEvent,System.Action decideEvent,System.Action cancelEvent)
+    public void Initialize()
     {
         InitializeListView(1);
-        SetInputCallHandler((a) => CallInputHandler(a,leftEvent,rightEvent,decideEvent,cancelEvent));
         SetInputFrame(24);
-        SetDragHandler(ObjectList[0],leftEvent,rightEvent);
+        SetDragHandler(ObjectList[0],() => CallListInputHandler(InputKeyType.SideLeft1),() => CallListInputHandler(InputKeyType.SideRight1));
     }
 
     public void Refresh(ActorInfo actorInfo,List<ActorInfo> actorInfos)
@@ -92,26 +91,5 @@ public class StatusActorList : ListWindow , IInputHandlerEvent
                         });
                 }
             });
-    }
-    
-    private void CallInputHandler(InputKeyType keyType, System.Action leftEvent, System.Action rightEvent,System.Action decideEvent,System.Action cancelEvent)
-    {
-        if (_animationBusy) return;
-        if (keyType == InputKeyType.SideLeft1)
-        {
-            leftEvent();
-        }
-        if (keyType == InputKeyType.SideRight1)
-        {
-            rightEvent();
-        }
-        if (keyType == InputKeyType.Start)
-        {
-            decideEvent();
-        }
-        if (keyType == InputKeyType.Cancel)
-        {
-            cancelEvent();
-        }
     }
 }

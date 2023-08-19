@@ -11,7 +11,16 @@ public class SkillActionList : ListWindow , IInputHandlerEvent
 
     private List<SkillInfo> _skillInfos = new List<SkillInfo>();
 
-    public void Initialize(System.Action<SkillInfo> callEvent,System.Action cancelEvent,System.Action<SkillInfo> learningEvent,System.Action escapeEvent,System.Action optionEvent)
+    public SkillInfo Data{
+        get {
+            if (Index < 0)
+            {
+                return null;
+            }
+            return _skillInfos[Index];
+        }
+    }
+    public void Initialize()
     {
         InitializeListView(rows);
         // スクロールするものはObjectList.CountでSetSelectHandlerを登録する
@@ -19,27 +28,12 @@ public class SkillActionList : ListWindow , IInputHandlerEvent
         {
             SkillAction skillAction = ObjectList[i].GetComponent<SkillAction>();
             skillAction.SetCallHandler((d) => {
-                SkillInfo skillInfo = _skillInfos.Find(a => a.Id == d);
-                if (skillInfo.Enable == false)
-                {
-                    return;
-                }
-                if (skillInfo.LearningState == LearningState.Notlearned || skillInfo.LearningState == LearningState.SelectLearn){
-                    if (learningEvent != null)
-                    {
-                        learningEvent(skillInfo);
-                    }
-                } else{
-                    if (callEvent != null)
-                    {
-                        callEvent(skillInfo);
-                    }
-                }
+                CallListInputHandler(InputKeyType.Decide);
             });
             skillAction.SetSelectHandler((data) => UpdateSelectIndex(data));
             //ObjectList[i].SetActive(false);
         }
-        SetInputCallHandler((a) => CallInputHandler(a,callEvent,cancelEvent,learningEvent,escapeEvent,optionEvent));
+        SetInputCallHandler((a) => CallListInputHandler(a));
     }
 
     public void SetSkillInfos(List<SkillInfo> skillInfoData)
@@ -82,53 +76,8 @@ public class SkillActionList : ListWindow , IInputHandlerEvent
         }
     }
 
-    private void CallInputHandler(InputKeyType keyType, System.Action<SkillInfo> callEvent,System.Action cancelEvent,System.Action<SkillInfo> learningEvent,System.Action escapeEvent,System.Action optionEvent)
+    private void CallInputHandler(InputKeyType keyType, System.Action<SkillInfo> callEvent)
     {
-        if (keyType == InputKeyType.Decide)
-        {
-            if (Index < 0)
-            {
-                return;
-            }
-            SkillInfo skillInfo = _skillInfos.Find(a => a.Id == _skillInfos[Index].Id);
-            if (skillInfo == null)
-            {
-                return;
-            }
-            if (skillInfo.Enable == false)
-            {
-                return;
-            }
-            if (skillInfo.LearningState == LearningState.Notlearned || skillInfo.LearningState == LearningState.SelectLearn){
-                if (learningEvent != null)
-                {
-                    learningEvent(skillInfo);
-                }
-            } else{
-                if (callEvent != null)
-                {
-                    callEvent(skillInfo);
-                }
-            }
-        }
-        if (keyType == InputKeyType.Cancel)
-        {
-            cancelEvent();
-        }
-        if (keyType == InputKeyType.Option1)
-        {
-            if (optionEvent != null)
-            {
-                optionEvent();
-            }
-        }
-        if (keyType == InputKeyType.Option2)
-        {
-            if (escapeEvent != null)
-            {
-                escapeEvent();
-            }
-        }
         if (Index >= 0)
         {
             if (keyType == InputKeyType.Down)

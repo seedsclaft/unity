@@ -20,9 +20,10 @@ public class BattleEnemyLayer : ListWindow , IInputHandlerEvent
     private int _backStartIndex = 0;
     private List<BattlerInfo> _battleInfos = new List<BattlerInfo>();
     private int _selectIndex = -1;
+    public int SelectedIndex => _selectIndex;
     private AttributeType _attributeType = AttributeType.None;
 
-    public void Initialize(List<BattlerInfo> battlerInfos ,System.Action<List<int>> callEvent,System.Action cancelEvent,System.Action selectPartyEvent,System.Action<int> detailEvent)
+    public void Initialize(List<BattlerInfo> battlerInfos ,System.Action<List<int>> callEvent)
     {
         _battleInfos = battlerInfos;
         frontDamageRoots.ForEach(a => a.SetActive(false));
@@ -71,12 +72,13 @@ public class BattleEnemyLayer : ListWindow , IInputHandlerEvent
             });
             battleEnemy.SetSelectHandler((data) => UpdateEnemyIndex(data));
             battleEnemy.SetPressHandler((enemyIndex) => {
-                detailEvent(enemyIndex);
+                _selectIndex = enemyIndex;
+                CallListInputHandler(InputKeyType.Option1);
             });
             _battleEnemies.Add(battleEnemy);
             frontIndex++;
         }
-        SetInputCallHandler((a) => CallInputHandler(a,callEvent,cancelEvent,selectPartyEvent,detailEvent));
+        SetInputCallHandler((a) => CallInputHandler(a,callEvent));
         UpdateAllUnSelect();
     }
 
@@ -209,7 +211,7 @@ public class BattleEnemyLayer : ListWindow , IInputHandlerEvent
         return _battleEnemies[index - 100].BattlerInfoComponent;
     }
     
-    private void CallInputHandler(InputKeyType keyType, System.Action<List<int>> callEvent,System.Action cancelEvent,System.Action selectPartyEvent,System.Action<int> detailEvent)
+    private void CallInputHandler(InputKeyType keyType, System.Action<List<int>> callEvent)
     {
         if (keyType == InputKeyType.Decide)
         {
@@ -227,10 +229,6 @@ public class BattleEnemyLayer : ListWindow , IInputHandlerEvent
                 return;
             }
             callEvent(MakeTargetIndexs(battlerInfo));
-        }
-        if (keyType == InputKeyType.Cancel)
-        {
-            cancelEvent();
         }
         if (keyType == InputKeyType.Right)
         {
@@ -288,21 +286,6 @@ public class BattleEnemyLayer : ListWindow , IInputHandlerEvent
                     {
                         UpdateEnemyIndex(target.Index);
                     }
-                }
-            }
-        }
-        if (keyType == InputKeyType.SideRight1)
-        {
-            selectPartyEvent();
-        }
-        if (keyType == InputKeyType.Option1)
-        {
-            if (detailEvent != null)
-            {
-                BattlerInfo battlerInfo = _battleInfos.Find(a => a.Index == _selectIndex);
-                if (battlerInfo != null)
-                {
-                    detailEvent(_selectIndex);
                 }
             }
         }

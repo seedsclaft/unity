@@ -38,7 +38,9 @@ public class StatusView : BaseView ,IInputHandlerEvent
 
     private void InitializeSkillActionList()
     {
-        skillList.InitializeAction((a) => CallSkillAction(a),() => OnClickBack(),(a) => CallSkillLearning(a),null,null);
+        skillList.InitializeAction();
+        skillList.SetInputHandlerAction(InputKeyType.Cancel,() => OnClickBack());
+        skillList.SetInputHandlerAction(InputKeyType.Decide,() => CallSkillLearning());
         SetInputHandler(skillList.skillActionList.GetComponent<IInputHandlerEvent>());
         SetInputHandler(skillList.skillAttributeList.GetComponent<IInputHandlerEvent>());
         skillList.HideActionList();
@@ -59,11 +61,11 @@ public class StatusView : BaseView ,IInputHandlerEvent
 
         decideButton.onClick.AddListener(() => OnClickDecide());
 
-        actorList.Initialize(
-            () => OnClickLeft(),
-            () => OnClickRight(),
-            () => OnClickDecide(),
-            () => OnClickBack());
+        actorList.Initialize();
+        actorList.SetInputHandler(InputKeyType.SideLeft1,() => OnClickLeft());
+        actorList.SetInputHandler(InputKeyType.SideRight1,() => OnClickRight());
+        actorList.SetInputHandler(InputKeyType.Start,() => OnClickDecide());
+        actorList.SetInputHandler(InputKeyType.Cancel,() => OnClickBack());
         SetInputHandler(actorList.GetComponent<IInputHandlerEvent>());
     }
 
@@ -288,11 +290,15 @@ public class StatusView : BaseView ,IInputHandlerEvent
         _commandData(eventData);
     }
 
-    private void CallSkillLearning(SkillInfo skillInfo)
+    private void CallSkillLearning()
     {
         var eventData = new StatusViewEvent(CommandType.SelectSkillLearning);
-        eventData.templete = skillInfo;
-        _commandData(eventData);
+        var item = skillList.ActionData;
+        if (item != null)
+        {
+            eventData.templete = item;
+            _commandData(eventData);
+        }
     }
 
     public void ShowSkillActionList()

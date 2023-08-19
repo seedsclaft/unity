@@ -235,6 +235,7 @@ public class StatusPresenter
                     _view.CommandSceneChange(Scene.Tactics);
                 }
             } else{
+                Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cancel);
                 _view.ActivateCommandList();
             }
         }

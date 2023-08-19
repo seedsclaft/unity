@@ -14,7 +14,7 @@ public class BattleActorList : ListWindow , IInputHandlerEvent
     private List<int> _targetIndexList = new List<int>();
     private int _selectIndex = -1;
 
-    public void Initialize(int battleActorsCount,System.Action<List<int>> callEvent,System.Action cancelEvent,System.Action enemySelectEvent)
+    public void Initialize(int battleActorsCount,System.Action<List<int>> callEvent)
     {
         damageRoots.ForEach(a => a.SetActive(false));
         InitializeListView(battleActorsCount);
@@ -44,7 +44,7 @@ public class BattleActorList : ListWindow , IInputHandlerEvent
             _battleActors.Add(battleActor);
             ObjectList[i].SetActive(false);
         }
-        SetInputCallHandler((a) => CallInputHandler(a,callEvent,cancelEvent,enemySelectEvent));
+        SetInputCallHandler((a) => CallInputHandler(a,callEvent));
     }
 
     public void Refresh(List<BattlerInfo> battlerInfos)
@@ -157,7 +157,7 @@ public class BattleActorList : ListWindow , IInputHandlerEvent
         return _battleActors[index].BattlerInfoComponent;
     }
     
-    private void CallInputHandler(InputKeyType keyType, System.Action<List<int>> callEvent,System.Action cancelEvent,System.Action enemySelectEvent)
+    private void CallInputHandler(InputKeyType keyType, System.Action<List<int>> callEvent)
     {
         if (keyType == InputKeyType.Decide)
         {
@@ -167,14 +167,6 @@ public class BattleActorList : ListWindow , IInputHandlerEvent
                 return;
             }
             callEvent(MakeTargetIndexs(battlerInfo));
-        }
-        if (keyType == InputKeyType.Cancel)
-        {
-            cancelEvent();
-        }
-        if (keyType == InputKeyType.SideLeft1)
-        {
-            enemySelectEvent();
         }
         if (keyType == InputKeyType.Down)
         {
@@ -215,9 +207,6 @@ public class BattleActorList : ListWindow , IInputHandlerEvent
         {
             for (int i = 0; i < _battleInfos.Count;i++)
             {
-                if (_battleInfos[i].IsAlive())
-                {
-                }
                 indexList.Add(_battleInfos[i].Index);
             }
         } else
@@ -227,25 +216,16 @@ public class BattleActorList : ListWindow , IInputHandlerEvent
             {
                 if (battlerInfo.LineIndex == _battleInfos[i].LineIndex)
                 {
-                    if (_battleInfos[i].IsAlive())
-                    {
-                    }
                     indexList.Add(_battleInfos[i].Index);
                 }
             }
         } else
         if (_targetScopeType == ScopeType.One || _targetScopeType == ScopeType.WithoutSelfOne)
         {
-            if (battlerInfo.IsAlive())
-            {
-            }
             indexList.Add(battlerInfo.Index);
         } else
         if (_targetScopeType == ScopeType.Self)
         {
-            if (battlerInfo.IsAlive())
-            {
-            }
             indexList.Add(battlerInfo.Index);
         }
         return indexList;

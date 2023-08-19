@@ -54,10 +54,10 @@ public class TacticsEnemyList : ListWindow , IInputHandlerEvent
                     _getItemIndex = -1;
                 });
             }
-            tacticsEnemy.SetGetItemCallHandler(() => CallInputHandler(InputKeyType.Decide));
+            tacticsEnemy.SetGetItemCallHandler(() => CallListInputHandler(InputKeyType.Decide));
             tacticsEnemy.SetGetItemSelectHandler((a,b) => UpdateGetItemIndex(a,b));
 
-            tacticsEnemy.SetEnemyInfoCallHandler(() => CallInputHandler(InputKeyType.Option1));
+            tacticsEnemy.SetEnemyInfoCallHandler(() => CallListInputHandler(InputKeyType.Option1));
         }
         SetInputCallHandler((a) => CallInputHandler(a,callEvent));
         //SetCancelEvent(() => cancelEvent());

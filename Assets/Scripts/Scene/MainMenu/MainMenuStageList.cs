@@ -7,7 +7,17 @@ public class MainMenuStageList: ListWindow , IInputHandlerEvent
     private List<StageInfo> _data = new List<StageInfo>();
     [SerializeField] private StageInfoComponent component;
 
-    public void Initialize(List<StageInfo> stages,System.Action<StageInfo> callEvent,System.Action sideMenuEvent)
+    public StageInfo Data{
+        get {
+            if (Index < 0)
+            {
+                return null;
+            }
+            return _data[Index];
+        }
+    }
+
+    public void Initialize(List<StageInfo> stages)
     {
         InitializeListView(stages.Count);
         _data = stages;
@@ -15,10 +25,9 @@ public class MainMenuStageList: ListWindow , IInputHandlerEvent
         {
             MainMenuStage mainMenuStage = ObjectList[i].GetComponent<MainMenuStage>();
             mainMenuStage.SetData(stages[i],i);
-            mainMenuStage.SetCallHandler(callEvent);
+            mainMenuStage.SetCallHandler(() => CallListInputHandler(InputKeyType.Decide));
             mainMenuStage.SetSelectHandler((data) => UpdateSelectIndex(data));
         }
-        SetInputCallHandler((a) => CallInputHandler(a,callEvent,sideMenuEvent));
         UpdateAllItems();
         UpdateSelectIndex(0);
         component.UpdateInfo(_data[Index]);
@@ -27,18 +36,6 @@ public class MainMenuStageList: ListWindow , IInputHandlerEvent
     public override void UpdateHelpWindow(){
         if (component != null){
             component.UpdateInfo(_data[Index]);
-        }
-    }
-
-    private void CallInputHandler(InputKeyType keyType, System.Action<StageInfo> callEvent,System.Action sideMenuEvent)
-    {
-        if (keyType == InputKeyType.Decide)
-        {
-            callEvent(_data[Index]);
-        }
-        if (keyType == InputKeyType.Option1)
-        {
-            sideMenuEvent();
         }
     }
 }

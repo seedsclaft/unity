@@ -6,7 +6,7 @@ public class RebornActorList : ListWindow , IInputHandlerEvent
 {
     private List<ActorInfo> _data = new List<ActorInfo>();
     private List<int> _disableIndexs = new List<int>();
-    public void Initialize(List<ActorInfo> actorInfos,List<int> disableIndexs,System.Action<int> callEvent,System.Action cancelEvent,System.Action updateEvent)
+    public void Initialize(List<ActorInfo> actorInfos,List<int> disableIndexs)
     {
         _data = actorInfos;
         _disableIndexs = disableIndexs;
@@ -14,18 +14,15 @@ public class RebornActorList : ListWindow , IInputHandlerEvent
         for (int i = actorInfos.Count-1; i >= 0;i--)
         {
             RebornActor skillAction = ObjectList[i].GetComponent<RebornActor>();
-            skillAction.SetCallHandler(callEvent);
+            skillAction.SetCallHandler(() => CallInputHandler(InputKeyType.Decide));
             skillAction.SetSelectHandler((data) => 
                 {
                     UpdateSelectIndex(data);
-                    if (updateEvent != null)
-                    {
-                        updateEvent();
-                    }
+                    CallInputHandler(InputKeyType.Down);
                 });
             //ObjectList[i].SetActive(false);
         } 
-        SetInputCallHandler((a) => CallInputHandler(a,callEvent,cancelEvent,updateEvent));
+        SetInputCallHandler((a) => CallInputHandler(a));
     }
 
     public void Refresh()
@@ -51,36 +48,17 @@ public class RebornActorList : ListWindow , IInputHandlerEvent
         UpdateAllItems();
     }
 
-    private void CallInputHandler(InputKeyType keyType, System.Action<int> callEvent,System.Action cancelEvent,System.Action updateEvent)
+    private void CallInputHandler(InputKeyType keyType)
     {
-        if (keyType == InputKeyType.Decide)
-        {
-            if (callEvent != null && Index >= 0 && !_disableIndexs.Contains(Index))
-            {
-                callEvent(Index);
-            }
-        }
-        if (keyType == InputKeyType.Cancel)
-        {
-            cancelEvent();
-        }
         if (Index >= 0)
         {
             if (keyType == InputKeyType.Down)
             {
                 UpdateScrollRect(keyType,3,_data.Count);
-                if (updateEvent != null)
-                {
-                    updateEvent();
-                }
             }
             if (keyType == InputKeyType.Up)
             {
                 UpdateScrollRect(keyType,3,_data.Count);
-                if (updateEvent != null)
-                {
-                    updateEvent();
-                }
             }
         }
     } 

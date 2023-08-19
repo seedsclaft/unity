@@ -13,10 +13,10 @@ public class MainMenuStage : ListItem ,IListViewItem
         SetIndex(index);
     }
 
-    public void SetCallHandler(System.Action<StageInfo> handler)
+    public void SetCallHandler(System.Action handler)
     {
         if (_data == null) return;
-        clickButton.onClick.AddListener(() => handler(_data));
+        clickButton.onClick.AddListener(() => handler());
     }
     
     public void UpdateViewItem()

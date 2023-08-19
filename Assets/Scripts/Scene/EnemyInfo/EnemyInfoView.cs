@@ -62,7 +62,8 @@ public class EnemyInfoView : BaseView,IInputHandlerEvent
 
     private void InitializeSkillActionList()
     {
-        skillList.InitializeAction(null,() => BackEvent(),null,null,null);
+        skillList.InitializeAction();
+        skillList.SetInputHandlerAction(InputKeyType.Cancel,() => BackEvent());
         SetInputHandler(skillList.skillActionList.GetComponent<IInputHandlerEvent>());
         SetInputHandler(skillList.skillAttributeList.GetComponent<IInputHandlerEvent>());
         skillList.HideActionList();

@@ -55,7 +55,9 @@ public class TacticsView : BaseView
     
     private void InitializeSkillActionList()
     {
-        skillList.InitializeAction((a) => CallSkillAction(a),() => OnClickBack(),null,null,null);
+        skillList.InitializeAction();
+        skillList.SetInputHandlerAction(InputKeyType.Decide,() => CallSkillAction());
+        skillList.SetInputHandlerAction(InputKeyType.Cancel,() => OnClickBack());
         SetInputHandler(skillList.skillActionList.GetComponent<IInputHandlerEvent>());
         //SetInputHandler(skillList.skillAttributeList.GetComponent<IInputHandlerEvent>());
         skillList.HideActionList();
@@ -567,11 +569,15 @@ public class TacticsView : BaseView
         _lastCallEventType = eventData.commandType;
     }
 
-    private void CallSkillAction(SkillInfo skillInfo)
+    private void CallSkillAction()
     {
         var eventData = new TacticsViewEvent(CommandType.SelectAlchemySkill);
-        eventData.templete = skillInfo.Id;
-        _commandData(eventData);
+        var item = skillList.ActionData;
+        if (item != null)
+        {
+            eventData.templete = item.Id;
+            _commandData(eventData);
+        }
     }
 
     public void CommandAttributeType(AttributeType attributeType)

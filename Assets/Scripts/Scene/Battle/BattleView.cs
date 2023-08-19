@@ -56,6 +56,7 @@ public class BattleView : BaseView
         HideConditionAll();
 
         skillList.InitializeAttribute((attribute) => CallAttributeTypes(attribute),() => OnClickCondition());
+        
         SetInputHandler(skillList.skillAttributeList.GetComponent<IInputHandlerEvent>());
         skillList.HideAttributeList();
 
@@ -64,18 +65,26 @@ public class BattleView : BaseView
 
     private void InitializeSkillActionList()
     {
-        skillList.InitializeAction(a => CallSkillAction(a),() => OnClickBack(),null,() => OnClickEscape(),() => CallOpenSideMenu());
+        skillList.InitializeAction();
+        skillList.SetInputHandlerAction(InputKeyType.Decide,() => CallSkillAction());
+        skillList.SetInputHandlerAction(InputKeyType.Cancel,() => OnClickBack());
+        skillList.SetInputHandlerAction(InputKeyType.Option1,() => CallOpenSideMenu());
+        skillList.SetInputHandlerAction(InputKeyType.Option2,() => OnClickEscape());
         SetInputHandler(skillList.skillActionList.GetComponent<IInputHandlerEvent>());
         skillList.HideActionList();
         skillList.HideAttributeList();
         sideMenuList.gameObject.SetActive(false);
     }
     
-    private void CallSkillAction(SkillInfo skillInfo)
+    private void CallSkillAction()
     {
         var eventData = new BattleViewEvent(CommandType.SkillAction);
-        eventData.templete = skillInfo;
-        _commandData(eventData);
+        var item = skillList.ActionData;
+        if (item != null)
+        {
+            eventData.templete = item;
+            _commandData(eventData);
+        }
     }
 
     public void HideSkillAction(ActionInfo actionInfo)
@@ -97,7 +106,9 @@ public class BattleView : BaseView
 
     public void CreateObject(int battleActorsCount)
     {
-        battleActorList.Initialize(battleActorsCount,actorInfo => CallActorList(actorInfo),() => OnClickBack(),() => OnClickSelectEnemy());
+        battleActorList.Initialize(battleActorsCount,a => CallActorList(a));
+        battleActorList.SetInputHandler(InputKeyType.Cancel,() => OnClickBack());
+        battleActorList.SetInputHandler(InputKeyType.SideLeft1,() => OnClickSelectEnemy());
         SetInputHandler(battleActorList.GetComponent<IInputHandlerEvent>());
         battleActorList.Deactivate();
         
@@ -201,7 +212,10 @@ public class BattleView : BaseView
     
     public void SetEnemies(List<BattlerInfo> battlerInfos)
     {
-        battleEnemyLayer.Initialize(battlerInfos,(a) => CallEnemyInfo(a),() => OnClickBack(),() => OnClickSelectParty(),(a) => CallEnemyDetailInfo(a));
+        battleEnemyLayer.Initialize(battlerInfos,(a) => CallEnemyInfo(a));
+        battleEnemyLayer.SetInputHandler(InputKeyType.Cancel,() => OnClickBack());
+        battleEnemyLayer.SetInputHandler(InputKeyType.SideRight1,() => OnClickSelectParty());
+        battleEnemyLayer.SetInputHandler(InputKeyType.Option1,() => CallEnemyDetailInfo(battlerInfos));
         SetInputHandler(battleEnemyLayer.GetComponent<IInputHandlerEvent>());
         foreach (var item in battlerInfos)
         {
@@ -218,12 +232,17 @@ public class BattleView : BaseView
         _commandData(eventData);
     }
 
-    private void CallEnemyDetailInfo(int enemyIndex)
+    private void CallEnemyDetailInfo(List<BattlerInfo> battlerInfos)
     {
         if (_animationBusy) return;
         var eventData = new BattleViewEvent(CommandType.EnemyDetail);
-        eventData.templete = enemyIndex;
-        _commandData(eventData);
+        var selectedIndex = battleEnemyLayer.SelectedIndex;
+        BattlerInfo battlerInfo = battlerInfos.Find(a => a.Index == selectedIndex);
+        if (battlerInfo != null)
+        {
+            eventData.templete = selectedIndex;
+            _commandData(eventData);
+        }
     }
 
     private void CallActorList(List<int> indexList)

@@ -324,6 +324,10 @@ public class BattlePresenter : BasePresenter
 
     private void CommandSkillAction(SkillInfo skillInfo)
     {
+        if (skillInfo.Enable == false)
+        {
+            return;
+        }
         _model.ClearActionInfo();
         _model.SetLastSkill(skillInfo.Id);
         Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);

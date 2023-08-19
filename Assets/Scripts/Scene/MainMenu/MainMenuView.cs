@@ -46,14 +46,20 @@ public class MainMenuView : BaseView
     }
     
     public void SetStagesData(List<StageInfo> stages){
-        stageList.Initialize(stages,(stageInfo) => CallMainMenuStage(stageInfo),() => CallOpenSideMenu());
+        stageList.Initialize(stages);
+        stageList.SetInputHandler(InputKeyType.Decide,() => CallMainMenuStage());
+        stageList.SetInputHandler(InputKeyType.Option1,() => CallOpenSideMenu());
         SetInputHandler(stageList.GetComponent<IInputHandlerEvent>());
     }
     
-    private void CallMainMenuStage(StageInfo stage){
+    private void CallMainMenuStage(){
         var eventData = new MainMenuViewEvent(CommandType.StageSelect);
-        eventData.templete = stage.Id;
-        _commandData(eventData);
+        var item = stageList.Data;
+        if (item != null)
+        {
+            eventData.templete = item.Id;
+            _commandData(eventData);
+        }
     }
 
     private void OnClickRuling(){

@@ -6,7 +6,7 @@ public class RebornSkillList : ListWindow , IInputHandlerEvent
 {
     private List<SkillInfo> _data = new List<SkillInfo>();
     public List<SkillInfo> Data => _data;
-    public void Initialize(List<SkillInfo> actorInfos,System.Action pageUpEvent,System.Action pageDownEvent)
+    public void Initialize(List<SkillInfo> actorInfos)
     {
         _data = actorInfos;
         InitializeListView(actorInfos.Count);
@@ -17,7 +17,6 @@ public class RebornSkillList : ListWindow , IInputHandlerEvent
             });
             skillAction.SetSelectHandler((data) => UpdateSelectIndex(data));
         }
-        SetInputCallHandler((a) => CallInputHandler(a,pageUpEvent,pageDownEvent));
     }
 
     public void Refresh()
@@ -36,33 +35,6 @@ public class RebornSkillList : ListWindow , IInputHandlerEvent
         UpdateSelectIndex(0);
         UpdateAllItems();
     }
-
-    private void CallInputHandler(InputKeyType keyType,System.Action pageUpEvent,System.Action pageDownEvent)
-    {
-        if (keyType == InputKeyType.Decide)
-        {
-        }
-        if (keyType == InputKeyType.Cancel)
-        {
-        }
-        if (Index >= 0)
-        {
-            if (keyType == InputKeyType.SideLeft1)
-            {
-                if (pageUpEvent != null)
-                {
-                    pageUpEvent();
-                }
-            }
-            if (keyType == InputKeyType.SideRight1)
-            {
-                if (pageDownEvent != null)
-                {
-                    pageDownEvent();
-                }
-            }
-        }
-    } 
 
     public override void RefreshListItem(GameObject gameObject, int itemIndex)
     {

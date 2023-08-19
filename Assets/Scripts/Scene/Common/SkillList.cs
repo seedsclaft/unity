@@ -8,6 +8,12 @@ public class SkillList : MonoBehaviour
     [SerializeField] private GameObject skillListRoot;
     public SkillActionList skillActionList;
     public SkillAttributeList skillAttributeList;
+
+    public SkillInfo ActionData{
+        get {
+            return skillActionList.Data;
+        }
+    }
     public void Initialize()
     {
         GameObject prefab = Instantiate(skillListPrefab);
@@ -20,15 +26,25 @@ public class SkillList : MonoBehaviour
     {
         skillAttributeList.Initialize(callEvent,conditionEvent);
     }
-
-    public void InitializeAction(System.Action<SkillInfo> callEvent,System.Action cancelEvent,System.Action<SkillInfo> learningEvent,System.Action escapeEvent,System.Action optionEvent)
+    
+    public void SetInputHandlerAttribute(InputKeyType keyType,System.Action callEvent)
     {
-        skillActionList.Initialize(callEvent,cancelEvent,learningEvent,escapeEvent,optionEvent);
+        skillAttributeList.SetInputHandler(keyType,callEvent);
+    }
+
+    public void InitializeAction()
+    {
+        skillActionList.Initialize();
     }
 
     public void SetSkillInfos(List<SkillInfo> skillInfoData)
     {
         skillActionList.SetSkillInfos(skillInfoData);
+    }
+
+    public void SetInputHandlerAction(InputKeyType keyType,System.Action callEvent)
+    {
+        skillActionList.SetInputHandler(keyType,callEvent);
     }
 
     public void RefreshAction(int selectIndex = 0)
