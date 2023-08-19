@@ -351,6 +351,9 @@ MonoBehaviour:
   - Id: 704
     Text: "\u9694\u4E16\u96E2\u8131"
     Help: '""'
+  - Id: 705
+    Text: "\u7DE8\u6210\u8FF0\u61D0"
+    Help: '""'
   - Id: 800
     Text: '""'
     Help: '""'
@@ -413,6 +416,12 @@ MonoBehaviour:
     Help: '""'
   - Id: 820
     Text: "\u601D\u5FF5\u9078\u629E\u79FB\u52D5"
+    Help: '""'
+  - Id: 821
+    Text: "\u4FDD\u6301\u5207\u66FF"
+    Help: '""'
+  - Id: 822
+    Text: "\u30B9\u30C6\u30FC\u30BF\u30B9\u78BA\u8A8D"
     Help: '""'
   - Id: 1000
     Text: (Nu)
@@ -638,6 +647,15 @@ MonoBehaviour:
     Help: '""'
   - Id: 17030
     Text: "\u601D\u5FF5\u7D99\u627F\u4E2D\u2026"
+    Help: '""'
+  - Id: 18010
+    Text: "\u8EE2\u751F\u3057\u305F\u8853\u8005\u3092\u78BA\u8A8D\u3057\u307E\u3059"
+    Help: '""'
+  - Id: 18020
+    Text: "\u4FDD\u6301\u3055\u308C\u3066\u3044\u307E\u3059"
+    Help: '""'
+  - Id: 18030
+    Text: "\u767B\u9332\u3055\u308C\u3066\u3044\u307E\u305B\u3093"
     Help: '""'
   InputDataList:
   - Key: TITLE
@@ -1064,5 +1082,20 @@ MonoBehaviour:
     KeyId: 1
     Name: "\u30AB\u30FC\u30BD\u30EB\u79FB\u52D5"
   - Key: REBORN
+    KeyId: 0
+    Name: '""'
+  - Key: SLOT
+    KeyId: 5
+    Name: "\u623B\u308B"
+  - Key: SLOT
+    KeyId: 6
+    Name: "\u30B9\u30C6\u30FC\u30BF\u30B9\u78BA\u8A8D"
+  - Key: SLOT
+    KeyId: 4
+    Name: "\u4FDD\u6301\u5207\u66FF"
+  - Key: SLOT
+    KeyId: 1
+    Name: "\u30AB\u30FC\u30BD\u30EB\u79FB\u52D5"
+  - Key: SLOT
     KeyId: 0
     Name: '""'

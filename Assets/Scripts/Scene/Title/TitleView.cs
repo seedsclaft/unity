@@ -67,7 +67,9 @@ public class TitleView : BaseView ,IInputHandlerEvent
     }
 
     public void SetTitleCommand(List<SystemData.MenuCommandData> menuCommands){
-        commandList.Initialize(menuCommands,(a) => CallTitleCommand(a),() => CallOpenSideMenu());
+        commandList.Initialize(menuCommands);
+        commandList.SetInputHandler(InputKeyType.Decide,() => CallTitleCommand());
+        commandList.SetInputHandler(InputKeyType.Option1,() => CallOpenSideMenu());
         SetInputHandler(commandList.GetComponent<IInputHandlerEvent>());
         commandList.Deactivate();
     }
@@ -115,10 +117,14 @@ public class TitleView : BaseView ,IInputHandlerEvent
         commandList.UpdateHelpWindow();
     }
 
-    private void CallTitleCommand(TitleComandType commandType){
+    private void CallTitleCommand(){
         var eventData = new TitleViewEvent(CommandType.TitleCommand);
-        eventData.templete = commandType;
-        _commandData(eventData);
+        var item = commandList.Data;
+        if (item != null)
+        {
+            eventData.templete = item.Id;
+            _commandData(eventData);
+        }
     }
 
     private void CallOpenSideMenu()

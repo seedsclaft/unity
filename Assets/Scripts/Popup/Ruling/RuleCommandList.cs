@@ -39,7 +39,7 @@ public class RuleCommandList : ListWindow , IInputHandlerEvent
                 });
             //ObjectList[i].SetActive(false);
         }
-        SetInputCallHandler((a) => CallInputHandler(a));
+        SetInputCallHandler((a) => CallSelectHandler(a));
         SetMenuCommandDatas(command);
     }
 
@@ -65,7 +65,7 @@ public class RuleCommandList : ListWindow , IInputHandlerEvent
         UpdateAllItems();
     }
 
-    private void CallInputHandler(InputKeyType keyType)
+    private void CallSelectHandler(InputKeyType keyType)
     {
         if (Index >= 0)
         {

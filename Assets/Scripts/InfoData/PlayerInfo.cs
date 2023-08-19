@@ -14,6 +14,14 @@ public class PlayerInfo
     private List<ActorInfo> _saveActorList = new ();
     public List<ActorInfo> SaveActorList => _saveActorList;
 
+    private Dictionary<int, SlotInfo> _saveSlotDict = new ();
+    public Dictionary<int, SlotInfo> GetSaveSlotDict()
+    {
+        InitSlotInfo();
+        return _saveSlotDict;
+    }
+    readonly int _saveSlotCount = 10;
+
     public void SetPlayerName(string name)
     {
         _playerName = name;
@@ -49,5 +57,59 @@ public class PlayerInfo
     public void EraseReborn(int index)
     {
         _saveActorList.RemoveAt(index);
+    }
+    
+    private void InitSlotInfo()
+    {
+        if (_saveSlotDict.Count != 0)
+        {
+            return;
+        }
+        _saveSlotDict = new ();
+        for (int i = 0;i < _saveSlotCount;i++)
+        {
+            var slotInfo = new SlotInfo(new List<ActorInfo>(){},0);
+            _saveSlotDict[i] = slotInfo;
+        }
+    }
+    
+    public void SaveSlotData(List<ActorInfo> actorInfos,int score)
+    {
+        InitSlotInfo();
+        var slotInfo = new SlotInfo(actorInfos,score);
+        var index = -1;
+        var find = false;
+        foreach (var saveSlotDict in _saveSlotDict)
+        {
+            if (saveSlotDict.Value.ActorInfos.Count == 0)
+            {
+                find = true;
+                index++;
+                break;
+            }
+            index++;
+        }
+        if (find == false)
+        {
+            index = -1;
+            foreach (var saveSlotDict in _saveSlotDict)
+            {
+                if (saveSlotDict.Value.IsLocked == false)
+                {
+                    find = true;
+                    index++;
+                    break;
+                }
+                index++;
+            }
+
+        }
+        slotInfo.SetTimeRecord();
+        UpdateSlotInfo(index,slotInfo);
+    }
+
+    private void UpdateSlotInfo(int slotId,SlotInfo slotInfo)
+    {
+        _saveSlotDict[slotId] = slotInfo;
     }
 }

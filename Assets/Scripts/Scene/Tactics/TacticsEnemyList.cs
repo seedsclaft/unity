@@ -1,11 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
-using UnityEngine.Events;
-using UnityEngine.UI;
-using UnityEngine.AddressableAssets;
-using TMPro;
 
 public class TacticsEnemyList : ListWindow , IInputHandlerEvent
 {
@@ -14,8 +9,36 @@ public class TacticsEnemyList : ListWindow , IInputHandlerEvent
     [SerializeField] private int cols = 0;
     private List<TroopInfo> _troopInfos = new List<TroopInfo>();
 
+    private bool _disableLeftRight = false;
+    public void SetDisableLeftRight() { _disableLeftRight = true;}
+    public int EnemyIndex
+    {
+        get {
+            if (_getItemIndex < 0)
+            {
+                return Index;
+            }
+            return -1;
+        }
+    }
+
+    public GetItemInfo GetItemInfo
+    {
+        get {
+            if (_getItemIndex > -1)
+            {
+                var data = _troopInfos[Index].GetItemInfos[_getItemIndex];
+                if (data.IsSkill() || data.IsAttributeSkill())
+                {
+                    return data;
+                }
+            }
+            return null;
+        }
+    }
+
     private int _getItemIndex = -1;
-    public void Initialize(System.Action<int> callEvent,System.Action cancelEvent,System.Action<GetItemInfo> getItemEvent,System.Action<int> enemyInfoEvent)
+    public void Initialize(System.Action<int> callEvent)
     {
         InitializeListView(cols);
         for (int i = 0; i < cols;i++)
@@ -28,20 +51,16 @@ public class TacticsEnemyList : ListWindow , IInputHandlerEvent
                 {
                     SetUnselectGetItem();
                     UpdateSelectIndex(data);
+                    _getItemIndex = -1;
                 });
             }
-            if (getItemEvent != null)
-            {
-                tacticsEnemy.SetGetItemCallHandler(getItemEvent);
-                tacticsEnemy.SetGetItemSelectHandler((a,b) => UpdateGetItemIndex(a,b));
-            }
-            if (enemyInfoEvent != null)
-            {
-                tacticsEnemy.SetEnemyInfoCallHandler(enemyInfoEvent);
-            }
+            tacticsEnemy.SetGetItemCallHandler(() => CallInputHandler(InputKeyType.Decide));
+            tacticsEnemy.SetGetItemSelectHandler((a,b) => UpdateGetItemIndex(a,b));
+
+            tacticsEnemy.SetEnemyInfoCallHandler(() => CallInputHandler(InputKeyType.Option1));
         }
-        SetInputCallHandler((a) => CallInputHandler(a,callEvent,cancelEvent,getItemEvent,enemyInfoEvent));
-        SetCancelEvent(() => cancelEvent());
+        SetInputCallHandler((a) => CallInputHandler(a,callEvent));
+        //SetCancelEvent(() => cancelEvent());
     }
 
     public void Refresh(List<TroopInfo> troopInfos)
@@ -64,9 +83,9 @@ public class TacticsEnemyList : ListWindow , IInputHandlerEvent
         SetUnselectGetItem();
     }
 
-    public void InitializeConfirm(List<SystemData.MenuCommandData> confirmCommands ,System.Action<TacticsComandType> callEvent,System.Action<int> enemyInfoEvent)
+    public void InitializeConfirm(List<SystemData.MenuCommandData> confirmCommands ,System.Action<TacticsComandType> callEvent)
     {
-        tacticsCommandList.Initialize(callEvent,null,null,null,enemyInfoEvent);
+        tacticsCommandList.Initialize(callEvent);
         tacticsCommandList.Refresh(confirmCommands);
     }
 
@@ -76,14 +95,7 @@ public class TacticsEnemyList : ListWindow , IInputHandlerEvent
         UpdateAllItems();
     }
 
-    public override void UpdateHelpWindow(){
-        if (_helpWindow != null)
-        {
-            //_helpWindow.SetHelpText(_data[Index].Help);
-        }
-    }
-
-    private void CallInputHandler(InputKeyType keyType, System.Action<int> callEvent,System.Action cancelEvent,System.Action<GetItemInfo> getItemEvent,System.Action<int> enemyInfoEvent)
+    private void CallInputHandler(InputKeyType keyType, System.Action<int> callEvent)
     {
         if (keyType == InputKeyType.Decide)
         {
@@ -91,35 +103,13 @@ public class TacticsEnemyList : ListWindow , IInputHandlerEvent
             {
                 callEvent(Index);
             }
-
-            if (getItemEvent != null && _getItemIndex > -1)
-            {
-                if (_troopInfos[Index].GetItemInfos[_getItemIndex].IsSkill())
-                {
-                    getItemEvent(_troopInfos[Index].GetItemInfos[_getItemIndex]);
-                }
-                if (_troopInfos[Index].GetItemInfos[_getItemIndex].IsAttributeSkill())
-                {
-                    getItemEvent(_troopInfos[Index].GetItemInfos[_getItemIndex]);
-                }
-            }
         }
-        if (keyType == InputKeyType.Cancel)
+        if (_disableLeftRight)
         {
-            if (cancelEvent != null)
-            cancelEvent();
+            UpdateSelectIndex(-1);
+            return;
         }
 
-        if (keyType == InputKeyType.Option1)
-        {
-            if (_getItemIndex < 0)
-            {
-                if (enemyInfoEvent != null && Index >= 0)
-                {
-                    enemyInfoEvent(Index);
-                }
-            }
-        }
         if (keyType == InputKeyType.Left || keyType == InputKeyType.Right)
         {            
             _getItemIndex = -1;

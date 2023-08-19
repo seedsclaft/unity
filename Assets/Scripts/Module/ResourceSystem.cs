@@ -103,4 +103,5 @@ public enum Scene
     Result,
     Reborn,
     RebornResult,
+    Slot,
 }

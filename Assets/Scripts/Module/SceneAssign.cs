@@ -16,6 +16,7 @@ public class SceneAssign : MonoBehaviour
     [SerializeField] private GameObject resultScene = null;
     [SerializeField] private GameObject rebornScene = null;
     [SerializeField] private GameObject rebornResultScene = null;
+    [SerializeField] private GameObject slotScene = null;
 
     public GameObject CreateScene(Scene scene)
     {
@@ -50,6 +51,8 @@ public class SceneAssign : MonoBehaviour
             return rebornScene;
             case Scene.RebornResult:
             return rebornResultScene;
+            case Scene.Slot:
+            return slotScene;
         }
         return null;
     }

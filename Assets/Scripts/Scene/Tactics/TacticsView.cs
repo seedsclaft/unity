@@ -66,7 +66,10 @@ public class TacticsView : BaseView
     public void SetUIButton()
     {
         CreateBackCommand(() => OnClickBack());
-        tacticsEnemyList.Initialize((a) => CallBattleEnemy(a),() => OnClickBack(),(a) => CallPopupSkillInfo(a),(a) => OnClickEnemyInfo(a));
+        tacticsEnemyList.Initialize((a) => CallBattleEnemy(a));
+        tacticsEnemyList.SetInputHandler(InputKeyType.Decide,() => CallPopupSkillInfo());
+        tacticsEnemyList.SetInputHandler(InputKeyType.Option1,() => OnClickEnemyInfo());
+        tacticsEnemyList.SetInputHandler(InputKeyType.Cancel,() => OnClickBack());
         SetInputHandler(tacticsEnemyList.GetComponent<IInputHandlerEvent>());
     }
 
@@ -138,7 +141,10 @@ public class TacticsView : BaseView
 
     public void SetTacticsCommand(List<SystemData.MenuCommandData> menuCommands)
     {
-        tacticsCommandList.Initialize((a) => CallTacticsCommand(a),() => CallOpenSideMenu(),() => OnClickDropout(),() => CallAlcanaEvent());
+        tacticsCommandList.Initialize((a) => CallTacticsCommand(a));
+        tacticsCommandList.SetInputHandler(InputKeyType.Option1,() => CallOpenSideMenu());
+        tacticsCommandList.SetInputHandler(InputKeyType.SideLeft1,() => OnClickDropout());
+        tacticsCommandList.SetInputHandler(InputKeyType.Option2,() => CallAlcanaEvent());
         tacticsCommandList.SetHelpWindow(HelpWindow);
         tacticsCommandList.Refresh(menuCommands);
         SetInputHandler(tacticsCommandList.GetComponent<IInputHandlerEvent>());
@@ -406,18 +412,26 @@ public class TacticsView : BaseView
         _lastCallEventType = eventData.commandType;
     }
 
-    private void CallPopupSkillInfo(GetItemInfo getItemInfo)
+    private void CallPopupSkillInfo()
     {
         var eventData = new TacticsViewEvent(CommandType.PopupSkillInfo);
-        eventData.templete = getItemInfo;
-        _commandData(eventData);
+        var item = tacticsEnemyList.GetItemInfo;
+        if (item != null)
+        {
+            eventData.templete = item;
+            _commandData(eventData);
+        }
     }
 
-    private void OnClickEnemyInfo(int enemyIndex)
+    private void OnClickEnemyInfo()
     {
         var eventData = new TacticsViewEvent(CommandType.CallEnemyInfo);
-        eventData.templete = enemyIndex;
-        _commandData(eventData);
+        var item = tacticsEnemyList.EnemyIndex;
+        if (item > -1)
+        {
+            eventData.templete = item;
+            _commandData(eventData);
+        }
     }
 
     public void ShowEnemyList()

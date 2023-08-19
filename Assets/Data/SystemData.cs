@@ -82,9 +82,8 @@ public enum TacticsComandType {
 }
 
 public enum TitleComandType {
-	NewGame = 0,
+	NewGame = 1,
 	Continue,
-	Option
 }
 
 

@@ -13,13 +13,13 @@ public class TitleCommand : ListItem ,IListViewItem
         SetIndex(index);
     }
 
-    public void SetCallHandler(System.Action<TitleComandType> handler)
+    public void SetCallHandler(System.Action handler)
     {
         if (_data == null) return;
         clickButton.onClick.AddListener(() => 
         {
             if (Disable.activeSelf) return;
-            handler((TitleComandType)Index);
+            handler();
         });
     }
 

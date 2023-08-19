@@ -41,6 +41,11 @@ public class MainMenuModel : BaseModel
         ranking.Name = DataSystem.System.GetTextData(702).Text;
         ranking.Key = "Ranking";
         list.Add(ranking);
+        var slot = new SystemData.MenuCommandData();
+        slot.Id = 0;
+        slot.Name = DataSystem.System.GetTextData(705).Text;
+        slot.Key = "Slot";
+        list.Add(slot);
         return list;
     }
 }

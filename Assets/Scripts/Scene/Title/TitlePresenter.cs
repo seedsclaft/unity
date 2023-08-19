@@ -106,13 +106,8 @@ public class TitlePresenter : BasePresenter
                 _view.CommandSceneChange(Scene.MainMenu);
             }
             break;
-            case TitleComandType.Option:
-            _view.CommandCallOption(() => {
-                _busy = false;
-            });
-            break;
         }
-            Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
+        Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
     }
 
     private void CommandCredit()
@@ -136,10 +131,10 @@ public class TitlePresenter : BasePresenter
     }
 
     private void CommandRefresh(){
-        int selectIndex = (int)TitleComandType.NewGame;
+        int selectIndex = 0;
         if (_model.ExistsLoadFile())
         {
-            selectIndex = (int)TitleComandType.Continue;
+            selectIndex = 1;
         } else
         {
             _view.SetCommandDisable(1);

@@ -205,6 +205,7 @@ public class ResultPresenter : BasePresenter
     }
     private void CommandEndGame()
     {
+        _model.SaveSlotData();
         _model.SetResumeStageFalse();
         _view.CommandSceneChange(Scene.MainMenu);
     }

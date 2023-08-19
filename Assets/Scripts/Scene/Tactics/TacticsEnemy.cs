@@ -11,9 +11,8 @@ public class TacticsEnemy : ListItem ,IListViewItem
     [SerializeField] private Button enemyInfoButton;
     private BattlerInfo _enemyInfo;
     private bool _cursorDeactive = false;
-    private new void Awake() {
-        getItemList.Initialize();
-    }
+    private System.Action _getItemHandler = null;
+    private System.Action<TacticsEnemy,int> _itemSelectHandler = null;
 
     public void SetData(BattlerInfo data,int index){
         _enemyInfo = data;
@@ -23,6 +22,26 @@ public class TacticsEnemy : ListItem ,IListViewItem
     public void SetGetItemList(List<GetItemInfo> getItemInfos)
     {
         getItemList.Refresh(getItemInfos);
+        if (_getItemHandler != null)
+        {
+            foreach (var gameObjectList in getItemList.ObjectList)
+            {
+                GetItem getItem = gameObjectList.GetComponent<GetItem>();
+                getItem.SetCallHandler((a) => {
+                    _getItemHandler();
+                });
+            }
+        }
+        if (_itemSelectHandler != null)
+        {
+            foreach (var gameObjectList in getItemList.ObjectList)
+            {
+                GetItem getItem = gameObjectList.GetComponent<GetItem>();
+                getItem.SetSelectHandler((a) => {
+                    _itemSelectHandler(this,a);
+                });
+            }
+        }
         getItemList.gameObject.SetActive(true);
     }
 
@@ -31,8 +50,10 @@ public class TacticsEnemy : ListItem ,IListViewItem
         clickButton.onClick.AddListener(() => handler((int)Index));
     }
 
-    public void SetGetItemCallHandler(System.Action<GetItemInfo> handler)
+    public void SetGetItemCallHandler(System.Action handler)
     {
+        _getItemHandler = handler;
+        /*
         foreach (var gameObjectList in getItemList.ObjectList)
         {
             GetItem getItem = gameObjectList.GetComponent<GetItem>();
@@ -42,10 +63,13 @@ public class TacticsEnemy : ListItem ,IListViewItem
                 }
             });
         }
+        */
     }
 
     public void SetGetItemSelectHandler(System.Action<TacticsEnemy,int> handler)
     {
+        _itemSelectHandler = handler;
+        /*
         foreach (var gameObjectList in getItemList.ObjectList)
         {
             GetItem getItem = gameObjectList.GetComponent<GetItem>();
@@ -53,11 +77,12 @@ public class TacticsEnemy : ListItem ,IListViewItem
                 handler(this,a);
             });
         }
+        */
     }
 
-    public void SetEnemyInfoCallHandler(System.Action<int> handler)
+    public void SetEnemyInfoCallHandler(System.Action handler)
     {
-        enemyInfoButton.onClick.AddListener(() => handler((int)Index));
+        enemyInfoButton.onClick.AddListener(() => handler());
     }
 
     public void UpdateViewItem()

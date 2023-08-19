@@ -444,4 +444,9 @@ public class ResultModel : BaseModel
     {
         CurrentData.PlayerInfo.EraseReborn(_rebornActorIndex);
     }
+
+    public void SaveSlotData()
+    {
+        CurrentData.PlayerInfo.SaveSlotData(EvaluateMembers(),TotalEvaluate());
+    }
 }

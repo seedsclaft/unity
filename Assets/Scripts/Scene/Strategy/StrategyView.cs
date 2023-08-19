@@ -81,8 +81,11 @@ public class StrategyView : BaseView
 
     public void SetEnemyList(List<SystemData.MenuCommandData> confirmCommands)
     {
-        tacticsEnemyList.Initialize(null,null,(a) => CallPopupSkillInfo(a),(a) => OnClickEnemyInfo(a));
-        tacticsEnemyList.InitializeConfirm(confirmCommands,(a) => CallBattleCommand(a),(a) => OnClickEnemyInfo(a));
+        tacticsEnemyList.Initialize(null);
+        //tacticsEnemyList.SetInputHandler(InputKeyType.Decide,() => CallPopupSkillInfo());
+        tacticsEnemyList.SetInputHandler(InputKeyType.Option1,() => OnClickEnemyInfo());
+        SetInputHandler(tacticsEnemyList.GetComponent<IInputHandlerEvent>());
+        tacticsEnemyList.InitializeConfirm(confirmCommands,(a) => CallBattleCommand(a));
         SetInputHandler(tacticsEnemyList.TacticsCommandList.GetComponent<IInputHandlerEvent>());
         tacticsEnemyList.gameObject.SetActive(false);
         tacticsEnemyList.Deactivate();
@@ -182,17 +185,22 @@ public class StrategyView : BaseView
         tacticsEnemyList.TacticsCommandList.Activate();
         tacticsEnemyList.TacticsCommandList.UpdateSelectIndex(1);
         tacticsEnemyList.UpdateSelectIndex(-1);
+        tacticsEnemyList.SetDisableLeftRight();
         HelpWindow.SetInputInfo("STRATEGY_BATTLE");
     }
 
-    private void CallPopupSkillInfo(GetItemInfo getItemInfo)
+    private void CallPopupSkillInfo()
     {
         var eventData = new StrategyViewEvent(CommandType.PopupSkillInfo);
-        eventData.templete = getItemInfo;
-        _commandData(eventData);
+        var item = tacticsEnemyList.GetItemInfo;
+        if (item != null)
+        {
+            eventData.templete = item;
+            _commandData(eventData);
+        }
     }
 
-    private void OnClickEnemyInfo(int enemyIndex)
+    private void OnClickEnemyInfo()
     {
         var eventData = new StrategyViewEvent(CommandType.CallEnemyInfo);
         _commandData(eventData);

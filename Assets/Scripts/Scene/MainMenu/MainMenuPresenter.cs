@@ -122,6 +122,11 @@ public class MainMenuPresenter : BasePresenter
         });
     }
 
+    private void CommandSlotPopup()
+    {
+        _view.CommandSceneChange(Scene.Slot);
+    }
+
     private void CommandOpenSideMenu()
     {
         _view.CommandOpenSideMenu();
@@ -141,6 +146,10 @@ public class MainMenuPresenter : BasePresenter
         if (sideMenu.Key == "Ranking")
         {
             CommandRankingPopup();
+        }
+        if (sideMenu.Key == "Slot")
+        {
+            CommandSlotPopup();
         }
     }    
     

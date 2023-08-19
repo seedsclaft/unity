@@ -37,13 +37,9 @@ public class RankingView : BaseView,IInputHandlerEvent
 
     public void SetRankingInfo(List<RankingInfo> rankingInfo) 
     {
-        rankingInfoList.Initialize(rankingInfo,CallCancel);
+        rankingInfoList.Initialize(rankingInfo);
     }
 
-    private void CallCancel()
-    {
-
-    }
 
     public void InputHandler(InputKeyType keyType)
     {

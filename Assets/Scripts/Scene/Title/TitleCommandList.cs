@@ -6,8 +6,16 @@ public class TitleCommandList : ListWindow , IInputHandlerEvent
 {
     [SerializeField] private int rows = 0;
     private List<SystemData.MenuCommandData> _data = new List<SystemData.MenuCommandData>();
-
-    public void Initialize(List<SystemData.MenuCommandData> menuCommands ,System.Action<TitleComandType> callEvent,System.Action optionEvent)
+    public SystemData.MenuCommandData Data {
+        get {
+            if (Index >= 0)
+            {
+                return _data[Index];
+            }
+            return null;
+        }
+    }
+    public void Initialize(List<SystemData.MenuCommandData> menuCommands)
     {
         InitializeListView(rows);
         _data = menuCommands;
@@ -15,10 +23,9 @@ public class TitleCommandList : ListWindow , IInputHandlerEvent
         {
             var titleCommand = ObjectList[i].GetComponent<TitleCommand>();
             titleCommand.SetData(menuCommands[i],i);
-            titleCommand.SetCallHandler(callEvent);
+            titleCommand.SetCallHandler(() => CallInputHandler(InputKeyType.Decide));
             titleCommand.SetSelectHandler((data) => UpdateSelectIndex(data));
         }
-        SetInputCallHandler((a) => CallInputHandler(a,callEvent,optionEvent));
         UpdateAllItems();
         UpdateSelectIndex(0);
     }
@@ -36,27 +43,6 @@ public class TitleCommandList : ListWindow , IInputHandlerEvent
             _helpWindow.SetInputInfo("TITLE");
         }
     }
-
-    private void CallInputHandler(InputKeyType keyType, System.Action<TitleComandType> callEvent,System.Action optionEvent)
-    {
-        if (keyType == InputKeyType.Decide)
-        {
-            callEvent((TitleComandType)Index);
-        }
-        if (keyType == InputKeyType.Option1)
-        {
-            optionEvent();
-        }
-    }
-
-    public override void RefreshListItem(GameObject gameObject, int itemIndex)
-    {
-        base.RefreshListItem(gameObject,itemIndex);
-        var titleCommand = gameObject.GetComponent<TitleCommand>();
-        titleCommand.SetData(_data[itemIndex],itemIndex);
-        titleCommand.UpdateViewItem();
-    }
-
 
     public void SetDisable(SystemData.MenuCommandData menuCommandData,bool IsDisable)
     {

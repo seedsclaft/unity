@@ -9,7 +9,7 @@ public class TacticsCommandList : ListWindow , IInputHandlerEvent
     [SerializeField] private int cols = 0;
     private List<SystemData.MenuCommandData> _menuCommands = new List<SystemData.MenuCommandData>();
 
-    public void Initialize(System.Action<TacticsComandType> callEvent,System.Action optionEvent = null,System.Action retireEvent = null,System.Action alcanaEvent = null,System.Action<int> enemyInfoEvent = null)
+    public void Initialize(System.Action<TacticsComandType> callEvent)
     {
         InitializeListView(cols);
         for (int i = 0; i < cols;i++)
@@ -18,7 +18,7 @@ public class TacticsCommandList : ListWindow , IInputHandlerEvent
             TacticsCommand.SetCallHandler(callEvent);
             TacticsCommand.SetSelectHandler((data) => UpdateSelectIndex(data));
         }
-        SetInputCallHandler((a) => CallInputHandler(a,callEvent,optionEvent,retireEvent,alcanaEvent,enemyInfoEvent));
+        SetInputCallHandler((a) => CallInputHandler(a,callEvent));
     }
 
     public void Refresh(List<SystemData.MenuCommandData> menuCommands)
@@ -67,38 +67,13 @@ public class TacticsCommandList : ListWindow , IInputHandlerEvent
         }
     }
 
-    private void CallInputHandler(InputKeyType keyType, System.Action<TacticsComandType> callEvent,System.Action optionEvent,System.Action retireEvent,System.Action alcanaEvent,System.Action<int> enemyInfoEvent)
+    private void CallInputHandler(InputKeyType keyType, System.Action<TacticsComandType> callEvent)
     {
         if (keyType == InputKeyType.Decide && Index > -1)
         {
             TacticsCommand tacticsCommand = ObjectList[Index].GetComponent<TacticsCommand>();
             if (tacticsCommand.Disable.gameObject.activeSelf) return;
             callEvent((TacticsComandType)_menuCommands[Index].Id);
-        }
-        if (keyType == InputKeyType.Option1)
-        {
-            if (optionEvent != null)
-            {
-                optionEvent();
-            }
-            if (enemyInfoEvent != null)
-            {
-                enemyInfoEvent(0);
-            }
-        }
-        if (keyType == InputKeyType.SideLeft1)
-        {
-            if (retireEvent != null)
-            {
-                retireEvent();
-            }
-        }
-        if (keyType == InputKeyType.Option2)
-        {
-            if (alcanaEvent != null)
-            {
-                alcanaEvent();
-            }
         }
     }
 }
