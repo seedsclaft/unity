@@ -6,7 +6,6 @@ using UnityEngine.UI;
 
 public class StatusConditionList : ListWindow , IInputHandlerEvent
 {
-    [SerializeField] private int rows = 0;
     [SerializeField] private Button conditionButton = null;
     [SerializeField] private GameObject mainView = null;
 
@@ -17,7 +16,7 @@ public class StatusConditionList : ListWindow , IInputHandlerEvent
         conditionButton.onClick.AddListener(() => conditionEvent());
     }
 
-    public void Refresh(List<StateInfo> stateInfos ,System.Action cancelEvent,System.Action optionEvent,System.Action skillEvent)
+    public void Refresh(List<StateInfo> stateInfos)
     {
         InitializeListView(stateInfos.Count);
         _stateInfos = stateInfos;
@@ -31,59 +30,9 @@ public class StatusConditionList : ListWindow , IInputHandlerEvent
                 ObjectList[i].SetActive(true);
             }
         }
-        SetInputCallHandler((a) => CallInputHandler(a,cancelEvent,optionEvent,skillEvent));
+        SetInputCallHandler((a) => CallSelectHandler(a));
         UpdateAllItems();
         UpdateSelectIndex(0);
-    }
-
-    public void Refresh()
-    {
-        UpdateAllItems();
-    }
-
-    public override void UpdateHelpWindow(){
-        if (_helpWindow != null)
-        {
-            //_helpWindow.SetHelpText(_data[Index].Help);
-        }
-    }
-    
-    private void CallInputHandler(InputKeyType keyType,System.Action cancelEVent,System.Action optionEvent,System.Action skillEvent)
-    {
-        if (keyType == InputKeyType.Cancel)
-        {
-            cancelEVent();
-        }
-        if (keyType == InputKeyType.Option1)
-        {
-            if (optionEvent != null)
-            {
-                optionEvent();
-            } else
-            if (skillEvent != null)
-            {
-                skillEvent();
-            }
-        }
-        if (Index >= 0)
-        {
-            if (keyType == InputKeyType.Down)
-            {
-                UpdateScrollRect(keyType,4,_stateInfos.Count);
-            }
-            if (keyType == InputKeyType.Up)
-            {
-                UpdateScrollRect(keyType,4,_stateInfos.Count);
-            }
-        }
-    }
-
-    public override void RefreshListItem(GameObject gameObject, int itemIndex)
-    {
-        base.RefreshListItem(gameObject,itemIndex);
-        var skillAction = gameObject.GetComponent<StatusCondition>();
-        skillAction.SetData(_stateInfos[itemIndex],itemIndex);
-        skillAction.UpdateViewItem();
     }
 
     public void ShowMainView()

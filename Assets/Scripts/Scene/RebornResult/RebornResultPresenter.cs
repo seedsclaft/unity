@@ -9,8 +9,6 @@ public class RebornResultPresenter : BasePresenter
     RebornResultView _view = null;
 
     private bool _busy = true;
-
-    private bool _isRankingEnd = false;
     public RebornResultPresenter(RebornResultView view)
     {
         _view = view;

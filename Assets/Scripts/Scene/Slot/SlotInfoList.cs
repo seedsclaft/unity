@@ -41,23 +41,8 @@ public class SlotInfoList : ListWindow , IInputHandlerEvent
             }
             ObjectList[i].SetActive(i < _data.Count);
         }
-        ResetScrollPosition();
+        //ResetScrollPosition();
         UpdateSelectIndex(0);
         UpdateAllItems();
-    }
-
-    private void CallSelectHandler(InputKeyType keyType)
-    {
-        if (Index >= 0)
-        {
-            if (keyType == InputKeyType.Down)
-            {
-                UpdateScrollRect(keyType,4,_data.Count);
-            }
-            if (keyType == InputKeyType.Up)
-            {
-                UpdateScrollRect(keyType,4,_data.Count);
-            }
-        }
     }
 }

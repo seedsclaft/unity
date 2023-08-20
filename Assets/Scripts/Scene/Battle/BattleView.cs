@@ -51,6 +51,8 @@ public class BattleView : BaseView
         skillList.Initialize();
         InitializeSkillActionList();
         statusConditionList.Initialize(() => OnClickCondition());
+        statusConditionList.SetInputHandler(InputKeyType.Cancel,() => OnClickBack());
+        statusConditionList.SetInputHandler(InputKeyType.Option1,() => CallOpenSideMenu());
         SetInputHandler(statusConditionList.GetComponent<IInputHandlerEvent>());
         DeactivateConditionList();
         HideConditionAll();
@@ -318,7 +320,7 @@ public class BattleView : BaseView
 
     public void SetCondition(List<StateInfo> stateInfos)
     {
-        statusConditionList.Refresh(stateInfos,() => OnClickBack(),() => CallOpenSideMenu(),null);
+        statusConditionList.Refresh(stateInfos);
     }
 
     public void ShowConditionTab()

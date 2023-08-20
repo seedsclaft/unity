@@ -13,8 +13,7 @@ public class RebornSkillList : ListWindow , IInputHandlerEvent
         for (int i = 0; i < ObjectList.Count;i++)
         {
             SkillAction skillAction = ObjectList[i].GetComponent<SkillAction>();
-            skillAction.SetCallHandler((d) => {
-            });
+            skillAction.SetCallHandler((d) => {});
             skillAction.SetSelectHandler((data) => UpdateSelectIndex(data));
         }
     }
@@ -31,16 +30,8 @@ public class RebornSkillList : ListWindow , IInputHandlerEvent
             }
             ObjectList[i].SetActive(i < _data.Count);
         }
-        ResetScrollPosition();
+        //ResetScrollPosition();
         UpdateSelectIndex(0);
         UpdateAllItems();
-    }
-
-    public override void RefreshListItem(GameObject gameObject, int itemIndex)
-    {
-        base.RefreshListItem(gameObject,itemIndex);
-        var skillAction = gameObject.GetComponent<SkillAction>();
-        skillAction.SetData(_data[itemIndex],itemIndex);
-        skillAction.UpdateViewItem();
     }
 }

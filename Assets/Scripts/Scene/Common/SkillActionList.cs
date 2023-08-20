@@ -1,9 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
-using UnityEngine.Events;
-using TMPro;
 
 public class SkillActionList : ListWindow , IInputHandlerEvent
 {
@@ -33,7 +30,7 @@ public class SkillActionList : ListWindow , IInputHandlerEvent
             skillAction.SetSelectHandler((data) => UpdateSelectIndex(data));
             //ObjectList[i].SetActive(false);
         }
-        SetInputCallHandler((a) => CallListInputHandler(a));
+        SetInputCallHandler((a) => CallSelectHandler(a));
     }
 
     public void SetSkillInfos(List<SkillInfo> skillInfoData)
@@ -58,7 +55,7 @@ public class SkillActionList : ListWindow , IInputHandlerEvent
         ResetScrollRect();
         for (int i = 0;i < selectIndex;i++)
         {
-            UpdateScrollRect(InputKeyType.Down,4,_skillInfos.Count);
+            UpdateScrollRect(InputKeyType.Down);
         }
         UpdateSelectIndex(selectIndex);
         UpdateAllItems();
@@ -67,36 +64,6 @@ public class SkillActionList : ListWindow , IInputHandlerEvent
     public void RefreshCostInfo()
     {
         UpdateAllItems();
-    }
-
-    public override void UpdateHelpWindow(){
-        if (_helpWindow != null)
-        {
-            //_helpWindow.SetHelpText(_data[Index].Help);
-        }
-    }
-
-    private void CallInputHandler(InputKeyType keyType, System.Action<SkillInfo> callEvent)
-    {
-        if (Index >= 0)
-        {
-            if (keyType == InputKeyType.Down)
-            {
-                UpdateScrollRect(keyType,4,_skillInfos.Count);
-            }
-            if (keyType == InputKeyType.Up)
-            {
-                UpdateScrollRect(keyType,4,_skillInfos.Count);
-            }
-        }
-    }
-
-    public override void RefreshListItem(GameObject gameObject, int itemIndex)
-    {
-        base.RefreshListItem(gameObject,itemIndex);
-        var skillAction = gameObject.GetComponent<SkillAction>();
-        skillAction.SetData(_skillInfos[itemIndex],itemIndex);
-        skillAction.UpdateViewItem();
     }
 
     public int SelectedSkillId()

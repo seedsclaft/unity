@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class BootPresenter 
+public class BootPresenter : BasePresenter
 {
     private BootView _view = null;
     private BootModel _model = null;

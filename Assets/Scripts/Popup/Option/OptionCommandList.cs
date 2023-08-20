@@ -1,11 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
-using UnityEngine.Events;
-using UnityEngine.UI;
-using UnityEngine.AddressableAssets;
-using TMPro;
 
 public class OptionCommandList : ListWindow , IInputHandlerEvent
 {
@@ -21,8 +16,8 @@ public class OptionCommandList : ListWindow , IInputHandlerEvent
             optionCommand.SetData(_optionCommands[i],i);
             optionCommand.SetSelectHandler((data) => UpdateSelectIndex(data));
         }
-        SetInputCallHandler((a) => CallInputHandler(a,optionEvent));
-        ResetScrollPosition();
+        SetInputCallHandler((a) => CallSelectHandler(a,optionEvent));
+        //ResetScrollPosition();
         UpdateSelectIndex(0);
         
         Refresh();
@@ -42,7 +37,7 @@ public class OptionCommandList : ListWindow , IInputHandlerEvent
         }
     }
 
-    private void CallInputHandler(InputKeyType keyType,System.Action<InputKeyType,SystemData.OptionCommand> optionEvent)
+    private void CallSelectHandler(InputKeyType keyType,System.Action<InputKeyType,SystemData.OptionCommand> optionEvent)
     {
         if (keyType == InputKeyType.Decide)
         {
@@ -56,16 +51,9 @@ public class OptionCommandList : ListWindow , IInputHandlerEvent
         {
             return;
         }
-        if (Index >= 0)
+        if (keyType == InputKeyType.Down || keyType == InputKeyType.Up)
         {
-            if (keyType == InputKeyType.Down)
-            {
-                UpdateScrollRect(keyType,5,_optionCommands.Count);
-            }
-            if (keyType == InputKeyType.Up)
-            {
-                UpdateScrollRect(keyType,5,_optionCommands.Count);
-            }
+            UpdateScrollRect(keyType);
         }
         if (keyType == InputKeyType.Right)
         {

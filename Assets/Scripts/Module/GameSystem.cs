@@ -10,7 +10,6 @@ public class GameSystem : MonoBehaviour
 {
     [SerializeField] private float version = 0.01f;
     [SerializeField] private bool testMode = false;
-    [SerializeField] private GameObject uiRoot = null;
     [SerializeField] private SceneAssign sceneAssign = null;
     [SerializeField] private PopupAssign popupAssign = null;
     [SerializeField] private GameObject confirmRoot = null;

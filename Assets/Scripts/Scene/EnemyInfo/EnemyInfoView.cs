@@ -45,6 +45,13 @@ public class EnemyInfoView : BaseView,IInputHandlerEvent
         if (_isBattle)
         {
             statusConditionList.Initialize(() => OnClickCondition());
+            statusConditionList.SetInputHandler(InputKeyType.Cancel,() => CommandBack());
+            statusConditionList.SetInputHandler(InputKeyType.Option1,() => 
+            {
+                skillList.ShowActionList();
+                skillList.ActivateActionList();
+                HideCondition();
+            });
             SetInputHandler(statusConditionList.GetComponent<IInputHandlerEvent>());
             DeactivateConditionList();
             _rightButton.gameObject.SetActive(false);
@@ -211,11 +218,7 @@ public class EnemyInfoView : BaseView,IInputHandlerEvent
     {
         if (_isBattle)
         {
-            statusConditionList.Refresh(stateInfos,() => CommandBack(),null,() => {
-                skillList.ShowActionList();
-                skillList.ActivateActionList();
-                HideCondition();
-            });
+            statusConditionList.Refresh(stateInfos);
         }
     }
     

@@ -14,15 +14,15 @@ public class RebornActorList : ListWindow , IInputHandlerEvent
         for (int i = actorInfos.Count-1; i >= 0;i--)
         {
             RebornActor skillAction = ObjectList[i].GetComponent<RebornActor>();
-            skillAction.SetCallHandler(() => CallInputHandler(InputKeyType.Decide));
+            skillAction.SetCallHandler(() => CallSelectHandler(InputKeyType.Decide));
             skillAction.SetSelectHandler((data) => 
                 {
                     UpdateSelectIndex(data);
-                    CallInputHandler(InputKeyType.Down);
+                    CallSelectHandler(InputKeyType.Down);
                 });
             //ObjectList[i].SetActive(false);
         } 
-        SetInputCallHandler((a) => CallInputHandler(a));
+        SetInputCallHandler((a) => CallSelectHandler(a));
     }
 
     public void Refresh()
@@ -43,33 +43,8 @@ public class RebornActorList : ListWindow , IInputHandlerEvent
             }
             ObjectList[i].SetActive(i < _data.Count);
         }
-        ResetScrollPosition();
+        //ResetScrollPosition();
         UpdateSelectIndex(selectIndex);
         UpdateAllItems();
     }
-
-    private void CallInputHandler(InputKeyType keyType)
-    {
-        if (Index >= 0)
-        {
-            if (keyType == InputKeyType.Down)
-            {
-                UpdateScrollRect(keyType,3,_data.Count);
-            }
-            if (keyType == InputKeyType.Up)
-            {
-                UpdateScrollRect(keyType,3,_data.Count);
-            }
-        }
-    } 
-
-    public override void RefreshListItem(GameObject gameObject, int itemIndex)
-    {
-        base.RefreshListItem(gameObject,itemIndex);
-        var skillAction = gameObject.GetComponent<RebornActor>();
-        skillAction.SetData(_data[itemIndex],itemIndex);
-        skillAction.SetDisable(itemIndex,_disableIndexs.Contains(itemIndex));
-        skillAction.UpdateViewItem();
-    }
-
 }

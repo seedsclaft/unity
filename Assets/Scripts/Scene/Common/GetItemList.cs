@@ -86,7 +86,7 @@ public class GetItemList : ListWindow , IInputHandlerEvent
         }
     }    
     
-    private void CallSelectHandler(InputKeyType keyType)
+    private new void CallSelectHandler(InputKeyType keyType)
     {
         if (_data != null && _data.Count < 6) return;
         var margin = 1.0f / (_data.Count - 5);
@@ -108,13 +108,5 @@ public class GetItemList : ListWindow , IInputHandlerEvent
                 ScrollRect.normalizedPosition = new Vector2(0,1);
             }
         }
-    }
-    
-    public override void RefreshListItem(GameObject gameObject, int itemIndex)
-    {
-        base.RefreshListItem(gameObject,itemIndex);
-        var getItem = gameObject.GetComponent<GetItem>();
-        getItem.SetData(_data[itemIndex],itemIndex);
-        getItem.UpdateViewItem();
     }
 }
