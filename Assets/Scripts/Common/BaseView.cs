@@ -105,127 +105,127 @@ abstract public class BaseView : MonoBehaviour
 
     public void CommandSceneChange(Scene scene)
     {
-        var eventData = new ViewEvent(Scene.Base, Base.CommandType.SceneChange);
+        var eventData = new ViewEvent(Base.CommandType.SceneChange);
         eventData.templete = scene;
         CallSceneChangeCommand(eventData);
     }
 
     public void CommandCallConfirm(ConfirmInfo popupInfo)
     {
-        var eventData = new ViewEvent(Scene.Base, Base.CommandType.CallConfirmView);
+        var eventData = new ViewEvent(Base.CommandType.CallConfirmView);
         eventData.templete = popupInfo;
         CallSceneChangeCommand(eventData);
     }
 
     public void CommandConfirmClose()
     {
-        var eventData = new ViewEvent(Scene.Base, Base.CommandType.CloseConfirm);
+        var eventData = new ViewEvent(Base.CommandType.CloseConfirm);
         CallSceneChangeCommand(eventData);
     }
 
     public void CommandCallRuling(System.Action endEvent)
     {
-        var eventData = new ViewEvent(Scene.Base, Base.CommandType.CallRulingView);
+        var eventData = new ViewEvent(Base.CommandType.CallRulingView);
         eventData.templete = endEvent;
         CallSceneChangeCommand(eventData);
     }
 
     public void CommandCallOption(System.Action endEvent)
     {
-        var eventData = new ViewEvent(Scene.Base, Base.CommandType.CallOptionView);
+        var eventData = new ViewEvent(Base.CommandType.CallOptionView);
         eventData.templete = endEvent;
         CallSceneChangeCommand(eventData);
     }
 
     public void CommandCallRanking(System.Action endEvent)
     {
-        var eventData = new ViewEvent(Scene.Base, Base.CommandType.CallRankingView);
+        var eventData = new ViewEvent(Base.CommandType.CallRankingView);
         eventData.templete = endEvent;
         CallSceneChangeCommand(eventData);
     }
 
     public void CommandCallCredit(System.Action endEvent)
     {
-        var eventData = new ViewEvent(Scene.Base, Base.CommandType.CallCreditView);
+        var eventData = new ViewEvent(Base.CommandType.CallCreditView);
         eventData.templete = endEvent;
         CallSceneChangeCommand(eventData);
     }
 
     public void CommandCallStatus(StatusViewInfo statusViewInfo)
     {
-        var eventData = new ViewEvent(Scene.Base, Base.CommandType.CallStatusView);
+        var eventData = new ViewEvent(Base.CommandType.CallStatusView);
         eventData.templete = statusViewInfo;
         CallSceneChangeCommand(eventData);
     }
 
     public void CommandStatusClose()
     {
-        var eventData = new ViewEvent(Scene.Base, Base.CommandType.CloseStatus);
+        var eventData = new ViewEvent(Base.CommandType.CloseStatus);
         CallSceneChangeCommand(eventData);
     }
 
     public void CommandCallEnemyInfo(StatusViewInfo statusViewInfo)
     {
-        var eventData = new ViewEvent(Scene.Base, Base.CommandType.CallEnemyInfoView);
+        var eventData = new ViewEvent(Base.CommandType.CallEnemyInfoView);
         eventData.templete = statusViewInfo;
         CallSceneChangeCommand(eventData);
     }
 
     public void CommandEnemyInfoClose()
     {
-        var eventData = new ViewEvent(Scene.Base, Base.CommandType.CloseEnemyInfo);
+        var eventData = new ViewEvent(Base.CommandType.CloseEnemyInfo);
         CallSceneChangeCommand(eventData);
     }
 
     public void CommandCallAdv(AdvCallInfo advCallInfo)
     {
-        var eventData = new ViewEvent(Scene.Base, Base.CommandType.CallAdvScene);
+        var eventData = new ViewEvent(Base.CommandType.CallAdvScene);
         eventData.templete = advCallInfo;
         CallSceneChangeCommand(eventData);
     }
 
     public void CommandDecidePlayerName(string nameText)
     {
-        var eventData = new ViewEvent(Scene.Base, Base.CommandType.DecidePlayerName);
+        var eventData = new ViewEvent(Base.CommandType.DecidePlayerName);
         eventData.templete = nameText;
         CallSceneChangeCommand(eventData);
     }
 
     public void CommandCallLoading()
     {
-        var eventData = new ViewEvent(Scene.Base, Base.CommandType.CallLoading);
+        var eventData = new ViewEvent(Base.CommandType.CallLoading);
         CallSceneChangeCommand(eventData);
     }
 
     public void CommandLoadingClose()
     {
-        var eventData = new ViewEvent(Scene.Base, Base.CommandType.CloseLoading);
+        var eventData = new ViewEvent(Base.CommandType.CloseLoading);
         CallSceneChangeCommand(eventData);
     }
 
     public void CommandSetRouteSelect()
     {
-        var eventData = new ViewEvent(Scene.Base, Base.CommandType.SetRouteSelect);
+        var eventData = new ViewEvent(Base.CommandType.SetRouteSelect);
         CallSceneChangeCommand(eventData);
     }
 
     public void CommandChangeViewToTransition(System.Action<string> endEvent)
     {
-        var eventData = new ViewEvent(Scene.Base, Base.CommandType.ChangeViewToTransition);
+        var eventData = new ViewEvent(Base.CommandType.ChangeViewToTransition);
         eventData.templete = endEvent;
         CallSceneChangeCommand(eventData);
     }
 
     public void CommandStartTransition(System.Action endEvent)
     {
-        var eventData = new ViewEvent(Scene.Base, Base.CommandType.StartTransition);
+        var eventData = new ViewEvent(Base.CommandType.StartTransition);
         eventData.templete = endEvent;
         CallSceneChangeCommand(eventData);
     }
 
     public void CommandChangeEventSkipIndex(bool isSkip)
     {
-        var eventData = new ViewEvent(Scene.Base, Base.CommandType.ChangeEventSkipIndex);
+        var eventData = new ViewEvent(Base.CommandType.ChangeEventSkipIndex);
         eventData.templete = isSkip;
         CallSceneChangeCommand(eventData);
     }

@@ -6,11 +6,10 @@ using System;
 
 public class ViewEvent
 {
-    public Scene scene;
     public Base.CommandType commandType;
     public object templete;
 
-    public ViewEvent(Scene scene, Base.CommandType type)
+    public ViewEvent(Base.CommandType type)
     {
         commandType = type;
     }
@@ -64,22 +63,12 @@ abstract public class ListItem : MonoBehaviour
     {
         if (cursor == null) return;
         cursor.SetActive(true);
-        /*
-        ColorBlock cb = clickButton.colors;
-        cb.normalColor = _selectedColor;
-        clickButton.colors = cb;
-        */
     }
     
     public void SetUnSelect()
     {
         if (cursor == null) return;
         cursor.SetActive(false);
-        /*
-        ColorBlock cb = clickButton.colors;
-        cb.normalColor = _normalColor;
-        clickButton.colors = cb;
-        */
     }
 
     public void SetIndex(int index)

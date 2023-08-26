@@ -28,7 +28,6 @@ public class ActorsData : ScriptableObject {
         public float AwakenScale;
         public List<LearningData> LearningSkills = new();
     }
-
 }
 
 [Serializable]

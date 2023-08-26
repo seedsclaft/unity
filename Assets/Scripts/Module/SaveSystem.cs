@@ -18,7 +18,13 @@ public class SaveSystem : MonoBehaviour
     	    MemoryStream    memoryStream    = new MemoryStream ();
         	TempBinaryFormatter.Serialize (memoryStream , pSourceSavePlayInfo);
         	var saveData = Convert.ToBase64String (memoryStream   .GetBuffer ());
-			PlayerPrefs.SetString("PlayerData", AESManager.Encrypt(saveData));
+			if (fileId != 0)
+			{
+				PlayerPrefs.SetString("PlayerData" + fileId.ToString(), AESManager.Encrypt(saveData));
+			} else
+			{
+				PlayerPrefs.SetString("PlayerData", AESManager.Encrypt(saveData));
+			}
 
 			#else
             //	保存情報
@@ -66,7 +72,14 @@ public class SaveSystem : MonoBehaviour
 			{
 				//	バイナリ形式でデシリアライズ
 				BinaryFormatter	TempBinaryFormatter = new BinaryFormatter();
-				string saveData = PlayerPrefs.GetString("PlayerData");
+				string saveData;
+				if (fileId != 0)
+				{
+					saveData = PlayerPrefs.GetString("PlayerData"+fileId.ToString());
+				} else
+				{
+					saveData = PlayerPrefs.GetString("PlayerData");
+				}
 				saveData = AESManager.Decrypt(saveData);
         		MemoryStream    memoryStream    = new MemoryStream (Convert.FromBase64String (saveData));
         		GameSystem.CurrentData = (SavePlayInfo)TempBinaryFormatter.Deserialize (memoryStream);

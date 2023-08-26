@@ -272,7 +272,7 @@ public class GameSystem : MonoBehaviour
         rulingView.Initialize();
         rulingView.SetBackEvent(() => 
         {
-            updateCommand(new ViewEvent(Scene.Base,Base.CommandType.CloseConfirm));
+            updateCommand(new ViewEvent(Base.CommandType.CloseConfirm));
             if (endEvent != null) endEvent();
         });
         confirmRoot.gameObject.SetActive(true);
@@ -301,7 +301,7 @@ public class GameSystem : MonoBehaviour
                 Ryneus.SoundManager.Instance._seMute
             );
             SaveSystem.SaveConfigStart(GameSystem.ConfigData);
-            updateCommand(new ViewEvent(Scene.Base,Base.CommandType.CloseConfirm));
+            updateCommand(new ViewEvent(Base.CommandType.CloseConfirm));
             if (endEvent != null) endEvent();
         });
         optionView.SetEvent((type) => updateCommand(type));
@@ -324,7 +324,7 @@ public class GameSystem : MonoBehaviour
         rankingView.Initialize();
         rankingView.SetBackEvent(() => 
         {
-            updateCommand(new ViewEvent(Scene.Base,Base.CommandType.CloseConfirm));
+            updateCommand(new ViewEvent(Base.CommandType.CloseConfirm));
             if (endEvent != null) endEvent();
         });
         confirmRoot.gameObject.SetActive(true);
@@ -346,7 +346,7 @@ public class GameSystem : MonoBehaviour
         creditView.Initialize();
         creditView.SetBackEvent(() => 
         {
-            updateCommand(new ViewEvent(Scene.Base,Base.CommandType.CloseConfirm));
+            updateCommand(new ViewEvent(Base.CommandType.CloseConfirm));
             if (endEvent != null) endEvent();
         });
         confirmRoot.gameObject.SetActive(true);

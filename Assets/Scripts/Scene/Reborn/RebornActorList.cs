@@ -14,11 +14,11 @@ public class RebornActorList : ListWindow , IInputHandlerEvent
         for (int i = actorInfos.Count-1; i >= 0;i--)
         {
             RebornActor skillAction = ObjectList[i].GetComponent<RebornActor>();
-            skillAction.SetCallHandler(() => CallSelectHandler(InputKeyType.Decide));
+            skillAction.SetCallHandler(() => CallListInputHandler(InputKeyType.Decide));
             skillAction.SetSelectHandler((data) => 
                 {
                     UpdateSelectIndex(data);
-                    CallSelectHandler(InputKeyType.Down);
+                    CallListInputHandler(InputKeyType.Down);
                 });
             //ObjectList[i].SetActive(false);
         } 
