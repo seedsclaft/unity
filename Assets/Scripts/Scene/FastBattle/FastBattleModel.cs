@@ -1,11 +1,11 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using Effekseer;
 using Cysharp.Threading.Tasks;
 
-public class BattleModel : BaseModel
+public class FastBattleModel : BaseModel
 {
-    public BattleModel()
+    public FastBattleModel()
     {
     }
 
@@ -255,16 +255,6 @@ public class BattleModel : BaseModel
             }
         }
         return stateInfos;
-    }
-
-    public void ChangeActorIndex(int value){
-        _currentIndex += value;
-        if (_currentIndex > PartyMembers().Count-1){
-            _currentIndex = 0;
-        } else
-        if (_currentIndex < 0){
-            _currentIndex = PartyMembers().Count-1;
-        }
     }
 
     public List<BattlerInfo> BattlerActors(){
@@ -710,14 +700,6 @@ public class BattleModel : BaseModel
         return _actionInfos[0];
     }
 
-    public void RemoveActionInfo(ActionInfo actionInfo)
-    {
-        var findIndex = _actionInfos.FindIndex(a => a == actionInfo);
-        if (findIndex > -1){
-            _actionInfos.RemoveAt(findIndex);
-        }
-    }
-
     public void MakeActionResultInfo(ActionInfo actionInfo,List<int> indexList)
     {   
         if (actionInfo.SubjectIndex < 100)
@@ -795,11 +777,7 @@ public class BattleModel : BaseModel
 
     public EffekseerEffectAsset SkillActionAnimation(string animationName)
     {
-        //string path = "Assets/Animations/" + animationName + ".asset";
-        //var result = await ResourceSystem.LoadAsset<EffekseerEffectAsset>(path);
-        string path = "Animations/" + animationName;
-        var result = UnityEngine.Resources.Load<EffekseerEffectAsset>(path);
-        return result;
+        return null;
     }
 
     public void ExecCurrentActionResult()
@@ -936,38 +914,6 @@ public class BattleModel : BaseModel
         _battleRecords.Add(new BattleRecord(actionResultInfo));
     }
     
-    public List<int> DeathBattlerIndex(List<ActionResultInfo> actionResultInfos)
-    {
-        List<int> deathBattlerIndex = new ();
-        for (int i = 0; i < actionResultInfos.Count; i++)
-        {
-            for (int j = 0; j < actionResultInfos[i].DeadIndexList.Count; j++)
-            {
-                // 例外
-                if (!GetBattlerInfo(actionResultInfos[i].DeadIndexList[j]).IsState(StateType.Death))
-                {
-
-                } else
-                {
-                    deathBattlerIndex.Add(actionResultInfos[i].DeadIndexList[j]);
-                }
-            }
-        }
-        return deathBattlerIndex;
-    }
-
-    public List<int> AliveBattlerIndex(List<ActionResultInfo> actionResultInfos)
-    {
-        List<int> aliveBattlerIndex = new ();
-        for (int i = 0; i < actionResultInfos.Count; i++)
-        {
-            for (int j = 0; j < actionResultInfos[i].AliveIndexList.Count; j++)
-            {
-                aliveBattlerIndex.Add(actionResultInfos[i].AliveIndexList[j]);
-            }
-        }
-        return aliveBattlerIndex;
-    }
 
     public List<StateInfo> UpdateTurn()
     {

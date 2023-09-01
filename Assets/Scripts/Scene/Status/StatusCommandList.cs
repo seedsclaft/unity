@@ -8,7 +8,21 @@ public class StatusCommandList : ListWindow , IInputHandlerEvent
 {
     private List<SystemData.MenuCommandData> _data = new List<SystemData.MenuCommandData>();
 
-    public void Initialize(List<SystemData.MenuCommandData> menuCommands ,System.Action<StatusComandType> callEvent)
+    public SystemData.MenuCommandData Data{
+        get {
+            if (Index < 0)
+            {
+                return null;
+            }
+            if (ObjectList[Index].GetComponent<StatusCommand>().Disable.gameObject.activeSelf)
+            {
+                return null;
+            }
+            return _data[Index];
+        }
+    }
+
+    public void Initialize(List<SystemData.MenuCommandData> menuCommands)
     {
         InitializeListView(menuCommands.Count);
         _data = menuCommands;
@@ -16,10 +30,10 @@ public class StatusCommandList : ListWindow , IInputHandlerEvent
         {
             var statusCommand = ObjectList[i].GetComponent<StatusCommand>();
             statusCommand.SetData(menuCommands[i],i);
-            statusCommand.SetCallHandler(callEvent);
+            statusCommand.SetCallHandler(() => CallListInputHandler(InputKeyType.Decide));
             statusCommand.SetSelectHandler((data) => UpdateSelectIndex(data));
         }
-        SetInputCallHandler((a) => CallInputHandler(a,callEvent));
+        SetInputCallHandler((a) => CallSelectHandler(a));
         UpdateAllItems();
         UpdateSelectIndex(0);
     }
@@ -37,15 +51,6 @@ public class StatusCommandList : ListWindow , IInputHandlerEvent
         {
             var statusCommand = ObjectList[i].GetComponent<StatusCommand>();
             statusCommand.SetDisable(menuCommandData,IsDisable);
-        }
-    }
-
-    private void CallInputHandler(InputKeyType keyType, System.Action<StatusComandType> callEvent)
-    {
-        if (keyType == InputKeyType.Decide)
-        {
-            if (ObjectList[Index].GetComponent<StatusCommand>().Disable.gameObject.activeSelf) return;
-            callEvent((StatusComandType)Index);
         }
     }
 }

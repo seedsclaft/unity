@@ -295,6 +295,11 @@ public class BattlePresenter : BasePresenter
             } 
             if (_model.CurrentBattler.isActor)
             {
+                /* オート戦闘の場合
+                var (autoSkillId,targetIndex) = _model.MakeAutoActorSkillId(_model.CurrentBattler);
+                ActionInfo actionInfo = _model.MakeActionInfo(_model.CurrentBattler,autoSkillId,false,false);
+                CommandSelectIndex(_model.MakeAutoSelectIndex(actionInfo,targetIndex));
+                */
                 CommandDecideActor();
             } else
             {

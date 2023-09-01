@@ -549,7 +549,9 @@ public class TacticsView : BaseView
     public void SetAttributeTypes(List<AttributeType> attributeTypes)
     {
         //skillList.RefreshAttribute(attributeTypes);
-        tacticsAttributeList.Initialize(attributeTypes,(a) => CallSkillAlchemy(a),() => OnClickBack());
+        tacticsAttributeList.Initialize(attributeTypes);
+        tacticsAttributeList.SetInputHandler(InputKeyType.Decide,() => CallSkillAlchemy());
+        tacticsAttributeList.SetInputHandler(InputKeyType.Cancel,() => OnClickBack());
         SetInputHandler(tacticsAttributeList.GetComponent<IInputHandlerEvent>());
         tacticsAttributeList.Deactivate();
     }
@@ -560,13 +562,17 @@ public class TacticsView : BaseView
         tacticsAttributeList.SelectEnableIndex();
     }
 
-    private void CallSkillAlchemy(AttributeType attributeType)
+    private void CallSkillAlchemy()
     {
         if (_lastCallEventType != CommandType.None) return;
         var eventData = new TacticsViewEvent(CommandType.SkillAlchemy);
-        eventData.templete = attributeType;
-        _commandData(eventData);
-        _lastCallEventType = eventData.commandType;
+        var item = tacticsAttributeList.Data;
+        if (item != AttributeType.None)
+        {
+            eventData.templete = item;
+            _commandData(eventData);
+            _lastCallEventType = eventData.commandType;
+        }
     }
 
     private void CallSkillAction()

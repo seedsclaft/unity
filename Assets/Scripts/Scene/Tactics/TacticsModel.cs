@@ -391,6 +391,12 @@ public class TacticsModel : BaseModel
     
     public AdvsData.AdvData StartTacticsAdvData()
     {
+        var isGameOver = (Actors().Find(a => a.ActorId == CurrentStage.SelectActorIds[0])).Lost;
+        if (isGameOver)
+        {
+            CurrentStage.SetEndingType(EndingType.D);
+            return DataSystem.Advs.Find(a => a.Id == 203);
+        }
         var isAendGameClear = CurrentStage.StageClaer;
         if (isAendGameClear)
         {
@@ -411,12 +417,6 @@ public class TacticsModel : BaseModel
             SetIsSubordinate(false);
             ChangeRouteSelectStage(11);
             return DataSystem.Advs.Find(a => a.Id == 171);
-        }
-        var isGameOver = (Actors().Find(a => a.ActorId == CurrentStage.SelectActorIds[0])).Lost;
-        if (isGameOver)
-        {
-            CurrentStage.SetEndingType(EndingType.D);
-            return DataSystem.Advs.Find(a => a.Id == 203);
         }
         var isTurnOver = (Turns < 0);
         if (isTurnOver)

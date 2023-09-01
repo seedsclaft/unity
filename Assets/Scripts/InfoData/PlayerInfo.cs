@@ -22,6 +22,9 @@ public class PlayerInfo
     }
     readonly int _saveSlotCount = 10;
 
+    private List<int> _clearedTroopIds = new ();
+    public List<int> ClearedTroopIds => _clearedTroopIds;
+
     public void SetPlayerName(string name)
     {
         _playerName = name;
@@ -111,5 +114,22 @@ public class PlayerInfo
     private void UpdateSlotInfo(int slotId,SlotInfo slotInfo)
     {
         _saveSlotDict[slotId] = slotInfo;
+    }
+
+    public bool EnableBattleSkip(int troopId)
+    {
+        return _clearedTroopIds != null && _clearedTroopIds.Contains(troopId);
+    }
+
+    public void AddClearedTroopId(int troopId)
+    {
+        if (_clearedTroopIds == null)
+        {
+            _clearedTroopIds = new List<int>();
+        }
+        if (!EnableBattleSkip(troopId))
+        {
+            _clearedTroopIds.Add(troopId);
+        }
     }
 }

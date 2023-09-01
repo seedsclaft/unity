@@ -211,16 +211,21 @@ public class StatusView : BaseView ,IInputHandlerEvent
     
     public void SetStatusCommand(List<SystemData.MenuCommandData> menuCommands)
     {
-        commandList.Initialize(menuCommands,(menuCommandInfo) => CallStatusCommand(menuCommandInfo));
+        commandList.Initialize(menuCommands);
+        commandList.SetInputHandler(InputKeyType.Decide,() => CallStatusCommand());
         SetInputHandler(commandList.GetComponent<IInputHandlerEvent>());
     }
 
-    private void CallStatusCommand(StatusComandType commandType)
+    private void CallStatusCommand()
     {
         if (actorList.AnimationBusy) return;
         var eventData = new StatusViewEvent(CommandType.StatusCommand);
-        eventData.templete = commandType;
-        _commandData(eventData);
+        var item = commandList.Data;
+        if (item != null)
+        {
+            eventData.templete = item;
+            _commandData(eventData);
+        }
     }
 
     public void ShowCommandList()

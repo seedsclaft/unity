@@ -26,6 +26,18 @@ public class SkillsData : ScriptableObject {
 
         public List<FeatureData> FeatureDatas;
         public List<TriggerData> TriggerDatas;
+        public bool IsHpDamageFeature()
+        {
+            return FeatureDatas.Find(a => a.FeatureType == FeatureType.HpDamage) != null;
+        }
+        public bool IsHpHealFeature()
+        {
+            return FeatureDatas.Find(a => a.FeatureType == FeatureType.HpHeal) != null;
+        }
+        public bool IsStateFeature(StateType stateType)
+        {
+            return FeatureDatas.Find(a => a.FeatureType == FeatureType.AddState && a.Param1 == (int)stateType) != null;
+        }
     }
 
     [Serializable]

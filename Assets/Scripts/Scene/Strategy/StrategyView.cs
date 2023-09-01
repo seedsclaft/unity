@@ -19,6 +19,7 @@ public class StrategyView : BaseView
     [SerializeField] private Button lvUpStatusButton = null;
     [SerializeField] private GameObject animRoot = null;
     [SerializeField] private GameObject animPrefab = null;
+    [SerializeField] private Toggle battleSkipToggle = null;
 
     private BattleStartAnim _battleStartAnim = null;
     private bool _animationBusy = false;
@@ -38,6 +39,8 @@ public class StrategyView : BaseView
         _battleStartAnim.gameObject.SetActive(false);
         lvUpStatusButton.onClick.AddListener(() => CallLvUpNext());
         lvUpStatusButton.gameObject.SetActive(false);
+        battleSkipToggle.onValueChanged.AddListener((a) => OnChangeSkipToggle());
+        battleSkipToggle.gameObject.SetActive(false);
         new StrategyPresenter(this);
     }
 
@@ -84,6 +87,7 @@ public class StrategyView : BaseView
         tacticsEnemyList.Initialize(null);
         //tacticsEnemyList.SetInputHandler(InputKeyType.Decide,() => CallPopupSkillInfo());
         tacticsEnemyList.SetInputHandler(InputKeyType.Option1,() => OnClickEnemyInfo());
+        tacticsEnemyList.SetInputHandler(InputKeyType.Option2,() => OnChangeSkipToggle());
         SetInputHandler(tacticsEnemyList.GetComponent<IInputHandlerEvent>());
         tacticsEnemyList.InitializeConfirm(confirmCommands,(a) => CallBattleCommand(a));
         SetInputHandler(tacticsEnemyList.TacticsCommandList.GetComponent<IInputHandlerEvent>());
@@ -175,7 +179,7 @@ public class StrategyView : BaseView
         strategyResultList.gameObject.SetActive(false);
     }
 
-    public void ShowEnemyList(TroopInfo troopInfo)
+    public void ShowEnemyList(TroopInfo troopInfo,bool enableBattleSkip)
     {
         List<TroopInfo> troopInfos = new List<TroopInfo>();
         troopInfos.Add(troopInfo);
@@ -186,6 +190,7 @@ public class StrategyView : BaseView
         tacticsEnemyList.TacticsCommandList.UpdateSelectIndex(1);
         tacticsEnemyList.UpdateSelectIndex(-1);
         tacticsEnemyList.SetDisableLeftRight();
+        battleSkipToggle.gameObject.SetActive(enableBattleSkip);
         HelpWindow.SetInputInfo("STRATEGY_BATTLE");
     }
 
@@ -203,6 +208,12 @@ public class StrategyView : BaseView
     private void OnClickEnemyInfo()
     {
         var eventData = new StrategyViewEvent(CommandType.CallEnemyInfo);
+        _commandData(eventData);
+    }
+
+    private void OnChangeSkipToggle()
+    {
+        var eventData = new StrategyViewEvent(CommandType.ChangeSkipToggle);
         _commandData(eventData);
     }
 
@@ -250,6 +261,14 @@ public class StrategyView : BaseView
         strategyResultList.Deactivate();
         strategyResultList.TacticsCommandList.Deactivate();
     }
+
+    public void CommandChangeSkipToggle(bool isCheck)
+    {
+        if (battleSkipToggle.isOn != isCheck)
+        {
+            battleSkipToggle.isOn = isCheck;
+        }
+    }
 }
 
 namespace Strategy
@@ -267,6 +286,7 @@ namespace Strategy
         LvUpActor = 8,
         
         EndLvupAnimation = 9,
+        ChangeSkipToggle = 10,
     }
 }
 public class StrategyViewEvent

@@ -104,4 +104,5 @@ public enum Scene
     Reborn,
     RebornResult,
     Slot,
+    FastBattle,
 }

@@ -14,13 +14,13 @@ public class StatusCommand : ListItem ,IListViewItem
         SetIndex(index);
     }
 
-    public void SetCallHandler(System.Action<StatusComandType> handler)
+    public void SetCallHandler(System.Action handler)
     {
         if (_data == null) return;
         clickButton.onClick.AddListener(() => 
         {
             if (Disable.gameObject.activeSelf) return;
-            handler((StatusComandType)Index);
+            handler();
         });
     }
 

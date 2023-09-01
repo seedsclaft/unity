@@ -11,17 +11,27 @@ public class TacticsAttributeList : ListWindow , IInputHandlerEvent
 {
     private List<AttributeType> _attributeTypesData = new List<AttributeType>();
 
-    public void Initialize(List<AttributeType> attributes,System.Action<AttributeType> callEvent,System.Action cancelEvent)
+    public AttributeType Data{
+        get {
+            if (Index < 0)
+            {
+                return AttributeType.None;
+            }
+            return _attributeTypesData[Index];
+        }
+    }
+
+    public void Initialize(List<AttributeType> attributes)
     {
         InitializeListView(attributes.Count);
         _attributeTypesData = attributes;
         for (int i = 0; i < attributes.Count;i++)
         {
             var skillAttribute = ObjectList[i].GetComponent<SkillAttribute>();
-            skillAttribute.SetCallHandler(callEvent);
+            skillAttribute.SetCallHandler((a) => CallListInputHandler(InputKeyType.Decide));
             skillAttribute.SetSelectHandler((data) => UpdateSelectIndex(data));
         }
-        SetInputCallHandler((a) => CallInputHandler(a,callEvent,cancelEvent));
+        SetInputCallHandler((a) => CallSelectHandler(a));
         UpdateSelectIndex(-1);
     }
 
@@ -38,13 +48,6 @@ public class TacticsAttributeList : ListWindow , IInputHandlerEvent
         UpdateAllItems();
     }
 
-    public override void UpdateHelpWindow(){
-        if (_helpWindow != null)
-        {
-            //_helpWindow.SetHelpText(_data[Index].Help);
-        }
-    }
-
     public void SelectEnableIndex()
     {
         if (Index == -1 || ObjectList[Index].GetComponent<ListItem>().Disable.activeSelf)
@@ -58,18 +61,6 @@ public class TacticsAttributeList : ListWindow , IInputHandlerEvent
                     break;
                 }
             }
-        }
-    }
-
-    private void CallInputHandler(InputKeyType keyType, System.Action<AttributeType> callEvent,System.Action cancelEvent)
-    {
-        if (keyType == InputKeyType.Decide && Index > -1)
-        {
-            callEvent(_attributeTypesData[Index]);
-        }
-        if (keyType == InputKeyType.Cancel)
-        {
-            cancelEvent();
         }
     }
 }

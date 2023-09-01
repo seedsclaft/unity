@@ -62,7 +62,7 @@ public class SkillAttributeList : ListWindow , IInputHandlerEvent
             } else
             if (index < 0 && conditionEvent != null) 
             {
-                index = -1;//_attributeTypesData.Count-1;
+                index = -1;
                 UpdateSelectIndex(index);
                 conditionEvent();
                 return;
@@ -79,11 +79,10 @@ public class SkillAttributeList : ListWindow , IInputHandlerEvent
             int index = Index + 1;
             if (index > _attributeTypesData.Count-1 && conditionEvent != null) 
             {
-                index = -1;//_attributeTypesData.Count-1;
+                index = -1;
                 UpdateSelectIndex(index);
                 conditionEvent();
                 return;
-                //index = 0;
             } else
             if (index > _attributeTypesData.Count-1 && conditionEvent == null) 
             {

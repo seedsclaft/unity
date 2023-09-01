@@ -13,6 +13,9 @@ public class StrategyModel : BaseModel
         _needUseSpCommand = isNeed;
     }
     
+    private bool _battleSkip = false;
+    public bool BattleSkip => _battleSkip;
+
     private List<ActorInfo> _levelUpData = new();
     private List<ActorInfo> _levelUpBonusData = new();
     public List<ActorInfo> LevelUpData => _levelUpData;
@@ -289,6 +292,7 @@ public class StrategyModel : BaseModel
 
         }
         CurrentStage.AddClearTroopId(CurrentTroopInfo().TroopId);
+        CurrentData.PlayerInfo.AddClearedTroopId(CurrentTroopInfo().TroopId);
         CurrentStage.GainTroopClearCount(1);
         CurrentStage.ChangeSubordinate(15);
 
@@ -427,5 +431,15 @@ public class StrategyModel : BaseModel
         CurrentStage.ClearTacticsEnemies();
         CurrentStage.ChangeSubordinate(-5);
         CurrentAlcana.SetAlacanaState(null);
+    }
+
+    public bool EnableBattleSkip()
+    {
+        return CurrentData.PlayerInfo.EnableBattleSkip(CurrentTroopInfo().TroopId);
+    }
+
+    public void ChangeBattleSkip()
+    {
+        _battleSkip = !_battleSkip;
     }
 }

@@ -77,6 +77,10 @@ public class StrategyPresenter : BasePresenter
         {
             CommandLvUpNext();
         }
+        if (viewEvent.commandType == CommandType.ChangeSkipToggle)
+        {
+            CommandChangeSkipToggle();
+        }
     }
 
     private void UpdatePopupSkillInfo(ConfirmComandType confirmComandType)
@@ -144,7 +148,7 @@ public class StrategyPresenter : BasePresenter
                 _view.ShowResultList(_model.ResultGetItemInfos);
             }
         } else{
-            _view.ShowEnemyList(_model.CurrentTroopInfo());
+            _view.ShowEnemyList(_model.CurrentTroopInfo(),_model.EnableBattleSkip());
         }
         var stageEvents = _model.StageEvents(EventTiming.StartStarategy);
         if (stageEvents.Count > 0)
@@ -226,7 +230,13 @@ public class StrategyPresenter : BasePresenter
             _view.SetHelpInputInfo("");
             _view.CommandCallLoading();
             _view.CommandChangeViewToTransition(null);
-            _view.CommandSceneChange(Scene.Battle);
+            if (_model.BattleSkip)
+            {
+                _view.CommandSceneChange(Scene.FastBattle);
+            } else
+            {
+                _view.CommandSceneChange(Scene.Battle);
+            }
         }
     }
 
@@ -319,6 +329,12 @@ public class StrategyPresenter : BasePresenter
         _view.CommandCallEnemyInfo(statusViewInfo);
         _view.SetActiveUi(false);
         Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);    
+    }
+
+    private void CommandChangeSkipToggle()
+    {
+        _model.ChangeBattleSkip();
+        _view.CommandChangeSkipToggle(_model.BattleSkip);
     }
 
     private void StartNextBattle(List<ActorInfo> battleMembers)
