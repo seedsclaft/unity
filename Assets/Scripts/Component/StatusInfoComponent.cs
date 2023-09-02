@@ -18,6 +18,7 @@ public class StatusInfoComponent : MonoBehaviour
     [SerializeField] private Image hpGauge;
     [SerializeField] private Image mpGaugeBg;
     [SerializeField] private Image mpGauge;
+    [SerializeField] private CanvasGroup canvasGroup;
     public void UpdateInfo(StatusInfo statusInfo)
     {
         if (statusInfo == null){
@@ -89,6 +90,22 @@ public class StatusInfoComponent : MonoBehaviour
             bgRect.sizeDelta = new Vector2(maxStatusMp * 1.5f,bgRect.sizeDelta.y);
             rect.sizeDelta = new Vector2(maxStatusMp * 1.5f * (currentMp*100 / maxStatusMp) * 0.01f - 3,rect.sizeDelta.y);
             //mpGauge.fillAmount = currentMp / maxmp;
+        }
+    }
+
+    public void ShowStatus()
+    {
+        if (canvasGroup != null)
+        {
+            canvasGroup.alpha = 1.0f;
+        }
+    }
+
+    public void HideStatus()
+    {
+        if (canvasGroup != null)
+        {
+            canvasGroup.alpha = 0f;
         }
     }
 }

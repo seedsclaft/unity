@@ -52,7 +52,8 @@ public class BattlerInfoComponent : MonoBehaviour
     public void SetStatusRoot(GameObject statusRoot)
     {
         _battleStatusRoot = statusRoot;
-        _battleStatusRoot.SetActive(false);
+        enemyInfoComponent.HideStatus();   
+        //_battleStatusRoot.SetActive(false);
     }
     
     public void SetStartSkillDamage(int damageTiming,System.Action<int> callEvent)
@@ -104,22 +105,24 @@ public class BattlerInfoComponent : MonoBehaviour
     {
         if (_battlerInfo.isActor)
         {
-            actorInfoComponent.ShowUI();
+            actorInfoComponent.ShowStatus();
         } else
         {
-            enemyInfoComponent.ShowUI();
+            enemyInfoComponent.ShowStatus();
         }
+        battleStateOverlay.gameObject.SetActive(true);
     }
 
     public void HideUI()
     {
         if (_battlerInfo.isActor)
         {
-            actorInfoComponent.HideUI();
+            actorInfoComponent.HideStatus();
         } else
         {
-            enemyInfoComponent.HideUI();
+            enemyInfoComponent.HideStatus();
         }
+        battleStateOverlay.gameObject.SetActive(false);
     }
 
     private BattleDamage CreatePrefab()
@@ -283,9 +286,43 @@ public class BattlerInfoComponent : MonoBehaviour
 
     public void SetActiveStatus(bool isSelectable)
     {
-        if (_battleStatusRoot != null && !_battlerInfo.isActor)
+        if (_battlerInfo.isActor)
         {
-            _battleStatusRoot.SetActive(isSelectable);
+            if (_battleStatusRoot != null && !_battlerInfo.isActor)
+            {
+                _battleStatusRoot.SetActive(isSelectable);
+            }
+        } else
+        {
+            if (isSelectable)
+            {
+                enemyInfoComponent.ShowStatus();
+            } else
+            {
+                enemyInfoComponent.HideStatus();
+            }
+        }
+    }
+
+    public void ShowEnemyStateOverlay()
+    {
+
+        if (_battlerInfo.isActor)
+        {
+        } else
+        {
+            battleStateOverlay.gameObject.SetActive(true);
+        }
+    }
+
+    public void HideEnemyStateOverlay()
+    {
+
+        if (_battlerInfo.isActor)
+        {
+        } else
+        {
+            battleStateOverlay.gameObject.SetActive(false);
         }
     }
 

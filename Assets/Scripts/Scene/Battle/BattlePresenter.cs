@@ -409,6 +409,7 @@ public class BattlePresenter : BasePresenter
         {
             var demigod = _model.SkillActionAnimation("NA_Effekseer/NA_cut-in_002_" + _model.CurrentBattler.CharaId.ToString());
             _view.StartAnimationDemigod(demigod);
+            _view.HideEnemyStateOverlay();
             _view.SetAnimationEndTiming(90);
             _nextCommandType = Battle.CommandType.EndDemigodAnimation;
         }
@@ -454,6 +455,7 @@ public class BattlePresenter : BasePresenter
         _view.SetRuleButton(false);
         _view.SetEscapeButton(false);
         _view.SetBattlerSelectable(true);
+        _view.ShowEnemyStateOverlay();
         ActionInfo actionInfo = _model.CurrentActionInfo();
         if (actionInfo.ActionResults.Count == 0)
         {

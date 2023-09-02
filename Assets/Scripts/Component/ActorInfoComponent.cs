@@ -216,18 +216,6 @@ public class ActorInfoComponent : MonoBehaviour
         statusInfoComponent.UpdateMp(value,maxMp);
     }
 
-    public void ShowUI()
-    {
-        if (statusInfoComponent == null) return;
-        statusInfoComponent.gameObject.SetActive(true);
-    }
-
-    public void HideUI()
-    {
-        if (statusInfoComponent == null) return;
-        statusInfoComponent.gameObject.SetActive(false);
-    }
-
     public void SetAwakeMode(bool IsAwaken)
     {
         if (faceThumb != null && awakenFaceThumb != null)
@@ -265,5 +253,15 @@ public class ActorInfoComponent : MonoBehaviour
         }
         _isAwakeFaceInit = false;
         _isMainFaceInit = false;
+    }
+
+    public void ShowStatus()
+    {
+        statusInfoComponent.ShowStatus();
+    }
+
+    public void HideStatus()
+    {
+        statusInfoComponent.HideStatus();
     }
 }

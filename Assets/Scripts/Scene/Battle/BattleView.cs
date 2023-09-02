@@ -285,6 +285,8 @@ public class BattleView : BaseView
         } else{
             battleThumb.ShowMainThumb(actorData);
         }
+        // 敵のstateEffectを非表示
+        HideEnemyStateOverlay();
     }
 
     public void HideSkillActionList(bool isSideBenuClose = true)
@@ -295,6 +297,8 @@ public class BattleView : BaseView
         {
             sideMenuList.gameObject.SetActive(false);
         }
+        // 敵のstateEffectを表示
+        ShowEnemyStateOverlay();
     }
 
     public void HideBattleThumb()
@@ -394,6 +398,12 @@ public class BattleView : BaseView
     {
         if (selectIndex != -1){
             ActivateEnemyList();
+        } else
+        {
+            if (targetIndexList == null)
+            {
+                HideEnemyStatus();
+            }
         }
         battleEnemyLayer.RefreshTarget(selectIndex,targetIndexList,scopeType,attributeType);
         if (targetIndexList != null)
@@ -429,6 +439,22 @@ public class BattleView : BaseView
         foreach (var item in _battlerComps)
         {
             item.Value.SetActiveStatus(false);
+        }
+    }
+
+    public void ShowEnemyStateOverlay()
+    {
+        foreach (var item in _battlerComps)
+        {
+            item.Value.ShowEnemyStateOverlay();
+        }
+    }
+
+    public void HideEnemyStateOverlay()
+    {
+        foreach (var item in _battlerComps)
+        {
+            item.Value.HideEnemyStateOverlay();
         }
     }
 

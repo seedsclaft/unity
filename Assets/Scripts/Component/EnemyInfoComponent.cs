@@ -62,18 +62,6 @@ public class EnemyInfoComponent : MonoBehaviour
         statusInfoComponent.UpdateMp(value,maxHp);
     }
 
-    public void ShowUI()
-    {
-        if (statusInfoComponent == null) return;
-        statusInfoComponent.gameObject.SetActive(true);
-    }
-
-    public void HideUI()
-    {
-        if (statusInfoComponent == null) return;
-        statusInfoComponent.gameObject.SetActive(false);
-    }
-
     public void UpdateData(EnemiesData.EnemyData enemyData)
     {
         if (enemyData == null)
@@ -123,5 +111,15 @@ public class EnemyInfoComponent : MonoBehaviour
             nameText.text = "";
         }
         _isMainThumbInit = false;
+    }
+
+    public void ShowStatus()
+    {
+        statusInfoComponent.ShowStatus();
+    }
+
+    public void HideStatus()
+    {
+        statusInfoComponent.HideStatus();
     }
 }

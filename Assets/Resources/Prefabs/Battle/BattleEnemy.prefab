@@ -1350,6 +1350,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5377538090458665422}
   - component: {fileID: 792150081235926605}
+  - component: {fileID: 8992351564704791629}
   m_Layer: 5
   m_Name: Status (1)
   m_TagString: Untagged
@@ -1404,6 +1405,19 @@ MonoBehaviour:
   hpGauge: {fileID: 206092670118021764}
   mpGaugeBg: {fileID: 4102583107753296055}
   mpGauge: {fileID: 3639527364998759770}
+  canvasGroup: {fileID: 8992351564704791629}
+--- !u!225 &8992351564704791629
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6400074927685459529}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 0
+  m_IgnoreParentGroups: 0
 --- !u!1 &7334635788524811271
 GameObject:
   m_ObjectHideFlags: 0
