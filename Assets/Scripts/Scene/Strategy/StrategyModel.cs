@@ -438,8 +438,8 @@ public class StrategyModel : BaseModel
         return CurrentData.PlayerInfo.EnableBattleSkip(CurrentTroopInfo().TroopId);
     }
 
-    public void ChangeBattleSkip()
+    public void ChangeBattleSkip(bool battleSkip)
     {
-        _battleSkip = !_battleSkip;
+        _battleSkip = battleSkip;
     }
 }

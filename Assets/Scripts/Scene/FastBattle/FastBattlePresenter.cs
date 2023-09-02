@@ -25,7 +25,7 @@ public class FastBattlePresenter : BasePresenter
         Initialize();
     }
 
-    private async void Initialize()
+    private void Initialize()
     {
         Time.timeScale = 4;
         _view.SetBattleBusy(true);

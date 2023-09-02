@@ -79,7 +79,7 @@ public class StrategyPresenter : BasePresenter
         }
         if (viewEvent.commandType == CommandType.ChangeSkipToggle)
         {
-            CommandChangeSkipToggle();
+            CommandChangeSkipToggle((bool)viewEvent.templete);
         }
     }
 
@@ -149,6 +149,7 @@ public class StrategyPresenter : BasePresenter
             }
         } else{
             _view.ShowEnemyList(_model.CurrentTroopInfo(),_model.EnableBattleSkip());
+            SetHelpInputSkipEnable();
         }
         var stageEvents = _model.StageEvents(EventTiming.StartStarategy);
         if (stageEvents.Count > 0)
@@ -256,7 +257,7 @@ public class StrategyPresenter : BasePresenter
             if (_isBattle == false){
                 _view.SetHelpInputInfo("STRATEGY");
             } else{
-                _view.SetHelpInputInfo("STRATEGY_BATTLE");
+                SetHelpInputSkipEnable();
             }
             _view.SetHelpText(DataSystem.System.GetTextData(14010).Text);
             _view.SetActiveUi(true);
@@ -321,7 +322,7 @@ public class StrategyPresenter : BasePresenter
             if (_isBattle == false){
                 _view.SetHelpInputInfo("STRATEGY");
             } else{
-                _view.SetHelpInputInfo("STRATEGY_BATTLE");
+                SetHelpInputSkipEnable();
             }
             _view.SetHelpText(DataSystem.System.GetTextData(14010).Text);
         });
@@ -331,10 +332,32 @@ public class StrategyPresenter : BasePresenter
         Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);    
     }
 
-    private void CommandChangeSkipToggle()
+    private void CommandChangeSkipToggle(bool needChangeView)
     {
-        _model.ChangeBattleSkip();
-        _view.CommandChangeSkipToggle(_model.BattleSkip);
+        if (_model.EnableBattleSkip())
+        {
+            var check = _view.BattleSkipToggle.isOn;
+            if (needChangeView)
+            {
+                check = !check;
+            }
+            _model.ChangeBattleSkip(check);
+            if (needChangeView)
+            {
+                _view.CommandChangeSkipToggle(_model.BattleSkip);
+            }
+        }
+    }
+
+    private void SetHelpInputSkipEnable()
+    {
+        if (_model.EnableBattleSkip())
+        {
+            _view.SetHelpInputInfo("STRATEGY_BATTLE_SKIP");
+        } else
+        {
+            _view.SetHelpInputInfo("STRATEGY_BATTLE");
+        }
     }
 
     private void StartNextBattle(List<ActorInfo> battleMembers)

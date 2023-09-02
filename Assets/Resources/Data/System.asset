@@ -423,6 +423,9 @@ MonoBehaviour:
   - Id: 822
     Text: "\u30B9\u30C6\u30FC\u30BF\u30B9\u78BA\u8A8D"
     Help: '""'
+  - Id: 823
+    Text: "\u30D0\u30C8\u30EB\u30B9\u30AD\u30C3\u30D7\u5207\u66FF"
+    Help: '""'
   - Id: 1000
     Text: (Nu)
     Help: '""'
@@ -608,6 +611,9 @@ MonoBehaviour:
     Help: '""'
   - Id: 14071
     Text: "\u30B9\u30C6\u30FC\u30BF\u30B9\u5F37\u5316"
+    Help: '""'
+  - Id: 14080
+    Text: "\u3053\u306E\u6551\u6E08\u57F7\u884C\u3092\u8853\u8005\u306B\u4EFB\u305B\u308B"
     Help: '""'
   - Id: 15010
     Text: "\u884C\u52D5\u9078\u629E\u4E2D\u2026"
@@ -866,6 +872,21 @@ MonoBehaviour:
     KeyId: 3
     Name: "\u30AB\u30FC\u30BD\u30EB\u79FB\u52D5"
   - Key: STRATEGY_BATTLE
+    KeyId: 2
+    Name: '""'
+  - Key: STRATEGY_BATTLE_SKIP
+    KeyId: 4
+    Name: "\u6C7A\u5B9A"
+  - Key: STRATEGY_BATTLE_SKIP
+    KeyId: 6
+    Name: "\u6575\u8A73\u7D30"
+  - Key: STRATEGY_BATTLE_SKIP
+    KeyId: 7
+    Name: "\u30D0\u30C8\u30EB\u30B9\u30AD\u30C3\u30D7\u5207\u66FF"
+  - Key: STRATEGY_BATTLE_SKIP
+    KeyId: 3
+    Name: "\u30AB\u30FC\u30BD\u30EB\u79FB\u52D5"
+  - Key: STRATEGY_BATTLE_SKIP
     KeyId: 2
     Name: '""'
   - Key: BATTLE

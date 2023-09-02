@@ -20,6 +20,7 @@ public class StrategyView : BaseView
     [SerializeField] private GameObject animRoot = null;
     [SerializeField] private GameObject animPrefab = null;
     [SerializeField] private Toggle battleSkipToggle = null;
+    public Toggle BattleSkipToggle => battleSkipToggle;
 
     private BattleStartAnim _battleStartAnim = null;
     private bool _animationBusy = false;
@@ -39,7 +40,7 @@ public class StrategyView : BaseView
         _battleStartAnim.gameObject.SetActive(false);
         lvUpStatusButton.onClick.AddListener(() => CallLvUpNext());
         lvUpStatusButton.gameObject.SetActive(false);
-        battleSkipToggle.onValueChanged.AddListener((a) => OnChangeSkipToggle());
+        battleSkipToggle.onValueChanged.AddListener((a) => OnChangeSkipToggle(false));
         battleSkipToggle.gameObject.SetActive(false);
         new StrategyPresenter(this);
     }
@@ -87,7 +88,7 @@ public class StrategyView : BaseView
         tacticsEnemyList.Initialize(null);
         //tacticsEnemyList.SetInputHandler(InputKeyType.Decide,() => CallPopupSkillInfo());
         tacticsEnemyList.SetInputHandler(InputKeyType.Option1,() => OnClickEnemyInfo());
-        tacticsEnemyList.SetInputHandler(InputKeyType.Option2,() => OnChangeSkipToggle());
+        tacticsEnemyList.SetInputHandler(InputKeyType.Option2,() => OnChangeSkipToggle(true));
         SetInputHandler(tacticsEnemyList.GetComponent<IInputHandlerEvent>());
         tacticsEnemyList.InitializeConfirm(confirmCommands,(a) => CallBattleCommand(a));
         SetInputHandler(tacticsEnemyList.TacticsCommandList.GetComponent<IInputHandlerEvent>());
@@ -191,7 +192,6 @@ public class StrategyView : BaseView
         tacticsEnemyList.UpdateSelectIndex(-1);
         tacticsEnemyList.SetDisableLeftRight();
         battleSkipToggle.gameObject.SetActive(enableBattleSkip);
-        HelpWindow.SetInputInfo("STRATEGY_BATTLE");
     }
 
     private void CallPopupSkillInfo()
@@ -211,9 +211,10 @@ public class StrategyView : BaseView
         _commandData(eventData);
     }
 
-    private void OnChangeSkipToggle()
+    private void OnChangeSkipToggle(bool needChangeView)
     {
         var eventData = new StrategyViewEvent(CommandType.ChangeSkipToggle);
+        eventData.templete = needChangeView;
         _commandData(eventData);
     }
 
@@ -266,6 +267,7 @@ public class StrategyView : BaseView
     {
         if (battleSkipToggle.isOn != isCheck)
         {
+            Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cursor);
             battleSkipToggle.isOn = isCheck;
         }
     }

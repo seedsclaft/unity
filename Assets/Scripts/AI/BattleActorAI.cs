@@ -225,7 +225,7 @@ public class BattleActorAI
                 // Frontを狙う
                 if (attackTarget.LineIndex == LineType.Front)
                 {
-                    skillTargetAI.Weigth += 50;
+                    skillTargetAI.Weigth += 100;
                 } else
                 {
                     // Frontが存在しない
