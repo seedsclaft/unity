@@ -50,6 +50,7 @@ public class BattlePresenter : BasePresenter
         _view.ClearCurrentSkillData();
         _view.CreateObject(_model.BattlerActors().Count);
         _view.SetUIButton();
+        _view.SetBattleAutoButton(_model.BattleAutoButton(),GameSystem.ConfigData._battleManual == false);
         _view.SetActiveBack(false);
 
         if (_view.TestMode == true)
@@ -162,6 +163,10 @@ public class BattlePresenter : BasePresenter
         {
             CommandSelectSideMenu((SystemData.MenuCommandData)viewEvent.templete);
         }
+        if (viewEvent.commandType == Battle.CommandType.ChangeBattleAuto)
+        {
+            CommandChangeBattleAuto();
+        }
     }
 
     private void UpdatePopup(ConfirmComandType confirmComandType)
@@ -212,6 +217,11 @@ public class BattlePresenter : BasePresenter
         });
     }
 
+    private void CommandAutoBattle()
+    {
+        CommandCloseSideMenu();
+    }
+
     private void CommandEnemyDetail(int enemyIndex)
     {
         if (_model.CurrentActor == null) return;
@@ -234,6 +244,7 @@ public class BattlePresenter : BasePresenter
 #if UNITY_EDITOR
         if (_debug == true) return;
 #endif
+        _view.SetHelpInputInfo("BATTLE_AUTO");
         if (GameSystem.ConfigData._battleWait == false)
         {
             while (_model.CurrentBattler == null)
@@ -295,12 +306,14 @@ public class BattlePresenter : BasePresenter
             } 
             if (_model.CurrentBattler.isActor)
             {
-                /* オート戦闘の場合
-                var (autoSkillId,targetIndex) = _model.MakeAutoActorSkillId(_model.CurrentBattler);
-                ActionInfo actionInfo = _model.MakeActionInfo(_model.CurrentBattler,autoSkillId,false,false);
-                CommandSelectIndex(_model.MakeAutoSelectIndex(actionInfo,targetIndex));
-                */
-                CommandDecideActor();
+                if (GameSystem.ConfigData._battleManual == false)
+                {
+                    // オート戦闘の場合
+                    CommandAutoActorSkillId();
+                } else
+                {
+                    CommandDecideActor();
+                }
             } else
             {
                 int autoSkillId = _model.MakeAutoSkillId(_model.CurrentBattler);
@@ -308,6 +321,13 @@ public class BattlePresenter : BasePresenter
                 CommandSelectIndex(_model.MakeAutoSelectIndex(actionInfo));
             }
         }
+    }
+
+    private void CommandAutoActorSkillId()
+    {
+        var (autoSkillId,targetIndex) = _model.MakeAutoActorSkillId(_model.CurrentBattler);
+        ActionInfo actionInfo = _model.MakeActionInfo(_model.CurrentBattler,autoSkillId,false,false);
+        CommandSelectIndex(_model.MakeAutoSelectIndex(actionInfo,targetIndex));
     }
 
     private void BeforeUpdateAp()
@@ -614,6 +634,7 @@ public class BattlePresenter : BasePresenter
             var isAbort = CheckAdvStageEvent(EventTiming.StartBattle,() => {
                 _view.HideEnemyStatus();
                 _view.SetBattleBusy(false);
+                _view.SetBattleAutoButtonActive(true);
                 CommandStartBattleAction();
                 _busy = false;
             });
@@ -624,6 +645,7 @@ public class BattlePresenter : BasePresenter
                 return;
             }
             _view.SetBattleBusy(false);
+            _view.SetBattleAutoButtonActive(true);
             CommandStartBattleAction();
             return;
         }
@@ -641,7 +663,6 @@ public class BattlePresenter : BasePresenter
         if (_nextCommandType == Battle.CommandType.EndSlipDamageAnimation)
         {
             EndTurn();
-            //CommandEndSlipDamageAnimation();
             return;
         }
         if (_nextCommandType == Battle.CommandType.EndRegeneAnimation)
@@ -709,39 +730,6 @@ public class BattlePresenter : BasePresenter
         ExecActionResult(PassiveResults);
         var AfterPassiveResults = _model.CheckTriggerPassiveInfos(TriggerTiming.After);
         ExecActionResult(AfterPassiveResults);
-    }
-
-    private void CommandEndSlipDamageAnimation()
-    {    
-        /*
-        var result = _model.CheckTriggerSkillInfos(TriggerTiming.After,_slipDamageResults);
-        if (result)
-        {    
-            if (_model.CurrentActionInfo() != null)
-            {
-                _model.RemoveActionInfo(_model.CurrentActionInfo());
-            }
-            ActionInfo CurrentActionInfo = _model.CurrentActionInfo();
-            if (CurrentActionInfo != null)
-            {
-                _model.SetActionBattler(_model.CurrentActionInfo().SubjectIndex);
-                CommandSelectIndex(_model.MakeAutoSelectIndex(CurrentActionInfo));
-            }
-            return;
-        }
-        */
-        /*
-        if (CheckBattleEnd() == false && result == false)
-        {
-            var regene = _model.CheckRegene();
-            if (regene && _triggerAfterChecked == false)
-            {
-                StartAnimationRegene();
-                return;
-            }
-        }
-        */
-        EndTurn();
     }
 
     private void EndTurn()
@@ -1004,6 +992,23 @@ public class BattlePresenter : BasePresenter
         }
     }    
     
+    private void CommandChangeBattleAuto()
+    {
+        if (_busy) return;
+        Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cancel);
+        _model.ChangeBattleAuto();
+        _view.ChangeBattleAuto(GameSystem.ConfigData._battleManual == false);
+        if (_view.BattleBusy && GameSystem.ConfigData._battleManual == false)
+        {
+            _view.HideSkillActionList();
+            _view.SetEscapeButton(false);
+            _view.HideSkillAtribute();
+            _view.HideConditionAll();
+            _view.HideBattleThumb();
+            CommandAutoActorSkillId();
+        }
+    }
+
     public void CommandOption()
     {
         _busy = true;

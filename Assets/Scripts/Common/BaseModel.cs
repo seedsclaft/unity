@@ -119,6 +119,7 @@ public class BaseModel
             ChangeBattleWait(saveConfigInfo._battleWait);
             ChangeBattleAnimation(saveConfigInfo._battleAnimationSkip);
             ChangeInputType(saveConfigInfo._inputType);
+            ChangeBattleAuto(saveConfigInfo._battleManual);
         }
     }
 
@@ -177,6 +178,11 @@ public class BaseModel
     public void ChangeInputType(bool inputType)
     {
         GameSystem.ConfigData._inputType = inputType;
+    }
+
+    public void ChangeBattleAuto(bool battleAuto)
+    {
+        GameSystem.ConfigData._battleManual = battleAuto;
     }
 
     public string PlayerName()

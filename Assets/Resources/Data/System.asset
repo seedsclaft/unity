@@ -103,6 +103,13 @@ MonoBehaviour:
     Toggles: 1
     ToggleText1: 541
     ToggleText2: 542
+  - Id: 9
+    Key: BATTLE_AUTO
+    Name: Battle Auto
+    Help: " - \u30D0\u30C8\u30EB\u306E\u64CD\u4F5C\u65B9\u6CD5\u3092\u5909\u66F4\u3057\u307E\u3059"
+    Toggles: 1
+    ToggleText1: 543
+    ToggleText2: 544
   TitleCommandData:
   - Id: 1
     Key: NEWGAME
@@ -309,6 +316,9 @@ MonoBehaviour:
   - Id: 508
     Text: Enable InputKey
     Help: " - \u30AD\u30FC\u30DC\u30FC\u30C9\u30FB\u30B2\u30FC\u30E0\u30D1\u30C3\u30C9\u64CD\u4F5C\u3092\u6709\u52B9\u306B\u3059\u308B\u304B\u5909\u66F4\u3057\u307E\u3059"
+  - Id: 509
+    Text: Battle Auto
+    Help: " - \u30D0\u30C8\u30EB\u306E\u64CD\u4F5C\u65B9\u6CD5\u3092\u5909\u66F4\u3057\u307E\u3059"
   - Id: 521
     Text: Normal
     Help: '""'
@@ -336,6 +346,12 @@ MonoBehaviour:
   - Id: 542
     Text: "\u6709\u52B9\u306B\u3059\u308B"
     Help: '""'
+  - Id: 543
+    Text: "\u30DE\u30CB\u30E5\u30A2\u30EB"
+    Help: '""'
+  - Id: 544
+    Text: "\u30AA\u30FC\u30C8"
+    Help: '""'
   - Id: 700
     Text: "\u7248\u6A29\u8868\u793A"
     Help: '""'
@@ -353,6 +369,9 @@ MonoBehaviour:
     Help: '""'
   - Id: 705
     Text: "\u7DE8\u6210\u8FF0\u61D0"
+    Help: '""'
+  - Id: 706
+    Text: "\u81EA\u52D5\u6226\u95D8"
     Help: '""'
   - Id: 800
     Text: '""'
@@ -425,6 +444,9 @@ MonoBehaviour:
     Help: '""'
   - Id: 823
     Text: "\u30D0\u30C8\u30EB\u30B9\u30AD\u30C3\u30D7\u5207\u66FF"
+    Help: '""'
+  - Id: 824
+    Text: "\u81EA\u52D5\u6226\u95D8\u5207\u66FF"
     Help: '""'
   - Id: 1000
     Text: (Nu)
@@ -893,6 +915,9 @@ MonoBehaviour:
     KeyId: 4
     Name: "\u6C7A\u5B9A"
   - Key: BATTLE
+    KeyId: 5
+    Name: "\u81EA\u52D5\u6226\u95D8\u5207\u66FF"
+  - Key: BATTLE
     KeyId: 7
     Name: "\u64A4\u9000\u3059\u308B"
   - Key: BATTLE
@@ -955,6 +980,9 @@ MonoBehaviour:
   - Key: BATTLE_PARTY
     KeyId: 0
     Name: '""'
+  - Key: BATTLE_AUTO
+    KeyId: 5
+    Name: "\u81EA\u52D5\u6226\u95D8\u5207\u66FF"
   - Key: STATUS
     KeyId: 4
     Name: "\u9B54\u6CD5\u78BA\u8A8D"

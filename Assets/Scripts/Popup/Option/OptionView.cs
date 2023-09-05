@@ -19,6 +19,7 @@ public class OptionView : BaseView
     private Toggle[] _battleWaitToggles = null;
     private Toggle[] _battleAnimationToggles = null;
     private Toggle[] _inputTypeToggles = null;
+    private Toggle[] _battleAutoToggles = null;
 
     private int _tempInputTypeIndex = -1;
     public override void Initialize() 
@@ -109,6 +110,17 @@ public class OptionView : BaseView
             _inputTypeToggles[i].onValueChanged.AddListener((a) => ChangeInputType(a,j));
         }
         _tempInputTypeIndex = InputTypeIndex;
+    }
+
+    public void InitializeBattleAuto(int autoIndex)
+    {
+        _battleAutoToggles = commandList.ObjectList[8].GetComponentsInChildren<Toggle>();
+        UpdateBattleAuto(autoIndex);
+        for (int i = 0;i < _battleAutoToggles.Length;i++)
+        {
+            int j = _battleAutoToggles.Length-i;
+            _battleAutoToggles[i].onValueChanged.AddListener((a) => ChangeBattleAuto(a,j));
+        }
     }
 
     public void SetEvent(System.Action<OptionViewEvent> commandData)
@@ -269,6 +281,22 @@ public class OptionView : BaseView
         }
     }
 
+    private void ChangeBattleAuto(bool isChange,int toggleIndex)
+    {
+        if (isChange == false) return;
+        var eventData = new OptionViewEvent(CommandType.ChangeBattleAuto);
+        eventData.templete = toggleIndex;
+        _commandData(eventData);
+    }
+
+    private void UpdateBattleAuto(int battleAutoIndex)
+    {
+        for (int i = 0;i < _battleAutoToggles.Length;i++)
+        {
+            _battleAutoToggles[i].isOn = (_battleAutoToggles.Length-i) == battleAutoIndex;
+        }
+    }
+
     public void CommandSelectCategory(int optionIndex)
     {
         for (int i = 0;i < optionObjs.Count ; i++)
@@ -394,6 +422,19 @@ public class OptionView : BaseView
                 UpdateInputType(2);
                 ChangeInputType(true,2);
             };
+        } else
+        if (optionCommand.Key == "BATTLE_AUTO")
+        {
+            if (inputKeyType == InputKeyType.Right)
+            {
+                UpdateBattleAuto(1);
+                ChangeBattleAuto(true,1);
+            } else
+            if (inputKeyType == InputKeyType.Left)
+            {
+                UpdateBattleAuto(2);
+                ChangeBattleAuto(true,2);
+            };
         }
         
     }
@@ -420,7 +461,8 @@ namespace Option
         ChangeCommandEndCheck = 1041,
         ChangeBattleWait = 1051,
         ChangeBattleAnimation = 1061,
-        ChangeInputType = 1071
+        ChangeInputType = 1071,
+        ChangeBattleAuto = 1081,
     }
 }
 public class OptionViewEvent

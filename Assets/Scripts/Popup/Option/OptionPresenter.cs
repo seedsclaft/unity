@@ -22,13 +22,14 @@ public class OptionPresenter
         _view.SetEvent((type) => updateCommand(type));
         _view.SetOptionCommand(_model.OptionCommand(),() => 
         {
-        _view.InitializeVolume(_model.BGMVolume(),_model.BGMMute(),_model.SEVolume(),_model.SEMute());
-        _view.InitializeGraphic(_model.GraphicIndex());
-        _view.InitializeEventSkip(GameSystem.ConfigData._eventSkipIndex ? 1 : 2);
-        _view.InitializeCommandEndCheck(GameSystem.ConfigData._commandEndCheck ? 2 : 1);
-        _view.InitializeBattleWait(GameSystem.ConfigData._battleWait ? 2 : 1);
-        _view.InitializeBattleAnimation(GameSystem.ConfigData._battleAnimationSkip ? 1 : 2);
-        _view.InitializeInputType(GameSystem.ConfigData._inputType ? 1 : 2);
+            _view.InitializeVolume(_model.BGMVolume(),_model.BGMMute(),_model.SEVolume(),_model.SEMute());
+            _view.InitializeGraphic(_model.GraphicIndex());
+            _view.InitializeEventSkip(GameSystem.ConfigData._eventSkipIndex ? 1 : 2);
+            _view.InitializeCommandEndCheck(GameSystem.ConfigData._commandEndCheck ? 2 : 1);
+            _view.InitializeBattleWait(GameSystem.ConfigData._battleWait ? 2 : 1);
+            _view.InitializeBattleAnimation(GameSystem.ConfigData._battleAnimationSkip ? 1 : 2);
+            _view.InitializeInputType(GameSystem.ConfigData._inputType ? 1 : 2);
+            _view.InitializeBattleAuto(GameSystem.ConfigData._battleManual ? 2 : 1);
         });
         _view.SetHelpWindow();
         _busy = false;
@@ -83,6 +84,10 @@ public class OptionPresenter
         if (viewEvent.commandType == CommandType.ChangeInputType)
         {
            CommandChangeInputType((int)viewEvent.templete);
+        }
+        if (viewEvent.commandType == CommandType.ChangeBattleAuto)
+        {
+           CommandChangeBattleAuto((int)viewEvent.templete);
         }
     }
 
@@ -142,6 +147,11 @@ public class OptionPresenter
     {
         _view.SetTempInputType(inputTypeIndex);
         //GameSystem.ConfigData._inputType = (inputTypeIndex == 1);
+    }
+
+    private void CommandChangeBattleAuto(int autoIndex)
+    {
+        GameSystem.ConfigData._battleManual = (autoIndex == 2);
     }
 }
 

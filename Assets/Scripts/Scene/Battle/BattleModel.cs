@@ -1861,6 +1861,7 @@ public class BattleModel : BaseModel
             actorInfo.ChangeHp(battler.Hp);
             actorInfo.ChangeMp(battler.Mp);
         }
+        SaveSystem.SaveConfigStart(GameSystem.ConfigData);
     }
 
     public List<SystemData.MenuCommandData> SideMenu()
@@ -1872,5 +1873,19 @@ public class BattleModel : BaseModel
         menucommand.Key = "Help";
         list.Add(menucommand);
         return list;
+    }
+
+    public SystemData.MenuCommandData BattleAutoButton()
+    {
+        var menucommand = new SystemData.MenuCommandData();
+        menucommand.Id = 1;
+        menucommand.Name = DataSystem.System.GetTextData(706).Text;
+        menucommand.Key = "BATTLE_AUTO";
+        return menucommand;
+    }
+
+    public void ChangeBattleAuto()
+    {
+        GameSystem.ConfigData._battleManual = !GameSystem.ConfigData._battleManual;
     }
 }

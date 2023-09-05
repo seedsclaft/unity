@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using Battle;
 using Effekseer;
 
-public class BattleView : BaseView
+public class BattleView : BaseView ,IInputHandlerEvent
 {
     [SerializeField] private BattleActorList battleActorList = null;
     [SerializeField] private BattleEnemyLayer battleEnemyLayer = null;
@@ -26,11 +26,13 @@ public class BattleView : BaseView
 
     
     [SerializeField] private GameObject centerAnimPosition = null;
+    [SerializeField] private SideMenu battleAutoButton = null;
     private BattleStartAnim _battleStartAnim = null;
 
 
 
     private bool _battleBusy = false;
+    public bool BattleBusy => _battleBusy;
     public void SetBattleBusy(bool isBusy)
     {
         _battleBusy = isBusy;
@@ -62,6 +64,7 @@ public class BattleView : BaseView
         SetInputHandler(skillList.skillAttributeList.GetComponent<IInputHandlerEvent>());
         skillList.HideAttributeList();
 
+        SetInputHandler(gameObject.GetComponent<IInputHandlerEvent>());
         new BattlePresenter(this);
     }
 
@@ -77,7 +80,26 @@ public class BattleView : BaseView
         skillList.HideAttributeList();
         sideMenuList.gameObject.SetActive(false);
     }
+
+    public void SetBattleAutoButton(SystemData.MenuCommandData data,bool isAuto)
+    {
+        battleAutoButton.SetData(data,0);
+        battleAutoButton.UpdateViewItem();
+        battleAutoButton.SetCallHandler((a) => {
+            if (battleAutoButton.gameObject.activeSelf == false) return;
+            if (sideMenuList.gameObject.activeSelf == true) return;
+            var eventData = new BattleViewEvent(CommandType.ChangeBattleAuto);
+            _commandData(eventData);
+        });
+        battleAutoButton.Cursor.SetActive(isAuto);
+        SetBattleAutoButtonActive(false);
+    }
     
+    public void SetBattleAutoButtonActive(bool isActive)
+    {
+        battleAutoButton.gameObject.SetActive(isActive);
+    }
+
     private void CallSkillAction()
     {
         var eventData = new BattleViewEvent(CommandType.SkillAction);
@@ -184,7 +206,7 @@ public class BattleView : BaseView
             HelpWindow.SetInputInfo("BATTLE");
         } else
         {
-            HelpWindow.SetInputInfo("BATTLE_NO");
+            HelpWindow.SetInputInfo("BATTLE_AUTO");
         }
     }
 
@@ -589,13 +611,13 @@ public class BattleView : BaseView
     }
 
     private new void Update() 
-    {
+    {     
+        base.Update();
         if (_animationBusy == true)
         {
             CheckAnimationBusy();
             return;
         }
-        base.Update();
         if (_battleBusy == true) return;
         var eventData = new BattleViewEvent(CommandType.UpdateAp);
         _commandData(eventData);
@@ -710,6 +732,22 @@ public class BattleView : BaseView
     {
         var eventData = new BattleViewEvent(CommandType.CloseSideMenu);
         _commandData(eventData);
+    }    
+    
+    public void InputHandler(InputKeyType keyType)
+    {
+        if (keyType == InputKeyType.Cancel)
+        {
+            if (battleAutoButton.gameObject.activeSelf == false) return;
+            if (sideMenuList.gameObject.activeSelf) return;
+            var eventData = new BattleViewEvent(CommandType.ChangeBattleAuto);
+            _commandData(eventData);
+        }
+    }
+
+    public void ChangeBattleAuto(bool isAuto)
+    {
+        battleAutoButton.Cursor.SetActive(isAuto);
     }
 }
 
@@ -744,6 +782,7 @@ namespace Battle
         SelectParty,
         EnemyDetail,
         EventCheck,
+        ChangeBattleAuto,
         EndBattle
     }
 }
