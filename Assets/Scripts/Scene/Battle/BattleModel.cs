@@ -1886,6 +1886,6 @@ public class BattleModel : BaseModel
 
     public void ChangeBattleAuto()
     {
-        GameSystem.ConfigData._battleManual = !GameSystem.ConfigData._battleManual;
+        GameSystem.ConfigData._battleAuto = !GameSystem.ConfigData._battleAuto;
     }
 }

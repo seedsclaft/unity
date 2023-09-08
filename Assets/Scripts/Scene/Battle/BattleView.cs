@@ -38,6 +38,7 @@ public class BattleView : BaseView ,IInputHandlerEvent
         _battleBusy = isBusy;
     }
     private bool _animationBusy = false;
+    public bool AnimationBusy => _animationBusy;
 
     private Dictionary<int,BattlerInfoComponent> _battlerComps = new Dictionary<int, BattlerInfoComponent>();
     private int _animationEndTiming = 0;
@@ -87,8 +88,11 @@ public class BattleView : BaseView ,IInputHandlerEvent
         battleAutoButton.UpdateViewItem();
         battleAutoButton.SetCallHandler((a) => {
             if (battleAutoButton.gameObject.activeSelf == false) return;
-            var eventData = new BattleViewEvent(CommandType.ChangeBattleAuto);
-            _commandData(eventData);
+            if (skillList.skillActionList.gameObject.activeSelf == true || (_battleBusy == true && GameSystem.ConfigData._battleAuto))
+            {
+                var eventData = new BattleViewEvent(CommandType.ChangeBattleAuto);
+                _commandData(eventData);
+            }
         });
         battleAutoButton.Cursor.SetActive(isAuto);
         SetBattleAutoButtonActive(false);
@@ -177,6 +181,7 @@ public class BattleView : BaseView ,IInputHandlerEvent
     { 
         var eventData = new BattleViewEvent(CommandType.Back);
         _commandData(eventData);
+        SetInputFrame(1);
     }
 
     private void OnClickEscape()
@@ -245,6 +250,7 @@ public class BattleView : BaseView ,IInputHandlerEvent
             _battlerComps[item.Index] = battleEnemyLayer.GetBattlerInfoComp(item.Index);
         }
         battleGridLayer.SetEnemyInfo(battlerInfos);
+        DeactivateEnemyList();
     }
 
     private void CallEnemyInfo(List<int> indexList)
@@ -509,6 +515,8 @@ public class BattleView : BaseView ,IInputHandlerEvent
 
     public void StartAnimationAll(EffekseerEffectAsset effekseerEffectAsset)
     {
+        DeactivateActorList();
+        DeactivateEnemyList();
         _animationBusy = true;
         if (GameSystem.ConfigData._battleAnimationSkip == true) 
         {
@@ -521,6 +529,8 @@ public class BattleView : BaseView ,IInputHandlerEvent
 
     public void StartAnimationDemigod(EffekseerEffectAsset effekseerEffectAsset)
     {
+        DeactivateActorList();
+        DeactivateEnemyList();
         _animationBusy = true;
         EffekseerHandle handle = EffekseerSystem.PlayEffect(effekseerEffectAsset, centerAnimPosition.transform.position);
     }

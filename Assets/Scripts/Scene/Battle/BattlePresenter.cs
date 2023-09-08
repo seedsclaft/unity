@@ -50,7 +50,7 @@ public class BattlePresenter : BasePresenter
         _view.ClearCurrentSkillData();
         _view.CreateObject(_model.BattlerActors().Count);
         _view.SetUIButton();
-        _view.SetBattleAutoButton(_model.BattleAutoButton(),GameSystem.ConfigData._battleManual == false);
+        _view.SetBattleAutoButton(_model.BattleAutoButton(),GameSystem.ConfigData._battleAuto == true);
         _view.SetActiveBack(false);
 
         if (_view.TestMode == true)
@@ -306,7 +306,7 @@ public class BattlePresenter : BasePresenter
             } 
             if (_model.CurrentBattler.isActor)
             {
-                if (GameSystem.ConfigData._battleManual == false)
+                if (GameSystem.ConfigData._battleAuto == true)
                 {
                     // オート戦闘の場合
                     CommandAutoActorSkillId();
@@ -997,9 +997,12 @@ public class BattlePresenter : BasePresenter
         if (_busy) return;
         Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cancel);
         _model.ChangeBattleAuto();
-        _view.ChangeBattleAuto(GameSystem.ConfigData._battleManual == false);
-        if (_view.BattleBusy && GameSystem.ConfigData._battleManual == false)
+        _view.ChangeBattleAuto(GameSystem.ConfigData._battleAuto == true);
+        if (_view.AnimationBusy == false && _view.BattleBusy && _model.CurrentBattler.isActor && GameSystem.ConfigData._battleAuto == true)
         {
+            _model.ClearActionInfo();
+            _view.RefreshBattlerEnemyLayerTarget(-1);
+            _view.RefreshBattlerPartyLayerTarget(-1);
             _view.HideSkillActionList();
             _view.SetEscapeButton(false);
             _view.HideSkillAtribute();

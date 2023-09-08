@@ -398,7 +398,7 @@ public class SaveConfigInfo
 	public bool _battleWait;
 	public bool _battleAnimationSkip;
 	public bool _inputType;
-	public bool _battleManual;
+	public bool _battleAuto;
     public SaveConfigInfo()
     {
 		this.InitParameter();
@@ -416,7 +416,7 @@ public class SaveConfigInfo
 		_battleWait = true;
 		_battleAnimationSkip = false;
 		_inputType = false;
-		_battleManual = true;
+		_battleAuto = false;
 	}
 
 	public void UpdateSoundParameter(float bgmVolume,bool bgmMute,float seVolume,bool seMute)

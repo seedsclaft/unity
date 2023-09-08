@@ -29,7 +29,7 @@ public class OptionPresenter
             _view.InitializeBattleWait(GameSystem.ConfigData._battleWait ? 2 : 1);
             _view.InitializeBattleAnimation(GameSystem.ConfigData._battleAnimationSkip ? 1 : 2);
             _view.InitializeInputType(GameSystem.ConfigData._inputType ? 1 : 2);
-            _view.InitializeBattleAuto(GameSystem.ConfigData._battleManual ? 2 : 1);
+            _view.InitializeBattleAuto(GameSystem.ConfigData._battleAuto ? 1 : 2);
         });
         _view.SetHelpWindow();
         _busy = false;
@@ -151,7 +151,7 @@ public class OptionPresenter
 
     private void CommandChangeBattleAuto(int autoIndex)
     {
-        GameSystem.ConfigData._battleManual = (autoIndex == 2);
+        GameSystem.ConfigData._battleAuto = (autoIndex == 1);
     }
 }
 
