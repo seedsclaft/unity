@@ -35,7 +35,8 @@ public class BattleActorAI
                 // 拘束
                 if (skillInfo.Master.IsStateFeature(StateType.Chain))
                 {
-                    CalcChainSkillWeight(skillInfo,attackTargets,skillTargetAI);
+                    var chainTargets = _batterInfo.isActor ? targetMember : partyMember;
+                    CalcChainSkillWeight(skillInfo,attackTargets,skillTargetAI,chainTargets);
                 }
                 // CA
                 if (skillInfo.Master.IsStateFeature(StateType.CounterOura))
@@ -98,7 +99,12 @@ public class BattleActorAI
                 skillTargetAIs.Add(skillTargetAI);
             }
         }
-
+#if UNITY_EDITOR
+        foreach (var skillTargetAI in skillTargetAIs)
+        {
+            Debug.Log("スキルID = " + skillTargetAI.SkillId + " W =" + skillTargetAI.Weigth);
+        }
+#endif
         var (skillId,targetId) = GetSkillTargetAI(skillTargetAIs);
         
         return (skillId,targetId);
@@ -146,7 +152,8 @@ public class BattleActorAI
         targets = targets.FindAll(a => a.IsAlive() == skillInfo.Master.AliveOnly);
         if (skillInfo.Master.Range == RangeType.S && !_batterInfo.IsState(StateType.Extension))
         {
-            var findFront = targets.Find(a => a.IsAlive() && a.LineIndex == LineType.Front);
+            var isActor = _batterInfo.isActor;
+            var findFront = targets.Find(a => a.isActor != isActor && a.IsAlive() && a.LineIndex == LineType.Front);
             if (findFront != null)
             {
                 targets = targets.FindAll(a => a.LineIndex == LineType.Front);
@@ -204,7 +211,7 @@ public class BattleActorAI
         }
     }
 
-    private static void CalcChainSkillWeight(SkillInfo skillInfo,List<BattlerInfo> attackTargets, SkillTargetAI skillTargetAI)
+    private static void CalcChainSkillWeight(SkillInfo skillInfo,List<BattlerInfo> attackTargets, SkillTargetAI skillTargetAI,List<BattlerInfo> opponents)
     {
         // 攻撃値計算
         var chainFeatures = skillInfo.Master.FeatureDatas.FindAll(a => a.FeatureType == FeatureType.AddState && a.Param1 == (int)StateType.Chain);
@@ -229,9 +236,9 @@ public class BattleActorAI
                 } else
                 {
                     // Frontが存在しない
-                    if (attackTargets.Find(a => a.IsAlive() && a.LineIndex == LineType.Front) == null)
+                    if (opponents.Find(a => a.IsAlive() && a.LineIndex == LineType.Front) == null)
                     {
-                        skillTargetAI.Weigth += 50;
+                        skillTargetAI.Weigth += 100;
                     }
                 }
             }
@@ -251,7 +258,7 @@ public class BattleActorAI
             skillTargetAI.Weigth += result.ReDamage;
             if (result.ReDamage >= attackTarget.Hp)
             {
-                skillTargetAI.Weigth += 50;
+                skillTargetAI.Weigth += 100;
             }
             var states = attackTarget.GetStateInfoAll(StateType.Substitute);
             // 挑発している
@@ -339,7 +346,12 @@ public class BattleActorAI
             {
                 if (attackTarget.Kinds.Contains(KindType.Undead))
                 {
-                    skillTargetAI.Weigth += 50;
+                    var result = new ActionResultInfo(_batterInfo,attackTarget,skillInfo.Master.FeatureDatas,-1);
+                    skillTargetAI.Weigth += result.HpDamage;
+                    if (result.HpDamage >= attackTarget.Hp)
+                    {
+                        skillTargetAI.Weigth += 50;
+                    }
                 } else
                 {
                     skillTargetAI.Weigth = 1;

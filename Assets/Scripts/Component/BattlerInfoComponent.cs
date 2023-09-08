@@ -350,6 +350,10 @@ public class BattlerInfoComponent : MonoBehaviour
                 }
                 _damageHandler = null;
                 _animationEndTiming = 60;
+                if (GameSystem.ConfigData._battleAnimationSkip == true) 
+                {
+                    _animationEndTiming = 1;
+                }
             }
         }
         if (_animationEndTiming > 0)

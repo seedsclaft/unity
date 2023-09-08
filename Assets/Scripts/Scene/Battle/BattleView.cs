@@ -87,7 +87,6 @@ public class BattleView : BaseView ,IInputHandlerEvent
         battleAutoButton.UpdateViewItem();
         battleAutoButton.SetCallHandler((a) => {
             if (battleAutoButton.gameObject.activeSelf == false) return;
-            if (sideMenuList.gameObject.activeSelf == true) return;
             var eventData = new BattleViewEvent(CommandType.ChangeBattleAuto);
             _commandData(eventData);
         });
@@ -175,7 +174,7 @@ public class BattleView : BaseView ,IInputHandlerEvent
     }
 
     private void OnClickBack()
-    {
+    { 
         var eventData = new BattleViewEvent(CommandType.Back);
         _commandData(eventData);
     }
@@ -531,6 +530,7 @@ public class BattleView : BaseView ,IInputHandlerEvent
         if (GameSystem.ConfigData._battleAnimationSkip == true) 
         {            
             _animationEndTiming = 1;
+            damageTiming = 10;
         } else{
             _animationEndTiming = damageTiming + 60;
         }
@@ -732,6 +732,7 @@ public class BattleView : BaseView ,IInputHandlerEvent
     {
         var eventData = new BattleViewEvent(CommandType.CloseSideMenu);
         _commandData(eventData);
+        SetInputFrame(1);
     }    
     
     public void InputHandler(InputKeyType keyType)
@@ -739,7 +740,6 @@ public class BattleView : BaseView ,IInputHandlerEvent
         if (keyType == InputKeyType.Cancel)
         {
             if (battleAutoButton.gameObject.activeSelf == false) return;
-            if (sideMenuList.gameObject.activeSelf) return;
             var eventData = new BattleViewEvent(CommandType.ChangeBattleAuto);
             _commandData(eventData);
         }

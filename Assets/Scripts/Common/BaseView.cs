@@ -30,6 +30,12 @@ abstract public class BaseView : MonoBehaviour
         HelpWindow.SetHelpText(text);
     }
 
+    private int _inputBusyFrame = 0;
+    public void SetInputFrame(int frame)
+    {
+        _inputBusyFrame = frame;
+    }
+
     public virtual void Initialize()
     {
         
@@ -55,7 +61,7 @@ abstract public class BaseView : MonoBehaviour
         if (_busy) return;
         for (int i = _inputHandler.Count-1;i >= 0;i--)
         {
-            if (_inputHandler[i] != null){
+            if (_inputHandler[i] != null && _inputBusyFrame < 0){
                 _inputHandler[i].InputHandler(keyType);
             }
         }
@@ -90,6 +96,15 @@ abstract public class BaseView : MonoBehaviour
             {
                 CallMouseCancel();
             }
+        }
+        UpdateInputFrame();
+    }
+
+    private void UpdateInputFrame()
+    {
+        if (_inputBusyFrame >= 0)
+        {
+            _inputBusyFrame--;
         }
     }
 
