@@ -88,11 +88,8 @@ public class BattleView : BaseView ,IInputHandlerEvent
         battleAutoButton.UpdateViewItem();
         battleAutoButton.SetCallHandler((a) => {
             if (battleAutoButton.gameObject.activeSelf == false) return;
-            if (skillList.skillActionList.gameObject.activeSelf == true || (_battleBusy == true && GameSystem.ConfigData._battleAuto))
-            {
-                var eventData = new BattleViewEvent(CommandType.ChangeBattleAuto);
-                _commandData(eventData);
-            }
+            var eventData = new BattleViewEvent(CommandType.ChangeBattleAuto);
+            _commandData(eventData);
         });
         battleAutoButton.Cursor.SetActive(isAuto);
         SetBattleAutoButtonActive(false);
