@@ -13,15 +13,15 @@ public class ResultModel : BaseModel
         return new List<string>();
     }
 
-    public List<SystemData.MenuCommandData> ResultCommand()
+    public List<SystemData.CommandData> ResultCommand()
     {
-        List<SystemData.MenuCommandData> menuCommandDatas = new List<SystemData.MenuCommandData>();
-        SystemData.MenuCommandData yesCommand = new SystemData.MenuCommandData();
+        List<SystemData.CommandData> menuCommandDatas = new List<SystemData.CommandData>();
+        SystemData.CommandData yesCommand = new SystemData.CommandData();
         yesCommand.Key = "Yes";
         yesCommand.Name = DataSystem.System.GetTextData(6).Text;
         yesCommand.Id = 0;
         menuCommandDatas.Add(yesCommand);
-        SystemData.MenuCommandData noCommand = new SystemData.MenuCommandData();
+        SystemData.CommandData noCommand = new SystemData.CommandData();
         noCommand.Key = "No";
         noCommand.Name = DataSystem.System.GetTextData(3040).Text;
         noCommand.Id = 1;
@@ -99,15 +99,15 @@ public class ResultModel : BaseModel
         CurrentData.PlayerInfo.SetBestScore(TotalEvaluate());
     }
 
-    public List<SystemData.MenuCommandData> StageEndCommand()
+    public List<SystemData.CommandData> StageEndCommand()
     {
-        List<SystemData.MenuCommandData> menuCommandDatas = new List<SystemData.MenuCommandData>();
-        SystemData.MenuCommandData yesCommand = new SystemData.MenuCommandData();
+        List<SystemData.CommandData> menuCommandDatas = new List<SystemData.CommandData>();
+        SystemData.CommandData yesCommand = new SystemData.CommandData();
         yesCommand.Key = "Yes";
         yesCommand.Name = DataSystem.System.GetTextData(6).Text;
         yesCommand.Id = 0;
         menuCommandDatas.Add(yesCommand);
-        SystemData.MenuCommandData noCommand = new SystemData.MenuCommandData();
+        SystemData.CommandData noCommand = new SystemData.CommandData();
         noCommand.Key = "No";
         noCommand.Name = DataSystem.System.GetTextData(16020).Text;
         noCommand.Id = 1;

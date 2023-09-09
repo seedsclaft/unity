@@ -2,7 +2,7 @@
 
 public class TitleModel : BaseModel
 {
-    public List<SystemData.MenuCommandData> TitleCommand => DataSystem.TitleCommand;
+    public List<SystemData.CommandData> TitleCommand => DataSystem.TitleCommand;
 
     public bool ExistsLoadFile()
     {
@@ -11,13 +11,13 @@ public class TitleModel : BaseModel
 
     public string VersionText()
     {
-        return GameSystem.Version.ToString();
+        return GameSystem.Version;
     }
 
-    public List<SystemData.MenuCommandData> SideMenu()
+    public List<SystemData.CommandData> SideMenu()
     {
-        var list = new List<SystemData.MenuCommandData>();
-        var menucommand = new SystemData.MenuCommandData();
+        var list = new List<SystemData.CommandData>();
+        var menucommand = new SystemData.CommandData();
         menucommand.Id = 1;
         menucommand.Name = DataSystem.System.GetTextData(700).Text;
         menucommand.Key = "Licence";

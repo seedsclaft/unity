@@ -62,7 +62,7 @@ public class TacticsModel : BaseModel
         return LaerningCost;
     }
 
-    public List<SystemData.MenuCommandData> TacticsCommand
+    public List<SystemData.CommandData> TacticsCommand
     {
         get { return DataSystem.TacticsCommand;}
     }
@@ -427,15 +427,15 @@ public class TacticsModel : BaseModel
         return null;
     }
 
-    public List<SystemData.MenuCommandData> SideMenu()
+    public List<SystemData.CommandData> SideMenu()
     {
-        var list = new List<SystemData.MenuCommandData>();
-        var retire = new SystemData.MenuCommandData();
+        var list = new List<SystemData.CommandData>();
+        var retire = new SystemData.CommandData();
         retire.Id = 1;
         retire.Name = DataSystem.System.GetTextData(704).Text;
         retire.Key = "Retire";
         list.Add(retire);
-        var menucommand = new SystemData.MenuCommandData();
+        var menucommand = new SystemData.CommandData();
         menucommand.Id = 2;
         menucommand.Name = DataSystem.System.GetTextData(703).Text;
         menucommand.Key = "Help";

@@ -78,7 +78,7 @@ public class MainMenuView : BaseView
         _commandData(eventData);
     }
 
-    public void SetSideMenu(List<SystemData.MenuCommandData> menuCommands){
+    public void SetSideMenu(List<SystemData.CommandData> menuCommands){
         sideMenuList.Initialize(menuCommands,(a) => CallSideMenu(a),() => OnClickOption(),() => CallCloseSideMenu());
         SetInputHandler(sideMenuList.GetComponent<IInputHandlerEvent>());
         sideMenuList.Deactivate();
@@ -119,7 +119,7 @@ public class MainMenuView : BaseView
         _commandData(eventData);
     }
 
-    private void CallSideMenu(SystemData.MenuCommandData sideMenu)
+    private void CallSideMenu(SystemData.CommandData sideMenu)
     {
         var eventData = new MainMenuViewEvent(CommandType.SelectSideMenu);
         eventData.templete = sideMenu;

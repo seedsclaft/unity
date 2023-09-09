@@ -82,7 +82,7 @@ public class BattleView : BaseView ,IInputHandlerEvent
         sideMenuList.gameObject.SetActive(false);
     }
 
-    public void SetBattleAutoButton(SystemData.MenuCommandData data,bool isAuto)
+    public void SetBattleAutoButton(SystemData.CommandData data,bool isAuto)
     {
         battleAutoButton.SetData(data,0);
         battleAutoButton.UpdateViewItem();
@@ -221,7 +221,7 @@ public class BattleView : BaseView ,IInputHandlerEvent
     }
 
     
-    public void SetBattleCommand(List<SystemData.MenuCommandData> menuCommands)
+    public void SetBattleCommand(List<SystemData.CommandData> menuCommands)
     {
     }
 
@@ -669,7 +669,7 @@ public class BattleView : BaseView ,IInputHandlerEvent
         }
     }
 
-    public void SetSideMenu(List<SystemData.MenuCommandData> menuCommands){
+    public void SetSideMenu(List<SystemData.CommandData> menuCommands){
         sideMenuList.Initialize(menuCommands,(a) => CallSideMenu(a),() => OnClickOption(),() => CallCloseSideMenu());
         SetInputHandler(sideMenuList.GetComponent<IInputHandlerEvent>());
         sideMenuList.Deactivate();
@@ -728,7 +728,7 @@ public class BattleView : BaseView ,IInputHandlerEvent
         _commandData(eventData);
     }
 
-    private void CallSideMenu(SystemData.MenuCommandData sideMenu)
+    private void CallSideMenu(SystemData.CommandData sideMenu)
     {
         var eventData = new BattleViewEvent(CommandType.SelectSideMenu);
         eventData.templete = sideMenu;

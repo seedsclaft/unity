@@ -65,7 +65,7 @@ public class TitlePresenter : BasePresenter
         }
         if (viewEvent.commandType == CommandType.SelectSideMenu)
         {
-            CommandSelectSideMenu((SystemData.MenuCommandData)viewEvent.templete);
+            CommandSelectSideMenu((SystemData.CommandData)viewEvent.templete);
         }
         if (viewEvent.commandType == CommandType.Option)
         {
@@ -165,7 +165,7 @@ public class TitlePresenter : BasePresenter
         _view.CommandCloseSideMenu();
     }
 
-    private void CommandSelectSideMenu(SystemData.MenuCommandData sideMenu)
+    private void CommandSelectSideMenu(SystemData.CommandData sideMenu)
     {
         if (sideMenu.Key == "Licence")
         {

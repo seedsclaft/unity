@@ -40,7 +40,7 @@ public class StatusPresenter
         }
         if (viewEvent.commandType == Status.CommandType.StatusCommand)
         {
-            CommandStatusCommand((StatusComandType)viewEvent.templete);
+            CommandStatusCommand((SystemData.CommandData)viewEvent.templete);
         }
         if (viewEvent.commandType == Status.CommandType.AttributeType)
         {
@@ -114,9 +114,9 @@ public class StatusPresenter
         Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cancel);
     }
 
-    private void CommandStatusCommand(StatusComandType statusComandType)
+    private void CommandStatusCommand(SystemData.CommandData commmandData)
     {
-        if (statusComandType == StatusComandType.Strength)
+        if (commmandData.Key == "Strength")
         {
             _backCommandType = Status.CommandType.StatusCommand;
             _model.ClearStrength();
@@ -125,7 +125,7 @@ public class StatusPresenter
             _view.DeactivateActorList();
             _view.SetActiveBack(false);
         }
-        if (statusComandType == StatusComandType.SkillActionList)
+        if (commmandData.Key == "SKILLLIST")
         {
             _backCommandType = Status.CommandType.StatusCommand;
             _view.SetActiveBack(true);

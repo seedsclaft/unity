@@ -10,8 +10,18 @@ public class TacticsTrainList : ListWindow , IInputHandlerEvent
     private List<ActorInfo> _actorInfos = new List<ActorInfo>();
     [SerializeField] private TextMeshProUGUI commandLv;
     [SerializeField] private TextMeshProUGUI commandDescription;
-    [SerializeField] private TacticsCommandList tacticsCommandList;
-    private System.Action<TacticsComandType> _confirmEvent = null;
+    [SerializeField] private BaseCommandList baseCommandList;
+    private System.Action _confirmEvent = null;
+
+    public SystemData.CommandData CommandData {
+        get {
+            if (baseCommandList.Index > -1)
+            {
+                return baseCommandList.Data;
+            }
+            return null;
+        }
+    }
 
     public void Initialize(System.Action<int> callEvent) {
         InitializeListView(rows);
@@ -47,13 +57,14 @@ public class TacticsTrainList : ListWindow , IInputHandlerEvent
         }
     }
 
-    public void InitializeConfirm(List<SystemData.MenuCommandData> confirmCommands ,System.Action<TacticsComandType> callEvent)
+    public void InitializeConfirm(List<SystemData.CommandData> confirmCommands ,System.Action callEvent)
     {
         _confirmEvent = callEvent;
-        tacticsCommandList.Initialize(callEvent);
-        tacticsCommandList.Refresh(confirmCommands);
-        tacticsCommandList.UpdateSelectIndex(-1);
-        SetCancelEvent(() => _confirmEvent(TacticsComandType.Train));
+        baseCommandList.SetInputHandler(InputKeyType.Decide,callEvent);
+        baseCommandList.Initialize(confirmCommands);
+        //baseCommandList.Refresh(confirmCommands);
+        baseCommandList.UpdateSelectIndex(-1);
+        SetCancelEvent(() => _confirmEvent());
     }
 
     public void Refresh()
@@ -74,12 +85,7 @@ public class TacticsTrainList : ListWindow , IInputHandlerEvent
         {
             if (Index == -1)
             {
-                TacticsComandType tacticsComandType = TacticsComandType.Train;
-                if (tacticsCommandList.Index == 1)
-                {
-                    tacticsComandType = TacticsComandType.None;
-                }
-                _confirmEvent(tacticsComandType);
+                _confirmEvent();
             } else
             {
                 callEvent(_actorInfos[Index].ActorId);
@@ -87,14 +93,14 @@ public class TacticsTrainList : ListWindow , IInputHandlerEvent
         }
         if (keyType == InputKeyType.Cancel)
         {
-            _confirmEvent(TacticsComandType.Train);
+            _confirmEvent();
         }
         if (keyType == InputKeyType.Down)
         {
             if (Index == 0)
             {
                 UpdateSelectIndex(-1);
-                tacticsCommandList.UpdateSelectIndex(1);
+                baseCommandList.UpdateSelectIndex(1);
             }
         }
         if (keyType == InputKeyType.Up)
@@ -102,7 +108,7 @@ public class TacticsTrainList : ListWindow , IInputHandlerEvent
             if (Index == _actorInfos.Count-1)
             {
                 UpdateSelectIndex(_actorInfos.Count-1);
-                tacticsCommandList.UpdateSelectIndex(-1);
+                baseCommandList.UpdateSelectIndex(-1);
             }
         }
         if (keyType == InputKeyType.Right)
@@ -110,7 +116,7 @@ public class TacticsTrainList : ListWindow , IInputHandlerEvent
             if (Index == -1)
             {
                 Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cursor);
-                tacticsCommandList.UpdateSelectIndex(1);
+                baseCommandList.UpdateSelectIndex(1);
             }
         }
         if (keyType == InputKeyType.Left)
@@ -118,7 +124,7 @@ public class TacticsTrainList : ListWindow , IInputHandlerEvent
             if (Index == -1)
             {
                 Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cursor);
-                tacticsCommandList.UpdateSelectIndex(0);
+                baseCommandList.UpdateSelectIndex(0);
             }
         }
     }

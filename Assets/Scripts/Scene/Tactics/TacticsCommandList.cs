@@ -7,7 +7,7 @@ using UnityEngine.Events;
 public class TacticsCommandList : ListWindow , IInputHandlerEvent
 {
     [SerializeField] private int cols = 0;
-    private List<SystemData.MenuCommandData> _menuCommands = new List<SystemData.MenuCommandData>();
+    private List<SystemData.CommandData> _menuCommands = new List<SystemData.CommandData>();
 
     public void Initialize(System.Action<TacticsComandType> callEvent)
     {
@@ -21,7 +21,7 @@ public class TacticsCommandList : ListWindow , IInputHandlerEvent
         SetInputCallHandler((a) => CallInputHandler(a,callEvent));
     }
 
-    public void Refresh(List<SystemData.MenuCommandData> menuCommands)
+    public void Refresh(List<SystemData.CommandData> menuCommands)
     {
         _menuCommands = menuCommands;
         for (int i = 0; i < ObjectList.Count;i++)
@@ -45,7 +45,7 @@ public class TacticsCommandList : ListWindow , IInputHandlerEvent
         }
     }
 
-    public void SetDisable(SystemData.MenuCommandData menuCommandData,bool IsDisable)
+    public void SetDisable(SystemData.CommandData menuCommandData,bool IsDisable)
     {
         for (int i = 0; i < _menuCommands.Count;i++)
         {

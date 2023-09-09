@@ -1808,15 +1808,4 @@ public class FastBattleModel : BaseModel
             actorInfo.ChangeMp(battler.Mp);
         }
     }
-
-    public List<SystemData.MenuCommandData> SideMenu()
-    {
-        var list = new List<SystemData.MenuCommandData>();
-        var menucommand = new SystemData.MenuCommandData();
-        menucommand.Id = 2;
-        menucommand.Name = DataSystem.System.GetTextData(703).Text;
-        menucommand.Key = "Help";
-        list.Add(menucommand);
-        return list;
-    }
 }

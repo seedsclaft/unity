@@ -20,9 +20,9 @@ abstract public class DataSystem
 
     private static SkillsData _skills;
     public static List<SkillsData.SkillData> Skills => _skills._data;
-    public static List<SystemData.MenuCommandData> TacticsCommand => _system.TacticsCommandData;
-    public static List<SystemData.MenuCommandData> TitleCommand => _system.TitleCommandData;
-    public static List<SystemData.MenuCommandData> StatusCommand => _system.StatusCommandData;
+    public static List<SystemData.CommandData> TacticsCommand => _system.TacticsCommandData;
+    public static List<SystemData.CommandData> TitleCommand => _system.TitleCommandData;
+    public static List<SystemData.CommandData> StatusCommand => _system.StatusCommandData;
     public static List<SystemData.OptionCommand> OptionCommand => _system.OptionCommandData;
     public static List<int> InitActors => _system.InitActors;
     

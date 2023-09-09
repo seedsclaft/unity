@@ -743,14 +743,9 @@ MonoBehaviour:
   uiRoot: {fileID: 0}
   backPrefab: {fileID: 0}
   backRoot: {fileID: 0}
-  creditButton: {fileID: 0}
   versionText: {fileID: 2891911273548843730}
-  commandList: {fileID: 5267821176426335035}
-  helpRoot: {fileID: 6731540557565418596}
-  helpPrefab: {fileID: 4660447992331240257, guid: fd198201f48424c4cbfbe909f658ea97,
-    type: 3}
+  commandList: {fileID: 7941995241926202269}
   logoButton: {fileID: 1485211589026052674}
-  optionButton: {fileID: 0}
   sideMenuList: {fileID: 564539034323250524}
 --- !u!1 &6439667682871215304
 GameObject:
@@ -963,7 +958,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4095549470293624050}
-  - component: {fileID: 5267821176426335035}
+  - component: {fileID: 7941995241926202269}
   m_Layer: 5
   m_Name: CommandList
   m_TagString: Untagged
@@ -992,7 +987,7 @@ RectTransform:
   m_AnchoredPosition: {x: 496, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!114 &5267821176426335035
+--- !u!114 &7941995241926202269
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1001,10 +996,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 7952781215911039537}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a73dd73984310c84180d9034ff650907, type: 3}
+  m_Script: {fileID: 11500000, guid: 34bbeba52e5f4514db171aed88cd0a95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isScrollList: 1
   horizontal: 0
   reverse: 0
   warpMode: 1
@@ -1012,7 +1006,6 @@ MonoBehaviour:
   itemPrefab: {fileID: 7381549249250482059, guid: 7b3ac5752ce890c46af4fab28284c9cf,
     type: 3}
   _helpWindow: {fileID: 0}
-  rows: 2
 --- !u!1 &8183367728836062911
 GameObject:
   m_ObjectHideFlags: 0

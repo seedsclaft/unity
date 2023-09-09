@@ -374,15 +374,15 @@ public class StrategyModel : BaseModel
         return TacticsBattleActors().FindAll(a => a.InBattle && a.CurrentHp == 0);
     }
 
-    public List<SystemData.MenuCommandData> ResultCommand()
+    public List<SystemData.CommandData> ResultCommand()
     {
-        List<SystemData.MenuCommandData> menuCommandDatas = new List<SystemData.MenuCommandData>();
-        SystemData.MenuCommandData yesCommand = new SystemData.MenuCommandData();
+        List<SystemData.CommandData> menuCommandDatas = new List<SystemData.CommandData>();
+        SystemData.CommandData yesCommand = new SystemData.CommandData();
         yesCommand.Key = "Yes";
         yesCommand.Name = DataSystem.System.GetTextData(6).Text;
         yesCommand.Id = 0;
         menuCommandDatas.Add(yesCommand);
-        SystemData.MenuCommandData noCommand = new SystemData.MenuCommandData();
+        SystemData.CommandData noCommand = new SystemData.CommandData();
         noCommand.Key = "No";
         noCommand.Name = DataSystem.System.GetTextData(3040).Text;
         noCommand.Id = 1;

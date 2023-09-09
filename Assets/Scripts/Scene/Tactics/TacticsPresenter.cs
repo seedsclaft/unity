@@ -334,7 +334,7 @@ public class TacticsPresenter :BasePresenter
         }
         if (viewEvent.commandType == Tactics.CommandType.SelectSideMenu)
         {
-            CommandSelectSideMenu((SystemData.MenuCommandData)viewEvent.templete);
+            CommandSelectSideMenu((SystemData.CommandData)viewEvent.templete);
         }
         if (_model.NeedAllTacticsCommand)
         {
@@ -848,7 +848,7 @@ public class TacticsPresenter :BasePresenter
         List<BattlerInfo> enemyInfos = _model.TacticsTroops()[enemyIndex].BattlerInfos;
         
         StatusViewInfo statusViewInfo = new StatusViewInfo(() => {
-            _view.CommandEnemyInfoClose();
+            _view.CommandStatusClose();
             _view.SetActiveUi(true);
         });
         statusViewInfo.SetEnemyInfos(enemyInfos,false);
@@ -920,7 +920,7 @@ public class TacticsPresenter :BasePresenter
         _view.CommandCloseSideMenu();
     }
 
-    private void CommandSelectSideMenu(SystemData.MenuCommandData sideMenu)
+    private void CommandSelectSideMenu(SystemData.CommandData sideMenu)
     {
         if (sideMenu.Key == "Retire")
         {

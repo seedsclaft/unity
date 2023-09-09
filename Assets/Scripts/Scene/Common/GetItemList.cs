@@ -64,7 +64,7 @@ public class GetItemList : ListWindow , IInputHandlerEvent
         }
     }
     
-    public void InitializeConfirm(List<SystemData.MenuCommandData> confirmCommands ,System.Action<TacticsComandType> callEvent)
+    public void InitializeConfirm(List<SystemData.CommandData> confirmCommands ,System.Action<TacticsComandType> callEvent)
     {
         _confirmEvent = callEvent;
         tacticsCommandList.SetInputCallHandler((a) => CallInputHandler(a,callEvent));

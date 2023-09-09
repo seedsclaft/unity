@@ -186,12 +186,6 @@ abstract public class BaseView : MonoBehaviour
         CallSceneChangeCommand(eventData);
     }
 
-    public void CommandEnemyInfoClose()
-    {
-        var eventData = new ViewEvent(Base.CommandType.CloseEnemyInfo);
-        CallSceneChangeCommand(eventData);
-    }
-
     public void CommandCallAdv(AdvCallInfo advCallInfo)
     {
         var eventData = new ViewEvent(Base.CommandType.CallAdvScene);
@@ -294,7 +288,6 @@ namespace Base
         CloseStatus,
         CallAdvScene,
         CallEnemyInfoView,
-        CloseEnemyInfo,
         DecidePlayerName,
         CallLoading,
         CloseLoading,

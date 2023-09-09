@@ -12,10 +12,10 @@ public class SideMenuList : ListWindow , IInputHandlerEvent
     [SerializeField] private GameObject optionPrefab = null;
     [SerializeField] private GameObject optionRoot = null;
     [SerializeField] private GameObject optionCursor = null;
-    private List<SystemData.MenuCommandData> _sideMenus;
+    private List<SystemData.CommandData> _sideMenus;
     private System.Action _openEvent = null;
     private System.Action _closeEvent = null;
-    public void Initialize(List<SystemData.MenuCommandData> sideMenus,System.Action<SystemData.MenuCommandData> callEvent,System.Action optionEvent,System.Action cancelEvent)
+    public void Initialize(List<SystemData.CommandData> sideMenus,System.Action<SystemData.CommandData> callEvent,System.Action optionEvent,System.Action cancelEvent)
     {
         var prefab = Instantiate(optionPrefab);
         prefab.transform.SetParent(optionRoot.transform,false);
@@ -116,7 +116,7 @@ public class SideMenuList : ListWindow , IInputHandlerEvent
         }
     }
 
-    private void CallInputHandler(InputKeyType keyType,System.Action<SystemData.MenuCommandData> callEvent,System.Action optionEvent, System.Action cancelEvent)
+    private void CallInputHandler(InputKeyType keyType,System.Action<SystemData.CommandData> callEvent,System.Action optionEvent, System.Action cancelEvent)
     {
         if (keyType == InputKeyType.Right)
         {

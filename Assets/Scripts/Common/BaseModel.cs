@@ -221,14 +221,14 @@ public class BaseModel
         return await ResourceSystem.LoadBGMAsset(bgmKey);
     }
 
-    public List<SystemData.MenuCommandData> ConfirmCommand()
+    public List<SystemData.CommandData> ConfirmCommand()
     {
-        List<SystemData.MenuCommandData> menuCommandDatas = new List<SystemData.MenuCommandData>();
-        SystemData.MenuCommandData yesCommand = new SystemData.MenuCommandData();
+        List<SystemData.CommandData> menuCommandDatas = new List<SystemData.CommandData>();
+        SystemData.CommandData yesCommand = new SystemData.CommandData();
         yesCommand.Key = "Yes";
         yesCommand.Name = DataSystem.System.GetTextData(3050).Text;
         yesCommand.Id = 0;
-        SystemData.MenuCommandData noCommand = new SystemData.MenuCommandData();
+        SystemData.CommandData noCommand = new SystemData.CommandData();
         noCommand.Key = "No";
         noCommand.Name = DataSystem.System.GetTextData(3051).Text;
         noCommand.Id = 1;
@@ -237,10 +237,10 @@ public class BaseModel
         return menuCommandDatas;
     }
 
-    public List<SystemData.MenuCommandData> NoChoiceConfirmCommand()
+    public List<SystemData.CommandData> NoChoiceConfirmCommand()
     {
-        List<SystemData.MenuCommandData> menuCommandDatas = new List<SystemData.MenuCommandData>();
-        SystemData.MenuCommandData yesCommand = new SystemData.MenuCommandData();
+        List<SystemData.CommandData> menuCommandDatas = new List<SystemData.CommandData>();
+        SystemData.CommandData yesCommand = new SystemData.CommandData();
         yesCommand.Key = "Yes";
         yesCommand.Name = DataSystem.System.GetTextData(3052).Text;
         yesCommand.Id = 0;

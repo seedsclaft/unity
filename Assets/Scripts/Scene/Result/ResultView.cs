@@ -102,7 +102,7 @@ public class ResultView : BaseView
     }
 
 
-    public void SetResultList(List<SystemData.MenuCommandData> confirmCommands)
+    public void SetResultList(List<SystemData.CommandData> confirmCommands)
     {
         commandList.Initialize((confirmCommands) => CallResultCommand(confirmCommands));
         commandList.Refresh(confirmCommands);
@@ -110,7 +110,7 @@ public class ResultView : BaseView
         commandList.gameObject.SetActive(false);
     }
 
-    public void UpdateResultCommand(List<SystemData.MenuCommandData> confirmCommands)
+    public void UpdateResultCommand(List<SystemData.CommandData> confirmCommands)
     {
         commandList.Refresh(confirmCommands);
     }

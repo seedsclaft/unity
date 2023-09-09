@@ -7,7 +7,7 @@ using Confirm;
 
 public class ConfirmView : BaseView,IInputHandlerEvent
 {
-    [SerializeField] private ConfirmCommandList commandList = null;
+    [SerializeField] private BaseCommandList commandList = null;
     [SerializeField] private TextMeshProUGUI titleText = null;
     [SerializeField] private GameObject skillInfoRoot = null;
     [SerializeField] private GameObject skillInfoPrefab = null;
@@ -81,19 +81,26 @@ public class ConfirmView : BaseView,IInputHandlerEvent
         _commandData = commandData;
     }
 
-    public void SetConfirmCommand(List<SystemData.MenuCommandData> menuCommands)
+    public void SetConfirmCommand(List<SystemData.CommandData> menuCommands)
     {
-        commandList.Initialize(menuCommands,(menuCommandInfo) => CallConfirmCommand(menuCommandInfo));
+        commandList.Initialize(menuCommands);
+        commandList.SetInputHandler(InputKeyType.Decide,() => CallConfirmCommand());
         SetInputHandler(commandList.GetComponent<IInputHandlerEvent>());
     }
 
-    private void CallConfirmCommand(ConfirmComandType commandType)
+    private void CallConfirmCommand()
     {
-        if (commandType == ConfirmComandType.Yes)
+        var data = commandList.Data;
+        if (data != null)
         {
-            Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
+            var commandType = ConfirmComandType.No;
+            if (data.Key == "Yes")
+            {
+                commandType = ConfirmComandType.Yes;
+                Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
+            }
+            _confirmEvent(commandType);
         }
-        _confirmEvent(commandType);
     }
 
     public void InputHandler(InputKeyType keyType)
@@ -105,10 +112,10 @@ public class ConfirmView : BaseView,IInputHandlerEvent
     {
         if (_confirmInfo.IsNoChoise)
         {
-            CallConfirmCommand(ConfirmComandType.Yes);
+            CallConfirmCommand();
         } else
         {
-            CallConfirmCommand(ConfirmComandType.No);
+            CallConfirmCommand();
         }
     }
 }

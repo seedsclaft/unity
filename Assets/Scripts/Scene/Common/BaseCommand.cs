@@ -1,14 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using TMPro;
 
-public class TitleCommand : ListItem ,IListViewItem 
+public class BaseCommand : ListItem ,IListViewItem 
 {
     [SerializeField] private TextMeshProUGUI commandName;
-    private SystemData.MenuCommandData _data;
-    public void SetData(SystemData.MenuCommandData data,int index){
+
+    private SystemData.CommandData _data; 
+    public void SetData(SystemData.CommandData data,int index){
         _data = data;
         SetIndex(index);
     }
@@ -16,11 +14,7 @@ public class TitleCommand : ListItem ,IListViewItem
     public void SetCallHandler(System.Action handler)
     {
         if (_data == null) return;
-        clickButton.onClick.AddListener(() => 
-        {
-            if (Disable.activeSelf) return;
-            handler();
-        });
+        clickButton.onClick.AddListener(() => handler());
     }
 
     public void UpdateViewItem()
@@ -29,7 +23,7 @@ public class TitleCommand : ListItem ,IListViewItem
         commandName.text = _data.Name;
     }
 
-    public void SetDisable(SystemData.MenuCommandData menuCommandData,bool IsDisable)
+    public void SetDisable(SystemData.CommandData menuCommandData,bool IsDisable)
     {
         if (_data.Id == menuCommandData.Id)
         {

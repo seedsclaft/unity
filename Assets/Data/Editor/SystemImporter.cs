@@ -103,7 +103,7 @@ public class SystemImporter : AssetPostprocessor
 				{
 					IRow Baserow = BaseSheet.GetRow(i);
 
-					var TitleCommandInfo = new SystemData.MenuCommandData();
+					var TitleCommandInfo = new SystemData.CommandData();
 					TitleCommandInfo.Id = (int)Baserow.GetCell((int)BaseColumn.Id)?.SafeNumericCellValue();
 					TitleCommandInfo.Key = Baserow.GetCell((int)BaseColumn.Key)?.SafeStringCellValue();
 					TitleCommandInfo.Name = textData.Find(a => a.Id == (int)Baserow.GetCell((int)BaseColumn.NameTextId).NumericCellValue).Text;
@@ -117,7 +117,7 @@ public class SystemImporter : AssetPostprocessor
 				{
 					IRow Baserow = BaseSheet.GetRow(i);
 
-					var TitleCommandInfo = new SystemData.MenuCommandData();
+					var TitleCommandInfo = new SystemData.CommandData();
 					TitleCommandInfo.Id = (int)Baserow.GetCell((int)BaseColumn.Id)?.SafeNumericCellValue();
 					TitleCommandInfo.Key = Baserow.GetCell((int)BaseColumn.Key)?.SafeStringCellValue();
 					TitleCommandInfo.Name = textData.Find(a => a.Id == (int)Baserow.GetCell((int)BaseColumn.NameTextId).NumericCellValue).Text;
@@ -131,7 +131,7 @@ public class SystemImporter : AssetPostprocessor
 				{
 					IRow Baserow = BaseSheet.GetRow(i);
 
-					var StatusCommandInfo = new SystemData.MenuCommandData();
+					var StatusCommandInfo = new SystemData.CommandData();
 					StatusCommandInfo.Id = (int)Baserow.GetCell((int)BaseColumn.Id)?.SafeNumericCellValue();
 					StatusCommandInfo.Key = Baserow.GetCell((int)BaseColumn.Key)?.SafeStringCellValue();
 					StatusCommandInfo.Name = textData.Find(a => a.Id == (int)Baserow.GetCell((int)BaseColumn.NameTextId).NumericCellValue).Text;

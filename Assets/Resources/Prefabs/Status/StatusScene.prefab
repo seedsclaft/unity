@@ -1811,7 +1811,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3364317650870688310}
-  - component: {fileID: 1031873667854947517}
+  - component: {fileID: 2219187622530071990}
   m_Layer: 5
   m_Name: CommandList
   m_TagString: Untagged
@@ -1840,7 +1840,7 @@ RectTransform:
   m_AnchoredPosition: {x: 120, y: -184}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!114 &1031873667854947517
+--- !u!114 &2219187622530071990
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1849,14 +1849,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 1315323446697087615}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7c68799a2c9a08f4d8f7889b1de46b94, type: 3}
+  m_Script: {fileID: 11500000, guid: 34bbeba52e5f4514db171aed88cd0a95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   horizontal: 1
   reverse: 0
   warpMode: 1
   scrollRect: {fileID: 5602817523781515025}
-  itemPrefab: {fileID: 5132306753832205738, guid: 7975e6cd8326d034dafa0a822b7917d0,
+  itemPrefab: {fileID: 8421530445655644752, guid: cc5fc59e5c3ca784ba22686c5edeb5b0,
     type: 3}
   _helpWindow: {fileID: 0}
 --- !u!1 &1667220725396083129
@@ -3919,7 +3919,7 @@ MonoBehaviour:
   backRoot: {fileID: 6004437273362368775}
   actorInfoComponent: {fileID: 2788684162253015153}
   actorList: {fileID: 647974921653974678}
-  commandList: {fileID: 1031873667854947517}
+  commandList: {fileID: 2219187622530071990}
   skillList: {fileID: 3351597825121512}
   statusStrengthList: {fileID: 2277826488316414332}
   decideButton: {fileID: 4543176366710301350}
@@ -3982,6 +3982,7 @@ MonoBehaviour:
   hpGauge: {fileID: 0}
   mpGaugeBg: {fileID: 0}
   mpGauge: {fileID: 0}
+  canvasGroup: {fileID: 0}
 --- !u!114 &7845590584420745723
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4005,6 +4006,7 @@ MonoBehaviour:
   hpGauge: {fileID: 0}
   mpGaugeBg: {fileID: 0}
   mpGauge: {fileID: 0}
+  canvasGroup: {fileID: 0}
 --- !u!1 &3177422911675038719
 GameObject:
   m_ObjectHideFlags: 0

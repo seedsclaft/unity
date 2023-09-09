@@ -317,7 +317,7 @@ public class StrategyPresenter : BasePresenter
         List<BattlerInfo> enemyInfos = _model.TacticsTroops()[enemyIndex].BattlerInfos;
         
         StatusViewInfo statusViewInfo = new StatusViewInfo(() => {
-            _view.CommandEnemyInfoClose();
+            _view.CommandStatusClose();
             _view.SetActiveUi(true);
             if (_isBattle == false){
                 _view.SetHelpInputInfo("STRATEGY");

@@ -1864,10 +1864,10 @@ public class BattleModel : BaseModel
         SaveSystem.SaveConfigStart(GameSystem.ConfigData);
     }
 
-    public List<SystemData.MenuCommandData> SideMenu()
+    public List<SystemData.CommandData> SideMenu()
     {
-        var list = new List<SystemData.MenuCommandData>();
-        var menucommand = new SystemData.MenuCommandData();
+        var list = new List<SystemData.CommandData>();
+        var menucommand = new SystemData.CommandData();
         menucommand.Id = 2;
         menucommand.Name = DataSystem.System.GetTextData(703).Text;
         menucommand.Key = "Help";
@@ -1875,9 +1875,9 @@ public class BattleModel : BaseModel
         return list;
     }
 
-    public SystemData.MenuCommandData BattleAutoButton()
+    public SystemData.CommandData BattleAutoButton()
     {
-        var menucommand = new SystemData.MenuCommandData();
+        var menucommand = new SystemData.CommandData();
         menucommand.Id = 1;
         menucommand.Name = DataSystem.System.GetTextData(706).Text;
         menucommand.Key = "BATTLE_AUTO";

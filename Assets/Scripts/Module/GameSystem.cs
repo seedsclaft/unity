@@ -1,14 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using Utage;
-using UtageExtensions;
-using Cysharp.Threading.Tasks;
 
 public class GameSystem : MonoBehaviour
 {
-    [SerializeField] private float version = 0.01f;
+    [SerializeField] private string version = "";
     [SerializeField] private bool testMode = false;
     [SerializeField] private SceneAssign sceneAssign = null;
     [SerializeField] private PopupAssign popupAssign = null;
@@ -28,8 +25,8 @@ public class GameSystem : MonoBehaviour
     
     private BaseView _currentScene = null;
     private BaseView _popupView = null;
-    private StatusView _statusView = null;
-    private EnemyInfoView _enemyInfoView = null;
+    private BaseView _statusView = null;
+
     private LoadingView _loadingView = null;
     private BaseModel _model = null;
     
@@ -40,7 +37,7 @@ public class GameSystem : MonoBehaviour
     private bool _busy = false;
     public bool Busy => _busy;
 
-    public static float Version;
+    public static string Version;
     public static DebugBattleData DebugBattleData;
     private void Awake() 
     {
@@ -56,24 +53,22 @@ public class GameSystem : MonoBehaviour
         CommandSceneChange(Scene.Boot);
     }
 
-    private void CreateStatus()
+    private void CreateStatus(bool isActor)
     {
-        var prefab = Instantiate(statusPrefab);
+        var basePrefab = isActor ? statusPrefab : enemyInfoPrefab;
+        var prefab = Instantiate(basePrefab);
         prefab.transform.SetParent(statusRoot.transform, false);
-        _statusView = prefab.GetComponent<StatusView>();
+        if (isActor)
+        {
+            _statusView = prefab.GetComponent<StatusView>();
+        } else
+        {
+            _statusView = prefab.GetComponent<EnemyInfoView>();
+        }
         _statusView.Initialize();
         _statusView.SetHelpWindow(helpWindow);
-        statusRoot.gameObject.SetActive(false);
-    }
-
-    private void CreateEnemyInfo()
-    {
-        var prefab = Instantiate(enemyInfoPrefab);
-        prefab.transform.SetParent(statusRoot.transform, false);
-        _enemyInfoView = prefab.GetComponent<EnemyInfoView>();
-        _enemyInfoView.Initialize();
-        _enemyInfoView.SetHelpWindow(helpWindow);
-        statusRoot.gameObject.SetActive(false);
+        //statusRoot.gameObject.SetActive(false);
+        statusRoot.gameObject.SetActive(true);
     }
 
     private void CreateLoading()
@@ -115,7 +110,6 @@ public class GameSystem : MonoBehaviour
             confirmRoot.gameObject.SetActive(false);
             _currentScene.SetBusy(false);
             if (_statusView) _statusView.SetBusy(false);
-            if (_enemyInfoView) _enemyInfoView.SetBusy(false);
         } else
         if (viewEvent.commandType == Base.CommandType.CallRulingView)
         {
@@ -139,10 +133,9 @@ public class GameSystem : MonoBehaviour
             {
                 DestroyImmediate(_statusView.gameObject);
             }
-            CreateStatus();
-            statusRoot.gameObject.SetActive(true);
+            CreateStatus(true);
             var popupInfo = (StatusViewInfo)viewEvent.templete;
-            _statusView.SetViewInfo(popupInfo);
+            (_statusView as StatusView).SetViewInfo(popupInfo);
             _statusView.SetEvent((type) => updateCommand(type));
             _currentScene.SetBusy(true);
         } else
@@ -154,30 +147,23 @@ public class GameSystem : MonoBehaviour
         } else
         if (viewEvent.commandType == Base.CommandType.CallEnemyInfoView)
         {
-            if (_enemyInfoView != null)
+            if (_statusView != null)
             {
-                DestroyImmediate(_enemyInfoView.gameObject);
+                DestroyImmediate(_statusView.gameObject);
             }
-            CreateEnemyInfo();
-            statusRoot.gameObject.SetActive(true);
+            CreateStatus(false);
             var popupInfo = (StatusViewInfo)viewEvent.templete;
-            _enemyInfoView.Initialize(popupInfo.EnemyInfos,popupInfo.IsBattle);
-            _enemyInfoView.SetBackEvent(popupInfo.BackEvent);
-            _enemyInfoView.SetEvent((type) => updateCommand(type));
+            var enemyInfoView = _statusView as EnemyInfoView;
+            enemyInfoView.Initialize(popupInfo.EnemyInfos,popupInfo.IsBattle);
+            enemyInfoView.SetBackEvent(popupInfo.BackEvent);
+            enemyInfoView.SetEvent((type) => updateCommand(type));
             _currentScene.SetBusy(true);
-        } else
-        if (viewEvent.commandType == Base.CommandType.CloseEnemyInfo)
-        {
-            DestroyImmediate(_enemyInfoView.gameObject);
-            statusRoot.gameObject.SetActive(false);
-            _currentScene.SetBusy(false);
         } else
         if (viewEvent.commandType == Base.CommandType.CallAdvScene)
         {
             statusRoot.gameObject.SetActive(false);
             if (!statusRoot.gameObject.activeSelf) _currentScene.SetBusy(true);
             if (_statusView) _statusView.SetBusy(true);
-            if (_enemyInfoView) _enemyInfoView.SetBusy(true);
             AdvCallInfo advCallInfo = viewEvent.templete as AdvCallInfo;
             _currentScene.SetBusy(true);
             if (!this.gameObject.activeSelf)
@@ -256,7 +242,6 @@ public class GameSystem : MonoBehaviour
         confirmView.SetViewInfo(confirmInfo);
         _currentScene.SetBusy(true);
         if (_statusView) _statusView.SetBusy(true);
-        if (_enemyInfoView) _enemyInfoView.SetBusy(true);
     }
 
     private void CommandRulingView(System.Action endEvent)
@@ -278,7 +263,6 @@ public class GameSystem : MonoBehaviour
         confirmRoot.gameObject.SetActive(true);
         _currentScene.SetBusy(true);
         if (_statusView) _statusView.SetBusy(true);
-        if (_enemyInfoView) _enemyInfoView.SetBusy(true);
     }
     
     private void CommandOptionView(System.Action endEvent)
@@ -308,7 +292,6 @@ public class GameSystem : MonoBehaviour
         confirmRoot.gameObject.SetActive(true);
         _currentScene.SetBusy(true);
         if (_statusView) _statusView.SetBusy(true);
-        if (_enemyInfoView) _enemyInfoView.SetBusy(true);
     }
     
     private void CommandRankingView(System.Action endEvent)
@@ -330,7 +313,6 @@ public class GameSystem : MonoBehaviour
         confirmRoot.gameObject.SetActive(true);
         _currentScene.SetBusy(true);
         if (_statusView) _statusView.SetBusy(true);
-        if (_enemyInfoView) _enemyInfoView.SetBusy(true);
     }
 
     private void CommandCreditView(System.Action endEvent)
@@ -368,7 +350,6 @@ public class GameSystem : MonoBehaviour
         }
         if (!statusRoot.gameObject.activeSelf) _currentScene.SetBusy(false);
         if (_statusView) _statusView.SetBusy(false);
-        if (_enemyInfoView) _enemyInfoView.SetBusy(false);
         advController.EndAdv();
         advHelpWindow.SetInputInfo("");
         

@@ -8,7 +8,7 @@ using Title;
 public class TitleView : BaseView ,IInputHandlerEvent
 {
     [SerializeField] private TextMeshProUGUI versionText = null;
-    [SerializeField] private TitleCommandList commandList = null;
+    [SerializeField] private BaseCommandList commandList = null;
     private new System.Action<TitleViewEvent> _commandData = null;
     [SerializeField] private Button logoButton = null;
     [SerializeField] private SideMenuList sideMenuList = null;
@@ -66,7 +66,7 @@ public class TitleView : BaseView ,IInputHandlerEvent
         versionText.text = text;
     }
 
-    public void SetTitleCommand(List<SystemData.MenuCommandData> menuCommands){
+    public void SetTitleCommand(List<SystemData.CommandData> menuCommands){
         commandList.Initialize(menuCommands);
         commandList.SetInputHandler(InputKeyType.Decide,() => CallTitleCommand());
         commandList.SetInputHandler(InputKeyType.Option1,() => CallOpenSideMenu());
@@ -74,7 +74,7 @@ public class TitleView : BaseView ,IInputHandlerEvent
         commandList.Deactivate();
     }
 
-    public void SetSideMenu(List<SystemData.MenuCommandData> menuCommands){
+    public void SetSideMenu(List<SystemData.CommandData> menuCommands){
         sideMenuList.Initialize(menuCommands,(a) => CallSideMenu(a),() => OnClickOption(),() => CallCloseSideMenu());
         SetInputHandler(sideMenuList.GetComponent<IInputHandlerEvent>());
         sideMenuList.Deactivate();
@@ -133,7 +133,7 @@ public class TitleView : BaseView ,IInputHandlerEvent
         _commandData(eventData);
     }
 
-    private void CallSideMenu(SystemData.MenuCommandData sideMenu)
+    private void CallSideMenu(SystemData.CommandData sideMenu)
     {
         var eventData = new TitleViewEvent(CommandType.SelectSideMenu);
         eventData.templete = sideMenu;

@@ -5,10 +5,10 @@ using System.Collections.Generic;
 
 public class SystemData : ScriptableObject
 {	
-	public List<MenuCommandData> TacticsCommandData;
-	public List<MenuCommandData> StatusCommandData;
+	public List<CommandData> TacticsCommandData;
+	public List<CommandData> StatusCommandData;
 	public List<OptionCommand> OptionCommandData;
-	public List<MenuCommandData> TitleCommandData;
+	public List<CommandData> TitleCommandData;
 	public List<int> InitActors;
 	public int InitCurrency;
 	public int TrainCount;
@@ -40,7 +40,7 @@ public class SystemData : ScriptableObject
 	}
 
 	[System.SerializableAttribute]
-	public class MenuCommandData
+	public class CommandData
 	{
 		
 		public int Id;

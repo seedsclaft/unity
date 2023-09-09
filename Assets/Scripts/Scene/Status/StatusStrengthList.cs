@@ -45,7 +45,7 @@ public class StatusStrengthList : ListWindow , IInputHandlerEvent
         if (Index == -1) UpdateSelectIndex(0);
     }
 
-    public void InitializeConfirm(List<SystemData.MenuCommandData> confirmCommands ,System.Action<TacticsComandType> callEvent)
+    public void InitializeConfirm(List<SystemData.CommandData> confirmCommands ,System.Action<TacticsComandType> callEvent)
     {
         tacticsCommandList.Initialize(callEvent);
         tacticsCommandList.Refresh(confirmCommands);

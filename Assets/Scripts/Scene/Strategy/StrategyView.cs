@@ -83,7 +83,7 @@ public class StrategyView : BaseView
     {
     }
 
-    public void SetEnemyList(List<SystemData.MenuCommandData> confirmCommands)
+    public void SetEnemyList(List<SystemData.CommandData> confirmCommands)
     {
         tacticsEnemyList.Initialize(null);
         //tacticsEnemyList.SetInputHandler(InputKeyType.Decide,() => CallPopupSkillInfo());
@@ -108,7 +108,7 @@ public class StrategyView : BaseView
         strategyActorList.gameObject.SetActive(false);
     }
 
-    public void SetResultList(List<SystemData.MenuCommandData> confirmCommands)
+    public void SetResultList(List<SystemData.CommandData> confirmCommands)
     {
         strategyResultList.Initialize();
         SetInputHandler(strategyResultList.GetComponent<IInputHandlerEvent>());
@@ -125,13 +125,13 @@ public class StrategyView : BaseView
     }
     
 
-    public void SetCommandAble(SystemData.MenuCommandData commandData)
+    public void SetCommandAble(SystemData.CommandData commandData)
     {
         strategyResultList.TacticsCommandList.SetDisable(commandData,false);
         tacticsEnemyList.TacticsCommandList.SetDisable(commandData,false);
     }
 
-    public void SetCommandDisable(SystemData.MenuCommandData commandData)
+    public void SetCommandDisable(SystemData.CommandData commandData)
     {
         strategyResultList.TacticsCommandList.SetDisable(commandData,true);
         tacticsEnemyList.TacticsCommandList.SetDisable(commandData,true);

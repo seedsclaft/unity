@@ -10,12 +10,20 @@ using TMPro;
 public class TacticsRecoveryList : ListWindow , IInputHandlerEvent
 {
     private List<ActorInfo> _actorInfos = new List<ActorInfo>();
-    [SerializeField] private TacticsCommandList tacticsCommandList;
+    [SerializeField] private BaseCommandList baseCommandList;
     [SerializeField] private TextMeshProUGUI commandLv;
     [SerializeField] private TextMeshProUGUI commandDescription;
-    private System.Action<TacticsComandType> _confirmEvent = null;
+    private System.Action _confirmEvent = null;
 
-
+    public SystemData.CommandData CommandData {
+        get {
+            if (baseCommandList.Index > -1)
+            {
+                return baseCommandList.Data;
+            }
+            return null;
+        }
+    }
 
     public void Initialize(List<ActorInfo> actorInfos,System.Action<int> callEvent,System.Action<int> plusEvent,System.Action<int> minusEvent,int rank)
     {
@@ -45,13 +53,14 @@ public class TacticsRecoveryList : ListWindow , IInputHandlerEvent
         Refresh();
     }
 
-    public void InitializeConfirm(List<SystemData.MenuCommandData> confirmCommands ,System.Action<TacticsComandType> callEvent)
+    public void InitializeConfirm(List<SystemData.CommandData> confirmCommands ,System.Action callEvent)
     {
         _confirmEvent = callEvent;
-        tacticsCommandList.Initialize(callEvent);
-        tacticsCommandList.Refresh(confirmCommands);
-        tacticsCommandList.UpdateSelectIndex(-1);
-        SetCancelEvent(() => _confirmEvent(TacticsComandType.Train));
+        baseCommandList.SetInputHandler(InputKeyType.Decide,callEvent);
+        baseCommandList.Initialize(confirmCommands);
+        //baseCommandList.Refresh(confirmCommands);
+        baseCommandList.UpdateSelectIndex(-1);
+        SetCancelEvent(() => _confirmEvent());
     }
 
     public void Refresh()
@@ -72,12 +81,7 @@ public class TacticsRecoveryList : ListWindow , IInputHandlerEvent
         {
             if (Index == -1)
             {
-                TacticsComandType tacticsComandType = TacticsComandType.Train;
-                if (tacticsCommandList.Index == 1)
-                {
-                    tacticsComandType = TacticsComandType.None;
-                }
-                _confirmEvent(tacticsComandType);
+                _confirmEvent();
             } else
             {
                 callEvent(_actorInfos[Index].ActorId);
@@ -85,14 +89,14 @@ public class TacticsRecoveryList : ListWindow , IInputHandlerEvent
         }
         if (keyType == InputKeyType.Cancel)
         {
-            _confirmEvent(TacticsComandType.Train);
+            _confirmEvent();
         }
         if (keyType == InputKeyType.Down)
         {
             if (Index == 0)
             {
                 UpdateSelectIndex(-1);
-                tacticsCommandList.UpdateSelectIndex(1);
+                baseCommandList.UpdateSelectIndex(1);
             }
         }
         if (keyType == InputKeyType.Up)
@@ -100,7 +104,7 @@ public class TacticsRecoveryList : ListWindow , IInputHandlerEvent
             if (Index == _actorInfos.Count-1)
             {
                 UpdateSelectIndex(_actorInfos.Count-1);
-                tacticsCommandList.UpdateSelectIndex(-1);
+                baseCommandList.UpdateSelectIndex(-1);
             }
         }
         if (keyType == InputKeyType.Right)
@@ -108,7 +112,7 @@ public class TacticsRecoveryList : ListWindow , IInputHandlerEvent
             if (Index == -1)
             {
                 Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cursor);
-                tacticsCommandList.UpdateSelectIndex(1);
+                baseCommandList.UpdateSelectIndex(1);
             } else{
                 plusEvent(_actorInfos[Index].ActorId);
             }
@@ -118,7 +122,7 @@ public class TacticsRecoveryList : ListWindow , IInputHandlerEvent
             if (Index == -1)
             {
                 Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cursor);
-                tacticsCommandList.UpdateSelectIndex(0);
+                baseCommandList.UpdateSelectIndex(0);
             } else{
                 minusEvent(_actorInfos[Index].ActorId);
             }

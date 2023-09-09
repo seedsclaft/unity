@@ -77,7 +77,7 @@ public class MainMenuPresenter : BasePresenter
         }
         if (viewEvent.commandType == CommandType.SelectSideMenu)
         {
-            CommandSelectSideMenu((SystemData.MenuCommandData)viewEvent.templete);
+            CommandSelectSideMenu((SystemData.CommandData)viewEvent.templete);
         }
     }
 
@@ -137,7 +137,7 @@ public class MainMenuPresenter : BasePresenter
         _view.CommandCloseSideMenu();
     }
 
-    private void CommandSelectSideMenu(SystemData.MenuCommandData sideMenu)
+    private void CommandSelectSideMenu(SystemData.CommandData sideMenu)
     {
         if (sideMenu.Key == "Help")
         {

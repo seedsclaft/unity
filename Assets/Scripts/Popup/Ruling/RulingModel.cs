@@ -27,12 +27,12 @@ public class RulingModel : BaseModel
         _currentId = id;
     }
 
-    public List<SystemData.MenuCommandData> RulingCommand()
+    public List<SystemData.CommandData> RulingCommand()
     {
-        var menuCommandDatas = new List<SystemData.MenuCommandData>();
+        var menuCommandDatas = new List<SystemData.CommandData>();
         foreach (var rule in DataSystem.Rules)
         {
-            SystemData.MenuCommandData ruleCommand = new SystemData.MenuCommandData();
+            SystemData.CommandData ruleCommand = new SystemData.CommandData();
             ruleCommand.Key = rule.Id.ToString();
             ruleCommand.Name = rule.Name;
             ruleCommand.Help = rule.Help;

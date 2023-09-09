@@ -8,7 +8,7 @@ public class StatusView : BaseView ,IInputHandlerEvent
 {
     [SerializeField] private ActorInfoComponent actorInfoComponent = null;
     [SerializeField] private StatusActorList actorList = null;
-    [SerializeField] private StatusCommandList commandList = null;
+    [SerializeField] private BaseCommandList commandList = null;
     [SerializeField] private SkillList skillList = null;
     [SerializeField] private StatusStrengthList statusStrengthList = null;
     [SerializeField] private Button decideButton = null;
@@ -192,7 +192,7 @@ public class StatusView : BaseView ,IInputHandlerEvent
         actorList.Deactivate();
     }
 
-    public void SetStrengthInfo(List<SystemData.MenuCommandData> confirmCommands)
+    public void SetStrengthInfo(List<SystemData.CommandData> confirmCommands)
     {
         statusStrengthList.Initialize(
             (a) => CallStrengthPlus(a),
@@ -209,7 +209,7 @@ public class StatusView : BaseView ,IInputHandlerEvent
         statusStrengthList.Refresh(actorInfo);
     }
     
-    public void SetStatusCommand(List<SystemData.MenuCommandData> menuCommands)
+    public void SetStatusCommand(List<SystemData.CommandData> menuCommands)
     {
         commandList.Initialize(menuCommands);
         commandList.SetInputHandler(InputKeyType.Decide,() => CallStatusCommand());

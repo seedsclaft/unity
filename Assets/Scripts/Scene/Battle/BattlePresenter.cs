@@ -161,7 +161,7 @@ public class BattlePresenter : BasePresenter
         }
         if (viewEvent.commandType == Battle.CommandType.SelectSideMenu)
         {
-            CommandSelectSideMenu((SystemData.MenuCommandData)viewEvent.templete);
+            CommandSelectSideMenu((SystemData.CommandData)viewEvent.templete);
         }
         if (viewEvent.commandType == Battle.CommandType.ChangeBattleAuto)
         {
@@ -230,7 +230,7 @@ public class BattlePresenter : BasePresenter
         BattlerInfo enemyInfo = _model.GetBattlerInfo(enemyIndex);
         
         StatusViewInfo statusViewInfo = new StatusViewInfo(() => {
-            _view.CommandEnemyInfoClose();
+            _view.CommandStatusClose();
             _busy = false;
         });
         statusViewInfo.SetEnemyInfos(new List<BattlerInfo>(){enemyInfo},true);
@@ -984,7 +984,7 @@ public class BattlePresenter : BasePresenter
         _view.CommandCloseSideMenu();
     }
 
-    private void CommandSelectSideMenu(SystemData.MenuCommandData sideMenu)
+    private void CommandSelectSideMenu(SystemData.CommandData sideMenu)
     {
         if (sideMenu.Key == "Help")
         {

@@ -64,7 +64,7 @@ public class RebornResultView : BaseView
         _commandData = commandData;
     }
     
-    public void SetResultList(List<SystemData.MenuCommandData> confirmCommands)
+    public void SetResultList(List<SystemData.CommandData> confirmCommands)
     {
         strategyResultList.Initialize();
         SetInputHandler(strategyResultList.GetComponent<IInputHandlerEvent>());

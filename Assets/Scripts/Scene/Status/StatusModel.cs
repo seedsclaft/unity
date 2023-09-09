@@ -104,7 +104,7 @@ public class StatusModel : BaseModel
         return skillInfos;
     }
 
-    public List<SystemData.MenuCommandData> StatusCommand
+    public List<SystemData.CommandData> StatusCommand
     {
         get { return DataSystem.StatusCommand;}
     }

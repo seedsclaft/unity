@@ -8,8 +8,8 @@ public class TacticsCommand : ListItem ,IListViewItem
 {
     [SerializeField] private TextMeshProUGUI commandName;
 
-    private SystemData.MenuCommandData _data; 
-    public void SetData(SystemData.MenuCommandData data,int index){
+    private SystemData.CommandData _data; 
+    public void SetData(SystemData.CommandData data,int index){
         _data = data;
         SetIndex(index);
     }
@@ -30,7 +30,7 @@ public class TacticsCommand : ListItem ,IListViewItem
         commandName.text = _data.Name;
     }
 
-    public void SetDisable(SystemData.MenuCommandData menuCommandData,bool IsDisable)
+    public void SetDisable(SystemData.CommandData menuCommandData,bool IsDisable)
     {
         if (_data.Id == menuCommandData.Id)
         {
