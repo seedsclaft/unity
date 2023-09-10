@@ -264,7 +264,9 @@ public enum TriggerType
     ChainCount = 102, // 拘束成功回数
     ActionResultDeath = 103, // 攻撃を受けると戦闘不能になる
     DeadWithoutSelf = 104, // 自身以外が戦闘不能
-    SelfDead = 105
+    SelfDead = 105, // 自身が戦闘不能
+    ActionResultAddState = 113, // 相手が状態異常を発動する前
+    OppnentHpRateUnder = 114, // 相手にHp〇〇以下がいる
 }
 
 public enum TriggerTiming

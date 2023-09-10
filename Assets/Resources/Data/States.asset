@@ -81,7 +81,7 @@ MonoBehaviour:
     Name: "\u72B6\u614B\u7570\u5E38\u7121\u52B9"
     Help: "\u920D\u8DB3\u30FB\u30B9\u30BF\u30F3\u30FB\u706B\u50B7\u30FB\u6697\u95C7\u7121\u52B9"
     IconPath: Heart
-    RemovalTiming: 1
+    RemovalTiming: 4
     OverWrite: 0
     EffectPath: '""'
     EffectPosition: 0
@@ -346,6 +346,30 @@ MonoBehaviour:
     Help: "\u653B\u6483\u304C\u5FC5\u305A\u3042\u305F\u308B\u3088\u3046\u306B\u306A\u308B"
     IconPath: ArrowScope
     RemovalTiming: 1
+    OverWrite: 0
+    EffectPath: '""'
+    EffectPosition: 0
+  - Id: 119
+    Name: "\u72B6\u614B\u7570\u5E38\u53CD\u5C04"
+    Help: "\u72B6\u614B\u7570\u5E38\u3092\u53CD\u5C04\u3057\u30C0\u30E1\u30FC\u30B8\u3092\u4E0E\u3048\u308B"
+    IconPath: ArrowScope
+    RemovalTiming: 1
+    OverWrite: 0
+    EffectPath: '""'
+    EffectPosition: 0
+  - Id: 120
+    Name: "\u30D7\u30EA\u30BA\u30E0"
+    Help: "\u767D\u9B54\u6CD5\u306E\u653B\u6483\u56DE\u6570\u3092\\d\u56DE\u5897\u3084\u3059"
+    IconPath: Arrow
+    RemovalTiming: 1
+    OverWrite: 1
+    EffectPath: '""'
+    EffectPosition: 0
+  - Id: 121
+    Name: "\u30D1\u30C3\u30B7\u30D6\u7121\u52B9"
+    Help: "\u30D1\u30C3\u30B7\u30D6\u52B9\u679C\u304C\u767A\u52D5\u3057\u306A\u304F\u306A\u308B"
+    IconPath: Arrow
+    RemovalTiming: 4
     OverWrite: 0
     EffectPath: '""'
     EffectPosition: 0

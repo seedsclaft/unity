@@ -43,7 +43,7 @@ public class TacticsPresenter :BasePresenter
         
         var isAbort = CheckAdvStageEvent(EventTiming.BeforeTactics,() => {
             _view.CommandSceneChange(Scene.Tactics);
-        },_model.CurrentStage.SelectActorIds[0]);
+        },_model.CurrentStage.SelectActorIdsClassId(0));
         if (isAbort)
         {
             _view.SetActiveUi(false);
@@ -174,7 +174,7 @@ public class TacticsPresenter :BasePresenter
         }
         isAbort = CheckAdvStageEvent(EventTiming.StartTactics,() => {
             _view.CommandSceneChange(Scene.Tactics);
-        },_model.CurrentStage.SelectActorIds[0]);
+        },_model.CurrentStage.SelectActorIdsClassId(0));
         if (isAbort)
         {
             return;

@@ -61,7 +61,10 @@ public enum StateType
     CounterOuraHeal = 115,
     HealActionSelfHeal = 116,
     Undead = 117,
-    AbsoluteHit = 118
+    AbsoluteHit = 118,
+    AntiDote = 119,
+    Prizm = 120,
+    NoPassive = 121,
 }
 
 public enum RemovalTiming

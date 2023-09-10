@@ -458,6 +458,8 @@ public class BaseModel
 
     public void SetSelectAddActor()
     {
+        //　加入しているパーティ
+        var stageMembers = StageMembers();
         //　加入していないパーティを生成
         List<ActorInfo> selectActorIds = Actors().FindAll(a => !StageMembers().Contains(a));
         
@@ -466,7 +468,10 @@ public class BaseModel
         {
             if (actorInfo.Lost == false)
             {
-                PartyInfo.AddActor(actorInfo.ActorId);
+                if (stageMembers.Find(a => a.Master.ClassId == actorInfo.Master.ClassId) != null)
+                {
+                    PartyInfo.AddActor(actorInfo.ActorId);
+                }
             }
         }
     }

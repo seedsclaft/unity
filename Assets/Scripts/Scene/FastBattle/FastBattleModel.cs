@@ -1423,6 +1423,16 @@ public class FastBattleModel : BaseModel
                         }
                     }
                 }
+                if (battlerInfo.IsAwaken == false && triggerTiming == TriggerTiming.Interrupt && triggerDatas[j].TriggerType == TriggerType.ActionResultAddState)
+                {
+                    if (battlerInfo.IsAlive())
+                    {
+                        if (actionResultInfos.Find(a => a.AddedStates.Find(b => b.IsBarrierStateType()) != null) != null)
+                        {
+                            IsTriggered = true;
+                        }
+                    }
+                }
                 if (triggerDatas[j].TriggerType == TriggerType.LessTroopMembers)
                 {
                     var troops = _battlers.FindAll(a => !a.isActor);

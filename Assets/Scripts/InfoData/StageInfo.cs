@@ -203,14 +203,17 @@ public class StageInfo
             //enemyIds.Add(2600);
             while (enemyIds.Count <= 2)
             {
-                int rand = new Random().Next(1, 6);
+                int rand = new Random().Next(1, 14);
                 rand *= 100;
                 rand += 2000;
-                if (rand != 2400)
+                if (DataSystem.Troops.Find(a => a.Id == rand) != null)
                 {
-                    if (!enemyIds.Contains(rand))
+                    if (rand != 2400)
                     {
-                        enemyIds.Add(rand);
+                        if (!enemyIds.Contains(rand))
+                        {
+                            enemyIds.Add(rand);
+                        }
                     }
                 }
             }
@@ -220,14 +223,17 @@ public class StageInfo
             enemyIds.Add(2400);
             while (enemyIds.Count <= 2)
             {
-                int rand = new Random().Next(1, 6);
+                int rand = new Random().Next(1, 14);
                 rand *= 100;
                 rand += 2000;
-                if (rand != 2600)
+                if (DataSystem.Troops.Find(a => a.Id == rand) != null)
                 {
-                    if (!enemyIds.Contains(rand))
+                    if (rand != 2600)
                     {
-                        enemyIds.Add(rand);
+                        if (!enemyIds.Contains(rand))
+                        {
+                            enemyIds.Add(rand);
+                        }
                     }
                 }
             }
@@ -371,5 +377,11 @@ public class StageInfo
     public bool IsBendGameClear()
     {
         return _clearTroopIds.Contains(2100) && _clearTroopIds.Contains(2200) && _clearTroopIds.Contains(2300) && _clearTroopIds.Contains(2500);
+    }
+
+    public int SelectActorIdsClassId(int selectIndex)
+    {
+        var actorId = SelectActorIds[selectIndex];
+        return DataSystem.Actors.Find(a => a.Id == actorId).ClassId;
     }
 };

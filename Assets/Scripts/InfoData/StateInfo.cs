@@ -79,7 +79,7 @@ public class StateInfo {
 
     public bool CanOverWrite()
     {
-        return _stateId == (int)StateType.DamageUp;
+        return _stateId == (int)StateType.DamageUp || _stateId == (int)StateType.Prizm;
     }
 
     public bool RemovalBuffState()

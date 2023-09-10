@@ -742,11 +742,28 @@ public class BattleModel : BaseModel
         }
         int MpCost = actionInfo.Master.MpCost;
         actionInfo.SetMpCost(MpCost);
+        var usePrizm = false;
         List<ActionResultInfo> actionResultInfos = new List<ActionResultInfo>();
         for (int i = 0; i < indexList.Count;i++)
         {
             BattlerInfo Target = GetBattlerInfo(indexList[i]);
-            ActionResultInfo actionResultInfo = new ActionResultInfo(CurrentBattler,Target,actionInfo.Master.FeatureDatas,actionInfo.Master.Id);
+            var featureDatas = new List<SkillsData.FeatureData>();
+            featureDatas.AddRange(actionInfo.Master.FeatureDatas);
+            if (actionInfo.Master.Attribute == AttributeType.Shine && CurrentBattler.IsState(StateType.Prizm))
+            {
+                var damageFeatures = featureDatas.FindAll(a => a.FeatureType == FeatureType.HpDamage || a.FeatureType == FeatureType.HpDefineDamage);
+                foreach (var damageFeature in damageFeatures)
+                {
+                    var hpDamageFeature = new SkillsData.FeatureData();
+                    hpDamageFeature.FeatureType = damageFeature.FeatureType;
+                    hpDamageFeature.Param1 = damageFeature.Param1;
+                    hpDamageFeature.Param2 = damageFeature.Param2;
+                    hpDamageFeature.Param3 = damageFeature.Param3;
+                    featureDatas.Add(damageFeature);
+                    usePrizm = true;
+                }
+            }
+            ActionResultInfo actionResultInfo = new ActionResultInfo(CurrentBattler,Target,featureDatas,actionInfo.Master.Id);
             if (actionResultInfo.HpDamage > 0 
              || actionResultInfo.AddedStates.Find(a => a.Master.Id == (int)StateType.Stun) != null
              || actionResultInfo.AddedStates.Find(a => a.Master.Id == (int)StateType.Chain) != null
@@ -789,6 +806,12 @@ public class BattleModel : BaseModel
                     actionResultInfos.Add(curseActionResultInfo);
                 }
             }
+        }
+        if (usePrizm)
+        {
+            var prizmRemoveState = new StateInfo((int)StateType.Prizm,0,0,0,CurrentBattler.Index,-1);
+            CurrentBattler.RemoveState(prizmRemoveState,true);
+            actionResultInfos[actionResultInfos.Count - 1].AddRemoveState(prizmRemoveState);
         }
         actionInfo.SetActionResult(actionResultInfos);
     }
@@ -1207,6 +1230,10 @@ public class BattleModel : BaseModel
             List<SkillInfo> passiveSkills = battlerInfo.PassiveSkills();
             for (int j = 0;j < passiveSkills.Count;j++)
             {
+                if (battlerInfo.IsState(StateType.NoPassive))
+                {
+                    continue;
+                }
                 SkillInfo passiveInfo = passiveSkills[j];
                 var triggerDatas = passiveInfo.Master.TriggerDatas.FindAll(a => a.TriggerTiming == triggerTiming);
                 if (IsTriggerdSkillInfo(battlerInfo,triggerDatas,triggerTiming,new List<ActionResultInfo>()))
@@ -1474,6 +1501,27 @@ public class BattleModel : BaseModel
                         for (var i = 0;i < stateInfos.Count;i++){
                             battlerInfo.RemoveState(stateInfos[i],true);
                             battlerInfo.SetPreserveAlive(true);
+                        }
+                    }
+                }
+                if (battlerInfo.IsAwaken == false && triggerTiming == TriggerTiming.Interrupt && triggerDatas[j].TriggerType == TriggerType.ActionResultAddState)
+                {
+                    if (battlerInfo.IsAlive())
+                    {
+                        if (actionResultInfos.Find(a => a.AddedStates.Find(b => b.IsBarrierStateType()) != null) != null)
+                        {
+                            IsTriggered = true;
+                        }
+                    }
+                }
+                if (battlerInfo.IsAwaken == false && triggerTiming == TriggerTiming.After && triggerDatas[j].TriggerType == TriggerType.OppnentHpRateUnder)
+                {
+                    if (battlerInfo.IsAlive())
+                    {
+                        var opponents = battlerInfo.isActor ? BattlerEnemies() : BattlerActors();
+                        if (opponents.Find(a => ((float)a.Hp / (float)a.MaxHp) < triggerDatas[j].Param1 * 0.01f) != null)
+                        {
+                            IsTriggered = true;
                         }
                     }
                 }

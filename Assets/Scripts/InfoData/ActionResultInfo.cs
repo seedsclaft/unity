@@ -139,7 +139,7 @@ public class ActionResultInfo
                 MakeMpHeal(subject,target,featureData);
                 return;
             case FeatureType.AddState:
-                MakeAddState(subject,target,featureData);
+                MakeAddState(subject,target,featureData,true);
                 return;
             case FeatureType.RemoveState:
                 MakeRemoveState(subject,target,featureData);
@@ -374,7 +374,7 @@ public class ActionResultInfo
         //_hpHeal = ApplyVariance(_hpHeal);
     }
 
-    private void MakeAddState(BattlerInfo subject,BattlerInfo target,SkillsData.FeatureData featureData)
+    private void MakeAddState(BattlerInfo subject,BattlerInfo target,SkillsData.FeatureData featureData,bool checkCounter = false)
     {
         StateInfo stateInfo = new StateInfo(featureData.Param1,featureData.Param2,featureData.Param3,subject.Index,target.Index,_skillIndex);
         if (stateInfo.Master.Id == (int)StateType.CounterOura || stateInfo.Master.Id == (int)StateType.Benediction)
@@ -416,6 +416,24 @@ public class ActionResultInfo
                     _displayStates.Add(barrierState);
                 }
             }
+        }
+        if (stateInfo.IsBarrierStateType() && target.IsState(StateType.AntiDote))
+        {
+            _execStateInfos[target.Index].Add(StateType.AntiDote);
+            if (subject.IsState(StateType.NoDamage))
+            {
+                _execStateInfos[subject.Index].Add(StateType.NoDamage);
+                SeekNoDamage(subject);
+            } else
+            {
+                _reDamage += AntiDoteDamageValue(target);
+            }
+            SkillsData.FeatureData counterAddState = new SkillsData.FeatureData();
+            counterAddState.FeatureType = FeatureType.AddState;
+            counterAddState.Param1 = featureData.Param1;
+            counterAddState.Param2 = featureData.Param2;
+            counterAddState.Param3 = featureData.Param3;
+            MakeAddState(target,subject,counterAddState,false);
         }
     }
     
@@ -493,6 +511,12 @@ public class ActionResultInfo
     {
         int ReDamage = (int)Mathf.Floor((target.CurrentDef() * 0.5f) * target.StateEffectAll(StateType.CounterOura) * 0.01f);
         ReDamage += target.StateEffectAll(StateType.CounterOuraDamage);
+        return ReDamage;
+    }
+
+    private int AntiDoteDamageValue(BattlerInfo target)
+    {
+        int ReDamage = (int)Mathf.Floor((target.CurrentDef() * 0.5f));
         return ReDamage;
     }
 

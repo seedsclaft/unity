@@ -36,7 +36,7 @@ public class RankingInfoComponent : ListItem ,IListViewItem
                 actorImages[i].gameObject.SetActive(true);
                 actorEvaluates[i].gameObject.SetActive(true);
                 actorEvaluates[i].text = _data.SelectRank[i].ToString();
-                UpdateMainFaceThumb(actorImages[i],_data.SelectIdx[i]);
+                UpdateAwakenFaceThumb(actorImages[i],_data.SelectIdx[i]);
             } else
             {
                 actorEvaluates[i].gameObject.SetActive(false);
@@ -45,10 +45,9 @@ public class RankingInfoComponent : ListItem ,IListViewItem
         }
     }
     
-    private void UpdateMainFaceThumb(Image image, int actorId)
+    private void UpdateAwakenFaceThumb(Image image, int actorId)
     {
-        //var handle = await ResourceSystem.LoadAsset<Sprite>("Texture/Character/Actors/" + imagePath + "/MainFace.png");
-        var handle = Resources.Load<Sprite>("Texture/Character/Actors/000" + actorId.ToString() + "/MainFace");
+        var handle = Resources.Load<Sprite>("Texture/Character/Actors/" + actorId.ToString("D4") + "/AwakenFace");
         if (image != null) image.sprite = handle;
     }
 }
