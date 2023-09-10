@@ -744,7 +744,7 @@ MonoBehaviour:
   backPrefab: {fileID: 0}
   backRoot: {fileID: 0}
   versionText: {fileID: 2891911273548843730}
-  commandList: {fileID: 7941995241926202269}
+  commandList: {fileID: 4202890901344585908}
   logoButton: {fileID: 1485211589026052674}
   sideMenuList: {fileID: 564539034323250524}
 --- !u!1 &6439667682871215304
@@ -958,7 +958,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4095549470293624050}
-  - component: {fileID: 7941995241926202269}
+  - component: {fileID: 4202890901344585908}
   m_Layer: 5
   m_Name: CommandList
   m_TagString: Untagged
@@ -987,7 +987,7 @@ RectTransform:
   m_AnchoredPosition: {x: 496, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!114 &7941995241926202269
+--- !u!114 &4202890901344585908
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -996,7 +996,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7952781215911039537}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 34bbeba52e5f4514db171aed88cd0a95, type: 3}
+  m_Script: {fileID: 11500000, guid: 8b4c64621decfe74fbaca42d143c0384, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   horizontal: 0
@@ -6447,7 +6447,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: SideMenuList
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 519043372040320751, guid: cbbfc9dbcbdfae14f9c03e1f6c6b043e, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: cbbfc9dbcbdfae14f9c03e1f6c6b043e, type: 3}
 --- !u!114 &564539034323250524 stripped
 MonoBehaviour:

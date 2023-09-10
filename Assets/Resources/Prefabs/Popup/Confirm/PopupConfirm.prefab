@@ -874,7 +874,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9067405869225649614}
-  - component: {fileID: 55205047347791041}
+  - component: {fileID: 3077148663740380936}
   m_Layer: 5
   m_Name: CommandList
   m_TagString: Untagged
@@ -903,7 +903,7 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0}
---- !u!114 &55205047347791041
+--- !u!114 &3077148663740380936
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -912,14 +912,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 4694271678494715271}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 34bbeba52e5f4514db171aed88cd0a95, type: 3}
+  m_Script: {fileID: 11500000, guid: 8b4c64621decfe74fbaca42d143c0384, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   horizontal: 1
   reverse: 0
   warpMode: 1
   scrollRect: {fileID: 2208070408749533417}
-  itemPrefab: {fileID: 8421530445655644752, guid: cc5fc59e5c3ca784ba22686c5edeb5b0,
+  itemPrefab: {fileID: 8421530445655644752, guid: f9e4128ea2633e0448c9ff7df16a3047,
     type: 3}
   _helpWindow: {fileID: 0}
 --- !u!1 &5269206747058708419
@@ -1293,7 +1293,7 @@ MonoBehaviour:
   uiRoot: {fileID: 0}
   backPrefab: {fileID: 0}
   backRoot: {fileID: 0}
-  commandList: {fileID: 55205047347791041}
+  commandList: {fileID: 3077148663740380936}
   titleText: {fileID: 6401037955893889904}
   skillInfoRoot: {fileID: 7797496822849030458}
   skillInfoPrefab: {fileID: 968043006584562322, guid: 69257f6d565ed274b8849a75225cb996,

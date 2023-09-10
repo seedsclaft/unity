@@ -42,7 +42,7 @@ public class RulingView : BaseView
     
     public void SetRulingCommand(List<SystemData.CommandData> menuCommands)
     {
-        confirmCommandList.Initialize(menuCommands);
+        confirmCommandList.InitializeRuleing(menuCommands);
         confirmCommandList.SetInputHandler(InputKeyType.Down,() => CallRulingCommand());
         confirmCommandList.SetInputHandler(InputKeyType.Up,() => CallRulingCommand());
         confirmCommandList.SetInputHandler(InputKeyType.Cancel,() => BackEvent());

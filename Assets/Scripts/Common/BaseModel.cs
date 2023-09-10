@@ -468,7 +468,7 @@ public class BaseModel
         {
             if (actorInfo.Lost == false)
             {
-                if (stageMembers.Find(a => a.Master.ClassId == actorInfo.Master.ClassId) != null)
+                if (stageMembers.Find(a => a.Master.ClassId == actorInfo.Master.ClassId) == null)
                 {
                     PartyInfo.AddActor(actorInfo.ActorId);
                 }

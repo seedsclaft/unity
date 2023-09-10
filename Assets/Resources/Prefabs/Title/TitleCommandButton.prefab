@@ -551,7 +551,7 @@ GameObject:
   - component: {fileID: 3971412243067427956}
   - component: {fileID: 6389939439624346566}
   - component: {fileID: 8755620311902555655}
-  - component: {fileID: 3265839146956761435}
+  - component: {fileID: 7257130859356255078}
   m_Layer: 5
   m_Name: TitleCommandButton
   m_TagString: Untagged
@@ -664,7 +664,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &3265839146956761435
+--- !u!114 &7257130859356255078
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -673,7 +673,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7381549249250482059}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2e16d3b7a6fb025418bcc9551c507c50, type: 3}
+  m_Script: {fileID: 11500000, guid: 0669c3dc1f0d9514e901fa25ebfdee73, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   clickButton: {fileID: 8755620311902555655}

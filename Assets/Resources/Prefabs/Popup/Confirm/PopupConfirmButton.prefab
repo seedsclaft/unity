@@ -504,7 +504,7 @@ GameObject:
   - component: {fileID: 4074881177074620402}
   - component: {fileID: 6285908676659105856}
   - component: {fileID: 8508318923232052609}
-  - component: {fileID: 293583677103411102}
+  - component: {fileID: 6929712707595885157}
   m_Layer: 5
   m_Name: PopupConfirmButton
   m_TagString: Untagged
@@ -618,7 +618,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &293583677103411102
+--- !u!114 &6929712707595885157
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -627,10 +627,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 7629431321772612621}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8fa5803b1919ac7479bcffc17be6d7de, type: 3}
+  m_Script: {fileID: 11500000, guid: 0669c3dc1f0d9514e901fa25ebfdee73, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   clickButton: {fileID: 8508318923232052609}
   cursor: {fileID: 3849351266288954934}
-  disable: {fileID: 3171465390970017340}
+  disable: {fileID: 7458528736431697529}
   commandName: {fileID: 4474631673165082156}

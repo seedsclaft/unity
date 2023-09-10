@@ -47,6 +47,25 @@ public class BaseCommandList : ListWindow , IInputHandlerEvent
         UpdateSelectIndex(0);
     }
 
+    public void InitializeRuleing(List<SystemData.CommandData> baseCommands)
+    {
+        InitializeListView(baseCommands.Count);
+        _data = baseCommands;
+        for (int i = 0; i < baseCommands.Count;i++)
+        {
+            var baseCommand = ObjectList[i].GetComponent<BaseCommand>();
+            baseCommand.SetData(baseCommands[i],i);
+            baseCommand.SetCallHandler(() => CallListInputHandler(InputKeyType.Decide));
+            baseCommand.SetSelectHandler((data) => 
+            {
+                UpdateSelectIndex(data);
+                CallListInputHandler(InputKeyType.Down);
+            });
+        }
+        UpdateAllItems();
+        UpdateSelectIndex(0);
+    }
+
     public override void UpdateHelpWindow(){
         if (_helpWindow != null)
         {
