@@ -19,6 +19,7 @@ public class SlotInfoList : ListWindow , IInputHandlerEvent
                 UpdateSelectIndex(data);
             }); 
             skillAction.SetCallHandler(() => CallListInputHandler(InputKeyType.Decide));
+            skillAction.SetCallInfoHandler(() => CallListInputHandler(InputKeyType.Option1));
         }
         SetInputCallHandler((a) => CallSelectHandler(a));
         _data = slotInfos;
@@ -30,7 +31,7 @@ public class SlotInfoList : ListWindow , IInputHandlerEvent
         _data = slotInfos;
     }
 
-    public void Refresh()
+    public void Refresh(int selectIndex = 0)
     {
         for (int i = 0; i < ObjectList.Count;i++)
         {
@@ -41,8 +42,8 @@ public class SlotInfoList : ListWindow , IInputHandlerEvent
             }
             ObjectList[i].SetActive(i < _data.Count);
         }
+        UpdateSelectIndex(selectIndex);
         //ResetScrollPosition();
-        UpdateSelectIndex(0);
         UpdateAllItems();
     }
 }

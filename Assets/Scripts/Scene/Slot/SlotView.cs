@@ -49,7 +49,7 @@ public class SlotView : BaseView
     public void CommandRefresh(Dictionary<int,SlotInfo> slotInfo)
     {
         slotInfoList.SetData(slotInfo);
-        slotInfoList.Refresh();
+        slotInfoList.Refresh(slotInfoList.Index);
     }
 
     private void CallSlotInfoLock()

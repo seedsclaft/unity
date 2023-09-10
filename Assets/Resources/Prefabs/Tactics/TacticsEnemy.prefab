@@ -696,14 +696,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3f792cc0ef0b4248bfbe7d2db796789, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isScrollList: 1
   horizontal: 0
+  reverse: 0
+  warpMode: 1
   scrollRect: {fileID: 7311244470334857957}
   itemPrefab: {fileID: 6145794166525957040, guid: ca4965df58f92f54a810c5e6f49b6098,
     type: 3}
   _helpWindow: {fileID: 0}
-  rows: 4
-  cols: 1
   tacticsCommandList: {fileID: 0}
 --- !u!1 &3589651004894536762
 GameObject:

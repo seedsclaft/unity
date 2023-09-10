@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 
 public class SlotInfoComponent : ListItem,IListViewItem
@@ -12,6 +13,7 @@ public class SlotInfoComponent : ListItem,IListViewItem
     [SerializeField] private GameObject locked = null;
 
     [SerializeField] private GameObject noData = null;
+    [SerializeField] private Button infoButton = null;
     private List<ActorInfoComponent> _actorInfoComponents = new ();
     private SlotInfo _slotInfo;
 
@@ -25,6 +27,15 @@ public class SlotInfoComponent : ListItem,IListViewItem
     public void SetCallHandler(System.Action handler)
     {
         clickButton.onClick.AddListener(() =>
+            {
+                if (Disable != null && Disable.gameObject.activeSelf) return;
+                handler();
+            }
+        );
+    }
+    public void SetCallInfoHandler(System.Action handler)
+    {
+        infoButton.onClick.AddListener(() =>
             {
                 if (Disable != null && Disable.gameObject.activeSelf) return;
                 handler();
