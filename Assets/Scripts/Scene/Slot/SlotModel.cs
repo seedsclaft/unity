@@ -26,6 +26,7 @@ public class SlotModel : BaseModel
 
     public void SetActorsData(int index)
     {
+        CurrentData.InitActors();
         PartyInfo.InitActors();
         var actorInfos = SlotInfos()[index].ActorInfos;
         foreach (var actorInfo in actorInfos)

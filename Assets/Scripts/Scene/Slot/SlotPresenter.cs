@@ -56,6 +56,7 @@ public class SlotPresenter
     {
         if (index > -1)
         {
+            Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
             _model.SlotLock(index);
             _view.CommandRefresh(_model.SlotInfos());
         }

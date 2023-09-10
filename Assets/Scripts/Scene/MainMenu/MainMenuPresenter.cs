@@ -124,6 +124,7 @@ public class MainMenuPresenter : BasePresenter
 
     private void CommandSlotPopup()
     {
+        Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
         _view.CommandSceneChange(Scene.Slot);
     }
 

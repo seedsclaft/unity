@@ -203,11 +203,11 @@ public class StageInfo
             //enemyIds.Add(2600);
             while (enemyIds.Count <= 2)
             {
-                int rand = new Random().Next(1, 14);
+                int rand = new Random().Next(1, 6);
                 rand *= 100;
                 rand += 2000;
-                if (DataSystem.Troops.Find(a => a.Id == rand) != null)
-                {
+                //if (DataSystem.Troops.Find(a => a.Id == rand) != null)
+                //{
                     if (rand != 2400)
                     {
                         if (!enemyIds.Contains(rand))
@@ -215,7 +215,7 @@ public class StageInfo
                             enemyIds.Add(rand);
                         }
                     }
-                }
+                //}
             }
         } else
         if (routeSelect == 2)
@@ -223,11 +223,11 @@ public class StageInfo
             enemyIds.Add(2400);
             while (enemyIds.Count <= 2)
             {
-                int rand = new Random().Next(1, 14);
+                int rand = new Random().Next(1, 6);
                 rand *= 100;
                 rand += 2000;
-                if (DataSystem.Troops.Find(a => a.Id == rand) != null)
-                {
+                //if (DataSystem.Troops.Find(a => a.Id == rand) != null)
+                //{
                     if (rand != 2600)
                     {
                         if (!enemyIds.Contains(rand))
@@ -235,7 +235,7 @@ public class StageInfo
                             enemyIds.Add(rand);
                         }
                     }
-                }
+                //}
             }
         }
         
