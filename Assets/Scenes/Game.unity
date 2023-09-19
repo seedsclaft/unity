@@ -5862,7 +5862,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1408798861
 RectTransform:
   m_ObjectHideFlags: 0
@@ -7160,7 +7160,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d0de51f5a4eb6d43a019f404ad730a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  version: 0.0.91
+  version: 0.0.10
   testMode: 0
   sceneAssign: {fileID: 64641776}
   popupAssign: {fileID: 497961168}
@@ -7193,13 +7193,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   consoleInputField: {fileID: 1447284014}
-  inBattleActorIds: 05000000
-  troopId: 50
+  inBattleActorIds: 0d000000
+  troopId: 130
   troopLv: 1
   actorDatas:
   - Id: 1
     Name: "\u30D8\u30AB\u30C6\u30FC"
-    SubName: 
+    SubName: "\u3010\u8C4A\u7A63\u306E\u6708\u5973\u795E\u3011"
     ClassId: 1
     ImagePath: 0001
     InitLv: 1
@@ -7258,17 +7258,9 @@ MonoBehaviour:
       Level: 0
       Weight: 0
       TriggerDatas: []
-    - SkillId: 131
-      Level: 0
-      Weight: 0
-      TriggerDatas: []
-    - SkillId: 132
-      Level: 0
-      Weight: 0
-      TriggerDatas: []
   - Id: 2
     Name: "\u30AD\u30E3\u30ED\u30E9\u30A4\u30F3"
-    SubName: 
+    SubName: "\u3010\u30EF\u30A4\u30E4\u30FC\u30D7\u30EA\u30F3\u30BB\u30B9\u3011"
     ClassId: 2
     ImagePath: 0002
     InitLv: 1
@@ -7337,13 +7329,13 @@ MonoBehaviour:
       TriggerDatas: []
   - Id: 3
     Name: "\u30A2\u30EA\u30B9"
-    SubName: 
+    SubName: "\u3010\u4E0D\u601D\u8B70\u306E\u56FD\u306E\u5B88\u8B77\u795E\u3011"
     ClassId: 3
     ImagePath: 0003
     InitLv: 1
     MaxLv: 40
     InitStatus:
-      _hp: 34
+      _hp: 35
       _mp: 20
       _atk: 19
       _def: 29
@@ -7398,7 +7390,7 @@ MonoBehaviour:
       TriggerDatas: []
   - Id: 4
     Name: "\u30D5\u30EA\u30EB"
-    SubName: 
+    SubName: "\u3010\u30A4\u30CE\u30BB\u30F3\u30B9\u30B9\u30DE\u30A4\u30EB\u3011"
     ClassId: 4
     ImagePath: 0004
     InitLv: 1
@@ -7457,13 +7449,9 @@ MonoBehaviour:
       Level: 0
       Weight: 0
       TriggerDatas: []
-    - SkillId: 421
-      Level: 0
-      Weight: 0
-      TriggerDatas: []
   - Id: 5
     Name: "\u30CB\u30E5\u30AF\u30B9"
-    SubName: 
+    SubName: "\u3010Determination2Die\u3011"
     ClassId: 5
     ImagePath: 0005
     InitLv: 1
@@ -7522,8 +7510,130 @@ MonoBehaviour:
       Level: 0
       Weight: 0
       TriggerDatas: []
+  - Id: 13
+    Name: "\u30A2\u30EA\u30B9"
+    SubName: "\u3010\u30A2\u30E1\u30FC\u30B8\u30F3\u30B0\u30B9\u30BF\u30FC\u3011"
+    ClassId: 3
+    ImagePath: 0013
+    InitLv: 1
+    MaxLv: 40
+    InitStatus:
+      _hp: 38
+      _mp: 20
+      _atk: 15
+      _def: 33
+      _spd: 22
+    PlusStatus:
+      _hp: 0
+      _mp: 0
+      _atk: 0
+      _def: 0
+      _spd: 0
+    NeedStatus:
+      _hp: 50
+      _mp: 50
+      _atk: 10
+      _def: 100
+      _spd: 30
+    Attribute: 1e00000000000000640000003200000000000000
+    X: 16
+    Y: -8
+    Scale: 0.9
+    AwakenX: 80
+    AwakenY: 64
+    AwakenScale: 0.8
+    LearningSkills:
+    - SkillId: 11
+      Level: 0
+      Weight: 0
+      TriggerDatas: []
+    - SkillId: 21
+      Level: 0
+      Weight: 0
+      TriggerDatas: []
+    - SkillId: 31
+      Level: 0
+      Weight: 0
+      TriggerDatas: []
+    - SkillId: 301
+      Level: 0
+      Weight: 0
+      TriggerDatas: []
+    - SkillId: 322
+      Level: 0
+      Weight: 0
+      TriggerDatas: []
+    - SkillId: 313
+      Level: 0
+      Weight: 0
+      TriggerDatas: []
+    - SkillId: 314
+      Level: 0
+      Weight: 0
+      TriggerDatas: []
+  - Id: 14
+    Name: "\u30D5\u30EA\u30EB"
+    SubName: "\u3010\u30E9\u30A4\u30D6\u30D5\u30A9\u30FC\u30EA\u30CA\u30FC\u3011"
+    ClassId: 4
+    ImagePath: 0014
+    InitLv: 1
+    MaxLv: 40
+    InitStatus:
+      _hp: 44
+      _mp: 20
+      _atk: 30
+      _def: 13
+      _spd: 32
+    PlusStatus:
+      _hp: 0
+      _mp: 0
+      _atk: 0
+      _def: 0
+      _spd: 0
+    NeedStatus:
+      _hp: 60
+      _mp: 50
+      _atk: 50
+      _def: 30
+      _spd: 70
+    Attribute: 00000000280000003c0000006400000000000000
+    X: 20
+    Y: -12
+    Scale: 0.88
+    AwakenX: -16
+    AwakenY: 40
+    AwakenScale: 0.8
+    LearningSkills:
+    - SkillId: 11
+      Level: 0
+      Weight: 0
+      TriggerDatas: []
+    - SkillId: 21
+      Level: 0
+      Weight: 0
+      TriggerDatas: []
+    - SkillId: 31
+      Level: 0
+      Weight: 0
+      TriggerDatas: []
+    - SkillId: 401
+      Level: 0
+      Weight: 0
+      TriggerDatas: []
+    - SkillId: 422
+      Level: 0
+      Weight: 0
+      TriggerDatas: []
+    - SkillId: 413
+      Level: 0
+      Weight: 0
+      TriggerDatas: []
+    - SkillId: 414
+      Level: 0
+      Weight: 0
+      TriggerDatas: []
   advName: 
-  saveActorData: 1
+  saveActorData: 0
 --- !u!1 &1651359293
 GameObject:
   m_ObjectHideFlags: 0

@@ -32,6 +32,7 @@ public class SkillsImporter : AssetPostprocessor {
 		Scope,
 		_Scope,
 		Range,
+		RepeatTime,
 		AliveOnly,
     }
 
@@ -133,7 +134,8 @@ public class SkillsImporter : AssetPostprocessor {
                     SkillData.TargetType = (TargetType)Baserow.GetCell((int)BaseColumn.TargetType)?.NumericCellValue;
                     SkillData.Scope = (ScopeType)Baserow.GetCell((int)BaseColumn.Scope)?.NumericCellValue;
                     SkillData.Range = (RangeType)Baserow.GetCell((int)BaseColumn.Range)?.NumericCellValue;
-                    SkillData.AliveOnly = Baserow.GetCell((int)BaseColumn.AliveOnly)?.NumericCellValue == 1;
+                    SkillData.RepeatTime = (int)Baserow.GetCell((int)BaseColumn.RepeatTime)?.NumericCellValue;
+					SkillData.AliveOnly = Baserow.GetCell((int)BaseColumn.AliveOnly)?.NumericCellValue == 1;
 					SkillData.Help = textData.Find(a => a.Id == (int)Baserow.GetCell((int)BaseColumn.NameId)?.NumericCellValue).Help;
 					Data._data.Add(SkillData);
 				}

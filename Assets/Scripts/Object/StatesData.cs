@@ -18,7 +18,9 @@ public class StatesData : ScriptableObject
         public bool OverWrite;
         public string EffectPath;
         public EffectPositionType EffectPosition;
+        public bool OverLap;
     }
+
 }
 
 public enum StateType
@@ -65,6 +67,7 @@ public enum StateType
     AntiDote = 119,
     Prizm = 120,
     NoPassive = 121,
+    AssistHeal = 122,
 }
 
 public enum RemovalTiming

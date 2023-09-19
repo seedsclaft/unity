@@ -18,6 +18,7 @@ public class StatesImporter : AssetPostprocessor {
 		OverRight,
 		EffectPath,
 		EffectPosition,
+		OverLap
     }
 	static readonly string ExcelPath = "Assets/Resources/Data";
 	static readonly string ExcelName = "States.xlsx";
@@ -93,6 +94,7 @@ public class StatesImporter : AssetPostprocessor {
 					StateData.OverWrite = (bool)(Baserow.GetCell((int)BaseColumn.OverRight)?.SafeNumericCellValue() == 1);
 					StateData.EffectPath = Baserow.GetCell((int)BaseColumn.EffectPath)?.SafeStringCellValue();
 					StateData.EffectPosition = (EffectPositionType)Baserow.GetCell((int)BaseColumn.EffectPosition)?.SafeNumericCellValue();
+					StateData.OverLap = (bool)(Baserow.GetCell((int)BaseColumn.OverLap)?.SafeNumericCellValue() == 1);
 					
 					
 					Data._data.Add(StateData);

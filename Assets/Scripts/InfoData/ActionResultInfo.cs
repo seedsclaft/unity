@@ -115,6 +115,9 @@ public class ActionResultInfo
     public List<StateInfo> DisplayStates => _displayStates;
     private Dictionary<int,List<StateType>> _execStateInfos = new ();
     public  Dictionary<int,List<StateType>> ExecStateInfos => _execStateInfos;
+    private bool _cursedDamage = false;
+    public bool CursedDamage => _cursedDamage;
+    public void SetCursedDamage(bool cursedDamage) {_cursedDamage = cursedDamage;}
 
     private void MakeFeature(BattlerInfo subject,BattlerInfo target,SkillsData.FeatureData featureData)
     {
@@ -131,6 +134,9 @@ public class ActionResultInfo
                 return;
             case FeatureType.HpDefineDamage:
                 MakeHpDefineDamage(subject,target,featureData,false);
+                return;
+            case FeatureType.HpCursedDamage:
+                MakeHpCursedDamage(subject,target,featureData,false);
                 return;
             case FeatureType.NoEffectHpDamage:
                 MakeHpDamage(subject,target,featureData,true);
@@ -188,6 +194,7 @@ public class ActionResultInfo
 
     private void MakeHpDamage(BattlerInfo subject,BattlerInfo target,SkillsData.FeatureData featureData,bool isNoEffect)
     {
+        var hpDamage = 0;
         if (!IsHit(subject,target) && !isNoEffect)
         {
             _missed = true;
@@ -223,7 +230,7 @@ public class ActionResultInfo
                     _execStateInfos[subject.Index].Add(StateType.NoDamage);
                     SeekNoDamage(subject);
                 } else
-                {
+                {                
                     _reDamage += CounterDamageValue(target);
                 }
                 if (target.IsState(StateType.CounterOuraHeal))
@@ -251,7 +258,7 @@ public class ActionResultInfo
         SkillDamage *= GetDeffenseRateValue((AtkValue * 0.5f),DefValue);
         //SkillDamage -= (DefValue * 0.5f);
         float DamageValue = Mathf.Max(1,SkillDamage);
-        _hpDamage = (int)Mathf.Round(DamageValue);
+        hpDamage = (int)Mathf.Round(DamageValue);
         // 属性補正
         // クリティカル
         if (subject.IsState(StateType.CriticalRateUp))
@@ -260,28 +267,29 @@ public class ActionResultInfo
             int rand = new System.Random().Next(0, 100);
             if (CriticalRate >= rand)
             {        
-                _hpDamage = ApplyCritical(_hpDamage);
+                hpDamage = ApplyCritical(hpDamage);
             }
         }
-        _hpDamage = ApplyVariance(_hpDamage);
-        _hpDamage = Mathf.Max(1,_hpDamage);
+        hpDamage = ApplyVariance(hpDamage);
+        hpDamage = Mathf.Max(1,hpDamage);
         if (target.IsState(StateType.NoDamage) && !isNoEffect)
         {
             _execStateInfos[target.Index].Add(StateType.NoDamage);
-            _hpDamage = 0;
+            hpDamage = 0;
             SeekNoDamage(target);
         }
         if (subject.IsState(StateType.Deadly))
         {
             int rand = new System.Random().Next(0, 100);
             if (subject.StateEffectAll(StateType.Deadly) >= rand){
-                _hpDamage = target.Hp;
+                hpDamage = target.Hp;
             }
         }
         if (subject.IsState(StateType.Drain))
         {
-            _reHeal = (int)Mathf.Floor(_hpDamage * subject.StateEffectAll(StateType.Drain) * 0.01f);
+            _reHeal += (int)Mathf.Floor(hpDamage * subject.StateEffectAll(StateType.Drain) * 0.01f);
         }
+        _hpDamage += hpDamage; 
     }
 
     private void MakeHpHeal(BattlerInfo subject,BattlerInfo target,SkillsData.FeatureData featureData)
@@ -313,6 +321,7 @@ public class ActionResultInfo
             return;
         }
         */
+        var hpDamage = 0;
         int AtkValue = featureData.Param1;
         float DamageRate = 100;
         if (subject.IsState(StateType.DamageUp))
@@ -345,8 +354,8 @@ public class ActionResultInfo
         }
         */
         float DamageValue = Mathf.Max(1,SkillDamage);
-        _hpDamage = (int)Mathf.Round(DamageValue);
-        _hpDamage = Mathf.Max(1,_hpDamage);
+        hpDamage = (int)Mathf.Round(DamageValue);
+        hpDamage = Mathf.Max(1,hpDamage);
         /*
         if (target.IsState(StateType.NoDamage) && !isNoEffect)
         {
@@ -363,8 +372,73 @@ public class ActionResultInfo
         */
         if (subject.IsState(StateType.Drain))
         {
-            _reHeal = (int)Mathf.Floor(_hpDamage * subject.StateEffectAll(StateType.Drain) * 0.01f);
+            _reHeal = (int)Mathf.Floor(hpDamage * subject.StateEffectAll(StateType.Drain) * 0.01f);
         }
+        _hpDamage += hpDamage;
+    }
+
+    // 呪いダメージ計算
+    private void MakeHpCursedDamage(BattlerInfo subject,BattlerInfo target,SkillsData.FeatureData featureData,bool isNoEffect)
+    {
+        /*
+        if (!IsHit(subject,target) && !isNoEffect)
+        {
+            _missed = true;
+            return;
+        }
+        */
+        var hpDamage = 0;
+        int AtkValue = featureData.Param1;
+        float DamageRate = 100;
+        if (subject.IsState(StateType.DamageUp))
+        {
+            DamageRate *= subject.StateEffectAll(StateType.DamageUp);
+        }
+        float SkillDamage = (DamageRate * 0.01f * AtkValue);
+        /*
+        if (target.CanMove() && !isNoEffect)
+        {
+            if (target.IsState(StateType.CounterOura))
+            {
+                _execStateInfos[target.Index].Add(StateType.CounterOura);
+                _reDamage += CounterDamageValue(target);
+                if (target.IsState(StateType.CounterOuraHeal))
+                {
+                    SkillsData.FeatureData counterOuraHeal = new SkillsData.FeatureData();
+                    counterOuraHeal.FeatureType = FeatureType.HpHeal;
+                    counterOuraHeal.Param1 = target.StateEffectAll(StateType.CounterOuraHeal);
+                    MakeHpHeal(target,target,counterOuraHeal);
+                }
+            }
+        }
+        */
+        /*
+        if (subject.IsState(StateType.Freeze))
+        {
+            _execStateInfos[subject.Index].Add(StateType.Freeze);
+            _reDamage += FreezeDamageValue(subject,SkillDamage);
+        }
+        */
+        float DamageValue = Mathf.Max(1,SkillDamage);
+        hpDamage = (int)Mathf.Round(DamageValue);
+        hpDamage = Mathf.Max(1,hpDamage);
+        if (target.IsState(StateType.NoDamage) && !isNoEffect)
+        {
+            _execStateInfos[target.Index].Add(StateType.NoDamage);
+            _hpDamage = 0;
+            int count = target.StateTurn(StateType.NoDamage);
+            if (count <= 1)
+            {
+                _removedStates.Add(target.GetStateInfo(StateType.NoDamage));
+            } else{
+                _displayStates.Add(target.GetStateInfo(StateType.NoDamage));
+            }
+        }
+        if (subject.IsState(StateType.Drain))
+        {
+            _reHeal = (int)Mathf.Floor(hpDamage * subject.StateEffectAll(StateType.Drain) * 0.01f);
+        }
+        _hpDamage += hpDamage;
     }
 
     private void MakeMpHeal(BattlerInfo subject,BattlerInfo target,SkillsData.FeatureData featureData)
@@ -541,5 +615,4 @@ public class ActionResultInfo
             _displayStates.Add(battlerInfo.GetStateInfo(StateType.NoDamage));
         }
     }
-
 }

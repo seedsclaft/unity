@@ -22,6 +22,7 @@ public class SkillsData : ScriptableObject {
         public TargetType TargetType;
         public string Help;
         public RangeType Range;
+        public int RepeatTime;
         public bool AliveOnly;
 
         public List<FeatureData> FeatureDatas;
@@ -48,6 +49,16 @@ public class SkillsData : ScriptableObject {
         public int Param1;
         public int Param2;
         public int Param3;
+        public FeatureData Copy()
+        {
+            var feature = new FeatureData();
+            feature.SkillId = SkillId;
+            feature.FeatureType = FeatureType;
+            feature.Param1 = Param1;
+            feature.Param2 = Param2;
+            feature.Param3 = Param3;
+            return feature;
+        }
     }
     
     [Serializable]
@@ -266,7 +277,7 @@ public enum TriggerType
     DeadWithoutSelf = 104, // 自身以外が戦闘不能
     SelfDead = 105, // 自身が戦闘不能
     ActionResultAddState = 113, // 相手が状態異常を発動する前
-    OppnentHpRateUnder = 114, // 相手にHp〇〇以下がいる
+    DefeatEnemyByAttack = 114, // 攻撃で敵を撃破する
 }
 
 public enum TriggerTiming
@@ -289,7 +300,6 @@ public enum FeatureType
     NoEffectHpDamage = 11,
     AddState = 21,
     RemoveState = 22,
-    RemoveStatePassive = 2022, // 制御用
     ApHeal = 32,
     PlusSkill = 101,
     KindHeal = 201,
@@ -309,6 +319,8 @@ public enum FeatureType
     RebornStatusUp = 402,
     RebornAddSkill = 403,
     RebornQuest = 404,
+    HpCursedDamage = 2004, // 制御用
+    RemoveStatePassive = 2022, // 制御用
 }
 
 public enum LearningState{

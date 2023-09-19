@@ -198,44 +198,24 @@ public class StageInfo
         {
             enemyIds.Add(2600);
         } else
-        if (routeSelect == 1)
+        if (routeSelect > 1)
         {
-            //enemyIds.Add(2600);
+            var notEncountId = routeSelect == 1 ? 400 : 600;
             while (enemyIds.Count <= 2)
             {
-                int rand = new Random().Next(1, 6);
+                int rand = new Random().Next(1, 14);
                 rand *= 100;
                 rand += 2000;
-                //if (DataSystem.Troops.Find(a => a.Id == rand) != null)
-                //{
-                    if (rand != 2400)
+                if (rand % 1000 != notEncountId)
+                {
+                    if (DataSystem.Troops.Find(a => a.TroopId == rand) != null)
                     {
                         if (!enemyIds.Contains(rand))
                         {
                             enemyIds.Add(rand);
                         }
                     }
-                //}
-            }
-        } else
-        if (routeSelect == 2)
-        {
-            enemyIds.Add(2400);
-            while (enemyIds.Count <= 2)
-            {
-                int rand = new Random().Next(1, 6);
-                rand *= 100;
-                rand += 2000;
-                //if (DataSystem.Troops.Find(a => a.Id == rand) != null)
-                //{
-                    if (rand != 2600)
-                    {
-                        if (!enemyIds.Contains(rand))
-                        {
-                            enemyIds.Add(rand);
-                        }
-                    }
-                //}
+                }
             }
         }
         

@@ -121,7 +121,6 @@ public class EnemiesImporter : AssetPostprocessor {
 					EnemyData.Name = textData.Find(a => a.Id == (int)Baserow.GetCell((int)BaseColumn.NameId).NumericCellValue).Text;
 					EnemyData.ImagePath = Baserow.GetCell((int)BaseColumn.ImagePath)?.SafeStringCellValue();
 					
-					
 					int Hp = (int)Baserow.GetCell((int)BaseColumn.Hp)?.SafeNumericCellValue();
 					int Mp = (int)Baserow.GetCell((int)BaseColumn.Mp)?.SafeNumericCellValue();
 					int Atk = (int)Baserow.GetCell((int)BaseColumn.Atk)?.SafeNumericCellValue();
@@ -136,7 +135,6 @@ public class EnemiesImporter : AssetPostprocessor {
 					if (Kind3 != 0) EnemyData.Kinds.Add(Kind3);
 					EnemyData.BaseStatus = new StatusInfo();
 					EnemyData.BaseStatus.SetParameter(Hp,Mp,Atk,Def,Spd);
-
 					Data._data.Add(EnemyData);
 				}
 

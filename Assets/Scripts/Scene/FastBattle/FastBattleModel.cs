@@ -661,7 +661,7 @@ public class FastBattleModel : BaseModel
                 }
                 break;
                 case FeatureType.AddState:
-                if (CurrentBattler.isActor || (!target.IsState((StateType)featureData.Param1) && !target.IsState(StateType.Barrier) || (StateType)featureData.Param1 == StateType.DamageUp))
+                if (CurrentBattler.isActor || (!target.IsState((StateType)featureData.Param1) && !target.IsState(StateType.Barrier) || (StateType)featureData.Param1 == StateType.DamageUp ||  (StateType)featureData.Param1 == StateType.Prizm ))
                 {
                     IsEnable = true;
                 }

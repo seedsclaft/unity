@@ -30,7 +30,7 @@ public class StateInfo {
     public bool CheckOverWriteState(StateInfo stateInfo)
     {
         // 重複可能スキルはfalse
-        if (CanOverWrite())
+        if (stateInfo.Master.OverLap)
         {
             return false;
         }
@@ -77,13 +77,12 @@ public class StateInfo {
         return _stateId == (int)StateType.Stun || _stateId == (int)StateType.Slow || _stateId == (int)StateType.Curse || _stateId == (int)StateType.SlipDamage;
     }
 
-    public bool CanOverWrite()
-    {
-        return _stateId == (int)StateType.DamageUp || _stateId == (int)StateType.Prizm;
-    }
-
     public bool RemovalBuffState()
     {
+        if (_skillId == (int)StateType.Curse)
+        {
+            return false;
+        }
         if (_stateId >= (int)StateType.Barrier && _stateId <= (int)StateType.TargetRateDown)
         {
             return true;
