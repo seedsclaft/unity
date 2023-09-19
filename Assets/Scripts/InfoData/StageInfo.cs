@@ -193,6 +193,11 @@ public class StageInfo
     public List<TroopInfo> MakeRouteSelectTroopData(int routeSelect)
     {
         _currentTroopInfos.Clear();
+        var troopIds = new List<int>();
+        foreach (var actorId in _selectActorIds)
+        {
+            troopIds.Add(actorId * 100 + 2000);
+        }
         var enemyIds = new List<int>();
         if (routeSelect == 0)
         {
@@ -200,6 +205,16 @@ public class StageInfo
         } else
         if (routeSelect > 1)
         {
+            if (routeSelect == 2)
+            {
+                foreach (var troopId in troopIds)
+                {
+                    if (troopId % 1000 == 400)
+                    {
+                        enemyIds.Add(troopId);
+                    }
+                }
+            }
             var notEncountId = routeSelect == 1 ? 400 : 600;
             while (enemyIds.Count <= 2)
             {
@@ -210,7 +225,7 @@ public class StageInfo
                 {
                     if (DataSystem.Troops.Find(a => a.TroopId == rand) != null)
                     {
-                        if (!enemyIds.Contains(rand))
+                        if (!enemyIds.Contains(rand) && troopIds.Contains(rand))
                         {
                             enemyIds.Add(rand);
                         }

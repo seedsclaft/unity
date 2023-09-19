@@ -232,6 +232,7 @@ public enum TargetType{
     Friend = 2,
     All = 3,
     Self = 4,
+    AttackTarget = 7,
     Party = 101
 }
 
@@ -271,6 +272,7 @@ public enum TriggerType
     MoreTroopMembers = 52, // 味方より敵が少ない
     TurnNumUnder = 61, // ターン数が〇以内
     TurnNumPer = 63, // ターン数がparam1 x ターン数 + param2
+    AttackState = 71, // 攻撃成功時〇%で
     PayBattleMp = 101, // Mpを〇消費する
     ChainCount = 102, // 拘束成功回数
     ActionResultDeath = 103, // 攻撃を受けると戦闘不能になる

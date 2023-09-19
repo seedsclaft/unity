@@ -74,7 +74,7 @@ public class StateInfo {
 
     public bool IsBarrierStateType()
     {
-        return _stateId == (int)StateType.Stun || _stateId == (int)StateType.Slow || _stateId == (int)StateType.Curse || _stateId == (int)StateType.SlipDamage;
+        return _stateId == (int)StateType.Stun || _stateId == (int)StateType.Slow || _stateId == (int)StateType.Curse || _stateId == (int)StateType.SlipDamage || _stateId == (int)StateType.Blind || _stateId == (int)StateType.Freeze;
     }
 
     public bool RemovalBuffState()

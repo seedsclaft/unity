@@ -679,7 +679,18 @@ public class BattleModel : BaseModel
                 {
                     IsEnable = true;
                 } else
-                if (CurrentBattler.isActor || (!target.IsState((StateType)featureData.Param1) && !target.IsState(StateType.Barrier) || (StateType)featureData.Param1 == StateType.DamageUp || (StateType)featureData.Param1 == StateType.Prizm))
+                if (!target.IsState((StateType)featureData.Param1) && !target.IsState(StateType.Barrier))
+                {
+                    IsEnable = true;
+                } else
+                if (!target.IsState((StateType)featureData.Param1) && target.IsState(StateType.Barrier))
+                {
+                    if (UnityEngine.Random.Range(0,100) > 50)
+                    {
+                        IsEnable = true;
+                    }
+                } else
+                if (CurrentBattler.isActor || (StateType)featureData.Param1 == StateType.DamageUp || (StateType)featureData.Param1 == StateType.Prizm)
                 {
                     IsEnable = true;
                 }
@@ -762,7 +773,11 @@ public class BattleModel : BaseModel
             }
         }
 
-
+        Dictionary<int,int> nodamageDict = new ();
+        for (int i = 0; i < indexList.Count;i++)
+        {
+            nodamageDict[indexList[i]] = GetBattlerInfo(indexList[i]).StateTurn(StateType.NoDamage);
+        }
         List<ActionResultInfo> actionResultInfos = new List<ActionResultInfo>();
 
         for (int i = 0; i < repeatTime;i++)
@@ -819,6 +834,35 @@ public class BattleModel : BaseModel
                             Target.RemoveState(benedictStateInfos[k],true);
                             Target.ResetAp(false);
                             actionResultInfo.AddRemoveState(benedictStateInfos[k]);
+                        }
+                    }
+                }
+                int noDamageCount = Target.StateTurn(StateType.NoDamage);
+                if (actionResultInfo.DisplayStates.Find(b => b.Master.Id == (int)StateType.NoDamage) != null
+                || actionResultInfo.RemovedStates.Find(b => b.Master.Id == (int)StateType.NoDamage) != null)
+                {
+                    var removeCount = actionResultInfos.FindAll(a => a.RemovedStates.Find(b => b.Master.Id == (int)StateType.NoDamage) != null).Count;
+                    var displayCount = actionResultInfos.FindAll(a => a.DisplayStates.Find(b => b.Master.Id == (int)StateType.NoDamage) != null).Count;
+                    
+                    if ((removeCount+displayCount) >= nodamageDict[indexList[j]])
+                    {
+                        var noDamageState =  Target.GetStateInfo(StateType.NoDamage);
+                        if (noDamageState != null && noDamageState.Effect <= removeCount)
+                        {
+                            Target.RemoveState(noDamageState,true);
+                            actionResultInfo.AddRemoveState(noDamageState);
+                            var displayedResults = actionResultInfos.FindAll(a => a.DisplayStates.Find(b => b.Master.Id == (int)StateType.NoDamage) != null);
+
+                            foreach (var displayedResult in displayedResults)
+                            {
+                                for (int k = displayedResult.DisplayStates.Count-1; 0 >= k;k--)
+                                {
+                                    if (displayedResult.DisplayStates[k] == noDamageState)
+                                    {
+                                        displayedResult.DisplayStates.Remove(noDamageState);
+                                    }
+                                }
+                            }
                         }
                     }
                 }
@@ -1180,7 +1224,7 @@ public class BattleModel : BaseModel
                 {
                     SkillsData.FeatureData featureData = new SkillsData.FeatureData();
                     featureData.FeatureType = FeatureType.HpHeal;
-                    featureData.Param1 = healValue;
+                    featureData.Param1 = healValue * stateInfo.Effect;
 
                     ActionResultInfo actionResultInfo = new ActionResultInfo(GetBattlerInfo(targetIndex),GetBattlerInfo(targetIndex),new List<SkillsData.FeatureData>(){featureData},-1);
                     assistHealResults.Add(actionResultInfo);
@@ -1377,6 +1421,16 @@ public class BattleModel : BaseModel
                                     actionResultInfos.Add(actionResultInfo);
                                 }
                             }
+                        } else
+                        {
+                            if (passiveInfo.Master.TargetType == TargetType.AttackTarget)
+                            {
+                                if (CurrentActionInfo() != null && CurrentActionInfo().ActionResults.Count > 0)
+                                {
+                                    ActionResultInfo actionResultInfo = new ActionResultInfo(battlerInfo,GetBattlerInfo(CurrentActionInfo().ActionResults[0].TargetIndex),passiveInfo.Master.FeatureDatas,passiveInfo.Id);
+                                    actionResultInfos.Add(actionResultInfo);
+                                }
+                            }
                         }
                         if (_passiveSkillInfos[battlerInfo.Index].Find(a => a.Master.Id == passiveInfo.Master.Id) == null)
                         {
@@ -1542,6 +1596,16 @@ public class BattleModel : BaseModel
                 {
                     IsTriggered = true;
                 }
+                if (triggerDatas[j].TriggerType == TriggerType.AttackState)
+                {
+                    if (battlerInfo.IsAlive() && CurrentActionInfo() != null && CurrentActionInfo().ActionResults.Find(a => a.HpDamage > 0) != null)
+                    {
+                        if (triggerDatas[j].Param1 > UnityEngine.Random.Range(0,100))
+                        {
+                            IsTriggered = true;
+                        }
+                    }
+                }
                 if (triggerTiming == TriggerTiming.After && triggerDatas[j].TriggerType == TriggerType.PayBattleMp)
                 {
                     if (battlerInfo.IsAlive() && battlerInfo.PayBattleMp >= triggerDatas[j].Param1)
@@ -1616,9 +1680,16 @@ public class BattleModel : BaseModel
                 {
                     if (battlerInfo.IsAlive())
                     {
-                        if (actionResultInfos.Find(a => a.AddedStates.Find(b => b.IsBarrierStateType()) != null) != null)
+                        if (CurrentActionInfo() != null && battlerInfo.isActor != CurrentBattler.isActor)
                         {
-                            IsTriggered = true;
+                            var states = CurrentActionInfo().Master.FeatureDatas.FindAll(a => a.FeatureType == FeatureType.AddState);
+                            foreach (var state in states)
+                            {
+                                if (state.Param1 == (int)StateType.Stun || state.Param1 == (int)StateType.Slow || state.Param1 == (int)StateType.Curse || state.Param1 == (int)StateType.SlipDamage || state.Param1 == (int)StateType.Blind || state.Param1 == (int)StateType.Freeze)
+                                {
+                                    IsTriggered = true;
+                                }
+                            }
                         }
                     }
                 }

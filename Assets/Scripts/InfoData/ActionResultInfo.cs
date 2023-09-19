@@ -491,7 +491,7 @@ public class ActionResultInfo
                 }
             }
         }
-        if (stateInfo.IsBarrierStateType() && target.IsState(StateType.AntiDote))
+        if (checkCounter == false && stateInfo.IsBarrierStateType() && target.IsState(StateType.AntiDote))
         {
             _execStateInfos[target.Index].Add(StateType.AntiDote);
             if (subject.IsState(StateType.NoDamage))

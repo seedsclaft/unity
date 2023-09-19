@@ -16,6 +16,7 @@ public class BattlePresenter : BasePresenter
     }
 #endif
     private bool _triggerAfterChecked = false;
+    private bool _triggerInterruptChecked = false;
     private bool _slipDamageChecked = false;
     private bool _regeneChecked = false;
     private bool _battleEnded = false;
@@ -412,11 +413,15 @@ public class BattlePresenter : BasePresenter
                 _model.MakeCurseActionResults(actionInfo,indexList);
             //}
             _model.PopupActionResultInfo(actionInfo.ActionResults);
-            var result = _model.CheckTriggerSkillInfos(TriggerTiming.Interrupt,actionInfo.ActionResults);
-            if (result)
+            if (_triggerInterruptChecked == false)
             {
-                _model.SetActionBattler(_model.CurrentActionInfo().SubjectIndex);
-                _model.MakeActionResultInfo(_model.CurrentActionInfo(),_model.MakeAutoSelectIndex(_model.CurrentActionInfo()));
+                var result = _model.CheckTriggerSkillInfos(TriggerTiming.Interrupt,actionInfo.ActionResults);
+                if (result)
+                {
+                    _model.SetActionBattler(_model.CurrentActionInfo().SubjectIndex);
+                    _model.MakeActionResultInfo(_model.CurrentActionInfo(),_model.MakeAutoSelectIndex(_model.CurrentActionInfo()));
+                    _triggerInterruptChecked = true;
+                }
             }
             
             var PassiveResults = _model.CheckTriggerPassiveInfos(TriggerTiming.Use);
@@ -853,6 +858,7 @@ public class BattlePresenter : BasePresenter
             }
         }
         _view.HideEnemyStatus();
+        _triggerInterruptChecked = false;
         _triggerAfterChecked = false;
         _slipDamageChecked = false;
         _regeneChecked = false;
