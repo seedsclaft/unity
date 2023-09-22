@@ -439,6 +439,7 @@ public class BattlePresenter : BasePresenter
             var demigod = _model.SkillActionAnimation("NA_Effekseer/NA_cut-in_002_" + _model.CurrentBattler.CharaId.ToString());
             _view.StartAnimationDemigod(demigod);
             _view.HideEnemyStateOverlay();
+            _view.HideActorStateOverlay();
             _view.SetAnimationEndTiming(90);
             _nextCommandType = Battle.CommandType.EndDemigodAnimation;
         }
@@ -687,30 +688,6 @@ public class BattlePresenter : BasePresenter
         if (actionInfo != null)
         {
             StartDeathAnimation(_model.CurrentActionInfo().ActionResults);
-            /*
-            if (_triggerAfterChecked == false)
-            {
-                if (_slipDamageChecked == false)
-                {
-                    var slipDamage = _model.CheckSlipDamage();
-                    if (slipDamage == true)
-                    {
-                        StartAnimationSlipDamage();
-                        return;
-                    }
-                }
-                // リジェネ
-                if (_regeneChecked == false)
-                {
-                    var regene = _model.CheckRegene();
-                    if (regene)
-                    {
-                        StartAnimationRegene();
-                        return;
-                    }
-                }
-            }
-            */
         }
         EndTurn();
     }
@@ -858,6 +835,7 @@ public class BattlePresenter : BasePresenter
             }
         }
         _view.HideEnemyStatus();
+        _view.ShowActorStateOverlay();
         _triggerInterruptChecked = false;
         _triggerAfterChecked = false;
         _slipDamageChecked = false;

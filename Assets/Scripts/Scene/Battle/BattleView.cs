@@ -311,6 +311,7 @@ public class BattleView : BaseView ,IInputHandlerEvent
         }
         // 敵のstateEffectを非表示
         HideEnemyStateOverlay();
+        HideActorStateOverlay();
     }
 
     public void HideSkillActionList(bool isSideBenuClose = true)
@@ -323,6 +324,7 @@ public class BattleView : BaseView ,IInputHandlerEvent
         }
         // 敵のstateEffectを表示
         ShowEnemyStateOverlay();
+        ShowActorStateOverlay();
     }
 
     public void HideBattleThumb()
@@ -479,6 +481,22 @@ public class BattleView : BaseView ,IInputHandlerEvent
         foreach (var item in _battlerComps)
         {
             item.Value.HideEnemyStateOverlay();
+        }
+    }
+
+    public void ShowActorStateOverlay()
+    {
+        foreach (var item in _battlerComps)
+        {
+            item.Value.ShowActorStateOverlay();
+        }
+    }
+
+    public void HideActorStateOverlay()
+    {
+        foreach (var item in _battlerComps)
+        {
+            item.Value.HideActorStateOverlay();
         }
     }
 

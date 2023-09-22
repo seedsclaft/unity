@@ -683,16 +683,16 @@ public class BattleModel : BaseModel
                 {
                     IsEnable = true;
                 } else
-                if (!target.IsState((StateType)featureData.Param1) && target.IsState(StateType.Barrier))
+                if (CurrentBattler.isActor || (StateType)featureData.Param1 == StateType.DamageUp || (StateType)featureData.Param1 == StateType.Prizm)
+                {
+                    IsEnable = true;
+                } else
+                if (!CurrentBattler.isActor && !target.IsState((StateType)featureData.Param1) && target.IsState(StateType.Barrier))
                 {
                     if (UnityEngine.Random.Range(0,100) > 50)
                     {
                         IsEnable = true;
                     }
-                } else
-                if (CurrentBattler.isActor || (StateType)featureData.Param1 == StateType.DamageUp || (StateType)featureData.Param1 == StateType.Prizm)
-                {
-                    IsEnable = true;
                 }
                 break;
                 case FeatureType.RemoveState:
@@ -1210,6 +1210,7 @@ public class BattleModel : BaseModel
             {
                 _actionInfos.Remove(actionInfo);
                 var party = CurrentBattler.isActor ? BattlerActors() : BattlerEnemies();
+                party = party.FindAll(a => a.IsAlive());
                 var targetIndexs = new List<int>();
                 foreach (var member in party)
                 {

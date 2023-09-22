@@ -1295,7 +1295,7 @@ MonoBehaviour:
     IconIndex: 10
     AnimationName: EffekseerVol_3/NA_v3_3d_fairy light_1
     AnimationPosition: 0
-    AnimationType: 3
+    AnimationType: 1
     DamageTiming: 26
     MpCost: 0
     Rank: 2
@@ -1303,7 +1303,7 @@ MonoBehaviour:
     Scope: 4
     SkillType: 3
     TargetType: 4
-    Help: "(\u6761\u4EF6)\u76F8\u624B\u304C\u72B6\u614B\u7570\u5E38\u4ED8\u4E0E\u9B54\u6CD5\u3092\u4F7F\u7528\n\u81EA\u8EAB\u306B\u72B6\u614B\u7570\u5E38\u53CD\u5C04\u3092\u4ED8\u4E0E(\u6C38\u7D9A)
+    Help: "(\u6761\u4EF6)\u6575\u304C\u72B6\u614B\u7570\u5E38\u4ED8\u4E0E\u9B54\u6CD5\u3092\u4F7F\u7528\n\u81EA\u8EAB\u306B\u72B6\u614B\u7570\u5E38CA\u3092\u4ED8\u4E0E(\u6C38\u7D9A)
       \u795E\u5316\u72B6\u614B\u306B\u79FB\u884C"
     Range: 1
     RepeatTime: 1
@@ -1345,7 +1345,7 @@ MonoBehaviour:
     Scope: 3
     SkillType: 4
     TargetType: 1
-    Help: "(\u6761\u4EF6)\u795E\u5316\u72B6\u614B\n\u6575\u5168\u4F53\u306B\u51CD\u7D50\u3092\u4ED8\u4E0E(\u6C38\u7D9A)
+    Help: "(\u6761\u4EF6)\u795E\u5316\u72B6\u614B\n\u6575\u5168\u4F53\u306B2\u500D\u30C0\u30E1\u30FC\u30B8\u306E\u51CD\u7D50\u3092\u4ED8\u4E0E(\u6C38\u7D9A)
       \u795E\u5316\u89E3\u9664"
     Range: 1
     RepeatTime: 1
@@ -1615,7 +1615,7 @@ MonoBehaviour:
     Scope: 1
     SkillType: 2
     TargetType: 7
-    Help: "(\u6761\u4EF6)\u653B\u6483\u6210\u529F\u6642\n50%\u306E\u78BA\u7387\u3067\u920D\u8DB3\u4ED8\u4E0E"
+    Help: "(\u6761\u4EF6)\u653B\u6483\u6210\u529F\u6642\n25%\u306E\u78BA\u7387\u3067\u920D\u8DB3\u4ED8\u4E0E"
     Range: 1
     RepeatTime: 1
     AliveOnly: 1
@@ -1629,7 +1629,7 @@ MonoBehaviour:
     - SkillId: 337
       TriggerType: 71
       TriggerTiming: 1
-      Param1: 50
+      Param1: 25
       Param2: 0
       Param3: 0
   - Id: 341
@@ -1909,7 +1909,7 @@ MonoBehaviour:
     IconIndex: 10
     AnimationName: EffekseerVol_3/NA_v3_2.5d_crash_1
     AnimationPosition: 0
-    AnimationType: 3
+    AnimationType: 1
     DamageTiming: 40
     MpCost: 0
     Rank: 2
@@ -1917,7 +1917,7 @@ MonoBehaviour:
     Scope: 3
     SkillType: 3
     TargetType: 1
-    Help: "(\u6761\u4EF6)\u76F8\u624B\u3092\u6483\u7834\u3059\u308B\n\u6575\u5358\u4F53\u306B5\u30BF\u30FC\u30F3\u306E\u30D1\u30C3\u30B7\u30D6\u7121\u52B9\u3092\u4ED8\u4E0E"
+    Help: "(\u6761\u4EF6)\u81EA\u8EAB\u306E\u884C\u52D5\u3067\u76F8\u624B\u3092\u6483\u7834\u3059\u308B\n\u6575\u5168\u4F53\u306B5\u30BF\u30FC\u30F3\u306E\u30D1\u30C3\u30B7\u30D6\u7121\u52B9\u3092\u4ED8\u4E0E"
     Range: 1
     RepeatTime: 1
     AliveOnly: 1

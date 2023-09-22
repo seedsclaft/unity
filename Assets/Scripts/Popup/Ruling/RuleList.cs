@@ -26,6 +26,7 @@ public class RuleList : ListWindow , IInputHandlerEvent
             {
                 ruleHelp.SetData("",i);
             }
+            ruleHelp.gameObject.SetActive(helpList.Count > i);
         }
         UpdateSelectIndex(0);
     }

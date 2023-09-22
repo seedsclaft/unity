@@ -326,6 +326,28 @@ public class BattlerInfoComponent : MonoBehaviour
         }
     }
 
+    public void ShowActorStateOverlay()
+    {
+
+        if (_battlerInfo.isActor)
+        {
+            battleStateOverlay.gameObject.SetActive(true);
+        } else
+        {
+        }
+    }
+
+    public void HideActorStateOverlay()
+    {
+
+        if (_battlerInfo.isActor)
+        {
+            battleStateOverlay.gameObject.SetActive(false);
+        } else
+        {
+        }
+    }
+
     public void SetEnemyGridKey(int index)
     {
         enemyInfoComponent.SetGridKey(index);
