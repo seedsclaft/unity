@@ -601,9 +601,9 @@ public class TacticsView : BaseView
         tacticsAttributeList.Deactivate();
     }
 
-    public void SetAttributeValues(List<string> attributeValues,List<int> learningCosts,int currensy)
+    public void SetAttributeValues(List<SkillsData.SkillData.SkillAttributeInfo> attributeInfos,int currensy)
     {
-        tacticsAttributeList.Refresh(attributeValues,learningCosts,currensy);
+        tacticsAttributeList.Refresh(attributeInfos,currensy);
         tacticsAttributeList.SelectEnableIndex();
     }
 

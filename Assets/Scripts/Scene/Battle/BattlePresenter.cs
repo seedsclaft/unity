@@ -208,10 +208,8 @@ public class BattlePresenter : BasePresenter
     {
         _busy = true;
         _view.SetHelpInputInfo("RULING");
-        //_view.SetBattleBusy(true);
         Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
         _view.CommandCallRuling(() => {
-            //_view.SetBattleBusy(false);
             _view.SetHelpInputInfo("OPTION");
             Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cancel);
             _busy = false;
@@ -262,7 +260,11 @@ public class BattlePresenter : BasePresenter
                 {
                     return;
                 }
-                _model.UpdateAp();
+                var isRemoveState = _model.UpdateAp();
+                if (isRemoveState)
+                {
+                    _view.RefreshStatus();
+                }
                 _view.UpdateAp();
             }
         } else
@@ -279,7 +281,11 @@ public class BattlePresenter : BasePresenter
             {
                 return;
             }
-            _model.UpdateAp();
+            var isRemoveState = _model.UpdateAp();
+            if (isRemoveState)
+            {
+                _view.RefreshStatus();
+            }
             _view.UpdateAp();
         }
         if (_model.CurrentBattler != null)
@@ -420,8 +426,8 @@ public class BattlePresenter : BasePresenter
                 {
                     _model.SetActionBattler(_model.CurrentActionInfo().SubjectIndex);
                     _model.MakeActionResultInfo(_model.CurrentActionInfo(),_model.MakeAutoSelectIndex(_model.CurrentActionInfo()));
-                    _triggerInterruptChecked = true;
                 }
+                _triggerInterruptChecked = true;
             }
             
             var PassiveResults = _model.CheckTriggerPassiveInfos(TriggerTiming.Use);

@@ -29,7 +29,7 @@ public interface IListViewItem
 
 public interface IInputHandlerEvent
 {
-    void InputHandler(InputKeyType keyType);
+    void InputHandler(InputKeyType keyType,bool pressed);
     void MouseCancelHandler();
 }
 

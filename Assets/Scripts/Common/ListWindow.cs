@@ -13,6 +13,8 @@ abstract public class ListWindow : MonoBehaviour
     public int Index => _index;
     private int _defaultInputFrame = 0;
 
+    private int _listMoveInputFrameFirst = 36;
+    private int _listMoveGamePadFrameFirst = 39;
     private int _listMoveInputFrame = 6;
     private int _listMoveGamePadFrame = 9;
     public void SetInputFrame(int frame)
@@ -51,7 +53,7 @@ abstract public class ListWindow : MonoBehaviour
 
     public void Activate()
     {
-        ResetInputFrame(1);
+        ResetInputOneFrame();
         _active = true;
     }
     
@@ -403,12 +405,22 @@ abstract public class ListWindow : MonoBehaviour
         _inputBusyFrame = _defaultInputFrame + plusValue;
     }
     
+    public void ResetInputOneFrame()
+    {
+        _inputBusyFrame = 1;
+    }
+    
+
     public void SetHelpWindow(HelpWindow helpWindow){
         _helpWindow = helpWindow;
     }
 
-    public void InputHandler(InputKeyType keyType)
+    public void InputHandler(InputKeyType keyType,bool pressed)
     {
+        if (keyType == InputKeyType.None)
+        {
+            ResetInputOneFrame();
+        }
         if (!IsInputEnable())
         {
             return;
@@ -420,10 +432,10 @@ abstract public class ListWindow : MonoBehaviour
         {
             if (InputSystem.IsGamePad)
             {
-                plusValue = _listMoveGamePadFrame;
+                plusValue = pressed ? _listMoveGamePadFrame : _listMoveGamePadFrameFirst;
             } else
             {
-                plusValue = _listMoveInputFrame;
+                plusValue = pressed ? _listMoveInputFrame : _listMoveInputFrameFirst;
             }
             UpdateSelectIndex(Index);
         }

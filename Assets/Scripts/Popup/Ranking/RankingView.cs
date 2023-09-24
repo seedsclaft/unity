@@ -41,7 +41,7 @@ public class RankingView : BaseView,IInputHandlerEvent
     }
 
 
-    public void InputHandler(InputKeyType keyType)
+    public void InputHandler(InputKeyType keyType,bool pressed)
     {
         if (keyType == InputKeyType.Cancel)
         {

@@ -430,7 +430,7 @@ public class StatusView : BaseView ,IInputHandlerEvent
         skillList.RefreshCostInfo();
     }
 
-    public void InputHandler(InputKeyType keyType)
+    public void InputHandler(InputKeyType keyType,bool pressed)
     {
 
     }

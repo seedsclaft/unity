@@ -35,15 +35,15 @@ public class TacticsAttributeList : ListWindow , IInputHandlerEvent
         UpdateSelectIndex(-1);
     }
 
-    public void Refresh(List<string> attributeValues,List<int> learningCosts,int currensy)
+    public void Refresh(List<SkillsData.SkillData.SkillAttributeInfo> attributeInfos,int currensy)
     {
         for (int i = 0; i < _attributeTypesData.Count;i++)
         {
             SkillAttribute skillAttribute = ObjectList[i].GetComponent<SkillAttribute>();
-            skillAttribute.SetData(_attributeTypesData[i],attributeValues[i],(int)_attributeTypesData[i] - 1,learningCosts[i]);
+            skillAttribute.SetData(attributeInfos[i],(int)_attributeTypesData[i] - 1);
             
             ListItem listItem = ObjectList[i].GetComponent<ListItem>();
-            listItem.Disable.SetActive(learningCosts[i] > currensy);
+            listItem.Disable.SetActive(attributeInfos[i].LearningCost > currensy);
         }
         UpdateAllItems();
     }

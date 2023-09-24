@@ -53,13 +53,22 @@ public class TacticsModel : BaseModel
         return CurrentActor.AttirbuteValues(StageMembers());
     }
 
-    public List<int> AttirbutesLearingCosts(){
-        List<int> LaerningCost = new List<int>();
+    public List<SkillsData.SkillData.SkillAttributeInfo> AttirbuteInfos()
+    {
+        var list = new List<SkillsData.SkillData.SkillAttributeInfo>();
+        var attirbuteValues = AttirbuteValues();
+        var idx = 0;
         foreach (var attributeType in AttributeTypes())
         {
-            LaerningCost.Add(TacticsUtility.AlchemyCost(CurrentActor,attributeType,StageMembers()));
+            var info = new SkillsData.SkillData.SkillAttributeInfo();
+            info.AttributeType = attributeType;
+            info.LearningCost = TacticsUtility.AlchemyCost(CurrentActor,attributeType,StageMembers());
+            info.ValueText = attirbuteValues[idx];
+            info.LearningCount = DataSystem.System.GetTextData(1120).Text + SelectActorAlchemy(CurrentActor.ActorId,attributeType).Count.ToString();
+            idx++;
+            list.Add(info);
         }
-        return LaerningCost;
+        return list;
     }
 
     public List<SystemData.CommandData> TacticsCommand

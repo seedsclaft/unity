@@ -91,13 +91,19 @@ public class BattleModel : BaseModel
     }
 
 
-    public void UpdateAp()
+    public bool UpdateAp()
     {
+        var isRemoveState = false;
         _battlers.ForEach(battler => {
             battler.UpdateAp();
-            battler.UpdateState(RemovalTiming.UpdateAp);
+            var removeStates = battler.UpdateState(RemovalTiming.UpdateAp);
+            if (removeStates != null)
+            {
+                isRemoveState = true;
+            }
         });
         MakeActionBattler();
+        return isRemoveState;
     }
     
     public List<ActionResultInfo> UpdateChainState()

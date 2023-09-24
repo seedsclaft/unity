@@ -11,13 +11,29 @@ public class SkillAttribute : ListItem ,IListViewItem
     [SerializeField] private Image icon;
     [SerializeField] private TextMeshProUGUI valueText;
     [SerializeField] private TextMeshProUGUI learnCost;
+    [SerializeField] private TextMeshProUGUI learningCountText;
     private AttributeType _data; 
     private string _valueText; 
     private int _learnCost; 
-    public void SetData(AttributeType data,string valueText,int index,int learnCost = -1){
+    public void SetData(AttributeType data,string valueText,int index,int learnCost = -1,string learningCount = ""){
         _data = data;
         _valueText = valueText;
         _learnCost = learnCost;
+        if (learningCountText != null)
+        {
+            learningCountText.text = learningCount;
+        }
+        SetIndex(index);
+    }
+
+    public void SetData(SkillsData.SkillData.SkillAttributeInfo data,int index){
+        _data = data.AttributeType;
+        _valueText = data.ValueText;
+        _learnCost = data.LearningCost;
+        if (learningCountText != null)
+        {
+            learningCountText.text = data.LearningCount;
+        }
         SetIndex(index);
     }
 

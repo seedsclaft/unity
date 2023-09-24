@@ -39,6 +39,14 @@ public class SkillsData : ScriptableObject {
         {
             return FeatureDatas.Find(a => a.FeatureType == FeatureType.AddState && a.Param1 == (int)stateType) != null;
         }
+        [Serializable]
+        public class SkillAttributeInfo
+        {   
+            public AttributeType AttributeType;
+            public string ValueText;
+            public int LearningCost;
+            public string LearningCount;
+        }
     }
 
     [Serializable]

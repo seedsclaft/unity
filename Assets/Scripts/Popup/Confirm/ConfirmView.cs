@@ -103,7 +103,7 @@ public class ConfirmView : BaseView,IInputHandlerEvent
         }
     }
 
-    public void InputHandler(InputKeyType keyType)
+    public void InputHandler(InputKeyType keyType,bool pressed)
     {
 
     }

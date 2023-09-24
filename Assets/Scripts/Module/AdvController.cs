@@ -29,15 +29,21 @@ public class AdvController : BaseView, IInputHandlerEvent
     public void EndAdv()
     {
         _advPlaying = false;
+        SaveSystem.SaveConfigStart(GameSystem.ConfigData);
         advInputButton.gameObject.SetActive(false);
     }
     
-    public void InputHandler(InputKeyType keyType)
+    public void InputHandler(InputKeyType keyType,bool pressed)
     {
         if (_advPlaying == false) return;
         if (keyType == InputKeyType.Decide || keyType == InputKeyType.Cancel)
         {
             advUguiManager.OnInput();
+        }
+        if (keyType == InputKeyType.Option1)
+        {
+            advUguiManager.Engine.Config.ToggleSkip();        
+            GameSystem.ConfigData._eventSkipIndex = advUguiManager.Engine.Config.IsSkip;
         }
         if (keyType == InputKeyType.SideLeft1)
         {

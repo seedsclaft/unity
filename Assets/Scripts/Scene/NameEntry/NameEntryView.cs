@@ -56,7 +56,7 @@ public class NameEntryView : BaseView, IInputHandlerEvent
         HelpWindow.SetInputInfo("NAMEENTRY");
     }
 
-    public void InputHandler(InputKeyType keyType)
+    public void InputHandler(InputKeyType keyType,bool pressed)
     {
         if (inputField.gameObject.activeSelf == true && inputField.IsActive())
         {

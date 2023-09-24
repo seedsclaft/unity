@@ -31,6 +31,9 @@ abstract public class BaseView : MonoBehaviour
     }
 
     private int _inputBusyFrame = 0;
+    private InputKeyType _lastInputKey = InputKeyType.None;
+    private int _pressedFrame = 0;
+    private int _pressFrame = 30;
     public void SetInputFrame(int frame)
     {
         _inputBusyFrame = frame;
@@ -56,13 +59,13 @@ abstract public class BaseView : MonoBehaviour
         _inputHandler.Add(handler);
     }
 
-    private void InputHandler(InputKeyType keyType)
+    private void InputHandler(InputKeyType keyType,bool pressed)
     {
         if (_busy) return;
         for (int i = _inputHandler.Count-1;i >= 0;i--)
         {
             if (_inputHandler[i] != null && _inputBusyFrame < 0){
-                _inputHandler[i].InputHandler(keyType);
+                _inputHandler[i].InputHandler(keyType,pressed);
             }
         }
     }
@@ -88,13 +91,21 @@ abstract public class BaseView : MonoBehaviour
         if (_input != null)
         {
             InputKeyType keyType = _input.Update();
-            if (keyType != InputKeyType.None)
-            {
-                InputHandler(keyType);
-            }
+            //if (keyType != InputKeyType.None)
+            //{
+                InputHandler(keyType,_pressedFrame > _pressFrame);
+            //}
             if (InputSystem.IsMouseRightButtonDown())
             {
                 CallMouseCancel();
+            }
+            if (_lastInputKey != keyType)
+            {
+                _lastInputKey = keyType;
+                _pressedFrame = 0;
+            } else
+            {
+                _pressedFrame += 1;
             }
         }
         UpdateInputFrame();

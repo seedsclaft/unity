@@ -760,7 +760,7 @@ public class BattleView : BaseView ,IInputHandlerEvent
         SetInputFrame(1);
     }    
     
-    public void InputHandler(InputKeyType keyType)
+    public void InputHandler(InputKeyType keyType,bool pressed)
     {
         if (keyType == InputKeyType.Cancel)
         {

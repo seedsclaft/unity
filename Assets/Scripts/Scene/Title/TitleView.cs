@@ -157,7 +157,7 @@ public class TitleView : BaseView ,IInputHandlerEvent
         logoButton.gameObject.SetActive(false);
     }    
     
-    public void InputHandler(InputKeyType keyType)
+    public void InputHandler(InputKeyType keyType,bool pressed)
     {
         if (keyType == InputKeyType.Decide || keyType == InputKeyType.Cancel || keyType == InputKeyType.Start)
         {

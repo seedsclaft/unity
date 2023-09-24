@@ -484,14 +484,14 @@ public class ActionResultInfo
         {
             if (target.IsState(StateType.Barrier))
             {
-                if (stateInfo.IsBarrierStateType())
+                if (stateInfo.Master.Abnormal)
                 {
                     StateInfo barrierState = new StateInfo((int)StateType.Barrier,0,0,0,target.Index,-1);
                     _displayStates.Add(barrierState);
                 }
             }
         }
-        if (checkCounter == true && stateInfo.IsBarrierStateType() && target.IsState(StateType.AntiDote))
+        if (checkCounter == true && stateInfo.Master.Abnormal && target.IsState(StateType.AntiDote))
         {
             _execStateInfos[target.Index].Add(StateType.AntiDote);
             if (subject.IsState(StateType.NoDamage))

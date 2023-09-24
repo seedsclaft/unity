@@ -71,30 +71,4 @@ public class StateInfo {
     {
         _turns = _baseTurns;
     }
-
-    public bool IsBarrierStateType()
-    {
-        return _stateId == (int)StateType.Stun || _stateId == (int)StateType.Slow || _stateId == (int)StateType.Curse || _stateId == (int)StateType.SlipDamage || _stateId == (int)StateType.Blind || _stateId == (int)StateType.Freeze;
-    }
-
-    public bool RemovalBuffState()
-    {
-        if (_skillId == (int)StateType.Curse)
-        {
-            return false;
-        }
-        if (_stateId >= (int)StateType.Barrier && _stateId <= (int)StateType.TargetRateDown)
-        {
-            return true;
-        } else
-        if (_stateId >= (int)StateType.ChainDamageUp && _stateId <= (int)StateType.HealActionSelfHeal)
-        {
-            return true;
-        } else
-        if (_stateId >= (int)StateType.AbsoluteHit)
-        {
-            return true;
-        }
-        return false;
-    }
 }

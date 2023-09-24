@@ -815,7 +815,7 @@ public class TacticsPresenter :BasePresenter
         _view.SetNuminous(_model.Currency);
         _view.SetStageInfo(_model.CurrentStage);
         
-        if (_model.CurrentActor != null) _view.SetAttributeValues(_model.AttirbuteValues(),_model.AttirbutesLearingCosts(),_model.Currency);
+        if (_model.CurrentActor != null) _view.SetAttributeValues(_model.AttirbuteInfos(),_model.Currency);
         _view.CommandRefresh(_model.CommandType);
     }
 

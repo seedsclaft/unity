@@ -385,6 +385,10 @@ MonoBehaviour:
         Param1: 0
         Param2: 0
         Param3: 0
+    - SkillId: 231
+      Level: 1
+      Weight: 100
+      TriggerDatas: []
     - SkillId: 205
       Level: 5
       Weight: 100
@@ -792,7 +796,13 @@ MonoBehaviour:
     - SkillId: 322
       Level: 1
       Weight: 80
-      TriggerDatas: []
+      TriggerDatas:
+      - SkillId: 0
+        TriggerType: 22
+        TriggerTiming: 1
+        Param1: 2
+        Param2: 0
+        Param3: 0
     - SkillId: 231
       Level: 1
       Weight: 0
@@ -1178,6 +1188,9 @@ MonoBehaviour:
     Help: 
   - Id: 105
     Text: 405
+    Help: 
+  - Id: 114
+    Text: 322
     Help: 
   - Id: 203
     Text: 302

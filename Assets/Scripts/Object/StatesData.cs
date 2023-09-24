@@ -19,6 +19,8 @@ public class StatesData : ScriptableObject
         public string EffectPath;
         public EffectPositionType EffectPosition;
         public bool OverLap;
+        public bool Removal;
+        public bool Abnormal;
     }
 
 }
