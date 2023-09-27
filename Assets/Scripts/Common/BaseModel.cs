@@ -261,6 +261,16 @@ public class BaseModel
         return attributeTypes;
     }
 
+    public List<AttributeType> AttributeAllTypes()
+    {
+        List<AttributeType> attributeTypes = new List<AttributeType>();
+        foreach(var attribute in Enum.GetValues(typeof(AttributeType)))
+        {
+            attributeTypes.Add((AttributeType)attribute);
+        } 
+        return attributeTypes;
+    }
+
     public List<SkillInfo> BasicSkillInfos(GetItemInfo getItemInfo)
     {
         List<SkillInfo> skillInfos = new List<SkillInfo>();

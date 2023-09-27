@@ -9,16 +9,16 @@ public class SkillAttributeList : ListWindow , IInputHandlerEvent
     [SerializeField] private int cols = 0;
     private List<AttributeType> _attributeTypesData = new List<AttributeType>();
 
-    public void Initialize(System.Action<AttributeType> callEvent,System.Action conditionEvent)
+    public void Initialize(int listCount,System.Action<AttributeType> callEvent,System.Action conditionEvent)
     {
-        InitializeListView(cols);
-        for (int i = 0; i < cols;i++)
+        InitializeListView(listCount);
+        for (int i = 0; i < listCount;i++)
         {
             var skillAttribute = ObjectList[i].GetComponent<SkillAttribute>();
             skillAttribute.SetCallHandler((a) =>
                 {
                     callEvent(a);
-                    UpdateSelectIndex((int)a-1);
+                    UpdateSelectIndex((int)a);
                 }
             );
             skillAttribute.SetSelectHandler((data) => 
@@ -38,7 +38,7 @@ public class SkillAttributeList : ListWindow , IInputHandlerEvent
             skillAttribute.SetData(attributeTypes[i],"",(int)attributeTypes[i] - 1);
         }
         UpdateAllItems();
-        UpdateSelectIndex((int)currentAttibuteType-1);
+        UpdateSelectIndex((int)currentAttibuteType);
     }
 
     public void RefreshValues(List<string> attributeValues)

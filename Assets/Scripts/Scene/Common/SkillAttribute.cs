@@ -12,6 +12,7 @@ public class SkillAttribute : ListItem ,IListViewItem
     [SerializeField] private TextMeshProUGUI valueText;
     [SerializeField] private TextMeshProUGUI learnCost;
     [SerializeField] private TextMeshProUGUI learningCountText;
+    [SerializeField] private TextMeshProUGUI allAttributeText;
     private AttributeType _data; 
     private string _valueText; 
     private int _learnCost; 
@@ -44,23 +45,29 @@ public class SkillAttribute : ListItem ,IListViewItem
 
     public void UpdateViewItem()
     {
-        if (_data == AttributeType.None) return;
         if (icon != null)
         {
-            UpdateSkillIcon(Index);
+            icon.gameObject.SetActive(_data != AttributeType.None);
+            UpdateElementIcon(Index);
         }
         
         if (valueText != null && _valueText != null)
         {
+            valueText.gameObject.SetActive(_data != AttributeType.None);
             valueText.text = _valueText;
         }
         if (learnCost != null && _learnCost != -1)
         {
+            learnCost.gameObject.SetActive(_data != AttributeType.None);
             learnCost.text = _learnCost.ToString();
+        }
+        if (allAttributeText != null)
+        {
+            allAttributeText.gameObject.SetActive(_data == AttributeType.None);
         }
     }
     
-    private void UpdateSkillIcon(int index)
+    private void UpdateElementIcon(int index)
     {
         var spriteAtlas = Resources.Load<SpriteAtlas>("Texture/Systems");
         if (icon != null)

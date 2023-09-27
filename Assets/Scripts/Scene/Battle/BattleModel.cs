@@ -292,11 +292,12 @@ public class BattleModel : BaseModel
 
     public List<SkillInfo> SkillActionList(AttributeType attributeType)
     {
+        _currentAttributeType = attributeType;
+        List<SkillInfo> skillInfos = CurrentBattler.Skills.FindAll(a => a.Master.SkillType != SkillType.None && a.Master.Id > 100);
         if (attributeType != AttributeType.None)
         {
-            _currentAttributeType = attributeType;
+            skillInfos = skillInfos.FindAll(a => a.Attribute == _currentAttributeType);
         }
-        List<SkillInfo> skillInfos = CurrentBattler.Skills.FindAll(a => a.Attribute == _currentAttributeType && a.Master.SkillType != SkillType.None);
         for (int i = 0; i < skillInfos.Count;i++)
         {
             skillInfos[i].SetEnable(CheckCanUse(skillInfos[i],CurrentBattler));
@@ -446,6 +447,7 @@ public class BattleModel : BaseModel
         {
             _actionInfos.Add(actionInfo);
         }
+        _battleRecords.Add(new BattleRecord( actionInfo ));
         return actionInfo;
     }
 

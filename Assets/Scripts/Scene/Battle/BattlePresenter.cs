@@ -72,7 +72,7 @@ public class BattlePresenter : BasePresenter
         _view.SetEnemies(_model.BattlerEnemies());
         _view.SetSideMenu(_model.SideMenu());
 
-        _view.SetAttributeTypes(_model.AttributeTypes(),_model.CurrentAttributeType);
+        _view.SetAttributeTypes(_model.AttributeAllTypes(),_model.CurrentAttributeType);
 
         _view.StartBattleStartAnim(DataSystem.System.GetTextData(4).Text);
         _nextCommandType = Battle.CommandType.EventCheck;
@@ -491,7 +491,9 @@ public class BattlePresenter : BasePresenter
         _view.SetRuleButton(false);
         _view.SetEscapeButton(false);
         _view.SetBattlerSelectable(true);
-        _view.ShowEnemyStateOverlay();
+        //_view.ShowEnemyStateOverlay();
+        _view.HideEnemyStateOverlay();
+        _view.HideActorStateOverlay();
         ActionInfo actionInfo = _model.CurrentActionInfo();
         if (actionInfo.ActionResults.Count == 0)
         {
@@ -842,6 +844,7 @@ public class BattlePresenter : BasePresenter
         }
         _view.HideEnemyStatus();
         _view.ShowActorStateOverlay();
+        _view.ShowEnemyStateOverlay();
         _triggerInterruptChecked = false;
         _triggerAfterChecked = false;
         _slipDamageChecked = false;
@@ -853,7 +856,7 @@ public class BattlePresenter : BasePresenter
     {
         List<SkillInfo> skillInfos = _model.SkillActionList(attributeType);
         _view.RefreshSkillActionList(skillInfos,_model.SelectSkillIndex(skillInfos));
-        _view.SetAttributeTypes(_model.AttributeTypes(),_model.CurrentAttributeType);
+        _view.SetAttributeTypes(_model.AttributeAllTypes(),_model.CurrentAttributeType);
         _view.HideCondition();
         Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cursor);
     }
@@ -911,6 +914,8 @@ public class BattlePresenter : BasePresenter
             _nextCommandType = Battle.CommandType.EndBattle;
             isEnd = true;
             _battleEnded = true;
+            _view.HideActorStateOverlay();
+            _view.HideEnemyStateOverlay();
         } else
         if (_model.CheckDefeat())
         {
@@ -920,6 +925,8 @@ public class BattlePresenter : BasePresenter
             _nextCommandType = Battle.CommandType.EndBattle;
             isEnd = true;
             _battleEnded = true;
+            _view.HideActorStateOverlay();
+            _view.HideEnemyStateOverlay();
         }
         return isEnd;
     }

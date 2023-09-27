@@ -30,7 +30,7 @@ public class EnemyInfoView : BaseView,IInputHandlerEvent
         _isBattle = isBattle;
         skillList.Initialize();
         InitializeSkillActionList();
-        skillList.InitializeAttribute((attribute) => CallAttributeTypes(attribute),null);
+        skillList.InitializeAttribute(System.Enum.GetValues(typeof(AttributeType)).Length,(a) => CallAttributeTypes(a),null);
 
         GameObject prefab2 = Instantiate(leftPrefab);
         prefab2.transform.SetParent(leftRoot.transform, false);
@@ -58,6 +58,7 @@ public class EnemyInfoView : BaseView,IInputHandlerEvent
             _leftButton.gameObject.SetActive(false);
         } else
         {
+            skillButton.transform.parent.gameObject.SetActive(false);
             statusConditionList.gameObject.SetActive(false);
         }
 

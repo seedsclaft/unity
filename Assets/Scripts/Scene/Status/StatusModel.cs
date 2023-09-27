@@ -98,7 +98,11 @@ public class StatusModel : BaseModel
     public List<SkillInfo> SkillActionList(AttributeType attributeType)
     {
         _currentAttributeType = attributeType;
-        List<SkillInfo> skillInfos = CurrentActor.Skills.FindAll(a => a.Attribute == _currentAttributeType && a.Id > 50);
+        List<SkillInfo> skillInfos = CurrentActor.Skills.FindAll(a => a.Id > 100);
+        if (_currentAttributeType != AttributeType.None)
+        {
+            skillInfos = skillInfos.FindAll(a => a.Attribute == _currentAttributeType);
+        }
         skillInfos.ForEach(a => a.SetEnable(true));
         var sortList1 = new List<SkillInfo>();
         var sortList2 = new List<SkillInfo>();

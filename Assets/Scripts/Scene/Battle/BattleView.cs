@@ -60,7 +60,7 @@ public class BattleView : BaseView ,IInputHandlerEvent
         DeactivateConditionList();
         HideConditionAll();
 
-        skillList.InitializeAttribute((attribute) => CallAttributeTypes(attribute),() => OnClickCondition());
+        skillList.InitializeAttribute(System.Enum.GetValues(typeof(AttributeType)).Length,(a) => CallAttributeTypes(a),() => OnClickCondition());
         
         SetInputHandler(skillList.skillAttributeList.GetComponent<IInputHandlerEvent>());
         skillList.HideAttributeList();
@@ -311,7 +311,7 @@ public class BattleView : BaseView ,IInputHandlerEvent
         }
         // 敵のstateEffectを非表示
         HideEnemyStateOverlay();
-        HideActorStateOverlay();
+        //HideActorStateOverlay();
     }
 
     public void HideSkillActionList(bool isSideBenuClose = true)

@@ -31,7 +31,7 @@ public class StatusView : BaseView ,IInputHandlerEvent
         InitializeInput();
         skillList.Initialize();
         InitializeSkillActionList();
-        skillList.InitializeAttribute((attribute) => CallAttributeTypes(attribute),null);
+        skillList.InitializeAttribute(System.Enum.GetValues(typeof(AttributeType)).Length,(a) => CallAttributeTypes(a),null);
         
         new StatusPresenter(this);
     }

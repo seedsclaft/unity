@@ -22,9 +22,9 @@ public class SkillList : MonoBehaviour
         skillAttributeList = prefab.GetComponentInChildren<SkillAttributeList>();
     }
 
-    public void InitializeAttribute(System.Action<AttributeType> callEvent,System.Action conditionEvent)
+    public void InitializeAttribute(int listCount,System.Action<AttributeType> callEvent,System.Action conditionEvent)
     {
-        skillAttributeList.Initialize(callEvent,conditionEvent);
+        skillAttributeList.Initialize(listCount,callEvent,conditionEvent);
     }
     
     public void SetInputHandlerAttribute(InputKeyType keyType,System.Action callEvent)

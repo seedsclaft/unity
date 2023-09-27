@@ -135,4 +135,14 @@ public class BattleStateOverlay : MonoBehaviour
         var result = UnityEngine.Resources.Load<EffekseerEffectAsset>(path);
         return result;
     }
+
+    public void ShowStateOverlay()
+    {
+        effekseerEmitter.gameObject.SetActive(true);
+    }
+
+    public void HideStateOverlay()
+    {
+        effekseerEmitter.gameObject.SetActive(false);
+    }
 }

@@ -406,7 +406,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a7f37134ee55c54eb5d3c3a392e7e81, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isScrollList: 1
   horizontal: 0
   reverse: 0
   warpMode: 1
@@ -414,7 +413,6 @@ MonoBehaviour:
   itemPrefab: {fileID: 4151538683936950575, guid: e8c37b614bc419e47923725816a639a0,
     type: 3}
   _helpWindow: {fileID: 0}
-  rows: 4
   conditionButton: {fileID: 365745197683097478}
   mainView: {fileID: 1953382230086594315}
 --- !u!1 &939385100030241798
@@ -626,7 +624,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -48.000008, y: 51.999985}
+  m_AnchoredPosition: {x: -176, y: 51.999985}
   m_SizeDelta: {x: 160, y: 56}
   m_Pivot: {x: 1, y: 1}
 --- !u!222 &5006756676714736492
@@ -2097,9 +2095,6 @@ MonoBehaviour:
   enemyInfoComponent: {fileID: 8326290044205133028}
   statusConditionList: {fileID: 6802059569165821734}
   skillButton: {fileID: 2363314401734772611}
-  helpRoot: {fileID: 5756192839435391455}
-  helpPrefab: {fileID: 4660447992331240257, guid: fd198201f48424c4cbfbe909f658ea97,
-    type: 3}
   leftRoot: {fileID: 6572477055941866587}
   rightRoot: {fileID: 7708323952574665442}
   leftPrefab: {fileID: 433919834750711742, guid: 965c3749406212b4fad9e6c7da2b52e2,
@@ -2146,6 +2141,7 @@ MonoBehaviour:
   hpGauge: {fileID: 0}
   mpGaugeBg: {fileID: 0}
   mpGauge: {fileID: 0}
+  canvasGroup: {fileID: 0}
 --- !u!1 &4333164789533986101
 GameObject:
   m_ObjectHideFlags: 0
@@ -3689,7 +3685,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -144, y: 227.99998}
+  m_AnchoredPosition: {x: -224, y: 227.99998}
   m_SizeDelta: {x: 160, y: 56}
   m_Pivot: {x: 1, y: 1}
 --- !u!222 &7380123316078409095

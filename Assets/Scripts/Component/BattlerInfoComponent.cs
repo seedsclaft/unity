@@ -311,7 +311,7 @@ public class BattlerInfoComponent : MonoBehaviour
         {
         } else
         {
-            battleStateOverlay.gameObject.SetActive(true);
+            battleStateOverlay.ShowStateOverlay();
         }
     }
 
@@ -322,7 +322,7 @@ public class BattlerInfoComponent : MonoBehaviour
         {
         } else
         {
-            battleStateOverlay.gameObject.SetActive(false);
+            battleStateOverlay.HideStateOverlay();
         }
     }
 
@@ -331,7 +331,7 @@ public class BattlerInfoComponent : MonoBehaviour
 
         if (_battlerInfo.isActor)
         {
-            battleStateOverlay.gameObject.SetActive(true);
+            battleStateOverlay.ShowStateOverlay();
         } else
         {
         }
@@ -342,7 +342,7 @@ public class BattlerInfoComponent : MonoBehaviour
 
         if (_battlerInfo.isActor)
         {
-            battleStateOverlay.gameObject.SetActive(false);
+            battleStateOverlay.HideStateOverlay();
         } else
         {
         }
