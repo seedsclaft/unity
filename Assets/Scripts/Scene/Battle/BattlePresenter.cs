@@ -511,7 +511,8 @@ public class BattlePresenter : BasePresenter
         {
             if (actionInfo.Master.AnimationType != AnimationType.All)
             {
-                _view.StartAnimation(actionInfo.ActionResults[i].TargetIndex,animation,actionInfo.Master.AnimationPosition);
+                var oneAnimation = actionInfo.ActionResults[i].CursedDamage ? _model.SkillActionAnimation("NA_Effekseer/NA_curse_001") : animation;
+                _view.StartAnimation(actionInfo.ActionResults[i].TargetIndex,oneAnimation,actionInfo.Master.AnimationPosition);
             }
             _view.StartSkillDamage(actionInfo.ActionResults[i].TargetIndex,actionInfo.Master.DamageTiming,(targetIndex) => StartSkillDamage(targetIndex));
         }

@@ -79,11 +79,13 @@ public class SkillAttribute : ListItem ,IListViewItem
     public new void SetSelect()
     {
         icon.color = new Color(1,1,1,1);
+        allAttributeText.color = new Color(1,1,1,1);
     }
 
     public new void SetUnSelect()
     {
         base.SetUnSelect();
         icon.color = new Color(1,1,1,0.5f);
+        allAttributeText.color = new Color(1,1,1,0.5f);
     }
 }

@@ -43,7 +43,7 @@ public class RebornModel : BaseModel
         var idx = 0;
         foreach (var actorInfo in ActorInfos())
         {
-            if (actorInfo.ActorId == CurrentStage.SelectActorIds[0])
+            if (actorInfo.Master.ClassId == DataSystem.Actors.Find(a => a.Id == CurrentStage.SelectActorIds[0]).ClassId)
             {
                 list.Add(idx);
             }

@@ -1300,10 +1300,10 @@ MonoBehaviour:
     MpCost: 0
     Rank: 2
     Attribute: 3
-    Scope: 4
+    Scope: 3
     SkillType: 3
-    TargetType: 4
-    Help: "(\u6761\u4EF6)\u6575\u304C\u72B6\u614B\u7570\u5E38\u4ED8\u4E0E\u9B54\u6CD5\u3092\u4F7F\u7528\n\u81EA\u8EAB\u306B\u72B6\u614B\u7570\u5E38CA\u3092\u4ED8\u4E0E(\u6C38\u7D9A)
+    TargetType: 2
+    Help: "(\u6761\u4EF6)\u6575\u304C\u72B6\u614B\u7570\u5E38\u4ED8\u4E0E\u9B54\u6CD5\u3092\u4F7F\u7528\n\u5473\u65B9\u5168\u54E1\u306B\u72B6\u614B\u7570\u5E38CA\u3092\u4ED8\u4E0E(\u6C38\u7D9A)
       \u795E\u5316\u72B6\u614B\u306B\u79FB\u884C"
     Range: 1
     RepeatTime: 1
@@ -1338,7 +1338,7 @@ MonoBehaviour:
     AnimationName: EffekseerVol_3/NA_v3_2.5d_fog_2
     AnimationPosition: 0
     AnimationType: 3
-    DamageTiming: 48
+    DamageTiming: 60
     MpCost: 0
     Rank: 2
     Attribute: 3
@@ -1917,7 +1917,7 @@ MonoBehaviour:
     Scope: 3
     SkillType: 3
     TargetType: 1
-    Help: "(\u6761\u4EF6)\u81EA\u8EAB\u306E\u884C\u52D5\u3067\u76F8\u624B\u3092\u6483\u7834\u3059\u308B\n\u6575\u5168\u4F53\u306B5\u30BF\u30FC\u30F3\u306E\u30D1\u30C3\u30B7\u30D6\u7121\u52B9\u3092\u4ED8\u4E0E"
+    Help: "(\u6761\u4EF6)\u81EA\u8EAB\u306E\u884C\u52D5\u3067\u76F8\u624B\u3092\u6483\u7834\u3059\u308B\n\u6575\u5168\u4F53\u306B\u30D1\u30C3\u30B7\u30D6\u4ED8\u4E0E\u7121\u52B9\u3092\u4ED8\u4E0E(\u6C38\u7D9A)"
     Range: 2
     RepeatTime: 1
     AliveOnly: 1
@@ -1925,7 +1925,7 @@ MonoBehaviour:
     - SkillId: 413
       FeatureType: 21
       Param1: 121
-      Param2: 5
+      Param2: 999
       Param3: 0
     - SkillId: 413
       FeatureType: 101
