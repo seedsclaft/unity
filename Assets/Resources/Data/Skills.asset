@@ -1375,7 +1375,7 @@ MonoBehaviour:
     Scope: 1
     SkillType: 1
     TargetType: 1
-    Help: "\u6575\u5358\u4F53\u306B\u920D\u8DB3\u4ED8\u4E0E"
+    Help: "\u6575\u5358\u4F53\u306B300\u30D5\u30EC\u30FC\u30E0\u306E\u920D\u8DB3\u4ED8\u4E0E"
     Range: 2
     RepeatTime: 1
     AliveOnly: 1
@@ -1615,7 +1615,7 @@ MonoBehaviour:
     Scope: 1
     SkillType: 2
     TargetType: 7
-    Help: "(\u6761\u4EF6)\u653B\u6483\u6210\u529F\u6642\n25%\u306E\u78BA\u7387\u3067\u920D\u8DB3\u4ED8\u4E0E"
+    Help: "(\u6761\u4EF6)\u653B\u6483\u6210\u529F\u6642\n100\u30D5\u30EC\u30FC\u30E0\u306E\u920D\u8DB3\u4ED8\u4E0E"
     Range: 1
     RepeatTime: 1
     AliveOnly: 1
@@ -1623,13 +1623,13 @@ MonoBehaviour:
     - SkillId: 337
       FeatureType: 21
       Param1: 21
-      Param2: 300
+      Param2: 100
       Param3: 0
     TriggerDatas:
     - SkillId: 337
       TriggerType: 71
-      TriggerTiming: 1
-      Param1: 25
+      TriggerTiming: 2
+      Param1: 100
       Param2: 0
       Param3: 0
   - Id: 341

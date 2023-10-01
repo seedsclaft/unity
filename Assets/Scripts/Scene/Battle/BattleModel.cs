@@ -737,14 +737,6 @@ public class BattleModel : BaseModel
         return _actionInfos[0];
     }
 
-    public void RemoveActionInfo(ActionInfo actionInfo)
-    {
-        var findIndex = _actionInfos.FindIndex(a => a == actionInfo);
-        if (findIndex > -1){
-            _actionInfos.RemoveAt(findIndex);
-        }
-    }
-
     public void MakeActionResultInfo(ActionInfo actionInfo,List<int> indexList)
     {   
         if (actionInfo.SubjectIndex < 100)
@@ -878,14 +870,6 @@ public class BattleModel : BaseModel
             }
         }
 
-        if (isPrizm)
-        {
-            /*
-            var prizmRemoveState = new StateInfo((int)StateType.Prizm,0,0,0,CurrentBattler.Index,-1);
-            CurrentBattler.RemoveState(prizmRemoveState,true);
-            actionResultInfos[actionResultInfos.Count - 1].AddRemoveState(prizmRemoveState);
-            */
-        }
         actionInfo.SetActionResult(actionResultInfos);
     }
 
@@ -1144,14 +1128,7 @@ public class BattleModel : BaseModel
             _actionInfos.AddRange(actionInfos);
         }
     }
-/*
-    public bool CheckRegene()
-    {
-        var regene = CurrentBattler != null && CurrentBattler.IsState(StateType.Regene);
-        var afterHeal = CurrentBattler != null && CurrentBattler.IsState(StateType.AfterHeal);
-        return regene || afterHeal;
-    }
-*/
+
     public List<ActionResultInfo> CheckRegene()
     {
         var results = RegeneActionResults();
@@ -1463,7 +1440,6 @@ public class BattleModel : BaseModel
             {
                 SkillInfo passiveInfo = passiveSkills[j];
                 bool IsRemove = false;
-
                 
                 foreach (var feature in passiveInfo.Master.FeatureDatas)
                 {
@@ -1517,64 +1493,6 @@ public class BattleModel : BaseModel
                         }
                     }
                 }
-                /*
-                foreach (var feature in passiveInfo.Master.FeatureDatas)
-                {
-                    if (feature.FeatureType == FeatureType.AddState)
-                    {
-                        foreach (var triggerData in passiveInfo.Master.TriggerDatas)
-                        {
-                            var opponent = battlerInfo.isActor ? BattlerEnemies() : BattlerActors();
-                            var party = battlerInfo.isActor ? BattlerActors() : BattlerEnemies();
-                            if (IsRemove == false &&
-                                (!triggerData.IsTriggerdSkillInfo(battlerInfo,party,opponent) || !battlerInfo.IsAlive()))
-                            {
-                                IsRemove = true;
-                                SkillsData.FeatureData featureData = new SkillsData.FeatureData();
-                                featureData.FeatureType = FeatureType.RemoveStatePassive;
-                                featureData.Param1 = feature.Param1;
-                                if (passiveInfo.Master.Scope == ScopeType.Self)
-                                {
-                                    ActionResultInfo actionResultInfo = new ActionResultInfo(battlerInfo,battlerInfo,new List<SkillsData.FeatureData>(){featureData},passiveInfo.Id);
-                                    if (actionResultInfos.Find(a => a.RemovedStates.Find(b => b.Master.Id == (int)featureData.FeatureType) != null) != null)
-                                    {
-                                        
-                                    } else{
-                                        var stateInfos = battlerInfo.GetStateInfoAll((StateType)feature.Param1);
-                                        if (battlerInfo.IsAlive() && stateInfos.Find(a => a.SkillId == passiveInfo.Id) != null)
-                                        {
-                                            actionResultInfos.Add(actionResultInfo);
-                                        }
-                                    }
-                                } else
-                                if (passiveInfo.Master.Scope == ScopeType.All)
-                                {
-                                    var partyMember = battlerInfo.isActor ? BattlerActors() : BattlerEnemies();
-                                    foreach (var member in partyMember)
-                                    {
-                                        if ((passiveInfo.Master.AliveOnly && member.IsAlive()) || (!passiveInfo.Master.AliveOnly && !member.IsAlive()))
-                                        {
-
-                                            ActionResultInfo actionResultInfo = new ActionResultInfo(battlerInfo,member,new List<SkillsData.FeatureData>(){featureData},passiveInfo.Id);
-                                            if (actionResultInfos.Find(a => a.RemovedStates.Find(b => b.Master.Id == (int)featureData.FeatureType) != null) != null)
-                                            {
-                                                
-                                            } else{
-                                                var stateInfos = battlerInfo.GetStateInfoAll((StateType)feature.Param1);
-                                                if (member.IsAlive() && stateInfos.Find(a => a.SkillId == passiveInfo.Id) != null)
-                                                {
-                                                    actionResultInfos.Add(actionResultInfo);
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-
-                            }
-                        }
-                    }
-                }
-            */
             }
         }
         return actionResultInfos;
@@ -1607,7 +1525,7 @@ public class BattleModel : BaseModel
                 }
                 if (triggerDatas[j].TriggerType == TriggerType.AttackState)
                 {
-                    if (battlerInfo.IsAlive() && CurrentActionInfo() != null && CurrentActionInfo().ActionResults.Find(a => a.HpDamage > 0) != null)
+                    if (battlerInfo.IsAlive() && CurrentActionInfo() != null && CurrentActionInfo().SubjectIndex == battlerInfo.Index && CurrentActionInfo().ActionResults.Find(a => a.HpDamage > 0) != null)
                     {
                         if (triggerDatas[j].Param1 > UnityEngine.Random.Range(0,100))
                         {

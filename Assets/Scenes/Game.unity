@@ -5862,7 +5862,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1408798861
 RectTransform:
   m_ObjectHideFlags: 0
@@ -7194,7 +7194,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   consoleInputField: {fileID: 1447284014}
   inBattleActorIds: 0d000000
-  troopId: 130
+  troopId: 10
   troopLv: 1
   actorDatas:
   - Id: 1
@@ -7568,6 +7568,10 @@ MonoBehaviour:
       Weight: 0
       TriggerDatas: []
     - SkillId: 314
+      Level: 0
+      Weight: 0
+      TriggerDatas: []
+    - SkillId: 337
       Level: 0
       Weight: 0
       TriggerDatas: []

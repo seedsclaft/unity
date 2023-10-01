@@ -9,12 +9,13 @@ public class BattleRecord
     public BattleRecord(ActionInfo actionInfo)
     {
         _actionInfo = actionInfo;
-        Debug.Log(_actionInfo.Master.Name);
+        //Debug.Log(_actionInfo.Master.Name);
     }
+
     public BattleRecord(ActionResultInfo resultInfo)
     {
         _resultInfo = resultInfo;
-        Debug.Log("subject " + resultInfo.SubjectIndex);
-        Debug.Log("target " + resultInfo.TargetIndex);
+        //Debug.Log("subject " + resultInfo.SubjectIndex);
+        //Debug.Log("target " + resultInfo.TargetIndex);
     }
 }
