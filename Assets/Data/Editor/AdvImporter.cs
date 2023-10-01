@@ -67,7 +67,7 @@ public class AdvImporter : AssetPostprocessor {
 			using (var Mainstream = File.Open(asset, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
 			{
 				// エクセルブックを作成
-				CreateBook(asset, Mainstream, out IWorkbook Book);
+				AssetPostImporter.CreateBook(asset, Mainstream, out IWorkbook Book);
 
 				// 情報の初期化
 				Data._data.Clear();
@@ -80,9 +80,9 @@ public class AdvImporter : AssetPostprocessor {
 					IRow Baserow = BaseSheet.GetRow(i);
 
 					var AdvData = new AdvsData.AdvData();
-					AdvData.Id = (int)Baserow.GetCell((int)BaseColumn.Id).NumericCellValue;
-					AdvData.AdvName = Baserow.GetCell((int)BaseColumn.AdvName).SafeStringCellValue();
-					AdvData.EndJump = (Scene)Baserow.GetCell((int)BaseColumn.EndJump).NumericCellValue;
+					AdvData.Id = AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.Id);
+					AdvData.AdvName = AssetPostImporter.ImportString(Baserow,(int)BaseColumn.AdvName);
+					AdvData.EndJump = (Scene)AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.EndJump);
 					
 					Data._data.Add(AdvData);
 				}
@@ -94,21 +94,5 @@ public class AdvImporter : AssetPostprocessor {
 		}
 
 		EditorUtility.SetDirty(Data);
-	}
-
-
-	// エクセルワークブックを作成
-	static void CreateBook(string path, Stream stream, out IWorkbook Workbook)
-	{
-		// 拡張子が".xls"の場合
-		if (Path.GetExtension(path) == ".xls")
-		{
-			Workbook = new HSSFWorkbook(stream);
-		}
-		// 拡張子がそれ以外の場合
-		else
-		{
-			Workbook = new XSSFWorkbook(stream);
-		}
 	}
 }

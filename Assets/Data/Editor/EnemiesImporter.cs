@@ -103,8 +103,8 @@ public class EnemiesImporter : AssetPostprocessor {
 			using (var Mainstream = File.Open(asset, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
 			{
 				// エクセルブックを作成
-				CreateBook(asset, Mainstream, out IWorkbook Book);
-				List<TextData> textData = CreateText(Book.GetSheetAt(3));
+				AssetPostImporter.CreateBook(asset, Mainstream, out IWorkbook Book);
+				List<TextData> textData = AssetPostImporter.CreateText(Book.GetSheetAt(3));
 
 				// 情報の初期化
 				Data._data.Clear();
@@ -117,21 +117,21 @@ public class EnemiesImporter : AssetPostprocessor {
 					IRow Baserow = BaseSheet.GetRow(i);
 
 					var EnemyData = new EnemiesData.EnemyData();
-					EnemyData.Id = (int)Baserow.GetCell((int)BaseColumn.Id)?.SafeNumericCellValue();
-					EnemyData.Name = textData.Find(a => a.Id == (int)Baserow.GetCell((int)BaseColumn.NameId).NumericCellValue).Text;
-					EnemyData.ImagePath = Baserow.GetCell((int)BaseColumn.ImagePath)?.SafeStringCellValue();
+					EnemyData.Id = AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.Id);
+					EnemyData.Name = textData.Find(a => a.Id == AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.NameId)).Text;
+					EnemyData.ImagePath = AssetPostImporter.ImportString(Baserow,(int)BaseColumn.ImagePath);
 					
-					int Hp = (int)Baserow.GetCell((int)BaseColumn.Hp)?.SafeNumericCellValue();
-					int Mp = (int)Baserow.GetCell((int)BaseColumn.Mp)?.SafeNumericCellValue();
-					int Atk = (int)Baserow.GetCell((int)BaseColumn.Atk)?.SafeNumericCellValue();
-					int Def = (int)Baserow.GetCell((int)BaseColumn.Def)?.SafeNumericCellValue();
-					int Spd = (int)Baserow.GetCell((int)BaseColumn.Spd)?.SafeNumericCellValue();
+					int Hp = AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.Hp);
+					int Mp = AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.Mp);
+					int Atk = AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.Atk);
+					int Def = AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.Def);
+					int Spd = AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.Spd);
 					EnemyData.Kinds = new List<KindType>();
-					KindType Kind1 = (KindType)Baserow.GetCell((int)BaseColumn.Kind1)?.SafeNumericCellValue();
+					KindType Kind1 = (KindType)AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.Kind1);
 					if (Kind1 != 0) EnemyData.Kinds.Add(Kind1);
-					KindType Kind2 = (KindType)Baserow.GetCell((int)BaseColumn.Kind2)?.SafeNumericCellValue();
+					KindType Kind2 = (KindType)AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.Kind2);
 					if (Kind2 != 0) EnemyData.Kinds.Add(Kind2);
-					KindType Kind3 = (KindType)Baserow.GetCell((int)BaseColumn.Kind3)?.SafeNumericCellValue();
+					KindType Kind3 = (KindType)AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.Kind3);
 					if (Kind3 != 0) EnemyData.Kinds.Add(Kind3);
 					EnemyData.BaseStatus = new StatusInfo();
 					EnemyData.BaseStatus.SetParameter(Hp,Mp,Atk,Def,Spd);
@@ -145,12 +145,12 @@ public class EnemiesImporter : AssetPostprocessor {
 					IRow Baserow = BaseSheet.GetRow(i);
 					var LearningData = new LearningData();
 
-					int ActorId = (int)Baserow.GetCell((int)BaseLearningColumn.ActorId)?.NumericCellValue;
+					int ActorId = AssetPostImporter.ImportNumeric(Baserow,(int)BaseLearningColumn.ActorId);
 					EnemiesData.EnemyData Enemy = Data._data.Find(a => a.Id == ActorId);
 					
-					LearningData.SkillId = (int)Baserow.GetCell((int)BaseLearningColumn.SkillId)?.NumericCellValue;
-					LearningData.Level = (int)Baserow.GetCell((int)BaseLearningColumn.Level)?.NumericCellValue;
-					LearningData.Weight = (int)Baserow.GetCell((int)BaseLearningColumn.Weight)?.NumericCellValue;
+					LearningData.SkillId = AssetPostImporter.ImportNumeric(Baserow,(int)BaseLearningColumn.SkillId);
+					LearningData.Level = AssetPostImporter.ImportNumeric(Baserow,(int)BaseLearningColumn.Level);
+					LearningData.Weight = AssetPostImporter.ImportNumeric(Baserow,(int)BaseLearningColumn.Weight);
 					LearningData.TriggerDatas = new List<SkillsData.TriggerData>();
 					Enemy.LearningSkills.Add(LearningData);
 				}
@@ -162,18 +162,18 @@ public class EnemiesImporter : AssetPostprocessor {
 				{
 					IRow Baserow = BaseSheet.GetRow(i);
 
-					int ActorId = (int)Baserow.GetCell((int)BaseTriggersColumn.ActorId)?.NumericCellValue;
+					int ActorId = AssetPostImporter.ImportNumeric(Baserow,(int)BaseTriggersColumn.ActorId);
 					EnemiesData.EnemyData Enemy = Data._data.Find(a => a.Id == ActorId);
-					int SkillId = (int)Baserow.GetCell((int)BaseTriggersColumn.SkillId)?.NumericCellValue;
+					int SkillId = AssetPostImporter.ImportNumeric(Baserow,(int)BaseTriggersColumn.SkillId);
 					LearningData learningData = Enemy.LearningSkills.Find(a => a.SkillId == SkillId);
 					if (learningData != null)
 					{
 						SkillsData.TriggerData triggerData = new SkillsData.TriggerData();
-						triggerData.TriggerType = (TriggerType)Baserow.GetCell((int)BaseTriggersColumn.TriggerType)?.NumericCellValue;
-						triggerData.TriggerTiming = (TriggerTiming)Baserow.GetCell((int)BaseTriggersColumn.TriggerTiming)?.NumericCellValue;
-						triggerData.Param1 = (int)Baserow.GetCell((int)BaseTriggersColumn.Param1)?.NumericCellValue;
-						triggerData.Param2 = (int)Baserow.GetCell((int)BaseTriggersColumn.Param2)?.NumericCellValue;
-						triggerData.Param3 = (int)Baserow.GetCell((int)BaseTriggersColumn.Param3)?.NumericCellValue;
+						triggerData.TriggerType = (TriggerType)AssetPostImporter.ImportNumeric(Baserow,(int)BaseTriggersColumn.TriggerType);
+						triggerData.TriggerTiming = (TriggerTiming)AssetPostImporter.ImportNumeric(Baserow,(int)BaseTriggersColumn.TriggerTiming);
+						triggerData.Param1 = AssetPostImporter.ImportNumeric(Baserow,(int)BaseTriggersColumn.Param1);
+						triggerData.Param2 = AssetPostImporter.ImportNumeric(Baserow,(int)BaseTriggersColumn.Param2);
+						triggerData.Param3 = AssetPostImporter.ImportNumeric(Baserow,(int)BaseTriggersColumn.Param3);
 						learningData.TriggerDatas.Add(triggerData);
 					}
 				}
@@ -187,8 +187,8 @@ public class EnemiesImporter : AssetPostprocessor {
 					IRow Baserow = BaseSheet.GetRow(i);
 					var TextData = new TextData();
 
-					TextData.Id = (int)Baserow.GetCell((int)BaseTextColumn.Id)?.SafeNumericCellValue();
-					TextData.Text = Baserow.GetCell((int)BaseTextColumn.Text)?.SafeStringCellValue();
+					TextData.Id = AssetPostImporter.ImportNumeric(Baserow,(int)BaseTextColumn.Id);
+					TextData.Text = AssetPostImporter.ImportString(Baserow,(int)BaseTextColumn.Text);
 					
 					Data._textdata.Add(TextData);
 				}
@@ -200,71 +200,5 @@ public class EnemiesImporter : AssetPostprocessor {
 		}
 
 		EditorUtility.SetDirty(Data);
-	}
-
-
-	// エクセルワークブックを作成
-	static void CreateBook(string path, Stream stream, out IWorkbook Workbook)
-	{
-		// 拡張子が".xls"の場合
-		if (Path.GetExtension(path) == ".xls")
-		{
-			Workbook = new HSSFWorkbook(stream);
-		}
-		// 拡張子がそれ以外の場合
-		else
-		{
-			Workbook = new XSSFWorkbook(stream);
-		}
-	}
-
-	// 文字列を分解
-	static string[] StringSplit(string str, int count)
-	{
-		List<string> List = new List<string>();
-
-		int Length = (int)Math.Ceiling((double)str.Length / count);
-
-		for (int i = 0; i < Length; i++)
-		{
-			int Start = count * i;
-
-			// 始まりが文字列の長さより多かったら
-			if (str.Length <= Start)
-			{
-				break;
-			}
-			// 読み取る大きさが文字列の長さより多かったら終わりを指定しない
-			if (str.Length < Start + count)
-			{
-				List.Add(str.Substring(Start));
-			}
-			// 始まりの位置と終わりの位置を指定（始まりの値は含むが終わりの値は含まない）
-			else
-			{
-				List.Add(str.Substring(Start, count));
-			}
-		}
-
-		return List.ToArray();
-	}
-
-	// テキストデータを作成
-	static List<TextData> CreateText(ISheet BaseSheet)
-	{
-		var textData = new List<TextData>();
-
-		for (int i = 1; i <= BaseSheet.LastRowNum; i++)
-		{
-			IRow Baserow = BaseSheet.GetRow(i);
-			var TextData = new TextData();
-
-			TextData.Id = (int)Baserow.GetCell((int)BaseTextColumn.Id)?.NumericCellValue;
-			TextData.Text = Baserow.GetCell((int)BaseTextColumn.Text).ToString();
-			
-			textData.Add(TextData);
-		}
-
-		return textData;
 	}
 }

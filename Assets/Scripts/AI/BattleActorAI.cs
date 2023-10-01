@@ -57,10 +57,25 @@ public class BattleActorAI
                 {
                     CalcBuffSkillWeight(skillInfo,attackTargets,skillTargetAI,StateType.EvaUp);
                 }
-                // 鈍足
-                if (skillInfo.Master.IsStateFeature(StateType.Slow))
+                // 状態異常
+                if (skillInfo.Master.IsStateFeature(StateType.Stun) 
+                || skillInfo.Master.IsStateFeature(StateType.Slow)
+                || skillInfo.Master.IsStateFeature(StateType.Curse)
+                || skillInfo.Master.IsStateFeature(StateType.SlipDamage)
+                || skillInfo.Master.IsStateFeature(StateType.Blind)
+                || skillInfo.Master.IsStateFeature(StateType.Freeze))
                 {
                     CalcAbnormalSkillWeight(skillInfo,attackTargets,skillTargetAI,StateType.Slow);
+                }
+                // プリズム
+                if (skillInfo.Master.IsStateFeature(StateType.Prizm))
+                {
+                    CalcPrizmSkillWeight(skillInfo,skillTargetAI);
+                }
+                // 攻撃無効
+                if (skillInfo.Master.IsStateFeature(StateType.NoDamage))
+                {
+                    CalcNoDamageSkillWeight(skillInfo,skillTarget,skillTargetAI);
                 }
                 // 挑発
                 if (skillInfo.Master.IsStateFeature(StateType.Substitute))
@@ -102,7 +117,7 @@ public class BattleActorAI
 #if UNITY_EDITOR
         foreach (var skillTargetAI in skillTargetAIs)
         {
-            Debug.Log("スキルID = " + skillTargetAI.SkillId + " W =" + skillTargetAI.Weigth);
+            Debug.Log("スキル = " + DataSystem.Skills.Find(a => a.Id == skillTargetAI.SkillId).Name + " W =" + skillTargetAI.Weigth);
         }
 #endif
         var (skillId,targetId) = GetSkillTargetAI(skillTargetAIs);
@@ -192,6 +207,10 @@ public class BattleActorAI
 
         // 攻撃値計算
         var attackFeatures = skillInfo.Master.FeatureDatas.FindAll(a => a.FeatureType == FeatureType.HpDamage);
+        
+        // 攻撃回数
+        var repeatTime = skillInfo.Master.RepeatTime;
+        repeatTime += _batterInfo.GetStateInfoAll(StateType.Prizm).Count;
         foreach (var attackFeature in attackFeatures)
         {
             foreach (var attackTarget in attackTargets)
@@ -207,6 +226,10 @@ public class BattleActorAI
             if (attackTargets.Count > 1)
             {
                 skillTargetAI.Weigth += attackTargets.Count * 50;
+            }
+            if (repeatTime > 1)
+            {
+                skillTargetAI.Weigth += (repeatTime-1) * 15;
             }
         }
     }
@@ -296,6 +319,7 @@ public class BattleActorAI
 
     private static void CalcAbnormalSkillWeight(SkillInfo skillInfo,List<BattlerInfo> attackTargets, SkillTargetAI skillTargetAI,StateType stateType)
     {
+        skillTargetAI.Weigth += 10;
         foreach (var attackTarget in attackTargets)
         {
             var stateInfo = attackTarget.GetStateInfoAll(stateType);
@@ -303,13 +327,36 @@ public class BattleActorAI
             {
                 return;
             }
-            skillTargetAI.Weigth += 50;
+            skillTargetAI.Weigth += 25;
         }
-        // 攻撃対象が複数
-        if (attackTargets.Count > 1)
+    }
+
+    private static void CalcPrizmSkillWeight(SkillInfo skillInfo,SkillTargetAI skillTargetAI)
+    {
+        // プリズム段階数
+        int prizumNum = _batterInfo.GetStateInfoAll(StateType.Prizm).Count;
+        if (prizumNum < 3)
         {
-            skillTargetAI.Weigth += attackTargets.Count * 50;
+            skillTargetAI.Weigth = 75 - prizumNum * 25;
+        } else
+        // アタックヒールの時
+        if (prizumNum < 5 && _batterInfo.Skills.Find(a => a.Master.IsStateFeature(StateType.AssistHeal)) != null)
+        {
+            skillTargetAI.Weigth = 75 - (prizumNum-2) * 25;
         }
+    }
+
+    private static void CalcNoDamageSkillWeight(SkillInfo skillInfo,BattlerInfo skillTarget,SkillTargetAI skillTargetAI)
+    {
+        if (skillTarget.IsState(StateType.NoDamage))
+        {
+            return;
+        }
+        // 残り使用回数
+        var useCount = _batterInfo.Mp / skillInfo.Master.MpCost;
+        // Hp割合
+        var hpRate = ((float)skillTarget.Hp / (float)skillTarget.MaxHp) * 50;
+        skillTargetAI.Weigth = useCount * 5 + (50 - (int)hpRate);
     }
 
     private static void CalcHealSkillWeight(SkillInfo skillInfo,List<BattlerInfo> attackTargets, SkillTargetAI skillTargetAI,List<BattlerInfo> friends,List<BattlerInfo> opponents)

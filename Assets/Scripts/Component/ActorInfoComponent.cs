@@ -37,33 +37,39 @@ public class ActorInfoComponent : MonoBehaviour
 
     public void UpdateInfo(ActorInfo actorInfo,List<ActorInfo> actorInfos)
     {
-        if (actorInfo == null){
+        if (actorInfo == null)
+        {
             return;
         }
         var actorData = actorInfo.Master;
         
         UpdateData(actorData);
-        if (mainThumb != null){
+        if (mainThumb != null)
+        {
             if (actorInfo.CurrentHp == 0 && actorInfo.InBattle || actorInfo.Lost)
             {
                 UpdateLostMainThumb();
             }
         }
-        if (demigod != null){
+        if (demigod != null)
+        {
             demigod.text = actorInfo.DemigodParam.ToString();
         }
-        if (lv != null){
+        if (lv != null)
+        {
             lv.text = actorInfo.Level.ToString();
         }
         if (sp != null){
             sp.text = actorInfo.Sp.ToString();
         }
-        if (statusInfoComponent != null){
+        if (statusInfoComponent != null)
+        {
             statusInfoComponent.UpdateInfo(actorInfo.CurrentStatus);
             statusInfoComponent.UpdateHp(actorInfo.CurrentHp,actorInfo.MaxHp);
             statusInfoComponent.UpdateMp(actorInfo.CurrentMp,actorInfo.MaxMp);
         }
-        if (needStatusInfoComponent != null){
+        if (needStatusInfoComponent != null)
+        {
             StatusInfo statusInfo = new StatusInfo();
             statusInfo.SetParameter(
                 actorInfo.UsePointCost(StatusParamType.Hp),
@@ -74,23 +80,29 @@ public class ActorInfoComponent : MonoBehaviour
             );
             needStatusInfoComponent.UpdateInfo(statusInfo);
         }
-        if (element1 != null){
+        if (element1 != null)
+        {
             UpdateAttributeParam(element1,actorInfo.Attribute[0]);
         }
-        if (element2 != null){
+        if (element2 != null)
+        {
             UpdateAttributeParam(element2,actorInfo.Attribute[1]);
         }
-        if (element3 != null){
+        if (element3 != null)
+        {
             UpdateAttributeParam(element3,actorInfo.Attribute[2]);
         }
-        if (element4 != null){
+        if (element4 != null)
+        {
             UpdateAttributeParam(element4,actorInfo.Attribute[3]);
         }
-        if (element5 != null){
+        if (element5 != null)
+        {
             UpdateAttributeParam(element5,actorInfo.Attribute[4]);
         }
         
-        if (evaluate != null){
+        if (evaluate != null)
+        {
             evaluate.text = actorInfo.Evaluate().ToString();
         }
     }
@@ -98,25 +110,32 @@ public class ActorInfoComponent : MonoBehaviour
 
     public void UpdateData(ActorsData.ActorData actorData)
     {
-        if (mainThumb != null){
+        if (mainThumb != null)
+        {
             UpdateMainThumb(actorData.ImagePath,actorData.X,actorData.Y,actorData.Scale);
         }
-        if (awakenThumb != null){
+        if (awakenThumb != null)
+        {
             UpdateAwakenThumb(actorData.ImagePath,actorData.AwakenX,actorData.AwakenY,actorData.AwakenScale);
         }
-        if (clipingThumb != null){
+        if (clipingThumb != null)
+        {
             UpdateClipingThumb(actorData.ImagePath);
         }
-        if (faceThumb != null){
+        if (faceThumb != null)
+        {
             UpdateMainFaceThumb(actorData.ImagePath);
         }
-        if (awakenFaceThumb != null){
+        if (awakenFaceThumb != null)
+        {
             UpdateAwakenFaceThumb(actorData.ImagePath);
         }
-        if (nameText != null){
+        if (nameText != null)
+        {
             nameText.text = actorData.Name;
         }
-        if (subnameText != null){
+        if (subnameText != null)
+        {
             subnameText.text = actorData.SubName;
         }
     }
@@ -180,25 +199,32 @@ public class ActorInfoComponent : MonoBehaviour
 
     private void UpdateAttributeParam(TextMeshProUGUI textMeshProUGUI,int param){
         string attributeParam = "G";
-        if (param > 100){
+        if (param > 100)
+        {
             attributeParam = "S";
         } else
-        if (param > 80){
+        if (param > 80)
+        {
             attributeParam = "A";
         } else
-        if (param > 60){
+        if (param > 60)
+        {
             attributeParam = "B";
         } else
-        if (param > 40){
+        if (param > 40)
+        {
             attributeParam = "C";
         } else
-        if (param > 20){
+        if (param > 20)
+        {
             attributeParam = "D";
         } else
-        if (param > 10){
+        if (param > 10)
+        {
             attributeParam = "E";
         } else
-        if (param > 0){
+        if (param > 0)
+        {
             attributeParam = "F";
         }
         textMeshProUGUI.text = attributeParam;
@@ -235,19 +261,23 @@ public class ActorInfoComponent : MonoBehaviour
 
     public void Clear()
     {
-        if (mainThumb != null){
+        if (mainThumb != null)
+        {
             mainThumb.sprite = null;
             //mainThumb.gameObject.SetActive(false);
         }
-        if (awakenThumb != null){
+        if (awakenThumb != null)
+        {
             awakenThumb.sprite = null;
             //awakenThumb.gameObject.SetActive(false);
         }
-        if (faceThumb != null){
+        if (faceThumb != null)
+        {
             faceThumb.sprite = null;
             faceThumb.gameObject.SetActive(false);
         }
-        if (awakenFaceThumb != null){
+        if (awakenFaceThumb != null)
+        {
             awakenFaceThumb.sprite = null;
             awakenFaceThumb.gameObject.SetActive(false);
         }

@@ -82,8 +82,8 @@ public class StagesInfoImporter : AssetPostprocessor {
 			using (var Mainstream = File.Open(asset, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
 			{
 				// エクセルブックを作成
-				CreateBook(asset, Mainstream, out IWorkbook Book);
-				List<TextData> textData = CreateText(Book.GetSheetAt(2));
+				AssetPostImporter.CreateBook(asset, Mainstream, out IWorkbook Book);
+				List<TextData> textData = AssetPostImporter.CreateText(Book.GetSheetAt(2));
 
 				// 情報の初期化
 				Data._data.Clear();
@@ -96,24 +96,24 @@ public class StagesInfoImporter : AssetPostprocessor {
 					IRow Baserow = BaseSheet.GetRow(i);
 
 					var StageData = new StagesData.StageData();
-					StageData.Id = (int)Baserow.GetCell((int)BaseColumn.Id)?.SafeNumericCellValue();
-					StageData.Name = textData.Find(a => a.Id == (int)Baserow.GetCell((int)BaseColumn.NameId).NumericCellValue).Text;
-					StageData.Help = textData.Find(a => a.Id == (int)Baserow.GetCell((int)BaseColumn.NameId).NumericCellValue).Help;
-					StageData.Turns = (int)Baserow.GetCell((int)BaseColumn.Turns)?.SafeNumericCellValue();
+					StageData.Id = AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.Id);
+					StageData.Name = textData.Find(a => a.Id == AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.NameId)).Text;
+					StageData.Help = textData.Find(a => a.Id == AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.NameId)).Help;
+					StageData.Turns = AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.Turns);
 					StageData.InitMembers = new List<int>();
-					string[] list = Baserow.GetCell((int)BaseColumn.InitMembers)?.SafeStringCellValue().Split(',');
+					string[] list = AssetPostImporter.ImportString(Baserow,(int)BaseColumn.InitMembers).Split(',');
 					foreach (string item in list)
 					{
 						StageData.InitMembers.Add(int.Parse(item));
 					}
-					StageData.RandomTroopCount = (int)Baserow.GetCell((int)BaseColumn.RandomTroopCount)?.SafeNumericCellValue();
+					StageData.RandomTroopCount = AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.RandomTroopCount);
 					StageData.BGMId = new List<int>();
-					string[] bgmlist = Baserow.GetCell((int)BaseColumn.BGMId)?.SafeStringCellValue().Split(',');
+					string[] bgmlist = AssetPostImporter.ImportString(Baserow,(int)BaseColumn.BGMId).Split(',');
 					foreach (string item in bgmlist)
 					{
 						StageData.BGMId.Add(int.Parse(item));
 					}
-					StageData.Reborn = ((int)Baserow.GetCell((int)BaseColumn.Reborn)?.SafeNumericCellValue() == 1);
+					StageData.Reborn = (AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.Reborn) == 1);
 					
 					StageData.StageEvents = new List<StagesData.StageEventData>();
 					for (int j = 1; j <= EventSheet.LastRowNum; j++)
@@ -147,72 +147,5 @@ public class StagesInfoImporter : AssetPostprocessor {
 		}
 
 		EditorUtility.SetDirty(Data);
-	}
-
-
-	// エクセルワークブックを作成
-	static void CreateBook(string path, Stream stream, out IWorkbook Workbook)
-	{
-		// 拡張子が".xls"の場合
-		if (Path.GetExtension(path) == ".xls")
-		{
-			Workbook = new HSSFWorkbook(stream);
-		}
-		// 拡張子がそれ以外の場合
-		else
-		{
-			Workbook = new XSSFWorkbook(stream);
-		}
-	}
-
-	// 文字列を分解
-	static string[] StringSplit(string str, int count)
-	{
-		List<string> List = new List<string>();
-
-		int Length = (int)Math.Ceiling((double)str.Length / count);
-
-		for (int i = 0; i < Length; i++)
-		{
-			int Start = count * i;
-
-			// 始まりが文字列の長さより多かったら
-			if (str.Length <= Start)
-			{
-				break;
-			}
-			// 読み取る大きさが文字列の長さより多かったら終わりを指定しない
-			if (str.Length < Start + count)
-			{
-				List.Add(str.Substring(Start));
-			}
-			// 始まりの位置と終わりの位置を指定（始まりの値は含むが終わりの値は含まない）
-			else
-			{
-				List.Add(str.Substring(Start, count));
-			}
-		}
-
-		return List.ToArray();
-	}
-
-	// テキストデータを作成
-	static List<TextData> CreateText(ISheet BaseSheet)
-	{
-		var textData = new List<TextData>();
-
-		for (int i = 1; i <= BaseSheet.LastRowNum; i++)
-		{
-			IRow Baserow = BaseSheet.GetRow(i);
-			var TextData = new TextData();
-
-			TextData.Id = (int)Baserow.GetCell((int)BaseTextColumn.Id)?.NumericCellValue;
-			TextData.Text = Baserow.GetCell((int)BaseTextColumn.Text).ToString();
-            TextData.Help = Baserow.GetCell((int)BaseTextColumn.Help).ToString();
-			
-			textData.Add(TextData);
-		}
-
-		return textData;
 	}
 }

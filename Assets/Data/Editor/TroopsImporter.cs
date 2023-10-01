@@ -79,7 +79,7 @@ public class TroopsImporter : AssetPostprocessor {
 			using (var Mainstream = File.Open(asset, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
 			{
 				// エクセルブックを作成
-				CreateBook(asset, Mainstream, out IWorkbook Book);
+				AssetPostImporter.CreateBook(asset, Mainstream, out IWorkbook Book);
 
 				// 情報の初期化
 				Data._data.Clear();
@@ -92,13 +92,13 @@ public class TroopsImporter : AssetPostprocessor {
 					IRow Baserow = BaseSheet.GetRow(i);
 
 					var TroopData = new TroopsData.TroopData();
-					TroopData.Id = (int)Baserow.GetCell((int)BaseColumn.Id)?.SafeNumericCellValue();
-					TroopData.TroopId = (int)Baserow.GetCell((int)BaseColumn.TroopId)?.SafeNumericCellValue();
-					TroopData.EnemyId = (int)Baserow.GetCell((int)BaseColumn.EnemyId)?.SafeNumericCellValue();
-					TroopData.Lv = (int)Baserow.GetCell((int)BaseColumn.Lv)?.SafeNumericCellValue();
-					TroopData.BossFlag = Baserow.GetCell((int)BaseColumn.BossFlag)?.SafeNumericCellValue() == 1;
-					TroopData.Line = (LineType)Baserow.GetCell((int)BaseColumn.Line)?.SafeNumericCellValue();
-					TroopData.StageTurn = (int)Baserow.GetCell((int)BaseColumn.StageTurn)?.SafeNumericCellValue();
+					TroopData.Id = AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.Id);
+					TroopData.TroopId = AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.TroopId);
+					TroopData.EnemyId = AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.EnemyId);
+					TroopData.Lv = AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.Lv);
+					TroopData.BossFlag = AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.BossFlag) == 1;
+					TroopData.Line = (LineType)AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.Line);
+					TroopData.StageTurn = AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.StageTurn);
 					TroopData.GetItemDatas = new List<GetItemData>();
 					Data._data.Add(TroopData);
 				}
@@ -107,15 +107,15 @@ public class TroopsImporter : AssetPostprocessor {
 				for (int i = 1; i <= BaseSheet.LastRowNum; i++)
 				{
 					IRow Baserow = BaseSheet.GetRow(i);
-					int Id = (int)Baserow.GetCell((int)BaseGetItemColumn.Id)?.SafeNumericCellValue();
-					int TroopId = (int)Baserow.GetCell((int)BaseGetItemColumn.TroopId)?.SafeNumericCellValue();
+					int Id = AssetPostImporter.ImportNumeric(Baserow,(int)BaseGetItemColumn.Id);
+					int TroopId = AssetPostImporter.ImportNumeric(Baserow,(int)BaseGetItemColumn.TroopId);
 					var troopData = Data._data.Find(a => a.TroopId == TroopId && a.Line == LineType.Back);
 					if (troopData != null)
 					{
 						var getItemData = new GetItemData();
-						getItemData.Type = (GetItemType)Baserow.GetCell((int)BaseGetItemColumn.Type)?.SafeNumericCellValue();
-						getItemData.Param1 = (int)Baserow.GetCell((int)BaseGetItemColumn.Param1)?.SafeNumericCellValue();
-						getItemData.Param2 = (int)Baserow.GetCell((int)BaseGetItemColumn.Param2)?.SafeNumericCellValue();
+						getItemData.Type = (GetItemType)AssetPostImporter.ImportNumeric(Baserow,(int)BaseGetItemColumn.Type);
+						getItemData.Param1 = AssetPostImporter.ImportNumeric(Baserow,(int)BaseGetItemColumn.Param1);
+						getItemData.Param2 = AssetPostImporter.ImportNumeric(Baserow,(int)BaseGetItemColumn.Param2);
 						troopData.GetItemDatas.Add(getItemData);
 					}
 				}
@@ -128,21 +128,4 @@ public class TroopsImporter : AssetPostprocessor {
 
 		EditorUtility.SetDirty(Data);
 	}
-
-
-	// エクセルワークブックを作成
-	static void CreateBook(string path, Stream stream, out IWorkbook Workbook)
-	{
-		// 拡張子が".xls"の場合
-		if (Path.GetExtension(path) == ".xls")
-		{
-			Workbook = new HSSFWorkbook(stream);
-		}
-		// 拡張子がそれ以外の場合
-		else
-		{
-			Workbook = new XSSFWorkbook(stream);
-		}
-	}
-
 }

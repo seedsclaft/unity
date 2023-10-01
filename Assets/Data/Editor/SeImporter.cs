@@ -69,7 +69,7 @@ public class SeImporter : AssetPostprocessor {
 			using (var Mainstream = File.Open(asset, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
 			{
 				// エクセルブックを作成
-				CreateBook(asset, Mainstream, out IWorkbook Book);
+				AssetPostImporter.CreateBook(asset, Mainstream, out IWorkbook Book);
 
 				// 情報の初期化
 				Data.SE.Clear();
@@ -82,11 +82,11 @@ public class SeImporter : AssetPostprocessor {
 					IRow Baserow = BaseSheet.GetRow(i);
 
 					var SE = new SEData();
-					SE.Id = (int)Baserow.GetCell((int)BaseColumn.Id).NumericCellValue;
-					SE.Key = Baserow.GetCell((int)BaseColumn.Key)?.SafeStringCellValue();
-					SE.FileName = Baserow.GetCell((int)BaseColumn.FileName)?.SafeStringCellValue();
-					SE.Volume = (float)Baserow.GetCell((int)BaseColumn.Volume)?.SafeNumericCellValue();
-					SE.Pitch = (float)Baserow.GetCell((int)BaseColumn.Pitch)?.SafeNumericCellValue();
+					SE.Id = AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.Id);
+					SE.Key = AssetPostImporter.ImportString(Baserow,(int)BaseColumn.Key);
+					SE.FileName = AssetPostImporter.ImportString(Baserow,(int)BaseColumn.FileName);
+					SE.Volume = (float)AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.Volume);
+					SE.Pitch = (float)AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.Pitch);
 					Data.SE.Add(SE);
 				}
 
@@ -99,22 +99,4 @@ public class SeImporter : AssetPostprocessor {
 
 		EditorUtility.SetDirty(Data);
 	}
-
-
-	// エクセルワークブックを作成
-	static void CreateBook(string path, Stream stream, out IWorkbook Workbook)
-	{
-		Debug.Log(path);
-		// 拡張子が".xls"の場合
-		if (Path.GetExtension(path) == ".xls")
-		{
-			Workbook = new HSSFWorkbook(stream);
-		}
-		// 拡張子がそれ以外の場合
-		else
-		{
-			Workbook = new XSSFWorkbook(stream);
-		}
-	}
-
 }

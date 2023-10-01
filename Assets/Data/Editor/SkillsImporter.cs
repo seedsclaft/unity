@@ -107,9 +107,9 @@ public class SkillsImporter : AssetPostprocessor {
 			using (var Mainstream = File.Open(asset, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
 			{
 				// エクセルブックを作成
-				CreateBook(asset, Mainstream, out IWorkbook Book);
+				AssetPostImporter.CreateBook(asset, Mainstream, out IWorkbook Book);
 				// テキストデータ作成
-				List<TextData> textData = CreateText(Book.GetSheetAt(3));
+				List<TextData> textData = AssetPostImporter.CreateText(Book.GetSheetAt(3));
 				// 情報の初期化
 				Data._data.Clear();
 				// エクセルシートからセル単位で読み込み
@@ -120,23 +120,23 @@ public class SkillsImporter : AssetPostprocessor {
 					IRow Baserow = BaseSheet.GetRow(i);
 
 					var SkillData = new SkillsData.SkillData();
-					SkillData.Id = (int)Baserow.GetCell((int)BaseColumn.Id)?.NumericCellValue;
-					SkillData.Name = textData.Find(a => a.Id == (int)Baserow.GetCell((int)BaseColumn.NameId)?.NumericCellValue).Text;
-					SkillData.IconIndex = (MagicIconType)Baserow.GetCell((int)BaseColumn.IconIndex)?.NumericCellValue;
-					SkillData.AnimationName = Baserow.GetCell((int)BaseColumn.AnimationName)?.SafeStringCellValue();
-                    SkillData.AnimationPosition = (int)Baserow.GetCell((int)BaseColumn.AnimationPosition)?.NumericCellValue;
-                    SkillData.AnimationType = (AnimationType)Baserow.GetCell((int)BaseColumn.AnimationType)?.NumericCellValue;
-                    SkillData.DamageTiming = (int)Baserow.GetCell((int)BaseColumn.DamageTiming)?.NumericCellValue;
-                    SkillData.MpCost = (int)Baserow.GetCell((int)BaseColumn.MpCost)?.NumericCellValue;
-					SkillData.Rank = (int)Baserow.GetCell((int)BaseColumn.Rank)?.NumericCellValue;
-					SkillData.Attribute = (AttributeType)Baserow.GetCell((int)BaseColumn.Attribute)?.NumericCellValue;
-					SkillData.SkillType = (SkillType)Baserow.GetCell((int)BaseColumn.SkillType)?.NumericCellValue;
-                    SkillData.TargetType = (TargetType)Baserow.GetCell((int)BaseColumn.TargetType)?.NumericCellValue;
-                    SkillData.Scope = (ScopeType)Baserow.GetCell((int)BaseColumn.Scope)?.NumericCellValue;
-                    SkillData.Range = (RangeType)Baserow.GetCell((int)BaseColumn.Range)?.NumericCellValue;
-                    SkillData.RepeatTime = (int)Baserow.GetCell((int)BaseColumn.RepeatTime)?.NumericCellValue;
-					SkillData.AliveOnly = Baserow.GetCell((int)BaseColumn.AliveOnly)?.NumericCellValue == 1;
-					SkillData.Help = textData.Find(a => a.Id == (int)Baserow.GetCell((int)BaseColumn.NameId)?.NumericCellValue).Help;
+					SkillData.Id = AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.Id);
+					SkillData.Name = textData.Find(a => a.Id == AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.NameId)).Text;
+					SkillData.IconIndex = (MagicIconType)AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.IconIndex);
+					SkillData.AnimationName = AssetPostImporter.ImportString(Baserow,(int)BaseColumn.AnimationName);
+                    SkillData.AnimationPosition = AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.AnimationPosition);
+                    SkillData.AnimationType = (AnimationType)AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.AnimationType);
+                    SkillData.DamageTiming = AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.DamageTiming);
+                    SkillData.MpCost = AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.MpCost);
+					SkillData.Rank = AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.Rank);
+					SkillData.Attribute = (AttributeType)AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.Attribute);
+					SkillData.SkillType = (SkillType)AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.SkillType);
+                    SkillData.TargetType = (TargetType)AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.TargetType);
+                    SkillData.Scope = (ScopeType)AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.Scope);
+                    SkillData.Range = (RangeType)AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.Range);
+                    SkillData.RepeatTime = AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.RepeatTime);
+					SkillData.AliveOnly = AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.AliveOnly) == 1;
+					SkillData.Help = textData.Find(a => a.Id == AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.NameId)).Help;
 					Data._data.Add(SkillData);
 				}
 
@@ -148,11 +148,11 @@ public class SkillsImporter : AssetPostprocessor {
 					IRow Baserow = BaseSheet.GetRow(i);
 
 					var FeatureData = new SkillsData.FeatureData();
-					FeatureData.SkillId = (int)Baserow.GetCell((int)BaseFeatureColumn.SkillId)?.NumericCellValue;
-					FeatureData.FeatureType = (FeatureType)Baserow.GetCell((int)BaseFeatureColumn.FeatureType)?.NumericCellValue;
-					FeatureData.Param1 = (int)Baserow.GetCell((int)BaseFeatureColumn.Param1)?.NumericCellValue;
-					FeatureData.Param2 = (int)Baserow.GetCell((int)BaseFeatureColumn.Param2)?.NumericCellValue;
-					FeatureData.Param3 = (int)Baserow.GetCell((int)BaseFeatureColumn.Param3)?.NumericCellValue;
+					FeatureData.SkillId = AssetPostImporter.ImportNumeric(Baserow,(int)BaseFeatureColumn.SkillId);
+					FeatureData.FeatureType = (FeatureType)AssetPostImporter.ImportNumeric(Baserow,(int)BaseFeatureColumn.FeatureType);
+					FeatureData.Param1 = AssetPostImporter.ImportNumeric(Baserow,(int)BaseFeatureColumn.Param1);
+					FeatureData.Param2 = AssetPostImporter.ImportNumeric(Baserow,(int)BaseFeatureColumn.Param2);
+					FeatureData.Param3 = AssetPostImporter.ImportNumeric(Baserow,(int)BaseFeatureColumn.Param3);
 					
 					var SkillData = Data._data.Find(a => a.Id == FeatureData.SkillId);
 					if (SkillData != null){
@@ -169,12 +169,12 @@ public class SkillsImporter : AssetPostprocessor {
 					IRow Baserow = BaseSheet.GetRow(i);
 
 					var TriggerData = new SkillsData.TriggerData();
-					TriggerData.SkillId = (int)Baserow.GetCell((int)BaseTriggerColumn.SkillId)?.NumericCellValue;
-					TriggerData.TriggerType = (TriggerType)Baserow.GetCell((int)BaseTriggerColumn.TriggerType)?.NumericCellValue;
-					TriggerData.TriggerTiming = (TriggerTiming)Baserow.GetCell((int)BaseTriggerColumn.TriggerTiming)?.NumericCellValue;
-					TriggerData.Param1 = (int)Baserow.GetCell((int)BaseTriggerColumn.Param1)?.NumericCellValue;
-					TriggerData.Param2 = (int)Baserow.GetCell((int)BaseTriggerColumn.Param2)?.NumericCellValue;
-					TriggerData.Param3 = (int)Baserow.GetCell((int)BaseTriggerColumn.Param3)?.NumericCellValue;
+					TriggerData.SkillId = AssetPostImporter.ImportNumeric(Baserow,(int)BaseTriggerColumn.SkillId);
+					TriggerData.TriggerType = (TriggerType)AssetPostImporter.ImportNumeric(Baserow,(int)BaseTriggerColumn.TriggerType);
+					TriggerData.TriggerTiming = (TriggerTiming)AssetPostImporter.ImportNumeric(Baserow,(int)BaseTriggerColumn.TriggerTiming);
+					TriggerData.Param1 = AssetPostImporter.ImportNumeric(Baserow,(int)BaseTriggerColumn.Param1);
+					TriggerData.Param2 = AssetPostImporter.ImportNumeric(Baserow,(int)BaseTriggerColumn.Param2);
+					TriggerData.Param3 = AssetPostImporter.ImportNumeric(Baserow,(int)BaseTriggerColumn.Param3);
 					
 					var SkillData = Data._data.Find(a => a.Id == TriggerData.SkillId);
 					if (SkillData != null){
@@ -192,41 +192,5 @@ public class SkillsImporter : AssetPostprocessor {
 		}
 
 		EditorUtility.SetDirty(Data);
-	}
-
-
-	// エクセルワークブックを作成
-	static void CreateBook(string path, Stream stream, out IWorkbook Workbook)
-	{
-		// 拡張子が".xls"の場合
-		if (Path.GetExtension(path) == ".xls")
-		{
-			Workbook = new HSSFWorkbook(stream);
-		}
-		// 拡張子がそれ以外の場合
-		else
-		{
-			Workbook = new XSSFWorkbook(stream);
-		}
-	}
-
-	// テキストデータを作成
-	static List<TextData> CreateText(ISheet BaseSheet)
-	{
-		var textData = new List<TextData>();
-
-		for (int i = 1; i <= BaseSheet.LastRowNum; i++)
-		{
-			IRow Baserow = BaseSheet.GetRow(i);
-			var TextData = new TextData();
-
-			TextData.Id = (int)Baserow.GetCell((int)BaseTextColumn.Id)?.NumericCellValue;
-			TextData.Text = Baserow.GetCell((int)BaseTextColumn.Text).ToString();
-			TextData.Help = Baserow.GetCell((int)BaseTextColumn.Help).ToString();
-			
-			textData.Add(TextData);
-		}
-
-		return textData;
 	}
 }

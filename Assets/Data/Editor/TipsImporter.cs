@@ -67,8 +67,8 @@ public class TipsImporter : AssetPostprocessor {
 			using (var Mainstream = File.Open(asset, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
 			{
 				// エクセルブックを作成
-				CreateBook(asset, Mainstream, out IWorkbook Book);
-				List<TextData> textData = CreateText(Book.GetSheetAt(1));
+				AssetPostImporter.CreateBook(asset, Mainstream, out IWorkbook Book);
+				List<TextData> textData = AssetPostImporter.CreateText(Book.GetSheetAt(1));
 
 				// 情報の初期化
 				Data._data.Clear();
@@ -81,9 +81,9 @@ public class TipsImporter : AssetPostprocessor {
 					IRow Baserow = BaseSheet.GetRow(i);
 
 					var TipData = new TipsData.TipData();
-					TipData.Id = (int)Baserow.GetCell((int)BaseColumn.Id).NumericCellValue;
-					TipData.Name = textData.Find(a => a.Id == (int)Baserow.GetCell((int)BaseColumn.NameId).NumericCellValue).Text;
-					TipData.ImagePath = Baserow.GetCell((int)BaseColumn.ImagePath)?.StringCellValue;
+					TipData.Id = AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.Id);
+					TipData.Name = textData.Find(a => a.Id == AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.NameId)).Text;
+					TipData.ImagePath = AssetPostImporter.ImportString(Baserow,(int)BaseColumn.ImagePath);
 					Data._data.Add(TipData);
 				}
 			}
@@ -94,41 +94,5 @@ public class TipsImporter : AssetPostprocessor {
 		}
 
 		EditorUtility.SetDirty(Data);
-	}
-
-
-	// エクセルワークブックを作成
-	static void CreateBook(string path, Stream stream, out IWorkbook Workbook)
-	{
-		// 拡張子が".xls"の場合
-		if (Path.GetExtension(path) == ".xls")
-		{
-			Workbook = new HSSFWorkbook(stream);
-		}
-		// 拡張子がそれ以外の場合
-		else
-		{
-			Workbook = new XSSFWorkbook(stream);
-		}
-	}
-
-	// テキストデータを作成
-	static List<TextData> CreateText(ISheet BaseSheet)
-	{
-		var textData = new List<TextData>();
-
-		for (int i = 1; i <= BaseSheet.LastRowNum; i++)
-		{
-			IRow Baserow = BaseSheet.GetRow(i);
-			var TextData = new TextData();
-
-			TextData.Id = (int)Baserow.GetCell((int)BaseTextColumn.Id)?.NumericCellValue;
-			TextData.Text = Baserow.GetCell((int)BaseTextColumn.Text).ToString();
-			//TextData.Help = Baserow.GetCell((int)BaseTextColumn.Help).ToString();
-			
-			textData.Add(TextData);
-		}
-
-		return textData;
 	}
 }

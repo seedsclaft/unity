@@ -6,9 +6,6 @@ using NPOI.HSSF.UserModel;
 using NPOI.SS.UserModel;
 using NPOI.XSSF.UserModel;
 using System;
-using System.Runtime.CompilerServices;
-using System.Linq;
-using System.Text.RegularExpressions;
 
 public class ItemsImporter : AssetPostprocessor {
     enum BaseColumn
@@ -72,7 +69,7 @@ public class ItemsImporter : AssetPostprocessor {
 			using (var Mainstream = File.Open(asset, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
 			{
 				// エクセルブックを作成
-				CreateBook(asset, Mainstream, out IWorkbook Book);
+				AssetPostImporter.CreateBook(asset, Mainstream, out IWorkbook Book);
 
 				// 情報の初期化
 				Data._data.Clear();
@@ -85,12 +82,12 @@ public class ItemsImporter : AssetPostprocessor {
 					IRow Baserow = BaseSheet.GetRow(i);
 
 					var ItemInfo = new ItemsData.ItemData();
-					ItemInfo.Id = (int)Baserow.GetCell((int)BaseColumn.Id)?.SafeNumericCellValue();
-					ItemInfo.Name = Baserow.GetCell((int)BaseColumn.Name)?.SafeStringCellValue();
-					ItemInfo.Worth = (int)Baserow.GetCell((int)BaseColumn.Worth)?.SafeNumericCellValue();
-                    ItemInfo.Feature = (int)Baserow.GetCell((int)BaseColumn.Feature)?.SafeNumericCellValue();
-                    ItemInfo.Target = (int)Baserow.GetCell((int)BaseColumn.Target)?.SafeNumericCellValue();
-                    ItemInfo.Value = (int)Baserow.GetCell((int)BaseColumn.Value)?.SafeNumericCellValue();
+					ItemInfo.Id = AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.Id);
+					ItemInfo.Name = AssetPostImporter.ImportString(Baserow,(int)BaseColumn.Name);
+					ItemInfo.Worth = AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.Worth);
+                    ItemInfo.Feature = AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.Feature);
+                    ItemInfo.Target = AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.Target);
+                    ItemInfo.Value = AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.Value);
                     
 					Data._data.Add(ItemInfo);
 				}
@@ -102,52 +99,5 @@ public class ItemsImporter : AssetPostprocessor {
 		}
 
 		EditorUtility.SetDirty(Data);
-	}
-
-
-	// エクセルワークブックを作成
-	static void CreateBook(string path, Stream stream, out IWorkbook Workbook)
-	{
-		// 拡張子が".xls"の場合
-		if (Path.GetExtension(path) == ".xls")
-		{
-			Workbook = new HSSFWorkbook(stream);
-		}
-		// 拡張子がそれ以外の場合
-		else
-		{
-			Workbook = new XSSFWorkbook(stream);
-		}
-	}
-
-	// 文字列を分解
-	static string[] StringSplit(string str, int count)
-	{
-		List<string> List = new List<string>();
-
-		int Length = (int)Math.Ceiling((double)str.Length / count);
-
-		for (int i = 0; i < Length; i++)
-		{
-			int Start = count * i;
-
-			// 始まりが文字列の長さより多かったら
-			if (str.Length <= Start)
-			{
-				break;
-			}
-			// 読み取る大きさが文字列の長さより多かったら終わりを指定しない
-			if (str.Length < Start + count)
-			{
-				List.Add(str.Substring(Start));
-			}
-			// 始まりの位置と終わりの位置を指定（始まりの値は含むが終わりの値は含まない）
-			else
-			{
-				List.Add(str.Substring(Start, count));
-			}
-		}
-
-		return List.ToArray();
 	}
 }

@@ -74,8 +74,8 @@ public class StatesImporter : AssetPostprocessor {
 			using (var Mainstream = File.Open(asset, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
 			{
 				// エクセルブックを作成
-				CreateBook(asset, Mainstream, out IWorkbook Book);
-				List<TextData> textData = CreateText(Book.GetSheetAt(1));
+				AssetPostImporter.CreateBook(asset, Mainstream, out IWorkbook Book);
+				List<TextData> textData = AssetPostImporter.CreateText(Book.GetSheetAt(1));
 
 				// 情報の初期化
 				Data._data.Clear();
@@ -88,17 +88,17 @@ public class StatesImporter : AssetPostprocessor {
 					IRow Baserow = BaseSheet.GetRow(i);
 
 					var StateData = new StatesData.StateData();
-					StateData.Id = (int)Baserow.GetCell((int)BaseColumn.Id).NumericCellValue;
-					StateData.Name = textData.Find(a => a.Id == (int)Baserow.GetCell((int)BaseColumn.NameId).NumericCellValue).Text;
-					StateData.Help = textData.Find(a => a.Id == (int)Baserow.GetCell((int)BaseColumn.NameId).NumericCellValue).Help;
-					StateData.IconPath = Baserow.GetCell((int)BaseColumn.IconIndex)?.SafeStringCellValue();
-					StateData.RemovalTiming = (RemovalTiming)Baserow.GetCell((int)BaseColumn.RemovalTiming).NumericCellValue;
-					StateData.OverWrite = (bool)(Baserow.GetCell((int)BaseColumn.OverRight)?.SafeNumericCellValue() == 1);
-					StateData.EffectPath = Baserow.GetCell((int)BaseColumn.EffectPath)?.SafeStringCellValue();
-					StateData.EffectPosition = (EffectPositionType)Baserow.GetCell((int)BaseColumn.EffectPosition)?.SafeNumericCellValue();
-					StateData.OverLap = (bool)(Baserow.GetCell((int)BaseColumn.OverLap)?.SafeNumericCellValue() == 1);
-					StateData.Removal = (bool)(Baserow.GetCell((int)BaseColumn.Removal)?.SafeNumericCellValue() == 1);
-					StateData.Abnormal = (bool)(Baserow.GetCell((int)BaseColumn.Abnormal)?.SafeNumericCellValue() == 1);
+					StateData.Id = AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.Id);
+					StateData.Name = textData.Find(a => a.Id == AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.NameId)).Text;
+					StateData.Help = textData.Find(a => a.Id == AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.NameId)).Help;
+					StateData.IconPath = AssetPostImporter.ImportString(Baserow,(int)BaseColumn.IconIndex);
+					StateData.RemovalTiming = (RemovalTiming)AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.RemovalTiming);
+					StateData.OverWrite = (bool)(AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.OverRight) == 1);
+					StateData.EffectPath = AssetPostImporter.ImportString(Baserow,(int)BaseColumn.EffectPath);
+					StateData.EffectPosition = (EffectPositionType)AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.EffectPosition);
+					StateData.OverLap = (bool)(AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.OverLap) == 1);
+					StateData.Removal = (bool)(AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.Removal) == 1);
+					StateData.Abnormal = (bool)(AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.Abnormal) == 1);
 					
 					
 					Data._data.Add(StateData);
@@ -111,41 +111,5 @@ public class StatesImporter : AssetPostprocessor {
 		}
 
 		EditorUtility.SetDirty(Data);
-	}
-
-
-	// エクセルワークブックを作成
-	static void CreateBook(string path, Stream stream, out IWorkbook Workbook)
-	{
-		// 拡張子が".xls"の場合
-		if (Path.GetExtension(path) == ".xls")
-		{
-			Workbook = new HSSFWorkbook(stream);
-		}
-		// 拡張子がそれ以外の場合
-		else
-		{
-			Workbook = new XSSFWorkbook(stream);
-		}
-	}
-
-	// テキストデータを作成
-	static List<TextData> CreateText(ISheet BaseSheet)
-	{
-		var textData = new List<TextData>();
-
-		for (int i = 1; i <= BaseSheet.LastRowNum; i++)
-		{
-			IRow Baserow = BaseSheet.GetRow(i);
-			var TextData = new TextData();
-
-			TextData.Id = (int)Baserow.GetCell((int)BaseTextColumn.Id)?.NumericCellValue;
-			TextData.Text = Baserow.GetCell((int)BaseTextColumn.Text).ToString();
-			TextData.Help = Baserow.GetCell((int)BaseTextColumn.Help).ToString();
-			
-			textData.Add(TextData);
-		}
-
-		return textData;
 	}
 }

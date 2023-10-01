@@ -67,7 +67,7 @@ public class BgmImporter : AssetPostprocessor {
 			using (var Mainstream = File.Open(asset, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
 			{
 				// エクセルブックを作成
-				CreateBook(asset, Mainstream, out IWorkbook Book);
+				AssetPostImporter.CreateBook(asset, Mainstream, out IWorkbook Book);
 
 				// 情報の初期化
 				Data.BGM.Clear();
@@ -80,9 +80,9 @@ public class BgmImporter : AssetPostprocessor {
 					IRow Baserow = BaseSheet.GetRow(i);
 
 					var BGM = new BGMData();
-					BGM.Id = (int)Baserow.GetCell((int)BaseColumn.Id).NumericCellValue;
-					BGM.Key = Baserow.GetCell((int)BaseColumn.Key)?.SafeStringCellValue();
-					BGM.FileName = Baserow.GetCell((int)BaseColumn.FileName)?.SafeStringCellValue();
+					BGM.Id = AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.Id);
+					BGM.Key = AssetPostImporter.ImportString(Baserow,(int)BaseColumn.Key);
+					BGM.FileName = AssetPostImporter.ImportString(Baserow,(int)BaseColumn.FileName);
 					BGM.Loop = Baserow.GetCell((int)BaseColumn.Loop).BooleanCellValue;
 					Data.BGM.Add(BGM);
 				}
@@ -96,22 +96,4 @@ public class BgmImporter : AssetPostprocessor {
 
 		EditorUtility.SetDirty(Data);
 	}
-
-
-	// エクセルワークブックを作成
-	static void CreateBook(string path, Stream stream, out IWorkbook Workbook)
-	{
-		Debug.Log(path);
-		// 拡張子が".xls"の場合
-		if (Path.GetExtension(path) == ".xls")
-		{
-			Workbook = new HSSFWorkbook(stream);
-		}
-		// 拡張子がそれ以外の場合
-		else
-		{
-			Workbook = new XSSFWorkbook(stream);
-		}
-	}
-
 }

@@ -98,8 +98,8 @@ public class ActorsImporter : AssetPostprocessor {
 			using (var Mainstream = File.Open(asset, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
 			{
 				// エクセルブックを作成
-				CreateBook(asset, Mainstream, out IWorkbook Book);
-				List<TextData> textData = CreateText(Book.GetSheetAt(2));
+				AssetPostImporter.CreateBook(asset, Mainstream, out IWorkbook Book);
+				List<TextData> textData = AssetPostImporter.CreateText(Book.GetSheetAt(2));
 
 				// 情報の初期化
 				Data._data.Clear();
@@ -112,36 +112,36 @@ public class ActorsImporter : AssetPostprocessor {
 					IRow Baserow = BaseSheet.GetRow(i);
 
 					var ActorData = new ActorsData.ActorData();
-					ActorData.Id = (int)Baserow.GetCell((int)BaseColumn.Id).NumericCellValue;
-					ActorData.Name = textData.Find(a => a.Id == (int)Baserow.GetCell((int)BaseColumn.NameId).NumericCellValue).Text;
-					ActorData.SubName = textData.Find(a => a.Id == (int)Baserow.GetCell((int)BaseColumn.NameId).NumericCellValue).Help;
+					ActorData.Id = AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.Id);
+					ActorData.Name = textData.Find(a => a.Id == AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.NameId)).Text;
+					ActorData.SubName = textData.Find(a => a.Id == AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.NameId)).Help;
 					
-					ActorData.ClassId = (int)Baserow.GetCell((int)BaseColumn.ClassId)?.NumericCellValue;
-					ActorData.ImagePath = Baserow.GetCell((int)BaseColumn.ImagePath).ToString();
-					ActorData.InitLv = (int)Baserow.GetCell((int)BaseColumn.InitLv)?.NumericCellValue;
-					ActorData.MaxLv = (int)Baserow.GetCell((int)BaseColumn.MaxLv)?.NumericCellValue;
+					ActorData.ClassId = AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.ClassId);
+					ActorData.ImagePath = AssetPostImporter.ImportString(Baserow,(int)BaseColumn.ImagePath);
+					ActorData.InitLv = AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.InitLv);
+					ActorData.MaxLv = AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.MaxLv);
 
-					int InitHp = (int)Baserow.GetCell((int)BaseColumn.InitHp)?.NumericCellValue;
-					int InitMp = (int)Baserow.GetCell((int)BaseColumn.InitMp)?.NumericCellValue;
-					int InitAtk = (int)Baserow.GetCell((int)BaseColumn.InitAtk)?.NumericCellValue;
-					int InitSpd = (int)Baserow.GetCell((int)BaseColumn.InitSpd)?.NumericCellValue;
-					int InitDef = (int)Baserow.GetCell((int)BaseColumn.InitDef)?.NumericCellValue;
+					int InitHp = AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.InitHp);
+					int InitMp = AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.InitMp);
+					int InitAtk = AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.InitAtk);
+					int InitSpd = AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.InitSpd);
+					int InitDef = AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.InitDef);
 					ActorData.InitStatus = new StatusInfo();
 					ActorData.InitStatus.SetParameter(InitHp,InitMp,InitAtk,InitDef,InitSpd);
 
-					int NeedHp = (int)Baserow.GetCell((int)BaseColumn.NeedHp)?.NumericCellValue;
-					int NeedMp = (int)Baserow.GetCell((int)BaseColumn.NeedMp)?.NumericCellValue;
-					int NeedAtk = (int)Baserow.GetCell((int)BaseColumn.NeedAtk)?.NumericCellValue;
-					int NeedSpd = (int)Baserow.GetCell((int)BaseColumn.NeedSpd)?.NumericCellValue;
-					int NeedDef = (int)Baserow.GetCell((int)BaseColumn.NeedDef)?.NumericCellValue;
+					int NeedHp = AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.NeedHp);
+					int NeedMp = AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.NeedMp);
+					int NeedAtk = AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.NeedAtk);
+					int NeedSpd = AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.NeedSpd);
+					int NeedDef = AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.NeedDef);
 					ActorData.NeedStatus = new StatusInfo();
 					ActorData.NeedStatus.SetParameter(NeedHp,NeedMp,NeedAtk,NeedDef,NeedSpd);
 
-					int Element1 = (int)Baserow.GetCell((int)BaseColumn.Element1)?.NumericCellValue;
-					int Element2 = (int)Baserow.GetCell((int)BaseColumn.Element2)?.NumericCellValue;
-					int Element3 = (int)Baserow.GetCell((int)BaseColumn.Element3)?.NumericCellValue;
-					int Element4 = (int)Baserow.GetCell((int)BaseColumn.Element4)?.NumericCellValue;
-					int Element5 = (int)Baserow.GetCell((int)BaseColumn.Element5)?.NumericCellValue;
+					int Element1 = AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.Element1);
+					int Element2 = AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.Element2);
+					int Element3 = AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.Element3);
+					int Element4 = AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.Element4);
+					int Element5 = AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.Element5);
 					ActorData.Attribute = new List<int>();
 					ActorData.Attribute.Add(Element1);
 					ActorData.Attribute.Add(Element2);
@@ -149,12 +149,12 @@ public class ActorsImporter : AssetPostprocessor {
 					ActorData.Attribute.Add(Element4);
 					ActorData.Attribute.Add(Element5);
 
-					int X = (int)Baserow.GetCell((int)BaseColumn.X)?.NumericCellValue;
-					int Y = (int)Baserow.GetCell((int)BaseColumn.Y)?.NumericCellValue;
-					float Scale = (float)Baserow.GetCell((int)BaseColumn.Scale)?.NumericCellValue;
-					int AwakenX = (int)Baserow.GetCell((int)BaseColumn.AwakenX)?.NumericCellValue;
-					int AwakenY = (int)Baserow.GetCell((int)BaseColumn.AwakenY)?.NumericCellValue;
-					float AwakenScale = (float)Baserow.GetCell((int)BaseColumn.AwakenScale)?.NumericCellValue;
+					int X = AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.X);
+					int Y = AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.Y);
+					float Scale = AssetPostImporter.ImportFloat(Baserow,(int)BaseColumn.Scale);
+					int AwakenX = AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.AwakenX);
+					int AwakenY = AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.AwakenY);
+					float AwakenScale = AssetPostImporter.ImportFloat(Baserow,(int)BaseColumn.AwakenScale);
 					ActorData.X = X;
 					ActorData.Y = Y;
 					ActorData.Scale = Scale;
@@ -173,10 +173,10 @@ public class ActorsImporter : AssetPostprocessor {
 					IRow Baserow = BaseSheet.GetRow(i);
 					var LearningData = new LearningData();
 
-					int ActorId = (int)Baserow.GetCell((int)BaseLearningColumn.ActorId)?.NumericCellValue;
+					int ActorId = AssetPostImporter.ImportNumeric(Baserow,(int)BaseLearningColumn.ActorId);
 					ActorsData.ActorData Actor = Data._data.Find(a => a.Id == ActorId);
 					
-					LearningData.SkillId = (int)Baserow.GetCell((int)BaseLearningColumn.SkillId)?.NumericCellValue;
+					LearningData.SkillId = AssetPostImporter.ImportNumeric(Baserow,(int)BaseLearningColumn.SkillId);
 					Actor.LearningSkills.Add(LearningData);
 				}
 
@@ -188,42 +188,6 @@ public class ActorsImporter : AssetPostprocessor {
 		}
 
 		EditorUtility.SetDirty(Data);
-	}
-
-
-	// エクセルワークブックを作成
-	static void CreateBook(string path, Stream stream, out IWorkbook Workbook)
-	{
-		// 拡張子が".xls"の場合
-		if (Path.GetExtension(path) == ".xls")
-		{
-			Workbook = new HSSFWorkbook(stream);
-		}
-		// 拡張子がそれ以外の場合
-		else
-		{
-			Workbook = new XSSFWorkbook(stream);
-		}
-	}
-
-	// テキストデータを作成
-	static List<TextData> CreateText(ISheet BaseSheet)
-	{
-		var textData = new List<TextData>();
-
-		for (int i = 1; i <= BaseSheet.LastRowNum; i++)
-		{
-			IRow Baserow = BaseSheet.GetRow(i);
-			var TextData = new TextData();
-
-			TextData.Id = (int)Baserow.GetCell((int)BaseTextColumn.Id)?.NumericCellValue;
-			TextData.Text = Baserow.GetCell((int)BaseTextColumn.Text).ToString();
-			TextData.Help = Baserow.GetCell((int)BaseTextColumn.Help).ToString();
-			
-			textData.Add(TextData);
-		}
-
-		return textData;
 	}
 }
 
