@@ -838,16 +838,17 @@ public class BattleModel : BaseModel
                     }
                 }
                 int noDamageCount = Target.StateTurn(StateType.NoDamage);
-                if (actionResultInfo.DisplayStates.Find(b => b.Master.Id == (int)StateType.NoDamage) != null
-                || actionResultInfo.RemovedStates.Find(b => b.Master.Id == (int)StateType.NoDamage) != null)
+                int currentRemoveCount = actionResultInfo.RemovedStates.FindAll(a => a.Master.Id == (int)StateType.NoDamage).Count;
+                int currentDisplayCount = actionResultInfo.DisplayStates.FindAll(a => a.Master.Id == (int)StateType.NoDamage).Count;
+                if ((currentRemoveCount+currentDisplayCount) > 0)
                 {
                     var removeCount = actionResultInfos.FindAll(a => a.RemovedStates.Find(b => b.Master.Id == (int)StateType.NoDamage) != null).Count;
                     var displayCount = actionResultInfos.FindAll(a => a.DisplayStates.Find(b => b.Master.Id == (int)StateType.NoDamage) != null).Count;
                     
-                    if ((removeCount+displayCount) >= nodamageDict[indexList[j]])
+                    if ((removeCount+displayCount+1) >= nodamageDict[indexList[j]])
                     {
-                        var noDamageState =  Target.GetStateInfo(StateType.NoDamage);
-                        if (noDamageState != null && noDamageState.Effect <= removeCount)
+                        var noDamageState = Target.GetStateInfo(StateType.NoDamage);
+                        if (noDamageState != null)
                         {
                             Target.RemoveState(noDamageState,true);
                             actionResultInfo.AddRemoveState(noDamageState);

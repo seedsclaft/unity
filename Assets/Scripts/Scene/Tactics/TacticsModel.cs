@@ -34,18 +34,10 @@ public class TacticsModel : BaseModel
     {
         _needAllTacticsCommand = isNeed;
     }
+
     public ActorInfo TacticsActor(int actorId)
     {
         return StageMembers().Find(a => a.ActorId == actorId);
-    }
-
-    public List<SkillInfo> SkillActionList(AttributeType attributeType)
-    {
-        if (attributeType != AttributeType.None)
-        {
-            _currentAttributeType = attributeType;
-        }
-        return CurrentActor.Skills.FindAll(a => a.Attribute == _currentAttributeType);
     }
 
     public List<string> AttirbuteValues()
@@ -223,20 +215,6 @@ public class TacticsModel : BaseModel
         }
     }
 
-    public int TacticsCost(TacticsComandType tacticsComandType)
-    {
-        int trainCost = 0;
-        foreach (var actorInfo in StageMembers()) if (actorInfo.TacticsComandType == tacticsComandType) trainCost += actorInfo.TacticsCost;
-        return trainCost;
-    }
-    
-    public int TacticsTotalCost()
-    {
-        int totalCost = 0;
-        foreach (var actorInfo in StageMembers()) totalCost += actorInfo.TacticsCost;
-        return totalCost;
-    }
-
     public bool IsCheckAlchemy(int actorId)
     {
         ActorInfo actorInfo = TacticsActor(actorId);
@@ -270,17 +248,6 @@ public class TacticsModel : BaseModel
     {
         ActorInfo actorInfo = CurrentActor;
         return Currency >= TacticsUtility.AlchemyCost(actorInfo,attributeType,StageMembers());
-    }
-
-    public void SelectAlchemy(AttributeType attributeType)
-    {
-        ActorInfo actorInfo = CurrentActor;
-        if (actorInfo != null){
-            actorInfo.SetTacticsCommand(TacticsComandType.Alchemy,TacticsUtility.AlchemyCost(actorInfo,attributeType,StageMembers()));
-            PartyInfo.ChangeCurrency(Currency - actorInfo.TacticsCost);
-            actorInfo.SetNextLearnAttribute(attributeType);
-            actorInfo.SetNextLearnCost(TacticsUtility.AlchemyCost(actorInfo,attributeType,StageMembers()));
-        }
     }
     
     public void SelectAlchemySkill(int skillId)
