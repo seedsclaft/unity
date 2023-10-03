@@ -1,9 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.EventSystems;
-using UnityEngine.Events;
 
 public class BaseCommandList : ListWindow , IInputHandlerEvent
 {
@@ -64,6 +60,7 @@ public class BaseCommandList : ListWindow , IInputHandlerEvent
         }
         UpdateAllItems();
         UpdateSelectIndex(0);
+        SetInputCallHandler((a) => CallSelectHandler(a));
     }
 
     public override void UpdateHelpWindow(){
