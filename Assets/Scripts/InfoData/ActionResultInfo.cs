@@ -425,7 +425,7 @@ public class ActionResultInfo
         if (target.IsState(StateType.NoDamage) && !isNoEffect)
         {
             _execStateInfos[target.Index].Add(StateType.NoDamage);
-            _hpDamage = 0;
+            hpDamage = 0;
             int count = target.StateTurn(StateType.NoDamage);
             if (count <= 1)
             {
