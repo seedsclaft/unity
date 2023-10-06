@@ -326,6 +326,189 @@ MonoBehaviour:
       Level: 0
       Weight: 0
       TriggerDatas: []
+  - Id: 6
+    Name: "\u30D5\u30A7\u30EA\u30AA"
+    SubName: "\u3010\u9AD8\u901F\u5929\u7FD4\u3011"
+    ClassId: 6
+    ImagePath: 0006
+    InitLv: 1
+    MaxLv: 40
+    InitStatus:
+      _hp: 40
+      _mp: 20
+      _atk: 22
+      _def: 7
+      _spd: 37
+    PlusStatus:
+      _hp: 0
+      _mp: 0
+      _atk: 0
+      _def: 0
+      _spd: 0
+    NeedStatus:
+      _hp: 60
+      _mp: 50
+      _atk: 40
+      _def: 20
+      _spd: 90
+    Attribute: 3200000064000000140000000000000014000000
+    X: 22
+    Y: 28
+    Scale: 1
+    AwakenX: -48
+    AwakenY: 16
+    AwakenScale: 0.6
+    LearningSkills:
+    - SkillId: 11
+      Level: 0
+      Weight: 0
+      TriggerDatas: []
+    - SkillId: 21
+      Level: 0
+      Weight: 0
+      TriggerDatas: []
+    - SkillId: 31
+      Level: 0
+      Weight: 0
+      TriggerDatas: []
+    - SkillId: 201
+      Level: 0
+      Weight: 0
+      TriggerDatas: []
+    - SkillId: 205
+      Level: 0
+      Weight: 0
+      TriggerDatas: []
+    - SkillId: 213
+      Level: 0
+      Weight: 0
+      TriggerDatas: []
+    - SkillId: 214
+      Level: 0
+      Weight: 0
+      TriggerDatas: []
+  - Id: 7
+    Name: "\u30E1\u30EA\u30FC"
+    SubName: "\u3010Ten-Shi\u3011"
+    ClassId: 7
+    ImagePath: 0007
+    InitLv: 1
+    MaxLv: 40
+    InitStatus:
+      _hp: 40
+      _mp: 20
+      _atk: 22
+      _def: 7
+      _spd: 37
+    PlusStatus:
+      _hp: 0
+      _mp: 0
+      _atk: 0
+      _def: 0
+      _spd: 0
+    NeedStatus:
+      _hp: 60
+      _mp: 50
+      _atk: 40
+      _def: 20
+      _spd: 90
+    Attribute: 3200000064000000140000000000000014000000
+    X: 22
+    Y: 28
+    Scale: 1
+    AwakenX: 0
+    AwakenY: 160
+    AwakenScale: 0.6
+    LearningSkills:
+    - SkillId: 11
+      Level: 0
+      Weight: 0
+      TriggerDatas: []
+    - SkillId: 21
+      Level: 0
+      Weight: 0
+      TriggerDatas: []
+    - SkillId: 31
+      Level: 0
+      Weight: 0
+      TriggerDatas: []
+    - SkillId: 501
+      Level: 0
+      Weight: 0
+      TriggerDatas: []
+    - SkillId: 505
+      Level: 0
+      Weight: 0
+      TriggerDatas: []
+    - SkillId: 513
+      Level: 0
+      Weight: 0
+      TriggerDatas: []
+    - SkillId: 514
+      Level: 0
+      Weight: 0
+      TriggerDatas: []
+  - Id: 11
+    Name: "\u30D8\u30AB\u30C6\u30FC"
+    SubName: "\u3010\u9CF3\u51F0\u6F14\u821E\u3011"
+    ClassId: 1
+    ImagePath: 0011
+    InitLv: 1
+    MaxLv: 40
+    InitStatus:
+      _hp: 48
+      _mp: 20
+      _atk: 35
+      _def: 18
+      _spd: 18
+    PlusStatus:
+      _hp: 0
+      _mp: 0
+      _atk: 0
+      _def: 0
+      _spd: 0
+    NeedStatus:
+      _hp: 70
+      _mp: 50
+      _atk: 60
+      _def: 50
+      _spd: 50
+    Attribute: 6400000028000000000000001400000032000000
+    X: 0
+    Y: -16
+    Scale: 0.78
+    AwakenX: 24
+    AwakenY: 120
+    AwakenScale: 0.9
+    LearningSkills:
+    - SkillId: 11
+      Level: 0
+      Weight: 0
+      TriggerDatas: []
+    - SkillId: 21
+      Level: 0
+      Weight: 0
+      TriggerDatas: []
+    - SkillId: 31
+      Level: 0
+      Weight: 0
+      TriggerDatas: []
+    - SkillId: 101
+      Level: 0
+      Weight: 0
+      TriggerDatas: []
+    - SkillId: 104
+      Level: 0
+      Weight: 0
+      TriggerDatas: []
+    - SkillId: 113
+      Level: 0
+      Weight: 0
+      TriggerDatas: []
+    - SkillId: 114
+      Level: 0
+      Weight: 0
+      TriggerDatas: []
   - Id: 13
     Name: "\u30A2\u30EA\u30B9"
     SubName: "\u3010\u93E1\u306E\u56FD\u306E\u6C37\u6620\u8B5A\u3011"
