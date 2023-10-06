@@ -765,11 +765,13 @@ MonoBehaviour:
     - SkillId: 505
       Level: 1
       Weight: 80
-      TriggerDatas: []
-    - SkillId: 231
-      Level: 1
-      Weight: 0
-      TriggerDatas: []
+      TriggerDatas:
+      - SkillId: 0
+        TriggerType: 21
+        TriggerTiming: 1
+        Param1: 2
+        Param2: 0
+        Param3: 0
     - SkillId: 41
       Level: 1
       Weight: 50
@@ -1188,6 +1190,9 @@ MonoBehaviour:
     Help: 
   - Id: 105
     Text: 405
+    Help: 
+  - Id: 113
+    Text: 505
     Help: 
   - Id: 114
     Text: 322
