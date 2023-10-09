@@ -426,6 +426,24 @@ public class BattlePresenter : BasePresenter
                 {
                     _model.SetActionBattler(_model.CurrentActionInfo().SubjectIndex);
                     _model.MakeActionResultInfo(_model.CurrentActionInfo(),_model.MakeAutoSelectIndex(_model.CurrentActionInfo()));
+                } else
+                {
+                    // 攻撃単体で居合
+                    if (_model.CurrentActionInfo().TargetIndexList.Count == 1)
+                    {
+                        var RevengeActBattler = _model.GetBattlerInfo(_model.CurrentActionInfo().TargetIndexList[0]);
+                        var RevengeActState = RevengeActBattler.GetStateInfo(StateType.RevengeAct);
+                        if (RevengeActState != null)
+                        {                        
+                            var RevengeActTarget = _model.GetBattlerInfo(_model.CurrentActionInfo().SubjectIndex);
+                            RevengeActTarget.ResetAp(false);
+                            _model.ClearActionInfo();
+                            _model.MakeActionInfo(RevengeActBattler,33,false,false);
+                            _model.SetActionBattler(RevengeActBattler.Index);
+                            _model.MakeActionResultInfo(_model.CurrentActionInfo(),new List<int>(){RevengeActTarget.Index});
+                            _model.CurrentActionInfo().ActionResults[0].AddRemoveState(RevengeActState);
+                        }
+                    }
                 }
                 _triggerInterruptChecked = true;
             }

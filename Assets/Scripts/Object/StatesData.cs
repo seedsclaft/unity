@@ -70,6 +70,7 @@ public enum StateType
     Prizm = 120,
     NoPassive = 121,
     AssistHeal = 122,
+    RevengeAct = 123
 }
 
 public enum RemovalTiming

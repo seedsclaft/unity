@@ -200,6 +200,11 @@ public class BattlerInfo
             _ap = 1;
             return;
         }
+        if (IsState(StateType.RevengeAct))
+        {
+            _ap += 3;
+            return;
+        }
         if (IsState(StateType.Slow))
         {
             _ap -= 2;
@@ -211,6 +216,14 @@ public class BattlerInfo
     public void ChangeAp(int value)
     {
         _ap += value;
+        if (_ap < 0){
+            _ap = 0;
+        }
+    }
+
+    public void SetAp(int value)
+    {
+        _ap = value;
         if (_ap < 0){
             _ap = 0;
         }

@@ -181,6 +181,35 @@ MonoBehaviour:
       Param2: 0
       Param3: 0
     TriggerDatas: []
+  - Id: 33
+    Name: "\u5C45\u5408"
+    IconIndex: 3
+    AnimationName: NA_Effekseer/NA_shooting_002
+    AnimationPosition: 0
+    AnimationType: 1
+    DamageTiming: 46
+    MpCost: 0
+    Rank: 0
+    Attribute: 2
+    Scope: 1
+    SkillType: 0
+    TargetType: 1
+    Help: '""'
+    Range: 2
+    RepeatTime: 1
+    AliveOnly: 1
+    FeatureDatas:
+    - SkillId: 33
+      FeatureType: 1
+      Param1: 150
+      Param2: 0
+      Param3: 0
+    - SkillId: 33
+      FeatureType: 33
+      Param1: 0
+      Param2: 0
+      Param3: 0
+    TriggerDatas: []
   - Id: 41
     Name: "\u30A2\u30F3\u30C7\u30C3\u30C9"
     IconIndex: 6
@@ -973,6 +1002,35 @@ MonoBehaviour:
       Param1: 53
       Param2: 1
       Param3: 4
+    TriggerDatas: []
+  - Id: 222
+    Name: "\u30F4\u30A7\u30F3\u30B8\u30A7\u30F3\u30B9"
+    IconIndex: 3
+    AnimationName: NA_Effekseer/NA_magic_006_c5
+    AnimationPosition: 0
+    AnimationType: 1
+    DamageTiming: 40
+    MpCost: 2
+    Rank: 2
+    Attribute: 2
+    Scope: 4
+    SkillType: 1
+    TargetType: 4
+    Help: "\u81EA\u8EAB\u306B\u5C45\u5408\u4ED8\u4E0E"
+    Range: 1
+    RepeatTime: 1
+    AliveOnly: 1
+    FeatureDatas:
+    - SkillId: 222
+      FeatureType: 21
+      Param1: 123
+      Param2: 300
+      Param3: 0
+    - SkillId: 222
+      FeatureType: 31
+      Param1: 2
+      Param2: 0
+      Param3: 0
     TriggerDatas: []
   - Id: 231
     Name: "\u30A8\u30AF\u30B9\u30C6\u30F3\u30B7\u30E7\u30F3"

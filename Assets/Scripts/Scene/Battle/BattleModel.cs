@@ -737,6 +737,11 @@ public class BattleModel : BaseModel
         return _actionInfos[0];
     }
 
+    public void RemoveActionInfo(int index)
+    {
+        _actionInfos.RemoveAt(index);
+    }
+
     public void MakeActionResultInfo(ActionInfo actionInfo,List<int> indexList)
     {   
         if (actionInfo.SubjectIndex < 100)
@@ -1106,8 +1111,17 @@ public class BattleModel : BaseModel
     public void TurnEnd()
     {
         if (CurrentActionInfo().TriggeredSkill == false)
-        {
-            CurrentBattler.ResetAp(false);
+        {    
+            var noResetAp = CurrentActionInfo().Master.FeatureDatas.Find(a => a.FeatureType == FeatureType.NoResetAp);
+            if (noResetAp == null)
+            {
+                _currentBattler.ResetAp(false);
+            }
+            var afterAp = CurrentActionInfo().Master.FeatureDatas.Find(a => a.FeatureType == FeatureType.SetAfterAp);
+            if (afterAp != null)
+            {
+                _currentBattler.SetAp(afterAp.Param1);
+            }
         }
         _actionInfos.RemoveAt(0);
         _currentBattler = null;

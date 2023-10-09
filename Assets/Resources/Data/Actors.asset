@@ -334,11 +334,11 @@ MonoBehaviour:
     InitLv: 1
     MaxLv: 40
     InitStatus:
-      _hp: 40
+      _hp: 33
       _mp: 20
-      _atk: 22
-      _def: 7
-      _spd: 37
+      _atk: 42
+      _def: 9
+      _spd: 25
     PlusStatus:
       _hp: 0
       _mp: 0
@@ -346,12 +346,12 @@ MonoBehaviour:
       _def: 0
       _spd: 0
     NeedStatus:
-      _hp: 60
+      _hp: 50
       _mp: 50
-      _atk: 40
-      _def: 20
-      _spd: 90
-    Attribute: 3200000064000000140000000000000014000000
+      _atk: 90
+      _def: 30
+      _spd: 40
+    Attribute: 0000000064000000000000001e00000032000000
     X: 22
     Y: 28
     Scale: 1
@@ -371,11 +371,15 @@ MonoBehaviour:
       Level: 0
       Weight: 0
       TriggerDatas: []
+    - SkillId: 33
+      Level: 0
+      Weight: 0
+      TriggerDatas: []
     - SkillId: 201
       Level: 0
       Weight: 0
       TriggerDatas: []
-    - SkillId: 205
+    - SkillId: 222
       Level: 0
       Weight: 0
       TriggerDatas: []
