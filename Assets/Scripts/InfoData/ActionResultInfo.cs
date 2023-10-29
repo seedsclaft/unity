@@ -186,6 +186,10 @@ public class ActionResultInfo
         {
             return true;
         }
+        if (subject.Index == target.Index)
+        {
+            return true;
+        }
         int hit = 100;
         if (subject.IsState(StateType.Blind))
         {
