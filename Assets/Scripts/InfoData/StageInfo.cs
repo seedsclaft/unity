@@ -207,7 +207,7 @@ public class StageInfo
         {
             enemyIds.Add(4100);
         } else
-        if (routeSelect > 1)
+        if (routeSelect >= 1)
         {
             if (routeSelect == 2)
             {
@@ -334,6 +334,10 @@ public class StageInfo
     {
         if (_IsSubordinate == false) return;
         _subordinateValue += value;
+        if (_subordinateValue > 100)
+        {
+            _subordinateValue = 100;
+        }
     }
 
     public void AddEventReadFlag(string key)
