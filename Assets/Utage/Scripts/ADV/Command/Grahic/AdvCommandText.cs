@@ -64,6 +64,7 @@ namespace Utage
 				{
 					//キャラクターラベル
 					engine.SoundManager.PlayVoice ( engine.Page.CharacterLabel, VoiceFile);
+					engine.ScenarioSound.SetVoiceInScenario(engine.Page.CharacterLabel, VoiceFile);
 				}
 			}
 			engine.Page.UpdatePageTextData(this);

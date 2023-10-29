@@ -7,16 +7,20 @@ using UnityEngine.Networking;
 using System.IO;
 using UnityEngine.AddressableAssets;
 using UnityEditor;
+using Cysharp.Threading.Tasks;
 
-namespace Ryneus{
-
+namespace Ryneus
+{
     public class SoundManager : SingletonMonoBehaviour<SoundManager>
     {
         public float _bgmVolume = 1.0f;
         public float _seVolume = 1.0f;
         public bool _bgmMute = false;
         public bool _seMute = false;
-        private List<AudioSource> _seData;
+        private List<AudioSource> _se;
+        private List<AudioSource> _playingSe = new ();
+        private int _seAudioSourceNum = 16;
+        private List<AudioSource> _staticSe;
         private List<SEData> _seMaster;
         
         private IntroLoopAudio _bgm;
@@ -29,22 +33,25 @@ namespace Ryneus{
 
             // 全体シーンで使うサウンドを初期ロード
             LoadDefaultSound();
+            // SeAudioSourceを生成
+            _se = new List<AudioSource>();
+            for (int i = 0;i < _seAudioSourceNum;i++)
+            {
+                AudioSource audioSource = gameObject.AddComponent<AudioSource>();
+                _se.Add(audioSource);
+            }
         }
 
         void LoadDefaultSound()
         {
-            _seData = new List<AudioSource>();
+            _staticSe = new List<AudioSource>();
             _seMaster = DataSystem.Data.SE.FindAll(a => a != null);
             for (int i = 0;i < _seMaster.Count;i++)
             {
                 AudioSource audioSource = gameObject.AddComponent<AudioSource>();
-                _seData.Add(audioSource);
+                _staticSe.Add(audioSource);
                 SetSeAudio(audioSource,_seMaster[i].FileName,_seMaster[i].Volume,_seMaster[i].Pitch);
             }
-            /*
-            AudioSource audioSource = gameObject.AddComponent<AudioSource>();
-            _seData.Add(audioSource);
-            */
         }
 
 
@@ -96,11 +103,11 @@ namespace Ryneus{
 
         public void UpdateSeVolume()
         {
-            foreach (var seData in _seData)
+            foreach (var staticSe in _staticSe)
             {
-                float baseVolume = _seMaster.Find(a => a.FileName == seData.clip.name).Volume;
-                seData.rolloffMode = AudioRolloffMode.Linear;
-                seData.volume = _seVolume * baseVolume;
+                float baseVolume = _seMaster.Find(a => a.FileName == staticSe.clip.name).Volume;
+                staticSe.rolloffMode = AudioRolloffMode.Linear;
+                staticSe.volume = _seVolume * baseVolume;
             }
         }
 
@@ -132,12 +139,29 @@ namespace Ryneus{
         }
 
 
-        public void PlaySe(string keyName, float volume = 1.0f)
+        public async void PlaySe(AudioClip clip, float volume,float pitch,int delayFrame = 0)
         {
-            int seIndex = DataSystem.Data.SE.FindIndex(a => a.Key == keyName);
-            if (seIndex > 0)
+            int audioSourceIndex = -1;
+            for (int i = 0;i < _seAudioSourceNum;i++)
             {
-                _seData[seIndex].Play();
+                if (_se[i].isPlaying == false && _playingSe.Contains(_se[i]) == false)
+                {
+                    audioSourceIndex = i;
+                    break;
+                }
+            }
+            if (audioSourceIndex > -1)
+            {
+                _se[audioSourceIndex].clip = clip;
+                _se[audioSourceIndex].volume = volume * _seVolume;
+                _se[audioSourceIndex].pitch = pitch;
+                _playingSe.Add(_se[audioSourceIndex]);
+                if (delayFrame > 0)
+                {
+                    await UniTask.DelayFrame(delayFrame);
+                }
+                _se[audioSourceIndex].Play();
+                _playingSe.Remove(_se[audioSourceIndex]);
             }
         }
 
@@ -147,14 +171,14 @@ namespace Ryneus{
             var seIndex = DataSystem.Data.SE.FindIndex(a => a.Id == (int)sEType);
             if (seIndex > -1)
             {
-                _seData[seIndex].Play();
+                _staticSe[seIndex].Play();
             }
         }
 
         public void AllPause()
         {
 
-            foreach (var data in _seData)
+            foreach (var data in _staticSe)
             {
                 if (data.isPlaying)
                 {
@@ -166,7 +190,7 @@ namespace Ryneus{
         public void AllUnPause()
         {
 
-            foreach (var data in _seData)
+            foreach (var data in _staticSe)
             {
                 if (data.isPlaying)
                 {

@@ -160,7 +160,14 @@ public class BattlerInfoComponent : MonoBehaviour
             }
         },delayCount);
         _battleDamages.Add(battleDamage);
-        ChangeHp(value * -1 + _battlerInfo.Hp);
+        if (damageType == DamageType.HpDamage)
+        {
+            ChangeHp(value * -1 + _battlerInfo.Hp);
+        }
+        if (damageType == DamageType.MpDamage)
+        {
+            ChangeMp(value * -1 + _battlerInfo.Mp);
+        }
     }
 
     public void StartBlink()
@@ -266,6 +273,16 @@ public class BattlerInfoComponent : MonoBehaviour
             if (animationPosition == 1)
             {
                 effectRect.localPosition = new Vector2(0,0);
+            }
+        } else
+        {
+            RectTransform effectRect = effekseerEmitter.gameObject.GetComponent < RectTransform > ();
+            if (animationPosition == 0){
+                effectRect.localPosition = new Vector2(0,0);
+            } else
+            if (animationPosition == 1)
+            {
+                effectRect.localPosition = new Vector2(0,-48);
             }
         }
         effekseerEmitter.enabled = true;

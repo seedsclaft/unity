@@ -92,8 +92,8 @@ public class AlcanaInfo{
     {
         if (_usedAlcana == true)
         {
-            SkillsData.SkillData skillData = DataSystem.Skills.Find(a => a.Id == CurrentSelectAlcana().SkillId);
-            SkillsData.FeatureData featureData = skillData.FeatureDatas.Find(a => a.FeatureType == FeatureType.StatusUpCostDown);
+            SkillData skillData = DataSystem.Skills.Find(a => a.Id == CurrentSelectAlcana().SkillId);
+            SkillData.FeatureData featureData = skillData.FeatureDatas.Find(a => a.FeatureType == FeatureType.StatusUpCostDown);
             if (featureData != null)
             {
                 if (featureData.Param1 == (int)statusParamType)
@@ -109,8 +109,8 @@ public class AlcanaInfo{
     {
         if (_usedAlcana == true)
         {
-            SkillsData.SkillData skillData = DataSystem.Skills.Find(a => a.Id == CurrentSelectAlcana().SkillId);
-            SkillsData.FeatureData featureData = skillData.FeatureDatas.Find(a => a.FeatureType == FeatureType.VictoryGainSp);
+            SkillData skillData = DataSystem.Skills.Find(a => a.Id == CurrentSelectAlcana().SkillId);
+            SkillData.FeatureData featureData = skillData.FeatureDatas.Find(a => a.FeatureType == FeatureType.VictoryGainSp);
             if (featureData != null)
             {
                 return featureData.Param1;
@@ -123,8 +123,8 @@ public class AlcanaInfo{
     {
         if (_usedAlcana == true)
         {
-            SkillsData.SkillData skillData = DataSystem.Skills.Find(a => a.Id == CurrentSelectAlcana().SkillId);
-            SkillsData.FeatureData featureData = skillData.FeatureDatas.Find(a => a.FeatureType == FeatureType.DisableTactics);
+            SkillData skillData = DataSystem.Skills.Find(a => a.Id == CurrentSelectAlcana().SkillId);
+            SkillData.FeatureData featureData = skillData.FeatureDatas.Find(a => a.FeatureType == FeatureType.DisableTactics);
             if (featureData != null)
             {
                 return true;

@@ -8,14 +8,14 @@ public class BattleThumb : MonoBehaviour
     [SerializeField] private GameObject mainThumbRoot = null;
     [SerializeField] private GameObject awakenThumbRoot = null;
 
-    public void ShowMainThumb(ActorsData.ActorData actorData)
+    public void ShowMainThumb(ActorData actorData)
     {
         awakenThumbRoot.SetActive(false);
         mainThumbRoot.SetActive(true);
         UpdateThumb(actorData);
     }
 
-    public void ShowAwakenThumb(ActorsData.ActorData actorData)
+    public void ShowAwakenThumb(ActorData actorData)
     {
         mainThumbRoot.SetActive(false);
         awakenThumbRoot.SetActive(true);
@@ -29,7 +29,7 @@ public class BattleThumb : MonoBehaviour
         Clear();
     }
 
-    private void UpdateThumb(ActorsData.ActorData actorData)
+    private void UpdateThumb(ActorData actorData)
     {
         actorInfoComponent.UpdateData(actorData);
     }

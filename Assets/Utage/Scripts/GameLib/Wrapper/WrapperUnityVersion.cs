@@ -19,6 +19,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System;
 using UnityEngine.Networking;
+
 #if UNITY_EDITOR
 using UnityEditor;
 #if UNITY_5_2_OR_EARLIER
@@ -402,6 +403,9 @@ namespace Utage
 
 #if UTAGE_DISABLE_CACHING
 
+#elif UNITY_2022_1_OR_NEWER
+			//Unity2022から、WebGLでUnityEngine.Cachingが使用不可能に
+			
 #elif UNITY_2017_1_OR_NEWER
 			UnityEngine.Caching.ClearCache();
 #else
@@ -522,6 +526,44 @@ namespace Utage
 			return (webRequest.isNetworkError || webRequest.isHttpError);
 #endif
 		}
+
 #endif
+
+
+		public static T FindObjectOfType<T>()
+			where T : UnityEngine.Object
+		{
+			#if UNITY_2023_1_OR_NEWER
+			return UnityEngine.Object.FindFirstObjectByType<T>();
+			#else
+			return UnityEngine.Object.FindObjectOfType<T>();
+			#endif 
+		}
+
+		public static T[] FindObjectsOfType<T>()
+			where T : UnityEngine.Object
+		{
+
+#if UNITY_2023_1_OR_NEWER
+			return UnityEngine.Object.FindObjectsByType<T>(FindObjectsSortMode.None);
+#else
+			return UnityEngine.Object.FindObjectsOfType<T>();
+#endif
+		}
+
+#if UNITY_EDITOR
+		public static Font LoadDefaultFont()
+		{
+			//UNITY_2022_2_OR_NEWERからデフォルトフォントが変わった
+			//https://unity.com/releases/editor/whats-new/2022.2.0
+#if UNITY_2022_2_OR_NEWER
+			const string defaultFontFile = "LegacyRuntime.ttf";
+#else
+			const string defaultFontFile = "Arial.ttf";
+#endif
+			return Resources.GetBuiltinResource(typeof(Font), defaultFontFile) as Font;
+		}
+#endif
+
 	}
 }

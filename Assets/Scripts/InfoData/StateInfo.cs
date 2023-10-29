@@ -1,6 +1,6 @@
 [System.Serializable]
 public class StateInfo {
-    public StatesData.StateData Master {
+    public StateData Master {
         get {return DataSystem.States.Find(a => a.Id == _stateId);}
     }
     private int _stateId = 0;

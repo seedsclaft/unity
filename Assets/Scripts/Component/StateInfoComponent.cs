@@ -68,7 +68,7 @@ public class StateInfoComponent : MonoBehaviour
             return;
         }
 
-        StatesData.StateData stateData = DataSystem.States.Find(a => a.Id == stateId);
+        StateData stateData = DataSystem.States.Find(a => a.Id == stateId);
         if (stateData == null)
         {
             return;

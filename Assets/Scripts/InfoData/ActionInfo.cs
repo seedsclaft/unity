@@ -11,7 +11,7 @@ public class ActionInfo
 
     private int _lastTargetIndex = 0;
     public int LastTargetIndex => _lastTargetIndex;
-    public SkillsData.SkillData Master {get {return DataSystem.Skills.Find(a => a.Id == _skillId);}}
+    public SkillData Master {get {return DataSystem.Skills.Find(a => a.Id == _skillId);}}
     
     private RangeType _rangeType = RangeType.None;
     public RangeType RangeType => _rangeType;
@@ -59,7 +59,7 @@ public class ActionInfo
 
     public List<ActionInfo> CheckPlusSkill()
     {
-        List<SkillsData.FeatureData> featureDatas = Master.FeatureDatas;
+        List<SkillData.FeatureData> featureDatas = Master.FeatureDatas;
         var PlusSkill = featureDatas.FindAll(a => a.FeatureType == FeatureType.PlusSkill);
         
         List<ActionInfo> actionInfos = new List<ActionInfo>();

@@ -249,7 +249,7 @@ namespace Utage
 			else
 			{
 				string errorMsg = "";
-				errorMsg += row.ToErrorString(ColorUtil.AddColorTag(data.Key, Color.red) + "  is already contains");
+				errorMsg += row.ToErrorString(ColorUtil.ToColorTagErrorMsg(data.Key) + "  is already contains");
 				Debug.LogError(errorMsg);
 			}
 			return null;

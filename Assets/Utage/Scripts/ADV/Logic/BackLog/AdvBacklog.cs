@@ -75,8 +75,10 @@ namespace Utage
 			}
 
 		};
+
+		public List<AdvBacklogDataInPage> DataList => dataList;
 		List<AdvBacklogDataInPage> dataList = new List<AdvBacklogDataInPage>();
-		public List<AdvBacklogDataInPage> DataList {get {return dataList;}}
+		
 		//データの追加
 		internal void AddData(AdvCommandText log, AdvCharacterInfo characterInfo)
 		{

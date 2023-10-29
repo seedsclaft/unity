@@ -545,7 +545,7 @@ namespace Utage
 				msg += this.DebugInfo;
 			}
 			return msg
-				+ ColorUtil.AddColorTag(ToDebugString(), Color.red) + "\n"
+				+ ColorUtil.ToColorTagErrorMsg(ToDebugString()) + "\n"
 				+ "<b>" + Grid.Name + "</b>" + "  : " + lineNo;
 		}
 

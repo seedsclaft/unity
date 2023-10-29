@@ -17,6 +17,8 @@ public class BattleDamage : MonoBehaviour
     [SerializeField] private GameObject mpHealPrefab;
     [SerializeField] private GameObject stateRoot;
     [SerializeField] private GameObject statePrefab;
+    [SerializeField] private GameObject mpDamageRoot;
+    [SerializeField] private GameObject mpDamagePrefab;
     //[SerializeField] private List<TextMeshProUGUI> mpHealList;
 
     private bool _busy = false;
@@ -161,6 +163,8 @@ public class BattleDamage : MonoBehaviour
             return mpHealPrefab;
             case DamageType.State:
             return statePrefab;
+            case DamageType.MpDamage:
+            return mpDamagePrefab;
         }
         return null;
     }
@@ -179,6 +183,8 @@ public class BattleDamage : MonoBehaviour
             return mpHealRoot;
             case DamageType.State:
             return stateRoot;
+            case DamageType.MpDamage:
+            return mpDamageRoot;
         }
         return null;
     }

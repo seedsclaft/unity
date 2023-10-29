@@ -44,7 +44,7 @@ namespace Utage
 		AdvIfManager ifManager = new AdvIfManager();
 
 		//ジャンプのマネージャー
-		internal AdvJumpManager JumpManager { get { return this.jumpManager; } }
+		public AdvJumpManager JumpManager { get { return this.jumpManager; } }
 		AdvJumpManager jumpManager = new AdvJumpManager();
 
 		//待機処理のマネージャー

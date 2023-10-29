@@ -6,6 +6,7 @@ using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 using System;
+using UtageExtensions;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -53,6 +54,10 @@ namespace Utage
 
 		//テキストのリップシンクチェック
 		public LipSynchEvent OnCheckTextLipSync = new LipSynchEvent();
+
+		protected AdvEngine Engine => AdvGraphicBase.Engine;
+		protected AdvGraphicBase AdvGraphicBase => this.GetComponentCacheInParent(ref graphicBase);
+		AdvGraphicBase graphicBase;
 
 		
 		//テキストが今のフレームで更新されているか（falseの場合はリップシンクが止まる）
@@ -196,15 +201,7 @@ namespace Utage
 			{
 				case LipSynchType.Voice:
 				case LipSynchType.TextAndVoice:
-					SoundManager soundManager = SoundManager.GetInstance();
-					if (soundManager != null)
-					{
-						if (soundManager.IsPlayingVoice(CharacterLabel))
-						{
-							return true;
-						}
-					}
-					break;
+					return Engine.ScenarioSound.IsPlayingScenarioVoice(CharacterLabel);
 				default:
 					break;
 			}

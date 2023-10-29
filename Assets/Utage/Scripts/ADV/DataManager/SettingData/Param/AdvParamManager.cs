@@ -292,6 +292,16 @@ namespace Utage
 			AdvParamData data;
 			return CheckSetParameterSub(key, parameter, out data);
 		}
+		
+		//指定のキーのパラメーターが存在するかチェック
+		public bool ExistParameter(string key)
+		{
+			if (TryGetParamData(key, out var data))
+			{
+				return true;
+			}
+			return false;
+		}
 
 		/// <summary>
 		/// 値の取得

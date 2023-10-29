@@ -77,7 +77,7 @@ public class SkillInfoComponent : MonoBehaviour
         }
         if (description != null)
         {
-            description.text = skillData.Help;
+            description.text = skillData.ConvertHelpText(skillData.Help);
         }
     }
 

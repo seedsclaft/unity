@@ -1,4 +1,4 @@
-﻿using System.Collections;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
@@ -10,42 +10,34 @@ abstract public class DataSystem
 {
     private static DataManager _data;
     public static DataManager Data => _data;
-    private static List<ActorsData.ActorData> _actors;
-    public static List<ActorsData.ActorData> Actors => _actors;
-    private static SystemData _system;
-    public static SystemData System => _system;
+    public static List<ActorData> Actors;
+    public static List<AdvData> Advs;
+    public static List<EnemyData> Enemies;
+    public static List<RuleData> Rules = new ();
+    public static List<SkillData> Skills = new ();
+    public static List<StageData> Stages = new ();
+    public static List<StateData> States = new ();
+    public static List<TroopData> Troops = new ();
+    public static SystemData System;
 
-    private static EnemiesData _enemies;
-    public static List<EnemiesData.EnemyData> Enemies => _enemies._data;
 
-    private static SkillsData _skills;
-    public static List<SkillsData.SkillData> Skills => _skills._data;
-    public static List<SystemData.CommandData> TacticsCommand => _system.TacticsCommandData;
-    public static List<SystemData.CommandData> TitleCommand => _system.TitleCommandData;
-    public static List<SystemData.CommandData> StatusCommand => _system.StatusCommandData;
-    public static List<SystemData.OptionCommand> OptionCommand => _system.OptionCommandData;
-    public static List<int> InitActors => _system.InitActors;
+
+    public static List<SystemData.CommandData> TacticsCommand => System.TacticsCommandData;
+    public static List<SystemData.CommandData> TitleCommand => System.TitleCommandData;
+    public static List<SystemData.CommandData> StatusCommand => System.StatusCommandData;
+    public static List<SystemData.OptionCommand> OptionCommand => System.OptionCommandData;
+    public static List<int> InitActors => System.InitActors;
     
-    private static StagesData _stages;
-    public static List<StagesData.StageData> Stages => _stages._data;
     
-    private static TroopsData _troops;
-    public static List<TroopsData.TroopData> Troops => _troops._data;
-    
-    private static StatesData _states;
-    public static List<StatesData.StateData> States => _states._data;
+
+
 
     private static AlcanaData _alcana;
     public static List<AlcanaData.Alcana> Alcana => _alcana._data;
 
-    private static AdvsData _advs;
-    public static List<AdvsData.AdvData> Advs => _advs._data;
 
-    private static TipsData _tips;
-    public static List<TipsData.TipData> Tips => _tips._data;
 
-    private static RulesData _rules;
-    public static List<RulesData.RuleData> Rules => _rules._data;
+
 
     public static void LoadData(){
         /*
@@ -74,17 +66,23 @@ abstract public class DataSystem
         
         AddressablesKey.LoadAssetAsync<DataManager>("Assets/Data/MainData.asset",(data) => {DataSystem._data = data;});
         */
-        DataSystem._actors = Resources.Load<ActorsData>("Data/Actors")._data;
-        DataSystem._system = Resources.Load<SystemData>("Data/System");
-        DataSystem._enemies = Resources.Load<EnemiesData>("Data/Enemies");
-        DataSystem._skills = Resources.Load<SkillsData>("Data/Skills");
-        DataSystem._stages = Resources.Load<StagesData>("Data/Stages");
-        DataSystem._troops = Resources.Load<TroopsData>("Data/Troops");
-        DataSystem._states = Resources.Load<StatesData>("Data/States");
+        Actors = Resources.Load<ActorDatas>("Data/Actors").Data;
+        Advs = Resources.Load<AdvDatas>("Data/Advs").Data;
+        Enemies = Resources.Load<EnemyDatas>("Data/Enemies").Data;
+        Rules = Resources.Load<RuleDatas>("Data/Rules").Data;
+        Skills = Resources.Load<SkillDatas>("Data/Skills").Data;
+        Stages = Resources.Load<StageDatas>("Data/Stages").Data;
+        States = Resources.Load<StateDatas>("Data/States").Data;
+        System = Resources.Load<SystemData>("Data/System");
+        Troops = Resources.Load<TroopDatas>("Data/Troops").Data;
         DataSystem._alcana = Resources.Load<AlcanaData>("Data/Alcana");
-        DataSystem._advs = Resources.Load<AdvsData>("Data/Advs");
-        DataSystem._tips = Resources.Load<TipsData>("Data/Tips");
-        DataSystem._rules = Resources.Load<RulesData>("Data/Rules");
         DataSystem._data = Resources.Load<DataManager>("Data/MainData");
     }
+}
+
+[Serializable]
+public class TextData {
+    public int Id;
+    public string Text;
+    public string Help;
 }

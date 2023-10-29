@@ -108,7 +108,7 @@ public class ActorInfoComponent : MonoBehaviour
     }
 
 
-    public void UpdateData(ActorsData.ActorData actorData)
+    public void UpdateData(ActorData actorData)
     {
         if (mainThumb != null)
         {

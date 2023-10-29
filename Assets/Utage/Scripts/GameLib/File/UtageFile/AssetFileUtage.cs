@@ -30,6 +30,9 @@ namespace Utage
 			{
 #if UTAGE_DISABLE_CACHING
 				return false;
+#elif UNITY_2022_1_OR_NEWER
+				//Unity2022から、WebGLでUnityEngine.Cachingが使用不可能に
+				return false;
 #else
 				if (LoadPath == null || FileInfo == null || FileInfo.AssetBundleInfo == null)
 				{

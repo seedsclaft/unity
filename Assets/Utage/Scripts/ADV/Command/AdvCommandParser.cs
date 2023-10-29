@@ -111,6 +111,7 @@ namespace Utage
 		public const string IdJumpSubroutineRandom = "JumpSubroutineRandom";			//ランダムにサブルーチンへ飛ぶ
 		public const string IdJumpSubroutineRandomEnd = "JumpSubroutineRandomEnd";	//ランダムにサブルーチンへ飛ぶ終了
 		public const string IdEndSubroutine = "EndSubroutine";		//サブルーチン終了
+		public const string IdExitSubroutine = "ExitSubroutine";	//サブルーチンを抜ける
 
 		public const string IdBeginMacro = "BeginMacro";			//マクロ定義開始
 		public const string IdEndMacro = "EndMacro";				//マクロ定義終了
@@ -365,6 +366,8 @@ namespace Utage
 					return new AdvCommandJumpSubroutineRandomEnd(row, dataManager);
 				case IdEndSubroutine:
 					return new AdvCommandEndSubroutine(row, dataManager);
+				case IdExitSubroutine:
+					return new AdvCommandExitSubroutine(row, dataManager);
 
 				case IdIf:
 					return new AdvCommandIf(row, dataManager);

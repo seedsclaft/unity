@@ -28,7 +28,7 @@ namespace Utage
 		{
 			if (null == instance)
 			{
-				instance = FindObjectOfType<SoundManager>();
+				instance = WrapperUnityVersion.FindObjectOfType<SoundManager>();
 			}
 			return instance;
 		}
@@ -244,7 +244,7 @@ namespace Utage
 		}
 		SoundManagerSystemInterface system;
 
-		//実際の処理をするシステム部分
+		//拡張機能に対応したインターフェースがあれば取得
 		public SoundManagerSystemInterfaceEx SystemEx
 		{
 			get

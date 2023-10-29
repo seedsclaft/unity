@@ -513,7 +513,7 @@ namespace Utage
 
 		static public Font LoadArialFont()
 		{
-			return Resources.GetBuiltinResource(typeof(Font), "Arial.ttf") as Font;
+			return WrapperUnityVersion.LoadDefaultFont();
 		}
 	}
 }

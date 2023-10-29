@@ -17,7 +17,7 @@ namespace Utage
 			string path = MonoScriptHelper.CurrentUtageRootDirectory + "/Sample/Resources/Sample";
 			if (System.IO.Directory.Exists(path))
 			{
-				Debug.LogWarning( ColorUtil.AddColorTag( "Sample resouces exist. Delete or move folder " + path, Color.red ));
+				Debug.LogWarning( ColorUtil.ToColorTagErrorMsg( "Sample resources exist. Delete or move folder " + path));
 			}
 		}
 	}

@@ -64,7 +64,7 @@ public class GetItemInfo
         SetResultData(trainResult);
     }
 
-    public void MakeAlchemyResult(string name,SkillsData.SkillData skillData)
+    public void MakeAlchemyResult(string name,SkillData skillData)
     {
         SetTitleData(DataSystem.System.GetReplaceText(3000,name));
         SetSkillElementId((int)skillData.Attribute);
@@ -72,7 +72,7 @@ public class GetItemInfo
         SetResultData(DataSystem.System.GetReplaceText(3002,magicAlchemy));    
     }
 
-    public void MakeAlchemyBonusResult(SkillsData.SkillData skillData)
+    public void MakeAlchemyBonusResult(SkillData skillData)
     {
         SetTitleData(DataSystem.System.GetTextData(14040).Text);
         SetResultData(skillData.Name);

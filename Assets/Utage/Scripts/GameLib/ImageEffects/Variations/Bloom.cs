@@ -43,12 +43,17 @@ namespace Utage
             int divider = resolution == Resolution.Low ? 4 : 2;
             float widthMod = resolution == Resolution.Low ? 0.5f : 1.0f;
 
-            Material.SetVector ("_Parameter", new Vector4 (blurSize * widthMod, 0.0f, threshold, intensity));
+#if UNITY_2021_3_OR_NEWER	
+			//Unity2021.3.23以降のエラー対策。描画時に使用しなくても、前回のテクスチャ設定が残っているとエラーになるのでいったんクリアする
+			Material.SetTexture("_MainTex", null);
+			Material.SetTexture("_Bloom", null);
+#endif
+			Material.SetVector ("_Parameter", new Vector4 (blurSize * widthMod, 0.0f, threshold, intensity));
             source.filterMode = FilterMode.Bilinear;
 
             var rtW= source.width/divider;
             var rtH= source.height/divider;
-
+            
             // downsample
             RenderTexture rt = RenderTexture.GetTemporary (rtW, rtH, 0, source.format);
             rt.filterMode = FilterMode.Bilinear;
@@ -76,8 +81,8 @@ namespace Utage
             }
 
 			Material.SetTexture ("_Bloom", rt);
-
-            Graphics.Blit (source, destination, Material, 0);
+			
+			Graphics.Blit (source, destination, Material, 0);
 
             RenderTexture.ReleaseTemporary (rt);
         }

@@ -82,12 +82,14 @@ namespace Utage
 				importer.textureType = TextureImporterType.Sprite;
 				hasChanged = true;
 			}
+#if !UNITY_2021_1_OR_NEWER
 			//スプライトタグ
 			if (importer.spritePackingTag != spritePackingTag)
 			{
 				importer.spritePackingTag = spritePackingTag;
 				hasChanged = true;
 			}
+#endif
 			if (importer.isReadable != false)
 			{
 				importer.isReadable = false;
@@ -115,12 +117,16 @@ namespace Utage
 				hasChanged = true;
 			}
 #endif
+			
+#if false
 			//テクスチャサイズの設定
 			if (importer.maxTextureSize != 2048)
 			{
 				importer.maxTextureSize = 2048;
 				hasChanged = true;
 			}
+#endif
+			
 			//Non Power of 2
 			if (importer.npotScale != TextureImporterNPOTScale.None)
 			{

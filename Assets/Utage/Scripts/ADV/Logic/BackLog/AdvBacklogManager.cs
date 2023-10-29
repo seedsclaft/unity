@@ -40,6 +40,11 @@ namespace Utage
 		[SerializeField]
 		BacklogEvent onAddData = new BacklogEvent();
 
+		//ログのあるページデータが追加されたときに呼ばれる
+		public BacklogEvent OnPostAddData { get { return onPostAddData; } }
+		[SerializeField]
+		BacklogEvent onPostAddData = new BacklogEvent();
+
 		/// <summary>
 		/// バックログデータのリスト
 		/// </summary>
@@ -102,6 +107,7 @@ namespace Utage
 			if (log != null)
 			{
 				log.AddData(dataInPage, characterInfo);
+				onPostAddData.Invoke(this);
 			}
 		}
 

@@ -211,6 +211,13 @@ namespace Utage
 			return player.IsPlaying();
 		}
 
+		internal bool IsPlaying(string label, AssetFile file)
+		{
+			SoundAudioPlayer player = GetPlayer(label);
+			if (player == null) return false;
+			return player.IsPlaying(file);
+		}
+
 		internal bool IsPlayingLoop(string label)
 		{
 			SoundAudioPlayer player = GetPlayer(label);

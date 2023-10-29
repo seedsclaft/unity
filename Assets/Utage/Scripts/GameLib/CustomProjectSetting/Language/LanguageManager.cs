@@ -14,7 +14,7 @@ namespace Utage
 		{
 			if (!IgnoreLocalizeUiText)
 			{
-				UguiLocalizeBase[] localizeTbl = GameObject.FindObjectsOfType<UguiLocalizeBase>();
+				UguiLocalizeBase[] localizeTbl = WrapperUnityVersion.FindObjectsOfType<UguiLocalizeBase>();
 				foreach (var item in localizeTbl)
 				{
 					item.OnLocalize();

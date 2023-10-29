@@ -19,12 +19,11 @@ namespace Utage
 		{
 			if (null == instance)
 			{
-				instance = (DebugPrint)FindObjectOfType(typeof(DebugPrint));
+				instance = WrapperUnityVersion.FindObjectOfType<DebugPrint>();
 			}
 			return instance;
 		}
 		static DebugPrint instance;
-
 		/// <summary>
 		/// デバッグログの追加
 		/// </summary>

@@ -91,6 +91,13 @@ namespace Utage
 			return group.IsPlaying(label);
 		}
 
+		public bool IsPlaying(string groupName, string label, AssetFile file)
+		{
+			SoundGroup group = GetGroup(groupName);
+			if (group == null) return false;
+			return group.IsPlaying(label,file);
+		}
+
 		public bool IsPlaying(string groupName)
 		{
 			SoundGroup group = GetGroup(groupName);

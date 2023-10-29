@@ -18,7 +18,7 @@ namespace Utage
 		string startScenario = "";
 
 		/// <summary>ADVエンジン</summary>
-		public AdvEngine Engine { get { return this.engine ?? (this.engine = FindObjectOfType<AdvEngine>() as AdvEngine); } }
+		public AdvEngine Engine { get { return this.GetComponentCacheFindIfMissing(ref engine); } }
 		[SerializeField]
 		AdvEngine engine;
 

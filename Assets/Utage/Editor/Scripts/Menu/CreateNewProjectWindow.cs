@@ -49,7 +49,7 @@ namespace Utage
 			{
 				if (uiFont == null)
 				{
-					uiFont = Resources.GetBuiltinResource(typeof(Font), "Arial.ttf") as Font;
+					uiFont = WrapperUnityVersion.LoadDefaultFont();
 				}
 				return uiFont;
 			}
@@ -259,7 +259,7 @@ namespace Utage
 			InitUtageEngine();
 
 			//エンジン休止状態に
-			AdvEngine engine = GameObject.FindObjectOfType<AdvEngine>();
+			AdvEngine engine = WrapperUnityVersion.FindObjectOfType<AdvEngine>();
 			engine.gameObject.SetActive(false);
 
 			ChangeLayerInCurrentScene();
@@ -360,15 +360,15 @@ namespace Utage
 		void InitUtageEngine()
 		{
 			//シナリオデータの設定
-			AdvEngine engine = GameObject.FindObjectOfType<AdvEngine>();
-			AdvEngineStarter starter = GameObject.FindObjectOfType<AdvEngineStarter>();
+			AdvEngine engine = WrapperUnityVersion.FindObjectOfType<AdvEngine>();
+			AdvEngineStarter starter = WrapperUnityVersion.FindObjectOfType<AdvEngineStarter>();
 
 //			AdvScenarioDataExported exportedScenarioAsset = UtageEditorToolKit.LoadAssetAtPath<AdvScenarioDataExported>(GetScenarioAssetRelativePath());
 //			AdvScenarioDataExported[] exportedScenarioDataTbl = { exportedScenarioAsset };
 			starter.InitOnCreate(engine, AdvScenarioDataBuilderWindow.ProjectData.Scenarios, newProjectName);
 			starter.ScenarioDataProject = AdvScenarioDataBuilderWindow.ProjectData;
 
-			LetterBoxCamera[] cameras = GameObject.FindObjectsOfType<LetterBoxCamera>();
+			LetterBoxCamera[] cameras = WrapperUnityVersion.FindObjectsOfType<LetterBoxCamera>();
 			foreach (LetterBoxCamera camera in cameras)
 			{
 				camera.Width = camera.MaxWidth = gameScreenWidth;
@@ -376,14 +376,14 @@ namespace Utage
 			}
 
 			//セーブファイルの場所の設定
-			AdvSaveManager saveManager = GameObject.FindObjectOfType<AdvSaveManager>();
+			AdvSaveManager saveManager = WrapperUnityVersion.FindObjectOfType<AdvSaveManager>();
 			saveManager.DirectoryName = "Save" + newProjectName;
 
-			AdvSystemSaveData systemSaveData = GameObject.FindObjectOfType<AdvSystemSaveData>();
+			AdvSystemSaveData systemSaveData = WrapperUnityVersion.FindObjectOfType<AdvSystemSaveData>();
 			systemSaveData.DirectoryName = "Save" + newProjectName;
 
 			//シークレットキーの設定
-			FileIOManager[] fileIOManagers = GameObject.FindObjectsOfType<FileIOManager>();
+			FileIOManager[] fileIOManagers = WrapperUnityVersion.FindObjectsOfType<FileIOManager>();
 			foreach( FileIOManager item in fileIOManagers )
 			{
 				item.SetCryptKey(this.secretKey);
@@ -543,6 +543,7 @@ namespace Utage
 					}
 					else
 					{
+#if !UNITY_2021_1_OR_NEWER
 						Sprite sprite = clone as Sprite;
 						if (sprite != null)
 						{
@@ -556,6 +557,7 @@ namespace Utage
 								EditorUtility.SetDirty(importer);
 							}
 						}
+#endif
 						Object template = AssetDatabase.LoadAssetAtPath(templatePath, clone.GetType());
 						if (template != null)
 						{
@@ -664,7 +666,7 @@ namespace Utage
 		//フォントを変更
 		void FontChange( bool autoSave )
 		{
-			Font arialFont = Resources.GetBuiltinResource(typeof(Font), "Arial.ttf") as Font;
+			Font arialFont = WrapperUnityVersion.LoadDefaultFont();
 
 			if (this.UiFont == arialFont) return;
 			if (this.UiFont == null) return;
@@ -688,3 +690,4 @@ namespace Utage
 		}
 	}
 }
+

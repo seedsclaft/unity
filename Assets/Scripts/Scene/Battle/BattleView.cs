@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Battle;
 using Effekseer;
+using Effekseer.Internal;
 
 public class BattleView : BaseView ,IInputHandlerEvent
 {
@@ -39,6 +40,8 @@ public class BattleView : BaseView ,IInputHandlerEvent
     }
     private bool _animationBusy = false;
     public bool AnimationBusy => _animationBusy;
+    
+    private List<MakerEffectData.SoundTimings> _soundTimings = null;
 
     private Dictionary<int,BattlerInfoComponent> _battlerComps = new Dictionary<int, BattlerInfoComponent>();
     private int _animationEndTiming = 0;
@@ -297,7 +300,7 @@ public class BattleView : BaseView ,IInputHandlerEvent
         _commandData(eventData);
     }
 
-    public void ShowSkillActionList(BattlerInfo battlerInfo,ActorsData.ActorData actorData)
+    public void ShowSkillActionList(BattlerInfo battlerInfo,ActorData actorData)
     {
         skillList.ShowActionList();
         sideMenuList.gameObject.SetActive(true);
@@ -500,7 +503,7 @@ public class BattleView : BaseView ,IInputHandlerEvent
         }
     }
 
-    public void SetCurrentSkillData(SkillsData.SkillData skillData)
+    public void SetCurrentSkillData(SkillData skillData)
     {
         if (skillData.Id >= 100)
         {
@@ -540,6 +543,26 @@ public class BattleView : BaseView ,IInputHandlerEvent
         }
         // transformの位置でエフェクトを再生する
         EffekseerHandle handle = EffekseerSystem.PlayEffect(effekseerEffectAsset, centerAnimPosition.transform.position);
+    }
+
+    public void PlayMakerEffectSound(List<MakerEffectData.SoundTimings> soundTimings)
+    {
+        if (GameSystem.ConfigData._battleAnimationSkip == true) 
+        {
+            return;
+        }
+        _soundTimings = soundTimings;
+        if (_soundTimings != null)
+        {
+            foreach (var soundTimingsData in _soundTimings)
+            {
+                var clip = Resources.Load<AudioClip>("Animations/Sound/" + soundTimingsData.se.name);
+                var volume = soundTimingsData.se.volume * 0.01f;
+                var pitch = soundTimingsData.se.pitch * 0.01f;
+                var frame = soundTimingsData.frame;
+                Ryneus.SoundManager.Instance.PlaySe(clip,volume,pitch,frame);
+            }
+        }
     }
 
     public void StartAnimationDemigod(EffekseerEffectAsset effekseerEffectAsset)

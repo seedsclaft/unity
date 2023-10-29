@@ -95,7 +95,7 @@ public class TacticsComponent : MonoBehaviour
 
         if (enemyInfoComponent != null)
         {
-            EnemiesData.EnemyData enemyData = DataSystem.Enemies.Find(a => a.Id == actorInfo.NextBattleEnemyId);
+            EnemyData enemyData = DataSystem.Enemies.Find(a => a.Id == actorInfo.NextBattleEnemyId);
             enemyInfoComponent.UpdateData(enemyData);
         }
 

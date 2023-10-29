@@ -9,10 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7b9ea7d0009faa24880a1cfcf913482f, type: 3}
+  m_Script: {fileID: 11500000, guid: 60f9a58dd26097d45be260097bd4d4a7, type: 3}
   m_Name: Advs
   m_EditorClassIdentifier: 
-  _data:
+  Data:
   - Id: 1
     AdvName: Tutorial1
     EndJump: 0
@@ -76,6 +76,9 @@ MonoBehaviour:
   - Id: 116
     AdvName: Event1_6
     EndJump: 0
+  - Id: 117
+    AdvName: Event1_7
+    EndJump: 0
   - Id: 121
     AdvName: Event2_1
     EndJump: 0
@@ -93,6 +96,9 @@ MonoBehaviour:
     EndJump: 0
   - Id: 126
     AdvName: Event2_6
+    EndJump: 0
+  - Id: 127
+    AdvName: Event2_7
     EndJump: 0
   - Id: 131
     AdvName: Stage2_1
@@ -118,6 +124,9 @@ MonoBehaviour:
   - Id: 146
     AdvName: Event3_6
     EndJump: 0
+  - Id: 147
+    AdvName: Event3_7
+    EndJump: 0
   - Id: 151
     AdvName: Event4_1
     EndJump: 0
@@ -133,6 +142,12 @@ MonoBehaviour:
   - Id: 155
     AdvName: Event4_5
     EndJump: 0
+  - Id: 156
+    AdvName: Event4_6
+    EndJump: 0
+  - Id: 157
+    AdvName: Event4_7
+    EndJump: 0
   - Id: 161
     AdvName: Event5_1
     EndJump: 0
@@ -147,6 +162,12 @@ MonoBehaviour:
     EndJump: 0
   - Id: 165
     AdvName: Event5_5
+    EndJump: 0
+  - Id: 166
+    AdvName: Event5_6
+    EndJump: 0
+  - Id: 167
+    AdvName: Event5_7
     EndJump: 0
   - Id: 171
     AdvName: Event6_1

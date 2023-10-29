@@ -90,18 +90,18 @@ public class StrategyModel : BaseModel
             if (actorInfos[i].TacticsComandType == TacticsComandType.Alchemy)
             {
                 bool alchemyBonus = PartyInfo.GetAlchemyNuminosValue();
-                SkillsData.SkillData skillData = DataSystem.Skills.Find(a => a.Id == actorInfos[i].NextLearnSkillId);
+                SkillData skillData = DataSystem.Skills.Find(a => a.Id == actorInfos[i].NextLearnSkillId);
                 getItemInfo.MakeAlchemyResult(actorName,skillData);
                 actorInfos[i].LearnSkill(actorInfos[i].NextLearnSkillId);
                 if (alchemyBonus)
                 {
-                    List<SkillsData.SkillData> getSkillDatas = DataSystem.Skills.FindAll(a => a.Rank == 1 && (int)a.Attribute == (int)skillData.Attribute && !PartyInfo.AlchemyIdList.Contains(a.Id));
+                    List<SkillData> getSkillDatas = DataSystem.Skills.FindAll(a => a.Rank == 1 && (int)a.Attribute == (int)skillData.Attribute && !PartyInfo.AlchemyIdList.Contains(a.Id));
                     if (getSkillDatas.Count > 0)
                     {
                         GetItemInfo bonusGetItemInfo = new GetItemInfo(null);
                         int rand2 = UnityEngine.Random.Range(0,getSkillDatas.Count);
                         PartyInfo.AddAlchemy(getSkillDatas[rand2].Id);
-                        SkillsData.SkillData randSkillData = DataSystem.Skills.Find(a => a.Id == getSkillDatas[rand2].Id);
+                        SkillData randSkillData = DataSystem.Skills.Find(a => a.Id == getSkillDatas[rand2].Id);
                         bonusGetItemInfo.MakeAlchemyBonusResult(randSkillData);
                         getItemInfos.Add(bonusGetItemInfo);
                     }
@@ -258,7 +258,7 @@ public class StrategyModel : BaseModel
                 int rand = UnityEngine.Random.Range(0,100);
                 if (getItemInfo.Param2 >= rand)
                 {
-                    List< SkillsData.SkillData> getSkillDatas = DataSystem.Skills.FindAll(a => a.Rank == getItemInfo.Param1 && (int)a.Attribute == (int)getItemInfo.GetItemType - 10 && !PartyInfo.AlchemyIdList.Contains(a.Id)); 
+                    List< SkillData> getSkillDatas = DataSystem.Skills.FindAll(a => a.Rank == getItemInfo.Param1 && (int)a.Attribute == (int)getItemInfo.GetItemType - 10 && !PartyInfo.AlchemyIdList.Contains(a.Id)); 
                     if (getSkillDatas.Count > 0)
                     {
                         int rand2 = UnityEngine.Random.Range(0,getSkillDatas.Count);

@@ -222,7 +222,7 @@ namespace Utage
 						string errorMsg = "";
 						if( !string.IsNullOrEmpty(key) )
 						{
-							errorMsg += row.ToErrorString( ColorUtil.AddColorTag(key,Color.red)+ "  is already contains");
+							errorMsg += row.ToErrorString( ColorUtil.ToColorTagErrorMsg(key)+ "  is already contains");
 							Debug.LogError(errorMsg);
 						}
 					}

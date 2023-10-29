@@ -54,8 +54,11 @@ namespace Utage
             blurAmount = Mathf.Clamp( blurAmount, 0.0f, 0.92f );
 
 			// Setup the texture and floating point values in the shader
+
+#if !UNITY_2021_3_OR_NEWER
 			Material.SetTexture("_MainTex", accumTexture);
-            Material.SetFloat("_AccumOrig", 1.0F-blurAmount);
+#endif
+			Material.SetFloat("_AccumOrig", 1.0F-blurAmount);
 
             // We are accumulating motion over frames without clear/discard
             // by design, so silence any performance warnings from Unity

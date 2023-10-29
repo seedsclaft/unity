@@ -84,13 +84,19 @@ namespace Utage
 
 			Profiler.BeginSample("シナリオラベルデータを作成");
 			//シナリオラベルデータを作成
-			MakeScanerioLabelData(commandList);
+			bool useScenarioLabel = CustomProjectSetting.Instance == null || CustomProjectSetting.Instance.UseSheetNameToScenarioLabel;
+			MakeScanerioLabelData(commandList,useScenarioLabel);
 			Profiler.EndSample();
 
 			Profiler.BeginSample("このシナリオからリンクするジャンプ先のシナリオラベルを取得");
 			//このシナリオからリンクするジャンプ先のシナリオラベルを取得
 			MakeJumpDataList(commandList);
 			Profiler.EndSample();
+
+			Profiler.BeginSample("シナリオラデータのエラーチェック");
+			CheckError(dataManager);
+			Profiler.EndSample();
+
 			isInit = true;
 		}
 
@@ -126,7 +132,7 @@ namespace Utage
 
 
 		//シナリオラベル区切りのデータを作成
-		void MakeScanerioLabelData(List<AdvCommand> commandList)
+		void MakeScanerioLabelData(List<AdvCommand> commandList, bool useScenarioLabel )
 		{
 			if (commandList.Count <= 0) return;
 
@@ -157,13 +163,28 @@ namespace Utage
 				else
 				{
 					//ラベルデータ追加
-					AdvScenarioLabelData next = new AdvScenarioLabelData(scenarioLabel, scenarioLabelCommand, commandList.GetRange(begin, commandIndex - begin));
-					if (scenarioLabelData != null)
+					var commands = commandList.GetRange(begin, commandIndex - begin);
+					
+					bool skip = false;
+					if (!useScenarioLabel && begin == 0)
 					{
-						scenarioLabelData.Next = next;
+						//シート名を使わない場合の特殊処理
+						skip = true;
+						if (commands.Count != 0)
+						{
+							Debug.LogError("Missing Scenario Label in " + DataGridName + " " + Name);
+						}
 					}
-					scenarioLabelData = next;
-					scenarioLabels.Add(scenarioLabel, next);
+					if (!skip)
+					{
+						AdvScenarioLabelData next = new AdvScenarioLabelData(scenarioLabel, scenarioLabelCommand, commandList.GetRange(begin, commandIndex - begin));
+						if (scenarioLabelData != null)
+						{
+							scenarioLabelData.Next = next;
+						}
+						scenarioLabelData = next;
+						scenarioLabels.Add(scenarioLabel, next);
+					}
 				}
 
 				if (commandIndex >= commandList.Count)
@@ -196,7 +217,16 @@ namespace Utage
 					}
 				});
 		}
-
+		
+		//エラーチェック
+		void CheckError(AdvSettingDataManager dataManager)
+		{
+			foreach (var keyValue in ScenarioLabels)
+			{
+				var scenarioLabelData = keyValue.Value;
+				scenarioLabelData.CheckErrorCommands(dataManager);
+			}
+		}
 
 		/// <summary>
 		/// バックグランドでダウンロードだけする

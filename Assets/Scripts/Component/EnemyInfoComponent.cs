@@ -62,7 +62,7 @@ public class EnemyInfoComponent : MonoBehaviour
         statusInfoComponent.UpdateMp(value,maxHp);
     }
 
-    public void UpdateData(EnemiesData.EnemyData enemyData)
+    public void UpdateData(EnemyData enemyData)
     {
         if (enemyData == null)
         {

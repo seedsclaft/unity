@@ -1,11 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Cysharp.Threading.Tasks;
+using DG.Tweening;
 
 public class SkillActionList : ListWindow , IInputHandlerEvent
 {
-    [SerializeField] private int rows = 0;
-
     private List<SkillInfo> _skillInfos = new List<SkillInfo>();
 
     public SkillInfo Data{
@@ -18,8 +18,8 @@ public class SkillActionList : ListWindow , IInputHandlerEvent
         }
     }
     public void Initialize()
-    {
-        InitializeListView(rows);
+    { 
+        InitializeListView(0);
         // スクロールするものはObjectList.CountでSetSelectHandlerを登録する
         for (int i = 0; i < ObjectList.Count;i++)
         {
@@ -35,13 +35,31 @@ public class SkillActionList : ListWindow , IInputHandlerEvent
 
     public void SetSkillInfos(List<SkillInfo> skillInfoData)
     {
-        //_skillInfos.Clear();
+        if (skillInfoData.Count > ObjectList.Count)
+        {
+            var objectListCount = ObjectList.Count;
+            AddCreateList(skillInfoData.Count-ObjectList.Count);
+            for (int i = 0; i < ObjectList.Count;i++)
+            {
+                if (i >= objectListCount)
+                {
+                    SkillAction skillAction = ObjectList[i].GetComponent<SkillAction>();
+                    skillAction.SetCallHandler((d) => {
+                        CallListInputHandler(InputKeyType.Decide);
+                    });
+                    skillAction.SetSelectHandler((data) => UpdateSelectIndex(data));
+                }
+            }
+        }
+        //SetInputCallHandler((a) => CallSelectHandler(a));
         _skillInfos = skillInfoData;
         SetDataCount(skillInfoData.Count);
+        SetItemCount(skillInfoData.Count);
     }
 
-    public void Refresh(int selectIndex = 0)
+    public async void Refresh(int selectIndex = 0)
     {
+        UpdateSelectIndex(-1);
         for (int i = 0; i < ObjectList.Count;i++)
         {
             if (i < _skillInfos.Count) 
@@ -51,14 +69,18 @@ public class SkillActionList : ListWindow , IInputHandlerEvent
             }
             ObjectList[i].SetActive(i < _skillInfos.Count);
         }
-        //ResetScrollPosition();
-        ResetScrollRect();
-        for (int i = 0;i < selectIndex;i++)
-        {
-            UpdateScrollRect(InputKeyType.Down);
-        }
-        UpdateSelectIndex(selectIndex);
         UpdateAllItems();
+        //ResetScrollPosition();
+        
+        await UniTask.DelayFrame(1);
+        UpdateSelectIndex(selectIndex);
+        if (selectIndex > 0)
+        {
+            UpdateScrollRect(selectIndex);
+        } else
+        {        
+            ResetScrollRect();
+        }
     }
 
     public void RefreshCostInfo()

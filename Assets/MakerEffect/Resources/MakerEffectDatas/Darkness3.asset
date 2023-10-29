@@ -1,0 +1,72 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 8
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 701a5690741d43a439191cab4276881c, type: 3}
+  m_Name: Darkness3
+  m_EditorClassIdentifier: 
+  AssetData:
+    id: 196
+    displayType: 2
+    effectName: Darkness3
+    flashTimings:
+    - frame: 9
+      duration: 30
+      color: 9900000000000000ff00000055000000
+    - frame: 29
+      duration: 30
+      color: 9900000000000000ff00000088000000
+    name: "\u95C7\u9B54\u6CD53"
+    offsetX: 0
+    offsetY: 0
+    rotation:
+      x: 0
+      y: 0
+      z: 0
+    scale: 100
+    soundTimings:
+    - frame: 0
+      se:
+        name: Fire9
+        pan: 0
+        pitch: 150
+        volume: 80
+    - frame: 9
+      se:
+        name: Fire9
+        pan: 0
+        pitch: 150
+        volume: 80
+    - frame: 11
+      se:
+        name: Darkness4
+        pan: 0
+        pitch: 100
+        volume: 100
+    - frame: 19
+      se:
+        name: Thunder13
+        pan: 0
+        pitch: 150
+        volume: 90
+    - frame: 19
+      se:
+        name: Fire9
+        pan: 0
+        pitch: 150
+        volume: 80
+    - frame: 21
+      se:
+        name: Darkness4
+        pan: 0
+        pitch: 100
+        volume: 100
+    speed: 100
+    timings: 

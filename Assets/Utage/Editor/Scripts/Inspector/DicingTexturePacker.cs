@@ -334,7 +334,8 @@ namespace Utage
 			}
 #endif
 			//テクスチャサイズの設定
-			if (importer.maxTextureSize != maxTextureSize)
+//			if (importer.maxTextureSize != maxTextureSize)
+			if (importer.maxTextureSize < maxTextureSize)	//アトラスの解像度未満にはならないようにしておく
 			{
 				importer.maxTextureSize = maxTextureSize;
 				hasChanged = true;

@@ -5,7 +5,7 @@ using System.Collections.Generic;
 [Serializable]
 public class SkillInfo 
 {
-    public SkillsData.SkillData Master {get {return DataSystem.Skills.Find(a => a.Id == _id);}}
+    public SkillData Master {get {return DataSystem.Skills.Find(a => a.Id == _id);}}
     private int _id;
     public int Id => _id;
     
@@ -26,8 +26,8 @@ public class SkillInfo
     private AttributeType _learnAttributeType;
     public AttributeType LearnAttributeType => _learnAttributeType;
 
-    private List<SkillsData.TriggerData> _triggerDatas = new();
-    public List<SkillsData.TriggerData> TriggerDatas => _triggerDatas;
+    private List<SkillData.TriggerData> _triggerDatas = new();
+    public List<SkillData.TriggerData> TriggerDatas => _triggerDatas;
 
     private int _weight = 100;
     public int Weight => _weight;
@@ -39,7 +39,7 @@ public class SkillInfo
         _learningState = LearningState.None;
     }
     
-    public void SetTriggerDatas(List<SkillsData.TriggerData> triggerDatas)
+    public void SetTriggerDatas(List<SkillData.TriggerData> triggerDatas)
     {
         _triggerDatas = triggerDatas;
     }

@@ -59,17 +59,26 @@ namespace Utage
 			return builder.ToString();
 		}
 
+
 		/// タグ<　>を使ったテキストを解析して、タグ末尾インデックスを返す。（タグ見つからない場合は、startと同じ値を返す）
-		static public int ParseTag(string text, int start, Func<string, string, bool> callbackParseTag)
+		public static char[] DefaultTagSeparator { get; } = { '=', ' ' };
+		public const char DefaultTagStartId = '<';
+		public const char DefaultTagEndId = '>';
+		public static int ParseTag(string text, int start, Func<string, string, bool> callbackParseTag)
+		{
+			return ParseTag(DefaultTagStartId, DefaultTagEndId, DefaultTagSeparator, text, start, callbackParseTag);
+		}
+
+		/// タグ記号を指定して、使ったテキストを解析して、タグ末尾インデックスを返す。（タグ見つからない場合は、startと同じ値を返す）
+		public static int ParseTag(char startId, char endId, char[] separator, string text,  int start, Func<string, string, bool> callbackParseTag)
 		{
 			//タグ識別子ではないので、タグではない
-			if (text[start] != '<') return start;
+			if (text[start] != startId) return start;
 
 			int index = start + 1;
-			int endIndex = text.IndexOf('>', index);
+			int endIndex = text.IndexOf(endId, index);
 			if (endIndex < 0) return start;
 
-			char[] separator = { '=' };
 			string[] tagTexts = text.Substring(index, endIndex - index).Split(separator, 2,System.StringSplitOptions.RemoveEmptyEntries);
 			if (tagTexts.Length < 1 || tagTexts.Length > 2)
 			{

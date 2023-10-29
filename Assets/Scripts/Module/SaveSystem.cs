@@ -276,7 +276,7 @@ public class SavePlayInfo
 		{
 			stageId = _party.StageId;
 		}
-		StagesData.StageData stageData = DataSystem.Stages.Find(a => a.Id == stageId);
+		StageData stageData = DataSystem.Stages.Find(a => a.Id == stageId);
 		_currentStage = new StageInfo(stageData);
 		_currentStage.AddSelectActorId(actorId);
 		_currentAlcana = new AlcanaInfo();
@@ -290,7 +290,7 @@ public class SavePlayInfo
 		_party.AddActor(actorInfo.ActorId);
 	}
 	
-	public void AddTestActor(ActorsData.ActorData actorData)
+	public void AddTestActor(ActorData actorData)
 	{
 		if (actorData != null)
 		{
@@ -322,7 +322,7 @@ public class SavePlayInfo
 	{
 		for (int i = 0;i < DataSystem.InitActors.Count;i++)
 		{
-			ActorsData.ActorData actorData = DataSystem.Actors.Find(actor => actor.Id == DataSystem.InitActors[i]);
+			ActorData actorData = DataSystem.Actors.Find(actor => actor.Id == DataSystem.InitActors[i]);
 			if (actorData != null)
 			{
 				ActorInfo actorInfo = new ActorInfo(actorData);
@@ -363,7 +363,7 @@ public class SavePlayInfo
 
 	public void ChangeRouteSelectStage(int stageId)
 	{
-		StagesData.StageData stageData = DataSystem.Stages.Find(a => a.Id == stageId);
+		StageData stageData = DataSystem.Stages.Find(a => a.Id == stageId);
 		var current = _currentStage;
 		var currentStage = new StageInfo(stageData);
 		currentStage.RouteSelectData(current);

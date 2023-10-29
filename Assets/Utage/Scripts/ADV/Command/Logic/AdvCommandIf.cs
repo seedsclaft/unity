@@ -6,7 +6,7 @@ namespace Utage
 	/// <summary>
 	/// コマンド：IF処理
 	/// </summary>
-	internal class AdvCommandIf : AdvCommand
+	internal class AdvCommandIf : AdvCommand, IAdvCommandIf
 	{
 
 		public AdvCommandIf(StringGridRow row, AdvSettingDataManager dataManager)

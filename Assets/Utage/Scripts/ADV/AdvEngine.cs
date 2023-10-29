@@ -57,6 +57,10 @@ namespace Utage
 		public AdvScenarioPlayer ScenarioPlayer { get { return this.GetComponentCache(ref scenarioPlayer); } }
 		AdvScenarioPlayer scenarioPlayer;
 
+		//シナリオ内のサウンド制御
+		public AdvScenarioSound ScenarioSound { get { return this.GetComponentCacheCreateIfMissing(ref scenarioSound); } }
+		AdvScenarioSound scenarioSound;
+
 		/// <summary>
 		/// ページ情報
 		/// </summary>
@@ -183,6 +187,9 @@ namespace Utage
 		[SerializeField]
 		bool isStopVoiceOnSoundStop = true;
 
+		[SerializeField]
+		bool isStopSeOnSoundStop = false;
+
 		//パラメーターに言語設定があればそれに合わせる
 		public string LanguageKeyOfParam { get { return languageKeyOfParam; } }
 		[SerializeField]
@@ -276,8 +283,10 @@ namespace Utage
 		/// <summary>
 		/// シーン回想を再生中か
 		/// </summary>
-		public bool IsSceneGallery { get { return isSceneGallery; } }
-		bool isSceneGallery = false;
+		public bool IsSceneGallery => GalleryController.IsPlayingSceneGallery;
+
+		public AdvGalleryController GalleryController => this.GetComponentCacheCreateIfMissing(ref galleryController);
+		private AdvGalleryController galleryController;
 
 		/// <summary>
 		/// ロード待ちか判定
@@ -515,7 +524,12 @@ namespace Utage
 				{
 					SoundManager.StopVoice();
 				}
+				if (isStopSeOnSoundStop)
+				{
+					SoundManager.StopSeAll(SoundManager.DefaultFadeTime);
+				}
 			}
+			ScenarioSound.Clear();
 
 			if(MessageWindowManager==null)
 			{
@@ -670,7 +684,7 @@ namespace Utage
 		/// </summary>
 		public void StartGame(string scenarioLabel)
 		{
-			isSceneGallery = false;
+			this.GalleryController.StartGame(false);
 			StartGameSub(scenarioLabel);
 		}
 
@@ -695,7 +709,7 @@ namespace Utage
 		/// <param name="saveData">ロードするセーブデータ</param>
 		public void OpenLoadGame(AdvSaveData saveData)
 		{
-			isSceneGallery = false;
+			this.GalleryController.StartGame(false);
 			LoadSaveData(saveData);
 		}
 
@@ -705,7 +719,7 @@ namespace Utage
 		/// <param name="label">シーンラベル</param>
 		public void StartSceneGallery(string label)
 		{
-			isSceneGallery = true;
+			this.GalleryController.StartGame(true);
 			StartGameSub(label);
 		}
 

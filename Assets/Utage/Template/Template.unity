@@ -3818,9 +3818,9 @@ Camera:
   m_FocalLength: 50
   m_NormalizedViewPortRect:
     serializedVersion: 2
-    x: 0.12499999
+    x: 0.12495125
     y: 0
-    width: 0.75
+    width: 0.7500975
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
@@ -6051,6 +6051,12 @@ MonoBehaviour:
   onEndCommand:
     m_PersistentCalls:
       m_Calls: []
+  onBeginLoadSaveData:
+    m_PersistentCalls:
+      m_Calls: []
+  onEndLoadSaveData:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &456724006
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6216,6 +6222,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   onAddData:
+    m_PersistentCalls:
+      m_Calls: []
+  onPostAddData:
     m_PersistentCalls:
       m_Calls: []
 --- !u!114 &456724012
@@ -7031,7 +7040,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &541020843
 RectTransform:
   m_ObjectHideFlags: 0
@@ -19157,9 +19166,9 @@ Camera:
   m_FocalLength: 50
   m_NormalizedViewPortRect:
     serializedVersion: 2
-    x: 0.12499999
+    x: 0.12495125
     y: 0
-    width: 0.75
+    width: 0.7500975
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
@@ -19235,6 +19244,7 @@ MonoBehaviour:
   allowAllSkip: 0
   unscaledTime: 0
   fadeTextures: []
+  videoPlayer: {fileID: 0}
 --- !u!114 &1561633315
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21333,7 +21343,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1733304332
 RectTransform:
   m_ObjectHideFlags: 0
@@ -21386,7 +21396,7 @@ MonoBehaviour:
   load: {fileID: 382316709}
   gallery: {fileID: 1199967548}
   download: {fileID: 613844295}
-  downloadButton: {fileID: 541020842}
+  downloadButton: {fileID: 0}
 --- !u!114 &1733304334
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -25103,6 +25113,7 @@ MonoBehaviour:
   resetCharacterTransformOnChangeLayer: 1
   debugAutoResetCanvasPosition: 0
   ignoreKeepPositionOnCrossFade: 0
+  ignoreOverride2DPrefabSortingOrder: 0
   renderTextureManager: {fileID: 975245268}
   videoManager: {fileID: 0}
   layerList: []

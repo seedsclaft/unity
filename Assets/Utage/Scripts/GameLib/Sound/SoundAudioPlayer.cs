@@ -68,6 +68,21 @@ namespace Utage
 			return false;
 		}
 
+		//再生中か
+		public bool IsPlaying(AssetFile assetFile)
+		{
+			foreach (var audio in AudioList)
+			{
+				if (audio == null ) continue;
+				if (!audio.IsPlaying()) continue;
+				if (audio.Data.File == assetFile)
+				{
+					return true;
+				}
+			}
+			return false;
+		}
+
 		//ループ再生中か
 		public bool IsPlayingLoop()
 		{

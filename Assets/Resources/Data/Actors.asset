@@ -9,10 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 197a87feeb3ec1940a87b1cd875b91ff, type: 3}
+  m_Script: {fileID: 11500000, guid: f49883fc3accff4479e2f90aaaaa6d87, type: 3}
   m_Name: Actors
   m_EditorClassIdentifier: 
-  _data:
+  Data:
   - Id: 1
     Name: "\u30D8\u30AB\u30C6\u30FC"
     SubName: "\u3010\u8C4A\u7A63\u306E\u6708\u5973\u795E\u3011"
@@ -336,9 +336,9 @@ MonoBehaviour:
     InitStatus:
       _hp: 33
       _mp: 20
-      _atk: 42
+      _atk: 39
       _def: 9
-      _spd: 25
+      _spd: 30
     PlusStatus:
       _hp: 0
       _mp: 0
@@ -349,11 +349,11 @@ MonoBehaviour:
       _hp: 50
       _mp: 50
       _atk: 90
-      _def: 30
-      _spd: 40
-    Attribute: 0000000064000000000000001e00000032000000
-    X: 22
-    Y: 28
+      _def: 20
+      _spd: 50
+    Attribute: 0000000064000000500000000000000000000000
+    X: 0
+    Y: 0
     Scale: 1
     AwakenX: -48
     AwakenY: 16
@@ -393,17 +393,17 @@ MonoBehaviour:
       TriggerDatas: []
   - Id: 7
     Name: "\u30E1\u30EA\u30FC"
-    SubName: "\u3010Ten-Shi\u3011"
+    SubName: "\u3010\u30B9\u30FC\u30B5\u30A4\u30C9\u30B8\u30A7\u30CE\u30B5\u30A4\u30C9\u3011"
     ClassId: 7
     ImagePath: 0007
     InitLv: 1
     MaxLv: 40
     InitStatus:
-      _hp: 40
+      _hp: 55
       _mp: 20
-      _atk: 22
-      _def: 7
-      _spd: 37
+      _atk: 32
+      _def: 12
+      _spd: 15
     PlusStatus:
       _hp: 0
       _mp: 0
@@ -411,15 +411,15 @@ MonoBehaviour:
       _def: 0
       _spd: 0
     NeedStatus:
-      _hp: 60
+      _hp: 110
       _mp: 50
-      _atk: 40
-      _def: 20
-      _spd: 90
-    Attribute: 3200000064000000140000000000000014000000
-    X: 22
-    Y: 28
-    Scale: 1
+      _atk: 60
+      _def: 30
+      _spd: 30
+    Attribute: 280000003c000000000000000000000064000000
+    X: 24
+    Y: 0
+    Scale: 0.8
     AwakenX: 0
     AwakenY: 160
     AwakenScale: 0.6
@@ -433,6 +433,14 @@ MonoBehaviour:
       Weight: 0
       TriggerDatas: []
     - SkillId: 31
+      Level: 0
+      Weight: 0
+      TriggerDatas: []
+    - SkillId: 41
+      Level: 0
+      Weight: 0
+      TriggerDatas: []
+    - SkillId: 42
       Level: 0
       Weight: 0
       TriggerDatas: []

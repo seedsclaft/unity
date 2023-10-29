@@ -25,7 +25,7 @@ namespace Utage
             {
                 if (instance == null)
                 {
-                    BootCustomProjectSetting boot = FindObjectOfType<BootCustomProjectSetting>();
+                    BootCustomProjectSetting boot = WrapperUnityVersion.FindObjectOfType<BootCustomProjectSetting>();
                     if (boot != null)
                     {
                         instance = boot.CustomProjectSetting;
@@ -53,5 +53,17 @@ namespace Utage
         }
         [SerializeField]
         LanguageManager language;
+        
+        
+        /// <summary>
+        /// 設定言語
+        /// </summary>
+        public bool UseSheetNameToScenarioLabel
+        {
+            get { return useSheetNameToScenarioLabel; }
+            set { useSheetNameToScenarioLabel = value; }
+        }
+        [SerializeField] bool useSheetNameToScenarioLabel = true;
+
     }
 }

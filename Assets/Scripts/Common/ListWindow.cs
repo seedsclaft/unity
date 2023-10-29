@@ -106,17 +106,17 @@ abstract public class ListWindow : MonoBehaviour
         return true;
     }
 
-    private void SetItemCount(int itemCount)
+    public void SetItemCount(int itemCount)
     {
         float itemSize;
-        float scrollSize;
+        //float scrollSize;
         if (horizontal == true)
         {
             itemSize = itemPrefab.GetComponent<RectTransform>().sizeDelta.x;
-            scrollSize = scrollRect.GetComponent<RectTransform>().sizeDelta.x;
+            //scrollSize = scrollRect.GetComponent<RectTransform>().sizeDelta.x;
         } else{
             itemSize = itemPrefab.GetComponent<RectTransform>().sizeDelta.y;
-            scrollSize = scrollRect.GetComponent<RectTransform>().sizeDelta.y;
+            //scrollSize = scrollRect.GetComponent<RectTransform>().sizeDelta.y;
         }
         _itemSize = itemSize;
         _itemCount = itemCount;//(int)Math.Floor( scrollSize / _itemSize);
@@ -141,6 +141,18 @@ abstract public class ListWindow : MonoBehaviour
             if (_dataCount <= i){
                 _objectList[i].SetActive(false);
             }
+        }
+    }
+
+    public void AddCreateList(int count)
+    {
+        int createCount = count;
+        for (var i = 0; i < createCount;i++){
+            GameObject prefab = Instantiate(itemPrefab);
+            prefab.transform.SetParent(scrollRect.content, false);
+            _objectList.Add(prefab);
+            IListViewItem view = prefab.GetComponent<IListViewItem>();
+            _itemList.AddLast(view);
         }
     }
 
@@ -612,6 +624,18 @@ abstract public class ListWindow : MonoBehaviour
                 var num = 1.0f / (float)(dataCount - listCount);
                 ScrollRect.normalizedPosition = new Vector2(0,1.0f - (num * Index));
             }
+        }
+    }
+
+    public void UpdateScrollRect(int selectIndex){
+        if (_index < 0) return;
+        var listCount = ListItemCount();
+        var dataCount = _dataCount;
+        var listIndex = selectIndex - (listCount - 1);
+        if (listIndex > 0)
+        {
+            var num = 1.0f / (float)(dataCount - listCount);
+            ScrollRect.normalizedPosition = new Vector2(0,1.0f - (num * (Index - (listCount-1))));
         }
     }
 

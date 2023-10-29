@@ -70,16 +70,16 @@ namespace Utage
 	/// <summary>
 	/// ジャンプのマネージャー
 	/// </summary>
-	internal class AdvJumpManager
+	public class AdvJumpManager
 	{
 		//ジャンプ先のラベル名
-		internal string Label{ get; private set; }
+		public string Label{ get; private set; }
 
 		//サブルーチンの復帰先の情報
-		internal SubRoutineInfo SubRoutineReturnInfo { get; private set; }
+		public SubRoutineInfo SubRoutineReturnInfo { get; private set; }
 
 		//サブルーチンのコールスタック
-		internal Stack<SubRoutineInfo> SubRoutineCallStack { get { return subRoutineCallStack; } }
+		public Stack<SubRoutineInfo> SubRoutineCallStack { get { return subRoutineCallStack; } }
 		Stack<SubRoutineInfo> subRoutineCallStack = new Stack<SubRoutineInfo>();
 
 		class RandomInfo
@@ -96,28 +96,28 @@ namespace Utage
 		List<RandomInfo> randomInfoList = new List<RandomInfo>();
 
 		//ジャンプ先が登録されているか
-		internal bool IsReserved
+		public bool IsReserved
 		{
 			get { return !string.IsNullOrEmpty(Label) || SubRoutineReturnInfo != null; }
 		}
 
 		//ジャンプ先のラベルを登録
-		internal void RegistoreLabel(string jumpLabel)
+		public void RegistoreLabel(string jumpLabel)
 		{
 			this.Label = jumpLabel;
 		}
 
 		//サブルーチンを登録
-		internal void RegistoreSubroutine(string label, SubRoutineInfo calledInfo) 
+		public void RegistoreSubroutine(string label, SubRoutineInfo calledInfo) 
 		{
 			this.Label = label;
 			subRoutineCallStack.Push(calledInfo);
 		}
 
 		//サブルーチンを終了して、元のページの次のページに戻る
-		internal void EndSubroutine()
+		public void EndSubroutine()
 		{
-			if (subRoutineCallStack.Count > 0)
+			if (IsSubroutine)
 			{
 				this.SubRoutineReturnInfo = subRoutineCallStack.Pop();
 			}
@@ -126,15 +126,21 @@ namespace Utage
 				Debug.LogErrorFormat("Failed to terminate the subroutine.Please call the subroutine with 'JumpSubRoutine'.");
 			}
 		}
-		
+
+		//サブルーチン中かどうかを判定
+		public bool IsSubroutine
+		{
+			get { return subRoutineCallStack.Count > 0; }
+		}
+
 		//ランダムジャンプのラベルを登録
-		internal void AddRandom(AdvCommand command, float rate)
+		public void AddRandom(AdvCommand command, float rate)
 		{
 			randomInfoList.Add(new RandomInfo(command, rate));
 		}
 
 		//ジャンプしたときにクリアする
-		internal void ClearOnJump()
+		public void ClearOnJump()
 		{
 			Label = "";
 			SubRoutineReturnInfo = null;
@@ -142,14 +148,21 @@ namespace Utage
 		}
 
 		//全てクリアする
-		internal void Clear()
+		public void Clear()
 		{
 			ClearOnJump();
 			subRoutineCallStack.Clear();
 		}
 
+		//サブルーチンから抜ける
+		public void ExitSubRoutine()
+		{
+			//サブルーチンのコールスタックをすべてクリアする
+			subRoutineCallStack.Clear();
+		}
+
 		//実行するランダムコマンドを取得
-		internal AdvCommand GetRandomJumpCommand()
+		public AdvCommand GetRandomJumpCommand()
 		{
 			//各要素の合計値を計算
 			float sum = 0;
@@ -179,7 +192,7 @@ namespace Utage
 
 		const int Version = 0;
 		//バイナリ書き込み
-		internal void Write(BinaryWriter writer)
+		public void Write(BinaryWriter writer)
 		{
 			writer.Write(Version);
 			writer.Write(subRoutineCallStack.Count);
@@ -189,7 +202,7 @@ namespace Utage
 			}
 		}
 		//バイナリ読み込み
-		internal void Read(AdvEngine engine, BinaryReader reader)
+		public void Read(AdvEngine engine, BinaryReader reader)
 		{
 			this.Clear();
 			if (reader.BaseStream.Length <= 0) return;

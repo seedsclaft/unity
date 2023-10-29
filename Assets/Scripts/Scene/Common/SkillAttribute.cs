@@ -27,7 +27,7 @@ public class SkillAttribute : ListItem ,IListViewItem
         SetIndex(index);
     }
 
-    public void SetData(SkillsData.SkillData.SkillAttributeInfo data,int index){
+    public void SetData(SkillData.SkillAttributeInfo data,int index){
         _data = data.AttributeType;
         _valueText = data.ValueText;
         _learnCost = data.LearningCost;

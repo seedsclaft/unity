@@ -4,7 +4,7 @@ using System.Collections.Generic;
 [Serializable]
 public class ActorInfo
 {
-    public ActorsData.ActorData Master {get {return DataSystem.Actors.Find(a => a.Id == ActorId);}}
+    public ActorData Master {get {return DataSystem.Actors.Find(a => a.Id == ActorId);}}
     private int _actorId;
     public int ActorId => _actorId;
     public int MaxHp => CurrentStatus.Hp;
@@ -15,7 +15,6 @@ public class ActorInfo
     private StatusInfo _baseStatus;
     private StatusInfo _currentStatus;
     public StatusInfo CurrentStatus => _currentStatus;
-    private StatusInfo _usePoint;
     private StatusInfo _upperRate;
     private List<int> _attribute;
     public List<int> Attribute => _attribute;
@@ -47,8 +46,6 @@ public class ActorInfo
     public int TacticsCost => _tacticsCost;
     private int _tacticsCostRate = 1;
     public int TacticsCostRate => _tacticsCostRate;
-    private AttributeType _nextLearnAttribute = AttributeType.None;
-    public AttributeType NextLearnAttribute => _nextLearnAttribute;
     private int _nextLearnSkillId = 0;
     public int NextLearnSkillId => _nextLearnSkillId;
     private int _nextLearnCost = 0;
@@ -73,13 +70,12 @@ public class ActorInfo
 
     private List<SkillInfo> _rebornSkillInfos = new ();
     public List<SkillInfo> RebornSkillInfos => _rebornSkillInfos;
-    public ActorInfo(ActorsData.ActorData actorData)
+    public ActorInfo(ActorData actorData)
     {
         _actorId = actorData.Id;
         _attribute = actorData.Attribute;
         _level = actorData.InitLv;
         _sp = 0;
-        //_usePoint = actorData.NeedStatus; 
         _upperRate = actorData.NeedStatus;
         SetInitialParameter(actorData);
         _currentHp = _baseStatus.Hp;
@@ -87,7 +83,7 @@ public class ActorInfo
         _demigodParam = 10;
     }
 
-    private void SetInitialParameter(ActorsData.ActorData actorData)
+    private void SetInitialParameter(ActorData actorData)
     {
         _baseStatus = actorData.InitStatus;
         _plusStatus = new StatusInfo();
@@ -214,16 +210,10 @@ public class ActorInfo
     {
         _tacticsComandType = TacticsComandType.None;
         _tacticsCost = 0;
-        _nextLearnAttribute = 0;
         _nextLearnSkillId = 0;
         _nextLearnCost = 0;
         _nextBattleEnemyIndex = -1;
         _nextBattleEnemyId = 0;
-    }
-
-    public void SetNextLearnAttribute(AttributeType attributeType)
-    {
-        _nextLearnAttribute = attributeType;
     }
     
     public void SetNextLearnSkillId(int skillId)
@@ -294,7 +284,7 @@ public class ActorInfo
 
     public void StrengthReset()
     {
-        ActorsData.ActorData actorData = DataSystem.Actors.Find(a => a.Id == _actorId);
+        ActorData actorData = Master;
         SetInitialParameter(actorData);
         ChangeHp(_currentHp);
         ChangeMp(_currentMp);
@@ -335,7 +325,7 @@ public class ActorInfo
 
     public List<int> AttirbuteParams(List<ActorInfo> actorInfos)
     {
-        List<SkillsData.FeatureData> alchemyFeatures = new List<SkillsData.FeatureData>();
+        List<SkillData.FeatureData> alchemyFeatures = new List<SkillData.FeatureData>();
         foreach (var actorInfo in actorInfos)
         {
             List<SkillInfo> skillInfos = actorInfo.Skills.FindAll(a => a.Master.FeatureDatas.Find(b => b.FeatureType == FeatureType.MagicAlchemy)!= null);

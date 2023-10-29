@@ -65,7 +65,7 @@ namespace UtageExtensions
 		}
 
 
-		//コンポーネンを取得。なかったら作成
+		//コンポーネントを取得。なかったら作成
 		public static T GetComponentCreateIfMissing<T>(this GameObject go) where T : Component
 		{
 			T component = go.GetComponent<T>();
@@ -112,7 +112,7 @@ namespace UtageExtensions
 		{
 			if (component == null)
 			{
-				component = GameObject.FindObjectOfType<T>();
+				component = WrapperUnityVersion.FindObjectOfType<T>();
 			}
 			return component;
 		}
@@ -273,7 +273,7 @@ namespace UtageExtensions
 		{
 			if (instance == null)
 			{
-				instance = GameObject.FindObjectOfType<T>();
+				instance = WrapperUnityVersion.FindObjectOfType<T>();
 			}
 			return instance;
 		}

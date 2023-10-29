@@ -35,7 +35,7 @@ public class TacticsAttributeList : ListWindow , IInputHandlerEvent
         UpdateSelectIndex(-1);
     }
 
-    public void Refresh(List<SkillsData.SkillData.SkillAttributeInfo> attributeInfos,int currensy)
+    public void Refresh(List<SkillData.SkillAttributeInfo> attributeInfos,int currensy)
     {
         for (int i = 0; i < _attributeTypesData.Count;i++)
         {

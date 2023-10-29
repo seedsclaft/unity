@@ -45,14 +45,14 @@ public class TacticsModel : BaseModel
         return CurrentActor.AttirbuteValues(StageMembers());
     }
 
-    public List<SkillsData.SkillData.SkillAttributeInfo> AttirbuteInfos()
+    public List<SkillData.SkillAttributeInfo> AttirbuteInfos()
     {
-        var list = new List<SkillsData.SkillData.SkillAttributeInfo>();
+        var list = new List<SkillData.SkillAttributeInfo>();
         var attirbuteValues = AttirbuteValues();
         var idx = 0;
         foreach (var attributeType in AttributeTypes())
         {
-            var info = new SkillsData.SkillData.SkillAttributeInfo();
+            var info = new SkillData.SkillAttributeInfo();
             info.AttributeType = attributeType;
             info.LearningCost = TacticsUtility.AlchemyCost(CurrentActor,attributeType,StageMembers());
             info.ValueText = attirbuteValues[idx];
@@ -365,7 +365,7 @@ public class TacticsModel : BaseModel
     {
     }
     
-    public AdvsData.AdvData StartTacticsAdvData()
+    public AdvData StartTacticsAdvData()
     {
         var isGameOver = (Actors().Find(a => a.ActorId == CurrentStage.SelectActorIds[0])).Lost;
         if (isGameOver)

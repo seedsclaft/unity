@@ -4,6 +4,8 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.Video;
+using UtageExtensions;
 
 
 namespace Utage
@@ -25,24 +27,33 @@ namespace Utage
 		{
 			public Texture texture;
 			public string moviePath;
+			public string videoPath;
 			public float fadeInTime = 0.5f;
 			public float duration = 3.0f;
 			public float fadeOutTime = 0.5f;
 			public bool allowSkip = false;
 		}
+
 		public FadeTextureInfo[] fadeTextures = new FadeTextureInfo[1];
 
+		public VideoPlayer videoPlayer;
+		
 		protected bool isInput;
+
 		public void OnPointerClick(PointerEventData eventData)
 		{
 			isInput = true;
 		}
-		protected virtual bool IsInputSkip( FadeTextureInfo info )
+
+		protected virtual bool IsInputSkip(FadeTextureInfo info)
 		{
 			return (isInput && (allowSkip || info.allowSkip));
 		}
 
-		protected virtual bool IsInputAllSkip { get { return isInput && allowAllSkip; } }
+		protected virtual bool IsInputAllSkip
+		{
+			get { return isInput && allowAllSkip; }
+		}
 
 		protected virtual void LateUpdate()
 		{
@@ -53,8 +64,14 @@ namespace Utage
 		{
 			StartCoroutine(CoPlay());
 		}
-		public bool IsPlaying { get{ return isPlaying; } }
+
+		public bool IsPlaying
+		{
+			get { return isPlaying; }
+		}
+
 		protected bool isPlaying;
+		protected bool AllSkip { get; set; }
 
 		protected virtual IEnumerator CoPlay()
 		{
@@ -62,10 +79,10 @@ namespace Utage
 			RawImage rawImage = GetComponent<RawImage>();
 			rawImage.CrossFadeAlpha(0, 0, true);
 
-			foreach( FadeTextureInfo info in fadeTextures )
+			foreach (FadeTextureInfo info in fadeTextures)
 			{
 				rawImage.texture = info.texture;
-				bool allSkip = false;
+				AllSkip = false;
 
 				if (info.texture)
 				{
@@ -77,6 +94,7 @@ namespace Utage
 						time += TimeUtil.GetDeltaTime(unscaledTime);
 						if (time > info.fadeInTime) break;
 					}
+
 					time = 0;
 					while (!IsInputSkip(info))
 					{
@@ -84,27 +102,78 @@ namespace Utage
 						time += TimeUtil.GetDeltaTime(unscaledTime);
 						if (time > info.duration) break;
 					}
-					allSkip = IsInputAllSkip;
+
+					AllSkip = IsInputAllSkip;
 					rawImage.CrossFadeAlpha(0, info.fadeOutTime, true);
-					yield return TimeUtil.WaitForSeconds(unscaledTime,info.fadeOutTime);
+					yield return TimeUtil.WaitForSeconds(unscaledTime, info.fadeOutTime);
 				}
 				else if (!string.IsNullOrEmpty(info.moviePath))
 				{
-					WrapperMoviePlayer.Play(info.moviePath);
-					while (WrapperMoviePlayer.IsPlaying() )
-					{
-						yield return null;
-						if (IsInputSkip(info))
-						{
-							WrapperMoviePlayer.Cancel();
-						}
-						allSkip = IsInputAllSkip;
-					}
+					yield return PlayMovie(info);
 				}
-				if (allSkip) break;
+				else if (!string.IsNullOrEmpty(info.videoPath))
+				{
+					yield return PlayVideo(info);
+				}
+
+				if (AllSkip) break;
 				yield return null;
 			}
+
 			isPlaying = false;
+		}
+
+		protected virtual IEnumerator PlayMovie(FadeTextureInfo info)
+		{
+			WrapperMoviePlayer.Play(info.moviePath);
+			while (WrapperMoviePlayer.IsPlaying())
+			{
+				yield return null;
+				if (IsInputSkip(info))
+				{
+					WrapperMoviePlayer.Cancel();
+				}
+				AllSkip = IsInputAllSkip;
+			}
+		}
+
+		protected virtual IEnumerator PlayVideo(FadeTextureInfo info)
+		{
+			if (videoPlayer==null)
+			{
+				Debug.LogError("videoPlayer is null ",this);
+				yield break;
+			}
+			VideoClip videoClip = Resources.Load<VideoClip>(info.videoPath);
+			if (videoClip == null)
+			{
+				Debug.LogError("Video cant load from " + info.videoPath,this);
+				yield break;
+			}
+
+			videoPlayer.clip = videoClip;
+			// 準備
+			videoPlayer.Prepare();
+			while(!videoPlayer.isPrepared) yield return null;  
+			yield return null;
+			
+			//音量設定
+			var soundManager = SoundManager.GetInstance(); 
+			float volume = soundManager.BgmVolume * soundManager.MasterVolume;
+			videoPlayer.SetDirectAudioVolume(0, volume);
+			
+			// 再生
+			videoPlayer.Play();
+			while (videoPlayer.isPlaying)
+			{
+				if (IsInputSkip(info))
+				{
+					videoPlayer.Stop();
+					AllSkip = IsInputAllSkip;
+				}
+				yield return null;
+			}
+			Resources.UnloadAsset(videoClip);
 		}
 	}
 }

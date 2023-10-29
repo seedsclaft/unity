@@ -6,7 +6,7 @@ namespace Utage
 	/// <summary>
 	/// コマンド：ELSE処理
 	/// </summary>
-	internal class AdvCommandElse : AdvCommand
+	internal class AdvCommandElse : AdvCommand, IAdvCommandElse
 	{
 
 		public AdvCommandElse(StringGridRow row)

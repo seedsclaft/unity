@@ -22,7 +22,7 @@ namespace Utage
 		[SerializeField]
 		BacklogType type = BacklogType.MessageWindow;
 
-		/// <summary>ADVエンジン</summary>
+		public AdvEngine Engine => engine;
 		[SerializeField]
 		protected AdvEngine engine;
 
@@ -100,6 +100,7 @@ namespace Utage
 			AdvBacklog data = BacklogManager.Backlogs[BacklogManager.Backlogs.Count- index -1];
 			AdvUguiBacklog backlog = go.GetComponent<AdvUguiBacklog>();
 			backlog.Init(data);
+			backlog.Engine = this.Engine;
 		}
 
 		// 戻るボタンが押された

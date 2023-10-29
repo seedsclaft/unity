@@ -194,6 +194,60 @@ namespace Utage
 		public static string AddColorTag(string str, Color color)
 		{
 			return AddColorTag(str, "#" + ColorUtil.ToColorString(color));
-		}		
+		}
+
+		//コンソールに表示するエラーメッセージに、エラーのカラータグなどを設定
+		public static string ToColorTagErrorMsg(string errorMsg, bool enableEscapeNewlines = true)
+		{
+			if (enableEscapeNewlines)
+			{
+				//Unityのコンソールは、表示行数（ユーザー設定で可変）を超えた行はカットされてしまい、カラータグを閉じられなくなってしまうので
+				//メッセージに改行文字が含まれる場合は、改行文字をエスケープして改行を無効化する。
+				
+				errorMsg = EscapeNewlines(errorMsg);
+			}
+			
+			//エラーのカラータグを設定
+			string str = AddColorTag(errorMsg, GetErrorColorInEditor());
+			if (IsDarkThemeInEditor())
+			{
+				//ダークテーマの場合は見づらいので<b>タグを設定
+				return $"<b>{str}</b>";
+			}
+			else
+			{
+				return str;
+			}
+		}
+		
+		//改行文字をエスケープ処理
+		public static string EscapeNewlines(string msg)
+		{
+			msg = msg.Replace("\r\n", @"\n");
+			msg = msg.Replace("\n", @"\n");
+			msg = msg.Replace("\r", @"\n");
+			return msg;
+		}
+
+
+		//コンソールに表示するエラー文字の色
+		public static Color GetErrorColorInEditor()
+		{
+			//ダークテーマの場合、明るめの赤にする
+			return IsDarkThemeInEditor() ? new Color(1.0f, 0.5f, 0.5f) : Color.red;
+		}
+		
+		//Unityエディタがダークテーマか？
+		public static bool IsDarkThemeInEditor()
+		{
+#if  UNITY_EDITOR
+			if (UnityEditor.EditorGUIUtility.isProSkin)
+			{
+				return true;
+			}
+#endif
+			
+			return false;
+		}
 	}
 }

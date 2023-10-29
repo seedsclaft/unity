@@ -86,10 +86,6 @@ namespace Utage
 			}
 		}
 
-		//エフェクト用の色が変化したとき
-		internal override void OnEffectColorsChange(AdvEffectColor color)
-		{
-		}
 
 		//********描画時にクロスフェードが失敗するであろうかのチェック********//
 		internal override bool CheckFailedCrossFade(AdvGraphicInfo graphic)
@@ -113,6 +109,11 @@ namespace Utage
 
 			this.RawImage.texture = this.RenderTexture;
 			this.RawImage.SetNativeSize();
+
+			if (LastResource == null)
+			{
+				ParentObject.FadeIn(fadeTime);
+			}
 
 			//			this.VideoPlayer.alpha = 0.5f;
 			//			this.VideoPlayer.loopPointReached += EndReached;

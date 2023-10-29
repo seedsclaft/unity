@@ -9,10 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: db8175ede9c89de4d9a4295339b3f637, type: 3}
+  m_Script: {fileID: 11500000, guid: f71ced78e0a473c4e86323fd84aa5a9b, type: 3}
   m_Name: Enemies
   m_EditorClassIdentifier: 
-  _data:
+  Data:
   - Id: 1
     Name: "\u30CD\u30EC\u30A4\u30C9\u30B8\u30A7\u30E0"
     ImagePath: Jelslime
@@ -389,11 +389,11 @@ MonoBehaviour:
       Level: 1
       Weight: 100
       TriggerDatas: []
-    - SkillId: 205
-      Level: 5
-      Weight: 100
-      TriggerDatas: []
     - SkillId: 236
+      Level: 5
+      Weight: 25
+      TriggerDatas: []
+    - SkillId: 205
       Level: 10
       Weight: 100
       TriggerDatas: []
@@ -593,6 +593,12 @@ MonoBehaviour:
         TriggerTiming: 1
         Param1: 50
         Param2: 0
+        Param3: 1
+      - SkillId: 0
+        TriggerType: 22
+        TriggerTiming: 1
+        Param1: 2
+        Param2: 0
         Param3: 0
     - SkillId: 133
       Level: 10
@@ -746,6 +752,50 @@ MonoBehaviour:
     - SkillId: 42
       Level: 1
       Weight: 50
+      TriggerDatas: []
+  - Id: 106
+    Name: "\u30DD\u30EA\u30D7"
+    ImagePath: Polyp
+    BaseStatus:
+      _hp: 100
+      _mp: 20
+      _atk: 40
+      _def: 20
+      _spd: 30
+    Kinds: 
+    LearningSkills:
+    - SkillId: 1
+      Level: 1
+      Weight: 20
+      TriggerDatas: []
+    - SkillId: 522
+      Level: 1
+      Weight: 60
+      TriggerDatas:
+      - SkillId: 0
+        TriggerType: 22
+        TriggerTiming: 1
+        Param1: 2
+        Param2: 0
+        Param3: 0
+  - Id: 107
+    Name: "\u30D3\u30E4\u30FC\u30AD\u30FC"
+    ImagePath: Byakhee
+    BaseStatus:
+      _hp: 100
+      _mp: 20
+      _atk: 40
+      _def: 20
+      _spd: 30
+    Kinds: 
+    LearningSkills:
+    - SkillId: 1
+      Level: 1
+      Weight: 20
+      TriggerDatas: []
+    - SkillId: 205
+      Level: 1
+      Weight: 60
       TriggerDatas: []
   - Id: 113
     Name: "\u30A2\u30A4\u30DB\u30FC\u30C8"
@@ -1003,33 +1053,78 @@ MonoBehaviour:
       Weight: 0
       TriggerDatas: []
   - Id: 206
-    Name: "\u30C7\u30D3\u30EB\u30C9\u30E9\u30B4\u30F3"
-    ImagePath: Devildragon
+    Name: "\u30A4\u30BF\u30AF\u30A1"
+    ImagePath: Ithaqua
     BaseStatus:
-      _hp: 500
+      _hp: 100
       _mp: 40
       _atk: 40
       _def: 20
       _spd: 30
     Kinds: 
     LearningSkills:
-    - SkillId: 2
+    - SkillId: 1
       Level: 1
       Weight: 30
       TriggerDatas: []
-    - SkillId: 601
+    - SkillId: 222
       Level: 1
       Weight: 80
-      TriggerDatas:
-      - SkillId: 0
-        TriggerType: 1
-        TriggerTiming: 1
-        Param1: 100
-        Param2: 0
-        Param3: 0
+      TriggerDatas: []
+    - SkillId: 213
+      Level: 1
+      Weight: 0
+      TriggerDatas: []
+    - SkillId: 214
+      Level: 1
+      Weight: 30
+      TriggerDatas: []
     - SkillId: 231
       Level: 1
       Weight: 0
+      TriggerDatas: []
+  - Id: 207
+    Name: "\u30B7\u30A2\u30A8\u30AC"
+    ImagePath: Cyaegha
+    BaseStatus:
+      _hp: 100
+      _mp: 40
+      _atk: 40
+      _def: 20
+      _spd: 30
+    Kinds: 
+    LearningSkills:
+    - SkillId: 1
+      Level: 1
+      Weight: 30
+      TriggerDatas: []
+    - SkillId: 41
+      Level: 1
+      Weight: 50
+      TriggerDatas: []
+    - SkillId: 42
+      Level: 1
+      Weight: 50
+      TriggerDatas: []
+    - SkillId: 505
+      Level: 1
+      Weight: 80
+      TriggerDatas: []
+    - SkillId: 534
+      Level: 1
+      Weight: 0
+      TriggerDatas: []
+    - SkillId: 502
+      Level: 1
+      Weight: 50
+      TriggerDatas: []
+    - SkillId: 513
+      Level: 1
+      Weight: 50
+      TriggerDatas: []
+    - SkillId: 514
+      Level: 1
+      Weight: 50
       TriggerDatas: []
   - Id: 213
     Name: "\u30B6\u30AC\u30F3"
@@ -1073,7 +1168,7 @@ MonoBehaviour:
       _spd: 30
     Kinds: 
     LearningSkills:
-    - SkillId: 1
+    - SkillId: 401
       Level: 1
       Weight: 30
       TriggerDatas: []
@@ -1109,103 +1204,32 @@ MonoBehaviour:
       Level: 1
       Weight: 30
       TriggerDatas: []
-  _textdata:
-  - Id: 1
-    Text: 2
-    Help: 
-  - Id: 2
-    Text: 2
-    Help: 
-  - Id: 3
-    Text: 2
-    Help: 
-  - Id: 4
-    Text: 2
-    Help: 
-  - Id: 5
-    Text: 2
-    Help: 
-  - Id: 6
-    Text: 2
-    Help: 
-  - Id: 6
-    Text: 403
-    Help: 
-  - Id: 6
-    Text: 405
-    Help: 
-  - Id: 7
-    Text: 2
-    Help: 
-  - Id: 8
-    Text: 2
-    Help: 
-  - Id: 9
-    Text: 2
-    Help: 
-  - Id: 9
-    Text: 103
-    Help: 
-  - Id: 10
-    Text: 2
-    Help: 
-  - Id: 11
-    Text: 2
-    Help: 
-  - Id: 12
-    Text: 2
-    Help: 
-  - Id: 13
-    Text: 421
-    Help: 
-  - Id: 14
-    Text: 2
-    Help: 
-  - Id: 14
-    Text: 403
-    Help: 
-  - Id: 15
-    Text: 2
-    Help: 
-  - Id: 15
-    Text: 104
-    Help: 
-  - Id: 101
-    Text: 321
-    Help: 
-  - Id: 102
-    Text: 221
-    Help: 
-  - Id: 103
-    Text: 104
-    Help: 
-  - Id: 103
-    Text: 104
-    Help: 
-  - Id: 104
-    Text: 121
-    Help: 
-  - Id: 105
-    Text: 405
-    Help: 
-  - Id: 105
-    Text: 405
-    Help: 
-  - Id: 113
-    Text: 505
-    Help: 
-  - Id: 114
-    Text: 322
-    Help: 
-  - Id: 203
-    Text: 302
-    Help: 
-  - Id: 204
-    Text: 405
-    Help: 
-  - Id: 204
-    Text: 405
-    Help: 
-  - Id: 206
-    Text: 601
-    Help: 
+  - Id: 301
+    Name: "\u30A4\u30BF\u30AF\u30A1"
+    ImagePath: Devildragon
+    BaseStatus:
+      _hp: 500
+      _mp: 40
+      _atk: 40
+      _def: 20
+      _spd: 30
+    Kinds: 
+    LearningSkills:
+    - SkillId: 2
+      Level: 1
+      Weight: 30
+      TriggerDatas: []
+    - SkillId: 601
+      Level: 1
+      Weight: 80
+      TriggerDatas:
+      - SkillId: 0
+        TriggerType: 1
+        TriggerTiming: 1
+        Param1: 100
+        Param2: 0
+        Param3: 0
+    - SkillId: 231
+      Level: 1
+      Weight: 0
+      TriggerDatas: []

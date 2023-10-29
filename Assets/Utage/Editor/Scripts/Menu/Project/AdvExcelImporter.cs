@@ -280,7 +280,7 @@ namespace Utage
 						int endIndex = str.Length - 1;
 						if (char.IsWhiteSpace(str[endIndex]))
 						{
-							Debug.LogWarning(row.ToErrorString("Last characer is white space [" + ColorUtil.AddColorTag(str, ColorUtil.Red) + "]  \n"));
+							Debug.LogWarning(row.ToErrorString("Last characer is white space [" + ColorUtil.ToColorTagErrorMsg(str) + "]  \n"));
 						}
 					}
 				}

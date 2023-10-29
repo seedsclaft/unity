@@ -28,8 +28,8 @@ public class BattlerInfo
     public List<SkillInfo> Skills => _skills;
     private ActorInfo _actorInfo;
     public ActorInfo ActorInfo => _actorInfo;
-    private EnemiesData.EnemyData _enemyData;
-    public EnemiesData.EnemyData EnemyData => _enemyData;
+    private EnemyData _enemyData;
+    public EnemyData EnemyData => _enemyData;
     private List<KindType> _kinds = new ();
     public List<KindType> Kinds => _kinds;
     private int _lastSelectSkillId = 0;
@@ -57,6 +57,9 @@ public class BattlerInfo
     public int ChainSuccessCount =>  _chainSuccessCount;
     private int _payBattleMp = 0;
     public int PayBattleMp => _payBattleMp;
+    private int _attackedCount = 0;
+    public int AttackedCount => _attackedCount;
+    
     private int _lastTargetIndex = 0;
     public void SetLastTargetIndex(int index){
         _lastTargetIndex = index;
@@ -107,7 +110,7 @@ public class BattlerInfo
         ResetAp(true);
     }
 
-    public BattlerInfo(EnemiesData.EnemyData enemyData,int lv,int index,LineType lineIndex,bool isBoss){
+    public BattlerInfo(EnemyData enemyData,int lv,int index,LineType lineIndex,bool isBoss){
         _charaId = enemyData.Id;
         _level = lv;
         _bossFlag = isBoss;
@@ -202,12 +205,17 @@ public class BattlerInfo
         }
         if (IsState(StateType.RevengeAct))
         {
-            _ap += 3;
+            _ap += 2;
             return;
         }
         if (IsState(StateType.Slow))
         {
             _ap -= 2;
+            return;
+        }
+        if (IsState(StateType.Haist))
+        {
+            _ap -= 6;
             return;
         }
         _ap -= 4;
@@ -352,6 +360,13 @@ public class BattlerInfo
                 return false;
             }
         }
+        if (IsState(StateType.Undead))
+        {
+            if ((StateType)stateInfo.Master.Id == StateType.Regene)
+            {
+                return false;
+            }
+        }
         if (_stateInfos.Find(a => a.CheckOverWriteState(stateInfo) == true) == null)
         {
             if (doAdd)
@@ -416,10 +431,10 @@ public class BattlerInfo
                 if (IsRemove)
                 {
                     RemoveState(stateInfo,true);
-                    if (stateInfo.Master.Id == (int)StateType.Substitute)
-                    {
+                    //if (stateInfo.Master.Id == (int)StateType.Substitute)
+                    //{
                         stateInfos.Add(stateInfo);
-                    }
+                    //}
                 }
             }
         }
@@ -524,6 +539,11 @@ public class BattlerInfo
     public void GainPaybattleMp(int value)
     {
         _payBattleMp += value;
+    }
+
+    public void GainAttackedCount(int value)
+    {
+        _attackedCount += value;
     }
 
     public void TurnEnd()

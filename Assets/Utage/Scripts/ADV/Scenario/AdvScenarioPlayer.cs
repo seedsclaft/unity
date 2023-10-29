@@ -55,9 +55,11 @@ namespace Utage
 		///　シナリオ開始時に呼ばれる
 		/// </summary>
 		public AdvScenarioPlayerEvent OnBeginScenario { get { return this.onBeginScenario; } }
-		[SerializeField]
-		public AdvScenarioPlayerEvent onBeginScenario = new AdvScenarioPlayerEvent();
+		[SerializeField] public AdvScenarioPlayerEvent onBeginScenario = new AdvScenarioPlayerEvent();
 
+		//　シナリオの開始時のうち、パラメータの初期化が終わった後に呼ばれる
+		public AdvScenarioPlayerEvent OnBeginScenarioAfterParametersInitialized => onBeginScenarioAfterParametersInitialized;
+		[SerializeField] AdvScenarioPlayerEvent onBeginScenarioAfterParametersInitialized = new AdvScenarioPlayerEvent();
 
 		/// <summary>
 		///　シナリオ終了時に呼ばれる
@@ -176,6 +178,8 @@ namespace Utage
 			this.CurrentGallerySceneLabel = "";
 			MainThread.Clear();
 			OnBeginScenario.Invoke(this);
+			//パラメータの初期化が終わった後に呼ばれる、シナリオの開始時イベント
+			OnBeginScenarioAfterParametersInitialized.Invoke(this);
 			MainThread.StartScenario(label, page, false);
 		}
 
@@ -195,6 +199,8 @@ namespace Utage
 				Engine.SaveManager.GetSaveIoListCreateIfMissing(Engine)
 				);
 			yield return null;
+			//パラメータの初期化が終わった後に呼ばれる、シナリオの開始時イベント
+			OnBeginScenarioAfterParametersInitialized.Invoke(this);
 			//シナリオを読み込み
 			saveData.Buffer.Overrirde(this);
 		}

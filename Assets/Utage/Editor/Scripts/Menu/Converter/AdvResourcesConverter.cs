@@ -123,7 +123,7 @@ namespace Utage
 		{
 			try
 			{
-				AssetFileManager assetFileManager = FindObjectOfType<AssetFileManager>();
+				AssetFileManager assetFileManager = WrapperUnityVersion.FindObjectOfType<AssetFileManager>();
 				if (assetFileManager == null)
 				{
 					Debug.LogError("FileManager is not found in current scene");

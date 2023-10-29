@@ -294,7 +294,7 @@ namespace Utage
 		{
 			if (instance == null)
 			{
-				instance = FindObjectOfType<AssetFileManager>();
+				instance = WrapperUnityVersion.FindObjectOfType<AssetFileManager>();
 				if (instance == null)
 				{
 					if (!isEditorErrorCheck)

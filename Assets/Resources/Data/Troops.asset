@@ -9,10 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 77bd2cc1f4d65504f87ac243afd23ad7, type: 3}
+  m_Script: {fileID: 11500000, guid: 311bac454bcdae34884a7edc8144ea4b, type: 3}
   m_Name: Troops
   m_EditorClassIdentifier: 
-  _data:
+  Data:
   - Id: 3
     TroopId: 401
     EnemyId: 104
@@ -277,7 +277,40 @@ MonoBehaviour:
     StageTurn: 1
     GetItemDatas:
     - Type: 1
-      Param1: 533
+      Param1: 237
+      Param2: 100
+    - Type: 2
+      Param1: 10
+      Param2: 100
+    - Type: 3
+      Param1: 2
+      Param2: 100
+  - Id: 1
+    TroopId: 70
+    EnemyId: 15
+    Lv: 1
+    BossFlag: 0
+    Line: 0
+    StageTurn: 1
+    GetItemDatas: []
+  - Id: 2
+    TroopId: 70
+    EnemyId: 15
+    Lv: 1
+    BossFlag: 0
+    Line: 0
+    StageTurn: 1
+    GetItemDatas: []
+  - Id: 3
+    TroopId: 70
+    EnemyId: 13
+    Lv: 3
+    BossFlag: 0
+    Line: 1
+    StageTurn: 1
+    GetItemDatas:
+    - Type: 1
+      Param1: 537
       Param2: 100
     - Type: 2
       Param1: 10
@@ -788,7 +821,7 @@ MonoBehaviour:
       Param2: 100
   - Id: 1
     TroopId: 500
-    EnemyId: 5
+    EnemyId: 4
     Lv: 3
     BossFlag: 0
     Line: 0
@@ -796,7 +829,7 @@ MonoBehaviour:
     GetItemDatas: []
   - Id: 2
     TroopId: 500
-    EnemyId: 5
+    EnemyId: 4
     Lv: 3
     BossFlag: 0
     Line: 0
@@ -804,7 +837,7 @@ MonoBehaviour:
     GetItemDatas: []
   - Id: 3
     TroopId: 500
-    EnemyId: 5
+    EnemyId: 4
     Lv: 3
     BossFlag: 0
     Line: 0
@@ -820,6 +853,88 @@ MonoBehaviour:
     GetItemDatas:
     - Type: 1
       Param1: 503
+      Param2: 100
+    - Type: 2
+      Param1: 15
+      Param2: 100
+    - Type: 3
+      Param1: 2
+      Param2: 100
+  - Id: 1
+    TroopId: 600
+    EnemyId: 10
+    Lv: 3
+    BossFlag: 0
+    Line: 0
+    StageTurn: 1
+    GetItemDatas: []
+  - Id: 2
+    TroopId: 600
+    EnemyId: 10
+    Lv: 3
+    BossFlag: 0
+    Line: 0
+    StageTurn: 1
+    GetItemDatas: []
+  - Id: 3
+    TroopId: 600
+    EnemyId: 10
+    Lv: 3
+    BossFlag: 0
+    Line: 0
+    StageTurn: 19
+    GetItemDatas: []
+  - Id: 4
+    TroopId: 600
+    EnemyId: 106
+    Lv: 1
+    BossFlag: 1
+    Line: 1
+    StageTurn: 1
+    GetItemDatas:
+    - Type: 1
+      Param1: 233
+      Param2: 100
+    - Type: 2
+      Param1: 15
+      Param2: 100
+    - Type: 3
+      Param1: 2
+      Param2: 100
+  - Id: 1
+    TroopId: 700
+    EnemyId: 3
+    Lv: 3
+    BossFlag: 0
+    Line: 0
+    StageTurn: 1
+    GetItemDatas: []
+  - Id: 2
+    TroopId: 700
+    EnemyId: 3
+    Lv: 3
+    BossFlag: 0
+    Line: 0
+    StageTurn: 1
+    GetItemDatas: []
+  - Id: 3
+    TroopId: 700
+    EnemyId: 3
+    Lv: 3
+    BossFlag: 0
+    Line: 0
+    StageTurn: 19
+    GetItemDatas: []
+  - Id: 4
+    TroopId: 700
+    EnemyId: 107
+    Lv: 1
+    BossFlag: 1
+    Line: 1
+    StageTurn: 1
+    GetItemDatas:
+    - Type: 1
+      Param1: 534
       Param2: 100
     - Type: 2
       Param1: 15
@@ -1034,7 +1149,7 @@ MonoBehaviour:
       Param2: 100
   - Id: 1
     TroopId: 2600
-    EnemyId: 14
+    EnemyId: 8
     Lv: 3
     BossFlag: 0
     Line: 0
@@ -1042,13 +1157,21 @@ MonoBehaviour:
     GetItemDatas: []
   - Id: 2
     TroopId: 2600
-    EnemyId: 14
+    EnemyId: 6
     Lv: 3
     BossFlag: 0
     Line: 0
     StageTurn: 1
     GetItemDatas: []
   - Id: 3
+    TroopId: 2600
+    EnemyId: 8
+    Lv: 3
+    BossFlag: 0
+    Line: 0
+    StageTurn: 1
+    GetItemDatas: []
+  - Id: 4
     TroopId: 2600
     EnemyId: 206
     Lv: 1
@@ -1065,6 +1188,71 @@ MonoBehaviour:
     - Type: 21
       Param1: 0
       Param2: 0
+  - Id: 1
+    TroopId: 2700
+    EnemyId: 13
+    Lv: 3
+    BossFlag: 0
+    Line: 0
+    StageTurn: 1
+    GetItemDatas: []
+  - Id: 2
+    TroopId: 2700
+    EnemyId: 7
+    Lv: 3
+    BossFlag: 0
+    Line: 0
+    StageTurn: 1
+    GetItemDatas: []
+  - Id: 3
+    TroopId: 2700
+    EnemyId: 13
+    Lv: 3
+    BossFlag: 0
+    Line: 0
+    StageTurn: 1
+    GetItemDatas: []
+  - Id: 4
+    TroopId: 2700
+    EnemyId: 207
+    Lv: 1
+    BossFlag: 1
+    Line: 1
+    StageTurn: 1
+    GetItemDatas:
+    - Type: 22
+      Param1: 5
+      Param2: 100
+    - Type: 3
+      Param1: 5
+      Param2: 100
+    - Type: 21
+      Param1: 0
+      Param2: 0
+  - Id: 1
+    TroopId: 4100
+    EnemyId: 14
+    Lv: 3
+    BossFlag: 0
+    Line: 0
+    StageTurn: 1
+    GetItemDatas: []
+  - Id: 2
+    TroopId: 4100
+    EnemyId: 14
+    Lv: 3
+    BossFlag: 0
+    Line: 0
+    StageTurn: 1
+    GetItemDatas: []
+  - Id: 3
+    TroopId: 4100
+    EnemyId: 206
+    Lv: 1
+    BossFlag: 1
+    Line: 1
+    StageTurn: 1
+    GetItemDatas: []
   - Id: 1
     TroopId: 3300
     EnemyId: 7
@@ -1147,4 +1335,3 @@ MonoBehaviour:
     - Type: 21
       Param1: 0
       Param2: 0
-  _getItemData: []

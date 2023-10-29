@@ -29,6 +29,7 @@ namespace Utage
 		/// <summary>ページ内に複数行あるか（ログの長さにあわせて変えるたりする）</summary>
 		public bool isMultiTextInPage;
 
+		public AdvEngine Engine { get; set; }
 		public AdvBacklog Data { get { return data; } }
 		protected AdvBacklog data;
 
@@ -119,6 +120,10 @@ namespace Utage
 			if (manager)
 			{
 				manager.PlayVoice(characterLabel, file);
+				if (Engine != null)
+				{
+					Engine.ScenarioSound.ClearVoiceInScenario(characterLabel);
+				}
 			}
 			file.Unuse(this);
 		}

@@ -190,18 +190,18 @@ public class BaseModel
         return CurrentData.PlayerInfo.PlayerName;
     }
 
-    public List<StagesData.StageEventData> StageEventDatas{ 
+    public List<StageEventData> StageEventDatas{ 
         get{ return DataSystem.Stages.Find(a => a.Id == CurrentStage.Id).StageEvents;}
     }
 
-    public List<StagesData.StageEventData> StageEvents(EventTiming eventTiming)
+    public List<StageEventData> StageEvents(EventTiming eventTiming)
     {
         int CurrentTurn = CurrentStage.CurrentTurn;
         List<string> eventKeys = CurrentStage.ReadEventKeys;
         return StageEventDatas.FindAll(a => a.Timing == eventTiming && a.Turns == CurrentTurn && !eventKeys.Contains(a.EventKey));
     }
     
-    public void AddEventsReadFlag(List<StagesData.StageEventData> stageEventDatas)
+    public void AddEventsReadFlag(List<StageEventData> stageEventDatas)
     {
         foreach (var eventData in stageEventDatas)
         {
@@ -209,7 +209,7 @@ public class BaseModel
         }
     }
 
-    public void AddEventReadFlag(StagesData.StageEventData stageEventDatas)
+    public void AddEventReadFlag(StageEventData stageEventDatas)
     {
         if (stageEventDatas.ReadFlag)
         {
@@ -282,7 +282,7 @@ public class BaseModel
         }
         if (getItemInfo.IsAttributeSkill())
         {
-            List<SkillsData.SkillData> skillDatas = DataSystem.Skills.FindAll(a => a.Rank == getItemInfo.Param1 && a.Attribute == (AttributeType)((int)getItemInfo.GetItemType - 10));
+            List<SkillData> skillDatas = DataSystem.Skills.FindAll(a => a.Rank == getItemInfo.Param1 && a.Attribute == (AttributeType)((int)getItemInfo.GetItemType - 10));
             foreach (var skillData in skillDatas)
             {
                 SkillInfo skillInfo = new SkillInfo(skillData.Id);

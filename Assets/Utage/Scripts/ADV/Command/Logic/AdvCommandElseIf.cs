@@ -7,7 +7,7 @@ namespace Utage
 	/// <summary>
 	/// コマンド：ELSE IF処理
 	/// </summary>
-	internal class AdvCommandElseIf : AdvCommand
+	internal class AdvCommandElseIf : AdvCommand, IAdvCommandElseIf
 	{
 
 		public AdvCommandElseIf(StringGridRow row, AdvSettingDataManager dataManager)

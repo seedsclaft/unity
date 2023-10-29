@@ -29,7 +29,22 @@ namespace Utage
 		[SerializeField]
 		string saveTitleParamName = "";
 
-		//スピードタグもスキップするかのチェック
+		//メッセージのスキップの設定
+		public enum SkipMessageType
+		{
+			Default,			//デフォルト（ページ末などに読み飛ばし）
+			WaitSkippedTime,	//スキップ処理した時間を待つ
+		}
+		public SkipMessageType TypeSkipMessage
+		{
+			get { return skipMessageType; }
+			set { skipMessageType = value; }
+		}
+		[SerializeField] SkipMessageType skipMessageType = SkipMessageType.Default;
+
+		//スピードタグもクリック入力で「読み飛ばし」するかのチェック
+		//命名をミスってしまったものの、既読・未読の「スキップ」のほうではない。
+		//既読・未読の「スキップ」のほうは、SkipMessageTypeがDefaultなら即座に読み飛ばされる。
 		public bool EnableSkipSpeedTag { get { return enableSkipSpeedTag; } set { enableSkipSpeedTag = value; } }
 		[SerializeField] private bool enableSkipSpeedTag;
 
@@ -321,7 +336,11 @@ namespace Utage
 		/// 外部から呼ぶこと
 		/// </summary>
 		public void InputSendMessage() { isInputSendMessage = true; }
-		bool IsInputSendMessage() { return isInputSendMessage || CheckSkip(); }
+
+		bool IsInputSendMessage()
+		{
+			return isInputSendMessage || CheckSkip();
+		}
 		bool isInputSendMessage;
 
 		bool LastInputSendMessage { get; set; }
@@ -487,7 +506,7 @@ namespace Utage
 			{
 				this.OnBeginText.Invoke(this);
 			}
-			if (IsNoWaitAllText || CheckSkip() || LastInputSendMessage)
+			if (IsNoWaitAllText || InputSendMessageOnSkipText(isInputSendMessage || LastInputSendMessage) )
 			{
 				EndSendChar();
 			}
@@ -606,21 +625,48 @@ namespace Utage
 
 
 
-		bool CheckInputSkipText()
+		bool CheckInputSkipText(bool input)
 		{
-			//そもそも入力がないならfalse
-			if(!IsInputSendMessage()) return false;
-			//スキップタグでもスキップならtrue
-			if(EnableSkipSpeedTag) return true;
-			//スキップタグならfalse
-			return !CurrentCharData.CustomInfo.IsSpeed;
+			//スキップ入力がないならfalse
+			if(!InputSendMessageOnSkipText(input)) return false;
+
+			//スキップ入力中でも、スピードタグ中は特殊処理
+			if (CurrentCharData.CustomInfo.IsSpeed)
+			{
+				return EnableSkipSpeedTag;
+			}
+			return true;
+		}
+
+		bool InputSendMessageOnSkipText(bool input)
+		{
+			//入力があった
+			if (input) return true;
+			
+			//スキップ中なら場合による
+			if (CheckSkip())
+			{
+				switch (TypeSkipMessage)
+				{
+					case SkipMessageType.WaitSkippedTime:
+						return false;
+					case SkipMessageType.Default:
+					default:
+						return true;
+				}
+			}
+			else
+			{
+				//スキップ中じゃないならfalse
+				return false;
+			}
 		}
 
 		//文字送り
 		void UpdateSendChar()
 		{
 			this.OnUpdateSendChar.Invoke(this);
-			if (CheckInputSkipText())
+			if (CheckInputSkipText(isInputSendMessage))
 			{
 				//入力による文字飛ばし
 				EndSendChar();
@@ -644,7 +690,6 @@ namespace Utage
 				}
 			}
 		}
-
 
 		//入力待ち
 		void UpdateWaitInput()
@@ -794,7 +839,7 @@ namespace Utage
 
 		//次のコマンドへ
 		void ToNextCommand()
-		{			
+		{
 			//文字送りをしておく
 			CurrentTextLength = CurrentTextLengthMax;
 			if (IsPageEnd)
@@ -826,6 +871,8 @@ namespace Utage
 				}
 			}
 
+			timeCharSend *= ScaleTimeCharSendOnSkip();
+
 			deltaTimeSendMessage += Engine.Time.DeltaTime;
 			while (deltaTimeSendMessage >= 0)
 			{
@@ -836,17 +883,42 @@ namespace Utage
 					CurrentTextLength = CurrentTextLengthMax;
 					break;
 				}
+
 				if (CurrentCharData.CustomInfo.IsInterval)
 				{
 					break;
 				}
-				
+
 				timeCharSend = Engine.Config.GetTimeSendChar(CheckReadPage());
 				if (CurrentCharData.CustomInfo.IsSpeed && CurrentCharData.CustomInfo.speed >= 0)
 				{
 					timeCharSend = CurrentCharData.CustomInfo.speed;
 				}
+
+				timeCharSend *= ScaleTimeCharSendOnSkip();
 			}
+		}
+
+		//文字送りの待ち時間にかけるスケール値を取得
+		float ScaleTimeCharSendOnSkip()
+		{
+			//待ち時間付きのスキップ中の文字送りを想定
+			switch (TypeSkipMessage)
+			{
+				case SkipMessageType.WaitSkippedTime:
+					if (CheckSkip())
+					{
+						float speed = Engine.Config.SkipSpped;
+						if (speed > 0)
+						{
+							return 1.0f / speed;
+						}
+					}
+
+					break;
+			}
+
+			return 1.0f;
 		}
 
 		//このページがNoWait（文字送りスピードが0か）

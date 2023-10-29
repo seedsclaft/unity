@@ -41,6 +41,7 @@ namespace Utage
 			if (!skip)
 			{
 				engine.SoundManager.PlayVoice(characterLabel, voiceFile, volume, isLoop);
+				engine.ScenarioSound.SetVoiceInScenario(characterLabel, voiceFile);
 			}
 		}
 

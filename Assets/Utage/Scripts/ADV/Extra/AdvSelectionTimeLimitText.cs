@@ -54,7 +54,7 @@ namespace Utage
 
 		void OnBeginWaitInput(AdvSelectionManager selection)
 		{
-			timeLimit = FindObjectOfType<AdvSelectionTimeLimit>();
+			timeLimit = WrapperUnityVersion.FindObjectOfType<AdvSelectionTimeLimit>();
 			if (timeLimit != null)
 			{
 				TargetRoot.SetActive(true);

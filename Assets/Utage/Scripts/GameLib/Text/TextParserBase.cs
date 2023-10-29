@@ -121,20 +121,7 @@ namespace Utage
 					}
 					else
 					{
-						string tagName　="";
-						string tagArg = "";
-						int endIndex = ParserUtil.ParseTag(OriginalText, index, 
-							(name,arg)=>
-							{
-								bool ret = ParseTag(name, arg);
-								if (ret)
-								{
-									tagName = name;
-									tagArg = arg;
-								}
-								return ret;
-							});
-						if (index == endIndex)
+						if (!TryParseTag(index, out int endIndex, out string tagName, out string tagArg))
 						{
 							//タグがなかった
 							//通常パターンのテキストを1文字追加
@@ -224,6 +211,28 @@ namespace Utage
 			CharData data = new CharData('\n', parsingInfo);
 			data.CustomInfo.IsDoubleWord = true;
 			AddCharData(data);
+		}
+
+		//タグの解析。解析方法によってここをoverrideして処理
+		protected virtual bool TryParseTag(int index, out int endIndex, out string tagName, out string tagArg)
+		{
+			string name0 ="";
+			string arg0 = "";
+
+			endIndex = ParserUtil.ParseTag(OriginalText, index, 
+				(name,arg)=>
+				{
+					bool ret = ParseTag(name, arg);
+					if (ret)
+					{
+						name0 = name;
+						arg0 = arg;
+					}
+					return ret;
+				});
+			tagName =name0;
+			tagArg = arg0;
+			return endIndex != index;
 		}
 
 		//タグの解析、タグの内容によってここをoverrideして処理

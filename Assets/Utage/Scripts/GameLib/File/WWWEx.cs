@@ -405,7 +405,7 @@ namespace Utage
 		///WWWを使ったロード処理
 		IEnumerator LoadAsyncSub(Action<UnityWebRequest> onComplete, Action<UnityWebRequest> onFailed, Action<UnityWebRequest> onTimeOut, int retryCount)
 		{
-#if !UTAGE_DISABLE_CACHING
+#if !UTAGE_DISABLE_CACHING && !UNITY_2022_1_OR_NEWER
 			if (LoadType == Type.Cache)
 			{
 				while (!Caching.ready) yield return null;

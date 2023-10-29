@@ -1,6 +1,7 @@
 ﻿// UTAGE: Unity Text Adventure Game Engine (c) Ryohei Tokimura
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 
 
@@ -343,5 +344,13 @@ namespace Utage
 			}
 		}
 #endif
+		
+		//全コマンドのエラーをチェックする（コマンド単体でエラーチェックできない構文チェックなど）
+		public void CheckErrorCommands(AdvSettingDataManager dataManager)
+		{
+			//if-else系のコマンドの構文エラーをチェックする
+			var elseIf = new AdvScenarioDataIfElse(this);
+			elseIf.CheckError(dataManager);
+		}
 	}
 }

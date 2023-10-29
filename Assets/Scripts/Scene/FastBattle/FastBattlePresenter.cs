@@ -28,7 +28,6 @@ public class FastBattlePresenter : BasePresenter
 
     private void Initialize()
     {
-        Time.timeScale = 4;
         _view.SetBattleBusy(true);
         _model.CreateBattleData();
 
@@ -43,6 +42,7 @@ public class FastBattlePresenter : BasePresenter
 
     private void BattleInitialized()
     {
+        Time.timeScale = 4;
         _view.SetEvent((type) => updateCommand(type));
 
         _view.SetActors(_model.BattlerActors());

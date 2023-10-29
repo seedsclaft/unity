@@ -260,9 +260,14 @@ public class BattlePresenter : BasePresenter
                 {
                     return;
                 }
-                var isRemoveState = _model.UpdateAp();
-                if (isRemoveState)
+                var removeStateList = _model.UpdateAp();
+                if (removeStateList.Count > 0)
                 {
+                    _view.ClearDamagePopup();
+                    foreach (var removeState in removeStateList)
+                    {
+                        _view.StartStatePopup(removeState.TargetIndex,DamageType.State,"-" + removeState.Master.Name);
+                    }
                     _view.RefreshStatus();
                 }
                 _view.UpdateAp();
@@ -281,9 +286,14 @@ public class BattlePresenter : BasePresenter
             {
                 return;
             }
-            var isRemoveState = _model.UpdateAp();
-            if (isRemoveState)
+            var removeStateList = _model.UpdateAp();
+            if (removeStateList.Count > 0)
             {
+                _view.ClearDamagePopup();
+                foreach (var removeState in removeStateList)
+                {
+                    _view.StartStatePopup(removeState.TargetIndex,DamageType.State,"-" + removeState.Master.Name);
+                }
                 _view.RefreshStatus();
             }
             _view.UpdateAp();
@@ -429,19 +439,39 @@ public class BattlePresenter : BasePresenter
                 } else
                 {
                     // 攻撃単体で居合
-                    if (_model.CurrentActionInfo().TargetIndexList.Count == 1)
+                    if (actionInfo.Master.Scope == ScopeType.One && actionInfo.Master.TargetType == TargetType.Opponent)
                     {
-                        var RevengeActBattler = _model.GetBattlerInfo(_model.CurrentActionInfo().TargetIndexList[0]);
-                        var RevengeActState = RevengeActBattler.GetStateInfo(StateType.RevengeAct);
-                        if (RevengeActState != null)
-                        {                        
-                            var RevengeActTarget = _model.GetBattlerInfo(_model.CurrentActionInfo().SubjectIndex);
-                            RevengeActTarget.ResetAp(false);
-                            _model.ClearActionInfo();
-                            _model.MakeActionInfo(RevengeActBattler,33,false,false);
-                            _model.SetActionBattler(RevengeActBattler.Index);
-                            _model.MakeActionResultInfo(_model.CurrentActionInfo(),new List<int>(){RevengeActTarget.Index});
-                            _model.CurrentActionInfo().ActionResults[0].AddRemoveState(RevengeActState);
+                        var targetIndex = -1;
+                        if (actionInfo.ActionResults.Count > 0)
+                        {
+                            foreach (var resultInfo in actionInfo.ActionResults)
+                            {
+                                if (resultInfo.TargetIndex >= 0 && (resultInfo.HpDamage > 0 
+                                || resultInfo.DisplayStates.Find(a => (StateType)a.Master.Id == StateType.NoDamage) != null
+                                || resultInfo.RemovedStates.Find(a => (StateType)a.Master.Id == StateType.NoDamage) != null
+                                || resultInfo.AddedStates.Find(a => a.Master.Abnormal == true) != null)
+                                || resultInfo.AddedStates.Find(a => (StateType)a.Master.Id == StateType.Chain) != null)
+                                {
+                                    targetIndex = resultInfo.TargetIndex;
+                                }
+                            }
+                        }
+                        var RevengeActBattler = _model.GetBattlerInfo(targetIndex);
+                        if (RevengeActBattler != null)
+                        {    
+                            var RevengeActState = RevengeActBattler.GetStateInfo(StateType.RevengeAct);
+                            if (RevengeActState != null)
+                            {                        
+                                var RevengeActTarget = _model.GetBattlerInfo(actionInfo.SubjectIndex);
+                                RevengeActTarget.ResetAp(false);
+                                _model.ClearActionInfo();
+                                actionInfo = _model.MakeActionInfo(RevengeActBattler,33,false,false);
+                                _model.SetActionBattler(RevengeActBattler.Index);
+                                _model.MakeActionResultInfo(actionInfo,new List<int>(){RevengeActTarget.Index});
+                                
+                                actionInfo.ActionResults[0].AddRemoveState(RevengeActState);
+                                RevengeActBattler.RemoveState(RevengeActState,true);
+                            }
                         }
                     }
                 }
@@ -520,6 +550,8 @@ public class BattlePresenter : BasePresenter
             return;
         }
         var animation = _model.SkillActionAnimation(actionInfo.Master.AnimationName);
+        var soundTimings = _model.SkillActionSoundTimings(actionInfo.Master.AnimationName);
+        _view.PlayMakerEffectSound(soundTimings);
         _view.SetCurrentSkillData(actionInfo.Master);
         if (actionInfo.Master.AnimationType == AnimationType.All)
         {
@@ -567,6 +599,7 @@ public class BattlePresenter : BasePresenter
         {
             if (actionResultInfo.TargetIndex == targetIndex)
             {
+                _model.GainAttackCount(actionResultInfo.TargetIndex);
                 _view.StartDamage(targetIndex,DamageType.HpDamage,actionResultInfo.HpDamage,needPopupDelay);
                 if (needDamageBlink){
                     _view.StartBlink(targetIndex);
@@ -579,6 +612,13 @@ public class BattlePresenter : BasePresenter
             if (actionResultInfo.TargetIndex == targetIndex)
             {
                 _view.StartHeal(targetIndex,DamageType.HpHeal,actionResultInfo.HpHeal,needPopupDelay);
+            }
+        }
+        if (actionResultInfo.MpDamage > 0)
+        {
+            if (actionResultInfo.TargetIndex == targetIndex)
+            {
+                _view.StartDamage(targetIndex,DamageType.MpDamage,actionResultInfo.MpDamage);
             }
         }
         if (actionResultInfo.MpHeal > 0)

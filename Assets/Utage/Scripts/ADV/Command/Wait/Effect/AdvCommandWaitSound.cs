@@ -53,7 +53,7 @@ namespace Utage
 					}
 					else
 					{
-						return Engine.SoundManager.IsPlayingVoice(SoundName);
+						return Engine.ScenarioSound.IsPlayingScenarioVoice(SoundName);
 					}
 				default:
 					return false;

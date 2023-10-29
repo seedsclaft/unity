@@ -38,9 +38,9 @@ public class TroopInfo
         _battlerInfos.Add(battlerInfo);
     }
 
-    public void MakeEnemyData(TroopsData.TroopData troopData,int index,int gainLevel)
+    public void MakeEnemyData(TroopData troopData,int index,int gainLevel)
     {
-        EnemiesData.EnemyData enemyData = DataSystem.Enemies.Find(a => a.Id == troopData.EnemyId);
+        EnemyData enemyData = DataSystem.Enemies.Find(a => a.Id == troopData.EnemyId);
         BattlerInfo battlerInfo = new BattlerInfo(enemyData,troopData.Lv + gainLevel,index,troopData.Line,troopData.BossFlag);
         AddEnemy(battlerInfo);
         
@@ -50,7 +50,7 @@ public class TroopInfo
             GetItemInfo getItemInfo = new GetItemInfo(getItemDatas[i]);
             if (getItemDatas[i].Type == GetItemType.Skill)
             {
-                SkillsData.SkillData skillData = DataSystem.Skills.Find(a => a.Id == getItemDatas[i].Param1);
+                SkillData skillData = DataSystem.Skills.Find(a => a.Id == getItemDatas[i].Param1);
                 getItemInfo.SetResultData(skillData.Name);
                 getItemInfo.SetSkillElementId((int)skillData.Attribute);
             }

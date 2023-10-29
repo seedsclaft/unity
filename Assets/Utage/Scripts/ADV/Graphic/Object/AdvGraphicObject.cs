@@ -603,7 +603,9 @@ namespace Utage
 		}
 
 
-		const int Version = 2;
+		const int Version = Version3;
+		const int Version3 = 3;
+		const int Version2 = 2;
 		const int Version1 = 1;
 		const int Version0 = 0;
 		//セーブデータ用のバイナリ書き込み
@@ -615,6 +617,10 @@ namespace Utage
 			writer.WriteBuffer((x)=>AdvITweenPlayer.WriteSaveData (x,this.gameObject));
 			writer.WriteBuffer((x) => AdvAnimationPlayer.WriteSaveData(x, this.gameObject));
 			writer.WriteBuffer((x) => this.TargetObject.Write(x));
+			foreach (var item in this.TargetObject.GetComponentsInChildren<IAdvGraphicObjectCustomSave>())
+			{
+				writer.WriteBuffer((x) => item.WriteSaveDataCustom(x));
+			}
 		}
 
 		//セーブデータ用のバイナリ読み込み
@@ -668,6 +674,14 @@ namespace Utage
 				{
 					this.TargetObject.Read(x);
 				});
+			
+			if (version>=Version3)
+			{
+				foreach (var item in this.TargetObject.GetComponentsInChildren<IAdvGraphicObjectCustomSave>())
+				{
+					reader.ReadBuffer((x) => item.ReadSaveDataCustom(x));
+				}
+			}
 		}
 
 

@@ -17,7 +17,7 @@ namespace Utage
 		void OnEnable()
 		{
 			projectDir = AdvScenarioDataBuilderWindow.ProjectDirAsset;
-			from = UtageEditorToolKit.LoadArialFont();
+			from = WrapperUnityVersion.LoadDefaultFont();
 		}
 
 		protected override void OnGUISub()
