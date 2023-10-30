@@ -209,6 +209,18 @@ public class StageInfo
         } else
         if (routeSelect >= 1)
         {
+            if (routeSelect == 1)
+            {
+                var idx = 0;
+                foreach (var actorId in _selectActorIds)
+                {
+                    if (idx < 3)
+                    {
+                        enemyIds.Add(actorId * 100 + 2000);
+                    }
+                    idx++;
+                }
+            } else
             if (routeSelect == 2)
             {
                 foreach (var troopId in troopIds)
@@ -218,20 +230,20 @@ public class StageInfo
                         enemyIds.Add(troopId);
                     }
                 }
-            }
-            var notEncountId = routeSelect == 1 ? 400 : 0;
-            while (enemyIds.Count <= 2)
-            {
-                int rand = new Random().Next(1, 14);
-                rand *= 100;
-                rand += 2000;
-                if (rand % 1000 != notEncountId)
+                var notEncountId = routeSelect == 1 ? 400 : 0;
+                while (enemyIds.Count <= 2)
                 {
-                    if (DataSystem.Troops.Find(a => a.TroopId == rand) != null)
+                    int rand = new Random().Next(1, 14);
+                    rand *= 100;
+                    rand += 2000;
+                    if (rand % 1000 != notEncountId)
                     {
-                        if (!enemyIds.Contains(rand) && troopIds.Contains(rand))
+                        if (DataSystem.Troops.Find(a => a.TroopId == rand) != null)
                         {
-                            enemyIds.Add(rand);
+                            if (!enemyIds.Contains(rand) && troopIds.Contains(rand))
+                            {
+                                enemyIds.Add(rand);
+                            }
                         }
                     }
                 }
@@ -379,7 +391,20 @@ public class StageInfo
 
     public bool IsBendGameClear()
     {
-        return _clearTroopIds.Contains(2100) && _clearTroopIds.Contains(2200) && _clearTroopIds.Contains(2300) && _clearTroopIds.Contains(2500);
+        var BendClear = true;
+        var idx = 0;
+        foreach (var actorId in _selectActorIds)
+        {
+            if (idx < 3)
+            {
+                if (!_clearTroopIds.Contains(actorId * 100 + 2000))
+                {
+                    BendClear = false;
+                }
+            }
+            idx++;
+        }
+        return BendClear;
     }
 
     public int SelectActorIdsClassId(int selectIndex)

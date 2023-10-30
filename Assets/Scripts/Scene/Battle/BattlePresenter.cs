@@ -457,7 +457,7 @@ public class BattlePresenter : BasePresenter
                             }
                         }
                         var RevengeActBattler = _model.GetBattlerInfo(targetIndex);
-                        if (RevengeActBattler != null)
+                        if (RevengeActBattler != null && !RevengeActBattler.IsState(StateType.Chain) && !RevengeActBattler.IsState(StateType.Stun))
                         {    
                             var RevengeActState = RevengeActBattler.GetStateInfo(StateType.RevengeAct);
                             if (RevengeActState != null)

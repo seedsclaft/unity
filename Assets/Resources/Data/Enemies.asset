@@ -754,6 +754,25 @@ MonoBehaviour:
       Weight: 50
       TriggerDatas: []
   - Id: 106
+    Name: "\u30D3\u30E4\u30FC\u30AD\u30FC"
+    ImagePath: Byakhee
+    BaseStatus:
+      _hp: 100
+      _mp: 20
+      _atk: 40
+      _def: 20
+      _spd: 30
+    Kinds: 
+    LearningSkills:
+    - SkillId: 1
+      Level: 1
+      Weight: 20
+      TriggerDatas: []
+    - SkillId: 205
+      Level: 1
+      Weight: 60
+      TriggerDatas: []
+  - Id: 107
     Name: "\u30DD\u30EA\u30D7"
     ImagePath: Polyp
     BaseStatus:
@@ -778,25 +797,6 @@ MonoBehaviour:
         Param1: 2
         Param2: 0
         Param3: 0
-  - Id: 107
-    Name: "\u30D3\u30E4\u30FC\u30AD\u30FC"
-    ImagePath: Byakhee
-    BaseStatus:
-      _hp: 100
-      _mp: 20
-      _atk: 40
-      _def: 20
-      _spd: 30
-    Kinds: 
-    LearningSkills:
-    - SkillId: 1
-      Level: 1
-      Weight: 20
-      TriggerDatas: []
-    - SkillId: 205
-      Level: 1
-      Weight: 60
-      TriggerDatas: []
   - Id: 113
     Name: "\u30A2\u30A4\u30DB\u30FC\u30C8"
     ImagePath: Eihort
@@ -1201,7 +1201,7 @@ MonoBehaviour:
       Weight: 30
       TriggerDatas: []
   - Id: 301
-    Name: "\u30A4\u30BF\u30AF\u30A1"
+    Name: "\u30C7\u30D3\u30EB\u30C9\u30E9\u30B4\u30F3"
     ImagePath: Devildragon
     BaseStatus:
       _hp: 500

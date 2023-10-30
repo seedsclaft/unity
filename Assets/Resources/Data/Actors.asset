@@ -346,11 +346,11 @@ MonoBehaviour:
       _def: 0
       _spd: 0
     NeedStatus:
-      _hp: 50
+      _hp: 40
       _mp: 50
       _atk: 90
       _def: 20
-      _spd: 50
+      _spd: 80
     Attribute: 0000000064000000500000000000000000000000
     X: 0
     Y: 0
@@ -399,10 +399,10 @@ MonoBehaviour:
     InitLv: 1
     MaxLv: 40
     InitStatus:
-      _hp: 55
+      _hp: 45
       _mp: 20
-      _atk: 32
-      _def: 12
+      _atk: 33
+      _def: 11
       _spd: 15
     PlusStatus:
       _hp: 0
@@ -413,8 +413,8 @@ MonoBehaviour:
     NeedStatus:
       _hp: 110
       _mp: 50
-      _atk: 60
-      _def: 30
+      _atk: 70
+      _def: 20
       _spd: 30
     Attribute: 280000003c000000000000000000000064000000
     X: 24

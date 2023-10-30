@@ -505,11 +505,13 @@ public class BattleView : BaseView ,IInputHandlerEvent
 
     public void SetCurrentSkillData(SkillData skillData)
     {
-        if (skillData.Id >= 100)
+        // 居合・拘束解除も表示
+        if (skillData.Id >= 100 || skillData.Id == 31 || skillData.Id == 33)
         {
             skillInfoComponent.gameObject.SetActive(true);
             skillInfoComponent.UpdateSkillData(skillData.Id);
         }
+
     }
 
     public void ClearCurrentSkillData()

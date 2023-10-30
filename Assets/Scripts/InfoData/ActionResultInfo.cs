@@ -176,7 +176,7 @@ public class ActionResultInfo
         }
     }
 
-    private bool IsHit(BattlerInfo subject,BattlerInfo target)
+    private bool IsHit(BattlerInfo subject,BattlerInfo target,bool isOneTarget)
     {
         if (subject.IsState(StateType.AbsoluteHit))
         {
@@ -187,6 +187,10 @@ public class ActionResultInfo
             return true;
         }
         if (subject.Index == target.Index)
+        {
+            return true;
+        }
+        if (isOneTarget && target.IsState(StateType.RevengeAct))
         {
             return true;
         }
@@ -210,7 +214,7 @@ public class ActionResultInfo
     private void MakeHpDamage(BattlerInfo subject,BattlerInfo target,SkillData.FeatureData featureData,bool isNoEffect,bool isOneTarget)
     {
         var hpDamage = 0;
-        if (!IsHit(subject,target) && !isNoEffect)
+        if (!IsHit(subject,target,isOneTarget) && !isNoEffect)
         {
             _missed = true;
             return;
@@ -411,7 +415,7 @@ public class ActionResultInfo
     private void MakeHpStateDamage(BattlerInfo subject,BattlerInfo target,SkillData.FeatureData featureData,bool isNoEffect,bool isOneTarget)
     {
         var hpDamage = 0;
-        if (!IsHit(subject,target) && !isNoEffect)
+        if (!IsHit(subject,target,isOneTarget) && !isNoEffect)
         {
             _missed = true;
             return;
