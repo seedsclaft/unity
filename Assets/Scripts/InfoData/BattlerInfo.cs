@@ -205,7 +205,7 @@ public class BattlerInfo
         }
         if (IsState(StateType.RevengeAct))
         {
-            _ap += 2;
+            _ap += 1;
             return;
         }
         if (IsState(StateType.Slow))
