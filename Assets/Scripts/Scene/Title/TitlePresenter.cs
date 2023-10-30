@@ -96,7 +96,14 @@ public class TitlePresenter : BasePresenter
             //_view.CommandSceneChange(Scene.Battle);
             break;
             case TitleComandType.Continue:
-            SaveSystem.LoadStart();
+            var loadSuccess = SaveSystem.LoadStart();
+            if (loadSuccess == false)
+            {
+                ConfirmInfo popupInfo = new ConfirmInfo("セーブデータを読み込めませんでした。\n誠に申し訳ないですがNewGameから開始をお願いします。",(menuCommandInfo) => updatePopup((ConfirmComandType)menuCommandInfo));
+                popupInfo.SetIsNoChoise(true);
+                _view.CommandCallConfirm(popupInfo);
+                return;
+            }
             // プレイヤーネームを設定しなおし
             _view.CommandDecidePlayerName(GameSystem.CurrentData.PlayerInfo.PlayerName);
             if (GameSystem.CurrentData.ResumeStage)
@@ -171,5 +178,14 @@ public class TitlePresenter : BasePresenter
         {
             CommandCredit();
         }
+    }
+
+    private void updatePopup(ConfirmComandType confirmComandType)
+    {
+        _view.CommandConfirmClose();
+        if (confirmComandType == ConfirmComandType.Yes)
+        {
+        }
+        _view.CommandSceneChange(Scene.Title);
     }
 }

@@ -64,7 +64,7 @@ public class SaveSystem : MonoBehaviour
 	}
 
 		
-	public static void LoadStart(int fileId = 0)
+	public static bool LoadStart(int fileId = 0)
 	{
 		#if UNITY_WEBGL
 				
@@ -83,6 +83,7 @@ public class SaveSystem : MonoBehaviour
 				saveData = AESManager.Decrypt(saveData);
         		MemoryStream    memoryStream    = new MemoryStream (Convert.FromBase64String (saveData));
         		GameSystem.CurrentData = (SavePlayInfo)TempBinaryFormatter.Deserialize (memoryStream);
+				return true;
 			}
 			// Jsonへの展開失敗　改ざんの可能性あり
 			catch(Exception e)
@@ -91,6 +92,7 @@ public class SaveSystem : MonoBehaviour
 				Debug.LogException(e);
 				Debug.Log("改ざんされたため　冒険の書は消えてしまいました");
 				GameSystem.CurrentData  = new SavePlayInfo();
+				return false;
 			}
 		#else
 		//#if UNITY_EDITOR_WIN || UNITY_STANDALONE_WIN
@@ -104,6 +106,7 @@ public class SaveSystem : MonoBehaviour
 			{
 				//	指定したファイルストリームをオブジェクトにデシリアライズ。
 				GameSystem.CurrentData = (SavePlayInfo)TempBinaryFormatter.Deserialize(TempFileStream);
+				return true;
 			}
 			finally 
 			{
