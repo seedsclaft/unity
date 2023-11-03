@@ -8,23 +8,13 @@ public class GetItemList : ListWindow , IInputHandlerEvent
 {
     private List<GetItemInfo> _data = new List<GetItemInfo>();
 
-    [SerializeField] private TacticsCommandList tacticsCommandList;
-    public TacticsCommandList TacticsCommandList {get {return tacticsCommandList;}}
+    [SerializeField] private BaseList tacticsCommandList;
+    public BaseList TacticsCommandList {get {return tacticsCommandList;}}
     private System.Action<TacticsComandType> _confirmEvent = null;
     
 
     public void Initialize()
     {
-        /*
-        InitializeListView(rows);
-        // スクロールするものはObjectList.CountでSetSelectHandlerを登録する
-        for (int i = 0; i < ObjectList.Count;i++)
-        {
-            var getItem = ObjectList[i].GetComponent<GetItem>();
-            getItem.SetSelectHandler((data) => UpdateSelectIndex(data));
-            ObjectList[i].SetActive(false);
-        }
-        */
     }
 
     public void Refresh(List<GetItemInfo> getItemData)
@@ -64,27 +54,24 @@ public class GetItemList : ListWindow , IInputHandlerEvent
         }
     }
     
-    public void InitializeConfirm(List<SystemData.CommandData> confirmCommands ,System.Action<TacticsComandType> callEvent)
+    public void InitializeConfirm(List<ListData> confirmCommands ,System.Action<ConfirmComandType> callEvent)
     {
-        _confirmEvent = callEvent;
-        tacticsCommandList.SetInputCallHandler((a) => CallInputHandler(a,callEvent));
-        tacticsCommandList.Initialize(callEvent);
-        tacticsCommandList.Refresh(confirmCommands);
+        tacticsCommandList.Initialize(confirmCommands.Count);
+        tacticsCommandList.SetData(confirmCommands);
+        tacticsCommandList.SetInputHandler(InputKeyType.Decide,() => 
+        {
+            var data = (SystemData.CommandData)tacticsCommandList.ListData.Data;
+            if (data.Key == "Yes")
+            {
+                callEvent(ConfirmComandType.Yes);
+            } else
+            if (data.Key == "No")
+            {
+                callEvent(ConfirmComandType.No);
+            }
+        });
         tacticsCommandList.UpdateSelectIndex(0);
-        SetCancelEvent(() => _confirmEvent(TacticsComandType.Train));
     }
-    
-    private void CallInputHandler(InputKeyType keyType, System.Action<TacticsComandType> callEvent)
-    {
-        if (keyType == InputKeyType.Decide)
-        {
-            _confirmEvent((TacticsComandType)tacticsCommandList.Index);
-        }
-        if (keyType == InputKeyType.Cancel)
-        {
-            _confirmEvent(TacticsComandType.Train);
-        }
-    }    
     
     private new void CallSelectHandler(InputKeyType keyType)
     {

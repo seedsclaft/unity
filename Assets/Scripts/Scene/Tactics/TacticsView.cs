@@ -7,7 +7,6 @@ using TMPro;
 
 public class TacticsView : BaseView
 {
-    //[SerializeField] private TacticsCommandList tacticsCommandList = null;
     [SerializeField] private BaseList tacticsCommandList = null;
     [SerializeField] private SkillList skillList = null;
     [SerializeField] private TacticsCharaLayer tacticsCharaLayer = null;
@@ -92,7 +91,7 @@ public class TacticsView : BaseView
         });
         sideMenuList.SetCloseEvent(() => {
             HelpWindow.SetInputInfo("TACTICS");
-            //tacticsCommandList.UpdateHelpWindow();
+            UpdateHelpWindow();
             tacticsCommandList.Activate();
             sideMenuList.Deactivate();
         });
@@ -148,7 +147,7 @@ public class TacticsView : BaseView
         tacticsCommandList.SetInputHandler(InputKeyType.Option1,() => CallOpenSideMenu());
         tacticsCommandList.SetInputHandler(InputKeyType.SideLeft1,() => OnClickDropout());
         tacticsCommandList.SetInputHandler(InputKeyType.Option2,() => CallAlcanaEvent());
-        tacticsCommandList.SetHelpWindow(HelpWindow);
+        tacticsCommandList.SetSelectedHandler(() => UpdateHelpWindow());
         tacticsCommandList.SetData(menuCommands);
         SetInputHandler(tacticsCommandList.GetComponent<IInputHandlerEvent>());
         tacticsCommandList.Activate();
@@ -159,6 +158,7 @@ public class TacticsView : BaseView
     {
         tacticsCommandList.RefreshListData(listData);
         tacticsCommandList.Refresh();
+        UpdateHelpWindow();
         //tacticsCommandList.SelectEnableIndex();
     }
 
@@ -713,7 +713,7 @@ public class TacticsView : BaseView
         sideMenuList.Deactivate();
         sideMenuList.CloseSideMenu();
         HelpWindow.SetInputInfo("TACTICS");
-        tacticsCommandList.UpdateHelpWindow();
+        UpdateHelpWindow();
     }
 
     private void CallOpenSideMenu()
@@ -733,6 +733,16 @@ public class TacticsView : BaseView
     {
         var eventData = new TacticsViewEvent(CommandType.CloseSideMenu);
         _commandData(eventData);
+    }    
+    
+    private void UpdateHelpWindow()
+    {
+        var listData = tacticsCommandList.ListData;
+        if (listData != null)
+        {
+            var commandData = (SystemData.CommandData)listData.Data;
+            HelpWindow.SetHelpText(commandData.Help);
+        }
     }
 }
 

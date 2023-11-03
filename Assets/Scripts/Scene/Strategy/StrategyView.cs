@@ -82,7 +82,7 @@ public class StrategyView : BaseView
     {
     }
 
-    public void SetEnemyList(List<SystemData.CommandData> confirmCommands)
+    public void SetEnemyList(List<ListData> confirmCommands)
     {
         tacticsEnemyList.Initialize(null);
         //tacticsEnemyList.SetInputHandler(InputKeyType.Decide,() => CallPopupSkillInfo());
@@ -107,7 +107,7 @@ public class StrategyView : BaseView
         strategyActorList.gameObject.SetActive(false);
     }
 
-    public void SetResultList(List<SystemData.CommandData> confirmCommands)
+    public void SetResultList(List<ListData> confirmCommands)
     {
         strategyResultList.Initialize();
         SetInputHandler(strategyResultList.GetComponent<IInputHandlerEvent>());
@@ -126,14 +126,10 @@ public class StrategyView : BaseView
 
     public void SetCommandAble(SystemData.CommandData commandData)
     {
-        strategyResultList.TacticsCommandList.SetDisable(commandData,false);
-        tacticsEnemyList.TacticsCommandList.SetDisable(commandData,false);
     }
 
     public void SetCommandDisable(SystemData.CommandData commandData)
     {
-        strategyResultList.TacticsCommandList.SetDisable(commandData,true);
-        tacticsEnemyList.TacticsCommandList.SetDisable(commandData,true);
     }
 
     private void CallStrategyStart(){
@@ -166,7 +162,7 @@ public class StrategyView : BaseView
         HelpWindow.SetInputInfo("STRATEGY");
     }
 
-    private void CallResultCommand(TacticsComandType commandType)
+    private void CallResultCommand(ConfirmComandType commandType)
     {
         var eventData = new StrategyViewEvent(CommandType.ResultClose);
         eventData.templete = commandType;
@@ -217,7 +213,7 @@ public class StrategyView : BaseView
         _commandData(eventData);
     }
 
-    private void CallBattleCommand(TacticsComandType commandType)
+    private void CallBattleCommand(ConfirmComandType commandType)
     {
         var eventData = new StrategyViewEvent(CommandType.BattleClose);
         eventData.templete = commandType;

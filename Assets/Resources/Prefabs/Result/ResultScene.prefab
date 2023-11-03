@@ -1152,7 +1152,7 @@ MonoBehaviour:
     type: 3}
   backRoot: {fileID: 2790424774664714026}
   strategyActorList: {fileID: 2771492920007860369}
-  commandList: {fileID: 1354134287006220551}
+  commandList: {fileID: 1654655867828736244}
   endingTypeObj: {fileID: 6041342320646928677}
   endingType: {fileID: 8818418129242180185}
   evaluateObj: {fileID: 9200369932903613314}
@@ -2532,7 +2532,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3062523412326597797}
-  - component: {fileID: 1354134287006220551}
+  - component: {fileID: 1654655867828736244}
   m_Layer: 5
   m_Name: CommandList
   m_TagString: Untagged
@@ -2562,7 +2562,7 @@ RectTransform:
   m_AnchoredPosition: {x: 291.99997, y: -224}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!114 &1354134287006220551
+--- !u!114 &1654655867828736244
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2571,7 +2571,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7127939367180409350}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8e93cbabf2965604fa8a9173b0116522, type: 3}
+  m_Script: {fileID: 11500000, guid: cf409b824ca9622468dd57c00bf805ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   horizontal: 1
@@ -2581,7 +2581,6 @@ MonoBehaviour:
   itemPrefab: {fileID: 2067777905309005909, guid: 7f16ce87c45057340ae8b484e81013e9,
     type: 3}
   _helpWindow: {fileID: 0}
-  cols: 2
 --- !u!1 &7237108952481386313
 GameObject:
   m_ObjectHideFlags: 0

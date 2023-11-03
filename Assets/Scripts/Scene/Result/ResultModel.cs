@@ -13,20 +13,27 @@ public class ResultModel : BaseModel
         return new List<string>();
     }
 
-    public List<SystemData.CommandData> ResultCommand()
+    public List<ListData> ResultCommand()
     {
-        List<SystemData.CommandData> menuCommandDatas = new List<SystemData.CommandData>();
         SystemData.CommandData yesCommand = new SystemData.CommandData();
         yesCommand.Key = "Yes";
         yesCommand.Name = DataSystem.System.GetTextData(6).Text;
         yesCommand.Id = 0;
-        menuCommandDatas.Add(yesCommand);
         SystemData.CommandData noCommand = new SystemData.CommandData();
         noCommand.Key = "No";
         noCommand.Name = DataSystem.System.GetTextData(3040).Text;
         noCommand.Id = 1;
-        menuCommandDatas.Add(noCommand);
-        return menuCommandDatas;
+        List<ListData> list = new List<ListData>();
+        foreach (var commandData in new List<SystemData.CommandData>() {yesCommand,noCommand})
+        {
+            var listData = new ListData(commandData);
+            if (commandData.Id == 1)
+            {
+                listData.SetEnable(false);
+            }
+            list.Add(listData);
+        }
+        return list;
     }
 
     public string EndingType()
@@ -99,20 +106,27 @@ public class ResultModel : BaseModel
         CurrentData.PlayerInfo.SetBestScore(TotalEvaluate());
     }
 
-    public List<SystemData.CommandData> StageEndCommand()
+    public List<ListData> StageEndCommand()
     {
-        List<SystemData.CommandData> menuCommandDatas = new List<SystemData.CommandData>();
         SystemData.CommandData yesCommand = new SystemData.CommandData();
         yesCommand.Key = "Yes";
         yesCommand.Name = DataSystem.System.GetTextData(6).Text;
         yesCommand.Id = 0;
-        menuCommandDatas.Add(yesCommand);
         SystemData.CommandData noCommand = new SystemData.CommandData();
         noCommand.Key = "No";
         noCommand.Name = DataSystem.System.GetTextData(16020).Text;
         noCommand.Id = 1;
-        menuCommandDatas.Add(noCommand);
-        return menuCommandDatas;
+        List<ListData> list = new List<ListData>();
+        foreach (var commandData in new List<SystemData.CommandData>() {yesCommand,noCommand})
+        {
+            var listData = new ListData(commandData);
+            if (commandData.Id == 1)
+            {
+                listData.SetEnable(false);
+            }
+            list.Add(listData);
+        }
+        return list;
     }
 
     public void SetActors()

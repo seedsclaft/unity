@@ -74,6 +74,7 @@ public class SkillList : MonoBehaviour
     public void RefreshAction(int selectIndex = 0)
     {
         skillActionList.Refresh(selectIndex);
+        skillActionList.Activate();
     }
 
     public void RefreshAttribute(List<ListData> listData)

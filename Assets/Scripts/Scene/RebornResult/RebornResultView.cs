@@ -10,7 +10,7 @@ public class RebornResultView : BaseView
 {   
     [SerializeField] private StrategyActorList strategyActorList = null;
     [SerializeField] private GetItemList strategyResultList = null; 
-    [SerializeField] private TacticsCommandList commandList = null; 
+    [SerializeField] private BaseList commandList = null; 
     [SerializeField] private GameObject animRoot = null;
     [SerializeField] private GameObject animPrefab = null;
 
@@ -63,7 +63,7 @@ public class RebornResultView : BaseView
         _commandData = commandData;
     }
     
-    public void SetResultList(List<SystemData.CommandData> confirmCommands)
+    public void SetResultList(List<ListData> confirmCommands)
     {
         strategyResultList.Initialize();
         SetInputHandler(strategyResultList.GetComponent<IInputHandlerEvent>());
@@ -72,10 +72,9 @@ public class RebornResultView : BaseView
         strategyResultList.InitializeConfirm(confirmCommands,(a) => CallResultCommand(a));
         SetInputHandler(strategyResultList.TacticsCommandList.GetComponent<IInputHandlerEvent>());
         strategyResultList.TacticsCommandList.Deactivate();
-        strategyResultList.TacticsCommandList.SetDisable(confirmCommands[0],true);
     }
     
-    private void CallResultCommand(TacticsComandType commandType)
+    private void CallResultCommand(ConfirmComandType commandType)
     {
         var eventData = new RebornResultViewEvent(CommandType.RebornResultClose);
         eventData.templete = commandType;

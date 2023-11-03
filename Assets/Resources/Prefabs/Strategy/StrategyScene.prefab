@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7703098461584010238}
-  - component: {fileID: 5317443866069777047}
+  - component: {fileID: 1132900719827252690}
   m_Layer: 5
   m_Name: CommandList
   m_TagString: Untagged
@@ -39,7 +39,7 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!114 &5317443866069777047
+--- !u!114 &1132900719827252690
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -48,7 +48,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 24548690873749380}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8e93cbabf2965604fa8a9173b0116522, type: 3}
+  m_Script: {fileID: 11500000, guid: cf409b824ca9622468dd57c00bf805ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   horizontal: 1
@@ -58,7 +58,6 @@ MonoBehaviour:
   itemPrefab: {fileID: 2067777905309005909, guid: 7f16ce87c45057340ae8b484e81013e9,
     type: 3}
   _helpWindow: {fileID: 0}
-  cols: 2
 --- !u!1 &106288006188450255
 GameObject:
   m_ObjectHideFlags: 0
@@ -205,7 +204,7 @@ MonoBehaviour:
   itemPrefab: {fileID: 963735004683801063, guid: f81fc10b69d708f4fb1d5f3d45cec6e1,
     type: 3}
   _helpWindow: {fileID: 0}
-  tacticsCommandList: {fileID: 5317443866069777047}
+  tacticsCommandList: {fileID: 1132900719827252690}
   cols: 1
 --- !u!1 &207127003218800608
 GameObject:
@@ -2649,7 +2648,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8863309130068257626}
-  - component: {fileID: 4848777650402258680}
+  - component: {fileID: 266666961092270222}
   m_Layer: 5
   m_Name: CommandList
   m_TagString: Untagged
@@ -2679,7 +2678,7 @@ RectTransform:
   m_AnchoredPosition: {x: 4, y: -256}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!114 &4848777650402258680
+--- !u!114 &266666961092270222
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2688,7 +2687,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3705072118685578745}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8e93cbabf2965604fa8a9173b0116522, type: 3}
+  m_Script: {fileID: 11500000, guid: cf409b824ca9622468dd57c00bf805ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   horizontal: 1
@@ -2698,7 +2697,6 @@ MonoBehaviour:
   itemPrefab: {fileID: 2067777905309005909, guid: 7f16ce87c45057340ae8b484e81013e9,
     type: 3}
   _helpWindow: {fileID: 0}
-  cols: 2
 --- !u!1 &3722787397025497017
 GameObject:
   m_ObjectHideFlags: 0
@@ -3890,7 +3888,7 @@ MonoBehaviour:
   itemPrefab: {fileID: 6696074532365261693, guid: 9b6cb7964ebe3dd488cb788b05699e4b,
     type: 3}
   _helpWindow: {fileID: 0}
-  tacticsCommandList: {fileID: 4848777650402258680}
+  tacticsCommandList: {fileID: 266666961092270222}
 --- !u!1 &6190800377602257344
 GameObject:
   m_ObjectHideFlags: 0

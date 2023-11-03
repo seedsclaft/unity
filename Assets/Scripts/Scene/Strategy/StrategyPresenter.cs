@@ -158,7 +158,6 @@ public class StrategyPresenter : BasePresenter
             {
                 if (stageEvents[i].Type == StageEventType.CommandDisable)
                 {
-                    _view.SetCommandDisable(_model.ResultCommand()[stageEvents[i].Param]);
                     _model.AddEventReadFlag(stageEvents[i]);
                 }
                 if (stageEvents[i].Type == StageEventType.NeedUseSp)
@@ -245,15 +244,6 @@ public class StrategyPresenter : BasePresenter
     {
         StatusViewInfo statusViewInfo = new StatusViewInfo(() => {
             _view.CommandStatusClose();
-            if (_model.NeedUseSpCommand)
-            {
-                if (_model.CheckUseSp())
-                {
-                    _view.SetCommandAble(_model.ResultCommand()[1]);
-                } else{
-                    _view.SetCommandDisable(_model.ResultCommand()[1]);
-                }
-            }
             if (_isBattle == false){
                 _view.SetHelpInputInfo("STRATEGY");
             } else{

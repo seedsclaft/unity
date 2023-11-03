@@ -199,7 +199,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6903556777371170788}
-  - component: {fileID: 7459299548521263686}
+  - component: {fileID: 5174739816212984368}
   m_Layer: 5
   m_Name: CommandList
   m_TagString: Untagged
@@ -229,7 +229,7 @@ RectTransform:
   m_AnchoredPosition: {x: 4, y: -256}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!114 &7459299548521263686
+--- !u!114 &5174739816212984368
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -238,18 +238,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 1703943442586282311}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8e93cbabf2965604fa8a9173b0116522, type: 3}
+  m_Script: {fileID: 11500000, guid: cf409b824ca9622468dd57c00bf805ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isScrollList: 0
-  horizontal: 1
+  horizontal: 0
   reverse: 0
   warpMode: 1
   scrollRect: {fileID: 555313870032054492}
   itemPrefab: {fileID: 2067777905309005909, guid: 7f16ce87c45057340ae8b484e81013e9,
     type: 3}
   _helpWindow: {fileID: 0}
-  cols: 2
 --- !u!1 &1848276216222421521
 GameObject:
   m_ObjectHideFlags: 0
@@ -1585,7 +1583,7 @@ MonoBehaviour:
   backRoot: {fileID: 0}
   strategyActorList: {fileID: 5996625087093904336}
   strategyResultList: {fileID: 1398372314278867321}
-  commandList: {fileID: 7459299548521263686}
+  commandList: {fileID: 5174739816212984368}
   animRoot: {fileID: 2517735961473490441}
   animPrefab: {fileID: 4528099191295616540, guid: f995e7f6f504de94092347d3d2b7dbfd,
     type: 3}
@@ -1813,7 +1811,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3f792cc0ef0b4248bfbe7d2db796789, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isScrollList: 0
   horizontal: 0
   reverse: 0
   warpMode: 1
@@ -1821,7 +1818,7 @@ MonoBehaviour:
   itemPrefab: {fileID: 6696074532365261693, guid: 9b6cb7964ebe3dd488cb788b05699e4b,
     type: 3}
   _helpWindow: {fileID: 0}
-  tacticsCommandList: {fileID: 7459299548521263686}
+  tacticsCommandList: {fileID: 5174739816212984368}
 --- !u!1 &8152840077997059454
 GameObject:
   m_ObjectHideFlags: 0

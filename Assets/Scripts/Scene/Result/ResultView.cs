@@ -9,7 +9,7 @@ using TMPro;
 public class ResultView : BaseView
 {   
     [SerializeField] private StrategyActorList strategyActorList = null;
-    [SerializeField] private TacticsCommandList commandList = null; 
+    [SerializeField] private BaseList commandList = null; 
     [SerializeField] private GameObject endingTypeObj = null;
     [SerializeField] private TextMeshProUGUI endingType = null; 
     [SerializeField] private GameObject evaluateObj = null;
@@ -101,17 +101,28 @@ public class ResultView : BaseView
     }
 
 
-    public void SetResultList(List<SystemData.CommandData> confirmCommands)
+    public void SetResultList(List<ListData> confirmCommands)
     {
-        commandList.Initialize((confirmCommands) => CallResultCommand(confirmCommands));
-        commandList.Refresh(confirmCommands);
+        commandList.Initialize(confirmCommands.Count);
+        commandList.SetData(confirmCommands);
+        commandList.SetInputHandler(InputKeyType.Decide,() => {
+            var data = (SystemData.CommandData)commandList.ListData.Data;
+            if (data.Key == "Yes")
+            {
+                CallResultCommand(ConfirmComandType.Yes);
+            } else
+            if (data.Key == "No")
+            {
+                CallResultCommand(ConfirmComandType.No);
+            }
+        });
         SetInputHandler(commandList.GetComponent<IInputHandlerEvent>());
         commandList.gameObject.SetActive(false);
     }
 
-    public void UpdateResultCommand(List<SystemData.CommandData> confirmCommands)
+    public void UpdateResultCommand(List<ListData> confirmCommands)
     {
-        commandList.Refresh(confirmCommands);
+        commandList.SetData(confirmCommands);
     }
 
     public void SetEvent(System.Action<ResultViewEvent> commandData)
@@ -131,7 +142,7 @@ public class ResultView : BaseView
         });
     }
 
-    private void CallResultCommand(TacticsComandType commandType)
+    private void CallResultCommand(ConfirmComandType commandType)
     {
         var eventData = new ResultViewEvent(CommandType.ResultClose);
         eventData.templete = commandType;

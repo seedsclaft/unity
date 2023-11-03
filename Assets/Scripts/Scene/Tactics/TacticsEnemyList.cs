@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class TacticsEnemyList : ListWindow , IInputHandlerEvent
 {
-    [SerializeField] private TacticsCommandList tacticsCommandList;
-    public TacticsCommandList TacticsCommandList => tacticsCommandList;
+    [SerializeField] private BaseList tacticsCommandList;
+    public BaseList TacticsCommandList => tacticsCommandList;
     [SerializeField] private int cols = 0;
     private List<TroopInfo> _troopInfos = new List<TroopInfo>();
 
@@ -83,10 +83,22 @@ public class TacticsEnemyList : ListWindow , IInputHandlerEvent
         SetUnselectGetItem();
     }
 
-    public void InitializeConfirm(List<SystemData.CommandData> confirmCommands ,System.Action<TacticsComandType> callEvent)
+    public void InitializeConfirm(List<ListData> confirmCommands ,System.Action<ConfirmComandType> callEvent)
     {
-        tacticsCommandList.Initialize(callEvent);
-        tacticsCommandList.Refresh(confirmCommands);
+        tacticsCommandList.Initialize(confirmCommands.Count);
+        tacticsCommandList.SetInputHandler(InputKeyType.Decide,() => 
+        {
+            var data = (SystemData.CommandData)tacticsCommandList.ListData.Data;
+            if (data.Key == "Yes")
+            {
+                callEvent(ConfirmComandType.Yes);
+            } else
+            if (data.Key == "No")
+            {
+                callEvent(ConfirmComandType.No);
+            }
+        });
+        tacticsCommandList.SetData(confirmCommands);
     }
 
 
