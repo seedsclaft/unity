@@ -30,7 +30,6 @@ public class StrategyView : BaseView
     public override void Initialize() 
     {
         base.Initialize();
-        InitializeInput();
         strategyStrengthList.Initialize(() => CallLvUpNext());
         SetInputHandler(strategyStrengthList.GetComponent<IInputHandlerEvent>());
         

@@ -52,7 +52,7 @@ public class ConfirmInfo
     public bool IsNoChoise => _isNoChoise;
     private List<SkillInfo> _skillInfos = null;
     public List<SkillInfo> SkillInfos => _skillInfos;
-    private int _selectIndex = -1;
+    private int _selectIndex = 0;
     public int SelectIndex => _selectIndex;
 
     public ConfirmInfo(string title,System.Action<ConfirmComandType> callEvent)

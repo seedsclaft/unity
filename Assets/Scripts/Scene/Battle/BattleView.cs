@@ -53,7 +53,6 @@ public class BattleView : BaseView ,IInputHandlerEvent
     public override void Initialize() 
     {
         base.Initialize();
-        InitializeInput();
         skillList.Initialize();
         InitializeSkillActionList();
         statusConditionList.Initialize(() => OnClickCondition());
@@ -68,7 +67,6 @@ public class BattleView : BaseView ,IInputHandlerEvent
         SetInputHandler(skillList.skillAttributeList.GetComponent<IInputHandlerEvent>());
         skillList.HideAttributeList();
 
-        SetInputHandler(gameObject.GetComponent<IInputHandlerEvent>());
         new BattlePresenter(this);
     }
 

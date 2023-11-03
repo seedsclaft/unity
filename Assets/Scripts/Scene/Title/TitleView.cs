@@ -8,19 +8,19 @@ using Title;
 public class TitleView : BaseView ,IInputHandlerEvent
 {
     [SerializeField] private TextMeshProUGUI versionText = null;
-    [SerializeField] private BaseCommandList commandList = null;
     private new System.Action<TitleViewEvent> _commandData = null;
     [SerializeField] private Button logoButton = null;
     [SerializeField] private SideMenuList sideMenuList = null;
+    [SerializeField] private BaseList titleCommandList = null;
+
+    
     
     public override void Initialize() 
     {
         base.Initialize();
-        InitializeInput();
         new TitlePresenter(this);
         logoButton.onClick.AddListener(() => CallLogoClick());
         logoButton.gameObject.SetActive(true);
-        SetInputHandler(gameObject.GetComponent<IInputHandlerEvent>());
     }
 
     private void CallCredit()
@@ -42,17 +42,16 @@ public class TitleView : BaseView ,IInputHandlerEvent
     }
 
     public void SetHelpWindow(){
-        commandList.SetHelpWindow(HelpWindow);
         sideMenuList.SetHelpWindow(HelpWindow);
         sideMenuList.SetOpenEvent(() => {
-            commandList.Deactivate();
+            titleCommandList.Deactivate();
             sideMenuList.Activate();
         });
         sideMenuList.SetCloseEvent(() => {
-            commandList.Activate();
+            titleCommandList.Activate();
             sideMenuList.Deactivate();
             HelpWindow.SetInputInfo("TITLE");
-            commandList.UpdateHelpWindow();
+            UpdateHelpWindow();
         });
     }
 
@@ -66,12 +65,14 @@ public class TitleView : BaseView ,IInputHandlerEvent
         versionText.text = text;
     }
 
-    public void SetTitleCommand(List<SystemData.CommandData> menuCommands){
-        commandList.Initialize(menuCommands);
-        commandList.SetInputHandler(InputKeyType.Decide,() => CallTitleCommand());
-        commandList.SetInputHandler(InputKeyType.Option1,() => CallOpenSideMenu());
-        SetInputHandler(commandList.GetComponent<IInputHandlerEvent>());
-        commandList.Deactivate();
+    public void SetTitleCommand(List<ListData> titleCommands){
+        titleCommandList.Initialize(titleCommands.Count);
+        titleCommandList.SetData(titleCommands);
+        titleCommandList.SetInputHandler(InputKeyType.Decide,() => CallTitleCommand());
+        titleCommandList.SetInputHandler(InputKeyType.Option1,() => CallOpenSideMenu());
+        titleCommandList.SetSelectedHandler(() => UpdateHelpWindow());
+        SetInputHandler(titleCommandList.GetComponent<IInputHandlerEvent>());
+        titleCommandList.SetHelpWindow(HelpWindow);
     }
 
     public void SetSideMenu(List<SystemData.CommandData> menuCommands){
@@ -82,15 +83,15 @@ public class TitleView : BaseView ,IInputHandlerEvent
 
     public void RefreshCommandIndex(int selectIndex)
     {
-        commandList.Refresh(selectIndex);
-        commandList.Activate();
+        titleCommandList.Refresh(selectIndex);
+        titleCommandList.Activate();
     }
 
     public void ActivateSideMenu()
     {
         HelpWindow.SetInputInfo("SIDEMENU");
         sideMenuList.Activate();
-        commandList.UpdateHelpWindow();
+        UpdateHelpWindow();
     }
 
     public void DeactivateSideMenu()
@@ -103,26 +104,27 @@ public class TitleView : BaseView ,IInputHandlerEvent
     {
         HelpWindow.SetInputInfo("SIDEMENU");
         HelpWindow.SetHelpText(DataSystem.System.GetTextData(701).Help);
-        commandList.Deactivate();
+        titleCommandList.Deactivate();
         sideMenuList.Activate();
         sideMenuList.OpenSideMenu();
     }
 
     public void CommandCloseSideMenu()
     {
-        commandList.Activate();
+        titleCommandList.Activate();
         sideMenuList.Deactivate();
         sideMenuList.CloseSideMenu();
         HelpWindow.SetInputInfo("TITLE");
-        commandList.UpdateHelpWindow();
+        UpdateHelpWindow();
     }
 
     private void CallTitleCommand(){
         var eventData = new TitleViewEvent(CommandType.TitleCommand);
-        var item = commandList.Data;
-        if (item != null)
+        var listData = titleCommandList.ListData;
+        if (listData != null)
         {
-            eventData.templete = item.Id;
+            var commandData = (SystemData.CommandData)listData.Data;
+            eventData.templete = commandData.Id;
             _commandData(eventData);
         }
     }
@@ -146,14 +148,9 @@ public class TitleView : BaseView ,IInputHandlerEvent
         _commandData(eventData);
     }
 
-    public void SetCommandDisable(int commandId)
-    {
-        commandList.SetDisable(DataSystem.TacticsCommand[commandId],true);
-    }
-
     public void CommandLogoClick()
     {
-        commandList.ResetInputFrame(1);
+        titleCommandList.ResetInputFrame(1);
         logoButton.gameObject.SetActive(false);
     }    
     
@@ -162,6 +159,16 @@ public class TitleView : BaseView ,IInputHandlerEvent
         if (keyType == InputKeyType.Decide || keyType == InputKeyType.Cancel || keyType == InputKeyType.Start)
         {
             CallLogoClick();
+        }
+    }
+
+    private void UpdateHelpWindow()
+    {
+        var listData = titleCommandList.ListData;
+        if (listData != null)
+        {
+            var commandData = (SystemData.CommandData)listData.Data;
+            HelpWindow.SetHelpText(commandData.Help);
         }
     }
 }

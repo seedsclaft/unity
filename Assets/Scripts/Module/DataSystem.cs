@@ -10,9 +10,9 @@ abstract public class DataSystem
 {
     private static DataManager _data;
     public static DataManager Data => _data;
-    public static List<ActorData> Actors;
-    public static List<AdvData> Advs;
-    public static List<EnemyData> Enemies;
+    public static List<ActorData> Actors = new ();
+    public static List<AdvData> Advs = new ();
+    public static List<EnemyData> Enemies = new ();
     public static List<RuleData> Rules = new ();
     public static List<SkillData> Skills = new ();
     public static List<StageData> Stages = new ();

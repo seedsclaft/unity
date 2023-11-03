@@ -66,7 +66,7 @@ public class TacticsPresenter :BasePresenter
         _view.SetStageInfo(_model.CurrentStage);
         _view.SetEnemies(_model.TacticsTroops());
 
-        _view.SetTacticsCommand(_model.TacticsCommand);
+        _view.SetTacticsCommand(_model.TacticsCommand());
         _view.HideCommandList();
         _view.SetAttributeTypes(_model.AttributeTypes());
         CommandRefresh();
@@ -82,7 +82,7 @@ public class TacticsPresenter :BasePresenter
             {
                 if (stageEvents[i].Type == StageEventType.CommandDisable)
                 {
-                    _view.SetCommandDisable(stageEvents[i].Param);
+                    _view.RefreshListData(_model.ChangeEnableCommandData(stageEvents[i].Param,false));
                 }
                 if (stageEvents[i].Type == StageEventType.TutorialBattle)
                 {
@@ -91,13 +91,8 @@ public class TacticsPresenter :BasePresenter
                 if (stageEvents[i].Type == StageEventType.NeedAllTactics)
                 {
                     _model.SetNeedAllTacticsCommand(true);
-                    if (_model.CheckNonBusy())
-                    {
-                        _view.SetCommandDisable(DataSystem.TacticsCommand.Count-1);
-                        
-                    } else{
-                        _view.SetCommandAble(DataSystem.TacticsCommand.Count-1);
-                    }
+                    var listData = _model.ChangeEnableCommandData((int)TacticsComandType.Turnend - 1, !_model.CheckNonBusy());
+                    _view.RefreshListData(listData);
                 }
                 if (stageEvents[i].Type == StageEventType.IsSubordinate)
                 {
@@ -338,13 +333,8 @@ public class TacticsPresenter :BasePresenter
         }
         if (_model.NeedAllTacticsCommand)
         {
-            if (_model.CheckNonBusy())
-            {
-                _view.SetCommandDisable(DataSystem.TacticsCommand.Count-1);
-                
-            } else{
-                _view.SetCommandAble(DataSystem.TacticsCommand.Count-1);
-            }
+            var listData = _model.ChangeEnableCommandData((int)TacticsComandType.Turnend - 1, !_model.CheckNonBusy());
+            _view.RefreshListData(listData);
         }
     }
 
@@ -905,7 +895,8 @@ public class TacticsPresenter :BasePresenter
             _model.ResetTacticsCostAll();
             for (int i = 0;i < 5;i++)
             {
-                _view.SetCommandDisable(i);
+                var listData = _model.ChangeEnableCommandData(i, false);
+                _view.RefreshListData(listData);
             }
         }
     }

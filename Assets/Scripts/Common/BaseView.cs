@@ -41,7 +41,8 @@ abstract public class BaseView : MonoBehaviour
 
     public virtual void Initialize()
     {
-        
+        InitializeInput();
+        SetInputHandler(gameObject.GetComponent<IInputHandlerEvent>());
     }
 
     public void InitializeInput()

@@ -2,7 +2,19 @@
 
 public class TitleModel : BaseModel
 {
-    public List<SystemData.CommandData> TitleCommand => DataSystem.TitleCommand;
+    public List<ListData> TitleCommand() {
+        var list = new List<ListData>();
+        foreach (var commandData in DataSystem.TitleCommand)
+        {
+            var listData = new ListData(commandData);
+            list.Add(listData);
+        }
+        if (!ExistsLoadFile())
+        {
+            list[1].SetEnable(false);
+        }
+        return list;
+    }
 
     public bool ExistsLoadFile()
     {

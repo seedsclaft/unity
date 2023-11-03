@@ -25,7 +25,7 @@ public class StatusPresenter
         //List<ActorInfo> actorInfos = _model.Actors();
         _view.SetActorInfo(_model.CurrentActor,_model.StatusActors());
 
-        _view.SetStrengthInfo(_model.ConfirmCommand());
+        //_view.SetStrengthInfo(_model.ConfirmCommand());
         _view.SetStatusCommand(_model.StatusCommand);
         _model.ChangeSkillAttributeType();
         _view.SetAttributeTypes(_model.AttributeAllTypes(),_model.CurrentAttributeType);

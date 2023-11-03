@@ -28,7 +28,6 @@ public class StatusView : BaseView ,IInputHandlerEvent
     public override void Initialize() 
     {
         base.Initialize();
-        InitializeInput();
         skillList.Initialize();
         InitializeSkillActionList();
         skillList.InitializeAttribute(System.Enum.GetValues(typeof(AttributeType)).Length,(a) => CallAttributeTypes(a),null);

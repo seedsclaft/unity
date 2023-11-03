@@ -7,7 +7,8 @@ using Confirm;
 
 public class ConfirmView : BaseView,IInputHandlerEvent
 {
-    [SerializeField] private BaseCommandList commandList = null;
+    [SerializeField] private BaseList commandList = null;
+    //[SerializeField] private BaseCommandList commandList = null;
     [SerializeField] private TextMeshProUGUI titleText = null;
     [SerializeField] private GameObject skillInfoRoot = null;
     [SerializeField] private GameObject skillInfoPrefab = null;
@@ -18,9 +19,7 @@ public class ConfirmView : BaseView,IInputHandlerEvent
     public override void Initialize() 
     {
         base.Initialize();
-        InitializeInput();
         new ConfirmPresenter(this);
-        SetInputHandler(gameObject.GetComponent<IInputHandlerEvent>());
     }
     
     public void SetTitle(string title)
@@ -55,10 +54,7 @@ public class ConfirmView : BaseView,IInputHandlerEvent
 
     public void SetSelectIndex(int selectIndex)
     {
-        if (selectIndex > -1)
-        {
-            commandList.UpdateSelectIndex(selectIndex);
-        }
+        commandList.Refresh(selectIndex);
     }
 
     public void SetConfirmEvent(System.Action<ConfirmComandType> commandData)
@@ -81,16 +77,18 @@ public class ConfirmView : BaseView,IInputHandlerEvent
         _commandData = commandData;
     }
 
-    public void SetConfirmCommand(List<SystemData.CommandData> menuCommands)
+    public void SetConfirmCommand(List<ListData> menuCommands)
     {
-        commandList.Initialize(menuCommands);
+        commandList.Initialize(menuCommands.Count);
+        commandList.SetData(menuCommands);
         commandList.SetInputHandler(InputKeyType.Decide,() => CallConfirmCommand());
         SetInputHandler(commandList.GetComponent<IInputHandlerEvent>());
+        commandList.Activate();
     }
 
     private void CallConfirmCommand()
     {
-        var data = commandList.Data;
+        var data = (SystemData.CommandData)commandList.ListData.Data;
         if (data != null)
         {
             var commandType = ConfirmComandType.No;

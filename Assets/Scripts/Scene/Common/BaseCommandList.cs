@@ -20,14 +20,6 @@ public class BaseCommandList : ListWindow , IInputHandlerEvent
     {
         InitializeListView(baseCommands.Count);
         _data = baseCommands;
-        /*
-        if (menuCommands.Count == 1)
-        {
-            HorizontalLayoutGroup horizontalLayoutGroup = gameObject.GetComponentInChildren<HorizontalLayoutGroup>();
-            horizontalLayoutGroup.spacing = 0;
-            horizontalLayoutGroup.padding.left = 0;
-        }
-        */
         for (int i = 0; i < baseCommands.Count;i++)
         {
             var baseCommand = ObjectList[i].GetComponent<BaseCommand>();

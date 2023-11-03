@@ -63,10 +63,25 @@ public class TacticsModel : BaseModel
         return list;
     }
 
-    public List<SystemData.CommandData> TacticsCommand
+    public List<ListData> TacticsCommand()
     {
-        get { return DataSystem.TacticsCommand;}
+        var list = new List<ListData>();
+        var idx = 0;
+        foreach (var commandData in DataSystem.TacticsCommand)
+        {
+            var listData = new ListData(commandData,idx);
+            list.Add(listData);
+            idx++;
+        }
+        return list;
     }
+
+    public ListData ChangeEnableCommandData(int index,bool enable)
+    {
+        return new ListData(DataSystem.TacticsCommand[index],index,enable);
+    }
+    
+
 
     public void SetTempData(TacticsComandType tacticsComandType)
     {

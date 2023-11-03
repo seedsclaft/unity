@@ -43,6 +43,8 @@ abstract public class ListWindow : MonoBehaviour
     private System.Action<InputKeyType> _inputCallHandler = null;
     private Dictionary<InputKeyType, System.Action> _inputHandler = new ();
 
+    private System.Action _selectedHandler = null;
+
     public HelpWindow _helpWindow = null;
 
     private System.Action _cancelEvent = null;
@@ -386,7 +388,14 @@ abstract public class ListWindow : MonoBehaviour
 
     public void SelectIndex(int selectIndex)
     {
-        _index = selectIndex;
+        if (_index != selectIndex)
+        {
+            _index = selectIndex;
+            if (_selectedHandler != null)
+            {
+                _selectedHandler();
+            }
+        }
     }
 
     public void Update()
@@ -517,6 +526,11 @@ abstract public class ListWindow : MonoBehaviour
     public void SetInputHandler(InputKeyType keyType,System.Action handler)
     {
         _inputHandler[keyType] = handler;
+    }
+
+    public void SetSelectedHandler(System.Action selectedHandler)
+    {
+        _selectedHandler = selectedHandler;
     }
 
     public void CallListInputHandler(InputKeyType keyType)

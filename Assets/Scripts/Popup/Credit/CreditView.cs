@@ -10,10 +10,8 @@ public class CreditView : BaseView,IInputHandlerEvent
     public override void Initialize() 
     {
         base.Initialize();
-        InitializeInput();
         new CreditPresenter(this);
         Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
-        SetInputHandler(gameObject.GetComponent<IInputHandlerEvent>());
     }
 
     public void SetEvent(System.Action<CreditViewEvent> commandData)

@@ -11,16 +11,16 @@ public class TacticsResourceList : ListWindow , IInputHandlerEvent
 {
     private List<ActorInfo> _actorInfos = new List<ActorInfo>();
 
-    [SerializeField] private BaseCommandList baseCommandList;
+    [SerializeField] private BaseList baseCommandList;
     [SerializeField] private TextMeshProUGUI commandLv;
     [SerializeField] private TextMeshProUGUI commandDescription;
     private System.Action _confirmEvent = null;
 
-    public SystemData.CommandData CommandData {
+    public ListData CommandData {
         get {
             if (baseCommandList.Index > -1)
             {
-                return baseCommandList.Data;
+                return baseCommandList.ListData;
             }
             return null;
         }
@@ -52,12 +52,13 @@ public class TacticsResourceList : ListWindow , IInputHandlerEvent
         Refresh();
     }
 
-    public void InitializeConfirm(List<SystemData.CommandData> confirmCommands ,System.Action callEvent)
+    public void InitializeConfirm(List<ListData> confirmCommands ,System.Action callEvent)
     {
         _confirmEvent = callEvent;
+        baseCommandList.Initialize(confirmCommands.Count);
         baseCommandList.SetInputHandler(InputKeyType.Decide,callEvent);
-        baseCommandList.Initialize(confirmCommands);
-        //baseCommandList.Refresh(confirmCommands);
+        baseCommandList.SetData(confirmCommands);
+        baseCommandList.Activate();
         baseCommandList.UpdateSelectIndex(-1);
         SetCancelEvent(() => _confirmEvent());
     }

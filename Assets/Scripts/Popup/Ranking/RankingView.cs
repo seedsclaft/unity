@@ -14,9 +14,7 @@ public class RankingView : BaseView,IInputHandlerEvent
     public override void Initialize() 
     {
         base.Initialize();
-        InitializeInput();
         new RankingPresenter(this);
-        SetInputHandler(gameObject.GetComponent<IInputHandlerEvent>());
     }
 
 

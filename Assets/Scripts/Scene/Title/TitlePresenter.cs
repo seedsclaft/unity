@@ -142,11 +142,9 @@ public class TitlePresenter : BasePresenter
         if (_model.ExistsLoadFile())
         {
             selectIndex = 1;
-        } else
-        {
-            _view.SetCommandDisable(1);
         }
         _view.RefreshCommandIndex(selectIndex);
+        //_view.RefreshView();
     }
 
     private async void CommandLogoClick()
@@ -155,7 +153,7 @@ public class TitlePresenter : BasePresenter
         _logoChecked = true;
         _view.CommandLogoClick();
         _view.SetHelpWindow();
-        _view.SetTitleCommand(_model.TitleCommand);
+        _view.SetTitleCommand(_model.TitleCommand());
         _view.SetSideMenu(_model.SideMenu());
         CommandRefresh();
         var bgm = await _model.GetBgmData("TITLE");

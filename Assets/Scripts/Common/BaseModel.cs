@@ -221,7 +221,7 @@ public class BaseModel
         return await ResourceSystem.LoadBGMAsset(bgmKey);
     }
 
-    public List<SystemData.CommandData> ConfirmCommand()
+    public List<ListData> ConfirmCommand()
     {
         List<SystemData.CommandData> menuCommandDatas = new List<SystemData.CommandData>();
         SystemData.CommandData yesCommand = new SystemData.CommandData();
@@ -234,10 +234,16 @@ public class BaseModel
         noCommand.Id = 1;
         menuCommandDatas.Add(noCommand);
         menuCommandDatas.Add(yesCommand);
-        return menuCommandDatas;
+        var list = new List<ListData>();
+        foreach (var commandData in menuCommandDatas)
+        {
+            var listData = new ListData(commandData);
+            list.Add(listData);
+        }
+        return list;
     }
 
-    public List<SystemData.CommandData> NoChoiceConfirmCommand()
+    public List<ListData> NoChoiceConfirmCommand()
     {
         List<SystemData.CommandData> menuCommandDatas = new List<SystemData.CommandData>();
         SystemData.CommandData yesCommand = new SystemData.CommandData();
@@ -245,7 +251,13 @@ public class BaseModel
         yesCommand.Name = DataSystem.System.GetTextData(3052).Text;
         yesCommand.Id = 0;
         menuCommandDatas.Add(yesCommand);
-        return menuCommandDatas;
+        var list = new List<ListData>();
+        foreach (var commandData in menuCommandDatas)
+        {
+            var listData = new ListData(commandData);
+            list.Add(listData);
+        }
+        return list;
     }
     
     public List<AttributeType> AttributeTypes()

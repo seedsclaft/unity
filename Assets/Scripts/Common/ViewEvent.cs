@@ -41,6 +41,13 @@ abstract public class ListItem : MonoBehaviour
     private Color _disableColor;
     private int _index;
     public int Index{get {return _index;}}
+    private ListData _listData;
+    public ListData ListData => _listData;
+    public void SetListData(ListData listData,int index)
+    {
+        _listData = listData;
+        _index = index;
+    }
     [SerializeField] private GameObject cursor;
     public GameObject Cursor { get {return cursor;}}
     [SerializeField] private GameObject disable;
@@ -85,5 +92,10 @@ abstract public class ListItem : MonoBehaviour
                 handler(_index);
             }
         });
+    }
+
+    public void SetCallHandler(System.Action handler)
+    {
+        clickButton.onClick.AddListener(() => handler());
     }
 }

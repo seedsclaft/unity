@@ -7,7 +7,8 @@ using TMPro;
 
 public class TacticsView : BaseView
 {
-    [SerializeField] private TacticsCommandList tacticsCommandList = null;
+    //[SerializeField] private TacticsCommandList tacticsCommandList = null;
+    [SerializeField] private BaseList tacticsCommandList = null;
     [SerializeField] private SkillList skillList = null;
     [SerializeField] private TacticsCharaLayer tacticsCharaLayer = null;
 
@@ -38,7 +39,6 @@ public class TacticsView : BaseView
     public override void Initialize()
     {
         base.Initialize();
-        InitializeInput();
 
         skillList.Initialize();
         InitializeSkillActionList();
@@ -92,7 +92,7 @@ public class TacticsView : BaseView
         });
         sideMenuList.SetCloseEvent(() => {
             HelpWindow.SetInputInfo("TACTICS");
-            tacticsCommandList.UpdateHelpWindow();
+            //tacticsCommandList.UpdateHelpWindow();
             tacticsCommandList.Activate();
             sideMenuList.Deactivate();
         });
@@ -141,26 +141,25 @@ public class TacticsView : BaseView
         alcanaInfoComponent.UpdateInfo(alcanaInfo);
     }
 
-    public void SetTacticsCommand(List<SystemData.CommandData> menuCommands)
+    public void SetTacticsCommand(List<ListData> menuCommands)
     {
-        tacticsCommandList.Initialize((a) => CallTacticsCommand(a));
+        tacticsCommandList.Initialize(menuCommands.Count);
+        tacticsCommandList.SetInputHandler(InputKeyType.Decide,() => CallTacticsCommand());
         tacticsCommandList.SetInputHandler(InputKeyType.Option1,() => CallOpenSideMenu());
         tacticsCommandList.SetInputHandler(InputKeyType.SideLeft1,() => OnClickDropout());
         tacticsCommandList.SetInputHandler(InputKeyType.Option2,() => CallAlcanaEvent());
         tacticsCommandList.SetHelpWindow(HelpWindow);
-        tacticsCommandList.Refresh(menuCommands);
+        tacticsCommandList.SetData(menuCommands);
         SetInputHandler(tacticsCommandList.GetComponent<IInputHandlerEvent>());
+        tacticsCommandList.Activate();
     }
 
-    public void SetCommandAble(int commandId)
-    {
-        tacticsCommandList.SetDisable(DataSystem.TacticsCommand[commandId],false);
-    }
 
-    public void SetCommandDisable(int commandId)
+    public void RefreshListData(ListData listData)
     {
-        tacticsCommandList.SetDisable(DataSystem.TacticsCommand[commandId],true);
-        tacticsCommandList.SelectEnableIndex();
+        tacticsCommandList.RefreshListData(listData);
+        tacticsCommandList.Refresh();
+        //tacticsCommandList.SelectEnableIndex();
     }
 
     public void ShowCommandList()
@@ -175,13 +174,18 @@ public class TacticsView : BaseView
         tacticsCommandList.gameObject.SetActive(false);
     }
 
-    private void CallTacticsCommand(TacticsComandType commandType)
+    private void CallTacticsCommand()
     {
         if (_lastCallEventType != CommandType.None) return;
-        var eventData = new TacticsViewEvent(CommandType.TacticsCommand);
-        eventData.templete = commandType;
-        _commandData(eventData);
-        _lastCallEventType = eventData.commandType;
+        var listData = tacticsCommandList.ListData;
+        if (listData != null)
+        {
+            var commandData = (SystemData.CommandData)listData.Data;
+            var eventData = new TacticsViewEvent(CommandType.TacticsCommand);
+            eventData.templete = commandData.Id;
+            _commandData(eventData);
+            _lastCallEventType = eventData.commandType;
+        }
     }
 
     private void CallAlcanaEvent()
@@ -190,7 +194,7 @@ public class TacticsView : BaseView
         _commandData(eventData);
     }
 
-    public void SetActors(List<ActorInfo> actorInfos,List<SystemData.CommandData> confirmCommands,Dictionary<TacticsComandType, int> commandRankInfo)
+    public void SetActors(List<ActorInfo> actorInfos,List<ListData> confirmCommands,Dictionary<TacticsComandType, int> commandRankInfo)
     {
         tacticsCharaLayer.Initialize(actorInfos);
         SetInputHandler(tacticsCharaLayer.GetComponent<IInputHandlerEvent>());
@@ -276,7 +280,7 @@ public class TacticsView : BaseView
     private void CallTrainCommand()
     {
         if (_lastCallEventType != CommandType.None) return;
-        var data = tacticsTrainList.CommandData;
+        var data = (SystemData.CommandData)tacticsTrainList.CommandData.Data;
         if (data != null)
         {
             var commandType = ConfirmComandType.No;
@@ -315,7 +319,7 @@ public class TacticsView : BaseView
     private void CallAlchemyCommand()
     {
         if (_lastCallEventType != CommandType.None) return;
-        var data = tacticsAlchemyList.CommandData;
+        var data = (SystemData.CommandData)tacticsAlchemyList.CommandData.Data;
         if (data != null)
         {
             var commandType = ConfirmComandType.No;
@@ -377,7 +381,7 @@ public class TacticsView : BaseView
     private void CallRecoveryCommand()
     {
         if (_lastCallEventType != CommandType.None) return;
-        var data = tacticsRecoveryList.CommandData;
+        var data = (SystemData.CommandData)tacticsRecoveryList.CommandData.Data;
         if (data != null)
         {
             var commandType = ConfirmComandType.No;
@@ -479,7 +483,7 @@ public class TacticsView : BaseView
     private void CallBattleCommand()
     {
         if (_lastCallEventType != CommandType.None) return;
-        var data = tacticsBattleList.CommandData;
+        var data = (SystemData.CommandData)tacticsBattleList.CommandData.Data;
         if (data != null)
         {
             var commandType = ConfirmComandType.No;
@@ -541,7 +545,7 @@ public class TacticsView : BaseView
     private void CallResourceCommand()
     {
         if (_lastCallEventType != CommandType.None) return;
-        var data = tacticsResourceList.CommandData;
+        var data = (SystemData.CommandData)tacticsResourceList.CommandData.Data;
         if (data != null)
         {
             var commandType = ConfirmComandType.No;

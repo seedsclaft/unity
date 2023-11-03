@@ -26,8 +26,10 @@ public class TacticsCommand : ListItem ,IListViewItem
 
     public void UpdateViewItem()
     {
-        if (_data == null) return;
-        commandName.text = _data.Name;
+        if (ListData == null) return;
+        var data = (SystemData.CommandData)ListData.Data;
+        commandName.text = data.Name;
+        Disable.gameObject.SetActive(ListData.Enable == false);
     }
 
     public void SetDisable(SystemData.CommandData menuCommandData,bool IsDisable)

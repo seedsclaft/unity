@@ -14,7 +14,6 @@ public class MainMenuView : BaseView
     public override void Initialize() 
     {
         base.Initialize();
-        InitializeInput();
         new MainMenuPresenter(this);
     }
 

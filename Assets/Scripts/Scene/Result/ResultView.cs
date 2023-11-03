@@ -35,7 +35,6 @@ public class ResultView : BaseView
     public override void Initialize() 
     {
         base.Initialize();
-        InitializeInput();
         
         GameObject prefab = Instantiate(animPrefab);
         prefab.transform.SetParent(animRoot.transform, false);

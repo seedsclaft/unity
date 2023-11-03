@@ -15,9 +15,7 @@ public class AdvController : BaseView, IInputHandlerEvent
     public override void Initialize() 
     {
         base.Initialize();
-        InitializeInput();
         advInputButton.onClick.AddListener(() => {advUguiManager.OnInput();});
-        SetInputHandler(gameObject.GetComponent<IInputHandlerEvent>());
     }
 
     public void StartAdv()

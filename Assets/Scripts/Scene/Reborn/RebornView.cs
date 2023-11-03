@@ -16,7 +16,6 @@ public class RebornView : BaseView
     public override void Initialize() 
     {
         base.Initialize();
-        InitializeInput();
         new RebornPresenter(this);
     }
 

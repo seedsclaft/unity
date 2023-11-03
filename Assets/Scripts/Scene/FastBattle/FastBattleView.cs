@@ -35,7 +35,6 @@ public class FastBattleView : BaseView
     public override void Initialize() 
     {
         base.Initialize();
-        InitializeInput();
 
         new FastBattlePresenter(this);
     }

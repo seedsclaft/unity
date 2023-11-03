@@ -16,7 +16,6 @@ public class RulingView : BaseView
     public override void Initialize() 
     {
         base.Initialize();
-        InitializeInput();
         ruleList.Initialize();
         new RulingPresenter(this);
     }

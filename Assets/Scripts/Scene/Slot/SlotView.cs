@@ -13,9 +13,7 @@ public class SlotView : BaseView
     public override void Initialize() 
     {
         base.Initialize();
-        InitializeInput();
         new SlotPresenter(this);
-        SetInputHandler(gameObject.GetComponent<IInputHandlerEvent>());
     }
 
 
