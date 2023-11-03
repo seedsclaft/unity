@@ -291,7 +291,7 @@ public class BattleModel : BaseModel
         return _battlers.Find(a => a.Index == index);
     }
 
-    public List<SkillInfo> SkillActionList(AttributeType attributeType)
+    public List<ListData> SkillActionList(AttributeType attributeType)
     {
         _currentAttributeType = attributeType;
         List<SkillInfo> skillInfos = CurrentBattler.Skills.FindAll(a => a.Master.SkillType != SkillType.None && a.Master.Id > 100);
@@ -325,15 +325,22 @@ public class BattleModel : BaseModel
         skillInfos.AddRange(sortList1);
         skillInfos.AddRange(sortList2);
         skillInfos.AddRange(sortList3);
-        return skillInfos;
+        var list = new List<ListData>();
+        var idx = 0;
+        foreach (var skillInfo in skillInfos)
+        {
+            var listData = new ListData(skillInfo,idx);
+            list.Add(listData);
+        }
+        return list;
     }
 
-    public int SelectSkillIndex(List<SkillInfo> skillInfos)
+    public int SelectSkillIndex(List<ListData> skillInfos)
     {
         int selectIndex = 0;
         if (CurrentBattler != null && CurrentBattler.isActor == true)
         {
-            var skillIndex = skillInfos.FindIndex(a => a.Id == CurrentBattler.LastSelectSkillId);
+            var skillIndex = skillInfos.FindIndex(a => ((SkillInfo)a.Data).Id == CurrentBattler.LastSelectSkillId);
             if (skillIndex > -1)
             {
                 selectIndex = skillIndex;

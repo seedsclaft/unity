@@ -579,7 +579,7 @@ public class TacticsPresenter :BasePresenter
     {
         if (_model.CheckCanSelectAlchemy(attributeType))
         {
-            List<SkillInfo> skillInfos = _model.SelectActorAlchemy(_model.CurrentActorId,attributeType);
+            var skillInfos = _model.SelectActorAlchemy(_model.CurrentActorId,attributeType);
             _view.ShowSkillAlchemyList(skillInfos);
             _view.HideAttributeList();
             _backCommand = Tactics.CommandType.SelectActorAlchemy;

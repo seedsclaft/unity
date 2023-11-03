@@ -310,7 +310,12 @@ public class StatusView : BaseView ,IInputHandlerEvent
 
     public int SelectedSkillId()
     {
-        return skillList.SelectedSkillId();
+        var listData = skillList.skillActionList.ListData;
+        if (listData != null)
+        {
+            return ((SkillInfo)listData.Data).Id;
+        }
+        return -1;
     }
     
     public void ActivateSkillActionList()
@@ -335,7 +340,7 @@ public class StatusView : BaseView ,IInputHandlerEvent
         skillList.HideAttributeList();
     }
     
-    public void RefreshSkillActionList(List<SkillInfo> skillInfos,List<ListData> attributeTypes,int currentAttibuteType,int lastSelectIndex)
+    public void RefreshSkillActionList(List<ListData> skillInfos,List<ListData> attributeTypes,int currentAttibuteType,int lastSelectIndex)
     {
         skillList.SetSkillInfos(skillInfos);
         skillList.RefreshAction(lastSelectIndex);

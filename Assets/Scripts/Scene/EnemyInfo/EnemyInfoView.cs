@@ -138,7 +138,7 @@ public class EnemyInfoView : BaseView,IInputHandlerEvent
         enemyInfoComponent.UpdateInfo(battlerInfo);
     }
 
-    public void RefreshSkillActionList(List<SkillInfo> skillInfos)
+    public void RefreshSkillActionList(List<ListData> skillInfos)
     {
         skillList.ShowActionList();
         skillList.HideAttributeList();

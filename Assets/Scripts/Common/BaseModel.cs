@@ -260,7 +260,7 @@ public class BaseModel
         return list;
     }
     
-    public List<AttributeType> AttributeTypes()
+    public List<ListData> AttributeTypes()
     {
         List<AttributeType> attributeTypes = new List<AttributeType>();
         foreach(var attribute in Enum.GetValues(typeof(AttributeType)))
@@ -269,8 +269,16 @@ public class BaseModel
             {
                 attributeTypes.Add((AttributeType)attribute);
             }
-        } 
-        return attributeTypes;
+        }
+        var list = new List<ListData>();
+        foreach (var attributeData in attributeTypes)
+        {
+            var attributeInfo = new SkillData.SkillAttributeInfo();
+            attributeInfo.AttributeType = attributeData;
+            var listData = new ListData(attributeInfo);
+            list.Add(listData);
+        }
+        return list;
     }
 
     public List<ListData> AttributeAllTypes(ActorInfo actorInfo = null,int selectedIndex = -1)

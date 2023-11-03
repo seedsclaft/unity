@@ -338,7 +338,7 @@ public class BattleView : BaseView ,IInputHandlerEvent
         skillList.HideAttributeList();
     }
     
-    public void RefreshSkillActionList(List<SkillInfo> skillInfos,int selectIndex)
+    public void RefreshSkillActionList(List<ListData> skillInfos,int selectIndex)
     {
         DeactivateActorList();
         DeactivateEnemyList();

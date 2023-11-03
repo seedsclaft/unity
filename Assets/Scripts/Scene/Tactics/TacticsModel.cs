@@ -45,20 +45,23 @@ public class TacticsModel : BaseModel
         return CurrentActor.AttirbuteValues(StageMembers());
     }
 
-    public List<SkillData.SkillAttributeInfo> AttirbuteInfos()
+    public List<ListData> AttirbuteInfos()
     {
-        var list = new List<SkillData.SkillAttributeInfo>();
+        var list = new List<ListData>();
         var attirbuteValues = AttirbuteValues();
         var idx = 0;
-        foreach (var attributeType in AttributeTypes())
+        foreach (var attributeData in AttributeTypes())
         {
+            var attributeType = ((SkillData.SkillAttributeInfo)attributeData.Data).AttributeType;
             var info = new SkillData.SkillAttributeInfo();
             info.AttributeType = attributeType;
             info.LearningCost = TacticsUtility.AlchemyCost(CurrentActor,attributeType,StageMembers());
             info.ValueText = attirbuteValues[idx];
             info.LearningCount = DataSystem.System.GetTextData(1120).Text + SelectActorAlchemy(CurrentActor.ActorId,attributeType).Count.ToString();
+            
+            var listData = new ListData(info,idx);
+            list.Add(listData);
             idx++;
-            list.Add(info);
         }
         return list;
     }
@@ -242,7 +245,7 @@ public class TacticsModel : BaseModel
         return false;
     }
 
-    public List<SkillInfo> SelectActorAlchemy(int actorId,AttributeType attributeType)
+    public List<ListData> SelectActorAlchemy(int actorId,AttributeType attributeType)
     {
         _currentAttributeType = attributeType;
         ActorInfo actorInfo = TacticsActor(actorId);
@@ -256,7 +259,14 @@ public class TacticsModel : BaseModel
             skillInfo.SetEnable(true);
             skillInfos.Add(skillInfo);
         }
-        return skillInfos;
+        var list = new List<ListData>();
+        var idx = 0;
+        foreach (var skillInfo in skillInfos)
+        {
+            var listData = new ListData(skillInfo,idx);
+            list.Add(listData);
+        }
+        return list;
     }
 
     public bool CheckCanSelectAlchemy(AttributeType attributeType)

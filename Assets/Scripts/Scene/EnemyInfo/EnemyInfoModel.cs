@@ -35,12 +35,19 @@ public class EnemyInfoModel : BaseModel
         }
     }
     
-    public List<SkillInfo> SkillActionList(AttributeType attributeType)
+    public List<ListData> SkillActionList(AttributeType attributeType)
     {
         _currentAttributeType = attributeType;
         List<SkillInfo> skillInfos = CurrentActor.Skills.FindAll(a => a.Master.Attribute != AttributeType.None);
         skillInfos.ForEach(a => a.SetEnable(true));
         skillInfos.Sort((a,b) => {return a.Id - b.Id;});
-        return skillInfos;
+        var list = new List<ListData>();
+        var idx = 0;
+        foreach (var skillInfo in skillInfos)
+        {
+            var listData = new ListData(skillInfo,idx);
+            list.Add(listData);
+        }
+        return list;
     }
 }

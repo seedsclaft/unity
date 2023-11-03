@@ -125,8 +125,8 @@ public class StatusPresenter
     private void CommandAttributeType(AttributeType attributeType)
     {
         Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cursor);
-        List<SkillInfo> skillInfos = _model.SkillActionList(attributeType);
-        var lastSelectIndex = skillInfos.FindIndex(a => a.Id == _model.CurrentActor.LastSelectSkillId);
+        var skillInfos = _model.SkillActionList(attributeType);
+        var lastSelectIndex = skillInfos.FindIndex(a => ((SkillInfo)a.Data).Id == _model.CurrentActor.LastSelectSkillId);
         if (lastSelectIndex == -1)
         {
             lastSelectIndex = 0;
@@ -278,8 +278,8 @@ public class StatusPresenter
     private void CommandRefresh()
     {
         _view.CommandRefresh(_model.CurrentActor.Sp,_model.StrengthNuminous());
-        List<SkillInfo> skillInfos = _model.SkillActionList(_model.CurrentAttributeType);
-        var lastSelectIndex = skillInfos.FindIndex(a => a.Id == _model.CurrentActor.LastSelectSkillId);
+        var skillInfos = _model.SkillActionList(_model.CurrentAttributeType);
+        var lastSelectIndex = skillInfos.FindIndex(a => ((SkillInfo)a.Data).Id == _model.CurrentActor.LastSelectSkillId);
         if (lastSelectIndex == -1)
         {
             lastSelectIndex = 0;

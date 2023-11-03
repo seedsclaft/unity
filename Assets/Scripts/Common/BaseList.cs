@@ -1,21 +1,41 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Cysharp.Threading.Tasks;
 
 public class BaseList : ListWindow , IInputHandlerEvent
 {
     private List<ListData> _listData = new ();
-    private System.Action _selectedHandler;
+    private bool _isInit = false;
     public void SetData(List<ListData> listData)
     {
         _listData = listData;
-        Refresh();
+        if (_listData.Count > ObjectList.Count)
+        {
+            var objectListCount = ObjectList.Count;
+            AddCreateList(_listData.Count-ObjectList.Count);
+            for (int i = 0; i < ObjectList.Count;i++)
+            {
+                if (i >= objectListCount)
+                {
+                    var listItem = ObjectList[i].GetComponent<ListItem>();
+                    listItem.SetCallHandler(() => CallListInputHandler(InputKeyType.Decide));
+                    listItem.SetSelectHandler((index) => 
+                    {
+                        UpdateSelectIndex(index);
+                    });
+                }
+            }
+            SetDataCount(_listData.Count);
+            SetItemCount(_listData.Count);
+        }
+        Refresh(_listData.FindIndex(a => a.Selected));
     }
 
     public ListData ListData 
     { 
         get {
-            if (Index > -1)
+            if (Index > -1 && _listData.Count > Index)
             {
                 return _listData[Index];
             }
@@ -25,6 +45,10 @@ public class BaseList : ListWindow , IInputHandlerEvent
     
     public void Initialize(int listCount)
     {
+        if (_isInit)
+        {
+            return;
+        }
         InitializeListView(listCount);
         InitializeList();
         /*
@@ -32,6 +56,7 @@ public class BaseList : ListWindow , IInputHandlerEvent
         */
         UpdateSelectIndex(0);
         Deactivate();
+        _isInit = true;
     }
     
     private void InitializeList()
@@ -51,12 +76,24 @@ public class BaseList : ListWindow , IInputHandlerEvent
     {
         for (int i = 0; i < ObjectList.Count;i++)
         {
-            var listItem = ObjectList[i].GetComponent<ListItem>();
-            listItem.SetListData(_listData[i],i);
+            if (i < _listData.Count) 
+            {
+                var listItem = ObjectList[i].GetComponent<ListItem>();
+                listItem.SetListData(_listData[i],i);
+            }
+            ObjectList[i].SetActive(i < _listData.Count);
         }
         //ResetScrollPosition();
-        UpdateSelectIndex(selectIndex);
         UpdateAllItems();
+        UpdateSelectIndex(selectIndex);
+        if (selectIndex > 3)
+        {
+            //await UniTask.DelayFrame(1);
+            UpdateScrollRect(selectIndex);
+        } else
+        {        
+            ResetScrollRect();
+        }
     }
     
     public void RefreshListData(ListData listData)

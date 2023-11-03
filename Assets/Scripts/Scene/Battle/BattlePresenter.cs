@@ -913,7 +913,7 @@ public class BattlePresenter : BasePresenter
 
     private void CommandAttributeType(AttributeType attributeType)
     {
-        List<SkillInfo> skillInfos = _model.SkillActionList(attributeType);
+        var skillInfos = _model.SkillActionList(attributeType);
         _view.RefreshSkillActionList(skillInfos,_model.SelectSkillIndex(skillInfos));
         _view.SetAttributeTypes(_model.AttributeAllTypes(null,(int)_model.CurrentAttributeType));
         _view.HideCondition();

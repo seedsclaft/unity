@@ -16,7 +16,7 @@ public class TacticsView : BaseView
 
     [SerializeField] private TacticsAlchemyList tacticsAlchemyList = null;
 
-    [SerializeField] private TacticsAttributeList tacticsAttributeList = null;
+    [SerializeField] private BaseList tacticsAttributeList = null;
     
     [SerializeField] private TacticsRecoveryList tacticsRecoveryList = null;
     [SerializeField] private TacticsEnemyList tacticsEnemyList = null;
@@ -362,7 +362,7 @@ public class TacticsView : BaseView
         HelpWindow.SetInputInfo("ALCHEMY");
     }
 
-    public void ShowSkillAlchemyList(List<SkillInfo> skillInfos)
+    public void ShowSkillAlchemyList(List<ListData> skillInfos)
     {
         skillList.ActivateActionList();
         skillList.ShowActionList();
@@ -600,30 +600,31 @@ public class TacticsView : BaseView
     }
     
 
-    public void SetAttributeTypes(List<AttributeType> attributeTypes)
+    public void SetAttributeTypes(List<ListData> attributeTypes)
     {
         //skillList.RefreshAttribute(attributeTypes);
-        tacticsAttributeList.Initialize(attributeTypes);
+        tacticsAttributeList.Initialize(attributeTypes.Count);
+        tacticsAttributeList.SetData(attributeTypes);
         tacticsAttributeList.SetInputHandler(InputKeyType.Decide,() => CallSkillAlchemy());
         tacticsAttributeList.SetInputHandler(InputKeyType.Cancel,() => OnClickBack());
         SetInputHandler(tacticsAttributeList.GetComponent<IInputHandlerEvent>());
         tacticsAttributeList.Deactivate();
     }
 
-    public void SetAttributeValues(List<SkillData.SkillAttributeInfo> attributeInfos,int currensy)
+    public void SetAttributeValues(List<ListData> attributeInfos,int currensy)
     {
-        tacticsAttributeList.Refresh(attributeInfos,currensy);
-        tacticsAttributeList.SelectEnableIndex();
+        tacticsAttributeList.SetData(attributeInfos);
+        //tacticsAttributeList.SelectEnableIndex();
     }
 
     private void CallSkillAlchemy()
     {
         if (_lastCallEventType != CommandType.None) return;
         var eventData = new TacticsViewEvent(CommandType.SkillAlchemy);
-        var item = tacticsAttributeList.Data;
-        if (item != AttributeType.None)
+        var listData = tacticsAttributeList.ListData;
+        if (listData != null && ((SkillData.SkillAttributeInfo)listData.Data).AttributeType != AttributeType.None)
         {
-            eventData.templete = item;
+            eventData.templete = (SkillData.SkillAttributeInfo)listData.Data;
             _commandData(eventData);
             _lastCallEventType = eventData.commandType;
         }

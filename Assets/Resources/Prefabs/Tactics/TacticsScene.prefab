@@ -3199,7 +3199,7 @@ MonoBehaviour:
   tacticsCharaLayer: {fileID: 6358233047655740615}
   tacticsTrainList: {fileID: 7061819610462193536}
   tacticsAlchemyList: {fileID: 4785663241377805439}
-  tacticsAttributeList: {fileID: 7569321835093042191}
+  tacticsAttributeList: {fileID: 1836200768910637362}
   tacticsRecoveryList: {fileID: 2693340992937764386}
   tacticsEnemyList: {fileID: 747035271688317537}
   tacticsBattleList: {fileID: 8717033008116606450}
@@ -3947,7 +3947,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6039849487281858086}
-  - component: {fileID: 7569321835093042191}
+  - component: {fileID: 1836200768910637362}
   m_Layer: 5
   m_Name: TacticsAttributeList
   m_TagString: Untagged
@@ -3976,7 +3976,7 @@ RectTransform:
   m_AnchoredPosition: {x: 24, y: 88}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!114 &7569321835093042191
+--- !u!114 &1836200768910637362
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3985,7 +3985,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3334946308452063310}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 58bb9393b71d2b44a95a5649b3b209c9, type: 3}
+  m_Script: {fileID: 11500000, guid: cf409b824ca9622468dd57c00bf805ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   horizontal: 1
@@ -4157,7 +4157,7 @@ MonoBehaviour:
     type: 3}
   skillListRoot: {fileID: 3699473130783140212}
   skillActionList: {fileID: 0}
-  skillAttributeList: {fileID: 0}
+  attributeList: {fileID: 0}
 --- !u!1 &3710491806237583510
 GameObject:
   m_ObjectHideFlags: 0

@@ -91,7 +91,7 @@ public class EnemyInfoPresenter
     private void CommandAttributeType(AttributeType attributeType)
     {
         Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cursor);
-        List<SkillInfo> skillInfos = _model.SkillActionList(attributeType);
+        List<ListData> skillInfos = _model.SkillActionList(attributeType);
         _view.RefreshSkillActionList(skillInfos);
     }
 
@@ -104,7 +104,7 @@ public class EnemyInfoPresenter
     private void CommandRefresh()
     {
         _view.StartEnemyInfo(_model.CurrentActor);
-        List<SkillInfo> skillInfos = _model.SkillActionList(_model.CurrentAttributeType);
+        var skillInfos = _model.SkillActionList(_model.CurrentAttributeType);
         _view.RefreshSkillActionList(skillInfos);
     }
 }

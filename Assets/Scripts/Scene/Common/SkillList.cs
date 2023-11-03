@@ -6,12 +6,12 @@ public class SkillList : MonoBehaviour
 {
     [SerializeField] private GameObject skillListPrefab;
     [SerializeField] private GameObject skillListRoot;
-    public SkillActionList skillActionList;
+    public BaseList skillActionList;
     public BaseList attributeList;
 
     public SkillInfo ActionData{
         get {
-            return skillActionList.Data;
+            return (SkillInfo)skillActionList.ListData.Data;
         }
     }
     public SkillData.SkillAttributeInfo AttributeInfo{
@@ -19,12 +19,14 @@ public class SkillList : MonoBehaviour
             return (SkillData.SkillAttributeInfo)attributeList.ListData.Data;
         }
     }
+
     public void Initialize()
     {
         GameObject prefab = Instantiate(skillListPrefab);
         prefab.transform.SetParent(skillListRoot.transform, false);
-        skillActionList = prefab.GetComponentInChildren<SkillActionList>();
-        attributeList = prefab.GetComponentInChildren<BaseList>();
+        var lists = prefab.GetComponentsInChildren<BaseList>();
+        skillActionList = lists[0];
+        attributeList = lists[1];
     }
 
     public void InitializeAttribute(int listCount,System.Action callEvent,System.Action conditionEvent)
@@ -56,12 +58,12 @@ public class SkillList : MonoBehaviour
 
     public void InitializeAction()
     {
-        skillActionList.Initialize();
     }
 
-    public void SetSkillInfos(List<SkillInfo> skillInfoData)
+    public void SetSkillInfos(List<ListData> skillInfoData)
     {
-        skillActionList.SetSkillInfos(skillInfoData);
+        skillActionList.Initialize(skillInfoData.Count);
+        skillActionList.SetData(skillInfoData);
     }
 
     public void SetInputHandlerAction(InputKeyType keyType,System.Action callEvent)
@@ -83,7 +85,7 @@ public class SkillList : MonoBehaviour
 
     public void RefreshCostInfo()
     {
-        skillActionList.RefreshCostInfo();
+        skillActionList.UpdateAllItems();
     }
 
     public void ActivateActionList()
@@ -124,10 +126,5 @@ public class SkillList : MonoBehaviour
     public void HideAttributeList()
     {
         attributeList.gameObject.SetActive(false);
-    }
-
-    public int SelectedSkillId()
-    {
-        return skillActionList.SelectedSkillId();
     }
 }

@@ -45,7 +45,7 @@ public class SkillAttribute : ListItem ,IListViewItem
         if (icon != null)
         {
             icon.gameObject.SetActive(data.AttributeType != AttributeType.None);
-            UpdateElementIcon(Index-1);
+            UpdateElementIcon((int)data.AttributeType - 1);
         }
         
         if (valueText != null && _valueText != null)
@@ -83,13 +83,13 @@ public class SkillAttribute : ListItem ,IListViewItem
     public new void SetSelect()
     {
         icon.color = new Color(1,1,1,1);
-        allAttributeText.color = new Color(1,1,1,1);
+        if (allAttributeText) allAttributeText.color = new Color(1,1,1,1);
     }
 
     public new void SetUnSelect()
     {
         base.SetUnSelect();
         icon.color = new Color(1,1,1,0.5f);
-        allAttributeText.color = new Color(1,1,1,0.5f);
+        if (allAttributeText) allAttributeText.color = new Color(1,1,1,0.5f);
     }
 }

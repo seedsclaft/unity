@@ -95,7 +95,7 @@ public class StatusModel : BaseModel
         }
     }
 
-    public List<SkillInfo> SkillActionList(AttributeType attributeType)
+    public List<ListData> SkillActionList(AttributeType attributeType)
     {
         _currentAttributeType = attributeType;
         List<SkillInfo> skillInfos = CurrentActor.Skills.FindAll(a => a.Id > 100);
@@ -126,7 +126,14 @@ public class StatusModel : BaseModel
         skillInfos.AddRange(sortList1);
         skillInfos.AddRange(sortList2);
         skillInfos.AddRange(sortList3);
-        return skillInfos;
+        var list = new List<ListData>();
+        var idx = 0;
+        foreach (var skillInfo in skillInfos)
+        {
+            var listData = new ListData(skillInfo,idx);
+            list.Add(listData);
+        }
+        return list;
     }
 
     public List<ListData> StatusCommand()
@@ -244,7 +251,7 @@ public class StatusModel : BaseModel
         return Currency - _useNuminous;
     }
 
-    public List<SkillInfo> LearningSkillList(AttributeType attributeType)
+    public List<ListData> LearningSkillList(AttributeType attributeType)
     {
         List<SkillInfo> skillInfos = new List<SkillInfo>();
         List<int> alchemyIds = PartyInfo.AlchemyIdList;
@@ -265,6 +272,13 @@ public class StatusModel : BaseModel
         removeSkillInfo.SetLearningState(LearningState.SelectLearn);
         removeSkillInfo.SetEnable(true);
         skillInfos.Add(removeSkillInfo);
-        return skillInfos;
+        var list = new List<ListData>();
+        var idx = 0;
+        foreach (var skillInfo in skillInfos)
+        {
+            var listData = new ListData(skillInfo,idx);
+            list.Add(listData);
+        }
+        return list;
     }
 }
