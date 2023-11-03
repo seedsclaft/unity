@@ -6,7 +6,7 @@ using Reborn;
 
 public class RebornView : BaseView
 {
-    [SerializeField] private RebornActorList actorInfoList = null;
+    [SerializeField] private BaseList actorInfoList = null;
     public int ActorInfoListIndex => actorInfoList.Index;
 
     [SerializeField] private RebornSkillList rebornSkillList = null;    
@@ -35,23 +35,25 @@ public class RebornView : BaseView
         SetActiveBack(true);
     }
 
-    public void SetActorList(List<ActorInfo> actorInfos,List<int> disableIndexs) 
+    public void SetActorList(List<ListData> actorInfos) 
     {
-        actorInfoList.Initialize(actorInfos,disableIndexs);
-        actorInfoList.SetInputHandler(InputKeyType.Decide,() => CallDecideActor(disableIndexs));
+        actorInfoList.Initialize(actorInfos.Count);
+        actorInfoList.SetData(actorInfos);
+        actorInfoList.SetInputHandler(InputKeyType.Decide,() => CallDecideActor());
         actorInfoList.SetInputHandler(InputKeyType.Cancel,() => CallCancelActor());
         actorInfoList.SetInputHandler(InputKeyType.Down,() => CallUpdate());
         actorInfoList.SetInputHandler(InputKeyType.Up,() => CallUpdate());
-        actorInfoList.Refresh();
         SetInputHandler(actorInfoList.GetComponent<IInputHandlerEvent>());
         actorInfoList.Activate();
     }
 
-    private void CallDecideActor(List<int> disableIndexs)
+    private void CallDecideActor()
     {
-        var eventData = new RebornViewEvent(CommandType.DecideActor);
-        if (actorInfoList.Index > -1 &&!disableIndexs.Contains(actorInfoList.Index))
+        var listData = actorInfoList.ListData;
+        if (listData != null)
         {
+            var data = (ActorInfo)listData.Data;
+            var eventData = new RebornViewEvent(CommandType.DecideActor);
             eventData.templete = actorInfoList.Index;
             _commandData(eventData);
         }

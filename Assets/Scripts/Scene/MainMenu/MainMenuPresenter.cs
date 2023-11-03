@@ -24,8 +24,7 @@ public class MainMenuPresenter : BasePresenter
         _view.SetHelpWindow();
         _view.SetEvent((type) => updateCommand(type));
 
-        List<StageInfo> stages = _model.Stages();
-        _view.SetStagesData(stages);
+        _view.SetStagesData(_model.Stages());
         _view.SetSideMenu(_model.SideMenu());
         _model.InitPartyInfo();
 

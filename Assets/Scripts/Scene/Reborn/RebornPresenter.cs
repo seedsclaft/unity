@@ -23,7 +23,7 @@ public class RebornPresenter :BasePresenter
     {
         _view.SetEvent((type) => updateCommand(type));
         _view.SetHelpInputInfo("REBORN");
-        _view.SetActorList(_model.ActorInfos(),_model.DisableActorIndexs());
+        _view.SetActorList(_model.ActorInfos());
         CommandUpdateActor();
         _view.SetHelpText(DataSystem.System.GetTextData(17010).Text);
         _view.SetBackEvent(() => {

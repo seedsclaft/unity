@@ -144,7 +144,7 @@ public class ResultPresenter : BasePresenter
     private void UpdatePopupReborn(ConfirmComandType confirmComandType)
     {
         _view.CommandActorAssign();
-        _view.SetActorList(_model.ActorInfos(),_model.DisableActorIndexs());
+        _view.SetActorList(_model.ActorInfos());
         CommandUpdateActor();
         _view.CommandConfirmClose();
         if (_model.ActorInfos().Count > 10)

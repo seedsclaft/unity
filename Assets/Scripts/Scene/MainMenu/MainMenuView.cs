@@ -6,7 +6,8 @@ using MainMenu;
 
 public class MainMenuView : BaseView
 {
-    [SerializeField] private MainMenuStageList stageList = null;
+    [SerializeField] private BaseList stageList = null;
+    [SerializeField] private StageInfoComponent component;
     [SerializeField] private SideMenuList sideMenuList = null;
 
     private new System.Action<MainMenuViewEvent> _commandData = null;
@@ -44,20 +45,34 @@ public class MainMenuView : BaseView
         _commandData = commandData;
     }
     
-    public void SetStagesData(List<StageInfo> stages){
-        stageList.Initialize(stages);
+    public void SetStagesData(List<ListData> stages){
+        stageList.Initialize(stages.Count);
+        stageList.SetData(stages);
         stageList.SetInputHandler(InputKeyType.Decide,() => CallMainMenuStage());
         stageList.SetInputHandler(InputKeyType.Option1,() => CallOpenSideMenu());
+        stageList.SetSelectedHandler(() => UpdateMainMenuStage());
         SetInputHandler(stageList.GetComponent<IInputHandlerEvent>());
+        stageList.Activate();
     }
     
     private void CallMainMenuStage(){
         var eventData = new MainMenuViewEvent(CommandType.StageSelect);
-        var item = stageList.Data;
-        if (item != null)
+        var listData = stageList.ListData;
+        if (listData != null)
         {
-            eventData.templete = item.Id;
+            var data = (StageInfo)listData.Data;
+            eventData.templete = data.Id;
             _commandData(eventData);
+        }
+    }
+
+    private void UpdateMainMenuStage()
+    {
+        var listData = stageList.ListData;
+        if (listData != null)
+        {
+            var data = (StageInfo)listData.Data;
+            component.UpdateInfo(data);
         }
     }
 

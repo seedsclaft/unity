@@ -922,7 +922,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3878334983151538862}
-  - component: {fileID: 8066339791692466196}
+  - component: {fileID: 3033544215176505388}
   m_Layer: 5
   m_Name: StageList
   m_TagString: Untagged
@@ -951,7 +951,7 @@ RectTransform:
   m_AnchoredPosition: {x: -24, y: 224}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!114 &8066339791692466196
+--- !u!114 &3033544215176505388
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -960,10 +960,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 5524155088370801173}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 54c20d65e296e77418ad3218ab4daf72, type: 3}
+  m_Script: {fileID: 11500000, guid: cf409b824ca9622468dd57c00bf805ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isScrollList: 1
   horizontal: 0
   reverse: 0
   warpMode: 1
@@ -971,7 +970,6 @@ MonoBehaviour:
   itemPrefab: {fileID: 8377295634972812392, guid: ff9b0432c352c324f8b2f6edb17efe20,
     type: 3}
   _helpWindow: {fileID: 0}
-  component: {fileID: 5443321860924494865}
 --- !u!1 &5667879424559383101
 GameObject:
   m_ObjectHideFlags: 0
@@ -1265,10 +1263,8 @@ MonoBehaviour:
   uiRoot: {fileID: 1740006770950926252}
   backPrefab: {fileID: 0}
   backRoot: {fileID: 0}
-  stageList: {fileID: 8066339791692466196}
-  helpRoot: {fileID: 283208224390437601}
-  helpPrefab: {fileID: 4660447992331240257, guid: fd198201f48424c4cbfbe909f658ea97,
-    type: 3}
+  stageList: {fileID: 3033544215176505388}
+  component: {fileID: 5443321860924494865}
   sideMenuList: {fileID: 5690209438290221548}
 --- !u!1001 &8632267530666772007
 PrefabInstance:

@@ -10,7 +10,6 @@ public class StatusView : BaseView ,IInputHandlerEvent
     [SerializeField] private StatusActorList actorList = null;
     [SerializeField] private BaseList commandList = null;
     [SerializeField] private SkillList skillList = null;
-    [SerializeField] private StatusStrengthList statusStrengthList = null;
     [SerializeField] private Button decideButton = null;
     private new System.Action<StatusViewEvent> _commandData = null;
     [SerializeField] private GameObject helpRoot = null;
@@ -190,23 +189,6 @@ public class StatusView : BaseView ,IInputHandlerEvent
     {
         actorList.Deactivate();
     }
-
-    public void SetStrengthInfo(List<SystemData.CommandData> confirmCommands)
-    {
-        statusStrengthList.Initialize(
-            (a) => CallStrengthPlus(a),
-            (a) => CallStrengthMinus(a),
-            () => CallStatusReset()
-        );
-        SetInputHandler(statusStrengthList.GetComponent<IInputHandlerEvent>());
-        statusStrengthList.InitializeConfirm(confirmCommands,(confirmCommands) => CallStrengthCommand(confirmCommands));
-        HideStrength();
-    }
-
-    public void RefreshActor(ActorInfo actorInfo)
-    {
-        statusStrengthList.Refresh(actorInfo);
-    }
     
     public void SetStatusCommand(List<ListData> menuCommands)
     {
@@ -248,16 +230,6 @@ public class StatusView : BaseView ,IInputHandlerEvent
     public void DeactivateCommandList()
     {
         commandList.Deactivate();
-    }
-
-    public void ActivateStrengthList()
-    {
-        statusStrengthList.Activate();
-    }
-
-    public void DeactivateStrengthList()
-    {
-        statusStrengthList.Deactivate();
     }
 
     private void OnClickBack()
@@ -386,47 +358,8 @@ public class StatusView : BaseView ,IInputHandlerEvent
         }
     }
 
-    private void CallStrengthCommand(TacticsComandType commandType)
-    {
-        var eventData = new StatusViewEvent(CommandType.StrengthClose);
-        eventData.templete = commandType;
-        _commandData(eventData);
-    }
-
-    private void CallStrengthPlus(int actorId)
-    {
-        var eventData = new StatusViewEvent(CommandType.SelectStrengthPlus);
-        eventData.templete = actorId;
-        _commandData(eventData);
-    }
-
-    private void CallStrengthMinus(int actorId)
-    {
-        var eventData = new StatusViewEvent(CommandType.SelectStrengthMinus);
-        eventData.templete = actorId;
-        _commandData(eventData);
-    }
-
-    private void CallStatusReset()
-    {
-
-        var eventData = new StatusViewEvent(CommandType.SelectStrengthReset);
-        _commandData(eventData);
-    }
-
-    public void ShowStrength()
-    {
-        statusStrengthList.gameObject.SetActive(true);
-    }
-
-    public void HideStrength()
-    {
-        statusStrengthList.gameObject.SetActive(false);
-    }
-
     public void CommandRefresh(int remainSp,int remainNuminous)
     {
-        statusStrengthList.RefreshCostInfo(remainSp,remainNuminous);
         //skillList.RefreshAction();
         skillList.RefreshCostInfo();
     }
@@ -455,9 +388,6 @@ namespace Status
         RightActor,
         SelectSkillAction,
         SelectSkillLearning,
-        SelectStrengthPlus,
-        SelectStrengthMinus,
-        SelectStrengthReset,
         StrengthClose,
         DecideStage,
         Back

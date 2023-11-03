@@ -15,8 +15,7 @@ public class GameSystem : MonoBehaviour
     [SerializeField] private GameObject statusRoot = null;
     [SerializeField] private GameObject statusPrefab = null;
     [SerializeField] private GameObject enemyInfoPrefab = null;
-    [SerializeField] private GameObject loadingRoot = null;
-    [SerializeField] private GameObject loadingPrefab = null;
+    [SerializeField] private LoadingView loadingView = null;
     [SerializeField] private AdvEngine advEngine = null;
     [SerializeField] private AdvController advController = null;
     [SerializeField] private DebugBattleData debugBattleData = null;
@@ -27,7 +26,6 @@ public class GameSystem : MonoBehaviour
     private BaseView _popupView = null;
     private BaseView _statusView = null;
 
-    private LoadingView _loadingView = null;
     private BaseModel _model = null;
     
     public static SavePlayInfo CurrentData = null;
@@ -45,6 +43,7 @@ public class GameSystem : MonoBehaviour
         advController.Initialize();
         advController.SetHelpWindow(advHelpWindow);
         transitionRoot.SetActive(false);
+        loadingView.gameObject.SetActive(false);
         _model = new BaseModel();
         GameSystem.Version = version;
 #if UNITY_EDITOR
@@ -73,11 +72,7 @@ public class GameSystem : MonoBehaviour
 
     private void CreateLoading()
     {
-        var prefab = Instantiate(loadingPrefab);
-        prefab.transform.SetParent(loadingRoot.transform, false);
-        _loadingView = prefab.GetComponent<LoadingView>();
-        _loadingView.Initialize();
-        loadingRoot.gameObject.SetActive(false);
+        loadingView.Initialize();
     }
 
     private void updateCommand(ViewEvent viewEvent)
@@ -180,11 +175,11 @@ public class GameSystem : MonoBehaviour
         } else
         if (viewEvent.commandType == Base.CommandType.CallLoading)
         {
-            if (_loadingView == null)
+            if (loadingView == null)
             {
                 CreateLoading();
             }
-            loadingRoot.gameObject.SetActive(true);
+            loadingView.gameObject.SetActive(true);
             _currentScene.SetBusy(true);
         } else
         if (viewEvent.commandType == Base.CommandType.CloseLoading)
@@ -195,7 +190,7 @@ public class GameSystem : MonoBehaviour
                 DestroyImmediate(_loadingView.gameObject);
             }
             */
-            loadingRoot.gameObject.SetActive(false);
+            loadingView.gameObject.SetActive(false);
             _currentScene.SetBusy(false);
         } else
         if (viewEvent.commandType == Base.CommandType.SetRouteSelect)

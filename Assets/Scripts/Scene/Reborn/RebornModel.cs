@@ -18,7 +18,8 @@ public class RebornModel : BaseModel
             PartyInfo.AddActor(stageMembers[i]);
         }
     }
-    public List<ActorInfo> ActorInfos(){
+    public List<ListData> ActorInfos(){
+        var list = new List<ListData>();
         var actorInfos = CurrentData.PlayerInfo.SaveActorList;
         if (actorInfos == null || actorInfos.Count == 0)
         {
@@ -34,30 +35,27 @@ public class RebornModel : BaseModel
 
             }
         }
-        return CurrentData.PlayerInfo.SaveActorList;
-    }
-
-    public List<int> DisableActorIndexs()
-    {
-        var list = new List<int>();
         var idx = 0;
-        foreach (var actorInfo in ActorInfos())
+        foreach (var actorInfo in CurrentData.PlayerInfo.SaveActorList)
         {
+            var listData = new ListData(actorInfo,idx);
             if (actorInfo.Master.ClassId == DataSystem.Actors.Find(a => a.Id == CurrentStage.SelectActorIds[0]).ClassId)
             {
-                list.Add(idx);
+                listData.SetEnable(false);
             }
+            list.Add(listData);
             idx++;
         }
         return list;
     }
 
+
     public ActorInfo RebornActorInfo()
     {
-        List<ActorInfo> actorInfos = ActorInfos();
+        List<ListData> actorInfos = ActorInfos();
         if (actorInfos.Count > _rebornActorIndex)
         {
-            return actorInfos[_rebornActorIndex];
+            return (ActorInfo)actorInfos[_rebornActorIndex].Data;
         }
         return null;
     }

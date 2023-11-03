@@ -371,8 +371,20 @@ public class ResultModel : BaseModel
 
     private int _rebornActorIndex = 0;
     
-    public List<ActorInfo> ActorInfos(){
-        return CurrentData.PlayerInfo.SaveActorList;
+    public List<ListData> ActorInfos(){        
+        var list = new List<ListData>();
+        var idx = 0;
+        foreach (var actorInfo in CurrentData.PlayerInfo.SaveActorList)
+        {
+            var listData = new ListData(actorInfo,idx);
+            if (actorInfo.Master.ClassId == DataSystem.Actors.Find(a => a.Id == CurrentStage.SelectActorIds[0]).ClassId)
+            {
+                listData.SetEnable(false);
+            }
+            list.Add(listData);
+            idx++;
+        }
+        return list;
     }
 
     public List<int> DisableActorIndexs()
@@ -383,8 +395,9 @@ public class ResultModel : BaseModel
 
         }
         var actorListIndexs = new List<int>();
-        foreach (var actorInfo in ActorInfos())
+        foreach (var listData in ActorInfos())
         {
+            var actorInfo = (ActorInfo)listData.Data;
             if (!actorListIndexs.Contains(actorInfo.ActorId))
             {
                 actorListIndexs.Add(actorInfo.ActorId);
@@ -392,15 +405,16 @@ public class ResultModel : BaseModel
         }
         if (actorListIndexs.Count == 2)
         {
-            var minSize = ActorInfos().FindAll(a => a.ActorId == actorListIndexs[0]);
-            var maxSize = ActorInfos().FindAll(a => a.ActorId == actorListIndexs[1]);
+            var minSize = ActorInfos().FindAll(a => ((ActorInfo)a.Data).ActorId == actorListIndexs[0]);
+            var maxSize = ActorInfos().FindAll(a => ((ActorInfo)a.Data).ActorId == actorListIndexs[1]);
             if (minSize.Count == 1 || maxSize.Count == 1)
             {
                 if (minSize.Count == 1)
                 {
                     var idx = 0;
-                    foreach (var actorInfo in ActorInfos())
+                    foreach (var listData in ActorInfos())
                     {
+                        var actorInfo = (ActorInfo)listData.Data;
                         if (actorInfo.ActorId == actorListIndexs[0])
                         {
                             list.Add(idx);
@@ -411,8 +425,9 @@ public class ResultModel : BaseModel
                 if (maxSize.Count == 1)
                 {
                     var idx = 0;
-                    foreach (var actorInfo in ActorInfos())
+                    foreach (var listData in ActorInfos())
                     {
+                        var actorInfo = (ActorInfo)listData.Data;
                         if (actorInfo.ActorId == actorListIndexs[1])
                         {
                             list.Add(idx);
@@ -427,10 +442,10 @@ public class ResultModel : BaseModel
 
     public ActorInfo RebornActorInfo()
     {
-        List<ActorInfo> actorInfos = ActorInfos();
+        List<ListData> actorInfos = ActorInfos();
         if (actorInfos.Count > _rebornActorIndex)
         {
-            return actorInfos[_rebornActorIndex];
+            return (ActorInfo)actorInfos[_rebornActorIndex].Data;
         }
         return null;
     }

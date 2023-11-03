@@ -66,21 +66,6 @@ public class StatusPresenter
         {
             CommandSelectSkillLearning((SkillInfo) viewEvent.templete);
         }
-        if (viewEvent.commandType == Status.CommandType.SelectStrengthPlus)
-        {
-            StatusParamType statusId = (StatusParamType)viewEvent.templete;
-            CommandSelectStrengthPlus(statusId);
-        }
-        if (viewEvent.commandType == Status.CommandType.SelectStrengthMinus)
-        {
-            StatusParamType statusId = (StatusParamType)viewEvent.templete;
-            CommandSelectStrengthMinus(statusId);
-        }
-        
-        if (viewEvent.commandType == Status.CommandType.SelectStrengthReset)
-        {
-            CommandSelectStrengthReset();
-        }
         if (viewEvent.commandType == Status.CommandType.StrengthClose)
         {
             CommandStrengthClose((ConfirmComandType)viewEvent.templete);
@@ -120,8 +105,6 @@ public class StatusPresenter
         {
             _backCommandType = Status.CommandType.StatusCommand;
             _model.ClearStrength();
-            _view.ActivateStrengthList();
-            _view.ShowStrength();
             _view.DeactivateActorList();
             _view.SetActiveBack(false);
         }
@@ -191,20 +174,6 @@ public class StatusPresenter
                 _view.ActivateSkillActionList();
             }
         }
-
-        if (_popupCommandType == Status.CommandType.SelectStrengthReset)
-        {
-            if (confirmComandType == ConfirmComandType.Yes)
-            {
-                _model.StrengthReset();
-                _view.SetActorInfo(_model.CurrentActor,_model.StatusActors());
-                CommandRefresh();
-                _view.ActivateStrengthList();
-            } else
-            {
-                _view.ActivateStrengthList();
-            }
-        }
         
         if (_popupCommandType == Status.CommandType.StrengthClose)
         {
@@ -213,10 +182,6 @@ public class StatusPresenter
                 _model.DecideStrength();
                 _view.SetActorInfo(_model.CurrentActor,_model.StatusActors());
                 CommandRefresh();
-                _view.ActivateStrengthList();
-            } else
-            {
-                _view.ActivateStrengthList();
             }
         }
 
@@ -289,44 +254,6 @@ public class StatusPresenter
         Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
     }
 
-    private void CommandSelectStrengthPlus(StatusParamType statusId)
-    {
-        bool enableParamUp = _model.EnableParamUp(statusId);
-        if (enableParamUp == true)
-        {
-            Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cursor);
-            _model.ChangeParameter(statusId,1);
-        } else
-        {
-
-        }
-        CommandRefresh();
-    }
-
-    private void CommandSelectStrengthMinus(StatusParamType statusId)
-    {
-        
-        bool enableParamMinus = _model.EnableParamMinus(statusId);
-        if (enableParamMinus == true)
-        {
-            Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cursor);
-            _model.ChangeParameter(statusId,-1);
-        } else
-        {
-
-        }
-        CommandRefresh();
-    }
-
-    private void CommandSelectStrengthReset()
-    {
-        string text = DataSystem.System.GetTextData(2010).Text;
-        ConfirmInfo confirmInfo = new ConfirmInfo(text,(menuCommandInfo) => updatePopup((ConfirmComandType)menuCommandInfo));
-        _view.CommandCallConfirm(confirmInfo);
-        _view.DeactivateStrengthList();
-        _popupCommandType = Status.CommandType.SelectStrengthReset;
-    }
-
     private void CommandStrengthClose(ConfirmComandType confirmComandType)
     {
         if (confirmComandType == ConfirmComandType.Yes)
@@ -336,14 +263,11 @@ public class StatusPresenter
             ConfirmInfo confirmInfo = new ConfirmInfo(textData.Text,(menuCommandInfo) => updatePopup((ConfirmComandType)menuCommandInfo));
             _view.CommandCallConfirm(confirmInfo);
             _view.DeactivateCommandList();
-            _view.DeactivateStrengthList();
         } else{
             _backCommandType = Status.CommandType.None;
             if (_model.StatusActors().Count > 1) _view.ShowArrows();
             _view.ShowCommandList();
             _view.ShowDecideButton();
-            _view.HideStrength();
-            _view.DeactivateStrengthList();
             _view.ActivateActorList();
             _view.ActivateCommandList();
             _view.SetActiveBack(true);
@@ -353,7 +277,6 @@ public class StatusPresenter
 
     private void CommandRefresh()
     {
-        _view.RefreshActor(_model.CurrentActor);
         _view.CommandRefresh(_model.CurrentActor.Sp,_model.StrengthNuminous());
         List<SkillInfo> skillInfos = _model.SkillActionList(_model.CurrentAttributeType);
         var lastSelectIndex = skillInfos.FindIndex(a => a.Id == _model.CurrentActor.LastSelectSkillId);

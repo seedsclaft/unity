@@ -3,8 +3,14 @@ using System.Collections.Generic;
 
 public class MainMenuModel : BaseModel
 {
-    public List<StageInfo> Stages(){
-        return GameSystem.CurrentData.Stages;
+    public List<ListData> Stages(){
+        var list = new List<ListData>();
+        foreach (var stage in GameSystem.CurrentData.Stages)
+        {
+            var listData = new ListData(stage);
+            list.Add(listData);
+        }
+        return list;
     }
 
     public void InitPartyInfo()

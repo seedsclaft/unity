@@ -2221,6 +2221,93 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 411299632}
   m_CullTransparentMesh: 0
+--- !u!1001 &418308400
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 1314763615}
+    m_Modifications:
+    - target: {fileID: 521908375594551791, guid: e27875b5b16443b4a9c4215e6e8031a0,
+        type: 3}
+      propertyPath: m_Name
+      value: LoadingScene
+      objectReference: {fileID: 0}
+    - target: {fileID: 9201976773809946580, guid: e27875b5b16443b4a9c4215e6e8031a0,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9201976773809946580, guid: e27875b5b16443b4a9c4215e6e8031a0,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9201976773809946580, guid: e27875b5b16443b4a9c4215e6e8031a0,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9201976773809946580, guid: e27875b5b16443b4a9c4215e6e8031a0,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9201976773809946580, guid: e27875b5b16443b4a9c4215e6e8031a0,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9201976773809946580, guid: e27875b5b16443b4a9c4215e6e8031a0,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9201976773809946580, guid: e27875b5b16443b4a9c4215e6e8031a0,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9201976773809946580, guid: e27875b5b16443b4a9c4215e6e8031a0,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9201976773809946580, guid: e27875b5b16443b4a9c4215e6e8031a0,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9201976773809946580, guid: e27875b5b16443b4a9c4215e6e8031a0,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9201976773809946580, guid: e27875b5b16443b4a9c4215e6e8031a0,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: e27875b5b16443b4a9c4215e6e8031a0, type: 3}
+--- !u!4 &418308401 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 9201976773809946580, guid: e27875b5b16443b4a9c4215e6e8031a0,
+    type: 3}
+  m_PrefabInstance: {fileID: 418308400}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &418308402 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 346530820445264457, guid: e27875b5b16443b4a9c4215e6e8031a0,
+    type: 3}
+  m_PrefabInstance: {fileID: 418308400}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe09c37ef50f6f14d9006cf99e71911b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &441795496
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5983,7 +6070,8 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 418308401}
   m_Father: {fileID: 1931081345}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -7585,9 +7673,7 @@ MonoBehaviour:
     type: 3}
   enemyInfoPrefab: {fileID: 3990735083279080324, guid: 51fea3964f81fd94899a544dd668c168,
     type: 3}
-  loadingRoot: {fileID: 1314763614}
-  loadingPrefab: {fileID: 521908375594551791, guid: e27875b5b16443b4a9c4215e6e8031a0,
-    type: 3}
+  loadingView: {fileID: 418308402}
   advEngine: {fileID: 456724002}
   advController: {fileID: 1315103154}
   debugBattleData: {fileID: 1631066105}

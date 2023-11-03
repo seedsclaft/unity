@@ -12,36 +12,24 @@ public class RebornActor : ListItem ,IListViewItem
     [SerializeField] private GameObject LimitRebornPrefab;
     [SerializeField] private bool LimitedSkillMax;
 
-    private ActorInfo _data;
+
     private bool _rebornInit = false;
-
-    public void SetData(ActorInfo data,int index){
-        _data = data;
-        SetIndex(index);
-    }
-
-    public void SetCallHandler(System.Action handler)
-    {
-        clickButton.onClick.AddListener(() => 
-        {   
-            if (Disable.activeSelf) return;
-            handler();
-        });
-    }
 
     public void UpdateViewItem()
     {
-        if (_data == null) return;
-        actorInfoComponent.UpdateInfo(_data,null);
-        UpdateRebornSkills();
+        if (ListData == null) return;
+        var data = (ActorInfo)ListData.Data;
+        actorInfoComponent.UpdateInfo(data,null);
+        UpdateRebornSkills(data);
+        Disable.gameObject.SetActive(ListData.Enable == false);
     }
 
-    private void UpdateRebornSkills()
+    private void UpdateRebornSkills(ActorInfo actorInfo)
     {
         if (_rebornInit) return;
         _rebornInit = true;
         var idx = 0;
-        foreach (var rebornSkill in _data.RebornSkillInfos)
+        foreach (var rebornSkill in actorInfo.RebornSkillInfos)
         {
             if (LimitedSkillMax && idx == 3)
             {
