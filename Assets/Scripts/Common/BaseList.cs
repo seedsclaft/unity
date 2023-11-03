@@ -5,6 +5,7 @@ using UnityEngine;
 public class BaseList : ListWindow , IInputHandlerEvent
 {
     private List<ListData> _listData = new ();
+    private System.Action _selectedHandler;
     public void SetData(List<ListData> listData)
     {
         _listData = listData;
@@ -37,9 +38,9 @@ public class BaseList : ListWindow , IInputHandlerEvent
     {
         for (int i = 0; i < ObjectList.Count;i++)
         {
-            var baseCommand = ObjectList[i].GetComponent<ListItem>();
-            baseCommand.SetCallHandler(() => CallListInputHandler(InputKeyType.Decide));
-            baseCommand.SetSelectHandler((index) => 
+            var listItem = ObjectList[i].GetComponent<ListItem>();
+            listItem.SetCallHandler(() => CallListInputHandler(InputKeyType.Decide));
+            listItem.SetSelectHandler((index) => 
             {
                 UpdateSelectIndex(index);
             });
@@ -50,8 +51,8 @@ public class BaseList : ListWindow , IInputHandlerEvent
     {
         for (int i = 0; i < ObjectList.Count;i++)
         {
-            var confirmCommand = ObjectList[i].GetComponent<ListItem>();
-            confirmCommand.SetListData(_listData[i],i);
+            var listItem = ObjectList[i].GetComponent<ListItem>();
+            listItem.SetListData(_listData[i],i);
         }
         //ResetScrollPosition();
         UpdateSelectIndex(selectIndex);
@@ -81,6 +82,12 @@ public class ListData
     public void SetEnable(bool enable)
     {
         _enable = enable;
+    }
+    private bool _selected = true;
+    public bool Selected => _selected;
+    public void SetSelected(bool selected)
+    {
+        _selected = selected;
     }
     public ListData(object data,int index = 0,bool enable = true)
     {

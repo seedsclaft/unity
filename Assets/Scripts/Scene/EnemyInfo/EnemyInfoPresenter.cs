@@ -21,7 +21,7 @@ public class EnemyInfoPresenter
     {
         _view.SetHelpWindow();
         _view.SetEvent((type) => updateCommand(type));
-        _view.SetAttributeTypes(_model.AttributeAllTypes(),_model.CurrentAttributeType);
+        _view.SetAttributeTypes(_model.AttributeAllTypes(null,(int)_model.CurrentAttributeType));
         CommandRefresh();
         _busy = false;
     }

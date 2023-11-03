@@ -62,9 +62,9 @@ public class BattleView : BaseView ,IInputHandlerEvent
         DeactivateConditionList();
         HideConditionAll();
 
-        skillList.InitializeAttribute(System.Enum.GetValues(typeof(AttributeType)).Length,(a) => CallAttributeTypes(a),() => OnClickCondition());
+        skillList.InitializeAttribute(System.Enum.GetValues(typeof(AttributeType)).Length,() => CallAttributeTypes(),() => OnClickCondition());
         
-        SetInputHandler(skillList.skillAttributeList.GetComponent<IInputHandlerEvent>());
+        SetInputHandler(skillList.attributeList.GetComponent<IInputHandlerEvent>());
         skillList.HideAttributeList();
 
         new BattlePresenter(this);
@@ -640,17 +640,21 @@ public class BattleView : BaseView ,IInputHandlerEvent
         }
     }
 
-    public void SetAttributeTypes(List<AttributeType> attributeTypes,AttributeType currentAttibuteType)
+    public void SetAttributeTypes(List<ListData> listData)
     {
-        skillList.RefreshAttribute(attributeTypes,currentAttibuteType);
+        skillList.RefreshAttribute(listData);
         //SetInputHandler(skillAttributeList.GetComponent<IInputHandlerEvent>());
     }
 
-    private void CallAttributeTypes(AttributeType attributeType)
+    private void CallAttributeTypes()
     {
-        var eventData = new BattleViewEvent(CommandType.AttributeType);
-        eventData.templete = attributeType;
-        _commandData(eventData);
+        var listData = skillList.AttributeInfo;
+        if (listData != null)
+        {
+            var eventData = new BattleViewEvent(CommandType.AttributeType);
+            eventData.templete = listData.AttributeType;
+            _commandData(eventData);
+        }
     }
 
     public void CommandAttributeType(AttributeType attributeType)

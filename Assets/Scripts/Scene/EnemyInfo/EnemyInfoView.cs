@@ -30,7 +30,7 @@ public class EnemyInfoView : BaseView,IInputHandlerEvent
         _isBattle = isBattle;
         skillList.Initialize();
         InitializeSkillActionList();
-        skillList.InitializeAttribute(System.Enum.GetValues(typeof(AttributeType)).Length,(a) => CallAttributeTypes(a),null);
+        skillList.InitializeAttribute(System.Enum.GetValues(typeof(AttributeType)).Length,() => CallAttributeTypes(),null);
 
         GameObject prefab2 = Instantiate(leftPrefab);
         prefab2.transform.SetParent(leftRoot.transform, false);
@@ -73,16 +73,20 @@ public class EnemyInfoView : BaseView,IInputHandlerEvent
         skillList.InitializeAction();
         skillList.SetInputHandlerAction(InputKeyType.Cancel,() => BackEvent());
         SetInputHandler(skillList.skillActionList.GetComponent<IInputHandlerEvent>());
-        SetInputHandler(skillList.skillAttributeList.GetComponent<IInputHandlerEvent>());
+        SetInputHandler(skillList.attributeList.GetComponent<IInputHandlerEvent>());
         skillList.HideActionList();
         skillList.HideAttributeList();
     }
     
-    private void CallAttributeTypes(AttributeType attributeType)
+    private void CallAttributeTypes()
     {
-        var eventData = new EnemyInfoViewEvent(CommandType.AttributeType);
-        eventData.templete = attributeType;
-        _commandData(eventData);
+        var listData = skillList.AttributeInfo;
+        if (listData != null)
+        {
+            var eventData = new EnemyInfoViewEvent(CommandType.AttributeType);
+            eventData.templete = listData.AttributeType;
+            _commandData(eventData);
+        }
     }
 
     private void OnClickLeft()
@@ -145,9 +149,9 @@ public class EnemyInfoView : BaseView,IInputHandlerEvent
         HideCondition();
     }
 
-    public void SetAttributeTypes(List<AttributeType> attributeTypes,AttributeType currentAttibuteType)
+    public void SetAttributeTypes(List<ListData> listData)
     {
-        skillList.RefreshAttribute(attributeTypes,currentAttibuteType);
+        skillList.RefreshAttribute(listData);
     }
 
     public void SetBackEvent(System.Action backEvent)

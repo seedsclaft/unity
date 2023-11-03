@@ -129,9 +129,17 @@ public class StatusModel : BaseModel
         return skillInfos;
     }
 
-    public List<SystemData.CommandData> StatusCommand
+    public List<ListData> StatusCommand()
     {
-        get { return DataSystem.StatusCommand;}
+        var list = new List<ListData>();
+        var idx = 0;
+        foreach (var commandData in DataSystem.StatusCommand)
+        {
+            var listData = new ListData(commandData);
+            list.Add(listData);
+            idx++;
+        }
+        return list;
     }
     
     public void SelectAddActor()

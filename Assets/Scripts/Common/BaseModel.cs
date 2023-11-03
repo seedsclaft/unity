@@ -273,14 +273,22 @@ public class BaseModel
         return attributeTypes;
     }
 
-    public List<AttributeType> AttributeAllTypes()
+    public List<ListData> AttributeAllTypes(ActorInfo actorInfo = null,int selectedIndex = -1)
     {
+        var list = new List<ListData>();
+        var idx = 0;
         List<AttributeType> attributeTypes = new List<AttributeType>();
         foreach(var attribute in Enum.GetValues(typeof(AttributeType)))
         {
-            attributeTypes.Add((AttributeType)attribute);
+            var attributeInfo = new SkillData.SkillAttributeInfo();
+            attributeInfo.AttributeType = (AttributeType)attribute;
+            attributeInfo.ValueText = "";
+            var listData = new ListData(attributeInfo,idx);
+            listData.SetSelected(selectedIndex == idx);
+            list.Add(listData);
+            idx++;
         } 
-        return attributeTypes;
+        return list;
     }
 
     public List<SkillInfo> BasicSkillInfos(GetItemInfo getItemInfo)

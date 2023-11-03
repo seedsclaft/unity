@@ -27,9 +27,10 @@ public class RulingModel : BaseModel
         _currentId = id;
     }
 
-    public List<SystemData.CommandData> RulingCommand()
+    public List<ListData> RulingCommand()
     {
-        var menuCommandDatas = new List<SystemData.CommandData>();
+        var list = new List<ListData>();
+        var idx = 0;
         foreach (var rule in DataSystem.Rules)
         {
             SystemData.CommandData ruleCommand = new SystemData.CommandData();
@@ -37,9 +38,11 @@ public class RulingModel : BaseModel
             ruleCommand.Name = rule.Name;
             ruleCommand.Help = rule.Help;
             ruleCommand.Id = rule.Id;
-            menuCommandDatas.Add(ruleCommand);
+            var listData = new ListData(ruleCommand,idx);
+            list.Add(listData);
+            idx++;
         }
-        return menuCommandDatas;
+        return list;
     }
 
     public List<string> RuleHelp()

@@ -970,7 +970,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2112994802282504723}
-  - component: {fileID: 1321864626585794860}
+  - component: {fileID: 2195991267608625251}
   m_Layer: 5
   m_Name: CommandList
   m_TagString: Untagged
@@ -999,7 +999,7 @@ RectTransform:
   m_AnchoredPosition: {x: -264, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0}
---- !u!114 &1321864626585794860
+--- !u!114 &2195991267608625251
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1008,7 +1008,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 6833638537268313010}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8b4c64621decfe74fbaca42d143c0384, type: 3}
+  m_Script: {fileID: 11500000, guid: cf409b824ca9622468dd57c00bf805ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   horizontal: 0
@@ -1068,7 +1068,7 @@ MonoBehaviour:
   backPrefab: {fileID: 6783263795755603185, guid: 6b914cf925ad6d14eb3325bbfc390299,
     type: 3}
   backRoot: {fileID: 1742002333855923751}
-  confirmCommandList: {fileID: 1321864626585794860}
+  commandList: {fileID: 2195991267608625251}
   ruleList: {fileID: 3202137263332825756}
   titleText: {fileID: 0}
 --- !u!1 &7020774200258942859

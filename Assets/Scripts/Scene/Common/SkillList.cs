@@ -7,11 +7,16 @@ public class SkillList : MonoBehaviour
     [SerializeField] private GameObject skillListPrefab;
     [SerializeField] private GameObject skillListRoot;
     public SkillActionList skillActionList;
-    public SkillAttributeList skillAttributeList;
+    public BaseList attributeList;
 
     public SkillInfo ActionData{
         get {
             return skillActionList.Data;
+        }
+    }
+    public SkillData.SkillAttributeInfo AttributeInfo{
+        get {
+            return (SkillData.SkillAttributeInfo)attributeList.ListData.Data;
         }
     }
     public void Initialize()
@@ -19,17 +24,34 @@ public class SkillList : MonoBehaviour
         GameObject prefab = Instantiate(skillListPrefab);
         prefab.transform.SetParent(skillListRoot.transform, false);
         skillActionList = prefab.GetComponentInChildren<SkillActionList>();
-        skillAttributeList = prefab.GetComponentInChildren<SkillAttributeList>();
+        attributeList = prefab.GetComponentInChildren<BaseList>();
     }
 
-    public void InitializeAttribute(int listCount,System.Action<AttributeType> callEvent,System.Action conditionEvent)
+    public void InitializeAttribute(int listCount,System.Action callEvent,System.Action conditionEvent)
     {
-        skillAttributeList.Initialize(listCount,callEvent,conditionEvent);
-    }
-    
-    public void SetInputHandlerAttribute(InputKeyType keyType,System.Action callEvent)
-    {
-        skillAttributeList.SetInputHandler(keyType,callEvent);
+        attributeList.Initialize(listCount);
+        attributeList.SetInputHandler(InputKeyType.Decide,() => callEvent());
+        attributeList.SetInputHandler(InputKeyType.SideLeft1,() => 
+        {
+            var index = attributeList.Index - 1;
+            if (index < 0)
+            {
+                index = attributeList.ObjectList.Count-1;
+            }
+            attributeList.UpdateSelectIndex(index);
+            callEvent();
+        });
+        attributeList.SetInputHandler(InputKeyType.SideRight1,() => 
+        {
+            var index = attributeList.Index + 1;
+            if (index > attributeList.ObjectList.Count-1)
+            {
+                index = 0;
+            }
+            attributeList.UpdateSelectIndex(index);
+            callEvent();
+        });
+        //skillAttributeList.Initialize(listCount,callEvent,conditionEvent);
     }
 
     public void InitializeAction()
@@ -52,15 +74,12 @@ public class SkillList : MonoBehaviour
         skillActionList.Refresh(selectIndex);
     }
 
-    public void RefreshAttribute(List<AttributeType> attributeTypes,AttributeType currentAttibuteType)
+    public void RefreshAttribute(List<ListData> listData)
     {
-        skillAttributeList.Refresh(attributeTypes,currentAttibuteType);
+        attributeList.SetData(listData);
+        attributeList.UpdateSelectIndex(listData.FindIndex(a => a.Selected));
     }
 
-    public void RefreshValues(List<string> attributeValues)
-    {
-        skillAttributeList.RefreshValues(attributeValues);
-    }
 
     public void RefreshCostInfo()
     {
@@ -89,22 +108,22 @@ public class SkillList : MonoBehaviour
 
     public void ActivateAttributeList()
     {
-        skillAttributeList.Activate();
+        attributeList.Activate();
     }
 
     public void DeactivateAttributeList()
     {
-        skillAttributeList.Deactivate();
+        attributeList.Deactivate();
     }
     
     public void ShowAttributeList()
     {
-        skillAttributeList.gameObject.SetActive(true);
+        attributeList.gameObject.SetActive(true);
     }
 
     public void HideAttributeList()
     {
-        skillAttributeList.gameObject.SetActive(false);
+        attributeList.gameObject.SetActive(false);
     }
 
     public int SelectedSkillId()

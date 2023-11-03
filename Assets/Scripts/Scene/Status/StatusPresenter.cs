@@ -26,9 +26,9 @@ public class StatusPresenter
         _view.SetActorInfo(_model.CurrentActor,_model.StatusActors());
 
         //_view.SetStrengthInfo(_model.ConfirmCommand());
-        _view.SetStatusCommand(_model.StatusCommand);
+        _view.SetStatusCommand(_model.StatusCommand());
         _model.ChangeSkillAttributeType();
-        _view.SetAttributeTypes(_model.AttributeAllTypes(),_model.CurrentAttributeType);
+        _view.SetAttributeTypes(_model.AttributeAllTypes(null,(int)_model.CurrentAttributeType));
         if (_model.StatusActors().Count == 1) _view.HideArrows();
         CommandRefresh();
     }
@@ -148,7 +148,7 @@ public class StatusPresenter
         {
             lastSelectIndex = 0;
         }
-        _view.RefreshSkillActionList(skillInfos,_model.AttributeAllTypes(),attributeType,lastSelectIndex);
+        _view.RefreshSkillActionList(skillInfos,_model.AttributeAllTypes(null,(int)attributeType),(int)attributeType,lastSelectIndex);
     }
 
     private void CommandDecideActor()
@@ -276,7 +276,7 @@ public class StatusPresenter
         {
             _model.SetLearnSkillInfo(skillInfo);
             var leariningSkillList = _model.LearningSkillList(skillInfo.Attribute);
-            _view.RefreshSkillActionList(leariningSkillList,_model.AttributeAllTypes(),_model.CurrentAttributeType,0);
+            _view.RefreshSkillActionList(leariningSkillList,_model.AttributeAllTypes(),(int)_model.CurrentAttributeType,0);
             _view.HideAttributeList();
         }
         if (skillInfo.LearningState == LearningState.SelectLearn)
@@ -361,7 +361,7 @@ public class StatusPresenter
         {
             lastSelectIndex = 0;
         }
-        _view.RefreshSkillActionList(skillInfos,_model.AttributeAllTypes(),_model.CurrentAttributeType,lastSelectIndex);
+        _view.RefreshSkillActionList(skillInfos,_model.AttributeAllTypes(),(int)_model.CurrentAttributeType,lastSelectIndex);
     }
 
     private void SaveSelectedSkillId()

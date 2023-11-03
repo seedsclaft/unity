@@ -282,6 +282,7 @@ GameObject:
   m_Component:
   - component: {fileID: 758525720455077572}
   - component: {fileID: 1746765979215293683}
+  - component: {fileID: 6127118474812341995}
   m_Layer: 5
   m_Name: SkillAttributeList
   m_TagString: Untagged
@@ -331,6 +332,25 @@ MonoBehaviour:
     type: 3}
   _helpWindow: {fileID: 0}
   cols: 5
+--- !u!114 &6127118474812341995
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3445815131480794502}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf409b824ca9622468dd57c00bf805ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  horizontal: 1
+  reverse: 0
+  warpMode: 1
+  scrollRect: {fileID: 2326025904747040545}
+  itemPrefab: {fileID: 5723993701910172595, guid: 8ea14062e026a1847baa868e21e3e74f,
+    type: 3}
+  _helpWindow: {fileID: 0}
 --- !u!1 &5849086939684113893
 GameObject:
   m_ObjectHideFlags: 0
@@ -853,7 +873,6 @@ MonoBehaviour:
   itemPrefab: {fileID: 968043006584562322, guid: 69257f6d565ed274b8849a75225cb996,
     type: 3}
   _helpWindow: {fileID: 0}
-  rows: 20
 --- !u!1 &8264663254818643856
 GameObject:
   m_ObjectHideFlags: 0

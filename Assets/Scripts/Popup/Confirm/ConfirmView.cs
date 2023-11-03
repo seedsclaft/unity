@@ -8,7 +8,6 @@ using Confirm;
 public class ConfirmView : BaseView,IInputHandlerEvent
 {
     [SerializeField] private BaseList commandList = null;
-    //[SerializeField] private BaseCommandList commandList = null;
     [SerializeField] private TextMeshProUGUI titleText = null;
     [SerializeField] private GameObject skillInfoRoot = null;
     [SerializeField] private GameObject skillInfoPrefab = null;

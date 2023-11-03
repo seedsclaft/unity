@@ -280,9 +280,10 @@ public class TacticsView : BaseView
     private void CallTrainCommand()
     {
         if (_lastCallEventType != CommandType.None) return;
-        var data = (SystemData.CommandData)tacticsTrainList.CommandData.Data;
-        if (data != null)
+        var commandData = tacticsTrainList.CommandData;
+        if (commandData != null)
         {
+            var data = (SystemData.CommandData)commandData.Data;
             var commandType = ConfirmComandType.No;
             if (data.Key == "Yes")
             {
@@ -319,9 +320,10 @@ public class TacticsView : BaseView
     private void CallAlchemyCommand()
     {
         if (_lastCallEventType != CommandType.None) return;
-        var data = (SystemData.CommandData)tacticsAlchemyList.CommandData.Data;
-        if (data != null)
+        var commandData = tacticsAlchemyList.CommandData;
+        if (commandData != null)
         {
+            var data = (SystemData.CommandData)tacticsAlchemyList.CommandData.Data;
             var commandType = ConfirmComandType.No;
             if (data.Key == "Yes")
             {
@@ -381,9 +383,10 @@ public class TacticsView : BaseView
     private void CallRecoveryCommand()
     {
         if (_lastCallEventType != CommandType.None) return;
-        var data = (SystemData.CommandData)tacticsRecoveryList.CommandData.Data;
-        if (data != null)
+        var commandData = tacticsRecoveryList.CommandData;
+        if (commandData != null)
         {
+            var data = (SystemData.CommandData)tacticsRecoveryList.CommandData.Data;
             var commandType = ConfirmComandType.No;
             if (data.Key == "Yes")
             {
@@ -483,9 +486,10 @@ public class TacticsView : BaseView
     private void CallBattleCommand()
     {
         if (_lastCallEventType != CommandType.None) return;
-        var data = (SystemData.CommandData)tacticsBattleList.CommandData.Data;
-        if (data != null)
+        var commandData = tacticsBattleList.CommandData;
+        if (commandData != null)
         {
+            var data = (SystemData.CommandData)tacticsBattleList.CommandData.Data;
             var commandType = ConfirmComandType.No;
             if (data.Key == "Yes")
             {
@@ -545,9 +549,10 @@ public class TacticsView : BaseView
     private void CallResourceCommand()
     {
         if (_lastCallEventType != CommandType.None) return;
-        var data = (SystemData.CommandData)tacticsResourceList.CommandData.Data;
-        if (data != null)
+        var commandData = tacticsResourceList.CommandData;
+        if (commandData != null)
         {
+            var data = (SystemData.CommandData)tacticsResourceList.CommandData.Data;
             var commandType = ConfirmComandType.No;
             if (data.Key == "Yes")
             {

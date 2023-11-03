@@ -7,7 +7,7 @@ using Ruling;
 
 public class RulingView : BaseView
 {
-    [SerializeField] private BaseCommandList confirmCommandList = null;
+    [SerializeField] private BaseList commandList = null;
     
     [SerializeField] private RuleList ruleList = null;
     [SerializeField] private TextMeshProUGUI titleText = null;
@@ -39,22 +39,26 @@ public class RulingView : BaseView
         SetActiveBack(true);
     }
     
-    public void SetRulingCommand(List<SystemData.CommandData> menuCommands)
+    public void SetRulingCommand(List<ListData> ruleList)
     {
-        confirmCommandList.InitializeRuleing(menuCommands);
-        confirmCommandList.SetInputHandler(InputKeyType.Down,() => CallRulingCommand());
-        confirmCommandList.SetInputHandler(InputKeyType.Up,() => CallRulingCommand());
-        confirmCommandList.SetInputHandler(InputKeyType.Cancel,() => BackEvent());
-        SetInputHandler(confirmCommandList.GetComponent<IInputHandlerEvent>());
+        commandList.Initialize(ruleList.Count);
+        commandList.SetData(ruleList);
+        commandList.SetInputHandler(InputKeyType.Down,() => CallRulingCommand());
+        commandList.SetInputHandler(InputKeyType.Up,() => CallRulingCommand());
+        commandList.SetInputHandler(InputKeyType.Cancel,() => BackEvent());
+        commandList.SetSelectedHandler(() => CallRulingCommand());
+        SetInputHandler(commandList.GetComponent<IInputHandlerEvent>());
+        commandList.Activate();
     }
 
     private void CallRulingCommand()
     {
         var eventData = new RulingViewEvent(CommandType.SelectTitle);
-        var item = confirmCommandList.Data;
-        if (item != null)
+        var listData = commandList.ListData;
+        if (listData != null)
         {
-            eventData.templete = item.Id;
+            var data = (SystemData.CommandData)listData.Data;
+            eventData.templete = data.Id;
             _commandData(eventData);
         }
     }
@@ -64,9 +68,9 @@ public class RulingView : BaseView
         ruleList.Refresh(helpList);
     }
 
-    public void CommandRefresh(List<SystemData.CommandData> menuCommands,List<string> helpList)
+    public void CommandRefresh(List<string> helpList)
     {
-        confirmCommandList.Refresh();
+        commandList.Refresh();
         ruleList.Refresh(helpList);
     }
 }

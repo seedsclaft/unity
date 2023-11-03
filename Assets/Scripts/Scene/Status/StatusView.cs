@@ -8,7 +8,7 @@ public class StatusView : BaseView ,IInputHandlerEvent
 {
     [SerializeField] private ActorInfoComponent actorInfoComponent = null;
     [SerializeField] private StatusActorList actorList = null;
-    [SerializeField] private BaseCommandList commandList = null;
+    [SerializeField] private BaseList commandList = null;
     [SerializeField] private SkillList skillList = null;
     [SerializeField] private StatusStrengthList statusStrengthList = null;
     [SerializeField] private Button decideButton = null;
@@ -30,7 +30,7 @@ public class StatusView : BaseView ,IInputHandlerEvent
         base.Initialize();
         skillList.Initialize();
         InitializeSkillActionList();
-        skillList.InitializeAttribute(System.Enum.GetValues(typeof(AttributeType)).Length,(a) => CallAttributeTypes(a),null);
+        skillList.InitializeAttribute(System.Enum.GetValues(typeof(AttributeType)).Length,() => CallAttributeTypes(),null);
         
         new StatusPresenter(this);
     }
@@ -41,7 +41,7 @@ public class StatusView : BaseView ,IInputHandlerEvent
         skillList.SetInputHandlerAction(InputKeyType.Cancel,() => OnClickBack());
         skillList.SetInputHandlerAction(InputKeyType.Decide,() => CallSkillLearning());
         SetInputHandler(skillList.skillActionList.GetComponent<IInputHandlerEvent>());
-        SetInputHandler(skillList.skillAttributeList.GetComponent<IInputHandlerEvent>());
+        SetInputHandler(skillList.attributeList.GetComponent<IInputHandlerEvent>());
         skillList.HideActionList();
         skillList.HideAttributeList();
     }
@@ -208,21 +208,24 @@ public class StatusView : BaseView ,IInputHandlerEvent
         statusStrengthList.Refresh(actorInfo);
     }
     
-    public void SetStatusCommand(List<SystemData.CommandData> menuCommands)
+    public void SetStatusCommand(List<ListData> menuCommands)
     {
-        commandList.Initialize(menuCommands);
+        commandList.Initialize(menuCommands.Count);
+        commandList.SetData(menuCommands);
         commandList.SetInputHandler(InputKeyType.Decide,() => CallStatusCommand());
         SetInputHandler(commandList.GetComponent<IInputHandlerEvent>());
+        commandList.Activate();
     }
 
     private void CallStatusCommand()
     {
         if (actorList.AnimationBusy) return;
         var eventData = new StatusViewEvent(CommandType.StatusCommand);
-        var item = commandList.Data;
-        if (item != null)
+        var listData = commandList.ListData;
+        if (listData != null)
         {
-            eventData.templete = item;
+            var data = (SystemData.CommandData)listData.Data;
+            eventData.templete = data;
             _commandData(eventData);
         }
     }
@@ -360,28 +363,27 @@ public class StatusView : BaseView ,IInputHandlerEvent
         skillList.HideAttributeList();
     }
     
-    public void RefreshSkillActionList(List<SkillInfo> skillInfos,List<AttributeType> attributeTypes,AttributeType currentAttibuteType,int lastSelectIndex)
+    public void RefreshSkillActionList(List<SkillInfo> skillInfos,List<ListData> attributeTypes,int currentAttibuteType,int lastSelectIndex)
     {
         skillList.SetSkillInfos(skillInfos);
         skillList.RefreshAction(lastSelectIndex);
-        skillList.RefreshAttribute(attributeTypes,currentAttibuteType);
+        skillList.RefreshAttribute(attributeTypes);
     }
 
-    public void SetAttributeTypes(List<AttributeType> attributeTypes,AttributeType currentAttibuteType)
+    public void SetAttributeTypes(List<ListData> listData)
     {
-        skillList.RefreshAttribute(attributeTypes,currentAttibuteType);
+        skillList.RefreshAttribute(listData);
     }
 
-    private void CallAttributeTypes(AttributeType attributeType)
+    private void CallAttributeTypes()
     {
-        var eventData = new StatusViewEvent(CommandType.AttributeType);
-        eventData.templete = attributeType;
-        _commandData(eventData);
-    }
-
-    public void CommandAttributeType(AttributeType attributeType)
-    {
-        
+        var listData = skillList.AttributeInfo;
+        if (listData != null)
+        {
+            var eventData = new StatusViewEvent(CommandType.AttributeType);
+            eventData.templete = listData.AttributeType;
+            _commandData(eventData);
+        }
     }
 
     private void CallStrengthCommand(TacticsComandType commandType)

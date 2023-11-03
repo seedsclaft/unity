@@ -56,6 +56,6 @@ public class RulingPresenter
 
     private void CommandRefresh()
     {
-        _view.CommandRefresh(_model.RulingCommand(),_model.RuleHelp());
+        _view.CommandRefresh(_model.RuleHelp());
     }
 }

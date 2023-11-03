@@ -1811,7 +1811,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3364317650870688310}
-  - component: {fileID: 1977910996801780557}
+  - component: {fileID: 8987175200878501228}
   m_Layer: 5
   m_Name: CommandList
   m_TagString: Untagged
@@ -1840,7 +1840,7 @@ RectTransform:
   m_AnchoredPosition: {x: 120, y: -184}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!114 &1977910996801780557
+--- !u!114 &8987175200878501228
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1849,7 +1849,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1315323446697087615}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8b4c64621decfe74fbaca42d143c0384, type: 3}
+  m_Script: {fileID: 11500000, guid: cf409b824ca9622468dd57c00bf805ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   horizontal: 1
@@ -3919,7 +3919,7 @@ MonoBehaviour:
   backRoot: {fileID: 6004437273362368775}
   actorInfoComponent: {fileID: 2788684162253015153}
   actorList: {fileID: 647974921653974678}
-  commandList: {fileID: 1977910996801780557}
+  commandList: {fileID: 8987175200878501228}
   skillList: {fileID: 3351597825121512}
   statusStrengthList: {fileID: 2277826488316414332}
   decideButton: {fileID: 4543176366710301350}
@@ -8998,7 +8998,7 @@ MonoBehaviour:
     type: 3}
   skillListRoot: {fileID: 7398809813307446426}
   skillActionList: {fileID: 0}
-  skillAttributeList: {fileID: 0}
+  attributeList: {fileID: 0}
 --- !u!1 &7410386173437052141
 GameObject:
   m_ObjectHideFlags: 0

@@ -13,22 +13,11 @@ public class SkillAttribute : ListItem ,IListViewItem
     [SerializeField] private TextMeshProUGUI learnCost;
     [SerializeField] private TextMeshProUGUI learningCountText;
     [SerializeField] private TextMeshProUGUI allAttributeText;
-    private AttributeType _data; 
     private string _valueText; 
     private int _learnCost; 
-    public void SetData(AttributeType data,string valueText,int index,int learnCost = -1,string learningCount = ""){
-        _data = data;
-        _valueText = valueText;
-        _learnCost = learnCost;
-        if (learningCountText != null)
-        {
-            learningCountText.text = learningCount;
-        }
-        SetIndex(index);
-    }
 
     public void SetData(SkillData.SkillAttributeInfo data,int index){
-        _data = data.AttributeType;
+        //_data = data.AttributeType;
         _valueText = data.ValueText;
         _learnCost = data.LearningCost;
         if (learningCountText != null)
@@ -40,30 +29,45 @@ public class SkillAttribute : ListItem ,IListViewItem
 
     public void SetCallHandler(System.Action<AttributeType> handler)
     {
-        clickButton.onClick.AddListener(() => handler((AttributeType)_data));
+        //clickButton.onClick.AddListener(() => handler((AttributeType)_data));
     }
 
     public void UpdateViewItem()
     {
+        if (ListData == null) return;
+        var data = (SkillData.SkillAttributeInfo)ListData.Data;
+        _valueText = data.ValueText;
+        _learnCost = data.LearningCost;
+        if (learningCountText != null)
+        {
+            learningCountText.text = data.LearningCount;
+        }
         if (icon != null)
         {
-            icon.gameObject.SetActive(_data != AttributeType.None);
-            UpdateElementIcon(Index);
+            icon.gameObject.SetActive(data.AttributeType != AttributeType.None);
+            UpdateElementIcon(Index-1);
         }
         
         if (valueText != null && _valueText != null)
         {
-            valueText.gameObject.SetActive(_data != AttributeType.None);
+            valueText.gameObject.SetActive(data.AttributeType != AttributeType.None);
             valueText.text = _valueText;
         }
         if (learnCost != null && _learnCost != -1)
         {
-            learnCost.gameObject.SetActive(_data != AttributeType.None);
+            learnCost.gameObject.SetActive(data.AttributeType != AttributeType.None);
             learnCost.text = _learnCost.ToString();
         }
         if (allAttributeText != null)
         {
-            allAttributeText.gameObject.SetActive(_data == AttributeType.None);
+            allAttributeText.gameObject.SetActive(data.AttributeType == AttributeType.None);
+        }
+        if (ListData.Selected)
+        {
+            SetSelect();
+        } else
+        {
+            SetUnSelect();
         }
     }
     

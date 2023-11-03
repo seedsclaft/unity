@@ -388,9 +388,10 @@ abstract public class ListWindow : MonoBehaviour
 
     public void SelectIndex(int selectIndex)
     {
-        if (_index != selectIndex)
+        var callHandler = _index != selectIndex;
+        _index = selectIndex;
+        if (callHandler)
         {
-            _index = selectIndex;
             if (_selectedHandler != null)
             {
                 _selectedHandler();
