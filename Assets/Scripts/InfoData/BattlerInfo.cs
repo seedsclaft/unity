@@ -26,6 +26,19 @@ public class BattlerInfo
     
     private List<SkillInfo> _skills;
     public List<SkillInfo> Skills => _skills;
+    private List<SkillInfo> _decksData = new ();
+    public List<SkillInfo> DecksData => _decksData;
+    public void RemoveDeck(int deckIndex)
+    {
+        if (isActor)
+        {
+            var findIndex = _decksData.FindIndex(a => a.DeckIndex == deckIndex);
+            if (findIndex > -1)
+            {
+                _decksData.RemoveAt(findIndex);
+            }
+        }
+    }
     private ActorInfo _actorInfo;
     public ActorInfo ActorInfo => _actorInfo;
     private EnemyData _enemyData;
@@ -90,6 +103,14 @@ public class BattlerInfo
         foreach (var skill in _skills)
         {
             skill.SetIsUsed(false);
+        }
+        _decksData = actorInfo.DecksData.FindAll(a => a.LearningState == LearningState.Learned);
+        var dexkIndex = 0;
+        foreach (var decksData in _decksData)
+        {
+            decksData.SetIsUsed(false);
+            decksData.SetDeckIndex(dexkIndex);
+            dexkIndex++;
         }
         _demigodParam = actorInfo.DemigodParam;
         _isActor = true;

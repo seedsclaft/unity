@@ -49,7 +49,6 @@ public class EnemyInfoView : BaseView,IInputHandlerEvent
             statusConditionList.SetInputHandler(InputKeyType.Option1,() => 
             {
                 skillList.ShowActionList();
-                skillList.ActivateActionList();
                 HideCondition();
             });
             SetInputHandler(statusConditionList.GetComponent<IInputHandlerEvent>());
@@ -142,8 +141,6 @@ public class EnemyInfoView : BaseView,IInputHandlerEvent
     {
         skillList.ShowActionList();
         skillList.HideAttributeList();
-        skillList.ActivateActionList();
-        skillList.DeactivateAttributeList();
         skillList.SetSkillInfos(skillInfos);
         skillList.RefreshAction();
         HideCondition();
@@ -200,7 +197,6 @@ public class EnemyInfoView : BaseView,IInputHandlerEvent
     public void HideSkillActionList()
     {
         skillList.HideActionList();
-        skillList.DeactivateActionList();
     }
     
     public void ActivateConditionList()

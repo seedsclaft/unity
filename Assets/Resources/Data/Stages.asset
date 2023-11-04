@@ -15,6 +15,7 @@ MonoBehaviour:
   Data:
   - Id: 1
     Name: "xxxx \u30C1\u30E5\u30FC\u30C8\u30EA\u30A2\u30EB"
+    Selectable: 1
     Help: "\u5B9F\u969B\u306B\u30D7\u30EC\u30A4\u3057\u306A\u304C\u3089\n\u57FA\u672C\u7684\u306A\u904A\u3073\u65B9\u3092\u5B66\u3073\u307E\u3059\u3002"
     Turns: 7
     InitMembers: 01000000
@@ -282,6 +283,7 @@ MonoBehaviour:
       ReadFlag: 0
   - Id: 2
     Name: "\u843D\u661F\u524D3986\u5E74 \u534A\u795E\u306E\u30A2\u30EB\u30B1\u30DF\u30B9\u30C8\u9054"
+    Selectable: 1
     Help: "\u6804\u83EF\u3092\u6975\u3081\u305F\u6587\u660E\u30FB\u30D1\u30A4\u30EA\u30A2\u306F\n\u6D2A\u6C34\u306B\u3088\u308A\u8DE1\u5F62\u3082\u306A\u304F\u6D88\u3048\u53BB\u3063\u305F\u3002\n\u4E0A\u4F4D\u8005\u306B\u3088\u308B\u6D44\u5316(Cleansing)\u304C\u884C\u308F\u308C\u305F\u306E\u3060\u3002\n\n\u6D44\u5316\u306B\u3088\u308A\u4EBA\u985E\u306F\u65B0\u305F\u306A\u9032\u5316\u3092\u9042\u3052\u305F\u3002\n\u3057\u304B\u3057\u4E0A\u4F4D\u4E16\u754C\u306B\u7570\u5F62\u306E\u5B58\u5728\n\u9053\u306A\u304D\u8005(The
       Pathless)\u304C\u73FE\u308C\u308B\u3088\u3046\u306B\u306A\u308B\u3002\n\n\u4E0A\u4F4D\u8005\u306F\u4E8B\u614B\u3092\u53CE\u62FE\u3059\u3079\u304F\n\u5C0E\u304F\u8005(Magister)\u300C\\p\u300D\u306B\n\u9053\u306A\u304D\u8005(The
       Pathless)\u8A0E\u4F10\u3092\u547D\u3058\u305F\u3002"
@@ -533,6 +535,7 @@ MonoBehaviour:
       ReadFlag: 1
   - Id: 11
     Name: "C\u30EB\u30FC\u30C8\u7528"
+    Selectable: 0
     Help: '""'
     Turns: 2
     InitMembers: 00000000
@@ -578,6 +581,7 @@ MonoBehaviour:
       ReadFlag: 0
   - Id: 12
     Name: "B\u30EB\u30FC\u30C8\u7528"
+    Selectable: 0
     Help: '""'
     Turns: 7
     InitMembers: 00000000
@@ -629,6 +633,7 @@ MonoBehaviour:
       ReadFlag: 1
   - Id: 13
     Name: "A\u30EB\u30FC\u30C8\u7528"
+    Selectable: 0
     Help: '""'
     Turns: 7
     InitMembers: 00000000
@@ -678,3 +683,13 @@ MonoBehaviour:
       Type: 32
       Param: 0
       ReadFlag: 1
+  - Id: 21
+    Name: "\u30C6\u30B9\u30C8\u30B9\u30C6\u30FC\u30B8"
+    Selectable: 1
+    Help: '""'
+    Turns: 6
+    InitMembers: 010000000200000003000000040000000500000006000000070000000b0000000d0000000e000000
+    RandomTroopCount: 0
+    BGMId: 03000000
+    Reborn: 1
+    StageEvents: []

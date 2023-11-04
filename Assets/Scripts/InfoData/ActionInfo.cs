@@ -5,6 +5,8 @@ using UnityEngine;
 public class ActionInfo 
 {
     private int _skillId = 0;
+    private SkillInfo _skillInfo = null;
+    public SkillInfo SkillInfo => _skillInfo;
     
     private int _subjectIndex = 0;
     public int SubjectIndex => _subjectIndex;
@@ -31,9 +33,10 @@ public class ActionInfo
     private bool _triggeredSkill = false;
     public bool TriggeredSkill => _triggeredSkill;
 
-    public ActionInfo(int skillId,int subjectIndex,int lastTargetIndex,List<int> targetIndexList)
+    public ActionInfo(SkillInfo skillInfo,int subjectIndex,int lastTargetIndex,List<int> targetIndexList)
     {
-        _skillId = skillId;
+        _skillInfo = skillInfo;
+        _skillId = skillInfo.Id;
         _scopeType = Master.Scope;
         _rangeType = Master.Range;
         _targetType = Master.TargetType;
@@ -64,7 +67,8 @@ public class ActionInfo
         
         List<ActionInfo> actionInfos = new List<ActionInfo>();
         for (var i = 0;i < PlusSkill.Count;i++){
-            ActionInfo actionInfo = new ActionInfo(PlusSkill[i].Param1,SubjectIndex,-1,null);
+            var skillInfo = new SkillInfo(PlusSkill[i].Param1);
+            ActionInfo actionInfo = new ActionInfo(skillInfo,SubjectIndex,-1,null);
             actionInfo.SetTriggerSkill(true);
             actionInfos.Add(actionInfo);
         }

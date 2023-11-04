@@ -154,12 +154,9 @@ public class StatusPresenter
             if (confirmComandType == ConfirmComandType.Yes)
             {
                 _model.ForgetSkill();
-                _view.ActivateSkillActionList();
                 CommandRefresh();
-            } else
-            {
-                _view.ActivateSkillActionList();
             }
+            _view.ActivateSkillActionList();
         }
 
         if (_popupCommandType == Status.CommandType.SelectSkillLearning)

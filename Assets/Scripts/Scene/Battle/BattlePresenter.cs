@@ -303,8 +303,8 @@ public class BattlePresenter : BasePresenter
             _view.SetBattleBusy(true);
             if (!_model.EnableCurrentBattler())
             {
-                int skillId = 0;
-                ActionInfo actionInfo = _model.MakeActionInfo(_model.CurrentBattler,skillId,false,false);
+                var skillInfo = new SkillInfo(0);
+                ActionInfo actionInfo = _model.MakeActionInfo(_model.CurrentBattler,skillInfo,false,false);
                 CommandSelectIndex(_model.MakeAutoSelectIndex(actionInfo));
                 return;
             }
@@ -312,7 +312,8 @@ public class BattlePresenter : BasePresenter
             if (chainTargetIndexs.Count > 0)
             {
                 // 拘束解除
-                ActionInfo actionInfo = _model.MakeActionInfo(_model.CurrentBattler,31,false,false);
+                var skillInfo = new SkillInfo(31);
+                ActionInfo actionInfo = _model.MakeActionInfo(_model.CurrentBattler,skillInfo,false,false);
                 CommandSelectIndex(chainTargetIndexs);
                 // 成功して入ればカウント
                 if (actionInfo.ActionResults.Find(a => !a.Missed) != null)
@@ -334,7 +335,8 @@ public class BattlePresenter : BasePresenter
             } else
             {
                 int autoSkillId = _model.MakeAutoSkillId(_model.CurrentBattler);
-                ActionInfo actionInfo = _model.MakeActionInfo(_model.CurrentBattler,autoSkillId,false,false);
+                var skillInfo = new SkillInfo(autoSkillId);
+                ActionInfo actionInfo = _model.MakeActionInfo(_model.CurrentBattler,skillInfo,false,false);
                 CommandSelectIndex(_model.MakeAutoSelectIndex(actionInfo));
             }
         }
@@ -343,7 +345,8 @@ public class BattlePresenter : BasePresenter
     private void CommandAutoActorSkillId()
     {
         var (autoSkillId,targetIndex) = _model.MakeAutoActorSkillId(_model.CurrentBattler);
-        ActionInfo actionInfo = _model.MakeActionInfo(_model.CurrentBattler,autoSkillId,false,false);
+            var skillInfo = new SkillInfo(autoSkillId);
+        ActionInfo actionInfo = _model.MakeActionInfo(_model.CurrentBattler,skillInfo,false,false);
         CommandSelectIndex(_model.MakeAutoSelectIndex(actionInfo,targetIndex));
     }
 
@@ -373,7 +376,7 @@ public class BattlePresenter : BasePresenter
         _model.ClearActionInfo();
         _model.SetLastSkill(skillInfo.Id);
         Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
-        ActionInfo actionInfo = _model.MakeActionInfo(_model.CurrentBattler,skillInfo.Id,false,false);
+        ActionInfo actionInfo = _model.MakeActionInfo(_model.CurrentBattler,skillInfo,false,false);
         _view.HideSkillActionList();
         _view.SetEscapeButton(false);
         _view.HideSkillAtribute();
@@ -465,7 +468,7 @@ public class BattlePresenter : BasePresenter
                                 var RevengeActTarget = _model.GetBattlerInfo(actionInfo.SubjectIndex);
                                 RevengeActTarget.ResetAp(false);
                                 _model.ClearActionInfo();
-                                actionInfo = _model.MakeActionInfo(RevengeActBattler,33,false,false);
+                                actionInfo = _model.MakeActionInfo(RevengeActBattler,new SkillInfo(33),false,false);
                                 _model.SetActionBattler(RevengeActBattler.Index);
                                 _model.MakeActionResultInfo(actionInfo,new List<int>(){RevengeActTarget.Index});
                                 

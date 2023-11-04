@@ -7,10 +7,56 @@ public class PlayerInfo
 {
     private int _playerId = -1;
     public int PlayerId => _playerId;
+    public void SetPlayerId()
+    {
+        if (_playerId == -1)
+        {
+            int strong = 1000;
+		    int sec = (int)DateTime.Now.Subtract(new DateTime(1970, 1, 1)).TotalSeconds;
+            _playerId = sec + (strong*UnityEngine.Random.Range(0,strong));
+        }
+    }
+
     private string _playerName = "";
     public string PlayerName => _playerName;
+    public void SetPlayerName(string name)
+    {
+        _playerName = name;
+    }
+
     private int _bestScore = -1;
     public int BestScore => _bestScore;
+    public void SetBestScore(int score)
+    {
+        if (score > _bestScore)
+        {
+            _bestScore = score;
+        }
+    }
+
+    private List<StageInfo> _stages = new ();
+    public List<StageInfo> Stages => _stages;
+    public void InitStages()
+    {
+        _stages.Clear();
+    }
+
+	public void InitStageInfo()
+	{
+		for (int i = 0;i < DataSystem.Stages.Count;i++)
+		{
+			if (!DataSystem.Stages[i].Selectable) continue;
+			StageInfo stageInfo = new StageInfo(DataSystem.Stages[i]);
+			_stages.Add(stageInfo);
+		}
+	}
+
+	public void StageClaer(int stageId)
+	{
+		StageInfo stageInfo = _stages.Find(a => a.Id == stageId);
+		stageInfo.GainClearCount();
+	}
+
     private List<ActorInfo> _saveActorList = new ();
     public List<ActorInfo> SaveActorList => _saveActorList;
 
@@ -25,28 +71,9 @@ public class PlayerInfo
     private List<int> _clearedTroopIds = new ();
     public List<int> ClearedTroopIds => _clearedTroopIds;
 
-    public void SetPlayerName(string name)
-    {
-        _playerName = name;
-    }
-    
-    public void SetPlayerId()
-    {
-        if (_playerId == -1)
-        {
-            int strong = 1000;
-		    int sec = (int)DateTime.Now.Subtract(new DateTime(1970, 1, 1)).TotalSeconds;
-            _playerId = sec + (strong*UnityEngine.Random.Range(0,strong));
-        }
-    }
 
-    public void SetBestScore(int score)
-    {
-        if (score > _bestScore)
-        {
-            _bestScore = score;
-        }
-    }
+    
+
 
     public void AddActorInfo(ActorInfo actorInfo)
     {

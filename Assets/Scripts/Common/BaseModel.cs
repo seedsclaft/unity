@@ -221,21 +221,29 @@ public class BaseModel
         return await ResourceSystem.LoadBGMAsset(bgmKey);
     }
 
-    public List<ListData> ConfirmCommand()
+    public List<SystemData.CommandData> BaseConfirmCommand(int yesTextId,int noTextId = 0)
     {
         List<SystemData.CommandData> menuCommandDatas = new List<SystemData.CommandData>();
         SystemData.CommandData yesCommand = new SystemData.CommandData();
         yesCommand.Key = "Yes";
-        yesCommand.Name = DataSystem.System.GetTextData(3050).Text;
+        yesCommand.Name = DataSystem.System.GetTextData(yesTextId).Text;
         yesCommand.Id = 0;
-        SystemData.CommandData noCommand = new SystemData.CommandData();
-        noCommand.Key = "No";
-        noCommand.Name = DataSystem.System.GetTextData(3051).Text;
-        noCommand.Id = 1;
-        menuCommandDatas.Add(noCommand);
+        if (noTextId != 0)
+        {
+            SystemData.CommandData noCommand = new SystemData.CommandData();
+            noCommand.Key = "No";
+            noCommand.Name = DataSystem.System.GetTextData(noTextId).Text;
+            noCommand.Id = 1;
+            menuCommandDatas.Add(noCommand);
+        }
         menuCommandDatas.Add(yesCommand);
+        return menuCommandDatas;
+    }
+
+    public List<ListData> ConfirmCommand()
+    {
         var list = new List<ListData>();
-        foreach (var commandData in menuCommandDatas)
+        foreach (var commandData in BaseConfirmCommand(3050,3051))
         {
             var listData = new ListData(commandData);
             list.Add(listData);
@@ -245,18 +253,9 @@ public class BaseModel
 
     public List<ListData> NoChoiceConfirmCommand()
     {
-        List<SystemData.CommandData> menuCommandDatas = new List<SystemData.CommandData>();
-        SystemData.CommandData yesCommand = new SystemData.CommandData();
-        yesCommand.Key = "Yes";
-        yesCommand.Name = DataSystem.System.GetTextData(3052).Text;
-        yesCommand.Id = 0;
-        menuCommandDatas.Add(yesCommand);
-        var list = new List<ListData>();
-        foreach (var commandData in menuCommandDatas)
-        {
-            var listData = new ListData(commandData);
-            list.Add(listData);
-        }
+        var list = new List<ListData>(){};
+        var listData = new ListData(BaseConfirmCommand(3052,0)[0]);
+        list.Add(listData);
         return list;
     }
     
@@ -526,12 +525,12 @@ public class BaseModel
 
     public void StageClaer()
     {
-        CurrentData.StageClaer();
+        CurrentData.PlayerInfo.StageClaer(CurrentStage.Id);
     }
 
     public void StageClaer(int stageId)
     {
-        CurrentData.StageClaer(stageId);
+        CurrentData.PlayerInfo.StageClaer(stageId);
     }
 
     public void ChangeRouteSelectStage(int stageBaseId)

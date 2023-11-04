@@ -105,8 +105,8 @@ public class FastBattlePresenter : BasePresenter
             _view.SetBattleBusy(true);
             if (!_model.EnableCurrentBattler())
             {
-                int skillId = 0;
-                ActionInfo actionInfo = _model.MakeActionInfo(_model.CurrentBattler,skillId,false,false);
+                var skillInfo = new SkillInfo(0);
+                ActionInfo actionInfo = _model.MakeActionInfo(_model.CurrentBattler,skillInfo,false,false);
                 CommandSelectIndex(_model.MakeAutoSelectIndex(actionInfo));
                 return;
             }
@@ -114,7 +114,8 @@ public class FastBattlePresenter : BasePresenter
             if (chainTargetIndexs.Count > 0)
             {
                 // 拘束解除
-                ActionInfo actionInfo = _model.MakeActionInfo(_model.CurrentBattler,31,false,false);
+                var skillInfo = new SkillInfo(31);
+                ActionInfo actionInfo = _model.MakeActionInfo(_model.CurrentBattler,skillInfo,false,false);
                 CommandSelectIndex(chainTargetIndexs);
                 // 成功して入ればカウント
                 if (actionInfo.ActionResults.Find(a => !a.Missed) != null)
@@ -126,12 +127,14 @@ public class FastBattlePresenter : BasePresenter
             if (_model.CurrentBattler.isActor)
             {
                 var (autoSkillId,targetIndex) = _model.MakeAutoActorSkillId(_model.CurrentBattler);
-                ActionInfo actionInfo = _model.MakeActionInfo(_model.CurrentBattler,autoSkillId,false,false);
+                var skillInfo = new SkillInfo(autoSkillId);
+                ActionInfo actionInfo = _model.MakeActionInfo(_model.CurrentBattler,skillInfo,false,false);
                 CommandSelectIndex(_model.MakeAutoSelectIndex(actionInfo,targetIndex));
             } else
             {
                 int autoSkillId = _model.MakeAutoSkillId(_model.CurrentBattler);
-                ActionInfo actionInfo = _model.MakeActionInfo(_model.CurrentBattler,autoSkillId,false,false);
+                var skillInfo = new SkillInfo(autoSkillId);
+                ActionInfo actionInfo = _model.MakeActionInfo(_model.CurrentBattler,skillInfo,false,false);
                 CommandSelectIndex(_model.MakeAutoSelectIndex(actionInfo));
             }
         }
@@ -157,7 +160,7 @@ public class FastBattlePresenter : BasePresenter
         }
         _model.ClearActionInfo();
         _model.SetLastSkill(skillInfo.Id);
-        ActionInfo actionInfo = _model.MakeActionInfo(_model.CurrentBattler,skillInfo.Id,false,false);
+        ActionInfo actionInfo = _model.MakeActionInfo(_model.CurrentBattler,skillInfo,false,false);
         
         _backCommandType = Battle.CommandType.DecideActor;
         _view.SetActiveBack(true);

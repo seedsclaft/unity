@@ -12,6 +12,7 @@ public class StageData
 {   
     public int Id;
     public string Name;
+    public bool Selectable;
     public string Help;
     public int Turns;
     public List<int> InitMembers;

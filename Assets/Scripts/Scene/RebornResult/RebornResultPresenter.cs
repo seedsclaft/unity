@@ -39,13 +39,14 @@ public class RebornResultPresenter : BasePresenter
         if (_busy){
             return;
         }
-        if (viewEvent.commandType == CommandType.EndAnimation)
+        switch (viewEvent.commandType)
         {
+            case CommandType.EndAnimation:
             CommandEndAnimation();
-        }
-        if (viewEvent.commandType == CommandType.RebornResultClose)
-        {
+            break;
+            case CommandType.RebornResultClose:
             CommandRebornResultClose((ConfirmComandType)viewEvent.templete);
+            break;
         }
     }
 
@@ -57,8 +58,6 @@ public class RebornResultPresenter : BasePresenter
     private void CommandRebornResultClose(ConfirmComandType confirmComandType)
     {
         if (confirmComandType == ConfirmComandType.Yes)
-        {
-        } else
         {
             CommandEndReborn();
         }

@@ -60,7 +60,6 @@ public class TacticsView : BaseView
         SetInputHandler(skillList.skillActionList.GetComponent<IInputHandlerEvent>());
         //SetInputHandler(skillList.skillAttributeList.GetComponent<IInputHandlerEvent>());
         skillList.HideActionList();
-        skillList.DeactivateActionList();
         skillList.HideAttributeList();
     }
 
@@ -364,7 +363,6 @@ public class TacticsView : BaseView
 
     public void ShowSkillAlchemyList(List<ListData> skillInfos)
     {
-        skillList.ActivateActionList();
         skillList.ShowActionList();
         skillList.SetSkillInfos(skillInfos);
         skillList.RefreshAction();
@@ -374,7 +372,6 @@ public class TacticsView : BaseView
 
     public void HideSkillAlchemyList()
     {
-        skillList.DeactivateActionList();
         skillList.HideActionList();
         skillList.HideAttributeList();
         HelpWindow.SetInputInfo("ALCHEMY_ATTRIBUTE");
@@ -624,7 +621,8 @@ public class TacticsView : BaseView
         var listData = tacticsAttributeList.ListData;
         if (listData != null && ((SkillData.SkillAttributeInfo)listData.Data).AttributeType != AttributeType.None)
         {
-            eventData.templete = (SkillData.SkillAttributeInfo)listData.Data;
+            var data = (SkillData.SkillAttributeInfo)listData.Data;
+            eventData.templete = data.AttributeType;
             _commandData(eventData);
             _lastCallEventType = eventData.commandType;
         }

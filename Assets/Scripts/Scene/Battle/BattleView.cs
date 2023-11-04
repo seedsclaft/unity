@@ -303,7 +303,6 @@ public class BattleView : BaseView ,IInputHandlerEvent
         skillList.ShowActionList();
         sideMenuList.gameObject.SetActive(true);
         skillList.ShowAttributeList();
-        skillList.ActivateActionList();
         if (battlerInfo.IsState(StateType.Demigod))
         {
             battleThumb.ShowAwakenThumb(actorData);
@@ -318,7 +317,6 @@ public class BattleView : BaseView ,IInputHandlerEvent
     public void HideSkillActionList(bool isSideBenuClose = true)
     {
         skillList.HideActionList();
-        skillList.DeactivateActionList();
         if (isSideBenuClose)
         {
             sideMenuList.gameObject.SetActive(false);
@@ -342,7 +340,6 @@ public class BattleView : BaseView ,IInputHandlerEvent
     {
         DeactivateActorList();
         DeactivateEnemyList();
-        skillList.ActivateActionList();
         skillList.ShowActionList();
         sideMenuList.gameObject.SetActive(true);
         skillList.SetSkillInfos(skillInfos);
@@ -720,14 +717,14 @@ public class BattleView : BaseView ,IInputHandlerEvent
         sideMenuList.Deactivate();
         sideMenuList.SetHelpWindow(HelpWindow);
         sideMenuList.SetOpenEvent(() => {
-            skillList.DeactivateActionList();
-            skillList.DeactivateAttributeList();
+            skillList.skillActionList.Deactivate();
+            skillList.attributeList.Deactivate();
             sideMenuList.Activate();
         });
         sideMenuList.SetCloseEvent(() => {
             HelpWindow.SetInputInfo("BATTLE");
-            skillList.ActivateActionList();
-            skillList.ActivateAttributeList();
+            skillList.skillActionList.Activate();
+            skillList.attributeList.Activate();
             sideMenuList.Deactivate();
             skillList.skillActionList.UpdateHelpWindow();
             HelpWindow.SetHelpText(DataSystem.System.GetTextData(15010).Text);
@@ -750,8 +747,8 @@ public class BattleView : BaseView ,IInputHandlerEvent
     {
         HelpWindow.SetInputInfo("SIDEMENU");
         HelpWindow.SetHelpText(DataSystem.System.GetTextData(701).Help);
-        skillList.DeactivateActionList();
-        skillList.DeactivateAttributeList();
+        skillList.skillActionList.Deactivate();
+        skillList.attributeList.Deactivate();
         sideMenuList.Activate();
         sideMenuList.OpenSideMenu();
     }
@@ -759,8 +756,8 @@ public class BattleView : BaseView ,IInputHandlerEvent
     public void CommandCloseSideMenu()
     {
         HelpWindow.SetInputInfo("BATTLE");
-        skillList.ActivateActionList();
-        skillList.ActivateAttributeList();
+        skillList.skillActionList.Activate();
+        skillList.attributeList.Activate();
         sideMenuList.Deactivate();
         sideMenuList.CloseSideMenu();
         skillList.skillActionList.UpdateHelpWindow();

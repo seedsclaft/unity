@@ -71,7 +71,7 @@ public class DebugBattleData : MonoBehaviour
             var skillInfo = battlerInfo.Skills.Find(a => a.Master.Id == int.Parse( command[1] ));
             if (skillInfo == null) return;
             _model.SetActionBattler(battlerInfo.Index);
-            ActionInfo actionInfo = _model.MakeActionInfo(battlerInfo,skillInfo.Id,false,false);
+            ActionInfo actionInfo = _model.MakeActionInfo(battlerInfo,skillInfo,false,false);
             _presenter.CommandSelectIndex(_model.MakeAutoSelectIndex(actionInfo));
         }
     }

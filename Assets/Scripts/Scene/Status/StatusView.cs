@@ -320,14 +320,14 @@ public class StatusView : BaseView ,IInputHandlerEvent
     
     public void ActivateSkillActionList()
     {
-        skillList.ActivateActionList();
-        skillList.ActivateAttributeList();
+        skillList.skillActionList.Activate();
+        skillList.attributeList.Activate();
     }
 
     public void DeactivateSkillActionList()
     {
-        skillList.DeactivateActionList();
-        skillList.DeactivateAttributeList();
+        skillList.skillActionList.Deactivate();
+        skillList.attributeList.Deactivate();
     }
 
     public void ShowAttributeList()

@@ -376,16 +376,8 @@ public class StrategyModel : BaseModel
 
     public List<ListData> ResultCommand()
     {
-        SystemData.CommandData yesCommand = new SystemData.CommandData();
-        yesCommand.Key = "Yes";
-        yesCommand.Name = DataSystem.System.GetTextData(6).Text;
-        yesCommand.Id = 0;
-        SystemData.CommandData noCommand = new SystemData.CommandData();
-        noCommand.Key = "No";
-        noCommand.Name = DataSystem.System.GetTextData(3040).Text;
-        noCommand.Id = 1;
         List<ListData> list = new List<ListData>();
-        foreach (var commandData in new List<SystemData.CommandData>() {yesCommand,noCommand})
+        foreach (var commandData in BaseConfirmCommand(3040,6))
         {
             var listData = new ListData(commandData);
             list.Add(listData);

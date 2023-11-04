@@ -8,7 +8,13 @@ public class SkillInfo
     public SkillData Master {get {return DataSystem.Skills.Find(a => a.Id == _id);}}
     private int _id;
     public int Id => _id;
-    
+    private int _deckIndex = -1;
+    public int DeckIndex => _deckIndex;
+    public void SetDeckIndex(int index)
+    {
+        _deckIndex = index;
+    }
+
     private string _param1 = "";
     public string Param1 => _param1;
     private int _param2 = 0;

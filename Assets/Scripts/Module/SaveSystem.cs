@@ -9,58 +9,68 @@ public class SaveSystem : MonoBehaviour
 {
 
 	private static readonly string debugFilePath = Application.persistentDataPath;
-        public static void SaveStart(SavePlayInfo pSourceSavePlayInfo = null,int fileId = 0)
-        {
-			#if UNITY_WEBGL
-			
+	public static void SaveStart(SavePlayInfo pSourceSavePlayInfo = null,int fileId = 0)
+	{
+		#if UNITY_WEBGL
 			//	バイナリ形式でシリアル化
-	        BinaryFormatter TempBinaryFormatter = new BinaryFormatter ();
-    	    MemoryStream    memoryStream    = new MemoryStream ();
-        	TempBinaryFormatter.Serialize (memoryStream , pSourceSavePlayInfo);
-        	var saveData = Convert.ToBase64String (memoryStream   .GetBuffer ());
+			BinaryFormatter TempBinaryFormatter = new BinaryFormatter ();
+			MemoryStream memoryStream = new MemoryStream ();
+			TempBinaryFormatter.Serialize (memoryStream , pSourceSavePlayInfo);
+			var saveData = Convert.ToBase64String (memoryStream   .GetBuffer ());
 			if (fileId != 0)
 			{
-				PlayerPrefs.SetString("PlayerData" + fileId.ToString(), AESManager.Encrypt(saveData));
+				PlayerPrefs.SetString("PlayerData" + fileId.ToString(), saveData);
 			} else
 			{
-				PlayerPrefs.SetString("PlayerData", AESManager.Encrypt(saveData));
+				PlayerPrefs.SetString("PlayerData", saveData);
+			}
+		#else
+			//	保存情報
+			if( pSourceSavePlayInfo == null )
+			{
+				pSourceSavePlayInfo = new SavePlayInfo();
+				pSourceSavePlayInfo.InitSaveData();
 			}
 
-			#else
-            //	保存情報
-            if( pSourceSavePlayInfo == null )
-            {
-                pSourceSavePlayInfo = new SavePlayInfo();
-				pSourceSavePlayInfo.InitSaveData();
-            }
-            //pSourceSavePlayInfo.SavePointSet(savePointType);
 
+			//#if UNITY_EDITOR_WIN || UNITY_STANDALONE_WIN
+			{
+				//	バイナリ形式でシリアル化
+				BinaryFormatter	TempBinaryFormatter = new BinaryFormatter();
 
-            //#if UNITY_EDITOR_WIN || UNITY_STANDALONE_WIN
-            {
-                //	バイナリ形式でシリアル化
-                BinaryFormatter	TempBinaryFormatter = new BinaryFormatter();
+				//	指定したパスにファイルを作成
+				FileStream TempFileStream = File.Create(debugFilePath + "/Autosave" + fileId.ToString() + ".dat");
 
-			    //	指定したパスにファイルを作成
-                FileStream TempFileStream = File.Create(debugFilePath + "/Autosave" + fileId.ToString() + ".dat");
+				//	Closeが確実に呼ばれるように例外処理を用いる
+				try
+				{
+					//	指定したオブジェクトを上で作成したストリームにシリアル化する
+					TempBinaryFormatter.Serialize(TempFileStream, pSourceSavePlayInfo);
+				}
+				finally
+				{
+					//	ファイル操作には明示的な破棄が必要です。Closeを忘れないように。
+					if( TempFileStream != null )
+					{
+						TempFileStream.Close();
+					}
+				}
+			}
+		#endif
+		#if UNITY_SWITCH
+		{
+			SwitchSaveDataMain	pSwitchSaveDataMain = GameInstance.Get.m_pSwitchMain.m_pSwitchSaveDataMain;
 
-                //	Closeが確実に呼ばれるように例外処理を用いる
-                try
-                {
-                    //	指定したオブジェクトを上で作成したストリームにシリアル化する
-                    TempBinaryFormatter.Serialize(TempFileStream, pSourceSavePlayInfo);
-                }
-                finally
-                {
-                    //	ファイル操作には明示的な破棄が必要です。Closeを忘れないように。
-                    if( TempFileStream != null )
-                    {
-                        TempFileStream.Close();
-                    }
-                }
-            }
-			#endif
-		//#endif
+			MemoryStream	TempMemoryStream    = new MemoryStream(); 
+			BinaryFormatter	TempBinaryFormatter = new BinaryFormatter();
+
+			//	バイナリ形式でシリアル化
+			TempBinaryFormatter.Serialize( TempMemoryStream, pSourceSavePlayInfo );
+
+			//	セーブ開始
+			pSwitchSaveDataMain.StartAutoSave( TempMemoryStream.ToArray() );
+		}
+		#endif
 	}
 
 		
@@ -80,7 +90,6 @@ public class SaveSystem : MonoBehaviour
 				{
 					saveData = PlayerPrefs.GetString("PlayerData");
 				}
-				saveData = AESManager.Decrypt(saveData);
         		MemoryStream    memoryStream    = new MemoryStream (Convert.FromBase64String (saveData));
         		GameSystem.CurrentData = (SavePlayInfo)TempBinaryFormatter.Deserialize (memoryStream);
 				return true;
@@ -138,7 +147,7 @@ public class SaveSystem : MonoBehaviour
 		MemoryStream    memoryStream    = new MemoryStream ();
 		TempBinaryFormatter.Serialize (memoryStream , pSourceSavePlayInfo);
 		var saveData = Convert.ToBase64String (memoryStream   .GetBuffer ());
-		PlayerPrefs.SetString("ConfigData", AESManager.Encrypt(saveData));
+		PlayerPrefs.SetString("ConfigData", saveData);
 
 #else
 		//	保存情報
@@ -184,7 +193,6 @@ public class SaveSystem : MonoBehaviour
 				//	バイナリ形式でデシリアライズ
 				BinaryFormatter	TempBinaryFormatter = new BinaryFormatter();
 				string saveData = PlayerPrefs.GetString("ConfigData");
-				saveData = AESManager.Decrypt(saveData);
         		MemoryStream    memoryStream    = new MemoryStream (Convert.FromBase64String (saveData));
         		GameSystem.ConfigData = (SaveConfigInfo)TempBinaryFormatter.Deserialize (memoryStream);
 			}
@@ -237,9 +245,6 @@ public class SavePlayInfo
     public PlayerInfo PlayerInfo => _playerInfo;
     private List<ActorInfo> _actors = new ();
     public List<ActorInfo> Actors => _actors;
-	
-    private List<StageInfo> _stages = new ();
-    public List<StageInfo> Stages => _stages;
     private PartyInfo _party = null;
 	public PartyInfo Party => _party;
     private StageInfo _currentStage = null;
@@ -256,9 +261,9 @@ public class SavePlayInfo
     public SavePlayInfo()
     {
 		this.InitActors();
-		this.InitStages();
 		this.InitParty();
 		_playerInfo = new PlayerInfo();
+		_playerInfo.InitStages();
 	}
 
     public void InitActors()
@@ -304,11 +309,6 @@ public class SavePlayInfo
 		}
 	}
 
-    public void InitStages()
-    {
-        _stages.Clear();
-    }
-
     public void InitParty()
     {
         _party = new PartyInfo();
@@ -318,7 +318,7 @@ public class SavePlayInfo
 	public void InitSaveData()
 	{
 		this.InitPlayer();
-		this.InitStageInfo();
+		_playerInfo.InitStageInfo();
 	}
 
 	public void InitPlayer()
@@ -336,27 +336,7 @@ public class SavePlayInfo
 		}
 	}
 
-	private void InitStageInfo()
-	{
-		for (int i = 0;i < DataSystem.Stages.Count;i++)
-		{
-			if (DataSystem.Stages[i].Id > 3) continue;
-			StageInfo stageInfo = new StageInfo(DataSystem.Stages[i]);
-			_stages.Add(stageInfo);
-		}
-	}
 
-	public void StageClaer()
-	{
-		StageInfo stageInfo = _stages.Find(a => a.Id == CurrentStage.Id);
-		stageInfo.GainClearCount();
-	}
-
-	public void StageClaer(int stageId)
-	{
-		StageInfo stageInfo = _stages.Find(a => a.Id == stageId);
-		stageInfo.GainClearCount();
-	}
 
 	public void SetPlayerName(string name)
 	{

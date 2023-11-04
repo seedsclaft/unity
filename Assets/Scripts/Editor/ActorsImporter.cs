@@ -44,6 +44,7 @@ public class ActorsImporter : AssetPostprocessor {
     {
 		ActorId = 0,
 		SkillId,
+		DeckNum,
 	}
 	static readonly string ExcelName = "Actors.xlsx";
 
@@ -162,6 +163,7 @@ public class ActorsImporter : AssetPostprocessor {
 					ActorData Actor = Data.Data.Find(a => a.Id == ActorId);
 					
 					LearningData.SkillId = AssetPostImporter.ImportNumeric(Baserow,(int)BaseLearningColumn.SkillId);
+					LearningData.DeckNum = AssetPostImporter.ImportNumeric(Baserow,(int)BaseLearningColumn.DeckNum);
 					Actor.LearningSkills.Add(LearningData);
 				}
 

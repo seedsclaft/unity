@@ -294,7 +294,7 @@ public class BattleModel : BaseModel
     public List<ListData> SkillActionList(AttributeType attributeType)
     {
         _currentAttributeType = attributeType;
-        List<SkillInfo> skillInfos = CurrentBattler.Skills.FindAll(a => a.Master.SkillType != SkillType.None && a.Master.Id > 100);
+        var skillInfos = CurrentBattler.DecksData.FindAll(a => a.Master.SkillType != SkillType.None && a.Master.Id > 100);
         if (attributeType != AttributeType.None)
         {
             skillInfos = skillInfos.FindAll(a => a.Attribute == _currentAttributeType);
@@ -396,10 +396,10 @@ public class BattleModel : BaseModel
         return true;
     }
 
-    public ActionInfo MakeActionInfo(BattlerInfo subject, int skillId,bool IsInterrupt,bool IsTriggerd)
+    public ActionInfo MakeActionInfo(BattlerInfo subject,SkillInfo skillInfo,bool IsInterrupt,bool IsTriggerd)
     {
-        SkillData skill = DataSystem.Skills.Find(a => a.Id == skillId);
-        List<int> targetIndexList = MakeActionTarget(skillId,subject.Index,true);
+        SkillData skill = DataSystem.Skills.Find(a => a.Id == skillInfo.Id);
+        List<int> targetIndexList = MakeActionTarget(skillInfo.Id,subject.Index,true);
         if (subject.IsState(StateType.Substitute))
         {
             int substituteId = subject.GetStateInfo(StateType.Substitute).BattlerId;
@@ -408,7 +408,7 @@ public class BattleModel : BaseModel
                 targetIndexList.Clear();
                 targetIndexList.Add(substituteId);
             } else{
-                List<int> tempIndexList = MakeActionTarget(skillId,subject.Index,false);
+                List<int> tempIndexList = MakeActionTarget(skillInfo.Id,subject.Index,false);
                 if (tempIndexList.Contains(substituteId))
                 {
                     targetIndexList.Clear();
@@ -439,7 +439,7 @@ public class BattleModel : BaseModel
                 }
             }
         }
-        ActionInfo actionInfo = new ActionInfo(skillId,subject.Index,LastTargetIndex,targetIndexList);
+        ActionInfo actionInfo = new ActionInfo(skillInfo,subject.Index,LastTargetIndex,targetIndexList);
         if (subject.IsState(StateType.Extension))
         {
             actionInfo.SetRangeType(RangeType.L);
@@ -975,6 +975,8 @@ public class BattleModel : BaseModel
             // Mpの支払い
             CurrentBattler.GainMp(actionInfo.MpCost * -1);
             CurrentBattler.GainPaybattleMp(actionInfo.MpCost);
+            // カード破棄
+            CurrentBattler.RemoveDeck(actionInfo.SkillInfo.DeckIndex);
             List<ActionResultInfo> actionResultInfos = CalcDeathIndexList(actionInfo.ActionResults);
             for (int i = 0; i < actionResultInfos.Count; i++)
             {
@@ -1205,7 +1207,8 @@ public class BattleModel : BaseModel
         if (CurrentBattler.IsState(StateType.AfterHeal) && afterSkillInfo != null)
         {
             var stateInfo = CurrentBattler.GetStateInfo(StateType.AfterHeal);
-            var actionInfo = MakeActionInfo(CurrentBattler,afterSkillInfo.Id,false,false);
+            var skillInfo = new SkillInfo(afterSkillInfo.Id);
+            var actionInfo = MakeActionInfo(CurrentBattler,skillInfo,false,false);
             
             if (actionInfo != null)
             {
@@ -1241,7 +1244,8 @@ public class BattleModel : BaseModel
         if (CurrentBattler.IsState(StateType.AssistHeal) && afterSkillInfo != null)
         {
             var stateInfo = CurrentBattler.GetStateInfo(StateType.AssistHeal);
-            var actionInfo = MakeActionInfo(CurrentBattler,afterSkillInfo.Id,false,false);
+            var skillInfo = new SkillInfo(afterSkillInfo.Id);
+            var actionInfo = MakeActionInfo(CurrentBattler,skillInfo,false,false);
             
             if (actionInfo != null)
             {
@@ -1397,12 +1401,14 @@ public class BattleModel : BaseModel
                         if (target.IsAwaken == false)
                         {
                             target.SetAwaken();
-                            ActionInfo makeActionInfo = MakeActionInfo(target,triggeredSkills[j].Id,triggerTiming == TriggerTiming.Interrupt,true);
+                            var skillInfo = new SkillInfo(triggeredSkills[j].Id);
+                            ActionInfo makeActionInfo = MakeActionInfo(target,skillInfo,triggerTiming == TriggerTiming.Interrupt,true);
                         } else{
 
                         }
                     } else{
-                        ActionInfo makeActionInfo = MakeActionInfo(target,triggeredSkills[j].Id,triggerTiming == TriggerTiming.Interrupt,true);
+                        var skillInfo = new SkillInfo(triggeredSkills[j].Id);
+                        ActionInfo makeActionInfo = MakeActionInfo(target,skillInfo,triggerTiming == TriggerTiming.Interrupt,true);
                     }
                 }
             }

@@ -5,7 +5,7 @@ public class MainMenuModel : BaseModel
 {
     public List<ListData> Stages(){
         var list = new List<ListData>();
-        foreach (var stage in GameSystem.CurrentData.Stages)
+        foreach (var stage in CurrentData.PlayerInfo.Stages)
         {
             var listData = new ListData(stage);
             list.Add(listData);

@@ -109,7 +109,6 @@ public class StrategyView : BaseView
 
     public void SetResultList(List<ListData> confirmCommands)
     {
-        strategyResultList.Initialize();
         SetInputHandler(strategyResultList.GetComponent<IInputHandlerEvent>());
         strategyResultList.Deactivate();
         strategyResultList.gameObject.SetActive(false);

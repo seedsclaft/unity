@@ -20,6 +20,8 @@ public class ActorInfo
     public List<int> Attribute => _attribute;
     private List<SkillInfo> _skills;
     public List<SkillInfo> Skills => _skills;
+    private List<SkillInfo> _decksData = new ();
+    public List<SkillInfo> DecksData => _decksData;
 
     private int _lastSelectSkillId = 0;
     public int LastSelectSkillId => _lastSelectSkillId;
@@ -108,6 +110,17 @@ public class ActorInfo
         var selectSkill = _skills.Find(a => a.Id >= 100);
         if (selectSkill != null){
             _lastSelectSkillId = selectSkill.Id;
+        }
+
+        _decksData.Clear();
+        foreach (var learningSkills in Master.LearningSkills)
+        {
+            for (int i = 0;i < learningSkills.DeckNum;i++)
+            {
+                SkillInfo skillInfo = new SkillInfo(learningSkills.SkillId);
+                skillInfo.SetLearningState(LearningState.Learned);
+                _decksData.Add(skillInfo);
+            }
         }
     }
 

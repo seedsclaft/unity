@@ -89,43 +89,27 @@ public class SkillList : MonoBehaviour
         skillActionList.UpdateAllItems();
     }
 
-    public void ActivateActionList()
-    {
-        skillActionList.Activate();
-    }
-
-    public void DeactivateActionList()
-    {
-        skillActionList.Deactivate();
-    }
-
     public void ShowActionList()
     {
         skillActionList.gameObject.SetActive(true);
+        skillActionList.Activate();
     }
 
     public void HideActionList()
     {
         skillActionList.gameObject.SetActive(false);
-    }
-
-    public void ActivateAttributeList()
-    {
-        attributeList.Activate();
-    }
-
-    public void DeactivateAttributeList()
-    {
-        attributeList.Deactivate();
+        skillActionList.Deactivate();
     }
     
     public void ShowAttributeList()
     {
         attributeList.gameObject.SetActive(true);
+        attributeList.Activate();
     }
 
     public void HideAttributeList()
     {
         attributeList.gameObject.SetActive(false);
+        attributeList.Deactivate();
     }
 }
