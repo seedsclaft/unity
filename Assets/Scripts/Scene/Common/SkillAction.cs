@@ -7,6 +7,7 @@ using TMPro;
 public class SkillAction : ListItem ,IListViewItem  
 {
     [SerializeField] private SkillInfoComponent skillInfoComponent;
+    [SerializeField] private GameObject DisableSkill;
     private SkillInfo _skillInfo; 
     public void SetData(SkillInfo data,int index){
         _skillInfo = data;
@@ -28,6 +29,6 @@ public class SkillAction : ListItem ,IListViewItem
         if (ListData == null) return;
         var data = (SkillInfo)ListData.Data;
         skillInfoComponent.SetInfoData(data);
-        if (Disable != null) Disable.SetActive(data.Enable == false);
+        if (DisableSkill != null) DisableSkill.SetActive(data.Enable == false);
     }
 }

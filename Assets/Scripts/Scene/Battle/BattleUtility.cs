@@ -9,7 +9,7 @@ public class BattleUtility
         var list = new List<string>();
         foreach (var battlerInfo in battlerInfos)
         {
-            foreach (var skillInfo in battlerInfo.Skills)
+            foreach (var skillInfo in battlerInfo.DecksData)
             {
                 var skillData = skillInfo.Master;
                 if (!list.Contains(skillData.AnimationName) && skillData.AnimationName != "")

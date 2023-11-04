@@ -303,7 +303,7 @@ public class BattleActorAI
         foreach (var attackTarget in attackTargets)
         {
             // CA持ちには回避バフを入れない
-            if (skillInfo.Master.Scope == ScopeType.One && attackTarget.Skills.Find(a => a.Master.IsStateFeature(StateType.CounterOura)) != null)
+            if (skillInfo.Master.Scope == ScopeType.One && attackTarget.DecksData.Find(a => a.Master.IsStateFeature(StateType.CounterOura)) != null)
             {
                 skillTargetAI.Weigth = 1;
                 return;
@@ -340,7 +340,7 @@ public class BattleActorAI
             skillTargetAI.Weigth = 75 - prizumNum * 25;
         } else
         // アタックヒールの時
-        if (prizumNum < 5 && _batterInfo.Skills.Find(a => a.Master.IsStateFeature(StateType.AssistHeal)) != null)
+        if (prizumNum < 5 && _batterInfo.DecksData.Find(a => a.Master.IsStateFeature(StateType.AssistHeal)) != null)
         {
             skillTargetAI.Weigth = 75 - (prizumNum-2) * 25;
         }

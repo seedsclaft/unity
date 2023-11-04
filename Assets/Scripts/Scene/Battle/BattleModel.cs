@@ -297,7 +297,7 @@ public class BattleModel : BaseModel
         var skillInfos = CurrentBattler.DecksData.FindAll(a => a.Master.SkillType != SkillType.None && a.Master.Id > 100);
         if (attributeType != AttributeType.None)
         {
-            skillInfos = skillInfos.FindAll(a => a.Attribute == _currentAttributeType);
+            //skillInfos = skillInfos.FindAll(a => a.Attribute == _currentAttributeType);
         }
         for (int i = 0; i < skillInfos.Count;i++)
         {
@@ -1203,7 +1203,7 @@ public class BattleModel : BaseModel
     private List<ActionResultInfo> AfterHealActionResults()
     {
         var afterHealResults = new List<ActionResultInfo>();
-        var afterSkillInfo = CurrentBattler.Skills.Find(a => a.Master.FeatureDatas.Find(b => b.FeatureType == FeatureType.AddState && (StateType)b.Param1 == StateType.AfterHeal) != null);
+        var afterSkillInfo = CurrentBattler.DecksData.Find(a => a.Master.FeatureDatas.Find(b => b.FeatureType == FeatureType.AddState && (StateType)b.Param1 == StateType.AfterHeal) != null);
         if (CurrentBattler.IsState(StateType.AfterHeal) && afterSkillInfo != null)
         {
             var stateInfo = CurrentBattler.GetStateInfo(StateType.AfterHeal);
@@ -1240,7 +1240,7 @@ public class BattleModel : BaseModel
     private List<ActionResultInfo> AssistHealActionResults()
     {
         var assistHealResults = new List<ActionResultInfo>();
-        var afterSkillInfo = CurrentBattler.Skills.Find(a => a.Master.FeatureDatas.Find(b => b.FeatureType == FeatureType.AddState && (StateType)b.Param1 == StateType.AssistHeal) != null);
+        var afterSkillInfo = CurrentBattler.DecksData.Find(a => a.Master.FeatureDatas.Find(b => b.FeatureType == FeatureType.AddState && (StateType)b.Param1 == StateType.AssistHeal) != null);
         if (CurrentBattler.IsState(StateType.AssistHeal) && afterSkillInfo != null)
         {
             var stateInfo = CurrentBattler.GetStateInfo(StateType.AssistHeal);
@@ -1401,14 +1401,12 @@ public class BattleModel : BaseModel
                         if (target.IsAwaken == false)
                         {
                             target.SetAwaken();
-                            var skillInfo = new SkillInfo(triggeredSkills[j].Id);
-                            ActionInfo makeActionInfo = MakeActionInfo(target,skillInfo,triggerTiming == TriggerTiming.Interrupt,true);
+                            ActionInfo makeActionInfo = MakeActionInfo(target,triggeredSkills[j],triggerTiming == TriggerTiming.Interrupt,true);
                         } else{
 
                         }
                     } else{
-                        var skillInfo = new SkillInfo(triggeredSkills[j].Id);
-                        ActionInfo makeActionInfo = MakeActionInfo(target,skillInfo,triggerTiming == TriggerTiming.Interrupt,true);
+                        ActionInfo makeActionInfo = MakeActionInfo(target,triggeredSkills[j],triggerTiming == TriggerTiming.Interrupt,true);
                     }
                 }
             }

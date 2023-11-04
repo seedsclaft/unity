@@ -93,6 +93,30 @@ public class StatusInfoComponent : MonoBehaviour
         }
     }
 
+    public void UpdateAtk(int value)
+    {
+        if (atk != null)
+        {
+            atk.text = value.ToString();
+        }
+    }
+
+    public void UpdateDef(int value)
+    {
+        if (def != null)
+        {
+            def.text = value.ToString();
+        }
+    }
+
+    public void UpdateSpd(int value)
+    {
+        if (spd != null)
+        {
+            spd.text = value.ToString();
+        }
+    }
+
     public void ShowStatus()
     {
         if (canvasGroup != null)

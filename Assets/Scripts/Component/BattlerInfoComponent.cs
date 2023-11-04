@@ -85,6 +85,36 @@ public class BattlerInfoComponent : MonoBehaviour
         }
     }
 
+    public void ChangeAtk(int value)
+    {
+        if (_battlerInfo.isActor)
+        {
+            actorInfoComponent.ChangeAtk(value);
+        } else
+        {
+        }
+    }
+
+    public void ChangeDef(int value)
+    {
+        if (_battlerInfo.isActor)
+        {
+            actorInfoComponent.ChangeDef(value);
+        } else
+        {
+        }
+    }
+
+    public void ChangeSpd(int value)
+    {
+        if (_battlerInfo.isActor)
+        {
+            actorInfoComponent.ChangeSpd(value);
+        } else
+        {
+        }
+    }
+
     public void RefreshStatus()
     {
         if (_battlerInfo.isActor)
@@ -97,6 +127,9 @@ public class BattlerInfoComponent : MonoBehaviour
         }
         ChangeHp(_battlerInfo.Hp);
         ChangeMp(_battlerInfo.Mp);
+        ChangeAtk(_battlerInfo.CurrentAtk());
+        ChangeDef(_battlerInfo.CurrentDef());
+        ChangeSpd(_battlerInfo.CurrentSpd());
         if (battleStateOverlay != null) battleStateOverlay.SetStates(_battlerInfo.IconStateInfos(),_battlerInfo.isActor == false);
         
     }

@@ -52,7 +52,7 @@ public class BattlerInfo
     }
     public AttributeType GetSkillAttribute()
     {
-        return Skills.Find(a => a.Id == _lastSelectSkillId).Attribute;
+        return DataSystem.Skills.Find(a => a.Id == _lastSelectSkillId).Attribute;
     }
     private List<StateInfo> _stateInfos = new ();
     public List<StateInfo> StateInfos => _stateInfos;
@@ -99,11 +99,13 @@ public class BattlerInfo
         );
         _status = statusInfo;
         _index = index;
+        /*
         _skills = actorInfo.Skills.FindAll(a => a.LearningState == LearningState.Learned);
         foreach (var skill in _skills)
         {
             skill.SetIsUsed(false);
         }
+        */
         _decksData = actorInfo.DecksData.FindAll(a => a.LearningState == LearningState.Learned);
         var dexkIndex = 0;
         foreach (var decksData in _decksData)
@@ -122,9 +124,9 @@ public class BattlerInfo
 
         if (_lastSelectSkillId == 0)
         {
-            _lastSelectSkillId = _skills.Find(a => a.Id > 100).Id;
+            _lastSelectSkillId = _decksData.Find(a => a.Id > 100).Id;
         }
-        if (_skills.Find(a => a.Master.FeatureDatas.Find(b => b.FeatureType == FeatureType.AddState && b.Param1 == (int)StateType.Undead) != null) != null)
+        if (_decksData.Find(a => a.Master.FeatureDatas.Find(b => b.FeatureType == FeatureType.AddState && b.Param1 == (int)StateType.Undead) != null) != null)
         {
             _kinds.Add(KindType.Undead);
         }
@@ -151,7 +153,7 @@ public class BattlerInfo
         _hp = _status.Hp;
         _mp = _status.Mp;
         _lineIndex = lineIndex;
-        _skills = new List<SkillInfo>();
+        _decksData = new List<SkillInfo>();
         for (int i = 0;i < enemyData.LearningSkills.Count;i++)
         {
             if (_level >= enemyData.LearningSkills[i].Level)
@@ -159,7 +161,7 @@ public class BattlerInfo
                 SkillInfo skillInfo = new SkillInfo(enemyData.LearningSkills[i].SkillId);
                 skillInfo.SetTriggerDatas(enemyData.LearningSkills[i].TriggerDatas);
                 skillInfo.SetWeight(enemyData.LearningSkills[i].Weight);
-                _skills.Add(skillInfo);
+                _decksData.Add(skillInfo);
             }
         }
         for (int i = 0;i < enemyData.Kinds.Count;i++)
@@ -580,12 +582,12 @@ public class BattlerInfo
 
     public List<SkillInfo> ActiveSkills()
     {
-        return Skills.FindAll(a => a.Master.SkillType != SkillType.Passive);
+        return DecksData.FindAll(a => a.Master.SkillType != SkillType.Passive);
     }
 
     public List<SkillInfo> PassiveSkills()
     {
-        return Skills.FindAll(a => a.Master.SkillType == SkillType.Passive);
+        return DecksData.FindAll(a => a.Master.SkillType == SkillType.Passive);
     }
 
     public List<StateInfo> IconStateInfos()

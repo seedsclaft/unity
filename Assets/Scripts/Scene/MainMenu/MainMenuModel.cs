@@ -5,9 +5,11 @@ public class MainMenuModel : BaseModel
 {
     public List<ListData> Stages(){
         var list = new List<ListData>();
-        foreach (var stage in CurrentData.PlayerInfo.Stages)
+        var stages = DataSystem.Stages.FindAll(a => a.Selectable);
+        foreach (var stage in stages)
         {
-            var listData = new ListData(stage);
+            var stageInfo = new StageInfo(stage);
+            var listData = new ListData(stageInfo);
             list.Add(listData);
         }
         return list;

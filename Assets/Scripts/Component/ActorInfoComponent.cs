@@ -242,6 +242,23 @@ public class ActorInfoComponent : MonoBehaviour
         statusInfoComponent.UpdateMp(value,maxMp);
     }
 
+    public void ChangeAtk(int value)
+    {
+        if (statusInfoComponent == null) return;
+        statusInfoComponent.UpdateAtk(value);
+    }
+    
+    public void ChangeDef(int value)
+    {
+        if (statusInfoComponent == null) return;
+        statusInfoComponent.UpdateDef(value);
+    }
+    public void ChangeSpd(int value)
+    {
+        if (statusInfoComponent == null) return;
+        statusInfoComponent.UpdateSpd(value);
+    }
+
     public void SetAwakeMode(bool IsAwaken)
     {
         if (faceThumb != null && awakenFaceThumb != null)

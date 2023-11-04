@@ -764,17 +764,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   icon: {fileID: 9076979496394783505}
+  iconBack: {fileID: 0}
+  nameAndMpCost: 1
   nameText: {fileID: 7298039820093797152}
   mpCost: {fileID: 8206820204457682162}
   lineImage: {fileID: 5564166846209030427}
   type: {fileID: 6918182349673411467}
   value: {fileID: 1581437035928366462}
   description: {fileID: 7901179075750134343}
-  learingObj: {fileID: 4910136212158111021}
-  learingcost: {fileID: 6894078431853289377}
-  hintObj: {fileID: 2576632115691816020}
-  hintLvBefore: {fileID: 3157781267571697088}
-  hintLvAfter: {fileID: 8735753230948225516}
+  selectable: {fileID: 0}
 --- !u!1 &3757673232962584038
 GameObject:
   m_ObjectHideFlags: 0

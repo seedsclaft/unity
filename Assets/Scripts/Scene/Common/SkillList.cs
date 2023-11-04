@@ -4,10 +4,9 @@ using UnityEngine;
 
 public class SkillList : MonoBehaviour
 {
-    [SerializeField] private GameObject skillListPrefab;
-    [SerializeField] private GameObject skillListRoot;
-    public BaseList skillActionList;
-    public BaseList attributeList;
+    [SerializeField] private SkillInfoComponent displaySelectCrad;
+    [SerializeField] public BaseList skillActionList;
+    [SerializeField] public BaseList attributeList;
 
     public SkillInfo ActionData{
         get {
@@ -22,11 +21,6 @@ public class SkillList : MonoBehaviour
 
     public void Initialize()
     {
-        GameObject prefab = Instantiate(skillListPrefab);
-        prefab.transform.SetParent(skillListRoot.transform, false);
-        var lists = prefab.GetComponentsInChildren<BaseList>();
-        skillActionList = lists[0];
-        attributeList = lists[1];
     }
 
     public void InitializeAttribute(int listCount,System.Action callEvent,System.Action conditionEvent)
@@ -64,6 +58,29 @@ public class SkillList : MonoBehaviour
     {
         skillActionList.Initialize(skillInfoData.Count);
         skillActionList.SetData(skillInfoData);
+        skillActionList.SetSelectedHandler(() => DisplaySelectCard());
+        if (displaySelectCrad == null)
+        {
+            displaySelectCrad.gameObject.SetActive(false);
+        }
+    }
+
+    private void DisplaySelectCard()
+    {
+        if (displaySelectCrad == null)
+        {
+            return;
+        }
+        var listData = skillActionList.ListData;
+        if (listData != null)
+        {
+            var skillInfo = (SkillInfo)listData.Data;
+            if (skillInfo != null)
+            {
+                displaySelectCrad.gameObject.SetActive(true);
+                displaySelectCrad.UpdateSkillData(skillInfo.Id);
+            }
+        }
     }
 
     public void SetInputHandlerAction(InputKeyType keyType,System.Action callEvent)
@@ -103,7 +120,7 @@ public class SkillList : MonoBehaviour
     
     public void ShowAttributeList()
     {
-        attributeList.gameObject.SetActive(true);
+        //attributeList.gameObject.SetActive(true);
         attributeList.Activate();
     }
 

@@ -305,9 +305,9 @@ public class BattleView : BaseView ,IInputHandlerEvent
         skillList.ShowAttributeList();
         if (battlerInfo.IsState(StateType.Demigod))
         {
-            battleThumb.ShowAwakenThumb(actorData);
+            battleThumb.ShowAwakenThumb(battlerInfo,actorData);
         } else{
-            battleThumb.ShowMainThumb(actorData);
+            battleThumb.ShowMainThumb(battlerInfo,actorData);
         }
         // 敵のstateEffectを非表示
         HideEnemyStateOverlay();

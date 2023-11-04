@@ -10,6 +10,7 @@ public class SkillInfoComponent : MonoBehaviour
 {
     [SerializeField] private Image icon;
     [SerializeField] private Image iconBack;
+    [SerializeField] private bool nameAndMpCost;
     [SerializeField] private TextMeshProUGUI nameText;
     [SerializeField] private TextMeshProUGUI mpCost;
     [SerializeField] private Image lineImage;
@@ -55,7 +56,10 @@ public class SkillInfoComponent : MonoBehaviour
         if (nameText != null)
         {
             nameText.text = skillData.Name;
-            nameText.rectTransform.sizeDelta = new Vector2(nameText.preferredWidth,nameText.preferredHeight);
+            if (nameAndMpCost)
+            {
+                nameText.rectTransform.sizeDelta = new Vector2(nameText.preferredWidth,nameText.preferredHeight);
+            }
         }
         if (mpCost != null)
         {
@@ -105,8 +109,11 @@ public class SkillInfoComponent : MonoBehaviour
     private void UpdateLineImege()
     {
         lineImage.gameObject.SetActive(true);
-        nameText.rectTransform.sizeDelta = new Vector2(nameText.preferredWidth,nameText.preferredHeight);
-        lineImage.rectTransform.sizeDelta = new Vector2(nameText.rectTransform.sizeDelta.x,lineImage.rectTransform.sizeDelta.y);
+        if (nameAndMpCost)
+        {
+            nameText.rectTransform.sizeDelta = new Vector2(nameText.preferredWidth,nameText.preferredHeight);
+            lineImage.rectTransform.sizeDelta = new Vector2(nameText.rectTransform.sizeDelta.x,lineImage.rectTransform.sizeDelta.y);
+        }
     }
 
     public void SetRebornInfoData(SkillInfo rebornSkillInfo)
@@ -115,7 +122,10 @@ public class SkillInfoComponent : MonoBehaviour
         if (nameText != null)
         {
             nameText.text = skillData.Name.Replace("\\d",rebornSkillInfo.Param1);
-            nameText.rectTransform.sizeDelta = new Vector2(nameText.preferredWidth,nameText.preferredHeight);
+            if (nameAndMpCost)
+            {
+                nameText.rectTransform.sizeDelta = new Vector2(nameText.preferredWidth,nameText.preferredHeight);
+            }
         }
         if (description != null)
         {
