@@ -7,6 +7,11 @@ public class BattlerInfo
 {
     private StatusInfo _status = null;
     public StatusInfo Status => _status;
+    public StatusInfo CurrentStatus(){
+        var currentStatus = new StatusInfo();
+        currentStatus.SetParameter(MaxHp,MaxMp,CurrentAtk(),CurrentDef(),CurrentSpd());
+        return currentStatus;
+    }
     private int _index = 0;
     public int Index => _index;
     private bool _isActor = false;

@@ -7,6 +7,7 @@ public class BaseList : ListWindow , IInputHandlerEvent
 {
     private List<ListData> _listData = new ();
     private bool _isInit = false;
+    public bool IsInit => _isInit;
     public void SetData(List<ListData> listData)
     {
         _listData = listData;

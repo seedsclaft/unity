@@ -72,7 +72,7 @@ public class DebugBattleData : MonoBehaviour
             if (skillInfo == null) return;
             _model.SetActionBattler(battlerInfo.Index);
             ActionInfo actionInfo = _model.MakeActionInfo(battlerInfo,skillInfo,false,false);
-            _presenter.CommandSelectIndex(_model.MakeAutoSelectIndex(actionInfo));
+            _presenter.CommandSelectTargetIndexs(_model.MakeAutoSelectIndex(actionInfo));
         }
     }
 

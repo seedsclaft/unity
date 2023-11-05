@@ -4,19 +4,14 @@ using UnityEngine;
 using UnityEngine.UI;
 using Battle;
 using Effekseer;
-using Effekseer.Internal;
 
 public class BattleView : BaseView ,IInputHandlerEvent
 {
+    private new System.Action<BattleViewEvent> _commandData = null;
     [SerializeField] private BattleActorList battleActorList = null;
     [SerializeField] private BattleEnemyLayer battleEnemyLayer = null;
     [SerializeField] private BattleGridLayer battleGridLayer = null;
-    [SerializeField] private SkillList skillList = null;
-    public SkillList SkillList => skillList;
-    [SerializeField] private StatusConditionList statusConditionList = null;
-    [SerializeField] private BattleThumb battleThumb = null;
-
-    private new System.Action<BattleViewEvent> _commandData = null;
+    [SerializeField] private BattleSelectCharacter selectCharacter = null;
 
     [SerializeField] private GameObject animRoot = null;
     [SerializeField] private GameObject animPrefab = null;
@@ -29,6 +24,7 @@ public class BattleView : BaseView ,IInputHandlerEvent
     [SerializeField] private GameObject centerAnimPosition = null;
     [SerializeField] private SideMenu battleAutoButton = null;
     private BattleStartAnim _battleStartAnim = null;
+    public bool StartAnimIsBusy => _battleStartAnim.IsBusy;
 
 
 
@@ -53,33 +49,29 @@ public class BattleView : BaseView ,IInputHandlerEvent
     public override void Initialize() 
     {
         base.Initialize();
-        skillList.Initialize();
-        InitializeSkillActionList();
+        selectCharacter.Initialize();
+        SetInputHandler(selectCharacter.GetComponent<IInputHandlerEvent>());
+
+        InitializeSelectCharacter();
+        /*
         statusConditionList.Initialize(() => OnClickCondition());
         statusConditionList.SetInputHandler(InputKeyType.Cancel,() => OnClickBack());
         statusConditionList.SetInputHandler(InputKeyType.Option1,() => CallOpenSideMenu());
         SetInputHandler(statusConditionList.GetComponent<IInputHandlerEvent>());
-        DeactivateConditionList();
-        HideConditionAll();
+        */
 
-        skillList.InitializeAttribute(System.Enum.GetValues(typeof(AttributeType)).Length,() => CallAttributeTypes(),() => OnClickCondition());
-        
-        SetInputHandler(skillList.attributeList.GetComponent<IInputHandlerEvent>());
-        skillList.HideAttributeList();
 
         new BattlePresenter(this);
     }
 
-    private void InitializeSkillActionList()
+    private void InitializeSelectCharacter()
     {
-        skillList.InitializeAction();
-        skillList.SetInputHandlerAction(InputKeyType.Decide,() => CallSkillAction());
-        skillList.SetInputHandlerAction(InputKeyType.Cancel,() => OnClickBack());
-        skillList.SetInputHandlerAction(InputKeyType.Option1,() => CallOpenSideMenu());
-        skillList.SetInputHandlerAction(InputKeyType.Option2,() => OnClickEscape());
-        SetInputHandler(skillList.skillActionList.GetComponent<IInputHandlerEvent>());
-        skillList.HideActionList();
-        skillList.HideAttributeList();
+        selectCharacter.SetInputHandlerAction(InputKeyType.Decide,() => CallSkillAction());
+        selectCharacter.SetInputHandlerAction(InputKeyType.Cancel,() => OnClickBack());
+        selectCharacter.SetInputHandlerAction(InputKeyType.Option1,() => CallOpenSideMenu());
+        selectCharacter.SetInputHandlerAction(InputKeyType.Option2,() => OnClickEscape());
+        SetInputHandler(selectCharacter.DeckMagicList.GetComponent<IInputHandlerEvent>());
+        selectCharacter.HideActionList();
         sideMenuList.gameObject.SetActive(false);
     }
 
@@ -93,21 +85,21 @@ public class BattleView : BaseView ,IInputHandlerEvent
             _commandData(eventData);
         });
         battleAutoButton.Cursor.SetActive(isAuto);
-        SetBattleAutoButtonActive(false);
+        SetBattleAutoButton(false);
     }
     
-    public void SetBattleAutoButtonActive(bool isActive)
+    public void SetBattleAutoButton(bool isActive)
     {
         battleAutoButton.gameObject.SetActive(isActive);
     }
 
     private void CallSkillAction()
     {
-        var eventData = new BattleViewEvent(CommandType.SkillAction);
-        var item = skillList.ActionData;
-        if (item != null)
+        var eventData = new BattleViewEvent(CommandType.SelectedSkill);
+        var data = selectCharacter.ActionData;
+        if (data != null)
         {
-            eventData.templete = item;
+            eventData.templete = data;
             _commandData(eventData);
         }
     }
@@ -146,16 +138,14 @@ public class BattleView : BaseView ,IInputHandlerEvent
     {
         _battleStartAnim.SetText(text);
         _battleStartAnim.StartAnim();
-        _animationBusy = true;
     }
 
     public void SetUIButton()
     {
-        
         CreateBackCommand(() => OnClickBack());
         escapeButton.onClick.AddListener(() => OnClickEscape());
         SetEscapeButton(false);
-        SetRuleButton(false);
+        SetSideMenuButton(false);
     }
 
     public void SetEscapeButton(bool isEscape)
@@ -163,16 +153,9 @@ public class BattleView : BaseView ,IInputHandlerEvent
         escapeButton.gameObject.SetActive(isEscape);
     }
 
-    public void SetRuleButton(bool isActive)
+    public void SetSideMenuButton(bool isActive)
     {
         sideMenuList.gameObject.SetActive(isActive);
-    }
-
-
-    private void OnClickCondition()
-    {
-        var eventData = new BattleViewEvent(CommandType.Condition);
-        _commandData(eventData);
     }
 
     private void OnClickBack()
@@ -185,12 +168,6 @@ public class BattleView : BaseView ,IInputHandlerEvent
     private void OnClickEscape()
     {
         var eventData = new BattleViewEvent(CommandType.Escape);
-        _commandData(eventData);
-    }
-
-    private void OnClickRuling()
-    {
-        var eventData = new BattleViewEvent(CommandType.Rule);
         _commandData(eventData);
     }
 
@@ -215,15 +192,6 @@ public class BattleView : BaseView ,IInputHandlerEvent
     public void SetEvent(System.Action<BattleViewEvent> commandData)
     {
         _commandData = commandData;
-    }
-    
-    public void SetActorInfo(ActorInfo actorInfo)
-    {
-    }
-
-    
-    public void SetBattleCommand(List<SystemData.CommandData> menuCommands)
-    {
     }
 
     public void SetActors(List<BattlerInfo> battlerInfos)
@@ -280,35 +248,12 @@ public class BattleView : BaseView ,IInputHandlerEvent
         _commandData(eventData);
     }
 
-    private void OnClickLeft()
-    {
-        var eventData = new BattleViewEvent(CommandType.LeftActor);
-        _commandData(eventData);
-    }
 
-    private void OnClickRight()
+    public void SelectedCharacter(BattlerInfo battlerInfo)
     {
-        var eventData = new BattleViewEvent(CommandType.RightActor);
-        _commandData(eventData);
-    }
-
-    private void OnClickDecide()
-    {
-        var eventData = new BattleViewEvent(CommandType.DecideActor);
-        _commandData(eventData);
-    }
-
-    public void ShowSkillActionList(BattlerInfo battlerInfo,ActorData actorData)
-    {
-        skillList.ShowActionList();
+        selectCharacter.ShowActionList();
         sideMenuList.gameObject.SetActive(true);
-        skillList.ShowAttributeList();
-        if (battlerInfo.IsState(StateType.Demigod))
-        {
-            battleThumb.ShowAwakenThumb(battlerInfo,actorData);
-        } else{
-            battleThumb.ShowMainThumb(battlerInfo,actorData);
-        }
+        selectCharacter.SetBattleThumb(battlerInfo);
         // 敵のstateEffectを非表示
         HideEnemyStateOverlay();
         //HideActorStateOverlay();
@@ -316,7 +261,7 @@ public class BattleView : BaseView ,IInputHandlerEvent
 
     public void HideSkillActionList(bool isSideBenuClose = true)
     {
-        skillList.HideActionList();
+        selectCharacter.HideActionList();
         if (isSideBenuClose)
         {
             sideMenuList.gameObject.SetActive(false);
@@ -328,62 +273,22 @@ public class BattleView : BaseView ,IInputHandlerEvent
 
     public void HideBattleThumb()
     {
-        battleThumb.HideThumb();
-    }
-
-    public void HideSkillAtribute()
-    {
-        skillList.HideAttributeList();
+        selectCharacter.HideThumb();
     }
     
-    public void RefreshSkillActionList(List<ListData> skillInfos,int selectIndex)
+    public void RefreshDecks(List<ListData> skillInfos,int selectIndex)
     {
         DeactivateActorList();
         DeactivateEnemyList();
-        skillList.ShowActionList();
+        selectCharacter.ShowActionList();
         sideMenuList.gameObject.SetActive(true);
-        skillList.SetSkillInfos(skillInfos);
-        skillList.RefreshAction(selectIndex);
+        selectCharacter.SetSkillInfos(skillInfos);
+        selectCharacter.RefreshAction(selectIndex);
     }
 
-    public void SetCondition(List<StateInfo> stateInfos)
+    public void SetCondition(List<ListData> stateInfos)
     {
-        statusConditionList.Refresh(stateInfos);
-    }
-
-    public void ShowConditionTab()
-    {
-        ShowConditionAll();
-        HideCondition();
-    }
-
-    public void ShowConditionAll()
-    {
-        statusConditionList.gameObject.SetActive(true);
-        statusConditionList.ShowMainView();
-        statusConditionList.Activate();
-    }
-
-    public void HideCondition()
-    {
-        statusConditionList.HideMainView();
-        statusConditionList.Deactivate();
-    }
-
-    public void HideConditionAll()
-    {
-        statusConditionList.gameObject.SetActive(false);
-        statusConditionList.Deactivate();
-    }
-    
-    public void ActivateConditionList()
-    {
-        statusConditionList.Activate();
-    }
-
-    public void DeactivateConditionList()
-    {
-        statusConditionList.Deactivate();
+        selectCharacter.SetConditionList(stateInfos);
     }
 
     public void ActivateEnemyList()
@@ -418,7 +323,7 @@ public class BattleView : BaseView ,IInputHandlerEvent
         _commandData(eventData);
     }
 
-    public void RefreshBattlerEnemyLayerTarget(int selectIndex,List<int> targetIndexList = null,ScopeType scopeType = ScopeType.None,AttributeType attributeType = AttributeType.None)
+    public void RefreshBattlerEnemyTarget(int selectIndex,List<int> targetIndexList = null,ScopeType scopeType = ScopeType.None,AttributeType attributeType = AttributeType.None)
     {
         if (selectIndex != -1){
             ActivateEnemyList();
@@ -442,7 +347,7 @@ public class BattleView : BaseView ,IInputHandlerEvent
         }
     }
 
-    public void RefreshBattlerPartyLayerTarget(int selectIndex,List<int> targetIndexList = null,ScopeType scopeType = ScopeType.None)
+    public void RefreshBattlerPartyTarget(int selectIndex,List<int> targetIndexList = null,ScopeType scopeType = ScopeType.None)
     {
         if (selectIndex != -1){
             ActivateActorList();
@@ -570,18 +475,6 @@ public class BattleView : BaseView ,IInputHandlerEvent
         EffekseerHandle handle = EffekseerSystem.PlayEffect(effekseerEffectAsset, centerAnimPosition.transform.position);
     }
 
-    public void StartSkillDamage(int targetIndex,int damageTiming,System.Action<int> callEvent)
-    {
-        if (GameSystem.ConfigData._battleAnimationSkip == true) 
-        {            
-            _animationEndTiming = 1;
-            damageTiming = 10;
-        } else{
-            _animationEndTiming = damageTiming + 60;
-        }
-        _battlerComps[targetIndex].SetStartSkillDamage(damageTiming,callEvent);
-    }
-
     public void ClearDamagePopup()
     {
         foreach (var item in _battlerComps)
@@ -637,28 +530,6 @@ public class BattleView : BaseView ,IInputHandlerEvent
         }
     }
 
-    public void SetAttributeTypes(List<ListData> listData)
-    {
-        skillList.RefreshAttribute(listData);
-        //SetInputHandler(skillAttributeList.GetComponent<IInputHandlerEvent>());
-    }
-
-    private void CallAttributeTypes()
-    {
-        var listData = skillList.AttributeInfo;
-        if (listData != null)
-        {
-            var eventData = new BattleViewEvent(CommandType.AttributeType);
-            eventData.templete = listData.AttributeType;
-            _commandData(eventData);
-        }
-    }
-
-    public void CommandAttributeType(AttributeType attributeType)
-    {
-        
-    }
-
     private new void Update() 
     {     
         base.Update();
@@ -695,7 +566,7 @@ public class BattleView : BaseView ,IInputHandlerEvent
                     break;
                 }
             }
-            if (IsBusy == false && _animationEndTiming <= 0 && _battleStartAnim.IsBusy == false)
+            if (IsBusy == false && _animationEndTiming <= 0)
             {
                 _animationBusy = false;
                 foreach (var item in _battlerComps)
@@ -717,16 +588,14 @@ public class BattleView : BaseView ,IInputHandlerEvent
         sideMenuList.Deactivate();
         sideMenuList.SetHelpWindow(HelpWindow);
         sideMenuList.SetOpenEvent(() => {
-            skillList.skillActionList.Deactivate();
-            skillList.attributeList.Deactivate();
+            selectCharacter.DeckMagicList.Deactivate();
             sideMenuList.Activate();
         });
         sideMenuList.SetCloseEvent(() => {
             HelpWindow.SetInputInfo("BATTLE");
-            skillList.skillActionList.Activate();
-            skillList.attributeList.Activate();
+            selectCharacter.DeckMagicList.Activate();
             sideMenuList.Deactivate();
-            skillList.skillActionList.UpdateHelpWindow();
+            selectCharacter.DeckMagicList.UpdateHelpWindow();
             HelpWindow.SetHelpText(DataSystem.System.GetTextData(15010).Text);
         });
     }
@@ -747,8 +616,7 @@ public class BattleView : BaseView ,IInputHandlerEvent
     {
         HelpWindow.SetInputInfo("SIDEMENU");
         HelpWindow.SetHelpText(DataSystem.System.GetTextData(701).Help);
-        skillList.skillActionList.Deactivate();
-        skillList.attributeList.Deactivate();
+        selectCharacter.DeckMagicList.Deactivate();
         sideMenuList.Activate();
         sideMenuList.OpenSideMenu();
     }
@@ -756,11 +624,10 @@ public class BattleView : BaseView ,IInputHandlerEvent
     public void CommandCloseSideMenu()
     {
         HelpWindow.SetInputInfo("BATTLE");
-        skillList.skillActionList.Activate();
-        skillList.attributeList.Activate();
+        selectCharacter.DeckMagicList.Activate();
         sideMenuList.Deactivate();
         sideMenuList.CloseSideMenu();
-        skillList.skillActionList.UpdateHelpWindow();
+        selectCharacter.DeckMagicList.UpdateHelpWindow();
         HelpWindow.SetHelpText(DataSystem.System.GetTextData(15010).Text);
     }
 
@@ -797,52 +664,5 @@ public class BattleView : BaseView ,IInputHandlerEvent
     public void ChangeBattleAuto(bool isAuto)
     {
         battleAutoButton.Cursor.SetActive(isAuto);
-    }
-}
-
-namespace Battle
-{
-    public enum CommandType
-    {
-        None = 0,
-        Back,
-        Escape,
-        Rule,
-        Option,
-        OpenSideMenu,
-        SelectSideMenu,
-        CloseSideMenu,
-        BattleCommand,
-        AttributeType,
-        DecideActor,
-        LeftActor,
-        RightActor,
-        ActorList,
-        UpdateAp,
-        SkillAction,
-        EnemyLayer,
-        EndAnimation,
-        EndDemigodAnimation,
-        EndRegeneAnimation,
-        EndSlipDamageAnimation,
-        StartDamage,
-        Condition,
-        SelectEnemy,
-        SelectParty,
-        EnemyDetail,
-        EventCheck,
-        ChangeBattleAuto,
-        EndBattle
-    }
-}
-
-public class BattleViewEvent
-{
-    public Battle.CommandType commandType;
-    public object templete;
-
-    public BattleViewEvent(Battle.CommandType type)
-    {
-        commandType = type;
     }
 }

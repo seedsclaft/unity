@@ -1,6 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
+using Cysharp.Threading.Tasks;
 
 public class BattlePresenter : BasePresenter
 {
@@ -20,7 +20,6 @@ public class BattlePresenter : BasePresenter
     private bool _slipDamageChecked = false;
     private bool _regeneChecked = false;
     private bool _battleEnded = false;
-    private List<ActionResultInfo> _slipDamageResults = new List<ActionResultInfo>();
     private Battle.CommandType _nextCommandType = Battle.CommandType.None;
     private Battle.CommandType _backCommandType = Battle.CommandType.None;
     public BattlePresenter(BattleView view)
@@ -56,30 +55,45 @@ public class BattlePresenter : BasePresenter
 
         if (_view.TestMode == true)
         {
-            BattleInitialized();
+            BattleInitialize();
             return;
         }
         _view.CommandStartTransition(() => {
-            BattleInitialized();
+            BattleInitialize();
         });
     }
 
-    private void BattleInitialized()
+    private async void BattleInitialize()
     {
-        _view.SetEvent((type) => updateCommand(type));
-
+        _view.SetEvent((type) => UpdateCommand(type));
         _view.SetActors(_model.BattlerActors());
         _view.SetEnemies(_model.BattlerEnemies());
         _view.SetSideMenu(_model.SideMenu());
-
-        _view.SetAttributeTypes(_model.AttributeAllTypes(null,(int)_model.CurrentAttributeType));
-
         _view.StartBattleStartAnim(DataSystem.System.GetTextData(4).Text);
-        _nextCommandType = Battle.CommandType.EventCheck;
+        await UniTask.WaitUntil(() => _view.StartAnimIsBusy == false);
+
+        var isAbort = CheckAdvStageEvent(EventTiming.StartBattle,() => {
+            _view.HideEnemyStatus();
+            _view.SetBattleBusy(false);
+            _view.SetBattleAutoButton(true);
+            CommandStartBattleAction();
+            _busy = false;
+        });
+        if (isAbort)
+        {
+            _busy = true;
+            _view.SetBattleBusy(true);
+            return;
+        }
+
+        _view.HideEnemyStatus();
+        _view.SetBattleBusy(false);
+        _view.SetBattleAutoButton(true);
+        CommandStartBattleAction();
         _busy = false;
     }
 
-    private void updateCommand(BattleViewEvent viewEvent)
+    private void UpdateCommand(BattleViewEvent viewEvent)
     {
         if (_busy){
             return;
@@ -88,17 +102,17 @@ public class BattlePresenter : BasePresenter
         {
             CommandUpdateAp();
         }
-        if (viewEvent.commandType == Battle.CommandType.SkillAction)
+        if (viewEvent.commandType == Battle.CommandType.SelectedSkill)
         {
-            CommandSkillAction((SkillInfo)viewEvent.templete);
+            CommandSelectedSkill((SkillInfo)viewEvent.templete);
         }
         if (viewEvent.commandType == Battle.CommandType.EnemyLayer)
         {
-            CommandSelectIndex((List<int>)viewEvent.templete);
+            CommandSelectTargetIndexs((List<int>)viewEvent.templete);
         }
         if (viewEvent.commandType == Battle.CommandType.ActorList)
         {
-            CommandSelectIndex((List<int>)viewEvent.templete);
+            CommandSelectTargetIndexs((List<int>)viewEvent.templete);
         }
         if (viewEvent.commandType == Battle.CommandType.EndAnimation)
         {
@@ -106,23 +120,11 @@ public class BattlePresenter : BasePresenter
         }
         if (viewEvent.commandType == Battle.CommandType.AttributeType)
         {
-            CommandAttributeType((AttributeType)viewEvent.templete);
+            RefreshDecks((AttributeType)viewEvent.templete);
         }
         if (viewEvent.commandType == Battle.CommandType.DecideActor)
         {
             CommandDecideActor();
-        }
-        if (viewEvent.commandType == Battle.CommandType.LeftActor)
-        {
-            CommandLeftActor();
-        }
-        if (viewEvent.commandType == Battle.CommandType.RightActor)
-        {
-            CommandRightActor();
-        }
-        if (viewEvent.commandType == Battle.CommandType.Condition)
-        {
-            CommandCondition();
         }
         if (viewEvent.commandType == Battle.CommandType.SelectEnemy)
         {
@@ -139,10 +141,6 @@ public class BattlePresenter : BasePresenter
         if (viewEvent.commandType == Battle.CommandType.Escape)
         {
             CommandEscape();
-        }
-        if (viewEvent.commandType == Battle.CommandType.Rule)
-        {
-            CommandRule();
         }
         if (viewEvent.commandType == Battle.CommandType.Option)
         {
@@ -176,8 +174,6 @@ public class BattlePresenter : BasePresenter
         if (confirmComandType == ConfirmComandType.Yes)
         {
             _view.HideSkillActionList();
-            _view.HideSkillAtribute();
-            _view.HideConditionAll();
             _view.HideBattleThumb();
             _view.SetEscapeButton(false);
             _view.SetBattleBusy(true);
@@ -192,7 +188,7 @@ public class BattlePresenter : BasePresenter
     private void CommandBack()
     {
         var eventData = new BattleViewEvent(_backCommandType);
-        updateCommand(eventData);
+        UpdateCommand(eventData);
     }
 
     private void CommandEscape()
@@ -224,7 +220,7 @@ public class BattlePresenter : BasePresenter
     private void CommandEnemyDetail(int enemyIndex)
     {
         if (_model.CurrentActor == null) return;
-        if (_view.SkillList.skillActionList.gameObject.activeSelf) return;
+        //if (_view.SkillList.skillActionList.gameObject.activeSelf) return;
         _busy = true;
         BattlerInfo enemyInfo = _model.GetBattlerInfo(enemyIndex);
         
@@ -238,13 +234,20 @@ public class BattlePresenter : BasePresenter
         Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);    
     }
     
+    private void CommandStartBattleAction()
+    {
+        var PassiveResults = _model.CheckTriggerPassiveInfos(TriggerTiming.StartBattle);
+        ExecActionResult(PassiveResults);
+        var AfterPassiveResults = _model.CheckTriggerPassiveInfos(TriggerTiming.After);
+        ExecActionResult(AfterPassiveResults);
+    }
     private void CommandUpdateAp()
     {
 #if UNITY_EDITOR
         if (_debug == true) return;
 #endif
         _view.SetHelpInputInfo("BATTLE_AUTO");
-        if (GameSystem.ConfigData._battleWait == false)
+        if (GameSystem.ConfigData.BattleWait == false)
         {
             while (_model.CurrentBattler == null)
             {
@@ -253,7 +256,7 @@ public class BattlePresenter : BasePresenter
                 if (CurrentActionInfo != null)
                 {
                     _model.SetActionBattler(CurrentActionInfo.SubjectIndex);
-                    CommandSelectIndex(_model.MakeAutoSelectIndex(CurrentActionInfo));
+                    CommandSelectTargetIndexs(_model.MakeAutoSelectIndex(CurrentActionInfo));
                     return;
                 }
                 if (CheckBattleEnd())
@@ -275,17 +278,19 @@ public class BattlePresenter : BasePresenter
         } else
         {
             BeforeUpdateAp();
+            // 拘束・祝福によって発動するトリガースキルを確認
             ActionInfo CurrentActionInfo = _model.CurrentActionInfo();
             if (CurrentActionInfo != null)
             {
                 _model.SetActionBattler(CurrentActionInfo.SubjectIndex);
-                CommandSelectIndex(_model.MakeAutoSelectIndex(CurrentActionInfo));
+                CommandSelectTargetIndexs(_model.MakeAutoSelectIndex(CurrentActionInfo));
                 return;
             }
             if (CheckBattleEnd())
             {
                 return;
             }
+            // Ap更新によるステート削除
             var removeStateList = _model.UpdateAp();
             if (removeStateList.Count > 0)
             {
@@ -298,24 +303,27 @@ public class BattlePresenter : BasePresenter
             }
             _view.UpdateAp();
         }
+        // Ap更新で行動するキャラがいる
         if (_model.CurrentBattler != null)
         {
             _view.SetBattleBusy(true);
+            // 行動不可の場合は行動しない
             if (!_model.EnableCurrentBattler())
             {
                 var skillInfo = new SkillInfo(0);
                 ActionInfo actionInfo = _model.MakeActionInfo(_model.CurrentBattler,skillInfo,false,false);
-                CommandSelectIndex(_model.MakeAutoSelectIndex(actionInfo));
+                CommandSelectTargetIndexs(_model.MakeAutoSelectIndex(actionInfo));
                 return;
             }
+            // 行動者が拘束を解除する
             List<int> chainTargetIndexs = _model.CheckChainBattler();
             if (chainTargetIndexs.Count > 0)
             {
                 // 拘束解除
                 var skillInfo = new SkillInfo(31);
                 ActionInfo actionInfo = _model.MakeActionInfo(_model.CurrentBattler,skillInfo,false,false);
-                CommandSelectIndex(chainTargetIndexs);
-                // 成功して入ればカウント
+                CommandSelectTargetIndexs(chainTargetIndexs);
+                // 成功して入れば成功カウントを加算
                 if (actionInfo.ActionResults.Find(a => !a.Missed) != null)
                 {
                     _model.CurrentBattler.GainChainCount(1);
@@ -324,7 +332,7 @@ public class BattlePresenter : BasePresenter
             } 
             if (_model.CurrentBattler.isActor)
             {
-                if (GameSystem.ConfigData._battleAuto == true)
+                if (GameSystem.ConfigData.BattleAuto == true)
                 {
                     // オート戦闘の場合
                     CommandAutoActorSkillId();
@@ -337,7 +345,7 @@ public class BattlePresenter : BasePresenter
                 int autoSkillId = _model.MakeAutoSkillId(_model.CurrentBattler);
                 var skillInfo = new SkillInfo(autoSkillId);
                 ActionInfo actionInfo = _model.MakeActionInfo(_model.CurrentBattler,skillInfo,false,false);
-                CommandSelectIndex(_model.MakeAutoSelectIndex(actionInfo));
+                CommandSelectTargetIndexs(_model.MakeAutoSelectIndex(actionInfo));
             }
         }
     }
@@ -347,11 +355,12 @@ public class BattlePresenter : BasePresenter
         var (autoSkillId,targetIndex) = _model.MakeAutoActorSkillId(_model.CurrentBattler);
             var skillInfo = new SkillInfo(autoSkillId);
         ActionInfo actionInfo = _model.MakeActionInfo(_model.CurrentBattler,skillInfo,false,false);
-        CommandSelectIndex(_model.MakeAutoSelectIndex(actionInfo,targetIndex));
+        CommandSelectTargetIndexs(_model.MakeAutoSelectIndex(actionInfo,targetIndex));
     }
 
     private void BeforeUpdateAp()
     {
+        // 拘束
         var chainActionResults = _model.UpdateChainState();
         ExecActionResult(chainActionResults,false);
         _model.CheckTriggerSkillInfos(TriggerTiming.After,chainActionResults,false);
@@ -359,6 +368,7 @@ public class BattlePresenter : BasePresenter
         StartAliveAnimation(chainActionResults);
         StartDeathAnimation(chainActionResults);
 
+        // 祝福
         var benedictionActionResults = _model.UpdateBenedictionState();
         ExecActionResult(benedictionActionResults,false);
         _model.CheckTriggerSkillInfos(TriggerTiming.After,benedictionActionResults,false);
@@ -367,7 +377,35 @@ public class BattlePresenter : BasePresenter
         StartAliveAnimation(benedictionActionResults);
     }
 
-    private void CommandSkillAction(SkillInfo skillInfo)
+    // 行動選択開始
+    private void CommandDecideActor()
+    {
+        _view.SetHelpText(DataSystem.System.GetTextData(15010).Text);
+        _view.SelectedCharacter(_model.CurrentBattler);
+        _view.SetCondition(_model.SelectCharacterConditions());
+        _view.SetEscapeButton(_model.EnableEspape());
+        _view.SetSideMenuButton(true);
+        RefreshDecks(_model.CurrentAttributeType);
+        _view.RefreshBattlerEnemyTarget(-1);
+        _view.RefreshBattlerPartyTarget(-1);
+        _view.SetActiveBack(false);
+        _view.SetBattlerSelectable(true);
+        var isAbort = CheckAdvStageEvent(EventTiming.TurnedBattle,() => {  
+            _view.HideEnemyStatus(); 
+            _view.SetBattleBusy(false);
+            _busy = false;
+            CommandDecideActor();
+        });
+        if (isAbort)
+        {
+            _view.SetBattleBusy(true);
+            _busy = true;
+            return;
+        }
+    }
+
+    // スキルを選択
+    private void CommandSelectedSkill(SkillInfo skillInfo)
     {
         if (skillInfo.Enable == false)
         {
@@ -379,22 +417,20 @@ public class BattlePresenter : BasePresenter
         ActionInfo actionInfo = _model.MakeActionInfo(_model.CurrentBattler,skillInfo,false,false);
         _view.HideSkillActionList();
         _view.SetEscapeButton(false);
-        _view.HideSkillAtribute();
-        _view.HideConditionAll();
         _view.HideBattleThumb();
         if (actionInfo.TargetType == TargetType.Opponent)
         {
             _view.ShowEnemyTarget();
-            _view.RefreshBattlerEnemyLayerTarget(actionInfo.LastTargetIndex,actionInfo.TargetIndexList,actionInfo.ScopeType,skillInfo.Attribute);
+            _view.RefreshBattlerEnemyTarget(actionInfo.LastTargetIndex,actionInfo.TargetIndexList,actionInfo.ScopeType,skillInfo.Attribute);
         } else
         if (actionInfo.TargetType == TargetType.Friend || actionInfo.TargetType == TargetType.Self)
         {
             _view.ShowPartyTarget();
-            _view.RefreshBattlerPartyLayerTarget(actionInfo.LastTargetIndex,actionInfo.TargetIndexList,actionInfo.ScopeType);
+            _view.RefreshBattlerPartyTarget(actionInfo.LastTargetIndex,actionInfo.TargetIndexList,actionInfo.ScopeType);
         } else
         {
-            _view.RefreshBattlerEnemyLayerTarget(actionInfo.LastTargetIndex,actionInfo.TargetIndexList,actionInfo.ScopeType,skillInfo.Attribute);
-            _view.RefreshBattlerPartyLayerTarget(actionInfo.LastTargetIndex,actionInfo.TargetIndexList,actionInfo.ScopeType);
+            _view.RefreshBattlerEnemyTarget(actionInfo.LastTargetIndex,actionInfo.TargetIndexList,actionInfo.ScopeType,skillInfo.Attribute);
+            _view.RefreshBattlerPartyTarget(actionInfo.LastTargetIndex,actionInfo.TargetIndexList,actionInfo.ScopeType);
             _view.ShowPartyTarget();
             _view.ShowEnemyTarget();
         }
@@ -402,7 +438,8 @@ public class BattlePresenter : BasePresenter
         _view.SetActiveBack(true);
     }
 
-    public void CommandSelectIndex(List<int> indexList)
+    // スキル対象を決定
+    public void CommandSelectTargetIndexs(List<int> indexList)
     {
         _view.SetHelpText("");
         _view.SetActiveBack(false);
@@ -410,12 +447,13 @@ public class BattlePresenter : BasePresenter
         ActionInfo actionInfo = _model.CurrentActionInfo();
         if (actionInfo != null)
         {
-            if (actionInfo.Master.SkillType == SkillType.Demigod)
+            if (actionInfo.Master.SkillType == SkillType.Demigod && actionInfo.SubjectIndex < 100)
             {
                 StartAnimationDemigod();
-                return;
+            } else
+            {
+                StartAnimationSkill();
             }
-            StartAnimationSkill();
         }
     }
 
@@ -424,14 +462,12 @@ public class BattlePresenter : BasePresenter
         ActionInfo actionInfo = _model.CurrentActionInfo();
         if (actionInfo != null)
         {
-            _view.RefreshBattlerEnemyLayerTarget(-1);
-            _view.RefreshBattlerPartyLayerTarget(-1);
+            _view.RefreshBattlerEnemyTarget(-1);
+            _view.RefreshBattlerPartyTarget(-1);
             _model.MakeActionResultInfo(actionInfo,indexList);
-            //if (_triggerAfterChecked == false)
-            //{
-                _model.MakeCurseActionResults(actionInfo,indexList);
-            //}
+            _model.MakeCurseActionResults(actionInfo,indexList);
             _model.PopupActionResultInfo(actionInfo.ActionResults);
+            // 行動割り込みスキル判定
             if (_triggerInterruptChecked == false)
             {
                 var result = _model.CheckTriggerSkillInfos(TriggerTiming.Interrupt,actionInfo.ActionResults);
@@ -486,60 +522,55 @@ public class BattlePresenter : BasePresenter
         }
     }
 
-    private void StartAnimationDemigod()
+    private async void StartAnimationDemigod()
     {
-        if (_model.CurrentBattler.isActor == false)
-        {
-            StartAnimationSkill();
-        } else
-        {
-            var demigod = _model.SkillActionAnimation("NA_Effekseer/NA_cut-in_002_" + _model.CurrentBattler.CharaId.ToString());
-            _view.StartAnimationDemigod(demigod);
-            _view.HideEnemyStateOverlay();
-            _view.HideActorStateOverlay();
-            _view.SetAnimationEndTiming(90);
-            _nextCommandType = Battle.CommandType.EndDemigodAnimation;
-        }
+        var demigod = _model.SkillActionAnimation("NA_Effekseer/NA_cut-in_002_" + _model.CurrentBattler.CharaId.ToString());
+        _view.StartAnimationDemigod(demigod);
+        _view.HideEnemyStateOverlay();
+        _view.HideActorStateOverlay();
+        await UniTask.DelayFrame(90);
+        StartAnimationSkill();
     }
 
     private void StartAnimationRegene(List<ActionResultInfo> regeneActionResults)
     {
         var animation = _model.SkillActionAnimation("tktk01/Cure1");
-        for (int i = 0; i < regeneActionResults.Count; i++)
+        foreach (var regeneActionResult in regeneActionResults)
         {
-            if (regeneActionResults[i].HpHeal != 0)
+            if (regeneActionResult.HpHeal != 0)
             {
-                _view.StartAnimation(regeneActionResults[i].TargetIndex,animation,0);
-                _view.StartHeal(regeneActionResults[i].TargetIndex,DamageType.HpHeal,regeneActionResults[i].HpHeal);
-                _model.GainHpTargetIndex(regeneActionResults[i].TargetIndex,regeneActionResults[i].HpHeal);
+                _view.StartAnimation(regeneActionResult.TargetIndex,animation,0);
+                _view.StartHeal(regeneActionResult.TargetIndex,DamageType.HpHeal,regeneActionResult.HpHeal);
+                _model.GainHpTargetIndex(regeneActionResult.TargetIndex,regeneActionResult.HpHeal);
             }
         }
         _nextCommandType = Battle.CommandType.EndRegeneAnimation;
     }
 
-    private void StartAnimationSlipDamage(List<ActionResultInfo> _slipDamageResults)
+    private void StartAnimationSlipDamage(List<ActionResultInfo> slipDamageResults)
     {
         var animation = _model.SkillActionAnimation("NA_Effekseer/NA_Fire_001");
-        for (int i = 0; i < _slipDamageResults.Count; i++)
+        foreach (var slipDamageResult in slipDamageResults)
         {
-            if (_slipDamageResults[i].HpDamage != 0)
+            var targetIndex = slipDamageResult.TargetIndex;
+            if (slipDamageResult.HpDamage != 0)
             {            
-                _view.StartDamage(_slipDamageResults[i].TargetIndex,DamageType.HpDamage,_slipDamageResults[i].HpDamage);
-                _view.StartAnimation(_slipDamageResults[i].TargetIndex,animation,0);
-                _model.GainHpTargetIndex(_slipDamageResults[i].TargetIndex,_slipDamageResults[i].HpDamage * -1);
+                _view.StartDamage(targetIndex,DamageType.HpDamage,slipDamageResult.HpDamage);
+                _view.StartAnimation(targetIndex,animation,0);
+                _model.GainHpTargetIndex(targetIndex,slipDamageResult.HpDamage * -1);
             }
-            if (_slipDamageResults[i].DeadIndexList.Contains(_slipDamageResults[i].TargetIndex))
+            if (slipDamageResult.DeadIndexList.Contains(targetIndex))
             {
                 Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Defeat);
-                _view.StartDeathAnimation(_slipDamageResults[i].TargetIndex);
+                _view.StartDeathAnimation(targetIndex);
             }
         }
         _nextCommandType = Battle.CommandType.EndSlipDamageAnimation;
     }
 
-    private void StartAnimationSkill()
+    private async void StartAnimationSkill()
     {
-        _view.SetRuleButton(false);
+        _view.SetSideMenuButton(false);
         _view.SetEscapeButton(false);
         _view.SetBattlerSelectable(true);
         //_view.ShowEnemyStateOverlay();
@@ -548,7 +579,7 @@ public class BattlePresenter : BasePresenter
         ActionInfo actionInfo = _model.CurrentActionInfo();
         if (actionInfo.ActionResults.Count == 0)
         {
-            _nextCommandType = Battle.CommandType.SkillAction;
+            _nextCommandType = Battle.CommandType.SelectedSkill;
             CommandEndAnimation();
             return;
         }
@@ -556,6 +587,7 @@ public class BattlePresenter : BasePresenter
         var soundTimings = _model.SkillActionSoundTimings(actionInfo.Master.AnimationName);
         _view.PlayMakerEffectSound(soundTimings);
         _view.SetCurrentSkillData(actionInfo.Master);
+        _view.ClearDamagePopup();
         if (actionInfo.Master.AnimationType == AnimationType.All)
         {
             _view.StartAnimationAll(animation);
@@ -567,26 +599,19 @@ public class BattlePresenter : BasePresenter
                 var oneAnimation = actionInfo.ActionResults[i].CursedDamage ? _model.SkillActionAnimation("NA_Effekseer/NA_curse_001") : animation;
                 _view.StartAnimation(actionInfo.ActionResults[i].TargetIndex,oneAnimation,actionInfo.Master.AnimationPosition);
             }
-            _view.StartSkillDamage(actionInfo.ActionResults[i].TargetIndex,actionInfo.Master.DamageTiming,(targetIndex) => StartSkillDamage(targetIndex));
         }
         StartAliveAnimation(_model.CurrentActionInfo().ActionResults);
-        _nextCommandType = Battle.CommandType.EndAnimation;
-    }
-    
 
-    private void StartSkillDamage(int targetIndex)
-    {
-        ActionInfo actionInfo = _model.CurrentActionInfo();
-        if (actionInfo != null)
+        await UniTask.DelayFrame(actionInfo.Master.DamageTiming);
+        _model.PopupActionResultInfo(actionInfo.ActionResults);
+        for (int i = 0; i < actionInfo.ActionResults.Count; i++)
         {
-            List<ActionResultInfo> actionResultInfos = actionInfo.ActionResults;
-            _model.PopupActionResultInfo(actionResultInfos);
-            for (int i = 0; i < actionResultInfos.Count; i++)
-            {
-                bool lastTarget = actionResultInfos[actionResultInfos.Count-1].TargetIndex == targetIndex;
-                PopupActionResult(actionResultInfos[i],targetIndex,true,true,lastTarget);
-            }
+            bool lastTarget = actionInfo.ActionResults[actionInfo.ActionResults.Count-1].TargetIndex == actionInfo.ActionResults[i].TargetIndex;
+            PopupActionResult(actionInfo.ActionResults[i],actionInfo.ActionResults[i].TargetIndex,true,true,lastTarget);
         }
+        await UniTask.DelayFrame(60);
+        _nextCommandType = Battle.CommandType.EndAnimation;
+        CommandEndAnimation();
     }
 
     private void PopupActionResult(ActionResultInfo actionResultInfo,int targetIndex,bool needDamageBlink = true,bool needPopupDelay = true,bool lastTarget = true)
@@ -697,7 +722,6 @@ public class BattlePresenter : BasePresenter
         {
             for (int i = 0; i < aliveBattlerIndex.Count; i++)
             {
-                //Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Defeat);
                 _view.StartAliveAnimation(aliveBattlerIndex[i]);
             }
         }
@@ -709,35 +733,10 @@ public class BattlePresenter : BasePresenter
         {
             return;
         }
-        if (_nextCommandType == Battle.CommandType.EventCheck)
-        {
-            var isAbort = CheckAdvStageEvent(EventTiming.StartBattle,() => {
-                _view.HideEnemyStatus();
-                _view.SetBattleBusy(false);
-                _view.SetBattleAutoButtonActive(true);
-                CommandStartBattleAction();
-                _busy = false;
-            });
-            if (isAbort)
-            {
-                _busy = true;
-                _view.SetBattleBusy(true);
-                return;
-            }
-            _view.SetBattleBusy(false);
-            _view.SetBattleAutoButtonActive(true);
-            CommandStartBattleAction();
-            return;
-        }
         if (_nextCommandType == Battle.CommandType.EndBattle)
         {
             _view.SetBattleBusy(false);
             _view.CommandSceneChange(Scene.Strategy);
-            return;
-        }
-        if (_nextCommandType == Battle.CommandType.EndDemigodAnimation)
-        {
-            StartAnimationSkill();
             return;
         }
         if (_nextCommandType == Battle.CommandType.EndSlipDamageAnimation)
@@ -757,7 +756,7 @@ public class BattlePresenter : BasePresenter
         ActionInfo actionInfo = _model.CurrentActionInfo();
         if (actionInfo != null)
         {
-            StartDeathAnimation(_model.CurrentActionInfo().ActionResults);
+            StartDeathAnimation(actionInfo.ActionResults);
         }
         EndTurn();
     }
@@ -778,14 +777,6 @@ public class BattlePresenter : BasePresenter
         {
             _view.RefreshStatus();
         }
-    }
-
-    private void CommandStartBattleAction()
-    {
-        var PassiveResults = _model.CheckTriggerPassiveInfos(TriggerTiming.StartBattle);
-        ExecActionResult(PassiveResults);
-        var AfterPassiveResults = _model.CheckTriggerPassiveInfos(TriggerTiming.After);
-        ExecActionResult(AfterPassiveResults);
     }
 
     private void EndTurn()
@@ -834,6 +825,7 @@ public class BattlePresenter : BasePresenter
         bool isTriggeredSkill = _model.CurrentActionInfo().TriggeredSkill;
         if (result == false && _triggerAfterChecked == false && isTriggeredSkill == false)
         {
+            // 行動者のターンを進める
             var removed =_model.UpdateTurn();
             foreach (var removedState in removed)
             {
@@ -853,8 +845,9 @@ public class BattlePresenter : BasePresenter
         }
 
         // 勝敗判定
-        if (CheckBattleEnd() && result == false)
+        if ((_model.CheckDefeat() || _model.CheckVictory()) && result == false)
         {
+            CheckBattleEnd();
             return;
         }
         if (result == true)
@@ -887,7 +880,7 @@ public class BattlePresenter : BasePresenter
         if (CurrentActionInfo != null)
         {
             _model.SetActionBattler(CurrentActionInfo.SubjectIndex);
-            CommandSelectIndex(_model.MakeAutoSelectIndex(CurrentActionInfo));
+            CommandSelectTargetIndexs(_model.MakeAutoSelectIndex(CurrentActionInfo));
             return;
         }
 
@@ -904,6 +897,7 @@ public class BattlePresenter : BasePresenter
                 return;
             }
         }
+        // 行動を全て終了する
         _view.HideEnemyStatus();
         _view.ShowActorStateOverlay();
         _view.ShowEnemyStateOverlay();
@@ -914,54 +908,12 @@ public class BattlePresenter : BasePresenter
         _view.SetBattleBusy(false);
     }
 
-    private void CommandAttributeType(AttributeType attributeType)
+    private void RefreshDecks(AttributeType attributeType)
     {
         var skillInfos = _model.SkillActionList(attributeType);
-        _view.RefreshSkillActionList(skillInfos,_model.SelectSkillIndex(skillInfos));
-        _view.SetAttributeTypes(_model.AttributeAllTypes(null,(int)_model.CurrentAttributeType));
-        _view.HideCondition();
+        _view.RefreshDecks(skillInfos,_model.SelectSkillIndex(skillInfos));
+        
         Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cursor);
-    }
-
-    private void CommandDecideActor()
-    {
-        // 行動選択開始
-        _view.SetHelpText(DataSystem.System.GetTextData(15010).Text);
-        _view.ShowSkillActionList(_model.CurrentBattler,_model.CurrentBattlerActorData());
-        _view.SetEscapeButton(_model.EnableEspape());
-        _view.SetRuleButton(true);
-        _view.ShowConditionTab();
-        CommandAttributeType(_model.CurrentAttributeType);
-        _view.RefreshBattlerEnemyLayerTarget(-1);
-        _view.RefreshBattlerPartyLayerTarget(-1);
-        _view.SetActiveBack(false);
-        _view.SetBattlerSelectable(true);
-        var isAbort = CheckAdvStageEvent(EventTiming.TurnedBattle,() => {  
-            _view.HideEnemyStatus(); 
-            _view.SetBattleBusy(false);
-            _busy = false;
-            CommandDecideActor();
-        });
-        if (isAbort)
-        {
-            _view.SetBattleBusy(true);
-            _busy = true;
-            return;
-        }
-    }
-    
-    private void CommandLeftActor()
-    {
-         _model.ChangeActorIndex(-1);
-        _view.SetActorInfo(_model.CurrentActor);
-        CommandAttributeType(_model.CurrentAttributeType);
-    }
-
-    private void CommandRightActor()
-    {
-         _model.ChangeActorIndex(1);
-        _view.SetActorInfo(_model.CurrentActor);
-        CommandAttributeType(_model.CurrentAttributeType);
     }
 
     private bool CheckBattleEnd()
@@ -993,16 +945,6 @@ public class BattlePresenter : BasePresenter
         return isEnd;
     }
 
-    public void CommandCondition()
-    {
-        _view.HideSkillActionList(false);
-        _view.SetEscapeButton(_model.EnableEspape());
-        _view.ActivateConditionList();
-        _view.SetCondition(_model.CurrentBattler.StateInfos);
-        _view.ShowConditionAll();
-        Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cursor);
-    }
-
     private void CommandSelectEnemy()
     {
         ActionInfo actionInfo = _model.CurrentActionInfo();
@@ -1013,8 +955,8 @@ public class BattlePresenter : BasePresenter
         {
         } else
         {
-            _view.RefreshBattlerEnemyLayerTarget(actionInfo.TargetIndexList.Find(a => a >= 100),actionInfo.TargetIndexList,actionInfo.ScopeType,actionInfo.Master.Attribute);
-            _view.RefreshBattlerPartyLayerTarget(-1);
+            _view.RefreshBattlerEnemyTarget(actionInfo.TargetIndexList.Find(a => a >= 100),actionInfo.TargetIndexList,actionInfo.ScopeType,actionInfo.Master.Attribute);
+            _view.RefreshBattlerPartyTarget(-1);
             _view.ShowEnemyTarget();
             _view.DeactivateActorList();
         }
@@ -1030,8 +972,8 @@ public class BattlePresenter : BasePresenter
         {
         } else
         {
-            _view.RefreshBattlerEnemyLayerTarget(-1);
-            _view.RefreshBattlerPartyLayerTarget(actionInfo.TargetIndexList.Find(a => a < 100),actionInfo.TargetIndexList,actionInfo.ScopeType);
+            _view.RefreshBattlerEnemyTarget(-1);
+            _view.RefreshBattlerPartyTarget(actionInfo.TargetIndexList.Find(a => a < 100),actionInfo.TargetIndexList,actionInfo.ScopeType);
             _view.ShowPartyTarget();
             _view.DeactivateEnemyList();
         }
@@ -1064,12 +1006,10 @@ public class BattlePresenter : BasePresenter
         if (_view.AnimationBusy == false && _view.BattleBusy && _model.CurrentBattler.isActor && GameSystem.ConfigData._battleAuto == true)
         {
             _model.ClearActionInfo();
-            _view.RefreshBattlerEnemyLayerTarget(-1);
-            _view.RefreshBattlerPartyLayerTarget(-1);
+            _view.RefreshBattlerEnemyTarget(-1);
+            _view.RefreshBattlerPartyTarget(-1);
             _view.HideSkillActionList();
             _view.SetEscapeButton(false);
-            _view.HideSkillAtribute();
-            _view.HideConditionAll();
             _view.HideBattleThumb();
             CommandAutoActorSkillId();
         }

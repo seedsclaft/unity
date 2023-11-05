@@ -5,26 +5,16 @@ using UnityEngine;
 public class BattleThumb : MonoBehaviour
 {
     [SerializeField] private ActorInfoComponent actorInfoComponent = null;
-    [SerializeField] private BattlerInfoComponent battlerInfoComponent = null;
     [SerializeField] private GameObject mainThumbRoot = null;
     [SerializeField] private GameObject awakenThumbRoot = null;
 
-    public void ShowMainThumb(BattlerInfo battlerInfo,ActorData actorData)
-    {
-        awakenThumbRoot.SetActive(false);
-        mainThumbRoot.SetActive(true);
-        gameObject.SetActive(true);
-        UpdateStatus(battlerInfo);
-        UpdateThumb(actorData);
-    }
 
-    public void ShowAwakenThumb(BattlerInfo battlerInfo,ActorData actorData)
+    public void ShowBattleThumb(BattlerInfo battlerInfo)
     {
-        mainThumbRoot.SetActive(false);
-        awakenThumbRoot.SetActive(true);
+        awakenThumbRoot.SetActive(battlerInfo.IsState(StateType.Demigod));
+        mainThumbRoot.SetActive(!battlerInfo.IsState(StateType.Demigod));
         gameObject.SetActive(true);
-        UpdateStatus(battlerInfo);
-        UpdateThumb(actorData);
+        UpdateThumb(battlerInfo.ActorInfo.Master);
     }
 
     public void HideThumb()
@@ -38,12 +28,6 @@ public class BattleThumb : MonoBehaviour
     private void UpdateThumb(ActorData actorData)
     {
         actorInfoComponent.UpdateData(actorData);
-    }    
-
-    private void UpdateStatus(BattlerInfo battlerInfo)
-    {
-        battlerInfoComponent.UpdateInfo(battlerInfo);
-        battlerInfoComponent.RefreshStatus();
     }
 
     private void Clear()

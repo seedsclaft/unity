@@ -9,7 +9,6 @@ public class EnemyInfoView : BaseView,IInputHandlerEvent
 {
     [SerializeField] private SkillList skillList = null;
     [SerializeField] private EnemyInfoComponent enemyInfoComponent = null;
-    [SerializeField] private StatusConditionList statusConditionList = null;
     [SerializeField] private Button skillButton = null;
     [SerializeField] private GameObject leftRoot = null;
     [SerializeField] private GameObject rightRoot = null;
@@ -44,21 +43,23 @@ public class EnemyInfoView : BaseView,IInputHandlerEvent
 
         if (_isBattle)
         {
-            statusConditionList.Initialize(() => OnClickCondition());
-            statusConditionList.SetInputHandler(InputKeyType.Cancel,() => CommandBack());
-            statusConditionList.SetInputHandler(InputKeyType.Option1,() => 
+            /*
+            //statusConditionList.Initialize(() => OnClickCondition());
+            //statusConditionList.SetInputHandler(InputKeyType.Cancel,() => CommandBack());
+            //statusConditionList.SetInputHandler(InputKeyType.Option1,() => 
             {
                 skillList.ShowActionList();
                 HideCondition();
             });
-            SetInputHandler(statusConditionList.GetComponent<IInputHandlerEvent>());
+            */
+            //SetInputHandler(statusConditionList.GetComponent<IInputHandlerEvent>());
             DeactivateConditionList();
             _rightButton.gameObject.SetActive(false);
             _leftButton.gameObject.SetActive(false);
         } else
         {
             skillButton.transform.parent.gameObject.SetActive(false);
-            statusConditionList.gameObject.SetActive(false);
+            //statusConditionList.gameObject.SetActive(false);
         }
 
         skillButton.onClick.AddListener(() => OnClickSkill());
@@ -203,7 +204,7 @@ public class EnemyInfoView : BaseView,IInputHandlerEvent
     {
         if (_isBattle)
         {
-            statusConditionList.Activate();
+            //statusConditionList.Activate();
         }
     }
     
@@ -211,7 +212,7 @@ public class EnemyInfoView : BaseView,IInputHandlerEvent
     {
         if (_isBattle)
         {
-            statusConditionList.Deactivate();
+            //statusConditionList.Deactivate();
         }
     }
 
@@ -219,7 +220,7 @@ public class EnemyInfoView : BaseView,IInputHandlerEvent
     {
         if (_isBattle)
         {
-            statusConditionList.Refresh(stateInfos);
+            //statusConditionList.Refresh(stateInfos);
         }
     }
     
@@ -227,8 +228,8 @@ public class EnemyInfoView : BaseView,IInputHandlerEvent
     {
         if (_isBattle)
         {
-            statusConditionList.gameObject.SetActive(true);
-            statusConditionList.ShowMainView();
+            //statusConditionList.gameObject.SetActive(true);
+            //statusConditionList.ShowMainView();
         }
         
     }
@@ -237,7 +238,7 @@ public class EnemyInfoView : BaseView,IInputHandlerEvent
     {
         if (_isBattle)
         {
-            statusConditionList.HideMainView();
+            //statusConditionList.HideMainView();
         }
     }
 

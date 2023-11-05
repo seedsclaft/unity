@@ -379,9 +379,11 @@ public class SaveConfigInfo
 	public bool _eventSkipIndex;
 	public bool _commandEndCheck;
 	public bool _battleWait;
+	public bool BattleWait => _battleWait;
 	public bool _battleAnimationSkip;
 	public bool _inputType;
 	public bool _battleAuto;
+	public bool BattleAuto => _battleAuto;
     public SaveConfigInfo()
     {
 		this.InitParameter();

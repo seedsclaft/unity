@@ -63,7 +63,7 @@ public class FastBattlePresenter : BasePresenter
         {
             CommandUpdateAp();
         }
-        if (viewEvent.commandType == Battle.CommandType.SkillAction)
+        if (viewEvent.commandType == Battle.CommandType.SelectedSkill)
         {
             CommandSkillAction((SkillInfo)viewEvent.templete);
         }
@@ -233,7 +233,7 @@ public class FastBattlePresenter : BasePresenter
         ActionInfo actionInfo = _model.CurrentActionInfo();
         if (actionInfo.ActionResults.Count == 0)
         {
-            _nextCommandType = Battle.CommandType.SkillAction;
+            _nextCommandType = Battle.CommandType.SelectedSkill;
             CommandEndAnimation();
             return;
         }
@@ -280,11 +280,6 @@ public class FastBattlePresenter : BasePresenter
             Time.timeScale = 1;
             _view.CommandLoadingClose();
             _view.CommandSceneChange(Scene.Strategy);
-            return;
-        }
-        if (_nextCommandType == Battle.CommandType.EndDemigodAnimation)
-        {
-            StartAnimationSkill();
             return;
         }
         if (_nextCommandType == Battle.CommandType.EndSlipDamageAnimation)

@@ -23,12 +23,9 @@ public class BattlerInfoComponent : MonoBehaviour
     private BattlerInfo _battlerInfo = null;
 
     public bool IsBusy {
-        get {return _animationEndTiming > 0 || _damageTiming > 0 || _battleDamages.Find(a => a.IsBusy);}
+        get {return _battleDamages.Find(a => a.IsBusy);}
     }
 
-    private System.Action<int> _damageHandler;
-    private int _damageTiming = 0;
-    private int _animationEndTiming = 0;
     private List<BattleDamage> _battleDamages = new ();
     private float _deathAnimation = 0.0f;
     public void UpdateInfo(BattlerInfo battlerInfo)
@@ -54,13 +51,6 @@ public class BattlerInfoComponent : MonoBehaviour
         _battleStatusRoot = statusRoot;
         enemyInfoComponent.HideStatus();   
         //_battleStatusRoot.SetActive(false);
-    }
-    
-    public void SetStartSkillDamage(int damageTiming,System.Action<int> callEvent)
-    {
-        ClearDamagePopup();
-        _damageTiming = damageTiming;
-        _damageHandler = callEvent;
     }
 
     public void ChangeHp(int value)
@@ -276,7 +266,6 @@ public class BattlerInfoComponent : MonoBehaviour
         {
 
         } else{
-            _damageHandler = null;
             _deathAnimation = 0;
             deathAnimation.enabled = false;
             deathAnimation.Destroyed = 0;
@@ -405,33 +394,7 @@ public class BattlerInfoComponent : MonoBehaviour
 
 
     private void Update() {
-        UpdateDamageTiming();
         UpdateDeathAnimation();
-    }
-
-    private void UpdateDamageTiming()
-    {
-        if (_damageTiming > 0)
-        {
-            _damageTiming--;
-            if (_damageTiming == 0)
-            {
-                if (_damageHandler != null)
-                {
-                   _damageHandler(_battlerInfo.Index);
-                }
-                _damageHandler = null;
-                _animationEndTiming = 60;
-                if (GameSystem.ConfigData._battleAnimationSkip == true) 
-                {
-                    _animationEndTiming = 1;
-                }
-            }
-        }
-        if (_animationEndTiming > 0)
-        {
-            _animationEndTiming--;
-        }
     }
     
     private void UpdateDeathAnimation()
