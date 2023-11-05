@@ -95,6 +95,8 @@ public class ResultPresenter : BasePresenter
 
     private void UpdatePopup(ConfirmComandType confirmComandType)
     {
+        if (_busy) return;
+        _busy = true;
         if (confirmComandType == ConfirmComandType.Yes)
         {
             _model.GetSelfRankingData((a) => 
@@ -103,6 +105,7 @@ public class ResultPresenter : BasePresenter
                 _view.CommandConfirmClose();
                 _view.SetRanking(a);
                 UpdateResultCommand();
+                _busy = false;
             });
         } else
         {
@@ -110,6 +113,7 @@ public class ResultPresenter : BasePresenter
             _isRankingEnd = true;
             _view.CommandConfirmClose();
             UpdateResultCommand();
+            _busy = false;
         }
     }
 

@@ -211,6 +211,7 @@ public class GameSystem : MonoBehaviour
         } else
         if (viewEvent.commandType == Base.CommandType.StartTransition)
         {
+            transitionFade.Init();
             transitionFade.FadeIn(0.8f,() => {
                 foreach(Transform child in transitionRoot.transform){
                     var endEvent = (System.Action)viewEvent.templete;

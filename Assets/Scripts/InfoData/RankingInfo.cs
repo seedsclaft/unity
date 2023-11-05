@@ -9,6 +9,8 @@ public class RankingInfo
 
     public List<int> SelectIdx = new List<int>();
     public List<int> SelectRank = new List<int>();
+
+    public int UserId;
     public RankingInfo()
     {
  

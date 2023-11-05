@@ -269,7 +269,7 @@ public class BattleView : BaseView ,IInputHandlerEvent
         BattlerInfo battlerInfo = battlerInfos.Find(a => a.Index == selectedIndex);
         if (battlerInfo != null)
         {
-            eventData.templete = selectedIndex;
+            eventData.templete = battlerInfo;
             _commandData(eventData);
         }
     }

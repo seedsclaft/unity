@@ -60,10 +60,20 @@ public class RankingModel : BaseModel
                                 rankingInfo.SelectRank.Add((int)numbers2[i]);
                             }
                         }
+                        if (obj.ContainsKey("UserId"))
+                        {
+                            rankingInfo.UserId = int.Parse(obj["UserId"].ToString());
+                        }
                         list.Add(rankingInfo);
                     }
                         
-                    _rakingInfos = list;
+                    foreach (var listItem in list)
+                    {
+                        if (_rakingInfos.Find(a => a.UserId == listItem.UserId && a.Score == listItem.Score) == null)
+                        {
+                            _rakingInfos.Add(listItem);   
+                        }                 
+                    }
                     isEnd = true;
                 }
             });

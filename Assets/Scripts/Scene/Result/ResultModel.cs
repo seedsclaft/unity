@@ -226,6 +226,11 @@ public class ResultModel : BaseModel
             {
                 count += 1;
                 SendRankingData(() => {
+                    if (rank > 100)
+                    {    
+                        if (endEvent != null) endEvent("圏外");
+                        return;
+                    }
                     if (endEvent != null) endEvent(rank.ToString() + "位" + " / " + count.ToString());
                 });
             }

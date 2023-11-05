@@ -150,7 +150,7 @@ public class BattlePresenter : BasePresenter
         }
         if (viewEvent.commandType == Battle.CommandType.EnemyDetail)
         {
-            CommandEnemyDetail((int)viewEvent.templete);
+            CommandEnemyDetail((BattlerInfo)viewEvent.templete);
         }
         if (viewEvent.commandType == Battle.CommandType.OpenSideMenu)
         {
@@ -221,12 +221,12 @@ public class BattlePresenter : BasePresenter
         CommandCloseSideMenu();
     }
 
-    private void CommandEnemyDetail(int enemyIndex)
+    private void CommandEnemyDetail(BattlerInfo battlerInfo)
     {
         if (_model.CurrentActor == null) return;
         if (_view.SkillList.skillActionList.gameObject.activeSelf) return;
         _busy = true;
-        BattlerInfo enemyInfo = _model.GetBattlerInfo(enemyIndex);
+        BattlerInfo enemyInfo = battlerInfo;
         
         StatusViewInfo statusViewInfo = new StatusViewInfo(() => {
             _view.CommandStatusClose();
