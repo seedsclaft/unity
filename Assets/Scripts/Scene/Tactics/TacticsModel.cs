@@ -9,9 +9,6 @@ public class TacticsModel : BaseModel
     public int CurrentActorId {
         get {return _currentActorId;} set{_currentActorId = value;}
     }
-    private AttributeType _currentAttributeType = AttributeType.Fire;
-    
-    public AttributeType CurrentAttributeType => _currentAttributeType;
     public ActorInfo CurrentActor
     {
         get {return TacticsActor(_currentActorId);}
@@ -40,32 +37,6 @@ public class TacticsModel : BaseModel
         return StageMembers().Find(a => a.ActorId == actorId);
     }
 
-    public List<string> AttirbuteValues()
-    {
-        return CurrentActor.AttirbuteValues(StageMembers());
-    }
-
-    public List<ListData> AttirbuteInfos()
-    {
-        var list = new List<ListData>();
-        var attirbuteValues = AttirbuteValues();
-        var idx = 0;
-        foreach (var attributeData in AttributeTypes())
-        {
-            var attributeType = ((SkillData.SkillAttributeInfo)attributeData.Data).AttributeType;
-            var info = new SkillData.SkillAttributeInfo();
-            info.AttributeType = attributeType;
-            info.LearningCost = TacticsUtility.AlchemyCost(CurrentActor,attributeType,StageMembers());
-            info.ValueText = attirbuteValues[idx];
-            info.LearningCount = DataSystem.System.GetTextData(1120).Text + SelectActorAlchemy(CurrentActor.ActorId,attributeType).Count.ToString();
-            
-            var listData = new ListData(info,idx);
-            list.Add(listData);
-            idx++;
-        }
-        return list;
-    }
-
     public List<ListData> TacticsCommand()
     {
         var list = new List<ListData>();
@@ -83,8 +54,6 @@ public class TacticsModel : BaseModel
     {
         return new ListData(DataSystem.TacticsCommand[index],index,enable);
     }
-    
-
 
     public void SetTempData(TacticsComandType tacticsComandType)
     {
@@ -245,16 +214,21 @@ public class TacticsModel : BaseModel
         return false;
     }
 
-    public List<ListData> SelectActorAlchemy(int actorId,AttributeType attributeType)
+    public List<ListData> SelectActorAlchemy(int actorId)
     {
-        _currentAttributeType = attributeType;
         ActorInfo actorInfo = TacticsActor(actorId);
         List<SkillInfo> skillInfos = new List<SkillInfo>();
         
+        if (!PartyInfo.AlchemyIdList.Contains(121))
+        {
+            PartyInfo.AlchemyIdList.Add(121);
+            PartyInfo.AlchemyIdList.Add(131);
+            PartyInfo.AlchemyIdList.Add(132);
+            PartyInfo.AlchemyIdList.Add(133);
+        }
         for (int i = 0;i < PartyInfo.AlchemyIdList.Count;i++)
         {
             SkillInfo skillInfo = new SkillInfo(PartyInfo.AlchemyIdList[i]);
-            if (skillInfo.Attribute != _currentAttributeType) continue;
             if (actorInfo.IsLearnedSkill(skillInfo.Id)) continue;
             skillInfo.SetEnable(true);
             skillInfos.Add(skillInfo);
@@ -278,11 +252,12 @@ public class TacticsModel : BaseModel
     public void SelectAlchemySkill(int skillId)
     {
         ActorInfo actorInfo = CurrentActor;
+        SkillData skillData = DataSystem.Skills.Find(a => a.Id == skillId);
         if (actorInfo != null){
-            actorInfo.SetTacticsCommand(TacticsComandType.Alchemy,TacticsUtility.AlchemyCost(actorInfo,_currentAttributeType,StageMembers()));
+            actorInfo.SetTacticsCommand(TacticsComandType.Alchemy,TacticsUtility.AlchemyCost(actorInfo,skillData.Attribute,StageMembers()));
             PartyInfo.ChangeCurrency(Currency - actorInfo.TacticsCost);
             actorInfo.SetNextLearnSkillId(skillId);
-            actorInfo.SetNextLearnCost(TacticsUtility.AlchemyCost(actorInfo,_currentAttributeType,StageMembers()));
+            actorInfo.SetNextLearnCost(TacticsUtility.AlchemyCost(actorInfo,skillData.Attribute,StageMembers()));
         }
     }
 
@@ -443,4 +418,23 @@ public class TacticsModel : BaseModel
         list.Add(menucommand);
         return list;
     }
+
+    public List<ListData> TacticsCharacterData()
+    {
+        var list = new List<ListData>();
+        foreach (var member in StageMembers())
+        {
+            var tacticsActorInfo = new TacticsActorInfo();
+            tacticsActorInfo.TacticsComandType = _commandType;
+            tacticsActorInfo.ActorInfo = member;
+            var listData = new ListData(tacticsActorInfo);
+            list.Add(listData);
+        }
+        return list;
+    }
+}
+
+public class TacticsActorInfo{
+    public ActorInfo ActorInfo;
+    public TacticsComandType TacticsComandType;
 }

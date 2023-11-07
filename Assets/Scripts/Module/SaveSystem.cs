@@ -57,6 +57,7 @@ public class SaveSystem : MonoBehaviour
 				}
 			}
 		#endif
+		/*
 		#if UNITY_SWITCH
 		{
 			SwitchSaveDataMain	pSwitchSaveDataMain = GameInstance.Get.m_pSwitchMain.m_pSwitchSaveDataMain;
@@ -71,6 +72,7 @@ public class SaveSystem : MonoBehaviour
 			pSwitchSaveDataMain.StartAutoSave( TempMemoryStream.ToArray() );
 		}
 		#endif
+		*/
 	}
 
 		
@@ -90,8 +92,9 @@ public class SaveSystem : MonoBehaviour
 				{
 					saveData = PlayerPrefs.GetString("PlayerData");
 				}
-        		MemoryStream    memoryStream    = new MemoryStream (Convert.FromBase64String (saveData));
-        		GameSystem.CurrentData = (SavePlayInfo)TempBinaryFormatter.Deserialize (memoryStream);
+                var bytes = Convert.FromBase64String(saveData);
+        		MemoryStream    memoryStream    = new MemoryStream (bytes);
+				GameSystem.CurrentData = (SavePlayInfo)TempBinaryFormatter.Deserialize (memoryStream);
 				return true;
 			}
 			// Jsonへの展開失敗　改ざんの可能性あり

@@ -7,23 +7,26 @@ using TMPro;
 public class TacticsTrain : ListItem ,IListViewItem 
 {
     [SerializeField] private TacticsComponent tacticsComponent;
+    [SerializeField] private Button plusButton;
+    [SerializeField] private Button minusButton;
 
-    private ActorInfo _data;
-    public void SetData(ActorInfo data,int index){
-        _data = data;
-        SetIndex(index);
+    public void SetPlusHandler(System.Action handler)
+    {
+        Debug.Log("SetPlusHandler");
+        plusButton.onClick.AddListener(() => handler());
     }
 
-    public void SetCallHandler(System.Action<int> handler)
+    public void SetMinusHandler(System.Action handler)
     {
-        clickButton.onClick.AddListener(() => handler((int)_data.ActorId));
-        tacticsComponent.SetToggleHandler(handler);
+        Debug.Log("SetMinusHandler");
+        minusButton.onClick.AddListener(() => handler());
     }
 
     public void UpdateViewItem()
     {
-        if (_data == null) return;
-        tacticsComponent.UpdateInfo(_data,TacticsComandType.Train);
-        Disable.SetActive(!_data.EnableTactics(TacticsComandType.Train));
+        if (ListData == null) return;
+        var data = (TacticsActorInfo)ListData.Data;
+        tacticsComponent.UpdateInfo(data.ActorInfo,data.TacticsComandType);
+        Disable.SetActive(!data.ActorInfo.EnableTactics(data.TacticsComandType));
     }
 }

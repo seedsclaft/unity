@@ -10,14 +10,19 @@ public class UnitInfo
     public List<BattlerInfo> FrontBattlers()
     {
         // 最前列は
-        bool IsFrontAlive = BattlerInfos.Find(a => a.LineIndex == LineType.Front) != null;
-        if (IsFrontAlive)
+        if (IsFrontAlive())
         {
             return BattlerInfos.FindAll(a => a.LineIndex == LineType.Front);
         }
         return BattlerInfos;
     }
     
+    public bool IsFrontAlive()
+    {
+        // 最前列は
+        return AliveBattlerInfos.Find(a => a.LineIndex == LineType.Front) != null;
+    }
+
     public void SetBattlers(List<BattlerInfo> battlerInfos)
     {
         _battlerInfos = battlerInfos;

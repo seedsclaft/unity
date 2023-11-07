@@ -168,7 +168,7 @@ public class BattlePresenter : BasePresenter
         }
     }
 
-    private void UpdatePopup(ConfirmComandType confirmComandType)
+    private async void UpdatePopup(ConfirmComandType confirmComandType)
     {
         _view.CommandConfirmClose();
         if (confirmComandType == ConfirmComandType.Yes)
@@ -177,11 +177,16 @@ public class BattlePresenter : BasePresenter
             _view.HideBattleThumb();
             _view.SetEscapeButton(false);
             _view.SetBattleBusy(true);
-            _model.EndBattle();
             _model.EscapeBattle();
             _view.StartBattleStartAnim(DataSystem.System.GetTextData(15030).Text);
-            _view.SetAnimationEndTiming(180);
-            _nextCommandType = Battle.CommandType.EndBattle;
+
+            _model.EndBattle();
+            _battleEnded = true;
+            _view.HideActorStateOverlay();
+            _view.HideEnemyStateOverlay();
+            await UniTask.DelayFrame(180);
+            _view.SetBattleBusy(false);
+            _view.CommandSceneChange(Scene.Strategy);
         }
     }
 
@@ -259,8 +264,9 @@ public class BattlePresenter : BasePresenter
                     CommandSelectTargetIndexs(_model.MakeAutoSelectIndex(CurrentActionInfo));
                     return;
                 }
-                if (CheckBattleEnd())
+                if (IsBattleEnd())
                 {
+                    BattleEnd();
                     return;
                 }
                 var removeStateList = _model.UpdateAp();
@@ -286,8 +292,9 @@ public class BattlePresenter : BasePresenter
                 CommandSelectTargetIndexs(_model.MakeAutoSelectIndex(CurrentActionInfo));
                 return;
             }
-            if (CheckBattleEnd())
+            if (IsBattleEnd())
             {
+                BattleEnd();
                 return;
             }
             // Ap更新によるステート削除
@@ -380,6 +387,7 @@ public class BattlePresenter : BasePresenter
     // 行動選択開始
     private void CommandDecideActor()
     {
+        _view.SetAnimationBusy(false);
         _view.SetHelpText(DataSystem.System.GetTextData(15010).Text);
         _view.SelectedCharacter(_model.CurrentBattler);
         _view.SetCondition(_model.SelectCharacterConditions());
@@ -528,11 +536,12 @@ public class BattlePresenter : BasePresenter
         _view.StartAnimationDemigod(demigod);
         _view.HideEnemyStateOverlay();
         _view.HideActorStateOverlay();
+        _view.SetAnimationBusy(true);
         await UniTask.DelayFrame(90);
         StartAnimationSkill();
     }
 
-    private void StartAnimationRegene(List<ActionResultInfo> regeneActionResults)
+    private async void StartAnimationRegene(List<ActionResultInfo> regeneActionResults)
     {
         var animation = _model.SkillActionAnimation("tktk01/Cure1");
         foreach (var regeneActionResult in regeneActionResults)
@@ -544,10 +553,12 @@ public class BattlePresenter : BasePresenter
                 _model.GainHpTargetIndex(regeneActionResult.TargetIndex,regeneActionResult.HpHeal);
             }
         }
-        _nextCommandType = Battle.CommandType.EndRegeneAnimation;
+        await UniTask.DelayFrame(60);
+        EndTurn();
+        //_nextCommandType = Battle.CommandType.EndRegeneAnimation;
     }
 
-    private void StartAnimationSlipDamage(List<ActionResultInfo> slipDamageResults)
+    private async void StartAnimationSlipDamage(List<ActionResultInfo> slipDamageResults)
     {
         var animation = _model.SkillActionAnimation("NA_Effekseer/NA_Fire_001");
         foreach (var slipDamageResult in slipDamageResults)
@@ -565,7 +576,9 @@ public class BattlePresenter : BasePresenter
                 _view.StartDeathAnimation(targetIndex);
             }
         }
-        _nextCommandType = Battle.CommandType.EndSlipDamageAnimation;
+        await UniTask.DelayFrame(60);
+        EndTurn();
+        //_nextCommandType = Battle.CommandType.EndSlipDamageAnimation;
     }
 
     private async void StartAnimationSkill()
@@ -576,6 +589,7 @@ public class BattlePresenter : BasePresenter
         //_view.ShowEnemyStateOverlay();
         _view.HideEnemyStateOverlay();
         _view.HideActorStateOverlay();
+        _view.SetAnimationBusy(true);
         ActionInfo actionInfo = _model.CurrentActionInfo();
         if (actionInfo.ActionResults.Count == 0)
         {
@@ -591,10 +605,9 @@ public class BattlePresenter : BasePresenter
         if (actionInfo.Master.AnimationType == AnimationType.All)
         {
             _view.StartAnimationAll(animation);
-        }
-        for (int i = 0; i < actionInfo.ActionResults.Count; i++)
+        } else
         {
-            if (actionInfo.Master.AnimationType != AnimationType.All)
+            for (int i = 0; i < actionInfo.ActionResults.Count; i++)
             {
                 var oneAnimation = actionInfo.ActionResults[i].CursedDamage ? _model.SkillActionAnimation("NA_Effekseer/NA_curse_001") : animation;
                 _view.StartAnimation(actionInfo.ActionResults[i].TargetIndex,oneAnimation,actionInfo.Master.AnimationPosition);
@@ -735,18 +748,6 @@ public class BattlePresenter : BasePresenter
         }
         if (_nextCommandType == Battle.CommandType.EndBattle)
         {
-            _view.SetBattleBusy(false);
-            _view.CommandSceneChange(Scene.Strategy);
-            return;
-        }
-        if (_nextCommandType == Battle.CommandType.EndSlipDamageAnimation)
-        {
-            EndTurn();
-            return;
-        }
-        if (_nextCommandType == Battle.CommandType.EndRegeneAnimation)
-        {
-            EndTurn();
             return;
         }
         // ダメージなどを適用
@@ -845,9 +846,9 @@ public class BattlePresenter : BasePresenter
         }
 
         // 勝敗判定
-        if ((_model.CheckDefeat() || _model.CheckVictory()) && result == false)
+        if (IsBattleEnd() && result == false)
         {
-            CheckBattleEnd();
+            BattleEnd();
             return;
         }
         if (result == true)
@@ -916,33 +917,29 @@ public class BattlePresenter : BasePresenter
         Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cursor);
     }
 
-    private bool CheckBattleEnd()
+    private bool IsBattleEnd()
     {
-        if (_battleEnded == true) return false;
-        bool isEnd = false;
+        return _model.CheckVictory() || _model.CheckDefeat();
+    }
+
+    private async void BattleEnd()
+    {
+        if (_battleEnded == true) return;
         if (_model.CheckVictory())
         {
-            _model.EndBattle();
             _view.StartBattleStartAnim(DataSystem.System.GetTextData(15020).Text);
-            _view.SetAnimationEndTiming(180);
-            _nextCommandType = Battle.CommandType.EndBattle;
-            isEnd = true;
-            _battleEnded = true;
-            _view.HideActorStateOverlay();
-            _view.HideEnemyStateOverlay();
         } else
         if (_model.CheckDefeat())
         {
-            _model.EndBattle();
-            _view.StartBattleStartAnim(DataSystem.System.GetTextData(15030).Text);
-            _view.SetAnimationEndTiming(180);
-            _nextCommandType = Battle.CommandType.EndBattle;
-            isEnd = true;
-            _battleEnded = true;
-            _view.HideActorStateOverlay();
-            _view.HideEnemyStateOverlay();
+            _view.StartBattleStartAnim(DataSystem.System.GetTextData(15030).Text);            
         }
-        return isEnd;
+        _model.EndBattle();
+        _battleEnded = true;
+        _view.HideActorStateOverlay();
+        _view.HideEnemyStateOverlay();
+        await UniTask.DelayFrame(180);
+        _view.SetBattleBusy(false);
+        _view.CommandSceneChange(Scene.Strategy);
     }
 
     private void CommandSelectEnemy()

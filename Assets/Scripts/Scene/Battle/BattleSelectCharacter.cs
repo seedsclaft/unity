@@ -69,6 +69,16 @@ public class BattleSelectCharacter : MonoBehaviour
         statusInfoComponent.UpdateMp(battlerInfo.Mp,currentStatus.Mp);
     }
 
+    public void SetActorThumb(ActorInfo actorInfo)
+    {
+        battleThumb.ShowActorThumb(actorInfo,false);
+        battleThumb.gameObject.SetActive(true);
+        var currentStatus = actorInfo.CurrentStatus;
+        statusInfoComponent.UpdateInfo(currentStatus);
+        statusInfoComponent.UpdateHp(actorInfo.MaxHp,currentStatus.Hp);
+        statusInfoComponent.UpdateMp(actorInfo.MaxMp,currentStatus.Mp);
+    }
+
     public void HideThumb()
     {
         battleThumb.gameObject.SetActive(false);

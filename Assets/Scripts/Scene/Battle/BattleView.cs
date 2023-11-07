@@ -36,15 +36,15 @@ public class BattleView : BaseView ,IInputHandlerEvent
     }
     private bool _animationBusy = false;
     public bool AnimationBusy => _animationBusy;
+    public void SetAnimationBusy(bool isBusy)
+    {
+        _animationBusy = isBusy;
+    }
     
     private List<MakerEffectData.SoundTimings> _soundTimings = null;
 
     private Dictionary<int,BattlerInfoComponent> _battlerComps = new Dictionary<int, BattlerInfoComponent>();
-    private int _animationEndTiming = 0;
-    public void SetAnimationEndTiming(int value)
-    {
-        _animationEndTiming = value;
-    }
+
 
     public override void Initialize() 
     {
@@ -424,10 +424,8 @@ public class BattleView : BaseView ,IInputHandlerEvent
     {
         DeactivateActorList();
         DeactivateEnemyList();
-        _animationBusy = true;
         if (GameSystem.ConfigData._battleAnimationSkip == true) 
         {
-            _animationEndTiming = 1;
             return;
         }
         _battlerComps[targetIndex].StartAnimation(effekseerEffectAsset,animationPosition);
@@ -437,10 +435,8 @@ public class BattleView : BaseView ,IInputHandlerEvent
     {
         DeactivateActorList();
         DeactivateEnemyList();
-        _animationBusy = true;
         if (GameSystem.ConfigData._battleAnimationSkip == true) 
         {
-            _animationEndTiming = 1;
             return;
         }
         // transformの位置でエフェクトを再生する
@@ -471,7 +467,6 @@ public class BattleView : BaseView ,IInputHandlerEvent
     {
         DeactivateActorList();
         DeactivateEnemyList();
-        _animationBusy = true;
         EffekseerHandle handle = EffekseerSystem.PlayEffect(effekseerEffectAsset, centerAnimPosition.transform.position);
     }
 
@@ -533,11 +528,6 @@ public class BattleView : BaseView ,IInputHandlerEvent
     private new void Update() 
     {     
         base.Update();
-        if (_animationBusy == true)
-        {
-            CheckAnimationBusy();
-            return;
-        }
         if (_battleBusy == true) return;
         var eventData = new BattleViewEvent(CommandType.UpdateAp);
         _commandData(eventData);
@@ -546,40 +536,6 @@ public class BattleView : BaseView ,IInputHandlerEvent
     public void UpdateAp() 
     {
         battleGridLayer.UpdatePosition();
-    }
-
-    private void CheckAnimationBusy()
-    {
-        if (_animationBusy == true)
-        {
-            bool IsBusy = false;
-            if (_animationEndTiming > 0)
-            {
-                _animationEndTiming--;
-                return;
-            }
-            foreach (var item in _battlerComps)
-            {
-                if (item.Value.IsBusy == true)
-                {
-                    IsBusy = true;
-                    break;
-                }
-            }
-            if (IsBusy == false && _animationEndTiming <= 0)
-            {
-                _animationBusy = false;
-                foreach (var item in _battlerComps)
-                {
-                    if (item.Value.EffekseerEmitter.enabled)
-                    {
-                        item.Value.DisableEmitter();
-                    }
-                }
-                var eventData = new BattleViewEvent(CommandType.EndAnimation);
-                _commandData(eventData);
-            }
-        }
     }
 
     public void SetSideMenu(List<SystemData.CommandData> menuCommands){

@@ -8,19 +8,14 @@ using TMPro;
 public class TacticsView : BaseView
 {
     [SerializeField] private BaseList tacticsCommandList = null;
-    [SerializeField] private SkillList skillList = null;
     [SerializeField] private TacticsCharaLayer tacticsCharaLayer = null;
 
-    [SerializeField] private TacticsTrainList tacticsTrainList = null;
 
-    [SerializeField] private TacticsAlchemyList tacticsAlchemyList = null;
+    [SerializeField] private BattleSelectCharacter battleSelectCharacter = null;
+    [SerializeField] private TacticsSelectCharacter selectCharacter = null;
 
-    [SerializeField] private BaseList tacticsAttributeList = null;
     
-    [SerializeField] private TacticsRecoveryList tacticsRecoveryList = null;
     [SerializeField] private TacticsEnemyList tacticsEnemyList = null;
-    [SerializeField] private TacticsBattleList tacticsBattleList = null;
-    [SerializeField] private TacticsResourceList tacticsResourceList = null;
     [SerializeField] private StageInfoComponent stageInfoComponent = null;
     [SerializeField] private AlcanaInfoComponent alcanaInfoComponent = null;
 
@@ -39,28 +34,28 @@ public class TacticsView : BaseView
     {
         base.Initialize();
 
-        skillList.Initialize();
-        InitializeSkillActionList();
+        battleSelectCharacter.Initialize();
+        SetInputHandler(battleSelectCharacter.GetComponent<IInputHandlerEvent>());
+        InitializeSelectCharacter();
+        //skillList.Initialize();
         //skillList.InitializeAttribute((attribute) => CallAttributeTypes(attribute));
         
-        tacticsTrainList.Initialize((actorinfo) => CallActorTrain(actorinfo));
-        SetInputHandler(tacticsTrainList.GetComponent<IInputHandlerEvent>());
+        //tacticsTrainList.Initialize(() => CallActorTrain());
+        //SetInputHandler(tacticsTrainList.GetComponent<IInputHandlerEvent>());
         
+
         SetRuleButton(true);
         SetDropoutButton(true);
 
         new TacticsPresenter(this);
     }
     
-    private void InitializeSkillActionList()
+    private void InitializeSelectCharacter()
     {
-        skillList.InitializeAction();
-        skillList.SetInputHandlerAction(InputKeyType.Decide,() => CallSkillAction());
-        skillList.SetInputHandlerAction(InputKeyType.Cancel,() => OnClickBack());
-        SetInputHandler(skillList.skillActionList.GetComponent<IInputHandlerEvent>());
-        //SetInputHandler(skillList.skillAttributeList.GetComponent<IInputHandlerEvent>());
-        skillList.HideActionList();
-        skillList.HideAttributeList();
+        battleSelectCharacter.SetInputHandlerAction(InputKeyType.Decide,() => CallSkillAlchemy());
+        battleSelectCharacter.SetInputHandlerAction(InputKeyType.Cancel,() => OnClickBack());
+        SetInputHandler(battleSelectCharacter.DeckMagicList.GetComponent<IInputHandlerEvent>());
+        battleSelectCharacter.HideActionList();
     }
 
     public void SetUIButton()
@@ -106,12 +101,6 @@ public class TacticsView : BaseView
         //ruleButton.gameObject.SetActive(isActive);
     }
     
-    private void OnClickRuling()
-    {
-        var eventData = new TacticsViewEvent(CommandType.Rule);
-        _commandData(eventData);
-    }
-
     private void SetDropoutButton(bool isActive)
     {
         //dropoutButton.gameObject.SetActive(isActive);
@@ -195,38 +184,18 @@ public class TacticsView : BaseView
 
     public void SetActors(List<ActorInfo> actorInfos,List<ListData> confirmCommands,Dictionary<TacticsComandType, int> commandRankInfo)
     {
+        selectCharacter.Initialize(actorInfos.Count);
+        SetInputHandler(selectCharacter.GetComponent<IInputHandlerEvent>());
+        selectCharacter.SetTacticsCommand(confirmCommands);
+        selectCharacter.SetInputHandlerCharacter(InputKeyType.Decide,() => CallActorTrain());
+        selectCharacter.SetInputHandlerCharacter(InputKeyType.Right,() => CallRecoveryPlus());
+        selectCharacter.SetInputHandlerCharacter(InputKeyType.Left,() => CallRecoveryMinus());
+        selectCharacter.SetInputHandlerCommand(InputKeyType.Decide,() => CallTrainCommand());
+        SetInputHandler(selectCharacter.CharacterList.GetComponent<IInputHandlerEvent>());
+        SetInputHandler(selectCharacter.CommandList.GetComponent<IInputHandlerEvent>());
+        
         tacticsCharaLayer.Initialize(actorInfos);
         SetInputHandler(tacticsCharaLayer.GetComponent<IInputHandlerEvent>());
-    
-        tacticsTrainList.Refresh(actorInfos,commandRankInfo[TacticsComandType.Train]);
-        tacticsTrainList.InitializeConfirm(confirmCommands,() => CallTrainCommand());
-        //HideTrainList();
-
-        tacticsAlchemyList.Initialize(actorInfos,(actorinfo) => CallActorAlchemy(actorinfo),commandRankInfo[TacticsComandType.Alchemy]);
-        SetInputHandler(tacticsAlchemyList.GetComponent<IInputHandlerEvent>());
-        tacticsAlchemyList.InitializeConfirm(confirmCommands,() => CallAlchemyCommand());
-        //HideAlchemyList();
-
-        tacticsRecoveryList.Initialize(actorInfos,
-            (actorinfo) => CallActorRecovery(actorinfo),
-            (actorinfo) => CallRecoveryPlus(actorinfo),
-            (actorinfo) => CallRecoveryMinus(actorinfo),
-            commandRankInfo[TacticsComandType.Recovery]
-        );
-        SetInputHandler(tacticsRecoveryList.GetComponent<IInputHandlerEvent>());
-        tacticsRecoveryList.InitializeConfirm(confirmCommands,() => CallRecoveryCommand());
-        //HideRecoveryList();
-
-        
-        tacticsBattleList.Initialize(actorInfos,(actorinfo) => CallActorBattle(actorinfo),commandRankInfo[TacticsComandType.Battle]);
-        SetInputHandler(tacticsBattleList.GetComponent<IInputHandlerEvent>());
-        tacticsBattleList.InitializeConfirm(confirmCommands,() => CallBattleCommand());
-        //HideBattleList();
-
-        tacticsResourceList.Initialize(actorInfos,(actorinfo) => CallActorResource(actorinfo),commandRankInfo[TacticsComandType.Resource]);
-        SetInputHandler(tacticsResourceList.GetComponent<IInputHandlerEvent>());
-        tacticsResourceList.InitializeConfirm(confirmCommands,() => CallResourceCommand());
-        //HideResourceList();
     }
 
     public void SetEnemies(List<TroopInfo> troopInfos)
@@ -240,19 +209,19 @@ public class TacticsView : BaseView
         switch (tacticsComandType)
         {
             case TacticsComandType.Train:
-            tacticsTrainList.Refresh();
+            selectCharacter.Refresh();
             return;
             case TacticsComandType.Alchemy:
-            tacticsAlchemyList.Refresh();
+            selectCharacter.Refresh();
             return;
             case TacticsComandType.Recovery:
-            tacticsRecoveryList.Refresh();
+            selectCharacter.Refresh();
             return;
             case TacticsComandType.Battle:
-            tacticsBattleList.Refresh();
+            selectCharacter.Refresh();
             return;
             case TacticsComandType.Resource:
-            tacticsResourceList.Refresh();
+            selectCharacter.Refresh();
             return;
         }
     }
@@ -267,19 +236,24 @@ public class TacticsView : BaseView
         tacticsAlcana.UseAnim();
     }
 
-    private void CallActorTrain(int actorId)
+    private void CallActorTrain()
     {
         if (_lastCallEventType != CommandType.None) return;
-        var eventData = new TacticsViewEvent(CommandType.SelectActorTrain);
-        eventData.templete = actorId;
-        _commandData(eventData);
-        _lastCallEventType = eventData.commandType;
+        var listData = selectCharacter.CharacterData;
+        if (listData != null)
+        {
+            var data = (TacticsActorInfo)listData.Data;
+            var eventData = new TacticsViewEvent(CommandType.SelectTacticsActor);
+            eventData.templete = data;
+            _commandData(eventData);
+            _lastCallEventType = eventData.commandType;
+        }
     }
 
     private void CallTrainCommand()
     {
         if (_lastCallEventType != CommandType.None) return;
-        var commandData = tacticsTrainList.CommandData;
+        var commandData = selectCharacter.CommandData;
         if (commandData != null)
         {
             var data = (SystemData.CommandData)commandData.Data;
@@ -288,153 +262,90 @@ public class TacticsView : BaseView
             {
                 commandType = ConfirmComandType.Yes;
             }
-            var eventData = new TacticsViewEvent(CommandType.TrainClose);
+            var eventData = new TacticsViewEvent(CommandType.TacticsCommandClose);
             eventData.templete = commandType;
             _commandData(eventData);
             _lastCallEventType = eventData.commandType;
         }
     }
 
-    public void ShowTrainList()
+    public void ShowSelectCharacter(List<ListData> tacticsActorInfo,int lv,string description)
     {
-        tacticsTrainList.gameObject.SetActive(true);
+        selectCharacter.SetTacticsChracter(tacticsActorInfo);
+        selectCharacter.SetTacticsTitle(lv,description);
+        selectCharacter.gameObject.SetActive(true);
         HelpWindow.SetInputInfo("TRAIN");
     }
 
-    public void HideTrainList()
+    public void HideSelectCharacter()
     {
-        tacticsTrainList.gameObject.SetActive(false);
+        selectCharacter.gameObject.SetActive(false);
         HelpWindow.SetInputInfo("TACTICS");
     }
 
-    private void CallActorAlchemy(int actorId)
+    public void ShowSelectCharacterCommand()
     {
-        if (_lastCallEventType != CommandType.None) return;
-        var eventData = new TacticsViewEvent(CommandType.SelectActorAlchemy);
-        eventData.templete = actorId;
-        _commandData(eventData);
-        _lastCallEventType = eventData.commandType;
+        selectCharacter.ShowCharacterList();
+        selectCharacter.ShowCommandList();
     }
 
-    private void CallAlchemyCommand()
+    public void HideSelectCharacterCommand()
     {
-        if (_lastCallEventType != CommandType.None) return;
-        var commandData = tacticsAlchemyList.CommandData;
-        if (commandData != null)
-        {
-            var data = (SystemData.CommandData)tacticsAlchemyList.CommandData.Data;
-            var commandType = ConfirmComandType.No;
-            if (data.Key == "Yes")
-            {
-                commandType = ConfirmComandType.Yes;
-            }
-            var eventData = new TacticsViewEvent(CommandType.AlchemyClose);
-            eventData.templete = commandType;
-            _commandData(eventData);
-            _lastCallEventType = eventData.commandType;
-        }
+        selectCharacter.HideCharacterList();
+        selectCharacter.HideCommandList();
     }
 
-    public void ShowAlchemyList()
+    public void ShowAttributeList(ActorInfo actorInfo, List<ListData> learnMagicList)
     {
-        tacticsAlchemyList.gameObject.SetActive(true);
-        HelpWindow.SetInputInfo("ALCHEMY");
-    }
-
-    public void HideAlchemyList()
-    {
-        tacticsAlchemyList.gameObject.SetActive(false);
-        HelpWindow.SetInputInfo("TACTICS");
-    }
-
-    public void ShowAttributeList()
-    {
-        tacticsAttributeList.Activate();
-        tacticsAttributeList.gameObject.SetActive(true);
+        //battleSelectCharacter.SetActorThumb(actorInfo);
+        battleSelectCharacter.SetSkillInfos(learnMagicList);
+        battleSelectCharacter.ShowActionList();
+        battleSelectCharacter.DeckMagicList.Activate();
         HelpWindow.SetInputInfo("ALCHEMY_ATTRIBUTE");
     }
 
     public void HideAttributeList()
     {
-        tacticsAttributeList.Deactivate();
-        tacticsAttributeList.gameObject.SetActive(false);
+        battleSelectCharacter.HideActionList();
+        battleSelectCharacter.DeckMagicList.Deactivate();
         HelpWindow.SetInputInfo("ALCHEMY");
     }
 
-    public void ShowSkillAlchemyList(List<ListData> skillInfos)
-    {
-        skillList.ShowActionList();
-        skillList.SetSkillInfos(skillInfos);
-        skillList.RefreshAction();
-        HelpWindow.SetInputInfo("ALCHEMY_SKILL");
-        //skillList.ShowAttributeList();
-    }
-
-    public void HideSkillAlchemyList()
-    {
-        skillList.HideActionList();
-        skillList.HideAttributeList();
-        HelpWindow.SetInputInfo("ALCHEMY_ATTRIBUTE");
-    }
-
-    private void CallRecoveryCommand()
+    private void CallRecoveryPlus()
     {
         if (_lastCallEventType != CommandType.None) return;
-        var commandData = tacticsRecoveryList.CommandData;
-        if (commandData != null)
+        var listData = selectCharacter.CharacterData;
+        if (listData != null)
         {
-            var data = (SystemData.CommandData)tacticsRecoveryList.CommandData.Data;
-            var commandType = ConfirmComandType.No;
-            if (data.Key == "Yes")
+            var data = (TacticsActorInfo)listData.Data;
+            if (data.TacticsComandType != TacticsComandType.Recovery)
             {
-                commandType = ConfirmComandType.Yes;
+                return;
             }
-            var eventData = new TacticsViewEvent(CommandType.RecoveryClose);
-            eventData.templete = commandType;
+            var eventData = new TacticsViewEvent(CommandType.SelectRecoveryPlus);
+            eventData.templete = data.ActorInfo.ActorId;
             _commandData(eventData);
             _lastCallEventType = eventData.commandType;
         }
     }
 
-    private void CallActorRecovery(int actorId)
+    private void CallRecoveryMinus()
     {
         if (_lastCallEventType != CommandType.None) return;
-        var eventData = new TacticsViewEvent(CommandType.SelectActorRecovery);
-        eventData.templete = actorId;
-        _commandData(eventData);
-        _lastCallEventType = eventData.commandType;
+        var listData = selectCharacter.CharacterData;
+        if (listData != null)
+        {
+            var data = (TacticsActorInfo)listData.Data;
+            if (data.TacticsComandType != TacticsComandType.Recovery)
+            {
+                return;
+            }
+            var eventData = new TacticsViewEvent(CommandType.SelectRecoveryMinus);
+            eventData.templete = data.ActorInfo.ActorId;
+            _commandData(eventData);
+            _lastCallEventType = eventData.commandType;
+        }
     }
-
-    private void CallRecoveryPlus(int actorId)
-    {
-        if (_lastCallEventType != CommandType.None) return;
-        var eventData = new TacticsViewEvent(CommandType.SelectRecoveryPlus);
-        eventData.templete = actorId;
-        _commandData(eventData);
-        _lastCallEventType = eventData.commandType;
-    }
-
-    private void CallRecoveryMinus(int actorId)
-    {
-        if (_lastCallEventType != CommandType.None) return;
-        var eventData = new TacticsViewEvent(CommandType.SelectRecoveryMinus);
-        eventData.templete = actorId;
-        _commandData(eventData);
-        _lastCallEventType = eventData.commandType;
-    }
-
-    public void ShowRecoveryList()
-    {
-        tacticsRecoveryList.gameObject.SetActive(true);
-        HelpWindow.SetInputInfo("RECOVERY");
-    }
-
-    public void HideRecoveryList()
-    {
-        tacticsRecoveryList.gameObject.SetActive(false);
-        HelpWindow.SetInputInfo("TACTICS");
-    }
-
 
     private void CallBattleEnemy(int enemyIndex)
     {
@@ -480,112 +391,6 @@ public class TacticsView : BaseView
         HelpWindow.SetInputInfo("TACTICS");
     }
 
-    private void CallBattleCommand()
-    {
-        if (_lastCallEventType != CommandType.None) return;
-        var commandData = tacticsBattleList.CommandData;
-        if (commandData != null)
-        {
-            var data = (SystemData.CommandData)tacticsBattleList.CommandData.Data;
-            var commandType = ConfirmComandType.No;
-            if (data.Key == "Yes")
-            {
-                commandType = ConfirmComandType.Yes;
-            }
-            var eventData = new TacticsViewEvent(CommandType.BattleClose);
-            eventData.templete = commandType;
-            _commandData(eventData);
-            _lastCallEventType = eventData.commandType;
-        }
-    }
-
-    public void ShowBattleList()
-    {
-        tacticsBattleList.gameObject.SetActive(true);
-        tacticsBattleList.Activate();
-        HelpWindow.SetInputInfo("ENEMY_BATTLE");
-    }
-
-    public void HideBattleList()
-    {
-        tacticsBattleList.gameObject.SetActive(false);
-        tacticsBattleList.Deactivate();
-        HelpWindow.SetInputInfo("ENEMY_SELECT");
-    }
-
-    private void CallActorBattle(int actorId)
-    {
-        if (_lastCallEventType != CommandType.None) return;
-        var eventData = new TacticsViewEvent(CommandType.SelectActorBattle);
-        eventData.templete = actorId;
-        _commandData(eventData);
-        _lastCallEventType = eventData.commandType;
-    }
-
-    private void CallActorResource(int actorId)
-    {
-        if (_lastCallEventType != CommandType.None) return;
-        var eventData = new TacticsViewEvent(CommandType.SelectActorResource);
-        eventData.templete = actorId;
-        _commandData(eventData);
-        _lastCallEventType = eventData.commandType;
-    }
-
-    public void ShowResourceList()
-    {
-        tacticsResourceList.gameObject.SetActive(true);
-        HelpWindow.SetInputInfo("RESOURCE");
-    }
-
-    public void HideResourceList()
-    {
-        tacticsResourceList.gameObject.SetActive(false);
-        HelpWindow.SetInputInfo("TACTICS");
-    }
-
-    private void CallResourceCommand()
-    {
-        if (_lastCallEventType != CommandType.None) return;
-        var commandData = tacticsResourceList.CommandData;
-        if (commandData != null)
-        {
-            var data = (SystemData.CommandData)tacticsResourceList.CommandData.Data;
-            var commandType = ConfirmComandType.No;
-            if (data.Key == "Yes")
-            {
-                commandType = ConfirmComandType.Yes;
-            }
-            var eventData = new TacticsViewEvent(CommandType.ResourceClose);
-            eventData.templete = commandType;
-            _commandData(eventData);
-            _lastCallEventType = eventData.commandType;
-        }
-    }
-
-    private void OnClickLeft()
-    {
-        if (_lastCallEventType != CommandType.None) return;
-        var eventData = new TacticsViewEvent(CommandType.LeftActor);
-        _commandData(eventData);
-        _lastCallEventType = eventData.commandType;
-    }
-
-    private void OnClickRight()
-    {
-        if (_lastCallEventType != CommandType.None) return;
-        var eventData = new TacticsViewEvent(CommandType.RightActor);
-        _commandData(eventData);
-        _lastCallEventType = eventData.commandType;
-    }
-
-    private void OnClickDecide()
-    {
-        if (_lastCallEventType != CommandType.None) return;
-        var eventData = new TacticsViewEvent(CommandType.DecideActor);
-        _commandData(eventData);
-        _lastCallEventType = eventData.commandType;
-    }
-
     public void SetTurns(int turns)
     {
         turnText.text = turns.ToString();
@@ -595,53 +400,19 @@ public class TacticsView : BaseView
     {
         numinousText.text = numinous.ToString();
     }
-    
-
-    public void SetAttributeTypes(List<ListData> attributeTypes)
-    {
-        //skillList.RefreshAttribute(attributeTypes);
-        tacticsAttributeList.Initialize(attributeTypes.Count);
-        tacticsAttributeList.SetData(attributeTypes);
-        tacticsAttributeList.SetInputHandler(InputKeyType.Decide,() => CallSkillAlchemy());
-        tacticsAttributeList.SetInputHandler(InputKeyType.Cancel,() => OnClickBack());
-        SetInputHandler(tacticsAttributeList.GetComponent<IInputHandlerEvent>());
-        tacticsAttributeList.Deactivate();
-    }
-
-    public void SetAttributeValues(List<ListData> attributeInfos,int currensy)
-    {
-        tacticsAttributeList.SetData(attributeInfos);
-        //tacticsAttributeList.SelectEnableIndex();
-    }
 
     private void CallSkillAlchemy()
     {
         if (_lastCallEventType != CommandType.None) return;
         var eventData = new TacticsViewEvent(CommandType.SkillAlchemy);
-        var listData = tacticsAttributeList.ListData;
-        if (listData != null && ((SkillData.SkillAttributeInfo)listData.Data).AttributeType != AttributeType.None)
+        var listData = battleSelectCharacter.ActionData;
+        if (listData != null)
         {
-            var data = (SkillData.SkillAttributeInfo)listData.Data;
-            eventData.templete = data.AttributeType;
+            var data = (SkillInfo)listData;
+            eventData.templete = listData;
             _commandData(eventData);
             _lastCallEventType = eventData.commandType;
         }
-    }
-
-    private void CallSkillAction()
-    {
-        var eventData = new TacticsViewEvent(CommandType.SelectAlchemySkill);
-        var item = skillList.ActionData;
-        if (item != null)
-        {
-            eventData.templete = item.Id;
-            _commandData(eventData);
-        }
-    }
-
-    public void CommandAttributeType(AttributeType attributeType)
-    {
-        
     }
 
     public void ActivateCommandList()
@@ -662,20 +433,12 @@ public class TacticsView : BaseView
 
     public void ActivateTacticsCommand()
     {
-        if (tacticsTrainList.gameObject.activeSelf) tacticsTrainList.Activate();
-        if (tacticsAlchemyList.gameObject.activeSelf) tacticsAlchemyList.Activate();
-        if (tacticsRecoveryList.gameObject.activeSelf) tacticsRecoveryList.Activate();
-        if (tacticsResourceList.gameObject.activeSelf) tacticsResourceList.Activate();
-        if (tacticsBattleList.gameObject.activeSelf) tacticsBattleList.Activate();
+        if (selectCharacter.CharacterList.gameObject.activeSelf) selectCharacter.CharacterList.Activate();
     }
 
     public void DeactivateTacticsCommand()
     {
-        if (tacticsTrainList.gameObject.activeSelf) tacticsTrainList.Deactivate();
-        if (tacticsAlchemyList.gameObject.activeSelf) tacticsAlchemyList.Deactivate();
-        if (tacticsRecoveryList.gameObject.activeSelf) tacticsRecoveryList.Deactivate();
-        if (tacticsResourceList.gameObject.activeSelf) tacticsResourceList.Deactivate();
-        if (tacticsBattleList.gameObject.activeSelf) tacticsBattleList.Deactivate();
+        if (selectCharacter.CharacterList.gameObject.activeSelf) selectCharacter.CharacterList.Deactivate();
     }
 
     public void SetSideMenu(List<SystemData.CommandData> menuCommands){
@@ -751,27 +514,17 @@ namespace Tactics
         None = 0,
         AddAlcana,
         TacticsCommand,
-        DecideActor,
-        LeftActor,
-        RightActor,
-        SelectActorTrain,
-        TrainClose,
+        SelectTacticsActor, // アクターを決定
+        TacticsCommandClose,
         SelectActorAlchemy,
-        AlchemyClose,
         SelectAlchemyClose,
         SkillAlchemy,
-        SelectAlchemySkill,
-        SelectActorRecovery,
         SelectRecoveryPlus,
         SelectRecoveryMinus,
-        RecoveryClose,
         SelectBattleEnemy,
         PopupSkillInfo,
-        BattleClose,
-        SelectActorBattle,
         EnemyClose,
         SelectActorResource,
-        ResourceClose,
         ShowUi,
         HideUi,
         OpenAlcana,

@@ -9,7 +9,7 @@ public class StatusView : BaseView ,IInputHandlerEvent
     [SerializeField] private ActorInfoComponent actorInfoComponent = null;
     [SerializeField] private StatusActorList actorList = null;
     [SerializeField] private BaseList commandList = null;
-    [SerializeField] private SkillList skillList = null;
+    [SerializeField] private BattleSelectCharacter selectCharacter = null;
     [SerializeField] private Button decideButton = null;
     private new System.Action<StatusViewEvent> _commandData = null;
     [SerializeField] private GameObject helpRoot = null;
@@ -27,22 +27,19 @@ public class StatusView : BaseView ,IInputHandlerEvent
     public override void Initialize() 
     {
         base.Initialize();
-        skillList.Initialize();
-        InitializeSkillActionList();
-        skillList.InitializeAttribute(System.Enum.GetValues(typeof(AttributeType)).Length,() => CallAttributeTypes(),null);
+        selectCharacter.Initialize();
+        SetInputHandler(selectCharacter.GetComponent<IInputHandlerEvent>());
+        InitializeSelectCharacter();
         
         new StatusPresenter(this);
     }
 
-    private void InitializeSkillActionList()
+    private void InitializeSelectCharacter()
     {
-        skillList.InitializeAction();
-        skillList.SetInputHandlerAction(InputKeyType.Cancel,() => OnClickBack());
-        skillList.SetInputHandlerAction(InputKeyType.Decide,() => CallSkillLearning());
-        SetInputHandler(skillList.skillActionList.GetComponent<IInputHandlerEvent>());
-        SetInputHandler(skillList.attributeList.GetComponent<IInputHandlerEvent>());
-        skillList.HideActionList();
-        skillList.HideAttributeList();
+        selectCharacter.SetInputHandlerAction(InputKeyType.Decide,null);
+        selectCharacter.SetInputHandlerAction(InputKeyType.Cancel,() => OnClickBack());
+        SetInputHandler(selectCharacter.DeckMagicList.GetComponent<IInputHandlerEvent>());
+        selectCharacter.HideActionList();
     }
     
     public void SetUIButton()
@@ -269,21 +266,10 @@ public class StatusView : BaseView ,IInputHandlerEvent
         _commandData(eventData);
     }
 
-    private void CallSkillLearning()
-    {
-        var eventData = new StatusViewEvent(CommandType.SelectSkillLearning);
-        var item = skillList.ActionData;
-        if (item != null)
-        {
-            eventData.templete = item;
-            _commandData(eventData);
-        }
-    }
 
     public void ShowSkillActionList()
     {
-        skillList.ShowActionList();
-        skillList.ShowAttributeList();
+        selectCharacter.ShowActionList();
         ActivateSkillActionList();
         if (_isDisplayDecide)
         {
@@ -296,8 +282,7 @@ public class StatusView : BaseView ,IInputHandlerEvent
 
     public void HideSkillActionList()
     {
-        skillList.HideActionList();
-        skillList.HideAttributeList();
+        selectCharacter.HideActionList();
         DeactivateSkillActionList();
         if (_isDisplayDecide)
         {
@@ -310,63 +295,34 @@ public class StatusView : BaseView ,IInputHandlerEvent
 
     public int SelectedSkillId()
     {
-        var listData = skillList.skillActionList.ListData;
+        var listData = selectCharacter.ActionData;
         if (listData != null)
         {
-            return ((SkillInfo)listData.Data).Id;
+            return ((SkillInfo)listData).Id;
         }
         return -1;
     }
     
     public void ActivateSkillActionList()
     {
-        skillList.skillActionList.Activate();
-        skillList.attributeList.Activate();
+        selectCharacter.DeckMagicList.Activate();
     }
 
     public void DeactivateSkillActionList()
     {
-        skillList.skillActionList.Deactivate();
-        skillList.attributeList.Deactivate();
-    }
-
-    public void ShowAttributeList()
-    {
-        skillList.ShowAttributeList();
-    }
-
-    public void HideAttributeList()
-    {
-        skillList.HideAttributeList();
+        selectCharacter.DeckMagicList.Deactivate();
     }
     
     public void RefreshSkillActionList(List<ListData> skillInfos,List<ListData> attributeTypes,int currentAttibuteType,int lastSelectIndex)
     {
-        skillList.SetSkillInfos(skillInfos);
-        skillList.RefreshAction(lastSelectIndex);
-        skillList.RefreshAttribute(attributeTypes);
-    }
-
-    public void SetAttributeTypes(List<ListData> listData)
-    {
-        skillList.RefreshAttribute(listData);
-    }
-
-    private void CallAttributeTypes()
-    {
-        var listData = skillList.AttributeInfo;
-        if (listData != null)
-        {
-            var eventData = new StatusViewEvent(CommandType.AttributeType);
-            eventData.templete = listData.AttributeType;
-            _commandData(eventData);
-        }
+        selectCharacter.SetSkillInfos(skillInfos);
+        selectCharacter.RefreshAction(lastSelectIndex);
     }
 
     public void CommandRefresh(int remainSp,int remainNuminous)
     {
         //skillList.RefreshAction();
-        skillList.RefreshCostInfo();
+        selectCharacter.RefreshCostInfo();
     }
 
     public void InputHandler(InputKeyType keyType,bool pressed)

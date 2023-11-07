@@ -570,9 +570,21 @@ public class BattleModel : BaseModel
                 }
             }
         } else{
-            foreach (var battlerInfo in _party.BattlerInfos)
+            if (rangeType == RangeType.S)
             {
-                targetIndexList.Add(battlerInfo.Index);
+                if ((lineType == LineType.Back && !_troop.IsFrontAlive()) || lineType == LineType.Front)
+                {
+                    foreach (var battlerInfo in _party.BattlerInfos)
+                    {
+                        targetIndexList.Add(battlerInfo.Index);
+                    }
+                }
+            } else
+            {
+                foreach (var battlerInfo in _party.BattlerInfos)
+                {
+                    targetIndexList.Add(battlerInfo.Index);
+                }
             }
         }
         return targetIndexList;

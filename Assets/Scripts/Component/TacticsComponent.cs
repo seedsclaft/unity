@@ -31,8 +31,13 @@ public class TacticsComponent : MonoBehaviour
 
     [SerializeField] private GameObject busyRoot;
     [SerializeField] private TextMeshProUGUI busyText;
+
+    [SerializeField] private List<GameObject> viewObjects;
     public void UpdateInfo(ActorInfo actorInfo,TacticsComandType tacticsComandType)
     {
+        viewObjects.ForEach(a => a.SetActive(false));
+        UpdateViewObjects(tacticsComandType);
+
         _actorInfo = actorInfo;
         TacticsComandType currentTacticsComandType = actorInfo.TacticsComandType;
         if (actorInfoComponent != null)
@@ -120,5 +125,15 @@ public class TacticsComponent : MonoBehaviour
 
     public void SetToggleHandler(System.Action<int> handler){
         //checkToggle.onValueChanged.AddListener((a) => handler(_actorInfo.ActorId));
+    }
+
+    private void UpdateViewObjects(TacticsComandType tacticsComandType)
+    {
+        var idx = 1;
+        foreach (var viewObject in viewObjects)
+        {
+            viewObject.SetActive((int)tacticsComandType == idx);
+            idx++;
+        }
     }
 }

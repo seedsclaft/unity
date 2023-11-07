@@ -28,7 +28,6 @@ public class StatusPresenter
         //_view.SetStrengthInfo(_model.ConfirmCommand());
         _view.SetStatusCommand(_model.StatusCommand());
         _model.ChangeSkillAttributeType();
-        _view.SetAttributeTypes(_model.AttributeAllTypes(null,(int)_model.CurrentAttributeType));
         if (_model.StatusActors().Count == 1) _view.HideArrows();
         CommandRefresh();
     }
@@ -239,12 +238,11 @@ public class StatusPresenter
             _model.SetLearnSkillInfo(skillInfo);
             var leariningSkillList = _model.LearningSkillList(skillInfo.Attribute);
             _view.RefreshSkillActionList(leariningSkillList,_model.AttributeAllTypes(),(int)_model.CurrentAttributeType,0);
-            _view.HideAttributeList();
+
         }
         if (skillInfo.LearningState == LearningState.SelectLearn)
         {
             _model.LearnSkillInfo(skillInfo);
-            _view.ShowAttributeList();
             CommandAttributeType(_model.CurrentAttributeType);
         }
         //_model.SetActorLastSkillId(skillInfo.Id);
