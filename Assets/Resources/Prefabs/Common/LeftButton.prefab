@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 6298383311719136321}
   - component: {fileID: 4096217598847286259}
   - component: {fileID: 1871006417537347122}
-  - component: {fileID: 1944043579312255044}
   m_Layer: 5
   m_Name: LeftButton
   m_TagString: Untagged
@@ -123,22 +122,6 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &1944043579312255044
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 433919834750711742}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bc4c71f8b90ac884bbf1265e0d6b4205, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  clickButton: {fileID: 1871006417537347122}
-  cursor: {fileID: 0}
-  disable: {fileID: 0}
-  commandName: {fileID: 0}
 --- !u!1 &5276677715966647995
 GameObject:
   m_ObjectHideFlags: 0

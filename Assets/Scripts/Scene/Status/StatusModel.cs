@@ -23,8 +23,6 @@ public class StatusModel : BaseModel
 
     private int _useNuminous = 0;
     private int _currentIndex = 0; 
-    private AttributeType _currentAttributeType = AttributeType.Fire;
-    public AttributeType CurrentAttributeType => _currentAttributeType;
 
     public ActorInfo CurrentActor
     {
@@ -38,15 +36,6 @@ public class StatusModel : BaseModel
         } else
         if (_currentIndex < 0){
             _currentIndex = StatusActors().Count-1;
-        }
-        ChangeSkillAttributeType();
-    }
-
-    public void ChangeSkillAttributeType()
-    {
-        if (CurrentActor.LastSelectSkillId > 0)
-        {
-            _currentAttributeType = CurrentActor.Skills.Find(a => a.Id == CurrentActor.LastSelectSkillId).Attribute;
         }
     }
     
@@ -80,29 +69,11 @@ public class StatusModel : BaseModel
     }
 
 
-    public void LearnSkillInfo(SkillInfo skillInfo)
-    {
-        if (_learnSkillInfo != null)
-        {
-            CurrentActor.ForgetSkill(_learnSkillInfo);
-            if (skillInfo.Id == 2009)
-            {
-                CurrentActor.LearnSkillAttribute((int)_currentAttributeType + 2000,0,_currentAttributeType);
-            } else{
-                CurrentActor.LearnSkill(skillInfo.Id);
-            }
-            _learnSkillInfo = null;
-        }
-    }
 
-    public List<ListData> SkillActionList(AttributeType attributeType)
+    public List<ListData> SkillActionList()
     {
-        _currentAttributeType = attributeType;
         List<SkillInfo> skillInfos = CurrentActor.Skills.FindAll(a => a.Id > 100);
-        if (_currentAttributeType != AttributeType.None)
-        {
-            skillInfos = skillInfos.FindAll(a => a.Attribute == _currentAttributeType);
-        }
+
         skillInfos.ForEach(a => a.SetEnable(true));
         var sortList1 = new List<SkillInfo>();
         var sortList2 = new List<SkillInfo>();
@@ -251,34 +222,4 @@ public class StatusModel : BaseModel
         return Currency - _useNuminous;
     }
 
-    public List<ListData> LearningSkillList(AttributeType attributeType)
-    {
-        List<SkillInfo> skillInfos = new List<SkillInfo>();
-        List<int> alchemyIds = PartyInfo.AlchemyIdList;
-        foreach (var alchemyId in alchemyIds)
-        {
-            if (skillInfos.Find(a => a.Id == alchemyId) == null)
-            {
-                SkillInfo skillInfo = new SkillInfo(alchemyId);
-                if (skillInfo.Master.Attribute == _currentAttributeType)
-                {
-                    skillInfo.SetLearningState(LearningState.SelectLearn);
-                    skillInfo.SetEnable(true);
-                    skillInfos.Add(skillInfo);
-                }
-            }
-        }
-        SkillInfo removeSkillInfo = new SkillInfo(2009);
-        removeSkillInfo.SetLearningState(LearningState.SelectLearn);
-        removeSkillInfo.SetEnable(true);
-        skillInfos.Add(removeSkillInfo);
-        var list = new List<ListData>();
-        var idx = 0;
-        foreach (var skillInfo in skillInfos)
-        {
-            var listData = new ListData(skillInfo,idx);
-            list.Add(listData);
-        }
-        return list;
-    }
 }

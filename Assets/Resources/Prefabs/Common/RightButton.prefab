@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 8336981902870602822}
   - component: {fileID: 2018178516290167796}
   - component: {fileID: 4408343379934983733}
-  - component: {fileID: 4476599793245431875}
   m_Layer: 5
   m_Name: RightButton
   m_TagString: Untagged
@@ -123,22 +122,6 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &4476599793245431875
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2512768162127015865}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bc4c71f8b90ac884bbf1265e0d6b4205, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  clickButton: {fileID: 4408343379934983733}
-  cursor: {fileID: 0}
-  disable: {fileID: 0}
-  commandName: {fileID: 0}
 --- !u!1 &7917386359295919804
 GameObject:
   m_ObjectHideFlags: 0

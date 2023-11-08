@@ -12,8 +12,12 @@ public class BattleSelectCharacter : MonoBehaviour
     [SerializeField] private BaseList conditionList;
     [SerializeField] private List<Toggle> magicConditionTabs;
     [SerializeField] private StatusInfoComponent statusInfoComponent;
+    [SerializeField] private GameObject detailObj;
+    [SerializeField] private ActorInfoComponent actorInfoComponent;
 
     private bool _isInit = false;
+
+    private SelectCharacterTabType _selectCharacterTabType = SelectCharacterTabType.Magic;
     
     public SkillInfo ActionData{
         get {
@@ -44,18 +48,27 @@ public class BattleSelectCharacter : MonoBehaviour
 
     private void SelectMagicConditionTab(int tabIndex)
     {
-        displaySelectCard.gameObject.SetActive(tabIndex == 0);
-        conditionList.gameObject.SetActive(tabIndex == 1);
-        magicConditionTabs[0].SetIsOnWithoutNotify(tabIndex == 0);
-        magicConditionTabs[1].SetIsOnWithoutNotify(tabIndex == 1);
-        if (tabIndex == 0)
+        _selectCharacterTabType = (SelectCharacterTabType)tabIndex;
+        displaySelectCard.gameObject.SetActive(tabIndex == (int)SelectCharacterTabType.Magic);
+        conditionList.gameObject.SetActive(tabIndex == (int)SelectCharacterTabType.Condition);
+        detailObj.gameObject.SetActive(tabIndex == (int)SelectCharacterTabType.Detail);
+        magicConditionTabs[0].SetIsOnWithoutNotify(tabIndex == (int)SelectCharacterTabType.Magic);
+        magicConditionTabs[1].SetIsOnWithoutNotify(tabIndex == (int)SelectCharacterTabType.Condition);
+        magicConditionTabs[2].SetIsOnWithoutNotify(tabIndex == (int)SelectCharacterTabType.Detail);
+        if (tabIndex == (int)SelectCharacterTabType.Magic)
         {
             deckMagicList.Activate();
             conditionList.Deactivate();
         } else
+        if (tabIndex == (int)SelectCharacterTabType.Condition)
         {
             deckMagicList.Deactivate();
             conditionList.Activate();
+        } else
+        if (tabIndex == (int)SelectCharacterTabType.Detail)
+        {
+            deckMagicList.Deactivate();
+            conditionList.Deactivate();
         }
     }
 
@@ -71,7 +84,7 @@ public class BattleSelectCharacter : MonoBehaviour
 
     public void SetActorThumb(ActorInfo actorInfo)
     {
-        battleThumb.ShowActorThumb(actorInfo,false);
+        battleThumb.ShowAllThumb(actorInfo);
         battleThumb.gameObject.SetActive(true);
         var currentStatus = actorInfo.CurrentStatus;
         statusInfoComponent.UpdateInfo(currentStatus);
@@ -107,9 +120,18 @@ public class BattleSelectCharacter : MonoBehaviour
         conditionList.SetData(conditionData);
     }
 
+    public void SetActorInfo(ActorInfo actorInfo,List<ActorInfo> party)
+    {
+        actorInfoComponent.UpdateInfo(actorInfo,party);
+    }
+
     private void DisplaySelectCard()
     {
         if (displaySelectCard == null)
+        {
+            return;
+        }
+        if (_selectCharacterTabType != SelectCharacterTabType.Magic)
         {
             return;
         }
@@ -156,4 +178,10 @@ public class BattleSelectCharacter : MonoBehaviour
         conditionList.Deactivate();
     }
     
+}
+
+public enum SelectCharacterTabType{
+    Magic = 0,
+    Condition = 1,
+    Detail = 2
 }

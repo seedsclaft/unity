@@ -8,16 +8,13 @@ public class StatusView : BaseView ,IInputHandlerEvent
 {
     [SerializeField] private ActorInfoComponent actorInfoComponent = null;
     [SerializeField] private StatusActorList actorList = null;
-    [SerializeField] private BaseList commandList = null;
     [SerializeField] private BattleSelectCharacter selectCharacter = null;
     [SerializeField] private Button decideButton = null;
     private new System.Action<StatusViewEvent> _commandData = null;
     [SerializeField] private GameObject helpRoot = null;
-    [SerializeField] private GameObject leftPrefab = null;
-    [SerializeField] private GameObject rightPrefab = null;
 
-    private Button _leftButton = null;
-    private Button _rightButton = null;
+    [SerializeField] private Button leftButton = null;
+    [SerializeField] private Button rightButton = null;
 
     private System.Action _backEvent = null;
     private bool _isDisplayDecide = false;
@@ -36,7 +33,7 @@ public class StatusView : BaseView ,IInputHandlerEvent
 
     private void InitializeSelectCharacter()
     {
-        selectCharacter.SetInputHandlerAction(InputKeyType.Decide,null);
+        selectCharacter.SetInputHandlerAction(InputKeyType.Decide,() => {});
         selectCharacter.SetInputHandlerAction(InputKeyType.Cancel,() => OnClickBack());
         SetInputHandler(selectCharacter.DeckMagicList.GetComponent<IInputHandlerEvent>());
         selectCharacter.HideActionList();
@@ -44,15 +41,9 @@ public class StatusView : BaseView ,IInputHandlerEvent
     
     public void SetUIButton()
     {
-        GameObject prefab2 = Instantiate(leftPrefab);
-        prefab2.transform.SetParent(helpRoot.transform, false);
-        _leftButton = prefab2.GetComponent<Button>();
-        _leftButton.onClick.AddListener(() => OnClickLeft());
+        leftButton.onClick.AddListener(() => OnClickLeft());
         
-        GameObject prefab3 = Instantiate(rightPrefab);
-        prefab3.transform.SetParent(helpRoot.transform, false);
-        _rightButton = prefab3.GetComponent<Button>();
-        _rightButton.onClick.AddListener(() => OnClickRight());
+        rightButton.onClick.AddListener(() => OnClickRight());
 
         decideButton.onClick.AddListener(() => OnClickDecide());
 
@@ -66,14 +57,14 @@ public class StatusView : BaseView ,IInputHandlerEvent
 
     public void ShowArrows()
     {
-        _leftButton.gameObject.SetActive(true);
-        _rightButton.gameObject.SetActive(true);
+        leftButton.gameObject.SetActive(true);
+        rightButton.gameObject.SetActive(true);
     }
 
     public void HideArrows()
     {
-        _leftButton.gameObject.SetActive(false);
-        _rightButton.gameObject.SetActive(false);
+        leftButton.gameObject.SetActive(false);
+        rightButton.gameObject.SetActive(false);
     }
 
     public void ShowDecideButton()
@@ -117,7 +108,6 @@ public class StatusView : BaseView ,IInputHandlerEvent
     {
         DisplayDecideButton(statusViewInfo.DisplayDecideButton);
         DisplayBackButton(statusViewInfo.DisplayBackButton);
-        DisableStrength(statusViewInfo.DisableStrength);
         SetBackEvent(statusViewInfo.BackEvent);
     }
 
@@ -154,11 +144,6 @@ public class StatusView : BaseView ,IInputHandlerEvent
         //if (_isDisplayBack == false) IsActive = false;
         base.SetActiveBack(IsActive);
     }
-
-    private void DisableStrength(bool IsDisable)
-    {
-        //commandList.SetDisable(DataSystem.StatusCommand[0],IsDisable);
-    }
     
     public void SetActorInfo(ActorInfo actorInfo,List<ActorInfo> actorInfos)
     {
@@ -187,47 +172,6 @@ public class StatusView : BaseView ,IInputHandlerEvent
         actorList.Deactivate();
     }
     
-    public void SetStatusCommand(List<ListData> menuCommands)
-    {
-        commandList.Initialize(menuCommands.Count);
-        commandList.SetData(menuCommands);
-        commandList.SetInputHandler(InputKeyType.Decide,() => CallStatusCommand());
-        SetInputHandler(commandList.GetComponent<IInputHandlerEvent>());
-        commandList.Activate();
-    }
-
-    private void CallStatusCommand()
-    {
-        if (actorList.AnimationBusy) return;
-        var eventData = new StatusViewEvent(CommandType.StatusCommand);
-        var listData = commandList.ListData;
-        if (listData != null)
-        {
-            var data = (SystemData.CommandData)listData.Data;
-            eventData.templete = data;
-            _commandData(eventData);
-        }
-    }
-
-    public void ShowCommandList()
-    {
-        commandList.gameObject.SetActive(true);
-    }
-
-    public void HideCommandList()
-    {
-        commandList.gameObject.SetActive(false);
-    }
-
-    public void ActivateCommandList()
-    {
-        commandList.Activate();
-    }
-
-    public void DeactivateCommandList()
-    {
-        commandList.Deactivate();
-    }
 
     private void OnClickBack()
     {
@@ -237,7 +181,7 @@ public class StatusView : BaseView ,IInputHandlerEvent
 
     private void OnClickLeft()
     {
-        if (!_leftButton.gameObject.activeSelf) return;
+        if (!leftButton.gameObject.activeSelf) return;
         if (actorList.AnimationBusy) return;
         var eventData = new StatusViewEvent(CommandType.LeftActor);
         _commandData(eventData);
@@ -245,7 +189,7 @@ public class StatusView : BaseView ,IInputHandlerEvent
 
     private void OnClickRight()
     {
-        if (!_rightButton.gameObject.activeSelf) return;
+        if (!rightButton.gameObject.activeSelf) return;
         if (actorList.AnimationBusy) return;
         var eventData = new StatusViewEvent(CommandType.RightActor);
         _commandData(eventData);
@@ -273,10 +217,10 @@ public class StatusView : BaseView ,IInputHandlerEvent
         ActivateSkillActionList();
         if (_isDisplayDecide)
         {
-            HelpWindow.SetInputInfo("HEROINE_SKILL");
+            //HelpWindow.SetInputInfo("HEROINE_SKILL");
         } else
         {
-            HelpWindow.SetInputInfo("STATUS_SKILL");
+            //HelpWindow.SetInputInfo("STATUS_SKILL");
         }
     }
 
@@ -313,13 +257,16 @@ public class StatusView : BaseView ,IInputHandlerEvent
         selectCharacter.DeckMagicList.Deactivate();
     }
     
-    public void RefreshSkillActionList(List<ListData> skillInfos,List<ListData> attributeTypes,int currentAttibuteType,int lastSelectIndex)
+    public void CommandRefreshStatus(List<ListData> skillInfos,ActorInfo actorInfo,List<ActorInfo> party,int lastSelectIndex)
     {
+        ShowSkillActionList();
+        selectCharacter.SetActorThumb(actorInfo);
+        selectCharacter.SetActorInfo(actorInfo,party);
         selectCharacter.SetSkillInfos(skillInfos);
         selectCharacter.RefreshAction(lastSelectIndex);
     }
 
-    public void CommandRefresh(int remainSp,int remainNuminous)
+    public void CommandRefresh()
     {
         //skillList.RefreshAction();
         selectCharacter.RefreshCostInfo();
@@ -342,14 +289,10 @@ namespace Status
     public enum CommandType
     {
         None = 0,
-        StatusCommand,
-        AttributeType,
         DecideActor,
         LeftActor,
         RightActor,
         SelectSkillAction,
-        SelectSkillLearning,
-        StrengthClose,
         DecideStage,
         Back
     }

@@ -25,6 +25,14 @@ public class BattleThumb : MonoBehaviour
         UpdateThumb(actorInfo.Master);
     }
 
+    public void ShowAllThumb(ActorInfo actorInfo)
+    {
+        awakenThumbRoot.SetActive(true);
+        mainThumbRoot.SetActive(true);
+        gameObject.SetActive(true);
+        UpdateThumb(actorInfo.Master);
+    }
+
     public void HideThumb()
     {
         mainThumbRoot.SetActive(false);   

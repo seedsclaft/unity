@@ -364,7 +364,6 @@ GameObject:
   - component: {fileID: 4009802071048036817}
   - component: {fileID: 6347058179667076707}
   - component: {fileID: 8735524848677155746}
-  - component: {fileID: 8806602878299729364}
   m_Layer: 5
   m_Name: BackButton
   m_TagString: Untagged
@@ -393,7 +392,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -480, y: -224}
+  m_AnchoredPosition: {x: 360, y: -224}
   m_SizeDelta: {x: 120, y: 40}
   m_Pivot: {x: 0, y: 0}
 --- !u!222 &4009802071048036817
@@ -478,22 +477,6 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &8806602878299729364
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7406275377514555950}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bc4c71f8b90ac884bbf1265e0d6b4205, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  clickButton: {fileID: 8735524848677155746}
-  cursor: {fileID: 4198177281499109397}
-  disable: {fileID: 0}
-  commandName: {fileID: 3544432579890616335}
 --- !u!1 &9043451964122209055
 GameObject:
   m_ObjectHideFlags: 0
