@@ -10,6 +10,7 @@ public class TacticsSelectCharacter : MonoBehaviour
     [SerializeField] private BaseList commandList;
     public BaseList CommandList => commandList;
     [SerializeField] private ActorInfoComponent displaySelectCharacter;
+    [SerializeField] private TextMeshProUGUI commandTitle;
     [SerializeField] private TextMeshProUGUI commandLv;
     [SerializeField] private TextMeshProUGUI commandDescription;
     
@@ -49,10 +50,11 @@ public class TacticsSelectCharacter : MonoBehaviour
         commandList.SetData(commandData);
     }
 
-    public void SetTacticsTitle(int lv,string description)
+    public void SetTacticsCommandData(TacticsCommandData tacticsCommandData)
     {
-        commandLv.text = lv.ToString();
-        commandDescription.text = description;
+        commandTitle.text = tacticsCommandData.Title;
+        commandLv.text = tacticsCommandData.Rank.ToString();
+        commandDescription.text = tacticsCommandData.Description;
     }
 
     public void SetTacticsChracter(List<ListData> characterData)

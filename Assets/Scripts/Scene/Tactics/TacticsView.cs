@@ -37,12 +37,6 @@ public class TacticsView : BaseView
         battleSelectCharacter.Initialize();
         SetInputHandler(battleSelectCharacter.GetComponent<IInputHandlerEvent>());
         InitializeSelectCharacter();
-        //skillList.Initialize();
-        //skillList.InitializeAttribute((attribute) => CallAttributeTypes(attribute));
-        
-        //tacticsTrainList.Initialize(() => CallActorTrain());
-        //SetInputHandler(tacticsTrainList.GetComponent<IInputHandlerEvent>());
-        
 
         SetRuleButton(true);
         SetDropoutButton(true);
@@ -84,7 +78,7 @@ public class TacticsView : BaseView
             sideMenuList.Activate();
         });
         sideMenuList.SetCloseEvent(() => {
-            HelpWindow.SetInputInfo("TACTICS");
+            SetHelpInputInfo("TACTICS");
             UpdateHelpWindow();
             tacticsCommandList.Activate();
             sideMenuList.Deactivate();
@@ -139,6 +133,7 @@ public class TacticsView : BaseView
         tacticsCommandList.SetData(menuCommands);
         SetInputHandler(tacticsCommandList.GetComponent<IInputHandlerEvent>());
         tacticsCommandList.Activate();
+        UpdateHelpWindow();
     }
 
 
@@ -182,7 +177,7 @@ public class TacticsView : BaseView
         _commandData(eventData);
     }
 
-    public void SetActors(List<ActorInfo> actorInfos,List<ListData> confirmCommands,Dictionary<TacticsComandType, int> commandRankInfo)
+    public void SetSelectCharacter(List<ActorInfo> actorInfos,List<ListData> confirmCommands,Dictionary<TacticsComandType, int> commandRankInfo)
     {
         selectCharacter.Initialize(actorInfos.Count);
         SetInputHandler(selectCharacter.GetComponent<IInputHandlerEvent>());
@@ -193,7 +188,8 @@ public class TacticsView : BaseView
         selectCharacter.SetInputHandlerCommand(InputKeyType.Decide,() => CallTrainCommand());
         SetInputHandler(selectCharacter.CharacterList.GetComponent<IInputHandlerEvent>());
         SetInputHandler(selectCharacter.CommandList.GetComponent<IInputHandlerEvent>());
-        
+        HideSelectCharacter();
+
         tacticsCharaLayer.Initialize(actorInfos);
         SetInputHandler(tacticsCharaLayer.GetComponent<IInputHandlerEvent>());
     }
@@ -269,18 +265,17 @@ public class TacticsView : BaseView
         }
     }
 
-    public void ShowSelectCharacter(List<ListData> tacticsActorInfo,int lv,string description)
+    public void ShowSelectCharacter(List<ListData> tacticsActorInfo,TacticsCommandData tacticsCommandData)
     {
         selectCharacter.SetTacticsChracter(tacticsActorInfo);
-        selectCharacter.SetTacticsTitle(lv,description);
+        selectCharacter.SetTacticsCommandData(tacticsCommandData);
         selectCharacter.gameObject.SetActive(true);
-        HelpWindow.SetInputInfo("TRAIN");
     }
 
     public void HideSelectCharacter()
     {
         selectCharacter.gameObject.SetActive(false);
-        HelpWindow.SetInputInfo("TACTICS");
+        SetHelpInputInfo("TACTICS");
     }
 
     public void ShowSelectCharacterCommand()
@@ -298,17 +293,19 @@ public class TacticsView : BaseView
     public void ShowAttributeList(ActorInfo actorInfo, List<ListData> learnMagicList)
     {
         //battleSelectCharacter.SetActorThumb(actorInfo);
+        battleSelectCharacter.SetActiveTab(SelectCharacterTabType.Condition,false);
+        battleSelectCharacter.SetActiveTab(SelectCharacterTabType.Detail,false);
         battleSelectCharacter.SetSkillInfos(learnMagicList);
         battleSelectCharacter.ShowActionList();
         battleSelectCharacter.DeckMagicList.Activate();
-        HelpWindow.SetInputInfo("ALCHEMY_ATTRIBUTE");
+        SetHelpInputInfo("ALCHEMY_ATTRIBUTE");
     }
 
     public void HideAttributeList()
     {
         battleSelectCharacter.HideActionList();
         battleSelectCharacter.DeckMagicList.Deactivate();
-        HelpWindow.SetInputInfo("ALCHEMY");
+        SetHelpInputInfo("ALCHEMY");
     }
 
     private void CallRecoveryPlus()
@@ -382,13 +379,13 @@ public class TacticsView : BaseView
     {
         tacticsEnemyList.gameObject.SetActive(true);
         tacticsEnemyList.ResetInputFrame(1);
-        HelpWindow.SetInputInfo("ENEMY_SELECT");
+        SetHelpInputInfo("ENEMY_SELECT");
     }
 
     public void HideEnemyList()
     {
         tacticsEnemyList.gameObject.SetActive(false);
-        HelpWindow.SetInputInfo("TACTICS");
+        SetHelpInputInfo("TACTICS");
     }
 
     public void SetTurns(int turns)
@@ -449,19 +446,19 @@ public class TacticsView : BaseView
     
     public void ActivateSideMenu()
     {
-        HelpWindow.SetInputInfo("SIDEMENU");
+        SetHelpInputInfo("SIDEMENU");
         sideMenuList.Activate();
     }
 
     public void DeactivateSideMenu()
     {
-        HelpWindow.SetInputInfo("TACTICS");
+        SetHelpInputInfo("TACTICS");
         sideMenuList.Deactivate();
     }
 
     public void CommandOpenSideMenu()
     {
-        HelpWindow.SetInputInfo("SIDEMENU");
+        SetHelpInputInfo("SIDEMENU");
         HelpWindow.SetHelpText(DataSystem.System.GetTextData(701).Help);
         tacticsCommandList.Deactivate();
         sideMenuList.Activate();
@@ -473,7 +470,7 @@ public class TacticsView : BaseView
         tacticsCommandList.Activate();
         sideMenuList.Deactivate();
         sideMenuList.CloseSideMenu();
-        HelpWindow.SetInputInfo("TACTICS");
+        SetHelpInputInfo("TACTICS");
         UpdateHelpWindow();
     }
 
@@ -525,8 +522,6 @@ namespace Tactics
         PopupSkillInfo,
         EnemyClose,
         SelectActorResource,
-        ShowUi,
-        HideUi,
         OpenAlcana,
         CallEnemyInfo,
         Back,

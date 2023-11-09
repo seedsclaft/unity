@@ -14,8 +14,12 @@ public class TacticsModel : BaseModel
         get {return TacticsActor(_currentActorId);}
     }
 
-    private TacticsComandType _commandType = TacticsComandType.Train;
-    public TacticsComandType CommandType { get {return _commandType;} set {_commandType = value;}}
+    private TacticsComandType _tacticsCommandType = TacticsComandType.Train;
+    public TacticsComandType TacticsCommandType => _tacticsCommandType;
+    public void SetTacticsCommandType(TacticsComandType tacticsComandType)
+    {
+        _tacticsCommandType = tacticsComandType;
+    }
     private List<ActorInfo> _tempTacticsData = new();
 
     private int _currentEnemyIndex = -1; 
@@ -57,6 +61,10 @@ public class TacticsModel : BaseModel
 
     public void SetTempData(TacticsComandType tacticsComandType)
     {
+        if (tacticsComandType > TacticsComandType.Resource)
+        {
+            return;
+        }
         _tempTacticsData.Clear();
         for (int i = 0;i < StageMembers().Count;i++)
         {
@@ -219,13 +227,6 @@ public class TacticsModel : BaseModel
         ActorInfo actorInfo = TacticsActor(actorId);
         List<SkillInfo> skillInfos = new List<SkillInfo>();
         
-        if (!PartyInfo.AlchemyIdList.Contains(121))
-        {
-            PartyInfo.AlchemyIdList.Add(121);
-            PartyInfo.AlchemyIdList.Add(131);
-            PartyInfo.AlchemyIdList.Add(132);
-            PartyInfo.AlchemyIdList.Add(133);
-        }
         for (int i = 0;i < PartyInfo.AlchemyIdList.Count;i++)
         {
             SkillInfo skillInfo = new SkillInfo(PartyInfo.AlchemyIdList[i]);
@@ -425,16 +426,88 @@ public class TacticsModel : BaseModel
         foreach (var member in StageMembers())
         {
             var tacticsActorInfo = new TacticsActorInfo();
-            tacticsActorInfo.TacticsComandType = _commandType;
+            tacticsActorInfo.TacticsComandType = _tacticsCommandType;
             tacticsActorInfo.ActorInfo = member;
             var listData = new ListData(tacticsActorInfo);
             list.Add(listData);
         }
         return list;
     }
+
+    public string TacticsCommandInputInfo()
+    {
+        switch (_tacticsCommandType)
+        {
+            case TacticsComandType.Train:
+                return "TRAIN";
+            case TacticsComandType.Alchemy:
+                return "ALCHEMY";
+            case TacticsComandType.Recovery:
+                return "RECOVERY";
+            case TacticsComandType.Battle:
+                return "ENEMY_SELECT";
+            case TacticsComandType.Resource:
+                return "RESOURCE";
+        }
+        return "";
+    }
+
+    public TacticsCommandData TacticsCommandData()
+    {
+        var tacticsComandData = new TacticsCommandData();
+        tacticsComandData.Title = CommandTitle();
+        tacticsComandData.Description = CommandDescription();
+        tacticsComandData.Rank = CommandRank();
+        return tacticsComandData;
+    }
+
+    private string CommandTitle()
+    {
+        return DataSystem.System.GetTextData((int)_tacticsCommandType).Text;
+    }
+
+    private int CommandRank()
+    {
+        return CommandRankInfo()[_tacticsCommandType];
+    }
+
+    private string CommandDescription()
+    {
+        int rank = CommandRank();
+        if (rank > 0)
+        {
+            return DataSystem.System.GetReplaceText(10 + (int)_tacticsCommandType,(rank * 10).ToString());
+        }
+        int count = 0;
+        switch (_tacticsCommandType)
+        {
+            case TacticsComandType.Train:
+                count = DataSystem.System.TrainCount;
+                break;
+            case TacticsComandType.Alchemy:
+                count = DataSystem.System.AlchemyCount;
+                break;
+            case TacticsComandType.Recovery:
+                count = DataSystem.System.RecoveryCount;
+                break;
+            case TacticsComandType.Battle:
+                count = DataSystem.System.BattleCount;
+                break;
+            case TacticsComandType.Resource:
+                count = DataSystem.System.ResourceCount;
+                break;
+        }
+        return DataSystem.System.GetReplaceText(10,count.ToString());
+    }
 }
 
 public class TacticsActorInfo{
     public ActorInfo ActorInfo;
     public TacticsComandType TacticsComandType;
+}
+
+public class TacticsCommandData{
+    public string Title;
+    public int Rank;
+    public string Description;
 }

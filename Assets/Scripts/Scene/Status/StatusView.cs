@@ -259,6 +259,7 @@ public class StatusView : BaseView ,IInputHandlerEvent
     
     public void CommandRefreshStatus(List<ListData> skillInfos,ActorInfo actorInfo,List<ActorInfo> party,int lastSelectIndex)
     {
+        selectCharacter.SetActiveTab(SelectCharacterTabType.Condition,false);
         ShowSkillActionList();
         selectCharacter.SetActorThumb(actorInfo);
         selectCharacter.SetActorInfo(actorInfo,party);

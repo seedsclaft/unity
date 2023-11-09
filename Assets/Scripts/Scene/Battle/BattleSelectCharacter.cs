@@ -10,7 +10,9 @@ public class BattleSelectCharacter : MonoBehaviour
     [SerializeField] private BaseList deckMagicList;
     public BaseList DeckMagicList => deckMagicList;
     [SerializeField] private BaseList conditionList;
-    [SerializeField] private List<Toggle> magicConditionTabs;
+    [SerializeField] private List<Toggle> detailTabs;
+    [SerializeField] private List<GameObject> detailObjs;
+    [SerializeField] private List<CanvasGroup> detailTabCanvasGroup;
     [SerializeField] private StatusInfoComponent statusInfoComponent;
     [SerializeField] private GameObject detailObj;
     [SerializeField] private ActorInfoComponent actorInfoComponent;
@@ -25,7 +27,6 @@ public class BattleSelectCharacter : MonoBehaviour
         }
     }
 
-
     public void Initialize()
     {
         if (_isInit == true)
@@ -34,42 +35,64 @@ public class BattleSelectCharacter : MonoBehaviour
         }
         _isInit = true;
         var idx = 0;
-        foreach (var magicConditionTab in magicConditionTabs)
+        foreach (var magicConditionTab in detailTabs)
         {
             var tabIndex = idx;
             magicConditionTab.onValueChanged.AddListener((a) => 
             {
-                SelectMagicConditionTab(tabIndex);
+                SelectMagicConditionTab((SelectCharacterTabType)tabIndex);
             });
             idx++;
         }
         gameObject.SetActive(false);
+        displaySelectCard.Clear();
     }
 
-    private void SelectMagicConditionTab(int tabIndex)
+    private void SelectMagicConditionTab(SelectCharacterTabType selectCharacterTabType)
     {
-        _selectCharacterTabType = (SelectCharacterTabType)tabIndex;
-        displaySelectCard.gameObject.SetActive(tabIndex == (int)SelectCharacterTabType.Magic);
-        conditionList.gameObject.SetActive(tabIndex == (int)SelectCharacterTabType.Condition);
-        detailObj.gameObject.SetActive(tabIndex == (int)SelectCharacterTabType.Detail);
-        magicConditionTabs[0].SetIsOnWithoutNotify(tabIndex == (int)SelectCharacterTabType.Magic);
-        magicConditionTabs[1].SetIsOnWithoutNotify(tabIndex == (int)SelectCharacterTabType.Condition);
-        magicConditionTabs[2].SetIsOnWithoutNotify(tabIndex == (int)SelectCharacterTabType.Detail);
-        if (tabIndex == (int)SelectCharacterTabType.Magic)
+        if (_selectCharacterTabType == selectCharacterTabType)
+        {
+            return;
+        }
+        _selectCharacterTabType = selectCharacterTabType;
+        UpdateTabs();
+        if (selectCharacterTabType == SelectCharacterTabType.Magic)
         {
             deckMagicList.Activate();
             conditionList.Deactivate();
         } else
-        if (tabIndex == (int)SelectCharacterTabType.Condition)
+        if (selectCharacterTabType == SelectCharacterTabType.Condition)
         {
             deckMagicList.Deactivate();
             conditionList.Activate();
         } else
-        if (tabIndex == (int)SelectCharacterTabType.Detail)
+        if (selectCharacterTabType == SelectCharacterTabType.Detail)
         {
             deckMagicList.Deactivate();
             conditionList.Deactivate();
         }
+        Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cursor);
+    }
+
+    private void UpdateTabs()
+    {
+        for (int i = 0;i < detailTabs.Count;i++)
+        {
+            detailTabs[i].SetIsOnWithoutNotify((int)_selectCharacterTabType == i);
+        }
+        for (int i = 0;i < detailObjs.Count;i++)
+        {
+            detailObjs[i].SetActive((int)_selectCharacterTabType == i);
+        }
+        for (int i = 0;i < detailTabCanvasGroup.Count;i++)
+        {
+            detailTabCanvasGroup[i].alpha = (int)_selectCharacterTabType == i ? 1 : 0.25f;
+        }
+    }
+    
+    public void SetActiveTab(SelectCharacterTabType selectCharacterTabType,bool isActive)
+    {    
+        detailTabs[(int)selectCharacterTabType].gameObject.SetActive(isActive);
     }
 
     public void SetBattleThumb(BattlerInfo battlerInfo)
