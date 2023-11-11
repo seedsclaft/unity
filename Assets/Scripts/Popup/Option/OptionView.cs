@@ -129,7 +129,7 @@ public class OptionView : BaseView
 
     public void SetBackEvent(System.Action backEvent)
     {
-        CreateBackCommand(() => 
+        SetBackCommand(() => 
         {    
             Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cancel);
             GameSystem.ConfigData._inputType = (_tempInputTypeIndex == 1);
@@ -139,7 +139,7 @@ public class OptionView : BaseView
             }
             if (backEvent != null) backEvent();
         });
-        SetActiveBack(true);
+        ChangeBackCommandActive(true);
     }
 
     public void SetOptionCommand(List<SystemData.OptionCommand> menuCommands,System.Action optionEvent)

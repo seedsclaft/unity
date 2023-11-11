@@ -155,12 +155,12 @@ public class EnemyInfoView : BaseView,IInputHandlerEvent
     public void SetBackEvent(System.Action backEvent)
     {
         _backEvent = backEvent;
-        CreateBackCommand(() => 
+        SetBackCommand(() => 
         {    
             var eventData = new EnemyInfoViewEvent(CommandType.Back);
             _commandData(eventData);
         });
-        SetActiveBack(true);
+        ChangeBackCommandActive(true);
     }
 
     public void CommandBack()

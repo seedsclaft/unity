@@ -70,12 +70,12 @@ public class SlotPresenter
             _model.SetActorsData(index);
             StatusViewInfo statusViewInfo = new StatusViewInfo(() => {
                 _view.CommandStatusClose();
-                _view.SetActiveUi(true);
+                _view.ChangeUIActive(true);
             });
             statusViewInfo.SetDisplayDecideButton(false);
             statusViewInfo.SetDisableStrength(true);
             _view.CommandCallStatus(statusViewInfo);
-            _view.SetActiveUi(false);
+            _view.ChangeUIActive(false);
             Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
         }
     }

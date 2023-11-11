@@ -46,12 +46,12 @@ public class MainMenuPresenter : BasePresenter
             StatusViewInfo statusViewInfo = new StatusViewInfo(() => {
                 _view.CommandStatusClose();
                 _view.SetInitHelpText();
-                _view.SetActiveUi(true);
+                _view.ChangeUIActive(true);
             });
             statusViewInfo.SetDisplayDecideButton(true);
             statusViewInfo.SetDisableStrength(true);
             _view.CommandCallStatus(statusViewInfo);
-            _view.SetActiveUi(false);
+            _view.ChangeUIActive(false);
             Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
         }
         if (viewEvent.commandType == CommandType.Rule)

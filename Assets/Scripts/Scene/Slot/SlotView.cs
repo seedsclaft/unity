@@ -24,13 +24,13 @@ public class SlotView : BaseView
     
     public void SetBackEvent()
     {
-        CreateBackCommand(() => 
+        SetBackCommand(() => 
         {
             var eventData = new SlotViewEvent(CommandType.Back);
             _commandData(eventData); 
             Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cancel);
         });
-        SetActiveBack(true);
+        ChangeBackCommandActive(true);
     }
 
     public void SetSlotInfo(Dictionary<int,SlotInfo> slotInfo) 

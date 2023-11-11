@@ -24,21 +24,41 @@ public class SkillInfo
 
     private bool _enable;
     public bool Enable => _enable;
+    public void SetEnable(bool IsEnable)
+    {
+        _enable = IsEnable;
+    }
     public AttributeType Attribute {get {return Master.Attribute;}}
 
     private LearningState _learningState;
     public LearningState LearningState => _learningState;
+    public void SetLearningState(LearningState learningState)
+    {
+        _learningState = learningState;
+    }
 
-    private AttributeType _learnAttributeType;
-    public AttributeType LearnAttributeType => _learnAttributeType;
+    private int _learningCost = 0;
+    public int LearningCost => _learningCost;
+    public void SetLearningCost(int learningCost)
+    {
+        _learningCost = learningCost;
+    }
 
     private List<SkillData.TriggerData> _triggerDatas = new();
     public List<SkillData.TriggerData> TriggerDatas => _triggerDatas;
 
     private int _weight = 100;
     public int Weight => _weight;
+    public void SetWeight(int weight)
+    {
+        _weight = weight;
+    }
     private bool _isUsed = false;
     public bool IsUsed => _isUsed;
+    public void SetIsUsed(bool isUsed)
+    {
+        _isUsed = isUsed;
+    }
     public SkillInfo(int id)
     {
         _id = id;
@@ -48,31 +68,6 @@ public class SkillInfo
     public void SetTriggerDatas(List<SkillData.TriggerData> triggerDatas)
     {
         _triggerDatas = triggerDatas;
-    }
-    
-    public void SetWeight(int weight)
-    {
-        _weight = weight;
-    }
-
-    public void SetEnable(bool IsEnable)
-    {
-        _enable = IsEnable;
-    }
-
-    public void SetLearningState(LearningState learningState)
-    {
-        _learningState = learningState;
-    }
-
-    public void SetLearnAttribute(AttributeType attributeType)
-    {
-        _learnAttributeType = attributeType;
-    }
-
-    public void SetIsUsed(bool isUsed)
-    {
-        _isUsed = isUsed;
     }
     
     public void SetParam(string param1,int param2,int param3)

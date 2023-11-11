@@ -345,9 +345,9 @@ public class BaseModel
         return CurrentStage.CurrentTroopInfo();
     }
 
-    public void SetIsSubordinate(bool isSubordinate)
+    public void ChangeSubordinate(bool isSubordinate)
     {
-        CurrentStage.SetIsSubordinate(isSubordinate);
+        CurrentStage.ChangeSubordinate(isSubordinate);
     }
 
     public void SetIsAlcana(bool isAlcana)

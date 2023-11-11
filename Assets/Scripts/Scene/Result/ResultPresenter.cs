@@ -123,12 +123,12 @@ public class ResultPresenter : BasePresenter
         _model.SetActors();
         StatusViewInfo statusViewInfo = new StatusViewInfo(() => {
             _view.CommandStatusClose();
-            _view.SetActiveUi(true);
+            _view.ChangeUIActive(true);
             _view.SetHelpInputInfo("RESULT");
         });
         statusViewInfo.SetDisplayDecideButton(false);
         _view.CommandCallStatus(statusViewInfo);
-        _view.SetActiveUi(false);
+        _view.ChangeUIActive(false);
         Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
     }
 

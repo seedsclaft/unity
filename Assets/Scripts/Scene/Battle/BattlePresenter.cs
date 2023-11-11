@@ -51,7 +51,7 @@ public class BattlePresenter : BasePresenter
         _view.CreateObject(_model.BattlerActors().Count);
         _view.SetUIButton();
         _view.SetBattleAutoButton(_model.BattleAutoButton(),GameSystem.ConfigData._battleAuto == true);
-        _view.SetActiveBack(false);
+        _view.ChangeBackCommandActive(false);
 
         if (_view.TestMode == true)
         {
@@ -396,7 +396,7 @@ public class BattlePresenter : BasePresenter
         RefreshDecks(_model.CurrentAttributeType);
         _view.RefreshBattlerEnemyTarget(-1);
         _view.RefreshBattlerPartyTarget(-1);
-        _view.SetActiveBack(false);
+        _view.ChangeBackCommandActive(false);
         _view.SetBattlerSelectable(true);
         var isAbort = CheckAdvStageEvent(EventTiming.TurnedBattle,() => {  
             _view.HideEnemyStatus(); 
@@ -443,14 +443,14 @@ public class BattlePresenter : BasePresenter
             _view.ShowEnemyTarget();
         }
         _backCommandType = Battle.CommandType.DecideActor;
-        _view.SetActiveBack(true);
+        _view.ChangeBackCommandActive(true);
     }
 
     // スキル対象を決定
     public void CommandSelectTargetIndexs(List<int> indexList)
     {
         _view.SetHelpText("");
-        _view.SetActiveBack(false);
+        _view.ChangeBackCommandActive(false);
         MakeActionResultInfo(indexList);
         ActionInfo actionInfo = _model.CurrentActionInfo();
         if (actionInfo != null)

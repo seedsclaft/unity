@@ -95,7 +95,7 @@ public class StatusView : BaseView ,IInputHandlerEvent
     public void SetBackEvent(System.Action backEvent)
     {
         _backEvent = backEvent;
-        CreateBackCommand(() => 
+        SetBackCommand(() => 
         {
             var eventData = new StatusViewEvent(CommandType.Back);
             _commandData(eventData);
@@ -142,7 +142,7 @@ public class StatusView : BaseView ,IInputHandlerEvent
     public new void SetActiveBack(bool IsActive)
     {
         //if (_isDisplayBack == false) IsActive = false;
-        base.SetActiveBack(IsActive);
+        base.ChangeBackCommandActive(IsActive);
     }
     
     public void SetActorInfo(ActorInfo actorInfo,List<ActorInfo> actorInfos)

@@ -27,12 +27,12 @@ public class RebornView : BaseView
     
     public void SetBackEvent(System.Action backEvent)
     {
-        CreateBackCommand(() => 
+        SetBackCommand(() => 
         {    
             Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cancel);
             if (backEvent != null) backEvent();
         });
-        SetActiveBack(true);
+        ChangeBackCommandActive(true);
     }
 
     public void SetActorList(List<ListData> actorInfos) 

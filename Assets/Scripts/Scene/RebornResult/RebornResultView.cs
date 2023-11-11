@@ -45,18 +45,10 @@ public class RebornResultView : BaseView
         _animationBusy = true;
     }
 
-
-    public void SetUiView()
-    {
-    }
-
-
     public void SetHelpWindow(){
         HelpWindow.SetHelpText(DataSystem.System.GetTextData(17030).Text);
         HelpWindow.SetInputInfo("RESULT");
     }
-
-
 
     public void SetEvent(System.Action<RebornResultViewEvent> commandData)
     {

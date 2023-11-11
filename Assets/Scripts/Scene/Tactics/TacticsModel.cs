@@ -20,7 +20,7 @@ public class TacticsModel : BaseModel
     {
         _tacticsCommandType = tacticsComandType;
     }
-    private List<ActorInfo> _tempTacticsData = new();
+    private List<ActorInfo> _tempActorInfos = new();
 
     private int _currentEnemyIndex = -1; 
     public int CurrentEnemyIndex
@@ -65,7 +65,7 @@ public class TacticsModel : BaseModel
         {
             return;
         }
-        _tempTacticsData.Clear();
+        _tempActorInfos.Clear();
         for (int i = 0;i < StageMembers().Count;i++)
         {
             ActorInfo stageMember = StageMembers()[i];
@@ -75,28 +75,26 @@ public class TacticsModel : BaseModel
             actorInfo.SetNextLearnCost(stageMember.NextLearnCost);
             //actorInfo.SetNextLearnAttribute(stageMember.NextLearnAttribute);
             actorInfo.SetNextLearnSkillId(stageMember.NextLearnSkillId);
-            _tempTacticsData.Add(actorInfo);
+            _tempActorInfos.Add(actorInfo);
         }
-        //_tempTacticsData = StageMembers().FindAll(a => a.TacticsComandType == tacticsComandType);
     }
 
     public void ResetTempData(TacticsComandType tacticsComandType)
     {
-        if (_tempTacticsData.Count > 0)
+        if (_tempActorInfos.Count > 0)
         {
-            List<ActorInfo> removeActors = new List<ActorInfo>();
+            List<ActorInfo> removeActorInfos = new List<ActorInfo>();
             List<ActorInfo> _stageMembers = StageMembers();
             
             for (int i = 0;i < _stageMembers.Count;i++)
             {
                 ActorInfo stageMember = _stageMembers[i];
-                ActorInfo tempData = _tempTacticsData.Find(a => a.ActorId == stageMember.ActorId);
+                ActorInfo tempData = _tempActorInfos.Find(a => a.ActorId == stageMember.ActorId);
                 if (tempData != null)
                 {
                     if (stageMember.TacticsComandType != tempData.TacticsComandType)
                     {   
                         PartyInfo.ChangeCurrency(Currency + stageMember.TacticsCost);
-                        //stageMember.ClearTacticsCommand();
                         if (tempData.TacticsComandType == TacticsComandType.None)
                         {
                             stageMember.ClearTacticsCommand();
@@ -114,7 +112,7 @@ public class TacticsModel : BaseModel
                     }
                 }
             }
-            _tempTacticsData.Clear();
+            _tempActorInfos.Clear();
         }
     }
 
@@ -232,6 +230,7 @@ public class TacticsModel : BaseModel
             SkillInfo skillInfo = new SkillInfo(PartyInfo.AlchemyIdList[i]);
             if (actorInfo.IsLearnedSkill(skillInfo.Id)) continue;
             skillInfo.SetEnable(true);
+            //skillInfo.SetLearningCost()
             skillInfos.Add(skillInfo);
         }
         var list = new List<ListData>();
@@ -339,14 +338,12 @@ public class TacticsModel : BaseModel
         if (actorInfo != null){
             if (actorInfo.TacticsComandType == TacticsComandType.Resource)
             {   
-                //PartyInfo.ChangeCurrency(Currency + actorInfo.TacticsCost);
                 actorInfo.ClearTacticsCommand();
             } else
             {
                 if (CanTacticsCommand(TacticsComandType.Resource,actorInfo))
                 {   
                     actorInfo.SetTacticsCommand(TacticsComandType.Resource,TacticsUtility.ResourceCost(actorInfo));
-                    //PartyInfo.ChangeCurrency(Currency - actorInfo.TacticsCost);
                 }
             }
         }
@@ -391,7 +388,7 @@ public class TacticsModel : BaseModel
         var isEndStage = (CurrentStage.SubordinateValue <= 0);
         if (isEndStage)
         {
-            SetIsSubordinate(false);
+            ChangeSubordinate(false);
             ChangeRouteSelectStage(11);
             return DataSystem.Advs.Find(a => a.Id == 171);
         }

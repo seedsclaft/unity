@@ -33,7 +33,7 @@ public class FastBattlePresenter : BasePresenter
 
         _view.CreateObject(_model.BattlerActors().Count);
         _view.SetUIButton();
-        _view.SetActiveBack(false);
+        _view.ChangeBackCommandActive(false);
 
         _view.CommandStartTransition(() => {
             BattleInitialized();
@@ -163,7 +163,7 @@ public class FastBattlePresenter : BasePresenter
         ActionInfo actionInfo = _model.MakeActionInfo(_model.CurrentBattler,skillInfo,false,false);
         
         _backCommandType = Battle.CommandType.DecideActor;
-        _view.SetActiveBack(true);
+        _view.ChangeBackCommandActive(true);
     }
 
     public void CommandSelectIndex(List<int> indexList)

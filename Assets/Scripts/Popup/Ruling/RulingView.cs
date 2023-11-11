@@ -32,11 +32,11 @@ public class RulingView : BaseView
 
     public void SetBackEvent(System.Action backEvent)
     {
-        CreateBackCommand(() => 
+        SetBackCommand(() => 
         {    
             if (backEvent != null) backEvent();
         });
-        SetActiveBack(true);
+        ChangeBackCommandActive(true);
     }
     
     public void SetRulingCommand(List<ListData> ruleList)

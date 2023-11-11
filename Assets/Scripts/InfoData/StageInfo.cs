@@ -133,7 +133,6 @@ public class StageInfo
                 BattlerInfo enemy = new BattlerInfo(enemyData,_troopClearCount + 1,j,0,false);
                 troopInfo.AddEnemy(enemy);
             }
-            troopInfo.MakeEnemyData(troopsData[i],enemyCount,0);
             _currentTroopInfos.Add(troopInfo);
         }
 
@@ -162,16 +161,7 @@ public class StageInfo
         {
             List<TroopData> troopDatas = DataSystem.Troops.FindAll(a => a.TroopId == bossTroopId);
             TroopInfo troopInfo = new TroopInfo(bossTroopId,true);
-            int enemyIndex = 0;
-            for (int i = 0;i < troopDatas.Count;i++)
-            {
-                if (stageTurn >= troopDatas[i].StageTurn)
-                {
-                    troopInfo.MakeEnemyData(troopDatas[i],enemyIndex,_troopClearCount + 1);
-                    enemyIndex++;
-                }
-            }
-
+            troopInfo.MakeEnemyTroopDatas(_troopClearCount + 1);
             _currentTroopInfos[_currentTroopInfos.Count-1] = troopInfo;
         }
     }
@@ -179,13 +169,8 @@ public class StageInfo
     public List<TroopInfo> MakeTutorialTroopData(int selectIndex)
     {
         _currentTroopInfos.Clear();
-        List<TroopData> troopDatas = DataSystem.Troops.FindAll(a => a.TroopId == selectIndex * 10);
-        
-        TroopInfo troopInfo = new TroopInfo(selectIndex * 10,false);
-        for (int i = 0;i < troopDatas.Count;i++)
-        {
-            troopInfo.MakeEnemyData(troopDatas[i],i,_troopClearCount);
-        }
+        var troopInfo = new TroopInfo(selectIndex * 10,false);
+        troopInfo.MakeEnemyTroopDatas(_troopClearCount);
         _currentTroopInfos.Add(troopInfo);
         return _currentTroopInfos;
     }
@@ -255,11 +240,7 @@ public class StageInfo
         {
             if (_clearTroopIds.Contains(enemyIds[i])) continue;
             TroopInfo troopInfo = new TroopInfo(enemyIds[i],false);
-            List<TroopData> troopDatas = DataSystem.Troops.FindAll(a => a.TroopId == enemyIds[i]);
-            for (int j = 0;j < troopDatas.Count;j++)
-            {
-                troopInfo.MakeEnemyData(troopDatas[j],j,lv);
-            }
+            troopInfo.MakeEnemyTroopDatas(lv);
             _currentTroopInfos.Add(troopInfo);
         }
         return _currentTroopInfos;
@@ -280,7 +261,6 @@ public class StageInfo
         return _currentTroopInfos[_currentBattleIndex].BattlerInfos;
     }
 
-    
     public void ClearTacticsEnemies()
     {
         _currentTroopInfos.Clear();
@@ -337,7 +317,7 @@ public class StageInfo
         _currentTurn++;
     }
 
-    public void SetIsSubordinate(bool isSubordinate)
+    public void ChangeSubordinate(bool isSubordinate)
     {
         _IsSubordinate = isSubordinate;
     }

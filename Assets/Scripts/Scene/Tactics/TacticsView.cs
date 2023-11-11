@@ -29,7 +29,6 @@ public class TacticsView : BaseView
 
     private CommandType _lastCallEventType = CommandType.None;
 
-
     public override void Initialize()
     {
         base.Initialize();
@@ -38,8 +37,6 @@ public class TacticsView : BaseView
         SetInputHandler(battleSelectCharacter.GetComponent<IInputHandlerEvent>());
         InitializeSelectCharacter();
 
-        SetRuleButton(true);
-        SetDropoutButton(true);
 
         new TacticsPresenter(this);
     }
@@ -54,7 +51,7 @@ public class TacticsView : BaseView
 
     public void SetUIButton()
     {
-        CreateBackCommand(() => OnClickBack());
+        SetBackCommand(() => OnClickBack());
         tacticsEnemyList.Initialize((a) => CallBattleEnemy(a));
         tacticsEnemyList.SetInputHandler(InputKeyType.Decide,() => CallPopupSkillInfo());
         tacticsEnemyList.SetInputHandler(InputKeyType.Option1,() => OnClickEnemyInfo());
@@ -88,16 +85,6 @@ public class TacticsView : BaseView
     public void SetEvent(System.Action<TacticsViewEvent> commandData)
     {
         _commandData = commandData;
-    }
-
-    private void SetRuleButton(bool isActive)
-    {
-        //ruleButton.gameObject.SetActive(isActive);
-    }
-    
-    private void SetDropoutButton(bool isActive)
-    {
-        //dropoutButton.gameObject.SetActive(isActive);
     }
 
     private void OnClickDropout()
@@ -205,32 +192,15 @@ public class TacticsView : BaseView
         switch (tacticsComandType)
         {
             case TacticsComandType.Train:
-            selectCharacter.Refresh();
-            return;
             case TacticsComandType.Alchemy:
-            selectCharacter.Refresh();
-            return;
             case TacticsComandType.Recovery:
-            selectCharacter.Refresh();
-            return;
             case TacticsComandType.Battle:
-            selectCharacter.Refresh();
-            return;
             case TacticsComandType.Resource:
             selectCharacter.Refresh();
             return;
         }
     }
 
-    public void AddAlcana()
-    {
-        tacticsAlcana.StartAnim();
-    }
-
-    public void UseAlcana()
-    {
-        tacticsAlcana.UseAnim();
-    }
 
     private void CallActorTrain()
     {
@@ -502,45 +472,14 @@ public class TacticsView : BaseView
             HelpWindow.SetHelpText(commandData.Help);
         }
     }
-}
-
-namespace Tactics
-{
-    public enum CommandType
+    
+    public void AddAlcana()
     {
-        None = 0,
-        AddAlcana,
-        TacticsCommand,
-        SelectTacticsActor, // アクターを決定
-        TacticsCommandClose,
-        SelectActorAlchemy,
-        SelectAlchemyClose,
-        SkillAlchemy,
-        SelectRecoveryPlus,
-        SelectRecoveryMinus,
-        SelectBattleEnemy,
-        PopupSkillInfo,
-        EnemyClose,
-        SelectActorResource,
-        OpenAlcana,
-        CallEnemyInfo,
-        Back,
-        Rule,
-        Dropout,
-        Option,
-        OpenSideMenu,
-        SelectSideMenu,
-        CloseSideMenu
+        tacticsAlcana.StartAnim();
     }
-}
 
-public class TacticsViewEvent
-{
-    public Tactics.CommandType commandType;
-    public object templete;
-
-    public TacticsViewEvent(Tactics.CommandType type)
+    public void UseAlcana()
     {
-        commandType = type;
+        tacticsAlcana.UseAnim();
     }
 }

@@ -12,12 +12,10 @@ abstract public class BaseView : MonoBehaviour
     private bool _busy = false;
     public bool Busy { get {return _busy;}}
     public System.Action<ViewEvent> _commandData = null;
-    private Button _backCommand = null;
+    [SerializeField] private Button _backCommand = null;
     private System.Action _backEvent = null;
     public System.Action BackEvent => _backEvent;
     [SerializeField] private GameObject uiRoot = null;
-    [SerializeField] private GameObject backPrefab = null;
-    [SerializeField] private GameObject backRoot = null;
 
     private HelpWindow _helpWindow = null;
     public HelpWindow HelpWindow => _helpWindow;
@@ -251,24 +249,24 @@ abstract public class BaseView : MonoBehaviour
         CallSceneChangeCommand(eventData);
     }
 
-    public void CreateBackCommand(System.Action callEvent)
+    public void SetBackCommand(System.Action callEvent)
     {
-        GameObject prefab = Instantiate(backPrefab);
-        prefab.transform.SetParent(backRoot.transform, false);
-        _backCommand = prefab.GetComponent<Button>();
-        _backCommand.onClick.AddListener(() => {        
-            if (!_backCommand.gameObject.activeSelf) return;
-            callEvent();
-        });
+        if (_backCommand != null)
+        {
+            _backCommand.onClick.AddListener(() => {        
+                if (!_backCommand.gameObject.activeSelf) return;
+                callEvent();
+            });
+        }
         _backEvent = callEvent;
     }
 
-    public void SetActiveBack(bool IsActive)
+    public void ChangeBackCommandActive(bool IsActive)
     {
-        _backCommand.gameObject.SetActive(IsActive);
+        _backCommand?.gameObject.SetActive(IsActive);
     }
 
-    public void SetActiveUi(bool IsActive)
+    public void ChangeUIActive(bool IsActive)
     {
         uiRoot.gameObject.SetActive(IsActive);
     }

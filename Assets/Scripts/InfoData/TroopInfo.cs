@@ -5,6 +5,8 @@ using UnityEngine;
 [System.Serializable]
 public class TroopInfo 
 {
+    public TroopData Master => DataSystem.Troops.Find(a => a.TroopId == _troopId);
+    public List<TroopData> MasterAll => DataSystem.Troops.FindAll(a => a.TroopId == _troopId);
     private int _troopId = 0;
     public int TroopId => _troopId;
     private List<BattlerInfo> _battlerInfos = new(); 
@@ -33,18 +35,25 @@ public class TroopInfo
         _escapeEnable = escapeEnable;
     }
 
+    public void MakeEnemyTroopDatas(int level)
+    {
+        foreach (var troopData in MasterAll)
+        {
+            EnemyData enemyData = DataSystem.Enemies.Find(a => a.Id == troopData.EnemyId);
+            BattlerInfo battlerInfo = new BattlerInfo(enemyData,troopData.Lv + level,troopData.Id,troopData.Line,troopData.BossFlag);
+            AddEnemy(battlerInfo);
+        }
+        MakeGetItemInfos();
+    }
+
     public void AddEnemy(BattlerInfo battlerInfo)
     {
         _battlerInfos.Add(battlerInfo);
     }
 
-    public void MakeEnemyData(TroopData troopData,int index,int gainLevel)
+    public void MakeGetItemInfos()
     {
-        EnemyData enemyData = DataSystem.Enemies.Find(a => a.Id == troopData.EnemyId);
-        BattlerInfo battlerInfo = new BattlerInfo(enemyData,troopData.Lv + gainLevel,index,troopData.Line,troopData.BossFlag);
-        AddEnemy(battlerInfo);
-        
-        List<GetItemData> getItemDatas = troopData.GetItemDatas;
+        List<GetItemData> getItemDatas = Master.GetItemDatas;
         for (int i = 0;i < getItemDatas.Count;i++)
         {
             GetItemInfo getItemInfo = new GetItemInfo(getItemDatas[i]);

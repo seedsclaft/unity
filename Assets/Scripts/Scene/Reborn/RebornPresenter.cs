@@ -115,7 +115,7 @@ public class RebornPresenter :BasePresenter
         });
         statusViewInfo.SetDisplayDecideButton(true);
         statusViewInfo.SetDisableStrength(true);
-        _view.SetActiveUi(false);
+        _view.ChangeUIActive(false);
         _view.CommandCallStatus(statusViewInfo);
     }
 }

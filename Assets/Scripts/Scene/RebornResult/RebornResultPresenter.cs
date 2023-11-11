@@ -21,7 +21,6 @@ public class RebornResultPresenter : BasePresenter
     private async void Initialize()
     {
         _view.SetHelpWindow();
-        _view.SetUiView();
         _view.SetResultList(_model.RebornResultCommand());
         _view.SetActors(_model.RebornMembers());
         var bgm = await _model.GetBgmData("TACTICS1");

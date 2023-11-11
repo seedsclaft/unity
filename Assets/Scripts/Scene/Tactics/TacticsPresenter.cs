@@ -37,7 +37,7 @@ public class TacticsPresenter :BasePresenter
                 }   
             });
             _view.CommandCallAdv(advInfo);
-            _view.SetActiveUi(false);
+            _view.ChangeUIActive(false);
             return;
         }
         
@@ -46,7 +46,7 @@ public class TacticsPresenter :BasePresenter
         },_model.CurrentStage.SelectActorIdsClassId(0));
         if (isAbort)
         {
-            _view.SetActiveUi(false);
+            _view.ChangeUIActive(false);
             return;
         }
         
@@ -55,11 +55,11 @@ public class TacticsPresenter :BasePresenter
         });
         if (isReborn)
         {
-            _view.SetActiveUi(false);
+            _view.ChangeUIActive(false);
             return;
         }
         _view.SetUIButton();
-        _view.SetActiveBack(false);
+        _view.ChangeBackCommandActive(false);
         _view.SetEvent((type) => UpdateCommand(type));
         _view.SetSideMenu(_model.SideMenu());
         _view.SetSelectCharacter(_model.StageMembers(),_model.ConfirmCommand(),_model.CommandRankInfo());
@@ -94,7 +94,7 @@ public class TacticsPresenter :BasePresenter
                 }
                 if (stageEvents[i].Type == StageEventType.IsSubordinate)
                 {
-                    _model.SetIsSubordinate(stageEvents[i].Param == 1);
+                    _model.ChangeSubordinate(stageEvents[i].Param == 1);
                     if (stageEvents[i].Param == 1)
                     {        
                         CommandRefresh();
@@ -117,7 +117,7 @@ public class TacticsPresenter :BasePresenter
                     popupInfo.SetSelectIndex(0);
                     _view.CommandCallConfirm(popupInfo);
                     _model.AddEventReadFlag(stageEvents[i]);
-                    _view.SetActiveUi(false);
+                    _view.ChangeUIActive(false);
                     isAbort = true;
                     break;
                 }
@@ -127,7 +127,7 @@ public class TacticsPresenter :BasePresenter
                     popupInfo.SetSelectIndex(1);
                     _view.CommandCallConfirm(popupInfo);
                     _model.AddEventReadFlag(stageEvents[i]);
-                    _view.SetActiveUi(false);
+                    _view.ChangeUIActive(false);
                     isAbort = true;
                     break;
                 }
@@ -490,20 +490,20 @@ public class TacticsPresenter :BasePresenter
             case TacticsComandType.Resource:
                 _view.ShowSelectCharacter(_model.TacticsCharacterData(),_model.TacticsCommandData());
                 _view.ActivateTacticsCommand();
-                _view.SetActiveBack(false);
+                _view.ChangeBackCommandActive(false);
                 _backCommand = Tactics.CommandType.None;
                 break;
             case TacticsComandType.Alchemy:
                 _view.ShowSelectCharacter(_model.TacticsCharacterData(),_model.TacticsCommandData());
                 _view.ActivateTacticsCommand();
-                _view.SetActiveBack(false);
+                _view.ChangeBackCommandActive(false);
                 _backCommand = Tactics.CommandType.None;
                 _view.HideAttributeList();
                 _view.ShowSelectCharacterCommand();
                 break;
             case TacticsComandType.Battle:
                 _view.ActivateTacticsCommand();
-                _view.SetActiveBack(true);
+                _view.ChangeBackCommandActive(true);
                 _view.HideSelectCharacter();
                 _view.ShowEnemyList();
                 _backCommand = Tactics.CommandType.EnemyClose;
@@ -550,7 +550,7 @@ public class TacticsPresenter :BasePresenter
             _view.HideAttributeList();
             _view.ShowSelectCharacterCommand();
             CommandRefresh();
-            _view.SetActiveBack(false);
+            _view.ChangeBackCommandActive(false);
             _backCommand = Tactics.CommandType.SelectActorAlchemy;
         }
         Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
@@ -595,7 +595,7 @@ public class TacticsPresenter :BasePresenter
             _view.ShowAttributeList(_model.CurrentActor, _model.SelectActorAlchemy(actorId));
             _view.HideSelectCharacterCommand();
             //_view.HideSkillAlchemyList();
-            _view.SetActiveBack(true);
+            _view.ChangeBackCommandActive(true);
             _backCommand = Tactics.CommandType.SelectAlchemyClose;        
             Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
         }
@@ -628,7 +628,7 @@ public class TacticsPresenter :BasePresenter
         _view.HideEnemyList();
         _view.ShowSelectCharacter(_model.TacticsCharacterData(),_model.TacticsCommandData());
         _view.ActivateTacticsCommand();
-        _view.SetActiveBack(false);
+        _view.ChangeBackCommandActive(false);
         Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
     }
 
@@ -650,7 +650,7 @@ public class TacticsPresenter :BasePresenter
     private void CommandEnemyClose()
     {
         _view.HideEnemyList();
-        _view.SetActiveBack(false);
+        _view.ChangeBackCommandActive(false);
         _view.ShowCommandList();
         if (_model.IsBusyAll())
         {
@@ -676,12 +676,12 @@ public class TacticsPresenter :BasePresenter
 
     private void CommandShowUi()
     {
-        _view.SetActiveUi(true);
+        _view.ChangeUIActive(true);
     }
 
     private void CommandHideUi()
     {
-        _view.SetActiveUi(false);
+        _view.ChangeUIActive(false);
     }
 
     private void CommandOpenAlcana()
@@ -704,11 +704,11 @@ public class TacticsPresenter :BasePresenter
         
         StatusViewInfo statusViewInfo = new StatusViewInfo(() => {
             _view.CommandStatusClose();
-            _view.SetActiveUi(true);
+            _view.ChangeUIActive(true);
         });
         statusViewInfo.SetEnemyInfos(enemyInfos,false);
         _view.CommandCallEnemyInfo(statusViewInfo);
-        _view.SetActiveUi(false);
+        _view.ChangeUIActive(false);
         Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
     }
 

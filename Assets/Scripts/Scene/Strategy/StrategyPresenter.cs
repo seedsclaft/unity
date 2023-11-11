@@ -250,11 +250,11 @@ public class StrategyPresenter : BasePresenter
                 SetHelpInputSkipEnable();
             }
             _view.SetHelpText(DataSystem.System.GetTextData(14010).Text);
-            _view.SetActiveUi(true);
+            _view.ChangeUIActive(true);
         });
         statusViewInfo.SetDisplayDecideButton(false);
         _view.CommandCallStatus(statusViewInfo);
-        _view.SetActiveUi(false);
+        _view.ChangeUIActive(false);
         Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
     }
 
@@ -308,7 +308,7 @@ public class StrategyPresenter : BasePresenter
         
         StatusViewInfo statusViewInfo = new StatusViewInfo(() => {
             _view.CommandStatusClose();
-            _view.SetActiveUi(true);
+            _view.ChangeUIActive(true);
             if (_isBattle == false){
                 _view.SetHelpInputInfo("STRATEGY");
             } else{
@@ -318,7 +318,7 @@ public class StrategyPresenter : BasePresenter
         });
         statusViewInfo.SetEnemyInfos(enemyInfos,false);
         _view.CommandCallEnemyInfo(statusViewInfo);
-        _view.SetActiveUi(false);
+        _view.ChangeUIActive(false);
         Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);    
     }
 

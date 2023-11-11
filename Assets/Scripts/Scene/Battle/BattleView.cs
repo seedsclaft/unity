@@ -142,7 +142,7 @@ public class BattleView : BaseView ,IInputHandlerEvent
 
     public void SetUIButton()
     {
-        CreateBackCommand(() => OnClickBack());
+        SetBackCommand(() => OnClickBack());
         escapeButton.onClick.AddListener(() => OnClickEscape());
         SetEscapeButton(false);
         SetSideMenuButton(false);

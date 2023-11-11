@@ -60,7 +60,7 @@ public class FastBattleView : BaseView
 
     public void SetUIButton()
     {
-        CreateBackCommand(() => OnClickBack());
+        SetBackCommand(() => OnClickBack());
     }
 
     private void OnClickBack()

@@ -88,7 +88,7 @@ GameObject:
   - component: {fileID: 6615615244552695900}
   - component: {fileID: 3782893360126261230}
   - component: {fileID: 1535761761900601903}
-  - component: {fileID: 1696708713933935912}
+  - component: {fileID: 4158316027245570621}
   m_Layer: 5
   m_Name: TacticsCommandButton
   m_TagString: Untagged
@@ -202,7 +202,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &1696708713933935912
+--- !u!114 &4158316027245570621
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -211,7 +211,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 766366792576891811}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bbb2999f44a450d449225182553c71e5, type: 3}
+  m_Script: {fileID: 11500000, guid: 0669c3dc1f0d9514e901fa25ebfdee73, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   clickButton: {fileID: 1535761761900601903}
