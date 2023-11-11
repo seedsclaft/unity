@@ -19,15 +19,20 @@ public class StrategyModel : BaseModel
     private List<ActorInfo> _levelUpData = new();
     private List<ActorInfo> _levelUpBonusData = new();
     public List<ActorInfo> LevelUpData => _levelUpData;
+    public List<ListData> LevelUpActorStatus(int index)
+    {
+        var list = new List<ListData>();
+        var listData = new ListData(_levelUpData[0]);
+        list.Add(listData);
+        list.Add(listData);
+        list.Add(listData);
+        list.Add(listData);
+        list.Add(listData);
+        return list;
+    }
 
     private List<GetItemInfo> _resultItemInfos = new();
     public List<GetItemInfo> ResultGetItemInfos => _resultItemInfos;
-
-    public bool CheckUseSp()
-    {
-        ActorInfo actorInfo = StageMembers()[0];
-        return (actorInfo.Sp < 10);
-    }
 
     public List<ActorInfo> TacticsActors()
     {
@@ -70,17 +75,17 @@ public class StrategyModel : BaseModel
         _levelUpData = lvupList;
     }
 
-    public void SetResult()
+    public void MakeResult()
     {
         // Party初期化
         PartyInfo.InitActors();
-        List<GetItemInfo> getItemInfos = new List<GetItemInfo>();
-        List<ActorInfo> actorInfos = TacticsActors();
+        var getItemInfos = new List<GetItemInfo>();
+        var actorInfos = TacticsActors();
         // 結果出力
         for (int i = 0;i < actorInfos.Count;i++)
         {
-            string actorName = actorInfos[i].Master.Name;
-            GetItemInfo getItemInfo = new GetItemInfo(null);
+            var actorName = actorInfos[i].Master.Name;
+            var getItemInfo = new GetItemInfo(null);
             if (actorInfos[i].TacticsComandType == TacticsComandType.Train)
             {
                 var trainBonus = _levelUpBonusData.Find(a => a == actorInfos[i]) != null;
@@ -248,7 +253,7 @@ public class StrategyModel : BaseModel
                 getItemInfo.MakeDemigodResult(getItemInfo.Param1);
                 getItemInfos.Add(getItemInfo);
             
-                foreach (var actorInfo in CheckInBattleActors())
+                foreach (var actorInfo in BattleResultActors())
                 {
                     actorInfo.GainDemigod(getItemInfo.Param1);
                 }
@@ -283,7 +288,7 @@ public class StrategyModel : BaseModel
                 getItemInfo.SetTitleData(DataSystem.System.GetTextData(14071).Text);
                 getItemInfos.Add(getItemInfo);
                 
-                foreach (var actorInfo in CheckInBattleActors())
+                foreach (var actorInfo in BattleResultActors())
                 {
                     actorInfo.TempStatus.AddParameterAll(getItemInfo.Param1);
                     actorInfo.DecideStrength(0);
@@ -296,7 +301,7 @@ public class StrategyModel : BaseModel
         CurrentStage.GainTroopClearCount(1);
         CurrentStage.ChangeSubordinate(15);
 
-        foreach (var actorInfo in CheckInBattleActors())
+        foreach (var actorInfo in BattleResultActors())
         {
             if (actorInfo.InBattle == true)
             {
@@ -344,7 +349,7 @@ public class StrategyModel : BaseModel
         return null;
     }
 
-    public List<ActorInfo> CheckInBattleActors()
+    public List<ActorInfo> BattleResultActors()
     {
         return TacticsBattleActors().FindAll(a => a.InBattle);
     }

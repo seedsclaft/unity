@@ -8,15 +8,10 @@ public class StrategyStrength : ListItem ,IListViewItem
 {
     [SerializeField] private StrengthComponent strengthComponent;
 
-    private ActorInfo _data;
-    public void SetData(ActorInfo data,int index){
-        _data = data;
-        SetIndex(index);
-    }
-
     public void UpdateViewItem()
     {
-        if (_data == null) return;
-        strengthComponent.UpdateInfo(_data,Index);
+        if (ListData == null) return;
+        var data = (ActorInfo)ListData.Data;
+        strengthComponent.UpdateInfo(data,(StatusParamType)Index);
     }
 }

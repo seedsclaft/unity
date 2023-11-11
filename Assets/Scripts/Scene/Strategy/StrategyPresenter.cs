@@ -10,8 +10,8 @@ public class StrategyPresenter : BasePresenter
 
     private bool _busy = true;
 
-    private bool _isBattle = false;
-    private bool _isBattleEnded = false;
+
+    private StrategyState _strategyState = StrategyState.None;
     public StrategyPresenter(StrategyView view)
     {
         _view = view;
@@ -27,27 +27,27 @@ public class StrategyPresenter : BasePresenter
         _model.LoadActorResources();
         _model.LoadEnemyResources();
         _view.SetHelpWindow();
-        _view.SetUiView();
         _view.SetEnemyList(_model.ResultCommand());
 
         _view.SetActors(_model.StageMembers());
         _view.SetResultList(_model.ResultCommand());
         var bgm = await _model.GetBgmData(_model.TacticsBgmFilename());
         Ryneus.SoundManager.Instance.PlayBgm(bgm,1.0f,true);
-        _view.SetEvent((type) => updateCommand(type));
+        _view.SetEvent((type) => UpdateCommand(type));
 
-        CommandStartStretegy();
+        CommandStartStrategy();
         _busy = false;
     }
 
-    private void updateCommand(StrategyViewEvent viewEvent)
+    private void UpdateCommand(StrategyViewEvent viewEvent)
     {
         if (_busy){
             return;
         }
-        if (viewEvent.commandType == CommandType.StartStretegy)
+        Debug.Log(viewEvent.commandType);
+        if (viewEvent.commandType == CommandType.StartStrategy)
         {
-            CommandStartStretegy();
+            CommandStartStrategy();
         }
         if (viewEvent.commandType == CommandType.EndAnimation)
         {
@@ -88,42 +88,103 @@ public class StrategyPresenter : BasePresenter
         _view.CommandConfirmClose();
     }
 
-    private void UpdatePopup(ConfirmComandType confirmComandType)
+    private void UpdatePopupLost(ConfirmComandType confirmComandType)
     {
         _view.CommandConfirmClose();
-        if (confirmComandType == ConfirmComandType.Yes)
-        {
-        }
         _model.LostActors(_model.LostMembers());
     }
 
-    private void CommandStartStretegy(){
-        List<ActorInfo> battledMembers = _model.CheckInBattleActors();
-        if (battledMembers != null && battledMembers.Count > 0)
+    private void CommandStartStrategy(){
+        var battledResultActors = _model.BattleResultActors();
+        if (battledResultActors.Count > 0)
         {
-            _model.SetResult();
-            var bonusList = new List<bool>();
-            foreach (var item in battledMembers)
-            {
-                bonusList.Add(false);
-            }
-            _isBattleEnded = true;
-            _view.SetTitle(DataSystem.System.GetTextData(14030).Text);
-            _view.StartResultAnimation(battledMembers,bonusList);
+            _strategyState = StrategyState.BattleResult;
+            SeekStrategyState();
         } else
         {
             CheckTacticsActors();
         }
     }
 
+    private void CheckTacticsActors()
+    {
+        var tacticsActors = _model.TacticsActors();
+        if (tacticsActors.Count > 0)
+        {
+            _strategyState = StrategyState.TacticsResult;
+            SeekStrategyState();
+        } else{
+            CheckNextBattle();
+        }
+    }
+
+    private void CheckNextBattle()
+    {
+        var battleMembers = _model.CheckNextBattleActors();
+        if (battleMembers != null && battleMembers.Count > 0)
+        {
+            _strategyState = StrategyState.InBattle;
+            SeekStrategyState();
+        } else{
+            EndStrategy();
+        }
+    }
+
+    private void SeekStrategyState()
+    {
+        if (_strategyState == StrategyState.BattleResult)
+        {
+            var battledResultActors = _model.BattleResultActors();
+            _model.MakeResult();
+            var bonusList = new List<bool>();
+            foreach (var item in battledResultActors)
+            {
+                bonusList.Add(false);
+            }
+            _view.SetTitle(DataSystem.System.GetTextData(14030).Text);
+            _view.StartResultAnimation(battledResultActors,bonusList);
+        } else
+        if (_strategyState == StrategyState.TacticsResult)
+        {
+            var tacticsActors = _model.TacticsActors();
+            _model.SetLvup();
+            _model.MakeResult();
+            var bonusList = new List<bool>();
+            foreach (var item in tacticsActors)
+            {
+                bonusList.Add(_model.IsBonusTactics(item.ActorId));
+            }
+            _view.SetTitle(DataSystem.System.GetTextData(14020).Text);
+            _view.StartResultAnimation(tacticsActors,bonusList);
+            if (_model.LevelUpData.Count > 0)
+            {
+                _view.StartLvUpAnimation();
+            }
+        }
+        if (_strategyState == StrategyState.InBattle)
+        {
+            var battleMembers = _model.CheckNextBattleActors();
+            _view.HideResultList();
+            _model.SetBattleMembers(battleMembers);
+            var bonusList = new List<bool>();
+            foreach (var item in battleMembers)
+            {
+                bonusList.Add(false);
+            }
+            _view.SetTitle(DataSystem.System.GetTextData(4).Text);
+            _view.StartResultAnimation(battleMembers,bonusList);
+        }
+    }
+
+
     private void CommandEndAnimation()
     {
-        if (_isBattleEnded == true)
+        if (_strategyState == StrategyState.BattleResult)
         {
-            List<GetItemInfo> getItemInfos = _model.SetBattleResult();
+            var getItemInfos = _model.SetBattleResult();
             _view.ShowResultList(getItemInfos);
             // ロスト判定
-            List<ActorInfo> lostMembers = _model.LostMembers();
+            var lostMembers = _model.LostMembers();
             if (lostMembers.Count > 0)
             {
                 string text = DataSystem.System.GetTextData(3060).Text;
@@ -137,17 +198,20 @@ public class StrategyPresenter : BasePresenter
                     }
                 }
                 text = text.Replace("\\d",lostMembersText);
-                ConfirmInfo popupInfo = new ConfirmInfo(text,(a) => UpdatePopup((ConfirmComandType)a));
+                ConfirmInfo popupInfo = new ConfirmInfo(text,(a) => UpdatePopupLost((ConfirmComandType)a));
                 popupInfo.SetIsNoChoise(true);
                 _view.CommandCallConfirm(popupInfo);
             }
-        } else 
-        if (_isBattle == false){
+        }
+        if (_strategyState == StrategyState.TacticsResult)
+        {
             if (_model.LevelUpData.Count == 0)
             {
                 _view.ShowResultList(_model.ResultGetItemInfos);
             }
-        } else{
+        }
+        if (_strategyState == StrategyState.InBattle)
+        {
             _view.ShowEnemyList(_model.CurrentTroopInfo(),_model.EnableBattleSkip());
             SetHelpInputSkipEnable();
         }
@@ -183,7 +247,7 @@ public class StrategyPresenter : BasePresenter
 
     private void CommandEndLvupAnimation()
     {
-        _view.ShowLvUpActor(_model.LevelUpData[0]);
+        _view.ShowLvUpActor(_model.LevelUpData[0],_model.LevelUpActorStatus(0));
     }
 
     private void CommandLvUpNext()
@@ -202,19 +266,18 @@ public class StrategyPresenter : BasePresenter
     {
         if (confirmComandType == ConfirmComandType.Yes)
         {
-            ShowStatus();
-        } else
-        {
-            if (_isBattleEnded == true)
+            if (_strategyState == StrategyState.BattleResult)
             {
-                List<ActorInfo> battledMembers = _model.CheckInBattleActors();
+                var battledMembers = _model.BattleResultActors();
                 if (battledMembers != null && battledMembers.Count > 0)
                 {
                     _model.ClearBattleData(battledMembers);
                 }
             }
-            _isBattleEnded = false;
             CheckTacticsActors();
+        } else
+        {
+            ShowStatus();
         }
         Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
     }
@@ -223,20 +286,25 @@ public class StrategyPresenter : BasePresenter
     {
         if (confirmComandType == ConfirmComandType.Yes)
         {
-            ShowStatus();
+            BattleStart();
         } else{
-            Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
-            _view.SetHelpText("");
-            _view.SetHelpInputInfo("");
-            _view.CommandCallLoading();
-            _view.CommandChangeViewToTransition(null);
-            if (_model.BattleSkip)
-            {
-                _view.CommandSceneChange(Scene.FastBattle);
-            } else
-            {
-                _view.CommandSceneChange(Scene.Battle);
-            }
+            ShowStatus();
+        }
+    }
+
+    private void BattleStart()
+    {
+        Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
+        _view.SetHelpText("");
+        _view.SetHelpInputInfo("");
+        _view.CommandCallLoading();
+        _view.CommandChangeViewToTransition(null);
+        if (_model.BattleSkip)
+        {
+            _view.CommandSceneChange(Scene.FastBattle);
+        } else
+        {
+            _view.CommandSceneChange(Scene.Battle);
         }
     }
 
@@ -244,7 +312,7 @@ public class StrategyPresenter : BasePresenter
     {
         StatusViewInfo statusViewInfo = new StatusViewInfo(() => {
             _view.CommandStatusClose();
-            if (_isBattle == false){
+            if (_strategyState != StrategyState.InBattle){
                 _view.SetHelpInputInfo("STRATEGY");
             } else{
                 SetHelpInputSkipEnable();
@@ -256,40 +324,6 @@ public class StrategyPresenter : BasePresenter
         _view.CommandCallStatus(statusViewInfo);
         _view.ChangeUIActive(false);
         Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
-    }
-
-    private void CheckTacticsActors()
-    {
-        List<ActorInfo> tacticsActors = _model.TacticsActors();
-        if (tacticsActors.Count > 0)
-        {
-            _model.SetLvup();
-            _model.SetResult();
-            var bonusList = new List<bool>();
-            foreach (var item in tacticsActors)
-            {
-                bonusList.Add(_model.IsBonusTactics(item.ActorId));
-            }
-            _view.SetTitle(DataSystem.System.GetTextData(14020).Text);
-            _view.StartResultAnimation(tacticsActors,bonusList);
-            if (_model.LevelUpData.Count > 0)
-            {
-                _view.StartLvUpAnimation();
-            }
-        } else{
-            CheckNextBattle();
-        }
-    }
-
-    private void CheckNextBattle()
-    {
-        List<ActorInfo> battleMembers = _model.CheckNextBattleActors();
-        if (battleMembers != null && battleMembers.Count > 0)
-        {
-            StartNextBattle(battleMembers);
-        } else{
-            EndStrategy();
-        }
     }
 
     private void CommandPopupSkillInfo(GetItemInfo getItemInfo)
@@ -304,12 +338,12 @@ public class StrategyPresenter : BasePresenter
     private void CommandCallEnemyInfo()
     {
         var enemyIndex = _model.CurrentStage.CurrentBattleIndex;
-        List<BattlerInfo> enemyInfos = _model.TacticsTroops()[enemyIndex].BattlerInfos;
+        var enemyInfos = _model.TacticsTroops()[enemyIndex].BattlerInfos;
         
         StatusViewInfo statusViewInfo = new StatusViewInfo(() => {
             _view.CommandStatusClose();
             _view.ChangeUIActive(true);
-            if (_isBattle == false){
+            if (_strategyState != StrategyState.InBattle){
                 _view.SetHelpInputInfo("STRATEGY");
             } else{
                 SetHelpInputSkipEnable();
@@ -350,24 +384,17 @@ public class StrategyPresenter : BasePresenter
         }
     }
 
-    private void StartNextBattle(List<ActorInfo> battleMembers)
-    {
-        _isBattle = true;
-        _view.HideResultList();
-        _model.SetBattleMembers(battleMembers);
-        _view.SetTitle(DataSystem.System.GetTextData(4).Text);
-        var bonusList = new List<bool>();
-        foreach (var item in battleMembers)
-        {
-            bonusList.Add(false);
-        }
-        _view.StartResultAnimation(battleMembers,bonusList);
-    }
-
     private void EndStrategy()
     {
         _model.EndStrategy();
         _view.EndShinyEffect();
         _view.CommandSceneChange(Scene.Tactics);
+    }
+
+    private enum StrategyState{
+        None = 0,
+        BattleResult = 1,
+        TacticsResult = 2,
+        InBattle = 3,
     }
 }

@@ -13,7 +13,7 @@ public class StrategyView : BaseView
     [SerializeField] private StrategyActorList strategyActorList = null; 
     [SerializeField] private GetItemList strategyResultList = null; 
     [SerializeField] private TacticsEnemyList tacticsEnemyList = null; 
-    [SerializeField] private StrategyStrengthList strategyStrengthList = null; 
+    [SerializeField] private BaseList statusList = null; 
     [SerializeField] private TextMeshProUGUI title = null; 
     [SerializeField] private ActorInfoComponent actorInfoComponent = null;
     [SerializeField] private Button lvUpStatusButton = null;
@@ -30,8 +30,8 @@ public class StrategyView : BaseView
     public override void Initialize() 
     {
         base.Initialize();
-        strategyStrengthList.Initialize(() => CallLvUpNext());
-        SetInputHandler(strategyStrengthList.GetComponent<IInputHandlerEvent>());
+        statusList.Initialize(5);
+        SetInputHandler(statusList.GetComponent<IInputHandlerEvent>());
         
         GameObject prefab = Instantiate(animPrefab);
         prefab.transform.SetParent(animRoot.transform, false);
@@ -48,7 +48,7 @@ public class StrategyView : BaseView
     {
         lvUpStatusButton.gameObject.SetActive(false);
         actorInfoComponent.gameObject.SetActive(false);
-        strategyStrengthList.gameObject.SetActive(false);
+        statusList.gameObject.SetActive(false);
         var eventData = new StrategyViewEvent(CommandType.LvUpNext);
         _commandData(eventData);
     }
@@ -61,25 +61,22 @@ public class StrategyView : BaseView
         _animationBusy = true;
     }
 
-    public void ShowLvUpActor(ActorInfo actorInfo)
+    public void ShowLvUpActor(ActorInfo actorInfo,List<ListData> status)
     {
         strategyResultList.TacticsCommandList.Deactivate();
-        strategyStrengthList.gameObject.SetActive(true);
+        statusList.gameObject.SetActive(true);
         lvUpStatusButton.gameObject.SetActive(true);
         actorInfoComponent.gameObject.SetActive(true);
         actorInfoComponent.Clear();
         actorInfoComponent.UpdateInfo(actorInfo,null);
-        strategyStrengthList.Refresh(actorInfo);
+        statusList.SetData(status);
+        statusList.Refresh();
         HelpWindow.SetInputInfo("LEVELUP");
     }
 
     public void SetTitle(string text)
     {
         title.text = text;
-    }
-
-    public void SetUiView()
-    {
     }
 
     public void SetEnemyList(List<ListData> confirmCommands)
@@ -103,7 +100,7 @@ public class StrategyView : BaseView
 
     public void SetActors(List<ActorInfo> actorInfos)
     {
-        strategyActorList.Initialize();
+        strategyActorList.Initialize(actorInfos.Count);
         strategyActorList.gameObject.SetActive(false);
     }
 
@@ -132,7 +129,7 @@ public class StrategyView : BaseView
     }
 
     private void CallStrategyStart(){
-        var eventData = new StrategyViewEvent(CommandType.StartStretegy);
+        var eventData = new StrategyViewEvent(CommandType.StartStrategy);
         _commandData(eventData);
     }
 
@@ -272,14 +269,13 @@ namespace Strategy
     public enum CommandType
     {
         None = 0,
-        StartStretegy = 1,
+        StartStrategy = 1,
         EndAnimation = 2,
         PopupSkillInfo = 3,
         CallEnemyInfo = 4,
         ResultClose = 5,
         BattleClose = 6,
         LvUpNext = 7,
-        LvUpActor = 8,
         
         EndLvupAnimation = 9,
         ChangeSkipToggle = 10,

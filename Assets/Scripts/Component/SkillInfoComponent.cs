@@ -17,6 +17,7 @@ public class SkillInfoComponent : MonoBehaviour
     [SerializeField] private TextMeshProUGUI type;
     [SerializeField] private TextMeshProUGUI value;
     [SerializeField] private TextMeshProUGUI description;
+    [SerializeField] private TextMeshProUGUI lerningCost;
     [SerializeField] private GameObject selectable;
 
     public void SetInfoData(SkillInfo skillInfo){
@@ -34,6 +35,11 @@ public class SkillInfoComponent : MonoBehaviour
         if (selectable != null)
         {
             selectable.SetActive(skillInfo.LearningState == LearningState.SelectLearn);
+        }
+        if (lerningCost != null)
+        {
+            lerningCost.gameObject.SetActive(skillInfo.LearningCost > 0);
+            lerningCost.text = skillInfo.LearningCost.ToString();
         }
     }
 
@@ -162,6 +168,11 @@ public class SkillInfoComponent : MonoBehaviour
         if (description != null)
         {
             description.text = "";
+        }
+        if (lerningCost != null)
+        {
+            lerningCost.gameObject.SetActive(false);
+            lerningCost.text = "";
         }
     }
 }

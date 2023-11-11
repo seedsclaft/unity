@@ -10,7 +10,6 @@ public class GetItemList : ListWindow , IInputHandlerEvent
 
     [SerializeField] private BaseList tacticsCommandList;
     public BaseList TacticsCommandList {get {return tacticsCommandList;}}
-    private System.Action<TacticsComandType> _confirmEvent = null;
 
     public void Refresh(List<GetItemInfo> getItemData)
     {

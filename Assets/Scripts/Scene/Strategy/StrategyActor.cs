@@ -10,28 +10,16 @@ public class StrategyActor : ListItem ,IListViewItem
     [SerializeField] private _2dxFX_Shiny_Reflect shinyReflect;
     [SerializeField] private Image bonusImage;
     [SerializeField] private Image shinyClip;
-    private ActorInfo _data;    
     private bool _isBonus; 
 
     private System.Action _callEvent = null;
 
-    public void SetData(ActorInfo data,bool isBonus){
-        _data = data;
-        _isBonus = isBonus;
-        UpdateViewItem();
-    }
-
-    public void SetCallHandler(System.Action<ActorInfo> handler)
-    {
-        if (_data == null) return;
-        clickButton.onClick.AddListener(() => handler(_data));
-    }
-
     public void UpdateViewItem()
     {
-        if (_data == null) return;
+        if (ListData == null) return;
+        var data = (ActorInfo)ListData.Data;
         component.Clear();
-        component.UpdateInfo(_data,null);
+        component.UpdateInfo(data,null);
     }
 
     public void StartResultAnimation(int animId)
@@ -47,8 +35,6 @@ public class StrategyActor : ListItem ,IListViewItem
                 if (_isBonus) 
                 {
                     StartBonusAnimation();
-                } else
-                {
                 }
                 if (_callEvent != null) _callEvent();
             });

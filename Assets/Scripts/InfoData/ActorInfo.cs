@@ -169,14 +169,6 @@ public class ActorInfo
         return IsLevelUpStatus;
     }
 
-    public void LearnSkillAttribute(int skillId,int learningCost,AttributeType attributeType)
-    {
-        SkillInfo skillInfo = new SkillInfo(skillId);
-        skillInfo.SetLearningState(LearningState.Notlearned);
-        skillInfo.SetLearnAttribute(attributeType);
-        _skills.Add(skillInfo);
-    }
-
     public bool IsLearnedSkill(int skillId)
     {
         return _skills.Find(a => a.Id == skillId) != null;

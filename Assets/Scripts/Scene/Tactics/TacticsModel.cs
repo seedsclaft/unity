@@ -230,7 +230,7 @@ public class TacticsModel : BaseModel
             SkillInfo skillInfo = new SkillInfo(PartyInfo.AlchemyIdList[i]);
             if (actorInfo.IsLearnedSkill(skillInfo.Id)) continue;
             skillInfo.SetEnable(true);
-            //skillInfo.SetLearningCost()
+            skillInfo.SetLearningCost(TacticsUtility.AlchemyCost(actorInfo,skillInfo.Attribute,StageMembers()));
             skillInfos.Add(skillInfo);
         }
         var list = new List<ListData>();

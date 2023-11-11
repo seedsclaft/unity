@@ -84,6 +84,10 @@ abstract public class ListItem : MonoBehaviour
     }
     
     public void SetSelectHandler(System.Action<int> handler){
+        if (clickButton == null)
+        {
+            return;
+        }
 		ContentEnterListener enterListener = clickButton.gameObject.AddComponent<ContentEnterListener> ();
         enterListener.SetEnterEvent(() => 
         {
@@ -95,7 +99,11 @@ abstract public class ListItem : MonoBehaviour
     }
 
     public void SetCallHandler(System.Action handler)
-    {
+    {        
+        if (clickButton == null)
+        {
+            return;
+        }
         clickButton.onClick.AddListener(() => handler());
     }
 }

@@ -33,7 +33,7 @@ public class RebornResultView : BaseView
 
     public void SetActors(List<ActorInfo> actorInfos)
     {
-        strategyActorList.Initialize();
+        strategyActorList.Initialize(actorInfos.Count);
         strategyActorList.gameObject.SetActive(false);
     }
 
