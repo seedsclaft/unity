@@ -152,7 +152,7 @@ public class TacticsView : BaseView
         {
             var commandData = (SystemData.CommandData)listData.Data;
             var eventData = new TacticsViewEvent(CommandType.TacticsCommand);
-            eventData.templete = commandData.Id;
+            eventData.template = commandData.Id;
             _commandData(eventData);
             _lastCallEventType = eventData.commandType;
         }
@@ -164,7 +164,7 @@ public class TacticsView : BaseView
         _commandData(eventData);
     }
 
-    public void SetSelectCharacter(List<ActorInfo> actorInfos,List<ListData> confirmCommands,Dictionary<TacticsComandType, int> commandRankInfo)
+    public void SetSelectCharacter(List<ActorInfo> actorInfos,List<ListData> confirmCommands,Dictionary<TacticsCommandType, int> commandRankInfo)
     {
         selectCharacter.Initialize(actorInfos.Count);
         SetInputHandler(selectCharacter.GetComponent<IInputHandlerEvent>());
@@ -187,15 +187,15 @@ public class TacticsView : BaseView
         HideEnemyList();
     }
 
-    public void CommandRefresh(TacticsComandType tacticsComandType)
+    public void CommandRefresh(TacticsCommandType tacticsCommandType)
     {
-        switch (tacticsComandType)
+        switch (tacticsCommandType)
         {
-            case TacticsComandType.Train:
-            case TacticsComandType.Alchemy:
-            case TacticsComandType.Recovery:
-            case TacticsComandType.Battle:
-            case TacticsComandType.Resource:
+            case TacticsCommandType.Train:
+            case TacticsCommandType.Alchemy:
+            case TacticsCommandType.Recovery:
+            case TacticsCommandType.Battle:
+            case TacticsCommandType.Resource:
             selectCharacter.Refresh();
             return;
         }
@@ -210,7 +210,7 @@ public class TacticsView : BaseView
         {
             var data = (TacticsActorInfo)listData.Data;
             var eventData = new TacticsViewEvent(CommandType.SelectTacticsActor);
-            eventData.templete = data;
+            eventData.template = data;
             _commandData(eventData);
             _lastCallEventType = eventData.commandType;
         }
@@ -223,13 +223,13 @@ public class TacticsView : BaseView
         if (commandData != null)
         {
             var data = (SystemData.CommandData)commandData.Data;
-            var commandType = ConfirmComandType.No;
+            var commandType = ConfirmCommandType.No;
             if (data.Key == "Yes")
             {
-                commandType = ConfirmComandType.Yes;
+                commandType = ConfirmCommandType.Yes;
             }
             var eventData = new TacticsViewEvent(CommandType.TacticsCommandClose);
-            eventData.templete = commandType;
+            eventData.template = commandType;
             _commandData(eventData);
             _lastCallEventType = eventData.commandType;
         }
@@ -237,8 +237,9 @@ public class TacticsView : BaseView
 
     public void ShowSelectCharacter(List<ListData> tacticsActorInfo,TacticsCommandData tacticsCommandData)
     {
-        selectCharacter.SetTacticsChracter(tacticsActorInfo);
+        selectCharacter.SetTacticsCharacter(tacticsActorInfo);
         selectCharacter.SetTacticsCommandData(tacticsCommandData);
+        selectCharacter.UpdateSmoothSelect();
         selectCharacter.gameObject.SetActive(true);
     }
 
@@ -285,12 +286,12 @@ public class TacticsView : BaseView
         if (listData != null)
         {
             var data = (TacticsActorInfo)listData.Data;
-            if (data.TacticsComandType != TacticsComandType.Recovery)
+            if (data.TacticsCommandType != TacticsCommandType.Recovery)
             {
                 return;
             }
             var eventData = new TacticsViewEvent(CommandType.SelectRecoveryPlus);
-            eventData.templete = data.ActorInfo.ActorId;
+            eventData.template = data.ActorInfo.ActorId;
             _commandData(eventData);
             _lastCallEventType = eventData.commandType;
         }
@@ -303,12 +304,12 @@ public class TacticsView : BaseView
         if (listData != null)
         {
             var data = (TacticsActorInfo)listData.Data;
-            if (data.TacticsComandType != TacticsComandType.Recovery)
+            if (data.TacticsCommandType != TacticsCommandType.Recovery)
             {
                 return;
             }
             var eventData = new TacticsViewEvent(CommandType.SelectRecoveryMinus);
-            eventData.templete = data.ActorInfo.ActorId;
+            eventData.template = data.ActorInfo.ActorId;
             _commandData(eventData);
             _lastCallEventType = eventData.commandType;
         }
@@ -318,7 +319,7 @@ public class TacticsView : BaseView
     {
         if (_lastCallEventType != CommandType.None) return;
         var eventData = new TacticsViewEvent(CommandType.SelectBattleEnemy);
-        eventData.templete = enemyIndex;
+        eventData.template = enemyIndex;
         _commandData(eventData);
         _lastCallEventType = eventData.commandType;
     }
@@ -329,7 +330,7 @@ public class TacticsView : BaseView
         var item = tacticsEnemyList.GetItemInfo;
         if (item != null)
         {
-            eventData.templete = item;
+            eventData.template = item;
             _commandData(eventData);
         }
     }
@@ -340,7 +341,7 @@ public class TacticsView : BaseView
         var item = tacticsEnemyList.EnemyIndex;
         if (item > -1)
         {
-            eventData.templete = item;
+            eventData.template = item;
             _commandData(eventData);
         }
     }
@@ -376,7 +377,7 @@ public class TacticsView : BaseView
         if (listData != null)
         {
             var data = (SkillInfo)listData;
-            eventData.templete = listData;
+            eventData.template = listData;
             _commandData(eventData);
             _lastCallEventType = eventData.commandType;
         }
@@ -453,7 +454,7 @@ public class TacticsView : BaseView
     private void CallSideMenu(SystemData.CommandData sideMenu)
     {
         var eventData = new TacticsViewEvent(CommandType.SelectSideMenu);
-        eventData.templete = sideMenu;
+        eventData.template = sideMenu;
         _commandData(eventData);
     }
 

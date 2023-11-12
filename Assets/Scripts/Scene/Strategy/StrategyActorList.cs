@@ -1,25 +1,23 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
 
 public class StrategyActorList : BaseList
 {   
-    private List<StrategyActor> _comps = new List<StrategyActor>();
 
-    public void StartResultAnimation(List<ActorInfo> actors,List<bool> isBonusList,System.Action callEvent)
+    public void StartResultAnimation(int actorCount,List<bool> isBonusList,System.Action callEvent)
     {
-        for (int i = 0; i < _comps.Count;i++)
+        for (int i = 0; i < ObjectList.Count;i++)
         {
             bool isBonus = (isBonusList != null && isBonusList.Count > i) ? isBonusList[i] : false;
-            _comps[i].gameObject.SetActive(false);
-            if (i < actors.Count)
+            ObjectList[i].SetActive(false);
+            if (i < actorCount)
             {
-                _comps[i].StartResultAnimation(i);
-                _comps[i].gameObject.SetActive(true);
-                if (i == actors.Count-1)
+                var StrategyActor = ObjectList[i].GetComponent<StrategyActor>();
+                StrategyActor.StartResultAnimation(i);
+                StrategyActor.gameObject.SetActive(true);
+                if (i == actorCount-1)
                 {
-                    _comps[i].SetEndCallEvent(callEvent);
+                    StrategyActor.SetEndCallEvent(callEvent);
                 }
             }
         }
@@ -27,9 +25,10 @@ public class StrategyActorList : BaseList
 
     public void SetShinyRefrect(bool isEnable)
     {
-        for (int i = 0; i < _comps.Count;i++)
+        for (int i = 0; i < ObjectList.Count;i++)
         {
-            _comps[i].SetShinyRefrect(isEnable);
+            var StrategyActor = ObjectList[i].GetComponent<StrategyActor>();
+            StrategyActor.SetShinyRefrect(isEnable);
         }
     }
 }

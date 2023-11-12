@@ -148,38 +148,38 @@ public class OptionView : BaseView
         SetInputHandler(commandList.GetComponent<IInputHandlerEvent>());
     }
 
-    private void CallConfirmCommand(ConfirmComandType commandType)
+    private void CallConfirmCommand(ConfirmCommandType commandType)
     {
         var eventData = new OptionViewEvent(CommandType.SelectCategory);
-        eventData.templete = commandType;
+        eventData.template = commandType;
         _commandData(eventData);
     }
 
     private void CallChangeBGMVolume(float bgmVolume)
     {
         var eventData = new OptionViewEvent(CommandType.ChangeBGMValue);
-        eventData.templete = bgmVolume;
+        eventData.template = bgmVolume;
         _commandData(eventData);
     }
 
     private void CallChangeBGMMute(bool bgmMute)
     {
         var eventData = new OptionViewEvent(CommandType.ChangeBGMMute);
-        eventData.templete = bgmMute;
+        eventData.template = bgmMute;
         _commandData(eventData);
     }
 
     private void CallChangeSEVolume(float seVolume)
     {
         var eventData = new OptionViewEvent(CommandType.ChangeSEValue);
-        eventData.templete = seVolume;
+        eventData.template = seVolume;
         _commandData(eventData);
     }
 
     private void CallChangeSEMute(bool seMute)
     {
         var eventData = new OptionViewEvent(CommandType.ChangeSEMute);
-        eventData.templete = seMute;
+        eventData.template = seMute;
         _commandData(eventData);
     }
 
@@ -187,7 +187,7 @@ public class OptionView : BaseView
     {
         if (isChange == false) return;
         var eventData = new OptionViewEvent(CommandType.ChangeGraphicIndex);
-        eventData.templete = toggleIndex;
+        eventData.template = toggleIndex;
         _commandData(eventData);
     }
 
@@ -204,7 +204,7 @@ public class OptionView : BaseView
     {
         if (isChange == false) return;
         var eventData = new OptionViewEvent(CommandType.ChangeEventSkipIndex);
-        eventData.templete = toggleIndex;
+        eventData.template = toggleIndex;
         _commandData(eventData);
     }
 
@@ -220,7 +220,7 @@ public class OptionView : BaseView
     {
         if (isChange == false) return;
         var eventData = new OptionViewEvent(CommandType.ChangeCommandEndCheck);
-        eventData.templete = toggleIndex;
+        eventData.template = toggleIndex;
         _commandData(eventData);
     }
 
@@ -236,7 +236,7 @@ public class OptionView : BaseView
     {
         if (isChange == false) return;
         var eventData = new OptionViewEvent(CommandType.ChangeBattleWait);
-        eventData.templete = toggleIndex;
+        eventData.template = toggleIndex;
         _commandData(eventData);
     }
 
@@ -252,7 +252,7 @@ public class OptionView : BaseView
     {
         if (isChange == false) return;
         var eventData = new OptionViewEvent(CommandType.ChangeBattleAnimation);
-        eventData.templete = toggleIndex;
+        eventData.template = toggleIndex;
         _commandData(eventData);
     }
 
@@ -268,7 +268,7 @@ public class OptionView : BaseView
     {
         if (isChange == false) return;
         var eventData = new OptionViewEvent(CommandType.ChangeInputType);
-        eventData.templete = toggleIndex;
+        eventData.template = toggleIndex;
         _commandData(eventData);
     }
 
@@ -284,7 +284,7 @@ public class OptionView : BaseView
     {
         if (isChange == false) return;
         var eventData = new OptionViewEvent(CommandType.ChangeBattleAuto);
-        eventData.templete = toggleIndex;
+        eventData.template = toggleIndex;
         _commandData(eventData);
     }
 
@@ -467,7 +467,7 @@ namespace Option
 public class OptionViewEvent
 {
     public Option.CommandType commandType;
-    public object templete;
+    public object template;
 
     public OptionViewEvent(Option.CommandType type)
     {

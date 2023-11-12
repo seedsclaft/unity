@@ -63,19 +63,19 @@ public class StatusPresenter
     {
         ActorInfo actorInfo = _model.CurrentActor;
         var text = _model.SelectAddActorConfirmText(actorInfo.Master.Name);
-        ConfirmInfo confirmInfo = new ConfirmInfo(text,(menuCommandInfo) => updatePopup((ConfirmComandType)menuCommandInfo));
+        ConfirmInfo confirmInfo = new ConfirmInfo(text,(menuCommandInfo) => updatePopup((ConfirmCommandType)menuCommandInfo));
         _view.CommandCallConfirm(confirmInfo);
         _popupCommandType = Status.CommandType.DecideStage;
         Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
     }
 
-    private void updatePopup(ConfirmComandType confirmComandType)
+    private void updatePopup(ConfirmCommandType confirmComandType)
     {
         _view.CommandConfirmClose();
 
         if (_popupCommandType == Status.CommandType.SelectSkillAction)
         {
-            if (confirmComandType == ConfirmComandType.Yes)
+            if (confirmComandType == ConfirmCommandType.Yes)
             {
                 CommandRefresh();
             }
@@ -85,7 +85,7 @@ public class StatusPresenter
 
         if (_popupCommandType == Status.CommandType.DecideStage)
         {
-            if (confirmComandType == ConfirmComandType.Yes)
+            if (confirmComandType == ConfirmCommandType.Yes)
             {
                 _model.SelectAddActor();
                 _view.CommandStatusClose();

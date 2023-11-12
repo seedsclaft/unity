@@ -65,17 +65,19 @@ public class RebornResultView : BaseView
         strategyResultList.TacticsCommandList.Deactivate();
     }
     
-    private void CallResultCommand(ConfirmComandType commandType)
+    private void CallResultCommand(ConfirmCommandType commandType)
     {
         var eventData = new RebornResultViewEvent(CommandType.RebornResultClose);
-        eventData.templete = commandType;
+        eventData.template = commandType;
         _commandData(eventData);
     }
 
-    public void StartRebornResultAnimation(List<ActorInfo> actorInfos)
+    public void StartRebornResultAnimation(List<ListData> actorInfos)
     {
         strategyActorList.gameObject.SetActive(true);
-        strategyActorList.StartResultAnimation(actorInfos,new List<bool>{false},() => {
+        strategyActorList.SetData(actorInfos);
+        strategyActorList.Refresh();
+        strategyActorList.StartResultAnimation(actorInfos.Count,new List<bool>{false},() => {
         });
     }
 
@@ -128,7 +130,7 @@ namespace RebornResult
 public class RebornResultViewEvent
 {
     public RebornResult.CommandType commandType;
-    public object templete;
+    public object template;
 
     public RebornResultViewEvent(RebornResult.CommandType type)
     {

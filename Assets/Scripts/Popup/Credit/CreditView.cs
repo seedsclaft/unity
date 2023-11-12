@@ -68,7 +68,7 @@ namespace Credit
 public class CreditViewEvent
 {
     public Credit.CommandType commandType;
-    public object templete;
+    public object template;
 
     public CreditViewEvent(Credit.CommandType type)
     {

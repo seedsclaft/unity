@@ -7,7 +7,7 @@ using System;
 public class ViewEvent
 {
     public Base.CommandType commandType;
-    public object templete;
+    public object template;
 
     public ViewEvent(Base.CommandType type)
     {

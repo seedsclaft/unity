@@ -36,6 +36,17 @@ public class BaseModel
         return GameSystem.CurrentData.Actors;
     }
 
+    public List<ListData> CastActorInfos(List<ActorInfo> actorInfos)
+    {
+        var list = new List<ListData>();
+        foreach (var actorInfo in actorInfos)
+        {
+            var listData = new ListData(actorInfo);
+            list.Add(listData);
+        }
+        return list;
+    }
+    
     public void LostActors(List<ActorInfo> lostMembers)
     {
         lostMembers.ForEach(a => a.ChangeLost(true));
@@ -539,7 +550,7 @@ public class BaseModel
 		GameSystem.CurrentData.ChangeRouteSelectStage(stageId);
     }
 
-    public Dictionary<TacticsComandType, int> CommandRankInfo()
+    public Dictionary<TacticsCommandType, int> CommandRankInfo()
     {
         return PartyInfo.CommandRankInfo;
     }

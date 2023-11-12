@@ -33,13 +33,13 @@ public class TacticsComponent : MonoBehaviour
     [SerializeField] private TextMeshProUGUI busyText;
 
     [SerializeField] private List<GameObject> viewObjects;
-    public void UpdateInfo(ActorInfo actorInfo,TacticsComandType tacticsComandType)
+    public void UpdateInfo(ActorInfo actorInfo,TacticsCommandType tacticsCommandType)
     {
         viewObjects.ForEach(a => a.SetActive(false));
-        UpdateViewObjects(tacticsComandType);
+        UpdateViewObjects(tacticsCommandType);
 
         _actorInfo = actorInfo;
-        TacticsComandType currentTacticsComandType = actorInfo.TacticsComandType;
+        TacticsCommandType currentTacticsCommandType = actorInfo.TacticsCommandType;
         if (actorInfoComponent != null)
         {
             actorInfoComponent.UpdateInfo(actorInfo,null);
@@ -47,10 +47,10 @@ public class TacticsComponent : MonoBehaviour
         
         if (checkToggle != null)
         {
-            checkToggle.isOn = (actorInfo.TacticsComandType == tacticsComandType);
+            checkToggle.isOn = (actorInfo.TacticsCommandType == tacticsCommandType);
         }
 
-        if (afterLv != null && tacticsComandType == TacticsComandType.Train)
+        if (afterLv != null && tacticsCommandType == TacticsCommandType.Train)
         {
             afterLv.gameObject.SetActive(checkToggle.isOn);
             afterLv.text = (actorInfo.Level+1).ToString();
@@ -88,7 +88,7 @@ public class TacticsComponent : MonoBehaviour
         if (statusInfoComponent != null)
         {
             int RecoveryCost = 0;
-            if (actorInfo.TacticsComandType == TacticsComandType.Recovery)
+            if (actorInfo.TacticsCommandType == TacticsCommandType.Recovery)
             {
                 RecoveryCost = actorInfo.TacticsCost;
             }
@@ -106,17 +106,17 @@ public class TacticsComponent : MonoBehaviour
 
         if (resourceCost != null)
         {
-            resourceCost.gameObject.SetActive(actorInfo.TacticsComandType == TacticsComandType.Resource);
+            resourceCost.gameObject.SetActive(actorInfo.TacticsCommandType == TacticsCommandType.Resource);
             resourceCost.text = "+" + TacticsUtility.ResourceGain(actorInfo).ToString();
         }
 
         if (busyRoot != null && busyText != null)
         {
             busyRoot.gameObject.SetActive(false);
-            if (tacticsComandType != actorInfo.TacticsComandType && actorInfo.TacticsComandType != TacticsComandType.None)
+            if (tacticsCommandType != actorInfo.TacticsCommandType && actorInfo.TacticsCommandType != TacticsCommandType.None)
             {
                 busyRoot.gameObject.SetActive(true);
-                TextData textData = DataSystem.System.GetTextData((int)actorInfo.TacticsComandType);
+                TextData textData = DataSystem.System.GetTextData((int)actorInfo.TacticsCommandType);
                 TextData subtextData = DataSystem.System.GetTextData(1020);
                 busyText.text = textData.Text + subtextData.Text;
             }
@@ -127,12 +127,12 @@ public class TacticsComponent : MonoBehaviour
         //checkToggle.onValueChanged.AddListener((a) => handler(_actorInfo.ActorId));
     }
 
-    private void UpdateViewObjects(TacticsComandType tacticsComandType)
+    private void UpdateViewObjects(TacticsCommandType tacticsCommandType)
     {
         var idx = 1;
         foreach (var viewObject in viewObjects)
         {
-            viewObject.SetActive((int)tacticsComandType == idx);
+            viewObject.SetActive((int)tacticsCommandType == idx);
             idx++;
         }
     }

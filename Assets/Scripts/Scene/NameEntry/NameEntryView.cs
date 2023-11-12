@@ -35,7 +35,7 @@ public class NameEntryView : BaseView, IInputHandlerEvent
     private void OnClickDecide()
     {
         var eventData = new NameEntryViewEvent(CommandType.EntryEnd);
-        eventData.templete = inputField.text;
+        eventData.template = inputField.text;
         _commandData(eventData);
         if (inputField != null) inputField.gameObject.SetActive(false);
         if (decideButton != null) decideButton.gameObject.SetActive(false);
@@ -91,7 +91,7 @@ namespace NameEntry
 public class NameEntryViewEvent
 {
     public NameEntry.CommandType commandType;
-    public object templete;
+    public object template;
 
     public NameEntryViewEvent(NameEntry.CommandType type)
     {

@@ -33,7 +33,7 @@ public class EnemyInfoPresenter
         }
         if (viewEvent.commandType == CommandType.AttributeType)
         {
-            CommandAttributeType((AttributeType)viewEvent.templete);
+            CommandAttributeType((AttributeType)viewEvent.template);
         }
         if (viewEvent.commandType == CommandType.LeftActor)
         {

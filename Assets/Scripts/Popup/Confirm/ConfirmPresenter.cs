@@ -46,8 +46,8 @@ public class ConfirmInfo
 {
     private string _title = "";
     public string Title => _title;
-    private System.Action<ConfirmComandType> _callEvent = null;
-    public System.Action<ConfirmComandType> CallEvent => _callEvent;
+    private System.Action<ConfirmCommandType> _callEvent = null;
+    public System.Action<ConfirmCommandType> CallEvent => _callEvent;
     private bool _isNoChoise = false;
     public bool IsNoChoise => _isNoChoise;
     private List<SkillInfo> _skillInfos = null;
@@ -55,7 +55,7 @@ public class ConfirmInfo
     private int _selectIndex = 0;
     public int SelectIndex => _selectIndex;
 
-    public ConfirmInfo(string title,System.Action<ConfirmComandType> callEvent)
+    public ConfirmInfo(string title,System.Action<ConfirmCommandType> callEvent)
     {
         _title = title;
         _callEvent = callEvent;

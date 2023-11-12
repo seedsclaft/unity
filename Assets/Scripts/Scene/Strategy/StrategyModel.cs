@@ -36,13 +36,13 @@ public class StrategyModel : BaseModel
 
     public List<ActorInfo> TacticsActors()
     {
-        List<ActorInfo> actorInfos = StageMembers().FindAll(a => a.TacticsComandType != TacticsComandType.None && a.TacticsComandType != TacticsComandType.Battle);
+        List<ActorInfo> actorInfos = StageMembers().FindAll(a => a.TacticsCommandType != TacticsCommandType.None && a.TacticsCommandType != TacticsCommandType.Battle);
         return actorInfos;
     }
 
     public List<ActorInfo> TacticsBattleActors()
     {
-        List<ActorInfo> actorInfos = StageMembers().FindAll(a => a.TacticsComandType == TacticsComandType.Battle);
+        List<ActorInfo> actorInfos = StageMembers().FindAll(a => a.TacticsCommandType == TacticsCommandType.Battle);
         return actorInfos;
     }
 
@@ -54,7 +54,7 @@ public class StrategyModel : BaseModel
         // 結果出力
         for (int i = 0;i < actorInfos.Count;i++)
         {
-            if (actorInfos[i].TacticsComandType == TacticsComandType.Train)
+            if (actorInfos[i].TacticsCommandType == TacticsCommandType.Train)
             {
                 int levelBonus = PartyInfo.GetTrainLevelBonusValue();
                 var statusInfo = actorInfos[i].LevelUp(levelBonus);
@@ -86,13 +86,13 @@ public class StrategyModel : BaseModel
         {
             var actorName = actorInfos[i].Master.Name;
             var getItemInfo = new GetItemInfo(null);
-            if (actorInfos[i].TacticsComandType == TacticsComandType.Train)
+            if (actorInfos[i].TacticsCommandType == TacticsCommandType.Train)
             {
                 var trainBonus = _levelUpBonusData.Find(a => a == actorInfos[i]) != null;
                 getItemInfo.MakeTrainResult(actorName,actorInfos[i].Level,trainBonus);
-                _resultInfos.Add(new TacticsResultInfo(actorInfos[i].ActorId,TacticsComandType.Train,trainBonus));
+                _resultInfos.Add(new TacticsResultInfo(actorInfos[i].ActorId,TacticsCommandType.Train,trainBonus));
             }
-            if (actorInfos[i].TacticsComandType == TacticsComandType.Alchemy)
+            if (actorInfos[i].TacticsCommandType == TacticsCommandType.Alchemy)
             {
                 bool alchemyBonus = PartyInfo.GetAlchemyNuminosValue();
                 SkillData skillData = DataSystem.Skills.Find(a => a.Id == actorInfos[i].NextLearnSkillId);
@@ -111,9 +111,9 @@ public class StrategyModel : BaseModel
                         getItemInfos.Add(bonusGetItemInfo);
                     }
                 }
-               _resultInfos.Add(new TacticsResultInfo(actorInfos[i].ActorId,TacticsComandType.Alchemy,alchemyBonus));    
+               _resultInfos.Add(new TacticsResultInfo(actorInfos[i].ActorId,TacticsCommandType.Alchemy,alchemyBonus));    
             }
-            if (actorInfos[i].TacticsComandType == TacticsComandType.Recovery)
+            if (actorInfos[i].TacticsCommandType == TacticsCommandType.Recovery)
             {
                 int Hp = Mathf.Min(actorInfos[i].CurrentHp + actorInfos[i].TacticsCost * 10,actorInfos[i].MaxHp);
                 int Mp = Mathf.Min(actorInfos[i].CurrentMp + actorInfos[i].TacticsCost * 10,actorInfos[i].MaxMp);
@@ -129,9 +129,9 @@ public class StrategyModel : BaseModel
                     bonusGetItemInfo.MakeRecoveryBonusResult(actorName);
                     getItemInfos.Add(bonusGetItemInfo);
                 }
-               _resultInfos.Add(new TacticsResultInfo(actorInfos[i].ActorId,TacticsComandType.Recovery,isRecoveryBonus));
+               _resultInfos.Add(new TacticsResultInfo(actorInfos[i].ActorId,TacticsCommandType.Recovery,isRecoveryBonus));
             }
-            if (actorInfos[i].TacticsComandType == TacticsComandType.Resource)
+            if (actorInfos[i].TacticsCommandType == TacticsCommandType.Resource)
             {
                 bool resourceBonus = PartyInfo.GetResourceBonusValue();
                 getItemInfo.SetTitleData(DataSystem.System.GetReplaceText(3020,actorInfos[i].Master.Name));
@@ -147,7 +147,7 @@ public class StrategyModel : BaseModel
                     resourceResult += " " + DataSystem.System.GetTextData(3031).Text;
                 }
                 getItemInfo.SetResultData(resourceResult);
-                _resultInfos.Add(new TacticsResultInfo(actorInfos[i].ActorId,TacticsComandType.Resource,resourceBonus));
+                _resultInfos.Add(new TacticsResultInfo(actorInfos[i].ActorId,TacticsCommandType.Resource,resourceBonus));
             }
             PartyInfo.AddActor(actorInfos[i].ActorId);
             getItemInfos.Add(getItemInfo);
@@ -156,43 +156,43 @@ public class StrategyModel : BaseModel
         // コマンドカウント出力
         for (int i = 0;i < actorInfos.Count;i++)
         {
-            if (actorInfos[i].TacticsComandType == TacticsComandType.Train)
+            if (actorInfos[i].TacticsCommandType == TacticsCommandType.Train)
             {
-                if (PartyInfo.AddCommandCountInfo(TacticsComandType.Train))
+                if (PartyInfo.AddCommandCountInfo(TacticsCommandType.Train))
                 {
                     GetItemInfo partyGetItemInfo = new GetItemInfo(null);
-                    partyGetItemInfo.MakeTrainCommandResult(PartyInfo.CommandRankInfo[TacticsComandType.Train]);
-                    PartyInfo.AddCommandRank(TacticsComandType.Train);
+                    partyGetItemInfo.MakeTrainCommandResult(PartyInfo.CommandRankInfo[TacticsCommandType.Train]);
+                    PartyInfo.AddCommandRank(TacticsCommandType.Train);
                     getItemInfos.Add(partyGetItemInfo);
                 }
             }
-            if (actorInfos[i].TacticsComandType == TacticsComandType.Alchemy)
+            if (actorInfos[i].TacticsCommandType == TacticsCommandType.Alchemy)
             {
-                if (PartyInfo.AddCommandCountInfo(TacticsComandType.Alchemy))
+                if (PartyInfo.AddCommandCountInfo(TacticsCommandType.Alchemy))
                 {
                     GetItemInfo partyGetItemInfo = new GetItemInfo(null);
-                    partyGetItemInfo.MakeAlchemyCommandResult(PartyInfo.CommandRankInfo[TacticsComandType.Alchemy]);
-                    PartyInfo.AddCommandRank(TacticsComandType.Alchemy);
+                    partyGetItemInfo.MakeAlchemyCommandResult(PartyInfo.CommandRankInfo[TacticsCommandType.Alchemy]);
+                    PartyInfo.AddCommandRank(TacticsCommandType.Alchemy);
                     getItemInfos.Add(partyGetItemInfo);
                 }
             }
-            if (actorInfos[i].TacticsComandType == TacticsComandType.Recovery)
+            if (actorInfos[i].TacticsCommandType == TacticsCommandType.Recovery)
             {
-                if (PartyInfo.AddCommandCountInfo(TacticsComandType.Recovery))
+                if (PartyInfo.AddCommandCountInfo(TacticsCommandType.Recovery))
                 {
                     GetItemInfo partyGetItemInfo = new GetItemInfo(null);
-                    partyGetItemInfo.MakeRecoveryCommandResult(PartyInfo.CommandRankInfo[TacticsComandType.Recovery]);
-                    PartyInfo.AddCommandRank(TacticsComandType.Recovery);
+                    partyGetItemInfo.MakeRecoveryCommandResult(PartyInfo.CommandRankInfo[TacticsCommandType.Recovery]);
+                    PartyInfo.AddCommandRank(TacticsCommandType.Recovery);
                     getItemInfos.Add(partyGetItemInfo);
                 }
             }
-            if (actorInfos[i].TacticsComandType == TacticsComandType.Resource)
+            if (actorInfos[i].TacticsCommandType == TacticsCommandType.Resource)
             {
-                if (PartyInfo.AddCommandCountInfo(TacticsComandType.Resource))
+                if (PartyInfo.AddCommandCountInfo(TacticsCommandType.Resource))
                 {
                     GetItemInfo partyGetItemInfo = new GetItemInfo(null);
-                    partyGetItemInfo.MakeResourceCommandResult(PartyInfo.CommandRankInfo[TacticsComandType.Resource]);
-                    PartyInfo.AddCommandRank(TacticsComandType.Resource);
+                    partyGetItemInfo.MakeResourceCommandResult(PartyInfo.CommandRankInfo[TacticsCommandType.Resource]);
+                    PartyInfo.AddCommandRank(TacticsCommandType.Resource);
                     getItemInfos.Add(partyGetItemInfo);
                 }
             }
@@ -305,11 +305,11 @@ public class StrategyModel : BaseModel
         {
             if (actorInfo.InBattle == true)
             {
-                if (PartyInfo.AddCommandCountInfo(TacticsComandType.Battle))
+                if (PartyInfo.AddCommandCountInfo(TacticsCommandType.Battle))
                 {
                     GetItemInfo partyGetItemInfo = new GetItemInfo(null);
-                    partyGetItemInfo.MakeBattleCommandResult(PartyInfo.CommandRankInfo[TacticsComandType.Battle]);
-                    PartyInfo.AddCommandRank(TacticsComandType.Battle);
+                    partyGetItemInfo.MakeBattleCommandResult(PartyInfo.CommandRankInfo[TacticsCommandType.Battle]);
+                    PartyInfo.AddCommandRank(TacticsCommandType.Battle);
                     getItemInfos.Add(partyGetItemInfo);
                 }
             }
@@ -325,7 +325,7 @@ public class StrategyModel : BaseModel
         {
             if (enemyIndex == -1)
             {
-                if (actorInfos[i].TacticsComandType == TacticsComandType.Battle)
+                if (actorInfos[i].TacticsCommandType == TacticsCommandType.Battle)
                 {
                     if (actorInfos[i].InBattle == inBattle && actorInfos[i].NextBattleEnemyIndex > enemyIndex)
                     {

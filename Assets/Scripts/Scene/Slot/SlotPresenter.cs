@@ -39,11 +39,11 @@ public class SlotPresenter
         }
         if (viewEvent.commandType == CommandType.Lock)
         {
-            CommandLock((int)viewEvent.templete);
+            CommandLock((int)viewEvent.template);
         }
         if (viewEvent.commandType == CommandType.Status)
         {
-            CommandStatus((int)viewEvent.templete);
+            CommandStatus((int)viewEvent.template);
         }
     }
 

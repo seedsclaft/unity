@@ -42,7 +42,7 @@ public class RebornPresenter :BasePresenter
         }
         if (viewEvent.commandType == CommandType.DecideActor)
         {
-           CommandDecideActor((int)viewEvent.templete);
+           CommandDecideActor((int)viewEvent.template);
         }
         if (viewEvent.commandType == CommandType.CancelActor)
         {
@@ -58,15 +58,15 @@ public class RebornPresenter :BasePresenter
         }
     }
 
-    private void UpdatePopupStart(ConfirmComandType confirmComandType)
+    private void UpdatePopupStart(ConfirmCommandType confirmComandType)
     {
         Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
         _view.CommandConfirmClose();
     }
 
-    private void UpdatePopup(ConfirmComandType confirmComandType)
+    private void UpdatePopup(ConfirmCommandType confirmComandType)
     {
-        if (confirmComandType == ConfirmComandType.Yes)
+        if (confirmComandType == ConfirmCommandType.Yes)
         {
             _model.OnRebornSkill();
             _view.CommandConfirmClose();

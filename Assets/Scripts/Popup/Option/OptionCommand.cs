@@ -18,10 +18,10 @@ public class OptionCommand : ListItem ,IListViewItem
         SetIndex(index);
     }
 
-    public void SetCallHandler(System.Action<ConfirmComandType> handler)
+    public void SetCallHandler(System.Action<ConfirmCommandType> handler)
     {
         if (_data == null) return;
-        clickButton.onClick.AddListener(() => handler((ConfirmComandType)_data.Id));
+        clickButton.onClick.AddListener(() => handler((ConfirmCommandType)_data.Id));
     }
 
     public void UpdateViewItem()

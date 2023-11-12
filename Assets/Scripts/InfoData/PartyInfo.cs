@@ -13,11 +13,11 @@ public class PartyInfo
     public void ClearData()
     {
         _commandCountInfo = new();
-        _commandRankInfo[TacticsComandType.Train] = 0;
-        _commandRankInfo[TacticsComandType.Alchemy] = 0;
-        _commandRankInfo[TacticsComandType.Recovery] = 0;
-        _commandRankInfo[TacticsComandType.Battle] = 0;
-        _commandRankInfo[TacticsComandType.Resource] = 0;
+        _commandRankInfo[TacticsCommandType.Train] = 0;
+        _commandRankInfo[TacticsCommandType.Alchemy] = 0;
+        _commandRankInfo[TacticsCommandType.Recovery] = 0;
+        _commandRankInfo[TacticsCommandType.Battle] = 0;
+        _commandRankInfo[TacticsCommandType.Resource] = 0;
     
         _alchemyIdList = new();
         _battleResult = false;
@@ -35,9 +35,9 @@ public class PartyInfo
     private bool _battleResult = false;
     public bool BattleResult => _battleResult;
 
-    private Dictionary<TacticsComandType,int> _commandCountInfo = new();
-    private Dictionary<TacticsComandType,int> _commandRankInfo = new();
-    public Dictionary<TacticsComandType,int> CommandRankInfo => _commandRankInfo;
+    private Dictionary<TacticsCommandType,int> _commandCountInfo = new();
+    private Dictionary<TacticsCommandType,int> _commandRankInfo = new();
+    public Dictionary<TacticsCommandType,int> CommandRankInfo => _commandRankInfo;
     public void AddActor(int actorId)
     {
         if (_actorIdList.IndexOf(actorId) != -1)
@@ -85,26 +85,26 @@ public class PartyInfo
         _alchemyIdList.Add(skillId);
     }
 
-    public bool AddCommandCountInfo(TacticsComandType commandType)
+    public bool AddCommandCountInfo(TacticsCommandType commandType)
     {
         if (_commandCountInfo.ContainsKey(commandType) == false)
         {
             _commandCountInfo[commandType] = 0;
         }
         int needLvUpCount = DataSystem.System.TrainCount;
-        if (commandType == TacticsComandType.Alchemy)
+        if (commandType == TacticsCommandType.Alchemy)
         {
             needLvUpCount = DataSystem.System.AlchemyCount;
         }
-        if (commandType == TacticsComandType.Resource)
+        if (commandType == TacticsCommandType.Resource)
         {
             needLvUpCount = DataSystem.System.ResourceCount;
         }
-        if (commandType == TacticsComandType.Recovery)
+        if (commandType == TacticsCommandType.Recovery)
         {
             needLvUpCount = DataSystem.System.RecoveryCount;
         }
-        if (commandType == TacticsComandType.Battle)
+        if (commandType == TacticsCommandType.Battle)
         {
             needLvUpCount = DataSystem.System.BattleCount;
         }
@@ -125,7 +125,7 @@ public class PartyInfo
         return false;
     }
     
-    public void AddCommandRank(TacticsComandType commandType)
+    public void AddCommandRank(TacticsCommandType commandType)
     {
         if (_commandRankInfo.ContainsKey(commandType) == false)
         {
@@ -138,10 +138,10 @@ public class PartyInfo
     public int GetTrainLevelBonusValue()
     {
         int value = 0;
-        if (_commandRankInfo.ContainsKey(TacticsComandType.Train))
+        if (_commandRankInfo.ContainsKey(TacticsCommandType.Train))
         {
             int rand = Random.Range(0,100);
-            if (_commandRankInfo[TacticsComandType.Train]*10 > rand)
+            if (_commandRankInfo[TacticsCommandType.Train]*10 > rand)
             {
                 value += 1;
             }
@@ -152,10 +152,10 @@ public class PartyInfo
     public bool GetAlchemyNuminosValue()
     {
         bool value = false;
-        if (_commandRankInfo.ContainsKey(TacticsComandType.Alchemy))
+        if (_commandRankInfo.ContainsKey(TacticsCommandType.Alchemy))
         {
             int rand = Random.Range(0,100);
-            if (_commandRankInfo[TacticsComandType.Alchemy]*10 > rand)
+            if (_commandRankInfo[TacticsCommandType.Alchemy]*10 > rand)
             {
                 value = true;
             }
@@ -166,10 +166,10 @@ public class PartyInfo
     public bool GetRecoveryBonusValue()
     {
         bool value = false;
-        if (_commandRankInfo.ContainsKey(TacticsComandType.Recovery))
+        if (_commandRankInfo.ContainsKey(TacticsCommandType.Recovery))
         {
             int rand = Random.Range(0,100);
-            if (_commandRankInfo[TacticsComandType.Recovery]*10 > rand)
+            if (_commandRankInfo[TacticsCommandType.Recovery]*10 > rand)
             {
                 value = true;
             }
@@ -180,10 +180,10 @@ public class PartyInfo
     public bool GetResourceBonusValue()
     {
         bool value = false;
-        if (_commandRankInfo.ContainsKey(TacticsComandType.Resource))
+        if (_commandRankInfo.ContainsKey(TacticsCommandType.Resource))
         {
             int rand = Random.Range(0,100);
-            if (_commandRankInfo[TacticsComandType.Resource]*10 > rand)
+            if (_commandRankInfo[TacticsCommandType.Resource]*10 > rand)
             {
                 value = true;
             }
@@ -194,9 +194,9 @@ public class PartyInfo
     public int GetBattleBonusValue(int baseValue)
     {
         int value = baseValue;
-        if (_commandRankInfo.ContainsKey(TacticsComandType.Battle))
+        if (_commandRankInfo.ContainsKey(TacticsCommandType.Battle))
         {
-            value += _commandRankInfo[TacticsComandType.Battle] * 4;
+            value += _commandRankInfo[TacticsCommandType.Battle] * 4;
         }
         return value;
     }

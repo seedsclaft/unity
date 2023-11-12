@@ -39,6 +39,8 @@ public class TacticsSelectCharacter : MonoBehaviour
         characterList.Activate();
         commandList.Initialize(0);
         commandList.Activate();
+        characterList.SetInputCallHandler((a) => CallCharacterInputHandler(a));
+        commandList.SetInputCallHandler((a) => CallCommandInputHandler(a));
     }    
     
     public void SetTacticsCommand(List<ListData> commandData)
@@ -57,7 +59,7 @@ public class TacticsSelectCharacter : MonoBehaviour
         commandDescription.text = tacticsCommandData.Description;
     }
 
-    public void SetTacticsChracter(List<ListData> characterData)
+    public void SetTacticsCharacter(List<ListData> characterData)
     {
         if (characterList.IsInit == false)
         {
@@ -70,6 +72,49 @@ public class TacticsSelectCharacter : MonoBehaviour
             displaySelectCharacter.gameObject.SetActive(false);
         }
         DisplaySelectCharacter();
+    }
+
+    public void UpdateSmoothSelect()
+    {
+        characterList.UpdateSelectIndex(0);
+        commandList.UpdateSelectIndex(-1);
+        commandList.Deactivate();
+    }
+
+    private void CallCharacterInputHandler(InputKeyType keyType)
+    {
+        if (!characterList.Active)
+        {
+            return;
+        }
+        if (keyType == InputKeyType.Down)
+        {
+            var characterListIndex = characterList.Index;
+            if (characterListIndex+1 >= characterList.ObjectList.Count)
+            {
+                Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cursor);
+                characterList.Deactivate();
+                characterList.UpdateSelectIndex(-1);
+                commandList.UpdateSelectIndex(1);
+                commandList.Activate();
+            }
+        }
+    }
+
+    private void CallCommandInputHandler(InputKeyType keyType)
+    {
+        if (!commandList.Active)
+        {
+            return;
+        }
+        if (keyType == InputKeyType.Up)
+        {
+            Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cursor);
+            commandList.Deactivate();
+            commandList.UpdateSelectIndex(-1);
+            characterList.UpdateSelectIndex(characterList.ObjectList.Count-1);
+            characterList.Activate();
+        }
     }
 
     private void DisplaySelectCharacter()

@@ -58,7 +58,7 @@ public class RulingView : BaseView
         if (listData != null)
         {
             var data = (SystemData.CommandData)listData.Data;
-            eventData.templete = data.Id;
+            eventData.template = data.Id;
             _commandData(eventData);
         }
     }
@@ -88,7 +88,7 @@ namespace Ruling
 public class RulingViewEvent
 {
     public Ruling.CommandType commandType;
-    public object templete;
+    public object template;
 
     public RulingViewEvent(Ruling.CommandType type)
     {

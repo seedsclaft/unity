@@ -70,7 +70,7 @@ public class SystemData : ScriptableObject
 	}
 }
 
-public enum TacticsComandType {
+public enum TacticsCommandType {
 	None,
 	Train,
 	Alchemy,
@@ -81,18 +81,18 @@ public enum TacticsComandType {
 	Turnend
 }
 
-public enum TitleComandType {
+public enum TitleCommandType {
 	NewGame = 1,
 	Continue,
 }
 
 
-public enum StatusComandType {
+public enum StatusCommandType {
 	SkillActionList = 0,
 	Strength = 1,
 }
 
-public enum ConfirmComandType {
+public enum ConfirmCommandType {
 	Yes = 0,
 	No = 1,
 }

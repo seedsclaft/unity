@@ -77,7 +77,7 @@ public class RebornModel : BaseModel
             var upLvCount = commandRebornSkill.Param2;
             for (int i = 0;i < upLvCount;i++)
             {
-                PartyInfo.AddCommandRank((TacticsComandType)commandRebornSkill.Param3);
+                PartyInfo.AddCommandRank((TacticsCommandType)commandRebornSkill.Param3);
             }
         }
 

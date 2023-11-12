@@ -133,11 +133,13 @@ public class StrategyView : BaseView
         _commandData(eventData);
     }
 
-    public void StartResultAnimation(List<ActorInfo> actorInfos,List<bool> isBonusList = null)
+    public void StartResultAnimation(List<ListData> actorInfos,List<bool> isBonusList = null)
     {
         DeactivateAll();
+        strategyActorList.SetData(actorInfos);
+        strategyActorList.Refresh();
         strategyActorList.gameObject.SetActive(true);
-        strategyActorList.StartResultAnimation(actorInfos,isBonusList,() => {
+        strategyActorList.StartResultAnimation(actorInfos.Count,isBonusList,() => {
             CallEndAnimation();
         });
     }
@@ -158,10 +160,10 @@ public class StrategyView : BaseView
         HelpWindow.SetInputInfo("STRATEGY");
     }
 
-    private void CallResultCommand(ConfirmComandType commandType)
+    private void CallResultCommand(ConfirmCommandType commandType)
     {
         var eventData = new StrategyViewEvent(CommandType.ResultClose);
-        eventData.templete = commandType;
+        eventData.template = commandType;
         _commandData(eventData);
     }
 
@@ -191,7 +193,7 @@ public class StrategyView : BaseView
         var item = tacticsEnemyList.GetItemInfo;
         if (item != null)
         {
-            eventData.templete = item;
+            eventData.template = item;
             _commandData(eventData);
         }
     }
@@ -205,14 +207,14 @@ public class StrategyView : BaseView
     private void OnChangeSkipToggle(bool needChangeView)
     {
         var eventData = new StrategyViewEvent(CommandType.ChangeSkipToggle);
-        eventData.templete = needChangeView;
+        eventData.template = needChangeView;
         _commandData(eventData);
     }
 
-    private void CallBattleCommand(ConfirmComandType commandType)
+    private void CallBattleCommand(ConfirmCommandType commandType)
     {
         var eventData = new StrategyViewEvent(CommandType.BattleClose);
-        eventData.templete = commandType;
+        eventData.template = commandType;
         _commandData(eventData);
     }
 
@@ -284,7 +286,7 @@ namespace Strategy
 public class StrategyViewEvent
 {
     public Strategy.CommandType commandType;
-    public object templete;
+    public object template;
 
     public StrategyViewEvent(Strategy.CommandType type)
     {

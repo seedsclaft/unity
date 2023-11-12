@@ -104,15 +104,15 @@ public class BattlePresenter : BasePresenter
         }
         if (viewEvent.commandType == Battle.CommandType.SelectedSkill)
         {
-            CommandSelectedSkill((SkillInfo)viewEvent.templete);
+            CommandSelectedSkill((SkillInfo)viewEvent.template);
         }
         if (viewEvent.commandType == Battle.CommandType.EnemyLayer)
         {
-            CommandSelectTargetIndexs((List<int>)viewEvent.templete);
+            CommandSelectTargetIndexs((List<int>)viewEvent.template);
         }
         if (viewEvent.commandType == Battle.CommandType.ActorList)
         {
-            CommandSelectTargetIndexs((List<int>)viewEvent.templete);
+            CommandSelectTargetIndexs((List<int>)viewEvent.template);
         }
         if (viewEvent.commandType == Battle.CommandType.EndAnimation)
         {
@@ -120,7 +120,7 @@ public class BattlePresenter : BasePresenter
         }
         if (viewEvent.commandType == Battle.CommandType.AttributeType)
         {
-            RefreshDecks((AttributeType)viewEvent.templete);
+            RefreshDecks((AttributeType)viewEvent.template);
         }
         if (viewEvent.commandType == Battle.CommandType.DecideActor)
         {
@@ -148,7 +148,7 @@ public class BattlePresenter : BasePresenter
         }
         if (viewEvent.commandType == Battle.CommandType.EnemyDetail)
         {
-            CommandEnemyDetail((int)viewEvent.templete);
+            CommandEnemyDetail((int)viewEvent.template);
         }
         if (viewEvent.commandType == Battle.CommandType.OpenSideMenu)
         {
@@ -160,7 +160,7 @@ public class BattlePresenter : BasePresenter
         }
         if (viewEvent.commandType == Battle.CommandType.SelectSideMenu)
         {
-            CommandSelectSideMenu((SystemData.CommandData)viewEvent.templete);
+            CommandSelectSideMenu((SystemData.CommandData)viewEvent.template);
         }
         if (viewEvent.commandType == Battle.CommandType.ChangeBattleAuto)
         {
@@ -168,10 +168,10 @@ public class BattlePresenter : BasePresenter
         }
     }
 
-    private async void UpdatePopup(ConfirmComandType confirmComandType)
+    private async void UpdatePopup(ConfirmCommandType confirmComandType)
     {
         _view.CommandConfirmClose();
-        if (confirmComandType == ConfirmComandType.Yes)
+        if (confirmComandType == ConfirmCommandType.Yes)
         {
             _view.HideSkillActionList();
             _view.HideBattleThumb();
@@ -200,7 +200,7 @@ public class BattlePresenter : BasePresenter
     {
         if (_model.EnableEspape())
         {
-            ConfirmInfo popupInfo = new ConfirmInfo(DataSystem.System.GetTextData(410).Text,(menuCommandInfo) => UpdatePopup((ConfirmComandType)menuCommandInfo));
+            ConfirmInfo popupInfo = new ConfirmInfo(DataSystem.System.GetTextData(410).Text,(menuCommandInfo) => UpdatePopup((ConfirmCommandType)menuCommandInfo));
             _view.CommandCallConfirm(popupInfo);
         }
     }

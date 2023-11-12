@@ -65,15 +65,15 @@ public class FastBattlePresenter : BasePresenter
         }
         if (viewEvent.commandType == Battle.CommandType.SelectedSkill)
         {
-            CommandSkillAction((SkillInfo)viewEvent.templete);
+            CommandSkillAction((SkillInfo)viewEvent.template);
         }
         if (viewEvent.commandType == Battle.CommandType.EnemyLayer)
         {
-            CommandSelectIndex((List<int>)viewEvent.templete);
+            CommandSelectIndex((List<int>)viewEvent.template);
         }
         if (viewEvent.commandType == Battle.CommandType.ActorList)
         {
-            CommandSelectIndex((List<int>)viewEvent.templete);
+            CommandSelectIndex((List<int>)viewEvent.template);
         }
         if (viewEvent.commandType == Battle.CommandType.EndAnimation)
         {

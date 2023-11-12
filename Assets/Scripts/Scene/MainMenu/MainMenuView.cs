@@ -61,7 +61,7 @@ public class MainMenuView : BaseView
         if (listData != null)
         {
             var data = (StageInfo)listData.Data;
-            eventData.templete = data.Id;
+            eventData.template = data.Id;
             _commandData(eventData);
         }
     }
@@ -136,7 +136,7 @@ public class MainMenuView : BaseView
     private void CallSideMenu(SystemData.CommandData sideMenu)
     {
         var eventData = new MainMenuViewEvent(CommandType.SelectSideMenu);
-        eventData.templete = sideMenu;
+        eventData.template = sideMenu;
         _commandData(eventData);
     }
 
@@ -164,7 +164,7 @@ namespace MainMenu
 public class MainMenuViewEvent
 {
     public MainMenu.CommandType commandType;
-    public object templete;
+    public object template;
 
     public MainMenuViewEvent(MainMenu.CommandType type)
     {

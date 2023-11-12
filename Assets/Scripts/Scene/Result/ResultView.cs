@@ -109,11 +109,11 @@ public class ResultView : BaseView
             var data = (SystemData.CommandData)commandList.ListData.Data;
             if (data.Key == "Yes")
             {
-                CallResultCommand(ConfirmComandType.Yes);
+                CallResultCommand(ConfirmCommandType.Yes);
             } else
             if (data.Key == "No")
             {
-                CallResultCommand(ConfirmComandType.No);
+                CallResultCommand(ConfirmCommandType.No);
             }
         });
         SetInputHandler(commandList.GetComponent<IInputHandlerEvent>());
@@ -130,7 +130,7 @@ public class ResultView : BaseView
         _commandData = commandData;
     }
     
-    public void StartResultAnimation(List<ActorInfo> actorInfos)
+    public void StartResultAnimation(List<ListData> actorInfos)
     {
         var bonusDummy = new List<bool>();
         foreach (var item in actorInfos)
@@ -138,14 +138,14 @@ public class ResultView : BaseView
             bonusDummy.Add(false);
         }
         strategyActorList.gameObject.SetActive(true);
-        strategyActorList.StartResultAnimation(actorInfos,bonusDummy,() => {
+        strategyActorList.StartResultAnimation(actorInfos.Count,bonusDummy,() => {
         });
     }
 
-    private void CallResultCommand(ConfirmComandType commandType)
+    private void CallResultCommand(ConfirmCommandType commandType)
     {
         var eventData = new ResultViewEvent(CommandType.ResultClose);
-        eventData.templete = commandType;
+        eventData.template = commandType;
         _commandData(eventData);
     }
 
@@ -203,7 +203,7 @@ public class ResultView : BaseView
         {
             var data = (ActorInfo)listData.Data;
             var eventData = new ResultViewEvent(CommandType.DecideActor);
-            eventData.templete = actorInfoList.Index;
+            eventData.template = actorInfoList.Index;
             _commandData(eventData);
         }
     }
@@ -284,7 +284,7 @@ namespace Result
 public class ResultViewEvent
 {
     public Result.CommandType commandType;
-    public object templete;
+    public object template;
 
     public ResultViewEvent(Result.CommandType type)
     {

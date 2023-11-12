@@ -45,7 +45,7 @@ public class TitlePresenter : BasePresenter
         }
         if (viewEvent.commandType == CommandType.TitleCommand)
         {
-            CommandTitle((int) viewEvent.templete);
+            CommandTitle((int) viewEvent.template);
         }
         if (viewEvent.commandType == CommandType.Credit)
         {
@@ -65,7 +65,7 @@ public class TitlePresenter : BasePresenter
         }
         if (viewEvent.commandType == CommandType.SelectSideMenu)
         {
-            CommandSelectSideMenu((SystemData.CommandData)viewEvent.templete);
+            CommandSelectSideMenu((SystemData.CommandData)viewEvent.template);
         }
         if (viewEvent.commandType == CommandType.Option)
         {
@@ -89,17 +89,17 @@ public class TitlePresenter : BasePresenter
             return;
         }
         _busy = true;
-        switch ((TitleComandType)commandIndex){
-            case TitleComandType.NewGame:
+        switch ((TitleCommandType)commandIndex){
+            case TitleCommandType.NewGame:
             _model.InitSaveInfo();
             _view.CommandSceneChange(Scene.NameEntry);
             //_view.CommandSceneChange(Scene.Battle);
             break;
-            case TitleComandType.Continue:
+            case TitleCommandType.Continue:
             var loadSuccess = SaveSystem.LoadStart();
             if (loadSuccess == false)
             {
-                ConfirmInfo popupInfo = new ConfirmInfo("セーブデータを読み込めませんでした。\n誠に申し訳ないですがNewGameから開始をお願いします。",(menuCommandInfo) => updatePopup((ConfirmComandType)menuCommandInfo));
+                ConfirmInfo popupInfo = new ConfirmInfo("セーブデータを読み込めませんでした。\n誠に申し訳ないですがNewGameから開始をお願いします。",(menuCommandInfo) => updatePopup((ConfirmCommandType)menuCommandInfo));
                 popupInfo.SetIsNoChoise(true);
                 _view.CommandCallConfirm(popupInfo);
                 return;
@@ -178,10 +178,10 @@ public class TitlePresenter : BasePresenter
         }
     }
 
-    private void updatePopup(ConfirmComandType confirmComandType)
+    private void updatePopup(ConfirmCommandType confirmComandType)
     {
         _view.CommandConfirmClose();
-        if (confirmComandType == ConfirmComandType.Yes)
+        if (confirmComandType == ConfirmCommandType.Yes)
         {
         }
         _view.CommandSceneChange(Scene.Title);

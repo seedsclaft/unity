@@ -29,7 +29,7 @@ public class RebornResultPresenter : BasePresenter
         _busy = true;
 
         _view.StartAnimation();
-        _view.StartRebornResultAnimation(_model.RebornMembers());
+        _view.StartRebornResultAnimation(_model.CastActorInfos(_model.RebornMembers()));
         _busy = false;
     }
 
@@ -44,7 +44,7 @@ public class RebornResultPresenter : BasePresenter
             CommandEndAnimation();
             break;
             case CommandType.RebornResultClose:
-            CommandRebornResultClose((ConfirmComandType)viewEvent.templete);
+            CommandRebornResultClose((ConfirmCommandType)viewEvent.template);
             break;
         }
     }
@@ -54,9 +54,9 @@ public class RebornResultPresenter : BasePresenter
         _view.ShowResultList(_model.ResultGetItemInfos());
     }
 
-    private void CommandRebornResultClose(ConfirmComandType confirmComandType)
+    private void CommandRebornResultClose(ConfirmCommandType confirmComandType)
     {
-        if (confirmComandType == ConfirmComandType.Yes)
+        if (confirmComandType == ConfirmCommandType.Yes)
         {
             CommandEndReborn();
         }

@@ -89,7 +89,7 @@ public class TacticsPresenter :BasePresenter
                 if (stageEvents[i].Type == StageEventType.NeedAllTactics)
                 {
                     _model.SetNeedAllTacticsCommand(true);
-                    var listData = _model.ChangeEnableCommandData((int)TacticsComandType.Turnend - 1, !_model.CheckNonBusy());
+                    var listData = _model.ChangeEnableCommandData((int)TacticsCommandType.Turnend - 1, !_model.CheckNonBusy());
                     _view.RefreshListData(listData);
                 }
                 if (stageEvents[i].Type == StageEventType.IsSubordinate)
@@ -112,7 +112,7 @@ public class TacticsPresenter :BasePresenter
                 }
                 if (stageEvents[i].Type == StageEventType.SelectAddActor)
                 {
-                    var popupInfo = new ConfirmInfo(DataSystem.System.GetTextData(11050).Text,(menuCommandInfo) => UpdatePopupSelectAddActor((ConfirmComandType)menuCommandInfo));
+                    var popupInfo = new ConfirmInfo(DataSystem.System.GetTextData(11050).Text,(menuCommandInfo) => UpdatePopupSelectAddActor((ConfirmCommandType)menuCommandInfo));
                     popupInfo.SetIsNoChoise(true);
                     popupInfo.SetSelectIndex(0);
                     _view.CommandCallConfirm(popupInfo);
@@ -123,7 +123,7 @@ public class TacticsPresenter :BasePresenter
                 }
                 if (stageEvents[i].Type == StageEventType.SaveCommand)
                 {
-                    var popupInfo = new ConfirmInfo(DataSystem.System.GetTextData(11080).Text,(menuCommandInfo) => UpdatePopupSaveCommand((ConfirmComandType)menuCommandInfo));
+                    var popupInfo = new ConfirmInfo(DataSystem.System.GetTextData(11080).Text,(menuCommandInfo) => UpdatePopupSaveCommand((ConfirmCommandType)menuCommandInfo));
                     popupInfo.SetSelectIndex(1);
                     _view.CommandCallConfirm(popupInfo);
                     _model.AddEventReadFlag(stageEvents[i]);
@@ -194,77 +194,77 @@ public class TacticsPresenter :BasePresenter
         }
         if (viewEvent.commandType == Tactics.CommandType.TacticsCommand)
         {
-            CommandTacticsCommand((TacticsComandType)viewEvent.templete);
+            CommandTacticsCommand((TacticsCommandType)viewEvent.template);
         }
         if (viewEvent.commandType == Tactics.CommandType.SelectTacticsActor)
         {
-            var tacticsActorInfo = (TacticsActorInfo)viewEvent.templete;
+            var tacticsActorInfo = (TacticsActorInfo)viewEvent.template;
             var actorId = tacticsActorInfo.ActorInfo.ActorId;
-            if (CheckBusyOther(actorId,tacticsActorInfo.TacticsComandType)) return;
-            if (tacticsActorInfo.TacticsComandType == TacticsComandType.Train)
+            if (CheckBusyOther(actorId,tacticsActorInfo.TacticsCommandType)) return;
+            if (tacticsActorInfo.TacticsCommandType == TacticsCommandType.Train)
             {
                 CommandSelectActorTrain(actorId);
             } else
-            if (tacticsActorInfo.TacticsComandType == TacticsComandType.Alchemy)
+            if (tacticsActorInfo.TacticsCommandType == TacticsCommandType.Alchemy)
             {
                 CommandSelectActorAlchemy(actorId);
             } else
-            if (tacticsActorInfo.TacticsComandType == TacticsComandType.Resource)
+            if (tacticsActorInfo.TacticsCommandType == TacticsCommandType.Resource)
             {
                 CommandSelectActorResource(actorId);
             } else
-            if (tacticsActorInfo.TacticsComandType == TacticsComandType.Recovery)
+            if (tacticsActorInfo.TacticsCommandType == TacticsCommandType.Recovery)
             {
                 CommandSelectActorRecovery(actorId);
             } else
-            if (tacticsActorInfo.TacticsComandType == TacticsComandType.Battle)
+            if (tacticsActorInfo.TacticsCommandType == TacticsCommandType.Battle)
             {
                 CommandSelectActorBattle(actorId);
             }
         }
         if (viewEvent.commandType == Tactics.CommandType.TacticsCommandClose)
         {
-            if (_model.TacticsCommandType == TacticsComandType.Battle)
+            if (_model.TacticsCommandType == TacticsCommandType.Battle)
             {
-                CommandTacticsCommand(TacticsComandType.Battle);
+                CommandTacticsCommand(TacticsCommandType.Battle);
             } else
             {
-                CommandTacticsCommandClose((ConfirmComandType)viewEvent.templete);
+                CommandTacticsCommandClose((ConfirmCommandType)viewEvent.template);
             }
         }
         if (viewEvent.commandType == Tactics.CommandType.SelectActorAlchemy)
         {
-            int actorId = (int)viewEvent.templete;
-            if (CheckBusyOther(actorId,TacticsComandType.Alchemy)) return;
+            int actorId = (int)viewEvent.template;
+            if (CheckBusyOther(actorId,TacticsCommandType.Alchemy)) return;
             CommandSelectActorAlchemy(actorId);
         }
         if (viewEvent.commandType == Tactics.CommandType.SkillAlchemy)
         {
-            CommandSkillAlchemy((SkillInfo)viewEvent.templete);
+            CommandSkillAlchemy((SkillInfo)viewEvent.template);
         }
         if (viewEvent.commandType == Tactics.CommandType.SelectAlchemyClose)
         {
-            CommandTacticsCommand(TacticsComandType.Alchemy);
+            CommandTacticsCommand(TacticsCommandType.Alchemy);
         }
         if (viewEvent.commandType == Tactics.CommandType.SelectRecoveryPlus)
         {
-            int actorId = (int)viewEvent.templete;
-            if (CheckBusyOther(actorId,TacticsComandType.Recovery)) return;
+            int actorId = (int)viewEvent.template;
+            if (CheckBusyOther(actorId,TacticsCommandType.Recovery)) return;
             CommandSelectRecoveryPlus(actorId);
         }
         if (viewEvent.commandType == Tactics.CommandType.SelectRecoveryMinus)
         {
-            int actorId = (int)viewEvent.templete;
-            if (CheckBusyOther(actorId,TacticsComandType.Recovery)) return;
+            int actorId = (int)viewEvent.template;
+            if (CheckBusyOther(actorId,TacticsCommandType.Recovery)) return;
             CommandSelectRecoveryMinus(actorId);
         }
         if (viewEvent.commandType == Tactics.CommandType.SelectBattleEnemy)
         {
-            CommandSelectBattleEnemy((int)viewEvent.templete);
+            CommandSelectBattleEnemy((int)viewEvent.template);
         }
         if (viewEvent.commandType == Tactics.CommandType.PopupSkillInfo)
         {
-            CommandPopupSkillInfo((GetItemInfo)viewEvent.templete);
+            CommandPopupSkillInfo((GetItemInfo)viewEvent.template);
         }
         if (viewEvent.commandType == Tactics.CommandType.EnemyClose)
         {
@@ -272,8 +272,8 @@ public class TacticsPresenter :BasePresenter
         }
         if (viewEvent.commandType == Tactics.CommandType.SelectActorResource)
         {
-            int actorId = (int)viewEvent.templete;
-            if (CheckBusyOther(actorId,TacticsComandType.Resource)) return;
+            int actorId = (int)viewEvent.template;
+            if (CheckBusyOther(actorId,TacticsCommandType.Resource)) return;
             CommandSelectActorResource(actorId);
         }
         if (viewEvent.commandType == Tactics.CommandType.OpenAlcana)
@@ -282,7 +282,7 @@ public class TacticsPresenter :BasePresenter
         }
         if (viewEvent.commandType == Tactics.CommandType.CallEnemyInfo)
         {
-            CommandCallEnemyInfo((int)viewEvent.templete);
+            CommandCallEnemyInfo((int)viewEvent.template);
         }
         if (viewEvent.commandType == Tactics.CommandType.Rule)
         {
@@ -310,26 +310,26 @@ public class TacticsPresenter :BasePresenter
         }
         if (viewEvent.commandType == Tactics.CommandType.SelectSideMenu)
         {
-            CommandSelectSideMenu((SystemData.CommandData)viewEvent.templete);
+            CommandSelectSideMenu((SystemData.CommandData)viewEvent.template);
         }
         if (_model.NeedAllTacticsCommand)
         {
-            var listData = _model.ChangeEnableCommandData((int)TacticsComandType.Turnend - 1, !_model.CheckNonBusy());
+            var listData = _model.ChangeEnableCommandData((int)TacticsCommandType.Turnend - 1, !_model.CheckNonBusy());
             _view.RefreshListData(listData);
         }
     }
 
-    private bool CheckBusyOther(int actorId,TacticsComandType tacticsComandType)
+    private bool CheckBusyOther(int actorId,TacticsCommandType tacticsCommandType)
     {
-        bool IsBusyOther = _model.IsOtherBusy(actorId,tacticsComandType);
+        bool IsBusyOther = _model.IsOtherBusy(actorId,tacticsCommandType);
         if (IsBusyOther == true)
         {
             _model.CurrentActorId = actorId;
-            _model.SetTacticsCommandType(tacticsComandType);
+            _model.SetTacticsCommandType(tacticsCommandType);
             TextData mainTextData = DataSystem.System.GetTextData(1030);
-            TextData textData = DataSystem.System.GetTextData((int)_model.TacticsActor(actorId).TacticsComandType);
+            TextData textData = DataSystem.System.GetTextData((int)_model.TacticsActor(actorId).TacticsCommandType);
             string mainText = mainTextData.Text.Replace("\\d",textData.Text);
-            var popupInfo = new ConfirmInfo(_model.TacticsActor(actorId).Master.Name + mainText,(a) => UpdatePopup((ConfirmComandType)a));
+            var popupInfo = new ConfirmInfo(_model.TacticsActor(actorId).Master.Name + mainText,(a) => UpdatePopup((ConfirmCommandType)a));
             _view.CommandCallConfirm(popupInfo);
             _view.DeactivateTacticsCommand();
             return true;
@@ -337,64 +337,64 @@ public class TacticsPresenter :BasePresenter
         return false;
     }
 
-    private void UpdatePopup(ConfirmComandType confirmComandType)
+    private void UpdatePopup(ConfirmCommandType confirmComandType)
     {
-        if (confirmComandType == ConfirmComandType.Yes)
+        if (confirmComandType == ConfirmCommandType.Yes)
         {
             int actorId = _model.CurrentActorId;
-            if (_model.TacticsCommandType == TacticsComandType.Train)
+            if (_model.TacticsCommandType == TacticsCommandType.Train)
             {
                 _model.ResetTacticsCost(actorId);
                 _view.ActivateTacticsCommand();
                 CommandSelectActorTrain(actorId);
             }
-            if (_model.TacticsCommandType == TacticsComandType.Alchemy)
+            if (_model.TacticsCommandType == TacticsCommandType.Alchemy)
             {
                 _model.ResetTacticsCost(actorId);
                 CommandSelectActorAlchemy(actorId);
             }
-            if (_model.TacticsCommandType == TacticsComandType.Recovery)
+            if (_model.TacticsCommandType == TacticsCommandType.Recovery)
             {
                 _model.ResetTacticsCost(actorId);
                 _view.ActivateTacticsCommand();
                 CommandSelectActorRecovery(actorId);
             }
-            if (_model.TacticsCommandType == TacticsComandType.Battle)
+            if (_model.TacticsCommandType == TacticsCommandType.Battle)
             {
                 _model.ResetTacticsCost(actorId);
                 _view.ActivateTacticsCommand();
                 CommandSelectActorBattle(actorId);
             }
-            if (_model.TacticsCommandType == TacticsComandType.Resource)
+            if (_model.TacticsCommandType == TacticsCommandType.Resource)
             {
                 _model.ResetTacticsCost(actorId);
                 _view.ActivateTacticsCommand();
                 CommandSelectActorResource(actorId);
             }
-            if (_model.TacticsCommandType == TacticsComandType.Turnend)
+            if (_model.TacticsCommandType == TacticsCommandType.Turnend)
             {
                 _model.TurnEnd();
                 _model.InitInBattle();
                 _view.CommandSceneChange(Scene.Strategy);
             }
         } else{
-            if (_model.TacticsCommandType == TacticsComandType.Turnend)
+            if (_model.TacticsCommandType == TacticsCommandType.Turnend)
             {
                 Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cancel);
                 _view.SetHelpInputInfo("TACTICS");
                 _view.ShowCommandList();
             }
         }
-        if (confirmComandType == ConfirmComandType.No && _model.TacticsCommandType != TacticsComandType.Turnend)
+        if (confirmComandType == ConfirmCommandType.No && _model.TacticsCommandType != TacticsCommandType.Turnend)
         {        
             _view.ActivateTacticsCommand();
         }
         _view.CommandConfirmClose();
     }
 
-    private void UpdatePopupOpenAlcana(ConfirmComandType confirmComandType)
+    private void UpdatePopupOpenAlcana(ConfirmCommandType confirmComandType)
     {
-        if (confirmComandType == ConfirmComandType.Yes)
+        if (confirmComandType == ConfirmCommandType.Yes)
         {
             _model.OpenAlcana();
             CommandCheckAlcana();
@@ -404,9 +404,9 @@ public class TacticsPresenter :BasePresenter
         }
     }
 
-    private void UpdatePopupUseAlcana(ConfirmComandType confirmComandType)
+    private void UpdatePopupUseAlcana(ConfirmCommandType confirmComandType)
     {
-        if (confirmComandType == ConfirmComandType.Yes)
+        if (confirmComandType == ConfirmCommandType.Yes)
         {
             CommandUseAlcana();
         } else{
@@ -416,9 +416,9 @@ public class TacticsPresenter :BasePresenter
         _view.CommandConfirmClose();
     }
 
-    private void UpdatePopupDropout(ConfirmComandType confirmComandType)
+    private void UpdatePopupDropout(ConfirmCommandType confirmComandType)
     {
-        if (confirmComandType == ConfirmComandType.Yes)
+        if (confirmComandType == ConfirmCommandType.Yes)
         {
             _model.SetResumeStageFalse();
             _view.CommandSceneChange(Scene.MainMenu);
@@ -430,7 +430,7 @@ public class TacticsPresenter :BasePresenter
     }
 
 
-    private void UpdatePopupSelectAddActor(ConfirmComandType confirmComandType)
+    private void UpdatePopupSelectAddActor(ConfirmCommandType confirmComandType)
     {
         _model.SetSelectAddActor();
         _view.CommandConfirmClose();
@@ -441,10 +441,10 @@ public class TacticsPresenter :BasePresenter
         _view.CommandCallStatus(statusViewInfo);
     }
 
-    private void UpdatePopupSaveCommand(ConfirmComandType confirmComandType)
+    private void UpdatePopupSaveCommand(ConfirmCommandType confirmComandType)
     {
         _view.CommandConfirmClose();
-        if (confirmComandType == ConfirmComandType.Yes)
+        if (confirmComandType == ConfirmCommandType.Yes)
         {
             SaveSystem.SaveStart(GameSystem.CurrentData);
         } else
@@ -454,7 +454,7 @@ public class TacticsPresenter :BasePresenter
         _view.CommandSceneChange(Scene.Tactics);
     }
 
-    private void UpdatePopupSkillInfo(ConfirmComandType confirmComandType)
+    private void UpdatePopupSkillInfo(ConfirmCommandType confirmComandType)
     {
         _view.CommandConfirmClose();
     }
@@ -464,9 +464,9 @@ public class TacticsPresenter :BasePresenter
         var eventData = new TacticsViewEvent(_backCommand);
         if (_backCommand == Tactics.CommandType.SelectActorAlchemy)
         {
-            eventData.templete = _model.CurrentActorId;
+            eventData.template = _model.CurrentActorId;
         } else{
-            eventData.templete = _model.TacticsCommandType;
+            eventData.template = _model.TacticsCommandType;
         }
         UpdateCommand(eventData);
         Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cancel);
@@ -479,21 +479,21 @@ public class TacticsPresenter :BasePresenter
         CommandRefresh();
     }
 
-    private void CommandTacticsCommand(TacticsComandType tacticsComandType)
+    private void CommandTacticsCommand(TacticsCommandType tacticsCommandType)
     {
-        _model.SetTacticsCommandType(tacticsComandType);
-        _model.SetTempData(tacticsComandType);
-        switch (tacticsComandType)
+        _model.SetTacticsCommandType(tacticsCommandType);
+        _model.SetTempData(tacticsCommandType);
+        switch (tacticsCommandType)
         {
-            case TacticsComandType.Train:
-            case TacticsComandType.Recovery:
-            case TacticsComandType.Resource:
+            case TacticsCommandType.Train:
+            case TacticsCommandType.Recovery:
+            case TacticsCommandType.Resource:
                 _view.ShowSelectCharacter(_model.TacticsCharacterData(),_model.TacticsCommandData());
                 _view.ActivateTacticsCommand();
                 _view.ChangeBackCommandActive(false);
                 _backCommand = Tactics.CommandType.None;
                 break;
-            case TacticsComandType.Alchemy:
+            case TacticsCommandType.Alchemy:
                 _view.ShowSelectCharacter(_model.TacticsCharacterData(),_model.TacticsCommandData());
                 _view.ActivateTacticsCommand();
                 _view.ChangeBackCommandActive(false);
@@ -501,7 +501,7 @@ public class TacticsPresenter :BasePresenter
                 _view.HideAttributeList();
                 _view.ShowSelectCharacterCommand();
                 break;
-            case TacticsComandType.Battle:
+            case TacticsCommandType.Battle:
                 _view.ActivateTacticsCommand();
                 _view.ChangeBackCommandActive(true);
                 _view.HideSelectCharacter();
@@ -509,7 +509,7 @@ public class TacticsPresenter :BasePresenter
                 _backCommand = Tactics.CommandType.EnemyClose;
                 break;
         }
-        if (tacticsComandType == TacticsComandType.Status)
+        if (tacticsCommandType == TacticsCommandType.Status)
         {
             SaveSystem.SaveStart(GameSystem.CurrentData);
             _model.SetStageActor();
@@ -523,7 +523,7 @@ public class TacticsPresenter :BasePresenter
             statusViewInfo.SetDisplayDecideButton(false);
             _view.CommandCallStatus(statusViewInfo);
         }
-        if (tacticsComandType == TacticsComandType.Turnend)
+        if (tacticsCommandType == TacticsCommandType.Turnend)
         {
             TextData textData = DataSystem.System.GetTextData(1040);
             TextData subData = DataSystem.System.GetTextData(1050);
@@ -532,8 +532,8 @@ public class TacticsPresenter :BasePresenter
             {
                 mainText += "\n" + subData.Text;
             }
-            var popupInfo = new ConfirmInfo(mainText,(a) => UpdatePopup((ConfirmComandType)a));
-            popupInfo.SetSelectIndex(_model.CheckNonBusy() ? (int)ConfirmComandType.Yes : (int)ConfirmComandType.No);
+            var popupInfo = new ConfirmInfo(mainText,(a) => UpdatePopup((ConfirmCommandType)a));
+            popupInfo.SetSelectIndex(_model.CheckNonBusy() ? (int)ConfirmCommandType.Yes : (int)ConfirmCommandType.No);
             _view.CommandCallConfirm(popupInfo);
         }
         CommandRefresh();
@@ -562,9 +562,9 @@ public class TacticsPresenter :BasePresenter
         CommandRefresh();
     }
 
-    private void CommandTacticsCommandClose(ConfirmComandType confirmComandType)
+    private void CommandTacticsCommandClose(ConfirmCommandType confirmComandType)
     {
-        if (confirmComandType == ConfirmComandType.Yes)
+        if (confirmComandType == ConfirmCommandType.Yes)
         {
             Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
         } else{
@@ -576,7 +576,7 @@ public class TacticsPresenter :BasePresenter
         CommandRefresh();
         if (_model.IsBusyAll())
         {
-            CommandTacticsCommand(TacticsComandType.Turnend);
+            CommandTacticsCommand(TacticsCommandType.Turnend);
         }
     }
 
@@ -623,7 +623,7 @@ public class TacticsPresenter :BasePresenter
 
     private void CommandSelectBattleEnemy(int enemyIndex)
     {
-        _model.SetTempData(TacticsComandType.Battle);
+        _model.SetTempData(TacticsCommandType.Battle);
         _model.CurrentEnemyIndex = enemyIndex;
         _view.HideEnemyList();
         _view.ShowSelectCharacter(_model.TacticsCharacterData(),_model.TacticsCommandData());
@@ -634,7 +634,7 @@ public class TacticsPresenter :BasePresenter
 
     private void CommandPopupSkillInfo(GetItemInfo getItemInfo)
     {
-        ConfirmInfo popupInfo = new ConfirmInfo("",(menuCommandInfo) => UpdatePopupSkillInfo((ConfirmComandType)menuCommandInfo));
+        ConfirmInfo popupInfo = new ConfirmInfo("",(menuCommandInfo) => UpdatePopupSkillInfo((ConfirmCommandType)menuCommandInfo));
         popupInfo.SetSkillInfo(_model.BasicSkillInfos(getItemInfo));
         popupInfo.SetIsNoChoise(true);
         _view.CommandCallConfirm(popupInfo);
@@ -654,7 +654,7 @@ public class TacticsPresenter :BasePresenter
         _view.ShowCommandList();
         if (_model.IsBusyAll())
         {
-            CommandTacticsCommand(TacticsComandType.Turnend);
+            CommandTacticsCommand(TacticsCommandType.Turnend);
         }
     }
 
@@ -689,7 +689,7 @@ public class TacticsPresenter :BasePresenter
         if (_model.CheckIsAlcana())
         {
             _view.DeactivateCommandList();
-            ConfirmInfo popupInfo = new ConfirmInfo(DataSystem.System.GetTextData(1070).Text,(menuCommandInfo) => UpdatePopupOpenAlcana((ConfirmComandType)menuCommandInfo));
+            ConfirmInfo popupInfo = new ConfirmInfo(DataSystem.System.GetTextData(1070).Text,(menuCommandInfo) => UpdatePopupOpenAlcana((ConfirmCommandType)menuCommandInfo));
             _view.CommandCallConfirm(popupInfo);
         }
     }
@@ -717,7 +717,7 @@ public class TacticsPresenter :BasePresenter
         _view.DeactivateCommandList();
         var alcana = _model.CurrentAlcana.CurrentSelectAlcana();
         TextData textData = DataSystem.System.GetTextData(1080);
-        var popupInfo = new ConfirmInfo(alcana.Name + alcana.Help + textData.Text,(menuCommandInfo) => UpdatePopupUseAlcana((ConfirmComandType)menuCommandInfo));
+        var popupInfo = new ConfirmInfo(alcana.Name + alcana.Help + textData.Text,(menuCommandInfo) => UpdatePopupUseAlcana((ConfirmCommandType)menuCommandInfo));
         _view.CommandCallConfirm(popupInfo);
     }
 
@@ -749,7 +749,7 @@ public class TacticsPresenter :BasePresenter
     private void CommandDropout()
     {  
         Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
-        var popupInfo = new ConfirmInfo(DataSystem.System.GetTextData(1100).Text,(a) => UpdatePopupDropout((ConfirmComandType)a));
+        var popupInfo = new ConfirmInfo(DataSystem.System.GetTextData(1100).Text,(a) => UpdatePopupDropout((ConfirmCommandType)a));
         _view.CommandCallConfirm(popupInfo);
     }
 

@@ -39,11 +39,11 @@ public class MainMenuModel : BaseModel
     public List<SystemData.CommandData> SideMenu()
     {
         var list = new List<SystemData.CommandData>();
-        var menucommand = new SystemData.CommandData();
-        menucommand.Id = 2;
-        menucommand.Name = DataSystem.System.GetTextData(703).Text;
-        menucommand.Key = "Help";
-        list.Add(menucommand);
+        var menuCommand = new SystemData.CommandData();
+        menuCommand.Id = 2;
+        menuCommand.Name = DataSystem.System.GetTextData(703).Text;
+        menuCommand.Key = "Help";
+        list.Add(menuCommand);
         var ranking = new SystemData.CommandData();
         ranking.Id = 1;
         ranking.Name = DataSystem.System.GetTextData(702).Text;

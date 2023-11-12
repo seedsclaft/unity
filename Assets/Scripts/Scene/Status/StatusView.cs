@@ -42,9 +42,7 @@ public class StatusView : BaseView ,IInputHandlerEvent
     public void SetUIButton()
     {
         leftButton.onClick.AddListener(() => OnClickLeft());
-        
         rightButton.onClick.AddListener(() => OnClickRight());
-
         decideButton.onClick.AddListener(() => OnClickDecide());
 
         actorList.Initialize();
@@ -100,7 +98,7 @@ public class StatusView : BaseView ,IInputHandlerEvent
             var eventData = new StatusViewEvent(CommandType.Back);
             _commandData(eventData);
         });
-        SetActiveBack(_isDisplayBack);
+        ChangeBackCommandActive(_isDisplayBack);
         SetInputHandler(gameObject.GetComponent<IInputHandlerEvent>());
     }
 
@@ -139,9 +137,8 @@ public class StatusView : BaseView ,IInputHandlerEvent
         _isDisplayBack = isDisplay;
     }
 
-    public new void SetActiveBack(bool IsActive)
+    public new void ChangeBackCommandActive(bool IsActive)
     {
-        //if (_isDisplayBack == false) IsActive = false;
         base.ChangeBackCommandActive(IsActive);
     }
     
@@ -206,7 +203,7 @@ public class StatusView : BaseView ,IInputHandlerEvent
     private void CallSkillAction(SkillInfo skillInfo)
     {
         var eventData = new StatusViewEvent(CommandType.SelectSkillAction);
-        eventData.templete = skillInfo;
+        eventData.template = skillInfo;
         _commandData(eventData);
     }
 
@@ -302,7 +299,7 @@ namespace Status
 public class StatusViewEvent
 {
     public Status.CommandType commandType;
-    public object templete;
+    public object template;
 
     public StatusViewEvent(Status.CommandType type)
     {

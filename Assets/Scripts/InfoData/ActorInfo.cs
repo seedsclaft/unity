@@ -39,11 +39,11 @@ public class ActorInfo
     private int _demigodParam;
     public int DemigodParam => _demigodParam;
 
-    private TacticsComandType _tacticsComandType = TacticsComandType.None;
-    public TacticsComandType TacticsComandType => _tacticsComandType;
+    private TacticsCommandType _tacticsCommandType = TacticsCommandType.None;
+    public TacticsCommandType TacticsCommandType => _tacticsCommandType;
 
 // Tactics
-    private Dictionary<TacticsComandType,bool> _tacticsEnable = new ();
+    private Dictionary<TacticsCommandType,bool> _tacticsEnable = new ();
     private int _tacticsCost = 0;
     public int TacticsCost => _tacticsCost;
     private int _tacticsCostRate = 1;
@@ -190,14 +190,14 @@ public class ActorInfo
         }
     }
 
-    public void RefreshTacticsEnable(TacticsComandType tacticsComandType,bool enable)
+    public void RefreshTacticsEnable(TacticsCommandType tacticsCommandType,bool enable)
     {
-        _tacticsEnable[tacticsComandType] = enable;
+        _tacticsEnable[tacticsCommandType] = enable;
     }
 
-    public bool EnableTactics(TacticsComandType tacticsComandType)
+    public bool EnableTactics(TacticsCommandType tacticsCommandType)
     {
-        return _tacticsEnable[tacticsComandType];
+        return _tacticsEnable[tacticsCommandType];
     }
 
     public void ChangeTacticsCostRate(int tacticsCostRate)
@@ -205,15 +205,15 @@ public class ActorInfo
         _tacticsCostRate = tacticsCostRate;
     }
 
-    public void SetTacticsCommand(TacticsComandType tacticsComandType,int tacticsCost)
+    public void SetTacticsCommand(TacticsCommandType tacticsCommandType,int tacticsCost)
     {
-        _tacticsComandType = tacticsComandType;
+        _tacticsCommandType = tacticsCommandType;
         _tacticsCost = tacticsCost;
     }
 
     public void ClearTacticsCommand()
     {
-        _tacticsComandType = TacticsComandType.None;
+        _tacticsCommandType = TacticsCommandType.None;
         _tacticsCost = 0;
         _nextLearnSkillId = 0;
         _nextLearnCost = 0;

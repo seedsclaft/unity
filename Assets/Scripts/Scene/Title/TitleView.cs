@@ -124,7 +124,7 @@ public class TitleView : BaseView ,IInputHandlerEvent
         if (listData != null)
         {
             var commandData = (SystemData.CommandData)listData.Data;
-            eventData.templete = commandData.Id;
+            eventData.template = commandData.Id;
             _commandData(eventData);
         }
     }
@@ -138,7 +138,7 @@ public class TitleView : BaseView ,IInputHandlerEvent
     private void CallSideMenu(SystemData.CommandData sideMenu)
     {
         var eventData = new TitleViewEvent(CommandType.SelectSideMenu);
-        eventData.templete = sideMenu;
+        eventData.template = sideMenu;
         _commandData(eventData);
     }
 
@@ -191,7 +191,7 @@ namespace Title
 public class TitleViewEvent
 {
     public Title.CommandType commandType;
-    public object templete;
+    public object template;
 
     public TitleViewEvent(Title.CommandType type)
     {

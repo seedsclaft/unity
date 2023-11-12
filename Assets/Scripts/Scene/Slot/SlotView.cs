@@ -53,14 +53,14 @@ public class SlotView : BaseView
     private void CallSlotInfoLock()
     {
         var eventData = new SlotViewEvent(CommandType.Lock);
-        eventData.templete = slotInfoList.Index;
+        eventData.template = slotInfoList.Index;
         _commandData(eventData); 
     }
     
     private void CallSlotStatus()
     {
         var eventData = new SlotViewEvent(CommandType.Status);
-        eventData.templete = slotInfoList.Index;
+        eventData.template = slotInfoList.Index;
         _commandData(eventData); 
     }
 
@@ -79,7 +79,7 @@ namespace Slot
 public class SlotViewEvent
 {
     public Slot.CommandType commandType;
-    public object templete;
+    public object template;
 
     public SlotViewEvent(Slot.CommandType type)
     {

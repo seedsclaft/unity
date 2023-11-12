@@ -7,11 +7,11 @@ public class TacticsResultInfo
 {
     private int _actorId;
     public int ActorId => _actorId;
-    private TacticsComandType _commandType;
-    public TacticsComandType CommandType => _commandType;
+    private TacticsCommandType _commandType;
+    public TacticsCommandType CommandType => _commandType;
     private bool _isBonus;
     public bool IsBonus => _isBonus;
-    public TacticsResultInfo(int actorId,TacticsComandType commandType,bool isBonus)
+    public TacticsResultInfo(int actorId,TacticsCommandType commandType,bool isBonus)
     {
         _actorId = actorId;
         _commandType = commandType;

@@ -84,7 +84,7 @@ public class EnemyInfoView : BaseView,IInputHandlerEvent
         if (listData != null)
         {
             var eventData = new EnemyInfoViewEvent(CommandType.AttributeType);
-            eventData.templete = listData.AttributeType;
+            eventData.template = listData.AttributeType;
             _commandData(eventData);
         }
     }
@@ -264,7 +264,7 @@ namespace EnemyInfo
 public class EnemyInfoViewEvent
 {
     public EnemyInfo.CommandType commandType;
-    public object templete;
+    public object template;
 
     public EnemyInfoViewEvent(EnemyInfo.CommandType type)
     {

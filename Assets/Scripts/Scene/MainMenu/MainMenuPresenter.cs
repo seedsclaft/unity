@@ -42,7 +42,7 @@ public class MainMenuPresenter : BasePresenter
         }
         if (viewEvent.commandType == CommandType.StageSelect)
         {
-            _model.SetStageId((int)viewEvent.templete);
+            _model.SetStageId((int)viewEvent.template);
             StatusViewInfo statusViewInfo = new StatusViewInfo(() => {
                 _view.CommandStatusClose();
                 _view.SetInitHelpText();
@@ -76,7 +76,7 @@ public class MainMenuPresenter : BasePresenter
         }
         if (viewEvent.commandType == CommandType.SelectSideMenu)
         {
-            CommandSelectSideMenu((SystemData.CommandData)viewEvent.templete);
+            CommandSelectSideMenu((SystemData.CommandData)viewEvent.template);
         }
     }
 
@@ -96,13 +96,13 @@ public class MainMenuPresenter : BasePresenter
 
     private void CommandRanking()
     {
-        var popupInfo = new ConfirmInfo(DataSystem.System.GetTextData(11100).Text,(menuCommandInfo) => UpdatePopup((ConfirmComandType)menuCommandInfo));
+        var popupInfo = new ConfirmInfo(DataSystem.System.GetTextData(11100).Text,(menuCommandInfo) => UpdatePopup((ConfirmCommandType)menuCommandInfo));
         _view.CommandCallConfirm(popupInfo);
     }
 
-    private void UpdatePopup(ConfirmComandType confirmComandType)
+    private void UpdatePopup(ConfirmCommandType confirmComandType)
     {
-        if (confirmComandType == ConfirmComandType.Yes)
+        if (confirmComandType == ConfirmCommandType.Yes)
         {
             CommandRankingPopup();
         } else

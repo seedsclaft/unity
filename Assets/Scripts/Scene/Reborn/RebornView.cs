@@ -54,7 +54,7 @@ public class RebornView : BaseView
         {
             var data = (ActorInfo)listData.Data;
             var eventData = new RebornViewEvent(CommandType.DecideActor);
-            eventData.templete = actorInfoList.Index;
+            eventData.template = actorInfoList.Index;
             _commandData(eventData);
         }
     }
@@ -137,7 +137,7 @@ namespace Reborn
 public class RebornViewEvent
 {
     public Reborn.CommandType commandType;
-    public object templete;
+    public object template;
 
     public RebornViewEvent(Reborn.CommandType type)
     {

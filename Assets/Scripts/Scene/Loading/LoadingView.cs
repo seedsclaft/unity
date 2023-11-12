@@ -46,7 +46,7 @@ namespace Loading
 public class LoadingViewEvent
 {
     public Loading.CommandType commandType;
-    public object templete;
+    public object template;
 
     public LoadingViewEvent(Loading.CommandType type)
     {

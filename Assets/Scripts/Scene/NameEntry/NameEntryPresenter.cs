@@ -45,14 +45,14 @@ public class NameEntryPresenter
         if (viewEvent.commandType == CommandType.EntryEnd)
         {
             Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
-            CommandEntryEnd((string)viewEvent.templete);
+            CommandEntryEnd((string)viewEvent.template);
         }
     }
 
-    private void updatePopup(ConfirmComandType confirmComandType)
+    private void updatePopup(ConfirmCommandType confirmComandType)
     {
         _view.CommandConfirmClose();
-        if (confirmComandType == ConfirmComandType.Yes)
+        if (confirmComandType == ConfirmCommandType.Yes)
         {
         }
         _view.StartNameEntry();
@@ -60,7 +60,7 @@ public class NameEntryPresenter
 
     private void CommandStartEntry()
     {
-        ConfirmInfo popupInfo = new ConfirmInfo(DataSystem.System.GetTextData(5000).Text,(menuCommandInfo) => updatePopup((ConfirmComandType)menuCommandInfo));
+        ConfirmInfo popupInfo = new ConfirmInfo(DataSystem.System.GetTextData(5000).Text,(menuCommandInfo) => updatePopup((ConfirmCommandType)menuCommandInfo));
         popupInfo.SetIsNoChoise(true);
         _view.CommandCallConfirm(popupInfo);
         _view.ShowNameEntry("");
@@ -70,7 +70,7 @@ public class NameEntryPresenter
     {
         if (nameText == "")
         {
-            ConfirmInfo popupInfo = new ConfirmInfo(DataSystem.System.GetTextData(5002).Text,(menuCommandInfo) => updatePopup((ConfirmComandType)menuCommandInfo));
+            ConfirmInfo popupInfo = new ConfirmInfo(DataSystem.System.GetTextData(5002).Text,(menuCommandInfo) => updatePopup((ConfirmCommandType)menuCommandInfo));
             popupInfo.SetIsNoChoise(true);
             _view.CommandCallConfirm(popupInfo);
         } else{

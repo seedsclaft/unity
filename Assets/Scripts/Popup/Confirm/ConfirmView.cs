@@ -11,7 +11,7 @@ public class ConfirmView : BaseView,IInputHandlerEvent
     [SerializeField] private TextMeshProUGUI titleText = null;
     [SerializeField] private GameObject skillInfoRoot = null;
     [SerializeField] private GameObject skillInfoPrefab = null;
-    private System.Action<ConfirmComandType> _confirmEvent = null;
+    private System.Action<ConfirmCommandType> _confirmEvent = null;
     private new System.Action<ConfirmViewEvent> _commandData = null;
     private ConfirmInfo _confirmInfo = null;
 
@@ -56,7 +56,7 @@ public class ConfirmView : BaseView,IInputHandlerEvent
         commandList.Refresh(selectIndex);
     }
 
-    public void SetConfirmEvent(System.Action<ConfirmComandType> commandData)
+    public void SetConfirmEvent(System.Action<ConfirmCommandType> commandData)
     {
         _confirmEvent = commandData;
     }
@@ -90,10 +90,10 @@ public class ConfirmView : BaseView,IInputHandlerEvent
         var data = (SystemData.CommandData)commandList.ListData.Data;
         if (data != null)
         {
-            var commandType = ConfirmComandType.No;
+            var commandType = ConfirmCommandType.No;
             if (data.Key == "Yes")
             {
-                commandType = ConfirmComandType.Yes;
+                commandType = ConfirmCommandType.Yes;
                 Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
             }
             _confirmEvent(commandType);
@@ -128,7 +128,7 @@ namespace Confirm
 public class ConfirmViewEvent
 {
     public Confirm.CommandType commandType;
-    public object templete;
+    public object template;
 
     public ConfirmViewEvent(Confirm.CommandType type)
     {

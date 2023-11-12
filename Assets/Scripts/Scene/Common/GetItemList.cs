@@ -48,7 +48,7 @@ public class GetItemList : ListWindow , IInputHandlerEvent
         }
     }
     
-    public void InitializeConfirm(List<ListData> confirmCommands ,System.Action<ConfirmComandType> callEvent)
+    public void InitializeConfirm(List<ListData> confirmCommands ,System.Action<ConfirmCommandType> callEvent)
     {
         tacticsCommandList.Initialize(confirmCommands.Count);
         tacticsCommandList.SetData(confirmCommands);
@@ -57,11 +57,11 @@ public class GetItemList : ListWindow , IInputHandlerEvent
             var data = (SystemData.CommandData)tacticsCommandList.ListData.Data;
             if (data.Key == "Yes")
             {
-                callEvent(ConfirmComandType.Yes);
+                callEvent(ConfirmCommandType.Yes);
             } else
             if (data.Key == "No")
             {
-                callEvent(ConfirmComandType.No);
+                callEvent(ConfirmCommandType.No);
             }
         });
         tacticsCommandList.UpdateSelectIndex(0);

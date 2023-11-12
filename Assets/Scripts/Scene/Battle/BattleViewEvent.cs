@@ -1,7 +1,7 @@
 public class BattleViewEvent 
 {
     public Battle.CommandType commandType;
-    public object templete;
+    public object template;
 
     public BattleViewEvent(Battle.CommandType type)
     {

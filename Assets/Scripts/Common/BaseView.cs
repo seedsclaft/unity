@@ -131,14 +131,14 @@ abstract public class BaseView : MonoBehaviour
     public void CommandSceneChange(Scene scene)
     {
         var eventData = new ViewEvent(Base.CommandType.SceneChange);
-        eventData.templete = scene;
+        eventData.template = scene;
         CallSceneChangeCommand(eventData);
     }
 
     public void CommandCallConfirm(ConfirmInfo popupInfo)
     {
         var eventData = new ViewEvent(Base.CommandType.CallConfirmView);
-        eventData.templete = popupInfo;
+        eventData.template = popupInfo;
         CallSceneChangeCommand(eventData);
     }
 
@@ -151,35 +151,35 @@ abstract public class BaseView : MonoBehaviour
     public void CommandCallRuling(System.Action endEvent)
     {
         var eventData = new ViewEvent(Base.CommandType.CallRulingView);
-        eventData.templete = endEvent;
+        eventData.template = endEvent;
         CallSceneChangeCommand(eventData);
     }
 
     public void CommandCallOption(System.Action endEvent)
     {
         var eventData = new ViewEvent(Base.CommandType.CallOptionView);
-        eventData.templete = endEvent;
+        eventData.template = endEvent;
         CallSceneChangeCommand(eventData);
     }
 
     public void CommandCallRanking(System.Action endEvent)
     {
         var eventData = new ViewEvent(Base.CommandType.CallRankingView);
-        eventData.templete = endEvent;
+        eventData.template = endEvent;
         CallSceneChangeCommand(eventData);
     }
 
     public void CommandCallCredit(System.Action endEvent)
     {
         var eventData = new ViewEvent(Base.CommandType.CallCreditView);
-        eventData.templete = endEvent;
+        eventData.template = endEvent;
         CallSceneChangeCommand(eventData);
     }
 
     public void CommandCallStatus(StatusViewInfo statusViewInfo)
     {
         var eventData = new ViewEvent(Base.CommandType.CallStatusView);
-        eventData.templete = statusViewInfo;
+        eventData.template = statusViewInfo;
         CallSceneChangeCommand(eventData);
     }
 
@@ -192,21 +192,21 @@ abstract public class BaseView : MonoBehaviour
     public void CommandCallEnemyInfo(StatusViewInfo statusViewInfo)
     {
         var eventData = new ViewEvent(Base.CommandType.CallEnemyInfoView);
-        eventData.templete = statusViewInfo;
+        eventData.template = statusViewInfo;
         CallSceneChangeCommand(eventData);
     }
 
     public void CommandCallAdv(AdvCallInfo advCallInfo)
     {
         var eventData = new ViewEvent(Base.CommandType.CallAdvScene);
-        eventData.templete = advCallInfo;
+        eventData.template = advCallInfo;
         CallSceneChangeCommand(eventData);
     }
 
     public void CommandDecidePlayerName(string nameText)
     {
         var eventData = new ViewEvent(Base.CommandType.DecidePlayerName);
-        eventData.templete = nameText;
+        eventData.template = nameText;
         CallSceneChangeCommand(eventData);
     }
 
@@ -231,21 +231,21 @@ abstract public class BaseView : MonoBehaviour
     public void CommandChangeViewToTransition(System.Action<string> endEvent)
     {
         var eventData = new ViewEvent(Base.CommandType.ChangeViewToTransition);
-        eventData.templete = endEvent;
+        eventData.template = endEvent;
         CallSceneChangeCommand(eventData);
     }
 
     public void CommandStartTransition(System.Action endEvent)
     {
         var eventData = new ViewEvent(Base.CommandType.StartTransition);
-        eventData.templete = endEvent;
+        eventData.template = endEvent;
         CallSceneChangeCommand(eventData);
     }
 
     public void CommandChangeEventSkipIndex(bool isSkip)
     {
         var eventData = new ViewEvent(Base.CommandType.ChangeEventSkipIndex);
-        eventData.templete = isSkip;
+        eventData.template = isSkip;
         CallSceneChangeCommand(eventData);
     }
 
@@ -311,7 +311,7 @@ namespace Base
 public class BaseViewEvent
 {
     public Base.CommandType commandType;
-    public Scene templete;
+    public Scene template;
 
     public BaseViewEvent(Base.CommandType type)
     {

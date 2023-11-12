@@ -133,23 +133,23 @@ public class GetItemInfo
         SetResultData("+" + value.ToString());
     }
 
-    public void MakeCommandRebornResult(TacticsComandType tacticsComandType,int bonus)
+    public void MakeCommandRebornResult(TacticsCommandType tacticsCommandType,int bonus)
     {
-        switch (tacticsComandType)
+        switch (tacticsCommandType)
         {
-            case TacticsComandType.Train:
+            case TacticsCommandType.Train:
             MakeTrainCommandResult(bonus);
             break;
-            case TacticsComandType.Alchemy:
+            case TacticsCommandType.Alchemy:
             MakeAlchemyCommandResult(bonus);
             break;
-            case TacticsComandType.Recovery:
+            case TacticsCommandType.Recovery:
             MakeRecoveryCommandResult(bonus);
             break;
-            case TacticsComandType.Battle:
+            case TacticsCommandType.Battle:
             MakeBattleCommandResult(bonus);
             break;
-            case TacticsComandType.Resource:
+            case TacticsCommandType.Resource:
             MakeResourceCommandResult(bonus);
             break;
         }

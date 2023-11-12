@@ -75,14 +75,14 @@ public class GameSystem : MonoBehaviour
         loadingView.Initialize();
     }
 
-    private void updateCommand(ViewEvent viewEvent)
+    private void UpdateCommand(ViewEvent viewEvent)
     {
         if (_busy){
             return;
         }
         if (viewEvent.commandType == Base.CommandType.SceneChange)
         {
-            if (testMode && (Scene)viewEvent.templete == Scene.Battle)
+            if (testMode && (Scene)viewEvent.template == Scene.Battle)
             {
                 if (debugBattleData.AdvName != "")
                 {
@@ -90,15 +90,15 @@ public class GameSystem : MonoBehaviour
                 } else
                 {
                     debugBattleData.MakeBattleActor();
-                    CommandSceneChange((Scene)viewEvent.templete);
+                    CommandSceneChange((Scene)viewEvent.template);
                 }
             } else{
-                CommandSceneChange((Scene)viewEvent.templete);
+                CommandSceneChange((Scene)viewEvent.template);
             }
         } else
         if (viewEvent.commandType == Base.CommandType.CallConfirmView)
         {
-            CommandConfirmView((ConfirmInfo)viewEvent.templete);
+            CommandConfirmView((ConfirmInfo)viewEvent.template);
         } else
         if (viewEvent.commandType == Base.CommandType.CloseConfirm)
         {
@@ -108,19 +108,19 @@ public class GameSystem : MonoBehaviour
         } else
         if (viewEvent.commandType == Base.CommandType.CallRulingView)
         {
-            CommandRulingView((System.Action)viewEvent.templete);
+            CommandRulingView((System.Action)viewEvent.template);
         } else
         if (viewEvent.commandType == Base.CommandType.CallOptionView)
         {
-            CommandOptionView((System.Action)viewEvent.templete);
+            CommandOptionView((System.Action)viewEvent.template);
         } else
         if (viewEvent.commandType == Base.CommandType.CallRankingView)
         {
-            CommandRankingView((System.Action)viewEvent.templete);
+            CommandRankingView((System.Action)viewEvent.template);
         } else
         if (viewEvent.commandType == Base.CommandType.CallCreditView)
         { 
-            CommandCreditView((System.Action)viewEvent.templete);
+            CommandCreditView((System.Action)viewEvent.template);
         } else
         if (viewEvent.commandType == Base.CommandType.CallStatusView)
         {
@@ -129,9 +129,9 @@ public class GameSystem : MonoBehaviour
                 DestroyImmediate(_statusView.gameObject);
             }
             CreateStatus(true);
-            var popupInfo = (StatusViewInfo)viewEvent.templete;
+            var popupInfo = (StatusViewInfo)viewEvent.template;
             (_statusView as StatusView).SetViewInfo(popupInfo);
-            _statusView.SetEvent((type) => updateCommand(type));
+            _statusView.SetEvent((type) => UpdateCommand(type));
             _currentScene.SetBusy(true);
         } else
         if (viewEvent.commandType == Base.CommandType.CloseStatus)
@@ -147,11 +147,11 @@ public class GameSystem : MonoBehaviour
                 DestroyImmediate(_statusView.gameObject);
             }
             CreateStatus(false);
-            var popupInfo = (StatusViewInfo)viewEvent.templete;
+            var popupInfo = (StatusViewInfo)viewEvent.template;
             var enemyInfoView = _statusView as EnemyInfoView;
             enemyInfoView.Initialize(popupInfo.EnemyInfos,popupInfo.IsBattle);
             enemyInfoView.SetBackEvent(popupInfo.BackEvent);
-            enemyInfoView.SetEvent((type) => updateCommand(type));
+            enemyInfoView.SetEvent((type) => UpdateCommand(type));
             _currentScene.SetBusy(true);
         } else
         if (viewEvent.commandType == Base.CommandType.CallAdvScene)
@@ -159,7 +159,7 @@ public class GameSystem : MonoBehaviour
             statusRoot.gameObject.SetActive(false);
             if (!statusRoot.gameObject.activeSelf) _currentScene.SetBusy(true);
             if (_statusView) _statusView.SetBusy(true);
-            AdvCallInfo advCallInfo = viewEvent.templete as AdvCallInfo;
+            AdvCallInfo advCallInfo = viewEvent.template as AdvCallInfo;
             _currentScene.SetBusy(true);
             if (!this.gameObject.activeSelf)
             {
@@ -171,7 +171,7 @@ public class GameSystem : MonoBehaviour
         if (viewEvent.commandType == Base.CommandType.DecidePlayerName)
         {
             string playerName = (string)advEngine.Param.GetParameter("PlayerName");
-            advEngine.Param.SetParameterString("PlayerName",(string)viewEvent.templete);
+            advEngine.Param.SetParameterString("PlayerName",(string)viewEvent.template);
         } else
         if (viewEvent.commandType == Base.CommandType.CallLoading)
         {
@@ -208,8 +208,8 @@ public class GameSystem : MonoBehaviour
         {
             transitionFade.FadeIn(0.8f,() => {
                 foreach(Transform child in transitionRoot.transform){
-                    var endEvent = (System.Action)viewEvent.templete;
-                    if ((System.Action)viewEvent.templete != null) endEvent();
+                    var endEvent = (System.Action)viewEvent.template;
+                    if ((System.Action)viewEvent.template != null) endEvent();
                     Destroy(child.gameObject);
                     transitionFade.FadeOut(0);
                     transitionRoot.SetActive(false);
@@ -218,7 +218,7 @@ public class GameSystem : MonoBehaviour
         } else
         if (viewEvent.commandType == Base.CommandType.ChangeEventSkipIndex)
         {
-            advEngine.Config.IsSkip = (bool)viewEvent.templete;
+            advEngine.Config.IsSkip = (bool)viewEvent.template;
         }
     }
 
@@ -252,7 +252,7 @@ public class GameSystem : MonoBehaviour
         rulingView.Initialize();
         rulingView.SetBackEvent(() => 
         {
-            updateCommand(new ViewEvent(Base.CommandType.CloseConfirm));
+            UpdateCommand(new ViewEvent(Base.CommandType.CloseConfirm));
             if (endEvent != null) endEvent();
         });
         confirmRoot.gameObject.SetActive(true);
@@ -280,10 +280,10 @@ public class GameSystem : MonoBehaviour
                 Ryneus.SoundManager.Instance._seMute
             );
             SaveSystem.SaveConfigStart(GameSystem.ConfigData);
-            updateCommand(new ViewEvent(Base.CommandType.CloseConfirm));
+            UpdateCommand(new ViewEvent(Base.CommandType.CloseConfirm));
             if (endEvent != null) endEvent();
         });
-        optionView.SetEvent((type) => updateCommand(type));
+        optionView.SetEvent((type) => UpdateCommand(type));
         confirmRoot.gameObject.SetActive(true);
         _currentScene.SetBusy(true);
         if (_statusView) _statusView.SetBusy(true);
@@ -302,7 +302,7 @@ public class GameSystem : MonoBehaviour
         rankingView.Initialize();
         rankingView.SetBackEvent(() => 
         {
-            updateCommand(new ViewEvent(Base.CommandType.CloseConfirm));
+            UpdateCommand(new ViewEvent(Base.CommandType.CloseConfirm));
             if (endEvent != null) endEvent();
         });
         confirmRoot.gameObject.SetActive(true);
@@ -323,7 +323,7 @@ public class GameSystem : MonoBehaviour
         creditView.Initialize();
         creditView.SetBackEvent(() => 
         {
-            updateCommand(new ViewEvent(Base.CommandType.CloseConfirm));
+            UpdateCommand(new ViewEvent(Base.CommandType.CloseConfirm));
             if (endEvent != null) endEvent();
         });
         confirmRoot.gameObject.SetActive(true);
@@ -366,12 +366,12 @@ public class GameSystem : MonoBehaviour
         _currentScene = prefab.GetComponent<BaseView>();
         _currentScene.SetTestMode(testMode);
         _currentScene.SetHelpWindow(helpWindow);
-        _currentScene.SetEvent((type) => updateCommand(type));
+        _currentScene.SetEvent((type) => UpdateCommand(type));
         _currentScene.Initialize();
     }
 
-    private void CommandSetTemplete(TempInfo templete){
-        CurrentTempData = templete;
+    private void CommandSetTemplate(TempInfo template){
+        CurrentTempData = template;
     }
 }
 

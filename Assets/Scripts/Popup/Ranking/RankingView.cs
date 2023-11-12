@@ -78,7 +78,7 @@ namespace Ranking
 public class RankingViewEvent
 {
     public Ranking.CommandType commandType;
-    public object templete;
+    public object template;
 
     public RankingViewEvent(Ranking.CommandType type)
     {

@@ -43,51 +43,51 @@ public class OptionPresenter
         }
         if (viewEvent.commandType == CommandType.SelectCategory)
         {
-           CommandSelectCategory((OptionCategory)viewEvent.templete);
+           CommandSelectCategory((OptionCategory)viewEvent.template);
         }
         if (viewEvent.commandType == CommandType.ChangeBGMValue)
         {
-           CommandChangeBGMValue((float)viewEvent.templete);
+           CommandChangeBGMValue((float)viewEvent.template);
         }
         if (viewEvent.commandType == CommandType.ChangeBGMMute)
         {
-           CommandChangeBGMMute((bool)viewEvent.templete);
+           CommandChangeBGMMute((bool)viewEvent.template);
         }
         if (viewEvent.commandType == CommandType.ChangeSEValue)
         {
-           CommandChangeSEValue((float)viewEvent.templete);
+           CommandChangeSEValue((float)viewEvent.template);
         }
         if (viewEvent.commandType == CommandType.ChangeSEMute)
         {
-           CommandChangeSEMute((bool)viewEvent.templete);
+           CommandChangeSEMute((bool)viewEvent.template);
         }
         if (viewEvent.commandType == CommandType.ChangeGraphicIndex)
         {
-           CommandChangeGraphicIndex((int)viewEvent.templete);
+           CommandChangeGraphicIndex((int)viewEvent.template);
         }
         if (viewEvent.commandType == CommandType.ChangeEventSkipIndex)
         {
-           CommandChangeEventSkipIndex((int)viewEvent.templete);
+           CommandChangeEventSkipIndex((int)viewEvent.template);
         }
         if (viewEvent.commandType == CommandType.ChangeCommandEndCheck)
         {
-           CommandChangeCommandEndCheck((int)viewEvent.templete);
+           CommandChangeCommandEndCheck((int)viewEvent.template);
         }
         if (viewEvent.commandType == CommandType.ChangeBattleWait)
         {
-           CommandChangeBattleWait((int)viewEvent.templete);
+           CommandChangeBattleWait((int)viewEvent.template);
         }
         if (viewEvent.commandType == CommandType.ChangeBattleAnimation)
         {
-           CommandChangeBattleAnimation((int)viewEvent.templete);
+           CommandChangeBattleAnimation((int)viewEvent.template);
         }
         if (viewEvent.commandType == CommandType.ChangeInputType)
         {
-           CommandChangeInputType((int)viewEvent.templete);
+           CommandChangeInputType((int)viewEvent.template);
         }
         if (viewEvent.commandType == CommandType.ChangeBattleAuto)
         {
-           CommandChangeBattleAuto((int)viewEvent.templete);
+           CommandChangeBattleAuto((int)viewEvent.template);
         }
     }
 

@@ -26,7 +26,7 @@ public class TacticsTrain : ListItem ,IListViewItem
     {
         if (ListData == null) return;
         var data = (TacticsActorInfo)ListData.Data;
-        tacticsComponent.UpdateInfo(data.ActorInfo,data.TacticsComandType);
-        Disable.SetActive(!data.ActorInfo.EnableTactics(data.TacticsComandType));
+        tacticsComponent.UpdateInfo(data.ActorInfo,data.TacticsCommandType);
+        Disable.SetActive(!data.ActorInfo.EnableTactics(data.TacticsCommandType));
     }
 }

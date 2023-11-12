@@ -8,6 +8,7 @@ using UnityEngine.UI;
 abstract public class ListWindow : MonoBehaviour
 {
     private bool _active = true;
+    public bool Active => _active;
 
     private int _index = 0;
     public int Index => _index;

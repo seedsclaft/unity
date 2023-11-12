@@ -99,7 +99,7 @@ public class BattleView : BaseView ,IInputHandlerEvent
         var data = selectCharacter.ActionData;
         if (data != null)
         {
-            eventData.templete = data;
+            eventData.template = data;
             _commandData(eventData);
         }
     }
@@ -223,7 +223,7 @@ public class BattleView : BaseView ,IInputHandlerEvent
     {
         if (_animationBusy) return;
         var eventData = new BattleViewEvent(CommandType.EnemyLayer);
-        eventData.templete = indexList;
+        eventData.template = indexList;
         _commandData(eventData);
     }
 
@@ -235,7 +235,7 @@ public class BattleView : BaseView ,IInputHandlerEvent
         BattlerInfo battlerInfo = battlerInfos.Find(a => a.Index == selectedIndex);
         if (battlerInfo != null)
         {
-            eventData.templete = selectedIndex;
+            eventData.template = selectedIndex;
             _commandData(eventData);
         }
     }
@@ -244,7 +244,7 @@ public class BattleView : BaseView ,IInputHandlerEvent
     {
         if (_animationBusy) return;
         var eventData = new BattleViewEvent(CommandType.ActorList);
-        eventData.templete = indexList;
+        eventData.template = indexList;
         _commandData(eventData);
     }
 
@@ -596,7 +596,7 @@ public class BattleView : BaseView ,IInputHandlerEvent
     private void CallSideMenu(SystemData.CommandData sideMenu)
     {
         var eventData = new BattleViewEvent(CommandType.SelectSideMenu);
-        eventData.templete = sideMenu;
+        eventData.template = sideMenu;
         _commandData(eventData);
     }
 

@@ -33,11 +33,11 @@ public class RulingPresenter
         }
         if (viewEvent.commandType == Ruling.CommandType.SelectTitle)
         {
-            CommandSelectTitle((int)viewEvent.templete);
+            CommandSelectTitle((int)viewEvent.template);
         }
         if (viewEvent.commandType == Ruling.CommandType.SelectCategory)
         {
-            CommandSelectCategory((int)viewEvent.templete);
+            CommandSelectCategory((int)viewEvent.template);
         }
     }
 

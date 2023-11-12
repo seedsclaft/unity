@@ -5,7 +5,7 @@ using UnityEngine;
 public class TacticsViewEvent
 {
     public Tactics.CommandType commandType;
-    public object templete;
+    public object template;
 
     public TacticsViewEvent(Tactics.CommandType type)
     {
