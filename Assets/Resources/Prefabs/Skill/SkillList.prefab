@@ -1407,7 +1407,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.0002898322, y: 0.000011444092}
+  m_AnchoredPosition: {x: -0.0002898322, y: -0.0000038146973}
   m_SizeDelta: {x: 0, y: 72}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &5072212521608218963
@@ -1883,10 +1883,21 @@ MonoBehaviour:
   battleThumb: {fileID: 965822462523711020}
   deckMagicList: {fileID: 4534644565046489533}
   conditionList: {fileID: 2717459126878286369}
-  magicConditionTabs:
-  - {fileID: 2891607368615491381}
-  - {fileID: 2805123323778703868}
+  detailTabs:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  detailObjs:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  detailTabCanvasGroup:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   statusInfoComponent: {fileID: 5939855946456377954}
+  detailObj: {fileID: 0}
+  actorInfoComponent: {fileID: 0}
 --- !u!1 &3190289639235698281
 GameObject:
   m_ObjectHideFlags: 0

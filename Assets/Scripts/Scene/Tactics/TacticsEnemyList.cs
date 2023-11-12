@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TacticsEnemyList : ListWindow , IInputHandlerEvent
+public class TacticsEnemyList : BaseList
 {
     [SerializeField] private BaseList tacticsCommandList;
     public BaseList TacticsCommandList => tacticsCommandList;

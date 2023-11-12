@@ -64,9 +64,8 @@ public class GameSystem : MonoBehaviour
         {
             _statusView = prefab.GetComponent<EnemyInfoView>();
         }
-        _statusView.Initialize();
         _statusView.SetHelpWindow(helpWindow);
-        //statusRoot.gameObject.SetActive(false);
+        _statusView.Initialize();
         statusRoot.gameObject.SetActive(true);
     }
 
@@ -136,7 +135,10 @@ public class GameSystem : MonoBehaviour
         } else
         if (viewEvent.commandType == Base.CommandType.CloseStatus)
         {
-            DestroyImmediate(_statusView.gameObject);
+            if (_statusView.gameObject)
+            {
+                DestroyImmediate(_statusView.gameObject);
+            }
             statusRoot.gameObject.SetActive(false);
             _currentScene.SetBusy(false);
         } else

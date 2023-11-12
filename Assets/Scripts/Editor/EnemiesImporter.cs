@@ -74,11 +74,11 @@ public class EnemiesImporter : AssetPostprocessor {
 		// ディレクトリ情報とファイル名の文字列を結合してアセット名を指定
 		string ExportPath = $"{Path.Combine(AssetPostImporter.ExportExcelPath, FileName)}.asset";
 
-		EnemyDatas Data = AssetDatabase.LoadAssetAtPath<EnemyDatas>(ExportPath);
+		EnemyDates Data = AssetDatabase.LoadAssetAtPath<EnemyDates>(ExportPath);
 		if (!Data)
 		{
 			// データがなければ作成
-			Data = ScriptableObject.CreateInstance<EnemyDatas>();
+			Data = ScriptableObject.CreateInstance<EnemyDates>();
 			AssetDatabase.CreateAsset(Data, ExportPath);
 			Data.hideFlags = HideFlags.NotEditable;
 		}

@@ -1,18 +1,14 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class StatusPresenter 
+public class StatusPresenter : BasePresenter
 {
-    StatusModel _model = null;
-    StatusView _view = null;
-    private Status.CommandType _backCommandType = Status.CommandType.None;
+    private StatusModel _model = null;
+    private StatusView _view = null;
     private Status.CommandType _popupCommandType = Status.CommandType.None;
     public StatusPresenter(StatusView view)
     {
         _view = view;
+        SetView(_view);
         _model = new StatusModel();
-
+        SetModel(_model);
         Initialize();
     }
 
@@ -22,7 +18,6 @@ public class StatusPresenter
         _view.SetUIButton();
         _view.SetEvent((type) => updateCommand(type));
 
-        _view.SetActorInfo(_model.CurrentActor,_model.StatusActors());
         CommandRefresh();
         if (_model.StatusActors().Count == 1) _view.HideArrows();
     }
@@ -52,10 +47,7 @@ public class StatusPresenter
 
     private void CommandBack()
     {
-        if (_backCommandType == Status.CommandType.None)
-        {
-            _view.CommandBack();
-        }
+        _view.CommandBack();
         Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cancel);
     }
 
@@ -69,13 +61,13 @@ public class StatusPresenter
         Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
     }
 
-    private void updatePopup(ConfirmCommandType confirmComandType)
+    private void updatePopup(ConfirmCommandType confirmCommandType)
     {
         _view.CommandConfirmClose();
 
         if (_popupCommandType == Status.CommandType.SelectSkillAction)
         {
-            if (confirmComandType == ConfirmCommandType.Yes)
+            if (confirmCommandType == ConfirmCommandType.Yes)
             {
                 CommandRefresh();
             }
@@ -85,7 +77,7 @@ public class StatusPresenter
 
         if (_popupCommandType == Status.CommandType.DecideStage)
         {
-            if (confirmComandType == ConfirmCommandType.Yes)
+            if (confirmCommandType == ConfirmCommandType.Yes)
             {
                 _model.SelectAddActor();
                 _view.CommandStatusClose();
@@ -109,7 +101,6 @@ public class StatusPresenter
         SaveSelectedSkillId();
         _model.ChangeActorIndex(-1);
         _view.MoveActorLeft(() => {
-            _view.SetActorInfo(_model.CurrentActor,_model.StatusActors());
             CommandRefresh();
         });
     }
@@ -120,7 +111,6 @@ public class StatusPresenter
         SaveSelectedSkillId();
         _model.ChangeActorIndex(1);
         _view.MoveActorRight(() => {
-            _view.SetActorInfo(_model.CurrentActor,_model.StatusActors());
             CommandRefresh();
         });
     }

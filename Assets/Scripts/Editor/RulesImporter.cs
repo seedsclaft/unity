@@ -38,11 +38,11 @@ public class RulesImporter : AssetPostprocessor {
 		// ディレクトリ情報とファイル名の文字列を結合してアセット名を指定
 		string ExportPath = $"{Path.Combine(AssetPostImporter.ExportExcelPath, FileName)}.asset";
 
-		RuleDatas Data = AssetDatabase.LoadAssetAtPath<RuleDatas>(ExportPath);
+		RuleDates Data = AssetDatabase.LoadAssetAtPath<RuleDates>(ExportPath);
 		if (!Data)
 		{
 			// データがなければ作成
-			Data = ScriptableObject.CreateInstance<RuleDatas>();
+			Data = ScriptableObject.CreateInstance<RuleDates>();
 			AssetDatabase.CreateAsset(Data, ExportPath);
 			Data.hideFlags = HideFlags.NotEditable;
 		}

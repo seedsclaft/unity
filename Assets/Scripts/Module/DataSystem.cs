@@ -66,15 +66,15 @@ abstract public class DataSystem
         
         AddressablesKey.LoadAssetAsync<DataManager>("Assets/Data/MainData.asset",(data) => {DataSystem._data = data;});
         */
-        Actors = Resources.Load<ActorDatas>("Data/Actors").Data;
-        Advs = Resources.Load<AdvDatas>("Data/Advs").Data;
-        Enemies = Resources.Load<EnemyDatas>("Data/Enemies").Data;
-        Rules = Resources.Load<RuleDatas>("Data/Rules").Data;
-        Skills = Resources.Load<SkillDatas>("Data/Skills").Data;
-        Stages = Resources.Load<StageDatas>("Data/Stages").Data;
-        States = Resources.Load<StateDatas>("Data/States").Data;
+        Actors = Resources.Load<ActorDates>("Data/Actors").Data;
+        Advs = Resources.Load<AdvDates>("Data/Advs").Data;
+        Enemies = Resources.Load<EnemyDates>("Data/Enemies").Data;
+        Rules = Resources.Load<RuleDates>("Data/Rules").Data;
+        Skills = Resources.Load<SkillDates>("Data/Skills").Data;
+        Stages = Resources.Load<StageDates>("Data/Stages").Data;
+        States = Resources.Load<StateDates>("Data/States").Data;
         System = Resources.Load<SystemData>("Data/System");
-        Troops = Resources.Load<TroopDatas>("Data/Troops").Data;
+        Troops = Resources.Load<TroopDates>("Data/Troops").Data;
         DataSystem._alcana = Resources.Load<AlcanaData>("Data/Alcana");
         DataSystem._data = Resources.Load<DataManager>("Data/MainData");
     }

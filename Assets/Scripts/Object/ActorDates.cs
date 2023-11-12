@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [Serializable]
-public class ActorDatas : ScriptableObject
+public class ActorDates : ScriptableObject
 {
     [SerializeField] public List<ActorData> Data = new();
 }

@@ -298,7 +298,7 @@ public class BattleModel : BaseModel
     public List<ListData> SkillActionList(AttributeType attributeType)
     {
         _currentAttributeType = attributeType;
-        var skillInfos = CurrentBattler.DecksData.FindAll(a => a.Master.SkillType != SkillType.None && a.Master.Id > 100);
+        var skillInfos = CurrentBattler.Skills.FindAll(a => a.Master.SkillType != SkillType.None && a.Master.Id > 100);
         if (attributeType != AttributeType.None)
         {
             //skillInfos = skillInfos.FindAll(a => a.Attribute == _currentAttributeType);
@@ -943,7 +943,7 @@ public class BattleModel : BaseModel
             CurrentBattler.GainMp(actionInfo.MpCost * -1);
             CurrentBattler.GainPaybattleMp(actionInfo.MpCost);
             // カード破棄
-            CurrentBattler.RemoveDeck(actionInfo.SkillInfo.DeckIndex);
+            //CurrentBattler.RemoveDeck(actionInfo.SkillInfo.DeckIndex);
             List<ActionResultInfo> actionResultInfos = CalcDeathIndexList(actionInfo.ActionResults);
             for (int i = 0; i < actionResultInfos.Count; i++)
             {
@@ -1171,7 +1171,7 @@ public class BattleModel : BaseModel
     private List<ActionResultInfo> AfterHealActionResults()
     {
         var afterHealResults = new List<ActionResultInfo>();
-        var afterSkillInfo = CurrentBattler.DecksData.Find(a => a.Master.FeatureDatas.Find(b => b.FeatureType == FeatureType.AddState && (StateType)b.Param1 == StateType.AfterHeal) != null);
+        var afterSkillInfo = CurrentBattler.Skills.Find(a => a.Master.FeatureDatas.Find(b => b.FeatureType == FeatureType.AddState && (StateType)b.Param1 == StateType.AfterHeal) != null);
         if (CurrentBattler.IsState(StateType.AfterHeal) && afterSkillInfo != null)
         {
             var stateInfo = CurrentBattler.GetStateInfo(StateType.AfterHeal);
@@ -1208,7 +1208,7 @@ public class BattleModel : BaseModel
     private List<ActionResultInfo> AssistHealActionResults()
     {
         var assistHealResults = new List<ActionResultInfo>();
-        var afterSkillInfo = CurrentBattler.DecksData.Find(a => a.Master.FeatureDatas.Find(b => b.FeatureType == FeatureType.AddState && (StateType)b.Param1 == StateType.AssistHeal) != null);
+        var afterSkillInfo = CurrentBattler.Skills.Find(a => a.Master.FeatureDatas.Find(b => b.FeatureType == FeatureType.AddState && (StateType)b.Param1 == StateType.AssistHeal) != null);
         if (CurrentBattler.IsState(StateType.AssistHeal) && afterSkillInfo != null)
         {
             var stateInfo = CurrentBattler.GetStateInfo(StateType.AssistHeal);

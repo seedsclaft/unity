@@ -6,6 +6,7 @@ using DG.Tweening;
 
 public class StrategyActor : ListItem ,IListViewItem  
 {   
+    [SerializeField] private GameObject innerObj;
     [SerializeField] private ActorInfoComponent component;
     [SerializeField] private _2dxFX_Shiny_Reflect shinyReflect;
     [SerializeField] private Image bonusImage;
@@ -24,12 +25,11 @@ public class StrategyActor : ListItem ,IListViewItem
 
     public void StartResultAnimation(int animId)
     {
-        KillShinyRefrect();
-        //gameObject.transform.DOLocalMoveX(80,0.0f);
+        KillShinyReflect();
         int initPosy = (animId % 2 == 1) ? -80 : 80;
+        innerObj.transform.DOLocalMoveY(initPosy,0.0f);
         Sequence sequence = DOTween.Sequence()
-            .Append(gameObject.transform.DOLocalMoveY(initPosy,0.0f))
-            .Append(gameObject.transform.DOLocalMoveY(0,1.0f))
+            .Append(innerObj.transform.DOLocalMoveY(0,1.0f))
             .SetEase(Ease.OutQuad)
             .OnComplete(() => {
                 if (_isBonus) 
@@ -58,12 +58,12 @@ public class StrategyActor : ListItem ,IListViewItem
             });
     }
 
-    public void SetShinyRefrect(bool isEnable)
+    public void SetShinyReflect(bool isEnable)
     {
         shinyReflect.enabled = isEnable;
         if (isEnable == false)
         {
-            KillShinyRefrect();
+            KillShinyReflect();
         }
     }
 
@@ -72,7 +72,7 @@ public class StrategyActor : ListItem ,IListViewItem
         _callEvent = callEvent;
     }
 
-    public void KillShinyRefrect()
+    public void KillShinyReflect()
     {
         shinyReflect.enabled = false;
         if (shinyClip.material != null)

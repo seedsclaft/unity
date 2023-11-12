@@ -31,6 +31,7 @@ public class StrategyView : BaseView
     {
         base.Initialize();
         statusList.Initialize(5);
+        statusList.SetInputHandler(InputKeyType.Decide,() => CallLvUpNext());
         SetInputHandler(statusList.GetComponent<IInputHandlerEvent>());
         
         GameObject prefab = Instantiate(animPrefab);
@@ -65,6 +66,7 @@ public class StrategyView : BaseView
     {
         strategyResultList.TacticsCommandList.Deactivate();
         statusList.gameObject.SetActive(true);
+        statusList.Activate();
         lvUpStatusButton.gameObject.SetActive(true);
         actorInfoComponent.gameObject.SetActive(true);
         actorInfoComponent.Clear();
@@ -136,12 +138,13 @@ public class StrategyView : BaseView
     public void StartResultAnimation(List<ListData> actorInfos,List<bool> isBonusList = null)
     {
         DeactivateAll();
+        strategyActorList.gameObject.SetActive(false);
         strategyActorList.SetData(actorInfos);
         strategyActorList.Refresh();
-        strategyActorList.gameObject.SetActive(true);
         strategyActorList.StartResultAnimation(actorInfos.Count,isBonusList,() => {
             CallEndAnimation();
         });
+        strategyActorList.gameObject.SetActive(true);
     }
 
     private void CallEndAnimation(){
@@ -157,7 +160,7 @@ public class StrategyView : BaseView
         strategyResultList.Activate();
         strategyResultList.TacticsCommandList.Activate();
         strategyResultList.TacticsCommandList.UpdateSelectIndex(1);
-        HelpWindow.SetInputInfo("STRATEGY");
+        SetHelpInputInfo("STRATEGY");
     }
 
     private void CallResultCommand(ConfirmCommandType commandType)
@@ -239,7 +242,7 @@ public class StrategyView : BaseView
 
     public void EndShinyEffect()
     {
-        strategyActorList.SetShinyRefrect(false);
+        strategyActorList.SetShinyReflect(false);
     }
 
     public void FadeOut()
@@ -249,7 +252,6 @@ public class StrategyView : BaseView
 
     private void DeactivateAll()
     {
-        
         tacticsEnemyList.Deactivate();
         tacticsEnemyList.TacticsCommandList.Deactivate();
         strategyResultList.Deactivate();

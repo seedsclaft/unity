@@ -25,7 +25,7 @@ public class DebugBattleData : MonoBehaviour
     public void MakeBattleActor()
     {
         GameSystem.CurrentData.MakeStageData(1,1);
-        GameSystem.CurrentData.CurrentStage.TacticsTroops(1);
+        //GameSystem.CurrentData.CurrentStage.TacticsTroops(1);
         GameSystem.CurrentData.InitActors();     
         foreach (var actor in actorDatas)
         { 

@@ -58,20 +58,63 @@ public class BattleSelectCharacter : MonoBehaviour
         UpdateTabs();
         if (selectCharacterTabType == SelectCharacterTabType.Magic)
         {
-            deckMagicList.Activate();
-            conditionList.Deactivate();
+            //deckMagicList.Activate();
+            //conditionList.Deactivate();
         } else
         if (selectCharacterTabType == SelectCharacterTabType.Condition)
         {
-            deckMagicList.Deactivate();
-            conditionList.Activate();
+            //deckMagicList.Deactivate();
+            //conditionList.Activate();
         } else
         if (selectCharacterTabType == SelectCharacterTabType.Detail)
         {
-            deckMagicList.Deactivate();
-            conditionList.Deactivate();
+            //deckMagicList.Activate();
+            //conditionList.Deactivate();
         }
         Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cursor);
+    }
+
+    public void SelectSmoothTab(int index)
+    {
+        var nextIndex = (int)_selectCharacterTabType + index;
+        var displayTabs = detailTabs.FindAll(a => a.gameObject.activeSelf);
+        if (nextIndex < 0)
+        {
+            for (int i = 0;i < detailTabs.Count;i++)
+            {
+                if (detailTabs[i].gameObject.activeSelf)
+                {            
+                    nextIndex = i;
+                }
+            }
+        } else
+        if (nextIndex > displayTabs.Count)
+        {
+            nextIndex = detailTabs.FindIndex(a => a.gameObject.activeSelf);
+        } else
+        {
+            if (index > 0)
+            {
+                for (int i = 0;i < detailTabs.Count;i++)
+                {
+                    if (!detailTabs[i].gameObject.activeSelf && (i == nextIndex))
+                    {
+                        nextIndex++;
+                    }
+                }
+            } else
+            {
+                
+                for (int i = detailTabs.Count-1;i >= 0;i--)
+                {
+                    if (!detailTabs[i].gameObject.activeSelf && (i == nextIndex))
+                    {
+                        nextIndex--;
+                    }
+                }
+            }
+        }
+        SelectMagicConditionTab((SelectCharacterTabType)nextIndex);
     }
 
     private void UpdateTabs()
@@ -126,6 +169,7 @@ public class BattleSelectCharacter : MonoBehaviour
         {
             deckMagicList.Initialize(skillInfoData.Count);
             deckMagicList.SetSelectedHandler(() => DisplaySelectCard());
+            deckMagicList.Activate();
         }
         deckMagicList.SetData(skillInfoData);
         if (displaySelectCard == null)

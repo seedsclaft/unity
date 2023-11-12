@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
 
 public class StrategyActorList : BaseList
 {   
@@ -13,8 +15,8 @@ public class StrategyActorList : BaseList
             if (i < actorCount)
             {
                 var StrategyActor = ObjectList[i].GetComponent<StrategyActor>();
-                StrategyActor.StartResultAnimation(i);
                 StrategyActor.gameObject.SetActive(true);
+                StrategyActor.StartResultAnimation(i);
                 if (i == actorCount-1)
                 {
                     StrategyActor.SetEndCallEvent(callEvent);
@@ -23,12 +25,12 @@ public class StrategyActorList : BaseList
         }
     }
 
-    public void SetShinyRefrect(bool isEnable)
+    public void SetShinyReflect(bool isEnable)
     {
         for (int i = 0; i < ObjectList.Count;i++)
         {
             var StrategyActor = ObjectList[i].GetComponent<StrategyActor>();
-            StrategyActor.SetShinyRefrect(isEnable);
+            StrategyActor.SetShinyReflect(isEnable);
         }
     }
 }

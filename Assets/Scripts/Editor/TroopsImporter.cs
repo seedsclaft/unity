@@ -50,11 +50,11 @@ public class TroopsImporter : AssetPostprocessor {
 		// ディレクトリ情報とファイル名の文字列を結合してアセット名を指定
 		string ExportPath = $"{Path.Combine(AssetPostImporter.ExportExcelPath, FileName)}.asset";
 
-		TroopDatas Data = AssetDatabase.LoadAssetAtPath<TroopDatas>(ExportPath);
+		TroopDates Data = AssetDatabase.LoadAssetAtPath<TroopDates>(ExportPath);
 		if (!Data)
 		{
 			// データがなければ作成
-			Data = ScriptableObject.CreateInstance<TroopDatas>();
+			Data = ScriptableObject.CreateInstance<TroopDates>();
 			AssetDatabase.CreateAsset(Data, ExportPath);
 			Data.hideFlags = HideFlags.NotEditable;
 		}
@@ -85,7 +85,7 @@ public class TroopsImporter : AssetPostprocessor {
 					TroopData.BossFlag = AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.BossFlag) == 1;
 					TroopData.Line = (LineType)AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.Line);
 					TroopData.StageTurn = AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.StageTurn);
-					TroopData.GetItemDatas = new List<GetItemData>();
+					TroopData.GetItemDates = new List<GetItemData>();
 					Data.Data.Add(TroopData);
 				}
 
@@ -102,7 +102,7 @@ public class TroopsImporter : AssetPostprocessor {
 						getItemData.Type = (GetItemType)AssetPostImporter.ImportNumeric(Baserow,(int)BaseGetItemColumn.Type);
 						getItemData.Param1 = AssetPostImporter.ImportNumeric(Baserow,(int)BaseGetItemColumn.Param1);
 						getItemData.Param2 = AssetPostImporter.ImportNumeric(Baserow,(int)BaseGetItemColumn.Param2);
-						troopData.GetItemDatas.Add(getItemData);
+						troopData.GetItemDates.Add(getItemData);
 					}
 				}
 			}

@@ -437,7 +437,6 @@ public class TacticsPresenter :BasePresenter
         StatusViewInfo statusViewInfo = new StatusViewInfo(null);
         statusViewInfo.SetDisplayDecideButton(true);
         statusViewInfo.SetDisplayBackButton(false);
-        statusViewInfo.SetDisableStrength(true);
         _view.CommandCallStatus(statusViewInfo);
     }
 

@@ -73,7 +73,6 @@ public class SlotPresenter
                 _view.ChangeUIActive(true);
             });
             statusViewInfo.SetDisplayDecideButton(false);
-            statusViewInfo.SetDisableStrength(true);
             _view.CommandCallStatus(statusViewInfo);
             _view.ChangeUIActive(false);
             Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);

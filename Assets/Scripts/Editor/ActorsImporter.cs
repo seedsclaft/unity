@@ -70,11 +70,11 @@ public class ActorsImporter : AssetPostprocessor {
 		// ディレクトリ情報とファイル名の文字列を結合してアセット名を指定
 		string ExportPath = $"{Path.Combine(AssetPostImporter.ExportExcelPath, FileName)}.asset";
 
-		ActorDatas Data = AssetDatabase.LoadAssetAtPath<ActorDatas>(ExportPath);
+		ActorDates Data = AssetDatabase.LoadAssetAtPath<ActorDates>(ExportPath);
 		if (!Data)
 		{
 			// データがなければ作成
-			Data = ScriptableObject.CreateInstance<ActorDatas>();
+			Data = ScriptableObject.CreateInstance<ActorDates>();
 			AssetDatabase.CreateAsset(Data, ExportPath);
 			Data.hideFlags = HideFlags.NotEditable;
 		}

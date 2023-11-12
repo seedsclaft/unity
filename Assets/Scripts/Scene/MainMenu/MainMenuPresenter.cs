@@ -49,7 +49,6 @@ public class MainMenuPresenter : BasePresenter
                 _view.ChangeUIActive(true);
             });
             statusViewInfo.SetDisplayDecideButton(true);
-            statusViewInfo.SetDisableStrength(true);
             _view.CommandCallStatus(statusViewInfo);
             _view.ChangeUIActive(false);
             Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);

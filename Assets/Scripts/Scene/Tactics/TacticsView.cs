@@ -172,7 +172,9 @@ public class TacticsView : BaseView
         selectCharacter.SetInputHandlerCharacter(InputKeyType.Decide,() => CallActorTrain());
         selectCharacter.SetInputHandlerCharacter(InputKeyType.Right,() => CallRecoveryPlus());
         selectCharacter.SetInputHandlerCharacter(InputKeyType.Left,() => CallRecoveryMinus());
+        selectCharacter.SetInputHandlerCharacter(InputKeyType.Cancel,() => CallTrainCommandCancel());
         selectCharacter.SetInputHandlerCommand(InputKeyType.Decide,() => CallTrainCommand());
+        selectCharacter.SetInputHandlerCommand(InputKeyType.Cancel,() => CallTrainCommandCancel());
         SetInputHandler(selectCharacter.CharacterList.GetComponent<IInputHandlerEvent>());
         SetInputHandler(selectCharacter.CommandList.GetComponent<IInputHandlerEvent>());
         HideSelectCharacter();
@@ -233,6 +235,15 @@ public class TacticsView : BaseView
             _commandData(eventData);
             _lastCallEventType = eventData.commandType;
         }
+    }
+
+    private void CallTrainCommandCancel()
+    {
+        if (_lastCallEventType != CommandType.None) return;
+        var eventData = new TacticsViewEvent(CommandType.TacticsCommandClose);
+        eventData.template = ConfirmCommandType.No;
+        _commandData(eventData);
+        _lastCallEventType = eventData.commandType;
     }
 
     public void ShowSelectCharacter(List<ListData> tacticsActorInfo,TacticsCommandData tacticsCommandData)

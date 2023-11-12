@@ -62,8 +62,8 @@ public class ResourcesController
 
     [MenuItem ("Resources/Deploy")]
     static void Deploy() {
-        var skills = Resources.Load<SkillDatas>("Data/Skills");
-        var states = Resources.Load<StateDatas>("Data/States");
+        var skills = Resources.Load<SkillDates>("Data/Skills");
+        var states = Resources.Load<StateDates>("Data/States");
         var strs = new List<string>();
         foreach (var item in skills.Data)
         {

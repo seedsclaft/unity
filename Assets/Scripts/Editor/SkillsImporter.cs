@@ -77,11 +77,11 @@ public class SkillsImporter : AssetPostprocessor {
 		// ディレクトリ情報とファイル名の文字列を結合してアセット名を指定
 		string ExportPath = $"{Path.Combine(AssetPostImporter.ExportExcelPath, FileName)}.asset";
 
-		SkillDatas Data = AssetDatabase.LoadAssetAtPath<SkillDatas>(ExportPath);
+		SkillDates Data = AssetDatabase.LoadAssetAtPath<SkillDates>(ExportPath);
 		if (!Data)
 		{
 			// データがなければ作成
-			Data = ScriptableObject.CreateInstance<SkillDatas>();
+			Data = ScriptableObject.CreateInstance<SkillDates>();
 			AssetDatabase.CreateAsset(Data, ExportPath);
 			Data.hideFlags = HideFlags.NotEditable;
 		}

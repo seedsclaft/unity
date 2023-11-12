@@ -39,11 +39,11 @@ public class AdvImporter : AssetPostprocessor {
 		// ディレクトリ情報とファイル名の文字列を結合してアセット名を指定
 		string ExportPath = $"{Path.Combine(AssetPostImporter.ExportExcelPath, FileName)}.asset";
 
-		AdvDatas Data = AssetDatabase.LoadAssetAtPath<AdvDatas>(ExportPath);
+		AdvDates Data = AssetDatabase.LoadAssetAtPath<AdvDates>(ExportPath);
 		if (!Data)
 		{
 			// データがなければ作成
-			Data = ScriptableObject.CreateInstance<AdvDatas>();
+			Data = ScriptableObject.CreateInstance<AdvDates>();
 			AssetDatabase.CreateAsset(Data, ExportPath);
 			Data.hideFlags = HideFlags.NotEditable;
 		}

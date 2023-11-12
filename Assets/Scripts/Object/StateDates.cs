@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StateDatas : ScriptableObject
+public class StateDates : ScriptableObject
 {
     [SerializeField] public List<StateData> Data = new();
 }

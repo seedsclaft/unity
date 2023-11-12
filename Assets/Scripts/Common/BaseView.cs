@@ -21,11 +21,11 @@ abstract public class BaseView : MonoBehaviour
     public HelpWindow HelpWindow => _helpWindow;
     public void SetHelpInputInfo(string key)
     {
-        HelpWindow.SetInputInfo(key);
+        _helpWindow.SetInputInfo(key);
     }
     public void SetHelpText(string text)
     {
-        HelpWindow.SetHelpText(text);
+        _helpWindow.SetHelpText(text);
     }
 
     private int _inputBusyFrame = 0;

@@ -912,7 +912,7 @@ public class BattlePresenter : BasePresenter
     private void RefreshDecks(AttributeType attributeType)
     {
         var skillInfos = _model.SkillActionList(attributeType);
-        _view.RefreshDecks(skillInfos,_model.SelectSkillIndex(skillInfos));
+        _view.RefreshMagicList(skillInfos,_model.SelectSkillIndex(skillInfos));
         
         Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cursor);
     }

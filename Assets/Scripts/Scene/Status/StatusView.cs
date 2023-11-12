@@ -6,13 +6,9 @@ using Status;
 
 public class StatusView : BaseView ,IInputHandlerEvent
 {
-    [SerializeField] private ActorInfoComponent actorInfoComponent = null;
-    [SerializeField] private StatusActorList actorList = null;
     [SerializeField] private BattleSelectCharacter selectCharacter = null;
     [SerializeField] private Button decideButton = null;
     private new System.Action<StatusViewEvent> _commandData = null;
-    [SerializeField] private GameObject helpRoot = null;
-
     [SerializeField] private Button leftButton = null;
     [SerializeField] private Button rightButton = null;
 
@@ -33,8 +29,17 @@ public class StatusView : BaseView ,IInputHandlerEvent
 
     private void InitializeSelectCharacter()
     {
-        selectCharacter.SetInputHandlerAction(InputKeyType.Decide,() => {});
+        selectCharacter.SetInputHandlerAction(InputKeyType.Decide,() => CallSkillAction());
         selectCharacter.SetInputHandlerAction(InputKeyType.Cancel,() => OnClickBack());
+        selectCharacter.SetInputHandlerAction(InputKeyType.Start,() => OnClickDecide());
+        selectCharacter.SetInputHandlerAction(InputKeyType.SideLeft1,() => OnClickLeft());
+        selectCharacter.SetInputHandlerAction(InputKeyType.SideRight1,() => OnClickRight());
+        selectCharacter.SetInputHandlerAction(InputKeyType.SideLeft2,() => {
+            selectCharacter.SelectSmoothTab(-1);
+        });
+        selectCharacter.SetInputHandlerAction(InputKeyType.SideRight2,() => {
+            selectCharacter.SelectSmoothTab(1);
+        });
         SetInputHandler(selectCharacter.DeckMagicList.GetComponent<IInputHandlerEvent>());
         selectCharacter.HideActionList();
     }
@@ -44,13 +49,6 @@ public class StatusView : BaseView ,IInputHandlerEvent
         leftButton.onClick.AddListener(() => OnClickLeft());
         rightButton.onClick.AddListener(() => OnClickRight());
         decideButton.onClick.AddListener(() => OnClickDecide());
-
-        actorList.Initialize();
-        actorList.SetInputHandler(InputKeyType.SideLeft1,() => OnClickLeft());
-        actorList.SetInputHandler(InputKeyType.SideRight1,() => OnClickRight());
-        actorList.SetInputHandler(InputKeyType.Start,() => OnClickDecide());
-        actorList.SetInputHandler(InputKeyType.Cancel,() => OnClickBack());
-        SetInputHandler(actorList.GetComponent<IInputHandlerEvent>());
     }
 
     public void ShowArrows()
@@ -123,12 +121,12 @@ public class StatusView : BaseView ,IInputHandlerEvent
         decideButton.gameObject.SetActive(isDisplay);
         if (_isDisplayDecide)
         {
-            HelpWindow.SetHelpText(_helpText);
-            HelpWindow.SetInputInfo("SELECT_HEROINE");
+            SetHelpText(_helpText);
+            SetHelpInputInfo("SELECT_HEROINE");
         } else
         {
-            HelpWindow.SetHelpText(DataSystem.System.GetTextData(202).Help);
-            HelpWindow.SetInputInfo("STATUS");
+            SetHelpText(DataSystem.System.GetTextData(202).Help);
+            SetHelpInputInfo("STATUS");
         }
     }
 
@@ -141,34 +139,14 @@ public class StatusView : BaseView ,IInputHandlerEvent
     {
         base.ChangeBackCommandActive(IsActive);
     }
-    
-    public void SetActorInfo(ActorInfo actorInfo,List<ActorInfo> actorInfos)
-    {
-        actorList.Refresh(actorInfo,actorInfos);
-        actorInfoComponent.Clear();
-        actorInfoComponent.UpdateInfo(actorInfo,actorInfos);
-    }
 
     public void MoveActorLeft(System.Action endEvent)
     {
-        actorList.MoveActorLeft(endEvent);
     }
 
     public void MoveActorRight(System.Action endEvent)
     {
-        actorList.MoveActorRight(endEvent);
     }
-
-    public void ActivateActorList()
-    {
-        actorList.Activate();
-    }
-
-    public void DeactivateActorList()
-    {
-        actorList.Deactivate();
-    }
-    
 
     private void OnClickBack()
     {
@@ -179,7 +157,6 @@ public class StatusView : BaseView ,IInputHandlerEvent
     private void OnClickLeft()
     {
         if (!leftButton.gameObject.activeSelf) return;
-        if (actorList.AnimationBusy) return;
         var eventData = new StatusViewEvent(CommandType.LeftActor);
         _commandData(eventData);
     }
@@ -187,24 +164,26 @@ public class StatusView : BaseView ,IInputHandlerEvent
     private void OnClickRight()
     {
         if (!rightButton.gameObject.activeSelf) return;
-        if (actorList.AnimationBusy) return;
         var eventData = new StatusViewEvent(CommandType.RightActor);
         _commandData(eventData);
     }
 
     private void OnClickDecide()
     {
-        if (!decideButton.gameObject.activeSelf) return;
-        if (actorList.AnimationBusy) return;
+        if (!_isDisplayDecide) return;
         var eventData = new StatusViewEvent(CommandType.DecideActor);
         _commandData(eventData);
     }
-
-    private void CallSkillAction(SkillInfo skillInfo)
+    
+    private void CallSkillAction()
     {
-        var eventData = new StatusViewEvent(CommandType.SelectSkillAction);
-        eventData.template = skillInfo;
-        _commandData(eventData);
+        var listData = selectCharacter.ActionData;
+        if (listData != null)
+        {
+            var eventData = new StatusViewEvent(CommandType.SelectSkillAction);
+            eventData.template = (SkillInfo)listData;
+            _commandData(eventData);
+        }
     }
 
 
@@ -214,23 +193,10 @@ public class StatusView : BaseView ,IInputHandlerEvent
         ActivateSkillActionList();
         if (_isDisplayDecide)
         {
-            //HelpWindow.SetInputInfo("HEROINE_SKILL");
+            SetHelpInputInfo("HEROINE_SKILL");
         } else
         {
-            //HelpWindow.SetInputInfo("STATUS_SKILL");
-        }
-    }
-
-    public void HideSkillActionList()
-    {
-        selectCharacter.HideActionList();
-        DeactivateSkillActionList();
-        if (_isDisplayDecide)
-        {
-            HelpWindow.SetInputInfo("SELECT_HEROINE");
-        } else
-        {
-            HelpWindow.SetInputInfo("STATUS");
+            SetHelpInputInfo("STATUS_SKILL");
         }
     }
 
@@ -266,7 +232,6 @@ public class StatusView : BaseView ,IInputHandlerEvent
 
     public void CommandRefresh()
     {
-        //skillList.RefreshAction();
         selectCharacter.RefreshCostInfo();
     }
 
@@ -314,8 +279,6 @@ public class StatusViewInfo{
     public bool DisplayDecideButton => _displayDecideButton;
     private bool _displayBackButton = true;
     public bool DisplayBackButton => _displayBackButton;
-    private bool _disableStrength = false;
-    public bool DisableStrength => _disableStrength;
     private List<BattlerInfo> _enemyInfos = null;
     public List<BattlerInfo> EnemyInfos => _enemyInfos;
     private bool _isBattle = false;
@@ -334,11 +297,6 @@ public class StatusViewInfo{
     public void SetDisplayBackButton(bool isDisplay)
     {
         _displayBackButton = isDisplay;
-    }
-
-    public void SetDisableStrength(bool IsDisable)
-    {
-        _disableStrength = IsDisable;
     }
     
     public void SetEnemyInfos(List<BattlerInfo> enemyInfos,bool isBattle)

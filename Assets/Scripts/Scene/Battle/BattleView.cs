@@ -53,14 +53,6 @@ public class BattleView : BaseView ,IInputHandlerEvent
         SetInputHandler(selectCharacter.GetComponent<IInputHandlerEvent>());
 
         InitializeSelectCharacter();
-        /*
-        statusConditionList.Initialize(() => OnClickCondition());
-        statusConditionList.SetInputHandler(InputKeyType.Cancel,() => OnClickBack());
-        statusConditionList.SetInputHandler(InputKeyType.Option1,() => CallOpenSideMenu());
-        SetInputHandler(statusConditionList.GetComponent<IInputHandlerEvent>());
-        */
-
-
         new BattlePresenter(this);
     }
 
@@ -70,6 +62,12 @@ public class BattleView : BaseView ,IInputHandlerEvent
         selectCharacter.SetInputHandlerAction(InputKeyType.Cancel,() => OnClickBack());
         selectCharacter.SetInputHandlerAction(InputKeyType.Option1,() => CallOpenSideMenu());
         selectCharacter.SetInputHandlerAction(InputKeyType.Option2,() => OnClickEscape());
+        selectCharacter.SetInputHandlerAction(InputKeyType.SideLeft2,() => {
+            selectCharacter.SelectSmoothTab(-1);
+        });
+        selectCharacter.SetInputHandlerAction(InputKeyType.SideRight2,() => {
+            selectCharacter.SelectSmoothTab(1);
+        });
         SetInputHandler(selectCharacter.DeckMagicList.GetComponent<IInputHandlerEvent>());
         selectCharacter.HideActionList();
         sideMenuList.gameObject.SetActive(false);
@@ -276,8 +274,9 @@ public class BattleView : BaseView ,IInputHandlerEvent
         selectCharacter.HideThumb();
     }
     
-    public void RefreshDecks(List<ListData> skillInfos,int selectIndex)
+    public void RefreshMagicList(List<ListData> skillInfos,int selectIndex)
     {
+        selectCharacter.SetActiveTab(SelectCharacterTabType.Detail,false);
         DeactivateActorList();
         DeactivateEnemyList();
         selectCharacter.ShowActionList();

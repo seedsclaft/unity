@@ -54,11 +54,11 @@ public class StagesInfoImporter : AssetPostprocessor {
 		// ディレクトリ情報とファイル名の文字列を結合してアセット名を指定
 		string ExportPath = $"{Path.Combine(AssetPostImporter.ExportExcelPath, FileName)}.asset";
 
-		StageDatas Data = AssetDatabase.LoadAssetAtPath<StageDatas>(ExportPath);
+		StageDates Data = AssetDatabase.LoadAssetAtPath<StageDates>(ExportPath);
 		if (!Data)
 		{
 			// データがなければ作成
-			Data = ScriptableObject.CreateInstance<StageDatas>();
+			Data = ScriptableObject.CreateInstance<StageDates>();
 			AssetDatabase.CreateAsset(Data, ExportPath);
 			Data.hideFlags = HideFlags.NotEditable;
 		}

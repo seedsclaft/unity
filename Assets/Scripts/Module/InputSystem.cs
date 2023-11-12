@@ -76,13 +76,13 @@ public class InputSystem
             InputSystem.IsGamePad = false;
             return InputKeyType.SideRight1;
         }  else
-        if(Keyboard.current[Key.PageUp].wasPressedThisFrame) 
+        if(Keyboard.current[Key.PageDown].wasPressedThisFrame) 
         {
             Debug.Log("sideLeft2");
             InputSystem.IsGamePad = false;
             return InputKeyType.SideLeft2;
         } else
-        if(Keyboard.current[Key.PageDown].wasPressedThisFrame) 
+        if(Keyboard.current[Key.PageUp].wasPressedThisFrame) 
         {
             Debug.Log("sideRight2");
             InputSystem.IsGamePad = false;

@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-public class TroopDatas : ScriptableObject
+public class TroopDates : ScriptableObject
 {
     [SerializeField] public List<TroopData> Data = new();
 }
@@ -18,5 +18,5 @@ public class TroopData
     public bool BossFlag;
     public LineType Line;
     public int StageTurn;
-    public List<GetItemData> GetItemDatas;
+    public List<GetItemData> GetItemDates;
 }
