@@ -8,7 +8,7 @@ public class RankingView : BaseView,IInputHandlerEvent
 {
 
     [SerializeField] private ScrollRect scrollRect = null;
-    [SerializeField] private RankingInfoList rankingInfoList = null;
+    [SerializeField] private BaseList rankingInfoList = null;
     private new System.Action<RankingViewEvent> _commandData = null;
 
     public override void Initialize() 
@@ -33,11 +33,11 @@ public class RankingView : BaseView,IInputHandlerEvent
         ChangeBackCommandActive(true);
     }
 
-    public void SetRankingInfo(List<RankingInfo> rankingInfo) 
+    public void SetRankingInfo(List<ListData> rankingInfo) 
     {
-        rankingInfoList.Initialize(rankingInfo);
+        rankingInfoList.Initialize(rankingInfo.Count);
+        rankingInfoList.SetData(rankingInfo);
     }
-
 
     public void InputHandler(InputKeyType keyType,bool pressed)
     {
@@ -45,6 +45,7 @@ public class RankingView : BaseView,IInputHandlerEvent
         {
             BackEvent();
         }
+        /*
         if (rankingInfoList.Data != null && rankingInfoList.Data.Count < 5) return;
         var margin = 1.0f / (rankingInfoList.Data.Count - 4);
         if (keyType == InputKeyType.Down)
@@ -65,6 +66,7 @@ public class RankingView : BaseView,IInputHandlerEvent
                 scrollRect.normalizedPosition = new Vector2(0,1);
             }
         }
+        */
     }
 }
 

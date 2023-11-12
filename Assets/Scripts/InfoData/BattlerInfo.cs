@@ -158,7 +158,7 @@ public class BattlerInfo
         _hp = _status.Hp;
         _mp = _status.Mp;
         _lineIndex = lineIndex;
-        _decksData = new List<SkillInfo>();
+        _skills = new List<SkillInfo>();
         for (int i = 0;i < enemyData.LearningSkills.Count;i++)
         {
             if (_level >= enemyData.LearningSkills[i].Level)
@@ -166,7 +166,7 @@ public class BattlerInfo
                 SkillInfo skillInfo = new SkillInfo(enemyData.LearningSkills[i].SkillId);
                 skillInfo.SetTriggerDatas(enemyData.LearningSkills[i].TriggerDatas);
                 skillInfo.SetWeight(enemyData.LearningSkills[i].Weight);
-                _decksData.Add(skillInfo);
+                _skills.Add(skillInfo);
             }
         }
         for (int i = 0;i < enemyData.Kinds.Count;i++)

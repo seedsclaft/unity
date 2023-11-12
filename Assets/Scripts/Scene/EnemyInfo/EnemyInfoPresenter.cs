@@ -20,36 +20,27 @@ public class EnemyInfoPresenter
     private void Initialize()
     {
         _view.SetHelpWindow();
-        _view.SetEvent((type) => updateCommand(type));
-        _view.SetAttributeTypes(_model.AttributeAllTypes(null,(int)_model.CurrentAttributeType));
+        _view.SetEvent((type) => UpdateCommand(type));
         CommandRefresh();
         _busy = false;
     }
 
-    private void updateCommand(EnemyInfoViewEvent viewEvent)
+    private void UpdateCommand(EnemyInfoViewEvent viewEvent)
     {
         if (_busy){
             return;
         }
-        if (viewEvent.commandType == CommandType.AttributeType)
+        if (viewEvent.commandType == CommandType.SelectEnemy)
         {
-            CommandAttributeType((AttributeType)viewEvent.template);
+            CommandSelectEnemy((int)viewEvent.template);
         }
-        if (viewEvent.commandType == CommandType.LeftActor)
+        if (viewEvent.commandType == CommandType.LeftEnemy)
         {
             CommandLeftActor();
         }
-        if (viewEvent.commandType == CommandType.RightActor)
+        if (viewEvent.commandType == CommandType.RightEnemy)
         {
             CommandRightActor();
-        }
-        if (viewEvent.commandType == CommandType.Condition)
-        {
-            CommandCondition();
-        }
-        if (viewEvent.commandType == CommandType.Skill)
-        {
-            CommandSkill();
         }
         if (viewEvent.commandType == CommandType.Back)
         {
@@ -57,42 +48,25 @@ public class EnemyInfoPresenter
         }
     }
 
+    private void CommandSelectEnemy(int enemyIndex)
+    {
+        Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cursor);
+        _model.SelectEnemy(enemyIndex);
+        CommandRefresh();
+    }
+
     private void CommandLeftActor()
     {
         Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cursor);
          _model.ChangeActorIndex(-1);
-        _view.StartEnemyInfo(_model.CurrentActor);
-        CommandAttributeType(_model.CurrentAttributeType);
+         CommandRefresh();
     }
 
     private void CommandRightActor()
     {
         Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cursor);
          _model.ChangeActorIndex(1);
-        _view.StartEnemyInfo(_model.CurrentActor);
-        CommandAttributeType(_model.CurrentAttributeType);
-    }
-
-    public void CommandCondition()
-    {
-        _view.HideSkillActionList();
-        _view.ActivateConditionList();
-        _view.SetCondition(_model.CurrentActor.StateInfos);
-        _view.ShowConditionAll();
-        Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cursor);
-    }
-
-    public void CommandSkill()
-    {
-        _view.HideCondition();
-        CommandRefresh();
-    }
-
-    private void CommandAttributeType(AttributeType attributeType)
-    {
-        Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cursor);
-        List<ListData> skillInfos = _model.SkillActionList(attributeType);
-        _view.RefreshSkillActionList(skillInfos);
+         CommandRefresh();
     }
 
     private void CommandBack()
@@ -103,8 +77,9 @@ public class EnemyInfoPresenter
 
     private void CommandRefresh()
     {
-        _view.StartEnemyInfo(_model.CurrentActor);
-        var skillInfos = _model.SkillActionList(_model.CurrentAttributeType);
-        _view.RefreshSkillActionList(skillInfos);
+        var skillInfos = _model.SkillActionList();
+        var lastSelectIndex = 0;
+        _view.SetCondition(_model.SelectCharacterConditions());
+        _view.CommandRefreshStatus(skillInfos,_model.CurrentEnemy,_model.EnemyIndexes(),lastSelectIndex);
     }
 }

@@ -2711,6 +2711,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6028946556372113017}
   - component: {fileID: 4479324120451228803}
+  - component: {fileID: 2776002990937367323}
   m_Layer: 5
   m_Name: StatusScene
   m_TagString: Untagged
@@ -2753,12 +2754,42 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _backCommand: {fileID: 5168450721176420677}
   uiRoot: {fileID: 5233074407125957706}
-  actorInfoComponent: {fileID: 0}
   selectCharacter: {fileID: 3823364012134550848}
+  actorInfoComponent: {fileID: 2776002990937367323}
   decideButton: {fileID: 4543176366710301350}
-  helpRoot: {fileID: 6004437273362368775}
   leftButton: {fileID: 3633059887657963781}
   rightButton: {fileID: 8979354271609169788}
+--- !u!114 &2776002990937367323
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3159241513173074780}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 713db660d05533345972d884c8ee86ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mainThumb: {fileID: 0}
+  awakenThumb: {fileID: 0}
+  grayscale: {fileID: 0}
+  faceThumb: {fileID: 0}
+  awakenFaceThumb: {fileID: 0}
+  clipingThumb: {fileID: 0}
+  nameText: {fileID: 2577329202854423670}
+  subnameText: {fileID: 7125061678924302158}
+  evaluate: {fileID: 0}
+  demigod: {fileID: 0}
+  lv: {fileID: 0}
+  sp: {fileID: 0}
+  statusInfoComponent: {fileID: 0}
+  needStatusInfoComponent: {fileID: 0}
+  element1: {fileID: 0}
+  element2: {fileID: 0}
+  element3: {fileID: 0}
+  element4: {fileID: 0}
+  element5: {fileID: 0}
 --- !u!1 &3177422911675038719
 GameObject:
   m_ObjectHideFlags: 0

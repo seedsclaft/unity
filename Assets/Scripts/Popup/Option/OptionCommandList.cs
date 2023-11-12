@@ -2,9 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class OptionCommandList : ListWindow , IInputHandlerEvent
+public class OptionCommandList : BaseList
 {
-
     private List<SystemData.OptionCommand> _optionCommands;
     public void Initialize(List<SystemData.OptionCommand> optionCommands,System.Action<InputKeyType,SystemData.OptionCommand> optionEvent,System.Action optionEventLisner)
     {

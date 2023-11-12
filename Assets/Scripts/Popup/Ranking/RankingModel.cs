@@ -9,7 +9,7 @@ using UnityEngine;
 public class RankingModel : BaseModel
 {
     private List<RankingInfo> _rakingInfos;
-    public async void RankingInfos(System.Action<List<RankingInfo>> endEvent)
+    public async void RankingInfos(System.Action<List<ListData>> endEvent)
     {
         var isEnd = false;
         if (_rakingInfos == null)
@@ -72,7 +72,16 @@ public class RankingModel : BaseModel
         
         try {
             await UniTask.WaitUntil(() => isEnd == true,PlayerLoopTiming.Update,_cancellationTokenSource.Token);
-            if (endEvent != null) endEvent(_rakingInfos);
+            if (endEvent != null) 
+            {
+                var list = new List<ListData>();
+                foreach (var rakingInfo in _rakingInfos)
+                {
+                    var listData = new ListData(rakingInfo);
+                    list.Add(listData);
+                }
+                endEvent(list);
+            }
         } catch (OperationCanceledException e)
         {
             Debug.Log(e);

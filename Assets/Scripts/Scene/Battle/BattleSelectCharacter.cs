@@ -16,7 +16,6 @@ public class BattleSelectCharacter : MonoBehaviour
     [SerializeField] private StatusInfoComponent statusInfoComponent;
     [SerializeField] private GameObject detailObj;
     [SerializeField] private ActorInfoComponent actorInfoComponent;
-
     private bool _isInit = false;
 
     private SelectCharacterTabType _selectCharacterTabType = SelectCharacterTabType.Magic;
@@ -156,6 +155,14 @@ public class BattleSelectCharacter : MonoBehaviour
         statusInfoComponent.UpdateInfo(currentStatus);
         statusInfoComponent.UpdateHp(actorInfo.MaxHp,currentStatus.Hp);
         statusInfoComponent.UpdateMp(actorInfo.MaxMp,currentStatus.Mp);
+    }
+
+    public void SetEnemyThumb(BattlerInfo battlerInfo)
+    {
+        var currentStatus = battlerInfo.CurrentStatus();
+        statusInfoComponent.UpdateInfo(currentStatus);
+        statusInfoComponent.UpdateHp(battlerInfo.MaxHp,currentStatus.Hp);
+        statusInfoComponent.UpdateMp(battlerInfo.MaxMp,currentStatus.Mp);
     }
 
     public void HideThumb()

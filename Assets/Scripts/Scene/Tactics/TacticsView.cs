@@ -148,7 +148,7 @@ public class TacticsView : BaseView
     {
         if (_lastCallEventType != CommandType.None) return;
         var listData = tacticsCommandList.ListData;
-        if (listData != null)
+        if (listData != null && listData.Enable)
         {
             var commandData = (SystemData.CommandData)listData.Data;
             var eventData = new TacticsViewEvent(CommandType.TacticsCommand);

@@ -7,6 +7,7 @@ using Status;
 public class StatusView : BaseView ,IInputHandlerEvent
 {
     [SerializeField] private BattleSelectCharacter selectCharacter = null;
+    [SerializeField] private ActorInfoComponent actorInfoComponent = null;
     [SerializeField] private Button decideButton = null;
     private new System.Action<StatusViewEvent> _commandData = null;
     [SerializeField] private Button leftButton = null;
@@ -228,6 +229,7 @@ public class StatusView : BaseView ,IInputHandlerEvent
         selectCharacter.SetActorInfo(actorInfo,party);
         selectCharacter.SetSkillInfos(skillInfos);
         selectCharacter.RefreshAction(lastSelectIndex);
+        actorInfoComponent.UpdateInfo(actorInfo,party);
     }
 
     public void CommandRefresh()

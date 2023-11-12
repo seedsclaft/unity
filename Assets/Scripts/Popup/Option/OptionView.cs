@@ -31,8 +31,8 @@ public class OptionView : BaseView
     
     public void SetHelpWindow()
     {
-        HelpWindow.SetHelpText(DataSystem.System.GetTextData(500).Help);
-        HelpWindow.SetInputInfo("OPTION");
+        SetHelpText(DataSystem.System.GetTextData(500).Help);
+        SetHelpInputInfo("OPTION");
     }
 
     public void InitializeVolume(float bgmVolume,bool bgmMute,float seVolume,bool seMute)

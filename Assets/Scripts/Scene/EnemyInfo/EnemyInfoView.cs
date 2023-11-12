@@ -7,17 +7,12 @@ using TMPro;
 
 public class EnemyInfoView : BaseView,IInputHandlerEvent
 {
-    [SerializeField] private SkillList skillList = null;
+    [SerializeField] private BattleSelectCharacter selectCharacter = null;
+    [SerializeField] private BattleEnemyLayer enemyLayer = null;
     [SerializeField] private EnemyInfoComponent enemyInfoComponent = null;
-    [SerializeField] private Button skillButton = null;
-    [SerializeField] private GameObject leftRoot = null;
-    [SerializeField] private GameObject rightRoot = null;
-    [SerializeField] private GameObject leftPrefab = null;
-    [SerializeField] private GameObject rightPrefab = null;
-
     private new System.Action<EnemyInfoViewEvent> _commandData = null;
-    private Button _leftButton = null;
-    private Button _rightButton = null;
+    [SerializeField] private Button leftButton = null;
+    [SerializeField] private Button rightButton = null;
     private System.Action _backEvent = null;
 
     private bool _isBattle = false;
@@ -25,97 +20,81 @@ public class EnemyInfoView : BaseView,IInputHandlerEvent
         InitializeInput();
     }
 
-    public void Initialize(List<BattlerInfo> enemyInfos,bool isBattle){
+    public void Initialize(List<BattlerInfo> battlerInfos,bool isBattle){
         _isBattle = isBattle;
-        skillList.Initialize();
-        InitializeSkillActionList();
-        skillList.InitializeAttribute(System.Enum.GetValues(typeof(AttributeType)).Length,() => CallAttributeTypes(),null);
-
-        GameObject prefab2 = Instantiate(leftPrefab);
-        prefab2.transform.SetParent(leftRoot.transform, false);
-        _leftButton = prefab2.GetComponent<Button>();
-        _leftButton.onClick.AddListener(() => OnClickLeft());
         
-        GameObject prefab3 = Instantiate(rightPrefab);
-        prefab3.transform.SetParent(rightRoot.transform, false);
-        _rightButton = prefab3.GetComponent<Button>();
-        _rightButton.onClick.AddListener(() => OnClickRight());
+        enemyLayer.Initialize(battlerInfos,(a) => OnClickSelectEnemy(a));
+        
+        selectCharacter.Initialize();
+        SetInputHandler(selectCharacter.GetComponent<IInputHandlerEvent>());
+        InitializeSelectCharacter();
 
-        if (_isBattle)
-        {
-            /*
-            //statusConditionList.Initialize(() => OnClickCondition());
-            //statusConditionList.SetInputHandler(InputKeyType.Cancel,() => CommandBack());
-            //statusConditionList.SetInputHandler(InputKeyType.Option1,() => 
-            {
-                skillList.ShowActionList();
-                HideCondition();
-            });
-            */
-            //SetInputHandler(statusConditionList.GetComponent<IInputHandlerEvent>());
-            DeactivateConditionList();
-            _rightButton.gameObject.SetActive(false);
-            _leftButton.gameObject.SetActive(false);
-        } else
-        {
-            skillButton.transform.parent.gameObject.SetActive(false);
-            //statusConditionList.gameObject.SetActive(false);
-        }
+        leftButton.onClick.AddListener(() => OnClickLeft());
+        rightButton.onClick.AddListener(() => OnClickRight());
 
-        skillButton.onClick.AddListener(() => OnClickSkill());
-
-        new EnemyInfoPresenter(this,enemyInfos);
+        new EnemyInfoPresenter(this,battlerInfos);
         SetInputHandler(gameObject.GetComponent<IInputHandlerEvent>());
     }
 
-    private void InitializeSkillActionList()
+    private void InitializeSelectCharacter()
     {
-        skillList.InitializeAction();
-        skillList.SetInputHandlerAction(InputKeyType.Cancel,() => BackEvent());
-        SetInputHandler(skillList.skillActionList.GetComponent<IInputHandlerEvent>());
-        SetInputHandler(skillList.attributeList.GetComponent<IInputHandlerEvent>());
-        skillList.HideActionList();
-        skillList.HideAttributeList();
+        selectCharacter.SetInputHandlerAction(InputKeyType.Decide,() => {});
+        selectCharacter.SetInputHandlerAction(InputKeyType.Cancel,() => OnClickBack());
+        selectCharacter.SetInputHandlerAction(InputKeyType.SideLeft1,() => OnClickLeft());
+        selectCharacter.SetInputHandlerAction(InputKeyType.SideRight1,() => OnClickRight());
+        selectCharacter.SetInputHandlerAction(InputKeyType.SideLeft2,() => {
+            selectCharacter.SelectSmoothTab(-1);
+        });
+        selectCharacter.SetInputHandlerAction(InputKeyType.SideRight2,() => {
+            selectCharacter.SelectSmoothTab(1);
+        });
+        SetInputHandler(selectCharacter.DeckMagicList.GetComponent<IInputHandlerEvent>());
+        selectCharacter.HideActionList();
+        selectCharacter.SelectSmoothTab(0);
     }
-    
-    private void CallAttributeTypes()
+
+    public void CommandRefreshStatus(List<ListData> skillInfos,BattlerInfo battlerInfo,List<int> enemyIndexes,int lastSelectIndex)
     {
-        var listData = skillList.AttributeInfo;
-        if (listData != null)
-        {
-            var eventData = new EnemyInfoViewEvent(CommandType.AttributeType);
-            eventData.template = listData.AttributeType;
-            _commandData(eventData);
-        }
+        selectCharacter.SetActiveTab(SelectCharacterTabType.Detail,false);
+        selectCharacter.ShowActionList();
+        selectCharacter.SetEnemyThumb(battlerInfo);
+        selectCharacter.SetSkillInfos(skillInfos);
+        selectCharacter.RefreshAction(lastSelectIndex);
+        enemyLayer.RefreshTarget(battlerInfo.Index,enemyIndexes,ScopeType.One);
+        enemyInfoComponent.Clear();
+        enemyInfoComponent.UpdateData(battlerInfo.EnemyData);
+    }
+
+    private void OnClickBack()
+    {
+        var eventData = new EnemyInfoViewEvent(CommandType.Back);
+        _commandData(eventData);
     }
 
     private void OnClickLeft()
     {
-        if (!_leftButton.gameObject.activeSelf) return;
-        var eventData = new EnemyInfoViewEvent(CommandType.LeftActor);
+        if (!leftButton.gameObject.activeSelf) return;
+        var eventData = new EnemyInfoViewEvent(CommandType.LeftEnemy);
         _commandData(eventData);
     }
 
     private void OnClickRight()
     {
-        if (!_rightButton.gameObject.activeSelf) return;
-        var eventData = new EnemyInfoViewEvent(CommandType.RightActor);
+        if (!rightButton.gameObject.activeSelf) return;
+        var eventData = new EnemyInfoViewEvent(CommandType.RightEnemy);
         _commandData(eventData);
     }
 
-    private void OnClickCondition()
+    private void OnClickSelectEnemy(List<int> enemyIndex)
     {
-        var eventData = new EnemyInfoViewEvent(CommandType.Condition);
-        _commandData(eventData);
+        if (enemyIndex.Count > 0)
+        {
+            var eventData = new EnemyInfoViewEvent(CommandType.SelectEnemy);
+            eventData.template = enemyIndex[0];
+            _commandData(eventData);
+        }
     }
-
-    private void OnClickSkill()
-    {
-        var eventData = new EnemyInfoViewEvent(CommandType.Skill);
-        _commandData(eventData);
-    }
-
-
+    
     public void SetHelpWindow()
     {
         HelpWindow.SetHelpText(DataSystem.System.GetTextData(809).Help);
@@ -133,23 +112,10 @@ public class EnemyInfoView : BaseView,IInputHandlerEvent
         _commandData = commandData;
     }
 
-    public void StartEnemyInfo(BattlerInfo battlerInfo){
-        enemyInfoComponent.Clear();
-        enemyInfoComponent.UpdateInfo(battlerInfo);
-    }
 
-    public void RefreshSkillActionList(List<ListData> skillInfos)
+    public void SetCondition(List<ListData> skillInfos)
     {
-        skillList.ShowActionList();
-        skillList.HideAttributeList();
-        skillList.SetSkillInfos(skillInfos);
-        skillList.RefreshAction();
-        HideCondition();
-    }
-
-    public void SetAttributeTypes(List<ListData> listData)
-    {
-        skillList.RefreshAttribute(listData);
+        selectCharacter.SetConditionList(skillInfos);
     }
 
     public void SetBackEvent(System.Action backEvent)
@@ -177,7 +143,6 @@ public class EnemyInfoView : BaseView,IInputHandlerEvent
         {
             if (_isBattle)
             {
-                OnClickSkill();
             } else
             {
                 OnClickLeft();
@@ -187,7 +152,6 @@ public class EnemyInfoView : BaseView,IInputHandlerEvent
         {
             if (_isBattle)
             {
-                OnClickCondition();
             } else
             {
                 OnClickRight();
@@ -195,52 +159,6 @@ public class EnemyInfoView : BaseView,IInputHandlerEvent
         }
     }
 
-    public void HideSkillActionList()
-    {
-        skillList.HideActionList();
-    }
-    
-    public void ActivateConditionList()
-    {
-        if (_isBattle)
-        {
-            //statusConditionList.Activate();
-        }
-    }
-    
-    public void DeactivateConditionList()
-    {
-        if (_isBattle)
-        {
-            //statusConditionList.Deactivate();
-        }
-    }
-
-    public void SetCondition(List<StateInfo> stateInfos)
-    {
-        if (_isBattle)
-        {
-            //statusConditionList.Refresh(stateInfos);
-        }
-    }
-    
-    public void ShowConditionAll()
-    {
-        if (_isBattle)
-        {
-            //statusConditionList.gameObject.SetActive(true);
-            //statusConditionList.ShowMainView();
-        }
-        
-    }
-
-    public void HideCondition()
-    {
-        if (_isBattle)
-        {
-            //statusConditionList.HideMainView();
-        }
-    }
 
     public new void MouseCancelHandler()
     {
@@ -254,11 +172,9 @@ namespace EnemyInfo
     {
         None = 0,
         Back,
-        LeftActor,
-        RightActor,
-        AttributeType,
-        Condition,
-        Skill
+        LeftEnemy,
+        RightEnemy,
+        SelectEnemy,
     }
 }
 public class EnemyInfoViewEvent
