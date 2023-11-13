@@ -99,9 +99,9 @@ public class MainMenuPresenter : BasePresenter
         _view.CommandCallConfirm(popupInfo);
     }
 
-    private void UpdatePopup(ConfirmCommandType confirmComandType)
+    private void UpdatePopup(ConfirmCommandType confirmCommandType)
     {
-        if (confirmComandType == ConfirmCommandType.Yes)
+        if (confirmCommandType == ConfirmCommandType.Yes)
         {
             CommandRankingPopup();
         } else

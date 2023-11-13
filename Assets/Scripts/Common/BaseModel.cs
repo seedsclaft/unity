@@ -201,7 +201,7 @@ public class BaseModel
         return CurrentData.PlayerInfo.PlayerName;
     }
 
-    public List<StageEventData> StageEventDatas{ 
+    public List<StageEventData> StageEventDates{ 
         get{ return DataSystem.Stages.Find(a => a.Id == CurrentStage.Id).StageEvents;}
     }
 
@@ -209,22 +209,22 @@ public class BaseModel
     {
         int CurrentTurn = CurrentStage.CurrentTurn;
         List<string> eventKeys = CurrentStage.ReadEventKeys;
-        return StageEventDatas.FindAll(a => a.Timing == eventTiming && a.Turns == CurrentTurn && !eventKeys.Contains(a.EventKey));
+        return StageEventDates.FindAll(a => a.Timing == eventTiming && a.Turns == CurrentTurn && !eventKeys.Contains(a.EventKey));
     }
     
-    public void AddEventsReadFlag(List<StageEventData> stageEventDatas)
+    public void AddEventsReadFlag(List<StageEventData> stageEventDates)
     {
-        foreach (var eventData in stageEventDatas)
+        foreach (var eventData in stageEventDates)
         {
             AddEventReadFlag(eventData);
         }
     }
 
-    public void AddEventReadFlag(StageEventData stageEventDatas)
+    public void AddEventReadFlag(StageEventData stageEventDates)
     {
-        if (stageEventDatas.ReadFlag)
+        if (stageEventDates.ReadFlag)
         {
-            CurrentStage.AddEventReadFlag(stageEventDatas.EventKey);
+            CurrentStage.AddEventReadFlag(stageEventDates.EventKey);
         }
     }
 
@@ -234,7 +234,7 @@ public class BaseModel
 
     public List<SystemData.CommandData> BaseConfirmCommand(int yesTextId,int noTextId = 0)
     {
-        List<SystemData.CommandData> menuCommandDatas = new List<SystemData.CommandData>();
+        List<SystemData.CommandData> menuCommandDates = new List<SystemData.CommandData>();
         SystemData.CommandData yesCommand = new SystemData.CommandData();
         yesCommand.Key = "Yes";
         yesCommand.Name = DataSystem.System.GetTextData(yesTextId).Text;
@@ -245,10 +245,10 @@ public class BaseModel
             noCommand.Key = "No";
             noCommand.Name = DataSystem.System.GetTextData(noTextId).Text;
             noCommand.Id = 1;
-            menuCommandDatas.Add(noCommand);
+            menuCommandDates.Add(noCommand);
         }
-        menuCommandDatas.Add(yesCommand);
-        return menuCommandDatas;
+        menuCommandDates.Add(yesCommand);
+        return menuCommandDates;
     }
 
     public List<ListData> ConfirmCommand()
@@ -320,8 +320,8 @@ public class BaseModel
         }
         if (getItemInfo.IsAttributeSkill())
         {
-            List<SkillData> skillDatas = DataSystem.Skills.FindAll(a => a.Rank == getItemInfo.Param1 && a.Attribute == (AttributeType)((int)getItemInfo.GetItemType - 10));
-            foreach (var skillData in skillDatas)
+            List<SkillData> skillDates = DataSystem.Skills.FindAll(a => a.Rank == getItemInfo.Param1 && a.Attribute == (AttributeType)((int)getItemInfo.GetItemType - 10));
+            foreach (var skillData in skillDates)
             {
                 SkillInfo skillInfo = new SkillInfo(skillData.Id);
                 skillInfo.SetEnable(true);
@@ -395,18 +395,18 @@ public class BaseModel
             // 基本的に味方全員
             if (skill.Master.TargetType == TargetType.Friend)
             {
-                List<int> targetIndexs = new List<int>();
+                List<int> targetIndexes = new List<int>();
                 if (skill.Master.Scope == ScopeType.All)
                 {
                     foreach (var item in StageMembers())
                     {
-                        targetIndexs.Add(item.ActorId);
+                        targetIndexes.Add(item.ActorId);
                     }
                 }
                 
-                for (int i = 0; i < targetIndexs.Count; i++)
+                for (int i = 0; i < targetIndexes.Count; i++)
                 {
-                    foreach (var featureData in skill.Master.FeatureDatas)
+                    foreach (var featureData in skill.Master.FeatureDates)
                     {
                         ActorInfo target = StageMembers()[i];
                         if (featureData.FeatureType == FeatureType.AddState)
@@ -445,14 +445,14 @@ public class BaseModel
             // パーティに影響
             if (skill.Master.TargetType == TargetType.Party)
             {
-                foreach (var featureData in skill.Master.FeatureDatas)
+                foreach (var featureData in skill.Master.FeatureDates)
                 {
                     if (featureData.FeatureType == FeatureType.AddState)
                     {
                         if (skill.Master.TargetType == TargetType.Opponent)
                         {
                             StateInfo stateInfo = new StateInfo(featureData.Param1,featureData.Param2,featureData.Param3,-1,0,skill.Id);
-                            CurrentStage.ChengeCurrentTroopAddState(stateInfo);
+                            CurrentStage.ChangeCurrentTroopAddState(stateInfo);
                         }
                     }
                     if (featureData.FeatureType == FeatureType.Numinous)
@@ -469,7 +469,7 @@ public class BaseModel
                     }
                     if (featureData.FeatureType == FeatureType.LineZeroErase)
                     {
-                        CurrentStage.ChengeCurrentTroopLineZeroErase();
+                        CurrentStage.ChangeCurrentTroopLineZeroErase();
                     }
                 }
             }
@@ -534,14 +534,14 @@ public class BaseModel
         return DataSystem.Advs.Find(a => a.Id == id).AdvName;
     }
 
-    public void StageClaer()
+    public void StageClear()
     {
-        CurrentData.PlayerInfo.StageClaer(CurrentStage.Id);
+        CurrentData.PlayerInfo.StageClear(CurrentStage.Id);
     }
 
-    public void StageClaer(int stageId)
+    public void StageClear(int stageId)
     {
-        CurrentData.PlayerInfo.StageClaer(stageId);
+        CurrentData.PlayerInfo.StageClear(stageId);
     }
 
     public void ChangeRouteSelectStage(int stageBaseId)
@@ -588,5 +588,27 @@ public class BaseModel
     {
         SetResumeStage(false);
         SaveSystem.SaveStart(GameSystem.CurrentData);
+    }
+
+    public ListData CastData(object data)
+    {
+        return new ListData(data);
+    }
+
+    public List<ListData> TroopInfoListDates(TroopInfo data)
+    {
+        var list = new List<ListData>();
+        list.Add(CastData(data));
+        return list;
+    }
+
+    public List<ListData> TroopInfoListDates(List<TroopInfo> dataList)
+    {
+        var list = new List<ListData>();
+        foreach (var data in dataList)
+        {
+            list.Add(CastData(data));
+        }
+        return list;
     }
 }

@@ -36,9 +36,8 @@ public class ConfirmView : BaseView,IInputHandlerEvent
         {
             GameObject prefab = Instantiate(skillInfoPrefab);
             prefab.transform.SetParent(skillInfoRoot.transform, false);
-            SkillAction skillAction = prefab.GetComponent<SkillAction>();
-            skillAction.SetData(skillInfo,0);
-            skillAction.UpdateViewItem();
+            var skillInfoComponent = prefab.GetComponent<SkillInfoComponent>();
+            skillInfoComponent.SetInfoData(skillInfo);
         }
     }
 
@@ -46,7 +45,7 @@ public class ConfirmView : BaseView,IInputHandlerEvent
     {
         if (isNoChoice)
         {
-            var eventData = new ConfirmViewEvent(CommandType.IsNoChoise);
+            var eventData = new ConfirmViewEvent(CommandType.IsNoChoice);
             _commandData(eventData);
         }
     }
@@ -64,7 +63,7 @@ public class ConfirmView : BaseView,IInputHandlerEvent
     public void SetViewInfo(ConfirmInfo confirmInfo)
     {
         _confirmInfo = confirmInfo;
-        SetIsNoChoice(confirmInfo.IsNoChoise);
+        SetIsNoChoice(confirmInfo.IsNoChoice);
         SetSelectIndex(confirmInfo.SelectIndex);
         SetTitle(confirmInfo.Title);
         SetSkillInfo(confirmInfo.SkillInfos);
@@ -107,7 +106,7 @@ public class ConfirmView : BaseView,IInputHandlerEvent
 
     public new void MouseCancelHandler()
     {
-        if (_confirmInfo.IsNoChoise)
+        if (_confirmInfo.IsNoChoice)
         {
             CallConfirmCommand();
         } else
@@ -122,7 +121,7 @@ namespace Confirm
     public enum CommandType
     {
         None = 0,
-        IsNoChoise = 101,
+        IsNoChoice = 101,
     }
 }
 public class ConfirmViewEvent

@@ -34,6 +34,7 @@ abstract public class ListWindow : MonoBehaviour
     private float _itemSize = 0.0f;
     private int _itemCount = 0;
     private int _dataCount = 0;
+    public int DataCount => _dataCount;
     //private RectTransform _prevRect;
     //private RectTransform _lastRect;
     private int _lastStartIndex = 0;
@@ -65,7 +66,7 @@ abstract public class ListWindow : MonoBehaviour
         _active = false;
     }
 
-    private void DestroyListChildrens()
+    private void DestroyListChildren()
     {
         foreach(Transform child in scrollRect.content.transform){
             Destroy(child.gameObject);
@@ -75,7 +76,7 @@ abstract public class ListWindow : MonoBehaviour
 
     public void InitializeListView(int count)
     {
-        DestroyListChildrens();
+        DestroyListChildren();
         SetValueChangedEvent();
         SetDataCount(count);
         SetItemCount(count);

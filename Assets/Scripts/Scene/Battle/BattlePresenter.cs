@@ -108,11 +108,11 @@ public class BattlePresenter : BasePresenter
         }
         if (viewEvent.commandType == Battle.CommandType.EnemyLayer)
         {
-            CommandSelectTargetIndexs((List<int>)viewEvent.template);
+            CommandSelectTargetIndexes((List<int>)viewEvent.template);
         }
         if (viewEvent.commandType == Battle.CommandType.ActorList)
         {
-            CommandSelectTargetIndexs((List<int>)viewEvent.template);
+            CommandSelectTargetIndexes((List<int>)viewEvent.template);
         }
         if (viewEvent.commandType == Battle.CommandType.EndAnimation)
         {
@@ -168,10 +168,10 @@ public class BattlePresenter : BasePresenter
         }
     }
 
-    private async void UpdatePopup(ConfirmCommandType confirmComandType)
+    private async void UpdatePopup(ConfirmCommandType confirmCommandType)
     {
         _view.CommandConfirmClose();
-        if (confirmComandType == ConfirmCommandType.Yes)
+        if (confirmCommandType == ConfirmCommandType.Yes)
         {
             _view.HideSkillActionList();
             _view.HideBattleThumb();
@@ -198,7 +198,7 @@ public class BattlePresenter : BasePresenter
 
     private void CommandEscape()
     {
-        if (_model.EnableEspape())
+        if (_model.EnableEscape())
         {
             ConfirmInfo popupInfo = new ConfirmInfo(DataSystem.System.GetTextData(410).Text,(menuCommandInfo) => UpdatePopup((ConfirmCommandType)menuCommandInfo));
             _view.CommandCallConfirm(popupInfo);
@@ -261,7 +261,7 @@ public class BattlePresenter : BasePresenter
                 if (CurrentActionInfo != null)
                 {
                     _model.SetActionBattler(CurrentActionInfo.SubjectIndex);
-                    CommandSelectTargetIndexs(_model.MakeAutoSelectIndex(CurrentActionInfo));
+                    CommandSelectTargetIndexes(_model.MakeAutoSelectIndex(CurrentActionInfo));
                     return;
                 }
                 if (IsBattleEnd())
@@ -289,7 +289,7 @@ public class BattlePresenter : BasePresenter
             if (CurrentActionInfo != null)
             {
                 _model.SetActionBattler(CurrentActionInfo.SubjectIndex);
-                CommandSelectTargetIndexs(_model.MakeAutoSelectIndex(CurrentActionInfo));
+                CommandSelectTargetIndexes(_model.MakeAutoSelectIndex(CurrentActionInfo));
                 return;
             }
             if (IsBattleEnd())
@@ -319,17 +319,17 @@ public class BattlePresenter : BasePresenter
             {
                 var skillInfo = new SkillInfo(0);
                 ActionInfo actionInfo = _model.MakeActionInfo(_model.CurrentBattler,skillInfo,false,false);
-                CommandSelectTargetIndexs(_model.MakeAutoSelectIndex(actionInfo));
+                CommandSelectTargetIndexes(_model.MakeAutoSelectIndex(actionInfo));
                 return;
             }
             // 行動者が拘束を解除する
-            List<int> chainTargetIndexs = _model.CheckChainBattler();
-            if (chainTargetIndexs.Count > 0)
+            List<int> chainTargetIndexes = _model.CheckChainBattler();
+            if (chainTargetIndexes.Count > 0)
             {
                 // 拘束解除
                 var skillInfo = new SkillInfo(31);
                 ActionInfo actionInfo = _model.MakeActionInfo(_model.CurrentBattler,skillInfo,false,false);
-                CommandSelectTargetIndexs(chainTargetIndexs);
+                CommandSelectTargetIndexes(chainTargetIndexes);
                 // 成功して入れば成功カウントを加算
                 if (actionInfo.ActionResults.Find(a => !a.Missed) != null)
                 {
@@ -352,7 +352,7 @@ public class BattlePresenter : BasePresenter
                 int autoSkillId = _model.MakeAutoSkillId(_model.CurrentBattler);
                 var skillInfo = new SkillInfo(autoSkillId);
                 ActionInfo actionInfo = _model.MakeActionInfo(_model.CurrentBattler,skillInfo,false,false);
-                CommandSelectTargetIndexs(_model.MakeAutoSelectIndex(actionInfo));
+                CommandSelectTargetIndexes(_model.MakeAutoSelectIndex(actionInfo));
             }
         }
     }
@@ -362,7 +362,7 @@ public class BattlePresenter : BasePresenter
         var (autoSkillId,targetIndex) = _model.MakeAutoActorSkillId(_model.CurrentBattler);
             var skillInfo = new SkillInfo(autoSkillId);
         ActionInfo actionInfo = _model.MakeActionInfo(_model.CurrentBattler,skillInfo,false,false);
-        CommandSelectTargetIndexs(_model.MakeAutoSelectIndex(actionInfo,targetIndex));
+        CommandSelectTargetIndexes(_model.MakeAutoSelectIndex(actionInfo,targetIndex));
     }
 
     private void BeforeUpdateAp()
@@ -391,7 +391,7 @@ public class BattlePresenter : BasePresenter
         _view.SetHelpText(DataSystem.System.GetTextData(15010).Text);
         _view.SelectedCharacter(_model.CurrentBattler);
         _view.SetCondition(_model.SelectCharacterConditions());
-        _view.SetEscapeButton(_model.EnableEspape());
+        _view.SetEscapeButton(_model.EnableEscape());
         _view.SetSideMenuButton(true);
         RefreshDecks(_model.CurrentAttributeType);
         _view.RefreshBattlerEnemyTarget(-1);
@@ -447,7 +447,7 @@ public class BattlePresenter : BasePresenter
     }
 
     // スキル対象を決定
-    public void CommandSelectTargetIndexs(List<int> indexList)
+    public void CommandSelectTargetIndexes(List<int> indexList)
     {
         _view.SetHelpText("");
         _view.ChangeBackCommandActive(false);
@@ -881,7 +881,7 @@ public class BattlePresenter : BasePresenter
         if (CurrentActionInfo != null)
         {
             _model.SetActionBattler(CurrentActionInfo.SubjectIndex);
-            CommandSelectTargetIndexs(_model.MakeAutoSelectIndex(CurrentActionInfo));
+            CommandSelectTargetIndexes(_model.MakeAutoSelectIndex(CurrentActionInfo));
             return;
         }
 

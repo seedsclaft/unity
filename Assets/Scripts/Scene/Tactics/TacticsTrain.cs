@@ -12,13 +12,11 @@ public class TacticsTrain : ListItem ,IListViewItem
 
     public void SetPlusHandler(System.Action handler)
     {
-        Debug.Log("SetPlusHandler");
         plusButton.onClick.AddListener(() => handler());
     }
 
     public void SetMinusHandler(System.Action handler)
     {
-        Debug.Log("SetMinusHandler");
         minusButton.onClick.AddListener(() => handler());
     }
 

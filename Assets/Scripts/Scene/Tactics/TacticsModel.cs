@@ -375,14 +375,14 @@ public class TacticsModel : BaseModel
         if (isAendGameClear)
         {
             CurrentStage.SetEndingType(EndingType.A);
-            StageClaer(2);
+            StageClear(2);
             return DataSystem.Advs.Find(a => a.Id == 173);
         }
         var isBendGameClear = CurrentStage.RouteSelect == 1 && CurrentStage.IsBendGameClear();
         if (isBendGameClear)
         {
             CurrentStage.SetEndingType(EndingType.B);
-            StageClaer(2);
+            StageClear(2);
             return DataSystem.Advs.Find(a => a.Id == 172);
         }
         var isEndStage = (CurrentStage.SubordinateValue <= 0);

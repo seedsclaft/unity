@@ -259,7 +259,7 @@ public class ResultModel : BaseModel
     private SkillInfo AddCommandRebornSkill()
     {
         // コマンドLvアップ
-        var commandReborn = DataSystem.Skills.FindAll(a => a.FeatureDatas.Find(b => b.FeatureType == FeatureType.RebornCommandLvUp) != null);
+        var commandReborn = DataSystem.Skills.FindAll(a => a.FeatureDates.Find(b => b.FeatureType == FeatureType.RebornCommandLvUp) != null);
         var commandRand = UnityEngine.Random.Range(0,commandReborn.Count);
         var param2 = 0;
         var rank1 = 0;
@@ -290,7 +290,7 @@ public class ResultModel : BaseModel
     
     private SkillInfo AddStatusRebornSkill()
     {
-        var statusReborn = DataSystem.Skills.FindAll(a => a.FeatureDatas.Find(b => b.FeatureType == FeatureType.RebornStatusUp) != null);
+        var statusReborn = DataSystem.Skills.FindAll(a => a.FeatureDates.Find(b => b.FeatureType == FeatureType.RebornStatusUp) != null);
         var statusRand = UnityEngine.Random.Range(0,statusReborn.Count);
         var param2 = 2;
         var rank1 = 0;
@@ -319,7 +319,7 @@ public class ResultModel : BaseModel
     private List<SkillInfo> AddMagicRebornSkill()
     {
         var list = new List<SkillInfo>();
-        var magicReborn = DataSystem.Skills.Find(a => a.FeatureDatas.Find(b => b.FeatureType == FeatureType.RebornAddSkill) != null);
+        var magicReborn = DataSystem.Skills.Find(a => a.FeatureDates.Find(b => b.FeatureType == FeatureType.RebornAddSkill) != null);
         
         var actorInfo = EvaluateMembers()[0];
         var skills = actorInfo.Skills.FindAll(a => a.Master.Rank == 1 && actorInfo.Master.LearningSkills.Find(b => b.SkillId == a.Master.Id) == null);
@@ -343,7 +343,7 @@ public class ResultModel : BaseModel
 
     private SkillInfo AddQuestRebornSkill()
     {
-        var quedtReborn = DataSystem.Skills.Find(a => a.FeatureDatas.Find(b => b.FeatureType == FeatureType.RebornQuest) != null);
+        var quedtReborn = DataSystem.Skills.Find(a => a.FeatureDates.Find(b => b.FeatureType == FeatureType.RebornQuest) != null);
         var param2 = 2;
         var rank1 = 0;
         if (CurrentStage.EndingType == global::EndingType.A || CurrentStage.EndingType == global::EndingType.B)

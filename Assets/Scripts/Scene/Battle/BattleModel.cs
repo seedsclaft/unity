@@ -605,7 +605,7 @@ public class BattleModel : BaseModel
         bool IsEnable = false;
         SkillData skill = DataSystem.Skills.Find(a => a.Id == skillId);
         BattlerInfo target = GetBattlerInfo(targetIndex);
-        foreach (var featureData in skill.FeatureDatas)
+        foreach (var featureData in skill.FeatureDates)
         {
             switch (featureData.FeatureType)
             {
@@ -757,7 +757,7 @@ public class BattleModel : BaseModel
         var repeatTime = actionInfo.Master.RepeatTime;
         if (actionInfo.Master.Attribute == AttributeType.Shine && subject.IsState(StateType.Prizm))
         {
-            var damageFeatures = actionInfo.Master.FeatureDatas.FindAll(a => a.FeatureType == FeatureType.HpDamage || a.FeatureType == FeatureType.HpDefineDamage);
+            var damageFeatures = actionInfo.Master.FeatureDates.FindAll(a => a.FeatureType == FeatureType.HpDamage || a.FeatureType == FeatureType.HpDefineDamage);
             if (damageFeatures.Count > 0)
             {
                 repeatTime *= (subject.GetStateInfoAll(StateType.Prizm).Count + 1);
@@ -778,7 +778,7 @@ public class BattleModel : BaseModel
             {
                 BattlerInfo Target = GetBattlerInfo(indexList[j]);
                 var featureDatas = new List<SkillData.FeatureData>();
-                foreach (var featureData in actionInfo.Master.FeatureDatas)
+                foreach (var featureData in actionInfo.Master.FeatureDates)
                 {
                     if (isPrizm)
                     {
@@ -1119,12 +1119,12 @@ public class BattleModel : BaseModel
         var actionInfo = CurrentActionInfo();
         if (actionInfo.TriggeredSkill == false)
         {    
-            var noResetAp = actionInfo.Master.FeatureDatas.Find(a => a.FeatureType == FeatureType.NoResetAp);
+            var noResetAp = actionInfo.Master.FeatureDates.Find(a => a.FeatureType == FeatureType.NoResetAp);
             if (noResetAp == null)
             {
                 _currentBattler.ResetAp(false);
             }
-            var afterAp = actionInfo.Master.FeatureDatas.Find(a => a.FeatureType == FeatureType.SetAfterAp);
+            var afterAp = actionInfo.Master.FeatureDates.Find(a => a.FeatureType == FeatureType.SetAfterAp);
             if (afterAp != null)
             {
                 _currentBattler.SetAp(afterAp.Param1);
@@ -1171,7 +1171,7 @@ public class BattleModel : BaseModel
     private List<ActionResultInfo> AfterHealActionResults()
     {
         var afterHealResults = new List<ActionResultInfo>();
-        var afterSkillInfo = CurrentBattler.Skills.Find(a => a.Master.FeatureDatas.Find(b => b.FeatureType == FeatureType.AddState && (StateType)b.Param1 == StateType.AfterHeal) != null);
+        var afterSkillInfo = CurrentBattler.Skills.Find(a => a.Master.FeatureDates.Find(b => b.FeatureType == FeatureType.AddState && (StateType)b.Param1 == StateType.AfterHeal) != null);
         if (CurrentBattler.IsState(StateType.AfterHeal) && afterSkillInfo != null)
         {
             var stateInfo = CurrentBattler.GetStateInfo(StateType.AfterHeal);
@@ -1208,7 +1208,7 @@ public class BattleModel : BaseModel
     private List<ActionResultInfo> AssistHealActionResults()
     {
         var assistHealResults = new List<ActionResultInfo>();
-        var afterSkillInfo = CurrentBattler.Skills.Find(a => a.Master.FeatureDatas.Find(b => b.FeatureType == FeatureType.AddState && (StateType)b.Param1 == StateType.AssistHeal) != null);
+        var afterSkillInfo = CurrentBattler.Skills.Find(a => a.Master.FeatureDates.Find(b => b.FeatureType == FeatureType.AddState && (StateType)b.Param1 == StateType.AssistHeal) != null);
         if (CurrentBattler.IsState(StateType.AssistHeal) && afterSkillInfo != null)
         {
             var stateInfo = CurrentBattler.GetStateInfo(StateType.AssistHeal);
@@ -1418,7 +1418,7 @@ public class BattleModel : BaseModel
                     {
                         if (passiveInfo.Master.Scope == ScopeType.Self)
                         {
-                            ActionResultInfo actionResultInfo = new ActionResultInfo(battlerInfo,battlerInfo,passiveInfo.Master.FeatureDatas,passiveInfo.Id);
+                            ActionResultInfo actionResultInfo = new ActionResultInfo(battlerInfo,battlerInfo,passiveInfo.Master.FeatureDates,passiveInfo.Id);
                             actionResultInfos.Add(actionResultInfo);
                         } else
                         if (passiveInfo.Master.Scope == ScopeType.All)
@@ -1428,7 +1428,7 @@ public class BattleModel : BaseModel
                             {
                                 if ((passiveInfo.Master.AliveOnly && member.IsAlive()) || (!passiveInfo.Master.AliveOnly && !member.IsAlive()) )
                                 {
-                                    ActionResultInfo actionResultInfo = new ActionResultInfo(battlerInfo,member,passiveInfo.Master.FeatureDatas,passiveInfo.Id);
+                                    ActionResultInfo actionResultInfo = new ActionResultInfo(battlerInfo,member,passiveInfo.Master.FeatureDates,passiveInfo.Id);
                                     actionResultInfos.Add(actionResultInfo);
                                 }
                             }
@@ -1438,7 +1438,7 @@ public class BattleModel : BaseModel
                             {
                                 if (CurrentActionInfo() != null && CurrentActionInfo().ActionResults.Count > 0)
                                 {
-                                    ActionResultInfo actionResultInfo = new ActionResultInfo(battlerInfo,GetBattlerInfo(CurrentActionInfo().ActionResults[0].TargetIndex),passiveInfo.Master.FeatureDatas,passiveInfo.Id);
+                                    ActionResultInfo actionResultInfo = new ActionResultInfo(battlerInfo,GetBattlerInfo(CurrentActionInfo().ActionResults[0].TargetIndex),passiveInfo.Master.FeatureDates,passiveInfo.Id);
                                     actionResultInfos.Add(actionResultInfo);
                                 }
                             }
@@ -1466,7 +1466,7 @@ public class BattleModel : BaseModel
                 SkillInfo passiveInfo = passiveSkills[j];
                 bool IsRemove = false;
                 
-                foreach (var feature in passiveInfo.Master.FeatureDatas)
+                foreach (var feature in passiveInfo.Master.FeatureDates)
                 {
                     if (feature.FeatureType == FeatureType.AddState)
                     {
@@ -1649,7 +1649,7 @@ public class BattleModel : BaseModel
                     {
                         if (CurrentActionInfo() != null && battlerInfo.isActor != CurrentBattler.isActor)
                         {
-                            var states = CurrentActionInfo().Master.FeatureDatas.FindAll(a => a.FeatureType == FeatureType.AddState);
+                            var states = CurrentActionInfo().Master.FeatureDates.FindAll(a => a.FeatureType == FeatureType.AddState);
                             foreach (var state in states)
                             {
                                 if (state.Param1 == (int)StateType.Stun || state.Param1 == (int)StateType.Slow || state.Param1 == (int)StateType.Curse || state.Param1 == (int)StateType.SlipDamage || state.Param1 == (int)StateType.Blind || state.Param1 == (int)StateType.Freeze)
@@ -2046,7 +2046,7 @@ public class BattleModel : BaseModel
         return isDefeat;
     }
 
-    public bool EnableEspape()
+    public bool EnableEscape()
     {
         var troopData = CurrentTroopInfo();
         if (troopData != null)

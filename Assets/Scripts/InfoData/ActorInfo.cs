@@ -333,10 +333,10 @@ public class ActorInfo
         List<SkillData.FeatureData> alchemyFeatures = new List<SkillData.FeatureData>();
         foreach (var actorInfo in actorInfos)
         {
-            List<SkillInfo> skillInfos = actorInfo.Skills.FindAll(a => a.Master.FeatureDatas.Find(b => b.FeatureType == FeatureType.MagicAlchemy)!= null);
+            List<SkillInfo> skillInfos = actorInfo.Skills.FindAll(a => a.Master.FeatureDates.Find(b => b.FeatureType == FeatureType.MagicAlchemy)!= null);
             foreach (var skillInfo in skillInfos)
             {
-                foreach (var featureData in skillInfo.Master.FeatureDatas)
+                foreach (var featureData in skillInfo.Master.FeatureDates)
                 {
                     if (featureData.FeatureType == FeatureType.MagicAlchemy)
                     {

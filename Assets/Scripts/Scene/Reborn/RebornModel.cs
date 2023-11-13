@@ -71,7 +71,7 @@ public class RebornModel : BaseModel
         var rebornActorInfo = RebornActorInfo();
         if (rebornActorInfo == null) return;
         var actorInfo = StageMembers()[0];
-        var commandRebornSkill = rebornActorInfo.RebornSkillInfos.Find(a => a.Master.FeatureDatas.Find(b => b.FeatureType == FeatureType.RebornCommandLvUp) != null);
+        var commandRebornSkill = rebornActorInfo.RebornSkillInfos.Find(a => a.Master.FeatureDates.Find(b => b.FeatureType == FeatureType.RebornCommandLvUp) != null);
         if (commandRebornSkill != null)
         {
             var upLvCount = commandRebornSkill.Param2;
@@ -81,7 +81,7 @@ public class RebornModel : BaseModel
             }
         }
 
-        var statusRebornSkill = rebornActorInfo.RebornSkillInfos.Find(a => a.Master.FeatureDatas.Find(b => b.FeatureType == FeatureType.RebornStatusUp) != null);
+        var statusRebornSkill = rebornActorInfo.RebornSkillInfos.Find(a => a.Master.FeatureDates.Find(b => b.FeatureType == FeatureType.RebornStatusUp) != null);
         if (statusRebornSkill != null)
         {
             var upStatusCount = statusRebornSkill.Param2;
@@ -89,13 +89,13 @@ public class RebornModel : BaseModel
             actorInfo.DecideStrength(0);
         }
 
-        var addSkillRebornSkills = rebornActorInfo.RebornSkillInfos.FindAll(a => a.Master.FeatureDatas.Find(b => b.FeatureType == FeatureType.RebornAddSkill) != null);
+        var addSkillRebornSkills = rebornActorInfo.RebornSkillInfos.FindAll(a => a.Master.FeatureDates.Find(b => b.FeatureType == FeatureType.RebornAddSkill) != null);
         foreach (var addSkill in addSkillRebornSkills)
         {
             PartyInfo.AddAlchemy(addSkill.Param3);
         }
         
-        var questRebornSkill = rebornActorInfo.RebornSkillInfos.Find(a => a.Master.FeatureDatas.Find(b => b.FeatureType == FeatureType.RebornQuest) != null);
+        var questRebornSkill = rebornActorInfo.RebornSkillInfos.Find(a => a.Master.FeatureDates.Find(b => b.FeatureType == FeatureType.RebornQuest) != null);
         if (questRebornSkill != null)
         {
             var upStatusCount = questRebornSkill.Param2;

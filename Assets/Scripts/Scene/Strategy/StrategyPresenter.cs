@@ -83,12 +83,12 @@ public class StrategyPresenter : BasePresenter
         }
     }
 
-    private void UpdatePopupSkillInfo(ConfirmCommandType confirmComandType)
+    private void UpdatePopupSkillInfo(ConfirmCommandType confirmCommandType)
     {
         _view.CommandConfirmClose();
     }
 
-    private void UpdatePopupLost(ConfirmCommandType confirmComandType)
+    private void UpdatePopupLost(ConfirmCommandType confirmCommandType)
     {
         _view.CommandConfirmClose();
         _model.LostActors(_model.LostMembers());
@@ -199,7 +199,7 @@ public class StrategyPresenter : BasePresenter
                 }
                 text = text.Replace("\\d",lostMembersText);
                 ConfirmInfo popupInfo = new ConfirmInfo(text,(a) => UpdatePopupLost((ConfirmCommandType)a));
-                popupInfo.SetIsNoChoise(true);
+                popupInfo.SetIsNoChoice(true);
                 _view.CommandCallConfirm(popupInfo);
             }
         }
@@ -212,10 +212,10 @@ public class StrategyPresenter : BasePresenter
         }
         if (_strategyState == StrategyState.InBattle)
         {
-            _view.ShowEnemyList(_model.CurrentTroopInfo(),_model.EnableBattleSkip());
+            _view.ShowEnemyList(_model.TroopInfoListDates(_model.CurrentTroopInfo()),_model.EnableBattleSkip());
             SetHelpInputSkipEnable();
         }
-        var stageEvents = _model.StageEvents(EventTiming.StartStarategy);
+        var stageEvents = _model.StageEvents(EventTiming.StartStrategy);
         if (stageEvents.Count > 0)
         {
             for (int i = 0;i < stageEvents.Count;i++)
@@ -262,9 +262,9 @@ public class StrategyPresenter : BasePresenter
         }
     }
 
-    private void CommandResultClose(ConfirmCommandType confirmComandType)
+    private void CommandResultClose(ConfirmCommandType confirmCommandType)
     {
-        if (confirmComandType == ConfirmCommandType.Yes)
+        if (confirmCommandType == ConfirmCommandType.Yes)
         {
             if (_strategyState == StrategyState.BattleResult)
             {
@@ -282,9 +282,9 @@ public class StrategyPresenter : BasePresenter
         Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
     }
 
-    private void CommandBattleClose(ConfirmCommandType confirmComandType)
+    private void CommandBattleClose(ConfirmCommandType confirmCommandType)
     {
-        if (confirmComandType == ConfirmCommandType.Yes)
+        if (confirmCommandType == ConfirmCommandType.Yes)
         {
             BattleStart();
         } else{
@@ -330,7 +330,7 @@ public class StrategyPresenter : BasePresenter
     {
         ConfirmInfo popupInfo = new ConfirmInfo("",(menuCommandInfo) => UpdatePopupSkillInfo((ConfirmCommandType)menuCommandInfo));
         popupInfo.SetSkillInfo(_model.BasicSkillInfos(getItemInfo));
-        popupInfo.SetIsNoChoise(true);
+        popupInfo.SetIsNoChoice(true);
         _view.CommandCallConfirm(popupInfo);
         Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
     }

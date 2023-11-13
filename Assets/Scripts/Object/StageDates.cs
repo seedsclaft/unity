@@ -38,7 +38,7 @@ public class StageEventData
 public enum EventTiming{
     None = 0,
     StartTactics = 1,
-    StartStarategy = 2,
+    StartStrategy = 2,
     StartBattle = 3,
     TurnedBattle = 4,
     AfterDemigod = 5,

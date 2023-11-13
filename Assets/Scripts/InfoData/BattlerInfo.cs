@@ -131,7 +131,7 @@ public class BattlerInfo
         {
             _lastSelectSkillId = _decksData.Find(a => a.Id > 100).Id;
         }
-        if (_decksData.Find(a => a.Master.FeatureDatas.Find(b => b.FeatureType == FeatureType.AddState && b.Param1 == (int)StateType.Undead) != null) != null)
+        if (_decksData.Find(a => a.Master.FeatureDates.Find(b => b.FeatureType == FeatureType.AddState && b.Param1 == (int)StateType.Undead) != null) != null)
         {
             _kinds.Add(KindType.Undead);
         }

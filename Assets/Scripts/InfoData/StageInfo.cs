@@ -266,7 +266,7 @@ public class StageInfo
         _currentTroopInfos.Clear();
     }
 
-    public void ChengeCurrentTroopLineZeroErase()
+    public void ChangeCurrentTroopLineZeroErase()
     {
         if (_currentTroopInfos.Count == 0) return;
         
@@ -282,7 +282,7 @@ public class StageInfo
         }
     }
 
-    public void ChengeCurrentTroopAddState(StateInfo stateInfo)
+    public void ChangeCurrentTroopAddState(StateInfo stateInfo)
     {
         if (_currentTroopInfos.Count == 0) return;
         

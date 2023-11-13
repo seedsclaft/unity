@@ -30,7 +30,7 @@ public class RebornResultModel : BaseModel
         var getItemInfos = new List<GetItemInfo>();
         var actorInfo = CurrentData.PlayerInfo.SaveActorList[CurrentStage.RebornActorIndex];
         
-        var commandRebornSkill = actorInfo.RebornSkillInfos.Find(a => a.Master.FeatureDatas.Find(b => b.FeatureType == FeatureType.RebornCommandLvUp) != null);
+        var commandRebornSkill = actorInfo.RebornSkillInfos.Find(a => a.Master.FeatureDates.Find(b => b.FeatureType == FeatureType.RebornCommandLvUp) != null);
         if (commandRebornSkill != null)
         {
             var upLvCount = commandRebornSkill.Param2;
@@ -39,7 +39,7 @@ public class RebornResultModel : BaseModel
             getItemInfos.Add(getItemInfo);
         }
 
-        var statusRebornSkill = actorInfo.RebornSkillInfos.Find(a => a.Master.FeatureDatas.Find(b => b.FeatureType == FeatureType.RebornStatusUp) != null);
+        var statusRebornSkill = actorInfo.RebornSkillInfos.Find(a => a.Master.FeatureDates.Find(b => b.FeatureType == FeatureType.RebornStatusUp) != null);
         if (statusRebornSkill != null)
         {
             var upStatusCount = statusRebornSkill.Param2;
@@ -49,7 +49,7 @@ public class RebornResultModel : BaseModel
             getItemInfos.Add(getItemInfo);
         }
 
-        var addSkillRebornSkills = actorInfo.RebornSkillInfos.FindAll(a => a.Master.FeatureDatas.Find(b => b.FeatureType == FeatureType.RebornAddSkill) != null);
+        var addSkillRebornSkills = actorInfo.RebornSkillInfos.FindAll(a => a.Master.FeatureDates.Find(b => b.FeatureType == FeatureType.RebornAddSkill) != null);
         foreach (var addSkill in addSkillRebornSkills)
         {
             GetItemInfo getItemInfo = new GetItemInfo(null);
@@ -58,7 +58,7 @@ public class RebornResultModel : BaseModel
         }
 
         
-        var questRebornSkill = actorInfo.RebornSkillInfos.Find(a => a.Master.FeatureDatas.Find(b => b.FeatureType == FeatureType.RebornQuest) != null);
+        var questRebornSkill = actorInfo.RebornSkillInfos.Find(a => a.Master.FeatureDates.Find(b => b.FeatureType == FeatureType.RebornQuest) != null);
         if (questRebornSkill != null)
         {
             var upStatusCount = questRebornSkill.Param2;

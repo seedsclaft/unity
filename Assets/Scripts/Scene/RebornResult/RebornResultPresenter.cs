@@ -54,9 +54,9 @@ public class RebornResultPresenter : BasePresenter
         _view.ShowResultList(_model.ResultGetItemInfos());
     }
 
-    private void CommandRebornResultClose(ConfirmCommandType confirmComandType)
+    private void CommandRebornResultClose(ConfirmCommandType confirmCommandType)
     {
-        if (confirmComandType == ConfirmCommandType.Yes)
+        if (confirmCommandType == ConfirmCommandType.Yes)
         {
             CommandEndReborn();
         }

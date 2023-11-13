@@ -28,10 +28,10 @@ public class EnemyInfoView : BaseView,IInputHandlerEvent
         selectCharacter.Initialize();
         SetInputHandler(selectCharacter.GetComponent<IInputHandlerEvent>());
         InitializeSelectCharacter();
-
+/*
         leftButton.onClick.AddListener(() => OnClickLeft());
         rightButton.onClick.AddListener(() => OnClickRight());
-
+*/
         new EnemyInfoPresenter(this,battlerInfos);
         SetInputHandler(gameObject.GetComponent<IInputHandlerEvent>());
     }

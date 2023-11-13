@@ -108,7 +108,7 @@ public class BaseList : ListWindow , IInputHandlerEvent
 }
 
 
-[System.SerializableAttribute]
+[System.Serializable]
 public class ListData
 {    
     private int _index;

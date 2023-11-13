@@ -83,8 +83,8 @@ public class StrategyView : BaseView
 
     public void SetEnemyList(List<ListData> confirmCommands)
     {
-        tacticsEnemyList.Initialize(null);
-        //tacticsEnemyList.SetInputHandler(InputKeyType.Decide,() => CallPopupSkillInfo());
+        tacticsEnemyList.Initialize(1);
+        //tacticsEnemyList.SetInputHandler(InputKeyType.Decide,() => CallBattleEnemy());
         tacticsEnemyList.SetInputHandler(InputKeyType.Option1,() => OnClickEnemyInfo());
         tacticsEnemyList.SetInputHandler(InputKeyType.Option2,() => OnChangeSkipToggle(true));
         SetInputHandler(tacticsEnemyList.GetComponent<IInputHandlerEvent>());
@@ -121,14 +121,6 @@ public class StrategyView : BaseView
         _commandData = commandData;
     }
     
-
-    public void SetCommandAble(SystemData.CommandData commandData)
-    {
-    }
-
-    public void SetCommandDisable(SystemData.CommandData commandData)
-    {
-    }
 
     private void CallStrategyStart(){
         var eventData = new StrategyViewEvent(CommandType.StartStrategy);
@@ -176,35 +168,43 @@ public class StrategyView : BaseView
         strategyResultList.gameObject.SetActive(false);
     }
 
-    public void ShowEnemyList(TroopInfo troopInfo,bool enableBattleSkip)
+    public void ShowEnemyList(List<ListData> troopInfo,bool enableBattleSkip)
     {
-        List<TroopInfo> troopInfos = new List<TroopInfo>();
-        troopInfos.Add(troopInfo);
-        tacticsEnemyList.Refresh(troopInfos);
+        tacticsEnemyList.SetData(troopInfo);
+        tacticsEnemyList.Refresh(-1);
         tacticsEnemyList.gameObject.SetActive(true);
         tacticsEnemyList.Activate();
         tacticsEnemyList.TacticsCommandList.Activate();
         tacticsEnemyList.TacticsCommandList.UpdateSelectIndex(1);
-        tacticsEnemyList.UpdateSelectIndex(-1);
-        tacticsEnemyList.SetDisableLeftRight();
         battleSkipToggle.gameObject.SetActive(enableBattleSkip);
-    }
-
-    private void CallPopupSkillInfo()
+    }    
+    
+    private void CallBattleEnemy()
     {
-        var eventData = new StrategyViewEvent(CommandType.PopupSkillInfo);
-        var item = tacticsEnemyList.GetItemInfo;
-        if (item != null)
+        if (tacticsEnemyList.IsSelectEnemy())
         {
-            eventData.template = item;
-            _commandData(eventData);
+        } else
+        {
+            var getItemInfo = tacticsEnemyList.GetItemInfo();
+            if (getItemInfo != null && (getItemInfo.IsSkill() || getItemInfo.IsAttributeSkill()))
+            {
+                var eventData = new StrategyViewEvent(CommandType.PopupSkillInfo);
+                eventData.template = getItemInfo;
+                _commandData(eventData);
+            }
         }
     }
 
     private void OnClickEnemyInfo()
     {
-        var eventData = new StrategyViewEvent(CommandType.CallEnemyInfo);
-        _commandData(eventData);
+        var listData = tacticsEnemyList.ListData;
+        if (listData != null)
+        {
+            var data = (TroopInfo)listData.Data;
+            var eventData = new StrategyViewEvent(CommandType.CallEnemyInfo);
+            eventData.template = data;
+            _commandData(eventData);
+        }
     }
 
     private void OnChangeSkipToggle(bool needChangeView)

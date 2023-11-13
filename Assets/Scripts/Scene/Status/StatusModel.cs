@@ -21,7 +21,6 @@ public class StatusModel : BaseModel
         return "";
     }
 
-    private int _useNuminous = 0;
     private int _currentIndex = 0; 
 
     public ActorInfo CurrentActor
@@ -58,21 +57,9 @@ public class StatusModel : BaseModel
         return members;
     }
 
-    private SkillInfo _learnSkillInfo = null;
-    public SkillInfo LlearnSkillInfo
-    {
-        get {return _learnSkillInfo;}
-    }
-
-    public void SetLearnSkillInfo(SkillInfo skillInfo){
-        _learnSkillInfo = skillInfo;
-    }
-
-
-
     public List<ListData> SkillActionList()
     {
-        List<SkillInfo> skillInfos = CurrentActor.Skills.FindAll(a => a.Id > 100);
+        var skillInfos = CurrentActor.Skills.FindAll(a => a.Id > 100);
 
         skillInfos.ForEach(a => a.SetEnable(true));
         var sortList1 = new List<SkillInfo>();
@@ -107,19 +94,6 @@ public class StatusModel : BaseModel
         return list;
     }
 
-    public List<ListData> StatusCommand()
-    {
-        var list = new List<ListData>();
-        var idx = 0;
-        foreach (var commandData in DataSystem.StatusCommand)
-        {
-            var listData = new ListData(commandData);
-            list.Add(listData);
-            idx++;
-        }
-        return list;
-    }
-    
     public void SelectAddActor()
     {
         if (CurrentStage == null)
@@ -137,89 +111,4 @@ public class StatusModel : BaseModel
     {
         return CurrentStage.Master.Reborn;
     }
-
-    public void ForgetSkill()
-    {
-        SkillInfo skillInfo = _learnSkillInfo;
-        CurrentActor.ForgetSkill(_learnSkillInfo);
-    }
-
-    public bool EnableParamUp(StatusParamType statusParamType)
-    {
-        int UseCost = CurrentActor.UsePointCost(statusParamType);
-        if (CurrentAlcana.IsStatusCostDown(statusParamType))
-        {
-            UseCost -= 1;
-        }
-        int Numinous = Currency - _useNuminous;
-        return (CurrentActor.Sp + Numinous) >= UseCost;
-    }
-
-    public bool EnableParamMinus(StatusParamType statusParamType)
-    {
-        return CurrentActor.TempStatus.GetParameter(statusParamType) > 0;
-    }
-
-    public void ChangeParameter(StatusParamType statusParamType,int value)
-    {
-        if (value > 0)
-        {
-            int Cost = CurrentActor.UsePointCost(statusParamType);
-            if (CurrentAlcana.IsStatusCostDown(statusParamType))
-            {
-                Cost -= 1;
-            }
-            if (CurrentActor.Sp >= Cost)
-            {
-                CurrentActor.ChangeSp(CurrentActor.Sp - Cost);
-            }else{
-                int CostNuminous = Cost - CurrentActor.Sp;
-                _useNuminous += CostNuminous;
-                CurrentActor.ChangeSp(0);
-            }
-            CurrentActor.TempStatus.AddParameter(statusParamType,value);
-        } else
-        {
-            CurrentActor.TempStatus.AddParameter(statusParamType,value);
-            int BackPoint = CurrentActor.UsePointCost(statusParamType);
-            if (CurrentAlcana.IsStatusCostDown(statusParamType))
-            {
-                BackPoint -= 1;
-            }
-            if (_useNuminous >= BackPoint)
-            {
-                _useNuminous -= BackPoint;
-            } else
-            {
-                CurrentActor.ChangeSp((CurrentActor.Sp - _useNuminous) + BackPoint);
-                _useNuminous = 0;
-            }
-        }
-    }
-
-    public void DecideStrength()
-    {
-        CurrentActor.DecideStrength(_useNuminous);
-        PartyInfo.ChangeCurrency(Currency - _useNuminous);
-        _useNuminous = 0;
-    }
-
-    public void StrengthReset()
-    {
-        int Numinous = CurrentActor.Numinous;
-        PartyInfo.ChangeCurrency(Currency + Numinous);
-        CurrentActor.StrengthReset();
-        _useNuminous = 0;
-    }
-
-    public void ClearStrength()
-    {
-        CurrentActor.ClearStrength();
-    }
-
-    public int StrengthNuminous()
-    {
-        return Currency - _useNuminous;
-    }
-
 }

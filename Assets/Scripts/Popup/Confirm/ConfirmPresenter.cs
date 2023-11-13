@@ -30,13 +30,13 @@ public class ConfirmPresenter
         if (_busy){
             return;
         }
-        if (viewEvent.commandType == CommandType.IsNoChoise)
+        if (viewEvent.commandType == CommandType.IsNoChoice)
         {
-           CommandIsNoChoise();
+           CommandIsNoChoice();
         }
     }
 
-    private void CommandIsNoChoise()
+    private void CommandIsNoChoice()
     {
         _view.SetConfirmCommand(_model.NoChoiceConfirmCommand());
     }
@@ -48,8 +48,8 @@ public class ConfirmInfo
     public string Title => _title;
     private System.Action<ConfirmCommandType> _callEvent = null;
     public System.Action<ConfirmCommandType> CallEvent => _callEvent;
-    private bool _isNoChoise = false;
-    public bool IsNoChoise => _isNoChoise;
+    private bool _isNoChoice = false;
+    public bool IsNoChoice => _isNoChoice;
     private List<SkillInfo> _skillInfos = null;
     public List<SkillInfo> SkillInfos => _skillInfos;
     private int _selectIndex = 0;
@@ -61,9 +61,9 @@ public class ConfirmInfo
         _callEvent = callEvent;
     }
 
-    public void SetIsNoChoise(bool isNoChoice)
+    public void SetIsNoChoice(bool isNoChoice)
     {
-        _isNoChoise = isNoChoice;
+        _isNoChoice = isNoChoice;
     }
 
     public void SetSkillInfo(List<SkillInfo> skillInfos)

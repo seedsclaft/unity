@@ -51,7 +51,7 @@ public class PlayerInfo
 		}
 	}
 
-	public void StageClaer(int stageId)
+	public void StageClear(int stageId)
 	{
 		StageInfo stageInfo = _stages.Find(a => a.Id == stageId);
 		stageInfo.GainClearCount();

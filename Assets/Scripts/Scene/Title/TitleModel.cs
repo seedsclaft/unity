@@ -29,11 +29,11 @@ public class TitleModel : BaseModel
     public List<SystemData.CommandData> SideMenu()
     {
         var list = new List<SystemData.CommandData>();
-        var menucommand = new SystemData.CommandData();
-        menucommand.Id = 1;
-        menucommand.Name = DataSystem.System.GetTextData(700).Text;
-        menucommand.Key = "Licence";
-        list.Add(menucommand);
+        var menuCommand = new SystemData.CommandData();
+        menuCommand.Id = 1;
+        menuCommand.Name = DataSystem.System.GetTextData(700).Text;
+        menuCommand.Key = "License";
+        list.Add(menuCommand);
         return list;
     }
 }

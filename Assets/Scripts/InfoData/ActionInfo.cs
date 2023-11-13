@@ -62,7 +62,7 @@ public class ActionInfo
 
     public List<ActionInfo> CheckPlusSkill()
     {
-        List<SkillData.FeatureData> featureDatas = Master.FeatureDatas;
+        List<SkillData.FeatureData> featureDatas = Master.FeatureDates;
         var PlusSkill = featureDatas.FindAll(a => a.FeatureType == FeatureType.PlusSkill);
         
         List<ActionInfo> actionInfos = new List<ActionInfo>();

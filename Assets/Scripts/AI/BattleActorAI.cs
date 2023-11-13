@@ -206,7 +206,7 @@ public class BattleActorAI
         }
 
         // 攻撃値計算
-        var attackFeatures = skillInfo.Master.FeatureDatas.FindAll(a => a.FeatureType == FeatureType.HpDamage);
+        var attackFeatures = skillInfo.Master.FeatureDates.FindAll(a => a.FeatureType == FeatureType.HpDamage);
         
         // 攻撃回数
         var repeatTime = skillInfo.Master.RepeatTime;
@@ -215,7 +215,7 @@ public class BattleActorAI
         {
             foreach (var attackTarget in attackTargets)
             {
-                var result = new ActionResultInfo(_batterInfo,attackTarget,skillInfo.Master.FeatureDatas,-1);
+                var result = new ActionResultInfo(_batterInfo,attackTarget,skillInfo.Master.FeatureDates,-1);
                 skillTargetAI.Weigth += result.HpDamage;
                 if (result.HpDamage >= attackTarget.Hp)
                 {
@@ -237,7 +237,7 @@ public class BattleActorAI
     private static void CalcChainSkillWeight(SkillInfo skillInfo,List<BattlerInfo> attackTargets, SkillTargetAI skillTargetAI,List<BattlerInfo> opponents)
     {
         // 攻撃値計算
-        var chainFeatures = skillInfo.Master.FeatureDatas.FindAll(a => a.FeatureType == FeatureType.AddState && a.Param1 == (int)StateType.Chain);
+        var chainFeatures = skillInfo.Master.FeatureDates.FindAll(a => a.FeatureType == FeatureType.AddState && a.Param1 == (int)StateType.Chain);
         foreach (var chainFeature in chainFeatures)
         {
             foreach (var attackTarget in attackTargets)
@@ -277,7 +277,7 @@ public class BattleActorAI
     {
         foreach (var attackTarget in attackTargets)
         {
-            var result = new ActionResultInfo(_batterInfo,attackTarget,skillInfo.Master.FeatureDatas,-1);
+            var result = new ActionResultInfo(_batterInfo,attackTarget,skillInfo.Master.FeatureDates,-1);
             skillTargetAI.Weigth += result.ReDamage;
             if (result.ReDamage >= attackTarget.Hp)
             {
@@ -393,7 +393,7 @@ public class BattleActorAI
             {
                 if (attackTarget.Kinds.Contains(KindType.Undead))
                 {
-                    var result = new ActionResultInfo(_batterInfo,attackTarget,skillInfo.Master.FeatureDatas,-1);
+                    var result = new ActionResultInfo(_batterInfo,attackTarget,skillInfo.Master.FeatureDates,-1);
                     skillTargetAI.Weigth += result.HpDamage;
                     if (result.HpDamage >= attackTarget.Hp)
                     {

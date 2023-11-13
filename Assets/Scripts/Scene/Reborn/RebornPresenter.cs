@@ -30,7 +30,7 @@ public class RebornPresenter :BasePresenter
             CommandBackEvent();
         });
         ConfirmInfo confirmInfo = new ConfirmInfo(DataSystem.System.GetTextData(17010).Text,(a) => UpdatePopupStart(a));
-        confirmInfo.SetIsNoChoise(true);
+        confirmInfo.SetIsNoChoice(true);
         _view.CommandCallConfirm(confirmInfo);
         _busy = false;
     }
@@ -58,15 +58,15 @@ public class RebornPresenter :BasePresenter
         }
     }
 
-    private void UpdatePopupStart(ConfirmCommandType confirmComandType)
+    private void UpdatePopupStart(ConfirmCommandType confirmCommandType)
     {
         Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
         _view.CommandConfirmClose();
     }
 
-    private void UpdatePopup(ConfirmCommandType confirmComandType)
+    private void UpdatePopup(ConfirmCommandType confirmCommandType)
     {
-        if (confirmComandType == ConfirmCommandType.Yes)
+        if (confirmCommandType == ConfirmCommandType.Yes)
         {
             _model.OnRebornSkill();
             _view.CommandConfirmClose();

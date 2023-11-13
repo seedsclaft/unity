@@ -141,10 +141,10 @@ public class SkillsImporter : AssetPostprocessor {
 					
 					var SkillData = Data.Data.Find(a => a.Id == FeatureData.SkillId);
 					if (SkillData != null){
-						if (SkillData.FeatureDatas == null){
-							SkillData.FeatureDatas = new List<SkillData.FeatureData>();
+						if (SkillData.FeatureDates == null){
+							SkillData.FeatureDates = new List<SkillData.FeatureData>();
 						}
-						SkillData.FeatureDatas.Add(FeatureData);
+						SkillData.FeatureDates.Add(FeatureData);
 					}
 				}
 				

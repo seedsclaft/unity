@@ -8,21 +8,10 @@ public class StatusCondition : ListItem ,IListViewItem
 {
     [SerializeField] private StateInfoComponent stateInfoComponent;
 
-    private StateInfo _stateInfo; 
-    public void SetData(StateInfo stateInfo,int index){
-        _stateInfo = stateInfo;
-        SetIndex(index);
-    }
-
-    public void SetCallHandler(System.Action<int> handler)
-    {
-        if (_stateInfo == null) return;
-        clickButton.onClick.AddListener(() => handler(Index));
-    }
-
     public void UpdateViewItem()
     {
-        if (_stateInfo == null) return;
-        stateInfoComponent.UpdateInfo(_stateInfo);
+        if (ListData == null) return;
+        var data = (StateInfo)ListData.Data;
+        stateInfoComponent.UpdateInfo(data);
     }
 }

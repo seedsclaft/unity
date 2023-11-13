@@ -100,7 +100,7 @@ public class TitlePresenter : BasePresenter
             if (loadSuccess == false)
             {
                 ConfirmInfo popupInfo = new ConfirmInfo("セーブデータを読み込めませんでした。\n誠に申し訳ないですがNewGameから開始をお願いします。",(menuCommandInfo) => updatePopup((ConfirmCommandType)menuCommandInfo));
-                popupInfo.SetIsNoChoise(true);
+                popupInfo.SetIsNoChoice(true);
                 _view.CommandCallConfirm(popupInfo);
                 return;
             }
@@ -172,16 +172,16 @@ public class TitlePresenter : BasePresenter
 
     private void CommandSelectSideMenu(SystemData.CommandData sideMenu)
     {
-        if (sideMenu.Key == "Licence")
+        if (sideMenu.Key == "License")
         {
             CommandCredit();
         }
     }
 
-    private void updatePopup(ConfirmCommandType confirmComandType)
+    private void updatePopup(ConfirmCommandType confirmCommandType)
     {
         _view.CommandConfirmClose();
-        if (confirmComandType == ConfirmCommandType.Yes)
+        if (confirmCommandType == ConfirmCommandType.Yes)
         {
         }
         _view.CommandSceneChange(Scene.Title);

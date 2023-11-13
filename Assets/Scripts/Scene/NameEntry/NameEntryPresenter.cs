@@ -49,10 +49,10 @@ public class NameEntryPresenter
         }
     }
 
-    private void updatePopup(ConfirmCommandType confirmComandType)
+    private void updatePopup(ConfirmCommandType confirmCommandType)
     {
         _view.CommandConfirmClose();
-        if (confirmComandType == ConfirmCommandType.Yes)
+        if (confirmCommandType == ConfirmCommandType.Yes)
         {
         }
         _view.StartNameEntry();
@@ -61,7 +61,7 @@ public class NameEntryPresenter
     private void CommandStartEntry()
     {
         ConfirmInfo popupInfo = new ConfirmInfo(DataSystem.System.GetTextData(5000).Text,(menuCommandInfo) => updatePopup((ConfirmCommandType)menuCommandInfo));
-        popupInfo.SetIsNoChoise(true);
+        popupInfo.SetIsNoChoice(true);
         _view.CommandCallConfirm(popupInfo);
         _view.ShowNameEntry("");
     }
@@ -71,7 +71,7 @@ public class NameEntryPresenter
         if (nameText == "")
         {
             ConfirmInfo popupInfo = new ConfirmInfo(DataSystem.System.GetTextData(5002).Text,(menuCommandInfo) => updatePopup((ConfirmCommandType)menuCommandInfo));
-            popupInfo.SetIsNoChoise(true);
+            popupInfo.SetIsNoChoice(true);
             _view.CommandCallConfirm(popupInfo);
         } else{
             _model.SetPlayerName(nameText);
