@@ -9,8 +9,7 @@ public class ConfirmView : BaseView,IInputHandlerEvent
 {
     [SerializeField] private BaseList commandList = null;
     [SerializeField] private TextMeshProUGUI titleText = null;
-    [SerializeField] private GameObject skillInfoRoot = null;
-    [SerializeField] private GameObject skillInfoPrefab = null;
+    [SerializeField] private BaseList skillInfoList = null;
     private System.Action<ConfirmCommandType> _confirmEvent = null;
     private new System.Action<ConfirmViewEvent> _commandData = null;
     private ConfirmInfo _confirmInfo = null;
@@ -26,19 +25,10 @@ public class ConfirmView : BaseView,IInputHandlerEvent
         titleText.text = title;
     }
 
-    public void SetSkillInfo(List<SkillInfo> skillInfos)
+    public void SetSkillInfo(List<ListData> skillInfos)
     {
         if (skillInfos == null) return;
-        foreach(Transform child in skillInfoRoot.transform){
-            Destroy(child.gameObject);
-        }
-        foreach (var skillInfo in skillInfos)
-        {
-            GameObject prefab = Instantiate(skillInfoPrefab);
-            prefab.transform.SetParent(skillInfoRoot.transform, false);
-            var skillInfoComponent = prefab.GetComponent<SkillInfoComponent>();
-            skillInfoComponent.SetInfoData(skillInfo);
-        }
+        skillInfoList.SetData(skillInfos);
     }
 
     public void SetIsNoChoice(bool isNoChoice)
@@ -66,7 +56,7 @@ public class ConfirmView : BaseView,IInputHandlerEvent
         SetIsNoChoice(confirmInfo.IsNoChoice);
         SetSelectIndex(confirmInfo.SelectIndex);
         SetTitle(confirmInfo.Title);
-        SetSkillInfo(confirmInfo.SkillInfos);
+        SetSkillInfo(confirmInfo.SkillInfos());
         SetConfirmEvent(confirmInfo.CallEvent);
     }
 

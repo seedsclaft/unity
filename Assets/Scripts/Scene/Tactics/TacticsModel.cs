@@ -371,7 +371,7 @@ public class TacticsModel : BaseModel
             CurrentStage.SetEndingType(EndingType.D);
             return DataSystem.Advs.Find(a => a.Id == 203);
         }
-        var isAendGameClear = CurrentStage.StageClaer;
+        var isAendGameClear = CurrentStage.StageClear;
         if (isAendGameClear)
         {
             CurrentStage.SetEndingType(EndingType.A);
@@ -409,11 +409,11 @@ public class TacticsModel : BaseModel
         retire.Name = DataSystem.System.GetTextData(704).Text;
         retire.Key = "Retire";
         list.Add(retire);
-        var menucommand = new SystemData.CommandData();
-        menucommand.Id = 2;
-        menucommand.Name = DataSystem.System.GetTextData(703).Text;
-        menucommand.Key = "Help";
-        list.Add(menucommand);
+        var menuCommand = new SystemData.CommandData();
+        menuCommand.Id = 2;
+        menuCommand.Name = DataSystem.System.GetTextData(703).Text;
+        menuCommand.Key = "Help";
+        list.Add(menuCommand);
         return list;
     }
 
@@ -451,11 +451,11 @@ public class TacticsModel : BaseModel
 
     public TacticsCommandData TacticsCommandData()
     {
-        var tacticsComandData = new TacticsCommandData();
-        tacticsComandData.Title = CommandTitle();
-        tacticsComandData.Description = CommandDescription();
-        tacticsComandData.Rank = CommandRank();
-        return tacticsComandData;
+        var tacticsCommandData = new TacticsCommandData();
+        tacticsCommandData.Title = CommandTitle();
+        tacticsCommandData.Description = CommandDescription();
+        tacticsCommandData.Rank = CommandRank();
+        return tacticsCommandData;
     }
 
     private string CommandTitle()

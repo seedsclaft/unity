@@ -51,7 +51,19 @@ public class ConfirmInfo
     private bool _isNoChoice = false;
     public bool IsNoChoice => _isNoChoice;
     private List<SkillInfo> _skillInfos = null;
-    public List<SkillInfo> SkillInfos => _skillInfos;
+    public List<ListData> SkillInfos()
+    {
+        var list = new List<ListData>();
+        if (_skillInfos != null)
+        {
+            foreach (var skillInfo in _skillInfos)
+            {
+                var data = new ListData(skillInfo);
+                list.Add(data);
+            }
+        }
+        return list;
+    }
     private int _selectIndex = 0;
     public int SelectIndex => _selectIndex;
 

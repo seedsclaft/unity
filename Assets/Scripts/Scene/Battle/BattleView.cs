@@ -257,10 +257,10 @@ public class BattleView : BaseView ,IInputHandlerEvent
         //HideActorStateOverlay();
     }
 
-    public void HideSkillActionList(bool isSideBenuClose = true)
+    public void HideSkillActionList(bool isSideMenuClose = true)
     {
         selectCharacter.HideActionList();
-        if (isSideBenuClose)
+        if (isSideMenuClose)
         {
             sideMenuList.gameObject.SetActive(false);
         }

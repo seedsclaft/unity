@@ -68,7 +68,7 @@ public class BattleEnemyLayer : ListWindow , IInputHandlerEvent
                     UpdateEnemyIndex(enemyIndex);
                     return;
                 }
-                callEvent(MakeTargetIndexs(battlerInfo));
+                callEvent(MakeTargetIndexes(battlerInfo));
             });
             battleEnemy.SetSelectHandler((data) => UpdateEnemyIndex(data));
             battleEnemy.SetPressHandler((enemyIndex) => {
@@ -228,7 +228,7 @@ public class BattleEnemyLayer : ListWindow , IInputHandlerEvent
             {
                 return;
             }
-            callEvent(MakeTargetIndexs(battlerInfo));
+            callEvent(MakeTargetIndexes(battlerInfo));
         }
         if (keyType == InputKeyType.Right)
         {
@@ -291,7 +291,7 @@ public class BattleEnemyLayer : ListWindow , IInputHandlerEvent
         }
     }
 
-    private List<int> MakeTargetIndexs(BattlerInfo battlerInfo)
+    private List<int> MakeTargetIndexes(BattlerInfo battlerInfo)
     {
         List<int> indexList = new List<int>();
         if (_targetScopeType == ScopeType.All || _targetScopeType == ScopeType.WithoutSelfAll)

@@ -8,10 +8,13 @@ public class TacticsEnemyList : BaseList
     public BaseList TacticsCommandList => tacticsCommandList;
     
     public bool IsSelectEnemy(){
-        var tacticsEnemy = ObjectList[Index].GetComponent<TacticsEnemy>();
-        if (tacticsEnemy.GetItemIndex == -1)
+        if (ObjectList.Count > Index)
         {
-            return true;
+            var tacticsEnemy = ObjectList[Index].GetComponent<TacticsEnemy>();
+            if (tacticsEnemy.GetItemIndex == -1)
+            {
+                return true;
+            }
         }
         return false;
     }
@@ -61,6 +64,11 @@ public class TacticsEnemyList : BaseList
         {
             var tacticsEnemy = ObjectList[i].GetComponent<TacticsEnemy>();
             tacticsEnemy.SetCallHandler(() => CallSelectHandler(InputKeyType.Decide));
+            tacticsEnemy.SetSelectHandler((a) => {
+                UpdateSelectIndex(a);
+                tacticsEnemy.SetItemIndex(-1);
+            });
+            tacticsEnemy.SetGetItemInfoCallHandler(() => CallListInputHandler(InputKeyType.Decide));
             tacticsEnemy.SetEnemyInfoCallHandler(() => CallListInputHandler(InputKeyType.Option1));
             tacticsEnemy.SetItemIndex(-1);
         }

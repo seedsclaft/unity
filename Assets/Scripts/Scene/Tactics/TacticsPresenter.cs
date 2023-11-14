@@ -89,7 +89,7 @@ public class TacticsPresenter :BasePresenter
                 if (stageEvents[i].Type == StageEventType.NeedAllTactics)
                 {
                     _model.SetNeedAllTacticsCommand(true);
-                    var listData = _model.ChangeEnableCommandData((int)TacticsCommandType.Turnend - 1, !_model.CheckNonBusy());
+                    var listData = _model.ChangeEnableCommandData((int)TacticsCommandType.TurnEnd - 1, !_model.CheckNonBusy());
                     _view.RefreshListData(listData);
                 }
                 if (stageEvents[i].Type == StageEventType.IsSubordinate)
@@ -314,7 +314,7 @@ public class TacticsPresenter :BasePresenter
         }
         if (_model.NeedAllTacticsCommand)
         {
-            var listData = _model.ChangeEnableCommandData((int)TacticsCommandType.Turnend - 1, !_model.CheckNonBusy());
+            var listData = _model.ChangeEnableCommandData((int)TacticsCommandType.TurnEnd - 1, !_model.CheckNonBusy());
             _view.RefreshListData(listData);
         }
     }
@@ -371,21 +371,21 @@ public class TacticsPresenter :BasePresenter
                 _view.ActivateTacticsCommand();
                 CommandSelectActorResource(actorId);
             }
-            if (_model.TacticsCommandType == TacticsCommandType.Turnend)
+            if (_model.TacticsCommandType == TacticsCommandType.TurnEnd)
             {
                 _model.TurnEnd();
                 _model.InitInBattle();
                 _view.CommandSceneChange(Scene.Strategy);
             }
         } else{
-            if (_model.TacticsCommandType == TacticsCommandType.Turnend)
+            if (_model.TacticsCommandType == TacticsCommandType.TurnEnd)
             {
                 Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cancel);
                 _view.SetHelpInputInfo("TACTICS");
                 _view.ShowCommandList();
             }
         }
-        if (confirmCommandType == ConfirmCommandType.No && _model.TacticsCommandType != TacticsCommandType.Turnend)
+        if (confirmCommandType == ConfirmCommandType.No && _model.TacticsCommandType != TacticsCommandType.TurnEnd)
         {        
             _view.ActivateTacticsCommand();
         }
@@ -522,7 +522,7 @@ public class TacticsPresenter :BasePresenter
             statusViewInfo.SetDisplayDecideButton(false);
             _view.CommandCallStatus(statusViewInfo);
         }
-        if (tacticsCommandType == TacticsCommandType.Turnend)
+        if (tacticsCommandType == TacticsCommandType.TurnEnd)
         {
             TextData textData = DataSystem.System.GetTextData(1040);
             TextData subData = DataSystem.System.GetTextData(1050);
@@ -575,7 +575,7 @@ public class TacticsPresenter :BasePresenter
         CommandRefresh();
         if (_model.IsBusyAll())
         {
-            CommandTacticsCommand(TacticsCommandType.Turnend);
+            CommandTacticsCommand(TacticsCommandType.TurnEnd);
         }
     }
 
@@ -653,7 +653,7 @@ public class TacticsPresenter :BasePresenter
         _view.ShowCommandList();
         if (_model.IsBusyAll())
         {
-            CommandTacticsCommand(TacticsCommandType.Turnend);
+            CommandTacticsCommand(TacticsCommandType.TurnEnd);
         }
     }
 

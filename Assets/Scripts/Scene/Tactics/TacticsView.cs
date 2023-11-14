@@ -52,7 +52,6 @@ public class TacticsView : BaseView
     public void SetUIButton()
     {
         SetBackCommand(() => OnClickBack());
-        tacticsEnemyList.Initialize(0);
         tacticsEnemyList.SetInputHandler(InputKeyType.Decide,() => CallBattleEnemy());
         tacticsEnemyList.SetInputHandler(InputKeyType.Option1,() => OnClickEnemyInfo());
         tacticsEnemyList.SetInputHandler(InputKeyType.Cancel,() => OnClickBack());
@@ -184,8 +183,6 @@ public class TacticsView : BaseView
     public void SetEnemies(List<ListData> troopInfos)
     {
         tacticsEnemyList.SetData(troopInfos);
-        tacticsEnemyList.Refresh();
-        tacticsEnemyList.Activate();
         HideEnemyList();
     }
 

@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class BasePresenter 
 {
-    private bool _busy = true;
     private BaseView _view = null;
     public void SetView(BaseView view)
     {

@@ -9,6 +9,7 @@ public class TacticsEnemy : ListItem ,IListViewItem
     [SerializeField] private BaseList getItemList = null;
     [SerializeField] private Button enemyInfoButton;
     private System.Action _enemyInfoHandler = null;
+    private System.Action _getItemInfoHandler = null;
 
     private int _getItemIndex = -1;
     public int GetItemIndex => _getItemIndex;
@@ -17,6 +18,16 @@ public class TacticsEnemy : ListItem ,IListViewItem
         if (ListData == null) return null;
         var data = (TroopInfo)ListData.Data;
         return data.GetItemInfos[_getItemIndex];
+    }
+
+    public void SetGetItemInfoCallHandler(System.Action handler)
+    {
+        if (_getItemInfoHandler != null)
+        {
+            return;
+        }
+        _getItemInfoHandler = handler;
+        getItemList.SetInputHandler(InputKeyType.Decide,() => _getItemInfoHandler());
     }
 
     public void SetEnemyInfoCallHandler(System.Action handler)
@@ -42,6 +53,9 @@ public class TacticsEnemy : ListItem ,IListViewItem
             list.Add(itemData);
         }
         getItemList.SetData(list);
+        getItemList.SetSelectedHandler(() => {
+            _getItemIndex = getItemList.Index;
+        });
         SetItemIndex(_getItemIndex);
     }
 

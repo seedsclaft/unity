@@ -62,13 +62,13 @@ public class ActionInfo
 
     public List<ActionInfo> CheckPlusSkill()
     {
-        List<SkillData.FeatureData> featureDatas = Master.FeatureDates;
-        var PlusSkill = featureDatas.FindAll(a => a.FeatureType == FeatureType.PlusSkill);
+        var featureDates = Master.FeatureDates;
+        var PlusSkill = featureDates.FindAll(a => a.FeatureType == FeatureType.PlusSkill);
         
-        List<ActionInfo> actionInfos = new List<ActionInfo>();
+        var actionInfos = new List<ActionInfo>();
         for (var i = 0;i < PlusSkill.Count;i++){
             var skillInfo = new SkillInfo(PlusSkill[i].Param1);
-            ActionInfo actionInfo = new ActionInfo(skillInfo,SubjectIndex,-1,null);
+            var actionInfo = new ActionInfo(skillInfo,SubjectIndex,-1,null);
             actionInfo.SetTriggerSkill(true);
             actionInfos.Add(actionInfo);
         }

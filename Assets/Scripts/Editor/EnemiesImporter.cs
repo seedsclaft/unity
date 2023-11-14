@@ -137,7 +137,7 @@ public class EnemiesImporter : AssetPostprocessor {
 					LearningData.SkillId = AssetPostImporter.ImportNumeric(Baserow,(int)BaseLearningColumn.SkillId);
 					LearningData.Level = AssetPostImporter.ImportNumeric(Baserow,(int)BaseLearningColumn.Level);
 					LearningData.Weight = AssetPostImporter.ImportNumeric(Baserow,(int)BaseLearningColumn.Weight);
-					LearningData.TriggerDatas = new List<SkillData.TriggerData>();
+					LearningData.TriggerDates = new List<SkillData.TriggerData>();
 					Enemy.LearningSkills.Add(LearningData);
 				}
 
@@ -160,7 +160,7 @@ public class EnemiesImporter : AssetPostprocessor {
 						triggerData.Param1 = AssetPostImporter.ImportNumeric(Baserow,(int)BaseTriggersColumn.Param1);
 						triggerData.Param2 = AssetPostImporter.ImportNumeric(Baserow,(int)BaseTriggersColumn.Param2);
 						triggerData.Param3 = AssetPostImporter.ImportNumeric(Baserow,(int)BaseTriggersColumn.Param3);
-						learningData.TriggerDatas.Add(triggerData);
+						learningData.TriggerDates.Add(triggerData);
 					}
 				}
 			}

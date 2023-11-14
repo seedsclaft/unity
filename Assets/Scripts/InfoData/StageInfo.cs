@@ -48,8 +48,8 @@ public class StageInfo
     public void SetEndingType(EndingType endingType) {_endingType = endingType;}
 
     private bool _stageClear = false;
-    public bool StageClaer => _stageClear;
-    public void SetStageClaer(bool stageClear) {_stageClear = stageClear;}
+    public bool StageClear => _stageClear;
+    public void SetStageClear(bool stageClear) {_stageClear = stageClear;}
 
     private int _rebornActorIndex = -1;
     public int RebornActorIndex => _rebornActorIndex;

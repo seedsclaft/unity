@@ -9,7 +9,6 @@ public class FastBattleView : BaseView
 {
     [SerializeField] private BattleActorList battleActorList = null;
     [SerializeField] private BattleEnemyLayer battleEnemyLayer = null;
-    [SerializeField] private BattleGridLayer battleGridLayer = null;
 
     private new System.Action<BattleViewEvent> _commandData = null;
 
@@ -126,10 +125,12 @@ public class FastBattleView : BaseView
     {
         return;
         //battleGridLayer.RefreshStatus();
+        /*
         foreach (var item in _battlerComps)
         {
             item.Value.RefreshStatus();
         }
+        */
     }
 
 

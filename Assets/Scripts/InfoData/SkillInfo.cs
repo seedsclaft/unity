@@ -44,8 +44,8 @@ public class SkillInfo
         _learningCost = learningCost;
     }
 
-    private List<SkillData.TriggerData> _triggerDatas = new();
-    public List<SkillData.TriggerData> TriggerDatas => _triggerDatas;
+    private List<SkillData.TriggerData> _triggerDates = new();
+    public List<SkillData.TriggerData> TriggerDates => _triggerDates;
 
     private int _weight = 100;
     public int Weight => _weight;
@@ -65,9 +65,9 @@ public class SkillInfo
         _learningState = LearningState.None;
     }
     
-    public void SetTriggerDatas(List<SkillData.TriggerData> triggerDatas)
+    public void SetTriggerDates(List<SkillData.TriggerData> triggerDates)
     {
-        _triggerDatas = triggerDatas;
+        _triggerDates = triggerDates;
     }
     
     public void SetParam(string param1,int param2,int param3)

@@ -135,7 +135,7 @@ public class GameSystem : MonoBehaviour
         } else
         if (viewEvent.commandType == Base.CommandType.CloseStatus)
         {
-            if (_statusView.gameObject)
+            if (_statusView != null)
             {
                 DestroyImmediate(_statusView.gameObject);
             }

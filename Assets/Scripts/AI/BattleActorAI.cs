@@ -68,9 +68,9 @@ public class BattleActorAI
                     CalcAbnormalSkillWeight(skillInfo,attackTargets,skillTargetAI,StateType.Slow);
                 }
                 // プリズム
-                if (skillInfo.Master.IsStateFeature(StateType.Prizm))
+                if (skillInfo.Master.IsStateFeature(StateType.Prism))
                 {
-                    CalcPrizmSkillWeight(skillInfo,skillTargetAI);
+                    CalcPrismSkillWeight(skillInfo,skillTargetAI);
                 }
                 // 攻撃無効
                 if (skillInfo.Master.IsStateFeature(StateType.NoDamage))
@@ -90,7 +90,7 @@ public class BattleActorAI
                     }
                 }
                 // Awake前でMpが支払える
-                if (skillInfos.Find(a => a.TriggerDatas.Find(b => b.TriggerType == TriggerType.PayBattleMp) != null) != null)
+                if (skillInfos.Find(a => a.TriggerDates.Find(b => b.TriggerType == TriggerType.PayBattleMp) != null) != null)
                 {
                     if (skillTargetAI.Weigth > 1 && _batterInfo.IsAwaken == false && skillInfo.Master.MpCost > 0)
                     {
@@ -210,7 +210,7 @@ public class BattleActorAI
         
         // 攻撃回数
         var repeatTime = skillInfo.Master.RepeatTime;
-        repeatTime += _batterInfo.GetStateInfoAll(StateType.Prizm).Count;
+        repeatTime += _batterInfo.GetStateInfoAll(StateType.Prism).Count;
         foreach (var attackFeature in attackFeatures)
         {
             foreach (var attackTarget in attackTargets)
@@ -303,7 +303,7 @@ public class BattleActorAI
         foreach (var attackTarget in attackTargets)
         {
             // CA持ちには回避バフを入れない
-            if (skillInfo.Master.Scope == ScopeType.One && attackTarget.DecksData.Find(a => a.Master.IsStateFeature(StateType.CounterOura)) != null)
+            if (skillInfo.Master.Scope == ScopeType.One && attackTarget.Skills.Find(a => a.Master.IsStateFeature(StateType.CounterOura)) != null)
             {
                 skillTargetAI.Weigth = 1;
                 return;
@@ -331,18 +331,18 @@ public class BattleActorAI
         }
     }
 
-    private static void CalcPrizmSkillWeight(SkillInfo skillInfo,SkillTargetAI skillTargetAI)
+    private static void CalcPrismSkillWeight(SkillInfo skillInfo,SkillTargetAI skillTargetAI)
     {
         // プリズム段階数
-        int prizumNum = _batterInfo.GetStateInfoAll(StateType.Prizm).Count;
-        if (prizumNum < 3)
+        int prismNum = _batterInfo.GetStateInfoAll(StateType.Prism).Count;
+        if (prismNum < 3)
         {
-            skillTargetAI.Weigth = 75 - prizumNum * 25;
+            skillTargetAI.Weigth = 75 - prismNum * 25;
         } else
         // アタックヒールの時
-        if (prizumNum < 5 && _batterInfo.DecksData.Find(a => a.Master.IsStateFeature(StateType.AssistHeal)) != null)
+        if (prismNum < 5 && _batterInfo.Skills.Find(a => a.Master.IsStateFeature(StateType.AssistHeal)) != null)
         {
-            skillTargetAI.Weigth = 75 - (prizumNum-2) * 25;
+            skillTargetAI.Weigth = 75 - (prismNum-2) * 25;
         }
     }
 

@@ -74,7 +74,6 @@ public class TacticsSelectCharacter : MonoBehaviour
     {
         characterList.UpdateSelectIndex(0);
         commandList.UpdateSelectIndex(-1);
-        commandList.Deactivate();
     }
 
     private void CallCharacterInputHandler(InputKeyType keyType)

@@ -281,7 +281,7 @@ public class StrategyModel : BaseModel
             {
                 getItemInfo.SetTitleData(DataSystem.System.GetTextData(14060).Text);
                 getItemInfos.Add(getItemInfo);
-                CurrentStage.SetStageClaer(true);
+                CurrentStage.SetStageClear(true);
             }
             if (getItemInfo.GetItemType == GetItemType.StatusUp)
             {

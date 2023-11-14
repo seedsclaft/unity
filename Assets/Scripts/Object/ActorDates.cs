@@ -37,6 +37,6 @@ public class LearningData
     public int SkillId;
     public int Level;
     public int Weight;
-    public List<SkillData.TriggerData> TriggerDatas;
+    public List<SkillData.TriggerData> TriggerDates;
     public int DeckNum;
 }

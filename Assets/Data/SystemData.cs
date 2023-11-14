@@ -78,7 +78,7 @@ public enum TacticsCommandType {
 	Battle,
 	Resource,
 	Status,
-	Turnend
+	TurnEnd
 }
 
 public enum TitleCommandType {

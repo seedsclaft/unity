@@ -82,16 +82,13 @@ public class StrategyView : BaseView
 
     public void SetEnemyList(List<ListData> confirmCommands)
     {
-        tacticsEnemyList.Initialize(1);
-        //tacticsEnemyList.SetInputHandler(InputKeyType.Decide,() => CallBattleEnemy());
+        tacticsEnemyList.SetInputHandler(InputKeyType.Decide,() => CallBattleEnemy());
         tacticsEnemyList.SetInputHandler(InputKeyType.Option1,() => OnClickEnemyInfo());
         tacticsEnemyList.SetInputHandler(InputKeyType.Option2,() => OnChangeSkipToggle(true));
         SetInputHandler(tacticsEnemyList.GetComponent<IInputHandlerEvent>());
         tacticsEnemyList.InitializeConfirm(confirmCommands,(a) => CallBattleCommand(a));
         SetInputHandler(tacticsEnemyList.TacticsCommandList.GetComponent<IInputHandlerEvent>());
         tacticsEnemyList.gameObject.SetActive(false);
-        tacticsEnemyList.Deactivate();
-        tacticsEnemyList.TacticsCommandList.Deactivate();
     }
 
     public void SetHelpWindow(){
@@ -171,8 +168,6 @@ public class StrategyView : BaseView
         tacticsEnemyList.SetData(troopInfo);
         tacticsEnemyList.Refresh(-1);
         tacticsEnemyList.gameObject.SetActive(true);
-        tacticsEnemyList.Activate();
-        tacticsEnemyList.TacticsCommandList.Activate();
         tacticsEnemyList.TacticsCommandList.UpdateSelectIndex(1);
         battleSkipToggle.gameObject.SetActive(enableBattleSkip);
     }    
@@ -250,8 +245,6 @@ public class StrategyView : BaseView
 
     private void DeactivateAll()
     {
-        tacticsEnemyList.Deactivate();
-        tacticsEnemyList.TacticsCommandList.Deactivate();
         strategyResultList.Deactivate();
         strategyResultList.TacticsCommandList.Deactivate();
     }

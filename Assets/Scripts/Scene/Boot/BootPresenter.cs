@@ -7,7 +7,6 @@ public class BootPresenter : BasePresenter
 {
     private BootView _view = null;
     private BootModel _model = null;
-    private bool _busy = true;
     public BootPresenter(BootView view)
     {
         _view = view;
@@ -19,7 +18,6 @@ public class BootPresenter : BasePresenter
     private void Initialize()
     {
         DataSystem.LoadData();
-        _busy = false;
         Debug.Log("Boot Success");
         Application.targetFrameRate = 60;
         var gamepad = Gamepad.current;

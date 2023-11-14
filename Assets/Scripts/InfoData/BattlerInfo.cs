@@ -31,19 +31,6 @@ public class BattlerInfo
     
     private List<SkillInfo> _skills;
     public List<SkillInfo> Skills => _skills;
-    private List<SkillInfo> _decksData = new ();
-    public List<SkillInfo> DecksData => _decksData;
-    public void RemoveDeck(int deckIndex)
-    {
-        if (isActor)
-        {
-            var findIndex = _decksData.FindIndex(a => a.DeckIndex == deckIndex);
-            if (findIndex > -1)
-            {
-                _decksData.RemoveAt(findIndex);
-            }
-        }
-    }
     private ActorInfo _actorInfo;
     public ActorInfo ActorInfo => _actorInfo;
     private EnemyData _enemyData;
@@ -104,13 +91,12 @@ public class BattlerInfo
         );
         _status = statusInfo;
         _index = index;
-        /*
         _skills = actorInfo.Skills.FindAll(a => a.LearningState == LearningState.Learned);
         foreach (var skill in _skills)
         {
             skill.SetIsUsed(false);
         }
-        */
+        /*
         _decksData = actorInfo.DecksData.FindAll(a => a.LearningState == LearningState.Learned);
         var dexkIndex = 0;
         foreach (var decksData in _decksData)
@@ -119,6 +105,7 @@ public class BattlerInfo
             decksData.SetDeckIndex(dexkIndex);
             dexkIndex++;
         }
+        */
         _demigodParam = actorInfo.DemigodParam;
         _isActor = true;
         
@@ -129,9 +116,9 @@ public class BattlerInfo
 
         if (_lastSelectSkillId == 0)
         {
-            _lastSelectSkillId = _decksData.Find(a => a.Id > 100).Id;
+            _lastSelectSkillId = _skills.Find(a => a.Id > 100).Id;
         }
-        if (_decksData.Find(a => a.Master.FeatureDates.Find(b => b.FeatureType == FeatureType.AddState && b.Param1 == (int)StateType.Undead) != null) != null)
+        if (_skills.Find(a => a.Master.FeatureDates.Find(b => b.FeatureType == FeatureType.AddState && b.Param1 == (int)StateType.Undead) != null) != null)
         {
             _kinds.Add(KindType.Undead);
         }
@@ -164,7 +151,7 @@ public class BattlerInfo
             if (_level >= enemyData.LearningSkills[i].Level)
             {
                 SkillInfo skillInfo = new SkillInfo(enemyData.LearningSkills[i].SkillId);
-                skillInfo.SetTriggerDatas(enemyData.LearningSkills[i].TriggerDatas);
+                skillInfo.SetTriggerDates(enemyData.LearningSkills[i].TriggerDates);
                 skillInfo.SetWeight(enemyData.LearningSkills[i].Weight);
                 _skills.Add(skillInfo);
             }
@@ -587,12 +574,12 @@ public class BattlerInfo
 
     public List<SkillInfo> ActiveSkills()
     {
-        return DecksData.FindAll(a => a.Master.SkillType != SkillType.Passive);
+        return Skills.FindAll(a => a.Master.SkillType != SkillType.Passive);
     }
 
     public List<SkillInfo> PassiveSkills()
     {
-        return DecksData.FindAll(a => a.Master.SkillType == SkillType.Passive);
+        return Skills.FindAll(a => a.Master.SkillType == SkillType.Passive);
     }
 
     public List<StateInfo> IconStateInfos()

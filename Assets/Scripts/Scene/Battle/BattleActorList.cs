@@ -32,7 +32,7 @@ public class BattleActorList : ListWindow , IInputHandlerEvent
                     UpdateTargetIndex(actorIndex);
                     return;
                 }
-                callEvent(MakeTargetIndexs(battlerInfo));
+                callEvent(MakeTargetIndexes(battlerInfo));
             });
             battleActor.SetSelectHandler((data) => 
                 {        
@@ -166,7 +166,7 @@ public class BattleActorList : ListWindow , IInputHandlerEvent
             {
                 return;
             }
-            callEvent(MakeTargetIndexs(battlerInfo));
+            callEvent(MakeTargetIndexes(battlerInfo));
         }
         if (keyType == InputKeyType.Down)
         {
@@ -200,7 +200,7 @@ public class BattleActorList : ListWindow , IInputHandlerEvent
         }
     }
 
-    private List<int> MakeTargetIndexs(BattlerInfo battlerInfo)
+    private List<int> MakeTargetIndexes(BattlerInfo battlerInfo)
     {
         List<int> indexList = new List<int>();
         if (_targetScopeType == ScopeType.All || _targetScopeType == ScopeType.WithoutSelfAll)
@@ -229,9 +229,5 @@ public class BattleActorList : ListWindow , IInputHandlerEvent
             indexList.Add(battlerInfo.Index);
         }
         return indexList;
-    }
-
-    private new void InputHandler(InputKeyType keyType)
-    {
     }
 }

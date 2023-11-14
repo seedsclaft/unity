@@ -30,8 +30,8 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveOnly: 1
-    FeatureDatas: []
-    TriggerDatas: []
+    FeatureDates: []
+    TriggerDates: []
   - Id: 1
     Name: "\u653B\u6483"
     IconIndex: 1
@@ -49,13 +49,13 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveOnly: 1
-    FeatureDatas:
+    FeatureDates:
     - SkillId: 1
       FeatureType: 1
       Param1: 100
       Param2: 0
       Param3: 0
-    TriggerDatas: []
+    TriggerDates: []
   - Id: 2
     Name: "\u653B\u6483"
     IconIndex: 1
@@ -73,13 +73,13 @@ MonoBehaviour:
     Range: 2
     RepeatTime: 1
     AliveOnly: 1
-    FeatureDatas:
+    FeatureDates:
     - SkillId: 2
       FeatureType: 1
       Param1: 50
       Param2: 0
       Param3: 0
-    TriggerDatas: []
+    TriggerDates: []
   - Id: 11
     Name: "\u795E\u5316"
     IconIndex: 5
@@ -97,13 +97,13 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveOnly: 1
-    FeatureDatas:
+    FeatureDates:
     - SkillId: 11
       FeatureType: 21
       Param1: 11
       Param2: 0
       Param3: 10
-    TriggerDatas: []
+    TriggerDates: []
   - Id: 21
     Name: "\u795E\u5316\u89E3\u9664"
     IconIndex: 5
@@ -121,13 +121,13 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveOnly: 1
-    FeatureDatas:
+    FeatureDates:
     - SkillId: 21
       FeatureType: 22
       Param1: 11
       Param2: 0
       Param3: 0
-    TriggerDatas: []
+    TriggerDates: []
   - Id: 31
     Name: "\u62D8\u675F\u5236\u5FA1"
     IconIndex: 3
@@ -145,7 +145,7 @@ MonoBehaviour:
     Range: 2
     RepeatTime: 1
     AliveOnly: 1
-    FeatureDatas:
+    FeatureDates:
     - SkillId: 31
       FeatureType: 1
       Param1: 100
@@ -156,7 +156,7 @@ MonoBehaviour:
       Param1: 101
       Param2: 0
       Param3: 0
-    TriggerDatas: []
+    TriggerDates: []
   - Id: 32
     Name: "\u62D8\u675F\u30C0\u30E1\u30FC\u30B8\u89E3\u9664"
     IconIndex: 3
@@ -174,13 +174,13 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveOnly: 1
-    FeatureDatas:
+    FeatureDates:
     - SkillId: 32
       FeatureType: 22
       Param1: 102
       Param2: 0
       Param3: 0
-    TriggerDatas: []
+    TriggerDates: []
   - Id: 33
     Name: "\u5C45\u5408"
     IconIndex: 3
@@ -198,7 +198,7 @@ MonoBehaviour:
     Range: 2
     RepeatTime: 1
     AliveOnly: 1
-    FeatureDatas:
+    FeatureDates:
     - SkillId: 33
       FeatureType: 1
       Param1: 150
@@ -209,7 +209,7 @@ MonoBehaviour:
       Param1: 0
       Param2: 0
       Param3: 0
-    TriggerDatas: []
+    TriggerDates: []
   - Id: 41
     Name: "\u30A2\u30F3\u30C7\u30C3\u30C9"
     IconIndex: 6
@@ -227,13 +227,13 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveOnly: 1
-    FeatureDatas:
+    FeatureDates:
     - SkillId: 41
       FeatureType: 21
       Param1: 117
       Param2: 0
       Param3: 10
-    TriggerDatas:
+    TriggerDates:
     - SkillId: 41
       TriggerType: 63
       TriggerTiming: 4
@@ -257,13 +257,13 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveOnly: 1
-    FeatureDatas:
+    FeatureDates:
     - SkillId: 42
       FeatureType: 2
       Param1: 5
       Param2: 0
       Param3: 0
-    TriggerDatas:
+    TriggerDates:
     - SkillId: 42
       TriggerType: 41
       TriggerTiming: 1
@@ -287,13 +287,13 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveOnly: 1
-    FeatureDatas:
+    FeatureDates:
     - SkillId: 101
       FeatureType: 1
       Param1: 150
       Param2: 0
       Param3: 0
-    TriggerDatas: []
+    TriggerDates: []
   - Id: 102
     Name: "\u30D0\u30FC\u30F3\u30B9\u30C8\u30FC\u30E0"
     IconIndex: 1
@@ -311,13 +311,13 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveOnly: 1
-    FeatureDatas:
+    FeatureDates:
     - SkillId: 102
       FeatureType: 1
       Param1: 150
       Param2: 0
       Param3: 0
-    TriggerDatas: []
+    TriggerDates: []
   - Id: 103
     Name: "\u30D2\u30FC\u30C8\u30B9\u30BF\u30F3\u30D7"
     IconIndex: 2
@@ -335,13 +335,13 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveOnly: 1
-    FeatureDatas:
+    FeatureDates:
     - SkillId: 103
       FeatureType: 7
       Param1: 8
       Param2: 0
       Param3: 0
-    TriggerDatas: []
+    TriggerDates: []
   - Id: 104
     Name: "\u30BD\u30FC\u30C9\u30A2\u30C0\u30D7\u30C8"
     IconIndex: 4
@@ -360,13 +360,13 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveOnly: 1
-    FeatureDatas:
+    FeatureDates:
     - SkillId: 104
       FeatureType: 21
       Param1: 46
       Param2: 999
       Param3: 10
-    TriggerDatas: []
+    TriggerDates: []
   - Id: 111
     Name: "\u30A4\u30F3\u30D5\u30A7\u30EB\u30CE"
     IconIndex: 10
@@ -385,7 +385,7 @@ MonoBehaviour:
     Range: 2
     RepeatTime: 1
     AliveOnly: 1
-    FeatureDatas:
+    FeatureDates:
     - SkillId: 111
       FeatureType: 21
       Param1: 23
@@ -396,7 +396,7 @@ MonoBehaviour:
       Param1: 11
       Param2: 0
       Param3: 0
-    TriggerDatas:
+    TriggerDates:
     - SkillId: 111
       TriggerType: 42
       TriggerTiming: 2
@@ -427,7 +427,7 @@ MonoBehaviour:
     Range: 2
     RepeatTime: 1
     AliveOnly: 1
-    FeatureDatas:
+    FeatureDates:
     - SkillId: 112
       FeatureType: 1
       Param1: 400
@@ -438,7 +438,7 @@ MonoBehaviour:
       Param1: 21
       Param2: 0
       Param3: 0
-    TriggerDatas: []
+    TriggerDates: []
   - Id: 113
     Name: "\u30A2\u30C0\u30D7\u30C6\u30FC\u30B7\u30E7\u30F3"
     IconIndex: 10
@@ -456,8 +456,8 @@ MonoBehaviour:
     Range: 2
     RepeatTime: 1
     AliveOnly: 1
-    FeatureDatas: []
-    TriggerDatas: []
+    FeatureDates: []
+    TriggerDates: []
   - Id: 114
     Name: "\u30E2\u30A8\u30B5\u30AB\u30EB\u30DB\u30CE\u30AA"
     IconIndex: 11
@@ -475,8 +475,8 @@ MonoBehaviour:
     Range: 2
     RepeatTime: 1
     AliveOnly: 1
-    FeatureDatas: []
-    TriggerDatas: []
+    FeatureDates: []
+    TriggerDates: []
   - Id: 121
     Name: "\u30E1\u30EB\u30C8\u30D0\u30FC\u30B9\u30C8"
     IconIndex: 1
@@ -494,13 +494,13 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveOnly: 1
-    FeatureDatas:
+    FeatureDates:
     - SkillId: 121
       FeatureType: 21
       Param1: 23
       Param2: 999
       Param3: 10
-    TriggerDatas: []
+    TriggerDates: []
   - Id: 131
     Name: "\u30A6\u30EB\u30D5\u30BD\u30A6\u30EB"
     IconIndex: 6
@@ -518,13 +518,13 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveOnly: 1
-    FeatureDatas:
+    FeatureDates:
     - SkillId: 131
       FeatureType: 21
       Param1: 43
       Param2: 999
       Param3: 8
-    TriggerDatas:
+    TriggerDates:
     - SkillId: 131
       TriggerType: 0
       TriggerTiming: 4
@@ -548,13 +548,13 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveOnly: 1
-    FeatureDatas:
+    FeatureDates:
     - SkillId: 132
       FeatureType: 21
       Param1: 43
       Param2: 999
       Param3: 16
-    TriggerDatas:
+    TriggerDates:
     - SkillId: 132
       TriggerType: 1
       TriggerTiming: 2
@@ -578,7 +578,7 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveOnly: 1
-    FeatureDatas:
+    FeatureDates:
     - SkillId: 133
       FeatureType: 21
       Param1: 43
@@ -589,7 +589,7 @@ MonoBehaviour:
       Param1: 84
       Param2: 999
       Param3: 12
-    TriggerDatas:
+    TriggerDates:
     - SkillId: 133
       TriggerType: 0
       TriggerTiming: 4
@@ -613,13 +613,13 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveOnly: 1
-    FeatureDatas:
+    FeatureDates:
     - SkillId: 134
       FeatureType: 21
       Param1: 43
       Param2: 999
       Param3: 20
-    TriggerDatas:
+    TriggerDates:
     - SkillId: 134
       TriggerType: 61
       TriggerTiming: 4
@@ -643,13 +643,13 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveOnly: 1
-    FeatureDatas:
+    FeatureDates:
     - SkillId: 135
       FeatureType: 7
       Param1: 12
       Param2: 0
       Param3: 0
-    TriggerDatas:
+    TriggerDates:
     - SkillId: 135
       TriggerType: 0
       TriggerTiming: 4
@@ -674,13 +674,13 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveOnly: 1
-    FeatureDatas:
+    FeatureDates:
     - SkillId: 136
       FeatureType: 7
       Param1: 12
       Param2: 0
       Param3: 0
-    TriggerDatas:
+    TriggerDates:
     - SkillId: 136
       TriggerType: 41
       TriggerTiming: 2
@@ -704,13 +704,13 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveOnly: 1
-    FeatureDatas:
+    FeatureDates:
     - SkillId: 137
       FeatureType: 7
       Param1: 4
       Param2: 0
       Param3: 0
-    TriggerDatas:
+    TriggerDates:
     - SkillId: 137
       TriggerType: 11
       TriggerTiming: 1
@@ -734,13 +734,13 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveOnly: 1
-    FeatureDatas:
+    FeatureDates:
     - SkillId: 141
       FeatureType: 310
       Param1: 201
       Param2: 1
       Param3: 20
-    TriggerDatas: []
+    TriggerDates: []
   - Id: 201
     Name: "\u30C7\u30A3\u30B9\u30C1\u30E3\u30FC\u30B8"
     IconIndex: 1
@@ -758,13 +758,13 @@ MonoBehaviour:
     Range: 2
     RepeatTime: 1
     AliveOnly: 1
-    FeatureDatas:
+    FeatureDates:
     - SkillId: 201
       FeatureType: 1
       Param1: 150
       Param2: 0
       Param3: 0
-    TriggerDatas: []
+    TriggerDates: []
   - Id: 202
     Name: "\u30E9\u30A4\u30C8\u30CB\u30F3\u30B0\u30A6\u30A7\u30D6"
     IconIndex: 3
@@ -782,13 +782,13 @@ MonoBehaviour:
     Range: 2
     RepeatTime: 1
     AliveOnly: 1
-    FeatureDatas:
+    FeatureDates:
     - SkillId: 202
       FeatureType: 21
       Param1: 101
       Param2: 10
       Param3: 1
-    TriggerDatas: []
+    TriggerDates: []
   - Id: 203
     Name: "\u30B7\u30E3\u30FC\u30D7\u30B3\u30FC\u30C9"
     IconIndex: 4
@@ -806,13 +806,13 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveOnly: 1
-    FeatureDatas:
+    FeatureDates:
     - SkillId: 203
       FeatureType: 21
       Param1: 52
       Param2: 999
       Param3: 33
-    TriggerDatas: []
+    TriggerDates: []
   - Id: 204
     Name: "\u30B7\u30E7\u30C3\u30AF\u30A4\u30F3\u30D1\u30EB\u30B9"
     IconIndex: 3
@@ -830,13 +830,13 @@ MonoBehaviour:
     Range: 2
     RepeatTime: 1
     AliveOnly: 1
-    FeatureDatas:
+    FeatureDates:
     - SkillId: 204
       FeatureType: 21
       Param1: 22
       Param2: 150
       Param3: 0
-    TriggerDatas: []
+    TriggerDates: []
   - Id: 205
     Name: "\u30C8\u30E9\u30B9\u30C8\u30C1\u30A7\u30A4\u30F3"
     IconIndex: 1
@@ -854,13 +854,13 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveOnly: 1
-    FeatureDatas:
+    FeatureDates:
     - SkillId: 205
       FeatureType: 32
       Param1: 100
       Param2: 0
       Param3: 0
-    TriggerDatas: []
+    TriggerDates: []
   - Id: 211
     Name: "\u30B9\u30C6\u30C3\u30D7\u30EA\u30FC\u30C0\u30FC"
     IconIndex: 10
@@ -879,7 +879,7 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveOnly: 1
-    FeatureDatas:
+    FeatureDates:
     - SkillId: 211
       FeatureType: 21
       Param1: 102
@@ -890,7 +890,7 @@ MonoBehaviour:
       Param1: 11
       Param2: 0
       Param3: 0
-    TriggerDatas:
+    TriggerDates:
     - SkillId: 211
       TriggerType: 42
       TriggerTiming: 2
@@ -921,7 +921,7 @@ MonoBehaviour:
     Range: 2
     RepeatTime: 1
     AliveOnly: 1
-    FeatureDatas:
+    FeatureDates:
     - SkillId: 212
       FeatureType: 21
       Param1: 101
@@ -937,7 +937,7 @@ MonoBehaviour:
       Param1: 32
       Param2: 0
       Param3: 0
-    TriggerDatas: []
+    TriggerDates: []
   - Id: 213
     Name: "\u30D5\u30EB\u30D0\u30FC\u30B9\u30C8"
     IconIndex: 10
@@ -956,7 +956,7 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveOnly: 1
-    FeatureDatas:
+    FeatureDates:
     - SkillId: 213
       FeatureType: 21
       Param1: 53
@@ -967,7 +967,7 @@ MonoBehaviour:
       Param1: 11
       Param2: 0
       Param3: 0
-    TriggerDatas:
+    TriggerDates:
     - SkillId: 213
       TriggerType: 42
       TriggerTiming: 2
@@ -998,7 +998,7 @@ MonoBehaviour:
     Range: 2
     RepeatTime: 1
     AliveOnly: 1
-    FeatureDatas:
+    FeatureDates:
     - SkillId: 214
       FeatureType: 21
       Param1: 124
@@ -1009,7 +1009,7 @@ MonoBehaviour:
       Param1: 21
       Param2: 0
       Param3: 0
-    TriggerDatas: []
+    TriggerDates: []
   - Id: 221
     Name: "\u30A2\u30AF\u30BB\u30E9\u30EC\u30A4\u30C8"
     IconIndex: 4
@@ -1027,13 +1027,13 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveOnly: 1
-    FeatureDatas:
+    FeatureDates:
     - SkillId: 221
       FeatureType: 21
       Param1: 53
       Param2: 1
       Param3: 4
-    TriggerDatas: []
+    TriggerDates: []
   - Id: 222
     Name: "\u30EA\u30D5\u30EC\u30AF\u30BB\u30B9"
     IconIndex: 3
@@ -1051,7 +1051,7 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveOnly: 1
-    FeatureDatas:
+    FeatureDates:
     - SkillId: 222
       FeatureType: 21
       Param1: 123
@@ -1062,7 +1062,7 @@ MonoBehaviour:
       Param1: 2
       Param2: 0
       Param3: 0
-    TriggerDatas: []
+    TriggerDates: []
   - Id: 231
     Name: "\u30A8\u30AF\u30B9\u30C6\u30F3\u30B7\u30E7\u30F3"
     IconIndex: 6
@@ -1080,13 +1080,13 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveOnly: 1
-    FeatureDatas:
+    FeatureDates:
     - SkillId: 231
       FeatureType: 21
       Param1: 32
       Param2: 999
       Param3: 0
-    TriggerDatas:
+    TriggerDates:
     - SkillId: 231
       TriggerType: 0
       TriggerTiming: 4
@@ -1110,13 +1110,13 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveOnly: 1
-    FeatureDatas:
+    FeatureDates:
     - SkillId: 232
       FeatureType: 21
       Param1: 62
       Param2: 999
       Param3: 50
-    TriggerDatas:
+    TriggerDates:
     - SkillId: 232
       TriggerType: 0
       TriggerTiming: 4
@@ -1140,13 +1140,13 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveOnly: 1
-    FeatureDatas:
+    FeatureDates:
     - SkillId: 233
       FeatureType: 21
       Param1: 45
       Param2: 999
       Param3: 8
-    TriggerDatas:
+    TriggerDates:
     - SkillId: 233
       TriggerType: 0
       TriggerTiming: 4
@@ -1170,13 +1170,13 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveOnly: 1
-    FeatureDatas:
+    FeatureDates:
     - SkillId: 234
       FeatureType: 21
       Param1: 45
       Param2: 999
       Param3: 20
-    TriggerDatas:
+    TriggerDates:
     - SkillId: 234
       TriggerType: 1
       TriggerTiming: 2
@@ -1200,13 +1200,13 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveOnly: 1
-    FeatureDatas:
+    FeatureDates:
     - SkillId: 235
       FeatureType: 21
       Param1: 52
       Param2: 999
       Param3: 33
-    TriggerDatas:
+    TriggerDates:
     - SkillId: 235
       TriggerType: 0
       TriggerTiming: 4
@@ -1230,13 +1230,13 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveOnly: 1
-    FeatureDatas:
+    FeatureDates:
     - SkillId: 236
       FeatureType: 21
       Param1: 45
       Param2: 999
       Param3: 0
-    TriggerDatas:
+    TriggerDates:
     - SkillId: 236
       TriggerType: 52
       TriggerTiming: 4
@@ -1260,13 +1260,13 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveOnly: 1
-    FeatureDatas:
+    FeatureDates:
     - SkillId: 237
       FeatureType: 21
       Param1: 125
       Param2: 999
       Param3: 8
-    TriggerDatas:
+    TriggerDates:
     - SkillId: 237
       TriggerType: 0
       TriggerTiming: 4
@@ -1290,13 +1290,13 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveOnly: 1
-    FeatureDatas:
+    FeatureDates:
     - SkillId: 241
       FeatureType: 310
       Param1: 202
       Param2: 2
       Param3: 20
-    TriggerDatas: []
+    TriggerDates: []
   - Id: 301
     Name: "\u30A2\u30A4\u30B9\u30D6\u30EC\u30A4\u30C9"
     IconIndex: 1
@@ -1314,13 +1314,13 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveOnly: 1
-    FeatureDatas:
+    FeatureDates:
     - SkillId: 301
       FeatureType: 1
       Param1: 150
       Param2: 0
       Param3: 0
-    TriggerDatas: []
+    TriggerDates: []
   - Id: 302
     Name: "\u30AB\u30A6\u30F3\u30BF\u30FC\u30AA\u30FC\u30E9"
     IconIndex: 2
@@ -1338,13 +1338,13 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveOnly: 1
-    FeatureDatas:
+    FeatureDates:
     - SkillId: 302
       FeatureType: 21
       Param1: 103
       Param2: 0
       Param3: 150
-    TriggerDatas: []
+    TriggerDates: []
   - Id: 303
     Name: "\u30B7\u30FC\u30EB\u30C9\u30B9\u30DA\u30EB"
     IconIndex: 4
@@ -1362,13 +1362,13 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveOnly: 1
-    FeatureDatas:
+    FeatureDates:
     - SkillId: 303
       FeatureType: 21
       Param1: 44
       Param2: 999
       Param3: 8
-    TriggerDatas: []
+    TriggerDates: []
   - Id: 304
     Name: "\u30A8\u30B9\u30B3\u30FC\u30C8\u30BD\u30FC\u30EB"
     IconIndex: 3
@@ -1386,13 +1386,13 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveOnly: 1
-    FeatureDatas:
+    FeatureDates:
     - SkillId: 304
       FeatureType: 21
       Param1: 107
       Param2: 5
       Param3: 10
-    TriggerDatas: []
+    TriggerDates: []
   - Id: 305
     Name: "\u30C7\u30A3\u30FC\u30D7\u30D5\u30EA\u30FC\u30BA"
     IconIndex: 3
@@ -1410,13 +1410,13 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveOnly: 1
-    FeatureDatas:
+    FeatureDates:
     - SkillId: 305
       FeatureType: 21
       Param1: 26
       Param2: 1
       Param3: 50
-    TriggerDatas: []
+    TriggerDates: []
   - Id: 311
     Name: "\u30D5\u30EA\u30B8\u30C3\u30C8\u30B7\u30A7\u30EB"
     IconIndex: 10
@@ -1435,7 +1435,7 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveOnly: 1
-    FeatureDatas:
+    FeatureDates:
     - SkillId: 311
       FeatureType: 21
       Param1: 104
@@ -1446,7 +1446,7 @@ MonoBehaviour:
       Param1: 11
       Param2: 0
       Param3: 0
-    TriggerDatas:
+    TriggerDates:
     - SkillId: 311
       TriggerType: 42
       TriggerTiming: 11
@@ -1477,7 +1477,7 @@ MonoBehaviour:
     Range: 2
     RepeatTime: 1
     AliveOnly: 1
-    FeatureDatas:
+    FeatureDates:
     - SkillId: 312
       FeatureType: 21
       Param1: 21
@@ -1488,7 +1488,7 @@ MonoBehaviour:
       Param1: 21
       Param2: 0
       Param3: 0
-    TriggerDatas: []
+    TriggerDates: []
   - Id: 313
     Name: "\u30A2\u30F3\u30C1\u30C9\u30FC\u30C9"
     IconIndex: 10
@@ -1507,7 +1507,7 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveOnly: 1
-    FeatureDatas:
+    FeatureDates:
     - SkillId: 313
       FeatureType: 21
       Param1: 119
@@ -1518,7 +1518,7 @@ MonoBehaviour:
       Param1: 11
       Param2: 0
       Param3: 0
-    TriggerDatas:
+    TriggerDates:
     - SkillId: 313
       TriggerType: 42
       TriggerTiming: 11
@@ -1549,7 +1549,7 @@ MonoBehaviour:
     Range: 2
     RepeatTime: 1
     AliveOnly: 1
-    FeatureDatas:
+    FeatureDates:
     - SkillId: 314
       FeatureType: 21
       Param1: 26
@@ -1560,7 +1560,7 @@ MonoBehaviour:
       Param1: 21
       Param2: 0
       Param3: 0
-    TriggerDatas: []
+    TriggerDates: []
   - Id: 321
     Name: "\u30D0\u30D6\u30EB\u30D6\u30ED\u30A6"
     IconIndex: 3
@@ -1578,13 +1578,13 @@ MonoBehaviour:
     Range: 2
     RepeatTime: 1
     AliveOnly: 1
-    FeatureDatas:
+    FeatureDates:
     - SkillId: 321
       FeatureType: 21
       Param1: 21
       Param2: 300
       Param3: 0
-    TriggerDatas: []
+    TriggerDates: []
   - Id: 322
     Name: "\u30A2\u30AF\u30A2\u30DF\u30E9\u30FC\u30B8\u30E5"
     IconIndex: 4
@@ -1602,13 +1602,13 @@ MonoBehaviour:
     Range: 2
     RepeatTime: 1
     AliveOnly: 1
-    FeatureDatas:
+    FeatureDates:
     - SkillId: 322
       FeatureType: 21
       Param1: 104
       Param2: 1
       Param3: 0
-    TriggerDatas: []
+    TriggerDates: []
   - Id: 331
     Name: "\u30AC\u30FC\u30C7\u30A3\u30A2\u30F3\u30BD\u30A6\u30EB"
     IconIndex: 6
@@ -1626,13 +1626,13 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveOnly: 1
-    FeatureDatas:
+    FeatureDates:
     - SkillId: 331
       FeatureType: 21
       Param1: 61
       Param2: 999
       Param3: 50
-    TriggerDatas:
+    TriggerDates:
     - SkillId: 331
       TriggerType: 0
       TriggerTiming: 4
@@ -1656,13 +1656,13 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveOnly: 1
-    FeatureDatas:
+    FeatureDates:
     - SkillId: 332
       FeatureType: 21
       Param1: 44
       Param2: 999
       Param3: 8
-    TriggerDatas:
+    TriggerDates:
     - SkillId: 332
       TriggerType: 0
       TriggerTiming: 4
@@ -1686,13 +1686,13 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveOnly: 1
-    FeatureDatas:
+    FeatureDates:
     - SkillId: 333
       FeatureType: 21
       Param1: 44
       Param2: 999
       Param3: 20
-    TriggerDatas:
+    TriggerDates:
     - SkillId: 333
       TriggerType: 1
       TriggerTiming: 2
@@ -1716,13 +1716,13 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveOnly: 1
-    FeatureDatas:
+    FeatureDates:
     - SkillId: 334
       FeatureType: 21
       Param1: 113
       Param2: 999
       Param3: 8
-    TriggerDatas:
+    TriggerDates:
     - SkillId: 334
       TriggerType: 0
       TriggerTiming: 4
@@ -1746,13 +1746,13 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveOnly: 1
-    FeatureDatas:
+    FeatureDates:
     - SkillId: 335
       FeatureType: 21
       Param1: 115
       Param2: 999
       Param3: 4
-    TriggerDatas:
+    TriggerDates:
     - SkillId: 335
       TriggerType: 0
       TriggerTiming: 4
@@ -1776,13 +1776,13 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveOnly: 1
-    FeatureDatas:
+    FeatureDates:
     - SkillId: 336
       FeatureType: 21
       Param1: 105
       Param2: 999
       Param3: 8
-    TriggerDatas:
+    TriggerDates:
     - SkillId: 336
       TriggerType: 41
       TriggerTiming: 2
@@ -1818,13 +1818,13 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveOnly: 1
-    FeatureDatas:
+    FeatureDates:
     - SkillId: 337
       FeatureType: 21
       Param1: 21
       Param2: 100
       Param3: 0
-    TriggerDatas:
+    TriggerDates:
     - SkillId: 337
       TriggerType: 71
       TriggerTiming: 2
@@ -1848,13 +1848,13 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveOnly: 1
-    FeatureDatas:
+    FeatureDates:
     - SkillId: 341
       FeatureType: 310
       Param1: 203
       Param2: 3
       Param3: 20
-    TriggerDatas: []
+    TriggerDates: []
   - Id: 401
     Name: "\u30BB\u30A4\u30F3\u30C8\u30EC\u30FC\u30B6\u30FC"
     IconIndex: 1
@@ -1872,7 +1872,7 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveOnly: 1
-    FeatureDatas:
+    FeatureDates:
     - SkillId: 401
       FeatureType: 1
       Param1: 150
@@ -1883,7 +1883,7 @@ MonoBehaviour:
       Param1: 1
       Param2: 0
       Param3: 150
-    TriggerDatas: []
+    TriggerDates: []
   - Id: 402
     Name: "\u30DA\u30CD\u30C8\u30EC\u30A4\u30C8"
     IconIndex: 1
@@ -1902,7 +1902,7 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveOnly: 1
-    FeatureDatas:
+    FeatureDates:
     - SkillId: 402
       FeatureType: 11
       Param1: 150
@@ -1913,7 +1913,7 @@ MonoBehaviour:
       Param1: 1
       Param2: 0
       Param3: 150
-    TriggerDatas: []
+    TriggerDates: []
   - Id: 403
     Name: "\u30D2\u30FC\u30EA\u30F3\u30B0"
     IconIndex: 2
@@ -1931,7 +1931,7 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveOnly: 1
-    FeatureDatas:
+    FeatureDates:
     - SkillId: 403
       FeatureType: 2
       Param1: 25
@@ -1947,7 +1947,7 @@ MonoBehaviour:
       Param1: 0
       Param2: 0
       Param3: 0
-    TriggerDatas: []
+    TriggerDates: []
   - Id: 404
     Name: "\u30EA\u30D5\u30EC\u30C3\u30B7\u30E5"
     IconIndex: 2
@@ -1965,7 +1965,7 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveOnly: 1
-    FeatureDatas:
+    FeatureDates:
     - SkillId: 404
       FeatureType: 22
       Param1: 21
@@ -2001,7 +2001,7 @@ MonoBehaviour:
       Param1: 26
       Param2: 0
       Param3: 0
-    TriggerDatas: []
+    TriggerDates: []
   - Id: 405
     Name: "\u3079\u30CD\u30C7\u30A3\u30AF\u30B7\u30E7\u30F3"
     IconIndex: 2
@@ -2019,13 +2019,13 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveOnly: 1
-    FeatureDatas:
+    FeatureDates:
     - SkillId: 405
       FeatureType: 21
       Param1: 109
       Param2: 10
       Param3: 1
-    TriggerDatas: []
+    TriggerDates: []
   - Id: 411
     Name: "\u30A8\u30EA\u30AF\u30B7\u30FC\u30EB"
     IconIndex: 10
@@ -2044,7 +2044,7 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveOnly: 0
-    FeatureDatas:
+    FeatureDates:
     - SkillId: 411
       FeatureType: 22
       Param1: 1
@@ -2060,7 +2060,7 @@ MonoBehaviour:
       Param1: 11
       Param2: 0
       Param3: 0
-    TriggerDatas:
+    TriggerDates:
     - SkillId: 411
       TriggerType: 42
       TriggerTiming: 2
@@ -2091,7 +2091,7 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveOnly: 1
-    FeatureDatas:
+    FeatureDates:
     - SkillId: 412
       FeatureType: 21
       Param1: 105
@@ -2102,7 +2102,7 @@ MonoBehaviour:
       Param1: 21
       Param2: 0
       Param3: 0
-    TriggerDatas: []
+    TriggerDates: []
   - Id: 413
     Name: "\u30D6\u30EC\u30FC\u30AF\u30B6\u30A6\u30A9\u30FC\u30EB"
     IconIndex: 10
@@ -2120,7 +2120,7 @@ MonoBehaviour:
     Range: 2
     RepeatTime: 1
     AliveOnly: 1
-    FeatureDatas:
+    FeatureDates:
     - SkillId: 413
       FeatureType: 21
       Param1: 121
@@ -2131,7 +2131,7 @@ MonoBehaviour:
       Param1: 11
       Param2: 0
       Param3: 0
-    TriggerDatas:
+    TriggerDates:
     - SkillId: 413
       TriggerType: 42
       TriggerTiming: 2
@@ -2162,7 +2162,7 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 3
     AliveOnly: 1
-    FeatureDatas:
+    FeatureDates:
     - SkillId: 414
       FeatureType: 1
       Param1: 150
@@ -2173,7 +2173,7 @@ MonoBehaviour:
       Param1: 21
       Param2: 0
       Param3: 0
-    TriggerDatas: []
+    TriggerDates: []
   - Id: 421
     Name: "\u30DB\u30FC\u30EA\u30FC\u30B0\u30EC\u30A4\u30B9"
     IconIndex: 2
@@ -2191,7 +2191,7 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveOnly: 0
-    FeatureDatas:
+    FeatureDates:
     - SkillId: 421
       FeatureType: 22
       Param1: 1
@@ -2202,7 +2202,7 @@ MonoBehaviour:
       Param1: 25
       Param2: 0
       Param3: 0
-    TriggerDatas: []
+    TriggerDates: []
   - Id: 422
     Name: "\u30D7\u30EA\u30BA\u30E0\u30EA\u30D5\u30EC\u30AF\u30BF\u30FC"
     IconIndex: 2
@@ -2221,13 +2221,13 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveOnly: 1
-    FeatureDatas:
+    FeatureDates:
     - SkillId: 422
       FeatureType: 21
       Param1: 120
       Param2: 999
       Param3: 1
-    TriggerDatas: []
+    TriggerDates: []
   - Id: 431
     Name: "\u30C7\u30A3\u30D0\u30A4\u30F3\u30B7\u30FC\u30EB\u30C9"
     IconIndex: 6
@@ -2245,13 +2245,13 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveOnly: 1
-    FeatureDatas:
+    FeatureDates:
     - SkillId: 431
       FeatureType: 21
       Param1: 31
       Param2: 999
       Param3: 0
-    TriggerDatas:
+    TriggerDates:
     - SkillId: 431
       TriggerType: 0
       TriggerTiming: 4
@@ -2275,13 +2275,13 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveOnly: 1
-    FeatureDatas:
+    FeatureDates:
     - SkillId: 432
       FeatureType: 21
       Param1: 112
       Param2: 999
       Param3: 2
-    TriggerDatas:
+    TriggerDates:
     - SkillId: 432
       TriggerType: 0
       TriggerTiming: 4
@@ -2305,13 +2305,13 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveOnly: 1
-    FeatureDatas:
+    FeatureDates:
     - SkillId: 433
       FeatureType: 21
       Param1: 51
       Param2: 999
       Param3: 50
-    TriggerDatas:
+    TriggerDates:
     - SkillId: 433
       TriggerType: 0
       TriggerTiming: 4
@@ -2335,13 +2335,13 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveOnly: 1
-    FeatureDatas:
+    FeatureDates:
     - SkillId: 434
       FeatureType: 21
       Param1: 105
       Param2: 999
       Param3: 5
-    TriggerDatas:
+    TriggerDates:
     - SkillId: 434
       TriggerType: 0
       TriggerTiming: 4
@@ -2365,13 +2365,13 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveOnly: 1
-    FeatureDatas:
+    FeatureDates:
     - SkillId: 435
       FeatureType: 21
       Param1: 41
       Param2: 999
       Param3: 20
-    TriggerDatas:
+    TriggerDates:
     - SkillId: 435
       TriggerType: 51
       TriggerTiming: 4
@@ -2395,13 +2395,13 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveOnly: 1
-    FeatureDatas:
+    FeatureDates:
     - SkillId: 436
       FeatureType: 21
       Param1: 116
       Param2: 999
       Param3: 4
-    TriggerDatas:
+    TriggerDates:
     - SkillId: 436
       TriggerType: 0
       TriggerTiming: 4
@@ -2425,13 +2425,13 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveOnly: 1
-    FeatureDatas:
+    FeatureDates:
     - SkillId: 437
       FeatureType: 21
       Param1: 118
       Param2: 999
       Param3: 0
-    TriggerDatas:
+    TriggerDates:
     - SkillId: 437
       TriggerType: 0
       TriggerTiming: 4
@@ -2455,13 +2455,13 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveOnly: 1
-    FeatureDatas:
+    FeatureDates:
     - SkillId: 438
       FeatureType: 21
       Param1: 122
       Param2: 999
       Param3: 1
-    TriggerDatas:
+    TriggerDates:
     - SkillId: 438
       TriggerType: 0
       TriggerTiming: 4
@@ -2485,13 +2485,13 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveOnly: 1
-    FeatureDatas:
+    FeatureDates:
     - SkillId: 441
       FeatureType: 310
       Param1: 204
       Param2: 4
       Param3: 20
-    TriggerDatas: []
+    TriggerDates: []
   - Id: 501
     Name: "\u30C0\u30FC\u30AF\u30D7\u30EA\u30BA\u30F3"
     IconIndex: 5
@@ -2509,13 +2509,13 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveOnly: 1
-    FeatureDatas:
+    FeatureDates:
     - SkillId: 501
       FeatureType: 1
       Param1: 150
       Param2: 0
       Param3: 0
-    TriggerDatas: []
+    TriggerDates: []
   - Id: 502
     Name: "\u30E6\u30FC\u30B5\u30CD\u30A4\u30B8\u30A2"
     IconIndex: 5
@@ -2533,13 +2533,13 @@ MonoBehaviour:
     Range: 2
     RepeatTime: 1
     AliveOnly: 1
-    FeatureDatas:
+    FeatureDates:
     - SkillId: 502
       FeatureType: 1
       Param1: 150
       Param2: 0
       Param3: 0
-    TriggerDatas: []
+    TriggerDates: []
   - Id: 503
     Name: "\u30C9\u30EC\u30A4\u30F3\u30D2\u30FC\u30EB"
     IconIndex: 5
@@ -2557,13 +2557,13 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveOnly: 1
-    FeatureDatas:
+    FeatureDates:
     - SkillId: 503
       FeatureType: 3
       Param1: 150
       Param2: 0
       Param3: 50
-    TriggerDatas: []
+    TriggerDates: []
   - Id: 504
     Name: "\u30C7\u30EA\u30FC\u30C8\u30DE\u30B8\u30C3\u30AF"
     IconIndex: 5
@@ -2581,13 +2581,13 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveOnly: 1
-    FeatureDatas:
+    FeatureDates:
     - SkillId: 504
       FeatureType: 21
       Param1: 71
       Param2: 0
       Param3: 0
-    TriggerDatas: []
+    TriggerDates: []
   - Id: 505
     Name: "\u30C7\u30A3\u30D7\u30E9\u30F4\u30A3\u30C6\u30A3"
     IconIndex: 3
@@ -2605,13 +2605,13 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveOnly: 1
-    FeatureDatas:
+    FeatureDates:
     - SkillId: 505
       FeatureType: 21
       Param1: 110
       Param2: 1
       Param3: 50
-    TriggerDatas: []
+    TriggerDates: []
   - Id: 511
     Name: "\u30C7\u30A3\u30B9\u30C8\u30E9\u30AF\u30B7\u30E7\u30F3"
     IconIndex: 10
@@ -2630,7 +2630,7 @@ MonoBehaviour:
     Range: 2
     RepeatTime: 1
     AliveOnly: 1
-    FeatureDatas:
+    FeatureDates:
     - SkillId: 511
       FeatureType: 1
       Param1: 400
@@ -2641,7 +2641,7 @@ MonoBehaviour:
       Param1: 11
       Param2: 0
       Param3: 0
-    TriggerDatas:
+    TriggerDates:
     - SkillId: 511
       TriggerType: 42
       TriggerTiming: 2
@@ -2672,7 +2672,7 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveOnly: 1
-    FeatureDatas:
+    FeatureDates:
     - SkillId: 512
       FeatureType: 1
       Param1: 600
@@ -2683,7 +2683,7 @@ MonoBehaviour:
       Param1: 21
       Param2: 0
       Param3: 0
-    TriggerDatas: []
+    TriggerDates: []
   - Id: 513
     Name: "\u30BB\u30E1\u30BF\u30EA\u30FC\u30B3\u30FC\u30EB"
     IconIndex: 10
@@ -2702,7 +2702,7 @@ MonoBehaviour:
     Range: 2
     RepeatTime: 1
     AliveOnly: 1
-    FeatureDatas:
+    FeatureDates:
     - SkillId: 513
       FeatureType: 5
       Param1: 600
@@ -2713,7 +2713,7 @@ MonoBehaviour:
       Param1: 11
       Param2: 0
       Param3: 0
-    TriggerDatas:
+    TriggerDates:
     - SkillId: 513
       TriggerType: 42
       TriggerTiming: 2
@@ -2744,7 +2744,7 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveOnly: 1
-    FeatureDatas:
+    FeatureDates:
     - SkillId: 514
       FeatureType: 1
       Param1: 1800
@@ -2755,7 +2755,7 @@ MonoBehaviour:
       Param1: 21
       Param2: 0
       Param3: 0
-    TriggerDatas: []
+    TriggerDates: []
   - Id: 521
     Name: "\u30C0\u30FC\u30AF\u30CD\u30B9"
     IconIndex: 3
@@ -2773,13 +2773,13 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveOnly: 1
-    FeatureDatas:
+    FeatureDates:
     - SkillId: 521
       FeatureType: 21
       Param1: 24
       Param2: 999
       Param3: 33
-    TriggerDatas: []
+    TriggerDates: []
   - Id: 522
     Name: "\u30B7\u30A7\u30A4\u30C7\u30A3\u30FC\u30AF\u30E9\u30A6\u30C9"
     IconIndex: 5
@@ -2797,13 +2797,13 @@ MonoBehaviour:
     Range: 2
     RepeatTime: 1
     AliveOnly: 1
-    FeatureDatas:
+    FeatureDates:
     - SkillId: 522
       FeatureType: 21
       Param1: 82
       Param2: 999
       Param3: 8
-    TriggerDatas: []
+    TriggerDates: []
   - Id: 531
     Name: "\u30A4\u30FC\u30B0\u30EB\u30A2\u30A4"
     IconIndex: 6
@@ -2821,13 +2821,13 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveOnly: 1
-    FeatureDatas:
+    FeatureDates:
     - SkillId: 531
       FeatureType: 21
       Param1: 47
       Param2: 999
       Param3: 25
-    TriggerDatas:
+    TriggerDates:
     - SkillId: 531
       TriggerType: 0
       TriggerTiming: 4
@@ -2851,13 +2851,13 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveOnly: 1
-    FeatureDatas:
+    FeatureDates:
     - SkillId: 532
       FeatureType: 21
       Param1: 47
       Param2: 999
       Param3: 75
-    TriggerDatas:
+    TriggerDates:
     - SkillId: 532
       TriggerType: 1
       TriggerTiming: 2
@@ -2881,13 +2881,13 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveOnly: 1
-    FeatureDatas:
+    FeatureDates:
     - SkillId: 533
       FeatureType: 21
       Param1: 111
       Param2: 999
       Param3: 25
-    TriggerDatas:
+    TriggerDates:
     - SkillId: 533
       TriggerType: 1
       TriggerTiming: 2
@@ -2911,13 +2911,13 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveOnly: 1
-    FeatureDatas:
+    FeatureDates:
     - SkillId: 534
       FeatureType: 21
       Param1: 114
       Param2: 999
       Param3: 5
-    TriggerDatas:
+    TriggerDates:
     - SkillId: 534
       TriggerType: 2
       TriggerTiming: 2
@@ -2941,13 +2941,13 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveOnly: 1
-    FeatureDatas:
+    FeatureDates:
     - SkillId: 535
       FeatureType: 2
       Param1: 20
       Param2: 0
       Param3: 0
-    TriggerDatas:
+    TriggerDates:
     - SkillId: 535
       TriggerType: 1
       TriggerTiming: 4
@@ -2971,7 +2971,7 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveOnly: 1
-    FeatureDatas:
+    FeatureDates:
     - SkillId: 536
       FeatureType: 21
       Param1: 117
@@ -2982,7 +2982,7 @@ MonoBehaviour:
       Param1: 5
       Param2: 0
       Param3: 0
-    TriggerDatas:
+    TriggerDates:
     - SkillId: 536
       TriggerType: 0
       TriggerTiming: 4
@@ -3012,13 +3012,13 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveOnly: 1
-    FeatureDatas:
+    FeatureDates:
     - SkillId: 537
       FeatureType: 2
       Param1: 5
       Param2: 0
       Param3: 0
-    TriggerDatas:
+    TriggerDates:
     - SkillId: 537
       TriggerType: 41
       TriggerTiming: 1
@@ -3042,13 +3042,13 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveOnly: 1
-    FeatureDatas:
+    FeatureDates:
     - SkillId: 541
       FeatureType: 310
       Param1: 205
       Param2: 5
       Param3: 20
-    TriggerDatas: []
+    TriggerDates: []
   - Id: 601
     Name: "\u30A8\u30F3\u30C9\u30AA\u30D6\u30B5\u30A4\u30AF\u30EB"
     IconIndex: 5
@@ -3066,13 +3066,13 @@ MonoBehaviour:
     Range: 2
     RepeatTime: 1
     AliveOnly: 1
-    FeatureDatas:
+    FeatureDates:
     - SkillId: 601
       FeatureType: 21
       Param1: 1
       Param2: 999
       Param3: 0
-    TriggerDatas: []
+    TriggerDates: []
   - Id: 1000
     Name: "\u611A\u8005"
     IconIndex: 1
@@ -3090,13 +3090,13 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveOnly: 1
-    FeatureDatas:
+    FeatureDates:
     - SkillId: 1000
       FeatureType: 301
       Param1: 10
       Param2: 0
       Param3: 0
-    TriggerDatas: []
+    TriggerDates: []
   - Id: 1001
     Name: "\u9B54\u8853\u5E2B"
     IconIndex: 1
@@ -3114,13 +3114,13 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveOnly: 1
-    FeatureDatas:
+    FeatureDates:
     - SkillId: 1001
       FeatureType: 304
       Param1: 5
       Param2: 0
       Param3: 0
-    TriggerDatas: []
+    TriggerDates: []
   - Id: 1002
     Name: "\u5973\u5E1D"
     IconIndex: 1
@@ -3138,7 +3138,7 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveOnly: 1
-    FeatureDatas:
+    FeatureDates:
     - SkillId: 1002
       FeatureType: 2
       Param1: 30
@@ -3149,7 +3149,7 @@ MonoBehaviour:
       Param1: 30
       Param2: 0
       Param3: 0
-    TriggerDatas: []
+    TriggerDates: []
   - Id: 1003
     Name: "\u5973\u6559\u7687"
     IconIndex: 1
@@ -3167,13 +3167,13 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveOnly: 1
-    FeatureDatas:
+    FeatureDates:
     - SkillId: 1003
       FeatureType: 2
       Param1: 999
       Param2: 0
       Param3: 0
-    TriggerDatas: []
+    TriggerDates: []
   - Id: 1004
     Name: "\u7687\u5E1D"
     IconIndex: 1
@@ -3191,13 +3191,13 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveOnly: 1
-    FeatureDatas:
+    FeatureDates:
     - SkillId: 1004
       FeatureType: 302
       Param1: 50
       Param2: 0
       Param3: 0
-    TriggerDatas: []
+    TriggerDates: []
   - Id: 1005
     Name: "\u6CD5\u738B"
     IconIndex: 1
@@ -3215,13 +3215,13 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveOnly: 1
-    FeatureDatas:
+    FeatureDates:
     - SkillId: 1005
       FeatureType: 309
       Param1: 5
       Param2: 0
       Param3: 0
-    TriggerDatas: []
+    TriggerDates: []
   - Id: 1006
     Name: "\u604B\u611B"
     IconIndex: 1
@@ -3239,13 +3239,13 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveOnly: 1
-    FeatureDatas:
+    FeatureDates:
     - SkillId: 1006
       FeatureType: 22
       Param1: 1
       Param2: 0
       Param3: 0
-    TriggerDatas: []
+    TriggerDates: []
   - Id: 1007
     Name: "\u6226\u8ECA"
     IconIndex: 1
@@ -3263,13 +3263,13 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveOnly: 1
-    FeatureDatas:
+    FeatureDates:
     - SkillId: 1007
       FeatureType: 307
       Param1: 0
       Param2: 0
       Param3: 0
-    TriggerDatas: []
+    TriggerDates: []
   - Id: 1008
     Name: "\u6B63\u7FA9"
     IconIndex: 1
@@ -3287,13 +3287,13 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveOnly: 1
-    FeatureDatas:
+    FeatureDates:
     - SkillId: 1008
       FeatureType: 305
       Param1: 30
       Param2: 0
       Param3: 0
-    TriggerDatas: []
+    TriggerDates: []
   - Id: 1009
     Name: "\u96A0\u8005"
     IconIndex: 1
@@ -3311,13 +3311,13 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveOnly: 1
-    FeatureDatas:
+    FeatureDates:
     - SkillId: 1009
       FeatureType: 307
       Param1: 4
       Param2: 0
       Param3: 0
-    TriggerDatas: []
+    TriggerDates: []
   - Id: 1010
     Name: "\u904B\u547D"
     IconIndex: 1
@@ -3335,13 +3335,13 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveOnly: 1
-    FeatureDatas:
+    FeatureDates:
     - SkillId: 1010
       FeatureType: 306
       Param1: 0
       Param2: 0
       Param3: 0
-    TriggerDatas: []
+    TriggerDates: []
   - Id: 1011
     Name: "\u525B\u6BC5"
     IconIndex: 1
@@ -3359,13 +3359,13 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveOnly: 1
-    FeatureDatas:
+    FeatureDates:
     - SkillId: 1011
       FeatureType: 307
       Param1: 2
       Param2: 0
       Param3: 0
-    TriggerDatas: []
+    TriggerDates: []
   - Id: 1012
     Name: "\u5211\u6B7B\u8005"
     IconIndex: 1
@@ -3383,13 +3383,13 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveOnly: 1
-    FeatureDatas:
+    FeatureDates:
     - SkillId: 1012
       FeatureType: 305
       Param1: -30
       Param2: 0
       Param3: 0
-    TriggerDatas: []
+    TriggerDates: []
   - Id: 1013
     Name: "\u6B7B\u795E"
     IconIndex: 1
@@ -3407,13 +3407,13 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveOnly: 1
-    FeatureDatas:
+    FeatureDates:
     - SkillId: 1013
       FeatureType: 308
       Param1: 0
       Param2: 0
       Param3: 0
-    TriggerDatas: []
+    TriggerDates: []
   - Id: 1014
     Name: "\u7BC0\u5236"
     IconIndex: 1
@@ -3431,13 +3431,13 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveOnly: 1
-    FeatureDatas:
+    FeatureDates:
     - SkillId: 1014
       FeatureType: 21
       Param1: 31
       Param2: 999
       Param3: 0
-    TriggerDatas: []
+    TriggerDates: []
   - Id: 1015
     Name: "\u60AA\u9B54"
     IconIndex: 1
@@ -3455,13 +3455,13 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveOnly: 1
-    FeatureDatas:
+    FeatureDates:
     - SkillId: 1015
       FeatureType: 307
       Param1: 1
       Param2: 0
       Param3: 0
-    TriggerDatas: []
+    TriggerDates: []
   - Id: 1016
     Name: "\u5854"
     IconIndex: 1
@@ -3479,13 +3479,13 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveOnly: 1
-    FeatureDatas:
+    FeatureDates:
     - SkillId: 1016
       FeatureType: 307
       Param1: 3
       Param2: 0
       Param3: 0
-    TriggerDatas: []
+    TriggerDates: []
   - Id: 1017
     Name: "\u661F"
     IconIndex: 1
@@ -3503,7 +3503,7 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveOnly: 1
-    FeatureDatas:
+    FeatureDates:
     - SkillId: 1017
       FeatureType: 301
       Param1: 20
@@ -3514,7 +3514,7 @@ MonoBehaviour:
       Param1: 0
       Param2: 0
       Param3: 0
-    TriggerDatas: []
+    TriggerDates: []
   - Id: 1018
     Name: "\u6708"
     IconIndex: 1
@@ -3532,7 +3532,7 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveOnly: 1
-    FeatureDatas:
+    FeatureDates:
     - SkillId: 1018
       FeatureType: 304
       Param1: 20
@@ -3543,7 +3543,7 @@ MonoBehaviour:
       Param1: 0
       Param2: 0
       Param3: 0
-    TriggerDatas: []
+    TriggerDates: []
   - Id: 1019
     Name: "\u592A\u967D"
     IconIndex: 1
@@ -3561,13 +3561,13 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveOnly: 1
-    FeatureDatas:
+    FeatureDates:
     - SkillId: 1019
       FeatureType: 304
       Param1: 10
       Param2: 0
       Param3: 0
-    TriggerDatas: []
+    TriggerDates: []
   - Id: 1020
     Name: "\u5BE9\u5224"
     IconIndex: 1
@@ -3585,13 +3585,13 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveOnly: 1
-    FeatureDatas:
+    FeatureDates:
     - SkillId: 1020
       FeatureType: 309
       Param1: 10
       Param2: 0
       Param3: 0
-    TriggerDatas: []
+    TriggerDates: []
   - Id: 1022
     Name: "\u6756"
     IconIndex: 1
@@ -3609,13 +3609,13 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveOnly: 1
-    FeatureDatas:
+    FeatureDates:
     - SkillId: 1022
       FeatureType: 304
       Param1: 1
       Param2: 0
       Param3: 0
-    TriggerDatas: []
+    TriggerDates: []
   - Id: 1023
     Name: "\u5668"
     IconIndex: 1
@@ -3633,13 +3633,13 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveOnly: 1
-    FeatureDatas:
+    FeatureDates:
     - SkillId: 1023
       FeatureType: 7
       Param1: 10
       Param2: 0
       Param3: 0
-    TriggerDatas: []
+    TriggerDates: []
   - Id: 1024
     Name: "\u5263"
     IconIndex: 1
@@ -3657,13 +3657,13 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveOnly: 1
-    FeatureDatas:
+    FeatureDates:
     - SkillId: 1024
       FeatureType: 2
       Param1: 10
       Param2: 0
       Param3: 0
-    TriggerDatas: []
+    TriggerDates: []
   - Id: 1025
     Name: "\u8CA8\u5E63"
     IconIndex: 1
@@ -3681,13 +3681,13 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveOnly: 1
-    FeatureDatas:
+    FeatureDates:
     - SkillId: 1025
       FeatureType: 301
       Param1: 2
       Param2: 0
       Param3: 0
-    TriggerDatas: []
+    TriggerDates: []
   - Id: 2001
     Name: "\u5143\u7D20\u8853\u30FB\u708E"
     IconIndex: 1
@@ -3705,8 +3705,8 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveOnly: 1
-    FeatureDatas: []
-    TriggerDatas: []
+    FeatureDates: []
+    TriggerDates: []
   - Id: 2002
     Name: "\u5143\u7D20\u8853\u30FB\u96F7"
     IconIndex: 1
@@ -3724,8 +3724,8 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveOnly: 1
-    FeatureDatas: []
-    TriggerDatas: []
+    FeatureDates: []
+    TriggerDates: []
   - Id: 2003
     Name: "\u5143\u7D20\u8853\u30FB\u6C37"
     IconIndex: 1
@@ -3743,8 +3743,8 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveOnly: 1
-    FeatureDatas: []
-    TriggerDatas: []
+    FeatureDates: []
+    TriggerDates: []
   - Id: 2004
     Name: "\u5149\u9B54\u8853"
     IconIndex: 2
@@ -3762,8 +3762,8 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveOnly: 1
-    FeatureDatas: []
-    TriggerDatas: []
+    FeatureDates: []
+    TriggerDates: []
   - Id: 2005
     Name: "\u8D85\u6B21\u5143\u8853"
     IconIndex: 5
@@ -3781,8 +3781,8 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveOnly: 1
-    FeatureDatas: []
-    TriggerDatas: []
+    FeatureDates: []
+    TriggerDates: []
   - Id: 2009
     Name: "\u306F\u305A\u3059"
     IconIndex: 1
@@ -3800,8 +3800,8 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveOnly: 1
-    FeatureDatas: []
-    TriggerDatas: []
+    FeatureDates: []
+    TriggerDates: []
   - Id: 4001
     Name: "\u4EBA\u4F53\u932C\u6210+\\d"
     IconIndex: 1
@@ -3819,13 +3819,13 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveOnly: 1
-    FeatureDatas:
+    FeatureDates:
     - SkillId: 4001
       FeatureType: 401
       Param1: 1
       Param2: 1
       Param3: 0
-    TriggerDatas: []
+    TriggerDates: []
   - Id: 4002
     Name: "\u7406\u6027\u62E1\u5F35+\\d"
     IconIndex: 1
@@ -3843,13 +3843,13 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveOnly: 1
-    FeatureDatas:
+    FeatureDates:
     - SkillId: 4002
       FeatureType: 401
       Param1: 2
       Param2: 1
       Param3: 0
-    TriggerDatas: []
+    TriggerDates: []
   - Id: 4003
     Name: "\u5B58\u5728\u4FEE\u5FA9+\\d"
     IconIndex: 1
@@ -3867,13 +3867,13 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveOnly: 1
-    FeatureDatas:
+    FeatureDates:
     - SkillId: 4003
       FeatureType: 401
       Param1: 3
       Param2: 1
       Param3: 0
-    TriggerDatas: []
+    TriggerDates: []
   - Id: 4004
     Name: "\u6551\u6E08\u57F7\u884C+\\d"
     IconIndex: 1
@@ -3891,13 +3891,13 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveOnly: 1
-    FeatureDatas:
+    FeatureDates:
     - SkillId: 4004
       FeatureType: 401
       Param1: 4
       Param2: 1
       Param3: 0
-    TriggerDatas: []
+    TriggerDates: []
   - Id: 4005
     Name: "\u7D20\u5B50\u88DC\u5145+\\d"
     IconIndex: 1
@@ -3915,13 +3915,13 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveOnly: 1
-    FeatureDatas:
+    FeatureDates:
     - SkillId: 4005
       FeatureType: 401
       Param1: 5
       Param2: 1
       Param3: 0
-    TriggerDatas: []
+    TriggerDates: []
   - Id: 4101
     Name: "\u6700\u5927Hp+\\d"
     IconIndex: 1
@@ -3939,13 +3939,13 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveOnly: 1
-    FeatureDatas:
+    FeatureDates:
     - SkillId: 4101
       FeatureType: 402
       Param1: 1
       Param2: 2
       Param3: 0
-    TriggerDatas: []
+    TriggerDates: []
   - Id: 4102
     Name: "\u6700\u5927Mp+\\d"
     IconIndex: 1
@@ -3963,13 +3963,13 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveOnly: 1
-    FeatureDatas:
+    FeatureDates:
     - SkillId: 4102
       FeatureType: 402
       Param1: 2
       Param2: 2
       Param3: 0
-    TriggerDatas: []
+    TriggerDates: []
   - Id: 4103
     Name: ATK+\d
     IconIndex: 1
@@ -3987,13 +3987,13 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveOnly: 1
-    FeatureDatas:
+    FeatureDates:
     - SkillId: 4103
       FeatureType: 402
       Param1: 3
       Param2: 2
       Param3: 0
-    TriggerDatas: []
+    TriggerDates: []
   - Id: 4104
     Name: DEF+\d
     IconIndex: 1
@@ -4011,13 +4011,13 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveOnly: 1
-    FeatureDatas:
+    FeatureDates:
     - SkillId: 4104
       FeatureType: 402
       Param1: 4
       Param2: 2
       Param3: 0
-    TriggerDatas: []
+    TriggerDates: []
   - Id: 4105
     Name: SPD+\d
     IconIndex: 1
@@ -4035,13 +4035,13 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveOnly: 1
-    FeatureDatas:
+    FeatureDates:
     - SkillId: 4105
       FeatureType: 402
       Param1: 5
       Param2: 2
       Param3: 0
-    TriggerDatas: []
+    TriggerDates: []
   - Id: 4201
     Name: \d
     IconIndex: 1
@@ -4059,13 +4059,13 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveOnly: 1
-    FeatureDatas:
+    FeatureDates:
     - SkillId: 4201
       FeatureType: 403
       Param1: 0
       Param2: 0
       Param3: 0
-    TriggerDatas: []
+    TriggerDates: []
   - Id: 4301
     Name: "\u3059\u3079\u3066\u6B7B\u305B\u308B\u9B42+\\d"
     IconIndex: 1
@@ -4083,10 +4083,10 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveOnly: 1
-    FeatureDatas:
+    FeatureDates:
     - SkillId: 4301
       FeatureType: 404
       Param1: 1
       Param2: 2
       Param3: 0
-    TriggerDatas: []
+    TriggerDates: []

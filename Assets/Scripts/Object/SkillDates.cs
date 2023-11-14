@@ -29,7 +29,7 @@ public class SkillData
     public bool AliveOnly;
 
     public List<FeatureData> FeatureDates;
-    public List<TriggerData> TriggerDatas;
+    public List<TriggerData> TriggerDates;
     public bool IsHpDamageFeature()
     {
         return FeatureDates.Find(a => a.FeatureType == FeatureType.HpDamage) != null;

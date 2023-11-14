@@ -68,7 +68,7 @@ public class DebugBattleData : MonoBehaviour
             if (command.Length != 2) return;
             var battlerInfo = _model.GetBattlerInfo(int.Parse( command[0] ));
             if (battlerInfo == null) return;
-            var skillInfo = battlerInfo.DecksData.Find(a => a.Master.Id == int.Parse( command[1] ));
+            var skillInfo = battlerInfo.Skills.Find(a => a.Master.Id == int.Parse( command[1] ));
             if (skillInfo == null) return;
             _model.SetActionBattler(battlerInfo.Index);
             ActionInfo actionInfo = _model.MakeActionInfo(battlerInfo,skillInfo,false,false);

@@ -11,7 +11,7 @@ public class ActionResultInfo
     public int TargetIndex => _targetIndex;
 
     private int _skillIndex = -1;
-    public ActionResultInfo(BattlerInfo subject,BattlerInfo target,List<SkillData.FeatureData> featureDatas,int skillIndex,bool isOneTarget = false)
+    public ActionResultInfo(BattlerInfo subject,BattlerInfo target,List<SkillData.FeatureData> featureDates,int skillIndex,bool isOneTarget = false)
     {
         if (subject != null && target != null)
         {
@@ -21,15 +21,15 @@ public class ActionResultInfo
             _execStateInfos[_targetIndex] = new List<StateType>();
             _skillIndex = skillIndex;
         }
-        for (int i = 0; i < featureDatas.Count; i++)
+        for (int i = 0; i < featureDates.Count; i++)
         {
-            MakeFeature(subject,target,featureDatas[i],isOneTarget);
+            MakeFeature(subject,target,featureDates[i],isOneTarget);
         }
         if (subject != null && target != null)
         {
             if (_hpDamage >= target.Hp && target.IsAlive())
             {
-                if (target.IsState(StateType.Undead) && featureDatas.Find(a => a.FeatureType == FeatureType.BreakUndead) == null)
+                if (target.IsState(StateType.Undead) && featureDates.Find(a => a.FeatureType == FeatureType.BreakUndead) == null)
                 {
                     SkillData.FeatureData undeadFeature = new SkillData.FeatureData();
                     undeadFeature.FeatureType = FeatureType.RemoveState;
@@ -46,7 +46,7 @@ public class ActionResultInfo
             int recoveryHp = Mathf.Min(_reHeal,resuceHp);
             if ((_reDamage - recoveryHp) >= subject.Hp && subject.IsAlive())
             {
-                if (subject.IsState(StateType.Undead) && featureDatas.Find(a => a.FeatureType == FeatureType.BreakUndead) == null)
+                if (subject.IsState(StateType.Undead) && featureDates.Find(a => a.FeatureType == FeatureType.BreakUndead) == null)
                 {
                     SkillData.FeatureData undeadFeature = new SkillData.FeatureData();
                     undeadFeature.FeatureType = FeatureType.RemoveState;
@@ -288,7 +288,7 @@ public class ActionResultInfo
             }
         }
 
-        SkillDamage *= GetDeffenseRateValue((AtkValue * 0.5f),DefValue);
+        SkillDamage *= GetDefenseRateValue((AtkValue * 0.5f),DefValue);
         //SkillDamage -= (DefValue * 0.5f);
         float DamageValue = Mathf.Max(1,SkillDamage);
         hpDamage = (int)Mathf.Round(DamageValue);
@@ -493,7 +493,7 @@ public class ActionResultInfo
             }
         }
 
-        SkillDamage *= GetDeffenseRateValue((AtkValue * 0.5f),DefValue);
+        SkillDamage *= GetDefenseRateValue((AtkValue * 0.5f),DefValue);
         //SkillDamage -= (DefValue * 0.5f);
         float DamageValue = Mathf.Max(1,SkillDamage);
         hpDamage = (int)Mathf.Round(DamageValue);
@@ -735,15 +735,15 @@ public class ActionResultInfo
         }
     }
     
-    private float GetDeffenseRateValue(float atk,float def){
+    private float GetDefenseRateValue(float atk,float def){
         // 防御率 ＝ 1 - 防御 / (攻撃 + 防御)　※攻撃 + 防御 < 1の時、1
-        float _deffenceRateValue;
+        float _defenseRateValue;
         if ((atk + def) < 1){
-            _deffenceRateValue = 1;
+            _defenseRateValue = 1;
         } else{
-            _deffenceRateValue = 1 - (def / (atk + def));
+            _defenseRateValue = 1 - (def / (atk + def));
         }
-        return _deffenceRateValue;
+        return _defenseRateValue;
     }
 
     private int FreezeDamageValue(BattlerInfo subject,float skillDamage)

@@ -68,7 +68,7 @@ public enum StateType
     Undead = 117,
     AbsoluteHit = 118,
     AntiDote = 119,
-    Prizm = 120,
+    Prism = 120,
     NoPassive = 121,
     AssistHeal = 122,
     RevengeAct = 123,
