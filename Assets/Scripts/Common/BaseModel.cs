@@ -140,6 +140,14 @@ public class BaseModel
     {
         Ryneus.SoundManager.Instance._bgmVolume = bgmVolume;
         Ryneus.SoundManager.Instance.UpdateBgmVolume();
+        if (bgmVolume > 0 && Ryneus.SoundManager.Instance._bgmMute == false)
+        {
+            ChangeBGMMute(false);
+        }
+        if (bgmVolume == 0 && Ryneus.SoundManager.Instance._bgmMute == true)
+        {
+            ChangeBGMMute(true);
+        }
     }
     public void ChangeBGMMute(bool bgmMute)
     {
@@ -153,6 +161,14 @@ public class BaseModel
     {
         Ryneus.SoundManager.Instance._seVolume = seVolume;
         Ryneus.SoundManager.Instance.UpdateSeVolume();
+        if (seVolume > 0 && Ryneus.SoundManager.Instance._seMute == false)
+        {
+            ChangeSEMute(false);
+        }
+        if (seVolume == 0 && Ryneus.SoundManager.Instance._seMute == true)
+        {
+            ChangeSEMute(true);
+        }
     }
     public void ChangeSEMute(bool seMute)
     {

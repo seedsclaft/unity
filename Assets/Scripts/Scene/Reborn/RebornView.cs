@@ -37,14 +37,12 @@ public class RebornView : BaseView
 
     public void SetActorList(List<ListData> actorInfos) 
     {
-        actorInfoList.Initialize(actorInfos.Count);
         actorInfoList.SetData(actorInfos);
         actorInfoList.SetInputHandler(InputKeyType.Decide,() => CallDecideActor());
         actorInfoList.SetInputHandler(InputKeyType.Cancel,() => CallCancelActor());
         actorInfoList.SetInputHandler(InputKeyType.Down,() => CallUpdate());
         actorInfoList.SetInputHandler(InputKeyType.Up,() => CallUpdate());
         SetInputHandler(actorInfoList.GetComponent<IInputHandlerEvent>());
-        actorInfoList.Activate();
     }
 
     private void CallDecideActor()

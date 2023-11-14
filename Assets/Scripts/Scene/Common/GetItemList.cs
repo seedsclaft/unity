@@ -50,7 +50,6 @@ public class GetItemList : ListWindow , IInputHandlerEvent
     
     public void InitializeConfirm(List<ListData> confirmCommands ,System.Action<ConfirmCommandType> callEvent)
     {
-        tacticsCommandList.Initialize(confirmCommands.Count);
         tacticsCommandList.SetData(confirmCommands);
         tacticsCommandList.SetInputHandler(InputKeyType.Decide,() => 
         {

@@ -41,14 +41,12 @@ public class RulingView : BaseView
     
     public void SetRulingCommand(List<ListData> ruleList)
     {
-        commandList.Initialize(ruleList.Count);
         commandList.SetData(ruleList);
         commandList.SetInputHandler(InputKeyType.Down,() => CallRulingCommand());
         commandList.SetInputHandler(InputKeyType.Up,() => CallRulingCommand());
         commandList.SetInputHandler(InputKeyType.Cancel,() => BackEvent());
         commandList.SetSelectedHandler(() => CallRulingCommand());
         SetInputHandler(commandList.GetComponent<IInputHandlerEvent>());
-        commandList.Activate();
     }
 
     private void CallRulingCommand()

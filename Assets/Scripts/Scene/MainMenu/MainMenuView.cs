@@ -46,13 +46,11 @@ public class MainMenuView : BaseView
     }
     
     public void SetStagesData(List<ListData> stages){
-        stageList.Initialize(stages.Count);
         stageList.SetData(stages);
         stageList.SetInputHandler(InputKeyType.Decide,() => CallMainMenuStage());
         stageList.SetInputHandler(InputKeyType.Option1,() => CallOpenSideMenu());
         stageList.SetSelectedHandler(() => UpdateMainMenuStage());
         SetInputHandler(stageList.GetComponent<IInputHandlerEvent>());
-        stageList.Activate();
     }
     
     private void CallMainMenuStage(){

@@ -77,11 +77,9 @@ public class ConfirmView : BaseView,IInputHandlerEvent
 
     public void SetConfirmCommand(List<ListData> menuCommands)
     {
-        commandList.Initialize(menuCommands.Count);
         commandList.SetData(menuCommands);
         commandList.SetInputHandler(InputKeyType.Decide,() => CallConfirmCommand());
         SetInputHandler(commandList.GetComponent<IInputHandlerEvent>());
-        commandList.Activate();
     }
 
     private void CallConfirmCommand()

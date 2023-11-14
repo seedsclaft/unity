@@ -35,7 +35,6 @@ public class RankingView : BaseView,IInputHandlerEvent
 
     public void SetRankingInfo(List<ListData> rankingInfo) 
     {
-        rankingInfoList.Initialize(rankingInfo.Count);
         rankingInfoList.SetData(rankingInfo);
     }
 

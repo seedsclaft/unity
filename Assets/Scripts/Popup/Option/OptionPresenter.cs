@@ -20,17 +20,11 @@ public class OptionPresenter
     private void Initialize()
     {
         _view.SetEvent((type) => updateCommand(type));
-        _view.SetOptionCommand(_model.OptionCommand(),() => 
-        {
-            _view.InitializeVolume(_model.BGMVolume(),_model.BGMMute(),_model.SEVolume(),_model.SEMute());
-            _view.InitializeGraphic(_model.GraphicIndex());
-            _view.InitializeEventSkip(GameSystem.ConfigData._eventSkipIndex ? 1 : 2);
-            _view.InitializeCommandEndCheck(GameSystem.ConfigData._commandEndCheck ? 2 : 1);
-            _view.InitializeBattleWait(GameSystem.ConfigData._battleWait ? 2 : 1);
-            _view.InitializeBattleAnimation(GameSystem.ConfigData._battleAnimationSkip ? 1 : 2);
-            _view.InitializeInputType(GameSystem.ConfigData._inputType ? 1 : 2);
-            _view.InitializeBattleAuto(GameSystem.ConfigData._battleAuto ? 1 : 2);
-        });
+        _view.SetOptionList(_model.OptionCommandData(
+            (a) => CommandVolumeSlider(a),
+            (a) => CommandVolumeMute(a),
+            (a) => CommandChangeToggle(a)
+        ));
         _view.SetHelpWindow();
         _busy = false;
     }
@@ -41,120 +35,168 @@ public class OptionPresenter
         if (_busy){
             return;
         }
+        if (viewEvent.commandType == CommandType.ChangeOptionValue)
+        {
+           CommandOptionValue((OptionInfo)viewEvent.template);
+        }
         if (viewEvent.commandType == CommandType.SelectCategory)
         {
            CommandSelectCategory((OptionCategory)viewEvent.template);
         }
-        if (viewEvent.commandType == CommandType.ChangeBGMValue)
+    }
+
+    private void CommandOptionValue(OptionInfo data)
+    {
+        var inputKeyType = data.keyType;
+        switch (data.OptionCommand.Key)
         {
-           CommandChangeBGMValue((float)viewEvent.template);
+            case "BGM_VOLUME":
+                if (inputKeyType == InputKeyType.Right)
+                {
+                    _model.ChangeBGMValue(Mathf.Min(1, Ryneus.SoundManager.Instance._bgmVolume + 0.05f));
+                }
+                if (inputKeyType == InputKeyType.Left)
+                {
+                    _model.ChangeBGMValue(Mathf.Max(0, Ryneus.SoundManager.Instance._bgmVolume - 0.05f));
+                }
+                if (inputKeyType == InputKeyType.Option1)
+                {
+                    _model.ChangeBGMMute(!Ryneus.SoundManager.Instance._bgmMute);
+                }
+                break;
+            case "SE_VOLUME":
+                if (inputKeyType == InputKeyType.Right)
+                {
+                    _model.ChangeSEValue(Mathf.Min(1, Ryneus.SoundManager.Instance._seVolume + 0.05f));
+                }
+                if (inputKeyType == InputKeyType.Left)
+                {
+                    _model.ChangeSEValue(Mathf.Max(0, Ryneus.SoundManager.Instance._seVolume - 0.05f));
+                }
+                if (inputKeyType == InputKeyType.Option1)
+                {
+                    _model.ChangeSEMute(!Ryneus.SoundManager.Instance._seMute);
+                }
+                break;
+            case "GRAPHIC_QUALITY":
+                if (inputKeyType == InputKeyType.Right)
+                {
+                    _model.ChangeGraphicIndex(1);
+                }
+                if (inputKeyType == InputKeyType.Left)
+                {
+                    _model.ChangeGraphicIndex(2);
+                };
+                break;
+            case "EVENT_SKIP":
+                _model.ChangeEventSkipIndex(inputKeyType == InputKeyType.Right);
+                break;
+            case "COMMAND_END_CHECK":
+                _model.ChangeCommandEndCheck(inputKeyType == InputKeyType.Right);
+                break;
+            case "BATTLE_WAIT":
+                _model.ChangeBattleWait(inputKeyType == InputKeyType.Right);
+                break;
+            case "BATTLE_ANIMATION":
+                _model.ChangeBattleAnimation(inputKeyType == InputKeyType.Right);
+                break;
+            case "INPUT_TYPE":
+                _model.ChangeInputType(inputKeyType == InputKeyType.Right);
+                _view.SetTempInputType(inputKeyType == InputKeyType.Right ? 1 : 0);
+                break;
+            case "BATTLE_AUTO":
+                _model.ChangeBattleAuto(inputKeyType == InputKeyType.Right);
+                break;
         }
-        if (viewEvent.commandType == CommandType.ChangeBGMMute)
+        CommandRefresh();
+    }
+
+    private void CommandVolumeSlider(float volume)
+    {
+        var ListData = _view.CurrentOptionCommand;
+        if (ListData != null)
         {
-           CommandChangeBGMMute((bool)viewEvent.template);
+            var data = (OptionInfo)ListData.Data;
+            if (data.OptionCommand.Key == "BGM_VOLUME")
+            {
+                _model.ChangeBGMValue(volume);
+            } else
+            if (data.OptionCommand.Key == "SE_VOLUME")
+            {
+                _model.ChangeSEValue(volume);
+            }
+            CommandRefresh();
         }
-        if (viewEvent.commandType == CommandType.ChangeSEValue)
+    }
+
+    private void CommandVolumeMute(bool isMute)
+    {
+        var ListData = _view.CurrentOptionCommand;
+        if (ListData != null)
         {
-           CommandChangeSEValue((float)viewEvent.template);
+            var data = (OptionInfo)ListData.Data;
+            if (data.OptionCommand.Key == "BGM_VOLUME")
+            {
+                _model.ChangeBGMMute(isMute);
+            } else
+            if (data.OptionCommand.Key == "SE_VOLUME")
+            {
+                _model.ChangeSEMute(isMute);
+            }
+            CommandRefresh();
         }
-        if (viewEvent.commandType == CommandType.ChangeSEMute)
+    }
+
+    private void CommandChangeToggle(int toggleIndex)
+    {
+        var ListData = _view.CurrentOptionCommand;
+        if (ListData != null)
         {
-           CommandChangeSEMute((bool)viewEvent.template);
+            var data = (OptionInfo)ListData.Data;
+            switch (data.OptionCommand.Key)
+            {
+                case "GRAPHIC_QUALITY":
+                    if (toggleIndex == 1)
+                    {
+                        _model.ChangeGraphicIndex(1);
+                    }
+                    if (toggleIndex == 0)
+                    {
+                        _model.ChangeGraphicIndex(2);
+                    };
+                    break;
+                case "EVENT_SKIP":
+                    _model.ChangeEventSkipIndex((toggleIndex == 1));
+                    break;
+                case "COMMAND_END_CHECK":
+                    _model.ChangeCommandEndCheck((toggleIndex == 1));
+                    break;
+                case "BATTLE_WAIT":
+                    _model.ChangeBattleWait(toggleIndex == 1);
+                    break;
+                case "BATTLE_ANIMATION":
+                    _model.ChangeBattleAnimation((toggleIndex == 1));
+                    break;
+                case "INPUT_TYPE":
+                    _model.ChangeInputType(toggleIndex == 1);
+                    _view.SetTempInputType(toggleIndex);
+                    break;
+                case "BATTLE_AUTO":
+                    _model.ChangeBattleAuto(toggleIndex == 1);
+                    break;
+            }
+            CommandRefresh();
         }
-        if (viewEvent.commandType == CommandType.ChangeGraphicIndex)
-        {
-           CommandChangeGraphicIndex((int)viewEvent.template);
-        }
-        if (viewEvent.commandType == CommandType.ChangeEventSkipIndex)
-        {
-           CommandChangeEventSkipIndex((int)viewEvent.template);
-        }
-        if (viewEvent.commandType == CommandType.ChangeCommandEndCheck)
-        {
-           CommandChangeCommandEndCheck((int)viewEvent.template);
-        }
-        if (viewEvent.commandType == CommandType.ChangeBattleWait)
-        {
-           CommandChangeBattleWait((int)viewEvent.template);
-        }
-        if (viewEvent.commandType == CommandType.ChangeBattleAnimation)
-        {
-           CommandChangeBattleAnimation((int)viewEvent.template);
-        }
-        if (viewEvent.commandType == CommandType.ChangeInputType)
-        {
-           CommandChangeInputType((int)viewEvent.template);
-        }
-        if (viewEvent.commandType == CommandType.ChangeBattleAuto)
-        {
-           CommandChangeBattleAuto((int)viewEvent.template);
-        }
+        
+    }
+
+    private void CommandRefresh()
+    {
+        _view.CommandRefresh();
     }
 
     private void CommandSelectCategory(OptionCategory optionCategory)
     {
         var optionIndex = _model.OptionIndex(optionCategory);
-        _view.CommandSelectCategory(optionIndex);
     }
-
-    private void CommandChangeBGMValue(float bgmValue)
-    {
-        _model.ChangeBGMValue(bgmValue);
-    }
-
-    private void CommandChangeBGMMute(bool bgmMute)
-    {
-        _model.ChangeBGMMute(bgmMute);
-    }
-
-    private void CommandChangeSEValue(float seValue)
-    {
-        _model.ChangeSEValue(seValue);
-    }
-
-    private void CommandChangeSEMute(bool seMute)
-    {
-        _model.ChangeSEMute(seMute);
-    }
-
-    private void CommandChangeGraphicIndex(int graphicIndex)
-    {
-        _model.ChangeGraphicIndex(graphicIndex);
-    }
-
-    private void CommandChangeEventSkipIndex(int eventSkipIndex)
-    {
-        GameSystem.ConfigData._eventSkipIndex = (eventSkipIndex == 1);
-        _view.CommandChangeEventSkipIndex(eventSkipIndex == 1);
-    }
-
-    private void CommandChangeCommandEndCheck(int commandEndCheckIndex)
-    {
-        GameSystem.ConfigData._commandEndCheck = (commandEndCheckIndex == 2);
-    }
-
-    private void CommandChangeBattleWait(int battleWaitIndex)
-    {
-        GameSystem.ConfigData._battleWait = (battleWaitIndex == 2);
-    }
-
-    private void CommandChangeBattleAnimation(int animationIndex)
-    {
-        GameSystem.ConfigData._battleAnimationSkip = (animationIndex == 1);
-    }
-
-    private void CommandChangeInputType(int inputTypeIndex)
-    {
-        _view.SetTempInputType(inputTypeIndex);
-        //GameSystem.ConfigData._inputType = (inputTypeIndex == 1);
-    }
-
-    private void CommandChangeBattleAuto(int autoIndex)
-    {
-        GameSystem.ConfigData._battleAuto = (autoIndex == 1);
-    }
-}
-
-public class OptionInfo
-{
 }

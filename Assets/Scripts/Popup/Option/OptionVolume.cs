@@ -11,43 +11,31 @@ public class OptionVolume : MonoBehaviour
     [SerializeField] private Button muteButton = null;
     [SerializeField] private List<Sprite> muteSprites = null;
 
-    private float _silderValue = 0;
+    private float _sliderValue = 0;
     private bool _isMute = false;
     private System.Action<float> _callEvent;
 
-    public void Initialize(float initValue,bool initMute, System.Action<float> callEvent,System.Action<bool> callMute)
+    public void Initialize(System.Action<float> callEvent,System.Action<bool> callMute)
     {
         _callEvent = callEvent;
         volumeSlider.onValueChanged.AddListener(ValueChanged);
-        _isMute = initMute;
         muteButton.onClick.AddListener(() => {
             _isMute = !_isMute;
             UpdateMute();
             callMute(_isMute);
         });
-        _silderValue = initValue;
-        UpdateValue();
-        UpdateMute();
-        volumeSlider.value = initValue;
     }
     
     private void ValueChanged(float sliderValue)
     {
-        _silderValue = sliderValue;
+        _sliderValue = sliderValue;
         UpdateValue();
         if (_callEvent != null) _callEvent(sliderValue);
     }
 
     private void UpdateValue()
     {
-        volumeValue.text = ((int)(_silderValue * 100)).ToString("D");
-    }
-
-    public void ChangeValue(float sliderValue)
-    {
-        _silderValue = sliderValue;
-        UpdateValue();
-        volumeSlider.value = sliderValue;
+        volumeValue.text = ((int)(_sliderValue * 100)).ToString("D");
     }
 
     private void UpdateMute()
@@ -65,5 +53,14 @@ public class OptionVolume : MonoBehaviour
     {
         _isMute = !_isMute;
         UpdateMute();
+    }
+
+    public void UpdateValue(float volume,bool isMute)
+    {
+        _sliderValue = volume;
+        _isMute = isMute;
+        UpdateValue();
+        UpdateMute();
+        volumeSlider.value = volume;
     }
 }

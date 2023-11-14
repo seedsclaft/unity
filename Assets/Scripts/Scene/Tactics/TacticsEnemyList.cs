@@ -44,11 +44,13 @@ public class TacticsEnemyList : BaseList
         {
             var tacticsEnemy = ObjectList[Index].GetComponent<TacticsEnemy>();
             tacticsEnemy.UpdateItemIndex(-1);
+            Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cursor);
         }
         if (keyType == InputKeyType.Down)
         {
             var tacticsEnemy = ObjectList[Index].GetComponent<TacticsEnemy>();
             tacticsEnemy.UpdateItemIndex(1);
+            Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cursor);
         }
     }
 

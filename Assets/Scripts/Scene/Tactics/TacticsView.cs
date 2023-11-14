@@ -112,15 +112,13 @@ public class TacticsView : BaseView
 
     public void SetTacticsCommand(List<ListData> menuCommands)
     {
-        tacticsCommandList.Initialize(menuCommands.Count);
+        tacticsCommandList.SetData(menuCommands);
         tacticsCommandList.SetInputHandler(InputKeyType.Decide,() => CallTacticsCommand());
         tacticsCommandList.SetInputHandler(InputKeyType.Option1,() => CallOpenSideMenu());
         tacticsCommandList.SetInputHandler(InputKeyType.SideLeft1,() => OnClickDropout());
         tacticsCommandList.SetInputHandler(InputKeyType.Option2,() => CallAlcanaEvent());
         tacticsCommandList.SetSelectedHandler(() => UpdateHelpWindow());
-        tacticsCommandList.SetData(menuCommands);
         SetInputHandler(tacticsCommandList.GetComponent<IInputHandlerEvent>());
-        tacticsCommandList.Activate();
         UpdateHelpWindow();
     }
 

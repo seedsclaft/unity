@@ -45,10 +45,6 @@ public class TacticsSelectCharacter : MonoBehaviour
     
     public void SetTacticsCommand(List<ListData> commandData)
     {
-        if (commandList.IsInit == false)
-        {
-            commandList.Initialize(commandData.Count);
-        }
         commandList.SetData(commandData);
     }
 

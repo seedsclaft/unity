@@ -72,7 +72,6 @@ public class StrategyView : BaseView
         actorInfoComponent.Clear();
         actorInfoComponent.UpdateInfo(actorInfo,null);
         statusList.SetData(status);
-        statusList.Refresh();
         HelpWindow.SetInputInfo("LEVELUP");
     }
 
@@ -132,7 +131,6 @@ public class StrategyView : BaseView
         DeactivateAll();
         strategyActorList.gameObject.SetActive(false);
         strategyActorList.SetData(actorInfos);
-        strategyActorList.Refresh();
         strategyActorList.StartResultAnimation(actorInfos.Count,isBonusList,() => {
             CallEndAnimation();
         });

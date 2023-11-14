@@ -76,7 +76,6 @@ public class RebornResultView : BaseView
     {
         strategyActorList.gameObject.SetActive(true);
         strategyActorList.SetData(actorInfos);
-        strategyActorList.Refresh();
         strategyActorList.StartResultAnimation(actorInfos.Count,new List<bool>{false},() => {
         });
     }

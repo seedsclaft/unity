@@ -103,7 +103,6 @@ public class ResultView : BaseView
 
     public void SetResultList(List<ListData> confirmCommands)
     {
-        commandList.Initialize(confirmCommands.Count);
         commandList.SetData(confirmCommands);
         commandList.SetInputHandler(InputKeyType.Decide,() => {
             var data = (SystemData.CommandData)commandList.ListData.Data;

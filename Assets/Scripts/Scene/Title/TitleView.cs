@@ -66,7 +66,6 @@ public class TitleView : BaseView ,IInputHandlerEvent
     }
 
     public void SetTitleCommand(List<ListData> titleCommands){
-        titleCommandList.Initialize(titleCommands.Count);
         titleCommandList.SetData(titleCommands);
         titleCommandList.SetInputHandler(InputKeyType.Decide,() => CallTitleCommand());
         titleCommandList.SetInputHandler(InputKeyType.Option1,() => CallOpenSideMenu());

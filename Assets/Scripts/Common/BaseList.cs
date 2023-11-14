@@ -10,6 +10,7 @@ public class BaseList : ListWindow , IInputHandlerEvent
     public bool IsInit => _isInit;
     public void SetData(List<ListData> listData)
     {
+        Initialize(listData.Count);
         _listData = listData;
         if (_listData.Count > ObjectList.Count)
         {
@@ -56,7 +57,7 @@ public class BaseList : ListWindow , IInputHandlerEvent
         UpdateAllItems();
         */
         UpdateSelectIndex(0);
-        Deactivate();
+        SetInputCallHandler((a) => CallSelectHandler(a));
         _isInit = true;
     }
     

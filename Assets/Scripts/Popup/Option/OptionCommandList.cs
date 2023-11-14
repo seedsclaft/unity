@@ -12,7 +12,6 @@ public class OptionCommandList : BaseList
         for (int i = 0; i < _optionCommands.Count;i++)
         {
             var optionCommand = ObjectList[i].GetComponent<OptionCommand>();
-            optionCommand.SetData(_optionCommands[i],i);
             optionCommand.SetSelectHandler((data) => UpdateSelectIndex(data));
         }
         SetInputCallHandler((a) => CallSelectHandler(a,optionEvent));

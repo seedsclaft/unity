@@ -176,7 +176,6 @@ public class BattleSelectCharacter : MonoBehaviour
         {
             deckMagicList.Initialize(skillInfoData.Count);
             deckMagicList.SetSelectedHandler(() => DisplaySelectCard());
-            deckMagicList.Activate();
         }
         deckMagicList.SetData(skillInfoData);
         if (displaySelectCard == null)
@@ -190,7 +189,6 @@ public class BattleSelectCharacter : MonoBehaviour
 
     public void SetConditionList(List<ListData> conditionData)
     {
-        conditionList.Initialize(conditionData.Count);
         conditionList.SetData(conditionData);
     }
 
