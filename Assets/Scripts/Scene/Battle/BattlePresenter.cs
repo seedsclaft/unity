@@ -120,7 +120,7 @@ public class BattlePresenter : BasePresenter
         }
         if (viewEvent.commandType == Battle.CommandType.AttributeType)
         {
-            RefreshDecks((AttributeType)viewEvent.template);
+            RefreshSkillInfos();
         }
         if (viewEvent.commandType == Battle.CommandType.DecideActor)
         {
@@ -224,7 +224,6 @@ public class BattlePresenter : BasePresenter
 
     private void CommandEnemyDetail(int enemyIndex)
     {
-        if (_model.CurrentActor == null) return;
         //if (_view.SkillList.skillActionList.gameObject.activeSelf) return;
         _busy = true;
         BattlerInfo enemyInfo = _model.GetBattlerInfo(enemyIndex);
@@ -323,12 +322,12 @@ public class BattlePresenter : BasePresenter
                 return;
             }
             // 行動者が拘束を解除する
-            List<int> chainTargetIndexes = _model.CheckChainBattler();
+            var chainTargetIndexes = _model.CheckChainBattler();
             if (chainTargetIndexes.Count > 0)
             {
                 // 拘束解除
                 var skillInfo = new SkillInfo(31);
-                ActionInfo actionInfo = _model.MakeActionInfo(_model.CurrentBattler,skillInfo,false,false);
+                var actionInfo = _model.MakeActionInfo(_model.CurrentBattler,skillInfo,false,false);
                 CommandSelectTargetIndexes(chainTargetIndexes);
                 // 成功して入れば成功カウントを加算
                 if (actionInfo.ActionResults.Find(a => !a.Missed) != null)
@@ -370,7 +369,7 @@ public class BattlePresenter : BasePresenter
         // 拘束
         var chainActionResults = _model.UpdateChainState();
         ExecActionResult(chainActionResults,false);
-        _model.CheckTriggerSkillInfos(TriggerTiming.After,chainActionResults,false);
+        _model.CheckTriggerSkillInfos(TriggerTiming.After,null,chainActionResults);
         
         StartAliveAnimation(chainActionResults);
         StartDeathAnimation(chainActionResults);
@@ -378,7 +377,7 @@ public class BattlePresenter : BasePresenter
         // 祝福
         var benedictionActionResults = _model.UpdateBenedictionState();
         ExecActionResult(benedictionActionResults,false);
-        _model.CheckTriggerSkillInfos(TriggerTiming.After,benedictionActionResults,false);
+        _model.CheckTriggerSkillInfos(TriggerTiming.After,null,benedictionActionResults);
         
         StartDeathAnimation(benedictionActionResults);
         StartAliveAnimation(benedictionActionResults);
@@ -392,10 +391,10 @@ public class BattlePresenter : BasePresenter
         _view.SelectedCharacter(_model.CurrentBattler);
         _view.SetCondition(_model.SelectCharacterConditions());
         _view.SetEscapeButton(_model.EnableEscape());
-        _view.SetSideMenuButton(true);
-        RefreshDecks(_model.CurrentAttributeType);
-        _view.RefreshBattlerEnemyTarget(-1);
-        _view.RefreshBattlerPartyTarget(-1);
+        _view.ChangeSideMenuButtonActive(true);
+        RefreshSkillInfos();
+        _view.HideBattlerEnemyTarget();
+        _view.HideBattlerPartyTarget();
         _view.ChangeBackCommandActive(false);
         _view.SetBattlerSelectable(true);
         var isAbort = CheckAdvStageEvent(EventTiming.TurnedBattle,() => {  
@@ -419,10 +418,10 @@ public class BattlePresenter : BasePresenter
         {
             return;
         }
+        Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
         _model.ClearActionInfo();
         _model.SetLastSkill(skillInfo.Id);
-        Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
-        ActionInfo actionInfo = _model.MakeActionInfo(_model.CurrentBattler,skillInfo,false,false);
+        var actionInfo = _model.MakeActionInfo(_model.CurrentBattler,skillInfo,false,false);
         _view.HideSkillActionList();
         _view.SetEscapeButton(false);
         _view.HideBattleThumb();
@@ -452,7 +451,7 @@ public class BattlePresenter : BasePresenter
         _view.SetHelpText("");
         _view.ChangeBackCommandActive(false);
         MakeActionResultInfo(indexList);
-        ActionInfo actionInfo = _model.CurrentActionInfo();
+        var actionInfo = _model.CurrentActionInfo();
         if (actionInfo != null)
         {
             if (actionInfo.Master.SkillType == SkillType.Demigod && actionInfo.SubjectIndex < 100)
@@ -467,22 +466,22 @@ public class BattlePresenter : BasePresenter
 
     private void MakeActionResultInfo(List<int> indexList)
     {
-        ActionInfo actionInfo = _model.CurrentActionInfo();
+        var actionInfo = _model.CurrentActionInfo();
         if (actionInfo != null)
         {
-            _view.RefreshBattlerEnemyTarget(-1);
-            _view.RefreshBattlerPartyTarget(-1);
+            _view.HideBattlerEnemyTarget();
+            _view.HideBattlerPartyTarget();
             _model.MakeActionResultInfo(actionInfo,indexList);
             _model.MakeCurseActionResults(actionInfo,indexList);
-            _model.PopupActionResultInfo(actionInfo.ActionResults);
+            _model.AdjustReactionActionResultInfo(actionInfo.ActionResults);
             // 行動割り込みスキル判定
             if (_triggerInterruptChecked == false)
             {
-                var result = _model.CheckTriggerSkillInfos(TriggerTiming.Interrupt,actionInfo.ActionResults);
-                if (result)
+                var result = _model.CheckTriggerSkillInfos(TriggerTiming.Interrupt,actionInfo,actionInfo.ActionResults);
+                if (result.Count > 0)
                 {
-                    _model.SetActionBattler(_model.CurrentActionInfo().SubjectIndex);
-                    _model.MakeActionResultInfo(_model.CurrentActionInfo(),_model.MakeAutoSelectIndex(_model.CurrentActionInfo()));
+                    _model.SetActionBattler(result[0].SubjectIndex);
+                    _model.MakeActionResultInfo(result[0],_model.MakeAutoSelectIndex(result[0]));
                 } else
                 {
                     // 攻撃単体で居合
@@ -583,14 +582,14 @@ public class BattlePresenter : BasePresenter
 
     private async void StartAnimationSkill()
     {
-        _view.SetSideMenuButton(false);
+        _view.ChangeSideMenuButtonActive(false);
         _view.SetEscapeButton(false);
         _view.SetBattlerSelectable(true);
         //_view.ShowEnemyStateOverlay();
         _view.HideEnemyStateOverlay();
         _view.HideActorStateOverlay();
         _view.SetAnimationBusy(true);
-        ActionInfo actionInfo = _model.CurrentActionInfo();
+        var actionInfo = _model.CurrentActionInfo();
         if (actionInfo.ActionResults.Count == 0)
         {
             _nextCommandType = Battle.CommandType.SelectedSkill;
@@ -616,7 +615,7 @@ public class BattlePresenter : BasePresenter
         StartAliveAnimation(_model.CurrentActionInfo().ActionResults);
 
         await UniTask.DelayFrame(actionInfo.Master.DamageTiming);
-        _model.PopupActionResultInfo(actionInfo.ActionResults);
+        _model.AdjustReactionActionResultInfo(actionInfo.ActionResults);
         for (int i = 0; i < actionInfo.ActionResults.Count; i++)
         {
             bool lastTarget = actionInfo.ActionResults[actionInfo.ActionResults.Count-1].TargetIndex == actionInfo.ActionResults[i].TargetIndex;
@@ -754,7 +753,7 @@ public class BattlePresenter : BasePresenter
         _model.ExecCurrentActionResult();
         
         _view.ClearCurrentSkillData();
-        ActionInfo actionInfo = _model.CurrentActionInfo();
+        var actionInfo = _model.CurrentActionInfo();
         if (actionInfo != null)
         {
             StartDeathAnimation(actionInfo.ActionResults);
@@ -764,7 +763,7 @@ public class BattlePresenter : BasePresenter
 
     private void ExecActionResult(List<ActionResultInfo> resultInfos,bool needPopupDelay = true)
     {
-        _model.PopupActionResultInfo(resultInfos);
+        _model.AdjustReactionActionResultInfo(resultInfos);
         for (int i = 0; i < resultInfos.Count; i++)
         {    
             // ダメージ表現をしない
@@ -816,7 +815,7 @@ public class BattlePresenter : BasePresenter
         ExecActionResult(RemovePassiveResults);
 
         // TriggerAfter
-        var result = _model.CheckTriggerSkillInfos(TriggerTiming.After,_model.CurrentActionInfo().ActionResults);
+        var result = _model.CheckTriggerSkillInfos(TriggerTiming.After,_model.CurrentActionInfo(),_model.CurrentActionInfo().ActionResults);
         
         bool isDemigodActor = false;
         if (_model.CurrentBattler != null)
@@ -824,7 +823,7 @@ public class BattlePresenter : BasePresenter
             isDemigodActor = _model.CurrentBattler.IsState(StateType.Demigod);
         }
         bool isTriggeredSkill = _model.CurrentActionInfo().TriggeredSkill;
-        if (result == false && _triggerAfterChecked == false && isTriggeredSkill == false)
+        if (result.Count == 0 && _triggerAfterChecked == false && isTriggeredSkill == false)
         {
             // 行動者のターンを進める
             var removed =_model.UpdateTurn();
@@ -846,12 +845,12 @@ public class BattlePresenter : BasePresenter
         }
 
         // 勝敗判定
-        if (IsBattleEnd() && result == false)
+        if (IsBattleEnd() && result.Count == 0)
         {
             BattleEnd();
             return;
         }
-        if (result == true)
+        if (result.Count > 0)
         {
             _battleEnded = false;
         }
@@ -877,7 +876,7 @@ public class BattlePresenter : BasePresenter
         _view.RefreshStatus();
 
         // 次の行動者がいれば続ける
-        ActionInfo CurrentActionInfo = _model.CurrentActionInfo();
+        var CurrentActionInfo = _model.CurrentActionInfo();
         if (CurrentActionInfo != null)
         {
             _model.SetActionBattler(CurrentActionInfo.SubjectIndex);
@@ -909,9 +908,9 @@ public class BattlePresenter : BasePresenter
         _view.SetBattleBusy(false);
     }
 
-    private void RefreshDecks(AttributeType attributeType)
+    private void RefreshSkillInfos()
     {
-        var skillInfos = _model.SkillActionList(attributeType);
+        var skillInfos = _model.SkillActionList();
         _view.RefreshMagicList(skillInfos,_model.SelectSkillIndex(skillInfos));
         
         Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cursor);
@@ -944,7 +943,7 @@ public class BattlePresenter : BasePresenter
 
     private void CommandSelectEnemy()
     {
-        ActionInfo actionInfo = _model.CurrentActionInfo();
+        var actionInfo = _model.CurrentActionInfo();
         if (actionInfo.TargetType == TargetType.Opponent)
         {
         } else
@@ -1003,8 +1002,8 @@ public class BattlePresenter : BasePresenter
         if (_view.AnimationBusy == false && _view.BattleBusy && _model.CurrentBattler.isActor && GameSystem.ConfigData._battleAuto == true)
         {
             _model.ClearActionInfo();
-            _view.RefreshBattlerEnemyTarget(-1);
-            _view.RefreshBattlerPartyTarget(-1);
+            _view.HideBattlerEnemyTarget();
+            _view.HideBattlerPartyTarget();
             _view.HideSkillActionList();
             _view.SetEscapeButton(false);
             _view.HideBattleThumb();

@@ -21,6 +21,7 @@ public class StateData
     public bool OverLap;
     public bool Removal;
     public bool Abnormal;
+    public bool RemoveByAttack;
 }
 
 
@@ -52,7 +53,7 @@ public enum StateType
     DefPerDown = 85,
     Chain = 101,
     ChainDamageUp = 102,
-    CounterOura = 103,
+    CounterAura = 103,
     NoDamage = 104,
     Regene = 105,
     SetAfterAp = 106,
@@ -63,7 +64,7 @@ public enum StateType
     AfterHeal = 112,
     CounterOuraDamage = 113,
     Deadly = 114,
-    CounterOuraHeal = 115,
+    CounterAuraHeal = 115,
     HealActionSelfHeal = 116,
     Undead = 117,
     AbsoluteHit = 118,

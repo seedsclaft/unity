@@ -43,7 +43,7 @@ public class BattleView : BaseView ,IInputHandlerEvent
     
     private List<MakerEffectData.SoundTimings> _soundTimings = null;
 
-    private Dictionary<int,BattlerInfoComponent> _battlerComps = new Dictionary<int, BattlerInfoComponent>();
+    private Dictionary<int,BattlerInfoComponent> _battlerComps = new ();
 
 
     public override void Initialize() 
@@ -143,7 +143,7 @@ public class BattleView : BaseView ,IInputHandlerEvent
         SetBackCommand(() => OnClickBack());
         escapeButton.onClick.AddListener(() => OnClickEscape());
         SetEscapeButton(false);
-        SetSideMenuButton(false);
+        ChangeSideMenuButtonActive(false);
     }
 
     public void SetEscapeButton(bool isEscape)
@@ -151,7 +151,7 @@ public class BattleView : BaseView ,IInputHandlerEvent
         escapeButton.gameObject.SetActive(isEscape);
     }
 
-    public void SetSideMenuButton(bool isActive)
+    public void ChangeSideMenuButtonActive(bool isActive)
     {
         sideMenuList.gameObject.SetActive(isActive);
     }
@@ -346,6 +346,12 @@ public class BattleView : BaseView ,IInputHandlerEvent
         }
     }
 
+    public void HideBattlerEnemyTarget()
+    {
+        HideEnemyStatus();
+        battleEnemyLayer.ClearSelect();
+    }
+
     public void RefreshBattlerPartyTarget(int selectIndex,List<int> targetIndexList = null,ScopeType scopeType = ScopeType.None)
     {
         if (selectIndex != -1){
@@ -360,6 +366,11 @@ public class BattleView : BaseView ,IInputHandlerEvent
                 _battlerComps[idx].SetSelectable(true);
             }
         }
+    }
+
+    public void HideBattlerPartyTarget()
+    {
+        battleActorList.ClearSelect();
     }
 
     public void HideEnemyStatus()

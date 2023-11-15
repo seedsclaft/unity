@@ -75,9 +75,7 @@ public class BattleActorList : ListWindow , IInputHandlerEvent
     {
         UpdateAllUnSelect();
         if (selectIndex == -1) {
-            UpdateSelectIndex(-1);
-            _targetScopeType = ScopeType.None;
-            _targetIndexList = new ();
+            ClearSelect();
             return;
         }
         _selectIndex = selectIndex;
@@ -229,5 +227,12 @@ public class BattleActorList : ListWindow , IInputHandlerEvent
             indexList.Add(battlerInfo.Index);
         }
         return indexList;
+    }
+
+    public void ClearSelect()
+    {
+        UpdateSelectIndex(-1);
+        _targetScopeType = ScopeType.None;
+        _targetIndexList = new ();
     }
 }

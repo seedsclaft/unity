@@ -39,7 +39,7 @@ public class BattleActorAI
                     CalcChainSkillWeight(skillInfo,attackTargets,skillTargetAI,chainTargets);
                 }
                 // CA
-                if (skillInfo.Master.IsStateFeature(StateType.CounterOura))
+                if (skillInfo.Master.IsStateFeature(StateType.CounterAura))
                 {
                     var caTargets = _batterInfo.isActor ? targetMember : partyMember;
                     CalcCounterOuraSkillWeight(skillInfo,caTargets,skillTargetAI);
@@ -81,7 +81,7 @@ public class BattleActorAI
                 if (skillInfo.Master.IsStateFeature(StateType.Substitute))
                 {
                     // CAを使える
-                    if (skillInfos.Find(a => a.Master.IsStateFeature(StateType.CounterOura)) != null)
+                    if (skillInfos.Find(a => a.Master.IsStateFeature(StateType.CounterAura)) != null)
                     {
                         CalcSubstituteSkillWeight(skillInfo,attackTargets,skillTargetAI,StateType.EvaUp);
                     } else
@@ -199,7 +199,7 @@ public class BattleActorAI
     private static void CalcAttackSkillWeight(SkillInfo skillInfo,List<BattlerInfo> attackTargets, SkillTargetAI skillTargetAI)
     {
         // CAなら狙わない
-        if (attackTargets.Find(a => a.IsState(StateType.CounterOura)) != null)
+        if (attackTargets.Find(a => a.IsState(StateType.CounterAura)) != null)
         {
             skillTargetAI.Weigth = 1;
             return;
@@ -243,7 +243,7 @@ public class BattleActorAI
             foreach (var attackTarget in attackTargets)
             {
                 // CAを狙う
-                if (attackTarget.IsState(StateType.CounterOura))
+                if (attackTarget.IsState(StateType.CounterAura))
                 {
                     skillTargetAI.Weigth += 100;
                 }
@@ -303,7 +303,7 @@ public class BattleActorAI
         foreach (var attackTarget in attackTargets)
         {
             // CA持ちには回避バフを入れない
-            if (skillInfo.Master.Scope == ScopeType.One && attackTarget.Skills.Find(a => a.Master.IsStateFeature(StateType.CounterOura)) != null)
+            if (skillInfo.Master.Scope == ScopeType.One && attackTarget.Skills.Find(a => a.Master.IsStateFeature(StateType.CounterAura)) != null)
             {
                 skillTargetAI.Weigth = 1;
                 return;

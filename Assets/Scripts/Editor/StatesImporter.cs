@@ -20,7 +20,8 @@ public class StatesImporter : AssetPostprocessor {
 		EffectPosition,
 		OverLap,
 		Removal,
-		Abnormal
+		Abnormal,
+		RemoveByAttack
     }
 	static readonly string ExcelName = "States.xlsx";
 
@@ -86,6 +87,7 @@ public class StatesImporter : AssetPostprocessor {
 					StateData.OverLap = (bool)(AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.OverLap) == 1);
 					StateData.Removal = (bool)(AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.Removal) == 1);
 					StateData.Abnormal = (bool)(AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.Abnormal) == 1);
+					StateData.RemoveByAttack = (bool)(AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.RemoveByAttack) == 1);
 					
 					
 					Data.Data.Add(StateData);

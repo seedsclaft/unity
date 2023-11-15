@@ -184,7 +184,7 @@ public class BattlerInfo
             return;
         }
         */
-        if (IsState(StateType.CounterOura))
+        if (IsState(StateType.CounterAura))
         {
             _ap = 1;
             return;
@@ -213,7 +213,7 @@ public class BattlerInfo
             _ap += 3;
             return;
         }
-        if (IsState(StateType.CounterOura) || IsState(StateType.Benediction))
+        if (IsState(StateType.CounterAura) || IsState(StateType.Benediction))
         {
             _ap = 1;
             return;

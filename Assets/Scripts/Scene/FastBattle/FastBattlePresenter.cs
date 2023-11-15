@@ -144,11 +144,11 @@ public class FastBattlePresenter : BasePresenter
     {
         var chainActionResults = _model.UpdateChainState();
         ExecActionResult(chainActionResults,false);
-        _model.CheckTriggerSkillInfos(TriggerTiming.After,chainActionResults,false);
+        _model.CheckTriggerSkillInfos(TriggerTiming.After,null,chainActionResults);
         
         var benedictionActionResults = _model.UpdateBenedictionState();
         ExecActionResult(benedictionActionResults,false);
-        _model.CheckTriggerSkillInfos(TriggerTiming.After,benedictionActionResults,false);
+        _model.CheckTriggerSkillInfos(TriggerTiming.After,null,benedictionActionResults);
         
     }
 
@@ -183,11 +183,11 @@ public class FastBattlePresenter : BasePresenter
         {
             _model.MakeActionResultInfo(actionInfo,indexList);
             _model.MakeCurseActionResults(actionInfo,indexList);
-            _model.PopupActionResultInfo(actionInfo.ActionResults);
+            _model.AdjustReactionActionResultInfo(actionInfo.ActionResults);
             if (_triggerInterruptChecked == false)
             {
-                var result = _model.CheckTriggerSkillInfos(TriggerTiming.Interrupt,actionInfo.ActionResults);
-                if (result)
+                var result = _model.CheckTriggerSkillInfos(TriggerTiming.Interrupt,actionInfo,actionInfo.ActionResults);
+                if (result.Count > 0)
                 {
                     _model.SetActionBattler(_model.CurrentActionInfo().SubjectIndex);
                     _model.MakeActionResultInfo(_model.CurrentActionInfo(),_model.MakeAutoSelectIndex(_model.CurrentActionInfo()));
@@ -260,7 +260,7 @@ public class FastBattlePresenter : BasePresenter
         if (actionInfo != null)
         {
             List<ActionResultInfo> actionResultInfos = actionInfo.ActionResults;
-            _model.PopupActionResultInfo(actionResultInfos);
+            _model.AdjustReactionActionResultInfo(actionResultInfos);
             for (int i = 0; i < actionResultInfos.Count; i++)
             {
                 bool lastTarget = actionResultInfos[actionResultInfos.Count-1].TargetIndex == targetIndex;
@@ -300,7 +300,7 @@ public class FastBattlePresenter : BasePresenter
 
     private void ExecActionResult(List<ActionResultInfo> resultInfos,bool needPopupDelay = true)
     {
-        _model.PopupActionResultInfo(resultInfos);
+        _model.AdjustReactionActionResultInfo(resultInfos);
         for (int i = 0; i < resultInfos.Count; i++)
         {    
             _model.ExecActionResultInfo(resultInfos[i]);
@@ -355,7 +355,7 @@ public class FastBattlePresenter : BasePresenter
         ExecActionResult(RemovePassiveResults);
 
         // TriggerAfter
-        var result = _model.CheckTriggerSkillInfos(TriggerTiming.After,_model.CurrentActionInfo().ActionResults);
+        var result = _model.CheckTriggerSkillInfos(TriggerTiming.After,_model.CurrentActionInfo(),_model.CurrentActionInfo().ActionResults);
         
         bool isDemigodActor = false;
         if (_model.CurrentBattler != null)
@@ -363,7 +363,7 @@ public class FastBattlePresenter : BasePresenter
             isDemigodActor = _model.CurrentBattler.IsState(StateType.Demigod);
         }
         bool isTriggeredSkill = _model.CurrentActionInfo().TriggeredSkill;
-        if (result == false && _triggerAfterChecked == false && isTriggeredSkill == false)
+        if (result.Count == 0 && _triggerAfterChecked == false && isTriggeredSkill == false)
         {
             var removed =_model.UpdateTurn();
             // Passive付与
@@ -380,11 +380,11 @@ public class FastBattlePresenter : BasePresenter
         }
 
         // 勝敗判定
-        if (CheckBattleEnd() && result == false)
+        if (CheckBattleEnd() && result.Count == 0)
         {
             return;
         }
-        if (result == true)
+        if (result.Count > 0)
         {
             _battleEnded = false;
         }

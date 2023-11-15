@@ -86,9 +86,7 @@ public class BattleEnemyLayer : ListWindow , IInputHandlerEvent
     {
         UpdateAllUnSelect();
         if (selectIndex == -1) {
-            UpdateSelectIndex(-1);
-            _targetScopeType = ScopeType.None;
-            _targetIndexList = new ();
+            ClearSelect();
             return;
         }
         _selectIndex = selectIndex;
@@ -332,5 +330,13 @@ public class BattleEnemyLayer : ListWindow , IInputHandlerEvent
             }
         }
         return indexList;
+    }
+
+    public void ClearSelect()
+    {
+        UpdateAllUnSelect();
+        UpdateSelectIndex(-1);
+        _targetScopeType = ScopeType.None;
+        _targetIndexList = new ();
     }
 }

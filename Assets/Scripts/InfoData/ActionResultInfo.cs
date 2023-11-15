@@ -42,8 +42,8 @@ public class ActionResultInfo
                     _deadIndexList.Add(target.Index);
                 }
             }
-            int resuceHp = subject.MaxHp - subject.Hp;
-            int recoveryHp = Mathf.Min(_reHeal,resuceHp);
+            int reduceHp = subject.MaxHp - subject.Hp;
+            int recoveryHp = Mathf.Min(_reHeal,reduceHp);
             if ((_reDamage - recoveryHp) >= subject.Hp && subject.IsAlive())
             {
                 if (subject.IsState(StateType.Undead) && featureDates.Find(a => a.FeatureType == FeatureType.BreakUndead) == null)
@@ -211,6 +211,61 @@ public class ActionResultInfo
         return hit >= rand;
     }
 
+    private int CurrentAttack(BattlerInfo battlerInfo,bool isNoEffect)
+    {
+        int AtkValue = battlerInfo.CurrentAtk();
+        if (isNoEffect == false)
+        {
+            if (battlerInfo.IsState(StateType.AtkUp))
+            {
+                AtkValue += battlerInfo.StateEffectAll(StateType.AtkUp);
+            }
+            if (battlerInfo.IsState(StateType.AtkDown))
+            {
+                AtkValue -= battlerInfo.StateEffectAll(StateType.AtkDown);
+            }
+        }
+        return AtkValue;
+    }
+
+    private int CurrentDefense(BattlerInfo battlerInfo,bool isNoEffect)
+    {
+        int DefValue = battlerInfo.CurrentDef();
+        if (isNoEffect == false)
+        {
+            if (battlerInfo.IsState(StateType.DefUp))
+            {
+                DefValue += battlerInfo.StateEffectAll(StateType.DefUp);
+            }
+            if (battlerInfo.IsState(StateType.DefDown))
+            {
+                DefValue -= battlerInfo.StateEffectAll(StateType.DefDown);
+            }
+            if (battlerInfo.IsState(StateType.DefPerDown))
+            {
+                DefValue = (int)((float)DefValue * ((100 - battlerInfo.StateEffectAll(StateType.DefPerDown)) * 0.01f));
+            }
+        }
+        return DefValue;
+    }
+
+    private float CurrentDamageRate(BattlerInfo battlerInfo,bool isNoEffect,bool isOneTarget)
+    {
+        float UpperDamageRate = 1;
+        if (isNoEffect == false)
+        {
+            if (battlerInfo.IsState(StateType.DamageUp))
+            {
+                UpperDamageRate += battlerInfo.StateEffectAll(StateType.DamageUp) * 0.01f;
+            }
+            if (battlerInfo.IsState(StateType.Rebellious) && isOneTarget)
+            {
+                UpperDamageRate += (1f - ((float)battlerInfo.Hp / (float)battlerInfo.MaxHp));
+            }
+        }
+        return UpperDamageRate;
+    }
+
     private void MakeHpDamage(BattlerInfo subject,BattlerInfo target,SkillData.FeatureData featureData,bool isNoEffect,bool isOneTarget)
     {
         var hpDamage = 0;
@@ -219,45 +274,16 @@ public class ActionResultInfo
             _missed = true;
             return;
         }
-        int AtkValue = subject.CurrentAtk();
-        if (subject.IsState(StateType.AtkUp) && !isNoEffect)
-        {
-            AtkValue += subject.StateEffectAll(StateType.AtkUp);
-        }
-        if (subject.IsState(StateType.AtkDown) && !isNoEffect)
-        {
-            AtkValue -= subject.StateEffectAll(StateType.AtkDown);
-        }
-        int DefValue = target.CurrentDef();
-        if (target.IsState(StateType.DefUp) && !isNoEffect)
-        {
-            DefValue += target.StateEffectAll(StateType.DefUp);
-        }
-        if (target.IsState(StateType.DefDown) && !isNoEffect)
-        {
-            DefValue -= target.StateEffectAll(StateType.DefDown);
-        }
-        if (target.IsState(StateType.DefPerDown) && !isNoEffect)
-        {
-            DefValue = (int)((float)DefValue * ((100 - target.StateEffectAll(StateType.DefPerDown)) * 0.01f));
-        }
-        float DamageRate = featureData.Param1;
-        float UpperDamageRate = 1;
-        if (subject.IsState(StateType.DamageUp))
-        {
-            UpperDamageRate += subject.StateEffectAll(StateType.DamageUp) * 0.01f;
-        }
-        if (subject.IsState(StateType.Rebellious) && isOneTarget)
-        {
-            UpperDamageRate += (1f - ((float)subject.Hp / (float)subject.MaxHp));
-        }
-        DamageRate *= UpperDamageRate;
+        int AtkValue = CurrentAttack(subject,isNoEffect);
+        int DefValue = CurrentDefense(target,isNoEffect);
+        float UpperDamageRate = CurrentDamageRate(subject,isNoEffect,isOneTarget);
+        float DamageRate = featureData.Param1 * UpperDamageRate;
         float SkillDamage = (DamageRate * 0.01f * (AtkValue * 0.5f));
         if (target.CanMove() && !isNoEffect)
         {
-            if (target.IsState(StateType.CounterOura))
+            if (target.IsState(StateType.CounterAura))
             {
-                _execStateInfos[target.Index].Add(StateType.CounterOura);
+                _execStateInfos[target.Index].Add(StateType.CounterAura);
                 if (subject.IsState(StateType.NoDamage))
                 {
                     _execStateInfos[subject.Index].Add(StateType.NoDamage);
@@ -266,12 +292,12 @@ public class ActionResultInfo
                 {                
                     _reDamage += CounterDamageValue(target);
                 }
-                if (target.IsState(StateType.CounterOuraHeal))
+                if (target.IsState(StateType.CounterAuraHeal))
                 {
-                    SkillData.FeatureData counterOuraHeal = new SkillData.FeatureData();
-                    counterOuraHeal.FeatureType = FeatureType.HpHeal;
-                    counterOuraHeal.Param1 = target.StateEffectAll(StateType.CounterOuraHeal);
-                    MakeHpHeal(target,target,counterOuraHeal);
+                    SkillData.FeatureData counterAuraHeal = new SkillData.FeatureData();
+                    counterAuraHeal.FeatureType = FeatureType.HpHeal;
+                    counterAuraHeal.Param1 = target.StateEffectAll(StateType.CounterAuraHeal);
+                    MakeHpHeal(target,target,counterAuraHeal);
                 }
             }
         }
@@ -289,7 +315,6 @@ public class ActionResultInfo
         }
 
         SkillDamage *= GetDefenseRateValue((AtkValue * 0.5f),DefValue);
-        //SkillDamage -= (DefValue * 0.5f);
         float DamageValue = Mathf.Max(1,SkillDamage);
         hpDamage = (int)Mathf.Round(DamageValue);
         // 属性補正
@@ -347,64 +372,15 @@ public class ActionResultInfo
     // スリップダメージ計算
     private void MakeHpDefineDamage(BattlerInfo subject,BattlerInfo target,SkillData.FeatureData featureData,bool isNoEffect)
     {
-        /*
-        if (!IsHit(subject,target) && !isNoEffect)
-        {
-            _missed = true;
-            return;
-        }
-        */
         var hpDamage = 0;
         int AtkValue = featureData.Param1;
         float DamageRate = 100;
-        float UpperDamageRate = 1;
-        if (subject.IsState(StateType.DamageUp))
-        {
-            UpperDamageRate += subject.StateEffectAll(StateType.DamageUp) * 0.01f;
-        }
+        float UpperDamageRate = CurrentDamageRate(subject,isNoEffect,false);
         DamageRate *= UpperDamageRate;
         float SkillDamage = (DamageRate * 0.01f * AtkValue);
-        /*
-        if (target.CanMove() && !isNoEffect)
-        {
-            if (target.IsState(StateType.CounterOura))
-            {
-                _execStateInfos[target.Index].Add(StateType.CounterOura);
-                _reDamage += CounterDamageValue(target);
-                if (target.IsState(StateType.CounterOuraHeal))
-                {
-                    SkillData.FeatureData counterOuraHeal = new SkillData.FeatureData();
-                    counterOuraHeal.FeatureType = FeatureType.HpHeal;
-                    counterOuraHeal.Param1 = target.StateEffectAll(StateType.CounterOuraHeal);
-                    MakeHpHeal(target,target,counterOuraHeal);
-                }
-            }
-        }
-        */
-        /*
-        if (subject.IsState(StateType.Freeze))
-        {
-            _execStateInfos[subject.Index].Add(StateType.Freeze);
-            _reDamage += FreezeDamageValue(subject,SkillDamage);
-        }
-        */
         float DamageValue = Mathf.Max(1,SkillDamage);
         hpDamage = (int)Mathf.Round(DamageValue);
         hpDamage = Mathf.Max(1,hpDamage);
-        /*
-        if (target.IsState(StateType.NoDamage) && !isNoEffect)
-        {
-            _execStateInfos[target.Index].Add(StateType.NoDamage);
-            _hpDamage = 0;
-            int count = target.StateTurn(StateType.NoDamage);
-            if (count <= 1)
-            {
-                _removedStates.Add(target.GetStateInfo(StateType.NoDamage));
-            } else{
-                _displayStates.Add(target.GetStateInfo(StateType.NoDamage));
-            }
-        }
-        */
         if (subject.IsState(StateType.Drain))
         {
             _reHeal = (int)Mathf.Floor(hpDamage * subject.StateEffectAll(StateType.Drain) * 0.01f);
@@ -420,49 +396,21 @@ public class ActionResultInfo
             _missed = true;
             return;
         }
-        int AtkValue = subject.CurrentAtk();
-        if (subject.IsState(StateType.AtkUp) && !isNoEffect)
-        {
-            AtkValue += subject.StateEffectAll(StateType.AtkUp);
-        }
-        if (subject.IsState(StateType.AtkDown) && !isNoEffect)
-        {
-            AtkValue -= subject.StateEffectAll(StateType.AtkDown);
-        }
-        int DefValue = target.CurrentDef();
-        if (target.IsState(StateType.DefUp) && !isNoEffect)
-        {
-            DefValue += target.StateEffectAll(StateType.DefUp);
-        }
-        if (target.IsState(StateType.DefDown) && !isNoEffect)
-        {
-            DefValue -= target.StateEffectAll(StateType.DefDown);
-        }
-        if (target.IsState(StateType.DefPerDown) && !isNoEffect)
-        {
-            DefValue = (int)((float)DefValue * ((100 - target.StateEffectAll(StateType.DefPerDown)) * 0.01f));
-        }
+        int AtkValue = CurrentAttack(subject,isNoEffect);
+        int DefValue = CurrentDefense(target,isNoEffect);
         float DamageRate = featureData.Param2;
         if (target.IsState((StateType)featureData.Param3))
         {
             DamageRate = featureData.Param1;
         }
-        float UpperDamageRate = 1;
-        if (subject.IsState(StateType.DamageUp))
-        {
-            UpperDamageRate += subject.StateEffectAll(StateType.DamageUp) * 0.01f;
-        }
-        if (subject.IsState(StateType.Rebellious) && isOneTarget)
-        {
-            UpperDamageRate += (1f - ((float)subject.Hp / (float)subject.MaxHp));
-        }
+        float UpperDamageRate = CurrentDamageRate(subject,isNoEffect,isOneTarget);
         DamageRate *= UpperDamageRate;
         float SkillDamage = (DamageRate * 0.01f * (AtkValue * 0.5f));
         if (target.CanMove() && !isNoEffect)
         {
-            if (target.IsState(StateType.CounterOura))
+            if (target.IsState(StateType.CounterAura))
             {
-                _execStateInfos[target.Index].Add(StateType.CounterOura);
+                _execStateInfos[target.Index].Add(StateType.CounterAura);
                 if (subject.IsState(StateType.NoDamage))
                 {
                     _execStateInfos[subject.Index].Add(StateType.NoDamage);
@@ -471,12 +419,12 @@ public class ActionResultInfo
                 {                
                     _reDamage += CounterDamageValue(target);
                 }
-                if (target.IsState(StateType.CounterOuraHeal))
+                if (target.IsState(StateType.CounterAuraHeal))
                 {
-                    SkillData.FeatureData counterOuraHeal = new SkillData.FeatureData();
-                    counterOuraHeal.FeatureType = FeatureType.HpHeal;
-                    counterOuraHeal.Param1 = target.StateEffectAll(StateType.CounterOuraHeal);
-                    MakeHpHeal(target,target,counterOuraHeal);
+                    SkillData.FeatureData counterAuraHeal = new SkillData.FeatureData();
+                    counterAuraHeal.FeatureType = FeatureType.HpHeal;
+                    counterAuraHeal.Param1 = target.StateEffectAll(StateType.CounterAuraHeal);
+                    MakeHpHeal(target,target,counterAuraHeal);
                 }
             }
         }
@@ -543,41 +491,9 @@ public class ActionResultInfo
         var hpDamage = 0;
         int AtkValue = featureData.Param1;
         float DamageRate = 100;
-        float UpperDamageRate = 1;
-        if (subject.IsState(StateType.DamageUp))
-        {
-            UpperDamageRate += subject.StateEffectAll(StateType.DamageUp) * 0.01f;
-        }
-        if (subject.IsState(StateType.Rebellious) && isOneTarget)
-        {
-            UpperDamageRate += (1f - ((float)subject.Hp / (float)subject.MaxHp));
-        }
+        float UpperDamageRate = CurrentDamageRate(subject,isNoEffect,isOneTarget);
         DamageRate *= UpperDamageRate;
         float SkillDamage = (DamageRate * 0.01f * AtkValue);
-        /*
-        if (target.CanMove() && !isNoEffect)
-        {
-            if (target.IsState(StateType.CounterOura))
-            {
-                _execStateInfos[target.Index].Add(StateType.CounterOura);
-                _reDamage += CounterDamageValue(target);
-                if (target.IsState(StateType.CounterOuraHeal))
-                {
-                    SkillData.FeatureData counterOuraHeal = new SkillData.FeatureData();
-                    counterOuraHeal.FeatureType = FeatureType.HpHeal;
-                    counterOuraHeal.Param1 = target.StateEffectAll(StateType.CounterOuraHeal);
-                    MakeHpHeal(target,target,counterOuraHeal);
-                }
-            }
-        }
-        */
-        /*
-        if (subject.IsState(StateType.Freeze))
-        {
-            _execStateInfos[subject.Index].Add(StateType.Freeze);
-            _reDamage += FreezeDamageValue(subject,SkillDamage);
-        }
-        */
         float DamageValue = Mathf.Max(1,SkillDamage);
         hpDamage = (int)Mathf.Round(DamageValue);
         hpDamage = Mathf.Max(1,hpDamage);
@@ -617,7 +533,7 @@ public class ActionResultInfo
     private void MakeAddState(BattlerInfo subject,BattlerInfo target,SkillData.FeatureData featureData,bool checkCounter = false)
     {
         StateInfo stateInfo = new StateInfo(featureData.Param1,featureData.Param2,featureData.Param3,subject.Index,target.Index,_skillIndex);
-        if (stateInfo.Master.Id == (int)StateType.CounterOura || stateInfo.Master.Id == (int)StateType.Benediction)
+        if (stateInfo.Master.Id == (int)StateType.CounterAura || stateInfo.Master.Id == (int)StateType.Benediction)
         {
             stateInfo.Turns = 200 - subject.Status.Spd * 2;
         } else
@@ -754,7 +670,7 @@ public class ActionResultInfo
 
     private int CounterDamageValue(BattlerInfo target)
     {
-        int ReDamage = (int)Mathf.Floor((target.CurrentDef() * 0.5f) * target.StateEffectAll(StateType.CounterOura) * 0.01f);
+        int ReDamage = (int)Mathf.Floor((target.CurrentDef() * 0.5f) * target.StateEffectAll(StateType.CounterAura) * 0.01f);
         ReDamage += target.StateEffectAll(StateType.CounterOuraDamage);
         return ReDamage;
     }

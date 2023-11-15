@@ -125,7 +125,7 @@ public class SkillData
         public int Param2;
         public int Param3;
 
-        public bool IsTriggerdSkillInfo(BattlerInfo battlerInfo,List<BattlerInfo> party,List<BattlerInfo> troops)
+        public bool IsTriggeredSkillInfo(BattlerInfo battlerInfo,List<BattlerInfo> party,List<BattlerInfo> troops)
         {
             bool CanUse = false;
             
