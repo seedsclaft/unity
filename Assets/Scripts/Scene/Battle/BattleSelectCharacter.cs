@@ -175,7 +175,10 @@ public class BattleSelectCharacter : MonoBehaviour
         if (deckMagicList.IsInit == false)
         {
             deckMagicList.Initialize(skillInfoData.Count);
-            deckMagicList.SetSelectedHandler(() => DisplaySelectCard());
+            deckMagicList.SetSelectedHandler(() => {
+                DisplaySelectCard();
+                RefreshCardWidth();
+            });
         }
         deckMagicList.SetData(skillInfoData);
         if (displaySelectCard == null)
@@ -185,6 +188,7 @@ public class BattleSelectCharacter : MonoBehaviour
         SelectMagicConditionTab(0);
         deckMagicList.UpdateSelectIndex(skillInfoData.Count > 0 ? 0 : -1);
         DisplaySelectCard();
+        RefreshCardWidth();
     }
 
     public void SetConditionList(List<ListData> conditionData)
@@ -248,6 +252,24 @@ public class BattleSelectCharacter : MonoBehaviour
         gameObject.SetActive(false);
         deckMagicList.Deactivate();
         conditionList.Deactivate();
+    }
+
+    public void RefreshCardWidth()
+    {
+        var selectObj = deckMagicList.ObjectList[deckMagicList.Index];
+        foreach (var gameObject in deckMagicList.ObjectList)
+        {
+            var rect = gameObject.GetComponent<RectTransform>();
+            if (selectObj != gameObject)
+            {
+                rect.sizeDelta = new Vector2(160,240);
+            } else
+            {
+                rect.sizeDelta = new Vector2(264,240);
+            }
+        }
+        selectObj.SetActive(false);
+        selectObj.SetActive(true);
     }
     
 }
