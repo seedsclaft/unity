@@ -326,7 +326,7 @@ public class ResultModel : BaseModel
         foreach (var skill in skills)
         {
             var rate = 10;
-            if (actorInfo.Attribute[(int)(skill.Attribute-1)] > 80)
+            if ((int)actorInfo.Attribute[(int)(skill.Attribute-1)] <= 1)
             {
                 rate = 20;
             }
@@ -385,26 +385,26 @@ public class ResultModel : BaseModel
         return list;
     }
 
-    public List<int> DisableActorIndexs()
+    public List<int> DisableActorIndexes()
     {
         var list = new List<int>();
         if (ActorInfos().Count > 10)
         {
 
         }
-        var actorListIndexs = new List<int>();
+        var actorListIndexes = new List<int>();
         foreach (var listData in ActorInfos())
         {
             var actorInfo = (ActorInfo)listData.Data;
-            if (!actorListIndexs.Contains(actorInfo.ActorId))
+            if (!actorListIndexes.Contains(actorInfo.ActorId))
             {
-                actorListIndexs.Add(actorInfo.ActorId);
+                actorListIndexes.Add(actorInfo.ActorId);
             }
         }
-        if (actorListIndexs.Count == 2)
+        if (actorListIndexes.Count == 2)
         {
-            var minSize = ActorInfos().FindAll(a => ((ActorInfo)a.Data).ActorId == actorListIndexs[0]);
-            var maxSize = ActorInfos().FindAll(a => ((ActorInfo)a.Data).ActorId == actorListIndexs[1]);
+            var minSize = ActorInfos().FindAll(a => ((ActorInfo)a.Data).ActorId == actorListIndexes[0]);
+            var maxSize = ActorInfos().FindAll(a => ((ActorInfo)a.Data).ActorId == actorListIndexes[1]);
             if (minSize.Count == 1 || maxSize.Count == 1)
             {
                 if (minSize.Count == 1)
@@ -413,7 +413,7 @@ public class ResultModel : BaseModel
                     foreach (var listData in ActorInfos())
                     {
                         var actorInfo = (ActorInfo)listData.Data;
-                        if (actorInfo.ActorId == actorListIndexs[0])
+                        if (actorInfo.ActorId == actorListIndexes[0])
                         {
                             list.Add(idx);
                         }
@@ -426,7 +426,7 @@ public class ResultModel : BaseModel
                     foreach (var listData in ActorInfos())
                     {
                         var actorInfo = (ActorInfo)listData.Data;
-                        if (actorInfo.ActorId == actorListIndexs[1])
+                        if (actorInfo.ActorId == actorListIndexes[1])
                         {
                             list.Add(idx);
                         }

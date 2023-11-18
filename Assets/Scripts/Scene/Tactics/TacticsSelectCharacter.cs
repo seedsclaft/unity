@@ -13,6 +13,7 @@ public class TacticsSelectCharacter : MonoBehaviour
     [SerializeField] private TextMeshProUGUI commandTitle;
     [SerializeField] private TextMeshProUGUI commandLv;
     [SerializeField] private TextMeshProUGUI commandDescription;
+    [SerializeField] private List<GameObject> infoObj;
     
     public ListData CommandData {
         get {
@@ -41,6 +42,7 @@ public class TacticsSelectCharacter : MonoBehaviour
         commandList.Activate();
         characterList.SetInputCallHandler((a) => CallCharacterInputHandler(a));
         commandList.SetInputCallHandler((a) => CallCommandInputHandler(a));
+        infoObj.ForEach(a => a.SetActive(false));
     }    
     
     public void SetTacticsCommand(List<ListData> commandData)
@@ -125,7 +127,10 @@ public class TacticsSelectCharacter : MonoBehaviour
             if (tacticsActorInfo != null)
             {
                 displaySelectCharacter.gameObject.SetActive(true);
-                displaySelectCharacter.UpdateInfo(tacticsActorInfo.ActorInfo,null);
+                displaySelectCharacter.UpdateInfo(tacticsActorInfo.ActorInfo,tacticsActorInfo.ActorInfos);
+                infoObj.ForEach(a => a.gameObject.SetActive(false));
+                infoObj[(int)tacticsActorInfo.TacticsCommandType-1].SetActive(true);
+                infoObj[(int)tacticsActorInfo.TacticsCommandType-1].GetComponent<ActorInfoComponent>().UpdateInfo(tacticsActorInfo.ActorInfo,tacticsActorInfo.ActorInfos);
             }
         }
     }

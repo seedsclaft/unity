@@ -21,7 +21,7 @@ public class ActorData
     public StatusInfo InitStatus;
     public StatusInfo PlusStatus;
     public StatusInfo NeedStatus;
-    public List<int> Attribute;
+    public List<AttributeRank> Attribute;
     public int X;
     public int Y;
     public float Scale;

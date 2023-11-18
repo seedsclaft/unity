@@ -425,6 +425,7 @@ public class TacticsModel : BaseModel
             var tacticsActorInfo = new TacticsActorInfo();
             tacticsActorInfo.TacticsCommandType = _tacticsCommandType;
             tacticsActorInfo.ActorInfo = member;
+            tacticsActorInfo.ActorInfos = StageMembers();
             var listData = new ListData(tacticsActorInfo);
             list.Add(listData);
         }
@@ -500,6 +501,7 @@ public class TacticsModel : BaseModel
 
 public class TacticsActorInfo{
     public ActorInfo ActorInfo;
+    public List<ActorInfo> ActorInfos;
     public TacticsCommandType TacticsCommandType;
 }
 

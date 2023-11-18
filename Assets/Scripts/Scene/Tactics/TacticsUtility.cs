@@ -17,30 +17,35 @@ public class TacticsUtility
     public static int AlchemyCost(ActorInfo actorInfo,AttributeType attributeType,List<ActorInfo> stageMembers)
     {
         int cost = 2;
-        int param = actorInfo.AttirbuteParams(stageMembers)[(int)attributeType-1];
-        if (param > 100){
-            //cost *= 1;
-        } else
-        if (param > 80){
-            cost *= 2;
-        } else
-        if (param > 60){
-            cost *= 3;
-        } else
-        if (param > 40){
-            cost *= 4;
-        } else
-        if (param > 20){
-            cost *= 6;
-        } else
-        if (param > 10){
-            cost *= 8;
-        } else
+        var param = actorInfo.AttributeParams(stageMembers)[(int)attributeType-1];
+        switch (param)
         {
-            cost *= 16;
+            case AttributeRank.S:
+                break;
+            case AttributeRank.A:
+                cost *= 2;
+                break;
+            case AttributeRank.B:
+                cost *= 3;
+                break;
+            case AttributeRank.C:
+                cost *= 4;
+                break;
+            case AttributeRank.D:
+                cost *= 6;
+                break;
+            case AttributeRank.E:
+                cost *= 8;
+                break;
+            case AttributeRank.F:
+                cost *= 16;
+                break;
+            case AttributeRank.G:
+                cost *= 32;
+                break;
         }
         
-        return Mathf.FloorToInt( cost * TacticsCostRate(actorInfo));
+        return Mathf.FloorToInt(cost * TacticsCostRate(actorInfo));
     }
     public static int RecoveryCost(ActorInfo actorInfo)
     {

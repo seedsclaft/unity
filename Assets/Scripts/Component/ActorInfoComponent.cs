@@ -8,9 +8,7 @@ using TMPro;
 public class ActorInfoComponent : MonoBehaviour
 {
     [SerializeField] private Image mainThumb;
-    public Image MainThumb => mainThumb;
     [SerializeField] private Image awakenThumb;
-    public Image AwakenThumb => awakenThumb;
     [SerializeField] private Material grayscale;
     [SerializeField] private Image faceThumb;
     public Image FaceThumb => faceThumb;
@@ -32,6 +30,14 @@ public class ActorInfoComponent : MonoBehaviour
     [SerializeField] private TextMeshProUGUI element4;
     [SerializeField] private TextMeshProUGUI element5;
 
+    [SerializeField] private TextMeshProUGUI element1Cost;
+    [SerializeField] private TextMeshProUGUI element2Cost;
+    [SerializeField] private TextMeshProUGUI element3Cost;
+    [SerializeField] private TextMeshProUGUI element4Cost;
+    [SerializeField] private TextMeshProUGUI element5Cost;
+
+    [SerializeField] private TextMeshProUGUI recoveryCost;
+    [SerializeField] private TextMeshProUGUI resourceGain;
     private bool _isMainFaceInit = false;
     private bool _isAwakeFaceInit = false;
 
@@ -100,6 +106,34 @@ public class ActorInfoComponent : MonoBehaviour
         {
             UpdateAttributeParam(element5,actorInfo.Attribute[4]);
         }
+        if (element1Cost != null)
+        {
+            element1Cost.text = TacticsUtility.AlchemyCost(actorInfo,AttributeType.Fire,actorInfos).ToString();
+        }
+        if (element2Cost != null)
+        {
+            element2Cost.text = TacticsUtility.AlchemyCost(actorInfo,AttributeType.Thunder,actorInfos).ToString();
+        }
+        if (element3Cost != null)
+        {
+            element3Cost.text = TacticsUtility.AlchemyCost(actorInfo,AttributeType.Ice,actorInfos).ToString();
+        }
+        if (element4Cost != null)
+        {
+            element4Cost.text = TacticsUtility.AlchemyCost(actorInfo,AttributeType.Shine,actorInfos).ToString();
+        }
+        if (element5Cost != null)
+        {
+            element5Cost.text = TacticsUtility.AlchemyCost(actorInfo,AttributeType.Dark,actorInfos).ToString();
+        }
+        if (recoveryCost != null)
+        {
+            recoveryCost.text = TacticsUtility.RecoveryCost(actorInfo).ToString();
+        }
+        if (resourceGain != null)
+        {
+            resourceGain.text = "+" + TacticsUtility.ResourceGain(actorInfo).ToString();
+        }
         
         if (evaluate != null)
         {
@@ -120,7 +154,7 @@ public class ActorInfoComponent : MonoBehaviour
         }
         if (clipingThumb != null)
         {
-            UpdateClipingThumb(actorData.ImagePath);
+            UpdateClipThumb(actorData.ImagePath);
         }
         if (faceThumb != null)
         {
@@ -165,7 +199,7 @@ public class ActorInfoComponent : MonoBehaviour
         }
     }
 
-    private void UpdateClipingThumb(string imagePath)
+    private void UpdateClipThumb(string imagePath)
     {
         var handle = Resources.Load<Sprite>("Texture/Character/Actors/" + imagePath + "/Cliping");
         if (clipingThumb != null) clipingThumb.sprite = handle;
@@ -197,37 +231,9 @@ public class ActorInfoComponent : MonoBehaviour
         _isAwakeFaceInit = true;
     }
 
-    private void UpdateAttributeParam(TextMeshProUGUI textMeshProUGUI,int param){
-        string attributeParam = "G";
-        if (param > 100)
-        {
-            attributeParam = "S";
-        } else
-        if (param > 80)
-        {
-            attributeParam = "A";
-        } else
-        if (param > 60)
-        {
-            attributeParam = "B";
-        } else
-        if (param > 40)
-        {
-            attributeParam = "C";
-        } else
-        if (param > 20)
-        {
-            attributeParam = "D";
-        } else
-        if (param > 10)
-        {
-            attributeParam = "E";
-        } else
-        if (param > 0)
-        {
-            attributeParam = "F";
-        }
-        textMeshProUGUI.text = attributeParam;
+    private void UpdateAttributeParam(TextMeshProUGUI textMeshProUGUI,AttributeRank param){
+        var textId = 321 + (int)param;
+        textMeshProUGUI.text = DataSystem.System.GetTextData(textId).Text;
     }
 
     public void ChangeHp(int value,int maxHp)

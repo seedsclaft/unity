@@ -16,8 +16,8 @@ public class ActorInfo
     private StatusInfo _currentStatus;
     public StatusInfo CurrentStatus => _currentStatus;
     private StatusInfo _upperRate;
-    private List<int> _attribute;
-    public List<int> Attribute => _attribute;
+    private List<AttributeRank> _attribute;
+    public List<AttributeRank> Attribute => _attribute;
     private List<SkillInfo> _skills;
     public List<SkillInfo> Skills => _skills;
     private List<SkillInfo> _decksData = new ();
@@ -58,7 +58,7 @@ public class ActorInfo
     public int NextBattleEnemyId => _nextBattleEnemyId;
 
     private bool _inBattle = false;
-    public bool InBattle {get {return _inBattle;} }
+    public bool InBattle => _inBattle;
     public void SetInBattle(bool inBattle) { _inBattle = inBattle;}
     private bool _lost = false;
     public bool Lost => _lost;
@@ -100,9 +100,9 @@ public class ActorInfo
         _skills = new List<SkillInfo>();
         for (int i = 0;i < learningData.Count;i++)
         {
-            LearningData _learningData = learningData[i];
+            var _learningData = learningData[i];
             if (_skills.Find(a =>a.Id == _learningData.SkillId) != null) continue;
-            SkillInfo skillInfo = new SkillInfo(_learningData.SkillId);
+            var skillInfo = new SkillInfo(_learningData.SkillId);
             skillInfo.SetLearningState(LearningState.Learned);
             _skills.Add(skillInfo);
         }
@@ -126,18 +126,18 @@ public class ActorInfo
 
     public StatusInfo LevelUp(int bonus)
     {
-        var lvUpstatus = new StatusInfo();
-        lvUpstatus.SetParameter(0,0,0,0,0);
-        CalcLevelUpStatusInfo(lvUpstatus);
+        var lvUpStatus = new StatusInfo();
+        lvUpStatus.SetParameter(0,0,0,0,0);
+        CalcLevelUpStatusInfo(lvUpStatus);
         _level++;
         _sp += 10;
         for (int i = 0;i < bonus;i++)
         {
-            CalcLevelUpStatusInfo(lvUpstatus);
+            CalcLevelUpStatusInfo(lvUpStatus);
             _level++;
             _sp += 10;
         }
-        return lvUpstatus;
+        return lvUpStatus;
     }
 
     private void CalcLevelUpStatusInfo(StatusInfo statusInfo)
@@ -226,9 +226,9 @@ public class ActorInfo
         _nextLearnSkillId = skillId;
     }
 
-    public void SetNextLearnCost(int leariningCost)
+    public void SetNextLearnCost(int learningCost)
     {
-        _nextLearnCost = leariningCost;
+        _nextLearnCost = learningCost;
     }
 
     public void SetNextBattleEnemyIndex(int enemyIndex,int enemyId)
@@ -328,12 +328,12 @@ public class ActorInfo
         _lost = isLost;
     }
 
-    public List<int> AttirbuteParams(List<ActorInfo> actorInfos)
+    public List<AttributeRank> AttributeParams(List<ActorInfo> actorInfos)
     {
-        List<SkillData.FeatureData> alchemyFeatures = new List<SkillData.FeatureData>();
+        var alchemyFeatures = new List<SkillData.FeatureData>();
         foreach (var actorInfo in actorInfos)
         {
-            List<SkillInfo> skillInfos = actorInfo.Skills.FindAll(a => a.Master.FeatureDates.Find(b => b.FeatureType == FeatureType.MagicAlchemy)!= null);
+            var skillInfos = actorInfo.Skills.FindAll(a => a.Master.FeatureDates.Find(b => b.FeatureType == FeatureType.MagicAlchemy)!= null);
             foreach (var skillInfo in skillInfos)
             {
                 foreach (var featureData in skillInfo.Master.FeatureDates)
@@ -345,11 +345,11 @@ public class ActorInfo
                 }
             }
         }
-        List<int> attributeValues = new List<int>();
+        var attributeValues = new List<AttributeRank>();
         int idx = 1;
         foreach (var attribute in Attribute)
         {
-            int attributeValue = attribute;
+            AttributeRank attributeValue = attribute;
             foreach (var alchemyFeature in alchemyFeatures)
             {
                 if (alchemyFeature.Param2 == idx)
@@ -363,36 +363,13 @@ public class ActorInfo
         return attributeValues;
     }
 
-    public List<string> AttirbuteValues(List<ActorInfo> actorInfos)
+    public List<string> AttributeValues(List<ActorInfo> actorInfos)
     {
-        List<int> attributeParams = AttirbuteParams(actorInfos);
-        List<string> attributeValues = new List<string>();
+        var attributeParams = AttributeParams(actorInfos);
+        var attributeValues = new List<string>();
         foreach (var attribute in Attribute)
         {
-            int textId = 320;
-            if (attribute > 100){
-                textId += 1;
-            } else
-            if (attribute > 80){
-                textId += 2;
-            } else
-            if (attribute > 60){
-                textId += 3;
-            } else
-            if (attribute > 40){
-                textId += 4;
-            } else
-            if (attribute > 20){
-                textId += 5;
-            } else
-            if (attribute > 10){
-                textId += 6;
-            } else
-            if (attribute > 0){
-                textId += 7;
-            } else{
-                textId += 8;
-            }
+            int textId = 320 + (int)attribute;
             attributeValues.Add(DataSystem.System.GetTextData(textId).Text);
         }
         return attributeValues;
@@ -416,12 +393,12 @@ public class ActorInfo
         {
             magicParam += 1 * 25;
         }
-        int attibuteParam = 0;
+        int attributeParam = 0;
         foreach (var attribute in Attribute)
         {
-            attibuteParam += attribute / 5;
+            attributeParam += (AttributeRank.G - attribute) * 10;
         }
-        int total = evaluate + statusParam + magicParam + attibuteParam + DemigodParam * 5;
+        int total = evaluate + statusParam + magicParam + attributeParam + DemigodParam * 5;
         if (Lost == true)
         {
             total = total / 2;
@@ -437,4 +414,16 @@ public class ActorInfo
         }
         _rebornSkillInfos.Add(rebornSkillInfo);
     }
+}
+
+
+public enum AttributeRank {
+    S = 0,
+    A = 1,
+    B = 2,
+    C = 3,
+    D = 4,
+    E = 5,
+    F = 6,
+    G = 7
 }

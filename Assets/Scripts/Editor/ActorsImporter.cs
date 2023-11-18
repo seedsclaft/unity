@@ -129,12 +129,12 @@ public class ActorsImporter : AssetPostprocessor {
 					int Element3 = AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.Element3);
 					int Element4 = AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.Element4);
 					int Element5 = AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.Element5);
-					ActorData.Attribute = new List<int>();
-					ActorData.Attribute.Add(Element1);
-					ActorData.Attribute.Add(Element2);
-					ActorData.Attribute.Add(Element3);
-					ActorData.Attribute.Add(Element4);
-					ActorData.Attribute.Add(Element5);
+					ActorData.Attribute = new List<AttributeRank>();
+					ActorData.Attribute.Add((AttributeRank)Element1);
+					ActorData.Attribute.Add((AttributeRank)Element2);
+					ActorData.Attribute.Add((AttributeRank)Element3);
+					ActorData.Attribute.Add((AttributeRank)Element4);
+					ActorData.Attribute.Add((AttributeRank)Element5);
 
 					int X = AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.X);
 					int Y = AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.Y);
