@@ -11,23 +11,10 @@ public class ResourcesController
     private static string _backupPath = "Assets/Resources_bak/Animations/";
 
     private static List<string> _animationFolder = new List<string>(){
-        "tktk01","tktk02","MAGICALxSPIRAL","NA_Effekseer","NA_Effekseer_Vol_2,EffekseerVol_3"
+        "tktk01","tktk02","MAGICALxSPIRAL","NA_Effekseer","NA_Effekseer_Vol_2","EffekseerVol_3"
     };
 
     private static List<string> _defineAnimation = new List<string>(){
-        "NA_Effekseer/NA_cut-in_002_1",
-        "NA_Effekseer/NA_cut-in_002_2",
-        "NA_Effekseer/NA_cut-in_002_3",
-        "NA_Effekseer/NA_cut-in_002_4",
-        "NA_Effekseer/NA_cut-in_002_5",
-        "tktk01/Cure1",
-        "NA_Effekseer/NA_Fire_001",
-        "NA_Effekseer_Vol_2/NA_v2_3d_Magic Circle_normal",
-        "NA_Effekseer_Vol_2/NA_v2_3d_Magic Circle_Fire",
-        "NA_Effekseer_Vol_2/NA_v2_3d_Magic Circle_electric",
-        "NA_Effekseer_Vol_2/NA_v2_3d_Magic Circle_ice",
-        "NA_Effekseer_Vol_2/NA_v2_3d_Magic Circle_light",
-        "NA_Effekseer_Vol_2/NA_v2_3d_Magic Circle_dark",
     };
 
     [MenuItem ("Resources/MoveResourceBackup")]
@@ -38,45 +25,56 @@ public class ResourcesController
         }
     }
 
-    [MenuItem ("Resources/CreateFolder")]
-    static void CreateFolder() {
+    [MenuItem ("Resources/CreateAnimationFolder")]
+    static void CreateAnimationFolder() {
         foreach (var folderPath in _animationFolder)
         {
-            var folder = AssetDatabase.FindAssets("Assets/Resources/Animations" + folderPath);
-            if (folder != null)
+            var folder = AssetDatabase.IsValidFolder("Assets/Resources/Animations/" + folderPath);
+            
+            if (folder == false)
             {
                 AssetDatabase.CreateFolder("Assets/Resources/Animations", folderPath);
             }
-            var tex = AssetDatabase.FindAssets("Assets/Resources/Animations/" + folderPath + "/Texture");
-            if (tex != null)
+        }
+    }
+
+    [MenuItem ("Resources/CreateAnimationChildFolder")]
+    static void CreateAnimationChildFolder() {
+        foreach (var folderPath in _animationFolder)
+        {
+            var folder = AssetDatabase.IsValidFolder("Assets/Resources/Animations/" + folderPath);
+            if (folder == true)
             {
-                AssetDatabase.CreateFolder("Assets/Resources/Animations/" + folderPath, "Texture");
+                var tex = AssetDatabase.IsValidFolder("Assets/Resources/Animations/" + folderPath + "/Texture");
+                if (tex == false)
+                {
+                    AssetDatabase.CreateFolder("Assets/Resources/Animations/" + folderPath, "Texture");
+                }
+                var model = AssetDatabase.IsValidFolder("Assets/Resources/Animations/" + folderPath + "/Model");
+                if (model == false)
+                {
+                    AssetDatabase.CreateFolder("Assets/Resources/Animations/" + folderPath, "Model");
+                }            
+                var parts = AssetDatabase.IsValidFolder("Assets/Resources/Animations/" + folderPath + "/Parts");
+                if (parts == false)
+                {
+                    AssetDatabase.CreateFolder("Assets/Resources/Animations/" + folderPath, "Parts");
+                }      
             }
-            var model = AssetDatabase.FindAssets("Assets/Resources/Animations/" + folderPath + "/Model");
-            if (model != null)
-            {
-                AssetDatabase.CreateFolder("Assets/Resources/Animations/" + folderPath, "Model");
-            }            
         }
     }
 
     [MenuItem ("Resources/Deploy")]
     static void Deploy() {
-        var skills = Resources.Load<SkillDates>("Data/Skills");
-        var states = Resources.Load<StateDates>("Data/States");
-        var strs = new List<string>();
-        foreach (var item in skills.Data)
+        var animationDates = Resources.Load<AnimationDates>("Data/Animations");
+        var paths = new List<string>();
+        foreach (var item in animationDates.Data)
         {
-            if (item.AnimationName != "")
-            strs.Add(item.AnimationName);
-        }
-        foreach (var item in states.Data)
-        {
-            if (item.EffectPath != "")
-            strs.Add(item.EffectPath);
+            if (item.AnimationPath != "")
+            paths.Add(item.AnimationPath);
         }
 
-        foreach (var str in strs)
+        foreach (var str in paths)
         {    
             var t = (EffekseerEffectAsset)AssetDatabase.LoadAssetAtPath(_backupPath + str + ".asset", typeof(EffekseerEffectAsset));
             if (t != null)

@@ -33,7 +33,8 @@ public class AnimationData
             }
         } else
         {
-            //Debug.Log("not" + AnimationPath);
+            // EffekseerEffectAssetがない
+            Debug.Log("not" + AnimationPath);
         }
     }
 }

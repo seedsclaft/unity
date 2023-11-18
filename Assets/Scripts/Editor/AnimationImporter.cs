@@ -71,8 +71,8 @@ public class AnimationImporter : AssetPostprocessor {
 					AnimationData.AnimationPath = AssetPostImporter.ImportString(Baserow,(int)BaseColumn.AnimationPath);
 					
 					Data.Data.Add(AnimationData);
-                    AnimationData.CheckResourceFile();
 				}
+                    Data.Data[0].CheckResourceFile();
 			}
 		}
 		catch (Exception ex)
