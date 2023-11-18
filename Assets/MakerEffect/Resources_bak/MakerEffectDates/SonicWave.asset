@@ -1,0 +1,48 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 8
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 701a5690741d43a439191cab4276881c, type: 3}
+  m_Name: SonicWave
+  m_EditorClassIdentifier: 
+  AssetData:
+    id: 34
+    displayType: 2
+    effectName: SonicWave
+    flashTimings:
+    - frame: 2
+      duration: 25
+      color: ff000000dd000000aa000000aa000000
+    - frame: 29
+      duration: 25
+      color: ff000000dd000000aa000000aa000000
+    - frame: 59
+      duration: 25
+      color: ff000000dd000000aa000000aa000000
+    - frame: 89
+      duration: 25
+      color: ff000000dd000000aa00000064000000
+    name: "\u8D85\u97F3\u6CE2"
+    offsetX: 0
+    offsetY: 0
+    rotation:
+      x: 0
+      y: 0
+      z: 0
+    scale: 100
+    soundTimings:
+    - frame: 0
+      se:
+        name: Sound3
+        pan: 0
+        pitch: 100
+        volume: 90
+    speed: 100
+    timings: 

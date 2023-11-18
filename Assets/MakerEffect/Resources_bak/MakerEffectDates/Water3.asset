@@ -1,0 +1,69 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 8
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 701a5690741d43a439191cab4276881c, type: 3}
+  m_Name: Water3
+  m_EditorClassIdentifier: 
+  AssetData:
+    id: 180
+    displayType: 2
+    effectName: Water3
+    flashTimings:
+    - frame: 5
+      duration: 15
+      color: 88000000bb000000cc00000088000000
+    - frame: 19
+      duration: 30
+      color: 77000000cc000000cc00000066000000
+    - frame: 19
+      duration: 60
+      color: aa000000cc000000ff000000cc000000
+    name: "\u6C34\u9B54\u6CD53"
+    offsetX: 0
+    offsetY: 0
+    rotation:
+      x: 0
+      y: 0
+      z: 0
+    scale: 100
+    soundTimings:
+    - frame: 0
+      se:
+        name: Water1
+        pan: 0
+        pitch: 110
+        volume: 100
+    - frame: 0
+      se:
+        name: Up4
+        pan: 0
+        pitch: 100
+        volume: 90
+    - frame: 2
+      se:
+        name: Magic1
+        pan: 0
+        pitch: 100
+        volume: 90
+    - frame: 4
+      se:
+        name: Water1
+        pan: 0
+        pitch: 70
+        volume: 100
+    - frame: 9
+      se:
+        name: Water1
+        pan: 0
+        pitch: 70
+        volume: 100
+    speed: 100
+    timings: 

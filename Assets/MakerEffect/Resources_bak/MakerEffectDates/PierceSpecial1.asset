@@ -1,0 +1,186 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 8
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 701a5690741d43a439191cab4276881c, type: 3}
+  m_Name: PierceSpecial1
+  m_EditorClassIdentifier: 
+  AssetData:
+    id: 26
+    displayType: 0
+    effectName: PierceSpecial1
+    flashTimings:
+    - frame: 0
+      duration: 30
+      color: ff000000ff000000ff000000ff000000
+    - frame: 31
+      duration: 32
+      color: ff000000ff000000ff000000ff000000
+    - frame: 62
+      duration: 31
+      color: ff000000ff000000ff000000ff000000
+    - frame: 99
+      duration: 27
+      color: ff000000ff000000ff000000ff000000
+    name: "\u523A\u7A81/\u5FC5\u6BBA\u62801"
+    offsetX: 0
+    offsetY: 0
+    rotation:
+      x: 0
+      y: 0
+      z: 0
+    scale: 100
+    soundTimings:
+    - frame: 0
+      se:
+        name: Wind6
+        pan: 0
+        pitch: 130
+        volume: 90
+    - frame: 2
+      se:
+        name: Sword5
+        pan: 0
+        pitch: 130
+        volume: 90
+    - frame: 3
+      se:
+        name: Slash1
+        pan: 0
+        pitch: 150
+        volume: 90
+    - frame: 4
+      se:
+        name: Sword5
+        pan: 0
+        pitch: 130
+        volume: 90
+    - frame: 5
+      se:
+        name: Slash1
+        pan: 0
+        pitch: 150
+        volume: 90
+    - frame: 6
+      se:
+        name: Sword5
+        pan: 0
+        pitch: 130
+        volume: 90
+    - frame: 11
+      se:
+        name: Wind6
+        pan: 0
+        pitch: 130
+        volume: 90
+    - frame: 15
+      se:
+        name: Sword5
+        pan: 0
+        pitch: 130
+        volume: 90
+    - frame: 19
+      se:
+        name: Slash1
+        pan: 0
+        pitch: 150
+        volume: 90
+    - frame: 21
+      se:
+        name: Sword5
+        pan: 0
+        pitch: 130
+        volume: 90
+    - frame: 26
+      se:
+        name: Slash1
+        pan: 0
+        pitch: 150
+        volume: 90
+    - frame: 31
+      se:
+        name: Sword5
+        pan: 0
+        pitch: 130
+        volume: 90
+    - frame: 35
+      se:
+        name: Sword5
+        pan: 0
+        pitch: 130
+        volume: 90
+    - frame: 38
+      se:
+        name: Slash1
+        pan: 0
+        pitch: 150
+        volume: 90
+    - frame: 41
+      se:
+        name: Sword5
+        pan: 0
+        pitch: 130
+        volume: 90
+    - frame: 46
+      se:
+        name: Slash1
+        pan: 0
+        pitch: 150
+        volume: 90
+    - frame: 52
+      se:
+        name: Slash1
+        pan: 0
+        pitch: 150
+        volume: 90
+    - frame: 56
+      se:
+        name: Sword5
+        pan: 0
+        pitch: 130
+        volume: 90
+    - frame: 62
+      se:
+        name: Slash1
+        pan: 0
+        pitch: 150
+        volume: 90
+    - frame: 66
+      se:
+        name: Slash1
+        pan: 0
+        pitch: 150
+        volume: 90
+    - frame: 69
+      se:
+        name: Sword5
+        pan: 0
+        pitch: 130
+        volume: 90
+    - frame: 74
+      se:
+        name: Slash1
+        pan: 0
+        pitch: 150
+        volume: 90
+    - frame: 89
+      se:
+        name: Sword4
+        pan: 0
+        pitch: 130
+        volume: 90
+    - frame: 89
+      se:
+        name: Slash2
+        pan: 0
+        pitch: 130
+        volume: 90
+    speed: 100
+    timings: 

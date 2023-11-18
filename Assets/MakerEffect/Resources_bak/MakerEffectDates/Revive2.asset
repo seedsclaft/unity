@@ -1,0 +1,60 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 8
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 701a5690741d43a439191cab4276881c, type: 3}
+  m_Name: Revive2
+  m_EditorClassIdentifier: 
+  AssetData:
+    id: 50
+    displayType: 0
+    effectName: Revive2
+    flashTimings:
+    - frame: 0
+      duration: 10
+      color: 00000000ff0000000000000066000000
+    - frame: 9
+      duration: 30
+      color: 66000000ff0000000000000066000000
+    - frame: 29
+      duration: 30
+      color: ff000000ff000000ff00000066000000
+    - frame: 49
+      duration: 30
+      color: ff000000ff000000ff00000066000000
+    name: "\u8607\u751F2"
+    offsetX: 0
+    offsetY: 0
+    rotation:
+      x: 0
+      y: 0
+      z: 0
+    scale: 100
+    soundTimings:
+    - frame: 0
+      se:
+        name: Magic2
+        pan: 0
+        pitch: 100
+        volume: 90
+    - frame: 9
+      se:
+        name: Ice4
+        pan: 0
+        pitch: 150
+        volume: 100
+    - frame: 13
+      se:
+        name: Up3
+        pan: 0
+        pitch: 130
+        volume: 80
+    speed: 100
+    timings: 

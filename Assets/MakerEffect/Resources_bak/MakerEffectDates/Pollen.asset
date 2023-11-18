@@ -1,0 +1,60 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 8
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 701a5690741d43a439191cab4276881c, type: 3}
+  m_Name: Pollen
+  m_EditorClassIdentifier: 
+  AssetData:
+    id: 33
+    displayType: 2
+    effectName: Pollen
+    flashTimings:
+    - frame: 3
+      duration: 30
+      color: ff00000055000000ee000000cc000000
+    - frame: 5
+      duration: 30
+      color: ff00000055000000ee000000cc000000
+    - frame: 7
+      duration: 30
+      color: ff00000055000000ee000000bb000000
+    - frame: 9
+      duration: 30
+      color: ff00000055000000ee000000aa000000
+    - frame: 29
+      duration: 50
+      color: ff00000055000000ee00000099000000
+    - frame: 59
+      duration: 50
+      color: ff00000055000000ee00000078000000
+    name: "\u82B1\u7C89"
+    offsetX: 0
+    offsetY: 0
+    rotation:
+      x: 0
+      y: 0
+      z: 0
+    scale: 200
+    soundTimings:
+    - frame: 0
+      se:
+        name: Darkness4
+        pan: 0
+        pitch: 60
+        volume: 90
+    - frame: 0
+      se:
+        name: Darkness3
+        pan: 0
+        pitch: 50
+        volume: 90
+    speed: 100
+    timings: 

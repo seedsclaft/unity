@@ -902,7 +902,7 @@ public class BattleModel : BaseModel
     public List<MakerEffectData.SoundTimings> SkillActionSoundTimings(string animationName)
     {
         string makerEffectPath = animationName.Replace("MakerEffect/","");
-        string path = "MakerEffectDatas/" + makerEffectPath;
+        string path = "Animations/AnimationData/" + makerEffectPath;
         var result = UnityEngine.Resources.Load<MakerEffectAssetData>(path);
         if (result != null)
         {

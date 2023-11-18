@@ -1,0 +1,78 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 8
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 701a5690741d43a439191cab4276881c, type: 3}
+  m_Name: SlashSP2
+  m_EditorClassIdentifier: 
+  AssetData:
+    id: 141
+    displayType: 0
+    effectName: SlashSP2
+    flashTimings:
+    - frame: 9
+      duration: 40
+      color: ff000000ff000000ff000000aa000000
+    - frame: 29
+      duration: 40
+      color: ff000000ff000000ff000000aa000000
+    name: "\u65AC\u6483\u5FC5\u6BBA\u62802"
+    offsetX: 0
+    offsetY: 0
+    rotation:
+      x: 0
+      y: 0
+      z: 0
+    scale: 100
+    soundTimings:
+    - frame: 0
+      se:
+        name: Sword4
+        pan: 0
+        pitch: 100
+        volume: 100
+    - frame: 1
+      se:
+        name: Slash2
+        pan: 0
+        pitch: 110
+        volume: 90
+    - frame: 3
+      se:
+        name: Wind4
+        pan: 0
+        pitch: 100
+        volume: 80
+    - frame: 7
+      se:
+        name: Slash8
+        pan: 0
+        pitch: 100
+        volume: 90
+    - frame: 7
+      se:
+        name: Wind4
+        pan: 0
+        pitch: 100
+        volume: 100
+    - frame: 9
+      se:
+        name: Slash10
+        pan: 0
+        pitch: 90
+        volume: 100
+    - frame: 16
+      se:
+        name: Ice3
+        pan: 0
+        pitch: 90
+        volume: 90
+    speed: 100
+    timings: 

@@ -10,7 +10,7 @@ using NPOI.XSSF.UserModel;
 
 public class MakerEffectImporter : AssetPostprocessor{
 	static readonly string ImportPath = "Assets/MakerEffect/Resources";
-	static readonly string ExportPath = "Assets/MakerEffect/Resources/MakerEffectDatas";
+	static readonly string ExportPath = "Assets/MakerEffect/Resources_bak/MakerEffectDatas";
 	static readonly string FileName = "Animations.json";
 
 	// Fileがあったら呼ばれる
@@ -56,7 +56,7 @@ public class MakerEffectImporter : AssetPostprocessor{
         var MakerEffectDatas = JsonUtility.FromJson<MakerEffectDatas>(convert);
         foreach (var MakerEffectData in MakerEffectDatas.data)
         {
-            if (MakerEffectData.effectName != null && (MakerEffectData.id == 194 || MakerEffectData.id == 223))
+            if (MakerEffectData.effectName != null)
             {
                 // ディレクトリ情報とファイル名の文字列を結合してアセット名を指定
 		        string ExportFilePath = $"{Path.Combine(ExportPath, MakerEffectData.effectName)}.asset";

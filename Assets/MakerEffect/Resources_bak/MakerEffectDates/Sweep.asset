@@ -1,0 +1,45 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 8
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 701a5690741d43a439191cab4276881c, type: 3}
+  m_Name: Sweep
+  m_EditorClassIdentifier: 
+  AssetData:
+    id: 38
+    displayType: 0
+    effectName: Sweep
+    flashTimings:
+    - frame: 2
+      duration: 30
+      color: ff000000ff000000ff000000ff000000
+    name: "\u8DB3\u6255\u3044"
+    offsetX: 0
+    offsetY: 30
+    rotation:
+      x: 0
+      y: 0
+      z: 0
+    scale: 100
+    soundTimings:
+    - frame: 0
+      se:
+        name: Wind7
+        pan: 0
+        pitch: 50
+        volume: 90
+    - frame: 2
+      se:
+        name: Blow2
+        pan: 0
+        pitch: 70
+        volume: 100
+    speed: 100
+    timings: 

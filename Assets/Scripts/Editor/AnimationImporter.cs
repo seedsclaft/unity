@@ -13,6 +13,7 @@ public class AnimationImporter : AssetPostprocessor {
     {
 		Id = 0,
 		AnimationPath,
+		MakerEffect,
 		Enable,
     }
 	static readonly string ExcelName = "Animations.xlsx";
@@ -69,10 +70,10 @@ public class AnimationImporter : AssetPostprocessor {
 					var AnimationData = new AnimationData();
 					AnimationData.Id = AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.Id);
 					AnimationData.AnimationPath = AssetPostImporter.ImportString(Baserow,(int)BaseColumn.AnimationPath);
+					AnimationData.MakerEffect = AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.MakerEffect) == 1;
 					
 					Data.Data.Add(AnimationData);
 				}
-                    Data.Data[0].CheckResourceFile();
 			}
 		}
 		catch (Exception ex)

@@ -1,0 +1,87 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 8
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 701a5690741d43a439191cab4276881c, type: 3}
+  m_Name: ShootSpecial
+  m_EditorClassIdentifier: 
+  AssetData:
+    id: 114
+    displayType: 2
+    effectName: ShootSpecial
+    flashTimings:
+    - frame: 69
+      duration: 10
+      color: ff000000880000000000000099000000
+    - frame: 119
+      duration: 10
+      color: ff000000880000000000000099000000
+    - frame: 139
+      duration: 10
+      color: ff0000000000000000000000aa000000
+    - frame: 154
+      duration: 30
+      color: ff0000000000000000000000cc000000
+    - frame: 199
+      duration: 30
+      color: ff000000ff0000000000000088000000
+    name: "\u9283\u6483/\u5FC5\u6BBA\u6280"
+    offsetX: 0
+    offsetY: 0
+    rotation:
+      x: 0
+      y: 0
+      z: 0
+    scale: 100
+    soundTimings:
+    - frame: 0
+      se:
+        name: Phone
+        pan: 0
+        pitch: 150
+        volume: 40
+    - frame: 24
+      se:
+        name: Skill1
+        pan: 0
+        pitch: 150
+        volume: 70
+    - frame: 69
+      se:
+        name: Skill2
+        pan: 0
+        pitch: 150
+        volume: 70
+    - frame: 109
+      se:
+        name: Wind6
+        pan: 0
+        pitch: 150
+        volume: 70
+    - frame: 124
+      se:
+        name: Wind6
+        pan: 0
+        pitch: 150
+        volume: 70
+    - frame: 149
+      se:
+        name: Explosion2
+        pan: 0
+        pitch: 100
+        volume: 70
+    - frame: 169
+      se:
+        name: Fire2
+        pan: 0
+        pitch: 150
+        volume: 70
+    speed: 100
+    timings: 

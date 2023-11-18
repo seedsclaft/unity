@@ -1,0 +1,48 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 8
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 701a5690741d43a439191cab4276881c, type: 3}
+  m_Name: ThunderAll2
+  m_EditorClassIdentifier: 
+  AssetData:
+    id: 79
+    displayType: 2
+    effectName: ThunderAll2
+    flashTimings:
+    - frame: 0
+      duration: 50
+      color: ff000000ff0000007700000099000000
+    - frame: 29
+      duration: 20
+      color: ff000000ff00000088000000cc000000
+    name: "\u96F7/\u5168\u4F532"
+    offsetX: 0
+    offsetY: 0
+    rotation:
+      x: 0
+      y: 0
+      z: 0
+    scale: 150
+    soundTimings:
+    - frame: 0
+      se:
+        name: Thunder10
+        pan: 0
+        pitch: 120
+        volume: 100
+    - frame: 1
+      se:
+        name: Thunder9
+        pan: 0
+        pitch: 100
+        volume: 100
+    speed: 100
+    timings: 

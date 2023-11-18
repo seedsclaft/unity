@@ -1,0 +1,147 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 8
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 701a5690741d43a439191cab4276881c, type: 3}
+  m_Name: ClawSpecial
+  m_EditorClassIdentifier: 
+  AssetData:
+    id: 28
+    displayType: 0
+    effectName: ClawSpecial
+    flashTimings:
+    - frame: 0
+      duration: 30
+      color: ff0000007700000099000000bb000000
+    - frame: 30
+      duration: 30
+      color: ff0000007700000099000000bb000000
+    - frame: 74
+      duration: 30
+      color: ff0000007700000099000000bb000000
+    name: "\u722A/\u5FC5\u6BBA\u6280"
+    offsetX: 0
+    offsetY: 0
+    rotation:
+      x: 0
+      y: 0
+      z: 0
+    scale: 120
+    soundTimings:
+    - frame: 0
+      se:
+        name: Attack3
+        pan: 0
+        pitch: 100
+        volume: 80
+    - frame: 1
+      se:
+        name: Slash2
+        pan: 0
+        pitch: 100
+        volume: 80
+    - frame: 3
+      se:
+        name: Attack2
+        pan: 0
+        pitch: 150
+        volume: 90
+    - frame: 4
+      se:
+        name: Slash3
+        pan: 0
+        pitch: 100
+        volume: 80
+    - frame: 6
+      se:
+        name: Attack2
+        pan: 0
+        pitch: 150
+        volume: 90
+    - frame: 7
+      se:
+        name: Slash2
+        pan: 0
+        pitch: 100
+        volume: 80
+    - frame: 9
+      se:
+        name: Attack2
+        pan: 0
+        pitch: 150
+        volume: 90
+    - frame: 10
+      se:
+        name: Slash3
+        pan: 0
+        pitch: 100
+        volume: 80
+    - frame: 16
+      se:
+        name: Attack2
+        pan: 0
+        pitch: 150
+        volume: 90
+    - frame: 17
+      se:
+        name: Slash1
+        pan: 0
+        pitch: 80
+        volume: 90
+    - frame: 21
+      se:
+        name: Attack2
+        pan: 0
+        pitch: 150
+        volume: 90
+    - frame: 25
+      se:
+        name: Slash3
+        pan: 0
+        pitch: 100
+        volume: 80
+    - frame: 29
+      se:
+        name: Attack2
+        pan: 0
+        pitch: 150
+        volume: 90
+    - frame: 30
+      se:
+        name: Slash1
+        pan: 0
+        pitch: 80
+        volume: 90
+    - frame: 41
+      se:
+        name: Attack2
+        pan: 0
+        pitch: 150
+        volume: 90
+    - frame: 41
+      se:
+        name: Slash1
+        pan: 0
+        pitch: 80
+        volume: 90
+    - frame: 74
+      se:
+        name: Attack2
+        pan: 0
+        pitch: 150
+        volume: 90
+    - frame: 74
+      se:
+        name: Slash1
+        pan: 0
+        pitch: 80
+        volume: 90
+    speed: 100
+    timings: 
