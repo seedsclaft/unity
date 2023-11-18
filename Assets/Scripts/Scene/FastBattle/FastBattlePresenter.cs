@@ -46,7 +46,7 @@ public class FastBattlePresenter : BasePresenter
         _view.SetEvent((type) => updateCommand(type));
 
         _view.SetActors(_model.BattlerActors());
-        _view.SetEnemies(_model.BattlerEnemies());
+        _view.SetEnemies(_model.BattlerEnemies(),_model.BattleCursorEffects());
 
 
         _view.SetBattleBusy(false);

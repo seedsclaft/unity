@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.AddressableAssets;
 using Cysharp.Threading.Tasks;
 using System.Threading;
+using Effekseer;
 
 public class BaseModel
 {
@@ -242,6 +243,19 @@ public class BaseModel
         {
             CurrentStage.AddEventReadFlag(stageEventDates.EventKey);
         }
+    }
+
+    public List<EffekseerEffectAsset> BattleCursorEffects()
+    {
+        var list = new List<EffekseerEffectAsset>();
+        var dates = DataSystem.Animations.FindAll(a => a.Id > 2000 && a.Id < 2100);
+        foreach (var data in dates)
+        {
+            var path = "Animations/" + data.AnimationPath;
+            var result = Resources.Load<EffekseerEffectAsset>(path);
+            list.Add(result);
+        }
+        return list;
     }
 
     public async UniTask<List<AudioClip>> GetBgmData(string bgmKey){

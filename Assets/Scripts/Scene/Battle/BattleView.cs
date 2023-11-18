@@ -202,9 +202,9 @@ public class BattleView : BaseView ,IInputHandlerEvent
         battleGridLayer.SetActorInfo(battlerInfos);
     }
     
-    public void SetEnemies(List<BattlerInfo> battlerInfos)
+    public void SetEnemies(List<BattlerInfo> battlerInfos,List<EffekseerEffectAsset> cursorEffects)
     {
-        battleEnemyLayer.Initialize(battlerInfos,(a) => CallEnemyInfo(a));
+        battleEnemyLayer.Initialize(battlerInfos,(a) => CallEnemyInfo(a),cursorEffects);
         battleEnemyLayer.SetInputHandler(InputKeyType.Cancel,() => OnClickBack());
         battleEnemyLayer.SetInputHandler(InputKeyType.SideRight1,() => OnClickSelectParty());
         battleEnemyLayer.SetInputHandler(InputKeyType.Option1,() => CallEnemyDetailInfo(battlerInfos));

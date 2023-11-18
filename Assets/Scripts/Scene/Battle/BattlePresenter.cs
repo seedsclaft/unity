@@ -67,7 +67,7 @@ public class BattlePresenter : BasePresenter
     {
         _view.SetEvent((type) => UpdateCommand(type));
         _view.SetActors(_model.BattlerActors());
-        _view.SetEnemies(_model.BattlerEnemies());
+        _view.SetEnemies(_model.BattlerEnemies(),_model.BattleCursorEffects());
         _view.SetSideMenu(_model.SideMenu());
         _view.StartBattleStartAnim(DataSystem.System.GetTextData(4).Text);
         await UniTask.WaitUntil(() => _view.StartAnimIsBusy == false);

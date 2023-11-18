@@ -12,7 +12,7 @@ public class BattleEnemyLayer : ListWindow , IInputHandlerEvent
     [SerializeField] private List<GameObject> backDamageRoots;
     [SerializeField] private List<GameObject> frontStatusRoots;
     [SerializeField] private List<GameObject> backStatusRoots;
-    [SerializeField] private List<EffekseerEffectAsset> cursorEffects;
+    private List<EffekseerEffectAsset> _cursorEffects;
     
     private List<BattleEnemy> _battleEnemies = new List<BattleEnemy>();
     private ScopeType _targetScopeType = ScopeType.None;
@@ -23,8 +23,9 @@ public class BattleEnemyLayer : ListWindow , IInputHandlerEvent
     public int SelectedIndex => _selectIndex;
     private AttributeType _attributeType = AttributeType.None;
 
-    public void Initialize(List<BattlerInfo> battlerInfos ,System.Action<List<int>> callEvent)
+    public void Initialize(List<BattlerInfo> battlerInfos ,System.Action<List<int>> callEvent,List<EffekseerEffectAsset> cursorEffects)
     {
+        _cursorEffects = cursorEffects;
         _battleInfos = battlerInfos;
         frontDamageRoots.ForEach(a => a.SetActive(false));
         backDamageRoots.ForEach(a => a.SetActive(false));
@@ -35,8 +36,8 @@ public class BattleEnemyLayer : ListWindow , IInputHandlerEvent
         int backIndex = 0;
         for (int i = 0; i < battlerInfos.Count;i++)
         {
-            GameObject prefab = Instantiate(battleEnemyPrefab);
-            BattleEnemy battleEnemy = prefab.GetComponent<BattleEnemy>();
+            var prefab = Instantiate(battleEnemyPrefab);
+            var battleEnemy = prefab.GetComponent<BattleEnemy>();
             if (battlerInfos[i].LineIndex == LineType.Front)
             {
                 frontEnemyRoots[i].SetActive(true);
@@ -54,7 +55,7 @@ public class BattleEnemyLayer : ListWindow , IInputHandlerEvent
             }
             battleEnemy.SetData(battlerInfos[i],i,battlerInfos[i].LineIndex == LineType.Front);
             battleEnemy.SetCallHandler((enemyIndex) => {
-                BattlerInfo battlerInfo = battlerInfos.Find(a => a.Index == enemyIndex);
+                var battlerInfo = battlerInfos.Find(a => a.Index == enemyIndex);
                 if (battlerInfo.IsAlive() == false)
                 {
                     return;
@@ -116,19 +117,17 @@ public class BattleEnemyLayer : ListWindow , IInputHandlerEvent
         {
             if (_battleInfos[i].IsAlive())
             {
-                BattleEnemy listItem = _battleEnemies[i].GetComponent<BattleEnemy>();
-                listItem.SetSelect(cursorEffects[(int)_attributeType]);
+                _battleEnemies[i].SetSelect(_cursorEffects[(int)_attributeType]);
                 _battleEnemies[i].EnableClick();
             }
         }
     }
 
     private void UpdateAllUnSelect(){
-        for (int i = 0; i < _battleEnemies.Count;i++)
+        foreach (var battleEnemy in _battleEnemies)
         {
-            BattleEnemy listItem = _battleEnemies[i].GetComponent<BattleEnemy>();
-            listItem.SetUnSelect();
-            _battleEnemies[i].DisableClick();
+            battleEnemy.SetUnSelect();
+            battleEnemy.DisableClick();
         }
     }
     
@@ -154,15 +153,14 @@ public class BattleEnemyLayer : ListWindow , IInputHandlerEvent
         }
         for (int i = 0; i < _battleEnemies.Count;i++)
         {
-            BattleEnemy listItem = _battleEnemies[i].GetComponent<BattleEnemy>();
             if (index == _battleEnemies[i].EnemyIndex){
                 if (_battleInfos[i].IsAlive())
                 {
-                    listItem.SetSelect(cursorEffects[(int)_attributeType]);
+                    _battleEnemies[i].SetSelect(_cursorEffects[(int)_attributeType]);
                     _battleEnemies[i].EnableClick();
                 }
             } else{
-                listItem.SetUnSelect();
+                _battleEnemies[i].SetUnSelect();
                 _battleEnemies[i].DisableClick();
             }
         }
@@ -175,17 +173,16 @@ public class BattleEnemyLayer : ListWindow , IInputHandlerEvent
         bool isFront = index < _backStartIndex;
         for (int i = 0; i < _battleEnemies.Count;i++)
         {
-            BattleEnemy listItem = _battleEnemies[i].GetComponent<BattleEnemy>();
             if (isFront)
             {
                 if (_battleEnemies[i].EnemyIndex < _backStartIndex){
                     if (_battleInfos[i].IsAlive())
                     {
-                        listItem.SetSelect(cursorEffects[(int)_attributeType]);
+                        _battleEnemies[i].SetSelect(_cursorEffects[(int)_attributeType]);
                         _battleEnemies[i].EnableClick();
                     }
                 } else{
-                    listItem.SetUnSelect();
+                    _battleEnemies[i].SetUnSelect();
                     _battleEnemies[i].DisableClick();
                 }
             } else
@@ -193,11 +190,11 @@ public class BattleEnemyLayer : ListWindow , IInputHandlerEvent
                 if (_battleEnemies[i].EnemyIndex >= _backStartIndex){
                     if (_battleInfos[i].IsAlive())
                     {
-                        listItem.SetSelect(cursorEffects[(int)_attributeType]);
+                        _battleEnemies[i].SetSelect(_cursorEffects[(int)_attributeType]);
                         _battleEnemies[i].EnableClick();
                     }
                 } else{
-                    listItem.SetUnSelect();
+                    _battleEnemies[i].SetUnSelect();
                     _battleEnemies[i].DisableClick();
                 }
             }
@@ -213,7 +210,7 @@ public class BattleEnemyLayer : ListWindow , IInputHandlerEvent
     {
         if (keyType == InputKeyType.Decide)
         {
-            BattlerInfo battlerInfo = _battleInfos.Find(a => a.Index == _selectIndex);
+            var battlerInfo = _battleInfos.Find(a => a.Index == _selectIndex);
             if (battlerInfo == null)
             {
                 return;
@@ -230,10 +227,10 @@ public class BattleEnemyLayer : ListWindow , IInputHandlerEvent
         }
         if (keyType == InputKeyType.Right)
         {
-            BattlerInfo current = _battleInfos.Find(a => a.Index == _selectIndex);
+            var current = _battleInfos.Find(a => a.Index == _selectIndex);
             if (current != null)
             {
-                BattlerInfo target = _battleInfos.Find(a => a.Index > current.Index && a.IsAlive());
+                var target = _battleInfos.Find(a => a.Index > current.Index && a.IsAlive());
                 if (target != null)
                 {
                     if (current.LineIndex == target.LineIndex)
@@ -246,10 +243,10 @@ public class BattleEnemyLayer : ListWindow , IInputHandlerEvent
         }
         if (keyType == InputKeyType.Left)
         {
-            BattlerInfo current = _battleInfos.Find(a => a.Index == _selectIndex);
+            var current = _battleInfos.Find(a => a.Index == _selectIndex);
             if (current != null)
             {
-                List<BattlerInfo> targets = _battleInfos.FindAll(a => a.Index < current.Index && a.IsAlive() && current.LineIndex == a.LineIndex);
+                var targets = _battleInfos.FindAll(a => a.Index < current.Index && a.IsAlive() && current.LineIndex == a.LineIndex);
                 if (targets.Count > 0)
                 {
                     Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cursor);
@@ -259,10 +256,10 @@ public class BattleEnemyLayer : ListWindow , IInputHandlerEvent
         }
         if (keyType == InputKeyType.Up)
         {
-            BattlerInfo current = _battleInfos.Find(a => a.Index == _selectIndex);
+            var current = _battleInfos.Find(a => a.Index == _selectIndex);
             if (current != null)
             {
-                BattlerInfo target = _battleInfos.Find(a => a.Index > current.Index && a.IsAlive() && a.LineIndex == LineType.Back);
+                var target = _battleInfos.Find(a => a.Index > current.Index && a.IsAlive() && a.LineIndex == LineType.Back);
                 if (target != null)
                 {
                     if (current != target)
@@ -274,10 +271,10 @@ public class BattleEnemyLayer : ListWindow , IInputHandlerEvent
         }
         if (keyType == InputKeyType.Down)
         {
-            BattlerInfo current = _battleInfos.Find(a => a.Index == _selectIndex);
+            var current = _battleInfos.Find(a => a.Index == _selectIndex);
             if (current != null)
             {
-                BattlerInfo target = _battleInfos.Find(a => a.Index < current.Index && a.IsAlive() && a.LineIndex == LineType.Front);
+                var target = _battleInfos.Find(a => a.Index < current.Index && a.IsAlive() && a.LineIndex == LineType.Front);
                 if (target != null)
                 {
                     if (current != target)
@@ -291,7 +288,7 @@ public class BattleEnemyLayer : ListWindow , IInputHandlerEvent
 
     private List<int> MakeTargetIndexes(BattlerInfo battlerInfo)
     {
-        List<int> indexList = new List<int>();
+        var indexList = new List<int>();
         if (_targetScopeType == ScopeType.All || _targetScopeType == ScopeType.WithoutSelfAll)
         {
             for (int i = 0; i < _battleEnemies.Count;i++)

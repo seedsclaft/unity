@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using EnemyInfo;
-using TMPro;
+using Effekseer;
 
 public class EnemyInfoView : BaseView,IInputHandlerEvent
 {
@@ -20,10 +20,10 @@ public class EnemyInfoView : BaseView,IInputHandlerEvent
         InitializeInput();
     }
 
-    public void Initialize(List<BattlerInfo> battlerInfos,bool isBattle){
+    public void Initialize(List<BattlerInfo> battlerInfos,List<EffekseerEffectAsset> cursorEffects,bool isBattle){
         _isBattle = isBattle;
         
-        enemyLayer.Initialize(battlerInfos,(a) => OnClickSelectEnemy(a));
+        enemyLayer.Initialize(battlerInfos,(a) => OnClickSelectEnemy(a),cursorEffects);
         
         selectCharacter.Initialize();
         SetInputHandler(selectCharacter.GetComponent<IInputHandlerEvent>());
