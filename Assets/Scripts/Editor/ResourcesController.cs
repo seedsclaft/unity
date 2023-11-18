@@ -11,7 +11,7 @@ public class ResourcesController
     private static string _backupPath = "Assets/Resources_bak/Animations/";
 
     private static List<string> _animationFolder = new List<string>(){
-        "tktk01","tktk02","MAGICALxSPIRAL","NA_Effekseer","NA_Effekseer_Vol_2"
+        "tktk01","tktk02","MAGICALxSPIRAL","NA_Effekseer","NA_Effekseer_Vol_2,EffekseerVol_3"
     };
 
     private static List<string> _defineAnimation = new List<string>(){
