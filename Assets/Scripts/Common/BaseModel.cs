@@ -190,7 +190,7 @@ public class BaseModel
 
     public void ChangeCommandEndCheck(bool commandEndCheck)
     {
-        GameSystem.ConfigData._commandEndCheck = commandEndCheck;
+        GameSystem.ConfigData._commandEndCheck = !commandEndCheck;
     }
 
     public void ChangeBattleWait(bool battleWait)

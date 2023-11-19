@@ -352,6 +352,7 @@ public class StageInfo
         _defineBossIndex = index;
         if (_troopClearCount > 0)
         {
+            TacticsTroops(stageTurn);
             MakeDefineBossTroop(stageTurn);
         }
     }

@@ -69,6 +69,7 @@ abstract public class ListItem : MonoBehaviour
     public void SetSelect()
     {
         if (cursor == null) return;
+        if (disable != null && disable.activeSelf) return;
         cursor.SetActive(true);
     }
     
@@ -91,10 +92,10 @@ abstract public class ListItem : MonoBehaviour
 		ContentEnterListener enterListener = clickButton.gameObject.AddComponent<ContentEnterListener> ();
         enterListener.SetEnterEvent(() => 
         {
-            if (disable == null || disable.activeSelf == false)
-            {
+            //if (disable == null || disable.activeSelf == false)
+            //{
                 handler(_index);
-            }
+            //}
         });
     }
 

@@ -65,12 +65,19 @@ public class TacticsEnemyList : BaseList
             var tacticsEnemy = ObjectList[i].GetComponent<TacticsEnemy>();
             tacticsEnemy.SetCallHandler(() => CallSelectHandler(InputKeyType.Decide));
             tacticsEnemy.SetSelectHandler((a) => {
+                UpdateUnSelectAll();
                 UpdateSelectIndex(a);
                 tacticsEnemy.SetItemIndex(-1);
+                tacticsEnemy.SetSelectable(true);
             });
             tacticsEnemy.SetGetItemInfoCallHandler(() => CallListInputHandler(InputKeyType.Decide));
             tacticsEnemy.SetEnemyInfoCallHandler(() => CallListInputHandler(InputKeyType.Option1));
+            tacticsEnemy.SetGetItemInfoSelectHandler((a) => {
+                UpdateUnSelectAll();
+                tacticsEnemy.SetSelectable(true);
+            });
             tacticsEnemy.SetItemIndex(-1);
+            tacticsEnemy.SetSelectable(i == 0);
         }
     }
 
@@ -90,5 +97,14 @@ public class TacticsEnemyList : BaseList
             }
         });
         tacticsCommandList.SetData(confirmCommands);
+    }
+
+    private void UpdateUnSelectAll()
+    {
+        for (int i = 0; i < ObjectList.Count;i++)
+        {
+            var tacticsEnemy = ObjectList[i].GetComponent<TacticsEnemy>();
+            tacticsEnemy.SetSelectable(false);
+        }
     }
 }

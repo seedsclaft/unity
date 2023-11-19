@@ -10,8 +10,14 @@ public class TacticsEnemy : ListItem ,IListViewItem
     [SerializeField] private Button enemyInfoButton;
     private System.Action _enemyInfoHandler = null;
     private System.Action _getItemInfoHandler = null;
+    private System.Action<int> _getItemInfoSelectHandler = null;
 
     private int _getItemIndex = -1;
+    private bool _selectable = false;
+    public void SetSelectable(bool selectable)
+    {
+        _selectable = selectable;
+    }
     public int GetItemIndex => _getItemIndex;
     public GetItemInfo GetItemInfo()
     {
@@ -40,6 +46,15 @@ public class TacticsEnemy : ListItem ,IListViewItem
         enemyInfoButton.onClick.AddListener(() => handler());
     }
 
+    public void SetGetItemInfoSelectHandler(System.Action<int> handler)
+    {
+        if (_getItemInfoSelectHandler != null)
+        {
+            return;
+        }
+        _getItemInfoSelectHandler = handler;
+    }
+
     public void UpdateViewItem()
     {
         if (ListData == null) return;
@@ -55,6 +70,10 @@ public class TacticsEnemy : ListItem ,IListViewItem
         getItemList.SetData(list);
         getItemList.SetSelectedHandler(() => {
             _getItemIndex = getItemList.Index;
+            if (_getItemInfoSelectHandler != null)
+            {
+                _getItemInfoSelectHandler(Index);
+            }
         });
         SetItemIndex(_getItemIndex);
     }
@@ -80,6 +99,6 @@ public class TacticsEnemy : ListItem ,IListViewItem
     }
 
     private void LateUpdate() {
-        Cursor.SetActive(_getItemIndex == -1);
+        Cursor.SetActive(_getItemIndex == -1 && _selectable);
     }
 }

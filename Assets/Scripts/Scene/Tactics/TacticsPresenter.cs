@@ -17,14 +17,101 @@ public class TacticsPresenter :BasePresenter
         _model = new TacticsModel();
         SetModel(_model);
 
+        if (CheckStageEvent())
+        {
+            return;
+        }
+        if (CheckAdvEvent())
+        {
+            return;
+        }
+        if (CheckBeforeTacticsAdvEvent())
+        {
+            return;
+        }
+        if (CheckRebornEvent())
+        {
+            return;
+        }
         Initialize();
     }
 
-    private async void Initialize()
+    private bool CheckStageEvent()
     {
-        _model.RefreshTacticsEnable();
+        var isEvent = false;
+        // イベントチェック
+        var stageEvents = _model.StageEvents(EventTiming.StartTactics);
+        foreach (var stageEvent in stageEvents)
+        {
+            switch (stageEvent.Type)
+            {
+                case StageEventType.CommandDisable:
+                    _model.SetTacticsCommandEnables((TacticsCommandType)stageEvent.Param,false);
+                    break;
+                case StageEventType.TutorialBattle:
+                    _model.TutorialTroopData();
+                    break;
+                case StageEventType.NeedAllTactics:
+                    _model.SetNeedAllTacticsCommand(true);
+                    break;
+                case StageEventType.IsSubordinate:
+                    _model.ChangeSubordinate(stageEvent.Param == 1);
+                    _model.AddEventReadFlag(stageEvent);
+                    break;
+                case StageEventType.IsAlcana:
+                    _model.SetIsAlcana(stageEvent.Param == 1);
+                    break;
+                case StageEventType.SelectAddActor:
+                    var selectAddActor = new ConfirmInfo(DataSystem.System.GetTextData(11050).Text,(menuCommandInfo) => UpdatePopupSelectAddActor((ConfirmCommandType)menuCommandInfo));
+                    selectAddActor.SetIsNoChoice(true);
+                    selectAddActor.SetSelectIndex(0);
+                    _view.CommandCallConfirm(selectAddActor);
+                    _view.ChangeUIActive(false);
+                    _model.AddEventReadFlag(stageEvent);
+                    isEvent = true;
+                    break;
+                case StageEventType.SaveCommand:
+                    var popupInfo = new ConfirmInfo(DataSystem.System.GetTextData(11080).Text,(menuCommandInfo) => UpdatePopupSaveCommand((ConfirmCommandType)menuCommandInfo));
+                    popupInfo.SetSelectIndex(1);
+                    _view.CommandCallConfirm(popupInfo);
+                    _view.ChangeUIActive(false);
+                    _model.AddEventReadFlag(stageEvent);
+                    isEvent = true;
+                    break;
+                case StageEventType.SetDefineBossIndex:
+                    _model.SetDefineBossIndex(stageEvent.Param);
+                    break;
+                case StageEventType.SetRouteSelectParam:
+                    _view.CommandSetRouteSelect();
+                    _model.AddEventReadFlag(stageEvent);
+                    break;
+                case StageEventType.AbortStage:
+                    _model.StageClear();
+                    _model.AddEventReadFlag(stageEvent);
+                    isEvent = true;
+                    _view.CommandSceneChange(Scene.MainMenu);
+                    break;
+                case StageEventType.ChangeRouteSelectStage:
+                    _model.ChangeRouteSelectStage(stageEvent.Param);
+                    _model.AddEventReadFlag(stageEvent);
+                    isEvent = true;
+                    _view.CommandSceneChange(Scene.Tactics);
+                    break;
+                case StageEventType.RouteSelectBattle:
+                    _model.RouteSelectTroopData();
+                    _model.AddEventReadFlag(stageEvent);
+                    break;
+            }
+            if (isEvent)
+            {
+                return true;
+            }
+        }
+        return isEvent;
+    }
 
-        _view.SetHelpWindow();
+    private bool CheckAdvEvent()
+    {
         var StartTacticsAdvData = _model.StartTacticsAdvData();
         if (StartTacticsAdvData != null)
         {
@@ -38,26 +125,41 @@ public class TacticsPresenter :BasePresenter
             });
             _view.CommandCallAdv(advInfo);
             _view.ChangeUIActive(false);
-            return;
         }
-        
+        return StartTacticsAdvData != null;
+    }
+
+    private bool CheckBeforeTacticsAdvEvent()
+    {
         var isAbort = CheckAdvStageEvent(EventTiming.BeforeTactics,() => {
             _view.CommandSceneChange(Scene.Tactics);
         },_model.CurrentStage.SelectActorIdsClassId(0));
         if (isAbort)
         {
             _view.ChangeUIActive(false);
-            return;
         }
-        
+        return isAbort;
+    }
+
+    private bool CheckRebornEvent()
+    {
         var isReborn = CheckRebornEvent(EventTiming.BeforeTactics,() => {
             _view.CommandSceneChange(Scene.RebornResult);
         });
         if (isReborn)
         {
             _view.ChangeUIActive(false);
-            return;
         }
+        return isReborn;
+    }
+
+    private async void Initialize()
+    {
+        _model.RefreshTacticsEnable();
+
+        _view.SetHelpWindow();
+        
+        
         _view.SetUIButton();
         _view.ChangeBackCommandActive(false);
         _view.SetEvent((type) => UpdateCommand(type));
@@ -72,100 +174,8 @@ public class TacticsPresenter :BasePresenter
         _view.SetHelpInputInfo(_model.TacticsCommandInputInfo());
         var bgm = await _model.GetBgmData(_model.TacticsBgmFilename());
         Ryneus.SoundManager.Instance.PlayBgm(bgm,1.0f,true);
-        // イベントチェック
-        var stageEvents = _model.StageEvents(EventTiming.StartTactics);
-        if (stageEvents.Count > 0)
-        {
-            for (int i = 0;i < stageEvents.Count;i++)
-            {
-                if (stageEvents[i].Type == StageEventType.CommandDisable)
-                {
-                    _view.RefreshListData(_model.ChangeEnableCommandData(stageEvents[i].Param,false));
-                }
-                if (stageEvents[i].Type == StageEventType.TutorialBattle)
-                {
-                    _view.SetEnemies(_model.TroopInfoListDates(_model.TutorialTroopData()));
-                }
-                if (stageEvents[i].Type == StageEventType.NeedAllTactics)
-                {
-                    _model.SetNeedAllTacticsCommand(true);
-                    var listData = _model.ChangeEnableCommandData((int)TacticsCommandType.TurnEnd - 1, !_model.CheckNonBusy());
-                    _view.RefreshListData(listData);
-                }
-                if (stageEvents[i].Type == StageEventType.IsSubordinate)
-                {
-                    _model.ChangeSubordinate(stageEvents[i].Param == 1);
-                    if (stageEvents[i].Param == 1)
-                    {        
-                        CommandRefresh();
-                    }
-                    _model.AddEventReadFlag(stageEvents[i]);
-                }
-                if (stageEvents[i].Type == StageEventType.IsAlcana)
-                {
-                    _model.SetIsAlcana(stageEvents[i].Param == 1);
-                    if (stageEvents[i].Param == 1)
-                    {        
-                        CommandRefresh();
-                    }
-                    _model.AddEventReadFlag(stageEvents[i]);
-                }
-                if (stageEvents[i].Type == StageEventType.SelectAddActor)
-                {
-                    var popupInfo = new ConfirmInfo(DataSystem.System.GetTextData(11050).Text,(menuCommandInfo) => UpdatePopupSelectAddActor((ConfirmCommandType)menuCommandInfo));
-                    popupInfo.SetIsNoChoice(true);
-                    popupInfo.SetSelectIndex(0);
-                    _view.CommandCallConfirm(popupInfo);
-                    _model.AddEventReadFlag(stageEvents[i]);
-                    _view.ChangeUIActive(false);
-                    isAbort = true;
-                    break;
-                }
-                if (stageEvents[i].Type == StageEventType.SaveCommand)
-                {
-                    var popupInfo = new ConfirmInfo(DataSystem.System.GetTextData(11080).Text,(menuCommandInfo) => UpdatePopupSaveCommand((ConfirmCommandType)menuCommandInfo));
-                    popupInfo.SetSelectIndex(1);
-                    _view.CommandCallConfirm(popupInfo);
-                    _model.AddEventReadFlag(stageEvents[i]);
-                    _view.ChangeUIActive(false);
-                    isAbort = true;
-                    break;
-                }
-                if (stageEvents[i].Type == StageEventType.SetDefineBossIndex)
-                {
-                    _model.SetDefineBossIndex(stageEvents[i].Param);
-                    _view.SetEnemies(_model.TroopInfoListDates(_model.TacticsTroops()));
-                }
-                if (stageEvents[i].Type == StageEventType.SetRouteSelectParam)
-                {
-                    _view.CommandSetRouteSelect();
-                    _model.AddEventReadFlag(stageEvents[i]);
-                }
-                if (stageEvents[i].Type == StageEventType.AbortStage)
-                {
-                    isAbort = true;
-                    _model.StageClear();
-                    _model.AddEventReadFlag(stageEvents[i]);
-                    _view.CommandSceneChange(Scene.MainMenu);
-                }
-                if (stageEvents[i].Type == StageEventType.ChangeRouteSelectStage)
-                {
-                    _model.ChangeRouteSelectStage(stageEvents[i].Param);
-                    _model.AddEventReadFlag(stageEvents[i]);
-                    _view.CommandSceneChange(Scene.Tactics);
-                }
-                if (stageEvents[i].Type == StageEventType.RouteSelectBattle)
-                {
-                    _view.SetEnemies(_model.TroopInfoListDates(_model.RouteSelectTroopData()));
-                    _model.AddEventReadFlag(stageEvents[i]);
-                }
-            }
-        }
-        if (isAbort)
-        {
-            return;
-        }
-        isAbort = CheckAdvStageEvent(EventTiming.StartTactics,() => {
+
+        var isAbort = CheckAdvStageEvent(EventTiming.StartTactics,() => {
             _view.CommandSceneChange(Scene.Tactics);
         },_model.CurrentStage.SelectActorIdsClassId(0));
         if (isAbort)

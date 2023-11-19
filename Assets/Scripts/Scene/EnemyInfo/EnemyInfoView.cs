@@ -24,7 +24,7 @@ public class EnemyInfoView : BaseView,IInputHandlerEvent
         _isBattle = isBattle;
         
         enemyLayer.Initialize(battlerInfos,(a) => OnClickSelectEnemy(a),cursorEffects);
-        
+        enemyLayer.SetSelectedHandler(() => OnSelectEnemy());
         selectCharacter.Initialize();
         SetInputHandler(selectCharacter.GetComponent<IInputHandlerEvent>());
         InitializeSelectCharacter();
@@ -95,6 +95,17 @@ public class EnemyInfoView : BaseView,IInputHandlerEvent
         }
     }
     
+    private void OnSelectEnemy()
+    {
+        var enemyIndex = enemyLayer.Index;
+        if (enemyIndex > -1)
+        {
+            var eventData = new EnemyInfoViewEvent(CommandType.SelectEnemy);
+            eventData.template = enemyIndex;
+            _commandData(eventData);
+        }
+    }
+
     public void SetHelpWindow()
     {
         HelpWindow.SetHelpText(DataSystem.System.GetTextData(809).Help);

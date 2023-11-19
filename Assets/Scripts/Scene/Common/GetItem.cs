@@ -27,22 +27,25 @@ public class GetItem : ListItem ,IListViewItem
 
     public void UpdateViewItem()
     {
-        if (ListData == null) return;
-        var data = (GetItemInfo)ListData.Data;
+        if (ListData != null) 
+        {
+            _data = (GetItemInfo)ListData.Data;
+        }
+        if (_data == null) return;
         if (iconImage != null)
         {
-            iconImage.gameObject.SetActive(data.SkillElementId > -1);
-            if (data.SkillElementId > -1) UpdateElementIcon((int)data.SkillElementId);
+            iconImage.gameObject.SetActive(_data.SkillElementId > -1);
+            if (_data.SkillElementId > -1) UpdateElementIcon((int)_data.SkillElementId);
         }
         if (titleName != null)
         {
-            titleName.gameObject.SetActive(data.TitleName != "");
-            titleName.text = data.TitleName;
+            titleName.gameObject.SetActive(_data.TitleName != "");
+            titleName.text = _data.TitleName;
         }
         if (resultName != null)
         {
-            resultName.gameObject.SetActive(data.ResultName != "");
-            resultName.text = data.ResultName;
+            resultName.gameObject.SetActive(_data.ResultName != "");
+            resultName.text = _data.ResultName;
             resultName.rectTransform.sizeDelta = new Vector2(resultName.preferredWidth,resultName.preferredHeight);
         }
     }

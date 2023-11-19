@@ -914,6 +914,13 @@ MonoBehaviour:
   element3: {fileID: 0}
   element4: {fileID: 0}
   element5: {fileID: 0}
+  element1Cost: {fileID: 0}
+  element2Cost: {fileID: 0}
+  element3Cost: {fileID: 0}
+  element4Cost: {fileID: 0}
+  element5Cost: {fileID: 0}
+  recoveryCost: {fileID: 0}
+  resourceGain: {fileID: 0}
 --- !u!1 &588181347988056461
 GameObject:
   m_ObjectHideFlags: 0
@@ -3447,6 +3454,13 @@ MonoBehaviour:
   element3: {fileID: 348484059999467192}
   element4: {fileID: 7818629919219455969}
   element5: {fileID: 4704211165613841815}
+  element1Cost: {fileID: 0}
+  element2Cost: {fileID: 0}
+  element3Cost: {fileID: 0}
+  element4Cost: {fileID: 0}
+  element5Cost: {fileID: 0}
+  recoveryCost: {fileID: 0}
+  resourceGain: {fileID: 0}
 --- !u!114 &6997491004173774619
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11915,7 +11929,7 @@ MonoBehaviour:
   onValueChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_IsOn: 0
+  m_IsOn: 1
 --- !u!225 &2133853021501661685
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -12131,7 +12145,7 @@ MonoBehaviour:
   onValueChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_IsOn: 1
+  m_IsOn: 0
 --- !u!225 &6985244807681314069
 CanvasGroup:
   m_ObjectHideFlags: 0

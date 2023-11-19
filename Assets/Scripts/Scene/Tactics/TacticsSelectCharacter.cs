@@ -59,12 +59,8 @@ public class TacticsSelectCharacter : MonoBehaviour
 
     public void SetTacticsCharacter(List<ListData> characterData)
     {
-        if (characterList.IsInit == false)
-        {
-            characterList.Initialize(characterData.Count);
-            characterList.SetSelectedHandler(() => DisplaySelectCharacter());
-        }
         characterList.SetData(characterData);
+        characterList.SetSelectedHandler(() => DisplaySelectCharacter());
         if (displaySelectCharacter == null)
         {
             displaySelectCharacter.gameObject.SetActive(false);

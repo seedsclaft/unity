@@ -137,6 +137,7 @@ public class BattleEnemyLayer : ListWindow , IInputHandlerEvent
             return;
         }
         _selectIndex = index;
+        UpdateSelectIndex(_selectIndex);
         if (_targetScopeType == ScopeType.All || _targetScopeType == ScopeType.WithoutSelfAll)
         {
             UpdateAllSelect();

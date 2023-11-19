@@ -20,6 +20,12 @@ public class TacticsModel : BaseModel
     {
         _tacticsCommandType = tacticsCommandType;
     }
+    private Dictionary<TacticsCommandType,bool> _tacticsCommandEnables = new ();
+    public void SetTacticsCommandEnables(TacticsCommandType tacticsCommand,bool isEnable)
+    {
+        _tacticsCommandEnables[tacticsCommand+1] = isEnable;
+    }
+
     private List<ActorInfo> _tempActorInfos = new();
 
     private int _currentEnemyIndex = -1; 
@@ -48,6 +54,10 @@ public class TacticsModel : BaseModel
         foreach (var commandData in DataSystem.TacticsCommand)
         {
             var listData = new ListData(commandData,idx);
+            if (_tacticsCommandEnables.ContainsKey((TacticsCommandType)commandData.Id))
+            {
+                listData.SetEnable(_tacticsCommandEnables[(TacticsCommandType)commandData.Id]);
+            }
             list.Add(listData);
             idx++;
         }
