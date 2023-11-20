@@ -27,6 +27,7 @@ public class StatusPresenter : BasePresenter
         if (_view.Busy){
             return;
         }
+        UnityEngine.Debug.Log(viewEvent.commandType);
         if (viewEvent.commandType == Status.CommandType.DecideActor)
         {
             CommandDecideActor();
@@ -100,9 +101,7 @@ public class StatusPresenter : BasePresenter
         Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cursor);
         SaveSelectedSkillId();
         _model.ChangeActorIndex(-1);
-        _view.MoveActorLeft(() => {
-            CommandRefresh();
-        });
+        CommandRefresh();
     }
 
     private void CommandRightActor()
@@ -110,9 +109,7 @@ public class StatusPresenter : BasePresenter
         Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cursor);
         SaveSelectedSkillId();
         _model.ChangeActorIndex(1);
-        _view.MoveActorRight(() => {
-            CommandRefresh();
-        });
+        CommandRefresh();
     }
 
     private void CommandRefresh()

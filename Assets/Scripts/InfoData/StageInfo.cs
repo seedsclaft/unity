@@ -86,14 +86,14 @@ public class StageInfo
 	{
 		for (int i = 0;i < _randomTroopCount;i++)
 		{
-			TroopData BossTroopData = new TroopData();
+			var BossTroopData = new TroopData();
 			BossTroopData.Id = i + _baseTroopId + 1;
 			BossTroopData.TroopId = i + _baseTroopId + 1;
 			BossTroopData.EnemyId = i + 1;
 			BossTroopData.Lv = 1;
 			BossTroopData.Line = LineType.Back;
             BossTroopData.BossFlag = true;
-            TroopData troopData = DataSystem.Troops.Find(a => a.TroopId == BossTroopData.Id);
+            var troopData = DataSystem.Troops.Find(a => a.TroopId == BossTroopData.Id);
             if (troopData != null && troopData.GetItemDates != null)
             {
                 BossTroopData.GetItemDates = troopData.GetItemDates;
@@ -133,6 +133,7 @@ public class StageInfo
                 BattlerInfo enemy = new BattlerInfo(enemyData,_troopClearCount + 1,j,0,false);
                 troopInfo.AddEnemy(enemy);
             }
+            troopInfo.MakeGetItemInfos();
             _currentTroopInfos.Add(troopInfo);
         }
 

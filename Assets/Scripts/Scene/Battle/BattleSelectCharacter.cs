@@ -45,6 +45,7 @@ public class BattleSelectCharacter : MonoBehaviour
         }
         gameObject.SetActive(false);
         displaySelectCard.Clear();
+        UpdateTabs();
     }
 
     private void SelectMagicConditionTab(SelectCharacterTabType selectCharacterTabType)
@@ -233,7 +234,6 @@ public class BattleSelectCharacter : MonoBehaviour
     {
         deckMagicList.Refresh(selectIndex);
     }
-
 
     public void RefreshCostInfo()
     {

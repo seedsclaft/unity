@@ -33,7 +33,10 @@ public class TacticsEnemy : ListItem ,IListViewItem
             return;
         }
         _getItemInfoHandler = handler;
-        getItemList.SetInputHandler(InputKeyType.Decide,() => _getItemInfoHandler());
+        getItemList.SetInputHandler(InputKeyType.Decide,() => 
+        {
+            _getItemInfoHandler();
+        });
     }
 
     public void SetEnemyInfoCallHandler(System.Action handler)
@@ -75,18 +78,12 @@ public class TacticsEnemy : ListItem ,IListViewItem
                 _getItemInfoSelectHandler(Index);
             }
         });
-        SetItemIndex(_getItemIndex);
+        UpdateItemIndex(_getItemIndex);
     }
 
-    public void SetItemIndex(int itemIndex)
+    public void UpdateItemIndex(int getItemIndex)
     {
-        _getItemIndex = itemIndex;
-        UpdateItemIndex(0);
-    }
-
-    public void UpdateItemIndex(int plusIndex)
-    {
-        _getItemIndex += plusIndex;
+        _getItemIndex = getItemIndex;
         if (_getItemIndex < -1)
         {
             _getItemIndex = -1;

@@ -205,7 +205,6 @@ MonoBehaviour:
     type: 3}
   _helpWindow: {fileID: 0}
   tacticsCommandList: {fileID: 1132900719827252690}
-  cols: 1
 --- !u!1 &207127003218800608
 GameObject:
   m_ObjectHideFlags: 0
@@ -3058,6 +3057,13 @@ MonoBehaviour:
   element3: {fileID: 0}
   element4: {fileID: 0}
   element5: {fileID: 0}
+  element1Cost: {fileID: 0}
+  element2Cost: {fileID: 0}
+  element3Cost: {fileID: 0}
+  element4Cost: {fileID: 0}
+  element5Cost: {fileID: 0}
+  recoveryCost: {fileID: 0}
+  resourceGain: {fileID: 0}
 --- !u!1 &4182797246233841871
 GameObject:
   m_ObjectHideFlags: 0
@@ -3881,7 +3887,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -184, y: 270}
+  m_AnchoredPosition: {x: -184, y: 256}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
 --- !u!114 &8644336505725030254
@@ -5476,7 +5482,7 @@ PrefabInstance:
     - target: {fileID: 3483328398092755893, guid: f81fc10b69d708f4fb1d5f3d45cec6e1,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3483328398092755893, guid: f81fc10b69d708f4fb1d5f3d45cec6e1,
         type: 3}
@@ -5486,7 +5492,7 @@ PrefabInstance:
     - target: {fileID: 3483328398092755893, guid: f81fc10b69d708f4fb1d5f3d45cec6e1,
         type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3483328398092755893, guid: f81fc10b69d708f4fb1d5f3d45cec6e1,
         type: 3}
@@ -5541,7 +5547,7 @@ PrefabInstance:
     - target: {fileID: 3483328398092755893, guid: f81fc10b69d708f4fb1d5f3d45cec6e1,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -304
       objectReference: {fileID: 0}
     - target: {fileID: 3483328398092755893, guid: f81fc10b69d708f4fb1d5f3d45cec6e1,
         type: 3}

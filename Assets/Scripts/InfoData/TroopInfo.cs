@@ -39,8 +39,8 @@ public class TroopInfo
     {
         foreach (var troopData in MasterAll)
         {
-            EnemyData enemyData = DataSystem.Enemies.Find(a => a.Id == troopData.EnemyId);
-            BattlerInfo battlerInfo = new BattlerInfo(enemyData,troopData.Lv + level,troopData.Id - 1,troopData.Line,troopData.BossFlag);
+            var enemyData = DataSystem.Enemies.Find(a => a.Id == troopData.EnemyId);
+            var battlerInfo = new BattlerInfo(enemyData,troopData.Lv + level,troopData.Id - 1,troopData.Line,troopData.BossFlag);
             AddEnemy(battlerInfo);
         }
         MakeGetItemInfos();
@@ -63,10 +63,10 @@ public class TroopInfo
         }
         for (int i = 0;i < getItemDates.Count;i++)
         {
-            GetItemInfo getItemInfo = new GetItemInfo(getItemDates[i]);
+            var getItemInfo = new GetItemInfo(getItemDates[i]);
             if (getItemDates[i].Type == GetItemType.Skill)
             {
-                SkillData skillData = DataSystem.Skills.Find(a => a.Id == getItemDates[i].Param1);
+                var skillData = DataSystem.Skills.Find(a => a.Id == getItemDates[i].Param1);
                 getItemInfo.SetResultData(skillData.Name);
                 getItemInfo.SetSkillElementId((int)skillData.Attribute);
             }

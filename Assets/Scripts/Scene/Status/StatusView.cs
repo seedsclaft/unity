@@ -136,19 +136,6 @@ public class StatusView : BaseView ,IInputHandlerEvent
         _isDisplayBack = isDisplay;
     }
 
-    public new void ChangeBackCommandActive(bool IsActive)
-    {
-        base.ChangeBackCommandActive(IsActive);
-    }
-
-    public void MoveActorLeft(System.Action endEvent)
-    {
-    }
-
-    public void MoveActorRight(System.Action endEvent)
-    {
-    }
-
     private void OnClickBack()
     {
         var eventData = new StatusViewEvent(CommandType.Back);

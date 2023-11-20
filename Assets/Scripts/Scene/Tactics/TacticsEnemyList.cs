@@ -40,19 +40,19 @@ public class TacticsEnemyList : BaseList
             if (DataCount > 1)
             {
                 var tacticsEnemy = ObjectList[Index].GetComponent<TacticsEnemy>();
-                tacticsEnemy.SetItemIndex(-1);
+                tacticsEnemy.UpdateItemIndex(-1);
             }
         }
         if (keyType == InputKeyType.Up)
         {
             var tacticsEnemy = ObjectList[Index].GetComponent<TacticsEnemy>();
-            tacticsEnemy.UpdateItemIndex(-1);
+            tacticsEnemy.UpdateItemIndex(tacticsEnemy.GetItemIndex-1);
             Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cursor);
         }
         if (keyType == InputKeyType.Down)
         {
             var tacticsEnemy = ObjectList[Index].GetComponent<TacticsEnemy>();
-            tacticsEnemy.UpdateItemIndex(1);
+            tacticsEnemy.UpdateItemIndex(tacticsEnemy.GetItemIndex+1);
             Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cursor);
         }
     }
@@ -64,19 +64,30 @@ public class TacticsEnemyList : BaseList
         {
             var tacticsEnemy = ObjectList[i].GetComponent<TacticsEnemy>();
             tacticsEnemy.SetCallHandler(() => CallSelectHandler(InputKeyType.Decide));
-            tacticsEnemy.SetSelectHandler((a) => {
+            tacticsEnemy.SetSelectHandler((System.Action<int>)((a) => {
                 UpdateUnSelectAll();
                 UpdateSelectIndex(a);
-                tacticsEnemy.SetItemIndex(-1);
+                tacticsEnemy.UpdateItemIndex(-1);
                 tacticsEnemy.SetSelectable(true);
+            }));
+            tacticsEnemy.SetGetItemInfoCallHandler(() => 
+            {
+                CallListInputHandler(InputKeyType.Decide);
             });
-            tacticsEnemy.SetGetItemInfoCallHandler(() => CallListInputHandler(InputKeyType.Decide));
             tacticsEnemy.SetEnemyInfoCallHandler(() => CallListInputHandler(InputKeyType.Option1));
             tacticsEnemy.SetGetItemInfoSelectHandler((a) => {
-                UpdateUnSelectAll();
-                tacticsEnemy.SetSelectable(true);
+                for (int i = 0; i < ObjectList.Count;i++)
+                {
+                    var tacticsEnemy = ObjectList[i].GetComponent<TacticsEnemy>();
+                    if (a != i)
+                    {
+                        tacticsEnemy.UpdateItemIndex(-1);
+                    }
+                    tacticsEnemy.SetSelectable(false);
+                }
+                UpdateSelectIndex(a);
             });
-            tacticsEnemy.SetItemIndex(-1);
+            tacticsEnemy.UpdateItemIndex(-1);
             tacticsEnemy.SetSelectable(i == 0);
         }
     }
@@ -104,6 +115,7 @@ public class TacticsEnemyList : BaseList
         for (int i = 0; i < ObjectList.Count;i++)
         {
             var tacticsEnemy = ObjectList[i].GetComponent<TacticsEnemy>();
+            tacticsEnemy.UpdateItemIndex(-1);
             tacticsEnemy.SetSelectable(false);
         }
     }
