@@ -92,7 +92,7 @@ public class OptionPresenter
                 _model.ChangeEventSkipIndex(inputKeyType == InputKeyType.Right);
                 break;
             case "COMMAND_END_CHECK":
-                _model.ChangeCommandEndCheck(inputKeyType == InputKeyType.Right);
+                _model.ChangeCommandEndCheck(inputKeyType == InputKeyType.Left);
                 break;
             case "BATTLE_WAIT":
                 _model.ChangeBattleWait(inputKeyType == InputKeyType.Right);
@@ -166,16 +166,16 @@ public class OptionPresenter
                     };
                     break;
                 case "EVENT_SKIP":
-                    _model.ChangeEventSkipIndex((toggleIndex == 1));
+                    _model.ChangeEventSkipIndex(toggleIndex == 1);
                     break;
                 case "COMMAND_END_CHECK":
-                    _model.ChangeCommandEndCheck((toggleIndex == 1));
+                    _model.ChangeCommandEndCheck(toggleIndex == 0);
                     break;
                 case "BATTLE_WAIT":
                     _model.ChangeBattleWait(toggleIndex == 1);
                     break;
                 case "BATTLE_ANIMATION":
-                    _model.ChangeBattleAnimation((toggleIndex == 1));
+                    _model.ChangeBattleAnimation(toggleIndex == 1);
                     break;
                 case "INPUT_TYPE":
                     _model.ChangeInputType(toggleIndex == 1);

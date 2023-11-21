@@ -1426,8 +1426,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 14
-  m_fontSizeBase: 14
+  m_fontSize: 12
+  m_fontSizeBase: 12
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -1890,7 +1890,6 @@ GameObject:
   m_Component:
   - component: {fileID: 7167891823024849878}
   - component: {fileID: 1088781980696951419}
-  - component: {fileID: 6966165946959609289}
   - component: {fileID: 4720719489883695112}
   - component: {fileID: 7909148494642811876}
   - component: {fileID: 4061044251296617296}
@@ -1935,36 +1934,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6805481075859665284}
   m_CullTransparentMesh: 0
---- !u!114 &6966165946959609289
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6805481075859665284}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0.2509804}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
 --- !u!114 &4720719489883695112
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2005,7 +1974,7 @@ MonoBehaviour:
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
   m_Interactable: 1
-  m_TargetGraphic: {fileID: 6966165946959609289}
+  m_TargetGraphic: {fileID: 0}
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
@@ -2025,7 +1994,7 @@ MonoBehaviour:
   cursor: {fileID: 214878875483014079}
   disable: {fileID: 2806420390202976053}
   skillInfoComponent: {fileID: 4061044251296617296}
-  DisableSkill: {fileID: 0}
+  DisableSkill: {fileID: 2806420390202976053}
 --- !u!114 &4061044251296617296
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2047,7 +2016,7 @@ MonoBehaviour:
   type: {fileID: 922214103558783758}
   value: {fileID: 8735974461422640635}
   description: {fileID: 101522752879801026}
-  lerningCost: {fileID: 6913366272447242171}
+  learningCost: {fileID: 6913366272447242171}
   selectable: {fileID: 2948239517588680104}
 --- !u!1 &7133477010123736153
 GameObject:
@@ -2161,7 +2130,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -64, y: 16}
+  m_AnchoredPosition: {x: -48, y: 16}
   m_SizeDelta: {x: 80, y: 32}
   m_Pivot: {x: 0, y: 1}
 --- !u!222 &5692769814395214236
@@ -2220,8 +2189,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 14
-  m_fontSizeBase: 14
+  m_fontSize: 12
+  m_fontSizeBase: 12
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18

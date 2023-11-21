@@ -349,7 +349,7 @@ public class ActorInfo
         int idx = 1;
         foreach (var attribute in Attribute)
         {
-            AttributeRank attributeValue = attribute;
+            var attributeValue = attribute;
             foreach (var alchemyFeature in alchemyFeatures)
             {
                 if (alchemyFeature.Param2 == idx)

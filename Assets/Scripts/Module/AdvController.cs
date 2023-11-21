@@ -41,7 +41,7 @@ public class AdvController : BaseView, IInputHandlerEvent
         if (keyType == InputKeyType.Option1)
         {
             advUguiManager.Engine.Config.ToggleSkip();        
-            GameSystem.ConfigData._eventSkipIndex = advUguiManager.Engine.Config.IsSkip;
+            GameSystem.ConfigData.EventSkipIndex = advUguiManager.Engine.Config.IsSkip;
         }
         if (keyType == InputKeyType.SideLeft1)
         {

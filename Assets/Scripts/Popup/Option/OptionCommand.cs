@@ -70,43 +70,43 @@ public class OptionCommand : ListItem ,IListViewItem
             case "GRAPHIC_QUALITY":
                 for (int i = 0;i < optionToggles.Count;i++)
                 {
-                    optionToggles[i].SetIsOnWithoutNotify(i == GameSystem.ConfigData._graphicIndex);
+                    optionToggles[i].SetIsOnWithoutNotify(i == GameSystem.ConfigData.GraphicIndex);
                 }
                 return;
             case "EVENT_SKIP":
                 for (int i = 0;i < optionToggles.Count;i++)
                 {
-                    optionToggles[i].SetIsOnWithoutNotify(i == (GameSystem.ConfigData._eventSkipIndex == true ? 1 : 0));
+                    optionToggles[i].SetIsOnWithoutNotify(i == (GameSystem.ConfigData.EventSkipIndex == true ? 1 : 0));
                 }
                 return;
             case "COMMAND_END_CHECK":
                 for (int i = 0;i < optionToggles.Count;i++)
                 {
-                    optionToggles[i].SetIsOnWithoutNotify(i == (GameSystem.ConfigData._commandEndCheck == true ? 1 : 0));
+                    optionToggles[i].SetIsOnWithoutNotify(i == (GameSystem.ConfigData.CommandEndCheck == true ? 0 : 1));
                 }
                 return;
             case "BATTLE_WAIT":
                 for (int i = 0;i < optionToggles.Count;i++)
                 {
-                    optionToggles[i].SetIsOnWithoutNotify(i == (GameSystem.ConfigData._battleWait == true ? 1 : 0));
+                    optionToggles[i].SetIsOnWithoutNotify(i == (GameSystem.ConfigData.BattleWait == true ? 1 : 0));
                 }
                 return;
             case "BATTLE_ANIMATION":
                 for (int i = 0;i < optionToggles.Count;i++)
                 {
-                    optionToggles[i].SetIsOnWithoutNotify(i == (GameSystem.ConfigData._battleAnimationSkip == true ? 1 : 0));
+                    optionToggles[i].SetIsOnWithoutNotify(i == (GameSystem.ConfigData.BattleAnimationSkip == true ? 1 : 0));
                 }
                 return;
             case "INPUT_TYPE":
                 for (int i = 0;i < optionToggles.Count;i++)
                 {
-                    optionToggles[i].SetIsOnWithoutNotify(i == (GameSystem.ConfigData._inputType == true ? 1 : 0));
+                    optionToggles[i].SetIsOnWithoutNotify(i == (GameSystem.ConfigData.InputType == true ? 1 : 0));
                 }
                 return;
             case "BATTLE_AUTO":
                 for (int i = 0;i < optionToggles.Count;i++)
                 {
-                    optionToggles[i].SetIsOnWithoutNotify(i == (GameSystem.ConfigData._battleAuto == true ? 1 : 0));
+                    optionToggles[i].SetIsOnWithoutNotify(i == (GameSystem.ConfigData.BattleAuto == true ? 1 : 0));
                 }
                 return;
         }

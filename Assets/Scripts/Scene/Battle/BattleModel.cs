@@ -2054,7 +2054,7 @@ public class BattleModel : BaseModel
 
     public void ChangeBattleAuto()
     {
-        GameSystem.ConfigData._battleAuto = !GameSystem.ConfigData._battleAuto;
+        GameSystem.ConfigData.BattleAuto = !GameSystem.ConfigData.BattleAuto;
     }
 
     public List<ListData> SelectCharacterConditions()

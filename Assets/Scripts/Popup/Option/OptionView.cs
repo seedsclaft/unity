@@ -16,7 +16,7 @@ public class OptionView : BaseView
     {
         base.Initialize();
         new OptionPresenter(this);
-        SetTempInputType(GameSystem.ConfigData._inputType ? 1 : 0);
+        SetTempInputType(GameSystem.ConfigData.InputType ? 1 : 0);
         Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
     }
     
@@ -51,8 +51,8 @@ public class OptionView : BaseView
         SetBackCommand(() => 
         {    
             Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cancel);
-            GameSystem.ConfigData._inputType = (_tempInputTypeIndex == 1);
-            if (GameSystem.ConfigData._inputType == false)
+            GameSystem.ConfigData.InputType = (_tempInputTypeIndex == 1);
+            if (GameSystem.ConfigData.InputType == false)
             {
                 SetHelpInputInfo("");
             }

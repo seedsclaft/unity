@@ -118,7 +118,6 @@ public class BattleEnemyLayer : ListWindow , IInputHandlerEvent
             if (_battleInfos[i].IsAlive())
             {
                 _battleEnemies[i].SetSelect(_cursorEffects[(int)_attributeType]);
-                _battleEnemies[i].EnableClick();
             }
         }
     }
@@ -127,7 +126,6 @@ public class BattleEnemyLayer : ListWindow , IInputHandlerEvent
         foreach (var battleEnemy in _battleEnemies)
         {
             battleEnemy.SetUnSelect();
-            battleEnemy.DisableClick();
         }
     }
     
@@ -158,11 +156,9 @@ public class BattleEnemyLayer : ListWindow , IInputHandlerEvent
                 if (_battleInfos[i].IsAlive())
                 {
                     _battleEnemies[i].SetSelect(_cursorEffects[(int)_attributeType]);
-                    _battleEnemies[i].EnableClick();
                 }
             } else{
                 _battleEnemies[i].SetUnSelect();
-                _battleEnemies[i].DisableClick();
             }
         }
     }
@@ -180,11 +176,9 @@ public class BattleEnemyLayer : ListWindow , IInputHandlerEvent
                     if (_battleInfos[i].IsAlive())
                     {
                         _battleEnemies[i].SetSelect(_cursorEffects[(int)_attributeType]);
-                        _battleEnemies[i].EnableClick();
                     }
                 } else{
                     _battleEnemies[i].SetUnSelect();
-                    _battleEnemies[i].DisableClick();
                 }
             } else
             {
@@ -192,11 +186,9 @@ public class BattleEnemyLayer : ListWindow , IInputHandlerEvent
                     if (_battleInfos[i].IsAlive())
                     {
                         _battleEnemies[i].SetSelect(_cursorEffects[(int)_attributeType]);
-                        _battleEnemies[i].EnableClick();
                     }
                 } else{
                     _battleEnemies[i].SetUnSelect();
-                    _battleEnemies[i].DisableClick();
                 }
             }
         }

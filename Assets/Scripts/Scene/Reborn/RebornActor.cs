@@ -40,7 +40,7 @@ public class RebornActor : ListItem ,IListViewItem
             var prefab = Instantiate(RebornPrefab);
             prefab.transform.SetParent(RebornRoot.transform,false);
             var rebornSkillInfo = prefab.GetComponent<SkillInfoComponent>();
-            rebornSkillInfo.SetInfoData(rebornSkill);
+            rebornSkillInfo.UpdateSkillInfo(rebornSkill);
             idx++;
         }
     }

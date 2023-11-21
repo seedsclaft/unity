@@ -50,7 +50,7 @@ public class BattlePresenter : BasePresenter
         _view.ClearCurrentSkillData();
         _view.CreateObject(_model.BattlerActors().Count);
         _view.SetUIButton();
-        _view.SetBattleAutoButton(_model.BattleAutoButton(),GameSystem.ConfigData._battleAuto == true);
+        _view.SetBattleAutoButton(_model.BattleAutoButton(),GameSystem.ConfigData.BattleAuto == true);
         _view.ChangeBackCommandActive(false);
 
         if (_view.TestMode == true)
@@ -998,8 +998,8 @@ public class BattlePresenter : BasePresenter
         if (_busy) return;
         Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cancel);
         _model.ChangeBattleAuto();
-        _view.ChangeBattleAuto(GameSystem.ConfigData._battleAuto == true);
-        if (_view.AnimationBusy == false && _view.BattleBusy && _model.CurrentBattler.isActor && GameSystem.ConfigData._battleAuto == true)
+        _view.ChangeBattleAuto(GameSystem.ConfigData.BattleAuto == true);
+        if (_view.AnimationBusy == false && _view.BattleBusy && _model.CurrentBattler.isActor && GameSystem.ConfigData.BattleAuto == true)
         {
             _model.ClearActionInfo();
             _view.HideBattlerEnemyTarget();

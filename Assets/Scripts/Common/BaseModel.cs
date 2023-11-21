@@ -121,17 +121,17 @@ public class BaseModel
         SaveConfigInfo saveConfigInfo = GameSystem.ConfigData;
         if (saveConfigInfo != null)
         {
-            ChangeBGMValue(saveConfigInfo._bgmVolume);
-            Ryneus.SoundManager.Instance._bgmMute = saveConfigInfo._bgmMute;
-            ChangeSEValue(saveConfigInfo._seVolume);
-            Ryneus.SoundManager.Instance._seMute = saveConfigInfo._seMute;
-            ChangeGraphicIndex(saveConfigInfo._graphicIndex);
-            ChangeEventSkipIndex(saveConfigInfo._eventSkipIndex);
-            ChangeCommandEndCheck(saveConfigInfo._commandEndCheck);
-            ChangeBattleWait(saveConfigInfo._battleWait);
-            ChangeBattleAnimation(saveConfigInfo._battleAnimationSkip);
-            ChangeInputType(saveConfigInfo._inputType);
-            ChangeBattleAuto(saveConfigInfo._battleAuto);
+            ChangeBGMValue(saveConfigInfo.BgmVolume);
+            Ryneus.SoundManager.Instance._bgmMute = saveConfigInfo.BgmMute;
+            ChangeSEValue(saveConfigInfo.SeVolume);
+            Ryneus.SoundManager.Instance._seMute = saveConfigInfo.SeMute;
+            ChangeGraphicIndex(saveConfigInfo.GraphicIndex);
+            ChangeEventSkipIndex(saveConfigInfo.EventSkipIndex);
+            ChangeCommandEndCheck(saveConfigInfo.CommandEndCheck);
+            ChangeBattleWait(saveConfigInfo.BattleWait);
+            ChangeBattleAnimation(saveConfigInfo.BattleAnimationSkip);
+            ChangeInputType(saveConfigInfo.InputType);
+            ChangeBattleAuto(saveConfigInfo.BattleAuto);
         }
     }
 
@@ -176,41 +176,41 @@ public class BaseModel
         Ryneus.SoundManager.Instance._seMute = seMute;
     }
 
-    public int GraphicIndex(){ return GameSystem.ConfigData._graphicIndex; }
+    public int GraphicIndex(){ return GameSystem.ConfigData.GraphicIndex; }
     public void ChangeGraphicIndex(int graphicIndex)
     {
-        GameSystem.ConfigData._graphicIndex = graphicIndex;
+        GameSystem.ConfigData.GraphicIndex = graphicIndex;
         QualitySettings.SetQualityLevel(graphicIndex);
     }
 
     public void ChangeEventSkipIndex(bool eventSkipIndex)
     {
-        GameSystem.ConfigData._eventSkipIndex = eventSkipIndex;
+        GameSystem.ConfigData.EventSkipIndex = eventSkipIndex;
     }
 
     public void ChangeCommandEndCheck(bool commandEndCheck)
     {
-        GameSystem.ConfigData._commandEndCheck = !commandEndCheck;
+        GameSystem.ConfigData.CommandEndCheck = commandEndCheck;
     }
 
     public void ChangeBattleWait(bool battleWait)
     {
-        GameSystem.ConfigData._battleWait = battleWait;
+        GameSystem.ConfigData.BattleWait = battleWait;
     }
 
     public void ChangeBattleAnimation(bool battleAnimation)
     {
-        GameSystem.ConfigData._battleAnimationSkip = battleAnimation;
+        GameSystem.ConfigData.BattleAnimationSkip = battleAnimation;
     }
 
     public void ChangeInputType(bool inputType)
     {
-        GameSystem.ConfigData._inputType = inputType;
+        GameSystem.ConfigData.InputType = inputType;
     }
 
     public void ChangeBattleAuto(bool battleAuto)
     {
-        GameSystem.ConfigData._battleAuto = battleAuto;
+        GameSystem.ConfigData.BattleAuto = battleAuto;
     }
 
     public string PlayerName()

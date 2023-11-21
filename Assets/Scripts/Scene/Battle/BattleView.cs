@@ -434,7 +434,7 @@ public class BattleView : BaseView ,IInputHandlerEvent
     {
         DeactivateActorList();
         DeactivateEnemyList();
-        if (GameSystem.ConfigData._battleAnimationSkip == true) 
+        if (GameSystem.ConfigData.BattleAnimationSkip == true) 
         {
             return;
         }
@@ -445,7 +445,7 @@ public class BattleView : BaseView ,IInputHandlerEvent
     {
         DeactivateActorList();
         DeactivateEnemyList();
-        if (GameSystem.ConfigData._battleAnimationSkip == true) 
+        if (GameSystem.ConfigData.BattleAnimationSkip == true) 
         {
             return;
         }
@@ -455,7 +455,7 @@ public class BattleView : BaseView ,IInputHandlerEvent
 
     public void PlayMakerEffectSound(List<MakerEffectData.SoundTimings> soundTimings)
     {
-        if (GameSystem.ConfigData._battleAnimationSkip == true) 
+        if (GameSystem.ConfigData.BattleAnimationSkip == true) 
         {
             return;
         }

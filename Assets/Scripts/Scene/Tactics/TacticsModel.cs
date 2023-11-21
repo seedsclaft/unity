@@ -361,7 +361,7 @@ public class TacticsModel : BaseModel
 
     public bool IsBusyAll()
     {
-        return StageMembers().Find(a => a.TacticsCommandType == TacticsCommandType.None) == null && GameSystem.ConfigData._commandEndCheck;
+        return StageMembers().Find(a => a.TacticsCommandType == TacticsCommandType.None) == null && GameSystem.ConfigData.CommandEndCheck;
     }
 
     public void InitInBattle()

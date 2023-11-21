@@ -28,7 +28,7 @@ public class SkillAction : ListItem ,IListViewItem
     {
         if (ListData == null) return;
         var data = (SkillInfo)ListData.Data;
-        skillInfoComponent.SetInfoData(data);
+        skillInfoComponent.UpdateSkillInfo(data);
         if (DisableSkill != null) DisableSkill.SetActive(data.Enable == false);
     }
 }

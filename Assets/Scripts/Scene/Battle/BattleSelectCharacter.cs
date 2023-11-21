@@ -219,7 +219,7 @@ public class BattleSelectCharacter : MonoBehaviour
             if (skillInfo != null)
             {
                 displaySelectCard.gameObject.SetActive(true);
-                displaySelectCard.UpdateSkillData(skillInfo.Id);
+                displaySelectCard.UpdateSkillInfo(skillInfo);
             }
         }
     }

@@ -49,13 +49,13 @@ public class BattleEnemy : ListItem
     
     public new void SetSelectHandler(System.Action<int> handler)
     {
-		ContentEnterListener enterListener = clickButton.gameObject.AddComponent<ContentEnterListener> ();
+		var enterListener = clickButton.gameObject.AddComponent<ContentEnterListener> ();
         enterListener.SetEnterEvent(() => handler(_battlerInfo.Index));
     }
 
     public void SetPressHandler(System.Action<int> handler)
     {
-		ContentPressListener pressListener = clickButton.gameObject.AddComponent<ContentPressListener> ();
+		var pressListener = clickButton.gameObject.AddComponent<ContentPressListener> ();
         pressListener.SetPressEvent(() => handler(_battlerInfo.Index));
     }
 
@@ -73,11 +73,11 @@ public class BattleEnemy : ListItem
         int size = _isFront == true ? 200 : 240;
         int width = Mathf.Max(size,enemyImage.mainTexture.width);
         int height = Mathf.Max(size,enemyImage.mainTexture.height);
-        RectTransform objectRect = gameObject.GetComponent < RectTransform > ();
-        RectTransform rect = Cursor.GetComponent < RectTransform > ();
-        RectTransform effectRect = effekseerEmitter.gameObject.GetComponent < RectTransform > ();
-        RectTransform statusRect = statusObject.GetComponent < RectTransform > ();
-        RectTransform damageRect = battlerInfoComponent.BattleDamageRoot.gameObject.GetComponent < RectTransform > ();
+        var objectRect = gameObject.GetComponent < RectTransform > ();
+        var rect = Cursor.GetComponent < RectTransform > ();
+        var effectRect = effekseerEmitter.gameObject.GetComponent < RectTransform > ();
+        var statusRect = statusObject.GetComponent < RectTransform > ();
+        var damageRect = battlerInfoComponent.BattleDamageRoot.gameObject.GetComponent < RectTransform > ();
         rect.sizeDelta = new Vector2(width,height);
         objectRect.sizeDelta = new Vector2(width,height);
         effectRect.sizeDelta = new Vector2(width,height);
@@ -87,20 +87,11 @@ public class BattleEnemy : ListItem
             damageRect.sizeDelta = new Vector2(0,height/2);
         }
     }
-
-    public void EnableClick()
-    {
-        clickButton.enabled = true;
-    }
-
-    public void DisableClick()
-    {
-        clickButton.enabled = false;
-    }
     
     public void SetSelect(EffekseerEffectAsset effekseerEffectAsset)
     {
         if (Cursor == null) return;
+        clickButton.enabled = true;
         Cursor.SetActive(true);
         cursorEffekseerEmitter.Stop();
         cursorEffekseerEmitter.Play(effekseerEffectAsset);
@@ -112,6 +103,7 @@ public class BattleEnemy : ListItem
     public new void SetUnSelect()
     {
         if (Cursor == null) return;
+        clickButton.enabled = false;
         Cursor.SetActive(false);
         cursorEffekseerEmitter.enabled = false;
         cursorEffekseerEmitter.playOnStart = false;

@@ -287,7 +287,7 @@ public class SavePlayInfo
 		{
 			stageId = _party.StageId;
 		}
-		StageData stageData = DataSystem.Stages.Find(a => a.Id == stageId);
+		var stageData = DataSystem.Stages.Find(a => a.Id == stageId);
 		_currentStage = new StageInfo(stageData);
 		_currentStage.AddSelectActorId(actorId);
 		_currentAlcana = new AlcanaInfo();
@@ -305,7 +305,7 @@ public class SavePlayInfo
 	{
 		if (actorData != null)
 		{
-			ActorInfo actorInfo = new ActorInfo(actorData);
+			var actorInfo = new ActorInfo(actorData);
 			actorInfo.InitSkillInfo(actorData.LearningSkills);
 			_actors.Add(actorInfo);
 			_party.AddActor(actorInfo.ActorId);
@@ -328,18 +328,16 @@ public class SavePlayInfo
 	{
 		for (int i = 0;i < DataSystem.InitActors.Count;i++)
 		{
-			ActorData actorData = DataSystem.Actors.Find(actor => actor.Id == DataSystem.InitActors[i]);
+			var actorData = DataSystem.Actors.Find(actor => actor.Id == DataSystem.InitActors[i]);
 			if (actorData != null)
 			{
-				ActorInfo actorInfo = new ActorInfo(actorData);
+				var actorInfo = new ActorInfo(actorData);
 				actorInfo.InitSkillInfo(actorData.LearningSkills);
 				_actors.Add(actorInfo);
 				_party.AddActor(actorInfo.ActorId);
 			}
 		}
 	}
-
-
 
 	public void SetPlayerName(string name)
 	{
@@ -349,7 +347,7 @@ public class SavePlayInfo
 
 	public void ChangeRouteSelectStage(int stageId)
 	{
-		StageData stageData = DataSystem.Stages.Find(a => a.Id == stageId);
+		var stageData = DataSystem.Stages.Find(a => a.Id == stageId);
 		var current = _currentStage;
 		var currentStage = new StageInfo(stageData);
 		currentStage.RouteSelectData(current);
@@ -374,19 +372,17 @@ public class SavePlayInfo
 [Serializable]
 public class SaveConfigInfo
 {
-	public float _bgmVolume;
-	public bool _bgmMute;
-	public float _seVolume;
-	public bool _seMute;
-	public int _graphicIndex;
-	public bool _eventSkipIndex;
-	public bool _commandEndCheck;
-	public bool _battleWait;
-	public bool BattleWait => _battleWait;
-	public bool _battleAnimationSkip;
-	public bool _inputType;
-	public bool _battleAuto;
-	public bool BattleAuto => _battleAuto;
+	public float BgmVolume;
+	public bool BgmMute;
+	public float SeVolume;
+	public bool SeMute;
+	public int GraphicIndex;
+	public bool EventSkipIndex;
+	public bool CommandEndCheck;
+	public bool BattleWait;
+	public bool BattleAnimationSkip;
+	public bool InputType;
+	public bool BattleAuto;
     public SaveConfigInfo()
     {
 		this.InitParameter();
@@ -394,24 +390,24 @@ public class SaveConfigInfo
 
 	public void InitParameter()
 	{
-		_bgmVolume = 1.0f;
-		_bgmMute = false;
-		_seVolume = 1.0f;
-		_seMute = false;
-		_graphicIndex = 2;
-		_eventSkipIndex = false;
-		_commandEndCheck = true;
-		_battleWait = true;
-		_battleAnimationSkip = false;
-		_inputType = false;
-		_battleAuto = false;
+		BgmVolume = 1.0f;
+		BgmMute = false;
+		SeVolume = 1.0f;
+		SeMute = false;
+		GraphicIndex = 2;
+		EventSkipIndex = false;
+		CommandEndCheck = true;
+		BattleWait = true;
+		BattleAnimationSkip = false;
+		InputType = false;
+		BattleAuto = false;
 	}
 
 	public void UpdateSoundParameter(float bgmVolume,bool bgmMute,float seVolume,bool seMute)
 	{
-		_bgmVolume = bgmVolume;
-		_bgmMute = bgmMute;
-		_seVolume = seVolume;
-		_seMute = seMute;
+		BgmVolume = bgmVolume;
+		BgmMute = bgmMute;
+		SeVolume = seVolume;
+		SeMute = seMute;
 	}
 }

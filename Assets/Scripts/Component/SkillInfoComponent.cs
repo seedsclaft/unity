@@ -17,17 +17,17 @@ public class SkillInfoComponent : MonoBehaviour
     [SerializeField] private TextMeshProUGUI type;
     [SerializeField] private TextMeshProUGUI value;
     [SerializeField] private TextMeshProUGUI description;
-    [SerializeField] private TextMeshProUGUI lerningCost;
+    [SerializeField] private TextMeshProUGUI learningCost;
     [SerializeField] private GameObject selectable;
 
-    public void SetInfoData(SkillInfo skillInfo){
+    public void UpdateSkillInfo(SkillInfo skillInfo){
         if (skillInfo == null){
             Clear();
             return;
         }
         if (skillInfo.Master.SkillType == SkillType.Reborn)
         {
-            SetRebornInfoData(skillInfo);
+            UpdateRebornInfo(skillInfo);
         } else
         {
             UpdateSkillData(skillInfo.Id);
@@ -36,10 +36,10 @@ public class SkillInfoComponent : MonoBehaviour
         {
             selectable.SetActive(skillInfo.LearningState == LearningState.SelectLearn);
         }
-        if (lerningCost != null)
+        if (learningCost != null)
         {
-            lerningCost.gameObject.SetActive(skillInfo.LearningCost > 0);
-            lerningCost.text = skillInfo.LearningCost.ToString();
+            learningCost.gameObject.SetActive(skillInfo.LearningCost > 0);
+            learningCost.text = skillInfo.LearningCost.ToString();
         }
     }
 
@@ -79,7 +79,7 @@ public class SkillInfoComponent : MonoBehaviour
         }
         if (lineImage != null)
         {
-            UpdateLineImege();
+            UpdateLineImage();
         }
         if (type != null)
         {
@@ -112,7 +112,7 @@ public class SkillInfoComponent : MonoBehaviour
         }
     }
 
-    private void UpdateLineImege()
+    private void UpdateLineImage()
     {
         lineImage.gameObject.SetActive(true);
         if (nameAndMpCost)
@@ -122,7 +122,7 @@ public class SkillInfoComponent : MonoBehaviour
         }
     }
 
-    public void SetRebornInfoData(SkillInfo rebornSkillInfo)
+    public void UpdateRebornInfo(SkillInfo rebornSkillInfo)
     {
         var skillData = DataSystem.Skills.Find(skill => skill.Id == rebornSkillInfo.Id);
         if (nameText != null)
@@ -169,10 +169,10 @@ public class SkillInfoComponent : MonoBehaviour
         {
             description.text = "";
         }
-        if (lerningCost != null)
+        if (learningCost != null)
         {
-            lerningCost.gameObject.SetActive(false);
-            lerningCost.text = "";
+            learningCost.gameObject.SetActive(false);
+            learningCost.text = "";
         }
     }
 }

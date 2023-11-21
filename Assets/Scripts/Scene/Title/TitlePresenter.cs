@@ -23,7 +23,7 @@ public class TitlePresenter : BasePresenter
     {
         _busy = true;
         _model.ApllyConfigData();
-        if (GameSystem.ConfigData._eventSkipIndex)
+        if (GameSystem.ConfigData.EventSkipIndex)
         {
             _view.CommandChangeEventSkipIndex(true);
         }
