@@ -171,7 +171,7 @@ public class TacticsPresenter :BasePresenter
         _view.SetTacticsCommand(_model.TacticsCommand());
         _view.HideCommandList();
         CommandRefresh();
-        _view.SetHelpInputInfo(_model.TacticsCommandInputInfo());
+        //_view.SetHelpInputInfo(_model.TacticsCommandInputInfo());
         var bgm = await _model.GetBgmData(_model.TacticsBgmFilename());
         Ryneus.SoundManager.Instance.PlayBgm(bgm,1.0f,true);
 

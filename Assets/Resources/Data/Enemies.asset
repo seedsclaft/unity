@@ -19,575 +19,489 @@ MonoBehaviour:
     BaseStatus:
       _hp: 42
       _mp: 20
-      _atk: 16
+      _atk: 14
       _def: 11
       _spd: 20
     Kinds: 
     LearningSkills:
-    - SkillId: 1
+    - SkillId: 301
       Level: 1
       Weight: 50
-      TriggerDatas: []
-    - SkillId: 2
-      Level: 5
-      Weight: 50
-      TriggerDatas:
-      - SkillId: 0
-        TriggerType: 32
-        TriggerTiming: 1
-        Param1: 0
-        Param2: 0
-        Param3: 0
+      TriggerDates: []
+      DeckNum: 0
     - SkillId: 321
       Level: 5
       Weight: 70
-      TriggerDatas: []
+      TriggerDates: []
+      DeckNum: 0
     - SkillId: 305
       Level: 10
       Weight: 100
-      TriggerDatas: []
+      TriggerDates: []
+      DeckNum: 0
     - SkillId: 333
       Level: 15
       Weight: 100
-      TriggerDatas: []
+      TriggerDates: []
+      DeckNum: 0
   - Id: 2
     Name: "\u30AB\u30FC\u30B9\u30C9"
     ImagePath: Cursed
     BaseStatus:
       _hp: 32
       _mp: 20
-      _atk: 24
+      _atk: 22
       _def: 5
       _spd: 13
     Kinds: 01000000
     LearningSkills:
-    - SkillId: 1
+    - SkillId: 501
       Level: 1
       Weight: 50
-      TriggerDatas: []
+      TriggerDates: []
+      DeckNum: 0
     - SkillId: 41
       Level: 1
       Weight: 50
-      TriggerDatas: []
+      TriggerDates: []
+      DeckNum: 0
     - SkillId: 42
       Level: 1
       Weight: 50
-      TriggerDatas: []
-    - SkillId: 2
-      Level: 5
-      Weight: 50
-      TriggerDatas:
-      - SkillId: 0
-        TriggerType: 32
-        TriggerTiming: 1
-        Param1: 0
-        Param2: 0
-        Param3: 0
+      TriggerDates: []
+      DeckNum: 0
     - SkillId: 503
       Level: 5
       Weight: 50
-      TriggerDatas: []
+      TriggerDates: []
+      DeckNum: 0
     - SkillId: 504
       Level: 10
       Weight: 50
-      TriggerDatas: []
+      TriggerDates: []
+      DeckNum: 0
   - Id: 3
     Name: "\u30D3\u30FC"
     ImagePath: Bee
     BaseStatus:
       _hp: 39
       _mp: 20
-      _atk: 18
+      _atk: 16
       _def: 6
       _spd: 37
     Kinds: 
     LearningSkills:
-    - SkillId: 1
+    - SkillId: 201
       Level: 1
       Weight: 100
-      TriggerDatas: []
-    - SkillId: 2
-      Level: 5
-      Weight: 100
-      TriggerDatas:
-      - SkillId: 0
-        TriggerType: 32
-        TriggerTiming: 1
-        Param1: 0
-        Param2: 0
-        Param3: 0
+      TriggerDates: []
+      DeckNum: 0
     - SkillId: 203
       Level: 5
       Weight: 100
-      TriggerDatas: []
+      TriggerDates: []
+      DeckNum: 0
     - SkillId: 235
       Level: 10
       Weight: 100
-      TriggerDatas: []
+      TriggerDates: []
+      DeckNum: 0
   - Id: 4
     Name: "\u30A6\u30EB\u30D5"
     ImagePath: Wolf
     BaseStatus:
       _hp: 49
       _mp: 20
-      _atk: 22
+      _atk: 20
       _def: 8
       _spd: 22
     Kinds: 
     LearningSkills:
-    - SkillId: 1
+    - SkillId: 101
       Level: 1
       Weight: 100
-      TriggerDatas: []
-    - SkillId: 2
-      Level: 5
-      Weight: 100
-      TriggerDatas:
-      - SkillId: 0
-        TriggerType: 32
-        TriggerTiming: 1
-        Param1: 0
-        Param2: 0
-        Param3: 0
+      TriggerDates: []
+      DeckNum: 0
     - SkillId: 131
       Level: 5
       Weight: 100
-      TriggerDatas: []
+      TriggerDates: []
+      DeckNum: 0
     - SkillId: 132
       Level: 10
       Weight: 100
-      TriggerDatas: []
+      TriggerDates: []
+      DeckNum: 0
     - SkillId: 134
       Level: 15
       Weight: 100
-      TriggerDatas: []
+      TriggerDates: []
+      DeckNum: 0
   - Id: 5
     Name: "\u30AF\u30ED\u30A6"
     ImagePath: Crow
     BaseStatus:
       _hp: 53
       _mp: 20
-      _atk: 14
+      _atk: 12
       _def: 10
       _spd: 16
     Kinds: 
     LearningSkills:
-    - SkillId: 1
+    - SkillId: 201
       Level: 1
       Weight: 25
-      TriggerDatas: []
-    - SkillId: 2
-      Level: 5
-      Weight: 25
-      TriggerDatas:
-      - SkillId: 0
-        TriggerType: 32
-        TriggerTiming: 1
-        Param1: 0
-        Param2: 0
-        Param3: 0
+      TriggerDates: []
+      DeckNum: 0
     - SkillId: 204
       Level: 5
       Weight: 50
-      TriggerDatas: []
+      TriggerDates: []
+      DeckNum: 0
     - SkillId: 233
       Level: 10
       Weight: 50
-      TriggerDatas: []
+      TriggerDates: []
+      DeckNum: 0
     - SkillId: 236
       Level: 15
       Weight: 50
-      TriggerDatas: []
+      TriggerDates: []
+      DeckNum: 0
   - Id: 6
     Name: "\u30CD\u30FC\u30E0\u30EC\u30B9"
     ImagePath: Nameless
     BaseStatus:
       _hp: 45
       _mp: 20
-      _atk: 15
+      _atk: 13
       _def: 12
       _spd: 17
     Kinds: 
     LearningSkills:
-    - SkillId: 1
+    - SkillId: 401
       Level: 1
       Weight: 100
-      TriggerDatas: []
-    - SkillId: 2
-      Level: 5
-      Weight: 100
-      TriggerDatas:
-      - SkillId: 0
-        TriggerType: 32
-        TriggerTiming: 1
-        Param1: 0
-        Param2: 0
-        Param3: 0
+      TriggerDates: []
+      DeckNum: 0
     - SkillId: 405
       Level: 5
       Weight: 50
-      TriggerDatas:
+      TriggerDates:
       - SkillId: 0
         TriggerType: 6
         TriggerTiming: 1
         Param1: 50
         Param2: 0
         Param3: 0
+      DeckNum: 0
     - SkillId: 403
       Level: 10
       Weight: 50
-      TriggerDatas:
+      TriggerDates:
       - SkillId: 0
         TriggerType: 6
         TriggerTiming: 1
         Param1: 50
         Param2: 0
         Param3: 0
+      DeckNum: 0
   - Id: 7
     Name: "\u30B5\u30FC\u30C1\u30E3\u30FC"
     ImagePath: Seacher
     BaseStatus:
       _hp: 36
       _mp: 20
-      _atk: 17
+      _atk: 15
       _def: 8
       _spd: 32
     Kinds: 
     LearningSkills:
-    - SkillId: 1
+    - SkillId: 501
       Level: 1
       Weight: 50
-      TriggerDatas: []
-    - SkillId: 2
-      Level: 5
-      Weight: 50
-      TriggerDatas:
-      - SkillId: 0
-        TriggerType: 32
-        TriggerTiming: 1
-        Param1: 0
-        Param2: 0
-        Param3: 0
+      TriggerDates: []
+      DeckNum: 0
     - SkillId: 521
       Level: 5
       Weight: 50
-      TriggerDatas: []
+      TriggerDates: []
+      DeckNum: 0
     - SkillId: 531
       Level: 10
       Weight: 50
-      TriggerDatas: []
+      TriggerDates: []
+      DeckNum: 0
     - SkillId: 532
       Level: 15
       Weight: 50
-      TriggerDatas: []
+      TriggerDates: []
+      DeckNum: 0
   - Id: 8
     Name: "\u30B7\u30FC\u30EB\u30C9"
     ImagePath: Shiled
     BaseStatus:
       _hp: 37
       _mp: 20
-      _atk: 12
+      _atk: 10
       _def: 16
       _spd: 14
     Kinds: 
     LearningSkills:
-    - SkillId: 1
+    - SkillId: 301
       Level: 1
       Weight: 25
-      TriggerDatas: []
-    - SkillId: 2
-      Level: 5
-      Weight: 25
-      TriggerDatas:
-      - SkillId: 0
-        TriggerType: 32
-        TriggerTiming: 1
-        Param1: 0
-        Param2: 0
-        Param3: 0
+      TriggerDates: []
+      DeckNum: 0
     - SkillId: 302
       Level: 5
       Weight: 75
-      TriggerDatas: []
+      TriggerDates: []
+      DeckNum: 0
     - SkillId: 333
       Level: 10
       Weight: 75
-      TriggerDatas: []
+      TriggerDates: []
+      DeckNum: 0
     - SkillId: 334
       Level: 15
       Weight: 75
-      TriggerDatas: []
+      TriggerDates: []
+      DeckNum: 0
   - Id: 9
     Name: "\u30C9\u30E9\u30A4\u30A2\u30C9"
     ImagePath: Dryad
     BaseStatus:
       _hp: 48
       _mp: 20
-      _atk: 15
+      _atk: 13
       _def: 10
       _spd: 12
     Kinds: 
     LearningSkills:
-    - SkillId: 1
+    - SkillId: 101
       Level: 1
       Weight: 50
-      TriggerDatas: []
-    - SkillId: 2
-      Level: 5
-      Weight: 50
-      TriggerDatas:
-      - SkillId: 0
-        TriggerType: 32
-        TriggerTiming: 1
-        Param1: 0
-        Param2: 0
-        Param3: 0
+      TriggerDates: []
+      DeckNum: 0
     - SkillId: 103
       Level: 5
       Weight: 80
-      TriggerDatas:
+      TriggerDates:
       - SkillId: 0
         TriggerType: 11
         TriggerTiming: 1
         Param1: 10
         Param2: 0
         Param3: 0
+      DeckNum: 0
     - SkillId: 133
       Level: 10
       Weight: 50
-      TriggerDatas: []
+      TriggerDates: []
+      DeckNum: 0
     - SkillId: 121
       Level: 15
       Weight: 50
-      TriggerDatas: []
+      TriggerDates: []
+      DeckNum: 0
   - Id: 10
     Name: "\u30B9\u30B3\u30FC\u30D4\u30AA\u30F3"
     ImagePath: Scorpion
     BaseStatus:
       _hp: 35
       _mp: 20
-      _atk: 19
+      _atk: 17
       _def: 9
       _spd: 35
     Kinds: 
     LearningSkills:
-    - SkillId: 1
+    - SkillId: 201
       Level: 1
       Weight: 100
-      TriggerDatas: []
-    - SkillId: 2
-      Level: 5
-      Weight: 100
-      TriggerDatas:
-      - SkillId: 0
-        TriggerType: 32
-        TriggerTiming: 1
-        Param1: 0
-        Param2: 0
-        Param3: 0
+      TriggerDates: []
+      DeckNum: 0
     - SkillId: 231
       Level: 1
       Weight: 100
-      TriggerDatas: []
+      TriggerDates: []
+      DeckNum: 0
     - SkillId: 236
       Level: 5
       Weight: 25
-      TriggerDatas: []
+      TriggerDates: []
+      DeckNum: 0
     - SkillId: 205
       Level: 10
       Weight: 100
-      TriggerDatas: []
+      TriggerDates: []
+      DeckNum: 0
     - SkillId: 234
       Level: 15
       Weight: 100
-      TriggerDatas: []
+      TriggerDates: []
+      DeckNum: 0
   - Id: 11
     Name: "\u30B9\u30AF\u30A4\u30C3\u30C9"
     ImagePath: Squid
     BaseStatus:
       _hp: 44
       _mp: 20
-      _atk: 18
+      _atk: 16
       _def: 13
       _spd: 26
     Kinds: 
     LearningSkills:
-    - SkillId: 1
+    - SkillId: 301
       Level: 1
       Weight: 100
-      TriggerDatas: []
-    - SkillId: 2
-      Level: 5
-      Weight: 100
-      TriggerDatas:
-      - SkillId: 0
-        TriggerType: 32
-        TriggerTiming: 1
-        Param1: 0
-        Param2: 0
-        Param3: 0
+      TriggerDates: []
+      DeckNum: 0
     - SkillId: 304
       Level: 5
       Weight: 100
-      TriggerDatas: []
+      TriggerDates: []
+      DeckNum: 0
     - SkillId: 332
       Level: 10
       Weight: 100
-      TriggerDatas: []
+      TriggerDates: []
+      DeckNum: 0
   - Id: 12
     Name: "\u30AF\u30EA\u30FC\u30D1\u30FC"
     ImagePath: Creeper
     BaseStatus:
       _hp: 40
       _mp: 20
-      _atk: 16
+      _atk: 14
       _def: 9
       _spd: 23
     Kinds: 01000000
     LearningSkills:
-    - SkillId: 1
+    - SkillId: 501
       Level: 1
       Weight: 100
-      TriggerDatas: []
+      TriggerDates: []
+      DeckNum: 0
     - SkillId: 41
       Level: 1
       Weight: 50
-      TriggerDatas: []
+      TriggerDates: []
+      DeckNum: 0
     - SkillId: 42
       Level: 1
       Weight: 50
-      TriggerDatas: []
-    - SkillId: 2
-      Level: 5
-      Weight: 100
-      TriggerDatas:
-      - SkillId: 0
-        TriggerType: 32
-        TriggerTiming: 1
-        Param1: 0
-        Param2: 0
-        Param3: 0
+      TriggerDates: []
+      DeckNum: 0
     - SkillId: 531
       Level: 5
       Weight: 100
-      TriggerDatas: []
+      TriggerDates: []
+      DeckNum: 0
     - SkillId: 534
       Level: 10
       Weight: 100
-      TriggerDatas: []
+      TriggerDates: []
+      DeckNum: 0
   - Id: 13
     Name: "\u30A4\u30F3\u30D7"
     ImagePath: Imp
     BaseStatus:
       _hp: 42
       _mp: 20
-      _atk: 18
+      _atk: 16
       _def: 5
       _spd: 30
     Kinds: 
     LearningSkills:
-    - SkillId: 1
+    - SkillId: 401
       Level: 1
       Weight: 20
-      TriggerDatas: []
-    - SkillId: 2
-      Level: 5
-      Weight: 20
-      TriggerDatas: []
+      TriggerDates: []
+      DeckNum: 0
     - SkillId: 421
       Level: 5
       Weight: 80
-      TriggerDatas:
+      TriggerDates:
       - SkillId: 0
         TriggerType: 21
         TriggerTiming: 1
         Param1: 1
         Param2: 0
         Param3: 0
+      DeckNum: 0
     - SkillId: 436
       Level: 10
       Weight: 50
-      TriggerDatas: []
+      TriggerDates: []
+      DeckNum: 0
   - Id: 14
     Name: "\u30B4\u30FC\u30B9\u30C8\u30A2\u30FC\u30DE\u30FC"
     ImagePath: Armor
     BaseStatus:
       _hp: 50
       _mp: 20
-      _atk: 17
+      _atk: 15
       _def: 14
       _spd: 11
     Kinds: 01000000
     LearningSkills:
-    - SkillId: 1
+    - SkillId: 401
       Level: 1
       Weight: 50
-      TriggerDatas: []
+      TriggerDates: []
+      DeckNum: 0
     - SkillId: 41
       Level: 1
       Weight: 50
-      TriggerDatas: []
+      TriggerDates: []
+      DeckNum: 0
     - SkillId: 42
       Level: 1
       Weight: 50
-      TriggerDatas: []
-    - SkillId: 2
-      Level: 5
-      Weight: 50
-      TriggerDatas:
-      - SkillId: 0
-        TriggerType: 32
-        TriggerTiming: 1
-        Param1: 0
-        Param2: 0
-        Param3: 0
+      TriggerDates: []
+      DeckNum: 0
     - SkillId: 404
       Level: 5
       Weight: 50
-      TriggerDatas: []
+      TriggerDates: []
+      DeckNum: 0
     - SkillId: 403
       Level: 10
       Weight: 80
-      TriggerDatas:
+      TriggerDates:
       - SkillId: 0
         TriggerType: 6
         TriggerTiming: 1
         Param1: 50
         Param2: 0
         Param3: 0
+      DeckNum: 0
     - SkillId: 433
       Level: 15
       Weight: 80
-      TriggerDatas: []
+      TriggerDates: []
+      DeckNum: 0
   - Id: 15
     Name: "\u30BD\u30FC\u30C9"
     ImagePath: Sword
     BaseStatus:
       _hp: 35
       _mp: 20
-      _atk: 25
+      _atk: 23
       _def: 10
       _spd: 24
     Kinds: 
     LearningSkills:
-    - SkillId: 1
+    - SkillId: 101
       Level: 1
       Weight: 50
-      TriggerDatas: []
-    - SkillId: 2
-      Level: 5
-      Weight: 50
-      TriggerDatas:
-      - SkillId: 0
-        TriggerType: 32
-        TriggerTiming: 1
-        Param1: 0
-        Param2: 0
-        Param3: 0
+      TriggerDates: []
+      DeckNum: 0
     - SkillId: 104
       Level: 5
       Weight: 50
-      TriggerDatas:
+      TriggerDates:
       - SkillId: 0
         TriggerType: 2
         TriggerTiming: 1
@@ -600,79 +514,86 @@ MonoBehaviour:
         Param1: 2
         Param2: 0
         Param3: 0
+      DeckNum: 0
     - SkillId: 133
       Level: 10
       Weight: 100
-      TriggerDatas: []
+      TriggerDates: []
+      DeckNum: 0
   - Id: 101
     Name: "\u30D3\u30D5\u30ED\u30F3\u30B9"
     ImagePath: Bifrons
     BaseStatus:
       _hp: 100
       _mp: 20
-      _atk: 40
+      _atk: 35
       _def: 20
       _spd: 30
     Kinds: 
     LearningSkills:
-    - SkillId: 1
+    - SkillId: 301
       Level: 1
       Weight: 30
-      TriggerDatas: []
+      TriggerDates: []
+      DeckNum: 0
     - SkillId: 321
       Level: 1
       Weight: 70
-      TriggerDatas:
+      TriggerDates:
       - SkillId: 0
         TriggerType: 2
         TriggerTiming: 1
         Param1: 50
         Param2: 0
         Param3: 0
+      DeckNum: 0
   - Id: 102
     Name: "\u30A2\u30F3\u30C9\u30E9\u30B9"
     ImagePath: Andras
     BaseStatus:
       _hp: 100
       _mp: 20
-      _atk: 40
+      _atk: 35
       _def: 20
       _spd: 30
     Kinds: 
     LearningSkills:
-    - SkillId: 1
+    - SkillId: 201
       Level: 1
       Weight: 50
-      TriggerDatas: []
+      TriggerDates: []
+      DeckNum: 0
     - SkillId: 221
       Level: 1
       Weight: 50
-      TriggerDatas:
+      TriggerDates:
       - SkillId: 0
         TriggerType: 2
         TriggerTiming: 1
         Param1: 50
         Param2: 0
         Param3: 0
+      DeckNum: 0
   - Id: 103
     Name: "\u30A2\u30E2\u30F3"
     ImagePath: Ammon
     BaseStatus:
       _hp: 100
       _mp: 20
-      _atk: 40
+      _atk: 35
       _def: 20
       _spd: 30
     Kinds: 
     LearningSkills:
-    - SkillId: 2
+    - SkillId: 101
       Level: 1
       Weight: 10
-      TriggerDatas: []
+      TriggerDates: []
+      DeckNum: 0
     - SkillId: 104
       Level: 1
       Weight: 90
-      TriggerDatas:
+      TriggerDates:
       - SkillId: 0
         TriggerType: 22
         TriggerTiming: 1
@@ -685,54 +606,59 @@ MonoBehaviour:
         Param1: 75
         Param2: 0
         Param3: 0
+      DeckNum: 0
   - Id: 104
     Name: "\u30D9\u30EA\u30C8"
     ImagePath: Berith
     BaseStatus:
       _hp: 100
       _mp: 20
-      _atk: 40
+      _atk: 35
       _def: 20
       _spd: 30
     Kinds: 
     LearningSkills:
-    - SkillId: 1
+    - SkillId: 101
       Level: 1
       Weight: 20
-      TriggerDatas: []
+      TriggerDates: []
+      DeckNum: 0
     - SkillId: 121
       Level: 1
       Weight: 80
-      TriggerDatas:
+      TriggerDates:
       - SkillId: 0
         TriggerType: 21
         TriggerTiming: 1
         Param1: 2
         Param2: 0
         Param3: 0
+      DeckNum: 0
     - SkillId: 231
       Level: 1
       Weight: 0
-      TriggerDatas: []
+      TriggerDates: []
+      DeckNum: 0
   - Id: 105
     Name: "\u30D1\u30A4\u30E2\u30F3"
     ImagePath: Paimon
     BaseStatus:
       _hp: 80
       _mp: 20
-      _atk: 40
+      _atk: 35
       _def: 20
       _spd: 30
     Kinds: 01000000
     LearningSkills:
-    - SkillId: 1
+    - SkillId: 401
       Level: 1
       Weight: 20
-      TriggerDatas: []
+      TriggerDates: []
+      DeckNum: 0
     - SkillId: 405
       Level: 1
       Weight: 80
-      TriggerDatas:
+      TriggerDates:
       - SkillId: 0
         TriggerType: 22
         TriggerTiming: 1
@@ -745,421 +671,260 @@ MonoBehaviour:
         Param1: 3
         Param2: 1
         Param3: 0
+      DeckNum: 0
     - SkillId: 41
       Level: 1
       Weight: 50
-      TriggerDatas: []
+      TriggerDates: []
+      DeckNum: 0
     - SkillId: 42
       Level: 1
       Weight: 50
-      TriggerDatas: []
+      TriggerDates: []
+      DeckNum: 0
   - Id: 106
     Name: "\u30D3\u30E4\u30FC\u30AD\u30FC"
     ImagePath: Byakhee
     BaseStatus:
       _hp: 100
       _mp: 20
-      _atk: 40
+      _atk: 35
       _def: 20
       _spd: 30
     Kinds: 
     LearningSkills:
-    - SkillId: 1
+    - SkillId: 201
       Level: 1
       Weight: 20
-      TriggerDatas: []
+      TriggerDates: []
+      DeckNum: 0
     - SkillId: 205
       Level: 1
       Weight: 60
-      TriggerDatas: []
+      TriggerDates: []
+      DeckNum: 0
   - Id: 107
     Name: "\u30DD\u30EA\u30D7"
     ImagePath: Polyp
     BaseStatus:
       _hp: 100
       _mp: 20
-      _atk: 40
+      _atk: 35
       _def: 20
       _spd: 30
     Kinds: 
     LearningSkills:
-    - SkillId: 1
+    - SkillId: 501
       Level: 1
       Weight: 20
-      TriggerDatas: []
+      TriggerDates: []
+      DeckNum: 0
     - SkillId: 522
       Level: 1
       Weight: 60
-      TriggerDatas:
+      TriggerDates:
       - SkillId: 0
         TriggerType: 22
         TriggerTiming: 1
         Param1: 2
         Param2: 0
         Param3: 0
+      DeckNum: 0
   - Id: 113
     Name: "\u30A2\u30A4\u30DB\u30FC\u30C8"
     ImagePath: Eihort
     BaseStatus:
       _hp: 80
       _mp: 20
-      _atk: 40
+      _atk: 35
       _def: 20
       _spd: 30
     Kinds: 01000000
     LearningSkills:
-    - SkillId: 1
+    - SkillId: 501
       Level: 1
       Weight: 20
-      TriggerDatas: []
+      TriggerDates: []
+      DeckNum: 0
     - SkillId: 505
       Level: 1
       Weight: 80
-      TriggerDatas:
+      TriggerDates:
       - SkillId: 0
         TriggerType: 21
         TriggerTiming: 1
         Param1: 2
         Param2: 0
         Param3: 0
+      DeckNum: 0
     - SkillId: 41
       Level: 1
       Weight: 50
-      TriggerDatas: []
+      TriggerDates: []
+      DeckNum: 0
     - SkillId: 42
       Level: 1
       Weight: 50
-      TriggerDatas: []
+      TriggerDates: []
+      DeckNum: 0
   - Id: 114
     Name: "\u30CE\u30FC\u30C7\u30F3\u30B9"
     ImagePath: Nodens
     BaseStatus:
       _hp: 80
       _mp: 20
-      _atk: 40
+      _atk: 35
       _def: 20
       _spd: 30
     Kinds: 
     LearningSkills:
-    - SkillId: 1
+    - SkillId: 301
       Level: 1
       Weight: 20
-      TriggerDatas: []
+      TriggerDates: []
+      DeckNum: 0
     - SkillId: 322
       Level: 1
       Weight: 80
-      TriggerDatas:
+      TriggerDates:
       - SkillId: 0
         TriggerType: 22
         TriggerTiming: 1
         Param1: 2
         Param2: 0
         Param3: 0
+      DeckNum: 0
     - SkillId: 231
       Level: 1
       Weight: 0
-      TriggerDatas: []
+      TriggerDates: []
+      DeckNum: 0
   - Id: 201
     Name: "\u30D6\u30A8\u30EB"
     ImagePath: Buer
     BaseStatus:
       _hp: 100
       _mp: 40
-      _atk: 40
+      _atk: 35
       _def: 20
       _spd: 30
     Kinds: 01000000
     LearningSkills:
-    - SkillId: 1
+    - SkillId: 501
       Level: 1
       Weight: 30
-      TriggerDatas: []
+      TriggerDates: []
+      DeckNum: 0
     - SkillId: 41
       Level: 1
       Weight: 50
-      TriggerDatas: []
+      TriggerDates: []
+      DeckNum: 0
     - SkillId: 42
       Level: 1
       Weight: 50
-      TriggerDatas: []
+      TriggerDates: []
+      DeckNum: 0
     - SkillId: 533
       Level: 1
       Weight: 0
-      TriggerDatas: []
+      TriggerDates: []
+      DeckNum: 0
     - SkillId: 502
       Level: 1
       Weight: 50
-      TriggerDatas: []
+      TriggerDates: []
+      DeckNum: 0
     - SkillId: 511
       Level: 1
       Weight: 50
-      TriggerDatas: []
+      TriggerDates: []
+      DeckNum: 0
     - SkillId: 512
       Level: 1
       Weight: 50
-      TriggerDatas: []
+      TriggerDates: []
+      DeckNum: 0
   - Id: 202
     Name: "\u30C7\u30AB\u30E9\u30D3\u30A2"
     ImagePath: Decarabia
     BaseStatus:
       _hp: 100
       _mp: 40
-      _atk: 40
+      _atk: 35
       _def: 20
       _spd: 30
     Kinds: 
     LearningSkills:
-    - SkillId: 1
+    - SkillId: 201
       Level: 1
       Weight: 10
-      TriggerDatas: []
+      TriggerDates: []
+      DeckNum: 0
     - SkillId: 202
       Level: 1
       Weight: 50
-      TriggerDatas: []
+      TriggerDates: []
+      DeckNum: 0
     - SkillId: 211
       Level: 1
       Weight: 0
-      TriggerDatas: []
+      TriggerDates: []
+      DeckNum: 0
     - SkillId: 212
       Level: 1
       Weight: 80
-      TriggerDatas: []
+      TriggerDates: []
+      DeckNum: 0
   - Id: 203
     Name: "\u30B6\u30AC\u30F3"
     ImagePath: Zagan
     BaseStatus:
       _hp: 100
       _mp: 40
-      _atk: 40
+      _atk: 35
       _def: 20
       _spd: 30
     Kinds: 
     LearningSkills:
-    - SkillId: 1
+    - SkillId: 301
       Level: 1
       Weight: 10
-      TriggerDatas: []
+      TriggerDates: []
+      DeckNum: 0
     - SkillId: 302
       Level: 1
       Weight: 50
-      TriggerDatas:
+      TriggerDates:
       - SkillId: 0
         TriggerType: 22
         TriggerTiming: 1
         Param1: 2
         Param2: 0
         Param3: 0
+      DeckNum: 0
     - SkillId: 305
       Level: 1
       Weight: 50
-      TriggerDatas: []
+      TriggerDates: []
+      DeckNum: 0
     - SkillId: 311
       Level: 1
       Weight: 50
-      TriggerDatas: []
+      TriggerDates: []
+      DeckNum: 0
     - SkillId: 312
       Level: 1
       Weight: 50
-      TriggerDatas: []
+      TriggerDates: []
+      DeckNum: 0
   - Id: 204
     Name: "\u30E1\u30D5\u30A3\u30B9\u30C8\u30D5\u30A7\u30EC\u30B9"
     ImagePath: Mephisto
     BaseStatus:
       _hp: 200
       _mp: 40
-      _atk: 40
-      _def: 20
-      _spd: 30
-    Kinds: 
-    LearningSkills:
-    - SkillId: 1
-      Level: 1
-      Weight: 30
-      TriggerDatas: []
-    - SkillId: 434
-      Level: 1
-      Weight: 30
-      TriggerDatas: []
-    - SkillId: 411
-      Level: 1
-      Weight: 30
-      TriggerDatas: []
-    - SkillId: 412
-      Level: 1
-      Weight: 30
-      TriggerDatas: []
-    - SkillId: 431
-      Level: 1
-      Weight: 30
-      TriggerDatas: []
-    - SkillId: 231
-      Level: 1
-      Weight: 0
-      TriggerDatas: []
-    - SkillId: 405
-      Level: 1
-      Weight: 30
-      TriggerDatas:
-      - SkillId: 0
-        TriggerType: 22
-        TriggerTiming: 1
-        Param1: 2
-        Param2: 0
-        Param3: 1
-      - SkillId: 0
-        TriggerType: 63
-        TriggerTiming: 1
-        Param1: 3
-        Param2: 1
-        Param3: 0
-    - SkillId: 421
-      Level: 1
-      Weight: 30
-      TriggerDatas: []
-    - SkillId: 437
-      Level: 1
-      Weight: 30
-      TriggerDatas: []
-  - Id: 205
-    Name: "\u30A2\u30B9\u30BF\u30ED\u30C8"
-    ImagePath: Astaroth
-    BaseStatus:
-      _hp: 100
-      _mp: 40
-      _atk: 40
-      _def: 20
-      _spd: 30
-    Kinds: 
-    LearningSkills:
-    - SkillId: 1
-      Level: 1
-      Weight: 30
-      TriggerDatas: []
-    - SkillId: 102
-      Level: 1
-      Weight: 80
-      TriggerDatas: []
-    - SkillId: 111
-      Level: 1
-      Weight: 0
-      TriggerDatas: []
-    - SkillId: 112
-      Level: 1
-      Weight: 0
-      TriggerDatas: []
-    - SkillId: 231
-      Level: 1
-      Weight: 0
-      TriggerDatas: []
-  - Id: 206
-    Name: "\u30A4\u30BF\u30AF\u30A1"
-    ImagePath: Ithaqua
-    BaseStatus:
-      _hp: 100
-      _mp: 40
-      _atk: 40
-      _def: 20
-      _spd: 30
-    Kinds: 
-    LearningSkills:
-    - SkillId: 1
-      Level: 1
-      Weight: 30
-      TriggerDatas: []
-    - SkillId: 222
-      Level: 1
-      Weight: 80
-      TriggerDatas: []
-    - SkillId: 213
-      Level: 1
-      Weight: 0
-      TriggerDatas: []
-    - SkillId: 214
-      Level: 1
-      Weight: 30
-      TriggerDatas: []
-    - SkillId: 231
-      Level: 1
-      Weight: 0
-      TriggerDatas: []
-  - Id: 207
-    Name: "\u30B7\u30A2\u30A8\u30AC"
-    ImagePath: Cyaegha
-    BaseStatus:
-      _hp: 100
-      _mp: 40
-      _atk: 40
-      _def: 20
-      _spd: 30
-    Kinds: 
-    LearningSkills:
-    - SkillId: 1
-      Level: 1
-      Weight: 30
-      TriggerDatas: []
-    - SkillId: 41
-      Level: 1
-      Weight: 50
-      TriggerDatas: []
-    - SkillId: 42
-      Level: 1
-      Weight: 50
-      TriggerDatas: []
-    - SkillId: 505
-      Level: 1
-      Weight: 80
-      TriggerDatas: []
-    - SkillId: 534
-      Level: 1
-      Weight: 0
-      TriggerDatas: []
-    - SkillId: 513
-      Level: 1
-      Weight: 50
-      TriggerDatas: []
-    - SkillId: 514
-      Level: 1
-      Weight: 50
-      TriggerDatas: []
-  - Id: 213
-    Name: "\u30B6\u30AC\u30F3"
-    ImagePath: Zagan
-    BaseStatus:
-      _hp: 100
-      _mp: 40
-      _atk: 40
-      _def: 20
-      _spd: 30
-    Kinds: 
-    LearningSkills:
-    - SkillId: 1
-      Level: 1
-      Weight: 10
-      TriggerDatas: []
-    - SkillId: 305
-      Level: 1
-      Weight: 40
-      TriggerDatas: []
-    - SkillId: 322
-      Level: 1
-      Weight: 25
-      TriggerDatas: []
-    - SkillId: 313
-      Level: 1
-      Weight: 50
-      TriggerDatas: []
-    - SkillId: 314
-      Level: 1
-      Weight: 80
-      TriggerDatas: []
-  - Id: 214
-    Name: "\u30E1\u30D5\u30A3\u30B9\u30C8\u30D5\u30A7\u30EC\u30B9"
-    ImagePath: Mephisto
-    BaseStatus:
-      _hp: 200
-      _mp: 40
-      _atk: 40
+      _atk: 35
       _def: 20
       _spd: 30
     Kinds: 
@@ -1167,65 +932,299 @@ MonoBehaviour:
     - SkillId: 401
       Level: 1
       Weight: 30
-      TriggerDatas: []
+      TriggerDates: []
+      DeckNum: 0
     - SkillId: 434
       Level: 1
       Weight: 30
-      TriggerDatas: []
-    - SkillId: 413
+      TriggerDates: []
+      DeckNum: 0
+    - SkillId: 411
       Level: 1
       Weight: 30
-      TriggerDatas: []
-    - SkillId: 414
-      Level: 1
-      Weight: 80
-      TriggerDatas: []
-    - SkillId: 438
+      TriggerDates: []
+      DeckNum: 0
+    - SkillId: 412
       Level: 1
       Weight: 30
-      TriggerDatas: []
+      TriggerDates: []
+      DeckNum: 0
+    - SkillId: 431
+      Level: 1
+      Weight: 30
+      TriggerDates: []
+      DeckNum: 0
     - SkillId: 231
       Level: 1
       Weight: 0
-      TriggerDatas: []
-    - SkillId: 422
+      TriggerDates: []
+      DeckNum: 0
+    - SkillId: 405
       Level: 1
-      Weight: 50
-      TriggerDatas: []
+      Weight: 30
+      TriggerDates:
+      - SkillId: 0
+        TriggerType: 22
+        TriggerTiming: 1
+        Param1: 2
+        Param2: 0
+        Param3: 1
+      - SkillId: 0
+        TriggerType: 63
+        TriggerTiming: 1
+        Param1: 3
+        Param2: 1
+        Param3: 0
+      DeckNum: 0
     - SkillId: 421
       Level: 1
-      Weight: 50
-      TriggerDatas: []
+      Weight: 30
+      TriggerDates: []
+      DeckNum: 0
     - SkillId: 437
       Level: 1
       Weight: 30
-      TriggerDatas: []
+      TriggerDates: []
+      DeckNum: 0
+  - Id: 205
+    Name: "\u30A2\u30B9\u30BF\u30ED\u30C8"
+    ImagePath: Astaroth
+    BaseStatus:
+      _hp: 100
+      _mp: 40
+      _atk: 35
+      _def: 20
+      _spd: 30
+    Kinds: 
+    LearningSkills:
+    - SkillId: 101
+      Level: 1
+      Weight: 30
+      TriggerDates: []
+      DeckNum: 0
+    - SkillId: 102
+      Level: 1
+      Weight: 80
+      TriggerDates: []
+      DeckNum: 0
+    - SkillId: 111
+      Level: 1
+      Weight: 0
+      TriggerDates: []
+      DeckNum: 0
+    - SkillId: 112
+      Level: 1
+      Weight: 0
+      TriggerDates: []
+      DeckNum: 0
+    - SkillId: 231
+      Level: 1
+      Weight: 0
+      TriggerDates: []
+      DeckNum: 0
+  - Id: 206
+    Name: "\u30A4\u30BF\u30AF\u30A1"
+    ImagePath: Ithaqua
+    BaseStatus:
+      _hp: 100
+      _mp: 40
+      _atk: 35
+      _def: 20
+      _spd: 30
+    Kinds: 
+    LearningSkills:
+    - SkillId: 201
+      Level: 1
+      Weight: 30
+      TriggerDates: []
+      DeckNum: 0
+    - SkillId: 222
+      Level: 1
+      Weight: 80
+      TriggerDates: []
+      DeckNum: 0
+    - SkillId: 213
+      Level: 1
+      Weight: 0
+      TriggerDates: []
+      DeckNum: 0
+    - SkillId: 214
+      Level: 1
+      Weight: 30
+      TriggerDates: []
+      DeckNum: 0
+    - SkillId: 231
+      Level: 1
+      Weight: 0
+      TriggerDates: []
+      DeckNum: 0
+  - Id: 207
+    Name: "\u30B7\u30A2\u30A8\u30AC"
+    ImagePath: Cyaegha
+    BaseStatus:
+      _hp: 100
+      _mp: 40
+      _atk: 35
+      _def: 20
+      _spd: 30
+    Kinds: 
+    LearningSkills:
+    - SkillId: 501
+      Level: 1
+      Weight: 30
+      TriggerDates: []
+      DeckNum: 0
+    - SkillId: 41
+      Level: 1
+      Weight: 50
+      TriggerDates: []
+      DeckNum: 0
+    - SkillId: 42
+      Level: 1
+      Weight: 50
+      TriggerDates: []
+      DeckNum: 0
+    - SkillId: 505
+      Level: 1
+      Weight: 80
+      TriggerDates: []
+      DeckNum: 0
+    - SkillId: 534
+      Level: 1
+      Weight: 0
+      TriggerDates: []
+      DeckNum: 0
+    - SkillId: 513
+      Level: 1
+      Weight: 50
+      TriggerDates: []
+      DeckNum: 0
+    - SkillId: 514
+      Level: 1
+      Weight: 50
+      TriggerDates: []
+      DeckNum: 0
+  - Id: 213
+    Name: "\u30B6\u30AC\u30F3"
+    ImagePath: Zagan
+    BaseStatus:
+      _hp: 100
+      _mp: 40
+      _atk: 35
+      _def: 20
+      _spd: 30
+    Kinds: 
+    LearningSkills:
+    - SkillId: 301
+      Level: 1
+      Weight: 10
+      TriggerDates: []
+      DeckNum: 0
+    - SkillId: 305
+      Level: 1
+      Weight: 40
+      TriggerDates: []
+      DeckNum: 0
+    - SkillId: 322
+      Level: 1
+      Weight: 25
+      TriggerDates: []
+      DeckNum: 0
+    - SkillId: 313
+      Level: 1
+      Weight: 50
+      TriggerDates: []
+      DeckNum: 0
+    - SkillId: 314
+      Level: 1
+      Weight: 80
+      TriggerDates: []
+      DeckNum: 0
+  - Id: 214
+    Name: "\u30E1\u30D5\u30A3\u30B9\u30C8\u30D5\u30A7\u30EC\u30B9"
+    ImagePath: Mephisto
+    BaseStatus:
+      _hp: 200
+      _mp: 40
+      _atk: 35
+      _def: 20
+      _spd: 30
+    Kinds: 
+    LearningSkills:
+    - SkillId: 401
+      Level: 1
+      Weight: 30
+      TriggerDates: []
+      DeckNum: 0
+    - SkillId: 434
+      Level: 1
+      Weight: 30
+      TriggerDates: []
+      DeckNum: 0
+    - SkillId: 413
+      Level: 1
+      Weight: 30
+      TriggerDates: []
+      DeckNum: 0
+    - SkillId: 414
+      Level: 1
+      Weight: 80
+      TriggerDates: []
+      DeckNum: 0
+    - SkillId: 438
+      Level: 1
+      Weight: 30
+      TriggerDates: []
+      DeckNum: 0
+    - SkillId: 231
+      Level: 1
+      Weight: 0
+      TriggerDates: []
+      DeckNum: 0
+    - SkillId: 422
+      Level: 1
+      Weight: 50
+      TriggerDates: []
+      DeckNum: 0
+    - SkillId: 421
+      Level: 1
+      Weight: 50
+      TriggerDates: []
+      DeckNum: 0
+    - SkillId: 437
+      Level: 1
+      Weight: 30
+      TriggerDates: []
+      DeckNum: 0
   - Id: 301
     Name: "\u30C7\u30D3\u30EB\u30C9\u30E9\u30B4\u30F3"
     ImagePath: Devildragon
     BaseStatus:
       _hp: 500
       _mp: 40
-      _atk: 40
+      _atk: 35
       _def: 20
       _spd: 30
     Kinds: 
     LearningSkills:
-    - SkillId: 2
+    - SkillId: 201
       Level: 1
       Weight: 30
-      TriggerDatas: []
+      TriggerDates: []
+      DeckNum: 0
     - SkillId: 601
       Level: 1
       Weight: 80
-      TriggerDatas:
+      TriggerDates:
       - SkillId: 0
         TriggerType: 1
         TriggerTiming: 1
         Param1: 100
         Param2: 0
         Param3: 0
+      DeckNum: 0
     - SkillId: 231
       Level: 1
       Weight: 0
-      TriggerDatas: []
+      TriggerDates: []
+      DeckNum: 0

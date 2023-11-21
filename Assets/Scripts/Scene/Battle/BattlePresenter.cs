@@ -31,9 +31,9 @@ public class BattlePresenter : BasePresenter
 
 #if UNITY_EDITOR
         _view.gameObject.AddComponent<DebugBattleData>();
-        var debgugger = _view.gameObject.GetComponent<DebugBattleData>();
-        debgugger.SetDebugger(_model,this,_view);
-        debgugger.consoleInputField = GameSystem.DebugBattleData.consoleInputField;
+        var debugger = _view.gameObject.GetComponent<DebugBattleData>();
+        debugger.SetDebugger(_model,this,_view);
+        debugger.consoleInputField = GameSystem.DebugBattleData.consoleInputField;
 #endif
         Initialize();
     }
@@ -53,11 +53,15 @@ public class BattlePresenter : BasePresenter
         _view.SetBattleAutoButton(_model.BattleAutoButton(),GameSystem.ConfigData.BattleAuto == true);
         _view.ChangeBackCommandActive(false);
 
+        #if UNITY_EDITOR
         if (_view.TestMode == true)
         {
             BattleInitialize();
+            _debug = true;
             return;
         }
+        #endif
+        
         _view.CommandStartTransition(() => {
             BattleInitialize();
         });
@@ -248,7 +252,7 @@ public class BattlePresenter : BasePresenter
     private void CommandUpdateAp()
     {
 #if UNITY_EDITOR
-        if (_debug == true) return;
+        //if (_debug == true) return;
 #endif
         _view.SetHelpInputInfo("BATTLE_AUTO");
         if (GameSystem.ConfigData.BattleWait == false)
@@ -317,7 +321,7 @@ public class BattlePresenter : BasePresenter
             if (!_model.EnableCurrentBattler())
             {
                 var skillInfo = new SkillInfo(0);
-                ActionInfo actionInfo = _model.MakeActionInfo(_model.CurrentBattler,skillInfo,false,false);
+                var actionInfo = _model.MakeActionInfo(_model.CurrentBattler,skillInfo,false,false);
                 CommandSelectTargetIndexes(_model.MakeAutoSelectIndex(actionInfo));
                 return;
             }
@@ -348,9 +352,16 @@ public class BattlePresenter : BasePresenter
                 }
             } else
             {
+                #if UNITY_EDITOR
+                if (_debug)
+                {
+                    CommandDecideEnemy();
+                    return;
+                }
+                #endif
                 int autoSkillId = _model.MakeAutoSkillId(_model.CurrentBattler);
                 var skillInfo = new SkillInfo(autoSkillId);
-                ActionInfo actionInfo = _model.MakeActionInfo(_model.CurrentBattler,skillInfo,false,false);
+                var actionInfo = _model.MakeActionInfo(_model.CurrentBattler,skillInfo,false,false);
                 CommandSelectTargetIndexes(_model.MakeAutoSelectIndex(actionInfo));
             }
         }
@@ -359,8 +370,8 @@ public class BattlePresenter : BasePresenter
     private void CommandAutoActorSkillId()
     {
         var (autoSkillId,targetIndex) = _model.MakeAutoActorSkillId(_model.CurrentBattler);
-            var skillInfo = new SkillInfo(autoSkillId);
-        ActionInfo actionInfo = _model.MakeActionInfo(_model.CurrentBattler,skillInfo,false,false);
+        var skillInfo = new SkillInfo(autoSkillId);
+        var actionInfo = _model.MakeActionInfo(_model.CurrentBattler,skillInfo,false,false);
         CommandSelectTargetIndexes(_model.MakeAutoSelectIndex(actionInfo,targetIndex));
     }
 
@@ -411,6 +422,21 @@ public class BattlePresenter : BasePresenter
         }
     }
 
+    private void CommandDecideEnemy()
+    {
+        _view.SetAnimationBusy(false);
+        _view.SetHelpText(DataSystem.System.GetTextData(15010).Text);
+        //_view.SelectedCharacter(_model.CurrentBattler);
+        _view.SetCondition(_model.SelectCharacterConditions());
+        //_view.SetEscapeButton(_model.EnableEscape());
+        //_view.ChangeSideMenuButtonActive(true);
+        RefreshSkillInfos();
+        _view.HideBattlerEnemyTarget();
+        _view.HideBattlerPartyTarget();
+        _view.ChangeBackCommandActive(false);
+        _view.SetBattlerSelectable(true);
+    }
+
     // スキルを選択
     private void CommandSelectedSkill(SkillInfo skillInfo)
     {
@@ -425,21 +451,42 @@ public class BattlePresenter : BasePresenter
         _view.HideSkillActionList();
         _view.SetEscapeButton(false);
         _view.HideBattleThumb();
-        if (actionInfo.TargetType == TargetType.Opponent)
+        if (_model.CurrentBattler.isActor)
         {
-            _view.ShowEnemyTarget();
-            _view.RefreshBattlerEnemyTarget(actionInfo.LastTargetIndex,actionInfo.TargetIndexList,actionInfo.ScopeType,skillInfo.Attribute);
+            if (actionInfo.TargetType == TargetType.Opponent)
+            {
+                _view.ShowEnemyTarget();
+                _view.RefreshBattlerEnemyTarget(actionInfo.LastTargetIndex,actionInfo.TargetIndexList,actionInfo.ScopeType,skillInfo.Attribute);
+            } else
+            if (actionInfo.TargetType == TargetType.Friend || actionInfo.TargetType == TargetType.Self)
+            {
+                _view.ShowPartyTarget();
+                _view.RefreshBattlerPartyTarget(actionInfo.LastTargetIndex,actionInfo.TargetIndexList,actionInfo.ScopeType);
+            } else
+            {
+                _view.RefreshBattlerEnemyTarget(actionInfo.LastTargetIndex,actionInfo.TargetIndexList,actionInfo.ScopeType,skillInfo.Attribute);
+                _view.RefreshBattlerPartyTarget(actionInfo.LastTargetIndex,actionInfo.TargetIndexList,actionInfo.ScopeType);
+                _view.ShowPartyTarget();
+                _view.ShowEnemyTarget();
+            }
         } else
-        if (actionInfo.TargetType == TargetType.Friend || actionInfo.TargetType == TargetType.Self)
         {
-            _view.ShowPartyTarget();
-            _view.RefreshBattlerPartyTarget(actionInfo.LastTargetIndex,actionInfo.TargetIndexList,actionInfo.ScopeType);
-        } else
-        {
-            _view.RefreshBattlerEnemyTarget(actionInfo.LastTargetIndex,actionInfo.TargetIndexList,actionInfo.ScopeType,skillInfo.Attribute);
-            _view.RefreshBattlerPartyTarget(actionInfo.LastTargetIndex,actionInfo.TargetIndexList,actionInfo.ScopeType);
-            _view.ShowPartyTarget();
-            _view.ShowEnemyTarget();
+            if (actionInfo.TargetType == TargetType.Friend || actionInfo.TargetType == TargetType.Self)
+            {
+                _view.ShowEnemyTarget();
+                _view.RefreshBattlerEnemyTarget(actionInfo.TargetIndexList[0],actionInfo.TargetIndexList,actionInfo.ScopeType,skillInfo.Attribute);
+            } else
+            if (actionInfo.TargetType == TargetType.Opponent)
+            {
+                _view.ShowPartyTarget();
+                _view.RefreshBattlerPartyTarget(actionInfo.TargetIndexList[0],actionInfo.TargetIndexList,actionInfo.ScopeType);
+            } else
+            {
+                _view.RefreshBattlerEnemyTarget(actionInfo.TargetIndexList[0],actionInfo.TargetIndexList,actionInfo.ScopeType,skillInfo.Attribute);
+                _view.RefreshBattlerPartyTarget(actionInfo.TargetIndexList[0],actionInfo.TargetIndexList,actionInfo.ScopeType);
+                _view.ShowPartyTarget();
+                _view.ShowEnemyTarget();
+            }
         }
         _backCommandType = Battle.CommandType.DecideActor;
         _view.ChangeBackCommandActive(true);
@@ -912,7 +959,6 @@ public class BattlePresenter : BasePresenter
     {
         var skillInfos = _model.SkillActionList();
         _view.RefreshMagicList(skillInfos,_model.SelectSkillIndex(skillInfos));
-        
         Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cursor);
     }
 

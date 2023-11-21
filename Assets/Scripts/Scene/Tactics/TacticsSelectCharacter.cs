@@ -83,13 +83,14 @@ public class TacticsSelectCharacter : MonoBehaviour
         if (keyType == InputKeyType.Down)
         {
             var characterListIndex = characterList.Index;
-            if (characterListIndex+1 >= characterList.ObjectList.Count)
+            if (characterListIndex == 0)
             {
                 Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cursor);
                 characterList.Deactivate();
                 characterList.UpdateSelectIndex(-1);
                 commandList.UpdateSelectIndex(1);
                 commandList.Activate();
+                commandList.ResetInputFrame(36);
             }
         }
     }
@@ -107,6 +108,7 @@ public class TacticsSelectCharacter : MonoBehaviour
             commandList.UpdateSelectIndex(-1);
             characterList.UpdateSelectIndex(characterList.ObjectList.Count-1);
             characterList.Activate();
+            characterList.ResetInputFrame(36);
         }
     }
 

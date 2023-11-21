@@ -511,7 +511,7 @@ abstract public class ListWindow : MonoBehaviour
         for (int i = 0; i < ObjectList.Count;i++)
         {
             if (ObjectList[i] == null) continue;
-            ListItem listItem = ObjectList[i].GetComponent<ListItem>();
+            var listItem = ObjectList[i].GetComponent<ListItem>();
             if (listItem == null) continue;
             if (index == listItem.Index){
                 listItem.SetSelect();

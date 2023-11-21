@@ -371,6 +371,12 @@ public class BattleModel : BaseModel
         {
             return false;
         }
+        // 使用可能な魔法がない
+        var skillInfos = CurrentBattler.ActiveSkills().FindAll(a => CheckCanUse(a,CurrentBattler));
+        if (skillInfos.Count == 0)
+        {
+            return false;
+        }
         return true;
     }
 
@@ -387,7 +393,7 @@ public class BattleModel : BaseModel
                 targetIndexList.Clear();
                 targetIndexList.Add(substituteId);
             } else{
-                List<int> tempIndexList = GetSkillTargetIndexes(skillInfo.Id,subject.Index,false);
+                var tempIndexList = GetSkillTargetIndexes(skillInfo.Id,subject.Index,false);
                 if (tempIndexList.Contains(substituteId))
                 {
                     targetIndexList.Clear();
@@ -401,7 +407,7 @@ public class BattleModel : BaseModel
             LastTargetIndex = subject.LastTargetIndex();
             if (skillData.TargetType == TargetType.Opponent)
             {
-                BattlerInfo targetBattler = _troop.AliveBattlerInfos.Find(a => a.Index == LastTargetIndex && targetIndexList.Contains(LastTargetIndex));
+                var targetBattler = _troop.AliveBattlerInfos.Find(a => a.Index == LastTargetIndex && targetIndexList.Contains(LastTargetIndex));
                 if (targetBattler == null && _troop.BattlerInfos.Count > 0)
                 {
                     var containsOpponent = _troop.AliveBattlerInfos.Find(a => targetIndexList.Contains(a.Index));
@@ -1824,7 +1830,7 @@ public class BattleModel : BaseModel
 
     public int MakeAutoSkillId(BattlerInfo battlerInfo)
     {
-        List<SkillInfo> skillInfos = battlerInfo.ActiveSkills().FindAll(a => CheckCanUse(a,battlerInfo));
+        var skillInfos = battlerInfo.ActiveSkills().FindAll(a => CheckCanUse(a,battlerInfo));
         if (skillInfos.Count == 0)
         {
             return 0;
@@ -1850,7 +1856,7 @@ public class BattleModel : BaseModel
 
     public (int,int) MakeAutoActorSkillId(BattlerInfo battlerInfo)
     {
-        List<SkillInfo> skillInfos = battlerInfo.ActiveSkills().FindAll(a => CheckCanUse(a,battlerInfo));
+        var skillInfos = battlerInfo.ActiveSkills().FindAll(a => CheckCanUse(a,battlerInfo));
         var (skillId,targetIndex) = BattleActorAI.MakeAutoActorSkillId(skillInfos,battlerInfo,BattlerActors(),BattlerEnemies());
         return (skillId,targetIndex);
     }

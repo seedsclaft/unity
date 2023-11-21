@@ -18,13 +18,13 @@ public class InputSystem
         }
         if(Keyboard.current.upArrowKey.isPressed || Keyboard.current[Key.W].isPressed) 
         {
-            //Debug.Log("up");
+            Debug.Log("up");
             InputSystem.IsGamePad = false;
             return InputKeyType.Up;
         } else
         if(Keyboard.current.downArrowKey.isPressed || Keyboard.current[Key.S].isPressed) 
         {
-            //Debug.Log("down");
+            Debug.Log("down");
             InputSystem.IsGamePad = false;
             return InputKeyType.Down;
         } else
