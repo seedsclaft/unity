@@ -53,29 +53,29 @@ public class OptionPresenter
             case "BGM_VOLUME":
                 if (inputKeyType == InputKeyType.Right)
                 {
-                    _model.ChangeBGMValue(Mathf.Min(1, Ryneus.SoundManager.Instance._bgmVolume + 0.05f));
+                    _model.ChangeBGMValue(Mathf.Min(1, Ryneus.SoundManager.Instance.BGMVolume + 0.05f));
                 }
                 if (inputKeyType == InputKeyType.Left)
                 {
-                    _model.ChangeBGMValue(Mathf.Max(0, Ryneus.SoundManager.Instance._bgmVolume - 0.05f));
+                    _model.ChangeBGMValue(Mathf.Max(0, Ryneus.SoundManager.Instance.BGMVolume - 0.05f));
                 }
                 if (inputKeyType == InputKeyType.Option1)
                 {
-                    _model.ChangeBGMMute(!Ryneus.SoundManager.Instance._bgmMute);
+                    _model.ChangeBGMMute(!Ryneus.SoundManager.Instance.BGMMute);
                 }
                 break;
             case "SE_VOLUME":
                 if (inputKeyType == InputKeyType.Right)
                 {
-                    _model.ChangeSEValue(Mathf.Min(1, Ryneus.SoundManager.Instance._seVolume + 0.05f));
+                    _model.ChangeSEValue(Mathf.Min(1, Ryneus.SoundManager.Instance.SeVolume + 0.05f));
                 }
                 if (inputKeyType == InputKeyType.Left)
                 {
-                    _model.ChangeSEValue(Mathf.Max(0, Ryneus.SoundManager.Instance._seVolume - 0.05f));
+                    _model.ChangeSEValue(Mathf.Max(0, Ryneus.SoundManager.Instance.SeVolume - 0.05f));
                 }
                 if (inputKeyType == InputKeyType.Option1)
                 {
-                    _model.ChangeSEMute(!Ryneus.SoundManager.Instance._seMute);
+                    _model.ChangeSEMute(!Ryneus.SoundManager.Instance.SeMute);
                 }
                 break;
             case "GRAPHIC_QUALITY":

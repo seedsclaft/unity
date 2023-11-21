@@ -56,7 +56,7 @@ public class StrategyView : BaseView
 
     public void StartLvUpAnimation()
     {
-        _battleStartAnim.SetText("LevelUp!");
+        _battleStartAnim.SetText(DataSystem.System.GetTextData(3080).Text);
         _battleStartAnim.StartAnim();
         _battleStartAnim.gameObject.SetActive(true);
         _animationBusy = true;

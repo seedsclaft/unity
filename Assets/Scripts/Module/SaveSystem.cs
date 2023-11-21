@@ -399,7 +399,7 @@ public class SaveConfigInfo
 		CommandEndCheck = true;
 		BattleWait = true;
 		BattleAnimationSkip = false;
-		InputType = false;
+		InputType = true;
 		BattleAuto = false;
 	}
 

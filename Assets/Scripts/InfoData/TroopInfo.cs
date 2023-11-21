@@ -35,13 +35,16 @@ public class TroopInfo
         _escapeEnable = escapeEnable;
     }
 
-    public void MakeEnemyTroopDates(int level)
+    public void MakeEnemyTroopDates(int level,int stageTurns = 1)
     {
         foreach (var troopData in MasterAll)
         {
-            var enemyData = DataSystem.Enemies.Find(a => a.Id == troopData.EnemyId);
-            var battlerInfo = new BattlerInfo(enemyData,troopData.Lv + level,troopData.Id - 1,troopData.Line,troopData.BossFlag);
-            AddEnemy(battlerInfo);
+            if (troopData.StageTurn <= stageTurns)
+            {
+                var enemyData = DataSystem.Enemies.Find(a => a.Id == troopData.EnemyId);
+                var battlerInfo = new BattlerInfo(enemyData,troopData.Lv + level,troopData.Id - 1,troopData.Line,troopData.BossFlag);
+                AddEnemy(battlerInfo);
+            }
         }
         MakeGetItemInfos();
     }

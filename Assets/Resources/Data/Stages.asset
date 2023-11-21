@@ -19,7 +19,7 @@ MonoBehaviour:
     Help: "\u5B9F\u969B\u306B\u30D7\u30EC\u30A4\u3057\u306A\u304C\u3089\n\u57FA\u672C\u7684\u306A\u904A\u3073\u65B9\u3092\u5B66\u3073\u307E\u3059\u3002"
     Turns: 7
     InitMembers: 01000000
-    RandomTroopCount: 14
+    RandomTroopCount: 15
     BGMId: 03000000
     Reborn: 0
     StageEvents:
@@ -65,7 +65,7 @@ MonoBehaviour:
       Type: 11
       Param: 1
       ReadFlag: 1
-    - EventKey: 1StartStarategyCommandDisable0
+    - EventKey: 1StartStrategyCommandDisable0
       Turns: 1
       Timing: 2
       Type: 1
@@ -113,7 +113,7 @@ MonoBehaviour:
       Type: 11
       Param: 2
       ReadFlag: 1
-    - EventKey: 2StartStarategyCommandDisable0
+    - EventKey: 2StartStrategyCommandDisable0
       Turns: 2
       Timing: 2
       Type: 1
@@ -167,7 +167,7 @@ MonoBehaviour:
       Type: 11
       Param: 3
       ReadFlag: 1
-    - EventKey: 3StartStarategyAdvStart4
+    - EventKey: 3StartStrategyAdvStart4
       Turns: 3
       Timing: 2
       Type: 11
@@ -263,7 +263,7 @@ MonoBehaviour:
       Type: 3
       Param: 0
       ReadFlag: 0
-    - EventKey: 5StartStarategyAdvStart10
+    - EventKey: 5StartStrategyAdvStart10
       Turns: 5
       Timing: 2
       Type: 11
@@ -289,7 +289,7 @@ MonoBehaviour:
       Pathless)\u8A0E\u4F10\u3092\u547D\u3058\u305F\u3002"
     Turns: 37
     InitMembers: 010000000200000003000000040000000500000006000000070000000b0000000d0000000e000000
-    RandomTroopCount: 14
+    RandomTroopCount: 15
     BGMId: 030000000400000005000000
     Reborn: 1
     StageEvents:
@@ -689,7 +689,7 @@ MonoBehaviour:
     Help: '""'
     Turns: 6
     InitMembers: 010000000200000003000000040000000500000006000000070000000b0000000d0000000e000000
-    RandomTroopCount: 0
+    RandomTroopCount: 15
     BGMId: 03000000
     Reborn: 1
     StageEvents: []

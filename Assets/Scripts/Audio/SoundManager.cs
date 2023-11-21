@@ -13,10 +13,10 @@ namespace Ryneus
 {
     public class SoundManager : SingletonMonoBehaviour<SoundManager>
     {
-        public float _bgmVolume = 1.0f;
-        public float _seVolume = 1.0f;
-        public bool _bgmMute = false;
-        public bool _seMute = false;
+        public float BGMVolume = 1.0f;
+        public float SeVolume = 1.0f;
+        public bool BGMMute = false;
+        public bool SeMute = false;
         private List<AudioSource> _se;
         private List<AudioSource> _playingSe = new ();
         private int _seAudioSourceNum = 16;
@@ -86,13 +86,13 @@ namespace Ryneus
 
         public void UpdateBgmVolume()
         {
-            var volume = _bgmVolume * _lastBgmVolume;
+            var volume = BGMVolume * _lastBgmVolume;
             _bgm.ChangeVolume(volume);
         }
 
         public void UpdateBgmMute()
         {
-            if (_bgmMute)
+            if (BGMMute)
             {
                 _bgm.ChangeVolume(0);
             } else
@@ -107,13 +107,13 @@ namespace Ryneus
             {
                 float baseVolume = _seMaster.Find(a => a.FileName == staticSe.clip.name).Volume;
                 staticSe.rolloffMode = AudioRolloffMode.Linear;
-                staticSe.volume = _seVolume * baseVolume;
+                staticSe.volume = SeVolume * baseVolume;
             }
         }
 
         public void UpdateSeMute()
         {
-            if (_seMute)
+            if (SeMute)
             {
             } else
             {
@@ -153,7 +153,7 @@ namespace Ryneus
             if (audioSourceIndex > -1)
             {
                 _se[audioSourceIndex].clip = clip;
-                _se[audioSourceIndex].volume = volume * _seVolume;
+                _se[audioSourceIndex].volume = volume * SeVolume;
                 _se[audioSourceIndex].pitch = pitch;
                 _playingSe.Add(_se[audioSourceIndex]);
                 if (delayFrame > 0)
@@ -167,7 +167,7 @@ namespace Ryneus
 
         public void PlayStaticSe(SEType sEType, float volume = 1.0f)
         {
-            if (_seMute) return;
+            if (SeMute) return;
             var seIndex = DataSystem.Data.SE.FindIndex(a => a.Id == (int)sEType);
             if (seIndex > -1)
             {

@@ -36,21 +36,21 @@ public class StrategyModel : BaseModel
 
     public List<ActorInfo> TacticsActors()
     {
-        List<ActorInfo> actorInfos = StageMembers().FindAll(a => a.TacticsCommandType != TacticsCommandType.None && a.TacticsCommandType != TacticsCommandType.Battle);
+        var actorInfos = StageMembers().FindAll(a => a.TacticsCommandType != TacticsCommandType.None && a.TacticsCommandType != TacticsCommandType.Battle);
         return actorInfos;
     }
 
     public List<ActorInfo> TacticsBattleActors()
     {
-        List<ActorInfo> actorInfos = StageMembers().FindAll(a => a.TacticsCommandType == TacticsCommandType.Battle);
+        var actorInfos = StageMembers().FindAll(a => a.TacticsCommandType == TacticsCommandType.Battle);
         return actorInfos;
     }
 
-    public void SetLvup()
+    public void SetLvUp()
     {
         if (_levelUpData.Count > 0) return;
-        List<ActorInfo> actorInfos = TacticsActors();
-        var lvupList = new List<ActorInfo>();
+        var actorInfos = TacticsActors();
+        var lvUpList = new List<ActorInfo>();
         // 結果出力
         for (int i = 0;i < actorInfos.Count;i++)
         {
@@ -65,14 +65,14 @@ public class StrategyModel : BaseModel
                     statusInfo.Def,
                     statusInfo.Spd
                 );
-                lvupList.Add(actorInfos[i]);
+                lvUpList.Add(actorInfos[i]);
                 if (levelBonus > 0)
                 {
                     _levelUpBonusData.Add(actorInfos[i]);
                 }
             }
         }
-        _levelUpData = lvupList;
+        _levelUpData = lvUpList;
     }
 
     public void MakeResult()
@@ -95,18 +95,18 @@ public class StrategyModel : BaseModel
             if (actorInfos[i].TacticsCommandType == TacticsCommandType.Alchemy)
             {
                 bool alchemyBonus = PartyInfo.GetAlchemyNuminosValue();
-                SkillData skillData = DataSystem.Skills.Find(a => a.Id == actorInfos[i].NextLearnSkillId);
+                var skillData = DataSystem.Skills.Find(a => a.Id == actorInfos[i].NextLearnSkillId);
                 getItemInfo.MakeAlchemyResult(actorName,skillData);
                 actorInfos[i].LearnSkill(actorInfos[i].NextLearnSkillId);
                 if (alchemyBonus)
                 {
-                    List<SkillData> getSkillDatas = DataSystem.Skills.FindAll(a => a.Rank == 1 && (int)a.Attribute == (int)skillData.Attribute && !PartyInfo.AlchemyIdList.Contains(a.Id));
-                    if (getSkillDatas.Count > 0)
+                    var getSkillDates = DataSystem.Skills.FindAll(a => a.Rank == 1 && (int)a.Attribute == (int)skillData.Attribute && !PartyInfo.AlchemyIdList.Contains(a.Id));
+                    if (getSkillDates.Count > 0)
                     {
-                        GetItemInfo bonusGetItemInfo = new GetItemInfo(null);
-                        int rand2 = UnityEngine.Random.Range(0,getSkillDatas.Count);
-                        PartyInfo.AddAlchemy(getSkillDatas[rand2].Id);
-                        SkillData randSkillData = DataSystem.Skills.Find(a => a.Id == getSkillDatas[rand2].Id);
+                        var bonusGetItemInfo = new GetItemInfo(null);
+                        int rand2 = UnityEngine.Random.Range(0,getSkillDates.Count);
+                        PartyInfo.AddAlchemy(getSkillDates[rand2].Id);
+                        var randSkillData = DataSystem.Skills.Find(a => a.Id == getSkillDates[rand2].Id);
                         bonusGetItemInfo.MakeAlchemyBonusResult(randSkillData);
                         getItemInfos.Add(bonusGetItemInfo);
                     }
@@ -125,7 +125,7 @@ public class StrategyModel : BaseModel
                 {
                     actorInfos[i].TempStatus.AddParameterAll(1);
                     actorInfos[i].DecideStrength(0);
-                    GetItemInfo bonusGetItemInfo = new GetItemInfo(null);
+                    var bonusGetItemInfo = new GetItemInfo(null);
                     bonusGetItemInfo.MakeRecoveryBonusResult(actorName);
                     getItemInfos.Add(bonusGetItemInfo);
                 }
@@ -160,7 +160,7 @@ public class StrategyModel : BaseModel
             {
                 if (PartyInfo.AddCommandCountInfo(TacticsCommandType.Train))
                 {
-                    GetItemInfo partyGetItemInfo = new GetItemInfo(null);
+                    var partyGetItemInfo = new GetItemInfo(null);
                     partyGetItemInfo.MakeTrainCommandResult(PartyInfo.CommandRankInfo[TacticsCommandType.Train]);
                     PartyInfo.AddCommandRank(TacticsCommandType.Train);
                     getItemInfos.Add(partyGetItemInfo);
@@ -170,7 +170,7 @@ public class StrategyModel : BaseModel
             {
                 if (PartyInfo.AddCommandCountInfo(TacticsCommandType.Alchemy))
                 {
-                    GetItemInfo partyGetItemInfo = new GetItemInfo(null);
+                    var partyGetItemInfo = new GetItemInfo(null);
                     partyGetItemInfo.MakeAlchemyCommandResult(PartyInfo.CommandRankInfo[TacticsCommandType.Alchemy]);
                     PartyInfo.AddCommandRank(TacticsCommandType.Alchemy);
                     getItemInfos.Add(partyGetItemInfo);
@@ -180,7 +180,7 @@ public class StrategyModel : BaseModel
             {
                 if (PartyInfo.AddCommandCountInfo(TacticsCommandType.Recovery))
                 {
-                    GetItemInfo partyGetItemInfo = new GetItemInfo(null);
+                    var partyGetItemInfo = new GetItemInfo(null);
                     partyGetItemInfo.MakeRecoveryCommandResult(PartyInfo.CommandRankInfo[TacticsCommandType.Recovery]);
                     PartyInfo.AddCommandRank(TacticsCommandType.Recovery);
                     getItemInfos.Add(partyGetItemInfo);
@@ -190,7 +190,7 @@ public class StrategyModel : BaseModel
             {
                 if (PartyInfo.AddCommandCountInfo(TacticsCommandType.Resource))
                 {
-                    GetItemInfo partyGetItemInfo = new GetItemInfo(null);
+                    var partyGetItemInfo = new GetItemInfo(null);
                     partyGetItemInfo.MakeResourceCommandResult(PartyInfo.CommandRankInfo[TacticsCommandType.Resource]);
                     PartyInfo.AddCommandRank(TacticsCommandType.Resource);
                     getItemInfos.Add(partyGetItemInfo);
@@ -218,17 +218,17 @@ public class StrategyModel : BaseModel
     {
         // Party初期化
         PartyInfo.InitActors();
-        List<ActorInfo> actorInfos = TacticsBattleActors();
+        var actorInfos = TacticsBattleActors();
         foreach (var actorInfo in actorInfos)
         {
             PartyInfo.AddActor(actorInfo.ActorId);
         }
-        List<GetItemInfo> getItemInfos = new List<GetItemInfo>();
+        var getItemInfos = new List<GetItemInfo>();
         if (PartyInfo.BattleResult == false)
         {
             return getItemInfos;
         }
-        foreach (GetItemInfo getItemInfo in CurrentTroopInfo().GetItemInfos)
+        foreach (var getItemInfo in CurrentTroopInfo().GetItemInfos)
         {
             if (getItemInfo.GetItemType == GetItemType.Skill)
             {
@@ -263,15 +263,15 @@ public class StrategyModel : BaseModel
                 int rand = UnityEngine.Random.Range(0,100);
                 if (getItemInfo.Param2 >= rand)
                 {
-                    List< SkillData> getSkillDatas = DataSystem.Skills.FindAll(a => a.Rank == getItemInfo.Param1 && (int)a.Attribute == (int)getItemInfo.GetItemType - 10 && !PartyInfo.AlchemyIdList.Contains(a.Id)); 
-                    if (getSkillDatas.Count > 0)
+                    var getSkillDates = DataSystem.Skills.FindAll(a => a.Rank == getItemInfo.Param1 && (int)a.Attribute == (int)getItemInfo.GetItemType - 10 && !PartyInfo.AlchemyIdList.Contains(a.Id)); 
+                    if (getSkillDates.Count > 0)
                     {
-                        int rand2 = UnityEngine.Random.Range(0,getSkillDatas.Count);
-                        PartyInfo.AddAlchemy(getSkillDatas[rand2].Id);
+                        int rand2 = UnityEngine.Random.Range(0,getSkillDates.Count);
+                        PartyInfo.AddAlchemy(getSkillDates[rand2].Id);
                         getItemInfo.SetTitleData(DataSystem.System.GetTextData(14040).Text);
                         
                         //string text = DataSystem.System.GetTextData(14051).Text.Replace("\\d", DataSystem.System.GetTextData(330 + (int)getItemInfo.GetItemType - 11).Text);
-                        getItemInfo.SetResultData(getSkillDatas[rand2].Name);
+                        getItemInfo.SetResultData(getSkillDates[rand2].Name);
                         getItemInfo.SetSkillElementId((int)getItemInfo.GetItemType - 10);
                         getItemInfos.Add(getItemInfo);
                     }
@@ -307,7 +307,7 @@ public class StrategyModel : BaseModel
             {
                 if (PartyInfo.AddCommandCountInfo(TacticsCommandType.Battle))
                 {
-                    GetItemInfo partyGetItemInfo = new GetItemInfo(null);
+                    var partyGetItemInfo = new GetItemInfo(null);
                     partyGetItemInfo.MakeBattleCommandResult(PartyInfo.CommandRankInfo[TacticsCommandType.Battle]);
                     PartyInfo.AddCommandRank(TacticsCommandType.Battle);
                     getItemInfos.Add(partyGetItemInfo);
@@ -320,7 +320,7 @@ public class StrategyModel : BaseModel
     public int BattleEnemyIndex(bool inBattle)
     {
         int enemyIndex = -1;
-        List<ActorInfo> actorInfos = TacticsBattleActors();
+        var actorInfos = TacticsBattleActors();
         for (int i = 0;i < actorInfos.Count;i++)
         {
             if (enemyIndex == -1)
@@ -340,7 +340,7 @@ public class StrategyModel : BaseModel
     public List<ActorInfo> CheckNextBattleActors()
     {
         int enemyIndex = BattleEnemyIndex(false);
-        List<ActorInfo> actorInfos = TacticsBattleActors();
+        var actorInfos = TacticsBattleActors();
         if (enemyIndex >= 0)
         {
             CurrentStage.SetBattleIndex(enemyIndex);
@@ -381,7 +381,7 @@ public class StrategyModel : BaseModel
 
     public List<ListData> ResultCommand()
     {
-        List<ListData> list = new List<ListData>();
+        var list = new List<ListData>();
         foreach (var commandData in BaseConfirmCommand(3040,6))
         {
             var listData = new ListData(commandData);

@@ -17,6 +17,7 @@ public class SkillInfoComponent : MonoBehaviour
     [SerializeField] private TextMeshProUGUI type;
     [SerializeField] private TextMeshProUGUI value;
     [SerializeField] private TextMeshProUGUI description;
+    [SerializeField] private TextMeshProUGUI range;
     [SerializeField] private TextMeshProUGUI learningCost;
     [SerializeField] private GameObject selectable;
 
@@ -88,6 +89,11 @@ public class SkillInfoComponent : MonoBehaviour
         if (description != null)
         {
             description.text = skillData.ConvertHelpText(skillData.Help);
+        }
+        if (range != null)
+        {
+            var rangeTextId = skillData.Range == RangeType.S ? 351 : 352;
+            range.text = DataSystem.System.GetTextData(rangeTextId).Text;
         }
     }
 

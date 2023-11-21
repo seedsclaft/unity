@@ -122,9 +122,9 @@ public class BaseModel
         if (saveConfigInfo != null)
         {
             ChangeBGMValue(saveConfigInfo.BgmVolume);
-            Ryneus.SoundManager.Instance._bgmMute = saveConfigInfo.BgmMute;
+            Ryneus.SoundManager.Instance.BGMMute = saveConfigInfo.BgmMute;
             ChangeSEValue(saveConfigInfo.SeVolume);
-            Ryneus.SoundManager.Instance._seMute = saveConfigInfo.SeMute;
+            Ryneus.SoundManager.Instance.SeMute = saveConfigInfo.SeMute;
             ChangeGraphicIndex(saveConfigInfo.GraphicIndex);
             ChangeEventSkipIndex(saveConfigInfo.EventSkipIndex);
             ChangeCommandEndCheck(saveConfigInfo.CommandEndCheck);
@@ -135,45 +135,45 @@ public class BaseModel
         }
     }
 
-    public float BGMVolume(){ return Ryneus.SoundManager.Instance._bgmVolume;}
-    public bool BGMMute(){ return Ryneus.SoundManager.Instance._bgmMute;}
+    public float BGMVolume(){ return Ryneus.SoundManager.Instance.BGMVolume;}
+    public bool BGMMute(){ return Ryneus.SoundManager.Instance.BGMMute;}
     public void ChangeBGMValue(float bgmVolume)
     {
-        Ryneus.SoundManager.Instance._bgmVolume = bgmVolume;
+        Ryneus.SoundManager.Instance.BGMVolume = bgmVolume;
         Ryneus.SoundManager.Instance.UpdateBgmVolume();
-        if (bgmVolume > 0 && Ryneus.SoundManager.Instance._bgmMute == false)
+        if (bgmVolume > 0 && Ryneus.SoundManager.Instance.BGMMute == false)
         {
             ChangeBGMMute(false);
         }
-        if (bgmVolume == 0 && Ryneus.SoundManager.Instance._bgmMute == true)
+        if (bgmVolume == 0 && Ryneus.SoundManager.Instance.BGMMute == true)
         {
             ChangeBGMMute(true);
         }
     }
     public void ChangeBGMMute(bool bgmMute)
     {
-        Ryneus.SoundManager.Instance._bgmMute = bgmMute;
+        Ryneus.SoundManager.Instance.BGMMute = bgmMute;
         Ryneus.SoundManager.Instance.UpdateBgmMute();
     }
-    public float SEVolume(){ return Ryneus.SoundManager.Instance._seVolume;}
-    public bool SEMute(){ return Ryneus.SoundManager.Instance._seMute;}
+    public float SEVolume(){ return Ryneus.SoundManager.Instance.SeVolume;}
+    public bool SEMute(){ return Ryneus.SoundManager.Instance.SeMute;}
     
     public void ChangeSEValue(float seVolume)
     {
-        Ryneus.SoundManager.Instance._seVolume = seVolume;
+        Ryneus.SoundManager.Instance.SeVolume = seVolume;
         Ryneus.SoundManager.Instance.UpdateSeVolume();
-        if (seVolume > 0 && Ryneus.SoundManager.Instance._seMute == false)
+        if (seVolume > 0 && Ryneus.SoundManager.Instance.SeMute == false)
         {
             ChangeSEMute(false);
         }
-        if (seVolume == 0 && Ryneus.SoundManager.Instance._seMute == true)
+        if (seVolume == 0 && Ryneus.SoundManager.Instance.SeMute == true)
         {
             ChangeSEMute(true);
         }
     }
     public void ChangeSEMute(bool seMute)
     {
-        Ryneus.SoundManager.Instance._seMute = seMute;
+        Ryneus.SoundManager.Instance.SeMute = seMute;
     }
 
     public int GraphicIndex(){ return GameSystem.ConfigData.GraphicIndex; }

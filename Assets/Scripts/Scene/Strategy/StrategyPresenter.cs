@@ -147,7 +147,7 @@ public class StrategyPresenter : BasePresenter
         if (_strategyState == StrategyState.TacticsResult)
         {
             var tacticsActors = _model.TacticsActors();
-            _model.SetLvup();
+            _model.SetLvUp();
             _model.MakeResult();
             var bonusList = new List<bool>();
             foreach (var item in tacticsActors)

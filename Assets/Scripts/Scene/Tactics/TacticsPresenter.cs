@@ -17,15 +17,15 @@ public class TacticsPresenter :BasePresenter
         _model = new TacticsModel();
         SetModel(_model);
 
+        if (CheckBeforeTacticsAdvEvent())
+        {
+            return;
+        }
         if (CheckStageEvent())
         {
             return;
         }
         if (CheckAdvEvent())
-        {
-            return;
-        }
-        if (CheckBeforeTacticsAdvEvent())
         {
             return;
         }

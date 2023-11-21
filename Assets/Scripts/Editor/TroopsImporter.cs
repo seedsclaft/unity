@@ -44,6 +44,7 @@ public class TroopsImporter : AssetPostprocessor {
 
 	static void CreateTroopData(string asset)
 	{
+		Debug.Log("CreateTroopData");
 		// 拡張子なしのファイル名を取得
 		string FileName = Path.GetFileNameWithoutExtension(asset);
 

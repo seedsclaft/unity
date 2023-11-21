@@ -29,7 +29,7 @@ public class StrategyActor : ListItem ,IListViewItem
         int initPosy = (animId % 2 == 1) ? -80 : 80;
         innerObj.transform.DOLocalMoveY(initPosy,0.0f);
         Sequence sequence = DOTween.Sequence()
-            .Append(innerObj.transform.DOLocalMoveY(0,1.0f))
+            .Append(innerObj.transform.DOLocalMoveY(0,0.8f))
             .SetEase(Ease.OutQuad)
             .OnComplete(() => {
                 if (_isBonus) 

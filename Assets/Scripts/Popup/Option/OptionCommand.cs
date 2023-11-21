@@ -62,10 +62,10 @@ public class OptionCommand : ListItem ,IListViewItem
         switch (optionCommand.Key)
         {
             case "BGM_VOLUME":
-                optionVolume.UpdateValue(Ryneus.SoundManager.Instance._bgmVolume,Ryneus.SoundManager.Instance._bgmMute);
+                optionVolume.UpdateValue(Ryneus.SoundManager.Instance.BGMVolume,Ryneus.SoundManager.Instance.BGMMute);
                 return;
             case "SE_VOLUME":
-                optionVolume.UpdateValue(Ryneus.SoundManager.Instance._seVolume,Ryneus.SoundManager.Instance._seMute);
+                optionVolume.UpdateValue(Ryneus.SoundManager.Instance.SeVolume,Ryneus.SoundManager.Instance.SeMute);
                 return;
             case "GRAPHIC_QUALITY":
                 for (int i = 0;i < optionToggles.Count;i++)
@@ -88,7 +88,7 @@ public class OptionCommand : ListItem ,IListViewItem
             case "BATTLE_WAIT":
                 for (int i = 0;i < optionToggles.Count;i++)
                 {
-                    optionToggles[i].SetIsOnWithoutNotify(i == (GameSystem.ConfigData.BattleWait == true ? 1 : 0));
+                    optionToggles[i].SetIsOnWithoutNotify(i == (GameSystem.ConfigData.BattleWait == true ? 0 : 1));
                 }
                 return;
             case "BATTLE_ANIMATION":

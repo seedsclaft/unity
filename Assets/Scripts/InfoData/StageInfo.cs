@@ -40,7 +40,7 @@ public class StageInfo
     public int RouteSelect => _routeSelect;
     private int _defineBossIndex = 0;
 
-    private int _randomTroopCount = 14;
+    private int _randomTroopCount = 15;
 
     private int _baseTroopId = 1000;
     private EndingType _endingType = EndingType.D;
@@ -82,14 +82,15 @@ public class StageInfo
         _clearCount += 1;
     }
 
+    // 雑魚敵グループを生成
 	private void MakeTroopData()
 	{
-		for (int i = 0;i < _randomTroopCount;i++)
+		for (int i = 1;i < _randomTroopCount;i++)
 		{
 			var BossTroopData = new TroopData();
-			BossTroopData.Id = i + _baseTroopId + 1;
-			BossTroopData.TroopId = i + _baseTroopId + 1;
-			BossTroopData.EnemyId = i + 1;
+			BossTroopData.Id = i + _baseTroopId;
+			BossTroopData.TroopId = i + _baseTroopId;
+			BossTroopData.EnemyId = i;
 			BossTroopData.Lv = 1;
 			BossTroopData.Line = LineType.Back;
             BossTroopData.BossFlag = true;
@@ -128,9 +129,9 @@ public class StageInfo
             var troopInfo = new TroopInfo(troopsData[i].TroopId,true);
 			for (int j = 0;j < enemyCount;j++)
 			{
-        		int rand = new System.Random().Next(0, _randomTroopCount) + 1;
-                EnemyData enemyData = DataSystem.Enemies.Find(a => a.Id == rand);
-                BattlerInfo enemy = new BattlerInfo(enemyData,_troopClearCount + 1,j,0,false);
+        		int rand = new System.Random().Next(1, _randomTroopCount);
+                var enemyData = DataSystem.Enemies.Find(a => a.Id == rand);
+                var enemy = new BattlerInfo(enemyData,_troopClearCount + 1,j,0,false);
                 troopInfo.AddEnemy(enemy);
             }
             troopInfo.MakeGetItemInfos();
@@ -145,24 +146,24 @@ public class StageInfo
 
     private void MakeDefineBossTroop(int stageTurn)
     {
-        int bossTroopId = 0;
+        var bossTroopId = 0;
         if (_defineBossIndex > 0 && _defineBossIndex < 5)
         {
-            bossTroopId = _selectActorIds[_defineBossIndex] * 100;
-            int tutorialId = _selectActorIds[_defineBossIndex] * 10;
+            bossTroopId = _selectActorIds[_defineBossIndex] * 10 + 2000;
+            var tutorialId = _selectActorIds[_defineBossIndex] * 10 + 1000;
             if (!_clearTroopIds.Contains(tutorialId))
             {
                 bossTroopId = tutorialId;
             }
         } else if (_defineBossIndex == 5)
         {
-            bossTroopId = _selectActorIds[0] * 100;
+            bossTroopId = _selectActorIds[0] * 10 + 2000;
         }
         if (!_clearTroopIds.Contains(bossTroopId))
         {
             var troopDates = DataSystem.Troops.FindAll(a => a.TroopId == bossTroopId);
             var troopInfo = new TroopInfo(bossTroopId,true);
-            troopInfo.MakeEnemyTroopDates(_troopClearCount + 1);
+            troopInfo.MakeEnemyTroopDates(_troopClearCount + 1,_currentTurn);
             _currentTroopInfos[_currentTroopInfos.Count-1] = troopInfo;
         }
     }
@@ -170,7 +171,7 @@ public class StageInfo
     public List<TroopInfo> MakeTutorialTroopData(int selectIndex)
     {
         _currentTroopInfos.Clear();
-        var troopInfo = new TroopInfo(selectIndex * 10,false);
+        var troopInfo = new TroopInfo(selectIndex * 10 + 1000,false);
         troopInfo.MakeEnemyTroopDates(_troopClearCount);
         _currentTroopInfos.Add(troopInfo);
         return _currentTroopInfos;
@@ -182,16 +183,16 @@ public class StageInfo
         var troopIds = new List<int>();
         foreach (var actorId in _selectActorIds)
         {
-            troopIds.Add(actorId * 100 + 2000);
+            troopIds.Add(actorId * 10 + 3000);
         }
-        if (!troopIds.Contains(2400) && !troopIds.Contains(3400))
+        if (!troopIds.Contains(3140) && !troopIds.Contains(3040))
         {
-            troopIds.Add(2400);
+            troopIds.Add(3040);
         }
         var enemyIds = new List<int>();
         if (routeSelect == 0)
         {
-            enemyIds.Add(4100);
+            enemyIds.Add(4010);
         } else
         if (routeSelect >= 1)
         {
@@ -202,7 +203,7 @@ public class StageInfo
                 {
                     if (idx < 3)
                     {
-                        enemyIds.Add(actorId * 100 + 2000);
+                        enemyIds.Add(actorId * 10 + 3000);
                     }
                     idx++;
                 }
@@ -211,17 +212,17 @@ public class StageInfo
             {
                 foreach (var troopId in troopIds)
                 {
-                    if (troopId % 1000 == 400)
+                    if (troopId % 1000 == 40)
                     {
                         enemyIds.Add(troopId);
                     }
                 }
-                var notEncountId = routeSelect == 1 ? 400 : 0;
+                var notEncountId = routeSelect == 1 ? 40 : 0;
                 while (enemyIds.Count <= 2)
                 {
                     int rand = new Random().Next(1, 14);
-                    rand *= 100;
-                    rand += 2000;
+                    rand *= 10;
+                    rand += 3000;
                     if (rand % 1000 != notEncountId)
                     {
                         if (DataSystem.Troops.Find(a => a.TroopId == rand) != null)
@@ -242,6 +243,7 @@ public class StageInfo
             if (_clearTroopIds.Contains(enemyIds[i])) continue;
             var troopInfo = new TroopInfo(enemyIds[i],false);
             troopInfo.MakeEnemyTroopDates(lv);
+            troopInfo.MakeGetItemInfos();
             _currentTroopInfos.Add(troopInfo);
         }
         return _currentTroopInfos;
@@ -304,9 +306,9 @@ public class StageInfo
         var troopInfo = new TroopInfo(troopDates[0].TroopId,true);
         for (int i = 0;i < troopDates.Count;i++)
         {
-            EnemyData enemyData = DataSystem.Enemies.Find(a => a.Id == troopDates[i].EnemyId);
+            var enemyData = DataSystem.Enemies.Find(a => a.Id == troopDates[i].EnemyId);
             bool isBoss = troopDates[i].BossFlag;
-            BattlerInfo enemy = new BattlerInfo(enemyData,troopDates[i].Lv + troopLv,i,troopDates[i].Line,isBoss);
+            var enemy = new BattlerInfo(enemyData,troopDates[i].Lv + troopLv,i,troopDates[i].Line,isBoss);
             troopInfo.AddEnemy(enemy);
         }
         _currentTroopInfos.Add(troopInfo);

@@ -70,18 +70,19 @@ public class BattleEnemy : ListItem
 
     private void UpdateSizeDelta()
     {
-        int size = _isFront == true ? 200 : 240;
-        int width = Mathf.Max(size,enemyImage.mainTexture.width);
-        int height = Mathf.Max(size,enemyImage.mainTexture.height);
-        var objectRect = gameObject.GetComponent < RectTransform > ();
-        var rect = Cursor.GetComponent < RectTransform > ();
-        var effectRect = effekseerEmitter.gameObject.GetComponent < RectTransform > ();
-        var statusRect = statusObject.GetComponent < RectTransform > ();
-        var damageRect = battlerInfoComponent.BattleDamageRoot.gameObject.GetComponent < RectTransform > ();
+        var sizeX = _isFront == true ? 200 : 240;
+        var sizeY = _isFront == true ? 160 : 240;
+        var width = Mathf.Max(sizeX,enemyImage.mainTexture.width);
+        var height = sizeY;
+        var objectRect = gameObject.GetComponent<RectTransform>();
+        var rect = Cursor.GetComponent<RectTransform>();
+        var effectRect = effekseerEmitter.gameObject.GetComponent<RectTransform>();
+        var statusRect = statusObject.GetComponent<RectTransform>();
+        var damageRect = battlerInfoComponent.BattleDamageRoot.gameObject.GetComponent<RectTransform>();
         rect.sizeDelta = new Vector2(width,height);
         objectRect.sizeDelta = new Vector2(width,height);
         effectRect.sizeDelta = new Vector2(width,height);
-        if (_isFront == false && height > 394)
+        if (_isFront == false && height > 390)
         {
             statusRect.sizeDelta = new Vector2(0,height/2);
             damageRect.sizeDelta = new Vector2(0,height/2);

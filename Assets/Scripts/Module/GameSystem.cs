@@ -276,10 +276,10 @@ public class GameSystem : MonoBehaviour
         optionView.SetBackEvent(() => 
         {
             GameSystem.ConfigData.UpdateSoundParameter(
-                Ryneus.SoundManager.Instance._bgmVolume,
-                Ryneus.SoundManager.Instance._bgmMute,
-                Ryneus.SoundManager.Instance._seVolume,
-                Ryneus.SoundManager.Instance._seMute
+                Ryneus.SoundManager.Instance.BGMVolume,
+                Ryneus.SoundManager.Instance.BGMMute,
+                Ryneus.SoundManager.Instance.SeVolume,
+                Ryneus.SoundManager.Instance.SeMute
             );
             SaveSystem.SaveConfigStart(GameSystem.ConfigData);
             UpdateCommand(new ViewEvent(Base.CommandType.CloseConfirm));
