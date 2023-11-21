@@ -913,18 +913,18 @@ public class BattleModel : BaseModel
 
     public void ExecCurrentActionResult()
     {
-        ActionInfo actionInfo = CurrentActionInfo();
+        var actionInfo = CurrentActionInfo();
         if (actionInfo != null)
         {
             // Mpの支払い
             CurrentBattler.GainMp(actionInfo.MpCost * -1);
-            CurrentBattler.GainPaybattleMp(actionInfo.MpCost);
+            CurrentBattler.GainPayBattleMp(actionInfo.MpCost);
             // カード破棄
             //CurrentBattler.RemoveDeck(actionInfo.SkillInfo.DeckIndex);
-            List<ActionResultInfo> actionResultInfos = CalcDeathIndexList(actionInfo.ActionResults);
-            for (int i = 0; i < actionResultInfos.Count; i++)
+            var actionResultInfos = CalcDeathIndexList(actionInfo.ActionResults);
+            foreach (var actionResultInfo in actionResultInfos)
             {
-                ExecActionResultInfo(actionResultInfos[i]);
+                ExecActionResultInfo(actionResultInfo);
             }
         }
     }
@@ -984,16 +984,16 @@ public class BattleModel : BaseModel
 
     public void ExecActionResultInfo(ActionResultInfo actionResultInfo)
     {
-        BattlerInfo subject = GetBattlerInfo(actionResultInfo.SubjectIndex);
-        BattlerInfo target = GetBattlerInfo(actionResultInfo.TargetIndex);
+        var subject = GetBattlerInfo(actionResultInfo.SubjectIndex);
+        var target = GetBattlerInfo(actionResultInfo.TargetIndex);
         foreach (var addState in actionResultInfo.AddedStates)
         {
-            BattlerInfo addTarget = GetBattlerInfo(addState.TargetIndex);
+            var addTarget = GetBattlerInfo(addState.TargetIndex);
             addTarget.AddState(addState,true);
         }
         foreach (var removeState in actionResultInfo.RemovedStates)
         {
-            BattlerInfo removeTarget = GetBattlerInfo(removeState.TargetIndex);
+            var removeTarget = GetBattlerInfo(removeState.TargetIndex);
             removeTarget.RemoveState(removeState,true);
         }
         if (actionResultInfo.HpDamage != 0)
@@ -1026,7 +1026,7 @@ public class BattleModel : BaseModel
         }
         foreach (var targetIndex in actionResultInfo.ExecStateInfos)
         {
-            BattlerInfo execTarget = GetBattlerInfo(targetIndex.Key);
+            var execTarget = GetBattlerInfo(targetIndex.Key);
             if (execTarget != null)
             {
                 foreach (var stateId in targetIndex.Value)
@@ -1041,11 +1041,11 @@ public class BattleModel : BaseModel
         {
             if (target.IsState(StateType.CounterAura))
             {
-                List<StateInfo> counterOuraStateInfos = target.GetStateInfoAll(StateType.CounterAura);
-                for (int j = 0; j < counterOuraStateInfos.Count;j++)
+                var counterAuraStateInfos = target.GetStateInfoAll(StateType.CounterAura);
+                for (int j = 0; j < counterAuraStateInfos.Count;j++)
                 {
-                    target.RemoveState(counterOuraStateInfos[j],true);
-                    actionResultInfo.AddRemoveState(counterOuraStateInfos[j]);
+                    target.RemoveState(counterAuraStateInfos[j],true);
+                    actionResultInfo.AddRemoveState(counterAuraStateInfos[j]);
                 }
             }
         }
@@ -1129,9 +1129,9 @@ public class BattleModel : BaseModel
         }
     }
 
-    public List<ActionResultInfo> CheckRegene()
+    public List<ActionResultInfo> CheckRegenerate()
     {
-        var results = RegeneActionResults();
+        var results = RegenerateActionResults();
         results.AddRange(AfterHealActionResults());
         if (CurrentActionInfo() != null && CurrentActionInfo().ActionResults.Find(a => a.HpDamage > 0) != null)
         {
@@ -1140,10 +1140,10 @@ public class BattleModel : BaseModel
         return results;
     }
 
-    private List<ActionResultInfo> RegeneActionResults()
+    private List<ActionResultInfo> RegenerateActionResults()
     {
-        var regeneResults = MakeStateActionResult(CurrentBattler,StateType.Regene,FeatureType.HpHeal);
-        return regeneResults;
+        var RegenerateResults = MakeStateActionResult(CurrentBattler,StateType.Regenerate,FeatureType.HpHeal);
+        return RegenerateResults;
     }
 
     private List<ActionResultInfo> AfterHealActionResults()
@@ -1210,11 +1210,11 @@ public class BattleModel : BaseModel
                 var healValue = CurrentActionInfo().ActionResults.FindAll(a => a.HpDamage > 0).Count;
                 foreach (var targetIndex in targetIndexes)
                 {
-                    SkillData.FeatureData featureData = new SkillData.FeatureData();
+                    var featureData = new SkillData.FeatureData();
                     featureData.FeatureType = FeatureType.HpHeal;
                     featureData.Param1 = healValue * stateInfo.Effect;
 
-                    ActionResultInfo actionResultInfo = new ActionResultInfo(GetBattlerInfo(targetIndex),GetBattlerInfo(targetIndex),new List<SkillData.FeatureData>(){featureData},-1);
+                    var actionResultInfo = new ActionResultInfo(GetBattlerInfo(targetIndex),GetBattlerInfo(targetIndex),new List<SkillData.FeatureData>(){featureData},-1);
                     assistHealResults.Add(actionResultInfo);
                 }
             }
@@ -1236,7 +1236,7 @@ public class BattleModel : BaseModel
         }
         foreach (var targetIndex in targetIndexes)
         {
-            List<ActionResultInfo> damageResults = results.FindAll(a => a.HpDamage > 0 && a.TargetIndex == targetIndex);
+            var damageResults = results.FindAll(a => a.HpDamage > 0 && a.TargetIndex == targetIndex);
             if (damageResults.Count > 1)
             {
                 int hpDamage = 0;
@@ -1260,28 +1260,24 @@ public class BattleModel : BaseModel
         return results;
     }
 
-/*
-    public List<ActionResultInfo> UpdateSlipDamageState()
-    {
-        return MakeStateActionResult(CurrentBattler,StateType.SlipDamage,FeatureType.HpDefineDamage);
-    }
-    */
-
+    /// <summary>
+    /// battlerInfoが付与したステート効果の結果を取得
+    /// </summary>
     public List<ActionResultInfo> MakeStateActionResult(BattlerInfo battlerInfo,StateType stateType,FeatureType featureType)
     {
         List<ActionResultInfo> actionResultInfos = new ();
-        List<StateInfo> stateInfos = battlerInfo.GetStateInfoAll(stateType);
+        var stateInfos = battlerInfo.GetStateInfoAll(stateType);
         
-        SkillData.FeatureData featureData = new SkillData.FeatureData();
+        var featureData = new SkillData.FeatureData();
         featureData.FeatureType = featureType;
 
         for (int i = 0;i < stateInfos.Count;i++)
         {
             featureData.Param1 = stateInfos[i].Effect;
-            BattlerInfo target = GetBattlerInfo(stateInfos[i].BattlerId);
+            var target = GetBattlerInfo(stateInfos[i].BattlerId);
             if (target.IsAlive())
             {
-                ActionResultInfo actionResultInfo = new ActionResultInfo(GetBattlerInfo(stateInfos[i].BattlerId),GetBattlerInfo(stateInfos[i].TargetIndex),new List<SkillData.FeatureData>(){featureData},-1);
+                var actionResultInfo = new ActionResultInfo(GetBattlerInfo(stateInfos[i].BattlerId),GetBattlerInfo(stateInfos[i].TargetIndex),new List<SkillData.FeatureData>(){featureData},-1);
                 actionResultInfos.Add(actionResultInfo);
             }
         }
@@ -1329,11 +1325,11 @@ public class BattleModel : BaseModel
                         if (checkBattler.IsAwaken == false)
                         {
                             checkBattler.SetAwaken();
-                            ActionInfo makeActionInfo = MakeActionInfo(checkBattler,triggeredSkills[j],triggerTiming == TriggerTiming.Interrupt,true);
+                            var makeActionInfo = MakeActionInfo(checkBattler,triggeredSkills[j],triggerTiming == TriggerTiming.Interrupt,true);
                             madeActionInfos.Add(makeActionInfo);
                         }
                     } else{
-                        ActionInfo makeActionInfo = MakeActionInfo(checkBattler,triggeredSkills[j],triggerTiming == TriggerTiming.Interrupt,true);
+                        var makeActionInfo = MakeActionInfo(checkBattler,triggeredSkills[j],triggerTiming == TriggerTiming.Interrupt,true);
                         madeActionInfos.Add(makeActionInfo);
                     }
                 }
@@ -1943,21 +1939,26 @@ public class BattleModel : BaseModel
         return list;
     }
 
-    private List<StateType> RemoveDeathStateTypes()
-    {
-        return new List<StateType>(){
-            StateType.Chain,
-            StateType.Benediction,
-            StateType.SlipDamage,
-            StateType.Regene
-        };
-    }
-
-    // 生存していない付与者の該当ステートを解除する
+    // 戦闘不能の付与者のステート効果を解除する
     public List<StateInfo> EndRemoveState()
     {
-        List<StateInfo> removeStateInfos = new ();
-        var StateTypes = RemoveDeathStateTypes();
+        var removeStateInfos = new List<StateInfo>();
+        //var StateTypes = RemoveDeathStateTypes();
+        foreach (var battler in _battlers)
+        {
+            if (battler.IsAlive() == false)
+            {
+                foreach (var stateInfo in battler.StateInfos)
+                {
+                    if (stateInfo.Master.RemoveByDeath)
+                    {
+                        battler.RemoveState(stateInfo,true);
+                        removeStateInfos.Add(stateInfo);
+                    }
+                }   
+            }
+        }
+        /*
         foreach (var stateType in StateTypes)
         {
             for (int i = 0;i < _battlers.Count;i++)
@@ -1977,6 +1978,7 @@ public class BattleModel : BaseModel
                 }
             }
         }
+        */
         return removeStateInfos;
     }
 
@@ -2035,21 +2037,21 @@ public class BattleModel : BaseModel
     public List<SystemData.CommandData> SideMenu()
     {
         var list = new List<SystemData.CommandData>();
-        var menucommand = new SystemData.CommandData();
-        menucommand.Id = 2;
-        menucommand.Name = DataSystem.System.GetTextData(703).Text;
-        menucommand.Key = "Help";
-        list.Add(menucommand);
+        var menuCommand = new SystemData.CommandData();
+        menuCommand.Id = 2;
+        menuCommand.Name = DataSystem.System.GetTextData(703).Text;
+        menuCommand.Key = "Help";
+        list.Add(menuCommand);
         return list;
     }
 
     public SystemData.CommandData BattleAutoButton()
     {
-        var menucommand = new SystemData.CommandData();
-        menucommand.Id = 1;
-        menucommand.Name = DataSystem.System.GetTextData(706).Text;
-        menucommand.Key = "BATTLE_AUTO";
-        return menucommand;
+        var menuCommand = new SystemData.CommandData();
+        menuCommand.Id = 1;
+        menuCommand.Name = DataSystem.System.GetTextData(706).Text;
+        menuCommand.Key = "BATTLE_AUTO";
+        return menuCommand;
     }
 
     public void ChangeBattleAuto()

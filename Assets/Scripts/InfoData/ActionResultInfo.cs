@@ -671,7 +671,7 @@ public class ActionResultInfo
     private int CounterDamageValue(BattlerInfo target)
     {
         int ReDamage = (int)Mathf.Floor((target.CurrentDef() * 0.5f) * target.StateEffectAll(StateType.CounterAura) * 0.01f);
-        ReDamage += target.StateEffectAll(StateType.CounterOuraDamage);
+        ReDamage += target.StateEffectAll(StateType.CounterAuraDamage);
         return ReDamage;
     }
 

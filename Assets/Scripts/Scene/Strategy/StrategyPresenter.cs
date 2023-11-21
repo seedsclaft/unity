@@ -69,9 +69,9 @@ public class StrategyPresenter : BasePresenter
         {
             CommandBattleClose((ConfirmCommandType)viewEvent.template);
         }
-        if (viewEvent.commandType == CommandType.EndLvupAnimation)
+        if (viewEvent.commandType == CommandType.EndLvUpAnimation)
         {
-            CommandEndLvupAnimation();
+            CommandEndLvUpAnimation();
         }
         if (viewEvent.commandType == CommandType.LvUpNext)
         {
@@ -245,7 +245,7 @@ public class StrategyPresenter : BasePresenter
         }
     }
 
-    private void CommandEndLvupAnimation()
+    private void CommandEndLvUpAnimation()
     {
         _view.ShowLvUpActor(_model.LevelUpData[0],_model.LevelUpActorStatus(0));
     }
@@ -255,7 +255,7 @@ public class StrategyPresenter : BasePresenter
         _model.SetLevelUpStatus();
         if (_model.LevelUpData.Count > 0)
         {
-            CommandEndLvupAnimation();
+            CommandEndLvUpAnimation();
         } else
         {
             _view.ShowResultList(_model.ResultGetItemInfos);

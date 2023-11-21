@@ -80,43 +80,43 @@ public class StagesInfoImporter : AssetPostprocessor {
 				ISheet EventSheet = Book.GetSheetAt(1);
 				for (int i = 1; i <= BaseSheet.LastRowNum; i++)
 				{
-					IRow Baserow = BaseSheet.GetRow(i);
+					IRow BaseRow = BaseSheet.GetRow(i);
 
 					var StageData = new StageData();
-					StageData.Id = AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.Id);
-					StageData.Name = textData.Find(a => a.Id == AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.NameId)).Text;
-					StageData.Selectable = AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.Selectable) == 1;
-					StageData.Help = textData.Find(a => a.Id == AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.NameId)).Help;
-					StageData.Turns = AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.Turns);
+					StageData.Id = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.Id);
+					StageData.Name = textData.Find(a => a.Id == AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.NameId)).Text;
+					StageData.Selectable = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.Selectable) == 1;
+					StageData.Help = textData.Find(a => a.Id == AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.NameId)).Help;
+					StageData.Turns = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.Turns);
 					StageData.InitMembers = new List<int>();
-					string[] list = AssetPostImporter.ImportString(Baserow,(int)BaseColumn.InitMembers).Split(',');
+					string[] list = AssetPostImporter.ImportString(BaseRow,(int)BaseColumn.InitMembers).Split(',');
 					foreach (string item in list)
 					{
 						StageData.InitMembers.Add(int.Parse(item));
 					}
-					StageData.RandomTroopCount = AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.RandomTroopCount);
+					StageData.RandomTroopCount = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.RandomTroopCount);
 					StageData.BGMId = new List<int>();
-					string[] bgmlist = AssetPostImporter.ImportString(Baserow,(int)BaseColumn.BGMId).Split(',');
-					foreach (string item in bgmlist)
+					string[] bgmList = AssetPostImporter.ImportString(BaseRow,(int)BaseColumn.BGMId).Split(',');
+					foreach (string item in bgmList)
 					{
 						StageData.BGMId.Add(int.Parse(item));
 					}
-					StageData.Reborn = (AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.Reborn) == 1);
+					StageData.Reborn = (AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.Reborn) == 1);
 					
 					StageData.StageEvents = new List<StageEventData>();
 					for (int j = 1; j <= EventSheet.LastRowNum; j++)
 					{
-						IRow Eventrow = EventSheet.GetRow(j);
+						IRow EventRow = EventSheet.GetRow(j);
 						var EventData = new StageEventData();
-						var StageId = (int)Eventrow.GetCell((int)BaseEventColumn.Id)?.SafeNumericCellValue();
+						var StageId = (int)EventRow.GetCell((int)BaseEventColumn.Id)?.SafeNumericCellValue();
 						
 						if (StageId == StageData.Id)
 						{
-							EventData.Turns = (int)Eventrow.GetCell((int)BaseEventColumn.Turns)?.SafeNumericCellValue();
-							EventData.Timing = (EventTiming)Eventrow.GetCell((int)BaseEventColumn.Timing)?.SafeNumericCellValue();
-							EventData.Type = (StageEventType)Eventrow.GetCell((int)BaseEventColumn.Type)?.SafeNumericCellValue();
-							EventData.Param = (int)Eventrow.GetCell((int)BaseEventColumn.Param)?.SafeNumericCellValue();
-							EventData.ReadFlag = (bool)(Eventrow.GetCell((int)BaseEventColumn.ReadFlag)?.SafeNumericCellValue() == 1);
+							EventData.Turns = (int)EventRow.GetCell((int)BaseEventColumn.Turns)?.SafeNumericCellValue();
+							EventData.Timing = (EventTiming)EventRow.GetCell((int)BaseEventColumn.Timing)?.SafeNumericCellValue();
+							EventData.Type = (StageEventType)EventRow.GetCell((int)BaseEventColumn.Type)?.SafeNumericCellValue();
+							EventData.Param = (int)EventRow.GetCell((int)BaseEventColumn.Param)?.SafeNumericCellValue();
+							EventData.ReadFlag = (bool)(EventRow.GetCell((int)BaseEventColumn.ReadFlag)?.SafeNumericCellValue() == 1);
 							
 							EventData.EventKey = EventData.Turns.ToString() + EventData.Timing.ToString() + EventData.Type.ToString() + EventData.Param.ToString();
 

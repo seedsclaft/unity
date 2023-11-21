@@ -18,7 +18,7 @@ public class BattlePresenter : BasePresenter
     private bool _triggerAfterChecked = false;
     private bool _triggerInterruptChecked = false;
     private bool _slipDamageChecked = false;
-    private bool _regeneChecked = false;
+    private bool _regenerateChecked = false;
     private bool _battleEnded = false;
     private Battle.CommandType _nextCommandType = Battle.CommandType.None;
     private Battle.CommandType _backCommandType = Battle.CommandType.None;
@@ -540,34 +540,35 @@ public class BattlePresenter : BasePresenter
         StartAnimationSkill();
     }
 
-    private async void StartAnimationRegene(List<ActionResultInfo> regeneActionResults)
+    private async void StartAnimationRegenerate(List<ActionResultInfo> regenerateActionResults)
     {
         var animation = _model.SkillActionAnimation("tktk01/Cure1");
-        foreach (var regeneActionResult in regeneActionResults)
+        ExecActionResult(regenerateActionResults);
+        foreach (var regenerateActionResult in regenerateActionResults)
         {
-            if (regeneActionResult.HpHeal != 0)
+            if (regenerateActionResult.HpHeal != 0)
             {
-                _view.StartAnimation(regeneActionResult.TargetIndex,animation,0);
-                _view.StartHeal(regeneActionResult.TargetIndex,DamageType.HpHeal,regeneActionResult.HpHeal);
-                _model.GainHpTargetIndex(regeneActionResult.TargetIndex,regeneActionResult.HpHeal);
+                _view.StartAnimation(regenerateActionResult.TargetIndex,animation,0);
+                //_view.StartHeal(regenerateActionResult.TargetIndex,DamageType.HpHeal,regenerateActionResult.HpHeal);
+                //_model.GainHpTargetIndex(regenerateActionResult.TargetIndex,regenerateActionResult.HpHeal);
             }
         }
         await UniTask.DelayFrame(60);
         EndTurn();
-        //_nextCommandType = Battle.CommandType.EndRegeneAnimation;
     }
 
     private async void StartAnimationSlipDamage(List<ActionResultInfo> slipDamageResults)
     {
         var animation = _model.SkillActionAnimation("NA_Effekseer/NA_Fire_001");
+        ExecActionResult(slipDamageResults);
         foreach (var slipDamageResult in slipDamageResults)
         {
             var targetIndex = slipDamageResult.TargetIndex;
             if (slipDamageResult.HpDamage != 0)
             {            
-                _view.StartDamage(targetIndex,DamageType.HpDamage,slipDamageResult.HpDamage);
+                //_view.StartDamage(targetIndex,DamageType.HpDamage,slipDamageResult.HpDamage);
                 _view.StartAnimation(targetIndex,animation,0);
-                _model.GainHpTargetIndex(targetIndex,slipDamageResult.HpDamage * -1);
+                //_model.GainHpTargetIndex(targetIndex,slipDamageResult.HpDamage * -1);
             }
             if (slipDamageResult.DeadIndexList.Contains(targetIndex))
             {
@@ -577,7 +578,6 @@ public class BattlePresenter : BasePresenter
         }
         await UniTask.DelayFrame(60);
         EndTurn();
-        //_nextCommandType = Battle.CommandType.EndSlipDamageAnimation;
     }
 
     private async void StartAnimationSkill()
@@ -794,14 +794,14 @@ public class BattlePresenter : BasePresenter
                 return;
             }
         }
-        // regene
-        if (_triggerAfterChecked == false && _regeneChecked == false)
+        // regenerate
+        if (_triggerAfterChecked == false && _regenerateChecked == false)
         {
-            _regeneChecked = true;
-            var regeneResult = _model.CheckRegene();
-            if (regeneResult.Count > 0)
+            _regenerateChecked = true;
+            var regenerateResult = _model.CheckRegenerate();
+            if (regenerateResult.Count > 0)
             {
-                StartAnimationRegene(regeneResult);
+                StartAnimationRegenerate(regenerateResult);
                 return;
             }
         }
@@ -904,7 +904,7 @@ public class BattlePresenter : BasePresenter
         _triggerInterruptChecked = false;
         _triggerAfterChecked = false;
         _slipDamageChecked = false;
-        _regeneChecked = false;
+        _regenerateChecked = false;
         _view.SetBattleBusy(false);
     }
 

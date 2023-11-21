@@ -617,26 +617,26 @@ abstract public class ListWindow : MonoBehaviour
         if (_index < 0) return;
         var listCount = ListItemCount();
         var dataCount = _dataCount;
-        var _dispDownCount = Index - GetStartIndex();
+        var _displayDownCount = Index - GetStartIndex();
         if (keyType == InputKeyType.Down){
-            _dispDownCount--;
+            _displayDownCount--;
             if (Index == 0)
             {
                 ScrollRect.normalizedPosition = new Vector2(0,1);
             } else
-            if (Index > (listCount-1) && _dispDownCount == (listCount-1))
+            if (Index > (listCount-1) && _displayDownCount == (listCount-1))
             {
                 var num = 1.0f / (float)(dataCount - listCount);
                 ScrollRect.normalizedPosition = new Vector2(0,1.0f - (num * (Index - (listCount-1))));
             }
         } else
         if (keyType == InputKeyType.Up){
-            _dispDownCount++;
+            _displayDownCount++;
             if (Index == (_dataCount-1))
             {
                 ScrollRect.normalizedPosition = new Vector2(0,0);
             } else
-            if (Index < (dataCount-listCount) && _dispDownCount == 0)
+            if (Index < (dataCount-listCount) && _displayDownCount == 0)
             {
                 var num = 1.0f / (float)(dataCount - listCount);
                 ScrollRect.normalizedPosition = new Vector2(0,1.0f - (num * Index));

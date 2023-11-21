@@ -281,6 +281,7 @@ MonoBehaviour:
   type: {fileID: 0}
   value: {fileID: 0}
   description: {fileID: 8087131676355356565}
+  range: {fileID: 0}
   learningCost: {fileID: 0}
   selectable: {fileID: 0}
 --- !u!1 &809852278961756160
@@ -865,7 +866,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 222043007fc43574bad9d4ae09cb8645, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  battleGridprefab: {fileID: 2689483007591944502, guid: b3bfc73dd9c59da4390e16734ee6e255,
+  battleGridPrefab: {fileID: 2689483007591944502, guid: b3bfc73dd9c59da4390e16734ee6e255,
     type: 3}
   actorRoot: {fileID: 2407011666620787126}
   enemyRoot: {fileID: 5650521231191054787}

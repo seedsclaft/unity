@@ -289,8 +289,7 @@ public class ActorInfo
 
     public void StrengthReset()
     {
-        ActorData actorData = Master;
-        SetInitialParameter(actorData);
+        SetInitialParameter(Master);
         ChangeHp(_currentHp);
         ChangeMp(_currentMp);
         ChangeSp((_level-1) * 10);

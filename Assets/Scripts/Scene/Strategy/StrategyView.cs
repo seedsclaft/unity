@@ -228,7 +228,7 @@ public class StrategyView : BaseView
         if (_battleStartAnim.IsBusy == false)
         {
             _animationBusy = false;
-            var eventData = new StrategyViewEvent(CommandType.EndLvupAnimation);
+            var eventData = new StrategyViewEvent(CommandType.EndLvUpAnimation);
             _commandData(eventData);
         }
     }
@@ -272,7 +272,7 @@ namespace Strategy
         BattleClose = 6,
         LvUpNext = 7,
         
-        EndLvupAnimation = 9,
+        EndLvUpAnimation = 9,
         ChangeSkipToggle = 10,
     }
 }

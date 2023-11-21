@@ -7,11 +7,9 @@ using Effekseer;
 
 public class BattlerInfoComponent : MonoBehaviour
 {
-    
     [SerializeField] private ActorInfoComponent actorInfoComponent;
     [SerializeField] private EnemyInfoComponent enemyInfoComponent;
     [SerializeField] private EffekseerEmitter effekseerEmitter;
-    public EffekseerEmitter EffekseerEmitter => effekseerEmitter;
     [SerializeField] private _2dxFX_DestroyedFX deathAnimation;
     private GameObject _battleDamageRoot;
     public GameObject BattleDamageRoot => _battleDamageRoot;
@@ -21,10 +19,6 @@ public class BattlerInfoComponent : MonoBehaviour
     [SerializeField] private CanvasGroup canvasGroup;
     
     private BattlerInfo _battlerInfo = null;
-
-    public bool IsBusy {
-        get {return _battleDamages.Find(a => a.IsBusy);}
-    }
 
     private List<BattleDamage> _battleDamages = new ();
     private float _deathAnimation = 0.0f;
@@ -150,7 +144,7 @@ public class BattlerInfoComponent : MonoBehaviour
 
     private BattleDamage CreatePrefab()
     {
-        GameObject prefab = Instantiate(battleDamagePrefab);
+        var prefab = Instantiate(battleDamagePrefab);
         prefab.transform.SetParent(_battleDamageRoot.transform, false);
         return prefab.GetComponent<BattleDamage>();
     }
@@ -195,7 +189,7 @@ public class BattlerInfoComponent : MonoBehaviour
 
     public void StartBlink()
     {
-        Image image = BattleImage();
+        var image = BattleImage();
         if (image == null) return;
         Sequence sequence = DOTween.Sequence()
             .Append(image.DOFade(0f, 0.05f))
@@ -283,14 +277,14 @@ public class BattlerInfoComponent : MonoBehaviour
             effekseerEmitter.Stop();
             return;
         } 
-        Image image = BattleImage();
+        var image = BattleImage();
         if (image == null) return;
         if (!_battlerInfo.isActor)
         {
-            RectTransform imagerect = image.gameObject.GetComponent < RectTransform > ();
-            RectTransform effectRect = effekseerEmitter.gameObject.GetComponent < RectTransform > ();
+            var imageRect = image.gameObject.GetComponent<RectTransform>();
+            var effectRect = effekseerEmitter.gameObject.GetComponent<RectTransform>();
             if (animationPosition == 0){
-                effectRect.localPosition = new Vector2(0,imagerect.sizeDelta.y / 2);
+                effectRect.localPosition = new Vector2(0,imageRect.sizeDelta.y / 2);
             } else
             if (animationPosition == 1)
             {
@@ -298,7 +292,7 @@ public class BattlerInfoComponent : MonoBehaviour
             }
         } else
         {
-            RectTransform effectRect = effekseerEmitter.gameObject.GetComponent < RectTransform > ();
+            var effectRect = effekseerEmitter.gameObject.GetComponent<RectTransform>();
             if (animationPosition == 0){
                 effectRect.localPosition = new Vector2(0,0);
             } else
@@ -315,7 +309,7 @@ public class BattlerInfoComponent : MonoBehaviour
     public void SetSelectable(bool isSelectable)
     {
         
-        Image image = BattleImage();
+        var image = BattleImage();
         if (image == null) return;
         float alpha = isSelectable == true ? 1 : 0.25f;
         canvasGroup.alpha = alpha;

@@ -208,7 +208,7 @@ public class FastBattlePresenter : BasePresenter
             if (regeneActionResults[i].HpHeal != 0)
             {
                 _view.StartAnimation(regeneActionResults[i].TargetIndex,animation,0);
-                _model.GainHpTargetIndex(regeneActionResults[i].TargetIndex,regeneActionResults[i].HpHeal);
+                //_model.GainHpTargetIndex(regeneActionResults[i].TargetIndex,regeneActionResults[i].HpHeal);
             }
         }
         _nextCommandType = Battle.CommandType.EndRegeneAnimation;
@@ -222,7 +222,7 @@ public class FastBattlePresenter : BasePresenter
             if (_slipDamageResults[i].HpDamage != 0)
             {            
                 _view.StartAnimation(_slipDamageResults[i].TargetIndex,animation,0);
-                _model.GainHpTargetIndex(_slipDamageResults[i].TargetIndex,_slipDamageResults[i].HpDamage * -1);
+                //_model.GainHpTargetIndex(_slipDamageResults[i].TargetIndex,_slipDamageResults[i].HpDamage * -1);
             }
         }
         _nextCommandType = Battle.CommandType.EndSlipDamageAnimation;
@@ -338,7 +338,7 @@ public class FastBattlePresenter : BasePresenter
         if (_triggerAfterChecked == false && _regeneChecked == false)
         {
             _regeneChecked = true;
-            var regeneResult = _model.CheckRegene();
+            var regeneResult = _model.CheckRegenerate();
             if (regeneResult.Count > 0)
             {
                 StartAnimationRegene(regeneResult);

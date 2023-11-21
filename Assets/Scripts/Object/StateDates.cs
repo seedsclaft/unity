@@ -22,6 +22,8 @@ public class StateData
     public bool Removal;
     public bool Abnormal;
     public bool RemoveByAttack;
+    // 付与者が戦闘不能になった時に効果が切れるか
+    public bool RemoveByDeath;
 }
 
 
@@ -55,14 +57,14 @@ public enum StateType
     ChainDamageUp = 102,
     CounterAura = 103,
     NoDamage = 104,
-    Regene = 105,
+    Regenerate = 105,
     SetAfterAp = 106,
     Substitute = 107,
     Benediction  = 109,
     Curse  = 110,
     Drain  = 111,
     AfterHeal = 112,
-    CounterOuraDamage = 113,
+    CounterAuraDamage = 113,
     Deadly = 114,
     CounterAuraHeal = 115,
     HealActionSelfHeal = 116,
@@ -73,7 +75,7 @@ public enum StateType
     NoPassive = 121,
     AssistHeal = 122,
     RevengeAct = 123,
-    Haist = 124,
+    Heist = 124,
     Rebellious  = 125,
 }
 

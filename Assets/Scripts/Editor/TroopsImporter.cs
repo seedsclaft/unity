@@ -76,16 +76,16 @@ public class TroopsImporter : AssetPostprocessor {
 
 				for (int i = 1; i <= BaseSheet.LastRowNum; i++)
 				{
-					IRow Baserow = BaseSheet.GetRow(i);
+					IRow BaseRow = BaseSheet.GetRow(i);
 
 					var TroopData = new TroopData();
-					TroopData.Id = AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.Id);
-					TroopData.TroopId = AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.TroopId);
-					TroopData.EnemyId = AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.EnemyId);
-					TroopData.Lv = AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.Lv);
-					TroopData.BossFlag = AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.BossFlag) == 1;
-					TroopData.Line = (LineType)AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.Line);
-					TroopData.StageTurn = AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.StageTurn);
+					TroopData.Id = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.Id);
+					TroopData.TroopId = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.TroopId);
+					TroopData.EnemyId = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.EnemyId);
+					TroopData.Lv = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.Lv);
+					TroopData.BossFlag = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.BossFlag) == 1;
+					TroopData.Line = (LineType)AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.Line);
+					TroopData.StageTurn = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.StageTurn);
 					TroopData.GetItemDates = new List<GetItemData>();
 					Data.Data.Add(TroopData);
 				}
@@ -93,16 +93,16 @@ public class TroopsImporter : AssetPostprocessor {
 				BaseSheet = Book.GetSheetAt(1);
 				for (int i = 1; i <= BaseSheet.LastRowNum; i++)
 				{
-					IRow Baserow = BaseSheet.GetRow(i);
-					int Id = AssetPostImporter.ImportNumeric(Baserow,(int)BaseGetItemColumn.Id);
-					int TroopId = AssetPostImporter.ImportNumeric(Baserow,(int)BaseGetItemColumn.TroopId);
+					IRow BaseRow = BaseSheet.GetRow(i);
+					int Id = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseGetItemColumn.Id);
+					int TroopId = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseGetItemColumn.TroopId);
 					var troopData = Data.Data.Find(a => a.TroopId == TroopId && a.Line == LineType.Back);
 					if (troopData != null)
 					{
 						var getItemData = new GetItemData();
-						getItemData.Type = (GetItemType)AssetPostImporter.ImportNumeric(Baserow,(int)BaseGetItemColumn.Type);
-						getItemData.Param1 = AssetPostImporter.ImportNumeric(Baserow,(int)BaseGetItemColumn.Param1);
-						getItemData.Param2 = AssetPostImporter.ImportNumeric(Baserow,(int)BaseGetItemColumn.Param2);
+						getItemData.Type = (GetItemType)AssetPostImporter.ImportNumeric(BaseRow,(int)BaseGetItemColumn.Type);
+						getItemData.Param1 = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseGetItemColumn.Param1);
+						getItemData.Param2 = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseGetItemColumn.Param2);
 						troopData.GetItemDates.Add(getItemData);
 					}
 				}

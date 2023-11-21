@@ -228,7 +228,7 @@ public class BattlerInfo
             _ap -= 2;
             return;
         }
-        if (IsState(StateType.Haist))
+        if (IsState(StateType.Heist))
         {
             _ap -= 6;
             return;
@@ -377,7 +377,7 @@ public class BattlerInfo
         }
         if (IsState(StateType.Undead))
         {
-            if ((StateType)stateInfo.Master.Id == StateType.Regene)
+            if ((StateType)stateInfo.Master.Id == StateType.Regenerate)
             {
                 return false;
             }
@@ -551,7 +551,7 @@ public class BattlerInfo
         _chainSuccessCount += value;
     }
 
-    public void GainPaybattleMp(int value)
+    public void GainPayBattleMp(int value)
     {
         _payBattleMp += value;
     }

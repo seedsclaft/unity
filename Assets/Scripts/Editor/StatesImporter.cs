@@ -21,7 +21,8 @@ public class StatesImporter : AssetPostprocessor {
 		OverLap,
 		Removal,
 		Abnormal,
-		RemoveByAttack
+		RemoveByAttack,
+		RemoveByDeath,
     }
 	static readonly string ExcelName = "States.xlsx";
 
@@ -73,22 +74,22 @@ public class StatesImporter : AssetPostprocessor {
 
 				for (int i = 1; i <= BaseSheet.LastRowNum; i++)
 				{
-					IRow Baserow = BaseSheet.GetRow(i);
+					IRow BaseRow = BaseSheet.GetRow(i);
 
 					var StateData = new StateData();
-					StateData.Id = AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.Id);
-					StateData.Name = textData.Find(a => a.Id == AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.NameId)).Text;
-					StateData.Help = textData.Find(a => a.Id == AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.NameId)).Help;
-					StateData.IconPath = AssetPostImporter.ImportString(Baserow,(int)BaseColumn.IconIndex);
-					StateData.RemovalTiming = (RemovalTiming)AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.RemovalTiming);
-					StateData.OverWrite = (bool)(AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.OverRight) == 1);
-					StateData.EffectPath = AssetPostImporter.ImportString(Baserow,(int)BaseColumn.EffectPath);
-					StateData.EffectPosition = (EffectPositionType)AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.EffectPosition);
-					StateData.OverLap = (bool)(AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.OverLap) == 1);
-					StateData.Removal = (bool)(AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.Removal) == 1);
-					StateData.Abnormal = (bool)(AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.Abnormal) == 1);
-					StateData.RemoveByAttack = (bool)(AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.RemoveByAttack) == 1);
-					
+					StateData.Id = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.Id);
+					StateData.Name = textData.Find(a => a.Id == AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.NameId)).Text;
+					StateData.Help = textData.Find(a => a.Id == AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.NameId)).Help;
+					StateData.IconPath = AssetPostImporter.ImportString(BaseRow,(int)BaseColumn.IconIndex);
+					StateData.RemovalTiming = (RemovalTiming)AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.RemovalTiming);
+					StateData.OverWrite = (bool)(AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.OverRight) == 1);
+					StateData.EffectPath = AssetPostImporter.ImportString(BaseRow,(int)BaseColumn.EffectPath);
+					StateData.EffectPosition = (EffectPositionType)AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.EffectPosition);
+					StateData.OverLap = (bool)(AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.OverLap) == 1);
+					StateData.Removal = (bool)(AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.Removal) == 1);
+					StateData.Abnormal = (bool)(AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.Abnormal) == 1);
+					StateData.RemoveByAttack = (bool)(AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.RemoveByAttack) == 1);
+					StateData.RemoveByDeath = (bool)(AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.RemoveByDeath) == 1);
 					
 					Data.Data.Add(StateData);
 				}

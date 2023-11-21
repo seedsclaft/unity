@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BattleGridLayer : MonoBehaviour
 {
-    [SerializeField] private GameObject battleGridprefab;
+    [SerializeField] private GameObject battleGridPrefab;
     [SerializeField] private GameObject actorRoot;
     [SerializeField] private GameObject enemyRoot;
     private Dictionary<BattlerInfo,BattlerInfoComponent> _data = new Dictionary<BattlerInfo,BattlerInfoComponent>();
@@ -12,7 +12,7 @@ public class BattleGridLayer : MonoBehaviour
     {
         for (int i = 0; i < battlerInfos.Count;i++)
         {
-            GameObject prefab = Instantiate(battleGridprefab);
+            var prefab = Instantiate(battleGridPrefab);
             prefab.transform.SetParent(actorRoot.transform, false);
             var comp = prefab.GetComponent<BattlerInfoComponent>();
             comp.UpdateInfo(battlerInfos[i]);
@@ -27,7 +27,7 @@ public class BattleGridLayer : MonoBehaviour
     {
         for (int i = 0; i < battlerInfos.Count;i++)
         {
-            GameObject prefab = Instantiate(battleGridprefab);
+            var prefab = Instantiate(battleGridPrefab);
             prefab.transform.SetParent(enemyRoot.transform, false);
             var comp = prefab.GetComponent<BattlerInfoComponent>();
             comp.UpdateInfo(battlerInfos[i]);
@@ -52,10 +52,10 @@ public class BattleGridLayer : MonoBehaviour
 
     public void UpdatePosition()
     {
-        List<BattlerInfo> battlerInfos = new List<BattlerInfo>();
+        var battlerInfos = new List<BattlerInfo>();
         foreach (var data in _data)
         {
-            RectTransform rect = data.Value.gameObject.GetComponent < RectTransform > ();
+            var rect = data.Value.gameObject.GetComponent<RectTransform>();
             rect.localPosition = new Vector3(rect.localPosition.x, data.Key.Ap, 0);
             battlerInfos.Add(data.Key);
         }
