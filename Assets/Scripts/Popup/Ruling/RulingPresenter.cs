@@ -19,14 +19,14 @@ public class RulingPresenter
 
     private void Initialize()
     {
-        _view.SetEvent((type) => updateCommand(type));
+        _view.SetEvent((type) => UpdateCommand(type));
         _view.SetRulingCommand(_model.RulingCommand());
         CommandRefresh();
         _busy = false;
     }
 
     
-    private void updateCommand(RulingViewEvent viewEvent)
+    private void UpdateCommand(RulingViewEvent viewEvent)
     {
         if (_busy){
             return;

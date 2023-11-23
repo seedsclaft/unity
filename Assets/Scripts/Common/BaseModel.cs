@@ -116,7 +116,7 @@ public class BaseModel
         return "TACTICS1";
     }
 
-    public void ApllyConfigData()
+    public void ApplyConfigData()
     {
         SaveConfigInfo saveConfigInfo = GameSystem.ConfigData;
         if (saveConfigInfo != null)

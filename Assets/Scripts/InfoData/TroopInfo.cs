@@ -5,7 +5,6 @@ using UnityEngine;
 [System.Serializable]
 public class TroopInfo 
 {
-    public TroopData Master => DataSystem.Troops.Find(a => a.TroopId == _troopId);
     public List<TroopData> MasterAll => DataSystem.Troops.FindAll(a => a.TroopId == _troopId);
     private int _troopId = 0;
     public int TroopId => _troopId;

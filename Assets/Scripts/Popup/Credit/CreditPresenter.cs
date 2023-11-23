@@ -5,7 +5,7 @@ using Credit;
 
 public class CreditPresenter 
 {
-    CreditView _view = null;
+    private CreditView _view = null;
     private bool _busy = true;
     public CreditPresenter(CreditView view)
     {
@@ -16,11 +16,11 @@ public class CreditPresenter
 
     private void Initialize()
     {
-        _view.SetEvent((type) => updateCommand(type));
+        _view.SetEvent((type) => UpdateCommand(type));
         _busy = false;
     }
 
-    private void updateCommand(CreditViewEvent viewEvent)
+    private void UpdateCommand(CreditViewEvent viewEvent)
     {
         if (_busy){
             return;

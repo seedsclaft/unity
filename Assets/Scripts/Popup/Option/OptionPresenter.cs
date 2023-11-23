@@ -19,7 +19,7 @@ public class OptionPresenter
 
     private void Initialize()
     {
-        _view.SetEvent((type) => updateCommand(type));
+        _view.SetEvent((type) => UpdateCommand(type));
         _view.SetOptionList(_model.OptionCommandData(
             (a) => CommandVolumeSlider(a),
             (a) => CommandVolumeMute(a),
@@ -30,7 +30,7 @@ public class OptionPresenter
     }
 
     
-    private void updateCommand(OptionViewEvent viewEvent)
+    private void UpdateCommand(OptionViewEvent viewEvent)
     {
         if (_busy){
             return;
@@ -95,7 +95,7 @@ public class OptionPresenter
                 _model.ChangeCommandEndCheck(inputKeyType == InputKeyType.Left);
                 break;
             case "BATTLE_WAIT":
-                _model.ChangeBattleWait(inputKeyType == InputKeyType.Right);
+                _model.ChangeBattleWait(inputKeyType == InputKeyType.Left);
                 break;
             case "BATTLE_ANIMATION":
                 _model.ChangeBattleAnimation(inputKeyType == InputKeyType.Right);
@@ -172,7 +172,7 @@ public class OptionPresenter
                     _model.ChangeCommandEndCheck(toggleIndex == 0);
                     break;
                 case "BATTLE_WAIT":
-                    _model.ChangeBattleWait(toggleIndex == 1);
+                    _model.ChangeBattleWait(toggleIndex == 0);
                     break;
                 case "BATTLE_ANIMATION":
                     _model.ChangeBattleAnimation(toggleIndex == 1);

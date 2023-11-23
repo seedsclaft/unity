@@ -93,7 +93,7 @@ public class ResultModel : BaseModel
         return TotalEvaluate() > CurrentData.PlayerInfo.BestScore;
     }
 
-    public void ApllyScore()
+    public void ApplyScore()
     {
         CurrentData.PlayerInfo.SetBestScore(TotalEvaluate());
     }

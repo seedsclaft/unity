@@ -42,7 +42,6 @@ public class StageInfo
 
     private int _randomTroopCount = 15;
 
-    private int _baseTroopId = 1000;
     private EndingType _endingType = EndingType.D;
     public EndingType EndingType => _endingType;
     public void SetEndingType(EndingType endingType) {_endingType = endingType;}
@@ -88,8 +87,8 @@ public class StageInfo
 		for (int i = 1;i < _randomTroopCount;i++)
 		{
 			var BossTroopData = new TroopData();
-			BossTroopData.Id = i + _baseTroopId;
-			BossTroopData.TroopId = i + _baseTroopId;
+			BossTroopData.Id = i;
+			BossTroopData.TroopId = i;
 			BossTroopData.EnemyId = i;
 			BossTroopData.Lv = 1;
 			BossTroopData.Line = LineType.Back;
@@ -134,6 +133,9 @@ public class StageInfo
                 var enemy = new BattlerInfo(enemyData,_troopClearCount + 1,j,0,false);
                 troopInfo.AddEnemy(enemy);
             }
+            var bossData = DataSystem.Enemies.Find(a => a.Id == troopsData[i].EnemyId);
+            var boss = new BattlerInfo(bossData,_troopClearCount + 1,troopInfo.BattlerInfos.Count,troopDates[i].Line,troopDates[i].BossFlag);
+            troopInfo.AddEnemy(boss);
             troopInfo.MakeGetItemInfos();
             _currentTroopInfos.Add(troopInfo);
         }

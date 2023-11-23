@@ -55,9 +55,9 @@ public class ResultView : BaseView
         strategyActorList.gameObject.SetActive(false);
     }
     
-    public void SetEvaluate(int evalutate,bool isNew)
+    public void SetEvaluate(int evaluate,bool isNew)
     {
-        evaluateValue.text = evalutate.ToString();
+        evaluateValue.text = evaluate.ToString();
         evaluateObj.SetActive(true);
         evaluateNew.gameObject.SetActive(isNew);
     }
@@ -274,7 +274,7 @@ namespace Result
         EndAnimation = 2,
         ResultClose = 5,
         
-        EndLvupAnimation = 9,
+        EndLvUpAnimation = 9,
         DecideActor = 11,
         CancelActor = 12,
         UpdateActor = 13,

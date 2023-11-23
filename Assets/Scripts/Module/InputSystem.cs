@@ -105,107 +105,107 @@ public class InputSystem
 
     private InputKeyType UpdateGamePad()
     {
-        var gamepad = Gamepad.current;
-        if (gamepad == null)
+        var gamePad = Gamepad.current;
+        if (gamePad == null)
         {
             return InputKeyType.None;
         }
         // 十字
-        if (gamepad.dpad.up.isPressed) 
+        if (gamePad.dpad.up.isPressed) 
         {
             return InputKeyType.Up;
         }
-        if (gamepad.dpad.down.isPressed) 
+        if (gamePad.dpad.down.isPressed) 
         {
             return InputKeyType.Down;
         }
-        if (gamepad.dpad.right.isPressed) 
+        if (gamePad.dpad.right.isPressed) 
         {
             return InputKeyType.Right;
         }
-        if (gamepad.dpad.left.isPressed) 
+        if (gamePad.dpad.left.isPressed) 
         {
             return InputKeyType.Left;
         }
 
-        if (gamepad.aButton.wasPressedThisFrame) 
+        if (gamePad.aButton.wasPressedThisFrame) 
         {
             return InputKeyType.Decide;
         }
-        if (gamepad.bButton.wasPressedThisFrame)
+        if (gamePad.bButton.wasPressedThisFrame)
         {
             return InputKeyType.Cancel;
         }
-        if (gamepad.xButton.wasPressedThisFrame) 
+        if (gamePad.xButton.wasPressedThisFrame) 
         {
             return InputKeyType.Option1;
         }
-        if (gamepad.yButton.wasPressedThisFrame)
+        if (gamePad.yButton.wasPressedThisFrame)
         {
             return InputKeyType.Option2;
         }
 
-        if (gamepad.buttonEast.wasPressedThisFrame) 
+        if (gamePad.buttonEast.wasPressedThisFrame) 
         {
             return InputKeyType.Cancel;
         }
-        if (gamepad.buttonWest.wasPressedThisFrame) 
+        if (gamePad.buttonWest.wasPressedThisFrame) 
         {
             return InputKeyType.Option1;
         }
-        if (gamepad.buttonNorth.wasPressedThisFrame)
+        if (gamePad.buttonNorth.wasPressedThisFrame)
         {
             return InputKeyType.Option2;
         }
-        if (gamepad.buttonSouth.wasPressedThisFrame)
+        if (gamePad.buttonSouth.wasPressedThisFrame)
         {
             return InputKeyType.Decide;
         }
 
-        if (gamepad.circleButton.wasPressedThisFrame) 
+        if (gamePad.circleButton.wasPressedThisFrame) 
         {
             return InputKeyType.Cancel;
         }
-        if (gamepad.crossButton.wasPressedThisFrame)
+        if (gamePad.crossButton.wasPressedThisFrame)
         {
             return InputKeyType.Decide;
         }
-        if (gamepad.triangleButton.wasPressedThisFrame) 
+        if (gamePad.triangleButton.wasPressedThisFrame) 
         {
             return InputKeyType.Option2;
         }
-        if (gamepad.squareButton.wasPressedThisFrame)
+        if (gamePad.squareButton.wasPressedThisFrame)
         {
             return InputKeyType.Option1;
         }
 
         // start,select
-        if (gamepad.startButton.wasPressedThisFrame) 
+        if (gamePad.startButton.wasPressedThisFrame) 
         {
             return InputKeyType.Start;
         }
-        if (gamepad.selectButton.wasPressedThisFrame) 
+        if (gamePad.selectButton.wasPressedThisFrame) 
         {
             return InputKeyType.Select;
         }
 
 
         // L1,R1
-        if (gamepad.leftShoulder.wasPressedThisFrame) 
+        if (gamePad.leftShoulder.wasPressedThisFrame) 
         {
             return InputKeyType.SideLeft1;
         }
-        if (gamepad.rightShoulder.wasPressedThisFrame)
+        if (gamePad.rightShoulder.wasPressedThisFrame)
         {
             return InputKeyType.SideRight1;
         }
 
         // L2,R2
-        if (gamepad.leftShoulder.isPressed)
+        if (gamePad.leftShoulder.isPressed)
         {
             return InputKeyType.SideLeft2;
         }
-        if (gamepad.rightShoulder.isPressed)
+        if (gamePad.rightShoulder.isPressed)
         {
             return InputKeyType.SideRight2;
         }

@@ -78,8 +78,8 @@ public class TacticsModel : BaseModel
         _tempActorInfos.Clear();
         for (int i = 0;i < StageMembers().Count;i++)
         {
-            ActorInfo stageMember = StageMembers()[i];
-            ActorInfo actorInfo = new ActorInfo(stageMember.Master);
+            var stageMember = StageMembers()[i];
+            var actorInfo = new ActorInfo(stageMember.Master);
             actorInfo.SetTacticsCommand(stageMember.TacticsCommandType,stageMember.TacticsCost);
             actorInfo.SetNextBattleEnemyIndex(stageMember.NextBattleEnemyIndex,stageMember.NextBattleEnemyId);
             actorInfo.SetNextLearnCost(stageMember.NextLearnCost);
@@ -93,13 +93,13 @@ public class TacticsModel : BaseModel
     {
         if (_tempActorInfos.Count > 0)
         {
-            List<ActorInfo> removeActorInfos = new List<ActorInfo>();
-            List<ActorInfo> _stageMembers = StageMembers();
+            var removeActorInfos = new List<ActorInfo>();
+            var _stageMembers = StageMembers();
             
             for (int i = 0;i < _stageMembers.Count;i++)
             {
-                ActorInfo stageMember = _stageMembers[i];
-                ActorInfo tempData = _tempActorInfos.Find(a => a.ActorId == stageMember.ActorId);
+                var stageMember = _stageMembers[i];
+                var tempData = _tempActorInfos.Find(a => a.ActorId == stageMember.ActorId);
                 if (tempData != null)
                 {
                     if (stageMember.TacticsCommandType != tempData.TacticsCommandType)
@@ -167,7 +167,7 @@ public class TacticsModel : BaseModel
 
     public bool IsOtherBusy(int actorId, TacticsCommandType tacticsCommandType)
     {
-        ActorInfo actorInfo = TacticsActor(actorId);
+        var actorInfo = TacticsActor(actorId);
         if (actorInfo.TacticsCommandType == TacticsCommandType.None)
         {
             return false;
@@ -186,7 +186,7 @@ public class TacticsModel : BaseModel
     
     public void ResetTacticsCost(int actorId)
     {
-        ActorInfo actorInfo = TacticsActor(actorId);
+        var actorInfo = TacticsActor(actorId);
         PartyInfo.ChangeCurrency(Currency + actorInfo.TacticsCost);
         actorInfo.ClearTacticsCommand();
     }
@@ -201,7 +201,7 @@ public class TacticsModel : BaseModel
 
     public void SelectActorTrain(int actorId)
     {
-        ActorInfo actorInfo = TacticsActor(actorId);
+        var actorInfo = TacticsActor(actorId);
         if (actorInfo != null){
             if (actorInfo.TacticsCommandType == TacticsCommandType.Train)
             {   
@@ -220,7 +220,7 @@ public class TacticsModel : BaseModel
 
     public bool IsCheckAlchemy(int actorId)
     {
-        ActorInfo actorInfo = TacticsActor(actorId);
+        var actorInfo = TacticsActor(actorId);
         if (actorInfo.TacticsCommandType == TacticsCommandType.Alchemy)
         {   
             PartyInfo.ChangeCurrency(Currency + actorInfo.TacticsCost);
@@ -232,12 +232,12 @@ public class TacticsModel : BaseModel
 
     public List<ListData> SelectActorAlchemy(int actorId)
     {
-        ActorInfo actorInfo = TacticsActor(actorId);
-        List<SkillInfo> skillInfos = new List<SkillInfo>();
+        var actorInfo = TacticsActor(actorId);
+        var skillInfos = new List<SkillInfo>();
         
         for (int i = 0;i < PartyInfo.AlchemyIdList.Count;i++)
         {
-            SkillInfo skillInfo = new SkillInfo(PartyInfo.AlchemyIdList[i]);
+            var skillInfo = new SkillInfo(PartyInfo.AlchemyIdList[i]);
             if (actorInfo.IsLearnedSkill(skillInfo.Id)) continue;
             skillInfo.SetEnable(true);
             skillInfo.SetLearningCost(TacticsUtility.AlchemyCost(actorInfo,skillInfo.Attribute,StageMembers()));
@@ -255,14 +255,14 @@ public class TacticsModel : BaseModel
 
     public bool CheckCanSelectAlchemy(AttributeType attributeType)
     {
-        ActorInfo actorInfo = CurrentActor;
+        var actorInfo = CurrentActor;
         return Currency >= TacticsUtility.AlchemyCost(actorInfo,attributeType,StageMembers());
     }
     
     public void SelectAlchemySkill(int skillId)
     {
-        ActorInfo actorInfo = CurrentActor;
-        SkillData skillData = DataSystem.Skills.Find(a => a.Id == skillId);
+        var actorInfo = CurrentActor;
+        var skillData = DataSystem.Skills.Find(a => a.Id == skillId);
         if (actorInfo != null){
             actorInfo.SetTacticsCommand(TacticsCommandType.Alchemy,TacticsUtility.AlchemyCost(actorInfo,skillData.Attribute,StageMembers()));
             PartyInfo.ChangeCurrency(Currency - actorInfo.TacticsCost);
@@ -273,7 +273,7 @@ public class TacticsModel : BaseModel
 
     public void SelectActorRecovery(int actorId)
     {
-        ActorInfo actorInfo = TacticsActor(actorId);
+        var actorInfo = TacticsActor(actorId);
         if (actorInfo != null){
             if (actorInfo.TacticsCommandType == TacticsCommandType.Recovery)
             {   
@@ -292,7 +292,7 @@ public class TacticsModel : BaseModel
 
     public void SelectRecoveryPlus(int actorId)
     {
-        ActorInfo actorInfo = TacticsActor(actorId);
+        var actorInfo = TacticsActor(actorId);
         if (actorInfo != null){
             if (CanTacticsCommand(TacticsCommandType.Recovery,actorInfo))
             {
@@ -307,7 +307,7 @@ public class TacticsModel : BaseModel
 
     public void SelectRecoveryMinus(int actorId)
     {
-        ActorInfo actorInfo = TacticsActor(actorId);
+        var actorInfo = TacticsActor(actorId);
         if (actorInfo != null){
             if (0 < actorInfo.TacticsCost)
             {
@@ -326,7 +326,7 @@ public class TacticsModel : BaseModel
     
     public void SelectActorBattle(int actorId)
     {
-        ActorInfo actorInfo = TacticsActor(actorId);
+        var actorInfo = TacticsActor(actorId);
         if (actorInfo != null){
             if (actorInfo.TacticsCommandType == TacticsCommandType.Battle)
             {   
@@ -344,7 +344,7 @@ public class TacticsModel : BaseModel
 
     public void SelectActorResource(int actorId)
     {
-        ActorInfo actorInfo = TacticsActor(actorId);
+        var actorInfo = TacticsActor(actorId);
         if (actorInfo != null){
             if (actorInfo.TacticsCommandType == TacticsCommandType.Resource)
             {   

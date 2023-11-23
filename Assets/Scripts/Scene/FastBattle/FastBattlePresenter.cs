@@ -43,7 +43,7 @@ public class FastBattlePresenter : BasePresenter
     private void BattleInitialized()
     {
         Time.timeScale = 4;
-        _view.SetEvent((type) => updateCommand(type));
+        _view.SetEvent((type) => UpdateCommand(type));
 
         _view.SetActors(_model.BattlerActors());
         _view.SetEnemies(_model.BattlerEnemies(),_model.BattleCursorEffects());
@@ -54,7 +54,7 @@ public class FastBattlePresenter : BasePresenter
         _busy = false;
     }
 
-    private void updateCommand(BattleViewEvent viewEvent)
+    private void UpdateCommand(BattleViewEvent viewEvent)
     {
         if (_busy){
             return;
@@ -183,7 +183,7 @@ public class FastBattlePresenter : BasePresenter
         {
             _model.MakeActionResultInfo(actionInfo,indexList);
             _model.MakeCurseActionResults(actionInfo,indexList);
-            _model.AdjustReactionActionResultInfo(actionInfo.ActionResults);
+            _model.AdjustActionResultInfo(actionInfo.ActionResults);
             if (_triggerInterruptChecked == false)
             {
                 var result = _model.CheckTriggerSkillInfos(TriggerTiming.Interrupt,actionInfo,actionInfo.ActionResults);
@@ -260,7 +260,7 @@ public class FastBattlePresenter : BasePresenter
         if (actionInfo != null)
         {
             List<ActionResultInfo> actionResultInfos = actionInfo.ActionResults;
-            _model.AdjustReactionActionResultInfo(actionResultInfos);
+            _model.AdjustActionResultInfo(actionResultInfos);
             for (int i = 0; i < actionResultInfos.Count; i++)
             {
                 bool lastTarget = actionResultInfos[actionResultInfos.Count-1].TargetIndex == targetIndex;
@@ -300,7 +300,7 @@ public class FastBattlePresenter : BasePresenter
 
     private void ExecActionResult(List<ActionResultInfo> resultInfos,bool needPopupDelay = true)
     {
-        _model.AdjustReactionActionResultInfo(resultInfos);
+        _model.AdjustActionResultInfo(resultInfos);
         for (int i = 0; i < resultInfos.Count; i++)
         {    
             _model.ExecActionResultInfo(resultInfos[i]);

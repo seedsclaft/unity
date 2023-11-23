@@ -5,9 +5,8 @@ using Confirm;
 
 public class ConfirmPresenter 
 {
-    ConfirmView _view = null;
-
-    ConfirmModel _model = null;
+    private ConfirmView _view = null;
+    private ConfirmModel _model = null;
     private bool _busy = true;
     public ConfirmPresenter(ConfirmView view)
     {
@@ -19,13 +18,13 @@ public class ConfirmPresenter
 
     private void Initialize()
     {
-        _view.SetEvent((type) => updateCommand(type));
+        _view.SetEvent((type) => UpdateCommand(type));
         _view.SetConfirmCommand(_model.ConfirmCommand());
         _busy = false;
     }
 
     
-    private void updateCommand(ConfirmViewEvent viewEvent)
+    private void UpdateCommand(ConfirmViewEvent viewEvent)
     {
         if (_busy){
             return;

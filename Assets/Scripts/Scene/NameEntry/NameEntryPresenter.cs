@@ -20,7 +20,7 @@ public class NameEntryPresenter
     private async void Initialize()
     {
         _view.SetHelpWindow();
-        _view.SetEvent((type) => updateCommand(type));
+        _view.SetEvent((type) => UpdateCommand(type));
 
 
 
@@ -33,7 +33,7 @@ public class NameEntryPresenter
         _busy = false;
     }
 
-    private void updateCommand(NameEntryViewEvent viewEvent)
+    private void UpdateCommand(NameEntryViewEvent viewEvent)
     {
         if (_busy){
             return;

@@ -22,7 +22,7 @@ public class MainMenuPresenter : BasePresenter
     private async void Initialize()
     {
         _view.SetHelpWindow();
-        _view.SetEvent((type) => updateCommand(type));
+        _view.SetEvent((type) => UpdateCommand(type));
 
         _view.SetStagesData(_model.Stages());
         _view.SetSideMenu(_model.SideMenu());
@@ -35,7 +35,7 @@ public class MainMenuPresenter : BasePresenter
         _busy = false;
     }
 
-    private void updateCommand(MainMenuViewEvent viewEvent)
+    private void UpdateCommand(MainMenuViewEvent viewEvent)
     {
         if (_busy){
             return;

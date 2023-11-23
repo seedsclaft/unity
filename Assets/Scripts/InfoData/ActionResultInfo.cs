@@ -532,7 +532,7 @@ public class ActionResultInfo
 
     private void MakeAddState(BattlerInfo subject,BattlerInfo target,SkillData.FeatureData featureData,bool checkCounter = false)
     {
-        StateInfo stateInfo = new StateInfo(featureData.Param1,featureData.Param2,featureData.Param3,subject.Index,target.Index,_skillIndex);
+        var stateInfo = new StateInfo(featureData.Param1,featureData.Param2,featureData.Param3,subject.Index,target.Index,_skillIndex);
         if (stateInfo.Master.Id == (int)StateType.CounterAura || stateInfo.Master.Id == (int)StateType.Benediction)
         {
             stateInfo.Turns = 200 - subject.Status.Spd * 2;

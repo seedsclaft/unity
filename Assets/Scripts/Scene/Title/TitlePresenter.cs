@@ -22,13 +22,13 @@ public class TitlePresenter : BasePresenter
     private async void Initialize()
     {
         _busy = true;
-        _model.ApllyConfigData();
+        _model.ApplyConfigData();
         if (GameSystem.ConfigData.EventSkipIndex)
         {
             _view.CommandChangeEventSkipIndex(true);
         }
 
-        _view.SetEvent((type) => updateCommand(type));
+        _view.SetEvent((type) => UpdateCommand(type));
         _view.SetVersion(_model.VersionText());
 
         var bgm = await _model.GetBgmData("TITLE");
@@ -38,7 +38,7 @@ public class TitlePresenter : BasePresenter
         _busy = false;
     }
 
-    private void updateCommand(TitleViewEvent viewEvent)
+    private void UpdateCommand(TitleViewEvent viewEvent)
     {
         if (_busy){
             return;

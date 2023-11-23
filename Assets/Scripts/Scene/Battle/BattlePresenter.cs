@@ -204,7 +204,7 @@ public class BattlePresenter : BasePresenter
     {
         if (_model.EnableEscape())
         {
-            ConfirmInfo popupInfo = new ConfirmInfo(DataSystem.System.GetTextData(410).Text,(menuCommandInfo) => UpdatePopup((ConfirmCommandType)menuCommandInfo));
+            var popupInfo = new ConfirmInfo(DataSystem.System.GetTextData(410).Text,(menuCommandInfo) => UpdatePopup((ConfirmCommandType)menuCommandInfo));
             _view.CommandCallConfirm(popupInfo);
         }
     }
@@ -520,7 +520,6 @@ public class BattlePresenter : BasePresenter
             _view.HideBattlerPartyTarget();
             _model.MakeActionResultInfo(actionInfo,indexList);
             _model.MakeCurseActionResults(actionInfo,indexList);
-            _model.AdjustReactionActionResultInfo(actionInfo.ActionResults);
             // 行動割り込みスキル判定
             if (_triggerInterruptChecked == false)
             {
@@ -662,7 +661,6 @@ public class BattlePresenter : BasePresenter
         StartAliveAnimation(_model.CurrentActionInfo().ActionResults);
 
         await UniTask.DelayFrame(actionInfo.Master.DamageTiming);
-        _model.AdjustReactionActionResultInfo(actionInfo.ActionResults);
         for (int i = 0; i < actionInfo.ActionResults.Count; i++)
         {
             bool lastTarget = actionInfo.ActionResults[actionInfo.ActionResults.Count-1].TargetIndex == actionInfo.ActionResults[i].TargetIndex;
@@ -810,7 +808,7 @@ public class BattlePresenter : BasePresenter
 
     private void ExecActionResult(List<ActionResultInfo> resultInfos,bool needPopupDelay = true)
     {
-        _model.AdjustReactionActionResultInfo(resultInfos);
+        _model.AdjustActionResultInfo(resultInfos);
         for (int i = 0; i < resultInfos.Count; i++)
         {    
             // ダメージ表現をしない

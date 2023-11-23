@@ -21,7 +21,7 @@ public class RebornPresenter :BasePresenter
 
     private void Initialize()
     {
-        _view.SetEvent((type) => updateCommand(type));
+        _view.SetEvent((type) => UpdateCommand(type));
         _view.SetHelpInputInfo("REBORN");
         _view.SetActorList(_model.ActorInfos());
         CommandUpdateActor();
@@ -35,7 +35,7 @@ public class RebornPresenter :BasePresenter
         _busy = false;
     }
 
-    private void updateCommand(RebornViewEvent viewEvent)
+    private void UpdateCommand(RebornViewEvent viewEvent)
     {
         if (_busy){
             return;

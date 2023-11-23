@@ -20,7 +20,7 @@ public class SlotPresenter
     private void Initialize()
     {
         _busy = true;
-        _view.SetEvent((type) => updateCommand(type));
+        _view.SetEvent((type) => UpdateCommand(type));
         _view.SetHelpInputInfo("SLOT");
         _view.SetHelpText(DataSystem.System.GetTextData(18010).Text);
         _view.SetBackEvent();
@@ -28,7 +28,7 @@ public class SlotPresenter
         _busy = false;
     }
 
-    private void updateCommand(SlotViewEvent viewEvent)
+    private void UpdateCommand(SlotViewEvent viewEvent)
     {
         if (_busy){
             return;

@@ -9,7 +9,7 @@ public class DebugBattleData : MonoBehaviour
     [SerializeField] private List<int> inBattleActorIds = null;
     [SerializeField] private int troopId = 0;
     [SerializeField] private int troopLv = 0;
-    [SerializeField] private List<ActorData> actorDatas = null;
+    [SerializeField] private List<ActorData> actorDates = null;
     [SerializeField] private string advName = "";
     public string AdvName { get {return advName;}}
 
@@ -27,7 +27,7 @@ public class DebugBattleData : MonoBehaviour
         GameSystem.CurrentData.MakeStageData(1,1);
         //GameSystem.CurrentData.CurrentStage.TacticsTroops(1);
         GameSystem.CurrentData.InitActors();     
-        foreach (var actor in actorDatas)
+        foreach (var actor in actorDates)
         { 
             if (inBattleActorIds.Contains(actor.Id))
             {
@@ -80,7 +80,7 @@ public class DebugBattleData : MonoBehaviour
         if (saveActorData == true)
         {
             saveActorData = false;
-            actorDatas = DataSystem.Actors;
+            actorDates = DataSystem.Actors;
         }
     }
 #endif

@@ -439,17 +439,14 @@ public class BattlerInfo
         var stateInfos = new List<StateInfo>();
         for (var i = _stateInfos.Count-1;i >= 0;i--)
         {
-            StateInfo stateInfo = _stateInfos[i];
+            var stateInfo = _stateInfos[i];
             if (stateInfo.Master.RemovalTiming == removalTiming)
             {
                 bool IsRemove = stateInfo.UpdateTurn();
                 if (IsRemove)
                 {
                     RemoveState(stateInfo,true);
-                    //if (stateInfo.Master.Id == (int)StateType.Substitute)
-                    //{
-                        stateInfos.Add(stateInfo);
-                    //}
+                    stateInfos.Add(stateInfo);
                 }
             }
         }
@@ -460,7 +457,7 @@ public class BattlerInfo
     {
         for (var i = _stateInfos.Count-1;i >= 0;i--)
         {
-            StateInfo stateInfo = _stateInfos[i];
+            var stateInfo = _stateInfos[i];
             if (stateInfo.Master.RemovalTiming == removalTiming && stateInfo.StateId == stateId)
             {
                 bool IsRemove = stateInfo.UpdateTurn();
@@ -474,10 +471,10 @@ public class BattlerInfo
 
     public List<StateInfo> UpdateChainState()
     {
-        List<StateInfo> stateInfos = new List<StateInfo>();
+        var stateInfos = new List<StateInfo>();
         for (var i = _stateInfos.Count-1;i >= 0;i--)
         {
-            StateInfo stateInfo = _stateInfos[i];
+            var stateInfo = _stateInfos[i];
             if (stateInfo.Master.RemovalTiming == RemovalTiming.UpdateChain)
             {
                 bool IsChainDamage = stateInfo.UpdateTurn();

@@ -4128,12 +4128,17 @@ PrefabInstance:
     - target: {fileID: 8076030056876258778, guid: cbbfc9dbcbdfae14f9c03e1f6c6b043e,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: -463
       objectReference: {fileID: 0}
     - target: {fileID: 9199919830122602089, guid: cbbfc9dbcbdfae14f9c03e1f6c6b043e,
         type: 3}
       propertyPath: m_Name
       value: SideMenuList
+      objectReference: {fileID: 0}
+    - target: {fileID: 9199919830122602089, guid: cbbfc9dbcbdfae14f9c03e1f6c6b043e,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cbbfc9dbcbdfae14f9c03e1f6c6b043e, type: 3}
@@ -4166,6 +4171,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: SideMenu
+      objectReference: {fileID: 0}
+    - target: {fileID: 431096817857327705, guid: f4ed02a726effff4e933d24f06deb8be,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7956852265762695745, guid: f4ed02a726effff4e933d24f06deb8be,
         type: 3}

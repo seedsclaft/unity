@@ -50,22 +50,22 @@ public class BattleDamage : MonoBehaviour
         UpdateAllHide();
         _busy = true;
         string result = value.ToString();
-        List<GameObject> _damageList = new List<GameObject>();
+        var _damageList = new List<GameObject>();
         for (int i = 0; i < result.Count(); i++)
         {   
-            GameObject prefab = Instantiate(GetPrefabType(damageType));
+            var prefab = Instantiate(GetPrefabType(damageType));
             prefab.transform.SetParent(GetRootType(damageType).transform, false);
-            TextMeshProUGUI textMeshProUGUI = prefab.GetComponent<TextMeshProUGUI>();
+            var textMeshProUGUI = prefab.GetComponent<TextMeshProUGUI>();
             textMeshProUGUI.text = result[i].ToString();
             _damageList.Add(prefab);
         }
 
         for (int i = _damageList.Count-1; i >= 0; i--)
         {   
-            TextMeshProUGUI textMeshProUGUI = _damageList[i].GetComponent<TextMeshProUGUI>();
+            var textMeshProUGUI = _damageList[i].GetComponent<TextMeshProUGUI>();
             textMeshProUGUI.alpha = 0;
             int delay = i + delayCount * 8;
-            Sequence sequence = DOTween.Sequence()
+            var sequence = DOTween.Sequence()
                 .SetDelay(delay * 0.05f)
                 .Append(textMeshProUGUI.DOFade(1.0f, 0.1f))
                 .Append(textMeshProUGUI.gameObject.transform.DOLocalMoveY(16, 0.1f))
@@ -74,7 +74,7 @@ public class BattleDamage : MonoBehaviour
                 .Append(textMeshProUGUI.gameObject.transform.DOLocalMoveY(0, 0.05f))
                 .SetEase(Ease.InOutQuad)
                 .OnComplete(() => {
-                    Sequence sequence = DOTween.Sequence()
+                    var sequence = DOTween.Sequence()
                         .Append(textMeshProUGUI.DOFade(0.0f, 0.2f))
                         .OnComplete(() => {
                             _busy = false;
@@ -88,23 +88,23 @@ public class BattleDamage : MonoBehaviour
     {
         UpdateAllHide();
         _busy = true;
-        string result = value.ToString();
-        List<GameObject> _damageList = new List<GameObject>();
+        var result = value.ToString();
+        var _damageList = new List<GameObject>();
         for (int i = 0; i < result.Count(); i++)
         {   
-            GameObject prefab = Instantiate(GetPrefabType(damageType));
+            var prefab = Instantiate(GetPrefabType(damageType));
             prefab.transform.SetParent(GetRootType(damageType).transform, false);
-            TextMeshProUGUI textMeshProUGUI = prefab.GetComponent<TextMeshProUGUI>();
+            var textMeshProUGUI = prefab.GetComponent<TextMeshProUGUI>();
             textMeshProUGUI.text = result[i].ToString();
             _damageList.Add(prefab);
         }
 
         for (int i = _damageList.Count-1; i >= 0; i--)
         {   
-            TextMeshProUGUI textMeshProUGUI = _damageList[i].GetComponent<TextMeshProUGUI>();
+            var textMeshProUGUI = _damageList[i].GetComponent<TextMeshProUGUI>();
             textMeshProUGUI.alpha = 0;
             int delay = i + delayCount * 8;
-            Sequence sequence = DOTween.Sequence()
+            var sequence = DOTween.Sequence()
                 .SetDelay(delay * 0.05f)
                 .Append(textMeshProUGUI.DOFade(1.0f, 0.1f))
                 .Join(textMeshProUGUI.gameObject.transform.DOLocalMoveY(16, 0.1f))
@@ -114,7 +114,7 @@ public class BattleDamage : MonoBehaviour
                 .Append(textMeshProUGUI.gameObject.transform.DOLocalMoveY(0, 0.05f))
                 .SetEase(Ease.InOutQuad)
                 .OnComplete(() => {
-                    Sequence sequence = DOTween.Sequence()
+                    var sequence = DOTween.Sequence()
                         .Append(textMeshProUGUI.DOFade(0.0f, 0.2f))
                         .OnComplete(() => {
                             _busy = false;
@@ -126,13 +126,13 @@ public class BattleDamage : MonoBehaviour
 
     public void StartStatePopup(DamageType damageType,string stateName,float delay,System.Action endEvent)
     {
-        GameObject prefab = Instantiate(GetPrefabType(damageType));
+        var prefab = Instantiate(GetPrefabType(damageType));
         prefab.transform.SetParent(GetRootType(damageType).transform, false);
-        TextMeshProUGUI textMeshProUGUI = prefab.GetComponent<TextMeshProUGUI>();
+        var textMeshProUGUI = prefab.GetComponent<TextMeshProUGUI>();
         textMeshProUGUI.text = stateName;
 
         textMeshProUGUI.alpha = 0;
-        Sequence sequence = DOTween.Sequence()
+        var sequence = DOTween.Sequence()
             .SetDelay(delay * 0.7f)
             .Append(textMeshProUGUI.DOFade(1.0f, 0.1f))
             .Join(textMeshProUGUI.gameObject.transform.DOLocalMoveY(8, 0.2f))
@@ -141,7 +141,7 @@ public class BattleDamage : MonoBehaviour
             .Join(textMeshProUGUI.DOFade(0.0f, 0.1f))
             .SetEase(Ease.InOutQuad)
             .OnComplete(() => {
-                Sequence sequence = DOTween.Sequence()
+                var sequence = DOTween.Sequence()
                     .OnComplete(() => {
                         _busy = false;
                         if (endEvent != null) endEvent();

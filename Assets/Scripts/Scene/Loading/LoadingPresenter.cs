@@ -19,12 +19,12 @@ public class LoadingPresenter
 
     private void Initialize()
     {
-        _view.SetEvent((type) => updateCommand(type));
+        _view.SetEvent((type) => UpdateCommand(type));
         CommandRefresh();
         _busy = false;
     }
 
-    private void updateCommand(LoadingViewEvent viewEvent)
+    private void UpdateCommand(LoadingViewEvent viewEvent)
     {
         if (_busy){
             return;

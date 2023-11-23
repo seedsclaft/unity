@@ -30,7 +30,6 @@ public class GameSystem : MonoBehaviour
     
     public static SavePlayInfo CurrentData = null;
     public static SaveConfigInfo ConfigData = null;
-    public static TempInfo CurrentTempData = null;
 
     private bool _busy = false;
     public bool Busy => _busy;
@@ -370,10 +369,6 @@ public class GameSystem : MonoBehaviour
         _currentScene.SetHelpWindow(helpWindow);
         _currentScene.SetEvent((type) => UpdateCommand(type));
         _currentScene.Initialize();
-    }
-
-    private void CommandSetTemplate(TempInfo template){
-        CurrentTempData = template;
     }
 }
 

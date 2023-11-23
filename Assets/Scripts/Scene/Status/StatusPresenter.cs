@@ -16,13 +16,13 @@ public class StatusPresenter : BasePresenter
     { 
         _view.SetHelpWindow(_model.HelpText());
         _view.SetUIButton();
-        _view.SetEvent((type) => updateCommand(type));
+        _view.SetEvent((type) => UpdateCommand(type));
 
         CommandRefresh();
         if (_model.StatusActors().Count == 1) _view.HideArrows();
     }
 
-    private void updateCommand(StatusViewEvent viewEvent)
+    private void UpdateCommand(StatusViewEvent viewEvent)
     {
         if (_view.Busy){
             return;

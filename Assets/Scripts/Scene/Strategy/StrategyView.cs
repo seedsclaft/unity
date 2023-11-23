@@ -166,7 +166,7 @@ public class StrategyView : BaseView
     public void ShowEnemyList(List<ListData> troopInfo,bool enableBattleSkip)
     {
         tacticsEnemyList.SetData(troopInfo);
-        tacticsEnemyList.Refresh(-1);
+        //tacticsEnemyList.Refresh(-1);
         tacticsEnemyList.gameObject.SetActive(true);
         tacticsEnemyList.TacticsCommandList.UpdateSelectIndex(1);
         battleSkipToggle.gameObject.SetActive(enableBattleSkip);

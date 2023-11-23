@@ -51,7 +51,7 @@ public class SkillData
         public string LearningCount;
     }
 
-    public string TargteTypeText()
+    public string TargetTypeText()
     {
         switch (TargetType)
         {
@@ -90,7 +90,7 @@ public class SkillData
     }
     public string ConvertHelpText(string help)
     {
-        var targetText = TargteTypeText();
+        var targetText = TargetTypeText();
         var scopeText = ScopeTypeText();
         return help.Replace("\\s",targetText + scopeText);
     }
@@ -390,7 +390,7 @@ public enum FeatureType
 public enum LearningState{
     None = 0,
     Learned = 1,
-    Notlearned = 2,
+    NotLearned = 2,
     SelectLearn = 3
 }
 
