@@ -142,6 +142,13 @@ abstract public class BaseView : MonoBehaviour
         CallSceneChangeCommand(eventData);
     }
 
+    public void CommandCallSkillDetail(ConfirmInfo popupInfo)
+    {
+        var eventData = new ViewEvent(Base.CommandType.CallSkillDetailView);
+        eventData.template = popupInfo;
+        CallSceneChangeCommand(eventData);
+    }
+
     public void CommandConfirmClose()
     {
         var eventData = new ViewEvent(Base.CommandType.CloseConfirm);
@@ -289,6 +296,7 @@ namespace Base
         None = 0,
         SceneChange,
         CallConfirmView,
+        CallSkillDetailView,
         CloseConfirm,
         CallRulingView,
         CallOptionView,

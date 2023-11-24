@@ -187,8 +187,8 @@ public class StrategyPresenter : BasePresenter
             var lostMembers = _model.LostMembers();
             if (lostMembers.Count > 0)
             {
-                string text = DataSystem.System.GetTextData(3060).Text;
-                string lostMembersText = "";
+                var text = DataSystem.System.GetTextData(3060).Text;
+                var lostMembersText = "";
                 for (int i = 0;i < lostMembers.Count;i++)
                 {
                     lostMembersText += lostMembers[i].Master.Name;
@@ -198,7 +198,7 @@ public class StrategyPresenter : BasePresenter
                     }
                 }
                 text = text.Replace("\\d",lostMembersText);
-                ConfirmInfo popupInfo = new ConfirmInfo(text,(a) => UpdatePopupLost((ConfirmCommandType)a));
+                var popupInfo = new ConfirmInfo(text,(a) => UpdatePopupLost((ConfirmCommandType)a));
                 popupInfo.SetIsNoChoice(true);
                 _view.CommandCallConfirm(popupInfo);
             }
@@ -310,7 +310,7 @@ public class StrategyPresenter : BasePresenter
 
     private void ShowStatus()
     {
-        StatusViewInfo statusViewInfo = new StatusViewInfo(() => {
+        var statusViewInfo = new StatusViewInfo(() => {
             _view.CommandStatusClose();
             if (_strategyState != StrategyState.InBattle){
                 _view.SetHelpInputInfo("STRATEGY");
@@ -328,10 +328,10 @@ public class StrategyPresenter : BasePresenter
 
     private void CommandPopupSkillInfo(GetItemInfo getItemInfo)
     {
-        ConfirmInfo popupInfo = new ConfirmInfo("",(menuCommandInfo) => UpdatePopupSkillInfo((ConfirmCommandType)menuCommandInfo));
+        var popupInfo = new ConfirmInfo("",(menuCommandInfo) => UpdatePopupSkillInfo((ConfirmCommandType)menuCommandInfo));
         popupInfo.SetSkillInfo(_model.BasicSkillInfos(getItemInfo));
         popupInfo.SetIsNoChoice(true);
-        _view.CommandCallConfirm(popupInfo);
+        _view.CommandCallSkillDetail(popupInfo);
         Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
     }
 
@@ -340,7 +340,7 @@ public class StrategyPresenter : BasePresenter
         var enemyIndex = _model.CurrentStage.CurrentBattleIndex;
         var enemyInfos = _model.TacticsTroops()[enemyIndex].BattlerInfos;
         
-        StatusViewInfo statusViewInfo = new StatusViewInfo(() => {
+        var statusViewInfo = new StatusViewInfo(() => {
             _view.CommandStatusClose();
             _view.ChangeUIActive(true);
             if (_strategyState != StrategyState.InBattle){

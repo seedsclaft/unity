@@ -6,6 +6,7 @@ public class PopupAssign : MonoBehaviour
 {
     [SerializeField] private GameObject confirmRoot = null;
     [SerializeField] private GameObject confirmPrefab = null;
+    [SerializeField] private GameObject skillDetailPrefab = null;
     [SerializeField] private GameObject rulingPrefab = null;
     [SerializeField] private GameObject optionPrefab = null;
     [SerializeField] private GameObject rankingPrefab = null;
@@ -25,6 +26,8 @@ public class PopupAssign : MonoBehaviour
         {
             case PopupType.Confirm:
             return confirmPrefab;
+            case PopupType.SkillDetail:
+            return skillDetailPrefab;
             case PopupType.Ruling:
             return rulingPrefab;
             case PopupType.Option:
@@ -40,6 +43,7 @@ public class PopupAssign : MonoBehaviour
 
 public enum PopupType{
     Confirm,
+    SkillDetail,
     Ruling,
     Option,
     Ranking,

@@ -7,6 +7,7 @@ public class TacticsEnemy : ListItem ,IListViewItem
 {
     [SerializeField] private EnemyInfoComponent enemyInfoComponent;
     [SerializeField] private BaseList getItemList = null;
+    public BaseList GetItemList => getItemList;
     [SerializeField] private Button enemyInfoButton;
     private System.Action _enemyInfoHandler = null;
     private System.Action _getItemInfoHandler = null;
@@ -14,6 +15,7 @@ public class TacticsEnemy : ListItem ,IListViewItem
 
     private int _getItemIndex = -1;
     private bool _selectable = false;
+    public bool Selectable => _selectable;
     public void SetSelectable(bool selectable)
     {
         _selectable = selectable;
@@ -23,7 +25,7 @@ public class TacticsEnemy : ListItem ,IListViewItem
     {
         if (ListData == null) return null;
         var data = (TroopInfo)ListData.Data;
-        return data.GetItemInfos[_getItemIndex];
+        return data.GetItemInfos[getItemList.Index];
     }
 
     public void SetGetItemInfoCallHandler(System.Action handler)
@@ -75,7 +77,10 @@ public class TacticsEnemy : ListItem ,IListViewItem
             _getItemIndex = getItemList.Index;
             if (_getItemInfoSelectHandler != null)
             {
-                _getItemInfoSelectHandler(Index);
+                if (_getItemIndex != -1)
+                {
+                    _getItemInfoSelectHandler(Index);
+                }
             }
         });
         UpdateItemIndex(_getItemIndex);

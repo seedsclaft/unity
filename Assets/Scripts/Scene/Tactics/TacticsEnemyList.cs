@@ -11,7 +11,7 @@ public class TacticsEnemyList : BaseList
         if (ObjectList.Count > Index)
         {
             var tacticsEnemy = ObjectList[Index].GetComponent<TacticsEnemy>();
-            if (tacticsEnemy.GetItemIndex == -1)
+            if (tacticsEnemy.Selectable)
             {
                 return true;
             }
@@ -21,7 +21,7 @@ public class TacticsEnemyList : BaseList
 
     public GetItemInfo GetItemInfo(){
         var tacticsEnemy = ObjectList[Index].GetComponent<TacticsEnemy>();
-        if (tacticsEnemy.GetItemIndex != -1)
+        if (tacticsEnemy.GetItemList.Index != -1)
         {
             return tacticsEnemy.GetItemInfo();
         }
@@ -67,7 +67,6 @@ public class TacticsEnemyList : BaseList
             tacticsEnemy.SetSelectHandler((System.Action<int>)((a) => {
                 UpdateUnSelectAll();
                 UpdateSelectIndex(a);
-                tacticsEnemy.UpdateItemIndex(-1);
                 tacticsEnemy.SetSelectable(true);
             }));
             tacticsEnemy.SetGetItemInfoCallHandler(() => 

@@ -336,9 +336,9 @@ public class TacticsPresenter :BasePresenter
         {
             _model.CurrentActorId = actorId;
             _model.SetTacticsCommandType(tacticsCommandType);
-            TextData mainTextData = DataSystem.System.GetTextData(1030);
-            TextData textData = DataSystem.System.GetTextData((int)_model.TacticsActor(actorId).TacticsCommandType);
-            string mainText = mainTextData.Text.Replace("\\d",textData.Text);
+            var mainTextData = DataSystem.System.GetTextData(1030);
+            var textData = DataSystem.System.GetTextData((int)_model.TacticsActor(actorId).TacticsCommandType);
+            var mainText = mainTextData.Text.Replace("\\d",textData.Text);
             var popupInfo = new ConfirmInfo(_model.TacticsActor(actorId).Master.Name + mainText,(a) => UpdatePopup((ConfirmCommandType)a));
             _view.CommandCallConfirm(popupInfo);
             _view.DeactivateTacticsCommand();
@@ -444,7 +444,7 @@ public class TacticsPresenter :BasePresenter
     {
         _model.SetSelectAddActor();
         _view.CommandConfirmClose();
-        StatusViewInfo statusViewInfo = new StatusViewInfo(null);
+        var statusViewInfo = new StatusViewInfo(null);
         statusViewInfo.SetDisplayDecideButton(true);
         statusViewInfo.SetDisplayBackButton(false);
         _view.CommandCallStatus(statusViewInfo);
@@ -522,7 +522,7 @@ public class TacticsPresenter :BasePresenter
         {
             SaveSystem.SaveStart(GameSystem.CurrentData);
             _model.SetStageActor();
-            StatusViewInfo statusViewInfo = new StatusViewInfo(() => {
+            var statusViewInfo = new StatusViewInfo(() => {
                 _view.CommandStatusClose();
                 CommandShowUi();
                 _view.ShowCommandList();
@@ -534,8 +534,8 @@ public class TacticsPresenter :BasePresenter
         }
         if (tacticsCommandType == TacticsCommandType.TurnEnd)
         {
-            TextData textData = DataSystem.System.GetTextData(1040);
-            TextData subData = DataSystem.System.GetTextData(1050);
+            var textData = DataSystem.System.GetTextData(1040);
+            var subData = DataSystem.System.GetTextData(1050);
             string mainText = textData.Text;
             if (_model.CheckNonBusy())
             {
@@ -643,10 +643,10 @@ public class TacticsPresenter :BasePresenter
 
     private void CommandPopupSkillInfo(GetItemInfo getItemInfo)
     {
-        ConfirmInfo popupInfo = new ConfirmInfo("",(a) => UpdatePopupSkillInfo((ConfirmCommandType)a));
+        var popupInfo = new ConfirmInfo("",(a) => UpdatePopupSkillInfo((ConfirmCommandType)a));
         popupInfo.SetSkillInfo(_model.BasicSkillInfos(getItemInfo));
         popupInfo.SetIsNoChoice(true);
-        _view.CommandCallConfirm(popupInfo);
+        _view.CommandCallSkillDetail(popupInfo);
         Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
     }
 
@@ -698,7 +698,7 @@ public class TacticsPresenter :BasePresenter
         if (_model.CheckIsAlcana())
         {
             _view.DeactivateCommandList();
-            ConfirmInfo popupInfo = new ConfirmInfo(DataSystem.System.GetTextData(1070).Text,(menuCommandInfo) => UpdatePopupOpenAlcana((ConfirmCommandType)menuCommandInfo));
+            var popupInfo = new ConfirmInfo(DataSystem.System.GetTextData(1070).Text,(menuCommandInfo) => UpdatePopupOpenAlcana((ConfirmCommandType)menuCommandInfo));
             _view.CommandCallConfirm(popupInfo);
         }
     }
@@ -707,7 +707,7 @@ public class TacticsPresenter :BasePresenter
     {
         var enemyInfos = troopInfo.BattlerInfos;
         
-        StatusViewInfo statusViewInfo = new StatusViewInfo(() => {
+        var statusViewInfo = new StatusViewInfo(() => {
             _view.CommandStatusClose();
             _view.ChangeUIActive(true);
         });
@@ -721,7 +721,7 @@ public class TacticsPresenter :BasePresenter
     {
         _view.DeactivateCommandList();
         var alcana = _model.CurrentAlcana.CurrentSelectAlcana();
-        TextData textData = DataSystem.System.GetTextData(1080);
+        var textData = DataSystem.System.GetTextData(1080);
         var popupInfo = new ConfirmInfo(alcana.Name + alcana.Help + textData.Text,(menuCommandInfo) => UpdatePopupUseAlcana((ConfirmCommandType)menuCommandInfo));
         _view.CommandCallConfirm(popupInfo);
     }
