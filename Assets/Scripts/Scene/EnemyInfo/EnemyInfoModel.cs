@@ -49,7 +49,7 @@ public class EnemyInfoModel : BaseModel
     
     public List<ListData> SkillActionList()
     {
-        List<SkillInfo> skillInfos = CurrentEnemy.Skills;//.FindAll(a => a.Master.Attribute != AttributeType.None);
+        var skillInfos = CurrentEnemy.Skills;//.FindAll(a => a.Master.Attribute != AttributeType.None);
         skillInfos.ForEach(a => a.SetEnable(true));
         skillInfos.Sort((a,b) => {return a.Id - b.Id;});
         var list = new List<ListData>();

@@ -99,7 +99,7 @@ public class TitlePresenter : BasePresenter
             var loadSuccess = SaveSystem.LoadStart();
             if (loadSuccess == false)
             {
-                ConfirmInfo popupInfo = new ConfirmInfo("セーブデータを読み込めませんでした。\n誠に申し訳ないですがNewGameから開始をお願いします。",(menuCommandInfo) => updatePopup((ConfirmCommandType)menuCommandInfo));
+                var popupInfo = new ConfirmInfo("セーブデータを読み込めませんでした。\n誠に申し訳ないですがNewGameから開始をお願いします。",(menuCommandInfo) => updatePopup((ConfirmCommandType)menuCommandInfo));
                 popupInfo.SetIsNoChoice(true);
                 _view.CommandCallConfirm(popupInfo);
                 return;

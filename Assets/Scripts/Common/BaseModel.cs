@@ -55,7 +55,7 @@ public class BaseModel
 
     public List<ActorInfo> StageMembers()
     {
-        List<int> SelectActorIds = CurrentStage.SelectActorIds;
+        var SelectActorIds = CurrentStage.SelectActorIds;
         var members = new List<ActorInfo>();
         for (int i = 0;i < SelectActorIds.Count ;i++)
         {
@@ -70,7 +70,7 @@ public class BaseModel
 
     public List<ActorInfo> PartyMembers()
     {
-        List<int> PartyMembersIds = PartyInfo.ActorIdList;
+        var PartyMembersIds = PartyInfo.ActorIdList;
         var members = new List<ActorInfo>();
         for (int i = 0;i < PartyMembersIds.Count ;i++)
         {
@@ -85,7 +85,7 @@ public class BaseModel
 
     public List<ActorInfo> ResultMembers()
     {
-        List<int> SelectActorIds = CurrentStage.SelectActorIds;
+        var SelectActorIds = CurrentStage.SelectActorIds;
         var members = new List<ActorInfo>();
         for (int i = 0;i < SelectActorIds.Count ;i++)
         {
@@ -225,7 +225,7 @@ public class BaseModel
     public List<StageEventData> StageEvents(EventTiming eventTiming)
     {
         int CurrentTurn = CurrentStage.CurrentTurn;
-        List<string> eventKeys = CurrentStage.ReadEventKeys;
+        var eventKeys = CurrentStage.ReadEventKeys;
         return StageEventDates.FindAll(a => a.Timing == eventTiming && a.Turns == CurrentTurn && !eventKeys.Contains(a.EventKey));
     }
     
@@ -264,14 +264,14 @@ public class BaseModel
 
     public List<SystemData.CommandData> BaseConfirmCommand(int yesTextId,int noTextId = 0)
     {
-        List<SystemData.CommandData> menuCommandDates = new List<SystemData.CommandData>();
-        SystemData.CommandData yesCommand = new SystemData.CommandData();
+        var menuCommandDates = new List<SystemData.CommandData>();
+        var yesCommand = new SystemData.CommandData();
         yesCommand.Key = "Yes";
         yesCommand.Name = DataSystem.System.GetTextData(yesTextId).Text;
         yesCommand.Id = 0;
         if (noTextId != 0)
         {
-            SystemData.CommandData noCommand = new SystemData.CommandData();
+            var noCommand = new SystemData.CommandData();
             noCommand.Key = "No";
             noCommand.Name = DataSystem.System.GetTextData(noTextId).Text;
             noCommand.Id = 1;
@@ -299,61 +299,22 @@ public class BaseModel
         list.Add(listData);
         return list;
     }
-    
-    public List<ListData> AttributeTypes()
-    {
-        List<AttributeType> attributeTypes = new List<AttributeType>();
-        foreach(var attribute in Enum.GetValues(typeof(AttributeType)))
-        {
-            if ((int)attribute != 0)
-            {
-                attributeTypes.Add((AttributeType)attribute);
-            }
-        }
-        var list = new List<ListData>();
-        foreach (var attributeData in attributeTypes)
-        {
-            var attributeInfo = new SkillData.SkillAttributeInfo();
-            attributeInfo.AttributeType = attributeData;
-            var listData = new ListData(attributeInfo);
-            list.Add(listData);
-        }
-        return list;
-    }
-
-    public List<ListData> AttributeAllTypes(ActorInfo actorInfo = null,int selectedIndex = -1)
-    {
-        var list = new List<ListData>();
-        var idx = 0;
-        List<AttributeType> attributeTypes = new List<AttributeType>();
-        foreach(var attribute in Enum.GetValues(typeof(AttributeType)))
-        {
-            var attributeInfo = new SkillData.SkillAttributeInfo();
-            attributeInfo.AttributeType = (AttributeType)attribute;
-            attributeInfo.ValueText = "";
-            var listData = new ListData(attributeInfo,idx);
-            listData.SetSelected(selectedIndex == idx);
-            list.Add(listData);
-            idx++;
-        } 
-        return list;
-    }
 
     public List<SkillInfo> BasicSkillInfos(GetItemInfo getItemInfo)
     {
-        List<SkillInfo> skillInfos = new List<SkillInfo>();
+        var skillInfos = new List<SkillInfo>();
         if (getItemInfo.IsSkill())
         {
-            SkillInfo skillInfo = new SkillInfo(getItemInfo.Param1);
+            var skillInfo = new SkillInfo(getItemInfo.Param1);
             skillInfo.SetEnable(true);
             skillInfos.Add(skillInfo);
         }
         if (getItemInfo.IsAttributeSkill())
         {
-            List<SkillData> skillDates = DataSystem.Skills.FindAll(a => a.Rank == getItemInfo.Param1 && a.Attribute == (AttributeType)((int)getItemInfo.GetItemType - 10));
+            var skillDates = DataSystem.Skills.FindAll(a => a.Rank == getItemInfo.Param1 && a.Attribute == (AttributeType)((int)getItemInfo.GetItemType - 10));
             foreach (var skillData in skillDates)
             {
-                SkillInfo skillInfo = new SkillInfo(skillData.Id);
+                var skillInfo = new SkillInfo(skillData.Id);
                 skillInfo.SetEnable(true);
                 skillInfos.Add(skillInfo);
             }
@@ -419,13 +380,13 @@ public class BaseModel
     public void UseAlcana()
     {
         CurrentAlcana.UseAlcana(true);
-        SkillInfo skill = new SkillInfo(CurrentAlcana.CurrentSelectAlcana().SkillId);
+        var skill = new SkillInfo(CurrentAlcana.CurrentSelectAlcana().SkillId);
         if (skill.Master.SkillType == SkillType.UseAlcana)
         {
             // 基本的に味方全員
             if (skill.Master.TargetType == TargetType.Friend)
             {
-                List<int> targetIndexes = new List<int>();
+                var targetIndexes = new List<int>();
                 if (skill.Master.Scope == ScopeType.All)
                 {
                     foreach (var item in StageMembers())
@@ -438,10 +399,10 @@ public class BaseModel
                 {
                     foreach (var featureData in skill.Master.FeatureDates)
                     {
-                        ActorInfo target = StageMembers()[i];
+                        var target = StageMembers()[i];
                         if (featureData.FeatureType == FeatureType.AddState)
                         {
-                            StateInfo stateInfo = new StateInfo(featureData.Param1,featureData.Param2,featureData.Param3,-1,0,skill.Id);
+                            var stateInfo = new StateInfo(featureData.Param1,featureData.Param2,featureData.Param3,-1,0,skill.Id);
                             CurrentAlcana.SetAlacanaState(stateInfo);
                         }
                         if (featureData.FeatureType == FeatureType.HpHeal)
@@ -481,7 +442,7 @@ public class BaseModel
                     {
                         if (skill.Master.TargetType == TargetType.Opponent)
                         {
-                            StateInfo stateInfo = new StateInfo(featureData.Param1,featureData.Param2,featureData.Param3,-1,0,skill.Id);
+                            var stateInfo = new StateInfo(featureData.Param1,featureData.Param2,featureData.Param3,-1,0,skill.Id);
                             CurrentStage.ChangeCurrentTroopAddState(stateInfo);
                         }
                     }
@@ -539,7 +500,7 @@ public class BaseModel
         //　加入しているパーティ
         var stageMembers = StageMembers();
         //　加入していないパーティを生成
-        List<ActorInfo> selectActorIds = Actors().FindAll(a => !StageMembers().Contains(a));
+        var selectActorIds = Actors().FindAll(a => !StageMembers().Contains(a));
         
         PartyInfo.InitActors();
         foreach (var actorInfo in selectActorIds)
@@ -577,7 +538,7 @@ public class BaseModel
     public void ChangeRouteSelectStage(int stageBaseId)
     {
         int stageId = stageBaseId + CurrentStage.RouteSelect;
-		GameSystem.CurrentData.ChangeRouteSelectStage(stageId);
+		CurrentData.ChangeRouteSelectStage(stageId);
     }
 
     public Dictionary<TacticsCommandType, int> CommandRankInfo()
@@ -638,6 +599,43 @@ public class BaseModel
         foreach (var data in dataList)
         {
             list.Add(CastData(data));
+        }
+        return list;
+    }
+    
+    public List<ListData> RebornSkillInfos(ActorInfo actorInfo)
+    {
+        var skillInfos = actorInfo.RebornSkillInfos;
+
+        skillInfos.ForEach(a => a.SetEnable(true));
+        var sortList1 = new List<SkillInfo>();
+        var sortList2 = new List<SkillInfo>();
+        var sortList3 = new List<SkillInfo>();
+        skillInfos.Sort((a,b) => {return a.Master.Id > b.Master.Id ? 1 : -1;});
+        foreach (var skillInfo in skillInfos)
+        {
+            if (skillInfo.Master.IconIndex <= MagicIconType.Psionics)
+            {
+                sortList1.Add(skillInfo);
+            } else
+            if (skillInfo.Master.IconIndex >= MagicIconType.Demigod)
+            {
+                sortList2.Add(skillInfo);
+            } else
+            {
+                sortList3.Add(skillInfo);
+            }
+        }
+        skillInfos.Clear();
+        skillInfos.AddRange(sortList1);
+        skillInfos.AddRange(sortList2);
+        skillInfos.AddRange(sortList3);
+        var list = new List<ListData>();
+        var idx = 0;
+        foreach (var skillInfo in skillInfos)
+        {
+            var listData = new ListData(skillInfo,idx);
+            list.Add(listData);
         }
         return list;
     }

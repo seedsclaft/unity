@@ -27,14 +27,18 @@ public class RebornActor : ListItem ,IListViewItem
     private void UpdateRebornSkills(ActorInfo actorInfo)
     {
         if (_rebornInit) return;
+    
+        foreach(Transform child in RebornRoot.transform){
+            Destroy(child.gameObject);
+        }
         _rebornInit = true;
         var idx = 0;
         foreach (var rebornSkill in actorInfo.RebornSkillInfos)
         {
             if (LimitedSkillMax && idx == 3)
             {
-                var limitprefab = Instantiate(LimitRebornPrefab);
-                limitprefab.transform.SetParent(RebornRoot.transform,false);
+                var limitPrefab = Instantiate(LimitRebornPrefab);
+                limitPrefab.transform.SetParent(RebornRoot.transform,false);
                 return;
             }
             var prefab = Instantiate(RebornPrefab);

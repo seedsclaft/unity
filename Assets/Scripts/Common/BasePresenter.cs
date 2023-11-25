@@ -49,7 +49,7 @@ public class BasePresenter
             }
             if (isAbort)
             {
-                AdvCallInfo advInfo = new AdvCallInfo();
+                var advInfo = new AdvCallInfo();
                 advInfo.SetLabel(_model.GetAdvFile(advId));
                 advInfo.SetCallEvent(() => {                
                     if (endCall != null) endCall();

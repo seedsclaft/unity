@@ -54,15 +54,15 @@ public class StatusPresenter : BasePresenter
 
     private void CommandDecideActor()
     {
-        ActorInfo actorInfo = _model.CurrentActor;
+        var actorInfo = _model.CurrentActor;
         var text = _model.SelectAddActorConfirmText(actorInfo.Master.Name);
-        ConfirmInfo confirmInfo = new ConfirmInfo(text,(menuCommandInfo) => updatePopup((ConfirmCommandType)menuCommandInfo));
+        var confirmInfo = new ConfirmInfo(text,(menuCommandInfo) => UpdatePopup((ConfirmCommandType)menuCommandInfo));
         _view.CommandCallConfirm(confirmInfo);
         _popupCommandType = Status.CommandType.DecideStage;
         Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
     }
 
-    private void updatePopup(ConfirmCommandType confirmCommandType)
+    private void UpdatePopup(ConfirmCommandType confirmCommandType)
     {
         _view.CommandConfirmClose();
 

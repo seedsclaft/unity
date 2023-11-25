@@ -9,16 +9,37 @@ public class RebornView : BaseView
     [SerializeField] private BaseList actorInfoList = null;
     public int ActorInfoListIndex => actorInfoList.Index;
 
-    [SerializeField] private RebornSkillList rebornSkillList = null;    
-    [SerializeField] private ActorInfoComponent actorInfoComponent = null; 
+    [SerializeField] private BattleSelectCharacter selectCharacter = null; 
+    [SerializeField] private Button decideButton = null;
     private new System.Action<RebornViewEvent> _commandData = null;
 
     public override void Initialize() 
     {
         base.Initialize();
+        selectCharacter.Initialize();
+        SetInputHandler(selectCharacter.GetComponent<IInputHandlerEvent>());
+        InitializeSelectCharacter();
+        SetUIButton();
         new RebornPresenter(this);
     }
 
+    private void InitializeSelectCharacter()
+    {
+        selectCharacter.SetInputHandlerAction(InputKeyType.Decide,() => CallDecideActor());
+        selectCharacter.SetInputHandlerAction(InputKeyType.Cancel,() => OnClickBack());
+        selectCharacter.SetInputHandlerAction(InputKeyType.Start,() => CallDecideActor());
+        selectCharacter.SetInputHandlerAction(InputKeyType.SideLeft1,() => OnClickLeft());
+        selectCharacter.SetInputHandlerAction(InputKeyType.SideRight1,() => OnClickRight());
+
+        SetInputHandler(selectCharacter.DeckMagicList.GetComponent<IInputHandlerEvent>());
+        selectCharacter.HideActionList();
+        selectCharacter.HideStatus();
+    }
+
+    private void SetUIButton()
+    {
+        decideButton.onClick.AddListener(() => CallDecideActor());
+    }
 
     public void SetEvent(System.Action<RebornViewEvent> commandData)
     {
@@ -42,13 +63,14 @@ public class RebornView : BaseView
         actorInfoList.SetInputHandler(InputKeyType.Cancel,() => CallCancelActor());
         actorInfoList.SetInputHandler(InputKeyType.Down,() => CallUpdate());
         actorInfoList.SetInputHandler(InputKeyType.Up,() => CallUpdate());
+        actorInfoList.SetSelectedHandler(() => CallUpdate());
         SetInputHandler(actorInfoList.GetComponent<IInputHandlerEvent>());
     }
 
     private void CallDecideActor()
     {
         var listData = actorInfoList.ListData;
-        if (listData != null)
+        if (listData != null && listData.Enable)
         {
             var data = (ActorInfo)listData.Data;
             var eventData = new RebornViewEvent(CommandType.DecideActor);
@@ -75,49 +97,29 @@ public class RebornView : BaseView
         _commandData(eventData);
     }
 
-    public void UpdateActor(ActorInfo actorInfo)
+    private void OnClickLeft()
     {
-        actorInfoComponent.Clear();
-        actorInfoComponent.UpdateInfo(actorInfo,null);
-        rebornSkillList.Initialize(actorInfo.RebornSkillInfos);
-        rebornSkillList.SetInputHandler(InputKeyType.SideLeft1,() => OnPageUpRebornSkill());
-        rebornSkillList.SetInputHandler(InputKeyType.SideRight1,() => OnPageDownRebornSkill());
-        SetInputHandler(rebornSkillList.GetComponent<IInputHandlerEvent>());
-        rebornSkillList.Refresh();
-    }
-    
-    private void OnPageUpRebornSkill()
-    {
-        if (rebornSkillList.Data != null && rebornSkillList.Data.Count < 4) return;
-        var margin = 1.0f / (rebornSkillList.Data.Count - 4);
-
-        var value = rebornSkillList.ScrollRect.normalizedPosition.y - margin;
-        if ((rebornSkillList.Data.Count - 4) == 0)
-        {
-            value = 1;
-        }
-        rebornSkillList.ScrollRect.normalizedPosition = new Vector2(0,value);
-        if (rebornSkillList.ScrollRect.normalizedPosition.y < 0)
-        {
-            rebornSkillList.ScrollRect.normalizedPosition = new Vector2(0,0);
-        }
+        var eventData = new RebornViewEvent(CommandType.LeftActor);
+        _commandData(eventData);
     }
 
-    private void OnPageDownRebornSkill()
+    private void OnClickRight()
     {
-        if (rebornSkillList.Data != null && rebornSkillList.Data.Count < 4) return;
-        var margin = 1.0f / (rebornSkillList.Data.Count - 4);
+        var eventData = new RebornViewEvent(CommandType.RightActor);
+        _commandData(eventData);
+    }
 
-        var value = rebornSkillList.ScrollRect.normalizedPosition.y + margin;
-        if ((rebornSkillList.Data.Count - 4) == 0)
-        {
-            value = 0;
-        }
-        rebornSkillList.ScrollRect.normalizedPosition = new Vector2(0,value);
-        if (rebornSkillList.ScrollRect.normalizedPosition.y > 1)
-        {
-            rebornSkillList.ScrollRect.normalizedPosition = new Vector2(0,1);
-        }
+    public void CommandRefreshStatus(List<ListData> skillInfos,ActorInfo actorInfo,List<ActorInfo> party,int lastSelectIndex)
+    {
+        selectCharacter.SetActiveTab(SelectCharacterTabType.Magic,false);
+        selectCharacter.SetActiveTab(SelectCharacterTabType.Condition,false);
+        selectCharacter.SetActiveTab(SelectCharacterTabType.Detail,false);
+        selectCharacter.ShowActionList();
+        selectCharacter.DeckMagicList.Activate();
+        selectCharacter.SetActorThumbOnly(actorInfo);
+        selectCharacter.SetActorInfo(actorInfo,party);
+        selectCharacter.SetSkillInfos(skillInfos);
+        selectCharacter.RefreshAction(lastSelectIndex);
     }
 }
 
@@ -129,7 +131,9 @@ namespace Reborn
         DecideActor = 1,
         CancelActor = 2,
         UpdateActor = 3,
-        Back = 4
+        Back = 4,
+        LeftActor = 5,
+        RightActor = 6,
     }
 }
 public class RebornViewEvent

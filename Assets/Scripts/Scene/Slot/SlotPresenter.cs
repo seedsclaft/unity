@@ -68,7 +68,7 @@ public class SlotPresenter
         {
             _model.ClearActorsData();
             _model.SetActorsData(index);
-            StatusViewInfo statusViewInfo = new StatusViewInfo(() => {
+            var statusViewInfo = new StatusViewInfo(() => {
                 _view.CommandStatusClose();
                 _view.ChangeUIActive(true);
             });

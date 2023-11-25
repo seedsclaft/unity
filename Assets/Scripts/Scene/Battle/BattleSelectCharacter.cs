@@ -148,6 +148,16 @@ public class BattleSelectCharacter : MonoBehaviour
         statusInfoComponent.UpdateMp(battlerInfo.Mp,currentStatus.Mp);
     }
 
+    public void SetActorThumbOnly(ActorInfo actorInfo)
+    {
+        battleThumb.ShowActorThumb(actorInfo,false);
+        battleThumb.gameObject.SetActive(true);
+        var currentStatus = actorInfo.CurrentStatus;
+        statusInfoComponent.UpdateInfo(currentStatus);
+        statusInfoComponent.UpdateHp(actorInfo.MaxHp,currentStatus.Hp);
+        statusInfoComponent.UpdateMp(actorInfo.MaxMp,currentStatus.Mp);
+    }
+
     public void SetActorThumb(ActorInfo actorInfo)
     {
         battleThumb.ShowAllThumb(actorInfo);
@@ -164,6 +174,11 @@ public class BattleSelectCharacter : MonoBehaviour
         statusInfoComponent.UpdateInfo(currentStatus);
         statusInfoComponent.UpdateHp(battlerInfo.MaxHp,currentStatus.Hp);
         statusInfoComponent.UpdateMp(battlerInfo.MaxMp,currentStatus.Mp);
+    }
+
+    public void HideStatus()
+    {
+        statusInfoComponent.gameObject.SetActive(false);
     }
 
     public void HideThumb()

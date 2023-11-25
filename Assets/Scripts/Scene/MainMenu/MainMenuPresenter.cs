@@ -43,7 +43,7 @@ public class MainMenuPresenter : BasePresenter
         if (viewEvent.commandType == CommandType.StageSelect)
         {
             _model.SetStageId((int)viewEvent.template);
-            StatusViewInfo statusViewInfo = new StatusViewInfo(() => {
+            var statusViewInfo = new StatusViewInfo(() => {
                 _view.CommandStatusClose();
                 _view.SetInitHelpText();
                 _view.ChangeUIActive(true);

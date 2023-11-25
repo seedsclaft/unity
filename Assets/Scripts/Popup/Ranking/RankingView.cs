@@ -4,10 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using Ranking;
 
-public class RankingView : BaseView,IInputHandlerEvent
+public class RankingView : BaseView
 {
-
-    [SerializeField] private ScrollRect scrollRect = null;
     [SerializeField] private BaseList rankingInfoList = null;
     private new System.Action<RankingViewEvent> _commandData = null;
 
@@ -15,6 +13,8 @@ public class RankingView : BaseView,IInputHandlerEvent
     {
         base.Initialize();
         new RankingPresenter(this);
+        rankingInfoList.SetInputHandler(InputKeyType.Cancel,() => BackEvent());
+        SetInputHandler(rankingInfoList.GetComponent<IInputHandlerEvent>());
     }
 
 
@@ -36,36 +36,6 @@ public class RankingView : BaseView,IInputHandlerEvent
     public void SetRankingInfo(List<ListData> rankingInfo) 
     {
         rankingInfoList.SetData(rankingInfo);
-    }
-
-    public void InputHandler(InputKeyType keyType,bool pressed)
-    {
-        if (keyType == InputKeyType.Cancel)
-        {
-            BackEvent();
-        }
-        /*
-        if (rankingInfoList.Data != null && rankingInfoList.Data.Count < 5) return;
-        var margin = 1.0f / (rankingInfoList.Data.Count - 4);
-        if (keyType == InputKeyType.Down)
-        {
-            var value = scrollRect.normalizedPosition.y - margin;
-            scrollRect.normalizedPosition = new Vector2(0,value);
-            if (scrollRect.normalizedPosition.y < 0)
-            {
-                scrollRect.normalizedPosition = new Vector2(0,0);
-            }
-        }
-        if (keyType == InputKeyType.Up)
-        {
-            var value = scrollRect.normalizedPosition.y + margin;
-            scrollRect.normalizedPosition = new Vector2(0,value);
-            if (scrollRect.normalizedPosition.y > 1)
-            {
-                scrollRect.normalizedPosition = new Vector2(0,1);
-            }
-        }
-        */
     }
 }
 

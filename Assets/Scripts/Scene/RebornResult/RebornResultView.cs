@@ -24,7 +24,7 @@ public class RebornResultView : BaseView
     {
         base.Initialize();
         
-        GameObject prefab = Instantiate(animPrefab);
+        var prefab = Instantiate(animPrefab);
         prefab.transform.SetParent(animRoot.transform, false);
         _battleStartAnim = prefab.GetComponent<BattleStartAnim>();
         _battleStartAnim.gameObject.SetActive(false);

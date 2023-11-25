@@ -49,7 +49,7 @@ public class NameEntryPresenter
         }
     }
 
-    private void updatePopup(ConfirmCommandType confirmCommandType)
+    private void UpdatePopup(ConfirmCommandType confirmCommandType)
     {
         _view.CommandConfirmClose();
         if (confirmCommandType == ConfirmCommandType.Yes)
@@ -60,7 +60,7 @@ public class NameEntryPresenter
 
     private void CommandStartEntry()
     {
-        ConfirmInfo popupInfo = new ConfirmInfo(DataSystem.System.GetTextData(5000).Text,(menuCommandInfo) => updatePopup((ConfirmCommandType)menuCommandInfo));
+        var popupInfo = new ConfirmInfo(DataSystem.System.GetTextData(5000).Text,(menuCommandInfo) => UpdatePopup((ConfirmCommandType)menuCommandInfo));
         popupInfo.SetIsNoChoice(true);
         _view.CommandCallConfirm(popupInfo);
         _view.ShowNameEntry("");
@@ -70,7 +70,7 @@ public class NameEntryPresenter
     {
         if (nameText == "")
         {
-            ConfirmInfo popupInfo = new ConfirmInfo(DataSystem.System.GetTextData(5002).Text,(menuCommandInfo) => updatePopup((ConfirmCommandType)menuCommandInfo));
+            var popupInfo = new ConfirmInfo(DataSystem.System.GetTextData(5002).Text,(menuCommandInfo) => UpdatePopup((ConfirmCommandType)menuCommandInfo));
             popupInfo.SetIsNoChoice(true);
             _view.CommandCallConfirm(popupInfo);
         } else{

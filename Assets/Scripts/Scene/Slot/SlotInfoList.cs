@@ -12,7 +12,7 @@ public class SlotInfoList : ListWindow , IInputHandlerEvent
         // スクロールするものはObjectList.CountでSetSelectHandlerを登録する
         for (int i = 0; i < ObjectList.Count;i++)
         {
-            SlotInfoComponent skillAction = ObjectList[i].GetComponent<SlotInfoComponent>();
+            var skillAction = ObjectList[i].GetComponent<SlotInfoComponent>();
             
             skillAction.SetSelectHandler((data) => 
             {
@@ -37,7 +37,7 @@ public class SlotInfoList : ListWindow , IInputHandlerEvent
         {
             if (i < _data.Count) 
             {
-                SlotInfoComponent skillAction = ObjectList[i].GetComponent<SlotInfoComponent>();
+                var skillAction = ObjectList[i].GetComponent<SlotInfoComponent>();
                 skillAction.SetData(_data[i],i);
             }
             ObjectList[i].SetActive(i < _data.Count);

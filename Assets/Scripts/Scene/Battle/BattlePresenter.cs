@@ -230,9 +230,9 @@ public class BattlePresenter : BasePresenter
     {
         //if (_view.SkillList.skillActionList.gameObject.activeSelf) return;
         _busy = true;
-        BattlerInfo enemyInfo = _model.GetBattlerInfo(enemyIndex);
+        var enemyInfo = _model.GetBattlerInfo(enemyIndex);
         
-        StatusViewInfo statusViewInfo = new StatusViewInfo(() => {
+        var statusViewInfo = new StatusViewInfo(() => {
             _view.CommandStatusClose();
             _busy = false;
         });
@@ -260,7 +260,7 @@ public class BattlePresenter : BasePresenter
             while (_model.CurrentBattler == null)
             {
                 BeforeUpdateAp();
-                ActionInfo CurrentActionInfo = _model.CurrentActionInfo();
+                var CurrentActionInfo = _model.CurrentActionInfo();
                 if (CurrentActionInfo != null)
                 {
                     _model.SetActionBattler(CurrentActionInfo.SubjectIndex);
@@ -288,7 +288,7 @@ public class BattlePresenter : BasePresenter
         {
             BeforeUpdateAp();
             // 拘束・祝福によって発動するトリガースキルを確認
-            ActionInfo CurrentActionInfo = _model.CurrentActionInfo();
+            var CurrentActionInfo = _model.CurrentActionInfo();
             if (CurrentActionInfo != null)
             {
                 _model.SetActionBattler(CurrentActionInfo.SubjectIndex);
@@ -761,7 +761,7 @@ public class BattlePresenter : BasePresenter
 
     private void StartDeathAnimation(List<ActionResultInfo> actionResultInfos)
     {
-        List<int> deathBattlerIndex = _model.DeathBattlerIndex(actionResultInfos);
+        var deathBattlerIndex = _model.DeathBattlerIndex(actionResultInfos);
         if (deathBattlerIndex.Count > 0)
         {
             for (int i = 0; i < deathBattlerIndex.Count; i++)
@@ -774,7 +774,7 @@ public class BattlePresenter : BasePresenter
 
     private void StartAliveAnimation(List<ActionResultInfo> actionResultInfos)
     {
-        List<int> aliveBattlerIndex = _model.AliveBattlerIndex(actionResultInfos);
+        var aliveBattlerIndex = _model.AliveBattlerIndex(actionResultInfos);
         if (aliveBattlerIndex.Count > 0)
         {
             for (int i = 0; i < aliveBattlerIndex.Count; i++)
@@ -1004,7 +1004,7 @@ public class BattlePresenter : BasePresenter
 
     private void CommandSelectParty()
     {
-        ActionInfo actionInfo = _model.CurrentActionInfo();
+        var actionInfo = _model.CurrentActionInfo();
         if (actionInfo.TargetType == TargetType.Opponent)
         {
         } else

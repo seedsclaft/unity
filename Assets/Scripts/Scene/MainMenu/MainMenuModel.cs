@@ -20,7 +20,7 @@ public class MainMenuModel : BaseModel
         CurrentData.InitActors();
         CurrentData.InitPlayer();
         PartyInfo.InitActors();
-        GameSystem.CurrentData.ClearStageInfo();
+        CurrentData.ClearStageInfo();
     }
     
     public void SetStageId(int stageId)
@@ -29,7 +29,7 @@ public class MainMenuModel : BaseModel
         
         // Party初期化
         PartyInfo.InitActors();
-        List<int> stageMembers = DataSystem.Stages.Find(a => a.Id == stageId).InitMembers;
+        var stageMembers = DataSystem.Stages.Find(a => a.Id == stageId).InitMembers;
         for (int i = 0;i < stageMembers.Count;i++)
         {
             PartyInfo.AddActor(stageMembers[i]);

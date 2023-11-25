@@ -23,7 +23,6 @@ public class ResultPresenter : BasePresenter
     private async void Initialize()
     {
         _view.SetHelpWindow();
-        _view.SetUiView();
         _view.SetResultList(_model.ResultCommand());
         _view.SetActors(_model.ResultMembers());
         var bgm = await _model.GetBgmData("TACTICS1");
@@ -88,7 +87,7 @@ public class ResultPresenter : BasePresenter
 
     private void CommandRanking()
     {
-        ConfirmInfo popupInfo = new ConfirmInfo(DataSystem.System.GetTextData(16010).Text,(menuCommandInfo) => UpdatePopup((ConfirmCommandType)menuCommandInfo));
+        var popupInfo = new ConfirmInfo(DataSystem.System.GetTextData(16010).Text,(menuCommandInfo) => UpdatePopup((ConfirmCommandType)menuCommandInfo));
         popupInfo.SetSelectIndex(1);
         _view.CommandCallConfirm(popupInfo);
     }
@@ -121,7 +120,7 @@ public class ResultPresenter : BasePresenter
     private void ShowStatus()
     {
         _model.SetActors();
-        StatusViewInfo statusViewInfo = new StatusViewInfo(() => {
+        var statusViewInfo = new StatusViewInfo(() => {
             _view.CommandStatusClose();
             _view.ChangeUIActive(true);
             _view.SetHelpInputInfo("RESULT");
@@ -136,7 +135,7 @@ public class ResultPresenter : BasePresenter
     {
         _model.GetRebornSkills();
         int textId = 16040;
-        ConfirmInfo popupInfo = new ConfirmInfo(DataSystem.System.GetTextData(textId).Text,(a) => UpdatePopupReborn((ConfirmCommandType)a));
+        var popupInfo = new ConfirmInfo(DataSystem.System.GetTextData(textId).Text,(a) => UpdatePopupReborn((ConfirmCommandType)a));
         popupInfo.SetIsNoChoice(true);
         _view.CommandCallConfirm(popupInfo);
     }
@@ -149,7 +148,7 @@ public class ResultPresenter : BasePresenter
         _view.CommandConfirmClose();
         if (_model.ActorInfos().Count > 10)
         {
-            ConfirmInfo popupInfo = new ConfirmInfo(DataSystem.System.GetTextData(16051).Text,(a) => UpdatePopupRebornEraseCheck((ConfirmCommandType)a));
+            var popupInfo = new ConfirmInfo(DataSystem.System.GetTextData(16051).Text,(a) => UpdatePopupRebornEraseCheck((ConfirmCommandType)a));
             popupInfo.SetIsNoChoice(true);
             _view.CommandCallConfirm(popupInfo);
         } else
@@ -175,7 +174,7 @@ public class ResultPresenter : BasePresenter
         Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
         if (_model.ActorInfos().Count > 10)
         {
-            ConfirmInfo popupInfo = new ConfirmInfo(DataSystem.System.GetTextData(16060).Text,(a) => UpdatePopupRebornErase((ConfirmCommandType)a));
+            var popupInfo = new ConfirmInfo(DataSystem.System.GetTextData(16060).Text,(a) => UpdatePopupRebornErase((ConfirmCommandType)a));
             _view.CommandCallConfirm(popupInfo);
             return;
         }
@@ -203,10 +202,22 @@ public class ResultPresenter : BasePresenter
             _view.UpdateActor(rebornActor);
         }
     }
+
     private void CommandEndGame()
     {
         _model.SaveSlotData();
         _model.SetResumeStageFalse();
         _view.CommandSceneChange(Scene.MainMenu);
+    }
+
+    private void CommandRefresh()
+    {
+        var skillInfos = _model.RebornSkillInfos(_model.RebornActorInfo());
+        var lastSelectIndex = skillInfos.FindIndex(a => ((SkillInfo)a.Data).Id == _model.RebornActorInfo().LastSelectSkillId);
+        if (lastSelectIndex == -1)
+        {
+            lastSelectIndex = 0;
+        }
+        _view.CommandRefreshStatus(skillInfos,_model.RebornActorInfo(),_model.PartyMembers(),lastSelectIndex);
     }
 }

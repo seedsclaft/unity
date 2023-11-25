@@ -10,14 +10,11 @@ public class ResultView : BaseView
 {   
     [SerializeField] private StrategyActorList strategyActorList = null;
     [SerializeField] private BaseList commandList = null; 
-    [SerializeField] private GameObject endingTypeObj = null;
+    [SerializeField] private GameObject resultMain = null;
     [SerializeField] private TextMeshProUGUI endingType = null; 
-    [SerializeField] private GameObject evaluateObj = null;
     [SerializeField] private TextMeshProUGUI evaluateValue = null; 
     [SerializeField] private TextMeshProUGUI evaluateNew = null; 
-    [SerializeField] private GameObject playerNameObj = null;
     [SerializeField] private TextMeshProUGUI playerName = null; 
-    [SerializeField] private GameObject rankingObj = null;
     [SerializeField] private TextMeshProUGUI rankingInfo = null; 
     [SerializeField] private GameObject animRoot = null;
     [SerializeField] private GameObject animPrefab = null;
@@ -25,8 +22,7 @@ public class ResultView : BaseView
     [SerializeField] private BaseList actorInfoList = null;
     public int ActorInfoListIndex => actorInfoList.Index;
 
-    [SerializeField] private RebornSkillList rebornSkillList = null;    
-    [SerializeField] private ActorInfoComponent actorInfoComponent = null; 
+    [SerializeField] private BattleSelectCharacter selectCharacter = null; 
     private BattleStartAnim _battleStartAnim = null;
     private bool _animationBusy = false;
 
@@ -40,13 +36,33 @@ public class ResultView : BaseView
         prefab.transform.SetParent(animRoot.transform, false);
         _battleStartAnim = prefab.GetComponent<BattleStartAnim>();
         _battleStartAnim.gameObject.SetActive(false);
-        endingTypeObj.SetActive(false);
-        evaluateObj.SetActive(false);
-        playerNameObj.SetActive(false);
-        rankingObj.SetActive(false);
+        resultMain.SetActive(false);
         rankingInfo.gameObject.SetActive(false);
         evaluateNew.gameObject.SetActive(false);
+        selectCharacter.Initialize();
+        SetInputHandler(selectCharacter.GetComponent<IInputHandlerEvent>());
+        InitializeSelectCharacter();
         new ResultPresenter(this);
+    }
+
+    private void InitializeSelectCharacter()
+    {
+        selectCharacter.SetInputHandlerAction(InputKeyType.Decide,() => CallDecideActor());
+        selectCharacter.SetInputHandlerAction(InputKeyType.Cancel,() => {});
+        selectCharacter.SetInputHandlerAction(InputKeyType.Start,() => CallDecideActor());
+
+        SetInputHandler(selectCharacter.DeckMagicList.GetComponent<IInputHandlerEvent>());
+        selectCharacter.HideActionList();
+        selectCharacter.HideStatus();
+        selectCharacter.gameObject.SetActive(false);
+    }
+
+    public void StartAnimation()
+    {
+        _battleStartAnim.SetText("終焉回帰");
+        _battleStartAnim.StartAnim();
+        _battleStartAnim.gameObject.SetActive(true);
+        _animationBusy = true;
     }
 
     public void SetActors(List<ActorInfo> actorInfos)
@@ -58,21 +74,18 @@ public class ResultView : BaseView
     public void SetEvaluate(int evaluate,bool isNew)
     {
         evaluateValue.text = evaluate.ToString();
-        evaluateObj.SetActive(true);
         evaluateNew.gameObject.SetActive(isNew);
     }
 
     public void SetEndingType(string endType)
     {
         endingType.text = endType;
-        endingTypeObj.SetActive(true);
     }
 
     public void SetPlayerName(string name)
     {
         playerName.text = name;
-        playerNameObj.SetActive(true);
-        rankingObj.SetActive(true);
+        resultMain.SetActive(true);
     }
 
     public void SetRanking(string ranking)
@@ -81,25 +94,10 @@ public class ResultView : BaseView
         rankingInfo.gameObject.SetActive(true);
     }
 
-    public void StartAnimation()
-    {
-        _battleStartAnim.SetText("終焉回帰");
-        _battleStartAnim.StartAnim();
-        _battleStartAnim.gameObject.SetActive(true);
-        _animationBusy = true;
-    }
-
-
-    public void SetUiView()
-    {
-    }
-
-
     public void SetHelpWindow(){
         HelpWindow.SetHelpText(DataSystem.System.GetTextData(16030).Text);
         HelpWindow.SetInputInfo("RESULT");
     }
-
 
     public void SetResultList(List<ListData> confirmCommands)
     {
@@ -171,12 +169,8 @@ public class ResultView : BaseView
     public void CommandActorAssign()
     {
         actorInfoList.gameObject.SetActive(true);
-        actorInfoComponent.gameObject.SetActive(true);
-        rebornSkillList.gameObject.SetActive(true);
-        endingTypeObj.SetActive(false);
-        evaluateObj.SetActive(false);
-        playerNameObj.SetActive(false);
-        rankingObj.SetActive(false);
+        selectCharacter.gameObject.SetActive(true);
+        resultMain.SetActive(false);
         rankingInfo.gameObject.SetActive(false);
         evaluateNew.gameObject.SetActive(false);
         commandList.gameObject.SetActive(false);
@@ -221,47 +215,19 @@ public class ResultView : BaseView
 
     public void UpdateActor(ActorInfo actorInfo)
     {
-        actorInfoComponent.Clear();
-        actorInfoComponent.UpdateInfo(actorInfo,null);
-        rebornSkillList.Initialize(actorInfo.RebornSkillInfos);
-        rebornSkillList.SetInputHandler(InputKeyType.SideLeft1,() => OnPageUpRebornSkill());
-        rebornSkillList.SetInputHandler(InputKeyType.SideRight1,() => OnPageDownRebornSkill());
-        SetInputHandler(rebornSkillList.GetComponent<IInputHandlerEvent>());
-        rebornSkillList.Refresh();
     }
 
-    private void OnPageUpRebornSkill()
+    public void CommandRefreshStatus(List<ListData> skillInfos,ActorInfo actorInfo,List<ActorInfo> party,int lastSelectIndex)
     {
-        if (rebornSkillList.Data != null && rebornSkillList.Data.Count < 4) return;
-        var margin = 1.0f / (rebornSkillList.Data.Count - 4);
-
-        var value = rebornSkillList.ScrollRect.normalizedPosition.y - margin;
-        if ((rebornSkillList.Data.Count - 4) == 0)
-        {
-            value = 0;
-        }
-        rebornSkillList.ScrollRect.normalizedPosition = new Vector2(0,value);
-        if (rebornSkillList.ScrollRect.normalizedPosition.y < 0)
-        {
-            rebornSkillList.ScrollRect.normalizedPosition = new Vector2(0,0);
-        }
-    }
-
-    private void OnPageDownRebornSkill()
-    {
-        if (rebornSkillList.Data != null && rebornSkillList.Data.Count < 4) return;
-        var margin = 1.0f / (rebornSkillList.Data.Count - 4);
-
-        var value = rebornSkillList.ScrollRect.normalizedPosition.y + margin;
-        if ((rebornSkillList.Data.Count - 4) == 0)
-        {
-            value = 1;
-        }
-        rebornSkillList.ScrollRect.normalizedPosition = new Vector2(0,value);
-        if (rebornSkillList.ScrollRect.normalizedPosition.y > 1)
-        {
-            rebornSkillList.ScrollRect.normalizedPosition = new Vector2(0,1);
-        }
+        selectCharacter.SetActiveTab(SelectCharacterTabType.Magic,false);
+        selectCharacter.SetActiveTab(SelectCharacterTabType.Condition,false);
+        selectCharacter.SetActiveTab(SelectCharacterTabType.Detail,false);
+        selectCharacter.ShowActionList();
+        selectCharacter.DeckMagicList.Activate();
+        selectCharacter.SetActorThumbOnly(actorInfo);
+        selectCharacter.SetActorInfo(actorInfo,party);
+        selectCharacter.SetSkillInfos(skillInfos);
+        selectCharacter.RefreshAction(lastSelectIndex);
     }
 }
 

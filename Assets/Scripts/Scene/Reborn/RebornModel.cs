@@ -5,20 +5,40 @@ using NCMB;
 
 public class RebornModel : BaseModel
 {
-    private int _rebornActorIndex = 0;
+    private List<ListData> _actorInfos = new ();
+    private int _currentIndex = 0; 
+
+    public ActorInfo CurrentActor
+    {
+        get {return (ActorInfo)ActorInfos()[_currentIndex].Data;}
+    }
+
+    public void ChangeActorIndex(int value){
+        _currentIndex += value;
+        if (_currentIndex > ActorInfos().Count-1){
+            _currentIndex = 0;
+        } else
+        if (_currentIndex < 0){
+            _currentIndex = ActorInfos().Count-1;
+        }
+    }
 
     public void ResetStage()
     {
-        GameSystem.CurrentData.ClearStageInfo();
+        CurrentData.ClearStageInfo();
         // Party初期化
         PartyInfo.InitActors();
-        List<int> stageMembers = DataSystem.Stages.Find(a => a.Id == PartyInfo.StageId).InitMembers;
+        var stageMembers = DataSystem.Stages.Find(a => a.Id == PartyInfo.StageId).InitMembers;
         for (int i = 0;i < stageMembers.Count;i++)
         {
             PartyInfo.AddActor(stageMembers[i]);
         }
     }
     public List<ListData> ActorInfos(){
+        if (_actorInfos.Count > 0)
+        {
+            return _actorInfos;
+        }
         var list = new List<ListData>();
         var actorInfos = CurrentData.PlayerInfo.SaveActorList;
         if (actorInfos == null || actorInfos.Count == 0)
@@ -46,28 +66,30 @@ public class RebornModel : BaseModel
             list.Add(listData);
             idx++;
         }
+        _actorInfos = list;
         return list;
     }
 
 
     public ActorInfo RebornActorInfo()
     {
-        List<ListData> actorInfos = ActorInfos();
-        if (actorInfos.Count > _rebornActorIndex)
+        var actorInfos = ActorInfos();
+        if (actorInfos.Count > _currentIndex)
         {
-            return (ActorInfo)actorInfos[_rebornActorIndex].Data;
+            return (ActorInfo)actorInfos[_currentIndex].Data;
         }
         return null;
     }
 
     public void SetRebornActorIndex(int index)
     {
-        _rebornActorIndex = index;
+        _currentIndex = index;
     }
+
 
     public void OnRebornSkill()
     {
-        CurrentStage.SetRebornActorIndex(_rebornActorIndex);
+        CurrentStage.SetRebornActorIndex(_currentIndex);
         var rebornActorInfo = RebornActorInfo();
         if (rebornActorInfo == null) return;
         var actorInfo = StageMembers()[0];

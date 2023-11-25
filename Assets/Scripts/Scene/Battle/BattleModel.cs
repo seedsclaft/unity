@@ -870,15 +870,15 @@ public class BattleModel : BaseModel
     {
         //string path = "Assets/Animations/" + animationName + ".asset";
         //var result = await ResourceSystem.LoadAsset<EffekseerEffectAsset>(path);
-        string path = "Animations/" + animationName;
+        var path = "Animations/" + animationName;
         var result = UnityEngine.Resources.Load<EffekseerEffectAsset>(path);
         return result;
     }
 
     public List<MakerEffectData.SoundTimings> SkillActionSoundTimings(string animationName)
     {
-        string makerEffectPath = animationName.Replace("MakerEffect/","");
-        string path = "Animations/AnimationData/" + makerEffectPath;
+        var makerEffectPath = animationName.Replace("MakerEffect/","");
+        var path = "Animations/AnimationData/" + makerEffectPath;
         var result = UnityEngine.Resources.Load<MakerEffectAssetData>(path);
         if (result != null)
         {
@@ -1185,11 +1185,11 @@ public class BattleModel : BaseModel
                 }
                 foreach (var targetIndex in targetIndexes)
                 {
-                    SkillData.FeatureData featureData = new SkillData.FeatureData();
+                    var featureData = new SkillData.FeatureData();
                     featureData.FeatureType = FeatureType.HpHeal;
                     featureData.Param1 = stateInfo.Effect;
 
-                    ActionResultInfo actionResultInfo = new ActionResultInfo(GetBattlerInfo(targetIndex),GetBattlerInfo(targetIndex),new List<SkillData.FeatureData>(){featureData},-1);
+                    var actionResultInfo = new ActionResultInfo(GetBattlerInfo(targetIndex),GetBattlerInfo(targetIndex),new List<SkillData.FeatureData>(){featureData},-1);
                     afterHealResults.Add(actionResultInfo);
                 }
             }

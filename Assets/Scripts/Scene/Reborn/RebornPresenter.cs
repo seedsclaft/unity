@@ -29,7 +29,7 @@ public class RebornPresenter :BasePresenter
         _view.SetBackEvent(() => {
             CommandBackEvent();
         });
-        ConfirmInfo confirmInfo = new ConfirmInfo(DataSystem.System.GetTextData(17010).Text,(a) => UpdatePopupStart(a));
+        var confirmInfo = new ConfirmInfo(DataSystem.System.GetTextData(17010).Text,(a) => UpdatePopupStart(a));
         confirmInfo.SetIsNoChoice(true);
         _view.CommandCallConfirm(confirmInfo);
         _busy = false;
@@ -55,6 +55,14 @@ public class RebornPresenter :BasePresenter
         if (viewEvent.commandType == CommandType.Back)
         {
            CommandBackEvent();
+        }
+        if (viewEvent.commandType == CommandType.LeftActor)
+        {
+           CommandLeftActor();
+        }
+        if (viewEvent.commandType == CommandType.RightActor)
+        {
+           CommandRightActor();
         }
     }
 
@@ -84,7 +92,7 @@ public class RebornPresenter :BasePresenter
         var rebornActor = _model.RebornActorInfo();
         if (rebornActor != null)
         {
-            ConfirmInfo confirmInfo = new ConfirmInfo(DataSystem.System.GetTextData(17020).Text,(a) => UpdatePopup(a));
+            var confirmInfo = new ConfirmInfo(DataSystem.System.GetTextData(17020).Text,(a) => UpdatePopup(a));
             _view.CommandCallConfirm(confirmInfo);
             Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
         }
@@ -102,19 +110,45 @@ public class RebornPresenter :BasePresenter
         var rebornActor = _model.RebornActorInfo();
         if (rebornActor != null)
         {
-            _view.UpdateActor(rebornActor);
+            //_view.UpdateActor(rebornActor);
         }
+        CommandRefresh();
     }
 
     public void CommandBackEvent()
     {
         _model.ResetStage();
-        StatusViewInfo statusViewInfo = new StatusViewInfo(() => {
+        var statusViewInfo = new StatusViewInfo(() => {
             _view.CommandStatusClose();
             _view.CommandSceneChange(Scene.MainMenu);
         });
         statusViewInfo.SetDisplayDecideButton(true);
         _view.ChangeUIActive(false);
         _view.CommandCallStatus(statusViewInfo);
+    }
+    
+    private void CommandLeftActor()
+    {
+        Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cursor);
+        _model.ChangeActorIndex(-1);
+        CommandRefresh();
+    }
+
+    private void CommandRightActor()
+    {
+        Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cursor);
+        _model.ChangeActorIndex(1);
+        CommandRefresh();
+    }
+
+    private void CommandRefresh()
+    {
+        var skillInfos = _model.RebornSkillInfos(_model.CurrentActor);
+        var lastSelectIndex = skillInfos.FindIndex(a => ((SkillInfo)a.Data).Id == _model.CurrentActor.LastSelectSkillId);
+        if (lastSelectIndex == -1)
+        {
+            lastSelectIndex = 0;
+        }
+        _view.CommandRefreshStatus(skillInfos,_model.CurrentActor,_model.PartyMembers(),lastSelectIndex);
     }
 }

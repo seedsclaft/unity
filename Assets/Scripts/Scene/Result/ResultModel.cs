@@ -8,14 +8,9 @@ using UnityEngine;
 
 public class ResultModel : BaseModel
 {
-    public List<string> GetStageResult()
-    {
-        return new List<string>();
-    }
-
     public List<ListData> ResultCommand()
     {
-        List<ListData> list = new List<ListData>();
+        var list = new List<ListData>();
         foreach (var commandData in BaseConfirmCommand(3040,6))
         {
             var listData = new ListData(commandData);
@@ -65,17 +60,17 @@ public class ResultModel : BaseModel
 
     public List<int> SelectRankList()
     {
-        var selectIdrank = new List<int>();
+        var selectIdRank = new List<int>();
         foreach (var actorInfo in EvaluateMembers())
         {
-            selectIdrank.Add(actorInfo.Evaluate());
+            selectIdRank.Add(actorInfo.Evaluate());
         }
-        return selectIdrank;
+        return selectIdRank;
     }
 
     private List<ActorInfo> EvaluateMembers()
     {
-        List<int> SelectActorIds = CurrentData.CurrentStage.SelectActorIds;
+        var SelectActorIds = CurrentData.CurrentStage.SelectActorIds;
         var members = new List<ActorInfo>();
         for (int i = 0;i < SelectActorIds.Count ;i++)
         {
@@ -100,7 +95,7 @@ public class ResultModel : BaseModel
 
     public List<ListData> StageEndCommand()
     {
-        List<ListData> list = new List<ListData>();
+        var list = new List<ListData>();
         foreach (var commandData in BaseConfirmCommand(16020,6))
         {
             var listData = new ListData(commandData);
@@ -125,7 +120,7 @@ public class ResultModel : BaseModel
 
     public void SendRankingData(System.Action endEvent)
     {
-        NCMBObject obj = new NCMBObject("ranking");
+        var obj = new NCMBObject("ranking");
             obj["UserId"]  = CurrentData.PlayerInfo.PlayerId.ToString();
             obj["Name"]  = GameSystem.CurrentData.PlayerInfo.PlayerName;
             obj["Score"] = TotalEvaluate();
@@ -138,7 +133,7 @@ public class ResultModel : BaseModel
 
     public void UpdateRankingData(string objectId,System.Action endEvent)
     {
-        NCMBObject obj = new NCMBObject("ranking");
+        var obj = new NCMBObject("ranking");
             obj["UserId"]  = CurrentData.PlayerInfo.PlayerId.ToString();
             obj["Name"]  = GameSystem.CurrentData.PlayerInfo.PlayerName;
             obj["Score"] = TotalEvaluate();
@@ -159,7 +154,7 @@ public class ResultModel : BaseModel
         //Scoreフィールドの降順でデータを取得
         query.OrderByDescending ("Score");
 
-        //検索件数を5件に設定
+        //検索件数を100件に設定
         query.Limit = 100;
 
         var rank = 1;
@@ -343,7 +338,7 @@ public class ResultModel : BaseModel
 
     private SkillInfo AddQuestRebornSkill()
     {
-        var quedtReborn = DataSystem.Skills.Find(a => a.FeatureDates.Find(b => b.FeatureType == FeatureType.RebornQuest) != null);
+        var questReborn = DataSystem.Skills.Find(a => a.FeatureDates.Find(b => b.FeatureType == FeatureType.RebornQuest) != null);
         var param2 = 2;
         var rank1 = 0;
         if (CurrentStage.EndingType == global::EndingType.A || CurrentStage.EndingType == global::EndingType.B)
@@ -362,7 +357,7 @@ public class ResultModel : BaseModel
         {
             param2 = 4;
         }
-        var skill = new SkillInfo(quedtReborn.Id);
+        var skill = new SkillInfo(questReborn.Id);
         skill.SetParam(param2.ToString(),param2,0);
         return skill;
     }
@@ -440,7 +435,7 @@ public class ResultModel : BaseModel
 
     public ActorInfo RebornActorInfo()
     {
-        List<ListData> actorInfos = ActorInfos();
+        var actorInfos = ActorInfos();
         if (actorInfos.Count > _rebornActorIndex)
         {
             return (ActorInfo)actorInfos[_rebornActorIndex].Data;

@@ -14,29 +14,21 @@ public class RankingInfoComponent : ListItem ,IListViewItem
     [SerializeField] private List<Image> actorImages;
     [SerializeField] private List<TextMeshProUGUI> actorEvaluates;
 
-    private RankingInfo _data; 
-    private int _rankingIndex; 
-    public void SetData(RankingInfo data,int index){
-        _data = data;
-        _rankingIndex = index;
-        SetIndex(index);
-        UpdateViewItem();
-    }
-
     public void UpdateViewItem()
     {
-        if (_data == null) return;
-        playerName.text = _data.Name;
-        score.text = _data.Score.ToString();
-        rank.text = (_rankingIndex+1).ToString() + "位";
+        if (ListData == null) return;
+        var data = (RankingInfo)ListData.Data;
+        playerName.text = data.Name;
+        score.text = data.Score.ToString();
+        rank.text = data.Rank.ToString() + "位";
         for (int i = 0;i < actorImages.Count;i++)
         {
-            if (_data.SelectIdx.Count > i)
+            if (data.SelectIdx.Count > i)
             {
                 actorImages[i].gameObject.SetActive(true);
                 actorEvaluates[i].gameObject.SetActive(true);
-                actorEvaluates[i].text = _data.SelectRank[i].ToString();
-                UpdateAwakenFaceThumb(actorImages[i],_data.SelectIdx[i]);
+                actorEvaluates[i].text = data.SelectRank[i].ToString();
+                UpdateAwakenFaceThumb(actorImages[i],data.SelectIdx[i]);
             } else
             {
                 actorEvaluates[i].gameObject.SetActive(false);

@@ -8,7 +8,7 @@ using UnityEngine;
 
 public class RankingModel : BaseModel
 {
-    private List<RankingInfo> _rakingInfos;
+    private List<RankingInfo> _rakingInfos = null;
     public async void RankingInfos(System.Action<List<ListData>> endEvent)
     {
         var isEnd = false;
@@ -17,12 +17,12 @@ public class RankingModel : BaseModel
             _rakingInfos = new List<RankingInfo>();
             var list = new List<RankingInfo>();
 
-            NCMBQuery<NCMBObject> query = new NCMBQuery<NCMBObject> ("ranking");
+            var query = new NCMBQuery<NCMBObject> ("ranking");
 
             //Scoreフィールドの降順でデータを取得
             query.OrderByDescending ("Score");
 
-            //検索件数を5件に設定
+            //検索件数を100件に設定
             query.Limit = 100;
 
             //データストアでの検索を行う
@@ -32,7 +32,8 @@ public class RankingModel : BaseModel
                     isEnd = true;
                 } else {
                     //検索成功時の処理
-                    foreach (NCMBObject obj in objList) {
+                    var rankIndex = 1;
+                    foreach (var obj in objList) {
                         var rankingInfo = new RankingInfo();
                         if (obj.ContainsKey("Score"))
                         {
@@ -44,7 +45,7 @@ public class RankingModel : BaseModel
                         }
                         if (obj.ContainsKey("SelectIdx"))
                         {
-                            ArrayList selectIdx = obj["SelectIdx"] as ArrayList;
+                            var selectIdx = obj["SelectIdx"] as ArrayList;
                             long[] numbers = new long[selectIdx.Count];
                             for (var i = 0; i < selectIdx.Count; i++) {
                                 numbers[i] = (long) selectIdx[i];
@@ -53,14 +54,16 @@ public class RankingModel : BaseModel
                         }
                         if (obj.ContainsKey("SelectRank"))
                         {
-                            ArrayList selectRank = obj["SelectRank"] as ArrayList;
+                            var selectRank = obj["SelectRank"] as ArrayList;
                             long[] numbers2 = new long[selectRank.Count];
                             for (var i = 0; i < selectRank.Count; i++) {
                                 numbers2[i] = (long) selectRank[i];
                                 rankingInfo.SelectRank.Add((int)numbers2[i]);
                             }
                         }
+                        rankingInfo.Rank = rankIndex;
                         list.Add(rankingInfo);
+                        rankIndex++;
                     }
                         
                     _rakingInfos = list;
