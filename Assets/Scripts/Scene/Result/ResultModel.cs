@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
-using NCMB;
 using System.Threading;
 using UnityEngine;
 
@@ -117,117 +116,53 @@ public class ResultModel : BaseModel
             PartyInfo.AddActor(ResultMembers()[i].ActorId);
         }
     }
-
-    public void SendRankingData(System.Action endEvent)
-    {
-        var obj = new NCMBObject("ranking");
-            obj["UserId"]  = CurrentData.PlayerInfo.PlayerId.ToString();
-            obj["Name"]  = GameSystem.CurrentData.PlayerInfo.PlayerName;
-            obj["Score"] = TotalEvaluate();
-            obj["SelectIdx"]  = SelectIdxList();
-            obj["SelectRank"] = SelectRankList();
-            obj.SaveAsync((res) => {
-                if (endEvent != null) endEvent();
-            });
-    }
-
-    public void UpdateRankingData(string objectId,System.Action endEvent)
-    {
-        var obj = new NCMBObject("ranking");
-            obj["UserId"]  = CurrentData.PlayerInfo.PlayerId.ToString();
-            obj["Name"]  = GameSystem.CurrentData.PlayerInfo.PlayerName;
-            obj["Score"] = TotalEvaluate();
-            obj["SelectIdx"]  = SelectIdxList();
-            obj["SelectRank"] = SelectRankList();
-            obj.ObjectId = objectId;
-            obj.SaveAsync((res) => {
-                if (endEvent != null) endEvent();
-            });
-    }
     
     public async void GetSelfRankingData(System.Action<string> endEvent)
     {
+        FireBaseController.Instance.CurrentRankingData(CurrentData.PlayerInfo.PlayerId.ToString());
+        await UniTask.WaitUntil(() => FireBaseController.IsBusy == false);
+        var currentScore = FireBaseController.CurrentScore;
         int evaluate = TotalEvaluate();
 
-        NCMBQuery<NCMBObject> query = new NCMBQuery<NCMBObject> ("ranking");
+        if (evaluate > currentScore)
+        {
+            FireBaseController.Instance.WriteRankingData(
+                CurrentData.PlayerInfo.PlayerId.ToString(),
+                evaluate,
+                CurrentData.PlayerInfo.PlayerName,
+                SelectIdxList(),
+                SelectRankList()
+            );
+            await UniTask.WaitUntil(() => FireBaseController.IsBusy == false);
 
-        //Scoreフィールドの降順でデータを取得
-        query.OrderByDescending ("Score");
-
-        //検索件数を100件に設定
-        query.Limit = 100;
-
-        var rank = 1;
-        var isEnd = false;
-        var count = 0;
-        long selfScore = -1;
-        long lineScore = -1;
-        string objectId = "";
-        //データストアでの検索を行う
-        query.FindAsync ((List<NCMBObject> objList ,NCMBException e) => {
-            if (e != null) {
-                //検索失敗時の処理
-                isEnd = true;
-            } else {
-                count = objList.Count;
-                //検索成功時の処理
-                foreach (NCMBObject obj in objList) {
-                    if (isEnd == false)
-                    {
-                        if ((string)obj["UserId"] == GameSystem.CurrentData.PlayerInfo.PlayerId.ToString())
-                        {
-                            selfScore = (long)obj["Score"];
-                            objectId = obj.ObjectId;
-                            isEnd = true;
-                        } else
-                        {
-                            var otherScore = (long)obj["Score"];
-                            if (otherScore > evaluate)
-                            {
-                                rank++;
-                            }
-                        }
-                    }
-                    if (obj.ContainsKey("Score"))
-                    {
-                        lineScore = (long)obj["Score"];
-                    }
+            FireBaseController.Instance.ReadRankingData();
+            await UniTask.WaitUntil(() => FireBaseController.IsBusy == false);
+            var results = FireBaseController.RankingInfos;
+            var rank = 1;
+            var include = false;
+            foreach (var result in results)
+            {
+                if (result.Score == evaluate)
+                {
+                    include = true;
                 }
-                isEnd = true;
-            }
-        });
-
-        _cancellationTokenSource = new CancellationTokenSource();
-        
-        try {
-            await UniTask.WaitUntil(() => isEnd == true,PlayerLoopTiming.Update,_cancellationTokenSource.Token);
-            if (selfScore > evaluate)
-            {
-                if (endEvent != null) endEvent("記録更新なし");
-            }
-            if (evaluate < lineScore && count >= 100)
-            {
-                if (endEvent != null) endEvent("圏外");
+                if (result.Score > evaluate)
+                {
+                    rank++;
+                }
             }
 
-            if (selfScore > -1)
+            if (include == true)
             {
-                UpdateRankingData(objectId,() => {
-                    if (endEvent != null) endEvent(rank.ToString() + "位" + " / " + count.ToString());
-                });
+                endEvent(rank.ToString() + "位");
             } else
             {
-                count += 1;
-                SendRankingData(() => {
-                    if (endEvent != null) endEvent(rank.ToString() + "位" + " / " + count.ToString());
-                });
+                endEvent("圏外");
             }
-        } catch (OperationCanceledException e)
-        {
-            Debug.Log(e);
+        } else
+        {            
+            endEvent("記録更新なし");
         }
-        
-
     }
 
     // 転生スキル習得

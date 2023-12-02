@@ -38,6 +38,9 @@ public class GameSystem : MonoBehaviour
     public static DebugBattleData DebugBattleData;
     private void Awake() 
     {
+        #if UNITY_WEBGL && !UNITY_EDITOR
+        FireBaseController.Instance.Initialize();
+        #endif
         Application.targetFrameRate = 60;
         advController.Initialize();
         advController.SetHelpWindow(advHelpWindow);
