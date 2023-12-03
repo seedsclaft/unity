@@ -10,7 +10,7 @@ public class RankingModel : BaseModel
     private List<RankingInfo> _rakingInfos = null;
     public async void RankingInfos(System.Action<List<ListData>> endEvent)
     {
-        #if UNITY_WEBGL && !UNITY_EDITOR
+#if (UNITY_WEBGL || UNITY_ANDROID) && !UNITY_EDITOR
         if (_rakingInfos == null)
         {
             FireBaseController.Instance.ReadRankingData();
@@ -27,6 +27,6 @@ public class RankingModel : BaseModel
             }
             endEvent(list);
         }
-        #endif
+#endif
     }
 }

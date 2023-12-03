@@ -697,7 +697,7 @@ public class BaseModel
     {
         var userId = CurrentData.PlayerInfo.UserId.ToString();
         var rankingText = "";
-#if UNITY_WEBGL && !UNITY_EDITOR
+#if (UNITY_WEBGL || UNITY_ANDROID) && !UNITY_EDITOR
         FireBaseController.Instance.CurrentRankingData(userId);
         await UniTask.WaitUntil(() => FireBaseController.IsBusy == false);
         var currentScore = FireBaseController.CurrentScore;
@@ -709,8 +709,8 @@ public class BaseModel
                 userId,
                 evaluate,
                 CurrentData.PlayerInfo.PlayerName,
-                SelectIdxList().ToArray(),
-                SelectRankList().ToArray()
+                SelectIdxList(),
+                SelectRankList()
             );
             await UniTask.WaitUntil(() => FireBaseController.IsBusy == false);
 
