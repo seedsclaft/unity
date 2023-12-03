@@ -1,4 +1,4 @@
-mergeInto(LibraryManager.library, {
+var FirebasePlugin = {
 
   FirebaseInit: function () {
     const FirebaseConfig = {
@@ -24,81 +24,86 @@ mergeInto(LibraryManager.library, {
             var json = JSON.stringify(doc.data());
             res += json;
             if (idx < q.docs.length-1){
-                res += ";";
+                res += ";.:";
             }
             idx++;
         });
-        var bufferSize = lengthBytesUTF8(res) + 1;
-        var buffer = _malloc(bufferSize);
-        stringToUTF8(res, buffer, bufferSize);
-        Module.dynCall_vii(callback,instanceId,buffer);
+        Module.dynCall_vii(callback,instanceId,utils.StringReturnValueFunction(res));
     })
     .catch(function(error) {
         console.log("Error getting documents: ", error);
+        Module.dynCall_vii(callback,instanceId,utils.StringReturnValueFunction(res));
     });     
   },
-
 
   FirebaseCurrentRankingData: function (instanceId,userId,callback) {
     console.log("FirebaseCurrentRankingData");
     const db = window.firebase.firestore();
-    const docRef = db.collection("ranking").doc(userId);
+    const userName = UTF8ToString(userId.toString());
+    const docRef = db.collection("ranking").doc(userName);
     
     let res = "-1";
     docRef.get().then((doc) => {
         if (doc.exists) {
-            res = doc.data()["Score"];
+          var json = JSON.stringify(doc.data());
+          res = json;
         }
-        var bufferSize = lengthBytesUTF8(res) + 1;
-        var buffer = _malloc(bufferSize);
-        stringToUTF8(res, buffer, bufferSize);
-        Module.dynCall_vii(callback,instanceId,buffer);
+        Module.dynCall_vii(callback,instanceId,utils.StringReturnValueFunction(res));
     }).catch((error) => {
         console.log("Error getting document:", error);
+        Module.dynCall_vii(callback,instanceId,utils.StringReturnValueFunction(res));
     });
   },
 
-  FirebaseWriteRankingData: function (instanceId,userId,score,name,selectIndex,selectRank,callback) {
+  FirebaseWriteRankingData: function (instanceId,userId,score,name,selectIndex,selectIndexSize,selectRank,selectRankSize,callback) {
     console.log("FirebaseWriteRankingData");
     const db = window.firebase.firestore();
+    const userName = UTF8ToString(userId.toString());
     let res = "";
-    db.collection("ranking").doc(userId).set({
-        Name: name,
+
+    var startIndex = selectIndex / HEAP32.BYTES_PER_ELEMENT;
+    var selectIndexData = HEAP32.subarray(startIndex, startIndex + selectIndexSize);
+    var sendIndex = [];
+    selectIndexData.forEach((data) => {
+      sendIndex.push(data);
+    });
+
+    var startIndex2 = selectRank / HEAP32.BYTES_PER_ELEMENT;
+    var selectRankData = HEAP32.subarray(startIndex2, startIndex2 + selectRankSize);
+    var sendRank = [];
+    selectRankData.forEach((data) => {
+      sendRank.push(data);
+    });
+
+    db.collection("ranking").doc(userName).set({
+        Name: UTF8ToString(name),
         Score: score,
-        SelectIdx: selectIndex,
-        SelectRank: selectRank
+        SelectIdx: sendIndex,
+        SelectRank: sendRank
     })
     .then(() => {
         console.log("Document successfully written!");
-        var bufferSize = lengthBytesUTF8(res) + 1;
-        var buffer = _malloc(bufferSize);
-        stringToUTF8(res, buffer, bufferSize);
-        Module.dynCall_vii(callback,instanceId,buffer);
+        Module.dynCall_vii(callback,instanceId,utils.StringReturnValueFunction(res));
     })
     .catch((error) => {
         console.error("Error writing document: ", error);
+        Module.dynCall_vii(callback,instanceId,utils.StringReturnValueFunction(res));
     });
   },
 
-  PrintFloatArray: function (array, size) {
-    for(var i = 0; i < size; i++)
-    console.log(HEAPF32[(array >> 2) + i]);
-  },
+};
 
-  AddNumbers: function (x, y) {
-    return x + y;
-  },
+var lib = {
+    $utils: {
+      StringReturnValueFunction: function (returnStr) {
+        var bufferSize = lengthBytesUTF8(returnStr) + 1;
+        var buffer = _malloc(bufferSize);
+        stringToUTF8(returnStr, buffer, bufferSize);
+        return buffer;
+      },
+    }
+};
 
-  StringReturnValueFunction: function () {
-    var returnStr = "bla";
-    var bufferSize = lengthBytesUTF8(returnStr) + 1;
-    var buffer = _malloc(bufferSize);
-    stringToUTF8(returnStr, buffer, bufferSize);
-    return buffer;
-  },
-
-  BindWebGLTexture: function (texture) {
-    GLctx.bindTexture(GLctx.TEXTURE_2D, GL.textures[texture]);
-  },
-
-});
+autoAddDeps(FirebasePlugin, '$utils');
+mergeInto(LibraryManager.library, lib);
+mergeInto(LibraryManager.library, FirebasePlugin);

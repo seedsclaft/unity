@@ -639,4 +639,113 @@ public class BaseModel
         }
         return list;
     }
+
+    public List<ActorInfo> EvaluateMembers()
+    {
+        var selectActorIds = CurrentData.CurrentStage.SelectActorIds;
+        var members = new List<ActorInfo>();
+        for (int i = 0;i < selectActorIds.Count ;i++)
+        {
+            var temp = CurrentData.Actors.Find(a => a.ActorId == selectActorIds[i]);
+            if (temp != null)
+            {
+                members.Add(temp);
+            }
+        }
+        return members;
+    }
+
+    public int TotalEvaluate()
+    {        
+        var evaluate = 0;
+        foreach (var actorInfo in EvaluateMembers())
+        {
+            evaluate += actorInfo.Evaluate();
+        }
+        if (CurrentStage.EndingType == global::EndingType.A)
+        {
+            evaluate += 1000;
+        }
+        if (CurrentStage.EndingType == global::EndingType.B)
+        {
+            evaluate += 500;
+        }
+        return evaluate;
+    }
+
+    public List<int> SelectIdxList()
+    {
+        var selectIdx = new List<int>();
+        foreach (var actorInfo in EvaluateMembers())
+        {
+            selectIdx.Add(actorInfo.ActorId);
+        }
+        return selectIdx;
+    }
+
+    public List<int> SelectRankList()
+    {
+        var selectIdRank = new List<int>();
+        foreach (var actorInfo in EvaluateMembers())
+        {
+            selectIdRank.Add(actorInfo.Evaluate());
+        }
+        return selectIdRank;
+    }
+
+    public async void CurrentRankingData(System.Action<string> endEvent)
+    {
+        var userId = CurrentData.PlayerInfo.UserId.ToString();
+        var rankingText = "";
+#if UNITY_WEBGL && !UNITY_EDITOR
+        FireBaseController.Instance.CurrentRankingData(userId);
+        await UniTask.WaitUntil(() => FireBaseController.IsBusy == false);
+        var currentScore = FireBaseController.CurrentScore;
+        var evaluate = TotalEvaluate();
+
+        if (evaluate > currentScore)
+        {
+            FireBaseController.Instance.WriteRankingData(
+                userId,
+                evaluate,
+                CurrentData.PlayerInfo.PlayerName,
+                SelectIdxList().ToArray(),
+                SelectRankList().ToArray()
+            );
+            await UniTask.WaitUntil(() => FireBaseController.IsBusy == false);
+
+            FireBaseController.Instance.ReadRankingData();
+            await UniTask.WaitUntil(() => FireBaseController.IsBusy == false);
+            var results = FireBaseController.RankingInfos;
+            var rank = 1;
+            var include = false;
+            foreach (var result in results)
+            {
+                if (result.Score == evaluate)
+                {
+                    include = true;
+                }
+                if (result.Score > evaluate)
+                {
+                    rank++;
+                }
+            }
+
+            if (include == true)
+            {
+                // 〇位
+                rankingText = rank.ToString() + DataSystem.System.GetTextData(16070).Text;
+            } else
+            {
+                // 圏外
+                rankingText = DataSystem.System.GetTextData(16071).Text;
+            }
+        } else
+        {          
+            // 記録更新なし  
+            rankingText = DataSystem.System.GetTextData(16072).Text;
+        }
+#endif
+        endEvent(rankingText);
+    }
 }

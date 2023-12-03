@@ -5,15 +5,15 @@ using System.Collections.Generic;
 [Serializable]
 public class PlayerInfo
 {
-    private int _playerId = -1;
-    public int PlayerId => _playerId;
-    public void SetPlayerId()
+    private int _userId = -1;
+    public int UserId => _userId;
+    public void SetUserId()
     {
-        if (_playerId == -1)
+        if (_userId == -1)
         {
-            int strong = 1000;
+            int strong = 100;
 		    int sec = (int)DateTime.Now.Subtract(new DateTime(1970, 1, 1)).TotalSeconds;
-            _playerId = sec + (strong*UnityEngine.Random.Range(0,strong));
+            _userId = sec + (strong*UnityEngine.Random.Range(0,strong));
         }
     }
 
@@ -35,7 +35,6 @@ public class PlayerInfo
     }
 
     private List<StageInfo> _stages = new ();
-    public List<StageInfo> Stages => _stages;
     public void InitStages()
     {
         _stages.Clear();
@@ -46,14 +45,14 @@ public class PlayerInfo
 		for (int i = 0;i < DataSystem.Stages.Count;i++)
 		{
 			if (!DataSystem.Stages[i].Selectable) continue;
-			StageInfo stageInfo = new StageInfo(DataSystem.Stages[i]);
+			var stageInfo = new StageInfo(DataSystem.Stages[i]);
 			_stages.Add(stageInfo);
 		}
 	}
 
 	public void StageClear(int stageId)
 	{
-		StageInfo stageInfo = _stages.Find(a => a.Id == stageId);
+		var stageInfo = _stages.Find(a => a.Id == stageId);
 		stageInfo.GainClearCount();
 	}
 
@@ -69,11 +68,6 @@ public class PlayerInfo
     readonly int _saveSlotCount = 10;
 
     private List<int> _clearedTroopIds = new ();
-    public List<int> ClearedTroopIds => _clearedTroopIds;
-
-
-    
-
 
     public void AddActorInfo(ActorInfo actorInfo)
     {

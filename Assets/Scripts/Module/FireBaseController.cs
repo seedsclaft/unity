@@ -16,9 +16,8 @@ public class FireBaseController : SingletonMonoBehaviour<FireBaseController>
     [DllImport("__Internal")]
     private static extern void FirebaseCurrentRankingData(int instanceId,string userId,Action<int,string> result);
    
-
     [DllImport("__Internal")]
-    private static extern void FirebaseWriteRankingData(int instanceId,string userId,int score,string name,List<int> selectIndex,List<int> selectRank,Action<int,string> result);
+    private static extern void FirebaseWriteRankingData(int instanceId,string userId,int score,string name,int[] selectIndex,int selectIndexSize,int[] selectRank,int selectRankSize,Action<int,string> result);
    
     private bool _isInit = false;
     public static bool IsBusy = false;
@@ -50,7 +49,7 @@ public class FireBaseController : SingletonMonoBehaviour<FireBaseController>
     {
         if (jsonString != "")
         {
-            var array = jsonString.Split(";");
+            var array = jsonString.Split(";.:");
             var data = new List<RankingInfo>(); 
             var rank = 1;
             foreach (var arrayStr in array)
@@ -72,6 +71,7 @@ public class FireBaseController : SingletonMonoBehaviour<FireBaseController>
         {
             return;
         }
+        FireBaseController.CurrentScore = 0;
         IsBusy = true;
         FirebaseCurrentRankingData(gameObject.GetInstanceID(),userId,OnCurrentFirestore);
     }
@@ -79,31 +79,30 @@ public class FireBaseController : SingletonMonoBehaviour<FireBaseController>
     [AOT.MonoPInvokeCallback(typeof(Action<int,string>))]
     private static void OnCurrentFirestore(int instanceId,string jsonString)
     {
-        if (jsonString == "-1")
+        Debug.Log("OnCurrentFirestore End");
+        if (jsonString != "-1")
         {
-            // 新規登録
-        } else
-        {
-            // スコア比較して更新
-            CurrentScore = int.Parse(jsonString);
+            var ranking = JsonUtility.FromJson<RankingInfo>(jsonString);
+            FireBaseController.CurrentScore = ranking.Score;
         }
         IsBusy = false;
     }
 
-    public void WriteRankingData(string userId,int score,string name, List<int> selectIdx,List<int> selectRank)
+    public void WriteRankingData(string userId,int score,string name, int[] selectIdx,int[] selectRank)
     {
         if (!_isInit)
         {
             return;
         }
         IsBusy = true;
-        FirebaseWriteRankingData(gameObject.GetInstanceID(),userId,score,name,selectIdx,selectRank,OnWriteFirestore);
+        FirebaseWriteRankingData(gameObject.GetInstanceID(),userId,score,name,selectIdx,selectIdx.Length,selectRank,selectRank.Length,OnWriteFirestore);
     }
 
     
     [AOT.MonoPInvokeCallback(typeof(Action<int,string>))]
     private static void OnWriteFirestore(int instanceId,string jsonString)
     {
+        Debug.Log("OnWriteFirestore End");
         IsBusy = false;
     }
     #endif

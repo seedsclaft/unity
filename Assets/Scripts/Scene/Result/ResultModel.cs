@@ -29,59 +29,6 @@ public class ResultModel : BaseModel
         return endType;
     }
 
-    public int TotalEvaluate()
-    {        
-        int evaluate = 0;
-        foreach (var actorInfo in EvaluateMembers())
-        {
-            evaluate += actorInfo.Evaluate();
-        }
-        if (CurrentStage.EndingType == global::EndingType.A)
-        {
-            evaluate += 1000;
-        }
-        if (CurrentStage.EndingType == global::EndingType.B)
-        {
-            evaluate += 500;
-        }
-        return evaluate;
-    }
-
-    public List<int> SelectIdxList()
-    {
-        var selectIdx = new List<int>();
-        foreach (var actorInfo in EvaluateMembers())
-        {
-            selectIdx.Add(actorInfo.ActorId);
-        }
-        return selectIdx;
-    }
-
-    public List<int> SelectRankList()
-    {
-        var selectIdRank = new List<int>();
-        foreach (var actorInfo in EvaluateMembers())
-        {
-            selectIdRank.Add(actorInfo.Evaluate());
-        }
-        return selectIdRank;
-    }
-
-    private List<ActorInfo> EvaluateMembers()
-    {
-        var SelectActorIds = CurrentData.CurrentStage.SelectActorIds;
-        var members = new List<ActorInfo>();
-        for (int i = 0;i < SelectActorIds.Count ;i++)
-        {
-            var temp = CurrentData.Actors.Find(a => a.ActorId == SelectActorIds[i]);
-            if (temp != null)
-            {
-                members.Add(temp);
-            }
-        }
-        return members;
-    }
-
     public bool IsNewRecord()
     {
         return TotalEvaluate() > CurrentData.PlayerInfo.BestScore;
@@ -114,54 +61,6 @@ public class ResultModel : BaseModel
         for (int i = 0;i < ResultMembers().Count;i++)
         {
             PartyInfo.AddActor(ResultMembers()[i].ActorId);
-        }
-    }
-    
-    public async void GetSelfRankingData(System.Action<string> endEvent)
-    {
-        FireBaseController.Instance.CurrentRankingData(CurrentData.PlayerInfo.PlayerId.ToString());
-        await UniTask.WaitUntil(() => FireBaseController.IsBusy == false);
-        var currentScore = FireBaseController.CurrentScore;
-        int evaluate = TotalEvaluate();
-
-        if (evaluate > currentScore)
-        {
-            FireBaseController.Instance.WriteRankingData(
-                CurrentData.PlayerInfo.PlayerId.ToString(),
-                evaluate,
-                CurrentData.PlayerInfo.PlayerName,
-                SelectIdxList(),
-                SelectRankList()
-            );
-            await UniTask.WaitUntil(() => FireBaseController.IsBusy == false);
-
-            FireBaseController.Instance.ReadRankingData();
-            await UniTask.WaitUntil(() => FireBaseController.IsBusy == false);
-            var results = FireBaseController.RankingInfos;
-            var rank = 1;
-            var include = false;
-            foreach (var result in results)
-            {
-                if (result.Score == evaluate)
-                {
-                    include = true;
-                }
-                if (result.Score > evaluate)
-                {
-                    rank++;
-                }
-            }
-
-            if (include == true)
-            {
-                endEvent(rank.ToString() + "位");
-            } else
-            {
-                endEvent("圏外");
-            }
-        } else
-        {            
-            endEvent("記録更新なし");
         }
     }
 

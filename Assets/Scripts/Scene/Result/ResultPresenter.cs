@@ -96,7 +96,7 @@ public class ResultPresenter : BasePresenter
     {
         if (confirmCommandType == ConfirmCommandType.Yes)
         {
-            _model.GetSelfRankingData((a) => 
+            _model.CurrentRankingData((a) => 
             {
                 _isRankingEnd = true;
                 _view.CommandConfirmClose();

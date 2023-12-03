@@ -342,7 +342,7 @@ public class SavePlayInfo
 	public void SetPlayerName(string name)
 	{
 		_playerInfo.SetPlayerName(name);
-		_playerInfo.SetPlayerId();
+		_playerInfo.SetUserId();
 	}
 
 	public void ChangeRouteSelectStage(int stageId)
