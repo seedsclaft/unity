@@ -367,6 +367,11 @@ public class StageInfo
         _clearTroopIds.Add(troopId);
     }
 
+    public bool IsClearTroopId(int troopId)
+    {
+        return _clearTroopIds.Contains(troopId);
+    }
+
     public void SetDefineBossIndex(int index,int stageTurn)
     {
         _defineBossIndex = index;

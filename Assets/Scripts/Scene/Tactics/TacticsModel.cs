@@ -394,6 +394,11 @@ public class TacticsModel : BaseModel
             ChangeRouteSelectStage(11);
             return DataSystem.Advs.Find(a => a.Id == 171);
         }
+        var isEndC = CurrentStage.IsClearTroopId(4100);
+        if (isEndC)
+        {
+            return DataSystem.Advs.Find(a => a.Id == 174);
+        }
         var isTurnOver = (Turns < 0);
         if (isTurnOver)
         {
