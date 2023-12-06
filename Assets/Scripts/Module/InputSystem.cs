@@ -215,7 +215,7 @@ public class InputSystem
 
     public static bool IsMouseRightButtonDown()
     {
-        if ( IsPlatformStandAloneOrEditor() || EnableWebGLInput())
+        if (IsPlatformStandAloneOrEditor() || EnableWebGLInput())
         { 
             return Input.GetMouseButtonDown(1);
         }
@@ -257,8 +257,8 @@ public enum InputKeyType{
     Right,
     Decide,
     Cancel,
-    Option1, // □,Akey
-    Option2, // △,Skey
+    Option1, // □,A
+    Option2, // △,S
     SideLeft1, // L1
     SideRight1, // R1
     SideLeft2, // L2

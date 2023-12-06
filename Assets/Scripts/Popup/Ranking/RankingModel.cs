@@ -13,9 +13,9 @@ public class RankingModel : BaseModel
 #if (UNITY_WEBGL || UNITY_ANDROID) && !UNITY_EDITOR
         if (_rakingInfos == null)
         {
-            FireBaseController.Instance.ReadRankingData();
-            await UniTask.WaitUntil(() => FireBaseController.IsBusy == false);
-            _rakingInfos = FireBaseController.RankingInfos;
+            FirebaseController.Instance.ReadRankingData();
+            await UniTask.WaitUntil(() => FirebaseController.IsBusy == false);
+            _rakingInfos = FirebaseController.RankingInfos;
         }
         if (endEvent != null) 
         {

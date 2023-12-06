@@ -39,7 +39,7 @@ public class GameSystem : MonoBehaviour
     private void Awake() 
     {
 #if (UNITY_WEBGL || UNITY_ANDROID) && !UNITY_EDITOR
-        FireBaseController.Instance.Initialize();
+        FirebaseController.Instance.Initialize();
 #endif
         Application.targetFrameRate = 60;
         advController.Initialize();

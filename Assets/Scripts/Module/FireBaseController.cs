@@ -10,7 +10,7 @@ using Firebase.Firestore;
 using Firebase.Extensions;
 #endif
 
-public class FireBaseController : SingletonMonoBehaviour<FireBaseController>
+public class FirebaseController : SingletonMonoBehaviour<FirebaseController>
 {
     private bool _isInit = false;
     public static bool IsBusy = false;
@@ -45,7 +45,7 @@ public class FireBaseController : SingletonMonoBehaviour<FireBaseController>
         {
             return;
         }
-        FireBaseController.RankingInfos.Clear();
+        FirebaseController.RankingInfos.Clear();
         IsBusy = true;
         FirebaseReadRankingData(gameObject.GetInstanceID(),OnReadFirestore);
     }
@@ -66,7 +66,7 @@ public class FireBaseController : SingletonMonoBehaviour<FireBaseController>
                 rank++;
             }
             Debug.Log("OnReadFirestore End");
-            FireBaseController.RankingInfos = data;
+            FirebaseController.RankingInfos = data;
         }
         IsBusy = false;
     }
@@ -77,7 +77,7 @@ public class FireBaseController : SingletonMonoBehaviour<FireBaseController>
         {
             return;
         }
-        FireBaseController.CurrentScore = 0;
+        FirebaseController.CurrentScore = 0;
         IsBusy = true;
         FirebaseCurrentRankingData(gameObject.GetInstanceID(),userId,OnCurrentFirestore);
     }
@@ -89,7 +89,7 @@ public class FireBaseController : SingletonMonoBehaviour<FireBaseController>
         if (jsonString != "-1")
         {
             var ranking = JsonUtility.FromJson<RankingInfo>(jsonString);
-            FireBaseController.CurrentScore = ranking.Score;
+            FirebaseController.CurrentScore = ranking.Score;
         }
         IsBusy = false;
     }
@@ -166,7 +166,7 @@ public class FireBaseController : SingletonMonoBehaviour<FireBaseController>
         {
             return;
         }
-        FireBaseController.RankingInfos.Clear();
+        FirebaseController.RankingInfos.Clear();
         IsBusy = true;
         FirebaseFirestore db = FirebaseFirestore.DefaultInstance;
 
@@ -188,7 +188,7 @@ public class FireBaseController : SingletonMonoBehaviour<FireBaseController>
                     rank++;
                 }
                 Debug.Log("OnReadFirestore End");
-                FireBaseController.RankingInfos = data;
+                FirebaseController.RankingInfos = data;
                 IsBusy = false;
             } else
             {
@@ -203,7 +203,7 @@ public class FireBaseController : SingletonMonoBehaviour<FireBaseController>
         {
             return;
         }
-        FireBaseController.CurrentScore = 0;
+        FirebaseController.CurrentScore = 0;
         IsBusy = true;
         FirebaseFirestore db = FirebaseFirestore.DefaultInstance;
         var cnf = db.Collection("ranking").Document(userId);
@@ -213,7 +213,7 @@ public class FireBaseController : SingletonMonoBehaviour<FireBaseController>
             {
                 DocumentSnapshot doc = task.Result;
                 var ranking = MakeRankingInfo(doc.ToDictionary());
-                FireBaseController.CurrentScore = ranking.Score;
+                FirebaseController.CurrentScore = ranking.Score;
                 IsBusy = false;
             } else
             {

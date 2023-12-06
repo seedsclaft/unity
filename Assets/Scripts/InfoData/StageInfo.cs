@@ -18,7 +18,6 @@ public class StageInfo
     public int TroopClearCount => _troopClearCount;
 
 	private List<TroopData> _troopDates = new();
-	public List<TroopData> TroopDates => _troopDates;
 	private List<TroopInfo> _currentTroopInfos = new();
 	
     private int _currentBattleIndex = -1;

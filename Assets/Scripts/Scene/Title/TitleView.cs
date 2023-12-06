@@ -5,11 +5,10 @@ using UnityEngine.UI;
 using TMPro;
 using Title;
 
-public class TitleView : BaseView ,IInputHandlerEvent
+public class TitleView : BaseView 
 {
     [SerializeField] private TextMeshProUGUI versionText = null;
     private new System.Action<TitleViewEvent> _commandData = null;
-    [SerializeField] private Button logoButton = null;
     [SerializeField] private SideMenuList sideMenuList = null;
     [SerializeField] private BaseList titleCommandList = null;
 
@@ -19,19 +18,11 @@ public class TitleView : BaseView ,IInputHandlerEvent
     {
         base.Initialize();
         new TitlePresenter(this);
-        logoButton.onClick.AddListener(() => CallLogoClick());
-        logoButton.gameObject.SetActive(true);
     }
 
     private void CallCredit()
     {
         var eventData = new TitleViewEvent(CommandType.Credit);
-        _commandData(eventData);
-    }
-
-    private void CallLogoClick()
-    {
-        var eventData = new TitleViewEvent(CommandType.LogoClick);
         _commandData(eventData);
     }
 
@@ -146,21 +137,7 @@ public class TitleView : BaseView ,IInputHandlerEvent
         var eventData = new TitleViewEvent(CommandType.CloseSideMenu);
         _commandData(eventData);
     }
-
-    public void CommandLogoClick()
-    {
-        titleCommandList.ResetInputFrame(1);
-        logoButton.gameObject.SetActive(false);
-    }    
     
-    public void InputHandler(InputKeyType keyType,bool pressed)
-    {
-        if (keyType == InputKeyType.Decide || keyType == InputKeyType.Cancel || keyType == InputKeyType.Start)
-        {
-            CallLogoClick();
-        }
-    }
-
     private void UpdateHelpWindow()
     {
         var listData = titleCommandList.ListData;
@@ -179,7 +156,6 @@ namespace Title
         None = 0,
         TitleCommand,
         Credit,
-        LogoClick,
         Option,
         OpenSideMenu,
         SelectSideMenu,

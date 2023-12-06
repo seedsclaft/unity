@@ -8,7 +8,6 @@ public class TitlePresenter : BasePresenter
     TitleModel _model = null;
     TitleView _view = null;
     private bool _busy = true;
-    private bool _logoChecked = false;
     public TitlePresenter(TitleView view)
     {
         _view = view;
@@ -30,11 +29,12 @@ public class TitlePresenter : BasePresenter
 
         _view.SetEvent((type) => UpdateCommand(type));
         _view.SetVersion(_model.VersionText());
-
-        var bgm = await _model.GetBgmData("TITLE");
-        //Ryneus.SoundManager.Instance.PlayBgm(bgm,1.0f,false);
-
+        _view.SetHelpWindow();
+        _view.SetTitleCommand(_model.TitleCommand());
+        _view.SetSideMenu(_model.SideMenu());
         CommandRefresh();
+        var bgm = await _model.GetBgmData("TITLE");
+        Ryneus.SoundManager.Instance.PlayBgm(bgm,1.0f,false);
         _busy = false;
     }
 
@@ -51,10 +51,6 @@ public class TitlePresenter : BasePresenter
         {
             CommandCredit();
         }
-        if (viewEvent.commandType == CommandType.LogoClick)
-        {
-            CommandLogoClick();
-        }
         if (viewEvent.commandType == CommandType.OpenSideMenu)
         {
             CommandOpenSideMenu();
@@ -69,25 +65,11 @@ public class TitlePresenter : BasePresenter
         }
         if (viewEvent.commandType == CommandType.Option)
         {
-            if (_logoChecked == false)
-            {
-                CommandLogoClick();
-                _logoChecked = true;
-                return;
-            } else
-            {
-                CommandOption();
-            }
+            CommandOption();
         }
     }
 
     private void CommandTitle(int commandIndex){
-        if (_logoChecked == false)
-        {
-            CommandLogoClick();
-            _logoChecked = true;
-            return;
-        }
         _busy = true;
         switch ((TitleCommandType)commandIndex){
             case TitleCommandType.NewGame:
@@ -145,19 +127,6 @@ public class TitlePresenter : BasePresenter
         }
         _view.RefreshCommandIndex(selectIndex);
         //_view.RefreshView();
-    }
-
-    private async void CommandLogoClick()
-    {
-        if (_logoChecked) return;
-        _logoChecked = true;
-        _view.CommandLogoClick();
-        _view.SetHelpWindow();
-        _view.SetTitleCommand(_model.TitleCommand());
-        _view.SetSideMenu(_model.SideMenu());
-        CommandRefresh();
-        var bgm = await _model.GetBgmData("TITLE");
-        Ryneus.SoundManager.Instance.PlayBgm(bgm,1.0f,false);
     }
 
     private void CommandOpenSideMenu()

@@ -294,7 +294,6 @@ public class SavePlayInfo
 		_currentAlcana.InitData();
 	}
 
-
 	public void AddActor(ActorInfo actorInfo)
 	{
 		_actors.Add(actorInfo);

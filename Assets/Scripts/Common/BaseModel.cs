@@ -698,25 +698,25 @@ public class BaseModel
         var userId = CurrentData.PlayerInfo.UserId.ToString();
         var rankingText = "";
 #if (UNITY_WEBGL || UNITY_ANDROID) && !UNITY_EDITOR
-        FireBaseController.Instance.CurrentRankingData(userId);
-        await UniTask.WaitUntil(() => FireBaseController.IsBusy == false);
-        var currentScore = FireBaseController.CurrentScore;
+        FirebaseController.Instance.CurrentRankingData(userId);
+        await UniTask.WaitUntil(() => FirebaseController.IsBusy == false);
+        var currentScore = FirebaseController.CurrentScore;
         var evaluate = TotalEvaluate();
 
         if (evaluate > currentScore)
         {
-            FireBaseController.Instance.WriteRankingData(
+            FirebaseController.Instance.WriteRankingData(
                 userId,
                 evaluate,
                 CurrentData.PlayerInfo.PlayerName,
                 SelectIdxList(),
                 SelectRankList()
             );
-            await UniTask.WaitUntil(() => FireBaseController.IsBusy == false);
+            await UniTask.WaitUntil(() => FirebaseController.IsBusy == false);
 
-            FireBaseController.Instance.ReadRankingData();
-            await UniTask.WaitUntil(() => FireBaseController.IsBusy == false);
-            var results = FireBaseController.RankingInfos;
+            FirebaseController.Instance.ReadRankingData();
+            await UniTask.WaitUntil(() => FirebaseController.IsBusy == false);
+            var results = FirebaseController.RankingInfos;
             var rank = 1;
             var include = false;
             foreach (var result in results)
