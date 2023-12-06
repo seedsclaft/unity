@@ -368,6 +368,12 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 24451007}
   m_CullTransparentMesh: 0
+--- !u!224 &38703928 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 3765696660498820278, guid: c2c85e39b81ea8448833223ad13ea8c7,
+    type: 3}
+  m_PrefabInstance: {fileID: 198261491}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &64641775
 GameObject:
   m_ObjectHideFlags: 0
@@ -747,6 +753,85 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Padding: {x: -8, y: -5, z: -8, w: -5}
   m_Softness: {x: 0, y: 0}
+--- !u!1001 &198261491
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 1848313490}
+    m_Modifications:
+    - target: {fileID: 3765696660498820278, guid: c2c85e39b81ea8448833223ad13ea8c7,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 6989705440537493584, guid: c2c85e39b81ea8448833223ad13ea8c7,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 6989705440537493584, guid: c2c85e39b81ea8448833223ad13ea8c7,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6989705440537493584, guid: c2c85e39b81ea8448833223ad13ea8c7,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6989705440537493584, guid: c2c85e39b81ea8448833223ad13ea8c7,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6989705440537493584, guid: c2c85e39b81ea8448833223ad13ea8c7,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6989705440537493584, guid: c2c85e39b81ea8448833223ad13ea8c7,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6989705440537493584, guid: c2c85e39b81ea8448833223ad13ea8c7,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6989705440537493584, guid: c2c85e39b81ea8448833223ad13ea8c7,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6989705440537493584, guid: c2c85e39b81ea8448833223ad13ea8c7,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6989705440537493584, guid: c2c85e39b81ea8448833223ad13ea8c7,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6989705440537493584, guid: c2c85e39b81ea8448833223ad13ea8c7,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6989705440537493589, guid: c2c85e39b81ea8448833223ad13ea8c7,
+        type: 3}
+      propertyPath: m_Name
+      value: BootScene
+      objectReference: {fileID: 0}
+    - target: {fileID: 6989705440537493589, guid: c2c85e39b81ea8448833223ad13ea8c7,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: c2c85e39b81ea8448833223ad13ea8c7, type: 3}
 --- !u!1 &208014286
 GameObject:
   m_ObjectHideFlags: 0
@@ -1884,9 +1969,9 @@ Camera:
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
-    y: 0
+    y: 0.0144962
     width: 1
-    height: 1
+    height: 0.9710076
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
@@ -3636,6 +3721,140 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   messageWindowList: []
+--- !u!1001 &582404295
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 1848313490}
+    m_Modifications:
+    - target: {fileID: 2037181349928009821, guid: ce816c9646a18d941ae3438de7597570,
+        type: 3}
+      propertyPath: m_Pivot.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2037181349928009821, guid: ce816c9646a18d941ae3438de7597570,
+        type: 3}
+      propertyPath: m_Pivot.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2037181349928009821, guid: ce816c9646a18d941ae3438de7597570,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2037181349928009821, guid: ce816c9646a18d941ae3438de7597570,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2037181349928009821, guid: ce816c9646a18d941ae3438de7597570,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2037181349928009821, guid: ce816c9646a18d941ae3438de7597570,
+        type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2037181349928009821, guid: ce816c9646a18d941ae3438de7597570,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2037181349928009821, guid: ce816c9646a18d941ae3438de7597570,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2037181349928009821, guid: ce816c9646a18d941ae3438de7597570,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2037181349928009821, guid: ce816c9646a18d941ae3438de7597570,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2037181349928009821, guid: ce816c9646a18d941ae3438de7597570,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2037181349928009821, guid: ce816c9646a18d941ae3438de7597570,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2037181349928009821, guid: ce816c9646a18d941ae3438de7597570,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2037181349928009821, guid: ce816c9646a18d941ae3438de7597570,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2037181349928009821, guid: ce816c9646a18d941ae3438de7597570,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2037181349928009821, guid: ce816c9646a18d941ae3438de7597570,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2037181349928009821, guid: ce816c9646a18d941ae3438de7597570,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2037181349928009821, guid: ce816c9646a18d941ae3438de7597570,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2037181349928009821, guid: ce816c9646a18d941ae3438de7597570,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2037181349928009821, guid: ce816c9646a18d941ae3438de7597570,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2037181349928009821, guid: ce816c9646a18d941ae3438de7597570,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4274715010337889381, guid: ce816c9646a18d941ae3438de7597570,
+        type: 3}
+      propertyPath: m_Name
+      value: TitleScene
+      objectReference: {fileID: 0}
+    - target: {fileID: 4274715010337889381, guid: ce816c9646a18d941ae3438de7597570,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4724057782605247492, guid: ce816c9646a18d941ae3438de7597570,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 5690897421614466893, guid: ce816c9646a18d941ae3438de7597570,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: -463
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: ce816c9646a18d941ae3438de7597570, type: 3}
 --- !u!1 &591757716
 GameObject:
   m_ObjectHideFlags: 0
@@ -9977,6 +10196,12 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1495007753}
   m_CullTransparentMesh: 1
+--- !u!224 &1496126362 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 2037181349928009821, guid: ce816c9646a18d941ae3438de7597570,
+    type: 3}
+  m_PrefabInstance: {fileID: 582404295}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1521332165
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11424,9 +11649,9 @@ Camera:
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
-    y: 0
+    y: 0.0144962
     width: 1
-    height: 1
+    height: 0.9710076
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
@@ -11818,7 +12043,707 @@ MonoBehaviour:
   inBattleActorIds: 01000000
   troopId: 1010
   troopLv: 1
-  actorDates: []
+  actorDates:
+  - Id: 1
+    Name: "\u30D8\u30AB\u30C6\u30FC"
+    SubName: "\u3010\u8C4A\u7A63\u306E\u6708\u5973\u795E\u3011"
+    ClassId: 1
+    ImagePath: 0001
+    InitLv: 1
+    MaxLv: 40
+    InitStatus:
+      _hp: 48
+      _mp: 20
+      _atk: 35
+      _def: 18
+      _spd: 18
+    PlusStatus:
+      _hp: 0
+      _mp: 0
+      _atk: 0
+      _def: 0
+      _spd: 0
+    NeedStatus:
+      _hp: 70
+      _mp: 50
+      _atk: 60
+      _def: 50
+      _spd: 50
+    Attribute: 0100000004000000070000000500000003000000
+    X: 0
+    Y: -16
+    Scale: 0.78
+    AwakenX: -32
+    AwakenY: 224
+    AwakenScale: 0.75
+    LearningSkills:
+    - SkillId: 11
+      Level: 0
+      Weight: 0
+      TriggerDates: []
+      DeckNum: 0
+    - SkillId: 21
+      Level: 0
+      Weight: 0
+      TriggerDates: []
+      DeckNum: 0
+    - SkillId: 31
+      Level: 0
+      Weight: 0
+      TriggerDates: []
+      DeckNum: 0
+    - SkillId: 1010
+      Level: 0
+      Weight: 0
+      TriggerDates: []
+      DeckNum: 4
+    - SkillId: 1020
+      Level: 0
+      Weight: 0
+      TriggerDates: []
+      DeckNum: 4
+    - SkillId: 100110
+      Level: 0
+      Weight: 0
+      TriggerDates: []
+      DeckNum: 1
+    - SkillId: 100111
+      Level: 0
+      Weight: 0
+      TriggerDates: []
+      DeckNum: 1
+  - Id: 2
+    Name: "\u30AD\u30E3\u30ED\u30E9\u30A4\u30F3"
+    SubName: "\u3010\u30EF\u30A4\u30E4\u30FC\u30D7\u30EA\u30F3\u30BB\u30B9\u3011"
+    ClassId: 2
+    ImagePath: 0002
+    InitLv: 1
+    MaxLv: 40
+    InitStatus:
+      _hp: 40
+      _mp: 20
+      _atk: 22
+      _def: 7
+      _spd: 37
+    PlusStatus:
+      _hp: 0
+      _mp: 0
+      _atk: 0
+      _def: 0
+      _spd: 0
+    NeedStatus:
+      _hp: 60
+      _mp: 50
+      _atk: 40
+      _def: 20
+      _spd: 90
+    Attribute: 0300000001000000050000000700000005000000
+    X: 22
+    Y: 28
+    Scale: 1
+    AwakenX: 0
+    AwakenY: 40
+    AwakenScale: 0.8
+    LearningSkills:
+    - SkillId: 11
+      Level: 0
+      Weight: 0
+      TriggerDates: []
+      DeckNum: 0
+    - SkillId: 21
+      Level: 0
+      Weight: 0
+      TriggerDates: []
+      DeckNum: 0
+    - SkillId: 31
+      Level: 0
+      Weight: 0
+      TriggerDates: []
+      DeckNum: 0
+    - SkillId: 32
+      Level: 0
+      Weight: 0
+      TriggerDates: []
+      DeckNum: 0
+    - SkillId: 2010
+      Level: 0
+      Weight: 0
+      TriggerDates: []
+      DeckNum: 0
+    - SkillId: 2020
+      Level: 0
+      Weight: 0
+      TriggerDates: []
+      DeckNum: 0
+    - SkillId: 100210
+      Level: 0
+      Weight: 0
+      TriggerDates: []
+      DeckNum: 0
+    - SkillId: 100211
+      Level: 0
+      Weight: 0
+      TriggerDates: []
+      DeckNum: 0
+  - Id: 3
+    Name: "\u30A2\u30EA\u30B9"
+    SubName: "\u3010\u4E0D\u601D\u8B70\u306E\u56FD\u306E\u5B88\u8B77\u795E\u3011"
+    ClassId: 3
+    ImagePath: 0003
+    InitLv: 1
+    MaxLv: 40
+    InitStatus:
+      _hp: 35
+      _mp: 20
+      _atk: 19
+      _def: 29
+      _spd: 23
+    PlusStatus:
+      _hp: 0
+      _mp: 0
+      _atk: 0
+      _def: 0
+      _spd: 0
+    NeedStatus:
+      _hp: 60
+      _mp: 50
+      _atk: 20
+      _def: 90
+      _spd: 40
+    Attribute: 0400000007000000010000000300000007000000
+    X: 16
+    Y: -8
+    Scale: 0.9
+    AwakenX: 80
+    AwakenY: 120
+    AwakenScale: 0.7
+    LearningSkills:
+    - SkillId: 11
+      Level: 0
+      Weight: 0
+      TriggerDates: []
+      DeckNum: 0
+    - SkillId: 21
+      Level: 0
+      Weight: 0
+      TriggerDates: []
+      DeckNum: 0
+    - SkillId: 31
+      Level: 0
+      Weight: 0
+      TriggerDates: []
+      DeckNum: 0
+    - SkillId: 3010
+      Level: 0
+      Weight: 0
+      TriggerDates: []
+      DeckNum: 0
+    - SkillId: 3020
+      Level: 0
+      Weight: 0
+      TriggerDates: []
+      DeckNum: 0
+    - SkillId: 100310
+      Level: 0
+      Weight: 0
+      TriggerDates: []
+      DeckNum: 0
+    - SkillId: 100311
+      Level: 0
+      Weight: 0
+      TriggerDates: []
+      DeckNum: 0
+  - Id: 4
+    Name: "\u30D5\u30EA\u30EB"
+    SubName: "\u3010\u30A4\u30CE\u30BB\u30F3\u30B9\u30B9\u30DE\u30A4\u30EB\u3011"
+    ClassId: 4
+    ImagePath: 0004
+    InitLv: 1
+    MaxLv: 40
+    InitStatus:
+      _hp: 49
+      _mp: 20
+      _atk: 26
+      _def: 15
+      _spd: 28
+    PlusStatus:
+      _hp: 0
+      _mp: 0
+      _atk: 0
+      _def: 0
+      _spd: 0
+    NeedStatus:
+      _hp: 80
+      _mp: 50
+      _atk: 30
+      _def: 40
+      _spd: 60
+    Attribute: 0700000004000000030000000100000007000000
+    X: 20
+    Y: -12
+    Scale: 0.88
+    AwakenX: 24
+    AwakenY: 40
+    AwakenScale: 0.8
+    LearningSkills:
+    - SkillId: 11
+      Level: 0
+      Weight: 0
+      TriggerDates: []
+      DeckNum: 0
+    - SkillId: 21
+      Level: 0
+      Weight: 0
+      TriggerDates: []
+      DeckNum: 0
+    - SkillId: 31
+      Level: 0
+      Weight: 0
+      TriggerDates: []
+      DeckNum: 0
+    - SkillId: 4010
+      Level: 0
+      Weight: 0
+      TriggerDates: []
+      DeckNum: 0
+    - SkillId: 4030
+      Level: 0
+      Weight: 0
+      TriggerDates: []
+      DeckNum: 0
+    - SkillId: 100410
+      Level: 0
+      Weight: 0
+      TriggerDates: []
+      DeckNum: 0
+    - SkillId: 100411
+      Level: 0
+      Weight: 0
+      TriggerDates: []
+      DeckNum: 0
+  - Id: 5
+    Name: "\u30CB\u30E5\u30AF\u30B9"
+    SubName: "\u3010Determination2Die\u3011"
+    ClassId: 5
+    ImagePath: 0005
+    InitLv: 1
+    MaxLv: 40
+    InitStatus:
+      _hp: 31
+      _mp: 20
+      _atk: 45
+      _def: 12
+      _spd: 20
+    PlusStatus:
+      _hp: 0
+      _mp: 0
+      _atk: 0
+      _def: 0
+      _spd: 0
+    NeedStatus:
+      _hp: 10
+      _mp: 50
+      _atk: 70
+      _def: 10
+      _spd: 50
+    Attribute: 0400000004000000040000000700000001000000
+    X: 24
+    Y: 40
+    Scale: 0.95
+    AwakenX: 292
+    AwakenY: 232
+    AwakenScale: 1
+    LearningSkills:
+    - SkillId: 11
+      Level: 0
+      Weight: 0
+      TriggerDates: []
+      DeckNum: 0
+    - SkillId: 21
+      Level: 0
+      Weight: 0
+      TriggerDates: []
+      DeckNum: 0
+    - SkillId: 31
+      Level: 0
+      Weight: 0
+      TriggerDates: []
+      DeckNum: 0
+    - SkillId: 5010
+      Level: 0
+      Weight: 0
+      TriggerDates: []
+      DeckNum: 0
+    - SkillId: 5020
+      Level: 0
+      Weight: 0
+      TriggerDates: []
+      DeckNum: 0
+    - SkillId: 100510
+      Level: 0
+      Weight: 0
+      TriggerDates: []
+      DeckNum: 0
+    - SkillId: 100511
+      Level: 0
+      Weight: 0
+      TriggerDates: []
+      DeckNum: 0
+  - Id: 6
+    Name: "\u30D5\u30A7\u30EA\u30AA"
+    SubName: "\u3010\u9AD8\u901F\u5929\u7FD4\u3011"
+    ClassId: 6
+    ImagePath: 0006
+    InitLv: 1
+    MaxLv: 40
+    InitStatus:
+      _hp: 33
+      _mp: 20
+      _atk: 39
+      _def: 9
+      _spd: 30
+    PlusStatus:
+      _hp: 0
+      _mp: 0
+      _atk: 0
+      _def: 0
+      _spd: 0
+    NeedStatus:
+      _hp: 40
+      _mp: 50
+      _atk: 90
+      _def: 20
+      _spd: 80
+    Attribute: 0700000001000000020000000700000007000000
+    X: 0
+    Y: 0
+    Scale: 1
+    AwakenX: -48
+    AwakenY: 16
+    AwakenScale: 0.6
+    LearningSkills:
+    - SkillId: 11
+      Level: 0
+      Weight: 0
+      TriggerDates: []
+      DeckNum: 0
+    - SkillId: 21
+      Level: 0
+      Weight: 0
+      TriggerDates: []
+      DeckNum: 0
+    - SkillId: 31
+      Level: 0
+      Weight: 0
+      TriggerDates: []
+      DeckNum: 0
+    - SkillId: 33
+      Level: 0
+      Weight: 0
+      TriggerDates: []
+      DeckNum: 0
+    - SkillId: 2010
+      Level: 0
+      Weight: 0
+      TriggerDates: []
+      DeckNum: 0
+    - SkillId: 2070
+      Level: 0
+      Weight: 0
+      TriggerDates: []
+      DeckNum: 0
+    - SkillId: 100610
+      Level: 0
+      Weight: 0
+      TriggerDates: []
+      DeckNum: 0
+    - SkillId: 100611
+      Level: 0
+      Weight: 0
+      TriggerDates: []
+      DeckNum: 0
+  - Id: 7
+    Name: "\u30E1\u30EA\u30FC"
+    SubName: "\u3010\u30B9\u30FC\u30B5\u30A4\u30C9\u30B8\u30A7\u30CE\u30B5\u30A4\u30C9\u3011"
+    ClassId: 7
+    ImagePath: 0007
+    InitLv: 1
+    MaxLv: 40
+    InitStatus:
+      _hp: 45
+      _mp: 20
+      _atk: 33
+      _def: 11
+      _spd: 15
+    PlusStatus:
+      _hp: 0
+      _mp: 0
+      _atk: 0
+      _def: 0
+      _spd: 0
+    NeedStatus:
+      _hp: 110
+      _mp: 50
+      _atk: 70
+      _def: 20
+      _spd: 30
+    Attribute: 0400000003000000070000000700000001000000
+    X: 24
+    Y: 0
+    Scale: 0.8
+    AwakenX: 0
+    AwakenY: 160
+    AwakenScale: 0.6
+    LearningSkills:
+    - SkillId: 11
+      Level: 0
+      Weight: 0
+      TriggerDates: []
+      DeckNum: 0
+    - SkillId: 21
+      Level: 0
+      Weight: 0
+      TriggerDates: []
+      DeckNum: 0
+    - SkillId: 31
+      Level: 0
+      Weight: 0
+      TriggerDates: []
+      DeckNum: 0
+    - SkillId: 41
+      Level: 0
+      Weight: 0
+      TriggerDates: []
+      DeckNum: 0
+    - SkillId: 42
+      Level: 0
+      Weight: 0
+      TriggerDates: []
+      DeckNum: 0
+    - SkillId: 5010
+      Level: 0
+      Weight: 0
+      TriggerDates: []
+      DeckNum: 0
+    - SkillId: 5050
+      Level: 0
+      Weight: 0
+      TriggerDates: []
+      DeckNum: 0
+    - SkillId: 100710
+      Level: 0
+      Weight: 0
+      TriggerDates: []
+      DeckNum: 0
+    - SkillId: 100711
+      Level: 0
+      Weight: 0
+      TriggerDates: []
+      DeckNum: 0
+  - Id: 11
+    Name: "\u30D8\u30AB\u30C6\u30FC"
+    SubName: "\u3010\u9CF3\u51F0\u6F14\u821E\u3011"
+    ClassId: 1
+    ImagePath: 0011
+    InitLv: 1
+    MaxLv: 40
+    InitStatus:
+      _hp: 48
+      _mp: 20
+      _atk: 35
+      _def: 18
+      _spd: 18
+    PlusStatus:
+      _hp: 0
+      _mp: 0
+      _atk: 0
+      _def: 0
+      _spd: 0
+    NeedStatus:
+      _hp: 70
+      _mp: 50
+      _atk: 60
+      _def: 50
+      _spd: 50
+    Attribute: 0100000004000000070000000500000003000000
+    X: 0
+    Y: -16
+    Scale: 0.78
+    AwakenX: 24
+    AwakenY: 120
+    AwakenScale: 0.9
+    LearningSkills:
+    - SkillId: 11
+      Level: 0
+      Weight: 0
+      TriggerDates: []
+      DeckNum: 0
+    - SkillId: 21
+      Level: 0
+      Weight: 0
+      TriggerDates: []
+      DeckNum: 0
+    - SkillId: 31
+      Level: 0
+      Weight: 0
+      TriggerDates: []
+      DeckNum: 0
+    - SkillId: 1010
+      Level: 0
+      Weight: 0
+      TriggerDates: []
+      DeckNum: 0
+    - SkillId: 1040
+      Level: 0
+      Weight: 0
+      TriggerDates: []
+      DeckNum: 0
+    - SkillId: 11030
+      Level: 0
+      Weight: 0
+      TriggerDates: []
+      DeckNum: 0
+    - SkillId: 11040
+      Level: 0
+      Weight: 0
+      TriggerDates: []
+      DeckNum: 0
+  - Id: 13
+    Name: "\u30A2\u30EA\u30B9"
+    SubName: "\u3010\u93E1\u306E\u56FD\u306E\u6C37\u6620\u8B5A\u3011"
+    ClassId: 3
+    ImagePath: 0013
+    InitLv: 1
+    MaxLv: 40
+    InitStatus:
+      _hp: 38
+      _mp: 20
+      _atk: 15
+      _def: 33
+      _spd: 22
+    PlusStatus:
+      _hp: 0
+      _mp: 0
+      _atk: 0
+      _def: 0
+      _spd: 0
+    NeedStatus:
+      _hp: 50
+      _mp: 50
+      _atk: 10
+      _def: 100
+      _spd: 30
+    Attribute: 0400000007000000010000000300000007000000
+    X: 16
+    Y: -8
+    Scale: 0.9
+    AwakenX: 80
+    AwakenY: 64
+    AwakenScale: 0.8
+    LearningSkills:
+    - SkillId: 11
+      Level: 0
+      Weight: 0
+      TriggerDates: []
+      DeckNum: 0
+    - SkillId: 21
+      Level: 0
+      Weight: 0
+      TriggerDates: []
+      DeckNum: 0
+    - SkillId: 31
+      Level: 0
+      Weight: 0
+      TriggerDates: []
+      DeckNum: 0
+    - SkillId: 3010
+      Level: 0
+      Weight: 0
+      TriggerDates: []
+      DeckNum: 0
+    - SkillId: 3070
+      Level: 0
+      Weight: 0
+      TriggerDates: []
+      DeckNum: 0
+    - SkillId: 100320
+      Level: 0
+      Weight: 0
+      TriggerDates: []
+      DeckNum: 0
+    - SkillId: 100321
+      Level: 0
+      Weight: 0
+      TriggerDates: []
+      DeckNum: 0
+  - Id: 14
+    Name: "\u30D5\u30EA\u30EB"
+    SubName: "\u3010\u30E9\u30A4\u30D6\u30D5\u30A9\u30FC\u30EA\u30CA\u30FC\u3011"
+    ClassId: 4
+    ImagePath: 0014
+    InitLv: 1
+    MaxLv: 40
+    InitStatus:
+      _hp: 44
+      _mp: 20
+      _atk: 30
+      _def: 13
+      _spd: 32
+    PlusStatus:
+      _hp: 0
+      _mp: 0
+      _atk: 0
+      _def: 0
+      _spd: 0
+    NeedStatus:
+      _hp: 60
+      _mp: 50
+      _atk: 50
+      _def: 30
+      _spd: 70
+    Attribute: 0700000004000000030000000100000007000000
+    X: 20
+    Y: -12
+    Scale: 0.88
+    AwakenX: -16
+    AwakenY: 40
+    AwakenScale: 0.8
+    LearningSkills:
+    - SkillId: 11
+      Level: 0
+      Weight: 0
+      TriggerDates: []
+      DeckNum: 0
+    - SkillId: 21
+      Level: 0
+      Weight: 0
+      TriggerDates: []
+      DeckNum: 0
+    - SkillId: 31
+      Level: 0
+      Weight: 0
+      TriggerDates: []
+      DeckNum: 0
+    - SkillId: 4010
+      Level: 0
+      Weight: 0
+      TriggerDates: []
+      DeckNum: 0
+    - SkillId: 4070
+      Level: 0
+      Weight: 0
+      TriggerDates: []
+      DeckNum: 0
+    - SkillId: 100420
+      Level: 0
+      Weight: 0
+      TriggerDates: []
+      DeckNum: 0
+    - SkillId: 100421
+      Level: 0
+      Weight: 0
+      TriggerDates: []
+      DeckNum: 0
   advName: 
   saveActorData: 0
 --- !u!1 &1651359293
@@ -12506,6 +13431,8 @@ RectTransform:
   - {fileID: 679285508}
   - {fileID: 268185844}
   - {fileID: 1123312659}
+  - {fileID: 1496126362}
+  - {fileID: 38703928}
   m_Father: {fileID: 1931081345}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

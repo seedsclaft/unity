@@ -61,7 +61,7 @@ public class BattleActorAI
                 if (skillInfo.Master.IsStateFeature(StateType.Stun) 
                 || skillInfo.Master.IsStateFeature(StateType.Slow)
                 || skillInfo.Master.IsStateFeature(StateType.Curse)
-                || skillInfo.Master.IsStateFeature(StateType.SlipDamage)
+                || skillInfo.Master.IsStateFeature(StateType.BurnDamage)
                 || skillInfo.Master.IsStateFeature(StateType.Blind)
                 || skillInfo.Master.IsStateFeature(StateType.Freeze))
                 {

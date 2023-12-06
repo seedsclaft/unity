@@ -6,6 +6,8 @@ using Cysharp.Threading.Tasks;
 public class BattleModel : BaseModel
 {
     private int _actionIndex = 0;
+    private int _turnCount = 0;
+    public void SeekTurnCount(){_turnCount++;}
 
     private List<BattlerInfo> _battlers = new List<BattlerInfo>();
     public List<BattlerInfo> Battlers => _battlers;
@@ -13,15 +15,13 @@ public class BattleModel : BaseModel
     private UnitInfo _party;
     private UnitInfo _troop;
 
-    private List<BattleRecord> _battleRecords = new ();
-    public List<BattleRecord> BattleRecords => _battleRecords;
+    private List<ActionResultInfo> _battleRecords = new ();
+    public List<ActionResultInfo> BattleRecords => _battleRecords;
 
     private BattlerInfo _currentBattler = null;
     public BattlerInfo CurrentBattler => _currentBattler;
 
     private List<ActionInfo> _actionInfos = new ();
-
-    private List<ActionInfo> _turnActionInfos = new ();
     private Dictionary<int,List<SkillInfo>> _passiveSkillInfos = new Dictionary<int,List<SkillInfo>>();
     private Dictionary<int,List<SkillInfo>> _usedPassiveSkillInfos = new Dictionary<int,List<SkillInfo>>();
 
@@ -82,7 +82,6 @@ public class BattleModel : BaseModel
         _troop.SetBattlers(BattlerEnemies());
     }
 
-
     public List<StateInfo> UpdateAp()
     {
         var removeStateList = new List<StateInfo>();
@@ -121,7 +120,6 @@ public class BattleModel : BaseModel
                         FeatureType = FeatureType.HpDefineDamage,
                         Param1 = chainDamage
                     };
-                    
                     var actionResultInfo = new ActionResultInfo(subject,target,new List<SkillData.FeatureData>(){featureData},-1);
                         
                     if ((target.Hp - chainDamage) <= 0)
@@ -340,7 +338,6 @@ public class BattleModel : BaseModel
     public void ClearActionInfo()
     {
         _actionInfos.Clear();
-        _turnActionInfos.Clear();
     }
 
     public bool EnableCurrentBattler()
@@ -416,13 +413,10 @@ public class BattleModel : BaseModel
         if (IsInterrupt)
         {
             _actionInfos.Insert(0,actionInfo);
-            _turnActionInfos.Insert(0,actionInfo);
         } else
         {
             _actionInfos.Add(actionInfo);
-            _turnActionInfos.Add(actionInfo);
         }
-        _battleRecords.Add(new BattleRecord(actionInfo));
         return actionInfo;
     }
 
@@ -1063,7 +1057,9 @@ public class BattleModel : BaseModel
                 }
             }
         }
-        _battleRecords.Add(new BattleRecord(actionResultInfo));
+        
+        actionResultInfo.SetTurnCount(_turnCount);
+        _battleRecords.Add(actionResultInfo);
     }
     
     public List<int> DeathBattlerIndex(List<ActionResultInfo> actionResultInfos)
@@ -1236,9 +1232,9 @@ public class BattleModel : BaseModel
         return assistHealResults;
     }
 
-    public List<ActionResultInfo> CheckSlipDamage()
+    public List<ActionResultInfo> CheckBurnDamage()
     {
-        var results = MakeStateActionResult(_currentBattler,StateType.SlipDamage,FeatureType.HpDefineDamage);
+        var results = MakeStateActionResult(_currentBattler,StateType.BurnDamage,FeatureType.HpDefineDamage);
         // 対象ごとにHpダメージでまとめる
         var targetIndexes = new List<int>();
         foreach (var result in results)
@@ -1621,7 +1617,7 @@ public class BattleModel : BaseModel
                             var states = actionInfo.Master.FeatureDates.FindAll(a => a.FeatureType == FeatureType.AddState);
                             foreach (var state in states)
                             {
-                                if (state.Param1 == (int)StateType.Stun || state.Param1 == (int)StateType.Slow || state.Param1 == (int)StateType.Curse || state.Param1 == (int)StateType.SlipDamage || state.Param1 == (int)StateType.Blind || state.Param1 == (int)StateType.Freeze)
+                                if (state.Param1 == (int)StateType.Stun || state.Param1 == (int)StateType.Slow || state.Param1 == (int)StateType.Curse || state.Param1 == (int)StateType.BurnDamage || state.Param1 == (int)StateType.Blind || state.Param1 == (int)StateType.Freeze)
                                 {
                                     IsTriggered = true;
                                 }

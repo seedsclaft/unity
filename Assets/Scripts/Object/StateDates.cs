@@ -34,7 +34,8 @@ public enum StateType
     Demigod = 11,
     Slow = 21,
     Stun = 22,
-    SlipDamage = 23,
+    BurnDamage = 2001, // 火傷
+    Chain = 2002, // 拘束
     Blind = 24,
     Freeze = 26,
     Barrier = 31,
@@ -53,7 +54,6 @@ public enum StateType
     AtkDown = 82,
     DefDown = 84,
     DefPerDown = 85,
-    Chain = 101,
     ChainDamageUp = 102,
     CounterAura = 103,
     NoDamage = 104,

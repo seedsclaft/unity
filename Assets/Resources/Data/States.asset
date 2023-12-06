@@ -65,7 +65,7 @@ MonoBehaviour:
     Abnormal: 1
     RemoveByAttack: 0
     RemoveByDeath: 1
-  - Id: 23
+  - Id: 2001
     Name: "\u706B\u50B7"
     Help: "\u884C\u52D5\u5F8C\u30C0\u30E1\u30FC\u30B8"
     IconPath: Burning
@@ -76,6 +76,19 @@ MonoBehaviour:
     OverLap: 0
     Removal: 0
     Abnormal: 1
+    RemoveByAttack: 0
+    RemoveByDeath: 1
+  - Id: 2002
+    Name: "\u62D8\u675F"
+    Help: "\u4E00\u5B9A\u6642\u9593\u30C0\u30E1\u30FC\u30B8\u3092\u53D7\u3051\u7D9A\u3051\u884C\u52D5\u3067\u304D\u306A\u304F\u306A\u308B"
+    IconPath: Imprisoned
+    RemovalTiming: 3
+    OverWrite: 0
+    EffectPath: MAGICALxSPIRAL/Thunder1
+    EffectPosition: 1
+    OverLap: 0
+    Removal: 0
+    Abnormal: 0
     RemoveByAttack: 0
     RemoveByDeath: 1
   - Id: 24
@@ -333,19 +346,6 @@ MonoBehaviour:
     OverWrite: 1
     EffectPath: '""'
     EffectPosition: 0
-    OverLap: 0
-    Removal: 0
-    Abnormal: 0
-    RemoveByAttack: 0
-    RemoveByDeath: 1
-  - Id: 101
-    Name: "\u62D8\u675F"
-    Help: "\u4E00\u5B9A\u6642\u9593\u30C0\u30E1\u30FC\u30B8\u3092\u53D7\u3051\u7D9A\u3051\u884C\u52D5\u3067\u304D\u306A\u304F\u306A\u308B"
-    IconPath: Imprisoned
-    RemovalTiming: 3
-    OverWrite: 0
-    EffectPath: MAGICALxSPIRAL/Thunder1
-    EffectPosition: 1
     OverLap: 0
     Removal: 0
     Abnormal: 0

@@ -327,7 +327,7 @@ public class FastBattlePresenter : BasePresenter
         if (_triggerAfterChecked == false && _slipDamageChecked == false)
         {
             _slipDamageChecked = true;
-            var slipResult = _model.CheckSlipDamage();
+            var slipResult = _model.CheckBurnDamage();
             if (slipResult.Count > 0)
             {
                 StartAnimationSlipDamage(slipResult);

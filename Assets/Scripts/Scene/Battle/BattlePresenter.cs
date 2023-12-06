@@ -832,7 +832,7 @@ public class BattlePresenter : BasePresenter
         if (_triggerAfterChecked == false && _slipDamageChecked == false)
         {
             _slipDamageChecked = true;
-            var slipResult = _model.CheckSlipDamage();
+            var slipResult = _model.CheckBurnDamage();
             if (slipResult.Count > 0)
             {
                 StartAnimationSlipDamage(slipResult);
@@ -943,6 +943,7 @@ public class BattlePresenter : BasePresenter
             }
         }
         // 行動を全て終了する
+        _model.SeekTurnCount();
         _view.HideEnemyStatus();
         _view.ShowActorStateOverlay();
         _view.ShowEnemyStateOverlay();

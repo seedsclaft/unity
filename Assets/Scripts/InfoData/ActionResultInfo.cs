@@ -73,7 +73,8 @@ public class ActionResultInfo
     public void SetHpDamage(int hpDamage)
     {
         _hpDamage = hpDamage;
-    }    private int _overkillHpDamage = 0;
+    }
+    private int _overkillHpDamage = 0;
     public int OverkillHpDamage => _overkillHpDamage;
     private int _hpHeal = 0;
     public int HpHeal {
@@ -120,6 +121,10 @@ public class ActionResultInfo
     private bool _cursedDamage = false;
     public bool CursedDamage => _cursedDamage;
     public void SetCursedDamage(bool cursedDamage) {_cursedDamage = cursedDamage;}
+
+    private int _turnCount;
+    public int TurnCount => _turnCount;
+    public void SetTurnCount(int turnCount) {_turnCount = turnCount;}
 
     private void MakeFeature(BattlerInfo subject,BattlerInfo target,SkillData.FeatureData featureData,bool isOneTarget = false)
     {
