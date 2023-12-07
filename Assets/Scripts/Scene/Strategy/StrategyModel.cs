@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -17,8 +16,8 @@ public class StrategyModel : BaseModel
     public bool BattleSkip => _battleSkip;
 
     private List<ActorInfo> _levelUpData = new();
-    private List<ActorInfo> _levelUpBonusData = new();
     public List<ActorInfo> LevelUpData => _levelUpData;
+    private List<int> _levelUpBonusActorIds = new();
     public List<ListData> LevelUpActorStatus(int index)
     {
         var list = new List<ListData>();
@@ -31,8 +30,8 @@ public class StrategyModel : BaseModel
         return list;
     }
 
-    private List<GetItemInfo> _resultItemInfos = new();
-    public List<GetItemInfo> ResultGetItemInfos => _resultItemInfos;
+    private List<ListData> _resultItemInfos = new();
+    public List<ListData> ResultGetItemInfos => _resultItemInfos;
 
     public List<ActorInfo> TacticsActors()
     {
@@ -49,27 +48,24 @@ public class StrategyModel : BaseModel
     public void SetLvUp()
     {
         if (_levelUpData.Count > 0) return;
-        var actorInfos = TacticsActors();
+        var lvUpActorInfos = TacticsActors().FindAll(a => a.TacticsCommandType == TacticsCommandType.Train);
         var lvUpList = new List<ActorInfo>();
         // 結果出力
-        for (int i = 0;i < actorInfos.Count;i++)
+        foreach (var lvUpActorInfo in lvUpActorInfos)
         {
-            if (actorInfos[i].TacticsCommandType == TacticsCommandType.Train)
+            var levelBonus = PartyInfo.GetTrainLevelBonusValue();
+            var statusInfo = lvUpActorInfo.LevelUp(levelBonus);
+            lvUpActorInfo.TempStatus.SetParameter(
+                statusInfo.Hp,
+                statusInfo.Mp,
+                statusInfo.Atk,
+                statusInfo.Def,
+                statusInfo.Spd
+            );
+            lvUpList.Add(lvUpActorInfo);
+            if (levelBonus > 0)
             {
-                int levelBonus = PartyInfo.GetTrainLevelBonusValue();
-                var statusInfo = actorInfos[i].LevelUp(levelBonus);
-                actorInfos[i].TempStatus.SetParameter(
-                    statusInfo.Hp,
-                    statusInfo.Mp,
-                    statusInfo.Atk,
-                    statusInfo.Def,
-                    statusInfo.Spd
-                );
-                lvUpList.Add(actorInfos[i]);
-                if (levelBonus > 0)
-                {
-                    _levelUpBonusData.Add(actorInfos[i]);
-                }
+                _levelUpBonusActorIds.Add(lvUpActorInfo.ActorId);
             }
         }
         _levelUpData = lvUpList;
@@ -82,129 +78,111 @@ public class StrategyModel : BaseModel
         var getItemInfos = new List<GetItemInfo>();
         var actorInfos = TacticsActors();
         // 結果出力
-        for (int i = 0;i < actorInfos.Count;i++)
+        foreach (var actorInfo in actorInfos)
         {
-            var actorName = actorInfos[i].Master.Name;
+            var actorName = actorInfo.Master.Name;
             var getItemInfo = new GetItemInfo(null);
-            if (actorInfos[i].TacticsCommandType == TacticsCommandType.Train)
+            switch (actorInfo.TacticsCommandType)
             {
-                var trainBonus = _levelUpBonusData.Find(a => a == actorInfos[i]) != null;
-                getItemInfo.MakeTrainResult(actorName,actorInfos[i].Level,trainBonus);
-                _resultInfos.Add(new TacticsResultInfo(actorInfos[i].ActorId,TacticsCommandType.Train,trainBonus));
-            }
-            if (actorInfos[i].TacticsCommandType == TacticsCommandType.Alchemy)
-            {
-                bool alchemyBonus = PartyInfo.GetAlchemyNuminosValue();
-                var skillData = DataSystem.Skills.Find(a => a.Id == actorInfos[i].NextLearnSkillId);
-                getItemInfo.MakeAlchemyResult(actorName,skillData);
-                actorInfos[i].LearnSkill(actorInfos[i].NextLearnSkillId);
-                if (alchemyBonus)
-                {
-                    var getSkillDates = DataSystem.Skills.FindAll(a => a.Rank == 1 && (int)a.Attribute == (int)skillData.Attribute && !PartyInfo.AlchemyIdList.Contains(a.Id));
-                    if (getSkillDates.Count > 0)
+                case TacticsCommandType.Train:
+                    var trainBonus = _levelUpBonusActorIds.Contains(actorInfo.ActorId);
+                    getItemInfo.MakeTrainResult(actorName,actorInfo.Level,trainBonus);
+                    _resultInfos.Add(new TacticsResultInfo(actorInfo.ActorId,TacticsCommandType.Train,trainBonus));
+                    break;
+                case TacticsCommandType.Alchemy:
+                    var skillData = DataSystem.Skills.Find(a => a.Id == actorInfo.NextLearnSkillId);
+                    getItemInfo.MakeAlchemyResult(actorName,skillData);
+                    actorInfo.LearnSkill(actorInfo.NextLearnSkillId);
+                    var alchemyBonus = PartyInfo.GetAlchemyBonusValue();
+                    if (alchemyBonus)
                     {
+                        var getSkillDates = DataSystem.Skills.FindAll(a => a.Rank == 1 && (int)a.Attribute == (int)skillData.Attribute && !PartyInfo.AlchemyIdList.Contains(a.Id));
+                        if (getSkillDates.Count > 0)
+                        {
+                            var bonusGetItemInfo = new GetItemInfo(null);
+                            var rand2 = Random.Range(0,getSkillDates.Count);
+                            PartyInfo.AddAlchemy(getSkillDates[rand2].Id);
+                            var randSkillData = DataSystem.Skills.Find(a => a.Id == getSkillDates[rand2].Id);
+                            bonusGetItemInfo.MakeAlchemyBonusResult(randSkillData);
+                            getItemInfos.Add(bonusGetItemInfo);
+                        }
+                    }
+                     _resultInfos.Add(new TacticsResultInfo(actorInfo.ActorId,TacticsCommandType.Alchemy,alchemyBonus));    
+                    break;
+                case TacticsCommandType.Recovery:
+                    var recovery = actorInfo.TacticsCost * 10;
+                    var Hp = Mathf.Min(actorInfo.CurrentHp + recovery,actorInfo.MaxHp);
+                    actorInfo.ChangeHp(Hp);
+                    var Mp = Mathf.Min(actorInfo.CurrentMp + recovery,actorInfo.MaxMp);
+                    actorInfo.ChangeMp(Mp);
+                    getItemInfo.MakeRecoveryResult(actorName);
+                    var isRecoveryBonus = PartyInfo.GetRecoveryBonusValue();
+                    if (isRecoveryBonus)
+                    {
+                        actorInfo.TempStatus.AddParameterAll(1);
+                        actorInfo.DecideStrength(0);
                         var bonusGetItemInfo = new GetItemInfo(null);
-                        int rand2 = UnityEngine.Random.Range(0,getSkillDates.Count);
-                        PartyInfo.AddAlchemy(getSkillDates[rand2].Id);
-                        var randSkillData = DataSystem.Skills.Find(a => a.Id == getSkillDates[rand2].Id);
-                        bonusGetItemInfo.MakeAlchemyBonusResult(randSkillData);
+                        bonusGetItemInfo.MakeRecoveryBonusResult(actorName);
                         getItemInfos.Add(bonusGetItemInfo);
                     }
-                }
-               _resultInfos.Add(new TacticsResultInfo(actorInfos[i].ActorId,TacticsCommandType.Alchemy,alchemyBonus));    
+                    _resultInfos.Add(new TacticsResultInfo(actorInfo.ActorId,TacticsCommandType.Recovery,isRecoveryBonus));
+                    break;
+                case TacticsCommandType.Resource:
+                    getItemInfo.SetTitleData(DataSystem.System.GetReplaceText(3020,actorName));
+                    var resource = TacticsUtility.ResourceGain(actorInfo);
+                    var resourceBonus = PartyInfo.GetResourceBonusValue();
+                    if (resourceBonus)
+                    {
+                        resource *= 2;
+                    }
+                    PartyInfo.ChangeCurrency(Currency + resource);
+                    var resourceResult = DataSystem.System.GetReplaceText(3021,resource.ToString());
+                    if (resourceBonus)
+                    {
+                        resourceResult += " " + DataSystem.System.GetTextData(3031).Text;
+                    }
+                    getItemInfo.SetResultData(resourceResult);
+                    _resultInfos.Add(new TacticsResultInfo(actorInfo.ActorId,TacticsCommandType.Resource,resourceBonus));
+                    break;
             }
-            if (actorInfos[i].TacticsCommandType == TacticsCommandType.Recovery)
-            {
-                int Hp = Mathf.Min(actorInfos[i].CurrentHp + actorInfos[i].TacticsCost * 10,actorInfos[i].MaxHp);
-                int Mp = Mathf.Min(actorInfos[i].CurrentMp + actorInfos[i].TacticsCost * 10,actorInfos[i].MaxMp);
-                actorInfos[i].ChangeHp(Hp);
-                actorInfos[i].ChangeMp(Mp);
-                getItemInfo.MakeRecoveryResult(actorName);
-                var isRecoveryBonus = PartyInfo.GetRecoveryBonusValue();
-                if (isRecoveryBonus)
-                {
-                    actorInfos[i].TempStatus.AddParameterAll(1);
-                    actorInfos[i].DecideStrength(0);
-                    var bonusGetItemInfo = new GetItemInfo(null);
-                    bonusGetItemInfo.MakeRecoveryBonusResult(actorName);
-                    getItemInfos.Add(bonusGetItemInfo);
-                }
-               _resultInfos.Add(new TacticsResultInfo(actorInfos[i].ActorId,TacticsCommandType.Recovery,isRecoveryBonus));
-            }
-            if (actorInfos[i].TacticsCommandType == TacticsCommandType.Resource)
-            {
-                bool resourceBonus = PartyInfo.GetResourceBonusValue();
-                getItemInfo.SetTitleData(DataSystem.System.GetReplaceText(3020,actorInfos[i].Master.Name));
-                int resource = TacticsUtility.ResourceGain(actorInfos[i]);
-                if (resourceBonus)
-                {
-                    resource *= 2;
-                }
-                PartyInfo.ChangeCurrency(Currency + resource);
-                var resourceResult = DataSystem.System.GetReplaceText(3021,resource.ToString());
-                if (resourceBonus)
-                {
-                    resourceResult += " " + DataSystem.System.GetTextData(3031).Text;
-                }
-                getItemInfo.SetResultData(resourceResult);
-                _resultInfos.Add(new TacticsResultInfo(actorInfos[i].ActorId,TacticsCommandType.Resource,resourceBonus));
-            }
-            PartyInfo.AddActor(actorInfos[i].ActorId);
+            PartyInfo.AddActor(actorInfo.ActorId);
             getItemInfos.Add(getItemInfo);
         }
         
         // コマンドカウント出力
-        for (int i = 0;i < actorInfos.Count;i++)
-        {
-            if (actorInfos[i].TacticsCommandType == TacticsCommandType.Train)
-            {
-                if (PartyInfo.AddCommandCountInfo(TacticsCommandType.Train))
-                {
-                    var partyGetItemInfo = new GetItemInfo(null);
-                    partyGetItemInfo.MakeTrainCommandResult(PartyInfo.CommandRankInfo[TacticsCommandType.Train]);
-                    PartyInfo.AddCommandRank(TacticsCommandType.Train);
-                    getItemInfos.Add(partyGetItemInfo);
-                }
-            }
-            if (actorInfos[i].TacticsCommandType == TacticsCommandType.Alchemy)
-            {
-                if (PartyInfo.AddCommandCountInfo(TacticsCommandType.Alchemy))
-                {
-                    var partyGetItemInfo = new GetItemInfo(null);
-                    partyGetItemInfo.MakeAlchemyCommandResult(PartyInfo.CommandRankInfo[TacticsCommandType.Alchemy]);
-                    PartyInfo.AddCommandRank(TacticsCommandType.Alchemy);
-                    getItemInfos.Add(partyGetItemInfo);
-                }
-            }
-            if (actorInfos[i].TacticsCommandType == TacticsCommandType.Recovery)
-            {
-                if (PartyInfo.AddCommandCountInfo(TacticsCommandType.Recovery))
-                {
-                    var partyGetItemInfo = new GetItemInfo(null);
-                    partyGetItemInfo.MakeRecoveryCommandResult(PartyInfo.CommandRankInfo[TacticsCommandType.Recovery]);
-                    PartyInfo.AddCommandRank(TacticsCommandType.Recovery);
-                    getItemInfos.Add(partyGetItemInfo);
-                }
-            }
-            if (actorInfos[i].TacticsCommandType == TacticsCommandType.Resource)
-            {
-                if (PartyInfo.AddCommandCountInfo(TacticsCommandType.Resource))
-                {
-                    var partyGetItemInfo = new GetItemInfo(null);
-                    partyGetItemInfo.MakeResourceCommandResult(PartyInfo.CommandRankInfo[TacticsCommandType.Resource]);
-                    PartyInfo.AddCommandRank(TacticsCommandType.Resource);
-                    getItemInfos.Add(partyGetItemInfo);
-                }
-            }
-        }
+        getItemInfos.AddRange(CommandCountResults(actorInfos));
 
         // コマンド初期化
-        for (int i = 0;i < actorInfos.Count;i++)
+        foreach (var actorInfo in actorInfos)
         {
-            actorInfos[i].ClearTacticsCommand();
+            actorInfo.ClearTacticsCommand();
         }
 
-        _resultItemInfos = getItemInfos;
+        _resultItemInfos = CastGetItemInfos(getItemInfos);
+    }
+
+    public List<GetItemInfo> CommandCountResults(List<ActorInfo> actorInfos)
+    {
+        var getItemInfos = new List<GetItemInfo>();
+        foreach (var actorInfo in actorInfos)
+        {
+            switch (actorInfo.TacticsCommandType)
+            {
+                case TacticsCommandType.Train:
+                case TacticsCommandType.Alchemy:
+                case TacticsCommandType.Recovery:
+                case TacticsCommandType.Resource:
+                    if (PartyInfo.AddCommandCountInfo(actorInfo.TacticsCommandType))
+                    {
+                        var partyGetItemInfo = new GetItemInfo(null);
+                        partyGetItemInfo.MakeCommandCountResult(PartyInfo.CommandRankInfo[actorInfo.TacticsCommandType],actorInfo.TacticsCommandType);
+                        PartyInfo.AddCommandRank(actorInfo.TacticsCommandType);
+                        getItemInfos.Add(partyGetItemInfo);
+                    }
+                    break;
+            }
+        }
+        return getItemInfos;
     }
 
     public void SetLevelUpStatus()
@@ -214,7 +192,7 @@ public class StrategyModel : BaseModel
         _levelUpData.RemoveAt(0);
     }
 
-    public List<GetItemInfo> SetBattleResult()
+    public List<ListData> BattleResult()
     {
         // Party初期化
         PartyInfo.InitActors();
@@ -224,15 +202,15 @@ public class StrategyModel : BaseModel
             PartyInfo.AddActor(actorInfo.ActorId);
         }
         var getItemInfos = new List<GetItemInfo>();
-        if (PartyInfo.BattleResult == false)
+        if (PartyInfo.BattleResultVictory == false)
         {
-            return getItemInfos;
+            return new List<ListData>();
         }
         foreach (var getItemInfo in CurrentTroopInfo().GetItemInfos)
         {
             if (getItemInfo.GetItemType == GetItemType.Skill)
             {
-                int rand = UnityEngine.Random.Range(0,100);
+                var rand = Random.Range(0,100);
                 if (getItemInfo.Param2 >= rand)
                 {
                     PartyInfo.AddAlchemy(getItemInfo.Param1);
@@ -242,10 +220,10 @@ public class StrategyModel : BaseModel
             }
             if (getItemInfo.GetItemType == GetItemType.Numinous)
             {
-                int getNuminos = PartyInfo.GetBattleBonusValue(getItemInfo.Param1);
-                int alcanaBonus = CurrentAlcana.VictoryGainSpValue();
-                PartyInfo.ChangeCurrency(PartyInfo.Currency + getNuminos + alcanaBonus);
-                getItemInfo.MakeNuminosResult(getNuminos + alcanaBonus);
+                var getCurrency = PartyInfo.GetBattleBonusValue(getItemInfo.Param1);
+                var alcanaBonus = CurrentAlcana.VictoryGainSpValue();
+                PartyInfo.ChangeCurrency(PartyInfo.Currency + getCurrency + alcanaBonus);
+                getItemInfo.MakeCurrencyResult(getCurrency + alcanaBonus);
                 getItemInfos.Add(getItemInfo);
             }
             if (getItemInfo.GetItemType == GetItemType.Demigod)
@@ -260,13 +238,13 @@ public class StrategyModel : BaseModel
             }
             if ((int)getItemInfo.GetItemType >= (int)GetItemType.AttributeFire && (int)getItemInfo.GetItemType <= (int)GetItemType.AttributeDark)
             {
-                int rand = UnityEngine.Random.Range(0,100);
+                var rand = Random.Range(0,100);
                 if (getItemInfo.Param2 >= rand)
                 {
                     var getSkillDates = DataSystem.Skills.FindAll(a => a.Rank == getItemInfo.Param1 && (int)a.Attribute == (int)getItemInfo.GetItemType - 10 && !PartyInfo.AlchemyIdList.Contains(a.Id)); 
                     if (getSkillDates.Count > 0)
                     {
-                        int rand2 = UnityEngine.Random.Range(0,getSkillDates.Count);
+                        int rand2 = Random.Range(0,getSkillDates.Count);
                         PartyInfo.AddAlchemy(getSkillDates[rand2].Id);
                         getItemInfo.SetTitleData(DataSystem.System.GetTextData(14040).Text);
                         
@@ -308,18 +286,18 @@ public class StrategyModel : BaseModel
                 if (PartyInfo.AddCommandCountInfo(TacticsCommandType.Battle))
                 {
                     var partyGetItemInfo = new GetItemInfo(null);
-                    partyGetItemInfo.MakeBattleCommandResult(PartyInfo.CommandRankInfo[TacticsCommandType.Battle]);
+                    partyGetItemInfo.MakeCommandCountResult(PartyInfo.CommandRankInfo[TacticsCommandType.Battle],TacticsCommandType.Battle);
                     PartyInfo.AddCommandRank(TacticsCommandType.Battle);
                     getItemInfos.Add(partyGetItemInfo);
                 }
             }
         }
-        return getItemInfos;
+        return CastGetItemInfos(getItemInfos);
     }
 
     public int BattleEnemyIndex(bool inBattle)
     {
-        int enemyIndex = -1;
+        var enemyIndex = -1;
         var actorInfos = TacticsBattleActors();
         for (int i = 0;i < actorInfos.Count;i++)
         {
@@ -339,7 +317,7 @@ public class StrategyModel : BaseModel
 
     public List<ActorInfo> CheckNextBattleActors()
     {
-        int enemyIndex = BattleEnemyIndex(false);
+        var enemyIndex = BattleEnemyIndex(false);
         var actorInfos = TacticsBattleActors();
         if (enemyIndex >= 0)
         {

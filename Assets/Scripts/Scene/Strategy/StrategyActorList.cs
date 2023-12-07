@@ -1,16 +1,12 @@
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
 
 public class StrategyActorList : BaseList
 {   
-
     public void StartResultAnimation(int actorCount,List<bool> isBonusList,System.Action callEvent)
     {
         for (int i = 0; i < ObjectList.Count;i++)
         {
-            bool isBonus = (isBonusList != null && isBonusList.Count > i) ? isBonusList[i] : false;
+            var isBonus = (isBonusList != null && isBonusList.Count > i) ? isBonusList[i] : false;
             ObjectList[i].SetActive(false);
             if (i < actorCount)
             {

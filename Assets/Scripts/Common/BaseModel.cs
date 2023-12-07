@@ -48,6 +48,17 @@ public class BaseModel
         return list;
     }
     
+    public List<ListData> CastGetItemInfos(List<GetItemInfo> getItemInfos)
+    {
+        var list = new List<ListData>();
+        foreach (var getItemInfo in getItemInfos)
+        {
+            var listData = new ListData(getItemInfo);
+            list.Add(listData);
+        }
+        return list;
+    }
+
     public void LostActors(List<ActorInfo> lostMembers)
     {
         lostMembers.ForEach(a => a.ChangeLost(true));

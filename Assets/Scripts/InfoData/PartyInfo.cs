@@ -20,7 +20,7 @@ public class PartyInfo
         _commandRankInfo[TacticsCommandType.Resource] = 0;
     
         _alchemyIdList = new();
-        _battleResult = false;
+        _battleResultVictory = false;
     }
 
     private List<int> _actorIdList = new();
@@ -32,8 +32,8 @@ public class PartyInfo
 
     private int _stageId = 0;
     public int StageId => _stageId;
-    private bool _battleResult = false;
-    public bool BattleResult => _battleResult;
+    private bool _battleResultVictory = false;
+    public bool BattleResultVictory => _battleResultVictory;
 
     private Dictionary<TacticsCommandType,int> _commandCountInfo = new();
     private Dictionary<TacticsCommandType,int> _commandRankInfo = new();
@@ -71,9 +71,9 @@ public class PartyInfo
         _stageId = stageId;
     }
 
-    public void SetBattleResult(bool isVictory)
+    public void SetBattleResultVictory(bool isVictory)
     {
-        _battleResult = isVictory;
+        _battleResultVictory = isVictory;
     }
 
     public void AddAlchemy(int skillId)
@@ -149,7 +149,7 @@ public class PartyInfo
         return value;
     }
     
-    public bool GetAlchemyNuminosValue()
+    public bool GetAlchemyBonusValue()
     {
         bool value = false;
         if (_commandRankInfo.ContainsKey(TacticsCommandType.Alchemy))

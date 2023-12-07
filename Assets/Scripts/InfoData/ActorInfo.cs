@@ -261,17 +261,12 @@ public class ActorInfo
 
     public void DecideStrength(int useNuminous)
     {
-        int addHp = TempStatus.GetParameter(StatusParamType.Hp);
-        _plusStatus.AddParameter(StatusParamType.Hp,addHp);
-        int addMp = TempStatus.GetParameter(StatusParamType.Mp);
-        _plusStatus.AddParameter(StatusParamType.Mp,addMp);
-        int addAtk = TempStatus.GetParameter(StatusParamType.Atk);
-        _plusStatus.AddParameter(StatusParamType.Atk,addAtk);
-        int addDef = TempStatus.GetParameter(StatusParamType.Def);
-        _plusStatus.AddParameter(StatusParamType.Def,addDef);
-        int addSpd = TempStatus.GetParameter(StatusParamType.Spd);
-        _plusStatus.AddParameter(StatusParamType.Spd,addSpd);
-        CurrentStatus.SetParameter(
+        _plusStatus.AddParameter(StatusParamType.Hp,_tempStatus.GetParameter(StatusParamType.Hp));
+        _plusStatus.AddParameter(StatusParamType.Mp,_tempStatus.GetParameter(StatusParamType.Mp));
+        _plusStatus.AddParameter(StatusParamType.Atk,_tempStatus.GetParameter(StatusParamType.Atk));
+        _plusStatus.AddParameter(StatusParamType.Def,_tempStatus.GetParameter(StatusParamType.Def));
+        _plusStatus.AddParameter(StatusParamType.Spd,_tempStatus.GetParameter(StatusParamType.Spd));
+        _currentStatus.SetParameter(
             CurrentParameter(StatusParamType.Hp),
             CurrentParameter(StatusParamType.Mp),
             CurrentParameter(StatusParamType.Atk),
@@ -304,18 +299,12 @@ public class ActorInfo
 
     public void ChangeHp(int hp)
     {
-        _currentHp = hp;
-        if (_currentHp > CurrentParameter(StatusParamType.Hp)){
-            _currentHp = CurrentParameter(StatusParamType.Hp);
-        }
+        _currentHp = Math.Min(hp,CurrentParameter(StatusParamType.Hp));
     }
 
     public void ChangeMp(int mp)
     {
-        _currentMp = mp;
-        if (_currentMp > CurrentParameter(StatusParamType.Mp)){
-            _currentMp = CurrentParameter(StatusParamType.Mp);
-        }
+        _currentMp = Math.Min(mp,CurrentParameter(StatusParamType.Mp));
     }
     
     public void ChangeLost(bool isLost)
@@ -381,23 +370,37 @@ public class ActorInfo
 
     public int Evaluate()
     {
-        int evaluate = 0;
-        int statusParam = CurrentParameter(StatusParamType.Hp) * 2
+        int statusValue = CurrentParameter(StatusParamType.Hp) * 2
         + CurrentParameter(StatusParamType.Mp) * 2
         + CurrentParameter(StatusParamType.Atk) * 3
         + CurrentParameter(StatusParamType.Def) * 3
         + CurrentParameter(StatusParamType.Spd) * 3;
-        int magicParam = 0;
-        foreach (var skillInfo in Skills)
+        float magicValue = 0;
+        foreach (var skillInfo in _skills)
         {
-            magicParam += 1 * 25;
+            var rate = 1.0f;
+            switch (_attribute[(int)skillInfo.Attribute])
+            {
+                case AttributeRank.S:
+                case AttributeRank.A:
+                    rate = 1.1f;
+                    break;
+                case AttributeRank.B:
+                case AttributeRank.C:
+                    rate = 0.9f;
+                    break;
+                case AttributeRank.D:
+                case AttributeRank.E:
+                case AttributeRank.F:
+                    rate = 0.8f;
+                    break;
+                case AttributeRank.G:
+                    rate = 0.7f;
+                    break;
+            }
+            magicValue += (rate * 25);
         }
-        int attributeParam = 0;
-        foreach (var attribute in Attribute)
-        {
-            attributeParam += (AttributeRank.G - attribute) * 10;
-        }
-        int total = evaluate + statusParam + magicParam + attributeParam + DemigodParam * 5;
+        int total = statusValue + (int)magicValue + _demigodParam * 5;
         if (Lost == true)
         {
             total = total / 2;

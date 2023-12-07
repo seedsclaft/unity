@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
@@ -26,7 +24,7 @@ public class StrategyActor : ListItem ,IListViewItem
     public void StartResultAnimation(int animId)
     {
         KillShinyReflect();
-        int initPosy = (animId % 2 == 1) ? -80 : 80;
+        var initPosy = (animId % 2 == 1) ? -80 : 80;
         innerObj.transform.DOLocalMoveY(initPosy,0.0f);
         Sequence sequence = DOTween.Sequence()
             .Append(innerObj.transform.DOLocalMoveY(0,0.8f))
@@ -42,7 +40,7 @@ public class StrategyActor : ListItem ,IListViewItem
 
     private void StartBonusAnimation()
     {
-        int rand = Random.Range(1,100);
+        var rand = Random.Range(1,100);
         bonusImage.transform.DOScaleY(0,0.0f);
         Sequence sequence = DOTween.Sequence()
             .Append(bonusImage.transform.DOScaleY(1.5f,0.4f))

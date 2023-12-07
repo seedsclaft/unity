@@ -68,7 +68,7 @@ public class GetItemInfo
     {
         SetTitleData(DataSystem.System.GetReplaceText(3000,name));
         SetSkillElementId((int)skillData.Attribute);
-        string magicAlchemy = skillData.Name;
+        var magicAlchemy = skillData.Name;
         SetResultData(DataSystem.System.GetReplaceText(3002,magicAlchemy));    
     }
 
@@ -91,37 +91,13 @@ public class GetItemInfo
         SetResultData(DataSystem.System.GetReplaceText(3013,name));
     }
 
-    public void MakeTrainCommandResult(int commandLv)
+    public void MakeCommandCountResult(int commandLv,TacticsCommandType tacticsCommandType)
     {
-        SetTitleData(DataSystem.System.GetReplaceText(3030,DataSystem.System.GetTextData(1).Text));
-        SetResultData("Lv." + commandLv.ToString() + " ⇒ " + (commandLv+1).ToString());
+        SetTitleData(DataSystem.System.GetReplaceText(3030,DataSystem.System.GetTextData((int)tacticsCommandType).Text));
+        SetResultData(DataSystem.System.GetTextData(316).Text + commandLv.ToString() + DataSystem.System.GetTextData(3090).Text + (commandLv+1).ToString());
     }
 
-    public void MakeAlchemyCommandResult(int commandLv)
-    {
-        SetTitleData(DataSystem.System.GetReplaceText(3030,DataSystem.System.GetTextData(2).Text));
-        SetResultData("Lv." + commandLv.ToString() + " ⇒ " + (commandLv+1).ToString());
-    }
-
-    public void MakeRecoveryCommandResult(int commandLv)
-    {
-        SetTitleData(DataSystem.System.GetReplaceText(3030,DataSystem.System.GetTextData(3).Text));
-        SetResultData("Lv." + commandLv + " ⇒ " + (commandLv+1).ToString());
-    }
-
-    public void MakeResourceCommandResult(int commandLv)
-    {
-        SetTitleData(DataSystem.System.GetReplaceText(3030,DataSystem.System.GetTextData(5).Text));
-        SetResultData("Lv." + commandLv.ToString() + " ⇒ " + (commandLv+1).ToString());
-    }
-
-    public void MakeBattleCommandResult(int commandLv)
-    {
-        SetTitleData(DataSystem.System.GetReplaceText(3030,DataSystem.System.GetTextData(4).Text));
-        SetResultData("Lv." + commandLv + " ⇒ " + (commandLv+1).ToString());
-    }
-
-    public void MakeNuminosResult(int value)
+    public void MakeCurrencyResult(int value)
     {
         SetTitleData(DataSystem.System.GetTextData(14041).Text);
         SetResultData("+" + value.ToString() + DataSystem.System.GetTextData(1000).Text);
@@ -133,53 +109,12 @@ public class GetItemInfo
         SetResultData("+" + value.ToString());
     }
 
-    public void MakeCommandRebornResult(TacticsCommandType tacticsCommandType,int bonus)
-    {
-        switch (tacticsCommandType)
-        {
-            case TacticsCommandType.Train:
-            MakeTrainCommandResult(bonus);
-            break;
-            case TacticsCommandType.Alchemy:
-            MakeAlchemyCommandResult(bonus);
-            break;
-            case TacticsCommandType.Recovery:
-            MakeRecoveryCommandResult(bonus);
-            break;
-            case TacticsCommandType.Battle:
-            MakeBattleCommandResult(bonus);
-            break;
-            case TacticsCommandType.Resource:
-            MakeResourceCommandResult(bonus);
-            break;
-        }
-
-    }
-
     public void MakeStatusRebornResult(string name, StatusParamType statusParamType,int bonus)
     {
         SetTitleData(DataSystem.System.GetReplaceText(3070,name));
         var result = "";
-        switch (statusParamType)
-        {
-            case StatusParamType.Hp:
-            result += DataSystem.System.GetReplaceText(3071,DataSystem.System.GetTextData(300).Text);
-            break;
-            case StatusParamType.Mp:
-            result += DataSystem.System.GetReplaceText(3071,DataSystem.System.GetTextData(301).Text);
-            break;
-            case StatusParamType.Atk:
-            result += DataSystem.System.GetReplaceText(3071,DataSystem.System.GetTextData(302).Text);
-            break;
-            case StatusParamType.Def:
-            result += DataSystem.System.GetReplaceText(3071,DataSystem.System.GetTextData(303).Text);
-            break;
-            case StatusParamType.Spd:
-            result += DataSystem.System.GetReplaceText(3071,DataSystem.System.GetTextData(304).Text);
-            break;
-        }
+        var textId = 300 + (int)statusParamType;result += DataSystem.System.GetReplaceText(3071,DataSystem.System.GetTextData(textId).Text);
         SetResultData(result + DataSystem.System.GetReplaceText(3072,bonus.ToString()));
-
     }
     
     public void MakeQuestRebornResult(string name, StatusParamType statusParamType,int bonus)

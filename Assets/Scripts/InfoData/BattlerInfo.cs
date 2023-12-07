@@ -516,6 +516,10 @@ public class BattlerInfo
         {
             spd += _demigodParam;
         }
+        if (IsState(StateType.SpdUp))
+        {
+            spd += StateEffectAll(StateType.SpdUp);
+        }
         if (IsState(StateType.Accel))
         {
             spd += StateEffect(StateType.Accel) * StateTurn(StateType.Accel);

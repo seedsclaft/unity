@@ -200,6 +200,10 @@ public class ActionResultInfo
             return true;
         }
         int hit = 100;
+        if (subject.IsState(StateType.HitUp))
+        {
+            hit += subject.StateEffectAll(StateType.HitUp);
+        }
         if (subject.IsState(StateType.Blind))
         {
             hit -= subject.StateEffectAll(StateType.Blind);

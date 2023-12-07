@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Strategy;
@@ -181,8 +180,7 @@ public class StrategyPresenter : BasePresenter
     {
         if (_strategyState == StrategyState.BattleResult)
         {
-            var getItemInfos = _model.SetBattleResult();
-            _view.ShowResultList(getItemInfos);
+            _view.ShowResultList(_model.BattleResult());
             // ロスト判定
             var lostMembers = _model.LostMembers();
             if (lostMembers.Count > 0)

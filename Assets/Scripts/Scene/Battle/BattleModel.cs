@@ -2003,7 +2003,7 @@ public class BattleModel : BaseModel
         bool isVictory = BattlerEnemies().Find(a => a.IsAlive()) == null;
         if (isVictory)
         {
-            PartyInfo.SetBattleResult(true);
+            PartyInfo.SetBattleResultVictory(true);
         }
         return isVictory;
     }
@@ -2013,7 +2013,7 @@ public class BattleModel : BaseModel
         bool isDefeat = BattlerActors().Find(a => a.IsAlive()) == null;
         if (isDefeat)
         {
-            PartyInfo.SetBattleResult(false);
+            PartyInfo.SetBattleResultVictory(false);
         }
         return isDefeat;
     }
@@ -2030,7 +2030,7 @@ public class BattleModel : BaseModel
 
     public void EscapeBattle()
     {
-        PartyInfo.SetBattleResult(false);
+        PartyInfo.SetBattleResultVictory(false);
     }
 
     public void EndBattle()

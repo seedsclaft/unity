@@ -1,9 +1,7 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Strategy;
-using Effekseer;
 using TMPro;
 using DG.Tweening;
 
@@ -139,10 +137,10 @@ public class StrategyView : BaseView
         _commandData(eventData);
     }
 
-    public void ShowResultList(List<GetItemInfo> getItemInfos)
+    public void ShowResultList(List<ListData> getItemInfos)
     {
         strategyResultList.Deactivate();
-        strategyResultList.Refresh(getItemInfos);
+        strategyResultList.SetData(getItemInfos);
         strategyResultList.gameObject.SetActive(true);
         strategyResultList.Activate();
         strategyResultList.TacticsCommandList.Activate();

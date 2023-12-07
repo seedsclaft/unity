@@ -80,10 +80,10 @@ public class RebornResultView : BaseView
         });
     }
 
-    public void ShowResultList(List<GetItemInfo> getItemInfos)
+    public void ShowResultList(List<ListData> getItemInfos)
     {
         strategyResultList.Deactivate();
-        strategyResultList.Refresh(getItemInfos);
+        strategyResultList.SetData(getItemInfos);
         strategyResultList.gameObject.SetActive(true);
         strategyResultList.Activate();
         strategyResultList.TacticsCommandList.Activate();

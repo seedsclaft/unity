@@ -1,8 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
+// Lvアップステータスで使用
 using UnityEngine;
-using UnityEngine.UI;
-using TMPro;
 
 public class StrategyStrength : ListItem ,IListViewItem 
 {

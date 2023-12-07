@@ -40,14 +40,15 @@ public class RebornModel : BaseModel
         }
         var list = new List<ListData>();
         var actorInfos = CurrentData.PlayerInfo.SaveActorList;
+        var baseRebornSkill = DataSystem.Skills.Find(a => a.SkillType == SkillType.Reborn);
         if (actorInfos == null || actorInfos.Count == 0)
         {
             for (int i = 0;i < 5;i++)
             {
                 var tempActor = new ActorInfo(DataSystem.Actors[i]);
                 tempActor.InitSkillInfo(DataSystem.Actors[i].LearningSkills);
-                    
-                var rebornSkill = new SkillInfo(4001+i); 
+                
+                var rebornSkill = new SkillInfo(baseRebornSkill.Id+i); 
                 rebornSkill.SetParam((1).ToString(),1,i+1);
                 tempActor.AddRebornSkill(rebornSkill);
                 CurrentData.PlayerInfo.AddActorInfo(tempActor);

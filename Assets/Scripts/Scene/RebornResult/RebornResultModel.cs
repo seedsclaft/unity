@@ -24,7 +24,7 @@ public class RebornResultModel : BaseModel
         return new List<ActorInfo>{CurrentData.PlayerInfo.SaveActorList[CurrentStage.RebornActorIndex]};
     }
 
-    public List<GetItemInfo> ResultGetItemInfos()
+    public List<ListData> ResultGetItemInfos()
     {
         var getItemInfos = new List<GetItemInfo>();
         var actorInfo = CurrentData.PlayerInfo.SaveActorList[CurrentStage.RebornActorIndex];
@@ -34,7 +34,7 @@ public class RebornResultModel : BaseModel
         {
             var upLvCount = commandRebornSkill.Param2;
             var getItemInfo = new GetItemInfo(null);
-            getItemInfo.MakeCommandRebornResult((TacticsCommandType)commandRebornSkill.Param3,upLvCount);
+            getItemInfo.MakeCommandCountResult(upLvCount,(TacticsCommandType)commandRebornSkill.Param3);
             getItemInfos.Add(getItemInfo);
         }
 
@@ -66,6 +66,6 @@ public class RebornResultModel : BaseModel
             getItemInfo.MakeQuestRebornResult(actorName,0,upStatusCount);
             getItemInfos.Add(getItemInfo);
         }
-        return getItemInfos;
+        return CastGetItemInfos(getItemInfos);
     }
 }
