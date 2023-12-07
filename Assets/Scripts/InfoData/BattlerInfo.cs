@@ -567,15 +567,15 @@ public class BattlerInfo
 
     public List<StateInfo> IconStateInfos()
     {
-        var iconstates = new List<StateInfo>();
+        var iconStates = new List<StateInfo>();
         foreach (var stateInfo in _stateInfos)
         {
             if (stateInfo.Master.IconPath != "" && stateInfo.Master.IconPath != "\"\"")
             {
-                iconstates.Add(stateInfo);
+                iconStates.Add(stateInfo);
             }
         }
-        return iconstates;
+        return iconStates;
     }
 
     public void SetPreserveAlive(bool preserveAlive)

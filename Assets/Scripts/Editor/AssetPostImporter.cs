@@ -30,20 +30,20 @@ public class AssetPostImporter
 		if (fileName != ExcelName) return false;
 		return true;
 	}
-    public static int ImportNumeric(IRow Baserow,int Column)
+    public static int ImportNumeric(IRow BaseRow,int Column)
     {
         //Debug.Log(Column);
-        return (int)Baserow.GetCell(Column).SafeNumericCellValue();
+        return (int)BaseRow.GetCell(Column).SafeNumericCellValue();
     }
-    public static float ImportFloat(IRow Baserow,int Column)
+    public static float ImportFloat(IRow BaseRow,int Column)
     {
         //Debug.Log(Column);
-        return (float)Baserow.GetCell(Column).SafeNumericCellValue();
+        return (float)BaseRow.GetCell(Column).SafeNumericCellValue();
     }
-    public static string ImportString(IRow Baserow,int Column)
+    public static string ImportString(IRow BaseRow,int Column)
     {
         //Debug.Log(Column);
-        return (string)Baserow.GetCell(Column).SafeStringCellValue();
+        return (string)BaseRow.GetCell(Column).SafeStringCellValue();
     }
 	// エクセルワークブックを作成
 	public static void CreateBook(string path, Stream stream, out IWorkbook Workbook)
@@ -66,12 +66,12 @@ public class AssetPostImporter
 
 		for (int i = 1; i <= BaseSheet.LastRowNum; i++)
 		{
-			IRow Baserow = BaseSheet.GetRow(i);
+			IRow BaseRow = BaseSheet.GetRow(i);
 			var TextData = new TextData();
 
-			TextData.Id = AssetPostImporter.ImportNumeric(Baserow,(int)BaseTextColumn.Id);
-			TextData.Text = AssetPostImporter.ImportString(Baserow,(int)BaseTextColumn.Text);
-			TextData.Help = AssetPostImporter.ImportString(Baserow,(int)BaseTextColumn.Help);
+			TextData.Id = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseTextColumn.Id);
+			TextData.Text = AssetPostImporter.ImportString(BaseRow,(int)BaseTextColumn.Text);
+			TextData.Help = AssetPostImporter.ImportString(BaseRow,(int)BaseTextColumn.Help);
 			
 			textData.Add(TextData);
 		}

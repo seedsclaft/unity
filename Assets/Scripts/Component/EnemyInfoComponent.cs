@@ -42,7 +42,7 @@ public class EnemyInfoComponent : MonoBehaviour
         if (mainThumb != null && _isMainThumbInit == false)
         {
             mainThumb.gameObject.SetActive(true);
-            RectTransform rect = mainThumb.GetComponent < RectTransform > ();
+            var rect = mainThumb.GetComponent<RectTransform>();
             rect.localPosition = new Vector3(x, y, 0);
             rect.localScale = new Vector3(scale, scale, 1);
             mainThumb.sprite = handle;

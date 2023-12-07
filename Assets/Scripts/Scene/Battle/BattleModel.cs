@@ -150,9 +150,9 @@ public class BattleModel : BaseModel
                         var targets = new List<BattlerInfo>();
                         if (subject.isActor)
                         {
-                            targets = _party.BattlerInfos.FindAll(a => a.Index != subject.Index && a.IsAlive());
+                            targets = _party.AliveBattlerInfos.FindAll(a => a.Index != subject.Index);
                         } else{
-                            targets = _troop.BattlerInfos.FindAll(a => a.Index != subject.Index && a.IsAlive());
+                            targets = _troop.AliveBattlerInfos.FindAll(a => a.Index != subject.Index);
                         }
                         var featureData = new SkillData.FeatureData(){
                             FeatureType = FeatureType.HpHeal,

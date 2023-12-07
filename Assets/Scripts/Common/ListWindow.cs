@@ -483,7 +483,7 @@ abstract public class ListWindow : MonoBehaviour
             {
                 nextIndex = Index + i + 1;
                 if (nextIndex >= _dataCount){
-                    nextIndex = i - Index;
+                    nextIndex -= _dataCount;
                 }
                 var listItem = ObjectList[nextIndex].GetComponent<ListItem>();
                 if (listItem.Disable != null && listItem.Disable.activeSelf == false)
@@ -502,9 +502,9 @@ abstract public class ListWindow : MonoBehaviour
         if (keyType == minusKey){
             for (int i = 0;i < _dataCount;i++)
             {
-                nextIndex = Index + i - 1;
+                nextIndex = Index - i - 1;
                 if (nextIndex < 0){
-                    nextIndex = (_dataCount - Index) - i;
+                    nextIndex += _dataCount;
                 }
                 var listItem = ObjectList[nextIndex].GetComponent<ListItem>();
                 if (listItem.Disable != null && listItem.Disable.activeSelf == false)

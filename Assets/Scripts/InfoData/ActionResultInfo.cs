@@ -562,7 +562,7 @@ public class ActionResultInfo
                 var removeStates = target.GetRemovalBuffStates();
                 foreach (var removeState in removeStates)
                 {
-                    SkillData.FeatureData removeFeature = new SkillData.FeatureData();
+                    var removeFeature = new SkillData.FeatureData();
                     removeFeature.FeatureType = FeatureType.RemoveState;
                     removeFeature.Param1 = (int)removeState.Master.StateType;
                     MakeRemoveState(subject,target,removeFeature);
@@ -577,7 +577,7 @@ public class ActionResultInfo
             {
                 if (stateInfo.Master.Abnormal)
                 {
-                    StateInfo barrierState = new StateInfo(StateType.Barrier,0,0,0,target.Index,-1);
+                    var barrierState = new StateInfo(StateType.Barrier,0,0,0,target.Index,-1);
                     _displayStates.Add(barrierState);
                 }
             }
@@ -593,7 +593,7 @@ public class ActionResultInfo
             {
                 _reDamage += AntiDoteDamageValue(target);
             }
-            SkillData.FeatureData counterAddState = new SkillData.FeatureData();
+            var counterAddState = new SkillData.FeatureData();
             counterAddState.FeatureType = FeatureType.AddState;
             counterAddState.Param1 = featureData.Param1;
             counterAddState.Param2 = featureData.Param2;
@@ -605,7 +605,7 @@ public class ActionResultInfo
     private void MakeRemoveState(BattlerInfo subject,BattlerInfo target,SkillData.FeatureData featureData)
     {
         // skillId -1のRemoveは強制で解除する
-        StateInfo stateInfo = new StateInfo((StateType)featureData.Param1,featureData.Param2,featureData.Param3,subject.Index,target.Index,-1);
+        var stateInfo = new StateInfo((StateType)featureData.Param1,featureData.Param2,featureData.Param3,subject.Index,target.Index,-1);
         bool IsRemoved = target.RemoveState(stateInfo,false);
         if (IsRemoved)
         {
@@ -616,7 +616,7 @@ public class ActionResultInfo
     private void MakeRemoveStatePassive(BattlerInfo subject,BattlerInfo target,SkillData.FeatureData featureData)
     {
         // パッシブはそのパッシブスキルのみ解除する
-        StateInfo stateInfo = new StateInfo((StateType)featureData.Param1,featureData.Param2,featureData.Param3,subject.Index,target.Index,_skillIndex);
+        var stateInfo = new StateInfo((StateType)featureData.Param1,featureData.Param2,featureData.Param3,subject.Index,target.Index,_skillIndex);
         bool IsRemoved = target.RemoveState(stateInfo,false);
         if (IsRemoved)
         {
@@ -698,7 +698,7 @@ public class ActionResultInfo
     private int ApplyVariance(int value)
     {
         int rand = new System.Random().Next(-10, 10);
-        return (int) Mathf.Floor(value * (1 + rand * 0.01f));
+        return (int)Mathf.Floor(value * (1 + rand * 0.01f));
     }
 
     private void SeekNoDamage(BattlerInfo battlerInfo)

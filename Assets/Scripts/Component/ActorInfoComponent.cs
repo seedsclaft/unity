@@ -76,7 +76,7 @@ public class ActorInfoComponent : MonoBehaviour
         }
         if (needStatusInfoComponent != null)
         {
-            StatusInfo statusInfo = new StatusInfo();
+            var statusInfo = new StatusInfo();
             statusInfo.SetParameter(
                 actorInfo.UsePointCost(StatusParamType.Hp),
                 actorInfo.UsePointCost(StatusParamType.Mp),
@@ -179,7 +179,7 @@ public class ActorInfoComponent : MonoBehaviour
         var handle = Resources.Load<Sprite>("Texture/Character/Actors/" + imagePath + "/Main");
         if (mainThumb != null)
         {
-            RectTransform rect = mainThumb.GetComponent < RectTransform > ();
+            var rect = mainThumb.GetComponent<RectTransform>();
             rect.localPosition = new Vector3(x, y, 0);
             rect.localScale = new Vector3(scale, scale, 1);
             mainThumb.sprite = handle;
@@ -192,7 +192,7 @@ public class ActorInfoComponent : MonoBehaviour
         var handle = Resources.Load<Sprite>("Texture/Character/Actors/" + imagePath + "/Awaken");
         if (awakenThumb != null)
         {
-            RectTransform rect = awakenThumb.GetComponent < RectTransform > ();
+            var rect = awakenThumb.GetComponent<RectTransform>();
             rect.localPosition = new Vector3(x, y, 0);
             rect.localScale = new Vector3(scale, scale, 1);
             awakenThumb.sprite = handle;

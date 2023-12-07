@@ -20,8 +20,6 @@ public class ActorInfo
     public List<AttributeRank> Attribute => _attribute;
     private List<SkillInfo> _skills;
     public List<SkillInfo> Skills => _skills;
-    private List<SkillInfo> _decksData = new ();
-    public List<SkillInfo> DecksData => _decksData;
 
     private int _lastSelectSkillId = 0;
     public int LastSelectSkillId => _lastSelectSkillId;
@@ -112,14 +110,12 @@ public class ActorInfo
             _lastSelectSkillId = selectSkill.Id;
         }
 
-        _decksData.Clear();
         foreach (var learningSkills in Master.LearningSkills)
         {
             for (int i = 0;i < learningSkills.DeckNum;i++)
             {
-                SkillInfo skillInfo = new SkillInfo(learningSkills.SkillId);
+                var skillInfo = new SkillInfo(learningSkills.SkillId);
                 skillInfo.SetLearningState(LearningState.Learned);
-                _decksData.Add(skillInfo);
             }
         }
     }
@@ -176,7 +172,7 @@ public class ActorInfo
 
     public void LearnSkill(int skillId)
     {
-        SkillInfo skillInfo = new SkillInfo(skillId);
+        var skillInfo = new SkillInfo(skillId);
         skillInfo.SetLearningState(LearningState.Learned);
         _skills.Add(skillInfo);
     }

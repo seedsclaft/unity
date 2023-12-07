@@ -102,26 +102,26 @@ public class SkillsImporter : AssetPostprocessor {
 
 				for (int i = 1; i <= BaseSheet.LastRowNum; i++)
 				{
-					IRow Baserow = BaseSheet.GetRow(i);
+					IRow BaseRow = BaseSheet.GetRow(i);
 
 					var SkillData = new SkillData();
-					SkillData.Id = AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.Id);
-					SkillData.Name = textData.Find(a => a.Id == AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.NameId)).Text;
-					SkillData.IconIndex = (MagicIconType)AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.IconIndex);
-					SkillData.AnimationName = AssetPostImporter.ImportString(Baserow,(int)BaseColumn.AnimationName);
-                    SkillData.AnimationPosition = AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.AnimationPosition);
-                    SkillData.AnimationType = (AnimationType)AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.AnimationType);
-                    SkillData.DamageTiming = AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.DamageTiming);
-                    SkillData.MpCost = AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.MpCost);
-					SkillData.Rank = AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.Rank);
-					SkillData.Attribute = (AttributeType)AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.Attribute);
-					SkillData.SkillType = (SkillType)AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.SkillType);
-                    SkillData.TargetType = (TargetType)AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.TargetType);
-                    SkillData.Scope = (ScopeType)AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.Scope);
-                    SkillData.Range = (RangeType)AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.Range);
-                    SkillData.RepeatTime = AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.RepeatTime);
-					SkillData.AliveOnly = AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.AliveOnly) == 1;
-					SkillData.Help = textData.Find(a => a.Id == AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.NameId)).Help;
+					SkillData.Id = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.Id);
+					SkillData.Name = textData.Find(a => a.Id == AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.NameId)).Text;
+					SkillData.IconIndex = (MagicIconType)AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.IconIndex);
+					SkillData.AnimationName = AssetPostImporter.ImportString(BaseRow,(int)BaseColumn.AnimationName);
+                    SkillData.AnimationPosition = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.AnimationPosition);
+                    SkillData.AnimationType = (AnimationType)AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.AnimationType);
+                    SkillData.DamageTiming = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.DamageTiming);
+                    SkillData.MpCost = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.MpCost);
+					SkillData.Rank = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.Rank);
+					SkillData.Attribute = (AttributeType)AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.Attribute);
+					SkillData.SkillType = (SkillType)AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.SkillType);
+                    SkillData.TargetType = (TargetType)AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.TargetType);
+                    SkillData.Scope = (ScopeType)AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.Scope);
+                    SkillData.Range = (RangeType)AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.Range);
+                    SkillData.RepeatTime = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.RepeatTime);
+					SkillData.AliveOnly = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.AliveOnly) == 1;
+					SkillData.Help = textData.Find(a => a.Id == AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.NameId)).Help;
 					Data.Data.Add(SkillData);
 				}
 
@@ -130,14 +130,14 @@ public class SkillsImporter : AssetPostprocessor {
 				
 				for (int i = 1; i <= BaseSheet.LastRowNum; i++)
 				{
-					IRow Baserow = BaseSheet.GetRow(i);
+					IRow BaseRow = BaseSheet.GetRow(i);
 
 					var FeatureData = new SkillData.FeatureData();
-					FeatureData.SkillId = AssetPostImporter.ImportNumeric(Baserow,(int)BaseFeatureColumn.SkillId);
-					FeatureData.FeatureType = (FeatureType)AssetPostImporter.ImportNumeric(Baserow,(int)BaseFeatureColumn.FeatureType);
-					FeatureData.Param1 = AssetPostImporter.ImportNumeric(Baserow,(int)BaseFeatureColumn.Param1);
-					FeatureData.Param2 = AssetPostImporter.ImportNumeric(Baserow,(int)BaseFeatureColumn.Param2);
-					FeatureData.Param3 = AssetPostImporter.ImportNumeric(Baserow,(int)BaseFeatureColumn.Param3);
+					FeatureData.SkillId = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseFeatureColumn.SkillId);
+					FeatureData.FeatureType = (FeatureType)AssetPostImporter.ImportNumeric(BaseRow,(int)BaseFeatureColumn.FeatureType);
+					FeatureData.Param1 = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseFeatureColumn.Param1);
+					FeatureData.Param2 = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseFeatureColumn.Param2);
+					FeatureData.Param3 = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseFeatureColumn.Param3);
 					
 					var SkillData = Data.Data.Find(a => a.Id == FeatureData.SkillId);
 					if (SkillData != null){
@@ -151,15 +151,15 @@ public class SkillsImporter : AssetPostprocessor {
 				BaseSheet = Book.GetSheetAt(2);
 				for (int i = 1; i <= BaseSheet.LastRowNum; i++)
 				{
-					IRow Baserow = BaseSheet.GetRow(i);
+					IRow BaseRow = BaseSheet.GetRow(i);
 
 					var TriggerData = new SkillData.TriggerData();
-					TriggerData.SkillId = AssetPostImporter.ImportNumeric(Baserow,(int)BaseTriggerColumn.SkillId);
-					TriggerData.TriggerType = (TriggerType)AssetPostImporter.ImportNumeric(Baserow,(int)BaseTriggerColumn.TriggerType);
-					TriggerData.TriggerTiming = (TriggerTiming)AssetPostImporter.ImportNumeric(Baserow,(int)BaseTriggerColumn.TriggerTiming);
-					TriggerData.Param1 = AssetPostImporter.ImportNumeric(Baserow,(int)BaseTriggerColumn.Param1);
-					TriggerData.Param2 = AssetPostImporter.ImportNumeric(Baserow,(int)BaseTriggerColumn.Param2);
-					TriggerData.Param3 = AssetPostImporter.ImportNumeric(Baserow,(int)BaseTriggerColumn.Param3);
+					TriggerData.SkillId = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseTriggerColumn.SkillId);
+					TriggerData.TriggerType = (TriggerType)AssetPostImporter.ImportNumeric(BaseRow,(int)BaseTriggerColumn.TriggerType);
+					TriggerData.TriggerTiming = (TriggerTiming)AssetPostImporter.ImportNumeric(BaseRow,(int)BaseTriggerColumn.TriggerTiming);
+					TriggerData.Param1 = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseTriggerColumn.Param1);
+					TriggerData.Param2 = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseTriggerColumn.Param2);
+					TriggerData.Param3 = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseTriggerColumn.Param3);
 					
 					var SkillData = Data.Data.Find(a => a.Id == TriggerData.SkillId);
 					if (SkillData != null){

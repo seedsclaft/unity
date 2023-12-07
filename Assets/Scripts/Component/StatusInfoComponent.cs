@@ -65,7 +65,7 @@ public class StatusInfoComponent : MonoBehaviour
         if (hpGauge != null)
         {
             //RectTransform bgRect = hpGaugeBg.gameObject.GetComponent < RectTransform > ();
-            RectTransform rect = hpGauge.gameObject.GetComponent < RectTransform > ();
+            var rect = hpGauge.gameObject.GetComponent < RectTransform > ();
             //bgRect.sizeDelta = new Vector2(maxhp,bgRect.sizeDelta.y);
             rect.sizeDelta = new Vector2(80 * (currentHp * 100 / maxStatusHp) * 0.01f - 3,rect.sizeDelta.y);
             //hpGauge.fillAmount = currentHp / maxhp;
@@ -85,8 +85,8 @@ public class StatusInfoComponent : MonoBehaviour
         }
         if (mpGauge != null)
         {
-            RectTransform bgRect = mpGaugeBg.gameObject.GetComponent < RectTransform > ();
-            RectTransform rect = mpGauge.gameObject.GetComponent < RectTransform > ();
+            var bgRect = mpGaugeBg.gameObject.GetComponent<RectTransform>();
+            var rect = mpGauge.gameObject.GetComponent<RectTransform>();
             bgRect.sizeDelta = new Vector2(maxStatusMp * 1.5f,bgRect.sizeDelta.y);
             rect.sizeDelta = new Vector2(maxStatusMp * 1.5f * (currentMp*100 / maxStatusMp) * 0.01f - 3,rect.sizeDelta.y);
             //mpGauge.fillAmount = currentMp / maxmp;

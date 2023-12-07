@@ -4,7 +4,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.AddressableAssets;
 using TMPro;
-using UnityEngine.EventSystems;
 
 public class TacticsComponent : MonoBehaviour
 {    
@@ -39,7 +38,7 @@ public class TacticsComponent : MonoBehaviour
         UpdateViewObjects(tacticsCommandType);
 
         _actorInfo = actorInfo;
-        TacticsCommandType currentTacticsCommandType = actorInfo.TacticsCommandType;
+        var currentTacticsCommandType = actorInfo.TacticsCommandType;
         if (actorInfoComponent != null)
         {
             actorInfoComponent.UpdateInfo(actorInfo,null);
@@ -100,7 +99,7 @@ public class TacticsComponent : MonoBehaviour
 
         if (enemyInfoComponent != null)
         {
-            EnemyData enemyData = DataSystem.Enemies.Find(a => a.Id == actorInfo.NextBattleEnemyId);
+            var enemyData = DataSystem.Enemies.Find(a => a.Id == actorInfo.NextBattleEnemyId);
             enemyInfoComponent.UpdateData(enemyData);
         }
 
@@ -116,8 +115,8 @@ public class TacticsComponent : MonoBehaviour
             if (tacticsCommandType != actorInfo.TacticsCommandType && actorInfo.TacticsCommandType != TacticsCommandType.None)
             {
                 busyRoot.gameObject.SetActive(true);
-                TextData textData = DataSystem.System.GetTextData((int)actorInfo.TacticsCommandType);
-                TextData subtextData = DataSystem.System.GetTextData(1020);
+                var textData = DataSystem.System.GetTextData((int)actorInfo.TacticsCommandType);
+                var subtextData = DataSystem.System.GetTextData(1020);
                 busyText.text = textData.Text + subtextData.Text;
             }
         }

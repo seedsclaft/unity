@@ -77,13 +77,13 @@ public class BgmImporter : AssetPostprocessor {
 
 				for (int i = 1; i <= BaseSheet.LastRowNum; i++)
 				{
-					IRow Baserow = BaseSheet.GetRow(i);
+					IRow BaseRow = BaseSheet.GetRow(i);
 
 					var BGM = new BGMData();
-					BGM.Id = AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.Id);
-					BGM.Key = AssetPostImporter.ImportString(Baserow,(int)BaseColumn.Key);
-					BGM.FileName = AssetPostImporter.ImportString(Baserow,(int)BaseColumn.FileName);
-					BGM.Loop = Baserow.GetCell((int)BaseColumn.Loop).BooleanCellValue;
+					BGM.Id = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.Id);
+					BGM.Key = AssetPostImporter.ImportString(BaseRow,(int)BaseColumn.Key);
+					BGM.FileName = AssetPostImporter.ImportString(BaseRow,(int)BaseColumn.FileName);
+					BGM.Loop = BaseRow.GetCell((int)BaseColumn.Loop).BooleanCellValue;
 					Data.BGM.Add(BGM);
 				}
 

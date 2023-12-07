@@ -64,13 +64,13 @@ public class RulesImporter : AssetPostprocessor {
 
 				for (int i = 1; i <= BaseSheet.LastRowNum-1; i++)
 				{
-					IRow Baserow = BaseSheet.GetRow(i);
+					IRow BaseRow = BaseSheet.GetRow(i);
 
 					var RuleData = new RuleData();
-					RuleData.Id = AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.Id);
-					RuleData.Name = textData.Find(a => a.Id == AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.NameId)).Text;
-					RuleData.Help = textData.Find(a => a.Id == AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.NameId)).Help;
-					RuleData.Category = AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.Category);
+					RuleData.Id = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.Id);
+					RuleData.Name = textData.Find(a => a.Id == AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.NameId)).Text;
+					RuleData.Help = textData.Find(a => a.Id == AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.NameId)).Help;
+					RuleData.Category = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.Category);
 					Data.Data.Add(RuleData);
 				}
 			}

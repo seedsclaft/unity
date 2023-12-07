@@ -28,6 +28,4 @@ public class UnitInfo
         // 最前列は
         return AliveBattlerInfos.Find(a => a.LineIndex == LineType.Front) != null;
     }
-
-
 }

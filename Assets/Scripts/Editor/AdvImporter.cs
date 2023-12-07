@@ -64,12 +64,12 @@ public class AdvImporter : AssetPostprocessor {
 
 				for (int i = 1; i <= BaseSheet.LastRowNum; i++)
 				{
-					IRow Baserow = BaseSheet.GetRow(i);
+					IRow BaseRow = BaseSheet.GetRow(i);
 
 					var AdvData = new AdvData();
-					AdvData.Id = AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.Id);
-					AdvData.AdvName = AssetPostImporter.ImportString(Baserow,(int)BaseColumn.AdvName);
-					AdvData.EndJump = (Scene)AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.EndJump);
+					AdvData.Id = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.Id);
+					AdvData.AdvName = AssetPostImporter.ImportString(BaseRow,(int)BaseColumn.AdvName);
+					AdvData.EndJump = (Scene)AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.EndJump);
 					
 					Data.Data.Add(AdvData);
 				}

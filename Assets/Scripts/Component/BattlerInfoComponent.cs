@@ -191,7 +191,7 @@ public class BattlerInfoComponent : MonoBehaviour
     {
         var image = BattleImage();
         if (image == null) return;
-        Sequence sequence = DOTween.Sequence()
+        var sequence = DOTween.Sequence()
             .Append(image.DOFade(0f, 0.05f))
             .Append(image.DOFade(1f, 0.05f))
             .SetLoops(3);
@@ -264,8 +264,8 @@ public class BattlerInfoComponent : MonoBehaviour
             deathAnimation.enabled = false;
             deathAnimation.Destroyed = 0;
             gameObject.SetActive(true);
-            Image image = BattleImage();
-            Sequence sequence = DOTween.Sequence()
+            var image = BattleImage();
+            var sequence = DOTween.Sequence()
                 .Append(image.DOFade(0f, 0))
                 .Append(image.DOFade(1f, 0.5f));
             }

@@ -79,14 +79,14 @@ public class SeImporter : AssetPostprocessor {
 
 				for (int i = 1; i <= BaseSheet.LastRowNum; i++)
 				{
-					IRow Baserow = BaseSheet.GetRow(i);
+					IRow BaseRow = BaseSheet.GetRow(i);
 
 					var SE = new SEData();
-					SE.Id = AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.Id);
-					SE.Key = AssetPostImporter.ImportString(Baserow,(int)BaseColumn.Key);
-					SE.FileName = AssetPostImporter.ImportString(Baserow,(int)BaseColumn.FileName);
-					SE.Volume = (float)AssetPostImporter.ImportFloat(Baserow,(int)BaseColumn.Volume);
-					SE.Pitch = (float)AssetPostImporter.ImportFloat(Baserow,(int)BaseColumn.Pitch);
+					SE.Id = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.Id);
+					SE.Key = AssetPostImporter.ImportString(BaseRow,(int)BaseColumn.Key);
+					SE.FileName = AssetPostImporter.ImportString(BaseRow,(int)BaseColumn.FileName);
+					SE.Volume = (float)AssetPostImporter.ImportFloat(BaseRow,(int)BaseColumn.Volume);
+					SE.Pitch = (float)AssetPostImporter.ImportFloat(BaseRow,(int)BaseColumn.Pitch);
 					Data.SE.Add(SE);
 				}
 

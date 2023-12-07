@@ -33,7 +33,7 @@ public class StateInfoComponent : MonoBehaviour
         if (turns != null)
         {
             turns.text = "";
-            RemovalTiming removalTiming = stateInfo.Master.RemovalTiming;
+            var removalTiming = stateInfo.Master.RemovalTiming;
             if (removalTiming == RemovalTiming.UpdateTurn)
             {
                 if (stateInfo.Turns > 100)
@@ -68,7 +68,7 @@ public class StateInfoComponent : MonoBehaviour
             return;
         }
 
-        StateData stateData = DataSystem.States.Find(a => a.StateType == stateType);
+        var stateData = DataSystem.States.Find(a => a.StateType == stateType);
         if (stateData == null)
         {
             return;

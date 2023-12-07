@@ -41,7 +41,7 @@ public class StageInfoComponent : MonoBehaviour
             subordinateValue.text = stageInfo.SubordinateValue.ToString();
         }
         if (subordinateBorder != null){
-            RectTransform borderRect = subordinateBorder.GetComponent<RectTransform>();
+            var borderRect = subordinateBorder.GetComponent<RectTransform>();
             borderRect.localScale = new Vector3(stageInfo.SubordinateValue * 0.01f,1,1);
         }
     }

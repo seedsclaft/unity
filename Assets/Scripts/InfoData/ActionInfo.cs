@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 
 public class ActionInfo 
 {
@@ -21,7 +20,7 @@ public class ActionInfo
     private ScopeType _scopeType = ScopeType.None;
     public ScopeType ScopeType => _scopeType;
 
-    private List<ActionResultInfo> _actionResult = new List<ActionResultInfo>();
+    private List<ActionResultInfo> _actionResult = new ();
     public List<ActionResultInfo> ActionResults => _actionResult;
 
     private int _mpCost;

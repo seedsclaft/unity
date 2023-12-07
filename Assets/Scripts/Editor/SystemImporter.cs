@@ -85,13 +85,13 @@ public class SystemImporter : AssetPostprocessor
 
 				for (int i = 1; i <= BaseSheet.LastRowNum; i++)
 				{
-					IRow Baserow = BaseSheet.GetRow(i);
+					IRow BaseRow = BaseSheet.GetRow(i);
 
 					var TitleCommandInfo = new SystemData.CommandData();
-					TitleCommandInfo.Id = AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.Id);
-					TitleCommandInfo.Key = AssetPostImporter.ImportString(Baserow,(int)BaseColumn.Key);
-					TitleCommandInfo.Name = textData.Find(a => a.Id == AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.NameTextId)).Text;
-					TitleCommandInfo.Help = textData.Find(a => a.Id == AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.NameTextId)).Help;
+					TitleCommandInfo.Id = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.Id);
+					TitleCommandInfo.Key = AssetPostImporter.ImportString(BaseRow,(int)BaseColumn.Key);
+					TitleCommandInfo.Name = textData.Find(a => a.Id == AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.NameTextId)).Text;
+					TitleCommandInfo.Help = textData.Find(a => a.Id == AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.NameTextId)).Help;
 					Data.TacticsCommandData.Add(TitleCommandInfo);
 				}
 				
@@ -99,13 +99,13 @@ public class SystemImporter : AssetPostprocessor
 
 				for (int i = 1; i <= BaseSheet.LastRowNum; i++)
 				{
-					IRow Baserow = BaseSheet.GetRow(i);
+					IRow BaseRow = BaseSheet.GetRow(i);
 
 					var TitleCommandInfo = new SystemData.CommandData();
-					TitleCommandInfo.Id = AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.Id);
-					TitleCommandInfo.Key = AssetPostImporter.ImportString(Baserow,(int)BaseColumn.Key);
-					TitleCommandInfo.Name = textData.Find(a => a.Id == AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.NameTextId)).Text;
-					TitleCommandInfo.Help = textData.Find(a => a.Id == AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.NameTextId)).Help;
+					TitleCommandInfo.Id = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.Id);
+					TitleCommandInfo.Key = AssetPostImporter.ImportString(BaseRow,(int)BaseColumn.Key);
+					TitleCommandInfo.Name = textData.Find(a => a.Id == AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.NameTextId)).Text;
+					TitleCommandInfo.Help = textData.Find(a => a.Id == AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.NameTextId)).Help;
 					Data.TitleCommandData.Add(TitleCommandInfo);
 				}
 
@@ -113,13 +113,13 @@ public class SystemImporter : AssetPostprocessor
 
 				for (int i = 1; i <= BaseSheet.LastRowNum; i++)
 				{
-					IRow Baserow = BaseSheet.GetRow(i);
+					IRow BaseRow = BaseSheet.GetRow(i);
 
 					var StatusCommandInfo = new SystemData.CommandData();
-					StatusCommandInfo.Id = AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.Id);
-					StatusCommandInfo.Key = AssetPostImporter.ImportString(Baserow,(int)BaseColumn.Key);
-					StatusCommandInfo.Name = textData.Find(a => a.Id == AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.NameTextId)).Text;
-					StatusCommandInfo.Help = textData.Find(a => a.Id == AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.NameTextId)).Help;
+					StatusCommandInfo.Id = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.Id);
+					StatusCommandInfo.Key = AssetPostImporter.ImportString(BaseRow,(int)BaseColumn.Key);
+					StatusCommandInfo.Name = textData.Find(a => a.Id == AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.NameTextId)).Text;
+					StatusCommandInfo.Help = textData.Find(a => a.Id == AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.NameTextId)).Help;
 					Data.StatusCommandData.Add(StatusCommandInfo);
 				}
 
@@ -127,16 +127,16 @@ public class SystemImporter : AssetPostprocessor
 
 				for (int i = 1; i <= BaseSheet.LastRowNum; i++)
 				{
-					IRow Baserow = BaseSheet.GetRow(i);
+					IRow BaseRow = BaseSheet.GetRow(i);
 
 					var StatusCommandInfo = new SystemData.OptionCommand();
-					StatusCommandInfo.Id = AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.Id);
-					StatusCommandInfo.Key = AssetPostImporter.ImportString(Baserow,(int)BaseColumn.Key);
-					StatusCommandInfo.Name = textData.Find(a => a.Id == AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.NameTextId)).Text;
-					StatusCommandInfo.Help = textData.Find(a => a.Id == AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.NameTextId)).Help;
-					StatusCommandInfo.Toggles = AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.Toggle) == 1;
-					StatusCommandInfo.ToggleText1 = AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.ToggleText1);
-					StatusCommandInfo.ToggleText2 = AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.ToggleText2);
+					StatusCommandInfo.Id = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.Id);
+					StatusCommandInfo.Key = AssetPostImporter.ImportString(BaseRow,(int)BaseColumn.Key);
+					StatusCommandInfo.Name = textData.Find(a => a.Id == AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.NameTextId)).Text;
+					StatusCommandInfo.Help = textData.Find(a => a.Id == AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.NameTextId)).Help;
+					StatusCommandInfo.Toggles = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.Toggle) == 1;
+					StatusCommandInfo.ToggleText1 = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.ToggleText1);
+					StatusCommandInfo.ToggleText2 = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.ToggleText2);
 					Data.OptionCommandData.Add(StatusCommandInfo);
 				}
 				
@@ -144,11 +144,11 @@ public class SystemImporter : AssetPostprocessor
 
 				for (int i = 1; i <= BaseSheet.LastRowNum; i++)
 				{
-					IRow Baserow = BaseSheet.GetRow(i);
+					IRow BaseRow = BaseSheet.GetRow(i);
 					var inputData = new SystemData.InputData();
-					inputData.Key = AssetPostImporter.ImportString(Baserow,(int)BaseColumn.Id);
-					inputData.KeyId = AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.Key);
-					inputData.Name = textData.Find(a => a.Id == AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.NameTextId)).Text;
+					inputData.Key = AssetPostImporter.ImportString(BaseRow,(int)BaseColumn.Id);
+					inputData.KeyId = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.Key);
+					inputData.Name = textData.Find(a => a.Id == AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.NameTextId)).Text;
 					
 					Data.InputDataList.Add(inputData);
 				}
@@ -157,12 +157,12 @@ public class SystemImporter : AssetPostprocessor
 
 				for (int i = 1; i <= BaseSheet.LastRowNum; i++)
 				{
-					IRow Baserow = BaseSheet.GetRow(i);
+					IRow BaseRow = BaseSheet.GetRow(i);
 
-					var KeyName = AssetPostImporter.ImportString(Baserow,(int)BaseDefineColumn.Key);
+					var KeyName = AssetPostImporter.ImportString(BaseRow,(int)BaseDefineColumn.Key);
 					if (KeyName == "initActors")
 					{
-						string[] list = AssetPostImporter.ImportString(Baserow,(int)BaseDefineColumn.Param).Split(',');
+						string[] list = AssetPostImporter.ImportString(BaseRow,(int)BaseDefineColumn.Param).Split(',');
 						foreach (string item in list)
 						{
 							Data.InitActors.Add(int.Parse(item));
@@ -170,27 +170,27 @@ public class SystemImporter : AssetPostprocessor
 					}
 					if (KeyName == "initCurrency")
 					{
-						Data.InitCurrency = AssetPostImporter.ImportNumeric(Baserow,(int)BaseDefineColumn.Param);
+						Data.InitCurrency = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseDefineColumn.Param);
 					}
 					if (KeyName == "trainCount")
 					{
-						Data.TrainCount = AssetPostImporter.ImportNumeric(Baserow,(int)BaseDefineColumn.Param);
+						Data.TrainCount = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseDefineColumn.Param);
 					}
 					if (KeyName == "alchemyCount")
 					{
-						Data.AlchemyCount = AssetPostImporter.ImportNumeric(Baserow,(int)BaseDefineColumn.Param);
+						Data.AlchemyCount = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseDefineColumn.Param);
 					}
 					if (KeyName == "recoveryCount")
 					{
-						Data.RecoveryCount = AssetPostImporter.ImportNumeric(Baserow,(int)BaseDefineColumn.Param);
+						Data.RecoveryCount = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseDefineColumn.Param);
 					}
 					if (KeyName == "battleCount")
 					{
-						Data.BattleCount = AssetPostImporter.ImportNumeric(Baserow,(int)BaseDefineColumn.Param);
+						Data.BattleCount = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseDefineColumn.Param);
 					}
 					if (KeyName == "resourceCount")
 					{
-						Data.ResourceCount = AssetPostImporter.ImportNumeric(Baserow,(int)BaseDefineColumn.Param);
+						Data.ResourceCount = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseDefineColumn.Param);
 					}
 				}
 			}
@@ -212,12 +212,12 @@ public class SystemImporter : AssetPostprocessor
 
 		for (int i = 1; i <= BaseSheet.LastRowNum; i++)
 		{
-			IRow Baserow = BaseSheet.GetRow(i);
+			IRow BaseRow = BaseSheet.GetRow(i);
 			var TextData = new TextData();
 
-			TextData.Id = AssetPostImporter.ImportNumeric(Baserow,(int)BaseTextColumn.Id);
-			TextData.Text = AssetPostImporter.ImportString(Baserow,(int)BaseTextColumn.Text).ToString();
-			TextData.Help = AssetPostImporter.ImportString(Baserow,(int)BaseTextColumn.Help).ToString();
+			TextData.Id = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseTextColumn.Id);
+			TextData.Text = AssetPostImporter.ImportString(BaseRow,(int)BaseTextColumn.Text).ToString();
+			TextData.Help = AssetPostImporter.ImportString(BaseRow,(int)BaseTextColumn.Help).ToString();
 			
 			textData.Add(TextData);
 		}

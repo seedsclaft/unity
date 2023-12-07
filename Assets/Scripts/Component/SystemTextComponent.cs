@@ -10,12 +10,12 @@ public class SystemTextComponent : MonoBehaviour
     public void Awake(){
         if (id != 0)
         {
-            TextData textData = DataSystem.System.GetTextData(id);
+            var textData = DataSystem.System.GetTextData(id);
             if (textData == null)
             {
                 Debug.Log("error" + gameObject.name);
             }
-            TextMeshProUGUI textMeshPro = gameObject.GetComponent<TextMeshProUGUI>();
+            var textMeshPro = gameObject.GetComponent<TextMeshProUGUI>();
             if (textMeshPro != null)
             {
                 textMeshPro.text = textData.Text;

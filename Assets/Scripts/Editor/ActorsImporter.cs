@@ -166,14 +166,14 @@ public class ActorsImporter : AssetPostprocessor {
 				BaseSheet = Book.GetSheetAt(1);
 				for (int i = 1; i <= BaseSheet.LastRowNum; i++)
 				{
-					IRow Baserow = BaseSheet.GetRow(i);
+					IRow BaseRow = BaseSheet.GetRow(i);
 					var LearningData = new LearningData();
 
-					int ActorId = AssetPostImporter.ImportNumeric(Baserow,(int)BaseLearningColumn.ActorId);
+					int ActorId = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseLearningColumn.ActorId);
 					ActorData Actor = Data.Data.Find(a => a.Id == ActorId);
 					
-					LearningData.SkillId = AssetPostImporter.ImportNumeric(Baserow,(int)BaseLearningColumn.SkillId);
-					LearningData.DeckNum = AssetPostImporter.ImportNumeric(Baserow,(int)BaseLearningColumn.DeckNum);
+					LearningData.SkillId = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseLearningColumn.SkillId);
+					LearningData.DeckNum = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseLearningColumn.DeckNum);
 					Actor.LearningSkills.Add(LearningData);
 				}
 

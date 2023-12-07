@@ -65,12 +65,12 @@ public class AnimationImporter : AssetPostprocessor {
 
 				for (int i = 1; i <= BaseSheet.LastRowNum; i++)
 				{
-					IRow Baserow = BaseSheet.GetRow(i);
+					IRow BaseRow = BaseSheet.GetRow(i);
 
 					var AnimationData = new AnimationData();
-					AnimationData.Id = AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.Id);
-					AnimationData.AnimationPath = AssetPostImporter.ImportString(Baserow,(int)BaseColumn.AnimationPath);
-					AnimationData.MakerEffect = AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.MakerEffect) == 1;
+					AnimationData.Id = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.Id);
+					AnimationData.AnimationPath = AssetPostImporter.ImportString(BaseRow,(int)BaseColumn.AnimationPath);
+					AnimationData.MakerEffect = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.MakerEffect) == 1;
 					
 					Data.Data.Add(AnimationData);
 				}
