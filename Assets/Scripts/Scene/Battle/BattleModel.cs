@@ -749,9 +749,9 @@ public class BattleModel : BaseModel
                 var actionResultInfo = new ActionResultInfo(subject,target,featureDates,actionInfo.Master.Id,actionInfo.Master.Scope == ScopeType.One);
                 
                 if (actionResultInfo.HpDamage > 0 
-                || actionResultInfo.AddedStates.Find(a => a.Master.Id == (int)StateType.Stun) != null
-                || actionResultInfo.AddedStates.Find(a => a.Master.Id == (int)StateType.Chain) != null
-                || actionResultInfo.AddedStates.Find(a => a.Master.Id == (int)StateType.Death) != null
+                || actionResultInfo.AddedStates.Find(a => a.Master.StateType == StateType.Stun) != null
+                || actionResultInfo.AddedStates.Find(a => a.Master.StateType == StateType.Chain) != null
+                || actionResultInfo.AddedStates.Find(a => a.Master.StateType == StateType.Death) != null
                 || actionResultInfo.DeadIndexList.Contains(actionResultInfo.TargetIndex))            
                 {
                     var chainStateInfos = CheckAttackedBattlerState(StateType.Chain,actionResultInfo.TargetIndex);
@@ -777,12 +777,12 @@ public class BattleModel : BaseModel
                 }
 
                 int noDamageCount = target.StateTurn(StateType.NoDamage);
-                int currentRemoveCount = actionResultInfo.RemovedStates.FindAll(a => a.Master.Id == (int)StateType.NoDamage).Count;
-                int currentDisplayCount = actionResultInfo.DisplayStates.FindAll(a => a.Master.Id == (int)StateType.NoDamage).Count;
+                int currentRemoveCount = actionResultInfo.RemovedStates.FindAll(a => a.Master.StateType == StateType.NoDamage).Count;
+                int currentDisplayCount = actionResultInfo.DisplayStates.FindAll(a => a.Master.StateType == StateType.NoDamage).Count;
                 if ((currentRemoveCount+currentDisplayCount) > 0)
                 {
-                    var removeCount = actionResultInfos.FindAll(a => a.RemovedStates.Find(b => b.Master.Id == (int)StateType.NoDamage) != null).Count;
-                    var displayCount = actionResultInfos.FindAll(a => a.DisplayStates.Find(b => b.Master.Id == (int)StateType.NoDamage) != null).Count;
+                    var removeCount = actionResultInfos.FindAll(a => a.RemovedStates.Find(b => b.Master.StateType == StateType.NoDamage) != null).Count;
+                    var displayCount = actionResultInfos.FindAll(a => a.DisplayStates.Find(b => b.Master.StateType == StateType.NoDamage) != null).Count;
                     
                     if ((removeCount+displayCount+1) >= noDamageDict[indexList[j]])
                     {
@@ -791,7 +791,7 @@ public class BattleModel : BaseModel
                         {
                             target.RemoveState(noDamageState,true);
                             actionResultInfo.AddRemoveState(noDamageState);
-                            var displayedResults = actionResultInfos.FindAll(a => a.DisplayStates.Find(b => b.Master.Id == (int)StateType.NoDamage) != null);
+                            var displayedResults = actionResultInfos.FindAll(a => a.DisplayStates.Find(b => b.Master.StateType == StateType.NoDamage) != null);
 
                             foreach (var displayedResult in displayedResults)
                             {
@@ -1446,7 +1446,7 @@ public class BattleModel : BaseModel
                             if (passiveInfo.Master.Scope == ScopeType.Self)
                             {
                                 var actionResultInfo = new ActionResultInfo(battlerInfo,battlerInfo,new List<SkillData.FeatureData>(){featureData},passiveInfo.Id);
-                                if (actionResultInfos.Find(a => a.RemovedStates.Find(b => b.Master.Id == (int)featureData.FeatureType) != null) != null)
+                                if (actionResultInfos.Find(a => a.RemovedStates.Find(b => b.Master.StateType == (StateType)featureData.FeatureType) != null) != null)
                                 {
                                     
                                 } else{
@@ -1466,7 +1466,7 @@ public class BattleModel : BaseModel
                                     {
 
                                         var actionResultInfo = new ActionResultInfo(battlerInfo,member,new List<SkillData.FeatureData>(){featureData},passiveInfo.Id);
-                                        if (actionResultInfos.Find(a => a.RemovedStates.Find(b => b.Master.Id == (int)featureData.FeatureType) != null) != null)
+                                        if (actionResultInfos.Find(a => a.RemovedStates.Find(b => b.Master.StateType == (StateType)featureData.FeatureType) != null) != null)
                                         {
                                             
                                         } else{

@@ -42,10 +42,6 @@ public class BattlerInfo
     public void SetLastSelectSkillId(int selectSkillId){
         _lastSelectSkillId = selectSkillId;
     }
-    public AttributeType GetSkillAttribute()
-    {
-        return DataSystem.Skills.Find(a => a.Id == _lastSelectSkillId).Attribute;
-    }
     private List<StateInfo> _stateInfos = new ();
     public List<StateInfo> StateInfos => _stateInfos;
 
@@ -81,7 +77,7 @@ public class BattlerInfo
     public BattlerInfo(ActorInfo actorInfo,int index){
         _charaId = actorInfo.ActorId;
         _level = actorInfo.Level;
-        StatusInfo statusInfo = new StatusInfo();
+        var statusInfo = new StatusInfo();
         statusInfo.SetParameter(
             actorInfo.CurrentParameter(StatusParamType.Hp),
             actorInfo.CurrentParameter(StatusParamType.Mp),
@@ -96,32 +92,23 @@ public class BattlerInfo
         {
             skill.SetIsUsed(false);
         }
-        /*
-        _decksData = actorInfo.DecksData.FindAll(a => a.LearningState == LearningState.Learned);
-        var dexkIndex = 0;
-        foreach (var decksData in _decksData)
-        {
-            decksData.SetIsUsed(false);
-            decksData.SetDeckIndex(dexkIndex);
-            dexkIndex++;
-        }
-        */
         _demigodParam = actorInfo.DemigodParam;
         _isActor = true;
         
         _actorInfo = actorInfo;
         _hp = actorInfo.CurrentHp;
         _mp = actorInfo.CurrentMp;
-        _lineIndex = 0;
+        _lineIndex = LineType.Front;
 
         if (_lastSelectSkillId == 0)
         {
             _lastSelectSkillId = _skills.Find(a => a.Id > 100).Id;
         }
-        if (_skills.Find(a => a.Master.FeatureDates.Find(b => b.FeatureType == FeatureType.AddState && b.Param1 == (int)StateType.Undead) != null) != null)
+        foreach (var kind in actorInfo.Master.Kinds)
         {
-            _kinds.Add(KindType.Undead);
+            _kinds.Add(kind);
         }
+        AddUndeadPassive();
         ResetAp(true);
     }
 
@@ -129,7 +116,7 @@ public class BattlerInfo
         _charaId = enemyData.Id;
         _level = lv;
         _bossFlag = isBoss;
-        StatusInfo statusInfo = new StatusInfo();
+        var statusInfo = new StatusInfo();
         int plusHpParam = isBoss == true ? 50 : 0;
         statusInfo.SetParameter(
             enemyData.BaseStatus.Hp + (int)Math.Floor(plusHpParam + lv + lv * enemyData.BaseStatus.Hp * 0.1f),
@@ -150,52 +137,47 @@ public class BattlerInfo
         {
             if (_level >= enemyData.LearningSkills[i].Level)
             {
-                SkillInfo skillInfo = new SkillInfo(enemyData.LearningSkills[i].SkillId);
+                var skillInfo = new SkillInfo(enemyData.LearningSkills[i].SkillId);
                 skillInfo.SetTriggerDates(enemyData.LearningSkills[i].TriggerDates);
                 skillInfo.SetWeight(enemyData.LearningSkills[i].Weight);
                 _skills.Add(skillInfo);
             }
         }
-        for (int i = 0;i < enemyData.Kinds.Count;i++)
+        foreach (var kind in enemyData.Kinds)
         {
-            _kinds.Add(enemyData.Kinds[i]);
+            _kinds.Add(kind);
         }
 
         ResetAp(true);
     }
 
+    private void AddUndeadPassive()
+    {
+        var IsUndead = _kinds.Contains(KindType.Undead);
+        if (IsUndead)
+        {
+            foreach (var skillId in new List<int>(){41,42})
+            {
+                var skillInfo = new SkillInfo(skillId);
+                _skills.Add(skillInfo);
+            }
+        }
+    }
+
     public void ResetAp(bool IsBattleStart)
     {
-        /* 再行動
-        if (IsState(StateType.ChainDamageUp))
-        {
-            List <StateInfo> stateInfos = GetStateInfoAll(StateType.ChainDamageUp);
-            for (var i = stateInfos.Count-1;i >= 0;i--)
-            {
-                StateInfo stateInfo = stateInfos[i];
-                stateInfo.UpdateTurn();
-                bool IsRemove = stateInfo.UpdateTurn();
-                if (IsRemove)
-                {
-                    RemoveState(stateInfo);
-                }
-            }
-            _ap = 0;
-            return;
-        }
-        */
         if (IsState(StateType.CounterAura))
         {
             _ap = 1;
             return;
         }
-        int rand = new Random().Next(-10, 10);
-        if (IsBattleStart == false)
+        int rand = 0;
+        if (IsBattleStart == true)
         {
-            rand = 0;
+            rand = new Random().Next(-10, 10);
         }
-        _ap = 500 - (CurrentSpd() + rand) * 4;
-        _ap = Math.Max(_ap,160);
+        _ap = 1000 - (CurrentSpd() + rand) * 8;
+        _ap = Math.Max(_ap,120);
     }
 
     public void UpdateAp()
@@ -210,7 +192,7 @@ public class BattlerInfo
         }
         if (IsState(StateType.Chain))
         {
-            _ap += 3;
+            _ap += 6;
             return;
         }
         if (IsState(StateType.CounterAura) || IsState(StateType.Benediction))
@@ -220,20 +202,20 @@ public class BattlerInfo
         }
         if (IsState(StateType.RevengeAct))
         {
-            _ap += 1;
+            _ap += 2;
             return;
         }
         if (IsState(StateType.Slow))
         {
-            _ap -= 2;
+            _ap -= 4;
             return;
         }
         if (IsState(StateType.Heist))
         {
-            _ap -= 6;
+            _ap -= 12;
             return;
         }
-        _ap -= 4;
+        _ap -= 8;
     }
 
     public void ChangeAp(int value)
@@ -269,7 +251,7 @@ public class BattlerInfo
         if (_hp <= 0)
         {
             _stateInfos.Clear();
-            StateInfo stateInfo = new StateInfo((int)StateType.Death,0,0,Index,Index,-1);
+            StateInfo stateInfo = new StateInfo(StateType.Death,0,0,Index,Index,-1);
             AddState(stateInfo,true);
         }
     }
@@ -306,17 +288,17 @@ public class BattlerInfo
 
     public bool IsState(StateType stateType)
     {
-        return _stateInfos.Find(a => a.StateId == (int)stateType) != null;
+        return _stateInfos.Find(a => a.StateType == stateType) != null;
     }
 
     public StateInfo GetStateInfo(StateType stateType)
     {
-        return _stateInfos.Find(a => a.StateId == (int)stateType);
+        return _stateInfos.Find(a => a.StateType == stateType);
     }
 
     public List<StateInfo> GetStateInfoAll(StateType stateType)
     {
-        return _stateInfos.FindAll(a => a.StateId == (int)stateType);
+        return _stateInfos.FindAll(a => a.StateType == stateType);
     }
 
     // ステートを消す
@@ -335,7 +317,7 @@ public class BattlerInfo
         int turns = 0;
         if (IsState(stateType))
         {
-            turns += _stateInfos.Find(a => a.StateId == (int)stateType).Turns;
+            turns += _stateInfos.Find(a => a.StateType == stateType).Turns;
         }
         return turns;
     }
@@ -345,7 +327,7 @@ public class BattlerInfo
         int effect = 0;
         if (IsState(stateType))
         {
-            effect += _stateInfos.Find(a => a.StateId == (int)stateType).Effect;
+            effect += _stateInfos.Find(a => a.StateType == stateType).Effect;
         }
         return effect;
     }
@@ -377,7 +359,7 @@ public class BattlerInfo
         }
         if (IsState(StateType.Undead))
         {
-            if ((StateType)stateInfo.Master.Id == StateType.Regenerate)
+            if ((StateType)stateInfo.Master.StateType == StateType.Regenerate)
             {
                 return false;
             }
@@ -387,11 +369,11 @@ public class BattlerInfo
             if (doAdd)
             {
                 _stateInfos.Add(stateInfo);
-                if (stateInfo.Master.Id == (int)StateType.MaxHpUp)
+                if (stateInfo.Master.StateType == StateType.MaxHpUp)
                 {
                     GainHp(stateInfo.Effect);
                 }
-                if (stateInfo.Master.Id == (int)StateType.MaxMpUp)
+                if (stateInfo.Master.StateType == StateType.MaxMpUp)
                 {
                     GainMp(stateInfo.Effect);
                 }
@@ -404,7 +386,7 @@ public class BattlerInfo
     public bool RemoveState(StateInfo stateInfo,bool doRemove)
     {
         bool IsRemoved = false;
-        int RemoveIndex = _stateInfos.FindIndex(a => a.StateId == stateInfo.StateId && (a.SkillId == stateInfo.SkillId || stateInfo.SkillId == -1));
+        int RemoveIndex = _stateInfos.FindIndex(a => a.StateType == stateInfo.StateType && (a.SkillId == stateInfo.SkillId || stateInfo.SkillId == -1));
         if (RemoveIndex > -1)
         {
             if (doRemove)
@@ -414,7 +396,7 @@ public class BattlerInfo
                     // 効果による解除は全て複数効果あっても全部解除する
                     for (int i = _stateInfos.Count-1;0 <= i;i--)
                     {
-                        if (_stateInfos[i].StateId == stateInfo.Master.Id)
+                        if (_stateInfos[i].StateType == (StateType)stateInfo.Master.StateType)
                         {
                             _stateInfos.Remove(_stateInfos[i]);
                         }
@@ -423,7 +405,7 @@ public class BattlerInfo
                 {
                     _stateInfos.RemoveAt(RemoveIndex);
                 }
-                if (stateInfo.StateId == (int)StateType.Death)
+                if (stateInfo.StateType == StateType.Death)
                 {
                     _preserveAlive = true;
                     if (_hp == 0)_hp = 1;
@@ -458,7 +440,7 @@ public class BattlerInfo
         for (var i = _stateInfos.Count-1;i >= 0;i--)
         {
             var stateInfo = _stateInfos[i];
-            if (stateInfo.Master.RemovalTiming == removalTiming && stateInfo.StateId == stateId)
+            if (stateInfo.Master.RemovalTiming == removalTiming && stateInfo.StateType == (StateType)stateId)
             {
                 bool IsRemove = stateInfo.UpdateTurn();
                 if (IsRemove)

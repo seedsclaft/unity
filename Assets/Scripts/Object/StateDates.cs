@@ -10,7 +10,7 @@ public class StateDates : ScriptableObject
 [Serializable]
 public class StateData
 {   
-    public int Id;
+    public StateType StateType;
     public string Name;
     public string Help;
     public string IconPath;

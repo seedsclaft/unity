@@ -1,10 +1,10 @@
 [System.Serializable]
 public class StateInfo {
     public StateData Master {
-        get {return DataSystem.States.Find(a => a.Id == _stateId);}
+        get {return DataSystem.States.Find(a => a.StateType == _stateType);}
     }
-    private int _stateId = 0;
-    public int StateId => _stateId;
+    private StateType _stateType = 0;
+    public StateType StateType => _stateType;
     private int _turns = 0;
     public int Turns{ get {return _turns;} set {_turns = value;}}
     private int _baseTurns = 0;
@@ -17,8 +17,8 @@ public class StateInfo {
     public int TargetIndex => _targetIndex;
     private int _skillId = 0;
     public int SkillId => _skillId;
-    public StateInfo(int stateId,int turns,int effect,int battlerId,int targetIndex,int skillId){
-        _stateId = stateId;
+    public StateInfo(StateType stateType,int turns,int effect,int battlerId,int targetIndex,int skillId){
+        _stateType = stateType;
         _turns = turns;
         _baseTurns = turns;
         _effect = effect;
@@ -34,21 +34,21 @@ public class StateInfo {
         {
             return false;
         }
-        if (stateInfo.StateId == (int)StateType.Death)
+        if (stateInfo.StateType == StateType.Death)
         {
-            return (stateInfo.StateId == _stateId);
+            return (stateInfo.StateType == _stateType);
         }
         if (stateInfo.Master.OverWrite)
         {
-            return (stateInfo.StateId == _stateId) && (stateInfo._skillId == _skillId);
+            return (stateInfo.StateType == _stateType) && (stateInfo._skillId == _skillId);
         }
-        return (stateInfo.StateId == _stateId);
+        return (stateInfo.StateType == _stateType);
     }
 
     public bool UpdateTurn()
     {
         // 挑発は確率でターンを終える
-        if ((int)StateType.Substitute == Master.Id)
+        if (StateType.Substitute == Master.StateType)
         {
             var per = 100 - (_turns * _effect);
             var rand = UnityEngine.Random.Range(0,100);

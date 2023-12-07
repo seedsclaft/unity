@@ -379,24 +379,27 @@ public class ActorInfo
         foreach (var skillInfo in _skills)
         {
             var rate = 1.0f;
-            switch (_attribute[(int)skillInfo.Attribute])
+            if (skillInfo.Attribute != AttributeType.None)
             {
-                case AttributeRank.S:
-                case AttributeRank.A:
-                    rate = 1.1f;
-                    break;
-                case AttributeRank.B:
-                case AttributeRank.C:
-                    rate = 0.9f;
-                    break;
-                case AttributeRank.D:
-                case AttributeRank.E:
-                case AttributeRank.F:
-                    rate = 0.8f;
-                    break;
-                case AttributeRank.G:
-                    rate = 0.7f;
-                    break;
+                switch (_attribute[(int)skillInfo.Attribute-1])
+                {
+                    case AttributeRank.S:
+                    case AttributeRank.A:
+                        rate = 1.1f;
+                        break;
+                    case AttributeRank.B:
+                    case AttributeRank.C:
+                        rate = 0.9f;
+                        break;
+                    case AttributeRank.D:
+                    case AttributeRank.E:
+                    case AttributeRank.F:
+                        rate = 0.8f;
+                        break;
+                    case AttributeRank.G:
+                        rate = 0.7f;
+                        break;
+                }
             }
             magicValue += (rate * 25);
         }

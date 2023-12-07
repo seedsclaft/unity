@@ -19,7 +19,7 @@ public class StateInfoComponent : MonoBehaviour
         {
             return;
         }
-        UpdateData(stateInfo.StateId);
+        UpdateData(stateInfo.StateType);
         if (description != null)
         {
             string effectText = stateInfo.Master.Help.Replace("\\d",stateInfo.Effect.ToString());
@@ -61,14 +61,14 @@ public class StateInfoComponent : MonoBehaviour
         }
     }
 
-    public void UpdateData(int stateId)
+    public void UpdateData(StateType stateType)
     {
-        if (stateId == 0)
+        if (stateType == 0)
         {
             return;
         }
 
-        StateData stateData = DataSystem.States.Find(a => a.Id == stateId);
+        StateData stateData = DataSystem.States.Find(a => a.StateType == stateType);
         if (stateData == null)
         {
             return;

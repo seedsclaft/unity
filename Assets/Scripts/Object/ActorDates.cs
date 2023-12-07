@@ -28,6 +28,7 @@ public class ActorData
     public int AwakenX;
     public int AwakenY;
     public float AwakenScale;
+    public List<KindType> Kinds;
     public List<LearningData> LearningSkills = new();
 }
 

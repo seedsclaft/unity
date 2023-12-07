@@ -468,8 +468,8 @@ abstract public class ListWindow : MonoBehaviour
     }
 
     public void InputSelectIndex(InputKeyType keyType){
-        int currentIndex = Index;
-        int selectIndex = Index;
+        var currentIndex = Index;
+        var selectIndex = Index;
         var plusKey = (horizontal == true) ? InputKeyType.Right : InputKeyType.Down;
         var minusKey = (horizontal == true) ? InputKeyType.Left : InputKeyType.Up;
         if (reverse)
@@ -477,25 +477,46 @@ abstract public class ListWindow : MonoBehaviour
             plusKey = (horizontal == true) ? InputKeyType.Left : InputKeyType.Up;
             minusKey = (horizontal == true) ? InputKeyType.Right : InputKeyType.Down;
         }
+        var nextIndex = Index;
         if (keyType == plusKey){
-            selectIndex = Index + 1;
+            for (int i = 0;i < _dataCount;i++)
+            {
+                nextIndex = Index + i + 1;
+                if (nextIndex >= _dataCount){
+                    nextIndex = i - Index;
+                }
+                var listItem = ObjectList[nextIndex].GetComponent<ListItem>();
+                if (listItem.Disable != null && listItem.Disable.activeSelf == false)
+                {
+                    break;
+                }
+            }
+            selectIndex = nextIndex;
             if (selectIndex >= _dataCount){
                 if (warpMode)
                 {
                     selectIndex = 0;
-                } else
-                {
                 }
             }
         } else
         if (keyType == minusKey){
-            selectIndex = Index - 1;
+            for (int i = 0;i < _dataCount;i++)
+            {
+                nextIndex = Index + i - 1;
+                if (nextIndex < 0){
+                    nextIndex = (_dataCount - Index) - i;
+                }
+                var listItem = ObjectList[nextIndex].GetComponent<ListItem>();
+                if (listItem.Disable != null && listItem.Disable.activeSelf == false)
+                {
+                    break;
+                }
+            }
+            selectIndex = nextIndex;
             if (selectIndex < 0){
                 if (warpMode)
                 {
                     selectIndex = _dataCount-1;
-                } else
-                {
                 }
             }
         }

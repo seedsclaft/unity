@@ -38,7 +38,10 @@ public class ActorsImporter : AssetPostprocessor {
 		Scale,
 		AwakenX,
 		AwakenY,
-		AwakenScale
+		AwakenScale,
+		Kind1,
+		Kind2,
+		Kind3,
     }
     enum BaseLearningColumn
     {
@@ -96,39 +99,39 @@ public class ActorsImporter : AssetPostprocessor {
 
 				for (int i = 1; i <= BaseSheet.LastRowNum; i++)
 				{
-					IRow Baserow = BaseSheet.GetRow(i);
+					IRow BaseRow = BaseSheet.GetRow(i);
 
 					var ActorData = new ActorData();
-					ActorData.Id = AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.Id);
-					ActorData.Name = textData.Find(a => a.Id == AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.NameId)).Text;
-					ActorData.SubName = textData.Find(a => a.Id == AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.NameId)).Help;
+					ActorData.Id = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.Id);
+					ActorData.Name = textData.Find(a => a.Id == AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.NameId)).Text;
+					ActorData.SubName = textData.Find(a => a.Id == AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.NameId)).Help;
 					
-					ActorData.ClassId = AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.ClassId);
-					ActorData.ImagePath = AssetPostImporter.ImportString(Baserow,(int)BaseColumn.ImagePath);
-					ActorData.InitLv = AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.InitLv);
-					ActorData.MaxLv = AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.MaxLv);
+					ActorData.ClassId = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.ClassId);
+					ActorData.ImagePath = AssetPostImporter.ImportString(BaseRow,(int)BaseColumn.ImagePath);
+					ActorData.InitLv = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.InitLv);
+					ActorData.MaxLv = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.MaxLv);
 
-					int InitHp = AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.InitHp);
-					int InitMp = AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.InitMp);
-					int InitAtk = AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.InitAtk);
-					int InitSpd = AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.InitSpd);
-					int InitDef = AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.InitDef);
+					int InitHp = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.InitHp);
+					int InitMp = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.InitMp);
+					int InitAtk = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.InitAtk);
+					int InitSpd = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.InitSpd);
+					int InitDef = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.InitDef);
 					ActorData.InitStatus = new StatusInfo();
 					ActorData.InitStatus.SetParameter(InitHp,InitMp,InitAtk,InitDef,InitSpd);
 
-					int NeedHp = AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.GrowthHp);
-					int NeedMp = AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.GrowthMp);
-					int NeedAtk = AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.GrowthAtk);
-					int NeedSpd = AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.GrowthSpd);
-					int NeedDef = AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.GrowthDef);
+					int NeedHp = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.GrowthHp);
+					int NeedMp = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.GrowthMp);
+					int NeedAtk = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.GrowthAtk);
+					int NeedSpd = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.GrowthSpd);
+					int NeedDef = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.GrowthDef);
 					ActorData.NeedStatus = new StatusInfo();
 					ActorData.NeedStatus.SetParameter(NeedHp,NeedMp,NeedAtk,NeedDef,NeedSpd);
 
-					int Element1 = AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.Element1);
-					int Element2 = AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.Element2);
-					int Element3 = AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.Element3);
-					int Element4 = AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.Element4);
-					int Element5 = AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.Element5);
+					int Element1 = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.Element1);
+					int Element2 = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.Element2);
+					int Element3 = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.Element3);
+					int Element4 = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.Element4);
+					int Element5 = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.Element5);
 					ActorData.Attribute = new List<AttributeRank>();
 					ActorData.Attribute.Add((AttributeRank)Element1);
 					ActorData.Attribute.Add((AttributeRank)Element2);
@@ -136,18 +139,25 @@ public class ActorsImporter : AssetPostprocessor {
 					ActorData.Attribute.Add((AttributeRank)Element4);
 					ActorData.Attribute.Add((AttributeRank)Element5);
 
-					int X = AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.X);
-					int Y = AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.Y);
-					float Scale = AssetPostImporter.ImportFloat(Baserow,(int)BaseColumn.Scale);
-					int AwakenX = AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.AwakenX);
-					int AwakenY = AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.AwakenY);
-					float AwakenScale = AssetPostImporter.ImportFloat(Baserow,(int)BaseColumn.AwakenScale);
+					int X = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.X);
+					int Y = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.Y);
+					float Scale = AssetPostImporter.ImportFloat(BaseRow,(int)BaseColumn.Scale);
+					int AwakenX = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.AwakenX);
+					int AwakenY = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.AwakenY);
+					float AwakenScale = AssetPostImporter.ImportFloat(BaseRow,(int)BaseColumn.AwakenScale);
 					ActorData.X = X;
 					ActorData.Y = Y;
 					ActorData.Scale = Scale;
 					ActorData.AwakenX = AwakenX;
 					ActorData.AwakenY = AwakenY;
 					ActorData.AwakenScale = AwakenScale;
+					ActorData.Kinds = new List<KindType>();
+					KindType Kind1 = (KindType)AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.Kind1);
+					if (Kind1 != 0) ActorData.Kinds.Add(Kind1);
+					KindType Kind2 = (KindType)AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.Kind2);
+					if (Kind2 != 0) ActorData.Kinds.Add(Kind2);
+					KindType Kind3 = (KindType)AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.Kind3);
+					if (Kind3 != 0) ActorData.Kinds.Add(Kind3);
 
 					
 					Data.Data.Add(ActorData);

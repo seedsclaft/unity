@@ -17,8 +17,8 @@ public class BasePresenter
 
     public bool CheckAdvStageEvent(EventTiming eventTiming,System.Action endCall,int selectActorId = 0)
     {
-        bool isAbort = false;
-        int advId = -1;
+        var isAbort = false;
+        var advId = -1;
         var stageEvents = _model.StageEvents(eventTiming);
         if (stageEvents.Count > 0)
         {
@@ -82,6 +82,4 @@ public class BasePresenter
         }
         return isReborn;
     }
-    
-    
 }

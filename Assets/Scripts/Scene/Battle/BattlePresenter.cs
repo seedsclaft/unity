@@ -539,10 +539,10 @@ public class BattlePresenter : BasePresenter
                             foreach (var resultInfo in actionInfo.ActionResults)
                             {
                                 if (resultInfo.TargetIndex >= 0 && (resultInfo.HpDamage > 0 
-                                || resultInfo.DisplayStates.Find(a => (StateType)a.Master.Id == StateType.NoDamage) != null
-                                || resultInfo.RemovedStates.Find(a => (StateType)a.Master.Id == StateType.NoDamage) != null
+                                || resultInfo.DisplayStates.Find(a => (StateType)a.Master.StateType == StateType.NoDamage) != null
+                                || resultInfo.RemovedStates.Find(a => (StateType)a.Master.StateType == StateType.NoDamage) != null
                                 || resultInfo.AddedStates.Find(a => a.Master.Abnormal == true) != null)
-                                || resultInfo.AddedStates.Find(a => (StateType)a.Master.Id == StateType.Chain) != null)
+                                || resultInfo.AddedStates.Find(a => (StateType)a.Master.StateType == StateType.Chain) != null)
                                 {
                                     targetIndex = resultInfo.TargetIndex;
                                 }

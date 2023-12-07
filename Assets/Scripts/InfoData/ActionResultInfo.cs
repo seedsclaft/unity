@@ -60,7 +60,7 @@ public class ActionResultInfo
             }
             foreach (var removeState in _removedStates)
             {
-                if (removeState.StateId == (int)StateType.Death)
+                if (removeState.StateType == StateType.Death)
                 {
                     _aliveIndexList.Add(removeState.TargetIndex);
                 }
@@ -541,30 +541,30 @@ public class ActionResultInfo
 
     private void MakeAddState(BattlerInfo subject,BattlerInfo target,SkillData.FeatureData featureData,bool checkCounter = false)
     {
-        var stateInfo = new StateInfo(featureData.Param1,featureData.Param2,featureData.Param3,subject.Index,target.Index,_skillIndex);
-        if (stateInfo.Master.Id == (int)StateType.CounterAura || stateInfo.Master.Id == (int)StateType.Benediction)
+        var stateInfo = new StateInfo((StateType)featureData.Param1,featureData.Param2,featureData.Param3,subject.Index,target.Index,_skillIndex);
+        if (stateInfo.Master.StateType == StateType.CounterAura || stateInfo.Master.StateType == StateType.Benediction)
         {
             stateInfo.Turns = 200 - subject.Status.Spd * 2;
         } else
-        if (stateInfo.Master.Id == (int)StateType.Demigod)
+        if (stateInfo.Master.StateType == StateType.Demigod)
         {
             stateInfo.Effect = subject.DemigodParam;
         } else
-        if (stateInfo.Master.Id == (int)StateType.Death)
+        if (stateInfo.Master.StateType == StateType.Death)
         {
             _hpDamage = target.Hp;
         }
         bool IsAdded = target.AddState(stateInfo,false);
         if (IsAdded)
         {
-            if (stateInfo.Master.Id == (int)StateType.RemoveBuff)
+            if (stateInfo.Master.StateType == StateType.RemoveBuff)
             {
                 var removeStates = target.GetRemovalBuffStates();
                 foreach (var removeState in removeStates)
                 {
                     SkillData.FeatureData removeFeature = new SkillData.FeatureData();
                     removeFeature.FeatureType = FeatureType.RemoveState;
-                    removeFeature.Param1 = removeState.Master.Id;
+                    removeFeature.Param1 = (int)removeState.Master.StateType;
                     MakeRemoveState(subject,target,removeFeature);
                 }
             } else
@@ -577,7 +577,7 @@ public class ActionResultInfo
             {
                 if (stateInfo.Master.Abnormal)
                 {
-                    StateInfo barrierState = new StateInfo((int)StateType.Barrier,0,0,0,target.Index,-1);
+                    StateInfo barrierState = new StateInfo(StateType.Barrier,0,0,0,target.Index,-1);
                     _displayStates.Add(barrierState);
                 }
             }
@@ -605,7 +605,7 @@ public class ActionResultInfo
     private void MakeRemoveState(BattlerInfo subject,BattlerInfo target,SkillData.FeatureData featureData)
     {
         // skillId -1のRemoveは強制で解除する
-        StateInfo stateInfo = new StateInfo(featureData.Param1,featureData.Param2,featureData.Param3,subject.Index,target.Index,-1);
+        StateInfo stateInfo = new StateInfo((StateType)featureData.Param1,featureData.Param2,featureData.Param3,subject.Index,target.Index,-1);
         bool IsRemoved = target.RemoveState(stateInfo,false);
         if (IsRemoved)
         {
@@ -616,7 +616,7 @@ public class ActionResultInfo
     private void MakeRemoveStatePassive(BattlerInfo subject,BattlerInfo target,SkillData.FeatureData featureData)
     {
         // パッシブはそのパッシブスキルのみ解除する
-        StateInfo stateInfo = new StateInfo(featureData.Param1,featureData.Param2,featureData.Param3,subject.Index,target.Index,_skillIndex);
+        StateInfo stateInfo = new StateInfo((StateType)featureData.Param1,featureData.Param2,featureData.Param3,subject.Index,target.Index,_skillIndex);
         bool IsRemoved = target.RemoveState(stateInfo,false);
         if (IsRemoved)
         {

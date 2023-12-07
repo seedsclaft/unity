@@ -77,7 +77,7 @@ public class StatesImporter : AssetPostprocessor {
 					IRow BaseRow = BaseSheet.GetRow(i);
 
 					var StateData = new StateData();
-					StateData.Id = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.Id);
+					StateData.StateType = (StateType)AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.Id);
 					StateData.Name = textData.Find(a => a.Id == AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.NameId)).Text;
 					StateData.Help = textData.Find(a => a.Id == AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.NameId)).Help;
 					StateData.IconPath = AssetPostImporter.ImportString(BaseRow,(int)BaseColumn.IconIndex);

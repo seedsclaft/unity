@@ -201,7 +201,7 @@ public class BattleSelectCharacter : MonoBehaviour
         {
             displaySelectCard.gameObject.SetActive(false);
         }
-        SelectMagicConditionTab(0);
+        SelectMagicConditionTab(_selectCharacterTabType);
         deckMagicList.UpdateSelectIndex(skillInfoData.Count > 0 ? 0 : -1);
         DisplaySelectCard();
         RefreshCardWidth();

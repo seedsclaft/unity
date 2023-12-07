@@ -129,7 +129,7 @@ public class BaseModel
 
     public void ApplyConfigData()
     {
-        SaveConfigInfo saveConfigInfo = GameSystem.ConfigData;
+        var saveConfigInfo = GameSystem.ConfigData;
         if (saveConfigInfo != null)
         {
             ChangeBGMValue(saveConfigInfo.BgmVolume);
@@ -146,8 +146,6 @@ public class BaseModel
         }
     }
 
-    public float BGMVolume(){ return Ryneus.SoundManager.Instance.BGMVolume;}
-    public bool BGMMute(){ return Ryneus.SoundManager.Instance.BGMMute;}
     public void ChangeBGMValue(float bgmVolume)
     {
         Ryneus.SoundManager.Instance.BGMVolume = bgmVolume;
@@ -161,13 +159,12 @@ public class BaseModel
             ChangeBGMMute(true);
         }
     }
+
     public void ChangeBGMMute(bool bgmMute)
     {
         Ryneus.SoundManager.Instance.BGMMute = bgmMute;
         Ryneus.SoundManager.Instance.UpdateBgmMute();
     }
-    public float SEVolume(){ return Ryneus.SoundManager.Instance.SeVolume;}
-    public bool SEMute(){ return Ryneus.SoundManager.Instance.SeMute;}
     
     public void ChangeSEValue(float seVolume)
     {
@@ -182,12 +179,14 @@ public class BaseModel
             ChangeSEMute(true);
         }
     }
+
     public void ChangeSEMute(bool seMute)
     {
         Ryneus.SoundManager.Instance.SeMute = seMute;
     }
 
     public int GraphicIndex(){ return GameSystem.ConfigData.GraphicIndex; }
+
     public void ChangeGraphicIndex(int graphicIndex)
     {
         GameSystem.ConfigData.GraphicIndex = graphicIndex;
@@ -413,7 +412,7 @@ public class BaseModel
                         var target = StageMembers()[i];
                         if (featureData.FeatureType == FeatureType.AddState)
                         {
-                            var stateInfo = new StateInfo(featureData.Param1,featureData.Param2,featureData.Param3,-1,0,skill.Id);
+                            var stateInfo = new StateInfo((StateType)featureData.Param1,featureData.Param2,featureData.Param3,-1,0,skill.Id);
                             CurrentAlcana.SetAlacanaState(stateInfo);
                         }
                         if (featureData.FeatureType == FeatureType.HpHeal)
@@ -453,7 +452,7 @@ public class BaseModel
                     {
                         if (skill.Master.TargetType == TargetType.Opponent)
                         {
-                            var stateInfo = new StateInfo(featureData.Param1,featureData.Param2,featureData.Param3,-1,0,skill.Id);
+                            var stateInfo = new StateInfo((StateType)featureData.Param1,featureData.Param2,featureData.Param3,-1,0,skill.Id);
                             CurrentStage.ChangeCurrentTroopAddState(stateInfo);
                         }
                     }
