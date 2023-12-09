@@ -4,15 +4,14 @@ using System.Collections.Generic;
 public class MainMenuModel : BaseModel
 {
     public List<ListData> Stages(){
-        var list = new List<ListData>();
+        var list = new List<StageInfo>();
         var stages = DataSystem.Stages.FindAll(a => a.Selectable);
         foreach (var stage in stages)
         {
             var stageInfo = new StageInfo(stage);
-            var listData = new ListData(stageInfo);
-            list.Add(listData);
+            list.Add(stageInfo);
         }
-        return list;
+        return MakeListData(list);
     }
 
     public void InitPartyInfo()

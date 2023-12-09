@@ -66,13 +66,7 @@ public class TacticsEnemy : ListItem ,IListViewItem
         var data = (TroopInfo)ListData.Data;
         enemyInfoComponent.Clear();
         enemyInfoComponent.UpdateInfo(data.BossEnemy);
-        var list = new List<ListData>();
-        foreach (var itemInfo in data.GetItemInfos)
-        {
-            var itemData = new ListData(itemInfo);
-            list.Add(itemData);
-        }
-        getItemList.SetData(list);
+        getItemList.SetData(ListData.MakeListData(data.GetItemInfos));
         getItemList.SetSelectedHandler(() => {
             _getItemIndex = getItemList.Index;
             if (_getItemInfoSelectHandler != null)

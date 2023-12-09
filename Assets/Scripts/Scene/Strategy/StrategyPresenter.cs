@@ -210,7 +210,7 @@ public class StrategyPresenter : BasePresenter
         }
         if (_strategyState == StrategyState.InBattle)
         {
-            _view.ShowEnemyList(_model.TroopInfoListDates(_model.CurrentTroopInfo()),_model.EnableBattleSkip());
+            _view.ShowEnemyList(ListData.MakeListData(_model.CurrentTroopInfo()),_model.EnableBattleSkip());
             SetHelpInputSkipEnable();
         }
         var stageEvents = _model.StageEvents(EventTiming.StartStrategy);

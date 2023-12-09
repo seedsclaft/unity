@@ -55,11 +55,7 @@ public class ConfirmInfo
         var list = new List<ListData>();
         if (_skillInfos != null)
         {
-            foreach (var skillInfo in _skillInfos)
-            {
-                var data = new ListData(skillInfo);
-                list.Add(data);
-            }
+            return ListData.MakeListData(_skillInfos);
         }
         return list;
     }

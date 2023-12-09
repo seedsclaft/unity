@@ -3,17 +3,12 @@
 public class TitleModel : BaseModel
 {
     public List<ListData> TitleCommand() {
-        var list = new List<ListData>();
-        foreach (var commandData in DataSystem.TitleCommand)
-        {
-            var listData = new ListData(commandData);
-            list.Add(listData);
-        }
+        var listDates = MakeListData(DataSystem.TitleCommand);
         if (!ExistsLoadFile())
         {
-            list[1].SetEnable(false);
+            listDates[1].SetEnable(false);
         }
-        return list;
+        return listDates;
     }
 
     public bool ExistsLoadFile()

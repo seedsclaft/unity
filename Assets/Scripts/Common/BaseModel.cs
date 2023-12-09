@@ -39,24 +39,7 @@ public class BaseModel
 
     public List<ListData> CastActorInfos(List<ActorInfo> actorInfos)
     {
-        var list = new List<ListData>();
-        foreach (var actorInfo in actorInfos)
-        {
-            var listData = new ListData(actorInfo);
-            list.Add(listData);
-        }
-        return list;
-    }
-    
-    public List<ListData> CastGetItemInfos(List<GetItemInfo> getItemInfos)
-    {
-        var list = new List<ListData>();
-        foreach (var getItemInfo in getItemInfos)
-        {
-            var listData = new ListData(getItemInfo);
-            list.Add(listData);
-        }
-        return list;
+        return MakeListData(actorInfos);
     }
 
     public void LostActors(List<ActorInfo> lostMembers)
@@ -291,23 +274,19 @@ public class BaseModel
         return menuCommandDates;
     }
 
+    public List<ListData> MakeListData<T>(List<T> dataList)
+    {
+        return ListData.MakeListData(dataList);
+    }
+
     public List<ListData> ConfirmCommand()
     {
-        var list = new List<ListData>();
-        foreach (var commandData in BaseConfirmCommand(3050,3051))
-        {
-            var listData = new ListData(commandData);
-            list.Add(listData);
-        }
-        return list;
+        return MakeListData(BaseConfirmCommand(3050,3051));
     }
 
     public List<ListData> NoChoiceConfirmCommand()
     {
-        var list = new List<ListData>(){};
-        var listData = new ListData(BaseConfirmCommand(3052,0)[0]);
-        list.Add(listData);
-        return list;
+        return MakeListData(new List<SystemData.CommandData>(){BaseConfirmCommand(3052,0)[0]});
     }
 
     public List<SkillInfo> BasicSkillInfos(GetItemInfo getItemInfo)
@@ -590,28 +569,6 @@ public class BaseModel
         SetResumeStage(false);
         SaveSystem.SaveStart(GameSystem.CurrentData);
     }
-
-    public ListData CastData(object data)
-    {
-        return new ListData(data);
-    }
-
-    public List<ListData> TroopInfoListDates(TroopInfo data)
-    {
-        var list = new List<ListData>();
-        list.Add(CastData(data));
-        return list;
-    }
-
-    public List<ListData> TroopInfoListDates(List<TroopInfo> dataList)
-    {
-        var list = new List<ListData>();
-        foreach (var data in dataList)
-        {
-            list.Add(CastData(data));
-        }
-        return list;
-    }
     
     public List<ListData> RebornSkillInfos(ActorInfo actorInfo)
     {
@@ -640,14 +597,7 @@ public class BaseModel
         skillInfos.AddRange(sortList1);
         skillInfos.AddRange(sortList2);
         skillInfos.AddRange(sortList3);
-        var list = new List<ListData>();
-        var idx = 0;
-        foreach (var skillInfo in skillInfos)
-        {
-            var listData = new ListData(skillInfo,idx);
-            list.Add(listData);
-        }
-        return list;
+        return MakeListData(skillInfos);
     }
 
     public List<ActorInfo> EvaluateMembers()

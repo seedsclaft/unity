@@ -166,7 +166,7 @@ public class TacticsPresenter :BasePresenter
         _view.SetSideMenu(_model.SideMenu());
         _view.SetSelectCharacter(_model.StageMembers(),_model.ConfirmCommand(),_model.CommandRankInfo());
         _view.SetStageInfo(_model.CurrentStage);
-        _view.SetEnemies(_model.TroopInfoListDates(_model.TacticsTroops()));
+        _view.SetEnemies(ListData.MakeListData(_model.TacticsTroops()));
 
         _view.SetTacticsCommand(_model.TacticsCommand());
         _view.HideCommandList();

@@ -158,7 +158,7 @@ public class StrategyModel : BaseModel
             actorInfo.ClearTacticsCommand();
         }
 
-        _resultItemInfos = CastGetItemInfos(getItemInfos);
+        _resultItemInfos = ListData.MakeListData(getItemInfos);
     }
 
     public List<GetItemInfo> CommandCountResults(List<ActorInfo> actorInfos)
@@ -292,7 +292,7 @@ public class StrategyModel : BaseModel
                 }
             }
         }
-        return CastGetItemInfos(getItemInfos);
+        return ListData.MakeListData(getItemInfos);
     }
 
     public int BattleEnemyIndex(bool inBattle)
@@ -359,13 +359,7 @@ public class StrategyModel : BaseModel
 
     public List<ListData> ResultCommand()
     {
-        var list = new List<ListData>();
-        foreach (var commandData in BaseConfirmCommand(3040,6))
-        {
-            var listData = new ListData(commandData);
-            list.Add(listData);
-        }
-        return list;
+        return MakeListData(BaseConfirmCommand(3040,6));
     }
 
     public bool IsBonusTactics(int actorId)

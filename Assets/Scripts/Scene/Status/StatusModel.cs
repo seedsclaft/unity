@@ -84,14 +84,7 @@ public class StatusModel : BaseModel
         skillInfos.AddRange(sortList1);
         skillInfos.AddRange(sortList2);
         skillInfos.AddRange(sortList3);
-        var list = new List<ListData>();
-        var idx = 0;
-        foreach (var skillInfo in skillInfos)
-        {
-            var listData = new ListData(skillInfo,idx);
-            list.Add(listData);
-        }
-        return list;
+        return MakeListData(skillInfos);
     }
 
     public void SelectAddActor()

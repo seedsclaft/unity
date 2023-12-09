@@ -6,8 +6,7 @@ using Slot;
 
 public class SlotView : BaseView
 {
-
-    [SerializeField] private SlotInfoList slotInfoList = null;
+    [SerializeField] private BaseList slotInfoList = null;
     private new System.Action<SlotViewEvent> _commandData = null;
 
     public override void Initialize() 
@@ -35,7 +34,7 @@ public class SlotView : BaseView
 
     public void SetSlotInfo(Dictionary<int,SlotInfo> slotInfo) 
     {
-        slotInfoList.Initialize(slotInfo,null);
+        slotInfoList.Initialize();
         SetInputHandler(slotInfoList.GetComponent<IInputHandlerEvent>());
         slotInfoList.SetInputHandler(InputKeyType.Decide,() => CallSlotInfoLock());
         slotInfoList.SetInputHandler(InputKeyType.Cancel,() => BackEvent());
@@ -44,10 +43,9 @@ public class SlotView : BaseView
         slotInfoList.Activate();
     }
 
-    public void CommandRefresh(Dictionary<int,SlotInfo> slotInfo)
+    public void CommandRefresh(List<ListData> slotInfo)
     {
         slotInfoList.SetData(slotInfo);
-        slotInfoList.Refresh(slotInfoList.Index);
     }
 
     private void CallSlotInfoLock()

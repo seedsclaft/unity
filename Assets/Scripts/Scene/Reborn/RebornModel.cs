@@ -67,7 +67,7 @@ public class RebornModel : BaseModel
             idx++;
         }
         _actorInfos = list;
-        return list;
+        return _actorInfos;
     }
 
 

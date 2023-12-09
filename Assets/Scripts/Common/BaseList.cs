@@ -45,7 +45,7 @@ public class BaseList : ListWindow , IInputHandlerEvent
         }
     }
     
-    public void Initialize(int listCount)
+    public void Initialize(int listCount = 0)
     {
         if (_isInit)
         {
@@ -128,10 +128,32 @@ public class ListData
     {
         _selected = selected;
     }
+
     public ListData(object data,int index = 0,bool enable = true)
     {
         _data = data;
         _index = index;
         _enable = enable;
+    }
+    
+    public static List<ListData> MakeListData<T>(T data)
+    {
+        var list = new List<ListData>();
+        var listData = new ListData(data,0);
+        list.Add(listData);
+        return list;
+    }
+
+    public static List<ListData> MakeListData<T>(List<T> dataList)
+    {
+        var list = new List<ListData>();
+        var idx = 0;
+        foreach (var data in dataList)
+        {
+            var listData = new ListData(data,idx);
+            list.Add(listData);
+            idx++;
+        }
+        return list;
     }
 }

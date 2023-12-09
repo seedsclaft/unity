@@ -49,19 +49,16 @@ public class TacticsModel : BaseModel
 
     public List<ListData> TacticsCommand()
     {
-        var list = new List<ListData>();
-        var idx = 0;
-        foreach (var commandData in DataSystem.TacticsCommand)
+        var commandListDates = MakeListData(DataSystem.TacticsCommand);
+        foreach (var commandListData in commandListDates)
         {
-            var listData = new ListData(commandData,idx);
+            var commandData = (SystemData.CommandData)commandListData.Data;
             if (_tacticsCommandEnables.ContainsKey((TacticsCommandType)commandData.Id))
             {
-                listData.SetEnable(_tacticsCommandEnables[(TacticsCommandType)commandData.Id]);
+                commandListData.SetEnable(_tacticsCommandEnables[(TacticsCommandType)commandData.Id]);
             }
-            list.Add(listData);
-            idx++;
         }
-        return list;
+        return commandListDates;
     }
 
     public ListData ChangeEnableCommandData(int index,bool enable)
@@ -243,14 +240,7 @@ public class TacticsModel : BaseModel
             skillInfo.SetLearningCost(TacticsUtility.AlchemyCost(actorInfo,skillInfo.Attribute,StageMembers()));
             skillInfos.Add(skillInfo);
         }
-        var list = new List<ListData>();
-        var idx = 0;
-        foreach (var skillInfo in skillInfos)
-        {
-            var listData = new ListData(skillInfo,idx);
-            list.Add(listData);
-        }
-        return list;
+        return MakeListData(skillInfos);
     }
 
     public bool CheckCanSelectAlchemy(AttributeType attributeType)
@@ -429,17 +419,16 @@ public class TacticsModel : BaseModel
 
     public List<ListData> TacticsCharacterData()
     {
-        var list = new List<ListData>();
+        var list = new List<TacticsActorInfo>();
         foreach (var member in StageMembers())
         {
             var tacticsActorInfo = new TacticsActorInfo();
             tacticsActorInfo.TacticsCommandType = _tacticsCommandType;
             tacticsActorInfo.ActorInfo = member;
             tacticsActorInfo.ActorInfos = StageMembers();
-            var listData = new ListData(tacticsActorInfo);
-            list.Add(listData);
+            list.Add(tacticsActorInfo);
         }
-        return list;
+        return MakeListData(list);
     }
 
     public string TacticsCommandInputInfo()

@@ -275,14 +275,7 @@ public class BattleModel : BaseModel
         skillInfos.AddRange(sortList1);
         skillInfos.AddRange(sortList2);
         skillInfos.AddRange(sortList3);
-        var list = new List<ListData>();
-        var idx = 0;
-        foreach (var skillInfo in skillInfos)
-        {
-            var listData = new ListData(skillInfo,idx);
-            list.Add(listData);
-        }
-        return list;
+        return MakeListData(skillInfos);
     }
 
     public int SelectSkillIndex(List<ListData> skillInfos)
@@ -2071,11 +2064,6 @@ public class BattleModel : BaseModel
 
     public List<ListData> SelectCharacterConditions()
     {
-        var list = new List<ListData>();
-        foreach (var stateInfo in _currentBattler.StateInfos)
-        {
-            var listData = new ListData(stateInfo);
-        }
-        return list;
+        return MakeListData(_currentBattler.StateInfos);
     }
 }

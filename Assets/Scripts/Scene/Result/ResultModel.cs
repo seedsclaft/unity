@@ -9,17 +9,16 @@ public class ResultModel : BaseModel
 {
     public List<ListData> ResultCommand()
     {
-        var list = new List<ListData>();
-        foreach (var commandData in BaseConfirmCommand(3040,6))
+        var listDates = MakeListData(BaseConfirmCommand(3040,6));
+        foreach (var listDate in listDates)
         {
-            var listData = new ListData(commandData);
-            if (commandData.Id == 1)
+            var data = (SystemData.CommandData)listDate.Data;
+            if (data.Id == 1)
             {
-                listData.SetEnable(false);
+                listDate.SetEnable(false);
             }
-            list.Add(listData);
         }
-        return list;
+        return listDates;
     }
 
     public string EndingType()
@@ -41,17 +40,16 @@ public class ResultModel : BaseModel
 
     public List<ListData> StageEndCommand()
     {
-        var list = new List<ListData>();
-        foreach (var commandData in BaseConfirmCommand(16020,6))
+        var listDates = MakeListData(BaseConfirmCommand(16020,6));
+        foreach (var listDate in listDates)
         {
-            var listData = new ListData(commandData);
-            if (commandData.Id == 1)
+            var data = (SystemData.CommandData)listDate.Data;
+            if (data.Id == 1)
             {
-                listData.SetEnable(false);
+                listDate.SetEnable(false);
             }
-            list.Add(listData);
         }
-        return list;
+        return listDates;
     }
 
     public void SetActors()
@@ -198,20 +196,18 @@ public class ResultModel : BaseModel
 
     private int _rebornActorIndex = 0;
     
-    public List<ListData> ActorInfos(){        
-        var list = new List<ListData>();
-        var idx = 0;
-        foreach (var actorInfo in CurrentData.PlayerInfo.SaveActorList)
+    public List<ListData> ActorInfos()
+    {
+        var listDates = MakeListData(CurrentData.PlayerInfo.SaveActorList);
+        foreach (var listDate in listDates)
         {
-            var listData = new ListData(actorInfo,idx);
+            var actorInfo = (ActorInfo)listDate.Data;
             if (actorInfo.Master.ClassId == DataSystem.Actors.Find(a => a.Id == CurrentStage.SelectActorIds[0]).ClassId)
             {
-                listData.SetEnable(false);
+                listDate.SetEnable(false);
             }
-            list.Add(listData);
-            idx++;
         }
-        return list;
+        return listDates;
     }
 
     public List<int> DisableActorIndexes()

@@ -6,17 +6,16 @@ public class RebornResultModel : BaseModel
 {
     public List<ListData> RebornResultCommand()
     {
-        var list = new List<ListData>();
-        foreach (var commandData in BaseConfirmCommand(3040,6))
+        var commandListDates = MakeListData(BaseConfirmCommand(3040,6));
+        foreach (var commandListData in commandListDates)
         {
-            var listData = new ListData(commandData);
-            if (commandData.Id == 1)
+            var listData = (SystemData.CommandData)commandListData.Data;
+            if (listData.Id == 1)
             {
-                listData.SetEnable(false);
+                commandListData.SetEnable(false);
             }
-            list.Add(listData);
         }
-        return list;
+        return commandListDates;
     }
 
     public List<ActorInfo> RebornMembers()
@@ -66,6 +65,6 @@ public class RebornResultModel : BaseModel
             getItemInfo.MakeQuestRebornResult(actorName,0,upStatusCount);
             getItemInfos.Add(getItemInfo);
         }
-        return CastGetItemInfos(getItemInfos);
+        return ListData.MakeListData(getItemInfos);
     }
 }

@@ -52,23 +52,11 @@ public class EnemyInfoModel : BaseModel
         var skillInfos = CurrentEnemy.Skills;//.FindAll(a => a.Master.Attribute != AttributeType.None);
         skillInfos.ForEach(a => a.SetEnable(true));
         skillInfos.Sort((a,b) => {return a.Id - b.Id;});
-        var list = new List<ListData>();
-        var idx = 0;
-        foreach (var skillInfo in skillInfos)
-        {
-            var listData = new ListData(skillInfo,idx);
-            list.Add(listData);
-        }
-        return list;
+        return MakeListData(skillInfos);
     }
 
     public List<ListData> SelectCharacterConditions()
     {
-        var list = new List<ListData>();
-        foreach (var stateInfo in CurrentEnemy.StateInfos)
-        {
-            var listData = new ListData(stateInfo);
-        }
-        return list;
+        return MakeListData(CurrentEnemy.StateInfos);
     }
 }

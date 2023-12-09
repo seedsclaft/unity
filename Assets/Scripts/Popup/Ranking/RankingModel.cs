@@ -19,13 +19,7 @@ public class RankingModel : BaseModel
         }
         if (endEvent != null) 
         {
-            var list = new List<ListData>();
-            foreach (var rakingInfo in _rakingInfos)
-            {
-                var listData = new ListData(rakingInfo);
-                list.Add(listData);
-            }
-            endEvent(list);
+            endEvent(MakeListData(_rakingInfos));
         }
 #endif
     }

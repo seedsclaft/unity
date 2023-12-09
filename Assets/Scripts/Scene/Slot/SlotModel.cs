@@ -7,6 +7,17 @@ using UnityEngine;
 
 public class SlotModel : BaseModel
 {
+    public List<ListData> SlotList()
+    {
+        var list = new List<ListData>();
+        foreach (var slotDict in CurrentData.PlayerInfo.GetSaveSlotDict())
+        {
+            var listData = new ListData(slotDict);
+            list.Add(listData);
+        }
+        return list;
+    }
+
     public Dictionary<int, SlotInfo> SlotInfos()
     {
         return CurrentData.PlayerInfo.GetSaveSlotDict();

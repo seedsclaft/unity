@@ -857,11 +857,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1055e5f09d3f59745b7d522958d5d10f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _backCommand: {fileID: 0}
   uiRoot: {fileID: 4103976646731744719}
-  backPrefab: {fileID: 7406275377514555950, guid: 90d481bd6e0e8d74bab7d2e4bd65a7ae,
-    type: 3}
-  backRoot: {fileID: 3786488223790298871}
-  slotInfoList: {fileID: 2487220307221856796}
+  slotInfoList: {fileID: 6330276142822426268}
 --- !u!1 &8516052367803466239
 GameObject:
   m_ObjectHideFlags: 0
@@ -871,7 +869,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7130107542237092839}
-  - component: {fileID: 2487220307221856796}
+  - component: {fileID: 6330276142822426268}
   m_Layer: 5
   m_Name: SlotInfoList
   m_TagString: Untagged
@@ -901,7 +899,7 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 24}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0}
---- !u!114 &2487220307221856796
+--- !u!114 &6330276142822426268
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -910,10 +908,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 8516052367803466239}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7459fd6c88f6332459afa1bfc3e88dcd, type: 3}
+  m_Script: {fileID: 11500000, guid: cf409b824ca9622468dd57c00bf805ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isScrollList: 0
   horizontal: 0
   reverse: 0
   warpMode: 1

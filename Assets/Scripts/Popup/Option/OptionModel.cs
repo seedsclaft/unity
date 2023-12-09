@@ -16,7 +16,7 @@ public class OptionModel : BaseModel
 
     public List<ListData> OptionCommandData(System.Action<float> sliderEvent,System.Action<bool> muteEvent,System.Action<int> toggleEvent)
     {
-        var list = new List<ListData>();
+        var list = new List<OptionInfo>();
         foreach (var optionCommand in DataSystem.OptionCommand)
         {
             var optionInfo = new OptionInfo();
@@ -24,10 +24,9 @@ public class OptionModel : BaseModel
             optionInfo.SliderEvent = sliderEvent;
             optionInfo.MuteEvent = muteEvent;
             optionInfo.ToggleEvent = toggleEvent;
-            var listData = new ListData(optionInfo);
-            list.Add(listData);
+            list.Add(optionInfo);
         }
-        return list;
+        return MakeListData(list);
     }
 
     public int OptionIndex(OptionCategory optionCategory)
