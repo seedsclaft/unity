@@ -52,11 +52,15 @@ public class SkillInfo
     {
         _weight = weight;
     }
-    private bool _isUsed = false;
-    public bool IsUsed => _isUsed;
-    public void SetIsUsed(bool isUsed)
+    private int _useCount = 0;
+    public int UseCount => _useCount;
+    public void SetUseCount(int useCount)
     {
-        _isUsed = isUsed;
+        _useCount = useCount;
+    }
+    public void GainUseCount()
+    {
+        _useCount++;
     }
     public SkillInfo(int id)
     {

@@ -90,7 +90,7 @@ public class BattlerInfo
         _skills = actorInfo.Skills.FindAll(a => a.LearningState == LearningState.Learned);
         foreach (var skill in _skills)
         {
-            skill.SetIsUsed(false);
+            skill.SetUseCount(0);
         }
         _demigodParam = actorInfo.DemigodParam;
         _isActor = true;

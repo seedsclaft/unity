@@ -1969,9 +1969,9 @@ Camera:
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
-    y: 0.013571441
+    y: 0
     width: 1
-    height: 0.9728571
+    height: 1
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
@@ -11651,9 +11651,9 @@ Camera:
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
-    y: 0.013571441
+    y: 0
     width: 1
-    height: 0.9728571
+    height: 1
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
@@ -12012,7 +12012,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   version: 0.0.11
-  testMode: 0
+  testMode: 1
   sceneAssign: {fileID: 64641776}
   popupAssign: {fileID: 497961168}
   confirmRoot: {fileID: 847318504}
@@ -12042,8 +12042,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   consoleInputField: {fileID: 1447284014}
-  inBattleActorIds: 01000000
-  troopId: 1010
+  inBattleActorIds: 02000000
+  troopId: 1020
   troopLv: 1
   actorDates:
   - Id: 1

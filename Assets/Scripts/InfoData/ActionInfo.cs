@@ -30,6 +30,10 @@ public class ActionInfo
 
     private bool _triggeredSkill = false;
     public bool TriggeredSkill => _triggeredSkill;
+    
+    private int _turnCount;
+    public int TurnCount => _turnCount;
+    public void SetTurnCount(int turnCount) {_turnCount = turnCount;}
 
     public ActionInfo(int index,int skillId,int subjectIndex,int lastTargetIndex,List<int> targetIndexList)
     {

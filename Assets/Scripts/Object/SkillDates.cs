@@ -132,6 +132,7 @@ public class SkillData
             switch (TriggerType)
             {
                 case TriggerType.None:
+                case TriggerType.InBattleUseCountUnder: // 別処理で判定するためここではパス
                     CanUse = true;
                 break;
                 case TriggerType.HpRateUnder:
@@ -328,6 +329,7 @@ public enum TriggerType
     TurnNumUnder = 61, // ターン数が〇以内
     TurnNumPer = 63, // ターン数がparam1 x ターン数 + param2
     AttackState = 71, // 攻撃成功時〇%で
+    InBattleUseCountUnder = 81, // バトル中使用回数が〇以下
     PayBattleMp = 101, // Mpを〇消費する
     ChainCount = 102, // 拘束成功回数
     ActionResultDeath = 103, // 攻撃を受けると戦闘不能になる

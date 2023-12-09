@@ -18,6 +18,9 @@ public class BattleModel : BaseModel
     private List<ActionResultInfo> _battleRecords = new ();
     public List<ActionResultInfo> BattleRecords => _battleRecords;
 
+    private List<ActionInfo> _battleActionRecords = new ();
+    public List<ActionInfo> BattleActionRecords => _battleActionRecords;
+
     private BattlerInfo _currentBattler = null;
     public BattlerInfo CurrentBattler => _currentBattler;
 
@@ -190,22 +193,22 @@ public class BattleModel : BaseModel
         }
     }
 
-    public List<int> CheckChainBattler()
+    public List<int> CheckChainBattler(BattlerInfo subject)
     {
         var targetIndexes = new List<int>();
-        for (int i = 0; i < _battlers.Count;i++)
+        foreach (var battler in _battlers)
         {
-            var stateInfos = _battlers[i].GetStateInfoAll(StateType.Chain);
-            for (int j = stateInfos.Count-1; 0 <= j;j--)
+            var stateInfos = battler.GetStateInfoAll(StateType.Chain);
+            for (var i = stateInfos.Count-1; 0 <= i;i--)
             {
-                if (stateInfos[j].BattlerId == _currentBattler.Index)
+                if (stateInfos[i].BattlerId == subject.Index)
                 {
-                    if (_battlers[i].IsAlive())
+                    if (battler.IsAlive())
                     {
-                        targetIndexes.Add(stateInfos[j].TargetIndex);
+                        targetIndexes.Add(stateInfos[i].TargetIndex);
                     } else
                     {
-                        _currentBattler.RemoveState(stateInfos[j],true);
+                        battler.RemoveState(stateInfos[i],true);
                     }
                 }
             }
@@ -889,6 +892,8 @@ public class BattleModel : BaseModel
             {
                 ExecActionResultInfo(actionResultInfo);
             }
+            actionInfo.SetTurnCount(_turnCount);
+            _battleActionRecords.Add(actionInfo);
         }
     }
 
@@ -1357,6 +1362,15 @@ public class BattleModel : BaseModel
                 }
                 var passiveInfo = passiveSkills[j];
                 var triggerDates = passiveInfo.Master.TriggerDates.FindAll(a => a.TriggerTiming == triggerTiming);
+                // バトル中〇回以下使用
+                var inBattleUseCountUnder = triggerDates.Find(a => a.TriggerType == TriggerType.InBattleUseCountUnder);
+                if (inBattleUseCountUnder != null)
+                {
+                    if (inBattleUseCountUnder.Param1 <= passiveInfo.UseCount)
+                    {
+                        continue;
+                    }
+                }
                 if (IsTriggeredSkillInfo(battlerInfo,triggerDates,triggerTiming,null,new List<ActionResultInfo>()))
                 {                
                     bool usable = true;
@@ -1405,6 +1419,7 @@ public class BattleModel : BaseModel
                         {
                             _passiveSkillInfos[battlerInfo.Index].Add(passiveInfo);
                         }
+                        passiveInfo.GainUseCount();
                     }
                 }
             }

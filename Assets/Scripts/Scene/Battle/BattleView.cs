@@ -93,10 +93,10 @@ public class BattleView : BaseView ,IInputHandlerEvent
 
     private void CallSkillAction()
     {
-        var eventData = new BattleViewEvent(CommandType.SelectedSkill);
         var data = selectCharacter.ActionData;
         if (data != null)
         {
+            var eventData = new BattleViewEvent(CommandType.SelectedSkill);
             eventData.template = data;
             _commandData(eventData);
         }
@@ -228,11 +228,11 @@ public class BattleView : BaseView ,IInputHandlerEvent
     private void CallEnemyDetailInfo(List<BattlerInfo> battlerInfos)
     {
         if (_animationBusy) return;
-        var eventData = new BattleViewEvent(CommandType.EnemyDetail);
         var selectedIndex = battleEnemyLayer.SelectedIndex;
-        BattlerInfo battlerInfo = battlerInfos.Find(a => a.Index == selectedIndex);
+        var battlerInfo = battlerInfos.Find(a => a.Index == selectedIndex);
         if (battlerInfo != null)
         {
+            var eventData = new BattleViewEvent(CommandType.EnemyDetail);
             eventData.template = selectedIndex;
             _commandData(eventData);
         }
@@ -477,7 +477,7 @@ public class BattleView : BaseView ,IInputHandlerEvent
     {
         DeactivateActorList();
         DeactivateEnemyList();
-        EffekseerHandle handle = EffekseerSystem.PlayEffect(effekseerEffectAsset, centerAnimPosition.transform.position);
+        var handle = EffekseerSystem.PlayEffect(effekseerEffectAsset, centerAnimPosition.transform.position);
     }
 
     public void ClearDamagePopup()

@@ -53,14 +53,14 @@ public class BattlePresenter : BasePresenter
         _view.SetBattleAutoButton(_model.BattleAutoButton(),GameSystem.ConfigData.BattleAuto == true);
         _view.ChangeBackCommandActive(false);
 
-        #if UNITY_EDITOR
+#if UNITY_EDITOR
         if (_view.TestMode == true)
         {
             BattleInitialize();
             _debug = true;
             return;
         }
-        #endif
+#endif
         
         _view.CommandStartTransition(() => {
             BattleInitialize();
@@ -134,9 +134,13 @@ public class BattlePresenter : BasePresenter
         {
             CommandSelectEnemy();
         }
-        if (viewEvent.commandType == Battle.CommandType.SelectParty)
+        if (viewEvent.commandType == Battle.CommandType.StartSelect)
         {
-            CommandSelectParty();
+            CommandStartSelect();
+        }
+        if (viewEvent.commandType == Battle.CommandType.OpenSideMenu)
+        {
+            CommandOpenSideMenu();
         }
         if (viewEvent.commandType == Battle.CommandType.Back)
         {
@@ -196,8 +200,12 @@ public class BattlePresenter : BasePresenter
 
     private void CommandBack()
     {
-        var eventData = new BattleViewEvent(_backCommandType);
-        UpdateCommand(eventData);
+        if (_backCommandType != Battle.CommandType.None)
+        {
+            var eventData = new BattleViewEvent(_backCommandType);
+            _backCommandType = Battle.CommandType.None;
+            UpdateCommand(eventData);
+        }
     }
 
     private void CommandEscape()
@@ -313,6 +321,11 @@ public class BattlePresenter : BasePresenter
             }
             _view.UpdateAp();
         }
+        CommandStartSelect();
+    }
+
+    private void CommandStartSelect()
+    {
         // Ap更新で行動するキャラがいる
         if (_model.CurrentBattler != null)
         {
@@ -326,7 +339,7 @@ public class BattlePresenter : BasePresenter
                 return;
             }
             // 行動者が拘束を解除する
-            var chainTargetIndexes = _model.CheckChainBattler();
+            var chainTargetIndexes = _model.CheckChainBattler(_model.CurrentBattler);
             if (chainTargetIndexes.Count > 0)
             {
                 // 拘束解除
@@ -488,7 +501,7 @@ public class BattlePresenter : BasePresenter
                 _view.ShowEnemyTarget();
             }
         }
-        _backCommandType = Battle.CommandType.DecideActor;
+        _backCommandType = Battle.CommandType.StartSelect;
         _view.ChangeBackCommandActive(true);
     }
 

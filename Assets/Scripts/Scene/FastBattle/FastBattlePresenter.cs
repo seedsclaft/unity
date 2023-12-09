@@ -110,7 +110,7 @@ public class FastBattlePresenter : BasePresenter
                 CommandSelectIndex(_model.MakeAutoSelectIndex(actionInfo));
                 return;
             }
-            List<int> chainTargetIndexs = _model.CheckChainBattler();
+            List<int> chainTargetIndexs = _model.CheckChainBattler(_model.CurrentBattler);
             if (chainTargetIndexs.Count > 0)
             {
                 // 拘束解除
@@ -211,7 +211,7 @@ public class FastBattlePresenter : BasePresenter
                 //_model.GainHpTargetIndex(regeneActionResults[i].TargetIndex,regeneActionResults[i].HpHeal);
             }
         }
-        _nextCommandType = Battle.CommandType.EndRegeneAnimation;
+        _nextCommandType = Battle.CommandType.EndRegenerateAnimation;
     }
 
     private void StartAnimationSlipDamage(List<ActionResultInfo> _slipDamageResults)
@@ -287,7 +287,7 @@ public class FastBattlePresenter : BasePresenter
             EndTurn();
             return;
         }
-        if (_nextCommandType == Battle.CommandType.EndRegeneAnimation)
+        if (_nextCommandType == Battle.CommandType.EndRegenerateAnimation)
         {
             EndTurn();
             return;
