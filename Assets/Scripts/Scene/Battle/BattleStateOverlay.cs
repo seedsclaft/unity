@@ -33,12 +33,10 @@ public class BattleStateOverlay : MonoBehaviour
             StopAnimation();
             return;
         }
-        float delay = 0.5f;
-        float duation = 1.0f;
+        var delay = 0.5f;
+        var duration = 1.0f;
         if (_iconAnimIndex < 0 || _iconAnimIndex > (_stateInfos.Count-1))
         {
-            //delay = 0;
-            //duation = 0;
             _iconAnimIndex = 0;
         }
         UpdateStateIcon();
@@ -47,7 +45,7 @@ public class BattleStateOverlay : MonoBehaviour
             if (_iconSequence == null)
             {
                 _iconSequence = DOTween.Sequence()
-                    .SetDelay(delay + duation)
+                    .SetDelay(delay + duration)
                     .OnComplete(() => {
                         _iconAnimIndex += 1;
                         IconAnimation();
@@ -56,7 +54,7 @@ public class BattleStateOverlay : MonoBehaviour
             {
                 _iconSequence.Kill(false);
                 _iconSequence = DOTween.Sequence()
-                    .SetDelay(delay + duation)
+                    .SetDelay(delay + duration)
                     .OnComplete(() => {
                         _iconAnimIndex += 1;
                         IconAnimation();
@@ -87,7 +85,7 @@ public class BattleStateOverlay : MonoBehaviour
     {
         if (_stateInfos.Count < _iconAnimIndex) return;
         icon.gameObject.SetActive(true);
-        StateInfo stateInfo = _stateInfos[_iconAnimIndex];
+        var stateInfo = _stateInfos[_iconAnimIndex];
         var spriteAtlas = Resources.Load<SpriteAtlas>("Texture/Icons");
         if (icon != null)
         {

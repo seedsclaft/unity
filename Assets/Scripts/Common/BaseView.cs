@@ -183,6 +183,13 @@ abstract public class BaseView : MonoBehaviour
         CallSceneChangeCommand(eventData);
     }
 
+    public void CommandCallCharacterList(CharacterListInfo characterListInfo)
+    {
+        var eventData = new ViewEvent(Base.CommandType.CallCharacterListView);
+        eventData.template = characterListInfo;
+        CallSceneChangeCommand(eventData);
+    }
+
     public void CommandCallStatus(StatusViewInfo statusViewInfo)
     {
         var eventData = new ViewEvent(Base.CommandType.CallStatusView);
@@ -302,6 +309,7 @@ namespace Base
         CallOptionView,
         CallRankingView,
         CallCreditView,
+        CallCharacterListView,
         CallStatusView,
         CloseStatus,
         CallAdvScene,

@@ -92,6 +92,20 @@ public class BaseModel
         return members;
     }
 
+    public List<ActorInfo> StatusActors(){
+        var StatusActorIds = PartyInfo.ActorIdList;
+        var members = new List<ActorInfo>();
+        for (int i = 0;i< StatusActorIds.Count;i++)
+        {
+            var temp = Actors().Find(a => a.ActorId == StatusActorIds[i]);
+            if (temp != null)
+            {
+                members.Add(temp);
+            }
+        }
+        return members;
+    }
+
     public string TacticsBgmFilename()
     {
         if (CurrentStage != null)

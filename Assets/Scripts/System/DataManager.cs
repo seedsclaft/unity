@@ -10,7 +10,7 @@ public class DataManager : ScriptableObject
     [SerializeField] public List<SEData> SE = new List<SEData>();
     
     public BGMData GetBGM(string key){
-        BGMData bGMData = BGM.Find(a => a.Key == key);
+        var bGMData = BGM.Find(a => a.Key == key);
         if (bGMData != null)
         {
             return bGMData;
@@ -19,7 +19,7 @@ public class DataManager : ScriptableObject
     }
     
     public BGMData GetBGM(int bgmId){
-        BGMData bGMData = BGM.Find(a => a.Id == bgmId);
+        var bGMData = BGM.Find(a => a.Id == bgmId);
         if (bGMData != null)
         {
             return bGMData;

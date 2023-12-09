@@ -39,7 +39,7 @@ public class BattleSelectCharacter : MonoBehaviour
             var tabIndex = idx;
             magicConditionTab.onValueChanged.AddListener((a) => 
             {
-                SelectMagicConditionTab((SelectCharacterTabType)tabIndex);
+                SelectCharacterTab((SelectCharacterTabType)tabIndex);
             });
             idx++;
         }
@@ -48,7 +48,7 @@ public class BattleSelectCharacter : MonoBehaviour
         UpdateTabs();
     }
 
-    private void SelectMagicConditionTab(SelectCharacterTabType selectCharacterTabType)
+    private void SelectCharacterTab(SelectCharacterTabType selectCharacterTabType)
     {
         if (_selectCharacterTabType == selectCharacterTabType)
         {
@@ -74,7 +74,7 @@ public class BattleSelectCharacter : MonoBehaviour
         Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cursor);
     }
 
-    public void SelectSmoothTab(int index)
+    public void SelectCharacterTabSmooth(int index)
     {
         var nextIndex = (int)_selectCharacterTabType + index;
         var displayTabs = detailTabs.FindAll(a => a.gameObject.activeSelf);
@@ -114,7 +114,7 @@ public class BattleSelectCharacter : MonoBehaviour
                 }
             }
         }
-        SelectMagicConditionTab((SelectCharacterTabType)nextIndex);
+        SelectCharacterTab((SelectCharacterTabType)nextIndex);
     }
 
     private void UpdateTabs()
@@ -201,7 +201,7 @@ public class BattleSelectCharacter : MonoBehaviour
         {
             displaySelectCard.gameObject.SetActive(false);
         }
-        SelectMagicConditionTab(_selectCharacterTabType);
+        SelectCharacterTab(_selectCharacterTabType);
         deckMagicList.UpdateSelectIndex(skillInfoData.Count > 0 ? 0 : -1);
         DisplaySelectCard();
         RefreshCardWidth();

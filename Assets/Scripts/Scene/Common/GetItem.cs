@@ -13,17 +13,7 @@ public class GetItem : ListItem ,IListViewItem
     [SerializeField] private Image iconImage;
     [SerializeField] private TextMeshProUGUI titleName;
     [SerializeField] private TextMeshProUGUI resultName;
-    private GetItemInfo _data; 
-
-    public void SetData(GetItemInfo data,int index){
-        _data = data;
-        SetIndex(index);
-    }
-
-    public void SetCallHandler(System.Action<GetItemInfo> handler)
-    {
-        clickButton.onClick.AddListener(() => handler((GetItemInfo)_data));
-    }
+    private GetItemInfo _data;
 
     public void UpdateViewItem()
     {

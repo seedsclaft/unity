@@ -135,10 +135,10 @@ abstract public class ListWindow : MonoBehaviour
     {
         int createCount = count;
         for (var i = 0; i < createCount;i++){
-            GameObject prefab = Instantiate(itemPrefab);
+            var prefab = Instantiate(itemPrefab);
             prefab.transform.SetParent(scrollRect.content, false);
             _objectList.Add(prefab);
-            IListViewItem view = prefab.GetComponent<IListViewItem>();
+            var view = prefab.GetComponent<IListViewItem>();
             _itemList.AddLast(view);
         }
         for (var i = 0; i < _objectList.Count;i++){
@@ -152,10 +152,10 @@ abstract public class ListWindow : MonoBehaviour
     {
         int createCount = count;
         for (var i = 0; i < createCount;i++){
-            GameObject prefab = Instantiate(itemPrefab);
+            var prefab = Instantiate(itemPrefab);
             prefab.transform.SetParent(scrollRect.content, false);
             _objectList.Add(prefab);
-            IListViewItem view = prefab.GetComponent<IListViewItem>();
+            var view = prefab.GetComponent<IListViewItem>();
             _itemList.AddLast(view);
         }
     }
@@ -486,6 +486,10 @@ abstract public class ListWindow : MonoBehaviour
                     nextIndex -= _dataCount;
                 }
                 var listItem = ObjectList[nextIndex].GetComponent<ListItem>();
+                if (listItem.Disable == null)
+                {
+                    break;
+                }
                 if (listItem.Disable != null && listItem.Disable.activeSelf == false)
                 {
                     break;
@@ -507,6 +511,10 @@ abstract public class ListWindow : MonoBehaviour
                     nextIndex += _dataCount;
                 }
                 var listItem = ObjectList[nextIndex].GetComponent<ListItem>();
+                if (listItem.Disable == null)
+                {
+                    break;
+                }
                 if (listItem.Disable != null && listItem.Disable.activeSelf == false)
                 {
                     break;

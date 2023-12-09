@@ -32,14 +32,15 @@ public class StatusView : BaseView ,IInputHandlerEvent
     {
         selectCharacter.SetInputHandlerAction(InputKeyType.Decide,() => CallSkillAction());
         selectCharacter.SetInputHandlerAction(InputKeyType.Cancel,() => OnClickBack());
+        selectCharacter.SetInputHandlerAction(InputKeyType.Option1,() => OnClickCharacterList());
         selectCharacter.SetInputHandlerAction(InputKeyType.Start,() => OnClickDecide());
         selectCharacter.SetInputHandlerAction(InputKeyType.SideLeft1,() => OnClickLeft());
         selectCharacter.SetInputHandlerAction(InputKeyType.SideRight1,() => OnClickRight());
         selectCharacter.SetInputHandlerAction(InputKeyType.SideLeft2,() => {
-            selectCharacter.SelectSmoothTab(-1);
+            selectCharacter.SelectCharacterTabSmooth(-1);
         });
         selectCharacter.SetInputHandlerAction(InputKeyType.SideRight2,() => {
-            selectCharacter.SelectSmoothTab(1);
+            selectCharacter.SelectCharacterTabSmooth(1);
         });
         SetInputHandler(selectCharacter.DeckMagicList.GetComponent<IInputHandlerEvent>());
         selectCharacter.HideActionList();
@@ -139,6 +140,12 @@ public class StatusView : BaseView ,IInputHandlerEvent
     private void OnClickBack()
     {
         var eventData = new StatusViewEvent(CommandType.Back);
+        _commandData(eventData);
+    }
+
+    private void OnClickCharacterList()
+    {
+        var eventData = new StatusViewEvent(CommandType.CharacterList);
         _commandData(eventData);
     }
 
@@ -246,6 +253,7 @@ namespace Status
         RightActor,
         SelectSkillAction,
         DecideStage,
+        CharacterList,
         Back
     }
 }

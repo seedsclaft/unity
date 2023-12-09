@@ -44,12 +44,26 @@ public class StatusPresenter : BasePresenter
         {
             CommandBack();
         }
+        if (viewEvent.commandType == Status.CommandType.CharacterList)
+        {
+            CommandCharacterList();
+        }
     }
 
     private void CommandBack()
     {
         _view.CommandBack();
         Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cancel);
+    }
+
+    private void CommandCharacterList()
+    {
+        var characterListInfo = new CharacterListInfo((a) => {
+            _view.CommandConfirmClose();
+            _model.SelectActor(a);
+            CommandRefresh();
+        });
+        _view.CommandCallCharacterList(characterListInfo);
     }
 
     private void CommandDecideActor()

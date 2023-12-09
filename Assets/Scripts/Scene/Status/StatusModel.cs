@@ -21,7 +21,12 @@ public class StatusModel : BaseModel
         return "";
     }
 
-    private int _currentIndex = 0; 
+    private int _currentIndex = 0;
+    public void SelectActor(int actorId)
+    {
+        var index = StatusActors().FindIndex(a => a.ActorId == actorId);
+        _currentIndex = index;
+    }
 
     public ActorInfo CurrentActor
     {
@@ -41,20 +46,6 @@ public class StatusModel : BaseModel
     public void SetActorLastSkillId(int selectSkillId)
     {
         CurrentActor.SetLastSelectSkillId(selectSkillId);
-    }
-
-    public List<ActorInfo> StatusActors(){
-        List<int> StatusActorIds = PartyInfo.ActorIdList;
-        var members = new List<ActorInfo>();
-        for (int i = 0;i< StatusActorIds.Count;i++)
-        {
-            var temp = Actors().Find(a => a.ActorId == StatusActorIds[i]);
-            if (temp != null)
-            {
-                members.Add(temp);
-            }
-        }
-        return members;
     }
 
     public List<ListData> SkillActionList()

@@ -43,14 +43,14 @@ public class EnemyInfoView : BaseView,IInputHandlerEvent
         selectCharacter.SetInputHandlerAction(InputKeyType.SideLeft1,() => OnClickLeft());
         selectCharacter.SetInputHandlerAction(InputKeyType.SideRight1,() => OnClickRight());
         selectCharacter.SetInputHandlerAction(InputKeyType.SideLeft2,() => {
-            selectCharacter.SelectSmoothTab(-1);
+            selectCharacter.SelectCharacterTabSmooth(-1);
         });
         selectCharacter.SetInputHandlerAction(InputKeyType.SideRight2,() => {
-            selectCharacter.SelectSmoothTab(1);
+            selectCharacter.SelectCharacterTabSmooth(1);
         });
         SetInputHandler(selectCharacter.DeckMagicList.GetComponent<IInputHandlerEvent>());
         selectCharacter.HideActionList();
-        selectCharacter.SelectSmoothTab(0);
+        selectCharacter.SelectCharacterTabSmooth(0);
     }
 
     public void CommandRefreshStatus(List<ListData> skillInfos,BattlerInfo battlerInfo,List<int> enemyIndexes,int lastSelectIndex)

@@ -7,6 +7,7 @@ using Boot;
 public class BootView : BaseView
 {
     [SerializeField] private Button logoButton = null;
+    [SerializeField] private BaseList baseList = null;
     private new System.Action<BootViewEvent> _commandData = null;
     public override void Initialize() 
     {
@@ -17,6 +18,8 @@ public class BootView : BaseView
             logoButton.onClick.AddListener(() => CallLogoClick());
         }
         logoButton.gameObject.SetActive(TestMode == false);
+        baseList.SetInputHandler(InputKeyType.Decide,() => CallLogoClick());
+        SetInputHandler(baseList.GetComponent<IInputHandlerEvent>());
     }
 
     public void SetEvent(System.Action<BootViewEvent> commandData)
@@ -29,6 +32,7 @@ public class BootView : BaseView
         var eventData = new BootViewEvent(CommandType.LogoClick);
         _commandData(eventData);
     }
+    
 }
 
 

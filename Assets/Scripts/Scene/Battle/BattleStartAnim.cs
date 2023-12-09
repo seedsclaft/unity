@@ -42,7 +42,7 @@ public class BattleStartAnim : MonoBehaviour
         _busy = true;
         Reset();
         mainText.transform.DOScaleY(0.95f,0);
-        Sequence main = DOTween.Sequence()
+        var main = DOTween.Sequence()
             .SetDelay(0.1f)
             .Append(mainText.DOFade(1f,0f))
             .Append(mainText.transform.DOScale(0.95f,0.4f))
@@ -52,7 +52,7 @@ public class BattleStartAnim : MonoBehaviour
         
     
         subText.transform.DOScaleY(0.95f,0);
-        Sequence sub = DOTween.Sequence()
+        var sub = DOTween.Sequence()
             .SetDelay(0.1f)
             .Append(subText.DOFade(1f,0f))
             .Append(subText.transform.DOScale(1.25f,0.8f))
@@ -64,13 +64,13 @@ public class BattleStartAnim : MonoBehaviour
             .Join(subText.transform.DOLocalMoveX(480, 0.1f));
 
         lineWhite.transform.DOScaleY(0.95f,0);
-        Sequence white = DOTween.Sequence()
+        var white = DOTween.Sequence()
             .Append(lineWhite.transform.DOScaleY(1f,0.02f))
             .Append(lineWhite.transform.DOScaleY(0.08f,0.1f))
             .Join(lineWhite.DOFade(0f, 1.6f))
             .SetEase(Ease.InOutQuad);
 
-        Sequence black = DOTween.Sequence()
+        var black = DOTween.Sequence()
             .SetDelay(0.1f)
             .Append(backBlack.DOFade(1f, 0.1f))
             .Join(backBlack.transform.DOScaleY(1f, 0.1f))

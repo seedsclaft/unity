@@ -63,10 +63,10 @@ public class BattleView : BaseView ,IInputHandlerEvent
         selectCharacter.SetInputHandlerAction(InputKeyType.Option1,() => CallOpenSideMenu());
         selectCharacter.SetInputHandlerAction(InputKeyType.Option2,() => OnClickEscape());
         selectCharacter.SetInputHandlerAction(InputKeyType.SideLeft2,() => {
-            selectCharacter.SelectSmoothTab(-1);
+            selectCharacter.SelectCharacterTabSmooth(-1);
         });
         selectCharacter.SetInputHandlerAction(InputKeyType.SideRight2,() => {
-            selectCharacter.SelectSmoothTab(1);
+            selectCharacter.SelectCharacterTabSmooth(1);
         });
         SetInputHandler(selectCharacter.DeckMagicList.GetComponent<IInputHandlerEvent>());
         selectCharacter.HideActionList();

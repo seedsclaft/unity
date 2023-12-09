@@ -121,6 +121,9 @@ public class GameSystem : MonoBehaviour
             case Base.CommandType.CallCreditView:
                 CommandCreditView((System.Action)viewEvent.template);
                 break;
+            case Base.CommandType.CallCharacterListView:
+                CommandCharacterListView((CharacterListInfo)viewEvent.template);
+                break;
             case Base.CommandType.CallStatusView:
                 if (_statusView != null)
                 {
@@ -331,6 +334,27 @@ public class GameSystem : MonoBehaviour
         });
         confirmRoot.gameObject.SetActive(true);
         _currentScene.SetBusy(true);
+    }
+
+    private void CommandCharacterListView(CharacterListInfo characterListInfo)
+    {
+        if (_popupView != null)
+        {
+            DestroyImmediate(_popupView.gameObject);
+        }
+        var prefab = popupAssign.CreatePopup(PopupType.CharacterList);
+        _popupView = prefab.GetComponent<CharacterListView>();
+        _popupView.SetHelpWindow(helpWindow);
+        var characterListView = (_popupView as CharacterListView);
+        characterListView.Initialize();
+        confirmRoot.gameObject.SetActive(true);
+        characterListView.SetViewInfo(characterListInfo);
+        characterListView.SetBackEvent(() => 
+        {
+            UpdateCommand(new ViewEvent(Base.CommandType.CloseConfirm));
+        });
+        _currentScene.SetBusy(true);
+        if (_statusView) _statusView.SetBusy(true);
     }
 
     IEnumerator JumpScenarioAsync(string label, System.Action onComplete)
