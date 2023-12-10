@@ -41,7 +41,7 @@ public class TroopInfo
             if (troopData.StageTurn <= stageTurns)
             {
                 var enemyData = DataSystem.Enemies.Find(a => a.Id == troopData.EnemyId);
-                var battlerInfo = new BattlerInfo(enemyData,troopData.Lv + level,troopData.Id - 1,troopData.Line,troopData.BossFlag);
+                var battlerInfo = new BattlerInfo(enemyData,troopData.Lv + level,_battlerInfos.Count,troopData.Line,troopData.BossFlag);
                 AddEnemy(battlerInfo);
             }
         }

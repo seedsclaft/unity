@@ -22,16 +22,16 @@ public class MainMenuModel : BaseModel
         CurrentData.ClearStageInfo();
     }
     
-    public void SetStageId(int stageId)
+    public void InitializeStageData(int stageId)
     {
         PartyInfo.SetStageId(stageId);
         
         // Party初期化
         PartyInfo.InitActors();
         var stageMembers = DataSystem.Stages.Find(a => a.Id == stageId).InitMembers;
-        for (int i = 0;i < stageMembers.Count;i++)
+        foreach (var stageMember in stageMembers)
         {
-            PartyInfo.AddActor(stageMembers[i]);
+            PartyInfo.AddActor(stageMember);
         }
     }
 

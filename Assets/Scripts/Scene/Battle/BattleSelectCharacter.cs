@@ -271,6 +271,10 @@ public class BattleSelectCharacter : MonoBehaviour
 
     public void RefreshCardWidth()
     {
+        if (deckMagicList.ObjectList.Count == 0)
+        {
+            return;
+        }
         var selectObj = deckMagicList.ObjectList[deckMagicList.Index];
         foreach (var gameObject in deckMagicList.ObjectList)
         {

@@ -21,15 +21,15 @@ public class TacticsPresenter :BasePresenter
         {
             return;
         }
+        if (CheckRebornEvent())
+        {
+            return;
+        }
         if (CheckStageEvent())
         {
             return;
         }
         if (CheckAdvEvent())
-        {
-            return;
-        }
-        if (CheckRebornEvent())
         {
             return;
         }
@@ -46,7 +46,7 @@ public class TacticsPresenter :BasePresenter
             switch (stageEvent.Type)
             {
                 case StageEventType.CommandDisable:
-                    _model.SetTacticsCommandEnables((TacticsCommandType)stageEvent.Param,false);
+                    _model.SetTacticsCommandEnables((TacticsCommandType)stageEvent.Param + 1,false);
                     break;
                 case StageEventType.TutorialBattle:
                     _model.TutorialTroopData();
@@ -100,6 +100,15 @@ public class TacticsPresenter :BasePresenter
                 case StageEventType.RouteSelectBattle:
                     _model.RouteSelectTroopData();
                     _model.AddEventReadFlag(stageEvent);
+                    break;
+                case StageEventType.MoveStage:
+                    _model.MoveStage(stageEvent.Param);
+                    _model.AddEventReadFlag(stageEvent);
+                    isEvent = true;
+                    _view.CommandSceneChange(Scene.Tactics);
+                    break;
+                case StageEventType.SetDefineBoss:
+                    _model.SetDefineBoss(stageEvent.Param);
                     break;
             }
             if (isEvent)

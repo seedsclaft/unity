@@ -23,7 +23,7 @@ public class TacticsModel : BaseModel
     private Dictionary<TacticsCommandType,bool> _tacticsCommandEnables = new ();
     public void SetTacticsCommandEnables(TacticsCommandType tacticsCommand,bool isEnable)
     {
-        _tacticsCommandEnables[tacticsCommand+1] = isEnable;
+        _tacticsCommandEnables[tacticsCommand] = isEnable;
     }
 
     private List<ActorInfo> _tempActorInfos = new();
@@ -495,6 +495,20 @@ public class TacticsModel : BaseModel
                 break;
         }
         return DataSystem.System.GetReplaceText(10,count.ToString());
+    }
+
+    public void SetDefineBoss(int index)
+    {
+        var defineTroopId = CurrentStage.DefineTroopId(false);
+        if (defineTroopId != 0 && !CurrentStage.ClearedTroopId(defineTroopId))
+        {
+            CurrentStage.SetDefineBossOnly(index);
+            SetNeedAllTacticsCommand(true);
+            SetTacticsCommandEnables(TacticsCommandType.Train,false);
+            SetTacticsCommandEnables(TacticsCommandType.Alchemy,false);
+            SetTacticsCommandEnables(TacticsCommandType.Recovery,false);
+            SetTacticsCommandEnables(TacticsCommandType.Resource,false);
+        }
     }
 }
 

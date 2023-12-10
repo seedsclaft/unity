@@ -33,17 +33,9 @@ public class BattleModel : BaseModel
         if (CurrentStage != null)
         {
             var troops = CurrentStage.CurrentTroopInfo();
-            if (troops.TroopId >= 100 && troops.TroopId <= 600 && troops.TroopId % 100 == 0)
+            if (CurrentStage.DefineTroopId(false) == troops.TroopId)
             {
-                return GetBgmData("BOSS1");
-            }
-            if (troops.TroopId >= 1100 && troops.TroopId <= 1600)
-            {
-                return GetBgmData("BOSS1");
-            }
-            if (troops.TroopId >= 2000)
-            {
-                return GetBgmData("LAST_BOSS");
+                return GetBgmData(DataSystem.Data.GetBGM(CurrentStage.Master.BossBGMId).Key);
             }
         }
         var battleMembers = PartyMembers();

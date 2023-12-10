@@ -9,6 +9,7 @@ public class BasePresenter
     {
         _view = view;
     }
+
     private BaseModel _model = null;
     public void SetModel(BaseModel model)
     {
@@ -20,65 +21,59 @@ public class BasePresenter
         var isAbort = false;
         var advId = -1;
         var stageEvents = _model.StageEvents(eventTiming);
-        if (stageEvents.Count > 0)
+        foreach (var stageEvent in stageEvents)
         {
-            for (int i = 0;i < stageEvents.Count;i++)
+            if (stageEvent.Type == StageEventType.AdvStart)
             {
-                if (stageEvents[i].Type == StageEventType.AdvStart)
-                {
-                    advId = stageEvents[i].Param;
-                    _model.AddEventReadFlag(stageEvents[i]);
-                    isAbort = true;
-                    break;
-                }
-                if (stageEvents[i].Type == StageEventType.SelectActorAdvStart)
-                {
-                    advId = stageEvents[i].Param + selectActorId;
-                    _model.AddEventReadFlag(stageEvents[i]);
-                    isAbort = true;
-                    break;
-                }
-                if (stageEvents[i].Type == StageEventType.RouteSelectEvent)
-                {
-                    int route = GameSystem.CurrentData.CurrentStage.RouteSelect;
-                    advId = stageEvents[i].Param + route;
-                    _model.AddEventReadFlag(stageEvents[i]);
-                    isAbort = true;
-                    break;
-                }
+                advId = stageEvent.Param;
+                _model.AddEventReadFlag(stageEvent);
+                isAbort = true;
+                break;
             }
-            if (isAbort)
+            if (stageEvent.Type == StageEventType.SelectActorAdvStart)
             {
-                var advInfo = new AdvCallInfo();
-                advInfo.SetLabel(_model.GetAdvFile(advId));
-                advInfo.SetCallEvent(() => {                
-                    if (endCall != null) endCall();
-                });
-                _view.CommandCallAdv(advInfo);
+                advId = stageEvent.Param + selectActorId;
+                _model.AddEventReadFlag(stageEvent);
+                isAbort = true;
+                break;
             }
+            if (stageEvent.Type == StageEventType.RouteSelectEvent)
+            {
+                int route = GameSystem.CurrentData.CurrentStage.RouteSelect;
+                advId = stageEvent.Param + route;
+                _model.AddEventReadFlag(stageEvent);
+                isAbort = true;
+                break;
+            }
+        }
+        if (isAbort)
+        {
+            var advInfo = new AdvCallInfo();
+            advInfo.SetLabel(_model.GetAdvFile(advId));
+            advInfo.SetCallEvent(() => {                
+                if (endCall != null) endCall();
+            });
+            _view.CommandCallAdv(advInfo);
         }
         return isAbort;
     }
 
     public bool CheckRebornEvent(EventTiming eventTiming,System.Action endCall)
     {
-        bool isReborn = false;
+        var isReborn = false;
         var stageEvents = _model.StageEvents(eventTiming);
-        if (stageEvents.Count > 0)
+        foreach (var stageEvent in stageEvents)
         {
-            for (int i = 0;i < stageEvents.Count;i++)
+            if (stageEvent.Type == StageEventType.RebornSkillEffect)
             {
-                if (stageEvents[i].Type == StageEventType.RebornSkillEffect)
-                {
-                    _model.AddEventReadFlag(stageEvents[i]);
-                    isReborn = true;
-                    break;
-                }
+                _model.AddEventReadFlag(stageEvent);
+                isReborn = true;
+                break;
             }
-            if (isReborn)
-            {
-                if (endCall != null) endCall();
-            }
+        }
+        if (isReborn)
+        {
+            if (endCall != null) endCall();
         }
         return isReborn;
     }

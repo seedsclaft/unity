@@ -397,7 +397,7 @@ MonoBehaviour:
     AnimationName: NA_Effekseer/NA_shooting_002
     AnimationPosition: 0
     AnimationType: 1
-    DamageTiming: 46
+    DamageTiming: 52
     MpCost: 0
     Rank: 2
     Attribute: 2
@@ -452,7 +452,7 @@ MonoBehaviour:
     Scope: 1
     SkillType: 1
     TargetType: 2
-    Help: "\\s\u306B\u56DE\u907F\u738733%\u30A2\u30C3\u30D7\u3092\u4ED8\u4E0E(\u6C38\u7D9A)"
+    Help: "\\s\u306B\u56DE\u907F\u738725%\u30A2\u30C3\u30D7\u3092\u4ED8\u4E0E(\u6C38\u7D9A)"
     Range: 1
     RepeatTime: 1
     AliveOnly: 1
@@ -461,7 +461,7 @@ MonoBehaviour:
       FeatureType: 21
       Param1: 1090
       Param2: 999
-      Param3: 33
+      Param3: 25
     TriggerDates: []
   - Id: 2040
     Name: "\u30B7\u30E7\u30C3\u30AF\u30A4\u30F3\u30D1\u30EB\u30B9"
@@ -1504,7 +1504,7 @@ MonoBehaviour:
     Scope: 4
     SkillType: 2
     TargetType: 4
-    Help: "(\u6761\u4EF6)\u30D0\u30C8\u30EB\u958B\u59CB\u6642\n\u81EA\u8EAB\u306E\u56DE\u907F\u7387\u309233%\u30A2\u30C3\u30D7"
+    Help: "(\u6761\u4EF6)\u30D0\u30C8\u30EB\u958B\u59CB\u6642\n\u81EA\u8EAB\u306E\u56DE\u907F\u7387\u309225%\u30A2\u30C3\u30D7"
     Range: 1
     RepeatTime: 1
     AliveOnly: 1
@@ -1513,7 +1513,7 @@ MonoBehaviour:
       FeatureType: 21
       Param1: 1090
       Param2: 999
-      Param3: 33
+      Param3: 25
     TriggerDates:
     - SkillId: 12050
       TriggerType: 0

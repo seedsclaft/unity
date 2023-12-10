@@ -29,7 +29,7 @@ public class StageInfoComponent : MonoBehaviour
             help.text = stageData.Help.Replace("\\p",GameSystem.CurrentData.PlayerInfo.PlayerName);
         }
         if (turns != null){
-            turns.text = (stageData.Turns - 1).ToString();
+            turns.text = (stageData.Turns).ToString();
         }
         if (clearCount != null){
             clearCount.text = stageInfo.ClearCount.ToString();

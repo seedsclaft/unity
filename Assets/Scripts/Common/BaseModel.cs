@@ -111,15 +111,7 @@ public class BaseModel
         if (CurrentStage != null)
         {
             var stageData = CurrentStage.Master;
-            if (CurrentStage.CurrentTurn >= 24)
-            {        
-                return DataSystem.Data.GetBGM(stageData.BGMId[2]).Key;
-            }
-            if (CurrentStage.CurrentTurn >= 12)
-            {        
-                return DataSystem.Data.GetBGM(stageData.BGMId[1]).Key;
-            }
-            return DataSystem.Data.GetBGM(stageData.BGMId[0]).Key;
+            return DataSystem.Data.GetBGM(stageData.BGMId).Key;
         }
         return "TACTICS1";
     }
@@ -520,7 +512,7 @@ public class BaseModel
 
     public void SetDefineBossIndex(int index)
     {
-        CurrentStage.SetDefineBossIndex(index,CurrentStage.CurrentTurn);
+        CurrentStage.SetDefineBossIndex(index);
     }
 
     public string GetAdvFile(int id)
@@ -542,6 +534,11 @@ public class BaseModel
     {
         int stageId = stageBaseId + CurrentStage.RouteSelect;
 		CurrentData.ChangeRouteSelectStage(stageId);
+    }
+
+    public void MoveStage(int stageId)
+    {
+		CurrentData.MoveStage(stageId);
     }
 
     public Dictionary<TacticsCommandType, int> CommandRankInfo()

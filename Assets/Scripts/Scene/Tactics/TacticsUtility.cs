@@ -16,17 +16,17 @@ public class TacticsUtility
 
     public static int AlchemyCost(ActorInfo actorInfo,AttributeType attributeType,List<ActorInfo> stageMembers)
     {
-        int cost = 2;
+        int cost = 4;
         var param = actorInfo.AttributeParams(stageMembers)[(int)attributeType-1];
         switch (param)
         {
             case AttributeRank.S:
+                cost /= 2;
                 break;
             case AttributeRank.A:
-                cost *= 2;
                 break;
             case AttributeRank.B:
-                cost *= 3;
+                cost *= 2;
                 break;
             case AttributeRank.C:
                 cost *= 4;
@@ -38,10 +38,10 @@ public class TacticsUtility
                 cost *= 8;
                 break;
             case AttributeRank.F:
-                cost *= 16;
+                cost *= 12;
                 break;
             case AttributeRank.G:
-                cost *= 32;
+                cost *= 16;
                 break;
         }
         

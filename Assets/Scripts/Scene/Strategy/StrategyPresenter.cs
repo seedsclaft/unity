@@ -214,31 +214,28 @@ public class StrategyPresenter : BasePresenter
             SetHelpInputSkipEnable();
         }
         var stageEvents = _model.StageEvents(EventTiming.StartStrategy);
-        if (stageEvents.Count > 0)
+        foreach (var stageEvent in stageEvents)
         {
-            for (int i = 0;i < stageEvents.Count;i++)
+            if (stageEvent.Type == StageEventType.CommandDisable)
             {
-                if (stageEvents[i].Type == StageEventType.CommandDisable)
-                {
-                    _model.AddEventReadFlag(stageEvents[i]);
-                }
-                if (stageEvents[i].Type == StageEventType.NeedUseSp)
-                {
-                    _model.SetNeedUseSpCommand(true);
-                    _model.AddEventReadFlag(stageEvents[i]);
-                }
-                if (stageEvents[i].Type == StageEventType.AdvStart)
-                {
-                    AdvCallInfo advInfo = new AdvCallInfo();
-                    advInfo.SetLabel(_model.GetAdvFile(stageEvents[i].Param));
-                    advInfo.SetCallEvent(() => {   
-                        _busy = false;
-                    });
-                    _view.CommandCallAdv(advInfo);
-                    _model.AddEventReadFlag(stageEvents[i]);
-                    _busy = true;
-                    break;
-                }
+                _model.AddEventReadFlag(stageEvent);
+            }
+            if (stageEvent.Type == StageEventType.NeedUseSp)
+            {
+                _model.SetNeedUseSpCommand(true);
+                _model.AddEventReadFlag(stageEvent);
+            }
+            if (stageEvent.Type == StageEventType.AdvStart)
+            {
+                var advInfo = new AdvCallInfo();
+                advInfo.SetLabel(_model.GetAdvFile(stageEvent.Param));
+                advInfo.SetCallEvent(() => {   
+                    _busy = false;
+                });
+                _view.CommandCallAdv(advInfo);
+                _model.AddEventReadFlag(stageEvent);
+                _busy = true;
+                break;
             }
         }
     }

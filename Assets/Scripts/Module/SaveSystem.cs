@@ -349,7 +349,7 @@ public class SavePlayInfo
 		var stageData = DataSystem.Stages.Find(a => a.Id == stageId);
 		var current = _currentStage;
 		var currentStage = new StageInfo(stageData);
-		currentStage.RouteSelectData(current);
+		currentStage.SetMoveStageData(current);
 		_currentStage = currentStage;
 		if (stageId == 11){
 			_currentStage.SetEndingType(EndingType.C);
@@ -360,6 +360,15 @@ public class SavePlayInfo
 		if (stageId == 13){
 			_currentStage.SetEndingType(EndingType.A);
 		}
+	}
+
+	public void MoveStage(int stageId)
+	{
+		var stageData = DataSystem.Stages.Find(a => a.Id == stageId);
+		var current = _currentStage;
+		var moveStage = new StageInfo(stageData);
+		moveStage.SetMoveStageData(current);
+		_currentStage = moveStage;
 	}
 
 	public void ClearStageInfo()

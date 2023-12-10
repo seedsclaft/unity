@@ -17,7 +17,8 @@ public class StageData
     public int Turns;
     public List<int> InitMembers;
     public int RandomTroopCount;
-    public List<int> BGMId;
+    public int BGMId;
+    public int BossBGMId;
     public bool Reborn;
     public List<StageEventData> StageEvents;
 }
@@ -63,7 +64,9 @@ public enum StageEventType{
     AbortStage = 21, // ステージを中断する
     ChangeRouteSelectStage = 31, // ルート分岐でステージに移動
     RouteSelectBattle = 32, // ルート分岐敵グループを生成
-    RebornSkillEffect = 41 // 継承スキル演出再生
+    RebornSkillEffect = 41, // 継承スキル演出再生
+    MoveStage = 51, // ステージ移動
+    SetDefineBoss = 61, // ボスを設定する
 }
 
 

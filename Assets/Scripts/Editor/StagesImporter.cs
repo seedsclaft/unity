@@ -18,6 +18,7 @@ public class StagesInfoImporter : AssetPostprocessor {
 		InitMembers,
 		RandomTroopCount,
 		BGMId,
+		BossBGMId,
 		Reborn
     }
     enum BaseEventColumn
@@ -95,12 +96,8 @@ public class StagesInfoImporter : AssetPostprocessor {
 						StageData.InitMembers.Add(int.Parse(item));
 					}
 					StageData.RandomTroopCount = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.RandomTroopCount);
-					StageData.BGMId = new List<int>();
-					string[] bgmList = AssetPostImporter.ImportString(BaseRow,(int)BaseColumn.BGMId).Split(',');
-					foreach (string item in bgmList)
-					{
-						StageData.BGMId.Add(int.Parse(item));
-					}
+					StageData.BGMId = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.BGMId);
+					StageData.BossBGMId = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.BossBGMId);
 					StageData.Reborn = (AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.Reborn) == 1);
 					
 					StageData.StageEvents = new List<StageEventData>();

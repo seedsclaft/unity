@@ -37,6 +37,7 @@ public class StageInfo
     private int _routeSelect;
     public int RouteSelect => _routeSelect;
     private int _defineBossIndex = 0;
+    public int DefineBossIndex => _defineBossIndex;
 
     private int _randomTroopCount = 15;
 
@@ -139,32 +140,54 @@ public class StageInfo
         }
 
         // 確定中ボス情報
-        MakeDefineBossTroop(stageTurn);
+        MakeDefineTroop(true);
 
         return _currentTroopInfos;
     }
 
-    private void MakeDefineBossTroop(int stageTurn)
+    public int DefineTroopId(bool containTutorial)
     {
-        var bossTroopId = 0;
+        var defineTroopId = 0;
         if (_defineBossIndex > 0 && _defineBossIndex < 5)
         {
-            bossTroopId = _selectActorIds[_defineBossIndex] * 10 + 2000;
-            var tutorialId = _selectActorIds[_defineBossIndex] * 10 + 1000;
-            if (!_clearTroopIds.Contains(tutorialId))
+            defineTroopId = _selectActorIds[_defineBossIndex] * 10 + 2000;
+            if (containTutorial)
             {
-                bossTroopId = tutorialId;
+                var tutorialId = _selectActorIds[_defineBossIndex] * 10 + 1000;
+                if (!_clearTroopIds.Contains(tutorialId))
+                {
+                    defineTroopId = tutorialId;
+                }
             }
         } else if (_defineBossIndex == 5)
         {
-            bossTroopId = _selectActorIds[0] * 10 + 2000;
+            defineTroopId = _selectActorIds[0] * 10 + 2000;
         }
-        if (!_clearTroopIds.Contains(bossTroopId))
+        return defineTroopId;
+    }
+
+    private void MakeDefineTroop(bool containTutorial)
+    {
+        var defineTroopId = DefineTroopId(containTutorial);
+        if (!ClearedTroopId(defineTroopId))
         {
-            var troopDates = DataSystem.Troops.FindAll(a => a.TroopId == bossTroopId);
-            var troopInfo = new TroopInfo(bossTroopId,true);
+            var troopDates = DataSystem.Troops.FindAll(a => a.TroopId == defineTroopId);
+            var troopInfo = new TroopInfo(defineTroopId,true);
             troopInfo.MakeEnemyTroopDates(_troopClearCount + 1,_currentTurn);
             _currentTroopInfos[_currentTroopInfos.Count-1] = troopInfo;
+        }
+    }
+
+    private void MakeBossOnlyTroop()
+    {
+        _currentTroopInfos.Clear();
+        var defineTroopId = DefineTroopId(false);
+        if (!ClearedTroopId(defineTroopId))
+        {
+            var troopDates = DataSystem.Troops.FindAll(a => a.TroopId == defineTroopId);
+            var troopInfo = new TroopInfo(defineTroopId,true);
+            troopInfo.MakeEnemyTroopDates(_troopClearCount + 1,_currentTurn);
+            _currentTroopInfos.Add(troopInfo);
         }
     }
 
@@ -350,14 +373,20 @@ public class StageInfo
         _clearTroopIds.Add(troopId);
     }
 
-    public void SetDefineBossIndex(int index,int stageTurn)
+    public bool ClearedTroopId(int troopId)
+    {
+        return _clearTroopIds.Contains(troopId);
+    }
+
+    public void SetDefineBossIndex(int index)
     {
         _defineBossIndex = index;
-        if (_troopClearCount > 0)
-        {
-            TacticsTroops(stageTurn);
-            MakeDefineBossTroop(stageTurn);
-        }
+    }
+
+    public void SetDefineBossOnly(int index)
+    {
+        _defineBossIndex = index;
+        MakeBossOnlyTroop();
     }
 
     public void SetRouteSelect(int routeSelect)
@@ -365,12 +394,15 @@ public class StageInfo
         _routeSelect = routeSelect;
     }
 
-    public void RouteSelectData(StageInfo stageInfo)
+    public void SetMoveStageData(StageInfo stageInfo)
     {
         _selectActorIds = stageInfo.SelectActorIds;
         _clearCount = stageInfo.ClearCount;
         _troopClearCount = stageInfo._troopClearCount;
         _routeSelect = stageInfo.RouteSelect;
+        _defineBossIndex = stageInfo.DefineBossIndex;
+        _troopDates = stageInfo._troopDates;
+        _currentTroopInfos = stageInfo._currentTroopInfos;
     }
 
     public bool IsBendGameClear()
