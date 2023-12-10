@@ -213,6 +213,7 @@ public class TacticsPresenter :BasePresenter
         }
         if (viewEvent.commandType == Tactics.CommandType.TacticsCommand)
         {
+            Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
             CommandTacticsCommand((TacticsCommandType)viewEvent.template);
         }
         if (viewEvent.commandType == Tactics.CommandType.SelectTacticsActor)
@@ -245,6 +246,12 @@ public class TacticsPresenter :BasePresenter
         {
             if (_model.TacticsCommandType == TacticsCommandType.Battle)
             {
+                if ((ConfirmCommandType)viewEvent.template == ConfirmCommandType.Yes)
+                {
+                    Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
+                } else{
+                    Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cancel);
+                }
                 CommandTacticsCommand(TacticsCommandType.Battle);
             } else
             {
@@ -263,6 +270,7 @@ public class TacticsPresenter :BasePresenter
         }
         if (viewEvent.commandType == Tactics.CommandType.SelectAlchemyClose)
         {
+            Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
             CommandTacticsCommand(TacticsCommandType.Alchemy);
         }
         if (viewEvent.commandType == Tactics.CommandType.SelectRecoveryPlus)
@@ -557,7 +565,6 @@ public class TacticsPresenter :BasePresenter
         CommandRefresh();
         _view.HideCommandList();
         _view.SetHelpInputInfo(_model.TacticsCommandInputInfo());
-        Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
     }
 
     private void CommandSkillAlchemy(SkillInfo skillInfo)

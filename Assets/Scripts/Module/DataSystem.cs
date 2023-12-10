@@ -11,7 +11,7 @@ abstract public class DataSystem
     private static DataManager _data;
     public static DataManager Data => _data;
     public static List<ActorData> Actors = new ();
-    public static List<AdvData> Advs = new ();
+    public static List<AdvData> Adventures = new ();
     public static List<EnemyData> Enemies = new ();
     public static List<RuleData> Rules = new ();
     public static List<SkillData> Skills = new ();
@@ -68,7 +68,7 @@ abstract public class DataSystem
         AddressablesKey.LoadAssetAsync<DataManager>("Assets/Data/MainData.asset",(data) => {DataSystem._data = data;});
         */
         Actors = Resources.Load<ActorDates>("Data/Actors").Data;
-        Advs = Resources.Load<AdvDates>("Data/Advs").Data;
+        Adventures = Resources.Load<AdvDates>("Data/Advs").Data;
         Enemies = Resources.Load<EnemyDates>("Data/Enemies").Data;
         Rules = Resources.Load<RuleDates>("Data/Rules").Data;
         Skills = Resources.Load<SkillDates>("Data/Skills").Data;

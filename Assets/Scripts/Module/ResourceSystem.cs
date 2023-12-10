@@ -39,8 +39,8 @@ public class ResourceSystem : MonoBehaviour
 
     public async static UniTask<List<AudioClip>>LoadBGMAsset(string bgmKey)
     {    
-        BGMData bGMData = DataSystem.Data.GetBGM(bgmKey);
-        List<string> data = new List<string>();
+        var bGMData = DataSystem.Data.GetBGM(bgmKey);
+        var data = new List<string>();
         if (bGMData.Loop)
         {
             data.Add("Audios/BGM/" + bGMData.FileName + "_intro");

@@ -517,7 +517,7 @@ public class BaseModel
 
     public string GetAdvFile(int id)
     {
-        return DataSystem.Advs.Find(a => a.Id == id).AdvName;
+        return DataSystem.Adventures.Find(a => a.Id == id).AdvName;
     }
 
     public void StageClear()

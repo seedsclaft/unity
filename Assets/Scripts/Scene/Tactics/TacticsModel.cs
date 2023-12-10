@@ -34,7 +34,6 @@ public class TacticsModel : BaseModel
         get {return _currentEnemyIndex;} set {_currentEnemyIndex = value;}
     }
     
-
     private bool _needAllTacticsCommand = false;
     public bool NeedAllTacticsCommand => _needAllTacticsCommand;
     public void SetNeedAllTacticsCommand(bool isNeed)
@@ -369,34 +368,34 @@ public class TacticsModel : BaseModel
         if (isGameOver)
         {
             CurrentStage.SetEndingType(EndingType.D);
-            return DataSystem.Advs.Find(a => a.Id == 203);
+            return DataSystem.Adventures.Find(a => a.Id == 203);
         }
-        var isAendGameClear = CurrentStage.StageClear;
-        if (isAendGameClear)
+        var isAEndGameClear = CurrentStage.StageClear;
+        if (isAEndGameClear)
         {
             CurrentStage.SetEndingType(EndingType.A);
-            StageClear(2);
-            return DataSystem.Advs.Find(a => a.Id == 173);
+            StageClear(CurrentStage.Master.Id);
+            return DataSystem.Adventures.Find(a => a.Id == 173);
         }
-        var isBendGameClear = CurrentStage.RouteSelect == 1 && CurrentStage.IsBendGameClear();
-        if (isBendGameClear)
+        var isBEndGameClear = CurrentStage.RouteSelect == 1 && CurrentStage.IsBendGameClear();
+        if (isBEndGameClear)
         {
             CurrentStage.SetEndingType(EndingType.B);
-            StageClear(2);
-            return DataSystem.Advs.Find(a => a.Id == 172);
+            StageClear(CurrentStage.Master.Id);
+            return DataSystem.Adventures.Find(a => a.Id == 172);
         }
         var isEndStage = (CurrentStage.SubordinateValue <= 0);
         if (isEndStage)
         {
             ChangeSubordinate(false);
             ChangeRouteSelectStage(11);
-            return DataSystem.Advs.Find(a => a.Id == 171);
+            return DataSystem.Adventures.Find(a => a.Id == 171);
         }
         var isTurnOver = (Turns < 0);
         if (isTurnOver)
         {
             CurrentStage.SetEndingType(EndingType.D);
-            return DataSystem.Advs.Find(a => a.Id == 204);
+            return DataSystem.Adventures.Find(a => a.Id == 204);
         }
         return null;
     }
