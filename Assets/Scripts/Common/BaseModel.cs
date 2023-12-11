@@ -522,12 +522,7 @@ public class BaseModel
 
     public void StageClear()
     {
-        CurrentData.PlayerInfo.StageClear(CurrentStage.Id);
-    }
-
-    public void StageClear(int stageId)
-    {
-        CurrentData.PlayerInfo.StageClear(stageId);
+        CurrentData.PlayerInfo.StageClear(CurrentStage.BaseStageId);
     }
 
     public void ChangeRouteSelectStage(int stageBaseId)

@@ -9,12 +9,10 @@ public class GameSystem : MonoBehaviour
     [SerializeField] private bool testMode = false;
     [SerializeField] private SceneAssign sceneAssign = null;
     [SerializeField] private PopupAssign popupAssign = null;
+    [SerializeField] private StatusAssign statusAssign = null;
     [SerializeField] private GameObject confirmRoot = null;
     [SerializeField] private GameObject transitionRoot = null;
     [SerializeField] private Fade transitionFade = null;
-    [SerializeField] private GameObject statusRoot = null;
-    [SerializeField] private GameObject statusPrefab = null;
-    [SerializeField] private GameObject enemyInfoPrefab = null;
     [SerializeField] private LoadingView loadingView = null;
     [SerializeField] private AdvEngine advEngine = null;
     [SerializeField] private AdvController advController = null;
@@ -56,9 +54,8 @@ public class GameSystem : MonoBehaviour
 
     private void CreateStatus(bool isActor)
     {
-        var basePrefab = isActor ? statusPrefab : enemyInfoPrefab;
-        var prefab = Instantiate(basePrefab);
-        prefab.transform.SetParent(statusRoot.transform, false);
+        var statusType = isActor ? StatusType.Status : StatusType.EnemyDetail;
+        var prefab = statusAssign.CreatePopup(statusType);
         if (isActor)
         {
             _statusView = prefab.GetComponent<StatusView>();
@@ -68,7 +65,6 @@ public class GameSystem : MonoBehaviour
         }
         _statusView.SetHelpWindow(helpWindow);
         _statusView.Initialize();
-        statusRoot.gameObject.SetActive(true);
     }
 
     private void CreateLoading()
@@ -140,7 +136,7 @@ public class GameSystem : MonoBehaviour
                 {
                     DestroyImmediate(_statusView.gameObject);
                 }
-                statusRoot.gameObject.SetActive(false);
+                statusAssign.StatusRoot.gameObject.SetActive(false);
                 _currentScene.SetBusy(false);
                 break;
             case Base.CommandType.CallEnemyInfoView:
@@ -157,8 +153,8 @@ public class GameSystem : MonoBehaviour
                 _currentScene.SetBusy(true);
                 break;
             case Base.CommandType.CallAdvScene:
-                statusRoot.gameObject.SetActive(false);
-                if (!statusRoot.gameObject.activeSelf) _currentScene.SetBusy(true);
+                statusAssign.StatusRoot.gameObject.SetActive(false);
+                if (!statusAssign.StatusRoot.gameObject.activeSelf) _currentScene.SetBusy(true);
                 if (_statusView) _statusView.SetBusy(true);
                 AdvCallInfo advCallInfo = viewEvent.template as AdvCallInfo;
                 _currentScene.SetBusy(true);
@@ -370,7 +366,7 @@ public class GameSystem : MonoBehaviour
         {
             yield return null;
         }
-        if (!statusRoot.gameObject.activeSelf) _currentScene.SetBusy(false);
+        if (!statusAssign.StatusRoot.gameObject.activeSelf) _currentScene.SetBusy(false);
         if (_statusView) _statusView.SetBusy(false);
         advController.EndAdv();
         advHelpWindow.SetInputInfo("");

@@ -11,7 +11,7 @@ public class PopupAssign : MonoBehaviour
     [SerializeField] private GameObject optionPrefab = null;
     [SerializeField] private GameObject rankingPrefab = null;
     [SerializeField] private GameObject creditPrefab = null;
-    [SerializeField] private GameObject chracterListPrefab = null;
+    [SerializeField] private GameObject characterListPrefab = null;
     
     public GameObject CreatePopup(PopupType popupType)
     {
@@ -38,7 +38,7 @@ public class PopupAssign : MonoBehaviour
             case PopupType.Credit:
             return creditPrefab;
             case PopupType.CharacterList:
-            return chracterListPrefab;
+            return characterListPrefab;
         }
         return null;
     }

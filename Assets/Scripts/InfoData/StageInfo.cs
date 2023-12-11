@@ -5,6 +5,8 @@ using System.Collections.Generic;
 public class StageInfo
 {
     public StageData Master {get {return DataSystem.Stages.Find(a => a.Id == _id);}}
+    private int _baseStageId;
+    public int BaseStageId => _baseStageId;
     private int _id;
     public int Id => _id;
     private int _turns;
@@ -52,15 +54,16 @@ public class StageInfo
     private int _rebornActorIndex = -1;
     public int RebornActorIndex => _rebornActorIndex;
     public void SetRebornActorIndex(int rebornActorIndex) {_rebornActorIndex = rebornActorIndex;}
-    public StageInfo(StageData stageInfo)
+    public StageInfo(StageData stageData)
     {
-        _id = stageInfo.Id;
-        _turns = stageInfo.Turns;
+        _id = stageData.Id;
+        _baseStageId = stageData.Id;
+        _turns = stageData.Turns;
         _currentTurn = 1;
         _IsSubordinate = false;
         _subordinateValue = 50;
         _troopClearCount = 0;
-        _randomTroopCount = stageInfo.RandomTroopCount;
+        _randomTroopCount = stageData.RandomTroopCount;
         _clearTroopIds.Clear();
 		MakeTroopData();
     }
@@ -191,6 +194,39 @@ public class StageInfo
         }
     }
 
+    public void MakeLastBossOnlyTroop()
+    {
+        _currentTroopInfos.Clear();
+        // アクターに呼応する敵 + 光属性
+        var troopIds = new List<int>();
+        foreach (var actorId in _selectActorIds)
+        {
+            troopIds.Add(actorId * 10 + 3000);
+        }
+        if (!troopIds.Contains(3140) && !troopIds.Contains(3040))
+        {
+            troopIds.Add(3040);
+        }
+        var enemyIds = new List<int>();
+        foreach (var troopId in troopIds)
+        {
+            if (troopId % 1000 == 40)
+            {
+                // 先頭は光属性
+                enemyIds.Add(troopId);
+            }
+        }
+        
+        int lv = 20;
+        for (int i = 0;i < enemyIds.Count;i++)
+        {
+            if (_clearTroopIds.Contains(enemyIds[i])) continue;
+            var troopInfo = new TroopInfo(enemyIds[i],false);
+            troopInfo.MakeEnemyTroopDates(lv);
+            _currentTroopInfos.Add(troopInfo);
+        }
+    }
+
     public List<TroopInfo> MakeTutorialTroopData(int selectIndex)
     {
         _currentTroopInfos.Clear();
@@ -203,6 +239,7 @@ public class StageInfo
     public List<TroopInfo> MakeRouteSelectTroopData(int routeSelect)
     {
         _currentTroopInfos.Clear();
+        // アクターに呼応する敵 + 光属性
         var troopIds = new List<int>();
         foreach (var actorId in _selectActorIds)
         {
@@ -213,60 +250,29 @@ public class StageInfo
             troopIds.Add(3040);
         }
         var enemyIds = new List<int>();
-        if (routeSelect == 0)
+        foreach (var troopId in troopIds)
         {
-            enemyIds.Add(4010);
-        } else
-        if (routeSelect >= 1)
+            if (troopId % 1000 == 40)
+            {
+                // 先頭は光属性
+                enemyIds.Add(troopId);
+            }
+        }
+        while (enemyIds.Count <= 2)
         {
-            if (routeSelect == 1)
+            int rand = new Random().Next(1, 14) * 10 + 3000;
+            if (!enemyIds.Contains(rand) && troopIds.Contains(rand))
             {
-                var idx = 0;
-                foreach (var actorId in _selectActorIds)
-                {
-                    if (idx < 3)
-                    {
-                        enemyIds.Add(actorId * 10 + 3000);
-                    }
-                    idx++;
-                }
-            } else
-            if (routeSelect == 2)
-            {
-                foreach (var troopId in troopIds)
-                {
-                    if (troopId % 1000 == 40)
-                    {
-                        enemyIds.Add(troopId);
-                    }
-                }
-                var notEncountId = routeSelect == 1 ? 40 : 0;
-                while (enemyIds.Count <= 2)
-                {
-                    int rand = new Random().Next(1, 14);
-                    rand *= 10;
-                    rand += 3000;
-                    if (rand % 1000 != notEncountId)
-                    {
-                        if (DataSystem.Troops.Find(a => a.TroopId == rand) != null)
-                        {
-                            if (!enemyIds.Contains(rand) && troopIds.Contains(rand))
-                            {
-                                enemyIds.Add(rand);
-                            }
-                        }
-                    }
-                }
+                enemyIds.Add(rand);
             }
         }
         
-        int lv = 15;
+        int lv = 20;
         for (int i = 0;i < enemyIds.Count;i++)
         {
             if (_clearTroopIds.Contains(enemyIds[i])) continue;
             var troopInfo = new TroopInfo(enemyIds[i],false);
             troopInfo.MakeEnemyTroopDates(lv);
-            troopInfo.MakeGetItemInfos();
             _currentTroopInfos.Add(troopInfo);
         }
         return _currentTroopInfos;
@@ -389,6 +395,11 @@ public class StageInfo
         MakeBossOnlyTroop();
     }
 
+    public void SetLastBossOnly()
+    {
+        MakeLastBossOnlyTroop();
+    }
+
     public void SetRouteSelect(int routeSelect)
     {
         _routeSelect = routeSelect;
@@ -396,6 +407,7 @@ public class StageInfo
 
     public void SetMoveStageData(StageInfo stageInfo)
     {
+        _baseStageId = stageInfo.BaseStageId;
         _selectActorIds = stageInfo.SelectActorIds;
         _clearCount = stageInfo.ClearCount;
         _troopClearCount = stageInfo._troopClearCount;
@@ -403,24 +415,6 @@ public class StageInfo
         _defineBossIndex = stageInfo.DefineBossIndex;
         _troopDates = stageInfo._troopDates;
         _currentTroopInfos = stageInfo._currentTroopInfos;
-    }
-
-    public bool IsBendGameClear()
-    {
-        var BendClear = true;
-        var idx = 0;
-        foreach (var actorId in _selectActorIds)
-        {
-            if (idx < 3)
-            {
-                if (!_clearTroopIds.Contains(actorId * 100 + 2000))
-                {
-                    BendClear = false;
-                }
-            }
-            idx++;
-        }
-        return BendClear;
     }
 
     public int SelectActorIdsClassId(int selectIndex)

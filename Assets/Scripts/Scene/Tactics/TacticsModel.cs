@@ -374,28 +374,8 @@ public class TacticsModel : BaseModel
         if (isAEndGameClear)
         {
             CurrentStage.SetEndingType(EndingType.A);
-            StageClear(CurrentStage.Master.Id);
+            StageClear();
             return DataSystem.Adventures.Find(a => a.Id == 173);
-        }
-        var isBEndGameClear = CurrentStage.RouteSelect == 1 && CurrentStage.IsBendGameClear();
-        if (isBEndGameClear)
-        {
-            CurrentStage.SetEndingType(EndingType.B);
-            StageClear(CurrentStage.Master.Id);
-            return DataSystem.Adventures.Find(a => a.Id == 172);
-        }
-        var isEndStage = (CurrentStage.SubordinateValue <= 0);
-        if (isEndStage)
-        {
-            ChangeSubordinate(false);
-            ChangeRouteSelectStage(11);
-            return DataSystem.Adventures.Find(a => a.Id == 171);
-        }
-        var isTurnOver = (Turns < 0);
-        if (isTurnOver)
-        {
-            CurrentStage.SetEndingType(EndingType.D);
-            return DataSystem.Adventures.Find(a => a.Id == 204);
         }
         return null;
     }
@@ -508,6 +488,16 @@ public class TacticsModel : BaseModel
             SetTacticsCommandEnables(TacticsCommandType.Recovery,false);
             SetTacticsCommandEnables(TacticsCommandType.Resource,false);
         }
+    }
+
+    public void SetLastBoss()
+    {
+        CurrentStage.SetLastBossOnly();
+        SetNeedAllTacticsCommand(true);
+        SetTacticsCommandEnables(TacticsCommandType.Train,false);
+        SetTacticsCommandEnables(TacticsCommandType.Alchemy,false);
+        SetTacticsCommandEnables(TacticsCommandType.Recovery,false);
+        SetTacticsCommandEnables(TacticsCommandType.Resource,false);
     }
 }
 

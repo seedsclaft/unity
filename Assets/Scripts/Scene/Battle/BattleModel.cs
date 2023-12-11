@@ -64,6 +64,7 @@ public class BattleModel : BaseModel
         
         for (int i = 0;i < enemies.Count;i++)
         {
+            enemies[i].GainHp(-99999);
             _battlers.Add(enemies[i]);
         }
         foreach (var battlerInfo1 in _battlers)

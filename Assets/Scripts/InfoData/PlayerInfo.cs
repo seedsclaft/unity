@@ -52,7 +52,10 @@ public class PlayerInfo
 	public void StageClear(int stageId)
 	{
 		var stageInfo = _stages.Find(a => a.Id == stageId);
-		stageInfo.GainClearCount();
+        if (stageInfo != null)
+        {
+    		stageInfo.GainClearCount();
+        }
 	}
 
     private List<ActorInfo> _saveActorList = new ();

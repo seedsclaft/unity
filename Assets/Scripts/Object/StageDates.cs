@@ -66,7 +66,8 @@ public enum StageEventType{
     RouteSelectBattle = 32, // ルート分岐敵グループを生成
     RebornSkillEffect = 41, // 継承スキル演出再生
     MoveStage = 51, // ステージ移動
-    SetDefineBoss = 61, // ボスを設定する
+    SetDefineBoss = 61, // 中ボスを設定する
+    SetLastBoss = 62, // 上位者ボスを設定する
 }
 
 

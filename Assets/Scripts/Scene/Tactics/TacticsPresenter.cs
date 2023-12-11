@@ -110,6 +110,9 @@ public class TacticsPresenter :BasePresenter
                 case StageEventType.SetDefineBoss:
                     _model.SetDefineBoss(stageEvent.Param);
                     break;
+                case StageEventType.SetLastBoss:
+                    _model.SetLastBoss();
+                    break;
             }
             if (isEvent)
             {

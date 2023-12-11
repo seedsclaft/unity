@@ -10737,21 +10737,6 @@ MonoBehaviour:
       debugIndex: 41
       strings:
       - Selection
-      - '*Selection3_Event5_1'
-      - 
-      - 
-      - 
-      - 280
-      - -32
-      - 
-      - ">>\u9053\u306A\u304D\u8005\u3092\u8A0E\u3061\u679C\u305F\u3059"
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 42
-      debugIndex: 42
-      strings:
-      - Selection
       - '*Selection4_Event5_1'
       - 
       - 
@@ -10763,53 +10748,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 43
-      debugIndex: 43
-      strings:
-      - '*Selection3_Event5_1'
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 44
-      debugIndex: 44
-      strings:
-      - Param
-      - RouteSelect=1
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 45
-      debugIndex: 45
-      strings:
-      - Jump
-      - '*Selection5_Event5_1'
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 46
-      debugIndex: 46
+    - rowIndex: 42
+      debugIndex: 42
       strings:
       - '*Selection4_Event5_1'
       - 
@@ -10823,8 +10763,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 47
-      debugIndex: 47
+    - rowIndex: 43
+      debugIndex: 43
       strings:
       - Param
       - RouteSelect=2
@@ -10838,8 +10778,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 48
-      debugIndex: 48
+    - rowIndex: 44
+      debugIndex: 44
       strings:
       - Jump
       - '*Selection5_Event5_1'
@@ -10853,8 +10793,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 49
-      debugIndex: 49
+    - rowIndex: 45
+      debugIndex: 45
       strings:
       - '*Selection5_Event5_1'
       - 
@@ -10868,8 +10808,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 50
-      debugIndex: 50
+    - rowIndex: 46
+      debugIndex: 46
       strings:
       - 
       - Chara1
@@ -10883,8 +10823,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 51
-      debugIndex: 51
+    - rowIndex: 47
+      debugIndex: 47
       strings:
       - EndScenario
       isEmpty: 0
@@ -10892,7 +10832,7 @@ MonoBehaviour:
       debugInfo: 
     name: Assets/ADVScene/AdvFile.xls:Event5_1
     type: 1
-    textLength: 1350
+    textLength: 1241
     headerRow: 0
     sourceAssetInEditor: {fileID: 0}
     entityIndexTbl: 
@@ -11197,21 +11137,6 @@ MonoBehaviour:
       debugIndex: 20
       strings:
       - Selection
-      - '*Selection1_Event5_2'
-      - 
-      - 
-      - 
-      - 280
-      - -32
-      - 
-      - ">>\u9053\u306A\u304D\u8005\u3060"
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 21
-      debugIndex: 21
-      strings:
-      - Selection
       - '*Selection2_Event5_2'
       - 
       - 
@@ -11223,11 +11148,26 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
+    - rowIndex: 21
+      debugIndex: 21
+      strings:
+      - '*Selection2_Event5_2'
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
     - rowIndex: 22
       debugIndex: 22
       strings:
-      - '*Selection1_Event5_2'
-      - 
+      - Param
+      - RouteSelect=2
       - 
       - 
       - 
@@ -11241,15 +11181,16 @@ MonoBehaviour:
     - rowIndex: 23
       debugIndex: 23
       strings:
-      - Param
-      - RouteSelect=1
+      - 
+      - Chara2
       - 
       - 
       - 
       - 
       - 
       - 
-      - 
+      - "\u3055\u3063\u304D\u3082\u8A00\u3063\u305F\u3051\u3069\u2026<speed=0.5>
+        </speed>\n\u30A2\u30BF\u30B7\u306F\u3069\u3063\u3061\u3067\u3082\u826F\u3044\u3093\u3060"
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
@@ -11264,8 +11205,7 @@ MonoBehaviour:
       - 
       - 
       - 
-      - "\u3055\u3063\u304D\u3082\u8A00\u3063\u305F\u3051\u3069\u2026<speed=0.5>
-        </speed>\n\u30A2\u30BF\u30B7\u306F\u3069\u3063\u3061\u3067\u3082\u826F\u3044\u3093\u3060"
+      - "\u3067\u3082\u304D\u3063\u3068\u5927\u5909\u3060\u3088<speed=0.5> </speed>\n\u76F8\u624B\u306F\u4E0A\u4F4D\u8005\u3060\u3057"
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
@@ -11280,15 +11220,15 @@ MonoBehaviour:
       - 
       - 
       - 
-      - "\u3060\u3063\u3066<speed=0.5> </speed>\n\u30A2\u30BF\u30B7\u306E\u601D\u3044\u306F\u2026"
+      - "\u305F\u3076\u3093\u30A2\u30BF\u30B7\u3089\u2026<speed=0.5> </speed>\n\u4E00\u5EA6\u8CA0\u3051\u3066\u308B\u304B\u3089"
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
     - rowIndex: 26
       debugIndex: 26
       strings:
-      - Jump
       - '*SelectionEnd_Event5_2'
+      - 
       - 
       - 
       - 
@@ -11302,104 +11242,13 @@ MonoBehaviour:
     - rowIndex: 27
       debugIndex: 27
       strings:
-      - '*Selection2_Event5_2'
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 28
-      debugIndex: 28
-      strings:
-      - Param
-      - RouteSelect=2
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 29
-      debugIndex: 29
-      strings:
-      - 
-      - Chara2
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      - "\u3055\u3063\u304D\u3082\u8A00\u3063\u305F\u3051\u3069\u2026<speed=0.5>
-        </speed>\n\u30A2\u30BF\u30B7\u306F\u3069\u3063\u3061\u3067\u3082\u826F\u3044\u3093\u3060"
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 30
-      debugIndex: 30
-      strings:
-      - 
-      - Chara2
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      - "\u3067\u3082\u304D\u3063\u3068\u5927\u5909\u3060\u3088<speed=0.5> </speed>\n\u76F8\u624B\u306F\u4E0A\u4F4D\u8005\u3060\u3057"
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 31
-      debugIndex: 31
-      strings:
-      - 
-      - Chara2
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      - "\u305F\u3076\u3093\u30A2\u30BF\u30B7\u3089\u2026<speed=0.5> </speed>\n\u4E00\u5EA6\u8CA0\u3051\u3066\u308B\u304B\u3089"
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 32
-      debugIndex: 32
-      strings:
-      - '*SelectionEnd_Event5_2'
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 33
-      debugIndex: 33
-      strings:
       - EndScenario
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
     name: Assets/ADVScene/AdvFile.xls:Event5_2
     type: 1
-    textLength: 1056
+    textLength: 862
     headerRow: 0
     sourceAssetInEditor: {fileID: 0}
     entityIndexTbl: 
@@ -12152,21 +12001,6 @@ MonoBehaviour:
       debugIndex: 50
       strings:
       - Selection
-      - '*Selection6_Event5_3'
-      - 
-      - 
-      - 
-      - 280
-      - -32
-      - 
-      - ">>\u9053\u306A\u304D\u8005\u3060"
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 51
-      debugIndex: 51
-      strings:
-      - Selection
       - '*Selection7_Event5_3'
       - 
       - 
@@ -12178,53 +12012,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 52
-      debugIndex: 52
-      strings:
-      - '*Selection6_Event5_3'
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 53
-      debugIndex: 53
-      strings:
-      - Param
-      - RouteSelect=1
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 54
-      debugIndex: 54
-      strings:
-      - Jump
-      - '*Selection8_Event5_3'
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 55
-      debugIndex: 55
+    - rowIndex: 51
+      debugIndex: 51
       strings:
       - '*Selection7_Event5_3'
       - 
@@ -12238,8 +12027,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 56
-      debugIndex: 56
+    - rowIndex: 52
+      debugIndex: 52
       strings:
       - Param
       - RouteSelect=2
@@ -12253,8 +12042,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 57
-      debugIndex: 57
+    - rowIndex: 53
+      debugIndex: 53
       strings:
       - Jump
       - '*Selection8_Event5_3'
@@ -12268,8 +12057,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 58
-      debugIndex: 58
+    - rowIndex: 54
+      debugIndex: 54
       strings:
       - '*Selection8_Event5_3'
       - 
@@ -12283,8 +12072,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 59
-      debugIndex: 59
+    - rowIndex: 55
+      debugIndex: 55
       strings:
       - 
       - Chara3
@@ -12298,8 +12087,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 60
-      debugIndex: 60
+    - rowIndex: 56
+      debugIndex: 56
       strings:
       - 
       - Chara3
@@ -12313,8 +12102,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 61
-      debugIndex: 61
+    - rowIndex: 57
+      debugIndex: 57
       strings:
       - 
       - Chara3
@@ -12328,8 +12117,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 62
-      debugIndex: 62
+    - rowIndex: 58
+      debugIndex: 58
       strings:
       - 
       - Chara3
@@ -12343,8 +12132,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 63
-      debugIndex: 63
+    - rowIndex: 59
+      debugIndex: 59
       strings:
       - EndScenario
       isEmpty: 0
@@ -12352,7 +12141,7 @@ MonoBehaviour:
       debugInfo: 
     name: Assets/ADVScene/AdvFile.xls:Event5_3
     type: 1
-    textLength: 1808
+    textLength: 1704
     headerRow: 0
     sourceAssetInEditor: {fileID: 0}
     entityIndexTbl: 
@@ -12622,21 +12411,6 @@ MonoBehaviour:
       debugIndex: 18
       strings:
       - Selection
-      - '*Selection1_Event5_4'
-      - 
-      - 
-      - 
-      - 280
-      - -32
-      - 
-      - ">>\u9053\u306A\u304D\u8005\u3092\u6EC5\u307C\u3059"
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 19
-      debugIndex: 19
-      strings:
-      - Selection
       - '*Selection2_Event5_4'
       - 
       - 
@@ -12648,11 +12422,26 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
+    - rowIndex: 19
+      debugIndex: 19
+      strings:
+      - '*Selection2_Event5_4'
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
     - rowIndex: 20
       debugIndex: 20
       strings:
-      - '*Selection1_Event5_4'
-      - 
+      - Param
+      - RouteSelect=2
       - 
       - 
       - 
@@ -12666,15 +12455,15 @@ MonoBehaviour:
     - rowIndex: 21
       debugIndex: 21
       strings:
-      - Param
-      - RouteSelect=1
+      - 
+      - Chara4
       - 
       - 
       - 
       - 
       - 
       - 
-      - 
+      - "\u3046\u3093\uFF01\u308F\u304B\u3063\u305F"
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
@@ -12689,7 +12478,7 @@ MonoBehaviour:
       - 
       - 
       - 
-      - "\u3046\u3093\uFF01\u308F\u304B\u3063\u305F"
+      - "<param=PlayerName>\u3055\u3093\u306E\u8A00\u3046\u901A\u308A\u306B\u3059\u308B\u306D"
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
@@ -12704,180 +12493,28 @@ MonoBehaviour:
       - 
       - 
       - 
-      - "<param=PlayerName>\u3055\u3093\u306E\u8A00\u3046\u901A\u308A\u306B\u3059\u308B\u306D"
+      - "\u305D\u3046\u3059\u308C\u3070\u304A\u7236\u3055\u3093\u306B\u2026<speed=0.5>
+        </speed>\n\u4F1A\u3048\u308B\u3093\u3060\u3088\u306D\uFF01"
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
     - rowIndex: 24
       debugIndex: 24
       strings:
-      - 
-      - Chara4
-      - 
+      - '*SelectionEnd_Event5_4'
       - 
       - 
       - 
       - 
       - 
-      - "\u305D\u3046\u3059\u308C\u3070\u304A\u7236\u3055\u3093\u306B\u2026<speed=0.5>
-        </speed>\n\u4F1A\u3048\u308B\u3093\u3060\u3088\u306D\uFF01"
+      - 
+      - 
+      - 
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
     - rowIndex: 25
       debugIndex: 25
-      strings:
-      - 
-      - Chara4
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      - "\u3042\u308C\u2026\u3067\u3082\uFF1F"
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 26
-      debugIndex: 26
-      strings:
-      - 
-      - Chara4
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      - "\u4ECA\u307E\u3067\u5012\u3057\u305F\u9053\u306A\u304D\u8005\u306E\u4E2D\u306B<speed=0.5>
-        </speed>\n\u304A\u7236\u3055\u3093\u306E\u611F\u89E6\u3092\u898B\u305F\u3088\u3046\u306A\u6C17\u304C\u3059\u308B\u2026"
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 27
-      debugIndex: 27
-      strings:
-      - 
-      - Chara4
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      - "\u305D\u308C\u3063\u3066\u2026<speed=0.5> </speed>\n\u4F55\u3067\u3060\u308D\u3046"
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 28
-      debugIndex: 28
-      strings:
-      - Jump
-      - '*SelectionEnd_Event5_4'
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 29
-      debugIndex: 29
-      strings:
-      - '*Selection2_Event5_4'
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 30
-      debugIndex: 30
-      strings:
-      - Param
-      - RouteSelect=2
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 31
-      debugIndex: 31
-      strings:
-      - 
-      - Chara4
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      - "\u3046\u3093\uFF01\u308F\u304B\u3063\u305F"
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 32
-      debugIndex: 32
-      strings:
-      - 
-      - Chara4
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      - "<param=PlayerName>\u3055\u3093\u306E\u8A00\u3046\u901A\u308A\u306B\u3059\u308B\u306D"
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 33
-      debugIndex: 33
-      strings:
-      - 
-      - Chara4
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      - "\u305D\u3046\u3059\u308C\u3070\u304A\u7236\u3055\u3093\u306B\u2026<speed=0.5>
-        </speed>\n\u4F1A\u3048\u308B\u3093\u3060\u3088\u306D\uFF01"
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 34
-      debugIndex: 34
-      strings:
-      - '*SelectionEnd_Event5_4'
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 35
-      debugIndex: 35
       strings:
       - EndScenario
       isEmpty: 0
@@ -12885,7 +12522,7 @@ MonoBehaviour:
       debugInfo: 
     name: Assets/ADVScene/AdvFile.xls:Event5_4
     type: 1
-    textLength: 944
+    textLength: 634
     headerRow: 0
     sourceAssetInEditor: {fileID: 0}
     entityIndexTbl: 
@@ -13536,21 +13173,6 @@ MonoBehaviour:
       debugIndex: 43
       strings:
       - Selection
-      - '*Selection3'
-      - 
-      - 
-      - 
-      - 280
-      - -32
-      - 
-      - ">>\u79C1\u306F\u9053\u306A\u304D\u8005\u3092\u8A0E\u3061\u679C\u305F\u3059\u3060\u3051\u3060"
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 44
-      debugIndex: 44
-      strings:
-      - Selection
       - '*Selection4'
       - 
       - 
@@ -13562,11 +13184,26 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
+    - rowIndex: 44
+      debugIndex: 44
+      strings:
+      - '*Selection4'
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
     - rowIndex: 45
       debugIndex: 45
       strings:
-      - '*Selection3'
-      - 
+      - Param
+      - RouteSelect=2
       - 
       - 
       - 
@@ -13580,15 +13217,15 @@ MonoBehaviour:
     - rowIndex: 46
       debugIndex: 46
       strings:
-      - Param
-      - RouteSelect=1
+      - 
+      - Chara5
       - 
       - 
       - 
       - 
       - 
       - 
-      - 
+      - "\u2026\uFF01"
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
@@ -13603,22 +13240,22 @@ MonoBehaviour:
       - 
       - 
       - 
-      - "\u2026"
+      - "\u8CB4\u65B9\u3068\u4E91\u3046\u65B9\u306F\u2026"
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
     - rowIndex: 48
       debugIndex: 48
       strings:
-      - 
-      - Chara5
-      - 
+      - Wait
       - 
       - 
       - 
       - 
       - 
-      - "\u305D\u3046\u3067\u3057\u305F\u306D"
+      - 1
+      - 
+      - 
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
@@ -13633,7 +13270,7 @@ MonoBehaviour:
       - 
       - 
       - 
-      - "\u3042\u304F\u307E\u3067\u3082<speed=0.5> </speed>\n\u79C1\u305F\u3061\u306F\u4E0A\u4F4D\u8005\u306E\u5C16\u5175"
+      - "\u9032\u307F\u307E\u3057\u3087\u3046\u2026<speed=0.5> </speed>\n\u8CB4\u65B9\u306E\u9B42\u304C\u884C\u304D\u3064\u304F\u5834\u6240\u3078"
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
@@ -13648,7 +13285,7 @@ MonoBehaviour:
       - 
       - 
       - 
-      - "\u4F7F\u547D\u3092\u5168\u3046\u3059\u308B\u3053\u3068\u306B\u81F4\u3057\u307E\u3057\u3087\u3046"
+      - "\u79C1\u306F\u5171\u306B\u3059\u308B\u899A\u609F\u3067\u3044\u307E\u3059\u304B\u3089"
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
@@ -13670,7 +13307,7 @@ MonoBehaviour:
     - rowIndex: 52
       debugIndex: 52
       strings:
-      - '*Selection4'
+      - '*SelectionEnd'
       - 
       - 
       - 
@@ -13685,133 +13322,13 @@ MonoBehaviour:
     - rowIndex: 53
       debugIndex: 53
       strings:
-      - Param
-      - RouteSelect=2
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 54
-      debugIndex: 54
-      strings:
-      - 
-      - Chara5
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      - "\u2026\uFF01"
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 55
-      debugIndex: 55
-      strings:
-      - 
-      - Chara5
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      - "\u8CB4\u65B9\u3068\u4E91\u3046\u65B9\u306F\u2026"
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 56
-      debugIndex: 56
-      strings:
-      - Wait
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 1
-      - 
-      - 
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 57
-      debugIndex: 57
-      strings:
-      - 
-      - Chara5
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      - "\u9032\u307F\u307E\u3057\u3087\u3046\u2026<speed=0.5> </speed>\n\u8CB4\u65B9\u306E\u9B42\u304C\u884C\u304D\u3064\u304F\u5834\u6240\u3078"
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 58
-      debugIndex: 58
-      strings:
-      - 
-      - Chara5
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      - "\u79C1\u306F\u5171\u306B\u3059\u308B\u899A\u609F\u3067\u3044\u307E\u3059\u304B\u3089"
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 59
-      debugIndex: 59
-      strings:
-      - Jump
-      - '*SelectionEnd'
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 60
-      debugIndex: 60
-      strings:
-      - '*SelectionEnd'
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 61
-      debugIndex: 61
-      strings:
       - EndScenario
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
     name: Assets/ADVScene/AdvFile.xls:Event5_5
     type: 1
-    textLength: 1357
+    textLength: 1185
     headerRow: 0
     sourceAssetInEditor: {fileID: 0}
     entityIndexTbl: 
@@ -14268,21 +13785,6 @@ MonoBehaviour:
       debugIndex: 30
       strings:
       - Selection
-      - '*Selection4_Event5_6'
-      - 
-      - 
-      - 
-      - 280
-      - -32
-      - 
-      - ">>\u9053\u306A\u304D\u8005\u3092\u5012\u3059"
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 31
-      debugIndex: 31
-      strings:
-      - Selection
       - '*Selection5_Event5_6'
       - 
       - 
@@ -14294,11 +13796,26 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
+    - rowIndex: 31
+      debugIndex: 31
+      strings:
+      - '*Selection5_Event5_6'
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
     - rowIndex: 32
       debugIndex: 32
       strings:
-      - '*Selection4_Event5_6'
-      - 
+      - Param
+      - RouteSelect=2
       - 
       - 
       - 
@@ -14312,8 +13829,8 @@ MonoBehaviour:
     - rowIndex: 33
       debugIndex: 33
       strings:
-      - Param
-      - RouteSelect=1
+      - Jump
+      - '*Selection7_Event5_6'
       - 
       - 
       - 
@@ -14327,7 +13844,7 @@ MonoBehaviour:
     - rowIndex: 34
       debugIndex: 34
       strings:
-      - '*Selection5_Event5_6'
+      - '*Selection7_Event5_6'
       - 
       - 
       - 
@@ -14342,51 +13859,6 @@ MonoBehaviour:
     - rowIndex: 35
       debugIndex: 35
       strings:
-      - Param
-      - RouteSelect=2
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 36
-      debugIndex: 36
-      strings:
-      - Jump
-      - '*Selection7_Event5_6'
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 37
-      debugIndex: 37
-      strings:
-      - '*Selection7_Event5_6'
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 38
-      debugIndex: 38
-      strings:
       - 
       - Chara6
       - 
@@ -14399,8 +13871,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 39
-      debugIndex: 39
+    - rowIndex: 36
+      debugIndex: 36
       strings:
       - 
       - Chara6
@@ -14415,8 +13887,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 40
-      debugIndex: 40
+    - rowIndex: 37
+      debugIndex: 37
       strings:
       - EndScenario
       isEmpty: 0
@@ -14424,7 +13896,7 @@ MonoBehaviour:
       debugInfo: 
     name: Assets/ADVScene/AdvFile.xls:Event5_6
     type: 1
-    textLength: 1272
+    textLength: 1190
     headerRow: 0
     sourceAssetInEditor: {fileID: 0}
     entityIndexTbl: 
@@ -14987,21 +14459,6 @@ MonoBehaviour:
       debugIndex: 37
       strings:
       - Selection
-      - '*Selection5_Event5_7'
-      - 
-      - 
-      - 
-      - 280
-      - -32
-      - 
-      - ">>\u9053\u306A\u304D\u8005\u3060"
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 38
-      debugIndex: 38
-      strings:
-      - Selection
       - '*Selection6_Event5_7'
       - 
       - 
@@ -15013,53 +14470,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 39
-      debugIndex: 39
-      strings:
-      - '*Selection5_Event5_7'
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 40
-      debugIndex: 40
-      strings:
-      - Param
-      - RouteSelect=1
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 41
-      debugIndex: 41
-      strings:
-      - Jump
-      - '*Selection7_Event5_7'
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 42
-      debugIndex: 42
+    - rowIndex: 38
+      debugIndex: 38
       strings:
       - '*Selection6_Event5_7'
       - 
@@ -15073,8 +14485,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 43
-      debugIndex: 43
+    - rowIndex: 39
+      debugIndex: 39
       strings:
       - Param
       - RouteSelect=2
@@ -15088,8 +14500,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 44
-      debugIndex: 44
+    - rowIndex: 40
+      debugIndex: 40
       strings:
       - Jump
       - '*Selection7_Event5_7'
@@ -15103,8 +14515,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 45
-      debugIndex: 45
+    - rowIndex: 41
+      debugIndex: 41
       strings:
       - '*Selection7_Event5_7'
       - 
@@ -15118,8 +14530,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 46
-      debugIndex: 46
+    - rowIndex: 42
+      debugIndex: 42
       strings:
       - 
       - Chara7
@@ -15133,8 +14545,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 47
-      debugIndex: 47
+    - rowIndex: 43
+      debugIndex: 43
       strings:
       - 
       - Chara7
@@ -15148,8 +14560,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 48
-      debugIndex: 48
+    - rowIndex: 44
+      debugIndex: 44
       strings:
       - 
       - Chara7
@@ -15163,8 +14575,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 49
-      debugIndex: 49
+    - rowIndex: 45
+      debugIndex: 45
       strings:
       - EndScenario
       isEmpty: 0
@@ -15172,7 +14584,7 @@ MonoBehaviour:
       debugInfo: 
     name: Assets/ADVScene/AdvFile.xls:Event5_7
     type: 1
-    textLength: 1476
+    textLength: 1372
     headerRow: 0
     sourceAssetInEditor: {fileID: 0}
     entityIndexTbl: 
@@ -27736,21 +27148,6 @@ MonoBehaviour:
       debugIndex: 41
       strings:
       - Selection
-      - '*Selection3_Event5_1'
-      - 
-      - 
-      - 
-      - 280
-      - -32
-      - 
-      - ">>\u9053\u306A\u304D\u8005\u3092\u8A0E\u3061\u679C\u305F\u3059"
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 42
-      debugIndex: 42
-      strings:
-      - Selection
       - '*Selection4_Event5_1'
       - 
       - 
@@ -27762,53 +27159,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 43
-      debugIndex: 43
-      strings:
-      - '*Selection3_Event5_1'
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 44
-      debugIndex: 44
-      strings:
-      - Param
-      - RouteSelect=1
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 45
-      debugIndex: 45
-      strings:
-      - Jump
-      - '*Selection5_Event5_1'
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 46
-      debugIndex: 46
+    - rowIndex: 42
+      debugIndex: 42
       strings:
       - '*Selection4_Event5_1'
       - 
@@ -27822,8 +27174,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 47
-      debugIndex: 47
+    - rowIndex: 43
+      debugIndex: 43
       strings:
       - Param
       - RouteSelect=2
@@ -27837,8 +27189,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 48
-      debugIndex: 48
+    - rowIndex: 44
+      debugIndex: 44
       strings:
       - Jump
       - '*Selection5_Event5_1'
@@ -27852,8 +27204,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 49
-      debugIndex: 49
+    - rowIndex: 45
+      debugIndex: 45
       strings:
       - '*Selection5_Event5_1'
       - 
@@ -27867,8 +27219,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 50
-      debugIndex: 50
+    - rowIndex: 46
+      debugIndex: 46
       strings:
       - 
       - Chara1
@@ -27882,8 +27234,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 51
-      debugIndex: 51
+    - rowIndex: 47
+      debugIndex: 47
       strings:
       - EndScenario
       isEmpty: 0
@@ -27891,7 +27243,7 @@ MonoBehaviour:
       debugInfo: 
     name: Assets/ADVScene/AdvFile.xls:Event5_1
     type: 1
-    textLength: 1350
+    textLength: 1241
     headerRow: 0
     sourceAssetInEditor: {fileID: 0}
   - rows:
@@ -28194,21 +27546,6 @@ MonoBehaviour:
       debugIndex: 20
       strings:
       - Selection
-      - '*Selection1_Event5_2'
-      - 
-      - 
-      - 
-      - 280
-      - -32
-      - 
-      - ">>\u9053\u306A\u304D\u8005\u3060"
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 21
-      debugIndex: 21
-      strings:
-      - Selection
       - '*Selection2_Event5_2'
       - 
       - 
@@ -28220,11 +27557,26 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
+    - rowIndex: 21
+      debugIndex: 21
+      strings:
+      - '*Selection2_Event5_2'
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
     - rowIndex: 22
       debugIndex: 22
       strings:
-      - '*Selection1_Event5_2'
-      - 
+      - Param
+      - RouteSelect=2
       - 
       - 
       - 
@@ -28238,15 +27590,16 @@ MonoBehaviour:
     - rowIndex: 23
       debugIndex: 23
       strings:
-      - Param
-      - RouteSelect=1
+      - 
+      - Chara2
       - 
       - 
       - 
       - 
       - 
       - 
-      - 
+      - "\u3055\u3063\u304D\u3082\u8A00\u3063\u305F\u3051\u3069\u2026<speed=0.5>
+        </speed>\n\u30A2\u30BF\u30B7\u306F\u3069\u3063\u3061\u3067\u3082\u826F\u3044\u3093\u3060"
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
@@ -28261,8 +27614,7 @@ MonoBehaviour:
       - 
       - 
       - 
-      - "\u3055\u3063\u304D\u3082\u8A00\u3063\u305F\u3051\u3069\u2026<speed=0.5>
-        </speed>\n\u30A2\u30BF\u30B7\u306F\u3069\u3063\u3061\u3067\u3082\u826F\u3044\u3093\u3060"
+      - "\u3067\u3082\u304D\u3063\u3068\u5927\u5909\u3060\u3088<speed=0.5> </speed>\n\u76F8\u624B\u306F\u4E0A\u4F4D\u8005\u3060\u3057"
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
@@ -28277,15 +27629,15 @@ MonoBehaviour:
       - 
       - 
       - 
-      - "\u3060\u3063\u3066<speed=0.5> </speed>\n\u30A2\u30BF\u30B7\u306E\u601D\u3044\u306F\u2026"
+      - "\u305F\u3076\u3093\u30A2\u30BF\u30B7\u3089\u2026<speed=0.5> </speed>\n\u4E00\u5EA6\u8CA0\u3051\u3066\u308B\u304B\u3089"
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
     - rowIndex: 26
       debugIndex: 26
       strings:
-      - Jump
       - '*SelectionEnd_Event5_2'
+      - 
       - 
       - 
       - 
@@ -28299,104 +27651,13 @@ MonoBehaviour:
     - rowIndex: 27
       debugIndex: 27
       strings:
-      - '*Selection2_Event5_2'
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 28
-      debugIndex: 28
-      strings:
-      - Param
-      - RouteSelect=2
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 29
-      debugIndex: 29
-      strings:
-      - 
-      - Chara2
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      - "\u3055\u3063\u304D\u3082\u8A00\u3063\u305F\u3051\u3069\u2026<speed=0.5>
-        </speed>\n\u30A2\u30BF\u30B7\u306F\u3069\u3063\u3061\u3067\u3082\u826F\u3044\u3093\u3060"
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 30
-      debugIndex: 30
-      strings:
-      - 
-      - Chara2
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      - "\u3067\u3082\u304D\u3063\u3068\u5927\u5909\u3060\u3088<speed=0.5> </speed>\n\u76F8\u624B\u306F\u4E0A\u4F4D\u8005\u3060\u3057"
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 31
-      debugIndex: 31
-      strings:
-      - 
-      - Chara2
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      - "\u305F\u3076\u3093\u30A2\u30BF\u30B7\u3089\u2026<speed=0.5> </speed>\n\u4E00\u5EA6\u8CA0\u3051\u3066\u308B\u304B\u3089"
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 32
-      debugIndex: 32
-      strings:
-      - '*SelectionEnd_Event5_2'
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 33
-      debugIndex: 33
-      strings:
       - EndScenario
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
     name: Assets/ADVScene/AdvFile.xls:Event5_2
     type: 1
-    textLength: 1056
+    textLength: 862
     headerRow: 0
     sourceAssetInEditor: {fileID: 0}
   - rows:
@@ -29147,21 +28408,6 @@ MonoBehaviour:
       debugIndex: 50
       strings:
       - Selection
-      - '*Selection6_Event5_3'
-      - 
-      - 
-      - 
-      - 280
-      - -32
-      - 
-      - ">>\u9053\u306A\u304D\u8005\u3060"
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 51
-      debugIndex: 51
-      strings:
-      - Selection
       - '*Selection7_Event5_3'
       - 
       - 
@@ -29173,53 +28419,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 52
-      debugIndex: 52
-      strings:
-      - '*Selection6_Event5_3'
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 53
-      debugIndex: 53
-      strings:
-      - Param
-      - RouteSelect=1
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 54
-      debugIndex: 54
-      strings:
-      - Jump
-      - '*Selection8_Event5_3'
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 55
-      debugIndex: 55
+    - rowIndex: 51
+      debugIndex: 51
       strings:
       - '*Selection7_Event5_3'
       - 
@@ -29233,8 +28434,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 56
-      debugIndex: 56
+    - rowIndex: 52
+      debugIndex: 52
       strings:
       - Param
       - RouteSelect=2
@@ -29248,8 +28449,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 57
-      debugIndex: 57
+    - rowIndex: 53
+      debugIndex: 53
       strings:
       - Jump
       - '*Selection8_Event5_3'
@@ -29263,8 +28464,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 58
-      debugIndex: 58
+    - rowIndex: 54
+      debugIndex: 54
       strings:
       - '*Selection8_Event5_3'
       - 
@@ -29278,8 +28479,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 59
-      debugIndex: 59
+    - rowIndex: 55
+      debugIndex: 55
       strings:
       - 
       - Chara3
@@ -29293,8 +28494,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 60
-      debugIndex: 60
+    - rowIndex: 56
+      debugIndex: 56
       strings:
       - 
       - Chara3
@@ -29308,8 +28509,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 61
-      debugIndex: 61
+    - rowIndex: 57
+      debugIndex: 57
       strings:
       - 
       - Chara3
@@ -29323,8 +28524,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 62
-      debugIndex: 62
+    - rowIndex: 58
+      debugIndex: 58
       strings:
       - 
       - Chara3
@@ -29338,8 +28539,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 63
-      debugIndex: 63
+    - rowIndex: 59
+      debugIndex: 59
       strings:
       - EndScenario
       isEmpty: 0
@@ -29347,7 +28548,7 @@ MonoBehaviour:
       debugInfo: 
     name: Assets/ADVScene/AdvFile.xls:Event5_3
     type: 1
-    textLength: 1808
+    textLength: 1704
     headerRow: 0
     sourceAssetInEditor: {fileID: 0}
   - rows:
@@ -29615,21 +28816,6 @@ MonoBehaviour:
       debugIndex: 18
       strings:
       - Selection
-      - '*Selection1_Event5_4'
-      - 
-      - 
-      - 
-      - 280
-      - -32
-      - 
-      - ">>\u9053\u306A\u304D\u8005\u3092\u6EC5\u307C\u3059"
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 19
-      debugIndex: 19
-      strings:
-      - Selection
       - '*Selection2_Event5_4'
       - 
       - 
@@ -29641,11 +28827,26 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
+    - rowIndex: 19
+      debugIndex: 19
+      strings:
+      - '*Selection2_Event5_4'
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
     - rowIndex: 20
       debugIndex: 20
       strings:
-      - '*Selection1_Event5_4'
-      - 
+      - Param
+      - RouteSelect=2
       - 
       - 
       - 
@@ -29659,15 +28860,15 @@ MonoBehaviour:
     - rowIndex: 21
       debugIndex: 21
       strings:
-      - Param
-      - RouteSelect=1
+      - 
+      - Chara4
       - 
       - 
       - 
       - 
       - 
       - 
-      - 
+      - "\u3046\u3093\uFF01\u308F\u304B\u3063\u305F"
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
@@ -29682,7 +28883,7 @@ MonoBehaviour:
       - 
       - 
       - 
-      - "\u3046\u3093\uFF01\u308F\u304B\u3063\u305F"
+      - "<param=PlayerName>\u3055\u3093\u306E\u8A00\u3046\u901A\u308A\u306B\u3059\u308B\u306D"
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
@@ -29697,180 +28898,28 @@ MonoBehaviour:
       - 
       - 
       - 
-      - "<param=PlayerName>\u3055\u3093\u306E\u8A00\u3046\u901A\u308A\u306B\u3059\u308B\u306D"
+      - "\u305D\u3046\u3059\u308C\u3070\u304A\u7236\u3055\u3093\u306B\u2026<speed=0.5>
+        </speed>\n\u4F1A\u3048\u308B\u3093\u3060\u3088\u306D\uFF01"
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
     - rowIndex: 24
       debugIndex: 24
       strings:
-      - 
-      - Chara4
-      - 
+      - '*SelectionEnd_Event5_4'
       - 
       - 
       - 
       - 
       - 
-      - "\u305D\u3046\u3059\u308C\u3070\u304A\u7236\u3055\u3093\u306B\u2026<speed=0.5>
-        </speed>\n\u4F1A\u3048\u308B\u3093\u3060\u3088\u306D\uFF01"
+      - 
+      - 
+      - 
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
     - rowIndex: 25
       debugIndex: 25
-      strings:
-      - 
-      - Chara4
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      - "\u3042\u308C\u2026\u3067\u3082\uFF1F"
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 26
-      debugIndex: 26
-      strings:
-      - 
-      - Chara4
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      - "\u4ECA\u307E\u3067\u5012\u3057\u305F\u9053\u306A\u304D\u8005\u306E\u4E2D\u306B<speed=0.5>
-        </speed>\n\u304A\u7236\u3055\u3093\u306E\u611F\u89E6\u3092\u898B\u305F\u3088\u3046\u306A\u6C17\u304C\u3059\u308B\u2026"
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 27
-      debugIndex: 27
-      strings:
-      - 
-      - Chara4
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      - "\u305D\u308C\u3063\u3066\u2026<speed=0.5> </speed>\n\u4F55\u3067\u3060\u308D\u3046"
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 28
-      debugIndex: 28
-      strings:
-      - Jump
-      - '*SelectionEnd_Event5_4'
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 29
-      debugIndex: 29
-      strings:
-      - '*Selection2_Event5_4'
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 30
-      debugIndex: 30
-      strings:
-      - Param
-      - RouteSelect=2
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 31
-      debugIndex: 31
-      strings:
-      - 
-      - Chara4
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      - "\u3046\u3093\uFF01\u308F\u304B\u3063\u305F"
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 32
-      debugIndex: 32
-      strings:
-      - 
-      - Chara4
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      - "<param=PlayerName>\u3055\u3093\u306E\u8A00\u3046\u901A\u308A\u306B\u3059\u308B\u306D"
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 33
-      debugIndex: 33
-      strings:
-      - 
-      - Chara4
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      - "\u305D\u3046\u3059\u308C\u3070\u304A\u7236\u3055\u3093\u306B\u2026<speed=0.5>
-        </speed>\n\u4F1A\u3048\u308B\u3093\u3060\u3088\u306D\uFF01"
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 34
-      debugIndex: 34
-      strings:
-      - '*SelectionEnd_Event5_4'
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 35
-      debugIndex: 35
       strings:
       - EndScenario
       isEmpty: 0
@@ -29878,7 +28927,7 @@ MonoBehaviour:
       debugInfo: 
     name: Assets/ADVScene/AdvFile.xls:Event5_4
     type: 1
-    textLength: 944
+    textLength: 634
     headerRow: 0
     sourceAssetInEditor: {fileID: 0}
   - rows:
@@ -30527,21 +29576,6 @@ MonoBehaviour:
       debugIndex: 43
       strings:
       - Selection
-      - '*Selection3'
-      - 
-      - 
-      - 
-      - 280
-      - -32
-      - 
-      - ">>\u79C1\u306F\u9053\u306A\u304D\u8005\u3092\u8A0E\u3061\u679C\u305F\u3059\u3060\u3051\u3060"
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 44
-      debugIndex: 44
-      strings:
-      - Selection
       - '*Selection4'
       - 
       - 
@@ -30553,11 +29587,26 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
+    - rowIndex: 44
+      debugIndex: 44
+      strings:
+      - '*Selection4'
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
     - rowIndex: 45
       debugIndex: 45
       strings:
-      - '*Selection3'
-      - 
+      - Param
+      - RouteSelect=2
       - 
       - 
       - 
@@ -30571,15 +29620,15 @@ MonoBehaviour:
     - rowIndex: 46
       debugIndex: 46
       strings:
-      - Param
-      - RouteSelect=1
+      - 
+      - Chara5
       - 
       - 
       - 
       - 
       - 
       - 
-      - 
+      - "\u2026\uFF01"
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
@@ -30594,22 +29643,22 @@ MonoBehaviour:
       - 
       - 
       - 
-      - "\u2026"
+      - "\u8CB4\u65B9\u3068\u4E91\u3046\u65B9\u306F\u2026"
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
     - rowIndex: 48
       debugIndex: 48
       strings:
-      - 
-      - Chara5
-      - 
+      - Wait
       - 
       - 
       - 
       - 
       - 
-      - "\u305D\u3046\u3067\u3057\u305F\u306D"
+      - 1
+      - 
+      - 
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
@@ -30624,7 +29673,7 @@ MonoBehaviour:
       - 
       - 
       - 
-      - "\u3042\u304F\u307E\u3067\u3082<speed=0.5> </speed>\n\u79C1\u305F\u3061\u306F\u4E0A\u4F4D\u8005\u306E\u5C16\u5175"
+      - "\u9032\u307F\u307E\u3057\u3087\u3046\u2026<speed=0.5> </speed>\n\u8CB4\u65B9\u306E\u9B42\u304C\u884C\u304D\u3064\u304F\u5834\u6240\u3078"
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
@@ -30639,7 +29688,7 @@ MonoBehaviour:
       - 
       - 
       - 
-      - "\u4F7F\u547D\u3092\u5168\u3046\u3059\u308B\u3053\u3068\u306B\u81F4\u3057\u307E\u3057\u3087\u3046"
+      - "\u79C1\u306F\u5171\u306B\u3059\u308B\u899A\u609F\u3067\u3044\u307E\u3059\u304B\u3089"
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
@@ -30661,7 +29710,7 @@ MonoBehaviour:
     - rowIndex: 52
       debugIndex: 52
       strings:
-      - '*Selection4'
+      - '*SelectionEnd'
       - 
       - 
       - 
@@ -30676,133 +29725,13 @@ MonoBehaviour:
     - rowIndex: 53
       debugIndex: 53
       strings:
-      - Param
-      - RouteSelect=2
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 54
-      debugIndex: 54
-      strings:
-      - 
-      - Chara5
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      - "\u2026\uFF01"
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 55
-      debugIndex: 55
-      strings:
-      - 
-      - Chara5
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      - "\u8CB4\u65B9\u3068\u4E91\u3046\u65B9\u306F\u2026"
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 56
-      debugIndex: 56
-      strings:
-      - Wait
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 1
-      - 
-      - 
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 57
-      debugIndex: 57
-      strings:
-      - 
-      - Chara5
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      - "\u9032\u307F\u307E\u3057\u3087\u3046\u2026<speed=0.5> </speed>\n\u8CB4\u65B9\u306E\u9B42\u304C\u884C\u304D\u3064\u304F\u5834\u6240\u3078"
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 58
-      debugIndex: 58
-      strings:
-      - 
-      - Chara5
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      - "\u79C1\u306F\u5171\u306B\u3059\u308B\u899A\u609F\u3067\u3044\u307E\u3059\u304B\u3089"
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 59
-      debugIndex: 59
-      strings:
-      - Jump
-      - '*SelectionEnd'
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 60
-      debugIndex: 60
-      strings:
-      - '*SelectionEnd'
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 61
-      debugIndex: 61
-      strings:
       - EndScenario
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
     name: Assets/ADVScene/AdvFile.xls:Event5_5
     type: 1
-    textLength: 1357
+    textLength: 1185
     headerRow: 0
     sourceAssetInEditor: {fileID: 0}
   - rows:
@@ -31257,21 +30186,6 @@ MonoBehaviour:
       debugIndex: 30
       strings:
       - Selection
-      - '*Selection4_Event5_6'
-      - 
-      - 
-      - 
-      - 280
-      - -32
-      - 
-      - ">>\u9053\u306A\u304D\u8005\u3092\u5012\u3059"
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 31
-      debugIndex: 31
-      strings:
-      - Selection
       - '*Selection5_Event5_6'
       - 
       - 
@@ -31283,11 +30197,26 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
+    - rowIndex: 31
+      debugIndex: 31
+      strings:
+      - '*Selection5_Event5_6'
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
     - rowIndex: 32
       debugIndex: 32
       strings:
-      - '*Selection4_Event5_6'
-      - 
+      - Param
+      - RouteSelect=2
       - 
       - 
       - 
@@ -31301,8 +30230,8 @@ MonoBehaviour:
     - rowIndex: 33
       debugIndex: 33
       strings:
-      - Param
-      - RouteSelect=1
+      - Jump
+      - '*Selection7_Event5_6'
       - 
       - 
       - 
@@ -31316,7 +30245,7 @@ MonoBehaviour:
     - rowIndex: 34
       debugIndex: 34
       strings:
-      - '*Selection5_Event5_6'
+      - '*Selection7_Event5_6'
       - 
       - 
       - 
@@ -31331,51 +30260,6 @@ MonoBehaviour:
     - rowIndex: 35
       debugIndex: 35
       strings:
-      - Param
-      - RouteSelect=2
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 36
-      debugIndex: 36
-      strings:
-      - Jump
-      - '*Selection7_Event5_6'
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 37
-      debugIndex: 37
-      strings:
-      - '*Selection7_Event5_6'
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 38
-      debugIndex: 38
-      strings:
       - 
       - Chara6
       - 
@@ -31388,8 +30272,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 39
-      debugIndex: 39
+    - rowIndex: 36
+      debugIndex: 36
       strings:
       - 
       - Chara6
@@ -31404,8 +30288,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 40
-      debugIndex: 40
+    - rowIndex: 37
+      debugIndex: 37
       strings:
       - EndScenario
       isEmpty: 0
@@ -31413,7 +30297,7 @@ MonoBehaviour:
       debugInfo: 
     name: Assets/ADVScene/AdvFile.xls:Event5_6
     type: 1
-    textLength: 1272
+    textLength: 1190
     headerRow: 0
     sourceAssetInEditor: {fileID: 0}
   - rows:
@@ -31974,21 +30858,6 @@ MonoBehaviour:
       debugIndex: 37
       strings:
       - Selection
-      - '*Selection5_Event5_7'
-      - 
-      - 
-      - 
-      - 280
-      - -32
-      - 
-      - ">>\u9053\u306A\u304D\u8005\u3060"
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 38
-      debugIndex: 38
-      strings:
-      - Selection
       - '*Selection6_Event5_7'
       - 
       - 
@@ -32000,53 +30869,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 39
-      debugIndex: 39
-      strings:
-      - '*Selection5_Event5_7'
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 40
-      debugIndex: 40
-      strings:
-      - Param
-      - RouteSelect=1
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 41
-      debugIndex: 41
-      strings:
-      - Jump
-      - '*Selection7_Event5_7'
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 42
-      debugIndex: 42
+    - rowIndex: 38
+      debugIndex: 38
       strings:
       - '*Selection6_Event5_7'
       - 
@@ -32060,8 +30884,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 43
-      debugIndex: 43
+    - rowIndex: 39
+      debugIndex: 39
       strings:
       - Param
       - RouteSelect=2
@@ -32075,8 +30899,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 44
-      debugIndex: 44
+    - rowIndex: 40
+      debugIndex: 40
       strings:
       - Jump
       - '*Selection7_Event5_7'
@@ -32090,8 +30914,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 45
-      debugIndex: 45
+    - rowIndex: 41
+      debugIndex: 41
       strings:
       - '*Selection7_Event5_7'
       - 
@@ -32105,8 +30929,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 46
-      debugIndex: 46
+    - rowIndex: 42
+      debugIndex: 42
       strings:
       - 
       - Chara7
@@ -32120,8 +30944,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 47
-      debugIndex: 47
+    - rowIndex: 43
+      debugIndex: 43
       strings:
       - 
       - Chara7
@@ -32135,8 +30959,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 48
-      debugIndex: 48
+    - rowIndex: 44
+      debugIndex: 44
       strings:
       - 
       - Chara7
@@ -32150,8 +30974,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 49
-      debugIndex: 49
+    - rowIndex: 45
+      debugIndex: 45
       strings:
       - EndScenario
       isEmpty: 0
@@ -32159,7 +30983,7 @@ MonoBehaviour:
       debugInfo: 
     name: Assets/ADVScene/AdvFile.xls:Event5_7
     type: 1
-    textLength: 1476
+    textLength: 1372
     headerRow: 0
     sourceAssetInEditor: {fileID: 0}
   - rows:
