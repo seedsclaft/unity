@@ -516,8 +516,11 @@ public class BattlePresenter : BasePresenter
             if (actionInfo.IsUnison())
             {
                 _model.WaitUnison();
+                _view.StartStatePopup(actionInfo.SubjectIndex,DamageType.State,"+" + DataSystem.States.Find(a => a.StateType == StateType.Wait).Name);
                 _view.HideBattlerEnemyTarget();
                 _view.HideBattlerPartyTarget();
+                _view.HideEnemyStatus();
+                _view.ShowStateOverlay();
                 _view.RefreshStatus();
                 _view.SetBattleBusy(false);
                 return;

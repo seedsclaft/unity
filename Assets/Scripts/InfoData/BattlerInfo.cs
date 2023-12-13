@@ -304,7 +304,7 @@ public class BattlerInfo
     // ステートを消す
     public void EraseStateInfo(StateType stateType)
     {
-        List<StateInfo> getStateInfoAll = GetStateInfoAll(stateType);
+        var getStateInfoAll = GetStateInfoAll(stateType);
 
         for (int i = getStateInfoAll.Count-1;i >= 0;i--)
         {

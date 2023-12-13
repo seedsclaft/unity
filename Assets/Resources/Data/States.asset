@@ -24,6 +24,21 @@ MonoBehaviour:
     OverLap: 0
     Removal: 0
     Abnormal: 0
+    CheckHit: 0
+    RemoveByAttack: 0
+    RemoveByDeath: 0
+  - StateType: 10
+    Name: "\u5F85\u6A5F"
+    Help: '""'
+    IconPath: Wingfoot
+    RemovalTiming: 0
+    OverWrite: 0
+    EffectPath: '""'
+    EffectPosition: 0
+    OverLap: 0
+    Removal: 0
+    Abnormal: 0
+    CheckHit: 0
     RemoveByAttack: 0
     RemoveByDeath: 0
   - StateType: 201
@@ -37,6 +52,7 @@ MonoBehaviour:
     OverLap: 0
     Removal: 0
     Abnormal: 0
+    CheckHit: 0
     RemoveByAttack: 0
     RemoveByDeath: 0
   - StateType: 202
@@ -50,6 +66,7 @@ MonoBehaviour:
     OverLap: 0
     Removal: 0
     Abnormal: 0
+    CheckHit: 0
     RemoveByAttack: 0
     RemoveByDeath: 0
   - StateType: 203
@@ -63,6 +80,7 @@ MonoBehaviour:
     OverLap: 0
     Removal: 0
     Abnormal: 0
+    CheckHit: 0
     RemoveByAttack: 0
     RemoveByDeath: 0
   - StateType: 204
@@ -76,6 +94,7 @@ MonoBehaviour:
     OverLap: 0
     Removal: 0
     Abnormal: 0
+    CheckHit: 0
     RemoveByAttack: 0
     RemoveByDeath: 0
   - StateType: 205
@@ -89,6 +108,7 @@ MonoBehaviour:
     OverLap: 0
     Removal: 0
     Abnormal: 0
+    CheckHit: 0
     RemoveByAttack: 0
     RemoveByDeath: 0
   - StateType: 1010
@@ -102,6 +122,7 @@ MonoBehaviour:
     OverLap: 0
     Removal: 0
     Abnormal: 0
+    CheckHit: 0
     RemoveByAttack: 0
     RemoveByDeath: 0
   - StateType: 1020
@@ -115,6 +136,7 @@ MonoBehaviour:
     OverLap: 0
     Removal: 1
     Abnormal: 0
+    CheckHit: 0
     RemoveByAttack: 0
     RemoveByDeath: 0
   - StateType: 1030
@@ -128,6 +150,7 @@ MonoBehaviour:
     OverLap: 0
     Removal: 1
     Abnormal: 0
+    CheckHit: 0
     RemoveByAttack: 0
     RemoveByDeath: 0
   - StateType: 1040
@@ -141,6 +164,7 @@ MonoBehaviour:
     OverLap: 0
     Removal: 1
     Abnormal: 0
+    CheckHit: 0
     RemoveByAttack: 0
     RemoveByDeath: 0
   - StateType: 1041
@@ -154,6 +178,7 @@ MonoBehaviour:
     OverLap: 0
     Removal: 0
     Abnormal: 0
+    CheckHit: 0
     RemoveByAttack: 0
     RemoveByDeath: 1
   - StateType: 1050
@@ -167,6 +192,7 @@ MonoBehaviour:
     OverLap: 0
     Removal: 1
     Abnormal: 0
+    CheckHit: 0
     RemoveByAttack: 0
     RemoveByDeath: 0
   - StateType: 1051
@@ -180,6 +206,7 @@ MonoBehaviour:
     OverLap: 0
     Removal: 0
     Abnormal: 0
+    CheckHit: 0
     RemoveByAttack: 0
     RemoveByDeath: 1
   - StateType: 1052
@@ -193,6 +220,7 @@ MonoBehaviour:
     OverLap: 0
     Removal: 0
     Abnormal: 0
+    CheckHit: 0
     RemoveByAttack: 0
     RemoveByDeath: 1
   - StateType: 1060
@@ -206,6 +234,7 @@ MonoBehaviour:
     OverLap: 0
     Removal: 1
     Abnormal: 0
+    CheckHit: 0
     RemoveByAttack: 0
     RemoveByDeath: 0
   - StateType: 1070
@@ -219,6 +248,7 @@ MonoBehaviour:
     OverLap: 0
     Removal: 1
     Abnormal: 0
+    CheckHit: 0
     RemoveByAttack: 0
     RemoveByDeath: 0
   - StateType: 1080
@@ -232,6 +262,7 @@ MonoBehaviour:
     OverLap: 0
     Removal: 1
     Abnormal: 0
+    CheckHit: 0
     RemoveByAttack: 0
     RemoveByDeath: 0
   - StateType: 1090
@@ -245,6 +276,7 @@ MonoBehaviour:
     OverLap: 0
     Removal: 1
     Abnormal: 0
+    CheckHit: 0
     RemoveByAttack: 0
     RemoveByDeath: 0
   - StateType: 2010
@@ -258,6 +290,7 @@ MonoBehaviour:
     OverLap: 0
     Removal: 0
     Abnormal: 1
+    CheckHit: 1
     RemoveByAttack: 0
     RemoveByDeath: 1
   - StateType: 2020
@@ -271,6 +304,7 @@ MonoBehaviour:
     OverLap: 0
     Removal: 0
     Abnormal: 0
+    CheckHit: 1
     RemoveByAttack: 0
     RemoveByDeath: 1
   - StateType: 2021
@@ -284,6 +318,7 @@ MonoBehaviour:
     OverLap: 0
     Removal: 1
     Abnormal: 0
+    CheckHit: 0
     RemoveByAttack: 0
     RemoveByDeath: 0
   - StateType: 2030
@@ -297,6 +332,7 @@ MonoBehaviour:
     OverLap: 0
     Removal: 0
     Abnormal: 0
+    CheckHit: 0
     RemoveByAttack: 0
     RemoveByDeath: 0
   - StateType: 2031
@@ -310,6 +346,7 @@ MonoBehaviour:
     OverLap: 0
     Removal: 1
     Abnormal: 0
+    CheckHit: 0
     RemoveByAttack: 0
     RemoveByDeath: 0
   - StateType: 2032
@@ -323,6 +360,7 @@ MonoBehaviour:
     OverLap: 0
     Removal: 1
     Abnormal: 0
+    CheckHit: 0
     RemoveByAttack: 0
     RemoveByDeath: 0
   - StateType: 2040
@@ -336,6 +374,7 @@ MonoBehaviour:
     OverLap: 0
     Removal: 1
     Abnormal: 0
+    CheckHit: 0
     RemoveByAttack: 0
     RemoveByDeath: 0
   - StateType: 2050
@@ -349,6 +388,7 @@ MonoBehaviour:
     OverLap: 0
     Removal: 1
     Abnormal: 0
+    CheckHit: 0
     RemoveByAttack: 0
     RemoveByDeath: 0
   - StateType: 2060
@@ -362,6 +402,7 @@ MonoBehaviour:
     OverLap: 0
     Removal: 1
     Abnormal: 0
+    CheckHit: 0
     RemoveByAttack: 0
     RemoveByDeath: 0
   - StateType: 2070
@@ -375,6 +416,7 @@ MonoBehaviour:
     OverLap: 0
     Removal: 1
     Abnormal: 0
+    CheckHit: 0
     RemoveByAttack: 0
     RemoveByDeath: 0
   - StateType: 2080
@@ -388,6 +430,7 @@ MonoBehaviour:
     OverLap: 1
     Removal: 1
     Abnormal: 0
+    CheckHit: 0
     RemoveByAttack: 0
     RemoveByDeath: 0
   - StateType: 2090
@@ -401,6 +444,7 @@ MonoBehaviour:
     OverLap: 0
     Removal: 0
     Abnormal: 0
+    CheckHit: 1
     RemoveByAttack: 0
     RemoveByDeath: 1
   - StateType: 2100
@@ -414,6 +458,7 @@ MonoBehaviour:
     OverLap: 0
     Removal: 1
     Abnormal: 0
+    CheckHit: 0
     RemoveByAttack: 0
     RemoveByDeath: 0
   - StateType: 2110
@@ -427,6 +472,7 @@ MonoBehaviour:
     OverLap: 0
     Removal: 1
     Abnormal: 0
+    CheckHit: 0
     RemoveByAttack: 0
     RemoveByDeath: 0
   - StateType: 2120
@@ -440,6 +486,7 @@ MonoBehaviour:
     OverLap: 0
     Removal: 0
     Abnormal: 1
+    CheckHit: 1
     RemoveByAttack: 0
     RemoveByDeath: 1
   - StateType: 2130
@@ -453,6 +500,7 @@ MonoBehaviour:
     OverLap: 0
     Removal: 0
     Abnormal: 0
+    CheckHit: 1
     RemoveByAttack: 0
     RemoveByDeath: 1
   - StateType: 2140
@@ -466,6 +514,7 @@ MonoBehaviour:
     OverLap: 0
     Removal: 0
     Abnormal: 1
+    CheckHit: 1
     RemoveByAttack: 0
     RemoveByDeath: 1
   - StateType: 2150
@@ -479,6 +528,7 @@ MonoBehaviour:
     OverLap: 0
     Removal: 0
     Abnormal: 1
+    CheckHit: 1
     RemoveByAttack: 0
     RemoveByDeath: 1
   - StateType: 2160
@@ -492,6 +542,7 @@ MonoBehaviour:
     OverLap: 0
     Removal: 0
     Abnormal: 1
+    CheckHit: 1
     RemoveByAttack: 0
     RemoveByDeath: 1
   - StateType: 2170
@@ -505,11 +556,12 @@ MonoBehaviour:
     OverLap: 0
     Removal: 0
     Abnormal: 1
+    CheckHit: 1
     RemoveByAttack: 0
     RemoveByDeath: 1
   - StateType: 2180
-    Name: "\u72B6\u614B\u7570\u5E38\u7121\u52B9"
-    Help: "\u920D\u8DB3\u30FB\u30B9\u30BF\u30F3\u30FB\u706B\u50B7\u30FB\u6697\u95C7\u7121\u52B9"
+    Name: "\u72B6\u614B\u7570\u5E38\u56DE\u907F"
+    Help: "\u72B6\u614B\u7570\u5E38\u3092\u56DE\u907F\u3059\u308B"
     IconPath: Heart
     RemovalTiming: 4
     OverWrite: 0
@@ -518,6 +570,7 @@ MonoBehaviour:
     OverLap: 0
     Removal: 1
     Abnormal: 0
+    CheckHit: 0
     RemoveByAttack: 0
     RemoveByDeath: 0
   - StateType: 2190
@@ -531,6 +584,7 @@ MonoBehaviour:
     OverLap: 0
     Removal: 1
     Abnormal: 0
+    CheckHit: 0
     RemoveByAttack: 0
     RemoveByDeath: 0
   - StateType: 2200
@@ -544,6 +598,7 @@ MonoBehaviour:
     OverLap: 0
     Removal: 1
     Abnormal: 0
+    CheckHit: 0
     RemoveByAttack: 0
     RemoveByDeath: 0
   - StateType: 2210
@@ -557,6 +612,7 @@ MonoBehaviour:
     OverLap: 0
     Removal: 1
     Abnormal: 0
+    CheckHit: 0
     RemoveByAttack: 0
     RemoveByDeath: 0
   - StateType: 2220
@@ -570,6 +626,7 @@ MonoBehaviour:
     OverLap: 0
     Removal: 1
     Abnormal: 0
+    CheckHit: 1
     RemoveByAttack: 0
     RemoveByDeath: 0
   - StateType: 2230
@@ -583,6 +640,7 @@ MonoBehaviour:
     OverLap: 0
     Removal: 1
     Abnormal: 0
+    CheckHit: 0
     RemoveByAttack: 0
     RemoveByDeath: 0
   - StateType: 2240
@@ -596,6 +654,7 @@ MonoBehaviour:
     OverLap: 0
     Removal: 1
     Abnormal: 0
+    CheckHit: 0
     RemoveByAttack: 0
     RemoveByDeath: 0
   - StateType: 2250
@@ -609,6 +668,7 @@ MonoBehaviour:
     OverLap: 0
     Removal: 1
     Abnormal: 0
+    CheckHit: 0
     RemoveByAttack: 0
     RemoveByDeath: 0
   - StateType: 2260
@@ -622,6 +682,7 @@ MonoBehaviour:
     OverLap: 0
     Removal: 1
     Abnormal: 0
+    CheckHit: 0
     RemoveByAttack: 0
     RemoveByDeath: 0
   - StateType: 2270
@@ -635,6 +696,7 @@ MonoBehaviour:
     OverLap: 0
     Removal: 0
     Abnormal: 0
+    CheckHit: 0
     RemoveByAttack: 0
     RemoveByDeath: 0
   - StateType: 2280
@@ -648,6 +710,7 @@ MonoBehaviour:
     OverLap: 0
     Removal: 1
     Abnormal: 0
+    CheckHit: 0
     RemoveByAttack: 0
     RemoveByDeath: 0
   - StateType: 2290
@@ -661,6 +724,7 @@ MonoBehaviour:
     OverLap: 1
     Removal: 1
     Abnormal: 0
+    CheckHit: 0
     RemoveByAttack: 0
     RemoveByDeath: 0
   - StateType: 2300
@@ -674,6 +738,7 @@ MonoBehaviour:
     OverLap: 0
     Removal: 1
     Abnormal: 0
+    CheckHit: 0
     RemoveByAttack: 0
     RemoveByDeath: 0
   - StateType: 2310
@@ -687,6 +752,7 @@ MonoBehaviour:
     OverLap: 0
     Removal: 1
     Abnormal: 0
+    CheckHit: 0
     RemoveByAttack: 0
     RemoveByDeath: 0
   - StateType: 2320
@@ -700,5 +766,6 @@ MonoBehaviour:
     OverLap: 0
     Removal: 1
     Abnormal: 0
+    CheckHit: 0
     RemoveByAttack: 0
     RemoveByDeath: 0

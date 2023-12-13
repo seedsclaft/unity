@@ -21,6 +21,7 @@ public class StatesImporter : AssetPostprocessor {
 		OverLap,
 		Removal,
 		Abnormal,
+		CheckHit,
 		RemoveByAttack,
 		RemoveByDeath,
     }
@@ -88,6 +89,7 @@ public class StatesImporter : AssetPostprocessor {
 					StateData.OverLap = (bool)(AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.OverLap) == 1);
 					StateData.Removal = (bool)(AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.Removal) == 1);
 					StateData.Abnormal = (bool)(AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.Abnormal) == 1);
+					StateData.CheckHit = (bool)(AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.CheckHit) == 1);
 					StateData.RemoveByAttack = (bool)(AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.RemoveByAttack) == 1);
 					StateData.RemoveByDeath = (bool)(AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.RemoveByDeath) == 1);
 					

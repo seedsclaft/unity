@@ -82,6 +82,6 @@ public class SkillInfo
 
     public bool IsUnison()
     {
-        return Master.FeatureDates.Find(a => a.FeatureType == FeatureType.Unison) != null;
+        return Master.FeatureDates.Find(a => a.FeatureType == FeatureType.AddState && (StateType)a.Param1 == StateType.Wait) != null;
     }
 }

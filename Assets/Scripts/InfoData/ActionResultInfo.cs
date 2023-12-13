@@ -131,19 +131,28 @@ public class ActionResultInfo
         switch (featureData.FeatureType)
         {
             case FeatureType.HpDamage:
-                MakeHpDamage(subject,target,featureData,false,isOneTarget);
+                if (CheckIsHit(subject,target,isOneTarget))
+                {
+                    MakeHpDamage(subject,target,featureData,false,isOneTarget);
+                }
                 return;
             case FeatureType.HpHeal:
                 MakeHpHeal(subject,target,featureData);
                 return;
             case FeatureType.HpDrain:
-                MakeHpDrain(subject,target,featureData,isOneTarget);
+                if (CheckIsHit(subject,target,isOneTarget))
+                {
+                    MakeHpDrain(subject,target,featureData,isOneTarget);
+                }
                 return;
             case FeatureType.HpDefineDamage:
                 MakeHpDefineDamage(subject,target,featureData,false);
                 return;
             case FeatureType.HpStateDamage:
-                MakeHpStateDamage(subject,target,featureData,false,isOneTarget);
+                if (CheckIsHit(subject,target,isOneTarget))
+                {
+                    MakeHpStateDamage(subject,target,featureData,false,isOneTarget);
+                }
                 return;
             case FeatureType.HpCursedDamage:
                 MakeHpCursedDamage(subject,target,featureData,false,isOneTarget);
@@ -152,7 +161,10 @@ public class ActionResultInfo
                 MakeHpDamage(subject,target,featureData,true,isOneTarget);
                 return;
             case FeatureType.MpDamage:
-                MakeMpDamage(subject,target,featureData);
+                if (CheckIsHit(subject,target,isOneTarget))
+                {
+                    MakeMpDamage(subject,target,featureData);
+                }
                 return;
             case FeatureType.MpHeal:
                 MakeMpHeal(subject,target,featureData);
@@ -179,6 +191,16 @@ public class ActionResultInfo
                 MakeBreakUndead(subject,target,featureData);
                 return;
         }
+    }
+
+    private bool CheckIsHit(BattlerInfo subject,BattlerInfo target,bool isOneTarget)
+    {
+        if (!IsHit(subject,target,isOneTarget))
+        {
+            _missed = true;
+            return false;
+        }
+        return true;
     }
 
     private bool IsHit(BattlerInfo subject,BattlerInfo target,bool isOneTarget)
@@ -278,11 +300,6 @@ public class ActionResultInfo
     private void MakeHpDamage(BattlerInfo subject,BattlerInfo target,SkillData.FeatureData featureData,bool isNoEffect,bool isOneTarget)
     {
         var hpDamage = 0;
-        if (!IsHit(subject,target,isOneTarget) && !isNoEffect)
-        {
-            _missed = true;
-            return;
-        }
         int AtkValue = CurrentAttack(subject,isNoEffect);
         int DefValue = CurrentDefense(target,isNoEffect);
         float UpperDamageRate = CurrentDamageRate(subject,isNoEffect,isOneTarget);
@@ -400,11 +417,6 @@ public class ActionResultInfo
     private void MakeHpStateDamage(BattlerInfo subject,BattlerInfo target,SkillData.FeatureData featureData,bool isNoEffect,bool isOneTarget)
     {
         var hpDamage = 0;
-        if (!IsHit(subject,target,isOneTarget) && !isNoEffect)
-        {
-            _missed = true;
-            return;
-        }
         int AtkValue = CurrentAttack(subject,isNoEffect);
         int DefValue = CurrentDefense(target,isNoEffect);
         float DamageRate = featureData.Param2;
@@ -490,13 +502,6 @@ public class ActionResultInfo
     // 呪いダメージ計算
     private void MakeHpCursedDamage(BattlerInfo subject,BattlerInfo target,SkillData.FeatureData featureData,bool isNoEffect,bool isOneTarget)
     {
-        /*
-        if (!IsHit(subject,target) && !isNoEffect)
-        {
-            _missed = true;
-            return;
-        }
-        */
         var hpDamage = 0;
         int AtkValue = featureData.Param1;
         float DamageRate = 100;
@@ -539,9 +544,16 @@ public class ActionResultInfo
         //_hpHeal = ApplyVariance(_hpHeal);
     }
 
-    private void MakeAddState(BattlerInfo subject,BattlerInfo target,SkillData.FeatureData featureData,bool checkCounter = false)
+    private void MakeAddState(BattlerInfo subject,BattlerInfo target,SkillData.FeatureData featureData,bool checkCounter = false,bool isOneTarget = false)
     {
         var stateInfo = new StateInfo((StateType)featureData.Param1,featureData.Param2,featureData.Param3,subject.Index,target.Index,_skillIndex);
+        if (stateInfo.Master.CheckHit)
+        {
+            if (!CheckIsHit(subject,target,isOneTarget))
+            {
+                return;
+            }
+        }
         if (stateInfo.Master.StateType == StateType.CounterAura || stateInfo.Master.StateType == StateType.Benediction)
         {
             stateInfo.Turns = 200 - subject.Status.Spd * 2;

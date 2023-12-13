@@ -21,6 +21,7 @@ public class StateData
     public bool OverLap;
     public bool Removal;
     public bool Abnormal;
+    public bool CheckHit; // 命中回避判定をするか
     public bool RemoveByAttack;
     // 付与者が戦闘不能になった時に効果が切れるか
     public bool RemoveByDeath;
@@ -31,6 +32,7 @@ public enum StateType
 {
     None = 0,
     Death = 1,
+    Wait = 10,
     Demigod = 1010,
     MaxHpUp = 1020,
     MaxMpUp = 1030,

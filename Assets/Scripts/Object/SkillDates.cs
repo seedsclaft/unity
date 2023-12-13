@@ -367,7 +367,6 @@ public enum FeatureType
     ApHeal = 32,
     NoResetAp = 33,
     RemainHpOne = 41,
-    Unison = 51,
     PlusSkill = 101,
     KindHeal = 201,
     BreakUndead = 202,

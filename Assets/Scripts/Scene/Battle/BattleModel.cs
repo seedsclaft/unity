@@ -24,8 +24,6 @@ public class BattleModel : BaseModel
     private BattlerInfo _currentBattler = null;
     public BattlerInfo CurrentBattler => _currentBattler;
 
-    private List<BattlerInfo> _waitBattlers = new ();
-
     private List<ActionInfo> _actionInfos = new ();
     private Dictionary<int,List<SkillInfo>> _passiveSkillInfos = new Dictionary<int,List<SkillInfo>>();
     private Dictionary<int,List<SkillInfo>> _usedPassiveSkillInfos = new Dictionary<int,List<SkillInfo>>();
@@ -85,7 +83,7 @@ public class BattleModel : BaseModel
         var removeStateList = new List<StateInfo>();
         foreach (var battler in _battlers)
         {
-            if (!_waitBattlers.Contains(battler) && battler.IsAlive())
+            if (battler.IsAlive() && !battler.IsState(StateType.Wait))
             {
                 battler.UpdateAp();
                 var removeStates = battler.UpdateState(RemovalTiming.UpdateAp);
@@ -179,7 +177,7 @@ public class BattleModel : BaseModel
     public void WaitUnison()
     {
         _currentBattler.SetAp(1);
-        _waitBattlers.Add(_currentBattler);
+        _currentBattler.AddState(new StateInfo(StateType.Wait,999,0,_currentBattler.Index,_currentBattler.Index,10),true);
         _currentBattler = null;
         _actionInfos.Clear();
     }
@@ -187,36 +185,30 @@ public class BattleModel : BaseModel
     public void AssignWaitBattler()
     {
         var isActor = _battleActionRecords[_battleActionRecords.Count-1].SubjectIndex < 100 ? true : false;
-        var waitBattlerIndex = _waitBattlers.FindIndex(a => a.isActor == isActor && a.IsAlive());
+        var waitBattlerIndex = _battlers.FindIndex(a => a.isActor == isActor && a.IsAlive() && a.IsState(StateType.Wait));
         if (waitBattlerIndex > -1)
         {
-            _waitBattlers[waitBattlerIndex].SetAp(0);
-            _waitBattlers.RemoveAt(waitBattlerIndex);
+            _battlers[waitBattlerIndex].SetAp(0);
+            _battlers[waitBattlerIndex].EraseStateInfo(StateType.Wait);
         }
     }
 
     public void RemoveOneMemberWaitBattlers()
     {
-        var partyWaitBattlers = _party.AliveBattlerInfos.FindAll(a => !_waitBattlers.Contains(a) && a.CanMove());
+        var partyWaitBattlers = _party.AliveBattlerInfos.FindAll(a => a.CanMove());
         if (partyWaitBattlers.Count < 1)
         {
-            for (var i = _waitBattlers.Count-1;i >= 0;i--)
+            foreach (var battlerInfo in _party.AliveBattlerInfos)
             {
-                if (_waitBattlers[i].IsAlive() && _waitBattlers[i].isActor)
-                {
-                    _waitBattlers.RemoveAt(i);
-                }
+                battlerInfo.EraseStateInfo(StateType.Wait);
             }
         }
-        var troopWaitBattlers = _troop.AliveBattlerInfos.FindAll(a => !_waitBattlers.Contains(a) && a.CanMove());
+        var troopWaitBattlers = _troop.AliveBattlerInfos.FindAll(a => a.CanMove());
         if (troopWaitBattlers.Count < 1)
         {
-            for (var i = _waitBattlers.Count-1;i >= 0;i--)
+            foreach (var battlerInfo in _troop.AliveBattlerInfos)
             {
-                if (_waitBattlers[i].IsAlive() && !_waitBattlers[i].isActor)
-                {
-                    _waitBattlers.RemoveAt(i);
-                }
+                battlerInfo.EraseStateInfo(StateType.Wait);
             }
         }
     }
@@ -361,7 +353,7 @@ public class BattleModel : BaseModel
         }
         if (skillInfo.IsUnison())
         {
-            return _battlers.FindAll(a => a.IsAlive() && a.isActor == battlerInfo.isActor && a.CanMove() && !_waitBattlers.Contains(a)).Count > 1;
+            return _battlers.FindAll(a => a.IsAlive() && a.isActor == battlerInfo.isActor && a.CanMove()).Count > 1;
         }
         if (CanUseTrigger(skillInfo,battlerInfo) == false)
         {
