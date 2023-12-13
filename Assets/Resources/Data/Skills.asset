@@ -1149,36 +1149,30 @@ MonoBehaviour:
       Param2: 999
       Param3: 0
     TriggerDates: []
-  - Id: 11010
-    Name: "\u30A6\u30EB\u30D5\u30BD\u30A6\u30EB"
-    IconIndex: 6
+  - Id: 7010
+    Name: "\u30A6\u30A7\u30A4\u30C8\u30E6\u30CB\u30BE\u30F3"
+    IconIndex: 4
     AnimationName: 
     AnimationPosition: 0
     AnimationType: 1
-    DamageTiming: 0
+    DamageTiming: 48
     MpCost: 0
-    Rank: 1
-    Attribute: 1
+    Rank: 2
+    Attribute: 0
     Scope: 4
-    SkillType: 2
+    SkillType: 1
     TargetType: 4
-    Help: "(\u6761\u4EF6)\u30D0\u30C8\u30EB\u958B\u59CB\u6642\nATK8\u304C\u30A2\u30C3\u30D7"
+    Help: "\u5473\u65B9\u304C\u6B21\u306E\u884C\u52D5\u3092\u3059\u308B\u307E\u3067\u5F85\u6A5F\u3059\u308B"
     Range: 1
     RepeatTime: 1
     AliveOnly: 1
     FeatureDates:
-    - SkillId: 11010
-      FeatureType: 21
-      Param1: 1040
-      Param2: 999
-      Param3: 8
-    TriggerDates:
-    - SkillId: 11010
-      TriggerType: 0
-      TriggerTiming: 4
+    - SkillId: 7010
+      FeatureType: 51
       Param1: 0
       Param2: 0
       Param3: 0
+    TriggerDates: []
   - Id: 11020
     Name: "\u30D7\u30EA\u30C7\u30A3\u30AB\u30E1\u30F3\u30C8"
     IconIndex: 6

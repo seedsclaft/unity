@@ -513,6 +513,15 @@ public class BattlePresenter : BasePresenter
         var actionInfo = _model.CurrentActionInfo();
         if (actionInfo != null)
         {
+            if (actionInfo.IsUnison())
+            {
+                _model.WaitUnison();
+                _view.HideBattlerEnemyTarget();
+                _view.HideBattlerPartyTarget();
+                _view.RefreshStatus();
+                _view.SetBattleBusy(false);
+                return;
+            }
             if (actionInfo.Master.SkillType == SkillType.Demigod && actionInfo.SubjectIndex < 100)
             {
                 StartAnimationDemigod();
@@ -652,31 +661,34 @@ public class BattlePresenter : BasePresenter
             CommandEndAnimation();
             return;
         }
-        var animation = _model.SkillActionAnimation(actionInfo.Master.AnimationName);
-        var soundTimings = _model.SkillActionSoundTimings(actionInfo.Master.AnimationName);
-        _view.PlayMakerEffectSound(soundTimings);
-        _view.SetCurrentSkillData(actionInfo.Master);
-        _view.ClearDamagePopup();
-        if (actionInfo.Master.AnimationType == AnimationType.All)
+        if (actionInfo.Master.AnimationName != "")
         {
-            _view.StartAnimationAll(animation);
-        } else
-        {
+            var animation = _model.SkillActionAnimation(actionInfo.Master.AnimationName);
+            var soundTimings = _model.SkillActionSoundTimings(actionInfo.Master.AnimationName);
+            _view.PlayMakerEffectSound(soundTimings);
+            _view.SetCurrentSkillData(actionInfo.Master);
+            _view.ClearDamagePopup();
+            if (actionInfo.Master.AnimationType == AnimationType.All)
+            {
+                _view.StartAnimationAll(animation);
+            } else
+            {
+                for (int i = 0; i < actionInfo.ActionResults.Count; i++)
+                {
+                    var oneAnimation = actionInfo.ActionResults[i].CursedDamage ? _model.SkillActionAnimation("NA_Effekseer/NA_curse_001") : animation;
+                    _view.StartAnimation(actionInfo.ActionResults[i].TargetIndex,oneAnimation,actionInfo.Master.AnimationPosition);
+                }
+            }
+            StartAliveAnimation(_model.CurrentActionInfo().ActionResults);
+
+            await UniTask.DelayFrame(actionInfo.Master.DamageTiming);
             for (int i = 0; i < actionInfo.ActionResults.Count; i++)
             {
-                var oneAnimation = actionInfo.ActionResults[i].CursedDamage ? _model.SkillActionAnimation("NA_Effekseer/NA_curse_001") : animation;
-                _view.StartAnimation(actionInfo.ActionResults[i].TargetIndex,oneAnimation,actionInfo.Master.AnimationPosition);
+                bool lastTarget = actionInfo.ActionResults[actionInfo.ActionResults.Count-1].TargetIndex == actionInfo.ActionResults[i].TargetIndex;
+                PopupActionResult(actionInfo.ActionResults[i],actionInfo.ActionResults[i].TargetIndex,true,true,lastTarget);
             }
+            await UniTask.DelayFrame(60);
         }
-        StartAliveAnimation(_model.CurrentActionInfo().ActionResults);
-
-        await UniTask.DelayFrame(actionInfo.Master.DamageTiming);
-        for (int i = 0; i < actionInfo.ActionResults.Count; i++)
-        {
-            bool lastTarget = actionInfo.ActionResults[actionInfo.ActionResults.Count-1].TargetIndex == actionInfo.ActionResults[i].TargetIndex;
-            PopupActionResult(actionInfo.ActionResults[i],actionInfo.ActionResults[i].TargetIndex,true,true,lastTarget);
-        }
-        await UniTask.DelayFrame(60);
         _nextCommandType = Battle.CommandType.EndAnimation;
         CommandEndAnimation();
     }
@@ -928,6 +940,8 @@ public class BattlePresenter : BasePresenter
         {
             _view.StartStatePopup(removeChainState.TargetIndex,DamageType.State,"-" + removeChainState.Master.Name);
         }
+        // 待機できなくなった場合は待機状態をはずす
+        _model.RemoveOneMemberWaitBattlers();
         _view.RefreshStatus();
 
         // 次の行動者がいれば続ける
@@ -960,6 +974,8 @@ public class BattlePresenter : BasePresenter
         _triggerAfterChecked = false;
         _slipDamageChecked = false;
         _regenerateChecked = false;
+        // ウェイトがいたら復帰する
+        _model.AssignWaitBattler();
         _view.SetBattleBusy(false);
     }
 

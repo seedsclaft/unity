@@ -28,6 +28,7 @@ public class SkillInfoComponent : MonoBehaviour
         }
         if (skillInfo.Master.SkillType == SkillType.Reborn)
         {
+            UpdateSkillData(skillInfo.Id);
             UpdateRebornInfo(skillInfo);
         } else
         {

@@ -81,4 +81,9 @@ public class ActionInfo
     {
         _triggeredSkill = triggeredSkill;
     }
+
+    public bool IsUnison()
+    {
+        return Master.FeatureDates.Find(a => a.FeatureType == FeatureType.Unison) != null;
+    }
 }

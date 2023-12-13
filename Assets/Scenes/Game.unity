@@ -175,7 +175,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 24451008}
-  - component: {fileID: 24451012}
   - component: {fileID: 24451011}
   - component: {fileID: 24451010}
   - component: {fileID: 24451009}
@@ -360,14 +359,6 @@ MonoBehaviour:
   debugLogError: 1
   checkOverFlow: 1
   checkOverFlowInEditor: 0
---- !u!222 &24451012
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 24451007}
-  m_CullTransparentMesh: 0
 --- !u!224 &38703928 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3765696660498820278, guid: c2c85e39b81ea8448833223ad13ea8c7,
@@ -12074,7 +12065,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   version: 0.0.11
-  testMode: 0
+  testMode: 1
   sceneAssign: {fileID: 64641776}
   popupAssign: {fileID: 497961168}
   statusAssign: {fileID: 1137596729}
@@ -12100,7 +12091,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   consoleInputField: {fileID: 1447284014}
-  inBattleActorIds: 02000000
+  inBattleActorIds: 0200000001000000
   troopId: 1020
   troopLv: 1
   actorDates:
@@ -12129,7 +12120,7 @@ MonoBehaviour:
       _atk: 60
       _def: 50
       _spd: 50
-    Attribute: 0100000004000000070000000500000003000000
+    Attribute: 0100000004000000050000000500000002000000
     X: 0
     Y: -16
     Scale: 0.78
@@ -12157,22 +12148,27 @@ MonoBehaviour:
       Level: 0
       Weight: 0
       TriggerDates: []
-      DeckNum: 4
+      DeckNum: 0
     - SkillId: 1020
       Level: 0
       Weight: 0
       TriggerDates: []
-      DeckNum: 4
+      DeckNum: 0
+    - SkillId: 7010
+      Level: 0
+      Weight: 0
+      TriggerDates: []
+      DeckNum: 0
     - SkillId: 100110
       Level: 0
       Weight: 0
       TriggerDates: []
-      DeckNum: 1
+      DeckNum: 0
     - SkillId: 100111
       Level: 0
       Weight: 0
       TriggerDates: []
-      DeckNum: 1
+      DeckNum: 0
   - Id: 2
     Name: "\u30AD\u30E3\u30ED\u30E9\u30A4\u30F3"
     SubName: "\u3010\u30EF\u30A4\u30E4\u30FC\u30D7\u30EA\u30F3\u30BB\u30B9\u3011"
@@ -12198,7 +12194,7 @@ MonoBehaviour:
       _atk: 40
       _def: 20
       _spd: 90
-    Attribute: 0300000001000000050000000700000005000000
+    Attribute: 0300000001000000050000000700000004000000
     X: 22
     Y: 28
     Scale: 1
@@ -12233,6 +12229,11 @@ MonoBehaviour:
       TriggerDates: []
       DeckNum: 0
     - SkillId: 2020
+      Level: 0
+      Weight: 0
+      TriggerDates: []
+      DeckNum: 0
+    - SkillId: 7010
       Level: 0
       Weight: 0
       TriggerDates: []
@@ -12272,7 +12273,7 @@ MonoBehaviour:
       _atk: 20
       _def: 90
       _spd: 40
-    Attribute: 0400000007000000010000000300000007000000
+    Attribute: 0400000007000000010000000200000007000000
     X: 16
     Y: -8
     Scale: 0.9
@@ -12302,6 +12303,11 @@ MonoBehaviour:
       TriggerDates: []
       DeckNum: 0
     - SkillId: 3020
+      Level: 0
+      Weight: 0
+      TriggerDates: []
+      DeckNum: 0
+    - SkillId: 7010
       Level: 0
       Weight: 0
       TriggerDates: []
@@ -12375,6 +12381,11 @@ MonoBehaviour:
       Weight: 0
       TriggerDates: []
       DeckNum: 0
+    - SkillId: 7010
+      Level: 0
+      Weight: 0
+      TriggerDates: []
+      DeckNum: 0
     - SkillId: 100410
       Level: 0
       Weight: 0
@@ -12440,6 +12451,11 @@ MonoBehaviour:
       TriggerDates: []
       DeckNum: 0
     - SkillId: 5020
+      Level: 0
+      Weight: 0
+      TriggerDates: []
+      DeckNum: 0
+    - SkillId: 7010
       Level: 0
       Weight: 0
       TriggerDates: []
@@ -12514,6 +12530,11 @@ MonoBehaviour:
       TriggerDates: []
       DeckNum: 0
     - SkillId: 2070
+      Level: 0
+      Weight: 0
+      TriggerDates: []
+      DeckNum: 0
+    - SkillId: 7010
       Level: 0
       Weight: 0
       TriggerDates: []
@@ -12597,6 +12618,11 @@ MonoBehaviour:
       Weight: 0
       TriggerDates: []
       DeckNum: 0
+    - SkillId: 7010
+      Level: 0
+      Weight: 0
+      TriggerDates: []
+      DeckNum: 0
     - SkillId: 100710
       Level: 0
       Weight: 0
@@ -12662,6 +12688,11 @@ MonoBehaviour:
       TriggerDates: []
       DeckNum: 0
     - SkillId: 1040
+      Level: 0
+      Weight: 0
+      TriggerDates: []
+      DeckNum: 0
+    - SkillId: 7010
       Level: 0
       Weight: 0
       TriggerDates: []
@@ -12735,6 +12766,11 @@ MonoBehaviour:
       Weight: 0
       TriggerDates: []
       DeckNum: 0
+    - SkillId: 7010
+      Level: 0
+      Weight: 0
+      TriggerDates: []
+      DeckNum: 0
     - SkillId: 100320
       Level: 0
       Weight: 0
@@ -12804,6 +12840,11 @@ MonoBehaviour:
       Weight: 0
       TriggerDates: []
       DeckNum: 0
+    - SkillId: 7010
+      Level: 0
+      Weight: 0
+      TriggerDates: []
+      DeckNum: 0
     - SkillId: 100420
       Level: 0
       Weight: 0
@@ -12814,7 +12855,7 @@ MonoBehaviour:
       Weight: 0
       TriggerDates: []
       DeckNum: 0
-  advName: Event3_1
+  advName: 
   saveActorData: 0
 --- !u!1 &1651359293
 GameObject:

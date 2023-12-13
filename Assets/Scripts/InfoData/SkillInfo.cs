@@ -79,4 +79,9 @@ public class SkillInfo
         _param2 = param2;
         _param3 = param3;
     }
+
+    public bool IsUnison()
+    {
+        return Master.FeatureDates.Find(a => a.FeatureType == FeatureType.Unison) != null;
+    }
 }

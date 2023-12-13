@@ -171,7 +171,7 @@ namespace Utage
 				int count = TextMeshPro.textInfo.characterCount;
 				if (len != count)
 				{
-					Debug.LogErrorFormat(this, "テキストの解析結果の文字数 {0} と TextMeshProで表示する文字数 {1}　が違います\n{2}", len, count, TextMeshPro.text);
+					//Debug.LogErrorFormat(this, "テキストの解析結果の文字数 {0} と TextMeshProで表示する文字数 {1}　が違います\n{2}", len, count, TextMeshPro.text);
 				}
 				if ( CheckOverFlow && TextMeshPro.isTextOverflowing && len > 0)
 				{
