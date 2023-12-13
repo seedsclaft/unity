@@ -29,7 +29,7 @@ public class RebornResultPresenter : BasePresenter
         _busy = true;
 
         _view.StartAnimation();
-        _view.StartRebornResultAnimation(_model.CastActorInfos(_model.RebornMembers()));
+        _view.StartRebornResultAnimation(_model.MakeListData(_model.RebornMembers()));
         _busy = false;
     }
 

@@ -11,6 +11,18 @@ public class StageInfo
     public int Id => _id;
     private int _turns;
     public int Turns => _turns;
+    private int _displayTurns;
+    public int DisplayTurns => _displayTurns;
+    public void SetDisplayTurns()
+    {
+        _displayTurns = Master.Turns;
+    }
+    private int _savedCount = 0;
+    public int SavedCount => _savedCount;
+    public void GainSaveCount()
+    {
+        _savedCount++;
+    }
     private int _currentTurn;
     public int CurrentTurn => _currentTurn;
     private int _clearCount;
@@ -59,10 +71,12 @@ public class StageInfo
         _id = stageData.Id;
         _baseStageId = stageData.Id;
         _turns = stageData.Turns;
+        _displayTurns = stageData.Turns;
         _currentTurn = 1;
         _IsSubordinate = false;
-        _subordinateValue = 50;
+        _subordinateValue = 0;
         _troopClearCount = 0;
+        _savedCount = 0;
         _randomTroopCount = stageData.RandomTroopCount;
         _clearTroopIds.Clear();
 		MakeTroopData();
@@ -194,34 +208,43 @@ public class StageInfo
         }
     }
 
-    public void MakeLastBossOnlyTroop()
+    public void MakeLastBossOnlyTroop(int routeSelect)
     {
         _currentTroopInfos.Clear();
-        // アクターに呼応する敵 + 光属性
-        var troopIds = new List<int>();
-        foreach (var actorId in _selectActorIds)
+        if (routeSelect > 0)
         {
-            troopIds.Add(actorId * 10 + 3000);
-        }
-        if (!troopIds.Contains(3140) && !troopIds.Contains(3040))
-        {
-            troopIds.Add(3040);
-        }
-        var enemyIds = new List<int>();
-        foreach (var troopId in troopIds)
-        {
-            if (troopId % 1000 == 40)
+            // アクターに呼応する敵 + 光属性
+            var troopIds = new List<int>();
+            foreach (var actorId in _selectActorIds)
             {
-                // 先頭は光属性
-                enemyIds.Add(troopId);
+                troopIds.Add(actorId * 10 + 3000);
             }
-        }
-        
-        int lv = 20;
-        for (int i = 0;i < enemyIds.Count;i++)
+            if (!troopIds.Contains(3140) && !troopIds.Contains(3040))
+            {
+                troopIds.Add(3040);
+            }
+            var enemyIds = new List<int>();
+            foreach (var troopId in troopIds)
+            {
+                if (troopId % 1000 == 40)
+                {
+                    // 先頭は光属性
+                    enemyIds.Add(troopId);
+                }
+            }
+            
+            int lv = 20;
+            for (int i = 0;i < enemyIds.Count;i++)
+            {
+                if (_clearTroopIds.Contains(enemyIds[i])) continue;
+                var troopInfo = new TroopInfo(enemyIds[i],false);
+                troopInfo.MakeEnemyTroopDates(lv);
+                _currentTroopInfos.Add(troopInfo);
+            }
+        } else
         {
-            if (_clearTroopIds.Contains(enemyIds[i])) continue;
-            var troopInfo = new TroopInfo(enemyIds[i],false);
+            int lv = 20;
+            var troopInfo = new TroopInfo(4010,false);
             troopInfo.MakeEnemyTroopDates(lv);
             _currentTroopInfos.Add(troopInfo);
         }
@@ -239,39 +262,48 @@ public class StageInfo
     public List<TroopInfo> MakeRouteSelectTroopData(int routeSelect)
     {
         _currentTroopInfos.Clear();
-        // アクターに呼応する敵 + 光属性
-        var troopIds = new List<int>();
-        foreach (var actorId in _selectActorIds)
+        if (routeSelect > 0)
         {
-            troopIds.Add(actorId * 10 + 3000);
-        }
-        if (!troopIds.Contains(3140) && !troopIds.Contains(3040))
-        {
-            troopIds.Add(3040);
-        }
-        var enemyIds = new List<int>();
-        foreach (var troopId in troopIds)
-        {
-            if (troopId % 1000 == 40)
+            // アクターに呼応する敵 + 光属性
+            var troopIds = new List<int>();
+            foreach (var actorId in _selectActorIds)
             {
-                // 先頭は光属性
-                enemyIds.Add(troopId);
+                troopIds.Add(actorId * 10 + 3000);
             }
-        }
-        while (enemyIds.Count <= 2)
-        {
-            int rand = new Random().Next(1, 14) * 10 + 3000;
-            if (!enemyIds.Contains(rand) && troopIds.Contains(rand))
+            if (!troopIds.Contains(3140) && !troopIds.Contains(3040))
             {
-                enemyIds.Add(rand);
+                troopIds.Add(3040);
             }
-        }
-        
-        int lv = 20;
-        for (int i = 0;i < enemyIds.Count;i++)
+            var enemyIds = new List<int>();
+            foreach (var troopId in troopIds)
+            {
+                if (troopId % 1000 == 40)
+                {
+                    // 先頭は光属性
+                    enemyIds.Add(troopId);
+                }
+            }
+            while (enemyIds.Count <= 2)
+            {
+                int rand = new Random().Next(1, 14) * 10 + 3000;
+                if (!enemyIds.Contains(rand) && troopIds.Contains(rand))
+                {
+                    enemyIds.Add(rand);
+                }
+            }
+            
+            int lv = 20;
+            for (int i = 0;i < enemyIds.Count;i++)
+            {
+                if (_clearTroopIds.Contains(enemyIds[i])) continue;
+                var troopInfo = new TroopInfo(enemyIds[i],false);
+                troopInfo.MakeEnemyTroopDates(lv);
+                _currentTroopInfos.Add(troopInfo);
+            }
+        } else
         {
-            if (_clearTroopIds.Contains(enemyIds[i])) continue;
-            var troopInfo = new TroopInfo(enemyIds[i],false);
+            int lv = 20;
+            var troopInfo = new TroopInfo(4010,false);
             troopInfo.MakeEnemyTroopDates(lv);
             _currentTroopInfos.Add(troopInfo);
         }
@@ -354,7 +386,7 @@ public class StageInfo
         _IsSubordinate = isSubordinate;
     }
 
-    public void ChangeSubordinate(int value)
+    public void ChangeSubordinateValue(int value)
     {
         if (_IsSubordinate == false) return;
         _subordinateValue += value;
@@ -397,7 +429,7 @@ public class StageInfo
 
     public void SetLastBossOnly()
     {
-        MakeLastBossOnlyTroop();
+        MakeLastBossOnlyTroop(_routeSelect);
     }
 
     public void SetRouteSelect(int routeSelect)
@@ -415,6 +447,10 @@ public class StageInfo
         _defineBossIndex = stageInfo.DefineBossIndex;
         _troopDates = stageInfo._troopDates;
         _currentTroopInfos = stageInfo._currentTroopInfos;
+        _displayTurns = stageInfo._displayTurns - stageInfo.CurrentTurn + 1;
+        _savedCount = stageInfo._savedCount;
+        _subordinateValue = stageInfo.SubordinateValue;
+        _IsSubordinate = stageInfo.IsSubordinate;
     }
 
     public int SelectActorIdsClassId(int selectIndex)

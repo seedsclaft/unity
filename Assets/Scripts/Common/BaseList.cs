@@ -106,6 +106,18 @@ public class BaseList : ListWindow , IInputHandlerEvent
             _listData[findIndex] = listData;
         }
     }
+
+    public void SetDisableIds(List<int> disableIds)
+    {
+        for (int i = 0; i < _listData.Count;i++)
+        {
+            if (disableIds.Contains(i))
+            {
+                _listData[i].SetEnable(false);
+            }
+        }
+        Refresh(_listData.FindIndex(a => a.Selected));
+    }
 }
 
 

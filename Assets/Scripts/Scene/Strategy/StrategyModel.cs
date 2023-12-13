@@ -277,7 +277,7 @@ public class StrategyModel : BaseModel
         CurrentStage.AddClearTroopId(CurrentTroopInfo().TroopId);
         CurrentData.PlayerInfo.AddClearedTroopId(CurrentTroopInfo().TroopId);
         CurrentStage.GainTroopClearCount(1);
-        CurrentStage.ChangeSubordinate(15);
+        CurrentStage.ChangeSubordinateValue(10);
 
         foreach (var actorInfo in BattleResultActors())
         {
@@ -401,7 +401,7 @@ public class StrategyModel : BaseModel
             actorInfo.ChangeTacticsCostRate(1);
         }
         CurrentStage.ClearTacticsEnemies();
-        CurrentStage.ChangeSubordinate(-5);
+        //CurrentStage.ChangeSubordinateValue(-5);
         CurrentAlcana.SetAlacanaState(null);
     }
 

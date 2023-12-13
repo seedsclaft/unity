@@ -265,8 +265,7 @@ public class BattleView : BaseView ,IInputHandlerEvent
             sideMenuList.gameObject.SetActive(false);
         }
         // 敵のstateEffectを表示
-        ShowEnemyStateOverlay();
-        ShowActorStateOverlay();
+        ShowStateOverlay();
     }
 
     public void HideBattleThumb()
@@ -381,14 +380,6 @@ public class BattleView : BaseView ,IInputHandlerEvent
         }
     }
 
-    public void ShowEnemyStateOverlay()
-    {
-        foreach (var item in _battlerComps)
-        {
-            item.Value.ShowEnemyStateOverlay();
-        }
-    }
-
     public void HideEnemyStateOverlay()
     {
         foreach (var item in _battlerComps)
@@ -397,19 +388,19 @@ public class BattleView : BaseView ,IInputHandlerEvent
         }
     }
 
-    public void ShowActorStateOverlay()
+    public void ShowStateOverlay()
     {
         foreach (var item in _battlerComps)
         {
-            item.Value.ShowActorStateOverlay();
+            item.Value.ShowStateOverlay();
         }
     }
 
-    public void HideActorStateOverlay()
+    public void HideStateOverlay()
     {
         foreach (var item in _battlerComps)
         {
-            item.Value.HideActorStateOverlay();
+            item.Value.HideStateOverlay();
         }
     }
 

@@ -49,7 +49,11 @@ public class GameSystem : MonoBehaviour
 #if UNITY_EDITOR
         GameSystem.DebugBattleData = debugBattleData;
 #endif
+#if UNITY_ANDROID
+        AdMobController.Instance.Initialize(() => {CommandSceneChange(Scene.Boot);});
+#else
         CommandSceneChange(Scene.Boot);
+#endif
     }
 
     private void CreateStatus(bool isActor)

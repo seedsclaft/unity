@@ -18,6 +18,7 @@ public class BaseModel
     public int Currency => PartyInfo.Currency;
 
     public int Turns{get {return CurrentStage.Turns - (CurrentStage.CurrentTurn);}}
+    public int DisplayTurns{get {return CurrentStage.DisplayTurns - (CurrentStage.CurrentTurn);}}
 
     public CancellationTokenSource _cancellationTokenSource;
     public void InitSaveInfo()
@@ -35,11 +36,6 @@ public class BaseModel
     public List<ActorInfo> Actors()
     {
         return GameSystem.CurrentData.Actors;
-    }
-
-    public List<ListData> CastActorInfos(List<ActorInfo> actorInfos)
-    {
-        return MakeListData(actorInfos);
     }
 
     public void LostActors(List<ActorInfo> lostMembers)
@@ -447,7 +443,7 @@ public class BaseModel
                     }
                     if (featureData.FeatureType == FeatureType.Subordinate)
                     {
-                        CurrentStage.ChangeSubordinate(featureData.Param1);
+                        CurrentStage.ChangeSubordinateValue(featureData.Param1);
                     }
                     if (featureData.FeatureType == FeatureType.Alcana)
                     {
@@ -525,10 +521,21 @@ public class BaseModel
         CurrentData.PlayerInfo.StageClear(CurrentStage.BaseStageId);
     }
 
-    public void ChangeRouteSelectStage(int stageBaseId)
+    public void ChangeRouteSelectStage(int stageId)
     {
-        int stageId = stageBaseId + CurrentStage.RouteSelect;
-		CurrentData.ChangeRouteSelectStage(stageId);
+        // 隷従族度が80以下なら粛清
+        if (CurrentStage.SubordinateValue < 80)
+        {
+	    	CurrentData.ChangeRouteSelectStage(stageId + 1);
+        } else
+        {
+	    	CurrentData.ChangeRouteSelectStage(stageId);
+        }
+    }
+
+    public void SetDisplayTurns()
+    {
+        CurrentStage.SetDisplayTurns();
     }
 
     public void MoveStage(int stageId)
@@ -713,5 +720,38 @@ public class BaseModel
         }
 #endif
         endEvent(rankingText);
+    }
+
+    public string SavePopupTitle()
+    {
+        var baseText = DataSystem.System.GetTextData(11080).Text;
+        var subText = DataSystem.System.GetTextData(11081).Text;
+        var savedCount = DataSystem.System.GetReplaceText(11083,(CurrentStage.SavedCount+1).ToString());
+        return baseText + savedCount + "\n" + subText;
+    }
+
+    public string FailedSavePopupTitle()
+    {
+        var baseText = DataSystem.System.GetTextData(11082).Text;
+        return baseText;
+    }
+
+    public bool SaveNeedAds()
+    {
+        var needAds = false;
+#if UNITY_ANDROID
+        needAds = CurrentStage.SavedCount >= DataSystem.System.LimitSaveCount;
+#endif
+        return needAds;
+    }
+
+    public void GainSaveCount()
+    {
+        CurrentStage.GainSaveCount();
+    }
+
+    public List<int> SaveAdsCommandTextIds()
+    {
+        return new List<int>(){3053,3051};
     }
 }

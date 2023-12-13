@@ -62,7 +62,7 @@ public class EnemyInfoView : BaseView,IInputHandlerEvent
         selectCharacter.RefreshAction(lastSelectIndex);
         enemyLayer.RefreshTarget(battlerInfo.Index,enemyIndexes,ScopeType.One);
         enemyInfoComponent.Clear();
-        enemyInfoComponent.UpdateData(battlerInfo.EnemyData);
+        enemyInfoComponent.UpdateInfo(battlerInfo);
     }
 
     private void OnClickBack()

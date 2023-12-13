@@ -64,6 +64,7 @@ public enum StageEventType{
     AbortStage = 21, // ステージを中断する
     ChangeRouteSelectStage = 31, // ルート分岐でステージに移動
     RouteSelectBattle = 32, // ルート分岐敵グループを生成
+    SetDisplayTurns = 33, // 表示残りターンをマスターから取得
     RebornSkillEffect = 41, // 継承スキル演出再生
     MoveStage = 51, // ステージ移動
     SetDefineBoss = 61, // 中ボスを設定する

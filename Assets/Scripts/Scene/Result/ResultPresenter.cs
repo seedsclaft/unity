@@ -22,16 +22,16 @@ public class ResultPresenter : BasePresenter
 
     private async void Initialize()
     {
+        _busy = true;
         _view.SetHelpWindow();
         _view.SetResultList(_model.ResultCommand());
         _view.SetActors(_model.ResultMembers());
         var bgm = await _model.GetBgmData("TACTICS1");
         Ryneus.SoundManager.Instance.PlayBgm(bgm,1.0f,true);
         _view.SetEvent((type) => UpdateCommand(type));
-        _busy = true;
 
         _view.StartAnimation();
-        _view.StartResultAnimation(_model.CastActorInfos(_model.ResultMembers()));
+        _view.StartResultAnimation(_model.MakeListData(_model.ResultMembers()));
         _busy = false;
     }
 
@@ -71,9 +71,6 @@ public class ResultPresenter : BasePresenter
     {
         if (confirmCommandType == ConfirmCommandType.Yes)
         {
-            ShowStatus();
-        } else
-        {
             if (_isRankingEnd)
             {
                 CommandActorAssign();
@@ -81,6 +78,9 @@ public class ResultPresenter : BasePresenter
             {
                 CommandRanking();
             }
+        } else
+        {
+            ShowStatus();
         }
         Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
     }

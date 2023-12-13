@@ -74,8 +74,6 @@ public class BattlerInfoComponent : MonoBehaviour
         if (_battlerInfo.isActor)
         {
             actorInfoComponent.ChangeAtk(value);
-        } else
-        {
         }
     }
 
@@ -84,8 +82,6 @@ public class BattlerInfoComponent : MonoBehaviour
         if (_battlerInfo.isActor)
         {
             actorInfoComponent.ChangeDef(value);
-        } else
-        {
         }
     }
 
@@ -94,8 +90,6 @@ public class BattlerInfoComponent : MonoBehaviour
         if (_battlerInfo.isActor)
         {
             actorInfoComponent.ChangeSpd(value);
-        } else
-        {
         }
     }
 
@@ -115,7 +109,6 @@ public class BattlerInfoComponent : MonoBehaviour
         ChangeDef(_battlerInfo.CurrentDef());
         ChangeSpd(_battlerInfo.CurrentSpd());
         if (battleStateOverlay != null) battleStateOverlay.SetStates(_battlerInfo.IconStateInfos(),_battlerInfo.isActor == false);
-        
     }
     
     public void ShowUI()
@@ -244,10 +237,8 @@ public class BattlerInfoComponent : MonoBehaviour
 
     public void StartDeathAnimation()
     {
-        if (_battlerInfo.isActor)
+        if (!_battlerInfo.isActor)
         {
-
-        } else{
             deathAnimation.enabled = true;
             _deathAnimation = 0.01f;
             HideUI();
@@ -256,10 +247,8 @@ public class BattlerInfoComponent : MonoBehaviour
 
     public void StartAliveAnimation()
     {
-        if (_battlerInfo.isActor)
+        if (!_battlerInfo.isActor)
         {
-
-        } else{
             _deathAnimation = 0;
             deathAnimation.enabled = false;
             deathAnimation.Destroyed = 0;
@@ -268,7 +257,7 @@ public class BattlerInfoComponent : MonoBehaviour
             var sequence = DOTween.Sequence()
                 .Append(image.DOFade(0f, 0))
                 .Append(image.DOFade(1f, 0.5f));
-            }
+        }
     }
     
     public void StartAnimation(EffekseerEffectAsset effectAsset,int animationPosition)
@@ -308,7 +297,6 @@ public class BattlerInfoComponent : MonoBehaviour
 
     public void SetSelectable(bool isSelectable)
     {
-        
         var image = BattleImage();
         if (image == null) return;
         float alpha = isSelectable == true ? 1 : 0.25f;
@@ -319,13 +307,7 @@ public class BattlerInfoComponent : MonoBehaviour
 
     public void SetActiveStatus(bool isSelectable)
     {
-        if (_battlerInfo.isActor)
-        {
-            if (_battleStatusRoot != null && !_battlerInfo.isActor)
-            {
-                _battleStatusRoot.SetActive(isSelectable);
-            }
-        } else
+        if (!_battlerInfo.isActor)
         {
             if (isSelectable)
             {
@@ -337,48 +319,23 @@ public class BattlerInfoComponent : MonoBehaviour
         }
     }
 
-    public void ShowEnemyStateOverlay()
-    {
-
-        if (_battlerInfo.isActor)
-        {
-        } else
-        {
-            battleStateOverlay.ShowStateOverlay();
-        }
-    }
-
     public void HideEnemyStateOverlay()
     {
 
-        if (_battlerInfo.isActor)
-        {
-        } else
+        if (!_battlerInfo.isActor)
         {
             battleStateOverlay.HideStateOverlay();
         }
     }
 
-    public void ShowActorStateOverlay()
+    public void ShowStateOverlay()
     {
-
-        if (_battlerInfo.isActor)
-        {
-            battleStateOverlay.ShowStateOverlay();
-        } else
-        {
-        }
+        battleStateOverlay.ShowStateOverlay();
     }
 
-    public void HideActorStateOverlay()
+    public void HideStateOverlay()
     {
-
-        if (_battlerInfo.isActor)
-        {
-            battleStateOverlay.HideStateOverlay();
-        } else
-        {
-        }
+        battleStateOverlay.HideStateOverlay();
     }
 
     public void SetEnemyGridKey(int index)

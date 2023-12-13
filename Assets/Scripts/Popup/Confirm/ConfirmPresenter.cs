@@ -33,11 +33,20 @@ public class ConfirmPresenter
         {
            CommandIsNoChoice();
         }
+        if (viewEvent.commandType == CommandType.DisableIds)
+        {
+           CommandDisableIds((List<int>)viewEvent.template);
+        }
     }
 
     private void CommandIsNoChoice()
     {
         _view.SetConfirmCommand(_model.NoChoiceConfirmCommand());
+    }
+
+    private void CommandDisableIds(List<int> disableIds)
+    {
+        _view.CommandDisableIds(disableIds);
     }
 }
 
@@ -61,6 +70,10 @@ public class ConfirmInfo
     }
     private int _selectIndex = 0;
     public int SelectIndex => _selectIndex;
+    private List<int> _disableIds = new ();
+    public List<int> DisableIds => _disableIds;
+    private List<int> _commandTextIds = new ();
+    public List<int> CommandTextIds => _commandTextIds;
 
     public ConfirmInfo(string title,System.Action<ConfirmCommandType> callEvent)
     {
@@ -71,6 +84,16 @@ public class ConfirmInfo
     public void SetIsNoChoice(bool isNoChoice)
     {
         _isNoChoice = isNoChoice;
+    }
+    
+    public void SetDisableIds(List<int> ids)
+    {
+        _disableIds = ids;
+    }
+
+    public void SetCommandTextIds(List<int> ids)
+    {
+        _commandTextIds = ids;
     }
 
     public void SetSkillInfo(List<SkillInfo> skillInfos)

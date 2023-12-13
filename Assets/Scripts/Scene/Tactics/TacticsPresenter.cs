@@ -71,8 +71,18 @@ public class TacticsPresenter :BasePresenter
                     isEvent = true;
                     break;
                 case StageEventType.SaveCommand:
-                    var popupInfo = new ConfirmInfo(DataSystem.System.GetTextData(11080).Text,(menuCommandInfo) => UpdatePopupSaveCommand((ConfirmCommandType)menuCommandInfo));
+                    var savePopupTitle = _model.SavePopupTitle();
+                    var saveNeedAds = _model.SaveNeedAds();
+                    var popupInfo = new ConfirmInfo(savePopupTitle,(menuCommandInfo) => UpdatePopupSaveCommand((ConfirmCommandType)menuCommandInfo));
+                    
                     popupInfo.SetSelectIndex(1);
+                    if (saveNeedAds)
+                    {
+                        //popupInfo.SetDisableIds(new List<int>(){1});
+                        popupInfo.SetCommandTextIds(_model.SaveAdsCommandTextIds());
+                    } else
+                    {
+                    }
                     _view.CommandCallConfirm(popupInfo);
                     _view.ChangeUIActive(false);
                     _model.AddEventReadFlag(stageEvent);
@@ -97,6 +107,10 @@ public class TacticsPresenter :BasePresenter
                     isEvent = true;
                     _view.CommandSceneChange(Scene.Tactics);
                     break;
+                case StageEventType.SetDisplayTurns:
+                    _model.SetDisplayTurns();
+                    _model.AddEventReadFlag(stageEvent);
+                    break;
                 case StageEventType.RouteSelectBattle:
                     _model.RouteSelectTroopData();
                     _model.AddEventReadFlag(stageEvent);
@@ -108,7 +122,7 @@ public class TacticsPresenter :BasePresenter
                     _view.CommandSceneChange(Scene.Tactics);
                     break;
                 case StageEventType.SetDefineBoss:
-                    _model.SetDefineBoss(stageEvent.Param);
+                    //_model.SetDefineBoss(stageEvent.Param);
                     break;
                 case StageEventType.SetLastBoss:
                     _model.SetLastBoss();
@@ -475,12 +489,47 @@ public class TacticsPresenter :BasePresenter
         _view.CommandConfirmClose();
         if (confirmCommandType == ConfirmCommandType.Yes)
         {
-            SaveSystem.SaveStart(GameSystem.CurrentData);
+            var saveNeedAds = _model.SaveNeedAds();
+            if (saveNeedAds)
+            {
+                AdMobController.Instance.LoadRewardedAd((success) => {
+                    if (success)
+                    {
+                        AdMobController.Instance.ShowRewardedAd((reward) => {
+                            if (reward)
+                            {
+                                _model.GainSaveCount();
+                                SaveSystem.SaveStart(GameSystem.CurrentData);
+                                _view.CommandSceneChange(Scene.Tactics);
+                            } else
+                            {
+                                // 失敗した時
+                                var savePopupTitle = _model.FailedSavePopupTitle();
+                                var popupInfo = new ConfirmInfo(savePopupTitle,(menuCommandInfo) => UpdatePopupSaveCommand((ConfirmCommandType)menuCommandInfo));
+                                _view.CommandCallConfirm(popupInfo);
+                                _view.ChangeUIActive(false);
+                            }
+                        });
+                    } else
+                    {
+                        // 失敗した時
+                        var savePopupTitle = _model.FailedSavePopupTitle();
+                        var popupInfo = new ConfirmInfo(savePopupTitle,(menuCommandInfo) => UpdatePopupSaveCommand((ConfirmCommandType)menuCommandInfo));
+                        _view.CommandCallConfirm(popupInfo);
+                        _view.ChangeUIActive(false);
+                    }
+                });
+            } else
+            {
+                _model.GainSaveCount();
+                SaveSystem.SaveStart(GameSystem.CurrentData);
+                _view.CommandSceneChange(Scene.Tactics);
+            }
         } else
         {
             Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cancel);
+            _view.CommandSceneChange(Scene.Tactics);
         }
-        _view.CommandSceneChange(Scene.Tactics);
     }
 
     private void UpdatePopupSkillInfo(ConfirmCommandType confirmCommandType)
@@ -695,11 +744,16 @@ public class TacticsPresenter :BasePresenter
 
     private void CommandRefresh()
     {
-        _view.SetTurns(_model.Turns);
+        _view.SetTurns(_model.DisplayTurns);
         _view.SetNuminous(_model.Currency);
         _view.SetStageInfo(_model.CurrentStage);
         
         _view.CommandRefresh(_model.TacticsCommandType);
+        if (_model.NeedAllTacticsCommand)
+        {
+            var listData = _model.ChangeEnableCommandData((int)TacticsCommandType.TurnEnd - 1, !_model.CheckNonBusy());
+            _view.RefreshListData(listData);
+        }
     }
 
     private void CommandShowUi()

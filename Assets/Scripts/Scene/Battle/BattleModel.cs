@@ -33,7 +33,7 @@ public class BattleModel : BaseModel
         if (CurrentStage != null)
         {
             var troops = CurrentStage.CurrentTroopInfo();
-            if (CurrentStage.DefineTroopId(false) == troops.TroopId)
+            if (CurrentStage.DefineTroopId(false) == troops.TroopId || troops.TroopId > 3000)
             {
                 return GetBgmData(DataSystem.Data.GetBGM(CurrentStage.Master.BossBGMId).Key);
             }

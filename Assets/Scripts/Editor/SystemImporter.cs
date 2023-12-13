@@ -192,6 +192,10 @@ public class SystemImporter : AssetPostprocessor
 					{
 						Data.ResourceCount = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseDefineColumn.Param);
 					}
+					if (KeyName == "limitSaveCount")
+					{
+						Data.LimitSaveCount = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseDefineColumn.Param);
+					}
 				}
 			}
 		}

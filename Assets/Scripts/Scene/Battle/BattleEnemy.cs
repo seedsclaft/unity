@@ -49,13 +49,13 @@ public class BattleEnemy : ListItem
     
     public new void SetSelectHandler(System.Action<int> handler)
     {
-		var enterListener = clickButton.gameObject.AddComponent<ContentEnterListener> ();
+		var enterListener = clickButton.gameObject.AddComponent<ContentEnterListener>();
         enterListener.SetEnterEvent(() => handler(_battlerInfo.Index));
     }
 
     public void SetPressHandler(System.Action<int> handler)
     {
-		var pressListener = clickButton.gameObject.AddComponent<ContentPressListener> ();
+		var pressListener = clickButton.gameObject.AddComponent<ContentPressListener>();
         pressListener.SetPressEvent(() => handler(_battlerInfo.Index));
     }
 

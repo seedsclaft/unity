@@ -40,6 +40,16 @@ public class ConfirmView : BaseView,IInputHandlerEvent
         }
     }
 
+    public void SetDisableIds(List<int> disableIds)
+    {
+        if (disableIds.Count > 0)
+        {
+            var eventData = new ConfirmViewEvent(CommandType.DisableIds);
+            eventData.template = disableIds;
+            _commandData(eventData);
+        }
+    }
+
     public void SetSelectIndex(int selectIndex)
     {
         commandList.Refresh(selectIndex);
@@ -58,6 +68,7 @@ public class ConfirmView : BaseView,IInputHandlerEvent
         SetTitle(confirmInfo.Title);
         SetSkillInfo(confirmInfo.SkillInfos());
         SetConfirmEvent(confirmInfo.CallEvent);
+        SetDisableIds(confirmInfo.DisableIds);
     }
 
     public void SetEvent(System.Action<ConfirmViewEvent> commandData)
@@ -70,6 +81,11 @@ public class ConfirmView : BaseView,IInputHandlerEvent
         commandList.SetData(menuCommands);
         commandList.SetInputHandler(InputKeyType.Decide,() => CallConfirmCommand());
         SetInputHandler(commandList.GetComponent<IInputHandlerEvent>());
+    }
+
+    public void CommandDisableIds(List<int> disableIds)
+    {
+        commandList.SetDisableIds(disableIds);
     }
 
     private void CallConfirmCommand()
@@ -110,6 +126,7 @@ namespace Confirm
     {
         None = 0,
         IsNoChoice = 101,
+        DisableIds = 102,
     }
 }
 public class ConfirmViewEvent

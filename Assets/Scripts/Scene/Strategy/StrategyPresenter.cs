@@ -141,7 +141,7 @@ public class StrategyPresenter : BasePresenter
                 bonusList.Add(false);
             }
             _view.SetTitle(DataSystem.System.GetTextData(14030).Text);
-            _view.StartResultAnimation(_model.CastActorInfos(battledResultActors),bonusList);
+            _view.StartResultAnimation(_model.MakeListData(battledResultActors),bonusList);
         } else
         if (_strategyState == StrategyState.TacticsResult)
         {
@@ -154,7 +154,7 @@ public class StrategyPresenter : BasePresenter
                 bonusList.Add(_model.IsBonusTactics(item.ActorId));
             }
             _view.SetTitle(DataSystem.System.GetTextData(14020).Text);
-            _view.StartResultAnimation(_model.CastActorInfos(tacticsActors),bonusList);
+            _view.StartResultAnimation(_model.MakeListData(tacticsActors),bonusList);
             if (_model.LevelUpData.Count > 0)
             {
                 _view.StartLvUpAnimation();
@@ -171,7 +171,7 @@ public class StrategyPresenter : BasePresenter
                 bonusList.Add(false);
             }
             _view.SetTitle(DataSystem.System.GetTextData(4).Text);
-            _view.StartResultAnimation(_model.CastActorInfos(battleMembers),bonusList);
+            _view.StartResultAnimation(_model.MakeListData(battleMembers),bonusList);
         }
     }
 

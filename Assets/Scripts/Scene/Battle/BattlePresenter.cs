@@ -190,8 +190,7 @@ public class BattlePresenter : BasePresenter
 
             _model.EndBattle();
             _battleEnded = true;
-            _view.HideActorStateOverlay();
-            _view.HideEnemyStateOverlay();
+            _view.HideStateOverlay();
             await UniTask.DelayFrame(180);
             _view.SetBattleBusy(false);
             _view.CommandSceneChange(Scene.Strategy);
@@ -592,8 +591,7 @@ public class BattlePresenter : BasePresenter
     {
         var demigod = _model.SkillActionAnimation("NA_Effekseer/NA_cut-in_002_" + _model.CurrentBattler.CharaId.ToString());
         _view.StartAnimationDemigod(demigod);
-        _view.HideEnemyStateOverlay();
-        _view.HideActorStateOverlay();
+        _view.HideStateOverlay();
         _view.SetAnimationBusy(true);
         await UniTask.DelayFrame(90);
         StartAnimationSkill();
@@ -645,8 +643,7 @@ public class BattlePresenter : BasePresenter
         _view.SetEscapeButton(false);
         _view.SetBattlerSelectable(true);
         //_view.ShowEnemyStateOverlay();
-        _view.HideEnemyStateOverlay();
-        _view.HideActorStateOverlay();
+        _view.HideStateOverlay();
         _view.SetAnimationBusy(true);
         var actionInfo = _model.CurrentActionInfo();
         if (actionInfo.ActionResults.Count == 0)
@@ -958,8 +955,7 @@ public class BattlePresenter : BasePresenter
         // 行動を全て終了する
         _model.SeekTurnCount();
         _view.HideEnemyStatus();
-        _view.ShowActorStateOverlay();
-        _view.ShowEnemyStateOverlay();
+        _view.ShowStateOverlay();
         _triggerInterruptChecked = false;
         _triggerAfterChecked = false;
         _slipDamageChecked = false;
@@ -992,8 +988,7 @@ public class BattlePresenter : BasePresenter
         }
         _model.EndBattle();
         _battleEnded = true;
-        _view.HideActorStateOverlay();
-        _view.HideEnemyStateOverlay();
+        _view.HideStateOverlay();
         await UniTask.DelayFrame(180);
         _view.SetBattleBusy(false);
         _view.CommandSceneChange(Scene.Strategy);

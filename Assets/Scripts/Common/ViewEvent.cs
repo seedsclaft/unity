@@ -89,7 +89,7 @@ abstract public class ListItem : MonoBehaviour
         {
             return;
         }
-		ContentEnterListener enterListener = clickButton.gameObject.AddComponent<ContentEnterListener> ();
+		var enterListener = clickButton.gameObject.AddComponent<ContentEnterListener>();
         enterListener.SetEnterEvent(() => 
         {
             //if (disable == null || disable.activeSelf == false)

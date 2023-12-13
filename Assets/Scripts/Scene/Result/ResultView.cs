@@ -42,6 +42,8 @@ public class ResultView : BaseView
         selectCharacter.Initialize();
         SetInputHandler(selectCharacter.GetComponent<IInputHandlerEvent>());
         InitializeSelectCharacter();
+        actorInfoList.gameObject.SetActive(false);
+        selectCharacter.gameObject.SetActive(false);
         new ResultPresenter(this);
     }
 
@@ -103,6 +105,10 @@ public class ResultView : BaseView
     {
         commandList.SetData(confirmCommands);
         commandList.SetInputHandler(InputKeyType.Decide,() => {
+            if (commandList.ListData.Enable == false)
+            {
+                return;
+            }
             var data = (SystemData.CommandData)commandList.ListData.Data;
             if (data.Key == "Yes")
             {

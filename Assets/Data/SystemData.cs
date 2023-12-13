@@ -16,6 +16,7 @@ public class SystemData : ScriptableObject
 	public int RecoveryCount;
 	public int BattleCount;
 	public int ResourceCount;
+	public int LimitSaveCount;
 	public List<TextData> SystemTextData;
 
 	public List<InputData> InputDataList;
