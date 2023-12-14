@@ -24,9 +24,9 @@ public class AudioSourceController :MonoBehaviour
         _isPlay = true;
     }
 
-    public void PlayDelay(float reseverTime)
+    public void PlayDelay(float reserveTime)
     {
-        _audioSource.PlayDelayed(reseverTime);
+        _audioSource.PlayDelayed(reserveTime);
     }
 
     public void Pause()

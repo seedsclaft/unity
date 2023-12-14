@@ -78,7 +78,7 @@ public class HelpWindow : MonoBehaviour
                 }
             }
             
-            Sequence main = DOTween.Sequence()
+            var main = DOTween.Sequence()
                 .Append(inputCanvasGroup.DOFade(1f,0.4f));
             //inputCanvasGroup.alpha = 1;
         }

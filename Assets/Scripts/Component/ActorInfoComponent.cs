@@ -8,6 +8,7 @@ using TMPro;
 public class ActorInfoComponent : MonoBehaviour
 {
     [SerializeField] private Image mainThumb;
+    public Image MainThumb => mainThumb;
     [SerializeField] private Image awakenThumb;
     [SerializeField] private Material grayscale;
     [SerializeField] private Image faceThumb;
@@ -242,10 +243,22 @@ public class ActorInfoComponent : MonoBehaviour
         statusInfoComponent.UpdateHp(value,maxHp);
     }
 
+    public void ChangeHpAnimation(int value,int maxHp)
+    {
+        if (statusInfoComponent == null) return;
+        statusInfoComponent.ChangeHpAnimation(value,maxHp);
+    }
+
     public void ChangeMp(int value,int maxMp)
     {
         if (statusInfoComponent == null) return;
         statusInfoComponent.UpdateMp(value,maxMp);
+    }
+
+    public void ChangeMpAnimation(int value,int maxHp)
+    {
+        if (statusInfoComponent == null) return;
+        statusInfoComponent.ChangeMpAnimation(value,maxHp);
     }
 
     public void ChangeAtk(int value)

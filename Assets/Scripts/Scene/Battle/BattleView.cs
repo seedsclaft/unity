@@ -345,9 +345,32 @@ public class BattleView : BaseView ,IInputHandlerEvent
         }
     }
 
+    public void ShowBattlerEnemyTargetWithinTarget(int targetIndex)
+    {
+        foreach (var item in _battlerComps)
+        {
+            if (item.Key == targetIndex)
+            {
+                item.Value.SetActiveStatus(true);
+            }
+        }
+    }
+
     public void HideBattlerEnemyTarget()
     {
         HideEnemyStatus();
+        battleEnemyLayer.ClearSelect();
+    }
+
+    public void HideBattlerEnemyTargetWithoutTarget(List<int> targetIndexes)
+    {
+        foreach (var item in _battlerComps)
+        {
+            if (!targetIndexes.Contains(item.Key))
+            {
+                item.Value.SetActiveStatus(false);
+            }
+        }
         battleEnemyLayer.ClearSelect();
     }
 

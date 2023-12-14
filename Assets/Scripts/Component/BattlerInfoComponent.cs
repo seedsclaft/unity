@@ -58,6 +58,19 @@ public class BattlerInfoComponent : MonoBehaviour
         }
     }
 
+    public void ChangeHpAnimation(int value)
+    {
+        if (_battlerInfo.isActor)
+        {
+            actorInfoComponent.ChangeHp(value,_battlerInfo.MaxHp);
+            actorInfoComponent.ChangeHpAnimation(value,_battlerInfo.MaxHp);
+        } else
+        {
+            enemyInfoComponent.ChangeHp(value,_battlerInfo.MaxHp);
+            enemyInfoComponent.ChangeHpAnimation(value,_battlerInfo.MaxHp);
+        }
+    }
+
     public void ChangeMp(int value)
     {
         if (_battlerInfo.isActor)
@@ -66,6 +79,19 @@ public class BattlerInfoComponent : MonoBehaviour
         } else
         {
             enemyInfoComponent.ChangeMp(value,_battlerInfo.MaxMp);
+        }
+    }
+
+    public void ChangeMpAnimation(int value)
+    {
+        if (_battlerInfo.isActor)
+        {
+            actorInfoComponent.ChangeMp(value,_battlerInfo.MaxMp);
+            actorInfoComponent.ChangeMpAnimation(value,_battlerInfo.MaxMp);
+        } else
+        {
+            enemyInfoComponent.ChangeMp(value,_battlerInfo.MaxMp);
+            enemyInfoComponent.ChangeMpAnimation(value,_battlerInfo.MaxMp);
         }
     }
 
@@ -172,11 +198,11 @@ public class BattlerInfoComponent : MonoBehaviour
         _battleDamages.Add(battleDamage);
         if (damageType == DamageType.HpDamage)
         {
-            ChangeHp(value * -1 + _battlerInfo.Hp);
+            ChangeHpAnimation(value * -1 + _battlerInfo.Hp);
         }
         if (damageType == DamageType.MpDamage)
         {
-            ChangeMp(value * -1 + _battlerInfo.Mp);
+            ChangeMpAnimation(value * -1 + _battlerInfo.Mp);
         }
     }
 
@@ -211,11 +237,11 @@ public class BattlerInfoComponent : MonoBehaviour
         _battleDamages.Add(battleDamage);
         if (damageType == DamageType.HpHeal)
         {
-            ChangeHp(value + _battlerInfo.Hp);
+            ChangeHpAnimation(value + _battlerInfo.Hp);
         } else
         if (damageType == DamageType.MpHeal)
         {
-            ChangeMp(value + _battlerInfo.Mp);
+            ChangeMpAnimation(value + _battlerInfo.Mp);
         }
     }
 

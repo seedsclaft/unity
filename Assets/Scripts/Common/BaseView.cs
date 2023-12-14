@@ -89,7 +89,7 @@ abstract public class BaseView : MonoBehaviour
     {
         if (_input != null)
         {
-            InputKeyType keyType = _input.Update();
+            var keyType = _input.Update();
             if (_lastInputKey != keyType)
             {
                 _lastInputKey = keyType;

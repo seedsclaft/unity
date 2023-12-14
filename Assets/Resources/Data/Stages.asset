@@ -23,6 +23,7 @@ MonoBehaviour:
     BGMId: 3
     BossBGMId: 11
     Reborn: 0
+    SubordinateValue: 0
     StageEvents:
     - EventKey: 1StartTacticsCommandDisable1
       Turns: 1
@@ -294,6 +295,7 @@ MonoBehaviour:
     BGMId: 0
     BossBGMId: 11
     Reborn: 1
+    SubordinateValue: 0
     StageEvents:
     - EventKey: 1StartTacticsCommandDisable3
       Turns: 1
@@ -547,6 +549,7 @@ MonoBehaviour:
     BGMId: 3
     BossBGMId: 11
     Reborn: 1
+    SubordinateValue: 80
     StageEvents:
     - EventKey: 1StartTacticsCommandDisable3
       Turns: 1
@@ -680,6 +683,7 @@ MonoBehaviour:
     BGMId: 3
     BossBGMId: 11
     Reborn: 0
+    SubordinateValue: 80
     StageEvents:
     - EventKey: 1StartTacticsIsSubordinate1
       Turns: 1
@@ -747,6 +751,7 @@ MonoBehaviour:
     BGMId: 4
     BossBGMId: 11
     Reborn: 0
+    SubordinateValue: 80
     StageEvents:
     - EventKey: 6StartTacticsSetDefineBoss2
       Turns: 6
@@ -796,6 +801,7 @@ MonoBehaviour:
     BGMId: 4
     BossBGMId: 11
     Reborn: 0
+    SubordinateValue: 80
     StageEvents:
     - EventKey: 6StartTacticsSetDefineBoss3
       Turns: 6
@@ -839,6 +845,7 @@ MonoBehaviour:
     BGMId: 5
     BossBGMId: 11
     Reborn: 0
+    SubordinateValue: 80
     StageEvents:
     - EventKey: 6StartTacticsSetDefineBoss4
       Turns: 6
@@ -876,6 +883,7 @@ MonoBehaviour:
     BGMId: 5
     BossBGMId: 11
     Reborn: 0
+    SubordinateValue: 80
     StageEvents:
     - EventKey: 6StartTacticsSetDefineBoss5
       Turns: 6
@@ -925,6 +933,7 @@ MonoBehaviour:
     BGMId: 5
     BossBGMId: 16
     Reborn: 0
+    SubordinateValue: 0
     StageEvents:
     - EventKey: 1StartTacticsSetDisplayTurns6
       Turns: 1
@@ -980,6 +989,7 @@ MonoBehaviour:
     BGMId: 5
     BossBGMId: 16
     Reborn: 0
+    SubordinateValue: 0
     StageEvents:
     - EventKey: 1StartTacticsRouteSelectBattle0
       Turns: 1

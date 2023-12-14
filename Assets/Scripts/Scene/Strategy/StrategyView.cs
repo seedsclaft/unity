@@ -25,6 +25,7 @@ public class StrategyView : BaseView
 
     private new System.Action<StrategyViewEvent> _commandData = null;
 
+    private float _lastActorPosition = 0;
     public override void Initialize() 
     {
         base.Initialize();
@@ -40,6 +41,10 @@ public class StrategyView : BaseView
         lvUpStatusButton.gameObject.SetActive(false);
         battleSkipToggle.onValueChanged.AddListener((a) => OnChangeSkipToggle(false));
         battleSkipToggle.gameObject.SetActive(false);
+        
+        var rect = actorInfoComponent.gameObject.GetComponent<RectTransform>();
+        rect.localPosition = new Vector3(0,0,0);
+        actorInfoComponent.MainThumb.DOFade(0,0);
         new StrategyPresenter(this);
     }
 
@@ -69,6 +74,16 @@ public class StrategyView : BaseView
         actorInfoComponent.gameObject.SetActive(true);
         actorInfoComponent.Clear();
         actorInfoComponent.UpdateInfo(actorInfo,null);
+        
+        var rect = actorInfoComponent.gameObject.GetComponent<RectTransform>();
+        rect.localPosition = new Vector3(0,0,0);
+        actorInfoComponent.MainThumb.DOFade(0,0);
+        var duration = 0.2f;
+        var sequence = DOTween.Sequence()
+            .Append(rect.DOLocalMoveX(24,duration))
+            .Join(actorInfoComponent.MainThumb.DOFade(1,duration)
+            .SetEase(Ease.InOutQuad));
+
         statusList.SetData(status);
         HelpWindow.SetInputInfo("LEVELUP");
     }

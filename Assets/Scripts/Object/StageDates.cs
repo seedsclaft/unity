@@ -20,6 +20,7 @@ public class StageData
     public int BGMId;
     public int BossBGMId;
     public bool Reborn;
+    public int SubordinateValue;
     public List<StageEventData> StageEvents;
 }
 

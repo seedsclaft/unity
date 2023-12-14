@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.AddressableAssets;
 using TMPro;
+using DG.Tweening;
 
 public class StatusInfoComponent : MonoBehaviour
 {
@@ -16,8 +17,10 @@ public class StatusInfoComponent : MonoBehaviour
     [SerializeField] private TextMeshProUGUI spd;
     [SerializeField] private Image hpGaugeBg;
     [SerializeField] private Image hpGauge;
+    [SerializeField] private Image hpGaugeAnimation;
     [SerializeField] private Image mpGaugeBg;
     [SerializeField] private Image mpGauge;
+    [SerializeField] private Image mpGaugeAnimation;
     [SerializeField] private CanvasGroup canvasGroup;
     public void UpdateInfo(StatusInfo statusInfo)
     {
@@ -64,11 +67,12 @@ public class StatusInfoComponent : MonoBehaviour
         }
         if (hpGauge != null)
         {
-            //RectTransform bgRect = hpGaugeBg.gameObject.GetComponent < RectTransform > ();
-            var rect = hpGauge.gameObject.GetComponent < RectTransform > ();
-            //bgRect.sizeDelta = new Vector2(maxhp,bgRect.sizeDelta.y);
-            rect.sizeDelta = new Vector2(80 * (currentHp * 100 / maxStatusHp) * 0.01f - 3,rect.sizeDelta.y);
-            //hpGauge.fillAmount = currentHp / maxhp;
+            var bgRect = hpGaugeBg.gameObject.GetComponent<RectTransform>();
+            var rect = hpGauge.gameObject.GetComponent<RectTransform>();
+            bgRect.sizeDelta = new Vector2(80,bgRect.sizeDelta.y);
+            rect.sizeDelta = new Vector2(80 - 3,rect.sizeDelta.y);
+            hpGaugeBg.fillAmount = 1.0f;
+            hpGauge.fillAmount = (float)currentHp / (float)maxStatusHp;
         }
     }
     public void UpdateMp(int currentMp,int maxStatusMp)
@@ -88,8 +92,31 @@ public class StatusInfoComponent : MonoBehaviour
             var bgRect = mpGaugeBg.gameObject.GetComponent<RectTransform>();
             var rect = mpGauge.gameObject.GetComponent<RectTransform>();
             bgRect.sizeDelta = new Vector2(maxStatusMp * 1.5f,bgRect.sizeDelta.y);
-            rect.sizeDelta = new Vector2(maxStatusMp * 1.5f * (currentMp*100 / maxStatusMp) * 0.01f - 3,rect.sizeDelta.y);
-            //mpGauge.fillAmount = currentMp / maxmp;
+            rect.sizeDelta = new Vector2(maxStatusMp * 1.5f - 3,rect.sizeDelta.y);
+            mpGauge.fillAmount = (float)currentMp / (float)maxStatusMp;
+            mpGaugeBg.fillAmount = 1.0f;
+        }
+    }
+
+    public void ChangeHpAnimation(int currentHp,int maxStatusHp)
+    {
+        if (hpGaugeAnimation != null)
+        {
+            var waitDuration = 1.0f;
+            var sequence = DOTween.Sequence()
+                .Append(hpGaugeAnimation.DOFillAmount((float)currentHp / (float)maxStatusHp,waitDuration)
+                .SetDelay(0.5f));
+        }
+    }
+
+    public void ChangeMpAnimation(int currentMp,int maxStatusMp)
+    {
+        if (mpGaugeAnimation != null)
+        {
+            var waitDuration = 1.0f;
+            var sequence = DOTween.Sequence()
+                .Append(mpGaugeAnimation.DOFillAmount((float)currentMp / (float)maxStatusMp,waitDuration)
+                .SetDelay(0.5f));
         }
     }
 

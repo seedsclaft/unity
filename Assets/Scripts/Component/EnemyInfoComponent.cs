@@ -56,12 +56,24 @@ public class EnemyInfoComponent : MonoBehaviour
         statusInfoComponent.UpdateHp(value,maxHp);
     }
 
+    public void ChangeHpAnimation(int value,int maxHp)
+    {
+        if (statusInfoComponent == null) return;
+        statusInfoComponent.ChangeHpAnimation(value,maxHp);
+    }
+
     public void ChangeMp(int value,int maxHp)
     {
         if (statusInfoComponent == null) return;
         statusInfoComponent.UpdateMp(value,maxHp);
     }
 
+    public void ChangeMpAnimation(int value,int maxHp)
+    {
+        if (statusInfoComponent == null) return;
+        statusInfoComponent.ChangeMpAnimation(value,maxHp);
+    }
+    
     public void UpdateData(EnemyData enemyData)
     {
         if (enemyData == null)

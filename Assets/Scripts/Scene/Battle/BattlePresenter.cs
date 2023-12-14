@@ -540,7 +540,7 @@ public class BattlePresenter : BasePresenter
         var actionInfo = _model.CurrentActionInfo();
         if (actionInfo != null)
         {
-            _view.HideBattlerEnemyTarget();
+            _view.HideBattlerEnemyTargetWithoutTarget(indexList);
             _view.HideBattlerPartyTarget();
             _model.MakeActionResultInfo(actionInfo,indexList);
             _model.MakeCurseActionResults(actionInfo,indexList);
@@ -615,14 +615,19 @@ public class BattlePresenter : BasePresenter
         ExecActionResult(regenerateActionResults);
         foreach (var regenerateActionResult in regenerateActionResults)
         {
+            var targetIndex = regenerateActionResult.TargetIndex;
             if (regenerateActionResult.HpHeal != 0)
             {
-                _view.StartAnimation(regenerateActionResult.TargetIndex,animation,0);
+                if (targetIndex > 100)
+                {
+                    _view.ShowBattlerEnemyTargetWithinTarget(targetIndex);
+                }
+                _view.StartAnimation(targetIndex,animation,0);
                 //_view.StartHeal(regenerateActionResult.TargetIndex,DamageType.HpHeal,regenerateActionResult.HpHeal);
                 //_model.GainHpTargetIndex(regenerateActionResult.TargetIndex,regenerateActionResult.HpHeal);
             }
         }
-        await UniTask.DelayFrame(60);
+        await UniTask.DelayFrame(64);
         EndTurn();
     }
 
@@ -637,6 +642,10 @@ public class BattlePresenter : BasePresenter
             {            
                 //_view.StartDamage(targetIndex,DamageType.HpDamage,slipDamageResult.HpDamage);
                 _view.StartAnimation(targetIndex,animation,0);
+                if (targetIndex > 100)
+                {
+                    _view.ShowBattlerEnemyTargetWithinTarget(targetIndex);
+                }
                 //_model.GainHpTargetIndex(targetIndex,slipDamageResult.HpDamage * -1);
             }
             if (slipDamageResult.DeadIndexList.Contains(targetIndex))
@@ -645,7 +654,7 @@ public class BattlePresenter : BasePresenter
                 _view.StartDeathAnimation(targetIndex);
             }
         }
-        await UniTask.DelayFrame(60);
+        await UniTask.DelayFrame(64);
         EndTurn();
     }
 
@@ -690,7 +699,7 @@ public class BattlePresenter : BasePresenter
                 bool lastTarget = actionInfo.ActionResults[actionInfo.ActionResults.Count-1].TargetIndex == actionInfo.ActionResults[i].TargetIndex;
                 PopupActionResult(actionInfo.ActionResults[i],actionInfo.ActionResults[i].TargetIndex,true,true,lastTarget);
             }
-            await UniTask.DelayFrame(60);
+            await UniTask.DelayFrame(64);
         }
         _nextCommandType = Battle.CommandType.EndAnimation;
         CommandEndAnimation();
