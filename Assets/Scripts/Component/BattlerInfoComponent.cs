@@ -9,6 +9,7 @@ public class BattlerInfoComponent : MonoBehaviour
 {
     [SerializeField] private ActorInfoComponent actorInfoComponent;
     [SerializeField] private EnemyInfoComponent enemyInfoComponent;
+    [SerializeField] private StatusInfoComponent statusInfoComponent;
     [SerializeField] private EffekseerEmitter effekseerEmitter;
     [SerializeField] private _2dxFX_DestroyedFX deathAnimation;
     private GameObject _battleDamageRoot;
@@ -43,80 +44,76 @@ public class BattlerInfoComponent : MonoBehaviour
     public void SetStatusRoot(GameObject statusRoot)
     {
         _battleStatusRoot = statusRoot;
-        enemyInfoComponent.HideStatus();   
-        //_battleStatusRoot.SetActive(false);
+        if (statusInfoComponent == null)
+        {
+            return;
+        }
+        statusInfoComponent.HideStatus();
     }
 
     public void ChangeHp(int value)
     {
-        if (_battlerInfo.isActor)
+        if (statusInfoComponent == null)
         {
-            actorInfoComponent.ChangeHp(value,_battlerInfo.MaxHp);
-        } else
-        {
-            enemyInfoComponent.ChangeHp(value,_battlerInfo.MaxHp);
+            return;
         }
+        statusInfoComponent.UpdateHp(value,_battlerInfo.MaxHp);
     }
 
     public void ChangeHpAnimation(int value)
     {
-        if (_battlerInfo.isActor)
+        if (statusInfoComponent == null)
         {
-            actorInfoComponent.ChangeHp(value,_battlerInfo.MaxHp);
-            actorInfoComponent.ChangeHpAnimation(value,_battlerInfo.MaxHp);
-        } else
-        {
-            enemyInfoComponent.ChangeHp(value,_battlerInfo.MaxHp);
-            enemyInfoComponent.ChangeHpAnimation(value,_battlerInfo.MaxHp);
+            return;
         }
+        statusInfoComponent.UpdateHp(value,_battlerInfo.MaxHp);
+        statusInfoComponent.UpdateHpAnimation(value,_battlerInfo.MaxHp);
     }
 
     public void ChangeMp(int value)
     {
-        if (_battlerInfo.isActor)
+        if (statusInfoComponent == null)
         {
-            actorInfoComponent.ChangeMp(value,_battlerInfo.MaxMp);
-        } else
-        {
-            enemyInfoComponent.ChangeMp(value,_battlerInfo.MaxMp);
+            return;
         }
+        statusInfoComponent.UpdateMp(value,_battlerInfo.MaxMp);
     }
 
     public void ChangeMpAnimation(int value)
     {
-        if (_battlerInfo.isActor)
+        if (statusInfoComponent == null)
         {
-            actorInfoComponent.ChangeMp(value,_battlerInfo.MaxMp);
-            actorInfoComponent.ChangeMpAnimation(value,_battlerInfo.MaxMp);
-        } else
-        {
-            enemyInfoComponent.ChangeMp(value,_battlerInfo.MaxMp);
-            enemyInfoComponent.ChangeMpAnimation(value,_battlerInfo.MaxMp);
+            return;
         }
+        statusInfoComponent.UpdateMp(value,_battlerInfo.MaxMp);
+        statusInfoComponent.UpdateMpAnimation(value,_battlerInfo.MaxMp);
     }
 
     public void ChangeAtk(int value)
     {
-        if (_battlerInfo.isActor)
+        if (statusInfoComponent == null)
         {
-            actorInfoComponent.ChangeAtk(value);
+            return;
         }
+        statusInfoComponent.UpdateAtk(value);
     }
 
     public void ChangeDef(int value)
     {
-        if (_battlerInfo.isActor)
+        if (statusInfoComponent == null)
         {
-            actorInfoComponent.ChangeDef(value);
+            return;
         }
+        statusInfoComponent.UpdateDef(value);
     }
 
     public void ChangeSpd(int value)
     {
-        if (_battlerInfo.isActor)
+        if (statusInfoComponent == null)
         {
-            actorInfoComponent.ChangeSpd(value);
+            return;
         }
+        statusInfoComponent.UpdateSpd(value);
     }
 
     public void RefreshStatus()
@@ -139,24 +136,18 @@ public class BattlerInfoComponent : MonoBehaviour
     
     public void ShowUI()
     {
-        if (_battlerInfo.isActor)
+        if (statusInfoComponent != null)
         {
-            actorInfoComponent.ShowStatus();
-        } else
-        {
-            enemyInfoComponent.ShowStatus();
+            statusInfoComponent.ShowStatus();
         }
         battleStateOverlay.gameObject.SetActive(true);
     }
 
     public void HideUI()
     {
-        if (_battlerInfo.isActor)
+        if (statusInfoComponent != null)
         {
-            actorInfoComponent.HideStatus();
-        } else
-        {
-            enemyInfoComponent.HideStatus();
+            statusInfoComponent.HideStatus();
         }
         battleStateOverlay.gameObject.SetActive(false);
     }
@@ -333,21 +324,24 @@ public class BattlerInfoComponent : MonoBehaviour
 
     public void SetActiveStatus(bool isSelectable)
     {
+        if (statusInfoComponent == null)
+        {
+            return;
+        }
         if (!_battlerInfo.isActor)
         {
             if (isSelectable)
             {
-                enemyInfoComponent.ShowStatus();
+                statusInfoComponent.ShowStatus();
             } else
             {
-                enemyInfoComponent.HideStatus();
+                statusInfoComponent.HideStatus();
             }
         }
     }
 
     public void HideEnemyStateOverlay()
     {
-
         if (!_battlerInfo.isActor)
         {
             battleStateOverlay.HideStateOverlay();

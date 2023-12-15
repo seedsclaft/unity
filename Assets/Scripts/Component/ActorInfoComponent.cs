@@ -10,14 +10,15 @@ public class ActorInfoComponent : MonoBehaviour
     [SerializeField] private Image mainThumb;
     public Image MainThumb => mainThumb;
     [SerializeField] private Image awakenThumb;
+    public Image AwakenThumb => awakenThumb;
     [SerializeField] private Material grayscale;
     [SerializeField] private Image faceThumb;
     public Image FaceThumb => faceThumb;
     [SerializeField] private Image awakenFaceThumb;
     public Image AwakenFaceThumb => awakenFaceThumb;
-    [SerializeField] private Image clipingThumb;
+    [SerializeField] private Image clipThumb;
     [SerializeField] private TextMeshProUGUI nameText;
-    [SerializeField] private TextMeshProUGUI subnameText;
+    [SerializeField] private TextMeshProUGUI subNameText;
     [SerializeField] private TextMeshProUGUI evaluate;
     [SerializeField] private TextMeshProUGUI demigod;
     [SerializeField] private TextMeshProUGUI lv;
@@ -153,7 +154,7 @@ public class ActorInfoComponent : MonoBehaviour
         {
             UpdateAwakenThumb(actorData.ImagePath,actorData.AwakenX,actorData.AwakenY,actorData.AwakenScale);
         }
-        if (clipingThumb != null)
+        if (clipThumb != null)
         {
             UpdateClipThumb(actorData.ImagePath);
         }
@@ -169,9 +170,9 @@ public class ActorInfoComponent : MonoBehaviour
         {
             nameText.text = actorData.Name;
         }
-        if (subnameText != null)
+        if (subNameText != null)
         {
-            subnameText.text = actorData.SubName;
+            subNameText.text = actorData.SubName;
         }
     }
     private void UpdateMainThumb(string imagePath,int x,int y,float scale)
@@ -202,8 +203,8 @@ public class ActorInfoComponent : MonoBehaviour
 
     private void UpdateClipThumb(string imagePath)
     {
-        var handle = Resources.Load<Sprite>("Texture/Character/Actors/" + imagePath + "/Cliping");
-        if (clipingThumb != null) clipingThumb.sprite = handle;
+        var handle = Resources.Load<Sprite>("Texture/Character/Actors/" + imagePath + "/Clip");
+        if (clipThumb != null) clipThumb.sprite = handle;
     }
 
     private void UpdateMainFaceThumb(string imagePath)
@@ -236,48 +237,7 @@ public class ActorInfoComponent : MonoBehaviour
         var textId = 321 + (int)param;
         textMeshProUGUI.text = DataSystem.System.GetTextData(textId).Text;
     }
-
-    public void ChangeHp(int value,int maxHp)
-    {
-        if (statusInfoComponent == null) return;
-        statusInfoComponent.UpdateHp(value,maxHp);
-    }
-
-    public void ChangeHpAnimation(int value,int maxHp)
-    {
-        if (statusInfoComponent == null) return;
-        statusInfoComponent.ChangeHpAnimation(value,maxHp);
-    }
-
-    public void ChangeMp(int value,int maxMp)
-    {
-        if (statusInfoComponent == null) return;
-        statusInfoComponent.UpdateMp(value,maxMp);
-    }
-
-    public void ChangeMpAnimation(int value,int maxHp)
-    {
-        if (statusInfoComponent == null) return;
-        statusInfoComponent.ChangeMpAnimation(value,maxHp);
-    }
-
-    public void ChangeAtk(int value)
-    {
-        if (statusInfoComponent == null) return;
-        statusInfoComponent.UpdateAtk(value);
-    }
     
-    public void ChangeDef(int value)
-    {
-        if (statusInfoComponent == null) return;
-        statusInfoComponent.UpdateDef(value);
-    }
-    public void ChangeSpd(int value)
-    {
-        if (statusInfoComponent == null) return;
-        statusInfoComponent.UpdateSpd(value);
-    }
-
     public void SetAwakeMode(bool IsAwaken)
     {
         if (faceThumb != null && awakenFaceThumb != null)
@@ -319,15 +279,5 @@ public class ActorInfoComponent : MonoBehaviour
         }
         _isAwakeFaceInit = false;
         _isMainFaceInit = false;
-    }
-
-    public void ShowStatus()
-    {
-        statusInfoComponent.ShowStatus();
-    }
-
-    public void HideStatus()
-    {
-        statusInfoComponent.HideStatus();
     }
 }

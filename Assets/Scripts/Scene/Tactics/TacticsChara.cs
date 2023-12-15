@@ -6,23 +6,20 @@ using UnityEngine.UI;
 public class TacticsChara : MonoBehaviour
 {
     [SerializeField] private ActorInfoComponent actorInfoComponent;
-    [SerializeField] private GameObject statusRoot;
-    [SerializeField] private GameObject statusPrefab;
-    private StatusInfoComponent _statusInfoComponent;
+    [SerializeField] private StatusInfoComponent statusInfoComponent;
+    [SerializeField] private Image bgImage;
 
     public void Initialize(GameObject root,float x,float y,float scale)
     {
-        GameObject prefab = Instantiate(statusPrefab);
-        prefab.transform.SetParent(root.transform, false);
-        prefab.GetComponent<RectTransform>().localPosition = new Vector3(x, y - (200 * scale), 0);
-        _statusInfoComponent = prefab.GetComponent<StatusInfoComponent>();
+        statusInfoComponent.GetComponent<RectTransform>().localPosition = new Vector3(x, y - (200 * scale), 0);
+        bgImage.GetComponent<RectTransform>().localPosition = new Vector3(x, y - (200 * scale), 0);
     }
 
     public void SetData(ActorInfo actorInfo)
     {
         actorInfoComponent.UpdateInfo(actorInfo,null);
-        _statusInfoComponent.UpdateInfo(actorInfo.CurrentStatus);
-        _statusInfoComponent.UpdateHp(actorInfo.CurrentHp,actorInfo.MaxHp);
-        _statusInfoComponent.UpdateMp(actorInfo.CurrentMp,actorInfo.MaxMp);
+        statusInfoComponent.UpdateInfo(actorInfo.CurrentStatus);
+        statusInfoComponent.UpdateHp(actorInfo.CurrentHp,actorInfo.MaxHp);
+        statusInfoComponent.UpdateMp(actorInfo.CurrentMp,actorInfo.MaxMp);
     }
 }

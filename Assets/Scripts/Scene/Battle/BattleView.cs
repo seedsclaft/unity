@@ -20,13 +20,10 @@ public class BattleView : BaseView ,IInputHandlerEvent
     [SerializeField] private SkillInfoComponent skillInfoComponent = null;
     [SerializeField] private SideMenuList sideMenuList = null;
 
-    
     [SerializeField] private GameObject centerAnimPosition = null;
     [SerializeField] private SideMenu battleAutoButton = null;
     private BattleStartAnim _battleStartAnim = null;
     public bool StartAnimIsBusy => _battleStartAnim.IsBusy;
-
-
 
     private bool _battleBusy = false;
     public bool BattleBusy => _battleBusy;
@@ -44,7 +41,6 @@ public class BattleView : BaseView ,IInputHandlerEvent
     private List<MakerEffectData.SoundTimings> _soundTimings = null;
 
     private Dictionary<int,BattlerInfoComponent> _battlerComps = new ();
-
 
     public override void Initialize() 
     {

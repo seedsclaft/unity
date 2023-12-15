@@ -4,36 +4,31 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.AddressableAssets;
 using TMPro;
-using DG.Tweening;
 
 public class StatusInfoComponent : MonoBehaviour
 {
-    [SerializeField] private TextMeshProUGUI maxhp;
+    [SerializeField] private TextMeshProUGUI maxHp;
     [SerializeField] private TextMeshProUGUI hp;
-    [SerializeField] private TextMeshProUGUI maxmp;
+    [SerializeField] private TextMeshProUGUI maxMp;
     [SerializeField] private TextMeshProUGUI mp;
     [SerializeField] private TextMeshProUGUI atk;
     [SerializeField] private TextMeshProUGUI def;
     [SerializeField] private TextMeshProUGUI spd;
-    [SerializeField] private Image hpGaugeBg;
-    [SerializeField] private Image hpGauge;
-    [SerializeField] private Image hpGaugeAnimation;
-    [SerializeField] private Image mpGaugeBg;
-    [SerializeField] private Image mpGauge;
-    [SerializeField] private Image mpGaugeAnimation;
+    [SerializeField] private StatusGaugeAnimation hpGaugeAnimation;
+    [SerializeField] private StatusGaugeAnimation mpGaugeAnimation;
     [SerializeField] private CanvasGroup canvasGroup;
     public void UpdateInfo(StatusInfo statusInfo)
     {
         if (statusInfo == null){
             return;
         }
-        if (maxhp != null)
+        if (maxHp != null)
         {
-            maxhp.text = statusInfo.Hp.ToString();
+            maxHp.text = statusInfo.Hp.ToString();
         }
-        if (maxmp != null)
+        if (maxMp != null)
         {
-            maxmp.text = statusInfo.Mp.ToString();
+            maxMp.text = statusInfo.Mp.ToString();
         }
         if (atk != null)
         {
@@ -62,17 +57,12 @@ public class StatusInfoComponent : MonoBehaviour
         if (hp != null){
             hp.text = currentHp.ToString();
         }
-        if (maxhp != null){
-            maxhp.text = maxStatusHp.ToString();
+        if (maxHp != null){
+            maxHp.text = maxStatusHp.ToString();
         }
-        if (hpGauge != null)
+        if (hpGaugeAnimation != null)
         {
-            var bgRect = hpGaugeBg.gameObject.GetComponent<RectTransform>();
-            var rect = hpGauge.gameObject.GetComponent<RectTransform>();
-            bgRect.sizeDelta = new Vector2(80,bgRect.sizeDelta.y);
-            rect.sizeDelta = new Vector2(80 - 3,rect.sizeDelta.y);
-            hpGaugeBg.fillAmount = 1.0f;
-            hpGauge.fillAmount = (float)currentHp / (float)maxStatusHp;
+            hpGaugeAnimation.UpdateGauge(80,3,(float)currentHp / (float)maxStatusHp);
         }
     }
     public void UpdateMp(int currentMp,int maxStatusMp)
@@ -84,39 +74,28 @@ public class StatusInfoComponent : MonoBehaviour
         if (mp != null){
             mp.text = currentMp.ToString();
         }
-        if (maxmp != null){
-            maxmp.text = maxStatusMp.ToString();
+        if (maxMp != null){
+            maxMp.text = maxStatusMp.ToString();
         }
-        if (mpGauge != null)
+        if (mpGaugeAnimation != null)
         {
-            var bgRect = mpGaugeBg.gameObject.GetComponent<RectTransform>();
-            var rect = mpGauge.gameObject.GetComponent<RectTransform>();
-            bgRect.sizeDelta = new Vector2(maxStatusMp * 1.5f,bgRect.sizeDelta.y);
-            rect.sizeDelta = new Vector2(maxStatusMp * 1.5f - 3,rect.sizeDelta.y);
-            mpGauge.fillAmount = (float)currentMp / (float)maxStatusMp;
-            mpGaugeBg.fillAmount = 1.0f;
+            mpGaugeAnimation.UpdateGauge(maxStatusMp * 1.5f,3,(float)currentMp / (float)maxStatusMp);
         }
     }
 
-    public void ChangeHpAnimation(int currentHp,int maxStatusHp)
+    public void UpdateHpAnimation(int currentHp,int maxStatusHp)
     {
         if (hpGaugeAnimation != null)
         {
-            var waitDuration = 1.0f;
-            var sequence = DOTween.Sequence()
-                .Append(hpGaugeAnimation.DOFillAmount((float)currentHp / (float)maxStatusHp,waitDuration)
-                .SetDelay(0.5f));
+            hpGaugeAnimation.UpdateGaugeAnimation((float)currentHp / (float)maxStatusHp);
         }
     }
 
-    public void ChangeMpAnimation(int currentMp,int maxStatusMp)
+    public void UpdateMpAnimation(int currentMp,int maxStatusMp)
     {
         if (mpGaugeAnimation != null)
         {
-            var waitDuration = 1.0f;
-            var sequence = DOTween.Sequence()
-                .Append(mpGaugeAnimation.DOFillAmount((float)currentMp / (float)maxStatusMp,waitDuration)
-                .SetDelay(0.5f));
+            mpGaugeAnimation.UpdateGaugeAnimation((float)currentMp / (float)maxStatusMp);
         }
     }
 

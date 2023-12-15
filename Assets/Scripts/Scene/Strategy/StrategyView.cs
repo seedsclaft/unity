@@ -78,11 +78,8 @@ public class StrategyView : BaseView
         var rect = actorInfoComponent.gameObject.GetComponent<RectTransform>();
         rect.localPosition = new Vector3(0,0,0);
         actorInfoComponent.MainThumb.DOFade(0,0);
-        var duration = 0.2f;
-        var sequence = DOTween.Sequence()
-            .Append(rect.DOLocalMoveX(24,duration))
-            .Join(actorInfoComponent.MainThumb.DOFade(1,duration)
-            .SetEase(Ease.InOutQuad));
+        
+        BaseAnimation.MoveAndFade(rect,actorInfoComponent.MainThumb,24,1);
 
         statusList.SetData(status);
         HelpWindow.SetInputInfo("LEVELUP");
