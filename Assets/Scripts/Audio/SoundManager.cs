@@ -2,7 +2,6 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine.AddressableAssets;
 using Cysharp.Threading.Tasks;
 
 namespace Ryneus
@@ -53,7 +52,7 @@ namespace Ryneus
 
         private void SetSeAudio(AudioSource audioSource,string sePath,float volume,float pitch)
         {
-            var handle = Resources.Load<AudioClip>("Audios/SE/" + sePath + "");
+            var handle = ResourceSystem.LoadSeAudio(sePath);
             
             if (audioSource != null)
             {

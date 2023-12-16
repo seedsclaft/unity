@@ -897,10 +897,7 @@ public class BattleModel : BaseModel
 
     public EffekseerEffectAsset SkillActionAnimation(string animationName)
     {
-        //string path = "Assets/Animations/" + animationName + ".asset";
-        //var result = await ResourceSystem.LoadAsset<EffekseerEffectAsset>(path);
-        var path = "Animations/" + animationName;
-        var result = UnityEngine.Resources.Load<EffekseerEffectAsset>(path);
+        var result = ResourceSystem.LoadResourceEffect(animationName);
         return result;
     }
 

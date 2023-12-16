@@ -2,9 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.AddressableAssets;
 using TMPro;
-using UnityEngine.U2D;
 
 public class StateInfoComponent : MonoBehaviour
 {
@@ -87,7 +85,7 @@ public class StateInfoComponent : MonoBehaviour
 
     private void UpdateStateIcon(string iconPath)
     {
-        var spriteAtlas = Resources.Load<SpriteAtlas>("Texture/Icons");
+        var spriteAtlas = ResourceSystem.LoadIcons();
         if (icon != null)
         {
             icon.sprite = spriteAtlas.GetSprite(iconPath);

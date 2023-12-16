@@ -246,8 +246,7 @@ public class BaseModel
         var dates = DataSystem.Animations.FindAll(a => a.Id > 2000 && a.Id < 2100);
         foreach (var data in dates)
         {
-            var path = "Animations/" + data.AnimationPath;
-            var result = Resources.Load<EffekseerEffectAsset>(path);
+            var result = ResourceSystem.LoadResourceEffect(data.AnimationPath);
             list.Add(result);
         }
         return list;

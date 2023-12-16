@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
 using TMPro;
 
 public class EnemyInfoComponent : MonoBehaviour
@@ -38,7 +37,7 @@ public class EnemyInfoComponent : MonoBehaviour
     private void UpdateMainThumb(string imagePath,int x,int y,float scale)
     {
         //var handle = await ResourceSystem.LoadAsset<Sprite>("Enemies/" + imagePath);
-        var handle = Resources.Load<Sprite>("Texture/Character/Enemies/" + imagePath);
+        var handle = ResourceSystem.LoadEnemySprite(imagePath);
         if (mainThumb != null && _isMainThumbInit == false)
         {
             mainThumb.gameObject.SetActive(true);
@@ -67,27 +66,8 @@ public class EnemyInfoComponent : MonoBehaviour
 
     public void SetGridKey(int index)
     {
-        if (index == 0){
-            gridKey.text = "A";
-        } else
-        if (index == 1){
-            gridKey.text = "B";
-        } else
-        if (index == 2){
-            gridKey.text = "C";
-        } else
-        if (index == 3){
-            gridKey.text = "D";
-        } else
-        if (index == 4){
-            gridKey.text = "E";
-        } else
-        if (index == 5){
-            gridKey.text = "F";
-        } else
-        if (index == 6){
-            gridKey.text = "G";
-        }
+        var textId = 360 + index;
+        gridKey.text = DataSystem.System.GetTextData(textId).Text;
     }
 
     public void Clear()

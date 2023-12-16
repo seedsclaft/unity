@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.AddressableAssets;
 using TMPro;
 
 public class ActorInfoComponent : MonoBehaviour
@@ -177,8 +176,7 @@ public class ActorInfoComponent : MonoBehaviour
     }
     private void UpdateMainThumb(string imagePath,int x,int y,float scale)
     {
-        //var handle = await ResourceSystem.LoadAsset<Sprite>("Texture/Character/Actors/" + imagePath + "/Main.png");
-        var handle = Resources.Load<Sprite>("Texture/Character/Actors/" + imagePath + "/Main");
+        var handle = ResourceSystem.LoadActorMainSprite(imagePath);
         if (mainThumb != null)
         {
             var rect = mainThumb.GetComponent<RectTransform>();
@@ -190,8 +188,7 @@ public class ActorInfoComponent : MonoBehaviour
 
     private void UpdateAwakenThumb(string imagePath,int x,int y,float scale)
     {
-        //var handle = await ResourceSystem.LoadAsset<Sprite>("Texture/Character/Actors/" + imagePath + "/Awaken.png");
-        var handle = Resources.Load<Sprite>("Texture/Character/Actors/" + imagePath + "/Awaken");
+        var handle = ResourceSystem.LoadActorAwakenSprite(imagePath);
         if (awakenThumb != null)
         {
             var rect = awakenThumb.GetComponent<RectTransform>();
@@ -203,15 +200,14 @@ public class ActorInfoComponent : MonoBehaviour
 
     private void UpdateClipThumb(string imagePath)
     {
-        var handle = Resources.Load<Sprite>("Texture/Character/Actors/" + imagePath + "/Clip");
+        var handle = ResourceSystem.LoadActorClipSprite(imagePath);
         if (clipThumb != null) clipThumb.sprite = handle;
     }
 
     private void UpdateMainFaceThumb(string imagePath)
     {   
         if (_isMainFaceInit == true) return;
-        //var handle = await ResourceSystem.LoadAsset<Sprite>("Texture/Character/Actors/" + imagePath + "/MainFace.png");
-        var handle = Resources.Load<Sprite>("Texture/Character/Actors/" + imagePath + "/MainFace");
+        var handle = ResourceSystem.LoadActorMainFaceSprite(imagePath);
         if (faceThumb != null) 
         {
             faceThumb.sprite = handle;
@@ -223,8 +219,7 @@ public class ActorInfoComponent : MonoBehaviour
     private void UpdateAwakenFaceThumb(string imagePath)
     {
         if (_isAwakeFaceInit == true) return;
-        //var handle = await ResourceSystem.LoadAsset<Sprite>("Texture/Character/Actors/" + imagePath + "/AwakenFace.png");
-        var handle = Resources.Load<Sprite>("Texture/Character/Actors/" + imagePath + "/AwakenFace");
+        var handle = ResourceSystem.LoadActorAwakenFaceSprite(imagePath);
         if (awakenFaceThumb != null)
         {
             awakenFaceThumb.sprite = handle;

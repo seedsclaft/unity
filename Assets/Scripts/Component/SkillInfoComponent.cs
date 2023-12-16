@@ -2,9 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.AddressableAssets;
 using TMPro;
-using UnityEngine.U2D;
 
 public class SkillInfoComponent : MonoBehaviour
 {
@@ -101,7 +99,7 @@ public class SkillInfoComponent : MonoBehaviour
     private void UpdateSkillIcon(MagicIconType iconIndex)
     {
         icon.gameObject.SetActive(true);
-        var spriteAtlas = Resources.Load<SpriteAtlas>("Texture/SpellIcons");
+        var spriteAtlas = ResourceSystem.LoadSpellIcons();
         if (icon != null)
         {
             icon.sprite = spriteAtlas.GetSprite(iconIndex.ToString());
@@ -112,7 +110,7 @@ public class SkillInfoComponent : MonoBehaviour
     {
         iconBack.gameObject.SetActive(true);
 
-        var spriteAtlas = Resources.Load<SpriteAtlas>("Texture/SpellIcons");
+        var spriteAtlas = ResourceSystem.LoadSpellIcons();
         if (iconBack != null)
         {
             iconBack.sprite = spriteAtlas.GetSprite(attributeType.ToString());

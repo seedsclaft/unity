@@ -41,34 +41,8 @@ abstract public class DataSystem
 
 
     public static void LoadData(){
-        /*
-        var asset = await Addressables.LoadAssetAsync<ActorsData>("Assets/Data/Actors.asset").Task;
-        DataSystem._actors = asset._data;
-        var asset2 = await Addressables.LoadAssetAsync<SystemData>("Assets/Data/System.asset").Task;
-        DataSystem._system = asset2;
-        var asset3 = await Addressables.LoadAssetAsync<ClassesData>("Assets/Data/Classes.asset").Task;
-        DataSystem._classes = asset3;
-        var asset4 = await Addressables.LoadAssetAsync<EnemiesData>("Assets/Data/Enemies.asset").Task;
-        DataSystem._enemies = asset4;
-        var asset5 = await Addressables.LoadAssetAsync<SkillsData>("Assets/Data/Skills.asset").Task;
-        DataSystem._skills = asset5;
-        var asset6 = await Addressables.LoadAssetAsync<StagesData>("Assets/Data/Stages.asset").Task;
-        DataSystem._stages = asset6;
-        var asset7 = await Addressables.LoadAssetAsync<TroopsData>("Assets/Data/Troops.asset").Task;
-        DataSystem._troops = asset7;
-        var asset8 = await Addressables.LoadAssetAsync<StatesData>("Assets/Data/States.asset").Task;
-        DataSystem._states = asset8;
-        var asset9 = await Addressables.LoadAssetAsync<AlcanaData>("Assets/Data/Alcana.asset").Task;
-        DataSystem._alcana = asset9;
-        var asset10 = await Addressables.LoadAssetAsync<AdvsData>("Assets/Data/Advs.asset").Task;
-        DataSystem._advs = asset10;
-        var asset11 = await Addressables.LoadAssetAsync<TipsData>("Assets/Data/Tips.asset").Task;
-        DataSystem._tips = asset11;
-        
-        AddressablesKey.LoadAssetAsync<DataManager>("Assets/Data/MainData.asset",(data) => {DataSystem._data = data;});
-        */
         Actors = Resources.Load<ActorDates>("Data/Actors").Data;
-        Adventures = Resources.Load<AdvDates>("Data/Advs").Data;
+        Adventures = Resources.Load<AdvDates>("Data/Adventures").Data;
         Enemies = Resources.Load<EnemyDates>("Data/Enemies").Data;
         Rules = Resources.Load<RuleDates>("Data/Rules").Data;
         Skills = Resources.Load<SkillDates>("Data/Skills").Data;

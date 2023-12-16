@@ -618,10 +618,6 @@ public class BattlePresenter : BasePresenter
             var targetIndex = regenerateActionResult.TargetIndex;
             if (regenerateActionResult.HpHeal != 0)
             {
-                if (targetIndex > 100)
-                {
-                    _view.ShowBattlerEnemyTargetWithinTarget(targetIndex);
-                }
                 _view.StartAnimation(targetIndex,animation,0);
                 //_view.StartHeal(regenerateActionResult.TargetIndex,DamageType.HpHeal,regenerateActionResult.HpHeal);
                 //_model.GainHpTargetIndex(regenerateActionResult.TargetIndex,regenerateActionResult.HpHeal);
@@ -642,10 +638,6 @@ public class BattlePresenter : BasePresenter
             {            
                 //_view.StartDamage(targetIndex,DamageType.HpDamage,slipDamageResult.HpDamage);
                 _view.StartAnimation(targetIndex,animation,0);
-                if (targetIndex > 100)
-                {
-                    _view.ShowBattlerEnemyTargetWithinTarget(targetIndex);
-                }
                 //_model.GainHpTargetIndex(targetIndex,slipDamageResult.HpDamage * -1);
             }
             if (slipDamageResult.DeadIndexList.Contains(targetIndex))

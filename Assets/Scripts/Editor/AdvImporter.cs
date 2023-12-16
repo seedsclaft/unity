@@ -4,9 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEditor;
 using UnityEngine;
-using NPOI.HSSF.UserModel;
 using NPOI.SS.UserModel;
-using NPOI.XSSF.UserModel;
 
 public class AdvImporter : AssetPostprocessor {
     enum BaseColumn
@@ -15,7 +13,7 @@ public class AdvImporter : AssetPostprocessor {
 		AdvName,
 		EndJump,
     }	
-	static readonly string ExcelName = "Advs.xlsx";
+	static readonly string ExcelName = "Adventures.xlsx";
 
 	// アセット更新があると呼ばれる
 	static void OnPostprocessAllAssets(string[] importedAssets, string[] deletedAssets, string[] movedAssets, string[] movedFromAssetPaths) {

@@ -341,7 +341,7 @@ public class BattleView : BaseView ,IInputHandlerEvent
         }
     }
 
-    public void ShowBattlerEnemyTargetWithinTarget(int targetIndex)
+    private void ShowBattlerEnemyTargetWithinTarget(int targetIndex)
     {
         foreach (var item in _battlerComps)
         {
@@ -447,6 +447,10 @@ public class BattleView : BaseView ,IInputHandlerEvent
         if (GameSystem.ConfigData.BattleAnimationSkip == true) 
         {
             return;
+        }
+        if (targetIndex > 100)
+        {
+            ShowBattlerEnemyTargetWithinTarget(targetIndex);
         }
         _battlerComps[targetIndex].StartAnimation(effekseerEffectAsset,animationPosition);
     }

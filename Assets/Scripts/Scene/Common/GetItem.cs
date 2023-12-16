@@ -4,9 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using UnityEngine.Events;
-using UnityEngine.AddressableAssets;
 using TMPro;
-using UnityEngine.U2D;
 
 public class GetItem : ListItem ,IListViewItem  
 {
@@ -42,7 +40,7 @@ public class GetItem : ListItem ,IListViewItem
 
     private void UpdateElementIcon(int index)
     {
-        var spriteAtlas = Resources.Load<SpriteAtlas>("Texture/Systems");
+        var spriteAtlas = ResourceSystem.LoadSystems();
         if (iconImage != null)
         {
             iconImage.sprite = spriteAtlas.GetSprite("ElementIcon_" + (index-1).ToString());
