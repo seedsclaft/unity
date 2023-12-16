@@ -12,10 +12,10 @@ public class TacticsCharaLayer : MonoBehaviour
     {
         for (int i = 0; i < actorInfos.Count;i++)
         {
-            GameObject prefab = Instantiate(tacticsCharaPrefab);
+            var prefab = Instantiate(tacticsCharaPrefab);
             prefab.transform.SetParent(tacticsCharaRoots[i].transform, false);
-            TacticsChara comp = prefab.GetComponent<TacticsChara>();
-            RectTransform rectTransform = tacticsCharaRoots[i].GetComponent<RectTransform>();
+            var comp = prefab.GetComponent<TacticsChara>();
+            var rectTransform = tacticsCharaRoots[i].GetComponent<RectTransform>();
             comp.Initialize(gameObject,rectTransform.localPosition.x,rectTransform.localPosition.y,rectTransform.localScale.x);
             comp.SetData(actorInfos[i]);
         }

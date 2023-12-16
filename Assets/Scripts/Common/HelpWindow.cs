@@ -26,6 +26,9 @@ public class HelpWindow : MonoBehaviour
 
     public async void SetInputInfo(string key)
     {
+#if UNITY_ANDROID
+        return;
+#endif
         if (GameSystem.ConfigData.InputType == false) {
             foreach(var prefab in _inputPrefabs){
                 prefab.SetActive(false);

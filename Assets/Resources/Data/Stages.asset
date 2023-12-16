@@ -294,7 +294,7 @@ MonoBehaviour:
     RandomTroopCount: 15
     BGMId: 0
     BossBGMId: 11
-    Reborn: 1
+    Reborn: 0
     SubordinateValue: 0
     StageEvents:
     - EventKey: 1StartTacticsCommandDisable3
@@ -548,7 +548,7 @@ MonoBehaviour:
     RandomTroopCount: 15
     BGMId: 3
     BossBGMId: 11
-    Reborn: 1
+    Reborn: 0
     SubordinateValue: 80
     StageEvents:
     - EventKey: 1StartTacticsCommandDisable3
@@ -859,12 +859,6 @@ MonoBehaviour:
       Type: 8
       Param: 5
       ReadFlag: 0
-    - EventKey: 7StartTacticsSaveCommand1
-      Turns: 7
-      Timing: 1
-      Type: 7
-      Param: 1
-      ReadFlag: 1
     - EventKey: 7StartTacticsMoveStage106
       Turns: 7
       Timing: 1

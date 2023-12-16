@@ -619,8 +619,6 @@ public class BattlePresenter : BasePresenter
             if (regenerateActionResult.HpHeal != 0)
             {
                 _view.StartAnimation(targetIndex,animation,0);
-                //_view.StartHeal(regenerateActionResult.TargetIndex,DamageType.HpHeal,regenerateActionResult.HpHeal);
-                //_model.GainHpTargetIndex(regenerateActionResult.TargetIndex,regenerateActionResult.HpHeal);
             }
         }
         await UniTask.DelayFrame(64);

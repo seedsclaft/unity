@@ -73,7 +73,8 @@ public class ResultPresenter : BasePresenter
         {
             if (_isRankingEnd)
             {
-                CommandActorAssign();
+                CommandEndGame();
+                //CommandActorAssign();
             } else
             {
                 CommandRanking();

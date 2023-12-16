@@ -90,7 +90,8 @@ public class StrategyPresenter : BasePresenter
     private void UpdatePopupLost(ConfirmCommandType confirmCommandType)
     {
         _view.CommandConfirmClose();
-        _model.LostActors(_model.LostMembers());
+        CommandContinue();
+        //_model.LostActors(_model.LostMembers());
     }
 
     private void CommandStartStrategy(){
@@ -180,7 +181,7 @@ public class StrategyPresenter : BasePresenter
     {
         if (_strategyState == StrategyState.BattleResult)
         {
-            _view.ShowResultList(_model.BattleResult());
+            _view.ShowResultList(_model.BattleResultInfos());
             // ロスト判定
             var lostMembers = _model.LostMembers();
             if (lostMembers.Count > 0)
@@ -199,6 +200,9 @@ public class StrategyPresenter : BasePresenter
                 var popupInfo = new ConfirmInfo(text,(a) => UpdatePopupLost((ConfirmCommandType)a));
                 popupInfo.SetIsNoChoice(true);
                 _view.CommandCallConfirm(popupInfo);
+            } else
+            {
+                CommandContinue();
             }
         }
         if (_strategyState == StrategyState.TacticsResult)
@@ -299,7 +303,82 @@ public class StrategyPresenter : BasePresenter
             _view.CommandSceneChange(Scene.FastBattle);
         } else
         {
+            // バトルメンバーを一時保存
+            _model.SaveTempBattleMembers();
             _view.CommandSceneChange(Scene.Battle);
+        }
+    }
+
+    private void CommandContinue()
+    {
+        // コンテニュー判定
+        if (_model.BattleResultVictory() == true)
+        {
+            return;
+        }
+        var continuePopupTitle = _model.ContinuePopupTitle();
+        var needAdsContinue = _model.NeedAdsContinue();
+        var popupInfo = new ConfirmInfo(continuePopupTitle,(a) => UpdatePopupContinueCommand((ConfirmCommandType)a));
+                    
+        popupInfo.SetSelectIndex(1);
+        if (needAdsContinue)
+        {
+            //popupInfo.SetDisableIds(new List<int>(){1});
+            popupInfo.SetCommandTextIds(_model.SaveAdsCommandTextIds());
+        } else
+        {
+        }
+        _view.CommandCallConfirm(popupInfo);
+        _view.ChangeUIActive(false);
+    }
+
+    private void UpdatePopupContinueCommand(ConfirmCommandType confirmCommandType)
+    {
+        _view.CommandConfirmClose();
+        if (confirmCommandType == ConfirmCommandType.Yes)
+        {
+            var needAdsContinue = _model.NeedAdsContinue();
+            if (needAdsContinue)
+            {
+                AdMobController.Instance.LoadRewardedAd((success) => {
+                    if (success)
+                    {
+                        AdMobController.Instance.ShowRewardedAd((reward) => {
+                            if (reward)
+                            {
+                                _model.GainContinueCount();
+                                // 復帰して結果をやり直し
+                                _model.ReturnTempBattleMembers();
+                                _view.CommandSceneChange(Scene.Strategy);
+                            } else
+                            {
+                                // 失敗した時
+                                var savePopupTitle = _model.FailedSavePopupTitle();
+                                var popupInfo = new ConfirmInfo(savePopupTitle,(a) => UpdatePopupContinueCommand((ConfirmCommandType)a));
+                                _view.CommandCallConfirm(popupInfo);
+                            }
+                        });
+                    } else
+                    {
+                        // 失敗した時
+                        var savePopupTitle = _model.FailedSavePopupTitle();
+                        var popupInfo = new ConfirmInfo(savePopupTitle,(a) => UpdatePopupContinueCommand((ConfirmCommandType)a));
+                        _view.CommandCallConfirm(popupInfo);
+                        _view.ChangeUIActive(false);
+                    }
+                });
+            } else
+            {
+                _model.GainContinueCount();
+                // 復帰して結果をやり直し
+                _model.ReturnTempBattleMembers();
+                _view.CommandSceneChange(Scene.Strategy);
+            }
+
+        } else
+        if (confirmCommandType == ConfirmCommandType.No)
+        {
+            _model.LostActors(_model.LostMembers());
         }
     }
 

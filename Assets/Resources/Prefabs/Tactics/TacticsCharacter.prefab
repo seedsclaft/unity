@@ -1409,19 +1409,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2402955de89268e4e84a86b325832163, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxhp: {fileID: 642429334929506611}
+  maxHp: {fileID: 642429334929506611}
   hp: {fileID: 5068793701504387784}
-  maxmp: {fileID: 0}
+  maxMp: {fileID: 0}
   mp: {fileID: 7904161612730456631}
   atk: {fileID: 0}
   def: {fileID: 0}
   spd: {fileID: 0}
-  hpGaugeBg: {fileID: 2104278786935191862}
-  hpGauge: {fileID: 1452374658932832539}
-  hpGaugeAnimation: {fileID: 0}
-  mpGaugeBg: {fileID: 1160386400598875209}
-  mpGauge: {fileID: 1936542466469717704}
-  mpGaugeAnimation: {fileID: 0}
+  hpGaugeAnimation: {fileID: 2997623528406754042}
+  mpGaugeAnimation: {fileID: 5351819287511309270}
   canvasGroup: {fileID: 0}
 --- !u!1 &2495588221236660469
 GameObject:
@@ -2054,6 +2050,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2942865071994077492}
+  - component: {fileID: 2997623528406754042}
   m_Layer: 0
   m_Name: HpGauge
   m_TagString: Untagged
@@ -2083,6 +2080,21 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: -8}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &2997623528406754042
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3308412306878446308}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35595a4bc94b9d54a94a1df599362339, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gaugeBg: {fileID: 2104278786935191862}
+  gauge: {fileID: 1452374658932832539}
+  gaugeAnimation: {fileID: 0}
 --- !u!1 &3608326739758367775
 GameObject:
   m_ObjectHideFlags: 0
@@ -3165,9 +3177,9 @@ MonoBehaviour:
   grayscale: {fileID: 0}
   faceThumb: {fileID: 0}
   awakenFaceThumb: {fileID: 0}
-  clipingThumb: {fileID: 0}
+  clipThumb: {fileID: 0}
   nameText: {fileID: 614646379203138687}
-  subnameText: {fileID: 0}
+  subNameText: {fileID: 0}
   evaluate: {fileID: 0}
   demigod: {fileID: 0}
   lv: {fileID: 4492516841290408347}
@@ -3195,6 +3207,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4346425186112392717}
+  - component: {fileID: 5351819287511309270}
   m_Layer: 0
   m_Name: MpGauge
   m_TagString: Untagged
@@ -3224,6 +3237,21 @@ RectTransform:
   m_AnchoredPosition: {x: 80, y: -8}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &5351819287511309270
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7017503966649993914}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35595a4bc94b9d54a94a1df599362339, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gaugeBg: {fileID: 1160386400598875209}
+  gauge: {fileID: 1936542466469717704}
+  gaugeAnimation: {fileID: 0}
 --- !u!1 &7201621122754728835
 GameObject:
   m_ObjectHideFlags: 0

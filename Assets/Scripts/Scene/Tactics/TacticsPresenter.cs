@@ -72,8 +72,8 @@ public class TacticsPresenter :BasePresenter
                     break;
                 case StageEventType.SaveCommand:
                     var savePopupTitle = _model.SavePopupTitle();
-                    var saveNeedAds = _model.SaveNeedAds();
-                    var popupInfo = new ConfirmInfo(savePopupTitle,(menuCommandInfo) => UpdatePopupSaveCommand((ConfirmCommandType)menuCommandInfo));
+                    var saveNeedAds = _model.NeedAdsSave();
+                    var popupInfo = new ConfirmInfo(savePopupTitle,(a) => UpdatePopupSaveCommand((ConfirmCommandType)a));
                     
                     popupInfo.SetSelectIndex(1);
                     if (saveNeedAds)
@@ -489,7 +489,7 @@ public class TacticsPresenter :BasePresenter
         _view.CommandConfirmClose();
         if (confirmCommandType == ConfirmCommandType.Yes)
         {
-            var saveNeedAds = _model.SaveNeedAds();
+            var saveNeedAds = _model.NeedAdsSave();
             if (saveNeedAds)
             {
                 AdMobController.Instance.LoadRewardedAd((success) => {

@@ -23,6 +23,12 @@ public class StageInfo
     {
         _savedCount++;
     }
+    private int _continueCount = 0;
+    public int ContinueCount => _continueCount;
+    public void GainContinueCount()
+    {
+        _continueCount++;
+    }
     private int _currentTurn;
     public int CurrentTurn => _currentTurn;
     private int _clearCount;

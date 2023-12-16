@@ -28,6 +28,7 @@ public class GameSystem : MonoBehaviour
     
     public static SavePlayInfo CurrentData = null;
     public static SaveConfigInfo ConfigData = null;
+    public static TempInfo TempData = null;
 
     private bool _busy = false;
     public bool Busy => _busy;
@@ -44,6 +45,7 @@ public class GameSystem : MonoBehaviour
         advController.SetHelpWindow(advHelpWindow);
         transitionRoot.SetActive(false);
         loadingView.gameObject.SetActive(false);
+        TempData = new TempInfo();
         _model = new BaseModel();
         GameSystem.Version = version;
 #if UNITY_EDITOR

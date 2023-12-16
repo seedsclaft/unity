@@ -151,6 +151,19 @@ public class BattlerInfo
         ResetAp(true);
     }
 
+    public void ResetData()
+    {
+        _stateInfos.Clear();
+        GainHp(_status.Hp);
+        GainMp(_status.Mp);
+        _isAwaken = false;
+        _preserveAlive = false;
+        _chainSuccessCount = 0;
+        _payBattleMp = 0;
+        _attackedCount = 0;
+        ResetAp(true);
+    }
+
     private void AddUndeadPassive()
     {
         var IsUndead = _kinds.Contains(KindType.Undead);

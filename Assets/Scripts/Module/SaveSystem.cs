@@ -300,6 +300,15 @@ public class SavePlayInfo
 		_party.AddActor(actorInfo.ActorId);
 	}
 	
+	public void UpdateActorInfo(ActorInfo actorInfo)
+	{
+		var findIndex = _actors.FindIndex(a => a.ActorId == actorInfo.ActorId);
+		if (findIndex > -1)
+		{
+			_actors[findIndex] = actorInfo;
+		}
+	}
+
 	public void AddTestActor(ActorData actorData)
 	{
 		if (actorData != null)

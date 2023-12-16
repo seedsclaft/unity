@@ -17,6 +17,7 @@ public class SystemData : ScriptableObject
 	public int BattleCount;
 	public int ResourceCount;
 	public int LimitSaveCount;
+	public int LimitContinueCount;
 	public List<TextData> SystemTextData;
 
 	public List<InputData> InputDataList;
@@ -60,6 +61,7 @@ public class SystemData : ScriptableObject
 		public bool Toggles;
 		public int ToggleText1;
 		public int ToggleText2;
+		public bool ExistAndroid;
 	}
 
 	[System.SerializableAttribute]

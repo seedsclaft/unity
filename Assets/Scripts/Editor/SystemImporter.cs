@@ -20,6 +20,7 @@ public class SystemImporter : AssetPostprocessor
 		Toggle,
 		ToggleText1,
 		ToggleText2,
+		ExistAndroid,
     }
 
     enum BaseDefineColumn
@@ -129,15 +130,16 @@ public class SystemImporter : AssetPostprocessor
 				{
 					IRow BaseRow = BaseSheet.GetRow(i);
 
-					var StatusCommandInfo = new SystemData.OptionCommand();
-					StatusCommandInfo.Id = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.Id);
-					StatusCommandInfo.Key = AssetPostImporter.ImportString(BaseRow,(int)BaseColumn.Key);
-					StatusCommandInfo.Name = textData.Find(a => a.Id == AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.NameTextId)).Text;
-					StatusCommandInfo.Help = textData.Find(a => a.Id == AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.NameTextId)).Help;
-					StatusCommandInfo.Toggles = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.Toggle) == 1;
-					StatusCommandInfo.ToggleText1 = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.ToggleText1);
-					StatusCommandInfo.ToggleText2 = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.ToggleText2);
-					Data.OptionCommandData.Add(StatusCommandInfo);
+					var OptionCommand = new SystemData.OptionCommand();
+					OptionCommand.Id = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.Id);
+					OptionCommand.Key = AssetPostImporter.ImportString(BaseRow,(int)BaseColumn.Key);
+					OptionCommand.Name = textData.Find(a => a.Id == AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.NameTextId)).Text;
+					OptionCommand.Help = textData.Find(a => a.Id == AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.NameTextId)).Help;
+					OptionCommand.Toggles = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.Toggle) == 1;
+					OptionCommand.ToggleText1 = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.ToggleText1);
+					OptionCommand.ToggleText2 = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.ToggleText2);
+					OptionCommand.ExistAndroid = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.ExistAndroid) == 1;
+					Data.OptionCommandData.Add(OptionCommand);
 				}
 				
 				BaseSheet = Book.GetSheetAt(4);
@@ -195,6 +197,10 @@ public class SystemImporter : AssetPostprocessor
 					if (KeyName == "limitSaveCount")
 					{
 						Data.LimitSaveCount = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseDefineColumn.Param);
+					}
+					if (KeyName == "limitContinueCount")
+					{
+						Data.LimitContinueCount = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseDefineColumn.Param);
 					}
 				}
 			}

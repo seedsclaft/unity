@@ -83,6 +83,58 @@ public class ActorInfo
         _demigodParam = 10;
     }
 
+    public void CopyData(ActorInfo baseActorInfo)
+    {
+        _level = baseActorInfo.Level;
+        _plusStatus = new StatusInfo();
+        _plusStatus.SetParameter(
+            baseActorInfo._plusStatus.GetParameter(StatusParamType.Hp),
+            baseActorInfo._plusStatus.GetParameter(StatusParamType.Mp),
+            baseActorInfo._plusStatus.GetParameter(StatusParamType.Atk),
+            baseActorInfo._plusStatus.GetParameter(StatusParamType.Def),
+            baseActorInfo._plusStatus.GetParameter(StatusParamType.Spd)
+        );
+        _currentStatus = new StatusInfo();
+        _currentStatus.SetParameter(
+            baseActorInfo.CurrentStatus.GetParameter(StatusParamType.Hp),
+            baseActorInfo.CurrentStatus.GetParameter(StatusParamType.Mp),
+            baseActorInfo.CurrentStatus.GetParameter(StatusParamType.Atk),
+            baseActorInfo.CurrentStatus.GetParameter(StatusParamType.Def),
+            baseActorInfo.CurrentStatus.GetParameter(StatusParamType.Spd)
+        );
+        _tempStatus = new StatusInfo();
+        _tempStatus.SetParameter(
+            baseActorInfo.TempStatus.GetParameter(StatusParamType.Hp),
+            baseActorInfo.TempStatus.GetParameter(StatusParamType.Mp),
+            baseActorInfo.TempStatus.GetParameter(StatusParamType.Atk),
+            baseActorInfo.TempStatus.GetParameter(StatusParamType.Def),
+            baseActorInfo.TempStatus.GetParameter(StatusParamType.Spd)
+        );
+        _skills = new List<SkillInfo>();
+        foreach (var skillInfo in baseActorInfo.Skills)
+        {
+            skillInfo.SetLearningState(LearningState.Learned);
+            _skills.Add(skillInfo);
+        }
+        _lastSelectSkillId = baseActorInfo.LastSelectSkillId;
+        _currentHp = baseActorInfo.CurrentHp;
+        _currentMp = baseActorInfo.CurrentMp;
+        _ap = baseActorInfo.Ap;
+        _demigodParam = baseActorInfo.DemigodParam;
+        _tacticsCommandType = baseActorInfo.TacticsCommandType;
+        _tacticsEnable = baseActorInfo._tacticsEnable;
+        _tacticsCost = baseActorInfo.TacticsCost;
+        _tacticsCostRate = baseActorInfo.TacticsCostRate;
+        _nextLearnSkillId = baseActorInfo.NextLearnSkillId;
+        _nextLearnCost = baseActorInfo.NextLearnCost;
+        _nextBattleEnemyIndex = baseActorInfo.NextBattleEnemyIndex;
+        _nextBattleEnemyId = baseActorInfo.NextBattleEnemyId;
+        _inBattle = baseActorInfo.InBattle;
+        _lost = baseActorInfo.Lost;
+        _sp = baseActorInfo.Sp;
+        _numinous = baseActorInfo.Numinous;
+    }
+
     private void SetInitialParameter(ActorData actorData)
     {
         _baseStatus = actorData.InitStatus;

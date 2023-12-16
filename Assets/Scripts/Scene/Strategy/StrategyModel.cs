@@ -192,7 +192,12 @@ public class StrategyModel : BaseModel
         _levelUpData.RemoveAt(0);
     }
 
-    public List<ListData> BattleResult()
+    public bool BattleResultVictory()
+    {
+        return PartyInfo.BattleResultVictory;
+    }
+
+    public List<ListData> BattleResultInfos()
     {
         // Party初期化
         PartyInfo.InitActors();
@@ -407,11 +412,28 @@ public class StrategyModel : BaseModel
 
     public bool EnableBattleSkip()
     {
-        return CurrentData.PlayerInfo.EnableBattleSkip(CurrentTroopInfo().TroopId);
+        // スキップ廃止
+        return false;
+        //return CurrentData.PlayerInfo.EnableBattleSkip(CurrentTroopInfo().TroopId);
     }
 
     public void ChangeBattleSkip(bool battleSkip)
     {
         _battleSkip = battleSkip;
+    }
+
+    public void SaveTempBattleMembers()
+    {
+        TempData.CashBattleActors(BattleResultActors());
+    }
+
+    public void ReturnTempBattleMembers()
+    {
+        foreach (var tempActorInfo in TempData.TempActorInfos)
+        {
+            tempActorInfo.SetInBattle(false);
+            CurrentData.UpdateActorInfo(tempActorInfo);
+        }
+        TempData.ClearBattleActors();
     }
 }

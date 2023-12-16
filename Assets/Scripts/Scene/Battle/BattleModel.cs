@@ -64,8 +64,10 @@ public class BattleModel : BaseModel
         
         for (int i = 0;i < enemies.Count;i++)
         {
+            var baseEnemy = enemies[i];
+            baseEnemy.ResetData();
             //enemies[i].GainHp(-99999);
-            _battlers.Add(enemies[i]);
+            _battlers.Add(baseEnemy);
         }
         foreach (var battlerInfo1 in _battlers)
         {
@@ -1326,11 +1328,6 @@ public class BattleModel : BaseModel
             }
         }
         return actionResultInfos;
-    }
-
-    public void GainHpTargetIndex(int index,int value)
-    {
-        GetBattlerInfo(index).GainHp(value);
     }
 
     // リザルトから発生するトリガースキルを生成

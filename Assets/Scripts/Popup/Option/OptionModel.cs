@@ -19,6 +19,12 @@ public class OptionModel : BaseModel
         var list = new List<OptionInfo>();
         foreach (var optionCommand in DataSystem.OptionCommand)
         {
+#if UNITY_ANDROID
+            if (optionCommand.ExistAndroid == false)
+            {
+                continue;
+            }
+#endif
             var optionInfo = new OptionInfo();
             optionInfo.OptionCommand = optionCommand;
             optionInfo.SliderEvent = sliderEvent;

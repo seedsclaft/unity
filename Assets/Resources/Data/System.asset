@@ -54,6 +54,7 @@ MonoBehaviour:
     Toggles: 0
     ToggleText1: 0
     ToggleText2: 0
+    ExistAndroid: 1
   - Id: 2
     Key: SE_VOLUME
     Name: SE Volume
@@ -61,6 +62,7 @@ MonoBehaviour:
     Toggles: 0
     ToggleText1: 0
     ToggleText2: 0
+    ExistAndroid: 1
   - Id: 3
     Key: GRAPHIC_QUALITY
     Name: Graphic Quality
@@ -68,6 +70,7 @@ MonoBehaviour:
     Toggles: 1
     ToggleText1: 521
     ToggleText2: 522
+    ExistAndroid: 0
   - Id: 4
     Key: EVENT_SKIP
     Name: Event Skip
@@ -75,6 +78,7 @@ MonoBehaviour:
     Toggles: 1
     ToggleText1: 526
     ToggleText2: 527
+    ExistAndroid: 1
   - Id: 5
     Key: COMMAND_END_CHECK
     Name: Command Check
@@ -82,6 +86,7 @@ MonoBehaviour:
     Toggles: 1
     ToggleText1: 531
     ToggleText2: 532
+    ExistAndroid: 1
   - Id: 6
     Key: BATTLE_WAIT
     Name: Battle Wait
@@ -89,6 +94,7 @@ MonoBehaviour:
     Toggles: 1
     ToggleText1: 536
     ToggleText2: 527
+    ExistAndroid: 1
   - Id: 7
     Key: BATTLE_ANIMATION
     Name: Battle Animation
@@ -96,6 +102,7 @@ MonoBehaviour:
     Toggles: 1
     ToggleText1: 536
     ToggleText2: 527
+    ExistAndroid: 1
   - Id: 8
     Key: INPUT_TYPE
     Name: Enable InputKey
@@ -103,6 +110,7 @@ MonoBehaviour:
     Toggles: 1
     ToggleText1: 541
     ToggleText2: 542
+    ExistAndroid: 0
   - Id: 9
     Key: BATTLE_AUTO
     Name: Battle Auto
@@ -110,6 +118,7 @@ MonoBehaviour:
     Toggles: 1
     ToggleText1: 543
     ToggleText2: 544
+    ExistAndroid: 1
   TitleCommandData:
   - Id: 1
     Key: NEWGAME
@@ -127,6 +136,7 @@ MonoBehaviour:
   BattleCount: 4
   ResourceCount: 3
   LimitSaveCount: 3
+  LimitContinueCount: 2
   SystemTextData:
   - Id: 1
     Text: "\u4EBA\u4F53\u932C\u6210"
@@ -629,6 +639,15 @@ MonoBehaviour:
   - Id: 3060
     Text: "\\d\u304C\u30ED\u30B9\u30C8\u3057\u307E\u3057\u305F\u2026"
     Help: '""'
+  - Id: 3061
+    Text: "\u6551\u6E08\u57F7\u884C\u3092\u3084\u308A\u76F4\u3057\u307E\u3059\u304B\uFF1F"
+    Help: '""'
+  - Id: 3062
+    Text: "\uFF01\u30B9\u30C6\u30FC\u30B8\u4E2D\\d\u56DE\u76EE\u4EE5\u964D\u306F\u5E83\u544A\u8996\u8074\u5F8C\u306B\u6709\u52B9\u306B\u306A\u308A\u307E\u3059\uFF01"
+    Help: '""'
+  - Id: 3063
+    Text: "(\u30B3\u30F3\u30C6\u30CB\u30E5\u30FC\\d\u56DE\u76EE)"
+    Help: '""'
   - Id: 3070
     Text: "\\d\u306E"
     Help: '""'
@@ -690,7 +709,7 @@ MonoBehaviour:
     Text: "\u3053\u3053\u307E\u3067\u306E\u9032\u884C\u72B6\u6CC1\u3092\u30BB\u30FC\u30D6\u3057\u307E\u3059\u304B\uFF1F"
     Help: '""'
   - Id: 11081
-    Text: "\uFF01\u30B9\u30C6\u30FC\u30B8\u4E2D3\u56DE\u76EE\u4EE5\u964D\u306F\u5E83\u544A\u8996\u8074\u5F8C\u306B\u6709\u52B9\u306B\u306A\u308A\u307E\u3059\uFF01"
+    Text: "\uFF01\u30B9\u30C6\u30FC\u30B8\u4E2D\\d\u56DE\u76EE\u4EE5\u964D\u306F\u5E83\u544A\u8996\u8074\u5F8C\u306B\u6709\u52B9\u306B\u306A\u308A\u307E\u3059\uFF01"
     Help: '""'
   - Id: 11082
     Text: "\u5E83\u544A\u8996\u8074\u306B\u5931\u6557\u3057\u307E\u3057\u305F\u3002\\n\u3082\u3046\u4E00\u5EA6\u30C8\u30E9\u30A4\u3057\u307E\u3059\u304B\uFF1F"

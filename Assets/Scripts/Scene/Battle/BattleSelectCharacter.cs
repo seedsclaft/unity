@@ -183,7 +183,7 @@ public class BattleSelectCharacter : MonoBehaviour
 
     public void HideThumb()
     {
-        battleThumb.gameObject.SetActive(false);
+        battleThumb.HideThumb();
     }
 
     public void SetSkillInfos(List<ListData> skillInfoData)

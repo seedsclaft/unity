@@ -10,6 +10,7 @@ using Effekseer;
 public class BaseModel
 {
     public SavePlayInfo CurrentData => GameSystem.CurrentData;
+    public TempInfo TempData => GameSystem.TempData;
     public StageInfo CurrentStage => CurrentData.CurrentStage;
     public AlcanaInfo CurrentAlcana => CurrentData.CurrentAlcana;
 
@@ -724,7 +725,7 @@ public class BaseModel
     public string SavePopupTitle()
     {
         var baseText = DataSystem.System.GetTextData(11080).Text;
-        var subText = DataSystem.System.GetTextData(11081).Text;
+        var subText = DataSystem.System.GetReplaceText(11081,DataSystem.System.LimitSaveCount.ToString());
         var savedCount = DataSystem.System.GetReplaceText(11083,(CurrentStage.SavedCount+1).ToString());
         return baseText + savedCount + "\n" + subText;
     }
@@ -735,7 +736,7 @@ public class BaseModel
         return baseText;
     }
 
-    public bool SaveNeedAds()
+    public bool NeedAdsSave()
     {
         var needAds = false;
 #if UNITY_ANDROID
@@ -747,6 +748,28 @@ public class BaseModel
     public void GainSaveCount()
     {
         CurrentStage.GainSaveCount();
+    }
+
+    public string ContinuePopupTitle()
+    {
+        var baseText = DataSystem.System.GetTextData(3061).Text;
+        var subText = DataSystem.System.GetReplaceText(3062,DataSystem.System.LimitContinueCount.ToString());
+        var continueCount = DataSystem.System.GetReplaceText(3063,(CurrentStage.ContinueCount+1).ToString());
+        return baseText + continueCount + "\n" + subText;
+    }
+
+    public bool NeedAdsContinue()
+    {
+        var needAds = false;
+#if UNITY_ANDROID
+        needAds = CurrentStage.ContinueCount >= DataSystem.System.LimitContinueCount;
+#endif
+        return needAds;
+    }
+
+    public void GainContinueCount()
+    {
+        CurrentStage.GainContinueCount();
     }
 
     public List<int> SaveAdsCommandTextIds()

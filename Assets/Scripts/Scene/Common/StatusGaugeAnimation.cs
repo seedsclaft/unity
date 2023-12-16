@@ -25,6 +25,12 @@ public class StatusGaugeAnimation : MonoBehaviour
             rect.sizeDelta = new Vector2(width - margin,rect.sizeDelta.y);
             gauge.fillAmount = gaugeAmount;
         }
+        if (gaugeAnimation != null)
+        {
+            var gaugeRect = gaugeAnimation.gameObject.GetComponent<RectTransform>();
+            gaugeRect.sizeDelta = new Vector2(width - margin,gaugeRect.sizeDelta.y);
+            gaugeAnimation.fillAmount = gaugeAmount;
+        }
     }
 
     public void UpdateGaugeAnimation(float gaugeAmount)
