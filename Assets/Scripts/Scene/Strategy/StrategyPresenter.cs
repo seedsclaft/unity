@@ -340,39 +340,20 @@ public class StrategyPresenter : BasePresenter
             var needAdsContinue = _model.NeedAdsContinue();
             if (needAdsContinue)
             {
-                AdMobController.Instance.LoadRewardedAd((success) => {
-                    if (success)
+                AdMobController.Instance.PlayRewardedAd(() => 
                     {
-                        AdMobController.Instance.ShowRewardedAd((reward) => {
-                            if (reward)
-                            {
-                                _model.GainContinueCount();
-                                // 復帰して結果をやり直し
-                                _model.ReturnTempBattleMembers();
-                                _view.CommandSceneChange(Scene.Strategy);
-                            } else
-                            {
-                                // 失敗した時
-                                var savePopupTitle = _model.FailedSavePopupTitle();
-                                var popupInfo = new ConfirmInfo(savePopupTitle,(a) => UpdatePopupContinueCommand((ConfirmCommandType)a));
-                                _view.CommandCallConfirm(popupInfo);
-                            }
-                        });
-                    } else
-                    {
+                        SuccessContinue();
+                    },
+                    () => {
                         // 失敗した時
                         var savePopupTitle = _model.FailedSavePopupTitle();
                         var popupInfo = new ConfirmInfo(savePopupTitle,(a) => UpdatePopupContinueCommand((ConfirmCommandType)a));
                         _view.CommandCallConfirm(popupInfo);
-                        _view.ChangeUIActive(false);
                     }
-                });
+                );
             } else
             {
-                _model.GainContinueCount();
-                // 復帰して結果をやり直し
-                _model.ReturnTempBattleMembers();
-                _view.CommandSceneChange(Scene.Strategy);
+                SuccessContinue();
             }
 
         } else
@@ -380,6 +361,14 @@ public class StrategyPresenter : BasePresenter
         {
             _model.LostActors(_model.LostMembers());
         }
+    }
+
+    private void SuccessContinue()
+    {
+        _model.GainContinueCount();
+        // 復帰して結果をやり直し
+        _model.ReturnTempBattleMembers();
+        _view.CommandSceneChange(Scene.Strategy);
     }
 
     private void ShowStatus()

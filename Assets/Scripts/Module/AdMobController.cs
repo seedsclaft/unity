@@ -125,10 +125,40 @@ public class AdMobController : SingletonMonoBehaviour<AdMobController>
         _interstitialAd.Destroy();
     }
 
+    public void PlayRewardedAd(System.Action rewardEvent,System.Action failEvent)
+    {
+        LoadRewardedAd((success) => {
+            if (success)
+            {
+                ShowRewardedAd((reward) => {
+                    if (reward)
+                    {
+                        if (rewardEvent != null)
+                        {
+                            rewardEvent();
+                        }
+                    } else
+                    {
+                        if (failEvent != null)
+                        {
+                            failEvent();
+                        }
+                    }
+                });
+            } else
+            {
+                if (failEvent != null)
+                {
+                    failEvent();
+                }
+            }
+        });
+    }
+
     /// <summary>
     /// Loads the rewarded ad.
     /// </summary>
-    public void LoadRewardedAd(System.Action<bool> endEvent)
+    private void LoadRewardedAd(System.Action<bool> endEvent)
     {
         // Clean up the old ad before loading a new one.
         if (_rewardedAd != null)
@@ -165,7 +195,7 @@ public class AdMobController : SingletonMonoBehaviour<AdMobController>
             });
     }
 
-    public void ShowRewardedAd(System.Action<bool> rewardEvent)
+    private void ShowRewardedAd(System.Action<bool> rewardEvent)
     {
         const string rewardMsg =
             "Rewarded ad rewarded the user. Type: {0}, amount: {1}.";

@@ -176,7 +176,7 @@ public class TacticsView : BaseView
         SetInputHandler(selectCharacter.CommandList.GetComponent<IInputHandlerEvent>());
         HideSelectCharacter();
 
-        tacticsCharaLayer.Initialize(actorInfos);
+        tacticsCharaLayer.SetData(actorInfos);
         SetInputHandler(tacticsCharaLayer.GetComponent<IInputHandlerEvent>());
     }
 

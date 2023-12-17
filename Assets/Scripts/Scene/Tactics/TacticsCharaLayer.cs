@@ -6,9 +6,8 @@ public class TacticsCharaLayer : MonoBehaviour
 {
     [SerializeField] private List<GameObject> tacticsCharaRoots;
     [SerializeField] private GameObject tacticsCharaPrefab;
-    [SerializeField] private GameObject statusPrefab;
 
-    public void Initialize(List<ActorInfo> actorInfos)
+    public void SetData(List<ActorInfo> actorInfos)
     {
         for (int i = 0; i < actorInfos.Count;i++)
         {

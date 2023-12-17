@@ -492,44 +492,33 @@ public class TacticsPresenter :BasePresenter
             var saveNeedAds = _model.NeedAdsSave();
             if (saveNeedAds)
             {
-                AdMobController.Instance.LoadRewardedAd((success) => {
-                    if (success)
-                    {
-                        AdMobController.Instance.ShowRewardedAd((reward) => {
-                            if (reward)
-                            {
-                                _model.GainSaveCount();
-                                SaveSystem.SaveStart(GameSystem.CurrentData);
-                                _view.CommandSceneChange(Scene.Tactics);
-                            } else
-                            {
-                                // 失敗した時
-                                var savePopupTitle = _model.FailedSavePopupTitle();
-                                var popupInfo = new ConfirmInfo(savePopupTitle,(menuCommandInfo) => UpdatePopupSaveCommand((ConfirmCommandType)menuCommandInfo));
-                                _view.CommandCallConfirm(popupInfo);
-                                _view.ChangeUIActive(false);
-                            }
-                        });
-                    } else
-                    {
-                        // 失敗した時
-                        var savePopupTitle = _model.FailedSavePopupTitle();
-                        var popupInfo = new ConfirmInfo(savePopupTitle,(menuCommandInfo) => UpdatePopupSaveCommand((ConfirmCommandType)menuCommandInfo));
-                        _view.CommandCallConfirm(popupInfo);
-                        _view.ChangeUIActive(false);
-                    }
+                AdMobController.Instance.PlayRewardedAd(() => 
+                {
+                    SuccessSave();
+                },
+                () => {
+                    // 失敗した時
+                    var savePopupTitle = _model.FailedSavePopupTitle();
+                    var popupInfo = new ConfirmInfo(savePopupTitle,(menuCommandInfo) => UpdatePopupSaveCommand((ConfirmCommandType)menuCommandInfo));
+                    _view.CommandCallConfirm(popupInfo);
+                    _view.ChangeUIActive(false);
                 });
             } else
             {
-                _model.GainSaveCount();
-                SaveSystem.SaveStart(GameSystem.CurrentData);
-                _view.CommandSceneChange(Scene.Tactics);
+                SuccessSave();
             }
         } else
         {
             Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cancel);
             _view.CommandSceneChange(Scene.Tactics);
         }
+    }
+
+    private void SuccessSave()
+    {
+        _model.GainSaveCount();
+        SaveSystem.SaveStart(GameSystem.CurrentData);
+        _view.CommandSceneChange(Scene.Tactics);
     }
 
     private void UpdatePopupSkillInfo(ConfirmCommandType confirmCommandType)
