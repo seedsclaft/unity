@@ -368,14 +368,18 @@ public class TacticsModel : BaseModel
         if (isGameOver)
         {
             CurrentStage.SetEndingType(EndingType.D);
-            return DataSystem.Adventures.Find(a => a.Id == 203);
+            return DataSystem.Adventures.Find(a => a.Id == 21);
+        }
+        var turnOver = Turns < 0;
+        if (turnOver)
+        {
         }
         var isAEndGameClear = CurrentStage.StageClear;
         if (isAEndGameClear)
         {
             CurrentStage.SetEndingType(EndingType.A);
             StageClear();
-            return DataSystem.Adventures.Find(a => a.Id == 173);
+            return DataSystem.Adventures.Find(a => a.Id == 151);
         }
         return null;
     }

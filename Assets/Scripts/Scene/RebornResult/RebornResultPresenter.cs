@@ -65,7 +65,6 @@ public class RebornResultPresenter : BasePresenter
 
     private void CommandEndReborn()
     {
-        _model.SetResumeStageTrue();
         _view.CommandSceneChange(Scene.Tactics);
     }
 }

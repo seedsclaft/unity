@@ -1,0 +1,3947 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 8
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9856eecfcd6b8df42ac2ebd73cc36dff, type: 3}
+  m_Name: Actor0001.book
+  m_EditorClassIdentifier: 
+  importVersion: 0
+  importGridList:
+  - rows:
+    - rowIndex: 0
+      debugIndex: 0
+      strings:
+      - Command
+      - Arg1
+      - Arg2
+      - Arg3
+      - Arg4
+      - Arg5
+      - Arg6
+      - WaitType
+      - Text
+      - PageCtrl
+      - Voice
+      - WindowType
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 1
+      debugIndex: 1
+      strings:
+      - ChangeMessageWindow
+      - MessageWindow
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 2
+      debugIndex: 2
+      strings:
+      - 
+      - Chara1
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u5148\u751F\uFF01"
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 3
+      debugIndex: 3
+      strings:
+      - 
+      - Chara1
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u3042<speed=0.5> </speed>\u3054\u3081\u3093\u306A\u3055\u3044<speed=0.5>
+        </speed>\n\u4ECA\u65E5\u304B\u3089\u306F\u4E0A\u5B98\u3067\u3057\u305F\u306D"
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 4
+      debugIndex: 4
+      strings:
+      - Wait
+      - 
+      - 
+      - 
+      - 
+      - 
+      - .5
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 5
+      debugIndex: 5
+      strings:
+      - 
+      - Chara1
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u3042\u308C\u2026<speed=0.5> </speed>\n\u5148\u751F\u306E\u307E\u307E\u3067\u826F\u3044\uFF1F"
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 6
+      debugIndex: 6
+      strings:
+      - 
+      - Chara1
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u305D\u3063\u304B<speed=0.5> </speed>\n\u305D\u3057\u305F\u3089\u2026"
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 7
+      debugIndex: 7
+      strings:
+      - Wait
+      - 
+      - 
+      - 
+      - 
+      - 
+      - .5
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 8
+      debugIndex: 8
+      strings:
+      - 
+      - Chara1
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u5148\u751F<speed=0.5> </speed>\u6307\u793A\u3092\u304A\u9858\u3044\u3057\u307E\u3059\uFF01"
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 9
+      debugIndex: 9
+      strings:
+      - EndScenario
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    name: Assets/ADVScene/AdvFiles/Actor0001.xls:Actor0001_1
+    type: 1
+    textLength: 307
+    headerRow: 0
+    sourceAssetInEditor: {fileID: 0}
+    entityIndexTbl: 
+    entityDataList: []
+  - rows:
+    - rowIndex: 0
+      debugIndex: 0
+      strings:
+      - Command
+      - Arg1
+      - Arg2
+      - Arg3
+      - Arg4
+      - Arg5
+      - Arg6
+      - WaitType
+      - Text
+      - PageCtrl
+      - Voice
+      - WindowType
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 1
+      debugIndex: 1
+      strings:
+      - ChangeMessageWindow
+      - MessageWindow
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 2
+      debugIndex: 2
+      strings:
+      - 
+      - Chara1
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u805E\u3044\u3066\u304F\u3060\u3055\u3044<speed=0.5> </speed>\u5148\u751F\uFF01"
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 3
+      debugIndex: 3
+      strings:
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u2026"
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 4
+      debugIndex: 4
+      strings:
+      - Wait
+      - 
+      - 
+      - 
+      - 
+      - 
+      - .5
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 5
+      debugIndex: 5
+      strings:
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u3069\u3046\u3084\u3089\u9053\u306A\u304D\u8005(The Pathless)\u3092\u7D22\u6575\u3057\u305F\u3089\u3057\u3044\u2026"
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 6
+      debugIndex: 6
+      strings:
+      - 
+      - Chara1
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u308F\u305F\u3057\u3067\u3057\u305F\u3089\u2026<speed=0.5> </speed>\n\u5927\u4E08\u592B\u3067\u3059\uFF01"
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 7
+      debugIndex: 7
+      strings:
+      - Wait
+      - 
+      - 
+      - 
+      - 
+      - 
+      - .5
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 8
+      debugIndex: 8
+      strings:
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u6C17\u8CA0\u3044\u306F\u306A\u3044<speed=0.5> </speed>\n\u7136\u308B\u3079\u304D\u6551\u6E08\u3092\u4E0E\u3048\u308B\u597D\u6A5F\u3068\u307F\u3066\u3044\u3044\u3060\u308D\u3046"
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 9
+      debugIndex: 9
+      strings:
+      - EndScenario
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    name: Assets/ADVScene/AdvFiles/Actor0001.xls:Actor0001_2
+    type: 1
+    textLength: 277
+    headerRow: 0
+    sourceAssetInEditor: {fileID: 0}
+    entityIndexTbl: 
+    entityDataList: []
+  - rows:
+    - rowIndex: 0
+      debugIndex: 0
+      strings:
+      - Command
+      - Arg1
+      - Arg2
+      - Arg3
+      - Arg4
+      - Arg5
+      - Arg6
+      - WaitType
+      - Text
+      - PageCtrl
+      - Voice
+      - WindowType
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 1
+      debugIndex: 1
+      strings:
+      - PlayBgm
+      - EVENT2
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 2
+      debugIndex: 2
+      strings:
+      - Bg
+      - Event4
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 3
+      debugIndex: 3
+      strings:
+      - ChangeMessageWindow
+      - MessageWindow
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 4
+      debugIndex: 4
+      strings:
+      - Wait
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 1
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 5
+      debugIndex: 5
+      strings:
+      - 
+      - Chara1
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 6
+      debugIndex: 6
+      strings:
+      - Wait
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 1
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 7
+      debugIndex: 7
+      strings:
+      - 
+      - Chara1
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u307F\u3093\u306A\u3084\u3063\u3068\u843D\u3061\u7740\u3044\u3066<speed=0.5>
+        </speed>\n\u5BDD\u4ED8\u3044\u3066\u304F\u308C\u305F\u306D"
+      - Input
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 8
+      debugIndex: 8
+      strings:
+      - Selection
+      - '*Selection1_Event3_1'
+      - 
+      - 
+      - 
+      - 280
+      - -80
+      - 
+      - ">>\u5B50\u4F9B\u305F\u3061\u306F\u6C17\u3065\u3044\u3066\u3044\u306A\u3044\u3060\u308D\u3046\u304B\uFF1F"
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 9
+      debugIndex: 9
+      strings:
+      - '*Selection1_Event3_1'
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 10
+      debugIndex: 10
+      strings:
+      - 
+      - Chara1
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u4ED5\u8349\u306B\u306F\u8868\u3055\u306A\u3044\u3051\u3069<speed=0.5>
+        </speed>\n\u305F\u3076\u3093\u6C17\u3065\u3044\u3066\u308B\u3093\u3060\u3068\u601D\u3046"
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 11
+      debugIndex: 11
+      strings:
+      - Wait
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 1
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 12
+      debugIndex: 12
+      strings:
+      - 
+      - Chara1
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u3067\u3082\u5927\u4E08\u592B\uFF01"
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 13
+      debugIndex: 13
+      strings:
+      - 
+      - Chara1
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u6B64\u51E6\u306F\u79C1\u304C\u9762\u5012\u898B\u308B\u3057<speed=0.5>
+        </speed>\n\u3042\u306A\u305F\u306F\u3068\u3063\u3066\u3082\u5F37\u3044\u304B\u3089"
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 14
+      debugIndex: 14
+      strings:
+      - 
+      - Chara1
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u2026"
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 15
+      debugIndex: 15
+      strings:
+      - Wait
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 1
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 16
+      debugIndex: 16
+      strings:
+      - 
+      - Chara1
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u4FE1\u3058\u3066\u3044\u308B\u304B\u3089\u306D"
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 17
+      debugIndex: 17
+      strings:
+      - 
+      - Chara1
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u7D76\u5BFE\u5E30\u3063\u3066\u304D\u3066\u306D"
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 18
+      debugIndex: 18
+      strings:
+      - 
+      - Chara1
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u53CD\u4E71\u8ECD\u306B\u8CA0\u3051\u306A\u3044\u3067\u306D"
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 19
+      debugIndex: 19
+      strings:
+      - 
+      - Chara1
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u307F\u3093\u306A<speed=0.5> </speed>\u5F85\u3063\u3066\u3044\u308B\u304B\u3089"
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 20
+      debugIndex: 20
+      strings:
+      - 
+      - Chara1
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u79C1\u3082\u2026"
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 21
+      debugIndex: 21
+      strings:
+      - FadeOut
+      - black
+      - 
+      - 
+      - 
+      - 
+      - .8
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 22
+      debugIndex: 22
+      strings:
+      - BgOff
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 23
+      debugIndex: 23
+      strings:
+      - Bg
+      - Tactics
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 24
+      debugIndex: 24
+      strings:
+      - StopBgm2
+      - 
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 25
+      debugIndex: 25
+      strings:
+      - Wait
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 1
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 26
+      debugIndex: 26
+      strings:
+      - FadeIn
+      - black
+      - 
+      - 
+      - 
+      - 
+      - .8
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 27
+      debugIndex: 27
+      strings:
+      - Wait
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 1
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 28
+      debugIndex: 28
+      strings:
+      - 
+      - Chara1
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u3042\u306E\u3045\u2026<speed=0.5> </speed>"
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 29
+      debugIndex: 29
+      strings:
+      - 
+      - Chara1
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u5148\u751F\uFF01<speed=0.5> </speed>\u96E3\u3057\u3044\u9854\u3092\u3057\u3066\n\u3069\u3046\u304B\u3057\u307E\u3057\u305F\u304B\uFF1F"
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 30
+      debugIndex: 30
+      strings:
+      - 
+      - Chara1
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u76F8\u8AC7\u4E8B\u3067\u3057\u305F\u3089<speed=0.5> </speed>\n\u3069\u30FC\u3093\u3068\u805E\u3044\u3061\u3083\u3044\u307E\u3059\u3088\uFF01"
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 31
+      debugIndex: 31
+      strings:
+      - EndScenario
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    name: Assets/ADVScene/AdvFiles/Actor0001.xls:Actor0001_3
+    type: 1
+    textLength: 670
+    headerRow: 0
+    sourceAssetInEditor: {fileID: 0}
+    entityIndexTbl: 
+    entityDataList: []
+  - rows:
+    - rowIndex: 0
+      debugIndex: 0
+      strings:
+      - Command
+      - Arg1
+      - Arg2
+      - Arg3
+      - Arg4
+      - Arg5
+      - Arg6
+      - WaitType
+      - Text
+      - PageCtrl
+      - Voice
+      - WindowType
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 1
+      debugIndex: 1
+      strings:
+      - PlayBgm
+      - EVENT2
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 2
+      debugIndex: 2
+      strings:
+      - Bg
+      - Event5
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 3
+      debugIndex: 3
+      strings:
+      - ChangeMessageWindow
+      - MessageWindow
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 4
+      debugIndex: 4
+      strings:
+      - Wait
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 1
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 5
+      debugIndex: 5
+      strings:
+      - 
+      - "\u30D8\u30AB\u30C6\u30FC"
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u307F\u3093\u306A\uFF01<speed=0.5> </speed>\n\u65E9\u304F\u9003\u3052\u3066\uFF01"
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 6
+      debugIndex: 6
+      strings:
+      - Wait
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 2
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 7
+      debugIndex: 7
+      strings:
+      - 
+      - "\u30B8\u30E3\u30AB\u30EB\u306E\u5C16\u5175"
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u2026\uFF01"
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 8
+      debugIndex: 8
+      strings:
+      - Wait
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 2
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 9
+      debugIndex: 9
+      strings:
+      - 
+      - "\u30D8\u30AB\u30C6\u30FC"
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u3046\u2026<speed=0.5> </speed>\u3046\u305D\u2026"
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 10
+      debugIndex: 10
+      strings:
+      - 
+      - "\u30B8\u30E3\u30AB\u30EB\u306E\u5C16\u5175"
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u8CB4\u69D8\u304C<param=PlayerName>\u306E\uFF1F"
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 11
+      debugIndex: 11
+      strings:
+      - 
+      - "\u30D8\u30AB\u30C6\u30FC"
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u3060\u3068\u3057\u305F\u3089<speed=0.5> </speed>\n\u4F55\u3060\u3063\u3066\u3044\u3046\u306E\uFF01\uFF1F"
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 12
+      debugIndex: 12
+      strings:
+      - StopBgm2
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 13
+      debugIndex: 13
+      strings:
+      - FadeOut
+      - red
+      - 
+      - 
+      - 
+      - 
+      - 0
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 14
+      debugIndex: 14
+      strings:
+      - Wait
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 1
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 15
+      debugIndex: 15
+      strings:
+      - 
+      - "\u30D8\u30AB\u30C6\u30FC"
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u3042\u3063\u2026\uFF01\uFF1F<speed=0.5> </speed>\n\u3042\u3041\u2026"
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 16
+      debugIndex: 16
+      strings:
+      - 
+      - "\u30D8\u30AB\u30C6\u30FC"
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u8840\u304C\u2026<speed=0.5> </speed>\n\u6B62\u307E\u3089\u306A\u3044\uFF01\uFF1F"
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 17
+      debugIndex: 17
+      strings:
+      - 
+      - "\u30D8\u30AB\u30C6\u30FC"
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u75DB\u3044<speed=0.5> </speed>\u75DB\u3044\u3088\u2026"
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 18
+      debugIndex: 18
+      strings:
+      - 
+      - "\u30D8\u30AB\u30C6\u30FC"
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u52A9\u3051\u3066\u2026<speed=0.5> </speed>\n\u5148\u751F\u2026"
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 19
+      debugIndex: 19
+      strings:
+      - Wait
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 1
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 20
+      debugIndex: 20
+      strings:
+      - BgOff
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 21
+      debugIndex: 21
+      strings:
+      - Bg
+      - Tactics
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 22
+      debugIndex: 22
+      strings:
+      - FadeIn
+      - red
+      - 
+      - 
+      - 
+      - 
+      - .8
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 23
+      debugIndex: 23
+      strings:
+      - 
+      - Chara1
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 24
+      debugIndex: 24
+      strings:
+      - Wait
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 1
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 25
+      debugIndex: 25
+      strings:
+      - 
+      - Chara1
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u305B<speed=0.5> </speed>\u305B\u3093\u305B\u3044\u2026"
+      - Input
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 26
+      debugIndex: 26
+      strings:
+      - Selection
+      - '*Selection1_Event4_1'
+      - 
+      - 
+      - 
+      - 280
+      - -80
+      - 
+      - ">>\u5927\u4E08\u592B\u304B\uFF1F \u5177\u5408\u304C\u60AA\u305D\u3046\u3060"
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 27
+      debugIndex: 27
+      strings:
+      - '*Selection1_Event4_1'
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 28
+      debugIndex: 28
+      strings:
+      - 
+      - Chara1
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u6628\u65E5\u2026<speed=0.5> </speed>\n\u3068\u3066\u3082\u6016\u3044\u5922\u3092\u898B\u305F\u3093\u3067\u3059"
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 29
+      debugIndex: 29
+      strings:
+      - 
+      - Chara1
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u79C1\u306F\u5B50\u4F9B\u305F\u3061\u3068\u5B64\u5150\u9662\u3067\u66AE\u3089\u3057\u3066\u3066"
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 30
+      debugIndex: 30
+      strings:
+      - 
+      - Chara1
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u305D\u3053\u306B\u6016\u3044\u5175\u58EB\u304C\u3084\u3063\u3066\u6765\u3066"
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 31
+      debugIndex: 31
+      strings:
+      - 
+      - Chara1
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u307F\u3093\u306A\u2026<speed=0.5> </speed>\n\u78D4\u306B\u2026"
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 32
+      debugIndex: 32
+      strings:
+      - 
+      - Chara1
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u79C1\u3082\u2026<speed=0.5> </speed>\n\u65AC\u3089\u308C\u3066\u2026<speed=0.5>
+        </speed>\u71C3\u3084\u3055\u308C\u3066\u2026"
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 33
+      debugIndex: 33
+      strings:
+      - EndScenario
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    name: Assets/ADVScene/AdvFiles/Actor0001.xls:Actor0001_4
+    type: 1
+    textLength: 767
+    headerRow: 0
+    sourceAssetInEditor: {fileID: 0}
+    entityIndexTbl: 
+    entityDataList: []
+  - rows:
+    - rowIndex: 0
+      debugIndex: 0
+      strings:
+      - Command
+      - Arg1
+      - Arg2
+      - Arg3
+      - Arg4
+      - Arg5
+      - Arg6
+      - WaitType
+      - Text
+      - PageCtrl
+      - Voice
+      - WindowType
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 1
+      debugIndex: 1
+      strings:
+      - PlayBgm
+      - EVENT2
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 2
+      debugIndex: 2
+      strings:
+      - ChangeMessageWindow
+      - MessageWindow
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 3
+      debugIndex: 3
+      strings:
+      - FadeOut
+      - black
+      - 
+      - 
+      - 
+      - 
+      - .8
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 4
+      debugIndex: 4
+      strings:
+      - 
+      - Chara5
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u2026"
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 5
+      debugIndex: 5
+      strings:
+      - Wait
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 1
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 6
+      debugIndex: 6
+      strings:
+      - 
+      - Chara5
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u9593\u306B\u5408\u3063\u305F\u3088\u3046\u306D"
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 7
+      debugIndex: 7
+      strings:
+      - Wait
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 1
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 8
+      debugIndex: 8
+      strings:
+      - 
+      - "\u30D8\u30AB\u30C6\u30FC"
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u3042<speed=0.5> </speed>\u3042\u306A\u305F\u306F\u2026"
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 9
+      debugIndex: 9
+      strings:
+      - 
+      - Chara5
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u30B8\u30E3\u30AB\u30EB\u306E\u5FEB\u5200<speed=0.5> </speed>\u3060\u3063\u305F\u3082\u306E\n\u3068\u3044\u3046\u3079\u304D\u304B\u3057\u3089"
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 10
+      debugIndex: 10
+      strings:
+      - 
+      - "\u30D8\u30AB\u30C6\u30FC"
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u2026\uFF01\uFF1F"
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 11
+      debugIndex: 11
+      strings:
+      - 
+      - "\u30D8\u30AB\u30C6\u30FC"
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u5148\u751F\u306F\uFF01\uFF1F"
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 12
+      debugIndex: 12
+      strings:
+      - 
+      - Chara5
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u6B8B\u5FF5\u3067\u3059\u304C"
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 13
+      debugIndex: 13
+      strings:
+      - 
+      - "\u30D8\u30AB\u30C6\u30FC"
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u305D\u3093\u306A\uFF01\uFF1F"
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 14
+      debugIndex: 14
+      strings:
+      - 
+      - "\u30D8\u30AB\u30C6\u30FC"
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u30B4\u30DB\u30C3\u2026<speed=0.5> </speed>\n\u3042\u2026"
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 15
+      debugIndex: 15
+      strings:
+      - 
+      - Chara5
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u8CB4\u65B9\u306E\u751F\u306F\u6F70\u3048\u3088\u3046\u3068\u3057\u3066\u3044\u307E\u3059<speed=0.5>
+        </speed>\n\u3067\u3059\u304C<speed=0.5> </speed>\u305D\u306E\u9B42\u306F\u6368\u3066\u308B\u306B\u306F\u3082\u3063\u305F\u3044\u306A\u3044"
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 16
+      debugIndex: 16
+      strings:
+      - 
+      - "\u30D8\u30AB\u30C6\u30FC"
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u3048\u2026\uFF1F"
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 17
+      debugIndex: 17
+      strings:
+      - 
+      - Chara5
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u4E0A\u4F4D\u8005\u306B\u3088\u3063\u3066\u6D44\u5316(Cleansing)\u306F\u679C\u305F\u3055\u308C\u3088\u3046\u3068\u3057\u3066\u3044\u307E\u3059<speed=0.5>
+        </speed>\n\u3057\u304B\u3057<speed=0.5> </speed>\u307E\u3060\u7D42\u308F\u3063\u305F\u308F\u3051\u3067\u306F\u3042\u308A\u307E\u305B\u3093"
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 18
+      debugIndex: 18
+      strings:
+      - 
+      - "\u30D8\u30AB\u30C6\u30FC"
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u2026"
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 19
+      debugIndex: 19
+      strings:
+      - 
+      - Chara5
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u5DFB\u304D\u8FBC\u3093\u3067\u3057\u307E\u3063\u305F\u3053\u3068\u3092\u304A\u8A31\u3057\u304F\u3060\u3055\u3044<speed=0.5>
+        </speed>\n\u76EE\u3092\u9589\u3058\u305F\u3089<speed=0.5> </speed>\u307E\u305F\u8CB4\u65B9\u306E\u751F\u306F\u59CB\u307E\u308A\u307E\u3059"
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 20
+      debugIndex: 20
+      strings:
+      - 
+      - Chara5
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u305D\u3053\u3067\u6700\u611B\u306E\u65B9\u306B\u304A\u4F1A\u3044\u306B\u306A\u3063\u3066\u304F\u3060\u3055\u3044<speed=0.5>
+        </speed>\n\u305D\u3057\u3066<speed=0.5> </speed>\u3069\u3046\u304B\u8A0E\u3061\u679C\u305F\u3057\u3066\u304F\u3060\u3055\u3044\u2026"
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 21
+      debugIndex: 21
+      strings:
+      - 
+      - Chara5
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u2026\u3092"
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 22
+      debugIndex: 22
+      strings:
+      - Wait
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 1
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 23
+      debugIndex: 23
+      strings:
+      - BgOff
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 24
+      debugIndex: 24
+      strings:
+      - CharacterOff
+      - Chara5
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 25
+      debugIndex: 25
+      strings:
+      - Wait
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 1
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 26
+      debugIndex: 26
+      strings:
+      - Bg
+      - Tactics
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 27
+      debugIndex: 27
+      strings:
+      - FadeIn
+      - black
+      - 
+      - 
+      - 
+      - 
+      - .8
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 28
+      debugIndex: 28
+      strings:
+      - Wait
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 1
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 29
+      debugIndex: 29
+      strings:
+      - 
+      - Chara1
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 30
+      debugIndex: 30
+      strings:
+      - Wait
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 1
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 31
+      debugIndex: 31
+      strings:
+      - 
+      - Chara1
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u5148\u751F\u2026"
+      - Input
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 32
+      debugIndex: 32
+      strings:
+      - Selection
+      - '*Selection1_Event5_1'
+      - 
+      - 
+      - 
+      - 280
+      - -80
+      - 
+      - ">>\u305F\u3060\u3044\u307E"
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 33
+      debugIndex: 33
+      strings:
+      - '*Selection1_Event5_1'
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 34
+      debugIndex: 34
+      strings:
+      - 
+      - Chara1
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u304A\u304B\u3048\u308A\u306A\u3055\u3044"
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 35
+      debugIndex: 35
+      strings:
+      - 
+      - Chara1
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u7D04\u675F<speed=0.5> </speed>\u307E\u3082\u3063\u3066\u304F\u308C\u305F\u3093\u3060\u306D"
+      - Input
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 36
+      debugIndex: 36
+      strings:
+      - Selection
+      - '*Selection2_Event5_1'
+      - 
+      - 
+      - 
+      - 280
+      - -80
+      - 
+      - ">>\u6D44\u5316\u306F\u6B62\u3081\u3089\u308C\u306A\u304B\u3063\u305F\u3088\u3046\u3060"
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 37
+      debugIndex: 37
+      strings:
+      - '*Selection2_Event5_1'
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 38
+      debugIndex: 38
+      strings:
+      - 
+      - Chara1
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u305D\u3046\u307F\u305F\u3044\u3060\u306D\u2026"
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 39
+      debugIndex: 39
+      strings:
+      - 
+      - Chara1
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u3067\u3082\u79C1\u306F\u3082\u3046\u4E8C\u5EA6\u3068<speed=0.5> </speed>\n\u5148\u751F\u3068\u96E2\u308C\u96E2\u308C\u306B\u306A\u308A\u305F\u304F\u306A\u3044"
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 40
+      debugIndex: 40
+      strings:
+      - 
+      - Chara1
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u3082\u3046\u4E00\u5EA6\u7D04\u675F\u3057\u3066\u304F\u308C\u308B\u2026\uFF1F<speed=0.5>
+        </speed>\n\u79C1\u3068\u5148\u751F\u306E\u672A\u6765\u306E\u305F\u3081\u306B"
+      - Input
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 41
+      debugIndex: 41
+      strings:
+      - Selection
+      - '*Selection4_Event5_1'
+      - 
+      - 
+      - 
+      - 280
+      - -80
+      - 
+      - ">>\u4E0A\u4F4D\u8005\u3092\u8A0E\u3061\u679C\u305F\u3059"
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 42
+      debugIndex: 42
+      strings:
+      - '*Selection4_Event5_1'
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 43
+      debugIndex: 43
+      strings:
+      - Param
+      - RouteSelect=2
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 44
+      debugIndex: 44
+      strings:
+      - Jump
+      - '*Selection5_Event5_1'
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 45
+      debugIndex: 45
+      strings:
+      - '*Selection5_Event5_1'
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 46
+      debugIndex: 46
+      strings:
+      - 
+      - Chara1
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u4FE1\u3058\u3066\u3044\u308B\u304B\u3089<speed=0.5> </speed>\n\u79C1\u306F\u305A\u3063\u3068\u3044\u3064\u307E\u3067\u3082"
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 47
+      debugIndex: 47
+      strings:
+      - EndScenario
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    name: Assets/ADVScene/AdvFiles/Actor0001.xls:Actor0001_5
+    type: 1
+    textLength: 1241
+    headerRow: 0
+    sourceAssetInEditor: {fileID: 0}
+    entityIndexTbl: 
+    entityDataList: []
+  gridList:
+  - rows:
+    - rowIndex: 0
+      debugIndex: 0
+      strings:
+      - Command
+      - Arg1
+      - Arg2
+      - Arg3
+      - Arg4
+      - Arg5
+      - Arg6
+      - WaitType
+      - Text
+      - PageCtrl
+      - Voice
+      - WindowType
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 1
+      debugIndex: 1
+      strings:
+      - ChangeMessageWindow
+      - MessageWindow
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 2
+      debugIndex: 2
+      strings:
+      - 
+      - Chara1
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u5148\u751F\uFF01"
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 3
+      debugIndex: 3
+      strings:
+      - 
+      - Chara1
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u3042<speed=0.5> </speed>\u3054\u3081\u3093\u306A\u3055\u3044<speed=0.5>
+        </speed>\n\u4ECA\u65E5\u304B\u3089\u306F\u4E0A\u5B98\u3067\u3057\u305F\u306D"
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 4
+      debugIndex: 4
+      strings:
+      - Wait
+      - 
+      - 
+      - 
+      - 
+      - 
+      - .5
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 5
+      debugIndex: 5
+      strings:
+      - 
+      - Chara1
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u3042\u308C\u2026<speed=0.5> </speed>\n\u5148\u751F\u306E\u307E\u307E\u3067\u826F\u3044\uFF1F"
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 6
+      debugIndex: 6
+      strings:
+      - 
+      - Chara1
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u305D\u3063\u304B<speed=0.5> </speed>\n\u305D\u3057\u305F\u3089\u2026"
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 7
+      debugIndex: 7
+      strings:
+      - Wait
+      - 
+      - 
+      - 
+      - 
+      - 
+      - .5
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 8
+      debugIndex: 8
+      strings:
+      - 
+      - Chara1
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u5148\u751F<speed=0.5> </speed>\u6307\u793A\u3092\u304A\u9858\u3044\u3057\u307E\u3059\uFF01"
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 9
+      debugIndex: 9
+      strings:
+      - EndScenario
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    name: Assets/ADVScene/AdvFiles/Actor0001.xls:Actor0001_1
+    type: 1
+    textLength: 307
+    headerRow: 0
+    sourceAssetInEditor: {fileID: 0}
+  - rows:
+    - rowIndex: 0
+      debugIndex: 0
+      strings:
+      - Command
+      - Arg1
+      - Arg2
+      - Arg3
+      - Arg4
+      - Arg5
+      - Arg6
+      - WaitType
+      - Text
+      - PageCtrl
+      - Voice
+      - WindowType
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 1
+      debugIndex: 1
+      strings:
+      - ChangeMessageWindow
+      - MessageWindow
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 2
+      debugIndex: 2
+      strings:
+      - 
+      - Chara1
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u805E\u3044\u3066\u304F\u3060\u3055\u3044<speed=0.5> </speed>\u5148\u751F\uFF01"
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 3
+      debugIndex: 3
+      strings:
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u2026"
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 4
+      debugIndex: 4
+      strings:
+      - Wait
+      - 
+      - 
+      - 
+      - 
+      - 
+      - .5
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 5
+      debugIndex: 5
+      strings:
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u3069\u3046\u3084\u3089\u9053\u306A\u304D\u8005(The Pathless)\u3092\u7D22\u6575\u3057\u305F\u3089\u3057\u3044\u2026"
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 6
+      debugIndex: 6
+      strings:
+      - 
+      - Chara1
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u308F\u305F\u3057\u3067\u3057\u305F\u3089\u2026<speed=0.5> </speed>\n\u5927\u4E08\u592B\u3067\u3059\uFF01"
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 7
+      debugIndex: 7
+      strings:
+      - Wait
+      - 
+      - 
+      - 
+      - 
+      - 
+      - .5
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 8
+      debugIndex: 8
+      strings:
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u6C17\u8CA0\u3044\u306F\u306A\u3044<speed=0.5> </speed>\n\u7136\u308B\u3079\u304D\u6551\u6E08\u3092\u4E0E\u3048\u308B\u597D\u6A5F\u3068\u307F\u3066\u3044\u3044\u3060\u308D\u3046"
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 9
+      debugIndex: 9
+      strings:
+      - EndScenario
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    name: Assets/ADVScene/AdvFiles/Actor0001.xls:Actor0001_2
+    type: 1
+    textLength: 277
+    headerRow: 0
+    sourceAssetInEditor: {fileID: 0}
+  - rows:
+    - rowIndex: 0
+      debugIndex: 0
+      strings:
+      - Command
+      - Arg1
+      - Arg2
+      - Arg3
+      - Arg4
+      - Arg5
+      - Arg6
+      - WaitType
+      - Text
+      - PageCtrl
+      - Voice
+      - WindowType
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 1
+      debugIndex: 1
+      strings:
+      - PlayBgm
+      - EVENT2
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 2
+      debugIndex: 2
+      strings:
+      - Bg
+      - Event4
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 3
+      debugIndex: 3
+      strings:
+      - ChangeMessageWindow
+      - MessageWindow
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 4
+      debugIndex: 4
+      strings:
+      - Wait
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 1
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 5
+      debugIndex: 5
+      strings:
+      - 
+      - Chara1
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 6
+      debugIndex: 6
+      strings:
+      - Wait
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 1
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 7
+      debugIndex: 7
+      strings:
+      - 
+      - Chara1
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u307F\u3093\u306A\u3084\u3063\u3068\u843D\u3061\u7740\u3044\u3066<speed=0.5>
+        </speed>\n\u5BDD\u4ED8\u3044\u3066\u304F\u308C\u305F\u306D"
+      - Input
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 8
+      debugIndex: 8
+      strings:
+      - Selection
+      - '*Selection1_Event3_1'
+      - 
+      - 
+      - 
+      - 280
+      - -80
+      - 
+      - ">>\u5B50\u4F9B\u305F\u3061\u306F\u6C17\u3065\u3044\u3066\u3044\u306A\u3044\u3060\u308D\u3046\u304B\uFF1F"
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 9
+      debugIndex: 9
+      strings:
+      - '*Selection1_Event3_1'
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 10
+      debugIndex: 10
+      strings:
+      - 
+      - Chara1
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u4ED5\u8349\u306B\u306F\u8868\u3055\u306A\u3044\u3051\u3069<speed=0.5>
+        </speed>\n\u305F\u3076\u3093\u6C17\u3065\u3044\u3066\u308B\u3093\u3060\u3068\u601D\u3046"
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 11
+      debugIndex: 11
+      strings:
+      - Wait
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 1
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 12
+      debugIndex: 12
+      strings:
+      - 
+      - Chara1
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u3067\u3082\u5927\u4E08\u592B\uFF01"
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 13
+      debugIndex: 13
+      strings:
+      - 
+      - Chara1
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u6B64\u51E6\u306F\u79C1\u304C\u9762\u5012\u898B\u308B\u3057<speed=0.5>
+        </speed>\n\u3042\u306A\u305F\u306F\u3068\u3063\u3066\u3082\u5F37\u3044\u304B\u3089"
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 14
+      debugIndex: 14
+      strings:
+      - 
+      - Chara1
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u2026"
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 15
+      debugIndex: 15
+      strings:
+      - Wait
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 1
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 16
+      debugIndex: 16
+      strings:
+      - 
+      - Chara1
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u4FE1\u3058\u3066\u3044\u308B\u304B\u3089\u306D"
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 17
+      debugIndex: 17
+      strings:
+      - 
+      - Chara1
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u7D76\u5BFE\u5E30\u3063\u3066\u304D\u3066\u306D"
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 18
+      debugIndex: 18
+      strings:
+      - 
+      - Chara1
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u53CD\u4E71\u8ECD\u306B\u8CA0\u3051\u306A\u3044\u3067\u306D"
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 19
+      debugIndex: 19
+      strings:
+      - 
+      - Chara1
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u307F\u3093\u306A<speed=0.5> </speed>\u5F85\u3063\u3066\u3044\u308B\u304B\u3089"
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 20
+      debugIndex: 20
+      strings:
+      - 
+      - Chara1
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u79C1\u3082\u2026"
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 21
+      debugIndex: 21
+      strings:
+      - FadeOut
+      - black
+      - 
+      - 
+      - 
+      - 
+      - .8
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 22
+      debugIndex: 22
+      strings:
+      - BgOff
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 23
+      debugIndex: 23
+      strings:
+      - Bg
+      - Tactics
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 24
+      debugIndex: 24
+      strings:
+      - StopBgm2
+      - 
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 25
+      debugIndex: 25
+      strings:
+      - Wait
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 1
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 26
+      debugIndex: 26
+      strings:
+      - FadeIn
+      - black
+      - 
+      - 
+      - 
+      - 
+      - .8
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 27
+      debugIndex: 27
+      strings:
+      - Wait
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 1
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 28
+      debugIndex: 28
+      strings:
+      - 
+      - Chara1
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u3042\u306E\u3045\u2026<speed=0.5> </speed>"
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 29
+      debugIndex: 29
+      strings:
+      - 
+      - Chara1
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u5148\u751F\uFF01<speed=0.5> </speed>\u96E3\u3057\u3044\u9854\u3092\u3057\u3066\n\u3069\u3046\u304B\u3057\u307E\u3057\u305F\u304B\uFF1F"
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 30
+      debugIndex: 30
+      strings:
+      - 
+      - Chara1
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u76F8\u8AC7\u4E8B\u3067\u3057\u305F\u3089<speed=0.5> </speed>\n\u3069\u30FC\u3093\u3068\u805E\u3044\u3061\u3083\u3044\u307E\u3059\u3088\uFF01"
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 31
+      debugIndex: 31
+      strings:
+      - EndScenario
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    name: Assets/ADVScene/AdvFiles/Actor0001.xls:Actor0001_3
+    type: 1
+    textLength: 670
+    headerRow: 0
+    sourceAssetInEditor: {fileID: 0}
+  - rows:
+    - rowIndex: 0
+      debugIndex: 0
+      strings:
+      - Command
+      - Arg1
+      - Arg2
+      - Arg3
+      - Arg4
+      - Arg5
+      - Arg6
+      - WaitType
+      - Text
+      - PageCtrl
+      - Voice
+      - WindowType
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 1
+      debugIndex: 1
+      strings:
+      - PlayBgm
+      - EVENT2
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 2
+      debugIndex: 2
+      strings:
+      - Bg
+      - Event5
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 3
+      debugIndex: 3
+      strings:
+      - ChangeMessageWindow
+      - MessageWindow
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 4
+      debugIndex: 4
+      strings:
+      - Wait
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 1
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 5
+      debugIndex: 5
+      strings:
+      - 
+      - "\u30D8\u30AB\u30C6\u30FC"
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u307F\u3093\u306A\uFF01<speed=0.5> </speed>\n\u65E9\u304F\u9003\u3052\u3066\uFF01"
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 6
+      debugIndex: 6
+      strings:
+      - Wait
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 2
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 7
+      debugIndex: 7
+      strings:
+      - 
+      - "\u30B8\u30E3\u30AB\u30EB\u306E\u5C16\u5175"
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u2026\uFF01"
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 8
+      debugIndex: 8
+      strings:
+      - Wait
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 2
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 9
+      debugIndex: 9
+      strings:
+      - 
+      - "\u30D8\u30AB\u30C6\u30FC"
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u3046\u2026<speed=0.5> </speed>\u3046\u305D\u2026"
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 10
+      debugIndex: 10
+      strings:
+      - 
+      - "\u30B8\u30E3\u30AB\u30EB\u306E\u5C16\u5175"
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u8CB4\u69D8\u304C<param=PlayerName>\u306E\uFF1F"
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 11
+      debugIndex: 11
+      strings:
+      - 
+      - "\u30D8\u30AB\u30C6\u30FC"
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u3060\u3068\u3057\u305F\u3089<speed=0.5> </speed>\n\u4F55\u3060\u3063\u3066\u3044\u3046\u306E\uFF01\uFF1F"
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 12
+      debugIndex: 12
+      strings:
+      - StopBgm2
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 13
+      debugIndex: 13
+      strings:
+      - FadeOut
+      - red
+      - 
+      - 
+      - 
+      - 
+      - 0
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 14
+      debugIndex: 14
+      strings:
+      - Wait
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 1
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 15
+      debugIndex: 15
+      strings:
+      - 
+      - "\u30D8\u30AB\u30C6\u30FC"
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u3042\u3063\u2026\uFF01\uFF1F<speed=0.5> </speed>\n\u3042\u3041\u2026"
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 16
+      debugIndex: 16
+      strings:
+      - 
+      - "\u30D8\u30AB\u30C6\u30FC"
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u8840\u304C\u2026<speed=0.5> </speed>\n\u6B62\u307E\u3089\u306A\u3044\uFF01\uFF1F"
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 17
+      debugIndex: 17
+      strings:
+      - 
+      - "\u30D8\u30AB\u30C6\u30FC"
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u75DB\u3044<speed=0.5> </speed>\u75DB\u3044\u3088\u2026"
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 18
+      debugIndex: 18
+      strings:
+      - 
+      - "\u30D8\u30AB\u30C6\u30FC"
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u52A9\u3051\u3066\u2026<speed=0.5> </speed>\n\u5148\u751F\u2026"
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 19
+      debugIndex: 19
+      strings:
+      - Wait
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 1
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 20
+      debugIndex: 20
+      strings:
+      - BgOff
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 21
+      debugIndex: 21
+      strings:
+      - Bg
+      - Tactics
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 22
+      debugIndex: 22
+      strings:
+      - FadeIn
+      - red
+      - 
+      - 
+      - 
+      - 
+      - .8
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 23
+      debugIndex: 23
+      strings:
+      - 
+      - Chara1
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 24
+      debugIndex: 24
+      strings:
+      - Wait
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 1
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 25
+      debugIndex: 25
+      strings:
+      - 
+      - Chara1
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u305B<speed=0.5> </speed>\u305B\u3093\u305B\u3044\u2026"
+      - Input
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 26
+      debugIndex: 26
+      strings:
+      - Selection
+      - '*Selection1_Event4_1'
+      - 
+      - 
+      - 
+      - 280
+      - -80
+      - 
+      - ">>\u5927\u4E08\u592B\u304B\uFF1F \u5177\u5408\u304C\u60AA\u305D\u3046\u3060"
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 27
+      debugIndex: 27
+      strings:
+      - '*Selection1_Event4_1'
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 28
+      debugIndex: 28
+      strings:
+      - 
+      - Chara1
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u6628\u65E5\u2026<speed=0.5> </speed>\n\u3068\u3066\u3082\u6016\u3044\u5922\u3092\u898B\u305F\u3093\u3067\u3059"
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 29
+      debugIndex: 29
+      strings:
+      - 
+      - Chara1
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u79C1\u306F\u5B50\u4F9B\u305F\u3061\u3068\u5B64\u5150\u9662\u3067\u66AE\u3089\u3057\u3066\u3066"
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 30
+      debugIndex: 30
+      strings:
+      - 
+      - Chara1
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u305D\u3053\u306B\u6016\u3044\u5175\u58EB\u304C\u3084\u3063\u3066\u6765\u3066"
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 31
+      debugIndex: 31
+      strings:
+      - 
+      - Chara1
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u307F\u3093\u306A\u2026<speed=0.5> </speed>\n\u78D4\u306B\u2026"
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 32
+      debugIndex: 32
+      strings:
+      - 
+      - Chara1
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u79C1\u3082\u2026<speed=0.5> </speed>\n\u65AC\u3089\u308C\u3066\u2026<speed=0.5>
+        </speed>\u71C3\u3084\u3055\u308C\u3066\u2026"
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 33
+      debugIndex: 33
+      strings:
+      - EndScenario
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    name: Assets/ADVScene/AdvFiles/Actor0001.xls:Actor0001_4
+    type: 1
+    textLength: 767
+    headerRow: 0
+    sourceAssetInEditor: {fileID: 0}
+  - rows:
+    - rowIndex: 0
+      debugIndex: 0
+      strings:
+      - Command
+      - Arg1
+      - Arg2
+      - Arg3
+      - Arg4
+      - Arg5
+      - Arg6
+      - WaitType
+      - Text
+      - PageCtrl
+      - Voice
+      - WindowType
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 1
+      debugIndex: 1
+      strings:
+      - PlayBgm
+      - EVENT2
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 2
+      debugIndex: 2
+      strings:
+      - ChangeMessageWindow
+      - MessageWindow
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 3
+      debugIndex: 3
+      strings:
+      - FadeOut
+      - black
+      - 
+      - 
+      - 
+      - 
+      - .8
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 4
+      debugIndex: 4
+      strings:
+      - 
+      - Chara5
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u2026"
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 5
+      debugIndex: 5
+      strings:
+      - Wait
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 1
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 6
+      debugIndex: 6
+      strings:
+      - 
+      - Chara5
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u9593\u306B\u5408\u3063\u305F\u3088\u3046\u306D"
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 7
+      debugIndex: 7
+      strings:
+      - Wait
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 1
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 8
+      debugIndex: 8
+      strings:
+      - 
+      - "\u30D8\u30AB\u30C6\u30FC"
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u3042<speed=0.5> </speed>\u3042\u306A\u305F\u306F\u2026"
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 9
+      debugIndex: 9
+      strings:
+      - 
+      - Chara5
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u30B8\u30E3\u30AB\u30EB\u306E\u5FEB\u5200<speed=0.5> </speed>\u3060\u3063\u305F\u3082\u306E\n\u3068\u3044\u3046\u3079\u304D\u304B\u3057\u3089"
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 10
+      debugIndex: 10
+      strings:
+      - 
+      - "\u30D8\u30AB\u30C6\u30FC"
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u2026\uFF01\uFF1F"
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 11
+      debugIndex: 11
+      strings:
+      - 
+      - "\u30D8\u30AB\u30C6\u30FC"
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u5148\u751F\u306F\uFF01\uFF1F"
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 12
+      debugIndex: 12
+      strings:
+      - 
+      - Chara5
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u6B8B\u5FF5\u3067\u3059\u304C"
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 13
+      debugIndex: 13
+      strings:
+      - 
+      - "\u30D8\u30AB\u30C6\u30FC"
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u305D\u3093\u306A\uFF01\uFF1F"
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 14
+      debugIndex: 14
+      strings:
+      - 
+      - "\u30D8\u30AB\u30C6\u30FC"
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u30B4\u30DB\u30C3\u2026<speed=0.5> </speed>\n\u3042\u2026"
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 15
+      debugIndex: 15
+      strings:
+      - 
+      - Chara5
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u8CB4\u65B9\u306E\u751F\u306F\u6F70\u3048\u3088\u3046\u3068\u3057\u3066\u3044\u307E\u3059<speed=0.5>
+        </speed>\n\u3067\u3059\u304C<speed=0.5> </speed>\u305D\u306E\u9B42\u306F\u6368\u3066\u308B\u306B\u306F\u3082\u3063\u305F\u3044\u306A\u3044"
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 16
+      debugIndex: 16
+      strings:
+      - 
+      - "\u30D8\u30AB\u30C6\u30FC"
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u3048\u2026\uFF1F"
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 17
+      debugIndex: 17
+      strings:
+      - 
+      - Chara5
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u4E0A\u4F4D\u8005\u306B\u3088\u3063\u3066\u6D44\u5316(Cleansing)\u306F\u679C\u305F\u3055\u308C\u3088\u3046\u3068\u3057\u3066\u3044\u307E\u3059<speed=0.5>
+        </speed>\n\u3057\u304B\u3057<speed=0.5> </speed>\u307E\u3060\u7D42\u308F\u3063\u305F\u308F\u3051\u3067\u306F\u3042\u308A\u307E\u305B\u3093"
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 18
+      debugIndex: 18
+      strings:
+      - 
+      - "\u30D8\u30AB\u30C6\u30FC"
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u2026"
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 19
+      debugIndex: 19
+      strings:
+      - 
+      - Chara5
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u5DFB\u304D\u8FBC\u3093\u3067\u3057\u307E\u3063\u305F\u3053\u3068\u3092\u304A\u8A31\u3057\u304F\u3060\u3055\u3044<speed=0.5>
+        </speed>\n\u76EE\u3092\u9589\u3058\u305F\u3089<speed=0.5> </speed>\u307E\u305F\u8CB4\u65B9\u306E\u751F\u306F\u59CB\u307E\u308A\u307E\u3059"
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 20
+      debugIndex: 20
+      strings:
+      - 
+      - Chara5
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u305D\u3053\u3067\u6700\u611B\u306E\u65B9\u306B\u304A\u4F1A\u3044\u306B\u306A\u3063\u3066\u304F\u3060\u3055\u3044<speed=0.5>
+        </speed>\n\u305D\u3057\u3066<speed=0.5> </speed>\u3069\u3046\u304B\u8A0E\u3061\u679C\u305F\u3057\u3066\u304F\u3060\u3055\u3044\u2026"
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 21
+      debugIndex: 21
+      strings:
+      - 
+      - Chara5
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u2026\u3092"
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 22
+      debugIndex: 22
+      strings:
+      - Wait
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 1
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 23
+      debugIndex: 23
+      strings:
+      - BgOff
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 24
+      debugIndex: 24
+      strings:
+      - CharacterOff
+      - Chara5
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 25
+      debugIndex: 25
+      strings:
+      - Wait
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 1
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 26
+      debugIndex: 26
+      strings:
+      - Bg
+      - Tactics
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 27
+      debugIndex: 27
+      strings:
+      - FadeIn
+      - black
+      - 
+      - 
+      - 
+      - 
+      - .8
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 28
+      debugIndex: 28
+      strings:
+      - Wait
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 1
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 29
+      debugIndex: 29
+      strings:
+      - 
+      - Chara1
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 30
+      debugIndex: 30
+      strings:
+      - Wait
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 1
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 31
+      debugIndex: 31
+      strings:
+      - 
+      - Chara1
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u5148\u751F\u2026"
+      - Input
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 32
+      debugIndex: 32
+      strings:
+      - Selection
+      - '*Selection1_Event5_1'
+      - 
+      - 
+      - 
+      - 280
+      - -80
+      - 
+      - ">>\u305F\u3060\u3044\u307E"
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 33
+      debugIndex: 33
+      strings:
+      - '*Selection1_Event5_1'
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 34
+      debugIndex: 34
+      strings:
+      - 
+      - Chara1
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u304A\u304B\u3048\u308A\u306A\u3055\u3044"
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 35
+      debugIndex: 35
+      strings:
+      - 
+      - Chara1
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u7D04\u675F<speed=0.5> </speed>\u307E\u3082\u3063\u3066\u304F\u308C\u305F\u3093\u3060\u306D"
+      - Input
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 36
+      debugIndex: 36
+      strings:
+      - Selection
+      - '*Selection2_Event5_1'
+      - 
+      - 
+      - 
+      - 280
+      - -80
+      - 
+      - ">>\u6D44\u5316\u306F\u6B62\u3081\u3089\u308C\u306A\u304B\u3063\u305F\u3088\u3046\u3060"
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 37
+      debugIndex: 37
+      strings:
+      - '*Selection2_Event5_1'
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 38
+      debugIndex: 38
+      strings:
+      - 
+      - Chara1
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u305D\u3046\u307F\u305F\u3044\u3060\u306D\u2026"
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 39
+      debugIndex: 39
+      strings:
+      - 
+      - Chara1
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u3067\u3082\u79C1\u306F\u3082\u3046\u4E8C\u5EA6\u3068<speed=0.5> </speed>\n\u5148\u751F\u3068\u96E2\u308C\u96E2\u308C\u306B\u306A\u308A\u305F\u304F\u306A\u3044"
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 40
+      debugIndex: 40
+      strings:
+      - 
+      - Chara1
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u3082\u3046\u4E00\u5EA6\u7D04\u675F\u3057\u3066\u304F\u308C\u308B\u2026\uFF1F<speed=0.5>
+        </speed>\n\u79C1\u3068\u5148\u751F\u306E\u672A\u6765\u306E\u305F\u3081\u306B"
+      - Input
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 41
+      debugIndex: 41
+      strings:
+      - Selection
+      - '*Selection4_Event5_1'
+      - 
+      - 
+      - 
+      - 280
+      - -80
+      - 
+      - ">>\u4E0A\u4F4D\u8005\u3092\u8A0E\u3061\u679C\u305F\u3059"
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 42
+      debugIndex: 42
+      strings:
+      - '*Selection4_Event5_1'
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 43
+      debugIndex: 43
+      strings:
+      - Param
+      - RouteSelect=2
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 44
+      debugIndex: 44
+      strings:
+      - Jump
+      - '*Selection5_Event5_1'
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 45
+      debugIndex: 45
+      strings:
+      - '*Selection5_Event5_1'
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 46
+      debugIndex: 46
+      strings:
+      - 
+      - Chara1
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - "\u4FE1\u3058\u3066\u3044\u308B\u304B\u3089<speed=0.5> </speed>\n\u79C1\u306F\u305A\u3063\u3068\u3044\u3064\u307E\u3067\u3082"
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 47
+      debugIndex: 47
+      strings:
+      - EndScenario
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    name: Assets/ADVScene/AdvFiles/Actor0001.xls:Actor0001_5
+    type: 1
+    textLength: 1241
+    headerRow: 0
+    sourceAssetInEditor: {fileID: 0}

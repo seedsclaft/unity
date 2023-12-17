@@ -9,7 +9,13 @@ public class AdMobController : SingletonMonoBehaviour<AdMobController>
 {
     // These ad units are configured to always serve test ads.
 #if UNITY_ANDROID
+    #if DEVELOPMENT_BUILD || UNITY_EDITOR
+    // テスト用
     private string _adUnitId = "ca-app-pub-3940256099942544/1033173712";
+    #else
+    // 本番用
+    private string _adUnitId = "ca-app-pub-1221993218392084/2335792790";
+    #endif
     //#elif UNITY_IPHONE
     //private string _adUnitId = "ca-app-pub-3940256099942544/4411468910";
 #else

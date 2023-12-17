@@ -102,6 +102,7 @@ public class StatusPresenter : BasePresenter
                     _view.CommandSceneChange(Scene.Reborn);
                 } else
                 {
+                    _model.SetResumeStageTrue();
                     _view.CommandSceneChange(Scene.Tactics);
                 }
             } else{

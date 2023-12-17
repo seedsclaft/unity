@@ -563,23 +563,11 @@ MonoBehaviour:
       Type: 11
       Param: 101
       ReadFlag: 1
-    - EventKey: 1BeforeTacticsSelectActorAdvStart110
+    - EventKey: 1BeforeTacticsSelectActorAdvStart1000
       Turns: 1
       Timing: 11
       Type: 12
-      Param: 110
-      ReadFlag: 1
-    - EventKey: 1BeforeTacticsAdvStart51
-      Turns: 1
-      Timing: 11
-      Type: 11
-      Param: 51
-      ReadFlag: 1
-    - EventKey: 1BeforeTacticsRebornSkillEffect0
-      Turns: 1
-      Timing: 11
-      Type: 41
-      Param: 0
+      Param: 1000
       ReadFlag: 1
     - EventKey: 2StartTacticsCommandDisable3
       Turns: 2
@@ -635,17 +623,17 @@ MonoBehaviour:
       Type: 3
       Param: 0
       ReadFlag: 0
-    - EventKey: 6BeforeTacticsSelectActorAdvStart120
+    - EventKey: 6BeforeTacticsSelectActorAdvStart2000
       Turns: 6
       Timing: 11
       Type: 12
-      Param: 120
+      Param: 2000
       ReadFlag: 1
-    - EventKey: 7BeforeTacticsAdvStart131
+    - EventKey: 7BeforeTacticsAdvStart102
       Turns: 7
       Timing: 11
       Type: 11
-      Param: 131
+      Param: 102
       ReadFlag: 1
     - EventKey: 7StartTacticsSelectAddActor1
       Turns: 7
@@ -703,17 +691,17 @@ MonoBehaviour:
       Type: 61
       Param: 1
       ReadFlag: 0
-    - EventKey: 7BeforeTacticsAdvStart140
+    - EventKey: 7BeforeTacticsAdvStart103
       Turns: 7
       Timing: 11
       Type: 11
-      Param: 140
+      Param: 103
       ReadFlag: 1
-    - EventKey: 7BeforeTacticsSelectActorAdvStart140
+    - EventKey: 7BeforeTacticsSelectActorAdvStart3000
       Turns: 7
       Timing: 11
       Type: 12
-      Param: 140
+      Param: 3000
       ReadFlag: 1
     - EventKey: 7StartTacticsSelectAddActor1
       Turns: 7
@@ -759,11 +747,11 @@ MonoBehaviour:
       Type: 61
       Param: 2
       ReadFlag: 0
-    - EventKey: 7BeforeTacticsSelectActorAdvStart150
+    - EventKey: 7BeforeTacticsSelectActorAdvStart4000
       Turns: 7
       Timing: 11
       Type: 12
-      Param: 150
+      Param: 4000
       ReadFlag: 1
     - EventKey: 7StartTacticsSelectAddActor1
       Turns: 7
@@ -885,11 +873,11 @@ MonoBehaviour:
       Type: 61
       Param: 5
       ReadFlag: 0
-    - EventKey: 6BeforeTacticsSelectActorAdvStart160
+    - EventKey: 6BeforeTacticsSelectActorAdvStart5000
       Turns: 6
       Timing: 11
       Type: 12
-      Param: 160
+      Param: 5000
       ReadFlag: 1
     - EventKey: 6StartTacticsSetRouteSelectParam0
       Turns: 6

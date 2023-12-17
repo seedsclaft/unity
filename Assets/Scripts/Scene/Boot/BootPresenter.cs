@@ -22,8 +22,14 @@ public class BootPresenter : BasePresenter
         DataSystem.LoadData();
         Debug.Log("Boot Success");
         Application.targetFrameRate = 60;
-        var gamepad = Gamepad.current;
-        if (gamepad != null)
+#if UNITY_ANDROID && !UNITY_EDITOR
+        var width = Screen.width;
+        var height = Screen.height;
+        var rate = 1280f / (float)width;
+        Screen.SetResolution((int)(width * rate), (int)(height * rate), true);
+#endif
+        var gamePad = Gamepad.current;
+        if (gamePad != null)
         {
             InputSystem.IsGamePad = true;
         }
