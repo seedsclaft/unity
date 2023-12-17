@@ -9,7 +9,7 @@ public class SaveSystem : MonoBehaviour
 {
 
 	private static readonly string debugFilePath = Application.persistentDataPath;
-	public static void SaveStart(SavePlayInfo pSourceSavePlayInfo = null,int fileId = 0)
+	public static void SaveStart(SaveInfo pSourceSavePlayInfo = null,int fileId = 0)
 	{
 		#if UNITY_WEBGL
 			//	バイナリ形式でシリアル化
@@ -28,7 +28,7 @@ public class SaveSystem : MonoBehaviour
 			//	保存情報
 			if( pSourceSavePlayInfo == null )
 			{
-				pSourceSavePlayInfo = new SavePlayInfo();
+				pSourceSavePlayInfo = new SaveInfo();
 				pSourceSavePlayInfo.InitSaveData();
 			}
 
@@ -117,7 +117,7 @@ public class SaveSystem : MonoBehaviour
 			try 
 			{
 				//	指定したファイルストリームをオブジェクトにデシリアライズ。
-				GameSystem.CurrentData = (SavePlayInfo)TempBinaryFormatter.Deserialize(TempFileStream);
+				GameSystem.CurrentData = (SaveInfo)TempBinaryFormatter.Deserialize(TempFileStream);
 				return true;
 			}
 			finally 
@@ -238,184 +238,5 @@ public class SaveSystem : MonoBehaviour
 #else
 		return File.Exists(debugFilePath + "/Autoconfig.dat");
 #endif
-	}
-}
-
-[Serializable]
-public class SavePlayInfo
-{
-	private PlayerInfo _playerInfo = null;
-    public PlayerInfo PlayerInfo => _playerInfo;
-    private List<ActorInfo> _actors = new ();
-    public List<ActorInfo> Actors => _actors;
-    private PartyInfo _party = null;
-	public PartyInfo Party => _party;
-    private StageInfo _currentStage = null;
-	public StageInfo CurrentStage => _currentStage;
-    private AlcanaInfo _currentAlcana = null;
-	public AlcanaInfo CurrentAlcana => _currentAlcana;
-
-	private bool _resumeStage = true;
-	public bool ResumeStage => _resumeStage;
-	public void SetResumeStage(bool resumeStage)
-	{
-		_resumeStage = resumeStage;
-	}
-    public SavePlayInfo()
-    {
-		this.InitActors();
-		this.InitParty();
-		_playerInfo = new PlayerInfo();
-		_playerInfo.InitStages();
-	}
-
-    public void InitActors()
-    {
-        _actors.Clear();
-    }
-
-	public void MakeStageData(int actorId,int debugStageId = 0)
-	{
-		//InitActors();
-		_party.InitActors();
-		//AddActor(actorId);
-		int stageId = 0;
-		if (debugStageId != 0)
-		{
-			stageId = debugStageId;
-		} else
-		{
-			stageId = _party.StageId;
-		}
-		var stageData = DataSystem.Stages.Find(a => a.Id == stageId);
-		_currentStage = new StageInfo(stageData);
-		_currentStage.AddSelectActorId(actorId);
-		_currentAlcana = new AlcanaInfo();
-		_currentAlcana.InitData();
-	}
-
-	public void AddActor(ActorInfo actorInfo)
-	{
-		_actors.Add(actorInfo);
-		_party.AddActor(actorInfo.ActorId);
-	}
-	
-	public void UpdateActorInfo(ActorInfo actorInfo)
-	{
-		var findIndex = _actors.FindIndex(a => a.ActorId == actorInfo.ActorId);
-		if (findIndex > -1)
-		{
-			_actors[findIndex] = actorInfo;
-		}
-	}
-
-	public void AddTestActor(ActorData actorData)
-	{
-		if (actorData != null)
-		{
-			var actorInfo = new ActorInfo(actorData);
-			actorInfo.InitSkillInfo(actorData.LearningSkills);
-			_actors.Add(actorInfo);
-			_party.AddActor(actorInfo.ActorId);
-		}
-	}
-
-    public void InitParty()
-    {
-        _party = new PartyInfo();
-		_party.ChangeCurrency(DataSystem.System.InitCurrency);
-    }
-
-	public void InitSaveData()
-	{
-		this.InitPlayer();
-		_playerInfo.InitStageInfo();
-	}
-
-	public void InitPlayer()
-	{
-		for (int i = 0;i < DataSystem.InitActors.Count;i++)
-		{
-			var actorData = DataSystem.Actors.Find(actor => actor.Id == DataSystem.InitActors[i]);
-			if (actorData != null)
-			{
-				var actorInfo = new ActorInfo(actorData);
-				actorInfo.InitSkillInfo(actorData.LearningSkills);
-				_actors.Add(actorInfo);
-				_party.AddActor(actorInfo.ActorId);
-			}
-		}
-	}
-
-	public void SetPlayerName(string name)
-	{
-		_playerInfo.SetPlayerName(name);
-		_playerInfo.SetUserId();
-	}
-
-	public void ChangeRouteSelectStage(int stageId)
-	{
-		var stageData = DataSystem.Stages.Find(a => a.Id == stageId);
-		var current = _currentStage;
-		var currentStage = new StageInfo(stageData);
-		currentStage.SetMoveStageData(current);
-		_currentStage = currentStage;
-	}
-
-	public void MoveStage(int stageId)
-	{
-		var stageData = DataSystem.Stages.Find(a => a.Id == stageId);
-		var current = _currentStage;
-		var moveStage = new StageInfo(stageData);
-		moveStage.SetMoveStageData(current);
-		_currentStage = moveStage;
-	}
-
-	public void ClearStageInfo()
-	{
-		_currentStage = null;
-	}
-}
-
-[Serializable]
-public class SaveConfigInfo
-{
-	public float BgmVolume;
-	public bool BgmMute;
-	public float SeVolume;
-	public bool SeMute;
-	public int GraphicIndex;
-	public bool EventSkipIndex;
-	public bool CommandEndCheck;
-	public bool BattleWait;
-	public bool BattleAnimationSkip;
-	public bool InputType;
-	public bool BattleAuto;
-    public SaveConfigInfo()
-    {
-		this.InitParameter();
-	}
-
-	public void InitParameter()
-	{
-		BgmVolume = 1.0f;
-		BgmMute = false;
-		SeVolume = 1.0f;
-		SeMute = false;
-		GraphicIndex = 2;
-		EventSkipIndex = false;
-		CommandEndCheck = true;
-		BattleWait = true;
-		BattleAnimationSkip = false;
-		InputType = true;
-		BattleAuto = false;
-	}
-
-	public void UpdateSoundParameter(float bgmVolume,bool bgmMute,float seVolume,bool seMute)
-	{
-		BgmVolume = bgmVolume;
-		BgmMute = bgmMute;
-		SeVolume = seVolume;
-		SeMute = seMute;
 	}
 }

@@ -287,6 +287,9 @@ public class BattlePresenter : BasePresenter
                     {
                         _view.StartStatePopup(removeState.TargetIndex,DamageType.State,"-" + removeState.Master.Name);
                     }
+                    // Passive解除
+                    var RemovePassiveResults = _model.CheckRemovePassiveInfos();
+                    ExecActionResult(RemovePassiveResults);
                     _view.RefreshStatus();
                 }
                 _view.UpdateAp();
@@ -316,6 +319,9 @@ public class BattlePresenter : BasePresenter
                 {
                     _view.StartStatePopup(removeState.TargetIndex,DamageType.State,"-" + removeState.Master.Name);
                 }
+                // Passive解除
+                var RemovePassiveResults = _model.CheckRemovePassiveInfos();
+                ExecActionResult(RemovePassiveResults);
                 _view.RefreshStatus();
             }
             _view.UpdateAp();
@@ -678,12 +684,23 @@ public class BattlePresenter : BasePresenter
                 for (int i = 0; i < actionInfo.ActionResults.Count; i++)
                 {
                     var oneAnimation = actionInfo.ActionResults[i].CursedDamage ? _model.SkillActionAnimation("NA_Effekseer/NA_curse_001") : animation;
-                    _view.StartAnimation(actionInfo.ActionResults[i].TargetIndex,oneAnimation,actionInfo.Master.AnimationPosition);
+                    _view.StartAnimation(actionInfo.ActionResults[i].TargetIndex,oneAnimation,actionInfo.Master.AnimationPosition,actionInfo.Master.AnimationScale);
                 }
             }
             StartAliveAnimation(_model.CurrentActionInfo().ActionResults);
 
             await UniTask.DelayFrame(actionInfo.Master.DamageTiming);
+            for (int i = 0; i < actionInfo.ActionResults.Count; i++)
+            {
+                bool lastTarget = actionInfo.ActionResults[actionInfo.ActionResults.Count-1].TargetIndex == actionInfo.ActionResults[i].TargetIndex;
+                PopupActionResult(actionInfo.ActionResults[i],actionInfo.ActionResults[i].TargetIndex,true,true,lastTarget);
+            }
+            await UniTask.DelayFrame(64);
+        } else
+        {
+            _view.SetCurrentSkillData(actionInfo.Master);
+            _view.ClearDamagePopup();
+            StartAliveAnimation(_model.CurrentActionInfo().ActionResults);
             for (int i = 0; i < actionInfo.ActionResults.Count; i++)
             {
                 bool lastTarget = actionInfo.ActionResults[actionInfo.ActionResults.Count-1].TargetIndex == actionInfo.ActionResults[i].TargetIndex;

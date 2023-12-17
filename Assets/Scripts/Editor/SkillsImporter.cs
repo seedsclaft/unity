@@ -18,6 +18,7 @@ public class SkillsImporter : AssetPostprocessor {
         _IconIndex,
 		AnimationName,
 		AnimationPosition,
+		AnimationScale,
 		AnimationType,
 		_AnimationType,
 		DamageTiming,
@@ -110,6 +111,7 @@ public class SkillsImporter : AssetPostprocessor {
 					SkillData.IconIndex = (MagicIconType)AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.IconIndex);
 					SkillData.AnimationName = AssetPostImporter.ImportString(BaseRow,(int)BaseColumn.AnimationName);
                     SkillData.AnimationPosition = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.AnimationPosition);
+                    SkillData.AnimationScale = AssetPostImporter.ImportFloat(BaseRow,(int)BaseColumn.AnimationScale);
                     SkillData.AnimationType = (AnimationType)AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.AnimationType);
                     SkillData.DamageTiming = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.DamageTiming);
                     SkillData.MpCost = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.MpCost);

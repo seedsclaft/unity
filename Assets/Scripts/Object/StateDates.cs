@@ -18,6 +18,7 @@ public class StateData
     public bool OverWrite;
     public string EffectPath;
     public EffectPositionType EffectPosition;
+    public float EffectScale;
     public bool OverLap;
     public bool Removal;
     public bool Abnormal;

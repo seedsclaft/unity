@@ -109,9 +109,9 @@ public class BattleStateOverlay : MonoBehaviour
             var asset = UpdateStateOverlay();
             //effekseerEmitter.enabled = true;
             if (asset != null) {
+                var rect = effekseerEmitter.gameObject.GetComponent<RectTransform>();
                 if (_changeEffectPosition)
                 {
-                    var rect = effekseerEmitter.gameObject.GetComponent<RectTransform>();
                     if (overlayState.Master.EffectPosition == EffectPositionType.Center)
                     {
                         rect.localPosition = new Vector2(rect.localPosition.x,64);
@@ -121,6 +121,8 @@ public class BattleStateOverlay : MonoBehaviour
                         rect.localPosition = new Vector2(rect.localPosition.x,-32);
                     }
                 }
+                rect = effekseerEmitter.gameObject.GetComponent<RectTransform>();
+                rect.localScale = new Vector3(overlayState.Master.EffectScale,overlayState.Master.EffectScale,overlayState.Master.EffectScale);
                 effekseerEmitter.effectAsset = asset;
                 effekseerEmitter.Play();
             }

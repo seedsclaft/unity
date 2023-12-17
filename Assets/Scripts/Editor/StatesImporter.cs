@@ -18,6 +18,7 @@ public class StatesImporter : AssetPostprocessor {
 		OverRight,
 		EffectPath,
 		EffectPosition,
+		EffectScale,
 		OverLap,
 		Removal,
 		Abnormal,
@@ -86,6 +87,7 @@ public class StatesImporter : AssetPostprocessor {
 					StateData.OverWrite = (bool)(AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.OverRight) == 1);
 					StateData.EffectPath = AssetPostImporter.ImportString(BaseRow,(int)BaseColumn.EffectPath);
 					StateData.EffectPosition = (EffectPositionType)AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.EffectPosition);
+					StateData.EffectScale = (float)AssetPostImporter.ImportFloat(BaseRow,(int)BaseColumn.EffectScale);
 					StateData.OverLap = (bool)(AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.OverLap) == 1);
 					StateData.Removal = (bool)(AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.Removal) == 1);
 					StateData.Abnormal = (bool)(AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.Abnormal) == 1);

@@ -30,12 +30,12 @@ public class ResultModel : BaseModel
 
     public bool IsNewRecord()
     {
-        return TotalEvaluate() > CurrentData.PlayerInfo.BestScore;
+        return TotalEvaluate() > CurrentData.PlayerInfo.GetBestScore(CurrentStage.Id);
     }
 
     public void ApplyScore()
     {
-        CurrentData.PlayerInfo.SetBestScore(TotalEvaluate());
+        CurrentData.PlayerInfo.SetBestScore(CurrentStage.Id,TotalEvaluate());
     }
 
     public List<ListData> StageEndCommand()

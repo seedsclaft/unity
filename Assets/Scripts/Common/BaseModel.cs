@@ -9,7 +9,7 @@ using Effekseer;
 
 public class BaseModel
 {
-    public SavePlayInfo CurrentData => GameSystem.CurrentData;
+    public SaveInfo CurrentData => GameSystem.CurrentData;
     public TempInfo TempData => GameSystem.TempData;
     public StageInfo CurrentStage => CurrentData.CurrentStage;
     public AlcanaInfo CurrentAlcana => CurrentData.CurrentAlcana;
@@ -24,7 +24,7 @@ public class BaseModel
     public CancellationTokenSource _cancellationTokenSource;
     public void InitSaveInfo()
     {
-        var playInfo = new SavePlayInfo();
+        var playInfo = new SaveInfo();
         playInfo.InitSaveData();
         GameSystem.CurrentData = playInfo;
     }
@@ -740,7 +740,7 @@ public class BaseModel
     {
         var needAds = false;
 #if UNITY_ANDROID
-        needAds = CurrentStage.SavedCount >= DataSystem.System.LimitSaveCount;
+        needAds = (CurrentStage.SavedCount + 1) >= DataSystem.System.LimitSaveCount;
 #endif
         return needAds;
     }
@@ -762,7 +762,7 @@ public class BaseModel
     {
         var needAds = false;
 #if UNITY_ANDROID
-        needAds = CurrentStage.ContinueCount >= DataSystem.System.LimitContinueCount;
+        needAds = (CurrentStage.ContinueCount + 1) >= DataSystem.System.LimitContinueCount;
 #endif
         return needAds;
     }

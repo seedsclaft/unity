@@ -440,7 +440,7 @@ public class BattleView : BaseView ,IInputHandlerEvent
         skillInfoComponent.Clear();
     }
 
-    public void StartAnimation(int targetIndex,EffekseerEffectAsset effekseerEffectAsset,int animationPosition)
+    public void StartAnimation(int targetIndex,EffekseerEffectAsset effekseerEffectAsset,int animationPosition,float animationScale = 1.0f)
     {
         DeactivateActorList();
         DeactivateEnemyList();
@@ -452,7 +452,7 @@ public class BattleView : BaseView ,IInputHandlerEvent
         {
             ShowBattlerEnemyTargetWithinTarget(targetIndex);
         }
-        _battlerComps[targetIndex].StartAnimation(effekseerEffectAsset,animationPosition);
+        _battlerComps[targetIndex].StartAnimation(effekseerEffectAsset,animationPosition,animationScale);
     }
 
     public void StartAnimationAll(EffekseerEffectAsset effekseerEffectAsset)

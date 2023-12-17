@@ -23,13 +23,24 @@ public class PlayerInfo
         _playerName = name;
     }
 
-    private int _bestScore = -1;
-    public int BestScore => _bestScore;
-    public void SetBestScore(int score)
+    private Dictionary<int,int> _bestScore = new ();
+    public int GetBestScore(int stageId)
     {
-        if (score > _bestScore)
+        if (!_bestScore.ContainsKey(stageId))
         {
-            _bestScore = score;
+            return 0;
+        }
+        return _bestScore[stageId];
+    }
+    public void SetBestScore(int stageId,int score)
+    {
+        if (!_bestScore.ContainsKey(stageId))
+        {
+            _bestScore[stageId] = 0;
+        }
+        if (score > _bestScore[stageId])
+        {
+            _bestScore[stageId] = score;
         }
     }
 
@@ -68,7 +79,6 @@ public class PlayerInfo
         return _saveSlotDict;
     }
     readonly int _saveSlotCount = 10;
-
     private List<int> _clearedTroopIds = new ();
 
     public void AddActorInfo(ActorInfo actorInfo)

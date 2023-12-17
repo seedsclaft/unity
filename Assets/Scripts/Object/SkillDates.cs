@@ -15,6 +15,7 @@ public class SkillData
     public MagicIconType IconIndex;
     public string AnimationName;
     public int AnimationPosition;
+    public float AnimationScale;
     public AnimationType AnimationType;
     public int DamageTiming;
     public int MpCost;

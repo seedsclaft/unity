@@ -60,14 +60,14 @@ public class BattlerInfoComponent : MonoBehaviour
         statusInfoComponent.UpdateHp(value,_battlerInfo.MaxHp);
     }
 
-    public void ChangeHpAnimation(int value)
+    private void ChangeHpAnimation(int fromValue,int toValue)
     {
         if (statusInfoComponent == null)
         {
             return;
         }
-        statusInfoComponent.UpdateHp(value,_battlerInfo.MaxHp);
-        statusInfoComponent.UpdateHpAnimation(value,_battlerInfo.MaxHp);
+        statusInfoComponent.UpdateHp(toValue,_battlerInfo.MaxHp);
+        statusInfoComponent.UpdateHpAnimation(fromValue,toValue,_battlerInfo.MaxHp);
     }
 
     public void ChangeMp(int value)
@@ -79,14 +79,14 @@ public class BattlerInfoComponent : MonoBehaviour
         statusInfoComponent.UpdateMp(value,_battlerInfo.MaxMp);
     }
 
-    public void ChangeMpAnimation(int value)
+    private void ChangeMpAnimation(int fromValue,int toValue)
     {
         if (statusInfoComponent == null)
         {
             return;
         }
-        statusInfoComponent.UpdateMp(value,_battlerInfo.MaxMp);
-        statusInfoComponent.UpdateMpAnimation(value,_battlerInfo.MaxMp);
+        statusInfoComponent.UpdateMp(toValue,_battlerInfo.MaxMp);
+        statusInfoComponent.UpdateMpAnimation(fromValue,toValue,_battlerInfo.MaxMp);
     }
 
     public void ChangeAtk(int value)
@@ -189,11 +189,11 @@ public class BattlerInfoComponent : MonoBehaviour
         _battleDamages.Add(battleDamage);
         if (damageType == DamageType.HpDamage)
         {
-            ChangeHpAnimation(value * -1 + _battlerInfo.Hp);
+            ChangeHpAnimation(_battlerInfo.Hp,value * -1 + _battlerInfo.Hp);
         }
         if (damageType == DamageType.MpDamage)
         {
-            ChangeMpAnimation(value * -1 + _battlerInfo.Mp);
+            ChangeMpAnimation(_battlerInfo.Mp,value * -1 + _battlerInfo.Mp);
         }
     }
 
@@ -228,11 +228,11 @@ public class BattlerInfoComponent : MonoBehaviour
         _battleDamages.Add(battleDamage);
         if (damageType == DamageType.HpHeal)
         {
-            ChangeHpAnimation(value + _battlerInfo.Hp);
+            ChangeHpAnimation(_battlerInfo.Hp,value + _battlerInfo.Hp);
         } else
         if (damageType == DamageType.MpHeal)
         {
-            ChangeMpAnimation(value + _battlerInfo.Mp);
+            ChangeMpAnimation(_battlerInfo.Mp,value + _battlerInfo.Mp);
         }
     }
 
@@ -277,7 +277,7 @@ public class BattlerInfoComponent : MonoBehaviour
         }
     }
     
-    public void StartAnimation(EffekseerEffectAsset effectAsset,int animationPosition)
+    public void StartAnimation(EffekseerEffectAsset effectAsset,int animationPosition,float animationScale = 1.0f)
     {
         if (effectAsset == null){    
             effekseerEmitter.Stop();
@@ -285,10 +285,10 @@ public class BattlerInfoComponent : MonoBehaviour
         } 
         var image = BattleImage();
         if (image == null) return;
+        var effectRect = effekseerEmitter.gameObject.GetComponent<RectTransform>();
         if (!_battlerInfo.isActor)
         {
             var imageRect = image.gameObject.GetComponent<RectTransform>();
-            var effectRect = effekseerEmitter.gameObject.GetComponent<RectTransform>();
             if (animationPosition == 0){
                 effectRect.localPosition = new Vector2(0,imageRect.sizeDelta.y / 2);
             } else
@@ -298,7 +298,6 @@ public class BattlerInfoComponent : MonoBehaviour
             }
         } else
         {
-            var effectRect = effekseerEmitter.gameObject.GetComponent<RectTransform>();
             if (animationPosition == 0){
                 effectRect.localPosition = new Vector2(0,0);
             } else
@@ -307,6 +306,7 @@ public class BattlerInfoComponent : MonoBehaviour
                 effectRect.localPosition = new Vector2(0,-48);
             }
         }
+        effectRect.localScale = new Vector3(animationScale,animationScale,animationScale);
         effekseerEmitter.enabled = true;
         effekseerEmitter.Stop();
         effekseerEmitter.Play(effectAsset);

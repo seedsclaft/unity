@@ -6,7 +6,7 @@ using DG.Tweening;
 
 public class BaseAnimation : MonoBehaviour
 {
-    public static void MoveAndFade(RectTransform rect,Image image,float moveX,float fade,float duration = 0.2f,System.Action endEvent = null)
+    public static void MoveAndFade(RectTransform rect,Image image,float moveX,float fade,float duration = 0.1f,System.Action endEvent = null)
     {
         var sequence = DOTween.Sequence()
             .Append(rect.DOLocalMoveX(moveX,duration))
@@ -14,6 +14,6 @@ public class BaseAnimation : MonoBehaviour
             .OnComplete(() => {
                 if (endEvent != null) endEvent();
             })
-            .SetEase(Ease.OutQuad));
+            .SetEase(Ease.InOutQuad));
     }
 }

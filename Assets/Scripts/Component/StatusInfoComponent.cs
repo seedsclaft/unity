@@ -78,22 +78,25 @@ public class StatusInfoComponent : MonoBehaviour
         }
         if (mpGaugeAnimation != null)
         {
+            mpGaugeAnimation.SetGaugeAnimation(maxStatusMp * 1.5f,3,(float)currentMp / (float)maxStatusMp);
             mpGaugeAnimation.UpdateGauge(maxStatusMp * 1.5f,3,(float)currentMp / (float)maxStatusMp);
         }
     }
 
-    public void UpdateHpAnimation(int currentHp,int maxStatusHp)
+    public void UpdateHpAnimation(int fromHp,int currentHp,int maxStatusHp)
     {
         if (hpGaugeAnimation != null)
         {
+            hpGaugeAnimation.SetGaugeAnimation(80,3,(float)fromHp / (float)maxStatusHp);
             hpGaugeAnimation.UpdateGaugeAnimation((float)currentHp / (float)maxStatusHp);
         }
     }
 
-    public void UpdateMpAnimation(int currentMp,int maxStatusMp)
+    public void UpdateMpAnimation(int fromMp,int currentMp,int maxStatusMp)
     {
         if (mpGaugeAnimation != null)
         {
+            mpGaugeAnimation.SetGaugeAnimation(maxStatusMp * 1.5f,3,(float)fromMp / (float)maxStatusMp);
             mpGaugeAnimation.UpdateGaugeAnimation((float)currentMp / (float)maxStatusMp);
         }
     }

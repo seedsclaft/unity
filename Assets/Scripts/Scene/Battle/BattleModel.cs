@@ -25,8 +25,8 @@ public class BattleModel : BaseModel
     public BattlerInfo CurrentBattler => _currentBattler;
 
     private List<ActionInfo> _actionInfos = new ();
-    private Dictionary<int,List<SkillInfo>> _passiveSkillInfos = new Dictionary<int,List<SkillInfo>>();
-    private Dictionary<int,List<SkillInfo>> _usedPassiveSkillInfos = new Dictionary<int,List<SkillInfo>>();
+    private Dictionary<int,List<int>> _passiveSkillInfos = new ();
+    private Dictionary<int,List<int>> _usedPassiveSkillInfos = new ();
 
     public UniTask<List<UnityEngine.AudioClip>> GetBattleBgm()
     {
@@ -1168,10 +1168,32 @@ public class BattleModel : BaseModel
             {
                 foreach (var plusActionInfo in plusActionInfos)
                 {
-                    plusActionInfo.SetRangeType(RangeType.L); 
+                    plusActionInfo.SetRangeType(RangeType.L);
                 }
             }
-            _actionInfos.AddRange(plusActionInfos);
+            foreach (var plusActionInfo in plusActionInfos)
+            {
+                if (plusActionInfo.Master.SkillType == SkillType.Passive)
+                {
+                    var useLimit = plusActionInfo.Master.TriggerDates.Find(a => a.Param2 >= 1);
+                    if (useLimit != null)
+                    {
+                        var usedCount = _usedPassiveSkillInfos[actionInfo.SubjectIndex].FindAll(a => a == plusActionInfo.Master.Id);
+                        if (usedCount.Count < useLimit.Param2)
+                        {
+                            _usedPassiveSkillInfos[actionInfo.SubjectIndex].Add(plusActionInfo.Master.Id);
+                        } else
+                        {
+                            continue;
+                        }
+                    }
+                    if (!_passiveSkillInfos[actionInfo.SubjectIndex].Contains(plusActionInfo.Master.Id))
+                    {
+                        _passiveSkillInfos[actionInfo.SubjectIndex].Add(plusActionInfo.Master.Id);
+                    }
+                }
+                _actionInfos.Add(plusActionInfo);
+            }
         }
     }
 
@@ -1408,11 +1430,13 @@ public class BattleModel : BaseModel
                 {                
                     bool usable = true;
                     // トリガーのParam2を使用回数制限にする
-                    if (triggerDates.Find(a => a.Param2 == 1) != null)
+                    var useLimit = triggerDates.Find(a => a.Param2 >= 1);
+                    if (useLimit != null)
                     {
-                        if (_usedPassiveSkillInfos[battlerInfo.Index].Find(a => a.Master.Id == passiveInfo.Master.Id) == null)
+                        var usedCount = _usedPassiveSkillInfos[battlerInfo.Index].FindAll(a => a == passiveInfo.Id);
+                        if (usedCount.Count < useLimit.Param2)
                         {
-                            _usedPassiveSkillInfos[battlerInfo.Index].Add(passiveInfo);
+                            _usedPassiveSkillInfos[battlerInfo.Index].Add(passiveInfo.Id);
                         } else
                         {
                             usable = false;
@@ -1448,9 +1472,9 @@ public class BattleModel : BaseModel
                                 }
                             }
                         }
-                        if (_passiveSkillInfos[battlerInfo.Index].Find(a => a.Master.Id == passiveInfo.Master.Id) == null)
+                        if (!_passiveSkillInfos[battlerInfo.Index].Contains(passiveInfo.Master.Id))
                         {
-                            _passiveSkillInfos[battlerInfo.Index].Add(passiveInfo);
+                            _passiveSkillInfos[battlerInfo.Index].Add(passiveInfo.Master.Id);
                         }
                         passiveInfo.GainUseCount();
                     }
@@ -1466,17 +1490,17 @@ public class BattleModel : BaseModel
         for (int i = 0;i < _battlers.Count;i++)
         {
             var battlerInfo = _battlers[i];
-            var passiveSkills = _passiveSkillInfos[battlerInfo.Index];
-            for (int j = 0;j < passiveSkills.Count;j++)
+            var passiveSkillIds = _passiveSkillInfos[battlerInfo.Index];
+            for (int j = 0;j < passiveSkillIds.Count;j++)
             {
-                var passiveInfo = passiveSkills[j];
+                var passiveSkillData = DataSystem.Skills.Find(a => a.Id == passiveSkillIds[j]);
                 bool IsRemove = false;
                 
-                foreach (var feature in passiveInfo.Master.FeatureDates)
+                foreach (var feature in passiveSkillData.FeatureDates)
                 {
                     if (feature.FeatureType == FeatureType.AddState)
                     {
-                        var triggerDates = passiveInfo.Master.TriggerDates.FindAll(a => a.TriggerTiming == TriggerTiming.After || a.TriggerTiming == TriggerTiming.StartBattle);
+                        var triggerDates = passiveSkillData.TriggerDates.FindAll(a => a.TriggerTiming == TriggerTiming.After || a.TriggerTiming == TriggerTiming.StartBattle);
                         if (IsRemove == false && !IsTriggeredSkillInfo(battlerInfo,triggerDates,TriggerTiming.After,null,new List<ActionResultInfo>()))
                         {
                             IsRemove = true;
@@ -1484,35 +1508,35 @@ public class BattleModel : BaseModel
                             var featureData = new SkillData.FeatureData();
                             featureData.FeatureType = FeatureType.RemoveStatePassive;
                             featureData.Param1 = feature.Param1;
-                            if (passiveInfo.Master.Scope == ScopeType.Self)
+                            if (passiveSkillData.Scope == ScopeType.Self)
                             {
-                                var actionResultInfo = new ActionResultInfo(battlerInfo,battlerInfo,new List<SkillData.FeatureData>(){featureData},passiveInfo.Id);
+                                var actionResultInfo = new ActionResultInfo(battlerInfo,battlerInfo,new List<SkillData.FeatureData>(){featureData},passiveSkillData.Id);
                                 if (actionResultInfos.Find(a => a.RemovedStates.Find(b => b.Master.StateType == (StateType)featureData.FeatureType) != null) != null)
                                 {
                                     
                                 } else{
                                     var stateInfos = battlerInfo.GetStateInfoAll((StateType)feature.Param1);
-                                    if (battlerInfo.IsAlive() && stateInfos.Find(a => a.SkillId == passiveInfo.Id) != null)
+                                    if (battlerInfo.IsAlive() && stateInfos.Find(a => a.SkillId == passiveSkillData.Id) != null)
                                     {
                                         actionResultInfos.Add(actionResultInfo);
                                     }
                                 }
                             } else
-                            if (passiveInfo.Master.Scope == ScopeType.All)
+                            if (passiveSkillData.Scope == ScopeType.All)
                             {
                                 var partyMember = battlerInfo.isActor ? BattlerActors() : BattlerEnemies();
                                 foreach (var member in partyMember)
                                 {
-                                    if ((passiveInfo.Master.AliveOnly && member.IsAlive()) || (!passiveInfo.Master.AliveOnly && !member.IsAlive()))
+                                    if ((passiveSkillData.AliveOnly && member.IsAlive()) || (!passiveSkillData.AliveOnly && !member.IsAlive()))
                                     {
 
-                                        var actionResultInfo = new ActionResultInfo(battlerInfo,member,new List<SkillData.FeatureData>(){featureData},passiveInfo.Id);
+                                        var actionResultInfo = new ActionResultInfo(battlerInfo,member,new List<SkillData.FeatureData>(){featureData},passiveSkillData.Id);
                                         if (actionResultInfos.Find(a => a.RemovedStates.Find(b => b.Master.StateType == (StateType)featureData.FeatureType) != null) != null)
                                         {
                                             
                                         } else{
                                             var stateInfos = battlerInfo.GetStateInfoAll((StateType)feature.Param1);
-                                            if (member.IsAlive() && stateInfos.Find(a => a.SkillId == passiveInfo.Id) != null)
+                                            if (member.IsAlive() && stateInfos.Find(a => a.SkillId == passiveSkillData.Id) != null)
                                             {
                                                 actionResultInfos.Add(actionResultInfo);
                                             }

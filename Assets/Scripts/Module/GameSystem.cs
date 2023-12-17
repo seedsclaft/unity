@@ -26,7 +26,7 @@ public class GameSystem : MonoBehaviour
 
     private BaseModel _model = null;
     
-    public static SavePlayInfo CurrentData = null;
+    public static SaveInfo CurrentData = null;
     public static SaveConfigInfo ConfigData = null;
     public static TempInfo TempData = null;
 

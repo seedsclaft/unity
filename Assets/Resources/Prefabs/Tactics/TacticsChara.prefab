@@ -208,8 +208,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   actorInfoComponent: {fileID: 3757592872682965314}
   status: {fileID: 1645453930958072508}
-  statusInfoComponent: {fileID: 6672713098202681830}
-  bgImage: {fileID: 417249390878342954}
 --- !u!114 &3757592872682965314
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -234,7 +232,7 @@ MonoBehaviour:
   demigod: {fileID: 0}
   lv: {fileID: 0}
   sp: {fileID: 0}
-  statusInfoComponent: {fileID: 0}
+  statusInfoComponent: {fileID: 6672713098202681830}
   needStatusInfoComponent: {fileID: 0}
   element1: {fileID: 0}
   element2: {fileID: 0}

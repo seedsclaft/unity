@@ -13,8 +13,9 @@ public class BattleThumb : MonoBehaviour
     {
         gameObject.SetActive(false);
         var awaken = battlerInfo.IsState(StateType.Demigod);
-        var image = awaken ? actorInfoComponent.AwakenFaceThumb : actorInfoComponent.MainThumb;
-        BaseAnimation.MoveAndFade(gameObject.GetComponent<RectTransform>(),image,-24,0,0);
+        var image = awaken ? actorInfoComponent.AwakenThumb : actorInfoComponent.MainThumb;
+        gameObject.GetComponent<RectTransform>().localPosition = new Vector3(-24,0,0);
+        image.color = new Color(255,255,255,0);
         BaseAnimation.MoveAndFade(gameObject.GetComponent<RectTransform>(),image,0,1,0.1f);
         awakenThumbRoot.SetActive(awaken);
         mainThumbRoot.SetActive(!awaken);
