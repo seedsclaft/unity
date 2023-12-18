@@ -91,7 +91,7 @@ MonoBehaviour:
       Weight: 100
       TriggerDates: []
       DeckNum: 0
-    - SkillId: 12050
+    - SkillId: 12010
       Level: 10
       Weight: 100
       TriggerDates: []
@@ -285,7 +285,7 @@ MonoBehaviour:
         Param2: 0
         Param3: 0
       DeckNum: 0
-    - SkillId: 13030
+    - SkillId: 11030
       Level: 10
       Weight: 50
       TriggerDates: []
@@ -347,12 +347,12 @@ MonoBehaviour:
       Weight: 100
       TriggerDates: []
       DeckNum: 0
-    - SkillId: 3040
+    - SkillId: 13020
       Level: 5
       Weight: 100
       TriggerDates: []
       DeckNum: 0
-    - SkillId: 13020
+    - SkillId: 3040
       Level: 10
       Weight: 100
       TriggerDates: []
@@ -399,16 +399,10 @@ MonoBehaviour:
       Weight: 20
       TriggerDates: []
       DeckNum: 0
-    - SkillId: 4060
+    - SkillId: 14040
       Level: 5
       Weight: 80
-      TriggerDates:
-      - SkillId: 0
-        TriggerType: 21
-        TriggerTiming: 1
-        Param1: 1
-        Param2: 0
-        Param3: 0
+      TriggerDates: []
       DeckNum: 0
     - SkillId: 14060
       Level: 10

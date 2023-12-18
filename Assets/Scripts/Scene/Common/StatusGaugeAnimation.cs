@@ -10,8 +10,8 @@ public class StatusGaugeAnimation : MonoBehaviour
     [SerializeField] private Image gauge;
     [SerializeField] private Image gaugeAnimation;
 
-    private float _waitDuration = 1.0f;
-    private float _delayDuration = 0.5f;
+    private float _waitDuration = 0.8f;
+    private float _delayDuration = 0.25f;
 
     public void UpdateGauge(float width,float margin,float gaugeAmount)
     {

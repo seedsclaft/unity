@@ -12,7 +12,7 @@ public class StrategyActorList : BaseList
             {
                 var StrategyActor = ObjectList[i].GetComponent<StrategyActor>();
                 StrategyActor.gameObject.SetActive(true);
-                StrategyActor.StartResultAnimation(i);
+                StrategyActor.StartResultAnimation(i,isBonus);
                 if (i == actorCount-1)
                 {
                     StrategyActor.SetEndCallEvent(callEvent);

@@ -147,7 +147,7 @@ public class BattlerInfo
         {
             _kinds.Add(kind);
         }
-
+        AddUndeadPassive();
         ResetAp(true);
     }
 
@@ -169,7 +169,7 @@ public class BattlerInfo
         var IsUndead = _kinds.Contains(KindType.Undead);
         if (IsUndead)
         {
-            foreach (var skillId in new List<int>(){41,42})
+            foreach (var skillId in new List<int>(){10010})
             {
                 var skillInfo = new SkillInfo(skillId);
                 _skills.Add(skillInfo);

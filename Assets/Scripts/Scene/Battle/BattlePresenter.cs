@@ -706,7 +706,7 @@ public class BattlePresenter : BasePresenter
                 bool lastTarget = actionInfo.ActionResults[actionInfo.ActionResults.Count-1].TargetIndex == actionInfo.ActionResults[i].TargetIndex;
                 PopupActionResult(actionInfo.ActionResults[i],actionInfo.ActionResults[i].TargetIndex,true,true,lastTarget);
             }
-            await UniTask.DelayFrame(64);
+            await UniTask.DelayFrame(32);
         }
         _nextCommandType = Battle.CommandType.EndAnimation;
         CommandEndAnimation();

@@ -312,7 +312,7 @@ public class StrategyPresenter : BasePresenter
     private void CommandContinue()
     {
         // コンテニュー判定
-        if (_model.BattleResultVictory() == true)
+        if (_model.BattleResultVictory() == true || _model.LostMembers().Count == 0)
         {
             return;
         }

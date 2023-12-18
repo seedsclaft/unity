@@ -153,7 +153,7 @@ MonoBehaviour:
     AliveOnly: 1
     FeatureDates:
     - SkillId: 31
-      FeatureType: 1
+      FeatureType: 11
       Param1: 100
       Param2: 0
       Param3: 0
@@ -218,68 +218,6 @@ MonoBehaviour:
       Param2: 0
       Param3: 0
     TriggerDates: []
-  - Id: 41
-    Name: "\u30A2\u30F3\u30C7\u30C3\u30C9"
-    IconIndex: 6
-    AnimationName: 
-    AnimationPosition: 0
-    AnimationScale: 1
-    AnimationType: 1
-    DamageTiming: 0
-    MpCost: 0
-    Rank: 0
-    Attribute: 5
-    Scope: 4
-    SkillType: 2
-    TargetType: 4
-    Help: '""'
-    Range: 1
-    RepeatTime: 1
-    AliveOnly: 1
-    FeatureDates:
-    - SkillId: 41
-      FeatureType: 21
-      Param1: 2270
-      Param2: 0
-      Param3: 10
-    TriggerDates:
-    - SkillId: 41
-      TriggerType: 63
-      TriggerTiming: 4
-      Param1: 1
-      Param2: 0
-      Param3: 0
-  - Id: 42
-    Name: "\u30A2\u30F3\u30C7\u30C3\u30C9\u56DE\u5FA9"
-    IconIndex: 6
-    AnimationName: 
-    AnimationPosition: 0
-    AnimationScale: 1
-    AnimationType: 1
-    DamageTiming: 0
-    MpCost: 0
-    Rank: 0
-    Attribute: 0
-    Scope: 4
-    SkillType: 2
-    TargetType: 4
-    Help: "\\s\u306B\u30C0\u30E1\u30FC\u30B8"
-    Range: 1
-    RepeatTime: 1
-    AliveOnly: 1
-    FeatureDates:
-    - SkillId: 42
-      FeatureType: 2
-      Param1: 5
-      Param2: 0
-      Param3: 0
-    TriggerDates:
-    - SkillId: 42
-      TriggerType: 41
-      TriggerTiming: 2
-      Param1: 2270
-      Param2: 0
-      Param3: 0
   - Id: 1010
     Name: "\u30D5\u30A1\u30A4\u30A2\u30DC\u30FC\u30EB"
     IconIndex: 1
@@ -591,7 +529,7 @@ MonoBehaviour:
     IconIndex: 1
     AnimationName: NA_Effekseer/NA_slash_003_c3
     AnimationPosition: 0
-    AnimationScale: 1
+    AnimationScale: 0.9
     AnimationType: 1
     DamageTiming: 36
     MpCost: 0
@@ -625,7 +563,7 @@ MonoBehaviour:
     Scope: 4
     SkillType: 1
     TargetType: 4
-    Help: "\\s\u306BCA(DEF\u5024\u30C0\u30E1\u30FC\u30B8\u53CD\u5C04)\u3092\u4ED8\u4E0E\nCA\u72B6\u614B\u4E2D\u6575\u304B\u3089\u72D9\u308F\u308C\u3084\u3059\u304F\u306A\u308B"
+    Help: "\\s\u306BCA(DEF\u5024\u30C0\u30E1\u30FC\u30B8\u53CD\u5C04)\u3092\u4ED8\u4E0E\nCA\u72B6\u614B\u4E2D\u308F\u305A\u304B\u306B\u6575\u304B\u3089\u72D9\u308F\u308C\u3084\u3059\u304F\u306A\u308B"
     Range: 1
     RepeatTime: 1
     AliveOnly: 1
@@ -655,7 +593,7 @@ MonoBehaviour:
     Scope: 4
     SkillType: 2
     TargetType: 4
-    Help: "CA\u72B6\u614B\u4E2D\u6575\u304B\u3089\u72D9\u308F\u308C\u3084\u3059\u304F\u306A\u308B"
+    Help: "CA\u72B6\u614B\u4E2D\u308F\u305A\u304B\u306B\u6575\u304B\u3089\u72D9\u308F\u308C\u3084\u3059\u304F\u306A\u308B"
     Range: 1
     RepeatTime: 1
     AliveOnly: 1
@@ -752,7 +690,7 @@ MonoBehaviour:
     IconIndex: 3
     AnimationName: NA_Effekseer/NA_magic_006_c2
     AnimationPosition: 0
-    AnimationScale: 1
+    AnimationScale: 0.8
     AnimationType: 1
     DamageTiming: 36
     MpCost: 4
@@ -1168,7 +1106,7 @@ MonoBehaviour:
     Scope: 1
     SkillType: 1
     TargetType: 1
-    Help: "\\s\u306B\u6697\u95C7(\u547D\u4E2D\u738733%\u30C0\u30A6\u30F3)\u3092\u4ED8\u4E0E(\u6C38\u7D9A)"
+    Help: "\\s\u306B\u6697\u95C7(\u547D\u4E2D\u738725%\u30C0\u30A6\u30F3)\u3092\u4ED8\u4E0E(\u6C38\u7D9A)"
     Range: 1
     RepeatTime: 1
     AliveOnly: 1
@@ -1177,7 +1115,7 @@ MonoBehaviour:
       FeatureType: 21
       Param1: 2170
       Param2: 999
-      Param3: 33
+      Param3: 25
     TriggerDates: []
   - Id: 5070
     Name: "\u30B7\u30A7\u30A4\u30C7\u30A3\u30FC\u30AF\u30E9\u30A6\u30C9"
@@ -1254,6 +1192,37 @@ MonoBehaviour:
       Param2: 999
       Param3: 0
     TriggerDates: []
+  - Id: 10010
+    Name: "\u30A2\u30F3\u30C7\u30C3\u30C9"
+    IconIndex: 6
+    AnimationName: 
+    AnimationPosition: 0
+    AnimationScale: 1
+    AnimationType: 1
+    DamageTiming: 0
+    MpCost: 0
+    Rank: 2
+    Attribute: 0
+    Scope: 4
+    SkillType: 2
+    TargetType: 4
+    Help: '""'
+    Range: 1
+    RepeatTime: 1
+    AliveOnly: 1
+    FeatureDates:
+    - SkillId: 10010
+      FeatureType: 21
+      Param1: 2270
+      Param2: 0
+      Param3: 5
+    TriggerDates:
+    - SkillId: 10010
+      TriggerType: 63
+      TriggerTiming: 4
+      Param1: 1
+      Param2: 0
+      Param3: 0
   - Id: 11010
     Name: "\u30A6\u30EB\u30D5\u30BD\u30A6\u30EB"
     IconIndex: 6
@@ -1268,7 +1237,7 @@ MonoBehaviour:
     Scope: 4
     SkillType: 2
     TargetType: 4
-    Help: "(\u6761\u4EF6)\u30D0\u30C8\u30EB\u958B\u59CB\u6642\nATK8\u304C\u30A2\u30C3\u30D7"
+    Help: "\\s\u306EATK8\u304C\u30A2\u30C3\u30D7"
     Range: 1
     RepeatTime: 1
     AliveOnly: 1
@@ -1299,7 +1268,7 @@ MonoBehaviour:
     Scope: 4
     SkillType: 2
     TargetType: 4
-    Help: "(\u6761\u4EF6)Hp\u304C25%\u4EE5\u4E0B\nATK\u304C16\u30A2\u30C3\u30D7"
+    Help: "(\u6761\u4EF6)Hp\u304C25%\u4EE5\u4E0B\n\\s\u306EATK\u304C16\u30A2\u30C3\u30D7"
     Range: 1
     RepeatTime: 1
     AliveOnly: 1
@@ -1366,7 +1335,7 @@ MonoBehaviour:
     Scope: 4
     SkillType: 2
     TargetType: 4
-    Help: "(\u6761\u4EF6)3\u30BF\u30FC\u30F3\u4EE5\u5185\nATK\u304C24\u30A2\u30C3\u30D7"
+    Help: "(\u6761\u4EF6)3\u30BF\u30FC\u30F3\u4EE5\u5185\n\\s\u306EATK\u304C24\u30A2\u30C3\u30D7"
     Range: 1
     RepeatTime: 1
     AliveOnly: 1
@@ -1397,7 +1366,7 @@ MonoBehaviour:
     Scope: 4
     SkillType: 2
     TargetType: 4
-    Help: "(\u6761\u4EF6)\u6226\u95D8\u958B\u59CB\u6642\nMP\u304C12\u56DE\u5FA9"
+    Help: "\\s\u306EMP\u304C12\u56DE\u5FA9"
     Range: 1
     RepeatTime: 1
     AliveOnly: 1
@@ -1428,8 +1397,7 @@ MonoBehaviour:
     Scope: 4
     SkillType: 2
     TargetType: 4
-    Help: "(\u6761\u4EF6)\u795E\u5316\u72B6\u614B\u306B\u306A\u3063\u305F\u6642\nMP\u304C12\u56DE\u5FA9
-      \u30D0\u30C8\u30EB\u4E2D1\u56DE\u306E\u307F"
+    Help: "(\u6761\u4EF6)\u795E\u5316\u72B6\u614B\u306B\u306A\u3063\u305F\u6642\n(\u5236\u9650)\u30D0\u30C8\u30EB\u4E2D1\u56DE\u307E\u3067\n\\s\u306EMP\u304C12\u56DE\u5FA9"
     Range: 1
     RepeatTime: 1
     AliveOnly: 1
@@ -1460,7 +1428,7 @@ MonoBehaviour:
     Scope: 4
     SkillType: 2
     TargetType: 4
-    Help: "(\u6761\u4EF6)Mp4\u672A\u6E80\u306E\u72B6\u614B\u3067\u884C\u52D5\u5F8C\n(\u5236\u9650)\u30D0\u30C8\u30EB\u4E2D5\u56DE\u307E\u3067\nMP4\u56DE\u5FA9"
+    Help: "(\u6761\u4EF6)Mp4\u672A\u6E80\u306E\u72B6\u614B\u3067\u884C\u52D5\u5F8C\n(\u5236\u9650)\u30D0\u30C8\u30EB\u4E2D5\u56DE\u307E\u3067\n\\s\u306EMP4\u304C\u56DE\u5FA9"
     Range: 1
     RepeatTime: 1
     AliveOnly: 1
@@ -1559,7 +1527,7 @@ MonoBehaviour:
     Scope: 4
     SkillType: 2
     TargetType: 4
-    Help: "(\u6761\u4EF6)\u30D0\u30C8\u30EB\u958B\u59CB\u6642\nSPD\u304C8\u30A2\u30C3\u30D7"
+    Help: "\\s\u306ESPD\u304C8\u30A2\u30C3\u30D7"
     Range: 1
     RepeatTime: 1
     AliveOnly: 1
@@ -1590,7 +1558,7 @@ MonoBehaviour:
     Scope: 4
     SkillType: 2
     TargetType: 4
-    Help: "(\u6761\u4EF6)Hp\u304C25%\u4EE5\u4E0B\nSPD\u304C20\u30A2\u30C3\u30D7"
+    Help: "(\u6761\u4EF6)Hp\u304C25%\u4EE5\u4E0B\n\\s\u306ESPD\u304C20\u30A2\u30C3\u30D7"
     Range: 1
     RepeatTime: 1
     AliveOnly: 1
@@ -1621,7 +1589,7 @@ MonoBehaviour:
     Scope: 4
     SkillType: 2
     TargetType: 4
-    Help: "(\u6761\u4EF6)\u30D0\u30C8\u30EB\u958B\u59CB\u6642\n\u81EA\u8EAB\u306E\u56DE\u907F\u7387\u309225%\u30A2\u30C3\u30D7"
+    Help: "\\s\u306E\u56DE\u907F\u7387\u304C25%\u30A2\u30C3\u30D7"
     Range: 1
     RepeatTime: 1
     AliveOnly: 1
@@ -1652,7 +1620,7 @@ MonoBehaviour:
     Scope: 4
     SkillType: 2
     TargetType: 4
-    Help: "(\u6761\u4EF6)\u30D0\u30C8\u30EB\u958B\u59CB\u6642\u5473\u65B9\u3088\u308A\u6575\u304C\u5C11\u306A\u3044\nSPD\u304C8\u30A2\u30C3\u30D7"
+    Help: "(\u6761\u4EF6)\u30D0\u30C8\u30EB\u958B\u59CB\u6642\u5473\u65B9\u3088\u308A\u6575\u304C\u5C11\u306A\u3044\n\\s\u306ESPD\u304C8\u30A2\u30C3\u30D7"
     Range: 1
     RepeatTime: 1
     AliveOnly: 1
@@ -1745,7 +1713,7 @@ MonoBehaviour:
     Scope: 4
     SkillType: 2
     TargetType: 4
-    Help: "(\u6761\u4EF6)\u30D0\u30C8\u30EB\u958B\u59CB\u6642\nDEF\u304C8\u30A2\u30C3\u30D7"
+    Help: "\\s\u306EDEF\u304C8\u30A2\u30C3\u30D7"
     Range: 1
     RepeatTime: 1
     AliveOnly: 1
@@ -1776,7 +1744,7 @@ MonoBehaviour:
     Scope: 4
     SkillType: 2
     TargetType: 4
-    Help: "(\u6761\u4EF6)Hp\u304C25%\u4EE5\u4E0B\nDEF\u304C20\u30A2\u30C3\u30D7"
+    Help: "(\u6761\u4EF6)Hp\u304C25%\u4EE5\u4E0B\n\\s\u306EDEF\u304C20\u30A2\u30C3\u30D7"
     Range: 1
     RepeatTime: 1
     AliveOnly: 1
@@ -1838,7 +1806,7 @@ MonoBehaviour:
     Scope: 4
     SkillType: 2
     TargetType: 4
-    Help: "(\u6761\u4EF6)CA\u6210\u529F\u6642\nHp\u304C4\u56DE\u5FA9"
+    Help: "(\u6761\u4EF6)CA\u6210\u529F\u6642\n\\s\u306EHp\u304C4\u56DE\u5FA9"
     Range: 1
     RepeatTime: 1
     AliveOnly: 1
@@ -1869,7 +1837,7 @@ MonoBehaviour:
     Scope: 4
     SkillType: 2
     TargetType: 4
-    Help: "(\u6761\u4EF6)\u72B6\u614B\u7570\u5E38\u72B6\u614B\u3067\u884C\u52D5\u5F8C\nHp\u304C8\u56DE\u5FA9"
+    Help: "(\u6761\u4EF6)\u72B6\u614B\u7570\u5E38\u72B6\u614B\u3067\u884C\u52D5\u5F8C\n\\s\u306EHp\u304C8\u56DE\u5FA9"
     Range: 1
     RepeatTime: 1
     AliveOnly: 1
@@ -1967,7 +1935,7 @@ MonoBehaviour:
     Scope: 4
     SkillType: 2
     TargetType: 4
-    Help: "(\u6761\u4EF6)\u30D0\u30C8\u30EB\u958B\u59CB\u6642\n3\u56DE\u307E\u3067\u72B6\u614B\u7570\u5E38\u3092\u56DE\u907F\u3059\u308B"
+    Help: "(\u5236\u9650)\u30D0\u30C8\u30EB\u4E2D3\u56DE\u307E\u3067\n\u72B6\u614B\u7570\u5E38\u3092\u56DE\u907F\u3059\u308B"
     Range: 1
     RepeatTime: 1
     AliveOnly: 1
@@ -2029,7 +1997,7 @@ MonoBehaviour:
     Scope: 3
     SkillType: 2
     TargetType: 2
-    Help: "(\u6761\u4EF6)\u30D0\u30C8\u30EB\u958B\u59CB\u6642\n\\s\u306E\u547D\u4E2D\u7387\u304C50%\u30A2\u30C3\u30D7"
+    Help: "\\s\u306E\u547D\u4E2D\u7387\u304C50%\u30A2\u30C3\u30D7"
     Range: 1
     RepeatTime: 1
     AliveOnly: 1
@@ -2091,7 +2059,7 @@ MonoBehaviour:
     Scope: 4
     SkillType: 2
     TargetType: 4
-    Help: "(\u6761\u4EF6)\u30D0\u30C8\u30EB\u958B\u59CB\u6642\u5473\u65B9\u3088\u308A\u6575\u304C\u591A\u3044\nMaxHp\u3068Hp\u304C20\u30A2\u30C3\u30D7"
+    Help: "(\u6761\u4EF6)\u30D0\u30C8\u30EB\u958B\u59CB\u6642\u5473\u65B9\u3088\u308A\u6575\u304C\u591A\u3044\n\\s\u306EMaxHp\u3068Hp\u304C20\u30A2\u30C3\u30D7"
     Range: 1
     RepeatTime: 1
     AliveOnly: 1
@@ -2184,7 +2152,7 @@ MonoBehaviour:
     Scope: 4
     SkillType: 2
     TargetType: 4
-    Help: "(\u6761\u4EF6)\u30D0\u30C8\u30EB\u958B\u59CB\u6642\n\u653B\u6483\u6210\u529F\u3057\u305F\u56DE\u6570\u5206\u5473\u65B9\u5168\u54E1\u306EHp\u3092\u56DE\u5FA9"
+    Help: "\u653B\u6483\u6210\u529F\u3057\u305F\u56DE\u6570\u5206\u5473\u65B9\u5168\u54E1\u306EHp\u3092\u56DE\u5FA9"
     Range: 1
     RepeatTime: 1
     AliveOnly: 1
@@ -2215,7 +2183,7 @@ MonoBehaviour:
     Scope: 4
     SkillType: 2
     TargetType: 4
-    Help: "(\u6761\u4EF6)\u30D0\u30C8\u30EB\u958B\u59CB\u6642\n\u81F4\u547D\u653B\u6483\u767A\u751F\u7387\u304C25%\u30A2\u30C3\u30D7"
+    Help: "\\s\u306E\u81F4\u547D\u653B\u6483\u767A\u751F\u7387\u304C25%\u30A2\u30C3\u30D7"
     Range: 1
     RepeatTime: 1
     AliveOnly: 1
@@ -2246,7 +2214,7 @@ MonoBehaviour:
     Scope: 4
     SkillType: 2
     TargetType: 4
-    Help: "(\u6761\u4EF6)Hp\u304C25%\u4EE5\u4E0B\n\u81F4\u547D\u653B\u6483\u767A\u751F\u7387\u304C75%\u30A2\u30C3\u30D7"
+    Help: "(\u6761\u4EF6)Hp\u304C25%\u4EE5\u4E0B\n\\s\u306E\u81F4\u547D\u653B\u6483\u767A\u751F\u7387\u304C75%\u30A2\u30C3\u30D7"
     Range: 1
     RepeatTime: 1
     AliveOnly: 1
@@ -2339,7 +2307,7 @@ MonoBehaviour:
     Scope: 4
     SkillType: 2
     TargetType: 4
-    Help: "(\u6761\u4EF6)\u6226\u95D8\u958B\u59CB\u6642Hp\u304C50%\u4EE5\u4E0B\nHp\u304C20\u56DE\u5FA9"
+    Help: "(\u6761\u4EF6)\u6226\u95D8\u958B\u59CB\u6642Hp\u304C50%\u4EE5\u4E0B\n\\s\u306EHp\u304C20\u56DE\u5FA9"
     Range: 1
     RepeatTime: 1
     AliveOnly: 1
@@ -2370,7 +2338,7 @@ MonoBehaviour:
     Scope: 4
     SkillType: 2
     TargetType: 4
-    Help: "(\u6761\u4EF6)\u30D0\u30C8\u30EB\u958B\u59CB\u6642\nHp\u30925\u56DE\u5FA9\u3057\u30A2\u30F3\u30C7\u30C3\u30C8\u72B6\u614B\u306B\u306A\u308B"
+    Help: "\\s\u306EHp\u30925\u56DE\u5FA9\u3057\u30A2\u30F3\u30C7\u30C3\u30C8\u72B6\u614B\u306B\u306A\u308B"
     Range: 1
     RepeatTime: 1
     AliveOnly: 1
@@ -2508,7 +2476,7 @@ MonoBehaviour:
     IconIndex: 10
     AnimationName: tktk01/Blow10
     AnimationPosition: 0
-    AnimationScale: 1
+    AnimationScale: 0.7
     AnimationType: 1
     DamageTiming: 60
     MpCost: 0
@@ -2587,7 +2555,7 @@ MonoBehaviour:
     IconIndex: 10
     AnimationName: NA_Effekseer/NA_barrier_001
     AnimationPosition: 0
-    AnimationScale: 1
+    AnimationScale: 0.5
     AnimationType: 1
     DamageTiming: 26
     MpCost: 0
@@ -2639,7 +2607,7 @@ MonoBehaviour:
     Scope: 3
     SkillType: 4
     TargetType: 1
-    Help: "(\u6761\u4EF6)\u795E\u5316\u72B6\u614B\n\\s\u306B\u920D\u8DB3\u4ED8\u4E0E(\u6C38\u7D9A)
+    Help: "(\u6761\u4EF6)\u795E\u5316\u72B6\u614B\n\\s\u306B\u7D043\u30BF\u30FC\u30F3\u5206\u306E\u920D\u8DB3\u4ED8\u4E0E
       \u795E\u5316\u89E3\u9664"
     Range: 2
     RepeatTime: 1
@@ -2648,7 +2616,7 @@ MonoBehaviour:
     - SkillId: 100311
       FeatureType: 21
       Param1: 2160
-      Param2: 9999999
+      Param2: 900
       Param3: 0
     - SkillId: 100311
       FeatureType: 101

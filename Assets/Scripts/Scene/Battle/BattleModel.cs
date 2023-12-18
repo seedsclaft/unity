@@ -1201,6 +1201,7 @@ public class BattleModel : BaseModel
     {
         var results = RegenerateActionResults();
         results.AddRange(AfterHealActionResults());
+        results.AddRange(UndeadHealActionResults());
         if (CurrentActionInfo() != null && CurrentActionInfo().ActionResults.Find(a => a.HpDamage > 0) != null)
         {
             results.AddRange(AssistHealActionResults());
@@ -1249,6 +1250,12 @@ public class BattleModel : BaseModel
             }
         }
         return afterHealResults;
+    }
+
+    private List<ActionResultInfo> UndeadHealActionResults()
+    {
+        var UndeadHealResults = MakeStateActionResult(_currentBattler,StateType.Undead,FeatureType.HpHeal);
+        return UndeadHealResults;
     }
 
     private List<ActionResultInfo> AssistHealActionResults()

@@ -10,8 +10,8 @@ public class ActionResultInfo
     private int _targetIndex = 0;
     public int TargetIndex => _targetIndex;
 
-    private int _skillIndex = -1;
-    public ActionResultInfo(BattlerInfo subject,BattlerInfo target,List<SkillData.FeatureData> featureDates,int skillIndex,bool isOneTarget = false)
+    private int _skillId = -1;
+    public ActionResultInfo(BattlerInfo subject,BattlerInfo target,List<SkillData.FeatureData> featureDates,int skillId,bool isOneTarget = false)
     {
         if (subject != null && target != null)
         {
@@ -19,7 +19,7 @@ public class ActionResultInfo
             _targetIndex = target.Index;
             _execStateInfos[subject.Index] = new List<StateType>();
             _execStateInfos[_targetIndex] = new List<StateType>();
-            _skillIndex = skillIndex;
+            _skillId = skillId;
         }
         for (int i = 0; i < featureDates.Count; i++)
         {
@@ -195,6 +195,11 @@ public class ActionResultInfo
 
     private bool CheckIsHit(BattlerInfo subject,BattlerInfo target,bool isOneTarget)
     {
+        var skillData = DataSystem.Skills.Find(a => a.Id == _skillId);
+        if (skillData != null && (skillData.SkillType == SkillType.Demigod || skillData.SkillType == SkillType.Awaken))
+        {
+            return true;
+        }
         if (!IsHit(subject,target,isOneTarget))
         {
             _missed = true;
@@ -546,7 +551,7 @@ public class ActionResultInfo
 
     private void MakeAddState(BattlerInfo subject,BattlerInfo target,SkillData.FeatureData featureData,bool checkCounter = false,bool isOneTarget = false)
     {
-        var stateInfo = new StateInfo((StateType)featureData.Param1,featureData.Param2,featureData.Param3,subject.Index,target.Index,_skillIndex);
+        var stateInfo = new StateInfo((StateType)featureData.Param1,featureData.Param2,featureData.Param3,subject.Index,target.Index,_skillId);
         if (stateInfo.Master.CheckHit)
         {
             if (!CheckIsHit(subject,target,isOneTarget))
@@ -628,7 +633,7 @@ public class ActionResultInfo
     private void MakeRemoveStatePassive(BattlerInfo subject,BattlerInfo target,SkillData.FeatureData featureData)
     {
         // パッシブはそのパッシブスキルのみ解除する
-        var stateInfo = new StateInfo((StateType)featureData.Param1,featureData.Param2,featureData.Param3,subject.Index,target.Index,_skillIndex);
+        var stateInfo = new StateInfo((StateType)featureData.Param1,featureData.Param2,featureData.Param3,subject.Index,target.Index,_skillId);
         bool IsRemoved = target.RemoveState(stateInfo,false);
         if (IsRemoved)
         {
