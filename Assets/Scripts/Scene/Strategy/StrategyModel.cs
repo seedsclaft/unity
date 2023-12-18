@@ -93,11 +93,10 @@ public class StrategyModel : BaseModel
                     var skillData = DataSystem.Skills.Find(a => a.Id == actorInfo.NextLearnSkillId);
                     getItemInfo.MakeAlchemyResult(actorName,skillData);
                     actorInfo.LearnSkill(actorInfo.NextLearnSkillId);
-                    PartyInfo.RemoveAlchemy(actorInfo.NextLearnSkillId);
                     var alchemyBonus = PartyInfo.GetAlchemyBonusValue();
                     if (alchemyBonus)
                     {
-                        var getSkillDates = DataSystem.Skills.FindAll(a => a.Rank == 1 && a.Attribute == skillData.Attribute);
+                        var getSkillDates = DataSystem.Skills.FindAll(a => a.Rank == 1 && a.Attribute == skillData.Attribute && !PartyInfo.AlchemyIdList.Contains(a.Id));
                         if (getSkillDates.Count > 0)
                         {
                             var bonusGetItemInfo = new GetItemInfo(null);
@@ -247,7 +246,7 @@ public class StrategyModel : BaseModel
                 var rand = Random.Range(0,100);
                 if (getItemInfo.Param2 >= rand)
                 {
-                    var getSkillDates = DataSystem.Skills.FindAll(a => a.Rank == getItemInfo.Param1 && (int)a.Attribute == (int)getItemInfo.GetItemType - 10); 
+                    var getSkillDates = DataSystem.Skills.FindAll(a => a.Rank == getItemInfo.Param1 && (int)a.Attribute == (int)getItemInfo.GetItemType - 10 && !PartyInfo.AlchemyIdList.Contains(a.Id)); 
                     if (getSkillDates.Count > 0)
                     {
                         int rand2 = Random.Range(0,getSkillDates.Count);

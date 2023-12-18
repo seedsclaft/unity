@@ -62,6 +62,7 @@ public enum StageEventType{
     SelectActorAdvStart = 12, // IDにActorIDを加算してADV再生
     RouteSelectEvent = 13, // ルート分岐イベント
     SetRouteSelectParam = 14, // ルート分岐パラメータを保存
+    RouteSelectMoveEvent = 15, // ルート分岐ステージイベント
     AbortStage = 21, // ステージを中断する
     ChangeRouteSelectStage = 31, // ルート分岐でステージに移動
     RouteSelectBattle = 32, // ルート分岐敵グループを生成
@@ -77,5 +78,4 @@ public enum EndingType{
     A,
     B,
     C,
-    D
 }

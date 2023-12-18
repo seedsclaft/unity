@@ -520,17 +520,17 @@ public class BaseModel
     {
         CurrentData.PlayerInfo.StageClear(CurrentStage.BaseStageId);
     }
+    
+    public bool IsSuccessStage()
+    {
+        return (CurrentStage.SubordinateValue >= CurrentStage.Master.SubordinateValue);
+    }
 
     public void ChangeRouteSelectStage(int stageId)
     {
-        // 隷従族度が80以下なら粛清
-        if (CurrentStage.SubordinateValue < 80)
-        {
-	    	CurrentData.ChangeRouteSelectStage(stageId + 1);
-        } else
-        {
-	    	CurrentData.ChangeRouteSelectStage(stageId);
-        }
+        // stageId + RouteSelect
+        int route = GameSystem.CurrentData.CurrentStage.RouteSelect;
+        CurrentData.ChangeRouteSelectStage(stageId + route);
     }
 
     public void SetDisplayTurns()

@@ -39,6 +39,18 @@ public class BasePresenter
             }
             if (stageEvent.Type == StageEventType.RouteSelectEvent)
             {
+                // ステージクリア条件を満たしていない場合は再生しない
+                if (_model.IsSuccessStage())
+                {
+                    advId = stageEvent.Param + selectActorId;
+                    _model.AddEventReadFlag(stageEvent);
+                    isAbort = true;
+                }
+                break;
+            }
+            if (stageEvent.Type == StageEventType.RouteSelectMoveEvent)
+            {
+                // advIdに+RouteSelect
                 int route = GameSystem.CurrentData.CurrentStage.RouteSelect;
                 advId = stageEvent.Param + route;
                 _model.AddEventReadFlag(stageEvent);

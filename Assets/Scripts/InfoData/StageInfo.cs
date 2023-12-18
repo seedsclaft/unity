@@ -48,20 +48,21 @@ public class StageInfo
     private int _subordinateValue = 0;
     public int SubordinateValue => _subordinateValue;
 	private List<int> _clearTroopIds = new ();
+    public List<int> ClearTroopIds => _clearTroopIds;
 	private List<int> _selectActorIds = new ();
 	public List<int> SelectActorIds => _selectActorIds;
 
     private List<string> _readEventKeys = new ();
     public List<string> ReadEventKeys => _readEventKeys;
 
-    private int _routeSelect;
+    private int _routeSelect = 0;
     public int RouteSelect => _routeSelect;
     private int _defineBossIndex = 0;
     public int DefineBossIndex => _defineBossIndex;
 
     private int _randomTroopCount = 15;
 
-    private EndingType _endingType = EndingType.D;
+    private EndingType _endingType = EndingType.C;
     public EndingType EndingType => _endingType;
     public void SetEndingType(EndingType endingType) {_endingType = endingType;}
 
@@ -440,7 +441,11 @@ public class StageInfo
 
     public void SetRouteSelect(int routeSelect)
     {
-        _routeSelect = routeSelect;
+        _routeSelect = 0;
+        if (routeSelect > 0)
+        {
+            _routeSelect = routeSelect;
+        }
     }
 
     public void SetMoveStageData(StageInfo stageInfo)
