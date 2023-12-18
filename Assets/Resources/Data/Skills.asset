@@ -593,7 +593,7 @@ MonoBehaviour:
     Scope: 4
     SkillType: 2
     TargetType: 4
-    Help: "CA\u72B6\u614B\u4E2D\u308F\u305A\u304B\u306B\u6575\u304B\u3089\u72D9\u308F\u308C\u3084\u3059\u304F\u306A\u308B"
+    Help: "\\s\u306BCA(DEF\u5024\u30C0\u30E1\u30FC\u30B8\u53CD\u5C04)\u3092\u4ED8\u4E0E\nCA\u72B6\u614B\u4E2D\u308F\u305A\u304B\u306B\u6575\u304B\u3089\u72D9\u308F\u308C\u3084\u3059\u304F\u306A\u308B"
     Range: 1
     RepeatTime: 1
     AliveOnly: 1
@@ -694,7 +694,7 @@ MonoBehaviour:
     AnimationType: 1
     DamageTiming: 36
     MpCost: 4
-    Rank: 1
+    Rank: 2
     Attribute: 3
     Scope: 1
     SkillType: 1
@@ -719,7 +719,7 @@ MonoBehaviour:
     AnimationType: 1
     DamageTiming: 36
     MpCost: 2
-    Rank: 1
+    Rank: 2
     Attribute: 3
     Scope: 1
     SkillType: 1
@@ -774,7 +774,7 @@ MonoBehaviour:
     AnimationType: 1
     DamageTiming: 26
     MpCost: 0
-    Rank: 1
+    Rank: 2
     Attribute: 4
     Scope: 1
     SkillType: 1
@@ -1101,7 +1101,7 @@ MonoBehaviour:
     AnimationType: 1
     DamageTiming: 26
     MpCost: 4
-    Rank: 1
+    Rank: 2
     Attribute: 5
     Scope: 1
     SkillType: 1
@@ -1126,7 +1126,7 @@ MonoBehaviour:
     AnimationType: 3
     DamageTiming: 60
     MpCost: 4
-    Rank: 1
+    Rank: 2
     Attribute: 5
     Scope: 3
     SkillType: 1
@@ -1675,7 +1675,7 @@ MonoBehaviour:
     AnimationPosition: 0
     AnimationScale: 1
     AnimationType: 1
-    DamageTiming: 26
+    DamageTiming: 0
     MpCost: 0
     Rank: 1
     Attribute: 3
@@ -1706,7 +1706,7 @@ MonoBehaviour:
     AnimationPosition: 0
     AnimationScale: 1
     AnimationType: 1
-    DamageTiming: 26
+    DamageTiming: 0
     MpCost: 0
     Rank: 1
     Attribute: 3
@@ -1737,7 +1737,7 @@ MonoBehaviour:
     AnimationPosition: 0
     AnimationScale: 1
     AnimationType: 1
-    DamageTiming: 26
+    DamageTiming: 0
     MpCost: 0
     Rank: 1
     Attribute: 3
@@ -1768,7 +1768,7 @@ MonoBehaviour:
     AnimationPosition: 0
     AnimationScale: 1
     AnimationType: 1
-    DamageTiming: 26
+    DamageTiming: 0
     MpCost: 0
     Rank: 1
     Attribute: 3
@@ -1799,7 +1799,7 @@ MonoBehaviour:
     AnimationPosition: 0
     AnimationScale: 1
     AnimationType: 1
-    DamageTiming: 26
+    DamageTiming: 0
     MpCost: 0
     Rank: 1
     Attribute: 3
@@ -1830,7 +1830,7 @@ MonoBehaviour:
     AnimationPosition: 0
     AnimationScale: 1
     AnimationType: 1
-    DamageTiming: 26
+    DamageTiming: 0
     MpCost: 0
     Rank: 1
     Attribute: 3
@@ -1897,7 +1897,7 @@ MonoBehaviour:
     AnimationPosition: 0
     AnimationScale: 1
     AnimationType: 1
-    DamageTiming: 26
+    DamageTiming: 0
     MpCost: 0
     Rank: 1
     Attribute: 3
@@ -1928,7 +1928,7 @@ MonoBehaviour:
     AnimationPosition: 0
     AnimationScale: 1
     AnimationType: 1
-    DamageTiming: 26
+    DamageTiming: 0
     MpCost: 0
     Rank: 1
     Attribute: 4
@@ -1959,7 +1959,7 @@ MonoBehaviour:
     AnimationPosition: 0
     AnimationScale: 1
     AnimationType: 1
-    DamageTiming: 26
+    DamageTiming: 0
     MpCost: 0
     Rank: 1
     Attribute: 4
@@ -1990,7 +1990,7 @@ MonoBehaviour:
     AnimationPosition: 0
     AnimationScale: 1
     AnimationType: 1
-    DamageTiming: 26
+    DamageTiming: 0
     MpCost: 0
     Rank: 1
     Attribute: 4
@@ -2021,7 +2021,7 @@ MonoBehaviour:
     AnimationPosition: 0
     AnimationScale: 1
     AnimationType: 1
-    DamageTiming: 26
+    DamageTiming: 0
     MpCost: 0
     Rank: 1
     Attribute: 4
@@ -2052,7 +2052,7 @@ MonoBehaviour:
     AnimationPosition: 0
     AnimationScale: 1
     AnimationType: 1
-    DamageTiming: 26
+    DamageTiming: 0
     MpCost: 0
     Rank: 1
     Attribute: 4
@@ -2083,7 +2083,7 @@ MonoBehaviour:
     AnimationPosition: 0
     AnimationScale: 1
     AnimationType: 1
-    DamageTiming: 26
+    DamageTiming: 0
     MpCost: 0
     Rank: 1
     Attribute: 4
@@ -2114,7 +2114,7 @@ MonoBehaviour:
     AnimationPosition: 0
     AnimationScale: 1
     AnimationType: 1
-    DamageTiming: 26
+    DamageTiming: 0
     MpCost: 0
     Rank: 1
     Attribute: 4
@@ -2145,7 +2145,7 @@ MonoBehaviour:
     AnimationPosition: 0
     AnimationScale: 1
     AnimationType: 1
-    DamageTiming: 26
+    DamageTiming: 0
     MpCost: 0
     Rank: 1
     Attribute: 4
@@ -3129,7 +3129,7 @@ MonoBehaviour:
     AnimationPosition: 0
     AnimationScale: 1
     AnimationType: 1
-    DamageTiming: 26
+    DamageTiming: 0
     MpCost: 0
     Rank: 1
     Attribute: 3
@@ -3154,7 +3154,7 @@ MonoBehaviour:
     AnimationPosition: 0
     AnimationScale: 1
     AnimationType: 1
-    DamageTiming: 26
+    DamageTiming: 0
     MpCost: 0
     Rank: 1
     Attribute: 4

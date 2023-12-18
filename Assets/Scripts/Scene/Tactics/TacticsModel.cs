@@ -231,10 +231,15 @@ public class TacticsModel : BaseModel
         var actorInfo = TacticsActor(actorId);
         var skillInfos = new List<SkillInfo>();
         
-        for (int i = 0;i < PartyInfo.AlchemyIdList.Count;i++)
+        for (int i = 0;i < PartyInfo.AlchemyIdDict.Count;i++)
         {
-            var skillInfo = new SkillInfo(PartyInfo.AlchemyIdList[i]);
+            var skillInfo = new SkillInfo(PartyInfo.AlchemyIdDict[i]);
             if (actorInfo.IsLearnedSkill(skillInfo.Id)) continue;
+            var preserved = StageMembers().FindAll(a => a.TacticsCommandType == TacticsCommandType.Alchemy && a.NextLearnSkillId == skillInfo.Id);
+            if ((PartyInfo.AlchemyNum(skillInfo.Id) - preserved.Count) <= 0)
+            {
+                continue;
+            }
             skillInfo.SetEnable(true);
             skillInfo.SetLearningCost(TacticsUtility.AlchemyCost(actorInfo,skillInfo.Attribute,StageMembers()));
             skillInfos.Add(skillInfo);

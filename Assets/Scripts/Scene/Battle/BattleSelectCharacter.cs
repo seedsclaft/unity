@@ -56,21 +56,6 @@ public class BattleSelectCharacter : MonoBehaviour
         }
         _selectCharacterTabType = selectCharacterTabType;
         UpdateTabs();
-        if (selectCharacterTabType == SelectCharacterTabType.Magic)
-        {
-            //deckMagicList.Activate();
-            //conditionList.Deactivate();
-        } else
-        if (selectCharacterTabType == SelectCharacterTabType.Condition)
-        {
-            //deckMagicList.Deactivate();
-            //conditionList.Activate();
-        } else
-        if (selectCharacterTabType == SelectCharacterTabType.Detail)
-        {
-            //deckMagicList.Activate();
-            //conditionList.Deactivate();
-        }
         Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cursor);
     }
 
@@ -281,7 +266,13 @@ public class BattleSelectCharacter : MonoBehaviour
             var rect = gameObject.GetComponent<RectTransform>();
             if (selectObj != gameObject)
             {
-                rect.sizeDelta = new Vector2(160,240);
+                if (deckMagicList.ObjectList.Count > 15)
+                {
+                    rect.sizeDelta = new Vector2(160 * (15f / (float)deckMagicList.ObjectList.Count),240);
+                } else
+                {
+                    rect.sizeDelta = new Vector2(160,240);
+                }
             } else
             {
                 rect.sizeDelta = new Vector2(264,240);

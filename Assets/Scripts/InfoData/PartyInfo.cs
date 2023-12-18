@@ -18,7 +18,7 @@ public class PartyInfo
         _commandRankInfo[TacticsCommandType.Battle] = 0;
         _commandRankInfo[TacticsCommandType.Resource] = 0;
     
-        _alchemyIdList = new();
+        _alchemyIdDict = new();
         _battleResultVictory = false;
     }
 
@@ -26,8 +26,8 @@ public class PartyInfo
     public List<int> ActorIdList => _actorIdList;
     private int _currency = 0;
     public int Currency => _currency;
-    private List<int> _alchemyIdList = new();
-    public List<int> AlchemyIdList => _alchemyIdList;
+    private Dictionary<int,int> _alchemyIdDict = new();
+    public Dictionary<int,int> AlchemyIdDict => _alchemyIdDict;
 
     private int _stageId = 0;
     public int StageId => _stageId;
@@ -77,11 +77,28 @@ public class PartyInfo
 
     public void AddAlchemy(int skillId)
     {
-        if (_alchemyIdList.Contains(skillId))
+        if (!_alchemyIdDict.ContainsKey(skillId))
         {
-            return;
+            _alchemyIdDict[skillId] = 0;
         }
-        _alchemyIdList.Add(skillId);
+        _alchemyIdDict[skillId]++;
+    }
+
+    public int AlchemyNum(int skillId)
+    {
+        if (!_alchemyIdDict.ContainsKey(skillId))
+        {
+            return 0;
+        }
+        return _alchemyIdDict[skillId];
+    }
+
+    public void RemoveAlchemy(int skillId)
+    {
+        if (_alchemyIdDict.ContainsKey(skillId))
+        {
+            _alchemyIdDict[skillId]--;
+        }
     }
 
     public bool AddCommandCountInfo(TacticsCommandType commandType)
