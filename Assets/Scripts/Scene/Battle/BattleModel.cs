@@ -67,7 +67,6 @@ public class BattleModel : BaseModel
         {
             var baseEnemy = enemies[i];
             baseEnemy.ResetData();
-            //enemies[i].GainHp(-99999);
             _battlers.Add(baseEnemy);
         }
         foreach (var battlerInfo1 in _battlers)

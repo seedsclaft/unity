@@ -82,10 +82,10 @@ public class BattleEnemy : ListItem
         rect.sizeDelta = new Vector2(width,height);
         objectRect.sizeDelta = new Vector2(width,height);
         effectRect.sizeDelta = new Vector2(width,height);
-        if (_isFront == false && height > 390)
+        if (_isFront == false && enemyImage.mainTexture.height > 390)
         {
-            statusRect.sizeDelta = new Vector2(0,height/2);
-            damageRect.sizeDelta = new Vector2(0,height/2);
+            statusRect.localPosition = new Vector2(0,0);
+            damageRect.localPosition = new Vector2(0,0);
         }
     }
     

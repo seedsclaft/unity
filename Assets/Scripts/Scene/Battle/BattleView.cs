@@ -20,6 +20,7 @@ public class BattleView : BaseView ,IInputHandlerEvent
 
     [SerializeField] private Button escapeButton = null;
     [SerializeField] private SkillInfoComponent skillInfoComponent = null;
+    [SerializeField] private GameObject currentSkillBg = null;
     [SerializeField] private SideMenuList sideMenuList = null;
 
     [SerializeField] private GameObject centerAnimPosition = null;
@@ -47,6 +48,7 @@ public class BattleView : BaseView ,IInputHandlerEvent
     public override void Initialize() 
     {
         base.Initialize();
+        ClearCurrentSkillData();
         selectCharacter.Initialize();
         SetInputHandler(selectCharacter.GetComponent<IInputHandlerEvent>());
 
@@ -434,6 +436,7 @@ public class BattleView : BaseView ,IInputHandlerEvent
         {
             skillInfoComponent.gameObject.SetActive(true);
             skillInfoComponent.UpdateSkillData(skillData.Id);
+            currentSkillBg.GetComponent<RectTransform>().sizeDelta = new Vector2(480,56 + ((skillData.Help.Split("\n").Length-1) * 24));
         }
 
     }

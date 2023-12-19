@@ -34,7 +34,7 @@ public class StateInfoComponent : MonoBehaviour
             var removalTiming = stateInfo.Master.RemovalTiming;
             if (removalTiming == RemovalTiming.UpdateTurn)
             {
-                if (stateInfo.Turns > 100)
+                if (stateInfo.Turns > 900)
                 {
                     turns.text = DataSystem.System.GetTextData(403).Text;
                 } else
@@ -48,7 +48,7 @@ public class StateInfoComponent : MonoBehaviour
             } else
             if (removalTiming == RemovalTiming.UpdateAp)
             {
-                if (stateInfo.Turns > 100)
+                if (stateInfo.Turns > 900)
                 {
                     turns.text = DataSystem.System.GetTextData(403).Text;
                 } else

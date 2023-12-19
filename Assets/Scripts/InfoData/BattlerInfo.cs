@@ -123,7 +123,7 @@ public class BattlerInfo
             Math.Min(50, enemyData.BaseStatus.Mp + lv),
             enemyData.BaseStatus.Atk + (int)Math.Floor(lv + lv * enemyData.BaseStatus.Atk * 0.05f),
             enemyData.BaseStatus.Def + (int)Math.Floor(lv + lv * enemyData.BaseStatus.Def * 0.05f),
-            Math.Min(100, enemyData.BaseStatus.Spd + (int)Math.Floor(lv + lv * enemyData.BaseStatus.Spd * 0.05f))
+            Math.Min(100, enemyData.BaseStatus.Spd + (int)Math.Floor(lv * enemyData.BaseStatus.Spd * 0.05f))
         );
         _status = statusInfo;
         _index = index + 100;

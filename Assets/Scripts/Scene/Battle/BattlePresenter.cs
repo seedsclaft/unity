@@ -270,6 +270,7 @@ public class BattlePresenter : BasePresenter
                 var CurrentActionInfo = _model.CurrentActionInfo();
                 if (CurrentActionInfo != null)
                 {
+                    _view.SetBattleBusy(true);
                     _model.SetActionBattler(CurrentActionInfo.SubjectIndex);
                     CommandSelectTargetIndexes(_model.MakeAutoSelectIndex(CurrentActionInfo));
                     return;
@@ -301,6 +302,7 @@ public class BattlePresenter : BasePresenter
             var CurrentActionInfo = _model.CurrentActionInfo();
             if (CurrentActionInfo != null)
             {
+                _view.SetBattleBusy(true);
                 _model.SetActionBattler(CurrentActionInfo.SubjectIndex);
                 CommandSelectTargetIndexes(_model.MakeAutoSelectIndex(CurrentActionInfo));
                 return;
@@ -692,8 +694,7 @@ public class BattlePresenter : BasePresenter
             await UniTask.DelayFrame(actionInfo.Master.DamageTiming);
             for (int i = 0; i < actionInfo.ActionResults.Count; i++)
             {
-                bool lastTarget = actionInfo.ActionResults[actionInfo.ActionResults.Count-1].TargetIndex == actionInfo.ActionResults[i].TargetIndex;
-                PopupActionResult(actionInfo.ActionResults[i],actionInfo.ActionResults[i].TargetIndex,true,true,lastTarget);
+                PopupActionResult(actionInfo.ActionResults[i],actionInfo.ActionResults[i].TargetIndex,true,true);
             }
             await UniTask.DelayFrame(64);
         } else
@@ -703,8 +704,7 @@ public class BattlePresenter : BasePresenter
             StartAliveAnimation(_model.CurrentActionInfo().ActionResults);
             for (int i = 0; i < actionInfo.ActionResults.Count; i++)
             {
-                bool lastTarget = actionInfo.ActionResults[actionInfo.ActionResults.Count-1].TargetIndex == actionInfo.ActionResults[i].TargetIndex;
-                PopupActionResult(actionInfo.ActionResults[i],actionInfo.ActionResults[i].TargetIndex,true,true,lastTarget);
+                PopupActionResult(actionInfo.ActionResults[i],actionInfo.ActionResults[i].TargetIndex,true,true);
             }
             await UniTask.DelayFrame(32);
         }
@@ -712,7 +712,7 @@ public class BattlePresenter : BasePresenter
         CommandEndAnimation();
     }
 
-    private void PopupActionResult(ActionResultInfo actionResultInfo,int targetIndex,bool needDamageBlink = true,bool needPopupDelay = true,bool lastTarget = true)
+    private void PopupActionResult(ActionResultInfo actionResultInfo,int targetIndex,bool needDamageBlink = true,bool needPopupDelay = true)
     {
         if (actionResultInfo.Missed)
         {
@@ -763,19 +763,13 @@ public class BattlePresenter : BasePresenter
         }
         if (actionResultInfo.ReDamage > 0)
         {
-            if (lastTarget == true)
-            {
-                Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Damage);
-                _view.StartDamage(actionResultInfo.SubjectIndex,DamageType.HpDamage,actionResultInfo.ReDamage);
-                _view.StartBlink(actionResultInfo.SubjectIndex);
-            }
+            Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Damage);
+            _view.StartDamage(actionResultInfo.SubjectIndex,DamageType.HpDamage,actionResultInfo.ReDamage);
+            _view.StartBlink(actionResultInfo.SubjectIndex);
         }
         if (actionResultInfo.ReHeal > 0)
-        {
-            if (lastTarget == true)
-            {
-                _view.StartHeal(actionResultInfo.SubjectIndex,DamageType.HpHeal,actionResultInfo.ReHeal);
-            }
+        {    
+            _view.StartHeal(actionResultInfo.SubjectIndex,DamageType.HpHeal,actionResultInfo.ReHeal);
         }
         foreach (var addedState in actionResultInfo.AddedStates)
         {
