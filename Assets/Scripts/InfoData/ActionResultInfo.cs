@@ -27,7 +27,7 @@ public class ActionResultInfo
         }
         if (subject != null && target != null)
         {
-            if (_hpDamage >= target.Hp && target.IsAlive())
+            if (_hpDamage >= (target.Hp + _hpHeal) && target.IsAlive())
             {
                 if (target.IsState(StateType.Undead) && featureDates.Find(a => a.FeatureType == FeatureType.BreakUndead) == null)
                 {
@@ -126,6 +126,9 @@ public class ActionResultInfo
     public int TurnCount => _turnCount;
     public void SetTurnCount(int turnCount) {_turnCount = turnCount;}
 
+    private bool _startDash;
+    public bool StartDash => _startDash;
+
     private void MakeFeature(BattlerInfo subject,BattlerInfo target,SkillData.FeatureData featureData,bool isOneTarget = false)
     {
         switch (featureData.FeatureType)
@@ -175,6 +178,9 @@ public class ActionResultInfo
             case FeatureType.RemoveState:
                 MakeRemoveState(subject,target,featureData);
                 return;
+            case FeatureType.RemoveAbnormalState:
+                MakeRemoveAbnormalState(subject,target,featureData);
+                return;
             case FeatureType.RemoveStatePassive:
                 MakeRemoveStatePassive(subject,target,featureData);
                 return;
@@ -183,6 +189,9 @@ public class ActionResultInfo
                 return;
             case FeatureType.ApHeal:
                 MakeApHeal(subject,target,featureData);
+                return;
+            case FeatureType.StartDash:
+                MakeStartDash(target);
                 return;
             case FeatureType.KindHeal:
                 MakeKindHeal(subject,target,featureData);
@@ -249,39 +258,13 @@ public class ActionResultInfo
 
     private int CurrentAttack(BattlerInfo battlerInfo,bool isNoEffect)
     {
-        int AtkValue = battlerInfo.CurrentAtk();
-        if (isNoEffect == false)
-        {
-            if (battlerInfo.IsState(StateType.AtkUp))
-            {
-                AtkValue += battlerInfo.StateEffectAll(StateType.AtkUp);
-            }
-            if (battlerInfo.IsState(StateType.AtkDown))
-            {
-                AtkValue -= battlerInfo.StateEffectAll(StateType.AtkDown);
-            }
-        }
+        int AtkValue = battlerInfo.CurrentAtk(isNoEffect);
         return AtkValue;
     }
 
     private int CurrentDefense(BattlerInfo battlerInfo,bool isNoEffect)
     {
-        int DefValue = battlerInfo.CurrentDef();
-        if (isNoEffect == false)
-        {
-            if (battlerInfo.IsState(StateType.DefUp))
-            {
-                DefValue += battlerInfo.StateEffectAll(StateType.DefUp);
-            }
-            if (battlerInfo.IsState(StateType.DefDown))
-            {
-                DefValue -= battlerInfo.StateEffectAll(StateType.DefDown);
-            }
-            if (battlerInfo.IsState(StateType.DefPerDown))
-            {
-                DefValue = (int)((float)DefValue * ((100 - battlerInfo.StateEffectAll(StateType.DefPerDown)) * 0.01f));
-            }
-        }
+        int DefValue = battlerInfo.CurrentDef(isNoEffect);
         return DefValue;
     }
 
@@ -331,17 +314,24 @@ public class ActionResultInfo
             }
         }
         hpDamage = ApplyVariance(hpDamage);
+        if (target.IsState(StateType.CounterAura) && target.IsState(StateType.CounterAuraShell))
+        {
+            hpDamage -= target.StateEffectAll(StateType.CounterAuraShell);
+        }
         hpDamage = Mathf.Max(1,hpDamage);
         if (target.IsState(StateType.NoDamage) && !isNoEffect)
         {
             hpDamage = 0;
             SeekStateCount(target,StateType.NoDamage);
         }
-        if (subject.IsState(StateType.Deadly))
+        if (subject.IsState(StateType.Deadly) && !isNoEffect)
         {
-            int rand = new System.Random().Next(0, 100);
-            if (subject.StateEffectAll(StateType.Deadly) >= rand){
-                hpDamage = target.Hp;
+            if (!target.IsState(StateType.Barrier))
+            {
+                int rand = new System.Random().Next(0, 100);
+                if (subject.StateEffectAll(StateType.Deadly) >= rand){
+                    hpDamage = target.Hp;
+                }
             }
         }
         if (subject.IsState(StateType.Drain))
@@ -354,12 +344,12 @@ public class ActionResultInfo
     private void MakeHpHeal(BattlerInfo subject,BattlerInfo target,SkillData.FeatureData featureData)
     {
         float HealValue = featureData.Param1;
-        _hpHeal = (int)Mathf.Round(HealValue);
+        _hpHeal += (int)Mathf.Round(HealValue);
         if (subject != target)
         {
             if (subject.IsState(StateType.HealActionSelfHeal))
             {
-                _reHeal = (int)Mathf.Round(HealValue);
+                _reHeal += (int)Mathf.Round(HealValue);
             }
         }
     }
@@ -430,11 +420,14 @@ public class ActionResultInfo
             hpDamage = 0;
             SeekStateCount(target,StateType.NoDamage);
         }
-        if (subject.IsState(StateType.Deadly))
+        if (subject.IsState(StateType.Deadly) && !isNoEffect)
         {
-            int rand = new System.Random().Next(0, 100);
-            if (subject.StateEffectAll(StateType.Deadly) >= rand){
-                hpDamage = target.Hp;
+            if (!target.IsState(StateType.Barrier))
+            {
+                int rand = new System.Random().Next(0, 100);
+                if (subject.StateEffectAll(StateType.Deadly) >= rand){
+                    hpDamage = target.Hp;
+                }
             }
         }
         if (subject.IsState(StateType.Drain))
@@ -561,6 +554,20 @@ public class ActionResultInfo
         }
     }
 
+    private void MakeRemoveAbnormalState(BattlerInfo subject,BattlerInfo target,SkillData.FeatureData featureData)
+    {
+        // skillId -1のRemoveは強制で解除する
+        var abnormalStates = target.StateInfos.FindAll(a => a.Master.Abnormal == true && a.BattlerId != target.Index);
+        foreach (var abnormalState in abnormalStates)
+        {
+            bool IsRemoved = target.RemoveState(abnormalState,false);
+            if (IsRemoved)
+            {
+                _removedStates.Add(abnormalState);
+            }
+        }
+    }
+
     private void MakeRemoveStatePassive(BattlerInfo subject,BattlerInfo target,SkillData.FeatureData featureData)
     {
         // パッシブはそのパッシブスキルのみ解除する
@@ -583,9 +590,15 @@ public class ActionResultInfo
         _apHeal = (int)Mathf.Round(HealValue);
     }
 
+    private void MakeStartDash(BattlerInfo target)
+    {
+        target.SetAp(0);
+        _startDash = true;
+    }
+
     public void MakeKindHeal(BattlerInfo subject,BattlerInfo target,SkillData.FeatureData featureData)
     {
-        if (target.Kinds.IndexOf((KindType)featureData.Param1) != -1)
+        if (target.IsState(StateType.Undead))
         {
             _hpDamage = (int)Mathf.Floor( _hpHeal * featureData.Param3 * 0.01f);
             _hpHeal = 0;
@@ -652,26 +665,19 @@ public class ActionResultInfo
             {                
                 _reDamage += CounterDamageValue(target);
             }
-            if (target.IsState(StateType.CounterAuraHeal))
-            {
-                var counterAuraHeal = new SkillData.FeatureData();
-                counterAuraHeal.FeatureType = FeatureType.HpHeal;
-                counterAuraHeal.Param1 = target.StateEffectAll(StateType.CounterAuraHeal);
-                MakeHpHeal(target,target,counterAuraHeal);
-            }
         }
     }
 
     private int CounterDamageValue(BattlerInfo target)
     {
-        int ReDamage = (int)Mathf.Floor((target.CurrentDef() * 0.5f) * target.StateEffectAll(StateType.CounterAura) * 0.01f);
+        int ReDamage = (int)Mathf.Floor((target.CurrentDef(false) * 0.5f) * target.StateEffectAll(StateType.CounterAura) * 0.01f);
         ReDamage += target.StateEffectAll(StateType.CounterAuraDamage);
         return ReDamage;
     }
 
     private int AntiDoteDamageValue(BattlerInfo target)
     {
-        int ReDamage = (int)Mathf.Floor((target.CurrentDef() * 0.5f));
+        int ReDamage = (int)Mathf.Floor((target.CurrentDef(false) * 0.5f));
         return ReDamage;
     }
 

@@ -132,8 +132,9 @@ public class BattleSelectCharacter : MonoBehaviour
 
     public void UpdateStatus(BattlerInfo battlerInfo)
     {
-        var currentStatus = battlerInfo.CurrentStatus();
-        statusInfoComponent.UpdateInfo(currentStatus);
+        var baseStatus = battlerInfo.CurrentStatus(true);
+        var currentStatus = battlerInfo.CurrentStatus(false);
+        statusInfoComponent.UpdateInfo(currentStatus,baseStatus);
         statusInfoComponent.UpdateHp(battlerInfo.MaxHp,currentStatus.Hp);
         statusInfoComponent.UpdateMp(battlerInfo.MaxMp,currentStatus.Mp);
     }

@@ -52,7 +52,7 @@ public enum StateType
     ChainDamageUp = 2021, // 拘束ダメージアップ
     CounterAura = 2030, // CA
     CounterAuraDamage = 2031,
-    CounterAuraHeal = 2032,
+    CounterAuraShell = 2032,
     Regenerate = 2040,
     NoDamage = 2050,
     Drain  = 2060,

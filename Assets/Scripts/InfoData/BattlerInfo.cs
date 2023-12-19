@@ -7,9 +7,9 @@ public class BattlerInfo
 {
     private StatusInfo _status = null;
     public StatusInfo Status => _status;
-    public StatusInfo CurrentStatus(){
+    public StatusInfo CurrentStatus(bool isNoEffect){
         var currentStatus = new StatusInfo();
-        currentStatus.SetParameter(MaxHp,MaxMp,CurrentAtk(),CurrentDef(),CurrentSpd());
+        currentStatus.SetParameter(MaxHp,MaxMp,CurrentAtk(isNoEffect),CurrentDef(isNoEffect),CurrentSpd(isNoEffect));
         return currentStatus;
     }
     private int _index = 0;
@@ -191,7 +191,7 @@ public class BattlerInfo
         {
             rand = new Random().Next(-10, 10);
         }
-        _ap = 1000 - (CurrentSpd() + rand) * 8;
+        _ap = 1000 - (CurrentSpd(false) + rand) * 8;
         _ap = Math.Max(_ap,120);
     }
 
@@ -498,52 +498,81 @@ public class BattlerInfo
     }
 
 
-    public int CurrentAtk()
+    public int CurrentAtk(bool isNoEffect)
     {
         int atk = Status.Atk;
-        if (IsState(StateType.Demigod))
+        if (isNoEffect == false)
         {
-            atk += _demigodParam;
-        }
-        if (IsState(StateType.StatusUp))
-        {
-            atk += GetStateInfo(StateType.StatusUp).Effect;
+            if (IsState(StateType.Demigod))
+            {
+                atk += _demigodParam;
+            }
+            if (IsState(StateType.StatusUp))
+            {
+                atk += StateEffectAll(StateType.StatusUp);
+            }
+            if (IsState(StateType.AtkUp))
+            {
+                atk += StateEffectAll(StateType.AtkUp);
+            }
+            if (IsState(StateType.AtkDown))
+            {
+                atk -= StateEffectAll(StateType.AtkDown);
+            }
         }
         return atk;
     }
     
-    public int CurrentDef()
+    public int CurrentDef(bool isNoEffect)
     {
         int def = Status.Def;
-        if (IsState(StateType.Demigod))
+        if (isNoEffect == false)
         {
-            def += _demigodParam;
-        }
-        if (IsState(StateType.StatusUp))
-        {
-            def += GetStateInfo(StateType.StatusUp).Effect;
+            if (IsState(StateType.Demigod))
+            {
+                def += _demigodParam;
+            }
+            if (IsState(StateType.StatusUp))
+            {
+                def += StateEffectAll(StateType.StatusUp);
+            }
+            if (IsState(StateType.DefUp))
+            {
+                def += StateEffectAll(StateType.DefUp);
+            }
+            if (IsState(StateType.DefDown))
+            {
+                def -= StateEffectAll(StateType.DefDown);
+            }
+            if (IsState(StateType.DefPerDown))
+            {
+                def = (int)((float)def * ((100 - StateEffectAll(StateType.DefPerDown)) * 0.01f));
+            }
         }
         return def;
     }
     
-    public int CurrentSpd()
+    public int CurrentSpd(bool isNoEffect)
     {
         int spd = Status.Spd;
-        if (IsState(StateType.Demigod))
+        if (isNoEffect == false)
         {
-            spd += _demigodParam;
-        }
-        if (IsState(StateType.SpdUp))
-        {
-            spd += StateEffectAll(StateType.SpdUp);
-        }
-        if (IsState(StateType.Accel))
-        {
-            spd += StateEffect(StateType.Accel) * StateTurn(StateType.Accel);
-        }
-        if (IsState(StateType.StatusUp))
-        {
-            spd += GetStateInfo(StateType.StatusUp).Effect;
+            if (IsState(StateType.Demigod))
+            {
+                spd += _demigodParam;
+            }
+            if (IsState(StateType.SpdUp))
+            {
+                spd += StateEffectAll(StateType.SpdUp);
+            }
+            if (IsState(StateType.Accel))
+            {
+                spd += StateEffect(StateType.Accel) * StateTurn(StateType.Accel);
+            }
+            if (IsState(StateType.StatusUp))
+            {
+                spd += StateEffectAll(StateType.StatusUp);
+            }
         }
         return spd;
     }

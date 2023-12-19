@@ -530,6 +530,7 @@ public class BattlePresenter : BasePresenter
                 _view.HideEnemyStatus();
                 _view.ShowStateOverlay();
                 _view.RefreshStatus();
+                _view.SetBattlerSelectable(true);
                 _view.SetBattleBusy(false);
                 return;
             }
@@ -602,8 +603,8 @@ public class BattlePresenter : BasePresenter
                 _triggerInterruptChecked = true;
             }
             
-            var PassiveResults = _model.CheckTriggerPassiveInfos(TriggerTiming.Use);
-            ExecActionResult(PassiveResults);
+            var PassiveResults = _model.CheckTriggerPassiveInfos(TriggerTiming.Use,actionInfo);
+            actionInfo.ActionResults.AddRange(PassiveResults);
         }
     }
 
@@ -735,7 +736,7 @@ public class BattlePresenter : BasePresenter
         }
         if (actionResultInfo.HpHeal > 0)
         {
-            if (actionResultInfo.TargetIndex == targetIndex)
+            if (actionResultInfo.TargetIndex == targetIndex && !actionResultInfo.DeadIndexList.Contains(targetIndex))
             {
                 _view.StartHeal(targetIndex,DamageType.HpHeal,actionResultInfo.HpHeal,needPopupDelay);
             }
@@ -758,7 +759,7 @@ public class BattlePresenter : BasePresenter
         {
             if (actionResultInfo.TargetIndex == targetIndex)
             {
-                _view.StartStatePopup(targetIndex,DamageType.State,"+行動短縮");
+                _view.StartStatePopup(targetIndex,DamageType.State,DataSystem.System.GetTextData(432).Text);
             }
         }
         if (actionResultInfo.ReDamage > 0)
@@ -790,6 +791,14 @@ public class BattlePresenter : BasePresenter
             if (actionResultInfo.TargetIndex == targetIndex)
             {
                 _view.StartStatePopup(displayState.TargetIndex,DamageType.State,displayState.Master.Name);
+            }
+        }
+        if (actionResultInfo.StartDash)
+        {    
+            if (actionResultInfo.TargetIndex == targetIndex)
+            {
+                //先制攻撃
+                _view.StartStatePopup(targetIndex,DamageType.State,DataSystem.System.GetTextData(431).Text);
             }
         }
     }

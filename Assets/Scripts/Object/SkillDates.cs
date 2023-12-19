@@ -221,6 +221,12 @@ public class SkillData
                     CanUse = true;
                 }
                 break;
+                case TriggerType.IsAbnormalState:
+                if (battlerInfo.StateInfos.Find(a => a.Master.Abnormal == true) != null)
+                {
+                    CanUse = true;
+                }
+                break;
                 case TriggerType.LessTroopMembers:
                 if ( troops.Count >= party.Count )
                 {
@@ -331,6 +337,7 @@ public enum TriggerType
     SelfLineBack = 32, // 自分が後列にいる
     IsState = 41, // StateId状態になっている
     IsNotState = 42, // StateId状態になっていない
+    IsAbnormalState = 43, // AbnormalのState状態になっている
     LessTroopMembers = 51, // 味方より敵が多い
     MoreTroopMembers = 52, // 味方より敵が少ない
     TurnNumUnder = 61, // ターン数が〇以内
@@ -371,9 +378,11 @@ public enum FeatureType
     NoEffectHpDamage = 11,
     AddState = 21,
     RemoveState = 22,
+    RemoveAbnormalState = 23,
     SetAfterAp = 31,
     ApHeal = 32,
     NoResetAp = 33,
+    StartDash = 34,
     RemainHpOne = 41,
     PlusSkill = 101,
     KindHeal = 201,

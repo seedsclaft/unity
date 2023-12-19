@@ -71,4 +71,9 @@ public class StateInfo {
     {
         _turns = _baseTurns;
     }
+
+    public bool CheckSameStateType(StateInfo otherStateInfo)
+    {
+        return _stateType == otherStateInfo.StateType && _skillId == otherStateInfo.SkillId && _targetIndex == otherStateInfo.TargetIndex;
+    }
 }

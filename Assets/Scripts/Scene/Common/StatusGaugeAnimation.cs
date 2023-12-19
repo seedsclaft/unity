@@ -13,6 +13,8 @@ public class StatusGaugeAnimation : MonoBehaviour
     private float _waitDuration = 0.8f;
     private float _delayDuration = 0.25f;
 
+    private Sequence _animation = null;
+
     public void UpdateGauge(float width,float margin,float gaugeAmount)
     {
         if (gauge != null)
@@ -41,9 +43,20 @@ public class StatusGaugeAnimation : MonoBehaviour
     {
         if (gaugeAnimation != null)
         {
+            if (_animation != null)
+            {
+                _animation.Kill(true);
+            }
             var sequence = DOTween.Sequence()
                 .Append(gaugeAnimation.DOFillAmount(gaugeAmount,_waitDuration)
-                .SetDelay(_delayDuration));
+                .SetDelay(_delayDuration)
+                .OnComplete(() => 
+                    {
+                        _animation = null;
+                        gaugeAnimation.fillAmount = gauge.fillAmount;
+                    })
+                );
+            _animation = sequence;
         }
     }
 }
