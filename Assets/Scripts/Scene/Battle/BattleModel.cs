@@ -1073,15 +1073,15 @@ public class BattleModel : BaseModel
             var execTarget = GetBattlerInfo(targetIndex.Key);
             if (execTarget != null)
             {
-                foreach (var stateId in targetIndex.Value)
+                foreach (var stateInfo in targetIndex.Value)
                 {
-                    execTarget.UpdateStateCount(RemovalTiming.UpdateCount,(int)stateId);
+                    execTarget.UpdateStateCount(RemovalTiming.UpdateCount,stateInfo);
                 }
             }
         }
         //if (actionResultInfo.AddedStates.Find(a => a.Master.Id == (int)StateType.Stun) != null
         //    || actionResultInfo.DeadIndexList.Contains(actionResultInfo.TargetIndex))  
-        if (actionResultInfo.HpDamage > 0 || actionResultInfo.ExecStateInfos[target.Index].Contains(StateType.CounterAura))
+        if (actionResultInfo.HpDamage > 0 || actionResultInfo.ExecStateInfos[target.Index].Find(a => a.StateType == StateType.CounterAura) != null)
         {
             if (target.IsState(StateType.CounterAura))
             {

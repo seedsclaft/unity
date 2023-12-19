@@ -41,8 +41,8 @@ public class StatusInfoComponent : MonoBehaviour
         {
             spd.text = statusInfo.Spd.ToString();
         }
-        
     }
+
     public void UpdateHp(int currentHp,int maxStatusHp)
     {
         if (currentHp < 0)

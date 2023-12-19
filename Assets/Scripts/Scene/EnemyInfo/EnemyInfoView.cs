@@ -48,7 +48,7 @@ public class EnemyInfoView : BaseView,IInputHandlerEvent
         selectCharacter.SetInputHandlerAction(InputKeyType.SideRight2,() => {
             selectCharacter.SelectCharacterTabSmooth(1);
         });
-        SetInputHandler(selectCharacter.DeckMagicList.GetComponent<IInputHandlerEvent>());
+        SetInputHandler(selectCharacter.MagicList.GetComponent<IInputHandlerEvent>());
         selectCharacter.HideActionList();
         selectCharacter.SelectCharacterTabSmooth(0);
     }
@@ -57,7 +57,7 @@ public class EnemyInfoView : BaseView,IInputHandlerEvent
     {
         selectCharacter.SetActiveTab(SelectCharacterTabType.Detail,false);
         selectCharacter.ShowActionList();
-        selectCharacter.SetEnemyThumb(battlerInfo);
+        selectCharacter.UpdateStatus(battlerInfo);
         selectCharacter.SetSkillInfos(skillInfos);
         selectCharacter.RefreshAction(lastSelectIndex);
         enemyLayer.RefreshTarget(battlerInfo.Index,enemyIndexes,ScopeType.One);

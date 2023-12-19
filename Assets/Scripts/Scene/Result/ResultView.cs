@@ -53,7 +53,7 @@ public class ResultView : BaseView
         selectCharacter.SetInputHandlerAction(InputKeyType.Cancel,() => {});
         selectCharacter.SetInputHandlerAction(InputKeyType.Start,() => CallDecideActor());
 
-        SetInputHandler(selectCharacter.DeckMagicList.GetComponent<IInputHandlerEvent>());
+        SetInputHandler(selectCharacter.MagicList.GetComponent<IInputHandlerEvent>());
         selectCharacter.HideActionList();
         selectCharacter.HideStatus();
         selectCharacter.gameObject.SetActive(false);
@@ -229,8 +229,8 @@ public class ResultView : BaseView
         selectCharacter.SetActiveTab(SelectCharacterTabType.Condition,false);
         selectCharacter.SetActiveTab(SelectCharacterTabType.Detail,false);
         selectCharacter.ShowActionList();
-        selectCharacter.DeckMagicList.Activate();
-        selectCharacter.SetActorThumbOnly(actorInfo);
+        selectCharacter.MagicList.Activate();
+        //selectCharacter.SetActorThumbOnly(actorInfo);
         selectCharacter.SetActorInfo(actorInfo,party);
         selectCharacter.SetSkillInfos(skillInfos);
         selectCharacter.RefreshAction(lastSelectIndex);

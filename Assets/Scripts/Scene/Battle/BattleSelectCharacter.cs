@@ -6,9 +6,8 @@ using UnityEngine.UI;
 public class BattleSelectCharacter : MonoBehaviour
 {   
     [SerializeField] private SkillInfoComponent displaySelectCard;
-    [SerializeField] private BattleThumb battleThumb;
-    [SerializeField] private BaseList deckMagicList;
-    public BaseList DeckMagicList => deckMagicList;
+    [SerializeField] private BaseList magicList;
+    public BaseList MagicList => magicList;
     [SerializeField] private BaseList conditionList;
     [SerializeField] private List<Toggle> detailTabs;
     [SerializeField] private List<GameObject> detailObjs;
@@ -22,7 +21,7 @@ public class BattleSelectCharacter : MonoBehaviour
     
     public SkillInfo ActionData{
         get {
-            return (SkillInfo)deckMagicList.ListData.Data;
+            return (SkillInfo)magicList.ListData.Data;
         }
     }
 
@@ -123,37 +122,15 @@ public class BattleSelectCharacter : MonoBehaviour
         detailTabs[(int)selectCharacterTabType].gameObject.SetActive(isActive);
     }
 
-    public void SetBattleThumb(BattlerInfo battlerInfo)
+    public void UpdateStatus(ActorInfo actorInfo)
     {
-        battleThumb.ShowBattleThumb(battlerInfo);
-        battleThumb.gameObject.SetActive(true);
-        var currentStatus = battlerInfo.CurrentStatus();
-        statusInfoComponent.UpdateInfo(currentStatus);
-        statusInfoComponent.UpdateHp(battlerInfo.Hp,currentStatus.Hp);
-        statusInfoComponent.UpdateMp(battlerInfo.Mp,currentStatus.Mp);
-    }
-
-    public void SetActorThumbOnly(ActorInfo actorInfo)
-    {
-        battleThumb.ShowActorThumb(actorInfo,false);
-        battleThumb.gameObject.SetActive(true);
         var currentStatus = actorInfo.CurrentStatus;
         statusInfoComponent.UpdateInfo(currentStatus);
         statusInfoComponent.UpdateHp(actorInfo.MaxHp,currentStatus.Hp);
         statusInfoComponent.UpdateMp(actorInfo.MaxMp,currentStatus.Mp);
     }
 
-    public void SetActorThumb(ActorInfo actorInfo)
-    {
-        battleThumb.ShowAllThumb(actorInfo);
-        battleThumb.gameObject.SetActive(true);
-        var currentStatus = actorInfo.CurrentStatus;
-        statusInfoComponent.UpdateInfo(currentStatus);
-        statusInfoComponent.UpdateHp(actorInfo.MaxHp,currentStatus.Hp);
-        statusInfoComponent.UpdateMp(actorInfo.MaxMp,currentStatus.Mp);
-    }
-
-    public void SetEnemyThumb(BattlerInfo battlerInfo)
+    public void UpdateStatus(BattlerInfo battlerInfo)
     {
         var currentStatus = battlerInfo.CurrentStatus();
         statusInfoComponent.UpdateInfo(currentStatus);
@@ -166,28 +143,23 @@ public class BattleSelectCharacter : MonoBehaviour
         statusInfoComponent.gameObject.SetActive(false);
     }
 
-    public void HideThumb()
-    {
-        battleThumb.HideThumb();
-    }
-
     public void SetSkillInfos(List<ListData> skillInfoData)
     {
-        if (deckMagicList.IsInit == false)
+        if (magicList.IsInit == false)
         {
-            deckMagicList.Initialize(skillInfoData.Count);
-            deckMagicList.SetSelectedHandler(() => {
+            magicList.Initialize(skillInfoData.Count);
+            magicList.SetSelectedHandler(() => {
                 DisplaySelectCard();
                 RefreshCardWidth();
             });
         }
-        deckMagicList.SetData(skillInfoData);
+        magicList.SetData(skillInfoData);
         if (displaySelectCard == null)
         {
             displaySelectCard.gameObject.SetActive(false);
         }
         SelectCharacterTab(_selectCharacterTabType);
-        deckMagicList.UpdateSelectIndex(skillInfoData.Count > 0 ? 0 : -1);
+        magicList.UpdateSelectIndex(skillInfoData.Count > 0 ? 0 : -1);
         DisplaySelectCard();
         RefreshCardWidth();
     }
@@ -212,7 +184,7 @@ public class BattleSelectCharacter : MonoBehaviour
         {
             return;
         }
-        var listData = deckMagicList.ListData;
+        var listData = magicList.ListData;
         if (listData != null)
         {
             var skillInfo = (SkillInfo)listData.Data;
@@ -226,58 +198,60 @@ public class BattleSelectCharacter : MonoBehaviour
 
     public void SetInputHandlerAction(InputKeyType keyType,System.Action callEvent)
     {
-        deckMagicList.SetInputHandler(keyType,callEvent);
+        magicList.SetInputHandler(keyType,callEvent);
         conditionList.SetInputHandler(keyType,callEvent);
     }
 
     public void RefreshAction(int selectIndex = 0)
     {
-        deckMagicList.Refresh(selectIndex);
+        magicList.Refresh(selectIndex);
     }
 
     public void RefreshCostInfo()
     {
-        deckMagicList.UpdateAllItems();
+        magicList.UpdateAllItems();
     }
 
     public void ShowActionList()
     {
         gameObject.SetActive(true);
-        deckMagicList.Activate();
+        magicList.Activate();
         conditionList.Deactivate();
     }
 
     public void HideActionList()
     {
         gameObject.SetActive(false);
-        deckMagicList.Deactivate();
+        magicList.Deactivate();
         conditionList.Deactivate();
     }
 
     public void RefreshCardWidth()
     {
-        if (deckMagicList.ObjectList.Count == 0)
+        if (magicList.ObjectList.Count == 0)
         {
             return;
         }
-        var selectObj = deckMagicList.ObjectList[deckMagicList.Index];
-        foreach (var gameObject in deckMagicList.ObjectList)
+        var selectObj = magicList.ObjectList[magicList.Index];
+        foreach (var gameObject in magicList.ObjectList)
         {
             var rect = gameObject.GetComponent<RectTransform>();
             if (selectObj != gameObject)
             {
-                if (deckMagicList.ObjectList.Count > 15)
-                {
-                    rect.sizeDelta = new Vector2(160 * (15f / (float)deckMagicList.ObjectList.Count),240);
-                } else
-                {
-                    rect.sizeDelta = new Vector2(160,240);
-                }
+                rect.sizeDelta = new Vector2(160,240);
             } else
             {
                 rect.sizeDelta = new Vector2(264,240);
             }
         }
+        var listRect = magicList.ScrollRect.gameObject.GetComponent<RectTransform>();
+        var height = 8;
+        if (magicList.ObjectList.Count < 10)
+        {
+            height = 0;
+        }
+        listRect.localPosition = new Vector3(listRect.localPosition.x,height,listRect.localPosition.z);
+        
         selectObj.SetActive(false);
         selectObj.SetActive(true);
     }

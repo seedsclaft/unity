@@ -12,6 +12,8 @@ public class BattleView : BaseView ,IInputHandlerEvent
     [SerializeField] private BattleEnemyLayer battleEnemyLayer = null;
     [SerializeField] private BattleGridLayer battleGridLayer = null;
     [SerializeField] private BattleSelectCharacter selectCharacter = null;
+    [SerializeField] private BattleThumb battleThumb;
+    
 
     [SerializeField] private GameObject animRoot = null;
     [SerializeField] private GameObject animPrefab = null;
@@ -64,7 +66,7 @@ public class BattleView : BaseView ,IInputHandlerEvent
         selectCharacter.SetInputHandlerAction(InputKeyType.SideRight2,() => {
             selectCharacter.SelectCharacterTabSmooth(1);
         });
-        SetInputHandler(selectCharacter.DeckMagicList.GetComponent<IInputHandlerEvent>());
+        SetInputHandler(selectCharacter.MagicList.GetComponent<IInputHandlerEvent>());
         selectCharacter.HideActionList();
         sideMenuList.gameObject.SetActive(false);
     }
@@ -247,7 +249,9 @@ public class BattleView : BaseView ,IInputHandlerEvent
     {
         selectCharacter.ShowActionList();
         sideMenuList.gameObject.SetActive(true);
-        selectCharacter.SetBattleThumb(battlerInfo);
+        selectCharacter.UpdateStatus(battlerInfo);
+        battleThumb.ShowBattleThumb(battlerInfo);
+        battleThumb.gameObject.SetActive(true);
         // 敵のstateEffectを非表示
         HideEnemyStateOverlay();
         //HideActorStateOverlay();
@@ -266,7 +270,7 @@ public class BattleView : BaseView ,IInputHandlerEvent
 
     public void HideBattleThumb()
     {
-        selectCharacter.HideThumb();
+        battleThumb.HideThumb();
     }
     
     public void RefreshMagicList(List<ListData> skillInfos,int selectIndex)
@@ -568,14 +572,14 @@ public class BattleView : BaseView ,IInputHandlerEvent
         sideMenuList.Deactivate();
         sideMenuList.SetHelpWindow(HelpWindow);
         sideMenuList.SetOpenEvent(() => {
-            selectCharacter.DeckMagicList.Deactivate();
+            selectCharacter.MagicList.Deactivate();
             sideMenuList.Activate();
         });
         sideMenuList.SetCloseEvent(() => {
             HelpWindow.SetInputInfo("BATTLE");
-            selectCharacter.DeckMagicList.Activate();
+            selectCharacter.MagicList.Activate();
             sideMenuList.Deactivate();
-            selectCharacter.DeckMagicList.UpdateHelpWindow();
+            selectCharacter.MagicList.UpdateHelpWindow();
             HelpWindow.SetHelpText(DataSystem.System.GetTextData(15010).Text);
         });
     }
@@ -596,7 +600,7 @@ public class BattleView : BaseView ,IInputHandlerEvent
     {
         HelpWindow.SetInputInfo("SIDEMENU");
         HelpWindow.SetHelpText(DataSystem.System.GetTextData(701).Help);
-        selectCharacter.DeckMagicList.Deactivate();
+        selectCharacter.MagicList.Deactivate();
         sideMenuList.Activate();
         sideMenuList.OpenSideMenu();
     }
@@ -604,10 +608,10 @@ public class BattleView : BaseView ,IInputHandlerEvent
     public void CommandCloseSideMenu()
     {
         HelpWindow.SetInputInfo("BATTLE");
-        selectCharacter.DeckMagicList.Activate();
+        selectCharacter.MagicList.Activate();
         sideMenuList.Deactivate();
         sideMenuList.CloseSideMenu();
-        selectCharacter.DeckMagicList.UpdateHelpWindow();
+        selectCharacter.MagicList.UpdateHelpWindow();
         HelpWindow.SetHelpText(DataSystem.System.GetTextData(15010).Text);
     }
 

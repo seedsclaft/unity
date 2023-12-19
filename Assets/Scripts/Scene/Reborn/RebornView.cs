@@ -31,7 +31,7 @@ public class RebornView : BaseView
         selectCharacter.SetInputHandlerAction(InputKeyType.SideLeft1,() => OnClickLeft());
         selectCharacter.SetInputHandlerAction(InputKeyType.SideRight1,() => OnClickRight());
 
-        SetInputHandler(selectCharacter.DeckMagicList.GetComponent<IInputHandlerEvent>());
+        SetInputHandler(selectCharacter.MagicList.GetComponent<IInputHandlerEvent>());
         selectCharacter.HideActionList();
         selectCharacter.HideStatus();
     }
@@ -115,8 +115,8 @@ public class RebornView : BaseView
         selectCharacter.SetActiveTab(SelectCharacterTabType.Condition,false);
         selectCharacter.SetActiveTab(SelectCharacterTabType.Detail,false);
         selectCharacter.ShowActionList();
-        selectCharacter.DeckMagicList.Activate();
-        selectCharacter.SetActorThumbOnly(actorInfo);
+        selectCharacter.MagicList.Activate();
+        //selectCharacter.SetActorThumbOnly(actorInfo);
         selectCharacter.SetActorInfo(actorInfo,party);
         selectCharacter.SetSkillInfos(skillInfos);
         selectCharacter.RefreshAction(lastSelectIndex);

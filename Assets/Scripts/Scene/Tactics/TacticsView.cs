@@ -45,7 +45,7 @@ public class TacticsView : BaseView
     {
         battleSelectCharacter.SetInputHandlerAction(InputKeyType.Decide,() => CallSkillAlchemy());
         battleSelectCharacter.SetInputHandlerAction(InputKeyType.Cancel,() => OnClickBack());
-        SetInputHandler(battleSelectCharacter.DeckMagicList.GetComponent<IInputHandlerEvent>());
+        SetInputHandler(battleSelectCharacter.MagicList.GetComponent<IInputHandlerEvent>());
         battleSelectCharacter.HideActionList();
     }
 
@@ -271,19 +271,19 @@ public class TacticsView : BaseView
 
     public void ShowAttributeList(ActorInfo actorInfo, List<ListData> learnMagicList)
     {
-        //battleSelectCharacter.SetActorThumb(actorInfo);
         battleSelectCharacter.SetActiveTab(SelectCharacterTabType.Condition,false);
         battleSelectCharacter.SetActiveTab(SelectCharacterTabType.Detail,false);
         battleSelectCharacter.SetSkillInfos(learnMagicList);
         battleSelectCharacter.ShowActionList();
-        battleSelectCharacter.DeckMagicList.Activate();
+        battleSelectCharacter.UpdateStatus(actorInfo);
+        battleSelectCharacter.MagicList.Activate();
         SetHelpInputInfo("ALCHEMY_ATTRIBUTE");
     }
 
     public void HideAttributeList()
     {
         battleSelectCharacter.HideActionList();
-        battleSelectCharacter.DeckMagicList.Deactivate();
+        battleSelectCharacter.MagicList.Deactivate();
         SetHelpInputInfo("ALCHEMY");
     }
 

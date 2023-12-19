@@ -23,22 +23,6 @@ public class BattleThumb : MonoBehaviour
         UpdateThumb(battlerInfo.ActorInfo.Master);
     }
 
-    public void ShowActorThumb(ActorInfo actorInfo,bool isAwake)
-    {
-        awakenThumbRoot.SetActive(isAwake);
-        mainThumbRoot.SetActive(isAwake == false);
-        gameObject.SetActive(true);
-        UpdateThumb(actorInfo.Master);
-    }
-
-    public void ShowAllThumb(ActorInfo actorInfo)
-    {
-        awakenThumbRoot.SetActive(true);
-        mainThumbRoot.SetActive(true);
-        gameObject.SetActive(true);
-        UpdateThumb(actorInfo.Master);
-    }
-
     public void HideThumb()
     {
         mainThumbRoot.SetActive(false);   

@@ -42,7 +42,7 @@ public class StatusView : BaseView ,IInputHandlerEvent
         selectCharacter.SetInputHandlerAction(InputKeyType.SideRight2,() => {
             selectCharacter.SelectCharacterTabSmooth(1);
         });
-        SetInputHandler(selectCharacter.DeckMagicList.GetComponent<IInputHandlerEvent>());
+        SetInputHandler(selectCharacter.MagicList.GetComponent<IInputHandlerEvent>());
         selectCharacter.HideActionList();
     }
     
@@ -207,19 +207,19 @@ public class StatusView : BaseView ,IInputHandlerEvent
     
     public void ActivateSkillActionList()
     {
-        selectCharacter.DeckMagicList.Activate();
+        selectCharacter.MagicList.Activate();
     }
 
     public void DeactivateSkillActionList()
     {
-        selectCharacter.DeckMagicList.Deactivate();
+        selectCharacter.MagicList.Deactivate();
     }
     
     public void CommandRefreshStatus(List<ListData> skillInfos,ActorInfo actorInfo,List<ActorInfo> party,int lastSelectIndex)
     {
         selectCharacter.SetActiveTab(SelectCharacterTabType.Condition,false);
         ShowSkillActionList();
-        selectCharacter.SetActorThumb(actorInfo);
+        selectCharacter.UpdateStatus(actorInfo);
         selectCharacter.SetActorInfo(actorInfo,party);
         selectCharacter.SetSkillInfos(skillInfos);
         selectCharacter.RefreshAction(lastSelectIndex);

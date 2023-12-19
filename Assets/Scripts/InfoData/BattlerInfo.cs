@@ -119,7 +119,7 @@ public class BattlerInfo
         var statusInfo = new StatusInfo();
         int plusHpParam = isBoss == true ? 50 : 0;
         statusInfo.SetParameter(
-            enemyData.BaseStatus.Hp + (int)Math.Floor(plusHpParam + lv + lv * enemyData.BaseStatus.Hp * 0.1f),
+            enemyData.BaseStatus.Hp + (int)Math.Floor(plusHpParam + lv + lv * enemyData.BaseStatus.Hp * 0.05f),
             Math.Min(50, enemyData.BaseStatus.Mp + lv),
             enemyData.BaseStatus.Atk + (int)Math.Floor(lv + lv * enemyData.BaseStatus.Atk * 0.05f),
             enemyData.BaseStatus.Def + (int)Math.Floor(lv + lv * enemyData.BaseStatus.Def * 0.05f),
@@ -448,7 +448,7 @@ public class BattlerInfo
         return stateInfos;
     }
 
-    public void UpdateStateCount(RemovalTiming removalTiming,int stateId)
+    public void UpdateStateTurn(RemovalTiming removalTiming,int stateId)
     {
         for (var i = _stateInfos.Count-1;i >= 0;i--)
         {
@@ -460,6 +460,18 @@ public class BattlerInfo
                 {
                     RemoveState(stateInfo,true);
                 }
+            }
+        }
+    }
+
+    public void UpdateStateCount(RemovalTiming removalTiming,StateInfo stateInfo)
+    {
+        if (stateInfo.Master.RemovalTiming == removalTiming)
+        {
+            bool IsRemove = stateInfo.UpdateTurn();
+            if (IsRemove)
+            {
+                RemoveState(stateInfo,true);
             }
         }
     }
