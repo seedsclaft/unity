@@ -108,7 +108,7 @@ public class BattlerInfo
         {
             _kinds.Add(kind);
         }
-        AddUndeadPassive();
+        AddKindPassive();
         ResetAp(true);
     }
 
@@ -147,7 +147,7 @@ public class BattlerInfo
         {
             _kinds.Add(kind);
         }
-        AddUndeadPassive();
+        AddKindPassive();
         ResetAp(true);
     }
 
@@ -164,15 +164,17 @@ public class BattlerInfo
         ResetAp(true);
     }
 
-    private void AddUndeadPassive()
+    private void AddKindPassive()
     {
-        var IsUndead = _kinds.Contains(KindType.Undead);
-        if (IsUndead)
+        foreach (var kind in _kinds)
         {
-            foreach (var skillId in new List<int>(){10010})
+            if (kind > 0)
             {
-                var skillInfo = new SkillInfo(skillId);
-                _skills.Add(skillInfo);
+                var skillInfo = new SkillInfo((int)kind * 10 + 10000);
+                if (_skills.Find(a => a.Id == skillInfo.Id) == null)
+                {
+                    _skills.Add(skillInfo);
+                }
             }
         }
     }
@@ -503,6 +505,10 @@ public class BattlerInfo
         {
             atk += _demigodParam;
         }
+        if (IsState(StateType.StatusUp))
+        {
+            atk += GetStateInfo(StateType.StatusUp).Effect;
+        }
         return atk;
     }
     
@@ -512,6 +518,10 @@ public class BattlerInfo
         if (IsState(StateType.Demigod))
         {
             def += _demigodParam;
+        }
+        if (IsState(StateType.StatusUp))
+        {
+            def += GetStateInfo(StateType.StatusUp).Effect;
         }
         return def;
     }
@@ -530,6 +540,10 @@ public class BattlerInfo
         if (IsState(StateType.Accel))
         {
             spd += StateEffect(StateType.Accel) * StateTurn(StateType.Accel);
+        }
+        if (IsState(StateType.StatusUp))
+        {
+            spd += GetStateInfo(StateType.StatusUp).Effect;
         }
         return spd;
     }

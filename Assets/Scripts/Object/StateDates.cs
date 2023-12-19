@@ -35,6 +35,7 @@ public enum StateType
     Death = 1,
     Wait = 10,
     Demigod = 1010,
+    StatusUp = 1011,
     MaxHpUp = 1020,
     MaxMpUp = 1030,
     AtkUp = 1040,

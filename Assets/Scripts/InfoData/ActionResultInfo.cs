@@ -458,7 +458,6 @@ public class ActionResultInfo
         hpDamage = Mathf.Max(1,hpDamage);
         if (target.IsState(StateType.NoDamage) && !isNoEffect)
         {
-            _execStateInfos[target.Index].Add(target.GetStateInfo(StateType.NoDamage));
             hpDamage = 0;
             SeekStateCount(target,StateType.NoDamage);
         }
@@ -655,7 +654,7 @@ public class ActionResultInfo
             }
             if (target.IsState(StateType.CounterAuraHeal))
             {
-                SkillData.FeatureData counterAuraHeal = new SkillData.FeatureData();
+                var counterAuraHeal = new SkillData.FeatureData();
                 counterAuraHeal.FeatureType = FeatureType.HpHeal;
                 counterAuraHeal.Param1 = target.StateEffectAll(StateType.CounterAuraHeal);
                 MakeHpHeal(target,target,counterAuraHeal);
@@ -689,14 +688,27 @@ public class ActionResultInfo
 
     private void SeekStateCount(BattlerInfo battlerInfo,StateType stateType)
     {
-        var noDamageState = battlerInfo.GetStateInfo(stateType);
-        _execStateInfos[battlerInfo.Index].Add(noDamageState);
-        int count = noDamageState.Turns;
-        if (count <= 1)
+        var seekState = battlerInfo.GetStateInfo(stateType);
+        if (seekState.Master.RemovalTiming == RemovalTiming.UpdateCount)
         {
-            _removedStates.Add(battlerInfo.GetStateInfo(stateType));
-        } else{
-            _displayStates.Add(battlerInfo.GetStateInfo(stateType));
+            if (!_execStateInfos[battlerInfo.Index].Contains(seekState))
+            {
+                _execStateInfos[battlerInfo.Index].Add(seekState);
+                int count = seekState.Turns;
+                if ((count-1) <= 0)
+                {
+                    _removedStates.Add(battlerInfo.GetStateInfo(stateType));
+                } else{
+                    _displayStates.Add(battlerInfo.GetStateInfo(stateType));
+                }
+            }
         }
+    }
+
+    public int SeekCount(BattlerInfo target,StateType stateType)
+    {
+        int removeCount = RemovedStates.FindAll(a => a.Master.StateType == stateType && a.TargetIndex == target.Index).Count;
+        int displayCount = DisplayStates.FindAll(a => a.Master.StateType == stateType && a.TargetIndex == target.Index).Count;
+        return removeCount + displayCount;
     }
 }

@@ -133,6 +133,21 @@ MonoBehaviour:
     CheckHit: 0
     RemoveByAttack: 0
     RemoveByDeath: 0
+  - StateType: 1011
+    Name: "\u5168\u30B9\u30C6\u30FC\u30BF\u30B9\u30A2\u30C3\u30D7"
+    Help: "\u5168\u3066\u306E\u30B9\u30C6\u30FC\u30BF\u30B9\u304C\\d\u30A2\u30C3\u30D7"
+    IconPath: Butterfly
+    RemovalTiming: 0
+    OverWrite: 0
+    EffectPath: '""'
+    EffectPosition: 0
+    EffectScale: 1
+    OverLap: 0
+    Removal: 0
+    Abnormal: 0
+    CheckHit: 0
+    RemoveByAttack: 0
+    RemoveByDeath: 0
   - StateType: 1020
     Name: "\u6700\u5927Hp\u30A2\u30C3\u30D7"
     Help: "MaxHp\\d\u30A2\u30C3\u30D7"

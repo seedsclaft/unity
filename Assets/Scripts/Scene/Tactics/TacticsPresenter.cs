@@ -287,7 +287,6 @@ public class TacticsPresenter :BasePresenter
         }
         if (viewEvent.commandType == Tactics.CommandType.SelectAlchemyClose)
         {
-            Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
             CommandTacticsCommand(TacticsCommandType.Alchemy);
         }
         if (viewEvent.commandType == Tactics.CommandType.SelectRecoveryPlus)

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Effekseer;
 using Cysharp.Threading.Tasks;
+using System.Linq;
 
 public class BattleModel : BaseModel
 {
@@ -813,15 +814,15 @@ public class BattleModel : BaseModel
                     }
                 }
 
+                // 無敵回数
                 int noDamageCount = target.StateTurn(StateType.NoDamage);
-                int currentRemoveCount = actionResultInfo.RemovedStates.FindAll(a => a.Master.StateType == StateType.NoDamage).Count;
-                int currentDisplayCount = actionResultInfo.DisplayStates.FindAll(a => a.Master.StateType == StateType.NoDamage).Count;
-                if ((currentRemoveCount+currentDisplayCount) > 0)
+                // このリザルトでの無敵進行回数
+                int seekCount = actionResultInfo.SeekCount(target,StateType.NoDamage);
+                if (seekCount > 0)
                 {
-                    var removeCount = actionResultInfos.FindAll(a => a.RemovedStates.Find(b => b.Master.StateType == StateType.NoDamage) != null).Count;
-                    var displayCount = actionResultInfos.FindAll(a => a.DisplayStates.Find(b => b.Master.StateType == StateType.NoDamage) != null).Count;
-                    
-                    if ((removeCount+displayCount+1) >= noDamageDict[indexList[j]])
+                    // 今までのリザルトでの無敵進行回数
+                    int seekCountAll = actionResultInfos.Sum(a => a.SeekCount(target,StateType.NoDamage));
+                    if ((seekCountAll+1) >= noDamageDict[indexList[j]])
                     {
                         var noDamageState = target.GetStateInfo(StateType.NoDamage);
                         if (noDamageState != null)
@@ -1228,15 +1229,14 @@ public class BattleModel : BaseModel
             if (actionInfo != null)
             {
                 _actionInfos.Remove(actionInfo);
-                var party = _currentBattler.isActor ? BattlerActors() : BattlerEnemies();
+                var party = _currentBattler.isActor ? _party.AliveBattlerInfos : _troop.AliveBattlerInfos;
                 var targetIndexes = new List<int>();
                 foreach (var member in party)
                 {
                     if (_currentBattler.Index != member.Index)
                     {
                         targetIndexes.Add(member.Index);
-                    }
-                    
+                    }   
                 }
                 foreach (var targetIndex in targetIndexes)
                 {

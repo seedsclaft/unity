@@ -1206,7 +1206,7 @@ MonoBehaviour:
     Scope: 4
     SkillType: 2
     TargetType: 4
-    Help: '""'
+    Help: "\u30A2\u30F3\u30C7\u30C3\u30C9\u72B6\u614B\u306B\u306A\u308B"
     Range: 1
     RepeatTime: 1
     AliveOnly: 1
@@ -1221,6 +1221,74 @@ MonoBehaviour:
       TriggerType: 63
       TriggerTiming: 4
       Param1: 1
+      Param2: 0
+      Param3: 0
+  - Id: 10020
+    Name: "\u30AF\u30EA\u30FC\u30C1\u30E3\u30FC"
+    IconIndex: 6
+    AnimationName: 
+    AnimationPosition: 0
+    AnimationScale: 1
+    AnimationType: 1
+    DamageTiming: 0
+    MpCost: 0
+    Rank: 2
+    Attribute: 0
+    Scope: 4
+    SkillType: 2
+    TargetType: 4
+    Help: "(\u6761\u4EF6)Lv10\u4EE5\u4E0A\n\u653B\u6483\u7BC4\u56F2\u304C\u5EF6\u9577\u3059\u308B"
+    Range: 1
+    RepeatTime: 1
+    AliveOnly: 1
+    FeatureDates:
+    - SkillId: 10020
+      FeatureType: 21
+      Param1: 2190
+      Param2: 999
+      Param3: 0
+    TriggerDates:
+    - SkillId: 10020
+      TriggerType: 92
+      TriggerTiming: 4
+      Param1: 10
+      Param2: 0
+      Param3: 0
+  - Id: 10030
+    Name: "\u30CF\u30A4\u30EF\u30F3\u30BA"
+    IconIndex: 6
+    AnimationName: 
+    AnimationPosition: 0
+    AnimationScale: 1
+    AnimationType: 1
+    DamageTiming: 0
+    MpCost: 0
+    Rank: 2
+    Attribute: 0
+    Scope: 4
+    SkillType: 2
+    TargetType: 4
+    Help: "(\u6761\u4EF6)Lv20\u4EE5\u4E0A\u3067\u81EA\u8EAB\u306E\u307F\u751F\u5B58\nATK,DEF,SPD\u304C10\u30A2\u30C3\u30D7"
+    Range: 1
+    RepeatTime: 1
+    AliveOnly: 1
+    FeatureDates:
+    - SkillId: 10030
+      FeatureType: 21
+      Param1: 1011
+      Param2: 999
+      Param3: 10
+    TriggerDates:
+    - SkillId: 10030
+      TriggerType: 92
+      TriggerTiming: 2
+      Param1: 20
+      Param2: 0
+      Param3: 1
+    - SkillId: 10030
+      TriggerType: 104
+      TriggerTiming: 2
+      Param1: 0
       Param2: 0
       Param3: 0
   - Id: 11010
@@ -2555,9 +2623,9 @@ MonoBehaviour:
     IconIndex: 10
     AnimationName: NA_Effekseer/NA_barrier_001
     AnimationPosition: 0
-    AnimationScale: 0.1
+    AnimationScale: 0.2
     AnimationType: 1
-    DamageTiming: 26
+    DamageTiming: 36
     MpCost: 0
     Rank: 2
     Attribute: 3
@@ -2600,7 +2668,7 @@ MonoBehaviour:
     AnimationPosition: 0
     AnimationScale: 1
     AnimationType: 3
-    DamageTiming: 48
+    DamageTiming: 60
     MpCost: 0
     Rank: 2
     Attribute: 3
@@ -2705,7 +2773,7 @@ MonoBehaviour:
     AnimationPosition: 0
     AnimationScale: 1
     AnimationType: 3
-    DamageTiming: 40
+    DamageTiming: 60
     MpCost: 0
     Rank: 2
     Attribute: 4
