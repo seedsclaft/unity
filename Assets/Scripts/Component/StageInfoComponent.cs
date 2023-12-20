@@ -7,6 +7,8 @@ using TMPro;
 public class StageInfoComponent : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI nameText;
+    [SerializeField] private GameObject achieve;
+    [SerializeField] private TextMeshProUGUI achieveText;
     [SerializeField] private TextMeshProUGUI help;
     [SerializeField] private TextMeshProUGUI turns;
     [SerializeField] private TextMeshProUGUI clearCount;
@@ -24,6 +26,13 @@ public class StageInfoComponent : MonoBehaviour
         
         if (nameText != null){
             nameText.text = stageData.Name;
+        }
+        if (achieve != null)
+        {
+            achieve.SetActive(stageData.AchieveText != "");
+        }
+        if (achieveText != null && stageData.AchieveText != ""){
+            achieveText.text = DataSystem.System.GetTextData(31).Text + stageData.AchieveText;
         }
         if (help != null){
             help.text = stageData.Help.Replace("\\p",GameSystem.CurrentData.PlayerInfo.PlayerName);

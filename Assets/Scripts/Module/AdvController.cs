@@ -8,6 +8,8 @@ public class AdvController : BaseView, IInputHandlerEvent
 {
     [SerializeField] private AdvUguiManager advUguiManager = null;
     [SerializeField] private Button advInputButton = null;
+    [SerializeField] private List<BaseCommand> skipButtonList = null;
+    [SerializeField] private List<BaseCommand> autoButtonList = null;
 
     private bool _advPlaying = false;
 
@@ -16,6 +18,14 @@ public class AdvController : BaseView, IInputHandlerEvent
     {
         base.Initialize();
         advInputButton.onClick.AddListener(() => {advUguiManager.OnInput();});
+        autoButtonList.ForEach(a => a.SetCallHandler(() => {
+            OnClickAuto();
+        }));
+        UpdateAutoButton();
+        skipButtonList.ForEach(a => a.SetCallHandler(() => {
+            OnClickSkip();
+        }));
+        UpdateSkipButton();
     }
 
     public void StartAdv()
@@ -80,6 +90,40 @@ public class AdvController : BaseView, IInputHandlerEvent
         {
             _lastKey = HelpWindow.LastKey;
             HelpWindow.SetInputInfo("ADV_READING");
+        }
+    }
+
+    private void OnClickAuto()
+    {
+        advUguiManager.Engine.Config.ToggleAuto();
+        Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cancel);
+        UpdateAutoButton();
+    }
+
+    private void UpdateAutoButton()
+    {
+        var auto = advUguiManager.Engine.Config.IsAutoBrPage;
+        autoButtonList.ForEach(a => 
+            a.Cursor.SetActive(auto)
+        );
+    }
+
+    private void OnClickSkip()
+    {
+        advUguiManager.Engine.Config.ToggleSkip();
+        Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cancel);
+        UpdateSkipButton();
+    }
+
+    private void UpdateSkipButton()
+    {
+        var skip = advUguiManager.Engine.Config.IsSkip;
+        skipButtonList.ForEach(a => 
+            a.Cursor.SetActive(skip)
+        );
+        if (GameSystem.ConfigData != null)
+        {
+            GameSystem.ConfigData.EventSkipIndex = advUguiManager.Engine.Config.IsSkip;
         }
     }
 }

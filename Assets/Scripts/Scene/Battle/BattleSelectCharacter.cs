@@ -237,13 +237,8 @@ public class BattleSelectCharacter : MonoBehaviour
         foreach (var gameObject in magicList.ObjectList)
         {
             var rect = gameObject.GetComponent<RectTransform>();
-            if (selectObj != gameObject)
-            {
-                rect.sizeDelta = new Vector2(160,240);
-            } else
-            {
-                rect.sizeDelta = new Vector2(264,240);
-            }
+            var cardWidth = (selectObj != gameObject) ? 200 : 264;
+            rect.sizeDelta = new Vector2(cardWidth,240);
         }
         var listRect = magicList.ScrollRect.gameObject.GetComponent<RectTransform>();
         var height = 8;
