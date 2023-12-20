@@ -17,8 +17,6 @@ public class BattleView : BaseView ,IInputHandlerEvent
 
     [SerializeField] private GameObject animRoot = null;
     [SerializeField] private GameObject animPrefab = null;
-
-    [SerializeField] private Button escapeButton = null;
     [SerializeField] private SkillInfoComponent skillInfoComponent = null;
     [SerializeField] private GameObject currentSkillBg = null;
     [SerializeField] private SideMenuList sideMenuList = null;
@@ -141,14 +139,7 @@ public class BattleView : BaseView ,IInputHandlerEvent
     public void SetUIButton()
     {
         SetBackCommand(() => OnClickBack());
-        escapeButton.onClick.AddListener(() => OnClickEscape());
-        SetEscapeButton(false);
         ChangeSideMenuButtonActive(false);
-    }
-
-    public void SetEscapeButton(bool isEscape)
-    {
-        escapeButton.gameObject.SetActive(isEscape);
     }
 
     public void ChangeSideMenuButtonActive(bool isActive)

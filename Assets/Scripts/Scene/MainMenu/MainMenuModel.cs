@@ -9,6 +9,7 @@ public class MainMenuModel : BaseModel
         foreach (var stage in stages)
         {
             var stageInfo = new StageInfo(stage);
+            stageInfo.SetClearCount(CurrentData.PlayerInfo.ClearCount(stage.Id));
             list.Add(stageInfo);
         }
         return MakeListData(list);

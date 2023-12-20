@@ -44,10 +44,19 @@ public class PlayerInfo
         }
     }
 
-    private List<StageInfo> _stages = new ();
+    private Dictionary<int,int> _stageClearDict = new ();
+    public Dictionary<int,int> StageClearDict => _stageClearDict;
+    public int ClearCount(int stageId)
+    {
+        if (!_stageClearDict.ContainsKey(stageId))
+        {
+            return _stageClearDict[stageId];
+        }
+        return 0;
+    }
     public void InitStages()
     {
-        _stages.Clear();
+        _stageClearDict.Clear();
     }
 
 	public void InitStageInfo()
@@ -55,18 +64,20 @@ public class PlayerInfo
 		for (int i = 0;i < DataSystem.Stages.Count;i++)
 		{
 			if (!DataSystem.Stages[i].Selectable) continue;
-			var stageInfo = new StageInfo(DataSystem.Stages[i]);
-			_stages.Add(stageInfo);
+            if (!_stageClearDict.ContainsKey(DataSystem.Stages[i].Id))
+            {
+			    _stageClearDict[DataSystem.Stages[i].Id] = 0;
+            }
 		}
 	}
 
 	public void StageClear(int stageId)
 	{
-		var stageInfo = _stages.Find(a => a.Id == stageId);
-        if (stageInfo != null)
+        if (!_stageClearDict.ContainsKey(stageId))
         {
-    		stageInfo.GainClearCount();
+            _stageClearDict[stageId] = 0;
         }
+        _stageClearDict[stageId]++;
 	}
 
     private List<ActorInfo> _saveActorList = new ();

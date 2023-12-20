@@ -176,14 +176,13 @@ public class BattlePresenter : BasePresenter
         }
     }
 
-    private async void UpdatePopup(ConfirmCommandType confirmCommandType)
+    private async void UpdatePopupEscape(ConfirmCommandType confirmCommandType)
     {
         _view.CommandConfirmClose();
         if (confirmCommandType == ConfirmCommandType.Yes)
         {
             _view.HideSkillActionList();
             _view.HideBattleThumb();
-            _view.SetEscapeButton(false);
             _view.SetBattleBusy(true);
             _model.EscapeBattle();
             _view.StartBattleStartAnim(DataSystem.System.GetTextData(15030).Text);
@@ -195,6 +194,11 @@ public class BattlePresenter : BasePresenter
             _view.SetBattleBusy(false);
             _view.CommandSceneChange(Scene.Strategy);
         }
+    }
+
+    private void UpdatePopupNoEscape(ConfirmCommandType confirmCommandType)
+    {
+        _view.CommandConfirmClose();
     }
 
     private void CommandBack()
@@ -211,7 +215,12 @@ public class BattlePresenter : BasePresenter
     {
         if (_model.EnableEscape())
         {
-            var popupInfo = new ConfirmInfo(DataSystem.System.GetTextData(410).Text,(menuCommandInfo) => UpdatePopup((ConfirmCommandType)menuCommandInfo));
+            var popupInfo = new ConfirmInfo(DataSystem.System.GetTextData(410).Text,(a) => UpdatePopupEscape((ConfirmCommandType)a));
+            _view.CommandCallConfirm(popupInfo);
+        } else
+        {
+            var popupInfo = new ConfirmInfo(DataSystem.System.GetTextData(412).Text,(a) => UpdatePopupNoEscape((ConfirmCommandType)a));
+            popupInfo.SetIsNoChoice(true);
             _view.CommandCallConfirm(popupInfo);
         }
     }
@@ -421,7 +430,6 @@ public class BattlePresenter : BasePresenter
         _view.SetHelpText(DataSystem.System.GetTextData(15010).Text);
         _view.SelectedCharacter(_model.CurrentBattler);
         _view.SetCondition(_model.SelectCharacterConditions());
-        _view.SetEscapeButton(_model.EnableEscape());
         _view.ChangeSideMenuButtonActive(true);
         RefreshSkillInfos();
         _view.HideBattlerEnemyTarget();
@@ -448,7 +456,6 @@ public class BattlePresenter : BasePresenter
         _view.SetHelpText(DataSystem.System.GetTextData(15010).Text);
         //_view.SelectedCharacter(_model.CurrentBattler);
         _view.SetCondition(_model.SelectCharacterConditions());
-        //_view.SetEscapeButton(_model.EnableEscape());
         //_view.ChangeSideMenuButtonActive(true);
         RefreshSkillInfos();
         _view.HideBattlerEnemyTarget();
@@ -469,7 +476,6 @@ public class BattlePresenter : BasePresenter
         _model.SetLastSkill(skillInfo.Id);
         var actionInfo = _model.MakeActionInfo(_model.CurrentBattler,skillInfo,false,false);
         _view.HideSkillActionList();
-        _view.SetEscapeButton(false);
         _view.HideBattleThumb();
         if (_model.CurrentBattler.isActor)
         {
@@ -660,7 +666,6 @@ public class BattlePresenter : BasePresenter
     private async void StartAnimationSkill()
     {
         _view.ChangeSideMenuButtonActive(false);
-        _view.SetEscapeButton(false);
         _view.SetBattlerSelectable(true);
         //_view.ShowEnemyStateOverlay();
         _view.HideStateOverlay();
@@ -1082,6 +1087,10 @@ public class BattlePresenter : BasePresenter
         {
             CommandRule();
         }
+        if (sideMenu.Key == "Escape")
+        {
+            CommandEscape();
+        }
     }    
     
     private void CommandChangeBattleAuto()
@@ -1096,7 +1105,6 @@ public class BattlePresenter : BasePresenter
             _view.HideBattlerEnemyTarget();
             _view.HideBattlerPartyTarget();
             _view.HideSkillActionList();
-            _view.SetEscapeButton(false);
             _view.HideBattleThumb();
             CommandAutoActorSkillId();
         }

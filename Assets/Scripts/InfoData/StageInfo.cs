@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Collections.Generic;
 
 [Serializable]
@@ -33,6 +34,10 @@ public class StageInfo
     public int CurrentTurn => _currentTurn;
     private int _clearCount;
     public int ClearCount => _clearCount;
+    public void SetClearCount(int count)
+    {
+        _clearCount = count;
+    }
     private int _troopClearCount;
     public int TroopClearCount => _troopClearCount;
 
@@ -209,7 +214,7 @@ public class StageInfo
         if (!ClearedTroopId(defineTroopId))
         {
             var troopDates = DataSystem.Troops.FindAll(a => a.TroopId == defineTroopId);
-            var troopInfo = new TroopInfo(defineTroopId,true);
+            var troopInfo = new TroopInfo(defineTroopId,false);
             troopInfo.MakeEnemyTroopDates(_troopClearCount + 1,_currentTurn);
             _currentTroopInfos.Add(troopInfo);
         }
@@ -218,17 +223,26 @@ public class StageInfo
     public void MakeLastBossOnlyTroop(int routeSelect)
     {
         _currentTroopInfos.Clear();
+        var bossId = 0;
         if (routeSelect > 0)
         {
             // アクターに呼応する敵 + 光属性
             var troopIds = new List<int>();
             foreach (var actorId in _selectActorIds)
             {
-                troopIds.Add(actorId * 10 + 3000);
+                var troopId = actorId * 10 + 3000;
+                if (!_clearTroopIds.Contains(troopId))
+                {
+                    troopIds.Add(troopId);
+                }
             }
-            if (!troopIds.Contains(3140) && !troopIds.Contains(3040))
+            if (troopIds.FindIndex(a => a % 1000 == 40) == -1)
             {
-                troopIds.Add(3040);
+                var troopId = 3040;
+                if (!_clearTroopIds.Contains(troopId))
+                {
+                    troopIds.Add(troopId);
+                }
             }
             var enemyIds = new List<int>();
             foreach (var troopId in troopIds)
@@ -239,22 +253,15 @@ public class StageInfo
                     enemyIds.Add(troopId);
                 }
             }
-            
-            int lv = 20;
-            for (int i = 0;i < enemyIds.Count;i++)
-            {
-                if (_clearTroopIds.Contains(enemyIds[i])) continue;
-                var troopInfo = new TroopInfo(enemyIds[i],false);
-                troopInfo.MakeEnemyTroopDates(lv);
-                _currentTroopInfos.Add(troopInfo);
-            }
+            bossId = enemyIds[0];
         } else
         {
-            int lv = 20;
-            var troopInfo = new TroopInfo(4010,false);
-            troopInfo.MakeEnemyTroopDates(lv);
-            _currentTroopInfos.Add(troopInfo);
+            bossId = 4010;
         }
+        int lv = 20;
+        var troopInfo = new TroopInfo(bossId,false);
+        troopInfo.MakeEnemyTroopDates(lv);
+        _currentTroopInfos.Add(troopInfo);
     }
 
     public List<TroopInfo> MakeTutorialTroopData(int selectIndex)
@@ -275,11 +282,19 @@ public class StageInfo
             var troopIds = new List<int>();
             foreach (var actorId in _selectActorIds)
             {
-                troopIds.Add(actorId * 10 + 3000);
+                var troopId = actorId * 10 + 3000;
+                if (!_clearTroopIds.Contains(troopId))
+                {
+                    troopIds.Add(troopId);
+                }
             }
-            if (!troopIds.Contains(3140) && !troopIds.Contains(3040))
+            if (troopIds.FindIndex(a => a % 1000 == 40) == -1)
             {
-                troopIds.Add(3040);
+                var troopId = 3040;
+                if (!_clearTroopIds.Contains(troopId))
+                {
+                    troopIds.Add(troopId);
+                }
             }
             var enemyIds = new List<int>();
             foreach (var troopId in troopIds)
@@ -290,19 +305,20 @@ public class StageInfo
                     enemyIds.Add(troopId);
                 }
             }
-            while (enemyIds.Count <= 2)
+
+            while (enemyIds.Count < troopIds.Count)
             {
-                int rand = new Random().Next(1, 14) * 10 + 3000;
-                if (!enemyIds.Contains(rand) && troopIds.Contains(rand))
+                int randIndex = new Random().Next(0, troopIds.Count);
+                if (!enemyIds.Contains(troopIds[randIndex]))
                 {
-                    enemyIds.Add(rand);
+                    enemyIds.Add(troopIds[randIndex]);
                 }
             }
             
             int lv = 20;
             for (int i = 0;i < enemyIds.Count;i++)
             {
-                if (_clearTroopIds.Contains(enemyIds[i])) continue;
+                if (_currentTroopInfos.Count > 2) continue;
                 var troopInfo = new TroopInfo(enemyIds[i],false);
                 troopInfo.MakeEnemyTroopDates(lv);
                 _currentTroopInfos.Add(troopInfo);
@@ -371,7 +387,7 @@ public class StageInfo
         _currentTroopInfos.Clear();
         var troopDates = DataSystem.Troops.FindAll(a => a.TroopId == troopId);
         
-        var troopInfo = new TroopInfo(troopDates[0].TroopId,true);
+        var troopInfo = new TroopInfo(troopDates[0].TroopId,false);
         for (int i = 0;i < troopDates.Count;i++)
         {
             var enemyData = DataSystem.Enemies.Find(a => a.Id == troopDates[i].EnemyId);

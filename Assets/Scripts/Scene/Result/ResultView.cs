@@ -141,6 +141,7 @@ public class ResultView : BaseView
             bonusDummy.Add(false);
         }
         strategyActorList.gameObject.SetActive(true);
+        strategyActorList.SetData(actorInfos);
         strategyActorList.StartResultAnimation(actorInfos.Count,bonusDummy,() => {
         });
     }
