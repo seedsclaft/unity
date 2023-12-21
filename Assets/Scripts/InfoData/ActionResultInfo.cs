@@ -31,7 +31,7 @@ public class ActionResultInfo
             {
                 if (target.IsState(StateType.Undead) && featureDates.Find(a => a.FeatureType == FeatureType.BreakUndead) == null)
                 {
-                    SkillData.FeatureData undeadFeature = new SkillData.FeatureData();
+                    var undeadFeature = new SkillData.FeatureData();
                     undeadFeature.FeatureType = FeatureType.RemoveState;
                     undeadFeature.Param1 = (int)StateType.Undead;
                     MakeRemoveState(target,target,undeadFeature);
@@ -48,7 +48,7 @@ public class ActionResultInfo
             {
                 if (subject.IsState(StateType.Undead) && featureDates.Find(a => a.FeatureType == FeatureType.BreakUndead) == null)
                 {
-                    SkillData.FeatureData undeadFeature = new SkillData.FeatureData();
+                    var undeadFeature = new SkillData.FeatureData();
                     undeadFeature.FeatureType = FeatureType.RemoveState;
                     undeadFeature.Param1 = (int)StateType.Undead;
                     MakeRemoveState(subject,subject,undeadFeature);

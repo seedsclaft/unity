@@ -266,7 +266,7 @@ public class BattlerInfo
         if (_hp <= 0)
         {
             _stateInfos.Clear();
-            StateInfo stateInfo = new StateInfo(StateType.Death,0,0,Index,Index,-1);
+            var stateInfo = new StateInfo(StateType.Death,0,0,Index,Index,-1);
             AddState(stateInfo,true);
         }
     }

@@ -13,10 +13,12 @@ public class ResultModel : BaseModel
         foreach (var listDate in listDates)
         {
             var data = (SystemData.CommandData)listDate.Data;
+            /*
             if (data.Id == 1)
             {
                 listDate.SetEnable(false);
             }
+            */
         }
         return listDates;
     }
@@ -44,10 +46,12 @@ public class ResultModel : BaseModel
         foreach (var listDate in listDates)
         {
             var data = (SystemData.CommandData)listDate.Data;
+            /*
             if (data.Id == 1)
             {
                 listDate.SetEnable(false);
             }
+            */
         }
         return listDates;
     }

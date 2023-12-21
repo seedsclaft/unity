@@ -11,7 +11,7 @@ public class AdMobController : SingletonMonoBehaviour<AdMobController>
 #if UNITY_ANDROID
     #if DEVELOPMENT_BUILD || UNITY_EDITOR
     // テスト用
-    private string _adUnitId = "ca-app-pub-3940256099942544/1033173712";
+    private string _adUnitId = "ca-app-pub-3940256099942544/5224354917";
     #else
     // 本番用
     private string _adUnitId = "ca-app-pub-1221993218392084/2335792790";

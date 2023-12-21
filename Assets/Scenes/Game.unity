@@ -8702,7 +8702,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   version: 0.1.0
-  testMode: 1
+  testMode: 0
   sceneAssign: {fileID: 64641776}
   popupAssign: {fileID: 497961168}
   statusAssign: {fileID: 1137596729}
@@ -8728,7 +8728,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   consoleInputField: {fileID: 1447284014}
-  inBattleActorIds: 01000000
+  inBattleActorIds: 03000000
   troopId: 2040
   troopLv: 5
   actorDates:
@@ -8814,7 +8814,7 @@ MonoBehaviour:
     InitLv: 1
     MaxLv: 40
     InitStatus:
-      _hp: 6
+      _hp: 40
       _mp: 20
       _atk: 22
       _def: 7
@@ -8919,7 +8919,7 @@ MonoBehaviour:
     AwakenScale: 0.7
     Kinds: 
     LearningSkills:
-    - SkillId: 5020
+    - SkillId: 11
       Level: 0
       Weight: 0
       TriggerDates: []
@@ -8939,17 +8939,22 @@ MonoBehaviour:
       Weight: 0
       TriggerDates: []
       DeckNum: 0
+    - SkillId: 3020
+      Level: 0
+      Weight: 0
+      TriggerDates: []
+      DeckNum: 0
     - SkillId: 7010
       Level: 0
       Weight: 0
       TriggerDates: []
       DeckNum: 0
-    - SkillId: 13070
+    - SkillId: 100310
       Level: 0
       Weight: 0
       TriggerDates: []
       DeckNum: 0
-    - SkillId: 3020
+    - SkillId: 100311
       Level: 0
       Weight: 0
       TriggerDates: []
@@ -9028,11 +9033,6 @@ MonoBehaviour:
       Weight: 0
       TriggerDates: []
       DeckNum: 0
-    - SkillId: 14080
-      Level: 0
-      Weight: 0
-      TriggerDates: []
-      DeckNum: 0
   - Id: 5
     Name: "\u30CB\u30E5\u30AF\u30B9"
     SubName: "\u3010Determination2Die\u3011"
@@ -9103,11 +9103,6 @@ MonoBehaviour:
       TriggerDates: []
       DeckNum: 0
     - SkillId: 100511
-      Level: 0
-      Weight: 0
-      TriggerDates: []
-      DeckNum: 0
-    - SkillId: 15060
       Level: 0
       Weight: 0
       TriggerDates: []
@@ -9497,7 +9492,7 @@ MonoBehaviour:
       Weight: 0
       TriggerDates: []
       DeckNum: 0
-  advName: 
+  advName: Actor0002_3
   saveActorData: 0
 --- !u!1 &1651359293
 GameObject:

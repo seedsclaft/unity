@@ -638,24 +638,6 @@ MonoBehaviour:
       Type: 11
       Param: 102
       ReadFlag: 1
-    - EventKey: 7StartTacticsSelectAddActor1
-      Turns: 7
-      Timing: 1
-      Type: 6
-      Param: 1
-      ReadFlag: 1
-    - EventKey: 7StartTacticsSetDefineBossIndex1
-      Turns: 7
-      Timing: 1
-      Type: 8
-      Param: 1
-      ReadFlag: 0
-    - EventKey: 7StartTacticsSaveCommand1
-      Turns: 7
-      Timing: 1
-      Type: 7
-      Param: 1
-      ReadFlag: 1
     - EventKey: 7StartTacticsMoveStage102
       Turns: 7
       Timing: 1
@@ -677,12 +659,30 @@ MonoBehaviour:
     Reborn: 0
     SubordinateValue: 80
     StageEvents:
+    - EventKey: 1StartTacticsSelectAddActor1
+      Turns: 1
+      Timing: 1
+      Type: 6
+      Param: 1
+      ReadFlag: 1
+    - EventKey: 1StartTacticsSetDefineBossIndex1
+      Turns: 1
+      Timing: 1
+      Type: 8
+      Param: 1
+      ReadFlag: 0
     - EventKey: 1StartTacticsIsSubordinate1
       Turns: 1
       Timing: 1
       Type: 4
       Param: 1
       ReadFlag: 0
+    - EventKey: 1StartTacticsSaveCommand1
+      Turns: 1
+      Timing: 1
+      Type: 7
+      Param: 1
+      ReadFlag: 1
     - EventKey: 1StartTacticsAdvStart12
       Turns: 1
       Timing: 1
@@ -707,24 +707,6 @@ MonoBehaviour:
       Type: 12
       Param: 3000
       ReadFlag: 1
-    - EventKey: 7StartTacticsSelectAddActor1
-      Turns: 7
-      Timing: 1
-      Type: 6
-      Param: 1
-      ReadFlag: 1
-    - EventKey: 7StartTacticsSetDefineBossIndex2
-      Turns: 7
-      Timing: 1
-      Type: 8
-      Param: 2
-      ReadFlag: 0
-    - EventKey: 7StartTacticsSaveCommand1
-      Turns: 7
-      Timing: 1
-      Type: 7
-      Param: 1
-      ReadFlag: 1
     - EventKey: 7StartTacticsMoveStage103
       Turns: 7
       Timing: 1
@@ -746,6 +728,24 @@ MonoBehaviour:
     Reborn: 0
     SubordinateValue: 80
     StageEvents:
+    - EventKey: 1StartTacticsSelectAddActor1
+      Turns: 1
+      Timing: 1
+      Type: 6
+      Param: 1
+      ReadFlag: 1
+    - EventKey: 1StartTacticsSetDefineBossIndex2
+      Turns: 1
+      Timing: 1
+      Type: 8
+      Param: 2
+      ReadFlag: 0
+    - EventKey: 1StartTacticsSaveCommand1
+      Turns: 1
+      Timing: 1
+      Type: 7
+      Param: 1
+      ReadFlag: 1
     - EventKey: 6StartTacticsSetDefineBoss2
       Turns: 6
       Timing: 1
@@ -757,24 +757,6 @@ MonoBehaviour:
       Timing: 11
       Type: 12
       Param: 4000
-      ReadFlag: 1
-    - EventKey: 7StartTacticsSelectAddActor1
-      Turns: 7
-      Timing: 1
-      Type: 6
-      Param: 1
-      ReadFlag: 1
-    - EventKey: 7StartTacticsSetDefineBossIndex3
-      Turns: 7
-      Timing: 1
-      Type: 8
-      Param: 3
-      ReadFlag: 0
-    - EventKey: 7StartTacticsSaveCommand1
-      Turns: 7
-      Timing: 1
-      Type: 7
-      Param: 1
       ReadFlag: 1
     - EventKey: 7StartTacticsMoveStage104
       Turns: 7
@@ -797,30 +779,30 @@ MonoBehaviour:
     Reborn: 0
     SubordinateValue: 80
     StageEvents:
+    - EventKey: 1StartTacticsSelectAddActor1
+      Turns: 1
+      Timing: 1
+      Type: 6
+      Param: 1
+      ReadFlag: 1
+    - EventKey: 1StartTacticsSetDefineBossIndex3
+      Turns: 1
+      Timing: 1
+      Type: 8
+      Param: 3
+      ReadFlag: 0
+    - EventKey: 1StartTacticsSaveCommand1
+      Turns: 1
+      Timing: 1
+      Type: 7
+      Param: 1
+      ReadFlag: 1
     - EventKey: 6StartTacticsSetDefineBoss3
       Turns: 6
       Timing: 1
       Type: 61
       Param: 3
       ReadFlag: 0
-    - EventKey: 7StartTacticsSelectAddActor1
-      Turns: 7
-      Timing: 1
-      Type: 6
-      Param: 1
-      ReadFlag: 1
-    - EventKey: 7StartTacticsSetDefineBossIndex4
-      Turns: 7
-      Timing: 1
-      Type: 8
-      Param: 4
-      ReadFlag: 0
-    - EventKey: 7StartTacticsSaveCommand1
-      Turns: 7
-      Timing: 1
-      Type: 7
-      Param: 1
-      ReadFlag: 1
     - EventKey: 7StartTacticsMoveStage105
       Turns: 7
       Timing: 1
@@ -842,17 +824,29 @@ MonoBehaviour:
     Reborn: 0
     SubordinateValue: 80
     StageEvents:
+    - EventKey: 1StartTacticsSelectAddActor1
+      Turns: 1
+      Timing: 1
+      Type: 6
+      Param: 1
+      ReadFlag: 1
+    - EventKey: 1StartTacticsSetDefineBossIndex4
+      Turns: 1
+      Timing: 1
+      Type: 8
+      Param: 4
+      ReadFlag: 0
+    - EventKey: 1StartTacticsSaveCommand1
+      Turns: 1
+      Timing: 1
+      Type: 7
+      Param: 1
+      ReadFlag: 1
     - EventKey: 6StartTacticsSetDefineBoss4
       Turns: 6
       Timing: 1
       Type: 61
       Param: 4
-      ReadFlag: 0
-    - EventKey: 7StartTacticsSetDefineBossIndex5
-      Turns: 7
-      Timing: 1
-      Type: 8
-      Param: 5
       ReadFlag: 0
     - EventKey: 7StartTacticsMoveStage106
       Turns: 7
@@ -875,6 +869,12 @@ MonoBehaviour:
     Reborn: 0
     SubordinateValue: 80
     StageEvents:
+    - EventKey: 1StartTacticsSetDefineBossIndex5
+      Turns: 1
+      Timing: 1
+      Type: 8
+      Param: 5
+      ReadFlag: 0
     - EventKey: 6BeforeTacticsRouteSelectEvent5000
       Turns: 6
       Timing: 11

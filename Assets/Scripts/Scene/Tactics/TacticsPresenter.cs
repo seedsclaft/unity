@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Cysharp.Threading.Tasks;
 
 public class TacticsPresenter :BasePresenter
 {
@@ -8,6 +9,7 @@ public class TacticsPresenter :BasePresenter
     TacticsView _view = null;
 
     private bool _busy = true;
+    private bool _eventBusy = false;
 
     private Tactics.CommandType _backCommand = Tactics.CommandType.None;
     public TacticsPresenter(TacticsView view)
@@ -29,21 +31,24 @@ public class TacticsPresenter :BasePresenter
         {
             return;
         }
-        if (CheckStageEvent())
+        CheckStageEvent();
+        if (_eventBusy)
         {
             return;
         }
         Initialize();
     }
 
-    private bool CheckStageEvent()
+    private async void CheckStageEvent()
     {
-        var isEvent = false;
         // イベントチェック
         var stageEvents = _model.StageEvents(EventTiming.StartTactics);
         foreach (var stageEvent in stageEvents)
         {
-            _model.AddEventReadFlag(stageEvent);
+            if (_eventBusy)
+            {
+                continue;
+            }
             switch (stageEvent.Type)
             {
                 case StageEventType.CommandDisable:
@@ -62,14 +67,20 @@ public class TacticsPresenter :BasePresenter
                     _model.SetIsAlcana(stageEvent.Param == 1);
                     break;
                 case StageEventType.SelectAddActor:
+                    _eventBusy = true;
+                    _model.AddEventReadFlag(stageEvent);
                     var selectAddActor = new ConfirmInfo(DataSystem.System.GetTextData(11050).Text,(menuCommandInfo) => UpdatePopupSelectAddActor((ConfirmCommandType)menuCommandInfo));
                     selectAddActor.SetIsNoChoice(true);
                     selectAddActor.SetSelectIndex(0);
                     _view.CommandCallConfirm(selectAddActor);
                     _view.ChangeUIActive(false);
-                    isEvent = true;
+                    var bgm = await _model.GetBgmData(_model.TacticsBgmFilename());
+                    Ryneus.SoundManager.Instance.PlayBgm(bgm,1.0f,true);
+                    
                     break;
                 case StageEventType.SaveCommand:
+                    _eventBusy = true;
+                    _model.AddEventReadFlag(stageEvent);
                     var savePopupTitle = _model.SavePopupTitle();
                     var saveNeedAds = _model.NeedAdsSave();
                     var popupInfo = new ConfirmInfo(savePopupTitle,(a) => UpdatePopupSaveCommand((ConfirmCommandType)a));
@@ -84,7 +95,6 @@ public class TacticsPresenter :BasePresenter
                     }
                     _view.CommandCallConfirm(popupInfo);
                     _view.ChangeUIActive(false);
-                    isEvent = true;
                     break;
                 case StageEventType.SetDefineBossIndex:
                     _model.SetDefineBossIndex(stageEvent.Param);
@@ -93,13 +103,15 @@ public class TacticsPresenter :BasePresenter
                     _view.CommandSetRouteSelect();
                     break;
                 case StageEventType.AbortStage:
+                    _eventBusy = true;
+                    _model.AddEventReadFlag(stageEvent);
                     _model.StageClear();
-                    isEvent = true;
                     _view.CommandSceneChange(Scene.MainMenu);
                     break;
                 case StageEventType.ChangeRouteSelectStage:
+                    _eventBusy = true;
+                    _model.AddEventReadFlag(stageEvent);
                     _model.ChangeRouteSelectStage(stageEvent.Param);
-                    isEvent = true;
                     _view.CommandSceneChange(Scene.Tactics);
                     break;
                 case StageEventType.SetDisplayTurns:
@@ -109,8 +121,9 @@ public class TacticsPresenter :BasePresenter
                     _model.RouteSelectTroopData();
                     break;
                 case StageEventType.MoveStage:
+                    _eventBusy = true;
+                    _model.AddEventReadFlag(stageEvent);
                     _model.MoveStage(stageEvent.Param);
-                    isEvent = true;
                     _view.CommandSceneChange(Scene.Tactics);
                     break;
                 case StageEventType.SetDefineBoss:
@@ -120,12 +133,7 @@ public class TacticsPresenter :BasePresenter
                     _model.SetLastBoss();
                     break;
             }
-            if (isEvent)
-            {
-                return true;
-            }
         }
-        return isEvent;
     }
 
     private bool CheckAdvEvent()
@@ -133,7 +141,7 @@ public class TacticsPresenter :BasePresenter
         var StartTacticsAdvData = _model.StartTacticsAdvData();
         if (StartTacticsAdvData != null)
         {
-            AdvCallInfo advInfo = new AdvCallInfo();
+            var advInfo = new AdvCallInfo();
             advInfo.SetLabel(_model.GetAdvFile(StartTacticsAdvData.Id));
             advInfo.SetCallEvent(() => {
                 if (StartTacticsAdvData.EndJump != Scene.None)
@@ -465,15 +473,13 @@ public class TacticsPresenter :BasePresenter
     }
 
 
-    private async void UpdatePopupSelectAddActor(ConfirmCommandType confirmCommandType)
+    private void UpdatePopupSelectAddActor(ConfirmCommandType confirmCommandType)
     {
         _model.SetSelectAddActor();
         _view.CommandConfirmClose();
         var statusViewInfo = new StatusViewInfo(null);
         statusViewInfo.SetDisplayDecideButton(true);
         statusViewInfo.SetDisplayBackButton(false);
-        var bgm = await _model.GetBgmData(_model.TacticsBgmFilename());
-        Ryneus.SoundManager.Instance.PlayBgm(bgm,1.0f,true);
         _view.CommandCallStatus(statusViewInfo);
     }
 

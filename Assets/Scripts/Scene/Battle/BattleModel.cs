@@ -123,7 +123,7 @@ public class BattleModel : BaseModel
                     };
                     var actionResultInfo = new ActionResultInfo(subject,target,new List<SkillData.FeatureData>(){featureData},-1);
                         
-                    if ((target.Hp - chainDamage) <= 0)
+                    if ((target.Hp - actionResultInfo.HpDamage) <= 0)
                     {
                         _battlers[i].RemoveState(stateInfo,true);
                     }
