@@ -237,7 +237,7 @@ public class BattleSelectCharacter : MonoBehaviour
         foreach (var gameObject in magicList.ObjectList)
         {
             var rect = gameObject.GetComponent<RectTransform>();
-            var cardWidth = (selectObj != gameObject) ? 200 : 264;
+            var cardWidth = (selectObj != gameObject) ? 184 : 264;
             rect.sizeDelta = new Vector2(cardWidth,240);
         }
         var listRect = magicList.ScrollRect.gameObject.GetComponent<RectTransform>();

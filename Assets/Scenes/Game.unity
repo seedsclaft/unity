@@ -7089,7 +7089,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1408798861
 RectTransform:
   m_ObjectHideFlags: 0
@@ -8702,7 +8702,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   version: 0.1.0
-  testMode: 0
+  testMode: 1
   sceneAssign: {fileID: 64641776}
   popupAssign: {fileID: 497961168}
   statusAssign: {fileID: 1137596729}
@@ -8728,9 +8728,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   consoleInputField: {fileID: 1447284014}
-  inBattleActorIds: 0200000004000000
-  troopId: 401
-  troopLv: 1
+  inBattleActorIds: 01000000
+  troopId: 2040
+  troopLv: 5
   actorDates:
   - Id: 1
     Name: "\u30D8\u30AB\u30C6\u30FC"

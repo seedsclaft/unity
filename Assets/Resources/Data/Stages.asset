@@ -554,12 +554,6 @@ MonoBehaviour:
     Reborn: 0
     SubordinateValue: 80
     StageEvents:
-    - EventKey: 1StartTacticsCommandDisable3
-      Turns: 1
-      Timing: 1
-      Type: 1
-      Param: 3
-      ReadFlag: 0
     - EventKey: 1BeforeTacticsAdvStart101
       Turns: 1
       Timing: 11
@@ -572,6 +566,12 @@ MonoBehaviour:
       Type: 12
       Param: 1000
       ReadFlag: 1
+    - EventKey: 1StartTacticsCommandDisable3
+      Turns: 1
+      Timing: 1
+      Type: 1
+      Param: 3
+      ReadFlag: 0
     - EventKey: 2StartTacticsCommandDisable3
       Turns: 2
       Timing: 1
@@ -596,6 +596,12 @@ MonoBehaviour:
       Type: 1
       Param: 3
       ReadFlag: 0
+    - EventKey: 6BeforeTacticsSelectActorAdvStart2000
+      Turns: 6
+      Timing: 11
+      Type: 12
+      Param: 2000
+      ReadFlag: 1
     - EventKey: 6StartTacticsCommandDisable0
       Turns: 6
       Timing: 1
@@ -626,12 +632,6 @@ MonoBehaviour:
       Type: 3
       Param: 0
       ReadFlag: 0
-    - EventKey: 6BeforeTacticsSelectActorAdvStart2000
-      Turns: 6
-      Timing: 11
-      Type: 12
-      Param: 2000
-      ReadFlag: 1
     - EventKey: 7BeforeTacticsAdvStart102
       Turns: 7
       Timing: 11
@@ -875,18 +875,18 @@ MonoBehaviour:
     Reborn: 0
     SubordinateValue: 80
     StageEvents:
-    - EventKey: 6StartTacticsSetDefineBoss5
-      Turns: 6
-      Timing: 1
-      Type: 61
-      Param: 5
-      ReadFlag: 0
     - EventKey: 6BeforeTacticsRouteSelectEvent5000
       Turns: 6
       Timing: 11
       Type: 13
       Param: 5000
       ReadFlag: 1
+    - EventKey: 6StartTacticsSetDefineBoss5
+      Turns: 6
+      Timing: 1
+      Type: 61
+      Param: 5
+      ReadFlag: 0
     - EventKey: 6StartTacticsSetRouteSelectParam0
       Turns: 6
       Timing: 1
@@ -899,17 +899,17 @@ MonoBehaviour:
       Type: 15
       Param: 201
       ReadFlag: 1
-    - EventKey: 7StartTacticsSaveCommand1
-      Turns: 7
-      Timing: 1
-      Type: 7
-      Param: 1
-      ReadFlag: 1
     - EventKey: 7StartTacticsChangeRouteSelectStage111
       Turns: 7
       Timing: 1
       Type: 31
       Param: 111
+      ReadFlag: 1
+    - EventKey: 7StartTacticsSaveCommand1
+      Turns: 7
+      Timing: 1
+      Type: 7
+      Param: 1
       ReadFlag: 1
   - Id: 111
     Name: "\u843D\u661F\u524D3986\u5E74 \u534A\u795E\u306E\u30A2\u30EB\u30B1\u30DF\u30B9\u30C8\u9054"

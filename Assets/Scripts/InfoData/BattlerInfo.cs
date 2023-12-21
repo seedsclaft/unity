@@ -119,7 +119,7 @@ public class BattlerInfo
         var statusInfo = new StatusInfo();
         int plusHpParam = isBoss == true ? 50 : 0;
         statusInfo.SetParameter(
-            enemyData.BaseStatus.Hp + (int)Math.Floor(plusHpParam + lv + lv * enemyData.BaseStatus.Hp * 0.05f),
+            enemyData.BaseStatus.Hp + (int)Math.Floor(plusHpParam + lv + lv * enemyData.BaseStatus.Hp * 0.1f),
             Math.Min(50, enemyData.BaseStatus.Mp + lv),
             enemyData.BaseStatus.Atk + (int)Math.Floor(lv + lv * enemyData.BaseStatus.Atk * 0.05f),
             enemyData.BaseStatus.Def + (int)Math.Floor(lv + lv * enemyData.BaseStatus.Def * 0.05f),

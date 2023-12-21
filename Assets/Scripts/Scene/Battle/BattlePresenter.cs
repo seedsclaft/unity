@@ -382,11 +382,13 @@ public class BattlePresenter : BasePresenter
             } else
             {
                 #if UNITY_EDITOR
+                /*
                 if (_debug)
                 {
                     CommandDecideEnemy();
                     return;
                 }
+                */
                 #endif
                 int autoSkillId = _model.MakeAutoSkillId(_model.CurrentBattler);
                 var skillInfo = new SkillInfo(autoSkillId);

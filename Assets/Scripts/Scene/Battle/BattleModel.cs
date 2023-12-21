@@ -683,6 +683,12 @@ public class BattleModel : BaseModel
                     IsEnable = true;
                 }
                 break;
+                case FeatureType.RemoveAbnormalState:
+                if (target.StateInfos.Find(a => a.Master.Abnormal) != null)
+                {
+                    IsEnable = true;
+                }
+                break;
                 case FeatureType.BreakUndead:
                 if (_currentBattler.isActor)
                 {
@@ -1920,7 +1926,7 @@ public class BattleModel : BaseModel
         {
             weight += skillInfos[i].Weight;
         }
-        weight = UnityEngine.Random.Range (0,weight);
+        weight = UnityEngine.Random.Range(0,weight);
         int skillIndex = -1;
         for (int i = 0;i < skillInfos.Count;i++)
         {

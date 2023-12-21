@@ -123,7 +123,7 @@ public class AdvController : BaseView, IInputHandlerEvent
         );
         if (GameSystem.ConfigData != null)
         {
-            GameSystem.ConfigData.EventSkipIndex = advUguiManager.Engine.Config.IsSkip;
+            GameSystem.ConfigData.EventSkipIndex = skip;
         }
     }
 }

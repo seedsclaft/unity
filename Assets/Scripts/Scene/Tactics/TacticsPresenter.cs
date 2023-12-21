@@ -17,6 +17,10 @@ public class TacticsPresenter :BasePresenter
         _model = new TacticsModel();
         SetModel(_model);
 
+        if (CheckAdvEvent())
+        {
+            return;
+        }
         if (CheckBeforeTacticsAdvEvent())
         {
             return;
@@ -26,10 +30,6 @@ public class TacticsPresenter :BasePresenter
             return;
         }
         if (CheckStageEvent())
-        {
-            return;
-        }
-        if (CheckAdvEvent())
         {
             return;
         }
@@ -43,6 +43,7 @@ public class TacticsPresenter :BasePresenter
         var stageEvents = _model.StageEvents(EventTiming.StartTactics);
         foreach (var stageEvent in stageEvents)
         {
+            _model.AddEventReadFlag(stageEvent);
             switch (stageEvent.Type)
             {
                 case StageEventType.CommandDisable:
@@ -56,7 +57,6 @@ public class TacticsPresenter :BasePresenter
                     break;
                 case StageEventType.IsSubordinate:
                     _model.ChangeSubordinate(stageEvent.Param == 1);
-                    _model.AddEventReadFlag(stageEvent);
                     break;
                 case StageEventType.IsAlcana:
                     _model.SetIsAlcana(stageEvent.Param == 1);
@@ -67,7 +67,6 @@ public class TacticsPresenter :BasePresenter
                     selectAddActor.SetSelectIndex(0);
                     _view.CommandCallConfirm(selectAddActor);
                     _view.ChangeUIActive(false);
-                    _model.AddEventReadFlag(stageEvent);
                     isEvent = true;
                     break;
                 case StageEventType.SaveCommand:
@@ -85,7 +84,6 @@ public class TacticsPresenter :BasePresenter
                     }
                     _view.CommandCallConfirm(popupInfo);
                     _view.ChangeUIActive(false);
-                    _model.AddEventReadFlag(stageEvent);
                     isEvent = true;
                     break;
                 case StageEventType.SetDefineBossIndex:
@@ -93,31 +91,25 @@ public class TacticsPresenter :BasePresenter
                     break;
                 case StageEventType.SetRouteSelectParam:
                     _view.CommandSetRouteSelect();
-                    _model.AddEventReadFlag(stageEvent);
                     break;
                 case StageEventType.AbortStage:
                     _model.StageClear();
-                    _model.AddEventReadFlag(stageEvent);
                     isEvent = true;
                     _view.CommandSceneChange(Scene.MainMenu);
                     break;
                 case StageEventType.ChangeRouteSelectStage:
                     _model.ChangeRouteSelectStage(stageEvent.Param);
-                    _model.AddEventReadFlag(stageEvent);
                     isEvent = true;
                     _view.CommandSceneChange(Scene.Tactics);
                     break;
                 case StageEventType.SetDisplayTurns:
                     _model.SetDisplayTurns();
-                    _model.AddEventReadFlag(stageEvent);
                     break;
                 case StageEventType.RouteSelectBattle:
                     _model.RouteSelectTroopData();
-                    _model.AddEventReadFlag(stageEvent);
                     break;
                 case StageEventType.MoveStage:
                     _model.MoveStage(stageEvent.Param);
-                    _model.AddEventReadFlag(stageEvent);
                     isEvent = true;
                     _view.CommandSceneChange(Scene.Tactics);
                     break;
@@ -473,13 +465,15 @@ public class TacticsPresenter :BasePresenter
     }
 
 
-    private void UpdatePopupSelectAddActor(ConfirmCommandType confirmCommandType)
+    private async void UpdatePopupSelectAddActor(ConfirmCommandType confirmCommandType)
     {
         _model.SetSelectAddActor();
         _view.CommandConfirmClose();
         var statusViewInfo = new StatusViewInfo(null);
         statusViewInfo.SetDisplayDecideButton(true);
         statusViewInfo.SetDisplayBackButton(false);
+        var bgm = await _model.GetBgmData(_model.TacticsBgmFilename());
+        Ryneus.SoundManager.Instance.PlayBgm(bgm,1.0f,true);
         _view.CommandCallStatus(statusViewInfo);
     }
 
