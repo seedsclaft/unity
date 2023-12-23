@@ -163,7 +163,7 @@ public class GameSystem : MonoBehaviour
                 statusAssign.StatusRoot.gameObject.SetActive(false);
                 if (!statusAssign.StatusRoot.gameObject.activeSelf) _currentScene.SetBusy(true);
                 if (_statusView) _statusView.SetBusy(true);
-                AdvCallInfo advCallInfo = viewEvent.template as AdvCallInfo;
+                var advCallInfo = viewEvent.template as AdvCallInfo;
                 _currentScene.SetBusy(true);
                 if (!this.gameObject.activeSelf)
                 {

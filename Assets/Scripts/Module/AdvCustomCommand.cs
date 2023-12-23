@@ -28,6 +28,9 @@ namespace Utage
                 case "StopBgm2":
                     command = new AdvCommandStopBgm2(row);
                     break;
+                case "SetSelect1Actor":
+                    command = new AdvCommandSetSelect1Actor(row);
+                    break;
             }
         }
     }
@@ -60,6 +63,28 @@ namespace Utage
         public override void DoCommand(AdvEngine engine)
         {
             Ryneus.SoundManager.Instance.StopBgm();
+        }
+    }
+
+    public class AdvCommandSetSelect1Actor : AdvCommand
+    {
+
+        public AdvCommandSetSelect1Actor(StringGridRow row)
+            :base(row)
+        {
+        }
+    
+        public override void DoCommand(AdvEngine engine)
+        {
+            if (GameSystem.CurrentStageData == null) return;
+            if (GameSystem.CurrentStageData.CurrentStage == null) return;
+            if (GameSystem.CurrentStageData.CurrentStage.SelectActorIds.Count == 0) return;
+            int actorId = GameSystem.CurrentStageData.CurrentStage.SelectActorIds[0];
+            var actorData = DataSystem.Actors.Find(a => a.Id == actorId);
+            if (actorData != null)
+            {
+                engine.Param.SetParameterString("Select1",actorData.Name);
+            }
         }
     }
 }
