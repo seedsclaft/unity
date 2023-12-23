@@ -113,7 +113,7 @@ public class TacticsView : BaseView
     {
         tacticsCommandList.SetData(menuCommands);
         tacticsCommandList.SetInputHandler(InputKeyType.Decide,() => CallTacticsCommand());
-        tacticsCommandList.SetInputHandler(InputKeyType.Option1,() => CallOpenSideMenu());
+        tacticsCommandList.SetInputHandler(InputKeyType.Option1,() => CommandOpenSideMenu());
         tacticsCommandList.SetInputHandler(InputKeyType.SideLeft1,() => OnClickDropout());
         tacticsCommandList.SetInputHandler(InputKeyType.Option2,() => CallAlcanaEvent());
         tacticsCommandList.SetSelectedHandler(() => UpdateHelpWindow());
@@ -425,7 +425,7 @@ public class TacticsView : BaseView
     }
 
     public void SetSideMenu(List<SystemData.CommandData> menuCommands){
-        sideMenuList.Initialize(menuCommands,(a) => CallSideMenu(a),() => OnClickOption(),() => CallCloseSideMenu());
+        sideMenuList.Initialize(menuCommands,(a) => CallSideMenu(a),() => OnClickOption(),() => CommandCloseSideMenu());
         SetInputHandler(sideMenuList.GetComponent<IInputHandlerEvent>());
         sideMenuList.Deactivate();
     }
@@ -442,28 +442,19 @@ public class TacticsView : BaseView
         sideMenuList.Deactivate();
     }
 
-    public void CommandOpenSideMenu()
+    public new void CommandOpenSideMenu()
     {
-        SetHelpInputInfo("SIDEMENU");
-        HelpWindow.SetHelpText(DataSystem.System.GetTextData(701).Help);
-        tacticsCommandList.Deactivate();
-        sideMenuList.Activate();
+        base.CommandOpenSideMenu();
         sideMenuList.OpenSideMenu();
+        tacticsCommandList.Deactivate();
     }
 
     public void CommandCloseSideMenu()
     {
         tacticsCommandList.Activate();
-        sideMenuList.Deactivate();
         sideMenuList.CloseSideMenu();
         SetHelpInputInfo("TACTICS");
         UpdateHelpWindow();
-    }
-
-    private void CallOpenSideMenu()
-    {
-        var eventData = new TacticsViewEvent(CommandType.OpenSideMenu);
-        _commandData(eventData);
     }
 
     private void CallSideMenu(SystemData.CommandData sideMenu)
@@ -472,12 +463,6 @@ public class TacticsView : BaseView
         eventData.template = sideMenu;
         _commandData(eventData);
     }
-
-    private void CallCloseSideMenu()
-    {
-        var eventData = new TacticsViewEvent(CommandType.CloseSideMenu);
-        _commandData(eventData);
-    }    
     
     private void UpdateHelpWindow()
     {

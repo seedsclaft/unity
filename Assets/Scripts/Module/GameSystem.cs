@@ -109,6 +109,10 @@ public class GameSystem : MonoBehaviour
                 break;
             case Base.CommandType.CloseConfirm:
                 confirmRoot.gameObject.SetActive(false);
+                if (_popupView != null)
+                {
+                    DestroyImmediate(_popupView.gameObject);
+                }
                 _currentScene.SetBusy(false);
                 if (_statusView) _statusView.SetBusy(false);
                 break;

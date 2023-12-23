@@ -1,4 +1,4 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -15,7 +15,7 @@ public class SideMenuList : ListWindow , IInputHandlerEvent
     private List<SystemData.CommandData> _sideMenus;
     private System.Action _openEvent = null;
     private System.Action _closeEvent = null;
-    public void Initialize(List<SystemData.CommandData> sideMenus,System.Action<SystemData.CommandData> callEvent,System.Action optionEvent,System.Action cancelEvent)
+    public void Initialize(List<SystemData.CommandData> sideMenus,Action<SystemData.CommandData> callEvent,Action optionEvent,Action cancelEvent)
     {
         var prefab = Instantiate(optionPrefab);
         prefab.transform.SetParent(optionRoot.transform,false);
@@ -59,15 +59,11 @@ public class SideMenuList : ListWindow , IInputHandlerEvent
         backButton.gameObject.SetActive(true);
         optionRoot.SetActive(true);
         ScrollRect.gameObject.SetActive(true);
-        if (_helpWindow != null)
-        {
-            _helpWindow.SetInputInfo("SIDEMENU");
-            _helpWindow.SetHelpText(DataSystem.System.GetTextData(701).Help);
-        }
         if (_openEvent != null)
         {
             _openEvent();
         }
+        Activate();
     }
 
     public void CloseSideMenu(bool isSoundNeed = true)
@@ -85,6 +81,7 @@ public class SideMenuList : ListWindow , IInputHandlerEvent
         {
             _closeEvent();
         }
+        Deactivate();
     }
 
     public void Refresh()
@@ -98,7 +95,7 @@ public class SideMenuList : ListWindow , IInputHandlerEvent
         for (int i = 0; i < ObjectList.Count;i++)
         {
             if (ObjectList[i] == null) continue;
-            ListItem listItem = ObjectList[i].GetComponent<ListItem>();
+            var listItem = ObjectList[i].GetComponent<ListItem>();
             if (listItem == null) continue;
             if (index == listItem.Index){
                 listItem.SetSelect();
@@ -107,13 +104,6 @@ public class SideMenuList : ListWindow , IInputHandlerEvent
             }
         }
         optionCursor.SetActive(index == -1);
-    }
-
-    public override void UpdateHelpWindow(){
-        if (_helpWindow != null)
-        {
-            //_helpWindow.SetHelpText(_data[Index].Help);
-        }
     }
 
     private void CallInputHandler(InputKeyType keyType,System.Action<SystemData.CommandData> callEvent,System.Action optionEvent, System.Action cancelEvent)

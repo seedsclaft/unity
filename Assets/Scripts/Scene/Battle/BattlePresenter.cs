@@ -138,10 +138,6 @@ public class BattlePresenter : BasePresenter
         {
             CommandStartSelect();
         }
-        if (viewEvent.commandType == Battle.CommandType.OpenSideMenu)
-        {
-            CommandOpenSideMenu();
-        }
         if (viewEvent.commandType == Battle.CommandType.Back)
         {
             CommandBack();
@@ -157,14 +153,6 @@ public class BattlePresenter : BasePresenter
         if (viewEvent.commandType == Battle.CommandType.EnemyDetail)
         {
             CommandEnemyDetail((int)viewEvent.template);
-        }
-        if (viewEvent.commandType == Battle.CommandType.OpenSideMenu)
-        {
-            CommandOpenSideMenu();
-        }
-        if (viewEvent.commandType == Battle.CommandType.CloseSideMenu)
-        {
-            CommandCloseSideMenu();
         }
         if (viewEvent.commandType == Battle.CommandType.SelectSideMenu)
         {
@@ -1071,11 +1059,6 @@ public class BattlePresenter : BasePresenter
             _view.ShowPartyTarget();
             _view.DeactivateEnemyList();
         }
-    }
-
-    private void CommandOpenSideMenu()
-    {
-        _view.CommandOpenSideMenu();
     }
 
     private void CommandCloseSideMenu()

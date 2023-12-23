@@ -37,8 +37,6 @@ namespace Tactics
         Rule,
         Dropout,
         Option,
-        OpenSideMenu,
         SelectSideMenu,
-        CloseSideMenu
     }
 }

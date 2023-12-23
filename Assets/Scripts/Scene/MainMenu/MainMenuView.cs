@@ -48,7 +48,7 @@ public class MainMenuView : BaseView
     public void SetStagesData(List<ListData> stages){
         stageList.SetData(stages);
         stageList.SetInputHandler(InputKeyType.Decide,() => CallMainMenuStage());
-        stageList.SetInputHandler(InputKeyType.Option1,() => CallOpenSideMenu());
+        stageList.SetInputHandler(InputKeyType.Option1,() => CommandOpenSideMenu());
         stageList.SetSelectedHandler(() => UpdateMainMenuStage());
         SetInputHandler(stageList.GetComponent<IInputHandlerEvent>());
     }
@@ -91,7 +91,7 @@ public class MainMenuView : BaseView
     }
 
     public void SetSideMenu(List<SystemData.CommandData> menuCommands){
-        sideMenuList.Initialize(menuCommands,(a) => CallSideMenu(a),() => OnClickOption(),() => CallCloseSideMenu());
+        sideMenuList.Initialize(menuCommands,(a) => CallSideMenu(a),() => OnClickOption(),() => CommandCloseSideMenu());
         SetInputHandler(sideMenuList.GetComponent<IInputHandlerEvent>());
         sideMenuList.Deactivate();
     }
@@ -108,39 +108,25 @@ public class MainMenuView : BaseView
         sideMenuList.Deactivate();
     }
 
-    public void CommandOpenSideMenu()
+    public new void CommandOpenSideMenu()
     {
-        HelpWindow.SetInputInfo("SIDEMENU");
-        HelpWindow.SetHelpText(DataSystem.System.GetTextData(701).Help);
-        stageList.Deactivate();
-        sideMenuList.Activate();
+        base.CommandOpenSideMenu();
         sideMenuList.OpenSideMenu();
+        stageList.Deactivate();
     }
 
     public void CommandCloseSideMenu()
     {
         stageList.Activate();
-        sideMenuList.Deactivate();
         sideMenuList.CloseSideMenu();
         HelpWindow.SetInputInfo("MAINMENU");
         stageList.UpdateHelpWindow();
-    }
-    private void CallOpenSideMenu()
-    {
-        var eventData = new MainMenuViewEvent(CommandType.OpenSideMenu);
-        _commandData(eventData);
     }
 
     private void CallSideMenu(SystemData.CommandData sideMenu)
     {
         var eventData = new MainMenuViewEvent(CommandType.SelectSideMenu);
         eventData.template = sideMenu;
-        _commandData(eventData);
-    }
-
-    private void CallCloseSideMenu()
-    {
-        var eventData = new MainMenuViewEvent(CommandType.CloseSideMenu);
         _commandData(eventData);
     }
 }
@@ -154,9 +140,7 @@ namespace MainMenu
         Rule = 102,
         Option = 103,
         Ranking = 104,
-        OpenSideMenu,
         SelectSideMenu,
-        CloseSideMenu
     }
 }
 public class MainMenuViewEvent

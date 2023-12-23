@@ -58,7 +58,7 @@ public class BattleView : BaseView ,IInputHandlerEvent
     {
         selectCharacter.SetInputHandlerAction(InputKeyType.Decide,() => CallSkillAction());
         selectCharacter.SetInputHandlerAction(InputKeyType.Cancel,() => OnClickBack());
-        selectCharacter.SetInputHandlerAction(InputKeyType.Option1,() => CallOpenSideMenu());
+        selectCharacter.SetInputHandlerAction(InputKeyType.Option1,() => CommandOpenSideMenu());
         selectCharacter.SetInputHandlerAction(InputKeyType.Option2,() => OnClickEscape());
         selectCharacter.SetInputHandlerAction(InputKeyType.SideLeft2,() => {
             selectCharacter.SelectCharacterTabSmooth(-1);
@@ -561,7 +561,7 @@ public class BattleView : BaseView ,IInputHandlerEvent
     }
 
     public void SetSideMenu(List<SystemData.CommandData> menuCommands){
-        sideMenuList.Initialize(menuCommands,(a) => CallSideMenu(a),() => OnClickOption(),() => CallCloseSideMenu());
+        sideMenuList.Initialize(menuCommands,(a) => CallSideMenu(a),() => OnClickOption(),() => CommandCloseSideMenu());
         SetInputHandler(sideMenuList.GetComponent<IInputHandlerEvent>());
         sideMenuList.Deactivate();
         sideMenuList.SetHelpWindow(HelpWindow);
@@ -590,12 +590,10 @@ public class BattleView : BaseView ,IInputHandlerEvent
         sideMenuList.Deactivate();
     }
 
-    public void CommandOpenSideMenu()
+    public new void CommandOpenSideMenu()
     {
-        HelpWindow.SetInputInfo("SIDEMENU");
-        HelpWindow.SetHelpText(DataSystem.System.GetTextData(701).Help);
+        base.CommandOpenSideMenu();
         selectCharacter.MagicList.Deactivate();
-        sideMenuList.Activate();
         sideMenuList.OpenSideMenu();
     }
 
@@ -603,16 +601,9 @@ public class BattleView : BaseView ,IInputHandlerEvent
     {
         HelpWindow.SetInputInfo("BATTLE");
         selectCharacter.MagicList.Activate();
-        sideMenuList.Deactivate();
         sideMenuList.CloseSideMenu();
         selectCharacter.MagicList.UpdateHelpWindow();
         HelpWindow.SetHelpText(DataSystem.System.GetTextData(15010).Text);
-    }
-
-    private void CallOpenSideMenu()
-    {
-        var eventData = new BattleViewEvent(CommandType.OpenSideMenu);
-        _commandData(eventData);
     }
 
     private void CallSideMenu(SystemData.CommandData sideMenu)
@@ -621,13 +612,6 @@ public class BattleView : BaseView ,IInputHandlerEvent
         eventData.template = sideMenu;
         _commandData(eventData);
     }
-
-    private void CallCloseSideMenu()
-    {
-        var eventData = new BattleViewEvent(CommandType.CloseSideMenu);
-        _commandData(eventData);
-        SetInputFrame(1);
-    }    
     
     public void InputHandler(InputKeyType keyType,bool pressed)
     {

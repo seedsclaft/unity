@@ -51,14 +51,6 @@ public class TitlePresenter : BasePresenter
         {
             CommandCredit();
         }
-        if (viewEvent.commandType == CommandType.OpenSideMenu)
-        {
-            CommandOpenSideMenu();
-        }
-        if (viewEvent.commandType == CommandType.CloseSideMenu)
-        {
-            CommandCloseSideMenu();
-        }
         if (viewEvent.commandType == CommandType.SelectSideMenu)
         {
             CommandSelectSideMenu((SystemData.CommandData)viewEvent.template);
@@ -133,16 +125,6 @@ public class TitlePresenter : BasePresenter
         }
         _view.RefreshCommandIndex(selectIndex);
         //_view.RefreshView();
-    }
-
-    private void CommandOpenSideMenu()
-    {
-        _view.CommandOpenSideMenu();
-    }
-
-    private void CommandCloseSideMenu()
-    {
-        _view.CommandCloseSideMenu();
     }
 
     private void CommandSelectSideMenu(SystemData.CommandData sideMenu)

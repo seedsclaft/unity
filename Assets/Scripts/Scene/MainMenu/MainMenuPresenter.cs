@@ -65,14 +65,6 @@ public class MainMenuPresenter : BasePresenter
         {
             CommandRanking();
         }
-        if (viewEvent.commandType == CommandType.OpenSideMenu)
-        {
-            CommandOpenSideMenu();
-        }
-        if (viewEvent.commandType == CommandType.CloseSideMenu)
-        {
-            CommandCloseSideMenu();
-        }
         if (viewEvent.commandType == CommandType.SelectSideMenu)
         {
             CommandSelectSideMenu((SystemData.CommandData)viewEvent.template);
@@ -124,16 +116,6 @@ public class MainMenuPresenter : BasePresenter
     {
         Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
         _view.CommandSceneChange(Scene.Slot);
-    }
-
-    private void CommandOpenSideMenu()
-    {
-        _view.CommandOpenSideMenu();
-    }
-
-    private void CommandCloseSideMenu()
-    {
-        _view.CommandCloseSideMenu();
     }
 
     private void CommandSelectSideMenu(SystemData.CommandData sideMenu)

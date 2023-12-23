@@ -343,14 +343,6 @@ public class TacticsPresenter :BasePresenter
         {
             CommandBack();
         }
-        if (viewEvent.commandType == Tactics.CommandType.OpenSideMenu)
-        {
-            CommandOpenSideMenu();
-        }
-        if (viewEvent.commandType == Tactics.CommandType.CloseSideMenu)
-        {
-            CommandCloseSideMenu();
-        }
         if (viewEvent.commandType == Tactics.CommandType.SelectSideMenu)
         {
             CommandSelectSideMenu((SystemData.CommandData)viewEvent.template);
@@ -829,16 +821,6 @@ public class TacticsPresenter :BasePresenter
                 _view.RefreshListData(listData);
             }
         }
-    }
-
-    private void CommandOpenSideMenu()
-    {
-        _view.CommandOpenSideMenu();
-    }
-
-    private void CommandCloseSideMenu()
-    {
-        _view.CommandCloseSideMenu();
     }
 
     private void CommandSelectSideMenu(SystemData.CommandData sideMenu)

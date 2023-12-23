@@ -56,14 +56,14 @@ public class TitleView : BaseView
     public void SetTitleCommand(List<ListData> titleCommands){
         titleCommandList.SetData(titleCommands);
         titleCommandList.SetInputHandler(InputKeyType.Decide,() => CallTitleCommand());
-        titleCommandList.SetInputHandler(InputKeyType.Option1,() => CallOpenSideMenu());
+        titleCommandList.SetInputHandler(InputKeyType.Option1,() => CommandOpenSideMenu());
         titleCommandList.SetSelectedHandler(() => UpdateHelpWindow());
         SetInputHandler(titleCommandList.GetComponent<IInputHandlerEvent>());
         titleCommandList.SetHelpWindow(HelpWindow);
     }
 
     public void SetSideMenu(List<SystemData.CommandData> menuCommands){
-        sideMenuList.Initialize(menuCommands,(a) => CallSideMenu(a),() => OnClickOption(),() => CallCloseSideMenu());
+        sideMenuList.Initialize(menuCommands,(a) => CallSideMenu(a),() => OnClickOption(),() => CommandCloseSideMenu());
         SetInputHandler(sideMenuList.GetComponent<IInputHandlerEvent>());
         sideMenuList.Deactivate();
     }
@@ -87,19 +87,16 @@ public class TitleView : BaseView
         sideMenuList.Deactivate();
     }
 
-    public void CommandOpenSideMenu()
+    public new void CommandOpenSideMenu()
     {
-        HelpWindow.SetInputInfo("SIDEMENU");
-        HelpWindow.SetHelpText(DataSystem.System.GetTextData(701).Help);
-        titleCommandList.Deactivate();
-        sideMenuList.Activate();
+        base.CommandOpenSideMenu();
         sideMenuList.OpenSideMenu();
+        titleCommandList.Deactivate();
     }
 
     public void CommandCloseSideMenu()
     {
         titleCommandList.Activate();
-        sideMenuList.Deactivate();
         sideMenuList.CloseSideMenu();
         HelpWindow.SetInputInfo("TITLE");
         UpdateHelpWindow();
@@ -116,22 +113,10 @@ public class TitleView : BaseView
         }
     }
 
-    private void CallOpenSideMenu()
-    {
-        var eventData = new TitleViewEvent(CommandType.OpenSideMenu);
-        _commandData(eventData);
-    }
-
     private void CallSideMenu(SystemData.CommandData sideMenu)
     {
         var eventData = new TitleViewEvent(CommandType.SelectSideMenu);
         eventData.template = sideMenu;
-        _commandData(eventData);
-    }
-
-    private void CallCloseSideMenu()
-    {
-        var eventData = new TitleViewEvent(CommandType.CloseSideMenu);
         _commandData(eventData);
     }
     
@@ -154,9 +139,7 @@ namespace Title
         TitleCommand,
         Credit,
         Option,
-        OpenSideMenu,
         SelectSideMenu,
-        CloseSideMenu,
     }
 }
 
