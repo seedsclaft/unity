@@ -10,11 +10,12 @@ using Effekseer;
 public class BaseModel
 {
     public SaveInfo CurrentData => GameSystem.CurrentData;
+    public SaveStageInfo CurrentStageData => GameSystem.CurrentStageData;
     public TempInfo TempData => GameSystem.TempData;
-    public StageInfo CurrentStage => CurrentData.CurrentStage;
-    public AlcanaInfo CurrentAlcana => CurrentData.CurrentAlcana;
+    public StageInfo CurrentStage => CurrentStageData.CurrentStage;
+    public AlcanaInfo CurrentAlcana => CurrentStageData.CurrentAlcana;
 
-    public PartyInfo PartyInfo => CurrentData.Party;
+    public PartyInfo PartyInfo => CurrentStageData.Party;
 
     public int Currency => PartyInfo.Currency;
 
@@ -24,9 +25,14 @@ public class BaseModel
     public CancellationTokenSource _cancellationTokenSource;
     public void InitSaveInfo()
     {
-        var playInfo = new SaveInfo();
-        playInfo.InitSaveData();
-        GameSystem.CurrentData = playInfo;
+        GameSystem.CurrentData = new SaveInfo();;
+    }
+
+    public void InitSaveStageInfo()
+    {
+        var saveStageInfo = new SaveStageInfo();
+        saveStageInfo.Initialize();
+        GameSystem.CurrentStageData = saveStageInfo;
     }
 
     public void InitConfigInfo()
@@ -36,7 +42,7 @@ public class BaseModel
 
     public List<ActorInfo> Actors()
     {
-        return GameSystem.CurrentData.Actors;
+        return CurrentStageData.Actors;
     }
 
     public void LostActors(List<ActorInfo> lostMembers)
@@ -460,7 +466,7 @@ public class BaseModel
 
     public void DeleteAlcana()
     {
-        CurrentData.CurrentAlcana.DeleteAlcana();
+        CurrentStageData.CurrentAlcana.DeleteAlcana();
     }
 
     public string SelectAddActorConfirmText(string actorName)
@@ -529,8 +535,8 @@ public class BaseModel
     public void ChangeRouteSelectStage(int stageId)
     {
         // stageId + RouteSelect
-        int route = GameSystem.CurrentData.CurrentStage.RouteSelect;
-        CurrentData.ChangeRouteSelectStage(stageId + route);
+        int route = GameSystem.CurrentStageData.CurrentStage.RouteSelect;
+        CurrentStageData.ChangeRouteSelectStage(stageId + route);
     }
 
     public void SetDisplayTurns()
@@ -540,7 +546,7 @@ public class BaseModel
 
     public void MoveStage(int stageId)
     {
-		CurrentData.MoveStage(stageId);
+		CurrentStageData.MoveStage(stageId);
     }
 
     public Dictionary<TacticsCommandType, int> CommandRankInfo()
@@ -568,19 +574,21 @@ public class BaseModel
 
     public void SetResumeStage(bool resumeStage)
     {
-        CurrentData.SetResumeStage(resumeStage);
+        CurrentStageData.SetResumeStage(resumeStage);
     }
     
     public void SetResumeStageTrue()
     {
         SetResumeStage(true);
-        SaveSystem.SaveStart(GameSystem.CurrentData);
+        SaveSystem.SaveStageInfo(GameSystem.CurrentStageData);
+        SaveSystem.SavePlayerInfo(GameSystem.CurrentData);
     }
 
     public void SetResumeStageFalse()
     {
         SetResumeStage(false);
-        SaveSystem.SaveStart(GameSystem.CurrentData);
+        SaveSystem.SaveStageInfo(GameSystem.CurrentStageData);
+        SaveSystem.SavePlayerInfo(GameSystem.CurrentData);
     }
     
     public List<ListData> RebornSkillInfos(ActorInfo actorInfo)
@@ -615,11 +623,11 @@ public class BaseModel
 
     public List<ActorInfo> EvaluateMembers()
     {
-        var selectActorIds = CurrentData.CurrentStage.SelectActorIds;
+        var selectActorIds = CurrentStageData.CurrentStage.SelectActorIds;
         var members = new List<ActorInfo>();
         for (int i = 0;i < selectActorIds.Count ;i++)
         {
-            var temp = CurrentData.Actors.Find(a => a.ActorId == selectActorIds[i]);
+            var temp = CurrentStageData.Actors.Find(a => a.ActorId == selectActorIds[i]);
             if (temp != null)
             {
                 members.Add(temp);

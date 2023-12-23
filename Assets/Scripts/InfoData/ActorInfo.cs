@@ -81,6 +81,7 @@ public class ActorInfo
         _currentHp = _baseStatus.Hp;
         _currentMp = _baseStatus.Mp;
         _demigodParam = 10;
+        InitSkillInfo();
     }
 
     public void CopyData(ActorInfo baseActorInfo)
@@ -145,12 +146,12 @@ public class ActorInfo
         _currentStatus.SetParameter(_baseStatus.Hp,_baseStatus.Mp,_baseStatus.Atk,_baseStatus.Def,_baseStatus.Spd);
     }
 
-    public void InitSkillInfo(List<LearningData> learningData)
+    private void InitSkillInfo()
     {
         _skills = new List<SkillInfo>();
-        for (int i = 0;i < learningData.Count;i++)
+        for (int i = 0;i < Master.LearningSkills.Count;i++)
         {
-            var _learningData = learningData[i];
+            var _learningData = Master.LearningSkills[i];
             if (_skills.Find(a =>a.Id == _learningData.SkillId) != null) continue;
             var skillInfo = new SkillInfo(_learningData.SkillId);
             skillInfo.SetLearningState(LearningState.Learned);

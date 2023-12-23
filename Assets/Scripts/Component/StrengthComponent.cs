@@ -32,7 +32,7 @@ public class StrengthComponent : MonoBehaviour
         if (usePoint != null)
         {
             int UseCost = _actorInfo.UsePointCost((StatusParamType)statusParamType);
-            var _currentAlcana = GameSystem.CurrentData.CurrentAlcana;
+            var _currentAlcana = GameSystem.CurrentStageData.CurrentAlcana;
             if (_currentAlcana != null && _currentAlcana.IsStatusCostDown((StatusParamType)statusParamType))
             {
                 UseCost -= 1;

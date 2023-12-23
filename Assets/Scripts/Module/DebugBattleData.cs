@@ -24,19 +24,20 @@ public class DebugBattleData : MonoBehaviour
 
     public void MakeBattleActor()
     {
-        GameSystem.CurrentData.MakeStageData(1,1);
+        GameSystem.CurrentStageData = new SaveStageInfo();
+        GameSystem.CurrentStageData.MakeStageData(1);
         //GameSystem.CurrentData.CurrentStage.TacticsTroops(1);
-        GameSystem.CurrentData.InitActors();     
+        GameSystem.CurrentStageData.ClearActors();     
         foreach (var actor in actorDates)
         { 
             if (inBattleActorIds.Contains(actor.Id))
             {
-                GameSystem.CurrentData.AddTestActor(actor);
+                GameSystem.CurrentStageData.AddTestActor(actor);
             }
         }
-        GameSystem.CurrentData.Actors.ForEach(a => a.SetInBattle(true));
+        GameSystem.CurrentStageData.Actors.ForEach(a => a.SetInBattle(true));
 
-        GameSystem.CurrentData.CurrentStage.TestTroops(troopId,troopLv);
+        GameSystem.CurrentStageData.CurrentStage.TestTroops(troopId,troopLv);
     }
 #if UNITY_EDITOR
     private BattleModel _model;

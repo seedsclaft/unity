@@ -30,18 +30,18 @@ public class SlotModel : BaseModel
 
     public void ClearActorsData()
     {
-        CurrentData.InitActors();
-        CurrentData.InitPlayer();
+        CurrentStageData.ClearActors();
+        CurrentStageData.InitAllActorMembers();
     }
 
     public void SetActorsData(int index)
     {
-        CurrentData.InitActors();
+        CurrentStageData.ClearActors();
         PartyInfo.InitActors();
         var actorInfos = SlotInfos()[index].ActorInfos;
         foreach (var actorInfo in actorInfos)
         {
-            CurrentData.AddActor(actorInfo);
+            CurrentStageData.AddActor(actorInfo);
         }
     }
 

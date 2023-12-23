@@ -76,7 +76,6 @@ public class SystemImporter : AssetPostprocessor
 				Data.StatusCommandData = new ();
 				Data.OptionCommandData = new ();
 				Data.TitleCommandData = new ();
-				Data.InitActors = new ();
 				Data.SystemTextData = new ();
 				Data.SystemTextData = textData;
 				Data.InputDataList = new ();
@@ -162,14 +161,7 @@ public class SystemImporter : AssetPostprocessor
 					IRow BaseRow = BaseSheet.GetRow(i);
 
 					var KeyName = AssetPostImporter.ImportString(BaseRow,(int)BaseDefineColumn.Key);
-					if (KeyName == "initActors")
-					{
-						string[] list = AssetPostImporter.ImportString(BaseRow,(int)BaseDefineColumn.Param).Split(',');
-						foreach (string item in list)
-						{
-							Data.InitActors.Add(int.Parse(item));
-						}
-					}
+					
 					if (KeyName == "initCurrency")
 					{
 						Data.InitCurrency = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseDefineColumn.Param);

@@ -432,7 +432,7 @@ public class StrategyModel : BaseModel
         foreach (var tempActorInfo in TempData.TempActorInfos)
         {
             tempActorInfo.SetInBattle(false);
-            CurrentData.UpdateActorInfo(tempActorInfo);
+            CurrentStageData.UpdateActorInfo(tempActorInfo);
         }
         TempData.ClearBattleActors();
     }

@@ -27,6 +27,7 @@ public class GameSystem : MonoBehaviour
     private BaseModel _model = null;
     
     public static SaveInfo CurrentData = null;
+    public static SaveStageInfo CurrentStageData = null;
     public static SaveConfigInfo ConfigData = null;
     public static TempInfo TempData = null;
 
@@ -189,7 +190,7 @@ public class GameSystem : MonoBehaviour
                 break;
             case Base.CommandType.SetRouteSelect:
                 int routeSelect = (int)advEngine.Param.GetParameter("RouteSelect");
-                CurrentData.CurrentStage.SetRouteSelect(routeSelect);
+                CurrentStageData.CurrentStage.SetRouteSelect(routeSelect);
                 break;
             case Base.CommandType.ChangeViewToTransition:
                 transitionRoot.SetActive(true);

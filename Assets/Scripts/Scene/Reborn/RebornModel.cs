@@ -24,7 +24,7 @@ public class RebornModel : BaseModel
 
     public void ResetStage()
     {
-        CurrentData.ClearStageInfo();
+        /*
         // Party初期化
         PartyInfo.InitActors();
         var stageMembers = DataSystem.Stages.Find(a => a.Id == PartyInfo.StageId).InitMembers;
@@ -32,7 +32,9 @@ public class RebornModel : BaseModel
         {
             PartyInfo.AddActor(stageMembers[i]);
         }
+        */
     }
+
     public List<ListData> ActorInfos(){
         if (_actorInfos.Count > 0)
         {
@@ -46,13 +48,10 @@ public class RebornModel : BaseModel
             for (int i = 0;i < 5;i++)
             {
                 var tempActor = new ActorInfo(DataSystem.Actors[i]);
-                tempActor.InitSkillInfo(DataSystem.Actors[i].LearningSkills);
-                
                 var rebornSkill = new SkillInfo(baseRebornSkill.Id+i); 
                 rebornSkill.SetParam((1).ToString(),1,i+1);
                 tempActor.AddRebornSkill(rebornSkill);
                 CurrentData.PlayerInfo.AddActorInfo(tempActor);
-
             }
         }
         var idx = 0;

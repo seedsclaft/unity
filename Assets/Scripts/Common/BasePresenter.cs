@@ -51,7 +51,7 @@ public class BasePresenter
             if (stageEvent.Type == StageEventType.RouteSelectMoveEvent)
             {
                 // advIdに+RouteSelect
-                int route = GameSystem.CurrentData.CurrentStage.RouteSelect;
+                int route = GameSystem.CurrentStageData.CurrentStage.RouteSelect;
                 advId = stageEvent.Param + route;
                 _model.AddEventReadFlag(stageEvent);
                 isAbort = true;

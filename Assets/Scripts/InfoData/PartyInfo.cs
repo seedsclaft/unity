@@ -29,8 +29,6 @@ public class PartyInfo
     private List<int> _alchemyIdList = new();
     public List<int> AlchemyIdList => _alchemyIdList;
 
-    private int _stageId = 0;
-    public int StageId => _stageId;
     private bool _battleResultVictory = false;
     public bool BattleResultVictory => _battleResultVictory;
 
@@ -63,11 +61,6 @@ public class PartyInfo
     public void ChangeCurrency(int currency)
     {
         _currency = currency;
-    }
-
-    public void SetStageId(int stageId)
-    {
-        _stageId = stageId;
     }
 
     public void SetBattleResultVictory(bool isVictory)

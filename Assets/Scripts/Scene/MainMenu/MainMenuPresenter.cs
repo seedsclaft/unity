@@ -26,7 +26,7 @@ public class MainMenuPresenter : BasePresenter
 
         _view.SetStagesData(_model.Stages());
         _view.SetSideMenu(_model.SideMenu());
-        _model.InitPartyInfo();
+        _model.InitStageData();
 
         var bgm = await _model.GetBgmData("MAINMENU");
         Ryneus.SoundManager.Instance.PlayBgm(bgm,1.0f,true);

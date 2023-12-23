@@ -54,12 +54,13 @@ public class PlayerInfo
         }
         return 0;
     }
-    public void InitStages()
+
+    public void ClearStageClearCount()
     {
         _stageClearDict.Clear();
     }
 
-	public void InitStageInfo()
+	public void InitStageClearCount()
 	{
 		for (int i = 0;i < DataSystem.Stages.Count;i++)
 		{

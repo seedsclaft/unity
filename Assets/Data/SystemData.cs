@@ -9,7 +9,6 @@ public class SystemData : ScriptableObject
 	public List<CommandData> StatusCommandData;
 	public List<OptionCommand> OptionCommandData;
 	public List<CommandData> TitleCommandData;
-	public List<int> InitActors;
 	public int InitCurrency;
 	public int TrainCount;
 	public int AlchemyCount;

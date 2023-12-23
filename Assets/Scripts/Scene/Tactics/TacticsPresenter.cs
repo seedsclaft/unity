@@ -516,7 +516,7 @@ public class TacticsPresenter :BasePresenter
     private void SuccessSave()
     {
         _model.GainSaveCount();
-        SaveSystem.SaveStart(GameSystem.CurrentData);
+        SaveSystem.SaveStageInfo(GameSystem.CurrentStageData);
         _view.CommandSceneChange(Scene.Tactics);
     }
 
@@ -577,7 +577,6 @@ public class TacticsPresenter :BasePresenter
         }
         if (tacticsCommandType == TacticsCommandType.Status)
         {
-            SaveSystem.SaveStart(GameSystem.CurrentData);
             _model.SetStageActor();
             var statusViewInfo = new StatusViewInfo(() => {
                 _view.CommandStatusClose();

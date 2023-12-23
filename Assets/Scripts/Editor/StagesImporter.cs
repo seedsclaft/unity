@@ -18,6 +18,7 @@ public class StagesInfoImporter : AssetPostprocessor {
         Turns,
 		InitMembers,
 		RandomTroopCount,
+		BossId,
 		BGMId,
 		BossBGMId,
 		Reborn,
@@ -99,6 +100,7 @@ public class StagesInfoImporter : AssetPostprocessor {
 						StageData.InitMembers.Add(int.Parse(item));
 					}
 					StageData.RandomTroopCount = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.RandomTroopCount);
+					StageData.BossId = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.BossId);
 					StageData.BGMId = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.BGMId);
 					StageData.BossBGMId = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.BossBGMId);
 					StageData.Reborn = (AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.Reborn) == 1);

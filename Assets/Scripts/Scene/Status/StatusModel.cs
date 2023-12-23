@@ -80,14 +80,11 @@ public class StatusModel : BaseModel
 
     public void SelectAddActor()
     {
+        CurrentStage.AddSelectActorId(CurrentActor.ActorId);
         if (CurrentStage == null)
         {
-            GameSystem.CurrentData.MakeStageData(CurrentActor.ActorId);
-            GameSystem.CurrentData.SetResumeStage(true);
-            GameSystem.CurrentData.Party.ClearData();
-		    GameSystem.CurrentData.Party.ChangeCurrency(DataSystem.System.InitCurrency);
-        } else{
-            CurrentStage.AddSelectActorId(CurrentActor.ActorId);
+            CurrentStageData.SetResumeStage(true);
+		    PartyInfo.ChangeCurrency(DataSystem.System.InitCurrency);
         }
     }
 

@@ -25,31 +25,31 @@ public class DebugConsole : MonoBehaviour
         }
         if (consoleInputField.text == "S0")
         {
-            SaveSystem.SaveStart(GameSystem.CurrentData,0);
+            SaveSystem.SaveStageInfo(GameSystem.CurrentStageData,0);
         }
         if (consoleInputField.text == "S1")
         {
-            SaveSystem.SaveStart(GameSystem.CurrentData,1);
+            SaveSystem.SaveStageInfo(GameSystem.CurrentStageData,1);
         }
         if (consoleInputField.text == "S2")
         {
-            SaveSystem.SaveStart(GameSystem.CurrentData,2);
+            SaveSystem.SaveStageInfo(GameSystem.CurrentStageData,2);
         }
         if (consoleInputField.text == "S3")
         {
-            SaveSystem.SaveStart(GameSystem.CurrentData,3);
+            SaveSystem.SaveStageInfo(GameSystem.CurrentStageData,3);
         }
         if (consoleInputField.text == "L1")
         {
-            SaveSystem.LoadStart(1);
+            SaveSystem.LoadStageInfo(1);
         }
         if (consoleInputField.text == "L2")
         {
-            SaveSystem.LoadStart(2);
+            SaveSystem.LoadStageInfo(2);
         }
         if (consoleInputField.text == "L3")
         {
-            SaveSystem.LoadStart(3);
+            SaveSystem.LoadStageInfo(3);
         }
     }
 }

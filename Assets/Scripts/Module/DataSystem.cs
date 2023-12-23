@@ -27,7 +27,6 @@ abstract public class DataSystem
     public static List<SystemData.CommandData> TitleCommand => System.TitleCommandData;
     public static List<SystemData.CommandData> StatusCommand => System.StatusCommandData;
     public static List<SystemData.OptionCommand> OptionCommand => System.OptionCommandData;
-    public static List<int> InitActors => System.InitActors;
     
     
 

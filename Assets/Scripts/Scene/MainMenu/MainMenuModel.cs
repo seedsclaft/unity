@@ -15,25 +15,14 @@ public class MainMenuModel : BaseModel
         return MakeListData(list);
     }
 
-    public void InitPartyInfo()
+    public void InitStageData()
     {
-        CurrentData.InitActors();
-        CurrentData.InitPlayer();
-        PartyInfo.InitActors();
-        CurrentData.ClearStageInfo();
+        InitSaveStageInfo();
     }
     
     public void InitializeStageData(int stageId)
     {
-        PartyInfo.SetStageId(stageId);
-        
-        // Party初期化
-        PartyInfo.InitActors();
-        var stageMembers = DataSystem.Stages.Find(a => a.Id == stageId).InitMembers;
-        foreach (var stageMember in stageMembers)
-        {
-            PartyInfo.AddActor(stageMember);
-        }
+        CurrentStageData.MakeStageData(stageId);
     }
 
     public List<SystemData.CommandData> SideMenu()
