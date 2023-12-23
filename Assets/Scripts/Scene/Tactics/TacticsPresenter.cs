@@ -463,7 +463,7 @@ public class TacticsPresenter :BasePresenter
     {
         if (confirmCommandType == ConfirmCommandType.Yes)
         {
-            _model.SetResumeStageFalse();
+            _model.SavePlayerStageData(false);
             _view.CommandSceneChange(Scene.MainMenu);
         } else{
             Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cancel);

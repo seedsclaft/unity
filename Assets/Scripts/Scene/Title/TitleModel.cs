@@ -13,7 +13,7 @@ public class TitleModel : BaseModel
 
     public bool ExistsLoadFile()
     {
-        return SaveSystem.ExistsLoadFile();
+        return SaveSystem.ExistsLoadPlayerFile();
     }
 
     public string VersionText()

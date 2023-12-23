@@ -61,7 +61,7 @@ public class ResultPresenter : BasePresenter
     private void CommandEndAnimation()
     {
         _model.ApplyScore();
-        _model.SetResumeStageFalse();
+        _model.SavePlayerStageData(false);
         _view.SetEndingType(_model.EndingType());
         _view.SetEvaluate(_model.TotalEvaluate(),_model.IsNewRecord());
         _view.SetPlayerName(_model.PlayerName());
@@ -154,7 +154,7 @@ public class ResultPresenter : BasePresenter
             _view.CommandCallConfirm(popupInfo);
         } else
         {        
-            _model.SetResumeStageFalse();
+            _model.SavePlayerStageData(false);
         }
     }
 
@@ -207,7 +207,7 @@ public class ResultPresenter : BasePresenter
     private void CommandEndGame()
     {
         _model.SaveSlotData();
-        _model.SetResumeStageFalse();
+        _model.SavePlayerStageData(false);
         _view.CommandSceneChange(Scene.MainMenu);
     }
 

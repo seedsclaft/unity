@@ -7,279 +7,223 @@ using System.Runtime.Serialization.Formatters.Binary;
 
 public class SaveSystem : MonoBehaviour
 {
-
-	private static readonly string debugFilePath = Application.persistentDataPath;
+#if !UNITY_WEBGL
 	private static FileStream TempFileStream = null;
-	public static void SavePlayerInfo(SaveInfo pSourceSavePlayInfo = null,int fileId = 0)
+#endif
+	private static readonly string debugFilePath = Application.persistentDataPath;
+	private static string SaveFilePath(string saveKey,int fileId = 0)
 	{
-		#if UNITY_WEBGL
-			//	バイナリ形式でシリアル化
-			BinaryFormatter TempBinaryFormatter = new BinaryFormatter ();
-			MemoryStream memoryStream = new MemoryStream ();
-			TempBinaryFormatter.Serialize (memoryStream , pSourceSavePlayInfo);
-			var saveData = Convert.ToBase64String (memoryStream   .GetBuffer ());
-			if (fileId != 0)
-			{
-				PlayerPrefs.SetString("PlayerData" + fileId.ToString(), saveData);
-			} else
-			{
-				PlayerPrefs.SetString("PlayerData", saveData);
-			}
-		#else
-			//	保存情報
-			if( pSourceSavePlayInfo == null )
-			{
-				pSourceSavePlayInfo = new SaveInfo();
-			}
-
-
-			//#if UNITY_EDITOR_WIN || UNITY_STANDALONE_WIN
-			{
-				
-				//	Closeが確実に呼ばれるように例外処理を用いる
-				try
-				{
-					//	バイナリ形式でシリアル化
-					BinaryFormatter	TempBinaryFormatter = new BinaryFormatter();
-
-					//	指定したパスにファイルを作成
-					FileStream TempFileStream = File.Create(debugFilePath + "/Autosave" + fileId.ToString() + ".dat");
-
-					//	指定したオブジェクトを上で作成したストリームにシリアル化する
-					TempBinaryFormatter.Serialize(TempFileStream, pSourceSavePlayInfo);
-				}
-				finally
-				{
-					//	ファイル操作には明示的な破棄が必要です。Closeを忘れないように。
-					if( TempFileStream != null )
-					{
-						TempFileStream.Close();
-					}
-				}
-			}
-		#endif
-		/*
-		#if UNITY_SWITCH
-		{
-			SwitchSaveDataMain	pSwitchSaveDataMain = GameInstance.Get.m_pSwitchMain.m_pSwitchSaveDataMain;
-
-			MemoryStream	TempMemoryStream    = new MemoryStream(); 
-			BinaryFormatter	TempBinaryFormatter = new BinaryFormatter();
-
-			//	バイナリ形式でシリアル化
-			TempBinaryFormatter.Serialize( TempMemoryStream, pSourceSavePlayInfo );
-
-			//	セーブ開始
-			pSwitchSaveDataMain.StartAutoSave( TempMemoryStream.ToArray() );
-		}
-		#endif
-		*/
+		return debugFilePath + "/" +saveKey + fileId + ".dat";
 	}
-
-		
-	public static bool LoadPlayerInfo(int fileId = 0)
+	
+	private static readonly string _playerDataKey = "PlayerData";
+	private static readonly string _playerStageDataKey = "PlayerStageData";
+	private static string PlayerStageDataKey(int fileId)
 	{
-		#if UNITY_WEBGL
-				
-		try
-			{
-				//	バイナリ形式でデシリアライズ
-				BinaryFormatter	TempBinaryFormatter = new BinaryFormatter();
-				string saveData;
-				if (fileId != 0)
-				{
-					saveData = PlayerPrefs.GetString("PlayerData"+fileId.ToString());
-				} else
-				{
-					saveData = PlayerPrefs.GetString("PlayerData");
-				}
-                var bytes = Convert.FromBase64String(saveData);
-        		MemoryStream    memoryStream    = new MemoryStream (bytes);
-				GameSystem.CurrentData = (SavePlayInfo)TempBinaryFormatter.Deserialize (memoryStream);
-				return true;
-			}
-			// Jsonへの展開失敗　改ざんの可能性あり
-			catch(Exception e)
-			{
-				// 例外が発生するのでここで処理
-				Debug.LogException(e);
-				Debug.Log("改ざんされたため　冒険の書は消えてしまいました");
-				GameSystem.CurrentData  = new SavePlayInfo();
-				return false;
-			}
-		#else
-		//#if UNITY_EDITOR_WIN || UNITY_STANDALONE_WIN
-		{
-			try 
-			{
-				//	バイナリ形式でデシリアライズ
-				BinaryFormatter	TempBinaryFormatter = new BinaryFormatter();
+		return _playerStageDataKey + fileId.ToString();
+	}
+	private static readonly string _optionDataKey = "OptionData";
 
-				//	指定したパスのファイルストリームを開く
-				FileStream	TempFileStream = File.Open(debugFilePath + "/Autosave" + fileId.ToString() + ".dat", FileMode.Open);
-			
-				//	指定したファイルストリームをオブジェクトにデシリアライズ。
-				GameSystem.CurrentData = (SaveInfo)TempBinaryFormatter.Deserialize(TempFileStream);
-				return true;
-			}
-			finally 
+	public static void SavePlayerInfo(SaveInfo userSaveInfo = null)
+	{
+		//	保存情報
+		if( userSaveInfo == null )
+		{
+			userSaveInfo = new SaveInfo();
+		}
+#if UNITY_WEBGL
+		//	バイナリ形式でシリアル化
+		BinaryFormatter TempBinaryFormatter = new BinaryFormatter ();
+		MemoryStream memoryStream = new MemoryStream ();
+		TempBinaryFormatter.Serialize (memoryStream,userSaveInfo);
+		var saveData = Convert.ToBase64String (memoryStream.GetBuffer());
+		PlayerPrefs.SetString(_playerDataKey, saveData);
+#else
+		try
+		{
+			//	バイナリ形式でシリアル化
+			BinaryFormatter	TempBinaryFormatter = new BinaryFormatter();
+			//	指定したパスにファイルを作成
+			TempFileStream = File.Create(SaveFilePath(_playerDataKey));
+			//	指定したオブジェクトを上で作成したストリームにシリアル化する
+			TempBinaryFormatter.Serialize(TempFileStream, userSaveInfo);
+		}
+		finally
+		{
+			//	ファイル操作には明示的な破棄が必要です。Closeを忘れないように。
+			if( TempFileStream != null )
 			{
-				//	ファイル操作には明示的な破棄が必要です。Closeを忘れないように。
-				if( TempFileStream != null )
-				{
-					TempFileStream.Close();
-				}
+				TempFileStream.Close();
 			}
 		}
-		#endif
-		//#endif
-    }
-	public static bool ExistsLoadFile(int fileId = 0)
-	{
-#if UNITY_WEBGL
-		return PlayerPrefs.GetString("PlayerData") != "";
-#else
-		return File.Exists(debugFilePath + "/Autosave" + fileId.ToString() + ".dat");
 #endif
 	}
 
-
-
-
-	public static void SaveStageInfo(SaveStageInfo pSourceSavePlayInfo = null,int fileId = 0)
+		
+	public static bool LoadPlayerInfo()
 	{
-		#if UNITY_WEBGL
-			//	バイナリ形式でシリアル化
-			BinaryFormatter TempBinaryFormatter = new BinaryFormatter ();
-			MemoryStream memoryStream = new MemoryStream ();
-			TempBinaryFormatter.Serialize (memoryStream , pSourceSavePlayInfo);
-			var saveData = Convert.ToBase64String (memoryStream   .GetBuffer ());
-			if (fileId != 0)
-			{
-				PlayerPrefs.SetString("PlayerStageData" + fileId.ToString(), saveData);
-			} else
-			{
-				PlayerPrefs.SetString("PlayerStageData", saveData);
-			}
-		#else
-			//	保存情報
-			if( pSourceSavePlayInfo == null )
-			{
-				pSourceSavePlayInfo = new SaveStageInfo();
-			}
-
-
-			//#if UNITY_EDITOR_WIN || UNITY_STANDALONE_WIN
-			{
-				//	バイナリ形式でシリアル化
-				BinaryFormatter	TempBinaryFormatter = new BinaryFormatter();
-
-				//	指定したパスにファイルを作成
-				FileStream TempFileStream = File.Create(debugFilePath + "/AutoStageSave" + fileId.ToString() + ".dat");
-
-				//	Closeが確実に呼ばれるように例外処理を用いる
-				try
-				{
-					//	指定したオブジェクトを上で作成したストリームにシリアル化する
-					TempBinaryFormatter.Serialize(TempFileStream, pSourceSavePlayInfo);
-				}
-				finally
-				{
-					//	ファイル操作には明示的な破棄が必要です。Closeを忘れないように。
-					if( TempFileStream != null )
-					{
-						TempFileStream.Close();
-					}
-				}
-			}
-		#endif
-		/*
-		#if UNITY_SWITCH
+#if UNITY_WEBGL
+		try
 		{
-			SwitchSaveDataMain	pSwitchSaveDataMain = GameInstance.Get.m_pSwitchMain.m_pSwitchSaveDataMain;
-
-			MemoryStream	TempMemoryStream    = new MemoryStream(); 
+			//	バイナリ形式でデシリアライズ
 			BinaryFormatter	TempBinaryFormatter = new BinaryFormatter();
-
-			//	バイナリ形式でシリアル化
-			TempBinaryFormatter.Serialize( TempMemoryStream, pSourceSavePlayInfo );
-
-			//	セーブ開始
-			pSwitchSaveDataMain.StartAutoSave( TempMemoryStream.ToArray() );
+			string saveData = PlayerPrefs.GetString(_playerDataKey);
+			var bytes = Convert.FromBase64String(saveData);
+			MemoryStream memoryStream = new MemoryStream (bytes);
+			GameSystem.CurrentData = (SavePlayInfo)TempBinaryFormatter.Deserialize (memoryStream);
+			return true;
 		}
-		#endif
-		*/
+		// Jsonへの展開失敗　改ざんの可能性あり
+		catch(Exception e)
+		{
+			// 例外が発生するのでここで処理
+			Debug.LogException(e);
+			GameSystem.CurrentData  = new SavePlayInfo();
+			return false;
+		}
+#else
+		try 
+		{
+			//	バイナリ形式でデシリアライズ
+			BinaryFormatter	TempBinaryFormatter = new BinaryFormatter();
+			//	指定したパスのファイルストリームを開く
+			TempFileStream = File.Open(SaveFilePath(_playerDataKey), FileMode.Open);
+			//	指定したファイルストリームをオブジェクトにデシリアライズ。
+			GameSystem.CurrentData = (SaveInfo)TempBinaryFormatter.Deserialize(TempFileStream);
+			return true;
+		}
+		catch (Exception e)
+		{
+			Debug.LogException(e);
+			GameSystem.CurrentData = new SaveInfo();
+			return false;
+		}
+		finally 
+		{
+			//	ファイル操作には明示的な破棄が必要です。Closeを忘れないように。
+			if( TempFileStream != null )
+			{
+				TempFileStream.Close();
+			}
+		}
+#endif
+    }
+	public static bool ExistsLoadPlayerFile()
+	{
+#if UNITY_WEBGL
+		return PlayerPrefs.GetString(_playerDataKey) != "";
+#else
+		try
+		{
+			return File.Exists(SaveFilePath(_playerDataKey));
+		}
+		catch(Exception e)
+		{
+			Debug.LogException(e);
+			return false;
+		}
+#endif
+	}
+
+	public static void SaveStageInfo(SaveStageInfo userSaveInfo = null,int fileId = 0)
+	{
+		//	保存情報
+		if( userSaveInfo == null )
+		{
+			userSaveInfo = new SaveStageInfo();
+		}
+#if UNITY_WEBGL
+		//	バイナリ形式でシリアル化
+		BinaryFormatter TempBinaryFormatter = new BinaryFormatter ();
+		MemoryStream memoryStream = new MemoryStream ();
+		TempBinaryFormatter.Serialize (memoryStream , userSaveInfo);
+		var saveData = Convert.ToBase64String (memoryStream.GetBuffer());
+		PlayerPrefs.SetString(PlayerStageDataKey(fileId), saveData);
+#else
+		try
+		{
+			//	バイナリ形式でシリアル化
+			BinaryFormatter	TempBinaryFormatter = new BinaryFormatter();
+			//	指定したパスにファイルを作成
+			TempFileStream = File.Create(SaveFilePath(_playerStageDataKey));
+			//	指定したオブジェクトを上で作成したストリームにシリアル化する
+			TempBinaryFormatter.Serialize(TempFileStream, userSaveInfo);
+		}
+		finally
+		{
+			//	ファイル操作には明示的な破棄が必要です。Closeを忘れないように。
+			if( TempFileStream != null )
+			{
+				TempFileStream.Close();
+			}
+		}
+#endif
 	}
 
 		
 	public static bool LoadStageInfo(int fileId = 0)
 	{
-		#if UNITY_WEBGL
-				
+#if UNITY_WEBGL		
 		try
-			{
-				//	バイナリ形式でデシリアライズ
-				BinaryFormatter	TempBinaryFormatter = new BinaryFormatter();
-				string saveData;
-				if (fileId != 0)
-				{
-					saveData = PlayerPrefs.GetString("PlayerStageData"+fileId.ToString());
-				} else
-				{
-					saveData = PlayerPrefs.GetString("PlayerStageData");
-				}
-                var bytes = Convert.FromBase64String(saveData);
-        		MemoryStream    memoryStream    = new MemoryStream (bytes);
-				GameSystem.CurrentStageData = (SaveStageInfo)TempBinaryFormatter.Deserialize (memoryStream);
-				return true;
-			}
-			// Jsonへの展開失敗　改ざんの可能性あり
-			catch(Exception e)
-			{
-				// 例外が発生するのでここで処理
-				Debug.LogException(e);
-				Debug.Log("改ざんされたため　冒険の書は消えてしまいました");
-				GameSystem.CurrentData  = new SaveStageInfo();
-				return false;
-			}
-		#else
-		//#if UNITY_EDITOR_WIN || UNITY_STANDALONE_WIN
 		{
 			//	バイナリ形式でデシリアライズ
-			try 
+			BinaryFormatter	TempBinaryFormatter = new BinaryFormatter();
+			string saveData = PlayerPrefs.GetString(PlayerStageDataKey(fileId));
+			var bytes = Convert.FromBase64String(saveData);
+			MemoryStream memoryStream = new MemoryStream (bytes);
+			GameSystem.CurrentStageData = (SaveStageInfo)TempBinaryFormatter.Deserialize (memoryStream);
+			return true;
+		}
+		// Jsonへの展開失敗　改ざんの可能性あり
+		catch(Exception e)
+		{
+			// 例外が発生するのでここで処理
+			Debug.LogException(e);
+			Debug.Log("改ざんされたため　冒険の書は消えてしまいました");
+			GameSystem.CurrentData = new SaveStageInfo();
+			return false;
+		}
+#else
+		try 
+		{
+			//	バイナリ形式でデシリアライズ
+			BinaryFormatter	TempBinaryFormatter = new BinaryFormatter();
+			//	指定したパスのファイルストリームを開く
+			TempFileStream = File.Open(SaveFilePath(_playerStageDataKey,fileId), FileMode.Open);
+			//	指定したファイルストリームをオブジェクトにデシリアライズ。
+			GameSystem.CurrentStageData = (SaveStageInfo)TempBinaryFormatter.Deserialize(TempFileStream);
+			return true;
+		}
+		catch (Exception e)
+		{
+			Debug.LogException(e);
+			GameSystem.CurrentStageData = new SaveStageInfo();
+			return false;
+		}
+		finally 
+		{
+			//	ファイル操作には明示的な破棄が必要です。Closeを忘れないように。
+			if( TempFileStream != null )
 			{
-				BinaryFormatter	TempBinaryFormatter = new BinaryFormatter();
-				//	指定したパスのファイルストリームを開く
-				FileStream	TempFileStream = File.Open(debugFilePath + "/AutoStageSave" + fileId.ToString() + ".dat", FileMode.Open);
-				//	指定したファイルストリームをオブジェクトにデシリアライズ。
-				GameSystem.CurrentStageData = (SaveStageInfo)TempBinaryFormatter.Deserialize(TempFileStream);
-				return true;
-			}
-			// Jsonへの展開失敗　改ざんの可能性あり
-			catch(Exception e)
-			{
-				Debug.LogException(e);
-				GameSystem.CurrentStageData  = new SaveStageInfo();
-				return false;
-			}
-			finally 
-			{
-				//	ファイル操作には明示的な破棄が必要です。Closeを忘れないように。
-				if( TempFileStream != null )
-				{
-					TempFileStream.Close();
-				}
+				TempFileStream.Close();
 			}
 		}
-		#endif
-		//#endif
+#endif
     }
 	public static bool ExistsLoadStageFile(int fileId = 0)
 	{
 #if UNITY_WEBGL
-		return PlayerPrefs.GetString("PlayerStageData") != "";
+		return PlayerPrefs.GetString(PlayerStageDataKey(fileId)) != "";
 #else
-		return File.Exists(debugFilePath + "/AutoStageSave" + fileId.ToString() + ".dat");
+		try
+		{
+			return File.Exists(SaveFilePath(_playerStageDataKey,fileId));
+		}
+		catch(Exception e)
+		{
+			Debug.LogException(e);
+			return false;
+		}
 #endif
 	}
 
@@ -287,46 +231,38 @@ public class SaveSystem : MonoBehaviour
 
 
 
-	public static void SaveConfigStart(SaveConfigInfo pSourceSavePlayInfo = null)
+	public static void SaveConfigStart(SaveConfigInfo userSaveInfo = null)
     {
+		//	保存情報
+		if( userSaveInfo == null )
+		{
+			userSaveInfo = new SaveConfigInfo();
+		}
 #if UNITY_WEBGL
 		
 		//	バイナリ形式でシリアル化
 		BinaryFormatter TempBinaryFormatter = new BinaryFormatter ();
-		MemoryStream    memoryStream    = new MemoryStream ();
-		TempBinaryFormatter.Serialize (memoryStream , pSourceSavePlayInfo);
-		var saveData = Convert.ToBase64String (memoryStream   .GetBuffer ());
+		MemoryStream memoryStream = new MemoryStream ();
+		TempBinaryFormatter.Serialize (memoryStream , userSaveInfo);
+		var saveData = Convert.ToBase64String (memoryStream.GetBuffer());
 		PlayerPrefs.SetString("ConfigData", saveData);
 
 #else
-		//	保存情報
-		if( pSourceSavePlayInfo == null )
-		{
-			pSourceSavePlayInfo = new SaveConfigInfo();
-		}
-
-
-		//#if UNITY_EDITOR_WIN || UNITY_STANDALONE_WIN
+		try
 		{
 			//	バイナリ形式でシリアル化
 			BinaryFormatter	TempBinaryFormatter = new BinaryFormatter();
-
 			//	指定したパスにファイルを作成
-			FileStream TempFileStream = File.Create(debugFilePath + "/Autoconfig.dat");
-
-			//	Closeが確実に呼ばれるように例外処理を用いる
-			try
+			TempFileStream = File.Create(SaveFilePath(_optionDataKey));
+			//	指定したオブジェクトを上で作成したストリームにシリアル化する
+			TempBinaryFormatter.Serialize(TempFileStream, userSaveInfo);
+		}
+		finally
+		{
+			//	ファイル操作には明示的な破棄が必要です。Closeを忘れないように。
+			if( TempFileStream != null )
 			{
-				//	指定したオブジェクトを上で作成したストリームにシリアル化する
-				TempBinaryFormatter.Serialize(TempFileStream, pSourceSavePlayInfo);
-			}
-			finally
-			{
-				//	ファイル操作には明示的な破棄が必要です。Closeを忘れないように。
-				if( TempFileStream != null )
-				{
-					TempFileStream.Close();
-				}
+				TempFileStream.Close();
 			}
 		}
 #endif
@@ -335,44 +271,45 @@ public class SaveSystem : MonoBehaviour
 
 	public static void LoadConfigStart()
 	{
-		#if UNITY_WEBGL
+#if UNITY_WEBGL
 				
 		try
-			{
-				//	バイナリ形式でデシリアライズ
-				BinaryFormatter	TempBinaryFormatter = new BinaryFormatter();
-				string saveData = PlayerPrefs.GetString("ConfigData");
-        		MemoryStream    memoryStream    = new MemoryStream (Convert.FromBase64String (saveData));
-        		GameSystem.ConfigData = (SaveConfigInfo)TempBinaryFormatter.Deserialize (memoryStream);
-			}
-			// Jsonへの展開失敗　改ざんの可能性あり
-			catch(Exception e)
-			{
-				// 例外が発生するのでここで処理
-				Debug.LogException(e);
-				Debug.Log("改ざんされたため　冒険の書は消えてしまいました");
-				GameSystem.ConfigData  = new SaveConfigInfo();
-			}
-		#else
-		//#if UNITY_EDITOR_WIN || UNITY_STANDALONE_WIN
 		{
 			//	バイナリ形式でデシリアライズ
 			BinaryFormatter	TempBinaryFormatter = new BinaryFormatter();
-
+			string saveData = PlayerPrefs.GetString("ConfigData");
+			MemoryStream memoryStream = new MemoryStream(Convert.FromBase64String (saveData));
+			GameSystem.ConfigData = (SaveConfigInfo)TempBinaryFormatter.Deserialize (memoryStream);
+		}
+		// Jsonへの展開失敗　改ざんの可能性あり
+		catch(Exception e)
+		{
+			// 例外が発生するのでここで処理
+			Debug.LogException(e);
+			Debug.Log("改ざんされたため　冒険の書は消えてしまいました");
+			GameSystem.ConfigData  = new SaveConfigInfo();
+		}
+#else
+		try 
+		{
+			//	バイナリ形式でデシリアライズ
+			BinaryFormatter	TempBinaryFormatter = new BinaryFormatter();
 			//	指定したパスのファイルストリームを開く
-			FileStream	TempFileStream = File.Open(debugFilePath + "/Autoconfig.dat", FileMode.Open);
-			try 
+			TempFileStream = File.Open(SaveFilePath(_optionDataKey), FileMode.Open);
+			//	指定したファイルストリームをオブジェクトにデシリアライズ。
+			GameSystem.ConfigData = (SaveConfigInfo)TempBinaryFormatter.Deserialize(TempFileStream);
+		}
+		catch (Exception e)
+		{
+			Debug.LogException(e);
+			GameSystem.ConfigData = new SaveConfigInfo();
+		}
+		finally 
+		{
+			//	ファイル操作には明示的な破棄が必要です。Closeを忘れないように。
+			if( TempFileStream != null )
 			{
-				//	指定したファイルストリームをオブジェクトにデシリアライズ。
-				GameSystem.ConfigData = (SaveConfigInfo)TempBinaryFormatter.Deserialize(TempFileStream);
-			}
-			finally 
-			{
-				//	ファイル操作には明示的な破棄が必要です。Closeを忘れないように。
-				if( TempFileStream != null )
-				{
-					TempFileStream.Close();
-				}
+				TempFileStream.Close();
 			}
 		}
 		#endif
@@ -380,9 +317,17 @@ public class SaveSystem : MonoBehaviour
 	public static bool ExistsConfigFile()
 	{
 #if UNITY_WEBGL
-		return PlayerPrefs.GetString("ConfigData") != "";
+		return PlayerPrefs.GetString(_optionDataKey) != "";
 #else
-		return File.Exists(debugFilePath + "/Autoconfig.dat");
+		try
+		{
+			return File.Exists(SaveFilePath(_optionDataKey));
+		}
+		catch(Exception e)
+		{
+			Debug.LogException(e);
+			return false;
+		}
 #endif
 	}
 }

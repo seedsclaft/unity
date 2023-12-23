@@ -577,18 +577,15 @@ public class BaseModel
         CurrentStageData.SetResumeStage(resumeStage);
     }
     
-    public void SetResumeStageTrue()
+    public void SavePlayerData()
     {
-        SetResumeStage(true);
-        SaveSystem.SaveStageInfo(GameSystem.CurrentStageData);
         SaveSystem.SavePlayerInfo(GameSystem.CurrentData);
     }
 
-    public void SetResumeStageFalse()
+    public void SavePlayerStageData(bool isResumeStage)
     {
-        SetResumeStage(false);
+        SetResumeStage(isResumeStage);
         SaveSystem.SaveStageInfo(GameSystem.CurrentStageData);
-        SaveSystem.SavePlayerInfo(GameSystem.CurrentData);
     }
     
     public List<ListData> RebornSkillInfos(ActorInfo actorInfo)

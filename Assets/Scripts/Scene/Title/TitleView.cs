@@ -11,9 +11,6 @@ public class TitleView : BaseView
     private new System.Action<TitleViewEvent> _commandData = null;
     [SerializeField] private SideMenuList sideMenuList = null;
     [SerializeField] private BaseList titleCommandList = null;
-
-    
-    
     public override void Initialize() 
     {
         base.Initialize();
@@ -109,10 +106,10 @@ public class TitleView : BaseView
     }
 
     private void CallTitleCommand(){
-        var eventData = new TitleViewEvent(CommandType.TitleCommand);
         var listData = titleCommandList.ListData;
-        if (listData != null)
+        if (listData != null && listData.Enable)
         {
+            var eventData = new TitleViewEvent(CommandType.TitleCommand);
             var commandData = (SystemData.CommandData)listData.Data;
             eventData.template = commandData.Id;
             _commandData(eventData);
