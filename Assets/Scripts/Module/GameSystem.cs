@@ -10,19 +10,19 @@ public class GameSystem : MonoBehaviour
     [SerializeField] private SceneAssign sceneAssign = null;
     [SerializeField] private PopupAssign popupAssign = null;
     [SerializeField] private StatusAssign statusAssign = null;
-    [SerializeField] private GameObject confirmRoot = null;
+
     [SerializeField] private GameObject transitionRoot = null;
     [SerializeField] private Fade transitionFade = null;
     [SerializeField] private LoadingView loadingView = null;
     [SerializeField] private AdvEngine advEngine = null;
     [SerializeField] private AdvController advController = null;
+
     [SerializeField] private DebugBattleData debugBattleData = null;
     [SerializeField] private HelpWindow helpWindow = null;
     [SerializeField] private HelpWindow advHelpWindow = null;
+    [SerializeField] private TutorialView tutorialView = null;
     
     private BaseView _currentScene = null;
-    private BaseView _popupView = null;
-    private BaseView _statusView = null;
 
     private BaseModel _model = null;
     
@@ -45,6 +45,7 @@ public class GameSystem : MonoBehaviour
         advController.Initialize();
         advController.SetHelpWindow(advHelpWindow);
         transitionRoot.SetActive(false);
+        loadingView.Initialize();
         loadingView.gameObject.SetActive(false);
         TempData = new TempInfo();
         _model = new BaseModel();
@@ -59,24 +60,17 @@ public class GameSystem : MonoBehaviour
 #endif
     }
 
-    private void CreateStatus(bool isActor)
+    private BaseView CreateStatus(StatusType statusType)
     {
-        var statusType = isActor ? StatusType.Status : StatusType.EnemyDetail;
-        var prefab = statusAssign.CreatePopup(statusType);
-        if (isActor)
+        var prefab = statusAssign.CreatePopup(statusType,helpWindow);
+        if (statusType == StatusType.Status)
         {
-            _statusView = prefab.GetComponent<StatusView>();
+            prefab.GetComponent<StatusView>().Initialize();
         } else
         {
-            _statusView = prefab.GetComponent<EnemyInfoView>();
+            prefab.GetComponent<EnemyInfoView>().Initialize();
         }
-        _statusView.SetHelpWindow(helpWindow);
-        _statusView.Initialize();
-    }
-
-    private void CreateLoading()
-    {
-        loadingView.Initialize();
+        return prefab.GetComponent<BaseView>();
     }
 
     private void UpdateCommand(ViewEvent viewEvent)
@@ -108,13 +102,8 @@ public class GameSystem : MonoBehaviour
                 CommandSkillDetailView((ConfirmInfo)viewEvent.template);
                 break;
             case Base.CommandType.CloseConfirm:
-                confirmRoot.gameObject.SetActive(false);
-                if (_popupView != null)
-                {
-                    DestroyImmediate(_popupView.gameObject);
-                }
-                _currentScene.SetBusy(false);
-                if (_statusView) _statusView.SetBusy(false);
+                popupAssign.CloseConfirm();
+                SetIsNotBusyMainAndStatus();
                 break;
             case Base.CommandType.CallRulingView:
                 CommandRulingView((System.Action)viewEvent.template);
@@ -132,43 +121,27 @@ public class GameSystem : MonoBehaviour
                 CommandCharacterListView((CharacterListInfo)viewEvent.template);
                 break;
             case Base.CommandType.CallStatusView:
-                if (_statusView != null)
-                {
-                    DestroyImmediate(_statusView.gameObject);
-                }
-                CreateStatus(true);
+                var statusView = CreateStatus(StatusType.Status) as StatusView;
                 var statusViewInfo = (StatusViewInfo)viewEvent.template;
-                (_statusView as StatusView).SetViewInfo(statusViewInfo);
-                _statusView.SetEvent((type) => UpdateCommand(type));
+                statusView.SetViewInfo(statusViewInfo);
+                statusView.SetEvent((type) => UpdateCommand(type));
                 _currentScene.SetBusy(true);
                 break;
             case Base.CommandType.CloseStatus:
-                if (_statusView != null)
-                {
-                    DestroyImmediate(_statusView.gameObject);
-                }
-                statusAssign.StatusRoot.gameObject.SetActive(false);
+                statusAssign.CloseStatus();
                 _currentScene.SetBusy(false);
                 break;
             case Base.CommandType.CallEnemyInfoView:
-                if (_statusView != null)
-                {
-                    DestroyImmediate(_statusView.gameObject);
-                }
-                CreateStatus(false);
+                var enemyInfoView = CreateStatus(StatusType.EnemyDetail) as EnemyInfoView;
                 var enemyStatusInfo = (StatusViewInfo)viewEvent.template;
-                var enemyInfoView = _statusView as EnemyInfoView;
                 enemyInfoView.Initialize(enemyStatusInfo.EnemyInfos,_model.BattleCursorEffects(),enemyStatusInfo.IsBattle);
                 enemyInfoView.SetBackEvent(enemyStatusInfo.BackEvent);
                 enemyInfoView.SetEvent((type) => UpdateCommand(type));
                 _currentScene.SetBusy(true);
                 break;
             case Base.CommandType.CallAdvScene:
-                statusAssign.StatusRoot.gameObject.SetActive(false);
-                if (!statusAssign.StatusRoot.gameObject.activeSelf) _currentScene.SetBusy(true);
-                if (_statusView) _statusView.SetBusy(true);
+                SetIsBusyMainAndStatus();
                 var advCallInfo = viewEvent.template as AdvCallInfo;
-                _currentScene.SetBusy(true);
                 if (!this.gameObject.activeSelf)
                 {
                     this.gameObject.SetActive(true);
@@ -181,16 +154,12 @@ public class GameSystem : MonoBehaviour
                 advEngine.Param.SetParameterString("PlayerName",(string)viewEvent.template);
                 break;
             case Base.CommandType.CallLoading:
-                if (loadingView == null)
-                {
-                    CreateLoading();
-                }
                 loadingView.gameObject.SetActive(true);
-                _currentScene.SetBusy(true);
+                SetIsBusyMainAndStatus();
                 break;
             case Base.CommandType.CloseLoading:
                 loadingView.gameObject.SetActive(false);
-                _currentScene.SetBusy(false);
+                SetIsNotBusyMainAndStatus();
                 break;
             case Base.CommandType.SetRouteSelect:
                 int routeSelect = (int)advEngine.Param.GetParameter("RouteSelect");
@@ -220,69 +189,39 @@ public class GameSystem : MonoBehaviour
 
     private void CommandConfirmView(ConfirmInfo confirmInfo)
     {
-        if (_popupView != null)
-        {
-            DestroyImmediate(_popupView.gameObject);
-        }
-        var prefab = popupAssign.CreatePopup(PopupType.Confirm);
-        _popupView = prefab.GetComponent<ConfirmView>();
-        _popupView.SetHelpWindow(helpWindow);
-        var confirmView = (_popupView as ConfirmView);
+        var prefab = popupAssign.CreatePopup(PopupType.Confirm,helpWindow);
+        var confirmView = prefab.GetComponent<ConfirmView>();
         confirmView.Initialize();
-        confirmRoot.gameObject.SetActive(true);
         confirmView.SetViewInfo(confirmInfo);
-        _currentScene.SetBusy(true);
-        if (_statusView) _statusView.SetBusy(true);
+        SetIsBusyMainAndStatus();
     }
 
     private void CommandSkillDetailView(ConfirmInfo confirmInfo)
     {
-        if (_popupView != null)
-        {
-            DestroyImmediate(_popupView.gameObject);
-        }
-        var prefab = popupAssign.CreatePopup(PopupType.SkillDetail);
-        _popupView = prefab.GetComponent<ConfirmView>();
-        _popupView.SetHelpWindow(helpWindow);
-        var confirmView = (_popupView as ConfirmView);
+        var prefab = popupAssign.CreatePopup(PopupType.SkillDetail,helpWindow);
+        var confirmView = prefab.GetComponent<ConfirmView>();
         confirmView.Initialize();
-        confirmRoot.gameObject.SetActive(true);
         confirmView.SetViewInfo(confirmInfo);
-        _currentScene.SetBusy(true);
-        if (_statusView) _statusView.SetBusy(true);
+        SetIsBusyMainAndStatus();
     }
 
     private void CommandRulingView(System.Action endEvent)
     {
-        if (_popupView != null)
-        {
-            DestroyImmediate(_popupView.gameObject);
-        }
-        var prefab = popupAssign.CreatePopup(PopupType.Ruling);
-        _popupView = prefab.GetComponent<RulingView>();
-        _popupView.SetHelpWindow(helpWindow);
-        var rulingView = (_popupView as RulingView);
+        var prefab = popupAssign.CreatePopup(PopupType.Ruling,helpWindow);
+        var rulingView = prefab.GetComponent<RulingView>();
         rulingView.Initialize();
         rulingView.SetBackEvent(() => 
         {
             UpdateCommand(new ViewEvent(Base.CommandType.CloseConfirm));
             if (endEvent != null) endEvent();
         });
-        confirmRoot.gameObject.SetActive(true);
-        _currentScene.SetBusy(true);
-        if (_statusView) _statusView.SetBusy(true);
+        SetIsBusyMainAndStatus();
     }
     
     private void CommandOptionView(System.Action endEvent)
     {
-        if (_popupView != null)
-        {
-            DestroyImmediate(_popupView.gameObject);
-        }
-        var prefab = popupAssign.CreatePopup(PopupType.Option);
-        _popupView = prefab.GetComponent<OptionView>();
-        _popupView.SetHelpWindow(helpWindow);
-        var optionView = (_popupView as OptionView);
+        var prefab = popupAssign.CreatePopup(PopupType.Option,helpWindow);
+        var optionView = prefab.GetComponent<OptionView>();
         optionView.Initialize();
         optionView.SetBackEvent(() => 
         {
@@ -297,71 +236,46 @@ public class GameSystem : MonoBehaviour
             if (endEvent != null) endEvent();
         });
         optionView.SetEvent((type) => UpdateCommand(type));
-        confirmRoot.gameObject.SetActive(true);
-        _currentScene.SetBusy(true);
-        if (_statusView) _statusView.SetBusy(true);
+        SetIsBusyMainAndStatus();
     }
     
     private void CommandRankingView(System.Action endEvent)
     {
-        if (_popupView != null)
-        {
-            DestroyImmediate(_popupView.gameObject);
-        }
-        var prefab = popupAssign.CreatePopup(PopupType.Ranking);
-        _popupView = prefab.GetComponent<RankingView>();
-        _popupView.SetHelpWindow(helpWindow);
-        var rankingView = (_popupView as RankingView);
+        var prefab = popupAssign.CreatePopup(PopupType.Ranking,helpWindow);
+        var rankingView = prefab.GetComponent<RankingView>();
         rankingView.Initialize();
         rankingView.SetBackEvent(() => 
         {
             UpdateCommand(new ViewEvent(Base.CommandType.CloseConfirm));
             if (endEvent != null) endEvent();
         });
-        confirmRoot.gameObject.SetActive(true);
-        _currentScene.SetBusy(true);
-        if (_statusView) _statusView.SetBusy(true);
+        SetIsBusyMainAndStatus();
     }
 
     private void CommandCreditView(System.Action endEvent)
     {
-        if (_popupView != null)
-        {
-            DestroyImmediate(_popupView.gameObject);
-        }
-        var prefab = popupAssign.CreatePopup(PopupType.Credit);
-        _popupView = prefab.GetComponent<CreditView>();
-        _popupView.SetHelpWindow(helpWindow);
-        var creditView = (_popupView as CreditView);
+        var prefab = popupAssign.CreatePopup(PopupType.Credit,helpWindow);
+        var creditView = prefab.GetComponent<CreditView>();
         creditView.Initialize();
         creditView.SetBackEvent(() => 
         {
             UpdateCommand(new ViewEvent(Base.CommandType.CloseConfirm));
             if (endEvent != null) endEvent();
         });
-        confirmRoot.gameObject.SetActive(true);
-        _currentScene.SetBusy(true);
+        SetIsBusyMainAndStatus();
     }
 
     private void CommandCharacterListView(CharacterListInfo characterListInfo)
     {
-        if (_popupView != null)
-        {
-            DestroyImmediate(_popupView.gameObject);
-        }
-        var prefab = popupAssign.CreatePopup(PopupType.CharacterList);
-        _popupView = prefab.GetComponent<CharacterListView>();
-        _popupView.SetHelpWindow(helpWindow);
-        var characterListView = (_popupView as CharacterListView);
+        var prefab = popupAssign.CreatePopup(PopupType.CharacterList,helpWindow);
+        var characterListView = prefab.GetComponent<CharacterListView>();
         characterListView.Initialize();
-        confirmRoot.gameObject.SetActive(true);
         characterListView.SetViewInfo(characterListInfo);
         characterListView.SetBackEvent(() => 
         {
             UpdateCommand(new ViewEvent(Base.CommandType.CloseConfirm));
         });
-        _currentScene.SetBusy(true);
-        if (_statusView) _statusView.SetBusy(true);
+        SetIsBusyMainAndStatus();
     }
 
     IEnumerator JumpScenarioAsync(string label, System.Action onComplete)
@@ -377,8 +291,7 @@ public class GameSystem : MonoBehaviour
         {
             yield return null;
         }
-        if (!statusAssign.StatusRoot.gameObject.activeSelf) _currentScene.SetBusy(false);
-        if (_statusView) _statusView.SetBusy(false);
+        SetIsNotBusyMainAndStatus();
         advController.EndAdv();
         advHelpWindow.SetInputInfo("");
         
@@ -396,12 +309,23 @@ public class GameSystem : MonoBehaviour
             ResourceSystem.ReleaseScene();
             Resources.UnloadUnusedAssets();
         }
-        GameObject prefab = sceneAssign.CreateScene(scene);
+        var prefab = sceneAssign.CreateScene(scene,helpWindow);
         _currentScene = prefab.GetComponent<BaseView>();
         _currentScene.SetTestMode(testMode);
-        _currentScene.SetHelpWindow(helpWindow);
         _currentScene.SetEvent((type) => UpdateCommand(type));
         _currentScene.Initialize();
+    }
+
+    private void SetIsBusyMainAndStatus()
+    {
+        _currentScene.SetBusy(true);
+        statusAssign.SetBusy(true);
+    }
+
+    private void SetIsNotBusyMainAndStatus()
+    {
+        if (!statusAssign.StatusRoot.gameObject.activeSelf) _currentScene.SetBusy(false);
+        statusAssign.SetBusy(false);
     }
 }
 

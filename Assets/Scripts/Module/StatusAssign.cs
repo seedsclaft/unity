@@ -8,11 +8,14 @@ public class StatusAssign : MonoBehaviour
     public GameObject StatusRoot => statusRoot;
     [SerializeField] private GameObject statusPrefab = null;
     [SerializeField] private GameObject enemyDetailPrefab = null;
-    public GameObject CreatePopup(StatusType popupType)
+    private BaseView _statusView;
+    public GameObject CreatePopup(StatusType popupType,HelpWindow helpWindow)
     {
         var prefab = Instantiate(GetStatusObject(popupType));
         prefab.transform.SetParent(statusRoot.transform, false);
         statusRoot.gameObject.SetActive(true);
+        _statusView = prefab.GetComponent<BaseView>();
+        _statusView?.SetHelpWindow(helpWindow);
         return prefab;
     }
 
@@ -26,6 +29,19 @@ public class StatusAssign : MonoBehaviour
             return enemyDetailPrefab;
         }
         return null;
+    }    
+    
+    public void CloseStatus()
+    {
+        foreach(Transform child in statusRoot.transform){
+            Destroy(child.gameObject);
+        }
+        statusRoot.gameObject.SetActive(false);
+    }
+
+    public void SetBusy(bool isBusy)
+    {
+        _statusView?.SetBusy(isBusy);
     }
 }
 

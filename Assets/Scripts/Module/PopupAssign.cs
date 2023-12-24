@@ -13,11 +13,14 @@ public class PopupAssign : MonoBehaviour
     [SerializeField] private GameObject creditPrefab = null;
     [SerializeField] private GameObject characterListPrefab = null;
     
-    public GameObject CreatePopup(PopupType popupType)
+    private BaseView _popupView = null;
+    public GameObject CreatePopup(PopupType popupType,HelpWindow helpWindow)
     {
         var prefab = Instantiate(GetPopupObject(popupType));
         prefab.transform.SetParent(confirmRoot.transform, false);
-        confirmRoot.gameObject.SetActive(false);
+        confirmRoot.gameObject.SetActive(true);
+        var view = prefab.GetComponent<BaseView>();
+        view?.SetHelpWindow(helpWindow);
         return prefab;
     }
 
@@ -41,6 +44,14 @@ public class PopupAssign : MonoBehaviour
             return characterListPrefab;
         }
         return null;
+    }
+
+    public void CloseConfirm()
+    {
+        foreach(Transform child in confirmRoot.transform){
+            Destroy(child.gameObject);
+        }
+        confirmRoot.gameObject.SetActive(false);
     }
 }
 
