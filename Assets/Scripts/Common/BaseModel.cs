@@ -23,6 +23,8 @@ public class BaseModel
     public int DisplayTurns{get {return CurrentStage.DisplayTurns - (CurrentStage.CurrentTurn);}}
 
     public CancellationTokenSource _cancellationTokenSource;
+    private List<StageTutorialData> _currentStageTutorialDates = new ();
+    public List<StageTutorialData> CurrentStageTutorialDates => _currentStageTutorialDates;
     public void InitSaveInfo()
     {
         GameSystem.CurrentData = new SaveInfo();;
@@ -224,6 +226,10 @@ public class BaseModel
         get{ return DataSystem.Stages.Find(a => a.Id == CurrentStage.Id).StageEvents;}
     }
 
+    public List<StageTutorialData> StageTutorialDates{ 
+        get{ return DataSystem.Stages.Find(a => a.Id == CurrentStage.Id).Tutorials;}
+    }
+
     public List<StageEventData> StageEvents(EventTiming eventTiming)
     {
         int CurrentTurn = CurrentStage.CurrentTurn;
@@ -231,6 +237,19 @@ public class BaseModel
         return StageEventDates.FindAll(a => a.Timing == eventTiming && a.Turns == CurrentTurn && !eventKeys.Contains(a.EventKey));
     }
     
+    public bool SetStageTutorials(EventTiming eventTiming)
+    {
+        int CurrentTurn = CurrentStage.CurrentTurn;
+        _currentStageTutorialDates = StageTutorialDates.FindAll(a => a.Timing == eventTiming && a.Turns == CurrentTurn);
+        return _currentStageTutorialDates.Count > 0;
+    }
+
+    public void SeekTutorial()
+    {
+        if (_currentStageTutorialDates.Count == 0) return;
+        _currentStageTutorialDates.RemoveAt(0);
+    }
+
     public void AddEventsReadFlag(List<StageEventData> stageEventDates)
     {
         foreach (var eventData in stageEventDates)

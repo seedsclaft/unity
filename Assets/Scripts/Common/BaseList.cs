@@ -31,7 +31,7 @@ public class BaseList : ListWindow , IInputHandlerEvent
             SetDataCount(_listData.Count);
             SetItemCount(_listData.Count);
         }
-        Refresh(_listData.FindIndex(a => a.Selected));
+        Refresh(_listData.FindIndex(a => a.Selected || a.Enable));
     }
 
     public ListData ListData 

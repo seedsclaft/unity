@@ -9,16 +9,20 @@ public class TutorialView : BaseView
     [SerializeField] private Image focusBgImage = null;
     [SerializeField] private Image arrowImage = null;
 
-    public void ShowFocusImage(float x,float y,float width,float height)
+    public void SeekFocusImage(StageTutorialData stageTutorialData)
     {
-        Debug.Log("ShowFocusImage");
+        ShowFocusImage(stageTutorialData);
+    }
+
+    public void ShowFocusImage(StageTutorialData stageTutorialData)
+    {
         gameObject.SetActive(true);
         if (focusImage == null) return;
         var rect = focusImage.GetComponent<RectTransform>();
-        rect.localPosition = new Vector3(x,y,0);
-        rect.sizeDelta = new Vector3(width,height);
+        rect.localPosition = new Vector3(stageTutorialData.X,stageTutorialData.Y,0);
+        rect.sizeDelta = new Vector3(stageTutorialData.Width,stageTutorialData.Height);
         var bgRect = focusBgImage.GetComponent<RectTransform>();
-        bgRect.localPosition = new Vector3(x * -1,y * -1,0);
+        bgRect.localPosition = new Vector3(stageTutorialData.X * -1,stageTutorialData.Y * -1,0);
     }
 
     public void HideFocusImage()

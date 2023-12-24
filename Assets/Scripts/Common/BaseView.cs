@@ -23,6 +23,7 @@ abstract public class BaseView : MonoBehaviour
     {
         _helpWindow.SetInputInfo(key);
     }
+
     public void SetHelpText(string text)
     {
         _helpWindow.SetHelpText(text);
@@ -269,6 +270,19 @@ abstract public class BaseView : MonoBehaviour
         CallSceneChangeCommand(eventData);
     }
 
+    public void CommandCallTutorialFocus(StageTutorialData stageTutorialDate)
+    {
+        var eventData = new ViewEvent(Base.CommandType.CallTutorialFocus);
+        eventData.template = stageTutorialDate;
+        CallSceneChangeCommand(eventData);
+    }
+
+    public void CommandCloseTutorialFocus()
+    {
+        var eventData = new ViewEvent(Base.CommandType.CloseTutorialFocus);
+        CallSceneChangeCommand(eventData);
+    }
+
     public void SetBackCommand(System.Action callEvent)
     {
         if (_backCommand != null)
@@ -327,6 +341,8 @@ namespace Base
         ChangeViewToTransition,
         StartTransition,
         ChangeEventSkipIndex,
+        CallTutorialFocus,
+        CloseTutorialFocus
     }
 }
 

@@ -15,7 +15,7 @@ MonoBehaviour:
   Data:
   - Id: 1
     Name: "xxxx \u30C1\u30E5\u30FC\u30C8\u30EA\u30A2\u30EB"
-    AchieveText: 
+    AchieveText: "\u30C1\u30E5\u30FC\u30C8\u30EA\u30A2\u30EB\u3092\u5C65\u4FEE\u3059\u308B"
     Selectable: 1
     Help: "\u5B9F\u969B\u306B\u30D7\u30EC\u30A4\u3057\u306A\u304C\u3089\n\u57FA\u672C\u7684\u306A\u904A\u3073\u65B9\u3092\u5B66\u3073\u307E\u3059\u3002"
     Turns: 7
@@ -285,6 +285,126 @@ MonoBehaviour:
       Type: 21
       Param: 0
       ReadFlag: 0
+    Tutorials:
+    - Turns: 1
+      Timing: 1
+      Type: 1
+      X: -384
+      Y: -204
+      Width: 164
+      Height: 52
+    - Turns: 1
+      Timing: 1
+      Type: 11
+      X: -216
+      Y: 64
+      Width: 496
+      Height: 56
+    - Turns: 1
+      Timing: 1
+      Type: 12
+      X: -140
+      Y: -188
+      Width: 184
+      Height: 56
+    - Turns: 2
+      Timing: 1
+      Type: 5
+      X: 128
+      Y: -204
+      Width: 164
+      Height: 52
+    - Turns: 2
+      Timing: 1
+      Type: 11
+      X: -216
+      Y: 64
+      Width: 496
+      Height: 56
+    - Turns: 2
+      Timing: 1
+      Type: 12
+      X: -140
+      Y: -188
+      Width: 184
+      Height: 56
+    - Turns: 3
+      Timing: 1
+      Type: 4
+      X: 0
+      Y: -204
+      Width: 164
+      Height: 52
+    - Turns: 3
+      Timing: 1
+      Type: 21
+      X: -264
+      Y: 30
+      Width: 216
+      Height: 144
+    - Turns: 3
+      Timing: 1
+      Type: 11
+      X: -216
+      Y: 64
+      Width: 496
+      Height: 56
+    - Turns: 3
+      Timing: 1
+      Type: 12
+      X: -140
+      Y: -188
+      Width: 184
+      Height: 56
+    - Turns: 4
+      Timing: 1
+      Type: 3
+      X: -128
+      Y: -204
+      Width: 164
+      Height: 52
+    - Turns: 4
+      Timing: 1
+      Type: 11
+      X: -216
+      Y: 64
+      Width: 496
+      Height: 56
+    - Turns: 4
+      Timing: 1
+      Type: 12
+      X: -140
+      Y: -188
+      Width: 184
+      Height: 56
+    - Turns: 5
+      Timing: 1
+      Type: 2
+      X: -128
+      Y: -204
+      Width: 164
+      Height: 52
+    - Turns: 5
+      Timing: 1
+      Type: 11
+      X: -216
+      Y: 64
+      Width: 496
+      Height: 56
+    - Turns: 5
+      Timing: 1
+      Type: 22
+      X: -84
+      Y: -160
+      Width: 104
+      Height: 136
+    - Turns: 5
+      Timing: 1
+      Type: 12
+      X: -140
+      Y: -188
+      Width: 184
+      Height: 56
   - Id: 2
     Name: "\u843D\u661F\u524D3986\u5E74 \u534A\u795E\u306E\u30A2\u30EB\u30B1\u30DF\u30B9\u30C8\u9054"
     AchieveText: 
@@ -541,6 +661,7 @@ MonoBehaviour:
       Type: 31
       Param: 11
       ReadFlag: 1
+    Tutorials: []
   - Id: 101
     Name: "\u843D\u661F\u524D3986\u5E74 \u534A\u795E\u306E\u30A2\u30EB\u30B1\u30DF\u30B9\u30C8\u9054"
     AchieveText: 
@@ -647,6 +768,7 @@ MonoBehaviour:
       Type: 51
       Param: 102
       ReadFlag: 1
+    Tutorials: []
   - Id: 102
     Name: "\u843D\u661F\u524D3986\u5E74 \u534A\u795E\u306E\u30A2\u30EB\u30B1\u30DF\u30B9\u30C8\u9054"
     AchieveText: "\u96B7\u5F93\u5C5E\u5EA6\u309290\u4EE5\u4E0A\u7372\u5F97"
@@ -717,6 +839,7 @@ MonoBehaviour:
       Type: 51
       Param: 103
       ReadFlag: 1
+    Tutorials: []
   - Id: 103
     Name: "\u843D\u661F\u524D3986\u5E74 \u534A\u795E\u306E\u30A2\u30EB\u30B1\u30DF\u30B9\u30C8\u9054"
     AchieveText: "\u96B7\u5F93\u5C5E\u5EA6\u309290\u4EE5\u4E0A\u7372\u5F97"
@@ -769,6 +892,7 @@ MonoBehaviour:
       Type: 51
       Param: 104
       ReadFlag: 1
+    Tutorials: []
   - Id: 104
     Name: "\u843D\u661F\u524D3986\u5E74 \u534A\u795E\u306E\u30A2\u30EB\u30B1\u30DF\u30B9\u30C8\u9054"
     AchieveText: "\u96B7\u5F93\u5C5E\u5EA6\u309290\u4EE5\u4E0A\u7372\u5F97"
@@ -815,6 +939,7 @@ MonoBehaviour:
       Type: 51
       Param: 105
       ReadFlag: 1
+    Tutorials: []
   - Id: 105
     Name: "\u843D\u661F\u524D3986\u5E74 \u534A\u795E\u306E\u30A2\u30EB\u30B1\u30DF\u30B9\u30C8\u9054"
     AchieveText: "\u96B7\u5F93\u5C5E\u5EA6\u309290\u4EE5\u4E0A\u7372\u5F97"
@@ -861,6 +986,7 @@ MonoBehaviour:
       Type: 51
       Param: 106
       ReadFlag: 1
+    Tutorials: []
   - Id: 106
     Name: "\u843D\u661F\u524D3986\u5E74 \u534A\u795E\u306E\u30A2\u30EB\u30B1\u30DF\u30B9\u30C8\u9054"
     AchieveText: "\u96B7\u5F93\u5C5E\u5EA6\u309290\u4EE5\u4E0A\u7372\u5F97"
@@ -919,6 +1045,7 @@ MonoBehaviour:
       Type: 7
       Param: 1
       ReadFlag: 1
+    Tutorials: []
   - Id: 111
     Name: "\u843D\u661F\u524D3986\u5E74 \u534A\u795E\u306E\u30A2\u30EB\u30B1\u30DF\u30B9\u30C8\u9054"
     AchieveText: "\u9B42\u306E\u7D42\u7109\u306B\u56DE\u5E30\u3059\u308B"
@@ -971,6 +1098,7 @@ MonoBehaviour:
       Type: 3
       Param: 0
       ReadFlag: 0
+    Tutorials: []
   - Id: 112
     Name: "\u843D\u661F\u524D3986\u5E74 \u534A\u795E\u306E\u30A2\u30EB\u30B1\u30DF\u30B9\u30C8\u9054"
     AchieveText: "\u9B42\u306E\u7D42\u7109\u306B\u56DE\u5E30\u3059\u308B"
@@ -1035,3 +1163,4 @@ MonoBehaviour:
       Type: 62
       Param: 1
       ReadFlag: 0
+    Tutorials: []

@@ -182,10 +182,7 @@ public class TacticsPresenter :BasePresenter
     private async void Initialize()
     {
         _model.RefreshTacticsEnable();
-
         _view.SetHelpWindow();
-        
-        
         _view.SetUIButton();
         _view.ChangeBackCommandActive(false);
         _view.SetEvent((type) => UpdateCommand(type));
@@ -215,6 +212,10 @@ public class TacticsPresenter :BasePresenter
         }
         DisableTacticsCommand();
         _view.ShowCommandList();
+        if (_model.SetStageTutorials(EventTiming.StartTactics))
+        {
+            _view.CommandCallTutorialFocus(_model.CurrentStageTutorialDates[0]);
+        }
         _busy = false;
     }
 
@@ -224,6 +225,16 @@ public class TacticsPresenter :BasePresenter
             return;
         }
         Debug.Log(viewEvent.commandType);
+        if (_model.CheckTutorial(viewEvent))
+        {
+            _model.SeekTutorial();
+            if (_model.CurrentStageTutorialDates.Count == 0)
+            {
+                _view.CommandCloseTutorialFocus();
+            } else{            
+                _view.CommandCallTutorialFocus(_model.CurrentStageTutorialDates[0]);
+            }
+        }
         if (viewEvent.commandType == Tactics.CommandType.AddAlcana)
         {
             CommandAddAlcana();
@@ -270,6 +281,10 @@ public class TacticsPresenter :BasePresenter
                     Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cancel);
                 }
                 CommandTacticsCommand(TacticsCommandType.Battle);
+                if (_model.IsBusyAll())
+                {
+                    CommandTacticsCommand(TacticsCommandType.TurnEnd);
+                }
             } else
             {
                 CommandTacticsCommandClose((ConfirmCommandType)viewEvent.template);
@@ -291,12 +306,14 @@ public class TacticsPresenter :BasePresenter
         }
         if (viewEvent.commandType == Tactics.CommandType.SelectRecoveryPlus)
         {
+            if (_model.CurrentStageTutorialDates.Count > 0) return;
             int actorId = (int)viewEvent.template;
             if (CheckBusyOther(actorId,TacticsCommandType.Recovery)) return;
             CommandSelectRecoveryPlus(actorId);
         }
         if (viewEvent.commandType == Tactics.CommandType.SelectRecoveryMinus)
         {
+            if (_model.CurrentStageTutorialDates.Count > 0) return;
             int actorId = (int)viewEvent.template;
             if (CheckBusyOther(actorId,TacticsCommandType.Recovery)) return;
             CommandSelectRecoveryMinus(actorId);
@@ -325,6 +342,7 @@ public class TacticsPresenter :BasePresenter
         }
         if (viewEvent.commandType == Tactics.CommandType.CallEnemyInfo)
         {
+            if (_model.CurrentStageTutorialDates.Count > 0) return;
             CommandCallEnemyInfo((TroopInfo)viewEvent.template);
         }
         if (viewEvent.commandType == Tactics.CommandType.Rule)

@@ -24,6 +24,7 @@ public class StageData
     public bool Reborn;
     public int SubordinateValue;
     public List<StageEventData> StageEvents;
+    public List<StageTutorialData> Tutorials;
 }
 
 
@@ -37,6 +38,18 @@ public class StageEventData
     public StageEventType Type;
     public int Param;
     public bool ReadFlag;
+}
+
+[Serializable]
+public class StageTutorialData
+{
+    public int Turns;
+    public EventTiming Timing;
+    public TutorialType Type;
+    public int X;
+    public int Y;
+    public int Width;
+    public int Height;
 }
 
 public enum EventTiming{
@@ -75,6 +88,19 @@ public enum StageEventType{
     SetLastBoss = 62, // 上位者ボスを設定する
 }
 
+public enum TutorialType{
+    None = 0,
+    TacticsCommandTrain = 1, // TacticsでTrain選択
+    TacticsCommandAlchemy = 2, // TacticsでAlchemy選択
+    TacticsCommandRecover = 3, // TacticsでRecover選択
+    TacticsCommandBattle = 4, // TacticsでBattle選択
+    TacticsCommandResource = 5, // TacticsでResource選択
+    TacticsSelectTacticsActor = 11, // TacticsTrainでアクターを選択
+    TacticsSelectTacticsDecide = 12, // TacticsTrainで決定を選択
+    TacticsSelectEnemy = 21, // TacticsBattleで敵を選択
+    TacticsSelectAlchemyMagic = 22, // TacticsAlchemyで魔法を選択
+
+}
 
 public enum EndingType{
     A,

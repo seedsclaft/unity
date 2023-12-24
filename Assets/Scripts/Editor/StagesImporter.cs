@@ -35,6 +35,19 @@ public class StagesInfoImporter : AssetPostprocessor {
 		Param,
 		ReadFlag
     }
+	
+    enum BaseTutorialColumn
+    {
+		Id = 0,
+        Turns,
+		Timing,
+		Type,
+		X,
+		Y,
+		Width,
+		Height,
+    }
+
 	static readonly string ExcelName = "Stages.xlsx";
 
 	// アセット更新があると呼ばれる
@@ -74,7 +87,7 @@ public class StagesInfoImporter : AssetPostprocessor {
 			{
 				// エクセルブックを作成
 				AssetPostImporter.CreateBook(asset, Mainstream, out IWorkbook Book);
-				List<TextData> textData = AssetPostImporter.CreateText(Book.GetSheetAt(2));
+				List<TextData> textData = AssetPostImporter.CreateText(Book.GetSheetAt(3));
 
 				// 情報の初期化
 				Data.Data.Clear();
@@ -82,6 +95,7 @@ public class StagesInfoImporter : AssetPostprocessor {
 				// エクセルシートからセル単位で読み込み
 				ISheet BaseSheet = Book.GetSheetAt(0);
 				ISheet EventSheet = Book.GetSheetAt(1);
+				ISheet TutorialSheet = Book.GetSheetAt(2);
 				for (int i = 1; i <= BaseSheet.LastRowNum; i++)
 				{
 					IRow BaseRow = BaseSheet.GetRow(i);
@@ -124,6 +138,27 @@ public class StagesInfoImporter : AssetPostprocessor {
 							EventData.EventKey = EventData.Turns.ToString() + EventData.Timing.ToString() + EventData.Type.ToString() + EventData.Param.ToString();
 
 							StageData.StageEvents.Add(EventData);
+						}
+					}
+					
+					StageData.Tutorials = new List<StageTutorialData>();
+					for (int j = 1; j <= TutorialSheet.LastRowNum; j++)
+					{
+						IRow EventRow = TutorialSheet.GetRow(j);
+						var TutorialData = new StageTutorialData();
+						var StageId = (int)EventRow.GetCell((int)BaseTutorialColumn.Id)?.SafeNumericCellValue();
+						
+						if (StageId == StageData.Id)
+						{
+							TutorialData.Turns = (int)EventRow.GetCell((int)BaseTutorialColumn.Turns)?.SafeNumericCellValue();
+							TutorialData.Timing = (EventTiming)EventRow.GetCell((int)BaseTutorialColumn.Timing)?.SafeNumericCellValue();
+							TutorialData.Type = (TutorialType)EventRow.GetCell((int)BaseTutorialColumn.Type)?.SafeNumericCellValue();
+							TutorialData.X = (int)EventRow.GetCell((int)BaseTutorialColumn.X)?.SafeNumericCellValue();
+							TutorialData.Y = (int)EventRow.GetCell((int)BaseTutorialColumn.Y)?.SafeNumericCellValue();
+							TutorialData.Width = (int)EventRow.GetCell((int)BaseTutorialColumn.Width)?.SafeNumericCellValue();
+							TutorialData.Height = (int)EventRow.GetCell((int)BaseTutorialColumn.Height)?.SafeNumericCellValue();
+							
+							StageData.Tutorials.Add(TutorialData);
 						}
 					}
 					Data.Data.Add(StageData);

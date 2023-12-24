@@ -47,6 +47,8 @@ public class GameSystem : MonoBehaviour
         transitionRoot.SetActive(false);
         loadingView.Initialize();
         loadingView.gameObject.SetActive(false);
+        tutorialView.Initialize();
+        tutorialView.HideFocusImage();
         TempData = new TempInfo();
         _model = new BaseModel();
         GameSystem.Version = version;
@@ -184,6 +186,13 @@ public class GameSystem : MonoBehaviour
             case Base.CommandType.ChangeEventSkipIndex:
                 advEngine.Config.IsSkip = (bool)viewEvent.template;
                 break;
+            case Base.CommandType.CallTutorialFocus:
+                var stageTutorialData = (StageTutorialData)viewEvent.template;
+                tutorialView.SeekFocusImage(stageTutorialData);
+                break;
+            case Base.CommandType.CloseTutorialFocus:
+                tutorialView.HideFocusImage();
+                break;
         }
     }
 
@@ -314,6 +323,7 @@ public class GameSystem : MonoBehaviour
         _currentScene.SetTestMode(testMode);
         _currentScene.SetEvent((type) => UpdateCommand(type));
         _currentScene.Initialize();
+        tutorialView.HideFocusImage();
     }
 
     private void SetIsBusyMainAndStatus()

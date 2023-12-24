@@ -8828,7 +8828,6 @@ MonoBehaviour:
   loadingView: {fileID: 418308402}
   advEngine: {fileID: 456724002}
   advController: {fileID: 1315103154}
-  advCustomCommand: {fileID: 456724015}
   debugBattleData: {fileID: 1631066105}
   helpWindow: {fileID: 1006505088}
   advHelpWindow: {fileID: 1438665401}
@@ -13472,6 +13471,16 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -200
       objectReference: {fileID: 0}
+    - target: {fileID: 5415594133237623264, guid: 00f9596394c1abc49a384dd2205058dd,
+        type: 3}
+      propertyPath: m_OnlyForChildren
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6880160840171033046, guid: 00f9596394c1abc49a384dd2205058dd,
+        type: 3}
+      propertyPath: m_RaycastTarget
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7701807440127711780, guid: 00f9596394c1abc49a384dd2205058dd,
         type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -13485,7 +13494,32 @@ PrefabInstance:
     - target: {fileID: 8038695463440020929, guid: 00f9596394c1abc49a384dd2205058dd,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8479839720491808766, guid: 00f9596394c1abc49a384dd2205058dd,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 496
+      objectReference: {fileID: 0}
+    - target: {fileID: 8479839720491808766, guid: 00f9596394c1abc49a384dd2205058dd,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 56
+      objectReference: {fileID: 0}
+    - target: {fileID: 8479839720491808766, guid: 00f9596394c1abc49a384dd2205058dd,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -216
+      objectReference: {fileID: 0}
+    - target: {fileID: 8479839720491808766, guid: 00f9596394c1abc49a384dd2205058dd,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 64
+      objectReference: {fileID: 0}
+    - target: {fileID: 9009337463802599372, guid: 00f9596394c1abc49a384dd2205058dd,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 00f9596394c1abc49a384dd2205058dd, type: 3}
