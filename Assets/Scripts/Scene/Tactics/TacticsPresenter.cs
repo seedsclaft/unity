@@ -19,6 +19,15 @@ public class TacticsPresenter :BasePresenter
         _model = new TacticsModel();
         SetModel(_model);
 
+        if (CheckBeforeAlcanaEvent())
+        {
+            InitializeView();
+            _view.StartAlcanaAnimation(() => 
+            {
+                _view.CommandSceneChange(Scene.AlcanaResult);
+            });
+            return;
+        }
         if (CheckAdvEvent())
         {
             return;
@@ -136,6 +145,13 @@ public class TacticsPresenter :BasePresenter
         }
     }
 
+    private bool CheckBeforeAlcanaEvent()
+    {
+        var results = _model.CheckAlcanaSkillInfos(TriggerTiming.BeforeTacticsTurn);
+        _model.SetAlcanaSkillInfo(results);
+        return results.Count > 0;
+    }
+
     private bool CheckAdvEvent()
     {
         var StartTacticsAdvData = _model.StartTacticsAdvData();
@@ -181,6 +197,24 @@ public class TacticsPresenter :BasePresenter
 
     private async void Initialize()
     {
+        InitializeView();
+        var isAbort = CheckAdvStageEvent(EventTiming.StartTactics,() => {
+            _view.CommandSceneChange(Scene.Tactics);
+        },_model.CurrentStage.SelectActorIdsClassId(0));
+        if (isAbort)
+        {
+            return;
+        }
+        _view.ShowCommandList();
+        if (_model.SetStageTutorials(EventTiming.StartTactics))
+        {
+            _view.CommandCallTutorialFocus(_model.CurrentStageTutorialDates[0]);
+        }
+        _busy = false;
+    }
+
+    private async void InitializeView()
+    {
         _model.RefreshTacticsEnable();
         _view.SetHelpWindow();
         _view.SetUIButton();
@@ -197,26 +231,6 @@ public class TacticsPresenter :BasePresenter
         //_view.SetHelpInputInfo(_model.TacticsCommandInputInfo());
         var bgm = await _model.GetBgmData(_model.TacticsBgmFilename());
         Ryneus.SoundManager.Instance.PlayBgm(bgm,1.0f,true);
-
-        var isAbort = CheckAdvStageEvent(EventTiming.StartTactics,() => {
-            _view.CommandSceneChange(Scene.Tactics);
-        },_model.CurrentStage.SelectActorIdsClassId(0));
-        if (isAbort)
-        {
-            return;
-        }
-        // アルカナ配布
-        if (_model.CheckIsAlcana())
-        {
-            CommandAddAlcana();
-        }
-        DisableTacticsCommand();
-        _view.ShowCommandList();
-        if (_model.SetStageTutorials(EventTiming.StartTactics))
-        {
-            _view.CommandCallTutorialFocus(_model.CurrentStageTutorialDates[0]);
-        }
-        _busy = false;
     }
 
     private void UpdateCommand(TacticsViewEvent viewEvent)
@@ -445,30 +459,6 @@ public class TacticsPresenter :BasePresenter
         _view.CommandConfirmClose();
     }
 
-    private void UpdatePopupOpenAlcana(ConfirmCommandType confirmCommandType)
-    {
-        if (confirmCommandType == ConfirmCommandType.Yes)
-        {
-            _model.OpenAlcana();
-            CommandCheckAlcana();
-        } else{
-            _view.ActivateCommandList();
-            _view.CommandConfirmClose();
-        }
-    }
-
-    private void UpdatePopupUseAlcana(ConfirmCommandType confirmCommandType)
-    {
-        if (confirmCommandType == ConfirmCommandType.Yes)
-        {
-            CommandUseAlcana();
-        } else{
-            CommandDeleteAlcana();
-        }
-        _view.ActivateCommandList();
-        _view.CommandConfirmClose();
-    }
-
     private void UpdatePopupDropout(ConfirmCommandType confirmCommandType)
     {
         if (confirmCommandType == ConfirmCommandType.Yes)
@@ -550,8 +540,6 @@ public class TacticsPresenter :BasePresenter
 
     private void CommandAddAlcana()
     {
-        _model.MakeAlcana();
-        _view.AddAlcana();
         CommandRefresh();
     }
 
@@ -765,12 +753,6 @@ public class TacticsPresenter :BasePresenter
 
     private void CommandOpenAlcana()
     {
-        if (_model.CheckIsAlcana())
-        {
-            _view.DeactivateCommandList();
-            var popupInfo = new ConfirmInfo(DataSystem.System.GetTextData(1070).Text,(menuCommandInfo) => UpdatePopupOpenAlcana((ConfirmCommandType)menuCommandInfo));
-            _view.CommandCallConfirm(popupInfo);
-        }
     }
 
     private void CommandCallEnemyInfo(TroopInfo troopInfo)
@@ -787,27 +769,6 @@ public class TacticsPresenter :BasePresenter
         Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
     }
 
-    private void CommandCheckAlcana()
-    {
-        _view.DeactivateCommandList();
-        var alcana = _model.CurrentAlcana.CurrentSelectAlcana();
-        var textData = DataSystem.System.GetTextData(1080);
-        var popupInfo = new ConfirmInfo(alcana.Name + alcana.Help + textData.Text,(menuCommandInfo) => UpdatePopupUseAlcana((ConfirmCommandType)menuCommandInfo));
-        _view.CommandCallConfirm(popupInfo);
-    }
-
-    private void CommandUseAlcana()
-    {
-        _model.UseAlcana();
-        _view.UseAlcana();
-        CommandRefresh();
-        DisableTacticsCommand();
-    }
-
-    private void CommandDeleteAlcana()
-    {
-        _model.DeleteAlcana();
-    }
 
     private void CommandRule()
     {
@@ -826,19 +787,6 @@ public class TacticsPresenter :BasePresenter
         Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
         var popupInfo = new ConfirmInfo(DataSystem.System.GetTextData(1100).Text,(a) => UpdatePopupDropout((ConfirmCommandType)a));
         _view.CommandCallConfirm(popupInfo);
-    }
-
-    private void DisableTacticsCommand()
-    {
-        if (_model.CurrentAlcana.IsDisableTactics())
-        {
-            _model.ResetTacticsCostAll();
-            for (int i = 0;i < 5;i++)
-            {
-                var listData = _model.ChangeEnableCommandData(i, false);
-                _view.RefreshListData(listData);
-            }
-        }
     }
 
     private void CommandSelectSideMenu(SystemData.CommandData sideMenu)

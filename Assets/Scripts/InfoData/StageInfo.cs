@@ -403,6 +403,11 @@ public class StageInfo
         _currentTurn++;
     }
 
+    public void DeSeekStage()
+    {
+        _currentTurn--;
+    }
+
     public void ChangeSubordinate(bool isSubordinate)
     {
         _IsSubordinate = isSubordinate;

@@ -7,6 +7,8 @@ public class TempInfo
 {
     private List<ActorInfo> _tempActorInfos = new ();
     public List<ActorInfo> TempActorInfos => _tempActorInfos;
+    private List<SkillInfo> _tempAlcanaSkillInfos = new ();
+    public List<SkillInfo> TempAlcanaSkillInfos => _tempAlcanaSkillInfos;
     public void CashBattleActors(List<ActorInfo> actorInfos)
     {
         ClearBattleActors();
@@ -21,5 +23,15 @@ public class TempInfo
     public void ClearBattleActors()
     {
         _tempActorInfos.Clear();
+    }
+
+    public void SetAlcanaSkillInfo(List<SkillInfo> skillInfos)
+    {
+        _tempAlcanaSkillInfos = skillInfos;
+    }
+
+    public void ClearAlcana()
+    {
+        _tempAlcanaSkillInfos.Clear();
     }
 }

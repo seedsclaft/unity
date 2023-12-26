@@ -122,4 +122,9 @@ public class GetItemInfo
     }
 
     
+    public void MakeGainTurnResult(string turn)
+    {
+        SetTitleData(DataSystem.System.GetTextData(3210).Text);
+        SetResultData(DataSystem.System.GetReplaceText(3211,turn));
+    }
 }

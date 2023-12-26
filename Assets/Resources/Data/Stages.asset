@@ -25,6 +25,7 @@ MonoBehaviour:
     BGMId: 3
     BossBGMId: 0
     Reborn: 0
+    Alcana: 0
     SubordinateValue: 0
     StageEvents:
     - EventKey: 1StartTacticsCommandDisable1
@@ -419,6 +420,7 @@ MonoBehaviour:
     BGMId: 0
     BossBGMId: 0
     Reborn: 0
+    Alcana: 0
     SubordinateValue: 0
     StageEvents:
     - EventKey: 1StartTacticsCommandDisable3
@@ -676,6 +678,7 @@ MonoBehaviour:
     BGMId: 3
     BossBGMId: 0
     Reborn: 0
+    Alcana: 1
     SubordinateValue: 80
     StageEvents:
     - EventKey: 1BeforeTacticsAdvStart101
@@ -690,6 +693,12 @@ MonoBehaviour:
       Type: 12
       Param: 1000
       ReadFlag: 1
+    - EventKey: 1StartTacticsIsAlcana1
+      Turns: 1
+      Timing: 1
+      Type: 5
+      Param: 1
+      ReadFlag: 0
     - EventKey: 1StartTacticsCommandDisable3
       Turns: 1
       Timing: 1
@@ -783,6 +792,7 @@ MonoBehaviour:
     BGMId: 3
     BossBGMId: 0
     Reborn: 0
+    Alcana: 0
     SubordinateValue: 80
     StageEvents:
     - EventKey: 1StartTacticsSelectAddActor1
@@ -854,6 +864,7 @@ MonoBehaviour:
     BGMId: 4
     BossBGMId: 0
     Reborn: 0
+    Alcana: 0
     SubordinateValue: 80
     StageEvents:
     - EventKey: 1StartTacticsSelectAddActor1
@@ -907,6 +918,7 @@ MonoBehaviour:
     BGMId: 4
     BossBGMId: 0
     Reborn: 0
+    Alcana: 0
     SubordinateValue: 80
     StageEvents:
     - EventKey: 1StartTacticsSelectAddActor1
@@ -954,6 +966,7 @@ MonoBehaviour:
     BGMId: 5
     BossBGMId: 0
     Reborn: 0
+    Alcana: 0
     SubordinateValue: 80
     StageEvents:
     - EventKey: 1StartTacticsSelectAddActor1
@@ -1001,6 +1014,7 @@ MonoBehaviour:
     BGMId: 5
     BossBGMId: 0
     Reborn: 0
+    Alcana: 0
     SubordinateValue: 80
     StageEvents:
     - EventKey: 1StartTacticsSetDefineBossIndex5
@@ -1060,6 +1074,7 @@ MonoBehaviour:
     BGMId: 5
     BossBGMId: 3000
     Reborn: 0
+    Alcana: 0
     SubordinateValue: 0
     StageEvents:
     - EventKey: 1StartTacticsRouteSelectBattle0
@@ -1113,6 +1128,7 @@ MonoBehaviour:
     BGMId: 5
     BossBGMId: 3000
     Reborn: 0
+    Alcana: 0
     SubordinateValue: 0
     StageEvents:
     - EventKey: 1StartTacticsSetDisplayTurns6

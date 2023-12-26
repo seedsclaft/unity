@@ -179,4 +179,6 @@ public enum Scene
     RebornResult,
     Slot,
     FastBattle,
+    AlcanaSelect,
+    AlcanaResult
 }

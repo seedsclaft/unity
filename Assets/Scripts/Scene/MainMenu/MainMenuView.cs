@@ -54,10 +54,10 @@ public class MainMenuView : BaseView
     }
     
     private void CallMainMenuStage(){
-        var eventData = new MainMenuViewEvent(CommandType.StageSelect);
         var listData = stageList.ListData;
         if (listData != null)
         {
+            var eventData = new MainMenuViewEvent(CommandType.StageSelect);
             var data = (StageInfo)listData.Data;
             eventData.template = data.Id;
             _commandData(eventData);

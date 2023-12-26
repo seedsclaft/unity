@@ -53,11 +53,13 @@ public class BattleModel : BaseModel
             if (battleMembers[i].InBattle == true)
             {
                 var battlerInfo = new BattlerInfo(battleMembers[i],i);
+                /*
                 if (CurrentAlcana.AlcanaState != null)
                 {
                     var stateInfo = CurrentAlcana.AlcanaState;
                     battlerInfo.AddState(stateInfo,true);
                 }
+                */
                 _battlers.Add(battlerInfo);
             }
         }

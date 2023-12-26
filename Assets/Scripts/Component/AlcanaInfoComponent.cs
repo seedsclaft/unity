@@ -13,7 +13,6 @@ public class AlcanaInfoComponent : MonoBehaviour
             alcana.gameObject.SetActive(alcanaInfo.IsAlcana == true);
         }
         if (alcanaValue != null){
-            alcanaValue.text = alcanaInfo.OwnAlcanaIds.Count.ToString();
         }
     }
 }

@@ -104,11 +104,6 @@ public class TacticsView : BaseView
         stageInfoComponent.UpdateInfo(stageInfo);
     }
 
-    public void SetAlcanaInfo(AlcanaInfo alcanaInfo)
-    {
-        alcanaInfoComponent.UpdateInfo(alcanaInfo);
-    }
-
     public void SetTacticsCommand(List<ListData> menuCommands)
     {
         tacticsCommandList.SetData(menuCommands);
@@ -474,13 +469,13 @@ public class TacticsView : BaseView
         }
     }
     
-    public void AddAlcana()
+    public void StartAlcanaAnimation(System.Action endEvent)
     {
-        tacticsAlcana.StartAnim();
+        tacticsAlcana.StartAlcanaAnimation(endEvent);
     }
 
-    public void UseAlcana()
+    public void UseAlcana(System.Action endEvent)
     {
-        tacticsAlcana.UseAnim();
+        tacticsAlcana.UseAnim(endEvent);
     }
 }

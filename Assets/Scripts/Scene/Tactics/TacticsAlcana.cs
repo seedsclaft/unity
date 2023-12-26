@@ -27,13 +27,13 @@ public class TacticsAlcana : MonoBehaviour
         emitter.enabled = false;
     }
 
-    public void StartAnim()
+    public void StartAlcanaAnimation(System.Action endEvent)
     {
         _busy = true;
         Reset();
         emitter.enabled = true;
         emitter.Play();
-        Sequence start = DOTween.Sequence()
+        var start = DOTween.Sequence()
             .SetDelay(0.3f)
             .Append(cardImage.DOFade(1f, 0.4f))
             .Join(cardImage.gameObject.transform.DOLocalMoveY(40,0.4f))
@@ -43,26 +43,26 @@ public class TacticsAlcana : MonoBehaviour
                 refrect.enabled = true;
             });
 
-        Sequence card = DOTween.Sequence()
-            .SetDelay(0.4f)
-            .SetDelay(1.6f)
+        var card = DOTween.Sequence()
+            .SetDelay(2f)
             .Append(cardImage.gameObject.transform.DOScale(0.25f, 0.4f))
-            .Join(cardImage.gameObject.transform.DOLocalMoveX(-340,0.4f))
-            .Join(cardImage.gameObject.transform.DOLocalMoveY(262,0.4f))
+            //.Join(cardImage.gameObject.transform.DOLocalMoveX(-340,0.4f))
+            //.Join(cardImage.gameObject.transform.DOLocalMoveY(262,0.4f))
             .Join(cardImage.DOFade(0f, 0.4f))
             .OnComplete(() => {
                 Reset();
+                if (endEvent != null) endEvent();
                 _busy = false;
             });
     }
     
-    public void UseAnim()
+    public void UseAnim(System.Action endEvent)
     {
         _busy = true;
         Reset();
         emitter.enabled = true;
         emitter.Play();
-        Sequence start = DOTween.Sequence()
+        var start = DOTween.Sequence()
             .SetDelay(0.3f)
             .Append(cardImage.DOFade(1f, 0.4f))
             .Join(cardImage.gameObject.transform.DOLocalMoveY(40,0.4f))
@@ -71,6 +71,7 @@ public class TacticsAlcana : MonoBehaviour
             .OnComplete(() => {
                 refrect.enabled = true;
                 Reset();
+                //if (endEvent != null) endEvent();
                 _busy = false;
             });
     }

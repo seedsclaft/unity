@@ -8,6 +8,7 @@ public class BaseList : ListWindow , IInputHandlerEvent
     private List<ListData> _listData = new ();
     private bool _isInit = false;
     public bool IsInit => _isInit;
+    private int _beforeSelectIndex = -1;
     public void SetData(List<ListData> listData)
     {
         Initialize(listData.Count);
@@ -21,7 +22,7 @@ public class BaseList : ListWindow , IInputHandlerEvent
                 if (i >= objectListCount)
                 {
                     var listItem = ObjectList[i].GetComponent<ListItem>();
-                    listItem.SetCallHandler(() => CallListInputHandler(InputKeyType.Decide));
+                    listItem.SetCallHandler(() => CallListInputHandlerDecide());
                     listItem.SetSelectHandler((index) => 
                     {
                         UpdateSelectIndex(index);
@@ -58,6 +59,7 @@ public class BaseList : ListWindow , IInputHandlerEvent
         */
         UpdateSelectIndex(0);
         SetInputCallHandler((a) => CallSelectHandler(a));
+        _beforeSelectIndex = -1;
         _isInit = true;
     }
     
@@ -66,7 +68,7 @@ public class BaseList : ListWindow , IInputHandlerEvent
         for (int i = 0; i < ObjectList.Count;i++)
         {
             var listItem = ObjectList[i].GetComponent<ListItem>();
-            listItem.SetCallHandler(() => CallListInputHandler(InputKeyType.Decide));
+            listItem.SetCallHandler(() => CallListInputHandlerDecide());
             listItem.SetSelectHandler((index) => 
             {
                 UpdateSelectIndex(index);
@@ -96,6 +98,19 @@ public class BaseList : ListWindow , IInputHandlerEvent
         {        
             ResetScrollRect();
         }
+        _beforeSelectIndex = selectIndex;
+    }
+
+    private void CallListInputHandlerDecide()
+    {
+#if UNITY_ANDROID && !UNITY_EDITOR
+        if (Index != _beforeSelectIndex)
+        {
+            _beforeSelectIndex = Index;
+            return;
+        }
+#endif
+        CallListInputHandler(InputKeyType.Decide);
     }
     
     public void RefreshListData(ListData listData)

@@ -16,42 +16,29 @@ public class AlcanaInfoImporter : AssetPostprocessor {
         FilePath,
         SkillId
     }
-	static readonly string ExcelPath = "Assets/Resources/Data";
 	static readonly string ExcelName = "Alcana.xlsx";
 
 	// アセット更新があると呼ばれる
 	static void OnPostprocessAllAssets(string[] importedAssets, string[] deletedAssets, string[] movedAssets, string[] movedFromAssetPaths) {
 		foreach (string asset in importedAssets) {
-			//拡張子を取得
-			string ext = Path.GetExtension(asset);
-			if (ext != ".xls" && ext != ".xlsx" && ext != ".xlsm") continue;
 
-			// エクセルを開いているデータはスキップ
-			string fileName = Path.GetFileName(asset);
-			if (fileName.StartsWith("~$")) continue;
-
-			// 同じパスのみ
-			string filePath = Path.GetDirectoryName(asset);
-			filePath = filePath.Replace("\\", "/");
-			if (filePath != ExcelPath) { continue; }
-
-			// 同じファイルのみ
-			if (fileName != ExcelName) { continue; }
-
-			CreateAlcanaData(asset);
-
-			AssetDatabase.SaveAssets();
-			return;
+			if (AssetPostImporter.CheckOnPostprocessAllAssets(asset,ExcelName))
+			{
+				CreateAlcanaData(asset);
+				AssetDatabase.SaveAssets();
+				return;
+			}
 		}
 	}
 
 	static void CreateAlcanaData(string asset)
 	{
+		Debug.Log("CreateAlcanaData");
 		// 拡張子なしのファイル名を取得
 		string FileName = Path.GetFileNameWithoutExtension(asset);
 
 		// ディレクトリ情報とファイル名の文字列を結合してアセット名を指定
-		string ExportPath = $"{Path.Combine(Path.GetDirectoryName(asset), FileName)}.asset";
+		string ExportPath = $"{Path.Combine(AssetPostImporter.ExportExcelPath, FileName)}.asset";
 
 		AlcanaData Data = AssetDatabase.LoadAssetAtPath<AlcanaData>(ExportPath);
 		if (!Data)

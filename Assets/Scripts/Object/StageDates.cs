@@ -22,6 +22,7 @@ public class StageData
     public int BGMId;
     public int BossBGMId;
     public bool Reborn;
+    public bool Alcana;
     public int SubordinateValue;
     public List<StageEventData> StageEvents;
     public List<StageTutorialData> Tutorials;

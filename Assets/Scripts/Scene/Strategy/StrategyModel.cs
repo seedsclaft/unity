@@ -226,9 +226,8 @@ public class StrategyModel : BaseModel
             if (getItemInfo.GetItemType == GetItemType.Numinous)
             {
                 var getCurrency = PartyInfo.GetBattleBonusValue(getItemInfo.Param1);
-                var alcanaBonus = CurrentAlcana.VictoryGainSpValue();
-                PartyInfo.ChangeCurrency(PartyInfo.Currency + getCurrency + alcanaBonus);
-                getItemInfo.MakeCurrencyResult(getCurrency + alcanaBonus);
+                PartyInfo.ChangeCurrency(PartyInfo.Currency + getCurrency);
+                getItemInfo.MakeCurrencyResult(getCurrency);
                 getItemInfos.Add(getItemInfo);
             }
             if (getItemInfo.GetItemType == GetItemType.Demigod)
@@ -400,14 +399,13 @@ public class StrategyModel : BaseModel
     public void EndStrategy()
     {
         CurrentStage.SeekStage();
-        CurrentAlcana.UseAlcana(false);
         foreach (var actorInfo in StageMembers())
         {
             actorInfo.ChangeTacticsCostRate(1);
         }
         CurrentStage.ClearTacticsEnemies();
         //CurrentStage.ChangeSubordinateValue(-5);
-        CurrentAlcana.SetAlacanaState(null);
+        CurrentAlcana.SetAlcanaStateInfo(null);
     }
 
     public bool EnableBattleSkip()

@@ -7,11 +7,14 @@ public class SaveInfo
 	private PlayerInfo _playerInfo = null;
     public PlayerInfo PlayerInfo => _playerInfo;
 
+	private AlcanaInfo _alcanaInfo = null;
+    public AlcanaInfo AlcanaInfo => _alcanaInfo;
     public SaveInfo()
     {
 		_playerInfo = new PlayerInfo();
 		_playerInfo.ClearStageClearCount();
 		_playerInfo.InitStageClearCount();
+		_alcanaInfo = new AlcanaInfo();
 	}
 
 	public void SetPlayerName(string name)

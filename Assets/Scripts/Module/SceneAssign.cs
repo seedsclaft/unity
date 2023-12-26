@@ -18,6 +18,8 @@ public class SceneAssign : MonoBehaviour
     [SerializeField] private GameObject rebornResultScene = null;
     [SerializeField] private GameObject slotScene = null;
     [SerializeField] private GameObject fastBattleScene = null;
+    [SerializeField] private GameObject alcanaSelectScene = null;
+    [SerializeField] private GameObject alcanaResultScene = null;
 
     public GameObject CreateScene(Scene scene,HelpWindow helpWindow)
     {
@@ -58,6 +60,10 @@ public class SceneAssign : MonoBehaviour
             return slotScene;
             case Scene.FastBattle:
             return fastBattleScene;
+            case Scene.AlcanaSelect:
+            return alcanaSelectScene;
+            case Scene.AlcanaResult:
+            return alcanaResultScene;
         }
         return null;
     }

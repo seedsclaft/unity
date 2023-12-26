@@ -362,7 +362,9 @@ public enum TriggerTiming
     Use = 1,
     After = 2,
     Interrupt = 3,
-    StartBattle = 4
+    StartBattle = 4,
+    BeforeTacticsTurn = 51,
+    CurrentTacticsTurn = 52
 }
 
 public enum FeatureType
@@ -402,6 +404,7 @@ public enum FeatureType
     RebornStatusUp = 402,
     RebornAddSkill = 403,
     RebornQuest = 404,
+    GainTurn = 501,
     HpCursedDamage = 2004, // 制御用
     RemoveStatePassive = 2022, // 制御用
 }

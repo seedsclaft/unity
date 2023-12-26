@@ -6,59 +6,39 @@ using System.Collections.Generic;
 public class AlcanaInfo{
     private bool _IsAlcana;
     public bool IsAlcana {get {return _IsAlcana;}}
-	private List<int> _alcanaIds = new List<int>();
-    public List<int> AlcanaIds {get {return _alcanaIds;}}
-    private AlcanaType _currentAlcanaId;
-    private List<int> _ownAlcanaIds = new List<int>();
-    public List<int> OwnAlcanaIds {get {return _ownAlcanaIds;}}
-    private bool _usedAlcana = false;
-    public bool UsedAlcana {get {return _usedAlcana;}}
-    private StateInfo _alcanaState = null;
-    public StateInfo AlcanaState {get {return _alcanaState;}}
+    private List<SkillInfo> _ownAlcanaList = new ();
+    public List<SkillInfo> OwnAlcanaList {get {return _ownAlcanaList;}}
+    private StateInfo _alcanaStateInfo = null;
+    public StateInfo AlcanaState {get {return _alcanaStateInfo;}}
 
     public AlcanaInfo(){
-
+        InitData();
     }
 
     public void InitData()
     {
         _IsAlcana = false;
-        _ownAlcanaIds.Clear();
-        _usedAlcana = false;
-		MakeAlcanaData();
+        _ownAlcanaList.Clear();
+        _ownAlcanaList.Add(new SkillInfo(500001));
     }
 
-	private void MakeAlcanaData()
+    public List<SkillInfo> CheckAlcanaSkillInfo(TriggerTiming triggerTiming)
     {
-        _alcanaIds.Clear();
-        List<AlcanaData.Alcana> alcana = DataSystem.Alcana;
-        while (_alcanaIds.Count < alcana.Count-1)
+        return _ownAlcanaList.FindAll(a => a.Master.TriggerDates.Find(b => b.TriggerTiming == triggerTiming) != null);
+    }
+
+    public void AddAlcana(SkillInfo skillInfo)
+    {
+        _ownAlcanaList.Add(skillInfo);
+    }
+
+    public void ReleaseAlcana(SkillInfo skillInfo)
+    {
+        var findIndex = _ownAlcanaList.FindIndex(a => a == skillInfo);
+        if (findIndex > -1)
         {
-            int rand = new Random().Next(0, alcana.Count-1);
-            if (_alcanaIds.FindIndex(a => a == rand) == -1)
-            {
-                _alcanaIds.Add(rand);
-            }
+            _ownAlcanaList.RemoveAt(findIndex);
         }
-    }
-
-    public void AddAlcanaId()
-    {
-        int alcanaId = _alcanaIds[0];
-        _alcanaIds.RemoveAt(0);
-        _ownAlcanaIds.Add(alcanaId);
-    }
-    
-    public void OpenAlcana()
-    {
-        int id = _ownAlcanaIds[0];
-        _ownAlcanaIds.RemoveAt(0);
-        _currentAlcanaId = (AlcanaType)id;
-    }
-    
-    public AlcanaData.Alcana CurrentSelectAlcana()
-    {
-        return DataSystem.Alcana.Find(a => a.Id == (int)_currentAlcanaId);
     }
 
     public void SetIsAlcana(bool isAlcana)
@@ -66,70 +46,11 @@ public class AlcanaInfo{
         _IsAlcana = isAlcana;
     }
 
-    public void UseAlcana(bool isUse)
+    public void SetAlcanaStateInfo(StateInfo stateInfo)
     {
-        _usedAlcana = isUse;
+        _alcanaStateInfo = stateInfo;
     }
 
-    public void SetAlacanaState(StateInfo stateInfo)
-    {
-        _alcanaState = stateInfo;
-    }
 
-    public void DeleteAlcana()
-    {
-        _currentAlcanaId = (AlcanaType)(-1);
-    }
 
-    public void ChangeNextAlcana()
-    {
-        List<AlcanaData.Alcana> alcana = DataSystem.Alcana;
-        int rand = new Random().Next(0, alcana.Count-1);
-        _alcanaIds[0] = rand;
-    }
-
-    public bool IsStatusCostDown(StatusParamType statusParamType)
-    {
-        if (_usedAlcana == true)
-        {
-            SkillData skillData = DataSystem.Skills.Find(a => a.Id == CurrentSelectAlcana().SkillId);
-            SkillData.FeatureData featureData = skillData.FeatureDates.Find(a => a.FeatureType == FeatureType.StatusUpCostDown);
-            if (featureData != null)
-            {
-                if (featureData.Param1 == (int)statusParamType)
-                {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-    
-    public int VictoryGainSpValue()
-    {
-        if (_usedAlcana == true)
-        {
-            SkillData skillData = DataSystem.Skills.Find(a => a.Id == CurrentSelectAlcana().SkillId);
-            SkillData.FeatureData featureData = skillData.FeatureDates.Find(a => a.FeatureType == FeatureType.VictoryGainSp);
-            if (featureData != null)
-            {
-                return featureData.Param1;
-            }
-        }
-        return 0;
-    }
-
-    public bool IsDisableTactics()
-    {
-        if (_usedAlcana == true)
-        {
-            SkillData skillData = DataSystem.Skills.Find(a => a.Id == CurrentSelectAlcana().SkillId);
-            SkillData.FeatureData featureData = skillData.FeatureDates.Find(a => a.FeatureType == FeatureType.DisableTactics);
-            if (featureData != null)
-            {
-                return true;
-            }
-        }
-        return false;
-    }
 }
