@@ -9,8 +9,10 @@ public class RankingInfo
     public string Name;
     public int Rank;
 
-    public List<int> SelectIdx = new List<int>();
-    public List<int> SelectRank = new List<int>();
+    public List<int> SelectIdx = new ();
+    public List<int> SelectRank = new ();
+    public List<ActorInfo> ActorInfos = new ();
+    public System.Action<int> DetailEvent;
     public RankingInfo()
     {
  

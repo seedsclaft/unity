@@ -46,7 +46,7 @@ public class FirebaseController : SingletonMonoBehaviour<FirebaseController>
             return;
         }
         FirebaseController.RankingInfos.Clear();
-        IsBusy = true;
+        FirebaseController.IsBusy = true;
         FirebaseReadRankingData(gameObject.GetInstanceID(),OnReadFirestore);
     }
     
@@ -68,7 +68,7 @@ public class FirebaseController : SingletonMonoBehaviour<FirebaseController>
             Debug.Log("OnReadFirestore End");
             FirebaseController.RankingInfos = data;
         }
-        IsBusy = false;
+        FirebaseController.IsBusy = false;
     }
 
     public void CurrentRankingData(string userId)
@@ -78,7 +78,7 @@ public class FirebaseController : SingletonMonoBehaviour<FirebaseController>
             return;
         }
         FirebaseController.CurrentScore = 0;
-        IsBusy = true;
+        FirebaseController.IsBusy = true;
         FirebaseCurrentRankingData(gameObject.GetInstanceID(),userId,OnCurrentFirestore);
     }
 
@@ -91,7 +91,7 @@ public class FirebaseController : SingletonMonoBehaviour<FirebaseController>
             var ranking = JsonUtility.FromJson<RankingInfo>(jsonString);
             FirebaseController.CurrentScore = ranking.Score;
         }
-        IsBusy = false;
+        FirebaseController.IsBusy = false;
     }
 
     public void WriteRankingData(string userId,int score,string name, List<int> selectIdx,List<int> selectRank)
@@ -100,7 +100,7 @@ public class FirebaseController : SingletonMonoBehaviour<FirebaseController>
         {
             return;
         }
-        IsBusy = true;
+        FirebaseController.IsBusy = true;
         FirebaseWriteRankingData(gameObject.GetInstanceID(),userId,score,name,selectIdx.ToArray(),selectIdx.Length,selectRank.ToArray(),selectRank.Length,OnWriteFirestore);
     }
 
@@ -109,7 +109,7 @@ public class FirebaseController : SingletonMonoBehaviour<FirebaseController>
     private static void OnWriteFirestore(int instanceId,string jsonString)
     {
         Debug.Log("OnWriteFirestore End");
-        IsBusy = false;
+        FirebaseController.IsBusy = false;
     }
     #endif
 
@@ -139,24 +139,65 @@ public class FirebaseController : SingletonMonoBehaviour<FirebaseController>
 
     private RankingInfo MakeRankingInfo(Dictionary<string, object> docDictionary)
     {
+        Debug.Log("MakeRankingInfo");
         var selectIdxData = (List<object>)Convert.ChangeType(docDictionary["SelectIdx"], typeof(List<object>));
         var selectRankData = (List<object>)Convert.ChangeType(docDictionary["SelectRank"], typeof(List<object>));
         
         var selectIdxList = new List<int>();
         foreach (var selectIdx in selectIdxData)
         {
-            selectIdxList.Add((int) Convert.ChangeType(selectIdx, typeof(int)));
+            selectIdxList.Add((int)Convert.ChangeType(selectIdx, typeof(int)));
         }
         var selectRankList = new List<int>();
         foreach (var selectRank in selectRankData)
         {
-            selectRankList.Add((int) Convert.ChangeType(selectRank, typeof(int)));
+            selectRankList.Add((int)Convert.ChangeType(selectRank, typeof(int)));
         }
+
+        var actorInfos = new List<ActorInfo>();
+        for (var i = 1;i <= 5;i++)
+        {
+            var actorKey = "Actor" + i;
+            if (docDictionary.ContainsKey(actorKey))
+            {
+                var convertActorData = (Dictionary<string, object>)Convert.ChangeType(docDictionary[actorKey], typeof(Dictionary<string, object>));
+                
+                var rankingActorData = new RankingActorData();
+                foreach (var rankingActor in convertActorData)
+                {
+                    if (rankingActor.Key == "ActorId") { rankingActorData.ActorId = (int)Convert.ChangeType(rankingActor.Value, typeof(int));}
+                    if (rankingActor.Key == "Level") { rankingActorData.Level = (int)Convert.ChangeType(rankingActor.Value, typeof(int));}
+                    if (rankingActor.Key == "DemigodParam") { rankingActorData.DemigodParam = (int)Convert.ChangeType(rankingActor.Value, typeof(int));}
+                    if (rankingActor.Key == "Hp") { rankingActorData.Hp = (int)Convert.ChangeType(rankingActor.Value, typeof(int));}
+                    if (rankingActor.Key == "Mp") { rankingActorData.Mp = (int)Convert.ChangeType(rankingActor.Value, typeof(int));}
+                    if (rankingActor.Key == "Atk") { rankingActorData.Atk = (int)Convert.ChangeType(rankingActor.Value, typeof(int));}
+                    if (rankingActor.Key == "Def") { rankingActorData.Def = (int)Convert.ChangeType(rankingActor.Value, typeof(int));}
+                    if (rankingActor.Key == "Spd") { rankingActorData.Spd = (int)Convert.ChangeType(rankingActor.Value, typeof(int));}
+                    if (rankingActor.Key == "Lost") { rankingActorData.Lost = (Boolean)Convert.ChangeType(rankingActor.Value, typeof(Boolean));}
+                    if (rankingActor.Key == "SkillIds")
+                    {
+                        var skillIdDates = (List<object>)Convert.ChangeType(rankingActor.Value, typeof(List<object>));
+                        var skillIds = new List<int>();
+                        foreach (var skillIdData in skillIdDates)
+                        {
+                            skillIds.Add((int)Convert.ChangeType(skillIdData, typeof(int)));
+                        }
+                        rankingActorData.SkillIds = skillIds;
+                    }
+                    
+                }
+                var actorInfo = new ActorInfo(rankingActorData);
+                actorInfos.Add(actorInfo);
+            }
+        }
+
+        Debug.Log("RankingInfo");
         return new RankingInfo(){
             Name = docDictionary["Name"].ToString(),
             Score = (int) Convert.ChangeType(docDictionary["Score"], typeof(int)),
             SelectIdx = selectIdxList,
-            SelectRank = selectRankList
+            SelectRank = selectRankList,
+            ActorInfos = actorInfos
         };
     }
 
@@ -167,7 +208,7 @@ public class FirebaseController : SingletonMonoBehaviour<FirebaseController>
             return;
         }
         FirebaseController.RankingInfos.Clear();
-        IsBusy = true;
+        FirebaseController.IsBusy = true;
         FirebaseFirestore db = FirebaseFirestore.DefaultInstance;
 
         var cnf = db.Collection("ranking").OrderByDescending("Score").Limit(100);
@@ -189,10 +230,10 @@ public class FirebaseController : SingletonMonoBehaviour<FirebaseController>
                 }
                 Debug.Log("OnReadFirestore End");
                 FirebaseController.RankingInfos = data;
-                IsBusy = false;
+                FirebaseController.IsBusy = false;
             } else
             {
-                IsBusy = false;
+                FirebaseController.IsBusy = false;
             }
         });
     }
@@ -204,7 +245,7 @@ public class FirebaseController : SingletonMonoBehaviour<FirebaseController>
             return;
         }
         FirebaseController.CurrentScore = 0;
-        IsBusy = true;
+        FirebaseController.IsBusy = true;
         FirebaseFirestore db = FirebaseFirestore.DefaultInstance;
         var cnf = db.Collection("ranking").Document(userId);
         cnf.GetSnapshotAsync().ContinueWithOnMainThread(task =>
@@ -212,42 +253,90 @@ public class FirebaseController : SingletonMonoBehaviour<FirebaseController>
             if (task.IsCompletedSuccessfully)
             {
                 DocumentSnapshot doc = task.Result;
-                var ranking = MakeRankingInfo(doc.ToDictionary());
-                FirebaseController.CurrentScore = ranking.Score;
-                IsBusy = false;
+                if (doc.Exists)
+                {
+                    var ranking = MakeRankingInfo(doc.ToDictionary());
+                    FirebaseController.CurrentScore = ranking.Score;
+                }
+                FirebaseController.IsBusy = false;
             } else
             {
-                IsBusy = false;
+                FirebaseController.IsBusy = false;
             }
         });
     }
 
-    public void WriteRankingData(string userId,int score,string name, List<int> selectIdx,List<int> selectRank)
+    public void WriteRankingData(string userId,int score,string name, List<int> selectIdx,List<int> selectRank,List<RankingActorData> actorInfos)
     {
         if (!_isInit)
         {
             return;
         }
-        IsBusy = true;
+        FirebaseController.IsBusy = true;
         FirebaseFirestore db = FirebaseFirestore.DefaultInstance;
         DocumentReference docRef = db.Collection("ranking").Document(userId);
-        RankingInfo rankingData = new RankingInfo
+        Dictionary<string, System.Object> rankingData = new Dictionary<string, System.Object>
         {
-            Score = score,
-            Name = name,
-            SelectIdx = selectIdx,
-            SelectRank = selectRank,
+            { "Name", name },
+            { "Score", score },
+            { "SelectIdx", selectIdx },
+            { "SelectRank", selectRank },
         };
+        if (actorInfos.Count > 0) rankingData.Add("Actor1",actorInfos[0]);
+        if (actorInfos.Count > 1) rankingData.Add("Actor2",actorInfos[1]);
+        if (actorInfos.Count > 2) rankingData.Add("Actor3",actorInfos[2]);
+        if (actorInfos.Count > 3) rankingData.Add("Actor4",actorInfos[3]);
+        if (actorInfos.Count > 4) rankingData.Add("Actor5",actorInfos[4]);
         docRef.SetAsync(rankingData).ContinueWithOnMainThread(task =>
         {
             if (task.IsCompletedSuccessfully)
             {
-                IsBusy = false;
+                Debug.Log("IsCompletedSuccessfully");
+                FirebaseController.IsBusy = false;
             } else
             {
-                IsBusy = false;
+                Debug.Log("IsCompleted");
+                FirebaseController.IsBusy = false;
             }
         });
     }
+
+    
     #endif
 }
+
+#if UNITY_ANDROID
+[FirestoreData]
+public class RankingActorData
+{
+    [FirestoreProperty]
+    public int ActorId { get; set; }
+
+    [FirestoreProperty]
+    public int Level { get; set; }
+
+    [FirestoreProperty]
+    public int Hp { get; set; }
+
+    [FirestoreProperty]
+    public int Mp { get; set; }
+
+    [FirestoreProperty]
+    public int Atk { get; set; }
+
+    [FirestoreProperty]
+    public int Def { get; set; }
+
+    [FirestoreProperty]
+    public int Spd { get; set; }
+
+    [FirestoreProperty]
+    public List<int> SkillIds { get; set; }
+
+    [FirestoreProperty]
+    public int DemigodParam { get; set; }
+
+    [FirestoreProperty]
+    public bool Lost { get; set; }
+}
+#endif

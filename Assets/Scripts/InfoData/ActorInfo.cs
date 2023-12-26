@@ -18,7 +18,7 @@ public class ActorInfo
     private StatusInfo _upperRate;
     private List<AttributeRank> _attribute;
     public List<AttributeRank> Attribute => _attribute;
-    private List<SkillInfo> _skills;
+    private List<SkillInfo> _skills = new ();
     public List<SkillInfo> Skills => _skills;
 
     private int _lastSelectSkillId = 0;
@@ -84,6 +84,30 @@ public class ActorInfo
         InitSkillInfo();
     }
 
+    public ActorInfo(RankingActorData rankingActorData)
+    {
+        _actorId = rankingActorData.ActorId;
+        _attribute = Master.Attribute;
+        _level = rankingActorData.Level;
+        _sp = 0;
+        _upperRate = Master.NeedStatus;
+        SetInitialParameter(Master);
+        _currentHp = _baseStatus.Hp;
+        _currentMp = _baseStatus.Mp;
+        _demigodParam = rankingActorData.DemigodParam;
+        InitSkillInfo();
+        
+        _plusStatus.SetParameter(
+            rankingActorData.Hp - _baseStatus.Hp,
+            rankingActorData.Mp - _baseStatus.Mp,
+            rankingActorData.Atk - _baseStatus.Atk,
+            rankingActorData.Def - _baseStatus.Def,
+            rankingActorData.Spd - _baseStatus.Spd
+        );
+            
+        
+    }
+
     public void CopyData(ActorInfo baseActorInfo)
     {
         _level = baseActorInfo.Level;
@@ -111,7 +135,7 @@ public class ActorInfo
             baseActorInfo.TempStatus.GetParameter(StatusParamType.Def),
             baseActorInfo.TempStatus.GetParameter(StatusParamType.Spd)
         );
-        _skills = new List<SkillInfo>();
+        _skills.Clear();
         foreach (var skillInfo in baseActorInfo.Skills)
         {
             skillInfo.SetLearningState(LearningState.Learned);
@@ -148,7 +172,7 @@ public class ActorInfo
 
     private void InitSkillInfo()
     {
-        _skills = new List<SkillInfo>();
+        _skills.Clear();
         for (int i = 0;i < Master.LearningSkills.Count;i++)
         {
             var _learningData = Master.LearningSkills[i];

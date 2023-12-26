@@ -38,7 +38,7 @@ public class GameSystem : MonoBehaviour
     public static DebugBattleData DebugBattleData;
     private void Awake() 
     {
-#if (UNITY_WEBGL || UNITY_ANDROID) && !UNITY_EDITOR
+#if (UNITY_WEBGL || UNITY_ANDROID)// && !UNITY_EDITOR
         FirebaseController.Instance.Initialize();
 #endif
         Application.targetFrameRate = 60;
@@ -258,6 +258,7 @@ public class GameSystem : MonoBehaviour
             UpdateCommand(new ViewEvent(Base.CommandType.CloseConfirm));
             if (endEvent != null) endEvent();
         });
+        rankingView.SetEvent((type) => UpdateCommand(type));
         SetIsBusyMainAndStatus();
     }
 

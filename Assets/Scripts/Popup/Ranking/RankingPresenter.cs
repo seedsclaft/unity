@@ -32,5 +32,23 @@ public class RankingPresenter
         if (_busy){
             return;
         }
+        if (viewEvent.commandType == CommandType.Detail)
+        {
+            CommandDetail((int)viewEvent.template);
+        }
+    }
+
+    private void CommandDetail(int listIndex)
+    {
+        _model.MakeDetailPartyInfo(listIndex);
+        var statusViewInfo = new StatusViewInfo(() => {
+            _view.CommandStatusClose();
+            //_view.SetHelpText(DataSystem.System.GetTextData(14010).Text);
+            _view.ChangeUIActive(true);
+        });
+        statusViewInfo.SetDisplayDecideButton(false);
+        _view.CommandCallStatus(statusViewInfo);
+        _view.ChangeUIActive(false);
+        Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
     }
 }

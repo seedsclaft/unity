@@ -219,10 +219,9 @@ public class ActorInfoComponent : MonoBehaviour
     private void UpdateAwakenFaceThumb(string imagePath)
     {
         if (_isAwakeFaceInit == true) return;
-        var handle = ResourceSystem.LoadActorAwakenFaceSprite(imagePath);
         if (awakenFaceThumb != null)
         {
-            awakenFaceThumb.sprite = handle;
+            awakenFaceThumb.sprite = ResourceSystem.LoadActorAwakenFaceSprite(imagePath);
             awakenFaceThumb.gameObject.SetActive(true);
         }
         _isAwakeFaceInit = true;

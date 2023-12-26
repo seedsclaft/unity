@@ -652,6 +652,35 @@ public class BaseModel
         return members;
     }
 
+#if UNITY_ANDROID
+    public List<RankingActorData> RankingActorDates()
+    {
+        var list = new List<RankingActorData>();
+        foreach (var actorInfo in EvaluateMembers())
+        {
+            var skillIds = new List<int>();
+            foreach (var skill in actorInfo.Skills)
+            {
+                skillIds.Add(skill.Id);
+            }
+            var rankingActorData = new RankingActorData()
+            {
+                ActorId = actorInfo.ActorId,
+                Level = actorInfo.Level,
+                Hp = actorInfo.CurrentParameter(StatusParamType.Hp),
+                Mp = actorInfo.CurrentParameter(StatusParamType.Mp),
+                Atk = actorInfo.CurrentParameter(StatusParamType.Atk),
+                Def = actorInfo.CurrentParameter(StatusParamType.Def),
+                Spd = actorInfo.CurrentParameter(StatusParamType.Spd),
+                SkillIds = skillIds,
+                DemigodParam = actorInfo.DemigodParam,
+                Lost = actorInfo.Lost
+            };
+            list.Add(rankingActorData);
+        }
+        return list;
+    }
+#endif
     public int TotalEvaluate()
     {        
         var evaluate = 0;
@@ -694,7 +723,7 @@ public class BaseModel
     {
         var userId = CurrentData.PlayerInfo.UserId.ToString();
         var rankingText = "";
-#if (UNITY_WEBGL || UNITY_ANDROID) && !UNITY_EDITOR
+#if (UNITY_WEBGL || UNITY_ANDROID)// && !UNITY_EDITOR
         FirebaseController.Instance.CurrentRankingData(userId);
         await UniTask.WaitUntil(() => FirebaseController.IsBusy == false);
         var currentScore = FirebaseController.CurrentScore;
@@ -707,7 +736,8 @@ public class BaseModel
                 evaluate,
                 CurrentData.PlayerInfo.PlayerName,
                 SelectIdxList(),
-                SelectRankList()
+                SelectRankList(),
+                RankingActorDates()
             );
             await UniTask.WaitUntil(() => FirebaseController.IsBusy == false);
 

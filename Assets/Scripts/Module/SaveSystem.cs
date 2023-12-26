@@ -61,7 +61,7 @@ public class SaveSystem : MonoBehaviour
 		{
 			userSaveInfo = new SaveInfo();
 		}
-		SaveInfo(_playerDataKey,userSaveInfo);
+		SaveInfo(SaveFilePath(_playerDataKey),userSaveInfo);
 	}
 
 		

@@ -35,7 +35,23 @@ public class RankingView : BaseView
 
     public void SetRankingInfo(List<ListData> rankingInfo) 
     {
+        foreach (var listDate in rankingInfo)
+        {
+            var data = (RankingInfo)listDate.Data;
+            data.DetailEvent = CallDetail;
+        }
         rankingInfoList.SetData(rankingInfo);
+    }
+
+    private void CallDetail(int index)
+    {
+        var listData = rankingInfoList.ListData;
+        if (listData != null && listData.Enable)
+        {
+            var eventData = new RankingViewEvent(CommandType.Detail);
+            eventData.template = index;
+            _commandData(eventData);
+        }
     }
 }
 
@@ -44,6 +60,7 @@ namespace Ranking
     public enum CommandType
     {
         None = 0,
+        Detail = 1,
     }
 }
 public class RankingViewEvent

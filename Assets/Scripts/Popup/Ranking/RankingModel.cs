@@ -3,14 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using System.Threading;
-using UnityEngine;
 
 public class RankingModel : BaseModel
 {
     private List<RankingInfo> _rakingInfos = null;
-    public async void RankingInfos(System.Action<List<ListData>> endEvent)
+    public async void RankingInfos(Action<List<ListData>> endEvent)
     {
-#if (UNITY_WEBGL || UNITY_ANDROID) && !UNITY_EDITOR
+#if (UNITY_WEBGL || UNITY_ANDROID) //&& !UNITY_EDITOR
         if (_rakingInfos == null)
         {
             FirebaseController.Instance.ReadRankingData();
@@ -22,5 +21,17 @@ public class RankingModel : BaseModel
             endEvent(MakeListData(_rakingInfos));
         }
 #endif
+    }
+
+    public void MakeDetailPartyInfo(int listIndex)
+    {
+        var rankingInfo = _rakingInfos[listIndex];
+        CurrentStageData.ClearActors();
+        PartyInfo.InitActors();
+        foreach (var actorInfo in rankingInfo.ActorInfos)
+        {
+            PartyInfo.AddActor(actorInfo.ActorId);
+            CurrentStageData.AddActor(actorInfo);
+        }
     }
 }

@@ -2,8 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.EventSystems;
-using UnityEngine.Events;
 using TMPro;
 
 public class RankingInfoComponent : ListItem ,IListViewItem 
@@ -13,14 +11,16 @@ public class RankingInfoComponent : ListItem ,IListViewItem
     [SerializeField] private TextMeshProUGUI score;
     [SerializeField] private List<Image> actorImages;
     [SerializeField] private List<TextMeshProUGUI> actorEvaluates;
+    [SerializeField] private Button detailButton;
 
+    private bool _isInit = false;
     public void UpdateViewItem()
     {
         if (ListData == null) return;
         var data = (RankingInfo)ListData.Data;
         playerName.text = data.Name;
         score.text = data.Score.ToString();
-        rank.text = data.Rank.ToString() + "位";
+        rank.text = data.Rank.ToString() + DataSystem.System.GetTextData(16070).Text;
         for (int i = 0;i < actorImages.Count;i++)
         {
             if (data.SelectIdx.Count > i)
@@ -35,11 +35,21 @@ public class RankingInfoComponent : ListItem ,IListViewItem
                 actorImages[i].gameObject.SetActive(false);
             }
         }
+        if (_isInit == false)
+        {
+            if (detailButton != null)
+            {
+                detailButton.onClick.AddListener(() => data.DetailEvent(Index));
+            }
+        }
+        _isInit = true;
     }
     
     private void UpdateAwakenFaceThumb(Image image, int actorId)
     {
-        var handle = Resources.Load<Sprite>("Texture/Character/Actors/" + actorId.ToString("D4") + "/AwakenFace");
-        if (image != null) image.sprite = handle;
+        if (image != null) 
+        {
+            image.sprite = ResourceSystem.LoadActorAwakenFaceSprite(actorId.ToString("D4"));
+        }
     }
 }
