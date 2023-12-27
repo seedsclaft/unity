@@ -17,6 +17,7 @@ public class SystemData : ScriptableObject
 	public int ResourceCount;
 	public int LimitSaveCount;
 	public int LimitContinueCount;
+	public int AlcanaSelectCount;
 	public List<TextData> SystemTextData;
 
 	public List<InputData> InputDataList;

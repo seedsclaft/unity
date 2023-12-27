@@ -18,6 +18,27 @@ public class ActorInfo
     private StatusInfo _upperRate;
     private List<AttributeRank> _attribute;
     public List<AttributeRank> Attribute => _attribute;
+    public List<AttributeRank> GetAttributeRank()
+    {
+        var list = new List<AttributeRank>();
+        var idx = 0;
+        foreach (var attribute in _attribute)
+        {
+            list.Add(attribute);
+            if (GameSystem.CurrentStageData != null)
+            {
+                if (GameSystem.CurrentStageData.CurrentAlcana.CheckAlchemyValue())
+                {
+                    if (list[idx] > 0)
+                    {
+                        list[idx] -= 1;
+                    }
+                }
+            }
+            idx++;
+        }
+        return list;
+    }
     private List<SkillInfo> _skills = new ();
     public List<SkillInfo> Skills => _skills;
 
@@ -408,7 +429,7 @@ public class ActorInfo
         }
         var attributeValues = new List<AttributeRank>();
         int idx = 1;
-        foreach (var attribute in Attribute)
+        foreach (var attribute in GetAttributeRank())
         {
             var attributeValue = attribute;
             foreach (var alchemyFeature in alchemyFeatures)
@@ -428,7 +449,7 @@ public class ActorInfo
     {
         var attributeParams = AttributeParams(actorInfos);
         var attributeValues = new List<string>();
-        foreach (var attribute in Attribute)
+        foreach (var attribute in GetAttributeRank())
         {
             int textId = 320 + (int)attribute;
             attributeValues.Add(DataSystem.System.GetTextData(textId).Text);

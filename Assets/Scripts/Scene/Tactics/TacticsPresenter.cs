@@ -45,6 +45,15 @@ public class TacticsPresenter :BasePresenter
         {
             return;
         }
+        if (CheckCurrentAlcanaEvent())
+        {
+            InitializeView();
+            _view.StartAlcanaAnimation(() => 
+            {
+                _view.CommandSceneChange(Scene.AlcanaResult);
+            });
+            return;
+        }
         Initialize();
     }
 
@@ -152,6 +161,13 @@ public class TacticsPresenter :BasePresenter
         return results.Count > 0;
     }
 
+    private bool CheckCurrentAlcanaEvent()
+    {
+        var results = _model.CheckAlcanaSkillInfos(TriggerTiming.CurrentTacticsTurn);
+        _model.SetAlcanaSkillInfo(results);
+        return results.Count > 0;
+    }
+
     private bool CheckAdvEvent()
     {
         var StartTacticsAdvData = _model.StartTacticsAdvData();
@@ -205,11 +221,6 @@ public class TacticsPresenter :BasePresenter
         {
             return;
         }
-        _view.ShowCommandList();
-        if (_model.SetStageTutorials(EventTiming.StartTactics))
-        {
-            _view.CommandCallTutorialFocus(_model.CurrentStageTutorialDates[0]);
-        }
         _busy = false;
     }
 
@@ -231,6 +242,11 @@ public class TacticsPresenter :BasePresenter
         //_view.SetHelpInputInfo(_model.TacticsCommandInputInfo());
         var bgm = await _model.GetBgmData(_model.TacticsBgmFilename());
         Ryneus.SoundManager.Instance.PlayBgm(bgm,1.0f,true);
+        _view.ShowCommandList();
+        if (_model.SetStageTutorials(EventTiming.StartTactics))
+        {
+            _view.CommandCallTutorialFocus(_model.CurrentStageTutorialDates[0]);
+        }
     }
 
     private void UpdateCommand(TacticsViewEvent viewEvent)

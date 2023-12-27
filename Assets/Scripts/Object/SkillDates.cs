@@ -405,6 +405,14 @@ public enum FeatureType
     RebornAddSkill = 403,
     RebornQuest = 404,
     GainTurn = 501,
+    ActorLvUp = 502,
+    AlchemyCostZero = 503,
+    NoBattleLost = 504,
+    ResourceBonus = 505,
+    CommandCostZero = 506,
+    AlchemyCostBonus = 507,
+    CommandLvUp = 508,
+    AddSkillOrCurrency = 509,
     HpCursedDamage = 2004, // 制御用
     RemoveStatePassive = 2022, // 制御用
 }

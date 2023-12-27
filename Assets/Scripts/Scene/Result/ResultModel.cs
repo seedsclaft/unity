@@ -23,11 +23,9 @@ public class ResultModel : BaseModel
         return listDates;
     }
 
-    public string EndingType()
+    public string EndingTypeText()
     {
-        string endType = "END-";
-        endType += CurrentStage.EndingType;
-        return endType;
+        return DataSystem.System.GetTextData(16080).Text + CurrentStage.EndingType;
     }
 
     public bool IsNewRecord()
@@ -60,10 +58,65 @@ public class ResultModel : BaseModel
     {
         // Party初期化
         PartyInfo.InitActors();
-        for (int i = 0;i < ResultMembers().Count;i++)
+        foreach (var resultMember in ResultMembers())
         {
-            PartyInfo.AddActor(ResultMembers()[i].ActorId);
+            PartyInfo.AddActor(resultMember.ActorId);
         }
+    }
+
+    // アルカナ新規入手
+    public bool CheckIsAlcana()
+    {
+        return CurrentStage.Master.Alcana;
+    }
+
+    public List<ListData> GetAlcanaSkillInfos()
+    {
+        // ヒロイン
+        var actorInfo = EvaluateMembers()[0];
+        // Aエンドは3枚　Bエンドは2枚　Cエンドは1枚
+        var getCount = 1;
+        if (CurrentStage.EndingType == EndingType.B)
+        {
+            getCount = 2;
+        } else
+        if (CurrentStage.EndingType == EndingType.A)
+        {
+            getCount = 3;
+        }
+        // 候補アルカナ
+        var alcanaSkillsDates = DataSystem.Skills.FindAll(a => a.SkillType == SkillType.UseAlcana);
+        var getAlcanaInfos = new List<SkillInfo>();
+        while (getCount > 0)
+        {
+            var rand = UnityEngine.Random.Range(0,alcanaSkillsDates.Count);
+            var randSkillData = alcanaSkillsDates[rand];
+            if (CurrentData.AlcanaInfo.OwnAlcanaList.Find(a => a.Id == randSkillData.Id) != null)
+            {
+                // 重複可能かどうか featureが508魔法入手
+                if (randSkillData.FeatureDates.Find(a => a.FeatureType == FeatureType.AddSkillOrCurrency) != null)
+                {
+                    var addSkillInfo = new SkillInfo(randSkillData.Id);
+                    var skills = actorInfo.Skills.FindAll(a => a.Master.Rank == 1 && a.Attribute == randSkillData.Attribute);
+                    if (skills.Count > 0)
+                    {
+                        var skillRand = UnityEngine.Random.Range(0,skills.Count);
+                        addSkillInfo.SetParam(skills[skillRand].Id,0,0);
+                        getAlcanaInfos.Add(addSkillInfo);
+                        getCount--;
+                    }
+                }
+            } else{
+                // 重複判定
+                if (getAlcanaInfos.Find(a => a.Id == randSkillData.Id) != null)
+                {
+                    var uniqueSkillInfo = new SkillInfo(randSkillData.Id);
+                    getAlcanaInfos.Add(uniqueSkillInfo);
+                    getCount--;
+                }
+            }
+        }
+        return MakeListData(getAlcanaInfos);
     }
 
     // 転生スキル習得
@@ -115,7 +168,7 @@ public class ResultModel : BaseModel
             return null;
         }
         var skill = new SkillInfo(commandReborn[commandRand].Id);
-        skill.SetParam(param2.ToString(),param2,(commandRand+1));
+        skill.SetParam(param2,param2,(commandRand+1));
         return skill;
     }    
     
@@ -142,7 +195,7 @@ public class ResultModel : BaseModel
             param2 = 4;
         }
         var skill = new SkillInfo(statusReborn[statusRand].Id);
-        skill.SetParam(param2.ToString(),param2,statusRand);
+        skill.SetParam(param2,param2,statusRand);
         return skill;
     }
 
@@ -157,7 +210,7 @@ public class ResultModel : BaseModel
         foreach (var skill in skills)
         {
             var rate = 10;
-            if ((int)actorInfo.Attribute[(int)(skill.Attribute-1)] <= 1)
+            if ((int)actorInfo.GetAttributeRank()[(int)(skill.Attribute-1)] <= 1)
             {
                 rate = 20;
             }
@@ -165,7 +218,7 @@ public class ResultModel : BaseModel
             if (rate >= skillRand)
             {
                 var rebornSkillInfo = new SkillInfo(magicReborn.Id);
-                rebornSkillInfo.SetParam(skill.Master.Name,0,skill.Master.Id);
+                rebornSkillInfo.SetParam(skill.Id,0,skill.Master.Id);
                 list.Add(rebornSkillInfo);
             }
         }
@@ -194,7 +247,7 @@ public class ResultModel : BaseModel
             param2 = 4;
         }
         var skill = new SkillInfo(questReborn.Id);
-        skill.SetParam(param2.ToString(),param2,0);
+        skill.SetParam(param2,param2,0);
         return skill;
     }
 

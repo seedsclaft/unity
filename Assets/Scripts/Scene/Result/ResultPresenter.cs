@@ -11,6 +11,7 @@ public class ResultPresenter : BasePresenter
     private bool _busy = true;
 
     private bool _isRankingEnd = false;
+    private bool _isAlcanaEnd = false;
     public ResultPresenter(ResultView view)
     {
         _view = view;
@@ -56,13 +57,17 @@ public class ResultPresenter : BasePresenter
         {
             CommandUpdateActor();
         }
+        if (viewEvent.commandType == CommandType.DecideAlcana)
+        {
+            CommandDecideAlcana();
+        }
     }
 
     private void CommandEndAnimation()
     {
         _model.ApplyScore();
         _model.SavePlayerStageData(false);
-        _view.SetEndingType(_model.EndingType());
+        _view.SetEndingType(_model.EndingTypeText());
         _view.SetEvaluate(_model.TotalEvaluate(),_model.IsNewRecord());
         _view.SetPlayerName(_model.PlayerName());
     }
@@ -88,32 +93,35 @@ public class ResultPresenter : BasePresenter
 
     private void CommandRanking()
     {
-        var popupInfo = new ConfirmInfo(DataSystem.System.GetTextData(16010).Text,(menuCommandInfo) => UpdatePopup((ConfirmCommandType)menuCommandInfo));
+        var popupInfo = new ConfirmInfo(DataSystem.System.GetTextData(16010).Text,(a) => UpdateAddRankingPopup((ConfirmCommandType)a));
         popupInfo.SetSelectIndex(1);
         _view.CommandCallConfirm(popupInfo);
     }
 
-    private void UpdatePopup(ConfirmCommandType confirmCommandType)
+    private void UpdateAddRankingPopup(ConfirmCommandType confirmCommandType)
     {
         if (confirmCommandType == ConfirmCommandType.Yes)
         {
+            // ランキングに登録
             _model.CurrentRankingData((a) => 
             {
                 _isRankingEnd = true;
                 _view.CommandConfirmClose();
                 _view.SetRanking(a);
-                UpdateResultCommand();
+                CommandGetAlcana();
+                //UpdateStageEndCommand();
             });
         } else
         {
             Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cancel);
             _isRankingEnd = true;
             _view.CommandConfirmClose();
-            UpdateResultCommand();
+            CommandGetAlcana();
+            //UpdateStageEndCommand();
         }
     }
 
-    private void UpdateResultCommand()
+    private void UpdateStageEndCommand()
     {
         _view.UpdateResultCommand(_model.StageEndCommand());
     }
@@ -204,6 +212,36 @@ public class ResultPresenter : BasePresenter
         }
     }
 
+    public void CommandGetAlcana()
+    {
+        // アルカナ入手ありならアルカナ入手
+        if (_model.CheckIsAlcana())
+        {
+            // ポップアップ表示        
+            var popupInfo = new ConfirmInfo(DataSystem.System.GetTextData(16100).Text,(a) => UpdateGetAlcanaPopup((ConfirmCommandType)a));
+            popupInfo.SetIsNoChoice(true);
+            _view.CommandCallConfirm(popupInfo);
+        } else
+        {
+            // 終了へ
+            UpdateStageEndCommand();
+        }
+    }
+
+    private void UpdateGetAlcanaPopup(ConfirmCommandType confirmCommandType)
+    {
+        _view.CommandConfirmClose();
+        Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
+        CommandAlcanaRefresh();
+    }
+
+    private void CommandDecideAlcana()
+    {
+        _view.CommandDecideAlcana();
+        // 終了へ
+        UpdateStageEndCommand();
+    }
+
     private void CommandEndGame()
     {
         _model.SaveSlotData();
@@ -211,7 +249,13 @@ public class ResultPresenter : BasePresenter
         _view.CommandSceneChange(Scene.MainMenu);
     }
 
-    private void CommandRefresh()
+    private void CommandAlcanaRefresh()
+    {
+        var skillInfos = _model.GetAlcanaSkillInfos();
+        _view.CommandAlcanaInfos(skillInfos);
+    }
+
+    private void CommandRebornRefresh()
     {
         var skillInfos = _model.RebornSkillInfos(_model.RebornActorInfo());
         var lastSelectIndex = skillInfos.FindIndex(a => ((SkillInfo)a.Data).Id == _model.RebornActorInfo().LastSelectSkillId);

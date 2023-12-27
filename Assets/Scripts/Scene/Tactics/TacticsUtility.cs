@@ -11,11 +11,25 @@ public class TacticsUtility
 
     public static int TrainCost(ActorInfo actorInfo)
     {
+        if (GameSystem.CurrentStageData != null)
+        {
+            if (GameSystem.CurrentStageData.CurrentAlcana.CheckCommandCostZero(TacticsCommandType.Train))
+            {
+                return 0;
+            }
+        }
         return actorInfo.Level * TacticsCostRate(actorInfo);
     }
 
     public static int AlchemyCost(ActorInfo actorInfo,AttributeType attributeType,List<ActorInfo> stageMembers)
     {
+        if (GameSystem.CurrentStageData != null)
+        {
+            if (GameSystem.CurrentStageData.CurrentAlcana.CheckAlchemyCostZero(attributeType))
+            {
+                return 0;
+            }
+        }
         int cost = 4;
         var param = actorInfo.AttributeParams(stageMembers)[(int)attributeType-1];
         switch (param)
@@ -47,8 +61,16 @@ public class TacticsUtility
         
         return Mathf.FloorToInt(cost * TacticsCostRate(actorInfo));
     }
+
     public static int RecoveryCost(ActorInfo actorInfo)
     {
+        if (GameSystem.CurrentStageData != null)
+        {
+            if (GameSystem.CurrentStageData.CurrentAlcana.CheckCommandCostZero(TacticsCommandType.Recovery))
+            {
+                return 0;
+            }
+        }
         int hpCost = (int)Mathf.Ceil((actorInfo.MaxHp - actorInfo.CurrentHp) * 0.1f) * TacticsCostRate(actorInfo);
         int mpCost = (int)Mathf.Ceil((actorInfo.MaxMp - actorInfo.CurrentMp) * 0.1f) * TacticsCostRate(actorInfo);
         return hpCost > mpCost ? hpCost : mpCost;

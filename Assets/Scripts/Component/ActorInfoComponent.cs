@@ -89,23 +89,23 @@ public class ActorInfoComponent : MonoBehaviour
         }
         if (element1 != null)
         {
-            UpdateAttributeParam(element1,actorInfo.Attribute[0]);
+            UpdateAttributeParam(element1,actorInfo.GetAttributeRank()[0]);
         }
         if (element2 != null)
         {
-            UpdateAttributeParam(element2,actorInfo.Attribute[1]);
+            UpdateAttributeParam(element2,actorInfo.GetAttributeRank()[1]);
         }
         if (element3 != null)
         {
-            UpdateAttributeParam(element3,actorInfo.Attribute[2]);
+            UpdateAttributeParam(element3,actorInfo.GetAttributeRank()[2]);
         }
         if (element4 != null)
         {
-            UpdateAttributeParam(element4,actorInfo.Attribute[3]);
+            UpdateAttributeParam(element4,actorInfo.GetAttributeRank()[3]);
         }
         if (element5 != null)
         {
-            UpdateAttributeParam(element5,actorInfo.Attribute[4]);
+            UpdateAttributeParam(element5,actorInfo.GetAttributeRank()[4]);
         }
         if (element1Cost != null)
         {

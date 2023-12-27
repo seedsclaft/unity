@@ -49,7 +49,7 @@ public class RebornModel : BaseModel
             {
                 var tempActor = new ActorInfo(DataSystem.Actors[i]);
                 var rebornSkill = new SkillInfo(baseRebornSkill.Id+i); 
-                rebornSkill.SetParam((1).ToString(),1,i+1);
+                rebornSkill.SetParam(1,1,i+1);
                 tempActor.AddRebornSkill(rebornSkill);
                 CurrentData.PlayerInfo.AddActorInfo(tempActor);
             }

@@ -44,7 +44,7 @@ public class AlcanaSelectModel : BaseModel
 
     public bool CheckStageStart()
     {
-        if (_selectedAlcanaList.Count == 5) return true;
+        if (_selectedAlcanaList.Count == DataSystem.System.AlcanaSelectCount) return true;
         if (_selectedAlcanaList.Count == CurrentData.AlcanaInfo.OwnAlcanaList.Count) return true;
         return false;
     }

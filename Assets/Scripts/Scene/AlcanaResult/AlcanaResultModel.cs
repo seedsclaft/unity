@@ -11,7 +11,7 @@ public class AlcanaResultModel : BaseModel
             var listData = (SystemData.CommandData)commandListData.Data;
             if (listData.Id == 1)
             {
-                commandListData.SetEnable(false);
+                //commandListData.SetEnable(false);
             }
         }
         return commandListDates;

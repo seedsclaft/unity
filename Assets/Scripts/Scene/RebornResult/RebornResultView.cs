@@ -39,7 +39,7 @@ public class RebornResultView : BaseView
 
     public void StartAnimation()
     {
-        _battleStartAnim.SetText("思念継承");
+        _battleStartAnim.SetText(DataSystem.System.GetTextData(17040).Text);
         _battleStartAnim.StartAnim();
         _battleStartAnim.gameObject.SetActive(true);
         _animationBusy = true;

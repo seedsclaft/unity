@@ -32,6 +32,18 @@ public class SkillInfoComponent : MonoBehaviour
         {
             UpdateSkillData(skillInfo.Id);
         }
+        if (skillInfo.Master.SkillType == SkillType.UseAlcana)
+        {
+            if (skillInfo.Master.FeatureDates.Find(a => a.FeatureType == FeatureType.AddSkillOrCurrency) != null)
+            {
+                var convertText = skillInfo.Master.ConvertHelpText(skillInfo.Master.Help);
+                var skillNameData = DataSystem.Skills.Find(a => a.Id == skillInfo.Param1);
+                if (skillNameData != null)
+                {
+                    description.text = convertText.Replace("\\d",skillNameData.Name);
+                }
+            }
+        }
         if (selectable != null)
         {
             selectable.SetActive(skillInfo.LearningState == LearningState.SelectLearn);
@@ -87,7 +99,14 @@ public class SkillInfoComponent : MonoBehaviour
         }
         if (description != null)
         {
-            description.text = skillData.ConvertHelpText(skillData.Help);
+            var convertText = skillData.ConvertHelpText(skillData.Help);
+            if (skillData.FeatureDates.Find(a => a.FeatureType == FeatureType.AddSkillOrCurrency) != null)
+            {
+                //description.text = convertText.Replace("\\d",replace);
+            } else
+            {
+                description.text = convertText;
+            }
         }
         if (range != null)
         {
@@ -132,7 +151,7 @@ public class SkillInfoComponent : MonoBehaviour
         var skillData = DataSystem.Skills.Find(skill => skill.Id == rebornSkillInfo.Id);
         if (nameText != null)
         {
-            nameText.text = skillData.Name.Replace("\\d",rebornSkillInfo.Param1);
+            //nameText.text = skillData.Name.Replace("\\d",rebornSkillInfo.Param1);
             if (nameAndMpCost)
             {
                 nameText.rectTransform.sizeDelta = new Vector2(nameText.preferredWidth,nameText.preferredHeight);
@@ -140,7 +159,7 @@ public class SkillInfoComponent : MonoBehaviour
         }
         if (description != null)
         {
-            description.text = skillData.Help.Replace("\\d",rebornSkillInfo.Param1);
+            //description.text = skillData.Help.Replace("\\d",rebornSkillInfo.Param1);
         }
     }
 

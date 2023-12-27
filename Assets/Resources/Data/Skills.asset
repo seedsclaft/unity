@@ -3511,8 +3511,8 @@ MonoBehaviour:
       Param3: 0
     TriggerDates: []
   - Id: 500001
-    Name: "\u611A\u8005"
-    IconIndex: 1
+    Name: "\u3010\u611A\u8005\u3011"
+    IconIndex: 11
     AnimationName: 
     AnimationPosition: 0
     AnimationScale: 1
@@ -3539,5 +3539,656 @@ MonoBehaviour:
       TriggerType: 501
       TriggerTiming: 51
       Param1: 0
+      Param2: 0
+      Param3: 0
+  - Id: 500002
+    Name: "\u3010\u9B54\u8853\u5E2B\u3011"
+    IconIndex: 5
+    AnimationName: 
+    AnimationPosition: 0
+    AnimationScale: 1
+    AnimationType: 0
+    DamageTiming: 0
+    MpCost: 0
+    Rank: 0
+    Attribute: 5
+    Scope: 0
+    SkillType: 11
+    TargetType: 101
+    Help: "(\u6761\u4EF6)\u7D42\u7109\u307E\u30671\u30BF\u30FC\u30F3\u306B\u306A\u3063\u305F\u6642\n\u30D2\u30ED\u30A4\u30F3\u306ELv\u304C5\u30A2\u30C3\u30D7\u3059\u308B"
+    Range: 1
+    RepeatTime: 1
+    AliveOnly: 1
+    FeatureDates:
+    - SkillId: 500002
+      FeatureType: 502
+      Param1: 1
+      Param2: 5
+      Param3: 0
+    TriggerDates:
+    - SkillId: 500002
+      TriggerType: 501
+      TriggerTiming: 52
+      Param1: 1
+      Param2: 0
+      Param3: 0
+  - Id: 500003
+    Name: "\u3010\u5973\u6559\u7687\u3011"
+    IconIndex: 1
+    AnimationName: 
+    AnimationPosition: 0
+    AnimationScale: 1
+    AnimationType: 0
+    DamageTiming: 0
+    MpCost: 0
+    Rank: 0
+    Attribute: 0
+    Scope: 0
+    SkillType: 11
+    TargetType: 101
+    Help: "(\u6761\u4EF6)\u7D42\u7109\u307E\u30672\u30BF\u30FC\u30F3\u306B\u306A\u3063\u305F\u6642\n\u708E\u5C5E\u6027\u9B54\u6CD5\u306E\u7FD2\u5F97\u30B3\u30B9\u30C8\u304C0\u306B\u306A\u308B"
+    Range: 1
+    RepeatTime: 1
+    AliveOnly: 1
+    FeatureDates:
+    - SkillId: 500003
+      FeatureType: 503
+      Param1: 1
+      Param2: 0
+      Param3: 0
+    TriggerDates:
+    - SkillId: 500003
+      TriggerType: 501
+      TriggerTiming: 52
+      Param1: 2
+      Param2: 0
+      Param3: 0
+  - Id: 500004
+    Name: "\u3010\u5973\u5E1D\u3011"
+    IconIndex: 1
+    AnimationName: 
+    AnimationPosition: 0
+    AnimationScale: 1
+    AnimationType: 0
+    DamageTiming: 0
+    MpCost: 0
+    Rank: 0
+    Attribute: 0
+    Scope: 0
+    SkillType: 11
+    TargetType: 101
+    Help: "(\u6761\u4EF6)\u7D42\u7109\u307E\u30673\u30BF\u30FC\u30F3\u306B\u306A\u3063\u305F\u6642\n\u6C37\u5C5E\u6027\u9B54\u6CD5\u306E\u7FD2\u5F97\u30B3\u30B9\u30C8\u304C0\u306B\u306A\u308B"
+    Range: 1
+    RepeatTime: 1
+    AliveOnly: 1
+    FeatureDates:
+    - SkillId: 500004
+      FeatureType: 503
+      Param1: 3
+      Param2: 0
+      Param3: 0
+    TriggerDates:
+    - SkillId: 500004
+      TriggerType: 501
+      TriggerTiming: 52
+      Param1: 3
+      Param2: 0
+      Param3: 0
+  - Id: 500005
+    Name: "\u3010\u7687\u5E1D\u3011"
+    IconIndex: 1
+    AnimationName: 
+    AnimationPosition: 0
+    AnimationScale: 1
+    AnimationType: 0
+    DamageTiming: 0
+    MpCost: 0
+    Rank: 0
+    Attribute: 0
+    Scope: 0
+    SkillType: 11
+    TargetType: 101
+    Help: "(\u6761\u4EF6)\u7D42\u7109\u307E\u30674\u30BF\u30FC\u30F3\u306B\u306A\u3063\u305F\u6642\n\u95C7\u5C5E\u6027\u9B54\u6CD5\u306E\u7FD2\u5F97\u30B3\u30B9\u30C8\u304C0\u306B\u306A\u308B"
+    Range: 1
+    RepeatTime: 1
+    AliveOnly: 1
+    FeatureDates:
+    - SkillId: 500005
+      FeatureType: 503
+      Param1: 5
+      Param2: 0
+      Param3: 0
+    TriggerDates:
+    - SkillId: 500005
+      TriggerType: 501
+      TriggerTiming: 52
+      Param1: 4
+      Param2: 0
+      Param3: 0
+  - Id: 500006
+    Name: "\u3010\u6CD5\u738B\u3011"
+    IconIndex: 1
+    AnimationName: 
+    AnimationPosition: 0
+    AnimationScale: 1
+    AnimationType: 0
+    DamageTiming: 0
+    MpCost: 0
+    Rank: 0
+    Attribute: 0
+    Scope: 0
+    SkillType: 11
+    TargetType: 101
+    Help: "(\u6761\u4EF6)\u7D42\u7109\u307E\u30675\u30BF\u30FC\u30F3\u306B\u306A\u3063\u305F\u6642\n\u5149\u5C5E\u6027\u9B54\u6CD5\u306E\u7FD2\u5F97\u30B3\u30B9\u30C8\u304C0\u306B\u306A\u308B"
+    Range: 1
+    RepeatTime: 1
+    AliveOnly: 1
+    FeatureDates:
+    - SkillId: 500006
+      FeatureType: 503
+      Param1: 4
+      Param2: 0
+      Param3: 0
+    TriggerDates:
+    - SkillId: 500006
+      TriggerType: 501
+      TriggerTiming: 52
+      Param1: 5
+      Param2: 0
+      Param3: 0
+  - Id: 500007
+    Name: "\u3010\u604B\u611B\u3011"
+    IconIndex: 2
+    AnimationName: 
+    AnimationPosition: 0
+    AnimationScale: 1
+    AnimationType: 0
+    DamageTiming: 0
+    MpCost: 0
+    Rank: 0
+    Attribute: 4
+    Scope: 0
+    SkillType: 11
+    TargetType: 101
+    Help: "(\u6761\u4EF6)\u7D42\u7109\u307E\u30676\u30BF\u30FC\u30F3\u306B\u306A\u3063\u305F\u6642\n\u96F7\u5C5E\u6027\u9B54\u6CD5\u306E\u7FD2\u5F97\u30B3\u30B9\u30C8\u304C0\u306B\u306A\u308B"
+    Range: 1
+    RepeatTime: 1
+    AliveOnly: 1
+    FeatureDates:
+    - SkillId: 500007
+      FeatureType: 503
+      Param1: 2
+      Param2: 0
+      Param3: 0
+    TriggerDates:
+    - SkillId: 500007
+      TriggerType: 501
+      TriggerTiming: 52
+      Param1: 6
+      Param2: 0
+      Param3: 0
+  - Id: 500008
+    Name: "\u3010\u6226\u8ECA\u3011"
+    IconIndex: 1
+    AnimationName: 
+    AnimationPosition: 0
+    AnimationScale: 1
+    AnimationType: 0
+    DamageTiming: 0
+    MpCost: 0
+    Rank: 0
+    Attribute: 0
+    Scope: 0
+    SkillType: 11
+    TargetType: 101
+    Help: "(\u6761\u4EF6)\u7D42\u7109\u307E\u30677\u30BF\u30FC\u30F3\u306B\u306A\u3063\u305F\u6642\n\u30D0\u30C8\u30EB\u7D42\u4E86\u6642\u306B\u30ED\u30B9\u30C8\u3057\u306A\u304F\u306A\u308B"
+    Range: 1
+    RepeatTime: 1
+    AliveOnly: 1
+    FeatureDates:
+    - SkillId: 500008
+      FeatureType: 504
+      Param1: 0
+      Param2: 0
+      Param3: 0
+    TriggerDates:
+    - SkillId: 500008
+      TriggerType: 501
+      TriggerTiming: 52
+      Param1: 7
+      Param2: 0
+      Param3: 0
+  - Id: 500009
+    Name: "\u3010\u6B63\u7FA9\u3011"
+    IconIndex: 1
+    AnimationName: 
+    AnimationPosition: 0
+    AnimationScale: 1
+    AnimationType: 0
+    DamageTiming: 0
+    MpCost: 0
+    Rank: 0
+    Attribute: 0
+    Scope: 0
+    SkillType: 11
+    TargetType: 101
+    Help: "(\u6761\u4EF6)\u7D42\u7109\u307E\u30678\u30BF\u30FC\u30F3\u306B\u306A\u3063\u305F\u6642\n\u7D20\u5B50\u88DC\u5145\u30B3\u30DE\u30F3\u30C9\u306E(Nu)\u5165\u624B\u91CF\u304C2\u500D\u306B\u306A\u308B"
+    Range: 1
+    RepeatTime: 1
+    AliveOnly: 1
+    FeatureDates:
+    - SkillId: 500009
+      FeatureType: 505
+      Param1: 0
+      Param2: 0
+      Param3: 0
+    TriggerDates:
+    - SkillId: 500009
+      TriggerType: 501
+      TriggerTiming: 52
+      Param1: 8
+      Param2: 0
+      Param3: 0
+  - Id: 500010
+    Name: "\u3010\u96A0\u8005\u3011"
+    IconIndex: 1
+    AnimationName: 
+    AnimationPosition: 0
+    AnimationScale: 1
+    AnimationType: 0
+    DamageTiming: 0
+    MpCost: 0
+    Rank: 0
+    Attribute: 0
+    Scope: 0
+    SkillType: 11
+    TargetType: 101
+    Help: "(\u6761\u4EF6)\u7D42\u7109\u307E\u30679\u30BF\u30FC\u30F3\u306B\u306A\u3063\u305F\u6642\n\u5168\u3066\u306E\u30A2\u30AF\u30BF\u30FC\u306E\u5C5E\u6027\u9069\u6B63\u5024\u304C1\u30A2\u30C3\u30D7"
+    Range: 1
+    RepeatTime: 1
+    AliveOnly: 1
+    FeatureDates:
+    - SkillId: 500010
+      FeatureType: 507
+      Param1: 1
+      Param2: 0
+      Param3: 0
+    TriggerDates:
+    - SkillId: 500010
+      TriggerType: 501
+      TriggerTiming: 52
+      Param1: 9
+      Param2: 0
+      Param3: 0
+  - Id: 500011
+    Name: "\u3010\u904B\u547D\u3011"
+    IconIndex: 4
+    AnimationName: 
+    AnimationPosition: 0
+    AnimationScale: 1
+    AnimationType: 0
+    DamageTiming: 0
+    MpCost: 0
+    Rank: 0
+    Attribute: 3
+    Scope: 0
+    SkillType: 11
+    TargetType: 101
+    Help: "(\u6761\u4EF6)\u7D42\u7109\u307E\u306710\u30BF\u30FC\u30F3\u306B\u306A\u3063\u305F\u6642\n\u5B58\u5728\u4FEE\u5FA9\u30B3\u30DE\u30F3\u30C9\u306E\u30B3\u30B9\u30C8\u304C0\u306B\u306A\u308B"
+    Range: 1
+    RepeatTime: 1
+    AliveOnly: 1
+    FeatureDates:
+    - SkillId: 500011
+      FeatureType: 506
+      Param1: 3
+      Param2: 0
+      Param3: 0
+    TriggerDates:
+    - SkillId: 500011
+      TriggerType: 501
+      TriggerTiming: 52
+      Param1: 10
+      Param2: 0
+      Param3: 0
+  - Id: 500012
+    Name: "\u3010\u525B\u6BC5\u3011"
+    IconIndex: 3
+    AnimationName: 
+    AnimationPosition: 0
+    AnimationScale: 1
+    AnimationType: 0
+    DamageTiming: 0
+    MpCost: 0
+    Rank: 0
+    Attribute: 2
+    Scope: 0
+    SkillType: 11
+    TargetType: 101
+    Help: "(\u6761\u4EF6)\u7D42\u7109\u307E\u306711\u30BF\u30FC\u30F3\u306B\u306A\u3063\u305F\u6642\n\u4EBA\u4F53\u932C\u6210\u30B3\u30DE\u30F3\u30C9\u306E\u30B3\u30B9\u30C8\u304C0\u306B\u306A\u308B"
+    Range: 1
+    RepeatTime: 1
+    AliveOnly: 1
+    FeatureDates:
+    - SkillId: 500012
+      FeatureType: 506
+      Param1: 1
+      Param2: 0
+      Param3: 0
+    TriggerDates:
+    - SkillId: 500012
+      TriggerType: 501
+      TriggerTiming: 52
+      Param1: 11
+      Param2: 0
+      Param3: 0
+  - Id: 500013
+    Name: "\u3010\u5211\u6B7B\u8005\u3011"
+    IconIndex: 1
+    AnimationName: 
+    AnimationPosition: 0
+    AnimationScale: 1
+    AnimationType: 0
+    DamageTiming: 0
+    MpCost: 0
+    Rank: 0
+    Attribute: 0
+    Scope: 0
+    SkillType: 11
+    TargetType: 101
+    Help: "(\u6761\u4EF6)\u7D42\u7109\u307E\u306712\u30BF\u30FC\u30F3\u306B\u306A\u3063\u305F\u6642\n\u4EBA\u4F53\u932C\u6210\u30B3\u30DE\u30F3\u30C9\u306ELv\u30921\u30A2\u30C3\u30D7"
+    Range: 1
+    RepeatTime: 1
+    AliveOnly: 1
+    FeatureDates:
+    - SkillId: 500013
+      FeatureType: 508
+      Param1: 1
+      Param2: 0
+      Param3: 0
+    TriggerDates:
+    - SkillId: 500013
+      TriggerType: 501
+      TriggerTiming: 52
+      Param1: 12
+      Param2: 0
+      Param3: 0
+  - Id: 500014
+    Name: "\u3010\u6B7B\u795E\u3011"
+    IconIndex: 1
+    AnimationName: 
+    AnimationPosition: 0
+    AnimationScale: 1
+    AnimationType: 0
+    DamageTiming: 0
+    MpCost: 0
+    Rank: 0
+    Attribute: 0
+    Scope: 0
+    SkillType: 11
+    TargetType: 101
+    Help: "(\u6761\u4EF6)\u7D42\u7109\u307E\u306713\u30BF\u30FC\u30F3\u306B\u306A\u3063\u305F\u6642\n\u6551\u6E08\u57F7\u884C\u30B3\u30DE\u30F3\u30C9\u306ELv\u30921\u30A2\u30C3\u30D7"
+    Range: 1
+    RepeatTime: 1
+    AliveOnly: 1
+    FeatureDates:
+    - SkillId: 500014
+      FeatureType: 508
+      Param1: 4
+      Param2: 0
+      Param3: 0
+    TriggerDates:
+    - SkillId: 500014
+      TriggerType: 501
+      TriggerTiming: 52
+      Param1: 13
+      Param2: 0
+      Param3: 0
+  - Id: 500015
+    Name: "\u3010\u7BC0\u5236\u3011"
+    IconIndex: 1
+    AnimationName: 
+    AnimationPosition: 0
+    AnimationScale: 1
+    AnimationType: 0
+    DamageTiming: 0
+    MpCost: 0
+    Rank: 0
+    Attribute: 0
+    Scope: 0
+    SkillType: 11
+    TargetType: 101
+    Help: "(\u6761\u4EF6)\u7D42\u7109\u307E\u306714\u30BF\u30FC\u30F3\u306B\u306A\u3063\u305F\u6642\n\u5B58\u5728\u4FEE\u5FA9\u30B3\u30DE\u30F3\u30C9\u306ELv\u30921\u30A2\u30C3\u30D7"
+    Range: 1
+    RepeatTime: 1
+    AliveOnly: 1
+    FeatureDates:
+    - SkillId: 500015
+      FeatureType: 508
+      Param1: 3
+      Param2: 0
+      Param3: 0
+    TriggerDates:
+    - SkillId: 500015
+      TriggerType: 501
+      TriggerTiming: 52
+      Param1: 14
+      Param2: 0
+      Param3: 0
+  - Id: 500016
+    Name: "\u3010\u60AA\u9B54\u3011"
+    IconIndex: 1
+    AnimationName: 
+    AnimationPosition: 0
+    AnimationScale: 1
+    AnimationType: 0
+    DamageTiming: 0
+    MpCost: 0
+    Rank: 0
+    Attribute: 0
+    Scope: 0
+    SkillType: 11
+    TargetType: 101
+    Help: "(\u6761\u4EF6)\u7D42\u7109\u307E\u306715\u30BF\u30FC\u30F3\u306B\u306A\u3063\u305F\u6642\n\u7D20\u5B50\u88DC\u5145\u30B3\u30DE\u30F3\u30C9\u306ELv\u30921\u30A2\u30C3\u30D7"
+    Range: 1
+    RepeatTime: 1
+    AliveOnly: 1
+    FeatureDates:
+    - SkillId: 500016
+      FeatureType: 508
+      Param1: 5
+      Param2: 0
+      Param3: 0
+    TriggerDates:
+    - SkillId: 500016
+      TriggerType: 501
+      TriggerTiming: 52
+      Param1: 15
+      Param2: 0
+      Param3: 0
+  - Id: 500017
+    Name: "\u3010\u5854\u3011"
+    IconIndex: 1
+    AnimationName: 
+    AnimationPosition: 0
+    AnimationScale: 1
+    AnimationType: 0
+    DamageTiming: 0
+    MpCost: 0
+    Rank: 0
+    Attribute: 0
+    Scope: 0
+    SkillType: 11
+    TargetType: 101
+    Help: "(\u6761\u4EF6)\u7D42\u7109\u307E\u306716\u30BF\u30FC\u30F3\u306B\u306A\u3063\u305F\u6642\n\u7406\u6027\u62E1\u5F35\u30B3\u30DE\u30F3\u30C9\u306ELv\u30921\u30A2\u30C3\u30D7"
+    Range: 1
+    RepeatTime: 1
+    AliveOnly: 1
+    FeatureDates:
+    - SkillId: 500017
+      FeatureType: 508
+      Param1: 2
+      Param2: 0
+      Param3: 0
+    TriggerDates:
+    - SkillId: 500017
+      TriggerType: 501
+      TriggerTiming: 52
+      Param1: 16
+      Param2: 0
+      Param3: 0
+  - Id: 500018
+    Name: "\u3010\u661F\u3011"
+    IconIndex: 1
+    AnimationName: 
+    AnimationPosition: 0
+    AnimationScale: 1
+    AnimationType: 0
+    DamageTiming: 0
+    MpCost: 0
+    Rank: 0
+    Attribute: 0
+    Scope: 0
+    SkillType: 11
+    TargetType: 101
+    Help: "(\u6761\u4EF6)\u7D42\u7109\u307E\u306717\u30BF\u30FC\u30F3\u306B\u306A\u3063\u305F\u6642\n\u30D2\u30ED\u30A4\u30F3\u304C\\d\u3092\u7FD2\u5F97\u3059\u308B\n\u65E2\u306B\u7FD2\u5F97\u6E08\u307F\u306E\u5834\u5408\u306F(Nu)\u3092+8"
+    Range: 1
+    RepeatTime: 1
+    AliveOnly: 1
+    FeatureDates:
+    - SkillId: 500018
+      FeatureType: 509
+      Param1: 2
+      Param2: 0
+      Param3: 0
+    TriggerDates:
+    - SkillId: 500018
+      TriggerType: 501
+      TriggerTiming: 52
+      Param1: 17
+      Param2: 0
+      Param3: 0
+  - Id: 500019
+    Name: "\u3010\u6708\u3011"
+    IconIndex: 1
+    AnimationName: 
+    AnimationPosition: 0
+    AnimationScale: 1
+    AnimationType: 0
+    DamageTiming: 0
+    MpCost: 0
+    Rank: 0
+    Attribute: 0
+    Scope: 0
+    SkillType: 11
+    TargetType: 101
+    Help: "(\u6761\u4EF6)\u7D42\u7109\u307E\u306718\u30BF\u30FC\u30F3\u306B\u306A\u3063\u305F\u6642\n\u30D2\u30ED\u30A4\u30F3\u304C\\d\u3092\u7FD2\u5F97\u3059\u308B\n\u65E2\u306B\u7FD2\u5F97\u6E08\u307F\u306E\u5834\u5408\u306F(Nu)\u3092+8"
+    Range: 1
+    RepeatTime: 1
+    AliveOnly: 1
+    FeatureDates:
+    - SkillId: 500019
+      FeatureType: 509
+      Param1: 1
+      Param2: 0
+      Param3: 0
+    TriggerDates:
+    - SkillId: 500019
+      TriggerType: 501
+      TriggerTiming: 52
+      Param1: 18
+      Param2: 0
+      Param3: 0
+  - Id: 500020
+    Name: "\u3010\u592A\u967D\u3011"
+    IconIndex: 1
+    AnimationName: 
+    AnimationPosition: 0
+    AnimationScale: 1
+    AnimationType: 0
+    DamageTiming: 0
+    MpCost: 0
+    Rank: 0
+    Attribute: 0
+    Scope: 0
+    SkillType: 11
+    TargetType: 101
+    Help: "(\u6761\u4EF6)\u7D42\u7109\u307E\u306719\u30BF\u30FC\u30F3\u306B\u306A\u3063\u305F\u6642\n\u30D2\u30ED\u30A4\u30F3\u304C\\d\u3092\u7FD2\u5F97\u3059\u308B\n\u65E2\u306B\u7FD2\u5F97\u6E08\u307F\u306E\u5834\u5408\u306F(Nu)\u3092+8"
+    Range: 1
+    RepeatTime: 1
+    AliveOnly: 1
+    FeatureDates:
+    - SkillId: 500020
+      FeatureType: 509
+      Param1: 4
+      Param2: 0
+      Param3: 0
+    TriggerDates:
+    - SkillId: 500020
+      TriggerType: 501
+      TriggerTiming: 52
+      Param1: 19
+      Param2: 0
+      Param3: 0
+  - Id: 500021
+    Name: "\u3010\u5BE9\u5224\u3011"
+    IconIndex: 1
+    AnimationName: 
+    AnimationPosition: 0
+    AnimationScale: 1
+    AnimationType: 0
+    DamageTiming: 0
+    MpCost: 0
+    Rank: 0
+    Attribute: 0
+    Scope: 0
+    SkillType: 11
+    TargetType: 101
+    Help: "(\u6761\u4EF6)\u7D42\u7109\u307E\u306720\u30BF\u30FC\u30F3\u306B\u306A\u3063\u305F\u6642\n\u30D2\u30ED\u30A4\u30F3\u304C\\d\u3092\u7FD2\u5F97\u3059\u308B\n\u65E2\u306B\u7FD2\u5F97\u6E08\u307F\u306E\u5834\u5408\u306F(Nu)\u3092+8"
+    Range: 1
+    RepeatTime: 1
+    AliveOnly: 1
+    FeatureDates:
+    - SkillId: 500021
+      FeatureType: 509
+      Param1: 3
+      Param2: 0
+      Param3: 0
+    TriggerDates:
+    - SkillId: 500021
+      TriggerType: 501
+      TriggerTiming: 52
+      Param1: 20
+      Param2: 0
+      Param3: 0
+  - Id: 500022
+    Name: "\u3010\u4E16\u754C\u3011"
+    IconIndex: 1
+    AnimationName: 
+    AnimationPosition: 0
+    AnimationScale: 1
+    AnimationType: 0
+    DamageTiming: 0
+    MpCost: 0
+    Rank: 0
+    Attribute: 0
+    Scope: 0
+    SkillType: 11
+    TargetType: 101
+    Help: "(\u6761\u4EF6)\u7D42\u7109\u307E\u306721\u30BF\u30FC\u30F3\u306B\u306A\u3063\u305F\u6642\n\u30D2\u30ED\u30A4\u30F3\u304C\\d\u3092\u7FD2\u5F97\u3059\u308B\n\u65E2\u306B\u7FD2\u5F97\u6E08\u307F\u306E\u5834\u5408\u306F(Nu)\u3092+8"
+    Range: 1
+    RepeatTime: 1
+    AliveOnly: 1
+    FeatureDates:
+    - SkillId: 500022
+      FeatureType: 509
+      Param1: 5
+      Param2: 0
+      Param3: 0
+    TriggerDates:
+    - SkillId: 500022
+      TriggerType: 501
+      TriggerTiming: 52
+      Param1: 21
       Param2: 0
       Param3: 0

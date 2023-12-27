@@ -49,6 +49,14 @@ public class BaseModel
 
     public void LostActors(List<ActorInfo> lostMembers)
     {
+        if (CurrentAlcana != null && CurrentAlcana.CheckNoBattleLost())
+        {
+            foreach (var lostMember in lostMembers)
+            {
+                lostMember.ChangeHp(1);
+            }
+            return;
+        }
         lostMembers.ForEach(a => a.ChangeLost(true));
     }
 
@@ -381,6 +389,7 @@ public class BaseModel
 
     public void SetAlcanaSkillInfo(List<SkillInfo> skillInfos)
     {
+        CurrentAlcana.SetCurrentTurnAlcanaList(skillInfos);
         TempData.SetAlcanaSkillInfo(skillInfos);
     }
 
@@ -394,9 +403,56 @@ public class BaseModel
                 var getItemInfo = new GetItemInfo(null);
                 switch (featureData.FeatureType)
                 {
-                    case FeatureType.GainTurn:
+                    case FeatureType.GainTurn: // param固定
                         getItemInfo.MakeGainTurnResult((CurrentStageData.CurrentStage.DisplayTurns).ToString());
                         CurrentStageData.CurrentStage.DeSeekStage();
+                        break;
+                    case FeatureType.ActorLvUp: // featureData で param1 = 選択順のActorId、 param2 = 上昇値
+                        var actorInfo = StageMembers().Find(a => a.ActorId == CurrentStage.SelectActorIds[featureData.Param1]);
+                        if (actorInfo != null)
+                        {
+                            var lv = featureData.Param2;
+                            getItemInfo.MakeActorLvUpResult(actorInfo.Master.Name,actorInfo.Level+lv);
+                            actorInfo.LevelUp(4);
+                        }
+                        break;
+                    case FeatureType.AlchemyCostZero: // featureData で param1 = 属性番号
+                        var attributeText = DataSystem.System.GetTextData(330 + featureData.Param1 - 1);
+                        getItemInfo.MakeAlchemyCostZeroResult(attributeText.Text);
+                        break;
+                    case FeatureType.NoBattleLost: // param固定
+                        getItemInfo.MakeNoBattleLostResult();
+                        break;
+                    case FeatureType.ResourceBonus: // param固定
+                        getItemInfo.MakeResourceBonusResult();
+                        break;
+                    case FeatureType.CommandCostZero: // featureData で param1 = tacticsCommand
+                        var commandText = DataSystem.System.GetTextData(featureData.Param1);
+                        getItemInfo.MakeCommandCostZeroResult(commandText.Text);
+                        break;
+                    case FeatureType.AlchemyCostBonus: // param固定
+                        getItemInfo.MakeAlchemyCostBonusResult();
+                        break;
+                    case FeatureType.CommandLvUp: // featureData で param1 = tacticsCommand param2 = 上昇値
+                        var tacticsCommandType = (TacticsCommandType)featureData.Param1;
+                        var commandLv = PartyInfo.CommandRankInfo[tacticsCommandType];
+                        var upLvCount = featureData.Param2;
+                        for (int i = 0;i < upLvCount;i++)
+                        {
+                            PartyInfo.AddCommandRank(tacticsCommandType);
+                        }
+                        getItemInfo.MakeCommandLvUpResult(commandLv + upLvCount,tacticsCommandType);
+                        break;
+                    case FeatureType.AddSkillOrCurrency: // skillInfo で param1 = 入手スキルID,featureData で param2 = 上昇Currency値
+                        var getSkillId = skillInfo.Param1;
+                        if (!PartyInfo.AlchemyIdList.Contains(getSkillId))
+                        {
+                            getItemInfo.MakeAlchemyBonusResult(DataSystem.Skills.Find(a => a.Id == skillInfo.Param1));    
+                            PartyInfo.AddAlchemy(getSkillId);
+                        } else
+                        {
+                            getItemInfo.MakeAddSkillCurrencyResult(featureData.Param2);                                
+                        }
                         break;
                 }
                 list.Add(getItemInfo);

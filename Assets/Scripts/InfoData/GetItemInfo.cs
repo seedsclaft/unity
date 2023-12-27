@@ -121,10 +121,52 @@ public class GetItemInfo
         SetResultData(DataSystem.System.GetReplaceText(3073,bonus.ToString()));
     }
 
-    
     public void MakeGainTurnResult(string turn)
     {
         SetTitleData(DataSystem.System.GetTextData(3210).Text);
         SetResultData(DataSystem.System.GetReplaceText(3211,turn));
+    }
+
+    public void MakeActorLvUpResult(string name,int lv)
+    {
+        SetTitleData(DataSystem.System.GetReplaceText(3000,name));
+        var trainResult = DataSystem.System.GetReplaceText(3001,lv.ToString());
+        SetResultData(trainResult);
+    }
+
+    public void MakeAlchemyCostZeroResult(string attributeText)
+    {
+        SetTitleData(DataSystem.System.GetReplaceText(3220,attributeText));
+    }
+
+    public void MakeNoBattleLostResult()
+    {
+        SetTitleData(DataSystem.System.GetTextData(3230).Text);
+    }
+
+    public void MakeResourceBonusResult()
+    {
+        SetTitleData(DataSystem.System.GetTextData(3240).Text);
+    }
+    
+    public void MakeCommandCostZeroResult(string commandText)
+    {
+        SetTitleData(DataSystem.System.GetReplaceText(3250,commandText));
+    }    
+    
+    public void MakeAlchemyCostBonusResult()
+    {
+        SetTitleData(DataSystem.System.GetTextData(3260).Text);
+    }
+
+    public void MakeCommandLvUpResult(int commandLv,TacticsCommandType tacticsCommandType)
+    {
+        SetTitleData(DataSystem.System.GetReplaceText(3030,DataSystem.System.GetTextData((int)tacticsCommandType).Text));
+        SetResultData(DataSystem.System.GetTextData(316).Text + commandLv.ToString() + DataSystem.System.GetTextData(3090).Text + (commandLv+1).ToString());
+    }
+
+    public void MakeAddSkillCurrencyResult(int currency)
+    {
+        SetTitleData(DataSystem.System.GetReplaceText(3021,currency.ToString()));
     }
 }

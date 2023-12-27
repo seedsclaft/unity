@@ -45,6 +45,7 @@ public class AlcanaSelectPresenter : BasePresenter
     {
         var statusViewInfo = new StatusViewInfo(() => {
             // ステージセレクトに戻る
+            _view.CommandStatusClose();
             _view.CommandSceneChange(Scene.MainMenu);
         });
         statusViewInfo.SetDisplayDecideButton(true);
@@ -66,7 +67,7 @@ public class AlcanaSelectPresenter : BasePresenter
 
     private void CommandStageStart()
     {
-        var popupInfo = new ConfirmInfo(DataSystem.System.GetTextData(11100).Text,(a) => UpdatePopup((ConfirmCommandType)a));
+        var popupInfo = new ConfirmInfo(DataSystem.System.GetTextData(20030).Text,(a) => UpdatePopup((ConfirmCommandType)a));
         _view.CommandCallConfirm(popupInfo);
     }
 
@@ -75,8 +76,12 @@ public class AlcanaSelectPresenter : BasePresenter
         _view.CommandConfirmClose();
         if (confirmCommandType == ConfirmCommandType.Yes)
         {
+            Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
             _model.SavePlayerStageData(true);
             _view.CommandSceneChange(Scene.Tactics);
+        } else
+        {
+            Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cancel);
         }
     }
 }

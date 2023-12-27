@@ -129,10 +129,10 @@ MonoBehaviour:
     Name: Continue
     Help: "\u4EE5\u524D\u306E\u7D9A\u304D\u304B\u3089\u30B2\u30FC\u30E0\u3092\u958B\u59CB\u3057\u307E\u3059"
   InitCurrency: 5
-  TrainCount: 4
-  AlchemyCount: 2
+  TrainCount: 5
+  AlchemyCount: 3
   RecoveryCount: 3
-  BattleCount: 4
+  BattleCount: 5
   ResourceCount: 3
   LimitSaveCount: 3
   LimitContinueCount: 1
@@ -630,7 +630,7 @@ MonoBehaviour:
     Text: "Numinos\u304C\\d\u56DE\u5FA9\u3057\u305F\uFF01"
     Help: '""'
   - Id: 3030
-    Text: "\\d\u306E\u547D\u4EE4\u30E9\u30F3\u30AF\u304C\u30A2\u30C3\u30D7\uFF01"
+    Text: "\\d\u306E\u30E9\u30F3\u30AF\u304C\u30A2\u30C3\u30D7\uFF01"
     Help: '""'
   - Id: 3031
     Text: "Bonus\uFF01"
@@ -685,6 +685,21 @@ MonoBehaviour:
     Help: '""'
   - Id: 3211
     Text: " \u21D2 \\d\u30BF\u30FC\u30F3"
+    Help: '""'
+  - Id: 3220
+    Text: "\u3053\u306E\u30BF\u30FC\u30F3\u306E\u307F\n\\d\u5C5E\u6027\u9B54\u6CD5\u306E\u7FD2\u5F97\u30B3\u30B9\u30C8\u304C\u304B\u304B\u3089\u306A\u3044"
+    Help: '""'
+  - Id: 3230
+    Text: "\u3053\u306E\u30BF\u30FC\u30F3\u306E\u307F\n\u30D0\u30C8\u30EB\u7D42\u4E86\u6642\u306B\u30ED\u30B9\u30C8\u3057\u306A\u304F\u306A\u308B"
+    Help: '""'
+  - Id: 3240
+    Text: "\u3053\u306E\u30BF\u30FC\u30F3\u306E\u307F\n\u7D20\u5B50\u88DC\u5145\u30B3\u30DE\u30F3\u30C9\u3067\u78BA\u5B9A\u30DC\u30FC\u30CA\u30B9"
+    Help: '""'
+  - Id: 3250
+    Text: "\u3053\u306E\u30BF\u30FC\u30F3\u306E\u307F\n\\d\u30B3\u30DE\u30F3\u30C9\u306E\u5B9F\u884C\u30B3\u30B9\u30C8\u304C\u304B\u304B\u3089\u306A\u3044"
+    Help: '""'
+  - Id: 3260
+    Text: "\u3053\u306E\u30BF\u30FC\u30F3\u306E\u307F\n\u5168\u3066\u306E\u30A2\u30AF\u30BF\u30FC\u306E\u5C5E\u6027\u9069\u6B63\u5024\u304C1\u30E9\u30F3\u30AF\u30A2\u30C3\u30D7"
     Help: '""'
   - Id: 4000
     Text: "Numinos\u3092\\d\u6D88\u8CBB\u3057\u3066\\e\u3092\u7FD2\u5F97\u3057\u307E\u3059\u304B\uFF1F"
@@ -818,6 +833,15 @@ MonoBehaviour:
   - Id: 16072
     Text: "\u8A18\u9332\u66F4\u65B0\u306A\u3057"
     Help: '""'
+  - Id: 16080
+    Text: End-
+    Help: '""'
+  - Id: 16090
+    Text: "\u7D42\u7109\u56DE\u5E30"
+    Help: '""'
+  - Id: 16100
+    Text: "\u30A2\u30EB\u30AB\u30CA\u3092\u65B0\u305F\u306B\u5165\u624B\u3057\u307E\u3057\u305F\uFF01"
+    Help: '""'
   - Id: 17010
     Text: "\u601D\u5FF5\u3092\u7D99\u627F\u3059\u308B\u30A2\u30EB\u30B1\u30DF\u30B9\u30C8\u3092\u9078\u3093\u3067\u304F\u3060\u3055\u3044"
     Help: '""'
@@ -826,6 +850,9 @@ MonoBehaviour:
     Help: '""'
   - Id: 17030
     Text: "\u601D\u5FF5\u7D99\u627F\u4E2D\u2026"
+    Help: '""'
+  - Id: 17040
+    Text: "\u601D\u5FF5\u7D99\u627F"
     Help: '""'
   - Id: 18010
     Text: "\u8EE2\u751F\u3057\u305F\u8853\u8005\u3092\u78BA\u8A8D\u3057\u307E\u3059"
@@ -836,6 +863,21 @@ MonoBehaviour:
   - Id: 18030
     Text: "\u767B\u9332\u3055\u308C\u3066\u3044\u307E\u305B\u3093"
     Help: '""'
+  - Id: 19010
+    Text: "\u5922\u5E7B\u53EC\u559A"
+    Help: '""'
+  - Id: 19020
+    Text: "\u5922\u5E7B\u53EC\u559A\u4E2D\u2026"
+    Help: '""'
+  - Id: 20010
+    Text: "\u5922\u5E7B\u9078\u629E"
+    Help: '""'
+  - Id: 20020
+    Text: "\u30B9\u30C6\u30FC\u30B8\u4E2D\u306B\u767A\u52D5\u3059\u308B\u30A2\u30EB\u30AB\u30CA\u30924\u679A\u9078\u629E\u3057\u3066\u304F\u3060\u3055\u3044"
+    Help: '""'
+  - Id: 20030
+    Text: "\u30A2\u30EB\u30AB\u30CA\u3092\u6C7A\u5B9A\u3057\u3066\u30B9\u30C6\u30FC\u30B8\u3092\u958B\u59CB\u3057\u307E\u3059\u304B\uFF1F"
+    Help: 
   InputDataList:
   - Key: TITLE
     KeyId: 4

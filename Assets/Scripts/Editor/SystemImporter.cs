@@ -194,6 +194,10 @@ public class SystemImporter : AssetPostprocessor
 					{
 						Data.LimitContinueCount = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseDefineColumn.Param);
 					}
+					if (KeyName == "alcanaSelectCount")
+					{
+						Data.AlcanaSelectCount = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseDefineColumn.Param);
+					}
 				}
 			}
 		}

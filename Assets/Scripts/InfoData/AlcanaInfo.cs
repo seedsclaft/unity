@@ -4,6 +4,16 @@ using System.Collections.Generic;
 
 [Serializable]
 public class AlcanaInfo{
+    private List<SkillInfo> _currentTurnAlcanaList = new ();
+    private List<SkillInfo> CurrentTurnAlcanaList => _currentTurnAlcanaList;
+    public void SetCurrentTurnAlcanaList(List<SkillInfo> currentTurnAlcanaList)
+    {
+        _currentTurnAlcanaList = currentTurnAlcanaList;
+    }
+    public void ClearCurrentTurnAlcanaList()
+    {
+        _currentTurnAlcanaList.Clear();
+    }
     private bool _IsAlcana;
     public bool IsAlcana {get {return _IsAlcana;}}
     private List<SkillInfo> _ownAlcanaList = new ();
@@ -20,6 +30,10 @@ public class AlcanaInfo{
         _IsAlcana = false;
         _ownAlcanaList.Clear();
         _ownAlcanaList.Add(new SkillInfo(500001));
+        _ownAlcanaList.Add(new SkillInfo(500002));
+        _ownAlcanaList.Add(new SkillInfo(500011));
+        _ownAlcanaList.Add(new SkillInfo(500012));
+        _ownAlcanaList.Add(new SkillInfo(500007));
     }
 
     public List<SkillInfo> CheckAlcanaSkillInfo(TriggerTiming triggerTiming)
@@ -51,6 +65,28 @@ public class AlcanaInfo{
         _alcanaStateInfo = stateInfo;
     }
 
+    public bool CheckAlchemyCostZero(AttributeType attributeType)
+    {
+        return _currentTurnAlcanaList.Find(a => a.Master.FeatureDates.Find(b => b.FeatureType == FeatureType.AlchemyCostZero && b.Param1 == (int)attributeType) != null) != null;
+    }
 
+    public bool CheckNoBattleLost()
+    {
+        return _currentTurnAlcanaList.Find(a => a.Master.FeatureDates.Find(b => b.FeatureType == FeatureType.NoBattleLost) != null) != null;
+    }
 
+    public bool CheckResourceBonus()
+    {
+        return _currentTurnAlcanaList.Find(a => a.Master.FeatureDates.Find(b => b.FeatureType == FeatureType.ResourceBonus) != null) != null;
+    }
+    
+    public bool CheckCommandCostZero(TacticsCommandType tacticsCommandType)
+    {
+        return _currentTurnAlcanaList.Find(a => a.Master.FeatureDates.Find(b => b.FeatureType == FeatureType.CommandCostZero && b.Param1 == (int)tacticsCommandType) != null) != null;
+    }
+
+    public bool CheckAlchemyValue()
+    {
+        return _currentTurnAlcanaList.Find(a => a.Master.FeatureDates.Find(b => b.FeatureType == FeatureType.AlchemyCostBonus) != null) != null;
+    }
 }

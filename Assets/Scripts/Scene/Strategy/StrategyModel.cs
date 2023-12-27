@@ -131,7 +131,7 @@ public class StrategyModel : BaseModel
                     getItemInfo.SetTitleData(DataSystem.System.GetReplaceText(3020,actorName));
                     var resource = TacticsUtility.ResourceGain(actorInfo);
                     var resourceBonus = PartyInfo.GetResourceBonusValue();
-                    if (resourceBonus)
+                    if (resourceBonus || (CurrentAlcana != null && CurrentAlcana.CheckResourceBonus()))
                     {
                         resource *= 2;
                     }
@@ -433,5 +433,6 @@ public class StrategyModel : BaseModel
             CurrentStageData.UpdateActorInfo(tempActorInfo);
         }
         TempData.ClearBattleActors();
+        CurrentAlcana.ClearCurrentTurnAlcanaList();
     }
 }

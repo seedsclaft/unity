@@ -16,6 +16,7 @@ public class AlcanaSelectView : BaseView
         SetInputHandler(selectCharacter.GetComponent<IInputHandlerEvent>());
         InitializeSelectCharacter();
         
+        SetBackCommand(() => OnClickBack());
         new AlcanaSelectPresenter(this);
     }
     
@@ -31,7 +32,7 @@ public class AlcanaSelectView : BaseView
 
     public void SetInitHelpText()
     {
-        //HelpWindow.SetHelpText(DataSystem.System.GetTextData(11040).Text);
+        HelpWindow.SetHelpText(DataSystem.System.GetTextData(20020).Text);
         //HelpWindow.SetInputInfo("MAINMENU");
     }
 
@@ -44,7 +45,7 @@ public class AlcanaSelectView : BaseView
     private void CallChangeAlcana()
     {
         var listData = selectCharacter.ActionData;
-        if (listData != null && listData.Enable)
+        if (listData != null)
         {
             var eventData = new AlcanaSelectViewEvent(CommandType.ChangeAlcana);
             eventData.template = listData;

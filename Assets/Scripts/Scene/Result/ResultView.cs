@@ -49,9 +49,9 @@ public class ResultView : BaseView
 
     private void InitializeSelectCharacter()
     {
-        selectCharacter.SetInputHandlerAction(InputKeyType.Decide,() => CallDecideActor());
-        selectCharacter.SetInputHandlerAction(InputKeyType.Cancel,() => {});
-        selectCharacter.SetInputHandlerAction(InputKeyType.Start,() => CallDecideActor());
+        selectCharacter.SetInputHandlerAction(InputKeyType.Decide,() => {});
+        selectCharacter.SetInputHandlerAction(InputKeyType.Cancel,() => CallDecideAlcana());
+        //selectCharacter.SetInputHandlerAction(InputKeyType.Start,() => CallDecideAlcana());
 
         SetInputHandler(selectCharacter.MagicList.GetComponent<IInputHandlerEvent>());
         selectCharacter.HideActionList();
@@ -61,7 +61,7 @@ public class ResultView : BaseView
 
     public void StartAnimation()
     {
-        _battleStartAnim.SetText("終焉回帰");
+        _battleStartAnim.SetText(DataSystem.System.GetTextData(16090).Text);
         _battleStartAnim.StartAnim();
         _battleStartAnim.gameObject.SetActive(true);
         _animationBusy = true;
@@ -187,7 +187,7 @@ public class ResultView : BaseView
     {
         actorInfoList.Initialize(actorInfos.Count);
         actorInfoList.SetData(actorInfos);
-        actorInfoList.SetInputHandler(InputKeyType.Decide,() => CallDecideActor());
+        actorInfoList.SetInputHandler(InputKeyType.Decide,() => CallDecide());
         actorInfoList.SetInputHandler(InputKeyType.Cancel,() => CallCancelActor());
         actorInfoList.SetInputHandler(InputKeyType.Down,() => CallUpdate());
         actorInfoList.SetInputHandler(InputKeyType.Up,() => CallUpdate());
@@ -196,7 +196,7 @@ public class ResultView : BaseView
         actorInfoList.Activate();
     }
 
-    private void CallDecideActor()
+    private void CallDecide()
     {
         var listData = actorInfoList.ListData;
         if (listData != null)
@@ -224,6 +224,38 @@ public class ResultView : BaseView
     {
     }
 
+    private void CallDecideAlcana()
+    {
+        var eventData = new ResultViewEvent(CommandType.DecideAlcana);
+        _commandData(eventData);
+    }
+
+    public void CommandAlcanaInfos(List<ListData> skillInfos)
+    {
+        actorInfoList.gameObject.SetActive(false);
+        selectCharacter.gameObject.SetActive(true);
+        resultMain.SetActive(false);
+        rankingInfo.gameObject.SetActive(false);
+        evaluateNew.gameObject.SetActive(false);
+        commandList.gameObject.SetActive(false);
+        selectCharacter.SetActiveTab(SelectCharacterTabType.Magic,true);
+        selectCharacter.SetActiveTab(SelectCharacterTabType.Condition,false);
+        selectCharacter.SetActiveTab(SelectCharacterTabType.Detail,false);
+        selectCharacter.ShowActionList();
+        selectCharacter.MagicList.Activate();
+        selectCharacter.SetSkillInfos(skillInfos);
+    }
+
+    public void CommandDecideAlcana()
+    {
+        actorInfoList.gameObject.SetActive(false);
+        selectCharacter.gameObject.SetActive(false);
+        resultMain.SetActive(true);
+        rankingInfo.gameObject.SetActive(true);
+        evaluateNew.gameObject.SetActive(true);
+        commandList.gameObject.SetActive(true);
+    }
+
     public void CommandRefreshStatus(List<ListData> skillInfos,ActorInfo actorInfo,List<ActorInfo> party,int lastSelectIndex)
     {
         selectCharacter.SetActiveTab(SelectCharacterTabType.Magic,false);
@@ -246,6 +278,7 @@ namespace Result
         StartResult = 1,
         EndAnimation = 2,
         ResultClose = 5,
+        DecideAlcana = 6,
         
         EndLvUpAnimation = 9,
         DecideActor = 11,
