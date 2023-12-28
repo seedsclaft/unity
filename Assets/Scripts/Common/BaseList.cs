@@ -5,6 +5,7 @@ using Cysharp.Threading.Tasks;
 
 public class BaseList : ListWindow , IInputHandlerEvent
 {
+    [SerializeField] private bool beforeSelect = true; 
     private List<ListData> _listData = new ();
     private bool _isInit = false;
     public bool IsInit => _isInit;
@@ -104,10 +105,13 @@ public class BaseList : ListWindow , IInputHandlerEvent
     private void CallListInputHandlerDecide()
     {
 #if UNITY_ANDROID && !UNITY_EDITOR
-        if (Index != _beforeSelectIndex)
+        if (beforeSelect)
         {
-            _beforeSelectIndex = Index;
-            return;
+            if (Index != _beforeSelectIndex)
+            {
+                _beforeSelectIndex = Index;
+                return;
+            }
         }
 #endif
         CallListInputHandler(InputKeyType.Decide);

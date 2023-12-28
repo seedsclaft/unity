@@ -129,7 +129,7 @@ public class ActorInfoComponent : MonoBehaviour
         }
         if (recoveryCost != null)
         {
-            recoveryCost.text = TacticsUtility.RecoveryCost(actorInfo).ToString();
+            recoveryCost.text = TacticsUtility.RecoveryCost(actorInfo,true).ToString();
         }
         if (resourceGain != null)
         {

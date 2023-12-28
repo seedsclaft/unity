@@ -3596,7 +3596,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 376, y: 120}
+  m_AnchoredPosition: {x: 376, y: 124}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &4034114671449070010
@@ -5119,6 +5119,7 @@ MonoBehaviour:
   itemPrefab: {fileID: 4151538683936950575, guid: e8c37b614bc419e47923725816a639a0,
     type: 3}
   _helpWindow: {fileID: 0}
+  beforeSelect: 1
 --- !u!1 &5061997133642689548
 GameObject:
   m_ObjectHideFlags: 0

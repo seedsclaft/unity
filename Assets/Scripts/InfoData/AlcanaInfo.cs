@@ -8,7 +8,13 @@ public class AlcanaInfo{
     private List<SkillInfo> CurrentTurnAlcanaList => _currentTurnAlcanaList;
     public void SetCurrentTurnAlcanaList(List<SkillInfo> currentTurnAlcanaList)
     {
-        _currentTurnAlcanaList = currentTurnAlcanaList;
+        foreach (var currentTurnAlcana in currentTurnAlcanaList)
+        {
+            if (!_currentTurnAlcanaList.Contains(currentTurnAlcana))
+            {
+                _currentTurnAlcanaList.Add(currentTurnAlcana);
+            }
+        }
     }
     public void ClearCurrentTurnAlcanaList()
     {

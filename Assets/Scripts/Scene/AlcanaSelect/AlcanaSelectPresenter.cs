@@ -13,9 +13,9 @@ public class AlcanaSelectPresenter : BasePresenter
 
     private void Initialize()
     { 
+        _view.StartAnimation();
         _view.SetInitHelpText();
         _view.SetEvent((type) => UpdateCommand(type));
-
         CommandRefresh();
     }
 
@@ -23,6 +23,10 @@ public class AlcanaSelectPresenter : BasePresenter
     {
         if (_view.Busy){
             return;
+        }
+        if (viewEvent.commandType == AlcanaSelect.CommandType.EndAnimation)
+        {
+            CommandEndAnimation();
         }
         if (viewEvent.commandType == AlcanaSelect.CommandType.ChangeAlcana)
         {
@@ -34,11 +38,17 @@ public class AlcanaSelectPresenter : BasePresenter
         }
     }
 
+    private void CommandEndAnimation()
+    {
+
+    }
+
     private void CommandChangeAlcana(SkillInfo skillInfo)
     {
         Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
         _model.ChangeSelectAlcana(skillInfo);
-        CommandRefresh();
+        var selectIndex = _view.SkillListIndex;
+        CommandRefresh(selectIndex);
     }
 
     private void CommandBack()
@@ -54,11 +64,11 @@ public class AlcanaSelectPresenter : BasePresenter
         Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cancel);
     }
 
-    private void CommandRefresh()
+    private void CommandRefresh(int selectIndex = 0)
     {
         _view.CommandRefresh(_model.SelectedAlcanaList);
         var skillInfos = _model.SkillActionList();
-        _view.RefreshMagicList(skillInfos);
+        _view.RefreshMagicList(skillInfos,selectIndex);
         if (_model.CheckStageStart())
         {
             CommandStageStart();

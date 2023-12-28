@@ -62,9 +62,9 @@ public class TacticsUtility
         return Mathf.FloorToInt(cost * TacticsCostRate(actorInfo));
     }
 
-    public static int RecoveryCost(ActorInfo actorInfo)
+    public static int RecoveryCost(ActorInfo actorInfo,bool checkAlcana = false)
     {
-        if (GameSystem.CurrentStageData != null)
+        if (checkAlcana && GameSystem.CurrentStageData != null)
         {
             if (GameSystem.CurrentStageData.CurrentAlcana.CheckCommandCostZero(TacticsCommandType.Recovery))
             {
@@ -75,6 +75,7 @@ public class TacticsUtility
         int mpCost = (int)Mathf.Ceil((actorInfo.MaxMp - actorInfo.CurrentMp) * 0.1f) * TacticsCostRate(actorInfo);
         return hpCost > mpCost ? hpCost : mpCost;
     }
+
     public static int ResourceCost(ActorInfo actorInfo)
     {
         return 0;

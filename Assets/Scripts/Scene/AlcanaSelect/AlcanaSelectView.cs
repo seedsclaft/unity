@@ -7,7 +7,8 @@ public class AlcanaSelectView : BaseView
 {
     [SerializeField] private BattleSelectCharacter selectCharacter = null;
     [SerializeField] private List<SkillInfoComponent> skillInfoComponents = null;
-    
+    [SerializeField] private BattleStartAnim battleStartAnim = null;
+    private bool _animationBusy = false;
     private new System.Action<AlcanaSelectViewEvent> _commandData = null;
     public override void Initialize() 
     {
@@ -18,8 +19,17 @@ public class AlcanaSelectView : BaseView
         
         SetBackCommand(() => OnClickBack());
         new AlcanaSelectPresenter(this);
+        ChangeUIActive(false);
     }
     
+    public void StartAnimation()
+    {
+        battleStartAnim.SetText(DataSystem.System.GetTextData(19010).Text);
+        battleStartAnim.StartAnim();
+        battleStartAnim.gameObject.SetActive(true);
+        _animationBusy = true;
+    }
+
     private void InitializeSelectCharacter()
     {
         selectCharacter.SetInputHandlerAction(InputKeyType.Decide,() => CallChangeAlcana());
@@ -29,6 +39,8 @@ public class AlcanaSelectView : BaseView
         selectCharacter.HideActionList();
         selectCharacter.HideStatus();
     }
+
+    public int SkillListIndex => selectCharacter.MagicList.Index;
 
     public void SetInitHelpText()
     {
@@ -40,7 +52,6 @@ public class AlcanaSelectView : BaseView
     {
         _commandData = commandData;
     }
-
 
     private void CallChangeAlcana()
     {
@@ -71,13 +82,33 @@ public class AlcanaSelectView : BaseView
         }
     }
 
-    public void RefreshMagicList(List<ListData> skillInfos)
+    public void RefreshMagicList(List<ListData> skillInfos,int selectIndex = 0)
     {
         selectCharacter.SetActiveTab(SelectCharacterTabType.Detail,false);
         selectCharacter.SetActiveTab(SelectCharacterTabType.Condition,false);
         selectCharacter.ShowActionList();
         selectCharacter.SetSkillInfos(skillInfos);
-        selectCharacter.RefreshAction();
+        selectCharacter.RefreshAction(selectIndex);
+    }
+
+    private new void Update() {
+        if (_animationBusy == true)
+        {
+            CheckAnimationBusy();
+            return;
+        }
+        base.Update();
+    }    
+    
+    private void CheckAnimationBusy()
+    {
+        if (battleStartAnim.IsBusy == false)
+        {
+            _animationBusy = false;
+            var eventData = new AlcanaSelectViewEvent(CommandType.EndAnimation);
+            _commandData(eventData);
+            ChangeUIActive(true);
+        }
     }
 }
 
@@ -86,6 +117,7 @@ namespace AlcanaSelect
     public enum CommandType
     {
         None = 0,
+        EndAnimation,
         ChangeAlcana,
         DeleteAlcana,
         Back

@@ -100,7 +100,12 @@ public class TacticsModel : BaseModel
                 {
                     if (stageMember.TacticsCommandType != tempData.TacticsCommandType)
                     {   
-                        PartyInfo.ChangeCurrency(Currency + stageMember.TacticsCost);
+                        if (RecoveryCostZero() && stageMember.TacticsCommandType == TacticsCommandType.Recovery)
+                        {
+                        } else
+                        {
+                            PartyInfo.ChangeCurrency(Currency + stageMember.TacticsCost);
+                        }
                         if (tempData.TacticsCommandType == TacticsCommandType.None)
                         {
                             stageMember.ClearTacticsCommand();
@@ -108,7 +113,13 @@ public class TacticsModel : BaseModel
                             stageMember.SetTacticsCommand(tempData.TacticsCommandType,tempData.TacticsCost);
                             if (tempData.TacticsCommandType != TacticsCommandType.Resource)
                             {
-                                PartyInfo.ChangeCurrency(Currency - tempData.TacticsCost);
+                                if (RecoveryCostZero() && tempData.TacticsCommandType == TacticsCommandType.Recovery)
+                                {
+                                    
+                                } else
+                                {
+                                    PartyInfo.ChangeCurrency(Currency - tempData.TacticsCost);
+                                }   
                             }
                             stageMember.SetNextBattleEnemyIndex(tempData.NextBattleEnemyIndex,tempData.NextBattleEnemyId);
                             stageMember.SetNextLearnCost(tempData.NextLearnCost);
@@ -183,7 +194,13 @@ public class TacticsModel : BaseModel
     public void ResetTacticsCost(int actorId)
     {
         var actorInfo = TacticsActor(actorId);
-        PartyInfo.ChangeCurrency(Currency + actorInfo.TacticsCost);
+        if (RecoveryCostZero() && actorInfo.TacticsCommandType == TacticsCommandType.Recovery)
+        {
+
+        } else
+        {
+            PartyInfo.ChangeCurrency(Currency + actorInfo.TacticsCost);
+        }
         actorInfo.ClearTacticsCommand();
     }
 
@@ -278,7 +295,10 @@ public class TacticsModel : BaseModel
                 if (CanTacticsCommand(TacticsCommandType.Recovery,actorInfo))
                 {   
                     actorInfo.SetTacticsCommand(TacticsCommandType.Recovery,TacticsUtility.RecoveryCost(actorInfo));
-                    PartyInfo.ChangeCurrency(Currency - actorInfo.TacticsCost);
+                    if (!RecoveryCostZero())
+                    {
+                        PartyInfo.ChangeCurrency(Currency - actorInfo.TacticsCost);
+                    }
                 }
             }
         }
@@ -293,7 +313,10 @@ public class TacticsModel : BaseModel
                 if (TacticsUtility.RecoveryCost(actorInfo) > actorInfo.TacticsCost)
                 {
                     actorInfo.SetTacticsCommand(TacticsCommandType.Recovery,actorInfo.TacticsCost + 1);
-                    PartyInfo.ChangeCurrency(Currency - 1);
+                    if (!RecoveryCostZero())
+                    {
+                        PartyInfo.ChangeCurrency(Currency - 1);
+                    }
                 }
             }
         }
@@ -307,7 +330,10 @@ public class TacticsModel : BaseModel
             {
                 if (actorInfo.TacticsCommandType == TacticsCommandType.Recovery)
                 {   
-                    PartyInfo.ChangeCurrency(Currency + 1);
+                    if (!RecoveryCostZero())
+                    {
+                        PartyInfo.ChangeCurrency(Currency + 1);
+                    }
                     actorInfo.SetTacticsCommand(TacticsCommandType.Recovery,actorInfo.TacticsCost - 1);
                     if (actorInfo.TacticsCost == 0)
                     {
@@ -468,6 +494,13 @@ public class TacticsModel : BaseModel
         int rank = CommandRank();
         if (rank > 0)
         {
+            // %の確率で
+            var bonusParam = rank * 10;
+            if (_tacticsCommandType == TacticsCommandType.Battle)
+            {
+                // 獲得Nuが〇アップ
+                bonusParam = rank * DataSystem.System.BattleBonusValue;
+            }
             return DataSystem.System.GetReplaceText(10 + (int)_tacticsCommandType,(rank * 10).ToString());
         }
         int count = 0;
@@ -490,6 +523,11 @@ public class TacticsModel : BaseModel
                 break;
         }
         return DataSystem.System.GetReplaceText(10,count.ToString());
+    }
+
+    private bool RecoveryCostZero()
+    {
+        return CurrentAlcana.CheckCommandCostZero(TacticsCommandType.Recovery);
     }
 
     public void SetDefineBoss(int index)

@@ -18,9 +18,9 @@ public class StagesInfoImporter : AssetPostprocessor {
         Turns,
 		InitMembers,
 		RandomTroopCount,
-		BossId,
 		BGMId,
 		BossBGMId,
+		BossId,
 		Reborn,
 		Alcana,
 		SubordinateValue

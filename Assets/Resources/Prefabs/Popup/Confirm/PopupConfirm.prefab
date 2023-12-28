@@ -502,6 +502,7 @@ MonoBehaviour:
   itemPrefab: {fileID: 6805481075859665284, guid: 2533c3a0ba6260543ac6b73de353e4ad,
     type: 3}
   _helpWindow: {fileID: 0}
+  beforeSelect: 1
 --- !u!1 &3555460180315435813
 GameObject:
   m_ObjectHideFlags: 0
@@ -949,6 +950,7 @@ MonoBehaviour:
   itemPrefab: {fileID: 8421530445655644752, guid: f9e4128ea2633e0448c9ff7df16a3047,
     type: 3}
   _helpWindow: {fileID: 0}
+  beforeSelect: 0
 --- !u!1 &5269206747058708419
 GameObject:
   m_ObjectHideFlags: 0
@@ -1358,7 +1360,7 @@ PrefabInstance:
     - target: {fileID: 5320952432566593538, guid: f9e4128ea2633e0448c9ff7df16a3047,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5320952432566593538, guid: f9e4128ea2633e0448c9ff7df16a3047,
         type: 3}
@@ -1368,7 +1370,7 @@ PrefabInstance:
     - target: {fileID: 5320952432566593538, guid: f9e4128ea2633e0448c9ff7df16a3047,
         type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5320952432566593538, guid: f9e4128ea2633e0448c9ff7df16a3047,
         type: 3}
@@ -1418,12 +1420,12 @@ PrefabInstance:
     - target: {fileID: 5320952432566593538, guid: f9e4128ea2633e0448c9ff7df16a3047,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 5320952432566593538, guid: f9e4128ea2633e0448c9ff7df16a3047,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -40
       objectReference: {fileID: 0}
     - target: {fileID: 5320952432566593538, guid: f9e4128ea2633e0448c9ff7df16a3047,
         type: 3}

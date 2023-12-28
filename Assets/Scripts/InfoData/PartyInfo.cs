@@ -188,7 +188,7 @@ public class PartyInfo
         int value = baseValue;
         if (_commandRankInfo.ContainsKey(TacticsCommandType.Battle))
         {
-            value += _commandRankInfo[TacticsCommandType.Battle] * 4;
+            value += _commandRankInfo[TacticsCommandType.Battle] * DataSystem.System.BattleBonusValue;
         }
         return value;
     }

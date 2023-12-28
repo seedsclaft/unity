@@ -198,6 +198,10 @@ public class SystemImporter : AssetPostprocessor
 					{
 						Data.AlcanaSelectCount = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseDefineColumn.Param);
 					}
+					if (KeyName == "battleBonusValue")
+					{
+						Data.BattleBonusValue = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseDefineColumn.Param);
+					}
 				}
 			}
 		}

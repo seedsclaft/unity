@@ -22,6 +22,7 @@ public class TacticsPresenter :BasePresenter
         if (CheckBeforeAlcanaEvent())
         {
             InitializeView();
+            _busy = true;
             _view.StartAlcanaAnimation(() => 
             {
                 _view.CommandSceneChange(Scene.AlcanaResult);
@@ -48,6 +49,7 @@ public class TacticsPresenter :BasePresenter
         if (CheckCurrentAlcanaEvent())
         {
             InitializeView();
+            _busy = true;
             _view.StartAlcanaAnimation(() => 
             {
                 _view.CommandSceneChange(Scene.AlcanaResult);

@@ -406,6 +406,7 @@ public class StrategyModel : BaseModel
         CurrentStage.ClearTacticsEnemies();
         //CurrentStage.ChangeSubordinateValue(-5);
         CurrentAlcana.SetAlcanaStateInfo(null);
+        CurrentAlcana.ClearCurrentTurnAlcanaList();
     }
 
     public bool EnableBattleSkip()
@@ -433,6 +434,5 @@ public class StrategyModel : BaseModel
             CurrentStageData.UpdateActorInfo(tempActorInfo);
         }
         TempData.ClearBattleActors();
-        CurrentAlcana.ClearCurrentTurnAlcanaList();
     }
 }

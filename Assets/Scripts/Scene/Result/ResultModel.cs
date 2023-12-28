@@ -86,11 +86,13 @@ public class ResultModel : BaseModel
         }
         // 候補アルカナ
         var alcanaSkillsDates = DataSystem.Skills.FindAll(a => a.SkillType == SkillType.UseAlcana);
+        
         var getAlcanaInfos = new List<SkillInfo>();
         while (getCount > 0)
         {
             var rand = UnityEngine.Random.Range(0,alcanaSkillsDates.Count);
             var randSkillData = alcanaSkillsDates[rand];
+            // 既に所有している
             if (CurrentData.AlcanaInfo.OwnAlcanaList.Find(a => a.Id == randSkillData.Id) != null)
             {
                 // 重複可能かどうか featureが508魔法入手

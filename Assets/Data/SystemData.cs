@@ -18,6 +18,7 @@ public class SystemData : ScriptableObject
 	public int LimitSaveCount;
 	public int LimitContinueCount;
 	public int AlcanaSelectCount;
+	public int BattleBonusValue;
 	public List<TextData> SystemTextData;
 
 	public List<InputData> InputDataList;
