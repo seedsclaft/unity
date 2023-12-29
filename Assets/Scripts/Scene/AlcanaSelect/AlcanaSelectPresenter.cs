@@ -86,6 +86,8 @@ public class AlcanaSelectPresenter : BasePresenter
         _view.CommandConfirmClose();
         if (confirmCommandType == ConfirmCommandType.Yes)
         {
+            // アルカナをセット
+            _model.SetStageAlcanaList();
             Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
             _model.SavePlayerStageData(true);
             _view.CommandSceneChange(Scene.Tactics);

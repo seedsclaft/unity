@@ -26,6 +26,8 @@ public class TacticsView : BaseView
 
     [SerializeField] private SideMenuList sideMenuList = null;
 
+    [SerializeField] private Button alcanaButton = null;
+
 
     private CommandType _lastCallEventType = CommandType.None;
 
@@ -37,7 +39,9 @@ public class TacticsView : BaseView
         SetInputHandler(battleSelectCharacter.GetComponent<IInputHandlerEvent>());
         InitializeSelectCharacter();
 
-
+        tacticsAlcana.gameObject.SetActive(false);
+        alcanaButton.onClick.AddListener(() => CallAlcanaCheck());
+        
         new TacticsPresenter(this);
     }
     
@@ -102,6 +106,11 @@ public class TacticsView : BaseView
     public void SetStageInfo(StageInfo stageInfo)
     {
         stageInfoComponent.UpdateInfo(stageInfo);
+    }
+
+    public void SetAlcanaInfo(AlcanaInfo alcanaInfo)
+    {
+        alcanaInfoComponent.UpdateInfo(alcanaInfo);
     }
 
     public void SetTacticsCommand(List<ListData> menuCommands)
@@ -477,5 +486,11 @@ public class TacticsView : BaseView
     public void UseAlcana(System.Action endEvent)
     {
         tacticsAlcana.UseAnim(endEvent);
+    }
+
+    private void CallAlcanaCheck()
+    {
+        var eventData = new TacticsViewEvent(CommandType.AlcanaCheck);
+        _commandData(eventData);
     }
 }

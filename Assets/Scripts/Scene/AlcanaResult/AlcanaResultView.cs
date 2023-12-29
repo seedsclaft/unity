@@ -66,7 +66,7 @@ public class AlcanaResultView : BaseView
         _commandData(eventData);
     }
 
-    public void StartRebornResultAnimation(List<ListData> actorInfos)
+    public void StartResultAnimation(List<ListData> actorInfos)
     {
         strategyActorList.gameObject.SetActive(true);
         strategyActorList.SetData(actorInfos);

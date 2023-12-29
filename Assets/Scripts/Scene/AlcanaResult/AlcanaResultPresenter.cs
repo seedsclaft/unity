@@ -17,13 +17,13 @@ public class AlcanaResultPresenter : BasePresenter
     private void Initialize()
     { 
         _view.SetHelpWindow();
-        _view.SetResultList(_model.RebornResultCommand());
+        _view.SetResultList(_model.AlcanaResultCommand());
         _view.SetActors(_model.AlcanaMembers());
         _view.SetEvent((type) => UpdateCommand(type));
         _busy = true;
 
         _view.StartAnimation();
-        _view.StartRebornResultAnimation(_model.MakeListData(_model.AlcanaMembers()));
+        _view.StartResultAnimation(_model.MakeListData(_model.AlcanaMembers()));
         _busy = false;
     }
 
@@ -38,7 +38,7 @@ public class AlcanaResultPresenter : BasePresenter
                 CommandEndAnimation();
                 break;
             case CommandType.ResultClose:
-                CommandRebornResultClose((ConfirmCommandType)viewEvent.template);
+                CommandResultClose((ConfirmCommandType)viewEvent.template);
                 break;
         }
     }
@@ -48,16 +48,31 @@ public class AlcanaResultPresenter : BasePresenter
         _view.ShowResultList(_model.ResultGetItemInfos());
     }
 
-    private void CommandRebornResultClose(ConfirmCommandType confirmCommandType)
+    private void CommandResultClose(ConfirmCommandType confirmCommandType)
     {
         if (confirmCommandType == ConfirmCommandType.Yes)
         {
-            CommandEndReborn();
+            CommandEndAlcana();
+        } else
+        {
+            ShowStatus();
         }
         Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
     }
 
-    private void CommandEndReborn()
+    private void ShowStatus()
+    {
+        var statusViewInfo = new StatusViewInfo(() => {
+            _view.CommandStatusClose();
+            _view.SetHelpText(DataSystem.System.GetTextData(14010).Text);
+            _view.ChangeUIActive(true);
+        });
+        statusViewInfo.SetDisplayDecideButton(false);
+        _view.CommandCallStatus(statusViewInfo);
+        _view.ChangeUIActive(false);
+    }
+
+    private void CommandEndAlcana()
     {
         _model.ReleaseAlcana();
         _view.CommandSceneChange(Scene.Tactics);

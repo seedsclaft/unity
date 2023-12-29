@@ -397,6 +397,10 @@ public class TacticsPresenter :BasePresenter
         {
             CommandSelectSideMenu((SystemData.CommandData)viewEvent.template);
         }
+        if (viewEvent.commandType == Tactics.CommandType.AlcanaCheck)
+        {
+            CommandAlcanaCheck();
+        }
         if (_model.NeedAllTacticsCommand)
         {
             var listData = _model.ChangeEnableCommandData((int)TacticsCommandType.TurnEnd - 1, !_model.CheckNonBusy());
@@ -750,6 +754,7 @@ public class TacticsPresenter :BasePresenter
         _view.SetTurns(_model.DisplayTurns);
         _view.SetNuminous(_model.Currency);
         _view.SetStageInfo(_model.CurrentStage);
+        _view.SetAlcanaInfo(_model.CurrentAlcana);
         
         _view.CommandRefresh(_model.TacticsCommandType);
         if (_model.NeedAllTacticsCommand)
@@ -827,5 +832,16 @@ public class TacticsPresenter :BasePresenter
             _busy = false;
             _view.ActivateSideMenu();
         });
+    }
+
+    private void CommandAlcanaCheck()
+    {
+        Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
+        _view.CommandCallAlcanaList(() => {
+            _view.ChangeUIActive(true);
+            _busy = false;
+        });
+        _busy = true;
+        _view.ChangeUIActive(false);
     }
 }

@@ -3,7 +3,12 @@ using System.Collections.Generic;
 
 public class AlcanaResultModel : BaseModel
 {
-    public List<ListData> RebornResultCommand()
+    public AlcanaResultModel()
+    {
+        SetStageActor();
+    }
+
+    public List<ListData> AlcanaResultCommand()
     {
         var commandListDates = MakeListData(BaseConfirmCommand(3040,6));
         foreach (var commandListData in commandListDates)
@@ -38,7 +43,7 @@ public class AlcanaResultModel : BaseModel
         var skillInfos = TempData.TempAlcanaSkillInfos;
         foreach (var skillInfo in skillInfos)
         {
-            CurrentAlcana.ReleaseAlcana(skillInfo);
+            CurrentAlcana.DisableAlcana(skillInfo);
         }
         TempData.ClearAlcana();
     }

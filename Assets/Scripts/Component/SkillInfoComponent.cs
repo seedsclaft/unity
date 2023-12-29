@@ -18,6 +18,8 @@ public class SkillInfoComponent : MonoBehaviour
     [SerializeField] private TextMeshProUGUI range;
     [SerializeField] private TextMeshProUGUI learningCost;
     [SerializeField] private GameObject selectable;
+    [SerializeField] private GameObject selectedAlcana;
+    [SerializeField] private _2dxFX_Shiny_Reflect shinyReflect;
 
     public void UpdateSkillInfo(SkillInfo skillInfo){
         if (skillInfo == null){
@@ -52,6 +54,14 @@ public class SkillInfoComponent : MonoBehaviour
         {
             learningCost.gameObject.SetActive(skillInfo.LearningCost > 0);
             learningCost.text = skillInfo.LearningCost.ToString();
+        }
+        if (shinyReflect != null)
+        {
+            shinyReflect.enabled = skillInfo.SelectedAlcana;
+        }
+        if (selectedAlcana != null)
+        {
+            selectedAlcana.SetActive(skillInfo.SelectedAlcana);
         }
     }
 

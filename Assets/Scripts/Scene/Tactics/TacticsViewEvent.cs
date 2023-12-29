@@ -38,5 +38,6 @@ namespace Tactics
         Dropout,
         Option,
         SelectSideMenu,
+        AlcanaCheck,
     }
 }

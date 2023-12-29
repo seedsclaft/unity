@@ -197,6 +197,13 @@ abstract public class BaseView : MonoBehaviour
         CallSceneChangeCommand(eventData);
     }
 
+    public void CommandCallAlcanaList(System.Action endEvent)
+    {
+        var eventData = new ViewEvent(Base.CommandType.CallAlcanaListView);
+        eventData.template = endEvent;
+        CallSceneChangeCommand(eventData);
+    }
+
     public void CommandCallStatus(StatusViewInfo statusViewInfo)
     {
         var eventData = new ViewEvent(Base.CommandType.CallStatusView);
@@ -330,6 +337,7 @@ namespace Base
         CallRankingView,
         CallCreditView,
         CallCharacterListView,
+        CallAlcanaListView,
         CallStatusView,
         CloseStatus,
         CallAdvScene,

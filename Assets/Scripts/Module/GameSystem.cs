@@ -122,6 +122,9 @@ public class GameSystem : MonoBehaviour
             case Base.CommandType.CallCharacterListView:
                 CommandCharacterListView((CharacterListInfo)viewEvent.template);
                 break;
+            case Base.CommandType.CallAlcanaListView:
+                CommandAlcanaListView((System.Action)viewEvent.template);
+                break;
             case Base.CommandType.CallStatusView:
                 var statusView = CreateStatus(StatusType.Status) as StatusView;
                 var statusViewInfo = (StatusViewInfo)viewEvent.template;
@@ -284,6 +287,19 @@ public class GameSystem : MonoBehaviour
         characterListView.SetBackEvent(() => 
         {
             UpdateCommand(new ViewEvent(Base.CommandType.CloseConfirm));
+        });
+        SetIsBusyMainAndStatus();
+    }
+
+    private void CommandAlcanaListView(System.Action endEvent)
+    {
+        var prefab = popupAssign.CreatePopup(PopupType.AlcanaList,helpWindow);
+        var characterListView = prefab.GetComponent<AlcanaListView>();
+        characterListView.Initialize();
+        characterListView.SetBackEvent(() => 
+        {
+            UpdateCommand(new ViewEvent(Base.CommandType.CloseConfirm));
+            if (endEvent != null) endEvent();
         });
         SetIsBusyMainAndStatus();
     }

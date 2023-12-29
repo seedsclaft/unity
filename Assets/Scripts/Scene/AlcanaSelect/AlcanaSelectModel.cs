@@ -48,4 +48,14 @@ public class AlcanaSelectModel : BaseModel
         if (_selectedAlcanaList.Count == CurrentData.AlcanaInfo.OwnAlcanaList.Count) return true;
         return false;
     }
+
+    public void SetStageAlcanaList()
+    {
+        CurrentStageData.CurrentAlcana.ClearOwnAlcanaList();
+        foreach (var selectedAlcana in _selectedAlcanaList)
+        {
+            selectedAlcana.SetEnable(true);
+            CurrentStageData.CurrentAlcana.AddAlcana(selectedAlcana);
+        }
+    }
 }

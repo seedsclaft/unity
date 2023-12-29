@@ -6,13 +6,19 @@ using TMPro;
 public class AlcanaInfoComponent : MonoBehaviour
 {
     [SerializeField] private GameObject alcana;
-    [SerializeField] private TextMeshProUGUI alcanaValue;
+    [SerializeField] private TextMeshProUGUI alcanaCount;
+    [SerializeField] private _2dxFX_Shiny_Reflect shinyReflect;
     public void UpdateInfo(AlcanaInfo alcanaInfo)
     {
         if (alcana != null){
             alcana.gameObject.SetActive(alcanaInfo.IsAlcana == true);
         }
-        if (alcanaValue != null){
+        if (alcanaCount != null){
+            alcanaCount.text = alcanaInfo.EnableOwnAlcanaList.Count.ToString();
+        }
+        if (shinyReflect != null)
+        {
+            shinyReflect.enabled = alcanaInfo.CurrentTurnAlcanaList.Count > 0;
         }
     }
 }

@@ -167,21 +167,23 @@ public class ListData
         _enable = enable;
     }
     
-    public static List<ListData> MakeListData<T>(T data)
+    public static List<ListData> MakeListData<T>(T data,bool isEnable = true)
     {
         var list = new List<ListData>();
         var listData = new ListData(data,0);
+        listData.SetEnable(isEnable);
         list.Add(listData);
         return list;
     }
 
-    public static List<ListData> MakeListData<T>(List<T> dataList)
+    public static List<ListData> MakeListData<T>(List<T> dataList,bool isEnable = true)
     {
         var list = new List<ListData>();
         var idx = 0;
         foreach (var data in dataList)
         {
             var listData = new ListData(data,idx);
+            listData.SetEnable(isEnable);
             list.Add(listData);
             idx++;
         }

@@ -52,6 +52,7 @@ public class SkillInfo
     {
         _weight = weight;
     }
+
     private int _useCount = 0;
     public int UseCount => _useCount;
     public void SetUseCount(int useCount)
@@ -62,6 +63,14 @@ public class SkillInfo
     {
         _useCount++;
     }
+
+    private bool _selectedAlcana = false;
+    public bool SelectedAlcana => _selectedAlcana;
+    public void SetSelectedAlcana(bool selectedAlcana)
+    {
+        _selectedAlcana = selectedAlcana;
+    }
+
     public SkillInfo(int id)
     {
         _id = id;

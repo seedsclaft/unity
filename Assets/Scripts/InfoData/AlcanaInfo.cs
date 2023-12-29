@@ -5,7 +5,7 @@ using System.Collections.Generic;
 [Serializable]
 public class AlcanaInfo{
     private List<SkillInfo> _currentTurnAlcanaList = new ();
-    private List<SkillInfo> CurrentTurnAlcanaList => _currentTurnAlcanaList;
+    public List<SkillInfo> CurrentTurnAlcanaList => _currentTurnAlcanaList;
     public void SetCurrentTurnAlcanaList(List<SkillInfo> currentTurnAlcanaList)
     {
         foreach (var currentTurnAlcana in currentTurnAlcanaList)
@@ -24,6 +24,7 @@ public class AlcanaInfo{
     public bool IsAlcana {get {return _IsAlcana;}}
     private List<SkillInfo> _ownAlcanaList = new ();
     public List<SkillInfo> OwnAlcanaList {get {return _ownAlcanaList;}}
+    public List<SkillInfo> EnableOwnAlcanaList {get {return _ownAlcanaList.FindAll(a => a.Enable);}}
     private StateInfo _alcanaStateInfo = null;
     public StateInfo AlcanaState {get {return _alcanaStateInfo;}}
 
@@ -42,9 +43,14 @@ public class AlcanaInfo{
         _ownAlcanaList.Add(new SkillInfo(500007));
     }
 
+    public void ClearOwnAlcanaList()
+    {
+        _ownAlcanaList.Clear();
+    }
+
     public List<SkillInfo> CheckAlcanaSkillInfo(TriggerTiming triggerTiming)
     {
-        return _ownAlcanaList.FindAll(a => a.Master.TriggerDates.Find(b => b.TriggerTiming == triggerTiming) != null);
+        return _ownAlcanaList.FindAll(a => a.Enable && a.Master.TriggerDates.Find(b => b.TriggerTiming == triggerTiming) != null);
     }
 
     public void AddAlcana(SkillInfo skillInfo)
@@ -52,13 +58,9 @@ public class AlcanaInfo{
         _ownAlcanaList.Add(skillInfo);
     }
 
-    public void ReleaseAlcana(SkillInfo skillInfo)
+    public void DisableAlcana(SkillInfo skillInfo)
     {
-        var findIndex = _ownAlcanaList.FindIndex(a => a == skillInfo);
-        if (findIndex > -1)
-        {
-            _ownAlcanaList.RemoveAt(findIndex);
-        }
+        skillInfo.SetEnable(false);
     }
 
     public void SetIsAlcana(bool isAlcana)
