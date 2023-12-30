@@ -380,7 +380,7 @@ public class TacticsView : BaseView
 
     public void SetTurns(int turns)
     {
-        turnText.text = (turns + 1).ToString();
+        turnText.text = (turns).ToString();
     }
     
     public void SetNuminous(int numinous)

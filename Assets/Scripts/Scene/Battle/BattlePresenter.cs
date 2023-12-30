@@ -626,7 +626,8 @@ public class BattlePresenter : BasePresenter
                 _view.StartAnimation(targetIndex,animation,0);
             }
         }
-        await UniTask.DelayFrame(64);
+        var waitFrame = GameSystem.ConfigData.BattleAnimationSkip ? 1 : 64;
+        await UniTask.DelayFrame(waitFrame);
         EndTurn();
     }
 
@@ -649,7 +650,8 @@ public class BattlePresenter : BasePresenter
                 _view.StartDeathAnimation(targetIndex);
             }
         }
-        await UniTask.DelayFrame(64);
+        var waitFrame = GameSystem.ConfigData.BattleAnimationSkip ? 1 : 64;
+        await UniTask.DelayFrame(waitFrame);
         EndTurn();
     }
 
@@ -667,7 +669,7 @@ public class BattlePresenter : BasePresenter
             CommandEndAnimation();
             return;
         }
-        if (actionInfo.Master.AnimationName != "")
+        if (actionInfo.Master.AnimationName != "" && GameSystem.ConfigData.BattleAnimationSkip == false)
         {
             var animation = _model.SkillActionAnimation(actionInfo.Master.AnimationName);
             var soundTimings = _model.SkillActionSoundTimings(actionInfo.Master.AnimationName);
@@ -702,7 +704,8 @@ public class BattlePresenter : BasePresenter
             {
                 PopupActionResult(actionInfo.ActionResults[i],actionInfo.ActionResults[i].TargetIndex,true,true);
             }
-            await UniTask.DelayFrame(32);
+            var waitFrame = GameSystem.ConfigData.BattleAnimationSkip ? 1 : 32;
+            await UniTask.DelayFrame(waitFrame);
         }
         _nextCommandType = Battle.CommandType.EndAnimation;
         CommandEndAnimation();

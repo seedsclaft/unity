@@ -79,7 +79,7 @@ public enum StageEventType{
     RouteSelectEvent = 13, // ルート分岐イベント
     SetRouteSelectParam = 14, // ルート分岐パラメータを保存
     RouteSelectMoveEvent = 15, // ルート分岐ステージイベント
-    AbortStage = 21, // ステージを中断する
+    ClearStage = 21, // ステージをクリアする
     ChangeRouteSelectStage = 31, // ルート分岐でステージに移動
     RouteSelectBattle = 32, // ルート分岐敵グループを生成
     SetDisplayTurns = 33, // 表示残りターンをマスターから取得

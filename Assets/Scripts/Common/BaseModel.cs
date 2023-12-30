@@ -20,7 +20,7 @@ public class BaseModel
     public int Currency => PartyInfo.Currency;
 
     public int Turns{get {return CurrentStage.Turns - (CurrentStage.CurrentTurn);}}
-    public int DisplayTurns{get {return CurrentStage.DisplayTurns - (CurrentStage.CurrentTurn);}}
+    public int RemainTurns{get {return CurrentStage.DisplayTurns - (CurrentStage.CurrentTurn) + 1;}}
 
     public CancellationTokenSource _cancellationTokenSource;
     private List<StageTutorialData> _currentStageTutorialDates = new ();
@@ -384,7 +384,7 @@ public class BaseModel
     public List<SkillInfo> CheckAlcanaSkillInfos(TriggerTiming triggerTiming)
     {
         var skillInfos = CurrentAlcana.CheckAlcanaSkillInfo(triggerTiming);
-        return skillInfos.FindAll(a => a.Master.TriggerDates.Find(b => b.Param1 == DisplayTurns) != null);
+        return skillInfos.FindAll(a => a.Master.TriggerDates.Find(b => b.Param1 == RemainTurns) != null);
     }
 
     public void SetAlcanaSkillInfo(List<SkillInfo> skillInfos)
@@ -404,7 +404,7 @@ public class BaseModel
                 switch (featureData.FeatureType)
                 {
                     case FeatureType.GainTurn: // param固定
-                        getItemInfo.MakeGainTurnResult((CurrentStageData.CurrentStage.DisplayTurns).ToString());
+                        getItemInfo.MakeGainTurnResult((RemainTurns).ToString());
                         CurrentStageData.CurrentStage.DeSeekStage();
                         break;
                     case FeatureType.ActorLvUp: // featureData で param1 = 選択順のActorId、 param2 = 上昇値
@@ -445,13 +445,15 @@ public class BaseModel
                         break;
                     case FeatureType.AddSkillOrCurrency: // skillInfo で param1 = 入手スキルID,featureData で param2 = 上昇Currency値
                         var getSkillId = skillInfo.Param1;
-                        if (!PartyInfo.AlchemyIdList.Contains(getSkillId))
+                        var hero = StageMembers().Find(a => a.ActorId == CurrentStage.SelectActorIds[0]);
+                        if (!hero.IsLearnedSkill(getSkillId))
                         {
-                            getItemInfo.MakeAlchemyBonusResult(DataSystem.Skills.Find(a => a.Id == skillInfo.Param1));    
-                            PartyInfo.AddAlchemy(getSkillId);
+                            getItemInfo.MakeSkillLearnResult(hero.Master.Name,DataSystem.Skills.Find(a => a.Id == skillInfo.Param1));    
+                            hero.LearnSkill(getSkillId);
                         } else
                         {
-                            getItemInfo.MakeAddSkillCurrencyResult(featureData.Param2);                                
+                            PartyInfo.ChangeCurrency(Currency + featureData.Param2);
+                            getItemInfo.MakeAddSkillCurrencyResult(skillInfo.Master.Name,featureData.Param2);                                
                         }
                         break;
                 }

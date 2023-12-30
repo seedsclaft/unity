@@ -71,7 +71,7 @@ public class TacticsSelectCharacter : MonoBehaviour
     public void UpdateSmoothSelect()
     {
         characterList.UpdateSelectIndex(0);
-        commandList.UpdateSelectIndex(-1);
+        commandList.UpdateSelectIndex(1);
     }
 
     private void CallCharacterInputHandler(InputKeyType keyType)
@@ -136,6 +136,18 @@ public class TacticsSelectCharacter : MonoBehaviour
     public void SetInputHandlerCharacter(InputKeyType keyType,System.Action callEvent)
     {
         characterList.SetInputHandler(keyType,callEvent);
+#if UNITY_ANDROID
+        // Androidはトグルで決定、リストで選択にする
+        if (keyType == InputKeyType.Decide)
+        {
+            for (int i = 0; i < characterList.ObjectList.Count;i++)
+            {
+                var tacticsTrain = characterList.ObjectList[i].GetComponent<TacticsTrain>();
+                tacticsTrain.SetToggleHandler(() => callEvent());
+            }
+        }
+        characterList.SetInputHandler(keyType,() => DisplaySelectCharacter());
+#endif
         if (keyType == InputKeyType.Right)
         {
             for (int i = 0; i < characterList.ObjectList.Count;i++)

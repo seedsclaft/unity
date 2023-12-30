@@ -34,11 +34,11 @@ public class TroopInfo
         _escapeEnable = escapeEnable;
     }
 
-    public void MakeEnemyTroopDates(int level,int stageTurns = 1)
+    public void MakeEnemyTroopDates(int level,int displayTurn = 1)
     {
         foreach (var troopData in MasterAll)
         {
-            if (troopData.StageTurn <= stageTurns)
+            if (troopData.StageTurn == 0 || troopData.StageTurn >= displayTurn)
             {
                 var enemyData = DataSystem.Enemies.Find(a => a.Id == troopData.EnemyId);
                 var battlerInfo = new BattlerInfo(enemyData,troopData.Lv + level,_battlerInfos.Count,troopData.Line,troopData.BossFlag);

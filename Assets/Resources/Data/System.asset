@@ -131,7 +131,7 @@ MonoBehaviour:
   InitCurrency: 5
   TrainCount: 5
   AlchemyCount: 3
-  RecoveryCount: 3
+  RecoveryCount: 4
   BattleCount: 5
   ResourceCount: 3
   LimitSaveCount: 4
@@ -689,19 +689,25 @@ MonoBehaviour:
     Text: " \u21D2 \\d\u30BF\u30FC\u30F3"
     Help: '""'
   - Id: 3220
-    Text: "\u3053\u306E\u30BF\u30FC\u30F3\u306E\u307F\n\\d\u5C5E\u6027\u9B54\u6CD5\u306E\u7FD2\u5F97\u30B3\u30B9\u30C8\u30C0\u30A6\u30F3"
+    Text: "\u3053\u306E\u30BF\u30FC\u30F3\u306E\u307F"
+    Help: '""'
+  - Id: 3221
+    Text: "\\d\u5C5E\u6027\u9B54\u6CD5\u306E\u7FD2\u5F97\u30B3\u30B9\u30C8\u30C0\u30A6\u30F3"
+    Help: '""'
+  - Id: 3222
+    Text: "\u30D0\u30C8\u30EB\u7D42\u4E86\u6642\u306B\u30ED\u30B9\u30C8\u3057\u306A\u3044"
+    Help: '""'
+  - Id: 3223
+    Text: "\u7D20\u5B50\u88DC\u5145\u3067\u78BA\u5B9A\u30DC\u30FC\u30CA\u30B9"
+    Help: '""'
+  - Id: 3224
+    Text: "\\d\u306E\u30B3\u30B9\u30C8\u304C\u304B\u304B\u3089\u306A\u3044"
+    Help: '""'
+  - Id: 3225
+    Text: "\u7406\u6027\u62E1\u5F35\u306E\u30B3\u30B9\u30C8\u30C0\u30A6\u30F3"
     Help: '""'
   - Id: 3230
-    Text: "\u3053\u306E\u30BF\u30FC\u30F3\u306E\u307F\n\u30D0\u30C8\u30EB\u7D42\u4E86\u6642\u306B\u30ED\u30B9\u30C8\u3057\u306A\u3044"
-    Help: '""'
-  - Id: 3240
-    Text: "\u3053\u306E\u30BF\u30FC\u30F3\u306E\u307F\n\u7D20\u5B50\u88DC\u5145\u3067\u78BA\u5B9A\u30DC\u30FC\u30CA\u30B9"
-    Help: '""'
-  - Id: 3250
-    Text: "\u3053\u306E\u30BF\u30FC\u30F3\u306E\u307F\n\\d\u306E\u30B3\u30B9\u30C8\u304C\u304B\u304B\u3089\u306A\u3044"
-    Help: '""'
-  - Id: 3260
-    Text: "\u3053\u306E\u30BF\u30FC\u30F3\u306E\u307F\n\u7406\u6027\u62E1\u5F35\u306E\u30B3\u30B9\u30C8\u30C0\u30A6\u30F3"
+    Text: "\u3092\u7FD2\u5F97\uFF01"
     Help: '""'
   - Id: 4000
     Text: "Numinos\u3092\\d\u6D88\u8CBB\u3057\u3066\\e\u3092\u7FD2\u5F97\u3057\u307E\u3059\u304B\uFF1F"

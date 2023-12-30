@@ -7,8 +7,14 @@ using TMPro;
 public class TacticsTrain : ListItem ,IListViewItem 
 {
     [SerializeField] private TacticsComponent tacticsComponent;
+    [SerializeField] private Toggle checkToggle;
     [SerializeField] private Button plusButton;
     [SerializeField] private Button minusButton;
+
+    public void SetToggleHandler(System.Action handler)
+    {
+        checkToggle.onValueChanged.AddListener((a) => handler());
+    }
 
     public void SetPlusHandler(System.Action handler)
     {

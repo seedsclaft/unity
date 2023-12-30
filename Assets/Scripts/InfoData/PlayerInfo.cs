@@ -48,7 +48,7 @@ public class PlayerInfo
     public Dictionary<int,int> StageClearDict => _stageClearDict;
     public int ClearCount(int stageId)
     {
-        if (!_stageClearDict.ContainsKey(stageId))
+        if (_stageClearDict.ContainsKey(stageId))
         {
             return _stageClearDict[stageId];
         }

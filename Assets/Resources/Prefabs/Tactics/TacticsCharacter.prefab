@@ -1989,7 +1989,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 0
+  m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -2162,6 +2162,8 @@ MonoBehaviour:
   range: {fileID: 0}
   learningCost: {fileID: 0}
   selectable: {fileID: 0}
+  selectedAlcana: {fileID: 0}
+  shinyReflect: {fileID: 0}
 --- !u!1 &4135741619398897558
 GameObject:
   m_ObjectHideFlags: 0
@@ -3131,6 +3133,7 @@ MonoBehaviour:
   cursor: {fileID: 285161606978933861}
   disable: {fileID: 2881203920470782191}
   tacticsComponent: {fileID: 8380513947595279782}
+  checkToggle: {fileID: 1225983677861027434}
   plusButton: {fileID: 4260998340266709590}
   minusButton: {fileID: 4217004284705621078}
 --- !u!114 &8380513947595279782
@@ -3796,7 +3799,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 0
+  m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:

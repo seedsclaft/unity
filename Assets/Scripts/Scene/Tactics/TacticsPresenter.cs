@@ -122,7 +122,7 @@ public class TacticsPresenter :BasePresenter
                 case StageEventType.SetRouteSelectParam:
                     _view.CommandSetRouteSelect();
                     break;
-                case StageEventType.AbortStage:
+                case StageEventType.ClearStage:
                     _eventBusy = true;
                     _model.AddEventReadFlag(stageEvent);
                     _model.StageClear();
@@ -751,7 +751,7 @@ public class TacticsPresenter :BasePresenter
 
     private void CommandRefresh()
     {
-        _view.SetTurns(_model.DisplayTurns);
+        _view.SetTurns(_model.RemainTurns);
         _view.SetNuminous(_model.Currency);
         _view.SetStageInfo(_model.CurrentStage);
         _view.SetAlcanaInfo(_model.CurrentAlcana);

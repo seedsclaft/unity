@@ -3524,7 +3524,7 @@ MonoBehaviour:
     Scope: 0
     SkillType: 11
     TargetType: 101
-    Help: "(\u6761\u4EF6)\u7D42\u7109\u307E\u30670\u30BF\u30FC\u30F3\u306B\u306A\u308B\u524D\n\u76EE\u6A19\u3092\u9054\u6210\u3057\u3066\u3044\u306A\u3044\u5834\u5408\u30BF\u30FC\u30F3\u6570\u30921\u5897\u3084\u3059"
+    Help: "(\u6761\u4EF6)\u7D42\u7109\u307E\u30670\u30BF\u30FC\u30F3\u306B\u306A\u308B\u524D\n\u7D42\u7109\u307E\u3067\u306E\u30BF\u30FC\u30F3\u6570\u30921\u5897\u3084\u3059"
     Range: 1
     RepeatTime: 1
     AliveOnly: 1
@@ -3562,7 +3562,7 @@ MonoBehaviour:
     FeatureDates:
     - SkillId: 500002
       FeatureType: 502
-      Param1: 1
+      Param1: 0
       Param2: 3
       Param3: 0
     TriggerDates:
@@ -3904,7 +3904,7 @@ MonoBehaviour:
     - SkillId: 500013
       FeatureType: 508
       Param1: 1
-      Param2: 0
+      Param2: 1
       Param3: 0
     TriggerDates:
     - SkillId: 500013
@@ -3935,7 +3935,7 @@ MonoBehaviour:
     - SkillId: 500014
       FeatureType: 508
       Param1: 4
-      Param2: 0
+      Param2: 1
       Param3: 0
     TriggerDates:
     - SkillId: 500014
@@ -3966,7 +3966,7 @@ MonoBehaviour:
     - SkillId: 500015
       FeatureType: 508
       Param1: 3
-      Param2: 0
+      Param2: 1
       Param3: 0
     TriggerDates:
     - SkillId: 500015
@@ -3997,7 +3997,7 @@ MonoBehaviour:
     - SkillId: 500016
       FeatureType: 508
       Param1: 5
-      Param2: 0
+      Param2: 1
       Param3: 0
     TriggerDates:
     - SkillId: 500016
@@ -4028,7 +4028,7 @@ MonoBehaviour:
     - SkillId: 500017
       FeatureType: 508
       Param1: 2
-      Param2: 0
+      Param2: 1
       Param3: 0
     TriggerDates:
     - SkillId: 500017
@@ -4059,7 +4059,7 @@ MonoBehaviour:
     - SkillId: 500018
       FeatureType: 509
       Param1: 2
-      Param2: 0
+      Param2: 8
       Param3: 0
     TriggerDates:
     - SkillId: 500018
@@ -4090,7 +4090,7 @@ MonoBehaviour:
     - SkillId: 500019
       FeatureType: 509
       Param1: 1
-      Param2: 0
+      Param2: 8
       Param3: 0
     TriggerDates:
     - SkillId: 500019
@@ -4121,7 +4121,7 @@ MonoBehaviour:
     - SkillId: 500020
       FeatureType: 509
       Param1: 4
-      Param2: 0
+      Param2: 8
       Param3: 0
     TriggerDates:
     - SkillId: 500020
@@ -4152,7 +4152,7 @@ MonoBehaviour:
     - SkillId: 500021
       FeatureType: 509
       Param1: 3
-      Param2: 0
+      Param2: 8
       Param3: 0
     TriggerDates:
     - SkillId: 500021
@@ -4183,7 +4183,7 @@ MonoBehaviour:
     - SkillId: 500022
       FeatureType: 509
       Param1: 5
-      Param2: 0
+      Param2: 8
       Param3: 0
     TriggerDates:
     - SkillId: 500022

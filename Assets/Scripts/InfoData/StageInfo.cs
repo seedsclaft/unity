@@ -199,7 +199,7 @@ public class StageInfo
         {
             var troopDates = DataSystem.Troops.FindAll(a => a.TroopId == defineTroopId);
             var troopInfo = new TroopInfo(defineTroopId,true);
-            troopInfo.MakeEnemyTroopDates(_troopClearCount + 1,_currentTurn);
+            troopInfo.MakeEnemyTroopDates(_troopClearCount + 1,_displayTurns);
             _currentTroopInfos[_currentTroopInfos.Count-1] = troopInfo;
         }
     }
@@ -212,7 +212,7 @@ public class StageInfo
         {
             var troopDates = DataSystem.Troops.FindAll(a => a.TroopId == defineTroopId);
             var troopInfo = new TroopInfo(defineTroopId,false);
-            troopInfo.MakeEnemyTroopDates(_troopClearCount + 1,_currentTurn);
+            troopInfo.MakeEnemyTroopDates(_troopClearCount + 1,_displayTurns);
             _currentTroopInfos.Add(troopInfo);
         }
     }

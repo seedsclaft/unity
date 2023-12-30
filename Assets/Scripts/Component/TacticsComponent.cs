@@ -45,7 +45,7 @@ public class TacticsComponent : MonoBehaviour
         
         if (checkToggle != null)
         {
-            checkToggle.isOn = (actorInfo.TacticsCommandType == tacticsCommandType);
+            checkToggle.SetIsOnWithoutNotify(actorInfo.TacticsCommandType == tacticsCommandType);
         }
 
         if (afterLv != null && tacticsCommandType == TacticsCommandType.Train)
