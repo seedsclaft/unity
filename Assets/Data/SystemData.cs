@@ -15,8 +15,6 @@ public class SystemData : ScriptableObject
 	public int RecoveryCount;
 	public int BattleCount;
 	public int ResourceCount;
-	public int LimitSaveCount;
-	public int LimitContinueCount;
 	public int AlcanaSelectCount;
 	public int BattleBonusValue;
 	public List<TextData> SystemTextData;

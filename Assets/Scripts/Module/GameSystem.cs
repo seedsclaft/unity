@@ -114,7 +114,7 @@ public class GameSystem : MonoBehaviour
                 CommandOptionView((System.Action)viewEvent.template);
                 break;
             case Base.CommandType.CallRankingView:
-                CommandRankingView((System.Action)viewEvent.template);
+                CommandRankingView((RankingViewInfo)viewEvent.template);
                 break;
             case Base.CommandType.CallCreditView:
                 CommandCreditView((System.Action)viewEvent.template);
@@ -251,15 +251,16 @@ public class GameSystem : MonoBehaviour
         SetIsBusyMainAndStatus();
     }
     
-    private void CommandRankingView(System.Action endEvent)
+    private void CommandRankingView(RankingViewInfo rankingViewInfo)
     {
         var prefab = popupAssign.CreatePopup(PopupType.Ranking,helpWindow);
         var rankingView = prefab.GetComponent<RankingView>();
         rankingView.Initialize();
+        rankingView.SetRankingViewInfo(rankingViewInfo);
         rankingView.SetBackEvent(() => 
         {
             UpdateCommand(new ViewEvent(Base.CommandType.CloseConfirm));
-            if (endEvent != null) endEvent();
+            if (rankingViewInfo.EndEvent != null) rankingViewInfo.EndEvent();
         });
         rankingView.SetEvent((type) => UpdateCommand(type));
         SetIsBusyMainAndStatus();

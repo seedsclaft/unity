@@ -201,7 +201,7 @@ public class FirebaseController : SingletonMonoBehaviour<FirebaseController>
         };
     }
 
-    public void ReadRankingData()
+    public void ReadRankingData(int stageId)
     {
         if (!_isInit)
         {
@@ -211,7 +211,7 @@ public class FirebaseController : SingletonMonoBehaviour<FirebaseController>
         FirebaseController.IsBusy = true;
         FirebaseFirestore db = FirebaseFirestore.DefaultInstance;
 
-        var cnf = db.Collection("ranking").OrderByDescending("Score").Limit(100);
+        var cnf = db.Collection("ranking" + stageId.ToString()).OrderByDescending("Score").Limit(100);
         
         cnf.GetSnapshotAsync().ContinueWithOnMainThread(task =>
         {
@@ -238,7 +238,7 @@ public class FirebaseController : SingletonMonoBehaviour<FirebaseController>
         });
     }
 
-    public void CurrentRankingData(string userId)
+    public void CurrentRankingData(int stageId,string userId)
     {
         if (!_isInit)
         {
@@ -247,7 +247,7 @@ public class FirebaseController : SingletonMonoBehaviour<FirebaseController>
         FirebaseController.CurrentScore = 0;
         FirebaseController.IsBusy = true;
         FirebaseFirestore db = FirebaseFirestore.DefaultInstance;
-        var cnf = db.Collection("ranking").Document(userId);
+        var cnf = db.Collection("ranking" + stageId.ToString()).Document(userId);
         cnf.GetSnapshotAsync().ContinueWithOnMainThread(task =>
         {
             if (task.IsCompletedSuccessfully)
@@ -266,7 +266,7 @@ public class FirebaseController : SingletonMonoBehaviour<FirebaseController>
         });
     }
 
-    public void WriteRankingData(string userId,int score,string name, List<int> selectIdx,List<int> selectRank,List<RankingActorData> actorInfos)
+    public void WriteRankingData(int stageId,string userId,int score,string name, List<int> selectIdx,List<int> selectRank,List<RankingActorData> actorInfos)
     {
         if (!_isInit)
         {
@@ -274,7 +274,7 @@ public class FirebaseController : SingletonMonoBehaviour<FirebaseController>
         }
         FirebaseController.IsBusy = true;
         FirebaseFirestore db = FirebaseFirestore.DefaultInstance;
-        DocumentReference docRef = db.Collection("ranking").Document(userId);
+        DocumentReference docRef = db.Collection("ranking" + stageId.ToString()).Document(userId);
         Dictionary<string, System.Object> rankingData = new Dictionary<string, System.Object>
         {
             { "Name", name },

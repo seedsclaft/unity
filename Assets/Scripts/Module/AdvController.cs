@@ -33,6 +33,7 @@ public class AdvController : BaseView, IInputHandlerEvent
         _advPlaying = true;
         advUguiManager.Engine.Config.IsSkip = GameSystem.ConfigData.EventSkipIndex;
         advInputButton.gameObject.SetActive(true);
+        UpdateSkipButton();
     }
 
     public void EndAdv()

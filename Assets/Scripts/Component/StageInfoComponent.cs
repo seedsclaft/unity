@@ -31,8 +31,14 @@ public class StageInfoComponent : MonoBehaviour
         {
             achieve.SetActive(stageData.AchieveText != "");
         }
-        if (achieveText != null && stageData.AchieveText != ""){
-            achieveText.text = DataSystem.System.GetTextData(31).Text + stageData.AchieveText;
+        if (achieveText != null){
+            if (stageData.AchieveText != "")
+            {
+                achieveText.text = DataSystem.System.GetTextData(31).Text + stageData.AchieveText;
+            } else
+            {
+                achieveText.text = DataSystem.System.GetTextData(31).Text + DataSystem.System.GetTextData(10000).Text;
+            }
         }
         if (help != null){
             help.text = stageData.Help.Replace("\\p",GameSystem.CurrentData.PlayerInfo.PlayerName);

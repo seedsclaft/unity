@@ -31,7 +31,7 @@ public class MainMenuPresenter : BasePresenter
         var bgm = await _model.GetBgmData("MAINMENU");
         Ryneus.SoundManager.Instance.PlayBgm(bgm,1.0f,true);
         //Ryneus.SoundManager.Instance.PlayBgm(bgm,1.0f,true);
-
+        _view.UpdateMainMenuStage();
         _busy = false;
     }
 
@@ -63,7 +63,7 @@ public class MainMenuPresenter : BasePresenter
         }
         if (viewEvent.commandType == CommandType.Ranking)
         {
-            CommandRanking();
+            CommandRanking((int)viewEvent.template);
         }
         if (viewEvent.commandType == CommandType.SelectSideMenu)
         {
@@ -85,33 +85,18 @@ public class MainMenuPresenter : BasePresenter
         });
     }
 
-    private void CommandRanking()
-    {
-        var popupInfo = new ConfirmInfo(DataSystem.System.GetTextData(11100).Text,(menuCommandInfo) => UpdatePopup((ConfirmCommandType)menuCommandInfo));
-        _view.CommandCallConfirm(popupInfo);
-    }
-
-    private void UpdatePopup(ConfirmCommandType confirmCommandType)
-    {
-        if (confirmCommandType == ConfirmCommandType.Yes)
-        {
-            CommandRankingPopup();
-        } else
-        {
-            _view.CommandConfirmClose();
-        }
-    }
-    
-    private void CommandRankingPopup()
+    private void CommandRanking(int stageId)
     {
         _busy = true;
-        _view.DeactivateSideMenu();
-        _view.CommandCallRanking(() => {
-            _view.ActivateSideMenu();
+        var rankingViewInfo = new RankingViewInfo();
+        rankingViewInfo.EndEvent = () => {
+            //_view.ActivateSideMenu();
             _busy = false;
-        });
+        };
+        rankingViewInfo.StageId = stageId;
+        _view.CommandCallRanking(rankingViewInfo);
     }
-
+    
     private void CommandSlotPopup()
     {
         Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
@@ -123,10 +108,6 @@ public class MainMenuPresenter : BasePresenter
         if (sideMenu.Key == "Help")
         {
             CommandRule();
-        }
-        if (sideMenu.Key == "Ranking")
-        {
-            CommandRankingPopup();
         }
         if (sideMenu.Key == "Slot")
         {

@@ -404,8 +404,8 @@ public class BaseModel
                 switch (featureData.FeatureType)
                 {
                     case FeatureType.GainTurn: // param固定
-                        getItemInfo.MakeGainTurnResult((RemainTurns).ToString());
                         CurrentStageData.CurrentStage.DeSeekStage();
+                        getItemInfo.MakeGainTurnResult((RemainTurns).ToString());
                         break;
                     case FeatureType.ActorLvUp: // featureData で param1 = 選択順のActorId、 param2 = 上昇値
                         var actorInfo = StageMembers().Find(a => a.ActorId == CurrentStage.SelectActorIds[featureData.Param1]);
@@ -578,6 +578,7 @@ public class BaseModel
 
     public void SavePlayerStageData(bool isResumeStage)
     {
+        TempData.ClearRankingInfo();
         SetResumeStage(isResumeStage);
         SaveSystem.SaveStageInfo(GameSystem.CurrentStageData);
     }
@@ -699,7 +700,7 @@ public class BaseModel
         var userId = CurrentData.PlayerInfo.UserId.ToString();
         var rankingText = "";
 #if (UNITY_WEBGL || UNITY_ANDROID)// && !UNITY_EDITOR
-        FirebaseController.Instance.CurrentRankingData(userId);
+        FirebaseController.Instance.CurrentRankingData(CurrentStage.Id,userId);
         await UniTask.WaitUntil(() => FirebaseController.IsBusy == false);
         var currentScore = FirebaseController.CurrentScore;
         var evaluate = TotalEvaluate();
@@ -707,6 +708,7 @@ public class BaseModel
         if (evaluate > currentScore)
         {
             FirebaseController.Instance.WriteRankingData(
+                CurrentStage.BaseStageId,
                 userId,
                 evaluate,
                 CurrentData.PlayerInfo.PlayerName,
@@ -716,7 +718,7 @@ public class BaseModel
             );
             await UniTask.WaitUntil(() => FirebaseController.IsBusy == false);
 
-            FirebaseController.Instance.ReadRankingData();
+            FirebaseController.Instance.ReadRankingData(CurrentStage.BaseStageId);
             await UniTask.WaitUntil(() => FirebaseController.IsBusy == false);
             var results = FirebaseController.RankingInfos;
             var rank = 1;
@@ -754,7 +756,7 @@ public class BaseModel
     public string SavePopupTitle()
     {
         var baseText = DataSystem.System.GetTextData(11080).Text;
-        var subText = DataSystem.System.GetReplaceText(11081,DataSystem.System.LimitSaveCount.ToString());
+        var subText = DataSystem.System.GetReplaceText(11081,CurrentStage.Master.SaveLimit.ToString());
         var savedCount = DataSystem.System.GetReplaceText(11083,(CurrentStage.SavedCount+1).ToString());
         return baseText + savedCount + "\n" + subText;
     }
@@ -769,7 +771,7 @@ public class BaseModel
     {
         var needAds = false;
 #if UNITY_ANDROID
-        needAds = (CurrentStage.SavedCount + 1) >= DataSystem.System.LimitSaveCount;
+        needAds = (CurrentStage.SavedCount + 1) >= CurrentStage.Master.SaveLimit;
 #endif
         return needAds;
     }
@@ -782,7 +784,7 @@ public class BaseModel
     public string ContinuePopupTitle()
     {
         var baseText = DataSystem.System.GetTextData(3061).Text;
-        var subText = DataSystem.System.GetReplaceText(3062,DataSystem.System.LimitContinueCount.ToString());
+        var subText = DataSystem.System.GetReplaceText(3062,CurrentStage.Master.ContinueLimit.ToString());
         var continueCount = DataSystem.System.GetReplaceText(3063,(CurrentStage.ContinueCount+1).ToString());
         return baseText + continueCount + "\n" + subText;
     }
@@ -791,7 +793,7 @@ public class BaseModel
     {
         var needAds = false;
 #if UNITY_ANDROID
-        needAds = (CurrentStage.ContinueCount + 1) >= DataSystem.System.LimitContinueCount;
+        needAds = (CurrentStage.ContinueCount + 1) >= CurrentStage.Master.ContinueLimit;
 #endif
         return needAds;
     }

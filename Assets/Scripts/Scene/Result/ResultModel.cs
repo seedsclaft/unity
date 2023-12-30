@@ -110,7 +110,7 @@ public class ResultModel : BaseModel
                 }
             } else{
                 // 重複判定
-                if (getAlcanaInfos.Find(a => a.Id == randSkillData.Id) != null)
+                if (getAlcanaInfos.Find(a => a.Id == randSkillData.Id) == null)
                 {
                     var uniqueSkillInfo = new SkillInfo(randSkillData.Id);
                     getAlcanaInfos.Add(uniqueSkillInfo);

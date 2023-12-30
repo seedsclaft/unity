@@ -237,7 +237,7 @@ public class ResultView : BaseView
         resultMain.SetActive(false);
         rankingInfo.gameObject.SetActive(false);
         evaluateNew.gameObject.SetActive(false);
-        commandList.gameObject.SetActive(false);
+        //commandList.gameObject.SetActive(false);
         selectCharacter.SetActiveTab(SelectCharacterTabType.Magic,true);
         selectCharacter.SetActiveTab(SelectCharacterTabType.Condition,false);
         selectCharacter.SetActiveTab(SelectCharacterTabType.Detail,false);

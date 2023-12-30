@@ -19,12 +19,9 @@ public class RankingPresenter
 
     private void Initialize()
     {
+        _busy = false;
         _view.SetEvent((type) => UpdateCommand(type));
         _view.SetHelpInputInfo("RANKING");
-        _model.RankingInfos((res) => {
-            _view.SetRankingInfo(res);
-            _busy = false;
-        });
     }
 
     private void UpdateCommand(RankingViewEvent viewEvent)
@@ -32,10 +29,23 @@ public class RankingPresenter
         if (_busy){
             return;
         }
+        if (viewEvent.commandType == CommandType.RankingOpen)
+        {
+            CommandRankingOpen((int)viewEvent.template);
+        }
         if (viewEvent.commandType == CommandType.Detail)
         {
             CommandDetail((int)viewEvent.template);
         }
+    }
+
+    private void CommandRankingOpen(int stageId)
+    {
+        _busy = true;
+        _model.RankingInfos(stageId,(res) => {
+            _view.SetRankingInfo(res);
+            _busy = false;
+        });
     }
 
     private void CommandDetail(int listIndex)

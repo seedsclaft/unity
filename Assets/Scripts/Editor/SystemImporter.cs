@@ -186,14 +186,6 @@ public class SystemImporter : AssetPostprocessor
 					{
 						Data.ResourceCount = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseDefineColumn.Param);
 					}
-					if (KeyName == "limitSaveCount")
-					{
-						Data.LimitSaveCount = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseDefineColumn.Param);
-					}
-					if (KeyName == "limitContinueCount")
-					{
-						Data.LimitContinueCount = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseDefineColumn.Param);
-					}
 					if (KeyName == "alcanaSelectCount")
 					{
 						Data.AlcanaSelectCount = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseDefineColumn.Param);

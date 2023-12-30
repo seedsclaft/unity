@@ -220,7 +220,7 @@ public class StageInfo
     public void MakeLastBossOnlyTroop(int routeSelect)
     {
         _currentTroopInfos.Clear();
-        var bossId = Master.BossBGMId;
+        var bossId = Master.BossId;
         int lv = 20;
         if (routeSelect > 0)
         {
@@ -274,7 +274,7 @@ public class StageInfo
     public List<TroopInfo> MakeRouteSelectTroopData(int routeSelect)
     {
         _currentTroopInfos.Clear();
-        var bossId = Master.BossBGMId;
+        var bossId = Master.BossId;
         int lv = 20;
         if (routeSelect > 0)
         {

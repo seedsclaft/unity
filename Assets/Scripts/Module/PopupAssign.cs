@@ -13,10 +13,12 @@ public class PopupAssign : MonoBehaviour
     [SerializeField] private GameObject creditPrefab = null;
     [SerializeField] private GameObject characterListPrefab = null;
     [SerializeField] private GameObject alcanaListPrefab = null;
-    
-    private BaseView _popupView = null;
     public GameObject CreatePopup(PopupType popupType,HelpWindow helpWindow)
     {
+        if (confirmRoot.transform.childCount > 0)
+        {
+            CloseConfirm();
+        }
         var prefab = Instantiate(GetPopupObject(popupType));
         prefab.transform.SetParent(confirmRoot.transform, false);
         confirmRoot.gameObject.SetActive(true);
@@ -56,9 +58,15 @@ public class PopupAssign : MonoBehaviour
         }
         confirmRoot.gameObject.SetActive(false);
     }
+
+    public void HideConfirm()
+    {
+        confirmRoot.gameObject.SetActive(false);
+    }
 }
 
 public enum PopupType{
+    None,
     Confirm,
     SkillDetail,
     Ruling,

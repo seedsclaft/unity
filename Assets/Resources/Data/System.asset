@@ -134,8 +134,6 @@ MonoBehaviour:
   RecoveryCount: 4
   BattleCount: 5
   ResourceCount: 3
-  LimitSaveCount: 4
-  LimitContinueCount: 1
   AlcanaSelectCount: 4
   BattleBonusValue: 4
   SystemTextData:
@@ -726,6 +724,9 @@ MonoBehaviour:
     Help: '""'
   - Id: 5002
     Text: "1\u6587\u5B57\u4EE5\u4E0A\u306E\u540D\u524D\u3092\u5165\u529B\u3057\u3066\u304F\u3060\u3055\u3044"
+    Help: '""'
+  - Id: 10000
+    Text: "\uFF1F\uFF1F\uFF1F"
     Help: '""'
   - Id: 11010
     Text: "\u7D42\u7109\u307E\u3067 :"

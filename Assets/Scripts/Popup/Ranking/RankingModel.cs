@@ -6,26 +6,27 @@ using System.Threading;
 
 public class RankingModel : BaseModel
 {
-    private List<RankingInfo> _rakingInfos = null;
-    public async void RankingInfos(Action<List<ListData>> endEvent)
+    private int _stageId = 0;
+    public async void RankingInfos(int stageId,Action<List<ListData>> endEvent)
     {
+        _stageId = stageId;
 #if (UNITY_WEBGL || UNITY_ANDROID) //&& !UNITY_EDITOR
-        if (_rakingInfos == null)
+        if (TempData.TempRankingData.ContainsKey(stageId) == false)
         {
-            FirebaseController.Instance.ReadRankingData();
+            FirebaseController.Instance.ReadRankingData(stageId);
             await UniTask.WaitUntil(() => FirebaseController.IsBusy == false);
-            _rakingInfos = FirebaseController.RankingInfos;
+            TempData.SetRankingInfo(stageId,FirebaseController.RankingInfos);
         }
         if (endEvent != null) 
         {
-            endEvent(MakeListData(_rakingInfos));
+            endEvent(MakeListData(TempData.TempRankingData[stageId]));
         }
 #endif
     }
 
     public void MakeDetailPartyInfo(int listIndex)
     {
-        var rankingInfo = _rakingInfos[listIndex];
+        var rankingInfo = TempData.TempRankingData[_stageId][listIndex];
         CurrentStageData.ClearActors();
         PartyInfo.InitActors();
         foreach (var actorInfo in rankingInfo.ActorInfos)

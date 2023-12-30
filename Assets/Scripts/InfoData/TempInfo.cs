@@ -9,6 +9,8 @@ public class TempInfo
     public List<ActorInfo> TempActorInfos => _tempActorInfos;
     private List<SkillInfo> _tempAlcanaSkillInfos = new ();
     public List<SkillInfo> TempAlcanaSkillInfos => _tempAlcanaSkillInfos;
+    private Dictionary<int,List<RankingInfo>> _tempRankingData = new ();
+    public Dictionary<int,List<RankingInfo>> TempRankingData => _tempRankingData;
     public void CashBattleActors(List<ActorInfo> actorInfos)
     {
         ClearBattleActors();
@@ -33,5 +35,15 @@ public class TempInfo
     public void ClearAlcana()
     {
         _tempAlcanaSkillInfos.Clear();
+    }
+    
+    public void SetRankingInfo(int stageId,List<RankingInfo> rankingInfos)
+    {
+        _tempRankingData[stageId] = rankingInfos;
+    }
+    
+    public void ClearRankingInfo()
+    {
+        _tempRankingData.Clear();
     }
 }

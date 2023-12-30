@@ -50,6 +50,15 @@ public class MainMenuView : BaseView
         stageList.SetInputHandler(InputKeyType.Decide,() => CallMainMenuStage());
         stageList.SetInputHandler(InputKeyType.Option1,() => CommandOpenSideMenu());
         stageList.SetSelectedHandler(() => UpdateMainMenuStage());
+        for (var i = 0;i < stageList.ObjectList.Count;i++)
+        {
+            if (i < stages.Count)
+            {
+                var stageInfo = stageList.ObjectList[i].GetComponent<MainMenuStage>();
+                stageInfo.SetRankingDetailHandler((a) => CallStageRanking(a));
+            }
+        }
+        stageList.UpdateSelectIndex(0);
         SetInputHandler(stageList.GetComponent<IInputHandlerEvent>());
     }
     
@@ -62,9 +71,19 @@ public class MainMenuView : BaseView
             eventData.template = data.Id;
             _commandData(eventData);
         }
+    }    
+    
+    private void CallStageRanking(int stageId){
+        var listData = stageList.ListData;
+        if (listData != null)
+        {
+            var eventData = new MainMenuViewEvent(CommandType.Ranking);
+            eventData.template = stageId;
+            _commandData(eventData);
+        }
     }
 
-    private void UpdateMainMenuStage()
+    public void UpdateMainMenuStage()
     {
         var listData = stageList.ListData;
         if (listData != null)
@@ -74,19 +93,8 @@ public class MainMenuView : BaseView
         }
     }
 
-    private void OnClickRuling(){
-        var eventData = new MainMenuViewEvent(CommandType.Rule);
-        _commandData(eventData);
-    }
-
     private void OnClickOption(){
         var eventData = new MainMenuViewEvent(CommandType.Option);
-        _commandData(eventData);
-    }
-
-    private void OnClickRanking()
-    {
-        var eventData = new MainMenuViewEvent(CommandType.Ranking);
         _commandData(eventData);
     }
 

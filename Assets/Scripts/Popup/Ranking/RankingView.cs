@@ -33,6 +33,13 @@ public class RankingView : BaseView
         ChangeBackCommandActive(true);
     }
 
+    public void SetRankingViewInfo(RankingViewInfo rankingViewInfo)
+    {
+        var eventData = new RankingViewEvent(CommandType.RankingOpen);
+        eventData.template = rankingViewInfo.StageId;
+        _commandData(eventData);
+    }
+
     public void SetRankingInfo(List<ListData> rankingInfo) 
     {
         foreach (var listDate in rankingInfo)
@@ -60,7 +67,8 @@ namespace Ranking
     public enum CommandType
     {
         None = 0,
-        Detail = 1,
+        RankingOpen = 1,
+        Detail = 2,
     }
 }
 public class RankingViewEvent
@@ -72,4 +80,9 @@ public class RankingViewEvent
     {
         commandType = type;
     }
+}
+
+public class RankingViewInfo{
+    public int StageId;
+    public System.Action EndEvent;
 }

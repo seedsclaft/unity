@@ -23,6 +23,9 @@ public class StagesInfoImporter : AssetPostprocessor {
 		BossId,
 		Reborn,
 		Alcana,
+		SaveLimit,
+		ContinueLimit,
+		RankingStage,
 		SubordinateValue
     }
     enum BaseEventColumn
@@ -120,6 +123,9 @@ public class StagesInfoImporter : AssetPostprocessor {
 					StageData.BossBGMId = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.BossBGMId);
 					StageData.Reborn = (AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.Reborn) == 1);
 					StageData.Alcana = (AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.Alcana) == 1);
+					StageData.SaveLimit = (AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.SaveLimit));
+					StageData.ContinueLimit = (AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.ContinueLimit));
+					StageData.RankingStage = (AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.RankingStage));
 					StageData.SubordinateValue = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.SubordinateValue);
 					
 					StageData.StageEvents = new List<StageEventData>();

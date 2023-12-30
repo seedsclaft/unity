@@ -33,11 +33,6 @@ public class MainMenuModel : BaseModel
         menuCommand.Name = DataSystem.System.GetTextData(703).Text;
         menuCommand.Key = "Help";
         list.Add(menuCommand);
-        var ranking = new SystemData.CommandData();
-        ranking.Id = 1;
-        ranking.Name = DataSystem.System.GetTextData(702).Text;
-        ranking.Key = "Ranking";
-        list.Add(ranking);
         /*
         var slot = new SystemData.CommandData();
         slot.Id = 0;

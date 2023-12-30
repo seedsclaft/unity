@@ -26,6 +26,9 @@ MonoBehaviour:
     BossBGMId: 11
     Reborn: 0
     Alcana: 0
+    SaveLimit: 4
+    ContinueLimit: 2
+    RankingStage: 0
     SubordinateValue: 0
     StageEvents:
     - EventKey: 1StartTacticsCommandDisable1
@@ -421,6 +424,9 @@ MonoBehaviour:
     BossBGMId: 11
     Reborn: 0
     Alcana: 0
+    SaveLimit: 4
+    ContinueLimit: 2
+    RankingStage: 0
     SubordinateValue: 0
     StageEvents:
     - EventKey: 1StartTacticsCommandDisable3
@@ -679,6 +685,9 @@ MonoBehaviour:
     BossBGMId: 11
     Reborn: 0
     Alcana: 1
+    SaveLimit: 4
+    ContinueLimit: 2
+    RankingStage: 1
     SubordinateValue: 80
     StageEvents:
     - EventKey: 1BeforeTacticsAdvStart101
@@ -793,6 +802,9 @@ MonoBehaviour:
     BossBGMId: 11
     Reborn: 0
     Alcana: 0
+    SaveLimit: 4
+    ContinueLimit: 2
+    RankingStage: 0
     SubordinateValue: 80
     StageEvents:
     - EventKey: 1StartTacticsSelectAddActor1
@@ -865,6 +877,9 @@ MonoBehaviour:
     BossBGMId: 11
     Reborn: 0
     Alcana: 0
+    SaveLimit: 4
+    ContinueLimit: 2
+    RankingStage: 0
     SubordinateValue: 80
     StageEvents:
     - EventKey: 1StartTacticsSelectAddActor1
@@ -919,6 +934,9 @@ MonoBehaviour:
     BossBGMId: 11
     Reborn: 0
     Alcana: 0
+    SaveLimit: 4
+    ContinueLimit: 2
+    RankingStage: 0
     SubordinateValue: 80
     StageEvents:
     - EventKey: 1StartTacticsSelectAddActor1
@@ -967,6 +985,9 @@ MonoBehaviour:
     BossBGMId: 11
     Reborn: 0
     Alcana: 0
+    SaveLimit: 4
+    ContinueLimit: 2
+    RankingStage: 0
     SubordinateValue: 80
     StageEvents:
     - EventKey: 1StartTacticsSelectAddActor1
@@ -1015,6 +1036,9 @@ MonoBehaviour:
     BossBGMId: 11
     Reborn: 0
     Alcana: 0
+    SaveLimit: 4
+    ContinueLimit: 2
+    RankingStage: 0
     SubordinateValue: 80
     StageEvents:
     - EventKey: 1StartTacticsSetDefineBossIndex5
@@ -1047,17 +1071,17 @@ MonoBehaviour:
       Type: 15
       Param: 201
       ReadFlag: 1
-    - EventKey: 7StartTacticsChangeRouteSelectStage111
-      Turns: 7
-      Timing: 1
-      Type: 31
-      Param: 111
-      ReadFlag: 1
     - EventKey: 7StartTacticsSaveCommand1
       Turns: 7
       Timing: 1
       Type: 7
       Param: 1
+      ReadFlag: 1
+    - EventKey: 7StartTacticsChangeRouteSelectStage111
+      Turns: 7
+      Timing: 1
+      Type: 31
+      Param: 111
       ReadFlag: 1
     Tutorials: []
   - Id: 111
@@ -1074,7 +1098,10 @@ MonoBehaviour:
     BGMId: 5
     BossBGMId: 16
     Reborn: 0
-    Alcana: 0
+    Alcana: 1
+    SaveLimit: 4
+    ContinueLimit: 2
+    RankingStage: 0
     SubordinateValue: 0
     StageEvents:
     - EventKey: 1StartTacticsRouteSelectBattle0
@@ -1128,7 +1155,10 @@ MonoBehaviour:
     BGMId: 5
     BossBGMId: 16
     Reborn: 0
-    Alcana: 0
+    Alcana: 1
+    SaveLimit: 4
+    ContinueLimit: 2
+    RankingStage: 0
     SubordinateValue: 0
     StageEvents:
     - EventKey: 1StartTacticsSetDisplayTurns6

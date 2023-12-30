@@ -176,10 +176,10 @@ abstract public class BaseView : MonoBehaviour
         CallSceneChangeCommand(eventData);
     }
 
-    public void CommandCallRanking(System.Action endEvent)
+    public void CommandCallRanking(RankingViewInfo rankingViewInfo)
     {
         var eventData = new ViewEvent(Base.CommandType.CallRankingView);
-        eventData.template = endEvent;
+        eventData.template = rankingViewInfo;
         CallSceneChangeCommand(eventData);
     }
 
