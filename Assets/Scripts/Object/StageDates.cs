@@ -26,7 +26,9 @@ public class StageData
     public int SaveLimit;
     public int ContinueLimit;
     public int RankingStage;
+    public bool SlotSave;
     public int SubordinateValue;
+    public bool UseSlot;
     public List<StageEventData> StageEvents;
     public List<StageTutorialData> Tutorials;
 }

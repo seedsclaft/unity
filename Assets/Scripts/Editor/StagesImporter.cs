@@ -26,7 +26,9 @@ public class StagesInfoImporter : AssetPostprocessor {
 		SaveLimit,
 		ContinueLimit,
 		RankingStage,
-		SubordinateValue
+		SlotSave,
+		SubordinateValue,
+		UseSlot,
     }
     enum BaseEventColumn
     {
@@ -126,7 +128,9 @@ public class StagesInfoImporter : AssetPostprocessor {
 					StageData.SaveLimit = (AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.SaveLimit));
 					StageData.ContinueLimit = (AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.ContinueLimit));
 					StageData.RankingStage = (AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.RankingStage));
+					StageData.SlotSave = (AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.SlotSave) == 1);
 					StageData.SubordinateValue = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.SubordinateValue);
+					StageData.UseSlot = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.UseSlot) == 1;
 					
 					StageData.StageEvents = new List<StageEventData>();
 					for (int j = 1; j <= EventSheet.LastRowNum; j++)

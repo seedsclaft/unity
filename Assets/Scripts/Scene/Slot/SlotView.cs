@@ -7,11 +7,13 @@ using Slot;
 public class SlotView : BaseView
 {
     [SerializeField] private BaseList slotInfoList = null;
+    [SerializeField] private SlotInfoComponent slotInfoComponent = null;
     private new System.Action<SlotViewEvent> _commandData = null;
 
     public override void Initialize() 
     {
         base.Initialize();
+        InitSlotList();
         new SlotPresenter(this);
     }
 
@@ -32,29 +34,25 @@ public class SlotView : BaseView
         ChangeBackCommandActive(true);
     }
 
-    public void SetSlotInfo(Dictionary<int,SlotInfo> slotInfo) 
+    public void InitSlotList() 
     {
         slotInfoList.Initialize();
         SetInputHandler(slotInfoList.GetComponent<IInputHandlerEvent>());
-        slotInfoList.SetInputHandler(InputKeyType.Decide,() => CallSlotInfoLock());
         slotInfoList.SetInputHandler(InputKeyType.Cancel,() => BackEvent());
         slotInfoList.SetInputHandler(InputKeyType.Option1,() => CallSlotStatus());
-        slotInfoList.Refresh();
+    }
+
+    public void CommandRefresh(List<ListData> slotInfos,SlotInfo current = null)
+    {
+        slotInfoList.SetData(slotInfos);
         slotInfoList.Activate();
+        slotInfoComponent.gameObject.SetActive(current != null);
+        if (current != null)
+        {
+            slotInfoComponent.UpdateInfo(current);
+        }
     }
 
-    public void CommandRefresh(List<ListData> slotInfo)
-    {
-        slotInfoList.SetData(slotInfo);
-    }
-
-    private void CallSlotInfoLock()
-    {
-        var eventData = new SlotViewEvent(CommandType.Lock);
-        eventData.template = slotInfoList.Index;
-        _commandData(eventData); 
-    }
-    
     private void CallSlotStatus()
     {
         var eventData = new SlotViewEvent(CommandType.Status);
@@ -69,7 +67,6 @@ namespace Slot
     public enum CommandType
     {
         None = 0,
-        Lock,
         Status,
         Back,
     }

@@ -501,9 +501,7 @@ MonoBehaviour:
   actorRoot: {fileID: 5546710531822853095}
   actorPrefab: {fileID: 3024296760280034765, guid: f5b0a6e5fc8db3946bfef08807530984,
     type: 3}
-  score: {fileID: 91063857639197849}
   timeRecord: {fileID: 9042058945303549630}
-  locked: {fileID: 8704242373146863473}
   noData: {fileID: 6950248615334744858}
   infoButton: {fileID: 9012276601418610263}
 --- !u!1 &5019252127881066119
@@ -970,7 +968,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1888285969291851027
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1503,7 +1501,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &7803843471744140619
 RectTransform:
   m_ObjectHideFlags: 0

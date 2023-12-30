@@ -59,7 +59,7 @@ public class StatusPresenter : BasePresenter
     private void CommandCharacterList()
     {
         var characterListInfo = new CharacterListInfo((a) => {
-            _view.CommandConfirmClose();
+            _view.CommandPopupClose();
             _model.SelectActor(a);
             CommandRefresh();
         });

@@ -4,6 +4,13 @@ using System.Collections.Generic;
 [Serializable]
 public class PlayerInfo
 {
+    public PlayerInfo()
+    {
+        InitSlotInfo();
+		ClearStageClearCount();
+		InitStageClearCount();
+    }
+
     private int _userId = -1;
     public int UserId => _userId;
     public void SetUserId()
@@ -44,6 +51,7 @@ public class PlayerInfo
         }
     }
 
+    // クリア情報
     private Dictionary<int,int> _stageClearDict = new ();
     public Dictionary<int,int> StageClearDict => _stageClearDict;
     public int ClearCount(int stageId)
@@ -55,12 +63,12 @@ public class PlayerInfo
         return 0;
     }
 
-    public void ClearStageClearCount()
+    private void ClearStageClearCount()
     {
         _stageClearDict.Clear();
     }
 
-	public void InitStageClearCount()
+	private void InitStageClearCount()
 	{
 		for (int i = 0;i < DataSystem.Stages.Count;i++)
 		{
@@ -84,14 +92,9 @@ public class PlayerInfo
     private List<ActorInfo> _saveActorList = new ();
     public List<ActorInfo> SaveActorList => _saveActorList;
 
-    private Dictionary<int, SlotInfo> _saveSlotDict = new ();
-    public Dictionary<int, SlotInfo> GetSaveSlotDict()
-    {
-        InitSlotInfo();
-        return _saveSlotDict;
-    }
-    readonly int _saveSlotCount = 10;
-    private List<int> _clearedTroopIds = new ();
+    private List<SlotInfo> _slotSaveList = new ();
+    public List<SlotInfo> SlotSaveList => _slotSaveList;
+    readonly int _slotSaveCount = 3;
 
     public void AddActorInfo(ActorInfo actorInfo)
     {
@@ -109,58 +112,28 @@ public class PlayerInfo
     
     private void InitSlotInfo()
     {
-        if (_saveSlotDict.Count != 0)
+        _slotSaveList.Clear();
+        for (int i = 0;i < _slotSaveCount;i++)
         {
-            return;
-        }
-        _saveSlotDict = new ();
-        for (int i = 0;i < _saveSlotCount;i++)
-        {
-            var slotInfo = new SlotInfo(new List<ActorInfo>(){},0);
-            _saveSlotDict[i] = slotInfo;
+            var slotInfo = new SlotInfo(new List<ActorInfo>(){});
+            _slotSaveList.Add(slotInfo);
         }
     }
     
-    public void SaveSlotData(List<ActorInfo> actorInfos,int score)
+    public void SaveSlotData(int index,SlotInfo slotInfo)
     {
-        InitSlotInfo();
-        var slotInfo = new SlotInfo(actorInfos,score);
-        var index = -1;
-        var find = false;
-        foreach (var saveSlotDict in _saveSlotDict)
-        {
-            if (saveSlotDict.Value.ActorInfos.Count == 0)
-            {
-                find = true;
-                index++;
-                break;
-            }
-            index++;
-        }
-        if (find == false)
-        {
-            index = -1;
-            foreach (var saveSlotDict in _saveSlotDict)
-            {
-                if (saveSlotDict.Value.IsLocked == false)
-                {
-                    find = true;
-                    index++;
-                    break;
-                }
-                index++;
-            }
-
-        }
-        slotInfo.SetTimeRecord();
-        UpdateSlotInfo(index,slotInfo);
+        var saveSlot = new SlotInfo(slotInfo.ActorInfos);
+        saveSlot.SetTimeRecord();
+        UpdateSlotInfo(index,saveSlot);
     }
 
     private void UpdateSlotInfo(int slotId,SlotInfo slotInfo)
     {
-        _saveSlotDict[slotId] = slotInfo;
+        _slotSaveList[slotId] = slotInfo;
     }
 
+    // 倒したTroopID
+    private List<int> _clearedTroopIds = new ();
     public bool EnableBattleSkip(int troopId)
     {
         return _clearedTroopIds != null && _clearedTroopIds.Contains(troopId);
@@ -168,10 +141,6 @@ public class PlayerInfo
 
     public void AddClearedTroopId(int troopId)
     {
-        if (_clearedTroopIds == null)
-        {
-            _clearedTroopIds = new List<int>();
-        }
         if (!EnableBattleSkip(troopId))
         {
             _clearedTroopIds.Add(troopId);

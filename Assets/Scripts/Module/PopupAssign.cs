@@ -5,7 +5,6 @@ using UnityEngine;
 public class PopupAssign : MonoBehaviour
 {
     [SerializeField] private GameObject confirmRoot = null;
-    [SerializeField] private GameObject confirmPrefab = null;
     [SerializeField] private GameObject skillDetailPrefab = null;
     [SerializeField] private GameObject rulingPrefab = null;
     [SerializeField] private GameObject optionPrefab = null;
@@ -13,11 +12,12 @@ public class PopupAssign : MonoBehaviour
     [SerializeField] private GameObject creditPrefab = null;
     [SerializeField] private GameObject characterListPrefab = null;
     [SerializeField] private GameObject alcanaListPrefab = null;
+    [SerializeField] private GameObject slotSavePrefab = null;
     public GameObject CreatePopup(PopupType popupType,HelpWindow helpWindow)
     {
         if (confirmRoot.transform.childCount > 0)
         {
-            CloseConfirm();
+            ClosePopup();
         }
         var prefab = Instantiate(GetPopupObject(popupType));
         prefab.transform.SetParent(confirmRoot.transform, false);
@@ -31,8 +31,6 @@ public class PopupAssign : MonoBehaviour
     {
         switch (popupType)
         {
-            case PopupType.Confirm:
-            return confirmPrefab;
             case PopupType.SkillDetail:
             return skillDetailPrefab;
             case PopupType.Ruling:
@@ -47,11 +45,13 @@ public class PopupAssign : MonoBehaviour
             return characterListPrefab;
             case PopupType.AlcanaList:
             return alcanaListPrefab;
+            case PopupType.SlotSave:
+            return slotSavePrefab;
         }
         return null;
     }
 
-    public void CloseConfirm()
+    public void ClosePopup()
     {
         foreach(Transform child in confirmRoot.transform){
             Destroy(child.gameObject);
@@ -59,20 +59,16 @@ public class PopupAssign : MonoBehaviour
         confirmRoot.gameObject.SetActive(false);
     }
 
-    public void HideConfirm()
-    {
-        confirmRoot.gameObject.SetActive(false);
-    }
 }
 
 public enum PopupType{
     None,
-    Confirm,
     SkillDetail,
     Ruling,
     Option,
     Ranking,
     Credit,
     CharacterList,
-    AlcanaList
+    AlcanaList,
+    SlotSave
 }

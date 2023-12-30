@@ -24,7 +24,7 @@ public class SlotPresenter
         _view.SetHelpInputInfo("SLOT");
         _view.SetHelpText(DataSystem.System.GetTextData(18010).Text);
         _view.SetBackEvent();
-        _view.SetSlotInfo(_model.SlotInfos());
+        CommandRefresh();
         _busy = false;
     }
 
@@ -37,10 +37,6 @@ public class SlotPresenter
         {
             CommandBack();
         }
-        if (viewEvent.commandType == CommandType.Lock)
-        {
-            CommandLock((int)viewEvent.template);
-        }
         if (viewEvent.commandType == CommandType.Status)
         {
             CommandStatus((int)viewEvent.template);
@@ -52,14 +48,9 @@ public class SlotPresenter
         _view.CommandSceneChange(Scene.MainMenu);
     }
 
-    private void CommandLock(int index)
+    private void CommandRefresh()
     {
-        if (index > -1)
-        {
-            Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
-            _model.SlotLock(index);
-            _view.CommandRefresh(_model.SlotList());
-        }
+        _view.CommandRefresh(_model.SlotList());
     }
     
     private void CommandStatus(int index)

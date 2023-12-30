@@ -12,8 +12,6 @@ public class SaveInfo
     public SaveInfo()
     {
 		_playerInfo = new PlayerInfo();
-		_playerInfo.ClearStageClearCount();
-		_playerInfo.InitStageClearCount();
 		_alcanaInfo = new AlcanaInfo();
 	}
 

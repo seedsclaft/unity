@@ -10,6 +10,7 @@ public class GameSystem : MonoBehaviour
     [SerializeField] private SceneAssign sceneAssign = null;
     [SerializeField] private PopupAssign popupAssign = null;
     [SerializeField] private StatusAssign statusAssign = null;
+    [SerializeField] private ConfirmAssign confirmAssign = null;
 
     [SerializeField] private GameObject transitionRoot = null;
     [SerializeField] private Fade transitionFade = null;
@@ -103,8 +104,12 @@ public class GameSystem : MonoBehaviour
             case Base.CommandType.CallSkillDetailView:
                 CommandSkillDetailView((ConfirmInfo)viewEvent.template);
                 break;
+            case Base.CommandType.ClosePopup:
+                popupAssign.ClosePopup();
+                SetIsNotBusyMainAndStatus();
+                break;
             case Base.CommandType.CloseConfirm:
-                popupAssign.CloseConfirm();
+                confirmAssign.CloseConfirm();
                 SetIsNotBusyMainAndStatus();
                 break;
             case Base.CommandType.CallRulingView:
@@ -124,6 +129,9 @@ public class GameSystem : MonoBehaviour
                 break;
             case Base.CommandType.CallAlcanaListView:
                 CommandAlcanaListView((System.Action)viewEvent.template);
+                break;
+            case Base.CommandType.CallSlotSaveView:
+                CommandSlotSaveView((SlotSaveViewInfo)viewEvent.template);
                 break;
             case Base.CommandType.CallStatusView:
                 var statusView = CreateStatus(StatusType.Status) as StatusView;
@@ -201,7 +209,7 @@ public class GameSystem : MonoBehaviour
 
     private void CommandConfirmView(ConfirmInfo confirmInfo)
     {
-        var prefab = popupAssign.CreatePopup(PopupType.Confirm,helpWindow);
+        var prefab = confirmAssign.CreateConfirm(ConfirmType.Confirm,helpWindow);
         var confirmView = prefab.GetComponent<ConfirmView>();
         confirmView.Initialize();
         confirmView.SetViewInfo(confirmInfo);
@@ -224,7 +232,7 @@ public class GameSystem : MonoBehaviour
         rulingView.Initialize();
         rulingView.SetBackEvent(() => 
         {
-            UpdateCommand(new ViewEvent(Base.CommandType.CloseConfirm));
+            UpdateCommand(new ViewEvent(Base.CommandType.ClosePopup));
             if (endEvent != null) endEvent();
         });
         SetIsBusyMainAndStatus();
@@ -244,7 +252,7 @@ public class GameSystem : MonoBehaviour
                 Ryneus.SoundManager.Instance.SeMute
             );
             SaveSystem.SaveConfigStart(GameSystem.ConfigData);
-            UpdateCommand(new ViewEvent(Base.CommandType.CloseConfirm));
+            UpdateCommand(new ViewEvent(Base.CommandType.ClosePopup));
             if (endEvent != null) endEvent();
         });
         optionView.SetEvent((type) => UpdateCommand(type));
@@ -259,7 +267,7 @@ public class GameSystem : MonoBehaviour
         rankingView.SetRankingViewInfo(rankingViewInfo);
         rankingView.SetBackEvent(() => 
         {
-            UpdateCommand(new ViewEvent(Base.CommandType.CloseConfirm));
+            UpdateCommand(new ViewEvent(Base.CommandType.ClosePopup));
             if (rankingViewInfo.EndEvent != null) rankingViewInfo.EndEvent();
         });
         rankingView.SetEvent((type) => UpdateCommand(type));
@@ -273,7 +281,7 @@ public class GameSystem : MonoBehaviour
         creditView.Initialize();
         creditView.SetBackEvent(() => 
         {
-            UpdateCommand(new ViewEvent(Base.CommandType.CloseConfirm));
+            UpdateCommand(new ViewEvent(Base.CommandType.ClosePopup));
             if (endEvent != null) endEvent();
         });
         SetIsBusyMainAndStatus();
@@ -287,7 +295,7 @@ public class GameSystem : MonoBehaviour
         characterListView.SetViewInfo(characterListInfo);
         characterListView.SetBackEvent(() => 
         {
-            UpdateCommand(new ViewEvent(Base.CommandType.CloseConfirm));
+            UpdateCommand(new ViewEvent(Base.CommandType.ClosePopup));
         });
         SetIsBusyMainAndStatus();
     }
@@ -299,9 +307,24 @@ public class GameSystem : MonoBehaviour
         characterListView.Initialize();
         characterListView.SetBackEvent(() => 
         {
-            UpdateCommand(new ViewEvent(Base.CommandType.CloseConfirm));
+            UpdateCommand(new ViewEvent(Base.CommandType.ClosePopup));
             if (endEvent != null) endEvent();
         });
+        SetIsBusyMainAndStatus();
+    }
+
+    private void CommandSlotSaveView(SlotSaveViewInfo slotSaveViewInfo)
+    {
+        var prefab = popupAssign.CreatePopup(PopupType.SlotSave,helpWindow);
+        var slotSaveView = prefab.GetComponent<SlotSaveView>();
+        slotSaveView.Initialize();
+        slotSaveView.SetBackEvent(() => 
+        {
+            UpdateCommand(new ViewEvent(Base.CommandType.ClosePopup));
+            if (slotSaveViewInfo.EndEvent != null) slotSaveViewInfo.EndEvent();
+        });
+        slotSaveView.SetEvent((type) => UpdateCommand(type));
+        slotSaveView.SetSlotSaveViewInfo(slotSaveViewInfo);
         SetIsBusyMainAndStatus();
     }
 

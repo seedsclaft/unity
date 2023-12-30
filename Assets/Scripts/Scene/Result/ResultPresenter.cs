@@ -12,6 +12,7 @@ public class ResultPresenter : BasePresenter
 
     private bool _isRankingEnd = false;
     private bool _isAlcanaEnd = false;
+    private bool _isSlotSaveEnd = false;
     public ResultPresenter(ResultView view)
     {
         _view = view;
@@ -76,13 +77,35 @@ public class ResultPresenter : BasePresenter
     {
         if (confirmCommandType == ConfirmCommandType.Yes)
         {
-            if (_isRankingEnd)
+            if (_isSlotSaveEnd)
             {
                 CommandEndGame();
+            } else
+            if (_isRankingEnd)
+            {
+                // スロットセーブ
+                if (_isSlotSaveEnd == false && _model.CurrentStage.Master.SlotSave)
+                {
+                    
+                    var confirmView = new ConfirmInfo("クリアデータを保存できます。クリアデータを使って高難度ステージに挑むことができます。",(a) => UpdatePopupSlotSaveOpen());
+                    confirmView.SetIsNoChoice(true);
+                    _view.CommandCallConfirm(confirmView);
+                } else
+                {
+                    _isSlotSaveEnd = true;
+                    CommandEndGame();
+                }
                 //CommandActorAssign();
             } else
             {
-                CommandRanking();
+                // ランキング登録アリなら
+                if (_model.CurrentStage.Master.RankingStage > 0)
+                {
+                    CommandRanking();
+                } else
+                {
+                    CommandEndGame();
+                }
             }
         } else
         {
@@ -238,13 +261,26 @@ public class ResultPresenter : BasePresenter
     private void CommandDecideAlcana()
     {
         _view.CommandDecideAlcana();
-        // 終了へ
         UpdateStageEndCommand();
+    }    
+    
+    private void UpdatePopupSlotSaveOpen()
+    {
+        _view.CommandConfirmClose();
+        Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
+        var slotView = new SlotSaveViewInfo();
+        slotView.EndEvent = () => {
+            _isSlotSaveEnd = true;
+            _view.CommandPopupClose();
+        };
+        var slotInfo = new SlotInfo(_model.EvaluateMembers());
+        slotInfo.SetTimeRecord();
+        slotView.SlotInfo = slotInfo;
+        _view.CommandSlotSave(slotView);
     }
 
     private void CommandEndGame()
     {
-        _model.SaveSlotData();
         _model.SavePlayerStageData(false);
         _view.CommandSceneChange(Scene.MainMenu);
     }

@@ -156,6 +156,12 @@ abstract public class BaseView : MonoBehaviour
         CallSceneChangeCommand(eventData);
     }
 
+    public void CommandPopupClose()
+    {
+        var eventData = new ViewEvent(Base.CommandType.ClosePopup);
+        CallSceneChangeCommand(eventData);
+    }
+
     public void CommandConfirmClose()
     {
         var eventData = new ViewEvent(Base.CommandType.CloseConfirm);
@@ -201,6 +207,13 @@ abstract public class BaseView : MonoBehaviour
     {
         var eventData = new ViewEvent(Base.CommandType.CallAlcanaListView);
         eventData.template = endEvent;
+        CallSceneChangeCommand(eventData);
+    }
+
+    public void CommandSlotSave(SlotSaveViewInfo slotSaveViewInfo)
+    {
+        var eventData = new ViewEvent(Base.CommandType.CallSlotSaveView);
+        eventData.template = slotSaveViewInfo;
         CallSceneChangeCommand(eventData);
     }
 
@@ -331,6 +344,7 @@ namespace Base
         SceneChange,
         CallConfirmView,
         CallSkillDetailView,
+        ClosePopup,
         CloseConfirm,
         CallRulingView,
         CallOptionView,
@@ -338,6 +352,7 @@ namespace Base
         CallCreditView,
         CallCharacterListView,
         CallAlcanaListView,
+        CallSlotSaveView,
         CallStatusView,
         CloseStatus,
         CallAdvScene,

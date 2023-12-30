@@ -99,11 +99,12 @@ public class ResultModel : BaseModel
                 if (randSkillData.FeatureDates.Find(a => a.FeatureType == FeatureType.AddSkillOrCurrency) != null)
                 {
                     var addSkillInfo = new SkillInfo(randSkillData.Id);
-                    var skills = actorInfo.Skills.FindAll(a => a.Master.Rank == 1 && a.Attribute == randSkillData.Attribute);
+                    var skills = DataSystem.Skills.FindAll(a => a.Rank == 1 && a.Attribute == randSkillData.Attribute);
                     if (skills.Count > 0)
                     {
                         var skillRand = UnityEngine.Random.Range(0,skills.Count);
                         addSkillInfo.SetParam(skills[skillRand].Id,0,0);
+                        addSkillInfo.SetEnable(true);
                         getAlcanaInfos.Add(addSkillInfo);
                         getCount--;
                     }
@@ -113,6 +114,7 @@ public class ResultModel : BaseModel
                 if (getAlcanaInfos.Find(a => a.Id == randSkillData.Id) == null)
                 {
                     var uniqueSkillInfo = new SkillInfo(randSkillData.Id);
+                    uniqueSkillInfo.SetEnable(true);
                     getAlcanaInfos.Add(uniqueSkillInfo);
                     getCount--;
                 }
@@ -201,7 +203,6 @@ public class ResultModel : BaseModel
         return skill;
     }
 
-    
     private List<SkillInfo> AddMagicRebornSkill()
     {
         var list = new List<SkillInfo>();
@@ -340,10 +341,5 @@ public class ResultModel : BaseModel
     public void EraseReborn()
     {
         CurrentData.PlayerInfo.EraseReborn(_rebornActorIndex);
-    }
-
-    public void SaveSlotData()
-    {
-        CurrentData.PlayerInfo.SaveSlotData(EvaluateMembers(),TotalEvaluate());
     }
 }
