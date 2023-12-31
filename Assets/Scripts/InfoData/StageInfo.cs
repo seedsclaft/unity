@@ -199,6 +199,12 @@ public class StageInfo
             troopInfo.AddEnemy(enemy);
             enemyCount++;
         }
+        var getItemData = new GetItemData();
+        getItemData.Type = GetItemType.AllRegeneration;
+        var getItemInfo = new GetItemInfo(getItemData);
+        getItemInfo.SetTitleData(DataSystem.System.GetTextData(3240).Text);
+        troopInfo.AddGetItemInfo(getItemInfo);
+        _currentTroopInfos.Add(troopInfo);
         return _currentTroopInfos;
     }
 
@@ -517,8 +523,12 @@ public class StageInfo
 
     public int SelectActorIdsClassId(int selectIndex)
     {
-        var actorId = SelectActorIds[selectIndex];
-        return DataSystem.Actors.Find(a => a.Id == actorId).ClassId;
+        if (SelectActorIds.Count > selectIndex)
+        {
+            var actorId = SelectActorIds[selectIndex];
+            return DataSystem.Actors.Find(a => a.Id == actorId).ClassId;
+        }
+        return 0;
     }
 
     public void SetSurvivalMode()

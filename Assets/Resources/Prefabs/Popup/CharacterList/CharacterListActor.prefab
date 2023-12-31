@@ -72,9 +72,9 @@ MonoBehaviour:
   grayscale: {fileID: 0}
   faceThumb: {fileID: 0}
   awakenFaceThumb: {fileID: 5075145801261933934}
-  clipingThumb: {fileID: 0}
+  clipThumb: {fileID: 0}
   nameText: {fileID: 325743150727122434}
-  subnameText: {fileID: 3302667946221551308}
+  subNameText: {fileID: 3302667946221551308}
   evaluate: {fileID: 0}
   demigod: {fileID: 0}
   lv: {fileID: 0}
@@ -105,17 +105,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2402955de89268e4e84a86b325832163, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxhp: {fileID: 2961072845481355850}
+  maxHp: {fileID: 2961072845481355850}
   hp: {fileID: 0}
-  maxmp: {fileID: 8538331653964668618}
+  maxMp: {fileID: 8538331653964668618}
   mp: {fileID: 0}
   atk: {fileID: 8423888810844449321}
   def: {fileID: 744757550073161267}
   spd: {fileID: 2372388722952320854}
-  hpGaugeBg: {fileID: 0}
-  hpGauge: {fileID: 0}
-  mpGaugeBg: {fileID: 0}
-  mpGauge: {fileID: 0}
+  hpGaugeAnimation: {fileID: 0}
+  mpGaugeAnimation: {fileID: 0}
+  normalColor: {r: 0, g: 0, b: 0, a: 0}
+  upperColor: {r: 0, g: 0, b: 0, a: 0}
+  downColor: {r: 0, g: 0, b: 0, a: 0}
   canvasGroup: {fileID: 0}
 --- !u!114 &9092813325176049355
 MonoBehaviour:

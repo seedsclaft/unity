@@ -32,8 +32,8 @@ abstract public class DataSystem
 
 
 
-    private static AlcanaData _alcana;
-    public static List<AlcanaData.Alcana> Alcana => _alcana._data;
+    //private static AlcanaData _alcana;
+    //public static List<AlcanaData.Alcana> Alcana => _alcana._data;
 
 
 
@@ -50,7 +50,7 @@ abstract public class DataSystem
         System = Resources.Load<SystemData>("Data/System");
         Troops = Resources.Load<TroopDates>("Data/Troops").Data;
         Animations = Resources.Load<AnimationDates>("Data/Animations").Data;
-        DataSystem._alcana = Resources.Load<AlcanaData>("Data/Alcana");
+        //DataSystem._alcana = Resources.Load<AlcanaData>("Data/Alcana");
         DataSystem._data = Resources.Load<DataManager>("Data/MainData");
     }
 }

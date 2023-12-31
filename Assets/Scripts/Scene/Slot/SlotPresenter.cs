@@ -49,6 +49,7 @@ public class SlotPresenter
 
     private void CommandDecide(int slotIndex)
     {
+        Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
         var confirmInfo = new ConfirmInfo(DataSystem.System.GetTextData(21010).Text,(a) => UpdatePopupStageStart((ConfirmCommandType)a));
         _view.CommandCallConfirm(confirmInfo);
     }
@@ -58,6 +59,11 @@ public class SlotPresenter
         if (confirmCommandType == ConfirmCommandType.Yes)
         {
             Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
+            _model.ClearActorsData();
+            var selectIndex = _view.SlotListIndex;
+            _model.SetActorsData(selectIndex);
+            _model.SetSelectActorIds();
+            _model.RegenerationActors();
             _model.SavePlayerStageData(true);
             _view.CommandSceneChange(Scene.Tactics);
         } else

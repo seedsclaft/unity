@@ -48,6 +48,13 @@ public class TacticsModel : BaseModel
 
     public List<ListData> TacticsCommand()
     {
+        if (CurrentStage.SurvivalMode)
+        {
+            SetTacticsCommandEnables(TacticsCommandType.Train,false);
+            SetTacticsCommandEnables(TacticsCommandType.Alchemy,false);
+            SetTacticsCommandEnables(TacticsCommandType.Recovery,false);
+            SetTacticsCommandEnables(TacticsCommandType.Resource,false);
+        }
         var commandListDates = MakeListData(DataSystem.TacticsCommand);
         foreach (var commandListData in commandListDates)
         {
@@ -395,11 +402,27 @@ public class TacticsModel : BaseModel
     
     public AdvData StartTacticsAdvData()
     {
-        var isGameOver = (Actors().Find(a => a.ActorId == CurrentStage.SelectActorIds[0])).Lost;
+        var isGameOver = CurrentStage.SelectActorIds.Count > 0 && (Actors().Find(a => a.ActorId == CurrentStage.SelectActorIds[0])).Lost;
         if (isGameOver)
         {
             CurrentStage.SetEndingType(EndingType.C);
             return DataSystem.Adventures.Find(a => a.Id == 21);
+        }
+        if (CurrentStage.SurvivalMode)
+        {
+            var isSurvivalGameOver = CurrentStage.SelectActorIds.Count > 0 && !Actors().Exists(a => a.Lost == false);
+            if (isSurvivalGameOver)
+            {
+                CurrentStage.SetEndingType(EndingType.C);
+                return DataSystem.Adventures.Find(a => a.Id == 21);
+            }
+            var isSurvivalClear = Turns < 0;
+            if (isSurvivalClear)
+            {
+                CurrentStage.SetEndingType(EndingType.A);
+                StageClear();
+                return DataSystem.Adventures.Find(a => a.Id == 151);
+            }
         }
         var turnOver = Turns < 0;
         if (turnOver)

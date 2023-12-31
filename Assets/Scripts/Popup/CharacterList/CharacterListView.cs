@@ -49,6 +49,7 @@ public class CharacterListView : BaseView
         var listData = characterList.ListData;
         if (listData != null)
         {
+            Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
             var data = (ActorInfo)listData.Data;
             _callEvent(data.ActorId);
         }

@@ -9,6 +9,7 @@ public class StatusView : BaseView ,IInputHandlerEvent
     [SerializeField] private BattleSelectCharacter selectCharacter = null;
     [SerializeField] private ActorInfoComponent actorInfoComponent = null;
     [SerializeField] private Button decideButton = null;
+    [SerializeField] private Button characterListButton = null;
     private new System.Action<StatusViewEvent> _commandData = null;
     [SerializeField] private Button leftButton = null;
     [SerializeField] private Button rightButton = null;
@@ -51,6 +52,7 @@ public class StatusView : BaseView ,IInputHandlerEvent
         leftButton.onClick.AddListener(() => OnClickLeft());
         rightButton.onClick.AddListener(() => OnClickRight());
         decideButton.onClick.AddListener(() => OnClickDecide());
+        characterListButton.onClick.AddListener(() => OnClickCharacterList());
     }
 
     public void ShowArrows()

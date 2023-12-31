@@ -276,6 +276,17 @@ public class StrategyModel : BaseModel
                     actorInfo.DecideStrength(0);
                 }
             }
+            if (getItemInfo.GetItemType == GetItemType.AllRegeneration)
+            {
+                foreach (var actorInfo in BattleResultActors())
+                {
+                    if (actorInfo.CurrentHp > 0)
+                    {
+                        actorInfo.ChangeHp(9999);
+                        actorInfo.ChangeMp(9999);
+                    }
+                }
+            }
 
         }
         CurrentStage.AddClearTroopId(CurrentTroopInfo().TroopId);

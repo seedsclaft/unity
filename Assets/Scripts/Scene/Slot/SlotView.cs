@@ -9,6 +9,7 @@ public class SlotView : BaseView
     [SerializeField] private BaseList slotInfoList = null;
     private new System.Action<SlotViewEvent> _commandData = null;
 
+    public int SlotListIndex => slotInfoList.Index;
     public override void Initialize() 
     {
         base.Initialize();

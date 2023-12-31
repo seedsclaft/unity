@@ -36,10 +36,12 @@ public class AlcanaInfo{
     {
         _IsAlcana = false;
         _ownAlcanaList.Clear();
+        /*
         for (var i = 500001;i <= 500022;i++)
         {
             _ownAlcanaList.Add(new SkillInfo(i));
         }
+        */
     }
 
     public void ClearOwnAlcanaList()

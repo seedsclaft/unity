@@ -58,6 +58,7 @@ public class StatusPresenter : BasePresenter
 
     private void CommandCharacterList()
     {
+        Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
         var characterListInfo = new CharacterListInfo((a) => {
             _view.CommandPopupClose();
             _model.SelectActor(a);
