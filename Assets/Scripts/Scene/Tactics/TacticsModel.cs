@@ -554,6 +554,12 @@ public class TacticsModel : BaseModel
         SetTacticsCommandEnables(TacticsCommandType.Resource,false);
     }
 
+    public void SetSurvivalMode()
+    {
+        CurrentStage.ClearTacticsEnemies();
+        CurrentStage.SetSurvivalMode();
+    }
+
     public bool CheckTutorial(TacticsViewEvent viewEvent)
     {
         if (CurrentStageTutorialDates.Count == 0)

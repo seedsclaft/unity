@@ -22,7 +22,7 @@ public class SlotPresenter
         _busy = true;
         _view.SetEvent((type) => UpdateCommand(type));
         _view.SetHelpInputInfo("SLOT");
-        _view.SetHelpText(DataSystem.System.GetTextData(18010).Text);
+        _view.SetHelpText(DataSystem.System.GetTextData(21020).Text);
         _view.SetBackEvent();
         CommandRefresh();
         _busy = false;
@@ -33,6 +33,10 @@ public class SlotPresenter
         if (_busy){
             return;
         }
+        if (viewEvent.commandType == CommandType.Decide)
+        {
+            CommandDecide((int)viewEvent.template);
+        }
         if (viewEvent.commandType == CommandType.Back)
         {
             CommandBack();
@@ -41,6 +45,26 @@ public class SlotPresenter
         {
             CommandStatus((int)viewEvent.template);
         }
+    }
+
+    private void CommandDecide(int slotIndex)
+    {
+        var confirmInfo = new ConfirmInfo(DataSystem.System.GetTextData(21010).Text,(a) => UpdatePopupStageStart((ConfirmCommandType)a));
+        _view.CommandCallConfirm(confirmInfo);
+    }
+
+    private void UpdatePopupStageStart(ConfirmCommandType confirmCommandType)
+    {
+        if (confirmCommandType == ConfirmCommandType.Yes)
+        {
+            Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
+            _model.SavePlayerStageData(true);
+            _view.CommandSceneChange(Scene.Tactics);
+        } else
+        {
+            Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cancel);
+        }
+        _view.CommandConfirmClose();
     }
 
     private void CommandBack()

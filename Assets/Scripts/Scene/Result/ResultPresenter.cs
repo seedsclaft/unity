@@ -86,8 +86,7 @@ public class ResultPresenter : BasePresenter
                 // スロットセーブ
                 if (_isSlotSaveEnd == false && _model.CurrentStage.Master.SlotSave)
                 {
-                    
-                    var confirmView = new ConfirmInfo("クリアデータを保存できます。クリアデータを使って高難度ステージに挑むことができます。",(a) => UpdatePopupSlotSaveOpen());
+                    var confirmView = new ConfirmInfo(DataSystem.System.GetTextData(16110).Text,(a) => UpdatePopupSlotSaveOpen());
                     confirmView.SetIsNoChoice(true);
                     _view.CommandCallConfirm(confirmView);
                 } else

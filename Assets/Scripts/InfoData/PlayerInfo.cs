@@ -98,10 +98,6 @@ public class PlayerInfo
 
     public void AddActorInfo(ActorInfo actorInfo)
     {
-        if (_saveActorList == null)
-        {
-            _saveActorList = new ();
-        }
         _saveActorList.Add(actorInfo);
     }
 

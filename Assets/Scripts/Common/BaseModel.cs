@@ -349,6 +349,10 @@ public class BaseModel
     
     public List<TroopInfo> TacticsTroops()
     {
+        if (CurrentStage.SurvivalMode)
+        {
+            return CurrentStage.SurvivalTroops(CurrentStage.CurrentTurn);
+        } else
         if (CurrentStage.TroopClearCount == 0 && CurrentStage.SelectActorIds.Count > 0)
         {
             return TutorialTroopData();
@@ -806,5 +810,23 @@ public class BaseModel
     public List<int> SaveAdsCommandTextIds()
     {
         return new List<int>(){3053,3051};
+    }
+
+    public void ClearActorsData()
+    {
+        CurrentStageData.ClearActors();
+        CurrentStageData.InitAllActorMembers();
+    }
+
+    public void SetActorsData(int index)
+    {
+        CurrentStageData.ClearActors();
+        PartyInfo.InitActors();
+        var slotData = CurrentData.PlayerInfo.SlotSaveList[index];
+        var actorInfos = slotData.ActorInfos;
+        foreach (var actorInfo in actorInfos)
+        {
+            CurrentStageData.AddActor(actorInfo);
+        }
     }
 }

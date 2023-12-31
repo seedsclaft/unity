@@ -7,7 +7,6 @@ using Slot;
 public class SlotView : BaseView
 {
     [SerializeField] private BaseList slotInfoList = null;
-    [SerializeField] private SlotInfoComponent slotInfoComponent = null;
     private new System.Action<SlotViewEvent> _commandData = null;
 
     public override void Initialize() 
@@ -38,28 +37,40 @@ public class SlotView : BaseView
     {
         slotInfoList.Initialize();
         SetInputHandler(slotInfoList.GetComponent<IInputHandlerEvent>());
+        slotInfoList.SetInputHandler(InputKeyType.Decide,() => CallSlotDecide());
         slotInfoList.SetInputHandler(InputKeyType.Cancel,() => BackEvent());
         slotInfoList.SetInputHandler(InputKeyType.Option1,() => CallSlotStatus());
     }
 
-    public void CommandRefresh(List<ListData> slotInfos,SlotInfo current = null)
+    public void CommandRefresh(List<ListData> slotInfos)
     {
         slotInfoList.SetData(slotInfos);
         slotInfoList.Activate();
-        slotInfoComponent.gameObject.SetActive(current != null);
-        if (current != null)
+        for (var i = 0;i < slotInfoList.ObjectList.Count;i++)
         {
-            slotInfoComponent.UpdateInfo(current);
+            var slotParty = slotInfoList.ObjectList[i].GetComponent<SlotParty>();
+            slotParty.SetCallInfoHandler((a) => {
+                CallSlotStatus(a);
+            });
         }
     }
-
-    private void CallSlotStatus()
+    private void CallSlotDecide()
     {
-        var eventData = new SlotViewEvent(CommandType.Status);
+        var eventData = new SlotViewEvent(CommandType.Decide);
         eventData.template = slotInfoList.Index;
         _commandData(eventData); 
     }
 
+    private void CallSlotStatus(int selectIndex = -1)
+    {
+        var eventData = new SlotViewEvent(CommandType.Status);
+        eventData.template = slotInfoList.Index;
+        if (selectIndex != -1)
+        {
+            eventData.template = selectIndex;
+        }
+        _commandData(eventData); 
+    }
 }
 
 namespace Slot
@@ -67,6 +78,7 @@ namespace Slot
     public enum CommandType
     {
         None = 0,
+        Decide,
         Status,
         Back,
     }

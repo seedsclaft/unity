@@ -80,6 +80,9 @@ public class StageInfo
     
     readonly int _tutorialEnemyKey = 1000;
     readonly int _defineBossEnemyKey = 2000;
+    readonly int _lastBossEnemyKey = 3000;
+    private bool _survivalMode = false;
+    public bool SurvivalMode => _survivalMode;
     public StageInfo(StageData stageData)
     {
         _id = stageData.Id;
@@ -168,6 +171,34 @@ public class StageInfo
         // 確定中ボス情報
         MakeDefineTroop(true);
 
+        return _currentTroopInfos;
+    }
+
+    public List<TroopInfo> SurvivalTroops(int turns)
+    {
+        if (_currentTroopInfos.Count > 0) return _currentTroopInfos; 
+        _currentTroopInfos.Clear();
+        var troopDates = new List<TroopData>();
+        troopDates.AddRange(DataSystem.Troops.FindAll(a => a.TroopId >= _defineBossEnemyKey && a.TroopId < (_lastBossEnemyKey + 999)));
+        var bossDates = troopDates.FindAll(a => a.BossFlag == true);
+        var enemyTroopDates = troopDates.FindAll(a => a.BossFlag == false);
+        
+        int randIndex = new Random().Next(0, bossDates.Count);
+        var troopInfo = new TroopInfo(bossDates[randIndex].TroopId,false);
+
+        var bossEnemy = DataSystem.Enemies.Find(a => a.Id == bossDates[randIndex].EnemyId);
+        var boss = new BattlerInfo(bossEnemy,bossDates[randIndex].Lv + 30 + turns * 2,0,bossDates[randIndex].Line,true);
+        troopInfo.AddEnemy(boss);
+
+        var enemyCount = 0;
+        while (enemyCount < 2)
+        {  
+            int enemyRandIndex = new Random().Next(0, enemyTroopDates.Count); 
+            var enemyData = DataSystem.Enemies.Find(a => a.Id == enemyTroopDates[enemyRandIndex].EnemyId);
+            var enemy = new BattlerInfo(enemyData,enemyTroopDates[enemyRandIndex].Lv + 30 + turns * 2,enemyCount + 1,enemyTroopDates[enemyRandIndex].Line,false);
+            troopInfo.AddEnemy(enemy);
+            enemyCount++;
+        }
         return _currentTroopInfos;
     }
 
@@ -488,5 +519,10 @@ public class StageInfo
     {
         var actorId = SelectActorIds[selectIndex];
         return DataSystem.Actors.Find(a => a.Id == actorId).ClassId;
+    }
+
+    public void SetSurvivalMode()
+    {
+        _survivalMode = true;
     }
 };

@@ -145,7 +145,6 @@ namespace MainMenu
     {
         None = 0,
         StageSelect = 101,
-        Rule = 102,
         Option = 103,
         Ranking = 104,
         SelectSideMenu,

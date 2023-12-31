@@ -25,6 +25,11 @@ public class MainMenuModel : BaseModel
         CurrentStageData.MakeStageData(stageId);
     }
 
+    public bool NeedSlotData(int stageId)
+    {
+        return DataSystem.Stages.Find(a => a.Id == stageId).UseSlot;
+    }
+
     public List<SystemData.CommandData> SideMenu()
     {
         var list = new List<SystemData.CommandData>();

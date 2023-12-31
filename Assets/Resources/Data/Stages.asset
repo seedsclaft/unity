@@ -807,7 +807,7 @@ MonoBehaviour:
     BGMId: 3
     BossBGMId: 11
     Reborn: 0
-    Alcana: 0
+    Alcana: 1
     SaveLimit: 4
     ContinueLimit: 2
     RankingStage: 1
@@ -884,7 +884,7 @@ MonoBehaviour:
     BGMId: 4
     BossBGMId: 11
     Reborn: 0
-    Alcana: 0
+    Alcana: 1
     SaveLimit: 4
     ContinueLimit: 2
     RankingStage: 1
@@ -943,7 +943,7 @@ MonoBehaviour:
     BGMId: 4
     BossBGMId: 11
     Reborn: 0
-    Alcana: 0
+    Alcana: 1
     SaveLimit: 4
     ContinueLimit: 2
     RankingStage: 1
@@ -996,7 +996,7 @@ MonoBehaviour:
     BGMId: 5
     BossBGMId: 11
     Reborn: 0
-    Alcana: 0
+    Alcana: 1
     SaveLimit: 4
     ContinueLimit: 2
     RankingStage: 1
@@ -1049,7 +1049,7 @@ MonoBehaviour:
     BGMId: 5
     BossBGMId: 11
     Reborn: 0
-    Alcana: 0
+    Alcana: 1
     SaveLimit: 4
     ContinueLimit: 2
     RankingStage: 1
@@ -1117,7 +1117,7 @@ MonoBehaviour:
     Alcana: 1
     SaveLimit: 4
     ContinueLimit: 2
-    RankingStage: 0
+    RankingStage: 1
     SlotSave: 1
     SubordinateValue: 0
     UseSlot: 0
@@ -1231,23 +1231,29 @@ MonoBehaviour:
       ReadFlag: 0
     Tutorials: []
   - Id: 201
-    Name: "<\u4E2D\u96E3\u5EA6>\u30B5\u30D0\u30A4\u30D0\u30EB"
+    Name: "<\u9AD8\u96E3\u5EA6>\u30B5\u30D0\u30A4\u30D0\u30EB"
     AchieveText: "\u6551\u6E08\u57F7\u884C\u306B\u6210\u529F\u3057\u3064\u3065\u3051\u308B"
     Selectable: 1
-    Help: "\u30AF\u30EA\u30A2\u30C7\u30FC\u30BF\u306E\u30A2\u30AF\u30BF\u30FC\u3092\u4F7F\u3063\u3066\n\u4E2D\u96E3\u5EA6\u306E\u30B9\u30C6\u30FC\u30B8\u306B\u6311\u3081\u307E\u3059\u3002\n\n\u7279\u6B8A\u30EB\u30FC\u30EB\uFF1A\n\u6551\u6E08\u57F7\u884C\u6210\u529F\u6642\u306BHP\u3068MP\u5168\u56DE\u5FA9\n\n\u203B\u6551\u6E08\u57F7\u884C\u306B\u5931\u6557\u3059\u308B\u3068\u30B2\u30FC\u30E0\u30AA\u30FC\u30D0\u30FC\n\u203B\u30AF\u30EA\u30A2\u30C7\u30FC\u30BF\u306F\u7D42\u4E86\u6642\u306B\u306F\u4FDD\u5B58\u3067\u304D\u307E\u305B\u3093\u3002"
-    Turns: 15
-    InitMembers: 0100000002000000030000000400000005000000
-    RandomTroopCount: 15
+    Help: "\u30AF\u30EA\u30A2\u30C7\u30FC\u30BF\u306E\u30A2\u30AF\u30BF\u30FC\u3092\u4F7F\u3063\u3066\n\u9AD8\u96E3\u5EA6\u306E\u30B9\u30C6\u30FC\u30B8\u306B\u6311\u3081\u307E\u3059\u3002\n\n\u7279\u6B8A\u30EB\u30FC\u30EB\uFF1A\n\u6551\u6E08\u57F7\u884C\u306B\u6210\u529F\u3059\u308B\u3068HP\u3068MP\u5168\u56DE\u5FA9\n\u6551\u6E08\u57F7\u884C\u306B\u5931\u6557\u3059\u308B\u3068\u30B2\u30FC\u30E0\u30AA\u30FC\u30D0\u30FC\n\n\u203B\u30AF\u30EA\u30A2\u30C7\u30FC\u30BF\u306F\u7D42\u4E86\u6642\u306B\u306F\u4FDD\u5B58\u3067\u304D\u307E\u305B\u3093\u3002"
+    Turns: 30
+    InitMembers: 00000000
+    RandomTroopCount: 1
     BossId: 0
     BGMId: 3
     BossBGMId: 11
     Reborn: 0
-    Alcana: 1
-    SaveLimit: 4
-    ContinueLimit: 2
+    Alcana: 0
+    SaveLimit: 0
+    ContinueLimit: 0
     RankingStage: 2
     SlotSave: 0
     SubordinateValue: 0
     UseSlot: 1
-    StageEvents: []
+    StageEvents:
+    - EventKey: 1StartTactics2011
+      Turns: 1
+      Timing: 1
+      Type: 201
+      Param: 1
+      ReadFlag: 1
     Tutorials: []

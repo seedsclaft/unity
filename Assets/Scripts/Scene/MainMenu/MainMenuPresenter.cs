@@ -42,20 +42,7 @@ public class MainMenuPresenter : BasePresenter
         }
         if (viewEvent.commandType == CommandType.StageSelect)
         {
-            _model.InitializeStageData((int)viewEvent.template);
-            var statusViewInfo = new StatusViewInfo(() => {
-                _view.CommandStatusClose();
-                _view.SetInitHelpText();
-                _view.ChangeUIActive(true);
-            });
-            statusViewInfo.SetDisplayDecideButton(true);
-            _view.CommandCallStatus(statusViewInfo);
-            _view.ChangeUIActive(false);
-            Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
-        }
-        if (viewEvent.commandType == CommandType.Rule)
-        {
-            CommandRule();
+            CommandStageSelect((int)viewEvent.template);
         }
         if (viewEvent.commandType == CommandType.Option)
         {
@@ -68,6 +55,26 @@ public class MainMenuPresenter : BasePresenter
         if (viewEvent.commandType == CommandType.SelectSideMenu)
         {
             CommandSelectSideMenu((SystemData.CommandData)viewEvent.template);
+        }
+    }
+
+    private void CommandStageSelect(int stageId)
+    {
+        _model.InitializeStageData(stageId);
+        Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
+        if (_model.NeedSlotData(stageId))
+        {
+            _view.CommandSceneChange(Scene.Slot);
+        } else
+        {
+            var statusViewInfo = new StatusViewInfo(() => {
+                _view.CommandStatusClose();
+                _view.SetInitHelpText();
+                _view.ChangeUIActive(true);
+            });
+            statusViewInfo.SetDisplayDecideButton(true);
+            _view.CommandCallStatus(statusViewInfo);
+            _view.ChangeUIActive(false);
         }
     }
 

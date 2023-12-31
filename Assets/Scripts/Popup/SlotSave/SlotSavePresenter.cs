@@ -30,17 +30,17 @@ public class SlotSavePresenter
         if (_busy){
             return;
         }
-        if (viewEvent.commandType == CommandType.SlotSaveOpen)
+        switch (viewEvent.commandType)
         {
-            CommandSlotSaveOpen((SlotInfo)viewEvent.template);
-        }
-        if (viewEvent.commandType == CommandType.SlotSave)
-        {
-            CommandSlotSave((SlotInfo)viewEvent.template);
-        }
-        if (viewEvent.commandType == CommandType.Detail)
-        {
-            CommandDetail((int)viewEvent.template);
+            case CommandType.SlotSaveOpen:
+                CommandSlotSaveOpen((SlotInfo)viewEvent.template);
+                break;
+            case CommandType.SlotSave:
+                CommandSlotSave((SlotInfo)viewEvent.template);
+                break;
+            case CommandType.Status:
+                CommandStatus((int)viewEvent.template);
+                break;
         }
     }
 
@@ -53,7 +53,7 @@ public class SlotSavePresenter
 
     private void CommandSlotSave(SlotInfo slotInfo)
     {
-        var confirmView = new ConfirmInfo("クリアデータを保存しますか？",(a) => UpdatePopupSlotSave(a));
+        var confirmView = new ConfirmInfo(DataSystem.System.GetTextData(22010).Text,(a) => UpdatePopupSlotSave(a));
         _model.SetBaseSlotSaveInfo(slotInfo);
         _view.CommandCallConfirm(confirmView);
         Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
@@ -73,20 +73,24 @@ public class SlotSavePresenter
         }
         _view.CommandConfirmClose();
     }
-
-    private void CommandDetail(int listIndex)
-    {
-        var statusViewInfo = new StatusViewInfo(() => {
-            _view.CommandStatusClose();
-            //_view.SetHelpText(DataSystem.System.GetTextData(14010).Text);
-            _view.ChangeUIActive(true);
-        });
-        statusViewInfo.SetDisplayDecideButton(false);
-        _view.CommandCallStatus(statusViewInfo);
-        _view.ChangeUIActive(false);
-        Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
-    }    
     
+    private void CommandStatus(int index)
+    {
+        if (index > -1)
+        {
+            _model.ClearActorsData();
+            _model.SetActorsData(index);
+            var statusViewInfo = new StatusViewInfo(() => {
+                _view.CommandStatusClose();
+                _view.ChangeUIActive(true);
+            });
+            statusViewInfo.SetDisplayDecideButton(false);
+            _view.CommandCallStatus(statusViewInfo);
+            _view.ChangeUIActive(false);
+            Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
+        }
+    }
+
     private void CommandRefresh()
     {
         _view.CommandRefresh(_model.SlotList());

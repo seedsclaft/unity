@@ -152,6 +152,9 @@ public class TacticsPresenter :BasePresenter
                 case StageEventType.SetLastBoss:
                     _model.SetLastBoss();
                     break;
+                case StageEventType.SurvivalMode:
+                    _model.SetSurvivalMode();
+                    break;
             }
         }
     }
@@ -213,7 +216,7 @@ public class TacticsPresenter :BasePresenter
         return isReborn;
     }
 
-    private async void Initialize()
+    private void Initialize()
     {
         InitializeView();
         var isAbort = CheckAdvStageEvent(EventTiming.StartTactics,() => {

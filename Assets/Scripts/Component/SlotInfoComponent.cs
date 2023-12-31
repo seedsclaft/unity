@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class SlotInfoComponent : ListItem,IListViewItem
+public class SlotInfoComponent : MonoBehaviour
 {
     [SerializeField] private GameObject actorRoot = null;
     [SerializeField] private GameObject actorPrefab = null;
@@ -18,31 +18,6 @@ public class SlotInfoComponent : ListItem,IListViewItem
     public void UpdateInfo(SlotInfo slotInfo)
     {
         _slotInfo = slotInfo;
-        UpdateViewItem();
-    }
-    
-    public void SetCallHandler(System.Action handler)
-    {
-        clickButton.onClick.AddListener(() =>
-            {
-                if (Disable != null && Disable.gameObject.activeSelf) return;
-                handler();
-            }
-        );
-    }
-    
-    public void SetCallInfoHandler(System.Action handler)
-    {
-        infoButton.onClick.AddListener(() =>
-            {
-                if (Disable != null && Disable.gameObject.activeSelf) return;
-                handler();
-            }
-        );
-    }
-
-    public void UpdateViewItem()
-    {
         if (_slotInfo == null) return;
         foreach (var comp in _actorInfoComponents)
         {

@@ -92,6 +92,7 @@ public enum StageEventType{
     MoveStage = 51, // ステージ移動
     SetDefineBoss = 61, // 中ボスを設定する
     SetLastBoss = 62, // 上位者ボスを設定する
+    SurvivalMode = 201, // サバイバルモードにする
 }
 
 public enum TutorialType{

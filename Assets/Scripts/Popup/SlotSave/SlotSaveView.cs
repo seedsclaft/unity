@@ -26,6 +26,13 @@ public class SlotSaveView : BaseView
         slotInfoList.SetInputHandler(InputKeyType.Decide,() => CallSlotSave());
         slotInfoList.SetInputHandler(InputKeyType.Cancel,() => BackEvent());
         slotInfoList.SetInputHandler(InputKeyType.Option1,() => CallSlotStatus());
+        for (var i = 0;i < slotInfoList.ObjectList.Count;i++)
+        {
+            var slotParty = slotInfoList.ObjectList[i].GetComponent<SlotParty>();
+            slotParty.SetCallInfoHandler((a) => {
+                CallSlotStatus(a);
+            });
+        }
     }
 
     public void SetEvent(System.Action<SlotSaveViewEvent> commandData)
@@ -77,10 +84,14 @@ public class SlotSaveView : BaseView
         }
     }
 
-    private void CallSlotStatus()
+    private void CallSlotStatus(int selectIndex = -1)
     {
         var eventData = new SlotSaveViewEvent(CommandType.Status);
         eventData.template = slotInfoList.Index;
+        if (selectIndex != -1)
+        {
+            eventData.template = selectIndex;
+        }
         _commandData(eventData); 
     }
 }
@@ -93,7 +104,6 @@ namespace SlotSave
         Status = 1,
         SlotSave = 2,
         SlotSaveOpen = 3,
-        Detail = 4,
     }
 }
 public class SlotSaveViewEvent

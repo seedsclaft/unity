@@ -130,7 +130,7 @@ abstract public class BaseView : MonoBehaviour
         _commandData = commandData;
     }
 
-    public void CallSceneChangeCommand(ViewEvent eventData)
+    private void CallSceneChangeCommand(ViewEvent eventData)
     {
         _commandData(eventData);
     }
