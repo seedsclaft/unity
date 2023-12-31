@@ -10,8 +10,8 @@ public class SaveStageInfo
     public List<ActorInfo> Actors => _actors;
     private PartyInfo _party = null;
 	public PartyInfo Party => _party;
-    private AlcanaInfo _currentAlcana = null;
-	public AlcanaInfo CurrentAlcana => _currentAlcana;
+    private AlcanaInfo stageAlcana = null;
+	public AlcanaInfo StageAlcana => stageAlcana;
 
 	private bool _resumeStage = true;
 	public bool ResumeStage => _resumeStage;
@@ -24,7 +24,7 @@ public class SaveStageInfo
     {
         ClearActors();
         InitParty();
-        _currentAlcana = new AlcanaInfo();
+        stageAlcana = new AlcanaInfo();
         _resumeStage = false;
 		_currentStage = null;
     }
@@ -38,8 +38,8 @@ public class SaveStageInfo
 		var stageData = DataSystem.Stages.Find(a => a.Id == stageId);
 		_currentStage = new StageInfo(stageData);
 		SetStageMembers();
-		_currentAlcana = new AlcanaInfo();
-		_currentAlcana.InitData();
+		stageAlcana = new AlcanaInfo();
+		stageAlcana.InitData();
 	}
 
 	private void SetStageMembers()

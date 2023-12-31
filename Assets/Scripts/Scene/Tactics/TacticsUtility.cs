@@ -13,7 +13,7 @@ public class TacticsUtility
     {
         if (GameSystem.CurrentStageData != null)
         {
-            if (GameSystem.CurrentStageData.CurrentAlcana.CheckCommandCostZero(TacticsCommandType.Train))
+            if (GameSystem.CurrentStageData.StageAlcana.CheckCommandCostZero(TacticsCommandType.Train))
             {
                 return 0;
             }
@@ -25,7 +25,7 @@ public class TacticsUtility
     {
         if (GameSystem.CurrentStageData != null)
         {
-            if (GameSystem.CurrentStageData.CurrentAlcana.CheckAlchemyCostZero(attributeType))
+            if (GameSystem.CurrentStageData.StageAlcana.CheckAlchemyCostZero(attributeType))
             {
                 return 0;
             }
@@ -66,7 +66,7 @@ public class TacticsUtility
     {
         if (checkAlcana && GameSystem.CurrentStageData != null)
         {
-            if (GameSystem.CurrentStageData.CurrentAlcana.CheckCommandCostZero(TacticsCommandType.Recovery))
+            if (GameSystem.CurrentStageData.StageAlcana.CheckCommandCostZero(TacticsCommandType.Recovery))
             {
                 return 0;
             }

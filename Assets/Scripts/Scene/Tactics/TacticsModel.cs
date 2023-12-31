@@ -550,7 +550,7 @@ public class TacticsModel : BaseModel
 
     private bool RecoveryCostZero()
     {
-        return CurrentAlcana.CheckCommandCostZero(TacticsCommandType.Recovery);
+        return StageAlcana.CheckCommandCostZero(TacticsCommandType.Recovery);
     }
 
     public void SetDefineBoss(int index)

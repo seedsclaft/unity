@@ -43,7 +43,7 @@ public class AlcanaResultModel : BaseModel
         var skillInfos = TempData.TempAlcanaSkillInfos;
         foreach (var skillInfo in skillInfos)
         {
-            CurrentAlcana.DisableAlcana(skillInfo);
+            StageAlcana.DisableAlcana(skillInfo);
         }
         TempData.ClearAlcana();
     }

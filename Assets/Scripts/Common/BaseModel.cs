@@ -13,7 +13,7 @@ public class BaseModel
     public SaveStageInfo CurrentStageData => GameSystem.CurrentStageData;
     public TempInfo TempData => GameSystem.TempData;
     public StageInfo CurrentStage => CurrentStageData.CurrentStage;
-    public AlcanaInfo CurrentAlcana => CurrentStageData.CurrentAlcana;
+    public AlcanaInfo StageAlcana => CurrentStageData.StageAlcana;
 
     public PartyInfo PartyInfo => CurrentStageData.Party;
 
@@ -49,7 +49,7 @@ public class BaseModel
 
     public void LostActors(List<ActorInfo> lostMembers)
     {
-        if (CurrentAlcana != null && CurrentAlcana.CheckNoBattleLost())
+        if (StageAlcana != null && StageAlcana.CheckNoBattleLost())
         {
             foreach (var lostMember in lostMembers)
             {
@@ -382,25 +382,30 @@ public class BaseModel
 
     public void SetIsAlcana(bool isAlcana)
     {
-        CurrentAlcana.SetIsAlcana(isAlcana);
+        StageAlcana.SetIsAlcana(isAlcana);
+    }
+
+    public void InitializeStageData(int stageId)
+    {
+        CurrentStageData.MakeStageData(stageId);
     }
 
     public List<SkillInfo> CheckAlcanaSkillInfos(TriggerTiming triggerTiming)
     {
-        var skillInfos = CurrentAlcana.CheckAlcanaSkillInfo(triggerTiming);
+        var skillInfos = StageAlcana.CheckAlcanaSkillInfo(triggerTiming);
         return skillInfos.FindAll(a => a.Master.TriggerDates.Find(b => b.Param1 == RemainTurns) != null);
     }
 
     public void SetAlcanaSkillInfo(List<SkillInfo> skillInfos)
     {
-        CurrentAlcana.SetCurrentTurnAlcanaList(skillInfos);
+        StageAlcana.SetCurrentTurnAlcanaList(skillInfos);
         TempData.SetAlcanaSkillInfo(skillInfos);
     }
 
     public List<GetItemInfo> GetAlcanaResults(SkillInfo skillInfo)
     {
         var list = new List<GetItemInfo>();
-        if (CurrentAlcana.IsAlcana)
+        if (StageAlcana.IsAlcana)
         {
             foreach (var featureData in skillInfo.Master.FeatureDates)
             {

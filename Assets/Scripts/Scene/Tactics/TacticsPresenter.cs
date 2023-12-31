@@ -757,7 +757,7 @@ public class TacticsPresenter :BasePresenter
         _view.SetTurns(_model.RemainTurns);
         _view.SetNuminous(_model.Currency);
         _view.SetStageInfo(_model.CurrentStage);
-        _view.SetAlcanaInfo(_model.CurrentAlcana);
+        _view.SetAlcanaInfo(_model.StageAlcana);
         
         _view.CommandRefresh(_model.TacticsCommandType);
         if (_model.NeedAllTacticsCommand)

@@ -1,12 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using AlcanaSelect;
 
 public class AlcanaSelectView : BaseView
 {
     [SerializeField] private BattleSelectCharacter selectCharacter = null;
     [SerializeField] private List<SkillInfoComponent> skillInfoComponents = null;
+    [SerializeField] private Button deleteButton = null;
     [SerializeField] private BattleStartAnim battleStartAnim = null;
     private bool _animationBusy = false;
     private new System.Action<AlcanaSelectViewEvent> _commandData = null;
@@ -18,6 +20,7 @@ public class AlcanaSelectView : BaseView
         InitializeSelectCharacter();
         
         SetBackCommand(() => OnClickBack());
+        deleteButton.onClick.AddListener(() => CallDeleteAlcana());
         new AlcanaSelectPresenter(this);
         ChangeUIActive(false);
     }
@@ -34,6 +37,7 @@ public class AlcanaSelectView : BaseView
     {
         selectCharacter.SetInputHandlerAction(InputKeyType.Decide,() => CallChangeAlcana());
         selectCharacter.SetInputHandlerAction(InputKeyType.Cancel,() => OnClickBack());
+        selectCharacter.SetInputHandlerAction(InputKeyType.Option1,() => CallDeleteAlcana());
         
         SetInputHandler(selectCharacter.MagicList.GetComponent<IInputHandlerEvent>());
         selectCharacter.HideActionList();
@@ -59,6 +63,17 @@ public class AlcanaSelectView : BaseView
         if (listData != null)
         {
             var eventData = new AlcanaSelectViewEvent(CommandType.ChangeAlcana);
+            eventData.template = listData;
+            _commandData(eventData);
+        }
+    }
+
+    private void CallDeleteAlcana()
+    {
+        var listData = selectCharacter.ActionData;
+        if (listData != null)
+        {
+            var eventData = new AlcanaSelectViewEvent(CommandType.DeleteAlcana);
             eventData.template = listData;
             _commandData(eventData);
         }

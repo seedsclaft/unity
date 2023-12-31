@@ -36,12 +36,10 @@ public class AlcanaInfo{
     {
         _IsAlcana = false;
         _ownAlcanaList.Clear();
-        /*
-        for (var i = 500001;i <= 500022;i++)
+        for (var i = 500001;i <= 500002;i++)
         {
             _ownAlcanaList.Add(new SkillInfo(i));
         }
-        */
     }
 
     public void ClearOwnAlcanaList()
@@ -62,6 +60,15 @@ public class AlcanaInfo{
     public void DisableAlcana(SkillInfo skillInfo)
     {
         skillInfo.SetEnable(false);
+    }
+
+    public void DeleteAlcana(SkillInfo skillInfo)
+    {
+        var findIndex = _ownAlcanaList.FindIndex(a => a == skillInfo);
+        if (findIndex > -1)
+        {
+            _ownAlcanaList.RemoveAt(findIndex);
+        }
     }
 
     public void SetIsAlcana(bool isAlcana)

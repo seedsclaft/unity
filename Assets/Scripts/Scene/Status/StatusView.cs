@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 using Status;
 
 public class StatusView : BaseView ,IInputHandlerEvent
@@ -13,6 +14,7 @@ public class StatusView : BaseView ,IInputHandlerEvent
     private new System.Action<StatusViewEvent> _commandData = null;
     [SerializeField] private Button leftButton = null;
     [SerializeField] private Button rightButton = null;
+    [SerializeField] private GameObject decideAnimation = null;
 
     private System.Action _backEvent = null;
     private bool _isDisplayDecide = false;
@@ -26,6 +28,7 @@ public class StatusView : BaseView ,IInputHandlerEvent
         SetInputHandler(selectCharacter.GetComponent<IInputHandlerEvent>());
         InitializeSelectCharacter();
         
+        SetDecideAnimation();
         new StatusPresenter(this);
     }
 
@@ -242,6 +245,21 @@ public class StatusView : BaseView ,IInputHandlerEvent
     {
         var eventData = new StatusViewEvent(CommandType.Back);
         _commandData(eventData);
+    }
+
+    private void SetDecideAnimation()
+    {
+        if (decideAnimation == null) return;
+        var rect = decideAnimation.GetComponent<RectTransform>();
+        var canvasGroup = decideAnimation.GetComponent<CanvasGroup>();
+        var duration = 1f;
+        var sequence = DOTween.Sequence()
+            .Append(rect.DOScaleX(1.25f,duration))
+            .Join(rect.DOScaleY(1.1f,duration))
+            .Join(canvasGroup.DOFade(0,duration))
+            .Append(canvasGroup.DOFade(0,duration)
+            .SetEase(Ease.InOutQuad))
+            .SetLoops(-1);
     }
 }
 

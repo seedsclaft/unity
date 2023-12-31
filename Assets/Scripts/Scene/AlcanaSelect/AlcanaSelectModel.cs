@@ -5,6 +5,14 @@ public class AlcanaSelectModel : BaseModel
 {
     private List<SkillInfo> _selectedAlcanaList = new ();
     public List<SkillInfo> SelectedAlcanaList => _selectedAlcanaList;
+
+    private SkillInfo _deleteAlcanaInfo = null;
+    public SkillInfo DeleteAlcanaInfo => _deleteAlcanaInfo;
+    public void SetDeleteAlcana(SkillInfo skillInfo)
+    {
+        _deleteAlcanaInfo = skillInfo;
+    }
+
     public List<ListData> SkillActionList()
     {
         var skillInfos = CurrentData.AlcanaInfo.OwnAlcanaList;
@@ -42,6 +50,20 @@ public class AlcanaSelectModel : BaseModel
         }
     }
 
+    public void DeleteAlcana()
+    {
+        if (_selectedAlcanaList.Contains(_deleteAlcanaInfo))
+        {
+            var index = _selectedAlcanaList.FindIndex(a => a == _deleteAlcanaInfo);
+            if (index > -1)
+            {
+                _selectedAlcanaList.RemoveAt(index);
+            }
+        }
+        CurrentData.AlcanaInfo.DeleteAlcana(_deleteAlcanaInfo);
+        SavePlayerData();
+    }
+
     public bool CheckStageStart()
     {
         if (_selectedAlcanaList.Count == DataSystem.System.AlcanaSelectCount) return true;
@@ -51,7 +73,7 @@ public class AlcanaSelectModel : BaseModel
 
     public void SetStageAlcanaList()
     {
-        CurrentStageData.CurrentAlcana.ClearOwnAlcanaList();
+        CurrentStageData.StageAlcana.ClearOwnAlcanaList();
         /*
         foreach (var selectedAlcana in _selectedAlcanaList)
         {
@@ -62,7 +84,7 @@ public class AlcanaSelectModel : BaseModel
         foreach (var selectedAlcana in CurrentData.AlcanaInfo.OwnAlcanaList)
         {
             selectedAlcana.SetEnable(true);
-            CurrentStageData.CurrentAlcana.AddAlcana(selectedAlcana);
+            CurrentStageData.StageAlcana.AddAlcana(selectedAlcana);
         }
     }
 }

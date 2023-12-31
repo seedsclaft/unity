@@ -19,11 +19,6 @@ public class MainMenuModel : BaseModel
     {
         InitSaveStageInfo();
     }
-    
-    public void InitializeStageData(int stageId)
-    {
-        CurrentStageData.MakeStageData(stageId);
-    }
 
     public bool NeedSlotData(int stageId)
     {

@@ -32,6 +32,10 @@ public class AlcanaSelectPresenter : BasePresenter
         {
             CommandChangeAlcana((SkillInfo)viewEvent.template);
         }
+        if (viewEvent.commandType == AlcanaSelect.CommandType.DeleteAlcana)
+        {
+            CommandDeleteAlcana((SkillInfo)viewEvent.template);
+        }
         if (viewEvent.commandType == AlcanaSelect.CommandType.Back)
         {
             CommandBack();
@@ -51,6 +55,31 @@ public class AlcanaSelectPresenter : BasePresenter
         CommandRefresh(selectIndex);
     }
 
+    private void CommandDeleteAlcana(SkillInfo skillInfo)
+    {
+        Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
+        _model.SetDeleteAlcana(skillInfo);
+        var selectIndex = _view.SkillListIndex;
+        CommandRefresh(selectIndex);
+
+        var confirmInfo = new ConfirmInfo(DataSystem.System.GetReplaceText(20050,skillInfo.Master.Name),(a) => UpdatePopupDeleteAlcana(a));
+        _view.CommandCallConfirm(confirmInfo);
+    }
+
+    private void UpdatePopupDeleteAlcana(ConfirmCommandType confirmCommandType)
+    {
+        if (confirmCommandType == ConfirmCommandType.Yes)
+        {
+            Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
+        } else
+        {
+            Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cancel);
+        }
+        _model.DeleteAlcana();
+        CommandRefresh(0);
+        _view.CommandConfirmClose();
+    }
+
     private void CommandBack()
     {
         var statusViewInfo = new StatusViewInfo(() => {
@@ -58,6 +87,7 @@ public class AlcanaSelectPresenter : BasePresenter
             _view.CommandStatusClose();
             _view.CommandSceneChange(Scene.MainMenu);
         });
+        _model.InitializeStageData(_model.CurrentStage.Id);
         statusViewInfo.SetDisplayDecideButton(true);
         _view.CommandCallStatus(statusViewInfo);
         _view.ChangeUIActive(false);

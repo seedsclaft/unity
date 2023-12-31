@@ -131,7 +131,7 @@ public class StrategyModel : BaseModel
                     getItemInfo.SetTitleData(DataSystem.System.GetReplaceText(3020,actorName));
                     var resource = TacticsUtility.ResourceGain(actorInfo);
                     var resourceBonus = PartyInfo.GetResourceBonusValue();
-                    if (resourceBonus || (CurrentAlcana != null && CurrentAlcana.CheckResourceBonus()))
+                    if (resourceBonus || (StageAlcana != null && StageAlcana.CheckResourceBonus()))
                     {
                         resource *= 2;
                     }
@@ -416,8 +416,8 @@ public class StrategyModel : BaseModel
         }
         CurrentStage.ClearTacticsEnemies();
         //CurrentStage.ChangeSubordinateValue(-5);
-        CurrentAlcana.SetAlcanaStateInfo(null);
-        CurrentAlcana.ClearCurrentTurnAlcanaList();
+        StageAlcana.SetAlcanaStateInfo(null);
+        StageAlcana.ClearCurrentTurnAlcanaList();
     }
 
     public bool EnableBattleSkip()

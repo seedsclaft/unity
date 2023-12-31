@@ -6,10 +6,10 @@ public class AlcanaListModel : BaseModel
 {
     public List<ListData> AlcanaList()
     {
-        var alcanaList = CurrentAlcana.OwnAlcanaList;
+        var alcanaList = StageAlcana.OwnAlcanaList;
         foreach (var alcana in alcanaList)
         {
-            alcana.SetSelectedAlcana(CurrentAlcana.CurrentTurnAlcanaList.Contains(alcana));
+            alcana.SetSelectedAlcana(StageAlcana.CurrentTurnAlcanaList.Contains(alcana));
         }
         return MakeListData(alcanaList);
     }
