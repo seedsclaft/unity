@@ -137,7 +137,7 @@ public class ResultModel : BaseModel
         {
             actorInfo.AddRebornSkill(rebornSkill);
         }
-        if (CurrentStage.EndingType == global::EndingType.A || CurrentStage.EndingType == global::EndingType.B)
+        if (CurrentStage.EndingType == EndingType.A || CurrentStage.EndingType == EndingType.B)
         {
             actorInfo.AddRebornSkill(AddQuestRebornSkill());
         }
@@ -151,7 +151,7 @@ public class ResultModel : BaseModel
         var commandRand = UnityEngine.Random.Range(0,commandReborn.Count);
         var param2 = 0;
         var rank1 = 0;
-        if (CurrentStage.EndingType == global::EndingType.A || CurrentStage.EndingType == global::EndingType.B)
+        if (CurrentStage.EndingType == EndingType.A || CurrentStage.EndingType == EndingType.B)
         {
             rank1 = 10;
         }
@@ -182,7 +182,7 @@ public class ResultModel : BaseModel
         var statusRand = UnityEngine.Random.Range(0,statusReborn.Count);
         var param2 = 2;
         var rank1 = 0;
-        if (CurrentStage.EndingType == global::EndingType.A || CurrentStage.EndingType == global::EndingType.B)
+        if (CurrentStage.EndingType == EndingType.A || CurrentStage.EndingType == EndingType.B)
         {
             rank1 = 10;
         }
@@ -233,7 +233,7 @@ public class ResultModel : BaseModel
         var questReborn = DataSystem.Skills.Find(a => a.FeatureDates.Find(b => b.FeatureType == FeatureType.RebornQuest) != null);
         var param2 = 2;
         var rank1 = 0;
-        if (CurrentStage.EndingType == global::EndingType.A || CurrentStage.EndingType == global::EndingType.B)
+        if (CurrentStage.EndingType == EndingType.A || CurrentStage.EndingType == EndingType.B)
         {
             rank1 = 10;
         }

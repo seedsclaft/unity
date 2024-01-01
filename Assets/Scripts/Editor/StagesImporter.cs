@@ -127,7 +127,7 @@ public class StagesInfoImporter : AssetPostprocessor {
 					StageData.Alcana = (AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.Alcana) == 1);
 					StageData.SaveLimit = (AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.SaveLimit));
 					StageData.ContinueLimit = (AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.ContinueLimit));
-					StageData.RankingStage = (AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.RankingStage));
+					StageData.RankingStage = (RankingType)(AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.RankingStage));
 					StageData.SlotSave = (AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.SlotSave) == 1);
 					StageData.SubordinateValue = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.SubordinateValue);
 					StageData.UseSlot = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.UseSlot) == 1;

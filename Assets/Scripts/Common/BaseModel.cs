@@ -51,10 +51,7 @@ public class BaseModel
     {
         if (StageAlcana != null && StageAlcana.CheckNoBattleLost())
         {
-            foreach (var lostMember in lostMembers)
-            {
-                lostMember.ChangeHp(1);
-            }
+            lostMembers.ForEach(a => a.ChangeLost(false));
             return;
         }
         lostMembers.ForEach(a => a.ChangeLost(true));
@@ -667,19 +664,26 @@ public class BaseModel
     }
 #endif
     public int TotalEvaluate()
-    {        
+    {
         var evaluate = 0;
-        foreach (var actorInfo in EvaluateMembers())
+        if (CurrentStage.Master.RankingStage == RankingType.Evaluate)
         {
-            evaluate += actorInfo.Evaluate();
-        }
-        if (CurrentStage.EndingType == global::EndingType.A)
+            foreach (var actorInfo in EvaluateMembers())
+            {
+                evaluate += actorInfo.Evaluate();
+            }
+            if (CurrentStage.EndingType == EndingType.A)
+            {
+                evaluate += 1000;
+            }
+            if (CurrentStage.EndingType == EndingType.B)
+            {
+                evaluate += 500;
+            }
+        } else
+        if (CurrentStage.Master.RankingStage == RankingType.Turns)
         {
-            evaluate += 1000;
-        }
-        if (CurrentStage.EndingType == global::EndingType.B)
-        {
-            evaluate += 500;
+            evaluate = CurrentStage.CurrentTurn;
         }
         return evaluate;
     }
@@ -788,6 +792,11 @@ public class BaseModel
     public void GainSaveCount()
     {
         CurrentStage.GainSaveCount();
+    }
+
+    public bool EnableContinue()
+    {
+        return CurrentStage.Master.ContinueLimit > 0;
     }
 
     public string ContinuePopupTitle()

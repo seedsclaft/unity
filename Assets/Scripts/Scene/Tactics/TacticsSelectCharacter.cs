@@ -70,8 +70,8 @@ public class TacticsSelectCharacter : MonoBehaviour
 
     public void UpdateSmoothSelect()
     {
-        characterList.UpdateSelectIndex(0);
-        commandList.UpdateSelectIndex(1);
+        characterList.Refresh(0);
+        commandList.Refresh(1);
     }
 
     private void CallCharacterInputHandler(InputKeyType keyType)

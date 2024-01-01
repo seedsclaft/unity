@@ -192,7 +192,7 @@ public class BattlerInfo
             rand = new Random().Next(-10, 10);
         }
         _ap = 1000 - (CurrentSpd(false) + rand) * 8;
-        _ap = Math.Max(_ap,120);
+        _ap = Math.Max(_ap,200);
     }
 
     public void UpdateAp()

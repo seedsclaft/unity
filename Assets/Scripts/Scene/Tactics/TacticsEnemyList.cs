@@ -73,7 +73,7 @@ public class TacticsEnemyList : BaseList
             {
                 CallListInputHandler(InputKeyType.Decide);
             });
-            tacticsEnemy.SetEnemyInfoCallHandler(() => CallListInputHandler(InputKeyType.Option1));
+            //tacticsEnemy.SetEnemyInfoCallHandler((a) => CallListInputHandler(InputKeyType.Option1));
             tacticsEnemy.SetGetItemInfoSelectHandler((a) => {
                 for (int i = 0; i < ObjectList.Count;i++)
                 {
@@ -88,6 +88,15 @@ public class TacticsEnemyList : BaseList
             });
             tacticsEnemy.UpdateItemIndex(-1);
             tacticsEnemy.SetSelectable(i == 0);
+        }
+    }
+
+    public void SetInfoHandler(System.Action<int> infoHandler)
+    {
+        for (int i = 0; i < ObjectList.Count;i++)
+        {
+            var tacticsEnemy = ObjectList[i].GetComponent<TacticsEnemy>();
+            tacticsEnemy.SetEnemyInfoCallHandler((a) => infoHandler(a));
         }
     }
 

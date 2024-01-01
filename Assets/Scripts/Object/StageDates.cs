@@ -25,7 +25,7 @@ public class StageData
     public bool Alcana;
     public int SaveLimit;
     public int ContinueLimit;
-    public int RankingStage;
+    public RankingType RankingStage;
     public bool SlotSave;
     public int SubordinateValue;
     public bool UseSlot;
@@ -113,4 +113,11 @@ public enum EndingType{
     A,
     B,
     C,
+}
+
+public enum RankingType
+{
+    None = 0,
+    Evaluate = 1,
+    Turns = 2
 }

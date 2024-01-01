@@ -311,8 +311,9 @@ public class StrategyPresenter : BasePresenter
 
     private void CommandContinue()
     {
+        _model.LostActors(_model.LostMembers());
         // コンテニュー判定
-        if (_model.BattleResultVictory() == true || _model.LostMembers().Count == 0)
+        if ((_model.BattleResultVictory() == true && _model.LostMembers().Count == 0) || _model.EnableContinue())
         {
             return;
         }
@@ -340,11 +341,15 @@ public class StrategyPresenter : BasePresenter
             var needAdsContinue = _model.NeedAdsContinue();
             if (needAdsContinue)
             {
+                // ロード表示
+                _view.CommandCallLoading();
                 AdMobController.Instance.PlayRewardedAd(() => 
                     {
                         SuccessContinue();
                     },
                     () => {
+                        // ロード非表示
+                        _view.CommandLoadingClose();
                         // 失敗した時
                         var savePopupTitle = _model.FailedSavePopupTitle();
                         var popupInfo = new ConfirmInfo(savePopupTitle,(a) => UpdatePopupContinueCommand((ConfirmCommandType)a));
@@ -365,6 +370,8 @@ public class StrategyPresenter : BasePresenter
 
     private void SuccessContinue()
     {
+        // ロード非表示
+        _view.CommandLoadingClose();
         _model.GainContinueCount();
         // 復帰して結果をやり直し
         _model.ReturnTempBattleMembers();

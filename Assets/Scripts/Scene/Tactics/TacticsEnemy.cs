@@ -9,7 +9,7 @@ public class TacticsEnemy : ListItem ,IListViewItem
     [SerializeField] private BaseList getItemList = null;
     public BaseList GetItemList => getItemList;
     [SerializeField] private Button enemyInfoButton;
-    private System.Action _enemyInfoHandler = null;
+    private System.Action<int> _enemyInfoHandler = null;
     private System.Action _getItemInfoHandler = null;
     private System.Action<int> _getItemInfoSelectHandler = null;
 
@@ -41,14 +41,14 @@ public class TacticsEnemy : ListItem ,IListViewItem
         });
     }
 
-    public void SetEnemyInfoCallHandler(System.Action handler)
+    public void SetEnemyInfoCallHandler(System.Action<int> handler)
     {
         if (_enemyInfoHandler != null)
         {
             return;
         }
         _enemyInfoHandler = handler;
-        enemyInfoButton.onClick.AddListener(() => handler());
+        enemyInfoButton.onClick.AddListener(() => handler(Index));
     }
 
     public void SetGetItemInfoSelectHandler(System.Action<int> handler)

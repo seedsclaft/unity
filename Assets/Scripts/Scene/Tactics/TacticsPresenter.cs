@@ -378,7 +378,7 @@ public class TacticsPresenter :BasePresenter
         if (viewEvent.commandType == Tactics.CommandType.CallEnemyInfo)
         {
             if (_model.CurrentStageTutorialDates.Count > 0) return;
-            CommandCallEnemyInfo((TroopInfo)viewEvent.template);
+            CommandCallEnemyInfo((int)viewEvent.template);
         }
         if (viewEvent.commandType == Tactics.CommandType.Rule)
         {
@@ -516,11 +516,15 @@ public class TacticsPresenter :BasePresenter
             var saveNeedAds = _model.NeedAdsSave();
             if (saveNeedAds)
             {
+                // ロード表示
+                _view.CommandCallLoading();
                 AdMobController.Instance.PlayRewardedAd(() => 
                 {
                     SuccessSave();
                 },
                 () => {
+                    // ロード非表示
+                    _view.CommandLoadingClose();
                     // 失敗した時
                     var savePopupTitle = _model.FailedSavePopupTitle();
                     var popupInfo = new ConfirmInfo(savePopupTitle,(menuCommandInfo) => UpdatePopupSaveCommand((ConfirmCommandType)menuCommandInfo));
@@ -540,6 +544,8 @@ public class TacticsPresenter :BasePresenter
 
     private void SuccessSave()
     {
+        // ロード非表示
+        _view.CommandLoadingClose();
         _model.GainSaveCount();
         SaveSystem.SaveStageInfo(GameSystem.CurrentStageData);
         _view.CommandSceneChange(Scene.Tactics);
@@ -781,9 +787,9 @@ public class TacticsPresenter :BasePresenter
     {
     }
 
-    private void CommandCallEnemyInfo(TroopInfo troopInfo)
+    private void CommandCallEnemyInfo(int troopInfoIndex)
     {
-        var enemyInfos = troopInfo.BattlerInfos;
+        var enemyInfos = _model.TacticsTroops()[troopInfoIndex].BattlerInfos;
         
         var statusViewInfo = new StatusViewInfo(() => {
             _view.CommandStatusClose();

@@ -120,5 +120,5 @@ public enum GetItemType
 	AttributeDark = 15,
 	Ending = 21,
 	StatusUp = 22,
-	AllRegeneration = 31
+	Regeneration = 31
 }

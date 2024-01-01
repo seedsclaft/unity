@@ -187,6 +187,7 @@ public class TacticsView : BaseView
     public void SetEnemies(List<ListData> troopInfos)
     {
         tacticsEnemyList.SetData(troopInfos);
+        tacticsEnemyList.SetInfoHandler((a) => OnClickEnemyInfo(a));
         HideEnemyList();
     }
 
@@ -353,14 +354,17 @@ public class TacticsView : BaseView
         }
     }
 
-    private void OnClickEnemyInfo()
+    private void OnClickEnemyInfo(int selectIndex = -1)
     {
-        var listData = tacticsEnemyList.ListData;
-        if (listData != null)
+        var index = tacticsEnemyList.Index;
+        if (index > -1)
         {
-            var data = (TroopInfo)listData.Data;
+            if (selectIndex > -1)
+            {
+                index = selectIndex;
+            }
             var eventData = new TacticsViewEvent(CommandType.CallEnemyInfo);
-            eventData.template = data;
+            eventData.template = index;
             _commandData(eventData);
         }
     }

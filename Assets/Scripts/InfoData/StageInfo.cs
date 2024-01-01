@@ -200,9 +200,10 @@ public class StageInfo
             enemyCount++;
         }
         var getItemData = new GetItemData();
-        getItemData.Type = GetItemType.AllRegeneration;
+        getItemData.Type = GetItemType.Regeneration;
+        getItemData.Param1 = 20;
         var getItemInfo = new GetItemInfo(getItemData);
-        getItemInfo.SetTitleData(DataSystem.System.GetTextData(3240).Text);
+        getItemInfo.SetResultData(DataSystem.System.GetReplaceText(3240,getItemData.Param1.ToString()));
         troopInfo.AddGetItemInfo(getItemInfo);
         _currentTroopInfos.Add(troopInfo);
         return _currentTroopInfos;

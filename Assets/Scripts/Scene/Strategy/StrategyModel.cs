@@ -276,14 +276,14 @@ public class StrategyModel : BaseModel
                     actorInfo.DecideStrength(0);
                 }
             }
-            if (getItemInfo.GetItemType == GetItemType.AllRegeneration)
+            if (getItemInfo.GetItemType == GetItemType.Regeneration)
             {
                 foreach (var actorInfo in BattleResultActors())
                 {
                     if (actorInfo.CurrentHp > 0)
                     {
-                        actorInfo.ChangeHp(9999);
-                        actorInfo.ChangeMp(9999);
+                        actorInfo.ChangeHp(actorInfo.CurrentHp + 20);
+                        actorInfo.ChangeMp(actorInfo.CurrentMp + 20);
                     }
                 }
             }
