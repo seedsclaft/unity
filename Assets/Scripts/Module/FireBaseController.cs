@@ -201,7 +201,7 @@ public class FirebaseController : SingletonMonoBehaviour<FirebaseController>
         };
     }
 
-    public void ReadRankingData(int stageId)
+    public void ReadRankingData(int stageId,string rankingTypeText)
     {
         if (!_isInit)
         {
@@ -225,6 +225,7 @@ public class FirebaseController : SingletonMonoBehaviour<FirebaseController>
                 {
                     var ranking = MakeRankingInfo(document.ToDictionary());
                     ranking.Rank = rank;
+                    ranking.RankingTypeText = rankingTypeText;
                     data.Add(ranking);
                     rank++;
                 }

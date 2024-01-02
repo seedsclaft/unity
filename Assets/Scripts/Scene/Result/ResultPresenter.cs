@@ -71,6 +71,7 @@ public class ResultPresenter : BasePresenter
         _view.SetEndingType(_model.EndingTypeText());
         _view.SetEvaluate(_model.TotalEvaluate(),_model.IsNewRecord());
         _view.SetPlayerName(_model.PlayerName());
+        _view.SetRankingTypeText(_model.RankingTypeText(_model.CurrentStage.Master.RankingStage));
     }
 
     private void CommandResultClose(ConfirmCommandType confirmCommandType)

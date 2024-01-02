@@ -168,6 +168,7 @@ public class BaseModel
     public void ChangeSEValue(float seVolume)
     {
         Ryneus.SoundManager.Instance.SeVolume = seVolume;
+        Effekseer.Internal.EffekseerSoundPlayer.SeVolume = seVolume;
         Ryneus.SoundManager.Instance.UpdateSeVolume();
         if (seVolume > 0 && Ryneus.SoundManager.Instance.SeMute == false)
         {
@@ -634,6 +635,18 @@ public class BaseModel
         return members;
     }
 
+    public string RankingTypeText(RankingType rankingType)
+    {
+        switch (rankingType)
+        {
+            case RankingType.Evaluate:
+            return DataSystem.System.GetTextData(16120).Text;
+            case RankingType.Turns:
+            return DataSystem.System.GetTextData(16121).Text;
+        }
+        return "";
+    }
+
 #if UNITY_ANDROID
     public List<RankingActorData> RankingActorDates()
     {
@@ -683,7 +696,7 @@ public class BaseModel
         } else
         if (CurrentStage.Master.RankingStage == RankingType.Turns)
         {
-            evaluate = CurrentStage.CurrentTurn;
+            evaluate = CurrentStage.CurrentTurn - 1;
         }
         return evaluate;
     }
@@ -731,7 +744,7 @@ public class BaseModel
             );
             await UniTask.WaitUntil(() => FirebaseController.IsBusy == false);
 
-            FirebaseController.Instance.ReadRankingData(CurrentStage.BaseStageId);
+            FirebaseController.Instance.ReadRankingData(CurrentStage.BaseStageId,RankingTypeText(CurrentStage.Master.RankingStage));
             await UniTask.WaitUntil(() => FirebaseController.IsBusy == false);
             var results = FirebaseController.RankingInfos;
             var rank = 1;

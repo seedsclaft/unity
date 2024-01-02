@@ -12,6 +12,7 @@ public class RankingInfoComponent : ListItem ,IListViewItem
     [SerializeField] private List<Image> actorImages;
     [SerializeField] private List<TextMeshProUGUI> actorEvaluates;
     [SerializeField] private Button detailButton;
+    [SerializeField] private TextMeshProUGUI rankingTypeText = null; 
 
     private bool _isInit = false;
     public void UpdateViewItem()
@@ -21,6 +22,7 @@ public class RankingInfoComponent : ListItem ,IListViewItem
         playerName.text = data.Name;
         score.text = data.Score.ToString();
         rank.text = data.Rank.ToString() + DataSystem.System.GetTextData(16070).Text;
+        rankingTypeText.text = data.RankingTypeText;
         for (int i = 0;i < actorImages.Count;i++)
         {
             if (data.SelectIdx.Count > i)

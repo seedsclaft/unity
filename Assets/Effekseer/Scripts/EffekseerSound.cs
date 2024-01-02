@@ -51,6 +51,8 @@ namespace Effekseer.Internal
 	{
 		// Singleton instance
 		public static EffekseerSoundPlayer Instance { get; private set; }
+		// オプションSEボリューム反映値を追加
+		public static float SeVolume = 1f;
 		public static bool IsValid { get { return Instance != null; } }
 
 		// Pooled instances
@@ -137,7 +139,7 @@ namespace Effekseer.Internal
 			lock (Instance)
 			{
 				//Instance.events.Add(() => { Instance.PlaySound(tag, data, volume, pan, pitch, mode3D, x, y, z, distance); });
-				Instance.events.Add(() => { Instance.PlaySound(tag, data, volume, pan, pitch, mode3D, 0, 0, z, distance); });
+				Instance.events.Add(() => { Instance.PlaySound(tag, data, volume * SeVolume, pan, pitch, mode3D, 0, 0, z, distance); });
 			}
 		}
 		[AOT.MonoPInvokeCallback(typeof(Plugin.EffekseerSoundPlayerStopTag))]

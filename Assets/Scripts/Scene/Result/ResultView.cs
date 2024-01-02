@@ -11,6 +11,7 @@ public class ResultView : BaseView
     [SerializeField] private StrategyActorList strategyActorList = null;
     [SerializeField] private BaseList commandList = null; 
     [SerializeField] private GameObject resultMain = null;
+    [SerializeField] private TextMeshProUGUI rankingTypeText = null; 
     [SerializeField] private TextMeshProUGUI endingType = null; 
     [SerializeField] private TextMeshProUGUI evaluateValue = null; 
     [SerializeField] private TextMeshProUGUI evaluateNew = null; 
@@ -94,6 +95,11 @@ public class ResultView : BaseView
     {
         rankingInfo.text = ranking;
         rankingInfo.gameObject.SetActive(true);
+    }
+
+    public void SetRankingTypeText(string rankinType)
+    {
+        rankingTypeText.text = rankinType;
     }
 
     public void SetHelpWindow(){

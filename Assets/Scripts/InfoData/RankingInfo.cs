@@ -8,6 +8,7 @@ public class RankingInfo
     public int Score;
     public string Name;
     public int Rank;
+    public string RankingTypeText = "";
 
     public List<int> SelectIdx = new ();
     public List<int> SelectRank = new ();
