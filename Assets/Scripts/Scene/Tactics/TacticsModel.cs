@@ -524,7 +524,7 @@ public class TacticsModel : BaseModel
                 // 獲得Nuが〇アップ
                 bonusParam = rank * DataSystem.System.BattleBonusValue;
             }
-            return DataSystem.System.GetReplaceText(10 + (int)_tacticsCommandType,(rank * 10).ToString());
+            return DataSystem.System.GetReplaceText(10 + (int)_tacticsCommandType,bonusParam.ToString());
         }
         int count = 0;
         switch (_tacticsCommandType)

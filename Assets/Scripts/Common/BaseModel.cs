@@ -419,7 +419,7 @@ public class BaseModel
                         {
                             var lv = featureData.Param2;
                             getItemInfo.MakeActorLvUpResult(actorInfo.Master.Name,actorInfo.Level+lv);
-                            actorInfo.LevelUp(4);
+                            actorInfo.LevelUp(lv);
                         }
                         break;
                     case FeatureType.AlchemyCostZero: // featureData で param1 = 属性番号

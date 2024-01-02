@@ -353,6 +353,7 @@ public class ActionResultInfo
         {
             healValue += (int)Mathf.Round(HealValue);
         }
+        _hpHeal += healValue;
         if (subject != target)
         {
             if (subject.IsState(StateType.HealActionSelfHeal))

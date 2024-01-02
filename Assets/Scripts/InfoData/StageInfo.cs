@@ -198,7 +198,7 @@ public class StageInfo
 
         var randFlag = false;
         int randIndex = -1;
-        while (randFlag)
+        while (randFlag == false)
         {
             randIndex = new Random().Next(0, bossDates.Count);
             if (!_clearTroopIds.Contains(bossDates[randIndex].TroopId))
