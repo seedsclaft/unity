@@ -438,3 +438,8 @@ public enum MagicIconType
     Awaken = 11, // 覚醒
     
 }
+
+public enum HpHealType{
+    EffectValue = 0,
+    RateValue = 1, //割合回復
+}

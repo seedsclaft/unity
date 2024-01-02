@@ -120,6 +120,10 @@ public class ResultModel : BaseModel
                 }
             }
         }
+        foreach (var getAlcanaInfo in getAlcanaInfos)
+        {
+            CurrentData.AlcanaInfo.AddAlcana(getAlcanaInfo);        
+        }
         return MakeListData(getAlcanaInfos);
     }
 

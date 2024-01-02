@@ -14,6 +14,7 @@ public class TroopsImporter : AssetPostprocessor {
 		Id = 0,
 		TroopId,
 		EnemyId,
+		_EnemyId,
 		Lv,
 		BossFlag,
 		Line,

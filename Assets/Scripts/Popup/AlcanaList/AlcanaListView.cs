@@ -16,12 +16,8 @@ public class AlcanaListView : BaseView
         new AlcanaListPresenter(this);
         alcanaList.SetInputHandler(InputKeyType.Cancel,() => BackEvent());
         alcanaList.SetInputHandler(InputKeyType.Decide,() => {});
-        alcanaList.SetSelectedHandler(() => {
-            if (alcanaList.ListData != null)
-            {
-                var data = (SkillInfo)alcanaList.ListData.Data;
-                skillInfoComponent.UpdateSkillInfo(data);
-            }
+        alcanaList.SetSelectedHandler(() => {        
+            UpdateSkillInfo();
         });
         SetInputHandler(alcanaList.GetComponent<IInputHandlerEvent>());
     }
@@ -45,6 +41,19 @@ public class AlcanaListView : BaseView
     {
         alcanaList.SetData(alcanaLists);
         alcanaList.Activate();
+        UpdateSkillInfo();
+    }
+
+    private void UpdateSkillInfo()
+    {
+        if (alcanaList.ListData != null)
+        {
+            var data = (SkillInfo)alcanaList.ListData.Data;
+            if (data != null)
+            {
+                skillInfoComponent.UpdateSkillInfo(data);
+            }
+        }
     }
 }
 

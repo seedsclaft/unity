@@ -344,12 +344,20 @@ public class ActionResultInfo
     private void MakeHpHeal(BattlerInfo subject,BattlerInfo target,SkillData.FeatureData featureData)
     {
         float HealValue = featureData.Param1;
-        _hpHeal += (int)Mathf.Round(HealValue);
+        // param3が1の時は割合
+        var healValue = 0;
+        if ((HpHealType)featureData.Param3 == HpHealType.RateValue)
+        {
+            healValue += (int)Mathf.Round(target.MaxHp * HealValue * 0.01f);
+        } else
+        {
+            healValue += (int)Mathf.Round(HealValue);
+        }
         if (subject != target)
         {
             if (subject.IsState(StateType.HealActionSelfHeal))
             {
-                _reHeal += (int)Mathf.Round(HealValue);
+                _reHeal += healValue;
             }
         }
     }
@@ -488,10 +496,6 @@ public class ActionResultInfo
         if (stateInfo.Master.StateType == StateType.CounterAura || stateInfo.Master.StateType == StateType.Benediction)
         {
             stateInfo.Turns = 200 - subject.Status.Spd * 2;
-        } else
-        if (stateInfo.Master.StateType == StateType.Demigod)
-        {
-            stateInfo.Effect = subject.DemigodParam;
         } else
         if (stateInfo.Master.StateType == StateType.Death)
         {

@@ -22,6 +22,5 @@ public class SlotSaveModel : BaseModel
     public void SaveSlotInfo(int slotId)
     {
         CurrentData.PlayerInfo.SaveSlotData(slotId,CurrentSlotInfo);
-        SavePlayerData();
     }
 }

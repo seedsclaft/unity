@@ -483,6 +483,10 @@ public class BattleModel : BaseModel
         if (skillData.TargetType == TargetType.Friend)
         {
             targetIndexList = TargetIndexFriend(subject.isActor,targetIndexList);
+            if (skillData.Scope == ScopeType.WithoutSelfOne || skillData.Scope == ScopeType.WithoutSelfAll)
+            {
+                targetIndexList.Remove(subject.Index);
+            }
         } else 
         if (skillData.TargetType == TargetType.Self)
         {
@@ -1261,7 +1265,7 @@ public class BattleModel : BaseModel
 
     private List<ActionResultInfo> UndeadHealActionResults()
     {
-        var UndeadHealResults = MakeStateActionResult(_currentBattler,StateType.Undead,FeatureType.HpHeal);
+        var UndeadHealResults = MakeStateActionResult(_currentBattler,StateType.Undead,FeatureType.HpHeal,(int)HpHealType.RateValue);
         return UndeadHealResults;
     }
 
@@ -1345,7 +1349,7 @@ public class BattleModel : BaseModel
     /// <summary>
     /// battlerInfoが付与したステート効果の結果を取得
     /// </summary>
-    public List<ActionResultInfo> MakeStateActionResult(BattlerInfo battlerInfo,StateType stateType,FeatureType featureType)
+    public List<ActionResultInfo> MakeStateActionResult(BattlerInfo battlerInfo,StateType stateType,FeatureType featureType,int param3Value = 0)
     {
         var actionResultInfos = new List<ActionResultInfo>();
         var stateInfos = battlerInfo.GetStateInfoAll(stateType);
@@ -1356,6 +1360,10 @@ public class BattleModel : BaseModel
         for (int i = 0;i < stateInfos.Count;i++)
         {
             featureData.Param1 = stateInfos[i].Effect;
+            if (param3Value > 0)
+            {
+                featureData.Param3 = param3Value;
+            }
             var target = GetBattlerInfo(stateInfos[i].BattlerId);
             if (target.IsAlive())
             {
@@ -1621,13 +1629,13 @@ public class BattleModel : BaseModel
                     {
                         if (battlerInfo.isActor)
                         {
-                            if (actionResultInfos.Find(a => BattlerActors().Find(b => a.DeadIndexList.Contains(b.Index)) != null) != null)
+                            if (actionResultInfos.Find(a => _party.AliveBattlerInfos.Find(b => a.DeadIndexList.Contains(b.Index)) != null) != null)
                             {
                                 IsTriggered = true;
                             }
                         } else
                         {
-                            if (actionResultInfos.Find(a => BattlerEnemies().Find(b => a.DeadIndexList.Contains(b.Index)) != null) != null)
+                            if (actionResultInfos.Find(a => _troop.AliveBattlerInfos.Find(b => a.DeadIndexList.Contains(b.Index)) != null) != null)
                             {
                                 IsTriggered = true;
                             }  
@@ -1775,6 +1783,7 @@ public class BattleModel : BaseModel
     public List<int> MakeAutoSelectIndex(ActionInfo actionInfo,int oneTargetIndex = -1)
     {
         var indexList = new List<int>();
+        // interruptされた行動の対象を引き継ぐ
         if (actionInfo.ActionResults.Count > 0)
         {
             foreach (var actionResultInfo in actionInfo.ActionResults)

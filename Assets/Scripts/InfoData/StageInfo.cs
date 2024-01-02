@@ -182,8 +182,30 @@ public class StageInfo
         troopDates.AddRange(DataSystem.Troops.FindAll(a => a.TroopId >= _defineBossEnemyKey && a.TroopId < (_lastBossEnemyKey + 999)));
         var bossDates = troopDates.FindAll(a => a.BossFlag == true);
         var enemyTroopDates = troopDates.FindAll(a => a.BossFlag == false);
-        
-        int randIndex = new Random().Next(0, bossDates.Count);
+        // 全部倒しているか
+        var allDefeated = true;
+        foreach (var bossDate in bossDates)
+        {
+            if (!_clearTroopIds.Contains(bossDate.TroopId))
+            {
+                allDefeated = false;
+            }
+        }
+        if (allDefeated)
+        {
+            _clearTroopIds.Clear();
+        }
+
+        var randFlag = false;
+        int randIndex = -1;
+        while (randFlag)
+        {
+            randIndex = new Random().Next(0, bossDates.Count);
+            if (!_clearTroopIds.Contains(bossDates[randIndex].TroopId))
+            {
+                randFlag = true;
+            }
+        }
         var troopInfo = new TroopInfo(bossDates[randIndex].TroopId,false);
 
         var bossEnemy = DataSystem.Enemies.Find(a => a.Id == bossDates[randIndex].EnemyId);
@@ -191,7 +213,7 @@ public class StageInfo
         troopInfo.AddEnemy(boss);
 
         var enemyCount = 0;
-        while (enemyCount < 2)
+        while (enemyCount < 3)
         {  
             int enemyRandIndex = new Random().Next(0, enemyTroopDates.Count); 
             var enemyData = DataSystem.Enemies.Find(a => a.Id == enemyTroopDates[enemyRandIndex].EnemyId);

@@ -119,11 +119,11 @@ public class BattlerInfo
         var statusInfo = new StatusInfo();
         int plusHpParam = isBoss == true ? 50 : 0;
         statusInfo.SetParameter(
-            enemyData.BaseStatus.Hp + (int)Math.Floor(plusHpParam + lv + lv * enemyData.BaseStatus.Hp * 0.1f),
+            enemyData.BaseStatus.Hp + (int)Math.Floor(plusHpParam + lv + lv * enemyData.BaseStatus.Hp * (1f/lv)),
             Math.Min(50, enemyData.BaseStatus.Mp + lv),
-            enemyData.BaseStatus.Atk + (int)Math.Floor(lv + lv * enemyData.BaseStatus.Atk * 0.05f),
-            enemyData.BaseStatus.Def + (int)Math.Floor(lv + lv * enemyData.BaseStatus.Def * 0.05f),
-            Math.Min(100, enemyData.BaseStatus.Spd + (int)Math.Floor(lv * enemyData.BaseStatus.Spd * 0.05f))
+            enemyData.BaseStatus.Atk + (int)Math.Floor(lv + lv * enemyData.BaseStatus.Atk * (0.5f/lv)),
+            enemyData.BaseStatus.Def + (int)Math.Floor(lv + lv * enemyData.BaseStatus.Def * (0.5f/lv)),
+            Math.Min(100, enemyData.BaseStatus.Spd + (int)Math.Floor(lv * enemyData.BaseStatus.Spd * (0.5f/lv)))
         );
         _status = statusInfo;
         _index = index + 100;
@@ -191,7 +191,38 @@ public class BattlerInfo
         {
             rand = new Random().Next(-10, 10);
         }
-        _ap = 1000 - (CurrentSpd(false) + rand) * 8;
+        var speed = CurrentSpd(false);
+        var baseSpeed = new List<int>{50,75,100,150};
+        _ap = 1000 + rand;
+        var speedCount = -1;
+        for (var i = 0;i < baseSpeed.Count;i++)
+        {
+            if (speed > baseSpeed[i])
+            {
+                speedCount = i;
+            }
+        }
+        if (speedCount > -1)
+        {
+            for (var i = 0;i <= speedCount;i++)
+            {
+                if (i == 0)
+                {
+                    _ap -= baseSpeed[i] * (8/(i+1));
+                } else
+                {
+                    _ap -= (baseSpeed[i] - baseSpeed[i-1]) * (8/(i+1));
+                }
+            }
+            var over = speed - baseSpeed[speedCount];
+            if (over > 0)
+            {
+                _ap -= over * (8/(speedCount+2));
+            }
+        } else
+        {
+            _ap -= speed * 8;
+        }
         _ap = Math.Max(_ap,200);
     }
 

@@ -280,6 +280,7 @@ public class ResultPresenter : BasePresenter
 
     private void CommandEndGame()
     {
+        _model.SavePlayerData();
         _model.SavePlayerStageData(false);
         _view.CommandSceneChange(Scene.MainMenu);
     }
