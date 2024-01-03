@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class RebornActor : ListItem ,IListViewItem 
 {
-
     [SerializeField] private ActorInfoComponent actorInfoComponent;
     [SerializeField] private GameObject RebornPrefab;
     [SerializeField] private GameObject RebornRoot;

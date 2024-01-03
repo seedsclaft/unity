@@ -161,7 +161,7 @@ public class SkillInfoComponent : MonoBehaviour
         var skillData = DataSystem.Skills.Find(skill => skill.Id == rebornSkillInfo.Id);
         if (nameText != null)
         {
-            //nameText.text = skillData.Name.Replace("\\d",rebornSkillInfo.Param1);
+            nameText.text = skillData.Name.Replace("\\d",rebornSkillInfo.Param1.ToString());
             if (nameAndMpCost)
             {
                 nameText.rectTransform.sizeDelta = new Vector2(nameText.preferredWidth,nameText.preferredHeight);
@@ -169,7 +169,7 @@ public class SkillInfoComponent : MonoBehaviour
         }
         if (description != null)
         {
-            //description.text = skillData.Help.Replace("\\d",rebornSkillInfo.Param1);
+            description.text = skillData.Help.Replace("\\d",rebornSkillInfo.Param1.ToString());
         }
     }
 

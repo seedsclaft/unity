@@ -91,14 +91,6 @@ public class BaseList : ListWindow , IInputHandlerEvent
         //ResetScrollPosition();
         UpdateAllItems();
         UpdateSelectIndex(selectIndex);
-        if (selectIndex > 3)
-        {
-            //await UniTask.DelayFrame(1);
-            UpdateScrollRect(selectIndex);
-        } else
-        {        
-            ResetScrollRect();
-        }
         _beforeSelectIndex = selectIndex;
     }
 

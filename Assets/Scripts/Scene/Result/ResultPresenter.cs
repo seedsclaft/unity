@@ -11,6 +11,7 @@ public class ResultPresenter : BasePresenter
     private bool _busy = true;
 
     private bool _isRankingEnd = false;
+    private bool _isRebornEnd = false;
     private bool _isAlcanaEnd = false;
     private bool _isSlotSaveEnd = false;
     public ResultPresenter(ResultView view)
@@ -78,40 +79,54 @@ public class ResultPresenter : BasePresenter
     {
         if (confirmCommandType == ConfirmCommandType.Yes)
         {
-            if (_isSlotSaveEnd)
-            {
-                CommandEndGame();
-            } else
-            if (_isRankingEnd)
-            {
-                // スロットセーブ
-                if (_isSlotSaveEnd == false && _model.CurrentStage.Master.SlotSave)
-                {
-                    var confirmView = new ConfirmInfo(DataSystem.System.GetTextData(16110).Text,(a) => UpdatePopupSlotSaveOpen());
-                    confirmView.SetIsNoChoice(true);
-                    _view.CommandCallConfirm(confirmView);
-                } else
-                {
-                    _isSlotSaveEnd = true;
-                    CommandEndGame();
-                }
-                //CommandActorAssign();
-            } else
-            {
-                // ランキング登録アリなら
-                if (_model.CurrentStage.Master.RankingStage > 0)
-                {
-                    CommandRanking();
-                } else
-                {
-                    CommandEndGame();
-                }
-            }
+            CommandResultNext();
         } else
         {
             ShowStatus();
         }
         Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
+    }
+
+    private void CommandResultNext()
+    {
+        // ランキング登録確認
+        if (_isRankingEnd == false)
+        {
+            _isRankingEnd = true;
+            // ランキング登録アリなら
+            if (_model.CurrentStage.Master.RankingStage > 0)
+            {
+                CommandRanking();
+                return;
+            }
+        }
+
+        // 思念継承獲得
+        if (_isRebornEnd == false && _model.CurrentStage.Master.Reborn)
+        {
+            _isRebornEnd = true;
+            CommandActorAssign();
+            return;
+        }
+
+        // アルカナ獲得
+        if (_isAlcanaEnd == false && _model.CurrentStage.Master.Alcana)
+        {
+            _isAlcanaEnd = true;
+            CommandGetAlcana();
+            return;
+        }
+
+        // スロットセーブ
+        if (_isSlotSaveEnd == false && _model.CurrentStage.Master.SlotSave)
+        {
+            _isSlotSaveEnd = true;
+            var confirmView = new ConfirmInfo(DataSystem.System.GetTextData(16110).Text,(a) => UpdatePopupSlotSaveOpen());
+            confirmView.SetIsNoChoice(true);
+            _view.CommandCallConfirm(confirmView);
+            return;
+        }
+        CommandEndGame();
     }
 
     private void CommandRanking()
@@ -126,21 +141,21 @@ public class ResultPresenter : BasePresenter
         if (confirmCommandType == ConfirmCommandType.Yes)
         {
             // ランキングに登録
+            _view.CommandCallLoading();
+            _busy = true;
             _model.CurrentRankingData((a) => 
             {
-                _isRankingEnd = true;
                 _view.CommandConfirmClose();
                 _view.SetRanking(a);
-                CommandGetAlcana();
-                //UpdateStageEndCommand();
+                _view.CommandLoadingClose();
+                _busy = false;
+                CommandResultNext();
             });
         } else
         {
             Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cancel);
-            _isRankingEnd = true;
             _view.CommandConfirmClose();
-            CommandGetAlcana();
-            //UpdateStageEndCommand();
+            CommandResultNext();
         }
     }
 
@@ -175,7 +190,7 @@ public class ResultPresenter : BasePresenter
     private void UpdatePopupReborn(ConfirmCommandType confirmCommandType)
     {
         _view.CommandActorAssign();
-        _view.SetActorList(_model.ActorInfos());
+        _view.SetActorList(_model.EraseActorInfos());
         CommandUpdateActor();
         _view.CommandConfirmClose();
         if (_model.ActorInfos().Count > 10)
@@ -183,9 +198,6 @@ public class ResultPresenter : BasePresenter
             var popupInfo = new ConfirmInfo(DataSystem.System.GetTextData(16051).Text,(a) => UpdatePopupRebornEraseCheck((ConfirmCommandType)a));
             popupInfo.SetIsNoChoice(true);
             _view.CommandCallConfirm(popupInfo);
-        } else
-        {        
-            _model.SavePlayerStageData(false);
         }
     }
 
@@ -210,7 +222,7 @@ public class ResultPresenter : BasePresenter
             _view.CommandCallConfirm(popupInfo);
             return;
         }
-        CommandEndGame();
+        CommandResultNext();
     }
 
     private void UpdatePopupRebornErase(ConfirmCommandType confirmCommandType)
@@ -219,7 +231,7 @@ public class ResultPresenter : BasePresenter
         if (confirmCommandType == ConfirmCommandType.Yes)
         {
             _model.EraseReborn();
-            CommandEndGame();
+            CommandResultNext();
         } else{        
             Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cancel);
         }
@@ -231,24 +243,16 @@ public class ResultPresenter : BasePresenter
         var rebornActor = _model.RebornActorInfo();
         if (rebornActor != null)
         {
-            _view.UpdateActor(rebornActor);
+            _view.UpdateActor(ListData.MakeListData(rebornActor.RebornSkillInfos));
         }
     }
 
     public void CommandGetAlcana()
     {
-        // アルカナ入手ありならアルカナ入手
-        if (_model.CheckIsAlcana())
-        {
-            // ポップアップ表示        
-            var popupInfo = new ConfirmInfo(DataSystem.System.GetTextData(16100).Text,(a) => UpdateGetAlcanaPopup((ConfirmCommandType)a));
-            popupInfo.SetIsNoChoice(true);
-            _view.CommandCallConfirm(popupInfo);
-        } else
-        {
-            // 終了へ
-            UpdateStageEndCommand();
-        }
+        // ポップアップ表示        
+        var popupInfo = new ConfirmInfo(DataSystem.System.GetTextData(16100).Text,(a) => UpdateGetAlcanaPopup((ConfirmCommandType)a));
+        popupInfo.SetIsNoChoice(true);
+        _view.CommandCallConfirm(popupInfo);
     }
 
     private void UpdateGetAlcanaPopup(ConfirmCommandType confirmCommandType)

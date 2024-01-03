@@ -10,7 +10,6 @@ public class RebornView : BaseView
     public int ActorInfoListIndex => actorInfoList.Index;
 
     [SerializeField] private BattleSelectCharacter selectCharacter = null; 
-    [SerializeField] private Button decideButton = null;
     private new System.Action<RebornViewEvent> _commandData = null;
 
     public override void Initialize() 
@@ -38,7 +37,6 @@ public class RebornView : BaseView
 
     private void SetUIButton()
     {
-        decideButton.onClick.AddListener(() => CallDecideActor());
     }
 
     public void SetEvent(System.Action<RebornViewEvent> commandData)

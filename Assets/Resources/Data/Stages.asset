@@ -687,7 +687,7 @@ MonoBehaviour:
     BossId: 0
     BGMId: 3
     BossBGMId: 11
-    Reborn: 0
+    Reborn: 1
     Alcana: 1
     SaveLimit: 4
     ContinueLimit: 2
@@ -720,6 +720,12 @@ MonoBehaviour:
       Type: 1
       Param: 3
       ReadFlag: 0
+    - EventKey: 1BeforeTacticsRebornSkillEffect0
+      Turns: 1
+      Timing: 11
+      Type: 41
+      Param: 0
+      ReadFlag: 1
     - EventKey: 2StartTacticsCommandDisable3
       Turns: 2
       Timing: 1
@@ -806,7 +812,7 @@ MonoBehaviour:
     BossId: 0
     BGMId: 3
     BossBGMId: 11
-    Reborn: 0
+    Reborn: 1
     Alcana: 1
     SaveLimit: 4
     ContinueLimit: 2
@@ -883,7 +889,7 @@ MonoBehaviour:
     BossId: 0
     BGMId: 4
     BossBGMId: 11
-    Reborn: 0
+    Reborn: 1
     Alcana: 1
     SaveLimit: 4
     ContinueLimit: 2
@@ -942,7 +948,7 @@ MonoBehaviour:
     BossId: 0
     BGMId: 4
     BossBGMId: 11
-    Reborn: 0
+    Reborn: 1
     Alcana: 1
     SaveLimit: 4
     ContinueLimit: 2
@@ -995,7 +1001,7 @@ MonoBehaviour:
     BossId: 0
     BGMId: 5
     BossBGMId: 11
-    Reborn: 0
+    Reborn: 1
     Alcana: 1
     SaveLimit: 4
     ContinueLimit: 2
@@ -1048,7 +1054,7 @@ MonoBehaviour:
     BossId: 0
     BGMId: 5
     BossBGMId: 11
-    Reborn: 0
+    Reborn: 1
     Alcana: 1
     SaveLimit: 4
     ContinueLimit: 2
@@ -1113,7 +1119,7 @@ MonoBehaviour:
     BossId: 3000
     BGMId: 5
     BossBGMId: 16
-    Reborn: 0
+    Reborn: 1
     Alcana: 1
     SaveLimit: 4
     ContinueLimit: 2
@@ -1172,7 +1178,7 @@ MonoBehaviour:
     BossId: 3000
     BGMId: 5
     BossBGMId: 16
-    Reborn: 0
+    Reborn: 1
     Alcana: 1
     SaveLimit: 4
     ContinueLimit: 2
@@ -1250,7 +1256,7 @@ MonoBehaviour:
     SubordinateValue: 0
     UseSlot: 1
     StageEvents:
-    - EventKey: 1StartTactics2011
+    - EventKey: 1StartTacticsSurvivalMode1
       Turns: 1
       Timing: 1
       Type: 201

@@ -268,6 +268,21 @@ public class ResultModel : BaseModel
             var actorInfo = (ActorInfo)listDate.Data;
             if (actorInfo.Master.ClassId == DataSystem.Actors.Find(a => a.Id == CurrentStage.SelectActorIds[0]).ClassId)
             {
+                //listDate.SetEnable(false);
+            }
+        }
+        return listDates;
+    }
+
+    public List<ListData> EraseActorInfos()
+    {
+        var listDates = MakeListData(CurrentData.PlayerInfo.SaveActorList);
+        var disable = DisableActorIndexes();
+        foreach (var listDate in listDates)
+        {
+            var actorInfo = (ActorInfo)listDate.Data;
+            if (disable.Contains(actorInfo.Master.ClassId))
+            {
                 listDate.SetEnable(false);
             }
         }
@@ -277,51 +292,25 @@ public class ResultModel : BaseModel
     public List<int> DisableActorIndexes()
     {
         var list = new List<int>();
-        if (ActorInfos().Count > 10)
-        {
-
-        }
+        var evaluateActorInfo = EvaluateMembers()[0];
         var actorListIndexes = new List<int>();
         foreach (var listData in ActorInfos())
         {
             var actorInfo = (ActorInfo)listData.Data;
-            if (!actorListIndexes.Contains(actorInfo.ActorId))
+            if (!actorListIndexes.Contains(actorInfo.Master.ClassId))
             {
-                actorListIndexes.Add(actorInfo.ActorId);
+                actorListIndexes.Add(actorInfo.Master.ClassId);
             }
         }
+        // 2キャラしかいない
         if (actorListIndexes.Count == 2)
         {
-            var minSize = ActorInfos().FindAll(a => ((ActorInfo)a.Data).ActorId == actorListIndexes[0]);
-            var maxSize = ActorInfos().FindAll(a => ((ActorInfo)a.Data).ActorId == actorListIndexes[1]);
-            if (minSize.Count == 1 || maxSize.Count == 1)
+            if (actorListIndexes[0] == evaluateActorInfo.Master.ClassId)
             {
-                if (minSize.Count == 1)
-                {
-                    var idx = 0;
-                    foreach (var listData in ActorInfos())
-                    {
-                        var actorInfo = (ActorInfo)listData.Data;
-                        if (actorInfo.ActorId == actorListIndexes[0])
-                        {
-                            list.Add(idx);
-                        }
-                        idx++;
-                    }
-                } else
-                if (maxSize.Count == 1)
-                {
-                    var idx = 0;
-                    foreach (var listData in ActorInfos())
-                    {
-                        var actorInfo = (ActorInfo)listData.Data;
-                        if (actorInfo.ActorId == actorListIndexes[1])
-                        {
-                            list.Add(idx);
-                        }
-                        idx++;
-                    }
-                }
+                list.Add(actorListIndexes[1]);
+            } else
+            {
+                list.Add(actorListIndexes[0]);
             }
         }
         return list;

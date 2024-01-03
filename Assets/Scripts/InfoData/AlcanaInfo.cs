@@ -38,7 +38,7 @@ public class AlcanaInfo{
         _ownAlcanaList.Clear();
         for (var i = 500001;i <= 500002;i++)
         {
-            _ownAlcanaList.Add(new SkillInfo(i));
+            //_ownAlcanaList.Add(new SkillInfo(i));
         }
     }
 

@@ -82,15 +82,22 @@ public class AlcanaSelectPresenter : BasePresenter
 
     private void CommandBack()
     {
-        var statusViewInfo = new StatusViewInfo(() => {
-            // ステージセレクトに戻る
-            _view.CommandStatusClose();
-            _view.CommandSceneChange(Scene.MainMenu);
-        });
-        _model.InitializeStageData(_model.CurrentStage.Id);
-        statusViewInfo.SetDisplayDecideButton(true);
-        _view.CommandCallStatus(statusViewInfo);
-        _view.ChangeUIActive(false);
+        if (GameSystem.LastScene == Scene.MainMenu)
+        {
+            var statusViewInfo = new StatusViewInfo(() => {
+                // ステージセレクトに戻る
+                _view.CommandStatusClose();
+                _view.CommandSceneChange(Scene.MainMenu);
+            });
+            _model.InitializeStageData(_model.CurrentStage.Id);
+            statusViewInfo.SetDisplayDecideButton(true);
+            _view.CommandCallStatus(statusViewInfo);
+            _view.ChangeUIActive(false);
+        } else
+        if (GameSystem.LastScene == Scene.Reborn)
+        {
+            _view.CommandSceneChange(Scene.Reborn);
+        }
         Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cancel);
     }
 

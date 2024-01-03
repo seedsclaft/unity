@@ -394,6 +394,11 @@ public class BaseModel
         return skillInfos.FindAll(a => a.Master.TriggerDates.Find(b => b.Param1 == RemainTurns) != null);
     }
 
+    public bool NeedAlcana()
+    {
+        return CurrentStage.Master.Alcana && CurrentData.AlcanaInfo.OwnAlcanaList.Count > 0;
+    }
+    
     public void SetAlcanaSkillInfo(List<SkillInfo> skillInfos)
     {
         StageAlcana.SetCurrentTurnAlcanaList(skillInfos);
@@ -855,5 +860,10 @@ public class BaseModel
         {
             CurrentStageData.AddActor(actorInfo);
         }
+    }
+
+    public bool SelectableSlot(int index)
+    {
+        return CurrentData.PlayerInfo.SlotSaveList[index].ActorInfos.Count > 0;
     }
 }

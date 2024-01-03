@@ -20,18 +20,6 @@ public class AlcanaSelectModel : BaseModel
         {
             skillInfos[i].SetEnable(_selectedAlcanaList.Contains(skillInfos[i]) == false);
         }
-        var sortList1 = new List<SkillInfo>();
-        var sortList2 = new List<SkillInfo>();
-        var sortList3 = new List<SkillInfo>();
-        skillInfos.Sort((a,b) => {return a.Master.Id > b.Master.Id ? 1 : -1;});
-        foreach (var skillInfo in skillInfos)
-        {
-            sortList1.Add(skillInfo);
-        }
-        skillInfos.Clear();
-        skillInfos.AddRange(sortList1);
-        skillInfos.AddRange(sortList2);
-        skillInfos.AddRange(sortList3);
         return MakeListData(skillInfos);
     }
 

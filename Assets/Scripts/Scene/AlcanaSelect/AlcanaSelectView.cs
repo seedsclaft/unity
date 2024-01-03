@@ -40,6 +40,8 @@ public class AlcanaSelectView : BaseView
         selectCharacter.SetInputHandlerAction(InputKeyType.Option1,() => CallDeleteAlcana());
         
         SetInputHandler(selectCharacter.MagicList.GetComponent<IInputHandlerEvent>());
+        selectCharacter.SetActiveTab(SelectCharacterTabType.Detail,false);
+        selectCharacter.SetActiveTab(SelectCharacterTabType.Condition,false);
         selectCharacter.HideActionList();
         selectCharacter.HideStatus();
     }
@@ -99,8 +101,6 @@ public class AlcanaSelectView : BaseView
 
     public void RefreshMagicList(List<ListData> skillInfos,int selectIndex = 0)
     {
-        selectCharacter.SetActiveTab(SelectCharacterTabType.Detail,false);
-        selectCharacter.SetActiveTab(SelectCharacterTabType.Condition,false);
         selectCharacter.ShowActionList();
         selectCharacter.SetSkillInfos(skillInfos);
         selectCharacter.RefreshAction(selectIndex);

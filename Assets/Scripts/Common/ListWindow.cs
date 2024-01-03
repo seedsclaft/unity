@@ -681,7 +681,14 @@ abstract public class ListWindow : MonoBehaviour
         if (listIndex > 0)
         {
             var num = 1.0f / (float)(dataCount - listCount);
-            ScrollRect.normalizedPosition = new Vector2(0,1.0f - (num * (Index - (listCount-1))));
+            var normalizedPosition = 1.0f - (num * (Index - (listCount-1)));
+            if (horizontal)
+            {
+                ScrollRect.normalizedPosition = new Vector2(normalizedPosition,0);
+            } else
+            {
+                ScrollRect.normalizedPosition = new Vector2(0,normalizedPosition);
+            }
         }
     }
 

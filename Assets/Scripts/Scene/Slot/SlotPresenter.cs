@@ -49,9 +49,12 @@ public class SlotPresenter
 
     private void CommandDecide(int slotIndex)
     {
-        Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
-        var confirmInfo = new ConfirmInfo(DataSystem.System.GetTextData(21010).Text,(a) => UpdatePopupStageStart((ConfirmCommandType)a));
-        _view.CommandCallConfirm(confirmInfo);
+        if (_model.SelectableSlot(slotIndex))
+        {
+            Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
+            var confirmInfo = new ConfirmInfo(DataSystem.System.GetTextData(21010).Text,(a) => UpdatePopupStageStart((ConfirmCommandType)a));
+            _view.CommandCallConfirm(confirmInfo);
+        }
     }
 
     private void UpdatePopupStageStart(ConfirmCommandType confirmCommandType)
@@ -85,18 +88,22 @@ public class SlotPresenter
     
     private void CommandStatus(int index)
     {
-        if (index > -1)
+        if (_model.SelectableSlot(index))
         {
-            _model.ClearActorsData();
-            _model.SetActorsData(index);
-            var statusViewInfo = new StatusViewInfo(() => {
-                _view.CommandStatusClose();
-                _view.ChangeUIActive(true);
-            });
-            statusViewInfo.SetDisplayDecideButton(false);
-            _view.CommandCallStatus(statusViewInfo);
-            _view.ChangeUIActive(false);
-            Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
+            if (index > -1)
+            {
+                _model.ClearActorsData();
+                _model.SetActorsData(index);
+                var statusViewInfo = new StatusViewInfo(() => {
+                    _view.CommandStatusClose();
+                    _view.ChangeUIActive(true);
+                });
+                statusViewInfo.SetDisplayDecideButton(false);
+                _view.CommandCallStatus(statusViewInfo);
+                _view.ChangeUIActive(false);
+                Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
+            }
+
         }
     }
 }

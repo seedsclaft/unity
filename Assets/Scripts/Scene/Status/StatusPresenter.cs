@@ -97,15 +97,15 @@ public class StatusPresenter : BasePresenter
             {
                 _model.SelectAddActor();
                 _view.CommandStatusClose();
-                var NeedAlcana = _model.NeedAlcana();
                 var NeedReborn = _model.NeedReborn();
-                if (_model.StageMembers().Count == 1 && NeedAlcana)
-                {
-                    _view.CommandSceneChange(Scene.AlcanaSelect);
-                } else
+                var NeedAlcana = _model.NeedAlcana();
                 if (_model.StageMembers().Count == 1 && NeedReborn)
                 {
                     _view.CommandSceneChange(Scene.Reborn);
+                } else
+                if (_model.StageMembers().Count == 1 && NeedAlcana)
+                {
+                    _view.CommandSceneChange(Scene.AlcanaSelect);
                 } else
                 {
                     _model.SavePlayerStageData(true);

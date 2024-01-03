@@ -1,9 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using Result;
-using Effekseer;
 using TMPro;
 
 public class ResultView : BaseView
@@ -43,6 +41,7 @@ public class ResultView : BaseView
         selectCharacter.Initialize();
         SetInputHandler(selectCharacter.GetComponent<IInputHandlerEvent>());
         InitializeSelectCharacter();
+        SetInputHandler(actorInfoList.GetComponent<IInputHandlerEvent>());
         actorInfoList.gameObject.SetActive(false);
         selectCharacter.gameObject.SetActive(false);
         new ResultPresenter(this);
@@ -54,6 +53,9 @@ public class ResultView : BaseView
         selectCharacter.SetInputHandlerAction(InputKeyType.Cancel,() => CallDecideAlcana());
         //selectCharacter.SetInputHandlerAction(InputKeyType.Start,() => CallDecideAlcana());
 
+        selectCharacter.SetActiveTab(SelectCharacterTabType.Magic,false);
+        selectCharacter.SetActiveTab(SelectCharacterTabType.Condition,false);
+        selectCharacter.SetActiveTab(SelectCharacterTabType.Detail,false);
         SetInputHandler(selectCharacter.MagicList.GetComponent<IInputHandlerEvent>());
         selectCharacter.HideActionList();
         selectCharacter.HideStatus();
@@ -191,14 +193,13 @@ public class ResultView : BaseView
     
     public void SetActorList(List<ListData> actorInfos) 
     {
-        actorInfoList.Initialize(actorInfos.Count);
         actorInfoList.SetData(actorInfos);
         actorInfoList.SetInputHandler(InputKeyType.Decide,() => CallDecide());
         actorInfoList.SetInputHandler(InputKeyType.Cancel,() => CallCancelActor());
-        actorInfoList.SetInputHandler(InputKeyType.Down,() => CallUpdate());
-        actorInfoList.SetInputHandler(InputKeyType.Up,() => CallUpdate());
+        actorInfoList.SetSelectedHandler(() => {
+            CallUpdate();
+        });
         actorInfoList.Refresh();
-        SetInputHandler(actorInfoList.GetComponent<IInputHandlerEvent>());
         actorInfoList.Activate();
     }
 
@@ -226,8 +227,11 @@ public class ResultView : BaseView
         _commandData(eventData);
     }
 
-    public void UpdateActor(ActorInfo actorInfo)
+    public void UpdateActor(List<ListData> skillInfos)
     {
+        selectCharacter.ShowActionList();
+        selectCharacter.MagicList.Activate();
+        selectCharacter.SetSkillInfos(skillInfos);
     }
 
     private void CallDecideAlcana()
@@ -243,10 +247,7 @@ public class ResultView : BaseView
         resultMain.SetActive(false);
         rankingInfo.gameObject.SetActive(false);
         evaluateNew.gameObject.SetActive(false);
-        //commandList.gameObject.SetActive(false);
-        selectCharacter.SetActiveTab(SelectCharacterTabType.Magic,true);
-        selectCharacter.SetActiveTab(SelectCharacterTabType.Condition,false);
-        selectCharacter.SetActiveTab(SelectCharacterTabType.Detail,false);
+        commandList.gameObject.SetActive(true);
         selectCharacter.ShowActionList();
         selectCharacter.MagicList.Activate();
         selectCharacter.SetSkillInfos(skillInfos);
@@ -264,9 +265,6 @@ public class ResultView : BaseView
 
     public void CommandRefreshStatus(List<ListData> skillInfos,ActorInfo actorInfo,List<ActorInfo> party,int lastSelectIndex)
     {
-        selectCharacter.SetActiveTab(SelectCharacterTabType.Magic,false);
-        selectCharacter.SetActiveTab(SelectCharacterTabType.Condition,false);
-        selectCharacter.SetActiveTab(SelectCharacterTabType.Detail,false);
         selectCharacter.ShowActionList();
         selectCharacter.MagicList.Activate();
         //selectCharacter.SetActorThumbOnly(actorInfo);

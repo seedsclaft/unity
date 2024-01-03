@@ -37,6 +37,7 @@ public class GameSystem : MonoBehaviour
 
     public static string Version;
     public static DebugBattleData DebugBattleData;
+    public static Scene LastScene => SceneAssign.LastScene;
     private void Awake() 
     {
 #if (UNITY_WEBGL || UNITY_ANDROID)// && !UNITY_EDITOR
@@ -264,13 +265,13 @@ public class GameSystem : MonoBehaviour
         var prefab = popupAssign.CreatePopup(PopupType.Ranking,helpWindow);
         var rankingView = prefab.GetComponent<RankingView>();
         rankingView.Initialize();
+        rankingView.SetEvent((type) => UpdateCommand(type));
         rankingView.SetRankingViewInfo(rankingViewInfo);
         rankingView.SetBackEvent(() => 
         {
             UpdateCommand(new ViewEvent(Base.CommandType.ClosePopup));
             if (rankingViewInfo.EndEvent != null) rankingViewInfo.EndEvent();
         });
-        rankingView.SetEvent((type) => UpdateCommand(type));
         SetIsBusyMainAndStatus();
     }
 

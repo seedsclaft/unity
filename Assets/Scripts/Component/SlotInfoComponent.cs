@@ -36,7 +36,7 @@ public class SlotInfoComponent : MonoBehaviour
             _actorInfoComponents[i].gameObject.SetActive(true);
         }
         timeRecord.text = _slotInfo.TimeRecord;
-        //noData.SetActive(_slotInfo.ActorInfos.Count == 0);
+        noData.SetActive(_slotInfo.ActorInfos.Count == 0);
     }
 
     private void OnDestroy() {

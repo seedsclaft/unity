@@ -20,13 +20,15 @@ public class SceneAssign : MonoBehaviour
     [SerializeField] private GameObject fastBattleScene = null;
     [SerializeField] private GameObject alcanaSelectScene = null;
     [SerializeField] private GameObject alcanaResultScene = null;
-
+    private static List<Scene> _scenes = new ();
+    public static Scene LastScene => SceneAssign._scenes.Count > 1 ? SceneAssign._scenes[SceneAssign._scenes.Count-2] : Scene.None;
     public GameObject CreateScene(Scene scene,HelpWindow helpWindow)
     {
         var prefab = Instantiate(GetSceneObject(scene));
         prefab.transform.SetParent(uiRoot.transform, false);
         var view = prefab.GetComponent<BaseView>();
         view?.SetHelpWindow(helpWindow);
+        SceneAssign._scenes.Add(scene);
         return prefab;
     }
 

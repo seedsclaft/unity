@@ -55,6 +55,7 @@ public class SlotView : BaseView
             });
         }
     }
+
     private void CallSlotDecide()
     {
         var eventData = new SlotViewEvent(CommandType.Decide);

@@ -93,8 +93,4 @@ public class StatusModel : BaseModel
         return CurrentStage.Master.Reborn;
     }
 
-    public bool NeedAlcana()
-    {
-        return CurrentStage.Master.Alcana && CurrentData.AlcanaInfo.OwnAlcanaList.Count > 0;
-    }
 }

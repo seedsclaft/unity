@@ -148,9 +148,9 @@ MonoBehaviour:
   grayscale: {fileID: 0}
   faceThumb: {fileID: 0}
   awakenFaceThumb: {fileID: 6647467162182796973}
-  clipingThumb: {fileID: 0}
+  clipThumb: {fileID: 0}
   nameText: {fileID: 0}
-  subnameText: {fileID: 0}
+  subNameText: {fileID: 0}
   evaluate: {fileID: 487145000695192901}
   demigod: {fileID: 0}
   lv: {fileID: 0}
@@ -162,6 +162,13 @@ MonoBehaviour:
   element3: {fileID: 0}
   element4: {fileID: 0}
   element5: {fileID: 0}
+  element1Cost: {fileID: 0}
+  element2Cost: {fileID: 0}
+  element3Cost: {fileID: 0}
+  element4Cost: {fileID: 0}
+  element5Cost: {fileID: 0}
+  recoveryCost: {fileID: 0}
+  resourceGain: {fileID: 0}
 --- !u!1 &4643079039564754905
 GameObject:
   m_ObjectHideFlags: 0
@@ -222,7 +229,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:

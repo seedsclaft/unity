@@ -402,12 +402,6 @@ public class TacticsModel : BaseModel
     
     public AdvData StartTacticsAdvData()
     {
-        var isGameOver = CurrentStage.SelectActorIds.Count > 0 && (Actors().Find(a => a.ActorId == CurrentStage.SelectActorIds[0])).Lost;
-        if (isGameOver)
-        {
-            CurrentStage.SetEndingType(EndingType.C);
-            return DataSystem.Adventures.Find(a => a.Id == 21);
-        }
         if (CurrentStage.SurvivalMode)
         {
             var isSurvivalGameOver = CurrentStage.SelectActorIds.Count > 0 && !Actors().Exists(a => a.Lost == false);
@@ -416,13 +410,20 @@ public class TacticsModel : BaseModel
                 CurrentStage.SetEndingType(EndingType.C);
                 return DataSystem.Adventures.Find(a => a.Id == 21);
             }
-            var isSurvivalClear = Turns < 0;
+            var isSurvivalClear = Turns <= 0;
             if (isSurvivalClear)
             {
                 CurrentStage.SetEndingType(EndingType.A);
                 StageClear();
                 return DataSystem.Adventures.Find(a => a.Id == 151);
             }
+            return null;
+        }
+        var isGameOver = CurrentStage.SelectActorIds.Count > 0 && (Actors().Find(a => a.ActorId == CurrentStage.SelectActorIds[0])).Lost;
+        if (isGameOver)
+        {
+            CurrentStage.SetEndingType(EndingType.C);
+            return DataSystem.Adventures.Find(a => a.Id == 21);
         }
         var turnOver = Turns < 0;
         if (turnOver)

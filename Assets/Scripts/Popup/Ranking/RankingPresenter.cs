@@ -42,7 +42,9 @@ public class RankingPresenter
     private void CommandRankingOpen(int stageId)
     {
         _busy = true;
+        _view.CommandCallLoading();
         _model.RankingInfos(stageId,(res) => {
+            _view.CommandLoadingClose();
             _view.SetRankingInfo(res);
             _busy = false;
         });

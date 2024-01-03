@@ -498,7 +498,7 @@ MonoBehaviour:
   actorPrefab: {fileID: 3024296760280034765, guid: f5b0a6e5fc8db3946bfef08807530984,
     type: 3}
   timeRecord: {fileID: 9042058945303549630}
-  noData: {fileID: 0}
+  noData: {fileID: 8704242373146863473}
   infoButton: {fileID: 9012276601418610263}
 --- !u!114 &8203919156056847839
 MonoBehaviour:
@@ -514,7 +514,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   clickButton: {fileID: 1487725858087472361}
   cursor: {fileID: 7420268712428353265}
-  disable: {fileID: 8704242373146863473}
+  disable: {fileID: 0}
   slotInfoComponent: {fileID: 6600990815820130401}
   infoButton: {fileID: 9012276601418610263}
 --- !u!1 &5019252127881066119
@@ -1116,7 +1116,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &4582717520973850983
 RectTransform:
   m_ObjectHideFlags: 0

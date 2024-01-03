@@ -29,9 +29,13 @@ public class RebornPresenter :BasePresenter
         _view.SetBackEvent(() => {
             CommandBackEvent();
         });
-        var confirmInfo = new ConfirmInfo(DataSystem.System.GetTextData(17010).Text,(a) => UpdatePopupStart(a));
-        confirmInfo.SetIsNoChoice(true);
-        _view.CommandCallConfirm(confirmInfo);
+        // 初回なら
+        if (GameSystem.LastScene == Scene.MainMenu)
+        {
+            var confirmInfo = new ConfirmInfo(DataSystem.System.GetTextData(17010).Text,(a) => UpdatePopupStart(a));
+            confirmInfo.SetIsNoChoice(true);
+            _view.CommandCallConfirm(confirmInfo);
+        }
         _busy = false;
     }
 
@@ -78,7 +82,14 @@ public class RebornPresenter :BasePresenter
         {
             _model.OnRebornSkill();
             _view.CommandConfirmClose();
-            _view.CommandSceneChange(Scene.Tactics);
+            var NeedAlcana = _model.NeedAlcana();
+            if (NeedAlcana)
+            {
+                _view.CommandSceneChange(Scene.AlcanaSelect);
+            } else
+            {
+                _view.CommandSceneChange(Scene.Tactics);
+            }
             Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
         } else{
             Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cancel);
@@ -117,11 +128,11 @@ public class RebornPresenter :BasePresenter
 
     public void CommandBackEvent()
     {
-        _model.ResetStage();
         var statusViewInfo = new StatusViewInfo(() => {
             _view.CommandStatusClose();
             _view.CommandSceneChange(Scene.MainMenu);
         });
+        _model.InitializeStageData(_model.CurrentStage.Id);
         statusViewInfo.SetDisplayDecideButton(true);
         _view.ChangeUIActive(false);
         _view.CommandCallStatus(statusViewInfo);
