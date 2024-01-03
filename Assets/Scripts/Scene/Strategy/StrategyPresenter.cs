@@ -141,7 +141,7 @@ public class StrategyPresenter : BasePresenter
             {
                 bonusList.Add(false);
             }
-            _view.SetTitle(DataSystem.System.GetTextData(14030).Text);
+            _view.SetTitle(DataSystem.GetTextData(14030).Text);
             _view.StartResultAnimation(_model.MakeListData(battledResultActors),bonusList);
         } else
         if (_strategyState == StrategyState.TacticsResult)
@@ -154,7 +154,7 @@ public class StrategyPresenter : BasePresenter
             {
                 bonusList.Add(_model.IsBonusTactics(item.ActorId));
             }
-            _view.SetTitle(DataSystem.System.GetTextData(14020).Text);
+            _view.SetTitle(DataSystem.GetTextData(14020).Text);
             _view.StartResultAnimation(_model.MakeListData(tacticsActors),bonusList);
             if (_model.LevelUpData.Count > 0)
             {
@@ -171,7 +171,7 @@ public class StrategyPresenter : BasePresenter
             {
                 bonusList.Add(false);
             }
-            _view.SetTitle(DataSystem.System.GetTextData(4).Text);
+            _view.SetTitle(DataSystem.GetTextData(4).Text);
             _view.StartResultAnimation(_model.MakeListData(battleMembers),bonusList);
         }
     }
@@ -186,7 +186,7 @@ public class StrategyPresenter : BasePresenter
             var lostMembers = _model.LostMembers();
             if (lostMembers.Count > 0)
             {
-                var text = DataSystem.System.GetTextData(3060).Text;
+                var text = DataSystem.GetTextData(3060).Text;
                 var lostMembersText = "";
                 for (int i = 0;i < lostMembers.Count;i++)
                 {
@@ -313,7 +313,12 @@ public class StrategyPresenter : BasePresenter
     {
         _model.LostActors(_model.LostMembers());
         // コンテニュー判定
-        if ((_model.BattleResultVictory() == true && _model.LostMembers().Count == 0) || _model.EnableContinue())
+        if ((_model.BattleResultVictory() == true && _model.LostMembers().Count == 0))
+        {
+            return;
+        }
+        // コンテニュー不可
+        if (!_model.EnableContinue())
         {
             return;
         }
@@ -387,7 +392,7 @@ public class StrategyPresenter : BasePresenter
             } else{
                 SetHelpInputSkipEnable();
             }
-            _view.SetHelpText(DataSystem.System.GetTextData(14010).Text);
+            _view.SetHelpText(DataSystem.GetTextData(14010).Text);
             _view.ChangeUIActive(true);
         });
         statusViewInfo.SetDisplayDecideButton(false);
@@ -418,7 +423,7 @@ public class StrategyPresenter : BasePresenter
             } else{
                 SetHelpInputSkipEnable();
             }
-            _view.SetHelpText(DataSystem.System.GetTextData(14010).Text);
+            _view.SetHelpText(DataSystem.GetTextData(14010).Text);
         });
         statusViewInfo.SetEnemyInfos(enemyInfos,false);
         _view.CommandCallEnemyInfo(statusViewInfo);

@@ -228,13 +228,9 @@ public class BaseModel
         return CurrentData.PlayerInfo.PlayerName;
     }
 
-    public List<StageEventData> StageEventDates{ 
-        get{ return DataSystem.Stages.Find(a => a.Id == CurrentStage.Id).StageEvents;}
-    }
+    public List<StageEventData> StageEventDates => CurrentStage.Master.StageEvents;
 
-    public List<StageTutorialData> StageTutorialDates{ 
-        get{ return DataSystem.Stages.Find(a => a.Id == CurrentStage.Id).Tutorials;}
-    }
+    public List<StageTutorialData> StageTutorialDates => CurrentStage.Master.Tutorials;
 
     public List<StageEventData> StageEvents(EventTiming eventTiming)
     {
@@ -293,13 +289,13 @@ public class BaseModel
         var menuCommandDates = new List<SystemData.CommandData>();
         var yesCommand = new SystemData.CommandData();
         yesCommand.Key = "Yes";
-        yesCommand.Name = DataSystem.System.GetTextData(yesTextId).Text;
+        yesCommand.Name = DataSystem.GetTextData(yesTextId).Text;
         yesCommand.Id = 0;
         if (noTextId != 0)
         {
             var noCommand = new SystemData.CommandData();
             noCommand.Key = "No";
-            noCommand.Name = DataSystem.System.GetTextData(noTextId).Text;
+            noCommand.Name = DataSystem.GetTextData(noTextId).Text;
             noCommand.Id = 1;
             menuCommandDates.Add(noCommand);
         }
@@ -429,7 +425,7 @@ public class BaseModel
                         }
                         break;
                     case FeatureType.AlchemyCostZero: // featureData で param1 = 属性番号
-                        var attributeText = DataSystem.System.GetTextData(330 + featureData.Param1 - 1);
+                        var attributeText = DataSystem.GetTextData(330 + featureData.Param1 - 1);
                         getItemInfo.MakeAlchemyCostZeroResult(attributeText.Text);
                         break;
                     case FeatureType.NoBattleLost: // param固定
@@ -439,7 +435,7 @@ public class BaseModel
                         getItemInfo.MakeResourceBonusResult();
                         break;
                     case FeatureType.CommandCostZero: // featureData で param1 = tacticsCommand
-                        var commandText = DataSystem.System.GetTextData(featureData.Param1);
+                        var commandText = DataSystem.GetTextData(featureData.Param1);
                         getItemInfo.MakeCommandCostZeroResult(commandText.Text);
                         break;
                     case FeatureType.AlchemyCostBonus: // param固定
@@ -460,7 +456,7 @@ public class BaseModel
                         var hero = StageMembers().Find(a => a.ActorId == CurrentStage.SelectActorIds[0]);
                         if (!hero.IsLearnedSkill(getSkillId))
                         {
-                            getItemInfo.MakeSkillLearnResult(hero.Master.Name,DataSystem.Skills.Find(a => a.Id == skillInfo.Param1));    
+                            getItemInfo.MakeSkillLearnResult(hero.Master.Name,DataSystem.FindSkill(skillInfo.Param1));    
                             hero.LearnSkill(getSkillId);
                         } else
                         {
@@ -485,7 +481,7 @@ public class BaseModel
         {
             textId = 11070;
         }
-        return DataSystem.System.GetReplaceText(textId,actorName);
+        return DataSystem.GetReplaceText(textId,actorName);
     }
 
     public void SetStageActor()
@@ -645,9 +641,9 @@ public class BaseModel
         switch (rankingType)
         {
             case RankingType.Evaluate:
-            return DataSystem.System.GetTextData(16120).Text;
+            return DataSystem.GetTextData(16120).Text;
             case RankingType.Turns:
-            return DataSystem.System.GetTextData(16121).Text;
+            return DataSystem.GetTextData(16121).Text;
         }
         return "";
     }
@@ -769,16 +765,16 @@ public class BaseModel
             if (include == true)
             {
                 // 〇位
-                rankingText = rank.ToString() + DataSystem.System.GetTextData(16070).Text;
+                rankingText = rank.ToString() + DataSystem.GetTextData(16070).Text;
             } else
             {
                 // 圏外
-                rankingText = DataSystem.System.GetTextData(16071).Text;
+                rankingText = DataSystem.GetTextData(16071).Text;
             }
         } else
         {          
             // 記録更新なし  
-            rankingText = DataSystem.System.GetTextData(16072).Text;
+            rankingText = DataSystem.GetTextData(16072).Text;
         }
 #endif
         endEvent(rankingText);
@@ -786,15 +782,15 @@ public class BaseModel
 
     public string SavePopupTitle()
     {
-        var baseText = DataSystem.System.GetTextData(11080).Text;
-        var subText = DataSystem.System.GetReplaceText(11081,CurrentStage.Master.SaveLimit.ToString());
-        var savedCount = DataSystem.System.GetReplaceText(11083,(CurrentStage.SavedCount+1).ToString());
+        var baseText = DataSystem.GetTextData(11080).Text;
+        var subText = DataSystem.GetReplaceText(11081,CurrentStage.Master.SaveLimit.ToString());
+        var savedCount = DataSystem.GetReplaceText(11083,(CurrentStage.SavedCount+1).ToString());
         return baseText + savedCount + "\n" + subText;
     }
 
     public string FailedSavePopupTitle()
     {
-        var baseText = DataSystem.System.GetTextData(11082).Text;
+        var baseText = DataSystem.GetTextData(11082).Text;
         return baseText;
     }
 
@@ -819,9 +815,9 @@ public class BaseModel
 
     public string ContinuePopupTitle()
     {
-        var baseText = DataSystem.System.GetTextData(3061).Text;
-        var subText = DataSystem.System.GetReplaceText(3062,CurrentStage.Master.ContinueLimit.ToString());
-        var continueCount = DataSystem.System.GetReplaceText(3063,(CurrentStage.ContinueCount+1).ToString());
+        var baseText = DataSystem.GetTextData(3061).Text;
+        var subText = DataSystem.GetReplaceText(3062,CurrentStage.Master.ContinueLimit.ToString());
+        var continueCount = DataSystem.GetReplaceText(3063,(CurrentStage.ContinueCount+1).ToString());
         return baseText + continueCount + "\n" + subText;
     }
 

@@ -59,7 +59,7 @@ public class StrategyView : BaseView
 
     public void StartLvUpAnimation()
     {
-        _battleStartAnim.SetText(DataSystem.System.GetTextData(3080).Text);
+        _battleStartAnim.SetText(DataSystem.GetTextData(3080).Text);
         _battleStartAnim.StartAnim();
         _battleStartAnim.gameObject.SetActive(true);
         _animationBusy = true;
@@ -103,7 +103,7 @@ public class StrategyView : BaseView
 
     public void SetHelpWindow(){
         HelpWindow.SetInputInfo("");
-        HelpWindow.SetHelpText(DataSystem.System.GetTextData(14010).Text);
+        HelpWindow.SetHelpText(DataSystem.GetTextData(14010).Text);
     }
 
     public void SetActors(List<ActorInfo> actorInfos)

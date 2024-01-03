@@ -57,13 +57,13 @@ public class SkillData
         switch (TargetType)
         {
             case TargetType.Friend:
-            return DataSystem.System.GetTextData(600).Text;
+            return DataSystem.GetTextData(600).Text;
             case TargetType.Opponent:
-            return DataSystem.System.GetTextData(601).Text;
+            return DataSystem.GetTextData(601).Text;
             case TargetType.Self:
-            return DataSystem.System.GetTextData(602).Text;
+            return DataSystem.GetTextData(602).Text;
             case TargetType.All:
-            return DataSystem.System.GetTextData(603).Text;
+            return DataSystem.GetTextData(603).Text;
         }
         return "";
     }
@@ -74,16 +74,16 @@ public class SkillData
             case ScopeType.All:
             if (TargetType == TargetType.Opponent)
             {
-                return DataSystem.System.GetTextData(620).Text;
+                return DataSystem.GetTextData(620).Text;
             }
-            return DataSystem.System.GetTextData(621).Text;
+            return DataSystem.GetTextData(621).Text;
             case ScopeType.Line:
-            return DataSystem.System.GetTextData(622).Text;
+            return DataSystem.GetTextData(622).Text;
             case ScopeType.One:
             if (TargetType == TargetType.Opponent){
-                return DataSystem.System.GetTextData(623).Text;
+                return DataSystem.GetTextData(623).Text;
             }
-            return DataSystem.System.GetTextData(624).Text;
+            return DataSystem.GetTextData(624).Text;
             case ScopeType.Self:
             return "";
         }

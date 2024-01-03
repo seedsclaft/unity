@@ -26,7 +26,7 @@ public class TitleModel : BaseModel
         var list = new List<SystemData.CommandData>();
         var menuCommand = new SystemData.CommandData();
         menuCommand.Id = 1;
-        menuCommand.Name = DataSystem.System.GetTextData(700).Text;
+        menuCommand.Name = DataSystem.GetTextData(700).Text;
         menuCommand.Key = "License";
         list.Add(menuCommand);
         return list;

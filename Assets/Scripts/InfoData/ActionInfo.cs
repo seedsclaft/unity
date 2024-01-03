@@ -11,7 +11,7 @@ public class ActionInfo
 
     private int _lastTargetIndex = 0;
     public int LastTargetIndex => _lastTargetIndex;
-    public SkillData Master {get {return DataSystem.Skills.Find(a => a.Id == _skillId);}}
+    public SkillData Master {get {return DataSystem.FindSkill(_skillId);}}
     
     private RangeType _rangeType = RangeType.None;
     public RangeType RangeType => _rangeType;

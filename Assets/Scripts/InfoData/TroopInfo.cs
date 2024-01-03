@@ -68,31 +68,31 @@ public class TroopInfo
             var getItemInfo = new GetItemInfo(getItemDates[i]);
             if (getItemDates[i].Type == GetItemType.Skill)
             {
-                var skillData = DataSystem.Skills.Find(a => a.Id == getItemDates[i].Param1);
+                var skillData = DataSystem.FindSkill(getItemDates[i].Param1);
                 getItemInfo.SetResultData(skillData.Name);
                 getItemInfo.SetSkillElementId((int)skillData.Attribute);
             }
             if (getItemDates[i].Type == GetItemType.Numinous)
             {
-                getItemInfo.SetResultData("+" + getItemDates[i].Param1.ToString() + DataSystem.System.GetTextData(1000).Text);
+                getItemInfo.SetResultData("+" + getItemDates[i].Param1.ToString() + DataSystem.GetTextData(1000).Text);
             }
             if (getItemDates[i].Type == GetItemType.Demigod)
             {
-                getItemInfo.SetResultData(DataSystem.System.GetTextData(14042).Text + "+" + (getItemInfo.Param1).ToString());
+                getItemInfo.SetResultData(DataSystem.GetTextData(14042).Text + "+" + (getItemInfo.Param1).ToString());
             }
             if ((int)getItemDates[i].Type >= (int)GetItemType.AttributeFire && (int)getItemDates[i].Type <= (int)GetItemType.AttributeDark)
             {
-                string text = DataSystem.System.GetReplaceText(14051,DataSystem.System.GetTextData(330 + (int)getItemDates[i].Type - 11).Text);
+                string text = DataSystem.GetReplaceText(14051,DataSystem.GetTextData(330 + (int)getItemDates[i].Type - 11).Text);
                 getItemInfo.SetResultData(text);
                 getItemInfo.SetSkillElementId((int)AttributeType.Fire + (int)getItemDates[i].Type - 11);
             }
             if (getItemDates[i].Type == GetItemType.Ending)
             {
-                getItemInfo.SetResultData(DataSystem.System.GetTextData(14060).Text);
+                getItemInfo.SetResultData(DataSystem.GetTextData(14060).Text);
             }
             if (getItemDates[i].Type == GetItemType.StatusUp)
             {
-                getItemInfo.SetResultData(DataSystem.System.GetReplaceText(14070,getItemDates[i].Param1.ToString()));
+                getItemInfo.SetResultData(DataSystem.GetReplaceText(14070,getItemDates[i].Param1.ToString()));
             }
             AddGetItemInfo(getItemInfo);
         }

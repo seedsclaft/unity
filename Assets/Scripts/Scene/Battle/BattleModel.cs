@@ -462,7 +462,7 @@ public class BattleModel : BaseModel
     // 選択可能な対象のインデックスを取得
     public List<int> GetSkillTargetIndexes(int skillId,int subjectIndex,bool checkCondition)
     {
-        var skillData = DataSystem.Skills.Find(a => a.Id == skillId);
+        var skillData = DataSystem.FindSkill(skillId);
         var subject = GetBattlerInfo(subjectIndex);
         
         var rangeType = skillData.Range;
@@ -599,7 +599,7 @@ public class BattleModel : BaseModel
     public bool CanUseCondition(int skillId,int targetIndex)
     {
         bool IsEnable = false;
-        var skill = DataSystem.Skills.Find(a => a.Id == skillId);
+        var skill = DataSystem.FindSkill(skillId);
         var target = GetBattlerInfo(targetIndex);
         foreach (var featureData in skill.FeatureDates)
         {
@@ -1521,7 +1521,7 @@ public class BattleModel : BaseModel
             var passiveSkillIds = _passiveSkillInfos[battlerInfo.Index];
             for (int j = 0;j < passiveSkillIds.Count;j++)
             {
-                var passiveSkillData = DataSystem.Skills.Find(a => a.Id == passiveSkillIds[j]);
+                var passiveSkillData = DataSystem.FindSkill(passiveSkillIds[j]);
                 bool IsRemove = false;
                 
                 foreach (var feature in passiveSkillData.FeatureDates)
@@ -2142,12 +2142,12 @@ public class BattleModel : BaseModel
         var list = new List<SystemData.CommandData>();
         var escapeCommand = new SystemData.CommandData();
         escapeCommand.Id = 1;
-        escapeCommand.Name = DataSystem.System.GetTextData(411).Text;
+        escapeCommand.Name = DataSystem.GetTextData(411).Text;
         escapeCommand.Key = "Escape";
         list.Add(escapeCommand);
         var menuCommand = new SystemData.CommandData();
         menuCommand.Id = 2;
-        menuCommand.Name = DataSystem.System.GetTextData(703).Text;
+        menuCommand.Name = DataSystem.GetTextData(703).Text;
         menuCommand.Key = "Help";
         list.Add(menuCommand);
         return list;
@@ -2157,7 +2157,7 @@ public class BattleModel : BaseModel
     {
         var menuCommand = new SystemData.CommandData();
         menuCommand.Id = 1;
-        menuCommand.Name = DataSystem.System.GetTextData(706).Text;
+        menuCommand.Name = DataSystem.GetTextData(706).Text;
         menuCommand.Key = "BATTLE_AUTO";
         return menuCommand;
     }

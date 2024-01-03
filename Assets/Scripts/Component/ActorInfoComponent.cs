@@ -229,7 +229,7 @@ public class ActorInfoComponent : MonoBehaviour
 
     private void UpdateAttributeParam(TextMeshProUGUI textMeshProUGUI,AttributeRank param){
         var textId = 321 + (int)param;
-        textMeshProUGUI.text = DataSystem.System.GetTextData(textId).Text;
+        textMeshProUGUI.text = DataSystem.GetTextData(textId).Text;
     }
     
     public void SetAwakeMode(bool IsAwaken)

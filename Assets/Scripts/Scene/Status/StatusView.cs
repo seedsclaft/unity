@@ -132,7 +132,7 @@ public class StatusView : BaseView ,IInputHandlerEvent
             SetHelpInputInfo("SELECT_HEROINE");
         } else
         {
-            SetHelpText(DataSystem.System.GetTextData(202).Help);
+            SetHelpText(DataSystem.GetTextData(202).Help);
             SetHelpInputInfo("STATUS");
         }
     }

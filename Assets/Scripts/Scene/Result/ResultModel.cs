@@ -25,7 +25,7 @@ public class ResultModel : BaseModel
 
     public string EndingTypeText()
     {
-        return DataSystem.System.GetTextData(16080).Text + CurrentStage.EndingType;
+        return DataSystem.GetTextData(16080).Text + CurrentStage.EndingType;
     }
 
     public bool IsNewRecord()
@@ -266,7 +266,7 @@ public class ResultModel : BaseModel
         foreach (var listDate in listDates)
         {
             var actorInfo = (ActorInfo)listDate.Data;
-            if (actorInfo.Master.ClassId == DataSystem.Actors.Find(a => a.Id == CurrentStage.SelectActorIds[0]).ClassId)
+            if (actorInfo.Master.ClassId == DataSystem.FindActor(CurrentStage.SelectActorIds[0]).ClassId)
             {
                 //listDate.SetEnable(false);
             }

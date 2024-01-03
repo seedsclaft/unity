@@ -108,7 +108,7 @@ public class EnemyInfoView : BaseView,IInputHandlerEvent
 
     public void SetHelpWindow()
     {
-        HelpWindow.SetHelpText(DataSystem.System.GetTextData(809).Help);
+        HelpWindow.SetHelpText(DataSystem.GetTextData(809).Help);
         if (_isBattle)
         {
             HelpWindow.SetInputInfo("ENEMYINFO_BATTLE");

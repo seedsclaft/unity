@@ -34,10 +34,10 @@ public class StageInfoComponent : MonoBehaviour
         if (achieveText != null){
             if (stageData.AchieveText != "")
             {
-                achieveText.text = DataSystem.System.GetTextData(31).Text + stageData.AchieveText;
+                achieveText.text = DataSystem.GetTextData(31).Text + stageData.AchieveText;
             } else
             {
-                achieveText.text = DataSystem.System.GetTextData(31).Text + DataSystem.System.GetTextData(10000).Text;
+                achieveText.text = DataSystem.GetTextData(31).Text + DataSystem.GetTextData(10000).Text;
             }
         }
         if (help != null){

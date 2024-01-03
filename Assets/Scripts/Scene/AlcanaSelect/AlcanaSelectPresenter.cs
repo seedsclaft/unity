@@ -62,7 +62,7 @@ public class AlcanaSelectPresenter : BasePresenter
         var selectIndex = _view.SkillListIndex;
         CommandRefresh(selectIndex);
 
-        var confirmInfo = new ConfirmInfo(DataSystem.System.GetReplaceText(20050,skillInfo.Master.Name),(a) => UpdatePopupDeleteAlcana(a));
+        var confirmInfo = new ConfirmInfo(DataSystem.GetReplaceText(20050,skillInfo.Master.Name),(a) => UpdatePopupDeleteAlcana(a));
         _view.CommandCallConfirm(confirmInfo);
     }
 
@@ -114,7 +114,7 @@ public class AlcanaSelectPresenter : BasePresenter
 
     private void CommandStageStart()
     {
-        var popupInfo = new ConfirmInfo(DataSystem.System.GetTextData(20030).Text,(a) => UpdatePopup((ConfirmCommandType)a));
+        var popupInfo = new ConfirmInfo(DataSystem.GetTextData(20030).Text,(a) => UpdatePopup((ConfirmCommandType)a));
         _view.CommandCallConfirm(popupInfo);
     }
 

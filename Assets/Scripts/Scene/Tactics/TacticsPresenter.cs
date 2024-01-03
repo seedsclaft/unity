@@ -89,7 +89,7 @@ public class TacticsPresenter :BasePresenter
                 case StageEventType.SelectAddActor:
                     _eventBusy = true;
                     _model.AddEventReadFlag(stageEvent);
-                    var selectAddActor = new ConfirmInfo(DataSystem.System.GetTextData(11050).Text,(menuCommandInfo) => UpdatePopupSelectAddActor((ConfirmCommandType)menuCommandInfo));
+                    var selectAddActor = new ConfirmInfo(DataSystem.GetTextData(11050).Text,(menuCommandInfo) => UpdatePopupSelectAddActor((ConfirmCommandType)menuCommandInfo));
                     selectAddActor.SetIsNoChoice(true);
                     selectAddActor.SetSelectIndex(0);
                     _view.CommandCallConfirm(selectAddActor);
@@ -418,8 +418,8 @@ public class TacticsPresenter :BasePresenter
         {
             _model.CurrentActorId = actorId;
             _model.SetTacticsCommandType(tacticsCommandType);
-            var mainTextData = DataSystem.System.GetTextData(1030);
-            var textData = DataSystem.System.GetTextData((int)_model.TacticsActor(actorId).TacticsCommandType);
+            var mainTextData = DataSystem.GetTextData(1030);
+            var textData = DataSystem.GetTextData((int)_model.TacticsActor(actorId).TacticsCommandType);
             var mainText = mainTextData.Text.Replace("\\d",textData.Text);
             var popupInfo = new ConfirmInfo(_model.TacticsActor(actorId).Master.Name + mainText,(a) => UpdatePopup((ConfirmCommandType)a));
             _view.CommandCallConfirm(popupInfo);
@@ -619,8 +619,8 @@ public class TacticsPresenter :BasePresenter
         }
         if (tacticsCommandType == TacticsCommandType.TurnEnd)
         {
-            var textData = DataSystem.System.GetTextData(1040);
-            var subData = DataSystem.System.GetTextData(1050);
+            var textData = DataSystem.GetTextData(1040);
+            var subData = DataSystem.GetTextData(1050);
             string mainText = textData.Text;
             if (_model.CheckNonBusy())
             {
@@ -817,7 +817,7 @@ public class TacticsPresenter :BasePresenter
     private void CommandDropout()
     {  
         Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
-        var popupInfo = new ConfirmInfo(DataSystem.System.GetTextData(1100).Text,(a) => UpdatePopupDropout((ConfirmCommandType)a));
+        var popupInfo = new ConfirmInfo(DataSystem.GetTextData(1100).Text,(a) => UpdatePopupDropout((ConfirmCommandType)a));
         _view.CommandCallConfirm(popupInfo);
     }
 

@@ -25,14 +25,14 @@ public class RebornPresenter :BasePresenter
         _view.SetHelpInputInfo("REBORN");
         _view.SetActorList(_model.ActorInfos());
         CommandUpdateActor();
-        _view.SetHelpText(DataSystem.System.GetTextData(17010).Text);
+        _view.SetHelpText(DataSystem.GetTextData(17010).Text);
         _view.SetBackEvent(() => {
             CommandBackEvent();
         });
         // 初回なら
         if (GameSystem.LastScene == Scene.MainMenu)
         {
-            var confirmInfo = new ConfirmInfo(DataSystem.System.GetTextData(17010).Text,(a) => UpdatePopupStart(a));
+            var confirmInfo = new ConfirmInfo(DataSystem.GetTextData(17010).Text,(a) => UpdatePopupStart(a));
             confirmInfo.SetIsNoChoice(true);
             _view.CommandCallConfirm(confirmInfo);
         }
@@ -103,7 +103,7 @@ public class RebornPresenter :BasePresenter
         var rebornActor = _model.RebornActorInfo();
         if (rebornActor != null)
         {
-            var confirmInfo = new ConfirmInfo(DataSystem.System.GetTextData(17020).Text,(a) => UpdatePopup(a));
+            var confirmInfo = new ConfirmInfo(DataSystem.GetTextData(17020).Text,(a) => UpdatePopup(a));
             _view.CommandCallConfirm(confirmInfo);
             Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
         }

@@ -70,14 +70,17 @@ public class PlayerInfo
 
 	private void InitStageClearCount()
 	{
-		for (int i = 0;i < DataSystem.Stages.Count;i++)
-		{
-			if (!DataSystem.Stages[i].Selectable) continue;
-            if (!_stageClearDict.ContainsKey(DataSystem.Stages[i].Id))
+        var stageDates = DataSystem.Stages;
+        foreach (var stageData in stageDates)
+        {
+            if (stageData.Selectable)
             {
-			    _stageClearDict[DataSystem.Stages[i].Id] = 0;
+                if (!_stageClearDict.ContainsKey(stageData.Id))
+                {
+                    _stageClearDict[stageData.Id] = 0;
+                }
             }
-		}
+        }
 	}
 
 	public void StageClear(int stageId)

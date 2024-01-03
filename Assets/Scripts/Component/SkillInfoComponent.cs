@@ -39,7 +39,7 @@ public class SkillInfoComponent : MonoBehaviour
             if (skillInfo.Master.FeatureDates.Find(a => a.FeatureType == FeatureType.AddSkillOrCurrency) != null)
             {
                 var convertText = skillInfo.Master.ConvertHelpText(skillInfo.Master.Help);
-                var skillNameData = DataSystem.Skills.Find(a => a.Id == skillInfo.Param1);
+                var skillNameData = DataSystem.FindSkill(skillInfo.Param1);
                 if (skillNameData != null)
                 {
                     description.text = convertText.Replace("\\d",skillNameData.Name);
@@ -72,7 +72,7 @@ public class SkillInfoComponent : MonoBehaviour
             Clear();
             return;
         }
-        var skillData = DataSystem.Skills.Find(skill => skill.Id == skillId);
+        var skillData = DataSystem.FindSkill(skillId);
         if (icon != null)
         {
             UpdateSkillIcon(skillData.IconIndex);
@@ -121,7 +121,7 @@ public class SkillInfoComponent : MonoBehaviour
         if (range != null)
         {
             var rangeTextId = skillData.Range == RangeType.S ? 351 : 352;
-            range.text = DataSystem.System.GetTextData(rangeTextId).Text;
+            range.text = DataSystem.GetTextData(rangeTextId).Text;
         }
     }
 
@@ -158,7 +158,7 @@ public class SkillInfoComponent : MonoBehaviour
 
     public void UpdateRebornInfo(SkillInfo rebornSkillInfo)
     {
-        var skillData = DataSystem.Skills.Find(skill => skill.Id == rebornSkillInfo.Id);
+        var skillData = DataSystem.FindSkill(rebornSkillInfo.Id);
         if (nameText != null)
         {
             nameText.text = skillData.Name.Replace("\\d",rebornSkillInfo.Param1.ToString());

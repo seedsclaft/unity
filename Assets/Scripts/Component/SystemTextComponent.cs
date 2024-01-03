@@ -10,7 +10,7 @@ public class SystemTextComponent : MonoBehaviour
     public void Awake(){
         if (id != 0)
         {
-            var textData = DataSystem.System.GetTextData(id);
+            var textData = DataSystem.GetTextData(id);
             if (textData == null)
             {
                 Debug.Log("error" + gameObject.name);

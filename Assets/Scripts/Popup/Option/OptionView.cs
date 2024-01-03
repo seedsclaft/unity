@@ -37,7 +37,7 @@ public class OptionView : BaseView
 
     public void SetHelpWindow()
     {
-        SetHelpText(DataSystem.System.GetTextData(500).Help);
+        SetHelpText(DataSystem.GetTextData(500).Help);
         SetHelpInputInfo("OPTION");
     }
 

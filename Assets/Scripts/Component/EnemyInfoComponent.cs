@@ -67,7 +67,7 @@ public class EnemyInfoComponent : MonoBehaviour
     public void SetGridKey(int index)
     {
         var textId = 360 + index;
-        gridKey.text = DataSystem.System.GetTextData(textId).Text;
+        gridKey.text = DataSystem.GetTextData(textId).Text;
     }
 
     public void Clear()

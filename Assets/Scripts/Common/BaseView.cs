@@ -122,7 +122,7 @@ abstract public class BaseView : MonoBehaviour
     public void CommandOpenSideMenu()
     {
         _helpWindow.SetInputInfo("SIDEMENU");
-        _helpWindow.SetHelpText(DataSystem.System.GetTextData(701).Help);
+        _helpWindow.SetHelpText(DataSystem.GetTextData(701).Help);
     }
 
     public void SetEvent(System.Action<ViewEvent> commandData)

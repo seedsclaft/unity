@@ -22,7 +22,7 @@ public class StateInfoComponent : MonoBehaviour
         {
             string effectText = stateInfo.Master.Help.Replace("\\d",stateInfo.Effect.ToString());
             description.text = effectText;
-            var skill = DataSystem.Skills.Find(a => a.Id == stateInfo.SkillId);
+            var skill = DataSystem.FindSkill(stateInfo.SkillId);
             if (skill != null)
             {
                 description.text = description.text + "(" + skill.Name + ")";
@@ -36,24 +36,24 @@ public class StateInfoComponent : MonoBehaviour
             {
                 if (stateInfo.Turns > 900)
                 {
-                    turns.text = DataSystem.System.GetTextData(403).Text;
+                    turns.text = DataSystem.GetTextData(403).Text;
                 } else
                 {
-                    turns.text = DataSystem.System.GetReplaceText(401,stateInfo.Turns.ToString());
+                    turns.text = DataSystem.GetReplaceText(401,stateInfo.Turns.ToString());
                 }
             } else
             if (removalTiming == RemovalTiming.UpdateCount)
             {
-                turns.text = DataSystem.System.GetReplaceText(404,stateInfo.Turns.ToString());
+                turns.text = DataSystem.GetReplaceText(404,stateInfo.Turns.ToString());
             } else
             if (removalTiming == RemovalTiming.UpdateAp)
             {
                 if (stateInfo.Turns > 900)
                 {
-                    turns.text = DataSystem.System.GetTextData(403).Text;
+                    turns.text = DataSystem.GetTextData(403).Text;
                 } else
                 {
-                    turns.text = DataSystem.System.GetReplaceText(405,stateInfo.Turns.ToString());
+                    turns.text = DataSystem.GetReplaceText(405,stateInfo.Turns.ToString());
                 }
             }
         }

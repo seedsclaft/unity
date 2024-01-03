@@ -60,7 +60,7 @@ public class NameEntryPresenter
 
     private void CommandStartEntry()
     {
-        var popupInfo = new ConfirmInfo(DataSystem.System.GetTextData(5000).Text,(menuCommandInfo) => UpdatePopup((ConfirmCommandType)menuCommandInfo));
+        var popupInfo = new ConfirmInfo(DataSystem.GetTextData(5000).Text,(menuCommandInfo) => UpdatePopup((ConfirmCommandType)menuCommandInfo));
         popupInfo.SetIsNoChoice(true);
         _view.CommandCallConfirm(popupInfo);
         _view.ShowNameEntry("");
@@ -70,7 +70,7 @@ public class NameEntryPresenter
     {
         if (nameText == "")
         {
-            var popupInfo = new ConfirmInfo(DataSystem.System.GetTextData(5002).Text,(menuCommandInfo) => UpdatePopup((ConfirmCommandType)menuCommandInfo));
+            var popupInfo = new ConfirmInfo(DataSystem.GetTextData(5002).Text,(menuCommandInfo) => UpdatePopup((ConfirmCommandType)menuCommandInfo));
             popupInfo.SetIsNoChoice(true);
             _view.CommandCallConfirm(popupInfo);
         } else{

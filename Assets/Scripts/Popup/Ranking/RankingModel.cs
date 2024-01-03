@@ -13,7 +13,7 @@ public class RankingModel : BaseModel
 #if (UNITY_WEBGL || UNITY_ANDROID) //&& !UNITY_EDITOR
         if (TempData.TempRankingData.ContainsKey(stageId) == false)
         {
-            FirebaseController.Instance.ReadRankingData(stageId,RankingTypeText(DataSystem.Stages.Find(a => a.Id == stageId).RankingStage));
+            FirebaseController.Instance.ReadRankingData(stageId,RankingTypeText(DataSystem.FindStage(stageId).RankingStage));
             await UniTask.WaitUntil(() => FirebaseController.IsBusy == false);
             TempData.SetRankingInfo(stageId,FirebaseController.RankingInfos);
         }

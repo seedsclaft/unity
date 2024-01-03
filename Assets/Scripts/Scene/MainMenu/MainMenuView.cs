@@ -20,7 +20,7 @@ public class MainMenuView : BaseView
 
     public void SetInitHelpText()
     {
-        HelpWindow.SetHelpText(DataSystem.System.GetTextData(11040).Text);
+        HelpWindow.SetHelpText(DataSystem.GetTextData(11040).Text);
         HelpWindow.SetInputInfo("MAINMENU");
     }
 

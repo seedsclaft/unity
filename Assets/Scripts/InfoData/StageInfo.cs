@@ -4,7 +4,7 @@ using System.Collections.Generic;
 [Serializable]
 public class StageInfo
 {
-    public StageData Master {get {return DataSystem.Stages.Find(a => a.Id == _id);}}
+    public StageData Master => DataSystem.FindStage(_id);
     private int _baseStageId;
     public int BaseStageId => _baseStageId;
     private int _id;
@@ -225,7 +225,7 @@ public class StageInfo
         getItemData.Type = GetItemType.Regeneration;
         getItemData.Param1 = 20;
         var getItemInfo = new GetItemInfo(getItemData);
-        getItemInfo.SetResultData(DataSystem.System.GetReplaceText(3240,getItemData.Param1.ToString()));
+        getItemInfo.SetResultData(DataSystem.GetReplaceText(3240,getItemData.Param1.ToString()));
         troopInfo.AddGetItemInfo(getItemInfo);
         _currentTroopInfos.Add(troopInfo);
         return _currentTroopInfos;
@@ -549,7 +549,7 @@ public class StageInfo
         if (SelectActorIds.Count > selectIndex)
         {
             var actorId = SelectActorIds[selectIndex];
-            return DataSystem.Actors.Find(a => a.Id == actorId).ClassId;
+            return DataSystem.FindActor(actorId).ClassId;
         }
         return 0;
     }

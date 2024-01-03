@@ -204,7 +204,7 @@ public class ActionResultInfo
 
     private bool CheckIsHit(BattlerInfo subject,BattlerInfo target,bool isOneTarget)
     {
-        var skillData = DataSystem.Skills.Find(a => a.Id == _skillId);
+        var skillData = DataSystem.FindSkill(_skillId);
         if (skillData != null && (skillData.SkillType == SkillType.Demigod || skillData.SkillType == SkillType.Awaken))
         {
             return true;

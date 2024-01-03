@@ -22,7 +22,7 @@ public class SlotPresenter
         _busy = true;
         _view.SetEvent((type) => UpdateCommand(type));
         _view.SetHelpInputInfo("SLOT");
-        _view.SetHelpText(DataSystem.System.GetTextData(21020).Text);
+        _view.SetHelpText(DataSystem.GetTextData(21020).Text);
         _view.SetBackEvent();
         CommandRefresh();
         _busy = false;
@@ -52,7 +52,7 @@ public class SlotPresenter
         if (_model.SelectableSlot(slotIndex))
         {
             Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
-            var confirmInfo = new ConfirmInfo(DataSystem.System.GetTextData(21010).Text,(a) => UpdatePopupStageStart((ConfirmCommandType)a));
+            var confirmInfo = new ConfirmInfo(DataSystem.GetTextData(21010).Text,(a) => UpdatePopupStageStart((ConfirmCommandType)a));
             _view.CommandCallConfirm(confirmInfo);
         }
     }

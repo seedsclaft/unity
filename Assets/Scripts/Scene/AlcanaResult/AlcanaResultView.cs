@@ -34,14 +34,14 @@ public class AlcanaResultView : BaseView
 
     public void StartAnimation()
     {
-        _battleStartAnim.SetText(DataSystem.System.GetTextData(19010).Text);
+        _battleStartAnim.SetText(DataSystem.GetTextData(19010).Text);
         _battleStartAnim.StartAnim();
         _battleStartAnim.gameObject.SetActive(true);
         _animationBusy = true;
     }
 
     public void SetHelpWindow(){
-        HelpWindow.SetHelpText(DataSystem.System.GetTextData(19020).Text);
+        HelpWindow.SetHelpText(DataSystem.GetTextData(19020).Text);
         HelpWindow.SetInputInfo("RESULT");
     }
 

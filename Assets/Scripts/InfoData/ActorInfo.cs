@@ -4,7 +4,7 @@ using System.Collections.Generic;
 [Serializable]
 public class ActorInfo
 {
-    public ActorData Master {get {return DataSystem.Actors.Find(a => a.Id == ActorId);}}
+    public ActorData Master {get {return DataSystem.FindActor(ActorId);}}
     private int _actorId;
     public int ActorId => _actorId;
     public int MaxHp => CurrentStatus.Hp;
@@ -452,7 +452,7 @@ public class ActorInfo
         foreach (var attribute in GetAttributeRank())
         {
             int textId = 320 + (int)attribute;
-            attributeValues.Add(DataSystem.System.GetTextData(textId).Text);
+            attributeValues.Add(DataSystem.GetTextData(textId).Text);
         }
         return attributeValues;
     }

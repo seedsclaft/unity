@@ -64,7 +64,7 @@ public class ResultView : BaseView
 
     public void StartAnimation()
     {
-        _battleStartAnim.SetText(DataSystem.System.GetTextData(16090).Text);
+        _battleStartAnim.SetText(DataSystem.GetTextData(16090).Text);
         _battleStartAnim.StartAnim();
         _battleStartAnim.gameObject.SetActive(true);
         _animationBusy = true;
@@ -105,7 +105,7 @@ public class ResultView : BaseView
     }
 
     public void SetHelpWindow(){
-        HelpWindow.SetHelpText(DataSystem.System.GetTextData(16030).Text);
+        HelpWindow.SetHelpText(DataSystem.GetTextData(16030).Text);
         HelpWindow.SetInputInfo("RESULT");
     }
 

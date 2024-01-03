@@ -50,7 +50,7 @@ public class NameEntryView : BaseView, IInputHandlerEvent
         inputField.gameObject.SetActive(true);
         inputField.Select();
         _inputLateUpdate = 1;
-        HelpWindow.SetHelpText(DataSystem.System.GetTextData(5000).Text);
+        HelpWindow.SetHelpText(DataSystem.GetTextData(5000).Text);
         HelpWindow.SetInputInfo("NAMEENTRY");
     }
 

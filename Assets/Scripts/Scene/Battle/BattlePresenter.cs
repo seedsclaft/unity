@@ -73,7 +73,7 @@ public class BattlePresenter : BasePresenter
         _view.SetActors(_model.BattlerActors());
         _view.SetEnemies(_model.BattlerEnemies(),_model.BattleCursorEffects());
         _view.SetSideMenu(_model.SideMenu());
-        _view.StartBattleStartAnim(DataSystem.System.GetTextData(4).Text);
+        _view.StartBattleStartAnim(DataSystem.GetTextData(4).Text);
         await UniTask.WaitUntil(() => _view.StartAnimIsBusy == false);
 
         var isAbort = CheckAdvStageEvent(EventTiming.StartBattle,() => {
@@ -173,7 +173,7 @@ public class BattlePresenter : BasePresenter
             _view.HideBattleThumb();
             _view.SetBattleBusy(true);
             _model.EscapeBattle();
-            _view.StartBattleStartAnim(DataSystem.System.GetTextData(15030).Text);
+            _view.StartBattleStartAnim(DataSystem.GetTextData(15030).Text);
 
             _model.EndBattle();
             _battleEnded = true;
@@ -203,11 +203,11 @@ public class BattlePresenter : BasePresenter
     {
         if (_model.EnableEscape())
         {
-            var popupInfo = new ConfirmInfo(DataSystem.System.GetTextData(410).Text,(a) => UpdatePopupEscape((ConfirmCommandType)a));
+            var popupInfo = new ConfirmInfo(DataSystem.GetTextData(410).Text,(a) => UpdatePopupEscape((ConfirmCommandType)a));
             _view.CommandCallConfirm(popupInfo);
         } else
         {
-            var popupInfo = new ConfirmInfo(DataSystem.System.GetTextData(412).Text,(a) => UpdatePopupNoEscape((ConfirmCommandType)a));
+            var popupInfo = new ConfirmInfo(DataSystem.GetTextData(412).Text,(a) => UpdatePopupNoEscape((ConfirmCommandType)a));
             popupInfo.SetIsNoChoice(true);
             _view.CommandCallConfirm(popupInfo);
         }
@@ -417,7 +417,7 @@ public class BattlePresenter : BasePresenter
     private void CommandDecideActor()
     {
         _view.SetAnimationBusy(false);
-        _view.SetHelpText(DataSystem.System.GetTextData(15010).Text);
+        _view.SetHelpText(DataSystem.GetTextData(15010).Text);
         _view.SelectedCharacter(_model.CurrentBattler);
         _view.SetCondition(_model.SelectCharacterConditions());
         _view.ChangeSideMenuButtonActive(true);
@@ -443,7 +443,7 @@ public class BattlePresenter : BasePresenter
     private void CommandDecideEnemy()
     {
         _view.SetAnimationBusy(false);
-        _view.SetHelpText(DataSystem.System.GetTextData(15010).Text);
+        _view.SetHelpText(DataSystem.GetTextData(15010).Text);
         //_view.SelectedCharacter(_model.CurrentBattler);
         _view.SetCondition(_model.SelectCharacterConditions());
         //_view.ChangeSideMenuButtonActive(true);
@@ -757,7 +757,7 @@ public class BattlePresenter : BasePresenter
         {
             if (actionResultInfo.TargetIndex == targetIndex)
             {
-                _view.StartStatePopup(targetIndex,DamageType.State,DataSystem.System.GetTextData(432).Text);
+                _view.StartStatePopup(targetIndex,DamageType.State,DataSystem.GetTextData(432).Text);
             }
         }
         if (actionResultInfo.ReDamage > 0)
@@ -796,7 +796,7 @@ public class BattlePresenter : BasePresenter
             if (actionResultInfo.TargetIndex == targetIndex)
             {
                 //先制攻撃
-                _view.StartStatePopup(targetIndex,DamageType.State,DataSystem.System.GetTextData(431).Text);
+                _view.StartStatePopup(targetIndex,DamageType.State,DataSystem.GetTextData(431).Text);
             }
         }
     }
@@ -1016,11 +1016,11 @@ public class BattlePresenter : BasePresenter
         if (_battleEnded == true) return;
         if (_model.CheckVictory())
         {
-            _view.StartBattleStartAnim(DataSystem.System.GetTextData(15020).Text);
+            _view.StartBattleStartAnim(DataSystem.GetTextData(15020).Text);
         } else
         if (_model.CheckDefeat())
         {
-            _view.StartBattleStartAnim(DataSystem.System.GetTextData(15030).Text);            
+            _view.StartBattleStartAnim(DataSystem.GetTextData(15030).Text);            
         }
         _model.EndBattle();
         _battleEnded = true;

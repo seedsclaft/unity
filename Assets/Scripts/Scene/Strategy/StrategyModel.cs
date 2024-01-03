@@ -90,7 +90,7 @@ public class StrategyModel : BaseModel
                     _resultInfos.Add(new TacticsResultInfo(actorInfo.ActorId,TacticsCommandType.Train,trainBonus));
                     break;
                 case TacticsCommandType.Alchemy:
-                    var skillData = DataSystem.Skills.Find(a => a.Id == actorInfo.NextLearnSkillId);
+                    var skillData = DataSystem.FindSkill(actorInfo.NextLearnSkillId);
                     getItemInfo.MakeAlchemyResult(actorName,skillData);
                     actorInfo.LearnSkill(actorInfo.NextLearnSkillId);
                     var alchemyBonus = PartyInfo.GetAlchemyBonusValue();
@@ -102,7 +102,7 @@ public class StrategyModel : BaseModel
                             var bonusGetItemInfo = new GetItemInfo(null);
                             var rand2 = Random.Range(0,getSkillDates.Count);
                             PartyInfo.AddAlchemy(getSkillDates[rand2].Id);
-                            var randSkillData = DataSystem.Skills.Find(a => a.Id == getSkillDates[rand2].Id);
+                            var randSkillData = DataSystem.FindSkill(getSkillDates[rand2].Id);
                             bonusGetItemInfo.MakeAlchemyBonusResult(randSkillData);
                             getItemInfos.Add(bonusGetItemInfo);
                         }
@@ -128,7 +128,7 @@ public class StrategyModel : BaseModel
                     _resultInfos.Add(new TacticsResultInfo(actorInfo.ActorId,TacticsCommandType.Recovery,isRecoveryBonus));
                     break;
                 case TacticsCommandType.Resource:
-                    getItemInfo.SetTitleData(DataSystem.System.GetReplaceText(3020,actorName));
+                    getItemInfo.SetTitleData(DataSystem.GetReplaceText(3020,actorName));
                     var resource = TacticsUtility.ResourceGain(actorInfo);
                     var resourceBonus = PartyInfo.GetResourceBonusValue();
                     if (resourceBonus || (StageAlcana != null && StageAlcana.CheckResourceBonus()))
@@ -136,10 +136,10 @@ public class StrategyModel : BaseModel
                         resource *= 2;
                     }
                     PartyInfo.ChangeCurrency(Currency + resource);
-                    var resourceResult = DataSystem.System.GetReplaceText(3021,resource.ToString());
+                    var resourceResult = DataSystem.GetReplaceText(3021,resource.ToString());
                     if (resourceBonus)
                     {
-                        resourceResult += " " + DataSystem.System.GetTextData(3031).Text;
+                        resourceResult += " " + DataSystem.GetTextData(3031).Text;
                     }
                     getItemInfo.SetResultData(resourceResult);
                     _resultInfos.Add(new TacticsResultInfo(actorInfo.ActorId,TacticsCommandType.Resource,resourceBonus));
@@ -219,7 +219,7 @@ public class StrategyModel : BaseModel
                 if (getItemInfo.Param2 >= rand)
                 {
                     PartyInfo.AddAlchemy(getItemInfo.Param1);
-                    getItemInfo.SetTitleData(DataSystem.System.GetTextData(14040).Text);
+                    getItemInfo.SetTitleData(DataSystem.GetTextData(14040).Text);
                     getItemInfos.Add(getItemInfo);
                 }
             }
@@ -250,9 +250,9 @@ public class StrategyModel : BaseModel
                     {
                         int rand2 = Random.Range(0,getSkillDates.Count);
                         PartyInfo.AddAlchemy(getSkillDates[rand2].Id);
-                        getItemInfo.SetTitleData(DataSystem.System.GetTextData(14040).Text);
+                        getItemInfo.SetTitleData(DataSystem.GetTextData(14040).Text);
                         
-                        //string text = DataSystem.System.GetTextData(14051).Text.Replace("\\d", DataSystem.System.GetTextData(330 + (int)getItemInfo.GetItemType - 11).Text);
+                        //string text = DataSystem.GetTextData(14051).Text.Replace("\\d", DataSystem.GetTextData(330 + (int)getItemInfo.GetItemType - 11).Text);
                         getItemInfo.SetResultData(getSkillDates[rand2].Name);
                         getItemInfo.SetSkillElementId((int)getItemInfo.GetItemType - 10);
                         getItemInfos.Add(getItemInfo);
@@ -261,13 +261,13 @@ public class StrategyModel : BaseModel
             }
             if (getItemInfo.GetItemType == GetItemType.Ending)
             {
-                getItemInfo.SetTitleData(DataSystem.System.GetTextData(14060).Text);
+                getItemInfo.SetTitleData(DataSystem.GetTextData(14060).Text);
                 getItemInfos.Add(getItemInfo);
                 CurrentStage.SetStageClear(true);
             }
             if (getItemInfo.GetItemType == GetItemType.StatusUp)
             {
-                getItemInfo.SetTitleData(DataSystem.System.GetTextData(14071).Text);
+                getItemInfo.SetTitleData(DataSystem.GetTextData(14071).Text);
                 getItemInfos.Add(getItemInfo);
                 
                 foreach (var actorInfo in BattleResultActors())
@@ -292,18 +292,21 @@ public class StrategyModel : BaseModel
         CurrentStage.AddClearTroopId(CurrentTroopInfo().TroopId);
         CurrentData.PlayerInfo.AddClearedTroopId(CurrentTroopInfo().TroopId);
         CurrentStage.GainTroopClearCount(1);
-        CurrentStage.ChangeSubordinateValue(10);
-
-        foreach (var actorInfo in BattleResultActors())
+        if (CurrentStage.SurvivalMode == false)
         {
-            if (actorInfo.InBattle == true)
+            CurrentStage.ChangeSubordinateValue(10);
+
+            foreach (var actorInfo in BattleResultActors())
             {
-                if (PartyInfo.AddCommandCountInfo(TacticsCommandType.Battle))
+                if (actorInfo.InBattle == true)
                 {
-                    var partyGetItemInfo = new GetItemInfo(null);
-                    partyGetItemInfo.MakeCommandCountResult(PartyInfo.CommandRankInfo[TacticsCommandType.Battle],TacticsCommandType.Battle);
-                    PartyInfo.AddCommandRank(TacticsCommandType.Battle);
-                    getItemInfos.Add(partyGetItemInfo);
+                    if (PartyInfo.AddCommandCountInfo(TacticsCommandType.Battle))
+                    {
+                        var partyGetItemInfo = new GetItemInfo(null);
+                        partyGetItemInfo.MakeCommandCountResult(PartyInfo.CommandRankInfo[TacticsCommandType.Battle],TacticsCommandType.Battle);
+                        PartyInfo.AddCommandRank(TacticsCommandType.Battle);
+                        getItemInfos.Add(partyGetItemInfo);
+                    }
                 }
             }
         }

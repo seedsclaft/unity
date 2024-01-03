@@ -22,7 +22,7 @@ public class SystemData : ScriptableObject
 	public List<InputData> InputDataList;
 	public TextData GetTextData(int id)
 	{
-		TextData textData = SystemTextData.Find(a => a.Id == id);
+		var textData = SystemTextData.Find(a => a.Id == id);
 		if (textData != null) 
 		{
 			return textData;
@@ -32,7 +32,7 @@ public class SystemData : ScriptableObject
 
 	public string GetReplaceText(int id,string replace)
 	{
-		TextData textData = SystemTextData.Find(a => a.Id == id);
+		var textData = SystemTextData.Find(a => a.Id == id);
 		if (textData != null) 
 		{
 			return textData.Text.Replace("\\d",replace);

@@ -27,7 +27,7 @@ public class AlcanaSelectView : BaseView
     
     public void StartAnimation()
     {
-        battleStartAnim.SetText(DataSystem.System.GetTextData(19010).Text);
+        battleStartAnim.SetText(DataSystem.GetTextData(19010).Text);
         battleStartAnim.StartAnim();
         battleStartAnim.gameObject.SetActive(true);
         _animationBusy = true;
@@ -50,7 +50,7 @@ public class AlcanaSelectView : BaseView
 
     public void SetInitHelpText()
     {
-        HelpWindow.SetHelpText(DataSystem.System.GetTextData(20020).Text);
+        HelpWindow.SetHelpText(DataSystem.GetTextData(20020).Text);
         //HelpWindow.SetInputInfo("MAINMENU");
     }
 

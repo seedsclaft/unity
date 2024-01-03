@@ -53,6 +53,30 @@ abstract public class DataSystem
         //DataSystem._alcana = Resources.Load<AlcanaData>("Data/Alcana");
         DataSystem._data = Resources.Load<DataManager>("Data/MainData");
     }
+    public static ActorData FindActor(int id)
+    {
+        return Actors.Find(a => a.Id == id);
+    }
+
+    public static SkillData FindSkill(int id)
+    {
+        return Skills.Find(a => a.Id == id);
+    }
+    
+    public static StageData FindStage(int id)
+    {
+        return Stages.Find(a => a.Id == id);
+    }
+
+	public static TextData GetTextData(int id)
+	{
+		return System.GetTextData(id);
+	}
+
+	public static string GetReplaceText(int id,string replace)
+	{
+		return System.GetReplaceText(id,replace);
+	}
 }
 
 [Serializable]

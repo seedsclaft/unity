@@ -16,7 +16,7 @@ public class StatusModel : BaseModel
 
         if (textId >= 0)
         {
-            return DataSystem.System.GetTextData(textId).Text;
+            return DataSystem.GetTextData(textId).Text;
         }
         return "";
     }

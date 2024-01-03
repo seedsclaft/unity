@@ -280,7 +280,7 @@ public class TacticsModel : BaseModel
     public void SelectAlchemySkill(int skillId)
     {
         var actorInfo = CurrentActor;
-        var skillData = DataSystem.Skills.Find(a => a.Id == skillId);
+        var skillData = DataSystem.FindSkill(skillId);
         if (actorInfo != null){
             actorInfo.SetTacticsCommand(TacticsCommandType.Alchemy,TacticsUtility.AlchemyCost(actorInfo,skillData.Attribute,StageMembers()));
             PartyInfo.ChangeCurrency(Currency - actorInfo.TacticsCost);
@@ -451,12 +451,12 @@ public class TacticsModel : BaseModel
         var list = new List<SystemData.CommandData>();
         var retire = new SystemData.CommandData();
         retire.Id = 1;
-        retire.Name = DataSystem.System.GetTextData(704).Text;
+        retire.Name = DataSystem.GetTextData(704).Text;
         retire.Key = "Retire";
         list.Add(retire);
         var menuCommand = new SystemData.CommandData();
         menuCommand.Id = 2;
-        menuCommand.Name = DataSystem.System.GetTextData(703).Text;
+        menuCommand.Name = DataSystem.GetTextData(703).Text;
         menuCommand.Key = "Help";
         list.Add(menuCommand);
         return list;
@@ -505,7 +505,7 @@ public class TacticsModel : BaseModel
 
     private string CommandTitle()
     {
-        return DataSystem.System.GetTextData((int)_tacticsCommandType).Text;
+        return DataSystem.GetTextData((int)_tacticsCommandType).Text;
     }
 
     private int CommandRank()
@@ -525,7 +525,7 @@ public class TacticsModel : BaseModel
                 // 獲得Nuが〇アップ
                 bonusParam = rank * DataSystem.System.BattleBonusValue;
             }
-            return DataSystem.System.GetReplaceText(10 + (int)_tacticsCommandType,bonusParam.ToString());
+            return DataSystem.GetReplaceText(10 + (int)_tacticsCommandType,bonusParam.ToString());
         }
         int count = 0;
         switch (_tacticsCommandType)
@@ -546,7 +546,7 @@ public class TacticsModel : BaseModel
                 count = DataSystem.System.ResourceCount;
                 break;
         }
-        return DataSystem.System.GetReplaceText(10,count.ToString());
+        return DataSystem.GetReplaceText(10,count.ToString());
     }
 
     private bool RecoveryCostZero()

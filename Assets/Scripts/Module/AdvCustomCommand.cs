@@ -80,7 +80,7 @@ namespace Utage
             if (GameSystem.CurrentStageData.CurrentStage == null) return;
             if (GameSystem.CurrentStageData.CurrentStage.SelectActorIds.Count == 0) return;
             int actorId = GameSystem.CurrentStageData.CurrentStage.SelectActorIds[0];
-            var actorData = DataSystem.Actors.Find(a => a.Id == actorId);
+            var actorData = DataSystem.FindActor(actorId);
             if (actorData != null)
             {
                 engine.Param.SetParameterString("Select1",actorData.Name);

@@ -24,9 +24,8 @@ public class RebornView : BaseView
 
     private void InitializeSelectCharacter()
     {
-        selectCharacter.SetInputHandlerAction(InputKeyType.Decide,() => CallDecideActor());
+        selectCharacter.SetInputHandlerAction(InputKeyType.Decide,() => {});
         selectCharacter.SetInputHandlerAction(InputKeyType.Cancel,() => OnClickBack());
-        selectCharacter.SetInputHandlerAction(InputKeyType.Start,() => CallDecideActor());
         selectCharacter.SetInputHandlerAction(InputKeyType.SideLeft1,() => OnClickLeft());
         selectCharacter.SetInputHandlerAction(InputKeyType.SideRight1,() => OnClickRight());
 

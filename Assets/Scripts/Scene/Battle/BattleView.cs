@@ -574,7 +574,7 @@ public class BattleView : BaseView ,IInputHandlerEvent
             selectCharacter.MagicList.Activate();
             sideMenuList.Deactivate();
             selectCharacter.MagicList.UpdateHelpWindow();
-            HelpWindow.SetHelpText(DataSystem.System.GetTextData(15010).Text);
+            HelpWindow.SetHelpText(DataSystem.GetTextData(15010).Text);
         });
     }
     
@@ -603,7 +603,7 @@ public class BattleView : BaseView ,IInputHandlerEvent
         selectCharacter.MagicList.Activate();
         sideMenuList.CloseSideMenu();
         selectCharacter.MagicList.UpdateHelpWindow();
-        HelpWindow.SetHelpText(DataSystem.System.GetTextData(15010).Text);
+        HelpWindow.SetHelpText(DataSystem.GetTextData(15010).Text);
     }
 
     private void CallSideMenu(SystemData.CommandData sideMenu)

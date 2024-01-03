@@ -4,7 +4,7 @@ using System.Collections.Generic;
 [Serializable]
 public class SkillInfo 
 {
-    public SkillData Master {get {return DataSystem.Skills.Find(a => a.Id == _id);}}
+    public SkillData Master {get {return DataSystem.FindSkill(_id);}}
     private int _id;
     public int Id => _id;
     private int _deckIndex = -1;

@@ -24,11 +24,11 @@ public class OptionCommand : ListItem ,IListViewItem
         optionToggles.ForEach(a => a.gameObject.SetActive(data.Toggles == true));
         if (data.ToggleText1 > 0)
         {
-            optionTexts[0].text = DataSystem.System.GetTextData(data.ToggleText1).Text;
+            optionTexts[0].text = DataSystem.GetTextData(data.ToggleText1).Text;
         }
         if (data.ToggleText2 > 0)
         {
-            optionTexts[1].text = DataSystem.System.GetTextData(data.ToggleText2).Text;
+            optionTexts[1].text = DataSystem.GetTextData(data.ToggleText2).Text;
         }
         UpdateOptionValues(data);
 

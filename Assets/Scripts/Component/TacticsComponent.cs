@@ -64,10 +64,8 @@ public class TacticsComponent : MonoBehaviour
             if (actorInfo.NextLearnSkillId > 0)
             {
                 skillInfoComponent.UpdateSkillData(actorInfo.NextLearnSkillId);
-                //attributeType.text = DataSystem.Skills.Find(a => a.Id == actorInfo.NextLearnSkillId).Name;
             } else{
                 skillInfoComponent.Clear();
-                //attributeType.text = "";
             }
         }
 
@@ -114,8 +112,8 @@ public class TacticsComponent : MonoBehaviour
             if (tacticsCommandType != actorInfo.TacticsCommandType && actorInfo.TacticsCommandType != TacticsCommandType.None)
             {
                 busyRoot.gameObject.SetActive(true);
-                var textData = DataSystem.System.GetTextData((int)actorInfo.TacticsCommandType);
-                var subtextData = DataSystem.System.GetTextData(1020);
+                var textData = DataSystem.GetTextData((int)actorInfo.TacticsCommandType);
+                var subtextData = DataSystem.GetTextData(1020);
                 busyText.text = textData.Text + subtextData.Text;
             }
         }

@@ -64,7 +64,7 @@ public class AlcanaResultPresenter : BasePresenter
     {
         var statusViewInfo = new StatusViewInfo(() => {
             _view.CommandStatusClose();
-            _view.SetHelpText(DataSystem.System.GetTextData(14010).Text);
+            _view.SetHelpText(DataSystem.GetTextData(14010).Text);
             _view.ChangeUIActive(true);
         });
         statusViewInfo.SetDisplayDecideButton(false);
