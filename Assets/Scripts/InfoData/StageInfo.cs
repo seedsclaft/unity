@@ -540,8 +540,15 @@ public class StageInfo
         _currentTroopInfos = stageInfo._currentTroopInfos;
         _displayTurns = stageInfo._displayTurns - stageInfo.CurrentTurn + 1;
         _savedCount = stageInfo._savedCount;
+        _continueCount = stageInfo._continueCount;
         _subordinateValue = stageInfo.SubordinateValue;
+        _clearTroopIds = stageInfo._clearTroopIds;
         _IsSubordinate = stageInfo.IsSubordinate;
+        //_readEventKeys = stageInfo._readEventKeys;
+        _endingType = stageInfo._endingType;
+        _stageClear = stageInfo._stageClear;
+        _rebornActorIndex = stageInfo._rebornActorIndex;
+        _survivalMode = stageInfo._survivalMode;
     }
 
     public int SelectActorIdsClassId(int selectIndex)

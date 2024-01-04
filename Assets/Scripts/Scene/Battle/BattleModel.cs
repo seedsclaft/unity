@@ -935,8 +935,6 @@ public class BattleModel : BaseModel
             // Mpの支払い
             _currentBattler.GainMp(actionInfo.MpCost * -1);
             _currentBattler.GainPayBattleMp(actionInfo.MpCost);
-            // カード破棄
-            //_currentBattler.RemoveDeck(actionInfo.SkillInfo.DeckIndex);
             var actionResultInfos = CalcDeathIndexList(actionInfo.ActionResults);
             foreach (var actionResultInfo in actionResultInfos)
             {

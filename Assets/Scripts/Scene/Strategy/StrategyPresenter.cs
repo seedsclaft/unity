@@ -311,15 +311,17 @@ public class StrategyPresenter : BasePresenter
 
     private void CommandContinue()
     {
-        _model.LostActors(_model.LostMembers());
+        // ロスト判定
+        var lostMembers = _model.LostMembers();
         // コンテニュー判定
-        if ((_model.BattleResultVictory() == true && _model.LostMembers().Count == 0))
+        if (_model.BattleResultVictory() == true && lostMembers.Count == 0)
         {
             return;
         }
         // コンテニュー不可
         if (!_model.EnableContinue())
         {
+            _model.LostActors(lostMembers);
             return;
         }
         var continuePopupTitle = _model.ContinuePopupTitle();
@@ -365,7 +367,6 @@ public class StrategyPresenter : BasePresenter
             {
                 SuccessContinue();
             }
-
         } else
         if (confirmCommandType == ConfirmCommandType.No)
         {
