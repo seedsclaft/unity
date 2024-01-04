@@ -283,13 +283,6 @@ abstract public class BaseView : MonoBehaviour
         CallSceneChangeCommand(eventData);
     }
 
-    public void CommandChangeEventSkipIndex(bool isSkip)
-    {
-        var eventData = new ViewEvent(Base.CommandType.ChangeEventSkipIndex);
-        eventData.template = isSkip;
-        CallSceneChangeCommand(eventData);
-    }
-
     public void CommandCallTutorialFocus(StageTutorialData stageTutorialDate)
     {
         var eventData = new ViewEvent(Base.CommandType.CallTutorialFocus);
@@ -363,7 +356,6 @@ namespace Base
         SetRouteSelect,
         ChangeViewToTransition,
         StartTransition,
-        ChangeEventSkipIndex,
         CallTutorialFocus,
         CloseTutorialFocus
     }

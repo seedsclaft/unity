@@ -32,7 +32,6 @@ public class BootView : BaseView
         var eventData = new BootViewEvent(CommandType.LogoClick);
         _commandData(eventData);
     }
-    
 }
 
 

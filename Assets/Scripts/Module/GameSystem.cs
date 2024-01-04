@@ -51,6 +51,7 @@ public class GameSystem : MonoBehaviour
         loadingView.gameObject.SetActive(false);
         tutorialView.Initialize();
         tutorialView.HideFocusImage();
+        transitionFade.Init();
         TempData = new TempInfo();
         _model = new BaseModel();
         GameSystem.Version = version;
@@ -195,9 +196,6 @@ public class GameSystem : MonoBehaviour
                     }
                 });
                 break;
-            case Base.CommandType.ChangeEventSkipIndex:
-                advEngine.Config.IsSkip = (bool)viewEvent.template;
-                break;
             case Base.CommandType.CallTutorialFocus:
                 var stageTutorialData = (StageTutorialData)viewEvent.template;
                 tutorialView.SeekFocusImage(stageTutorialData);
@@ -337,6 +335,7 @@ public class GameSystem : MonoBehaviour
         while (advEngine.GraphicManager.IsLoading) yield return null;
         while (advEngine.SoundManager.IsLoading) yield return null;
         advEngine.JumpScenario(label);
+        advEngine.Config.IsSkip = ConfigData.EventSkipIndex;
         advController.StartAdv();
         while (!advEngine.IsEndOrPauseScenario)
         {

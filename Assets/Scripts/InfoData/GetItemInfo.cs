@@ -89,10 +89,10 @@ public class GetItemInfo
         _resultName = (DataSystem.GetReplaceText(3013,name));
     }
 
-    public void MakeCommandCountResult(int commandLv,TacticsCommandType tacticsCommandType)
+    public void MakeCommandCountResult(int commandLv,int toLv,TacticsCommandType tacticsCommandType)
     {
         _titleName = (DataSystem.GetReplaceText(3030,DataSystem.GetTextData((int)tacticsCommandType).Text));
-        _resultName = (DataSystem.GetTextData(316).Text + commandLv.ToString() + DataSystem.GetTextData(3090).Text + (commandLv+1).ToString());
+        _resultName = (DataSystem.GetTextData(316).Text + commandLv.ToString() + DataSystem.GetTextData(3090).Text + toLv.ToString());
     }
 
     public void MakeCurrencyResult(int value)
@@ -163,10 +163,10 @@ public class GetItemInfo
         _resultName = (DataSystem.GetTextData(3225).Text);
     }
 
-    public void MakeCommandLvUpResult(int commandLv,TacticsCommandType tacticsCommandType)
+    public void MakeCommandLvUpResult(int currentLv,int toLv,TacticsCommandType tacticsCommandType)
     {
         _titleName = (DataSystem.GetReplaceText(3030,DataSystem.GetTextData((int)tacticsCommandType).Text));
-        _resultName = (DataSystem.GetTextData(316).Text + commandLv.ToString() + DataSystem.GetTextData(3090).Text + (commandLv+1).ToString());
+        _resultName = (DataSystem.GetTextData(316).Text + currentLv.ToString() + DataSystem.GetTextData(3090).Text + toLv.ToString());
     }
 
     public void MakeAddSkillCurrencyResult(string skillName,int currency)

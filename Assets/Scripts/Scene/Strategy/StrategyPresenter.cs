@@ -335,7 +335,7 @@ public class StrategyPresenter : BasePresenter
         {
         }
         _view.CommandCallConfirm(popupInfo);
-        _view.ChangeUIActive(false);
+        //_view.ChangeUIActive(false);
     }
 
     private void UpdatePopupContinueCommand(ConfirmCommandType confirmCommandType)

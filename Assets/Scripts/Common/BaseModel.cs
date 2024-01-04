@@ -449,7 +449,7 @@ public class BaseModel
                         {
                             PartyInfo.AddCommandRank(tacticsCommandType);
                         }
-                        getItemInfo.MakeCommandLvUpResult(commandLv + upLvCount,tacticsCommandType);
+                        getItemInfo.MakeCommandLvUpResult(commandLv,commandLv + upLvCount,tacticsCommandType);
                         break;
                     case FeatureType.AddSkillOrCurrency: // skillInfo で param1 = 入手スキルID,featureData で param2 = 上昇Currency値
                         var getSkillId = skillInfo.Param1;

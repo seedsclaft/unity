@@ -527,7 +527,7 @@ public class TacticsPresenter :BasePresenter
                     _view.CommandLoadingClose();
                     // 失敗した時
                     var savePopupTitle = _model.FailedSavePopupTitle();
-                    var popupInfo = new ConfirmInfo(savePopupTitle,(menuCommandInfo) => UpdatePopupSaveCommand((ConfirmCommandType)menuCommandInfo));
+                    var popupInfo = new ConfirmInfo(savePopupTitle,(q) => UpdatePopupSaveCommand((ConfirmCommandType)q));
                     _view.CommandCallConfirm(popupInfo);
                     _view.ChangeUIActive(false);
                 });

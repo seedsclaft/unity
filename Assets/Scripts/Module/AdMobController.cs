@@ -37,6 +37,7 @@ public class AdMobController : SingletonMonoBehaviour<AdMobController>
             {
                 endEvent();
             }
+            LoadRewardedAd(null);
         });
     }
 
@@ -171,6 +172,12 @@ public class AdMobController : SingletonMonoBehaviour<AdMobController>
         // Clean up the old ad before loading a new one.
         if (_rewardedAd != null && _preloaded == false)
         {
+            _rewardedAd.Destroy();
+            _rewardedAd = null;
+        }
+        if (_preloaded == true && !_rewardedAd.CanShowAd())
+        {
+            _preloaded = false;
             _rewardedAd.Destroy();
             _rewardedAd = null;
         }

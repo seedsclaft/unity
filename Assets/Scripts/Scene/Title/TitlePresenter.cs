@@ -22,10 +22,6 @@ public class TitlePresenter : BasePresenter
     {
         _busy = true;
         _model.ApplyConfigData();
-        if (GameSystem.ConfigData.EventSkipIndex)
-        {
-            _view.CommandChangeEventSkipIndex(true);
-        }
 
         _view.SetEvent((type) => UpdateCommand(type));
         _view.SetVersion(_model.VersionText());

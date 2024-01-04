@@ -33,7 +33,7 @@ public class RebornResultModel : BaseModel
         {
             var upLvCount = commandRebornSkill.Param2;
             var getItemInfo = new GetItemInfo(null);
-            getItemInfo.MakeCommandCountResult(upLvCount,(TacticsCommandType)commandRebornSkill.Param3);
+            getItemInfo.MakeCommandCountResult(0,upLvCount,(TacticsCommandType)commandRebornSkill.Param3);
             getItemInfos.Add(getItemInfo);
         }
 

@@ -32,12 +32,6 @@ public class Fade : MonoBehaviour
 {
 	IFade fade;
 
-	void Start ()
-	{
-		Init ();
-		fade.Range = cutoutRange;
-	}
-
 	float cutoutRange;
 
 	private CancellationTokenSource _cancellationTokenSource;
@@ -45,11 +39,6 @@ public class Fade : MonoBehaviour
 	public void Init ()
 	{
 		fade = GetComponent<IFade> ();
-	}
-
-	void OnValidate ()
-	{
-		Init ();
 		fade.Range = cutoutRange;
 	}
 

@@ -175,7 +175,8 @@ public class StrategyModel : BaseModel
                     if (PartyInfo.AddCommandCountInfo(actorInfo.TacticsCommandType))
                     {
                         var partyGetItemInfo = new GetItemInfo(null);
-                        partyGetItemInfo.MakeCommandCountResult(PartyInfo.CommandRankInfo[actorInfo.TacticsCommandType],actorInfo.TacticsCommandType);
+                        var currentLv = PartyInfo.CommandRankInfo[actorInfo.TacticsCommandType];
+                        partyGetItemInfo.MakeCommandCountResult(currentLv,currentLv+1,actorInfo.TacticsCommandType);
                         PartyInfo.AddCommandRank(actorInfo.TacticsCommandType);
                         getItemInfos.Add(partyGetItemInfo);
                     }
@@ -303,7 +304,8 @@ public class StrategyModel : BaseModel
                     if (PartyInfo.AddCommandCountInfo(TacticsCommandType.Battle))
                     {
                         var partyGetItemInfo = new GetItemInfo(null);
-                        partyGetItemInfo.MakeCommandCountResult(PartyInfo.CommandRankInfo[TacticsCommandType.Battle],TacticsCommandType.Battle);
+                        var currentLv = PartyInfo.CommandRankInfo[TacticsCommandType.Battle];
+                        partyGetItemInfo.MakeCommandCountResult(currentLv,currentLv+1,TacticsCommandType.Battle);
                         PartyInfo.AddCommandRank(TacticsCommandType.Battle);
                         getItemInfos.Add(partyGetItemInfo);
                     }

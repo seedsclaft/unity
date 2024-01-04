@@ -28,6 +28,7 @@ public class BootPresenter : BasePresenter
         var rate = 1280f / (float)width;
         Screen.SetResolution((int)(width * rate), (int)(height * rate), true);
 #endif
+        Input.multiTouchEnabled = false;
         var gamePad = Gamepad.current;
         if (gamePad != null)
         {
