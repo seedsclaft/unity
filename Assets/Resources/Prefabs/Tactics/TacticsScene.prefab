@@ -4350,7 +4350,7 @@ MonoBehaviour:
   m_HorizontalAlignment: 4
   m_VerticalAlignment: 512
   m_textAlignment: 65535
-  m_characterSpacing: -10
+  m_characterSpacing: 0
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -5418,7 +5418,7 @@ MonoBehaviour:
   __MainTex2: {fileID: 2800000, guid: 6ed1aafd335608e48aa3198044a161df, type: 3}
   _Alpha: 1
   Light: 1
-  LightSize: 0.208
+  LightSize: 0.315
   UseShinyCurve: 1
   ShinyLightCurve:
     serializedVersion: 2
@@ -5433,28 +5433,28 @@ MonoBehaviour:
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.21125662
-      value: 0.4870473
-      inSlope: -0.051003218
-      outSlope: -0.051003218
+      time: 0.20249045
+      value: 1.0073924
+      inSlope: -0.00060668273
+      outSlope: -0.00060668273
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.33333334
+      inWeight: 1
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.5467412
-      value: -0.5268681
-      inSlope: -1.1646628
-      outSlope: -1.1646628
+      time: 0.5057866
+      value: -0.5195744
+      inSlope: -0.022213707
+      outSlope: -0.022213707
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.33333334
+      inWeight: 0.5374532
       outWeight: 0.94844514
     - serializedVersion: 3
-      time: 0.79798275
-      value: 0.49226892
-      inSlope: -0.053101435
-      outSlope: -0.053101435
+      time: 0.7716878
+      value: 1.0077801
+      inSlope: -0.024315601
+      outSlope: -0.024315601
       tangentMode: 0
       weightedMode: 0
       inWeight: 0.9640261
@@ -5472,9 +5472,9 @@ MonoBehaviour:
     m_PostInfinity: 1
     m_RotationOrder: 4
   AnimationSpeedReduction: 1.5
-  Intensity: 0.47
+  Intensity: 0.3
   OnlyLight: 0
-  LightBump: -0.76
+  LightBump: -0.7
   ShaderChange: 0
   ActiveUpdate: 1
 --- !u!1 &2808636126732810464

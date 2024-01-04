@@ -334,6 +334,7 @@ public class BattlePresenter : BasePresenter
         if (_model.CurrentBattler != null)
         {
             _view.SetBattleBusy(true);
+            _model.SetCurrentTurnBattler(_model.CurrentBattler);
             // 行動不可の場合は行動しない
             if (!_model.EnableCurrentBattler())
             {
@@ -527,6 +528,7 @@ public class BattlePresenter : BasePresenter
                 _view.ShowStateOverlay();
                 _view.RefreshStatus();
                 _view.SetBattlerSelectable(true);
+                _model.SetCurrentTurnBattler(null);
                 _view.SetBattleBusy(false);
                 return;
             }
@@ -996,6 +998,7 @@ public class BattlePresenter : BasePresenter
         _regenerateChecked = false;
         // ウェイトがいたら復帰する
         _model.AssignWaitBattler();
+        _model.SetCurrentTurnBattler(null);
         _view.SetBattleBusy(false);
     }
 

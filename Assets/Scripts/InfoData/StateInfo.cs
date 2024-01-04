@@ -17,6 +17,17 @@ public class StateInfo {
     public int TargetIndex => _targetIndex;
     private int _skillId = 0;
     public int SkillId => _skillId;
+
+    public bool IsStartPassive()
+    {
+        var skillData = DataSystem.FindSkill(_skillId);
+        if (skillData != null)
+        {
+            return skillData.FeatureDates.Find(a => a.FeatureType == FeatureType.AddState) != null && skillData.SkillType == SkillType.Passive;
+        }
+        return false;
+    }
+
     public StateInfo(StateType stateType,int turns,int effect,int battlerId,int targetIndex,int skillId){
         _stateType = stateType;
         _turns = turns;

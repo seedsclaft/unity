@@ -113,9 +113,24 @@ public class ResultModel : BaseModel
                 // 重複判定
                 if (getAlcanaInfos.Find(a => a.Id == randSkillData.Id) == null)
                 {
-                    var uniqueSkillInfo = new SkillInfo(randSkillData.Id);
-                    uniqueSkillInfo.SetEnable(true);
-                    getAlcanaInfos.Add(uniqueSkillInfo);
+                    // featureが508魔法入手
+                    if (randSkillData.FeatureDates.Find(a => a.FeatureType == FeatureType.AddSkillOrCurrency) != null)
+                    {
+                        var addSkillInfo = new SkillInfo(randSkillData.Id);
+                        var skills = DataSystem.Skills.FindAll(a => a.Rank == 1 && a.Attribute == randSkillData.Attribute);
+                        if (skills.Count > 0)
+                        {
+                            var skillRand = UnityEngine.Random.Range(0,skills.Count);
+                            addSkillInfo.SetParam(skills[skillRand].Id,0,0);
+                            addSkillInfo.SetEnable(true);
+                            getAlcanaInfos.Add(addSkillInfo);
+                        }
+                    } else
+                    {
+                        var uniqueSkillInfo = new SkillInfo(randSkillData.Id);
+                        uniqueSkillInfo.SetEnable(true);
+                        getAlcanaInfos.Add(uniqueSkillInfo);
+                    }
                     getCount--;
                 }
             }

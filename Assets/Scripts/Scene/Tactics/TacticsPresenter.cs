@@ -101,20 +101,7 @@ public class TacticsPresenter :BasePresenter
                 case StageEventType.SaveCommand:
                     _eventBusy = true;
                     _model.AddEventReadFlag(stageEvent);
-                    var savePopupTitle = _model.SavePopupTitle();
-                    var saveNeedAds = _model.NeedAdsSave();
-                    var popupInfo = new ConfirmInfo(savePopupTitle,(a) => UpdatePopupSaveCommand((ConfirmCommandType)a));
-                    
-                    popupInfo.SetSelectIndex(1);
-                    if (saveNeedAds)
-                    {
-                        //popupInfo.SetDisableIds(new List<int>(){1});
-                        popupInfo.SetCommandTextIds(_model.SaveAdsCommandTextIds());
-                    } else
-                    {
-                    }
-                    _view.CommandCallConfirm(popupInfo);
-                    _view.ChangeUIActive(false);
+                    CommandSave(true);
                     break;
                 case StageEventType.SetDefineBossIndex:
                     _model.SetDefineBossIndex(stageEvent.Param);
@@ -316,10 +303,6 @@ public class TacticsPresenter :BasePresenter
                     Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cancel);
                 }
                 CommandTacticsCommand(TacticsCommandType.Battle);
-                if (_model.IsBusyAll())
-                {
-                    CommandTacticsCommand(TacticsCommandType.TurnEnd);
-                }
             } else
             {
                 CommandTacticsCommandClose((ConfirmCommandType)viewEvent.template);
@@ -508,7 +491,7 @@ public class TacticsPresenter :BasePresenter
         _view.CommandCallStatus(statusViewInfo);
     }
 
-    private void UpdatePopupSaveCommand(ConfirmCommandType confirmCommandType)
+    private void UpdatePopupSaveCommand(ConfirmCommandType confirmCommandType,bool isReturnScene)
     {
         _view.CommandConfirmClose();
         if (confirmCommandType == ConfirmCommandType.Yes)
@@ -520,35 +503,47 @@ public class TacticsPresenter :BasePresenter
                 _view.CommandCallLoading();
                 AdMobController.Instance.PlayRewardedAd(() => 
                 {
-                    SuccessSave();
+                    SuccessSave(isReturnScene);
                 },
                 () => {
                     // ロード非表示
                     _view.CommandLoadingClose();
                     // 失敗した時
                     var savePopupTitle = _model.FailedSavePopupTitle();
-                    var popupInfo = new ConfirmInfo(savePopupTitle,(q) => UpdatePopupSaveCommand((ConfirmCommandType)q));
+                    var popupInfo = new ConfirmInfo(savePopupTitle,(q) => UpdatePopupSaveCommand((ConfirmCommandType)q,isReturnScene));
                     _view.CommandCallConfirm(popupInfo);
                     _view.ChangeUIActive(false);
                 });
             } else
             {
-                SuccessSave();
+                SuccessSave(isReturnScene);
             }
         } else
         {
             Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cancel);
-            _view.CommandSceneChange(Scene.Tactics);
+            if (isReturnScene)
+            {
+                _view.CommandSceneChange(Scene.Tactics);
+            } else
+            {
+                _view.ChangeUIActive(true);
+            }
         }
     }
 
-    private void SuccessSave()
+    private void SuccessSave(bool isReturnScene)
     {
         // ロード非表示
         _view.CommandLoadingClose();
         _model.GainSaveCount();
         SaveSystem.SaveStageInfo(GameSystem.CurrentStageData);
-        _view.CommandSceneChange(Scene.Tactics);
+        if (isReturnScene)
+        {
+            _view.CommandSceneChange(Scene.Tactics);
+        } else
+        {        
+            _view.ChangeUIActive(true);
+        }
     }
 
     private void UpdatePopupSkillInfo(ConfirmCommandType confirmCommandType)
@@ -821,6 +816,24 @@ public class TacticsPresenter :BasePresenter
         _view.CommandCallConfirm(popupInfo);
     }
 
+    private void CommandSave(bool isReturnScene)
+    {
+        var savePopupTitle = _model.SavePopupTitle();
+        var saveNeedAds = _model.NeedAdsSave();
+        var popupInfo = new ConfirmInfo(savePopupTitle,(a) => UpdatePopupSaveCommand((ConfirmCommandType)a,false));
+        
+        popupInfo.SetSelectIndex(1);
+        if (saveNeedAds)
+        {
+            //popupInfo.SetDisableIds(new List<int>(){1});
+            popupInfo.SetCommandTextIds(_model.SaveAdsCommandTextIds());
+        } else
+        {
+        }
+        _view.CommandCallConfirm(popupInfo);
+        _view.ChangeUIActive(false);
+    }
+
     private void CommandSelectSideMenu(SystemData.CommandData sideMenu)
     {
         if (sideMenu.Key == "Retire")
@@ -830,6 +843,10 @@ public class TacticsPresenter :BasePresenter
         if (sideMenu.Key == "Help")
         {
             CommandRule();
+        }
+        if (sideMenu.Key == "Save")
+        {
+            CommandSave(false);
         }
     }
 

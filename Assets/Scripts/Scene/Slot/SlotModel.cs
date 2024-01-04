@@ -17,10 +17,12 @@ public class SlotModel : BaseModel
         }
     }
 
-    public void RegenerationActors()
+    public void ResetActors()
     {
         foreach (var actorInfo in Actors())
         {
+            actorInfo.ChangeLost(false);
+            actorInfo.ClearTacticsCommand();
             actorInfo.ChangeHp(9999);
             actorInfo.ChangeMp(9999);
         }

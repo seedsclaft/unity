@@ -301,7 +301,16 @@ public class BattlerInfo
         _hp = Math.Min(_hp,MaxHp);
         if (_hp <= 0)
         {
-            _stateInfos.Clear();
+            for (var i = _stateInfos.Count-1;i >= 0;i--)
+            {
+                if (_stateInfos[i].Master.RemoveByDeath)
+                {
+                    if (_stateInfos[i].IsStartPassive() == false)
+                    {
+                        RemoveState(_stateInfos[i],true);
+                    }
+                }
+            }
             var stateInfo = new StateInfo(StateType.Death,0,0,Index,Index,-1);
             AddState(stateInfo,true);
         }
@@ -330,6 +339,10 @@ public class BattlerInfo
             return false;
         }
         if (IsState(StateType.Chain))
+        {
+            return false;
+        }
+        if (IsState(StateType.Wait))
         {
             return false;
         }

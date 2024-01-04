@@ -22,6 +22,13 @@ public class BattleModel : BaseModel
     private List<ActionInfo> _battleActionRecords = new ();
     public List<ActionInfo> BattleActionRecords => _battleActionRecords;
 
+    // 行動したバトラー
+    private BattlerInfo _currentTurnBattler = null;
+    private BattlerInfo CurrentTurnBattler => _currentTurnBattler;
+    public void SetCurrentTurnBattler(BattlerInfo currentTurnBattler)
+    {
+        _currentTurnBattler = currentTurnBattler;
+    }
     private BattlerInfo _currentBattler = null;
     public BattlerInfo CurrentBattler => _currentBattler;
 
@@ -69,6 +76,7 @@ public class BattleModel : BaseModel
         {
             var baseEnemy = enemies[i];
             baseEnemy.ResetData();
+            //baseEnemy.GainHp(-9999);
             _battlers.Add(baseEnemy);
         }
         foreach (var battlerInfo1 in _battlers)
@@ -188,12 +196,14 @@ public class BattleModel : BaseModel
 
     public void AssignWaitBattler()
     {
-        var isActor = _battleActionRecords[_battleActionRecords.Count-1].SubjectIndex < 100 ? true : false;
-        var waitBattlerIndex = _battlers.FindIndex(a => a.isActor == isActor && a.IsAlive() && a.IsState(StateType.Wait));
-        if (waitBattlerIndex > -1)
+        if (_currentTurnBattler != null && _currentTurnBattler.isActor)
         {
-            _battlers[waitBattlerIndex].SetAp(0);
-            _battlers[waitBattlerIndex].EraseStateInfo(StateType.Wait);
+            var waitBattlerIndex = _party.AliveBattlerInfos.FindIndex(a => a.IsState(StateType.Wait));
+            if (waitBattlerIndex > -1)
+            {
+                _party.AliveBattlerInfos[waitBattlerIndex].SetAp(0);
+                _party.AliveBattlerInfos[waitBattlerIndex].EraseStateInfo(StateType.Wait);
+            }
         }
     }
 
@@ -2049,14 +2059,17 @@ public class BattleModel : BaseModel
         {
             if (battler.IsAlive() == false)
             {
-                foreach (var stateInfo in battler.StateInfos)
+                for (var i = battler.StateInfos.Count-1;i >= 0;i--)
                 {
-                    if (stateInfo.Master.RemoveByDeath)
+                    if (battler.StateInfos[i].Master.RemoveByDeath)
                     {
-                        battler.RemoveState(stateInfo,true);
-                        removeStateInfos.Add(stateInfo);
+                        if (battler.StateInfos[i].IsStartPassive() == false)
+                        {
+                            removeStateInfos.Add(battler.StateInfos[i]);
+                            battler.RemoveState(battler.StateInfos[i],true);
+                        }
                     }
-                }   
+                }
             }
         }
         /*

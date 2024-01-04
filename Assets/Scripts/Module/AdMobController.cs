@@ -37,7 +37,7 @@ public class AdMobController : SingletonMonoBehaviour<AdMobController>
             {
                 endEvent();
             }
-            LoadRewardedAd(null);
+            LoadRewardedAd(null,true);
         });
     }
 
@@ -167,7 +167,7 @@ public class AdMobController : SingletonMonoBehaviour<AdMobController>
     /// <summary>
     /// Loads the rewarded ad.
     /// </summary>
-    private void LoadRewardedAd(System.Action<bool> endEvent)
+    private void LoadRewardedAd(System.Action<bool> endEvent,bool isPreload = false)
     {
         // Clean up the old ad before loading a new one.
         if (_rewardedAd != null && _preloaded == false)
@@ -175,11 +175,19 @@ public class AdMobController : SingletonMonoBehaviour<AdMobController>
             _rewardedAd.Destroy();
             _rewardedAd = null;
         }
-        if (_preloaded == true && !_rewardedAd.CanShowAd())
+        if (_preloaded && _rewardedAd != null && !_rewardedAd.CanShowAd())
         {
             _preloaded = false;
             _rewardedAd.Destroy();
             _rewardedAd = null;
+        }
+        if (_preloaded && _rewardedAd != null && _rewardedAd.CanShowAd() && isPreload == false)
+        {
+            _preloaded = false;
+            if (endEvent != null){
+                endEvent(true);
+            }
+            return;
         }
 
         Debug.Log("Loading the rewarded ad.");
@@ -206,7 +214,8 @@ public class AdMobController : SingletonMonoBehaviour<AdMobController>
                 _rewardedAd = ad;
                 if (endEvent != null){
                     endEvent(true);
-                } else
+                }
+                if (isPreload)
                 {
                     _preloaded = true;
                 }
@@ -262,7 +271,7 @@ public class AdMobController : SingletonMonoBehaviour<AdMobController>
         ad.OnAdFullScreenContentClosed += () =>
         {
             Debug.Log("Rewarded ad full screen content closed.");
-            LoadRewardedAd(null);
+            LoadRewardedAd(null,true);
         };
         // Raised when the ad failed to open full screen content.
         ad.OnAdFullScreenContentFailed += (AdError error) =>
@@ -274,7 +283,6 @@ public class AdMobController : SingletonMonoBehaviour<AdMobController>
             {
                 rewardEvent(false);
             }
-            LoadRewardedAd(null);
         };
     }
 

@@ -459,6 +459,14 @@ public class TacticsModel : BaseModel
         menuCommand.Name = DataSystem.GetTextData(703).Text;
         menuCommand.Key = "Help";
         list.Add(menuCommand);
+        if (CurrentStage.SurvivalMode == false)
+        {
+            var saveCommand = new SystemData.CommandData();
+            saveCommand.Id = 3;
+            saveCommand.Name = DataSystem.GetTextData(707).Text;
+            saveCommand.Key = "Save";
+            list.Add(saveCommand);
+        }
         return list;
     }
 
