@@ -96,7 +96,13 @@ public class StrategyModel : BaseModel
                     var alchemyBonus = PartyInfo.GetAlchemyBonusValue();
                     if (alchemyBonus)
                     {
-                        var getSkillDates = DataSystem.Skills.FindAll(a => a.Rank == 1 && a.Attribute == skillData.Attribute && !PartyInfo.AlchemyIdList.Contains(a.Id));
+                        var getSkillDates = new List<SkillData>();//  DataSystem.Skills.FindAll(a => a.Rank == 1 && a.Attribute == skillData.Attribute && !PartyInfo.AlchemyIdList.Contains(a.Id));
+                        while (getSkillDates.Count == 0)
+                        {
+                            // 属性を決定
+                            var attributeType = actorInfo.AlchemyAttribute(StageMembers());
+                            getSkillDates = DataSystem.Skills.FindAll(a => a.Rank == 1 && a.Attribute == attributeType && !PartyInfo.AlchemyIdList.Contains(a.Id));
+                        }
                         if (getSkillDates.Count > 0)
                         {
                             var bonusGetItemInfo = new GetItemInfo(null);

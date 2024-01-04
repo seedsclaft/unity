@@ -410,7 +410,7 @@ public class ActorInfo
         _lost = isLost;
     }
 
-    public List<AttributeRank> AttributeParams(List<ActorInfo> actorInfos)
+    public List<AttributeRank> AttributeRanks(List<ActorInfo> actorInfos)
     {
         var alchemyFeatures = new List<SkillData.FeatureData>();
         foreach (var actorInfo in actorInfos)
@@ -436,8 +436,12 @@ public class ActorInfo
             {
                 if (alchemyFeature.Param2 == idx)
                 {
-                    attributeValue += alchemyFeature.Param3;
+                    attributeValue -= alchemyFeature.Param3;
                 }
+            }
+            if (attributeValue < 0)
+            {
+                attributeValue = AttributeRank.S;
             }
             attributeValues.Add(attributeValue);
             idx++;
@@ -447,7 +451,7 @@ public class ActorInfo
 
     public List<string> AttributeValues(List<ActorInfo> actorInfos)
     {
-        var attributeParams = AttributeParams(actorInfos);
+        var attributeParams = AttributeRanks(actorInfos);
         var attributeValues = new List<string>();
         foreach (var attribute in GetAttributeRank())
         {
@@ -455,6 +459,39 @@ public class ActorInfo
             attributeValues.Add(DataSystem.GetTextData(textId).Text);
         }
         return attributeValues;
+    }
+
+    private List<int> AlchemyAttributeRates(List<ActorInfo> actorInfos)
+    {
+        var attributeRanks = AttributeRanks(actorInfos);
+        var rateList = new List<int>();
+        foreach (var attributeRank in attributeRanks)
+        {
+            var rate = (int)AttributeRank.G - (int)attributeRank;
+            rateList.Add(rate * 50);
+        }
+        return rateList;
+    }
+
+    public AttributeType AlchemyAttribute(List<ActorInfo> actorInfos)
+    {
+        var alchemyAttributeRates = AlchemyAttributeRates(actorInfos);
+        int targetRand = 0;
+        foreach (var alchemyAttributeRate in alchemyAttributeRates)
+        {
+            targetRand += alchemyAttributeRate;
+        }
+        targetRand = UnityEngine.Random.Range (0,targetRand);
+        int targetIndex = -1;
+        for (int i = 0;i < alchemyAttributeRates.Count;i++)
+        {
+            targetRand -= alchemyAttributeRates[i];
+            if (targetRand <= 0 && targetIndex == -1)
+            {
+                targetIndex = i;
+            }
+        }
+        return (AttributeType)(targetIndex+1);
     }
 
     public void GainDemigod(int param)

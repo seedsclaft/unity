@@ -89,23 +89,23 @@ public class ActorInfoComponent : MonoBehaviour
         }
         if (element1 != null)
         {
-            UpdateAttributeParam(element1,actorInfo.GetAttributeRank()[0]);
+            UpdateAttributeRank(element1,actorInfo,AttributeType.Fire,actorInfos);
         }
         if (element2 != null)
         {
-            UpdateAttributeParam(element2,actorInfo.GetAttributeRank()[1]);
+            UpdateAttributeRank(element2,actorInfo,AttributeType.Thunder,actorInfos);
         }
         if (element3 != null)
         {
-            UpdateAttributeParam(element3,actorInfo.GetAttributeRank()[2]);
+            UpdateAttributeRank(element3,actorInfo,AttributeType.Ice,actorInfos);
         }
         if (element4 != null)
         {
-            UpdateAttributeParam(element4,actorInfo.GetAttributeRank()[3]);
+            UpdateAttributeRank(element4,actorInfo,AttributeType.Shine,actorInfos);
         }
         if (element5 != null)
         {
-            UpdateAttributeParam(element5,actorInfo.GetAttributeRank()[4]);
+            UpdateAttributeRank(element5,actorInfo,AttributeType.Dark,actorInfos);
         }
         if (element1Cost != null)
         {
@@ -139,6 +139,17 @@ public class ActorInfoComponent : MonoBehaviour
         if (evaluate != null)
         {
             evaluate.text = actorInfo.Evaluate().ToString();
+        }
+    }
+
+    private void UpdateAttributeRank(TextMeshProUGUI text,ActorInfo actorInfo,AttributeType attributeType,List<ActorInfo> actorInfos)
+    {
+        if (actorInfos != null)
+        {
+            UpdateAttributeParam(text,actorInfo.AttributeRanks(actorInfos)[(int)attributeType-1]);
+        } else
+        {
+            UpdateAttributeParam(text,actorInfo.GetAttributeRank()[(int)attributeType-1]);
         }
     }
 

@@ -31,7 +31,7 @@ public class TacticsUtility
             }
         }
         int cost = 4;
-        var param = actorInfo.AttributeParams(stageMembers)[(int)attributeType-1];
+        var param = actorInfo.AttributeRanks(stageMembers)[(int)attributeType-1];
         switch (param)
         {
             case AttributeRank.S:

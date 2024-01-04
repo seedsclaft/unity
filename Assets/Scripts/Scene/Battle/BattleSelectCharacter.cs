@@ -233,12 +233,17 @@ public class BattleSelectCharacter : MonoBehaviour
         {
             return;
         }
-        var selectObj = magicList.ObjectList[magicList.Index];
-        foreach (var gameObject in magicList.ObjectList)
+        if (magicList.ObjectList.Count > magicList.Index)
         {
-            var rect = gameObject.GetComponent<RectTransform>();
-            var cardWidth = (selectObj != gameObject) ? 184 : 264;
-            rect.sizeDelta = new Vector2(cardWidth,240);
+            var selectObj = magicList.ObjectList[magicList.Index];
+            foreach (var gameObject in magicList.ObjectList)
+            {
+                var rect = gameObject.GetComponent<RectTransform>();
+                var cardWidth = (selectObj != gameObject) ? 184 : 264;
+                rect.sizeDelta = new Vector2(cardWidth,240);
+            }
+            selectObj.SetActive(false);
+            selectObj.SetActive(true);
         }
         var listRect = magicList.ScrollRect.gameObject.GetComponent<RectTransform>();
         var height = 8;
@@ -247,9 +252,6 @@ public class BattleSelectCharacter : MonoBehaviour
             height = 0;
         }
         listRect.localPosition = new Vector3(listRect.localPosition.x,height,listRect.localPosition.z);
-        
-        selectObj.SetActive(false);
-        selectObj.SetActive(true);
     }
     
 }
