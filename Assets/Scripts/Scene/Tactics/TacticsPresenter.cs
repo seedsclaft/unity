@@ -532,7 +532,7 @@ public class TacticsPresenter :BasePresenter
         // ロード非表示
         _view.CommandLoadingClose();
         _model.GainSaveCount();
-        SaveSystem.SaveStageInfo(GameSystem.CurrentStageData);
+        _model.SavePlayerStageData(true);
         if (isReturnScene)
         {
             _view.CommandSceneChange(Scene.Tactics);
@@ -562,6 +562,14 @@ public class TacticsPresenter :BasePresenter
 
     private void CommandTacticsCommand(TacticsCommandType tacticsCommandType)
     {
+        // 救済執行の相手がいない場合
+        if (tacticsCommandType == TacticsCommandType.Battle && _model.TacticsTroops().Count == 0)
+        {
+            var confirmInfo = new ConfirmInfo(DataSystem.GetTextData(1130).Text,(a) => UpdateNoTacticsTroops((ConfirmCommandType)a));
+            confirmInfo.SetIsNoChoice(true);
+            _view.CommandCallConfirm(confirmInfo);
+            return;
+        }
         _model.SetTacticsCommandType(tacticsCommandType);
         _model.SetTempData(tacticsCommandType);
         switch (tacticsCommandType)
@@ -734,6 +742,12 @@ public class TacticsPresenter :BasePresenter
         {
             CommandTacticsCommand(TacticsCommandType.TurnEnd);
         }
+    }
+
+    private void UpdateNoTacticsTroops(ConfirmCommandType confirmCommandType)
+    {
+        Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
+        _view.CommandConfirmClose();
     }
 
     private void CommandSelectActorResource(int actorId)

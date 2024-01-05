@@ -64,7 +64,6 @@ public class StageInfo
     private int _defineBossIndex = 0;
     public int DefineBossIndex => _defineBossIndex;
 
-    private int _randomTroopCount = 15;
 
     private EndingType _endingType = EndingType.C;
     public EndingType EndingType => _endingType;
@@ -94,7 +93,6 @@ public class StageInfo
         _subordinateValue = 0;
         _troopClearCount = 0;
         _savedCount = 0;
-        _randomTroopCount = stageData.RandomTroopCount;
         _clearTroopIds.Clear();
 		MakeTroopData();
     }
@@ -112,7 +110,7 @@ public class StageInfo
     // 雑魚敵グループを生成
 	private void MakeTroopData()
 	{
-		for (int i = 1;i < _randomTroopCount;i++)
+		for (int i = 1;i < Master.RandomTroopCount;i++)
 		{
 			var BossTroopData = new TroopData();
 			BossTroopData.Id = i;
@@ -134,20 +132,20 @@ public class StageInfo
     {
         if (_currentTroopInfos.Count > 0) return _currentTroopInfos; 
         _currentTroopInfos.Clear();
-        var troopDates = _troopDates.FindAll(a => !_clearTroopIds.Contains(a.Id) && a.Line == LineType.Back);
+        var remainTroopDates = _troopDates.FindAll(a => !_clearTroopIds.Contains(a.Id) && a.Line == LineType.Back);
         int max = 2;
-        if (troopDates.Count < 2)
+        if (remainTroopDates.Count < 2)
         {
-            max = troopDates.Count - 1;
+            max = remainTroopDates.Count;
         }
         var troopsData = new List<TroopData>();
-        while (troopsData.Count <= max)
+        while (troopsData.Count < max)
         {
-            int rand = new Random().Next(0, troopDates.Count);
-            if (!troopsData.Contains(troopDates[rand]))
+            int rand = new Random().Next(0, remainTroopDates.Count);
+            if (!troopsData.Contains(remainTroopDates[rand]))
             {
-                troopDates[rand].Lv = _troopClearCount + 1;
-                troopsData.Add(troopDates[rand]);
+                remainTroopDates[rand].Lv = _troopClearCount + 1;
+                troopsData.Add(remainTroopDates[rand]);
             }
         }
         int enemyCount = 2;
@@ -156,13 +154,13 @@ public class StageInfo
             var troopInfo = new TroopInfo(troopsData[i].TroopId,true);
 			for (int j = 0;j < enemyCount;j++)
 			{
-        		int rand = new System.Random().Next(1, _randomTroopCount);
+        		int rand = new System.Random().Next(1, Master.RandomTroopCount);
                 var enemyData = DataSystem.Enemies.Find(a => a.Id == rand);
                 var enemy = new BattlerInfo(enemyData,_troopClearCount + 1,j,0,false);
                 troopInfo.AddEnemy(enemy);
             }
             var bossData = DataSystem.Enemies.Find(a => a.Id == troopsData[i].EnemyId);
-            var boss = new BattlerInfo(bossData,_troopClearCount + 1,troopInfo.BattlerInfos.Count,troopDates[i].Line,troopDates[i].BossFlag);
+            var boss = new BattlerInfo(bossData,_troopClearCount + 1,troopInfo.BattlerInfos.Count,remainTroopDates[i].Line,remainTroopDates[i].BossFlag);
             troopInfo.AddEnemy(boss);
             troopInfo.MakeGetItemInfos();
             _currentTroopInfos.Add(troopInfo);
@@ -260,7 +258,15 @@ public class StageInfo
             var troopDates = DataSystem.Troops.FindAll(a => a.TroopId == defineTroopId);
             var troopInfo = new TroopInfo(defineTroopId,true);
             troopInfo.MakeEnemyTroopDates(_troopClearCount + 1,_displayTurns);
-            _currentTroopInfos[_currentTroopInfos.Count-1] = troopInfo;
+            if (_currentTroopInfos.Count == 3)
+            {
+                // 上書き
+                _currentTroopInfos[_currentTroopInfos.Count-1] = troopInfo;
+            } else
+            {
+                // 後入れ
+                _currentTroopInfos.Add(troopInfo);
+            }
         }
     }
 

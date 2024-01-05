@@ -108,7 +108,7 @@ public class StatusPresenter : BasePresenter
                     _view.CommandSceneChange(Scene.AlcanaSelect);
                 } else
                 {
-                    _model.SavePlayerStageData(true);
+                    // ステージに戻る
                     _view.CommandSceneChange(Scene.Tactics);
                 }
             } else{

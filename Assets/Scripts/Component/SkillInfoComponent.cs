@@ -159,12 +159,12 @@ public class SkillInfoComponent : MonoBehaviour
     public void UpdateRebornInfo(SkillInfo rebornSkillInfo)
     {
         var skillData = DataSystem.FindSkill(rebornSkillInfo.Id);
-        var addSkillData = DataSystem.FindSkill(rebornSkillInfo.Param1);
+        var rebornAddSkill = skillData.FeatureDates.Find(a => a.FeatureType == FeatureType.RebornAddSkill) != null;
         if (nameText != null)
         {
-            if (addSkillData != null)
+            if (rebornAddSkill)
             {
-                nameText.text = skillData.Name.Replace("\\d",addSkillData.Name);
+                nameText.text = skillData.Name.Replace("\\d",DataSystem.FindSkill(rebornSkillInfo.Param1).Name);
             } else
             {
                 nameText.text = skillData.Name.Replace("\\d",rebornSkillInfo.Param1.ToString());

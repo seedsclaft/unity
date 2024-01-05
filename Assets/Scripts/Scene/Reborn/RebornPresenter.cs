@@ -88,6 +88,7 @@ public class RebornPresenter :BasePresenter
                 _view.CommandSceneChange(Scene.AlcanaSelect);
             } else
             {
+                _model.SavePlayerStageData(true);
                 _view.CommandSceneChange(Scene.Tactics);
             }
             Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
