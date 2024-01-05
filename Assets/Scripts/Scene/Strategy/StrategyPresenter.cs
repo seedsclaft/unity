@@ -345,6 +345,7 @@ public class StrategyPresenter : BasePresenter
         _view.CommandConfirmClose();
         if (confirmCommandType == ConfirmCommandType.Yes)
         {
+            Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
             var needAdsContinue = _model.NeedAdsContinue();
             if (needAdsContinue)
             {
@@ -370,6 +371,7 @@ public class StrategyPresenter : BasePresenter
         } else
         if (confirmCommandType == ConfirmCommandType.No)
         {
+            Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cancel);
             _model.LostActors(_model.LostMembers());
         }
     }

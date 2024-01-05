@@ -209,7 +209,7 @@ public class StageInfo
         var troopInfo = new TroopInfo(bossDates[randIndex].TroopId,false);
 
         var bossEnemy = DataSystem.Enemies.Find(a => a.Id == bossDates[randIndex].EnemyId);
-        var boss = new BattlerInfo(bossEnemy,bossDates[randIndex].Lv + 30 + turns * 2,0,bossDates[randIndex].Line,true);
+        var boss = new BattlerInfo(bossEnemy,bossDates[randIndex].Lv + 30 + turns,0,bossDates[randIndex].Line,true);
         troopInfo.AddEnemy(boss);
 
         var enemyCount = 0;

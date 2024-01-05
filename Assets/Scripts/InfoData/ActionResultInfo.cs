@@ -211,6 +211,11 @@ public class ActionResultInfo
         }
         if (!IsHit(subject,target,isOneTarget))
         {
+            if (subject.IsState(StateType.AbsoluteHit))
+            {
+                SeekStateCount(subject,StateType.AbsoluteHit);
+                return true;
+            }
             _missed = true;
             return false;
         }
@@ -219,10 +224,6 @@ public class ActionResultInfo
 
     private bool IsHit(BattlerInfo subject,BattlerInfo target,bool isOneTarget)
     {
-        if (subject.IsState(StateType.AbsoluteHit))
-        {
-            return true;
-        }
         if (target.IsState(StateType.Chain))
         {
             return true;

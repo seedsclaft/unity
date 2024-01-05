@@ -2139,7 +2139,7 @@ MonoBehaviour:
     Scope: 4
     SkillType: 2
     TargetType: 4
-    Help: "\u5168\u3066\u306E\u9B54\u6CD5\u304C\u56DE\u907F\u3055\u308C\u306A\u304F\u306A\u308B"
+    Help: "(\u5236\u9650)\u30D0\u30C8\u30EB\u4E2D3\u56DE\u307E\u3067\n\u9B54\u6CD5\u304C\u56DE\u907F\u3055\u308C\u305F\u6642\u3067\u3082\u547D\u4E2D\u3059\u308B"
     Range: 1
     RepeatTime: 1
     AliveOnly: 1
@@ -2147,7 +2147,7 @@ MonoBehaviour:
     - SkillId: 14070
       FeatureType: 21
       Param1: 2240
-      Param2: 999
+      Param2: 3
       Param3: 0
     TriggerDates:
     - SkillId: 14070
@@ -2325,7 +2325,7 @@ MonoBehaviour:
     Scope: 4
     SkillType: 2
     TargetType: 4
-    Help: "(\u6761\u4EF6)\u6226\u95D8\u958B\u59CB\u6642Hp\u304C50%\u4EE5\u4E0B\n\\s\u306EHp\u304C20\u56DE\u5FA9"
+    Help: "(\u6761\u4EF6)\u30D0\u30C8\u30EB\u958B\u59CB\u6642Hp\u304C50%\u4EE5\u4E0B\n\\s\u306EHp\u304C20\u56DE\u5FA9"
     Range: 1
     RepeatTime: 1
     AliveOnly: 1
@@ -3461,7 +3461,7 @@ MonoBehaviour:
       Param3: 0
     TriggerDates: []
   - Id: 400201
-    Name: \d
+    Name: "\\d\u5165\u624B"
     IconIndex: 6
     AnimationName: 
     AnimationPosition: 0

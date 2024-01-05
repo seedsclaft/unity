@@ -159,9 +159,16 @@ public class SkillInfoComponent : MonoBehaviour
     public void UpdateRebornInfo(SkillInfo rebornSkillInfo)
     {
         var skillData = DataSystem.FindSkill(rebornSkillInfo.Id);
+        var addSkillData = DataSystem.FindSkill(rebornSkillInfo.Param1);
         if (nameText != null)
         {
-            nameText.text = skillData.Name.Replace("\\d",rebornSkillInfo.Param1.ToString());
+            if (addSkillData != null)
+            {
+                nameText.text = skillData.Name.Replace("\\d",addSkillData.Name);
+            } else
+            {
+                nameText.text = skillData.Name.Replace("\\d",rebornSkillInfo.Param1.ToString());
+            }
             if (nameAndMpCost)
             {
                 nameText.rectTransform.sizeDelta = new Vector2(nameText.preferredWidth,nameText.preferredHeight);

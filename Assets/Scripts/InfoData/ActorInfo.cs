@@ -206,14 +206,6 @@ public class ActorInfo
             _lastSelectSkillId = selectSkill.Id;
         }
 
-        foreach (var learningSkills in Master.LearningSkills)
-        {
-            for (int i = 0;i < learningSkills.DeckNum;i++)
-            {
-                var skillInfo = new SkillInfo(learningSkills.SkillId);
-                skillInfo.SetLearningState(LearningState.Learned);
-            }
-        }
     }
 
     public void ResetData()

@@ -15,7 +15,7 @@ MonoBehaviour:
   Data:
   - Id: 3
     TroopId: 401
-    EnemyId: 103
+    EnemyId: 104
     Lv: 1
     BossFlag: 1
     Line: 1
@@ -23,10 +23,18 @@ MonoBehaviour:
     GetItemDates: []
   - Id: 2
     TroopId: 401
-    EnemyId: 2
+    EnemyId: 6
     Lv: 1
     BossFlag: 1
-    Line: 1
+    Line: 0
+    StageTurn: 0
+    GetItemDates: []
+  - Id: 1
+    TroopId: 401
+    EnemyId: 6
+    Lv: 1
+    BossFlag: 1
+    Line: 0
     StageTurn: 0
     GetItemDates: []
   - Id: 1

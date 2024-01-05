@@ -87,6 +87,14 @@ public class SaveStageInfo
 			var actorInfo = new ActorInfo(actorData);
 			_actors.Add(actorInfo);
 			_party.AddActor(actorInfo.ActorId);
+			for (int i = 0;i < actorData.LearningSkills.Count;i++)
+			{
+				var _learningData = actorData.LearningSkills[i];
+				if (actorInfo.Skills.Find(a =>a.Id == _learningData.SkillId) != null) continue;
+				var skillInfo = new SkillInfo(_learningData.SkillId);
+				skillInfo.SetLearningState(LearningState.Learned);
+				actorInfo.Skills.Add(skillInfo);
+			}
 		}
 	}
 
