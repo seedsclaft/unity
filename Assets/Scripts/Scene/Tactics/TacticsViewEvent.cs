@@ -18,7 +18,6 @@ namespace Tactics
     public enum CommandType
     {
         None = 0,
-        AddAlcana,
         TacticsCommand,
         SelectTacticsActor, // アクターを決定
         TacticsCommandClose,
@@ -30,8 +29,7 @@ namespace Tactics
         SelectBattleEnemy,
         PopupSkillInfo,
         EnemyClose,
-        SelectActorResource,
-        OpenAlcana,
+        //SelectActorResource,
         CallEnemyInfo,
         Back,
         Rule,

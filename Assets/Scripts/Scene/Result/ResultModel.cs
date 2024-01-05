@@ -350,4 +350,17 @@ public class ResultModel : BaseModel
     {
         CurrentData.PlayerInfo.EraseReborn(_rebornActorIndex);
     }
+
+    public SlotInfo MakeSlotInfo()
+    {
+        var list = new List<ActorInfo>();
+        foreach (var evaluateMember in EvaluateMembers())
+        {
+            evaluateMember.ResetData();
+            list.Add(evaluateMember);
+        }
+        var slotInfo = new SlotInfo(EvaluateMembers());
+        slotInfo.SetTimeRecord();
+        return slotInfo;
+    }
 }

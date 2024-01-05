@@ -21,10 +21,7 @@ public class SlotModel : BaseModel
     {
         foreach (var actorInfo in Actors())
         {
-            actorInfo.ChangeLost(false);
-            actorInfo.ClearTacticsCommand();
-            actorInfo.ChangeHp(9999);
-            actorInfo.ChangeMp(9999);
+            actorInfo.ResetData();
         }
     }
 }

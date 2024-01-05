@@ -125,8 +125,6 @@ public class ActorInfo
             rankingActorData.Def - _baseStatus.Def,
             rankingActorData.Spd - _baseStatus.Spd
         );
-            
-        
     }
 
     public void CopyData(ActorInfo baseActorInfo)
@@ -216,6 +214,14 @@ public class ActorInfo
                 skillInfo.SetLearningState(LearningState.Learned);
             }
         }
+    }
+
+    public void ResetData()
+    {
+        ChangeLost(false);
+        ClearTacticsCommand();
+        ChangeHp(9999);
+        ChangeMp(9999);
     }
 
     public StatusInfo LevelUp(int bonus)

@@ -119,7 +119,6 @@ public class TacticsView : BaseView
         tacticsCommandList.SetInputHandler(InputKeyType.Decide,() => CallTacticsCommand());
         tacticsCommandList.SetInputHandler(InputKeyType.Option1,() => CommandOpenSideMenu());
         tacticsCommandList.SetInputHandler(InputKeyType.SideLeft1,() => OnClickDropout());
-        tacticsCommandList.SetInputHandler(InputKeyType.Option2,() => CallAlcanaEvent());
         tacticsCommandList.SetSelectedHandler(() => UpdateHelpWindow());
         SetInputHandler(tacticsCommandList.GetComponent<IInputHandlerEvent>());
         UpdateHelpWindow();
@@ -157,12 +156,6 @@ public class TacticsView : BaseView
             _commandData(eventData);
             _lastCallEventType = eventData.commandType;
         }
-    }
-
-    private void CallAlcanaEvent()
-    {
-        var eventData = new TacticsViewEvent(CommandType.OpenAlcana);
-        _commandData(eventData);
     }
 
     public void SetSelectCharacter(List<ActorInfo> actorInfos,List<ListData> confirmCommands,Dictionary<TacticsCommandType, int> commandRankInfo)
@@ -485,11 +478,6 @@ public class TacticsView : BaseView
     public void StartAlcanaAnimation(System.Action endEvent)
     {
         tacticsAlcana.StartAlcanaAnimation(endEvent);
-    }
-
-    public void UseAlcana(System.Action endEvent)
-    {
-        tacticsAlcana.UseAnim(endEvent);
     }
 
     private void CallAlcanaCheck()

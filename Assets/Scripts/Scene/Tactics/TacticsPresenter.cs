@@ -257,10 +257,6 @@ public class TacticsPresenter :BasePresenter
                 _view.CommandCallTutorialFocus(_model.CurrentStageTutorialDates[0]);
             }
         }
-        if (viewEvent.commandType == Tactics.CommandType.AddAlcana)
-        {
-            CommandAddAlcana();
-        }
         if (viewEvent.commandType == Tactics.CommandType.TacticsCommand)
         {
             Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
@@ -348,16 +344,14 @@ public class TacticsPresenter :BasePresenter
         {
             CommandEnemyClose();
         }
+        /*
         if (viewEvent.commandType == Tactics.CommandType.SelectActorResource)
         {
             int actorId = (int)viewEvent.template;
             if (CheckBusyOther(actorId,TacticsCommandType.Resource)) return;
             CommandSelectActorResource(actorId);
         }
-        if (viewEvent.commandType == Tactics.CommandType.OpenAlcana)
-        {
-            CommandOpenAlcana();
-        }
+        */
         if (viewEvent.commandType == Tactics.CommandType.CallEnemyInfo)
         {
             if (_model.CurrentStageTutorialDates.Count > 0) return;
@@ -462,8 +456,10 @@ public class TacticsPresenter :BasePresenter
         }
         if (confirmCommandType == ConfirmCommandType.No && _model.TacticsCommandType != TacticsCommandType.TurnEnd)
         {        
+            Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cancel);
             _view.ActivateTacticsCommand();
         }
+        CommandRefresh();
         _view.CommandConfirmClose();
     }
 
@@ -548,7 +544,7 @@ public class TacticsPresenter :BasePresenter
 
     private void UpdatePopupSkillInfo(ConfirmCommandType confirmCommandType)
     {
-        _view.CommandConfirmClose();
+        _view.CommandPopupClose();
     }
 
     private void CommandBack()
@@ -562,11 +558,6 @@ public class TacticsPresenter :BasePresenter
         }
         UpdateCommand(eventData);
         Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cancel);
-    }
-
-    private void CommandAddAlcana()
-    {
-        CommandRefresh();
     }
 
     private void CommandTacticsCommand(TacticsCommandType tacticsCommandType)
@@ -604,11 +595,11 @@ public class TacticsPresenter :BasePresenter
             _model.SetStageActor();
             var statusViewInfo = new StatusViewInfo(() => {
                 _view.CommandStatusClose();
-                CommandShowUi();
+                _view.ChangeUIActive(true);
                 _view.ShowCommandList();
                 _view.SetHelpInputInfo("TACTICS");
             });
-            CommandHideUi();
+            _view.ChangeUIActive(false);
             statusViewInfo.SetDisplayDecideButton(false);
             _view.CommandCallStatus(statusViewInfo);
         }
@@ -708,7 +699,6 @@ public class TacticsPresenter :BasePresenter
         CommandRefresh();
     }
 
-
     private void CommandSelectBattleEnemy(int enemyIndex)
     {
         _model.SetTempData(TacticsCommandType.Battle);
@@ -752,7 +742,6 @@ public class TacticsPresenter :BasePresenter
         CommandRefresh();
     }
 
-
     private void CommandRefresh()
     {
         _view.SetTurns(_model.RemainTurns);
@@ -768,20 +757,6 @@ public class TacticsPresenter :BasePresenter
         }
     }
 
-    private void CommandShowUi()
-    {
-        _view.ChangeUIActive(true);
-    }
-
-    private void CommandHideUi()
-    {
-        _view.ChangeUIActive(false);
-    }
-
-    private void CommandOpenAlcana()
-    {
-    }
-
     private void CommandCallEnemyInfo(int troopInfoIndex)
     {
         var enemyInfos = _model.TacticsTroops()[troopInfoIndex].BattlerInfos;
@@ -795,7 +770,6 @@ public class TacticsPresenter :BasePresenter
         _view.ChangeUIActive(false);
         Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
     }
-
 
     private void CommandRule()
     {
@@ -820,7 +794,7 @@ public class TacticsPresenter :BasePresenter
     {
         var savePopupTitle = _model.SavePopupTitle();
         var saveNeedAds = _model.NeedAdsSave();
-        var popupInfo = new ConfirmInfo(savePopupTitle,(a) => UpdatePopupSaveCommand((ConfirmCommandType)a,false));
+        var popupInfo = new ConfirmInfo(savePopupTitle,(a) => UpdatePopupSaveCommand((ConfirmCommandType)a,isReturnScene));
         
         popupInfo.SetSelectIndex(1);
         if (saveNeedAds)
@@ -846,6 +820,7 @@ public class TacticsPresenter :BasePresenter
         }
         if (sideMenu.Key == "Save")
         {
+            Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
             CommandSave(false);
         }
     }

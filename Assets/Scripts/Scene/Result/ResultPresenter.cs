@@ -277,9 +277,7 @@ public class ResultPresenter : BasePresenter
             _isSlotSaveEnd = true;
             _view.CommandPopupClose();
         };
-        var slotInfo = new SlotInfo(_model.EvaluateMembers());
-        slotInfo.SetTimeRecord();
-        slotView.SlotInfo = slotInfo;
+        slotView.SlotInfo = _model.MakeSlotInfo();
         _view.CommandSlotSave(slotView);
     }
 

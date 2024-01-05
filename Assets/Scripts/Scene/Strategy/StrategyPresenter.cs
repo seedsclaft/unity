@@ -84,7 +84,7 @@ public class StrategyPresenter : BasePresenter
 
     private void UpdatePopupSkillInfo(ConfirmCommandType confirmCommandType)
     {
-        _view.CommandConfirmClose();
+        _view.CommandPopupClose();
     }
 
     private void UpdatePopupLost(ConfirmCommandType confirmCommandType)

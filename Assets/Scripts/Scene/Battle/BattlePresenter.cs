@@ -201,6 +201,7 @@ public class BattlePresenter : BasePresenter
 
     private void CommandEscape()
     {
+        Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
         if (_model.EnableEscape())
         {
             var popupInfo = new ConfirmInfo(DataSystem.GetTextData(410).Text,(a) => UpdatePopupEscape((ConfirmCommandType)a));
