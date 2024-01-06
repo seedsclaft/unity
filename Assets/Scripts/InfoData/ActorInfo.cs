@@ -542,10 +542,7 @@ public class ActorInfo
 
     public void AddRebornSkill(SkillInfo rebornSkillInfo)
     {
-        if (_rebornSkillInfos == null)
-        {
-            _rebornSkillInfos = new List<SkillInfo>();
-        }
+        rebornSkillInfo.SetEnable(true);
         _rebornSkillInfos.Add(rebornSkillInfo);
     }
 }

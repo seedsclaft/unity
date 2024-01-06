@@ -62,14 +62,7 @@ public class AlcanaSelectModel : BaseModel
     public void SetStageAlcanaList()
     {
         CurrentStageData.StageAlcana.ClearOwnAlcanaList();
-        /*
         foreach (var selectedAlcana in _selectedAlcanaList)
-        {
-            selectedAlcana.SetEnable(true);
-            CurrentStageData.CurrentAlcana.AddAlcana(selectedAlcana);
-        }
-        */
-        foreach (var selectedAlcana in CurrentData.AlcanaInfo.OwnAlcanaList)
         {
             selectedAlcana.SetEnable(true);
             CurrentStageData.StageAlcana.AddAlcana(selectedAlcana);
