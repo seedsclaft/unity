@@ -749,7 +749,7 @@ MonoBehaviour:
     Scope: 1
     SkillType: 1
     TargetType: 1
-    Help: "\\s\u306B\u30C0\u30E1\u30FC\u30B8\n\u30A2\u30F3\u30C7\u30C3\u30C9\u7279\u653B\u30C0\u30E1\u30FC\u30B8"
+    Help: "\\s\u306B\u30C0\u30E1\u30FC\u30B8\n\u30A2\u30F3\u30C7\u30C3\u30C9\u306B\u306F2\u500D\u306E\u30C0\u30E1\u30FC\u30B8"
     Range: 1
     RepeatTime: 1
     AliveOnly: 1
@@ -779,8 +779,8 @@ MonoBehaviour:
     Scope: 1
     SkillType: 1
     TargetType: 1
-    Help: "\u5BFE\u8C61\u306E\u52B9\u679C\u3092\u7121\u8996\u3057\u3066\u653B\u6483
-      \n\u30A2\u30F3\u30C7\u30C3\u30C9\u7279\u653B\u30C0\u30E1\u30FC\u30B8"
+    Help: "\u5BFE\u8C61\u306E\u72B6\u614B\u52B9\u679C\u3092\u7121\u8996\u3057\u3066\u653B\u6483
+      \n\u30A2\u30F3\u30C7\u30C3\u30C9\u306B\u306F2\u500D\u306E\u30C0\u30E1\u30FC\u30B8"
     Range: 1
     RepeatTime: 1
     AliveOnly: 1
@@ -810,7 +810,7 @@ MonoBehaviour:
     Scope: 1
     SkillType: 1
     TargetType: 3
-    Help: "\u6575\u5473\u65B9\u4E00\u4EBA\u306EHp\u309225\u56DE\u5FA9\n\u30A2\u30F3\u30C7\u30C3\u30C9\u72B6\u614B\u306E\u76F8\u624B\u306B\u7279\u653B\u30C0\u30E1\u30FC\u30B8"
+    Help: "\u6575\u5473\u65B9\u4E00\u4EBA\u306EHp\u309225\u56DE\u5FA9\n\u30A2\u30F3\u30C7\u30C3\u30C9\u306B\u306F2\u500D\u306E\u30C0\u30E1\u30FC\u30B8"
     Range: 1
     RepeatTime: 1
     AliveOnly: 1
@@ -1076,7 +1076,7 @@ MonoBehaviour:
     Scope: 1
     SkillType: 1
     TargetType: 1
-    Help: "\\s\u306B\u6697\u95C7(\u547D\u4E2D\u738725%\u30C0\u30A6\u30F3)\u3092\u4ED8\u4E0E(\u6C38\u7D9A)"
+    Help: "\\s\u306B\u6697\u95C7(Magic\u547D\u4E2D\u738725%\u30C0\u30A6\u30F3)\u3092\u4ED8\u4E0E(\u6C38\u7D9A)"
     Range: 1
     RepeatTime: 1
     AliveOnly: 1
@@ -2847,7 +2847,7 @@ MonoBehaviour:
     SkillType: 4
     TargetType: 1
     Help: "(\u6761\u4EF6)\u795E\u5316\u72B6\u614B\n\\s\u306B3\u9023\u30C0\u30E1\u30FC\u30B8
-      \u30A2\u30F3\u30C7\u30C3\u30C9\u7279\u653B \u795E\u5316\u89E3\u9664"
+      \u795E\u5316\u89E3\u9664\n\u30A2\u30F3\u30C7\u30C3\u30C9\u306B\u306F2\u500D\u306E\u30C0\u30E1\u30FC\u30B8"
     Range: 1
     RepeatTime: 3
     AliveOnly: 1

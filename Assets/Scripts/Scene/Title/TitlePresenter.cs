@@ -43,10 +43,6 @@ public class TitlePresenter : BasePresenter
         {
             CommandTitle((int) viewEvent.template);
         }
-        if (viewEvent.commandType == CommandType.Credit)
-        {
-            CommandCredit();
-        }
         if (viewEvent.commandType == CommandType.SelectSideMenu)
         {
             CommandSelectSideMenu((SystemData.CommandData)viewEvent.template);

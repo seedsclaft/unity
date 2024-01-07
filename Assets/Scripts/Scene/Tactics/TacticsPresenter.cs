@@ -533,13 +533,20 @@ public class TacticsPresenter :BasePresenter
         _view.CommandLoadingClose();
         _model.GainSaveCount();
         _model.SavePlayerStageData(true);
-        if (isReturnScene)
-        {
-            _view.CommandSceneChange(Scene.Tactics);
-        } else
-        {        
-            _view.ChangeUIActive(true);
-        }
+        // 成功表示
+        var confirmInfo = new ConfirmInfo(DataSystem.GetTextData(11084).Text,(a) => {
+            Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
+            _view.CommandConfirmClose();
+            if (isReturnScene)
+            {
+                _view.CommandSceneChange(Scene.Tactics);
+            } else
+            {        
+                _view.ChangeUIActive(true);
+            }
+        });
+        confirmInfo.SetIsNoChoice(true);
+        _view.CommandCallConfirm(confirmInfo);
     }
 
     private void UpdatePopupSkillInfo(ConfirmCommandType confirmCommandType)

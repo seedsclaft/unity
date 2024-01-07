@@ -17,12 +17,6 @@ public class TitleView : BaseView
         new TitlePresenter(this);
     }
 
-    private void CallCredit()
-    {
-        var eventData = new TitleViewEvent(CommandType.Credit);
-        _commandData(eventData);
-    }
-
     private void OnClickOption()
     {
         var eventData = new TitleViewEvent(CommandType.Option);
@@ -137,7 +131,6 @@ namespace Title
     {
         None = 0,
         TitleCommand,
-        Credit,
         Option,
         SelectSideMenu,
     }

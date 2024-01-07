@@ -256,14 +256,19 @@ public class BattlerInfo
             _ap += 2;
             return;
         }
-        if (IsState(StateType.Slow))
+        if (IsState(StateType.Heist) && IsState(StateType.Slow))
         {
-            _ap -= 4;
+            _ap -= 8;
             return;
         }
         if (IsState(StateType.Heist))
         {
             _ap -= 12;
+            return;
+        }
+        if (IsState(StateType.Slow))
+        {
+            _ap -= 4;
             return;
         }
         _ap -= 8;

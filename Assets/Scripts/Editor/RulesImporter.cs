@@ -13,7 +13,8 @@ public class RulesImporter : AssetPostprocessor {
     {
 		Id = 0,
 		NameId,
-        Category
+        Category,
+		Open
     }
 	static readonly string ExcelName = "Rules.xlsx";
 
@@ -71,7 +72,11 @@ public class RulesImporter : AssetPostprocessor {
 					RuleData.Name = textData.Find(a => a.Id == AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.NameId)).Text;
 					RuleData.Help = textData.Find(a => a.Id == AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.NameId)).Help;
 					RuleData.Category = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.Category);
-					Data.Data.Add(RuleData);
+					var open = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.Open) == 1;
+					if (open)
+					{
+						Data.Data.Add(RuleData);
+					}
 				}
 			}
 		}
