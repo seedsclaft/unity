@@ -7,6 +7,7 @@ using TMPro;
 
 public class TacticsView : BaseView
 {
+    [SerializeField] private Button enemyListBackCommand = null;
     [SerializeField] private BaseList tacticsCommandList = null;
     [SerializeField] private TacticsCharaLayer tacticsCharaLayer = null;
 
@@ -41,6 +42,7 @@ public class TacticsView : BaseView
 
         tacticsAlcana.gameObject.SetActive(false);
         alcanaButton.onClick.AddListener(() => CallAlcanaCheck());
+        enemyListBackCommand.onClick.AddListener(() => OnClickEnemyListClose());
         
         new TacticsPresenter(this);
     }
@@ -69,6 +71,19 @@ public class TacticsView : BaseView
         var eventData = new TacticsViewEvent(CommandType.Back);
         _commandData(eventData);
         _lastCallEventType = eventData.commandType;
+    }
+
+    private void OnClickEnemyListClose()
+    {
+        if (_lastCallEventType != CommandType.None) return;
+        var eventData = new TacticsViewEvent(CommandType.EnemyClose);
+        _commandData(eventData);
+        _lastCallEventType = eventData.commandType;
+    }
+
+    public void SetActiveEnemyListClose(bool isActive)
+    {
+        enemyListBackCommand.gameObject.SetActive(isActive);
     }
 
     public void SetHelpWindow()
@@ -273,7 +288,7 @@ public class TacticsView : BaseView
         battleSelectCharacter.SetActiveTab(SelectCharacterTabType.Detail,false);
         battleSelectCharacter.SetSkillInfos(learnMagicList);
         battleSelectCharacter.ShowActionList();
-        battleSelectCharacter.UpdateStatus(actorInfo);
+        battleSelectCharacter.HideStatus();
         battleSelectCharacter.MagicList.Activate();
         SetHelpInputInfo("ALCHEMY_ATTRIBUTE");
     }
@@ -388,10 +403,10 @@ public class TacticsView : BaseView
     private void CallSkillAlchemy()
     {
         if (_lastCallEventType != CommandType.None) return;
-        var eventData = new TacticsViewEvent(CommandType.SkillAlchemy);
         var listData = battleSelectCharacter.ActionData;
         if (listData != null)
         {
+            var eventData = new TacticsViewEvent(CommandType.SkillAlchemy);
             var data = (SkillInfo)listData;
             eventData.template = listData;
             _commandData(eventData);

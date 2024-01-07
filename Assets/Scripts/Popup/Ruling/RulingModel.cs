@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 using System;
 
 public class RulingModel : BaseModel
@@ -15,11 +14,8 @@ public class RulingModel : BaseModel
         _currentCategory = category;
     }
 
-    private int _currentId = 1; 
-    public int CurrentId
-    {
-        get {return _currentId;}
-    }
+    private int _currentId = DataSystem.Rules.Count > 0 ? DataSystem.Rules[0].Id : 1; 
+
     public void SetId(int id)
     {
         _currentId = id;

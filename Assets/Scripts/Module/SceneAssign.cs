@@ -21,6 +21,7 @@ public class SceneAssign : MonoBehaviour
     [SerializeField] private GameObject alcanaSelectScene = null;
     [SerializeField] private GameObject alcanaResultScene = null;
     private static List<Scene> _scenes = new ();
+    public static Scene CurrentScene => SceneAssign._scenes.Count > 0 ? SceneAssign._scenes[SceneAssign._scenes.Count-1] : Scene.None;
     public static Scene LastScene => SceneAssign._scenes.Count > 1 ? SceneAssign._scenes[SceneAssign._scenes.Count-2] : Scene.None;
     public GameObject CreateScene(Scene scene,HelpWindow helpWindow)
     {
@@ -68,5 +69,23 @@ public class SceneAssign : MonoBehaviour
             return alcanaResultScene;
         }
         return null;
+    }
+
+    public void ShowUI()
+    {
+        if (CurrentScene != Scene.None)
+        {
+            var view = uiRoot.GetComponentInChildren<BaseView>();
+            view?.ChangeUIActive(true);
+        }
+    }
+
+    public void HideUI()
+    {
+        if (CurrentScene != Scene.None)
+        {
+            var view = uiRoot.GetComponentInChildren<BaseView>();
+            view?.ChangeUIActive(false);
+        }
     }
 }

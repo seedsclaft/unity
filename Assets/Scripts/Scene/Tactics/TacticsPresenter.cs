@@ -599,10 +599,9 @@ public class TacticsPresenter :BasePresenter
                 break;
             case TacticsCommandType.Battle:
                 _view.ActivateTacticsCommand();
-                _view.ChangeBackCommandActive(true);
+                _view.SetActiveEnemyListClose(true);
                 _view.HideSelectCharacter();
                 _view.ShowEnemyList();
-                _backCommand = Tactics.CommandType.EnemyClose;
                 break;
         }
         if (tacticsCommandType == TacticsCommandType.Status)
@@ -721,7 +720,7 @@ public class TacticsPresenter :BasePresenter
         _view.HideEnemyList();
         _view.ShowSelectCharacter(_model.TacticsCharacterData(),_model.TacticsCommandData());
         _view.ActivateTacticsCommand();
-        _view.ChangeBackCommandActive(false);
+        _view.SetActiveEnemyListClose(false);
         Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
     }
 
@@ -743,7 +742,7 @@ public class TacticsPresenter :BasePresenter
     private void CommandEnemyClose()
     {
         _view.HideEnemyList();
-        _view.ChangeBackCommandActive(false);
+        _view.SetActiveEnemyListClose(false);
         _view.ShowCommandList();
         if (_model.IsBusyAll())
         {

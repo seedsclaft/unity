@@ -22,6 +22,7 @@ public class RulingPresenter
         _view.SetEvent((type) => UpdateCommand(type));
         _view.SetRulingCommand(_model.RulingCommand());
         CommandRefresh();
+        _view.CommandSelectTitle(_model.RuleHelp());
         _busy = false;
     }
 

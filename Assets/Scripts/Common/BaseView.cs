@@ -296,6 +296,18 @@ abstract public class BaseView : MonoBehaviour
         CallSceneChangeCommand(eventData);
     }
 
+    public void CommandSceneShowUI()
+    {
+        var eventData = new ViewEvent(Base.CommandType.SceneShowUI);
+        CallSceneChangeCommand(eventData);
+    }
+
+    public void CommandSceneHideUI()
+    {
+        var eventData = new ViewEvent(Base.CommandType.SceneHideUI);
+        CallSceneChangeCommand(eventData);
+    }
+
     public void SetBackCommand(System.Action callEvent)
     {
         if (_backCommand != null)
@@ -357,7 +369,9 @@ namespace Base
         ChangeViewToTransition,
         StartTransition,
         CallTutorialFocus,
-        CloseTutorialFocus
+        CloseTutorialFocus,
+        SceneShowUI,
+        SceneHideUI
     }
 }
 

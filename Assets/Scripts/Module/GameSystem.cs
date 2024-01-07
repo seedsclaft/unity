@@ -203,6 +203,12 @@ public class GameSystem : MonoBehaviour
             case Base.CommandType.CloseTutorialFocus:
                 tutorialView.HideFocusImage();
                 break;
+            case Base.CommandType.SceneHideUI:
+                SceneHideUI();
+                break;
+            case Base.CommandType.SceneShowUI:
+                SceneShowUI();
+                break;
         }
     }
 
@@ -377,6 +383,16 @@ public class GameSystem : MonoBehaviour
     {
         if (!statusAssign.StatusRoot.gameObject.activeSelf) _currentScene.SetBusy(false);
         statusAssign.SetBusy(false);
+    }
+
+    private void SceneShowUI()
+    {
+        sceneAssign.ShowUI();
+    }
+
+    private void SceneHideUI()
+    {
+        sceneAssign.HideUI();
     }
 }
 

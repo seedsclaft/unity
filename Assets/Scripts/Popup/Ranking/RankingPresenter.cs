@@ -57,10 +57,12 @@ public class RankingPresenter
             _view.CommandStatusClose();
             //_view.SetHelpText(DataSystem.GetTextData(14010).Text);
             _view.ChangeUIActive(true);
+            _view.CommandSceneShowUI();
         });
         statusViewInfo.SetDisplayDecideButton(false);
         _view.CommandCallStatus(statusViewInfo);
         _view.ChangeUIActive(false);
+        _view.CommandSceneHideUI();
         Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
     }
 }

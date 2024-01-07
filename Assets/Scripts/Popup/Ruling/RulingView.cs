@@ -51,10 +51,10 @@ public class RulingView : BaseView
 
     private void CallRulingCommand()
     {
-        var eventData = new RulingViewEvent(CommandType.SelectTitle);
         var listData = commandList.ListData;
         if (listData != null)
         {
+            var eventData = new RulingViewEvent(CommandType.SelectTitle);
             var data = (SystemData.CommandData)listData.Data;
             eventData.template = data.Id;
             _commandData(eventData);

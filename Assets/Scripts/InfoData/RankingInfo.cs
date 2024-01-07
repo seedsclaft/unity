@@ -18,4 +18,16 @@ public class RankingInfo
     {
  
     }
+
+    public void CopyInfo(RankingInfo baseRankingInfo)
+    {
+        Score = baseRankingInfo.Score;
+        Name = baseRankingInfo.Name;
+        Rank = baseRankingInfo.Rank;
+        RankingTypeText = baseRankingInfo.RankingTypeText;
+        SelectIdx = baseRankingInfo.SelectIdx;
+        SelectRank = baseRankingInfo.SelectRank;
+        ActorInfos = baseRankingInfo.ActorInfos;
+        DetailEvent = baseRankingInfo.DetailEvent;
+    }
 }
