@@ -741,6 +741,7 @@ public class TacticsPresenter :BasePresenter
 
     private void CommandEnemyClose()
     {
+        Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cancel);
         _view.HideEnemyList();
         _view.SetActiveEnemyListClose(false);
         _view.ShowCommandList();
