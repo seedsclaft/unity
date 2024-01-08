@@ -61,8 +61,8 @@ public class TacticsView : BaseView
         tacticsEnemyList.SetInputHandler(InputKeyType.Decide,() => CallBattleEnemy());
         tacticsEnemyList.SetInputHandler(InputKeyType.Option1,() => OnClickEnemyInfo());
         tacticsEnemyList.SetInputHandler(InputKeyType.Cancel,() => OnClickBack());
-        tacticsEnemyList.SetInputCallHandler();
         SetInputHandler(tacticsEnemyList.GetComponent<IInputHandlerEvent>());
+        tacticsEnemyList.SetInputCallHandler();
     }
 
     private void OnClickBack()

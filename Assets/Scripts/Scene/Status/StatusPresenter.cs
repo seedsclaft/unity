@@ -63,6 +63,9 @@ public class StatusPresenter : BasePresenter
             _view.CommandPopupClose();
             _model.SelectActor(a);
             CommandRefresh();
+        },
+        () => {
+            CommandRefresh();
         });
         _view.CommandCallCharacterList(characterListInfo);
     }

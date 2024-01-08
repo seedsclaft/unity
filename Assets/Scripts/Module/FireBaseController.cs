@@ -16,7 +16,7 @@ public class FirebaseController : SingletonMonoBehaviour<FirebaseController>
     public static bool IsBusy = false;
     public static List<RankingInfo> RankingInfos = new ();
     public static int CurrentScore = 0;
-    #if UNITY_WEBGL 
+#if UNITY_WEBGL 
     [DllImport("__Internal")]
     private static extern void FirebaseInit();
 
@@ -39,7 +39,7 @@ public class FirebaseController : SingletonMonoBehaviour<FirebaseController>
         FirebaseInit();
     }
 
-    public void ReadRankingData()
+    public void ReadRankingData(int stageId,string rankingTypeText)
     {
         if (!_isInit)
         {
@@ -71,7 +71,7 @@ public class FirebaseController : SingletonMonoBehaviour<FirebaseController>
         FirebaseController.IsBusy = false;
     }
 
-    public void CurrentRankingData(string userId)
+    public void CurrentRankingData(int stageId,string userId)
     {
         if (!_isInit)
         {
@@ -94,14 +94,14 @@ public class FirebaseController : SingletonMonoBehaviour<FirebaseController>
         FirebaseController.IsBusy = false;
     }
 
-    public void WriteRankingData(string userId,int score,string name, List<int> selectIdx,List<int> selectRank)
+    public void WriteRankingData(int stageId,string userId,int score,string name, List<int> selectIdx,List<int> selectRank)
     {
         if (!_isInit)
         {
             return;
         }
         FirebaseController.IsBusy = true;
-        FirebaseWriteRankingData(gameObject.GetInstanceID(),userId,score,name,selectIdx.ToArray(),selectIdx.Length,selectRank.ToArray(),selectRank.Length,OnWriteFirestore);
+        FirebaseWriteRankingData(gameObject.GetInstanceID(),userId,score,name,selectIdx.ToArray(),selectIdx.Count,selectRank.ToArray(),selectRank.Count,OnWriteFirestore);
     }
 
     
@@ -301,9 +301,7 @@ public class FirebaseController : SingletonMonoBehaviour<FirebaseController>
             }
         });
     }
-
-    
-    #endif
+#endif
 }
 
 #if UNITY_ANDROID

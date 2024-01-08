@@ -497,6 +497,7 @@ public class TacticsPresenter :BasePresenter
             {
                 // ロード表示
                 _view.CommandCallLoading();
+#if UNITY_ANDROID
                 AdMobController.Instance.PlayRewardedAd(() => 
                 {
                     SuccessSave(isReturnScene);
@@ -510,6 +511,7 @@ public class TacticsPresenter :BasePresenter
                     _view.CommandCallConfirm(popupInfo);
                     _view.ChangeUIActive(false);
                 });
+#endif
             } else
             {
                 SuccessSave(isReturnScene);
@@ -602,6 +604,7 @@ public class TacticsPresenter :BasePresenter
                 _view.SetActiveEnemyListClose(true);
                 _view.HideSelectCharacter();
                 _view.ShowEnemyList();
+                _backCommand = Tactics.CommandType.EnemyClose;
                 break;
         }
         if (tacticsCommandType == TacticsCommandType.Status)
@@ -813,6 +816,7 @@ public class TacticsPresenter :BasePresenter
 
     private void CommandSave(bool isReturnScene)
     {
+#if UNITY_ANDROID
         var savePopupTitle = _model.SavePopupTitle();
         var saveNeedAds = _model.NeedAdsSave();
         var popupInfo = new ConfirmInfo(savePopupTitle,(a) => UpdatePopupSaveCommand((ConfirmCommandType)a,isReturnScene));
@@ -827,6 +831,9 @@ public class TacticsPresenter :BasePresenter
         }
         _view.CommandCallConfirm(popupInfo);
         _view.ChangeUIActive(false);
+#elif UNITY_WEBGL
+        SuccessSave(isReturnScene);
+#endif
     }
 
     private void CommandSelectSideMenu(SystemData.CommandData sideMenu)

@@ -13,6 +13,7 @@ public class OptionPresenter
     {
         _view = view;
         _model = new OptionModel();
+        _model.ChangeTempInputType(GameSystem.ConfigData.InputType);
 
         Initialize();
     }
@@ -101,8 +102,7 @@ public class OptionPresenter
                 _model.ChangeBattleAnimation(inputKeyType == InputKeyType.Right);
                 break;
             case "INPUT_TYPE":
-                _model.ChangeInputType(inputKeyType == InputKeyType.Right);
-                _view.SetTempInputType(inputKeyType == InputKeyType.Right ? 1 : 0);
+                _model.ChangeTempInputType(inputKeyType == InputKeyType.Right);
                 break;
             case "BATTLE_AUTO":
                 _model.ChangeBattleAuto(inputKeyType == InputKeyType.Right);
@@ -178,8 +178,7 @@ public class OptionPresenter
                     _model.ChangeBattleAnimation(toggleIndex == 1);
                     break;
                 case "INPUT_TYPE":
-                    _model.ChangeInputType(toggleIndex == 1);
-                    _view.SetTempInputType(toggleIndex);
+                    _model.ChangeTempInputType(toggleIndex == 1);
                     break;
                 case "BATTLE_AUTO":
                     _model.ChangeBattleAuto(toggleIndex == 1);

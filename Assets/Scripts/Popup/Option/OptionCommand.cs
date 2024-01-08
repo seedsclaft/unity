@@ -70,7 +70,8 @@ public class OptionCommand : ListItem ,IListViewItem
             case "GRAPHIC_QUALITY":
                 for (int i = 0;i < optionToggles.Count;i++)
                 {
-                    optionToggles[i].SetIsOnWithoutNotify(i == GameSystem.ConfigData.GraphicIndex);
+                    var notify = (i == 0 && GameSystem.ConfigData.GraphicIndex == 2) || (i == 1 && GameSystem.ConfigData.GraphicIndex == 1);
+                    optionToggles[i].SetIsOnWithoutNotify(notify);
                 }
                 return;
             case "EVENT_SKIP":
@@ -100,7 +101,8 @@ public class OptionCommand : ListItem ,IListViewItem
             case "INPUT_TYPE":
                 for (int i = 0;i < optionToggles.Count;i++)
                 {
-                    optionToggles[i].SetIsOnWithoutNotify(i == (GameSystem.ConfigData.InputType == true ? 1 : 0));
+                    var notify = i == (GameSystem.TempData.TempInputType == true ? 1 : 0);
+                    optionToggles[i].SetIsOnWithoutNotify(notify);
                 }
                 return;
             case "BATTLE_AUTO":

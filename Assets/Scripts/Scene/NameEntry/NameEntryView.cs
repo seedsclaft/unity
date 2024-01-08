@@ -20,6 +20,7 @@ public class NameEntryView : BaseView, IInputHandlerEvent
         decideButton.onClick.AddListener(() => OnClickDecide());
         inputField.gameObject.SetActive(false);
         decideButton.gameObject.SetActive(false);
+        SetInputHandler(gameObject.GetComponent<IInputHandlerEvent>());
     }
 
     public void SetHelpWindow(){

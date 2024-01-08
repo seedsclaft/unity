@@ -40,7 +40,7 @@ public class GameSystem : MonoBehaviour
     public static Scene LastScene => SceneAssign.LastScene;
     private void Awake() 
     {
-#if (UNITY_WEBGL || UNITY_ANDROID)// && !UNITY_EDITOR
+#if (UNITY_WEBGL || UNITY_ANDROID) && !UNITY_EDITOR
         FirebaseController.Instance.Initialize();
 #endif
         Application.targetFrameRate = 60;
@@ -52,6 +52,7 @@ public class GameSystem : MonoBehaviour
         tutorialView.Initialize();
         tutorialView.HideFocusImage();
         transitionFade.Init();
+        statusAssign.CloseStatus();
         TempData = new TempInfo();
         _model = new BaseModel();
         GameSystem.Version = version;
@@ -300,6 +301,10 @@ public class GameSystem : MonoBehaviour
         characterListView.SetViewInfo(characterListInfo);
         characterListView.SetBackEvent(() => 
         {
+            if (characterListInfo.BackEvent != null)
+            {
+                characterListInfo.BackEvent();
+            }
             UpdateCommand(new ViewEvent(Base.CommandType.ClosePopup));
         });
         SetIsBusyMainAndStatus();

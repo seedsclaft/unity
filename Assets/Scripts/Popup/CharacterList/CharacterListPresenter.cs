@@ -20,7 +20,7 @@ public class CharacterListPresenter
     private void Initialize()
     {
         _view.SetEvent((type) => UpdateCommand(type));
-        _view.SetHelpInputInfo("CharacterList");
+        _view.SetHelpInputInfo("CHARACTER_LIST");
         _view.SetCharacterList(_model.CharacterList());
     }
 
@@ -36,8 +36,12 @@ public class CharacterListInfo
 {
     private System.Action<int> _callEvent;
     public System.Action<int> CallEvent => _callEvent;
-    public CharacterListInfo(System.Action<int> callEvent)
+    public CharacterListInfo(System.Action<int> callEvent,System.Action backEvent)
     {
         _callEvent = callEvent;
+        _backEvent = backEvent;
     }
+    private System.Action _backEvent;
+    public System.Action BackEvent => _backEvent;
+    
 }

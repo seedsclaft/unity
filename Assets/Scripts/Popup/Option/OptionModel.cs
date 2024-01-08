@@ -40,6 +40,10 @@ public class OptionModel : BaseModel
         return (int)optionCategory;
     }
 
+    public void ChangeTempInputType(bool inputType)
+    {
+        TempData.SetInputType(inputType);
+    }
 
 }
 

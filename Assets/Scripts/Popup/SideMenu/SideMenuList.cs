@@ -15,6 +15,7 @@ public class SideMenuList : ListWindow , IInputHandlerEvent
     private List<SystemData.CommandData> _sideMenus;
     private System.Action _openEvent = null;
     private System.Action _closeEvent = null;
+    private int _lastSelectIndex = -1;
     public void Initialize(List<SystemData.CommandData> sideMenus,Action<SystemData.CommandData> callEvent,Action optionEvent,Action cancelEvent)
     {
         var prefab = Instantiate(optionPrefab);
@@ -90,11 +91,13 @@ public class SideMenuList : ListWindow , IInputHandlerEvent
     }
 
     public new void UpdateSelectIndex(int index){
+        _lastSelectIndex = index;
         SelectIndex(index);
         UpdateHelpWindow();
         for (int i = 0; i < ObjectList.Count;i++)
         {
             if (ObjectList[i] == null) continue;
+            if (i > ObjectList.Count) continue;
             var listItem = ObjectList[i].GetComponent<ListItem>();
             if (listItem == null) continue;
             if (index == listItem.Index){
@@ -110,9 +113,14 @@ public class SideMenuList : ListWindow , IInputHandlerEvent
     {
         if (keyType == InputKeyType.Right)
         {
-            if (Index < 0)
+            if (_lastSelectIndex == 0)
             {
+                Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cursor);
                 UpdateSelectIndex(-1);
+            } else
+            if (_lastSelectIndex == -1)
+            {
+                UpdateSelectIndex(_sideMenus.Count-1);
             } else
             {
                 UpdateSelectIndex(Index);
@@ -120,6 +128,11 @@ public class SideMenuList : ListWindow , IInputHandlerEvent
         }
         if (keyType == InputKeyType.Left)
         {
+            if (_lastSelectIndex == (_sideMenus.Count-1))
+            {
+                Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cursor);
+                UpdateSelectIndex(-1);
+            } else
             if (Index >= (_sideMenus.Count))
             {
                 UpdateSelectIndex(_sideMenus.Count-1);

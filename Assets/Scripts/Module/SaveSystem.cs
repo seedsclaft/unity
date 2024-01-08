@@ -61,7 +61,11 @@ public class SaveSystem : MonoBehaviour
 		{
 			userSaveInfo = new SaveInfo();
 		}
+#if UNITY_ANDROID
 		SaveInfo(SaveFilePath(_playerDataKey),userSaveInfo);
+#elif UNITY_WEBGL
+		SaveInfo(_playerDataKey,userSaveInfo);
+#endif
 	}
 
 		
@@ -75,7 +79,7 @@ public class SaveSystem : MonoBehaviour
 			var saveData = PlayerPrefs.GetString(_playerDataKey);
 			var bytes = Convert.FromBase64String(saveData);
 			var memoryStream = new MemoryStream(bytes);
-			GameSystem.CurrentData = (SavePlayInfo)TempBinaryFormatter.Deserialize (memoryStream);
+			GameSystem.CurrentData = (SaveInfo)TempBinaryFormatter.Deserialize (memoryStream);
 			return true;
 		}
 		// Jsonへの展開失敗　改ざんの可能性あり
@@ -83,7 +87,7 @@ public class SaveSystem : MonoBehaviour
 		{
 			// 例外が発生するのでここで処理
 			Debug.LogException(e);
-			GameSystem.CurrentData = new SavePlayInfo();
+			GameSystem.CurrentData = new SaveInfo();
 			return false;
 		}
 #else
@@ -170,7 +174,7 @@ public class SaveSystem : MonoBehaviour
 			// 例外が発生するのでここで処理
 			Debug.LogException(e);
 			Debug.Log("改ざんされたため　冒険の書は消えてしまいました");
-			GameSystem.CurrentData = new SaveStageInfo();
+			GameSystem.CurrentData = new SaveInfo();
 			return false;
 		}
 #else
@@ -201,6 +205,11 @@ public class SaveSystem : MonoBehaviour
 #endif
     }
 
+	public static bool ExistsStageFile(int fileId = 0)
+	{
+		return ExistsLoadFile(PlayerStageDataKey(fileId));
+	}
+
 	public static void SaveConfigStart(SaveConfigInfo userSaveInfo = null)
     {
 		//	保存情報
@@ -208,7 +217,11 @@ public class SaveSystem : MonoBehaviour
 		{
 			userSaveInfo = new SaveConfigInfo();
 		}
+#if UNITY_ANDROID
 		SaveInfo(SaveFilePath(_optionDataKey),userSaveInfo);
+#elif UNITY_WEBGL
+		SaveInfo(_optionDataKey,userSaveInfo);
+#endif
 	}
 
 

@@ -1,9 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+
 #if UNITY_ANDROID
+using UnityEngine;
 using GoogleMobileAds.Api;
-#endif
 
 public class AdMobController : SingletonMonoBehaviour<AdMobController>
 {
@@ -291,3 +289,5 @@ public class AdMobController : SingletonMonoBehaviour<AdMobController>
         _rewardedAd.Destroy();
     }
 }
+
+#endif

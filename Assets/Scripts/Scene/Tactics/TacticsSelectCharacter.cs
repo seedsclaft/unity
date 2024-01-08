@@ -71,7 +71,11 @@ public class TacticsSelectCharacter : MonoBehaviour
     public void UpdateSmoothSelect()
     {
         characterList.Refresh(0);
+#if UNITY_ANDROID
         commandList.Refresh(1);
+#else
+        commandList.Refresh(-1);
+#endif
     }
 
     private void CallCharacterInputHandler(InputKeyType keyType)

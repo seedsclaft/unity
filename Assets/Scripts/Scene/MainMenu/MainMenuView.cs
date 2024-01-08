@@ -49,6 +49,7 @@ public class MainMenuView : BaseView
         stageList.SetData(stages);
         stageList.SetInputHandler(InputKeyType.Decide,() => CallMainMenuStage());
         stageList.SetInputHandler(InputKeyType.Option1,() => CommandOpenSideMenu());
+        stageList.SetInputHandler(InputKeyType.Option2,() => CallStageRanking());
         stageList.SetSelectedHandler(() => UpdateMainMenuStage());
         for (var i = 0;i < stageList.ObjectList.Count;i++)
         {
@@ -73,12 +74,19 @@ public class MainMenuView : BaseView
         }
     }    
     
-    private void CallStageRanking(int stageId){
+    private void CallStageRanking(int stageId = -1){
         var listData = stageList.ListData;
         if (listData != null)
         {
             var eventData = new MainMenuViewEvent(CommandType.Ranking);
-            eventData.template = stageId;
+            if (stageId > 0)
+            {
+                eventData.template = stageId;
+            } else
+            {
+                var data = (StageInfo)listData.Data;
+                eventData.template = data.Id;
+            }
             _commandData(eventData);
         }
     }

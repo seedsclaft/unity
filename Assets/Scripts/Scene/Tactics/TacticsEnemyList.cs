@@ -30,7 +30,11 @@ public class TacticsEnemyList : BaseList
 
     public void SetInputCallHandler()
     {
-        SetInputCallHandler((a) => CallInputHandler(a));
+        //SetInputCallHandler((a) => CallInputHandler(a));
+        SetInputHandler(InputKeyType.Right,() => CallInputHandler(InputKeyType.Right));
+        SetInputHandler(InputKeyType.Left,() => CallInputHandler(InputKeyType.Left));
+        SetInputHandler(InputKeyType.Down,() => CallInputHandler(InputKeyType.Down));
+        SetInputHandler(InputKeyType.Up,() => CallInputHandler(InputKeyType.Up));
     }
 
     private void CallInputHandler(InputKeyType keyType)
@@ -47,6 +51,10 @@ public class TacticsEnemyList : BaseList
         {
             var tacticsEnemy = ObjectList[Index].GetComponent<TacticsEnemy>();
             tacticsEnemy.UpdateItemIndex(tacticsEnemy.GetItemIndex-1);
+            if (tacticsEnemy.GetItemIndex == -1)
+            {
+                tacticsEnemy.SetSelectable(true);
+            }
             Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cursor);
         }
         if (keyType == InputKeyType.Down)

@@ -734,6 +734,7 @@ public class BaseModel
 
         if (evaluate > currentScore)
         {
+#if UNITY_ANDROID
             FirebaseController.Instance.WriteRankingData(
                 CurrentStage.BaseStageId,
                 userId,
@@ -743,6 +744,16 @@ public class BaseModel
                 SelectRankList(),
                 RankingActorDates()
             );
+#elif UNITY_WEBGL
+            FirebaseController.Instance.WriteRankingData(
+                CurrentStage.BaseStageId,
+                userId,
+                evaluate,
+                CurrentData.PlayerInfo.PlayerName,
+                SelectIdxList(),
+                SelectRankList()
+            );
+#endif
             await UniTask.WaitUntil(() => FirebaseController.IsBusy == false);
 
             FirebaseController.Instance.ReadRankingData(CurrentStage.BaseStageId,RankingTypeText(CurrentStage.Master.RankingStage));
@@ -813,13 +824,27 @@ public class BaseModel
         return CurrentStage.Master.ContinueLimit > 0;
     }
 
+    public bool EnableUserContinue()
+    {
+        var enable = true;
+#if UNITY_WEBGL
+        enable = CurrentStage.ContinueCount < CurrentStage.Master.ContinueLimit;
+#endif
+        return enable;
+    }
+
     public string ContinuePopupTitle()
     {
         var baseText = DataSystem.GetTextData(3061).Text;
+#if UNITY_ANDROID
         var subText = DataSystem.GetReplaceText(3062,CurrentStage.Master.ContinueLimit.ToString());
+#elif UNITY_WEBGL
+        var subText = DataSystem.GetReplaceText(3064,CurrentStage.Master.ContinueLimit.ToString());
+#endif
         var continueCount = DataSystem.GetReplaceText(3063,(CurrentStage.ContinueCount+1).ToString());
         return baseText + continueCount + "\n" + subText;
     }
+
 
     public bool NeedAdsContinue()
     {

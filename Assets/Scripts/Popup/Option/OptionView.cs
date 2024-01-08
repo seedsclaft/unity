@@ -11,12 +11,10 @@ public class OptionView : BaseView
     [SerializeField] private BaseList optionList = null;
     public ListData CurrentOptionCommand => optionList.ListData;
 
-    private int _tempInputTypeIndex = -1;
     public override void Initialize() 
     {
         base.Initialize();
         new OptionPresenter(this);
-        SetTempInputType(GameSystem.ConfigData.InputType ? 1 : 0);
         Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
     }
     
@@ -51,7 +49,7 @@ public class OptionView : BaseView
         SetBackCommand(() => 
         {    
             Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cancel);
-            GameSystem.ConfigData.InputType = (_tempInputTypeIndex == 1);
+            GameSystem.ConfigData.InputType = GameSystem.TempData.TempInputType;
             if (GameSystem.ConfigData.InputType == false)
             {
                 SetHelpInputInfo("");
@@ -76,12 +74,6 @@ public class OptionView : BaseView
         eventData.template = optionInfo;
         _commandData(eventData);
     }
-
-    public void SetTempInputType(int tempInputTypeIndex)
-    {
-        _tempInputTypeIndex = tempInputTypeIndex;
-    }
-
 }
 
 namespace Option

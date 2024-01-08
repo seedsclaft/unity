@@ -105,6 +105,7 @@ public class ActorInfo
         InitSkillInfo();
     }
 
+#if UNITY_ANDROID
     public ActorInfo(RankingActorData rankingActorData)
     {
         _actorId = rankingActorData.ActorId;
@@ -126,6 +127,7 @@ public class ActorInfo
             rankingActorData.Spd - _baseStatus.Spd
         );
     }
+#endif
 
     public void CopyData(ActorInfo baseActorInfo)
     {

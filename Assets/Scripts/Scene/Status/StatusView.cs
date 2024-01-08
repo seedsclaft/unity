@@ -191,13 +191,6 @@ public class StatusView : BaseView ,IInputHandlerEvent
     {
         selectCharacter.ShowActionList();
         ActivateSkillActionList();
-        if (_isDisplayDecide)
-        {
-            SetHelpInputInfo("HEROINE_SKILL");
-        } else
-        {
-            SetHelpInputInfo("STATUS_SKILL");
-        }
     }
 
     public int SelectedSkillId()
@@ -234,6 +227,15 @@ public class StatusView : BaseView ,IInputHandlerEvent
     public void CommandRefresh()
     {
         selectCharacter.RefreshCostInfo();
+        if (_isDisplayDecide)
+        {
+            SetHelpText(_helpText);
+            SetHelpInputInfo("SELECT_HEROINE");
+        } else
+        {
+            SetHelpText(DataSystem.GetTextData(202).Help);
+            SetHelpInputInfo("STATUS");
+        }
     }
 
     public void InputHandler(InputKeyType keyType,bool pressed)

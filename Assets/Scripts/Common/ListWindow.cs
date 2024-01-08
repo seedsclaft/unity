@@ -510,6 +510,10 @@ abstract public class ListWindow : MonoBehaviour
                 if (nextIndex < 0){
                     nextIndex += _dataCount;
                 }
+                if (nextIndex < 0)
+                {
+                    break;
+                }
                 var listItem = ObjectList[nextIndex].GetComponent<ListItem>();
                 if (listItem.Disable == null)
                 {

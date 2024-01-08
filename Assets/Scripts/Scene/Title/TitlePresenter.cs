@@ -73,8 +73,11 @@ public class TitlePresenter : BasePresenter
             // プレイヤーネームを設定しなおし
             _view.CommandDecidePlayerName(GameSystem.CurrentData.PlayerInfo.PlayerName);
             
-            var loadStage = SaveSystem.LoadStageInfo();
-            if (loadStage == false)
+            var loadStage = SaveSystem.ExistsStageFile();
+            if (loadStage)
+            {
+                SaveSystem.LoadStageInfo();
+            } else
             {
                 _model.InitSaveStageInfo();
             }

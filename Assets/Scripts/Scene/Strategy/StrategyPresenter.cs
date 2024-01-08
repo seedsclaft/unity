@@ -324,6 +324,11 @@ public class StrategyPresenter : BasePresenter
             _model.LostActors(lostMembers);
             return;
         }
+        if (!_model.EnableUserContinue())
+        {
+            _model.LostActors(lostMembers);
+            return;
+        }
         var continuePopupTitle = _model.ContinuePopupTitle();
         var needAdsContinue = _model.NeedAdsContinue();
         var popupInfo = new ConfirmInfo(continuePopupTitle,(a) => UpdatePopupContinueCommand((ConfirmCommandType)a));
@@ -351,6 +356,7 @@ public class StrategyPresenter : BasePresenter
             {
                 // ロード表示
                 _view.CommandCallLoading();
+#if UNITY_ANDROID
                 AdMobController.Instance.PlayRewardedAd(() => 
                     {
                         SuccessContinue();
@@ -364,6 +370,7 @@ public class StrategyPresenter : BasePresenter
                         _view.CommandCallConfirm(popupInfo);
                     }
                 );
+#endif
             } else
             {
                 SuccessContinue();
