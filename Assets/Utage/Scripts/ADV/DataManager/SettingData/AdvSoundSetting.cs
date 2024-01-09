@@ -38,11 +38,18 @@ namespace Utage
 		/// </summary>
 		public string Title { get; private set; }
 
+		// タイトル(ローカライズ対応済み)
+		public string LocalizedTitle
+		{
+			get { return AdvParser.ParseCellLocalizedText(this.RowData, AdvColumnName.Title); }
+		}
+
 		/// <summary>
 		/// ファイル名
 		/// </summary>
 		string fileName;
-
+		
+		
 		/// <summary>
 		/// ファイル名
 		/// </summary>

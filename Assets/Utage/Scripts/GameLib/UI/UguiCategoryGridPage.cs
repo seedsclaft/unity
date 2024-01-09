@@ -81,8 +81,10 @@ namespace Utage
 		void CreateTabButton(GameObject go, int index)
 		{
 			Text text = go.GetComponentInChildren<Text>();
-			if (text && index < categoryList.Length) text.text = categoryList[index];
-
+			if (text && index < categoryList.Length)
+			{
+				text.text = LanguageManager.Instance.LocalizeText(categoryList[index]);
+			}
 			Image image = go.GetComponentInChildren<Image>();
 			if (image && index < buttonSpriteList.Count) image.sprite = buttonSpriteList[index];
 		}

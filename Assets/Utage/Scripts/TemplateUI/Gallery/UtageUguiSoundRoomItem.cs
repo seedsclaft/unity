@@ -27,7 +27,7 @@ public class UtageUguiSoundRoomItem : MonoBehaviour
 	public virtual void Init(AdvSoundSettingData data, Action<UtageUguiSoundRoomItem> ButtonClickedEvent, int index)
 	{
 		this.data = data;
-		title.text = data.Title;
+		title.text = data.LocalizedTitle;
 
 		UnityEngine.UI.Button button = this.GetComponent<UnityEngine.UI.Button>();
 		button.onClick.AddListener( ()=>ButtonClickedEvent(this) );

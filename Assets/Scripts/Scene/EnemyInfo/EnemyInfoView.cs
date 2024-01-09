@@ -100,6 +100,7 @@ public class EnemyInfoView : BaseView,IInputHandlerEvent
         var enemyIndex = enemyLayer.Index;
         if (enemyIndex > -1)
         {
+            Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cursor);
             var eventData = new EnemyInfoViewEvent(CommandType.SelectEnemy);
             eventData.template = enemyIndex;
             _commandData(eventData);
