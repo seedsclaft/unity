@@ -10,6 +10,7 @@ public class TacticsView : BaseView
     [SerializeField] private Button enemyListBackCommand = null;
     [SerializeField] private BaseList tacticsCommandList = null;
     [SerializeField] private TacticsCharaLayer tacticsCharaLayer = null;
+    [SerializeField] private GameObject charaLayerBG = null;
 
 
     [SerializeField] private BattleSelectCharacter battleSelectCharacter = null;
@@ -53,6 +54,7 @@ public class TacticsView : BaseView
         battleSelectCharacter.SetInputHandlerAction(InputKeyType.Cancel,() => OnClickBack());
         SetInputHandler(battleSelectCharacter.MagicList.GetComponent<IInputHandlerEvent>());
         battleSelectCharacter.HideActionList();
+        charaLayerBG.SetActive(false);
     }
 
     public void SetUIButton()
@@ -288,6 +290,7 @@ public class TacticsView : BaseView
         battleSelectCharacter.SetActiveTab(SelectCharacterTabType.Detail,false);
         battleSelectCharacter.SetSkillInfos(learnMagicList);
         battleSelectCharacter.ShowActionList();
+        charaLayerBG.SetActive(true);
         battleSelectCharacter.HideStatus();
         battleSelectCharacter.MagicList.Activate();
         SetHelpInputInfo("ALCHEMY_ATTRIBUTE");
@@ -296,7 +299,9 @@ public class TacticsView : BaseView
     public void HideAttributeList()
     {
         battleSelectCharacter.HideActionList();
+        charaLayerBG.SetActive(false);
         battleSelectCharacter.MagicList.Deactivate();
+        
         SetHelpInputInfo("ALCHEMY");
     }
 
@@ -381,12 +386,14 @@ public class TacticsView : BaseView
     {
         tacticsEnemyList.gameObject.SetActive(true);
         tacticsEnemyList.ResetInputFrame(1);
+        charaLayerBG.SetActive(true);
         SetHelpInputInfo("ENEMY_SELECT");
     }
 
     public void HideEnemyList()
     {
         tacticsEnemyList.gameObject.SetActive(false);
+        charaLayerBG.SetActive(false);
         SetHelpInputInfo("TACTICS");
     }
 

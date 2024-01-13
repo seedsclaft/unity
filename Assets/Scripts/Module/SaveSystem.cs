@@ -13,7 +13,7 @@ public class SaveSystem : MonoBehaviour
 	private static readonly string debugFilePath = Application.persistentDataPath;
 	private static string SaveFilePath(string saveKey,int fileId = 0)
 	{
-		return debugFilePath + "/" + saveKey + fileId + ".dat";
+		return debugFilePath + "/" + saveKey + fileId.ToString() + ".dat";
 	}
 	
 	private static readonly string _playerDataKey = "PlayerData";
@@ -142,15 +142,10 @@ public class SaveSystem : MonoBehaviour
 
 	public static void SaveStageInfo(SaveStageInfo userSaveInfo = null,int fileId = 0)
 	{
-		//	保存情報
-		if( userSaveInfo == null )
-		{
-			userSaveInfo = new SaveStageInfo();
-		}
-#if UNITY_WEBGL
-		SaveInfo(PlayerStageDataKey(fileId),userSaveInfo);
-#else
+#if UNITY_ANDROID
 		SaveInfo(SaveFilePath(_playerStageDataKey,fileId),userSaveInfo);
+#elif UNITY_WEBGL
+		SaveInfo(PlayerStageDataKey(fileId),userSaveInfo);
 #endif
 	}
 
@@ -207,7 +202,7 @@ public class SaveSystem : MonoBehaviour
 
 	public static bool ExistsStageFile(int fileId = 0)
 	{
-		return ExistsLoadFile(PlayerStageDataKey(fileId));
+		return ExistsLoadFile(_playerStageDataKey);
 	}
 
 	public static void SaveConfigStart(SaveConfigInfo userSaveInfo = null)

@@ -50,7 +50,6 @@ public class EnemyInfoPresenter
 
     private void CommandSelectEnemy(int enemyIndex)
     {
-        Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cursor);
         _model.SelectEnemy(enemyIndex);
         CommandRefresh();
     }
