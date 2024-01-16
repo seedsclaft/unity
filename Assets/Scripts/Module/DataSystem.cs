@@ -19,6 +19,7 @@ abstract public class DataSystem
     public static List<StateData> States = new ();
     public static List<TroopData> Troops = new ();
     public static List<AnimationData> Animations = new ();
+    public static List<PrizeSetData> PrizeSets = new ();
     public static SystemData System;
 
 
@@ -49,6 +50,7 @@ abstract public class DataSystem
         States = Resources.Load<StateDates>("Data/States").Data;
         System = Resources.Load<SystemData>("Data/System");
         Troops = Resources.Load<TroopDates>("Data/Troops").Data;
+        PrizeSets = Resources.Load<PrizeSetDates>("Data/PrizeSets").Data;
         Animations = Resources.Load<AnimationDates>("Data/Animations").Data;
         //DataSystem._alcana = Resources.Load<AlcanaData>("Data/Alcana");
         DataSystem._data = Resources.Load<DataManager>("Data/MainData");

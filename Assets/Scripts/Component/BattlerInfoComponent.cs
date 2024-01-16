@@ -131,7 +131,7 @@ public class BattlerInfoComponent : MonoBehaviour
         ChangeAtk(_battlerInfo.CurrentAtk(false));
         ChangeDef(_battlerInfo.CurrentDef(false));
         ChangeSpd(_battlerInfo.CurrentSpd(false));
-        if (battleStateOverlay != null) battleStateOverlay.SetStates(_battlerInfo.IconStateInfos(),_battlerInfo.isActor == false);
+        if (battleStateOverlay != null) battleStateOverlay.SetStates(_battlerInfo.IconStateInfos());
     }
     
     public void ShowUI()
@@ -256,9 +256,12 @@ public class BattlerInfoComponent : MonoBehaviour
     {
         if (!_battlerInfo.isActor)
         {
-            deathAnimation.enabled = true;
-            _deathAnimation = 0.01f;
-            HideUI();
+            if (deathAnimation)
+            {
+                deathAnimation.enabled = true;
+                _deathAnimation = 0.01f;
+                HideUI();
+            }
         }
     }
 
@@ -288,13 +291,12 @@ public class BattlerInfoComponent : MonoBehaviour
         var effectRect = effekseerEmitter.gameObject.GetComponent<RectTransform>();
         if (!_battlerInfo.isActor)
         {
-            var imageRect = image.gameObject.GetComponent<RectTransform>();
             if (animationPosition == 0){
-                effectRect.localPosition = new Vector2(0,imageRect.sizeDelta.y / 2);
+                effectRect.localPosition = new Vector2(0,0);
             } else
             if (animationPosition == 1)
             {
-                effectRect.localPosition = new Vector2(0,0);
+                effectRect.localPosition = new Vector2(0,-48);
             }
         } else
         {

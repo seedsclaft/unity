@@ -11,7 +11,6 @@ public class TempInfo
     public List<SkillInfo> TempAlcanaSkillInfos => _tempAlcanaSkillInfos;
     private Dictionary<int,List<RankingInfo>> _tempRankingData = new ();
     public Dictionary<int,List<RankingInfo>> TempRankingData => _tempRankingData;
-
     private bool _tempInputType = false;
     public bool TempInputType => _tempInputType;
     public void CashBattleActors(List<ActorInfo> actorInfos)
@@ -53,5 +52,26 @@ public class TempInfo
     public void SetInputType(bool inputType)
     {
         _tempInputType = inputType;
+    }    
+    
+    private List<GetItemInfo> _tempGetItemInfos = new ();
+    public List<GetItemInfo> TempGetItemInfos => _tempGetItemInfos;
+    public void SetTempGetItemInfos(List<GetItemInfo> tempGetItemInfos)
+    {
+        _tempGetItemInfos = tempGetItemInfos;
+    }
+    public void ClearTempGetItemInfos()
+    {
+        _tempGetItemInfos.Clear();
+    }
+    private List<ActorInfo> _tempResultActorInfos = new ();
+    public List<ActorInfo> TempResultActorInfos => _tempResultActorInfos;
+    public void SetTempResultActorInfos(List<ActorInfo> tempResultActorInfos)
+    {
+        _tempResultActorInfos = tempResultActorInfos;
+    }
+    public void ClearTempResultActorInfos()
+    {
+        _tempResultActorInfos.Clear();
     }
 }

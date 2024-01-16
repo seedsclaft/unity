@@ -22,7 +22,7 @@ public class BattleActorList : ListWindow , IInputHandlerEvent
         {
             var battleActor = ObjectList[i].GetComponent<BattleActor>();
             battleActor.SetCallHandler((actorIndex) => {
-                BattlerInfo battlerInfo = _battleInfos.Find(a => a.Index == actorIndex);
+                var battlerInfo = _battleInfos.Find(a => a.Index == actorIndex);
                 if (_targetIndexList.IndexOf(actorIndex) == -1)
                 {
                     return;

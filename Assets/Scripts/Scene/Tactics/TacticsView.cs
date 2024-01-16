@@ -7,17 +7,15 @@ using TMPro;
 
 public class TacticsView : BaseView
 {
-    [SerializeField] private Button enemyListBackCommand = null;
     [SerializeField] private BaseList tacticsCommandList = null;
     [SerializeField] private TacticsCharaLayer tacticsCharaLayer = null;
-    [SerializeField] private GameObject charaLayerBG = null;
 
 
     [SerializeField] private BattleSelectCharacter battleSelectCharacter = null;
     [SerializeField] private TacticsSelectCharacter selectCharacter = null;
 
     
-    [SerializeField] private TacticsEnemyList tacticsEnemyList = null;
+    [SerializeField] private TacticsSymbolList tacticsSymbolList = null;
     [SerializeField] private StageInfoComponent stageInfoComponent = null;
     [SerializeField] private AlcanaInfoComponent alcanaInfoComponent = null;
 
@@ -43,7 +41,6 @@ public class TacticsView : BaseView
 
         tacticsAlcana.gameObject.SetActive(false);
         alcanaButton.onClick.AddListener(() => CallAlcanaCheck());
-        enemyListBackCommand.onClick.AddListener(() => OnClickEnemyListClose());
         
         new TacticsPresenter(this);
     }
@@ -54,17 +51,16 @@ public class TacticsView : BaseView
         battleSelectCharacter.SetInputHandlerAction(InputKeyType.Cancel,() => OnClickBack());
         SetInputHandler(battleSelectCharacter.MagicList.GetComponent<IInputHandlerEvent>());
         battleSelectCharacter.HideActionList();
-        charaLayerBG.SetActive(false);
     }
 
     public void SetUIButton()
     {
         SetBackCommand(() => OnClickBack());
-        tacticsEnemyList.SetInputHandler(InputKeyType.Decide,() => CallBattleEnemy());
-        tacticsEnemyList.SetInputHandler(InputKeyType.Option1,() => OnClickEnemyInfo());
-        tacticsEnemyList.SetInputHandler(InputKeyType.Cancel,() => OnClickBack());
-        SetInputHandler(tacticsEnemyList.GetComponent<IInputHandlerEvent>());
-        tacticsEnemyList.SetInputCallHandler();
+        tacticsSymbolList.SetInputHandler(InputKeyType.Decide,() => CallBattleEnemy());
+        tacticsSymbolList.SetInputHandler(InputKeyType.Option1,() => OnClickEnemyInfo());
+        tacticsSymbolList.SetInputHandler(InputKeyType.Cancel,() => OnClickBack());
+        SetInputHandler(tacticsSymbolList.GetComponent<IInputHandlerEvent>());
+        tacticsSymbolList.SetInputCallHandler();
     }
 
     private void OnClickBack()
@@ -78,15 +74,11 @@ public class TacticsView : BaseView
     private void OnClickEnemyListClose()
     {
         if (_lastCallEventType != CommandType.None) return;
-        var eventData = new TacticsViewEvent(CommandType.EnemyClose);
+        var eventData = new TacticsViewEvent(CommandType.SymbolClose);
         _commandData(eventData);
         _lastCallEventType = eventData.commandType;
     }
 
-    public void SetActiveEnemyListClose(bool isActive)
-    {
-        enemyListBackCommand.gameObject.SetActive(isActive);
-    }
 
     public void SetHelpWindow()
     {
@@ -194,11 +186,11 @@ public class TacticsView : BaseView
         SetInputHandler(tacticsCharaLayer.GetComponent<IInputHandlerEvent>());
     }
 
-    public void SetEnemies(List<ListData> troopInfos)
+    public void SetSymbols(List<ListData> symbolInfos)
     {
-        tacticsEnemyList.SetData(troopInfos);
-        tacticsEnemyList.SetInfoHandler((a) => OnClickEnemyInfo(a));
-        HideEnemyList();
+        tacticsSymbolList.SetData(symbolInfos);
+        tacticsSymbolList.SetInfoHandler((a) => OnClickEnemyInfo(a));
+        HideSymbolList();
     }
 
     public void CommandRefresh(TacticsCommandType tacticsCommandType)
@@ -208,8 +200,6 @@ public class TacticsView : BaseView
             case TacticsCommandType.Train:
             case TacticsCommandType.Alchemy:
             case TacticsCommandType.Recovery:
-            case TacticsCommandType.Battle:
-            case TacticsCommandType.Resource:
             selectCharacter.Refresh();
             return;
         }
@@ -290,7 +280,6 @@ public class TacticsView : BaseView
         battleSelectCharacter.SetActiveTab(SelectCharacterTabType.Detail,false);
         battleSelectCharacter.SetSkillInfos(learnMagicList);
         battleSelectCharacter.ShowActionList();
-        charaLayerBG.SetActive(true);
         battleSelectCharacter.HideStatus();
         battleSelectCharacter.MagicList.Activate();
         SetHelpInputInfo("ALCHEMY_ATTRIBUTE");
@@ -299,7 +288,6 @@ public class TacticsView : BaseView
     public void HideAttributeList()
     {
         battleSelectCharacter.HideActionList();
-        charaLayerBG.SetActive(false);
         battleSelectCharacter.MagicList.Deactivate();
         
         SetHelpInputInfo("ALCHEMY");
@@ -344,9 +332,9 @@ public class TacticsView : BaseView
     private void CallBattleEnemy()
     {
         if (_lastCallEventType != CommandType.None) return;
-        if (tacticsEnemyList.IsSelectEnemy())
+        if (tacticsSymbolList.IsSelectSymbol())
         {
-            var listIndex = tacticsEnemyList.Index;
+            var listIndex = tacticsSymbolList.Index;
             if (listIndex > -1)
             {
                 var eventData = new TacticsViewEvent(CommandType.SelectBattleEnemy);
@@ -356,7 +344,7 @@ public class TacticsView : BaseView
             }
         } else
         {
-            var getItemInfo = tacticsEnemyList.GetItemInfo();
+            var getItemInfo = tacticsSymbolList.GetItemInfo();
             if (getItemInfo != null && (getItemInfo.IsSkill() || getItemInfo.IsAttributeSkill()))
             {
                 var eventData = new TacticsViewEvent(CommandType.PopupSkillInfo);
@@ -369,7 +357,7 @@ public class TacticsView : BaseView
 
     private void OnClickEnemyInfo(int selectIndex = -1)
     {
-        var index = tacticsEnemyList.Index;
+        var index = tacticsSymbolList.Index;
         if (index > -1)
         {
             if (selectIndex > -1)
@@ -382,18 +370,18 @@ public class TacticsView : BaseView
         }
     }
 
-    public void ShowEnemyList()
+    public void ShowSymbolList()
     {
-        tacticsEnemyList.gameObject.SetActive(true);
-        tacticsEnemyList.ResetInputFrame(1);
-        charaLayerBG.SetActive(true);
+        tacticsSymbolList.gameObject.SetActive(true);
+        tacticsSymbolList.ResetInputFrame(1);
+        ChangeBackCommandActive(true);
         SetHelpInputInfo("ENEMY_SELECT");
     }
 
-    public void HideEnemyList()
+    public void HideSymbolList()
     {
-        tacticsEnemyList.gameObject.SetActive(false);
-        charaLayerBG.SetActive(false);
+        tacticsSymbolList.gameObject.SetActive(false);
+        ChangeBackCommandActive(false);
         SetHelpInputInfo("TACTICS");
     }
 

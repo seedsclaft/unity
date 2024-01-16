@@ -74,13 +74,11 @@ public class SystemData : ScriptableObject
 
 public enum TacticsCommandType {
 	None,
+	Paradigm,
 	Train,
 	Alchemy,
 	Recovery,
-	Battle,
-	Resource,
 	Status,
-	TurnEnd
 }
 
 public enum TitleCommandType {

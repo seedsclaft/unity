@@ -72,6 +72,12 @@ public class BaseModel
         return members;
     }
 
+    public List<ActorInfo> BattleMembers()
+    {
+        return StageMembers().FindAll(a => a.InBattle);
+    }
+    
+
     public List<ActorInfo> PartyMembers()
     {
         var PartyMembersIds = PartyInfo.ActorIdList;
@@ -118,11 +124,6 @@ public class BaseModel
 
     public string TacticsBgmFilename()
     {
-        if (CurrentStage != null)
-        {
-            var stageData = CurrentStage.Master;
-            return DataSystem.Data.GetBGM(stageData.BGMId).Key;
-        }
         return "TACTICS1";
     }
 
@@ -341,28 +342,11 @@ public class BaseModel
     }
 
     
-    public List<TroopInfo> TacticsTroops()
+    public List<SymbolInfo> TacticsSymbols()
     {
-        if (CurrentStage.SurvivalMode)
-        {
-            return CurrentStage.SurvivalTroops(CurrentStage.CurrentTurn);
-        } else
-        if (CurrentStage.TroopClearCount == 0 && CurrentStage.SelectActorIds.Count > 0)
-        {
-            return TutorialTroopData();
-        }
-        return CurrentStage.TacticsTroops(CurrentStage.CurrentTurn);
+        return CurrentStage.CurrentSymbolInfos;
     }
 
-    public List<TroopInfo> TutorialTroopData()
-    {
-        return CurrentStage.MakeTutorialTroopData(CurrentStage.SelectActorIds[0]);
-    }
-
-    public List<TroopInfo> RouteSelectTroopData()
-    {
-        return CurrentStage.MakeRouteSelectTroopData(CurrentStage.RouteSelect);
-    }
 
     public TroopInfo CurrentTroopInfo()
     {

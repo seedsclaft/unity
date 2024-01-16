@@ -30,6 +30,7 @@ public class StageData
     public int SubordinateValue;
     public bool UseSlot;
     public List<StageEventData> StageEvents;
+    public List<StageSymbolData> StageSymbols;
     public List<StageTutorialData> Tutorials;
 }
 
@@ -47,6 +48,24 @@ public class StageEventData
 }
 
 [Serializable]
+public class StageSymbolData
+{
+    public int StageId;
+    public int Seek;
+    public int SymbolNum;
+    public int BattleSymbol;
+    public int BossSymbol;
+    public int RecoverSymbol;
+    public int AlcanaSymbol;
+    public int ActorSymbol;
+    public int ResourceSymbol;
+    public int RebirthSymbol;
+    public int Param1;
+    public int Param2;
+    public int PrizeSetId;
+}
+
+[Serializable]
 public class StageTutorialData
 {
     public int Turns;
@@ -56,6 +75,17 @@ public class StageTutorialData
     public int Y;
     public int Width;
     public int Height;
+}
+
+public enum SymbolType{
+    None = 0,
+    Battle = 1,
+    Boss = 2,
+    Recover = 3,
+    Alcana = 4,
+    Actor = 5,
+    Resource = 6,
+    Rebirth = 7
 }
 
 public enum EventTiming{

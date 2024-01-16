@@ -23,12 +23,9 @@ public class StrategyPresenter : BasePresenter
     private async void Initialize()
     {
         _busy = true;
-        _model.LoadActorResources();
-        _model.LoadEnemyResources();
         _view.SetHelpWindow();
-        _view.SetEnemyList(_model.ResultCommand());
 
-        _view.SetActors(_model.StageMembers());
+        _view.SetActors(_model.TempData.TempResultActorInfos);
         _view.SetResultList(_model.ResultCommand());
         var bgm = await _model.GetBgmData(_model.TacticsBgmFilename());
         Ryneus.SoundManager.Instance.PlayBgm(bgm,1.0f,true);
@@ -64,10 +61,6 @@ public class StrategyPresenter : BasePresenter
         {
             CommandResultClose((ConfirmCommandType)viewEvent.template);
         }
-        if (viewEvent.commandType == CommandType.BattleClose)
-        {
-            CommandBattleClose((ConfirmCommandType)viewEvent.template);
-        }
         if (viewEvent.commandType == CommandType.EndLvUpAnimation)
         {
             CommandEndLvUpAnimation();
@@ -75,10 +68,6 @@ public class StrategyPresenter : BasePresenter
         if (viewEvent.commandType == CommandType.LvUpNext)
         {
             CommandLvUpNext();
-        }
-        if (viewEvent.commandType == CommandType.ChangeSkipToggle)
-        {
-            CommandChangeSkipToggle((bool)viewEvent.template);
         }
     }
 
@@ -112,18 +101,6 @@ public class StrategyPresenter : BasePresenter
         if (tacticsActors.Count > 0)
         {
             _strategyState = StrategyState.TacticsResult;
-            SeekStrategyState();
-        } else{
-            CheckNextBattle();
-        }
-    }
-
-    private void CheckNextBattle()
-    {
-        var battleMembers = _model.CheckNextBattleActors();
-        if (battleMembers != null && battleMembers.Count > 0)
-        {
-            _strategyState = StrategyState.InBattle;
             SeekStrategyState();
         } else{
             EndStrategy();
@@ -161,21 +138,7 @@ public class StrategyPresenter : BasePresenter
                 _view.StartLvUpAnimation();
             }
         }
-        if (_strategyState == StrategyState.InBattle)
-        {
-            var battleMembers = _model.CheckNextBattleActors();
-            _view.HideResultList();
-            _model.SetBattleMembers(battleMembers);
-            var bonusList = new List<bool>();
-            foreach (var item in battleMembers)
-            {
-                bonusList.Add(false);
-            }
-            _view.SetTitle(DataSystem.GetTextData(4).Text);
-            _view.StartResultAnimation(_model.MakeListData(battleMembers),bonusList);
-        }
     }
-
 
     private void CommandEndAnimation()
     {
@@ -212,11 +175,6 @@ public class StrategyPresenter : BasePresenter
                 _view.ShowResultList(_model.ResultGetItemInfos);
             }
         }
-        if (_strategyState == StrategyState.InBattle)
-        {
-            _view.ShowEnemyList(ListData.MakeListData(_model.CurrentTroopInfo()),_model.EnableBattleSkip());
-            SetHelpInputSkipEnable();
-        }
         var stageEvents = _model.StageEvents(EventTiming.StartStrategy);
         foreach (var stageEvent in stageEvents)
         {
@@ -226,7 +184,6 @@ public class StrategyPresenter : BasePresenter
             }
             if (stageEvent.Type == StageEventType.NeedUseSp)
             {
-                _model.SetNeedUseSpCommand(true);
                 _model.AddEventReadFlag(stageEvent);
             }
             if (stageEvent.Type == StageEventType.AdvStart)
@@ -273,6 +230,15 @@ public class StrategyPresenter : BasePresenter
                     _model.ClearBattleData(battledMembers);
                 }
             }
+            if (_strategyState == StrategyState.TacticsResult)
+            {
+                var tacticsActors = _model.TacticsActors();
+                if (tacticsActors != null && tacticsActors.Count > 0)
+                {
+                    _model.TempData.ClearTempResultActorInfos();
+                }
+            }
+            _model.TempData.ClearTempGetItemInfos();
             CheckTacticsActors();
         } else
         {
@@ -281,33 +247,7 @@ public class StrategyPresenter : BasePresenter
         Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
     }
 
-    private void CommandBattleClose(ConfirmCommandType confirmCommandType)
-    {
-        if (confirmCommandType == ConfirmCommandType.Yes)
-        {
-            BattleStart();
-        } else{
-            ShowStatus();
-        }
-    }
 
-    private void BattleStart()
-    {
-        Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
-        _view.SetHelpText("");
-        _view.SetHelpInputInfo("");
-        _view.CommandCallLoading();
-        _view.CommandChangeViewToTransition(null);
-        if (_model.BattleSkip)
-        {
-            _view.CommandSceneChange(Scene.FastBattle);
-        } else
-        {
-            // バトルメンバーを一時保存
-            _model.SaveTempBattleMembers();
-            _view.CommandSceneChange(Scene.Battle);
-        }
-    }
 
     private void CommandContinue()
     {
@@ -397,11 +337,7 @@ public class StrategyPresenter : BasePresenter
     {
         var statusViewInfo = new StatusViewInfo(() => {
             _view.CommandStatusClose();
-            if (_strategyState != StrategyState.InBattle){
-                _view.SetHelpInputInfo("STRATEGY");
-            } else{
-                SetHelpInputSkipEnable();
-            }
+            SetHelpInputSkipEnable();
             _view.SetHelpText(DataSystem.GetTextData(14010).Text);
             _view.ChangeUIActive(true);
         });
@@ -423,39 +359,18 @@ public class StrategyPresenter : BasePresenter
     private void CommandCallEnemyInfo()
     {
         var enemyIndex = _model.CurrentStage.CurrentBattleIndex;
-        var enemyInfos = _model.TacticsTroops()[enemyIndex].BattlerInfos;
+        var enemyInfos = _model.TacticsSymbols()[enemyIndex].BattlerInfos();
         
         var statusViewInfo = new StatusViewInfo(() => {
             _view.CommandStatusClose();
             _view.ChangeUIActive(true);
-            if (_strategyState != StrategyState.InBattle){
-                _view.SetHelpInputInfo("STRATEGY");
-            } else{
-                SetHelpInputSkipEnable();
-            }
+            SetHelpInputSkipEnable();
             _view.SetHelpText(DataSystem.GetTextData(14010).Text);
         });
         statusViewInfo.SetEnemyInfos(enemyInfos,false);
         _view.CommandCallEnemyInfo(statusViewInfo);
         _view.ChangeUIActive(false);
         Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);    
-    }
-
-    private void CommandChangeSkipToggle(bool needChangeView)
-    {
-        if (_model.EnableBattleSkip())
-        {
-            var check = _view.BattleSkipToggle.isOn;
-            if (needChangeView)
-            {
-                check = !check;
-            }
-            _model.ChangeBattleSkip(check);
-            if (needChangeView)
-            {
-                _view.CommandChangeSkipToggle(_model.BattleSkip);
-            }
-        }
     }
 
     private void SetHelpInputSkipEnable()
@@ -480,6 +395,5 @@ public class StrategyPresenter : BasePresenter
         None = 0,
         BattleResult = 1,
         TacticsResult = 2,
-        InBattle = 3,
     }
 }

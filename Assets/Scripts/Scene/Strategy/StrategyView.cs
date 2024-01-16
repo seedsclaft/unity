@@ -10,15 +10,12 @@ public class StrategyView : BaseView
     [SerializeField] private Image backgroundImage = null; 
     [SerializeField] private StrategyActorList strategyActorList = null; 
     [SerializeField] private GetItemList strategyResultList = null; 
-    [SerializeField] private TacticsEnemyList tacticsEnemyList = null; 
     [SerializeField] private BaseList statusList = null; 
     [SerializeField] private TextMeshProUGUI title = null; 
     [SerializeField] private ActorInfoComponent actorInfoComponent = null;
     [SerializeField] private Button lvUpStatusButton = null;
     [SerializeField] private GameObject animRoot = null;
     [SerializeField] private GameObject animPrefab = null;
-    [SerializeField] private Toggle battleSkipToggle = null;
-    public Toggle BattleSkipToggle => battleSkipToggle;
 
     private BattleStartAnim _battleStartAnim = null;
     private bool _animationBusy = false;
@@ -39,8 +36,6 @@ public class StrategyView : BaseView
         _battleStartAnim.gameObject.SetActive(false);
         lvUpStatusButton.onClick.AddListener(() => CallLvUpNext());
         lvUpStatusButton.gameObject.SetActive(false);
-        battleSkipToggle.onValueChanged.AddListener((a) => OnChangeSkipToggle(false));
-        battleSkipToggle.gameObject.SetActive(false);
         
         var rect = actorInfoComponent.gameObject.GetComponent<RectTransform>();
         rect.localPosition = new Vector3(0,0,0);
@@ -88,17 +83,6 @@ public class StrategyView : BaseView
     public void SetTitle(string text)
     {
         title.text = text;
-    }
-
-    public void SetEnemyList(List<ListData> confirmCommands)
-    {
-        tacticsEnemyList.SetInputHandler(InputKeyType.Decide,() => CallBattleEnemy());
-        tacticsEnemyList.SetInputHandler(InputKeyType.Option1,() => OnClickEnemyInfo());
-        tacticsEnemyList.SetInputHandler(InputKeyType.Option2,() => OnChangeSkipToggle(true));
-        SetInputHandler(tacticsEnemyList.GetComponent<IInputHandlerEvent>());
-        tacticsEnemyList.InitializeConfirm(confirmCommands,(a) => CallBattleCommand(a));
-        SetInputHandler(tacticsEnemyList.TacticsCommandList.GetComponent<IInputHandlerEvent>());
-        tacticsEnemyList.gameObject.SetActive(false);
     }
 
     public void SetHelpWindow(){
@@ -173,42 +157,7 @@ public class StrategyView : BaseView
         strategyResultList.gameObject.SetActive(false);
     }
 
-    public void ShowEnemyList(List<ListData> troopInfo,bool enableBattleSkip)
-    {
-        tacticsEnemyList.SetData(troopInfo);
-        //tacticsEnemyList.Refresh(-1);
-        tacticsEnemyList.gameObject.SetActive(true);
-        tacticsEnemyList.TacticsCommandList.UpdateSelectIndex(1);
-        battleSkipToggle.gameObject.SetActive(enableBattleSkip);
-    }    
     
-    private void CallBattleEnemy()
-    {
-        if (tacticsEnemyList.IsSelectEnemy())
-        {
-        } else
-        {
-            var getItemInfo = tacticsEnemyList.GetItemInfo();
-            if (getItemInfo != null && (getItemInfo.IsSkill() || getItemInfo.IsAttributeSkill()))
-            {
-                var eventData = new StrategyViewEvent(CommandType.PopupSkillInfo);
-                eventData.template = getItemInfo;
-                _commandData(eventData);
-            }
-        }
-    }
-
-    private void OnClickEnemyInfo()
-    {
-        var listData = tacticsEnemyList.ListData;
-        if (listData != null)
-        {
-            var data = (TroopInfo)listData.Data;
-            var eventData = new StrategyViewEvent(CommandType.CallEnemyInfo);
-            eventData.template = data;
-            _commandData(eventData);
-        }
-    }
 
     private void OnChangeSkipToggle(bool needChangeView)
     {
@@ -259,14 +208,6 @@ public class StrategyView : BaseView
         strategyResultList.TacticsCommandList.Deactivate();
     }
 
-    public void CommandChangeSkipToggle(bool isCheck)
-    {
-        if (battleSkipToggle.isOn != isCheck)
-        {
-            Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cursor);
-            battleSkipToggle.isOn = isCheck;
-        }
-    }
 }
 
 namespace Strategy

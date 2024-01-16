@@ -71,7 +71,7 @@ public class BattlePresenter : BasePresenter
     {
         _view.SetEvent((type) => UpdateCommand(type));
         _view.SetActors(_model.BattlerActors());
-        _view.SetEnemies(_model.BattlerEnemies(),_model.BattleCursorEffects());
+        _view.SetEnemies(_model.BattlerEnemies());
         _view.SetSideMenu(_model.SideMenu());
         _view.StartBattleStartAnim(DataSystem.GetTextData(4).Text);
         await UniTask.WaitUntil(() => _view.StartAnimIsBusy == false);
@@ -180,6 +180,7 @@ public class BattlePresenter : BasePresenter
             _view.HideStateOverlay();
             await UniTask.DelayFrame(180);
             _view.SetBattleBusy(false);
+            _model.TempData.SetTempResultActorInfos(_model.BattleMembers());
             _view.CommandSceneChange(Scene.Strategy);
         }
     }
@@ -1031,6 +1032,8 @@ public class BattlePresenter : BasePresenter
         _view.HideStateOverlay();
         await UniTask.DelayFrame(180);
         _view.SetBattleBusy(false);
+        _model.TempData.SetTempGetItemInfos(_model.CurrentStage.CurrentSelectSymbol().GetItemInfos);
+        _model.TempData.SetTempResultActorInfos(_model.BattleMembers());
         _view.CommandSceneChange(Scene.Strategy);
     }
 

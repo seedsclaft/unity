@@ -23,6 +23,34 @@ public class GetItemInfo
             _param1 = getItemData.Param1;
             _param2 = getItemData.Param2;
             _getItemType = getItemData.Type;
+            MakeTextData();
+        }
+    }
+
+    private void MakeTextData()
+    {
+        switch (_getItemType)
+        {
+            case GetItemType.Numinous:
+                SetResultData("+" + _param1.ToString() + DataSystem.GetTextData(1000).Text);
+                break;
+            case GetItemType.Skill:
+                var skillData = DataSystem.FindSkill(_param1);
+                SetResultData(skillData.Name);
+                SetSkillElementId((int)skillData.Attribute);
+                break;
+            case GetItemType.Demigod:
+                SetResultData(DataSystem.GetTextData(14042).Text + "+" + _param1.ToString());
+                break;
+            case GetItemType.Ending:
+                SetResultData(DataSystem.GetTextData(14060).Text);
+                break;
+            case GetItemType.StatusUp:
+                SetResultData(DataSystem.GetReplaceText(14070,_param1.ToString()));
+                break;
+            case GetItemType.Regeneration:
+                SetResultData(DataSystem.GetReplaceText(3240,_param1.ToString()));
+                break;
         }
     }
 

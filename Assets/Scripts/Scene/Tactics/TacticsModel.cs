@@ -53,7 +53,6 @@ public class TacticsModel : BaseModel
             SetTacticsCommandEnables(TacticsCommandType.Train,false);
             SetTacticsCommandEnables(TacticsCommandType.Alchemy,false);
             SetTacticsCommandEnables(TacticsCommandType.Recovery,false);
-            SetTacticsCommandEnables(TacticsCommandType.Resource,false);
         }
         var commandListDates = MakeListData(DataSystem.TacticsCommand);
         foreach (var commandListData in commandListDates)
@@ -74,10 +73,6 @@ public class TacticsModel : BaseModel
 
     public void SetTempData(TacticsCommandType tacticsCommandType)
     {
-        if (tacticsCommandType > TacticsCommandType.Resource)
-        {
-            return;
-        }
         _tempActorInfos.Clear();
         for (int i = 0;i < StageMembers().Count;i++)
         {
@@ -118,16 +113,7 @@ public class TacticsModel : BaseModel
                             stageMember.ClearTacticsCommand();
                         } else{
                             stageMember.SetTacticsCommand(tempData.TacticsCommandType,tempData.TacticsCost);
-                            if (tempData.TacticsCommandType != TacticsCommandType.Resource)
-                            {
-                                if (RecoveryCostZero() && tempData.TacticsCommandType == TacticsCommandType.Recovery)
-                                {
-                                    
-                                } else
-                                {
-                                    PartyInfo.ChangeCurrency(Currency - tempData.TacticsCost);
-                                }   
-                            }
+                            
                             stageMember.SetNextBattleEnemyIndex(tempData.NextBattleEnemyIndex,tempData.NextBattleEnemyId);
                             stageMember.SetNextLearnCost(tempData.NextLearnCost);
                             //stageMember.SetNextLearnAttribute(tempData.NextLearnAttribute);
@@ -156,6 +142,10 @@ public class TacticsModel : BaseModel
 
     private bool CanTacticsCommand(TacticsCommandType tacticsCommandType,ActorInfo actorInfo)
     {
+        if (tacticsCommandType == TacticsCommandType.Paradigm)
+        {
+            return true;
+        }
         if (tacticsCommandType == TacticsCommandType.Train)
         {
             return Currency >= TacticsUtility.TrainCost(actorInfo);
@@ -167,14 +157,6 @@ public class TacticsModel : BaseModel
         if (tacticsCommandType == TacticsCommandType.Recovery)
         {
             return Currency > 0;
-        }
-        if (tacticsCommandType == TacticsCommandType.Battle)
-        {
-            return true;
-        }
-        if (tacticsCommandType == TacticsCommandType.Resource)
-        {
-            return true;
         }
         return false;
     }
@@ -235,6 +217,41 @@ public class TacticsModel : BaseModel
                     PartyInfo.ChangeCurrency(Currency - actorInfo.TacticsCost);
                 }
             }
+        }
+    }
+
+    public void SelectActorParadigm(int actorId)
+    {
+        var actorInfo = TacticsActor(actorId);
+        if (actorInfo != null){
+            if (actorInfo.TacticsCommandType == TacticsCommandType.Paradigm)
+            {   
+                actorInfo.ClearTacticsCommand();
+            } else
+            {
+                if (CanTacticsCommand(TacticsCommandType.Paradigm,actorInfo))
+                {   
+                    actorInfo.SetTacticsCommand(TacticsCommandType.Paradigm,TacticsUtility.TrainCost(actorInfo));
+                }
+            }
+        }
+    }
+
+    public void SetBattleEnemyIndex()
+    {
+        CurrentStage.SetBattleIndex(_currentEnemyIndex);
+    }
+
+    public void SaveTempBattleMembers()
+    {
+        TempData.CashBattleActors(BattleMembers());
+    }
+
+    public void SetInBattle(bool inBattle)
+    {
+        foreach (var stageMember in StageMembers())
+        {
+            stageMember.SetInBattle(inBattle);
         }
     }
 
@@ -355,17 +372,6 @@ public class TacticsModel : BaseModel
     {
         var actorInfo = TacticsActor(actorId);
         if (actorInfo != null){
-            if (actorInfo.TacticsCommandType == TacticsCommandType.Battle)
-            {   
-                actorInfo.ClearTacticsCommand();
-            } else
-            {
-                if (CanTacticsCommand(TacticsCommandType.Battle,actorInfo))
-                {   
-                    actorInfo.SetTacticsCommand(TacticsCommandType.Battle,0);
-                    actorInfo.SetNextBattleEnemyIndex(_currentEnemyIndex,TacticsTroops()[_currentEnemyIndex].BossEnemy.EnemyData.Id);
-                }
-            }
         }
     }
 
@@ -373,16 +379,6 @@ public class TacticsModel : BaseModel
     {
         var actorInfo = TacticsActor(actorId);
         if (actorInfo != null){
-            if (actorInfo.TacticsCommandType == TacticsCommandType.Resource)
-            {   
-                actorInfo.ClearTacticsCommand();
-            } else
-            {
-                if (CanTacticsCommand(TacticsCommandType.Resource,actorInfo))
-                {   
-                    actorInfo.SetTacticsCommand(TacticsCommandType.Resource,TacticsUtility.ResourceCost(actorInfo));
-                }
-            }
         }
     }
 
@@ -391,10 +387,6 @@ public class TacticsModel : BaseModel
         return StageMembers().Find(a => a.TacticsCommandType == TacticsCommandType.None) == null && GameSystem.ConfigData.CommandEndCheck;
     }
 
-    public void InitInBattle()
-    {
-        StageMembers().ForEach(a => a.SetInBattle(false));
-    }
 
     public void TurnEnd()
     {
@@ -494,10 +486,6 @@ public class TacticsModel : BaseModel
                 return "ALCHEMY";
             case TacticsCommandType.Recovery:
                 return "RECOVERY";
-            case TacticsCommandType.Battle:
-                return "ENEMY_SELECT";
-            case TacticsCommandType.Resource:
-                return "RESOURCE";
         }
         return "";
     }
@@ -518,7 +506,7 @@ public class TacticsModel : BaseModel
 
     private int CommandRank()
     {
-        return CommandRankInfo()[_tacticsCommandType];
+        return 1;//CommandRankInfo()[_tacticsCommandType];
     }
 
     private string CommandDescription()
@@ -528,11 +516,6 @@ public class TacticsModel : BaseModel
         {
             // %の確率で
             var bonusParam = rank * 10;
-            if (_tacticsCommandType == TacticsCommandType.Battle)
-            {
-                // 獲得Nuが〇アップ
-                bonusParam = rank * DataSystem.System.BattleBonusValue;
-            }
             return DataSystem.GetReplaceText(10 + (int)_tacticsCommandType,bonusParam.ToString());
         }
         int count = 0;
@@ -547,12 +530,6 @@ public class TacticsModel : BaseModel
             case TacticsCommandType.Recovery:
                 count = DataSystem.System.RecoveryCount;
                 break;
-            case TacticsCommandType.Battle:
-                count = DataSystem.System.BattleCount;
-                break;
-            case TacticsCommandType.Resource:
-                count = DataSystem.System.ResourceCount;
-                break;
         }
         return DataSystem.GetReplaceText(10,count.ToString());
     }
@@ -562,33 +539,10 @@ public class TacticsModel : BaseModel
         return StageAlcana.CheckCommandCostZero(TacticsCommandType.Recovery);
     }
 
-    public void SetDefineBoss(int index)
-    {
-        var defineTroopId = CurrentStage.DefineTroopId(false);
-        if (defineTroopId != 0 && !CurrentStage.ClearedTroopId(defineTroopId))
-        {
-            CurrentStage.SetDefineBossOnly(index);
-            SetNeedAllTacticsCommand(true);
-            SetTacticsCommandEnables(TacticsCommandType.Train,false);
-            SetTacticsCommandEnables(TacticsCommandType.Alchemy,false);
-            SetTacticsCommandEnables(TacticsCommandType.Recovery,false);
-            SetTacticsCommandEnables(TacticsCommandType.Resource,false);
-        }
-    }
 
-    public void SetLastBoss()
-    {
-        CurrentStage.SetLastBossOnly();
-        SetNeedAllTacticsCommand(true);
-        SetTacticsCommandEnables(TacticsCommandType.Train,false);
-        SetTacticsCommandEnables(TacticsCommandType.Alchemy,false);
-        SetTacticsCommandEnables(TacticsCommandType.Recovery,false);
-        SetTacticsCommandEnables(TacticsCommandType.Resource,false);
-    }
 
     public void SetSurvivalMode()
     {
-        CurrentStage.ClearTacticsEnemies();
         CurrentStage.SetSurvivalMode();
     }
 
@@ -607,10 +561,6 @@ public class TacticsModel : BaseModel
                 return (viewEvent.commandType == Tactics.CommandType.TacticsCommand && (TacticsCommandType)viewEvent.template == TacticsCommandType.Alchemy);
             case TutorialType.TacticsCommandRecover:
                 return (viewEvent.commandType == Tactics.CommandType.TacticsCommand && (TacticsCommandType)viewEvent.template == TacticsCommandType.Recovery);
-            case TutorialType.TacticsCommandBattle:
-                return (viewEvent.commandType == Tactics.CommandType.TacticsCommand && (TacticsCommandType)viewEvent.template == TacticsCommandType.Battle);
-            case TutorialType.TacticsCommandResource:
-                return (viewEvent.commandType == Tactics.CommandType.TacticsCommand && (TacticsCommandType)viewEvent.template == TacticsCommandType.Resource);
             case TutorialType.TacticsSelectTacticsActor:
                 return (viewEvent.commandType == Tactics.CommandType.SelectTacticsActor);
             case TutorialType.TacticsSelectTacticsDecide:

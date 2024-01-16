@@ -17,11 +17,9 @@ public class BattleStateOverlay : MonoBehaviour
 
     private int _iconAnimIndex = -1;
 
-    private bool _changeEffectPosition = false;
-    public void SetStates(List<StateInfo> stateInfos,bool changeEffectPosition)
+    public void SetStates(List<StateInfo> stateInfos)
     {
         _stateInfos = stateInfos;
-        _changeEffectPosition = changeEffectPosition;
         IconAnimation();
         OverlayAnimation();
     }
@@ -110,18 +108,14 @@ public class BattleStateOverlay : MonoBehaviour
             //effekseerEmitter.enabled = true;
             if (asset != null) {
                 var rect = effekseerEmitter.gameObject.GetComponent<RectTransform>();
-                if (_changeEffectPosition)
+                if (overlayState.Master.EffectPosition == EffectPositionType.Center)
                 {
-                    if (overlayState.Master.EffectPosition == EffectPositionType.Center)
-                    {
-                        rect.localPosition = new Vector2(rect.localPosition.x,64);
-                    } else
-                    if (overlayState.Master.EffectPosition == EffectPositionType.Down)
-                    {
-                        rect.localPosition = new Vector2(rect.localPosition.x,-32);
-                    }
+                    rect.localPosition = new Vector2(rect.localPosition.x,40);
+                } else
+                if (overlayState.Master.EffectPosition == EffectPositionType.Down)
+                {
+                    rect.localPosition = new Vector2(rect.localPosition.x,-8);
                 }
-                rect = effekseerEmitter.gameObject.GetComponent<RectTransform>();
                 rect.localScale = new Vector3(overlayState.Master.EffectScale,overlayState.Master.EffectScale,overlayState.Master.EffectScale);
                 effekseerEmitter.effectAsset = asset;
                 effekseerEmitter.Play();

@@ -8,8 +8,8 @@ using Effekseer;
 public class BattleView : BaseView ,IInputHandlerEvent
 {
     private new System.Action<BattleViewEvent> _commandData = null;
-    [SerializeField] private BattleActorList battleActorList = null;
-    [SerializeField] private BattleEnemyLayer battleEnemyLayer = null;
+    [SerializeField] private BattleBattlerList battleActorList = null;
+    [SerializeField] private BattleBattlerList battleEnemyLayer = null;
     [SerializeField] private BattleGridLayer battleGridLayer = null;
     [SerializeField] private BattleSelectCharacter selectCharacter = null;
     [SerializeField] private BattleThumb battleThumb;
@@ -119,7 +119,6 @@ public class BattleView : BaseView ,IInputHandlerEvent
 
     public void CreateObject(int battleActorsCount)
     {
-        battleActorList.Initialize(battleActorsCount,a => CallActorList(a));
         battleActorList.SetInputHandler(InputKeyType.Cancel,() => OnClickBack());
         battleActorList.SetInputHandler(InputKeyType.SideLeft1,() => OnClickSelectEnemy());
         SetInputHandler(battleActorList.GetComponent<IInputHandlerEvent>());
@@ -185,7 +184,8 @@ public class BattleView : BaseView ,IInputHandlerEvent
 
     public void SetActors(List<BattlerInfo> battlerInfos)
     {
-        battleActorList.Refresh(battlerInfos);
+        battleActorList.Initialize(battlerInfos,a => CallActorList(a));
+        //battleActorList.Refresh(battlerInfos);
         foreach (var item in battlerInfos)
         {
             _battlerComps[item.Index] = battleActorList.GetBattlerInfoComp(item.Index);
@@ -193,16 +193,16 @@ public class BattleView : BaseView ,IInputHandlerEvent
         battleGridLayer.SetActorInfo(battlerInfos);
     }
     
-    public void SetEnemies(List<BattlerInfo> battlerInfos,List<EffekseerEffectAsset> cursorEffects)
+    public void SetEnemies(List<BattlerInfo> battlerInfos)
     {
-        battleEnemyLayer.Initialize(battlerInfos,(a) => CallEnemyInfo(a),cursorEffects);
+        battleEnemyLayer.Initialize(battlerInfos,(a) => CallEnemyInfo(a));
         battleEnemyLayer.SetInputHandler(InputKeyType.Cancel,() => OnClickBack());
         battleEnemyLayer.SetInputHandler(InputKeyType.SideRight1,() => OnClickSelectParty());
         battleEnemyLayer.SetInputHandler(InputKeyType.Option1,() => CallEnemyDetailInfo(battlerInfos));
         SetInputHandler(battleEnemyLayer.GetComponent<IInputHandlerEvent>());
         foreach (var item in battlerInfos)
         {
-            _battlerComps[item.Index] = battleEnemyLayer.GetBattlerInfoComp(item.Index);
+            _battlerComps[item.Index] = battleEnemyLayer.GetBattlerInfoComp(item.Index - 100);
         }
         battleGridLayer.SetEnemyInfo(battlerInfos);
         DeactivateEnemyList();
@@ -318,22 +318,14 @@ public class BattleView : BaseView ,IInputHandlerEvent
     {
         if (selectIndex != -1){
             ActivateEnemyList();
-        } else
-        {
-            if (targetIndexList == null)
-            {
-                HideEnemyStatus();
-            }
         }
         battleEnemyLayer.RefreshTarget(selectIndex,targetIndexList,scopeType,attributeType);
         if (targetIndexList != null)
         {
             SetBattlerSelectable(false);
-            HideEnemyStatus();
             foreach (var idx in targetIndexList)
             {
                 _battlerComps[idx].SetSelectable(true);
-                _battlerComps[idx].SetActiveStatus(true);
             }
         }
     }
@@ -392,7 +384,7 @@ public class BattleView : BaseView ,IInputHandlerEvent
     {
         foreach (var item in _battlerComps)
         {
-            item.Value.SetActiveStatus(false);
+            //item.Value.SetActiveStatus(false);
         }
     }
 

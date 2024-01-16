@@ -25,7 +25,6 @@ public class TacticsComponent : MonoBehaviour
     [SerializeField] private EnemyInfoComponent enemyInfoComponent;
 
 
-    [SerializeField] private TextMeshProUGUI resourceCost;
 
     [SerializeField] private GameObject busyRoot;
     [SerializeField] private TextMeshProUGUI busyText;
@@ -100,11 +99,6 @@ public class TacticsComponent : MonoBehaviour
             enemyInfoComponent.UpdateData(enemyData);
         }
 
-        if (resourceCost != null)
-        {
-            resourceCost.gameObject.SetActive(actorInfo.TacticsCommandType == TacticsCommandType.Resource);
-            resourceCost.text = "+" + TacticsUtility.ResourceGain(actorInfo).ToString();
-        }
 
         if (busyRoot != null && busyText != null)
         {

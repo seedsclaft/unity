@@ -42,6 +42,22 @@ public class StagesInfoImporter : AssetPostprocessor {
 		ReadFlag
     }
 	
+    enum BaseSymbolColumn
+    {
+		Id = 0,
+        Seek,
+		SelectSymbol,
+		Battle,
+		Boss,
+		Recover,
+		Alcana,
+		Actor,
+		Resource,
+		Rebirth,
+		Param1,
+		Param2,
+		PrizeSetId
+    }
     enum BaseTutorialColumn
     {
 		Id = 0,
@@ -93,7 +109,7 @@ public class StagesInfoImporter : AssetPostprocessor {
 			{
 				// エクセルブックを作成
 				AssetPostImporter.CreateBook(asset, Mainstream, out IWorkbook Book);
-				List<TextData> textData = AssetPostImporter.CreateText(Book.GetSheetAt(3));
+				var textData = AssetPostImporter.CreateText(Book.GetSheetAt(4));
 
 				// 情報の初期化
 				Data.Data.Clear();
@@ -101,7 +117,8 @@ public class StagesInfoImporter : AssetPostprocessor {
 				// エクセルシートからセル単位で読み込み
 				ISheet BaseSheet = Book.GetSheetAt(0);
 				ISheet EventSheet = Book.GetSheetAt(1);
-				ISheet TutorialSheet = Book.GetSheetAt(2);
+				ISheet SymbolSheet = Book.GetSheetAt(2);
+				ISheet TutorialSheet = Book.GetSheetAt(3);
 				for (int i = 1; i <= BaseSheet.LastRowNum; i++)
 				{
 					IRow BaseRow = BaseSheet.GetRow(i);
@@ -150,6 +167,33 @@ public class StagesInfoImporter : AssetPostprocessor {
 							EventData.EventKey = EventData.Turns.ToString() + EventData.Timing.ToString() + EventData.Type.ToString() + EventData.Param.ToString();
 
 							StageData.StageEvents.Add(EventData);
+						}
+					}
+					StageData.StageSymbols = new ();
+					
+					for (int j = 1; j <= SymbolSheet.LastRowNum; j++)
+					{
+						IRow SymbolRow = SymbolSheet.GetRow(j);
+						var SymbolData = new StageSymbolData();
+						var StageId = (int)SymbolRow.GetCell((int)BaseSymbolColumn.Id)?.SafeNumericCellValue();
+						
+						if (StageId == StageData.Id)
+						{
+							SymbolData.StageId = (int)SymbolRow.GetCell((int)BaseSymbolColumn.Id)?.SafeNumericCellValue();
+							SymbolData.Seek = (int)SymbolRow.GetCell((int)BaseSymbolColumn.Seek)?.SafeNumericCellValue();
+							SymbolData.SymbolNum = (int)SymbolRow.GetCell((int)BaseSymbolColumn.SelectSymbol)?.SafeNumericCellValue();
+							SymbolData.BattleSymbol = (int)SymbolRow.GetCell((int)BaseSymbolColumn.Battle)?.SafeNumericCellValue();
+							SymbolData.BossSymbol = (int)SymbolRow.GetCell((int)BaseSymbolColumn.Boss)?.SafeNumericCellValue();
+							SymbolData.ActorSymbol = (int)SymbolRow.GetCell((int)BaseSymbolColumn.Actor)?.SafeNumericCellValue();
+							SymbolData.AlcanaSymbol = (int)SymbolRow.GetCell((int)BaseSymbolColumn.Alcana)?.SafeNumericCellValue();
+							SymbolData.RebirthSymbol = (int)SymbolRow.GetCell((int)BaseSymbolColumn.Rebirth)?.SafeNumericCellValue();
+							SymbolData.RecoverSymbol = (int)SymbolRow.GetCell((int)BaseSymbolColumn.Recover)?.SafeNumericCellValue();
+							SymbolData.ResourceSymbol = (int)SymbolRow.GetCell((int)BaseSymbolColumn.Resource)?.SafeNumericCellValue();
+							SymbolData.Param1 = (int)SymbolRow.GetCell((int)BaseSymbolColumn.Param1)?.SafeNumericCellValue();
+							SymbolData.Param2 = (int)SymbolRow.GetCell((int)BaseSymbolColumn.Param2)?.SafeNumericCellValue();
+							SymbolData.PrizeSetId = (int)SymbolRow.GetCell((int)BaseSymbolColumn.PrizeSetId)?.SafeNumericCellValue();
+							
+							StageData.StageSymbols.Add(SymbolData);
 						}
 					}
 					
