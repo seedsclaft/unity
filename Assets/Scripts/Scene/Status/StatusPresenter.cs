@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 public class StatusPresenter : BasePresenter
 {
     private StatusModel _model = null;
@@ -110,9 +111,15 @@ public class StatusPresenter : BasePresenter
                 {
                     _view.CommandSceneChange(Scene.AlcanaSelect);
                 } else
+                if (_model.StageMembers().Count == 1)
                 {
-                    // ステージに戻る
                     _view.CommandSceneChange(Scene.Tactics);
+                }
+                if (_model.StageMembers().Count > 1)
+                {
+                    // 結果に移動
+                    _model.TempData.SetTempResultActorInfos(new List<ActorInfo>(){_model.CurrentActor});
+                    _view.CommandSceneChange(Scene.Strategy);
                 }
             } else{
                 Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cancel);

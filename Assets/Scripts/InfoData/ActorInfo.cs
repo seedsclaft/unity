@@ -18,6 +18,8 @@ public class ActorInfo
     private StatusInfo _upperRate;
     private List<AttributeRank> _attribute;
     public List<AttributeRank> Attribute => _attribute;
+    private int _equipmentSkillId = 0;
+    public int EquipmentSkillId => _equipmentSkillId;
     public List<AttributeRank> GetAttributeRank()
     {
         var list = new List<AttributeRank>();
@@ -275,6 +277,23 @@ public class ActorInfo
         _skills.Add(skillInfo);
     }
 
+    public void EquipSkill(SkillInfo skillInfo)
+    {
+        _equipmentSkillId = skillInfo.Id;
+        skillInfo.SetLearningState(LearningState.Equipment);
+        _skills.Add(skillInfo);
+    }
+
+    public void RemoveEquipSkill()
+    {
+        int skillIdx = _skills.FindIndex(a => a.Id == _equipmentSkillId);
+        if (skillIdx > 0)
+        {
+            _skills.RemoveAt(skillIdx);
+        }
+        _equipmentSkillId = 0;
+    }
+
     public void ForgetSkill(SkillInfo skillInfo)
     {
         int skillIdx = _skills.FindIndex(a => a == skillInfo);
@@ -315,9 +334,18 @@ public class ActorInfo
         _nextBattleEnemyId = 0;
     }
     
-    public void SetNextLearnSkillId(int skillId)
+    public void SeekAlchemy()
     {
-        _nextLearnSkillId = skillId;
+        var learnSkills = Skills.FindAll(a => a.LearningState == LearningState.Equipment);
+        foreach (var learnSkill in learnSkills)
+        {
+            learnSkill.SeekAlchemy();
+            if (learnSkill.LearningTurns == 0)
+            {
+                learnSkill.SetLearningState(LearningState.Learned);
+                _equipmentSkillId = 0;
+            }
+        }
     }
 
     public void SetNextLearnCost(int learningCost)

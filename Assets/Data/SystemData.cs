@@ -111,6 +111,7 @@ public enum GetItemType
 	Skill = 1,
 	Numinous = 2,
 	Demigod = 3,
+	ReBirth = 4,
 	AttributeFire = 11,
 	AttributeThunder = 12,
 	AttributeIce = 13,

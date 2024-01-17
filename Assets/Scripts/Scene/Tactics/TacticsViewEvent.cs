@@ -26,7 +26,7 @@ namespace Tactics
         SkillAlchemy,
         SelectRecoveryPlus,
         SelectRecoveryMinus,
-        SelectBattleEnemy,
+        SelectSymbol,
         PopupSkillInfo,
         SymbolClose,
         SelectEnemyClose,

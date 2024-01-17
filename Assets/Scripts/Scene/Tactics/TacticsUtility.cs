@@ -21,45 +21,39 @@ public class TacticsUtility
         return actorInfo.Level * TacticsCostRate(actorInfo);
     }
 
-    public static int AlchemyCost(ActorInfo actorInfo,AttributeType attributeType,List<ActorInfo> stageMembers)
+    public static int AlchemyTurns(ActorInfo actorInfo,AttributeType attributeType,List<ActorInfo> stageMembers)
     {
-        if (GameSystem.CurrentStageData != null)
-        {
-            if (GameSystem.CurrentStageData.StageAlcana.CheckAlchemyCostZero(attributeType))
-            {
-                return 0;
-            }
-        }
-        int cost = 4;
+        int turns = 1;
         var param = actorInfo.AttributeRanks(stageMembers)[(int)attributeType-1];
         switch (param)
         {
             case AttributeRank.S:
-                cost /= 2;
+                turns = 1;
                 break;
             case AttributeRank.A:
+                turns = 2;
                 break;
             case AttributeRank.B:
-                cost *= 2;
+                turns = 3;
                 break;
             case AttributeRank.C:
-                cost *= 4;
+                turns = 4;
                 break;
             case AttributeRank.D:
-                cost *= 6;
+                turns = 6;
                 break;
             case AttributeRank.E:
-                cost *= 8;
+                turns = 8;
                 break;
             case AttributeRank.F:
-                cost *= 12;
+                turns = 12;
                 break;
             case AttributeRank.G:
-                cost *= 16;
+                turns = 16;
                 break;
         }
         
-        return Mathf.FloorToInt(cost * TacticsCostRate(actorInfo));
+        return Mathf.FloorToInt(turns * TacticsCostRate(actorInfo));
     }
 
     public static int RecoveryCost(ActorInfo actorInfo,bool checkAlcana = false)
@@ -71,6 +65,11 @@ public class TacticsUtility
                 return 0;
             }
         }
+        return actorInfo.Level * TacticsCostRate(actorInfo);
+    }
+
+    public static int RemainRecoveryCost(ActorInfo actorInfo,bool checkAlcana = false)
+    {
         int hpCost = (int)Mathf.Ceil((actorInfo.MaxHp - actorInfo.CurrentHp) * 0.1f) * TacticsCostRate(actorInfo);
         int mpCost = (int)Mathf.Ceil((actorInfo.MaxMp - actorInfo.CurrentMp) * 0.1f) * TacticsCostRate(actorInfo);
         return hpCost > mpCost ? hpCost : mpCost;

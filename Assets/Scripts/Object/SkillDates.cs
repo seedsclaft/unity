@@ -420,7 +420,7 @@ public enum FeatureType
 public enum LearningState{
     None = 0,
     Learned = 1,
-    NotLearned = 2,
+    Equipment = 2,
     SelectLearn = 3
 }
 

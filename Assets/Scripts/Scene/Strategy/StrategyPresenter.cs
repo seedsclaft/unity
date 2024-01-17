@@ -228,6 +228,7 @@ public class StrategyPresenter : BasePresenter
                 if (battledMembers != null && battledMembers.Count > 0)
                 {
                     _model.ClearBattleData(battledMembers);
+                    _model.TempData.ClearTempResultActorInfos();
                 }
             }
             if (_strategyState == StrategyState.TacticsResult)

@@ -51,6 +51,9 @@ public class GetItemInfo
             case GetItemType.Regeneration:
                 SetResultData(DataSystem.GetReplaceText(3240,_param1.ToString()));
                 break;
+            case GetItemType.ReBirth:
+                SetResultData("ロスト復活");
+                break;
         }
     }
 

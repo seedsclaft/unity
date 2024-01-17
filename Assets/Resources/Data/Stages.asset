@@ -14,10 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Data:
   - Id: 1
-    Name: "xxxx \u30C1\u30E5\u30FC\u30C8\u30EA\u30A2\u30EB"
-    AchieveText: "\u30C1\u30E5\u30FC\u30C8\u30EA\u30A2\u30EB\u3092\u5C65\u4FEE\u3059\u308B"
+    Name: "A.D.4308 \u6700\u5F8C\u306E\u5BE9\u5224"
+    AchieveText: ??????
     Selectable: 1
-    Help: "\u5B9F\u969B\u306B\u30D7\u30EC\u30A4\u3057\u306A\u304C\u3089\n\u57FA\u672C\u7684\u306A\u904A\u3073\u65B9\u3092\u5B66\u3073\u307E\u3059\u3002"
+    Help: "\u4EBA\u985E\u6700\u5F8C\u306E\u65E5\u3002\u5929\u304B\u3089\u5F57\u661F\u304C\u843D\u3068\u3055\u308C\u308B\u3002\n\u71B1\u6CE2\u306F\u4E09\u65E5\u9593\u7D9A\u304D\u3001\u4E0D\u7FA9\u8005\u306E\u7F6A\u306F\u6D44\u5316\u3055\u308C\u305F\u3002\n\u3059\u3079\u3066\u7406\u60F3\u4E16\u754C\u306B\u751F\u307E\u308C\u5909\u308F\u308B\u70BA\u306B\u3002"
     Turns: 7
     InitMembers: 0100000002000000030000000400000005000000
     RandomTroopCount: 15
@@ -104,7 +104,7 @@ MonoBehaviour:
       RebirthSymbol: 0
       Param1: 0
       Param2: 0
-      PrizeSetId: 0
+      PrizeSetId: 200
     - StageId: 1
       Seek: 6
       SymbolNum: 1
@@ -117,7 +117,7 @@ MonoBehaviour:
       RebirthSymbol: 1
       Param1: 0
       Param2: 0
-      PrizeSetId: 0
+      PrizeSetId: 400
     - StageId: 1
       Seek: 7
       SymbolNum: 1
@@ -131,4 +131,114 @@ MonoBehaviour:
       Param1: 1010
       Param2: 0
       PrizeSetId: 200
+    Tutorials: []
+  - Id: 2
+    Name: "A.D.3946 VR\u81E8\u5E8A\u8133\u6B7B\u4E8B\u4EF6"
+    AchieveText: "\u56DE\u8DEF\u3092\u89E3\u6790\u3057\u4F7F\u9014\u3092\u6BB2\u6EC5\u3059\u308B"
+    Selectable: 1
+    Help: "VR\u8133\u79D1\u5B66\u53F2\u306B\u304A\u3051\u308B\u4EBA\u985E\u6700\u5927\u306E\u4E8B\u4EF6\u3002\n\n<\u8A73\u7D30>\n\u4E16\u754CVR\u7BA1\u7406\u653F\u7B56\u671F\u306B\u642D\u8F09\u3057\u305FVR\u8133\u30C1\u30C3\u30D7\u304C\u8AA4\u4F5C\u52D5\u3057\u540C\u6642\u591A\u767A\u7684\u306B\u30B7\u30E7\u30C3\u30AF\u6027\u306E\u96FB\u78C1\u6CE2\u304C\u767A\u751F\u3002\n\n<\u6B7B\u8005\u6570>\n5\u4E07\u4EBA\u8D85\u3002\n\n<\u5099\u8003>\n\u6B7B\u8005\u306F\u82E5\u5E74\u5C64\u306B\u96C6\u4E2D\u3057\u3066\u3044\u308B\u3002"
+    Turns: 7
+    InitMembers: 0100000002000000030000000400000005000000
+    RandomTroopCount: 15
+    BossId: 0
+    BGMId: 3
+    BossBGMId: 11
+    Reborn: 0
+    Alcana: 0
+    SaveLimit: 4
+    ContinueLimit: 2
+    RankingStage: 0
+    SlotSave: 0
+    SubordinateValue: 0
+    UseSlot: 0
+    StageEvents: []
+    StageSymbols: []
+    Tutorials: []
+  - Id: 3
+    Name: "A.D.3324 \u74B0\u592A\u5E73\u6D0B\u706B\u5C71\u5E2F\u5674\u706B\u9023\u9396"
+    AchieveText: "\u56DE\u8DEF\u3092\u89E3\u6790\u3057\u4F7F\u9014\u3092\u6BB2\u6EC5\u3059\u308B"
+    Selectable: 1
+    Help: "\u74B0\u592A\u5E73\u6D0B\u706B\u5C71\u5E2F\u3067\u9023\u9396\u7684\u306B\u767A\u751F\u3057\u305F\u5674\u706B\u6D3B\u52D5\u3002\n\n<\u8A73\u7D30>\n\u74B0\u592A\u5E73\u6D0B\u706B\u5C71\u5E2F\u306E\u731B\u70C8\u306A\u6D3B\u52D5\u306B\u3088\u308A\u5674\u706B\u304C\u9023\u9396\u3057\u3066\u767A\u751F\u3002\n\n<\u6B7B\u8005\u6570>\n3\u4E07\u4EBA\u8D85\u3002\n\n<\u5099\u8003>\n\u5E83\u57DF\u306B\u3066\u767A\u751F\u3002"
+    Turns: 7
+    InitMembers: 0100000002000000030000000400000005000000
+    RandomTroopCount: 15
+    BossId: 0
+    BGMId: 3
+    BossBGMId: 11
+    Reborn: 0
+    Alcana: 0
+    SaveLimit: 4
+    ContinueLimit: 2
+    RankingStage: 0
+    SlotSave: 0
+    SubordinateValue: 0
+    UseSlot: 0
+    StageEvents: []
+    StageSymbols: []
+    Tutorials: []
+  - Id: 4
+    Name: "A.D.2978 \u7B2C\u516D\u6B21\u4E16\u754C\u5927\u6226"
+    AchieveText: "\u56DE\u8DEF\u3092\u89E3\u6790\u3057\u4F7F\u9014\u3092\u6BB2\u6EC5\u3059\u308B"
+    Selectable: 1
+    Help: "\u5370\u4E2D\u9593\u306E\u7D1B\u4E89\u3092\u767A\u7AEF\u3068\u3059\u308B\u4E16\u754C\u5927\u6226\u3002\n\n<\u8A73\u7D30>\n\u5370\u4E2D\u9593\u304B\u3089\u98DB\u3073\u706B\u3057\u6B27\u7C73\u9023\u5408\u5185\u3067\u3082\u5185\u6226\u304C\u767A\u751F\u3002\n\n<\u6B7B\u8005\u6570>\n8\u4E07\u4EBA\u8D85\u3002\n\n<\u5099\u8003>\n\u5EF6\u307934\u5E74\u306E\u671F\u9593\u3092\u7D4C\u3066\u7D42\u6226\u3002"
+    Turns: 7
+    InitMembers: 0100000002000000030000000400000005000000
+    RandomTroopCount: 15
+    BossId: 0
+    BGMId: 3
+    BossBGMId: 11
+    Reborn: 0
+    Alcana: 0
+    SaveLimit: 4
+    ContinueLimit: 2
+    RankingStage: 0
+    SlotSave: 0
+    SubordinateValue: 0
+    UseSlot: 0
+    StageEvents: []
+    StageSymbols: []
+    Tutorials: []
+  - Id: 5
+    Name: "A.D.2504 \u30AE\u30D9\u30AA\u30F3\u9695\u77F3\u843D\u4E0B"
+    AchieveText: "\u56DE\u8DEF\u3092\u89E3\u6790\u3057\u4F7F\u9014\u3092\u6BB2\u6EC5\u3059\u308B"
+    Selectable: 1
+    Help: "\u30A2\u30D5\u30EA\u30AB\u4E2D\u592E\u90E8\u306B\u843D\u4E0B\u3057\u305F\u5DE8\u5927\u9695\u77F3\u3002\n\n<\u8A73\u7D30>\n\u885D\u7A81\u306B\u3088\u308B\u71B1\u30A8\u30CD\u30EB\u30AE\u30FC\u306E\u4ED6\u3001\u5927\u91CF\u306E\u3061\u308A\u304C\u5DFB\u304D\u4E0A\u304C\u308A\u5927\u9678\u5168\u571F\u306B\u6C17\u5019\u5909\u52D5\u3092\u3082\u305F\u3089\u3057\u305F\u3002\n\n<\u6B7B\u8005\u6570>\n12\u4E07\u4EBA\u8D85\u3002\n\n<\u5099\u8003>\n\u6B7B\u8005\u306F\u6C17\u5019\u5909\u52D5\u95A2\u9023\u6B7B\u3082\u542B\u3080\u3002"
+    Turns: 7
+    InitMembers: 0100000002000000030000000400000005000000
+    RandomTroopCount: 15
+    BossId: 0
+    BGMId: 3
+    BossBGMId: 11
+    Reborn: 0
+    Alcana: 0
+    SaveLimit: 4
+    ContinueLimit: 2
+    RankingStage: 0
+    SlotSave: 0
+    SubordinateValue: 0
+    UseSlot: 0
+    StageEvents: []
+    StageSymbols: []
+    Tutorials: []
+  - Id: 6
+    Name: "A.D.1923 \u95A2\u6771\u5927\u9707\u707D"
+    AchieveText: "\u56DE\u8DEF\u3092\u89E3\u6790\u3057\u4F7F\u9014\u3092\u6BB2\u6EC5\u3059\u308B"
+    Selectable: 1
+    Help: "\u65E5\u672C\u306E\u95A2\u6771\u5730\u65B9\u3067\u767A\u751F\u3057\u305F\u5DE8\u5927\u5730\u9707\u3002\n\n<\u8A73\u7D30>\n\u5730\u9707\u306B\u3088\u308A\u5BB6\u5C4B\u306E\u5012\u58CA\u304C\u5F37\u98A8\u306B\u3088\u308A\u706B\u707D\u304C\u5E83\u7BC4\u56F2\u306B\u767A\u751F\u3057\u305F\u3002\n\n<\u6B7B\u8005\u6570>\n10\u4E07\u4EBA\u8D85\u3002\n\n<\u5099\u8003>\n\u6B7B\u8005\u306F\u884C\u65B9\u4E0D\u660E\u8005\u3082\u542B\u3080\u3002"
+    Turns: 7
+    InitMembers: 0100000002000000030000000400000005000000
+    RandomTroopCount: 15
+    BossId: 0
+    BGMId: 3
+    BossBGMId: 11
+    Reborn: 0
+    Alcana: 0
+    SaveLimit: 4
+    ContinueLimit: 2
+    RankingStage: 0
+    SlotSave: 0
+    SubordinateValue: 0
+    UseSlot: 0
+    StageEvents: []
+    StageSymbols: []
     Tutorials: []

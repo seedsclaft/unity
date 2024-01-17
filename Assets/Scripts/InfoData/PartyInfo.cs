@@ -12,6 +12,7 @@ public class PartyInfo
     public void ClearData()
     {
         _commandCountInfo = new();
+        _commandRankInfo[TacticsCommandType.Paradigm] = 0;
         _commandRankInfo[TacticsCommandType.Train] = 0;
         _commandRankInfo[TacticsCommandType.Alchemy] = 0;
         _commandRankInfo[TacticsCommandType.Recovery] = 0;
@@ -68,10 +69,6 @@ public class PartyInfo
 
     public void AddAlchemy(int skillId)
     {
-        if (_alchemyIdList.Contains(skillId))
-        {
-            return;
-        }
         _alchemyIdList.Add(skillId);
     }
 

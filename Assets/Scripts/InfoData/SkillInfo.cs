@@ -29,12 +29,11 @@ public class SkillInfo
     {
         _learningState = learningState;
     }
-
-    private int _learningCost = 0;
-    public int LearningCost => _learningCost;
-    public void SetLearningCost(int learningCost)
+    private int _learningTurns = 0;
+    public int LearningTurns => _learningTurns;
+    public void SetLearningTurns(int learningTurns)
     {
-        _learningCost = learningCost;
+        _learningTurns = learningTurns;
     }
 
     private List<SkillData.TriggerData> _triggerDates = new();
@@ -86,5 +85,10 @@ public class SkillInfo
     public bool IsUnison()
     {
         return Master.FeatureDates.Find(a => a.FeatureType == FeatureType.AddState && (StateType)a.Param1 == StateType.Wait) != null;
+    }
+
+    public void SeekAlchemy()
+    {
+        _learningTurns--;
     }
 }

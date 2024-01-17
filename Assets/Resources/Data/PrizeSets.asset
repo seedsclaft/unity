@@ -17,12 +17,22 @@ MonoBehaviour:
     GetItem:
       Type: 1
       Param1: 11070
-      Param2: 100
+      Param2: 0
+  - Id: 100
+    GetItem:
+      Type: 1
+      Param1: 11010
+      Param2: 0
   - Id: 200
     GetItem:
       Type: 2
       Param1: 5
       Param2: 100
+  - Id: 400
+    GetItem:
+      Type: 4
+      Param1: 1
+      Param2: 1
   - Id: 3100
     GetItem:
       Type: 31

@@ -52,8 +52,8 @@ public class SkillInfoComponent : MonoBehaviour
         }
         if (learningCost != null)
         {
-            learningCost.gameObject.SetActive(skillInfo.LearningCost > 0);
-            learningCost.text = skillInfo.LearningCost.ToString();
+            learningCost.gameObject.SetActive(skillInfo.LearningTurns > 0);
+            learningCost.text = skillInfo.LearningTurns.ToString();
         }
         if (shinyReflect != null)
         {

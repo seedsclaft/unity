@@ -109,27 +109,27 @@ public class ActorInfoComponent : MonoBehaviour
         }
         if (element1Cost != null)
         {
-            element1Cost.text = TacticsUtility.AlchemyCost(actorInfo,AttributeType.Fire,actorInfos).ToString();
+            element1Cost.text = TacticsUtility.AlchemyTurns(actorInfo,AttributeType.Fire,actorInfos).ToString();
         }
         if (element2Cost != null)
         {
-            element2Cost.text = TacticsUtility.AlchemyCost(actorInfo,AttributeType.Thunder,actorInfos).ToString();
+            element2Cost.text = TacticsUtility.AlchemyTurns(actorInfo,AttributeType.Thunder,actorInfos).ToString();
         }
         if (element3Cost != null)
         {
-            element3Cost.text = TacticsUtility.AlchemyCost(actorInfo,AttributeType.Ice,actorInfos).ToString();
+            element3Cost.text = TacticsUtility.AlchemyTurns(actorInfo,AttributeType.Ice,actorInfos).ToString();
         }
         if (element4Cost != null)
         {
-            element4Cost.text = TacticsUtility.AlchemyCost(actorInfo,AttributeType.Shine,actorInfos).ToString();
+            element4Cost.text = TacticsUtility.AlchemyTurns(actorInfo,AttributeType.Shine,actorInfos).ToString();
         }
         if (element5Cost != null)
         {
-            element5Cost.text = TacticsUtility.AlchemyCost(actorInfo,AttributeType.Dark,actorInfos).ToString();
+            element5Cost.text = TacticsUtility.AlchemyTurns(actorInfo,AttributeType.Dark,actorInfos).ToString();
         }
         if (recoveryCost != null)
         {
-            recoveryCost.text = TacticsUtility.RecoveryCost(actorInfo,true).ToString();
+            recoveryCost.text = TacticsUtility.RemainRecoveryCost(actorInfo,true).ToString();
         }
         if (resourceGain != null)
         {

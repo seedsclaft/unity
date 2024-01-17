@@ -160,6 +160,7 @@ public class TacticsView : BaseView
         if (listData != null && listData.Enable)
         {
             var commandData = (SystemData.CommandData)listData.Data;
+            Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
             var eventData = new TacticsViewEvent(CommandType.TacticsCommand);
             eventData.template = commandData.Id;
             _commandData(eventData);
@@ -193,16 +194,9 @@ public class TacticsView : BaseView
         HideSymbolList();
     }
 
-    public void CommandRefresh(TacticsCommandType tacticsCommandType)
+    public void CommandRefresh()
     {
-        switch (tacticsCommandType)
-        {
-            case TacticsCommandType.Train:
-            case TacticsCommandType.Alchemy:
-            case TacticsCommandType.Recovery:
-            selectCharacter.Refresh();
-            return;
-        }
+        selectCharacter.Refresh();
     }
 
 
@@ -265,12 +259,20 @@ public class TacticsView : BaseView
     public void ShowSelectCharacterCommand()
     {
         selectCharacter.ShowCharacterList();
-        selectCharacter.ShowCommandList();
     }
 
     public void HideSelectCharacterCommand()
     {
         selectCharacter.HideCharacterList();
+    }
+
+    public void ShowConfirmCommand()
+    {
+        selectCharacter.ShowCommandList();
+    }
+    
+    public void HideConfirmCommand()
+    {
         selectCharacter.HideCommandList();
     }
 
@@ -337,7 +339,8 @@ public class TacticsView : BaseView
             var listIndex = tacticsSymbolList.Index;
             if (listIndex > -1)
             {
-                var eventData = new TacticsViewEvent(CommandType.SelectBattleEnemy);
+                Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
+                var eventData = new TacticsViewEvent(CommandType.SelectSymbol);
                 eventData.template = listIndex;
                 _commandData(eventData);
                 _lastCallEventType = eventData.commandType;
@@ -399,7 +402,7 @@ public class TacticsView : BaseView
     {
         if (_lastCallEventType != CommandType.None) return;
         var listData = battleSelectCharacter.ActionData;
-        if (listData != null)
+        if (listData != null && listData.Enable)
         {
             var eventData = new TacticsViewEvent(CommandType.SkillAlchemy);
             var data = (SkillInfo)listData;

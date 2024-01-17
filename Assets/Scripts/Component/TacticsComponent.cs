@@ -14,6 +14,7 @@ public class TacticsComponent : MonoBehaviour
     [SerializeField] private TextMeshProUGUI trainCost;
 
 
+    [SerializeField] private TextMeshProUGUI recoveryCost;
     [SerializeField] private TextMeshProUGUI attributeType;
     [SerializeField] private TextMeshProUGUI attributeLearnCost;
     
@@ -49,15 +50,19 @@ public class TacticsComponent : MonoBehaviour
 
         if (afterLv != null && tacticsCommandType == TacticsCommandType.Train)
         {
-            afterLv.gameObject.SetActive(checkToggle.isOn);
             afterLv.text = (actorInfo.Level+1).ToString();
         }
 
         if (trainCost != null)
         {
-            trainCost.text = TacticsUtility.TrainCost(actorInfo).ToString();
+            trainCost.text = "-" + TacticsUtility.TrainCost(actorInfo).ToString();
         }
         
+        if (recoveryCost != null)
+        {
+            recoveryCost.text = "-" + TacticsUtility.RecoveryCost(actorInfo).ToString();
+        }
+
         if (attributeType != null)
         {
             if (actorInfo.NextLearnSkillId > 0)

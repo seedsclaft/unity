@@ -58,6 +58,47 @@ public class StrategyModel : BaseModel
     public void MakeResult()
     {
         var getItemInfos = TempData.TempGetItemInfos;
+        foreach (var getItemInfo in getItemInfos)
+        {
+            switch (getItemInfo.GetItemType)
+            {
+                case GetItemType.Numinous:
+                    PartyInfo.ChangeCurrency(Currency + getItemInfo.Param1);
+                    break;
+                case GetItemType.Skill:
+                    PartyInfo.AddAlchemy(getItemInfo.Param1);
+                    break;
+                case GetItemType.Regeneration:
+                    foreach (var stageMember in StageMembers())
+                    {
+                        if (stageMember.Lost == false)
+                        {
+                            stageMember.ChangeHp(stageMember.CurrentHp + getItemInfo.Param1);
+                            stageMember.ChangeMp(stageMember.CurrentMp + getItemInfo.Param1);
+                        }
+                    }
+                    break;
+                case GetItemType.Demigod:
+                    foreach (var stageMember in StageMembers())
+                    {
+                        if (stageMember.Lost == false)
+                        {
+                            stageMember.GainDemigod(getItemInfo.Param1);
+                        }
+                    }
+                    break;
+                case GetItemType.StatusUp:
+                    foreach (var stageMember in StageMembers())
+                    {
+                        if (stageMember.Lost == false)
+                        {
+                            stageMember.TempStatus.AddParameterAll(getItemInfo.Param1);
+                            stageMember.DecideStrength(0);
+                        }
+                    }
+                    break;
+            }
+        }
         _resultItemInfos = ListData.MakeListData(getItemInfos);
     }
 
@@ -123,6 +164,8 @@ public class StrategyModel : BaseModel
         {
             actorInfo.ChangeTacticsCostRate(1);
             actorInfo.ClearTacticsCommand();
+            // 魔法習熟度進行
+            actorInfo.SeekAlchemy();
         }
         //CurrentStage.ChangeSubordinateValue(-5);
         StageAlcana.SetAlcanaStateInfo(null);

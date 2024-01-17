@@ -87,7 +87,7 @@ public class BattlerInfo
         );
         _status = statusInfo;
         _index = index;
-        _skills = actorInfo.Skills.FindAll(a => a.LearningState == LearningState.Learned);
+        _skills = actorInfo.Skills.FindAll(a => a.LearningState == LearningState.Learned || a.LearningState == LearningState.Equipment);
         foreach (var skill in _skills)
         {
             skill.SetUseCount(0);

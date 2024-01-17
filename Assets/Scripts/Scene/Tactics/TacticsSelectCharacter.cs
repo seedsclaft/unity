@@ -178,6 +178,7 @@ public class TacticsSelectCharacter : MonoBehaviour
     public void Refresh()
     {
         characterList.UpdateAllItems();
+        DisplaySelectCharacter();
     }
 
     public void ShowCharacterList()
