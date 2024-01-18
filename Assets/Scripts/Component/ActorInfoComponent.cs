@@ -79,11 +79,11 @@ public class ActorInfoComponent : MonoBehaviour
         {
             var statusInfo = new StatusInfo();
             statusInfo.SetParameter(
-                actorInfo.UsePointCost(StatusParamType.Hp),
-                actorInfo.UsePointCost(StatusParamType.Mp),
-                actorInfo.UsePointCost(StatusParamType.Atk),
-                actorInfo.UsePointCost(StatusParamType.Def),
-                actorInfo.UsePointCost(StatusParamType.Spd)
+                actorInfo.GrowthRate(StatusParamType.Hp),
+                actorInfo.GrowthRate(StatusParamType.Mp),
+                actorInfo.GrowthRate(StatusParamType.Atk),
+                actorInfo.GrowthRate(StatusParamType.Def),
+                actorInfo.GrowthRate(StatusParamType.Spd)
             );
             needStatusInfoComponent.UpdateInfo(statusInfo);
         }

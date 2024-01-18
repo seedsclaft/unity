@@ -3,16 +3,21 @@
 [Serializable]
 public class StatusInfo
 {
-    public int _hp = 0;
-    public int Hp => _hp;
-    public int _mp = 0;
-    public int Mp => _mp;
-    public int _atk = 0;
-    public int Atk => _atk;
-    public int _def = 0;
-    public int Def => _def;
-    public int _spd = 0;
-    public int Spd => _spd;
+    public float _hp = 0;
+    public int Hp => (int)Math.Floor(_hp);
+    public float BaseHp => _hp;
+    public float _mp = 0;
+    public int Mp => (int)Math.Floor(_mp);
+    public float BaseMp => _mp;
+    public float _atk = 0;
+    public int Atk => (int)Math.Floor(_atk);
+    public float BaseAtk => _atk;
+    public float _def = 0;
+    public int Def => (int)Math.Floor(_def);
+    public float BaseDef => _def;
+    public float _spd = 0;
+    public int Spd => (int)Math.Floor(_spd);
+    public float BaseSpd => _spd;
     public void SetParameter(int hp,int mp,int atk,int def,int spd)
     {
         _hp = hp;
@@ -26,16 +31,16 @@ public class StatusInfo
     {
         switch (paramType)
         {
-            case StatusParamType.Hp: return _hp;
-            case StatusParamType.Mp: return _mp;
-            case StatusParamType.Atk: return _atk;
-            case StatusParamType.Def: return _def;
-            case StatusParamType.Spd: return _spd;
+            case StatusParamType.Hp: return Hp;
+            case StatusParamType.Mp: return Mp;
+            case StatusParamType.Atk: return Atk;
+            case StatusParamType.Def: return Def;
+            case StatusParamType.Spd: return Spd;
         }
         return 0;
     }
     
-    public void AddParameter(StatusParamType paramType,int param)
+    public void AddParameter(StatusParamType paramType,float param)
     {
         switch (paramType)
         {

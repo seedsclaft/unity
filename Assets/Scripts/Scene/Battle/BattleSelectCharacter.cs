@@ -229,7 +229,7 @@ public class BattleSelectCharacter : MonoBehaviour
 
     public void RefreshCardWidth()
     {
-        if (magicList.ObjectList.Count == 0)
+        if (magicList.ObjectList.Count == 0 || magicList.Index < 0)
         {
             return;
         }

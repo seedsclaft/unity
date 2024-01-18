@@ -576,6 +576,9 @@ MonoBehaviour:
   - Id: 1000
     Text: (Nu)
     Help: '""'
+  - Id: 1001
+    Text: Turn(s)
+    Help: '""'
   - Id: 1010
     Text: "\u7FD2\u5F97Cost"
     Help: '""'
@@ -631,7 +634,7 @@ MonoBehaviour:
     Text: "\\d\u3092\u7FD2\u5F97\uFF01"
     Help: '""'
   - Id: 3003
-    Text: "\u7406\u6027\u62E1\u5F35\u30DC\u30FC\u30CA\u30B9\uFF01"
+    Text: "\\d\u304C\u52A0\u5165\u3057\u305F\uFF01"
     Help: '""'
   - Id: 3004
     Text: "\\d(Nu)\u3092\u9084\u5143\uFF01"
@@ -808,7 +811,7 @@ MonoBehaviour:
     Text: "\u8853\u8005\u4E00\u89A7"
     Help: '""'
   - Id: 13010
-    Text: "\u7D42\u7109\u307E\u3067"
+    Text: "\u5B58\u5728\u7336\u4E88"
     Help: '""'
   - Id: 14010
     Text: "\u4F5C\u6226\u9042\u884C\u4E2D\u2026"

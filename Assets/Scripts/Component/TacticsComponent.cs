@@ -45,8 +45,14 @@ public class TacticsComponent : MonoBehaviour
         
         if (checkToggle != null)
         {
-            checkToggle.SetIsOnWithoutNotify(actorInfo.TacticsCommandType == tacticsCommandType);
-        }
+            if (tacticsCommandType == TacticsCommandType.Alchemy)
+            {
+                checkToggle.SetIsOnWithoutNotify(actorInfo.EquipmentSkillId != 0);
+            } else
+            {
+                checkToggle.SetIsOnWithoutNotify(actorInfo.TacticsCommandType == tacticsCommandType);
+            }
+         }
 
         if (afterLv != null && tacticsCommandType == TacticsCommandType.Train)
         {
@@ -65,9 +71,9 @@ public class TacticsComponent : MonoBehaviour
 
         if (attributeType != null)
         {
-            if (actorInfo.NextLearnSkillId > 0)
+            if (actorInfo.EquipmentSkillId > 0)
             {
-                skillInfoComponent.UpdateSkillData(actorInfo.NextLearnSkillId);
+                skillInfoComponent.UpdateSkillData(actorInfo.EquipmentSkillId);
             } else{
                 skillInfoComponent.Clear();
             }
@@ -75,10 +81,11 @@ public class TacticsComponent : MonoBehaviour
 
         if (attributeLearnCost != null)
         {
-            attributeLearnCost.gameObject.SetActive(actorInfo.NextLearnCost > 0);
-            if (actorInfo.NextLearnCost > 0)
+            var learningTurns = actorInfo.EquipmentSkillTurns();
+            attributeLearnCost.gameObject.SetActive(learningTurns > 0);
+            if (learningTurns > 0)
             {
-                attributeLearnCost.text = actorInfo.NextLearnCost.ToString();
+                attributeLearnCost.text = learningTurns.ToString();
             } else
             {
                 attributeLearnCost.text = "";

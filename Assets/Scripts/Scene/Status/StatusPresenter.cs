@@ -118,6 +118,10 @@ public class StatusPresenter : BasePresenter
                 if (_model.StageMembers().Count > 1)
                 {
                     // 結果に移動
+                    var getItemData = new GetItemData();
+                    getItemData.Type = GetItemType.AddActor;
+                    getItemData.Param1 = _model.CurrentActor.ActorId;
+                    _model.TempData.SetTempGetItemInfos(new List<GetItemInfo>(){new GetItemInfo(getItemData)});
                     _model.TempData.SetTempResultActorInfos(new List<ActorInfo>(){_model.CurrentActor});
                     _view.CommandSceneChange(Scene.Strategy);
                 }

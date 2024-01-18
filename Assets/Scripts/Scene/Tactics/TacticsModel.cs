@@ -6,16 +6,18 @@ using System;
 public class TacticsModel : BaseModel
 {
     
+    private int _selectAlchemyActorId = 0;
+    public void SetSelectAlchemyActorId(int actorId)
+    {
+        _selectAlchemyActorId = actorId;
+    }    
+    public ActorInfo SelectAlchemyActorInfo()
+    {
+        return StageMembers().Find(a => a.ActorId == _selectAlchemyActorId);
+    }
+
     private int _selectSkillId = 0;
     public int SelectAlcanaSkillId => _selectSkillId;
-    private int _currentActorId = 0;
-    public int CurrentActorId {
-        get {return _currentActorId;} set{_currentActorId = value;}
-    }
-    public ActorInfo CurrentActor
-    {
-        get {return TacticsActor(_currentActorId);}
-    }
 
     private TacticsCommandType _tacticsCommandType = TacticsCommandType.Train;
     public TacticsCommandType TacticsCommandType => _tacticsCommandType;
@@ -42,6 +44,8 @@ public class TacticsModel : BaseModel
     {
         _needAllTacticsCommand = isNeed;
     }
+
+
 
     public ActorInfo TacticsActor(int actorId)
     {
@@ -127,16 +131,27 @@ public class TacticsModel : BaseModel
         }
     }
 
+    public bool SkillEquipmentActor()
+    {
+        return SelectAlchemyActorInfo().EquipmentSkillId != 0;
+    }
+
+    public void RemoveAlchemy()
+    {
+        var actorInfo = SelectAlchemyActorInfo();
+        // 装備中
+        if (actorInfo.EquipmentSkillId != 0)
+        {
+            actorInfo.RemoveEquipSkill();
+        }
+    }
+
     public void SetSkillEquip(int skillId)
     {
-        // 装備中
-        if (CurrentActor.EquipmentSkillId != 0)
-        {
-            CurrentActor.RemoveEquipSkill();
-        }
+        var actorInfo = SelectAlchemyActorInfo();
         var skillInfo = new SkillInfo(skillId);
-        skillInfo.SetLearningTurns(TacticsUtility.AlchemyTurns(CurrentActor,skillInfo.Attribute,StageMembers()));
-        CurrentActor.EquipSkill(skillInfo);
+        skillInfo.SetLearningTurns(TacticsUtility.AlchemyTurns(actorInfo,skillInfo.Attribute,StageMembers()));
+        actorInfo.EquipSkill(skillInfo);
     }
 
     public void SelectActorParadigm(int actorId)
@@ -174,9 +189,17 @@ public class TacticsModel : BaseModel
         }
     }
 
-    public List<ListData> SelectActorAlchemy(int actorId)
+    public List<ListData> SelectActorAlchemy()
     {
-        var actorInfo = TacticsActor(actorId);
+        var actorInfo = SelectAlchemyActorInfo();
+        var otherActorSelected = new List<int>();
+        foreach (var stageMember in StageMembers())
+        {
+            if (stageMember.EquipmentSkillId != 0)
+            {
+                otherActorSelected.Add(stageMember.EquipmentSkillId);
+            }
+        }
         var skillInfos = new List<SkillInfo>();
         
         foreach (var alchemyId in PartyInfo.AlchemyIdList)
@@ -188,7 +211,7 @@ public class TacticsModel : BaseModel
             {
                 //continue;
             }
-            skillInfo.SetEnable(cost <= PartyInfo.Currency);
+            skillInfo.SetEnable(!otherActorSelected.Contains(alchemyId));
             skillInfos.Add(skillInfo);
         }
         return MakeListData(skillInfos);
@@ -221,8 +244,8 @@ public class TacticsModel : BaseModel
             if (Currency >= cost){
                 actorInfo.ChangeHp(actorInfo.CurrentHp + 10);
                 actorInfo.ChangeMp(actorInfo.CurrentMp + 10);
+                PartyInfo.ChangeCurrency(Currency - cost);
             }
-            PartyInfo.ChangeCurrency(Currency - cost);
         }
     }
     

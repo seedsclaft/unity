@@ -119,5 +119,7 @@ public enum GetItemType
 	AttributeDark = 15,
 	Ending = 21,
 	StatusUp = 22,
-	Regeneration = 31
+	Regeneration = 31,
+	LearnSkill = 41,
+	AddActor = 51
 }

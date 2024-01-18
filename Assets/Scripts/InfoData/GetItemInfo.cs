@@ -54,6 +54,13 @@ public class GetItemInfo
             case GetItemType.ReBirth:
                 SetResultData("ロスト復活");
                 break;
+            case GetItemType.LearnSkill:
+                SetTitleData(DataSystem.GetReplaceText(3000,DataSystem.FindActor(_param1).Name));
+                SetResultData(DataSystem.GetReplaceText(3002,DataSystem.FindSkill(_param2).Name));
+                break;
+            case GetItemType.AddActor:
+                SetTitleData(DataSystem.GetReplaceText(3003,DataSystem.FindActor(_param1).Name));
+                break;
         }
     }
 

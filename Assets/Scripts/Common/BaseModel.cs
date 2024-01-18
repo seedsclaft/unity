@@ -311,7 +311,7 @@ public class BaseModel
 
     public List<ListData> ConfirmCommand()
     {
-        return MakeListData(BaseConfirmCommand(3050));
+        return MakeListData(BaseConfirmCommand(3050,3051));
     }
 
     public List<ListData> NoChoiceConfirmCommand()

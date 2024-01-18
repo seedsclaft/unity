@@ -226,12 +226,12 @@ public class ActorInfo
         lvUpStatus.SetParameter(0,0,0,0,0);
         CalcLevelUpStatusInfo(lvUpStatus);
         _level++;
-        _sp += 10;
+        //_sp += 10;
         for (int i = 0;i < bonus;i++)
         {
             CalcLevelUpStatusInfo(lvUpStatus);
             _level++;
-            _sp += 10;
+            //_sp += 10;
         }
         return lvUpStatus;
     }
@@ -247,6 +247,8 @@ public class ActorInfo
 
     private int IsLevelUpStatus(StatusParamType statusParamType)
     {
+        return GrowthRate(statusParamType);
+        /*
         int IsLevelUpStatus = 0;
         int upperRate = _upperRate.GetParameter(statusParamType) + ((_level-1) * 10);
         while (upperRate >= 0)
@@ -263,6 +265,7 @@ public class ActorInfo
             }
         }
         return IsLevelUpStatus;
+        */
     }
 
     public bool IsLearnedSkill(int skillId)
@@ -282,6 +285,15 @@ public class ActorInfo
         _equipmentSkillId = skillInfo.Id;
         skillInfo.SetLearningState(LearningState.Equipment);
         _skills.Add(skillInfo);
+    }
+
+    public int EquipmentSkillTurns()
+    {
+        if (_equipmentSkillId > 0)
+        {
+            return Skills.Find(a => a.Id == _equipmentSkillId).LearningTurns;
+        }
+        return -1;
     }
 
     public void RemoveEquipSkill()
@@ -334,7 +346,7 @@ public class ActorInfo
         _nextBattleEnemyId = 0;
     }
     
-    public void SeekAlchemy()
+    public List<SkillInfo> SeekAlchemy()
     {
         var learnSkills = Skills.FindAll(a => a.LearningState == LearningState.Equipment);
         foreach (var learnSkill in learnSkills)
@@ -346,6 +358,7 @@ public class ActorInfo
                 _equipmentSkillId = 0;
             }
         }
+        return learnSkills.FindAll(a => a.LearningTurns == 0);
     }
 
     public void SetNextLearnCost(int learningCost)
@@ -364,9 +377,8 @@ public class ActorInfo
         _sp = value;
     }
 
-    public int UsePointCost(StatusParamType statusParamType)
+    public int GrowthRate(StatusParamType statusParamType)
     {
-        int UseCost = _upperRate.GetParameter(statusParamType) + ((_level-1) * 10);
         /*
         UseCost += (_plusStatus.GetParameter(statusParamType)+TempStatus.GetParameter(statusParamType)) / 5;
         var _currentAlcana = GameSystem.CurrentData.CurrentAlcana;
@@ -378,16 +390,17 @@ public class ActorInfo
             }
         }
         */
-        return UseCost;
+        return _upperRate.GetParameter(statusParamType) + ((_level-1) * 1);
     }
 
     public void DecideStrength(int useNuminous)
     {
-        _plusStatus.AddParameter(StatusParamType.Hp,_tempStatus.GetParameter(StatusParamType.Hp));
-        _plusStatus.AddParameter(StatusParamType.Mp,_tempStatus.GetParameter(StatusParamType.Mp));
-        _plusStatus.AddParameter(StatusParamType.Atk,_tempStatus.GetParameter(StatusParamType.Atk));
-        _plusStatus.AddParameter(StatusParamType.Def,_tempStatus.GetParameter(StatusParamType.Def));
-        _plusStatus.AddParameter(StatusParamType.Spd,_tempStatus.GetParameter(StatusParamType.Spd));
+        // ここは百分率代入
+        _plusStatus.AddParameter(StatusParamType.Hp,_tempStatus.GetParameter(StatusParamType.Hp) * 0.01f);
+        _plusStatus.AddParameter(StatusParamType.Mp,_tempStatus.GetParameter(StatusParamType.Mp) * 0.01f);
+        _plusStatus.AddParameter(StatusParamType.Atk,_tempStatus.GetParameter(StatusParamType.Atk) * 0.01f);
+        _plusStatus.AddParameter(StatusParamType.Def,_tempStatus.GetParameter(StatusParamType.Def) * 0.01f);
+        _plusStatus.AddParameter(StatusParamType.Spd,_tempStatus.GetParameter(StatusParamType.Spd) * 0.01f);
         _currentStatus.SetParameter(
             CurrentParameter(StatusParamType.Hp),
             CurrentParameter(StatusParamType.Mp),

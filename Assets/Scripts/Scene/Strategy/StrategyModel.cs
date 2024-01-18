@@ -58,6 +58,19 @@ public class StrategyModel : BaseModel
     public void MakeResult()
     {
         var getItemInfos = TempData.TempGetItemInfos;
+        // 魔法習熟度進行
+        foreach (var actorInfo in StageMembers())
+        {
+            var learningSkills = actorInfo.SeekAlchemy();
+            foreach (var learningSkill in learningSkills)
+            {
+                var getItemData = new GetItemData();
+                getItemData.Type = GetItemType.LearnSkill;
+                getItemData.Param1 = actorInfo.ActorId;
+                getItemData.Param2 = learningSkill.Id;
+                getItemInfos.Add(new GetItemInfo(getItemData));
+            }
+        }
         foreach (var getItemInfo in getItemInfos)
         {
             switch (getItemInfo.GetItemType)
@@ -164,8 +177,6 @@ public class StrategyModel : BaseModel
         {
             actorInfo.ChangeTacticsCostRate(1);
             actorInfo.ClearTacticsCommand();
-            // 魔法習熟度進行
-            actorInfo.SeekAlchemy();
         }
         //CurrentStage.ChangeSubordinateValue(-5);
         StageAlcana.SetAlcanaStateInfo(null);
