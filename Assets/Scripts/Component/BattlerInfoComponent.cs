@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 using DG.Tweening;
 using Effekseer;
 
@@ -18,6 +19,7 @@ public class BattlerInfoComponent : MonoBehaviour
     [SerializeField] private GameObject battleDamagePrefab;
     [SerializeField] private BattleStateOverlay battleStateOverlay;
     [SerializeField] private CanvasGroup canvasGroup;
+    [SerializeField] private TextMeshProUGUI battlePosition;
     
     private BattlerInfo _battlerInfo = null;
 
@@ -91,29 +93,17 @@ public class BattlerInfoComponent : MonoBehaviour
 
     public void ChangeAtk(int value)
     {
-        if (statusInfoComponent == null)
-        {
-            return;
-        }
-        statusInfoComponent.UpdateAtk(value);
+        statusInfoComponent?.UpdateAtk(value);
     }
 
     public void ChangeDef(int value)
     {
-        if (statusInfoComponent == null)
-        {
-            return;
-        }
-        statusInfoComponent.UpdateDef(value);
+        statusInfoComponent?.UpdateDef(value);
     }
 
     public void ChangeSpd(int value)
     {
-        if (statusInfoComponent == null)
-        {
-            return;
-        }
-        statusInfoComponent.UpdateSpd(value);
+        statusInfoComponent?.UpdateSpd(value);
     }
 
     public void RefreshStatus()
@@ -131,6 +121,10 @@ public class BattlerInfoComponent : MonoBehaviour
         ChangeAtk(_battlerInfo.CurrentAtk(false));
         ChangeDef(_battlerInfo.CurrentDef(false));
         ChangeSpd(_battlerInfo.CurrentSpd(false));
+        if (battlePosition != null)
+        {
+            battlePosition.text = _battlerInfo.LineIndex == LineType.Front ? "F" : "B";
+        }
         if (battleStateOverlay != null) battleStateOverlay.SetStates(_battlerInfo.IconStateInfos());
     }
     
@@ -289,24 +283,12 @@ public class BattlerInfoComponent : MonoBehaviour
         var image = BattleImage();
         if (image == null) return;
         var effectRect = effekseerEmitter.gameObject.GetComponent<RectTransform>();
-        if (!_battlerInfo.isActor)
-        {
-            if (animationPosition == 0){
-                effectRect.localPosition = new Vector2(0,0);
-            } else
-            if (animationPosition == 1)
-            {
-                effectRect.localPosition = new Vector2(0,-48);
-            }
+        if (animationPosition == 0){
+            effectRect.localPosition = new Vector2(0,0);
         } else
+        if (animationPosition == 1)
         {
-            if (animationPosition == 0){
-                effectRect.localPosition = new Vector2(0,0);
-            } else
-            if (animationPosition == 1)
-            {
-                effectRect.localPosition = new Vector2(0,-48);
-            }
+            effectRect.localPosition = new Vector2(0,-48);
         }
         effectRect.localScale = new Vector3(animationScale,animationScale,animationScale);
         effekseerEmitter.enabled = true;

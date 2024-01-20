@@ -113,7 +113,7 @@ public class BattleSelectCharacter : MonoBehaviour
         }
         for (int i = 0;i < detailTabCanvasGroup.Count;i++)
         {
-            detailTabCanvasGroup[i].alpha = (int)_selectCharacterTabType == i ? 1 : 0.25f;
+            detailTabCanvasGroup[i].alpha = (int)_selectCharacterTabType == i ? 1 : 0.75f;
         }
     }
     
@@ -229,31 +229,8 @@ public class BattleSelectCharacter : MonoBehaviour
 
     public void RefreshCardWidth()
     {
-        if (magicList.ObjectList.Count == 0 || magicList.Index < 0)
-        {
-            return;
-        }
-        if (magicList.ObjectList.Count > magicList.Index)
-        {
-            var selectObj = magicList.ObjectList[magicList.Index];
-            foreach (var gameObject in magicList.ObjectList)
-            {
-                var rect = gameObject.GetComponent<RectTransform>();
-                var cardWidth = (selectObj != gameObject) ? 184 : 264;
-                rect.sizeDelta = new Vector2(cardWidth,240);
-            }
-            selectObj.SetActive(false);
-            selectObj.SetActive(true);
-        }
-        var listRect = magicList.ScrollRect.gameObject.GetComponent<RectTransform>();
-        var height = 8;
-        if (magicList.ObjectList.Count < 10)
-        {
-            height = 0;
-        }
-        listRect.localPosition = new Vector3(listRect.localPosition.x,height,listRect.localPosition.z);
+        return;
     }
-    
 }
 
 public enum SelectCharacterTabType{

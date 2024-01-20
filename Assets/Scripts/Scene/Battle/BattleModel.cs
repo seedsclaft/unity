@@ -76,7 +76,7 @@ public class BattleModel : BaseModel
         {
             var baseEnemy = enemies[i];
             baseEnemy.ResetData();
-            baseEnemy.GainHp(-9999);
+            //baseEnemy.GainHp(-9999);
             _battlers.Add(baseEnemy);
         }
         foreach (var battlerInfo1 in _battlers)
@@ -667,6 +667,7 @@ public class BattleModel : BaseModel
                 }
                 break;
                 case FeatureType.AddState:
+                case FeatureType.AddStateNextTurn:
                 if ((StateType)featureData.Param1 == StateType.RemoveBuff)
                 {
                     if (target.GetRemovalBuffStates().Count > 0)
@@ -1158,8 +1159,15 @@ public class BattleModel : BaseModel
         return result;
     }
 
+    public List<StateInfo> UpdateNextSelfTurn()
+    {
+        var result = _currentBattler.UpdateState(RemovalTiming.NextSelfTurn);
+        return result;
+    }
+
     public void TurnEnd()
     {
+        var reAction = false;
         var actionInfo = CurrentActionInfo();
         if (actionInfo.TriggeredSkill == false)
         {    
@@ -1172,10 +1180,17 @@ public class BattleModel : BaseModel
             if (afterAp != null)
             {
                 _currentBattler.SetAp(afterAp.Param1);
+                if (afterAp.Param1 == 0)
+                {
+                    reAction = true;
+                }
             }
         }
         _actionInfos.RemoveAt(0);
-        _currentBattler = null;
+        if (reAction == false)
+        {
+            _currentBattler = null;
+        }
     }
 
     public void CheckPlusSkill()

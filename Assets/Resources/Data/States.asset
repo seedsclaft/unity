@@ -298,11 +298,41 @@ MonoBehaviour:
     CheckHit: 0
     RemoveByAttack: 0
     RemoveByDeath: 1
+  - StateType: 1081
+    Name: "\u547D\u4E2D\u30A2\u30C3\u30D7"
+    Help: "\u547D\u4E2D\u7387\\d%\u30A2\u30C3\u30D7"
+    IconPath: ArrowScope
+    RemovalTiming: 5
+    OverWrite: 1
+    EffectPath: '""'
+    EffectPosition: 0
+    EffectScale: 1
+    OverLap: 0
+    Removal: 1
+    Abnormal: 0
+    CheckHit: 0
+    RemoveByAttack: 0
+    RemoveByDeath: 1
   - StateType: 1090
     Name: "\u56DE\u907F\u30A2\u30C3\u30D7"
     Help: "\u56DE\u907F\u7387\\d%\u30A2\u30C3\u30D7"
     IconPath: Dodging
     RemovalTiming: 1
+    OverWrite: 1
+    EffectPath: '""'
+    EffectPosition: 0
+    EffectScale: 1
+    OverLap: 0
+    Removal: 1
+    Abnormal: 0
+    CheckHit: 0
+    RemoveByAttack: 0
+    RemoveByDeath: 1
+  - StateType: 1091
+    Name: "\u56DE\u907F\u30A2\u30C3\u30D7"
+    Help: "\u56DE\u907F\u7387\\d%\u30A2\u30C3\u30D7"
+    IconPath: Dodging
+    RemovalTiming: 5
     OverWrite: 1
     EffectPath: '""'
     EffectPosition: 0

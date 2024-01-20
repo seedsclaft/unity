@@ -91,6 +91,7 @@ public enum RemovalTiming
     UpdateAp = 2,
     UpdateChain = 3,
     UpdateCount = 4,
+    NextSelfTurn = 5
 }
 
 public enum EffectPositionType

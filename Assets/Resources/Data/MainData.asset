@@ -17,74 +17,82 @@ MonoBehaviour:
     Key: TITLE
     FileName: Peritune_Moonlit_Overture
     Loop: 0
+    CrossFade: 
   - Id: 2
     Key: MAINMENU
     FileName: PerituneMaterial_RainDrop_loop
     Loop: 0
+    CrossFade: 
   - Id: 3
     Key: TACTICS1
-    FileName: PerituneMaterial_Dream_and_Reality_inst_loop
+    FileName: PerituneMaterial_Firmament3_Calm_loop
     Loop: 0
+    CrossFade: TACTICS2
   - Id: 4
     Key: TACTICS2
-    FileName: PerituneMaterial_Firmament3_Calm_loop
-    Loop: 0
-  - Id: 5
-    Key: TACTICS3
-    FileName: PerituneMaterial_Firmament3_Calm_loop
-    Loop: 0
-  - Id: 6
-    Key: BATTLE1
     FileName: PerituneMaterial_Firmament3_Active_loop
     Loop: 0
+    CrossFade: 
+  - Id: 5
+    Key: TACTICS3
+    FileName: PerituneMaterial_Dream_and_Reality_inst_loop
+    Loop: 0
+    CrossFade: TACTICS2
+  - Id: 6
+    Key: TACTICS4
+    FileName: PerituneMaterial_Dream_and_Reality_loop
+    Loop: 0
+    CrossFade: 
   - Id: 7
+    Key: BATTLE1
+    FileName: PerituneMaterial_Firmament3_Calm_loop
+    Loop: 0
+    CrossFade: BATTLE2
+  - Id: 8
     Key: BATTLE2
     FileName: PerituneMaterial_Firmament3_Active_loop
     Loop: 0
-  - Id: 8
-    Key: BATTLE3
-    FileName: PerituneMaterial_Firmament3_Active_loop
-    Loop: 0
-  - Id: 9
-    Key: BATTLE4
-    FileName: PerituneMaterial_Firmament3_Active_loop
-    Loop: 0
-  - Id: 10
-    Key: BATTLE5
-    FileName: PerituneMaterial_Firmament3_Active_loop
-    Loop: 0
+    CrossFade: 
   - Id: 11
     Key: BOSS1
     FileName: PerituneMaterial_Firmament3_Active_loop
     Loop: 0
+    CrossFade: 
   - Id: 12
     Key: OPENING
     FileName: Ruined
     Loop: 1
+    CrossFade: 
   - Id: 13
     Key: EVENT1
     FileName: Remotest-Liblary
     Loop: 1
+    CrossFade: 
   - Id: 14
     Key: EVENT2
     FileName: Farewell
     Loop: 1
+    CrossFade: 
   - Id: 15
     Key: ENDING
     FileName: saikai637
     Loop: 0
+    CrossFade: 
   - Id: 16
     Key: LAST_BOSS
     FileName: EndOfLvateinn
     Loop: 1
+    CrossFade: 
   - Id: 17
     Key: BATTLE6
     FileName: PerituneMaterial_Firmament3_Active_loop
     Loop: 0
+    CrossFade: 
   - Id: 18
     Key: BATTLE7
     FileName: PerituneMaterial_Firmament3_Active_loop
     Loop: 0
+    CrossFade: 
   SE:
   - Id: 1
     Key: DECIDE

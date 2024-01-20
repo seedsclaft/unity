@@ -31,7 +31,7 @@ public class StateInfoComponent : MonoBehaviour
         if (turns != null)
         {
             turns.text = "";
-            var removalTiming = stateInfo.Master.RemovalTiming;
+            var removalTiming = stateInfo.RemovalTiming;
             if (removalTiming == RemovalTiming.UpdateTurn)
             {
                 if (stateInfo.Turns > 900)

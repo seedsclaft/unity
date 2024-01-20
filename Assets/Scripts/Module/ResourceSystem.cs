@@ -43,6 +43,11 @@ public class ResourceSystem : MonoBehaviour
     {    
         var bGMData = DataSystem.Data.GetBGM(bgmKey);
         var data = new List<string>();
+        if (bGMData.CrossFade != null && bGMData.CrossFade != "")
+        {
+            data.Add("Audios/BGM/" + bGMData.FileName + "");
+            data.Add("Audios/BGM/" + DataSystem.Data.GetBGM(bGMData.CrossFade).FileName + "");
+        } else
         if (bGMData.Loop)
         {
             data.Add("Audios/BGM/" + bGMData.FileName + "_intro");
@@ -54,7 +59,7 @@ public class ResourceSystem : MonoBehaviour
         AudioClip result2 = null;
         result1 = await LoadAssetResources<AudioClip>(data[0]);
         //result1 = Resources.Load<AudioClip>(data[0]);
-        if (bGMData.Loop)
+        if (bGMData.Loop || (bGMData.CrossFade != null && bGMData.CrossFade != ""))
         {
             result2 = await LoadAssetResources<AudioClip>(data[1]);
             //result2 = Resources.Load<AudioClip>(data[1]);
@@ -63,7 +68,6 @@ public class ResourceSystem : MonoBehaviour
             result1,result2
         };
     }
-
 
     public static async UniTask<AudioClip> LoadAssetResources<T>(string address){
         var handle = Resources.LoadAsync<AudioClip>(address);

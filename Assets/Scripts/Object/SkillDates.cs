@@ -41,7 +41,7 @@ public class SkillData
     }
     public bool IsStateFeature(StateType stateType)
     {
-        return FeatureDates.Find(a => a.FeatureType == FeatureType.AddState && a.Param1 == (int)stateType) != null;
+        return FeatureDates.Find(a => (a.FeatureType == FeatureType.AddState || a.FeatureType == FeatureType.AddStateNextTurn) && a.Param1 == (int)stateType) != null;
     }
     [Serializable]
     public class SkillAttributeInfo
@@ -381,6 +381,7 @@ public enum FeatureType
     AddState = 21,
     RemoveState = 22,
     RemoveAbnormalState = 23,
+    AddStateNextTurn = 24,
     SetAfterAp = 31,
     ApHeal = 32,
     NoResetAp = 33,

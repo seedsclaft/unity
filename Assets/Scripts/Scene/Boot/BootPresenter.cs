@@ -20,6 +20,7 @@ public class BootPresenter : BasePresenter
     private void Initialize()
     {
         DataSystem.LoadData();
+        Ryneus.SoundManager.Instance.Initialize();
         Debug.Log("Boot Success");
         Application.targetFrameRate = 60;
 #if UNITY_ANDROID && !UNITY_EDITOR

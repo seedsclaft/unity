@@ -51,6 +51,13 @@ public class ActorInfo
         _lastSelectSkillId = selectSkillId;
     }
 
+    private LineType _lineIndex = LineType.Front;
+    public LineType LineIndex => _lineIndex;
+    public void SetLineIndex(LineType lineIndex)
+    {
+        _lineIndex = lineIndex;
+    }
+
     private int _currentHp;
     public int CurrentHp => _currentHp;
     private int _currentMp;

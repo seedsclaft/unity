@@ -157,7 +157,8 @@ public class TacticsSelectCharacter : MonoBehaviour
             for (int i = 0; i < characterList.ObjectList.Count;i++)
             {
                 var tacticsTrain = characterList.ObjectList[i].GetComponent<TacticsTrain>();
-                tacticsTrain.SetPlusHandler(() => callEvent());
+                //tacticsTrain.SetPlusHandler(() => callEvent());
+                tacticsTrain.SetBattleFrontToggleHandler(() => callEvent());
             }
         }
         if (keyType == InputKeyType.Left)
@@ -165,7 +166,8 @@ public class TacticsSelectCharacter : MonoBehaviour
             for (int i = 0; i < characterList.ObjectList.Count;i++)
             {
                 var tacticsTrain = characterList.ObjectList[i].GetComponent<TacticsTrain>();
-                tacticsTrain.SetMinusHandler(() => callEvent());
+                //tacticsTrain.SetMinusHandler(() => callEvent());
+                tacticsTrain.SetBattleBackToggleHandler(() => callEvent());
             }
         }
     }

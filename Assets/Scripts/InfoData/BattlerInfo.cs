@@ -98,7 +98,7 @@ public class BattlerInfo
         _actorInfo = actorInfo;
         _hp = actorInfo.CurrentHp;
         _mp = actorInfo.CurrentMp;
-        _lineIndex = LineType.Front;
+        _lineIndex = actorInfo.LineIndex;
 
         if (_lastSelectSkillId == 0)
         {
@@ -491,7 +491,7 @@ public class BattlerInfo
         for (var i = _stateInfos.Count-1;i >= 0;i--)
         {
             var stateInfo = _stateInfos[i];
-            if (stateInfo.Master.RemovalTiming == removalTiming)
+            if (stateInfo.RemovalTiming == removalTiming)
             {
                 bool IsRemove = stateInfo.UpdateTurn();
                 if (IsRemove)
@@ -509,7 +509,7 @@ public class BattlerInfo
         for (var i = _stateInfos.Count-1;i >= 0;i--)
         {
             var stateInfo = _stateInfos[i];
-            if (stateInfo.Master.RemovalTiming == removalTiming && stateInfo.StateType == (StateType)stateId)
+            if (stateInfo.RemovalTiming == removalTiming && stateInfo.StateType == (StateType)stateId)
             {
                 bool IsRemove = stateInfo.UpdateTurn();
                 if (IsRemove)
@@ -522,7 +522,7 @@ public class BattlerInfo
 
     public void UpdateStateCount(RemovalTiming removalTiming,StateInfo stateInfo)
     {
-        if (stateInfo.Master.RemovalTiming == removalTiming)
+        if (stateInfo.RemovalTiming == removalTiming)
         {
             bool IsRemove = stateInfo.UpdateTurn();
             if (IsRemove)
@@ -538,7 +538,7 @@ public class BattlerInfo
         for (var i = _stateInfos.Count-1;i >= 0;i--)
         {
             var stateInfo = _stateInfos[i];
-            if (stateInfo.Master.RemovalTiming == RemovalTiming.UpdateChain)
+            if (stateInfo.RemovalTiming == RemovalTiming.UpdateChain)
             {
                 bool IsChainDamage = stateInfo.UpdateTurn();
                 if (IsChainDamage)
@@ -629,6 +629,20 @@ public class BattlerInfo
             }
         }
         return spd;
+    }
+
+    public int CurrentHit()
+    {
+        int hit = 0;
+        hit += StateEffectAll(StateType.HitUp);
+        return hit;
+    }
+
+    public int CurrentEva()
+    {
+        int eva = 0;
+        eva += StateEffectAll(StateType.EvaUp);
+        return eva;
     }
 
     public int TargetRate()

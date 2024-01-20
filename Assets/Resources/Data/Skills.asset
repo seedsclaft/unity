@@ -344,6 +344,41 @@ MonoBehaviour:
       Param2: 999
       Param3: 10
     TriggerDates: []
+  - Id: 1060
+    Name: "\u30B3\u30F3\u30BB\u30F3\u30C8\u30EC\u30A4\u30C8"
+    IconIndex: 3
+    AnimationName: NA_Effekseer/NA_sword_001
+    AnimationPosition: 0
+    AnimationScale: 1
+    AnimationType: 1
+    DamageTiming: 40
+    MpCost: 3
+    Rank: 2
+    Attribute: 1
+    Scope: 4
+    SkillType: 1
+    TargetType: 4
+    Help: "\u6B21\u306B\u884C\u52D5\u3059\u308B\u307E\u3067\\s\u306E\u547D\u4E2D\u3068\u56DE\u907F\u309230%\u30A2\u30C3\u30D7\n\u4F7F\u7528\u5F8C\u518D\u884C\u52D5\u3067\u304D\u308B"
+    Range: 1
+    RepeatTime: 1
+    AliveOnly: 1
+    FeatureDates:
+    - SkillId: 1060
+      FeatureType: 24
+      Param1: 1080
+      Param2: 2
+      Param3: 30
+    - SkillId: 1060
+      FeatureType: 24
+      Param1: 1090
+      Param2: 2
+      Param3: 30
+    - SkillId: 1060
+      FeatureType: 31
+      Param1: 0
+      Param2: 0
+      Param3: 0
+    TriggerDates: []
   - Id: 2010
     Name: "\u30C7\u30A3\u30B9\u30C1\u30E3\u30FC\u30B8"
     IconIndex: 1

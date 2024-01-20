@@ -9,4 +9,5 @@ public class BGMData
     public string Key;
     public string FileName;
     public bool Loop;
+    public string CrossFade;
 }

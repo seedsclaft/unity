@@ -25,7 +25,7 @@ public class IntroLoopAudio : MonoBehaviour
   private float _reservedTime = 44100;
 
   /// <summary>再生中であるかどうか。一時停止、非アクティブの場合は false を返す。</summary>
-  private bool IsPlaying
+  public bool IsPlaying
     => (_introAudioSource.isPlaying() || _introAudioSource.timeSamples() > 0)
       || (_loopAudioSource.isPlaying() || _loopAudioSource.timeSamples() > 0)
       || (_loopWebGLAudioSource != null && (_loopWebGLAudioSource.isPlaying() || _loopWebGLAudioSource.timeSamples() > 0));
@@ -38,10 +38,29 @@ public class IntroLoopAudio : MonoBehaviour
   /// <summary>現在の再生時間 (s)。</summary>
   public float time
     => _introAudioSource == null ? 0
-      : _introAudioSource.timeSamples > 0 ? _introAudioSource.timeSamples
-      : LoopAudioSourceActive.timeSamples > 0 ? _introAudioSource.clip.length + LoopAudioSourceActive.timeSamples
+      : _introAudioSource.timeSamples() > 0 ? _introAudioSource.timeSamples()
+      : _loopAudioSource.timeSamples() > 0 ? _introAudioSource.Clip.length + _introAudioSource.timeSamples()
       : 0;
 */
+
+  /// <summary>現在の再生時間 (s)。</summary>
+  public float PlayingPer()
+  {
+    if (_introAudioSource == null)
+    {
+      return -1;
+    }
+    if (_introAudioSource.timeSamples() > 0)
+    {
+      return _introAudioSource.timeSamples() / _introAudioSource.Clip.length;
+    }
+    return -1;
+  }
+
+  public float TimeStampPer(float per)
+  {
+      return _introAudioSource.Clip.length * per;
+  }
 
   void Awake()
   {
@@ -54,6 +73,16 @@ public class IntroLoopAudio : MonoBehaviour
     _loopWebGLAudioSource = gameObject.AddComponent<AudioSourceController>();
     _loopWebGLAudioSource.Initialize();
 #endif
+  }
+
+  public void SetSoloClip(AudioClip clip){
+    _introAudioSource.ResetReserveTimestamp();
+    _introAudioSource.SetAudioData(clip,true);
+    if (_loopWebGLAudioSource) 
+    {
+      _loopWebGLAudioSource.ResetReserveTimestamp();
+      _loopWebGLAudioSource.SetAudioData(clip,true);
+    }
   }
 
   public void SetClip(List<AudioClip> clip,bool isLoop){
@@ -114,7 +143,7 @@ public class IntroLoopAudio : MonoBehaviour
     #endif
   }
 
-  public void Play()
+  public void Play(float timeStamp = 1)
   {
     // クリップが設定されていない場合は何もしない
     if (_introAudioSource == null || _loopAudioSource == null) return;
@@ -167,11 +196,11 @@ public class IntroLoopAudio : MonoBehaviour
       Stop();
       if (_introAudioSource.Clip != null){
         _introAudioSource.SetReserveTimestamp();
-        _introAudioSource.Play(1);
+        _introAudioSource.Play((int)timeStamp);
         _nowPlayIndex = 2;
         //_loopAudioSource.PlayScheduled(AudioSettings.dspTime + _introAudioSource.clip.length);
       } else{
-        _loopAudioSource.Play(1);
+        _loopAudioSource.Play((int)timeStamp);
       }
     }
 
@@ -207,5 +236,14 @@ public class IntroLoopAudio : MonoBehaviour
     _introAudioSource.ChangeVolume(volume);
     _loopAudioSource.ChangeVolume(volume);
     if (_loopWebGLAudioSource != null) _loopWebGLAudioSource.ChangeVolume(volume);
+  }
+
+  public void FadeVolume(int targetVolume,int duration)
+  {
+    if (_introAudioSource == null || _loopAudioSource == null) return;
+    if (_introAudioSource.isPlaying())
+    {
+      _introAudioSource.FadeVolume(targetVolume,duration);
+    }
   }
 }

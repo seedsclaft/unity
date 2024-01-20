@@ -43,8 +43,8 @@ public class BattlePresenter : BasePresenter
         _view.SetBattleBusy(true);
         _model.CreateBattleData();
         await _model.LoadBattleResources(_model.Battlers);
-        var bgm = await _model.GetBattleBgm();
-        Ryneus.SoundManager.Instance.PlayBgm(bgm,1.0f,true);
+        //var bgm = await _model.GetBattleBgm();
+        //Ryneus.SoundManager.Instance.PlayBgm(bgm,1.0f,true);
         _view.CommandLoadingClose();
 
         _view.ClearCurrentSkillData();
@@ -181,6 +181,7 @@ public class BattlePresenter : BasePresenter
             await UniTask.DelayFrame(180);
             _view.SetBattleBusy(false);
             _model.TempData.SetTempResultActorInfos(_model.BattleMembers());
+            Ryneus.SoundManager.Instance.ChangeCrossFade();
             _view.CommandSceneChange(Scene.Strategy);
         }
     }
@@ -260,6 +261,13 @@ public class BattlePresenter : BasePresenter
 #if UNITY_EDITOR
         //if (_debug == true) return;
 #endif
+        _model.MakeActionBattler();
+        if (_model.CurrentBattler != null)
+        {
+            CommandStartSelect();
+            return;
+        }
+
         _view.SetHelpInputInfo("BATTLE_AUTO");
         if (GameSystem.ConfigData.BattleWait == false)
         {
@@ -337,6 +345,11 @@ public class BattlePresenter : BasePresenter
         {
             _view.SetBattleBusy(true);
             _model.SetCurrentTurnBattler(_model.CurrentBattler);
+            var removed =_model.UpdateNextSelfTurn();
+            foreach (var removedState in removed)
+            {
+                _view.StartStatePopup(removedState.TargetIndex,DamageType.State,"-" + removedState.Master.Name);
+            }
             // 行動不可の場合は行動しない
             if (!_model.EnableCurrentBattler())
             {
@@ -1034,6 +1047,7 @@ public class BattlePresenter : BasePresenter
         _view.SetBattleBusy(false);
         _model.TempData.SetTempGetItemInfos(_model.CurrentStage.CurrentSelectSymbol().GetItemInfos);
         _model.TempData.SetTempResultActorInfos(_model.BattleMembers());
+        Ryneus.SoundManager.Instance.ChangeCrossFade();
         _view.CommandSceneChange(Scene.Strategy);
     }
 

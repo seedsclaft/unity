@@ -175,6 +175,9 @@ public class ActionResultInfo
             case FeatureType.AddState:
                 MakeAddState(subject,target,featureData,true);
                 return;
+            case FeatureType.AddStateNextTurn:
+                MakeAddState(subject,target,featureData,true,false,true);
+                return;
             case FeatureType.RemoveState:
                 MakeRemoveState(subject,target,featureData);
                 return;
@@ -237,18 +240,12 @@ public class ActionResultInfo
             return true;
         }
         int hit = 100;
-        if (subject.IsState(StateType.HitUp))
-        {
-            hit += subject.StateEffectAll(StateType.HitUp);
-        }
+        hit += subject.CurrentHit();
         if (subject.IsState(StateType.Blind))
         {
             hit -= subject.StateEffectAll(StateType.Blind);
         }
-        if (target.IsState(StateType.EvaUp))
-        {
-            hit -= target.StateEffectAll(StateType.EvaUp);
-        }
+        hit -= target.CurrentEva();
         if (hit < 10)
         {
             hit = 10;
@@ -305,14 +302,9 @@ public class ActionResultInfo
         hpDamage = (int)Mathf.Round(DamageValue);
         // 属性補正
         // クリティカル
-        if (subject.IsState(StateType.CriticalRateUp))
+        if (IsCritical(subject,target))
         {
-            int CriticalRate = subject.StateEffectAll(StateType.CriticalRateUp);
-            int rand = new System.Random().Next(0, 100);
-            if (CriticalRate >= rand)
-            {        
-                hpDamage = ApplyCritical(hpDamage);
-            }
+            hpDamage = ApplyCritical(hpDamage);
         }
         hpDamage = ApplyVariance(hpDamage);
         if (target.IsState(StateType.CounterAura) && target.IsState(StateType.CounterAuraShell))
@@ -414,14 +406,9 @@ public class ActionResultInfo
         hpDamage = (int)Mathf.Round(DamageValue);
         // 属性補正
         // クリティカル
-        if (subject.IsState(StateType.CriticalRateUp))
+        if (IsCritical(subject,target))
         {
-            int CriticalRate = subject.StateEffectAll(StateType.CriticalRateUp);
-            int rand = new System.Random().Next(0, 100);
-            if (CriticalRate >= rand)
-            {        
-                hpDamage = ApplyCritical(hpDamage);
-            }
+            hpDamage = ApplyCritical(hpDamage);
         }
         hpDamage = ApplyVariance(hpDamage);
         hpDamage = Mathf.Max(1,hpDamage);
@@ -485,9 +472,13 @@ public class ActionResultInfo
         //_hpHeal = ApplyVariance(_hpHeal);
     }
 
-    private void MakeAddState(BattlerInfo subject,BattlerInfo target,SkillData.FeatureData featureData,bool checkCounter = false,bool isOneTarget = false)
+    private void MakeAddState(BattlerInfo subject,BattlerInfo target,SkillData.FeatureData featureData,bool checkCounter = false,bool isOneTarget = false,bool removeTimingIsNextTurn = false)
     {
         var stateInfo = new StateInfo((StateType)featureData.Param1,featureData.Param2,featureData.Param3,subject.Index,target.Index,_skillId);
+        if (removeTimingIsNextTurn)
+        {
+            stateInfo.SetRemoveTiming(RemovalTiming.NextSelfTurn);
+        }
         if (stateInfo.Master.CheckHit)
         {
             if (!CheckIsHit(subject,target,isOneTarget))
@@ -681,6 +672,17 @@ public class ActionResultInfo
         return ReDamage;
     }
 
+    private bool IsCritical(BattlerInfo subject,BattlerInfo target)
+    {
+        int HitOver = subject.CurrentHit() - target.CurrentEva();
+        if (HitOver < 0){
+            HitOver = 0;
+        }
+        int CriticalRate = subject.StateEffectAll(StateType.CriticalRateUp) + HitOver;
+        int rand = new System.Random().Next(0, 100);
+        return (CriticalRate >= rand);
+    }
+
     private int AntiDoteDamageValue(BattlerInfo target)
     {
         int ReDamage = (int)Mathf.Floor((target.CurrentDef(false) * 0.5f));
@@ -701,7 +703,7 @@ public class ActionResultInfo
     private void SeekStateCount(BattlerInfo battlerInfo,StateType stateType)
     {
         var seekState = battlerInfo.GetStateInfo(stateType);
-        if (seekState.Master.RemovalTiming == RemovalTiming.UpdateCount)
+        if (seekState.RemovalTiming == RemovalTiming.UpdateCount)
         {
             if (!_execStateInfos[battlerInfo.Index].Contains(seekState))
             {

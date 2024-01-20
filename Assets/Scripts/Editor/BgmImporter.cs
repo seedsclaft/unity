@@ -14,6 +14,7 @@ public class BgmImporter : AssetPostprocessor {
 		Key,
 		FileName,
 		Loop,
+		CrossFade,
     }
 	//static readonly string ExcelPath = "Assets/Resources/Data";
 	static readonly string ExcelName = "BGM.xlsx";
@@ -84,6 +85,7 @@ public class BgmImporter : AssetPostprocessor {
 					BGM.Key = AssetPostImporter.ImportString(BaseRow,(int)BaseColumn.Key);
 					BGM.FileName = AssetPostImporter.ImportString(BaseRow,(int)BaseColumn.FileName);
 					BGM.Loop = BaseRow.GetCell((int)BaseColumn.Loop).BooleanCellValue;
+					BGM.CrossFade = AssetPostImporter.ImportString(BaseRow,(int)BaseColumn.CrossFade);
 					Data.BGM.Add(BGM);
 				}
 

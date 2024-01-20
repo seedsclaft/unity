@@ -10,10 +10,21 @@ public class TacticsTrain : ListItem ,IListViewItem
     [SerializeField] private Toggle checkToggle;
     [SerializeField] private Button plusButton;
     [SerializeField] private Button minusButton;
+    [SerializeField] private List<Toggle> battlePositionToggles;
 
     public void SetToggleHandler(System.Action handler)
     {
         checkToggle.onValueChanged.AddListener((a) => handler());
+    }    
+    
+    public void SetBattleFrontToggleHandler(System.Action handler)
+    {
+        battlePositionToggles[0].onValueChanged.AddListener((a) => handler());
+    }
+
+    public void SetBattleBackToggleHandler(System.Action handler)
+    {
+        battlePositionToggles[1].onValueChanged.AddListener((a) => handler());
     }
 
     public void SetPlusHandler(System.Action handler)

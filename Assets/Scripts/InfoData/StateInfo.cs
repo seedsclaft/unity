@@ -17,6 +17,12 @@ public class StateInfo {
     public int TargetIndex => _targetIndex;
     private int _skillId = 0;
     public int SkillId => _skillId;
+    private RemovalTiming _removeTiming = 0;
+    public RemovalTiming RemovalTiming => _removeTiming;
+    public void SetRemoveTiming(RemovalTiming removalTiming)
+    {
+        _removeTiming = removalTiming;
+    }
 
     public bool IsStartPassive()
     {
@@ -36,6 +42,7 @@ public class StateInfo {
         _battlerId = battlerId;
         _targetIndex = targetIndex;
         _skillId = skillId;
+        _removeTiming = Master.RemovalTiming;
     }
 
     public bool CheckOverWriteState(StateInfo stateInfo)

@@ -237,7 +237,7 @@ public class BattleActorAI
     private static void CalcChainSkillWeight(SkillInfo skillInfo,List<BattlerInfo> attackTargets, SkillTargetAI skillTargetAI,List<BattlerInfo> opponents)
     {
         // 攻撃値計算
-        var chainFeatures = skillInfo.Master.FeatureDates.FindAll(a => a.FeatureType == FeatureType.AddState && a.Param1 == (int)StateType.Chain);
+        var chainFeatures = skillInfo.Master.FeatureDates.FindAll(a => (a.FeatureType == FeatureType.AddState || a.FeatureType == FeatureType.AddStateNextTurn)&& a.Param1 == (int)StateType.Chain);
         foreach (var chainFeature in chainFeatures)
         {
             foreach (var attackTarget in attackTargets)

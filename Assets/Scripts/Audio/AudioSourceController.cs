@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class AudioSourceController :MonoBehaviour
 {
     private AudioSource _audioSource;
+    
     public AudioClip Clip => _audioSource.clip;
 
     private int _reserveTimeSample = -1;
@@ -83,5 +85,10 @@ public class AudioSourceController :MonoBehaviour
             return true;
         }
         return false;
+    }
+
+    public void FadeVolume(int targetVolume,int duration)
+    {
+        _audioSource.DOFade( targetVolume, duration );
     }
 }

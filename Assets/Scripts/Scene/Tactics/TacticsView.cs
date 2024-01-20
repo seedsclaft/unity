@@ -174,8 +174,8 @@ public class TacticsView : BaseView
         SetInputHandler(selectCharacter.GetComponent<IInputHandlerEvent>());
         selectCharacter.SetTacticsCommand(confirmCommands);
         selectCharacter.SetInputHandlerCharacter(InputKeyType.Decide,() => CallActorTrain());
-        selectCharacter.SetInputHandlerCharacter(InputKeyType.Right,() => CallRecoveryPlus());
-        selectCharacter.SetInputHandlerCharacter(InputKeyType.Left,() => CallRecoveryMinus());
+        selectCharacter.SetInputHandlerCharacter(InputKeyType.Right,() => CallFrontBattleIndex());
+        selectCharacter.SetInputHandlerCharacter(InputKeyType.Left,() => CallBattleBackIndex());
         selectCharacter.SetInputHandlerCharacter(InputKeyType.Cancel,() => CallTrainCommandCancel());
         selectCharacter.SetInputHandlerCommand(InputKeyType.Decide,() => CallTrainCommand());
         selectCharacter.SetInputHandlerCommand(InputKeyType.Cancel,() => CallTrainCommandCancel());
@@ -295,36 +295,36 @@ public class TacticsView : BaseView
         SetHelpInputInfo("ALCHEMY");
     }
 
-    private void CallRecoveryPlus()
+    private void CallFrontBattleIndex()
     {
         if (_lastCallEventType != CommandType.None) return;
         var listData = selectCharacter.CharacterData;
         if (listData != null)
         {
             var data = (TacticsActorInfo)listData.Data;
-            if (data.TacticsCommandType != TacticsCommandType.Recovery)
+            if (data.TacticsCommandType != TacticsCommandType.Paradigm)
             {
                 return;
             }
-            var eventData = new TacticsViewEvent(CommandType.SelectRecoveryPlus);
+            var eventData = new TacticsViewEvent(CommandType.SelectFrontBattleIndex);
             eventData.template = data.ActorInfo.ActorId;
             _commandData(eventData);
             _lastCallEventType = eventData.commandType;
         }
     }
 
-    private void CallRecoveryMinus()
+    private void CallBattleBackIndex()
     {
         if (_lastCallEventType != CommandType.None) return;
         var listData = selectCharacter.CharacterData;
         if (listData != null)
         {
             var data = (TacticsActorInfo)listData.Data;
-            if (data.TacticsCommandType != TacticsCommandType.Recovery)
+            if (data.TacticsCommandType != TacticsCommandType.Paradigm)
             {
                 return;
             }
-            var eventData = new TacticsViewEvent(CommandType.SelectRecoveryMinus);
+            var eventData = new TacticsViewEvent(CommandType.SelectBackBattleIndex);
             eventData.template = data.ActorInfo.ActorId;
             _commandData(eventData);
             _lastCallEventType = eventData.commandType;

@@ -6,8 +6,8 @@ using Cysharp.Threading.Tasks;
 
 public class DataManager : ScriptableObject
 {
-    [SerializeField] public List<BGMData> BGM = new List<BGMData>();
-    [SerializeField] public List<SEData> SE = new List<SEData>();
+    [SerializeField] public List<BGMData> BGM = new ();
+    [SerializeField] public List<SEData> SE =  new ();
     
     public BGMData GetBGM(string key){
         var bGMData = BGM.Find(a => a.Key == key);

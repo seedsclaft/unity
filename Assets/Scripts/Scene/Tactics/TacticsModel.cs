@@ -396,7 +396,18 @@ public class TacticsModel : BaseModel
         return StageAlcana.CheckCommandCostZero(TacticsCommandType.Recovery);
     }
 
-
+    public void ChangeBattleLineIndex(int actorId,bool isFront)
+    {
+        var actorInfo = TacticsActor(actorId);
+        if (actorInfo.LineIndex == LineType.Front && isFront == false)
+        {
+            actorInfo.SetLineIndex(LineType.Back);
+        } else
+        if (actorInfo.LineIndex == LineType.Back && isFront == true)
+        {
+            actorInfo.SetLineIndex(LineType.Front);
+        }
+    }
 
     public void SetSurvivalMode()
     {

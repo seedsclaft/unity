@@ -24,6 +24,7 @@ public class TacticsComponent : MonoBehaviour
     [SerializeField] private StatusInfoComponent statusInfoComponent;
 
     [SerializeField] private EnemyInfoComponent enemyInfoComponent;
+    [SerializeField] private List<Toggle> battlePositionToggles;
 
 
 
@@ -109,6 +110,15 @@ public class TacticsComponent : MonoBehaviour
         {
             var enemyData = DataSystem.Enemies.Find(a => a.Id == actorInfo.NextBattleEnemyId);
             enemyInfoComponent.UpdateData(enemyData);
+        }
+
+        if (battlePositionToggles.Count > 0)
+        {
+            var lineIndex = actorInfo.LineIndex;
+            for (int i = 0; i < battlePositionToggles.Count; i++)
+            {
+                battlePositionToggles[i].SetIsOnWithoutNotify((int)lineIndex == i);            
+            }
         }
 
 

@@ -243,6 +243,7 @@ public class StageInfo
     
     public void TestTroops(int troopId,int troopLv)
     {
+        _currentSymbolInfos.Clear();
         var troopDates = DataSystem.Troops.FindAll(a => a.TroopId == troopId);
         
         var troopInfo = new TroopInfo(troopDates[0].TroopId,false);

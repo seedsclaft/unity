@@ -224,7 +224,7 @@ public class TacticsPresenter :BasePresenter
         CommandRefresh();
         //_view.SetHelpInputInfo(_model.TacticsCommandInputInfo());
         var bgm = await _model.GetBgmData(_model.TacticsBgmFilename());
-        Ryneus.SoundManager.Instance.PlayBgm(bgm,1.0f,true);
+        Ryneus.SoundManager.Instance.PlayCrossFadeBgm(bgm,1.0f);
         _view.ShowCommandList();
         if (_model.SetStageTutorials(EventTiming.StartTactics))
         {
@@ -304,11 +304,17 @@ public class TacticsPresenter :BasePresenter
         {
             CommandTacticsCommand(TacticsCommandType.Alchemy);
         }
-        if (viewEvent.commandType == Tactics.CommandType.SelectRecoveryPlus)
+        if (viewEvent.commandType == Tactics.CommandType.SelectFrontBattleIndex)
         {
             if (_model.CurrentStageTutorialDates.Count > 0) return;
             int actorId = (int)viewEvent.template;
-            CommandSelectRecoveryPlus(actorId);
+            CommandSelectFrontBattleIndex(actorId);
+        }
+        if (viewEvent.commandType == Tactics.CommandType.SelectBackBattleIndex)
+        {
+            if (_model.CurrentStageTutorialDates.Count > 0) return;
+            int actorId = (int)viewEvent.template;
+            CommandSelectBackBattleIndex(actorId);
         }
         if (viewEvent.commandType == Tactics.CommandType.SelectSymbol)
         {
@@ -615,6 +621,18 @@ public class TacticsPresenter :BasePresenter
         
     }
 
+    private void CommandSelectFrontBattleIndex(int actorId)
+    {
+        _model.ChangeBattleLineIndex(actorId,true);
+        CommandRefresh();
+    }
+
+    private void CommandSelectBackBattleIndex(int actorId)
+    {
+        _model.ChangeBattleLineIndex(actorId,false);
+        CommandRefresh();
+    }
+
     private void CheckActorSymbol(List<GetItemInfo> getItemInfos)
     {
         var popupInfo = new ConfirmInfo("仲間を選びますか？",(a) => UpdatePopupActorSymbol((ConfirmCommandType)a));
@@ -761,6 +779,7 @@ public class TacticsPresenter :BasePresenter
             _model.SetInBattle(true);
             _model.SaveTempBattleMembers();
             _view.CommandChangeViewToTransition(null);
+            Ryneus.SoundManager.Instance.ChangeCrossFade();
             _view.CommandSceneChange(Scene.Battle);
         } else{
             Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cancel);
