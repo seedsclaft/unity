@@ -14,6 +14,7 @@ public class BattleActorList : ListWindow , IInputHandlerEvent
     private List<int> _targetIndexList = new List<int>();
     private int _selectIndex = -1;
 
+    /*
     public void Initialize(int battleActorsCount,System.Action<List<int>> callEvent)
     {
         damageRoots.ForEach(a => a.SetActive(false));
@@ -89,7 +90,7 @@ public class BattleActorList : ListWindow , IInputHandlerEvent
         {
             UpdateTargetIndex(_selectIndex);
         } else
-        if (_targetScopeType == ScopeType.Line)
+        if (_targetScopeType == ScopeType.Line || _targetScopeType == ScopeType.FrontLine)
         {
             UpdateTargetIndex(_selectIndex);
         } else
@@ -136,6 +137,11 @@ public class BattleActorList : ListWindow , IInputHandlerEvent
             UpdateLineSelect(index);
             return;
         }
+        if (_targetScopeType == ScopeType.FrontLine)
+        {
+            UpdateFrontLineSelect(index);
+            return;
+        }
         for (int i = 0; i < ObjectList.Count;i++)
         {
             var listItem = ObjectList[i].GetComponent<ListItem>();
@@ -147,9 +153,14 @@ public class BattleActorList : ListWindow , IInputHandlerEvent
         }
     }
 
-    private void UpdateLineSelect(int index){
+    private void UpdateLineSelect(int index)
+    {
     }
     
+    private void UpdateFrontLineSelect(int index)
+    {
+    }
+
     public BattlerInfoComponent GetBattlerInfoComp(int index)
     {
         return _battleActors[index].BattlerInfoComponent;
@@ -208,7 +219,7 @@ public class BattleActorList : ListWindow , IInputHandlerEvent
                 indexList.Add(_battleInfos[i].Index);
             }
         } else
-        if (_targetScopeType == ScopeType.Line)
+        if (_targetScopeType == ScopeType.Line || _targetScopeType == ScopeType.FrontLine)
         {
             for (int i = 0; i < _battleInfos.Count;i++)
             {
@@ -235,4 +246,5 @@ public class BattleActorList : ListWindow , IInputHandlerEvent
         _targetScopeType = ScopeType.None;
         _targetIndexList = new ();
     }
+    */
 }

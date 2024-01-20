@@ -95,7 +95,7 @@ public class SkillsImporter : AssetPostprocessor {
 				// エクセルブックを作成
 				AssetPostImporter.CreateBook(asset, Mainstream, out IWorkbook Book);
 				// テキストデータ作成
-				List<TextData> textData = AssetPostImporter.CreateText(Book.GetSheetAt(3));
+				List<TextData> textData = AssetPostImporter.CreateText(Book.GetSheetAt(4));
 				// 情報の初期化
 				Data.Data.Clear();
 				// エクセルシートからセル単位で読み込み
@@ -169,6 +169,27 @@ public class SkillsImporter : AssetPostprocessor {
 							SkillData.TriggerDates = new List<SkillData.TriggerData>();
 						}
 						SkillData.TriggerDates.Add(TriggerData);
+					}
+				}
+				BaseSheet = Book.GetSheetAt(3);
+				for (int i = 1; i <= BaseSheet.LastRowNum; i++)
+				{
+					IRow BaseRow = BaseSheet.GetRow(i);
+					
+					var ScopeTriggerData = new SkillData.TriggerData();
+					ScopeTriggerData.SkillId = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseTriggerColumn.SkillId);
+					ScopeTriggerData.TriggerType = (TriggerType)AssetPostImporter.ImportNumeric(BaseRow,(int)BaseTriggerColumn.TriggerType);
+					ScopeTriggerData.TriggerTiming = (TriggerTiming)AssetPostImporter.ImportNumeric(BaseRow,(int)BaseTriggerColumn.TriggerTiming);
+					ScopeTriggerData.Param1 = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseTriggerColumn.Param1);
+					ScopeTriggerData.Param2 = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseTriggerColumn.Param2);
+					ScopeTriggerData.Param3 = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseTriggerColumn.Param3);
+					
+					var SkillData = Data.Data.Find(a => a.Id == ScopeTriggerData.SkillId);
+					if (SkillData != null){
+						if (SkillData.ScopeTriggers == null){
+							SkillData.ScopeTriggers = new List<SkillData.TriggerData>();
+						}
+						SkillData.ScopeTriggers.Add(ScopeTriggerData);
 					}
 				}
 			}

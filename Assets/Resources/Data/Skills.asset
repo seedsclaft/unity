@@ -33,6 +33,7 @@ MonoBehaviour:
     AliveOnly: 1
     FeatureDates: []
     TriggerDates: []
+    ScopeTriggers: []
   - Id: 1
     Name: "\u653B\u6483"
     IconIndex: 1
@@ -58,6 +59,7 @@ MonoBehaviour:
       Param2: 0
       Param3: 0
     TriggerDates: []
+    ScopeTriggers: []
   - Id: 2
     Name: "\u653B\u6483"
     IconIndex: 1
@@ -83,6 +85,7 @@ MonoBehaviour:
       Param2: 0
       Param3: 0
     TriggerDates: []
+    ScopeTriggers: []
   - Id: 11
     Name: "\u795E\u5316"
     IconIndex: 5
@@ -108,6 +111,7 @@ MonoBehaviour:
       Param2: 0
       Param3: 10
     TriggerDates: []
+    ScopeTriggers: []
   - Id: 21
     Name: "\u795E\u5316\u89E3\u9664"
     IconIndex: 5
@@ -133,6 +137,7 @@ MonoBehaviour:
       Param2: 0
       Param3: 0
     TriggerDates: []
+    ScopeTriggers: []
   - Id: 31
     Name: "\u62D8\u675F\u5236\u5FA1"
     IconIndex: 3
@@ -163,6 +168,7 @@ MonoBehaviour:
       Param2: 0
       Param3: 0
     TriggerDates: []
+    ScopeTriggers: []
   - Id: 32
     Name: "\u62D8\u675F\u30C0\u30E1\u30FC\u30B8\u89E3\u9664"
     IconIndex: 3
@@ -188,6 +194,7 @@ MonoBehaviour:
       Param2: 0
       Param3: 0
     TriggerDates: []
+    ScopeTriggers: []
   - Id: 33
     Name: "\u5C45\u5408"
     IconIndex: 3
@@ -218,6 +225,7 @@ MonoBehaviour:
       Param2: 0
       Param3: 0
     TriggerDates: []
+    ScopeTriggers: []
   - Id: 1010
     Name: "\u30D5\u30A1\u30A4\u30A2\u30DC\u30FC\u30EB"
     IconIndex: 1
@@ -243,6 +251,7 @@ MonoBehaviour:
       Param2: 0
       Param3: 0
     TriggerDates: []
+    ScopeTriggers: []
   - Id: 1020
     Name: "\u30D0\u30FC\u30F3\u30B9\u30C8\u30FC\u30E0"
     IconIndex: 1
@@ -268,6 +277,7 @@ MonoBehaviour:
       Param2: 0
       Param3: 0
     TriggerDates: []
+    ScopeTriggers: []
   - Id: 1030
     Name: "\u30D2\u30FC\u30C8\u30B9\u30BF\u30F3\u30D7"
     IconIndex: 2
@@ -293,6 +303,7 @@ MonoBehaviour:
       Param2: 0
       Param3: 0
     TriggerDates: []
+    ScopeTriggers: []
   - Id: 1040
     Name: "\u30BD\u30FC\u30C9\u30A2\u30C0\u30D7\u30C8"
     IconIndex: 4
@@ -319,6 +330,7 @@ MonoBehaviour:
       Param2: 999
       Param3: 10
     TriggerDates: []
+    ScopeTriggers: []
   - Id: 1050
     Name: "\u30E1\u30EB\u30C8\u30D0\u30FC\u30B9\u30C8"
     IconIndex: 1
@@ -344,41 +356,33 @@ MonoBehaviour:
       Param2: 999
       Param3: 10
     TriggerDates: []
+    ScopeTriggers: []
   - Id: 1060
-    Name: "\u30B3\u30F3\u30BB\u30F3\u30C8\u30EC\u30A4\u30C8"
-    IconIndex: 3
-    AnimationName: NA_Effekseer/NA_sword_001
+    Name: "\u30A4\u30AF\u30B9\u30C6\u30A3\u30F3\u30AF\u30B7\u30E7\u30F3"
+    IconIndex: 1
+    AnimationName: tktk01/Fire2
     AnimationPosition: 0
     AnimationScale: 1
     AnimationType: 1
-    DamageTiming: 40
-    MpCost: 3
+    DamageTiming: 68
+    MpCost: 5
     Rank: 2
     Attribute: 1
-    Scope: 4
+    Scope: 1
     SkillType: 1
-    TargetType: 4
-    Help: "\u6B21\u306B\u884C\u52D5\u3059\u308B\u307E\u3067\\s\u306E\u547D\u4E2D\u3068\u56DE\u907F\u309230%\u30A2\u30C3\u30D7\n\u4F7F\u7528\u5F8C\u518D\u884C\u52D5\u3067\u304D\u308B"
+    TargetType: 1
+    Help: "\\s\u306B\u9AD8\u5A01\u529B\u30C0\u30E1\u30FC\u30B8"
     Range: 1
     RepeatTime: 1
     AliveOnly: 1
     FeatureDates:
     - SkillId: 1060
-      FeatureType: 24
-      Param1: 1080
-      Param2: 2
-      Param3: 30
-    - SkillId: 1060
-      FeatureType: 24
-      Param1: 1090
-      Param2: 2
-      Param3: 30
-    - SkillId: 1060
-      FeatureType: 31
-      Param1: 0
+      FeatureType: 1
+      Param1: 300
       Param2: 0
       Param3: 0
     TriggerDates: []
+    ScopeTriggers: []
   - Id: 2010
     Name: "\u30C7\u30A3\u30B9\u30C1\u30E3\u30FC\u30B8"
     IconIndex: 1
@@ -404,6 +408,7 @@ MonoBehaviour:
       Param2: 0
       Param3: 0
     TriggerDates: []
+    ScopeTriggers: []
   - Id: 2020
     Name: "\u30E9\u30A4\u30C8\u30CB\u30F3\u30B0\u30A6\u30A7\u30D6"
     IconIndex: 3
@@ -429,6 +434,7 @@ MonoBehaviour:
       Param2: 10
       Param3: 1
     TriggerDates: []
+    ScopeTriggers: []
   - Id: 2030
     Name: "\u30B7\u30E3\u30FC\u30D7\u30B3\u30FC\u30C9"
     IconIndex: 4
@@ -454,6 +460,7 @@ MonoBehaviour:
       Param2: 999
       Param3: 25
     TriggerDates: []
+    ScopeTriggers: []
   - Id: 2040
     Name: "\u30B7\u30E7\u30C3\u30AF\u30A4\u30F3\u30D1\u30EB\u30B9"
     IconIndex: 3
@@ -479,6 +486,7 @@ MonoBehaviour:
       Param2: 100
       Param3: 0
     TriggerDates: []
+    ScopeTriggers: []
   - Id: 2050
     Name: "\u30C8\u30E9\u30B9\u30C8\u30C1\u30A7\u30A4\u30F3"
     IconIndex: 1
@@ -504,6 +512,7 @@ MonoBehaviour:
       Param2: 0
       Param3: 0
     TriggerDates: []
+    ScopeTriggers: []
   - Id: 2060
     Name: "\u30A2\u30AF\u30BB\u30E9\u30EC\u30A4\u30C8"
     IconIndex: 4
@@ -529,6 +538,7 @@ MonoBehaviour:
       Param2: 1
       Param3: 4
     TriggerDates: []
+    ScopeTriggers: []
   - Id: 2070
     Name: "\u30EA\u30D5\u30EC\u30AF\u30BB\u30B9"
     IconIndex: 3
@@ -559,6 +569,43 @@ MonoBehaviour:
       Param2: 0
       Param3: 0
     TriggerDates: []
+    ScopeTriggers: []
+  - Id: 2080
+    Name: "\u30B3\u30F3\u30BB\u30F3\u30C8\u30EC\u30A4\u30C8"
+    IconIndex: 3
+    AnimationName: NA_Effekseer/NA_sword_001
+    AnimationPosition: 0
+    AnimationScale: 1
+    AnimationType: 1
+    DamageTiming: 40
+    MpCost: 3
+    Rank: 2
+    Attribute: 2
+    Scope: 4
+    SkillType: 1
+    TargetType: 4
+    Help: "\u6B21\u306B\u884C\u52D5\u3059\u308B\u307E\u3067\\s\u306E\u547D\u4E2D\u3068\u56DE\u907F\u309250%\u30A2\u30C3\u30D7\n\u4F7F\u7528\u5F8C\u518D\u884C\u52D5\u3067\u304D\u308B"
+    Range: 1
+    RepeatTime: 1
+    AliveOnly: 1
+    FeatureDates:
+    - SkillId: 2080
+      FeatureType: 24
+      Param1: 1080
+      Param2: 2
+      Param3: 50
+    - SkillId: 2080
+      FeatureType: 24
+      Param1: 1090
+      Param2: 2
+      Param3: 50
+    - SkillId: 2080
+      FeatureType: 31
+      Param1: 0
+      Param2: 0
+      Param3: 0
+    TriggerDates: []
+    ScopeTriggers: []
   - Id: 3010
     Name: "\u30A2\u30A4\u30B9\u30D6\u30EC\u30A4\u30C9"
     IconIndex: 1
@@ -584,6 +631,7 @@ MonoBehaviour:
       Param2: 0
       Param3: 0
     TriggerDates: []
+    ScopeTriggers: []
   - Id: 3020
     Name: "\u30AB\u30A6\u30F3\u30BF\u30FC\u30AA\u30FC\u30E9"
     IconIndex: 2
@@ -614,6 +662,7 @@ MonoBehaviour:
       Param2: 0
       Param3: 0
     TriggerDates: []
+    ScopeTriggers: []
   - Id: 3021
     Name: "\u30AB\u30A6\u30F3\u30BF\u30FC\u30AA\u30FC\u30E9"
     IconIndex: 2
@@ -645,6 +694,7 @@ MonoBehaviour:
       Param1: 2030
       Param2: 0
       Param3: 0
+    ScopeTriggers: []
   - Id: 3030
     Name: "\u30B7\u30FC\u30EB\u30C9\u30B9\u30DA\u30EB"
     IconIndex: 4
@@ -670,6 +720,7 @@ MonoBehaviour:
       Param2: 999
       Param3: 8
     TriggerDates: []
+    ScopeTriggers: []
   - Id: 3040
     Name: "\u30A8\u30B9\u30B3\u30FC\u30C8\u30BD\u30FC\u30EB"
     IconIndex: 3
@@ -695,6 +746,7 @@ MonoBehaviour:
       Param2: 5
       Param3: 10
     TriggerDates: []
+    ScopeTriggers: []
   - Id: 3050
     Name: "\u30C7\u30A3\u30FC\u30D7\u30D5\u30EA\u30FC\u30BA"
     IconIndex: 3
@@ -720,6 +772,7 @@ MonoBehaviour:
       Param2: 1
       Param3: 50
     TriggerDates: []
+    ScopeTriggers: []
   - Id: 3060
     Name: "\u30D0\u30D6\u30EB\u30D6\u30ED\u30A6"
     IconIndex: 3
@@ -745,6 +798,7 @@ MonoBehaviour:
       Param2: 200
       Param3: 0
     TriggerDates: []
+    ScopeTriggers: []
   - Id: 3070
     Name: "\u30A2\u30AF\u30A2\u30DF\u30E9\u30FC\u30B8\u30E5"
     IconIndex: 4
@@ -770,6 +824,7 @@ MonoBehaviour:
       Param2: 1
       Param3: 0
     TriggerDates: []
+    ScopeTriggers: []
   - Id: 4010
     Name: "\u30BB\u30A4\u30F3\u30C8\u30EC\u30FC\u30B6\u30FC"
     IconIndex: 1
@@ -800,6 +855,7 @@ MonoBehaviour:
       Param2: 0
       Param3: 200
     TriggerDates: []
+    ScopeTriggers: []
   - Id: 4020
     Name: "\u30DA\u30CD\u30C8\u30EC\u30A4\u30C8"
     IconIndex: 1
@@ -831,6 +887,7 @@ MonoBehaviour:
       Param2: 0
       Param3: 200
     TriggerDates: []
+    ScopeTriggers: []
   - Id: 4030
     Name: "\u30D2\u30FC\u30EA\u30F3\u30B0"
     IconIndex: 2
@@ -866,6 +923,7 @@ MonoBehaviour:
       Param2: 0
       Param3: 0
     TriggerDates: []
+    ScopeTriggers: []
   - Id: 4040
     Name: "\u30EA\u30D5\u30EC\u30C3\u30B7\u30E5"
     IconIndex: 2
@@ -891,6 +949,7 @@ MonoBehaviour:
       Param2: 0
       Param3: 0
     TriggerDates: []
+    ScopeTriggers: []
   - Id: 4050
     Name: "\u3079\u30CD\u30C7\u30A3\u30AF\u30B7\u30E7\u30F3"
     IconIndex: 2
@@ -916,6 +975,7 @@ MonoBehaviour:
       Param2: 10
       Param3: 1
     TriggerDates: []
+    ScopeTriggers: []
   - Id: 4060
     Name: "\u30DB\u30FC\u30EA\u30FC\u30B0\u30EC\u30A4\u30B9"
     IconIndex: 2
@@ -946,6 +1006,7 @@ MonoBehaviour:
       Param2: 0
       Param3: 0
     TriggerDates: []
+    ScopeTriggers: []
   - Id: 4070
     Name: "\u30D7\u30EA\u30BA\u30E0\u30EA\u30D5\u30EC\u30AF\u30BF\u30FC"
     IconIndex: 2
@@ -972,6 +1033,7 @@ MonoBehaviour:
       Param2: 999
       Param3: 1
     TriggerDates: []
+    ScopeTriggers: []
   - Id: 5010
     Name: "\u30C0\u30FC\u30AF\u30D7\u30EA\u30BA\u30F3"
     IconIndex: 5
@@ -997,6 +1059,7 @@ MonoBehaviour:
       Param2: 0
       Param3: 0
     TriggerDates: []
+    ScopeTriggers: []
   - Id: 5020
     Name: "\u30E6\u30FC\u30B5\u30CD\u30A4\u30B8\u30A2"
     IconIndex: 5
@@ -1022,6 +1085,7 @@ MonoBehaviour:
       Param2: 0
       Param3: 0
     TriggerDates: []
+    ScopeTriggers: []
   - Id: 5030
     Name: "\u30C9\u30EC\u30A4\u30F3\u30D2\u30FC\u30EB"
     IconIndex: 5
@@ -1047,6 +1111,7 @@ MonoBehaviour:
       Param2: 0
       Param3: 100
     TriggerDates: []
+    ScopeTriggers: []
   - Id: 5040
     Name: "\u30C7\u30EA\u30FC\u30C8\u30DE\u30B8\u30C3\u30AF"
     IconIndex: 5
@@ -1072,6 +1137,7 @@ MonoBehaviour:
       Param2: 0
       Param3: 0
     TriggerDates: []
+    ScopeTriggers: []
   - Id: 5050
     Name: "\u30C7\u30A3\u30D7\u30E9\u30F4\u30A3\u30C6\u30A3"
     IconIndex: 3
@@ -1097,6 +1163,7 @@ MonoBehaviour:
       Param2: 1
       Param3: 50
     TriggerDates: []
+    ScopeTriggers: []
   - Id: 5060
     Name: "\u30C0\u30FC\u30AF\u30CD\u30B9"
     IconIndex: 3
@@ -1122,6 +1189,7 @@ MonoBehaviour:
       Param2: 999
       Param3: 25
     TriggerDates: []
+    ScopeTriggers: []
   - Id: 5070
     Name: "\u30B7\u30A7\u30A4\u30C7\u30A3\u30FC\u30AF\u30E9\u30A6\u30C9"
     IconIndex: 5
@@ -1147,6 +1215,7 @@ MonoBehaviour:
       Param2: 999
       Param3: 8
     TriggerDates: []
+    ScopeTriggers: []
   - Id: 6010
     Name: "\u30A8\u30F3\u30C9\u30AA\u30D6\u30B5\u30A4\u30AF\u30EB"
     IconIndex: 5
@@ -1172,9 +1241,10 @@ MonoBehaviour:
       Param2: 999
       Param3: 0
     TriggerDates: []
+    ScopeTriggers: []
   - Id: 7010
     Name: "\u30A6\u30A7\u30A4\u30C8\u30E6\u30CB\u30BE\u30F3"
-    IconIndex: 4
+    IconIndex: 0
     AnimationName: 
     AnimationPosition: 0
     AnimationScale: 1
@@ -1197,6 +1267,7 @@ MonoBehaviour:
       Param2: 999
       Param3: 0
     TriggerDates: []
+    ScopeTriggers: []
   - Id: 10010
     Name: "\u30A2\u30F3\u30C7\u30C3\u30C9"
     IconIndex: 6
@@ -1228,6 +1299,7 @@ MonoBehaviour:
       Param1: 1
       Param2: 0
       Param3: 0
+    ScopeTriggers: []
   - Id: 10020
     Name: "\u30AF\u30EA\u30FC\u30C1\u30E3\u30FC"
     IconIndex: 6
@@ -1259,6 +1331,7 @@ MonoBehaviour:
       Param1: 10
       Param2: 0
       Param3: 0
+    ScopeTriggers: []
   - Id: 10030
     Name: "\u30CF\u30A4\u30EF\u30F3\u30BA"
     IconIndex: 6
@@ -1296,6 +1369,7 @@ MonoBehaviour:
       Param1: 0
       Param2: 0
       Param3: 0
+    ScopeTriggers: []
   - Id: 11010
     Name: "\u30A6\u30EB\u30D5\u30BD\u30A6\u30EB"
     IconIndex: 6
@@ -1327,6 +1401,7 @@ MonoBehaviour:
       Param1: 0
       Param2: 0
       Param3: 0
+    ScopeTriggers: []
   - Id: 11020
     Name: "\u30D7\u30EA\u30C7\u30A3\u30AB\u30E1\u30F3\u30C8"
     IconIndex: 6
@@ -1358,6 +1433,7 @@ MonoBehaviour:
       Param1: 25
       Param2: 0
       Param3: 0
+    ScopeTriggers: []
   - Id: 11030
     Name: "\u30A2\u30B5\u30EB\u30C8\u30B7\u30D5\u30C8"
     IconIndex: 6
@@ -1394,6 +1470,7 @@ MonoBehaviour:
       Param1: 0
       Param2: 0
       Param3: 0
+    ScopeTriggers: []
   - Id: 11040
     Name: "\u30B9\u30BF\u30FC\u30C8\u30C0\u30C3\u30B7\u30E5"
     IconIndex: 6
@@ -1425,6 +1502,7 @@ MonoBehaviour:
       Param1: 3
       Param2: 0
       Param3: 0
+    ScopeTriggers: []
   - Id: 11050
     Name: "\u30E9\u30A4\u30BA\u30A2\u30C3\u30D7\u30DE\u30A4\u30F3\u30C9"
     IconIndex: 6
@@ -1461,6 +1539,7 @@ MonoBehaviour:
       Param1: 0
       Param2: 0
       Param3: 0
+    ScopeTriggers: []
   - Id: 11060
     Name: "\u30A4\u30B0\u30CA\u30A4\u30C6\u30C3\u30C9"
     IconIndex: 6
@@ -1498,6 +1577,7 @@ MonoBehaviour:
       Param1: 1
       Param2: 0
       Param3: 0
+    ScopeTriggers: []
   - Id: 11070
     Name: "\u30A2\u30D5\u30BF\u30FC\u30D0\u30FC\u30CA\u30FC"
     IconIndex: 6
@@ -1535,6 +1615,7 @@ MonoBehaviour:
       Param1: 3
       Param2: 0
       Param3: 0
+    ScopeTriggers: []
   - Id: 12010
     Name: "\u30A8\u30AF\u30B9\u30C6\u30F3\u30B7\u30E7\u30F3"
     IconIndex: 6
@@ -1566,6 +1647,7 @@ MonoBehaviour:
       Param1: 0
       Param2: 0
       Param3: 0
+    ScopeTriggers: []
   - Id: 12020
     Name: "\u30B9\u30D1\u30FC\u30AF\u30D5\u30A9\u30B0"
     IconIndex: 6
@@ -1597,6 +1679,7 @@ MonoBehaviour:
       Param1: 0
       Param2: 0
       Param3: 0
+    ScopeTriggers: []
   - Id: 12030
     Name: "\u30B9\u30A6\u30A3\u30D5\u30C8\u30AB\u30EC\u30F3\u30C8"
     IconIndex: 6
@@ -1628,6 +1711,7 @@ MonoBehaviour:
       Param1: 0
       Param2: 0
       Param3: 0
+    ScopeTriggers: []
   - Id: 12040
     Name: "\u30D5\u30A1\u30B9\u30C8\u30AD\u30E3\u30B9\u30BF\u30FC"
     IconIndex: 6
@@ -1659,6 +1743,7 @@ MonoBehaviour:
       Param1: 25
       Param2: 0
       Param3: 0
+    ScopeTriggers: []
   - Id: 12050
     Name: "\u30D8\u30D6\u30F3\u30EA\u30FC\u30E9\u30C3\u30AF"
     IconIndex: 6
@@ -1690,6 +1775,7 @@ MonoBehaviour:
       Param1: 0
       Param2: 0
       Param3: 0
+    ScopeTriggers: []
   - Id: 12060
     Name: "\u30AF\u30A4\u30C3\u30AF\u30A2\u30AF\u30C8"
     IconIndex: 6
@@ -1721,6 +1807,7 @@ MonoBehaviour:
       Param1: 0
       Param2: 0
       Param3: 0
+    ScopeTriggers: []
   - Id: 12070
     Name: "\u30EA\u30D9\u30EA\u30AA\u30B9\u30B9\u30D7\u30EA\u30C3\u30C4"
     IconIndex: 6
@@ -1752,6 +1839,7 @@ MonoBehaviour:
       Param1: 0
       Param2: 0
       Param3: 0
+    ScopeTriggers: []
   - Id: 13010
     Name: "\u30AC\u30FC\u30C7\u30A3\u30A2\u30F3\u30BD\u30A6\u30EB"
     IconIndex: 6
@@ -1783,6 +1871,7 @@ MonoBehaviour:
       Param1: 0
       Param2: 0
       Param3: 0
+    ScopeTriggers: []
   - Id: 13020
     Name: "\u30A2\u30FC\u30DE\u30FC\u30B3\u30FC\u30C9"
     IconIndex: 6
@@ -1814,6 +1903,7 @@ MonoBehaviour:
       Param1: 0
       Param2: 0
       Param3: 0
+    ScopeTriggers: []
   - Id: 13030
     Name: "\u30AC\u30FC\u30C9\u30B7\u30D5\u30C8"
     IconIndex: 6
@@ -1845,6 +1935,7 @@ MonoBehaviour:
       Param1: 25
       Param2: 0
       Param3: 0
+    ScopeTriggers: []
   - Id: 13040
     Name: "\u30CE\u30FC\u30EA\u30DF\u30C3\u30C8"
     IconIndex: 6
@@ -1876,6 +1967,7 @@ MonoBehaviour:
       Param1: 0
       Param2: 0
       Param3: 0
+    ScopeTriggers: []
   - Id: 13050
     Name: "\u30B3\u30FC\u30EB\u30C9\u30B7\u30A7\u30EB"
     IconIndex: 6
@@ -1907,6 +1999,7 @@ MonoBehaviour:
       Param1: 0
       Param2: 0
       Param3: 0
+    ScopeTriggers: []
   - Id: 13060
     Name: "\u30DA\u30A4\u30B7\u30E3\u30F3\u30B9"
     IconIndex: 6
@@ -1938,6 +2031,7 @@ MonoBehaviour:
       Param1: 0
       Param2: 0
       Param3: 0
+    ScopeTriggers: []
   - Id: 13070
     Name: "\u30A2\u30B7\u30C3\u30C9\u30E9\u30C3\u30B7\u30E5"
     IconIndex: 6
@@ -1969,6 +2063,7 @@ MonoBehaviour:
       Param1: 100
       Param2: 0
       Param3: 0
+    ScopeTriggers: []
   - Id: 14010
     Name: "\u30C7\u30A3\u30D0\u30A4\u30F3\u30B7\u30FC\u30EB\u30C9"
     IconIndex: 6
@@ -2000,6 +2095,7 @@ MonoBehaviour:
       Param1: 0
       Param2: 0
       Param3: 0
+    ScopeTriggers: []
   - Id: 14020
     Name: "\u30E1\u30C7\u30A3\u30B1\u30FC\u30B7\u30E7\u30F3"
     IconIndex: 6
@@ -2031,6 +2127,7 @@ MonoBehaviour:
       Param1: 0
       Param2: 0
       Param3: 0
+    ScopeTriggers: []
   - Id: 14030
     Name: "\u30A8\u30A4\u30DF\u30F3\u30B0\u30B9\u30B3\u30FC\u30D7"
     IconIndex: 6
@@ -2062,6 +2159,7 @@ MonoBehaviour:
       Param1: 0
       Param2: 0
       Param3: 0
+    ScopeTriggers: []
   - Id: 14040
     Name: "\u30EA\u30B8\u30A7\u30CD\u30EC\u30FC\u30B7\u30E7\u30F3"
     IconIndex: 6
@@ -2093,6 +2191,7 @@ MonoBehaviour:
       Param1: 0
       Param2: 0
       Param3: 0
+    ScopeTriggers: []
   - Id: 14050
     Name: "\u30A2\u30E9\u30A4\u30A2\u30F3\u30B9"
     IconIndex: 6
@@ -2129,6 +2228,7 @@ MonoBehaviour:
       Param1: 0
       Param2: 0
       Param3: 0
+    ScopeTriggers: []
   - Id: 14060
     Name: "\u30B9\u30DA\u30AF\u30C8\u30EB\u30DE\u30A4\u30F3"
     IconIndex: 6
@@ -2160,6 +2260,7 @@ MonoBehaviour:
       Param1: 0
       Param2: 0
       Param3: 0
+    ScopeTriggers: []
   - Id: 14070
     Name: "\u30DB\u30FC\u30DF\u30F3\u30B0\u30AF\u30EB\u30BB\u30A4\u30C9"
     IconIndex: 6
@@ -2191,6 +2292,7 @@ MonoBehaviour:
       Param1: 0
       Param2: 0
       Param3: 0
+    ScopeTriggers: []
   - Id: 14080
     Name: "\u30B9\u30DA\u30EA\u30AA\u30FC\u30EB"
     IconIndex: 6
@@ -2222,6 +2324,7 @@ MonoBehaviour:
       Param1: 0
       Param2: 0
       Param3: 0
+    ScopeTriggers: []
   - Id: 15010
     Name: "\u30A4\u30FC\u30B0\u30EB\u30A2\u30A4"
     IconIndex: 6
@@ -2253,6 +2356,7 @@ MonoBehaviour:
       Param1: 0
       Param2: 0
       Param3: 0
+    ScopeTriggers: []
   - Id: 15020
     Name: "\u30CD\u30F4\u30A1\u30FC\u30A8\u30F3\u30C9"
     IconIndex: 6
@@ -2284,6 +2388,7 @@ MonoBehaviour:
       Param1: 25
       Param2: 0
       Param3: 0
+    ScopeTriggers: []
   - Id: 15030
     Name: "\u30CD\u30AC\u30C6\u30A3\u30D6\u30C9\u30EC\u30A4\u30F3"
     IconIndex: 6
@@ -2315,6 +2420,7 @@ MonoBehaviour:
       Param1: 50
       Param2: 0
       Param3: 0
+    ScopeTriggers: []
   - Id: 15040
     Name: "\u30B9\u30AB\u30EB\u30B0\u30E9\u30C3\u30B8"
     IconIndex: 6
@@ -2346,6 +2452,7 @@ MonoBehaviour:
       Param1: 100
       Param2: 0
       Param3: 0
+    ScopeTriggers: []
   - Id: 15050
     Name: "\u30AF\u30EA\u30FC\u30D7\u30A2\u30A6\u30C8"
     IconIndex: 6
@@ -2377,6 +2484,7 @@ MonoBehaviour:
       Param1: 50
       Param2: 0
       Param3: 0
+    ScopeTriggers: []
   - Id: 15060
     Name: "\u30A2\u30F3\u30C7\u30C3\u30C9\u30DA\u30A4\u30F3"
     IconIndex: 6
@@ -2414,6 +2522,7 @@ MonoBehaviour:
       Param1: 2270
       Param2: 0
       Param3: 0
+    ScopeTriggers: []
   - Id: 15070
     Name: "\u30A2\u30C3\u30D7\u30B0\u30EB\u30F3\u30C8"
     IconIndex: 6
@@ -2445,31 +2554,32 @@ MonoBehaviour:
       Param1: 2270
       Param2: 0
       Param3: 0
+    ScopeTriggers: []
   - Id: 100110
-    Name: "\u30A4\u30F3\u30D5\u30A7\u30EB\u30CE"
+    Name: "\u30BB\u30A4\u30AF\u30EA\u30C3\u30C9\u30D0\u30EA\u30A2"
     IconIndex: 10
-    AnimationName: NA_Effekseer/NA_magic_006_c1
+    AnimationName: tktk02/Gun2
     AnimationPosition: 0
     AnimationScale: 1
     AnimationType: 1
     DamageTiming: 60
     MpCost: 0
     Rank: 2
-    Attribute: 1
-    Scope: 3
+    Attribute: 2
+    Scope: 5
     SkillType: 3
-    TargetType: 1
-    Help: "(\u6761\u4EF6)\u30D0\u30C8\u30EB\u4E2DMp\u309210\u6D88\u8CBB\u3059\u308B\n\\s\u306B20\u30C0\u30E1\u30FC\u30B8\u306E\u706B\u50B7\u4ED8\u4E0E(\u6C38\u7D9A)
-      \u795E\u5316\u72B6\u614B\u306B\u79FB\u884C"
+    TargetType: 2
+    Help: "(\u6761\u4EF6)\u30D0\u30C8\u30EB\u4E2D\u56DE\u907F\u884C\u52D5\u30923\u56DE\u884C\u3046\n\\s\u306BDEF\u309230\u30A2\u30C3\u30D7(\u6C38\u7D9A)
+      \u795E\u5316\u72B6\u614B\u306B\u79FB\u884C\n\u30D0\u30D5\u89E3\u9664\u4E0D\u53EF"
     Range: 2
     RepeatTime: 1
     AliveOnly: 1
     FeatureDates:
     - SkillId: 100110
       FeatureType: 21
-      Param1: 2010
+      Param1: 1050
       Param2: 999
-      Param3: 20
+      Param3: 30
     - SkillId: 100110
       FeatureType: 101
       Param1: 11
@@ -2483,26 +2593,27 @@ MonoBehaviour:
       Param2: 0
       Param3: 1
     - SkillId: 100110
-      TriggerType: 101
+      TriggerType: 1001
       TriggerTiming: 2
-      Param1: 10
+      Param1: 3
       Param2: 0
       Param3: 0
+    ScopeTriggers: []
   - Id: 100111
-    Name: "\u30B9\u30D9\u30C6\u30E2\u30E4\u30B7\u30C4\u30AF\u30B9"
+    Name: "\u30EC\u30F4\u30A7\u30EA\u30FC"
     IconIndex: 11
-    AnimationName: NA_Effekseer/NA_magic_004_c1
+    AnimationName: EffekseerVol_3/NA_v3_3d_element shot_electric
     AnimationPosition: 0
     AnimationScale: 1
-    AnimationType: 3
+    AnimationType: 1
     DamageTiming: 96
     MpCost: 0
     Rank: 2
-    Attribute: 1
+    Attribute: 2
     Scope: 3
     SkillType: 4
     TargetType: 1
-    Help: "(\u6761\u4EF6)\u795E\u5316\u72B6\u614B\n\\s\u306B\u30C0\u30E1\u30FC\u30B8
+    Help: "(\u6761\u4EF6)\u795E\u5316\u72B6\u614B\n\\s\u306B\u9AD8\u5A01\u529B\u30C0\u30E1\u30FC\u30B8
       \u795E\u5316\u89E3\u9664"
     Range: 2
     RepeatTime: 1
@@ -2519,8 +2630,9 @@ MonoBehaviour:
       Param2: 0
       Param3: 0
     TriggerDates: []
+    ScopeTriggers: []
   - Id: 100210
-    Name: "\u30B9\u30C6\u30C3\u30D7\u30EA\u30FC\u30C0\u30FC"
+    Name: "\u30A2\u30B2\u30A4\u30F3\u30B9\u30C8\u30EC\u30A4\u30B8"
     IconIndex: 10
     AnimationName: tktk01/Blow10
     AnimationPosition: 0
@@ -2529,11 +2641,11 @@ MonoBehaviour:
     DamageTiming: 60
     MpCost: 0
     Rank: 2
-    Attribute: 2
+    Attribute: 3
     Scope: 4
     SkillType: 3
     TargetType: 4
-    Help: "(\u6761\u4EF6)\u62D8\u675F\u89E3\u9664\u653B\u6483\u30923\u56DE\u6210\u529F\n\u62D8\u675F\u6210\u529F\u6570\u5206\u62D8\u675F\u30C0\u30E1\u30FC\u30B8\u30A2\u30C3\u30D7
+    Help: "(\u6761\u4EF6)\u30D0\u30C8\u30EB\u4E2D\u653B\u6483\u30925\u56DE\u53D7\u3051\u308B\n\\s\u306EATK\u3068SPD\u309215\u30A2\u30C3\u30D7(\u6C38\u7D9A)
       \u795E\u5316\u72B6\u614B\u306B\u79FB\u884C"
     Range: 1
     RepeatTime: 1
@@ -2541,9 +2653,14 @@ MonoBehaviour:
     FeatureDates:
     - SkillId: 100210
       FeatureType: 21
-      Param1: 2021
-      Param2: 0
-      Param3: 0
+      Param1: 1040
+      Param2: 999
+      Param3: 15
+    - SkillId: 100210
+      FeatureType: 21
+      Param1: 1060
+      Param2: 999
+      Param3: 15
     - SkillId: 100210
       FeatureType: 101
       Param1: 11
@@ -2557,13 +2674,14 @@ MonoBehaviour:
       Param2: 0
       Param3: 1
     - SkillId: 100210
-      TriggerType: 102
+      TriggerType: 106
       TriggerTiming: 2
-      Param1: 3
+      Param1: 5
       Param2: 0
       Param3: 0
+    ScopeTriggers: []
   - Id: 100211
-    Name: "\u30E6\u30D3\u30B5\u30AD\u30C7\u30AB\u30E9\u30E1\u30C8\u30EB"
+    Name: "\u30D5\u30ED\u30B9\u30C8\u30CB\u30FC\u30C9\u30EB"
     IconIndex: 11
     AnimationName: NA_Effekseer/NA_net_002
     AnimationPosition: 0
@@ -2572,56 +2690,51 @@ MonoBehaviour:
     DamageTiming: 80
     MpCost: 0
     Rank: 2
-    Attribute: 2
+    Attribute: 3
     Scope: 3
     SkillType: 4
     TargetType: 1
-    Help: "(\u6761\u4EF6)\u795E\u5316\u72B6\u614B\n\\s\u306B5\u30C0\u30E1\u30FC\u30B8\u306E\u62D8\u675F\u4ED8\u4E0E
+    Help: "(\u6761\u4EF6)\u795E\u5316\u72B6\u614B\n\\s\u306B\u30C0\u30E1\u30FC\u30B8
       \u795E\u5316\u89E3\u9664"
     Range: 2
     RepeatTime: 1
     AliveOnly: 1
     FeatureDates:
     - SkillId: 100211
-      FeatureType: 21
-      Param1: 2020
-      Param2: 10
-      Param3: 5
+      FeatureType: 1
+      Param1: 300
+      Param2: 0
+      Param3: 0
     - SkillId: 100211
       FeatureType: 101
       Param1: 21
       Param2: 0
       Param3: 0
-    - SkillId: 100211
-      FeatureType: 101
-      Param1: 32
-      Param2: 0
-      Param3: 0
     TriggerDates: []
+    ScopeTriggers: []
   - Id: 100310
-    Name: "\u30D5\u30EA\u30B8\u30C3\u30C8\u30B7\u30A7\u30EB"
+    Name: "\u30BD\u30FC\u30A4\u30F3\u30B0\u30A2\u30FC\u30E0\u30C9"
     IconIndex: 10
-    AnimationName: NA_Effekseer/NA_barrier_001
+    AnimationName: NA_Effekseer/NA_sword_001
     AnimationPosition: 0
-    AnimationScale: 0.2
+    AnimationScale: 1
     AnimationType: 1
     DamageTiming: 48
     MpCost: 0
     Rank: 2
-    Attribute: 3
-    Scope: 3
+    Attribute: 1
+    Scope: 4
     SkillType: 3
-    TargetType: 2
-    Help: "(\u6761\u4EF6)\u6575\u306E\u884C\u52D5\u3067\u5473\u65B9\u304C\u6226\u95D8\u4E0D\u80FD\n\\s\u306B\u653B\u6483\u7121\u52B92\u56DE\u3092\u4ED8\u4E0E
-      \u795E\u5316\u72B6\u614B\u306B\u79FB\u884C"
+    TargetType: 4
+    Help: "(\u6761\u4EF6)\u30D0\u30C8\u30EB\u4E2DMp\u309215\u6D88\u8CBB\n\\s\u306BDEF50%\u7121\u8996\u306E\u8CAB\u901A\u3092\u4ED8\u4E0E\uFF08\u6C38\u7D9A\uFF09\n\u795E\u5316\u72B6\u614B\u306B\u79FB\u884C"
     Range: 1
     RepeatTime: 1
     AliveOnly: 1
     FeatureDates:
     - SkillId: 100310
       FeatureType: 21
-      Param1: 2050
-      Param2: 2
+      Param1: 2330
+      Param2: 50
       Param3: 0
     - SkillId: 100310
       FeatureType: 101
@@ -2631,40 +2744,41 @@ MonoBehaviour:
     TriggerDates:
     - SkillId: 100310
       TriggerType: 42
-      TriggerTiming: 3
+      TriggerTiming: 2
       Param1: 1010
       Param2: 0
       Param3: 1
     - SkillId: 100310
-      TriggerType: 103
-      TriggerTiming: 3
-      Param1: 0
+      TriggerType: 101
+      TriggerTiming: 2
+      Param1: 15
       Param2: 0
       Param3: 0
+    ScopeTriggers: []
   - Id: 100311
-    Name: "\u30CE\u30ED\u30DE\u30CA\u30AB\u30E1\u30CB\u30CA\u30EC"
+    Name: "\u30A8\u30BF\u30FC\u30CA\u30EB\u30ED\u30F3\u30C9"
     IconIndex: 11
-    AnimationName: NA_Effekseer/NA_magic_008_c3
+    AnimationName: tktk01/Fire2
     AnimationPosition: 0
     AnimationScale: 1
-    AnimationType: 3
+    AnimationType: 1
     DamageTiming: 88
     MpCost: 0
     Rank: 2
-    Attribute: 3
-    Scope: 3
+    Attribute: 1
+    Scope: 1
     SkillType: 4
     TargetType: 1
-    Help: "(\u6761\u4EF6)\u795E\u5316\u72B6\u614B\n\\s\u306B\u7D043\u30BF\u30FC\u30F3\u5206\u306E\u920D\u8DB3\u4ED8\u4E0E
+    Help: "(\u6761\u4EF6)\u795E\u5316\u72B6\u614B\n\\s\u306B\u6975\u5A01\u529B\u30C0\u30E1\u30FC\u30B8
       \u795E\u5316\u89E3\u9664"
-    Range: 2
+    Range: 1
     RepeatTime: 1
     AliveOnly: 1
     FeatureDates:
     - SkillId: 100311
-      FeatureType: 21
-      Param1: 2160
-      Param2: 600
+      FeatureType: 1
+      Param1: 500
+      Param2: 0
       Param3: 0
     - SkillId: 100311
       FeatureType: 101
@@ -2672,6 +2786,7 @@ MonoBehaviour:
       Param2: 0
       Param3: 0
     TriggerDates: []
+    ScopeTriggers: []
   - Id: 100320
     Name: "\u30A2\u30F3\u30C1\u30C9\u30FC\u30C9"
     IconIndex: 10
@@ -2693,9 +2808,9 @@ MonoBehaviour:
     AliveOnly: 1
     FeatureDates:
     - SkillId: 100320
-      FeatureType: 21
-      Param1: 2070
-      Param2: 999
+      FeatureType: 1
+      Param1: 500
+      Param2: 0
       Param3: 0
     - SkillId: 100320
       FeatureType: 101
@@ -2715,6 +2830,7 @@ MonoBehaviour:
       Param1: 0
       Param2: 0
       Param3: 0
+    ScopeTriggers: []
   - Id: 100321
     Name: "\u30B3\u30AA\u30EA\u30CE\u30BB\u30AB\u30A4\u30D8"
     IconIndex: 11
@@ -2746,36 +2862,32 @@ MonoBehaviour:
       Param2: 0
       Param3: 0
     TriggerDates: []
+    ScopeTriggers: []
   - Id: 100410
-    Name: "\u30A8\u30EA\u30AF\u30B7\u30FC\u30EB"
+    Name: "\u30B7\u30A7\u30A4\u30C7\u30A3\u30FC\u30AF\u30E9\u30A6\u30C9"
     IconIndex: 10
-    AnimationName: tktk01/Cure2
+    AnimationName: NA_Effekseer/NA_smoke_004
     AnimationPosition: 0
     AnimationScale: 1
-    AnimationType: 3
+    AnimationType: 1
     DamageTiming: 60
     MpCost: 0
     Rank: 2
-    Attribute: 4
+    Attribute: 5
     Scope: 3
     SkillType: 3
     TargetType: 2
-    Help: "(\u6761\u4EF6)\u81EA\u8EAB\u306E\u307F\u304C\u751F\u5B58\n\\s\u3092\u8607\u751F\u3057\u3066Hp\u309250\u56DE\u5FA9
+    Help: "(\u6761\u4EF6)Demigod\u9B54\u6CD5\u306E\u5C5E\u6027\u304C\u95C7\u306E\u5473\u65B9\u304C\u795E\u5316\u3059\u308B\n\\s\u306EATK\u3068DEF\u309220\u30A2\u30C3\u30D7\uFF08\u6C38\u7D9A\uFF09
       \u795E\u5316\u72B6\u614B\u306B\u79FB\u884C"
-    Range: 1
+    Range: 2
     RepeatTime: 1
-    AliveOnly: 0
+    AliveOnly: 1
     FeatureDates:
     - SkillId: 100410
-      FeatureType: 22
-      Param1: 1
-      Param2: 0
-      Param3: 0
-    - SkillId: 100410
-      FeatureType: 2
-      Param1: 50
-      Param2: 0
-      Param3: 0
+      FeatureType: 21
+      Param1: 1041
+      Param2: 999
+      Param3: 15
     - SkillId: 100410
       FeatureType: 101
       Param1: 11
@@ -2789,42 +2901,50 @@ MonoBehaviour:
       Param2: 0
       Param3: 1
     - SkillId: 100410
-      TriggerType: 104
+      TriggerType: 1004
       TriggerTiming: 2
-      Param1: 0
+      Param1: 5
+      Param2: 0
+      Param3: 0
+    ScopeTriggers:
+    - SkillId: 100410
+      TriggerType: 201
+      TriggerTiming: 0
+      Param1: 5
       Param2: 0
       Param3: 0
   - Id: 100411
-    Name: "\u30A8\u30F3\u30B8\u30A7\u30EB\u30D5\u30A7\u30B6\u30FC"
+    Name: "\u30E0\u30FC\u30F3\u30E9\u30A4\u30C8\u30EC\u30A4"
     IconIndex: 11
-    AnimationName: NA_Effekseer/NA_aura_005
+    AnimationName: NA_Effekseer/NA_magic_009
     AnimationPosition: 0
     AnimationScale: 1
     AnimationType: 1
     DamageTiming: 60
     MpCost: 0
     Rank: 2
-    Attribute: 4
+    Attribute: 5
     Scope: 3
     SkillType: 4
-    TargetType: 2
-    Help: "(\u6761\u4EF6)\u795E\u5316\u72B6\u614B\n\\s\u306B10\u56DE\u5FA9\u306E\u30EA\u30B8\u30A7\u30CD\u4ED8\u4E0E(\u6C38\u7D9A)
+    TargetType: 1
+    Help: "(\u6761\u4EF6)\u795E\u5316\u72B6\u614B\n\\s\u306B\u30C0\u30E1\u30FC\u30B8
       \u795E\u5316\u89E3\u9664"
-    Range: 1
+    Range: 2
     RepeatTime: 1
     AliveOnly: 1
     FeatureDates:
     - SkillId: 100411
-      FeatureType: 21
-      Param1: 2040
-      Param2: 999
-      Param3: 10
+      FeatureType: 1
+      Param1: 200
+      Param2: 0
+      Param3: 0
     - SkillId: 100411
       FeatureType: 101
       Param1: 21
       Param2: 0
       Param3: 0
     TriggerDates: []
+    ScopeTriggers: []
   - Id: 100420
     Name: "\u30D6\u30EC\u30FC\u30AF\u30B6\u30A6\u30A9\u30FC\u30EB"
     IconIndex: 10
@@ -2867,6 +2987,7 @@ MonoBehaviour:
       Param1: 30
       Param2: 0
       Param3: 0
+    ScopeTriggers: []
   - Id: 100421
     Name: "\u30C8\u30EA\u30CB\u30C6\u30A3\u30EC\u30A4"
     IconIndex: 11
@@ -2898,6 +3019,7 @@ MonoBehaviour:
       Param2: 0
       Param3: 0
     TriggerDates: []
+    ScopeTriggers: []
   - Id: 100510
     Name: "\u30C7\u30A3\u30B9\u30C8\u30E9\u30AF\u30B7\u30E7\u30F3"
     IconIndex: 10
@@ -2941,6 +3063,7 @@ MonoBehaviour:
       Param1: 0
       Param2: 0
       Param3: 0
+    ScopeTriggers: []
   - Id: 100511
     Name: "\u30AB\u30AA\u30B9\u30DA\u30A4\u30F3"
     IconIndex: 11
@@ -2972,6 +3095,7 @@ MonoBehaviour:
       Param2: 0
       Param3: 0
     TriggerDates: []
+    ScopeTriggers: []
   - Id: 100610
     Name: "\u30D5\u30EB\u30D0\u30FC\u30B9\u30C8"
     IconIndex: 10
@@ -3015,6 +3139,7 @@ MonoBehaviour:
       Param1: 3
       Param2: 0
       Param3: 0
+    ScopeTriggers: []
   - Id: 100611
     Name: "\u30B3\u30A6\u30BD\u30AF\u30C6\u30F3\u30B7\u30E7\u30A6"
     IconIndex: 11
@@ -3046,6 +3171,7 @@ MonoBehaviour:
       Param2: 0
       Param3: 0
     TriggerDates: []
+    ScopeTriggers: []
   - Id: 100710
     Name: "\u30BB\u30E1\u30BF\u30EA\u30FC\u30B3\u30FC\u30EB"
     IconIndex: 10
@@ -3089,6 +3215,7 @@ MonoBehaviour:
       Param1: 0
       Param2: 0
       Param3: 0
+    ScopeTriggers: []
   - Id: 100711
     Name: "\u30BB\u30EB\u30D5\u30AB\u30C3\u30C8"
     IconIndex: 11
@@ -3120,6 +3247,7 @@ MonoBehaviour:
       Param2: 0
       Param3: 0
     TriggerDates: []
+    ScopeTriggers: []
   - Id: 300010
     Name: "\u30D5\u30A1\u30A4\u30A2\u30A8\u30F3\u30C1\u30E3\u30F3\u30C8"
     IconIndex: 7
@@ -3145,6 +3273,7 @@ MonoBehaviour:
       Param2: 1
       Param3: 1
     TriggerDates: []
+    ScopeTriggers: []
   - Id: 300020
     Name: "\u30B5\u30F3\u30C0\u30FC\u30A8\u30F3\u30C1\u30E3\u30F3\u30C8"
     IconIndex: 7
@@ -3170,6 +3299,7 @@ MonoBehaviour:
       Param2: 2
       Param3: 1
     TriggerDates: []
+    ScopeTriggers: []
   - Id: 300030
     Name: "\u30A2\u30A4\u30B9\u30A8\u30F3\u30C1\u30E3\u30F3\u30C8"
     IconIndex: 7
@@ -3195,6 +3325,7 @@ MonoBehaviour:
       Param2: 3
       Param3: 1
     TriggerDates: []
+    ScopeTriggers: []
   - Id: 300040
     Name: "\u30DB\u30FC\u30EA\u30FC\u30A8\u30F3\u30C1\u30E3\u30F3\u30C8"
     IconIndex: 7
@@ -3220,6 +3351,7 @@ MonoBehaviour:
       Param2: 4
       Param3: 1
     TriggerDates: []
+    ScopeTriggers: []
   - Id: 300050
     Name: "\u30C0\u30FC\u30AF\u30A8\u30F3\u30C1\u30E3\u30F3\u30C8"
     IconIndex: 7
@@ -3245,6 +3377,7 @@ MonoBehaviour:
       Param2: 5
       Param3: 1
     TriggerDates: []
+    ScopeTriggers: []
   - Id: 400001
     Name: "\u4EBA\u4F53\u932C\u6210+\\d"
     IconIndex: 3
@@ -3270,6 +3403,7 @@ MonoBehaviour:
       Param2: 1
       Param3: 0
     TriggerDates: []
+    ScopeTriggers: []
   - Id: 400002
     Name: "\u7406\u6027\u62E1\u5F35+\\d"
     IconIndex: 3
@@ -3295,6 +3429,7 @@ MonoBehaviour:
       Param2: 1
       Param3: 0
     TriggerDates: []
+    ScopeTriggers: []
   - Id: 400003
     Name: "\u5B58\u5728\u4FEE\u5FA9+\\d"
     IconIndex: 3
@@ -3320,6 +3455,7 @@ MonoBehaviour:
       Param2: 1
       Param3: 0
     TriggerDates: []
+    ScopeTriggers: []
   - Id: 400004
     Name: "\u6551\u6E08\u57F7\u884C+\\d"
     IconIndex: 3
@@ -3345,6 +3481,7 @@ MonoBehaviour:
       Param2: 1
       Param3: 0
     TriggerDates: []
+    ScopeTriggers: []
   - Id: 400005
     Name: "\u7D20\u5B50\u88DC\u5145+\\d"
     IconIndex: 3
@@ -3370,6 +3507,7 @@ MonoBehaviour:
       Param2: 1
       Param3: 0
     TriggerDates: []
+    ScopeTriggers: []
   - Id: 400101
     Name: "\u6700\u5927Hp+\\d"
     IconIndex: 6
@@ -3395,6 +3533,7 @@ MonoBehaviour:
       Param2: 2
       Param3: 0
     TriggerDates: []
+    ScopeTriggers: []
   - Id: 400102
     Name: "\u6700\u5927Mp+\\d"
     IconIndex: 6
@@ -3420,6 +3559,7 @@ MonoBehaviour:
       Param2: 2
       Param3: 0
     TriggerDates: []
+    ScopeTriggers: []
   - Id: 400103
     Name: ATK+\d
     IconIndex: 6
@@ -3445,6 +3585,7 @@ MonoBehaviour:
       Param2: 2
       Param3: 0
     TriggerDates: []
+    ScopeTriggers: []
   - Id: 400104
     Name: DEF+\d
     IconIndex: 6
@@ -3470,6 +3611,7 @@ MonoBehaviour:
       Param2: 2
       Param3: 0
     TriggerDates: []
+    ScopeTriggers: []
   - Id: 400105
     Name: SPD+\d
     IconIndex: 6
@@ -3495,6 +3637,7 @@ MonoBehaviour:
       Param2: 2
       Param3: 0
     TriggerDates: []
+    ScopeTriggers: []
   - Id: 400201
     Name: "\\d\u5165\u624B"
     IconIndex: 6
@@ -3520,6 +3663,7 @@ MonoBehaviour:
       Param2: 0
       Param3: 0
     TriggerDates: []
+    ScopeTriggers: []
   - Id: 400301
     Name: "\u3059\u3079\u3066\u6B7B\u305B\u308B\u9B42+\\d"
     IconIndex: 5
@@ -3545,6 +3689,7 @@ MonoBehaviour:
       Param2: 2
       Param3: 0
     TriggerDates: []
+    ScopeTriggers: []
   - Id: 500001
     Name: "\u3010\u611A\u8005\u3011"
     IconIndex: 11
@@ -3576,6 +3721,7 @@ MonoBehaviour:
       Param1: 0
       Param2: 0
       Param3: 0
+    ScopeTriggers: []
   - Id: 500002
     Name: "\u3010\u9B54\u8853\u5E2B\u3011"
     IconIndex: 5
@@ -3607,6 +3753,7 @@ MonoBehaviour:
       Param1: 1
       Param2: 0
       Param3: 0
+    ScopeTriggers: []
   - Id: 500003
     Name: "\u3010\u5973\u6559\u7687\u3011"
     IconIndex: 7
@@ -3638,6 +3785,7 @@ MonoBehaviour:
       Param1: 2
       Param2: 0
       Param3: 0
+    ScopeTriggers: []
   - Id: 500004
     Name: "\u3010\u5973\u5E1D\u3011"
     IconIndex: 7
@@ -3669,6 +3817,7 @@ MonoBehaviour:
       Param1: 3
       Param2: 0
       Param3: 0
+    ScopeTriggers: []
   - Id: 500005
     Name: "\u3010\u7687\u5E1D\u3011"
     IconIndex: 7
@@ -3700,6 +3849,7 @@ MonoBehaviour:
       Param1: 4
       Param2: 0
       Param3: 0
+    ScopeTriggers: []
   - Id: 500006
     Name: "\u3010\u6CD5\u738B\u3011"
     IconIndex: 7
@@ -3731,6 +3881,7 @@ MonoBehaviour:
       Param1: 5
       Param2: 0
       Param3: 0
+    ScopeTriggers: []
   - Id: 500007
     Name: "\u3010\u604B\u611B\u3011"
     IconIndex: 7
@@ -3762,6 +3913,7 @@ MonoBehaviour:
       Param1: 6
       Param2: 0
       Param3: 0
+    ScopeTriggers: []
   - Id: 500008
     Name: "\u3010\u6226\u8ECA\u3011"
     IconIndex: 1
@@ -3793,6 +3945,7 @@ MonoBehaviour:
       Param1: 7
       Param2: 0
       Param3: 0
+    ScopeTriggers: []
   - Id: 500009
     Name: "\u3010\u6B63\u7FA9\u3011"
     IconIndex: 2
@@ -3824,6 +3977,7 @@ MonoBehaviour:
       Param1: 8
       Param2: 0
       Param3: 0
+    ScopeTriggers: []
   - Id: 500010
     Name: "\u3010\u96A0\u8005\u3011"
     IconIndex: 3
@@ -3855,6 +4009,7 @@ MonoBehaviour:
       Param1: 9
       Param2: 0
       Param3: 0
+    ScopeTriggers: []
   - Id: 500011
     Name: "\u3010\u904B\u547D\u3011"
     IconIndex: 3
@@ -3886,6 +4041,7 @@ MonoBehaviour:
       Param1: 10
       Param2: 0
       Param3: 0
+    ScopeTriggers: []
   - Id: 500012
     Name: "\u3010\u525B\u6BC5\u3011"
     IconIndex: 3
@@ -3917,6 +4073,7 @@ MonoBehaviour:
       Param1: 11
       Param2: 0
       Param3: 0
+    ScopeTriggers: []
   - Id: 500013
     Name: "\u3010\u5211\u6B7B\u8005\u3011"
     IconIndex: 4
@@ -3948,6 +4105,7 @@ MonoBehaviour:
       Param1: 12
       Param2: 0
       Param3: 0
+    ScopeTriggers: []
   - Id: 500014
     Name: "\u3010\u6B7B\u795E\u3011"
     IconIndex: 4
@@ -3979,6 +4137,7 @@ MonoBehaviour:
       Param1: 13
       Param2: 0
       Param3: 0
+    ScopeTriggers: []
   - Id: 500015
     Name: "\u3010\u7BC0\u5236\u3011"
     IconIndex: 4
@@ -4010,6 +4169,7 @@ MonoBehaviour:
       Param1: 14
       Param2: 0
       Param3: 0
+    ScopeTriggers: []
   - Id: 500016
     Name: "\u3010\u60AA\u9B54\u3011"
     IconIndex: 4
@@ -4041,6 +4201,7 @@ MonoBehaviour:
       Param1: 15
       Param2: 0
       Param3: 0
+    ScopeTriggers: []
   - Id: 500017
     Name: "\u3010\u5854\u3011"
     IconIndex: 4
@@ -4072,6 +4233,7 @@ MonoBehaviour:
       Param1: 16
       Param2: 0
       Param3: 0
+    ScopeTriggers: []
   - Id: 500018
     Name: "\u3010\u661F\u3011"
     IconIndex: 6
@@ -4103,6 +4265,7 @@ MonoBehaviour:
       Param1: 17
       Param2: 0
       Param3: 0
+    ScopeTriggers: []
   - Id: 500019
     Name: "\u3010\u6708\u3011"
     IconIndex: 6
@@ -4134,6 +4297,7 @@ MonoBehaviour:
       Param1: 18
       Param2: 0
       Param3: 0
+    ScopeTriggers: []
   - Id: 500020
     Name: "\u3010\u592A\u967D\u3011"
     IconIndex: 6
@@ -4165,6 +4329,7 @@ MonoBehaviour:
       Param1: 19
       Param2: 0
       Param3: 0
+    ScopeTriggers: []
   - Id: 500021
     Name: "\u3010\u5BE9\u5224\u3011"
     IconIndex: 6
@@ -4196,6 +4361,7 @@ MonoBehaviour:
       Param1: 20
       Param2: 0
       Param3: 0
+    ScopeTriggers: []
   - Id: 500022
     Name: "\u3010\u4E16\u754C\u3011"
     IconIndex: 6
@@ -4227,3 +4393,4 @@ MonoBehaviour:
       Param1: 21
       Param2: 0
       Param3: 0
+    ScopeTriggers: []

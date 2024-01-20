@@ -19,13 +19,13 @@ MonoBehaviour:
     ClassId: 1
     ImagePath: 0001
     InitLv: 1
-    MaxLv: 40
+    MaxLv: 99
     InitStatus:
-      _hp: 38
-      _mp: 20
-      _atk: 27
-      _def: 8
-      _spd: 8
+      _hp: 30
+      _mp: 15
+      _atk: 24
+      _def: 7
+      _spd: 23
     PlusStatus:
       _hp: 0
       _mp: 0
@@ -59,15 +59,11 @@ MonoBehaviour:
       Level: 0
       Weight: 0
       TriggerDates: []
-    - SkillId: 1010
+    - SkillId: 2010
       Level: 0
       Weight: 0
       TriggerDates: []
-    - SkillId: 1060
-      Level: 0
-      Weight: 0
-      TriggerDates: []
-    - SkillId: 7010
+    - SkillId: 2080
       Level: 0
       Weight: 0
       TriggerDates: []
@@ -79,19 +75,23 @@ MonoBehaviour:
       Level: 0
       Weight: 0
       TriggerDates: []
+    - SkillId: 7010
+      Level: 0
+      Weight: 0
+      TriggerDates: []
   - Id: 2
     Name: "\u30AD\u30E3\u30ED\u30E9\u30A4\u30F3"
     SubName: "\u3010\u30EF\u30A4\u30E4\u30FC\u30D7\u30EA\u30F3\u30BB\u30B9\u3011"
     ClassId: 2
     ImagePath: 0002
     InitLv: 1
-    MaxLv: 40
+    MaxLv: 99
     InitStatus:
-      _hp: 40
-      _mp: 20
-      _atk: 22
-      _def: 7
-      _spd: 37
+      _hp: 35
+      _mp: 15
+      _atk: 12
+      _def: 14
+      _spd: 12
     PlusStatus:
       _hp: 0
       _mp: 0
@@ -129,15 +129,11 @@ MonoBehaviour:
       Level: 0
       Weight: 0
       TriggerDates: []
-    - SkillId: 2010
+    - SkillId: 3010
       Level: 0
       Weight: 0
       TriggerDates: []
-    - SkillId: 2020
-      Level: 0
-      Weight: 0
-      TriggerDates: []
-    - SkillId: 7010
+    - SkillId: 3030
       Level: 0
       Weight: 0
       TriggerDates: []
@@ -149,19 +145,23 @@ MonoBehaviour:
       Level: 0
       Weight: 0
       TriggerDates: []
+    - SkillId: 7010
+      Level: 0
+      Weight: 0
+      TriggerDates: []
   - Id: 3
     Name: "\u30A2\u30EA\u30B9"
     SubName: "\u3010\u4E0D\u601D\u8B70\u306E\u56FD\u306E\u5B88\u8B77\u795E\u3011"
     ClassId: 3
     ImagePath: 0003
     InitLv: 1
-    MaxLv: 40
+    MaxLv: 99
     InitStatus:
-      _hp: 35
-      _mp: 20
-      _atk: 19
-      _def: 29
-      _spd: 23
+      _hp: 27
+      _mp: 15
+      _atk: 27
+      _def: 5
+      _spd: 19
     PlusStatus:
       _hp: 0
       _mp: 0
@@ -195,15 +195,11 @@ MonoBehaviour:
       Level: 0
       Weight: 0
       TriggerDates: []
-    - SkillId: 3010
+    - SkillId: 1010
       Level: 0
       Weight: 0
       TriggerDates: []
-    - SkillId: 3020
-      Level: 0
-      Weight: 0
-      TriggerDates: []
-    - SkillId: 7010
+    - SkillId: 1060
       Level: 0
       Weight: 0
       TriggerDates: []
@@ -215,19 +211,23 @@ MonoBehaviour:
       Level: 0
       Weight: 0
       TriggerDates: []
+    - SkillId: 7010
+      Level: 0
+      Weight: 0
+      TriggerDates: []
   - Id: 4
     Name: "\u30D5\u30EA\u30EB"
     SubName: "\u3010\u30A4\u30CE\u30BB\u30F3\u30B9\u30B9\u30DE\u30A4\u30EB\u3011"
     ClassId: 4
     ImagePath: 0004
     InitLv: 1
-    MaxLv: 40
+    MaxLv: 99
     InitStatus:
-      _hp: 49
-      _mp: 20
-      _atk: 26
-      _def: 15
-      _spd: 28
+      _hp: 28
+      _mp: 15
+      _atk: 20
+      _def: 8
+      _spd: 17
     PlusStatus:
       _hp: 0
       _mp: 0
@@ -261,15 +261,11 @@ MonoBehaviour:
       Level: 0
       Weight: 0
       TriggerDates: []
-    - SkillId: 4010
+    - SkillId: 5010
       Level: 0
       Weight: 0
       TriggerDates: []
-    - SkillId: 4030
-      Level: 0
-      Weight: 0
-      TriggerDates: []
-    - SkillId: 7010
+    - SkillId: 5060
       Level: 0
       Weight: 0
       TriggerDates: []
@@ -278,6 +274,10 @@ MonoBehaviour:
       Weight: 0
       TriggerDates: []
     - SkillId: 100411
+      Level: 0
+      Weight: 0
+      TriggerDates: []
+    - SkillId: 7010
       Level: 0
       Weight: 0
       TriggerDates: []

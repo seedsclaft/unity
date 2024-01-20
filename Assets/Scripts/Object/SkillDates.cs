@@ -31,6 +31,7 @@ public class SkillData
 
     public List<FeatureData> FeatureDates;
     public List<TriggerData> TriggerDates;
+    public List<TriggerData> ScopeTriggers;
     public bool IsHpDamageFeature()
     {
         return FeatureDates.Find(a => a.FeatureType == FeatureType.HpDamage) != null;
@@ -271,6 +272,7 @@ public enum ScopeType{
     Line = 2,
     All = 3,
     Self = 4,
+    FrontLine = 5,
     WithoutSelfOne = 11,
     WithoutSelfAll = 13,
 }
@@ -354,6 +356,9 @@ public enum TriggerType
     AllEnemyCurseState = 107, // 敵全員が呪い
     ActionResultAddState = 113, // 相手が状態異常を発動する前
     DefeatEnemyByAttack = 114, // 攻撃で敵を撃破する
+    DemigodMagicAttribute = 204, // Demigod魔法の属性が〇の味方が神化する
+    DodgeCountOver = 1001, // 回避を〇回行う
+    AwakenDemigodAttribute = 1004, // Demigod魔法の属性が〇の味方が神化する
 }
 
 public enum TriggerTiming

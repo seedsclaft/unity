@@ -60,6 +60,8 @@ public class BattlerInfo
     public int PayBattleMp => _payBattleMp;
     private int _attackedCount = 0;
     public int AttackedCount => _attackedCount;
+    private int _dodgeCount = 0;
+    public int DodgeCount => _dodgeCount;
     
     private int _lastTargetIndex = 0;
     public void SetLastTargetIndex(int index){
@@ -678,6 +680,11 @@ public class BattlerInfo
     public void GainAttackedCount(int value)
     {
         _attackedCount += value;
+    }
+
+    public void GainDodgeCount(int value)
+    {
+        _dodgeCount += value;
     }
 
     public void TurnEnd()

@@ -71,7 +71,7 @@ public class BattleBattlerList : ListWindow , IInputHandlerEvent
         {
             UpdateAllSelect();
         } else
-        if (_targetScopeType == ScopeType.Line)
+        if (_targetScopeType == ScopeType.Line || _targetScopeType == ScopeType.FrontLine)
         {
             UpdateLineSelect(_selectIndex);
         } else
@@ -114,7 +114,7 @@ public class BattleBattlerList : ListWindow , IInputHandlerEvent
             UpdateAllSelect();
             return;
         }
-        if (_targetScopeType == ScopeType.Line)
+        if (_targetScopeType == ScopeType.Line || _targetScopeType == ScopeType.FrontLine)
         {
             UpdateLineSelect(index);
             return;
@@ -137,7 +137,7 @@ public class BattleBattlerList : ListWindow , IInputHandlerEvent
     }
 
     private void UpdateLineSelect(int index){
-        if (_targetScopeType != ScopeType.Line){
+        if (_targetScopeType != ScopeType.Line && _targetScopeType != ScopeType.FrontLine){
             return;
         }
         bool isFront = index < _backStartIndex;
@@ -265,7 +265,7 @@ public class BattleBattlerList : ListWindow , IInputHandlerEvent
                 }
             }
         } else
-        if (_targetScopeType == ScopeType.Line)
+        if (_targetScopeType == ScopeType.Line || _targetScopeType == ScopeType.FrontLine)
         {
             for (int i = 0; i < _battleBattler.Count;i++)
             {

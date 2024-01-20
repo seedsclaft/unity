@@ -311,7 +311,7 @@ public class BattleModel : BaseModel
         skillInfos.Sort((a,b) => {return a.Master.Id > b.Master.Id ? 1 : -1;});
         foreach (var skillInfo in skillInfos)
         {
-            if (skillInfo.Master.IconIndex <= MagicIconType.Psionics)
+            if (skillInfo.Master.IconIndex >= MagicIconType.Elementarism && skillInfo.Master.IconIndex <= MagicIconType.Psionics)
             {
                 sortList1.Add(skillInfo);
             } else
@@ -509,6 +509,10 @@ public class BattleModel : BaseModel
         } else
         {
             targetIndexList = targetIndexList.FindAll(a => !_battlers.Find(b => a == b.Index).IsAlive());
+        }
+        if (skillData.ScopeTriggers.Count > 0)
+        {
+            targetIndexList = CheckScopeTriggers(targetIndexList,skillData.ScopeTriggers);
         }
         if (checkCondition == true)
         {
@@ -724,6 +728,30 @@ public class BattleModel : BaseModel
             }
         }
         return IsEnable;
+    }
+
+    public List<int> CheckScopeTriggers(List<int> targetIndexList,List<SkillData.TriggerData> scopeTriggers)
+    {
+        for (int i = targetIndexList.Count-1;i >= 0;i--)
+        {
+            var target = GetBattlerInfo(targetIndexList[i]);
+            var remove = false;
+            foreach (var scopeTrigger in scopeTriggers)
+            {
+                if (scopeTrigger.TriggerType == TriggerType.DemigodMagicAttribute)
+                {
+                    if (target.Skills.Find(a => a.Master.SkillType == SkillType.Demigod && a.Attribute == (AttributeType)scopeTrigger.Param1) == null)
+                    {
+                        remove = true;
+                    }
+                }
+            }
+            if (remove)
+            {
+                targetIndexList.RemoveAt(i);
+            }
+        }
+        return targetIndexList;
     }
 
     public ActionInfo CurrentActionInfo()
@@ -1088,6 +1116,10 @@ public class BattleModel : BaseModel
         if (actionResultInfo.ReDamage != 0)
         {
             subject.GainHp(-1 * actionResultInfo.ReDamage);
+        }
+        if (actionResultInfo.Missed == true)
+        {
+            target.GainDodgeCount(1);
         }
         foreach (var targetIndex in actionResultInfo.ExecStateInfos)
         {
@@ -1776,6 +1808,23 @@ public class BattleModel : BaseModel
                         IsTriggered = true;
                     }
                 }
+                
+                if (triggerDates[j].TriggerType == TriggerType.DodgeCountOver)
+                {
+                    if (battlerInfo.IsAlive() && battlerInfo.DodgeCount >= triggerDates[j].Param1)
+                    {
+                        IsTriggered = true;
+                    }
+                }
+                if (triggerDates[j].TriggerType == TriggerType.AwakenDemigodAttribute)
+                {
+                    var friends = battlerInfo.isActor ? _party.AliveBattlerInfos : _troop.AliveBattlerInfos;
+                    friends = friends.FindAll(a => a.IsAwaken);
+                    if (battlerInfo.IsAlive() && friends.Count > 0 && friends.Find(a => a.Skills.Find(b => (b.Attribute == (AttributeType)triggerDates[j].Param1 && b.Master.SkillType == SkillType.Demigod)) != null) != null)
+                    {
+                        IsTriggered = true;
+                    }
+                }
                 // Param3をAnd条件フラグにする
                 if (triggerDates[j].Param3 == 1)
                 {
@@ -1909,7 +1958,7 @@ public class BattleModel : BaseModel
                 indexList.Add(targetIndexList[i]);
             }
         }
-        if (actionInfo.Master.Scope == ScopeType.Line)
+        if (actionInfo.Master.Scope == ScopeType.Line || actionInfo.Master.Scope ==ScopeType.FrontLine)
         {
             indexList.Add (targetIndex);
             var battlerInfo = GetBattlerInfo(targetIndex);

@@ -260,9 +260,17 @@ public class ActionResultInfo
         return AtkValue;
     }
 
-    private int CurrentDefense(BattlerInfo battlerInfo,bool isNoEffect)
+    private int CurrentDefense(BattlerInfo subject, BattlerInfo target,bool isNoEffect)
     {
-        int DefValue = battlerInfo.CurrentDef(isNoEffect);
+        int DefValue = target.CurrentDef(isNoEffect);
+        if (isNoEffect == false)
+        {
+            if (subject.IsState(StateType.Penetrate))
+            {
+                var Penetrate = 100 - Mathf.Max(100,subject.StateEffectAll(StateType.Penetrate));
+                DefValue = (int)(DefValue * Penetrate * 0.01f);
+            }
+        }
         return DefValue;
     }
 
@@ -287,7 +295,7 @@ public class ActionResultInfo
     {
         var hpDamage = 0;
         int AtkValue = CurrentAttack(subject,isNoEffect);
-        int DefValue = CurrentDefense(target,isNoEffect);
+        int DefValue = CurrentDefense(subject,target,isNoEffect);
         float UpperDamageRate = CurrentDamageRate(subject,isNoEffect,isOneTarget);
         float DamageRate = featureData.Param1 * UpperDamageRate;
         float SkillDamage = (DamageRate * 0.01f * (AtkValue * 0.5f));
@@ -385,7 +393,7 @@ public class ActionResultInfo
     {
         var hpDamage = 0;
         int AtkValue = CurrentAttack(subject,isNoEffect);
-        int DefValue = CurrentDefense(target,isNoEffect);
+        int DefValue = CurrentDefense(subject,target,isNoEffect);
         float DamageRate = featureData.Param2;
         if (target.IsState((StateType)featureData.Param3))
         {
