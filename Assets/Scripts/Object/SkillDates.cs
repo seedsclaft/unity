@@ -358,7 +358,8 @@ public enum TriggerType
     DefeatEnemyByAttack = 114, // 攻撃で敵を撃破する
     DemigodMagicAttribute = 204, // Demigod魔法の属性が〇の味方が神化する
     DodgeCountOver = 1001, // 回避を〇回行う
-    AwakenDemigodAttribute = 1004, // Demigod魔法の属性が〇の味方が神化する
+    HpHealCountOver = 1004, // Hp回復魔法を〇回行う
+    AwakenDemigodAttribute = 1005, // Demigod魔法の属性が〇の味方が神化する
 }
 
 public enum TriggerTiming

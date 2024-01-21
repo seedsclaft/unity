@@ -62,6 +62,8 @@ public class BattlerInfo
     public int AttackedCount => _attackedCount;
     private int _dodgeCount = 0;
     public int DodgeCount => _dodgeCount;
+    private int _healCount = 0;
+    public int HealCount => _healCount;
     
     private int _lastTargetIndex = 0;
     public void SetLastTargetIndex(int index){
@@ -644,6 +646,7 @@ public class BattlerInfo
     {
         int eva = 0;
         eva += StateEffectAll(StateType.EvaUp);
+        eva -= StateEffectAll(StateType.EvaDown);
         return eva;
     }
 
@@ -685,6 +688,11 @@ public class BattlerInfo
     public void GainDodgeCount(int value)
     {
         _dodgeCount += value;
+    }
+
+    public void GainHealCount(int value)
+    {
+        _healCount += value;
     }
 
     public void TurnEnd()

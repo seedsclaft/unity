@@ -974,6 +974,10 @@ public class BattleModel : BaseModel
             // Mpの支払い
             _currentBattler.GainMp(actionInfo.MpCost * -1);
             _currentBattler.GainPayBattleMp(actionInfo.MpCost);
+            if (actionInfo.Master.IsHpHealFeature())
+            {
+                _currentBattler.GainHealCount(1);
+            }
             var actionResultInfos = CalcDeathIndexList(actionInfo.ActionResults);
             foreach (var actionResultInfo in actionResultInfos)
             {
@@ -1812,6 +1816,13 @@ public class BattleModel : BaseModel
                 if (triggerDates[j].TriggerType == TriggerType.DodgeCountOver)
                 {
                     if (battlerInfo.IsAlive() && battlerInfo.DodgeCount >= triggerDates[j].Param1)
+                    {
+                        IsTriggered = true;
+                    }
+                }
+                if (triggerDates[j].TriggerType == TriggerType.HpHealCountOver)
+                {
+                    if (battlerInfo.IsAlive() && battlerInfo.HealCount >= triggerDates[j].Param1)
                     {
                         IsTriggered = true;
                     }

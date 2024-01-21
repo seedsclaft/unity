@@ -47,6 +47,7 @@ public enum StateType
     CriticalRateUp = 1070,
     HitUp = 1080,
     EvaUp = 1090,
+    EvaDown = 1090,
     BurnDamage = 2010, // 火傷
     Chain = 2020, // 拘束
     ChainDamageUp = 2021, // 拘束ダメージアップ
