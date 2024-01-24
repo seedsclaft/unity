@@ -39,8 +39,6 @@ public class ActorInfoComponent : MonoBehaviour
 
     [SerializeField] private TextMeshProUGUI recoveryCost;
     [SerializeField] private TextMeshProUGUI resourceGain;
-    private bool _isMainFaceInit = false;
-    private bool _isAwakeFaceInit = false;
 
     public void UpdateInfo(ActorInfo actorInfo,List<ActorInfo> actorInfos)
     {
@@ -194,6 +192,7 @@ public class ActorInfoComponent : MonoBehaviour
             rect.localPosition = new Vector3(x, y, 0);
             rect.localScale = new Vector3(scale, scale, 1);
             mainThumb.sprite = handle;
+            rect.sizeDelta = new Vector3(mainThumb.mainTexture.width, mainThumb.mainTexture.height, 1);
         }
     }
 
@@ -206,6 +205,7 @@ public class ActorInfoComponent : MonoBehaviour
             rect.localPosition = new Vector3(x, y, 0);
             rect.localScale = new Vector3(scale, scale, 1);
             awakenThumb.sprite = handle;
+            rect.sizeDelta = new Vector3(mainThumb.mainTexture.width, mainThumb.mainTexture.height, 1);
         }
     }
 
@@ -217,25 +217,21 @@ public class ActorInfoComponent : MonoBehaviour
 
     private void UpdateMainFaceThumb(string imagePath)
     {   
-        if (_isMainFaceInit == true) return;
         var handle = ResourceSystem.LoadActorMainFaceSprite(imagePath);
         if (faceThumb != null) 
         {
             faceThumb.sprite = handle;
             faceThumb.gameObject.SetActive(true);
         }
-        _isMainFaceInit = true;
     }
 
     private void UpdateAwakenFaceThumb(string imagePath)
     {
-        if (_isAwakeFaceInit == true) return;
         if (awakenFaceThumb != null)
         {
             awakenFaceThumb.sprite = ResourceSystem.LoadActorAwakenFaceSprite(imagePath);
             awakenFaceThumb.gameObject.SetActive(true);
         }
-        _isAwakeFaceInit = true;
     }
 
     private void UpdateAttributeParam(TextMeshProUGUI textMeshProUGUI,AttributeRank param){
@@ -282,7 +278,5 @@ public class ActorInfoComponent : MonoBehaviour
             awakenFaceThumb.sprite = null;
             awakenFaceThumb.gameObject.SetActive(false);
         }
-        _isAwakeFaceInit = false;
-        _isMainFaceInit = false;
     }
 }

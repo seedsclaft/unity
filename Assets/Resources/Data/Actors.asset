@@ -14,18 +14,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Data:
   - Id: 1
-    Name: "\u30D8\u30AB\u30C6\u30FC"
-    SubName: "\u3010\u8C4A\u7A63\u306E\u6708\u5973\u795E\u3011"
+    Name: "\u30DF\u30AB"
+    SubName: "\u3010\u7149\u7344\u68D8\u59EB\u3011"
     ClassId: 1
     ImagePath: 0001
     InitLv: 1
     MaxLv: 99
     InitStatus:
-      _hp: 27
+      _hp: 35
       _mp: 15
       _atk: 27
-      _def: 5
-      _spd: 19
+      _def: 14
+      _spd: 12
     PlusStatus:
       _hp: 0
       _mp: 0
@@ -40,11 +40,11 @@ MonoBehaviour:
       _spd: 26
     Attribute: 0100000004000000050000000500000002000000
     X: 0
-    Y: -16
-    Scale: 0.78
-    AwakenX: -32
-    AwakenY: 224
-    AwakenScale: 0.75
+    Y: -40
+    Scale: 0.95
+    AwakenX: 0
+    AwakenY: -40
+    AwakenScale: 0.95
     Kinds: 
     LearningSkills:
     - SkillId: 11
@@ -80,18 +80,18 @@ MonoBehaviour:
       Weight: 0
       TriggerDates: []
   - Id: 2
-    Name: "\u30AD\u30E3\u30ED\u30E9\u30A4\u30F3"
-    SubName: "\u3010\u30EF\u30A4\u30E4\u30FC\u30D7\u30EA\u30F3\u30BB\u30B9\u3011"
+    Name: "\u30A8\u30EA\u30B6\u30D9\u30FC\u30C8"
+    SubName: "\u3010Electric-Force\u3011"
     ClassId: 2
     ImagePath: 0002
     InitLv: 1
     MaxLv: 99
     InitStatus:
-      _hp: 35
+      _hp: 27
       _mp: 15
       _atk: 12
-      _def: 14
-      _spd: 12
+      _def: 5
+      _spd: 19
     PlusStatus:
       _hp: 0
       _mp: 0
@@ -105,12 +105,12 @@ MonoBehaviour:
       _def: 20
       _spd: 90
     Attribute: 0300000001000000050000000700000004000000
-    X: 22
-    Y: 28
+    X: -8
+    Y: -36
     Scale: 1
-    AwakenX: 0
-    AwakenY: 40
-    AwakenScale: 0.8
+    AwakenX: -8
+    AwakenY: -36
+    AwakenScale: 1
     Kinds: 
     LearningSkills:
     - SkillId: 11
@@ -150,8 +150,8 @@ MonoBehaviour:
       Weight: 0
       TriggerDates: []
   - Id: 3
-    Name: "\u30A2\u30EA\u30B9"
-    SubName: "\u3010\u4E0D\u601D\u8B70\u306E\u56FD\u306E\u5B88\u8B77\u795E\u3011"
+    Name: "\u30A2\u30EA\u30A8\u30B9"
+    SubName: "\u3010\u6020\u60F0\u306A\u5B88\u8B77\u5C11\u5973\u3011"
     ClassId: 3
     ImagePath: 0003
     InitLv: 1
@@ -175,12 +175,12 @@ MonoBehaviour:
       _def: 90
       _spd: 40
     Attribute: 0400000007000000010000000200000007000000
-    X: 16
-    Y: -8
-    Scale: 0.9
-    AwakenX: 80
-    AwakenY: 120
-    AwakenScale: 0.7
+    X: 10
+    Y: -64
+    Scale: 1
+    AwakenX: 10
+    AwakenY: -64
+    AwakenScale: 1
     Kinds: 
     LearningSkills:
     - SkillId: 11

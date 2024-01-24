@@ -59,7 +59,11 @@ public class IntroLoopAudio : MonoBehaviour
 
   public float TimeStampPer(float per)
   {
+    if (_introAudioSource != null)
+    {
       return _introAudioSource.Clip.length * per;
+    }
+    return 0;
   }
 
   void Awake()

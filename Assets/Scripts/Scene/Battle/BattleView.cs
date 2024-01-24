@@ -51,6 +51,7 @@ public class BattleView : BaseView ,IInputHandlerEvent
         SetInputHandler(selectCharacter.GetComponent<IInputHandlerEvent>());
 
         InitializeSelectCharacter();
+        battleGridLayer.Initialize();
         new BattlePresenter(this);
     }
 
@@ -548,6 +549,10 @@ public class BattleView : BaseView ,IInputHandlerEvent
     }
 
     public void UpdateAp() 
+    {
+    }
+
+    public void UpdateGridLayer()
     {
         battleGridLayer.UpdatePosition();
     }

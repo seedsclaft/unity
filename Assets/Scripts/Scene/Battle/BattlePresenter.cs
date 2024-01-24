@@ -343,6 +343,7 @@ public class BattlePresenter : BasePresenter
         // Ap更新で行動するキャラがいる
         if (_model.CurrentBattler != null)
         {
+            _view.UpdateGridLayer();
             _view.SetBattleBusy(true);
             _model.SetCurrentTurnBattler(_model.CurrentBattler);
             var removed =_model.UpdateNextSelfTurn();

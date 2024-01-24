@@ -13,7 +13,6 @@ public class EnemyInfoComponent : MonoBehaviour
     [SerializeField] private StatusInfoComponent statusInfoComponent;
     [SerializeField] private TextMeshProUGUI gridKey;
     
-    private bool _isMainThumbInit = false;
 
     public void UpdateInfo(BattlerInfo battlerInfo)
     {
@@ -38,14 +37,13 @@ public class EnemyInfoComponent : MonoBehaviour
     {
         //var handle = await ResourceSystem.LoadAsset<Sprite>("Enemies/" + imagePath);
         var handle = ResourceSystem.LoadEnemySprite(imagePath);
-        if (mainThumb != null && _isMainThumbInit == false)
+        if (mainThumb != null)
         {
             mainThumb.gameObject.SetActive(true);
             var rect = mainThumb.GetComponent<RectTransform>();
             rect.localPosition = new Vector3(x, y, 0);
             rect.localScale = new Vector3(scale, scale, 1);
             mainThumb.sprite = handle;
-            _isMainThumbInit = true;
         }
     }
     
@@ -78,6 +76,5 @@ public class EnemyInfoComponent : MonoBehaviour
         if (nameText != null){
             nameText.text = "";
         }
-        _isMainThumbInit = false;
     }
 }

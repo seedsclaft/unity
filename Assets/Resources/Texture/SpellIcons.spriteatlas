@@ -20,7 +20,19 @@ SpriteAtlas:
       readable: 0
       crunchedCompression: 0
       sRGB: 1
-    platformSettings: []
+    platformSettings:
+    - serializedVersion: 3
+      m_BuildTarget: DefaultTexturePlatform
+      m_MaxTextureSize: 1024
+      m_ResizeAlgorithm: 0
+      m_TextureFormat: -1
+      m_TextureCompression: 1
+      m_CompressionQuality: 50
+      m_CrunchedCompression: 0
+      m_AllowsAlphaSplitting: 0
+      m_Overridden: 0
+      m_AndroidETC2FallbackOverride: 0
+      m_ForceMaximumCompressionQuality_BC6H_BC7: 0
     packingSettings:
       serializedVersion: 2
       padding: 4
@@ -52,6 +64,7 @@ SpriteAtlas:
   - {fileID: 21300000, guid: fa40516b27a4c984e87feb93394d7be6, type: 3}
   - {fileID: 21300000, guid: ebd884ab9b9688d459429f20ba50d29d, type: 3}
   - {fileID: 21300000, guid: 228a3b4d84703c6418295a1eada06108, type: 3}
+  - {fileID: 21300000, guid: d50f320f41ebfa44f9b176fe0c8d02dd, type: 3}
   - {fileID: 21300000, guid: 55e86f2f94021b64181b59bc7d590f76, type: 3}
   m_PackedSpriteNamesToIndex:
   - Shine
@@ -68,6 +81,7 @@ SpriteAtlas:
   - Awaken
   - Demigod
   - Mentalism
+  - Other
   - Elementarism
   m_RenderDataMap: {}
   m_Tag: SpellIcons

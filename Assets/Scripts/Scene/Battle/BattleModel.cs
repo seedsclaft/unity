@@ -229,7 +229,7 @@ public class BattleModel : BaseModel
 
     public void MakeActionBattler()
     {
-        _battlers.Sort((a,b) => a.Ap - b.Ap);
+        _battlers.Sort((a,b) => (int)a.Ap - (int)b.Ap);
         _currentBattler = _battlers.Find(a => a.Ap <= 0);
     }
 
@@ -315,7 +315,7 @@ public class BattleModel : BaseModel
             {
                 sortList1.Add(skillInfo);
             } else
-            if (skillInfo.Master.IconIndex >= MagicIconType.Demigod)
+            if (skillInfo.Master.IconIndex >= MagicIconType.Demigod && skillInfo.Master.IconIndex < MagicIconType.Other)
             {
                 sortList2.Add(skillInfo);
             } else

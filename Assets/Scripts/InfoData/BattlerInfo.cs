@@ -26,8 +26,8 @@ public class BattlerInfo
     public int Hp => _hp;
     private int _mp;
     public int Mp => _mp;
-    private int _ap;
-    public int Ap => _ap;
+    private float _ap;
+    public float Ap => _ap;
     
     private List<SkillInfo> _skills;
     public List<SkillInfo> Skills => _skills;
@@ -235,47 +235,132 @@ public class BattlerInfo
         _ap = Math.Max(_ap,200);
     }
 
+    public int ResetApFrame()
+    {
+        var speed = CurrentSpd(false);
+        var baseSpeed = new List<int>{50,75,100,150};
+        var ap = 1000;
+        var speedCount = -1;
+        for (var i = 0;i < baseSpeed.Count;i++)
+        {
+            if (speed > baseSpeed[i])
+            {
+                speedCount = i;
+            }
+        }
+        if (speedCount > -1)
+        {
+            for (var i = 0;i <= speedCount;i++)
+            {
+                if (i == 0)
+                {
+                    ap -= baseSpeed[i] * (8/(i+1));
+                } else
+                {
+                    ap -= (baseSpeed[i] - baseSpeed[i-1]) * (8/(i+1));
+                }
+            }
+            var over = speed - baseSpeed[speedCount];
+            if (over > 0)
+            {
+                ap -= over * (8/(speedCount+2));
+            }
+        } else
+        {
+            ap -= speed * 8;
+        }
+        return Math.Max(ap,200);
+    }
+
     public void UpdateAp()
     {
+        _ap += UpdateApValue();
+    }
+
+    public int UpdateApValue()
+    {
+        var apValue = 0;
         if (IsState(StateType.Death))
         {
-            return;
+            return apValue;
         }
         if (IsState(StateType.Stun))
         {
-            return;
+            return apValue;
         }
         if (IsState(StateType.Chain))
         {
-            _ap += 6;
-            return;
+            apValue += 6;
+            return apValue;
         }
         if (IsState(StateType.CounterAura) || IsState(StateType.Benediction))
         {
-            _ap = 1;
-            return;
+            apValue = 1;
+            return apValue;
         }
         if (IsState(StateType.RevengeAct))
         {
-            _ap += 2;
-            return;
+            apValue += 2;
+            return apValue;
         }
         if (IsState(StateType.Heist) && IsState(StateType.Slow))
         {
-            _ap -= 8;
-            return;
+            apValue -= 8;
+            return apValue;
         }
         if (IsState(StateType.Heist))
         {
-            _ap -= 12;
-            return;
+            apValue -= 12;
+            return apValue;
         }
         if (IsState(StateType.Slow))
         {
-            _ap -= 4;
-            return;
+            apValue -= 4;
+            return apValue;
         }
-        _ap -= 8;
+        apValue -= 8;
+        return apValue;
+    }
+
+    public float WaitFrame(int turn)
+    {
+        var wait = _ap;
+        if (turn > 0)
+        {
+            wait += ResetApFrame() * turn;
+        }
+        if (IsState(StateType.Stun))
+        {
+            wait += StateTurn(StateType.Stun);
+        } else
+        if (IsState(StateType.Chain))
+        {
+            wait += StateTurn(StateType.Chain) * 6;
+        } else
+        if (IsState(StateType.CounterAura))
+        {
+            wait += StateTurn(StateType.CounterAura);
+        } else
+        if (IsState(StateType.Benediction))
+        {
+            wait += StateTurn(StateType.Benediction);
+        } else
+        if (IsState(StateType.RevengeAct))
+        {
+            wait += StateTurn(StateType.RevengeAct) * 2;
+        } else
+        if (IsState(StateType.Heist) && IsState(StateType.Slow))
+        {
+        } else
+        if (IsState(StateType.Heist))
+        {
+            wait -= StateTurn(StateType.Heist) * 1.5f;
+        } else
+        if (IsState(StateType.Slow))
+        {
+            wait += StateTurn(StateType.Slow) * 2;
+        }
+        return wait;
     }
 
     public void ChangeAp(int value)

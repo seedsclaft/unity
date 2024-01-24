@@ -59,11 +59,11 @@ public class StatusModel : BaseModel
         skillInfos.Sort((a,b) => {return a.Master.Id > b.Master.Id ? 1 : -1;});
         foreach (var skillInfo in skillInfos)
         {
-            if (skillInfo.Master.IconIndex <= MagicIconType.Psionics)
+            if (skillInfo.Master.IconIndex >= MagicIconType.Elementarism && skillInfo.Master.IconIndex <= MagicIconType.Psionics)
             {
                 sortList1.Add(skillInfo);
             } else
-            if (skillInfo.Master.IconIndex >= MagicIconType.Demigod)
+            if (skillInfo.Master.IconIndex >= MagicIconType.Demigod && skillInfo.Master.IconIndex < MagicIconType.Other)
             {
                 sortList2.Add(skillInfo);
             } else

@@ -5,26 +5,50 @@ using UnityEngine;
 public class BattleGridLayer : MonoBehaviour
 {
     [SerializeField] private GameObject battleGridPrefab;
+    [SerializeField] private GameObject battleGridEnemyPrefab;
     [SerializeField] private GameObject actorRoot;
     [SerializeField] private GameObject enemyRoot;
-    private Dictionary<BattlerInfo,BattlerInfoComponent> _data = new Dictionary<BattlerInfo,BattlerInfoComponent>();
+    private Dictionary<BattlerInfo,BattlerInfoComponent> _battlers = new ();
+    private List<BattlerGrid> _actorBattlers = new ();
+    private List<BattlerGrid> _enemyBattlers = new ();
+
+    private List<BattlerInfo> _battlerLists = new ();
+
+    public void Initialize()
+    {
+        for (int i = 0; i < 10;i++)
+        {
+            var prefab = Instantiate(battleGridPrefab);
+            prefab.transform.SetParent(actorRoot.transform, false);
+            var comp = prefab.GetComponent<BattlerGrid>();
+            comp.UpdateAlpha(false);
+            _actorBattlers.Add(comp);
+        }
+        for (int i = 0; i < 10;i++)
+        {
+            var prefab = Instantiate(battleGridEnemyPrefab);
+            prefab.transform.SetParent(enemyRoot.transform, false);
+            var comp = prefab.GetComponent<BattlerGrid>();
+            comp.UpdateAlpha(false);
+            _enemyBattlers.Add(comp);
+        }
+    }
+
     public void SetActorInfo(List<BattlerInfo> battlerInfos)
     {
         for (int i = 0; i < battlerInfos.Count;i++)
         {
-            var prefab = Instantiate(battleGridPrefab);
-            prefab.transform.SetParent(actorRoot.transform, false);
-            var comp = prefab.GetComponent<BattlerInfoComponent>();
-            comp.UpdateInfo(battlerInfos[i]);
-            _data[battlerInfos[i]] = comp;
-            prefab.GetComponentInChildren<EnemyInfoComponent>().Clear();
+            _battlerLists.Add(battlerInfos[i]);
         }
-        UpdatePosition();
-        RefreshStatus();
     }
     
     public void SetEnemyInfo(List<BattlerInfo> battlerInfos)
     {
+        for (int i = 0; i < battlerInfos.Count;i++)
+        {
+            _battlerLists.Add(battlerInfos[i]);
+        }
+        /*
         for (int i = 0; i < battlerInfos.Count;i++)
         {
             var prefab = Instantiate(battleGridPrefab);
@@ -32,7 +56,7 @@ public class BattleGridLayer : MonoBehaviour
             var comp = prefab.GetComponent<BattlerInfoComponent>();
             comp.UpdateInfo(battlerInfos[i]);
             int gridKey = 0;
-            foreach (var item in _data)
+            foreach (var item in _battlers)
             {
                 if (item.Key.EnemyData != null)
                 {
@@ -43,39 +67,88 @@ public class BattleGridLayer : MonoBehaviour
                 }
             }
             comp.SetEnemyGridKey(gridKey);
-            _data[battlerInfos[i]] = comp;
+            _battlers[battlerInfos[i]] = comp;
             prefab.GetComponentInChildren<ActorInfoComponent>().Clear();
         }
-        UpdatePosition();
-        RefreshStatus();
+        */
+        //UpdatePosition();
+        //RefreshStatus();
     }
 
     public void UpdatePosition()
     {
+        UpdateWaitPosition();
+        /*
         var battlerInfos = new List<BattlerInfo>();
-        foreach (var data in _data)
+        foreach (var data in _battlers)
         {
             var rect = data.Value.gameObject.GetComponent<RectTransform>();
             rect.localPosition = new Vector3(rect.localPosition.x, (float)data.Key.Ap / 3f, 0);
             battlerInfos.Add(data.Key);
         }
-        battlerInfos.Sort((a,b)=> a.Ap - b.Ap);
+        battlerInfos.Sort((a,b)=> (int)a.Ap - (int)b.Ap);
         foreach (var info in battlerInfos)
         {
-            _data[info].gameObject.transform.SetAsFirstSibling();
-        }
-        /*
-        foreach (var data in _data)
-        {
-            int index = battlerInfos.FindIndex(a => a.Index == data.Key.Index);
-            data.Value.gameObject.transform.SetSiblingIndex(index * 10);
+            _battlers[info].gameObject.transform.SetAsFirstSibling();
         }
         */
     }
 
+    
+    public void UpdateWaitPosition()
+    {
+        var waitFrameList = new List<float>();
+        var turnWait = new Dictionary<BattlerInfo,List<float>>();
+        foreach (var battler in _battlerLists)
+        {
+            if (battler.IsAlive())
+            {
+                turnWait[battler] = new List<float>();
+                for (int i = 0;i < 10;i++)
+                {
+                    waitFrameList.Add(battler.WaitFrame(i));
+                    turnWait[battler].Add(battler.WaitFrame(i));
+                }
+            }
+        }
+        waitFrameList.Sort((a,b) => a < b ? -1 : 1);
+        var sortedBattlerList = new List<BattlerInfo>();
+        var sortedBattlerApList = new List<float>();
+        var targetIndex = 0;
+        while (sortedBattlerList.Count < 10)
+        {
+            var ap = waitFrameList[targetIndex];
+            targetIndex++;
+            foreach (var turnW in turnWait)
+            {
+                var findIndex = turnWait[turnW.Key].FindIndex(a => a == ap);
+                if (findIndex > -1)
+                {
+                    sortedBattlerList.Add(turnW.Key);
+                    sortedBattlerApList.Add(ap);
+                }
+            }
+        }
+
+        for (int i = 0;i < sortedBattlerList.Count;i++)
+        {
+            if (i > 9) continue;
+            var battler = sortedBattlerList[i];
+            _actorBattlers[i].UpdateAlpha(battler.isActor);
+            _enemyBattlers[i].UpdateAlpha(!battler.isActor);
+            if (battler.isActor)
+            {
+                _actorBattlers[i].UpdateInfo(battler,(int)sortedBattlerApList[i],i);
+            } else
+            {
+                _enemyBattlers[i].UpdateInfo(battler,(int)sortedBattlerApList[i],i);
+            }
+        }
+    }
+
     public void RefreshStatus()
     {
-        foreach (var data in _data)
+        foreach (var data in _battlers)
         {
             data.Value.RefreshStatus();
             data.Value.gameObject.SetActive(data.Key.IsAlive());

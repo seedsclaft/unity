@@ -443,6 +443,7 @@ public enum MagicIconType
     Craft = 7, // 工作
     Demigod = 10, //半神
     Awaken = 11, // 覚醒
+    Other = 99, // その他
     
 }
 
