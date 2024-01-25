@@ -2743,11 +2743,10 @@ MonoBehaviour:
     MpCost: 0
     Rank: 2
     Attribute: 3
-    Scope: 4
+    Scope: 3
     SkillType: 3
-    TargetType: 4
-    Help: "(\u6761\u4EF6)\u30D0\u30C8\u30EB\u4E2D\u653B\u6483\u30925\u56DE\u53D7\u3051\u308B\n\\s\u306EATK\u3068SPD\u309215\u30A2\u30C3\u30D7(\u6C38\u7D9A)
-      \u795E\u5316\u72B6\u614B\u306B\u79FB\u884C"
+    TargetType: 2
+    Help: "(\u6761\u4EF6)\u30D0\u30C8\u30EB\u4E2D\u653B\u6483\u30925\u56DE\u53D7\u3051\u308B\n\\s\u306EATK\u3068SPD\u309215\u30A2\u30C3\u30D7(\u6C38\u7D9A)\n\u795E\u5316\u72B6\u614B\u306B\u79FB\u884C"
     Range: 1
     RepeatTime: 1
     AliveOnly: 1
@@ -2795,7 +2794,7 @@ MonoBehaviour:
     Scope: 1
     SkillType: 4
     TargetType: 1
-    Help: "(\u6761\u4EF6)\u795E\u5316\u72B6\u614B\n\\s\u306B\u30C0\u30E1\u30FC\u30B8
+    Help: "(\u6761\u4EF6)\u795E\u5316\u72B6\u614B\n\\s\u306B\u4E2D\u5A01\u529B\u30C0\u30E1\u30FC\u30B8
       \u795E\u5316\u89E3\u9664"
     Range: 1
     RepeatTime: 1
@@ -2953,7 +2952,7 @@ MonoBehaviour:
     Scope: 3
     SkillType: 4
     TargetType: 1
-    Help: "(\u6761\u4EF6)\u795E\u5316\u72B6\u614B\n\\s\u306EHp\u3092100\u56DE\u5FA9
+    Help: "(\u6761\u4EF6)\u795E\u5316\u72B6\u614B\n\\s\u306EHp\u309250\u56DE\u5FA9
       \u795E\u5316\u89E3\u9664"
     Range: 2
     RepeatTime: 1
@@ -2961,7 +2960,7 @@ MonoBehaviour:
     FeatureDates:
     - SkillId: 100411
       FeatureType: 2
-      Param1: 100
+      Param1: 50
       Param2: 0
       Param3: 0
     - SkillId: 100411

@@ -87,6 +87,8 @@ public class SkillData
             return DataSystem.GetTextData(624).Text;
             case ScopeType.Self:
             return "";
+            case ScopeType.FrontLine:
+            return DataSystem.GetTextData(625).Text;
         }
         return "";
     }
