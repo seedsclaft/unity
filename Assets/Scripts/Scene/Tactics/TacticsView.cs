@@ -42,6 +42,7 @@ public class TacticsView : BaseView
         tacticsAlcana.gameObject.SetActive(false);
         alcanaButton.onClick.AddListener(() => CallAlcanaCheck());
         
+        tacticsCommandList.Initialize();
         new TacticsPresenter(this);
     }
     
@@ -438,7 +439,7 @@ public class TacticsView : BaseView
         if (selectCharacter.CharacterList.gameObject.activeSelf) selectCharacter.CharacterList.Deactivate();
     }
 
-    public void SetSideMenu(List<SystemData.CommandData> menuCommands){
+    public void SetSideMenu(List<ListData> menuCommands){
         sideMenuList.Initialize(menuCommands,(a) => CallSideMenu(a),() => OnClickOption(),() => CommandCloseSideMenu());
         SetInputHandler(sideMenuList.GetComponent<IInputHandlerEvent>());
         sideMenuList.Deactivate();

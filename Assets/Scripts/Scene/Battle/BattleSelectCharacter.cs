@@ -148,7 +148,7 @@ public class BattleSelectCharacter : MonoBehaviour
     {
         if (magicList.IsInit == false)
         {
-            magicList.Initialize(skillInfoData.Count);
+            magicList.Initialize();
             magicList.SetSelectedHandler(() => {
                 DisplaySelectCard();
                 RefreshCardWidth();

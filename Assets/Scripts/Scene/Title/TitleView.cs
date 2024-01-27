@@ -14,6 +14,7 @@ public class TitleView : BaseView
     public override void Initialize() 
     {
         base.Initialize();
+        titleCommandList.Initialize();
         new TitlePresenter(this);
     }
 
@@ -56,7 +57,7 @@ public class TitleView : BaseView
         titleCommandList.SetHelpWindow(HelpWindow);
     }
 
-    public void SetSideMenu(List<SystemData.CommandData> menuCommands){
+    public void SetSideMenu(List<ListData> menuCommands){
         sideMenuList.Initialize(menuCommands,(a) => CallSideMenu(a),() => OnClickOption(),() => CommandCloseSideMenu());
         SetInputHandler(sideMenuList.GetComponent<IInputHandlerEvent>());
         sideMenuList.Deactivate();

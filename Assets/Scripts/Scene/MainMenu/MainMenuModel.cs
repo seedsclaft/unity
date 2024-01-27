@@ -25,7 +25,7 @@ public class MainMenuModel : BaseModel
         return DataSystem.FindStage(stageId).UseSlot;
     }
 
-    public List<SystemData.CommandData> SideMenu()
+    public List<ListData> SideMenu()
     {
         var list = new List<SystemData.CommandData>();
         var menuCommand = new SystemData.CommandData();
@@ -40,6 +40,6 @@ public class MainMenuModel : BaseModel
         slot.Key = "Slot";
         list.Add(slot);
         */
-        return list;
+        return MakeListData(list);
     }
 }

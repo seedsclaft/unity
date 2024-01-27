@@ -36,9 +36,9 @@ public class TacticsSelectCharacter : MonoBehaviour
     }    
 
     public void Initialize(int createCount) {
-        characterList.Initialize(createCount);
+        characterList.Initialize();
         characterList.Activate();
-        commandList.Initialize(0);
+        commandList.Initialize();
         commandList.Activate();
         characterList.SetInputCallHandler((a) => CallCharacterInputHandler(a));
         commandList.SetInputCallHandler((a) => CallCommandInputHandler(a));
@@ -144,9 +144,9 @@ public class TacticsSelectCharacter : MonoBehaviour
         // Androidはトグルで決定、リストで選択にする
         if (keyType == InputKeyType.Decide)
         {
-            for (int i = 0; i < characterList.ObjectList.Count;i++)
+            for (int i = 0; i < characterList.ItemPrefabList.Count;i++)
             {
-                var tacticsTrain = characterList.ObjectList[i].GetComponent<TacticsTrain>();
+                var tacticsTrain = characterList.ItemPrefabList[i].GetComponent<TacticsTrain>();
                 tacticsTrain.SetToggleHandler(() => callEvent());
             }
         }
@@ -154,18 +154,18 @@ public class TacticsSelectCharacter : MonoBehaviour
 #endif
         if (keyType == InputKeyType.Right)
         {
-            for (int i = 0; i < characterList.ObjectList.Count;i++)
+            for (int i = 0; i < characterList.ItemPrefabList.Count;i++)
             {
-                var tacticsTrain = characterList.ObjectList[i].GetComponent<TacticsTrain>();
+                var tacticsTrain = characterList.ItemPrefabList[i].GetComponent<TacticsTrain>();
                 //tacticsTrain.SetPlusHandler(() => callEvent());
                 tacticsTrain.SetBattleFrontToggleHandler(() => callEvent());
             }
         }
         if (keyType == InputKeyType.Left)
         {
-            for (int i = 0; i < characterList.ObjectList.Count;i++)
+            for (int i = 0; i < characterList.ItemPrefabList.Count;i++)
             {
-                var tacticsTrain = characterList.ObjectList[i].GetComponent<TacticsTrain>();
+                var tacticsTrain = characterList.ItemPrefabList[i].GetComponent<TacticsTrain>();
                 //tacticsTrain.SetMinusHandler(() => callEvent());
                 tacticsTrain.SetBattleBackToggleHandler(() => callEvent());
             }

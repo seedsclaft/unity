@@ -52,6 +52,12 @@ abstract public class ListItem : MonoBehaviour
     public GameObject Cursor { get {return cursor;}}
     [SerializeField] private GameObject disable;
     public GameObject Disable{ get {return disable;}}
+
+    private bool _addListenHandler = false;
+    public void SetAddListenHandler()
+    {
+        _addListenHandler = true;
+    }
     public void Awake()
     {
         InitButtonColors();
@@ -89,6 +95,10 @@ abstract public class ListItem : MonoBehaviour
         {
             return;
         }
+        if (_addListenHandler)
+        {
+            return;
+        }
 		var enterListener = clickButton.gameObject.AddComponent<ContentEnterListener>();
         enterListener.SetEnterEvent(() => 
         {
@@ -102,6 +112,10 @@ abstract public class ListItem : MonoBehaviour
     public void SetCallHandler(System.Action handler)
     {        
         if (clickButton == null)
+        {
+            return;
+        }
+        if (_addListenHandler)
         {
             return;
         }

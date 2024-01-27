@@ -28,7 +28,7 @@ public class AlcanaResultView : BaseView
     
     public void SetActors(List<ActorInfo> actorInfos)
     {
-        strategyActorList.Initialize(actorInfos.Count);
+        strategyActorList.Initialize();
         strategyActorList.gameObject.SetActive(false);
     }
 

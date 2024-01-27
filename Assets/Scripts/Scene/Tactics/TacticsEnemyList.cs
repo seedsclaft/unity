@@ -110,7 +110,7 @@ public class TacticsEnemyList : BaseList
 
     public void InitializeConfirm(List<ListData> confirmCommands ,System.Action<ConfirmCommandType> callEvent)
     {
-        tacticsCommandList.Initialize(confirmCommands.Count);
+        tacticsCommandList.Initialize();
         tacticsCommandList.SetInputHandler(InputKeyType.Decide,() => 
         {
             var data = (SystemData.CommandData)tacticsCommandList.ListData.Data;

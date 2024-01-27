@@ -2223,7 +2223,7 @@ public class BattleModel : BaseModel
         SaveSystem.SaveConfigStart(GameSystem.ConfigData);
     }
 
-    public List<SystemData.CommandData> SideMenu()
+    public List<ListData> SideMenu()
     {
         var list = new List<SystemData.CommandData>();
         var escapeCommand = new SystemData.CommandData();
@@ -2236,7 +2236,7 @@ public class BattleModel : BaseModel
         menuCommand.Name = DataSystem.GetTextData(703).Text;
         menuCommand.Key = "Help";
         list.Add(menuCommand);
-        return list;
+        return MakeListData(list);
     }
 
     public SystemData.CommandData BattleAutoButton()

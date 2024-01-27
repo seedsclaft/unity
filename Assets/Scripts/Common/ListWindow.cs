@@ -31,13 +31,12 @@ abstract public class ListWindow : MonoBehaviour
     [SerializeField] private ScrollRect scrollRect = null; 
     public ScrollRect ScrollRect => scrollRect; 
     [SerializeField] private GameObject itemPrefab = null; 
-    private float _itemSize = 0.0f;
-    private int _itemCount = 0;
-    private int _dataCount = 0;
-    public int DataCount => _dataCount;
-    //private RectTransform _prevRect;
-    //private RectTransform _lastRect;
-    private int _lastStartIndex = 0;
+    private List<GameObject> _itemPrefabList = new ();
+    public List<GameObject> ItemPrefabList => _itemPrefabList;
+    private List<ListData> _listData = new ();
+    public int DataCount => _listData.Count;
+    private Vector2 _itemSize;
+    private int _lastStartIndex = -1;
     private LinkedList<IListViewItem> _itemList = new();
     private List<GameObject> _objectList = new ();
     public List<GameObject> ObjectList => _objectList;
@@ -50,6 +49,8 @@ abstract public class ListWindow : MonoBehaviour
     public HelpWindow _helpWindow = null;
 
     private System.Action _cancelEvent = null;
+
+    private GameObject _blankObject;
     public void SetCancelEvent(System.Action cancelEvent)
     {
         _cancelEvent = cancelEvent;
@@ -74,16 +75,22 @@ abstract public class ListWindow : MonoBehaviour
         _objectList = new List<GameObject>();
     }
 
-    public void InitializeListView(int count)
+    public void InitializeListView()
     {
         DestroyListChildren();
         SetValueChangedEvent();
-        SetDataCount(count);
-        SetItemCount(count);
-        //CreatePrevObject();
-        CreateList(count);
-        //CreateLastObject();
+        SetItemSize();
         _inputCallHandler = null;
+    }
+
+    public void CreateObjectList()
+    {
+        CreateList();
+    }
+
+    public void SetListData(List<ListData> listData)
+    {
+        _listData = listData;
     }
 
     private void SetValueChangedEvent()
@@ -95,9 +102,7 @@ abstract public class ListWindow : MonoBehaviour
     {
         if (EnableValueChanged())
         {
-            //UpdateListItem(false);
-            //UpdateSizeDelta();
-            _lastStartIndex = GetStartIndex();
+            UpdateListItem();
         }
     }
 
@@ -105,101 +110,93 @@ abstract public class ListWindow : MonoBehaviour
     {
         int startIndex = GetStartIndex();
         if (startIndex < 0) return false;    
-        if (startIndex > (_dataCount - _itemCount)) return false; 
         if (_lastStartIndex == startIndex) return false;
         return true;
     }
 
-    public void SetItemCount(int itemCount)
+    public void SetItemSize()
     {
-        float itemSize;
-        //float scrollSize;
-        if (horizontal == true)
-        {
-            itemSize = itemPrefab.GetComponent<RectTransform>().sizeDelta.x;
-            //scrollSize = scrollRect.GetComponent<RectTransform>().sizeDelta.x;
-        } else{
-            itemSize = itemPrefab.GetComponent<RectTransform>().sizeDelta.y;
-            //scrollSize = scrollRect.GetComponent<RectTransform>().sizeDelta.y;
-        }
-        _itemSize = itemSize;
-        _itemCount = itemCount;//(int)Math.Floor( scrollSize / _itemSize);
+        _itemSize = itemPrefab.GetComponent<RectTransform>().sizeDelta;
     }
 
-    public void SetDataCount(int count)
+    private void CreateList()
     {
-        _dataCount = count;
-    }
-
-    private void CreateList(int count)
-    {
-        int createCount = count;
+        _blankObject = new GameObject("blank");
+        _blankObject.AddComponent<RectTransform>();
+        var rect = _blankObject.GetComponent<RectTransform>();
+        rect.sizeDelta = new Vector3(_itemSize.x,_itemSize.y,0);
+        rect.pivot = new Vector3(0,1,0);
+        int createCount = _listData.Count;
         for (var i = 0; i < createCount;i++){
-            var prefab = Instantiate(itemPrefab);
+            var prefab = Instantiate(_blankObject);
             prefab.transform.SetParent(scrollRect.content, false);
             _objectList.Add(prefab);
-            var view = prefab.GetComponent<IListViewItem>();
-            _itemList.AddLast(view);
         }
         for (var i = 0; i < _objectList.Count;i++){
-            if (_dataCount <= i){
+            if (_listData.Count <= i){
                 _objectList[i].SetActive(false);
             }
         }
+        var listCount = ListItemCount();
+        for (var i = 0; i < (listCount+1);i++){
+            var prefab = Instantiate(itemPrefab);
+            _itemPrefabList.Add(prefab);
+            var view = prefab.GetComponent<IListViewItem>();
+            if (view != null)
+            {
+                _itemList.AddLast(view);
+            }
+        }
+        var startIndex = 0;
+        for (int i = startIndex;i < _itemPrefabList.Count;i++)
+        {
+            if (_listData.Count <= i){
+                continue;
+            }
+            _itemPrefabList[i].transform.SetParent(_objectList[i].transform,false);
+        }
+        Refresh();
+    }
+
+    public void UpdateItemPrefab()
+    {
+        var startIndex = GetStartIndex();
+        for (int i = 0;i < _itemPrefabList.Count;i++)
+        {
+            if (_listData.Count <= i+startIndex){
+                continue;
+            }
+            _itemPrefabList[i].transform.SetParent(_objectList[i+startIndex].transform,false);
+        }
+        Refresh();
+    }
+
+    public void Refresh(int selectIndex = 0)
+    {
+        var startIndex = Math.Max(0,GetStartIndex());
+        for (int i = 0; i < ItemPrefabList.Count;i++)
+        {
+            if (startIndex < 0) continue;
+            if (i + startIndex >= _listData.Count) continue;
+            if (i < _listData.Count) 
+            {
+                var listItem = ItemPrefabList[i].GetComponent<ListItem>();
+                listItem.SetListData(_listData[i + startIndex],i + startIndex);
+            }
+            ItemPrefabList[i].SetActive(i < _listData.Count);
+        }
+        UpdateAllItems();
+        UpdateSelectIndex(selectIndex);
     }
 
     public void AddCreateList(int count)
     {
         int createCount = count;
         for (var i = 0; i < createCount;i++){
-            var prefab = Instantiate(itemPrefab);
+            var prefab = Instantiate(_blankObject);
             prefab.transform.SetParent(scrollRect.content, false);
             _objectList.Add(prefab);
-            var view = prefab.GetComponent<IListViewItem>();
-            _itemList.AddLast(view);
         }
-    }
-
-    private void CreatePrevObject()
-    {
-        /*
-        if (isScrollList == false) return;
-        GameObject prevObject = new GameObject();
-        prevObject.AddComponent<RectTransform>();
-        prevObject.transform.SetParent(scrollRect.content, false);
-        prevObject.transform.SetSiblingIndex(-1);
-        _prevRect = prevObject.GetComponent<RectTransform>();
-        _prevRect.sizeDelta = new Vector2(0,0);
-        */
-    }
-
-    private void SetPrevRectSetSiblingIndex(int index)
-    {
-        /*
-        if (isScrollList == false) return;
-        _prevRect.gameObject.transform.SetSiblingIndex(index);
-        */
-    }
-
-    private void CreateLastObject()
-    {
-        /*
-        if (isScrollList == false) return;
-        GameObject lastObject = new GameObject();
-        lastObject.AddComponent<RectTransform>();
-        lastObject.transform.SetParent(scrollRect.content, false);
-        _lastRect = lastObject.GetComponent<RectTransform>();
-        _lastRect.sizeDelta = new Vector2(0, (_dataCount - _itemCount) * _itemSize );
-        lastObject.transform.SetSiblingIndex(9999);
-        */
-    }
-
-    private void SetLastRectSetSiblingIndex(int index)
-    {
-        /*
-        if (isScrollList == false) return;
-        _lastRect.gameObject.transform.SetSiblingIndex(index);
-        */
     }
 
     private float GetViewPortWidth()
@@ -248,79 +245,25 @@ abstract public class ListWindow : MonoBehaviour
     {
         if (horizontal)
         {   //Math.Truncate
-            return (int)Math.Round( (GetScrolledWidth() - ListMargin()) / (_itemSize + ItemSpace()) );
+            return (int)Math.Round( (GetScrolledWidth() - ListMargin()) / (_itemSize.x + ItemSpace()) );
         } else
         {
-            return (int)Math.Round( ((GetScrolledHeight()-ItemSpace()) - ListMargin()) / (_itemSize + ItemSpace()) );
+            var height = GetScrolledHeight();
+            var itemSpace = ItemSpace();
+            var listMargin = ListMargin();
+            var space = ItemSpace();
+            return (int)Math.Round( ((height - itemSpace) - listMargin) / (_itemSize.y + space) );
         }
     }
 
-    private void UpdateListItem(bool forceRepaint)
+    private void UpdateListItem()
     {
         int startIndex = GetStartIndex();
-
-        if (startIndex > _lastStartIndex)
+        if (startIndex != _lastStartIndex)
         {
-            //UpdateListDown();
+            UpdateItemPrefab();
+            _lastStartIndex = startIndex;
         }
-        else if (0 < _lastStartIndex)
-        {
-            //UpdateListUp();
-        }
-    }
-
-    private void UpdateItemViews(bool forceRepaint)
-    {
-        /*
-        int startIndex = GetStartIndex();
-        for (int i = 0;i < _itemCount;i++)
-        {
-            RefreshListItem(_objectList[i], startIndex + i);
-        }
-        */
-    }
-
-    private void UpdateSizeDelta()
-    {
-        /*
-        if (isScrollList == false) return;
-        int startIndex = GetStartIndex();
-        float scrolledSize;
-        if (horizontal == true)
-        {
-            scrolledSize = (GetScrolledWidth() - ListMargin());
-        } else
-        {
-            scrolledSize = (GetScrolledHeight() - ListMargin());
-        }
-
-        float prevSize;
-        float lastSize;
-        float rectHeight = (_itemSize+ItemSpace());
-        if (startIndex > _lastStartIndex)
-        {
-            prevSize = Math.Max(0, Math.Min(scrolledSize, (_dataCount - _itemCount) * rectHeight));
-            lastSize = Math.Max(0, (_dataCount - _itemCount - 1) * rectHeight  - scrolledSize);
-        } else
-        {
-            prevSize = Math.Min(scrolledSize - rectHeight, (_dataCount - _itemCount) * rectHeight);
-            prevSize = Math.Max(0,prevSize);
-            lastSize = Math.Max(0, (_dataCount - _itemCount) * rectHeight - scrolledSize);
-            //lastSize = Math.Max(0,lastSize);
-        }
-
-        if (horizontal == true)
-        {
-            _prevRect.sizeDelta = new Vector2( prevSize, 0 );
-            _lastRect.sizeDelta = new Vector2( lastSize, 0 );
-        } else
-        {
-            _prevRect.sizeDelta = new Vector2( 0, prevSize );
-            _lastRect.sizeDelta = new Vector2( 0, lastSize );
-        }
-        LayoutRebuilder.MarkLayoutForRebuild(_prevRect);
-        LayoutRebuilder.MarkLayoutForRebuild(_lastRect);
-        */
     }
 
     public void UpdateAllItems()
@@ -329,63 +272,6 @@ abstract public class ListWindow : MonoBehaviour
         {
             item.UpdateViewItem();
         }
-    }
-
-    private void UpdateItemView(GameObject gameObject, int itemIndex, LinkedListNode<IListViewItem> item)
-    {
-        /*
-        if (itemIndex < 0 || itemIndex > _dataCount-1){
-            return;
-        }
-        RefreshListItem(gameObject,itemIndex);
-        //item.Value.UpdateViewItem(itemIndex);
-        */
-    }
-
-    private void UpdateListDown()
-    {
-        /*
-        int startIndex = GetStartIndex();
-        var itemIndex = Math.Max(startIndex, _lastStartIndex + _itemCount);
-        while (itemIndex < startIndex + _itemCount)
-        {
-            var itemView = _itemList.First;
-            _itemList.RemoveFirst();
-            UpdateItemView(_objectList[0], itemIndex + 1, itemView);
-            _itemList.AddLast(itemView);
-            var targetObj = _objectList[0];
-            targetObj.transform.SetSiblingIndex(itemIndex + 1);
-            _objectList.Remove(targetObj);
-            _objectList.Add(targetObj);
-            //SetLastRectSetSiblingIndex(9999);
-            targetObj.gameObject.SetActive(itemIndex < (_dataCount - 1));
-            itemIndex++;
-        }
-        UpdateItemViews(false);
-        */
-    }
-
-    private void UpdateListUp()
-    {
-        /*
-        int startIndex = GetStartIndex();
-        var itemIndex =  Math.Min(_lastStartIndex + _itemCount - 1, _lastStartIndex - 1);
-        while (itemIndex >= startIndex)
-        {
-            var itemView = _itemList.Last;
-            _itemList.RemoveLast();
-            UpdateItemView(_objectList[ObjectList.Count-1], itemIndex, itemView);
-            _itemList.AddFirst(itemView);
-            var targetObj = _objectList[_objectList.Count - 1];
-            targetObj.transform.SetSiblingIndex(1);
-            _objectList.Remove(targetObj);
-            _objectList.Insert(0,targetObj);
-            //SetPrevRectSetSiblingIndex(0);
-            targetObj.gameObject.SetActive(true);
-            itemIndex--;
-        }
-        UpdateItemViews(false);
-        */
     }
 
     public void SelectIndex(int selectIndex)
@@ -479,11 +365,11 @@ abstract public class ListWindow : MonoBehaviour
         }
         var nextIndex = Index;
         if (keyType == plusKey){
-            for (int i = 0;i < _dataCount;i++)
+            for (int i = 0;i < _listData.Count;i++)
             {
                 nextIndex = Index + i + 1;
-                if (nextIndex >= _dataCount){
-                    nextIndex -= _dataCount;
+                if (nextIndex >= _listData.Count){
+                    nextIndex -= _listData.Count;
                 }
                 var listItem = ObjectList[nextIndex].GetComponent<ListItem>();
                 if (listItem.Disable == null)
@@ -496,7 +382,7 @@ abstract public class ListWindow : MonoBehaviour
                 }
             }
             selectIndex = nextIndex;
-            if (selectIndex >= _dataCount){
+            if (selectIndex >= _listData.Count){
                 if (warpMode)
                 {
                     selectIndex = 0;
@@ -504,11 +390,11 @@ abstract public class ListWindow : MonoBehaviour
             }
         } else
         if (keyType == minusKey){
-            for (int i = 0;i < _dataCount;i++)
+            for (int i = 0;i < _listData.Count;i++)
             {
                 nextIndex = Index - i - 1;
                 if (nextIndex < 0){
-                    nextIndex += _dataCount;
+                    nextIndex += _listData.Count;
                 }
                 if (nextIndex < 0)
                 {
@@ -528,7 +414,7 @@ abstract public class ListWindow : MonoBehaviour
             if (selectIndex < 0){
                 if (warpMode)
                 {
-                    selectIndex = _dataCount-1;
+                    selectIndex = _listData.Count-1;
                 }
             }
         }
@@ -544,7 +430,7 @@ abstract public class ListWindow : MonoBehaviour
         for (int i = 0; i < ObjectList.Count;i++)
         {
             if (ObjectList[i] == null) continue;
-            var listItem = ObjectList[i].GetComponent<ListItem>();
+            var listItem = ObjectList[i].GetComponentInChildren<ListItem>();
             if (listItem == null) continue;
             if (index == listItem.Index){
                 listItem.SetSelect();
@@ -610,32 +496,8 @@ abstract public class ListWindow : MonoBehaviour
 
     public virtual void RefreshListItem(GameObject gameObject,int itemIndex)
     {
-        /*
         ListItem listItem = gameObject.GetComponent<ListItem>();
         listItem.SetUnSelect();
-        */
-    }
-
-    public void ResetScrollPosition()
-    {
-        /*
-        if (isScrollList == false) return;
-        if (horizontal == true)
-        {
-            _prevRect.sizeDelta = new Vector2( 0, 0 );
-            _lastRect.sizeDelta = new Vector2( 0, 0 );
-        } else
-        {
-            _prevRect.sizeDelta = new Vector2( 0, 0 );
-            _lastRect.sizeDelta = new Vector2( 0, (_dataCount - _itemCount - 1) * _itemSize );
-        }
-        LayoutRebuilder.MarkLayoutForRebuild(_prevRect);
-        LayoutRebuilder.MarkLayoutForRebuild(_lastRect);
-        scrollRect.normalizedPosition = new Vector2(0,1);
-        ValueChanged(new Vector2(0,1));
-        _lastStartIndex = 0;
-        SelectIndex(0);
-        */
     }
     
     public void CallSelectHandler(InputKeyType keyType)
@@ -649,7 +511,7 @@ abstract public class ListWindow : MonoBehaviour
     public void UpdateScrollRect(InputKeyType keyType){
         if (_index < 0) return;
         var listCount = ListItemCount();
-        var dataCount = _dataCount;
+        var dataCount = _listData.Count;
         var _displayDownCount = Index - GetStartIndex();
         if (keyType == InputKeyType.Down){
             _displayDownCount--;
@@ -665,7 +527,7 @@ abstract public class ListWindow : MonoBehaviour
         } else
         if (keyType == InputKeyType.Up){
             _displayDownCount++;
-            if (Index == (_dataCount-1))
+            if (Index == (_listData.Count-1))
             {
                 ScrollRect.normalizedPosition = new Vector2(0,0);
             } else
@@ -680,7 +542,7 @@ abstract public class ListWindow : MonoBehaviour
     public void UpdateScrollRect(int selectIndex){
         if (_index < 0) return;
         var listCount = ListItemCount();
-        var dataCount = _dataCount;
+        var dataCount = _listData.Count;
         var listIndex = selectIndex - (listCount - 1);
         if (listIndex > 0)
         {
@@ -700,10 +562,13 @@ abstract public class ListWindow : MonoBehaviour
     {
         if (horizontal)
         {   //Math.Truncate
-            return (int)Math.Round( (GetViewPortWidth() - ListMargin()) / (_itemSize + ItemSpace()));
+            return (int)Math.Round( (GetViewPortWidth() - ListMargin()) / (_itemSize.x + ItemSpace()));
         } else
         {
-            return (int)Math.Round( (GetViewPortHeight() - ListMargin()) / (_itemSize + ItemSpace()));
+            var height = GetViewPortHeight();
+            var listMargin = ListMargin();
+            var space = ItemSpace();
+            return (int)Math.Round( (height - listMargin) / (_itemSize.y + space));
         }
     }
 

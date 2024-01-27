@@ -106,7 +106,7 @@ public class MainMenuView : BaseView
         _commandData(eventData);
     }
 
-    public void SetSideMenu(List<SystemData.CommandData> menuCommands){
+    public void SetSideMenu(List<ListData> menuCommands){
         sideMenuList.Initialize(menuCommands,(a) => CallSideMenu(a),() => OnClickOption(),() => CommandCloseSideMenu());
         SetInputHandler(sideMenuList.GetComponent<IInputHandlerEvent>());
         sideMenuList.Deactivate();

@@ -9,16 +9,16 @@ public class RuleList : ListWindow , IInputHandlerEvent
 
     public void Initialize()
     {
-        InitializeListView(cols);
+        InitializeListView();
         UpdateAllItems();
         UpdateSelectIndex(0);
     }
 
     public void Refresh(List<string> helpList)
     {
-        for (int i = 0; i < ObjectList.Count;i++)
+        for (int i = 0; i < ItemPrefabList.Count;i++)
         {
-            var ruleHelp = ObjectList[i].GetComponent<RuleHelp>();
+            var ruleHelp = ItemPrefabList[i].GetComponent<RuleHelp>();
             if (helpList.Count > i)
             {
                 ruleHelp.SetData(helpList[i],i);

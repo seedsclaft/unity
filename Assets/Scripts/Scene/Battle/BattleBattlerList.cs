@@ -19,7 +19,7 @@ public class BattleBattlerList : ListWindow , IInputHandlerEvent
     public void Initialize(List<BattlerInfo> battlerInfos ,System.Action<List<int>> callEvent)
     {
         _battleInfos = battlerInfos;
-        InitializeListView(battlerInfos.Count);
+        InitializeListView();
         damageRoots.ForEach(a => a.SetActive(false));
 
         for (int i = 0; i < ObjectList.Count;i++)

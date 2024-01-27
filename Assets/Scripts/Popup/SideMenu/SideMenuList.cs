@@ -12,11 +12,11 @@ public class SideMenuList : ListWindow , IInputHandlerEvent
     [SerializeField] private GameObject optionPrefab = null;
     [SerializeField] private GameObject optionRoot = null;
     [SerializeField] private GameObject optionCursor = null;
-    private List<SystemData.CommandData> _sideMenus;
+    private List<ListData> _sideMenus;
     private System.Action _openEvent = null;
     private System.Action _closeEvent = null;
     private int _lastSelectIndex = -1;
-    public void Initialize(List<SystemData.CommandData> sideMenus,Action<SystemData.CommandData> callEvent,Action optionEvent,Action cancelEvent)
+    public void Initialize(List<ListData> sideMenus,Action<SystemData.CommandData> callEvent,Action optionEvent,Action cancelEvent)
     {
         var prefab = Instantiate(optionPrefab);
         prefab.transform.SetParent(optionRoot.transform,false);
@@ -26,12 +26,14 @@ public class SideMenuList : ListWindow , IInputHandlerEvent
         closeButton.onClick.AddListener(() => CloseSideMenu());
         backButton.onClick.AddListener(() => CloseSideMenu());
 
-        InitializeListView(sideMenus.Count);
+        SetListData(sideMenus);
+        CreateObjectList();
+        InitializeListView();
         _sideMenus = sideMenus;
         for (int i = 0; i < sideMenus.Count;i++)
         {
-            var sideMenu = ObjectList[i].GetComponent<SideMenu>();
-            sideMenu.SetData(_sideMenus[i],i);
+            var sideMenu = ItemPrefabList[i].GetComponent<SideMenu>();
+            sideMenu.SetData((SystemData.CommandData)_sideMenus[i].Data,i);
             sideMenu.SetSelectHandler((data) => UpdateSelectIndex(data));
             sideMenu.SetCallHandler((a) => callEvent(a));
         }
@@ -149,7 +151,7 @@ public class SideMenuList : ListWindow , IInputHandlerEvent
                 optionEvent();
                 return;
             }
-            callEvent(_sideMenus[Index]);
+            callEvent((SystemData.CommandData)_sideMenus[Index].Data);
         }
         if (keyType == InputKeyType.Cancel)
         {

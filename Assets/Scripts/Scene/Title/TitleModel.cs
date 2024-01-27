@@ -21,7 +21,7 @@ public class TitleModel : BaseModel
         return GameSystem.Version;
     }
 
-    public List<SystemData.CommandData> SideMenu()
+    public List<ListData> SideMenu()
     {
         var list = new List<SystemData.CommandData>();
         var menuCommand = new SystemData.CommandData();
@@ -29,6 +29,6 @@ public class TitleModel : BaseModel
         menuCommand.Name = DataSystem.GetTextData(700).Text;
         menuCommand.Key = "License";
         list.Add(menuCommand);
-        return list;
+        return MakeListData(list);
     }
 }

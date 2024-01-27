@@ -10,32 +10,6 @@ public class BaseList : ListWindow , IInputHandlerEvent
     private bool _isInit = false;
     public bool IsInit => _isInit;
     private int _beforeSelectIndex = -1;
-    public void SetData(List<ListData> listData)
-    {
-        Initialize(listData.Count);
-        _listData = listData;
-        if (_listData.Count > ObjectList.Count)
-        {
-            var objectListCount = ObjectList.Count;
-            AddCreateList(_listData.Count-ObjectList.Count);
-            for (int i = 0; i < ObjectList.Count;i++)
-            {
-                if (i >= objectListCount)
-                {
-                    var listItem = ObjectList[i].GetComponent<ListItem>();
-                    listItem.SetCallHandler(() => CallListInputHandlerDecide());
-                    listItem.SetSelectHandler((index) => 
-                    {
-                        UpdateSelectIndex(index);
-                    });
-                }
-            }
-            SetDataCount(_listData.Count);
-            SetItemCount(_listData.Count);
-        }
-        Refresh(_listData.FindIndex(a => a.Selected || a.Enable));
-    }
-
     public ListData ListData 
     { 
         get {
@@ -46,51 +20,50 @@ public class BaseList : ListWindow , IInputHandlerEvent
             return null;
         }
     }
-    
-    public void Initialize(int listCount = 0)
+
+    public void Initialize()
     {
         if (_isInit)
         {
             return;
         }
-        InitializeListView(listCount);
-        InitializeList();
-        /*
-        UpdateAllItems();
-        */
-        UpdateSelectIndex(0);
+        InitializeListView();
         SetInputCallHandler((a) => CallSelectHandler(a));
         _beforeSelectIndex = -1;
         _isInit = true;
     }
-    
-    private void InitializeList()
+
+    public void SetData(List<ListData> listData)
     {
-        for (int i = 0; i < ObjectList.Count;i++)
+        _listData = listData;
+        SetListData(_listData);
+        CreateObjectList();
+        if (_listData.Count > ObjectList.Count)
         {
-            var listItem = ObjectList[i].GetComponent<ListItem>();
+            var objectListCount = ObjectList.Count;
+            AddCreateList(_listData.Count-ObjectList.Count);
+        }
+        SetListCallHandler();
+        Refresh(_listData.FindIndex(a => a.Selected || a.Enable));
+    }
+    
+    private void SetListCallHandler()
+    {
+        for (int i = 0; i < ItemPrefabList.Count;i++)
+        {
+            var listItem = ItemPrefabList[i].GetComponent<ListItem>();
             listItem.SetCallHandler(() => CallListInputHandlerDecide());
             listItem.SetSelectHandler((index) => 
             {
                 UpdateSelectIndex(index);
             });
+            listItem.SetAddListenHandler();
         }
     }    
     
-    public void Refresh(int selectIndex = 0)
+    public new void Refresh(int selectIndex = 0)
     {
-        for (int i = 0; i < ObjectList.Count;i++)
-        {
-            if (i < _listData.Count) 
-            {
-                var listItem = ObjectList[i].GetComponent<ListItem>();
-                listItem.SetListData(_listData[i],i);
-            }
-            ObjectList[i].SetActive(i < _listData.Count);
-        }
-        //ResetScrollPosition();
-        UpdateAllItems();
-        UpdateSelectIndex(selectIndex);
+        base.Refresh(selectIndex);
         _beforeSelectIndex = selectIndex;
     }
 

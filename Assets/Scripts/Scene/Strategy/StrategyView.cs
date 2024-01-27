@@ -26,7 +26,7 @@ public class StrategyView : BaseView
     public override void Initialize() 
     {
         base.Initialize();
-        statusList.Initialize(5);
+        statusList.Initialize();
         statusList.SetInputHandler(InputKeyType.Decide,() => CallLvUpNext());
         SetInputHandler(statusList.GetComponent<IInputHandlerEvent>());
         
@@ -92,7 +92,7 @@ public class StrategyView : BaseView
 
     public void SetActors(List<ActorInfo> actorInfos)
     {
-        strategyActorList.Initialize(actorInfos.Count);
+        strategyActorList.Initialize();
         strategyActorList.gameObject.SetActive(false);
     }
 

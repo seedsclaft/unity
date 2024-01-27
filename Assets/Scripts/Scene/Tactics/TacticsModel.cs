@@ -295,7 +295,7 @@ public class TacticsModel : BaseModel
         return null;
     }
 
-    public List<SystemData.CommandData> SideMenu()
+    public List<ListData> SideMenu()
     {
         var list = new List<SystemData.CommandData>();
         var retire = new SystemData.CommandData();
@@ -316,7 +316,7 @@ public class TacticsModel : BaseModel
             saveCommand.Key = "Save";
             list.Add(saveCommand);
         }
-        return list;
+        return MakeListData(list);
     }
 
     public List<ListData> TacticsCharacterData()
