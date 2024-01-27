@@ -15,6 +15,7 @@ public class MainMenuView : BaseView
     public override void Initialize() 
     {
         base.Initialize();
+        stageList.Initialize();
         new MainMenuPresenter(this);
     }
 
@@ -51,11 +52,11 @@ public class MainMenuView : BaseView
         stageList.SetInputHandler(InputKeyType.Option1,() => CommandOpenSideMenu());
         stageList.SetInputHandler(InputKeyType.Option2,() => CallStageRanking());
         stageList.SetSelectedHandler(() => UpdateMainMenuStage());
-        for (var i = 0;i < stageList.ObjectList.Count;i++)
+        for (var i = 0;i < stageList.ItemPrefabList.Count;i++)
         {
             if (i < stages.Count)
             {
-                var stageInfo = stageList.ObjectList[i].GetComponent<MainMenuStage>();
+                var stageInfo = stageList.ItemPrefabList[i].GetComponent<MainMenuStage>();
                 stageInfo.SetRankingDetailHandler((a) => CallStageRanking(a));
             }
         }

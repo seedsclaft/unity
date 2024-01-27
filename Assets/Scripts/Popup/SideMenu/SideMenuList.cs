@@ -26,9 +26,9 @@ public class SideMenuList : ListWindow , IInputHandlerEvent
         closeButton.onClick.AddListener(() => CloseSideMenu());
         backButton.onClick.AddListener(() => CloseSideMenu());
 
+        InitializeListView();
         SetListData(sideMenus);
         CreateObjectList();
-        InitializeListView();
         _sideMenus = sideMenus;
         for (int i = 0; i < sideMenus.Count;i++)
         {
@@ -96,11 +96,11 @@ public class SideMenuList : ListWindow , IInputHandlerEvent
         _lastSelectIndex = index;
         SelectIndex(index);
         UpdateHelpWindow();
-        for (int i = 0; i < ObjectList.Count;i++)
+        for (int i = 0; i < ItemPrefabList.Count;i++)
         {
-            if (ObjectList[i] == null) continue;
-            if (i > ObjectList.Count) continue;
-            var listItem = ObjectList[i].GetComponent<ListItem>();
+            if (ItemPrefabList[i] == null) continue;
+            if (i > ItemPrefabList.Count) continue;
+            var listItem = ItemPrefabList[i].GetComponent<ListItem>();
             if (listItem == null) continue;
             if (index == listItem.Index){
                 listItem.SetSelect();

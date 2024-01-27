@@ -11,6 +11,7 @@ public class GetItemList : BaseList
     
     public void InitializeConfirm(List<ListData> confirmCommands ,System.Action<ConfirmCommandType> callEvent)
     {
+        tacticsCommandList.Initialize();
         tacticsCommandList.SetData(confirmCommands);
         tacticsCommandList.SetInputHandler(InputKeyType.Decide,() => 
         {

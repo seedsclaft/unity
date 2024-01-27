@@ -14,6 +14,7 @@ public class OptionView : BaseView
     public override void Initialize() 
     {
         base.Initialize();
+        optionList.Initialize();
         new OptionPresenter(this);
         Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
     }

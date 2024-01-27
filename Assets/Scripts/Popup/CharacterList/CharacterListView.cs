@@ -12,6 +12,7 @@ public class CharacterListView : BaseView
     public override void Initialize() 
     {
         base.Initialize();
+        characterList.Initialize();
         new CharacterListPresenter(this);
         characterList.SetInputHandler(InputKeyType.Cancel,() => BackEvent());
         characterList.SetInputHandler(InputKeyType.Decide,() => CallDecideActor());

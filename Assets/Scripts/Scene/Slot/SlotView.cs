@@ -13,6 +13,7 @@ public class SlotView : BaseView
     public override void Initialize() 
     {
         base.Initialize();
+        slotInfoList.Initialize();
         InitSlotList();
         new SlotPresenter(this);
     }

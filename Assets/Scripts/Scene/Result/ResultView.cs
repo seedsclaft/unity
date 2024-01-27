@@ -30,7 +30,8 @@ public class ResultView : BaseView
     public override void Initialize() 
     {
         base.Initialize();
-        
+        commandList.Initialize();
+        actorInfoList.Initialize();
         GameObject prefab = Instantiate(animPrefab);
         prefab.transform.SetParent(animRoot.transform, false);
         _battleStartAnim = prefab.GetComponent<BattleStartAnim>();

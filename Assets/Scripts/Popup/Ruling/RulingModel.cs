@@ -36,7 +36,7 @@ public class RulingModel : BaseModel
         return MakeListData(list);
     }
 
-    public List<string> RuleHelp()
+    public List<ListData> RuleHelp()
     {
         var helpList = new List<string>();
         var rule = DataSystem.Rules.Find(a => a.Id == _currentId);
@@ -47,7 +47,7 @@ public class RulingModel : BaseModel
                 helpList.Add(item);
             }
         }
-        return helpList;
+        return MakeListData(helpList);
     }
 }
 

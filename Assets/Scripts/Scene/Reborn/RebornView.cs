@@ -15,6 +15,7 @@ public class RebornView : BaseView
     public override void Initialize() 
     {
         base.Initialize();
+        actorInfoList.Initialize();
         selectCharacter.Initialize();
         SetInputHandler(selectCharacter.GetComponent<IInputHandlerEvent>());
         InitializeSelectCharacter();

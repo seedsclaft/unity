@@ -13,6 +13,7 @@ public class RankingView : BaseView
     {
         base.Initialize();
         new RankingPresenter(this);
+        rankingInfoList.Initialize();
         rankingInfoList.SetInputHandler(InputKeyType.Cancel,() => BackEvent());
         SetInputHandler(rankingInfoList.GetComponent<IInputHandlerEvent>());
     }

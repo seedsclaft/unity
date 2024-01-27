@@ -10,16 +10,9 @@ public class RuleHelp : ListItem ,IListViewItem
 {
     [SerializeField] private TextMeshProUGUI commandName;
 
-    private string _data; 
-    public void SetData(string data,int index){
-        _data = data;
-        SetIndex(index);
-        UpdateViewItem();
-    }
-
     public void UpdateViewItem()
     {
-        if (_data == null) return;
-        commandName.text = _data;
+        if (ListData == null) return;
+        commandName.text = (string)ListData.Data;
     }
 }

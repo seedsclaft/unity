@@ -15,6 +15,7 @@ public class SlotSaveView : BaseView
     public override void Initialize() 
     {
         base.Initialize();
+        slotInfoList.Initialize();
         InitSlotList();
         new SlotSavePresenter(this);
     }

@@ -31,6 +31,7 @@ public class BattleSelectCharacter : MonoBehaviour
         {
             return;
         }
+        conditionList.Initialize();
         _isInit = true;
         var idx = 0;
         foreach (var magicConditionTab in detailTabs)

@@ -9,7 +9,7 @@ public class RulingView : BaseView
 {
     [SerializeField] private BaseList commandList = null;
     
-    [SerializeField] private RuleList ruleList = null;
+    [SerializeField] private BaseList ruleList = null;
     [SerializeField] private TextMeshProUGUI titleText = null;
     private new System.Action<RulingViewEvent> _commandData = null;
 
@@ -17,6 +17,7 @@ public class RulingView : BaseView
     {
         base.Initialize();
         ruleList.Initialize();
+        commandList.Initialize();
         new RulingPresenter(this);
     }
     
@@ -61,15 +62,15 @@ public class RulingView : BaseView
         }
     }
 
-    public void CommandSelectTitle(List<string> helpList )
+    public void CommandSelectTitle(List<ListData> helpList )
     {
-        ruleList.Refresh(helpList);
+        ruleList.SetData(helpList);
     }
 
-    public void CommandRefresh(List<string> helpList)
+    public void CommandRefresh(List<ListData> helpList)
     {
         commandList.Refresh();
-        ruleList.Refresh(helpList);
+        ruleList.SetData(helpList);
     }
 }
 

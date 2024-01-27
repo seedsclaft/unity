@@ -18,6 +18,7 @@ public class AlcanaResultView : BaseView
     public override void Initialize() 
     {
         base.Initialize();
+        commandList.Initialize();
         
         var prefab = Instantiate(animPrefab);
         prefab.transform.SetParent(animRoot.transform, false);

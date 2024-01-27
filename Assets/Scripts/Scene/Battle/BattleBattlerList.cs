@@ -16,15 +16,17 @@ public class BattleBattlerList : ListWindow , IInputHandlerEvent
     public int SelectedIndex => _selectIndex;
     private AttributeType _attributeType = AttributeType.None;
 
-    public void Initialize(List<BattlerInfo> battlerInfos ,System.Action<List<int>> callEvent)
+    public void Initialize(List<BattlerInfo> battlerInfos,System.Action<List<int>> callEvent)
     {
         _battleInfos = battlerInfos;
         InitializeListView();
+        SetListData(ListData.MakeListData(battlerInfos));
+        CreateObjectList();
         damageRoots.ForEach(a => a.SetActive(false));
 
-        for (int i = 0; i < ObjectList.Count;i++)
+        for (int i = 0; i < battlerInfos.Count;i++)
         {
-            var battleBattler = ObjectList[i].GetComponent<BattleBattler>();
+            var battleBattler = ItemPrefabList[i].GetComponent<BattleBattler>();
             battleBattler.SetDamageRoot(damageRoots[i]);
             battleBattler.SetData(battlerInfos[i],battlerInfos[i].Index,battlerInfos[i].LineIndex == LineType.Front);
             battleBattler.SetCallHandler((enemyIndex) => {

@@ -138,7 +138,7 @@ abstract public class ListWindow : MonoBehaviour
             }
         }
         var listCount = ListItemCount();
-        for (var i = 0; i < (listCount+1);i++){
+        for (var i = 0; i < (listCount+2);i++){
             var prefab = Instantiate(itemPrefab);
             _itemPrefabList.Add(prefab);
             var view = prefab.GetComponent<IListViewItem>();
@@ -574,5 +574,20 @@ abstract public class ListWindow : MonoBehaviour
 
     public void ResetScrollRect(){
         ScrollRect.normalizedPosition = new Vector2(0,1);
+    }
+
+    private void OnDestroy() {
+        if (_blankObject != null)
+        {
+            Destroy(_blankObject);
+        }
+        for (int i = 0;i < _itemPrefabList.Count;i++)
+        {
+            Destroy(_itemPrefabList[i]);
+        }
+        for (int i = 0;i < _objectList.Count;i++)
+        {
+            Destroy(_objectList[i]);
+        }
     }
 }

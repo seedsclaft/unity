@@ -49,9 +49,9 @@ abstract public class ListItem : MonoBehaviour
         _index = index;
     }
     [SerializeField] private GameObject cursor;
-    public GameObject Cursor { get {return cursor;}}
+    public GameObject Cursor => cursor;
     [SerializeField] private GameObject disable;
-    public GameObject Disable{ get {return disable;}}
+    public GameObject Disable => disable;
 
     private bool _addListenHandler = false;
     public void SetAddListenHandler()
@@ -61,6 +61,7 @@ abstract public class ListItem : MonoBehaviour
     public void Awake()
     {
         InitButtonColors();
+        SetCursorColor();
     }
 
     public void InitButtonColors()
@@ -120,5 +121,22 @@ abstract public class ListItem : MonoBehaviour
             return;
         }
         clickButton.onClick.AddListener(() => handler());
+    }
+
+    public void SetCursorColor()
+    {
+        if (cursor != null)
+        {
+            var images = cursor.GetComponentsInChildren<Image>();
+            var cursorColor = new Color(224f/255f,144f/255f,24f/255f);
+            foreach (var image in images)
+            {
+                if (image.sprite == null)
+                {
+                    var alpha = image.color.a;
+                    image.color = new Color(cursorColor.r,cursorColor.g,cursorColor.b,alpha);
+                }
+            }
+        }
     }
 }

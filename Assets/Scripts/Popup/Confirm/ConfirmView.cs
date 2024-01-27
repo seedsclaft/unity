@@ -17,6 +17,8 @@ public class ConfirmView : BaseView,IInputHandlerEvent
     public override void Initialize() 
     {
         base.Initialize();
+        commandList.Initialize();
+        skillInfoList.Initialize();
         new ConfirmPresenter(this);
     }
     

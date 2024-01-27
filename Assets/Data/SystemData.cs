@@ -19,6 +19,7 @@ public class SystemData : ScriptableObject
 	public int BattleBonusValue;
 	public List<TextData> SystemTextData;
 
+
 	public List<InputData> InputDataList;
 	public TextData GetTextData(int id)
 	{
