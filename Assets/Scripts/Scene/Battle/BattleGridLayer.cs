@@ -11,7 +11,6 @@ public class BattleGridLayer : MonoBehaviour
     private Dictionary<BattlerInfo,BattlerInfoComponent> _battlers = new ();
     private List<BattlerGrid> _actorBattlers = new ();
     private List<BattlerGrid> _enemyBattlers = new ();
-
     private List<BattlerInfo> _battlerLists = new ();
 
     public void Initialize()
@@ -78,20 +77,6 @@ public class BattleGridLayer : MonoBehaviour
     public void UpdatePosition()
     {
         UpdateWaitPosition();
-        /*
-        var battlerInfos = new List<BattlerInfo>();
-        foreach (var data in _battlers)
-        {
-            var rect = data.Value.gameObject.GetComponent<RectTransform>();
-            rect.localPosition = new Vector3(rect.localPosition.x, (float)data.Key.Ap / 3f, 0);
-            battlerInfos.Add(data.Key);
-        }
-        battlerInfos.Sort((a,b)=> (int)a.Ap - (int)b.Ap);
-        foreach (var info in battlerInfos)
-        {
-            _battlers[info].gameObject.transform.SetAsFirstSibling();
-        }
-        */
     }
 
     

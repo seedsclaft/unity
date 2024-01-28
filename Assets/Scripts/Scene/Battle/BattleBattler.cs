@@ -30,8 +30,23 @@ public class BattleBattler : ListItem ,IListViewItem
 
     public void UpdateViewItem()
     {
-        if (_data == null) return;
-        battlerInfoComponent.UpdateInfo(_data);
+        if (ListData == null) return;
+        var battlerInfo = (BattlerInfo)ListData.Data;
+        //battlerInfoComponent.SetSelectable(ListData.Enable);
+        battlerInfoComponent.UpdateInfo(battlerInfo);
         battlerInfoComponent.RefreshStatus();
+        if (Disable != null)
+        {
+            Disable.SetActive(!ListData.Enable);
+        }
+    }
+
+    
+    public void SetDisable()
+    {
+        if (Disable != null)
+        {
+            Disable.SetActive(true);
+        }
     }
 }

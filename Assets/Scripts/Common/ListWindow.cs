@@ -33,8 +33,9 @@ abstract public class ListWindow : MonoBehaviour
     [SerializeField] private GameObject itemPrefab = null; 
     private List<GameObject> _itemPrefabList = new ();
     public List<GameObject> ItemPrefabList => _itemPrefabList;
-    private List<ListData> _listData = new ();
-    public int DataCount => _listData.Count;
+    private List<ListData> _listDates = new ();
+    public List<ListData> ListDates => _listDates;
+    public int DataCount => _listDates.Count;
     private Vector2 _itemSize;
     private int _lastStartIndex = -1;
     private LinkedList<IListViewItem> _itemList = new();
@@ -90,7 +91,7 @@ abstract public class ListWindow : MonoBehaviour
 
     public void SetListData(List<ListData> listData)
     {
-        _listData = listData;
+        _listDates = listData;
     }
 
     private void SetValueChangedEvent()
@@ -126,14 +127,14 @@ abstract public class ListWindow : MonoBehaviour
         var rect = _blankObject.GetComponent<RectTransform>();
         rect.sizeDelta = new Vector3(_itemSize.x,_itemSize.y,0);
         rect.pivot = new Vector3(0,1,0);
-        int createCount = _listData.Count;
+        int createCount = _listDates.Count;
         for (var i = 0; i < createCount;i++){
             var prefab = Instantiate(_blankObject);
             prefab.transform.SetParent(scrollRect.content, false);
             _objectList.Add(prefab);
         }
         for (var i = 0; i < _objectList.Count;i++){
-            if (_listData.Count <= i){
+            if (_listDates.Count <= i){
                 _objectList[i].SetActive(false);
             }
         }
@@ -150,7 +151,7 @@ abstract public class ListWindow : MonoBehaviour
         var startIndex = 0;
         for (int i = startIndex;i < _itemPrefabList.Count;i++)
         {
-            if (_listData.Count <= i){
+            if (_listDates.Count <= i){
                 continue;
             }
             _itemPrefabList[i].transform.SetParent(_objectList[i].transform,false);
@@ -163,7 +164,7 @@ abstract public class ListWindow : MonoBehaviour
         var startIndex = GetStartIndex();
         for (int i = 0;i < _itemPrefabList.Count;i++)
         {
-            if (_listData.Count <= i+startIndex){
+            if (_listDates.Count <= i+startIndex){
                 continue;
             }
             _itemPrefabList[i].transform.SetParent(_objectList[i+startIndex].transform,false);
@@ -177,13 +178,13 @@ abstract public class ListWindow : MonoBehaviour
         for (int i = 0; i < ItemPrefabList.Count;i++)
         {
             if (startIndex < 0) continue;
-            if (i + startIndex >= _listData.Count) continue;
-            if (i < _listData.Count) 
+            if (i + startIndex >= _listDates.Count) continue;
+            if (i < _listDates.Count) 
             {
                 var listItem = ItemPrefabList[i].GetComponent<ListItem>();
-                listItem.SetListData(_listData[i + startIndex],i + startIndex);
+                listItem.SetListData(_listDates[i + startIndex],i + startIndex);
             }
-            ItemPrefabList[i].SetActive(i < _listData.Count);
+            ItemPrefabList[i].SetActive(i < _listDates.Count);
         }
         UpdateAllItems();
         UpdateSelectIndex(selectIndex);
@@ -365,11 +366,11 @@ abstract public class ListWindow : MonoBehaviour
         }
         var nextIndex = Index;
         if (keyType == plusKey){
-            for (int i = 0;i < _listData.Count;i++)
+            for (int i = 0;i < _listDates.Count;i++)
             {
                 nextIndex = Index + i + 1;
-                if (nextIndex >= _listData.Count){
-                    nextIndex -= _listData.Count;
+                if (nextIndex >= _listDates.Count){
+                    nextIndex -= _listDates.Count;
                 }
                 var listItem = ObjectList[nextIndex].GetComponent<ListItem>();
                 if (listItem.Disable == null)
@@ -382,7 +383,7 @@ abstract public class ListWindow : MonoBehaviour
                 }
             }
             selectIndex = nextIndex;
-            if (selectIndex >= _listData.Count){
+            if (selectIndex >= _listDates.Count){
                 if (warpMode)
                 {
                     selectIndex = 0;
@@ -390,11 +391,11 @@ abstract public class ListWindow : MonoBehaviour
             }
         } else
         if (keyType == minusKey){
-            for (int i = 0;i < _listData.Count;i++)
+            for (int i = 0;i < _listDates.Count;i++)
             {
                 nextIndex = Index - i - 1;
                 if (nextIndex < 0){
-                    nextIndex += _listData.Count;
+                    nextIndex += _listDates.Count;
                 }
                 if (nextIndex < 0)
                 {
@@ -414,7 +415,7 @@ abstract public class ListWindow : MonoBehaviour
             if (selectIndex < 0){
                 if (warpMode)
                 {
-                    selectIndex = _listData.Count-1;
+                    selectIndex = _listDates.Count-1;
                 }
             }
         }
@@ -511,7 +512,7 @@ abstract public class ListWindow : MonoBehaviour
     public void UpdateScrollRect(InputKeyType keyType){
         if (_index < 0) return;
         var listCount = ListItemCount();
-        var dataCount = _listData.Count;
+        var dataCount = _listDates.Count;
         var _displayDownCount = Index - GetStartIndex();
         if (keyType == InputKeyType.Down){
             _displayDownCount--;
@@ -527,7 +528,7 @@ abstract public class ListWindow : MonoBehaviour
         } else
         if (keyType == InputKeyType.Up){
             _displayDownCount++;
-            if (Index == (_listData.Count-1))
+            if (Index == (_listDates.Count-1))
             {
                 ScrollRect.normalizedPosition = new Vector2(0,0);
             } else
@@ -542,7 +543,7 @@ abstract public class ListWindow : MonoBehaviour
     public void UpdateScrollRect(int selectIndex){
         if (_index < 0) return;
         var listCount = ListItemCount();
-        var dataCount = _listData.Count;
+        var dataCount = _listDates.Count;
         var listIndex = selectIndex - (listCount - 1);
         if (listIndex > 0)
         {

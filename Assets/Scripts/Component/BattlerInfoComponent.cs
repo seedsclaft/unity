@@ -296,7 +296,7 @@ public class BattlerInfoComponent : MonoBehaviour
         effekseerEmitter.Play(effectAsset);
     }
 
-    public void SetSelectable(bool isSelectable)
+    public void SetThumbAlpha(bool isSelectable)
     {
         var image = BattleImage();
         if (image == null) return;

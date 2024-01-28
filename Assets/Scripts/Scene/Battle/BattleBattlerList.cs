@@ -1,179 +1,54 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Effekseer;
 
-public class BattleBattlerList : ListWindow , IInputHandlerEvent
+public class BattleBattlerList : BaseList
 {
     [SerializeField] private List<GameObject> damageRoots;
-    
-    private List<BattleBattler> _battleBattler = new ();
-    private ScopeType _targetScopeType = ScopeType.None;
-    private List<int> _targetIndexList = new ();
-    private int _backStartIndex = 0;
-    private List<BattlerInfo> _battleInfos = new ();
+    private Dictionary<int,BattleBattler> _battleBattler = new ();
     private int _selectIndex = -1;
     public int SelectedIndex => _selectIndex;
-    private AttributeType _attributeType = AttributeType.None;
 
-    public void Initialize(List<BattlerInfo> battlerInfos,System.Action<List<int>> callEvent)
+    public new void SetData(List<ListData> listDates)
     {
-        _battleInfos = battlerInfos;
-        InitializeListView();
-        SetListData(ListData.MakeListData(battlerInfos));
-        CreateObjectList();
-        damageRoots.ForEach(a => a.SetActive(false));
+        base.SetData(listDates);
+        SetBattlerInfoComp();
+    }
 
-        for (int i = 0; i < battlerInfos.Count;i++)
+    public void SetTargetListData(List<ListData> listDates)
+    {
+        base.SetData(listDates);
+    }
+
+    public void SetBattlerInfoComp()
+    {
+        damageRoots.ForEach(a => a.SetActive(false));
+        for (var i = 0;i < ItemPrefabList.Count;i++)
         {
             var battleBattler = ItemPrefabList[i].GetComponent<BattleBattler>();
-            battleBattler.SetDamageRoot(damageRoots[i]);
-            battleBattler.SetData(battlerInfos[i],battlerInfos[i].Index,battlerInfos[i].LineIndex == LineType.Front);
-            battleBattler.SetCallHandler((enemyIndex) => {
-                var battlerInfo = battlerInfos.Find(a => a.Index == enemyIndex);
-                if (battlerInfo.IsAlive() == false)
-                {
-                    return;
-                }
-                if (_targetIndexList.IndexOf(enemyIndex) == -1)
-                {
-                    return;
-                }
-                if (_selectIndex != enemyIndex)
-                {
-                    UpdateBattlerIndex(enemyIndex);
-                    return;
-                }
-                callEvent(MakeTargetIndexes(battlerInfo));
-            });
-            battleBattler.SetSelectHandler((data) => UpdateBattlerIndex(data));
-            battleBattler.SetPressHandler((enemyIndex) => {
-                _selectIndex = enemyIndex;
-                CallListInputHandler(InputKeyType.Option1);
-            });
-            _battleBattler.Add(battleBattler);
-        }
-        SetInputCallHandler((a) => CallInputHandler(a,callEvent));
-        UpdateAllUnSelect();
-        UpdateAllItems();
-    }
-
-    public void RefreshTarget(int selectIndex,List<int> targetIndexList,ScopeType scopeType,AttributeType attributeType = AttributeType.None)
-    {
-        UpdateAllUnSelect();
-        if (selectIndex == -1) {
-            ClearSelect();
-            return;
-        }
-        _selectIndex = selectIndex;
-        _targetIndexList = targetIndexList;
-        _targetScopeType = scopeType;
-        _attributeType = attributeType;
-        if (_targetScopeType == ScopeType.All || _targetScopeType == ScopeType.WithoutSelfAll)
-        {
-            UpdateAllSelect();
-        } else
-        if (_targetScopeType == ScopeType.Line || _targetScopeType == ScopeType.FrontLine)
-        {
-            UpdateLineSelect(_selectIndex);
-        } else
-        if (_targetScopeType == ScopeType.One || _targetScopeType == ScopeType.WithoutSelfOne)
-        {
-            UpdateBattlerIndex(_selectIndex);
-        } else
-        if (_targetScopeType == ScopeType.Self)
-        {
-            UpdateBattlerIndex(_selectIndex);
-        }
-    }
-
-    private void UpdateAllSelect(){
-        for (int i = 0; i < _battleBattler.Count;i++)
-        {
-            if (_battleInfos[i].IsAlive())
+            if (battleBattler.ListData != null)
             {
-                _battleBattler[i].SetSelect();
+                var battlerInfo = (BattlerInfo)battleBattler.ListData.Data;
+                if (battleBattler != null && battlerInfo != null)
+                {
+                    _battleBattler[battlerInfo.Index] = battleBattler;
+                    battleBattler.SetDamageRoot(damageRoots[i]);
+                }
             }
         }
     }
 
-    private void UpdateAllUnSelect(){
-        foreach (var battleBattler in _battleBattler)
+    public BattlerInfoComponent GetBattlerInfoComp(int battlerIndex)
+    {
+        var battleBattler = _battleBattler[battlerIndex];
+        if (battleBattler != null)
         {
-            battleBattler.SetUnSelect();
+            return battleBattler.BattlerInfoComponent;
         }
+        return null;
     }
     
-    private void UpdateBattlerIndex(int index){
-        if (_targetIndexList.IndexOf(index) == -1)
-        {
-            return;
-        }
-        _selectIndex = index;
-        UpdateSelectIndex(_selectIndex);
-        if (_targetScopeType == ScopeType.All || _targetScopeType == ScopeType.WithoutSelfAll)
-        {
-            UpdateAllSelect();
-            return;
-        }
-        if (_targetScopeType == ScopeType.Line || _targetScopeType == ScopeType.FrontLine)
-        {
-            UpdateLineSelect(index);
-            return;
-        }
-        if (_targetScopeType != ScopeType.One && _targetScopeType != ScopeType.WithoutSelfOne)
-        {
-            return;
-        }
-        for (int i = 0; i < _battleBattler.Count;i++)
-        {
-            if (index == _battleBattler[i].Index){
-                if (_battleInfos[i].IsAlive())
-                {
-                    _battleBattler[i].SetSelect();
-                }
-            } else{
-                _battleBattler[i].SetUnSelect();
-            }
-        }
-    }
-
-    private void UpdateLineSelect(int index){
-        if (_targetScopeType != ScopeType.Line && _targetScopeType != ScopeType.FrontLine){
-            return;
-        }
-        bool isFront = index < _backStartIndex;
-        for (int i = 0; i < _battleBattler.Count;i++)
-        {
-            if (isFront)
-            {
-                if (_battleBattler[i].Index < _backStartIndex){
-                    if (_battleInfos[i].IsAlive())
-                    {
-                        _battleBattler[i].SetSelect();
-                    }
-                } else{
-                    _battleBattler[i].SetUnSelect();
-                }
-            } else
-            {
-                if (_battleBattler[i].Index >= _backStartIndex){
-                    if (_battleInfos[i].IsAlive())
-                    {
-                        _battleBattler[i].SetSelect();
-                    }
-                } else{
-                    _battleBattler[i].SetUnSelect();
-                }
-            }
-        }
-    }
-
-    public BattlerInfoComponent GetBattlerInfoComp(int index)
-    {
-        return _battleBattler[index].BattlerInfoComponent;
-    }
-    
+    /*
     private void CallInputHandler(InputKeyType keyType, System.Action<List<int>> callEvent)
     {
         if (keyType == InputKeyType.Decide)
@@ -253,7 +128,9 @@ public class BattleBattlerList : ListWindow , IInputHandlerEvent
             }
         }
     }
+    */
 
+/*
     private List<int> MakeTargetIndexes(BattlerInfo battlerInfo)
     {
         var indexList = new List<int>();
@@ -296,12 +173,14 @@ public class BattleBattlerList : ListWindow , IInputHandlerEvent
         }
         return indexList;
     }
+    */
 
     public void ClearSelect()
     {
-        UpdateAllUnSelect();
         UpdateSelectIndex(-1);
-        _targetScopeType = ScopeType.None;
-        _targetIndexList = new ();
+        foreach (var battleBattler in _battleBattler)
+        {
+            battleBattler.Value.SetDisable();
+        }
     }
 }

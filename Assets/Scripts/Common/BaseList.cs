@@ -6,16 +6,15 @@ using Cysharp.Threading.Tasks;
 public class BaseList : ListWindow , IInputHandlerEvent
 {
     [SerializeField] private bool beforeSelect = true; 
-    private List<ListData> _listData = new ();
     private bool _isInit = false;
     public bool IsInit => _isInit;
     private int _beforeSelectIndex = -1;
     public ListData ListData 
     { 
         get {
-            if (Index > -1 && _listData.Count > Index)
+            if (Index > -1 && ListDates.Count > Index)
             {
-                return _listData[Index];
+                return ListDates[Index];
             }
             return null;
         }
@@ -35,17 +34,17 @@ public class BaseList : ListWindow , IInputHandlerEvent
 
     public void SetData(List<ListData> listData)
     {
-        _listData = listData;
-        SetListData(_listData);
+        SetListData(listData);
         CreateObjectList();
-        if (_listData.Count > ObjectList.Count)
+        if (ListDates.Count > ObjectList.Count)
         {
             var objectListCount = ObjectList.Count;
-            AddCreateList(_listData.Count-ObjectList.Count);
+            AddCreateList(ListDates.Count-ObjectList.Count);
         }
         SetListCallHandler();
-        Refresh(_listData.FindIndex(a => a.Selected || a.Enable));
+        Refresh(ListDates.FindIndex(a => a.Selected || a.Enable));
     }
+
     
     private void SetListCallHandler()
     {
@@ -84,23 +83,23 @@ public class BaseList : ListWindow , IInputHandlerEvent
     
     public void RefreshListData(ListData listData)
     {
-        var findIndex = _listData.FindIndex(a => a.Index == listData.Index);
+        var findIndex = ListDates.FindIndex(a => a.Index == listData.Index);
         if (findIndex > -1)
         {
-            _listData[findIndex] = listData;
+            ListDates[findIndex] = listData;
         }
     }
 
     public void SetDisableIds(List<int> disableIds)
     {
-        for (int i = 0; i < _listData.Count;i++)
+        for (int i = 0; i < ListDates.Count;i++)
         {
             if (disableIds.Contains(i))
             {
-                _listData[i].SetEnable(false);
+                ListDates[i].SetEnable(false);
             }
         }
-        Refresh(_listData.FindIndex(a => a.Selected));
+        Refresh(ListDates.FindIndex(a => a.Selected));
     }
 }
 

@@ -108,6 +108,22 @@ public class BattleModel : BaseModel
         MakeActionBattler();
         return removeStateList;
     }
+
+    public void UpdateApModify(BattlerInfo battlerInfo)
+    {
+        var minusAp = 0f;
+        if (battlerInfo.Ap < 0)
+        {
+            minusAp = battlerInfo.Ap;
+        }
+        foreach (var battler in _battlers)
+        {
+            if (battler.IsAlive())
+            {
+                battler.ChangeAp(minusAp * -1f);
+            }
+        }
+    }
     
     public List<ActionResultInfo> UpdateChainState()
     {
@@ -606,6 +622,60 @@ public class BattleModel : BaseModel
         foreach (var battlerInfo in battlerInfos)
         {
             targetIndexList.Add(battlerInfo.Index);
+        }
+        return targetIndexList;
+    }
+
+    // 選択可能なBattlerInfoを取得
+    public List<ListData> TargetBattlerPartyInfos(ActionInfo actionInfo)
+    {
+        var targetBattlerInfos = new List<ListData>();
+        foreach (var battlerInfo in _party.BattlerInfos)
+        {
+            var listData = new ListData(battlerInfo);
+            listData.SetEnable(actionInfo.TargetIndexList.Contains(battlerInfo.Index));
+            listData.SetSelected(actionInfo.LastTargetIndex == battlerInfo.Index);
+            targetBattlerInfos.Add(listData);
+        }
+        return targetBattlerInfos;
+    }
+
+    // 選択可能なBattlerInfoを取得
+    public List<ListData> TargetBattlerEnemyInfos(ActionInfo actionInfo)
+    {
+        var targetBattlerInfos = new List<ListData>();
+        foreach (var battlerInfo in _troop.BattlerInfos)
+        {
+            var listData = new ListData(battlerInfo);
+            listData.SetEnable(actionInfo.TargetIndexList.Contains(battlerInfo.Index));
+            listData.SetSelected(actionInfo.LastTargetIndex == battlerInfo.Index);
+            targetBattlerInfos.Add(listData);
+        }
+        return targetBattlerInfos;
+    }
+
+    public List<int> CurrentActionTargetIndexes(int selectIndex)
+    {
+        var actionInfo = CurrentActionInfo();
+        var targetIndexList = GetSkillTargetIndexes(actionInfo.Master.Id,_currentBattler.Index,true);
+        var scopeType = actionInfo.ScopeType;
+        var TargetBattler = GetBattlerInfo(selectIndex);
+        switch (scopeType)
+        {
+            case ScopeType.All:
+                break;
+            case ScopeType.WithoutSelfAll:
+                break;
+            case ScopeType.Line:
+            case ScopeType.FrontLine:
+                targetIndexList = targetIndexList.FindAll(a => GetBattlerInfo(a).LineIndex == TargetBattler.LineIndex);
+                break;
+            case ScopeType.One:
+            case ScopeType.WithoutSelfOne:
+            case ScopeType.Self:
+                targetIndexList.Clear();
+                targetIndexList.Add(selectIndex);
+                break;
         }
         return targetIndexList;
     }

@@ -52,6 +52,8 @@ public class BattleView : BaseView ,IInputHandlerEvent
 
         InitializeSelectCharacter();
         battleGridLayer.Initialize();
+        battleActorList.Initialize();
+        battleEnemyLayer.Initialize();
         new BattlePresenter(this);
     }
 
@@ -120,6 +122,7 @@ public class BattleView : BaseView ,IInputHandlerEvent
 
     public void CreateObject(int battleActorsCount)
     {
+        battleActorList.SetInputHandler(InputKeyType.Decide,() => CallActorList());
         battleActorList.SetInputHandler(InputKeyType.Cancel,() => OnClickBack());
         battleActorList.SetInputHandler(InputKeyType.SideLeft1,() => OnClickSelectEnemy());
         SetInputHandler(battleActorList.GetComponent<IInputHandlerEvent>());
@@ -185,36 +188,43 @@ public class BattleView : BaseView ,IInputHandlerEvent
 
     public void SetActors(List<BattlerInfo> battlerInfos)
     {
-        battleActorList.Initialize(battlerInfos,a => CallActorList(a));
+        battleActorList.SetData(ListData.MakeListData(battlerInfos,false));
         //battleActorList.Refresh(battlerInfos);
-        foreach (var item in battlerInfos)
+        foreach (var battlerInfo in battlerInfos)
         {
-            _battlerComps[item.Index] = battleActorList.GetBattlerInfoComp(item.Index);
+            _battlerComps[battlerInfo.Index] = battleActorList.GetBattlerInfoComp(battlerInfo.Index);
         }
         battleGridLayer.SetActorInfo(battlerInfos);
+        battleActorList.Deactivate();
     }
     
     public void SetEnemies(List<BattlerInfo> battlerInfos)
     {
-        battleEnemyLayer.Initialize(battlerInfos,(a) => CallEnemyInfo(a));
+        battleEnemyLayer.SetData(ListData.MakeListData(battlerInfos,false));
+        battleEnemyLayer.SetInputHandler(InputKeyType.Decide,() => CallEnemyInfo());
         battleEnemyLayer.SetInputHandler(InputKeyType.Cancel,() => OnClickBack());
         battleEnemyLayer.SetInputHandler(InputKeyType.SideRight1,() => OnClickSelectParty());
         battleEnemyLayer.SetInputHandler(InputKeyType.Option1,() => CallEnemyDetailInfo(battlerInfos));
         SetInputHandler(battleEnemyLayer.GetComponent<IInputHandlerEvent>());
-        foreach (var item in battlerInfos)
+        foreach (var battlerInfo in battlerInfos)
         {
-            _battlerComps[item.Index] = battleEnemyLayer.GetBattlerInfoComp(item.Index - 100);
+            _battlerComps[battlerInfo.Index] = battleEnemyLayer.GetBattlerInfoComp(battlerInfo.Index);
         }
         battleGridLayer.SetEnemyInfo(battlerInfos);
         DeactivateEnemyList();
     }
 
-    private void CallEnemyInfo(List<int> indexList)
+    private void CallEnemyInfo()
     {
         if (_animationBusy) return;
-        var eventData = new BattleViewEvent(CommandType.EnemyLayer);
-        eventData.template = indexList;
-        _commandData(eventData);
+        var listData = battleEnemyLayer.ListData;
+        if (listData != null)
+        {
+            var data = (BattlerInfo)listData.Data;
+            var eventData = new BattleViewEvent(CommandType.EnemyLayer);
+            eventData.template = data.Index;
+            _commandData(eventData);
+        }
     }
 
     private void CallEnemyDetailInfo(List<BattlerInfo> battlerInfos)
@@ -230,12 +240,17 @@ public class BattleView : BaseView ,IInputHandlerEvent
         }
     }
 
-    private void CallActorList(List<int> indexList)
+    private void CallActorList()
     {
         if (_animationBusy) return;
-        var eventData = new BattleViewEvent(CommandType.ActorList);
-        eventData.template = indexList;
-        _commandData(eventData);
+        var listData = battleActorList.ListData;
+        if (listData != null)
+        {
+            var data = (BattlerInfo)listData.Data;
+            var eventData = new BattleViewEvent(CommandType.ActorList);
+            eventData.template = data.Index;
+            _commandData(eventData);
+        }
     }
 
 
@@ -315,78 +330,48 @@ public class BattleView : BaseView ,IInputHandlerEvent
         _commandData(eventData);
     }
 
-    public void RefreshBattlerEnemyTarget(int selectIndex,List<int> targetIndexList = null,ScopeType scopeType = ScopeType.None,AttributeType attributeType = AttributeType.None)
+    public void RefreshPartyBattlerList(List<ListData> battlerInfos)
     {
-        if (selectIndex != -1){
-            ActivateEnemyList();
-        }
-        battleEnemyLayer.RefreshTarget(selectIndex,targetIndexList,scopeType,attributeType);
-        if (targetIndexList != null)
+        if (battlerInfos.Count > 0)
         {
-            SetBattlerSelectable(false);
-            foreach (var idx in targetIndexList)
-            {
-                _battlerComps[idx].SetSelectable(true);
-            }
-        }
-    }
-
-    private void ShowBattlerEnemyTargetWithinTarget(int targetIndex)
-    {
-        foreach (var item in _battlerComps)
-        {
-            if (item.Key == targetIndex)
-            {
-                item.Value.SetActiveStatus(true);
-            }
-        }
-    }
-
-    public void HideBattlerEnemyTarget()
-    {
-        HideEnemyStatus();
-        battleEnemyLayer.ClearSelect();
-    }
-
-    public void HideBattlerEnemyTargetWithoutTarget(List<int> targetIndexes)
-    {
-        foreach (var item in _battlerComps)
-        {
-            if (!targetIndexes.Contains(item.Key))
-            {
-                item.Value.SetActiveStatus(false);
-            }
-        }
-        battleEnemyLayer.ClearSelect();
-    }
-
-    public void RefreshBattlerPartyTarget(int selectIndex,List<int> targetIndexList = null,ScopeType scopeType = ScopeType.None)
-    {
-        if (selectIndex != -1){
             ActivateActorList();
         }
-        battleActorList.RefreshTarget(selectIndex,targetIndexList,scopeType);
-        if (targetIndexList != null)
-        {
-            SetBattlerSelectable(false);
-            foreach (var idx in targetIndexList)
-            {
-                _battlerComps[idx].SetSelectable(true);
-            }
-        }
-    }
-
-    public void HideBattlerPartyTarget()
-    {
-        battleActorList.ClearSelect();
-    }
-
-    public void HideEnemyStatus()
-    {
+        battleActorList.SetTargetListData(battlerInfos);
         foreach (var item in _battlerComps)
         {
-            //item.Value.SetActiveStatus(false);
+            var battlerInfo = battlerInfos.Find(a => item.Key == ((BattlerInfo)a.Data).Index);
+            if (battlerInfo != null)
+            {
+                var selectable = battlerInfo.Enable;
+                item.Value.SetThumbAlpha(selectable);
+            }
+           
         }
+    }
+
+    public void RefreshEnemyBattlerList(List<ListData> battlerInfos)
+    {
+        if (battlerInfos.Count > 0)
+        {
+            ActivateEnemyList();
+        }
+        battleEnemyLayer.SetTargetListData(battlerInfos);
+        foreach (var item in _battlerComps)
+        {
+            var battlerInfo = battlerInfos.Find(a => item.Key == ((BattlerInfo)a.Data).Index);
+            if (battlerInfo != null)
+            {
+                var selectable = battlerInfo.Enable;
+                item.Value.SetThumbAlpha(selectable);
+            }
+           
+        }
+    }
+
+    public void BattlerBattleClearSelect()
+    {
+        battleActorList.ClearSelect();
+        battleEnemyLayer.ClearSelect();
     }
 
     public void HideEnemyStateOverlay()
@@ -438,10 +423,6 @@ public class BattleView : BaseView ,IInputHandlerEvent
         if (GameSystem.ConfigData.BattleAnimationSkip == true) 
         {
             return;
-        }
-        if (targetIndex > 100)
-        {
-            ShowBattlerEnemyTargetWithinTarget(targetIndex);
         }
         _battlerComps[targetIndex].StartAnimation(effekseerEffectAsset,animationPosition,animationScale);
     }
@@ -532,11 +513,11 @@ public class BattleView : BaseView ,IInputHandlerEvent
         }
     }
 
-    public void SetBattlerSelectable(bool selectable)
+    public void SetBattlerThumbAlpha(bool selectable)
     {
         foreach (var item in _battlerComps)
         {
-            item.Value.SetSelectable(selectable);
+            item.Value.SetThumbAlpha(selectable);
         }
     }
 

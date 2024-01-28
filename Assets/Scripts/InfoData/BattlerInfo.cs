@@ -290,35 +290,36 @@ public class BattlerInfo
         }
         if (IsState(StateType.Chain))
         {
-            apValue += 6;
+            apValue = 6;
             return apValue;
         }
         if (IsState(StateType.CounterAura) || IsState(StateType.Benediction))
         {
-            apValue = 1;
+            _ap = 1;
+            apValue = 0;
             return apValue;
         }
         if (IsState(StateType.RevengeAct))
         {
-            apValue += 2;
+            apValue = 2;
             return apValue;
         }
         if (IsState(StateType.Heist) && IsState(StateType.Slow))
         {
-            apValue -= 8;
+            apValue = -8;
             return apValue;
         }
         if (IsState(StateType.Heist))
         {
-            apValue -= 12;
+            apValue = -12;
             return apValue;
         }
         if (IsState(StateType.Slow))
         {
-            apValue -= 4;
+            apValue = -4;
             return apValue;
         }
-        apValue -= 8;
+        apValue = -8;
         return apValue;
     }
 
@@ -363,7 +364,7 @@ public class BattlerInfo
         return wait;
     }
 
-    public void ChangeAp(int value)
+    public void ChangeAp(float value)
     {
         _ap += value;
         if (_ap < 0){

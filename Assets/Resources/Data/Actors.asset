@@ -81,7 +81,7 @@ MonoBehaviour:
       TriggerDates: []
   - Id: 2
     Name: "\u30A8\u30EA\u30B6\u30D9\u30FC\u30C8"
-    SubName: "\u3010Electric-Force\u3011"
+    SubName: "\u3010ChargeCommander\u3011"
     ClassId: 2
     ImagePath: 0002
     InitLv: 1
@@ -282,8 +282,8 @@ MonoBehaviour:
       Weight: 0
       TriggerDates: []
   - Id: 5
-    Name: "\u30CB\u30E5\u30AF\u30B9"
-    SubName: "\u3010Determination2Die\u3011"
+    Name: "\u30EC\u30C0"
+    SubName: "\u3010Self-sacrifice\u3011"
     ClassId: 5
     ImagePath: 0005
     InitLv: 1
@@ -307,12 +307,12 @@ MonoBehaviour:
       _def: 30
       _spd: 50
     Attribute: 0400000004000000040000000700000001000000
-    X: 24
-    Y: 40
-    Scale: 0.95
-    AwakenX: 292
-    AwakenY: 232
-    AwakenScale: 1
+    X: -20
+    Y: 32
+    Scale: 1.1
+    AwakenX: -20
+    AwakenY: 32
+    AwakenScale: 1.1
     Kinds: 
     LearningSkills:
     - SkillId: 11
@@ -348,8 +348,8 @@ MonoBehaviour:
       Weight: 0
       TriggerDates: []
   - Id: 6
-    Name: "\u30D5\u30A7\u30EA\u30AA"
-    SubName: "\u3010\u9AD8\u901F\u5929\u7FD4\u3011"
+    Name: "\u30CA\u30E6\u30BF"
+    SubName: "\u3010Faked-Magician\u3011"
     ClassId: 6
     ImagePath: 0006
     InitLv: 1
@@ -373,12 +373,12 @@ MonoBehaviour:
       _def: 20
       _spd: 80
     Attribute: 0700000001000000020000000700000007000000
-    X: 0
-    Y: 0
+    X: 24
+    Y: -12
     Scale: 1
-    AwakenX: -48
-    AwakenY: 16
-    AwakenScale: 0.6
+    AwakenX: 24
+    AwakenY: -12
+    AwakenScale: 1
     Kinds: 
     LearningSkills:
     - SkillId: 11
@@ -393,19 +393,11 @@ MonoBehaviour:
       Level: 0
       Weight: 0
       TriggerDates: []
-    - SkillId: 33
+    - SkillId: 1010
       Level: 0
       Weight: 0
       TriggerDates: []
-    - SkillId: 2010
-      Level: 0
-      Weight: 0
-      TriggerDates: []
-    - SkillId: 2070
-      Level: 0
-      Weight: 0
-      TriggerDates: []
-    - SkillId: 7010
+    - SkillId: 1060
       Level: 0
       Weight: 0
       TriggerDates: []
@@ -414,6 +406,10 @@ MonoBehaviour:
       Weight: 0
       TriggerDates: []
     - SkillId: 100611
+      Level: 0
+      Weight: 0
+      TriggerDates: []
+    - SkillId: 7010
       Level: 0
       Weight: 0
       TriggerDates: []
@@ -463,23 +459,11 @@ MonoBehaviour:
       Level: 0
       Weight: 0
       TriggerDates: []
-    - SkillId: 41
+    - SkillId: 1010
       Level: 0
       Weight: 0
       TriggerDates: []
-    - SkillId: 42
-      Level: 0
-      Weight: 0
-      TriggerDates: []
-    - SkillId: 5010
-      Level: 0
-      Weight: 0
-      TriggerDates: []
-    - SkillId: 5050
-      Level: 0
-      Weight: 0
-      TriggerDates: []
-    - SkillId: 7010
+    - SkillId: 1060
       Level: 0
       Weight: 0
       TriggerDates: []
@@ -488,6 +472,10 @@ MonoBehaviour:
       Weight: 0
       TriggerDates: []
     - SkillId: 100711
+      Level: 0
+      Weight: 0
+      TriggerDates: []
+    - SkillId: 7010
       Level: 0
       Weight: 0
       TriggerDates: []
