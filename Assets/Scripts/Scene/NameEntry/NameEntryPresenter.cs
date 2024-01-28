@@ -24,8 +24,8 @@ public class NameEntryPresenter
 
 
 
-        var bgm = await _model.GetBgmData("MAINMENU");
-        Ryneus.SoundManager.Instance.PlayBgm(bgm,1.0f,true);
+        //var bgm = await _model.GetBgmData("MAINMENU");
+        //Ryneus.SoundManager.Instance.PlayBgm(bgm,1.0f,true);
 
         //_view.CommandLoadingClose();
         // 

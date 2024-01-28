@@ -50,6 +50,7 @@ abstract public class ListItem : MonoBehaviour
     }
     [SerializeField] private GameObject cursor;
     public GameObject Cursor => cursor;
+    [SerializeField] private bool changeCursorColor = true;
     [SerializeField] private GameObject disable;
     public GameObject Disable => disable;
 
@@ -61,7 +62,10 @@ abstract public class ListItem : MonoBehaviour
     public void Awake()
     {
         InitButtonColors();
-        SetCursorColor();
+        if (changeCursorColor)
+        {
+            SetCursorColor();
+        }
     }
 
     public void InitButtonColors()

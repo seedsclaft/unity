@@ -430,7 +430,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.30588236, g: 0.69803923, b: 0.69803923, a: 0.78431374}
+  m_Color: {r: 0.735849, g: 0.735849, b: 0.735849, a: 0.78431374}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -522,7 +522,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.30588236, g: 0.69803923, b: 0.69803923, a: 0.78431374}
+  m_Color: {r: 0.7372549, g: 0.7372549, b: 0.7372549, a: 0.78431374}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -678,6 +678,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   clickButton: {fileID: 8755620311902555655}
   cursor: {fileID: 4249722562084660656}
+  changeCursorColor: 0
   disable: {fileID: 7570797664848245927}
   commandName: {fileID: 3569311058158544298}
 --- !u!1 &7570797664848245927
