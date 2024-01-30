@@ -233,14 +233,13 @@ public class BattleSelectCharacter : MonoBehaviour
         {
             return;
         }
-        if (magicList.ObjectList.Count > magicList.Index)
+        if (magicList.ObjectList.Count > magicList.Index && magicList.Index > 0)
         {
             var selectObj = magicList.ObjectList[magicList.Index];
             foreach (var gameObject in magicList.ObjectList)
             {
-                var rect = gameObject.GetComponent<RectTransform>();
-                var cardWidth = (selectObj != gameObject) ? 184 : 264;
-                rect.sizeDelta = new Vector2(cardWidth,240);
+                //var rect = gameObject.GetComponent<RectTransform>();
+                //rect.sizeDelta = new Vector2(240,240);
             }
             selectObj.SetActive(false);
             selectObj.SetActive(true);
