@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 [System.Serializable]
 public class BattlerInfo 
@@ -128,11 +129,11 @@ public class BattlerInfo
             lvRate = 20 + ((lv-20) / 2);
         }
         statusInfo.SetParameter(
-            enemyData.BaseStatus.Hp + (int)Math.Floor(plusHpParam + lv + lvRate * enemyData.BaseStatus.Hp * 0.1f),
-            Math.Min(50, enemyData.BaseStatus.Mp + lv),
-            enemyData.BaseStatus.Atk + (int)Math.Floor(lv + lvRate * enemyData.BaseStatus.Atk * 0.05f),
-            enemyData.BaseStatus.Def + (int)Math.Floor(lv + lvRate * enemyData.BaseStatus.Def * 0.05f),
-            Math.Min(100, enemyData.BaseStatus.Spd + (int)Math.Floor(lvRate * enemyData.BaseStatus.Spd * 0.05f))
+            enemyData.BaseStatus.Hp + (int)Math.Floor(plusHpParam + lvRate * enemyData.BaseStatus.Hp * 0.01f),
+            Math.Min(50, enemyData.BaseStatus.Mp),
+            enemyData.BaseStatus.Atk + (int)Math.Floor(lvRate * enemyData.BaseStatus.Atk * 0.04f),
+            enemyData.BaseStatus.Def + (int)Math.Floor(lvRate * enemyData.BaseStatus.Def * 0.04f),
+            Math.Min(100, enemyData.BaseStatus.Spd + (int)Math.Floor(lvRate * enemyData.BaseStatus.Spd * 0.04f))
         );
         _status = statusInfo;
         _index = index + 100;

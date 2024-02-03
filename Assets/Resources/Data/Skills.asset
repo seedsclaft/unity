@@ -255,8 +255,8 @@ MonoBehaviour:
   - Id: 1020
     Name: "\u30D0\u30FC\u30F3\u30B9\u30C8\u30FC\u30E0"
     IconIndex: 1
-    AnimationName: NA_Effekseer/NA_Fire_001
-    AnimationPosition: 1
+    AnimationName: tktk01/Fire2
+    AnimationPosition: 0
     AnimationScale: 1
     AnimationType: 2
     DamageTiming: 48
@@ -364,7 +364,7 @@ MonoBehaviour:
     AnimationPosition: 0
     AnimationScale: 1
     AnimationType: 1
-    DamageTiming: 68
+    DamageTiming: 48
     MpCost: 5
     Rank: 2
     Attribute: 1
@@ -1204,7 +1204,7 @@ MonoBehaviour:
     Scope: 1
     SkillType: 1
     TargetType: 1
-    Help: "\\s\u306B\u6697\u95C7(Magic\u547D\u4E2D\u738725%\u30C0\u30A6\u30F3)\u3092\u4ED8\u4E0E(\u6C38\u7D9A)"
+    Help: "\\s\u306B5\u30BF\u30FC\u30F3\u306E\u6697\u95C7(\u547D\u4E2D\u738750%\u30C0\u30A6\u30F3)\u3092\u4ED8\u4E0E"
     Range: 1
     RepeatTime: 1
     AliveOnly: 1
@@ -1212,8 +1212,8 @@ MonoBehaviour:
     - SkillId: 5060
       FeatureType: 21
       Param1: 2170
-      Param2: 999
-      Param3: 25
+      Param2: 5
+      Param3: 50
     TriggerDates: []
     ScopeTriggers: []
   - Id: 5070

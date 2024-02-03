@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class BattleBattler : ListItem ,IListViewItem 
-{    [SerializeField] private BattlerInfoComponent battlerInfoComponent;
+{    
+    [SerializeField] private BattlerInfoComponent battlerInfoComponent;
     public BattlerInfoComponent BattlerInfoComponent{get { return battlerInfoComponent;}}
     private BattlerInfo _data; 
 

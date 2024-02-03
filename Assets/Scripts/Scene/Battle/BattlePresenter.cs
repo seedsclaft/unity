@@ -551,7 +551,7 @@ public class BattlePresenter : BasePresenter
 
     private async void StartAnimationDemigod()
     {
-        var demigod = _model.SkillActionAnimation("NA_Effekseer/NA_cut-in_002_" + _model.CurrentBattler.CharaId.ToString());
+        var demigod = _model.SkillActionAnimation("NA_Effekseer/NA_cut-in_001_" + _model.CurrentBattler.CharaId.ToString());
         _view.StartAnimationDemigod(demigod);
         _view.HideStateOverlay();
         _view.SetAnimationBusy(true);

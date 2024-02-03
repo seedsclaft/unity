@@ -253,7 +253,7 @@ public class StageInfo
         {
             var enemyData = DataSystem.Enemies.Find(a => a.Id == troopDate.TroopEnemies[i].EnemyId);
             bool isBoss = troopDate.TroopEnemies[i].BossFlag;
-            var enemy = new BattlerInfo(enemyData,troopDate.TroopEnemies[i].Lv + troopLv,i,troopDate.TroopEnemies[i].Line,isBoss);
+            var enemy = new BattlerInfo(enemyData,troopDate.TroopEnemies[i].Lv + troopLv - 1,i,troopDate.TroopEnemies[i].Line,isBoss);
             troopInfo.AddEnemy(enemy);
         }
         _currentBattleIndex = 0;

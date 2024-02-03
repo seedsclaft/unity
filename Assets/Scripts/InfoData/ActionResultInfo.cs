@@ -688,6 +688,7 @@ public class ActionResultInfo
         }
         int CriticalRate = subject.StateEffectAll(StateType.CriticalRateUp) + HitOver;
         int rand = new System.Random().Next(0, 100);
+        Debug.Log(CriticalRate);
         return (CriticalRate >= rand);
     }
 

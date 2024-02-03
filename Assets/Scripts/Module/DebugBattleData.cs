@@ -7,6 +7,7 @@ public class DebugBattleData : MonoBehaviour
 {
     public TMP_InputField consoleInputField = null;
     [SerializeField] private List<int> inBattleActorIds = null;
+    [SerializeField] private int actorLv = 0;
     [SerializeField] private int troopId = 0;
     [SerializeField] private int troopLv = 0;
     [SerializeField] private List<ActorData> actorDates = null;
@@ -32,7 +33,7 @@ public class DebugBattleData : MonoBehaviour
         { 
             if (inBattleActorIds.Contains(actor.Id))
             {
-                GameSystem.CurrentStageData.AddTestActor(actor);
+                GameSystem.CurrentStageData.AddTestActor(actor,actorLv);
             }
         }
         GameSystem.CurrentStageData.Actors.ForEach(a => a.SetInBattle(true));

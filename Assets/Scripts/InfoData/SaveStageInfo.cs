@@ -80,15 +80,15 @@ public class SaveStageInfo
 		}
 	}
 
-	public void AddTestActor(ActorData actorData)
+	public void AddTestActor(ActorData actorData,int lvUpNum)
 	{
 		if (actorData != null)
 		{
-			var actorInfo = new ActorInfo(actorData);
+			var actorInfo = new ActorInfo(DataSystem.FindActor(actorData.Id));
 			_actors.Add(actorInfo);
 			_party.AddActor(actorInfo.ActorId);
 			_currentStage.AddSelectActorId(actorInfo.ActorId);
-			for (int i = 0;i < actorData.LearningSkills.Count;i++)
+			for (int i = 0;i < actorInfo.Master.LearningSkills.Count;i++)
 			{
 				var _learningData = actorData.LearningSkills[i];
 				if (actorInfo.Skills.Find(a =>a.Id == _learningData.SkillId) != null) continue;
@@ -96,6 +96,16 @@ public class SaveStageInfo
 				skillInfo.SetLearningState(LearningState.Learned);
 				actorInfo.Skills.Add(skillInfo);
 			}
+			var statusInfo = actorInfo.LevelUp(lvUpNum-1);
+            actorInfo.TempStatus.SetParameter(
+                statusInfo.Hp,
+                statusInfo.Mp,
+                statusInfo.Atk,
+                statusInfo.Def,
+                statusInfo.Spd
+            );
+			actorInfo.DecideStrength(0);
+			actorInfo.ChangeHp(actorInfo.MaxHp);
 		}
 	}
 

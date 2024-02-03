@@ -110,7 +110,7 @@ public class BattleStateOverlay : MonoBehaviour
                 var rect = effekseerEmitter.gameObject.GetComponent<RectTransform>();
                 if (overlayState.Master.EffectPosition == EffectPositionType.Center)
                 {
-                    rect.localPosition = new Vector2(rect.localPosition.x,40);
+                    rect.localPosition = new Vector2(rect.localPosition.x,-36);
                 } else
                 if (overlayState.Master.EffectPosition == EffectPositionType.Down)
                 {

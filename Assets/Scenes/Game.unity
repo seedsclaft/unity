@@ -2755,9 +2755,9 @@ Camera:
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
-    y: 0
+    y: 0.00026315823
     width: 1
-    height: 1
+    height: 0.9994737
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
@@ -3470,6 +3470,60 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 378581529}
   m_CullTransparentMesh: 0
+--- !u!1 &384833775
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 384833776}
+  - component: {fileID: 384833777}
+  m_Layer: 5
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!224 &384833776
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 384833775}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1848313490}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &384833777
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 384833775}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35d396bcb8480c24eb784eebe6096a99, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TimingOfUpdate: 0
+  EmitterScale: 0
+  TimeScale: 0
+  effectAsset: {fileID: 11400000, guid: 5d21123c81126d94aa51f47d4579e308, type: 2}
+  playOnStart: 1
+  isLooping: 1
 --- !u!1 &399313405
 GameObject:
   m_ObjectHideFlags: 0
@@ -4335,6 +4389,11 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -180
       objectReference: {fileID: 0}
+    - target: {fileID: 3559639656273856683, guid: 47bd1ca0687aff849b862a1a349ded12,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4287548331942049232, guid: 47bd1ca0687aff849b862a1a349ded12,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -5024,6 +5083,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -100
+      objectReference: {fileID: 0}
+    - target: {fileID: 8736041822657157087, guid: 47bd1ca0687aff849b862a1a349ded12,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8856518977833602126, guid: 47bd1ca0687aff849b862a1a349ded12,
         type: 3}
@@ -8570,6 +8634,11 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.x
       value: 196
       objectReference: {fileID: 0}
+    - target: {fileID: 3402633102928012270, guid: 07dfc875fab8d464ab6d5df3896fa7b6,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3980821240047002177, guid: 07dfc875fab8d464ab6d5df3896fa7b6,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -8954,6 +9023,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -16
+      objectReference: {fileID: 0}
+    - target: {fileID: 7449607373271153818, guid: 07dfc875fab8d464ab6d5df3896fa7b6,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7504184216079128236, guid: 07dfc875fab8d464ab6d5df3896fa7b6,
         type: 3}
@@ -13236,9 +13310,9 @@ Camera:
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
-    y: 0
+    y: 0.00026315823
     width: 1
-    height: 1
+    height: 0.9994737
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
@@ -13772,23 +13846,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   consoleInputField: {fileID: 1447284014}
-  inBattleActorIds: 01000000
+  inBattleActorIds: 05000000
+  actorLv: 50
   troopId: 401
-  troopLv: 4
+  troopLv: 50
   actorDates:
   - Id: 1
-    Name: "\u30D8\u30AB\u30C6\u30FC"
-    SubName: "\u3010\u8C4A\u7A63\u306E\u6708\u5973\u795E\u3011"
+    Name: "\u30DF\u30AB"
+    SubName: "\u3010\u7149\u7344\u68D8\u59EB\u3011"
     ClassId: 1
     ImagePath: 0001
     InitLv: 1
     MaxLv: 99
     InitStatus:
-      _hp: 27
+      _hp: 35
       _mp: 15
       _atk: 27
-      _def: 5
-      _spd: 19
+      _def: 14
+      _spd: 12
     PlusStatus:
       _hp: 0
       _mp: 0
@@ -13802,12 +13877,12 @@ MonoBehaviour:
       _def: 30
       _spd: 26
     Attribute: 0100000004000000050000000500000002000000
-    X: 0
-    Y: -16
-    Scale: 0.78
-    AwakenX: -32
-    AwakenY: 224
-    AwakenScale: 0.75
+    X: -4
+    Y: 12
+    Scale: 0.98
+    AwakenX: 0
+    AwakenY: 0
+    AwakenScale: 0.95
     Kinds: 
     LearningSkills:
     - SkillId: 11
@@ -13843,18 +13918,18 @@ MonoBehaviour:
       Weight: 0
       TriggerDates: []
   - Id: 2
-    Name: "\u30AD\u30E3\u30ED\u30E9\u30A4\u30F3"
-    SubName: "\u3010\u30EF\u30A4\u30E4\u30FC\u30D7\u30EA\u30F3\u30BB\u30B9\u3011"
+    Name: "\u30A8\u30EA\u30B6\u30D9\u30FC\u30C8"
+    SubName: "\u3010ChargeCommander\u3011"
     ClassId: 2
     ImagePath: 0002
     InitLv: 1
     MaxLv: 99
     InitStatus:
-      _hp: 35
+      _hp: 27
       _mp: 15
       _atk: 12
-      _def: 14
-      _spd: 12
+      _def: 5
+      _spd: 19
     PlusStatus:
       _hp: 0
       _mp: 0
@@ -13868,12 +13943,12 @@ MonoBehaviour:
       _def: 20
       _spd: 90
     Attribute: 0300000001000000050000000700000004000000
-    X: 22
-    Y: 28
+    X: -10
+    Y: 24
     Scale: 1
-    AwakenX: 0
-    AwakenY: 40
-    AwakenScale: 0.8
+    AwakenX: -8
+    AwakenY: 0
+    AwakenScale: 1
     Kinds: 
     LearningSkills:
     - SkillId: 11
@@ -13913,8 +13988,8 @@ MonoBehaviour:
       Weight: 0
       TriggerDates: []
   - Id: 3
-    Name: "\u30A2\u30EA\u30B9"
-    SubName: "\u3010\u4E0D\u601D\u8B70\u306E\u56FD\u306E\u5B88\u8B77\u795E\u3011"
+    Name: "\u30A2\u30EA\u30A8\u30B9"
+    SubName: "\u3010\u6020\u60F0\u306A\u5B88\u8B77\u5C11\u5973\u3011"
     ClassId: 3
     ImagePath: 0003
     InitLv: 1
@@ -13938,12 +14013,12 @@ MonoBehaviour:
       _def: 90
       _spd: 40
     Attribute: 0400000007000000010000000200000007000000
-    X: 16
-    Y: -8
-    Scale: 0.9
-    AwakenX: 80
-    AwakenY: 120
-    AwakenScale: 0.7
+    X: 8
+    Y: 4
+    Scale: 1.05
+    AwakenX: 10
+    AwakenY: 0
+    AwakenScale: 1
     Kinds: 
     LearningSkills:
     - SkillId: 11
@@ -13979,8 +14054,8 @@ MonoBehaviour:
       Weight: 0
       TriggerDates: []
   - Id: 4
-    Name: "\u30D5\u30EA\u30EB"
-    SubName: "\u3010\u30A4\u30CE\u30BB\u30F3\u30B9\u30B9\u30DE\u30A4\u30EB\u3011"
+    Name: "\u30CE\u30A8\u30EB"
+    SubName: "\u3010\u30A4\u30CE\u30BB\u30F3\u30C8\u30FB\u30EA\u30E1\u30C7\u30A3\u3011"
     ClassId: 4
     ImagePath: 0004
     InitLv: 1
@@ -14004,9 +14079,9 @@ MonoBehaviour:
       _def: 40
       _spd: 60
     Attribute: 0700000004000000030000000100000007000000
-    X: 20
-    Y: -12
-    Scale: 0.88
+    X: 0
+    Y: -56
+    Scale: 0.8
     AwakenX: 24
     AwakenY: 40
     AwakenScale: 0.8
@@ -14045,8 +14120,8 @@ MonoBehaviour:
       Weight: 0
       TriggerDates: []
   - Id: 5
-    Name: "\u30CB\u30E5\u30AF\u30B9"
-    SubName: "\u3010Determination2Die\u3011"
+    Name: "\u30EC\u30C0"
+    SubName: "\u3010Self-sacrifice\u3011"
     ClassId: 5
     ImagePath: 0005
     InitLv: 1
@@ -14070,12 +14145,12 @@ MonoBehaviour:
       _def: 30
       _spd: 50
     Attribute: 0400000004000000040000000700000001000000
-    X: 24
-    Y: 40
-    Scale: 0.95
-    AwakenX: 292
-    AwakenY: 232
-    AwakenScale: 1
+    X: -20
+    Y: 32
+    Scale: 1.1
+    AwakenX: -20
+    AwakenY: 32
+    AwakenScale: 1.1
     Kinds: 
     LearningSkills:
     - SkillId: 11
@@ -14111,8 +14186,8 @@ MonoBehaviour:
       Weight: 0
       TriggerDates: []
   - Id: 6
-    Name: "\u30D5\u30A7\u30EA\u30AA"
-    SubName: "\u3010\u9AD8\u901F\u5929\u7FD4\u3011"
+    Name: "\u30CA\u30E6\u30BF"
+    SubName: "\u3010Faked-Magician\u3011"
     ClassId: 6
     ImagePath: 0006
     InitLv: 1
@@ -14136,12 +14211,12 @@ MonoBehaviour:
       _def: 20
       _spd: 80
     Attribute: 0700000001000000020000000700000007000000
-    X: 0
-    Y: 0
+    X: 20
+    Y: 56
     Scale: 1
-    AwakenX: -48
-    AwakenY: 16
-    AwakenScale: 0.6
+    AwakenX: 24
+    AwakenY: -12
+    AwakenScale: 1
     Kinds: 
     LearningSkills:
     - SkillId: 11
@@ -14156,19 +14231,11 @@ MonoBehaviour:
       Level: 0
       Weight: 0
       TriggerDates: []
-    - SkillId: 33
+    - SkillId: 1010
       Level: 0
       Weight: 0
       TriggerDates: []
-    - SkillId: 2010
-      Level: 0
-      Weight: 0
-      TriggerDates: []
-    - SkillId: 2070
-      Level: 0
-      Weight: 0
-      TriggerDates: []
-    - SkillId: 7010
+    - SkillId: 1060
       Level: 0
       Weight: 0
       TriggerDates: []
@@ -14180,10 +14247,14 @@ MonoBehaviour:
       Level: 0
       Weight: 0
       TriggerDates: []
+    - SkillId: 7010
+      Level: 0
+      Weight: 0
+      TriggerDates: []
   - Id: 7
-    Name: "\u30E1\u30EA\u30FC"
-    SubName: "\u3010\u30B9\u30FC\u30B5\u30A4\u30C9\u30B8\u30A7\u30CE\u30B5\u30A4\u30C9\u3011"
-    ClassId: 7
+    Name: "\u30B1\u30A4\u30C8"
+    SubName: "\u3010\u7121\u57A2\u306A\u308B\u69CB\u6210\u5B98\u3011"
+    ClassId: 1
     ImagePath: 0007
     InitLv: 1
     MaxLv: 40
@@ -14206,9 +14277,9 @@ MonoBehaviour:
       _def: 20
       _spd: 30
     Attribute: 0400000003000000070000000700000001000000
-    X: 24
-    Y: 0
-    Scale: 0.8
+    X: 4
+    Y: -56
+    Scale: 0.95
     AwakenX: 0
     AwakenY: 160
     AwakenScale: 0.6
@@ -14222,35 +14293,45 @@ MonoBehaviour:
       Level: 0
       Weight: 0
       TriggerDates: []
-    - SkillId: 31
+  - Id: 8
+    Name: "\u30DE\u30EA\u30FC\u30D9\u30EB"
+    SubName: "\u3010\u83DC\u5712\u306E\u4FEE\u9053\u58EB\u3011"
+    ClassId: 1
+    ImagePath: 0008
+    InitLv: 1
+    MaxLv: 40
+    InitStatus:
+      _hp: 45
+      _mp: 20
+      _atk: 33
+      _def: 11
+      _spd: 15
+    PlusStatus:
+      _hp: 0
+      _mp: 0
+      _atk: 0
+      _def: 0
+      _spd: 0
+    NeedStatus:
+      _hp: 110
+      _mp: 50
+      _atk: 70
+      _def: 20
+      _spd: 30
+    Attribute: 0400000003000000070000000700000001000000
+    X: -8
+    Y: 36
+    Scale: 1.05
+    AwakenX: 0
+    AwakenY: 160
+    AwakenScale: 0.6
+    Kinds: 01000000
+    LearningSkills:
+    - SkillId: 11
       Level: 0
       Weight: 0
       TriggerDates: []
-    - SkillId: 41
-      Level: 0
-      Weight: 0
-      TriggerDates: []
-    - SkillId: 42
-      Level: 0
-      Weight: 0
-      TriggerDates: []
-    - SkillId: 5010
-      Level: 0
-      Weight: 0
-      TriggerDates: []
-    - SkillId: 5050
-      Level: 0
-      Weight: 0
-      TriggerDates: []
-    - SkillId: 7010
-      Level: 0
-      Weight: 0
-      TriggerDates: []
-    - SkillId: 100710
-      Level: 0
-      Weight: 0
-      TriggerDates: []
-    - SkillId: 100711
+    - SkillId: 21
       Level: 0
       Weight: 0
       TriggerDates: []
@@ -15982,6 +16063,7 @@ RectTransform:
   - {fileID: 2046263487}
   - {fileID: 292919095}
   - {fileID: 1326559000}
+  - {fileID: 384833776}
   m_Father: {fileID: 1931081345}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -16798,6 +16880,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1848313490}
     m_Modifications:
+    - target: {fileID: 261542460070843353, guid: d635cf12e11dd874d8573871e217562e,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 377340740722537510, guid: d635cf12e11dd874d8573871e217562e,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -16902,6 +16989,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -18
+      objectReference: {fileID: 0}
+    - target: {fileID: 2353071076802125549, guid: d635cf12e11dd874d8573871e217562e,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -17.599998
       objectReference: {fileID: 0}
     - target: {fileID: 2752358324858449167, guid: d635cf12e11dd874d8573871e217562e,
         type: 3}
@@ -17118,6 +17210,11 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -100
       objectReference: {fileID: 0}
+    - target: {fileID: 5710861324325860619, guid: d635cf12e11dd874d8573871e217562e,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -17.599998
+      objectReference: {fileID: 0}
     - target: {fileID: 5757845490049288096, guid: d635cf12e11dd874d8573871e217562e,
         type: 3}
       propertyPath: m_AnchorMax.x
@@ -17147,6 +17244,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -18
+      objectReference: {fileID: 0}
+    - target: {fileID: 6489364053868050635, guid: d635cf12e11dd874d8573871e217562e,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6971877522467363414, guid: d635cf12e11dd874d8573871e217562e,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -17.599998
       objectReference: {fileID: 0}
     - target: {fileID: 7015339147569415521, guid: d635cf12e11dd874d8573871e217562e,
         type: 3}
@@ -17306,6 +17413,11 @@ PrefabInstance:
     - target: {fileID: 7602088211443688605, guid: d635cf12e11dd874d8573871e217562e,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7624754370789337629, guid: d635cf12e11dd874d8573871e217562e,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7694818615189846048, guid: d635cf12e11dd874d8573871e217562e,

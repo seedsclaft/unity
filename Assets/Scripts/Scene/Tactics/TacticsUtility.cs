@@ -11,6 +11,7 @@ public class TacticsUtility
 
     public static int TrainCost(ActorInfo actorInfo)
     {
+                return 0;
         if (GameSystem.CurrentStageData != null)
         {
             if (GameSystem.CurrentStageData.StageAlcana.CheckCommandCostZero(TacticsCommandType.Train))
