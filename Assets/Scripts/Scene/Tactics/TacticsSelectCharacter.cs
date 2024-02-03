@@ -35,15 +35,19 @@ public class TacticsSelectCharacter : MonoBehaviour
         }
     }    
 
-    public void Initialize(int createCount) {
+    public void Initialize() {
         characterList.Initialize();
         characterList.Activate();
         commandList.Initialize();
         commandList.Activate();
         characterList.SetInputCallHandler((a) => CallCharacterInputHandler(a));
         commandList.SetInputCallHandler((a) => CallCommandInputHandler(a));
-        infoObj.ForEach(a => a.SetActive(false));
-    }    
+        //infoObj.ForEach(a => a.SetActive(false));
+    }
+
+    public void SetCharacterData(List<ListData> characterData) {
+        characterList.SetData(characterData);
+    }
     
     public void SetTacticsCommand(List<ListData> commandData)
     {
@@ -130,9 +134,11 @@ public class TacticsSelectCharacter : MonoBehaviour
             {
                 displaySelectCharacter.gameObject.SetActive(true);
                 displaySelectCharacter.UpdateInfo(tacticsActorInfo.ActorInfo,tacticsActorInfo.ActorInfos);
+                /*
                 infoObj.ForEach(a => a.gameObject.SetActive(false));
                 infoObj[(int)tacticsActorInfo.TacticsCommandType-1].SetActive(true);
                 infoObj[(int)tacticsActorInfo.TacticsCommandType-1].GetComponent<ActorInfoComponent>().UpdateInfo(tacticsActorInfo.ActorInfo,tacticsActorInfo.ActorInfos);
+                */
             }
         }
     }

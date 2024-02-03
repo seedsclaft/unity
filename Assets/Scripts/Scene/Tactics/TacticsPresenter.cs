@@ -215,7 +215,8 @@ public class TacticsPresenter :BasePresenter
         _view.ChangeBackCommandActive(false);
         _view.SetEvent((type) => UpdateCommand(type));
         _view.SetSideMenu(_model.SideMenu());
-        _view.SetSelectCharacter(_model.StageMembers(),_model.NoChoiceConfirmCommand(),_model.CommandRankInfo());
+        _view.SetSelectCharacter(_model.TacticsCharacterData(),_model.NoChoiceConfirmCommand(),_model.CommandRankInfo());
+        _view.SetTacticsCharaLayer(_model.StageMembers());
         _view.SetStageInfo(_model.CurrentStage);
         _view.SetSymbols(ListData.MakeListData(_model.TacticsSymbols()));
 
@@ -295,7 +296,9 @@ public class TacticsPresenter :BasePresenter
             if (_model.TacticsCommandType == TacticsCommandType.Paradigm)
             {
                 CommandSkillAlchemy((SkillInfo)viewEvent.template);  
-            } else{
+            } else
+            if (_model.TacticsCommandType == TacticsCommandType.Alchemy)
+            {
                 // 魔法装備
                 CommandSkillEquip((SkillInfo)viewEvent.template);  
             }
@@ -487,17 +490,20 @@ public class TacticsPresenter :BasePresenter
             case TacticsCommandType.Train:
             case TacticsCommandType.Recovery:
                 _view.ShowSelectCharacter(_model.TacticsCharacterData(),_model.TacticsCommandData());
+                _view.ShowTrainCharacter(_model.StageMembers()[0],_model.StageMembers());
                 _view.ActivateTacticsCommand();
                 _view.ChangeBackCommandActive(true);
                 _backCommand = Tactics.CommandType.TacticsCommandClose;
                 break;
             case TacticsCommandType.Alchemy:
                 _view.ShowSelectCharacter(_model.TacticsCharacterData(),_model.TacticsCommandData());
+                _view.ShowAttributeList(_model.SelectActorAlchemy());
                 _view.ActivateTacticsCommand();
                 _view.ChangeBackCommandActive(true);
-                _backCommand = Tactics.CommandType.TacticsCommandClose;
-                _view.HideAttributeList();
+
+                //_view.HideAttributeList();
                 _view.ShowSelectCharacterCommand();
+                _backCommand = Tactics.CommandType.TacticsCommandClose;
                 break;
         }
         if (tacticsCommandType == TacticsCommandType.Status)
@@ -522,6 +528,7 @@ public class TacticsPresenter :BasePresenter
     private void CommandSelectActorTrain(int actorId)
     {
         _model.SelectActorTrain(actorId);
+        _view.ShowTrainCharacter(_model.TacticsActor(actorId),_model.StageMembers());
         CommandRefresh();
     }
 
@@ -538,10 +545,10 @@ public class TacticsPresenter :BasePresenter
         // 装備中なら
         if (_model.SkillEquipmentActor())
         {
-            CheckRemoveAlchemy();
-            return;
+            //CheckRemoveAlchemy();
+            ///return;
         }
-        _view.ShowAttributeList(null,_model.SelectActorAlchemy());
+        _view.ShowAttributeList(_model.SelectActorAlchemy());
         _view.ChangeBackCommandActive(true);
         _view.HideSelectCharacterCommand();
         _backCommand = Tactics.CommandType.SelectAlchemyClose;
@@ -680,7 +687,7 @@ public class TacticsPresenter :BasePresenter
 
     private void CheckAlcanaSymbol(List<GetItemInfo> getItemInfos)
     {
-        _view.ShowAttributeList(null,_model.AlcanaMagicSkillInfos(getItemInfos));
+        _view.ShowAttributeList(_model.AlcanaMagicSkillInfos(getItemInfos));
         _view.ChangeBackCommandActive(true);
         _backCommand = Tactics.CommandType.TacticsCommand;        
         Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
@@ -814,6 +821,7 @@ public class TacticsPresenter :BasePresenter
         _view.SetAlcanaInfo(_model.StageAlcana);
         
         _view.CommandRefresh();
+                
     }
 
     private void CommandCallEnemyInfo(int troopInfoIndex)

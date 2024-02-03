@@ -10,6 +10,15 @@ public class TroopDates : ScriptableObject
 [Serializable]
 public class TroopData
 {   
+    public int TroopId;
+    public List<TroopEnemyData> TroopEnemies;
+    public int StageTurn;
+    public int PrizeSetId;
+}
+
+[Serializable]
+public class TroopEnemyData
+{   
     public int Id;
 
     public int TroopId;
@@ -17,6 +26,5 @@ public class TroopData
     public int Lv;
     public bool BossFlag;
     public LineType Line;
-    public int StageTurn;
-    public List<GetItemData> GetItemDates;
+    public int PrizeSetId;
 }

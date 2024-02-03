@@ -122,6 +122,7 @@ abstract public class ListWindow : MonoBehaviour
 
     private void CreateList()
     {
+        if (_itemPrefabList.Count > 0) return;
         _blankObject = new GameObject("blank");
         _blankObject.AddComponent<RectTransform>();
         var rect = _blankObject.GetComponent<RectTransform>();
@@ -177,6 +178,7 @@ abstract public class ListWindow : MonoBehaviour
         var startIndex = Math.Max(0,GetStartIndex());
         for (int i = 0; i < ItemPrefabList.Count;i++)
         {
+            ItemPrefabList[i].SetActive(i < _listDates.Count);
             if (startIndex < 0) continue;
             if (i + startIndex >= _listDates.Count) continue;
             if (i < _listDates.Count) 
@@ -184,7 +186,6 @@ abstract public class ListWindow : MonoBehaviour
                 var listItem = ItemPrefabList[i].GetComponent<ListItem>();
                 listItem.SetListData(_listDates[i + startIndex],i + startIndex);
             }
-            ItemPrefabList[i].SetActive(i < _listDates.Count);
         }
         UpdateAllItems();
         UpdateSelectIndex(selectIndex);

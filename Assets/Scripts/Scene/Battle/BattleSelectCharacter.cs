@@ -52,7 +52,7 @@ public class BattleSelectCharacter : MonoBehaviour
         UpdateTabs();
     }
 
-    private void SelectCharacterTab(SelectCharacterTabType selectCharacterTabType)
+    public void SelectCharacterTab(SelectCharacterTabType selectCharacterTabType)
     {
         if (_selectCharacterTabType == selectCharacterTabType)
         {
@@ -236,6 +236,7 @@ public class BattleSelectCharacter : MonoBehaviour
     {
         return;
     }
+    
 }
 
 public enum SelectCharacterTabType{

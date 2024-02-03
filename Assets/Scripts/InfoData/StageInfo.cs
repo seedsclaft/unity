@@ -163,6 +163,7 @@ public class StageInfo
     // 雑魚敵グループを生成
 	private void MakeTroopData()
 	{
+        /*
 		for (int i = 1;i < Master.RandomTroopCount;i++)
 		{
 			var BossTroopData = new TroopData();
@@ -179,6 +180,7 @@ public class StageInfo
             }
             _troopDates.Add(BossTroopData);
 		}
+        */
 	}
 
     public TroopInfo BattleTroops(int troopId,int enemyCount)
@@ -244,14 +246,14 @@ public class StageInfo
     public void TestTroops(int troopId,int troopLv)
     {
         _currentSymbolInfos.Clear();
-        var troopDates = DataSystem.Troops.FindAll(a => a.TroopId == troopId);
+        var troopDate = DataSystem.Troops.Find(a => a.TroopId == troopId);
         
-        var troopInfo = new TroopInfo(troopDates[0].TroopId,false);
-        for (int i = 0;i < troopDates.Count;i++)
+        var troopInfo = new TroopInfo(troopDate.TroopId,false);
+        for (int i = 0;i < troopDate.TroopEnemies.Count;i++)
         {
-            var enemyData = DataSystem.Enemies.Find(a => a.Id == troopDates[i].EnemyId);
-            bool isBoss = troopDates[i].BossFlag;
-            var enemy = new BattlerInfo(enemyData,troopDates[i].Lv + troopLv,i,troopDates[i].Line,isBoss);
+            var enemyData = DataSystem.Enemies.Find(a => a.Id == troopDate.TroopEnemies[i].EnemyId);
+            bool isBoss = troopDate.TroopEnemies[i].BossFlag;
+            var enemy = new BattlerInfo(enemyData,troopDate.TroopEnemies[i].Lv + troopLv,i,troopDate.TroopEnemies[i].Line,isBoss);
             troopInfo.AddEnemy(enemy);
         }
         _currentBattleIndex = 0;

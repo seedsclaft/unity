@@ -595,6 +595,36 @@ public class ActorInfo
         rebornSkillInfo.SetEnable(true);
         _rebornSkillInfos.Add(rebornSkillInfo);
     }
+
+    public List<ListData> SkillActionList()
+    {
+        var skillInfos = Skills.FindAll(a => a.Id > 100);
+
+        skillInfos.ForEach(a => a.SetEnable(true));
+        var sortList1 = new List<SkillInfo>();
+        var sortList2 = new List<SkillInfo>();
+        var sortList3 = new List<SkillInfo>();
+        skillInfos.Sort((a,b) => {return a.Master.Id > b.Master.Id ? 1 : -1;});
+        foreach (var skillInfo in skillInfos)
+        {
+            if (skillInfo.Master.IconIndex >= MagicIconType.Elementarism && skillInfo.Master.IconIndex <= MagicIconType.Psionics)
+            {
+                sortList1.Add(skillInfo);
+            } else
+            if (skillInfo.Master.IconIndex >= MagicIconType.Demigod && skillInfo.Master.IconIndex < MagicIconType.Other)
+            {
+                sortList2.Add(skillInfo);
+            } else
+            {
+                sortList3.Add(skillInfo);
+            }
+        }
+        skillInfos.Clear();
+        skillInfos.AddRange(sortList1);
+        skillInfos.AddRange(sortList2);
+        skillInfos.AddRange(sortList3);
+        return ListData.MakeListData(skillInfos);
+    }
 }
 
 

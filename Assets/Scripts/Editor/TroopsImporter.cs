@@ -7,6 +7,7 @@ using UnityEngine;
 using NPOI.HSSF.UserModel;
 using NPOI.SS.UserModel;
 using NPOI.XSSF.UserModel;
+using TreeEditor;
 
 public class TroopsImporter : AssetPostprocessor {
     enum BaseColumn
@@ -18,7 +19,8 @@ public class TroopsImporter : AssetPostprocessor {
 		Lv,
 		BossFlag,
 		Line,
-		StageTurn
+		StageTurn,
+		PrizeSetId
     }
 	enum BaseGetItemColumn
     {		
@@ -75,22 +77,39 @@ public class TroopsImporter : AssetPostprocessor {
 				// エクセルシートからセル単位で読み込み
 				ISheet BaseSheet = Book.GetSheetAt(0);
 
+				var TroopEnemyDates = new List<TroopEnemyData>();
 				for (int i = 1; i <= BaseSheet.LastRowNum; i++)
 				{
 					IRow BaseRow = BaseSheet.GetRow(i);
 
-					var TroopData = new TroopData();
-					TroopData.Id = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.Id);
-					TroopData.TroopId = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.TroopId);
-					TroopData.EnemyId = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.EnemyId);
-					TroopData.Lv = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.Lv);
-					TroopData.BossFlag = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.BossFlag) == 1;
-					TroopData.Line = (LineType)AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.Line);
-					TroopData.StageTurn = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.StageTurn);
-					TroopData.GetItemDates = new List<GetItemData>();
-					Data.Data.Add(TroopData);
+					var TroopEnemyData = new TroopEnemyData();
+					TroopEnemyData.Id = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.Id);
+					TroopEnemyData.TroopId = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.TroopId);
+					TroopEnemyData.EnemyId = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.EnemyId);
+					TroopEnemyData.Lv = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.Lv);
+					TroopEnemyData.BossFlag = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.BossFlag) == 1;
+					TroopEnemyData.Line = (LineType)AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.Line);
+					TroopEnemyData.PrizeSetId = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.PrizeSetId);
+					//TroopData.GetItemDates = new List<GetItemData>();
+					TroopEnemyDates.Add(TroopEnemyData);
 				}
 
+				foreach (var TroopEnemyData in TroopEnemyDates)
+				{
+					var FindTroop = Data.Data.Find(a => a.TroopId == TroopEnemyData.TroopId);
+					if (FindTroop == null)
+					{
+						var TroopData = new TroopData();
+						TroopData.TroopId = TroopEnemyData.TroopId;
+						TroopData.PrizeSetId = TroopEnemyData.PrizeSetId;
+						TroopData.TroopEnemies = new List<TroopEnemyData>();
+						Data.Data.Add(TroopData);
+					}
+					FindTroop = Data.Data.Find(a => a.TroopId == TroopEnemyData.TroopId);
+					FindTroop.TroopEnemies.Add(TroopEnemyData);
+				}
+
+				/*
 				BaseSheet = Book.GetSheetAt(1);
 				for (int i = 1; i <= BaseSheet.LastRowNum; i++)
 				{
@@ -107,6 +126,7 @@ public class TroopsImporter : AssetPostprocessor {
 						troopData.GetItemDates.Add(getItemData);
 					}
 				}
+				*/
 			}
 		}
 		catch (Exception ex)

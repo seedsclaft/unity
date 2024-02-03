@@ -5,7 +5,7 @@ using UnityEngine;
 [System.Serializable]
 public class TroopInfo 
 {
-    public List<TroopData> MasterAll => DataSystem.Troops.FindAll(a => a.TroopId == _troopId);
+    public TroopData Master => DataSystem.Troops.Find(a => a.TroopId == _troopId);
     private int _troopId = 0;
     public int TroopId => _troopId;
     private List<BattlerInfo> _battlerInfos = new(); 
@@ -36,12 +36,13 @@ public class TroopInfo
 
     public void MakeEnemyTroopDates(int level,int displayTurn = 1)
     {
-        foreach (var troopData in MasterAll)
+        var troopData = Master;
+        if (troopData.StageTurn == 0 || troopData.StageTurn >= displayTurn)
         {
-            if (troopData.StageTurn == 0 || troopData.StageTurn >= displayTurn)
+            foreach (var troopEnemies in troopData.TroopEnemies)
             {
-                var enemyData = DataSystem.Enemies.Find(a => a.Id == troopData.EnemyId);
-                var battlerInfo = new BattlerInfo(enemyData,troopData.Lv + level,_battlerInfos.Count,troopData.Line,troopData.BossFlag);
+                var enemyData = DataSystem.Enemies.Find(a => a.Id == troopEnemies.EnemyId);
+                var battlerInfo = new BattlerInfo(enemyData,troopEnemies.Lv + level,_battlerInfos.Count,troopEnemies.Line,troopEnemies.BossFlag);
                 AddEnemy(battlerInfo);
             }
         }
@@ -55,44 +56,39 @@ public class TroopInfo
 
     public void MakeGetItemInfos()
     {
-        var getItemDates = new List<GetItemData>();
-        foreach (var master in MasterAll)
+        var prizeSetId = Master.PrizeSetId;
+        var prizeSetDates = DataSystem.PrizeSets.FindAll(a => a.Id == prizeSetId);
+        for (int i = 0;i < prizeSetDates.Count;i++)
         {
-            foreach (var getItemData in master.GetItemDates)
+            var getItemData = prizeSetDates[i].GetItem;
+            var getItemInfo = new GetItemInfo(getItemData);
+            if (getItemData.Type == GetItemType.Skill)
             {
-                getItemDates.Add(getItemData);
-            }
-        }
-        for (int i = 0;i < getItemDates.Count;i++)
-        {
-            var getItemInfo = new GetItemInfo(getItemDates[i]);
-            if (getItemDates[i].Type == GetItemType.Skill)
-            {
-                var skillData = DataSystem.FindSkill(getItemDates[i].Param1);
+                var skillData = DataSystem.FindSkill(getItemData.Param1);
                 getItemInfo.SetResultData(skillData.Name);
                 getItemInfo.SetSkillElementId((int)skillData.Attribute);
             }
-            if (getItemDates[i].Type == GetItemType.Numinous)
+            if (getItemData.Type == GetItemType.Numinous)
             {
-                getItemInfo.SetResultData("+" + getItemDates[i].Param1.ToString() + DataSystem.GetTextData(1000).Text);
+                getItemInfo.SetResultData("+" + getItemData.Param1.ToString() + DataSystem.GetTextData(1000).Text);
             }
-            if (getItemDates[i].Type == GetItemType.Demigod)
+            if (getItemData.Type == GetItemType.Demigod)
             {
                 getItemInfo.SetResultData(DataSystem.GetTextData(14042).Text + "+" + (getItemInfo.Param1).ToString());
             }
-            if ((int)getItemDates[i].Type >= (int)GetItemType.AttributeFire && (int)getItemDates[i].Type <= (int)GetItemType.AttributeDark)
+            if ((int)getItemData.Type >= (int)GetItemType.AttributeFire && (int)getItemData.Type <= (int)GetItemType.AttributeDark)
             {
-                string text = DataSystem.GetReplaceText(14051,DataSystem.GetTextData(330 + (int)getItemDates[i].Type - 11).Text);
+                string text = DataSystem.GetReplaceText(14051,DataSystem.GetTextData(330 + (int)getItemData.Type - 11).Text);
                 getItemInfo.SetResultData(text);
-                getItemInfo.SetSkillElementId((int)AttributeType.Fire + (int)getItemDates[i].Type - 11);
+                getItemInfo.SetSkillElementId((int)AttributeType.Fire + (int)getItemData.Type - 11);
             }
-            if (getItemDates[i].Type == GetItemType.Ending)
+            if (getItemData.Type == GetItemType.Ending)
             {
                 getItemInfo.SetResultData(DataSystem.GetTextData(14060).Text);
             }
-            if (getItemDates[i].Type == GetItemType.StatusUp)
+            if (getItemData.Type == GetItemType.StatusUp)
             {
-                getItemInfo.SetResultData(DataSystem.GetReplaceText(14070,getItemDates[i].Param1.ToString()));
+                getItemInfo.SetResultData(DataSystem.GetReplaceText(14070,getItemData.Param1.ToString()));
             }
             AddGetItemInfo(getItemInfo);
         }

@@ -43,7 +43,9 @@ public class TacticsView : BaseView
         alcanaButton.onClick.AddListener(() => CallAlcanaCheck());
         
         tacticsCommandList.Initialize();
+        battleSelectCharacter.gameObject.SetActive(false);
         new TacticsPresenter(this);
+        selectCharacter.gameObject.SetActive(false);
     }
     
     private void InitializeSelectCharacter()
@@ -169,9 +171,10 @@ public class TacticsView : BaseView
         }
     }
 
-    public void SetSelectCharacter(List<ActorInfo> actorInfos,List<ListData> confirmCommands,Dictionary<TacticsCommandType, int> commandRankInfo)
+    public void SetSelectCharacter(List<ListData> actorInfos,List<ListData> confirmCommands,Dictionary<TacticsCommandType, int> commandRankInfo)
     {
-        selectCharacter.Initialize(actorInfos.Count);
+        selectCharacter.Initialize();
+        selectCharacter.SetCharacterData(actorInfos);
         SetInputHandler(selectCharacter.GetComponent<IInputHandlerEvent>());
         selectCharacter.SetTacticsCommand(confirmCommands);
         selectCharacter.SetInputHandlerCharacter(InputKeyType.Decide,() => CallActorTrain());
@@ -184,8 +187,12 @@ public class TacticsView : BaseView
         SetInputHandler(selectCharacter.CommandList.GetComponent<IInputHandlerEvent>());
         HideSelectCharacter();
 
-        tacticsCharaLayer.SetData(actorInfos);
         SetInputHandler(tacticsCharaLayer.GetComponent<IInputHandlerEvent>());
+    }
+
+    public void SetTacticsCharaLayer(List<ActorInfo> actorInfos)
+    {
+        tacticsCharaLayer.SetData(actorInfos);
     }
 
     public void SetSymbols(List<ListData> symbolInfos)
@@ -253,7 +260,8 @@ public class TacticsView : BaseView
 
     public void HideSelectCharacter()
     {
-        selectCharacter.gameObject.SetActive(false);
+        battleSelectCharacter.gameObject.SetActive(false);
+        selectCharacter.gameObject.SetActive(false); 
         SetHelpInputInfo("TACTICS");
     }
 
@@ -277,10 +285,25 @@ public class TacticsView : BaseView
         selectCharacter.HideCommandList();
     }
 
-    public void ShowAttributeList(ActorInfo actorInfo, List<ListData> learnMagicList)
+    public void ShowTrainCharacter(ActorInfo actorInfo,List<ActorInfo> party)
     {
+        battleSelectCharacter.gameObject.SetActive(true);
+        battleSelectCharacter.SetActiveTab(SelectCharacterTabType.Magic,false);
+        battleSelectCharacter.SetActiveTab(SelectCharacterTabType.Condition,false);
+        battleSelectCharacter.SetActiveTab(SelectCharacterTabType.Detail,true);
+        battleSelectCharacter.SelectCharacterTab(SelectCharacterTabType.Detail);
+        battleSelectCharacter.SetActorInfo(actorInfo,party);
+        battleSelectCharacter.SetSkillInfos(actorInfo.SkillActionList());
+        SetHelpInputInfo("ALCHEMY_ATTRIBUTE");
+    }
+
+    public void ShowAttributeList(List<ListData> learnMagicList)
+    {
+        battleSelectCharacter.gameObject.SetActive(true);
+        battleSelectCharacter.SetActiveTab(SelectCharacterTabType.Magic,true);
         battleSelectCharacter.SetActiveTab(SelectCharacterTabType.Condition,false);
         battleSelectCharacter.SetActiveTab(SelectCharacterTabType.Detail,false);
+        battleSelectCharacter.SelectCharacterTab(SelectCharacterTabType.Magic);
         battleSelectCharacter.SetSkillInfos(learnMagicList);
         battleSelectCharacter.ShowActionList();
         battleSelectCharacter.HideStatus();
