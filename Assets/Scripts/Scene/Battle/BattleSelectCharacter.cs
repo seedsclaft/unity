@@ -21,7 +21,11 @@ public class BattleSelectCharacter : MonoBehaviour
     
     public SkillInfo ActionData{
         get {
-            return (SkillInfo)magicList.ListData.Data;
+            if (magicList.ListData != null)
+            {
+                return (SkillInfo)magicList.ListData.Data;
+            }
+            return null;
         }
     }
 

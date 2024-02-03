@@ -1,13 +1,10 @@
 {
-    // IntelliSense を使用して利用可能な属性を学べます。
-    // 既存の属性の説明をホバーして表示します。
-    // 詳細情報は次を確認してください: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
         {
             "name": "Unity Editor",
             "type": "unity",
-            "path": "/C:/Users/USER/Documents/unity3/Library/EditorInstance.json",
+            "path": "/C:/Users/USER/Documents/unity4/Library/EditorInstance.json",
             "request": "launch"
         },
         {
@@ -49,6 +46,11 @@
             "name": "SwitchPlayer",
             "type": "unity",
             "request": "launch"
+        },
+        {
+            "name": "Attach to Unity",
+            "type": "vstuc",
+            "request": "attach"
         }
     ]
 }

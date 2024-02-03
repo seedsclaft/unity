@@ -235,6 +235,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   clickButton: {fileID: 8243786774434776597}
   cursor: {fileID: 8490510217433408911}
+  changeCursorColor: 1
   disable: {fileID: 0}
   commandName: {fileID: 748867480089640542}
 --- !u!1 &520167036628628291
@@ -1198,7 +1199,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.30588236, g: 0.69803923, b: 0.69803923, a: 0.78431374}
+  m_Color: {r: 1, g: 0.6745098, b: 0.78431374, a: 0.78431374}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1290,7 +1291,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.30588236, g: 0.69803923, b: 0.69803923, a: 0.78431374}
+  m_Color: {r: 1, g: 0.6745098, b: 0.78431374, a: 0.78431374}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1677,6 +1678,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   clickButton: {fileID: 7759860869189205476}
   cursor: {fileID: 2938785911709144659}
+  changeCursorColor: 0
   disable: {fileID: 0}
   component: {fileID: 555983641208344323}
   rankingButton: {fileID: 8243786774434776597}

@@ -373,8 +373,8 @@ MonoBehaviour:
       _def: 20
       _spd: 80
     Attribute: 0700000001000000020000000700000007000000
-    X: 24
-    Y: -12
+    X: 20
+    Y: 56
     Scale: 1
     AwakenX: 24
     AwakenY: -12
@@ -414,9 +414,9 @@ MonoBehaviour:
       Weight: 0
       TriggerDates: []
   - Id: 7
-    Name: "\u30E1\u30EA\u30FC"
-    SubName: "\u3010\u30B9\u30FC\u30B5\u30A4\u30C9\u30B8\u30A7\u30CE\u30B5\u30A4\u30C9\u3011"
-    ClassId: 7
+    Name: "\u30B1\u30A4\u30C8"
+    SubName: "\u3010\u7121\u57A2\u306A\u308B\u69CB\u6210\u5B98\u3011"
+    ClassId: 1
     ImagePath: 0007
     InitLv: 1
     MaxLv: 40
@@ -439,9 +439,9 @@ MonoBehaviour:
       _def: 20
       _spd: 30
     Attribute: 0400000003000000070000000700000001000000
-    X: 24
-    Y: 0
-    Scale: 0.8
+    X: 4
+    Y: -56
+    Scale: 0.95
     AwakenX: 0
     AwakenY: 160
     AwakenScale: 0.6
@@ -455,27 +455,45 @@ MonoBehaviour:
       Level: 0
       Weight: 0
       TriggerDates: []
-    - SkillId: 31
+  - Id: 8
+    Name: "\u30DE\u30EA\u30FC\u30D9\u30EB"
+    SubName: "\u3010\u83DC\u5712\u306E\u4FEE\u9053\u58EB\u3011"
+    ClassId: 1
+    ImagePath: 0008
+    InitLv: 1
+    MaxLv: 40
+    InitStatus:
+      _hp: 45
+      _mp: 20
+      _atk: 33
+      _def: 11
+      _spd: 15
+    PlusStatus:
+      _hp: 0
+      _mp: 0
+      _atk: 0
+      _def: 0
+      _spd: 0
+    NeedStatus:
+      _hp: 110
+      _mp: 50
+      _atk: 70
+      _def: 20
+      _spd: 30
+    Attribute: 0400000003000000070000000700000001000000
+    X: -8
+    Y: 36
+    Scale: 1.05
+    AwakenX: 0
+    AwakenY: 160
+    AwakenScale: 0.6
+    Kinds: 01000000
+    LearningSkills:
+    - SkillId: 11
       Level: 0
       Weight: 0
       TriggerDates: []
-    - SkillId: 1010
-      Level: 0
-      Weight: 0
-      TriggerDates: []
-    - SkillId: 1060
-      Level: 0
-      Weight: 0
-      TriggerDates: []
-    - SkillId: 100710
-      Level: 0
-      Weight: 0
-      TriggerDates: []
-    - SkillId: 100711
-      Level: 0
-      Weight: 0
-      TriggerDates: []
-    - SkillId: 7010
+    - SkillId: 21
       Level: 0
       Weight: 0
       TriggerDates: []
