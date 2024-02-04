@@ -38,7 +38,12 @@ public class SymbolInfo
     {
         if (_troopInfo != null)
         {
-            return 1;
+            var evaluate = 0;
+            foreach (var battlerInfo in _troopInfo.BattlerInfos)
+            {
+                evaluate += battlerInfo.Evaluate();
+            }
+            return evaluate;
         }
         return 0;
     }

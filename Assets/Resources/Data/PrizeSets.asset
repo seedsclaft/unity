@@ -13,28 +13,33 @@ MonoBehaviour:
   m_Name: PrizeSets
   m_EditorClassIdentifier: 
   Data:
-  - Id: 100
-    GetItem:
-      Type: 1
-      Param1: 11070
-      Param2: 0
-  - Id: 100
-    GetItem:
-      Type: 1
-      Param1: 11010
-      Param2: 0
-  - Id: 200
+  - Id: 105
     GetItem:
       Type: 2
       Param1: 5
+      Param2: 100
+  - Id: 300
+    GetItem:
+      Type: 31
+      Param1: 50
       Param2: 100
   - Id: 400
     GetItem:
       Type: 4
       Param1: 1
       Param2: 1
-  - Id: 3100
+  - Id: 1001
     GetItem:
-      Type: 31
-      Param1: 50
-      Param2: 100
+      Type: 51
+      Param1: 2
+      Param2: 0
+  - Id: 1002
+    GetItem:
+      Type: 51
+      Param1: 3
+      Param2: 0
+  - Id: 11010
+    GetItem:
+      Type: 1
+      Param1: 11010
+      Param2: 0

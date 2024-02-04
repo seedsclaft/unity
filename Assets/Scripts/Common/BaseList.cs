@@ -56,7 +56,7 @@ public class BaseList : ListWindow , IInputHandlerEvent
             {
                 UpdateSelectIndex(index);
             });
-            listItem.SetAddListenHandler();
+            listItem.SetAddListenHandler(true);
         }
     }    
     

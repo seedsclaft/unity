@@ -187,6 +187,10 @@ abstract public class ListWindow : MonoBehaviour
                 listItem.SetListData(_listDates[i + startIndex],i + startIndex);
             }
         }
+        for (int i = 0; i < ObjectList.Count;i++)
+        {
+            ObjectList[i].SetActive(i < _listDates.Count);
+        }
         UpdateAllItems();
         UpdateSelectIndex(selectIndex);
     }

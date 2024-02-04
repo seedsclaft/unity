@@ -12,9 +12,10 @@ public class BattleUtility
             foreach (var skillInfo in battlerInfo.Skills)
             {
                 var skillData = skillInfo.Master;
-                if (!list.Contains(skillData.AnimationName) && skillData.AnimationName != "")
+                var animationData = AnimationData(skillData.AnimationId);
+                if (animationData != null && !list.Contains(animationData.AnimationPath) && animationData.AnimationPath != "")
                 {
-                    list.Add(skillData.AnimationName);
+                    list.Add(animationData.AnimationPath);
                 }
             }
         }
@@ -29,12 +30,18 @@ public class BattleUtility
             foreach (var skillInfo in actorInfo.Skills)
             {
                 var skillData = skillInfo.Master;
-                if (!list.Contains(skillData.AnimationName) && skillData.AnimationName != "")
+                var animationData = AnimationData(skillData.AnimationId);
+                if (!list.Contains(animationData.AnimationPath) && animationData.AnimationPath != "")
                 {
-                    list.Add(skillData.AnimationName);
+                    list.Add(animationData.AnimationPath);
                 }
             }
         }
         return list;
+    }
+
+    public static AnimationData AnimationData(int animationId)
+    {
+        return DataSystem.Animations.Find(a => a.Id == animationId);
     }
 }

@@ -16,6 +16,8 @@ public class TacticsSymbol : ListItem ,IListViewItem
     private int _getItemIndex = -1;
     private bool _selectable = false;
     public bool Selectable => _selectable;
+
+    private bool _getItemInit = false;
     public void SetSelectable(bool selectable)
     {
         _selectable = selectable;
@@ -69,17 +71,22 @@ public class TacticsSymbol : ListItem ,IListViewItem
         {
             return;
         }
-        getItemList.SetData(ListData.MakeListData(data.GetItemInfos));
-        getItemList.SetSelectedHandler(() => {
-            _getItemIndex = getItemList.Index;
-            if (_getItemInfoSelectHandler != null)
-            {
-                if (_getItemIndex != -1)
+        if (_getItemInit == false)
+        {
+            getItemList.Initialize();
+            getItemList.SetData(ListData.MakeListData(data.GetItemInfos));
+            getItemList.SetSelectedHandler(() => {
+                _getItemIndex = getItemList.Index;
+                if (_getItemInfoSelectHandler != null)
                 {
-                    _getItemInfoSelectHandler(Index);
+                    if (_getItemIndex != -1)
+                    {
+                        _getItemInfoSelectHandler(Index);
+                    }
                 }
-            }
-        });
+            });
+            _getItemInit = true;
+        }
         UpdateItemIndex(_getItemIndex);
     }
 

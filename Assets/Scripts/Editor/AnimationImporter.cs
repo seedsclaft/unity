@@ -14,6 +14,9 @@ public class AnimationImporter : AssetPostprocessor {
 		Id = 0,
 		AnimationPath,
 		MakerEffect,
+		Position,
+		Scale,
+		DamageTiming,
 		Enable,
     }
 	static readonly string ExcelName = "Animations.xlsx";
@@ -71,6 +74,9 @@ public class AnimationImporter : AssetPostprocessor {
 					AnimationData.Id = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.Id);
 					AnimationData.AnimationPath = AssetPostImporter.ImportString(BaseRow,(int)BaseColumn.AnimationPath);
 					AnimationData.MakerEffect = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.MakerEffect) == 1;
+					AnimationData.Position = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.Position);
+					AnimationData.Scale = AssetPostImporter.ImportFloat(BaseRow,(int)BaseColumn.Scale);
+					AnimationData.DamageTiming = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.DamageTiming);
 					
 					Data.Data.Add(AnimationData);
 				}

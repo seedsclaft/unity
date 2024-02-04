@@ -825,5 +825,22 @@ public class BattlerInfo
     public List<StateInfo> GetRemovalBuffStates()
     {
         return _stateInfos.FindAll(a => a.Master.Removal);
+    }    
+    
+    public int Evaluate()
+    {
+        int statusValue = MaxHp * 2
+        + MaxMp * 2
+        + _status.Atk * 3
+        + _status.Def * 3
+        + _status.Spd * 3;
+        float magicValue = 0;
+        foreach (var skillInfo in _skills)
+        {
+            var rate = 1.0f;
+            magicValue += (rate * 25);
+        }
+        int total = statusValue + (int)magicValue + _demigodParam * 5;
+        return total;
     }
 }

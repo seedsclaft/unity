@@ -614,10 +614,11 @@ public class BattlePresenter : BasePresenter
             CommandEndAnimation();
             return;
         }
-        if (actionInfo.Master.AnimationName != "" && GameSystem.ConfigData.BattleAnimationSkip == false)
+        var animationData = BattleUtility.AnimationData(actionInfo.Master.AnimationId);
+        if (animationData != null && animationData.AnimationPath != "" && GameSystem.ConfigData.BattleAnimationSkip == false)
         {
-            var animation = _model.SkillActionAnimation(actionInfo.Master.AnimationName);
-            var soundTimings = _model.SkillActionSoundTimings(actionInfo.Master.AnimationName);
+            var animation = _model.SkillActionAnimation(animationData.AnimationPath);
+            var soundTimings = _model.SkillActionSoundTimings(animationData.AnimationPath);
             _view.PlayMakerEffectSound(soundTimings);
             _view.SetCurrentSkillData(actionInfo.Master);
             _view.ClearDamagePopup();
@@ -629,12 +630,12 @@ public class BattlePresenter : BasePresenter
                 for (int i = 0; i < actionInfo.ActionResults.Count; i++)
                 {
                     var oneAnimation = actionInfo.ActionResults[i].CursedDamage ? _model.SkillActionAnimation("NA_Effekseer/NA_curse_001") : animation;
-                    _view.StartAnimation(actionInfo.ActionResults[i].TargetIndex,oneAnimation,actionInfo.Master.AnimationPosition,actionInfo.Master.AnimationScale);
+                    _view.StartAnimation(actionInfo.ActionResults[i].TargetIndex,oneAnimation,animationData.Position,animationData.Scale);
                 }
             }
             StartAliveAnimation(_model.CurrentActionInfo().ActionResults);
 
-            await UniTask.DelayFrame(actionInfo.Master.DamageTiming);
+            await UniTask.DelayFrame(animationData.DamageTiming);
             for (int i = 0; i < actionInfo.ActionResults.Count; i++)
             {
                 PopupActionResult(actionInfo.ActionResults[i],actionInfo.ActionResults[i].TargetIndex,true,true);

@@ -36,9 +36,14 @@ public class SymbolComponent : MonoBehaviour
 
     private void UpdateSymbolImage()
     {
-        if (symbolImage != null && symbolSprites != null)
+        if (_symbolInfo.SymbolType == SymbolType.Battle || _symbolInfo.SymbolType == SymbolType.Boss){
+            symbolImage.sprite = ResourceSystem.LoadEnemySprite(_symbolInfo.TroopInfo.BossEnemy.EnemyData.ImagePath);
+        } else
         {
-            symbolImage.sprite = symbolSprites[(int)_symbolInfo.SymbolType];
+            if (symbolImage != null && symbolSprites != null)
+            {
+                symbolImage.sprite = symbolSprites[(int)_symbolInfo.SymbolType];
+            }
         }
     }
 

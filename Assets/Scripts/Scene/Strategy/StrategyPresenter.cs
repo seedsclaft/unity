@@ -389,7 +389,13 @@ public class StrategyPresenter : BasePresenter
     {
         _model.EndStrategy();
         _view.EndShinyEffect();
-        _view.CommandSceneChange(Scene.Tactics);
+        if (_model.RemainTurns == 0)
+        {
+            _view.CommandSceneChange(Scene.MainMenu);
+        } else
+        {
+            _view.CommandSceneChange(Scene.Tactics);
+        }
     }
 
     private enum StrategyState{

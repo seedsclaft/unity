@@ -55,9 +55,9 @@ abstract public class ListItem : MonoBehaviour
     public GameObject Disable => disable;
 
     private bool _addListenHandler = false;
-    public void SetAddListenHandler()
+    public void SetAddListenHandler(bool add)
     {
-        _addListenHandler = true;
+        _addListenHandler = add;
     }
     public void Awake()
     {

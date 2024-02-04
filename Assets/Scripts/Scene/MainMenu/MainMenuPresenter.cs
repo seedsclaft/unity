@@ -26,7 +26,7 @@ public class MainMenuPresenter : BasePresenter
 
         _view.SetStagesData(_model.Stages());
         _view.SetSideMenu(_model.SideMenu());
-        _model.InitStageData();
+        //_model.InitStageData();
 
         var bgm = await _model.GetBgmData("MAINMENU");
         Ryneus.SoundManager.Instance.PlayBgm(bgm,1.0f,true);
@@ -60,13 +60,15 @@ public class MainMenuPresenter : BasePresenter
 
     private void CommandStageSelect(int stageId)
     {
-        _model.InitializeStageData(stageId);
+        //_model.InitializeStageData(stageId);
         Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
         if (_model.NeedSlotData(stageId))
         {
             _view.CommandSceneChange(Scene.Slot);
         } else
         {
+            _view.CommandSceneChange(Scene.Tactics);
+            /*
             var statusViewInfo = new StatusViewInfo(() => {
                 _view.CommandStatusClose();
                 _view.SetInitHelpText();
@@ -75,6 +77,7 @@ public class MainMenuPresenter : BasePresenter
             statusViewInfo.SetDisplayDecideButton(true);
             _view.CommandCallStatus(statusViewInfo);
             _view.ChangeUIActive(false);
+            */
         }
     }
 

@@ -76,7 +76,7 @@ public class BattleModel : BaseModel
         {
             var baseEnemy = enemies[i];
             baseEnemy.ResetData();
-            //baseEnemy.GainHp(-9999);
+            baseEnemy.GainHp(-9999);
             _battlers.Add(baseEnemy);
         }
         foreach (var battlerInfo1 in _battlers)
@@ -581,36 +581,14 @@ public class BattleModel : BaseModel
     {   
         if (isActor)
         {
-            if (rangeType == RangeType.S)
+            foreach (var battlerInfo in _troop.BattlerInfos)
             {
-                // 前列のみ
-                foreach (var battlerInfo in _troop.FrontBattlers())
-                {
-                    targetIndexList.Add(battlerInfo.Index);
+                targetIndexList.Add(battlerInfo.Index);
                 }
-            } else
-            {
-                foreach (var battlerInfo in _troop.BattlerInfos)
-                {
-                    targetIndexList.Add(battlerInfo.Index);
-                }
-            }
         } else{
-            if (rangeType == RangeType.S)
+            foreach (var battlerInfo in _party.BattlerInfos)
             {
-                if ((lineType == LineType.Back && !_troop.IsFrontAlive()) || lineType == LineType.Front)
-                {
-                    foreach (var battlerInfo in _party.BattlerInfos)
-                    {
-                        targetIndexList.Add(battlerInfo.Index);
-                    }
-                }
-            } else
-            {
-                foreach (var battlerInfo in _party.BattlerInfos)
-                {
-                    targetIndexList.Add(battlerInfo.Index);
-                }
+                targetIndexList.Add(battlerInfo.Index);
             }
         }
         return targetIndexList;

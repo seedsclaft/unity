@@ -62,9 +62,9 @@ MonoBehaviour:
       ActorSymbol: 0
       ResourceSymbol: 0
       RebirthSymbol: 0
-      Param1: 401
+      Param1: 1001
       Param2: 0
-      PrizeSetId: 200
+      PrizeSetId: 105
     - StageId: 1
       Seek: 2
       SymbolNum: 1
@@ -77,9 +77,35 @@ MonoBehaviour:
       RebirthSymbol: 0
       Param1: 0
       Param2: 0
-      PrizeSetId: 3100
+      PrizeSetId: 300
     - StageId: 1
       Seek: 3
+      SymbolNum: 1
+      BattleSymbol: 1
+      BossSymbol: 0
+      RecoverSymbol: 0
+      AlcanaSymbol: 0
+      ActorSymbol: 0
+      ResourceSymbol: 0
+      RebirthSymbol: 0
+      Param1: 1011
+      Param2: 0
+      PrizeSetId: 105
+    - StageId: 1
+      Seek: 3
+      SymbolNum: 1
+      BattleSymbol: 1
+      BossSymbol: 0
+      RecoverSymbol: 0
+      AlcanaSymbol: 0
+      ActorSymbol: 0
+      ResourceSymbol: 0
+      RebirthSymbol: 0
+      Param1: 1012
+      Param2: 0
+      PrizeSetId: 105
+    - StageId: 1
+      Seek: 4
       SymbolNum: 1
       BattleSymbol: 0
       BossSymbol: 0
@@ -90,9 +116,9 @@ MonoBehaviour:
       RebirthSymbol: 0
       Param1: 0
       Param2: 0
-      PrizeSetId: 100
+      PrizeSetId: 11010
     - StageId: 1
-      Seek: 4
+      Seek: 5
       SymbolNum: 1
       BattleSymbol: 0
       BossSymbol: 0
@@ -103,7 +129,7 @@ MonoBehaviour:
       RebirthSymbol: 0
       Param1: 0
       Param2: 0
-      PrizeSetId: 0
+      PrizeSetId: 1001
     - StageId: 1
       Seek: 5
       SymbolNum: 1
@@ -111,27 +137,14 @@ MonoBehaviour:
       BossSymbol: 0
       RecoverSymbol: 0
       AlcanaSymbol: 0
-      ActorSymbol: 0
-      ResourceSymbol: 1
+      ActorSymbol: 1
+      ResourceSymbol: 0
       RebirthSymbol: 0
       Param1: 0
       Param2: 0
-      PrizeSetId: 200
+      PrizeSetId: 1002
     - StageId: 1
       Seek: 6
-      SymbolNum: 1
-      BattleSymbol: 0
-      BossSymbol: 0
-      RecoverSymbol: 0
-      AlcanaSymbol: 0
-      ActorSymbol: 0
-      ResourceSymbol: 0
-      RebirthSymbol: 1
-      Param1: 0
-      Param2: 0
-      PrizeSetId: 400
-    - StageId: 1
-      Seek: 7
       SymbolNum: 1
       BattleSymbol: 0
       BossSymbol: 1
@@ -140,7 +153,7 @@ MonoBehaviour:
       ActorSymbol: 0
       ResourceSymbol: 0
       RebirthSymbol: 0
-      Param1: 401
+      Param1: 1021
       Param2: 0
-      PrizeSetId: 200
+      PrizeSetId: 105
     Tutorials: []

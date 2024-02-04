@@ -33,7 +33,11 @@ public class AssetPostImporter
     public static int ImportNumeric(IRow BaseRow,int Column)
     {
         //Debug.Log(Column);
-        return (int)BaseRow.GetCell(Column).SafeNumericCellValue();
+		var value = BaseRow.GetCell(Column);
+		if (value != null){
+	        return (int)value?.SafeNumericCellValue();
+		}
+		return 0;
     }
     public static float ImportFloat(IRow BaseRow,int Column)
     {

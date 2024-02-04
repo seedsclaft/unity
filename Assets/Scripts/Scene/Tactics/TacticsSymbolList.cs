@@ -70,6 +70,7 @@ public class TacticsSymbolList : BaseList
         {
             var tacticsSymbol = ItemPrefabList[i].GetComponent<TacticsSymbol>();
             tacticsSymbol.SetCallHandler(() => CallSelectHandler(InputKeyType.Decide));
+            tacticsSymbol.SetAddListenHandler(false);
             tacticsSymbol.SetSelectHandler((System.Action<int>)((a) => {
                 UpdateUnSelectAll();
                 UpdateSelectIndex(a);
@@ -94,6 +95,7 @@ public class TacticsSymbolList : BaseList
             });
             tacticsSymbol.UpdateItemIndex(-1);
             tacticsSymbol.SetSelectable(i == 0);
+            tacticsSymbol.SetAddListenHandler(true);
         }
     }
 

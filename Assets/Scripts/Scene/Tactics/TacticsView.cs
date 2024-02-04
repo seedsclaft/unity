@@ -43,6 +43,7 @@ public class TacticsView : BaseView
         alcanaButton.onClick.AddListener(() => CallAlcanaCheck());
         
         tacticsCommandList.Initialize();
+        tacticsSymbolList.Initialize();
         battleSelectCharacter.gameObject.SetActive(false);
         new TacticsPresenter(this);
         selectCharacter.gameObject.SetActive(false);

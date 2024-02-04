@@ -191,7 +191,12 @@ public class TacticsModel : BaseModel
 
     public List<ListData> SelectActorAlchemy()
     {
+        var skillInfos = new List<SkillInfo>();
         var actorInfo = SelectAlchemyActorInfo();
+        if (actorInfo == null)
+        {
+        return MakeListData(skillInfos);
+        }
         var otherActorSelected = new List<int>();
         foreach (var stageMember in StageMembers())
         {
@@ -200,7 +205,6 @@ public class TacticsModel : BaseModel
                 otherActorSelected.Add(stageMember.EquipmentSkillId);
             }
         }
-        var skillInfos = new List<SkillInfo>();
         
         foreach (var alchemyId in PartyInfo.AlchemyIdList)
         {
