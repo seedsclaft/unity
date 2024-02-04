@@ -10,11 +10,34 @@ public class SymbolInfo
     public TroopInfo TroopInfo => _troopInfo;
     private List<GetItemInfo> _getItemInfos = new ();
     public List<GetItemInfo> GetItemInfos => _getItemInfos;
-    public SymbolInfo()
+    private bool _selected;
+    public bool Selected => _selected;
+    public SymbolInfo(StageSymbolData symbol = null)
     {
+        if (symbol.BattleSymbol == 1){
+            SetSymbolType(SymbolType.Battle);
+        } else
+        if (symbol.BossSymbol == 1){
+            SetSymbolType(SymbolType.Boss);
+        } else
+        if (symbol.RecoverSymbol == 1){
+            SetSymbolType(SymbolType.Recover);
+        } else
+        if (symbol.AlcanaSymbol == 1){
+            SetSymbolType(SymbolType.Alcana);
+        } else
+        if (symbol.ActorSymbol == 1){
+            SetSymbolType(SymbolType.Actor);
+        } else
+        if (symbol.ResourceSymbol == 1){
+            SetSymbolType(SymbolType.Resource);
+        } else
+        if (symbol.RebirthSymbol == 1){
+            SetSymbolType(SymbolType.Rebirth);
+        }
     }
 
-    public void SetSymbolType(SymbolType symbolType)
+    private void SetSymbolType(SymbolType symbolType)
     {
         _symbolType = symbolType;
     }
@@ -22,6 +45,11 @@ public class SymbolInfo
     public void SetTroopInfo(TroopInfo troopInfo)
     {
         _troopInfo = troopInfo;
+    }
+
+    public void SetSelected(bool selected)
+    {
+        _selected = selected;
     }
 
     public List<BattlerInfo> BattlerInfos()

@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StrategyModel : BaseModel
+public class SymbolRecordModel : BaseModel
 {
     private List<TacticsResultInfo> _resultInfos = new();
     
@@ -170,38 +170,110 @@ public class StrategyModel : BaseModel
         return false;
     }
     
-    public void EndStrategy()
+    public List<ListData> Symbols(int seek)
     {
-        // レコード作成
-        var records = CurrentStage.SymbolRecordList.FindAll(a => a.IsSameSymbol(CurrentStage.Id,CurrentStage.CurrentTurn,CurrentStageData.CurrentStage.CurrentSeekIndex));
-        for (var i = records.Count-1;i >= 0;i--)
+        var symbolInfos = new List<SymbolInfo>();
+        
+        var stageData = DataSystem.FindStage(CurrentStage.Id);
+        var symbols = stageData.StageSymbols.FindAll(a => a.Seek == seek+1);
+        var symbolRecords = CurrentStageData.Party.SymbolRecordList.FindAll(a => a.StageId == CurrentStage.Id && a.Selected == true);
+        
+        for (int i = 0;i < symbols.Count;i++)
         {
-            records[i].SetSelected(true);
-            CurrentStage.SetSymbolResultInfo(records[i]);
+            var symbol = symbols[i];
+            var symbolInfo = new SymbolInfo(symbol);
+            if (symbol.BattleSymbol == 1){
+                if (symbol.Param1 > 0)
+                {
+                    symbolInfo.SetTroopInfo(BattleTroops(symbol.Param1,symbol.Param2));
+                }
+            } else
+            if (symbol.BossSymbol == 1){
+                if (symbol.Param1 > 0)
+                {
+                    symbolInfo.SetTroopInfo(BattleTroops(symbol.Param1,symbol.Param2));
+                }
+            }
+            if (symbol.PrizeSetId > 0)
+            {
+                var getItemInfos = new List<GetItemInfo>();
+                var prizeSets = DataSystem.PrizeSets.FindAll(a => a.Id == symbol.PrizeSetId);
+                foreach (var prizeSet in prizeSets)
+                {
+                    var getItemInfo = new GetItemInfo(prizeSet.GetItem);
+                    getItemInfos.Add(getItemInfo);
+                }
+                symbolInfo.MakeGetItemInfos(getItemInfos);
+            }
+            if (symbolRecords.Find(a => a.IsSameSymbol(stageData.Id,symbol.Seek,i)) != null)
+            {
+                symbolInfo.SetSelected(true);
+            }
+            symbolInfos.Add(symbolInfo);
         }
-
-        CurrentStage.SeekStage();
-        foreach (var actorInfo in StageMembers())
-        {
-            actorInfo.ChangeTacticsCostRate(1);
-            actorInfo.ClearTacticsCommand();
-        }
-        //CurrentStage.ChangeSubordinateValue(-5);
-        StageAlcana.SetAlcanaStateInfo(null);
-        StageAlcana.ClearCurrentTurnAlcanaList();
+        return MakeListData(symbolInfos);
     }
 
-    public void CommitResult()
+    public List<ListData> SymbolRecords()
     {
-        CurrentData.PlayerInfo.StageClear(CurrentStage.Id);
-        foreach (var symbolResultInfo in CurrentStage.SymbolRecordList)
+        var symbolRecords = CurrentStageData.Party.SymbolRecordList.FindAll(a => a.StageId == CurrentStage.Id && a.Selected == true);
+        var symbolInfos = new List<SymbolInfo>();
+        
+        var stageData = DataSystem.FindStage(CurrentStage.Id);
+        foreach (var symbolRecord in symbolRecords)
         {
-            CurrentStageData.Party.SetSymbolResultInfo(symbolResultInfo);
+            var symbols = stageData.StageSymbols.FindAll(a => a.Seek == symbolRecord.Seek);
+            var symbol = symbols[symbolRecord.SeekIndex];
+            var symbolInfo = new SymbolInfo(symbol);
+            if (symbol.BattleSymbol == 1){
+                if (symbol.Param1 > 0)
+                {
+                    symbolInfo.SetTroopInfo(BattleTroops(symbol.Param1,symbol.Param2));
+                }
+            } else
+            if (symbol.BossSymbol == 1){
+                if (symbol.Param1 > 0)
+                {
+                    symbolInfo.SetTroopInfo(BattleTroops(symbol.Param1,symbol.Param2));
+                }
+            }
+            if (symbol.PrizeSetId > 0)
+            {
+                var getItemInfos = new List<GetItemInfo>();
+                var prizeSets = DataSystem.PrizeSets.FindAll(a => a.Id == symbol.PrizeSetId);
+                foreach (var prizeSet in prizeSets)
+                {
+                    var getItemInfo = new GetItemInfo(prizeSet.GetItem);
+                    getItemInfos.Add(getItemInfo);
+                }
+                symbolInfo.MakeGetItemInfos(getItemInfos);
+            }
+            symbolInfos.Add(symbolInfo);
         }
-        SavePlayerData();
-        SavePlayerStageData(false);
+        return MakeListData(symbolInfos);
     }
 
+    public List<ActorInfo> SymbolActors(int seek)
+    {
+        var symbolRecord = CurrentStageData.Party.SymbolRecordList.Find(a => a.StageId == CurrentStage.Id && a.Selected == true && a.Seek == seek+1);
+        return symbolRecord.ActorsData;
+    }
+
+    public TroopInfo BattleTroops(int troopId,int enemyCount)
+    {
+        var troopInfo = new TroopInfo(troopId,false);
+        troopInfo.MakeEnemyTroopDates(CurrentStage.ClearCount);
+        for (int j = 0;j < enemyCount;j++)
+        {
+            int rand = new System.Random().Next(1, CurrentStage.Master.RandomTroopCount);
+            var enemyData = DataSystem.Enemies.Find(a => a.Id == rand);
+            var enemy = new BattlerInfo(enemyData,CurrentStage.ClearCount + 1,j,0,false);
+            troopInfo.AddEnemy(enemy);
+        }
+        troopInfo.MakeGetItemInfos();
+        return troopInfo;
+    }
+    
     public bool EnableBattleSkip()
     {
         // スキップ廃止

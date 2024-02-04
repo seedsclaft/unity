@@ -365,7 +365,7 @@ public class BaseModel
 
     public void InitializeStageData(int stageId)
     {
-        CurrentStageData.MakeStageData(stageId);
+        //CurrentStageData.MakeStageData(stageId);
     }
 
     public List<SkillInfo> CheckAlcanaSkillInfos(TriggerTiming triggerTiming)

@@ -34,6 +34,19 @@ public class PartyInfo
     private Dictionary<TacticsCommandType,int> _commandCountInfo = new();
     private Dictionary<TacticsCommandType,int> _commandRankInfo = new();
     public Dictionary<TacticsCommandType,int> CommandRankInfo => _commandRankInfo;
+    private List<SymbolResultInfo> _symbolRecordList = new ();
+    public List<SymbolResultInfo> SymbolRecordList => _symbolRecordList;
+    public void SetSymbolResultInfo(SymbolResultInfo symbolResultInfo)
+    {
+        var findIndex = _symbolRecordList.FindIndex(a => a.IsSameSymbol(symbolResultInfo));
+        if (findIndex < 0)
+        {
+        } else{
+            _symbolRecordList.RemoveAt(findIndex);
+        }
+        _symbolRecordList.Add(symbolResultInfo);
+    }
+
     public void AddActor(int actorId)
     {
         if (_actorIdList.IndexOf(actorId) != -1)

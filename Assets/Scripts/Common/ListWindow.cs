@@ -33,6 +33,7 @@ abstract public class ListWindow : MonoBehaviour
     [SerializeField] private GameObject itemPrefab = null; 
     private List<GameObject> _itemPrefabList = new ();
     public List<GameObject> ItemPrefabList => _itemPrefabList;
+    private GameObject _prevPrefab = null;
     private List<ListData> _listDates = new ();
     public List<ListData> ListDates => _listDates;
     public int DataCount => _listDates.Count;
@@ -140,14 +141,22 @@ abstract public class ListWindow : MonoBehaviour
             }
         }
         var listCount = ListItemCount();
-        for (var i = 0; i < (listCount+2);i++){
+        for (var i = 0; i < (listCount+1);i++){
             var prefab = Instantiate(itemPrefab);
+            prefab.name = i.ToString();
             _itemPrefabList.Add(prefab);
             var view = prefab.GetComponent<IListViewItem>();
             if (view != null)
             {
                 _itemList.AddLast(view);
             }
+        }
+        var prev = Instantiate(itemPrefab);
+        _prevPrefab = prev;
+        var prevView = prev.GetComponent<IListViewItem>();
+        if (prevView != null)
+        {
+            _itemList.AddLast(prevView);
         }
         var startIndex = 0;
         for (int i = startIndex;i < _itemPrefabList.Count;i++)
@@ -165,12 +174,33 @@ abstract public class ListWindow : MonoBehaviour
         var startIndex = GetStartIndex();
         for (int i = 0;i < _itemPrefabList.Count;i++)
         {
+            _itemPrefabList[i].gameObject.SetActive(false);
+            _itemPrefabList[i].transform.SetParent(gameObject.transform,false);
             if (_listDates.Count <= i+startIndex){
                 continue;
             }
+            _itemPrefabList[i].gameObject.SetActive(true);
             _itemPrefabList[i].transform.SetParent(_objectList[i+startIndex].transform,false);
         }
-        Refresh();
+        if (startIndex > 0)
+        {   
+            if (_objectList[startIndex-1].transform.childCount == 0)
+            {
+                _prevPrefab.SetActive(true);
+                _prevPrefab.transform.SetParent(_objectList[startIndex-1].transform,false);
+            } else
+            {
+                _prevPrefab.SetActive(false);
+                if (_objectList[startIndex-1].transform.GetChild(0).gameObject.activeSelf == false)
+                {
+                    _objectList[startIndex-1].transform.GetChild(0).gameObject.SetActive(true);
+                }
+            }
+        } else
+        {
+            _prevPrefab.SetActive(false);
+        }
+        Refresh(_index);
     }
 
     public void Refresh(int selectIndex = 0)
@@ -178,13 +208,24 @@ abstract public class ListWindow : MonoBehaviour
         var startIndex = Math.Max(0,GetStartIndex());
         for (int i = 0; i < ItemPrefabList.Count;i++)
         {
-            ItemPrefabList[i].SetActive(i < _listDates.Count);
             if (startIndex < 0) continue;
             if (i + startIndex >= _listDates.Count) continue;
             if (i < _listDates.Count) 
             {
                 var listItem = ItemPrefabList[i].GetComponent<ListItem>();
                 listItem.SetListData(_listDates[i + startIndex],i + startIndex);
+            }
+        }
+        if (_prevPrefab != null)
+        {
+            if (startIndex > 0)
+            {
+                //_prevPrefab.SetActive(true);
+                var listItem = _prevPrefab.GetComponent<ListItem>();
+                listItem.SetListData(_listDates[startIndex-1],startIndex-1);
+            } else
+            {
+                //_prevPrefab.SetActive(false);
             }
         }
         for (int i = 0; i < ObjectList.Count;i++)
@@ -203,6 +244,14 @@ abstract public class ListWindow : MonoBehaviour
             prefab.transform.SetParent(scrollRect.content, false);
             _objectList.Add(prefab);
         }
+        var startIndex = 0;
+        for (int i = startIndex;i < _itemPrefabList.Count;i++)
+        {
+            if (_listDates.Count <= i){
+                continue;
+            }
+            _itemPrefabList[i].transform.SetParent(_objectList[i].transform,false);
+        }
     }
 
     private float GetViewPortWidth()
@@ -217,7 +266,7 @@ abstract public class ListWindow : MonoBehaviour
 
     private float GetScrolledWidth()
     {
-        return (scrollRect.content.rect.width - GetViewPortWidth()) * (1.0f - scrollRect.normalizedPosition.x);
+        return (scrollRect.content.rect.width - GetViewPortWidth()) * (scrollRect.normalizedPosition.x);
     }
 
     private float GetScrolledHeight()
@@ -240,7 +289,7 @@ abstract public class ListWindow : MonoBehaviour
     {
         if (horizontal)
         {
-            return GetComponentInChildren<HorizontalLayoutGroup>().padding.left;
+            return GetComponentInChildren<HorizontalLayoutGroup>().padding.left + GetComponentInChildren<HorizontalLayoutGroup>().padding.right;
         } else
         {
             return GetComponentInChildren<VerticalLayoutGroup>().padding.top + GetComponentInChildren<VerticalLayoutGroup>().padding.bottom;
@@ -251,7 +300,11 @@ abstract public class ListWindow : MonoBehaviour
     {
         if (horizontal)
         {   //Math.Truncate
-            return (int)Math.Round( (GetScrolledWidth() - ListMargin()) / (_itemSize.x + ItemSpace()) );
+            var width = GetScrolledWidth();
+            var itemSpace = ItemSpace();
+            var listMargin = ListMargin();
+            var space = ItemSpace();
+            return (int)Math.Round( ((width - itemSpace) - listMargin) / (_itemSize.x + space) );
         } else
         {
             var height = GetScrolledHeight();
@@ -567,8 +620,11 @@ abstract public class ListWindow : MonoBehaviour
     private int ListItemCount()
     {
         if (horizontal)
-        {   //Math.Truncate
-            return (int)Math.Round( (GetViewPortWidth() - ListMargin()) / (_itemSize.x + ItemSpace()));
+        {   
+            var width = GetViewPortWidth();
+            var listMargin = ListMargin();
+            var space = ItemSpace();
+            return (int)Math.Round( (width - listMargin) / (_itemSize.x + space));
         } else
         {
             var height = GetViewPortHeight();

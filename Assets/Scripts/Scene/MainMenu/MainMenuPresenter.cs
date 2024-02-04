@@ -67,7 +67,15 @@ public class MainMenuPresenter : BasePresenter
             _view.CommandSceneChange(Scene.Slot);
         } else
         {
-            _view.CommandSceneChange(Scene.Tactics);
+            if (_model.ClearedStage(stageId))
+            {
+                _model.MoveStage(stageId);
+                _view.CommandSceneChange(Scene.SymbolRecord);
+            } else
+            {
+                _model.CurrentStage.MakeTurnSymbol();
+                _view.CommandSceneChange(Scene.Tactics);
+            }
             /*
             var statusViewInfo = new StatusViewInfo(() => {
                 _view.CommandStatusClose();

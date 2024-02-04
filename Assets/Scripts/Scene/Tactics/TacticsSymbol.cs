@@ -12,6 +12,7 @@ public class TacticsSymbol : ListItem ,IListViewItem
     private System.Action<int> _enemyInfoHandler = null;
     private System.Action _getItemInfoHandler = null;
     private System.Action<int> _getItemInfoSelectHandler = null;
+    [SerializeField] private GameObject selected = null;
 
     private int _getItemIndex = -1;
     private bool _selectable = false;
@@ -74,7 +75,10 @@ public class TacticsSymbol : ListItem ,IListViewItem
         if (_getItemInit == false)
         {
             getItemList.Initialize();
-            getItemList.SetData(ListData.MakeListData(data.GetItemInfos));
+        }
+        getItemList.SetData(ListData.MakeListData(data.GetItemInfos));
+        if (_getItemInit == false)
+        {
             getItemList.SetSelectedHandler(() => {
                 _getItemIndex = getItemList.Index;
                 if (_getItemInfoSelectHandler != null)
@@ -88,6 +92,7 @@ public class TacticsSymbol : ListItem ,IListViewItem
             _getItemInit = true;
         }
         UpdateItemIndex(_getItemIndex);
+        UpdateSelected(data);
     }
 
     public void UpdateItemIndex(int getItemIndex)
@@ -102,6 +107,12 @@ public class TacticsSymbol : ListItem ,IListViewItem
             _getItemIndex = getItemList.DataCount - 1;
         }
         getItemList.Refresh(_getItemIndex);
+    }
+
+    private void UpdateSelected(SymbolInfo symbolInfo)
+    {
+        if (selected == null) return;
+        selected.SetActive(symbolInfo.Selected);
     }
 
     private void LateUpdate() {

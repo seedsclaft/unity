@@ -18,7 +18,7 @@ MonoBehaviour:
     AchieveText: ??????
     Selectable: 1
     Help: '""'
-    Turns: 7
+    Turns: 6
     InitMembers: 0100000002000000030000000400000005000000060000000700000008000000
     RandomTroopCount: 15
     BossId: 0
@@ -117,6 +117,19 @@ MonoBehaviour:
       Param1: 0
       Param2: 0
       PrizeSetId: 11010
+    - StageId: 1
+      Seek: 4
+      SymbolNum: 1
+      BattleSymbol: 0
+      BossSymbol: 0
+      RecoverSymbol: 0
+      AlcanaSymbol: 1
+      ActorSymbol: 0
+      ResourceSymbol: 0
+      RebirthSymbol: 0
+      Param1: 0
+      Param2: 0
+      PrizeSetId: 11070
     - StageId: 1
       Seek: 5
       SymbolNum: 1

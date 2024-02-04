@@ -20,6 +20,7 @@ public class SceneAssign : MonoBehaviour
     [SerializeField] private GameObject fastBattleScene = null;
     [SerializeField] private GameObject alcanaSelectScene = null;
     [SerializeField] private GameObject alcanaResultScene = null;
+    [SerializeField] private GameObject symbolRecordScene = null;
     private static List<Scene> _scenes = new ();
     public static Scene CurrentScene => SceneAssign._scenes.Count > 0 ? SceneAssign._scenes[SceneAssign._scenes.Count-1] : Scene.None;
     public static Scene LastScene => SceneAssign._scenes.Count > 1 ? SceneAssign._scenes[SceneAssign._scenes.Count-2] : Scene.None;
@@ -67,6 +68,8 @@ public class SceneAssign : MonoBehaviour
             return alcanaSelectScene;
             case Scene.AlcanaResult:
             return alcanaResultScene;
+            case Scene.SymbolRecord:
+            return symbolRecordScene;
         }
         return null;
     }

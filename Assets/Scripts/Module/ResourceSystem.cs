@@ -184,5 +184,6 @@ public enum Scene
     Slot,
     FastBattle,
     AlcanaSelect,
-    AlcanaResult
+    AlcanaResult,
+    SymbolRecord,
 }

@@ -359,7 +359,7 @@ public class StrategyPresenter : BasePresenter
 
     private void CommandCallEnemyInfo()
     {
-        var enemyIndex = _model.CurrentStage.CurrentBattleIndex;
+        var enemyIndex = _model.CurrentStage.CurrentSeekIndex;
         var enemyInfos = _model.TacticsSymbols()[enemyIndex].BattlerInfos();
         
         var statusViewInfo = new StatusViewInfo(() => {
@@ -391,6 +391,7 @@ public class StrategyPresenter : BasePresenter
         _view.EndShinyEffect();
         if (_model.RemainTurns == 0)
         {
+            _model.CommitResult();
             _view.CommandSceneChange(Scene.MainMenu);
         } else
         {

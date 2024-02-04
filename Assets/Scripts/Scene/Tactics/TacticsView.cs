@@ -188,7 +188,6 @@ public class TacticsView : BaseView
         SetInputHandler(selectCharacter.CommandList.GetComponent<IInputHandlerEvent>());
         HideSelectCharacter();
 
-        SetInputHandler(tacticsCharaLayer.GetComponent<IInputHandlerEvent>());
     }
 
     public void SetTacticsCharaLayer(List<ActorInfo> actorInfos)

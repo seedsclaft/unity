@@ -66,9 +66,10 @@ public class TacticsSymbolList : BaseList
     public new void SetData(List<ListData> symbolInfos)
     {
         base.SetData(symbolInfos);
-        for (int i = 0; i < ItemPrefabList.Count;i++)
+        for (int i = 0; i < ObjectList.Count;i++)
         {
-            var tacticsSymbol = ItemPrefabList[i].GetComponent<TacticsSymbol>();
+            var tacticsSymbol = ObjectList[i].GetComponentInChildren<TacticsSymbol>();
+            if (tacticsSymbol == null) continue;
             tacticsSymbol.SetCallHandler(() => CallSelectHandler(InputKeyType.Decide));
             tacticsSymbol.SetAddListenHandler(false);
             tacticsSymbol.SetSelectHandler((System.Action<int>)((a) => {

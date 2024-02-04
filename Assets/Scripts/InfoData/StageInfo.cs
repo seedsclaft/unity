@@ -44,8 +44,8 @@ public class StageInfo
 	private List<SymbolInfo> _currentSymbolInfos = new();
 	public List<SymbolInfo> CurrentSymbolInfos => _currentSymbolInfos;
 	
-    private int _currentBattleIndex = -1;
-    public int CurrentBattleIndex => _currentBattleIndex;
+    private int _currentSeekIndex = -1;
+    public int CurrentSeekIndex => _currentSeekIndex;
 
     private bool _IsSubordinate;
     public bool IsSubordinate => _IsSubordinate;
@@ -83,6 +83,19 @@ public class StageInfo
     readonly int _lastBossEnemyKey = 3000;
     private bool _survivalMode = false;
     public bool SurvivalMode => _survivalMode;
+
+    private List<SymbolResultInfo> _symbolRecordList = new ();
+    public List<SymbolResultInfo> SymbolRecordList => _symbolRecordList;
+    public void SetSymbolResultInfo(SymbolResultInfo symbolResultInfo)
+    {
+        var findIndex = _symbolRecordList.FindIndex(a => a.IsSameSymbol(symbolResultInfo));
+        if (findIndex < 0)
+        {
+        } else{
+            _symbolRecordList.RemoveAt(findIndex);
+        }
+        _symbolRecordList.Add(symbolResultInfo);
+    }
     public StageInfo(StageData stageData)
     {
         _id = stageData.Id;
@@ -96,7 +109,7 @@ public class StageInfo
         _savedCount = 0;
         _clearTroopIds.Clear();
 		MakeTroopData();
-        MakeTurnSymbol();
+        _symbolRecordList.Clear();
     }
 
     public void MakeTurnSymbol()
@@ -105,35 +118,18 @@ public class StageInfo
         var symbols = Master.StageSymbols.FindAll(a => a.Seek == _currentTurn);
         foreach (var symbol in symbols)
         {
-            var symbolInfo = new SymbolInfo();
+            var symbolInfo = new SymbolInfo(symbol);
             if (symbol.BattleSymbol == 1){
-                symbolInfo.SetSymbolType(SymbolType.Battle);
                 if (symbol.Param1 > 0)
                 {
                     symbolInfo.SetTroopInfo(BattleTroops(symbol.Param1,symbol.Param2));
                 }
             } else
             if (symbol.BossSymbol == 1){
-                symbolInfo.SetSymbolType(SymbolType.Boss);
                 if (symbol.Param1 > 0)
                 {
                     symbolInfo.SetTroopInfo(BattleTroops(symbol.Param1,symbol.Param2));
                 }
-            } else
-            if (symbol.RecoverSymbol == 1){
-                symbolInfo.SetSymbolType(SymbolType.Recover);
-            } else
-            if (symbol.AlcanaSymbol == 1){
-                symbolInfo.SetSymbolType(SymbolType.Alcana);
-            } else
-            if (symbol.ActorSymbol == 1){
-                symbolInfo.SetSymbolType(SymbolType.Actor);
-            } else
-            if (symbol.ResourceSymbol == 1){
-                symbolInfo.SetSymbolType(SymbolType.Resource);
-            } else
-            if (symbol.RebirthSymbol == 1){
-                symbolInfo.SetSymbolType(SymbolType.Rebirth);
             }
             if (symbol.PrizeSetId > 0)
             {
@@ -147,6 +143,18 @@ public class StageInfo
                 symbolInfo.MakeGetItemInfos(getItemInfos);
             }
             _currentSymbolInfos.Add(symbolInfo);
+        }
+        // レコード作成
+        for (int i = 0;i < _currentSymbolInfos.Count;i++)
+        {
+            var record = new SymbolResultInfo(_id,_currentTurn,i,GameSystem.CurrentStageData.Party.Currency);
+            var actorInfos = new List<ActorInfo>();
+            foreach (var selectActorId in _selectActorIds)
+            {
+                actorInfos.Add(GameSystem.CurrentStageData.Actors.Find(a => a.ActorId == selectActorId));
+            }
+            record.SetStartActorInfos(actorInfos);
+            SetSymbolResultInfo(record);
         }
     }
 
@@ -222,24 +230,24 @@ public class StageInfo
 
 
 
-    public void SetBattleIndex(int battleIndex)
+    public void SetSeekIndex(int battleIndex)
     {
-        _currentBattleIndex = battleIndex;
+        _currentSeekIndex = battleIndex;
     }
 
     public SymbolInfo CurrentSelectSymbol()
     {
-        return _currentSymbolInfos[_currentBattleIndex];
+        return _currentSymbolInfos[_currentSeekIndex];
     }
 
     public TroopInfo CurrentTroopInfo()
     {
-        return _currentSymbolInfos[_currentBattleIndex].TroopInfo;
+        return _currentSymbolInfos[_currentSeekIndex].TroopInfo;
     }
 
     public List<BattlerInfo> CurrentBattleInfos()
     {
-        return _currentSymbolInfos[_currentBattleIndex].BattlerInfos();
+        return _currentSymbolInfos[_currentSeekIndex].BattlerInfos();
     }
 
     
@@ -256,7 +264,7 @@ public class StageInfo
             var enemy = new BattlerInfo(enemyData,troopDate.TroopEnemies[i].Lv + troopLv - 1,i,troopDate.TroopEnemies[i].Line,isBoss);
             troopInfo.AddEnemy(enemy);
         }
-        _currentBattleIndex = 0;
+        _currentSeekIndex = 0;
         var symbolInfo = new SymbolInfo();
         symbolInfo.SetTroopInfo(troopInfo);
         _currentSymbolInfos.Add(symbolInfo);

@@ -173,7 +173,7 @@ public class TacticsModel : BaseModel
 
     public void SetBattleEnemyIndex()
     {
-        CurrentStage.SetBattleIndex(_currentEnemyIndex);
+        CurrentStage.SetSeekIndex(_currentEnemyIndex);
     }
 
     public void SaveTempBattleMembers()

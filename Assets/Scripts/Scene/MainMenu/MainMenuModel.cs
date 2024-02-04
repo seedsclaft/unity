@@ -15,6 +15,11 @@ public class MainMenuModel : BaseModel
         return MakeListData(list);
     }
 
+    public bool ClearedStage(int stageId)
+    {
+        return CurrentData.PlayerInfo.ClearCount(stageId) > 0;
+    }
+
     public void InitStageData()
     {
         InitSaveStageInfo();
