@@ -27,6 +27,7 @@ public class SymbolRecordView : BaseView
             var eventData = new SymbolRecordViewEvent(CommandType.SelectRecord);
             _commandData(eventData);
         });
+        symbolRecordList.SetInputHandler(InputKeyType.Decide,() => CallSymbolRecord());
         new SymbolRecordPresenter(this);
         SetBackCommand(() => OnClickBack());
     }
@@ -35,6 +36,17 @@ public class SymbolRecordView : BaseView
     {
         var eventData = new SymbolRecordViewEvent(CommandType.Back);
         _commandData(eventData);
+    }
+
+    private void CallSymbolRecord()
+    {
+        var listData = symbolRecordList.ListData;
+        if (listData != null)
+        {
+            Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
+            var eventData = new SymbolRecordViewEvent(CommandType.DecideRecord);
+            _commandData(eventData);
+        }
     }
 
     public void SetTacticsCharaLayer(List<ActorInfo> actorInfos)
@@ -83,7 +95,8 @@ namespace SymbolRecord
     {
         None = 0,
         SelectRecord = 1,
-        Back = 2,
+        DecideRecord = 2,
+        Back = 3,
     }
 }
 public class SymbolRecordViewEvent

@@ -12,10 +12,6 @@ public class StageInfoComponent : MonoBehaviour
     [SerializeField] private TextMeshProUGUI help;
     [SerializeField] private TextMeshProUGUI turns;
     [SerializeField] private TextMeshProUGUI clearCount;
-    [SerializeField] private GameObject subordinate;
-    [SerializeField] private TextMeshProUGUI subordinateValue;
-    [SerializeField] private Image subordinateGauge;
-    [SerializeField] private Image subordinateBorder;
 
     public void UpdateInfo(StageInfo stageInfo)
     {
@@ -48,19 +44,6 @@ public class StageInfoComponent : MonoBehaviour
         }
         if (clearCount != null){
             clearCount.text = stageInfo.ClearCount.ToString();
-        }
-        if (subordinate != null){
-            subordinate.gameObject.SetActive(stageInfo.IsSubordinate == true);
-        }
-        if (subordinateValue != null){
-            subordinateValue.text = stageInfo.SubordinateValue.ToString();
-        }
-        if (subordinateGauge != null){
-            subordinateGauge.fillAmount = (float)stageInfo.SubordinateValue / 100f;
-        }
-        if (subordinateBorder != null){
-            var borderRect = subordinateBorder.GetComponent<RectTransform>();
-            borderRect.localScale = new Vector3(stageInfo.Master.SubordinateValue * 0.01f,1,1);
         }
     }
 }

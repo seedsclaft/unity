@@ -45,9 +45,31 @@ public class SymbolRecordPresenter : BasePresenter
         {
             CommandRefresh();
         }
+        if (viewEvent.commandType == CommandType.DecideRecord)
+        {
+            CommandDecideRecord();
+        }
         if (viewEvent.commandType == CommandType.Back)
         {
             CommandBack();
+        }
+    }
+
+    private void CommandDecideRecord()
+    {
+        var index = _view.SymbolListIndex;
+        var popupInfo = new ConfirmInfo("この過去を改編しますか？",(a) => UpdatePopupCheckStartRecord((ConfirmCommandType)a));
+        _view.CommandCallConfirm(popupInfo);
+    }
+
+    private void UpdatePopupCheckStartRecord(ConfirmCommandType confirmCommandType)
+    {
+        _view.CommandConfirmClose();
+        if (confirmCommandType == ConfirmCommandType.Yes)
+        {
+            var index = _view.SymbolListIndex;
+            _model.MakeSymbolRecordStage(index);
+            _view.CommandSceneChange(Scene.Tactics);
         }
     }
 
@@ -57,9 +79,6 @@ public class SymbolRecordPresenter : BasePresenter
         _view.SetNuminous(_model.Currency);
         _view.SetSymbols(_model.Symbols(_view.SymbolListIndex));
         _view.SetTacticsCharaLayer(_model.SymbolActors(_view.SymbolListIndex));
-        //_view.SetStageInfo(_model.CurrentStage);
-        
-        //_view.CommandRefresh();
     }
 
     private void CommandBack()

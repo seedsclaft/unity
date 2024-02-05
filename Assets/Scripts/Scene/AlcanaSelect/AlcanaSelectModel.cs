@@ -61,11 +61,11 @@ public class AlcanaSelectModel : BaseModel
 
     public void SetStageAlcanaList()
     {
-        CurrentStageData.StageAlcana.ClearOwnAlcanaList();
+        CurrentSaveData.StageAlcana.ClearOwnAlcanaList();
         foreach (var selectedAlcana in _selectedAlcanaList)
         {
             selectedAlcana.SetEnable(true);
-            CurrentStageData.StageAlcana.AddAlcana(selectedAlcana);
+            CurrentSaveData.StageAlcana.AddAlcana(selectedAlcana);
         }
     }
 }

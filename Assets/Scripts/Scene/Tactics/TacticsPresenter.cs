@@ -78,7 +78,6 @@ public class TacticsPresenter :BasePresenter
                     _model.SetNeedAllTacticsCommand(true);
                     break;
                 case StageEventType.IsSubordinate:
-                    _model.ChangeSubordinate(stageEvent.Param == 1);
                     break;
                 case StageEventType.IsAlcana:
                     _model.SetIsAlcana(stageEvent.Param == 1);
@@ -119,7 +118,6 @@ public class TacticsPresenter :BasePresenter
                     _view.CommandSceneChange(Scene.Tactics);
                     break;
                 case StageEventType.SetDisplayTurns:
-                    _model.SetDisplayTurns();
                     break;
                 case StageEventType.MoveStage:
                     _eventBusy = true;
@@ -215,7 +213,7 @@ public class TacticsPresenter :BasePresenter
         _view.ChangeBackCommandActive(false);
         _view.SetEvent((type) => UpdateCommand(type));
         _view.SetSideMenu(_model.SideMenu());
-        _view.SetSelectCharacter(_model.TacticsCharacterData(),_model.NoChoiceConfirmCommand(),_model.CommandRankInfo());
+        _view.SetSelectCharacter(_model.TacticsCharacterData(),_model.NoChoiceConfirmCommand());
         _view.SetTacticsCharaLayer(_model.StageMembers());
         _view.SetStageInfo(_model.CurrentStage);
         _view.SetSymbols(ListData.MakeListData(_model.TacticsSymbols()));
@@ -593,8 +591,8 @@ public class TacticsPresenter :BasePresenter
 
     private void CommandSelectSymbol(int enemyIndex)
     {
-        _model.CurrentEnemyIndex = enemyIndex;
-        _model.SetBattleEnemyIndex();
+        _model.StageSeekIndex = enemyIndex;
+        _model.SetStageSeekIndex();
         _view.HideSymbolList();
         // 回路解析
         var currentSymbol = _model.CurrentStage.CurrentSelectSymbol();

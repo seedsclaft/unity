@@ -42,12 +42,12 @@ public class RankingModel : BaseModel
     public void MakeDetailPartyInfo(int listIndex)
     {
         var rankingInfo = TempData.TempRankingData[_stageId][listIndex];
-        CurrentStageData.ClearActors();
+        CurrentSaveData.ClearActors();
         PartyInfo.InitActors();
         foreach (var actorInfo in rankingInfo.ActorInfos)
         {
             PartyInfo.AddActor(actorInfo.ActorId);
-            CurrentStageData.AddActor(actorInfo);
+            CurrentSaveData.AddActor(actorInfo);
         }
     }
 }

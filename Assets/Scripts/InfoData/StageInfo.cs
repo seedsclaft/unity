@@ -5,18 +5,10 @@ using System.Collections.Generic;
 public class StageInfo
 {
     public StageData Master => DataSystem.FindStage(_id);
-    private int _baseStageId;
-    public int BaseStageId => _baseStageId;
     private int _id;
     public int Id => _id;
     private int _turns;
     public int Turns => _turns;
-    private int _displayTurns;
-    public int DisplayTurns => _displayTurns;
-    public void SetDisplayTurns()
-    {
-        _displayTurns = Master.Turns;
-    }
     private int _savedCount = 0;
     public int SavedCount => _savedCount;
     public void GainSaveCount()
@@ -47,11 +39,7 @@ public class StageInfo
     private int _currentSeekIndex = -1;
     public int CurrentSeekIndex => _currentSeekIndex;
 
-    private bool _IsSubordinate;
-    public bool IsSubordinate => _IsSubordinate;
 
-    private int _subordinateValue = 0;
-    public int SubordinateValue => _subordinateValue;
 	private List<int> _clearTroopIds = new ();
     public List<int> ClearTroopIds => _clearTroopIds;
 	private List<int> _selectActorIds = new ();
@@ -62,8 +50,6 @@ public class StageInfo
 
     private int _routeSelect = 0;
     public int RouteSelect => _routeSelect;
-    private int _defineBossIndex = 0;
-    public int DefineBossIndex => _defineBossIndex;
 
 
     private EndingType _endingType = EndingType.C;
@@ -74,13 +60,14 @@ public class StageInfo
     public bool StageClear => _stageClear;
     public void SetStageClear(bool stageClear) {_stageClear = stageClear;}
 
+    private bool _recordStage = false;
+    public bool RecordStage => _recordStage;
+    public void SetRecordStage(bool recordStage) {_recordStage = recordStage;}
+
     private int _rebornActorIndex = -1;
     public int RebornActorIndex => _rebornActorIndex;
     public void SetRebornActorIndex(int rebornActorIndex) {_rebornActorIndex = rebornActorIndex;}
     
-    readonly int _tutorialEnemyKey = 1000;
-    readonly int _defineBossEnemyKey = 2000;
-    readonly int _lastBossEnemyKey = 3000;
     private bool _survivalMode = false;
     public bool SurvivalMode => _survivalMode;
 
@@ -95,16 +82,14 @@ public class StageInfo
             _symbolRecordList.RemoveAt(findIndex);
         }
         _symbolRecordList.Add(symbolResultInfo);
+        _symbolRecordList.Sort((a,b) => a.Seek - b.Seek > 0 ? 1 : -1);
     }
+
     public StageInfo(StageData stageData)
     {
         _id = stageData.Id;
-        _baseStageId = stageData.Id;
         _turns = stageData.Turns;
-        _displayTurns = stageData.Turns;
         _currentTurn = 1;
-        _IsSubordinate = false;
-        _subordinateValue = 0;
         _troopClearCount = 0;
         _savedCount = 0;
         _clearTroopIds.Clear();
@@ -167,6 +152,7 @@ public class StageInfo
                 actorInfos.Add(GameSystem.CurrentStageData.Actors.Find(a => a.ActorId == selectActorId));
             }
             record.SetStartActorInfos(actorInfos);
+            record.SetAlchemyIdList(GameSystem.CurrentStageData.Party.AlchemyIdList);
             SetSymbolResultInfo(record);
         }
     }
@@ -220,26 +206,6 @@ public class StageInfo
     }
 
 
-    public int DefineTroopId(bool containTutorial)
-    {
-        var defineTroopId = 0;
-        if (_defineBossIndex > 0 && _defineBossIndex < 5)
-        {
-            defineTroopId = _selectActorIds[_defineBossIndex] * 10 + _defineBossEnemyKey;
-            if (containTutorial)
-            {
-                var tutorialId = _selectActorIds[_defineBossIndex] * 10 + _tutorialEnemyKey;
-                if (!_clearTroopIds.Contains(tutorialId))
-                {
-                    defineTroopId = tutorialId;
-                }
-            }
-        } else if (_defineBossIndex == 5)
-        {
-            defineTroopId = _selectActorIds[0] * 10 + _defineBossEnemyKey;
-        }
-        return defineTroopId;
-    }
 
 
 
@@ -294,20 +260,6 @@ public class StageInfo
         _currentTurn--;
     }
 
-    public void ChangeSubordinate(bool isSubordinate)
-    {
-        _IsSubordinate = isSubordinate;
-    }
-
-    public void ChangeSubordinateValue(int value)
-    {
-        if (_IsSubordinate == false) return;
-        _subordinateValue += value;
-        if (_subordinateValue > 100)
-        {
-            _subordinateValue = 100;
-        }
-    }
 
     public void AddEventReadFlag(string key)
     {
@@ -329,11 +281,6 @@ public class StageInfo
         return _clearTroopIds.Contains(troopId);
     }
 
-    public void SetDefineBossIndex(int index)
-    {
-        _defineBossIndex = index;
-    }
-
 
     public void SetRouteSelect(int routeSelect)
     {
@@ -346,19 +293,14 @@ public class StageInfo
 
     public void SetMoveStageData(StageInfo stageInfo)
     {
-        _baseStageId = stageInfo.BaseStageId;
         _selectActorIds = stageInfo.SelectActorIds;
         _clearCount = stageInfo.ClearCount;
         _troopClearCount = stageInfo._troopClearCount;
         _routeSelect = stageInfo.RouteSelect;
-        _defineBossIndex = stageInfo.DefineBossIndex;
         _troopDates = stageInfo._troopDates;
-        _displayTurns = stageInfo._displayTurns - stageInfo.CurrentTurn + 1;
         _savedCount = stageInfo._savedCount;
         _continueCount = stageInfo._continueCount;
-        _subordinateValue = stageInfo.SubordinateValue;
         _clearTroopIds = stageInfo._clearTroopIds;
-        _IsSubordinate = stageInfo.IsSubordinate;
         //_readEventKeys = stageInfo._readEventKeys;
         _endingType = stageInfo._endingType;
         _stageClear = stageInfo._stageClear;

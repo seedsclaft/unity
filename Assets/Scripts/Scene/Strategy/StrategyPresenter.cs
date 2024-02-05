@@ -387,14 +387,21 @@ public class StrategyPresenter : BasePresenter
 
     private void EndStrategy()
     {
-        _model.EndStrategy();
         _view.EndShinyEffect();
-        if (_model.RemainTurns == 0)
+        if (_model.CurrentStage.RecordStage)
         {
+            _model.EndStrategy(false);
+            _model.CommitCurrentResult();
+            _view.CommandSceneChange(Scene.SymbolRecord);
+        } else
+        if (_model.RemainTurns == 1)
+        {
+            _model.EndStrategy(false);
             _model.CommitResult();
             _view.CommandSceneChange(Scene.MainMenu);
         } else
         {
+            _model.EndStrategy(true);
             _view.CommandSceneChange(Scene.Tactics);
         }
     }

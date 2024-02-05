@@ -10,17 +10,17 @@ using Effekseer;
 public class BaseModel
 {
     public SaveInfo CurrentData => GameSystem.CurrentData;
-    public SaveStageInfo CurrentStageData => GameSystem.CurrentStageData;
+    public SaveStageInfo CurrentSaveData => GameSystem.CurrentStageData;
     public TempInfo TempData => GameSystem.TempData;
-    public StageInfo CurrentStage => CurrentStageData.CurrentStage;
-    public AlcanaInfo StageAlcana => CurrentStageData.StageAlcana;
+    public StageInfo CurrentStage => CurrentSaveData.CurrentStage;
+    public AlcanaInfo StageAlcana => CurrentSaveData.StageAlcana;
 
-    public PartyInfo PartyInfo => CurrentStageData.Party;
+    public PartyInfo PartyInfo => CurrentSaveData.Party;
 
     public int Currency => PartyInfo.Currency;
 
     public int Turns{get {return CurrentStage.Turns - (CurrentStage.CurrentTurn);}}
-    public int RemainTurns{get {return CurrentStage.DisplayTurns - (CurrentStage.CurrentTurn) + 1;}}
+    public int RemainTurns{get {return CurrentStage.Turns - (CurrentStage.CurrentTurn) + 1;}}
 
     public CancellationTokenSource _cancellationTokenSource;
     private List<StageTutorialData> _currentStageTutorialDates = new ();
@@ -44,7 +44,7 @@ public class BaseModel
 
     public List<ActorInfo> Actors()
     {
-        return CurrentStageData.Actors;
+        return CurrentSaveData.Actors;
     }
 
     public void LostActors(List<ActorInfo> lostMembers)
@@ -353,10 +353,6 @@ public class BaseModel
         return CurrentStage.CurrentTroopInfo();
     }
 
-    public void ChangeSubordinate(bool isSubordinate)
-    {
-        CurrentStage.ChangeSubordinate(isSubordinate);
-    }
 
     public void SetIsAlcana(bool isAlcana)
     {
@@ -396,7 +392,7 @@ public class BaseModel
                 switch (featureData.FeatureType)
                 {
                     case FeatureType.GainTurn: // param固定
-                        CurrentStageData.CurrentStage.DeSeekStage();
+                        CurrentSaveData.CurrentStage.DeSeekStage();
                         getItemInfo.MakeGainTurnResult((RemainTurns).ToString());
                         break;
                     case FeatureType.ActorLvUp: // featureData で param1 = 選択順のActorId、 param2 = 上昇値
@@ -426,14 +422,6 @@ public class BaseModel
                         getItemInfo.MakeAlchemyCostBonusResult();
                         break;
                     case FeatureType.CommandLvUp: // featureData で param1 = tacticsCommand param2 = 上昇値
-                        var tacticsCommandType = (TacticsCommandType)featureData.Param1;
-                        var commandLv = PartyInfo.CommandRankInfo[tacticsCommandType];
-                        var upLvCount = featureData.Param2;
-                        for (int i = 0;i < upLvCount;i++)
-                        {
-                            PartyInfo.AddCommandRank(tacticsCommandType);
-                        }
-                        getItemInfo.MakeCommandLvUpResult(commandLv,commandLv + upLvCount,tacticsCommandType);
                         break;
                     case FeatureType.AddSkillOrCurrency: // skillInfo で param1 = 入手スキルID,featureData で param2 = 上昇Currency値
                         var getSkillId = skillInfo.Param1;
@@ -500,7 +488,6 @@ public class BaseModel
 
     public void SetDefineBossIndex(int index)
     {
-        CurrentStage.SetDefineBossIndex(index);
     }
 
     public string GetAdvFile(int id)
@@ -510,34 +497,20 @@ public class BaseModel
 
     public void StageClear()
     {
-        CurrentData.PlayerInfo.StageClear(CurrentStage.BaseStageId);
+        CurrentData.PlayerInfo.StageClear(CurrentStage.Id);
     }
     
-    public bool IsSuccessStage()
-    {
-        return (CurrentStage.SubordinateValue >= CurrentStage.Master.SubordinateValue);
-    }
 
     public void ChangeRouteSelectStage(int stageId)
     {
         // stageId + RouteSelect
         int route = GameSystem.CurrentStageData.CurrentStage.RouteSelect;
-        CurrentStageData.ChangeRouteSelectStage(stageId + route);
-    }
-
-    public void SetDisplayTurns()
-    {
-        CurrentStage.SetDisplayTurns();
+        CurrentSaveData.ChangeRouteSelectStage(stageId + route);
     }
 
     public void MoveStage(int stageId)
     {
-		CurrentStageData.MoveStage(stageId);
-    }
-
-    public Dictionary<TacticsCommandType, int> CommandRankInfo()
-    {
-        return PartyInfo.CommandRankInfo;
+		CurrentSaveData.MoveStage(stageId);
     }
 
     public async UniTask LoadBattleResources(List<BattlerInfo> battlers)
@@ -560,7 +533,7 @@ public class BaseModel
 
     public void SetResumeStage(bool resumeStage)
     {
-        CurrentStageData.SetResumeStage(resumeStage);
+        CurrentSaveData.SetResumeStage(resumeStage);
     }
     
     public void SavePlayerData()
@@ -607,11 +580,11 @@ public class BaseModel
 
     public List<ActorInfo> EvaluateMembers()
     {
-        var selectActorIds = CurrentStageData.CurrentStage.SelectActorIds;
+        var selectActorIds = CurrentSaveData.CurrentStage.SelectActorIds;
         var members = new List<ActorInfo>();
         for (int i = 0;i < selectActorIds.Count ;i++)
         {
-            var temp = CurrentStageData.Actors.Find(a => a.ActorId == selectActorIds[i]);
+            var temp = CurrentSaveData.Actors.Find(a => a.ActorId == selectActorIds[i]);
             if (temp != null)
             {
                 members.Add(temp);
@@ -720,7 +693,7 @@ public class BaseModel
         {
 #if UNITY_ANDROID
             FirebaseController.Instance.WriteRankingData(
-                CurrentStage.BaseStageId,
+                CurrentStage.Id,
                 userId,
                 evaluate,
                 CurrentData.PlayerInfo.PlayerName,
@@ -740,7 +713,7 @@ public class BaseModel
 #endif
             await UniTask.WaitUntil(() => FirebaseController.IsBusy == false);
 
-            FirebaseController.Instance.ReadRankingData(CurrentStage.BaseStageId,RankingTypeText(CurrentStage.Master.RankingStage));
+            FirebaseController.Instance.ReadRankingData(CurrentStage.Id,RankingTypeText(CurrentStage.Master.RankingStage));
             await UniTask.WaitUntil(() => FirebaseController.IsBusy == false);
             var results = FirebaseController.RankingInfos;
             var rank = 1;
@@ -851,19 +824,19 @@ public class BaseModel
 
     public void ClearActorsData()
     {
-        CurrentStageData.ClearActors();
-        CurrentStageData.InitAllActorMembers();
+        CurrentSaveData.ClearActors();
+        CurrentSaveData.InitAllActorMembers();
     }
 
     public void SetActorsData(int index)
     {
-        CurrentStageData.ClearActors();
+        CurrentSaveData.ClearActors();
         PartyInfo.InitActors();
         var slotData = CurrentData.PlayerInfo.SlotSaveList[index];
         var actorInfos = slotData.ActorInfos;
         foreach (var actorInfo in actorInfos)
         {
-            CurrentStageData.AddActor(actorInfo);
+            CurrentSaveData.AddActor(actorInfo);
         }
     }
 

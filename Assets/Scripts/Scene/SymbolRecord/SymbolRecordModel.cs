@@ -3,180 +3,13 @@ using UnityEngine;
 
 public class SymbolRecordModel : BaseModel
 {
-    private List<TacticsResultInfo> _resultInfos = new();
-    
-
-    private List<ActorInfo> _levelUpData = new();
-    public List<ActorInfo> LevelUpData => _levelUpData;
-    private List<int> _levelUpBonusActorIds = new();
-    public List<ListData> LevelUpActorStatus(int index)
-    {
-        var list = new List<ListData>();
-        var listData = new ListData(_levelUpData[0]);
-        list.Add(listData);
-        list.Add(listData);
-        list.Add(listData);
-        list.Add(listData);
-        list.Add(listData);
-        return list;
-    }
-
-    private List<ListData> _resultItemInfos = new();
-    public List<ListData> ResultGetItemInfos => _resultItemInfos;
-
-    public List<ActorInfo> TacticsActors()
-    {
-        return TempData.TempResultActorInfos.FindAll(a => a.InBattle == false);
-    }
-
-    public void SetLvUp()
-    {
-        if (_levelUpData.Count > 0) return;
-        var lvUpActorInfos = TacticsActors().FindAll(a => a.TacticsCommandType == TacticsCommandType.Train);
-        var lvUpList = new List<ActorInfo>();
-        // 結果出力
-        foreach (var lvUpActorInfo in lvUpActorInfos)
-        {
-            var levelBonus = PartyInfo.GetTrainLevelBonusValue();
-            var statusInfo = lvUpActorInfo.LevelUp(levelBonus);
-            lvUpActorInfo.TempStatus.SetParameter(
-                statusInfo.Hp,
-                statusInfo.Mp,
-                statusInfo.Atk,
-                statusInfo.Def,
-                statusInfo.Spd
-            );
-            lvUpList.Add(lvUpActorInfo);
-            if (levelBonus > 0)
-            {
-                _levelUpBonusActorIds.Add(lvUpActorInfo.ActorId);
-            }
-        }
-        _levelUpData = lvUpList;
-    }
-
-    public void MakeResult()
-    {
-        var getItemInfos = TempData.TempGetItemInfos;
-        // 魔法習熟度進行
-        foreach (var actorInfo in StageMembers())
-        {
-            var learningSkills = actorInfo.SeekAlchemy();
-            foreach (var learningSkill in learningSkills)
-            {
-                var getItemData = new GetItemData();
-                getItemData.Type = GetItemType.LearnSkill;
-                getItemData.Param1 = actorInfo.ActorId;
-                getItemData.Param2 = learningSkill.Id;
-                getItemInfos.Add(new GetItemInfo(getItemData));
-            }
-        }
-        foreach (var getItemInfo in getItemInfos)
-        {
-            switch (getItemInfo.GetItemType)
-            {
-                case GetItemType.Numinous:
-                    PartyInfo.ChangeCurrency(Currency + getItemInfo.Param1);
-                    break;
-                case GetItemType.Skill:
-                    PartyInfo.AddAlchemy(getItemInfo.Param1);
-                    break;
-                case GetItemType.Regeneration:
-                    foreach (var stageMember in StageMembers())
-                    {
-                        if (stageMember.Lost == false)
-                        {
-                            stageMember.ChangeHp(stageMember.CurrentHp + getItemInfo.Param1);
-                            stageMember.ChangeMp(stageMember.CurrentMp + getItemInfo.Param1);
-                        }
-                    }
-                    break;
-                case GetItemType.Demigod:
-                    foreach (var stageMember in StageMembers())
-                    {
-                        if (stageMember.Lost == false)
-                        {
-                            stageMember.GainDemigod(getItemInfo.Param1);
-                        }
-                    }
-                    break;
-                case GetItemType.StatusUp:
-                    foreach (var stageMember in StageMembers())
-                    {
-                        if (stageMember.Lost == false)
-                        {
-                            stageMember.TempStatus.AddParameterAll(getItemInfo.Param1);
-                            stageMember.DecideStrength(0);
-                        }
-                    }
-                    break;
-            }
-        }
-        _resultItemInfos = ListData.MakeListData(getItemInfos);
-    }
-
-    public void SetLevelUpStatus()
-    {
-        var actorInfo = _levelUpData[0];
-        actorInfo.DecideStrength(0);
-        _levelUpData.RemoveAt(0);
-    }
-
-    public bool BattleResultVictory()
-    {
-        return PartyInfo.BattleResultVictory;
-    }
-
-    public List<ListData> BattleResultInfos()
-    {
-        return MakeListData(TempData.TempGetItemInfos);
-    }
-
-    public List<ActorInfo> BattleResultActors()
-    {
-        return TempData.TempResultActorInfos.FindAll(a => a.InBattle);
-    }
-
-    public void ClearBattleData(List<ActorInfo> actorInfos)
-    {
-        foreach (var actorInfo in actorInfos)
-        {
-            actorInfo.SetNextBattleEnemyIndex(-1,0);
-            if (actorInfo.InBattle == true)
-            {
-                actorInfo.SetInBattle(false);
-            }
-            actorInfo.ClearTacticsCommand();
-        }
-    }
-
-    public List<ActorInfo> LostMembers()
-    {
-        return BattleResultActors().FindAll(a => a.InBattle && a.CurrentHp == 0);
-    }
-
-    public List<ListData> ResultCommand()
-    {
-        return MakeListData(BaseConfirmCommand(3040,5));
-    }
-
-    public bool IsBonusTactics(int actorId)
-    {
-        var result = _resultInfos.Find(a => a.ActorId == actorId);
-        if (result != null)
-        {
-            return result.IsBonus;
-        }
-        return false;
-    }
-    
     public List<ListData> Symbols(int seek)
     {
         var symbolInfos = new List<SymbolInfo>();
         
         var stageData = DataSystem.FindStage(CurrentStage.Id);
         var symbols = stageData.StageSymbols.FindAll(a => a.Seek == seek+1);
-        var symbolRecords = CurrentStageData.Party.SymbolRecordList.FindAll(a => a.StageId == CurrentStage.Id && a.Selected == true);
+        var symbolRecords = CurrentSaveData.Party.SymbolRecordList.FindAll(a => a.StageId == CurrentStage.Id && a.Selected == true);
         
         for (int i = 0;i < symbols.Count;i++)
         {
@@ -214,7 +47,7 @@ public class SymbolRecordModel : BaseModel
 
     public List<ListData> SymbolRecords()
     {
-        var symbolRecords = CurrentStageData.Party.SymbolRecordList.FindAll(a => a.StageId == CurrentStage.Id && a.Selected == true);
+        var symbolRecords = CurrentSaveData.Party.SymbolRecordList.FindAll(a => a.StageId == CurrentStage.Id && a.Selected == true);
         var symbolInfos = new List<SymbolInfo>();
         
         var stageData = DataSystem.FindStage(CurrentStage.Id);
@@ -254,8 +87,14 @@ public class SymbolRecordModel : BaseModel
 
     public List<ActorInfo> SymbolActors(int seek)
     {
-        var symbolRecord = CurrentStageData.Party.SymbolRecordList.Find(a => a.StageId == CurrentStage.Id && a.Selected == true && a.Seek == seek+1);
+        var symbolRecord = CurrentSaveData.Party.SymbolRecordList.Find(a => a.StageId == CurrentStage.Id && a.Selected == true && a.Seek == seek+1);
         return symbolRecord.ActorsData;
+    }
+
+    public List<int> SymbolAlchemyList(int seek)
+    {
+        var symbolRecord = CurrentSaveData.Party.SymbolRecordList.Find(a => a.StageId == CurrentStage.Id && a.Selected == true && a.Seek == seek+1);
+        return symbolRecord.AlchemyIdList;
     }
 
     public TroopInfo BattleTroops(int troopId,int enemyCount)
@@ -289,22 +128,31 @@ public class SymbolRecordModel : BaseModel
         }
     }
     
-    public bool EnableBattleSkip()
+    public void MakeSymbolRecordStage(int seek)
     {
-        // スキップ廃止
-        return false;
-        //return CurrentData.PlayerInfo.EnableBattleSkip(CurrentTroopInfo().TroopId);
-    }
-
-
-
-    public void ReturnTempBattleMembers()
-    {
-        foreach (var tempActorInfo in TempData.TempActorInfos)
+        CurrentSaveData.MakeRecordStage(CurrentStage.Master.Id);
+        CurrentStage.SetRecordStage(true);
+        TempData.SetRecordActors(CurrentSaveData.Actors);
+        TempData.SetRecordAlchemyList(CurrentSaveData.Party.AlchemyIdList);
+        
+        CurrentSaveData.ClearActors();
+        CurrentStage.ClearSelectActorId();
+        foreach (var symbolActor in SymbolActors(seek))
         {
-            tempActorInfo.SetInBattle(false);
-            CurrentStageData.UpdateActorInfo(tempActorInfo);
+            CurrentSaveData.AddActor(symbolActor);
+            CurrentStage.AddSelectActorId(symbolActor.ActorId);
         }
-        TempData.ClearBattleActors();
+
+        CurrentSaveData.Party.ClearAlchemy();
+        foreach (var alchemyId in SymbolAlchemyList(seek))
+        {
+            CurrentSaveData.Party.AddAlchemy(alchemyId);
+        }
+
+		CurrentStage.MakeTurnSymbol();
+        for (int i = 0;i < seek;i++)
+        {
+            CurrentStage.SeekStage();
+        }
     }
 }

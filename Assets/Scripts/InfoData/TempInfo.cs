@@ -74,4 +74,63 @@ public class TempInfo
     {
         _tempResultActorInfos.Clear();
     }
+    
+    private List<ActorInfo> _tempRecordActors = new ();
+    public List<ActorInfo> TempRecordActors => _tempRecordActors;
+    public void SetRecordActors(List<ActorInfo> actorInfos)
+    {
+        _tempRecordActors.Clear();
+        var tempRecordActors = new List<ActorInfo>();
+        foreach (var actorInfo in actorInfos)
+        {
+            var recordActorInfo = new ActorInfo(actorInfo.Master);			
+            for (int i = 0;i < actorInfo.Master.LearningSkills.Count;i++)
+			{
+				var _learningData = actorInfo.Master.LearningSkills[i];
+				if (recordActorInfo.Skills.Find(a =>a.Id == _learningData.SkillId) != null) continue;
+				var skillInfo = new SkillInfo(_learningData.SkillId);
+				skillInfo.SetLearningState(LearningState.Learned);
+				recordActorInfo.Skills.Add(skillInfo);
+			}
+            if (actorInfo.Level > 1)
+            {
+                var statusInfo = recordActorInfo.LevelUp(actorInfo.Level-2);
+                actorInfo.TempStatus.SetParameter(
+                    statusInfo.Hp,
+                    statusInfo.Mp,
+                    statusInfo.Atk,
+                    statusInfo.Def,
+                    statusInfo.Spd
+                );
+                recordActorInfo.DecideStrength(0);
+            }
+			recordActorInfo.ChangeHp(actorInfo.CurrentHp);
+			recordActorInfo.ChangeMp(actorInfo.CurrentMp);
+			recordActorInfo.ChangeLost(actorInfo.Lost);
+            tempRecordActors.Add(recordActorInfo);
+        }
+        _tempRecordActors = tempRecordActors;
+    }
+    public void ClearRecordActors()
+    {
+        _tempRecordActors.Clear();
+    }
+
+    private List<int> _tempRecordAlchemyList = new ();
+    public List<int> TempRecordAlchemyList => _tempRecordAlchemyList;
+    public void SetRecordAlchemyList(List<int> tempRecordAlchemyList)
+    {
+        _tempRecordAlchemyList.Clear();
+        var alchemyList = new List<int>();
+        foreach (var alchemyId in tempRecordAlchemyList)
+        {
+            alchemyList.Add(alchemyId);
+        }
+        _tempRecordAlchemyList = alchemyList;
+    }
+    public void ClearRecordAlchemyList()
+    {
+        _tempRecordAlchemyList.Clear();
+    }
+    
 }

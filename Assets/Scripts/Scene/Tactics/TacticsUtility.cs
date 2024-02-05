@@ -11,7 +11,6 @@ public class TacticsUtility
 
     public static int TrainCost(ActorInfo actorInfo)
     {
-                return 0;
         if (GameSystem.CurrentStageData != null)
         {
             if (GameSystem.CurrentStageData.StageAlcana.CheckCommandCostZero(TacticsCommandType.Train))
@@ -22,6 +21,17 @@ public class TacticsUtility
         return actorInfo.Level * TacticsCostRate(actorInfo);
     }
 
+    public static int TrainCost(int level,ActorInfo actorInfo)
+    {
+        if (GameSystem.CurrentStageData != null)
+        {
+            if (GameSystem.CurrentStageData.StageAlcana.CheckCommandCostZero(TacticsCommandType.Train))
+            {
+                return 0;
+            }
+        }
+        return level * TacticsCostRate(actorInfo);
+    }
     public static int AlchemyTurns(ActorInfo actorInfo,AttributeType attributeType,List<ActorInfo> stageMembers)
     {
         int turns = 1;

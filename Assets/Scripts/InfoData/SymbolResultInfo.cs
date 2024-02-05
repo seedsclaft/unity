@@ -26,6 +26,16 @@ public class SymbolResultInfo
     {
         _battleScore = battleScore;
     }
+    private List<int> _alchemyIdList = new();
+    public List<int> AlchemyIdList => _alchemyIdList;
+    public void SetAlchemyIdList(List<int> alchemyIdList)
+    {
+        _alchemyIdList.Clear();
+        foreach (var alchemyId in alchemyIdList)
+        {
+            _alchemyIdList.Add(alchemyId);
+        }
+    }
 
     public List<ActorInfo> _actorsData = new ();
     public List<ActorInfo> ActorsData => _actorsData;

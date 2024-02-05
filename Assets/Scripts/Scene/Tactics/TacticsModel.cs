@@ -32,10 +32,10 @@ public class TacticsModel : BaseModel
     }
 
 
-    private int _currentEnemyIndex = -1; 
-    public int CurrentEnemyIndex
+    private int _stageSeekIndex = -1; 
+    public int StageSeekIndex
     {
-        get {return _currentEnemyIndex;} set {_currentEnemyIndex = value;}
+        get {return _stageSeekIndex;} set {_stageSeekIndex = value;}
     }
     
     private bool _needAllTacticsCommand = false;
@@ -44,8 +44,6 @@ public class TacticsModel : BaseModel
     {
         _needAllTacticsCommand = isNeed;
     }
-
-
 
     public ActorInfo TacticsActor(int actorId)
     {
@@ -127,6 +125,7 @@ public class TacticsModel : BaseModel
                 statusInfo.Spd
             );
             actorInfo.DecideStrength(0);
+            actorInfo.GainLevelUpCost(cost);
             PartyInfo.ChangeCurrency(Currency - cost);
         }
     }
@@ -171,9 +170,9 @@ public class TacticsModel : BaseModel
         }
     }
 
-    public void SetBattleEnemyIndex()
+    public void SetStageSeekIndex()
     {
-        CurrentStage.SetSeekIndex(_currentEnemyIndex);
+        CurrentStage.SetSeekIndex(_stageSeekIndex);
     }
 
     public void SaveTempBattleMembers()
@@ -367,7 +366,7 @@ public class TacticsModel : BaseModel
 
     private int CommandRank()
     {
-        return CommandRankInfo()[_tacticsCommandType];
+        return 0;
     }
 
     private string CommandDescription()

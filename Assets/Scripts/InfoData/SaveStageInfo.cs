@@ -145,4 +145,11 @@ public class SaveStageInfo
 		moveStage.SetMoveStageData(current);
 		_currentStage = moveStage;
 	}
+
+	public void MakeRecordStage(int stageId)
+	{
+		var stageData = DataSystem.FindStage(stageId);
+		var moveStage = new StageInfo(stageData);
+		_currentStage = moveStage;
+	}
 }

@@ -172,7 +172,7 @@ public class TacticsView : BaseView
         }
     }
 
-    public void SetSelectCharacter(List<ListData> actorInfos,List<ListData> confirmCommands,Dictionary<TacticsCommandType, int> commandRankInfo)
+    public void SetSelectCharacter(List<ListData> actorInfos,List<ListData> confirmCommands)
     {
         selectCharacter.Initialize();
         selectCharacter.SetCharacterData(actorInfos);

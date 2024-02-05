@@ -83,7 +83,7 @@ public class StatusModel : BaseModel
         CurrentStage.AddSelectActorId(CurrentActor.ActorId);
         if (CurrentStage == null)
         {
-            CurrentStageData.SetResumeStage(true);
+            CurrentSaveData.SetResumeStage(true);
 		    PartyInfo.ChangeCurrency(DataSystem.System.InitCurrency);
         }
     }

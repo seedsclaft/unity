@@ -11,6 +11,8 @@ public class ActorInfo
     public int MaxMp => CurrentStatus.Mp;
     private int _level;
     public int Level => _level;
+    private int _levelUpCost = 0;
+    public int LevelUpCost => _levelUpCost;
     
     private StatusInfo _baseStatus;
     private StatusInfo _currentStatus;
@@ -273,6 +275,11 @@ public class ActorInfo
         }
         return IsLevelUpStatus;
         */
+    }
+
+    public void GainLevelUpCost(int cost)
+    {
+        _levelUpCost += cost;
     }
 
     public bool IsLearnedSkill(int skillId)
@@ -624,6 +631,24 @@ public class ActorInfo
         skillInfos.AddRange(sortList2);
         skillInfos.AddRange(sortList3);
         return ListData.MakeListData(skillInfos);
+    }
+
+    public int LevelUpByCost()
+    {
+        var levelUpNum = 0;
+        var useCost = 0;
+        for (int i = 0;i <= LevelUpCost;i++)
+        {
+            if (i >= (TacticsUtility.TrainCost(_level+levelUpNum,this) + useCost))
+            {
+                useCost += i;
+                levelUpNum++;
+            }
+        }
+
+        _levelUpCost -= useCost;
+
+        return levelUpNum;
     }
 }
 

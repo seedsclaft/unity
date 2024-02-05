@@ -38,14 +38,6 @@ public class BattleModel : BaseModel
 
     public UniTask<List<UnityEngine.AudioClip>> GetBattleBgm()
     {
-        if (CurrentStage != null)
-        {
-            var troops = CurrentStage.CurrentTroopInfo();
-            if (CurrentStage.DefineTroopId(false) == troops.TroopId || troops.TroopId > 3000)
-            {
-                return GetBgmData(DataSystem.Data.GetBGM(CurrentStage.Master.BossBGMId).Key);
-            }
-        }
         var battleMembers = PartyMembers();
         return GetBgmData("BATTLE" + (battleMembers[0].Master.ClassId).ToString());
     }

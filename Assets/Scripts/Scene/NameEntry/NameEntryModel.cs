@@ -9,7 +9,7 @@ public class NameEntryModel : BaseModel
     public void StartOpeningStage()
     {
         InitSaveStageInfo();
-        CurrentStageData.MakeStageData(1);
+        CurrentSaveData.MakeStageData(1);
         CurrentStage.AddSelectActorId(1);
         PartyInfo.ChangeCurrency(DataSystem.System.InitCurrency);
         SavePlayerStageData(true);
