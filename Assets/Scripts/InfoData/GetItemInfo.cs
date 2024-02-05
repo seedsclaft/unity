@@ -27,7 +27,12 @@ public class GetItemInfo
         }
     }
 
-    private void MakeTextData()
+    public void SetParam2(int param2)
+    {
+        _param2 = param2;
+    }
+
+    public void MakeTextData()
     {
         switch (_getItemType)
         {
@@ -60,6 +65,10 @@ public class GetItemInfo
                 break;
             case GetItemType.AddActor:
                 SetTitleData(DataSystem.GetReplaceText(3003,DataSystem.FindActor(_param1).Name));
+                SetResultData(DataSystem.FindActor(_param1).Name);
+                break;
+            case GetItemType.SaveHuman:
+                SetResultData("救命人数 " + _param2.ToString() + "/" + _param1.ToString());
                 break;
         }
     }

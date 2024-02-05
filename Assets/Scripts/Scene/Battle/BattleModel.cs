@@ -16,8 +16,8 @@ public class BattleModel : BaseModel
     private UnitInfo _party;
     private UnitInfo _troop;
 
-    private List<ActionResultInfo> _battleRecords = new ();
-    public List<ActionResultInfo> BattleRecords => _battleRecords;
+    private List<BattleRecord> _battleRecords = new ();
+    public List<BattleRecord> BattleRecords => _battleRecords;
 
     private List<ActionInfo> _battleActionRecords = new ();
     public List<ActionInfo> BattleActionRecords => _battleActionRecords;
@@ -68,6 +68,8 @@ public class BattleModel : BaseModel
                 }
                 */
                 _battlers.Add(battlerInfo);
+                var battlerRecord = new BattleRecord(battlerInfo.Index);
+                _battleRecords.Add(battlerRecord);
             //}
         }
         var enemies = CurrentStage.CurrentBattleInfos();
@@ -76,8 +78,10 @@ public class BattleModel : BaseModel
         {
             var baseEnemy = enemies[i];
             baseEnemy.ResetData();
-            baseEnemy.GainHp(-9999);
+            //baseEnemy.GainHp(-9999);
             _battlers.Add(baseEnemy);
+            var battlerRecord = new BattleRecord(baseEnemy.Index);
+            _battleRecords.Add(battlerRecord);
         }
         foreach (var battlerInfo1 in _battlers)
         {
@@ -312,6 +316,11 @@ public class BattleModel : BaseModel
     public BattlerInfo GetBattlerInfo(int index)
     {
         return _battlers.Find(a => a.Index == index);
+    }
+
+    public BattleRecord GetBattlerRecord(int index)
+    {
+        return _battleRecords.Find(a => a.BattlerIndex == index);
     }
 
     public List<ListData> SkillActionList()
@@ -1131,6 +1140,8 @@ public class BattleModel : BaseModel
     {
         var subject = GetBattlerInfo(actionResultInfo.SubjectIndex);
         var target = GetBattlerInfo(actionResultInfo.TargetIndex);
+        var subjectRecord = GetBattlerRecord(actionResultInfo.SubjectIndex);
+        var targetRecord = GetBattlerRecord(actionResultInfo.TargetIndex);
         foreach (var addState in actionResultInfo.AddedStates)
         {
             var addTarget = GetBattlerInfo(addState.TargetIndex);
@@ -1144,10 +1155,13 @@ public class BattleModel : BaseModel
         if (actionResultInfo.HpDamage != 0)
         {
             target.GainHp(-1 * actionResultInfo.HpDamage);
+            targetRecord.GainDamagedValue(actionResultInfo.HpDamage);
+            subjectRecord.GainDamageValue(actionResultInfo.HpDamage);
         }
         if (actionResultInfo.HpHeal != 0 && (!actionResultInfo.DeadIndexList.Contains(target.Index) || actionResultInfo.AliveIndexList.Contains(target.Index)))
         {
             target.GainHp(actionResultInfo.HpHeal);
+            subjectRecord.GainHealValue(actionResultInfo.HpHeal);
         }
         if (actionResultInfo.MpDamage != 0)
         {
@@ -1200,7 +1214,6 @@ public class BattleModel : BaseModel
         }
         
         actionResultInfo.SetTurnCount(_turnCount);
-        _battleRecords.Add(actionResultInfo);
     }
     
     public List<int> DeathBattlerIndex(List<ActionResultInfo> actionResultInfos)
@@ -2231,6 +2244,19 @@ public class BattleModel : BaseModel
         if (isVictory)
         {
             PartyInfo.SetBattleResultVictory(true);
+            var score = 0;
+            foreach (var battleRecord in _battleRecords)
+            {
+                if (battleRecord.BattlerIndex < 100)
+                {
+                    score += battleRecord.DamageValue;
+                    score += battleRecord.HealValue;
+                    score -= battleRecord.DamagedValue;
+                }
+            }
+            score = Math.Min(score,50);
+            score = Math.Max(0,score);
+            PartyInfo.SetBattleScore(50 + score);
         }
         return isVictory;
     }
@@ -2241,6 +2267,7 @@ public class BattleModel : BaseModel
         if (isDefeat)
         {
             PartyInfo.SetBattleResultVictory(false);
+            PartyInfo.SetBattleScore(0);
         }
         return isDefeat;
     }
@@ -2258,6 +2285,7 @@ public class BattleModel : BaseModel
     public void EscapeBattle()
     {
         PartyInfo.SetBattleResultVictory(false);
+        PartyInfo.SetBattleScore(0);
     }
 
     public void EndBattle()

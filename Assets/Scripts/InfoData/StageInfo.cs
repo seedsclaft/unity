@@ -119,10 +119,18 @@ public class StageInfo
         foreach (var symbol in symbols)
         {
             var symbolInfo = new SymbolInfo(symbol);
+            var getItemInfos = new List<GetItemInfo>();
             if (symbol.BattleSymbol == 1){
                 if (symbol.Param1 > 0)
                 {
                     symbolInfo.SetTroopInfo(BattleTroops(symbol.Param1,symbol.Param2));
+                }
+                
+                var prizeSets = DataSystem.PrizeSets.FindAll(a => a.Id == symbolInfo.TroopInfo.Master.PrizeSetId);
+                foreach (var prizeSet in prizeSets)
+                {
+                    var getItemInfo = new GetItemInfo(prizeSet.GetItem);
+                    getItemInfos.Add(getItemInfo);
                 }
             } else
             if (symbol.BossSymbol == 1){
@@ -130,18 +138,23 @@ public class StageInfo
                 {
                     symbolInfo.SetTroopInfo(BattleTroops(symbol.Param1,symbol.Param2));
                 }
+                var prizeSets = DataSystem.PrizeSets.FindAll(a => a.Id == symbolInfo.TroopInfo.Master.PrizeSetId);
+                foreach (var prizeSet in prizeSets)
+                {
+                    var getItemInfo = new GetItemInfo(prizeSet.GetItem);
+                    getItemInfos.Add(getItemInfo);
+                }
             }
             if (symbol.PrizeSetId > 0)
             {
-                var getItemInfos = new List<GetItemInfo>();
                 var prizeSets = DataSystem.PrizeSets.FindAll(a => a.Id == symbol.PrizeSetId);
                 foreach (var prizeSet in prizeSets)
                 {
                     var getItemInfo = new GetItemInfo(prizeSet.GetItem);
                     getItemInfos.Add(getItemInfo);
                 }
-                symbolInfo.MakeGetItemInfos(getItemInfos);
             }
+            symbolInfo.MakeGetItemInfos(getItemInfos);
             _currentSymbolInfos.Add(symbolInfo);
         }
         // レコード作成

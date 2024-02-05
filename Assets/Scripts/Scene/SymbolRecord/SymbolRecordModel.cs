@@ -181,34 +181,32 @@ public class SymbolRecordModel : BaseModel
         for (int i = 0;i < symbols.Count;i++)
         {
             var symbol = symbols[i];
+            var saveRecord = symbolRecords.Find(a => a.IsSameSymbol(stageData.Id,symbol.Seek,i));
+            var getItemInfos = new List<GetItemInfo>();
             var symbolInfo = new SymbolInfo(symbol);
             if (symbol.BattleSymbol == 1){
                 if (symbol.Param1 > 0)
                 {
                     symbolInfo.SetTroopInfo(BattleTroops(symbol.Param1,symbol.Param2));
-                }
+                }                
+                var prizeSets = DataSystem.PrizeSets.FindAll(a => a.Id == symbolInfo.TroopInfo.Master.PrizeSetId);
+                MakePrizeData(saveRecord,prizeSets,getItemInfos);
             } else
             if (symbol.BossSymbol == 1){
                 if (symbol.Param1 > 0)
                 {
                     symbolInfo.SetTroopInfo(BattleTroops(symbol.Param1,symbol.Param2));
-                }
+                }                
+                var prizeSets = DataSystem.PrizeSets.FindAll(a => a.Id == symbolInfo.TroopInfo.Master.PrizeSetId);
+                MakePrizeData(saveRecord,prizeSets,getItemInfos);
             }
             if (symbol.PrizeSetId > 0)
             {
-                var getItemInfos = new List<GetItemInfo>();
                 var prizeSets = DataSystem.PrizeSets.FindAll(a => a.Id == symbol.PrizeSetId);
-                foreach (var prizeSet in prizeSets)
-                {
-                    var getItemInfo = new GetItemInfo(prizeSet.GetItem);
-                    getItemInfos.Add(getItemInfo);
-                }
-                symbolInfo.MakeGetItemInfos(getItemInfos);
+                MakePrizeData(saveRecord,prizeSets,getItemInfos);
             }
-            if (symbolRecords.Find(a => a.IsSameSymbol(stageData.Id,symbol.Seek,i)) != null)
-            {
-                symbolInfo.SetSelected(true);
-            }
+            symbolInfo.SetSelected(saveRecord != null);
+            symbolInfo.MakeGetItemInfos(getItemInfos);
             symbolInfos.Add(symbolInfo);
         }
         return MakeListData(symbolInfos);
@@ -224,30 +222,31 @@ public class SymbolRecordModel : BaseModel
         {
             var symbols = stageData.StageSymbols.FindAll(a => a.Seek == symbolRecord.Seek);
             var symbol = symbols[symbolRecord.SeekIndex];
+            var saveRecord = symbolRecords.Find(a => a.IsSameSymbol(stageData.Id,symbolRecord.Seek,symbolRecord.SeekIndex));
             var symbolInfo = new SymbolInfo(symbol);
+            var getItemInfos = new List<GetItemInfo>();
             if (symbol.BattleSymbol == 1){
                 if (symbol.Param1 > 0)
                 {
                     symbolInfo.SetTroopInfo(BattleTroops(symbol.Param1,symbol.Param2));
                 }
+                var prizeSets = DataSystem.PrizeSets.FindAll(a => a.Id == symbolInfo.TroopInfo.Master.PrizeSetId);
+                MakePrizeData(saveRecord,prizeSets,getItemInfos);
             } else
             if (symbol.BossSymbol == 1){
                 if (symbol.Param1 > 0)
                 {
                     symbolInfo.SetTroopInfo(BattleTroops(symbol.Param1,symbol.Param2));
                 }
+                var prizeSets = DataSystem.PrizeSets.FindAll(a => a.Id == symbolInfo.TroopInfo.Master.PrizeSetId);
+                MakePrizeData(saveRecord,prizeSets,getItemInfos);
             }
             if (symbol.PrizeSetId > 0)
             {
-                var getItemInfos = new List<GetItemInfo>();
                 var prizeSets = DataSystem.PrizeSets.FindAll(a => a.Id == symbol.PrizeSetId);
-                foreach (var prizeSet in prizeSets)
-                {
-                    var getItemInfo = new GetItemInfo(prizeSet.GetItem);
-                    getItemInfos.Add(getItemInfo);
-                }
-                symbolInfo.MakeGetItemInfos(getItemInfos);
+                MakePrizeData(saveRecord,prizeSets,getItemInfos);
             }
+            symbolInfo.MakeGetItemInfos(getItemInfos);
             symbolInfos.Add(symbolInfo);
         }
         return MakeListData(symbolInfos);
@@ -272,6 +271,22 @@ public class SymbolRecordModel : BaseModel
         }
         troopInfo.MakeGetItemInfos();
         return troopInfo;
+    }
+
+    private void MakePrizeData(SymbolResultInfo saveRecord,List<PrizeSetData> prizeSets,List<GetItemInfo> getItemInfos)
+    {
+        foreach (var prizeSet in prizeSets)
+        {
+            var getItemInfo = new GetItemInfo(prizeSet.GetItem);
+            if (saveRecord != null && prizeSet.GetItem.Type == GetItemType.SaveHuman)
+            {
+                var rate = (float)saveRecord.BattleScore * 0.01f;
+                rate *= getItemInfo.Param1;
+                getItemInfo.SetParam2((int)rate);
+                getItemInfo.MakeTextData();
+            }
+            getItemInfos.Add(getItemInfo);
+        }
     }
     
     public bool EnableBattleSkip()

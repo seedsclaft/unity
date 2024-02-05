@@ -110,6 +110,10 @@ public class StrategyModel : BaseModel
                         }
                     }
                     break;
+                case GetItemType.SaveHuman:
+                    var record = CurrentStage.SymbolRecordList.Find(a => a.IsSameSymbol(CurrentStage.Id,CurrentStage.CurrentTurn,CurrentStageData.CurrentStage.CurrentSeekIndex));
+                    record.SetBattleScore(PartyInfo.BattleResultScore);
+                    break;
             }
         }
         _resultItemInfos = ListData.MakeListData(getItemInfos);
@@ -173,12 +177,9 @@ public class StrategyModel : BaseModel
     public void EndStrategy()
     {
         // レコード作成
-        var records = CurrentStage.SymbolRecordList.FindAll(a => a.IsSameSymbol(CurrentStage.Id,CurrentStage.CurrentTurn,CurrentStageData.CurrentStage.CurrentSeekIndex));
-        for (var i = records.Count-1;i >= 0;i--)
-        {
-            records[i].SetSelected(true);
-            CurrentStage.SetSymbolResultInfo(records[i]);
-        }
+        var record = CurrentStage.SymbolRecordList.Find(a => a.IsSameSymbol(CurrentStage.Id,CurrentStage.CurrentTurn,CurrentStageData.CurrentStage.CurrentSeekIndex));
+        record.SetSelected(true);
+        CurrentStage.SetSymbolResultInfo(record);
 
         CurrentStage.SeekStage();
         foreach (var actorInfo in StageMembers())

@@ -122,5 +122,6 @@ public enum GetItemType
 	StatusUp = 22,
 	Regeneration = 31,
 	LearnSkill = 41,
-	AddActor = 51
+	AddActor = 51,
+	SaveHuman = 61,
 }

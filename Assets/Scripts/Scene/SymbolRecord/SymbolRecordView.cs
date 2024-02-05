@@ -28,6 +28,13 @@ public class SymbolRecordView : BaseView
             _commandData(eventData);
         });
         new SymbolRecordPresenter(this);
+        SetBackCommand(() => OnClickBack());
+    }
+
+    private void OnClickBack()
+    {
+        var eventData = new SymbolRecordViewEvent(CommandType.Back);
+        _commandData(eventData);
     }
 
     public void SetTacticsCharaLayer(List<ActorInfo> actorInfos)
@@ -76,15 +83,7 @@ namespace SymbolRecord
     {
         None = 0,
         SelectRecord = 1,
-        EndAnimation = 2,
-        PopupSkillInfo = 3,
-        CallEnemyInfo = 4,
-        ResultClose = 5,
-        BattleClose = 6,
-        LvUpNext = 7,
-        
-        EndLvUpAnimation = 9,
-        ChangeSkipToggle = 10,
+        Back = 2,
     }
 }
 public class SymbolRecordViewEvent

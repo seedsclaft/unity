@@ -4,18 +4,31 @@ using UnityEngine;
 
 public class BattleRecord 
 {
-    private ActionResultInfo _resultInfo;
-    private ActionInfo _actionInfo;
-    public BattleRecord(ActionInfo actionInfo)
+    private int _battlerIndex = -1;
+    public int BattlerIndex => _battlerIndex;
+    private int _damageValue = 0;
+    public int DamageValue => _damageValue;
+    private int _damagedValue = 0;
+    public int DamagedValue => _damagedValue;
+    private int _healValue = 0;
+    public int HealValue => _healValue;
+    public BattleRecord(int battlerIndex)
     {
-        _actionInfo = actionInfo;
-        //Debug.Log(_actionInfo.Master.Name);
+        _battlerIndex = battlerIndex;
     }
 
-    public BattleRecord(ActionResultInfo resultInfo)
+    public void GainDamageValue(int damageValue)
     {
-        _resultInfo = resultInfo;
-        //Debug.Log("subject " + resultInfo.SubjectIndex);
-        //Debug.Log("target " + resultInfo.TargetIndex);
+        _damageValue += damageValue;
+    }
+
+    public void GainDamagedValue(int damagedValue)
+    {
+        _damagedValue += damagedValue;
+    }
+
+    public void GainHealValue(int healValue)
+    {
+        _healValue += healValue;
     }
 }

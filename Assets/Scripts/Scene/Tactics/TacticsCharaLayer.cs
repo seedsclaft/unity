@@ -11,6 +11,7 @@ public class TacticsCharaLayer : MonoBehaviour
 
     public void SetData(List<ActorInfo> actorInfos)
     {
+        _tacticsCharacters.ForEach(a => a.gameObject.SetActive(false));
         for (int i = 0; i < actorInfos.Count;i++)
         {
             if (tacticsCharaRoots.Count > i)
@@ -23,6 +24,7 @@ public class TacticsCharaLayer : MonoBehaviour
                     _tacticsCharacters.Add(comp);
                 }
                 var rectTransform = tacticsCharaRoots[i].GetComponent<RectTransform>();
+                _tacticsCharacters[i].gameObject.SetActive(true);
                 _tacticsCharacters[i].Initialize(gameObject,rectTransform.localPosition.x,rectTransform.localPosition.y,rectTransform.localScale.x);
                 _tacticsCharacters[i].SetData(actorInfos[i]);
             }

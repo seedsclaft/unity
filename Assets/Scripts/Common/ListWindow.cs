@@ -191,9 +191,10 @@ abstract public class ListWindow : MonoBehaviour
             } else
             {
                 _prevPrefab.SetActive(false);
-                if (_objectList[startIndex-1].transform.GetChild(0).gameObject.activeSelf == false)
+                var childObject = _objectList[startIndex-1].transform.GetChild(0).gameObject;
+                if (childObject.activeSelf == false)
                 {
-                    _objectList[startIndex-1].transform.GetChild(0).gameObject.SetActive(true);
+                    childObject.SetActive(true);
                 }
             }
         } else

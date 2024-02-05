@@ -20,6 +20,12 @@ public class SymbolResultInfo
     {
         _selected = isSelected;
     }
+    public int _battleScore;
+    public int BattleScore => _battleScore;
+    public void SetBattleScore(int battleScore)
+    {
+        _battleScore = battleScore;
+    }
 
     public List<ActorInfo> _actorsData = new ();
     public List<ActorInfo> ActorsData => _actorsData;

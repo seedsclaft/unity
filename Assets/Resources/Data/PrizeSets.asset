@@ -28,15 +28,35 @@ MonoBehaviour:
       Type: 4
       Param1: 1
       Param2: 1
-  - Id: 1001
+  - Id: 501
     GetItem:
       Type: 51
       Param1: 2
       Param2: 0
-  - Id: 1002
+  - Id: 502
     GetItem:
       Type: 51
       Param1: 3
+      Param2: 0
+  - Id: 1001
+    GetItem:
+      Type: 61
+      Param1: 100
+      Param2: 0
+  - Id: 1011
+    GetItem:
+      Type: 61
+      Param1: 100
+      Param2: 0
+  - Id: 1012
+    GetItem:
+      Type: 61
+      Param1: 1000
+      Param2: 0
+  - Id: 1021
+    GetItem:
+      Type: 61
+      Param1: 1000
       Param2: 0
   - Id: 11010
     GetItem:

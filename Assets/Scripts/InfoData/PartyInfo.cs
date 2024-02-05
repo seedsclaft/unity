@@ -30,6 +30,8 @@ public class PartyInfo
 
     private bool _battleResultVictory = false;
     public bool BattleResultVictory => _battleResultVictory;
+    private int _battleResultScore = 0;
+    public int BattleResultScore => _battleResultScore;
 
     private Dictionary<TacticsCommandType,int> _commandCountInfo = new();
     private Dictionary<TacticsCommandType,int> _commandRankInfo = new();
@@ -78,6 +80,11 @@ public class PartyInfo
     public void SetBattleResultVictory(bool isVictory)
     {
         _battleResultVictory = isVictory;
+    }
+
+    public void SetBattleScore(int score)
+    {
+        _battleResultScore = score;
     }
 
     public void AddAlchemy(int skillId)

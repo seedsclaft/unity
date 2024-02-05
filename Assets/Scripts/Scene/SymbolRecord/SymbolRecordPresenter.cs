@@ -45,6 +45,10 @@ public class SymbolRecordPresenter : BasePresenter
         {
             CommandRefresh();
         }
+        if (viewEvent.commandType == CommandType.Back)
+        {
+            CommandBack();
+        }
     }
 
     public void CommandRefresh()
@@ -58,6 +62,10 @@ public class SymbolRecordPresenter : BasePresenter
         //_view.CommandRefresh();
     }
 
+    private void CommandBack()
+    {
+        _view.CommandSceneChange(Scene.MainMenu);
+    }
 
 
 
