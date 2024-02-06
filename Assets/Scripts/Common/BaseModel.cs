@@ -19,8 +19,7 @@ public class BaseModel
 
     public int Currency => PartyInfo.Currency;
 
-    public int Turns{get {return CurrentStage.Turns - (CurrentStage.CurrentTurn);}}
-    public int RemainTurns{get {return CurrentStage.Turns - (CurrentStage.CurrentTurn) + 1;}}
+    public int RemainTurns => CurrentStage.Master.Turns - CurrentStage.CurrentTurn + 1;
 
     public CancellationTokenSource _cancellationTokenSource;
     private List<StageTutorialData> _currentStageTutorialDates = new ();
@@ -109,17 +108,7 @@ public class BaseModel
     }
 
     public List<ActorInfo> StatusActors(){
-        var StatusActorIds = PartyInfo.ActorIdList;
-        var members = new List<ActorInfo>();
-        for (int i = 0;i< StatusActorIds.Count;i++)
-        {
-            var temp = Actors().Find(a => a.ActorId == StatusActorIds[i]);
-            if (temp != null)
-            {
-                members.Add(temp);
-            }
-        }
-        return members;
+        return TempData.TempStatusActorInfos;
     }
 
     public string TacticsBgmFilename()
@@ -459,11 +448,16 @@ public class BaseModel
     public void SetStageActor()
     {
         //　加入しているパーティを生成
-        PartyInfo.InitActors();
+        PartyInfo.InitActorIds();
         foreach (var actorInfo in StageMembers())
         {
             PartyInfo.AddActor(actorInfo.ActorId);
         }
+    }
+
+    public void SetStatusActorInfos()
+    {
+        TempData.SetTempStatusActorInfos(StageMembers());
     }
 
     public void SetSelectAddActor()
@@ -473,7 +467,7 @@ public class BaseModel
         //　加入していないパーティを生成
         var selectActorIds = Actors().FindAll(a => !StageMembers().Contains(a));
         
-        PartyInfo.InitActors();
+        PartyInfo.InitActorIds();
         foreach (var actorInfo in selectActorIds)
         {
             if (actorInfo.Lost == false)
@@ -508,9 +502,35 @@ public class BaseModel
         CurrentSaveData.ChangeRouteSelectStage(stageId + route);
     }
 
-    public void MoveStage(int stageId)
+    public void StartOpeningStage()
     {
-		CurrentSaveData.MoveStage(stageId);
+        InitSaveStageInfo();
+        CurrentSaveData.InitializeStageData(1);
+        CurrentStage.AddSelectActorId(1);
+        PartyInfo.ChangeCurrency(DataSystem.System.InitCurrency);
+        SavePlayerStageData(true);
+    }
+    
+    public void StartSelectStage(int stageId)
+    {
+        CurrentSaveData.MakeStageData(stageId);
+        CurrentStage.ClearSelectActorId();
+        foreach (var actorId in PartyInfo.ActorIdList)
+        {
+            CurrentStage.AddSelectActorId(actorId);
+        }
+        CurrentStage.MakeTurnSymbol();
+        SavePlayerStageData(true);
+    }
+
+    public void StartSymbolRecordStage(int stageId)
+    {
+        CurrentSaveData.MakeStageData(stageId);
+        CurrentStage.ClearSelectActorId();
+        foreach (var actorId in PartyInfo.ActorIdList)
+        {
+            CurrentStage.AddSelectActorId(actorId);
+        }
     }
 
     public async UniTask LoadBattleResources(List<BattlerInfo> battlers)
@@ -831,7 +851,7 @@ public class BaseModel
     public void SetActorsData(int index)
     {
         CurrentSaveData.ClearActors();
-        PartyInfo.InitActors();
+        PartyInfo.InitActorIds();
         var slotData = CurrentData.PlayerInfo.SlotSaveList[index];
         var actorInfos = slotData.ActorInfos;
         foreach (var actorInfo in actorInfos)

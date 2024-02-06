@@ -7,8 +7,6 @@ public class StageInfo
     public StageData Master => DataSystem.FindStage(_id);
     private int _id;
     public int Id => _id;
-    private int _turns;
-    public int Turns => _turns;
     private int _savedCount = 0;
     public int SavedCount => _savedCount;
     public void GainSaveCount()
@@ -88,12 +86,10 @@ public class StageInfo
     public StageInfo(StageData stageData)
     {
         _id = stageData.Id;
-        _turns = stageData.Turns;
         _currentTurn = 1;
         _troopClearCount = 0;
         _savedCount = 0;
         _clearTroopIds.Clear();
-		MakeTroopData();
         _symbolRecordList.Clear();
     }
 
@@ -167,29 +163,6 @@ public class StageInfo
         _selectActorIds.Clear();
     }
 
-    // 雑魚敵グループを生成
-	private void MakeTroopData()
-	{
-        /*
-		for (int i = 1;i < Master.RandomTroopCount;i++)
-		{
-			var BossTroopData = new TroopData();
-			BossTroopData.Id = i;
-			BossTroopData.TroopId = i;
-			BossTroopData.EnemyId = i;
-			BossTroopData.Lv = 1;
-			BossTroopData.Line = LineType.Back;
-            BossTroopData.BossFlag = true;
-            var troopData = DataSystem.Troops.Find(a => a.TroopId == BossTroopData.Id);
-            if (troopData != null && troopData.GetItemDates != null)
-            {
-                BossTroopData.GetItemDates = troopData.GetItemDates;
-            }
-            _troopDates.Add(BossTroopData);
-		}
-        */
-	}
-
     public TroopInfo BattleTroops(int troopId,int enemyCount)
     {
         var troopInfo = new TroopInfo(troopId,false);
@@ -204,10 +177,6 @@ public class StageInfo
         troopInfo.MakeGetItemInfos();
         return troopInfo;
     }
-
-
-
-
 
     public void SetSeekIndex(int battleIndex)
     {
@@ -259,7 +228,6 @@ public class StageInfo
     {
         _currentTurn--;
     }
-
 
     public void AddEventReadFlag(string key)
     {

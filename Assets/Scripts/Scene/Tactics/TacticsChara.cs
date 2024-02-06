@@ -21,4 +21,16 @@ public class TacticsChara : MonoBehaviour
     {
         actorInfoComponent.UpdateInfo(actorInfo,null);
     }
+
+    public void Show()
+    {
+        gameObject.SetActive(true);
+        status.SetActive(true);
+    }
+
+    public void Hide()
+    {
+        gameObject.SetActive(false);
+        status.SetActive(false);
+    }
 }

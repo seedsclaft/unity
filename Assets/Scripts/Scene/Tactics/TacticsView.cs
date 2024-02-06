@@ -285,7 +285,7 @@ public class TacticsView : BaseView
         selectCharacter.HideCommandList();
     }
 
-    public void ShowTrainCharacter(ActorInfo actorInfo,List<ActorInfo> party)
+    public void ShowCharacterDetail(ActorInfo actorInfo,List<ActorInfo> party)
     {
         battleSelectCharacter.gameObject.SetActive(true);
         battleSelectCharacter.SetActiveTab(SelectCharacterTabType.Magic,false);
@@ -297,7 +297,7 @@ public class TacticsView : BaseView
         SetHelpInputInfo("ALCHEMY_ATTRIBUTE");
     }
 
-    public void ShowAttributeList(List<ListData> learnMagicList)
+    public void ShowLeaningList(List<ListData> learnMagicList)
     {
         battleSelectCharacter.gameObject.SetActive(true);
         battleSelectCharacter.SetActiveTab(SelectCharacterTabType.Magic,true);

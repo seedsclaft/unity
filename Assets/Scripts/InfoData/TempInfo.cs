@@ -133,4 +133,10 @@ public class TempInfo
         _tempRecordAlchemyList.Clear();
     }
     
+    private List<ActorInfo> _tempStatusActorInfos = new ();
+    public List<ActorInfo> TempStatusActorInfos => _tempStatusActorInfos;
+    public void SetTempStatusActorInfos(List<ActorInfo> tempStatusActorInfos)
+    {
+        _tempStatusActorInfos = tempStatusActorInfos;
+    }
 }

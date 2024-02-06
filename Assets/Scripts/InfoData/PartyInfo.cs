@@ -11,7 +11,6 @@ public class PartyInfo
 
     public void ClearData()
     {
-    
         _alchemyIdList = new();
         _battleResultVictory = false;
     }
@@ -60,7 +59,7 @@ public class PartyInfo
         _actorIdList.Remove(actorId);
     }
 
-    public void InitActors()
+    public void InitActorIds()
     {
         _actorIdList.Clear();
     }

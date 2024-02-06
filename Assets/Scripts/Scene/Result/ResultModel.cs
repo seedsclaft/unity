@@ -57,7 +57,7 @@ public class ResultModel : BaseModel
     public void SetActors()
     {
         // Party初期化
-        PartyInfo.InitActors();
+        PartyInfo.InitActorIds();
         foreach (var resultMember in ResultMembers())
         {
             PartyInfo.AddActor(resultMember.ActorId);

@@ -130,7 +130,7 @@ public class SymbolRecordModel : BaseModel
     
     public void MakeSymbolRecordStage(int seek)
     {
-        CurrentSaveData.MakeRecordStage(CurrentStage.Master.Id);
+        CurrentSaveData.MakeCurrentStage(CurrentStage.Master.Id);
         CurrentStage.SetRecordStage(true);
         TempData.SetRecordActors(CurrentSaveData.Actors);
         TempData.SetRecordAlchemyList(CurrentSaveData.Party.AlchemyIdList);

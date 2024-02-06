@@ -20,11 +20,6 @@ public class MainMenuModel : BaseModel
         return CurrentData.PlayerInfo.ClearCount(stageId) > 0;
     }
 
-    public void InitStageData()
-    {
-        InitSaveStageInfo();
-    }
-
     public bool NeedSlotData(int stageId)
     {
         return DataSystem.FindStage(stageId).UseSlot;

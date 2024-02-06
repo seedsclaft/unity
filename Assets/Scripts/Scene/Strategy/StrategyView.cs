@@ -40,6 +40,8 @@ public class StrategyView : BaseView
         var rect = actorInfoComponent.gameObject.GetComponent<RectTransform>();
         rect.localPosition = new Vector3(0,0,0);
         actorInfoComponent.MainThumb.DOFade(0,0);
+
+        strategyResultList.Initialize();
         new StrategyPresenter(this);
     }
 

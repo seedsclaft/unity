@@ -29,23 +29,28 @@ public class SaveStageInfo
 		_currentStage = null;
     }
 
-
-	public void MakeStageData(int stageId)
+	public void InitializeStageData(int stageId)
 	{
         InitParty();
-		_party.InitActors();
+		_party.InitActorIds();
         _party.ClearData();
 		var stageData = DataSystem.FindStage(stageId);
 		_currentStage = new StageInfo(stageData);
-		SetStageMembers();
+		SetInitMembers();
 		stageAlcana = new AlcanaInfo();
 		stageAlcana.InitData();
 	}
 
-	private void SetStageMembers()
+	public void MakeStageData(int stageId)
+	{
+		var stageData = DataSystem.FindStage(stageId);
+		_currentStage = new StageInfo(stageData);
+	}
+
+	private void SetInitMembers()
 	{
         // Party初期化
-        _party.InitActors();
+        _party.InitActorIds();
 		ClearActors();
         var stageMembers = _currentStage.Master.InitMembers;
         foreach (var stageMember in stageMembers)
@@ -57,7 +62,6 @@ public class SaveStageInfo
 				AddActor(actorInfo);
 			}
         }
-
 	}
 
     public void ClearActors()
@@ -112,7 +116,6 @@ public class SaveStageInfo
     public void InitParty()
     {
         _party = new PartyInfo();
-		_party.ChangeCurrency(DataSystem.System.InitCurrency);
     }
 
 	public void InitAllActorMembers()
@@ -137,19 +140,9 @@ public class SaveStageInfo
 		_currentStage = currentStage;
 	}
 
-	public void MoveStage(int stageId)
+	public void MakeCurrentStage(int stageId)
 	{
 		var stageData = DataSystem.FindStage(stageId);
-		var current = _currentStage;
-		var moveStage = new StageInfo(stageData);
-		moveStage.SetMoveStageData(current);
-		_currentStage = moveStage;
-	}
-
-	public void MakeRecordStage(int stageId)
-	{
-		var stageData = DataSystem.FindStage(stageId);
-		var moveStage = new StageInfo(stageData);
-		_currentStage = moveStage;
+		_currentStage = new StageInfo(stageData);
 	}
 }

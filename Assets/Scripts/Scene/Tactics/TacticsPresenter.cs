@@ -120,10 +120,6 @@ public class TacticsPresenter :BasePresenter
                 case StageEventType.SetDisplayTurns:
                     break;
                 case StageEventType.MoveStage:
-                    _eventBusy = true;
-                    _model.AddEventReadFlag(stageEvent);
-                    _model.MoveStage(stageEvent.Param);
-                    _view.CommandSceneChange(Scene.Tactics);
                     break;
                 case StageEventType.SetDefineBoss:
                     //_model.SetDefineBoss(stageEvent.Param);
@@ -255,22 +251,22 @@ public class TacticsPresenter :BasePresenter
         {
             var tacticsActorInfo = (TacticsActorInfo)viewEvent.template;
             var actorId = tacticsActorInfo.ActorInfo.ActorId;
+            _model.SetSelectActorId(actorId);
             if (tacticsActorInfo.TacticsCommandType == TacticsCommandType.Train)
             {
-                CommandSelectActorTrain(actorId);
+                CommandSelectActorTrain();
             } else
             if (tacticsActorInfo.TacticsCommandType == TacticsCommandType.Alchemy)
             {
-                _model.SetSelectAlchemyActorId(actorId);
                 CommandSelectActorAlchemy();
             } else
             if (tacticsActorInfo.TacticsCommandType == TacticsCommandType.Recovery)
             {
-                CommandSelectRecoveryPlus(actorId);
+                CommandSelectRecoveryPlus();
             } else
             if (tacticsActorInfo.TacticsCommandType == TacticsCommandType.Paradigm)
             {
-                CommandSelectActorParadigm(actorId);
+                CommandSelectActorParadigm();
             }
         }
         if (viewEvent.commandType == Tactics.CommandType.TacticsCommandClose)
@@ -286,7 +282,7 @@ public class TacticsPresenter :BasePresenter
         if (viewEvent.commandType == Tactics.CommandType.SelectActorAlchemy)
         {
             int actorId = (int)viewEvent.template;
-            _model.SetSelectAlchemyActorId(actorId);
+            _model.SetSelectActorId(actorId);
             CommandSelectActorAlchemy();
         }
         if (viewEvent.commandType == Tactics.CommandType.SkillAlchemy)
@@ -488,14 +484,14 @@ public class TacticsPresenter :BasePresenter
             case TacticsCommandType.Train:
             case TacticsCommandType.Recovery:
                 _view.ShowSelectCharacter(_model.TacticsCharacterData(),_model.TacticsCommandData());
-                _view.ShowTrainCharacter(_model.StageMembers()[0],_model.StageMembers());
+                _view.ShowCharacterDetail(_model.StageMembers()[0],_model.StageMembers());
                 _view.ActivateTacticsCommand();
                 _view.ChangeBackCommandActive(true);
                 _backCommand = Tactics.CommandType.TacticsCommandClose;
                 break;
             case TacticsCommandType.Alchemy:
                 _view.ShowSelectCharacter(_model.TacticsCharacterData(),_model.TacticsCommandData());
-                _view.ShowAttributeList(_model.SelectActorAlchemy());
+                _view.ShowLeaningList(_model.SelectActorAlchemy());
                 _view.ActivateTacticsCommand();
                 _view.ChangeBackCommandActive(true);
 
@@ -506,7 +502,7 @@ public class TacticsPresenter :BasePresenter
         }
         if (tacticsCommandType == TacticsCommandType.Status)
         {
-            _model.SetStageActor();
+            _model.SetStatusActorInfos();
             var statusViewInfo = new StatusViewInfo(() => {
                 _view.CommandStatusClose();
                 _view.ChangeUIActive(true);
@@ -523,10 +519,10 @@ public class TacticsPresenter :BasePresenter
     }
 
 
-    private void CommandSelectActorTrain(int actorId)
+    private void CommandSelectActorTrain()
     {
-        _model.SelectActorTrain(actorId);
-        _view.ShowTrainCharacter(_model.TacticsActor(actorId),_model.StageMembers());
+        _model.SelectActorTrain();
+        _view.ShowCharacterDetail(_model.TacticsActor(),_model.StageMembers());
         CommandRefresh();
     }
 
@@ -543,18 +539,18 @@ public class TacticsPresenter :BasePresenter
         // 装備中なら
         if (_model.SkillEquipmentActor())
         {
-            //CheckRemoveAlchemy();
-            ///return;
+            _model.RemoveAlchemy();
         }
-        _view.ShowAttributeList(_model.SelectActorAlchemy());
+        _view.ShowLeaningList(_model.SelectActorAlchemy());
         _view.ChangeBackCommandActive(true);
-        _view.HideSelectCharacterCommand();
+        CommandRefresh();
+        //_view.HideSelectCharacterCommand();
         _backCommand = Tactics.CommandType.SelectAlchemyClose;
     }
 
     private void CheckRemoveAlchemy()
     {
-        var popupInfo = new ConfirmInfo(_model.SelectAlchemyActorInfo().Master.Name + "の加護をはずしますか？\n習得進捗は初期化されます！",(a) => UpdatePopupRemoveSkill((ConfirmCommandType)a));
+        var popupInfo = new ConfirmInfo(_model.TacticsActor().Master.Name + "の加護をはずしますか？\n習得進捗は初期化されます！",(a) => UpdatePopupRemoveSkill((ConfirmCommandType)a));
         _view.CommandCallConfirm(popupInfo);
     }
 
@@ -576,15 +572,16 @@ public class TacticsPresenter :BasePresenter
     {
     }
 
-    private void CommandSelectActorParadigm(int actorId)
+    private void CommandSelectActorParadigm()
     {
-        _model.SelectActorParadigm(actorId);
+        _model.SelectActorParadigm();
         CommandRefresh();
     }
 
-    private void CommandSelectRecoveryPlus(int actorId)
+    private void CommandSelectRecoveryPlus()
     {
-        _model.SelectRecoveryPlus(actorId);
+        _model.SelectRecoveryPlus();
+        _view.ShowCharacterDetail(_model.TacticsActor(),_model.StageMembers());
         CommandRefresh();
     }
 
@@ -685,7 +682,7 @@ public class TacticsPresenter :BasePresenter
 
     private void CheckAlcanaSymbol(List<GetItemInfo> getItemInfos)
     {
-        _view.ShowAttributeList(_model.AlcanaMagicSkillInfos(getItemInfos));
+        _view.ShowLeaningList(_model.AlcanaMagicSkillInfos(getItemInfos));
         _view.ChangeBackCommandActive(true);
         _backCommand = Tactics.CommandType.TacticsCommand;        
         Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);

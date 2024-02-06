@@ -43,7 +43,7 @@ public class RankingModel : BaseModel
     {
         var rankingInfo = TempData.TempRankingData[_stageId][listIndex];
         CurrentSaveData.ClearActors();
-        PartyInfo.InitActors();
+        PartyInfo.InitActorIds();
         foreach (var actorInfo in rankingInfo.ActorInfos)
         {
             PartyInfo.AddActor(actorInfo.ActorId);

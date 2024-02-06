@@ -69,11 +69,11 @@ public class MainMenuPresenter : BasePresenter
         {
             if (_model.ClearedStage(stageId))
             {
-                _model.MoveStage(stageId);
+                _model.StartSymbolRecordStage(stageId);
                 _view.CommandSceneChange(Scene.SymbolRecord);
             } else
             {
-                _model.CurrentStage.MakeTurnSymbol();
+                _model.StartSelectStage(stageId);
                 _view.CommandSceneChange(Scene.Tactics);
             }
             /*
