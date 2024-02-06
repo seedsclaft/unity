@@ -5,47 +5,34 @@ public class EnemyInfoModel : BaseModel
 {
     public EnemyInfoModel(List<BattlerInfo> enemyInfos)
     {
-        _enemies = enemyInfos;
+        _enemyBattlerInfos = enemyInfos;
         _currentIndex = enemyInfos.Count - 1;
     }
     
-    private List<BattlerInfo> _enemies = new();
+    private List<BattlerInfo> _enemyBattlerInfos = new();
 
     private int _currentIndex = 0; 
     public int CurrentIndex => _currentIndex;
 
-    public List<BattlerInfo> Enemies(){
-        return _enemies;
+    public List<ListData> EnemyInfoListDates(){
+        return ListData.MakeListData(_enemyBattlerInfos,true);
     }
 
     public List<int> EnemyIndexes(){
         var list = new List<int>();
-        foreach (var enemy in _enemies)
+        foreach (var enemy in _enemyBattlerInfos)
         {
             list.Add(enemy.Index);
         }
         return list;
     }
 
-    public void SelectEnemy(int enemyIndex)
+    public void SelectEnemyIndex(int selectIndex)
     {
-        _currentIndex = _enemies.FindIndex(a => a.Index == enemyIndex);
+        _currentIndex = selectIndex;
     }
 
-    public BattlerInfo CurrentEnemy
-    {
-        get {return Enemies()[_currentIndex];}
-    }
-
-    public void ChangeActorIndex(int value){
-        _currentIndex += value;
-        if (_currentIndex > Enemies().Count-1){
-            _currentIndex = 0;
-        } else
-        if (_currentIndex < 0){
-            _currentIndex = Enemies().Count-1;
-        }
-    }
+    public BattlerInfo CurrentEnemy => _enemyBattlerInfos[_currentIndex];
     
     public List<ListData> SkillActionList()
     {

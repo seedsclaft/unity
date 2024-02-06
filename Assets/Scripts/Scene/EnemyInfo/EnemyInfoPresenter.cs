@@ -21,6 +21,7 @@ public class EnemyInfoPresenter
     {
         _view.SetHelpWindow();
         _view.SetEvent((type) => UpdateCommand(type));
+        _view.SetEnemies(_model.EnemyInfoListDates());
         CommandRefresh();
         _busy = false;
     }
@@ -32,15 +33,7 @@ public class EnemyInfoPresenter
         }
         if (viewEvent.commandType == CommandType.SelectEnemy)
         {
-            CommandSelectEnemy((int)viewEvent.template);
-        }
-        if (viewEvent.commandType == CommandType.LeftEnemy)
-        {
-            CommandLeftActor();
-        }
-        if (viewEvent.commandType == CommandType.RightEnemy)
-        {
-            CommandRightActor();
+            CommandSelectEnemy();
         }
         if (viewEvent.commandType == CommandType.Back)
         {
@@ -48,24 +41,12 @@ public class EnemyInfoPresenter
         }
     }
 
-    private void CommandSelectEnemy(int enemyIndex)
+    private void CommandSelectEnemy()
     {
-        _model.SelectEnemy(enemyIndex);
+        var selectIndex = _view.EnemyListIndex;
+        _model.SelectEnemyIndex(selectIndex);
+        _view.UpdateEnemyList(selectIndex);
         CommandRefresh();
-    }
-
-    private void CommandLeftActor()
-    {
-        Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cursor);
-         _model.ChangeActorIndex(-1);
-         CommandRefresh();
-    }
-
-    private void CommandRightActor()
-    {
-        Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cursor);
-         _model.ChangeActorIndex(1);
-         CommandRefresh();
     }
 
     private void CommandBack()

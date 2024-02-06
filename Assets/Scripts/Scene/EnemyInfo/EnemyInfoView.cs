@@ -7,45 +7,50 @@ using Effekseer;
 
 public class EnemyInfoView : BaseView,IInputHandlerEvent
 {
+    [SerializeField] private BattleBattlerList battleEnemyLayer = null;
     [SerializeField] private BattleSelectCharacter selectCharacter = null;
-    [SerializeField] private BattleEnemyLayer enemyLayer = null;
     [SerializeField] private EnemyInfoComponent enemyInfoComponent = null;
     private new System.Action<EnemyInfoViewEvent> _commandData = null;
-    [SerializeField] private Button leftButton = null;
-    [SerializeField] private Button rightButton = null;
     private System.Action _backEvent = null;
+
+    public int EnemyListIndex => battleEnemyLayer.Index;
 
     private bool _isBattle = false;
     protected void Awake(){
         InitializeInput();
     }
 
-    public void Initialize(List<BattlerInfo> battlerInfos,List<EffekseerEffectAsset> cursorEffects,bool isBattle){
+    public void Initialize(List<BattlerInfo> battlerInfos,bool isBattle){
         _isBattle = isBattle;
+        battleEnemyLayer.Initialize();
+        battleEnemyLayer.SetSelectedHandler(() => {
+            var eventData = new EnemyInfoViewEvent(CommandType.SelectEnemy);
+            _commandData(eventData);
+        });
         
-        enemyLayer.Initialize(battlerInfos,(a) => OnClickSelectEnemy(a),cursorEffects);
-        enemyLayer.SetSelectedHandler(() => OnSelectEnemy());
         selectCharacter.Initialize();
         SetInputHandler(selectCharacter.GetComponent<IInputHandlerEvent>());
         InitializeSelectCharacter();
-/*
-        leftButton.onClick.AddListener(() => OnClickLeft());
-        rightButton.onClick.AddListener(() => OnClickRight());
-*/
         new EnemyInfoPresenter(this,battlerInfos);
         SetInputHandler(gameObject.GetComponent<IInputHandlerEvent>());
+    }
+
+    public void SetEnemies(List<ListData> battlerInfos)
+    {
+        battleEnemyLayer.SetData(battlerInfos);
+        battleEnemyLayer.SetInputHandler(InputKeyType.Decide,() => {});
+        battleEnemyLayer.SetInputHandler(InputKeyType.Cancel,() => OnClickBack());
+        SetInputHandler(battleEnemyLayer.GetComponent<IInputHandlerEvent>());
     }
 
     private void InitializeSelectCharacter()
     {
         selectCharacter.SetInputHandlerAction(InputKeyType.Decide,() => {});
         selectCharacter.SetInputHandlerAction(InputKeyType.Cancel,() => OnClickBack());
-        selectCharacter.SetInputHandlerAction(InputKeyType.SideLeft1,() => OnClickLeft());
-        selectCharacter.SetInputHandlerAction(InputKeyType.SideRight1,() => OnClickRight());
-        selectCharacter.SetInputHandlerAction(InputKeyType.SideLeft2,() => {
+        selectCharacter.SetInputHandlerAction(InputKeyType.SideLeft1,() => {
             selectCharacter.SelectCharacterTabSmooth(-1);
         });
-        selectCharacter.SetInputHandlerAction(InputKeyType.SideRight2,() => {
+        selectCharacter.SetInputHandlerAction(InputKeyType.SideRight1,() => {
             selectCharacter.SelectCharacterTabSmooth(1);
         });
         SetInputHandler(selectCharacter.MagicList.GetComponent<IInputHandlerEvent>());
@@ -55,56 +60,23 @@ public class EnemyInfoView : BaseView,IInputHandlerEvent
 
     public void CommandRefreshStatus(List<ListData> skillInfos,BattlerInfo battlerInfo,List<int> enemyIndexes,int lastSelectIndex)
     {
-        selectCharacter.SetActiveTab(SelectCharacterTabType.Detail,false);
         selectCharacter.ShowActionList();
-        selectCharacter.UpdateStatus(battlerInfo);
+        selectCharacter.SetEnemyBattlerInfo(battlerInfo);
         selectCharacter.SetSkillInfos(skillInfos);
         selectCharacter.RefreshAction(lastSelectIndex);
-        enemyLayer.RefreshTarget(battlerInfo.Index,enemyIndexes,ScopeType.One);
         enemyInfoComponent.Clear();
         enemyInfoComponent.UpdateInfo(battlerInfo);
+    }
+
+    public void UpdateEnemyList(int selectIndex)
+    {
+        battleEnemyLayer.UpdateSelectIndex(selectIndex);
     }
 
     private void OnClickBack()
     {
         var eventData = new EnemyInfoViewEvent(CommandType.Back);
         _commandData(eventData);
-    }
-
-    private void OnClickLeft()
-    {
-        if (!leftButton.gameObject.activeSelf) return;
-        var eventData = new EnemyInfoViewEvent(CommandType.LeftEnemy);
-        _commandData(eventData);
-    }
-
-    private void OnClickRight()
-    {
-        if (!rightButton.gameObject.activeSelf) return;
-        var eventData = new EnemyInfoViewEvent(CommandType.RightEnemy);
-        _commandData(eventData);
-    }
-
-    private void OnClickSelectEnemy(List<int> enemyIndex)
-    {
-        if (enemyIndex.Count > 0)
-        {
-            var eventData = new EnemyInfoViewEvent(CommandType.SelectEnemy);
-            eventData.template = enemyIndex[0];
-            _commandData(eventData);
-        }
-    }
-    
-    private void OnSelectEnemy()
-    {
-        var enemyIndex = enemyLayer.Index;
-        if (enemyIndex > -1)
-        {
-            Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cursor);
-            var eventData = new EnemyInfoViewEvent(CommandType.SelectEnemy);
-            eventData.template = enemyIndex;
-            _commandData(eventData);
-        }
     }
 
     public void SetHelpWindow()
@@ -157,7 +129,6 @@ public class EnemyInfoView : BaseView,IInputHandlerEvent
             {
             } else
             {
-                OnClickLeft();
             }
         }
         if (keyType == InputKeyType.SideRight1)
@@ -166,7 +137,6 @@ public class EnemyInfoView : BaseView,IInputHandlerEvent
             {
             } else
             {
-                OnClickRight();
             }
         }
     }

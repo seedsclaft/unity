@@ -15,6 +15,7 @@ public class BattleSelectCharacter : MonoBehaviour
     [SerializeField] private StatusInfoComponent statusInfoComponent;
     [SerializeField] private GameObject detailObj;
     [SerializeField] private ActorInfoComponent actorInfoComponent;
+    [SerializeField] private BattlerInfoComponent battlerInfoComponent;
     private bool _isInit = false;
 
     private SelectCharacterTabType _selectCharacterTabType = SelectCharacterTabType.Magic;
@@ -178,6 +179,11 @@ public class BattleSelectCharacter : MonoBehaviour
     public void SetActorInfo(ActorInfo actorInfo,List<ActorInfo> party)
     {
         actorInfoComponent.UpdateInfo(actorInfo,party);
+    }
+
+    public void SetEnemyBattlerInfo(BattlerInfo enemyInfo)
+    {
+        battlerInfoComponent.UpdateInfo(enemyInfo);
     }
 
     private void DisplaySelectCard()

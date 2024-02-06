@@ -150,7 +150,7 @@ public class GameSystem : MonoBehaviour
             case Base.CommandType.CallEnemyInfoView:
                 var enemyInfoView = CreateStatus(StatusType.EnemyDetail) as EnemyInfoView;
                 var enemyStatusInfo = (StatusViewInfo)viewEvent.template;
-                enemyInfoView.Initialize(enemyStatusInfo.EnemyInfos,_model.BattleCursorEffects(),enemyStatusInfo.IsBattle);
+                enemyInfoView.Initialize(enemyStatusInfo.EnemyInfos,enemyStatusInfo.IsBattle);
                 enemyInfoView.SetBackEvent(enemyStatusInfo.BackEvent);
                 enemyInfoView.SetEvent((type) => UpdateCommand(type));
                 _currentScene.SetBusy(true);
