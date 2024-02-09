@@ -21,6 +21,7 @@ public class SystemImporter : AssetPostprocessor
 		ToggleText1,
 		ToggleText2,
 		ExistAndroid,
+		ExistWebGL,
     }
 
     enum BaseDefineColumn
@@ -138,6 +139,7 @@ public class SystemImporter : AssetPostprocessor
 					OptionCommand.ToggleText1 = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.ToggleText1);
 					OptionCommand.ToggleText2 = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.ToggleText2);
 					OptionCommand.ExistAndroid = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.ExistAndroid) == 1;
+					OptionCommand.ExistWebGL = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.ExistWebGL) == 1;
 					Data.OptionCommandData.Add(OptionCommand);
 				}
 				

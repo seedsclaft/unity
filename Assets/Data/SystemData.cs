@@ -61,6 +61,7 @@ public class SystemData : ScriptableObject
 		public int ToggleText1;
 		public int ToggleText2;
 		public bool ExistAndroid;
+		public bool ExistWebGL;
 	}
 
 	[System.SerializableAttribute]

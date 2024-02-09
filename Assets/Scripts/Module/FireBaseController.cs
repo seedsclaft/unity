@@ -21,13 +21,13 @@ public class FirebaseController : SingletonMonoBehaviour<FirebaseController>
     private static extern void FirebaseInit();
 
     [DllImport("__Internal")]
-    private static extern void FirebaseReadRankingData(int instanceId,Action<int,string> result);
+    private static extern void FirebaseReadRankingData(int instanceId,string rankingKey,Action<int,string> result);
     
     [DllImport("__Internal")]
-    private static extern void FirebaseCurrentRankingData(int instanceId,string userId,Action<int,string> result);
+    private static extern void FirebaseCurrentRankingData(int instanceId,string rankingKey,string userId,Action<int,string> result);
    
     [DllImport("__Internal")]
-    private static extern void FirebaseWriteRankingData(int instanceId,string userId,int score,string name,int[] selectIndex,int selectIndexSize,int[] selectRank,int selectRankSize,Action<int,string> result);
+    private static extern void FirebaseWriteRankingData(int instanceId,string rankingKey,string userId,int score,string name,int[] selectIndex,int selectIndexSize,int[] selectRank,int selectRankSize,Action<int,string> result);
    
     public void Initialize()
     {
@@ -47,7 +47,8 @@ public class FirebaseController : SingletonMonoBehaviour<FirebaseController>
         }
         FirebaseController.RankingInfos.Clear();
         FirebaseController.IsBusy = true;
-        FirebaseReadRankingData(gameObject.GetInstanceID(),OnReadFirestore);
+        Debug.Log("ranking" + stageId.ToString());
+        FirebaseReadRankingData(gameObject.GetInstanceID(),"ranking" + stageId.ToString(),OnReadFirestore);
     }
     
     [AOT.MonoPInvokeCallback(typeof(Action<int,string>))]
@@ -79,7 +80,7 @@ public class FirebaseController : SingletonMonoBehaviour<FirebaseController>
         }
         FirebaseController.CurrentScore = 0;
         FirebaseController.IsBusy = true;
-        FirebaseCurrentRankingData(gameObject.GetInstanceID(),userId,OnCurrentFirestore);
+        FirebaseCurrentRankingData(gameObject.GetInstanceID(),"ranking" + stageId.ToString(),userId,OnCurrentFirestore);
     }
 
     [AOT.MonoPInvokeCallback(typeof(Action<int,string>))]
@@ -101,7 +102,7 @@ public class FirebaseController : SingletonMonoBehaviour<FirebaseController>
             return;
         }
         FirebaseController.IsBusy = true;
-        FirebaseWriteRankingData(gameObject.GetInstanceID(),userId,score,name,selectIdx.ToArray(),selectIdx.Count,selectRank.ToArray(),selectRank.Count,OnWriteFirestore);
+        FirebaseWriteRankingData(gameObject.GetInstanceID(),"ranking" + stageId.ToString(),userId,score,name,selectIdx.ToArray(),selectIdx.Count,selectRank.ToArray(),selectRank.Count,OnWriteFirestore);
     }
 
     

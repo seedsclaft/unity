@@ -832,7 +832,13 @@ public class TacticsPresenter :BasePresenter
         _view.CommandCallConfirm(popupInfo);
         _view.ChangeUIActive(false);
 #elif UNITY_WEBGL
-        SuccessSave(isReturnScene);
+        var savePopupTitle = _model.SavePopupTitleWebgl();
+        var saveNeedAds = false;
+        var popupInfo = new ConfirmInfo(savePopupTitle,(a) => UpdatePopupSaveCommand((ConfirmCommandType)a,isReturnScene));
+        
+        popupInfo.SetSelectIndex(1);
+        _view.CommandCallConfirm(popupInfo);
+        _view.ChangeUIActive(false);
 #endif
     }
 

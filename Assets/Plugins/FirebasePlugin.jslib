@@ -13,10 +13,11 @@ var FirebasePlugin = {
     window.firebase.initializeApp(FirebaseConfig);
   },
 
-  FirebaseReadRankingData: function (instanceId,callback) {
+  FirebaseReadRankingData: function (instanceId,rankingKey,callback) {
     console.log("FirebaseReadRankingData");
     const db = window.firebase.firestore();
-    const cnf = db.collection("ranking");
+    const rankText = UTF8ToString(rankingKey.toString());
+    const cnf = db.collection(rankText);
     let res = "";
     let idx = 0;
     cnf.orderBy("Score","desc").limit(100).get().then(function(q) {
@@ -36,11 +37,12 @@ var FirebasePlugin = {
     });     
   },
 
-  FirebaseCurrentRankingData: function (instanceId,userId,callback) {
+  FirebaseCurrentRankingData: function (instanceId,rankingKey,userId,callback) {
     console.log("FirebaseCurrentRankingData");
     const db = window.firebase.firestore();
     const userName = UTF8ToString(userId.toString());
-    const docRef = db.collection("ranking").doc(userName);
+    const rankText = UTF8ToString(rankingKey.toString());
+    const docRef = db.collection(rankText).doc(userName);
     
     let res = "-1";
     docRef.get().then((doc) => {
@@ -55,10 +57,11 @@ var FirebasePlugin = {
     });
   },
 
-  FirebaseWriteRankingData: function (instanceId,userId,score,name,selectIndex,selectIndexSize,selectRank,selectRankSize,callback) {
+  FirebaseWriteRankingData: function (instanceId,rankingKey,userId,score,name,selectIndex,selectIndexSize,selectRank,selectRankSize,callback) {
     console.log("FirebaseWriteRankingData");
     const db = window.firebase.firestore();
     const userName = UTF8ToString(userId.toString());
+    const rankText = UTF8ToString(rankingKey.toString());
     let res = "";
 
     var startIndex = selectIndex / HEAP32.BYTES_PER_ELEMENT;
@@ -75,7 +78,7 @@ var FirebasePlugin = {
       sendRank.push(data);
     });
 
-    db.collection("ranking").doc(userName).set({
+    db.collection(rankText).doc(userName).set({
         Name: UTF8ToString(name),
         Score: score,
         SelectIdx: sendIndex,

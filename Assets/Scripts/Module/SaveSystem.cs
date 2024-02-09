@@ -202,7 +202,7 @@ public class SaveSystem : MonoBehaviour
 
 	public static bool ExistsStageFile(int fileId = 0)
 	{
-		return ExistsLoadFile(_playerStageDataKey);
+		return ExistsLoadFile(_playerStageDataKey + fileId.ToString());
 	}
 
 	public static void SaveConfigStart(SaveConfigInfo userSaveInfo = null)

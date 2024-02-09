@@ -41,7 +41,11 @@ public class RankingInfoComponent : ListItem ,IListViewItem
         {
             if (detailButton != null)
             {
+#if UNITY_WEBGL
+                detailButton.gameObject.SetActive(false);
+#else
                 detailButton.onClick.AddListener(() => data.DetailEvent(Index));
+#endif
             }
         }
         _isInit = true;

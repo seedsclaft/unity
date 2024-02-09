@@ -151,6 +151,16 @@ public class TacticsSelectCharacter : MonoBehaviour
             }
         }
         characterList.SetInputHandler(keyType,() => DisplaySelectCharacter());
+#elif UNITY_WEBGL
+        // Androidはトグルで決定、リストで選択にする
+        if (keyType == InputKeyType.Decide)
+        {
+            for (int i = 0; i < characterList.ObjectList.Count;i++)
+            {
+                var tacticsTrain = characterList.ObjectList[i].GetComponent<TacticsTrain>();
+                tacticsTrain.SetToggleHandler(() => callEvent());
+            }
+        }
 #endif
         if (keyType == InputKeyType.Right)
         {

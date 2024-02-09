@@ -31,7 +31,7 @@ public class SaveConfigInfo
 		CommandEndCheck = true;
 		BattleWait = true;
 		BattleAnimationSkip = false;
-		InputType = true;
+		InputType = false;
 		BattleAuto = false;
 	}
 

@@ -24,6 +24,11 @@ public class OptionModel : BaseModel
             {
                 continue;
             }
+#elif UNITY_WEBGL
+            if (optionCommand.ExistWebGL == false)
+            {
+                continue;
+            }
 #endif
             var optionInfo = new OptionInfo();
             optionInfo.OptionCommand = optionCommand;

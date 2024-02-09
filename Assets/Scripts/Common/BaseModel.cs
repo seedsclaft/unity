@@ -799,6 +799,11 @@ public class BaseModel
         return baseText + savedCount + "\n" + subText;
     }
 
+    public string SavePopupTitleWebgl()
+    {
+        return DataSystem.GetTextData(11080).Text;
+    }
+
     public string FailedSavePopupTitle()
     {
         var baseText = DataSystem.GetTextData(11082).Text;
