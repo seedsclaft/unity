@@ -93,7 +93,7 @@ var FirebasePlugin = {
 
 };
 
-var lib = {
+var lib2 = {
     $utils: {
       StringReturnValueFunction: function (returnStr) {
         var bufferSize = lengthBytesUTF8(returnStr) + 1;
@@ -105,5 +105,5 @@ var lib = {
 };
 
 autoAddDeps(FirebasePlugin, '$utils');
-mergeInto(LibraryManager.library, lib);
+mergeInto(LibraryManager.library, lib2);
 mergeInto(LibraryManager.library, FirebasePlugin);

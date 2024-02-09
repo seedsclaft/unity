@@ -723,7 +723,7 @@ public class BaseModel
             );
 #elif UNITY_WEBGL
             FirebaseController.Instance.WriteRankingData(
-                CurrentStage.BaseStageId,
+                CurrentStage.Id,
                 userId,
                 evaluate,
                 CurrentData.PlayerInfo.PlayerName,

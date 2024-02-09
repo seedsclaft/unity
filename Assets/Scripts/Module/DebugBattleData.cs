@@ -29,6 +29,7 @@ public class DebugBattleData : MonoBehaviour
         GameSystem.CurrentStageData.MakeStageData(1);
         //GameSystem.CurrentData.CurrentStage.TacticsTroops(1);
         GameSystem.CurrentStageData.ClearActors();     
+        GameSystem.CurrentStageData.InitParty();     
         foreach (var actor in actorDates)
         { 
             if (inBattleActorIds.Contains(actor.Id))

@@ -14,6 +14,10 @@ public class SymbolInfo
     public bool Selected => _selected;
     public SymbolInfo(StageSymbolData symbol = null)
     {
+        if (symbol == null)
+        {
+            return;
+        }
         if (symbol.BattleSymbol == 1){
             SetSymbolType(SymbolType.Battle);
         } else

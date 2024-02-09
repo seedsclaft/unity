@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 468a46d0ae32c3544b7d98094e6448a9, type: 3}
   m_Name: AddressableAssetSettings
   m_EditorClassIdentifier: 
-  m_DefaultGroup: de53bf3e30808c9449ac8228c9f9ecbe
+  m_DefaultGroup: 44a15cf91d8d7544d8340fde25fbe336
   m_currentHash:
     serializedVersion: 2
-    Hash: 00000000000000000000000000000000
+    Hash: db40bbe66b7fae050ad3137f384d840e
   m_OptimizeCatalogSize: 0
   m_BuildRemoteCatalog: 0
   m_BundleLocalCatalog: 0
@@ -35,17 +35,17 @@ MonoBehaviour:
   m_CheckForContentUpdateRestrictionsOption: 0
   m_MonoScriptBundleCustomNaming: 
   m_RemoteCatalogBuildPath:
-    m_Id: 
+    m_Id: 16f6d7ff3aa436d4cad4f5335c1a8764
   m_RemoteCatalogLoadPath:
-    m_Id: 
+    m_Id: 02f1e1acd15825c439f09c0626fa3dc9
   m_ContentStateBuildPathProfileVariableName: <default settings path>
   m_CustomContentStateBuildPath: 
   m_ContentStateBuildPath: 
-  m_BuildAddressablesWithPlayerBuild: 2
+  m_BuildAddressablesWithPlayerBuild: 1
   m_overridePlayerVersion: 
   m_GroupAssets:
   - {fileID: 11400000, guid: 70f42ed308a47d4438c8848d6757d229, type: 2}
-  - {fileID: 11400000, guid: c78bad82c24100e40a78f51ce6bdb80b, type: 2}
+  - {fileID: 11400000, guid: 502381ef1384d5744862b980c67d43a5, type: 2}
   m_BuildSettings:
     m_CompileScriptsInVirtualMode: 0
     m_CleanupStreamingAssetsAfterBuilds: 1
@@ -66,7 +66,7 @@ MonoBehaviour:
       - m_Id: 920de9de92b27084790981f618339819
         m_Value: ServerData/[BuildTarget]
       - m_Id: a76d1c6f914cb2a4689f4cb23f562a7d
-        m_Value: http://localhost/[BuildTarget]
+        m_Value: https://plicy.net/GameFilesUpdate/173723/4
     m_ProfileEntryNames:
     - m_Id: ace150756dd95c448ab00032f48a8272
       m_Name: BuildTarget
@@ -108,5 +108,6 @@ MonoBehaviour:
     m_HostingServiceInfos: []
     m_Settings: {fileID: 11400000}
     m_NextInstanceId: 0
-    m_RegisteredServiceTypeRefs: []
+    m_RegisteredServiceTypeRefs:
+    - UnityEditor.AddressableAssets.HostingServices.HttpHostingService, Unity.Addressables.Editor
     m_PingTimeoutInMilliseconds: 5000

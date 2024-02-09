@@ -142,6 +142,7 @@ PlayerSettings:
   bundleVersion: 0.07
   preloadedAssets:
   - {fileID: 11400000, guid: 8c513e6bb5c30f141aeb8ad58625c44d, type: 2}
+  - {fileID: 11400000, guid: c6a48862e53304643959aa91937eb122, type: 2}
   metroInputSource: 0
   wsaTransparentSwapchain: 0
   m_HolographicPauseOnTrackingLoss: 1
@@ -556,7 +557,7 @@ PlayerSettings:
     m_Automatic: 0
   - m_BuildTarget: WebGLSupport
     m_APIs: 0b000000
-    m_Automatic: 0
+    m_Automatic: 1
   m_BuildTargetVRSettings:
   - m_BuildTarget: Android
     m_Enabled: 0
