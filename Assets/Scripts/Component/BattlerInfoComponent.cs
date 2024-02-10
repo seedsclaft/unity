@@ -274,7 +274,7 @@ public class BattlerInfoComponent : MonoBehaviour
         }
     }
     
-    public void StartAnimation(EffekseerEffectAsset effectAsset,int animationPosition,float animationScale = 1.0f)
+    public void StartAnimation(EffekseerEffectAsset effectAsset,int animationPosition,float animationScale = 1.0f,float animationSpeed = 1.0f)
     {
         if (effectAsset == null){    
             effekseerEmitter.Stop();
@@ -293,6 +293,7 @@ public class BattlerInfoComponent : MonoBehaviour
         effectRect.localScale = new Vector3(animationScale,animationScale,animationScale);
         effekseerEmitter.enabled = true;
         effekseerEmitter.Stop();
+        effekseerEmitter.speed = animationSpeed;
         effekseerEmitter.Play(effectAsset);
     }
 

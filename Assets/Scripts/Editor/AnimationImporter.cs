@@ -16,6 +16,7 @@ public class AnimationImporter : AssetPostprocessor {
 		MakerEffect,
 		Position,
 		Scale,
+		Speed,
 		DamageTiming,
 		Enable,
     }
@@ -76,6 +77,7 @@ public class AnimationImporter : AssetPostprocessor {
 					AnimationData.MakerEffect = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.MakerEffect) == 1;
 					AnimationData.Position = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.Position);
 					AnimationData.Scale = AssetPostImporter.ImportFloat(BaseRow,(int)BaseColumn.Scale);
+					AnimationData.Speed = AssetPostImporter.ImportFloat(BaseRow,(int)BaseColumn.Speed);
 					AnimationData.DamageTiming = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.DamageTiming);
 					
 					Data.Data.Add(AnimationData);

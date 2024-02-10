@@ -630,7 +630,7 @@ public class BattlePresenter : BasePresenter
                 for (int i = 0; i < actionInfo.ActionResults.Count; i++)
                 {
                     var oneAnimation = actionInfo.ActionResults[i].CursedDamage ? _model.SkillActionAnimation("NA_Effekseer/NA_curse_001") : animation;
-                    _view.StartAnimation(actionInfo.ActionResults[i].TargetIndex,oneAnimation,animationData.Position,animationData.Scale);
+                    _view.StartAnimation(actionInfo.ActionResults[i].TargetIndex,oneAnimation,animationData.Position,animationData.Scale,animationData.Speed);
                 }
             }
             StartAliveAnimation(_model.CurrentActionInfo().ActionResults);
