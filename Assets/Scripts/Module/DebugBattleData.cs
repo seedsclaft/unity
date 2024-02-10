@@ -28,7 +28,6 @@ public class DebugBattleData : MonoBehaviour
         GameSystem.CurrentStageData = new SaveStageInfo();
         GameSystem.CurrentStageData.MakeStageData(1);
         //GameSystem.CurrentData.CurrentStage.TacticsTroops(1);
-        GameSystem.CurrentStageData.ClearActors();     
         GameSystem.CurrentStageData.InitParty();     
         foreach (var actor in actorDates)
         { 
@@ -37,7 +36,7 @@ public class DebugBattleData : MonoBehaviour
                 GameSystem.CurrentStageData.AddTestActor(actor,actorLv);
             }
         }
-        GameSystem.CurrentStageData.Actors.ForEach(a => a.SetInBattle(true));
+        GameSystem.CurrentStageData.Party.ActorInfos.ForEach(a => a.SetInBattle(true));
 
         GameSystem.CurrentStageData.CurrentStage.TestTroops(troopId,troopLv);
     }

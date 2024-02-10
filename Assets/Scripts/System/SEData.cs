@@ -18,5 +18,6 @@ public enum SEType {
     Cancel,
     Cursor,
     Damage,
-    Defeat
+    Defeat,
+    Demigod
 }

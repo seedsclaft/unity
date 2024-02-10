@@ -37,7 +37,7 @@ public class RebornModel : BaseModel
         foreach (var actorInfo in actorInfos)
         {
             var listData = new ListData(actorInfo,idx);
-            if (actorInfo.Master.ClassId == DataSystem.FindActor(CurrentStage.SelectActorIds[0]).ClassId)
+            if (actorInfo.Master.ClassId == DataSystem.FindActor(PartyInfo.ActorIdList[0]).ClassId)
             {
                 listData.SetEnable(false);
             }

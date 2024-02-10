@@ -114,6 +114,9 @@ public class StrategyModel : BaseModel
                             }
                         }
                         break;
+                    case GetItemType.AddActor:
+                        PartyInfo.AddActor(getItemInfo.Param1);
+                        break;
                     case GetItemType.SaveHuman:
                         var record = CurrentStage.SymbolRecordList.Find(a => a.IsSameSymbol(CurrentStage.Id,CurrentStage.CurrentTurn,CurrentSaveData.CurrentStage.CurrentSeekIndex));
                         record.SetBattleScore(PartyInfo.BattleResultScore);
@@ -204,6 +207,9 @@ public class StrategyModel : BaseModel
                             }
                         }
                         break;
+                    case GetItemType.AddActor:
+                        PartyInfo.AddActor(getItemInfo.Param1);
+                        break;
                     case GetItemType.SaveHuman:
                         var record = CurrentStage.SymbolRecordList.Find(a => a.IsSameSymbol(CurrentStage.Id,CurrentStage.CurrentTurn,CurrentSaveData.CurrentStage.CurrentSeekIndex));
                         record.SetBattleScore(PartyInfo.BattleResultScore);
@@ -287,6 +293,7 @@ public class StrategyModel : BaseModel
         if (isSeek)
         {
             CurrentStage.SeekStage();
+            MakeSymbolResultInfos();
         }
     }
 
@@ -340,7 +347,7 @@ public class StrategyModel : BaseModel
         CurrentSaveData.ClearActors();
         foreach (var actorInfo in TempData.TempRecordActors)
         {
-            CurrentSaveData.AddActor(actorInfo);
+            CurrentSaveData.AddActor(actorInfo.ActorId);
         }
         TempData.ClearRecordActors();
         

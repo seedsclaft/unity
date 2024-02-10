@@ -6,8 +6,6 @@ public class SaveStageInfo
 {
     private StageInfo _currentStage = null;
 	public StageInfo CurrentStage => _currentStage;
-    private List<ActorInfo> _actors = new ();
-    public List<ActorInfo> Actors => _actors;
     private PartyInfo _party = null;
 	public PartyInfo Party => _party;
     private AlcanaInfo stageAlcana = null;
@@ -22,7 +20,6 @@ public class SaveStageInfo
 
     public void Initialize()
     {
-        ClearActors();
         InitParty();
         stageAlcana = new AlcanaInfo();
         _resumeStage = false;
@@ -32,11 +29,10 @@ public class SaveStageInfo
 	public void InitializeStageData(int stageId)
 	{
         InitParty();
-		_party.InitActorIds();
-        _party.ClearData();
 		var stageData = DataSystem.FindStage(stageId);
 		_currentStage = new StageInfo(stageData);
 		SetInitMembers();
+		AddActor(1);
 		stageAlcana = new AlcanaInfo();
 		stageAlcana.InitData();
 	}
@@ -52,36 +48,37 @@ public class SaveStageInfo
         // Party初期化
         _party.InitActorIds();
 		ClearActors();
-        var stageMembers = _currentStage.Master.InitMembers;
-        foreach (var stageMember in stageMembers)
+		var actorInfos = new List<ActorInfo>();
+        foreach (var initMember in _currentStage.Master.InitMembers)
         {
-			var actorData = DataSystem.FindActor(stageMember);
+			var actorData = DataSystem.FindActor(initMember);
 			if (actorData != null)
 			{
 				var actorInfo = new ActorInfo(actorData);
-				AddActor(actorInfo);
+				actorInfos.Add(actorInfo);
 			}
         }
+		_party.SetActorInfos(actorInfos);
 	}
+
+    public void SetActorInfos(List<ActorInfo> actorInfos)
+    {
+        _party.SetActorInfos(actorInfos);
+    }
 
     public void ClearActors()
     {
-        _actors.Clear();
+        _party.ClearActorInfos();
     }
 
-	public void AddActor(ActorInfo actorInfo)
+	public void AddActor(int actorId)
 	{
-		_actors.Add(actorInfo);
-		_party.AddActor(actorInfo.ActorId);
+		_party.AddActor(actorId);
 	}
 	
 	public void UpdateActorInfo(ActorInfo actorInfo)
 	{
-		var findIndex = _actors.FindIndex(a => a.ActorId == actorInfo.ActorId);
-		if (findIndex > -1)
-		{
-			_actors[findIndex] = actorInfo;
-		}
+		_party.UpdateActorInfo(actorInfo);
 	}
 
 	public void AddTestActor(ActorData actorData,int lvUpNum)
@@ -89,7 +86,7 @@ public class SaveStageInfo
 		if (actorData != null)
 		{
 			var actorInfo = new ActorInfo(DataSystem.FindActor(actorData.Id));
-			_actors.Add(actorInfo);
+			_party.UpdateActorInfo(actorInfo);
 			_party.AddActor(actorInfo.ActorId);
 			_currentStage.AddSelectActorId(actorInfo.ActorId);
 			for (int i = 0;i < actorInfo.Master.LearningSkills.Count;i++)
@@ -120,15 +117,16 @@ public class SaveStageInfo
 
 	public void InitAllActorMembers()
 	{
+		/*
         foreach (var actorData in DataSystem.Actors)
         {
             if (actorData != null)
 			{
 				var actorInfo = new ActorInfo(actorData);
-				_actors.Add(actorInfo);
 				_party.AddActor(actorInfo.ActorId);
 			}
         }
+		*/
     }
     
     public void ChangeRouteSelectStage(int stageId)

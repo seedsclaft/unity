@@ -380,7 +380,8 @@ public class BattlerInfoComponent : MonoBehaviour
         {
             if (_battlerInfo.IsAwaken)
             {
-                image = actorInfoComponent.AwakenFaceThumb;
+                image = actorInfoComponent.FaceThumb;
+                //image = actorInfoComponent.AwakenFaceThumb;
             } else{
                 image = actorInfoComponent.FaceThumb;
             }

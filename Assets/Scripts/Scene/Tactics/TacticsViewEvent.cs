@@ -38,5 +38,6 @@ namespace Tactics
         Option,
         SelectSideMenu,
         AlcanaCheck,
+        ChangeSelectTacticsActor,
     }
 }

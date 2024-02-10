@@ -47,7 +47,7 @@ public class RankingModel : BaseModel
         foreach (var actorInfo in rankingInfo.ActorInfos)
         {
             PartyInfo.AddActor(actorInfo.ActorId);
-            CurrentSaveData.AddActor(actorInfo);
+            CurrentSaveData.AddActor(actorInfo.ActorId);
         }
     }
 }

@@ -171,8 +171,9 @@ public class TacticsModel : BaseModel
         }
     }
 
-    public void SetStageSeekIndex()
+    public void SetStageSeekIndex(int symbolIndex)
     {
+        _stageSeekIndex = symbolIndex;
         CurrentStage.SetSeekIndex(_stageSeekIndex);
     }
 
@@ -212,7 +213,7 @@ public class TacticsModel : BaseModel
         }
         foreach (var alchemyId in PartyInfo.AlchemyIdList)
         {
-            //if (actorInfo.IsLearnedSkill(alchemyId)) continue;
+            if (actorInfo.IsLearnedSkill(alchemyId)) continue;
             var skillInfo = new SkillInfo(alchemyId);
             var cost = TacticsUtility.AlchemyTurns(actorInfo,skillInfo.Attribute,StageMembers());
             skillInfo.SetEnable(!otherActorSelected.Contains(alchemyId));
@@ -221,7 +222,7 @@ public class TacticsModel : BaseModel
         return MakeListData(skillInfos);
     }
 
-    public List<ListData> AlcanaMagicSkillInfos(List<GetItemInfo> getItemInfos)
+    public List<SkillInfo> AlcanaMagicSkillInfos(List<GetItemInfo> getItemInfos)
     {
         var skillInfos = new List<SkillInfo>();
         foreach (var getItemInfo in getItemInfos)
@@ -231,12 +232,13 @@ public class TacticsModel : BaseModel
             skillInfo.SetEnable(cost <= PartyInfo.Currency);
             skillInfos.Add(skillInfo);
         }
-        return MakeListData(skillInfos);
+        return skillInfos;
     }
-    
-    public void SelectAlchemySkill(int skillId)
+
+    public void SetAddActorInfos(int actorId)
     {
-        _selectSkillId = skillId;
+        var actorInfos = PartyInfo.ActorInfos.FindAll(a => a.ActorId == actorId);
+        TempData.SetTempStatusActorInfos(actorInfos);
     }
 
     public void SelectRecoveryPlus()
@@ -257,7 +259,7 @@ public class TacticsModel : BaseModel
     {
         if (CurrentStage.SurvivalMode)
         {
-            var isSurvivalGameOver = CurrentStage.SelectActorIds.Count > 0 && !Actors().Exists(a => a.Lost == false);
+            var isSurvivalGameOver = PartyInfo.ActorIdList.Count > 0 && !Actors().Exists(a => a.Lost == false);
             if (isSurvivalGameOver)
             {
                 CurrentStage.SetEndingType(EndingType.C);
@@ -272,7 +274,7 @@ public class TacticsModel : BaseModel
             }
             return null;
         }
-        var isGameOver = CurrentStage.SelectActorIds.Count > 0 && (Actors().Find(a => a.ActorId == CurrentStage.SelectActorIds[0])).Lost;
+        var isGameOver = PartyInfo.ActorIdList.Count > 0 && (Actors().Find(a => a.ActorId == PartyInfo.ActorIdList[0])).Lost;
         if (isGameOver)
         {
             CurrentStage.SetEndingType(EndingType.C);

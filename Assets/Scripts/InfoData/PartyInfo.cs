@@ -11,12 +11,23 @@ public class PartyInfo
 
     public void ClearData()
     {
-        _alchemyIdList = new();
+        _alchemyIdList.Clear();
+        _actorInfos.Clear();
+        _actorIdList.Clear();
+        _currency = 0;
         _battleResultVictory = false;
+        _battleResultScore = 0;
+        _symbolRecordList.Clear();
     }
+    // 所持するアクターリスト
+    private List<ActorInfo> _actorInfos = new();
+    public List<ActorInfo> ActorInfos => _actorInfos;
 
+    // 現在使用可能なアクターIdリスト
     private List<int> _actorIdList = new();
     public List<int> ActorIdList => _actorIdList;
+
+    public List<ActorInfo> CurrentActorInfos => _actorInfos.FindAll(a => _actorIdList.Contains(a.ActorId));
     private int _currency = 0;
     public int Currency => _currency;
     private List<int> _alchemyIdList = new();
@@ -41,15 +52,41 @@ public class PartyInfo
         _symbolRecordList.Sort((a,b) => a.Seek - b.Seek > 0 ? 1 : -1);
     }
 
+    public void SetActorInfos(List<ActorInfo> actorInfos)
+    {
+        _actorInfos.Clear();
+        _actorInfos = actorInfos;
+    }
+
+    public void UpdateActorInfo(ActorInfo actorInfo)
+    {
+		var findIndex = _actorInfos.FindIndex(a => a.ActorId == actorInfo.ActorId);
+		if (findIndex > -1)
+		{
+			_actorInfos[findIndex] = actorInfo;
+		} else
+        {
+            _actorInfos.Add(actorInfo);
+        }
+    }
+
+    public void ClearActorInfos()
+    {
+        _actorInfos.Clear();
+    }
+
+    // アクター加入
     public void AddActor(int actorId)
     {
         if (_actorIdList.IndexOf(actorId) != -1)
         {
             return;
         }
+        Debug.Log(actorId);
         _actorIdList.Add(actorId);
     }
 
+    // アクター離脱
     public void RemoveActor(int actorId)
     {
         if (_actorIdList.IndexOf(actorId) == -1)
@@ -92,7 +129,6 @@ public class PartyInfo
             _alchemyIdList.RemoveAt(findIndex);
         }
     }
-
 
     public void ClearAlchemy()
     {

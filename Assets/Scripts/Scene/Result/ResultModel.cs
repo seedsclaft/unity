@@ -281,7 +281,7 @@ public class ResultModel : BaseModel
         foreach (var listDate in listDates)
         {
             var actorInfo = (ActorInfo)listDate.Data;
-            if (actorInfo.Master.ClassId == DataSystem.FindActor(CurrentStage.SelectActorIds[0]).ClassId)
+            if (actorInfo.Master.ClassId == DataSystem.FindActor(PartyInfo.ActorIdList[0]).ClassId)
             {
                 //listDate.SetEnable(false);
             }

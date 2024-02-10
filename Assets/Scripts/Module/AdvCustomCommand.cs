@@ -78,8 +78,8 @@ namespace Utage
         {
             if (GameSystem.CurrentStageData == null) return;
             if (GameSystem.CurrentStageData.CurrentStage == null) return;
-            if (GameSystem.CurrentStageData.CurrentStage.SelectActorIds.Count == 0) return;
-            int actorId = GameSystem.CurrentStageData.CurrentStage.SelectActorIds[0];
+            if (GameSystem.CurrentStageData.Party.ActorIdList.Count == 0) return;
+            int actorId = GameSystem.CurrentStageData.Party.ActorIdList[0];
             var actorData = DataSystem.FindActor(actorId);
             if (actorData != null)
             {

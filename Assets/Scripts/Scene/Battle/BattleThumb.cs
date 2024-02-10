@@ -12,7 +12,7 @@ public class BattleThumb : MonoBehaviour
     public void ShowBattleThumb(BattlerInfo battlerInfo)
     {
         gameObject.SetActive(false);
-        var awaken = battlerInfo.IsState(StateType.Demigod);
+        var awaken = false;//battlerInfo.IsAwaken;
         var image = awaken ? actorInfoComponent.AwakenThumb : actorInfoComponent.MainThumb;
         gameObject.GetComponent<RectTransform>().localPosition = new Vector3(-24,0,0);
         image.color = new Color(255,255,255,0);

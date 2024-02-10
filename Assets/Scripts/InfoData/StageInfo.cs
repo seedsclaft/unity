@@ -40,8 +40,6 @@ public class StageInfo
 
 	private List<int> _clearTroopIds = new ();
     public List<int> ClearTroopIds => _clearTroopIds;
-	private List<int> _selectActorIds = new ();
-	public List<int> SelectActorIds => _selectActorIds;
 
     private List<string> _readEventKeys = new ();
     public List<string> ReadEventKeys => _readEventKeys;
@@ -138,29 +136,14 @@ public class StageInfo
             symbolInfo.MakeGetItemInfos(getItemInfos);
             _currentSymbolInfos.Add(symbolInfo);
         }
-        // レコード作成
-        for (int i = 0;i < _currentSymbolInfos.Count;i++)
-        {
-            var record = new SymbolResultInfo(_id,_currentTurn,i,GameSystem.CurrentStageData.Party.Currency);
-            var actorInfos = new List<ActorInfo>();
-            foreach (var selectActorId in _selectActorIds)
-            {
-                actorInfos.Add(GameSystem.CurrentStageData.Actors.Find(a => a.ActorId == selectActorId));
-            }
-            record.SetStartActorInfos(actorInfos);
-            record.SetAlchemyIdList(GameSystem.CurrentStageData.Party.AlchemyIdList);
-            SetSymbolResultInfo(record);
-        }
     }
 
     public void AddSelectActorId(int actorId)
     {
-        _selectActorIds.Add(actorId);
     }
 
     public void ClearSelectActorId()
     {
-        _selectActorIds.Clear();
     }
 
     public TroopInfo BattleTroops(int troopId,int enemyCount)
@@ -261,7 +244,6 @@ public class StageInfo
 
     public void SetMoveStageData(StageInfo stageInfo)
     {
-        _selectActorIds = stageInfo.SelectActorIds;
         _clearCount = stageInfo.ClearCount;
         _troopClearCount = stageInfo._troopClearCount;
         _routeSelect = stageInfo.RouteSelect;
@@ -278,11 +260,6 @@ public class StageInfo
 
     public int SelectActorIdsClassId(int selectIndex)
     {
-        if (SelectActorIds.Count > selectIndex)
-        {
-            var actorId = SelectActorIds[selectIndex];
-            return DataSystem.FindActor(actorId).ClassId;
-        }
         return 0;
     }
 

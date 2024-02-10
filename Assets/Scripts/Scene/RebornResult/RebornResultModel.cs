@@ -42,7 +42,7 @@ public class RebornResultModel : BaseModel
         {
             var upStatusCount = statusRebornSkill.Param2;
             var getItemInfo = new GetItemInfo(null);
-            var actorName = DataSystem.FindActor(CurrentStage.SelectActorIds[0]).Name;
+            var actorName = DataSystem.FindActor(PartyInfo.ActorIdList[0]).Name;
             getItemInfo.MakeStatusRebornResult(actorName,(StatusParamType)statusRebornSkill.Param3,upStatusCount);
             getItemInfos.Add(getItemInfo);
         }
@@ -61,7 +61,7 @@ public class RebornResultModel : BaseModel
         {
             var upStatusCount = questRebornSkill.Param2;
             var getItemInfo = new GetItemInfo(null);
-            var actorName = DataSystem.FindActor(CurrentStage.SelectActorIds[0]).Name;
+            var actorName = DataSystem.FindActor(PartyInfo.ActorIdList[0]).Name;
             getItemInfo.MakeQuestRebornResult(actorName,0,upStatusCount);
             getItemInfos.Add(getItemInfo);
         }

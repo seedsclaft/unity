@@ -132,14 +132,14 @@ public class SymbolRecordModel : BaseModel
     {
         CurrentSaveData.MakeCurrentStage(CurrentStage.Master.Id);
         CurrentStage.SetRecordStage(true);
-        TempData.SetRecordActors(CurrentSaveData.Actors);
+        TempData.SetRecordActors(PartyInfo.ActorInfos);
         TempData.SetRecordAlchemyList(CurrentSaveData.Party.AlchemyIdList);
         
         CurrentSaveData.ClearActors();
         CurrentStage.ClearSelectActorId();
         foreach (var symbolActor in SymbolActors(seek))
         {
-            CurrentSaveData.AddActor(symbolActor);
+            CurrentSaveData.AddActor(symbolActor.ActorId);
             CurrentStage.AddSelectActorId(symbolActor.ActorId);
         }
 
@@ -153,6 +153,7 @@ public class SymbolRecordModel : BaseModel
         for (int i = 0;i < seek;i++)
         {
             CurrentStage.SeekStage();
+            MakeSymbolResultInfos();
         }
     }
 }

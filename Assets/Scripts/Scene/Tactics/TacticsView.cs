@@ -186,6 +186,16 @@ public class TacticsView : BaseView
         selectCharacter.SetInputHandlerCommand(InputKeyType.Cancel,() => CallTrainCommandCancel());
         SetInputHandler(selectCharacter.CharacterList.GetComponent<IInputHandlerEvent>());
         SetInputHandler(selectCharacter.CommandList.GetComponent<IInputHandlerEvent>());
+        selectCharacter.CharacterList.SetSelectedHandler(() => {
+            var listData = selectCharacter.CharacterData;
+            if (listData != null)
+            {
+                var data = (TacticsActorInfo)listData.Data;
+                var eventData = new TacticsViewEvent(CommandType.ChangeSelectTacticsActor);
+                eventData.template = data.ActorInfo.ActorId;
+                _commandData(eventData);
+            }
+        });
         HideSelectCharacter();
 
     }

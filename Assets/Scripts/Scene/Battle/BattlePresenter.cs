@@ -476,7 +476,7 @@ public class BattlePresenter : BasePresenter
                 _view.SetBattleBusy(false);
                 return;
             }
-            if (actionInfo.Master.SkillType == SkillType.Demigod && actionInfo.SubjectIndex < 100)
+            if (actionInfo.Master.SkillType == SkillType.Demigod && actionInfo.SubjectIndex < 100 || actionInfo.Master.SkillType == SkillType.Awaken && actionInfo.SubjectIndex < 100)
             {
                 StartAnimationDemigod();
             } else
@@ -551,8 +551,8 @@ public class BattlePresenter : BasePresenter
 
     private async void StartAnimationDemigod()
     {
-        var demigod = _model.SkillActionAnimation("NA_Effekseer/NA_cut-in_001_" + _model.CurrentBattler.CharaId.ToString());
-        _view.StartAnimationDemigod(demigod);
+        Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Demigod);
+        _view.StartAnimationDemigod(_model.CurrentBattler,_model.CurrentActionInfo().Master);
         _view.HideStateOverlay();
         _view.SetAnimationBusy(true);
         await UniTask.DelayFrame(90);

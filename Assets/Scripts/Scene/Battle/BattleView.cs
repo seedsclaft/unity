@@ -23,6 +23,7 @@ public class BattleView : BaseView ,IInputHandlerEvent
 
     [SerializeField] private GameObject centerAnimPosition = null;
     [SerializeField] private SideMenu battleAutoButton = null;
+    [SerializeField] private BattleCutinAnimation battleCutinAnimation = null;
     private BattleStartAnim _battleStartAnim = null;
     public bool StartAnimIsBusy => _battleStartAnim.IsBusy;
 
@@ -459,11 +460,12 @@ public class BattleView : BaseView ,IInputHandlerEvent
         }
     }
 
-    public void StartAnimationDemigod(EffekseerEffectAsset effekseerEffectAsset)
+    public void StartAnimationDemigod(BattlerInfo battlerInfo,SkillData skillData)
     {
         DeactivateActorList();
         DeactivateEnemyList();
-        var handle = EffekseerSystem.PlayEffect(effekseerEffectAsset, centerAnimPosition.transform.position);
+        battleCutinAnimation.StartAnimation(battlerInfo,skillData);
+        //var handle = EffekseerSystem.PlayEffect(effekseerEffectAsset, centerAnimPosition.transform.position);
     }
 
     public void ClearDamagePopup()

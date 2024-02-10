@@ -354,6 +354,22 @@ public class TacticsPresenter :BasePresenter
         {
             CommandAlcanaCheck();
         }
+        if (viewEvent.commandType == Tactics.CommandType.ChangeSelectTacticsActor)
+        {
+            _model.SetSelectActorId((int)viewEvent.template);
+            if (_model.TacticsCommandType == TacticsCommandType.Train)
+            {
+                _view.ShowCharacterDetail(_model.TacticsActor(),_model.StageMembers());
+            } else
+            if (_model.TacticsCommandType == TacticsCommandType.Recovery)
+            {
+                _view.ShowCharacterDetail(_model.TacticsActor(),_model.StageMembers());
+            } else
+            if (_model.TacticsCommandType == TacticsCommandType.Alchemy)
+            {
+                _view.ShowLeaningList(_model.SelectActorAlchemy());
+            }
+        }
         if (_model.NeedAllTacticsCommand)
         {
         }
@@ -586,10 +602,9 @@ public class TacticsPresenter :BasePresenter
     }
 
 
-    private void CommandSelectSymbol(int enemyIndex)
+    private void CommandSelectSymbol(int symbolIndex)
     {
-        _model.StageSeekIndex = enemyIndex;
-        _model.SetStageSeekIndex();
+        _model.SetStageSeekIndex(symbolIndex);
         _view.HideSymbolList();
         // 回路解析
         var currentSymbol = _model.CurrentStage.CurrentSelectSymbol();
@@ -608,7 +623,7 @@ public class TacticsPresenter :BasePresenter
                 CheckRecoverSymbol(currentSymbol.GetItemInfos[0]);
                 break;
             case SymbolType.Actor:
-                CheckActorSymbol(currentSymbol.GetItemInfos);
+                CheckActorSymbol(currentSymbol.GetItemInfos[0]);
                 break;
             case SymbolType.Alcana:
                 CheckAlcanaSymbol(currentSymbol.GetItemInfos);
@@ -635,9 +650,10 @@ public class TacticsPresenter :BasePresenter
         CommandRefresh();
     }
 
-    private void CheckActorSymbol(List<GetItemInfo> getItemInfos)
+    private void CheckActorSymbol(GetItemInfo getItemInfo)
     {
-        var popupInfo = new ConfirmInfo("仲間を選びますか？",(a) => UpdatePopupActorSymbol((ConfirmCommandType)a));
+        var actorData = DataSystem.FindActor(getItemInfo.Param1);
+        var popupInfo = new ConfirmInfo(actorData.Name + "を加入しますか？",(a) => UpdatePopupActorSymbol((ConfirmCommandType)a));
         _view.CommandCallConfirm(popupInfo);
     }
 
@@ -647,11 +663,13 @@ public class TacticsPresenter :BasePresenter
         if (confirmCommandType == ConfirmCommandType.Yes)
         {
             Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
-            var selectAddActor = new ConfirmInfo(DataSystem.GetTextData(11050).Text,(menuCommandInfo) => UpdatePopupSelectAddActor((ConfirmCommandType)menuCommandInfo));
-            selectAddActor.SetIsNoChoice(true);
-            selectAddActor.SetSelectIndex(0);
-            _view.CommandCallConfirm(selectAddActor);
-            _view.ChangeUIActive(false);
+            var getItemInfos = _model.CurrentStage.CurrentSelectSymbol().GetItemInfos;
+            var actorInfos = _model.PartyInfo.ActorInfos.FindAll(a => a.ActorId == getItemInfos[0].Param1);
+            _model.TempData.SetTempGetItemInfos(getItemInfos);
+            Debug.Log(getItemInfos[0].GetItemType);
+            Debug.Log(getItemInfos[0].Param1);
+            _model.TempData.SetTempResultActorInfos(actorInfos);
+            _view.CommandSceneChange(Scene.Strategy);
         } else{
             Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cancel);
             CommandTacticsCommand(_model.TacticsCommandType);
@@ -682,15 +700,19 @@ public class TacticsPresenter :BasePresenter
 
     private void CheckAlcanaSymbol(List<GetItemInfo> getItemInfos)
     {
+        /*
         _view.ShowLeaningList(_model.AlcanaMagicSkillInfos(getItemInfos));
         _view.ChangeBackCommandActive(true);
-        _backCommand = Tactics.CommandType.TacticsCommand;        
+        _backCommand = Tactics.CommandType.TacticsCommand; 
+        */
+        CheckAlcanaSymbol(_model.AlcanaMagicSkillInfos(getItemInfos)[0]);
         Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
     }
 
     private void CommandSkillAlchemy(SkillInfo skillInfo)
     {
-        _model.SelectAlchemySkill(skillInfo.Id);
+        /*
+        _model.AddAlchemySkill(skillInfo.Id);
         _view.HideAttributeList();
         //_view.ShowSelectCharacterCommand();
         CommandRefresh();
@@ -698,6 +720,7 @@ public class TacticsPresenter :BasePresenter
         //_backCommand = Tactics.CommandType.SelectActorAlchemy;
         Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
         CheckAlcanaSymbol(skillInfo);
+        */
     }
 
     
@@ -713,8 +736,8 @@ public class TacticsPresenter :BasePresenter
         if (confirmCommandType == ConfirmCommandType.Yes)
         {
             Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
-            var skill = _model.CurrentStage.CurrentSelectSymbol().GetItemInfos.FindAll(a => a.Param1 == _model.SelectAlcanaSkillId);
-            _model.TempData.SetTempGetItemInfos(skill);
+            var getItemInfos = _model.CurrentStage.CurrentSelectSymbol().GetItemInfos;
+            _model.TempData.SetTempGetItemInfos(getItemInfos);
             _model.TempData.SetTempResultActorInfos(_model.StageMembers());
             _view.CommandSceneChange(Scene.Strategy);
         } else{
@@ -819,17 +842,36 @@ public class TacticsPresenter :BasePresenter
                 
     }
 
-    private void CommandCallEnemyInfo(int troopInfoIndex)
+    private void CommandCallEnemyInfo(int symbolIndex)
     {
-        var enemyInfos = _model.TacticsSymbols()[troopInfoIndex].BattlerInfos();
-        
-        var statusViewInfo = new StatusViewInfo(() => {
-            _view.CommandStatusClose();
-            _view.ChangeUIActive(true);
-        });
-        statusViewInfo.SetEnemyInfos(enemyInfos,false);
-        _view.CommandCallEnemyInfo(statusViewInfo);
-        _view.ChangeUIActive(false);
+        var symbolInfo = _model.TacticsSymbols()[symbolIndex];
+        switch (symbolInfo.SymbolType)
+        {
+            case SymbolType.Battle:
+            case SymbolType.Boss:
+                var enemyInfos = symbolInfo.BattlerInfos();
+                
+                var enemyViewInfo = new StatusViewInfo(() => {
+                    _view.CommandStatusClose();
+                    _view.ChangeUIActive(true);
+                });
+                enemyViewInfo.SetEnemyInfos(enemyInfos,false);
+                _view.CommandCallEnemyInfo(enemyViewInfo);
+                _view.ChangeUIActive(false);
+                break;
+            case SymbolType.Alcana:
+                CommandPopupSkillInfo(symbolInfo.GetItemInfos[0]);
+                break;
+            case SymbolType.Actor:
+                _model.SetAddActorInfos(symbolInfo.GetItemInfos[0].Param1);
+                var statusViewInfo = new StatusViewInfo(() => {
+                    _view.CommandStatusClose();
+                    _view.ChangeUIActive(true);
+                });
+                _view.CommandCallStatus(statusViewInfo);
+                _view.ChangeUIActive(false);
+                break;
+        }
         Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
     }
 

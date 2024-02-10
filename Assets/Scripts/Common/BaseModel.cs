@@ -43,7 +43,7 @@ public class BaseModel
 
     public List<ActorInfo> Actors()
     {
-        return CurrentSaveData.Actors;
+        return PartyInfo.ActorInfos;
     }
 
     public void LostActors(List<ActorInfo> lostMembers)
@@ -58,17 +58,7 @@ public class BaseModel
 
     public List<ActorInfo> StageMembers()
     {
-        var SelectActorIds = CurrentStage.SelectActorIds;
-        var members = new List<ActorInfo>();
-        for (int i = 0;i < SelectActorIds.Count ;i++)
-        {
-            var temp = Actors().Find(a => a.ActorId == SelectActorIds[i] && a.Lost == false);
-            if (temp != null)
-            {
-                members.Add(temp);
-            }
-        }
-        return members;
+        return PartyInfo.CurrentActorInfos;
     }
 
     public List<ActorInfo> BattleMembers()
@@ -94,7 +84,7 @@ public class BaseModel
 
     public List<ActorInfo> ResultMembers()
     {
-        var SelectActorIds = CurrentStage.SelectActorIds;
+        var SelectActorIds = PartyInfo.ActorIdList;
         var members = new List<ActorInfo>();
         for (int i = 0;i < SelectActorIds.Count ;i++)
         {
@@ -385,7 +375,7 @@ public class BaseModel
                         getItemInfo.MakeGainTurnResult((RemainTurns).ToString());
                         break;
                     case FeatureType.ActorLvUp: // featureData で param1 = 選択順のActorId、 param2 = 上昇値
-                        var actorInfo = StageMembers().Find(a => a.ActorId == CurrentStage.SelectActorIds[featureData.Param1]);
+                        var actorInfo = StageMembers().Find(a => a.ActorId == PartyInfo.ActorIdList[featureData.Param1]);
                         if (actorInfo != null)
                         {
                             var lv = featureData.Param2;
@@ -414,7 +404,7 @@ public class BaseModel
                         break;
                     case FeatureType.AddSkillOrCurrency: // skillInfo で param1 = 入手スキルID,featureData で param2 = 上昇Currency値
                         var getSkillId = skillInfo.Param1;
-                        var hero = StageMembers().Find(a => a.ActorId == CurrentStage.SelectActorIds[0]);
+                        var hero = StageMembers().Find(a => a.ActorId == PartyInfo.ActorIdList[0]);
                         if (!hero.IsLearnedSkill(getSkillId))
                         {
                             getItemInfo.MakeSkillLearnResult(hero.Master.Name,DataSystem.FindSkill(skillInfo.Param1));    
@@ -506,9 +496,28 @@ public class BaseModel
     {
         InitSaveStageInfo();
         CurrentSaveData.InitializeStageData(1);
-        CurrentStage.AddSelectActorId(1);
+        //CurrentStage.AddSelectActorId(1);
         PartyInfo.ChangeCurrency(DataSystem.System.InitCurrency);
+        CurrentStage.MakeTurnSymbol();
+        MakeSymbolResultInfos();
         SavePlayerStageData(true);
+    }
+
+    public void MakeSymbolResultInfos()
+    {
+        // レコード作成
+        for (int i = 0;i < CurrentStage.CurrentSymbolInfos.Count;i++)
+        {
+            var record = new SymbolResultInfo(CurrentStage.Id,CurrentStage.CurrentTurn,i,GameSystem.CurrentStageData.Party.Currency);
+            var actorInfos = new List<ActorInfo>();
+            foreach (var actorInfo in PartyInfo.CurrentActorInfos)
+            {
+                actorInfos.Add(actorInfo);
+            }
+            record.SetStartActorInfos(actorInfos);
+            record.SetAlchemyIdList(PartyInfo.AlchemyIdList);
+            CurrentStage.SetSymbolResultInfo(record);
+        }
     }
     
     public void StartSelectStage(int stageId)
@@ -600,15 +609,10 @@ public class BaseModel
 
     public List<ActorInfo> EvaluateMembers()
     {
-        var selectActorIds = CurrentSaveData.CurrentStage.SelectActorIds;
         var members = new List<ActorInfo>();
-        for (int i = 0;i < selectActorIds.Count ;i++)
+        foreach (var actorInfo in PartyInfo.CurrentActorInfos)
         {
-            var temp = CurrentSaveData.Actors.Find(a => a.ActorId == selectActorIds[i]);
-            if (temp != null)
-            {
-                members.Add(temp);
-            }
+            members.Add(actorInfo);
         }
         return members;
     }
@@ -856,7 +860,7 @@ public class BaseModel
         var actorInfos = slotData.ActorInfos;
         foreach (var actorInfo in actorInfos)
         {
-            CurrentSaveData.AddActor(actorInfo);
+            CurrentSaveData.AddActor(actorInfo.ActorId);
         }
     }
 
