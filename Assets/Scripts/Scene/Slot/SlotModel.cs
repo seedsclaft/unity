@@ -11,10 +11,6 @@ public class SlotModel : BaseModel
 
     public void SetSelectActorIds()
     {
-        foreach (var actorId in PartyInfo.ActorIdList)
-        {
-            CurrentStage.AddSelectActorId(actorId);
-        }
     }
 
     public void ResetActors()

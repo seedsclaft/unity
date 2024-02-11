@@ -105,6 +105,7 @@ public class StrategyPresenter : BasePresenter
         } else{
             EndStrategy();
         }
+        _model.TempData.ClearTempGetItemInfos();
     }
 
     private void SeekStrategyState()
@@ -239,7 +240,6 @@ public class StrategyPresenter : BasePresenter
                     _model.TempData.ClearTempResultActorInfos();
                 }
             }
-            _model.TempData.ClearTempGetItemInfos();
             CheckTacticsActors();
         } else
         {

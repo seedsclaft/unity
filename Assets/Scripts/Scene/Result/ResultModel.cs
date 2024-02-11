@@ -57,10 +57,10 @@ public class ResultModel : BaseModel
     public void SetActors()
     {
         // Party初期化
-        PartyInfo.InitActorIds();
+        PartyInfo.ClearActorIds();
         foreach (var resultMember in ResultMembers())
         {
-            PartyInfo.AddActor(resultMember.ActorId);
+            PartyInfo.AddActorId(resultMember.ActorId);
         }
     }
 

@@ -115,7 +115,7 @@ public class StrategyModel : BaseModel
                         }
                         break;
                     case GetItemType.AddActor:
-                        PartyInfo.AddActor(getItemInfo.Param1);
+                        PartyInfo.AddActorId(getItemInfo.Param1);
                         break;
                     case GetItemType.SaveHuman:
                         var record = CurrentStage.SymbolRecordList.Find(a => a.IsSameSymbol(CurrentStage.Id,CurrentStage.CurrentTurn,CurrentSaveData.CurrentStage.CurrentSeekIndex));
@@ -208,7 +208,7 @@ public class StrategyModel : BaseModel
                         }
                         break;
                     case GetItemType.AddActor:
-                        PartyInfo.AddActor(getItemInfo.Param1);
+                        PartyInfo.AddActorId(getItemInfo.Param1);
                         break;
                     case GetItemType.SaveHuman:
                         var record = CurrentStage.SymbolRecordList.Find(a => a.IsSameSymbol(CurrentStage.Id,CurrentStage.CurrentTurn,CurrentSaveData.CurrentStage.CurrentSeekIndex));
@@ -293,6 +293,7 @@ public class StrategyModel : BaseModel
         if (isSeek)
         {
             CurrentStage.SeekStage();
+            CurrentStage.SetSymbolInfos(CurrentTurnSymbolInfos(CurrentStage.CurrentTurn));
             MakeSymbolResultInfos();
         }
     }
@@ -302,7 +303,7 @@ public class StrategyModel : BaseModel
         CurrentData.PlayerInfo.StageClear(CurrentStage.Id);
         foreach (var symbolResultInfo in CurrentStage.SymbolRecordList)
         {
-            CurrentSaveData.Party.SetSymbolResultInfo(symbolResultInfo);
+            PartyInfo.SetSymbolResultInfo(symbolResultInfo);
         }
         SavePlayerData();
         SavePlayerStageData(false);
@@ -310,11 +311,14 @@ public class StrategyModel : BaseModel
 
     public void CommitCurrentResult()
     {
-        var beforeRecords = CurrentSaveData.Party.SymbolRecordList.FindAll(a => a.StageId == CurrentStage.Id && a.Seek == CurrentStage.CurrentTurn);
+        var beforeRecords = PartyInfo.SymbolRecordList.FindAll(a => a.StageId == CurrentStage.Id && a.Seek == CurrentStage.CurrentTurn);
         var records = CurrentStage.SymbolRecordList.FindAll(a => a.StageId == CurrentStage.Id && a.Seek == CurrentStage.CurrentTurn);
         
         var addAlchemyIdList = new List<int>();
         var removeAlchemyIdList = new List<int>();
+
+        var addActorIdList = new List<int>();
+        var removeActorIdList = new List<int>();
         // 差分確認
         foreach (var beforeRecord in beforeRecords)
         {
@@ -336,36 +340,80 @@ public class StrategyModel : BaseModel
                         }
                     }
                 }
+                if (symbol.SymbolType == SymbolType.Actor)
+                {
+                    foreach (var getItemInfo in symbol.GetItemInfos)
+                    {
+                        if (currentRecord.Selected)
+                        {
+                            // 増える
+                            addActorIdList.Add(getItemInfo.Param1);
+                        } else
+                        {
+                            removeActorIdList.Add(getItemInfo.Param1);
+                        }
+                    }
+                }
             }
         }
-        //CurrentData.PlayerInfo.StageClear(CurrentStage.Id);
         foreach (var symbolResultInfo in records)
         {
-            CurrentSaveData.Party.SetSymbolResultInfo(symbolResultInfo);
+            PartyInfo.SetSymbolResultInfo(symbolResultInfo);
         }
 
-        CurrentSaveData.ClearActors();
+        PartyInfo.InitActorInfos();
         foreach (var actorInfo in TempData.TempRecordActors)
         {
-            CurrentSaveData.AddActor(actorInfo.ActorId);
+            PartyInfo.AddActorId(actorInfo.ActorId);
         }
         TempData.ClearRecordActors();
         
-        CurrentSaveData.Party.ClearAlchemy();
+        PartyInfo.ClearAlchemy();
         foreach (var alchemyId in TempData.TempRecordAlchemyList)
         {
-            CurrentSaveData.Party.AddAlchemy(alchemyId);
+            PartyInfo.AddAlchemy(alchemyId);
         }
         foreach (var alchemyId in addAlchemyIdList)
         {
-            CurrentSaveData.Party.AddAlchemy(alchemyId);
+            PartyInfo.AddAlchemy(alchemyId);
         }
         foreach (var alchemyId in removeAlchemyIdList)
         {
-            CurrentSaveData.Party.RemoveAlchemy(alchemyId);
+            PartyInfo.RemoveAlchemy(alchemyId);
+        }
+        foreach (var actorId in addActorIdList)
+        {
+            PartyInfo.AddActorId(actorId);
+        }
+        foreach (var actorId in removeActorIdList)
+        {
+            PartyInfo.RemoveActor(actorId);
         }
         TempData.ClearRecordAlchemyList();
         
+        // 後のレコードを書き換え
+        var afterRecords = PartyInfo.SymbolRecordList.FindAll(a => a.StageId >= CurrentStage.Id && a.Seek > CurrentStage.CurrentTurn);
+        foreach (var symbolResultInfo in afterRecords)
+        {
+            foreach (var alchemyId in addAlchemyIdList)
+            {
+                symbolResultInfo.AddAlchemyId(alchemyId);
+            }
+            foreach (var alchemyId in removeAlchemyIdList)
+            {
+                symbolResultInfo.RemoveAlchemyId(alchemyId);
+            }
+            foreach (var actorId in addActorIdList)
+            {
+                symbolResultInfo.AddActorId(actorId);
+            }
+            foreach (var actorId in removeActorIdList)
+            {
+                symbolResultInfo.RemoveActorId(actorId);
+            }
+            PartyInfo.SetSymbolResultInfo(symbolResultInfo);
+        }
+
         SavePlayerData();
         SavePlayerStageData(false);
     }
@@ -384,7 +432,7 @@ public class StrategyModel : BaseModel
         foreach (var tempActorInfo in TempData.TempActorInfos)
         {
             tempActorInfo.SetInBattle(false);
-            CurrentSaveData.UpdateActorInfo(tempActorInfo);
+            PartyInfo.UpdateActorInfo(tempActorInfo);
         }
         TempData.ClearBattleActors();
     }

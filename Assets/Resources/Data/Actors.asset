@@ -25,7 +25,7 @@ MonoBehaviour:
       _mp: 15
       _atk: 27
       _def: 14
-      _spd: 12
+      _spd: 15
     PlusStatus:
       _hp: 0
       _mp: 0
@@ -33,10 +33,10 @@ MonoBehaviour:
       _def: 0
       _spd: 0
     NeedStatus:
-      _hp: 40
+      _hp: 50
       _mp: 20
       _atk: 50
-      _def: 30
+      _def: 40
       _spd: 26
     Attribute: 0100000004000000050000000500000002000000
     X: -4
@@ -89,9 +89,9 @@ MonoBehaviour:
     InitStatus:
       _hp: 27
       _mp: 15
-      _atk: 12
+      _atk: 21
       _def: 5
-      _spd: 19
+      _spd: 24
     PlusStatus:
       _hp: 0
       _mp: 0
@@ -100,10 +100,10 @@ MonoBehaviour:
       _spd: 0
     NeedStatus:
       _hp: 60
-      _mp: 50
-      _atk: 30
+      _mp: 20
+      _atk: 40
       _def: 20
-      _spd: 90
+      _spd: 35
     Attribute: 0300000001000000050000000700000004000000
     X: -10
     Y: 24
@@ -159,9 +159,9 @@ MonoBehaviour:
     InitStatus:
       _hp: 30
       _mp: 15
-      _atk: 24
-      _def: 7
-      _spd: 23
+      _atk: 17
+      _def: 12
+      _spd: 9
     PlusStatus:
       _hp: 0
       _mp: 0
@@ -169,11 +169,11 @@ MonoBehaviour:
       _def: 0
       _spd: 0
     NeedStatus:
-      _hp: 60
-      _mp: 50
+      _hp: 70
+      _mp: 20
       _atk: 20
-      _def: 90
-      _spd: 40
+      _def: 80
+      _spd: 15
     Attribute: 0400000007000000010000000200000007000000
     X: 8
     Y: 4
@@ -236,7 +236,7 @@ MonoBehaviour:
       _spd: 0
     NeedStatus:
       _hp: 80
-      _mp: 50
+      _mp: 20
       _atk: 30
       _def: 40
       _spd: 60
@@ -302,7 +302,7 @@ MonoBehaviour:
       _spd: 0
     NeedStatus:
       _hp: 20
-      _mp: 50
+      _mp: 20
       _atk: 90
       _def: 30
       _spd: 50
@@ -356,7 +356,7 @@ MonoBehaviour:
     MaxLv: 40
     InitStatus:
       _hp: 33
-      _mp: 20
+      _mp: 15
       _atk: 39
       _def: 9
       _spd: 30
@@ -368,7 +368,7 @@ MonoBehaviour:
       _spd: 0
     NeedStatus:
       _hp: 40
-      _mp: 50
+      _mp: 20
       _atk: 90
       _def: 20
       _spd: 80
@@ -422,7 +422,7 @@ MonoBehaviour:
     MaxLv: 40
     InitStatus:
       _hp: 45
-      _mp: 20
+      _mp: 15
       _atk: 33
       _def: 11
       _spd: 15
@@ -434,7 +434,7 @@ MonoBehaviour:
       _spd: 0
     NeedStatus:
       _hp: 110
-      _mp: 50
+      _mp: 20
       _atk: 70
       _def: 20
       _spd: 30
@@ -464,7 +464,7 @@ MonoBehaviour:
     MaxLv: 40
     InitStatus:
       _hp: 45
-      _mp: 20
+      _mp: 15
       _atk: 33
       _def: 11
       _spd: 15
@@ -476,7 +476,7 @@ MonoBehaviour:
       _spd: 0
     NeedStatus:
       _hp: 110
-      _mp: 50
+      _mp: 20
       _atk: 70
       _def: 20
       _spd: 30
@@ -506,7 +506,7 @@ MonoBehaviour:
     MaxLv: 40
     InitStatus:
       _hp: 48
-      _mp: 20
+      _mp: 15
       _atk: 35
       _def: 18
       _spd: 18
@@ -518,7 +518,7 @@ MonoBehaviour:
       _spd: 0
     NeedStatus:
       _hp: 70
-      _mp: 50
+      _mp: 20
       _atk: 60
       _def: 50
       _spd: 50
@@ -572,7 +572,7 @@ MonoBehaviour:
     MaxLv: 40
     InitStatus:
       _hp: 38
-      _mp: 20
+      _mp: 15
       _atk: 15
       _def: 33
       _spd: 22
@@ -584,7 +584,7 @@ MonoBehaviour:
       _spd: 0
     NeedStatus:
       _hp: 50
-      _mp: 50
+      _mp: 20
       _atk: 10
       _def: 100
       _spd: 30
@@ -638,7 +638,7 @@ MonoBehaviour:
     MaxLv: 40
     InitStatus:
       _hp: 44
-      _mp: 20
+      _mp: 15
       _atk: 30
       _def: 13
       _spd: 32
@@ -650,7 +650,7 @@ MonoBehaviour:
       _spd: 0
     NeedStatus:
       _hp: 60
-      _mp: 50
+      _mp: 20
       _atk: 50
       _def: 30
       _spd: 70

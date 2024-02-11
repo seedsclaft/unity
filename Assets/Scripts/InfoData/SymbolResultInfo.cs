@@ -28,6 +28,20 @@ public class SymbolResultInfo
     }
     private List<int> _alchemyIdList = new();
     public List<int> AlchemyIdList => _alchemyIdList;
+    public void AddAlchemyId(int alchemyId)
+    {
+        if (!_alchemyIdList.Contains(alchemyId))
+        {
+            _alchemyIdList.Add(alchemyId);
+        }
+    }
+    public void RemoveAlchemyId(int alchemyId)
+    {
+        if (_alchemyIdList.Contains(alchemyId))
+        {
+            _alchemyIdList.Remove(alchemyId);
+        }
+    }
     public void SetAlchemyIdList(List<int> alchemyIdList)
     {
         _alchemyIdList.Clear();
@@ -37,8 +51,38 @@ public class SymbolResultInfo
         }
     }
 
-    public List<ActorInfo> _actorsData = new ();
-    public List<ActorInfo> ActorsData => _actorsData;
+    public List<int> _actorIdList = new ();
+    public List<int> ActorIdList => _actorIdList;
+    public void SetActorIdList(List<int> actorIdList)
+    {
+        _actorIdList = actorIdList;
+    }
+    public void AddActorId(int actorId)
+    {
+        if (!_actorIdList.Contains(actorId))
+        {
+            _actorIdList.Add(actorId);
+        }
+    }
+    public void RemoveActorId(int actorId)
+    {
+        if (_actorIdList.Contains(actorId))
+        {
+            _actorIdList.Remove(actorId);
+        }
+    }
+
+    public List<ActorInfo> _actorInfos = new ();
+    public List<ActorInfo> ActorInfos => _actorInfos;
+    public void SetActorInfos(List<ActorInfo> actorInfos)
+    {
+        foreach (var actorInfo in actorInfos)
+        {
+            var recordActorInfo = new ActorInfo(actorInfo.Master);
+            recordActorInfo.CopyData(actorInfo);		
+            _actorInfos.Add(recordActorInfo);
+        }
+    }
 
     public SymbolResultInfo(int stageId,int seek,int seekIndex,int currency)
     {
@@ -49,37 +93,6 @@ public class SymbolResultInfo
         _selected = false;
     }
 
-    public void SetStartActorInfos(List<ActorInfo> actorInfos)
-    {
-        foreach (var actorInfo in actorInfos)
-        {
-            var recordActorInfo = new ActorInfo(actorInfo.Master);			
-            for (int i = 0;i < actorInfo.Master.LearningSkills.Count;i++)
-			{
-				var _learningData = actorInfo.Master.LearningSkills[i];
-				if (recordActorInfo.Skills.Find(a =>a.Id == _learningData.SkillId) != null) continue;
-				var skillInfo = new SkillInfo(_learningData.SkillId);
-				skillInfo.SetLearningState(LearningState.Learned);
-				recordActorInfo.Skills.Add(skillInfo);
-			}
-            if (actorInfo.Level > 1)
-            {
-                var statusInfo = recordActorInfo.LevelUp(actorInfo.Level-2);
-                actorInfo.TempStatus.SetParameter(
-                    statusInfo.Hp,
-                    statusInfo.Mp,
-                    statusInfo.Atk,
-                    statusInfo.Def,
-                    statusInfo.Spd
-                );
-                recordActorInfo.DecideStrength(0);
-            }
-			recordActorInfo.ChangeHp(actorInfo.CurrentHp);
-			recordActorInfo.ChangeMp(actorInfo.CurrentMp);
-			recordActorInfo.ChangeLost(actorInfo.Lost);
-            _actorsData.Add(recordActorInfo);
-        }
-    }
 
     public bool IsSameSymbol(SymbolResultInfo symbolResultInfo)
     {

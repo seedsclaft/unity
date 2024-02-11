@@ -38,6 +38,9 @@ public class PartyInfo
     private int _battleResultScore = 0;
     public int BattleResultScore => _battleResultScore;
 
+    private int _clearTroopCount;
+    public int ClearTroopCount => _clearTroopCount;
+
     private List<SymbolResultInfo> _symbolRecordList = new ();
     public List<SymbolResultInfo> SymbolRecordList => _symbolRecordList;
     public void SetSymbolResultInfo(SymbolResultInfo symbolResultInfo)
@@ -70,19 +73,24 @@ public class PartyInfo
         }
     }
 
+    public void InitActorInfos()
+    {
+        ClearActorInfos();
+        ClearActorIds();
+    }
+
     public void ClearActorInfos()
     {
         _actorInfos.Clear();
     }
 
     // アクター加入
-    public void AddActor(int actorId)
+    public void AddActorId(int actorId)
     {
         if (_actorIdList.IndexOf(actorId) != -1)
         {
             return;
         }
-        Debug.Log(actorId);
         _actorIdList.Add(actorId);
     }
 
@@ -96,7 +104,7 @@ public class PartyInfo
         _actorIdList.Remove(actorId);
     }
 
-    public void InitActorIds()
+    public void ClearActorIds()
     {
         _actorIdList.Clear();
     }

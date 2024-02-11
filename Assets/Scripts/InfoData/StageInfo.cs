@@ -91,74 +91,9 @@ public class StageInfo
         _symbolRecordList.Clear();
     }
 
-    public void MakeTurnSymbol()
+    public void SetSymbolInfos(List<SymbolInfo> symbolInfos)
     {
-        _currentSymbolInfos.Clear();
-        var symbols = Master.StageSymbols.FindAll(a => a.Seek == _currentTurn);
-        foreach (var symbol in symbols)
-        {
-            var symbolInfo = new SymbolInfo(symbol);
-            var getItemInfos = new List<GetItemInfo>();
-            if (symbol.BattleSymbol == 1){
-                if (symbol.Param1 > 0)
-                {
-                    symbolInfo.SetTroopInfo(BattleTroops(symbol.Param1,symbol.Param2));
-                }
-                
-                var prizeSets = DataSystem.PrizeSets.FindAll(a => a.Id == symbolInfo.TroopInfo.Master.PrizeSetId);
-                foreach (var prizeSet in prizeSets)
-                {
-                    var getItemInfo = new GetItemInfo(prizeSet.GetItem);
-                    getItemInfos.Add(getItemInfo);
-                }
-            } else
-            if (symbol.BossSymbol == 1){
-                if (symbol.Param1 > 0)
-                {
-                    symbolInfo.SetTroopInfo(BattleTroops(symbol.Param1,symbol.Param2));
-                }
-                var prizeSets = DataSystem.PrizeSets.FindAll(a => a.Id == symbolInfo.TroopInfo.Master.PrizeSetId);
-                foreach (var prizeSet in prizeSets)
-                {
-                    var getItemInfo = new GetItemInfo(prizeSet.GetItem);
-                    getItemInfos.Add(getItemInfo);
-                }
-            }
-            if (symbol.PrizeSetId > 0)
-            {
-                var prizeSets = DataSystem.PrizeSets.FindAll(a => a.Id == symbol.PrizeSetId);
-                foreach (var prizeSet in prizeSets)
-                {
-                    var getItemInfo = new GetItemInfo(prizeSet.GetItem);
-                    getItemInfos.Add(getItemInfo);
-                }
-            }
-            symbolInfo.MakeGetItemInfos(getItemInfos);
-            _currentSymbolInfos.Add(symbolInfo);
-        }
-    }
-
-    public void AddSelectActorId(int actorId)
-    {
-    }
-
-    public void ClearSelectActorId()
-    {
-    }
-
-    public TroopInfo BattleTroops(int troopId,int enemyCount)
-    {
-        var troopInfo = new TroopInfo(troopId,false);
-        troopInfo.MakeEnemyTroopDates(_troopClearCount);
-        for (int j = 0;j < enemyCount;j++)
-        {
-            int rand = new System.Random().Next(1, Master.RandomTroopCount);
-            var enemyData = DataSystem.Enemies.Find(a => a.Id == rand);
-            var enemy = new BattlerInfo(enemyData,_troopClearCount + 1,j,0,false);
-            troopInfo.AddEnemy(enemy);
-        }
-        troopInfo.MakeGetItemInfos();
-        return troopInfo;
+        _currentSymbolInfos = symbolInfos;
     }
 
     public void SetSeekIndex(int battleIndex)
@@ -180,7 +115,6 @@ public class StageInfo
     {
         return _currentSymbolInfos[_currentSeekIndex].BattlerInfos();
     }
-
     
     public void TestTroops(int troopId,int troopLv)
     {
@@ -204,7 +138,6 @@ public class StageInfo
     public void SeekStage()
     {
         _currentTurn++;
-        MakeTurnSymbol();
     }
 
     public void DeSeekStage()
@@ -216,22 +149,6 @@ public class StageInfo
     {
         _readEventKeys.Add(key);
     }
-
-    public void GainTroopClearCount(int value)
-    {
-        _troopClearCount += value;
-    }
-
-    public void AddClearTroopId(int troopId)
-    {
-        _clearTroopIds.Add(troopId);
-    }
-
-    public bool ClearedTroopId(int troopId)
-    {
-        return _clearTroopIds.Contains(troopId);
-    }
-
 
     public void SetRouteSelect(int routeSelect)
     {

@@ -438,10 +438,10 @@ public class BaseModel
     public void SetStageActor()
     {
         //　加入しているパーティを生成
-        PartyInfo.InitActorIds();
+        PartyInfo.ClearActorIds();
         foreach (var actorInfo in StageMembers())
         {
-            PartyInfo.AddActor(actorInfo.ActorId);
+            PartyInfo.AddActorId(actorInfo.ActorId);
         }
     }
 
@@ -457,14 +457,14 @@ public class BaseModel
         //　加入していないパーティを生成
         var selectActorIds = Actors().FindAll(a => !StageMembers().Contains(a));
         
-        PartyInfo.InitActorIds();
+        PartyInfo.ClearActorIds();
         foreach (var actorInfo in selectActorIds)
         {
             if (actorInfo.Lost == false)
             {
                 if (stageMembers.Find(a => a.Master.ClassId == actorInfo.Master.ClassId) == null)
                 {
-                    PartyInfo.AddActor(actorInfo.ActorId);
+                    PartyInfo.AddActorId(actorInfo.ActorId);
                 }
             }
         }
@@ -492,13 +492,76 @@ public class BaseModel
         CurrentSaveData.ChangeRouteSelectStage(stageId + route);
     }
 
+    public List<SymbolInfo> CurrentTurnSymbolInfos(int turns)
+    {
+        var symbolInfos = new List<SymbolInfo>();
+        var symbols = CurrentStage.Master.StageSymbols.FindAll(a => a.Seek == turns);
+        foreach (var symbol in symbols)
+        {
+            var symbolInfo = new SymbolInfo(symbol);
+            var getItemInfos = new List<GetItemInfo>();
+            if (symbol.BattleSymbol == 1){
+                if (symbol.Param1 > 0)
+                {
+                    symbolInfo.SetTroopInfo(BattleTroop(symbol.Param1,symbol.Param2));
+                }
+                
+                var prizeSets = DataSystem.PrizeSets.FindAll(a => a.Id == symbolInfo.TroopInfo.Master.PrizeSetId);
+                foreach (var prizeSet in prizeSets)
+                {
+                    var getItemInfo = new GetItemInfo(prizeSet.GetItem);
+                    getItemInfos.Add(getItemInfo);
+                }
+            } else
+            if (symbol.BossSymbol == 1){
+                if (symbol.Param1 > 0)
+                {
+                    symbolInfo.SetTroopInfo(BattleTroop(symbol.Param1,symbol.Param2));
+                }
+                var prizeSets = DataSystem.PrizeSets.FindAll(a => a.Id == symbolInfo.TroopInfo.Master.PrizeSetId);
+                foreach (var prizeSet in prizeSets)
+                {
+                    var getItemInfo = new GetItemInfo(prizeSet.GetItem);
+                    getItemInfos.Add(getItemInfo);
+                }
+            }
+            if (symbol.PrizeSetId > 0)
+            {
+                var prizeSets = DataSystem.PrizeSets.FindAll(a => a.Id == symbol.PrizeSetId);
+                foreach (var prizeSet in prizeSets)
+                {
+                    var getItemInfo = new GetItemInfo(prizeSet.GetItem);
+                    getItemInfos.Add(getItemInfo);
+                }
+            }
+            symbolInfo.MakeGetItemInfos(getItemInfos);
+            symbolInfos.Add(symbolInfo);
+        }
+        return symbolInfos;
+    }
+
+    public TroopInfo BattleTroop(int troopId,int enemyCount)
+    {
+        var troopInfo = new TroopInfo(troopId,false);
+        troopInfo.MakeEnemyTroopDates(PartyInfo.ClearTroopCount);
+        for (int i = 0;i < enemyCount;i++)
+        {
+            int rand = new System.Random().Next(1, CurrentStage.Master.RandomTroopCount);
+            var enemyData = DataSystem.Enemies.Find(a => a.Id == rand);
+            var enemy = new BattlerInfo(enemyData,PartyInfo.ClearTroopCount + 1,i,0,false);
+            troopInfo.AddEnemy(enemy);
+        }
+        troopInfo.MakeGetItemInfos();
+        return troopInfo;
+    }
+
     public void StartOpeningStage()
     {
         InitSaveStageInfo();
         CurrentSaveData.InitializeStageData(1);
         //CurrentStage.AddSelectActorId(1);
         PartyInfo.ChangeCurrency(DataSystem.System.InitCurrency);
-        CurrentStage.MakeTurnSymbol();
+        CurrentStage.SetSymbolInfos(CurrentTurnSymbolInfos(CurrentStage.CurrentTurn));
         MakeSymbolResultInfos();
         SavePlayerStageData(true);
     }
@@ -514,7 +577,8 @@ public class BaseModel
             {
                 actorInfos.Add(actorInfo);
             }
-            record.SetStartActorInfos(actorInfos);
+            record.SetActorInfos(actorInfos);
+            record.SetActorIdList(PartyInfo.ActorIdList);
             record.SetAlchemyIdList(PartyInfo.AlchemyIdList);
             CurrentStage.SetSymbolResultInfo(record);
         }
@@ -523,23 +587,13 @@ public class BaseModel
     public void StartSelectStage(int stageId)
     {
         CurrentSaveData.MakeStageData(stageId);
-        CurrentStage.ClearSelectActorId();
-        foreach (var actorId in PartyInfo.ActorIdList)
-        {
-            CurrentStage.AddSelectActorId(actorId);
-        }
-        CurrentStage.MakeTurnSymbol();
+        CurrentStage.SetSymbolInfos(CurrentTurnSymbolInfos(CurrentStage.CurrentTurn));
         SavePlayerStageData(true);
     }
 
     public void StartSymbolRecordStage(int stageId)
     {
         CurrentSaveData.MakeStageData(stageId);
-        CurrentStage.ClearSelectActorId();
-        foreach (var actorId in PartyInfo.ActorIdList)
-        {
-            CurrentStage.AddSelectActorId(actorId);
-        }
     }
 
     public async UniTask LoadBattleResources(List<BattlerInfo> battlers)
@@ -848,19 +902,19 @@ public class BaseModel
 
     public void ClearActorsData()
     {
-        CurrentSaveData.ClearActors();
+        PartyInfo.InitActorInfos();
         CurrentSaveData.InitAllActorMembers();
     }
 
     public void SetActorsData(int index)
     {
-        CurrentSaveData.ClearActors();
-        PartyInfo.InitActorIds();
+        PartyInfo.InitActorInfos();
+        PartyInfo.ClearActorIds();
         var slotData = CurrentData.PlayerInfo.SlotSaveList[index];
         var actorInfos = slotData.ActorInfos;
         foreach (var actorInfo in actorInfos)
         {
-            CurrentSaveData.AddActor(actorInfo.ActorId);
+            PartyInfo.AddActorId(actorInfo.ActorId);
         }
     }
 

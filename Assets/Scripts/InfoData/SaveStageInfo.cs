@@ -32,7 +32,7 @@ public class SaveStageInfo
 		var stageData = DataSystem.FindStage(stageId);
 		_currentStage = new StageInfo(stageData);
 		SetInitMembers();
-		AddActor(1);
+		_party.AddActorId(1);
 		stageAlcana = new AlcanaInfo();
 		stageAlcana.InitData();
 	}
@@ -46,8 +46,7 @@ public class SaveStageInfo
 	private void SetInitMembers()
 	{
         // Party初期化
-        _party.InitActorIds();
-		ClearActors();
+		_party.InitActorInfos();
 		var actorInfos = new List<ActorInfo>();
         foreach (var initMember in _currentStage.Master.InitMembers)
         {
@@ -61,34 +60,13 @@ public class SaveStageInfo
 		_party.SetActorInfos(actorInfos);
 	}
 
-    public void SetActorInfos(List<ActorInfo> actorInfos)
-    {
-        _party.SetActorInfos(actorInfos);
-    }
-
-    public void ClearActors()
-    {
-        _party.ClearActorInfos();
-    }
-
-	public void AddActor(int actorId)
-	{
-		_party.AddActor(actorId);
-	}
-	
-	public void UpdateActorInfo(ActorInfo actorInfo)
-	{
-		_party.UpdateActorInfo(actorInfo);
-	}
-
 	public void AddTestActor(ActorData actorData,int lvUpNum)
 	{
 		if (actorData != null)
 		{
 			var actorInfo = new ActorInfo(DataSystem.FindActor(actorData.Id));
 			_party.UpdateActorInfo(actorInfo);
-			_party.AddActor(actorInfo.ActorId);
-			_currentStage.AddSelectActorId(actorInfo.ActorId);
+			_party.AddActorId(actorInfo.ActorId);
 			for (int i = 0;i < actorInfo.Master.LearningSkills.Count;i++)
 			{
 				var _learningData = actorData.LearningSkills[i];
@@ -136,11 +114,5 @@ public class SaveStageInfo
 		var currentStage = new StageInfo(stageData);
 		currentStage.SetMoveStageData(current);
 		_currentStage = currentStage;
-	}
-
-	public void MakeCurrentStage(int stageId)
-	{
-		var stageData = DataSystem.FindStage(stageId);
-		_currentStage = new StageInfo(stageData);
 	}
 }

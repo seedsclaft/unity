@@ -80,7 +80,6 @@ public class StatusModel : BaseModel
 
     public void SelectAddActor()
     {
-        CurrentStage.AddSelectActorId(CurrentActor.ActorId);
         if (CurrentStage == null)
         {
             CurrentSaveData.SetResumeStage(true);

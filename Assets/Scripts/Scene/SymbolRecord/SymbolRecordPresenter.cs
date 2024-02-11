@@ -77,7 +77,7 @@ public class SymbolRecordPresenter : BasePresenter
     {
         _view.SetTurns(_model.RemainTurns);
         _view.SetNuminous(_model.Currency);
-        _view.SetSymbols(_model.Symbols(_view.SymbolListIndex));
+        _view.SetSymbols(_model.StageSymbolInfos(_view.SymbolListIndex));
         _view.SetTacticsCharaLayer(_model.SymbolActors(_view.SymbolListIndex));
     }
 
