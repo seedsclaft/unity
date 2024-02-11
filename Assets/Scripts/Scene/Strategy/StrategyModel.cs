@@ -364,9 +364,12 @@ public class StrategyModel : BaseModel
         PartyInfo.InitActorInfos();
         foreach (var actorInfo in TempData.TempRecordActors)
         {
-            PartyInfo.AddActorId(actorInfo.ActorId);
+			PartyInfo.UpdateActorInfo(actorInfo);
         }
-        TempData.ClearRecordActors();
+        foreach (var actorId in TempData.TempRecordActorIdList)
+        {
+            PartyInfo.AddActorId(actorId);
+        }
         
         PartyInfo.ClearAlchemy();
         foreach (var alchemyId in TempData.TempRecordAlchemyList)
@@ -389,7 +392,6 @@ public class StrategyModel : BaseModel
         {
             PartyInfo.RemoveActor(actorId);
         }
-        TempData.ClearRecordAlchemyList();
         
         // 後のレコードを書き換え
         var afterRecords = PartyInfo.SymbolRecordList.FindAll(a => a.StageId >= CurrentStage.Id && a.Seek > CurrentStage.CurrentTurn);
@@ -414,6 +416,9 @@ public class StrategyModel : BaseModel
             PartyInfo.SetSymbolResultInfo(symbolResultInfo);
         }
 
+        TempData.ClearRecordActors();
+        TempData.ClearRecordActorIdList();
+        TempData.ClearRecordAlchemyList();
         SavePlayerData();
         SavePlayerStageData(false);
     }

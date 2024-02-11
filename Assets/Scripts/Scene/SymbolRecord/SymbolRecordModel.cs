@@ -36,7 +36,7 @@ public class SymbolRecordModel : BaseModel
     public List<ActorInfo> SymbolActors(int seek)
     {
         var symbolRecord = PartyInfo.SymbolRecordList.Find(a => a.StageId == CurrentStage.Id && a.Selected == true && a.Seek == seek+1);
-        return symbolRecord.ActorInfos;
+        return symbolRecord.ActorInfos.FindAll(a => symbolRecord.ActorIdList.Contains(a.ActorId));
     }
 
     public List<int> SymbolAlchemyList(int seek)
@@ -79,6 +79,7 @@ public class SymbolRecordModel : BaseModel
         CurrentSaveData.MakeStageData(CurrentStage.Id);
         CurrentStage.SetRecordStage(true);
         TempData.SetRecordActors(PartyInfo.ActorInfos);
+        TempData.SetRecordActorIdList(PartyInfo.ActorIdList);
         TempData.SetRecordAlchemyList(PartyInfo.AlchemyIdList);
         
         PartyInfo.InitActorInfos();

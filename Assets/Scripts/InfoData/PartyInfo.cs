@@ -57,7 +57,6 @@ public class PartyInfo
 
     public void SetActorInfos(List<ActorInfo> actorInfos)
     {
-        _actorInfos.Clear();
         _actorInfos = actorInfos;
     }
 

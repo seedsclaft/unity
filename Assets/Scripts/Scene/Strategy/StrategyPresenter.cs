@@ -105,7 +105,6 @@ public class StrategyPresenter : BasePresenter
         } else{
             EndStrategy();
         }
-        _model.TempData.ClearTempGetItemInfos();
     }
 
     private void SeekStrategyState()
@@ -404,6 +403,7 @@ public class StrategyPresenter : BasePresenter
             _model.EndStrategy(true);
             _view.CommandSceneChange(Scene.Tactics);
         }
+        _model.TempData.ClearTempGetItemInfos();
     }
 
     private enum StrategyState{

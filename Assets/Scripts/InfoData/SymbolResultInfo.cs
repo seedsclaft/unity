@@ -44,11 +44,7 @@ public class SymbolResultInfo
     }
     public void SetAlchemyIdList(List<int> alchemyIdList)
     {
-        _alchemyIdList.Clear();
-        foreach (var alchemyId in alchemyIdList)
-        {
-            _alchemyIdList.Add(alchemyId);
-        }
+        _alchemyIdList = alchemyIdList;
     }
 
     public List<int> _actorIdList = new ();

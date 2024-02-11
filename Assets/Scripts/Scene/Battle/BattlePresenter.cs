@@ -74,7 +74,7 @@ public class BattlePresenter : BasePresenter
         _view.SetEnemies(_model.BattlerEnemies());
         _view.BattlerBattleClearSelect();
         _view.SetSideMenu(_model.SideMenu());
-        _view.StartBattleStartAnim(DataSystem.GetTextData(4).Text);
+        _view.StartBattleStartAnim(DataSystem.GetTextData(61).Text);
         await UniTask.WaitUntil(() => _view.StartAnimIsBusy == false);
 
         var isAbort = CheckAdvStageEvent(EventTiming.StartBattle,() => {

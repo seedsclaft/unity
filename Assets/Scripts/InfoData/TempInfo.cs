@@ -83,30 +83,8 @@ public class TempInfo
         var tempRecordActors = new List<ActorInfo>();
         foreach (var actorInfo in actorInfos)
         {
-            var recordActorInfo = new ActorInfo(actorInfo.Master);			
-            for (int i = 0;i < actorInfo.Master.LearningSkills.Count;i++)
-			{
-				var _learningData = actorInfo.Master.LearningSkills[i];
-				if (recordActorInfo.Skills.Find(a =>a.Id == _learningData.SkillId) != null) continue;
-				var skillInfo = new SkillInfo(_learningData.SkillId);
-				skillInfo.SetLearningState(LearningState.Learned);
-				recordActorInfo.Skills.Add(skillInfo);
-			}
-            if (actorInfo.Level > 1)
-            {
-                var statusInfo = recordActorInfo.LevelUp(actorInfo.Level-2);
-                actorInfo.TempStatus.SetParameter(
-                    statusInfo.Hp,
-                    statusInfo.Mp,
-                    statusInfo.Atk,
-                    statusInfo.Def,
-                    statusInfo.Spd
-                );
-                recordActorInfo.DecideStrength(0);
-            }
-			recordActorInfo.ChangeHp(actorInfo.CurrentHp);
-			recordActorInfo.ChangeMp(actorInfo.CurrentMp);
-			recordActorInfo.ChangeLost(actorInfo.Lost);
+            var recordActorInfo = new ActorInfo(actorInfo.Master);
+            recordActorInfo.CopyData(actorInfo);		
             tempRecordActors.Add(recordActorInfo);
         }
         _tempRecordActors = tempRecordActors;
@@ -114,6 +92,23 @@ public class TempInfo
     public void ClearRecordActors()
     {
         _tempRecordActors.Clear();
+    }
+
+    private List<int> _tempRecordActorIdList = new ();
+    public List<int> TempRecordActorIdList => _tempRecordActorIdList;
+    public void SetRecordActorIdList(List<int> actorIdList)
+    {
+        _tempRecordActorIdList.Clear();
+        var tempRecordActorIdList = new List<int>();
+        foreach (var actorId in actorIdList)
+        {	
+            tempRecordActorIdList.Add(actorId);
+        }
+        _tempRecordActorIdList = tempRecordActorIdList;
+    }
+    public void ClearRecordActorIdList()
+    {
+        _tempRecordActorIdList.Clear();
     }
 
     private List<int> _tempRecordAlchemyList = new ();

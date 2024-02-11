@@ -573,13 +573,23 @@ public class BaseModel
         {
             var record = new SymbolResultInfo(CurrentStage.Id,CurrentStage.CurrentTurn,i,GameSystem.CurrentStageData.Party.Currency);
             var actorInfos = new List<ActorInfo>();
-            foreach (var actorInfo in PartyInfo.CurrentActorInfos)
+            foreach (var actorInfo in PartyInfo.ActorInfos)
             {
                 actorInfos.Add(actorInfo);
             }
             record.SetActorInfos(actorInfos);
-            record.SetActorIdList(PartyInfo.ActorIdList);
-            record.SetAlchemyIdList(PartyInfo.AlchemyIdList);
+            var actorIdList = new List<int>();
+            foreach (var actorId in PartyInfo.ActorIdList)
+            {
+                actorIdList.Add(actorId);
+            }
+            record.SetActorIdList(actorIdList);
+            var alchemyIdList = new List<int>();
+            foreach (var alchemyId in PartyInfo.AlchemyIdList)
+            {
+                alchemyIdList.Add(alchemyId);
+            }
+            record.SetAlchemyIdList(alchemyIdList);
             CurrentStage.SetSymbolResultInfo(record);
         }
     }
