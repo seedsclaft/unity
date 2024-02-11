@@ -235,7 +235,7 @@ public class TacticsModel : BaseModel
         return skillInfos;
     }
 
-    public void SetAddActorInfos(int actorId)
+    public void SetTempAddActorStatusInfos(int actorId)
     {
         var actorInfos = PartyInfo.ActorInfos.FindAll(a => a.ActorId == actorId);
         TempData.SetTempStatusActorInfos(actorInfos);

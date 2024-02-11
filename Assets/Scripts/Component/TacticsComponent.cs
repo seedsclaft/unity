@@ -108,8 +108,8 @@ public class TacticsComponent : MonoBehaviour
 
         if (enemyInfoComponent != null)
         {
-            var enemyData = DataSystem.Enemies.Find(a => a.Id == actorInfo.NextBattleEnemyId);
-            enemyInfoComponent.UpdateData(enemyData);
+            //var enemyData = DataSystem.Enemies.Find(a => a.Id == actorInfo.NextBattleEnemyId);
+            //enemyInfoComponent.UpdateData(enemyData);
         }
 
         if (battlePositionToggles.Count > 0)

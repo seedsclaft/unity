@@ -69,6 +69,17 @@ public class SkillInfo
         _id = id;
         _learningState = LearningState.None;
     }
+
+    public void CopyData(SkillInfo skillInfo)
+    {
+        _id = skillInfo.Id;
+        _learningState = skillInfo.LearningState;
+        _learningTurns = skillInfo.LearningTurns;
+        _param1 = skillInfo.Param1;
+        _param2 = skillInfo.Param2;
+        _param3 = skillInfo.Param3;
+
+    }
     
     public void SetTriggerDates(List<SkillData.TriggerData> triggerDates)
     {

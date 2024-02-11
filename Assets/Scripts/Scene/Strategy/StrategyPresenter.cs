@@ -27,7 +27,7 @@ public class StrategyPresenter : BasePresenter
 
         _view.SetActors(_model.TempData.TempResultActorInfos);
         _view.SetResultList(_model.ResultCommand());
-        var bgm = await _model.GetBgmData(_model.TacticsBgmFilename());
+        var bgm = await _model.GetBgmData(_model.TacticsBgmKey());
         Ryneus.SoundManager.Instance.PlayBgm(bgm,1.0f,true);
         _view.SetEvent((type) => UpdateCommand(type));
 

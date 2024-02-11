@@ -75,6 +75,7 @@ public class BattlePresenter : BasePresenter
         _view.BattlerBattleClearSelect();
         _view.SetSideMenu(_model.SideMenu());
         _view.StartBattleStartAnim(DataSystem.GetTextData(61).Text);
+        _view.StartBattleAnimation();
         await UniTask.WaitUntil(() => _view.StartAnimIsBusy == false);
 
         var isAbort = CheckAdvStageEvent(EventTiming.StartBattle,() => {
@@ -182,7 +183,13 @@ public class BattlePresenter : BasePresenter
             await UniTask.DelayFrame(180);
             _view.SetBattleBusy(false);
             _model.TempData.SetTempResultActorInfos(_model.BattleMembers());
-            Ryneus.SoundManager.Instance.ChangeCrossFade();
+            if (Ryneus.SoundManager.Instance.CrossFadeMode)
+            {
+                Ryneus.SoundManager.Instance.ChangeCrossFade();
+            } else
+            {
+                PlayTacticsBgm();
+            }
             _view.CommandSceneChange(Scene.Strategy);
         }
     }
@@ -974,7 +981,14 @@ public class BattlePresenter : BasePresenter
         _view.SetBattleBusy(false);
         _model.TempData.SetTempGetItemInfos(_model.CurrentStage.CurrentSelectSymbol().GetItemInfos);
         _model.TempData.SetTempResultActorInfos(_model.BattleMembers());
-        Ryneus.SoundManager.Instance.ChangeCrossFade();
+        if (Ryneus.SoundManager.Instance.CrossFadeMode)
+        {
+            Ryneus.SoundManager.Instance.ChangeCrossFade();
+        } else
+        {
+            PlayTacticsBgm();
+        }
+
         _view.CommandSceneChange(Scene.Strategy);
     }
 

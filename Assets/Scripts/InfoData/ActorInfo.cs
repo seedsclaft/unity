@@ -78,14 +78,6 @@ public class ActorInfo
     public int TacticsCost => _tacticsCost;
     private int _tacticsCostRate = 1;
     public int TacticsCostRate => _tacticsCostRate;
-    private int _nextLearnSkillId = 0;
-    public int NextLearnSkillId => _nextLearnSkillId;
-    private int _nextLearnCost = 0;
-    public int NextLearnCost => _nextLearnCost;
-    private int _nextBattleEnemyIndex = -1;
-    public int NextBattleEnemyIndex => _nextBattleEnemyIndex;
-    private int _nextBattleEnemyId = -1;
-    public int NextBattleEnemyId => _nextBattleEnemyId;
 
     private bool _inBattle = false;
     public bool InBattle => _inBattle;
@@ -168,9 +160,10 @@ public class ActorInfo
             baseActorInfo.TempStatus.GetParameter(StatusParamType.Spd)
         );
         _skills.Clear();
-        foreach (var skillInfo in baseActorInfo.Skills)
+        foreach (var baseSkill in baseActorInfo.Skills)
         {
-            skillInfo.SetLearningState(LearningState.Learned);
+            var skillInfo = new SkillInfo(baseSkill.Id);
+            skillInfo.CopyData(baseSkill);
             _skills.Add(skillInfo);
         }
         _lastSelectSkillId = baseActorInfo.LastSelectSkillId;
@@ -182,14 +175,11 @@ public class ActorInfo
         _tacticsEnable = baseActorInfo._tacticsEnable;
         _tacticsCost = baseActorInfo.TacticsCost;
         _tacticsCostRate = baseActorInfo.TacticsCostRate;
-        _nextLearnSkillId = baseActorInfo.NextLearnSkillId;
-        _nextLearnCost = baseActorInfo.NextLearnCost;
-        _nextBattleEnemyIndex = baseActorInfo.NextBattleEnemyIndex;
-        _nextBattleEnemyId = baseActorInfo.NextBattleEnemyId;
         _inBattle = baseActorInfo.InBattle;
         _lost = baseActorInfo.Lost;
         _sp = baseActorInfo.Sp;
         _numinous = baseActorInfo.Numinous;
+        _equipmentSkillId = baseActorInfo.EquipmentSkillId;
     }
 
     private void SetInitialParameter(ActorData actorData)
@@ -354,10 +344,6 @@ public class ActorInfo
     {
         _tacticsCommandType = TacticsCommandType.None;
         _tacticsCost = 0;
-        _nextLearnSkillId = 0;
-        _nextLearnCost = 0;
-        _nextBattleEnemyIndex = -1;
-        _nextBattleEnemyId = 0;
     }
     
     public List<SkillInfo> SeekAlchemy()
@@ -375,17 +361,6 @@ public class ActorInfo
         return learnSkills.FindAll(a => a.LearningTurns == 0);
     }
 
-    public void SetNextLearnCost(int learningCost)
-    {
-        _nextLearnCost = learningCost;
-    }
-
-    public void SetNextBattleEnemyIndex(int enemyIndex,int enemyId)
-    {
-        _nextBattleEnemyIndex = enemyIndex;
-        _nextBattleEnemyId = enemyId;
-    }
-
     public void ChangeSp(int value)
     {
         _sp = value;
@@ -393,17 +368,6 @@ public class ActorInfo
 
     public int GrowthRate(StatusParamType statusParamType)
     {
-        /*
-        UseCost += (_plusStatus.GetParameter(statusParamType)+TempStatus.GetParameter(statusParamType)) / 5;
-        var _currentAlcana = GameSystem.CurrentData.CurrentAlcana;
-        if (_currentAlcana != null)
-        {
-            if (_currentAlcana.IsStatusCostDown(statusParamType))
-            {
-                UseCost += 20;
-            }
-        }
-        */
         return _upperRate.GetParameter(statusParamType) + ((_level-1) * 1);
     }
 

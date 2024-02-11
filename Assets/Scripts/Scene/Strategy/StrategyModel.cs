@@ -58,72 +58,62 @@ public class StrategyModel : BaseModel
     public void MakeResult()
     {
         var getItemInfos = TempData.TempGetItemInfos;
+        
+        foreach (var getItemInfo in getItemInfos)
+        {
+            switch (getItemInfo.GetItemType)
+            {
+                case GetItemType.Numinous:
+                    //PartyInfo.ChangeCurrency(Currency + getItemInfo.Param1);
+                    break;
+                case GetItemType.Skill:
+                    PartyInfo.AddAlchemy(getItemInfo.Param1);
+                    break;
+                case GetItemType.Regeneration:
+                    foreach (var stageMember in StageMembers())
+                    {
+                        if (stageMember.Lost == false)
+                        {
+                            stageMember.ChangeHp(stageMember.CurrentHp + getItemInfo.Param1);
+                            stageMember.ChangeMp(stageMember.CurrentMp + getItemInfo.Param1);
+                        }
+                    }
+                    break;
+                case GetItemType.Demigod:
+                    foreach (var stageMember in StageMembers())
+                    {
+                        if (stageMember.Lost == false)
+                        {
+                            stageMember.GainDemigod(getItemInfo.Param1);
+                        }
+                    }
+                    break;
+                case GetItemType.StatusUp:
+                    foreach (var stageMember in StageMembers())
+                    {
+                        if (stageMember.Lost == false)
+                        {
+                            stageMember.TempStatus.AddParameterAll(getItemInfo.Param1);
+                            stageMember.DecideStrength(0);
+                        }
+                    }
+                    break;
+                case GetItemType.AddActor:
+                    PartyInfo.AddActorId(getItemInfo.Param1);
+                    break;
+                case GetItemType.SaveHuman:
+                    var record = CurrentStage.SymbolRecordList.Find(a => a.IsSameSymbol(CurrentStage.Id,CurrentStage.CurrentTurn,CurrentSaveData.CurrentStage.CurrentSeekIndex));
+                    
+                    var rate = (float)PartyInfo.BattleResultScore * 0.01f;
+                    rate *= getItemInfo.Param1;
+                    getItemInfo.SetParam2((int)rate);
+                    getItemInfo.MakeTextData();
+                    record.SetBattleScore((int)rate);
+                    break;
+            }
+        }
         if (CurrentStage.RecordStage)
         {
-            // 魔法習熟度進行
-            /*
-            foreach (var actorInfo in StageMembers())
-            {
-                var learningSkills = actorInfo.SeekAlchemy();
-                foreach (var learningSkill in learningSkills)
-                {
-                    var getItemData = new GetItemData();
-                    getItemData.Type = GetItemType.LearnSkill;
-                    getItemData.Param1 = actorInfo.ActorId;
-                    getItemData.Param2 = learningSkill.Id;
-                    getItemInfos.Add(new GetItemInfo(getItemData));
-                }
-            }
-            */
-            foreach (var getItemInfo in getItemInfos)
-            {
-                switch (getItemInfo.GetItemType)
-                {
-                    case GetItemType.Numinous:
-                        //PartyInfo.ChangeCurrency(Currency + getItemInfo.Param1);
-                        break;
-                    case GetItemType.Skill:
-                        PartyInfo.AddAlchemy(getItemInfo.Param1);
-                        break;
-                    case GetItemType.Regeneration:
-                        foreach (var stageMember in StageMembers())
-                        {
-                            if (stageMember.Lost == false)
-                            {
-                                stageMember.ChangeHp(stageMember.CurrentHp + getItemInfo.Param1);
-                                stageMember.ChangeMp(stageMember.CurrentMp + getItemInfo.Param1);
-                            }
-                        }
-                        break;
-                    case GetItemType.Demigod:
-                        foreach (var stageMember in StageMembers())
-                        {
-                            if (stageMember.Lost == false)
-                            {
-                                stageMember.GainDemigod(getItemInfo.Param1);
-                            }
-                        }
-                        break;
-                    case GetItemType.StatusUp:
-                        foreach (var stageMember in StageMembers())
-                        {
-                            if (stageMember.Lost == false)
-                            {
-                                stageMember.TempStatus.AddParameterAll(getItemInfo.Param1);
-                                stageMember.DecideStrength(0);
-                            }
-                        }
-                        break;
-                    case GetItemType.AddActor:
-                        PartyInfo.AddActorId(getItemInfo.Param1);
-                        break;
-                    case GetItemType.SaveHuman:
-                        var record = CurrentStage.SymbolRecordList.Find(a => a.IsSameSymbol(CurrentStage.Id,CurrentStage.CurrentTurn,CurrentSaveData.CurrentStage.CurrentSeekIndex));
-                        record.SetBattleScore(PartyInfo.BattleResultScore);
-                        break;
-                }
-            }
-
             foreach (var actorInfo in TempData.TempRecordActors)
             {
                 // 強さ差分を適用
@@ -168,54 +158,6 @@ public class StrategyModel : BaseModel
                     getItemInfos.Add(new GetItemInfo(getItemData));
                 }
             }
-            foreach (var getItemInfo in getItemInfos)
-            {
-                switch (getItemInfo.GetItemType)
-                {
-                    case GetItemType.Numinous:
-                        PartyInfo.ChangeCurrency(Currency + getItemInfo.Param1);
-                        break;
-                    case GetItemType.Skill:
-                        PartyInfo.AddAlchemy(getItemInfo.Param1);
-                        break;
-                    case GetItemType.Regeneration:
-                        foreach (var stageMember in StageMembers())
-                        {
-                            if (stageMember.Lost == false)
-                            {
-                                stageMember.ChangeHp(stageMember.CurrentHp + getItemInfo.Param1);
-                                stageMember.ChangeMp(stageMember.CurrentMp + getItemInfo.Param1);
-                            }
-                        }
-                        break;
-                    case GetItemType.Demigod:
-                        foreach (var stageMember in StageMembers())
-                        {
-                            if (stageMember.Lost == false)
-                            {
-                                stageMember.GainDemigod(getItemInfo.Param1);
-                            }
-                        }
-                        break;
-                    case GetItemType.StatusUp:
-                        foreach (var stageMember in StageMembers())
-                        {
-                            if (stageMember.Lost == false)
-                            {
-                                stageMember.TempStatus.AddParameterAll(getItemInfo.Param1);
-                                stageMember.DecideStrength(0);
-                            }
-                        }
-                        break;
-                    case GetItemType.AddActor:
-                        PartyInfo.AddActorId(getItemInfo.Param1);
-                        break;
-                    case GetItemType.SaveHuman:
-                        var record = CurrentStage.SymbolRecordList.Find(a => a.IsSameSymbol(CurrentStage.Id,CurrentStage.CurrentTurn,CurrentSaveData.CurrentStage.CurrentSeekIndex));
-                        record.SetBattleScore(PartyInfo.BattleResultScore);
-                        break;
-                }
-            }
             _resultItemInfos = ListData.MakeListData(getItemInfos);
         }
     }
@@ -246,7 +188,6 @@ public class StrategyModel : BaseModel
     {
         foreach (var actorInfo in actorInfos)
         {
-            actorInfo.SetNextBattleEnemyIndex(-1,0);
             if (actorInfo.InBattle == true)
             {
                 actorInfo.SetInBattle(false);
@@ -391,6 +332,17 @@ public class StrategyModel : BaseModel
         foreach (var actorId in removeActorIdList)
         {
             PartyInfo.RemoveActor(actorId);
+        }
+        // 装備中の魔法を解除
+        foreach (var actorInfo1 in PartyInfo.ActorInfos)
+        {
+            if (actorInfo1.EquipmentSkillId != 0)
+            {
+                if (!PartyInfo.AlchemyIdList.Contains(actorInfo1.EquipmentSkillId))
+                {
+                    actorInfo1.RemoveEquipSkill();
+                }
+            }
         }
         
         // 後のレコードを書き換え

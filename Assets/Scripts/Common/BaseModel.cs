@@ -48,9 +48,10 @@ public class BaseModel
 
     public void LostActors(List<ActorInfo> lostMembers)
     {
+        lostMembers.ForEach(a => a.ChangeLost(false));
+        return;
         if (StageAlcana != null && StageAlcana.CheckNoBattleLost())
         {
-            lostMembers.ForEach(a => a.ChangeLost(false));
             return;
         }
         lostMembers.ForEach(a => a.ChangeLost(true));
@@ -69,17 +70,7 @@ public class BaseModel
 
     public List<ActorInfo> PartyMembers()
     {
-        var PartyMembersIds = PartyInfo.ActorIdList;
-        var members = new List<ActorInfo>();
-        for (int i = 0;i < PartyMembersIds.Count ;i++)
-        {
-            var temp = Actors().Find(a => a.ActorId == PartyMembersIds[i]);
-            if (temp != null)
-            {
-                members.Add(temp);
-            }
-        }
-        return members;
+        return PartyInfo.CurrentActorInfos;
     }
 
     public List<ActorInfo> ResultMembers()
@@ -101,8 +92,13 @@ public class BaseModel
         return TempData.TempStatusActorInfos;
     }
 
-    public string TacticsBgmFilename()
+    public string TacticsBgmKey()
     {
+        if (CurrentStage != null)
+        {
+            var bgmData = DataSystem.Data.GetBGM(CurrentStage.Master.BGMId);
+            return bgmData.Key;
+        }
         return "TACTICS1";
     }
 
@@ -598,6 +594,7 @@ public class BaseModel
     {
         CurrentSaveData.MakeStageData(stageId);
         CurrentStage.SetSymbolInfos(CurrentTurnSymbolInfos(CurrentStage.CurrentTurn));
+        MakeSymbolResultInfos();
         SavePlayerStageData(true);
     }
 

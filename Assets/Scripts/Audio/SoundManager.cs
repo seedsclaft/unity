@@ -23,7 +23,9 @@ namespace Ryneus
         private int _mainTrack = 0;
         public IntroLoopAudio BgmSubTrack => _bgmTracks[_subTrack];
         private int _subTrack = 1;
-
+        
+        private bool _crossFadeMode = false;
+        public bool CrossFadeMode => _crossFadeMode;
         private int _crossFadeTrackNo = 0;
 
         private string _lastPlayAudio = "";
@@ -131,6 +133,7 @@ namespace Ryneus
             UpdateBgmMute();
             BgmTrack.Play();
             _lastPlayAudio = clip[0].name;
+            _crossFadeMode = false;
         }
 
         public void PlayCrossFadeBgm(List<AudioClip> clip, float volume = 1.0f)
@@ -147,6 +150,7 @@ namespace Ryneus
             BgmSubTrack.Stop();
             BgmSubTrack.SetSoloClip(clip[1]);
             _crossFadeTrackNo = 0;
+            _crossFadeMode = true;
         }
 
         public void ChangeCrossFade(float volume = 1.0f)

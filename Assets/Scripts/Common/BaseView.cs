@@ -339,6 +339,7 @@ abstract public class BaseView : MonoBehaviour
     {
 
     }
+
 }
 
 namespace Base

@@ -32,6 +32,7 @@ public class TacticsUtility
         }
         return level * TacticsCostRate(actorInfo);
     }
+
     public static int AlchemyTurns(ActorInfo actorInfo,AttributeType attributeType,List<ActorInfo> stageMembers)
     {
         int turns = 1;
@@ -76,7 +77,7 @@ public class TacticsUtility
                 return 0;
             }
         }
-        return actorInfo.Level * TacticsCostRate(actorInfo);
+        return (int)Mathf.Ceil((float)actorInfo.Level * 0.1f) * TacticsCostRate(actorInfo);
     }
 
     public static int RemainRecoveryCost(ActorInfo actorInfo,bool checkAlcana = false)

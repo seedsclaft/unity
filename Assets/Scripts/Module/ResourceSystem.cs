@@ -15,6 +15,8 @@ public class ResourceSystem : MonoBehaviour
     private static GameObject _lastScene = null;
     private static List<Object> _lastLoadAssets = new List<Object>();
 
+    private static string _bgmPath = "Audios/BGM/";
+
     public static void ReleaseScene()
     {
         if (_lastScene != null)
@@ -45,15 +47,15 @@ public class ResourceSystem : MonoBehaviour
         var data = new List<string>();
         if (bGMData.CrossFade != null && bGMData.CrossFade != "")
         {
-            data.Add("Audios/BGM/" + bGMData.FileName + "");
-            data.Add("Audios/BGM/" + DataSystem.Data.GetBGM(bGMData.CrossFade).FileName + "");
+            data.Add(_bgmPath + bGMData.FileName + "");
+            data.Add(_bgmPath + DataSystem.Data.GetBGM(bGMData.CrossFade).FileName + "");
         } else
         if (bGMData.Loop)
         {
-            data.Add("Audios/BGM/" + bGMData.FileName + "_intro");
-            data.Add("Audios/BGM/" + bGMData.FileName + "_loop");
+            data.Add(_bgmPath + bGMData.FileName + "_intro");
+            data.Add(_bgmPath + bGMData.FileName + "_loop");
         } else{
-            data.Add("Audios/BGM/" + bGMData.FileName + "");
+            data.Add(_bgmPath + bGMData.FileName + "");
         }
         AudioClip result1 = null;
         AudioClip result2 = null;

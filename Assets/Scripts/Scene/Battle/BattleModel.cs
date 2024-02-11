@@ -2236,19 +2236,23 @@ public class BattleModel : BaseModel
         if (isVictory)
         {
             PartyInfo.SetBattleResultVictory(true);
-            var score = 0;
+            float score = 100;
+            float damageAll = 0;
+            float healAll = 0;
+            float damagedAll = 0;
             foreach (var battleRecord in _battleRecords)
             {
                 if (battleRecord.BattlerIndex < 100)
                 {
-                    score += battleRecord.DamageValue;
-                    score += battleRecord.HealValue;
-                    score -= battleRecord.DamagedValue;
+                    damageAll += battleRecord.DamageValue;
+                    healAll += battleRecord.HealValue;
+                    damagedAll += battleRecord.DamagedValue;
                 }
             }
-            score = Math.Min(score,50);
+            var scoreRate = 1f - ((damagedAll-(healAll/2)) / (damageAll+damagedAll));
+            score *= scoreRate;
             score = Math.Max(0,score);
-            PartyInfo.SetBattleScore(50 + score);
+            PartyInfo.SetBattleScore((int)score);
         }
         return isVictory;
     }

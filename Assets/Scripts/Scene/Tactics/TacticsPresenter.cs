@@ -90,8 +90,7 @@ public class TacticsPresenter :BasePresenter
                     selectAddActor.SetSelectIndex(0);
                     _view.CommandCallConfirm(selectAddActor);
                     _view.ChangeUIActive(false);
-                    var bgm = await _model.GetBgmData(_model.TacticsBgmFilename());
-                    Ryneus.SoundManager.Instance.PlayBgm(bgm,1.0f,true);
+                    PlayTacticsBgm();
                     
                     break;
                 case StageEventType.SaveCommand:
@@ -210,22 +209,22 @@ public class TacticsPresenter :BasePresenter
         _view.SetEvent((type) => UpdateCommand(type));
         _view.SetSideMenu(_model.SideMenu());
         _view.SetSelectCharacter(_model.TacticsCharacterData(),_model.NoChoiceConfirmCommand());
-        _view.SetTacticsCharaLayer(_model.StageMembers());
+        
         _view.SetStageInfo(_model.CurrentStage);
         _view.SetSymbols(ListData.MakeListData(_model.TacticsSymbols()));
 
         _view.SetTacticsCommand(_model.TacticsCommand());
         _view.HideCommandList();
         CommandRefresh();
+        PlayTacticsBgm();
         //_view.SetHelpInputInfo(_model.TacticsCommandInputInfo());
-        var bgm = await _model.GetBgmData(_model.TacticsBgmFilename());
-        Ryneus.SoundManager.Instance.PlayCrossFadeBgm(bgm,1.0f);
         _view.ShowCommandList();
         if (_model.SetStageTutorials(EventTiming.StartTactics))
         {
             _view.CommandCallTutorialFocus(_model.CurrentStageTutorialDates[0]);
         }
     }
+
 
     private void UpdateCommand(TacticsViewEvent viewEvent)
     {
@@ -803,8 +802,16 @@ public class TacticsPresenter :BasePresenter
             Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
             _model.SetInBattle(true);
             _model.SaveTempBattleMembers();
+            _model.SetStatusActorInfos();
             _view.CommandChangeViewToTransition(null);
-            Ryneus.SoundManager.Instance.ChangeCrossFade();
+            var bgmData = DataSystem.Data.GetBGM(_model.TacticsBgmKey());
+            if (bgmData.CrossFade != "" && Ryneus.SoundManager.Instance.CrossFadeMode)
+            {
+                Ryneus.SoundManager.Instance.ChangeCrossFade();
+            } else
+            {
+                PlayTacticsBgm();
+            }
             _view.CommandSceneChange(Scene.Battle);
         } else{
             Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cancel);
@@ -837,7 +844,7 @@ public class TacticsPresenter :BasePresenter
         _view.SetNuminous(_model.Currency);
         _view.SetStageInfo(_model.CurrentStage);
         _view.SetAlcanaInfo(_model.StageAlcana);
-        
+        _view.SetTacticsCharaLayer(_model.StageMembers());
         _view.CommandRefresh();
                 
     }
@@ -863,7 +870,7 @@ public class TacticsPresenter :BasePresenter
                 CommandPopupSkillInfo(symbolInfo.GetItemInfos[0]);
                 break;
             case SymbolType.Actor:
-                _model.SetAddActorInfos(symbolInfo.GetItemInfos[0].Param1);
+                _model.SetTempAddActorStatusInfos(symbolInfo.GetItemInfos[0].Param1);
                 var statusViewInfo = new StatusViewInfo(() => {
                     _view.CommandStatusClose();
                     _view.ChangeUIActive(true);

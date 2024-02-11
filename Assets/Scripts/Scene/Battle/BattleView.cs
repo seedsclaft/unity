@@ -140,6 +140,26 @@ public class BattleView : BaseView ,IInputHandlerEvent
         _battleStartAnim.StartAnim();
     }
 
+    public void StartBattleAnimation()
+    {
+        var duration = 0.8f;
+        var actorListRect = battleActorList.GetComponent<RectTransform>();
+        AnimationUtility.LocalMoveToTransform(battleActorList.gameObject,
+            new Vector3(actorListRect.localPosition.x - 240,actorListRect.localPosition.y,0),
+            new Vector3(actorListRect.localPosition.x,actorListRect.localPosition.y,0),
+            duration);
+        var enemyListRect = battleEnemyLayer.GetComponent<RectTransform>();
+        AnimationUtility.LocalMoveToTransform(enemyListRect.gameObject,
+            new Vector3(enemyListRect.localPosition.x + 240,enemyListRect.localPosition.y,0),
+            new Vector3(enemyListRect.localPosition.x,enemyListRect.localPosition.y,0),
+            duration);
+        var borderRect = battleGridLayer.GetComponent<RectTransform>();
+        AnimationUtility.LocalMoveToTransform(borderRect.gameObject,
+            new Vector3(borderRect.localPosition.x,borderRect.localPosition.y + 400,0),
+            new Vector3(borderRect.localPosition.x,borderRect.localPosition.y,0),
+            duration);
+    }
+
     public void SetUIButton()
     {
         SetBackCommand(() => OnClickBack());
