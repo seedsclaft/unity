@@ -284,32 +284,6 @@ public class ActorInfo
         _skills.Add(skillInfo);
     }
 
-    public void EquipSkill(SkillInfo skillInfo)
-    {
-        _equipmentSkillId = skillInfo.Id;
-        skillInfo.SetLearningState(LearningState.Equipment);
-        _skills.Add(skillInfo);
-    }
-
-    public int EquipmentSkillTurns()
-    {
-        if (_equipmentSkillId > 0)
-        {
-            return Skills.Find(a => a.Id == _equipmentSkillId).LearningTurns;
-        }
-        return -1;
-    }
-
-    public void RemoveEquipSkill()
-    {
-        int skillIdx = _skills.FindIndex(a => a.Id == _equipmentSkillId);
-        if (skillIdx > 0)
-        {
-            _skills.RemoveAt(skillIdx);
-        }
-        _equipmentSkillId = 0;
-    }
-
     public void ForgetSkill(SkillInfo skillInfo)
     {
         int skillIdx = _skills.FindIndex(a => a == skillInfo);
@@ -346,20 +320,6 @@ public class ActorInfo
         _tacticsCost = 0;
     }
     
-    public List<SkillInfo> SeekAlchemy()
-    {
-        var learnSkills = Skills.FindAll(a => a.LearningState == LearningState.Equipment);
-        foreach (var learnSkill in learnSkills)
-        {
-            learnSkill.SeekAlchemy();
-            if (learnSkill.LearningTurns == 0)
-            {
-                learnSkill.SetLearningState(LearningState.Learned);
-                _equipmentSkillId = 0;
-            }
-        }
-        return learnSkills.FindAll(a => a.LearningTurns == 0);
-    }
 
     public void ChangeSp(int value)
     {
@@ -386,6 +346,11 @@ public class ActorInfo
             CurrentParameter(StatusParamType.Def),
             CurrentParameter(StatusParamType.Spd)
         );
+        var plusHp = (int)Math.Round(_tempStatus.GetParameter(StatusParamType.Hp) * 0.01f);
+        if (plusHp > 0)
+        {
+            ChangeHp(_currentHp + plusHp);
+        }
         ClearStrength();
         _numinous += useNuminous;
     }

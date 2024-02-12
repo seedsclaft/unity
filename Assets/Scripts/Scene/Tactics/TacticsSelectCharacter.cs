@@ -146,6 +146,14 @@ public class TacticsSelectCharacter : MonoBehaviour
     public void SetInputHandlerCharacter(InputKeyType keyType,System.Action callEvent)
     {
         characterList.SetInputHandler(keyType,callEvent);
+        if (keyType == InputKeyType.Decide)
+        {
+            for (int i = 0; i < characterList.ItemPrefabList.Count;i++)
+            {
+                var tacticsTrain = characterList.ItemPrefabList[i].GetComponent<TacticsTrain>();
+                tacticsTrain.SetToggleHandler(() => callEvent());
+            }
+        }
 #if UNITY_ANDROID
         // Androidはトグルで決定、リストで選択にする
         if (keyType == InputKeyType.Decide)

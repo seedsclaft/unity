@@ -42,9 +42,13 @@ public class BattlePresenter : BasePresenter
     {
         _view.SetBattleBusy(true);
         _model.CreateBattleData();
+        _view.SetHelpText("");
         await _model.LoadBattleResources(_model.Battlers);
-        //var bgm = await _model.GetBattleBgm();
-        //Ryneus.SoundManager.Instance.PlayBgm(bgm,1.0f,true);
+        if (Ryneus.SoundManager.Instance.CrossFadeMode == false)
+        {
+            var bgm = await _model.GetBattleBgm();
+            Ryneus.SoundManager.Instance.PlayBgm(bgm,1.0f,true);
+        }
         _view.CommandLoadingClose();
 
         _view.ClearCurrentSkillData();
@@ -562,7 +566,7 @@ public class BattlePresenter : BasePresenter
         _view.StartAnimationDemigod(_model.CurrentBattler,_model.CurrentActionInfo().Master);
         _view.HideStateOverlay();
         _view.SetAnimationBusy(true);
-        await UniTask.DelayFrame(90);
+        await UniTask.DelayFrame(110);
         StartAnimationSkill();
     }
 
@@ -975,11 +979,12 @@ public class BattlePresenter : BasePresenter
             _view.StartBattleStartAnim(DataSystem.GetTextData(15030).Text);            
         }
         _model.EndBattle();
+        _model.MakeBattleScore();
         _battleEnded = true;
         _view.HideStateOverlay();
         await UniTask.DelayFrame(180);
         _view.SetBattleBusy(false);
-        _model.TempData.SetTempGetItemInfos(_model.CurrentStage.CurrentSelectSymbol().GetItemInfos);
+        _model.TempData.SetTempGetItemInfos(_model.MakeBattlerResult());
         _model.TempData.SetTempResultActorInfos(_model.BattleMembers());
         if (Ryneus.SoundManager.Instance.CrossFadeMode)
         {

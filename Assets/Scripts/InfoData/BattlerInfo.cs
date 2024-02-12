@@ -795,12 +795,12 @@ public class BattlerInfo
 
     public List<SkillInfo> ActiveSkills()
     {
-        return Skills.FindAll(a => a.Master.SkillType != SkillType.Passive);
+        return _skills.FindAll(a => a.Master.SkillType != SkillType.Passive);
     }
 
     public List<SkillInfo> PassiveSkills()
     {
-        return Skills.FindAll(a => a.Master.SkillType == SkillType.Passive);
+        return _skills.FindAll(a => a.Master.SkillType == SkillType.Passive);
     }
 
     public List<StateInfo> IconStateInfos()

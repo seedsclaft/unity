@@ -33,39 +33,39 @@ public class TacticsUtility
         return level * TacticsCostRate(actorInfo);
     }
 
-    public static int AlchemyTurns(ActorInfo actorInfo,AttributeType attributeType,List<ActorInfo> stageMembers)
+    public static int LearningMagicCost(ActorInfo actorInfo,AttributeType attributeType,List<ActorInfo> stageMembers)
     {
-        int turns = 1;
+        int cost = 2;
         var param = actorInfo.AttributeRanks(stageMembers)[(int)attributeType-1];
         switch (param)
         {
             case AttributeRank.S:
-                turns = 1;
+                cost = 1;
                 break;
             case AttributeRank.A:
-                turns = 2;
+                cost = 2;
                 break;
             case AttributeRank.B:
-                turns = 3;
+                cost = 4;
                 break;
             case AttributeRank.C:
-                turns = 4;
+                cost = 6;
                 break;
             case AttributeRank.D:
-                turns = 6;
+                cost = 8;
                 break;
             case AttributeRank.E:
-                turns = 8;
+                cost = 12;
                 break;
             case AttributeRank.F:
-                turns = 12;
+                cost = 16;
                 break;
             case AttributeRank.G:
-                turns = 16;
+                cost = 24;
                 break;
         }
         
-        return Mathf.FloorToInt(turns * TacticsCostRate(actorInfo));
+        return Mathf.FloorToInt(cost * TacticsCostRate(actorInfo));
     }
 
     public static int RecoveryCost(ActorInfo actorInfo,bool checkAlcana = false)

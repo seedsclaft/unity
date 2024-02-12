@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using System;
 
 public class StrengthComponent : MonoBehaviour
 {
@@ -26,8 +27,9 @@ public class StrengthComponent : MonoBehaviour
         }
         if (afterStatus != null)
         {
-            afterStatus.gameObject.SetActive(_actorInfo.TempStatus.GetParameter((StatusParamType)statusParamType) > 0);
-            afterStatus.text = (_actorInfo.CurrentStatus.GetParameter((StatusParamType)statusParamType) + _actorInfo.TempStatus.GetParameter((StatusParamType)statusParamType)).ToString();
+            var plus = Math.Round(_actorInfo.TempStatus.GetParameter((StatusParamType)statusParamType) * 0.01f);
+            afterStatus.gameObject.SetActive(plus > 0);
+            afterStatus.text = (_actorInfo.CurrentStatus.GetParameter((StatusParamType)statusParamType) + plus).ToString();
         }
         if (usePoint != null)
         {

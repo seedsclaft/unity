@@ -29,11 +29,12 @@ public class SkillInfo
     {
         _learningState = learningState;
     }
-    private int _learningTurns = 0;
-    public int LearningTurns => _learningTurns;
-    public void SetLearningTurns(int learningTurns)
+
+    private int _learningCost = 0;
+    public int LearningCost => _learningCost;
+    public void SetLearningCost(int cost)
     {
-        _learningTurns = learningTurns;
+        _learningCost = cost;
     }
 
     private List<SkillData.TriggerData> _triggerDates = new();
@@ -74,7 +75,6 @@ public class SkillInfo
     {
         _id = skillInfo.Id;
         _learningState = skillInfo.LearningState;
-        _learningTurns = skillInfo.LearningTurns;
         _param1 = skillInfo.Param1;
         _param2 = skillInfo.Param2;
         _param3 = skillInfo.Param3;
@@ -98,8 +98,4 @@ public class SkillInfo
         return Master.FeatureDates.Find(a => a.FeatureType == FeatureType.AddState && (StateType)a.Param1 == StateType.Wait) != null;
     }
 
-    public void SeekAlchemy()
-    {
-        _learningTurns--;
-    }
 }

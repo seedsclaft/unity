@@ -6,7 +6,6 @@ using TMPro;
 
 public class TacticsComponent : MonoBehaviour
 {    
-    private ActorInfo _actorInfo = null;
     [SerializeField] private ActorInfoComponent actorInfoComponent;
 
     [SerializeField] private Toggle checkToggle;
@@ -37,7 +36,6 @@ public class TacticsComponent : MonoBehaviour
         viewObjects.ForEach(a => a.SetActive(false));
         UpdateViewObjects(tacticsCommandType);
 
-        _actorInfo = actorInfo;
         var currentTacticsCommandType = actorInfo.TacticsCommandType;
         if (actorInfoComponent != null)
         {
@@ -46,9 +44,9 @@ public class TacticsComponent : MonoBehaviour
         
         if (checkToggle != null)
         {
-            if (tacticsCommandType == TacticsCommandType.Alchemy)
+            if (tacticsCommandType == TacticsCommandType.Paradigm)
             {
-                checkToggle.SetIsOnWithoutNotify(actorInfo.EquipmentSkillId != 0);
+                checkToggle.SetIsOnWithoutNotify(actorInfo.InBattle);
             } else
             {
                 checkToggle.SetIsOnWithoutNotify(actorInfo.TacticsCommandType == tacticsCommandType);
@@ -82,15 +80,7 @@ public class TacticsComponent : MonoBehaviour
 
         if (attributeLearnCost != null)
         {
-            var learningTurns = actorInfo.EquipmentSkillTurns();
-            attributeLearnCost.gameObject.SetActive(learningTurns > 0);
-            if (learningTurns > 0)
-            {
-                attributeLearnCost.text = learningTurns.ToString();
-            } else
-            {
-                attributeLearnCost.text = "";
-            }
+            attributeLearnCost.SetText("");
         }
         
         if (statusInfoComponent != null)
@@ -133,6 +123,8 @@ public class TacticsComponent : MonoBehaviour
                 busyText.text = textData.Text + subtextData.Text;
             }
         }
+
+        checkToggle.gameObject.SetActive(tacticsCommandType == TacticsCommandType.Paradigm);
     }
 
     public void SetToggleHandler(System.Action<int> handler){

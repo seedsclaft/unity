@@ -32,13 +32,13 @@ public class StrategyModel : BaseModel
     public void SetLvUp()
     {
         if (_levelUpData.Count > 0) return;
-        var lvUpActorInfos = TacticsActors().FindAll(a => a.TacticsCommandType == TacticsCommandType.Train);
+        if (CurrentStage.RecordStage) return;
+        //var lvUpActorInfos = TacticsActors().FindAll(a => a.TacticsCommandType == TacticsCommandType.Train);
         var lvUpList = new List<ActorInfo>();
         // 結果出力
-        foreach (var lvUpActorInfo in lvUpActorInfos)
+        foreach (var lvUpActorInfo in BattleResultActors())
         {
-            var levelBonus = 0;
-            var statusInfo = lvUpActorInfo.LevelUp(levelBonus);
+            var statusInfo = lvUpActorInfo.LevelUp(0);
             lvUpActorInfo.TempStatus.SetParameter(
                 statusInfo.Hp,
                 statusInfo.Mp,
@@ -47,10 +47,6 @@ public class StrategyModel : BaseModel
                 statusInfo.Spd
             );
             lvUpList.Add(lvUpActorInfo);
-            if (levelBonus > 0)
-            {
-                _levelUpBonusActorIds.Add(lvUpActorInfo.ActorId);
-            }
         }
         _levelUpData = lvUpList;
     }
@@ -104,7 +100,7 @@ public class StrategyModel : BaseModel
                 case GetItemType.SaveHuman:
                     var record = CurrentStage.SymbolRecordList.Find(a => a.IsSameSymbol(CurrentStage.Id,CurrentStage.CurrentTurn,CurrentSaveData.CurrentStage.CurrentSeekIndex));
                     
-                    var rate = (float)PartyInfo.BattleResultScore * 0.01f;
+                    var rate = PartyInfo.BattleResultScore * 0.01f;
                     rate *= getItemInfo.Param1;
                     getItemInfo.SetParam2((int)rate);
                     getItemInfo.MakeTextData();
@@ -145,19 +141,6 @@ public class StrategyModel : BaseModel
             _resultItemInfos = ListData.MakeListData(getItemInfos);
         } else
         {
-            // 魔法習熟度進行
-            foreach (var actorInfo in StageMembers())
-            {
-                var learningSkills = actorInfo.SeekAlchemy();
-                foreach (var learningSkill in learningSkills)
-                {
-                    var getItemData = new GetItemData();
-                    getItemData.Type = GetItemType.LearnSkill;
-                    getItemData.Param1 = actorInfo.ActorId;
-                    getItemData.Param2 = learningSkill.Id;
-                    getItemInfos.Add(new GetItemInfo(getItemData));
-                }
-            }
             _resultItemInfos = ListData.MakeListData(getItemInfos);
         }
     }
@@ -332,17 +315,6 @@ public class StrategyModel : BaseModel
         foreach (var actorId in removeActorIdList)
         {
             PartyInfo.RemoveActor(actorId);
-        }
-        // 装備中の魔法を解除
-        foreach (var actorInfo1 in PartyInfo.ActorInfos)
-        {
-            if (actorInfo1.EquipmentSkillId != 0)
-            {
-                if (!PartyInfo.AlchemyIdList.Contains(actorInfo1.EquipmentSkillId))
-                {
-                    actorInfo1.RemoveEquipSkill();
-                }
-            }
         }
         
         // 後のレコードを書き換え

@@ -38,8 +38,7 @@ public class BattleModel : BaseModel
 
     public UniTask<List<UnityEngine.AudioClip>> GetBattleBgm()
     {
-        var battleMembers = PartyMembers();
-        return GetBgmData("BATTLE" + (battleMembers[0].Master.ClassId).ToString());
+        return GetBgmData("TACTICS2");
     }
 
     public void CreateBattleData()
@@ -70,7 +69,7 @@ public class BattleModel : BaseModel
         {
             var baseEnemy = enemies[i];
             baseEnemy.ResetData();
-            //baseEnemy.GainHp(-9999);
+            baseEnemy.GainHp(-9999);
             _battlers.Add(baseEnemy);
             var battlerRecord = new BattleRecord(baseEnemy.Index);
             _battleRecords.Add(battlerRecord);
@@ -2233,7 +2232,12 @@ public class BattleModel : BaseModel
     public bool CheckVictory()
     {
         bool isVictory = _troop.BattlerInfos.Find(a => a.IsAlive()) == null;
-        if (isVictory)
+        return isVictory;
+    }
+
+    public void MakeBattleScore()
+    {
+        if (CheckVictory())
         {
             PartyInfo.SetBattleResultVictory(true);
             float score = 100;
@@ -2249,12 +2253,32 @@ public class BattleModel : BaseModel
                     damagedAll += battleRecord.DamagedValue;
                 }
             }
-            var scoreRate = 1f - ((damagedAll-(healAll/2)) / (damageAll+damagedAll));
-            score *= scoreRate;
-            score = Math.Max(0,score);
-            PartyInfo.SetBattleScore((int)score);
+            if (damageAll == 0 && damagedAll == 0)
+            {
+                PartyInfo.SetBattleScore((int)score);
+            } else
+            {
+                var scoreRate = 1f - ((damagedAll-(healAll/2)) / (damageAll+damagedAll));
+                score *= scoreRate;
+                score = Math.Max(0,score);
+                score = Math.Min(100,score);
+                PartyInfo.SetBattleScore((int)score);
+            }
         }
-        return isVictory;
+    }
+
+    public List<GetItemInfo> MakeBattlerResult()
+    {
+        var list = new List<GetItemInfo>();
+        list.AddRange(CurrentStage.CurrentSelectSymbol().GetItemInfos);
+        if (CheckVictory() && CurrentStage.RecordStage == false)
+        {
+            foreach (var battlerInfo in _party.BattlerInfos)
+            {
+                
+            }
+        }
+        return list;
     }
 
     public bool CheckDefeat()

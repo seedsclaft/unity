@@ -24,6 +24,8 @@ public class BattleView : BaseView ,IInputHandlerEvent
     [SerializeField] private GameObject centerAnimPosition = null;
     [SerializeField] private SideMenu battleAutoButton = null;
     [SerializeField] private BattleCutinAnimation battleCutinAnimation = null;
+    [SerializeField] private BattleBackGroundAnimation backGroundAnimation = null;
+    
     private BattleStartAnim _battleStartAnim = null;
     public bool StartAnimIsBusy => _battleStartAnim.IsBusy;
 
@@ -142,6 +144,7 @@ public class BattleView : BaseView ,IInputHandlerEvent
 
     public void StartBattleAnimation()
     {
+        backGroundAnimation.StartAnimation();
         var duration = 0.8f;
         var actorListRect = battleActorList.GetComponent<RectTransform>();
         AnimationUtility.LocalMoveToTransform(battleActorList.gameObject,

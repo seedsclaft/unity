@@ -9,6 +9,7 @@ public class AnimationUtility
     {
         target.GetComponent<RectTransform>().localPosition = from;
         DOTween.Sequence()
-            .Append(target.transform.DOLocalMove(to,duration));
+            .Append(target.transform.DOLocalMove(to,duration))
+            .SetEase(Ease.InOutQuad);
     }
 }

@@ -112,6 +112,7 @@ public class StrategyPresenter : BasePresenter
         if (_strategyState == StrategyState.BattleResult)
         {
             var battledResultActors = _model.BattleResultActors();
+            _model.SetLvUp();
             _model.MakeResult();
             var bonusList = new List<bool>();
             foreach (var item in battledResultActors)
@@ -120,11 +121,15 @@ public class StrategyPresenter : BasePresenter
             }
             _view.SetTitle(DataSystem.GetTextData(14030).Text);
             _view.StartResultAnimation(_model.MakeListData(battledResultActors),bonusList);
+            if (_model.LevelUpData.Count > 0)
+            {
+                _view.StartLvUpAnimation();
+                _view.HideResultList();
+            }
         } else
         if (_strategyState == StrategyState.TacticsResult)
         {
             var tacticsActors = _model.TacticsActors();
-            _model.SetLvUp();
             _model.MakeResult();
             var bonusList = new List<bool>();
             foreach (var item in tacticsActors)
@@ -133,10 +138,6 @@ public class StrategyPresenter : BasePresenter
             }
             _view.SetTitle(DataSystem.GetTextData(14020).Text);
             _view.StartResultAnimation(_model.MakeListData(tacticsActors),bonusList);
-            if (_model.LevelUpData.Count > 0)
-            {
-                _view.StartLvUpAnimation();
-            }
         }
     }
 
@@ -144,25 +145,28 @@ public class StrategyPresenter : BasePresenter
     {
         if (_strategyState == StrategyState.BattleResult)
         {
-            _view.ShowResultList(_model.BattleResultInfos());
-            // ロスト判定
-            var lostMembers = _model.LostMembers();
-            if (lostMembers.Count > 0)
+            if (_model.LevelUpData.Count == 0)
             {
-                var text = DataSystem.GetTextData(3060).Text;
-                var lostMembersText = "";
-                for (int i = 0;i < lostMembers.Count;i++)
+                _view.ShowResultList(_model.BattleResultInfos());
+                // ロスト判定
+                var lostMembers = _model.LostMembers();
+                if (lostMembers.Count > 0)
                 {
-                    lostMembersText += lostMembers[i].Master.Name;
-                    if (i != lostMembers.Count-1)
+                    var text = DataSystem.GetTextData(3060).Text;
+                    var lostMembersText = "";
+                    for (int i = 0;i < lostMembers.Count;i++)
                     {
-                        lostMembersText += ",";
+                        lostMembersText += lostMembers[i].Master.Name;
+                        if (i != lostMembers.Count-1)
+                        {
+                            lostMembersText += ",";
+                        }
                     }
+                    text = text.Replace("\\d",lostMembersText);
+                    var popupInfo = new ConfirmInfo(text,(a) => UpdatePopupLost((ConfirmCommandType)a));
+                    popupInfo.SetIsNoChoice(true);
+                    _view.CommandCallConfirm(popupInfo);
                 }
-                text = text.Replace("\\d",lostMembersText);
-                var popupInfo = new ConfirmInfo(text,(a) => UpdatePopupLost((ConfirmCommandType)a));
-                popupInfo.SetIsNoChoice(true);
-                _view.CommandCallConfirm(popupInfo);
             } else
             {
                 CommandContinue();

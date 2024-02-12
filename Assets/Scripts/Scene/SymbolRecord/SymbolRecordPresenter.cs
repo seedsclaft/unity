@@ -67,9 +67,13 @@ public class SymbolRecordPresenter : BasePresenter
         _view.CommandConfirmClose();
         if (confirmCommandType == ConfirmCommandType.Yes)
         {
+            Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
             var index = _view.SymbolListIndex;
             _model.MakeSymbolRecordStage(index);
             _view.CommandSceneChange(Scene.Tactics);
+        } else
+        {
+            Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cancel);
         }
     }
 

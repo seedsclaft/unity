@@ -477,8 +477,8 @@ RectTransform:
   - {fileID: 7845327777048154343}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 200, y: 80}
   m_Pivot: {x: 0, y: 1}
@@ -1238,7 +1238,7 @@ MonoBehaviour:
   TimingOfUpdate: 0
   EmitterScale: 0
   TimeScale: 0
-  effectAsset: {fileID: 11400000, guid: b1e97a42aafb87241b8820393b5938b9, type: 2}
+  effectAsset: {fileID: 0}
   playOnStart: 0
   isLooping: 1
 --- !u!1 &8522047463975682708

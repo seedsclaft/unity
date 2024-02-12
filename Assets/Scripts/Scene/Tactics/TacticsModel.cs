@@ -131,27 +131,13 @@ public class TacticsModel : BaseModel
         }
     }
 
-    public bool SkillEquipmentActor()
-    {
-        return TacticsActor().EquipmentSkillId != 0;
-    }
-
-    public void RemoveAlchemy()
-    {
-        var actorInfo = TacticsActor();
-        // 装備中
-        if (actorInfo.EquipmentSkillId != 0)
-        {
-            actorInfo.RemoveEquipSkill();
-        }
-    }
-
-    public void SetSkillEquip(int skillId)
+    public void LearnMagic(int skillId)
     {
         var actorInfo = TacticsActor();
         var skillInfo = new SkillInfo(skillId);
-        skillInfo.SetLearningTurns(TacticsUtility.AlchemyTurns(actorInfo,skillInfo.Attribute,StageMembers()));
-        actorInfo.EquipSkill(skillInfo);
+        var learningCost = TacticsUtility.LearningMagicCost(actorInfo,skillInfo.Attribute,StageMembers());
+        PartyInfo.ChangeCurrency(PartyInfo.Currency - learningCost);
+        actorInfo.LearnSkill(skillInfo.Id);
     }
 
     public void SelectActorParadigm()
@@ -182,41 +168,24 @@ public class TacticsModel : BaseModel
         TempData.CashBattleActors(BattleMembers());
     }
 
-    public void SetInBattle(bool inBattle)
+    public void SetInBattle()
     {
-        foreach (var stageMember in StageMembers())
-        {
-            stageMember.SetInBattle(inBattle);
-        }
+        var actorInfo = TacticsActor();
+        actorInfo.SetInBattle(!actorInfo.InBattle);
     }
 
-    public List<ListData> SelectActorAlchemy()
+    public List<ListData> SelectActorLearningMagicList()
     {
         var skillInfos = new List<SkillInfo>();
         var actorInfo = TacticsActor();
-        var otherActorSelected = new List<int>();
-        foreach (var stageMember in StageMembers())
-        {
-            if (stageMember.EquipmentSkillId != 0)
-            {
-                otherActorSelected.Add(stageMember.EquipmentSkillId);
-            }
-        }
         
-        foreach (var skill in actorInfo.SkillActionList())
-        {
-            var baseSkill = (SkillInfo)skill.Data;
-            //if (actorInfo.IsLearnedSkill(alchemyId)) continue;
-            var skillInfo = new SkillInfo(baseSkill.Id);
-            skillInfo.SetEnable(false);
-            skillInfos.Add(skillInfo);
-        }
         foreach (var alchemyId in PartyInfo.AlchemyIdList)
         {
-            if (actorInfo.IsLearnedSkill(alchemyId)) continue;
+            //if (actorInfo.IsLearnedSkill(alchemyId)) continue;
             var skillInfo = new SkillInfo(alchemyId);
-            var cost = TacticsUtility.AlchemyTurns(actorInfo,skillInfo.Attribute,StageMembers());
-            skillInfo.SetEnable(!otherActorSelected.Contains(alchemyId));
+            var cost = TacticsUtility.LearningMagicCost(actorInfo,skillInfo.Attribute,StageMembers());
+            skillInfo.SetEnable(Currency >= cost && !actorInfo.IsLearnedSkill(alchemyId));
+            skillInfo.SetLearningCost(cost);
             skillInfos.Add(skillInfo);
         }
         return MakeListData(skillInfos);

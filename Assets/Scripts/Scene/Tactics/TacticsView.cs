@@ -31,6 +31,8 @@ public class TacticsView : BaseView
 
     private CommandType _lastCallEventType = CommandType.None;
 
+    public SkillInfo SelectMagic => battleSelectCharacter.ActionData;
+
     public override void Initialize()
     {
         base.Initialize();
