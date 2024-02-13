@@ -639,6 +639,10 @@ abstract public class ListWindow : MonoBehaviour
         ScrollRect.normalizedPosition = new Vector2(0,1);
     }
 
+    public void Release() {
+        OnDestroy();
+    }
+
     private void OnDestroy() {
         if (_blankObject != null)
         {
@@ -651,6 +655,10 @@ abstract public class ListWindow : MonoBehaviour
         for (int i = 0;i < _objectList.Count;i++)
         {
             Destroy(_objectList[i]);
+        }
+        if (_prevPrefab != null)
+        {
+            Destroy(_prevPrefab);
         }
     }
 }

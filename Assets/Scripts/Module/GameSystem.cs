@@ -130,6 +130,9 @@ public class GameSystem : MonoBehaviour
             case Base.CommandType.CallCharacterListView:
                 CommandCharacterListView((CharacterListInfo)viewEvent.template);
                 break;
+            case Base.CommandType.CallHelpView:
+                CommandHelpView((List<ListData>)viewEvent.template);
+                break;
             case Base.CommandType.CallAlcanaListView:
                 CommandAlcanaListView((System.Action)viewEvent.template);
                 break;
@@ -305,6 +308,19 @@ public class GameSystem : MonoBehaviour
             {
                 characterListInfo.BackEvent();
             }
+            UpdateCommand(new ViewEvent(Base.CommandType.ClosePopup));
+        });
+        SetIsBusyMainAndStatus();
+    }
+
+    private void CommandHelpView(List<ListData> helpTextList)
+    {
+        var prefab = popupAssign.CreatePopup(PopupType.Help,helpWindow);
+        var characterListView = prefab.GetComponent<HelpView>();
+        characterListView.Initialize();
+        characterListView.SetHelp(helpTextList);
+        characterListView.SetBackEvent(() => 
+        {
             UpdateCommand(new ViewEvent(Base.CommandType.ClosePopup));
         });
         SetIsBusyMainAndStatus();

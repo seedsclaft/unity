@@ -203,6 +203,13 @@ abstract public class BaseView : MonoBehaviour
         CallSceneChangeCommand(eventData);
     }
 
+    public void CommandHelpList(List<ListData> helpTextList)
+    {
+        var eventData = new ViewEvent(Base.CommandType.CallHelpView);
+        eventData.template = helpTextList;
+        CallSceneChangeCommand(eventData);
+    }
+
     public void CommandCallAlcanaList(System.Action endEvent)
     {
         var eventData = new ViewEvent(Base.CommandType.CallAlcanaListView);
@@ -322,6 +329,14 @@ abstract public class BaseView : MonoBehaviour
 
     }
 
+    private void OnDestroy() {
+        var listViews = GetComponentsInChildren<ListWindow>();
+        for (int i = listViews.Length-1;i >= 0;i--)
+        {
+            listViews[i].Release();
+        }
+    }
+
 }
 
 namespace Base
@@ -339,6 +354,7 @@ namespace Base
         CallRankingView,
         CallCreditView,
         CallCharacterListView,
+        CallHelpView,
         CallAlcanaListView,
         CallSlotSaveView,
         CallStatusView,
