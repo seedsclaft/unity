@@ -13,6 +13,7 @@ abstract public class BaseView : MonoBehaviour
     public bool Busy { get {return _busy;}}
     public System.Action<ViewEvent> _commandData = null;
     [SerializeField] private Button _backCommand = null;
+    [SerializeField] private SpriteRenderer _backGround = null;
     private System.Action _backEvent = null;
     public System.Action BackEvent => _backEvent;
     [SerializeField] private GameObject uiRoot = null;
@@ -27,6 +28,11 @@ abstract public class BaseView : MonoBehaviour
     public void SetHelpText(string text)
     {
         _helpWindow.SetHelpText(text);
+    }
+
+    public void SetBackGround(string fileName)
+    {
+        _backGround.sprite = ResourceSystem.LoadBackGround(fileName);
     }
 
     private int _inputBusyFrame = 0;

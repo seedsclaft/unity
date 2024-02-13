@@ -94,6 +94,11 @@ public class ResourceSystem : MonoBehaviour
         return Resources.Load<Sprite>(path);
     } 
 
+    private static GameObject LoadResourcePrefab(string path)
+    {
+        return Resources.Load<GameObject>(path);
+    } 
+    
     public static Sprite LoadActorMainSprite(string path)
     {
         return LoadResourceSprite(ActorTexturePath + path + "/Main");
@@ -123,7 +128,17 @@ public class ResourceSystem : MonoBehaviour
     {
         return LoadResourceSprite("Texture/Character/Enemies/" + enemyImage);
     }
+
+    public static Sprite LoadBackGround(string fileName)
+    {
+        return  LoadResourceSprite("Texture/BG/" + fileName);
+    }
     
+    public static GameObject LoadBattleBackGround(string fileName)
+    {
+        return  LoadResourcePrefab("Prefabs/BG/" + fileName);
+    }
+
     public static EffekseerEffectAsset LoadResourceEffect(string path)
     {
         return Resources.Load<EffekseerEffectAsset>("Animations/" + path);
@@ -147,7 +162,7 @@ public class ResourceSystem : MonoBehaviour
     public static SpriteAtlas LoadSystems()
     {
         return LoadResourceSpriteAtlas("Texture/Systems");
-    } 
+    }
 }
 
 public static class ResourceRequestExtenion

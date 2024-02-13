@@ -200,7 +200,7 @@ public class TacticsPresenter :BasePresenter
         _busy = false;
     }
 
-    private async void InitializeView()
+    private void InitializeView()
     {
         _model.RefreshTacticsEnable();
         _view.SetHelpWindow();
@@ -215,6 +215,7 @@ public class TacticsPresenter :BasePresenter
 
         _view.SetTacticsCommand(_model.TacticsCommand());
         _view.HideCommandList();
+        _view.SetBackGround(_model.CurrentStage.Master.BackGround);
         CommandRefresh();
         PlayTacticsBgm();
         //_view.SetHelpInputInfo(_model.TacticsCommandInputInfo());
@@ -590,6 +591,7 @@ public class TacticsPresenter :BasePresenter
                 _view.ChangeBackCommandActive(true);
                 _view.HideCommandList();
                 _view.ShowSelectCharacter(_model.TacticsCharacterData(),_model.TacticsCommandData());
+                _view.ShowCharacterDetail(_model.TacticsActor(),_model.StageMembers());
                 _view.ActivateTacticsCommand();
                 _view.ShowConfirmCommand();
                 _backCommand = Tactics.CommandType.TacticsCommand;
@@ -805,6 +807,7 @@ public class TacticsPresenter :BasePresenter
                 {
                     PlayTacticsBgm();
                 }
+                _view.SetActiveBackGround(false);
                 _view.CommandSceneChange(Scene.Battle);
             } else
             {

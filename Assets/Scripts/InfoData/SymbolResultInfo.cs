@@ -79,9 +79,12 @@ public class SymbolResultInfo
             _actorInfos.Add(recordActorInfo);
         }
     }
+    public SymbolInfo _symbolInfo;
+    public SymbolInfo SymbolInfo => _symbolInfo;
 
-    public SymbolResultInfo(int stageId,int seek,int seekIndex,int currency)
+    public SymbolResultInfo(SymbolInfo symbolInfo,int stageId,int seek,int seekIndex,int currency)
     {
+        _symbolInfo = symbolInfo;
         _stageId = stageId;
         _seek = seek;
         _seekIndex = seekIndex;

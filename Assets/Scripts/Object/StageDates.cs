@@ -18,7 +18,7 @@ public class StageData
     public int Turns;
     public List<int> InitMembers;
     public int RandomTroopCount;
-    public int BossId;
+    public string BackGround;
     public int BGMId;
     public int BossBGMId;
     public bool Reborn;

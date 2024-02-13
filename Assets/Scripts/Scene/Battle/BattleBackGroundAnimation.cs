@@ -6,35 +6,38 @@ using DG.Tweening;
 
 public class BattleBackGroundAnimation : MonoBehaviour
 {
-    [SerializeField] private SpriteRenderer spriteRenderer1 = null;
-    [SerializeField] private SpriteRenderer spriteRenderer2 = null;
-    [SerializeField] private List<Sprite> sprites = null;
+    [SerializeField] private SpriteRenderer spriteRenderer = null;
+    [SerializeField] private _2dxFX_DestroyedFX destroy = null;
     private int _lastSpriteIndex = -1;
     
-    public void StartAnimation()
+    private bool _seekAnimation = false;
+    private int _seekFrame = 60;
+
+    public void SeekAnimation()
     {
-        return;
-        var duration = 0.8f;
-        var sequence = DOTween.Sequence()
-            .SetDelay(duration)
-            .OnStepComplete(() => {
-                var spriteChange = false;
-                while (spriteChange == false)
+        _seekAnimation = true;
+        _seekFrame = 24;
+    }
+
+    private void Update() {
+        if (destroy != null)
+        {
+            if (_seekAnimation)
+            {
+                destroy.Seed += 0.0004f;
+                if (destroy.Seed > 1)
                 {
-                    var spriteIndex = Random.Range(0,sprites.Count);
-                    if (spriteIndex != _lastSpriteIndex)
-                    {
-                        spriteChange = true;
-                        _lastSpriteIndex = spriteIndex;
-                    }
+                    destroy.Seed = 0;
                 }
-                var sprite = sprites[_lastSpriteIndex];
-                spriteRenderer1.sprite = sprite;
-                spriteRenderer1.transform.DOScale(50,0);
-                spriteRenderer1.transform.DOScale(52,duration).SetEase(Ease.OutExpo);
-                spriteRenderer2.sprite = sprite;
-                spriteRenderer1.DOFade(0.5f,0);
-            })
-            .SetLoops(-1);
+                _seekFrame--;
+                if (_seekFrame == 0)
+                {
+                    _seekAnimation = false;
+                }
+            } else
+            {
+                destroy.Seed += 0.00001f;
+            }
+        }
     }
 }

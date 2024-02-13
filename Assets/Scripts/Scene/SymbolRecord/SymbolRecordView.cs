@@ -12,6 +12,7 @@ public class SymbolRecordView : BaseView
     [SerializeField] private BaseList symbolRecordList = null;
     [SerializeField] private TextMeshProUGUI turnText = null;
     [SerializeField] private TextMeshProUGUI numinousText = null;
+    [SerializeField] private StageInfoComponent stageInfoComponent = null;
 
     private new System.Action<SymbolRecordViewEvent> _commandData = null;
 
@@ -72,6 +73,11 @@ public class SymbolRecordView : BaseView
     public void SetNuminous(int numinous)
     {
         numinousText.text = numinous.ToString();
+    }
+    
+    public void SetStageInfo(StageInfo stageInfo)
+    {
+        stageInfoComponent.UpdateInfo(stageInfo);
     }
 
     public void SetHelpWindow(){

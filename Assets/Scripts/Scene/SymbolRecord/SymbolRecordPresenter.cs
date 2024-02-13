@@ -20,14 +20,13 @@ public class SymbolRecordPresenter : BasePresenter
         Initialize();
     }
 
-    private async void Initialize()
+    private void Initialize()
     {
         _busy = true;
         _view.SetHelpWindow();
 
         //_view.SetActors(_model.TempData.TempResultActorInfos);
-        //var bgm = await _model.GetBgmData(_model.TacticsBgmFilename());
-        //Ryneus.SoundManager.Instance.PlayBgm(bgm,1.0f,true);
+        _view.SetBackGround(_model.CurrentStage.Master.BackGround);
         _view.SetEvent((type) => UpdateCommand(type));
 
         _view.SetSymbolRecords(_model.SymbolRecords());
@@ -81,12 +80,14 @@ public class SymbolRecordPresenter : BasePresenter
     {
         _view.SetTurns(_model.RemainTurns);
         _view.SetNuminous(_model.Currency);
+        _view.SetStageInfo(_model.CurrentStage);
         _view.SetSymbols(_model.StageSymbolInfos(_view.SymbolListIndex));
         _view.SetTacticsCharaLayer(_model.SymbolActorIdList(_view.SymbolListIndex));
     }
 
     private void CommandBack()
     {
+        Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cancel);
         _view.CommandSceneChange(Scene.MainMenu);
     }
 

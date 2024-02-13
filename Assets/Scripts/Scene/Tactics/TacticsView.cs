@@ -27,6 +27,12 @@ public class TacticsView : BaseView
     [SerializeField] private SideMenuList sideMenuList = null;
 
     [SerializeField] private Button alcanaButton = null;
+    
+    [SerializeField] private GameObject backGround = null;
+    public void SetActiveBackGround(bool isActive)
+    {
+        backGround.SetActive(isActive);
+    }
 
 
     private CommandType _lastCallEventType = CommandType.None;

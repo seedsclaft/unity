@@ -43,6 +43,7 @@ public class BattlePresenter : BasePresenter
         _view.SetBattleBusy(true);
         _model.CreateBattleData();
         _view.SetHelpText("");
+        _view.CreateBattleBackGround(_model.BattleBackGroundObject());
         await _model.LoadBattleResources(_model.Battlers);
         if (Ryneus.SoundManager.Instance.CrossFadeMode == false)
         {

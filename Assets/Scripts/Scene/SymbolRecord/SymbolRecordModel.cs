@@ -72,9 +72,7 @@ public class SymbolRecordModel : BaseModel
         {
             if (saveRecord != null && getItemInfo.GetItemType == GetItemType.SaveHuman)
             {
-                var rate = (float)saveRecord.BattleScore * 0.01f;
-                rate *= getItemInfo.Param1;
-                getItemInfo.SetParam2((int)rate);
+                getItemInfo.SetParam2(saveRecord.BattleScore);
                 getItemInfo.MakeTextData();
             }
         }

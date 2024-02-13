@@ -79,4 +79,17 @@ public class SymbolInfo
         }
         return 0;
     }
+
+    public int ScoreMax()
+    {
+        var scoreMax = 0;
+        foreach (var getItemInfo in GetItemInfos)
+        {
+            if (getItemInfo.GetItemType == GetItemType.SaveHuman)
+            {
+                scoreMax += getItemInfo.Param1;
+            }
+        }
+        return scoreMax;
+    }
 }

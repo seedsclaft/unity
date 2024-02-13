@@ -3,12 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using MainMenu;
+using TMPro;
 
 public class MainMenuView : BaseView
 {
     [SerializeField] private BaseList stageList = null;
     [SerializeField] private StageInfoComponent component;
     [SerializeField] private SideMenuList sideMenuList = null;
+    [SerializeField] private TextMeshProUGUI numinous = null;
+    [SerializeField] private TextMeshProUGUI totalScore = null;
 
     private new System.Action<MainMenuViewEvent> _commandData = null;
 
@@ -17,6 +20,16 @@ public class MainMenuView : BaseView
         base.Initialize();
         stageList.Initialize();
         new MainMenuPresenter(this);
+    }
+
+    public void SetNuminous(int value)
+    {
+        numinous.SetText(value.ToString());
+    }
+
+    public void SetTotalScore(int value)
+    {
+        totalScore.SetText(value.ToString());
     }
 
     public void SetInitHelpText()

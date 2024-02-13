@@ -12,6 +12,8 @@ public class StageInfoComponent : MonoBehaviour
     [SerializeField] private TextMeshProUGUI help;
     [SerializeField] private TextMeshProUGUI turns;
     [SerializeField] private TextMeshProUGUI clearCount;
+    [SerializeField] private TextMeshProUGUI score;
+    [SerializeField] private TextMeshProUGUI scoreMax;
 
     public void UpdateInfo(StageInfo stageInfo)
     {
@@ -19,7 +21,6 @@ public class StageInfoComponent : MonoBehaviour
             return;
         }
         var stageData = stageInfo.Master;
-        
         if (nameText != null){
             nameText.text = stageData.Name;
         }
@@ -44,6 +45,13 @@ public class StageInfoComponent : MonoBehaviour
         }
         if (clearCount != null){
             clearCount.text = stageInfo.ClearCount.ToString();
+        }
+
+        if (score != null){
+            score.SetText(stageInfo.Score.ToString());
+        }
+        if (scoreMax != null){
+            scoreMax.SetText(stageInfo.ScoreMax.ToString());
         }
     }
 }

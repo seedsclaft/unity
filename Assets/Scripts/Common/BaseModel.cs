@@ -18,6 +18,7 @@ public class BaseModel
     public PartyInfo PartyInfo => CurrentSaveData.Party;
 
     public int Currency => PartyInfo.Currency;
+    public int TotalScore => PartyInfo.TotalScore();
 
     public int RemainTurns => CurrentStage.Master.Turns - CurrentStage.CurrentTurn + 1;
 
@@ -567,7 +568,7 @@ public class BaseModel
         // レコード作成
         for (int i = 0;i < CurrentStage.CurrentSymbolInfos.Count;i++)
         {
-            var record = new SymbolResultInfo(CurrentStage.Id,CurrentStage.CurrentTurn,i,GameSystem.CurrentStageData.Party.Currency);
+            var record = new SymbolResultInfo(CurrentStage.CurrentSymbolInfos[i],CurrentStage.Id,CurrentStage.CurrentTurn,i,GameSystem.CurrentStageData.Party.Currency);
             var actorInfos = new List<ActorInfo>();
             foreach (var actorInfo in PartyInfo.ActorInfos)
             {

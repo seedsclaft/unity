@@ -26,6 +26,8 @@ public class MainMenuPresenter : BasePresenter
 
         _view.SetStagesData(_model.Stages());
         _view.SetSideMenu(_model.SideMenu());
+        _view.SetNuminous(_model.Currency);
+        _view.SetTotalScore(_model.TotalScore);
         //_model.InitStageData();
 
         var bgm = await _model.GetBgmData("MAINMENU");

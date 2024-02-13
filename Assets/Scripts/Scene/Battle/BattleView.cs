@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Battle;
 using Effekseer;
+using UnityEngine.U2D.IK;
 
 public class BattleView : BaseView ,IInputHandlerEvent
 {
@@ -24,7 +25,8 @@ public class BattleView : BaseView ,IInputHandlerEvent
     [SerializeField] private GameObject centerAnimPosition = null;
     [SerializeField] private SideMenu battleAutoButton = null;
     [SerializeField] private BattleCutinAnimation battleCutinAnimation = null;
-    [SerializeField] private BattleBackGroundAnimation backGroundAnimation = null;
+    [SerializeField] private GameObject battleBackGroundRoot = null;
+    private BattleBackGroundAnimation _backGroundAnimation = null;
     
     private BattleStartAnim _battleStartAnim = null;
     public bool StartAnimIsBusy => _battleStartAnim.IsBusy;
@@ -58,6 +60,13 @@ public class BattleView : BaseView ,IInputHandlerEvent
         battleActorList.Initialize();
         battleEnemyLayer.Initialize();
         new BattlePresenter(this);
+    }
+
+    public void CreateBattleBackGround(GameObject gameObject)
+    {
+        var prefab = Instantiate(gameObject);
+        prefab.transform.SetParent(battleBackGroundRoot.transform,false);
+        _backGroundAnimation = prefab.GetComponent<BattleBackGroundAnimation>();
     }
 
     private void InitializeSelectCharacter()
@@ -144,7 +153,6 @@ public class BattleView : BaseView ,IInputHandlerEvent
 
     public void StartBattleAnimation()
     {
-        backGroundAnimation.StartAnimation();
         var duration = 0.8f;
         var actorListRect = battleActorList.GetComponent<RectTransform>();
         AnimationUtility.LocalMoveToTransform(battleActorList.gameObject,
@@ -158,8 +166,8 @@ public class BattleView : BaseView ,IInputHandlerEvent
             duration);
         var borderRect = battleGridLayer.GetComponent<RectTransform>();
         AnimationUtility.LocalMoveToTransform(borderRect.gameObject,
-            new Vector3(borderRect.localPosition.x,borderRect.localPosition.y + 400,0),
             new Vector3(borderRect.localPosition.x,borderRect.localPosition.y,0),
+            new Vector3(borderRect.localPosition.x,borderRect.localPosition.y-360,0),
             duration);
     }
 
@@ -502,6 +510,7 @@ public class BattleView : BaseView ,IInputHandlerEvent
     public void StartDamage(int targetIndex,DamageType damageType,int value,bool needPopupDelay = true)
     {
         _battlerComps[targetIndex].StartDamage(damageType,value,needPopupDelay);
+        _backGroundAnimation?.SeekAnimation();
     }
 
     public void StartBlink(int targetIndex)

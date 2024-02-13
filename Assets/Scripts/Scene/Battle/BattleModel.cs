@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Effekseer;
 using Cysharp.Threading.Tasks;
 using System.Linq;
+using UnityEngine;
 
 public class BattleModel : BaseModel
 {
@@ -41,6 +42,11 @@ public class BattleModel : BaseModel
         return GetBgmData("TACTICS2");
     }
 
+    public GameObject BattleBackGroundObject()
+    {
+        return ResourceSystem.LoadBattleBackGround(CurrentStage.Master.BackGround);
+    }
+
     public void CreateBattleData()
     {
         _actionIndex = 0;
@@ -69,7 +75,7 @@ public class BattleModel : BaseModel
         {
             var baseEnemy = enemies[i];
             baseEnemy.ResetData();
-            baseEnemy.GainHp(-9999);
+            //baseEnemy.GainHp(-9999);
             _battlers.Add(baseEnemy);
             var battlerRecord = new BattleRecord(baseEnemy.Index);
             _battleRecords.Add(battlerRecord);

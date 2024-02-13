@@ -27,6 +27,20 @@ public class StageInfo
     {
         _clearCount = count;
     }
+    
+    private int _score;
+    public int Score => _score;
+    public void SetScore(int score)
+    {
+        _score = score;
+    }
+
+    private int _scoreMax;
+    public int ScoreMax => _scoreMax;
+    public void SetScoreMax(int scoreMax)
+    {
+        _scoreMax = scoreMax;
+    }
     private int _troopClearCount;
     public int TroopClearCount => _troopClearCount;
 

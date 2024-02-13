@@ -141,4 +141,14 @@ public class PartyInfo
     {
         _alchemyIdList.Clear();
     }
+
+    public int TotalScore()
+    {
+        var score = 0;
+        foreach (var record in SymbolRecordList)
+        {
+            score += record.BattleScore;
+        }
+        return score;
+    }
 }
