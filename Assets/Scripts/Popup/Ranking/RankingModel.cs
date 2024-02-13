@@ -11,7 +11,7 @@ public class RankingModel : BaseModel
     {
         _stageId = stageId;
 #if (UNITY_WEBGL || UNITY_ANDROID) //&& !UNITY_EDITOR
-        if (TempData.TempRankingData.ContainsKey(stageId) == false)
+        if (TempInfo.TempRankingData.ContainsKey(stageId) == false)
         {
             FirebaseController.Instance.ReadRankingData(stageId,RankingTypeText(DataSystem.FindStage(stageId).RankingStage));
             await UniTask.WaitUntil(() => FirebaseController.IsBusy == false);
@@ -24,11 +24,11 @@ public class RankingModel : BaseModel
                 rankingData.CopyInfo(rankingInfo);
                 list.Add(rankingData);
             }
-            TempData.SetRankingInfo(stageId,list);
+            TempInfo.SetRankingInfo(stageId,list);
         }
         if (endEvent != null) 
         {
-            var rankingDataList = MakeListData(TempData.TempRankingData[stageId]);
+            var rankingDataList = MakeListData(TempInfo.TempRankingData[stageId]);
             foreach (var rankingData in rankingDataList)
             {
                 var data = (RankingInfo)rankingData.Data;
@@ -41,7 +41,7 @@ public class RankingModel : BaseModel
 
     public void MakeDetailPartyInfo(int listIndex)
     {
-        var rankingInfo = TempData.TempRankingData[_stageId][listIndex];
+        var rankingInfo = TempInfo.TempRankingData[_stageId][listIndex];
         PartyInfo.InitActorInfos();
         foreach (var actorInfo in rankingInfo.ActorInfos)
         {

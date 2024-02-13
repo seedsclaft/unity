@@ -42,7 +42,7 @@ public class OptionModel : BaseModel
 
     public void ChangeTempInputType(bool inputType)
     {
-        TempData.SetInputType(inputType);
+        TempInfo.SetInputType(inputType);
     }
 
 }

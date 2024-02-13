@@ -30,7 +30,7 @@ public class AlcanaResultModel : BaseModel
     public List<ListData> ResultGetItemInfos()
     {
         var getItemInfos = new List<GetItemInfo>();
-        var skillInfos = TempData.TempAlcanaSkillInfos;
+        var skillInfos = TempInfo.TempAlcanaSkillInfos;
         foreach (var skillInfo in skillInfos)
         {
             getItemInfos.AddRange(GetAlcanaResults(skillInfo));
@@ -40,11 +40,11 @@ public class AlcanaResultModel : BaseModel
 
     public void ReleaseAlcana()
     {
-        var skillInfos = TempData.TempAlcanaSkillInfos;
+        var skillInfos = TempInfo.TempAlcanaSkillInfos;
         foreach (var skillInfo in skillInfos)
         {
             StageAlcana.DisableAlcana(skillInfo);
         }
-        TempData.ClearAlcana();
+        TempInfo.ClearAlcana();
     }
 }

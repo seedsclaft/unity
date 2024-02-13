@@ -165,7 +165,7 @@ public class TacticsModel : BaseModel
 
     public void SaveTempBattleMembers()
     {
-        TempData.CashBattleActors(BattleMembers());
+        TempInfo.CashBattleActors(BattleMembers());
     }
 
     public void SetInBattle()
@@ -207,7 +207,7 @@ public class TacticsModel : BaseModel
     public void SetTempAddActorStatusInfos(int actorId)
     {
         var actorInfos = PartyInfo.ActorInfos.FindAll(a => a.ActorId == actorId);
-        TempData.SetTempStatusActorInfos(actorInfos);
+        TempInfo.SetTempStatusActorInfos(actorInfos);
     }
 
     public void SelectRecoveryPlus()

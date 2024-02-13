@@ -389,14 +389,14 @@ public class TacticsPresenter :BasePresenter
             Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cancel);
         }
         //_view.ActivateCommandList();
-        _view.CommandConfirmClose();
+        _view.CommandGameSystem(Base.CommandType.CloseConfirm);
     }
 
 
     private void UpdatePopupSelectAddActor(ConfirmCommandType confirmCommandType)
     {
         _model.SetSelectAddActor();
-        _view.CommandConfirmClose();
+        _view.CommandGameSystem(Base.CommandType.CloseConfirm);
         var statusViewInfo = new StatusViewInfo(null);
         statusViewInfo.SetDisplayDecideButton(true);
         statusViewInfo.SetDisplayBackButton(false);
@@ -405,14 +405,14 @@ public class TacticsPresenter :BasePresenter
 
     private void UpdatePopupSaveCommand(ConfirmCommandType confirmCommandType,bool isReturnScene)
     {
-        _view.CommandConfirmClose();
+        _view.CommandGameSystem(Base.CommandType.CloseConfirm);
         if (confirmCommandType == ConfirmCommandType.Yes)
         {
             var saveNeedAds = _model.NeedAdsSave();
             if (saveNeedAds)
             {
                 // ロード表示
-                _view.CommandCallLoading();
+                _view.CommandGameSystem(Base.CommandType.CallLoading);
 #if UNITY_ANDROID
                 AdMobController.Instance.PlayRewardedAd(() => 
                 {
@@ -420,7 +420,7 @@ public class TacticsPresenter :BasePresenter
                 },
                 () => {
                     // ロード非表示
-                    _view.CommandLoadingClose();
+                    _view.CommandGameSystem(Base.CommandType.CloseLoading);
                     // 失敗した時
                     var savePopupTitle = _model.FailedSavePopupTitle();
                     var popupInfo = new ConfirmInfo(savePopupTitle,(q) => UpdatePopupSaveCommand((ConfirmCommandType)q,isReturnScene));
@@ -448,13 +448,12 @@ public class TacticsPresenter :BasePresenter
     private void SuccessSave(bool isReturnScene)
     {
         // ロード非表示
-        _view.CommandLoadingClose();
+        _view.CommandGameSystem(Base.CommandType.CloseLoading);
         _model.GainSaveCount();
         _model.SavePlayerStageData(true);
         // 成功表示
         var confirmInfo = new ConfirmInfo(DataSystem.GetTextData(11084).Text,(a) => {
-            Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
-            _view.CommandConfirmClose();
+            _view.CommandGameSystem(Base.CommandType.CloseConfirm);
             if (isReturnScene)
             {
                 _view.CommandSceneChange(Scene.Tactics);
@@ -469,7 +468,7 @@ public class TacticsPresenter :BasePresenter
 
     private void UpdatePopupSkillInfo(ConfirmCommandType confirmCommandType)
     {
-        _view.CommandPopupClose();
+        _view.CommandGameSystem(Base.CommandType.ClosePopup);
     }
 
     private void CommandBack()
@@ -524,7 +523,7 @@ public class TacticsPresenter :BasePresenter
         {
             _model.SetStatusActorInfos();
             var statusViewInfo = new StatusViewInfo(() => {
-                _view.CommandStatusClose();
+                _view.CommandGameSystem(Base.CommandType.CloseStatus);
                 _view.ChangeUIActive(true);
                 _view.ShowCommandList();
                 _view.SetHelpInputInfo("TACTICS");
@@ -636,19 +635,17 @@ public class TacticsPresenter :BasePresenter
 
     private void UpdatePopupActorSymbol(ConfirmCommandType confirmCommandType)
     {
-        _view.CommandConfirmClose();
+        _view.CommandGameSystem(Base.CommandType.CloseConfirm);
         if (confirmCommandType == ConfirmCommandType.Yes)
         {
-            Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
             var getItemInfos = _model.CurrentStage.CurrentSelectSymbol().GetItemInfos;
             var actorInfos = _model.PartyInfo.ActorInfos.FindAll(a => a.ActorId == getItemInfos[0].Param1);
-            _model.TempData.SetTempGetItemInfos(getItemInfos);
+            _model.TempInfo.SetTempGetItemInfos(getItemInfos);
             Debug.Log(getItemInfos[0].GetItemType);
             Debug.Log(getItemInfos[0].Param1);
-            _model.TempData.SetTempResultActorInfos(actorInfos);
+            _model.TempInfo.SetTempResultActorInfos(actorInfos);
             _view.CommandSceneChange(Scene.Strategy);
         } else{
-            Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cancel);
             CommandTacticsCommand(_model.TacticsCommandType);
         }
     }
@@ -661,16 +658,14 @@ public class TacticsPresenter :BasePresenter
 
     private void UpdatePopupRecoverSymbol(ConfirmCommandType confirmCommandType)
     {
-        _view.CommandConfirmClose();
+        _view.CommandGameSystem(Base.CommandType.CloseConfirm);
         if (confirmCommandType == ConfirmCommandType.Yes)
         {
-            Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
             var currentSymbol = _model.CurrentStage.CurrentSelectSymbol();
-            _model.TempData.SetTempGetItemInfos(currentSymbol.GetItemInfos);
-            _model.TempData.SetTempResultActorInfos(_model.StageMembers());
+            _model.TempInfo.SetTempGetItemInfos(currentSymbol.GetItemInfos);
+            _model.TempInfo.SetTempResultActorInfos(_model.StageMembers());
             _view.CommandSceneChange(Scene.Strategy);
         } else{
-            Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cancel);
             CommandTacticsCommand(_model.TacticsCommandType);
         }
     }
@@ -709,16 +704,14 @@ public class TacticsPresenter :BasePresenter
 
     private void UpdatePopupAlcanaSymbol(ConfirmCommandType confirmCommandType)
     {
-        _view.CommandConfirmClose();
+        _view.CommandGameSystem(Base.CommandType.CloseConfirm);
         if (confirmCommandType == ConfirmCommandType.Yes)
         {
-            Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
             var getItemInfos = _model.CurrentStage.CurrentSelectSymbol().GetItemInfos;
-            _model.TempData.SetTempGetItemInfos(getItemInfos);
-            _model.TempData.SetTempResultActorInfos(_model.StageMembers());
+            _model.TempInfo.SetTempGetItemInfos(getItemInfos);
+            _model.TempInfo.SetTempResultActorInfos(_model.StageMembers());
             _view.CommandSceneChange(Scene.Strategy);
         } else{
-            Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cancel);
             CommandTacticsCommand(_model.TacticsCommandType);
         }
     }
@@ -731,16 +724,14 @@ public class TacticsPresenter :BasePresenter
 
     private void UpdatePopupResourceSymbol(ConfirmCommandType confirmCommandType)
     {
-        _view.CommandConfirmClose();
+        _view.CommandGameSystem(Base.CommandType.CloseConfirm);
         if (confirmCommandType == ConfirmCommandType.Yes)
         {
-            Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
             var currentSymbol = _model.CurrentStage.CurrentSelectSymbol();
-            _model.TempData.SetTempGetItemInfos(currentSymbol.GetItemInfos);
-            _model.TempData.SetTempResultActorInfos(_model.StageMembers());
+            _model.TempInfo.SetTempGetItemInfos(currentSymbol.GetItemInfos);
+            _model.TempInfo.SetTempResultActorInfos(_model.StageMembers());
             _view.CommandSceneChange(Scene.Strategy);
         } else{
-            Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cancel);
             CommandTacticsCommand(_model.TacticsCommandType);
         }
     }
@@ -753,16 +744,14 @@ public class TacticsPresenter :BasePresenter
 
     private void UpdatePopupRebirthSymbol(ConfirmCommandType confirmCommandType)
     {
-        _view.CommandConfirmClose();
+        _view.CommandGameSystem(Base.CommandType.CloseConfirm);
         if (confirmCommandType == ConfirmCommandType.Yes)
         {
-            Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
             var currentSymbol = _model.CurrentStage.CurrentSelectSymbol();
-            _model.TempData.SetTempGetItemInfos(currentSymbol.GetItemInfos);
-            _model.TempData.SetTempResultActorInfos(_model.StageMembers());
+            _model.TempInfo.SetTempGetItemInfos(currentSymbol.GetItemInfos);
+            _model.TempInfo.SetTempResultActorInfos(_model.StageMembers());
             _view.CommandSceneChange(Scene.Strategy);
         } else{
-            Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cancel);
             CommandTacticsCommand(_model.TacticsCommandType);
         }
     }
@@ -777,23 +766,18 @@ public class TacticsPresenter :BasePresenter
     {
         if (confirmCommandType == ConfirmCommandType.Yes)
         {
-            Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
             var skillInfo = _view.SelectMagic;
             _model.LearnMagic(skillInfo.Id);
             CommandTacticsCommand(_model.TacticsCommandType);
             CommandRefresh();
-        } else
-        {
-            Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cancel);
         }
-        _view.CommandConfirmClose();
+        _view.CommandGameSystem(Base.CommandType.CloseConfirm);
     }
 
     private void CommandSelectEnemyClose(ConfirmCommandType confirmCommandType)
     {
         if (confirmCommandType == ConfirmCommandType.Yes)
         {
-            Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
             if (_model.BattleMembers().Count > 0)
             {
                 _model.SaveTempBattleMembers();
@@ -814,7 +798,6 @@ public class TacticsPresenter :BasePresenter
                 CheckBattleMember();
             }
         } else{
-            Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cancel);
             _view.ShowSymbolList();
             _view.HideSelectCharacter();
             CommandRefresh();
@@ -830,8 +813,7 @@ public class TacticsPresenter :BasePresenter
 
     private void UpdatePopupBattleMember()
     {
-        Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
-        _view.CommandConfirmClose();
+        _view.CommandGameSystem(Base.CommandType.CloseConfirm);
     }
 
     private void CommandPopupSkillInfo(GetItemInfo getItemInfo)
@@ -872,7 +854,7 @@ public class TacticsPresenter :BasePresenter
                 var enemyInfos = symbolInfo.BattlerInfos();
                 
                 var enemyViewInfo = new StatusViewInfo(() => {
-                    _view.CommandStatusClose();
+                    _view.CommandGameSystem(Base.CommandType.CloseStatus);
                     _view.ChangeUIActive(true);
                 });
                 enemyViewInfo.SetEnemyInfos(enemyInfos,false);
@@ -885,7 +867,7 @@ public class TacticsPresenter :BasePresenter
             case SymbolType.Actor:
                 _model.SetTempAddActorStatusInfos(symbolInfo.GetItemInfos[0].Param1);
                 var statusViewInfo = new StatusViewInfo(() => {
-                    _view.CommandStatusClose();
+                    _view.CommandGameSystem(Base.CommandType.CloseStatus);
                     _view.ChangeUIActive(true);
                 });
                 _view.CommandCallStatus(statusViewInfo);

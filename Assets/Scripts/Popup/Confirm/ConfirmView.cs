@@ -95,11 +95,13 @@ public class ConfirmView : BaseView,IInputHandlerEvent
         var data = (SystemData.CommandData)commandList.ListData.Data;
         if (data != null)
         {
-            var commandType = ConfirmCommandType.No;
+            var commandType = data.Key == "Yes" ? ConfirmCommandType.Yes : ConfirmCommandType.No;
             if (data.Key == "Yes")
             {
-                commandType = ConfirmCommandType.Yes;
                 Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
+            } else
+            {
+                Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cancel);
             }
             _confirmEvent(commandType);
         }

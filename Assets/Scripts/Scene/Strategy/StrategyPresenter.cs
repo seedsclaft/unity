@@ -25,7 +25,7 @@ public class StrategyPresenter : BasePresenter
         _busy = true;
         _view.SetHelpWindow();
 
-        _view.SetActors(_model.TempData.TempResultActorInfos);
+        _view.SetActors(_model.TempInfo.TempResultActorInfos);
         _view.SetResultList(_model.ResultCommand());
         _view.SetBackGround(_model.CurrentStage.Master.BackGround);
         var bgm = await _model.GetBgmData(_model.TacticsBgmKey());
@@ -74,12 +74,12 @@ public class StrategyPresenter : BasePresenter
 
     private void UpdatePopupSkillInfo(ConfirmCommandType confirmCommandType)
     {
-        _view.CommandPopupClose();
+        _view.CommandGameSystem(Base.CommandType.ClosePopup);
     }
 
     private void UpdatePopupLost(ConfirmCommandType confirmCommandType)
     {
-        _view.CommandConfirmClose();
+        _view.CommandGameSystem(Base.CommandType.CloseConfirm);
         CommandContinue();
         //_model.LostActors(_model.LostMembers());
     }
@@ -233,7 +233,7 @@ public class StrategyPresenter : BasePresenter
                 if (battledMembers != null && battledMembers.Count > 0)
                 {
                     _model.ClearBattleData(battledMembers);
-                    _model.TempData.ClearTempResultActorInfos();
+                    _model.TempInfo.ClearTempResultActorInfos();
                 }
             }
             if (_strategyState == StrategyState.TacticsResult)
@@ -241,7 +241,7 @@ public class StrategyPresenter : BasePresenter
                 var tacticsActors = _model.TacticsActors();
                 if (tacticsActors != null && tacticsActors.Count > 0)
                 {
-                    _model.TempData.ClearTempResultActorInfos();
+                    _model.TempInfo.ClearTempResultActorInfos();
                 }
             }
             CheckTacticsActors();
@@ -292,15 +292,14 @@ public class StrategyPresenter : BasePresenter
 
     private void UpdatePopupContinueCommand(ConfirmCommandType confirmCommandType)
     {
-        _view.CommandConfirmClose();
+        _view.CommandGameSystem(Base.CommandType.CloseConfirm);
         if (confirmCommandType == ConfirmCommandType.Yes)
         {
-            Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
             var needAdsContinue = _model.NeedAdsContinue();
             if (needAdsContinue)
             {
                 // ロード表示
-                _view.CommandCallLoading();
+                _view.CommandGameSystem(Base.CommandType.CallLoading);
 #if UNITY_ANDROID
                 AdMobController.Instance.PlayRewardedAd(() => 
                     {
@@ -308,7 +307,7 @@ public class StrategyPresenter : BasePresenter
                     },
                     () => {
                         // ロード非表示
-                        _view.CommandLoadingClose();
+                        _view.CommandGameSystem(Base.CommandType.CloseLoading);
                         // 失敗した時
                         var savePopupTitle = _model.FailedSavePopupTitle();
                         var popupInfo = new ConfirmInfo(savePopupTitle,(a) => UpdatePopupContinueCommand((ConfirmCommandType)a));
@@ -323,7 +322,6 @@ public class StrategyPresenter : BasePresenter
         } else
         if (confirmCommandType == ConfirmCommandType.No)
         {
-            Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cancel);
             _model.LostActors(_model.LostMembers());
         }
     }
@@ -331,7 +329,7 @@ public class StrategyPresenter : BasePresenter
     private void SuccessContinue()
     {
         // ロード非表示
-        _view.CommandLoadingClose();
+        _view.CommandGameSystem(Base.CommandType.CloseLoading);
         _model.GainContinueCount();
         // 復帰して結果をやり直し
         _model.ReturnTempBattleMembers();
@@ -341,7 +339,7 @@ public class StrategyPresenter : BasePresenter
     private void ShowStatus()
     {
         var statusViewInfo = new StatusViewInfo(() => {
-            _view.CommandStatusClose();
+            _view.CommandGameSystem(Base.CommandType.CloseStatus);
             SetHelpInputSkipEnable();
             _view.SetHelpText(DataSystem.GetTextData(14010).Text);
             _view.ChangeUIActive(true);
@@ -367,7 +365,7 @@ public class StrategyPresenter : BasePresenter
         var enemyInfos = _model.TacticsSymbols()[enemyIndex].BattlerInfos();
         
         var statusViewInfo = new StatusViewInfo(() => {
-            _view.CommandStatusClose();
+            _view.CommandGameSystem(Base.CommandType.CloseStatus);
             _view.ChangeUIActive(true);
             SetHelpInputSkipEnable();
             _view.SetHelpText(DataSystem.GetTextData(14010).Text);
@@ -408,7 +406,7 @@ public class StrategyPresenter : BasePresenter
             _model.EndStrategy(true);
             _view.CommandSceneChange(Scene.Tactics);
         }
-        _model.TempData.ClearTempGetItemInfos();
+        _model.TempInfo.ClearTempGetItemInfos();
     }
 
     private enum StrategyState{

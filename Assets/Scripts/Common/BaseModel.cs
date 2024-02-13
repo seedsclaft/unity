@@ -11,7 +11,7 @@ public class BaseModel
 {
     public SaveInfo CurrentData => GameSystem.CurrentData;
     public SaveStageInfo CurrentSaveData => GameSystem.CurrentStageData;
-    public TempInfo TempData => GameSystem.TempData;
+    public TempInfo TempInfo => GameSystem.TempData;
     public StageInfo CurrentStage => CurrentSaveData.CurrentStage;
     public AlcanaInfo StageAlcana => CurrentSaveData.StageAlcana;
 
@@ -90,7 +90,7 @@ public class BaseModel
     }
 
     public List<ActorInfo> StatusActors(){
-        return TempData.TempStatusActorInfos;
+        return TempInfo.TempStatusActorInfos;
     }
 
     public string TacticsBgmKey()
@@ -354,7 +354,7 @@ public class BaseModel
     public void SetAlcanaSkillInfo(List<SkillInfo> skillInfos)
     {
         StageAlcana.SetCurrentTurnAlcanaList(skillInfos);
-        TempData.SetAlcanaSkillInfo(skillInfos);
+        TempInfo.SetAlcanaSkillInfo(skillInfos);
     }
 
     public List<GetItemInfo> GetAlcanaResults(SkillInfo skillInfo)
@@ -444,7 +444,7 @@ public class BaseModel
 
     public void SetStatusActorInfos()
     {
-        TempData.SetTempStatusActorInfos(StageMembers());
+        TempInfo.SetTempStatusActorInfos(StageMembers());
     }
 
     public void SetSelectAddActor()
@@ -634,7 +634,7 @@ public class BaseModel
 
     public void SavePlayerStageData(bool isResumeStage)
     {
-        TempData.ClearRankingInfo();
+        TempInfo.ClearRankingInfo();
         SetResumeStage(isResumeStage);
         SaveSystem.SaveStageInfo(GameSystem.CurrentStageData);
     }

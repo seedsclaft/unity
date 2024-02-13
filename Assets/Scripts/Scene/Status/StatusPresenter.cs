@@ -61,7 +61,7 @@ public class StatusPresenter : BasePresenter
     {
         Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
         var characterListInfo = new CharacterListInfo((a) => {
-            _view.CommandPopupClose();
+            _view.CommandGameSystem(Base.CommandType.ClosePopup);
             _model.SelectActor(a);
             CommandRefresh();
         },
@@ -83,7 +83,7 @@ public class StatusPresenter : BasePresenter
 
     private void UpdatePopup(ConfirmCommandType confirmCommandType)
     {
-        _view.CommandConfirmClose();
+        _view.CommandGameSystem(Base.CommandType.CloseConfirm);
 
         if (_popupCommandType == Status.CommandType.SelectSkillAction)
         {
@@ -100,7 +100,7 @@ public class StatusPresenter : BasePresenter
             if (confirmCommandType == ConfirmCommandType.Yes)
             {
                 _model.SelectAddActor();
-                _view.CommandStatusClose();
+                _view.CommandGameSystem(Base.CommandType.CloseStatus);
                 var NeedReborn = _model.NeedReborn();
                 var NeedAlcana = _model.NeedAlcana();
                 if (_model.StageMembers().Count == 1 && NeedReborn)
@@ -121,8 +121,8 @@ public class StatusPresenter : BasePresenter
                     var getItemData = new GetItemData();
                     getItemData.Type = GetItemType.AddActor;
                     getItemData.Param1 = _model.CurrentActor.ActorId;
-                    _model.TempData.SetTempGetItemInfos(new List<GetItemInfo>(){new GetItemInfo(getItemData)});
-                    _model.TempData.SetTempResultActorInfos(new List<ActorInfo>(){_model.CurrentActor});
+                    _model.TempInfo.SetTempGetItemInfos(new List<GetItemInfo>(){new GetItemInfo(getItemData)});
+                    _model.TempInfo.SetTempResultActorInfos(new List<ActorInfo>(){_model.CurrentActor});
                     _view.CommandSceneChange(Scene.Strategy);
                 }
             } else{

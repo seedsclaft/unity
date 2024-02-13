@@ -63,15 +63,11 @@ public class SlotSavePresenter
     {
         if (confirmCommandType == ConfirmCommandType.Yes)
         {
-            Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
             var slotIndex = _view.SlotListIndex;
             _model.SaveSlotInfo(slotIndex);
             _view.BackEvent();
-        } else
-        {
-            Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cancel);
         }
-        _view.CommandConfirmClose();
+        _view.CommandGameSystem(Base.CommandType.CloseConfirm);
     }
     
     private void CommandStatus(int index)
@@ -81,7 +77,7 @@ public class SlotSavePresenter
             _model.ClearActorsData();
             _model.SetActorsData(index);
             var statusViewInfo = new StatusViewInfo(() => {
-                _view.CommandStatusClose();
+                _view.CommandGameSystem(Base.CommandType.CloseStatus);
                 _view.ChangeUIActive(true);
             });
             statusViewInfo.SetDisplayDecideButton(false);

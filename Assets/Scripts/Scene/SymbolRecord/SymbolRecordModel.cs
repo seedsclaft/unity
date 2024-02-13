@@ -82,9 +82,9 @@ public class SymbolRecordModel : BaseModel
     {
         CurrentSaveData.MakeStageData(CurrentStage.Id);
         CurrentStage.SetRecordStage(true);
-        TempData.SetRecordActors(PartyInfo.ActorInfos);
-        TempData.SetRecordActorIdList(PartyInfo.ActorIdList);
-        TempData.SetRecordAlchemyList(PartyInfo.AlchemyIdList);
+        TempInfo.SetRecordActors(PartyInfo.ActorInfos);
+        TempInfo.SetRecordActorIdList(PartyInfo.ActorIdList);
+        TempInfo.SetRecordAlchemyList(PartyInfo.AlchemyIdList);
         
         PartyInfo.InitActorInfos();
         foreach (var symbolActor in SymbolActorIdList(seek))

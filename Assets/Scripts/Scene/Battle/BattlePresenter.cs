@@ -50,7 +50,7 @@ public class BattlePresenter : BasePresenter
             var bgm = await _model.GetBattleBgm();
             Ryneus.SoundManager.Instance.PlayBgm(bgm,1.0f,true);
         }
-        _view.CommandLoadingClose();
+        _view.CommandGameSystem(Base.CommandType.CloseLoading);
 
         _view.ClearCurrentSkillData();
         _view.CreateObject(_model.BattlerActors().Count);
@@ -173,7 +173,7 @@ public class BattlePresenter : BasePresenter
 
     private async void UpdatePopupEscape(ConfirmCommandType confirmCommandType)
     {
-        _view.CommandConfirmClose();
+        _view.CommandGameSystem(Base.CommandType.CloseConfirm);
         if (confirmCommandType == ConfirmCommandType.Yes)
         {
             _view.HideSkillActionList();
@@ -187,7 +187,7 @@ public class BattlePresenter : BasePresenter
             _view.HideStateOverlay();
             await UniTask.DelayFrame(180);
             _view.SetBattleBusy(false);
-            _model.TempData.SetTempResultActorInfos(_model.BattleMembers());
+            _model.TempInfo.SetTempResultActorInfos(_model.BattleMembers());
             if (Ryneus.SoundManager.Instance.CrossFadeMode)
             {
                 Ryneus.SoundManager.Instance.ChangeCrossFade();
@@ -201,7 +201,7 @@ public class BattlePresenter : BasePresenter
 
     private void UpdatePopupNoEscape(ConfirmCommandType confirmCommandType)
     {
-        _view.CommandConfirmClose();
+        _view.CommandGameSystem(Base.CommandType.CloseConfirm);
     }
 
     private void CommandBack()
@@ -253,7 +253,7 @@ public class BattlePresenter : BasePresenter
         var enemyInfo = _model.GetBattlerInfo(enemyIndex);
         
         var statusViewInfo = new StatusViewInfo(() => {
-            _view.CommandStatusClose();
+            _view.CommandGameSystem(Base.CommandType.CloseStatus);
             _busy = false;
         });
         statusViewInfo.SetEnemyInfos(new List<BattlerInfo>(){enemyInfo},true);
@@ -985,8 +985,8 @@ public class BattlePresenter : BasePresenter
         _view.HideStateOverlay();
         await UniTask.DelayFrame(180);
         _view.SetBattleBusy(false);
-        _model.TempData.SetTempGetItemInfos(_model.MakeBattlerResult());
-        _model.TempData.SetTempResultActorInfos(_model.BattleMembers());
+        _model.TempInfo.SetTempGetItemInfos(_model.MakeBattlerResult());
+        _model.TempInfo.SetTempResultActorInfos(_model.BattleMembers());
         if (Ryneus.SoundManager.Instance.CrossFadeMode)
         {
             Ryneus.SoundManager.Instance.ChangeCrossFade();

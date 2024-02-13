@@ -27,7 +27,7 @@ public class NameEntryPresenter
         //var bgm = await _model.GetBgmData("MAINMENU");
         //Ryneus.SoundManager.Instance.PlayBgm(bgm,1.0f,true);
 
-        //_view.CommandLoadingClose();
+        //_view.CommandGameSystem(Base.CommandType.CloseLoading);
         // 
         CommandStartEntry();
         _busy = false;
@@ -51,7 +51,7 @@ public class NameEntryPresenter
 
     private void UpdatePopup(ConfirmCommandType confirmCommandType)
     {
-        _view.CommandConfirmClose();
+        _view.CommandGameSystem(Base.CommandType.CloseConfirm);
         if (confirmCommandType == ConfirmCommandType.Yes)
         {
         }

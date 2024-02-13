@@ -42,9 +42,9 @@ public class RankingPresenter
     private void CommandRankingOpen(int stageId)
     {
         _busy = true;
-        _view.CommandCallLoading();
+        _view.CommandGameSystem(Base.CommandType.CallLoading);
         _model.RankingInfos(stageId,(res) => {
-            _view.CommandLoadingClose();
+            _view.CommandGameSystem(Base.CommandType.CloseLoading);
             _view.SetRankingInfo(res);
             _busy = false;
         });
@@ -54,7 +54,7 @@ public class RankingPresenter
     {
         _model.MakeDetailPartyInfo(listIndex);
         var statusViewInfo = new StatusViewInfo(() => {
-            _view.CommandStatusClose();
+            _view.CommandGameSystem(Base.CommandType.CloseStatus);
             //_view.SetHelpText(DataSystem.GetTextData(14010).Text);
             _view.ChangeUIActive(true);
             _view.CommandSceneShowUI();

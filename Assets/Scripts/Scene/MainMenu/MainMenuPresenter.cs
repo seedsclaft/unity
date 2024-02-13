@@ -80,7 +80,7 @@ public class MainMenuPresenter : BasePresenter
             }
             /*
             var statusViewInfo = new StatusViewInfo(() => {
-                _view.CommandStatusClose();
+                _view.CommandGameSystem(Base.CommandType.CloseStatus);
                 _view.SetInitHelpText();
                 _view.ChangeUIActive(true);
             });

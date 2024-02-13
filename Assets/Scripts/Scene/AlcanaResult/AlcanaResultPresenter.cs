@@ -63,7 +63,7 @@ public class AlcanaResultPresenter : BasePresenter
     private void ShowStatus()
     {
         var statusViewInfo = new StatusViewInfo(() => {
-            _view.CommandStatusClose();
+            _view.CommandGameSystem(Base.CommandType.CloseStatus);
             _view.SetHelpText(DataSystem.GetTextData(14010).Text);
             _view.ChangeUIActive(true);
         });

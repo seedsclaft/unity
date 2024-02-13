@@ -141,20 +141,20 @@ public class ResultPresenter : BasePresenter
         if (confirmCommandType == ConfirmCommandType.Yes)
         {
             // ランキングに登録
-            _view.CommandCallLoading();
+            _view.CommandGameSystem(Base.CommandType.CallLoading);
             _busy = true;
             _model.CurrentRankingData((a) => 
             {
-                _view.CommandConfirmClose();
+                _view.CommandGameSystem(Base.CommandType.CloseConfirm);
                 _view.SetRanking(a);
-                _view.CommandLoadingClose();
+                _view.CommandGameSystem(Base.CommandType.CloseLoading);
                 _busy = false;
                 CommandResultNext();
             });
         } else
         {
             Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cancel);
-            _view.CommandConfirmClose();
+            _view.CommandGameSystem(Base.CommandType.CloseConfirm);
             CommandResultNext();
         }
     }
@@ -168,7 +168,7 @@ public class ResultPresenter : BasePresenter
     {
         _model.SetActors();
         var statusViewInfo = new StatusViewInfo(() => {
-            _view.CommandStatusClose();
+            _view.CommandGameSystem(Base.CommandType.CloseStatus);
             _view.ChangeUIActive(true);
             _view.SetHelpInputInfo("RESULT");
         });
@@ -192,7 +192,7 @@ public class ResultPresenter : BasePresenter
         _view.CommandActorAssign();
         _view.SetActorList(_model.EraseActorInfos());
         CommandUpdateActor();
-        _view.CommandConfirmClose();
+        _view.CommandGameSystem(Base.CommandType.CloseConfirm);
         if (_model.ActorInfos().Count > 10)
         {
             var popupInfo = new ConfirmInfo(DataSystem.GetTextData(16051).Text,(a) => UpdatePopupRebornEraseCheck((ConfirmCommandType)a));
@@ -203,14 +203,7 @@ public class ResultPresenter : BasePresenter
 
     private void UpdatePopupRebornEraseCheck(ConfirmCommandType confirmCommandType)
     {
-        if (confirmCommandType == ConfirmCommandType.Yes)
-        {
-            Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
-        } else
-        {        
-            Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cancel);
-        }
-        _view.CommandConfirmClose();
+        _view.CommandGameSystem(Base.CommandType.CloseConfirm);
     }
     
     private void CommandDecideActor(int index)
@@ -227,7 +220,7 @@ public class ResultPresenter : BasePresenter
 
     private void UpdatePopupRebornErase(ConfirmCommandType confirmCommandType)
     {
-        _view.CommandConfirmClose();
+        _view.CommandGameSystem(Base.CommandType.CloseConfirm);
         if (confirmCommandType == ConfirmCommandType.Yes)
         {
             _model.EraseReborn();
@@ -257,8 +250,7 @@ public class ResultPresenter : BasePresenter
 
     private void UpdateGetAlcanaPopup(ConfirmCommandType confirmCommandType)
     {
-        _view.CommandConfirmClose();
-        Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
+        _view.CommandGameSystem(Base.CommandType.CloseConfirm);
         CommandAlcanaRefresh();
     }
 
@@ -270,12 +262,12 @@ public class ResultPresenter : BasePresenter
     
     private void UpdatePopupSlotSaveOpen()
     {
-        _view.CommandConfirmClose();
+        _view.CommandGameSystem(Base.CommandType.CloseConfirm);
         Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
         var slotView = new SlotSaveViewInfo();
         slotView.EndEvent = () => {
             _isSlotSaveEnd = true;
-            _view.CommandPopupClose();
+            _view.CommandGameSystem(Base.CommandType.ClosePopup);
         };
         slotView.SlotInfo = _model.MakeSlotInfo();
         _view.CommandSlotSave(slotView);

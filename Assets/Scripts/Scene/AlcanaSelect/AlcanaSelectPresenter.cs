@@ -68,16 +68,9 @@ public class AlcanaSelectPresenter : BasePresenter
 
     private void UpdatePopupDeleteAlcana(ConfirmCommandType confirmCommandType)
     {
-        if (confirmCommandType == ConfirmCommandType.Yes)
-        {
-            Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
-        } else
-        {
-            Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cancel);
-        }
         _model.DeleteAlcana();
         CommandRefresh(0);
-        _view.CommandConfirmClose();
+        _view.CommandGameSystem(Base.CommandType.CloseConfirm);
     }
 
     private void CommandBack()
@@ -86,7 +79,7 @@ public class AlcanaSelectPresenter : BasePresenter
         {
             var statusViewInfo = new StatusViewInfo(() => {
                 // ステージセレクトに戻る
-                _view.CommandStatusClose();
+                _view.CommandGameSystem(Base.CommandType.CloseStatus);
                 _view.CommandSceneChange(Scene.MainMenu);
             });
             _model.InitializeStageData(_model.CurrentStage.Id);
@@ -120,17 +113,13 @@ public class AlcanaSelectPresenter : BasePresenter
 
     private void UpdatePopup(ConfirmCommandType confirmCommandType)
     {
-        _view.CommandConfirmClose();
+        _view.CommandGameSystem(Base.CommandType.CloseConfirm);
         if (confirmCommandType == ConfirmCommandType.Yes)
         {
             // アルカナをセット
             _model.SetStageAlcanaList();
-            Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
             _model.SavePlayerStageData(true);
             _view.CommandSceneChange(Scene.Tactics);
-        } else
-        {
-            Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cancel);
         }
     }
 }

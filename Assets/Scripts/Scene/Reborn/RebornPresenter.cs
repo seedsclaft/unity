@@ -72,8 +72,7 @@ public class RebornPresenter :BasePresenter
 
     private void UpdatePopupStart(ConfirmCommandType confirmCommandType)
     {
-        Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
-        _view.CommandConfirmClose();
+        _view.CommandGameSystem(Base.CommandType.CloseConfirm);
     }
 
     private void UpdatePopup(ConfirmCommandType confirmCommandType)
@@ -81,7 +80,7 @@ public class RebornPresenter :BasePresenter
         if (confirmCommandType == ConfirmCommandType.Yes)
         {
             _model.OnRebornSkill();
-            _view.CommandConfirmClose();
+            _view.CommandGameSystem(Base.CommandType.CloseConfirm);
             var NeedAlcana = _model.NeedAlcana();
             if (NeedAlcana)
             {
@@ -95,7 +94,7 @@ public class RebornPresenter :BasePresenter
         } else{
             Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cancel);
         }
-        _view.CommandConfirmClose();
+        _view.CommandGameSystem(Base.CommandType.CloseConfirm);
     }
 
     private void CommandDecideActor(int index)
@@ -130,7 +129,7 @@ public class RebornPresenter :BasePresenter
     public void CommandBackEvent()
     {
         var statusViewInfo = new StatusViewInfo(() => {
-            _view.CommandStatusClose();
+            _view.CommandGameSystem(Base.CommandType.CloseStatus);
             _view.CommandSceneChange(Scene.MainMenu);
         });
         _model.InitializeStageData(_model.CurrentStage.Id);

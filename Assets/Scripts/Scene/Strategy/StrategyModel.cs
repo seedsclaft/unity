@@ -26,7 +26,7 @@ public class StrategyModel : BaseModel
 
     public List<ActorInfo> TacticsActors()
     {
-        return TempData.TempResultActorInfos.FindAll(a => a.InBattle == false);
+        return TempInfo.TempResultActorInfos.FindAll(a => a.InBattle == false);
     }
 
     public void SetLvUp()
@@ -53,7 +53,7 @@ public class StrategyModel : BaseModel
 
     public void MakeResult()
     {
-        var getItemInfos = TempData.TempGetItemInfos;
+        var getItemInfos = TempInfo.TempGetItemInfos;
         
         foreach (var getItemInfo in getItemInfos)
         {
@@ -110,7 +110,7 @@ public class StrategyModel : BaseModel
         }
         if (CurrentStage.RecordStage)
         {
-            foreach (var actorInfo in TempData.TempRecordActors)
+            foreach (var actorInfo in TempInfo.TempRecordActors)
             {
                 // 強さ差分を適用
                 var recordActor = Actors().Find(a => a.ActorId == actorInfo.ActorId);
@@ -159,12 +159,12 @@ public class StrategyModel : BaseModel
 
     public List<ListData> BattleResultInfos()
     {
-        return MakeListData(TempData.TempGetItemInfos);
+        return MakeListData(TempInfo.TempGetItemInfos);
     }
 
     public List<ActorInfo> BattleResultActors()
     {
-        return TempData.TempResultActorInfos.FindAll(a => a.InBattle);
+        return TempInfo.TempResultActorInfos.FindAll(a => a.InBattle);
     }
 
     public void ClearBattleData(List<ActorInfo> actorInfos)
@@ -286,17 +286,17 @@ public class StrategyModel : BaseModel
         }
 
         PartyInfo.InitActorInfos();
-        foreach (var actorInfo in TempData.TempRecordActors)
+        foreach (var actorInfo in TempInfo.TempRecordActors)
         {
 			PartyInfo.UpdateActorInfo(actorInfo);
         }
-        foreach (var actorId in TempData.TempRecordActorIdList)
+        foreach (var actorId in TempInfo.TempRecordActorIdList)
         {
             PartyInfo.AddActorId(actorId);
         }
         
         PartyInfo.ClearAlchemy();
-        foreach (var alchemyId in TempData.TempRecordAlchemyList)
+        foreach (var alchemyId in TempInfo.TempRecordAlchemyList)
         {
             PartyInfo.AddAlchemy(alchemyId);
         }
@@ -340,9 +340,9 @@ public class StrategyModel : BaseModel
             PartyInfo.SetSymbolResultInfo(symbolResultInfo);
         }
 
-        TempData.ClearRecordActors();
-        TempData.ClearRecordActorIdList();
-        TempData.ClearRecordAlchemyList();
+        TempInfo.ClearRecordActors();
+        TempInfo.ClearRecordActorIdList();
+        TempInfo.ClearRecordAlchemyList();
         SavePlayerData();
         SavePlayerStageData(false);
     }
@@ -358,11 +358,11 @@ public class StrategyModel : BaseModel
 
     public void ReturnTempBattleMembers()
     {
-        foreach (var tempActorInfo in TempData.TempActorInfos)
+        foreach (var tempActorInfo in TempInfo.TempActorInfos)
         {
             tempActorInfo.SetInBattle(false);
             PartyInfo.UpdateActorInfo(tempActorInfo);
         }
-        TempData.ClearBattleActors();
+        TempInfo.ClearBattleActors();
     }
 }

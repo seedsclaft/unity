@@ -132,7 +132,7 @@ public class TitlePresenter : BasePresenter
 
     private void updatePopup(ConfirmCommandType confirmCommandType)
     {
-        _view.CommandConfirmClose();
+        _view.CommandGameSystem(Base.CommandType.CloseConfirm);
         if (confirmCommandType == ConfirmCommandType.Yes)
         {
         }

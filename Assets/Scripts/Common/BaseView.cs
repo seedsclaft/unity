@@ -141,6 +141,12 @@ abstract public class BaseView : MonoBehaviour
         _commandData(eventData);
     }
 
+    public void CommandGameSystem(Base.CommandType commandType)
+    {
+        var eventData = new ViewEvent(commandType);
+        CallSceneChangeCommand(eventData);
+    }
+
     public void CommandSceneChange(Scene scene)
     {
         var eventData = new ViewEvent(Base.CommandType.SceneChange);
@@ -159,18 +165,6 @@ abstract public class BaseView : MonoBehaviour
     {
         var eventData = new ViewEvent(Base.CommandType.CallSkillDetailView);
         eventData.template = popupInfo;
-        CallSceneChangeCommand(eventData);
-    }
-
-    public void CommandPopupClose()
-    {
-        var eventData = new ViewEvent(Base.CommandType.ClosePopup);
-        CallSceneChangeCommand(eventData);
-    }
-
-    public void CommandConfirmClose()
-    {
-        var eventData = new ViewEvent(Base.CommandType.CloseConfirm);
         CallSceneChangeCommand(eventData);
     }
 
@@ -230,12 +224,6 @@ abstract public class BaseView : MonoBehaviour
         CallSceneChangeCommand(eventData);
     }
 
-    public void CommandStatusClose()
-    {
-        var eventData = new ViewEvent(Base.CommandType.CloseStatus);
-        CallSceneChangeCommand(eventData);
-    }
-
     public void CommandCallEnemyInfo(StatusViewInfo statusViewInfo)
     {
         var eventData = new ViewEvent(Base.CommandType.CallEnemyInfoView);
@@ -254,18 +242,6 @@ abstract public class BaseView : MonoBehaviour
     {
         var eventData = new ViewEvent(Base.CommandType.DecidePlayerName);
         eventData.template = nameText;
-        CallSceneChangeCommand(eventData);
-    }
-
-    public void CommandCallLoading()
-    {
-        var eventData = new ViewEvent(Base.CommandType.CallLoading);
-        CallSceneChangeCommand(eventData);
-    }
-
-    public void CommandLoadingClose()
-    {
-        var eventData = new ViewEvent(Base.CommandType.CloseLoading);
         CallSceneChangeCommand(eventData);
     }
 

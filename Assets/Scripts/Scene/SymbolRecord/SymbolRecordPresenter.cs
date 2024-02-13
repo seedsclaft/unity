@@ -63,16 +63,12 @@ public class SymbolRecordPresenter : BasePresenter
 
     private void UpdatePopupCheckStartRecord(ConfirmCommandType confirmCommandType)
     {
-        _view.CommandConfirmClose();
+        _view.CommandGameSystem(Base.CommandType.CloseConfirm);
         if (confirmCommandType == ConfirmCommandType.Yes)
         {
-            Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
             var index = _view.SymbolListIndex;
             _model.MakeSymbolRecordStage(index);
             _view.CommandSceneChange(Scene.Tactics);
-        } else
-        {
-            Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cancel);
         }
     }
 
