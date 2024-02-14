@@ -54,118 +54,55 @@ MonoBehaviour:
     StageSymbols:
     - StageId: 1
       Seek: 1
-      SymbolNum: 1
-      BattleSymbol: 1
-      BossSymbol: 0
-      RecoverSymbol: 0
-      AlcanaSymbol: 0
-      ActorSymbol: 0
-      ResourceSymbol: 0
-      RebirthSymbol: 0
+      SymbolType: 1
       Param1: 1001
       Param2: 0
       PrizeSetId: 105
     - StageId: 1
       Seek: 2
-      SymbolNum: 1
-      BattleSymbol: 0
-      BossSymbol: 0
-      RecoverSymbol: 1
-      AlcanaSymbol: 0
-      ActorSymbol: 0
-      ResourceSymbol: 0
-      RebirthSymbol: 0
+      SymbolType: 3
       Param1: 0
       Param2: 0
       PrizeSetId: 300
     - StageId: 1
       Seek: 3
-      SymbolNum: 1
-      BattleSymbol: 1
-      BossSymbol: 0
-      RecoverSymbol: 0
-      AlcanaSymbol: 0
-      ActorSymbol: 0
-      ResourceSymbol: 0
-      RebirthSymbol: 0
+      SymbolType: 1
       Param1: 1011
       Param2: 0
       PrizeSetId: 105
     - StageId: 1
       Seek: 3
-      SymbolNum: 1
-      BattleSymbol: 1
-      BossSymbol: 0
-      RecoverSymbol: 0
-      AlcanaSymbol: 0
-      ActorSymbol: 0
-      ResourceSymbol: 0
-      RebirthSymbol: 0
+      SymbolType: 1
       Param1: 1012
       Param2: 0
       PrizeSetId: 105
     - StageId: 1
       Seek: 4
-      SymbolNum: 1
-      BattleSymbol: 0
-      BossSymbol: 0
-      RecoverSymbol: 0
-      AlcanaSymbol: 1
-      ActorSymbol: 0
-      ResourceSymbol: 0
-      RebirthSymbol: 0
+      SymbolType: 4
       Param1: 0
       Param2: 0
       PrizeSetId: 11010
     - StageId: 1
       Seek: 4
-      SymbolNum: 1
-      BattleSymbol: 0
-      BossSymbol: 0
-      RecoverSymbol: 0
-      AlcanaSymbol: 1
-      ActorSymbol: 0
-      ResourceSymbol: 0
-      RebirthSymbol: 0
+      SymbolType: 4
       Param1: 0
       Param2: 0
       PrizeSetId: 11070
     - StageId: 1
       Seek: 5
-      SymbolNum: 1
-      BattleSymbol: 0
-      BossSymbol: 0
-      RecoverSymbol: 0
-      AlcanaSymbol: 0
-      ActorSymbol: 1
-      ResourceSymbol: 0
-      RebirthSymbol: 0
+      SymbolType: 5
       Param1: 0
       Param2: 0
       PrizeSetId: 501
     - StageId: 1
       Seek: 5
-      SymbolNum: 1
-      BattleSymbol: 0
-      BossSymbol: 0
-      RecoverSymbol: 0
-      AlcanaSymbol: 0
-      ActorSymbol: 1
-      ResourceSymbol: 0
-      RebirthSymbol: 0
+      SymbolType: 5
       Param1: 0
       Param2: 0
       PrizeSetId: 502
     - StageId: 1
       Seek: 6
-      SymbolNum: 1
-      BattleSymbol: 0
-      BossSymbol: 1
-      RecoverSymbol: 0
-      AlcanaSymbol: 0
-      ActorSymbol: 0
-      ResourceSymbol: 0
-      RebirthSymbol: 0
+      SymbolType: 2
       Param1: 1021
       Param2: 0
       PrizeSetId: 105
@@ -175,7 +112,7 @@ MonoBehaviour:
     AchieveText: ??????
     Selectable: 1
     Help: "\u7570\u5E38\u73FE\u8C61\u306B\u3088\u308A\u8C6A\u96EA\u304C\u5927\u548C\u4E2D\u8D8A\u5C71\u9593\u90E8\u3092\u8986\u3063\u305F\u5927\u707D\u5BB3\u3002\n\n<\u8A73\u7D30>\n\u5927\u96EA\u306B\u3088\u308A\u591A\u304F\u306E\u5EFA\u7269\u304C\u96EA\u306E\u91CD\u307F\u306B\u8010\u3048\u5207\u308C\u305A\u5012\u58CA\u3002\n\u4EA4\u901A\u306F\u5BF8\u65AD\u3055\u308C\u6551\u52A9\u6D3B\u52D5\u304C\u9045\u308C\n\u5B64\u7ACB\u3057\u305F\u5730\u57DF\u3067\u306F\u547D\u3092\u843D\u3068\u3059\u8005\u304C\u76F8\u6B21\u3044\u3060\u3002\n\n<\u6B7B\u8005\u6570>\n5\u4E07\u4EBA\u8D85\u3002\n\n<\u5099\u8003>\n\u547D\u540D\u306F\u6551\u52A9\u6D3B\u52D5\u304C\u99C6\u3051\u3064\u3051\u305F\u6642\u306E\u69D8\u5B50\u306B\u7531\u6765\u3059\u308B\u3002"
-    Turns: 6
+    Turns: 1
     InitMembers: 0100000002000000030000000400000005000000
     RandomTroopCount: 15
     BackGround: NA_background image_3D like_404
@@ -193,17 +130,10 @@ MonoBehaviour:
     StageSymbols:
     - StageId: 2
       Seek: 1
-      SymbolNum: 1
-      BattleSymbol: 1
-      BossSymbol: 0
-      RecoverSymbol: 0
-      AlcanaSymbol: 0
-      ActorSymbol: 0
-      ResourceSymbol: 0
-      RebirthSymbol: 0
-      Param1: 1001
+      SymbolType: 101
+      Param1: 0
       Param2: 0
-      PrizeSetId: 105
+      PrizeSetId: 0
     Tutorials: []
   - Id: 3
     Name: "A.D.3324 \u5317\u6975\u661F\u306E\u5927\u7570\u5909"
@@ -249,3 +179,22 @@ MonoBehaviour:
     StageEvents: []
     StageSymbols: []
     Tutorials: []
+  SymbolGroupData:
+  - GroupId: 101
+    SymbolType: 4
+    Rate: -1
+    Param1: 0
+    Param2: 0
+    PrizeSetId: 11010
+  - GroupId: 101
+    SymbolType: 4
+    Rate: 80
+    Param1: 0
+    Param2: 0
+    PrizeSetId: 11020
+  - GroupId: 101
+    SymbolType: 4
+    Rate: 20
+    Param1: 0
+    Param2: 0
+    PrizeSetId: 11030

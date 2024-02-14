@@ -4,8 +4,9 @@ using System.Collections.Generic;
 [Serializable]
 public class SymbolInfo
 {
-    private SymbolType _symbolType;
-    public SymbolType SymbolType => _symbolType;
+    private StageSymbolData _stageSymbolData;
+    public StageSymbolData StageSymbolData => _stageSymbolData;
+    public SymbolType SymbolType => _stageSymbolData.SymbolType;
     private TroopInfo _troopInfo;
     public TroopInfo TroopInfo => _troopInfo;
     private List<GetItemInfo> _getItemInfos = new ();
@@ -18,33 +19,18 @@ public class SymbolInfo
         {
             return;
         }
-        if (symbol.BattleSymbol == 1){
-            SetSymbolType(SymbolType.Battle);
-        } else
-        if (symbol.BossSymbol == 1){
-            SetSymbolType(SymbolType.Boss);
-        } else
-        if (symbol.RecoverSymbol == 1){
-            SetSymbolType(SymbolType.Recover);
-        } else
-        if (symbol.AlcanaSymbol == 1){
-            SetSymbolType(SymbolType.Alcana);
-        } else
-        if (symbol.ActorSymbol == 1){
-            SetSymbolType(SymbolType.Actor);
-        } else
-        if (symbol.ResourceSymbol == 1){
-            SetSymbolType(SymbolType.Resource);
-        } else
-        if (symbol.RebirthSymbol == 1){
-            SetSymbolType(SymbolType.Rebirth);
-        }
+        _stageSymbolData = symbol;
     }
 
-    private void SetSymbolType(SymbolType symbolType)
+    public void CopyData(SymbolInfo symbolInfo)
     {
-        _symbolType = symbolType;
+        _stageSymbolData = symbolInfo.StageSymbolData;
+        _troopInfo = symbolInfo.TroopInfo;
+        _getItemInfos = symbolInfo.GetItemInfos;
+        _selected = symbolInfo.Selected;
     }
+
+
 
     public void SetTroopInfo(TroopInfo troopInfo)
     {

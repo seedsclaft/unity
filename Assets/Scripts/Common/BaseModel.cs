@@ -496,11 +496,20 @@ public class BaseModel
         foreach (var symbol in symbols)
         {
             var symbolInfo = new SymbolInfo(symbol);
+            // ランダム
+            if (symbol.SymbolType > SymbolType.Rebirth){
+                var groupId = (int)symbol.SymbolType;
+                var groupDates = DataSystem.SymbolGroups.FindAll(a => a.GroupId == groupId);
+                var data = PickUpSymbolData(groupDates);
+                data.StageId = symbol.StageId;
+                data.Seek = symbol.Seek;
+                symbolInfo = new SymbolInfo(data);
+            }
             var getItemInfos = new List<GetItemInfo>();
-            if (symbol.BattleSymbol == 1){
-                if (symbol.Param1 > 0)
+            if (symbolInfo.SymbolType == SymbolType.Battle || symbolInfo.SymbolType == SymbolType.Boss){
+                if (symbolInfo.StageSymbolData.Param1 > 0)
                 {
-                    symbolInfo.SetTroopInfo(BattleTroop(symbol.Param1,symbol.Param2));
+                    symbolInfo.SetTroopInfo(BattleTroop(symbolInfo.StageSymbolData.Param1,symbolInfo.StageSymbolData.Param2));
                 }
                 
                 var prizeSets = DataSystem.PrizeSets.FindAll(a => a.Id == symbolInfo.TroopInfo.Master.PrizeSetId);
@@ -509,22 +518,10 @@ public class BaseModel
                     var getItemInfo = new GetItemInfo(prizeSet.GetItem);
                     getItemInfos.Add(getItemInfo);
                 }
-            } else
-            if (symbol.BossSymbol == 1){
-                if (symbol.Param1 > 0)
-                {
-                    symbolInfo.SetTroopInfo(BattleTroop(symbol.Param1,symbol.Param2));
-                }
-                var prizeSets = DataSystem.PrizeSets.FindAll(a => a.Id == symbolInfo.TroopInfo.Master.PrizeSetId);
-                foreach (var prizeSet in prizeSets)
-                {
-                    var getItemInfo = new GetItemInfo(prizeSet.GetItem);
-                    getItemInfos.Add(getItemInfo);
-                }
             }
-            if (symbol.PrizeSetId > 0)
+            if (symbolInfo.StageSymbolData.PrizeSetId > 0)
             {
-                var prizeSets = DataSystem.PrizeSets.FindAll(a => a.Id == symbol.PrizeSetId);
+                var prizeSets = DataSystem.PrizeSets.FindAll(a => a.Id == symbolInfo.StageSymbolData.PrizeSetId);
                 foreach (var prizeSet in prizeSets)
                 {
                     var getItemInfo = new GetItemInfo(prizeSet.GetItem);
@@ -535,6 +532,28 @@ public class BaseModel
             symbolInfos.Add(symbolInfo);
         }
         return symbolInfos;
+    }
+
+    public StageSymbolData PickUpSymbolData(List<SymbolGroupData> groupDates)
+    {
+        int targetRand = 0;
+        for (int i = 0;i < groupDates.Count;i++)
+        {
+            targetRand += groupDates[i].Rate;
+        }
+        targetRand = UnityEngine.Random.Range (0,targetRand);
+        int targetIndex = -1;
+        for (int i = 0;i < groupDates.Count;i++)
+        {
+            targetRand -= groupDates[i].Rate;
+            if (targetRand <= 0 && targetIndex == -1)
+            {
+                targetIndex = i;
+            }
+        }
+        var StageSymbolData = new StageSymbolData();
+        StageSymbolData.ConvertSymbolGroupData(groupDates[targetIndex]);
+        return StageSymbolData;
     }
 
     public TroopInfo BattleTroop(int troopId,int enemyCount)

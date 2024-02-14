@@ -46,18 +46,22 @@ public class StagesInfoImporter : AssetPostprocessor {
     {
 		Id = 0,
         Seek,
-		SelectSymbol,
-		Battle,
-		Boss,
-		Recover,
-		Alcana,
-		Actor,
-		Resource,
-		Rebirth,
+		SymbolType,
+		_SymbolType,
 		Param1,
 		Param2,
 		PrizeSetId
     }
+    enum BaseSymbolGroupColumn
+    {
+		GroupId = 0,
+		SymbolType,
+		_SymbolType,
+		Rate,
+		Param1,
+		Param2,
+		PrizeSetId
+	}
     enum BaseTutorialColumn
     {
 		Id = 0,
@@ -109,7 +113,7 @@ public class StagesInfoImporter : AssetPostprocessor {
 			{
 				// エクセルブックを作成
 				AssetPostImporter.CreateBook(asset, Mainstream, out IWorkbook Book);
-				var textData = AssetPostImporter.CreateText(Book.GetSheetAt(4));
+				var textData = AssetPostImporter.CreateText(Book.GetSheetAt(5));
 
 				// 情報の初期化
 				Data.Data.Clear();
@@ -118,7 +122,7 @@ public class StagesInfoImporter : AssetPostprocessor {
 				ISheet BaseSheet = Book.GetSheetAt(0);
 				ISheet EventSheet = Book.GetSheetAt(1);
 				ISheet SymbolSheet = Book.GetSheetAt(2);
-				ISheet TutorialSheet = Book.GetSheetAt(3);
+				ISheet TutorialSheet = Book.GetSheetAt(4);
 				for (int i = 1; i <= BaseSheet.LastRowNum; i++)
 				{
 					IRow BaseRow = BaseSheet.GetRow(i);
@@ -181,14 +185,7 @@ public class StagesInfoImporter : AssetPostprocessor {
 						{
 							SymbolData.StageId = (int)SymbolRow.GetCell((int)BaseSymbolColumn.Id)?.SafeNumericCellValue();
 							SymbolData.Seek = (int)SymbolRow.GetCell((int)BaseSymbolColumn.Seek)?.SafeNumericCellValue();
-							SymbolData.SymbolNum = (int)SymbolRow.GetCell((int)BaseSymbolColumn.SelectSymbol)?.SafeNumericCellValue();
-							SymbolData.BattleSymbol = (int)SymbolRow.GetCell((int)BaseSymbolColumn.Battle)?.SafeNumericCellValue();
-							SymbolData.BossSymbol = (int)SymbolRow.GetCell((int)BaseSymbolColumn.Boss)?.SafeNumericCellValue();
-							SymbolData.ActorSymbol = (int)SymbolRow.GetCell((int)BaseSymbolColumn.Actor)?.SafeNumericCellValue();
-							SymbolData.AlcanaSymbol = (int)SymbolRow.GetCell((int)BaseSymbolColumn.Alcana)?.SafeNumericCellValue();
-							SymbolData.RebirthSymbol = (int)SymbolRow.GetCell((int)BaseSymbolColumn.Rebirth)?.SafeNumericCellValue();
-							SymbolData.RecoverSymbol = (int)SymbolRow.GetCell((int)BaseSymbolColumn.Recover)?.SafeNumericCellValue();
-							SymbolData.ResourceSymbol = (int)SymbolRow.GetCell((int)BaseSymbolColumn.Resource)?.SafeNumericCellValue();
+							SymbolData.SymbolType = (SymbolType)SymbolRow.GetCell((int)BaseSymbolColumn.SymbolType)?.SafeNumericCellValue();
 							SymbolData.Param1 = (int)SymbolRow.GetCell((int)BaseSymbolColumn.Param1)?.SafeNumericCellValue();
 							SymbolData.Param2 = (int)SymbolRow.GetCell((int)BaseSymbolColumn.Param2)?.SafeNumericCellValue();
 							SymbolData.PrizeSetId = (int)SymbolRow.GetCell((int)BaseSymbolColumn.PrizeSetId)?.SafeNumericCellValue();
@@ -217,10 +214,26 @@ public class StagesInfoImporter : AssetPostprocessor {
 							StageData.Tutorials.Add(TutorialData);
 						}
 					}
+
+
 					Data.Data.Add(StageData);
 				}
 
+				Data.SymbolGroupData = new List<SymbolGroupData>();
+				ISheet SymbolGroupSheet = Book.GetSheetAt(3);
+				for (int i = 1; i <= SymbolGroupSheet.LastRowNum; i++)
+				{
+					IRow BaseRow = SymbolGroupSheet.GetRow(i);
 
+					var SymbolGroupData = new SymbolGroupData();
+					SymbolGroupData.GroupId = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseSymbolGroupColumn.GroupId);
+					SymbolGroupData.SymbolType = (SymbolType)AssetPostImporter.ImportNumeric(BaseRow,(int)BaseSymbolGroupColumn.SymbolType);
+					SymbolGroupData.Param1 = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseSymbolGroupColumn.Param1);
+					SymbolGroupData.Param2 = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseSymbolGroupColumn.Param2);
+					SymbolGroupData.Rate = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseSymbolGroupColumn.Rate);
+					SymbolGroupData.PrizeSetId = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseSymbolGroupColumn.PrizeSetId);
+					Data.SymbolGroupData.Add(SymbolGroupData);
+				}
 			}
 		}
 		catch (Exception ex)

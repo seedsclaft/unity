@@ -16,6 +16,7 @@ abstract public class DataSystem
     public static List<RuleData> Rules = new ();
     public static List<SkillData> Skills = new ();
     public static List<StageData> Stages = new ();
+    public static List<SymbolGroupData> SymbolGroups = new ();
     public static List<StateData> States = new ();
     public static List<TroopData> Troops = new ();
     public static List<AnimationData> Animations = new ();
@@ -47,6 +48,7 @@ abstract public class DataSystem
         Rules = Resources.Load<RuleDates>("Data/Rules").Data;
         Skills = Resources.Load<SkillDates>("Data/Skills").Data;
         Stages = Resources.Load<StageDates>("Data/Stages").Data;
+        SymbolGroups = Resources.Load<StageDates>("Data/Stages").SymbolGroupData;
         States = Resources.Load<StateDates>("Data/States").Data;
         System = Resources.Load<SystemData>("Data/System");
         Troops = Resources.Load<TroopDates>("Data/Troops").Data;

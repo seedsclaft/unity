@@ -5,6 +5,7 @@ using UnityEngine;
 public class StageDates : ScriptableObject
 {
     [SerializeField] public List<StageData> Data = new();
+    [SerializeField] public List<SymbolGroupData> SymbolGroupData = new();
 }
 
 [Serializable]
@@ -52,17 +53,18 @@ public class StageSymbolData
 {
     public int StageId;
     public int Seek;
-    public int SymbolNum;
-    public int BattleSymbol;
-    public int BossSymbol;
-    public int RecoverSymbol;
-    public int AlcanaSymbol;
-    public int ActorSymbol;
-    public int ResourceSymbol;
-    public int RebirthSymbol;
+    public SymbolType SymbolType;
     public int Param1;
     public int Param2;
     public int PrizeSetId;
+
+    public void ConvertSymbolGroupData(SymbolGroupData symbolGroupData)
+    {
+        SymbolType = symbolGroupData.SymbolType;
+        Param1 = symbolGroupData.Param1;
+        Param2 = symbolGroupData.Param2;
+        PrizeSetId = symbolGroupData.PrizeSetId;
+    }
 }
 
 [Serializable]
@@ -75,6 +77,18 @@ public class StageTutorialData
     public int Y;
     public int Width;
     public int Height;
+}
+
+
+[Serializable]
+public class SymbolGroupData
+{   
+    public int GroupId;
+    public SymbolType SymbolType;
+    public int Rate;
+    public int Param1;
+    public int Param2;
+    public int PrizeSetId;
 }
 
 public enum SymbolType{

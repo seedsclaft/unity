@@ -5,16 +5,19 @@ public class SymbolRecordModel : BaseModel
 {
     public List<ListData> StageSymbolInfos(int seek)
     {
-        var symbolInfos = CurrentTurnSymbolInfos(seek+1);
+        var list = new List<SymbolInfo>();
+        var symbolInfos = PartyInfo.SymbolRecordList.FindAll(a => a.StageId == CurrentStage.Id && a.Seek == (seek+1));
         var symbolRecords = PartyInfo.SymbolRecordList.FindAll(a => a.StageId == CurrentStage.Id && a.Selected == true);
         for (int i = 0;i < symbolInfos.Count;i++)
         {
-            var symbolInfo = symbolInfos[i];
+            var symbolInfo = new SymbolInfo();
+            symbolInfo.CopyData(symbolInfos[i].SymbolInfo);
             var saveRecord = symbolRecords.Find(a => a.IsSameSymbol(CurrentStage.Id,seek+1,i));
             symbolInfo.SetSelected(saveRecord != null);
             MakePrizeData(saveRecord,symbolInfo.GetItemInfos);
+            list.Add(symbolInfo);
         }
-        return MakeListData(symbolInfos);
+        return MakeListData(list);
     }
 
     public List<ListData> SymbolRecords()
@@ -25,8 +28,8 @@ public class SymbolRecordModel : BaseModel
         var stageData = DataSystem.FindStage(CurrentStage.Id);
         foreach (var symbolRecord in symbolRecords)
         {
-            var currentSymbolInfos = CurrentTurnSymbolInfos(symbolRecord.Seek);
-            var symbolInfo = currentSymbolInfos[symbolRecord.SeekIndex];
+            var symbolInfo = new SymbolInfo();
+            symbolInfo.CopyData(symbolRecord.SymbolInfo);
             MakePrizeData(symbolRecord,symbolInfo.GetItemInfos);
             symbolInfos.Add(symbolInfo);
         }
