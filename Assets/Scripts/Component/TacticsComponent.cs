@@ -23,6 +23,7 @@ public class TacticsComponent : MonoBehaviour
     [SerializeField] private StatusInfoComponent statusInfoComponent;
 
     [SerializeField] private EnemyInfoComponent enemyInfoComponent;
+    [SerializeField] private TextMeshProUGUI battleIndex;
     [SerializeField] private List<Toggle> battlePositionToggles;
 
 
@@ -46,7 +47,7 @@ public class TacticsComponent : MonoBehaviour
         {
             if (tacticsCommandType == TacticsCommandType.Paradigm)
             {
-                checkToggle.SetIsOnWithoutNotify(actorInfo.InBattle);
+                checkToggle.SetIsOnWithoutNotify(actorInfo.BattleIndex >= 0);
             } else
             {
                 checkToggle.SetIsOnWithoutNotify(actorInfo.TacticsCommandType == tacticsCommandType);
@@ -70,11 +71,17 @@ public class TacticsComponent : MonoBehaviour
 
         if (attributeType != null)
         {
-            if (actorInfo.EquipmentSkillId > 0)
+            skillInfoComponent.Clear();
+        }
+
+        if (battleIndex != null)
+        {
+            if (actorInfo.BattleIndex >= 0)
             {
-                skillInfoComponent.UpdateSkillData(actorInfo.EquipmentSkillId);
-            } else{
-                skillInfoComponent.Clear();
+                battleIndex.SetText(BattleIndexText(actorInfo.BattleIndex));
+            } else
+            { 
+                battleIndex.SetText("");
             }
         }
 
@@ -124,11 +131,7 @@ public class TacticsComponent : MonoBehaviour
             }
         }
 
-        checkToggle.gameObject.SetActive(tacticsCommandType == TacticsCommandType.Paradigm);
-    }
-
-    public void SetToggleHandler(System.Action<int> handler){
-        //checkToggle.onValueChanged.AddListener((a) => handler(_actorInfo.ActorId));
+        //checkToggle.gameObject.SetActive(tacticsCommandType == TacticsCommandType.Paradigm);
     }
 
     private void UpdateViewObjects(TacticsCommandType tacticsCommandType)
@@ -139,5 +142,10 @@ public class TacticsComponent : MonoBehaviour
             viewObject.SetActive((int)tacticsCommandType == idx);
             idx++;
         }
+    }
+
+    private string BattleIndexText(int battleIndex)
+    {
+        return DataSystem.System.GetTextData(battleIndex + 2000 - 1).Text;
     }
 }

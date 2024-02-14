@@ -20,8 +20,6 @@ public class ActorInfo
     private StatusInfo _upperRate;
     private List<AttributeRank> _attribute;
     public List<AttributeRank> Attribute => _attribute;
-    private int _equipmentSkillId = 0;
-    public int EquipmentSkillId => _equipmentSkillId;
     public List<AttributeRank> GetAttributeRank()
     {
         var list = new List<AttributeRank>();
@@ -64,8 +62,6 @@ public class ActorInfo
     public int CurrentHp => _currentHp;
     private int _currentMp;
     public int CurrentMp => _currentMp;
-    private int _ap;
-    public int Ap => _ap;
     private int _demigodParam;
     public int DemigodParam => _demigodParam;
 
@@ -79,9 +75,9 @@ public class ActorInfo
     private int _tacticsCostRate = 1;
     public int TacticsCostRate => _tacticsCostRate;
 
-    private bool _inBattle = false;
-    public bool InBattle => _inBattle;
-    public void SetInBattle(bool inBattle) { _inBattle = inBattle;}
+    private int _battleIndex = -1;
+    public int BattleIndex => _battleIndex;
+    public void SetBattleIndex(int battleIndex) { _battleIndex = battleIndex;}
     private bool _lost = false;
     public bool Lost => _lost;
     private int _sp = 0;
@@ -169,17 +165,15 @@ public class ActorInfo
         _lastSelectSkillId = baseActorInfo.LastSelectSkillId;
         _currentHp = baseActorInfo.CurrentHp;
         _currentMp = baseActorInfo.CurrentMp;
-        _ap = baseActorInfo.Ap;
         _demigodParam = baseActorInfo.DemigodParam;
         _tacticsCommandType = baseActorInfo.TacticsCommandType;
         _tacticsEnable = baseActorInfo._tacticsEnable;
         _tacticsCost = baseActorInfo.TacticsCost;
         _tacticsCostRate = baseActorInfo.TacticsCostRate;
-        _inBattle = baseActorInfo.InBattle;
+        _battleIndex = baseActorInfo.BattleIndex;
         _lost = baseActorInfo.Lost;
         _sp = baseActorInfo.Sp;
         _numinous = baseActorInfo.Numinous;
-        _equipmentSkillId = baseActorInfo.EquipmentSkillId;
     }
 
     private void SetInitialParameter(ActorData actorData)

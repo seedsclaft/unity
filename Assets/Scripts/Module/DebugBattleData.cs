@@ -36,8 +36,12 @@ public class DebugBattleData : MonoBehaviour
                 GameSystem.CurrentStageData.AddTestActor(actor,actorLv);
             }
         }
-        GameSystem.CurrentStageData.Party.ActorInfos.ForEach(a => a.SetInBattle(true));
-
+        var idx = 1;
+        foreach (var actorInfo in GameSystem.CurrentStageData.Party.ActorInfos)
+        {
+            actorInfo.SetBattleIndex(idx);
+            idx++;
+        }
         GameSystem.CurrentStageData.CurrentStage.TestTroops(troopId,troopLv);
     }
 #if UNITY_EDITOR

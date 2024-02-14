@@ -26,7 +26,7 @@ public class StrategyModel : BaseModel
 
     public List<ActorInfo> TacticsActors()
     {
-        return TempInfo.TempResultActorInfos.FindAll(a => a.InBattle == false);
+        return TempInfo.TempResultActorInfos.FindAll(a => a.BattleIndex >= 0);
     }
 
     public void SetLvUp()
@@ -164,16 +164,16 @@ public class StrategyModel : BaseModel
 
     public List<ActorInfo> BattleResultActors()
     {
-        return TempInfo.TempResultActorInfos.FindAll(a => a.InBattle);
+        return TempInfo.TempResultActorInfos.FindAll(a => a.BattleIndex >= 0);
     }
 
     public void ClearBattleData(List<ActorInfo> actorInfos)
     {
         foreach (var actorInfo in actorInfos)
         {
-            if (actorInfo.InBattle == true)
+            if (actorInfo.BattleIndex >= 0)
             {
-                actorInfo.SetInBattle(false);
+                actorInfo.SetBattleIndex(-1);
             }
             actorInfo.ClearTacticsCommand();
         }
@@ -181,7 +181,7 @@ public class StrategyModel : BaseModel
 
     public List<ActorInfo> LostMembers()
     {
-        return BattleResultActors().FindAll(a => a.InBattle && a.CurrentHp == 0);
+        return BattleResultActors().FindAll(a => a.BattleIndex >= 0 && a.CurrentHp == 0);
     }
 
     public List<ListData> ResultCommand()
@@ -360,7 +360,7 @@ public class StrategyModel : BaseModel
     {
         foreach (var tempActorInfo in TempInfo.TempActorInfos)
         {
-            tempActorInfo.SetInBattle(false);
+            tempActorInfo.SetBattleIndex(-1);
             PartyInfo.UpdateActorInfo(tempActorInfo);
         }
         TempInfo.ClearBattleActors();

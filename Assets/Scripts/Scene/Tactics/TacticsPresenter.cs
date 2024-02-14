@@ -555,11 +555,6 @@ public class TacticsPresenter :BasePresenter
 
     private void CommandSelectActorAlchemy()
     {
-        _view.ShowLeaningList(_model.SelectActorLearningMagicList());
-        _view.ChangeBackCommandActive(true);
-        CommandRefresh();
-        //_view.HideSelectCharacterCommand();
-        _backCommand = Tactics.CommandType.SelectAlchemyClose;
     }
 
     private void CommandSelectActorParadigm()

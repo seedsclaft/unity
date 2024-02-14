@@ -51,7 +51,7 @@ public class ActorInfoComponent : MonoBehaviour
         UpdateData(actorData);
         if (mainThumb != null)
         {
-            if (actorInfo.CurrentHp == 0 && actorInfo.InBattle || actorInfo.Lost)
+            if (actorInfo.CurrentHp == 0 && actorInfo.BattleIndex >= 0 || actorInfo.Lost)
             {
                 UpdateLostMainThumb();
             }

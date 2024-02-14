@@ -171,7 +171,15 @@ public class TacticsModel : BaseModel
     public void SetInBattle()
     {
         var actorInfo = TacticsActor();
-        actorInfo.SetInBattle(!actorInfo.InBattle);
+        var battleIndex = StageMembers().FindAll(a => a.BattleIndex >= 0).Count + 1;
+        if (battleIndex >= 5) return;
+        if (actorInfo.BattleIndex >= 0)
+        {
+            actorInfo.SetBattleIndex(-1);
+        } else
+        {
+            actorInfo.SetBattleIndex(battleIndex);
+        }
     }
 
     public List<ListData> SelectActorLearningMagicList()

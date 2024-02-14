@@ -65,7 +65,9 @@ public class BaseModel
 
     public List<ActorInfo> BattleMembers()
     {
-        return StageMembers().FindAll(a => a.InBattle);
+        var members = StageMembers().FindAll(a => a.BattleIndex >= 0);
+        members.Sort((a,b) => a.BattleIndex > b.BattleIndex ? -1 : 1);
+        return members;
     }
     
 
