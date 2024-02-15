@@ -84,6 +84,8 @@ public enum StateType
     TargetRateDown = 2310,
     RemoveBuff = 2320,
     Penetrate = 2330,
+    EffectLine = 2340,
+    EffectAll = 2341,
 }
 
 public enum RemovalTiming

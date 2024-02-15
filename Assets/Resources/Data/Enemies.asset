@@ -431,40 +431,83 @@ MonoBehaviour:
       Weight: 100
       TriggerDates: []
   - Id: 101
-    Name: "\u30D3\u30D5\u30ED\u30F3\u30B9"
+    Name: "\u30BF\u30EB\u30A6\u30A3"
+    ImagePath: Ammon
+    BaseStatus:
+      _hp: 100
+      _mp: 10
+      _atk: 25
+      _def: 10
+      _spd: 20
+    Kinds: 
+    LearningSkills:
+    - SkillId: 1010
+      Level: 1
+      Weight: 50
+      TriggerDates: []
+    - SkillId: 1040
+      Level: 1
+      Weight: 50
+      TriggerDates:
+      - SkillId: 0
+        TriggerType: 22
+        TriggerTiming: 1
+        Param1: 2
+        Param2: 0
+        Param3: 0
+    - SkillId: 200110
+      Level: 1
+      Weight: 0
+      TriggerDates: []
+    - SkillId: 200120
+      Level: 1
+      Weight: 300
+      TriggerDates: []
+    - SkillId: 200130
+      Level: 1
+      Weight: 0
+      TriggerDates: []
+  - Id: 102
+    Name: "\u30B6\u30EA\u30C1\u30E5"
     ImagePath: Bifrons
     BaseStatus:
       _hp: 100
       _mp: 10
-      _atk: 35
-      _def: 20
-      _spd: 30
-    Kinds: 03000000
+      _atk: 25
+      _def: 10
+      _spd: 20
+    Kinds: 
     LearningSkills:
     - SkillId: 3010
       Level: 1
       Weight: 30
       TriggerDates: []
-    - SkillId: 3060
+    - SkillId: 13070
       Level: 1
-      Weight: 70
-      TriggerDates:
-      - SkillId: 0
-        TriggerType: 2
-        TriggerTiming: 1
-        Param1: 50
-        Param2: 0
-        Param3: 0
-  - Id: 102
-    Name: "\u30A2\u30F3\u30C9\u30E9\u30B9"
+      Weight: 0
+      TriggerDates: []
+    - SkillId: 200210
+      Level: 1
+      Weight: 0
+      TriggerDates: []
+    - SkillId: 200220
+      Level: 1
+      Weight: 50
+      TriggerDates: []
+    - SkillId: 200230
+      Level: 1
+      Weight: 0
+      TriggerDates: []
+  - Id: 103
+    Name: "\u30B5\u30EB\u30EF"
     ImagePath: Andras
     BaseStatus:
       _hp: 100
       _mp: 10
-      _atk: 35
-      _def: 20
-      _spd: 30
-    Kinds: 03000000
+      _atk: 25
+      _def: 10
+      _spd: 20
+    Kinds: 
     LearningSkills:
     - SkillId: 2010
       Level: 1
@@ -473,54 +516,21 @@ MonoBehaviour:
     - SkillId: 2060
       Level: 1
       Weight: 50
-      TriggerDates:
-      - SkillId: 0
-        TriggerType: 2
-        TriggerTiming: 1
-        Param1: 50
-        Param2: 0
-        Param3: 0
-  - Id: 103
-    Name: "\u30A2\u30E2\u30F3"
-    ImagePath: Ammon
-    BaseStatus:
-      _hp: 100
-      _mp: 10
-      _atk: 35
-      _def: 20
-      _spd: 30
-    Kinds: 03000000
-    LearningSkills:
-    - SkillId: 1010
-      Level: 1
-      Weight: 10
       TriggerDates: []
-    - SkillId: 1040
+    - SkillId: 10040
       Level: 1
-      Weight: 90
-      TriggerDates:
-      - SkillId: 0
-        TriggerType: 22
-        TriggerTiming: 1
-        Param1: 2
-        Param2: 0
-        Param3: 1
-      - SkillId: 0
-        TriggerType: 2
-        TriggerTiming: 1
-        Param1: 75
-        Param2: 0
-        Param3: 0
+      Weight: 0
+      TriggerDates: []
   - Id: 104
-    Name: "\u30D9\u30EA\u30C8"
+    Name: "\u30BF\u30ED\u30FC\u30DE\u30C6\u30A3"
     ImagePath: Berith
     BaseStatus:
       _hp: 100
       _mp: 10
-      _atk: 35
-      _def: 20
-      _spd: 30
-    Kinds: 03000000
+      _atk: 25
+      _def: 10
+      _spd: 20
+    Kinds: 
     LearningSkills:
     - SkillId: 1010
       Level: 1
@@ -541,15 +551,15 @@ MonoBehaviour:
       Weight: 0
       TriggerDates: []
   - Id: 105
-    Name: "\u30D1\u30A4\u30E2\u30F3"
+    Name: "\u30C9\u30A5\u30EB\u30B8"
     ImagePath: Paimon
     BaseStatus:
       _hp: 80
       _mp: 10
-      _atk: 35
-      _def: 20
-      _spd: 30
-    Kinds: 0100000003000000
+      _atk: 25
+      _def: 10
+      _spd: 20
+    Kinds: 
     LearningSkills:
     - SkillId: 4010
       Level: 1
@@ -575,10 +585,10 @@ MonoBehaviour:
     BaseStatus:
       _hp: 100
       _mp: 10
-      _atk: 35
-      _def: 20
-      _spd: 30
-    Kinds: 03000000
+      _atk: 25
+      _def: 10
+      _spd: 20
+    Kinds: 
     LearningSkills:
     - SkillId: 2010
       Level: 1
@@ -594,10 +604,10 @@ MonoBehaviour:
     BaseStatus:
       _hp: 100
       _mp: 10
-      _atk: 35
-      _def: 20
-      _spd: 30
-    Kinds: 03000000
+      _atk: 25
+      _def: 10
+      _spd: 20
+    Kinds: 
     LearningSkills:
     - SkillId: 5010
       Level: 1
@@ -619,10 +629,10 @@ MonoBehaviour:
     BaseStatus:
       _hp: 80
       _mp: 10
-      _atk: 35
-      _def: 20
-      _spd: 30
-    Kinds: 0100000003000000
+      _atk: 25
+      _def: 10
+      _spd: 20
+    Kinds: 
     LearningSkills:
     - SkillId: 5010
       Level: 1
@@ -644,10 +654,10 @@ MonoBehaviour:
     BaseStatus:
       _hp: 80
       _mp: 10
-      _atk: 35
-      _def: 20
-      _spd: 30
-    Kinds: 03000000
+      _atk: 25
+      _def: 10
+      _spd: 20
+    Kinds: 
     LearningSkills:
     - SkillId: 3010
       Level: 1
@@ -662,15 +672,15 @@ MonoBehaviour:
       Weight: 0
       TriggerDates: []
   - Id: 201
-    Name: "\u30D6\u30A8\u30EB"
+    Name: "\u30A2\u30AB\u30DE\u30CA\u30D5"
     ImagePath: Buer
     BaseStatus:
       _hp: 100
       _mp: 20
-      _atk: 35
-      _def: 20
-      _spd: 30
-    Kinds: 0100000003000000
+      _atk: 25
+      _def: 10
+      _spd: 20
+    Kinds: 
     LearningSkills:
     - SkillId: 5010
       Level: 1
@@ -698,10 +708,10 @@ MonoBehaviour:
     BaseStatus:
       _hp: 100
       _mp: 20
-      _atk: 35
-      _def: 20
-      _spd: 30
-    Kinds: 03000000
+      _atk: 25
+      _def: 10
+      _spd: 20
+    Kinds: 
     LearningSkills:
     - SkillId: 2010
       Level: 1
@@ -725,10 +735,10 @@ MonoBehaviour:
     BaseStatus:
       _hp: 100
       _mp: 20
-      _atk: 35
-      _def: 20
-      _spd: 30
-    Kinds: 03000000
+      _atk: 25
+      _def: 10
+      _spd: 20
+    Kinds: 
     LearningSkills:
     - SkillId: 3010
       Level: 1
@@ -762,10 +772,10 @@ MonoBehaviour:
     BaseStatus:
       _hp: 200
       _mp: 20
-      _atk: 35
-      _def: 20
-      _spd: 30
-    Kinds: 03000000
+      _atk: 25
+      _def: 10
+      _spd: 20
+    Kinds: 
     LearningSkills:
     - SkillId: 4010
       Level: 1
@@ -821,10 +831,10 @@ MonoBehaviour:
     BaseStatus:
       _hp: 100
       _mp: 20
-      _atk: 35
-      _def: 20
-      _spd: 30
-    Kinds: 03000000
+      _atk: 25
+      _def: 10
+      _spd: 20
+    Kinds: 
     LearningSkills:
     - SkillId: 1010
       Level: 1
@@ -852,10 +862,10 @@ MonoBehaviour:
     BaseStatus:
       _hp: 100
       _mp: 20
-      _atk: 35
-      _def: 20
-      _spd: 30
-    Kinds: 03000000
+      _atk: 25
+      _def: 10
+      _spd: 20
+    Kinds: 
     LearningSkills:
     - SkillId: 2010
       Level: 1
@@ -878,15 +888,15 @@ MonoBehaviour:
       Weight: 0
       TriggerDates: []
   - Id: 207
-    Name: "\u30B7\u30A2\u30A8\u30AC"
+    Name: "\u30A2\u30F3\u30EA\u30FB\u30DE\u30F3\u30E6"
     ImagePath: Cyaegha
     BaseStatus:
       _hp: 100
       _mp: 20
-      _atk: 35
-      _def: 20
-      _spd: 30
-    Kinds: 03000000
+      _atk: 25
+      _def: 10
+      _spd: 20
+    Kinds: 
     LearningSkills:
     - SkillId: 5010
       Level: 1
@@ -914,10 +924,10 @@ MonoBehaviour:
     BaseStatus:
       _hp: 100
       _mp: 20
-      _atk: 35
-      _def: 20
-      _spd: 30
-    Kinds: 03000000
+      _atk: 25
+      _def: 10
+      _spd: 20
+    Kinds: 
     LearningSkills:
     - SkillId: 3010
       Level: 1
@@ -945,10 +955,10 @@ MonoBehaviour:
     BaseStatus:
       _hp: 200
       _mp: 20
-      _atk: 35
-      _def: 20
-      _spd: 30
-    Kinds: 03000000
+      _atk: 25
+      _def: 10
+      _spd: 20
+    Kinds: 
     LearningSkills:
     - SkillId: 4010
       Level: 1
@@ -992,9 +1002,9 @@ MonoBehaviour:
     BaseStatus:
       _hp: 500
       _mp: 20
-      _atk: 35
-      _def: 20
-      _spd: 30
+      _atk: 25
+      _def: 10
+      _spd: 20
     Kinds: 
     LearningSkills:
     - SkillId: 2010

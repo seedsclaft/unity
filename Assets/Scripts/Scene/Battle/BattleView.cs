@@ -250,7 +250,7 @@ public class BattleView : BaseView ,IInputHandlerEvent
     {
         if (_animationBusy) return;
         var listData = battleEnemyLayer.ListData;
-        if (listData != null)
+        if (listData != null && listData.Enable)
         {
             var data = (BattlerInfo)listData.Data;
             var eventData = new BattleViewEvent(CommandType.EnemyLayer);
@@ -276,7 +276,7 @@ public class BattleView : BaseView ,IInputHandlerEvent
     {
         if (_animationBusy) return;
         var listData = battleActorList.ListData;
-        if (listData != null)
+        if (listData != null && listData.Enable)
         {
             var data = (BattlerInfo)listData.Data;
             var eventData = new BattleViewEvent(CommandType.ActorList);

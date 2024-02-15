@@ -631,6 +631,15 @@ public class BattleModel : BaseModel
         var actionInfo = CurrentActionInfo();
         var targetIndexList = GetSkillTargetIndexes(actionInfo.Master.Id,_currentBattler.Index,true);
         var scopeType = actionInfo.ScopeType;
+        var subject = GetBattlerInfo(actionInfo.SubjectIndex);
+        if (subject.IsState(StateType.EffectLine))
+        {
+            scopeType = ScopeType.Line;
+        }
+        if (subject.IsState(StateType.EffectAll))
+        {
+            scopeType = ScopeType.All;
+        }
         var TargetBattler = GetBattlerInfo(selectIndex);
         switch (scopeType)
         {
@@ -1171,6 +1180,10 @@ public class BattleModel : BaseModel
         if (actionResultInfo.ApHeal != 0)
         {
             target.ChangeAp(actionResultInfo.ApHeal * -1);
+        }
+        if (actionResultInfo.ApDamage != 0)
+        {
+            target.ChangeAp(actionResultInfo.ApDamage);
         }
         if (actionResultInfo.ReHeal != 0)
         {
@@ -1988,16 +2001,25 @@ public class BattleModel : BaseModel
             targetIndex = targetIndexList [UnityEngine.Random.Range (0, targetIndexList.Count)];
         }
         //int targetIndex = targetIndexList [UnityEngine.Random.Range (0, targetIndexList.Count)];
-            
-        if (actionInfo.Master.Scope == ScopeType.All)
+        
+        var scopeType = actionInfo.Master.Scope;
+        if (_currentBattler.IsState(StateType.EffectLine))
+        {
+            scopeType = ScopeType.Line;
+        }
+        if (_currentBattler.IsState(StateType.EffectAll))
+        {
+            scopeType = ScopeType.All;
+        }
+        if (scopeType == ScopeType.All)
         {
             indexList = targetIndexList;
         }
-        if (actionInfo.Master.Scope == ScopeType.Self)
+        if (scopeType == ScopeType.Self)
         {
             indexList = targetIndexList;
         }
-        if (actionInfo.Master.Scope == ScopeType.One)
+        if (scopeType == ScopeType.One)
         {
             if (!_currentBattler.IsState(StateType.Substitute) && oneTargetIndex > -1)
             {
@@ -2007,11 +2029,11 @@ public class BattleModel : BaseModel
                 indexList.Add (targetIndex);
             }
         }
-        if (actionInfo.Master.Scope == ScopeType.WithoutSelfOne)
+        if (scopeType == ScopeType.WithoutSelfOne)
         {
             indexList.Add (targetIndex);
         }
-        if (actionInfo.Master.Scope == ScopeType.WithoutSelfAll)
+        if (scopeType == ScopeType.WithoutSelfAll)
         {
             indexList.Clear();
             for (int i = 0;i < targetIndexList.Count;i++)
@@ -2024,7 +2046,7 @@ public class BattleModel : BaseModel
                 indexList.Add(targetIndexList[i]);
             }
         }
-        if (actionInfo.Master.Scope == ScopeType.Line || actionInfo.Master.Scope ==ScopeType.FrontLine)
+        if (scopeType == ScopeType.Line || scopeType == ScopeType.FrontLine)
         {
             indexList.Add (targetIndex);
             var battlerInfo = GetBattlerInfo(targetIndex);

@@ -391,6 +391,7 @@ public enum FeatureType
     ApHeal = 32,
     NoResetAp = 33,
     StartDash = 34,
+    ApDamage = 35,
     RemainHpOne = 41,
     ChangeFeatureParam1 = 61,
     ChangeFeatureParam2 = 62,

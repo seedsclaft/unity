@@ -719,7 +719,14 @@ public class BattlePresenter : BasePresenter
         {
             if (actionResultInfo.TargetIndex == targetIndex)
             {
-                _view.StartStatePopup(targetIndex,DamageType.State,DataSystem.GetTextData(432).Text);
+                _view.StartStatePopup(targetIndex,DamageType.State,DataSystem.GetReplaceText(432,actionResultInfo.ApDamage.ToString()));
+            }
+        }
+        if (actionResultInfo.ApDamage > 0)
+        {
+            if (actionResultInfo.TargetIndex == targetIndex)
+            {
+                _view.StartStatePopup(targetIndex,DamageType.State,DataSystem.GetReplaceText(433,actionResultInfo.ApDamage.ToString()));
             }
         }
         if (actionResultInfo.ReDamage > 0)

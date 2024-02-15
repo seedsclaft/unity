@@ -86,6 +86,9 @@ public class ActionResultInfo
     public int MpHeal {
         get {return _mpHeal;} set{_mpHeal = value;}
     }
+    private int _apDamage = 0;
+    public int ApDamage => _apDamage;
+
     private int _apHeal = 0;
     public int ApHeal {
         get {return _apHeal;} set{_apHeal = value;}
@@ -196,6 +199,9 @@ public class ActionResultInfo
             case FeatureType.StartDash:
                 MakeStartDash(target);
                 return;
+            case FeatureType.ApDamage:
+                MakeApDamage(subject,target,featureData);
+                return;
             case FeatureType.KindHeal:
                 MakeKindHeal(subject,target,featureData);
                 return;
@@ -276,7 +282,7 @@ public class ActionResultInfo
         {
             if (subject.IsState(StateType.Penetrate))
             {
-                var Penetrate = 100 - Mathf.Max(100,subject.StateEffectAll(StateType.Penetrate));
+                var Penetrate = 100 - subject.StateEffectAll(StateType.Penetrate);
                 DefValue = (int)(DefValue * Penetrate * 0.01f);
             }
         }
@@ -602,6 +608,12 @@ public class ActionResultInfo
     {
         float HealValue = featureData.Param1;
         _apHeal = (int)Mathf.Round(HealValue);
+    }
+
+    private void MakeApDamage(BattlerInfo subject,BattlerInfo target,SkillData.FeatureData featureData)
+    {
+        float HealValue = featureData.Param1;
+        _apDamage = (int)Mathf.Round(HealValue);
     }
 
     private void MakeStartDash(BattlerInfo target)
