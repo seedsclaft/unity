@@ -93,10 +93,7 @@ public class BattlerInfo
         _status = statusInfo;
         _index = index;
         _skills = actorInfo.Skills.FindAll(a => a.LearningState == LearningState.Learned || a.LearningState == LearningState.Equipment);
-        foreach (var skill in _skills)
-        {
-            skill.SetUseCount(0);
-        }
+        
         _demigodParam = actorInfo.DemigodParam;
         _isActor = true;
         
@@ -113,7 +110,10 @@ public class BattlerInfo
         {
             _kinds.Add(kind);
         }
-        AddKindPassive();
+        AddKindPassive();foreach (var skill in _skills)
+        {
+            skill.SetUseCount(0);
+        }
         ResetAp(true);
     }
 
@@ -158,6 +158,10 @@ public class BattlerInfo
             _kinds.Add(kind);
         }
         AddKindPassive();
+        foreach (var skill in _skills)
+        {
+            skill.SetUseCount(0);
+        }
         ResetAp(true);
     }
 
@@ -286,6 +290,10 @@ public class BattlerInfo
             return apValue;
         }
         if (IsState(StateType.Stun))
+        {
+            return apValue;
+        }
+        if (IsState(StateType.Wait))
         {
             return apValue;
         }

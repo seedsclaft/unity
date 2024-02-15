@@ -104,7 +104,7 @@ public class SkillData
         public int Param1;
         public int Param2;
         public int Param3;
-        public FeatureData Copy()
+        public FeatureData CopyData()
         {
             var feature = new FeatureData();
             feature.SkillId = SkillId;
@@ -392,6 +392,9 @@ public enum FeatureType
     NoResetAp = 33,
     StartDash = 34,
     RemainHpOne = 41,
+    ChangeFeatureParam1 = 61,
+    ChangeFeatureParam2 = 62,
+    ChangeFeatureParam3 = 63,
     PlusSkill = 101,
     KindHeal = 201,
     BreakUndead = 202,
@@ -426,8 +429,9 @@ public enum FeatureType
 public enum LearningState{
     None = 0,
     Learned = 1,
-    Equipment = 2,
-    SelectLearn = 3
+    NotLearn = 2,
+    Equipment = 3,
+    SelectLearn = 4
 }
 
 public enum MagicIconType

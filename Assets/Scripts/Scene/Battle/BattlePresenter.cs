@@ -324,11 +324,15 @@ public class BattlePresenter : BasePresenter
             _model.UpdateApModify(_model.CurrentBattler);
             _view.UpdateGridLayer();
             _view.SetBattleBusy(true);
-            _model.SetCurrentTurnBattler(_model.CurrentBattler);
-            var removed =_model.UpdateNextSelfTurn();
-            foreach (var removedState in removed)
+            if (_model.CurrentTurnBattler == null)
             {
-                _view.StartStatePopup(removedState.TargetIndex,DamageType.State,"-" + removedState.Master.Name);
+                _model.SetCurrentTurnBattler(_model.CurrentBattler);
+                // 解除判定は行動開始の最初のみ
+                var removed =_model.UpdateNextSelfTurn();
+                foreach (var removedState in removed)
+                {
+                    _view.StartStatePopup(removedState.TargetIndex,DamageType.State,"-" + removedState.Master.Name);
+                }
             }
             // 行動不可の場合は行動しない
             if (!_model.EnableCurrentBattler())
@@ -639,18 +643,18 @@ public class BattlePresenter : BasePresenter
                 _view.StartAnimationAll(animation);
             } else
             {
-                for (int i = 0; i < actionInfo.ActionResults.Count; i++)
+                foreach (var actionResultInfo in actionInfo.ActionResults)
                 {
-                    var oneAnimation = actionInfo.ActionResults[i].CursedDamage ? _model.SkillActionAnimation("NA_Effekseer/NA_curse_001") : animation;
-                    _view.StartAnimation(actionInfo.ActionResults[i].TargetIndex,oneAnimation,animationData.Position,animationData.Scale,animationData.Speed);
+                    var oneAnimation = actionResultInfo.CursedDamage ? _model.SkillActionAnimation("NA_Effekseer/NA_curse_001") : animation;
+                    _view.StartAnimation(actionResultInfo.TargetIndex,oneAnimation,animationData.Position,animationData.Scale,animationData.Speed);
                 }
             }
             StartAliveAnimation(_model.CurrentActionInfo().ActionResults);
 
             await UniTask.DelayFrame(animationData.DamageTiming);
-            for (int i = 0; i < actionInfo.ActionResults.Count; i++)
+            foreach (var actionResultInfo in actionInfo.ActionResults)
             {
-                PopupActionResult(actionInfo.ActionResults[i],actionInfo.ActionResults[i].TargetIndex,true,true);
+                PopupActionResult(actionResultInfo,actionResultInfo.TargetIndex,true,true);
             }
             await UniTask.DelayFrame(64);
         } else
@@ -658,9 +662,9 @@ public class BattlePresenter : BasePresenter
             _view.SetCurrentSkillData(actionInfo.Master);
             _view.ClearDamagePopup();
             StartAliveAnimation(_model.CurrentActionInfo().ActionResults);
-            for (int i = 0; i < actionInfo.ActionResults.Count; i++)
+            foreach (var actionResultInfo in actionInfo.ActionResults)
             {
-                PopupActionResult(actionInfo.ActionResults[i],actionInfo.ActionResults[i].TargetIndex,true,true);
+                PopupActionResult(actionResultInfo,actionResultInfo.TargetIndex,true,true);
             }
             var waitFrame = GameSystem.ConfigData.BattleAnimationSkip ? 1 : 32;
             await UniTask.DelayFrame(waitFrame);
@@ -802,6 +806,7 @@ public class BattlePresenter : BasePresenter
         if (actionInfo != null)
         {
             StartDeathAnimation(actionInfo.ActionResults);
+            StartAliveAnimation(actionInfo.ActionResults);
         }
         EndTurn();
     }
@@ -999,10 +1004,6 @@ public class BattlePresenter : BasePresenter
     }
 
     private void CommandSelectEnemy()
-    {
-    }
-
-    private void CommandSelectParty()
     {
     }
 

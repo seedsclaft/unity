@@ -28,10 +28,7 @@ public class StatusModel : BaseModel
         _currentIndex = index;
     }
 
-    public ActorInfo CurrentActor
-    {
-        get {return StatusActors()[_currentIndex];}
-    }
+    public ActorInfo CurrentActor => StatusActors()[_currentIndex];
 
     public void ChangeActorIndex(int value){
         _currentIndex += value;
@@ -50,32 +47,7 @@ public class StatusModel : BaseModel
 
     public List<ListData> SkillActionList()
     {
-        var skillInfos = CurrentActor.Skills.FindAll(a => a.Id > 100);
-
-        skillInfos.ForEach(a => a.SetEnable(true));
-        var sortList1 = new List<SkillInfo>();
-        var sortList2 = new List<SkillInfo>();
-        var sortList3 = new List<SkillInfo>();
-        skillInfos.Sort((a,b) => {return a.Master.Id > b.Master.Id ? 1 : -1;});
-        foreach (var skillInfo in skillInfos)
-        {
-            if (skillInfo.Master.IconIndex >= MagicIconType.Elementarism && skillInfo.Master.IconIndex <= MagicIconType.Psionics)
-            {
-                sortList1.Add(skillInfo);
-            } else
-            if (skillInfo.Master.IconIndex >= MagicIconType.Demigod && skillInfo.Master.IconIndex < MagicIconType.Other)
-            {
-                sortList2.Add(skillInfo);
-            } else
-            {
-                sortList3.Add(skillInfo);
-            }
-        }
-        skillInfos.Clear();
-        skillInfos.AddRange(sortList1);
-        skillInfos.AddRange(sortList2);
-        skillInfos.AddRange(sortList3);
-        return MakeListData(skillInfos);
+        return CurrentActor.SkillActionList();
     }
 
     public void SelectAddActor()

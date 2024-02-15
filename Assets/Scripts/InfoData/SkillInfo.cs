@@ -37,6 +37,16 @@ public class SkillInfo
         _learningCost = cost;
     }
 
+    private int _learningLv = 0;
+    public int LearningLv => _learningLv;
+    public void SetLearningLv(int learningLv)
+    {
+        _learningLv = learningLv;
+    }
+
+    private List<SkillData.FeatureData> _featureDates = new();
+    public List<SkillData.FeatureData> FeatureDates => _featureDates;
+
     private List<SkillData.TriggerData> _triggerDates = new();
     public List<SkillData.TriggerData> TriggerDates => _triggerDates;
 
@@ -69,6 +79,12 @@ public class SkillInfo
     {
         _id = id;
         _learningState = LearningState.None;
+        var list = new List<SkillData.FeatureData>();
+        foreach (var featureData in Master.FeatureDates)
+        {
+            list.Add(featureData.CopyData());
+        }
+        _featureDates = list;
     }
 
     public void CopyData(SkillInfo skillInfo)
@@ -78,7 +94,8 @@ public class SkillInfo
         _param1 = skillInfo.Param1;
         _param2 = skillInfo.Param2;
         _param3 = skillInfo.Param3;
-
+        _learningLv = skillInfo.LearningLv;
+        _featureDates = skillInfo.FeatureDates;
     }
     
     public void SetTriggerDates(List<SkillData.TriggerData> triggerDates)
@@ -95,7 +112,7 @@ public class SkillInfo
 
     public bool IsUnison()
     {
-        return Master.FeatureDates.Find(a => a.FeatureType == FeatureType.AddState && (StateType)a.Param1 == StateType.Wait) != null;
+        return FeatureDates.Find(a => a.FeatureType == FeatureType.AddState && (StateType)a.Param1 == StateType.Wait) != null;
     }
 
 }

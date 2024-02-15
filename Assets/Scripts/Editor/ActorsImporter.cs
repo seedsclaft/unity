@@ -46,6 +46,7 @@ public class ActorsImporter : AssetPostprocessor {
     {
 		ActorId = 0,
 		SkillId,
+		Level,
 	}
 	static readonly string ExcelName = "Actors.xlsx";
 
@@ -165,13 +166,17 @@ public class ActorsImporter : AssetPostprocessor {
 				for (int i = 1; i <= BaseSheet.LastRowNum; i++)
 				{
 					IRow BaseRow = BaseSheet.GetRow(i);
-					var LearningData = new LearningData();
 
 					int ActorId = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseLearningColumn.ActorId);
 					ActorData Actor = Data.Data.Find(a => a.Id == ActorId);
-					
-					LearningData.SkillId = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseLearningColumn.SkillId);
-					Actor.LearningSkills.Add(LearningData);
+					string[] list = AssetPostImporter.ImportString(BaseRow,(int)BaseLearningColumn.SkillId).Split(',');
+					foreach (string item in list)
+					{
+						var LearningData = new LearningData();
+						LearningData.SkillId = int.Parse(item);
+						LearningData.Level = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseLearningColumn.Level);
+						Actor.LearningSkills.Add(LearningData);
+					}
 				}
 
 			}

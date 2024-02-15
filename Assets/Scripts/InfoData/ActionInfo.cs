@@ -12,6 +12,8 @@ public class ActionInfo
     private int _lastTargetIndex = 0;
     public int LastTargetIndex => _lastTargetIndex;
     public SkillData Master {get {return DataSystem.FindSkill(_skillId);}}
+    private SkillInfo _skillInfo = null;
+    public SkillInfo SkillInfo => _skillInfo;
     
     private RangeType _rangeType = RangeType.None;
     public RangeType RangeType => _rangeType;
@@ -35,7 +37,7 @@ public class ActionInfo
     public int TurnCount => _turnCount;
     public void SetTurnCount(int turnCount) {_turnCount = turnCount;}
 
-    public ActionInfo(int index,int skillId,int subjectIndex,int lastTargetIndex,List<int> targetIndexList)
+    public ActionInfo(SkillInfo skillInfo,int index,int skillId,int subjectIndex,int lastTargetIndex,List<int> targetIndexList)
     {
         _index = index;
         _skillId = skillId;
@@ -45,6 +47,7 @@ public class ActionInfo
         _subjectIndex = subjectIndex;
         _lastTargetIndex = lastTargetIndex;
         _targetIndexList = targetIndexList;
+        _skillInfo = skillInfo;
     }
 
     public void SetRangeType(RangeType rangeType)
@@ -64,13 +67,13 @@ public class ActionInfo
 
     public List<ActionInfo> CheckPlusSkill()
     {
-        var featureDates = Master.FeatureDates;
+        var featureDates = SkillInfo.FeatureDates;
         var PlusSkill = featureDates.FindAll(a => a.FeatureType == FeatureType.PlusSkill);
         
         var actionInfos = new List<ActionInfo>();
         for (var i = 0;i < PlusSkill.Count;i++){
             var skillInfo = new SkillInfo(PlusSkill[i].Param1);
-            var actionInfo = new ActionInfo(_index,skillInfo.Id,SubjectIndex,-1,null);
+            var actionInfo = new ActionInfo(skillInfo,_index,skillInfo.Id,SubjectIndex,-1,null);
             actionInfo.SetTriggerSkill(true);
             actionInfos.Add(actionInfo);
         }
@@ -84,6 +87,6 @@ public class ActionInfo
 
     public bool IsUnison()
     {
-        return Master.FeatureDates.Find(a => a.FeatureType == FeatureType.AddState && (StateType)a.Param1 == StateType.Wait) != null;
+        return SkillInfo.FeatureDates.Find(a => a.FeatureType == FeatureType.AddState && (StateType)a.Param1 == StateType.Wait) != null;
     }
 }

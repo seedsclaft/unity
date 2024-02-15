@@ -202,6 +202,15 @@ public class ActionResultInfo
             case FeatureType.BreakUndead:
                 MakeBreakUndead(subject,target,featureData);
                 return;
+            case FeatureType.ChangeFeatureParam1:
+                MakeChangeFeatureParam(subject,target,featureData,1);
+                return;
+            case FeatureType.ChangeFeatureParam2:
+                MakeChangeFeatureParam(subject,target,featureData,2);
+                return;
+            case FeatureType.ChangeFeatureParam3:
+                MakeChangeFeatureParam(subject,target,featureData,3);
+                return;
         }
     }
 
@@ -619,6 +628,33 @@ public class ActionResultInfo
         }
     }
 
+    public void MakeChangeFeatureParam(BattlerInfo subject,BattlerInfo target,SkillData.FeatureData featureData,int featureParamIndex)
+    {
+        // 即代入
+        var skillInfo = subject.Skills.Find(a => a.Id == featureData.Param1);
+        if (skillInfo != null)
+        {
+            // featureのIndex
+            var feature = skillInfo.FeatureDates.Count >= featureData.Param2 ? skillInfo.FeatureDates[featureData.Param2] : null;
+            if (feature != null)
+            {
+                switch (featureParamIndex)
+                {
+                    case 1:
+                        feature.Param1 = featureData.Param3;
+                        break;
+                    case 2:
+                        feature.Param2 = featureData.Param3;
+                        break;
+                    case 3:
+                        feature.Param3 = featureData.Param3;
+                        break;
+                }
+            }
+        }
+
+    }
+
     public void AddRemoveState(StateInfo stateInfo)
     {
         if (_removedStates.IndexOf(stateInfo) == -1){
@@ -733,5 +769,15 @@ public class ActionResultInfo
         int removeCount = RemovedStates.FindAll(a => a.Master.StateType == stateType && a.TargetIndex == target.Index).Count;
         int displayCount = DisplayStates.FindAll(a => a.Master.StateType == stateType && a.TargetIndex == target.Index).Count;
         return removeCount + displayCount;
+    }
+
+    // 拘束と祝福を解除できるか
+    public bool RemoveAttackStateDamage()
+    {
+        return HpDamage > 0 
+                || AddedStates.Find(a => a.Master.StateType == StateType.Stun) != null
+                || AddedStates.Find(a => a.Master.StateType == StateType.Chain) != null
+                || AddedStates.Find(a => a.Master.StateType == StateType.Death) != null
+                || DeadIndexList.Contains(TargetIndex);
     }
 }

@@ -194,7 +194,14 @@ public class ActorInfo
             var _learningData = Master.LearningSkills[i];
             if (_skills.Find(a =>a.Id == _learningData.SkillId) != null) continue;
             var skillInfo = new SkillInfo(_learningData.SkillId);
-            skillInfo.SetLearningState(LearningState.Learned);
+            if (_level >= _learningData.Level)
+            {
+                skillInfo.SetLearningState(LearningState.Learned);
+            } else
+            {
+                skillInfo.SetLearningLv(_learningData.Level);
+                skillInfo.SetLearningState(LearningState.NotLearn);
+            }
             _skills.Add(skillInfo);
         }
         _lastSelectSkillId = 0;
@@ -226,7 +233,16 @@ public class ActorInfo
             _level++;
             //_sp += 10;
         }
+        foreach (var skillInfo in LearningSkills())
+        {
+            skillInfo.SetLearningState(LearningState.Learned);
+        }
         return lvUpStatus;
+    }
+
+    public List<SkillInfo> LearningSkills(int plusLv = 0)
+    {
+        return _skills.FindAll(a => a.LearningState == LearningState.NotLearn && a.LearningLv <= (_level+plusLv));
     }
 
     private void CalcLevelUpStatusInfo(StatusInfo statusInfo)
@@ -530,18 +546,18 @@ public class ActorInfo
     {
         var skillInfos = Skills.FindAll(a => a.Id > 100);
 
-        skillInfos.ForEach(a => a.SetEnable(true));
+        skillInfos.ForEach(a => a.SetEnable(a.LearningState == LearningState.Learned));
         var sortList1 = new List<SkillInfo>();
         var sortList2 = new List<SkillInfo>();
         var sortList3 = new List<SkillInfo>();
         skillInfos.Sort((a,b) => {return a.Master.Id > b.Master.Id ? 1 : -1;});
         foreach (var skillInfo in skillInfos)
         {
-            if (skillInfo.Master.IconIndex >= MagicIconType.Elementarism && skillInfo.Master.IconIndex <= MagicIconType.Psionics)
+            if (skillInfo.LearningState == LearningState.Learned && skillInfo.Master.SkillType == SkillType.Magic || skillInfo.Master.SkillType == SkillType.Demigod || skillInfo.Master.SkillType == SkillType.Awaken)
             {
                 sortList1.Add(skillInfo);
             } else
-            if (skillInfo.Master.IconIndex >= MagicIconType.Demigod && skillInfo.Master.IconIndex < MagicIconType.Other)
+            if (skillInfo.LearningState == LearningState.Learned && skillInfo.Master.SkillType == SkillType.Passive)
             {
                 sortList2.Add(skillInfo);
             } else
@@ -552,8 +568,29 @@ public class ActorInfo
         skillInfos.Clear();
         skillInfos.AddRange(sortList1);
         skillInfos.AddRange(sortList2);
+        sortList3.Sort((a,b) => {return a.LearningLv > b.LearningLv ? 1 : -1;});
         skillInfos.AddRange(sortList3);
+        //skillInfos.Sort((a,b) => {return a.LearningState > b.LearningState ? 1 : -1;});
         return ListData.MakeListData(skillInfos);
+    }
+
+    public void UpdateLearningDates(List<LearningData> learningDates)
+    {
+        foreach (var skillInfo in _skills)
+        {
+            var learningDate = learningDates.Find(a => a.SkillId == skillInfo.Id);
+            if (learningDate != null)
+            {
+                skillInfo.SetLearningLv(learningDate.Level);
+                if (_level >= learningDate.Level)
+                {
+                    skillInfo.SetLearningState(LearningState.Learned);
+                } else
+                {
+                    skillInfo.SetLearningState(LearningState.NotLearn);
+                }
+            }
+        }
     }
 
     public int LevelUpByCost()

@@ -77,6 +77,8 @@ public class TitlePresenter : BasePresenter
             if (loadStage)
             {
                 SaveSystem.LoadStageInfo();
+                // 習得データを変更
+                GameSystem.CurrentStageData.Party.ActorInfos.ForEach(a => a.UpdateLearningDates(DataSystem.Actors.Find(b => b.Id == a.ActorId).LearningSkills));
             } else
             {
                 _model.InitSaveStageInfo();

@@ -97,7 +97,7 @@ public class StagesInfoImporter : AssetPostprocessor {
 		// ディレクトリ情報とファイル名の文字列を結合してアセット名を指定
 		string ExportPath = $"{Path.Combine(AssetPostImporter.ExportExcelPath, FileName)}.asset";
 
-		StageDates Data = AssetDatabase.LoadAssetAtPath<StageDates>(ExportPath);
+		var Data = AssetDatabase.LoadAssetAtPath<StageDates>(ExportPath);
 		if (!Data)
 		{
 			// データがなければ作成
