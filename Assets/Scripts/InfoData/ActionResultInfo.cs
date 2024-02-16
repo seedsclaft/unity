@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -23,7 +24,7 @@ public class ActionResultInfo
         }
         for (int i = 0; i < featureDates.Count; i++)
         {
-            MakeFeature(subject,target,featureDates[i],isOneTarget);
+            MakeFeature(subject,target,featureDates[i],skillId,isOneTarget);
         }
         if (subject != null && target != null)
         {
@@ -132,30 +133,31 @@ public class ActionResultInfo
     private bool _startDash;
     public bool StartDash => _startDash;
 
-    private void MakeFeature(BattlerInfo subject,BattlerInfo target,SkillData.FeatureData featureData,bool isOneTarget = false)
+    private void MakeFeature(BattlerInfo subject,BattlerInfo target,SkillData.FeatureData featureData,int skillId,bool isOneTarget = false)
     {
+        var range = CalcRange(subject,target,skillId);
         switch (featureData.FeatureType)
         {
             case FeatureType.HpDamage:
-                if (CheckIsHit(subject,target,isOneTarget))
+                if (CheckIsHit(subject,target,isOneTarget,range))
                 {
-                    MakeHpDamage(subject,target,featureData,false,isOneTarget);
+                    MakeHpDamage(subject,target,featureData,false,isOneTarget,range);
                 }
                 return;
             case FeatureType.HpHeal:
                 MakeHpHeal(subject,target,featureData);
                 return;
             case FeatureType.HpDrain:
-                if (CheckIsHit(subject,target,isOneTarget))
+                if (CheckIsHit(subject,target,isOneTarget,range))
                 {
-                    MakeHpDrain(subject,target,featureData,isOneTarget);
+                    MakeHpDrain(subject,target,featureData,isOneTarget,range);
                 }
                 return;
             case FeatureType.HpDefineDamage:
                 MakeHpDefineDamage(subject,target,featureData,false);
                 return;
             case FeatureType.HpStateDamage:
-                if (CheckIsHit(subject,target,isOneTarget))
+                if (CheckIsHit(subject,target,isOneTarget,range))
                 {
                     MakeHpStateDamage(subject,target,featureData,false,isOneTarget);
                 }
@@ -164,10 +166,10 @@ public class ActionResultInfo
                 MakeHpCursedDamage(subject,target,featureData,false,isOneTarget);
                 return;
             case FeatureType.NoEffectHpDamage:
-                MakeHpDamage(subject,target,featureData,true,isOneTarget);
+                MakeHpDamage(subject,target,featureData,true,isOneTarget,range);
                 return;
             case FeatureType.MpDamage:
-                if (CheckIsHit(subject,target,isOneTarget))
+                if (CheckIsHit(subject,target,isOneTarget,range))
                 {
                     MakeMpDamage(subject,target,featureData);
                 }
@@ -220,14 +222,14 @@ public class ActionResultInfo
         }
     }
 
-    private bool CheckIsHit(BattlerInfo subject,BattlerInfo target,bool isOneTarget)
+    private bool CheckIsHit(BattlerInfo subject,BattlerInfo target,bool isOneTarget,int range)
     {
         var skillData = DataSystem.FindSkill(_skillId);
         if (skillData != null && (skillData.SkillType == SkillType.Demigod || skillData.SkillType == SkillType.Awaken))
         {
             return true;
         }
-        if (!IsHit(subject,target,isOneTarget))
+        if (!IsHit(subject,target,isOneTarget,range))
         {
             if (subject.IsState(StateType.AbsoluteHit))
             {
@@ -240,7 +242,7 @@ public class ActionResultInfo
         return true;
     }
 
-    private bool IsHit(BattlerInfo subject,BattlerInfo target,bool isOneTarget)
+    private bool IsHit(BattlerInfo subject,BattlerInfo target,bool isOneTarget,int range)
     {
         if (target.IsState(StateType.Chain))
         {
@@ -255,6 +257,14 @@ public class ActionResultInfo
             return true;
         }
         int hit = 100;
+        if (range > 0)
+        {
+            hit -= range * 25;
+        }
+        // S⇒L Range.Sスキル = range=1で25%カット
+        // L⇒L Range.Sスキル = range=2で50%カット
+        // S⇒L Range.Lスキル = range=0
+        // L⇒L Range.Lスキル = range=1で25%カット
         hit += subject.CurrentHit();
         if (subject.IsState(StateType.Blind))
         {
@@ -306,7 +316,40 @@ public class ActionResultInfo
         return UpperDamageRate;
     }
 
-    private void MakeHpDamage(BattlerInfo subject,BattlerInfo target,SkillData.FeatureData featureData,bool isNoEffect,bool isOneTarget)
+    private int CalcRange(BattlerInfo subject,BattlerInfo target,int skillId)
+    {
+        var range = 0;
+        var skillData = DataSystem.FindSkill(skillId);
+        if (skillData.Range == RangeType.S)
+        {
+            // S⇒L Range.Sスキル = range=1で25%カット
+            // L⇒L Range.Sスキル = range=2で50%カット
+            if (subject.LineIndex == LineType.Front && target.LineIndex == LineType.Back)
+            {
+                range = 1;
+            } else
+            if (subject.LineIndex == LineType.Back && target.LineIndex == LineType.Back)
+            {
+                range = 2;
+            } else
+            if (subject.LineIndex == LineType.Back && target.LineIndex == LineType.Front)
+            {
+                range = 1;
+            }
+        } else
+        if (skillData.Range == RangeType.L)
+        {
+            // S⇒L Range.Lスキル = range=0
+            // L⇒L Range.Lスキル = range=1で25%カット
+            if (subject.LineIndex == LineType.Back && target.LineIndex == LineType.Back)
+            {
+                range = 1;
+            }
+        }
+        return range;
+    }
+
+    private void MakeHpDamage(BattlerInfo subject,BattlerInfo target,SkillData.FeatureData featureData,bool isNoEffect,bool isOneTarget,int range)
     {
         var hpDamage = 0;
         int AtkValue = CurrentAttack(subject,isNoEffect);
@@ -354,6 +397,14 @@ public class ActionResultInfo
         {
             _reHeal += (int)Mathf.Floor(hpDamage * subject.StateEffectAll(StateType.Drain) * 0.01f);
         }
+        if (range > 0)
+        {
+            // S⇒L Range.Sスキル = range=1で25%カット
+            // L⇒L Range.Sスキル = range=2で50%カット
+            // S⇒L Range.Lスキル = range=0
+            // L⇒L Range.Lスキル = range=1で25%カット
+            hpDamage = (int)MathF.Round((float)hpDamage * (1 - (0.25f * range)));
+        }
         _hpDamage += hpDamage; 
     }
 
@@ -379,9 +430,9 @@ public class ActionResultInfo
         }
     }
 
-    private void MakeHpDrain(BattlerInfo subject,BattlerInfo target,SkillData.FeatureData featureData,bool isOneTarget)
+    private void MakeHpDrain(BattlerInfo subject,BattlerInfo target,SkillData.FeatureData featureData,bool isOneTarget,int range)
     {
-        MakeHpDamage(subject,target,featureData,false,isOneTarget);
+        MakeHpDamage(subject,target,featureData,false,isOneTarget,range);
         _reHeal = (int)Mathf.Floor(HpDamage * featureData.Param3 * 0.01f);
     }
 
@@ -495,7 +546,7 @@ public class ActionResultInfo
         //_hpHeal = ApplyVariance(_hpHeal);
     }
 
-    private void MakeAddState(BattlerInfo subject,BattlerInfo target,SkillData.FeatureData featureData,bool checkCounter = false,bool isOneTarget = false,bool removeTimingIsNextTurn = false)
+    private void MakeAddState(BattlerInfo subject,BattlerInfo target,SkillData.FeatureData featureData,bool checkCounter = false,bool isOneTarget = false,bool removeTimingIsNextTurn = false,int range = 0)
     {
         var stateInfo = new StateInfo((StateType)featureData.Param1,featureData.Param2,featureData.Param3,subject.Index,target.Index,_skillId);
         if (removeTimingIsNextTurn)
@@ -504,7 +555,7 @@ public class ActionResultInfo
         }
         if (stateInfo.Master.CheckHit)
         {
-            if (!CheckIsHit(subject,target,isOneTarget))
+            if (!CheckIsHit(subject,target,isOneTarget,range))
             {
                 return;
             }
@@ -736,7 +787,6 @@ public class ActionResultInfo
         }
         int CriticalRate = subject.StateEffectAll(StateType.CriticalRateUp) + HitOver;
         int rand = new System.Random().Next(0, 100);
-        Debug.Log(CriticalRate);
         return (CriticalRate >= rand);
     }
 

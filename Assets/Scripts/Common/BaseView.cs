@@ -7,6 +7,8 @@ abstract public class BaseView : MonoBehaviour
 {
     private bool _testMode = false;
     public bool TestMode => _testMode;
+    private bool _testBattleMode = false;
+    public bool TestBattleMode => _testBattleMode;
     private InputSystem _input;
     private List<IInputHandlerEvent> _inputHandler = new List<IInputHandlerEvent>();
     private bool _busy = false;
@@ -322,6 +324,11 @@ abstract public class BaseView : MonoBehaviour
     public void SetTestMode(bool isTest)
     {
         _testMode = isTest;
+    }
+
+    public void SetBattleTestMode(bool isTest)
+    {
+        _testBattleMode = isTest;
     }
 
     public void MouseCancelHandler()

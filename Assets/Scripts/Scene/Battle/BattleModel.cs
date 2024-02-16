@@ -2378,4 +2378,36 @@ public class BattleModel : BaseModel
     {
         return MakeListData(_currentBattler.StateInfos);
     }
+    
+#if UNITY_EDITOR
+    public List<TestActionData> testActionDates = new ();
+    public int testActionIndex = 0;
+    public void MakeTestBattleAction()
+    {
+        testActionDates.Clear();
+        testActionDates = Resources.Load<TestBattleData>("Data/TestBattle").TestActionDates;
+    }
+    public BattlerInfo TestBattler()
+    {
+        if (testActionDates.Count > testActionIndex)
+        {
+            return GetBattlerInfo(testActionDates[testActionIndex].BattlerIndex);
+        }
+        return null;
+    }
+    
+    public int TestSkillId()
+    {
+        if (testActionDates.Count > testActionIndex)
+        {
+            return testActionDates[testActionIndex].SkillId;
+        }
+        return 0;
+    }
+
+    public void SeekActionIndex()
+    {
+        testActionIndex++;
+    }
+#endif
 }

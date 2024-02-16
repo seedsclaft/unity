@@ -389,6 +389,7 @@ public class GameSystem : MonoBehaviour
         var prefab = sceneAssign.CreateScene(scene,helpWindow);
         _currentScene = prefab.GetComponent<BaseView>();
         _currentScene.SetTestMode(testMode);
+        _currentScene.SetBattleTestMode(debugBattleData.TestBattle);
         _currentScene.SetEvent((type) => UpdateCommand(type));
         _currentScene.Initialize();
         tutorialView.HideFocusImage();

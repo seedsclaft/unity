@@ -3059,7 +3059,13 @@ MonoBehaviour:
     RepeatTime: 1
     AliveOnly: 1
     FeatureDates: []
-    TriggerDates: []
+    TriggerDates:
+    - SkillId: 200210
+      TriggerType: 1
+      TriggerTiming: 2
+      Param1: 99
+      Param2: 0
+      Param3: 0
     ScopeTriggers: []
   - Id: 200220
     Name: "\u30DE\u30B0\u30CD\u30C6\u30A3\u30C3\u30AF"

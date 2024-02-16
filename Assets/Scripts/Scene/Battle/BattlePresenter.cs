@@ -14,6 +14,7 @@ public class BattlePresenter : BasePresenter
     {
         _debug = busy;
     }
+    private bool _testBattle = false;
 #endif
     private bool _triggerAfterChecked = false;
     private bool _triggerInterruptChecked = false;
@@ -59,10 +60,11 @@ public class BattlePresenter : BasePresenter
         _view.ChangeBackCommandActive(false);
 
 #if UNITY_EDITOR
-        if (_view.TestMode == true)
+        if (_view.TestMode == true && _view.TestBattleMode)
         {
             BattleInitialize();
-            _debug = true;
+            _model.MakeTestBattleAction();
+            _testBattle = _model.testActionDates.Count > 0;
             return;
         }
 #endif
@@ -272,7 +274,14 @@ public class BattlePresenter : BasePresenter
     private void CommandUpdateAp()
     {
 #if UNITY_EDITOR
-        //if (_debug == true) return;
+        if (_testBattle == true && _model.TestBattler() != null) {
+            _model.SetActionBattler(_model.TestBattler().Index);
+            if (_model.CurrentBattler != null)
+            {
+                CommandStartSelect();
+            }
+            return;
+        }
 #endif
         _model.MakeActionBattler();
         if (_model.CurrentBattler != null)
@@ -357,6 +366,17 @@ public class BattlePresenter : BasePresenter
                 }
                 return;
             } 
+#if UNITY_EDITOR
+            if (_testBattle && _model.TestSkillId() != 0)
+            {    
+                int testSkillId = _model.TestSkillId();
+                var skillInfo = new SkillInfo(testSkillId);
+                var actionInfo = _model.MakeActionInfo(_model.CurrentBattler,skillInfo,false,false);
+                CommandSelectTargetIndexes(_model.MakeAutoSelectIndex(actionInfo));
+                _model.SeekActionIndex();
+                return;
+            }
+#endif
             if (_model.CurrentBattler.isActor)
             {
                 if (GameSystem.ConfigData.BattleAuto == true)
@@ -370,13 +390,11 @@ public class BattlePresenter : BasePresenter
             } else
             {
                 #if UNITY_EDITOR
-                /*
                 if (_debug)
                 {
                     CommandDecideEnemy();
                     return;
                 }
-                */
                 #endif
                 int autoSkillId = _model.MakeAutoSkillId(_model.CurrentBattler);
                 var skillInfo = new SkillInfo(autoSkillId);

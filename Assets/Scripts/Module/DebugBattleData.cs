@@ -10,8 +10,10 @@ public class DebugBattleData : MonoBehaviour
     [SerializeField] private int actorLv = 0;
     [SerializeField] private int troopId = 0;
     [SerializeField] private int troopLv = 0;
+    [SerializeField] private bool testBattle = false;
+    public bool TestBattle => testBattle;
     [SerializeField] private string advName = "";
-    public string AdvName { get {return advName;}}
+    public string AdvName => advName;
 
     void Start()
     {
@@ -26,28 +28,51 @@ public class DebugBattleData : MonoBehaviour
     {
         GameSystem.CurrentStageData = new SaveStageInfo();
         GameSystem.CurrentStageData.MakeStageData(1);
-        //GameSystem.CurrentData.CurrentStage.TacticsTroops(1);
+
         GameSystem.CurrentStageData.InitParty();     
-        foreach (var actor in DataSystem.Actors)
-        { 
-            if (inBattleActorIds.Contains(actor.Id))
-            {
-                GameSystem.CurrentStageData.AddTestActor(actor,actorLv);
-            }
-        }
-        var idx = 1;
-        foreach (var actorInfo in GameSystem.CurrentStageData.Party.ActorInfos)
+        if (testBattle)
         {
-            actorInfo.SetBattleIndex(idx);
-            idx++;
+            var TestBattleData = Resources.Load<TestBattleData>("Data/TestBattle").TestBattleDates;
+            var ActorIndex = 1;
+            foreach (var TestBattle in TestBattleData)
+            {
+                if (TestBattle.IsActor)
+                {
+                    var actorData = DataSystem.FindActor(TestBattle.BattlerId);
+                    GameSystem.CurrentStageData.AddTestActor(actorData,TestBattle.Level);
+                    var actorInfo = GameSystem.CurrentStageData.Party.ActorInfos.Find(a => a.ActorId == actorData.Id);
+                    actorInfo.SetBattleIndex(ActorIndex);
+                    actorInfo.SetLineIndex(TestBattle.IsFront ? LineType.Front : LineType.Back);
+                    ActorIndex++;
+                } else
+                {
+                    
+                }
+            }
+            GameSystem.CurrentStageData.CurrentStage.TestTroops(troopId,troopLv);
+        } else
+        {
+            foreach (var actor in DataSystem.Actors)
+            { 
+                if (inBattleActorIds.Contains(actor.Id))
+                {
+                    GameSystem.CurrentStageData.AddTestActor(actor,actorLv);
+                }
+            }
+            var idx = 1;
+            foreach (var actorInfo in GameSystem.CurrentStageData.Party.ActorInfos)
+            {
+                actorInfo.SetBattleIndex(idx);
+                idx++;
+            }
+            GameSystem.CurrentStageData.CurrentStage.TestTroops(troopId,troopLv);
         }
-        GameSystem.CurrentStageData.CurrentStage.TestTroops(troopId,troopLv);
     }
 #if UNITY_EDITOR
     private BattleModel _model;
     private BattlePresenter _presenter;
     private BattleView _view;
-    [SerializeField] private bool saveActorData = false;
+
     public void SetDebugger(BattleModel model,BattlePresenter presenter,BattleView view)
     {
         _model = model;
