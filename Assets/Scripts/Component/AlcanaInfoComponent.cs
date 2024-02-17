@@ -18,7 +18,7 @@ public class AlcanaInfoComponent : MonoBehaviour
         }
         if (shinyReflect != null)
         {
-            shinyReflect.enabled = alcanaInfo.CurrentTurnAlcanaList.Count > 0;
+            shinyReflect.enabled = alcanaInfo.EnableOwnAlcanaList.Count > 0;
         }
     }
 }

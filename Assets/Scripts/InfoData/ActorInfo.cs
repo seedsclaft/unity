@@ -27,16 +27,6 @@ public class ActorInfo
         foreach (var attribute in _attribute)
         {
             list.Add(attribute);
-            if (GameSystem.CurrentStageData != null)
-            {
-                if (GameSystem.CurrentStageData.StageAlcana.CheckAlchemyValue())
-                {
-                    if (list[idx] > 0)
-                    {
-                        list[idx] -= 1;
-                    }
-                }
-            }
             idx++;
         }
         return list;

@@ -11,25 +11,11 @@ public class TacticsUtility
 
     public static int TrainCost(ActorInfo actorInfo)
     {
-        if (GameSystem.CurrentStageData != null)
-        {
-            if (GameSystem.CurrentStageData.StageAlcana.CheckCommandCostZero(TacticsCommandType.Train))
-            {
-                return 0;
-            }
-        }
         return actorInfo.Level * TacticsCostRate(actorInfo);
     }
 
     public static int TrainCost(int level,ActorInfo actorInfo)
     {
-        if (GameSystem.CurrentStageData != null)
-        {
-            if (GameSystem.CurrentStageData.StageAlcana.CheckCommandCostZero(TacticsCommandType.Train))
-            {
-                return 0;
-            }
-        }
         return level * TacticsCostRate(actorInfo);
     }
 
@@ -70,13 +56,6 @@ public class TacticsUtility
 
     public static int RecoveryCost(ActorInfo actorInfo,bool checkAlcana = false)
     {
-        if (checkAlcana && GameSystem.CurrentStageData != null)
-        {
-            if (GameSystem.CurrentStageData.StageAlcana.CheckCommandCostZero(TacticsCommandType.Recovery))
-            {
-                return 0;
-            }
-        }
         return (int)Mathf.Ceil((float)actorInfo.Level * 0.1f) * TacticsCostRate(actorInfo);
     }
 

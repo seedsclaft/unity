@@ -343,7 +343,37 @@ MonoBehaviour:
     CheckHit: 0
     RemoveByAttack: 0
     RemoveByDeath: 1
+  - StateType: 1100
+    Name: "\u30C0\u30E1\u30FC\u30B8\u30AB\u30C3\u30C8"
+    Help: "\u88AB\u30C0\u30E1\u30FC\u30B8\u3092\\d%\u30AB\u30C3\u30C8\u3059\u308B"
+    IconPath: ArmorUpgrade
+    RemovalTiming: 1
+    OverWrite: 1
+    EffectPath: '""'
+    EffectPosition: 0
+    EffectScale: 1
+    OverLap: 0
+    Removal: 1
+    Abnormal: 0
+    CheckHit: 0
+    RemoveByAttack: 0
+    RemoveByDeath: 1
   - StateType: 2010
+    Name: "\u706B\u50B7"
+    Help: "\u884C\u52D5\u5F8C\u30C0\u30E1\u30FC\u30B8"
+    IconPath: Burning
+    RemovalTiming: 1
+    OverWrite: 1
+    EffectPath: MAGICALxSPIRAL/Salamander7
+    EffectPosition: 1
+    EffectScale: 1
+    OverLap: 0
+    Removal: 0
+    Abnormal: 1
+    CheckHit: 1
+    RemoveByAttack: 0
+    RemoveByDeath: 1
+  - StateType: 2011
     Name: "\u706B\u50B7"
     Help: "\u884C\u52D5\u5F8C\u30C0\u30E1\u30FC\u30B8"
     IconPath: Burning
@@ -910,6 +940,21 @@ MonoBehaviour:
     OverLap: 0
     Removal: 1
     Abnormal: 0
+    CheckHit: 0
+    RemoveByAttack: 0
+    RemoveByDeath: 1
+  - StateType: 2350
+    Name: "\u8056\u68FA"
+    Help: "\u88AB\u30C0\u30E1\u30FC\u30B8\u30A2\u30C3\u30D7"
+    IconPath: Arrow
+    RemovalTiming: 1
+    OverWrite: 1
+    EffectPath: '""'
+    EffectPosition: 0
+    EffectScale: 1
+    OverLap: 0
+    Removal: 0
+    Abnormal: 1
     CheckHit: 0
     RemoveByAttack: 0
     RemoveByDeath: 1

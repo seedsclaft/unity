@@ -4,41 +4,29 @@ using System.Collections.Generic;
 
 [Serializable]
 public class AlcanaInfo{
-    private List<SkillInfo> _currentTurnAlcanaList = new ();
-    public List<SkillInfo> CurrentTurnAlcanaList => _currentTurnAlcanaList;
-    public void SetCurrentTurnAlcanaList(List<SkillInfo> currentTurnAlcanaList)
-    {
-        foreach (var currentTurnAlcana in currentTurnAlcanaList)
-        {
-            if (!_currentTurnAlcanaList.Contains(currentTurnAlcana))
-            {
-                _currentTurnAlcanaList.Add(currentTurnAlcana);
-            }
-        }
-    }
-    public void ClearCurrentTurnAlcanaList()
-    {
-        _currentTurnAlcanaList.Clear();
-    }
     private bool _IsAlcana;
-    public bool IsAlcana {get {return _IsAlcana;}}
+    public bool IsAlcana => _IsAlcana;
     private List<SkillInfo> _ownAlcanaList = new ();
-    public List<SkillInfo> OwnAlcanaList {get {return _ownAlcanaList;}}
-    public List<SkillInfo> EnableOwnAlcanaList {get {return _ownAlcanaList.FindAll(a => a.Enable);}}
-    private StateInfo _alcanaStateInfo = null;
-    public StateInfo AlcanaState {get {return _alcanaStateInfo;}}
+    public List<SkillInfo> OwnAlcanaList => _ownAlcanaList;
+    public List<SkillInfo> EnableOwnAlcanaList => _ownAlcanaList.FindAll(a => a.Enable);
+
 
     public AlcanaInfo(){
-        InitData();
+        InitData(false);
     }
 
-    public void InitData()
+    public void InitData(bool isTestMode)
     {
         _IsAlcana = false;
         _ownAlcanaList.Clear();
-        for (var i = 500001;i <= 500005;i++)
+        if (isTestMode)
         {
-            //_ownAlcanaList.Add(new SkillInfo(i));
+            for (var i = 1;i <= 22;i++)
+            {
+                var alcana = new SkillInfo(500000 + i * 10);
+                alcana.SetEnable(false);
+                _ownAlcanaList.Add(alcana);
+            }
         }
     }
 
@@ -76,33 +64,19 @@ public class AlcanaInfo{
         _IsAlcana = isAlcana;
     }
 
-    public void SetAlcanaStateInfo(StateInfo stateInfo)
+    public void CheckEnableSkillTrigger()
     {
-        _alcanaStateInfo = stateInfo;
-    }
-
-    public bool CheckAlchemyCostZero(AttributeType attributeType)
-    {
-        return _currentTurnAlcanaList.Find(a => a.Master.FeatureDates.Find(b => b.FeatureType == FeatureType.AlchemyCostZero && b.Param1 == (int)attributeType) != null) != null;
-    }
-
-    public bool CheckNoBattleLost()
-    {
-        return _currentTurnAlcanaList.Find(a => a.Master.FeatureDates.Find(b => b.FeatureType == FeatureType.NoBattleLost) != null) != null;
-    }
-
-    public bool CheckResourceBonus()
-    {
-        return _currentTurnAlcanaList.Find(a => a.Master.FeatureDates.Find(b => b.FeatureType == FeatureType.ResourceBonus) != null) != null;
-    }
-    
-    public bool CheckCommandCostZero(TacticsCommandType tacticsCommandType)
-    {
-        return _currentTurnAlcanaList.Find(a => a.Master.FeatureDates.Find(b => b.FeatureType == FeatureType.CommandCostZero && b.Param1 == (int)tacticsCommandType) != null) != null;
-    }
-
-    public bool CheckAlchemyValue()
-    {
-        return _currentTurnAlcanaList.Find(a => a.Master.FeatureDates.Find(b => b.FeatureType == FeatureType.AlchemyCostBonus) != null) != null;
+        foreach (var alcana in _ownAlcanaList)
+        {
+            var triggerDates = alcana.Master.TriggerDates;
+            foreach (var triggerData in triggerDates)
+            {
+                if (triggerData.TriggerType == TriggerType.ExtendStageTurn)
+                {
+                    var enable = GameSystem.CurrentStageData.CurrentStage.CurrentTurn <= 0;
+                    alcana.SetEnable(enable);
+                }
+            }
+        }
     }
 }

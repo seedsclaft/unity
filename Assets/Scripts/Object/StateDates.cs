@@ -48,7 +48,9 @@ public enum StateType
     HitUp = 1080,
     EvaUp = 1090,
     EvaDown = 1091,
-    BurnDamage = 2010, // 火傷
+    DamageCut = 1100,
+    BurnDamage = 2010, // 火傷(ダメージ固定)
+    BurnDamagePer = 2011, // 火傷(ダメージ割合)
     Chain = 2020, // 拘束
     ChainDamageUp = 2021, // 拘束ダメージアップ
     CounterAura = 2030, // CA
@@ -86,6 +88,7 @@ public enum StateType
     Penetrate = 2330,
     EffectLine = 2340,
     EffectAll = 2341,
+    HolyCoffin = 2350,
 }
 
 public enum RemovalTiming

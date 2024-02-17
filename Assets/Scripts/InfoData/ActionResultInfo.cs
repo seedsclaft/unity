@@ -168,6 +168,12 @@ public class ActionResultInfo
             case FeatureType.NoEffectHpDamage:
                 MakeHpDamage(subject,target,featureData,true,isOneTarget,range);
                 return;
+            case FeatureType.NoEffectHpPerDamage:
+                MakeHpPerDamage(subject,target,featureData,true,isOneTarget,range);
+                return;
+            case FeatureType.NoEffectHpAddDamage:
+                MakeHpAddDamage(subject,target,featureData,true,isOneTarget,range);
+                return;
             case FeatureType.MpDamage:
                 if (CheckIsHit(subject,target,isOneTarget,range))
                 {
@@ -218,6 +224,15 @@ public class ActionResultInfo
                 return;
             case FeatureType.ChangeFeatureParam3:
                 MakeChangeFeatureParam(subject,target,featureData,3);
+                return;
+            case FeatureType.ChangeFeatureParam1StageWinCount:
+                MakeAddFeatureParamStageWinCount(subject,target,featureData,1);
+                return;
+            case FeatureType.ChangeFeatureParam2StageWinCount:
+                MakeAddFeatureParamStageWinCount(subject,target,featureData,2);
+                return;
+            case FeatureType.ChangeFeatureParam3StageWinCount:
+                MakeAddFeatureParamStageWinCount(subject,target,featureData,3);
                 return;
         }
     }
@@ -316,6 +331,19 @@ public class ActionResultInfo
         return UpperDamageRate;
     }
 
+    private float CalcDamageCut(BattlerInfo target,bool isNoEffect)
+    {
+        float damageCutRate = 0;
+        if (isNoEffect == false)
+        {
+            if (target.IsState(StateType.DamageCut))
+            {
+                damageCutRate += target.StateEffectAll(StateType.DamageCut) * 0.01f;
+            }
+        }
+        return damageCutRate;
+    }
+
     private int CalcRange(BattlerInfo subject,BattlerInfo target,int skillId)
     {
         var range = 0;
@@ -365,6 +393,11 @@ public class ActionResultInfo
 
         SkillDamage *= GetDefenseRateValue((AtkValue * 0.5f),DefValue);
         float DamageValue = Mathf.Max(1,SkillDamage);
+        if (target.IsState(StateType.HolyCoffin))
+        {
+            DamageValue *= (1 + target.StateEffectAll(StateType.HolyCoffin) * 0.01f);
+        }
+        DamageValue *= (1f - CalcDamageCut(target,isNoEffect));
         hpDamage = (int)Mathf.Round(DamageValue);
         // 属性補正
         // クリティカル
@@ -408,6 +441,23 @@ public class ActionResultInfo
         _hpDamage += hpDamage; 
     }
 
+    private void MakeHpPerDamage(BattlerInfo subject,BattlerInfo target,SkillData.FeatureData featureData,bool isNoEffect,bool isOneTarget,int range)
+    {
+        var hpDamage = (int)Math.Round(target.MaxHp * 0.01f * featureData.Param1);
+        _hpDamage += hpDamage; 
+    }
+
+    private void MakeHpAddDamage(BattlerInfo subject,BattlerInfo target,SkillData.FeatureData featureData,bool isNoEffect,bool isOneTarget,int range)
+    {
+        var hpDamage = (int)Math.Round(_hpDamage * 0.01f * featureData.Param1);
+        _hpDamage += hpDamage;
+        // 追加ダメージで戦闘不能にならない
+        if (_hpDamage > target.Hp)
+        {
+            _hpDamage = target.Hp - 1;
+        }
+    }
+
     private void MakeHpHeal(BattlerInfo subject,BattlerInfo target,SkillData.FeatureData featureData)
     {
         float HealValue = featureData.Param1;
@@ -430,6 +480,7 @@ public class ActionResultInfo
         }
     }
 
+
     private void MakeHpDrain(BattlerInfo subject,BattlerInfo target,SkillData.FeatureData featureData,bool isOneTarget,int range)
     {
         MakeHpDamage(subject,target,featureData,false,isOneTarget,range);
@@ -446,6 +497,11 @@ public class ActionResultInfo
         DamageRate *= UpperDamageRate;
         float SkillDamage = (DamageRate * 0.01f * AtkValue);
         float DamageValue = Mathf.Max(1,SkillDamage);
+        if (target.IsState(StateType.HolyCoffin))
+        {
+            DamageValue *= (1 + target.StateEffectAll(StateType.HolyCoffin) * 0.01f);
+        }
+        DamageValue *= (1f - CalcDamageCut(target,isNoEffect));
         hpDamage = (int)Mathf.Round(DamageValue);
         hpDamage = Mathf.Max(1,hpDamage);
         if (subject.IsState(StateType.Drain))
@@ -477,6 +533,11 @@ public class ActionResultInfo
         SkillDamage *= GetDefenseRateValue((AtkValue * 0.5f),DefValue);
         //SkillDamage -= (DefValue * 0.5f);
         float DamageValue = Mathf.Max(1,SkillDamage);
+        if (target.IsState(StateType.HolyCoffin))
+        {
+            DamageValue *= (1 + target.StateEffectAll(StateType.HolyCoffin) * 0.01f);
+        }
+        DamageValue *= (1f - CalcDamageCut(target,isNoEffect));
         hpDamage = (int)Mathf.Round(DamageValue);
         // 属性補正
         // クリティカル
@@ -518,12 +579,21 @@ public class ActionResultInfo
         DamageRate *= UpperDamageRate;
         float SkillDamage = (DamageRate * 0.01f * AtkValue);
         float DamageValue = Mathf.Max(1,SkillDamage);
+        if (target.IsState(StateType.HolyCoffin))
+        {
+            DamageValue *= (1 + target.StateEffectAll(StateType.HolyCoffin) * 0.01f);
+        }
+        DamageValue *= (1f - CalcDamageCut(target,isNoEffect));
         hpDamage = (int)Mathf.Round(DamageValue);
         hpDamage = Mathf.Max(1,hpDamage);
         if (target.IsState(StateType.NoDamage) && !isNoEffect)
         {
             hpDamage = 0;
             SeekStateCount(target,StateType.NoDamage);
+        }
+        if (target.IsState(StateType.DamageCut) && !isNoEffect)
+        {
+            
         }
         /*
         if (subject.IsState(StateType.Drain))
@@ -715,9 +785,35 @@ public class ActionResultInfo
                 }
             }
         }
-
     }
 
+    public void MakeAddFeatureParamStageWinCount(BattlerInfo subject,BattlerInfo target,SkillData.FeatureData featureData,int featureParamIndex)
+    {
+        // 即代入
+        var skillInfo = subject.Skills.Find(a => a.Id == featureData.Param1);
+        if (skillInfo != null)
+        {
+            // featureのIndex
+            var feature = skillInfo.FeatureDates.Count >= featureData.Param2 ? skillInfo.FeatureDates[featureData.Param2] : null;
+            var winCount = GameSystem.CurrentStageData.CurrentStage.ClearTroopIds.Count;
+            if (feature != null)
+            {
+                switch (featureParamIndex)
+                {
+                    case 1:
+                        feature.Param1 += winCount * featureData.Param3;
+                        break;
+                    case 2:
+                        feature.Param2 += winCount * featureData.Param3;
+                        break;
+                    case 3:
+                        feature.Param3 += winCount * featureData.Param3;
+                        break;
+                }
+            }
+        }
+
+    }
     public void AddRemoveState(StateInfo stateInfo)
     {
         if (_removedStates.IndexOf(stateInfo) == -1){

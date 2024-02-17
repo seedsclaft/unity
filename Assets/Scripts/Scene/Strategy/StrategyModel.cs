@@ -212,8 +212,6 @@ public class StrategyModel : BaseModel
             actorInfo.ClearTacticsCommand();
         }
         //CurrentStage.ChangeSubordinateValue(-5);
-        StageAlcana.SetAlcanaStateInfo(null);
-        StageAlcana.ClearCurrentTurnAlcanaList();
         if (isSeek)
         {
             CurrentStage.SeekStage();

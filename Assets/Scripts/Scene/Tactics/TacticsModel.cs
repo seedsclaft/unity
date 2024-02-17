@@ -370,11 +370,6 @@ public class TacticsModel : BaseModel
         return DataSystem.GetReplaceText(10,count.ToString());
     }
 
-    private bool RecoveryCostZero()
-    {
-        return StageAlcana.CheckCommandCostZero(TacticsCommandType.Recovery);
-    }
-
     public void ChangeBattleLineIndex(int actorId,bool isFront)
     {
         var actorInfo = TacticsActor();

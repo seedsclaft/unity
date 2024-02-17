@@ -51,10 +51,6 @@ public class BaseModel
     {
         lostMembers.ForEach(a => a.ChangeLost(false));
         return;
-        if (StageAlcana != null && StageAlcana.CheckNoBattleLost())
-        {
-            return;
-        }
         lostMembers.ForEach(a => a.ChangeLost(true));
     }
 
@@ -355,7 +351,6 @@ public class BaseModel
     
     public void SetAlcanaSkillInfo(List<SkillInfo> skillInfos)
     {
-        StageAlcana.SetCurrentTurnAlcanaList(skillInfos);
         TempInfo.SetAlcanaSkillInfo(skillInfos);
     }
 

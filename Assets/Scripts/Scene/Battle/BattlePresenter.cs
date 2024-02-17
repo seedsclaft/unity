@@ -267,6 +267,8 @@ public class BattlePresenter : BasePresenter
     private void CommandStartBattleAction()
     {
         var PassiveResults = _model.CheckTriggerPassiveInfos(TriggerTiming.StartBattle);
+        var PassiveResults2 = _model.CheckTriggerPassiveInfos(TriggerTiming.AfterAndStartBattle);
+        PassiveResults.AddRange(PassiveResults2);
         ExecActionResult(PassiveResults);
         var AfterPassiveResults = _model.CheckTriggerPassiveInfos(TriggerTiming.After);
         ExecActionResult(AfterPassiveResults);
@@ -418,6 +420,7 @@ public class BattlePresenter : BasePresenter
         var chainActionResults = _model.UpdateChainState();
         ExecActionResult(chainActionResults,false);
         _model.CheckTriggerSkillInfos(TriggerTiming.After,null,chainActionResults);
+        _model.CheckTriggerSkillInfos(TriggerTiming.AfterAndStartBattle,null,chainActionResults);
         
         StartAliveAnimation(chainActionResults);
         StartDeathAnimation(chainActionResults);
@@ -426,7 +429,8 @@ public class BattlePresenter : BasePresenter
         var benedictionActionResults = _model.UpdateBenedictionState();
         ExecActionResult(benedictionActionResults,false);
         _model.CheckTriggerSkillInfos(TriggerTiming.After,null,benedictionActionResults);
-        
+        _model.CheckTriggerSkillInfos(TriggerTiming.AfterAndStartBattle,null,benedictionActionResults);
+       
         StartDeathAnimation(benedictionActionResults);
         StartAliveAnimation(benedictionActionResults);
     }
@@ -884,6 +888,8 @@ public class BattlePresenter : BasePresenter
         _model.CheckPlusSkill();
         // Passive付与
         var PassiveResults = _model.CheckTriggerPassiveInfos(TriggerTiming.After);
+        var PassiveResults2 = _model.CheckTriggerPassiveInfos(TriggerTiming.AfterAndStartBattle);
+        PassiveResults.AddRange(PassiveResults2);
         ExecActionResult(PassiveResults);
         // Passive解除
         var RemovePassiveResults = _model.CheckRemovePassiveInfos();
@@ -891,7 +897,8 @@ public class BattlePresenter : BasePresenter
 
         // TriggerAfter
         var result = _model.CheckTriggerSkillInfos(TriggerTiming.After,_model.CurrentActionInfo(),_model.CurrentActionInfo().ActionResults);
-        
+        var result2 = _model.CheckTriggerSkillInfos(TriggerTiming.AfterAndStartBattle,_model.CurrentActionInfo(),_model.CurrentActionInfo().ActionResults);
+        result.AddRange(result2);
         bool isDemigodActor = false;
         if (_model.CurrentBattler != null)
         {
@@ -908,6 +915,8 @@ public class BattlePresenter : BasePresenter
             }
             // Passive付与
             PassiveResults = _model.CheckTriggerPassiveInfos(TriggerTiming.After);
+            PassiveResults2 = _model.CheckTriggerPassiveInfos(TriggerTiming.AfterAndStartBattle);
+            PassiveResults.AddRange(PassiveResults2);
             ExecActionResult(PassiveResults);
             // Passive解除
             RemovePassiveResults = _model.CheckRemovePassiveInfos();

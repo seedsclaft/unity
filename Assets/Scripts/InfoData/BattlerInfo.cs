@@ -17,6 +17,8 @@ public class BattlerInfo
     public int Index => _index;
     private bool _isActor = false;
     public bool isActor => _isActor;
+    private bool _isAlcana = false;
+    public bool isAlcana => _isAlcana;
     private int _charaId;
     public int CharaId => _charaId;
     private int _level;
@@ -96,6 +98,7 @@ public class BattlerInfo
         
         _demigodParam = actorInfo.DemigodParam;
         _isActor = true;
+        _isAlcana = false;
         
         _actorInfo = actorInfo;
         _hp = actorInfo.CurrentHp;
@@ -110,7 +113,8 @@ public class BattlerInfo
         {
             _kinds.Add(kind);
         }
-        AddKindPassive();foreach (var skill in _skills)
+        AddKindPassive();
+        foreach (var skill in _skills)
         {
             skill.SetUseCount(0);
         }
@@ -138,6 +142,7 @@ public class BattlerInfo
         _status = statusInfo;
         _index = index + 100;
         _isActor = false;
+        _isAlcana = false;
         _enemyData = enemyData;
         _hp = _status.Hp;
         _mp = _status.Mp;
@@ -158,6 +163,33 @@ public class BattlerInfo
             _kinds.Add(kind);
         }
         AddKindPassive();
+        foreach (var skill in _skills)
+        {
+            skill.SetUseCount(0);
+        }
+        ResetAp(true);
+    }
+    
+    public BattlerInfo(AlcanaInfo alcanaInfo,bool isActor,int index){
+        _charaId = index + 1000;
+        var statusInfo = new StatusInfo();
+        statusInfo.SetParameter(
+            1,
+            0,
+            0,
+            0,
+            0
+        );
+        _status = statusInfo;
+        _index = index + 1000;
+        _isActor = isActor;
+        _isAlcana = true;
+        _skills = new List<SkillInfo>();
+        foreach (var alcana in alcanaInfo.EnableOwnAlcanaList)
+        {
+            var skillInfo = new SkillInfo(alcana.Id);
+            _skills.Add(skillInfo);
+        }
         foreach (var skill in _skills)
         {
             skill.SetUseCount(0);
@@ -808,7 +840,7 @@ public class BattlerInfo
 
     public List<SkillInfo> PassiveSkills()
     {
-        return _skills.FindAll(a => a.Master.SkillType == SkillType.Passive);
+        return _skills.FindAll(a => a.Master.SkillType == SkillType.Passive || a.Master.SkillType == SkillType.UseAlcana);
     }
 
     public List<StateInfo> IconStateInfos()

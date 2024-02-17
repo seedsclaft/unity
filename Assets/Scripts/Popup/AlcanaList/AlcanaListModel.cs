@@ -9,7 +9,7 @@ public class AlcanaListModel : BaseModel
         var alcanaList = StageAlcana.OwnAlcanaList;
         foreach (var alcana in alcanaList)
         {
-            alcana.SetSelectedAlcana(StageAlcana.CurrentTurnAlcanaList.Contains(alcana));
+            alcana.SetSelectedAlcana(StageAlcana.EnableOwnAlcanaList.Contains(alcana));
         }
         return MakeListData(alcanaList);
     }

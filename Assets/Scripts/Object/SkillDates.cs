@@ -190,6 +190,21 @@ public class SkillData
                     CanUse = true;
                 }
                 break;
+                case TriggerType.ActionCountPer:
+                var actionCount = 0;
+                foreach (var member in party)
+                {
+                    actionCount += member.TurnCount;
+                }
+                foreach (var member in troops)
+                {
+                    actionCount += member.TurnCount;
+                }
+                if ((actionCount % Param1) - Param2 == 0)
+                {
+                    CanUse = true;
+                }
+                break;
                 case TriggerType.PartyHpRateUnder:
                 var filter = troops.Find(a => ((float)a.Hp / (float)a.MaxHp) < Param1 * 0.01f);
                 if (filter == null)
@@ -251,6 +266,13 @@ public class SkillData
                     CanUse = true;
                 }
                 break;
+                case TriggerType.Percent:
+                var rand = UnityEngine.Random.Range(0,100);
+                if (rand <= Param1)
+                {
+                    CanUse = true;
+                }
+                break;
             }
             return CanUse;
         }
@@ -274,6 +296,7 @@ public enum ScopeType{
     FrontLine = 5,
     WithoutSelfOne = 11,
     WithoutSelfAll = 13,
+    RandomOne = 21,
 }
 
 public enum SkillType{
@@ -302,6 +325,7 @@ public enum TargetType{
     All = 3,
     Self = 4,
     AttackTarget = 7,
+    IsTriggerTarget = 11,
     Party = 101
 }
 
@@ -343,9 +367,13 @@ public enum TriggerType
     MoreTroopMembers = 52, // 味方より敵が少ない
     TurnNumUnder = 61, // ターン数が〇以内
     TurnNumPer = 63, // ターン数がparam1 x ターン数 + param2
+    ActionCountPer = 64, // 全体の行動数がparam1 x 行動数 + param2
     AttackState = 71, // 攻撃成功時〇%で
+    Percent = 72, // 〇%で
     InBattleUseCountUnder = 81, // バトル中使用回数が〇以下
     LvUpper = 92, // Lvが〇以上
+    ActionMpCost = 93, // 行動Magicの消費Mpが〇
+    TargetHpRateUnder = 94, // 攻撃を受けた対象のHpが〇%以下
     PayBattleMp = 101, // Mpを〇消費する
     ChainCount = 102, // 拘束成功回数
     ActionResultDeath = 103, // 攻撃を受けると戦闘不能になる
@@ -356,6 +384,7 @@ public enum TriggerType
     ActionResultAddState = 113, // 相手が状態異常を発動する前
     DefeatEnemyByAttack = 114, // 攻撃で敵を撃破する
     DemigodMagicAttribute = 204, // Demigod魔法の属性が〇の味方が神化する
+    ExtendStageTurn = 502, // 存在猶予を延長している
     DodgeCountOver = 1001, // 回避を〇回行う
     HpHealCountOver = 1004, // Hp回復魔法を〇回行う
     AwakenDemigodAttribute = 1005, // Demigod魔法の属性が〇の味方が神化する
@@ -368,6 +397,7 @@ public enum TriggerTiming
     After = 2,
     Interrupt = 3,
     StartBattle = 4,
+    AfterAndStartBattle = 24,
     BeforeTacticsTurn = 51,
     CurrentTacticsTurn = 52
 }
@@ -383,6 +413,8 @@ public enum FeatureType
     MpDamage = 6,
     MpHeal = 7,
     NoEffectHpDamage = 11,
+    NoEffectHpPerDamage = 12,
+    NoEffectHpAddDamage = 13,
     AddState = 21,
     RemoveState = 22,
     RemoveAbnormalState = 23,
@@ -396,6 +428,9 @@ public enum FeatureType
     ChangeFeatureParam1 = 61,
     ChangeFeatureParam2 = 62,
     ChangeFeatureParam3 = 63,
+    ChangeFeatureParam1StageWinCount = 64,
+    ChangeFeatureParam2StageWinCount = 65,
+    ChangeFeatureParam3StageWinCount = 66,
     PlusSkill = 101,
     KindHeal = 201,
     BreakUndead = 202,
