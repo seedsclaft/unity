@@ -74,7 +74,7 @@ public class AlcanaInfo{
                 if (triggerData.TriggerType == TriggerType.ExtendStageTurn)
                 {
                     var enable = GameSystem.CurrentStageData.CurrentStage.CurrentTurn <= 0;
-                    alcana.SetEnable(enable);
+                    //alcana.SetEnable(enable);
                 }
             }
         }

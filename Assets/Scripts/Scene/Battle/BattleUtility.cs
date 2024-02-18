@@ -44,4 +44,35 @@ public class BattleUtility
     {
         return DataSystem.Animations.Find(a => a.Id == animationId);
     }
+
+    public static List<TriggerTiming> StartTriggerTimings()
+    {
+        return new List<TriggerTiming>(){
+            TriggerTiming.StartBattle,
+            TriggerTiming.AfterAndStartBattle,
+        };
+    }
+
+    public static List<TriggerTiming> BeforeTriggerTimings()
+    {
+        return new List<TriggerTiming>(){
+            TriggerTiming.Before,
+            TriggerTiming.BeforeAndStartBattle,
+        };
+    }
+
+    public static List<TriggerTiming> AfterTriggerTimings()
+    {
+        return new List<TriggerTiming>(){
+            TriggerTiming.After,
+            TriggerTiming.AfterAndStartBattle,
+        };
+    }    
+    
+    public static List<TriggerTiming> HpDamagedTriggerTimings()
+    {
+        return new List<TriggerTiming>(){
+            TriggerTiming.HpDamaged,
+        };
+    }
 }

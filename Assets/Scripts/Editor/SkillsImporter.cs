@@ -42,7 +42,8 @@ public class SkillsImporter : AssetPostprocessor {
 		_FeatureType,
 		Param1,
 		Param2,
-		Param3
+		Param3,
+		Rate,
 	}
     enum BaseTriggerColumn
 	{
@@ -136,6 +137,7 @@ public class SkillsImporter : AssetPostprocessor {
 					FeatureData.Param1 = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseFeatureColumn.Param1);
 					FeatureData.Param2 = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseFeatureColumn.Param2);
 					FeatureData.Param3 = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseFeatureColumn.Param3);
+					FeatureData.Rate = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseFeatureColumn.Rate);
 					
 					var SkillData = Data.Data.Find(a => a.Id == FeatureData.SkillId);
 					if (SkillData != null){

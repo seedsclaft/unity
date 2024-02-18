@@ -552,32 +552,13 @@ public class BattleModel : BaseModel
     // 選択範囲が敵味方全員の場合
     private List<int> TargetIndexAll(bool isActor,List<int> targetIndexList,RangeType rangeType)
     {
-        if (isActor)
+        foreach (var battlerInfo in _party.BattlerInfos)
         {
-            foreach (var battlerInfo in _party.BattlerInfos)
-            {
-                targetIndexList.Add(battlerInfo.Index);
-            }
-            if (rangeType == RangeType.S)
-            {
-                // 前列のみ
-                foreach (var battlerInfo in _troop.FrontBattlers())
-                {
-                    targetIndexList.Add(battlerInfo.Index);
-                }
-            } else
-            {
-                foreach (var battlerInfo in _troop.BattlerInfos)
-                {
-                    targetIndexList.Add(battlerInfo.Index);
-                }
-            }
-        } else
+            targetIndexList.Add(battlerInfo.Index);
+        }
+        foreach (var battlerInfo in _troop.BattlerInfos)
         {
-            foreach (var battlerInfo in FieldBattlerInfos())
-            {
-                targetIndexList.Add(battlerInfo.Index);
-            }
+            targetIndexList.Add(battlerInfo.Index);
         }
         return targetIndexList;
     }
@@ -748,11 +729,11 @@ public class BattleModel : BaseModel
                     {
                         IsEnable = true;
                     } else
-                    if (_currentBattler.isActor || (StateType)featureData.Param1 == StateType.DamageUp || (StateType)featureData.Param1 == StateType.Prism)
+                    if (_currentBattler != null && _currentBattler.isActor || (StateType)featureData.Param1 == StateType.DamageUp || (StateType)featureData.Param1 == StateType.Prism)
                     {
                         IsEnable = true;
                     } else
-                    if (!_currentBattler.isActor && !target.IsState((StateType)featureData.Param1) && target.IsState(StateType.Barrier))
+                    if (_currentBattler != null && !_currentBattler.isActor && !target.IsState((StateType)featureData.Param1) && target.IsState(StateType.Barrier))
                     {
                         if (UnityEngine.Random.Range(0,100) > 50)
                         {
@@ -804,6 +785,12 @@ public class BattleModel : BaseModel
                 if (scopeTrigger.TriggerType == TriggerType.DemigodMagicAttribute)
                 {
                     if (target.Skills.Find(a => a.Master.SkillType == SkillType.Demigod && a.Attribute == (AttributeType)scopeTrigger.Param1) == null)
+                    {
+                        remove = true;
+                    }
+                } else
+                {
+                    if (!scopeTrigger.IsTriggeredSkillInfo(target,BattlerActors(),BattlerEnemies()))
                     {
                         remove = true;
                     }
@@ -1540,7 +1527,7 @@ public class BattleModel : BaseModel
                 if (actionInfo == null || (actionInfo.Master.Id != skillInfo.Id))
                 {
                     var triggerDates = skillInfo.Master.TriggerDates.FindAll(a => a.TriggerTiming == triggerTiming);
-                    if (IsTriggeredSkillInfo(checkBattler,triggerDates,triggerTiming,actionInfo,actionResultInfos))
+                    if (IsTriggeredSkillInfo(checkBattler,triggerDates,actionInfo,actionResultInfos))
                     {
                         triggeredSkills.Add(skillInfo);
                     }
@@ -1568,9 +1555,9 @@ public class BattleModel : BaseModel
         return madeActionInfos;
     }
 
-    public List<ActionResultInfo> CheckTriggerPassiveInfos(TriggerTiming triggerTiming,ActionInfo actionInfo = null)
+    public List<ActionResultInfo> CheckTriggerPassiveInfos(List<TriggerTiming> triggerTimings,ActionInfo actionInfo = null, List<ActionResultInfo> actionResultInfos = null)
     {
-        var actionResultInfos = new List<ActionResultInfo>();
+        var makeActionResults = new List<ActionResultInfo>();
         foreach (var battlerInfo in _battlers)
         {
             foreach (var passiveInfo in battlerInfo.PassiveSkills())
@@ -1579,7 +1566,7 @@ public class BattleModel : BaseModel
                 {
                     continue;
                 }
-                var triggerDates = passiveInfo.Master.TriggerDates.FindAll(a => a.TriggerTiming == triggerTiming);
+                var triggerDates = passiveInfo.Master.TriggerDates.FindAll(a => triggerTimings.Contains(a.TriggerTiming));
                 // バトル中〇回以下使用
                 var inBattleUseCountUnder = triggerDates.Find(a => a.TriggerType == TriggerType.InBattleUseCountUnder);
                 if (inBattleUseCountUnder != null)
@@ -1589,101 +1576,152 @@ public class BattleModel : BaseModel
                         continue;
                     }
                 }
-                if (IsTriggeredSkillInfo(battlerInfo,triggerDates,triggerTiming,actionInfo,new List<ActionResultInfo>()))
+                if (IsTriggeredSkillInfo(battlerInfo,triggerDates,actionInfo,actionResultInfos))
                 {                
-                    bool usable = true;
-                    // トリガーのParam2を使用回数制限にする
-                    var useLimit = triggerDates.Find(a => a.Param2 >= 1);
-                    if (useLimit != null)
-                    {
-                        var usedCount = _usedPassiveSkillInfos[battlerInfo.Index].FindAll(a => a == passiveInfo.Id);
-                        if (usedCount.Count < useLimit.Param2)
-                        {
-                            _usedPassiveSkillInfos[battlerInfo.Index].Add(passiveInfo.Id);
-                        } else
-                        {
-                            usable = false;
-                        }
-                    }
-                    
+                    bool usable = CanUsePassiveCount(battlerInfo,passiveInfo.Id,triggerDates);
                     if (usable)
                     {
-                        if (passiveInfo.Master.Scope == ScopeType.Self)
-                        {
-                            var actionResultInfo = new ActionResultInfo(battlerInfo,battlerInfo,passiveInfo.FeatureDates,passiveInfo.Id);
-                            actionResultInfos.Add(actionResultInfo);
-                        } else
-                        if (passiveInfo.Master.Scope == ScopeType.All)
-                        {
-                            var partyMember = battlerInfo.isActor ? BattlerActors() : BattlerEnemies();
-                            if (passiveInfo.Master.TargetType == TargetType.Opponent){
-                                partyMember = battlerInfo.isActor ? BattlerEnemies() : BattlerActors();
-                            }
-                            if (passiveInfo.Master.AliveOnly)
-                            {
-                                partyMember = partyMember.FindAll(a => a.IsAlive());
-                            } else
-                            {
-                                partyMember = partyMember.FindAll(a => !a.IsAlive());
-                            }
-                            foreach (var member in partyMember)
-                            {
-                                var actionResultInfo = new ActionResultInfo(battlerInfo,member,passiveInfo.FeatureDates,passiveInfo.Id);
-                                actionResultInfos.Add(actionResultInfo);
-                            }
-                        } else
-                        if (passiveInfo.Master.Scope == ScopeType.One){
-                            if (passiveInfo.Master.TargetType == TargetType.IsTriggerTarget)
-                            {
-                                var targetList = TriggerTargetList(battlerInfo,triggerDates,triggerTiming,actionInfo,actionResultInfos);
-                                if (targetList.Count > 0)
-                                {
-                                    var actionResultInfo = new ActionResultInfo(battlerInfo,targetList[0],passiveInfo.FeatureDates,passiveInfo.Id);
-                                    actionResultInfos.Add(actionResultInfo);
-                                }
-                            }
-                        } else
-                        if (passiveInfo.Master.Scope == ScopeType.RandomOne)
-                        {
-                            var partyMember = battlerInfo.isActor ? BattlerActors() : BattlerEnemies();
-                            if (passiveInfo.Master.TargetType == TargetType.Opponent){
-                                partyMember = battlerInfo.isActor ? BattlerEnemies() : BattlerActors();
-                            }
-                            if (passiveInfo.Master.AliveOnly)
-                            {
-                                partyMember = partyMember.FindAll(a => a.IsAlive());
-                            } else
-                            {
-                                partyMember = partyMember.FindAll(a => !a.IsAlive());
-                            }
-                            var rand = UnityEngine.Random.Range(0,partyMember.Count);
-                            var actionResultInfo = new ActionResultInfo(battlerInfo,partyMember[rand],passiveInfo.FeatureDates,passiveInfo.Id);
-                            actionResultInfos.Add(actionResultInfo);
-                        } else
-                        {
-                            if (passiveInfo.Master.TargetType == TargetType.AttackTarget)
-                            {
-                                if (actionInfo != null && actionInfo.ActionResults.Count > 0)
-                                {
-                                    foreach (var actionResult in actionInfo.ActionResults)
-                                    {
-                                        if (actionResult.Missed == false)
-                                        {
-                                            var actionResultInfo = new ActionResultInfo(battlerInfo,GetBattlerInfo(actionResult.TargetIndex),passiveInfo.FeatureDates,passiveInfo.Id);
-                                            actionResultInfos.Add(actionResultInfo);
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                        if (!_passiveSkillInfos[battlerInfo.Index].Contains(passiveInfo.Master.Id))
-                        {
-                            _passiveSkillInfos[battlerInfo.Index].Add(passiveInfo.Master.Id);
-                        }
-                        passiveInfo.GainUseCount();
+                        var makeResultInfos = MakePassiveSkillActionResults(battlerInfo,triggerDates,actionResultInfos,passiveInfo);
+                        makeActionResults.AddRange(makeResultInfos);
                     }
                 }
             }
+        }
+        return makeActionResults;
+    }
+
+    private bool CanUsePassiveCount(BattlerInfo battlerInfo,int skillId,List<SkillData.TriggerData> triggerDates)
+    {
+        bool usable = true;
+        // トリガーのParam2を使用回数制限にする
+        var useLimit = triggerDates.Find(a => a.Param2 >= 1);
+        if (useLimit != null)
+        {
+            var usedCount = _usedPassiveSkillInfos[battlerInfo.Index].FindAll(a => a == skillId);
+            if (usedCount.Count < useLimit.Param2)
+            {
+                _usedPassiveSkillInfos[battlerInfo.Index].Add(skillId);
+            } else
+            {
+                usable = false;
+            }
+        }
+        return usable;
+    }
+
+    private List<ActionResultInfo> MakePassiveSkillActionResults(BattlerInfo battlerInfo,List<SkillData.TriggerData> triggerDates,List<ActionResultInfo> actionResultInfos,SkillInfo passiveInfo)
+    {
+        var makeResultInfos = new List<ActionResultInfo>();
+        if (passiveInfo.Master.Scope == ScopeType.Self)
+        {
+            var actionResultInfo = new ActionResultInfo(battlerInfo,battlerInfo,passiveInfo.FeatureDates,passiveInfo.Id);
+            makeResultInfos.Add(actionResultInfo);
+        } else
+        if (passiveInfo.Master.Scope == ScopeType.All)
+        {
+            var partyMember = battlerInfo.isActor ? BattlerActors() : BattlerEnemies();
+            if (passiveInfo.Master.TargetType == TargetType.Opponent){
+                partyMember = battlerInfo.isActor ? BattlerEnemies() : BattlerActors();
+            }
+            if (passiveInfo.Master.AliveOnly)
+            {
+                partyMember = partyMember.FindAll(a => a.IsAlive());
+            } else
+            {
+                partyMember = partyMember.FindAll(a => !a.IsAlive());
+            }
+            var targetIndexList = new List<int>();
+            foreach (var member in partyMember)
+            {
+                targetIndexList.Add(member.Index);
+            }
+            targetIndexList = CheckScopeTriggers(targetIndexList,passiveInfo.Master.ScopeTriggers);
+            foreach (var targetIndex in targetIndexList)
+            {
+                var actionResultInfo = new ActionResultInfo(battlerInfo,GetBattlerInfo(targetIndex),passiveInfo.FeatureDates,passiveInfo.Id);
+                makeResultInfos.Add(actionResultInfo);
+            }
+        } else
+        if (passiveInfo.Master.Scope == ScopeType.One){
+            if (passiveInfo.Master.TargetType == TargetType.IsTriggerTarget)
+            {
+                var targetList = TriggerTargetList(battlerInfo,triggerDates,actionResultInfos);
+                if (targetList.Count > 0)
+                {
+                    var actionResultInfo = new ActionResultInfo(battlerInfo,targetList[0],passiveInfo.FeatureDates,passiveInfo.Id);
+                    makeResultInfos.Add(actionResultInfo);
+                }
+            }
+            if (passiveInfo.Master.TargetType == TargetType.AttackTarget)
+            {
+                foreach (var actionResult in actionResultInfos)
+                {
+                    if (actionResult.Missed == false)
+                    {
+                        var actionResultInfo = new ActionResultInfo(battlerInfo,GetBattlerInfo(actionResult.TargetIndex),passiveInfo.FeatureDates,passiveInfo.Id);
+                        makeResultInfos.Add(actionResultInfo);
+                    }
+                }
+            }
+        } else
+        if (passiveInfo.Master.Scope == ScopeType.RandomOne)
+        {
+            var partyMember = battlerInfo.isActor ? BattlerActors() : BattlerEnemies();
+            if (passiveInfo.Master.TargetType == TargetType.Opponent){
+                partyMember = battlerInfo.isActor ? BattlerEnemies() : BattlerActors();
+            }
+            if (passiveInfo.Master.AliveOnly)
+            {
+                partyMember = partyMember.FindAll(a => a.IsAlive());
+            } else
+            {
+                partyMember = partyMember.FindAll(a => !a.IsAlive());
+            }
+            var rand = UnityEngine.Random.Range(0,partyMember.Count);
+            var actionResultInfo = new ActionResultInfo(battlerInfo,partyMember[rand],passiveInfo.FeatureDates,passiveInfo.Id);
+            makeResultInfos.Add(actionResultInfo);
+        } else
+        {
+            if (passiveInfo.Master.TargetType == TargetType.AttackTarget)
+            {
+                foreach (var actionResult in actionResultInfos)
+                {
+                    if (actionResult.Missed == false)
+                    {
+                        var actionResultInfo = new ActionResultInfo(battlerInfo,GetBattlerInfo(actionResult.TargetIndex),passiveInfo.FeatureDates,passiveInfo.Id);
+                        makeResultInfos.Add(actionResultInfo);
+                    }
+                }
+            }
+        }
+        if (!_passiveSkillInfos[battlerInfo.Index].Contains(passiveInfo.Master.Id))
+        {
+            _passiveSkillInfos[battlerInfo.Index].Add(passiveInfo.Master.Id);
+        }
+        passiveInfo.GainUseCount();
+        return makeResultInfos;
+    }
+
+    public List<ActionResultInfo> CheckPlusPassiveInfos(ActionResultInfo actionResultInfo,int skillId)
+    {
+        var actionResultInfos = new List<ActionResultInfo>();
+        var skill = DataSystem.FindSkill(skillId);
+        var triggerDates = skill.TriggerDates;
+        var battlerInfo = GetBattlerInfo(actionResultInfo.SubjectIndex);
+        var target = GetBattlerInfo(actionResultInfo.TargetIndex);
+        var enable = true;
+        // 簡易判定
+        foreach (var triggerData in triggerDates)
+        {
+            if (!triggerData.IsTriggeredSkillInfo(battlerInfo,BattlerActors(),BattlerEnemies()))
+            {
+                enable = false;
+            }
+        }
+        if (enable)
+        {
+            var makeResultInfos = MakePassiveSkillActionResults(battlerInfo,triggerDates,new List<ActionResultInfo>(){actionResultInfo},new SkillInfo(skillId));
+            actionResultInfos.AddRange(makeResultInfos);
         }
         return actionResultInfos;
     }
@@ -1705,7 +1743,7 @@ public class BattleModel : BaseModel
                     if (feature.FeatureType == FeatureType.AddState)
                     {
                         var triggerDates = passiveSkillData.TriggerDates.FindAll(a => a.TriggerTiming == TriggerTiming.After || a.TriggerTiming == TriggerTiming.StartBattle || a.TriggerTiming == TriggerTiming.AfterAndStartBattle);
-                        if (IsRemove == false && !IsTriggeredSkillInfo(battlerInfo,triggerDates,TriggerTiming.After,null,new List<ActionResultInfo>()))
+                        if (IsRemove == false && !IsTriggeredSkillInfo(battlerInfo,triggerDates,null,new List<ActionResultInfo>()))
                         {
                             IsRemove = true;
                             
@@ -1757,13 +1795,14 @@ public class BattleModel : BaseModel
         return actionResultInfos;
     }
 
-    private bool IsTriggeredSkillInfo(BattlerInfo battlerInfo,List<SkillData.TriggerData> triggerDates,TriggerTiming triggerTiming,ActionInfo actionInfo,List<ActionResultInfo> actionResultInfos)
+    private bool IsTriggeredSkillInfo(BattlerInfo battlerInfo,List<SkillData.TriggerData> triggerDates,ActionInfo actionInfo,List<ActionResultInfo> actionResultInfos)
     {
         bool IsTriggered = false;
         if (triggerDates.Count > 0)
         {
             for (var j = 0;j < triggerDates.Count;j++)
             {
+                /*
                 if (triggerTiming == TriggerTiming.Use)
                 {
                     if (actionInfo == null)
@@ -1777,6 +1816,7 @@ public class BattleModel : BaseModel
                         break;
                     }
                 }
+                */
                 // 簡易判定
                 if (triggerDates[j].IsTriggeredSkillInfo(battlerInfo,BattlerActors(),BattlerEnemies()))
                 {
@@ -1801,16 +1841,28 @@ public class BattleModel : BaseModel
                 }
                 if (triggerDates[j].TriggerType == TriggerType.TargetHpRateUnder)
                 {
-                    if (battlerInfo.IsAlive() && actionInfo != null && actionInfo.TargetIndexList.Count > 0)
+                    if (battlerInfo.IsAlive() && actionResultInfos != null && actionResultInfos.Count > 0)
                     {
-                        foreach (var targetIndex in actionInfo.TargetIndexList)
+                        foreach (var actionResultInfo in actionResultInfos)
                         {
-                            if (actionResultInfos.Find(a => a.HpDamage > 0 && a.TargetIndex == targetIndex) != null)
+                            if (actionResultInfo.HpDamage > 0 && actionResultInfo.TargetIndex != actionResultInfo.SubjectIndex)
                             {
-                                var targetBattlerInfo = GetBattlerInfo(targetIndex);
-                                if (((float)targetBattlerInfo.Hp / (float)targetBattlerInfo.MaxHp) < triggerDates[j].Param1 * 0.01f)
+                                var targetBattlerInfo = GetBattlerInfo(actionResultInfo.TargetIndex);
+                                if (battlerInfo.isActor == targetBattlerInfo.isActor)
                                 {
-                                    IsTriggered = true;
+                                    if (targetBattlerInfo.Hp == 0)
+                                    {
+                                        if (0 == triggerDates[j].Param1)
+                                        {
+                                            IsTriggered = true;
+                                        }
+                                    }else
+                                    {
+                                        if (((float)targetBattlerInfo.Hp / (float)targetBattlerInfo.MaxHp) <= triggerDates[j].Param1 * 0.01f)
+                                        {
+                                            IsTriggered = true;
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -1823,7 +1875,7 @@ public class BattleModel : BaseModel
                         IsTriggered = true;
                     }
                 }
-                if (battlerInfo.IsAwaken == false && triggerTiming == TriggerTiming.Interrupt && triggerDates[j].TriggerType == TriggerType.ActionResultDeath)
+                if (battlerInfo.IsAwaken == false && triggerDates[j].TriggerType == TriggerType.ActionResultDeath)
                 {
                     if (battlerInfo.IsAlive())
                     {
@@ -1901,7 +1953,7 @@ public class BattleModel : BaseModel
                         IsTriggered = true;
                     }
                 }
-                if (battlerInfo.IsAwaken == false && triggerTiming == TriggerTiming.Interrupt && triggerDates[j].TriggerType == TriggerType.ActionResultAddState)
+                if (battlerInfo.IsAwaken == false && triggerDates[j].TriggerType == TriggerType.ActionResultAddState)
                 {
                     if (battlerInfo.IsAlive())
                     {
@@ -1918,7 +1970,7 @@ public class BattleModel : BaseModel
                         }
                     }
                 }
-                if (battlerInfo.IsAwaken == false && triggerTiming == TriggerTiming.After && triggerDates[j].TriggerType == TriggerType.DefeatEnemyByAttack)
+                if (battlerInfo.IsAwaken == false && triggerDates[j].TriggerType == TriggerType.DefeatEnemyByAttack)
                 {
                     var attackBattler = GetBattlerInfo(actionInfo.SubjectIndex);
                     if (battlerInfo.IsAlive() && attackBattler != null && battlerInfo.Index == attackBattler.Index)
@@ -1993,24 +2045,28 @@ public class BattleModel : BaseModel
         return IsTriggered;
     }
 
-    private List<BattlerInfo> TriggerTargetList(BattlerInfo battlerInfo,List<SkillData.TriggerData> triggerDates,TriggerTiming triggerTiming,ActionInfo actionInfo,List<ActionResultInfo> actionResultInfos)
+    private List<BattlerInfo> TriggerTargetList(BattlerInfo battlerInfo,List<SkillData.TriggerData> triggerDates,List<ActionResultInfo> actionResultInfos)
     {
         var list = new List<BattlerInfo>();
         for (int i = 0;i < triggerDates.Count;i++)
         {
             if (triggerDates[i].TriggerType == TriggerType.TargetHpRateUnder)
             {
-                if (battlerInfo.IsAlive() && actionInfo != null && actionInfo.TargetIndexList.Count > 0)
+                if (battlerInfo.IsAlive())
                 {
-                    foreach (var targetIndex in actionInfo.TargetIndexList)
+                    foreach (var actionResultInfo in actionResultInfos)
                     {
-                        if (actionResultInfos.Find(a => a.HpDamage > 0 && a.TargetIndex == targetIndex) != null)
+                        var targetBattlerInfo = GetBattlerInfo(actionResultInfo.TargetIndex);
+                        if (targetBattlerInfo.Hp == 0)
                         {
-                            var targetBattlerInfo = GetBattlerInfo(targetIndex);
-                            if (((float)targetBattlerInfo.Hp / (float)targetBattlerInfo.MaxHp) < triggerDates[i].Param1 * 0.01f)
+                            if (0 == triggerDates[i].Param1)
                             {
                                 list.Add(targetBattlerInfo);
                             }
+                        }else
+                        if (((float)targetBattlerInfo.Hp / (float)targetBattlerInfo.MaxHp) < triggerDates[i].Param1 * 0.01f)
+                        {
+                            list.Add(targetBattlerInfo);
                         }
                     }
                 }
@@ -2048,7 +2104,7 @@ public class BattleModel : BaseModel
         if (skillInfo.TriggerDates.Count > 0)
         {
             CanUse = false;
-            CanUse = IsTriggeredSkillInfo(battlerInfo,skillInfo.TriggerDates,TriggerTiming.None,null,new List<ActionResultInfo>());
+            CanUse = IsTriggeredSkillInfo(battlerInfo,skillInfo.TriggerDates,null,new List<ActionResultInfo>());
         }
         return CanUse;
     }
@@ -2172,25 +2228,25 @@ public class BattleModel : BaseModel
         {
             indexList.Add (targetIndex);
             var battlerInfo = GetBattlerInfo(targetIndex);
-            for (int i = 0;i < _battlers.Count;i++)
-            {
-                if (battlerInfo.isActor && _battlers[i].isActor)
+            foreach (var targetBattlerInfo in FieldBattlerInfos())
+            {   
+                if (battlerInfo.isActor && targetBattlerInfo.isActor)
                 {
-                    if (battlerInfo.LineIndex == _battlers[i].LineIndex)
+                    if (battlerInfo.LineIndex == targetBattlerInfo.LineIndex)
                     {
-                        if (indexList.IndexOf(_battlers[i].Index) == -1)
+                        if (indexList.IndexOf(targetBattlerInfo.Index) == -1)
                         {                        
-                            indexList.Add (_battlers[i].Index);
+                            indexList.Add (targetBattlerInfo.Index);
                         }
                     }
                 }
-                if (!battlerInfo.isActor && !_battlers[i].isActor)
+                if (!battlerInfo.isActor && !targetBattlerInfo.isActor)
                 {
-                    if (battlerInfo.LineIndex == _battlers[i].LineIndex)
+                    if (battlerInfo.LineIndex == targetBattlerInfo.LineIndex)
                     {
-                        if (indexList.IndexOf(_battlers[i].Index) == -1)
+                        if (indexList.IndexOf(targetBattlerInfo.Index) == -1)
                         {                        
-                            indexList.Add (_battlers[i].Index);
+                            indexList.Add (targetBattlerInfo.Index);
                         }
                     }
                 }
@@ -2369,6 +2425,36 @@ public class BattleModel : BaseModel
         */
         return removeStateInfos;
     }
+
+    // 戦闘不能に聖棺がいたら他の対象に移す
+    public List<StateInfo> EndHolyCoffinState()
+    {
+        var addStateInfos = new List<StateInfo>();
+        //var StateTypes = RemoveDeathStateTypes();
+        foreach (var battler in FieldBattlerInfos())
+        {
+            if (battler.IsAlive() == false)
+            {
+                for (var i = battler.StateInfos.Count-1;i >= 0;i--)
+                {
+                    if (battler.StateInfos[i].StateType == StateType.HolyCoffin)
+                    {
+                        battler.RemoveState(battler.StateInfos[i],true);
+                        var randTargets = battler.isActor ? _party.AliveBattlerInfos : _troop.AliveBattlerInfos;
+                        if (randTargets.Count > 0)
+                        {
+                            var rand = UnityEngine.Random.Range(0,randTargets.Count);
+                            battler.StateInfos[i].SetTargetIndex(randTargets[rand].Index);
+                            randTargets[rand].AddState(battler.StateInfos[i],true);
+                            addStateInfos.Add(battler.StateInfos[i]);
+                        }
+                    }
+                }
+            }
+        }
+        return addStateInfos;
+    }
+    
 
     public void GainAttackCount(int targetIndex)
     {

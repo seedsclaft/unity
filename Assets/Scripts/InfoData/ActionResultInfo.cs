@@ -12,7 +12,10 @@ public class ActionResultInfo
     public int TargetIndex => _targetIndex;
 
     private int _skillId = -1;
-    public ActionResultInfo(BattlerInfo subject,BattlerInfo target,List<SkillData.FeatureData> featureDates,int skillId,bool isOneTarget = false)
+    public int SkillId => _skillId;
+
+    private SkillInfo _skillInfo = null;
+    public ActionResultInfo(BattlerInfo subject,BattlerInfo target,List<SkillData.FeatureData> featureDates,int skillId,bool isOneTarget = false,SkillInfo skillInfo = null)
     {
         if (subject != null && target != null)
         {
@@ -21,6 +24,10 @@ public class ActionResultInfo
             _execStateInfos[subject.Index] = new ();
             _execStateInfos[_targetIndex] = new ();
             _skillId = skillId;
+        }
+        if (skillInfo != null)
+        {
+            _skillInfo = skillInfo;
         }
         for (int i = 0; i < featureDates.Count; i++)
         {
@@ -201,6 +208,9 @@ public class ActionResultInfo
             case FeatureType.RemainHpOne:
                 MakeRemainHpOne(subject);
                 return;
+            case FeatureType.RemainHpOneTarget:
+                MakeHpOne(target);
+                return;
             case FeatureType.ApHeal:
                 MakeApHeal(subject,target,featureData);
                 return;
@@ -348,6 +358,10 @@ public class ActionResultInfo
     {
         var range = 0;
         var skillData = DataSystem.FindSkill(skillId);
+        if (skillData == null)
+        {
+            return range;
+        }
         if (skillData.Range == RangeType.S)
         {
             // S⇒L Range.Sスキル = range=1で25%カット
@@ -391,13 +405,10 @@ public class ActionResultInfo
         }
         CalcFreezeDamage(subject,SkillDamage);
 
-        SkillDamage *= GetDefenseRateValue((AtkValue * 0.5f),DefValue);
+        SkillDamage *= GetDefenseRateValue(AtkValue * 0.5f,DefValue);
         float DamageValue = Mathf.Max(1,SkillDamage);
-        if (target.IsState(StateType.HolyCoffin))
-        {
-            DamageValue *= (1 + target.StateEffectAll(StateType.HolyCoffin) * 0.01f);
-        }
-        DamageValue *= (1f - CalcDamageCut(target,isNoEffect));
+        DamageValue = CalcHolyCoffin(subject,target,DamageValue);
+        DamageValue *= 1f - CalcDamageCut(target,isNoEffect);
         hpDamage = (int)Mathf.Round(DamageValue);
         // 属性補正
         // クリティカル
@@ -410,6 +421,8 @@ public class ActionResultInfo
         {
             hpDamage -= target.StateEffectAll(StateType.CounterAuraShell);
         }
+        hpDamage = CalcAddDamage(subject,target,hpDamage);
+        CalcAddState(subject,target);
         hpDamage = Mathf.Max(1,hpDamage);
         if (target.IsState(StateType.NoDamage) && !isNoEffect)
         {
@@ -497,10 +510,7 @@ public class ActionResultInfo
         DamageRate *= UpperDamageRate;
         float SkillDamage = (DamageRate * 0.01f * AtkValue);
         float DamageValue = Mathf.Max(1,SkillDamage);
-        if (target.IsState(StateType.HolyCoffin))
-        {
-            DamageValue *= (1 + target.StateEffectAll(StateType.HolyCoffin) * 0.01f);
-        }
+        DamageValue = CalcHolyCoffin(subject,target,DamageValue);
         DamageValue *= (1f - CalcDamageCut(target,isNoEffect));
         hpDamage = (int)Mathf.Round(DamageValue);
         hpDamage = Mathf.Max(1,hpDamage);
@@ -533,10 +543,7 @@ public class ActionResultInfo
         SkillDamage *= GetDefenseRateValue((AtkValue * 0.5f),DefValue);
         //SkillDamage -= (DefValue * 0.5f);
         float DamageValue = Mathf.Max(1,SkillDamage);
-        if (target.IsState(StateType.HolyCoffin))
-        {
-            DamageValue *= (1 + target.StateEffectAll(StateType.HolyCoffin) * 0.01f);
-        }
+        DamageValue = CalcHolyCoffin(subject,target,DamageValue);
         DamageValue *= (1f - CalcDamageCut(target,isNoEffect));
         hpDamage = (int)Mathf.Round(DamageValue);
         // 属性補正
@@ -579,10 +586,7 @@ public class ActionResultInfo
         DamageRate *= UpperDamageRate;
         float SkillDamage = (DamageRate * 0.01f * AtkValue);
         float DamageValue = Mathf.Max(1,SkillDamage);
-        if (target.IsState(StateType.HolyCoffin))
-        {
-            DamageValue *= (1 + target.StateEffectAll(StateType.HolyCoffin) * 0.01f);
-        }
+        DamageValue = CalcHolyCoffin(subject,target,DamageValue);
         DamageValue *= (1f - CalcDamageCut(target,isNoEffect));
         hpDamage = (int)Mathf.Round(DamageValue);
         hpDamage = Mathf.Max(1,hpDamage);
@@ -590,10 +594,6 @@ public class ActionResultInfo
         {
             hpDamage = 0;
             SeekStateCount(target,StateType.NoDamage);
-        }
-        if (target.IsState(StateType.DamageCut) && !isNoEffect)
-        {
-            
         }
         /*
         if (subject.IsState(StateType.Drain))
@@ -723,6 +723,11 @@ public class ActionResultInfo
     private void MakeRemainHpOne(BattlerInfo subject)
     {
         _reDamage = subject.Hp - 1;
+    }
+
+    private void MakeHpOne(BattlerInfo battlerInfo)
+    {
+        battlerInfo.SetHp(1);
     }
 
     private void MakeApHeal(BattlerInfo subject,BattlerInfo target,SkillData.FeatureData featureData)
@@ -890,6 +895,63 @@ public class ActionResultInfo
     {
         int ReDamage = (int)Mathf.Floor((target.CurrentDef(false) * 0.5f));
         return ReDamage;
+    }
+
+    private float CalcHolyCoffin(BattlerInfo subject,BattlerInfo target,float hpDamage)
+    {
+        if (target.IsState(StateType.HolyCoffin))
+        {
+            hpDamage *= (1 + target.StateEffectAll(StateType.HolyCoffin) * 0.01f);
+        }
+        return hpDamage;
+    }
+
+    private int CalcAddDamage(BattlerInfo subject,BattlerInfo target,int hpDamage)
+    {
+        var addDamage = 0;
+        if (subject.IsState(StateType.MpCostZeroAddDamage))
+        {
+            if (DataSystem.FindSkill(_skillId).MpCost == 0)
+            {
+                addDamage = (int)Math.Round(hpDamage * 0.01f * subject.StateEffectAll(StateType.MpCostZeroAddDamage));
+            }
+            if (hpDamage < target.Hp)
+            {
+                if ((addDamage + hpDamage) >= target.Hp)
+                {
+                    return target.Hp - 1;
+                }
+            }
+        } else
+        {
+            return hpDamage;
+        }
+        return addDamage + hpDamage;
+    }
+
+    private void CalcAddState(BattlerInfo subject,BattlerInfo target)
+    {
+        if (subject.IsState(StateType.MpCostZeroAddState))
+        {
+            if (DataSystem.FindSkill(_skillId).MpCost == 0)
+            {
+                var stateInfos = subject.GetStateInfoAll(StateType.MpCostZeroAddState);
+                foreach (var stateInfo in stateInfos)
+                {
+                    var skillData = DataSystem.FindSkill(stateInfo.Effect);
+                    if (skillData != null)
+                    {
+                        foreach (var featureData in skillData.FeatureDates)
+                        {
+                            if (featureData.Rate >= UnityEngine.Random.Range(0,100))
+                            {
+                                MakeAddState(subject,target,featureData);
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 
     private int ApplyCritical(int value)

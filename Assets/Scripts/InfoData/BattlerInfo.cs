@@ -181,6 +181,7 @@ public class BattlerInfo
             0
         );
         _status = statusInfo;
+        _hp = 1;
         _index = index + 1000;
         _isActor = isActor;
         _isAlcana = true;
@@ -429,6 +430,10 @@ public class BattlerInfo
         return -1;
     }
     
+    public void SetHp(int value)
+    {
+        _hp = value;
+    }
 
     public void GainHp(int value)
     {
@@ -835,7 +840,7 @@ public class BattlerInfo
 
     public List<SkillInfo> ActiveSkills()
     {
-        return _skills.FindAll(a => a.Master.SkillType != SkillType.Passive);
+        return _skills.FindAll(a => a.Master.SkillType != SkillType.Passive && a.Master.SkillType != SkillType.UseAlcana);
     }
 
     public List<SkillInfo> PassiveSkills()

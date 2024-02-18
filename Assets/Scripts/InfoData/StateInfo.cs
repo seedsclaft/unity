@@ -15,6 +15,10 @@ public class StateInfo {
     public int BattlerId => _battlerId;
     private int _targetIndex = 0;
     public int TargetIndex => _targetIndex;
+    public void SetTargetIndex(int targetIndex)
+    {
+        _targetIndex = targetIndex;
+    }
     private int _skillId = 0;
     public int SkillId => _skillId;
     private RemovalTiming _removeTiming = 0;

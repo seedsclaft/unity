@@ -953,8 +953,38 @@ MonoBehaviour:
     EffectPosition: 0
     EffectScale: 1
     OverLap: 0
-    Removal: 0
-    Abnormal: 1
+    Removal: 1
+    Abnormal: 0
+    CheckHit: 0
+    RemoveByAttack: 0
+    RemoveByDeath: 1
+  - StateType: 2360
+    Name: "\u8FFD\u52A0\u30C0\u30E1\u30FC\u30B8"
+    Help: "\u6D88\u8CBBMp\u304C0\u306EMagic\u306B\u8FFD\u52A0\u30C0\u30E1\u30FC\u30B8"
+    IconPath: Arrow
+    RemovalTiming: 1
+    OverWrite: 1
+    EffectPath: '""'
+    EffectPosition: 0
+    EffectScale: 1
+    OverLap: 0
+    Removal: 1
+    Abnormal: 0
+    CheckHit: 0
+    RemoveByAttack: 0
+    RemoveByDeath: 1
+  - StateType: 2370
+    Name: "\u8FFD\u52A0\u52B9\u679C"
+    Help: "\u6D88\u8CBBMp\u304C0\u306EMagic\u306B\u8FFD\u52A0\u52B9\u679C"
+    IconPath: Arrow
+    RemovalTiming: 1
+    OverWrite: 1
+    EffectPath: '""'
+    EffectPosition: 0
+    EffectScale: 1
+    OverLap: 0
+    Removal: 1
+    Abnormal: 0
     CheckHit: 0
     RemoveByAttack: 0
     RemoveByDeath: 1

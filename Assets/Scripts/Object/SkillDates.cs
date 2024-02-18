@@ -104,6 +104,7 @@ public class SkillData
         public int Param1;
         public int Param2;
         public int Param3;
+        public int Rate;
         public FeatureData CopyData()
         {
             var feature = new FeatureData();
@@ -134,9 +135,14 @@ public class SkillData
             {
                 case TriggerType.None:
                 case TriggerType.InBattleUseCountUnder: // 別処理で判定するためここではパス
+                case TriggerType.ExtendStageTurn: // 別処理で判定するためここではパス
                     CanUse = true;
                 break;
                 case TriggerType.HpRateUnder:
+                if (battlerInfo.Hp == 0)
+                {
+                    CanUse = (Param1 == 0);
+                } else
                 if (((float)battlerInfo.Hp / (float)battlerInfo.MaxHp) < Param1 * 0.01f)
                 {
                     CanUse = true;
@@ -200,9 +206,18 @@ public class SkillData
                 {
                     actionCount += member.TurnCount;
                 }
-                if ((actionCount % Param1) - Param2 == 0)
+                if (Param1 > 0)
                 {
-                    CanUse = true;
+                    if ((actionCount % Param1) - Param2 == 0)
+                    {
+                        CanUse = true;
+                    }
+                } else
+                {
+                    if (actionCount - Param2 == 0)
+                    {
+                        CanUse = true;
+                    }
                 }
                 break;
                 case TriggerType.PartyHpRateUnder:
@@ -397,6 +412,9 @@ public enum TriggerTiming
     After = 2,
     Interrupt = 3,
     StartBattle = 4,
+    Before = 5,
+    HpDamaged = 11,
+    BeforeAndStartBattle = 20,
     AfterAndStartBattle = 24,
     BeforeTacticsTurn = 51,
     CurrentTacticsTurn = 52
@@ -425,6 +443,7 @@ public enum FeatureType
     StartDash = 34,
     ApDamage = 35,
     RemainHpOne = 41,
+    RemainHpOneTarget = 42,
     ChangeFeatureParam1 = 61,
     ChangeFeatureParam2 = 62,
     ChangeFeatureParam3 = 63,

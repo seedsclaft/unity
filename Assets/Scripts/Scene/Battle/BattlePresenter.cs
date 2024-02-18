@@ -264,15 +264,32 @@ public class BattlePresenter : BasePresenter
         Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);    
     }
     
+    private void PassiveInfoAction(List<TriggerTiming> triggerTimings)
+    {
+        var PassiveResults = _model.CheckTriggerPassiveInfos(triggerTimings);
+        ExecActionResult(PassiveResults);
+        foreach (var passiveResult in PassiveResults)
+        {
+            var skill = DataSystem.FindSkill(passiveResult.SkillId);
+            var plusSkill = skill.FeatureDates.Find(a => a.FeatureType == FeatureType.PlusSkill);
+            if (plusSkill != null)
+            {
+                var plusSkillId = plusSkill.Param1;
+                var PlusResults = _model.CheckPlusPassiveInfos(passiveResult,plusSkillId);
+                ExecActionResult(PlusResults);
+            }
+        }
+    }
+
     private void CommandStartBattleAction()
     {
-        var PassiveResults = _model.CheckTriggerPassiveInfos(TriggerTiming.StartBattle);
-        var PassiveResults2 = _model.CheckTriggerPassiveInfos(TriggerTiming.AfterAndStartBattle);
-        PassiveResults.AddRange(PassiveResults2);
-        ExecActionResult(PassiveResults);
-        var AfterPassiveResults = _model.CheckTriggerPassiveInfos(TriggerTiming.After);
-        ExecActionResult(AfterPassiveResults);
+        PassiveInfoAction(BattleUtility.StartTriggerTimings());
+        var startTriggerTimings = new List<TriggerTiming>(){
+            TriggerTiming.After,
+        };
+        PassiveInfoAction(startTriggerTimings);
     }
+
     private void CommandUpdateAp()
     {
 #if UNITY_EDITOR
@@ -281,6 +298,9 @@ public class BattlePresenter : BasePresenter
             if (_model.CurrentBattler != null)
             {
                 CommandStartSelect();
+            } else
+            {
+                _testBattle = false;
             }
             return;
         }
@@ -344,6 +364,8 @@ public class BattlePresenter : BasePresenter
                 {
                     _view.StartStatePopup(removedState.TargetIndex,DamageType.State,"-" + removedState.Master.Name);
                 }
+                // 開始前トリガー
+                PassiveInfoAction(BattleUtility.BeforeTriggerTimings());
             }
             // 行動不可の場合は行動しない
             if (!_model.EnableCurrentBattler())
@@ -582,7 +604,7 @@ public class BattlePresenter : BasePresenter
                 _triggerInterruptChecked = true;
             }
             
-            var PassiveResults = _model.CheckTriggerPassiveInfos(TriggerTiming.Use,actionInfo);
+            var PassiveResults = _model.CheckTriggerPassiveInfos(new List<TriggerTiming>(){TriggerTiming.Use},actionInfo);
             actionInfo.ActionResults.AddRange(PassiveResults);
         }
     }
@@ -623,9 +645,7 @@ public class BattlePresenter : BasePresenter
             var targetIndex = slipDamageResult.TargetIndex;
             if (slipDamageResult.HpDamage != 0)
             {            
-                //_view.StartDamage(targetIndex,DamageType.HpDamage,slipDamageResult.HpDamage);
                 _view.StartAnimation(targetIndex,animation,0);
-                //_model.GainHpTargetIndex(targetIndex,slipDamageResult.HpDamage * -1);
             }
             if (slipDamageResult.DeadIndexList.Contains(targetIndex))
             {
@@ -633,6 +653,8 @@ public class BattlePresenter : BasePresenter
                 _view.StartDeathAnimation(targetIndex);
             }
         }
+        var PassiveResults = _model.CheckTriggerPassiveInfos(BattleUtility.HpDamagedTriggerTimings(),null,slipDamageResults);
+        ExecActionResult(PassiveResults);
         var waitFrame = GameSystem.ConfigData.BattleAnimationSkip ? 1 : 64;
         await UniTask.DelayFrame(waitFrame);
         EndTurn();
@@ -829,6 +851,8 @@ public class BattlePresenter : BasePresenter
         }
         // ダメージなどを適用
         _model.ExecCurrentActionResult();
+        var PassiveResults = _model.CheckTriggerPassiveInfos(BattleUtility.HpDamagedTriggerTimings(),_model.CurrentActionInfo(),_model.CurrentActionInfo().ActionResults);
+        ExecActionResult(PassiveResults);
         
         _view.ClearCurrentSkillData();
         var actionInfo = _model.CurrentActionInfo();
@@ -887,10 +911,7 @@ public class BattlePresenter : BasePresenter
         // PlusSkill
         _model.CheckPlusSkill();
         // Passive付与
-        var PassiveResults = _model.CheckTriggerPassiveInfos(TriggerTiming.After);
-        var PassiveResults2 = _model.CheckTriggerPassiveInfos(TriggerTiming.AfterAndStartBattle);
-        PassiveResults.AddRange(PassiveResults2);
-        ExecActionResult(PassiveResults);
+        PassiveInfoAction(BattleUtility.AfterTriggerTimings());
         // Passive解除
         var RemovePassiveResults = _model.CheckRemovePassiveInfos();
         ExecActionResult(RemovePassiveResults);
@@ -914,10 +935,8 @@ public class BattlePresenter : BasePresenter
                 _view.StartStatePopup(removedState.TargetIndex,DamageType.State,"-" + removedState.Master.Name);
             }
             // Passive付与
-            PassiveResults = _model.CheckTriggerPassiveInfos(TriggerTiming.After);
-            PassiveResults2 = _model.CheckTriggerPassiveInfos(TriggerTiming.AfterAndStartBattle);
-            PassiveResults.AddRange(PassiveResults2);
-            ExecActionResult(PassiveResults);
+            PassiveInfoAction(BattleUtility.AfterTriggerTimings());
+
             // Passive解除
             RemovePassiveResults = _model.CheckRemovePassiveInfos();
             ExecActionResult(RemovePassiveResults);
@@ -950,6 +969,12 @@ public class BattlePresenter : BasePresenter
         foreach (var notDeadMember in notDeadMembers)
         {
             _view.StartAliveAnimation(notDeadMember.Index);                
+        }
+        // 戦闘不能に聖棺がいたら他の対象に移す
+        var changeHolyCoffinStates = _model.EndHolyCoffinState();
+        foreach (var addState in changeHolyCoffinStates)
+        {
+            _view.StartStatePopup(addState.TargetIndex,DamageType.State,"+" + addState.Master.Name);
         }
         // 戦闘不能の拘束ステートを解除する
         var removeChainStates = _model.EndRemoveState();
