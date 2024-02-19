@@ -15,6 +15,7 @@ public class StagesInfoImporter : AssetPostprocessor {
 		NameId,
 		AchieveTextId,
 		Selectable,
+		StageLv,
         Turns,
 		InitMembers,
 		RandomTroopCount,
@@ -133,6 +134,7 @@ public class StagesInfoImporter : AssetPostprocessor {
 					StageData.AchieveText = textData.Find(a => a.Id == AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.AchieveTextId))?.Text;
 					StageData.Selectable = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.Selectable) == 1;
 					StageData.Help = textData.Find(a => a.Id == AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.NameId)).Help;
+					StageData.StageLv = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.StageLv);
 					StageData.Turns = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.Turns);
 					StageData.InitMembers = new List<int>();
 					string[] list = AssetPostImporter.ImportString(BaseRow,(int)BaseColumn.InitMembers).Split(',');

@@ -92,7 +92,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Content: {fileID: 2464726399205246294}
   m_Horizontal: 0
-  m_Vertical: 0
+  m_Vertical: 1
   m_MovementType: 1
   m_Elasticity: 0.1
   m_Inertia: 1
@@ -667,6 +667,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4473767516783494613}
   - component: {fileID: 1005972251269675402}
+  - component: {fileID: 8956580230960485828}
   - component: {fileID: 5499733906228789227}
   m_Layer: 5
   m_Name: Description
@@ -702,6 +703,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 936624082653886706}
   m_CullTransparentMesh: 1
+--- !u!114 &8956580230960485828
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 936624082653886706}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f44f7c136c1dcf4b86a8b7fad1fad41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  id: 14100
 --- !u!114 &5499733906228789227
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1996,6 +2010,7 @@ MonoBehaviour:
   clearCount: {fileID: 0}
   score: {fileID: 0}
   scoreMax: {fileID: 0}
+  stageLv: {fileID: 0}
 --- !u!1 &2953292761391523703
 GameObject:
   m_ObjectHideFlags: 0
@@ -4029,6 +4044,7 @@ MonoBehaviour:
   clearCount: {fileID: 0}
   score: {fileID: 0}
   scoreMax: {fileID: 0}
+  stageLv: {fileID: 0}
 --- !u!1 &6928965152962180522
 GameObject:
   m_ObjectHideFlags: 0
@@ -5060,6 +5076,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _backCommand: {fileID: 0}
+  _backGround: {fileID: 0}
   uiRoot: {fileID: 1740006770950926252}
   stageList: {fileID: 3033544215176505388}
   component: {fileID: 5443321860924494865}

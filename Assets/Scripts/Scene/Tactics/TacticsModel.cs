@@ -396,6 +396,14 @@ public class TacticsModel : BaseModel
         }
     }
 
+    public void ResetBattlerIndex()
+    {
+        foreach (var stageMember in StageMembers())
+        {
+            stageMember.SetBattleIndex(-1);
+        }
+    }
+
     public void SetPartyBattlerIdList()
     {
         var idList = new List<int>();

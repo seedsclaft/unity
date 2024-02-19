@@ -24,12 +24,12 @@ public class MainMenuView : BaseView
 
     public void SetNuminous(int value)
     {
-        numinous.SetText(value.ToString());
+        numinous.SetText(DataSystem.GetReplaceDecimalText(value));
     }
 
     public void SetTotalScore(int value)
     {
-        totalScore.SetText(value.ToString());
+        totalScore.SetText(DataSystem.GetReplaceDecimalText(value));
     }
 
     public void SetInitHelpText()

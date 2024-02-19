@@ -37,7 +37,7 @@ public class GetItemInfo
         switch (_getItemType)
         {
             case GetItemType.Numinous:
-                SetResultData("(初回クリアのみ)+" + _param1.ToString() + DataSystem.GetTextData(1000).Text);
+                SetResultData(DataSystem.GetTextData(14090).Text + "+" + _param1.ToString() + DataSystem.GetTextData(1000).Text);
                 break;
             case GetItemType.Skill:
                 var skillData = DataSystem.FindSkill(_param1);
@@ -68,7 +68,7 @@ public class GetItemInfo
                 SetResultData(DataSystem.FindActor(_param1).Name);
                 break;
             case GetItemType.SaveHuman:
-                SetResultData("救命人数 " + _param2.ToString() + "/" + _param1.ToString());
+                SetResultData(DataSystem.GetTextData(14100).Text + DataSystem.GetReplaceDecimalText(_param2) + "/" + DataSystem.GetReplaceDecimalText(_param1));
                 break;
         }
     }

@@ -72,7 +72,7 @@ public class SymbolRecordView : BaseView
     
     public void SetNuminous(int numinous)
     {
-        numinousText.text = numinous.ToString();
+        numinousText.SetText(DataSystem.GetReplaceDecimalText(numinous));
     }
     
     public void SetStageInfo(StageInfo stageInfo)

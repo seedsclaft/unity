@@ -14,6 +14,7 @@ public class StageInfoComponent : MonoBehaviour
     [SerializeField] private TextMeshProUGUI clearCount;
     [SerializeField] private TextMeshProUGUI score;
     [SerializeField] private TextMeshProUGUI scoreMax;
+    [SerializeField] private TextMeshProUGUI stageLv;
 
     public void UpdateInfo(StageInfo stageInfo)
     {
@@ -48,10 +49,14 @@ public class StageInfoComponent : MonoBehaviour
         }
 
         if (score != null){
-            score.SetText(stageInfo.Score.ToString());
+            score.SetText(DataSystem.GetReplaceDecimalText(stageInfo.Score));
         }
         if (scoreMax != null){
-            scoreMax.SetText(stageInfo.ScoreMax.ToString());
+            scoreMax.SetText(DataSystem.GetReplaceDecimalText(stageInfo.ScoreMax));
+        }
+        if (stageLv != null)
+        {
+            stageLv.SetText(stageData.StageLv.ToString());
         }
     }
 }

@@ -16,6 +16,7 @@ public class StageData
     public string AchieveText;
     public bool Selectable;
     public string Help;
+    public int StageLv;
     public int Turns;
     public List<int> InitMembers;
     public int RandomTroopCount;

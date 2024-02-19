@@ -5,6 +5,7 @@ using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using System.Threading;
 using Cysharp.Threading.Tasks;
+using System.Linq;
 
 abstract public class DataSystem 
 {
@@ -80,6 +81,29 @@ abstract public class DataSystem
 	public static string GetReplaceText(int id,string replace)
 	{
 		return System.GetReplaceText(id,replace);
+	}
+
+	public static string GetReplaceDecimalText(int value)
+	{
+		var numText = value.ToString();
+        var index = 0;
+        var charList = new List<string>();
+        for (int i = numText.Length-1;i >= 0;i--)
+        {
+            charList.Add(numText[i].ToString());
+            index++;
+            if (index % 3 == 0 && i != 0)
+            {
+                charList.Add(",");
+            }
+        }
+        charList.Reverse();
+        var text = "";
+        foreach (var character in charList)
+        {
+            text += character;
+        }
+        return text;
 	}
 }
 

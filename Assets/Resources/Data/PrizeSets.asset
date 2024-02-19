@@ -13,51 +13,106 @@ MonoBehaviour:
   m_Name: PrizeSets
   m_EditorClassIdentifier: 
   Data:
-  - Id: 105
+  - Id: 5
     GetItem:
       Type: 2
       Param1: 5
       Param2: 100
-  - Id: 300
+  - Id: 10
     GetItem:
-      Type: 31
+      Type: 2
+      Param1: 10
+      Param2: 100
+  - Id: 20
+    GetItem:
+      Type: 2
+      Param1: 20
+      Param2: 100
+  - Id: 30
+    GetItem:
+      Type: 2
+      Param1: 30
+      Param2: 100
+  - Id: 50
+    GetItem:
+      Type: 2
       Param1: 50
+      Param2: 100
+  - Id: 100
+    GetItem:
+      Type: 2
+      Param1: 100
       Param2: 100
   - Id: 400
     GetItem:
       Type: 4
       Param1: 1
       Param2: 1
-  - Id: 501
+  - Id: 502
     GetItem:
       Type: 51
       Param1: 2
       Param2: 0
-  - Id: 502
+  - Id: 503
     GetItem:
       Type: 51
       Param1: 3
       Param2: 0
-  - Id: 1001
+  - Id: 504
+    GetItem:
+      Type: 51
+      Param1: 4
+      Param2: 0
+  - Id: 505
+    GetItem:
+      Type: 51
+      Param1: 5
+      Param2: 0
+  - Id: 601
     GetItem:
       Type: 61
       Param1: 100
       Param2: 0
-  - Id: 1011
+  - Id: 605
     GetItem:
       Type: 61
-      Param1: 100
+      Param1: 500
       Param2: 0
-  - Id: 1012
-    GetItem:
-      Type: 61
-      Param1: 1000
-      Param2: 0
-  - Id: 1021
+  - Id: 610
     GetItem:
       Type: 61
       Param1: 1000
       Param2: 0
+  - Id: 620
+    GetItem:
+      Type: 61
+      Param1: 2000
+      Param2: 0
+  - Id: 640
+    GetItem:
+      Type: 61
+      Param1: 4000
+      Param2: 0
+  - Id: 650
+    GetItem:
+      Type: 61
+      Param1: 5000
+      Param2: 0
+  - Id: 700
+    GetItem:
+      Type: 61
+      Param1: 10000
+      Param2: 0
+  - Id: 800
+    GetItem:
+      Type: 61
+      Param1: 20000
+      Param2: 0
+  - Id: 3000
+    GetItem:
+      Type: 31
+      Param1: 50
+      Param2: 100
   - Id: 11010
     GetItem:
       Type: 1
@@ -73,8 +128,178 @@ MonoBehaviour:
       Type: 1
       Param1: 11030
       Param2: 0
+  - Id: 11040
+    GetItem:
+      Type: 1
+      Param1: 11040
+      Param2: 0
+  - Id: 11050
+    GetItem:
+      Type: 1
+      Param1: 11050
+      Param2: 0
+  - Id: 11060
+    GetItem:
+      Type: 1
+      Param1: 11060
+      Param2: 0
   - Id: 11070
     GetItem:
       Type: 1
       Param1: 11070
+      Param2: 0
+  - Id: 12010
+    GetItem:
+      Type: 1
+      Param1: 12010
+      Param2: 0
+  - Id: 12020
+    GetItem:
+      Type: 1
+      Param1: 12020
+      Param2: 0
+  - Id: 12030
+    GetItem:
+      Type: 1
+      Param1: 12030
+      Param2: 0
+  - Id: 12040
+    GetItem:
+      Type: 1
+      Param1: 12040
+      Param2: 0
+  - Id: 12050
+    GetItem:
+      Type: 1
+      Param1: 12050
+      Param2: 0
+  - Id: 12060
+    GetItem:
+      Type: 1
+      Param1: 12060
+      Param2: 0
+  - Id: 12070
+    GetItem:
+      Type: 1
+      Param1: 12070
+      Param2: 0
+  - Id: 13010
+    GetItem:
+      Type: 1
+      Param1: 13010
+      Param2: 0
+  - Id: 13020
+    GetItem:
+      Type: 1
+      Param1: 13020
+      Param2: 0
+  - Id: 13030
+    GetItem:
+      Type: 1
+      Param1: 13030
+      Param2: 0
+  - Id: 13040
+    GetItem:
+      Type: 1
+      Param1: 13040
+      Param2: 0
+  - Id: 13050
+    GetItem:
+      Type: 1
+      Param1: 13050
+      Param2: 0
+  - Id: 13060
+    GetItem:
+      Type: 1
+      Param1: 13060
+      Param2: 0
+  - Id: 13070
+    GetItem:
+      Type: 1
+      Param1: 13070
+      Param2: 0
+  - Id: 14010
+    GetItem:
+      Type: 1
+      Param1: 14010
+      Param2: 0
+  - Id: 14020
+    GetItem:
+      Type: 1
+      Param1: 14020
+      Param2: 0
+  - Id: 14030
+    GetItem:
+      Type: 1
+      Param1: 14030
+      Param2: 0
+  - Id: 14040
+    GetItem:
+      Type: 1
+      Param1: 14040
+      Param2: 0
+  - Id: 14050
+    GetItem:
+      Type: 1
+      Param1: 14050
+      Param2: 0
+  - Id: 14060
+    GetItem:
+      Type: 1
+      Param1: 14060
+      Param2: 0
+  - Id: 14070
+    GetItem:
+      Type: 1
+      Param1: 14070
+      Param2: 0
+  - Id: 14080
+    GetItem:
+      Type: 1
+      Param1: 14080
+      Param2: 0
+  - Id: 15010
+    GetItem:
+      Type: 1
+      Param1: 13010
+      Param2: 0
+  - Id: 15020
+    GetItem:
+      Type: 1
+      Param1: 14020
+      Param2: 0
+  - Id: 15030
+    GetItem:
+      Type: 1
+      Param1: 14030
+      Param2: 0
+  - Id: 15040
+    GetItem:
+      Type: 1
+      Param1: 14040
+      Param2: 0
+  - Id: 15050
+    GetItem:
+      Type: 1
+      Param1: 14050
+      Param2: 0
+  - Id: 15060
+    GetItem:
+      Type: 1
+      Param1: 14060
+      Param2: 0
+  - Id: 15070
+    GetItem:
+      Type: 1
+      Param1: 15070
+      Param2: 0
+  - Id: 500080
+    GetItem:
+      Type: 1
+      Param1: 500080
+      Param2: 0
+  - Id: 500130
+    GetItem:
+      Type: 1
+      Param1: 500130
       Param2: 0

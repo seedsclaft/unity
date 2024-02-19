@@ -437,7 +437,7 @@ public class TacticsView : BaseView
     
     public void SetNuminous(int numinous)
     {
-        numinousText.text = numinous.ToString();
+        numinousText.SetText(DataSystem.GetReplaceDecimalText(numinous));
     }
 
     private void CallSkillAlchemy()

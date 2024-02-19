@@ -83,4 +83,12 @@ public class BasePresenter
             Ryneus.SoundManager.Instance.PlayBgm(bgm,1.0f);
         }
     }
+
+    public async void PlayBossBgm()
+    {
+        var bgmKey = _model.CurrentStage.Master.BossBGMId;
+        var bgmData = DataSystem.Data.GetBGM(bgmKey);
+        var bgm = await _model.GetBgmData(bgmData.Key);
+        Ryneus.SoundManager.Instance.PlayBgm(bgm,1.0f);
+    }
 }

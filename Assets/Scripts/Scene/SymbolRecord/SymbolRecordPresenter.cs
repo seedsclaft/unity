@@ -57,7 +57,7 @@ public class SymbolRecordPresenter : BasePresenter
     private void CommandDecideRecord()
     {
         var index = _view.SymbolListIndex;
-        var popupInfo = new ConfirmInfo("この過去を改編しますか？",(a) => UpdatePopupCheckStartRecord((ConfirmCommandType)a));
+        var popupInfo = new ConfirmInfo(DataSystem.GetTextData(23010).Text,(a) => UpdatePopupCheckStartRecord((ConfirmCommandType)a));
         _view.CommandCallConfirm(popupInfo);
     }
 

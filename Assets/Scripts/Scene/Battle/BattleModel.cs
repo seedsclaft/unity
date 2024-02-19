@@ -39,6 +39,14 @@ public class BattleModel : BaseModel
 
     public UniTask<List<UnityEngine.AudioClip>> GetBattleBgm()
     {
+        if (CurrentStage != null)
+        {
+            if (CurrentStage.CurrentSelectSymbol().SymbolType == SymbolType.Boss)
+            {
+                var bgmData = DataSystem.Data.GetBGM(CurrentStage.Master.BossBGMId);
+                return GetBgmData(bgmData.Key);
+            }
+        }
         return GetBgmData("TACTICS2");
     }
 

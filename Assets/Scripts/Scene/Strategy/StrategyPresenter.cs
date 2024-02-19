@@ -241,6 +241,7 @@ public class StrategyPresenter : BasePresenter
                 var tacticsActors = _model.TacticsActors();
                 if (tacticsActors != null && tacticsActors.Count > 0)
                 {
+                    _model.ClearBattleData(tacticsActors);
                     _model.TempInfo.ClearTempResultActorInfos();
                 }
             }

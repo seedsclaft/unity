@@ -802,7 +802,7 @@ MonoBehaviour:
     Text: "\u30BF\u30FC\u30F3"
     Help: '""'
   - Id: 11030
-    Text: "\u6551\u547D\u6570:"
+    Text: "\u6551\u547D\u4EBA\u6570:"
     Help: '""'
   - Id: 11040
     Text: "\u30B7\u30CA\u30EA\u30AA\u3092\u9078\u3093\u3067\u304F\u3060\u3055\u3044"
@@ -836,6 +836,27 @@ MonoBehaviour:
     Help: '""'
   - Id: 11100
     Text: "\u5168\u4F53\u9806\u4F4D\u3092\u53D6\u5F97\u3057\u307E\u3059\u304B\uFF1F\n\uFF01\u901A\u4FE1\u3092\u4F7F\u7528\u3057\u307E\u3059\uFF01"
+    Help: '""'
+  - Id: 11110
+    Text: "\u63A8\u5968Lv."
+    Help: '""'
+  - Id: 11120
+    Text: "\\d\u3092\u53EC\u559A\u3057\u307E\u3059\u304B\uFF1F"
+    Help: '""'
+  - Id: 11130
+    Text: "\\d\u3092\u767A\u52D5\u3057\u307E\u3059\u304B\uFF1F"
+    Help: '""'
+  - Id: 11140
+    Text: "\\d\u3092\u5165\u624B\u3057\u307E\u3059\u304B\uFF1F"
+    Help: '""'
+  - Id: 11150
+    Text: "\\d\u3092\u6D88\u8CBB\u3057\u3066"
+    Help: '""'
+  - Id: 11151
+    Text: "\\d\u3092\u7FD2\u5F97\u3057\u307E\u3059\u304B\uFF1F"
+    Help: '""'
+  - Id: 11160
+    Text: "\u30D0\u30C8\u30EB\u306B\u53C2\u52A0\u3059\u308B\u30A2\u30AF\u30BF\u30FC\u30921\u4EBA\u4EE5\u4E0A\u9078\u629E\u3057\u3066\u304F\u3060\u3055\u3044"
     Help: '""'
   - Id: 12010
     Text: "\u8853\u8005\u9078\u5B9A"
@@ -878,6 +899,12 @@ MonoBehaviour:
     Help: '""'
   - Id: 14080
     Text: "\u3053\u306E\u6551\u6E08\u57F7\u884C\u3092\u8853\u8005\u306B\u4EFB\u305B\u308B"
+    Help: '""'
+  - Id: 14090
+    Text: "(\u521D\u56DE\u306E\u307F)"
+    Help: '""'
+  - Id: 14100
+    Text: "\u6551\u547D\u4EBA\u6570"
     Help: '""'
   - Id: 15010
     Text: "\u884C\u52D5\u9078\u629E\u4E2D\u2026"
@@ -986,6 +1013,9 @@ MonoBehaviour:
     Help: '""'
   - Id: 22010
     Text: "\u30AF\u30EA\u30A2\u30C7\u30FC\u30BF\u3092\u4FDD\u5B58\u3057\u307E\u3059\u304B\uFF1F"
+    Help: '""'
+  - Id: 23010
+    Text: "\u9078\u629E\u3057\u305F\u904E\u53BB\u3092\u6539\u7DE8\u3057\u307E\u3059\u304B\uFF1F"
     Help: '""'
   InputDataList:
   - Key: TITLE

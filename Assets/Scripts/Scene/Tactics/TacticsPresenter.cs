@@ -625,7 +625,7 @@ public class TacticsPresenter :BasePresenter
     private void CheckActorSymbol(GetItemInfo getItemInfo)
     {
         var actorData = DataSystem.FindActor(getItemInfo.Param1);
-        var popupInfo = new ConfirmInfo(actorData.Name + "を加入しますか？",(a) => UpdatePopupActorSymbol((ConfirmCommandType)a));
+        var popupInfo = new ConfirmInfo(DataSystem.GetReplaceText(11120,actorData.Name),(a) => UpdatePopupActorSymbol((ConfirmCommandType)a));
         _view.CommandCallConfirm(popupInfo);
     }
 
@@ -637,9 +637,8 @@ public class TacticsPresenter :BasePresenter
             var getItemInfos = _model.CurrentStage.CurrentSelectSymbol().GetItemInfos;
             var actorInfos = _model.PartyInfo.ActorInfos.FindAll(a => a.ActorId == getItemInfos[0].Param1);
             _model.TempInfo.SetTempGetItemInfos(getItemInfos);
-            Debug.Log(getItemInfos[0].GetItemType);
-            Debug.Log(getItemInfos[0].Param1);
             _model.TempInfo.SetTempResultActorInfos(actorInfos);
+            _model.ResetBattlerIndex();
             _view.CommandSceneChange(Scene.Strategy);
         } else{
             CommandTacticsCommand(_model.TacticsCommandType);
@@ -648,7 +647,7 @@ public class TacticsPresenter :BasePresenter
 
     private void CheckRecoverSymbol(GetItemInfo getItemInfo)
     {
-        var popupInfo = new ConfirmInfo(getItemInfo.ResultName + "を発動しますか？",(a) => UpdatePopupRecoverSymbol((ConfirmCommandType)a));
+        var popupInfo = new ConfirmInfo(DataSystem.GetReplaceText(11130,getItemInfo.ResultName),(a) => UpdatePopupRecoverSymbol((ConfirmCommandType)a));
         _view.CommandCallConfirm(popupInfo);
     }
 
@@ -660,6 +659,7 @@ public class TacticsPresenter :BasePresenter
             var currentSymbol = _model.CurrentStage.CurrentSelectSymbol();
             _model.TempInfo.SetTempGetItemInfos(currentSymbol.GetItemInfos);
             _model.TempInfo.SetTempResultActorInfos(_model.StageMembers());
+            _model.ResetBattlerIndex();
             _view.CommandSceneChange(Scene.Strategy);
         } else{
             CommandTacticsCommand(_model.TacticsCommandType);
@@ -694,7 +694,7 @@ public class TacticsPresenter :BasePresenter
     
     private void CheckAlcanaSymbol(SkillInfo skillInfo)
     {
-        var popupInfo = new ConfirmInfo(skillInfo.Master.Name + "を取得しますか？",(a) => UpdatePopupAlcanaSymbol((ConfirmCommandType)a));
+        var popupInfo = new ConfirmInfo(DataSystem.GetReplaceText(11140,skillInfo.Master.Name),(a) => UpdatePopupAlcanaSymbol((ConfirmCommandType)a));
         _view.CommandCallConfirm(popupInfo);
     }
 
@@ -706,6 +706,7 @@ public class TacticsPresenter :BasePresenter
             var getItemInfos = _model.CurrentStage.CurrentSelectSymbol().GetItemInfos;
             _model.TempInfo.SetTempGetItemInfos(getItemInfos);
             _model.TempInfo.SetTempResultActorInfos(_model.StageMembers());
+            _model.ResetBattlerIndex();
             _view.CommandSceneChange(Scene.Strategy);
         } else{
             CommandTacticsCommand(_model.TacticsCommandType);
@@ -714,7 +715,7 @@ public class TacticsPresenter :BasePresenter
 
     private void CheckResourceSymbol(GetItemInfo getItemInfo)
     {
-        var popupInfo = new ConfirmInfo(getItemInfo.Param1 + "(Nu)を取得しますか？",(a) => UpdatePopupResourceSymbol((ConfirmCommandType)a));
+        var popupInfo = new ConfirmInfo(DataSystem.GetReplaceText(11140,getItemInfo.Param1 + DataSystem.GetTextData(1000).Text),(a) => UpdatePopupResourceSymbol((ConfirmCommandType)a));
         _view.CommandCallConfirm(popupInfo);
     }
 
@@ -726,6 +727,7 @@ public class TacticsPresenter :BasePresenter
             var currentSymbol = _model.CurrentStage.CurrentSelectSymbol();
             _model.TempInfo.SetTempGetItemInfos(currentSymbol.GetItemInfos);
             _model.TempInfo.SetTempResultActorInfos(_model.StageMembers());
+            _model.ResetBattlerIndex();
             _view.CommandSceneChange(Scene.Strategy);
         } else{
             CommandTacticsCommand(_model.TacticsCommandType);
@@ -746,6 +748,7 @@ public class TacticsPresenter :BasePresenter
             var currentSymbol = _model.CurrentStage.CurrentSelectSymbol();
             _model.TempInfo.SetTempGetItemInfos(currentSymbol.GetItemInfos);
             _model.TempInfo.SetTempResultActorInfos(_model.StageMembers());
+            _model.ResetBattlerIndex();
             _view.CommandSceneChange(Scene.Strategy);
         } else{
             CommandTacticsCommand(_model.TacticsCommandType);
@@ -754,7 +757,7 @@ public class TacticsPresenter :BasePresenter
 
     private void CommandLearnSkill(SkillInfo skillInfo)
     {
-        var popupInfo = new ConfirmInfo(skillInfo.LearningCost + "(Nu)を消費して" + skillInfo.Master.Name + "を習得しますか？",(a) => UpdatePopupLearnSkill((ConfirmCommandType)a));
+        var popupInfo = new ConfirmInfo(DataSystem.GetReplaceText(11150,skillInfo.LearningCost.ToString()) + DataSystem.GetReplaceText(11151,skillInfo.Master.Name),(a) => UpdatePopupLearnSkill((ConfirmCommandType)a));
         _view.CommandCallConfirm(popupInfo);
     }
 
@@ -779,13 +782,20 @@ public class TacticsPresenter :BasePresenter
                 _model.SaveTempBattleMembers();
                 _model.SetStatusActorInfos();
                 _view.CommandChangeViewToTransition(null);
-                var bgmData = DataSystem.Data.GetBGM(_model.TacticsBgmKey());
-                if (bgmData.CrossFade != "" && Ryneus.SoundManager.Instance.CrossFadeMode)
+                // ボス戦なら
+                if (_model.CurrentStage.CurrentSelectSymbol().SymbolType == SymbolType.Boss)
                 {
-                    Ryneus.SoundManager.Instance.ChangeCrossFade();
+                    PlayBossBgm();
                 } else
                 {
-                    PlayTacticsBgm();
+                    var bgmData = DataSystem.Data.GetBGM(_model.TacticsBgmKey());
+                    if (bgmData.CrossFade != "" && Ryneus.SoundManager.Instance.CrossFadeMode)
+                    {
+                        Ryneus.SoundManager.Instance.ChangeCrossFade();
+                    } else
+                    {
+                        PlayTacticsBgm();
+                    }
                 }
                 _view.SetActiveBackGround(false);
                 _model.SetPartyBattlerIdList();
@@ -803,7 +813,7 @@ public class TacticsPresenter :BasePresenter
 
     private void CheckBattleMember()
     {
-        var popupInfo = new ConfirmInfo("バトルに参加するアクターを1人以上選択してください",(a) => UpdatePopupBattleMember());
+        var popupInfo = new ConfirmInfo(DataSystem.GetTextData(11160).Text,(a) => UpdatePopupBattleMember());
         popupInfo.SetIsNoChoice(true);
         _view.CommandCallConfirm(popupInfo);
     }
