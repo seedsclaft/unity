@@ -28,7 +28,9 @@ public class TacticsSymbol : ListItem ,IListViewItem
     {
         if (ListData == null) return null;
         var data = (SymbolInfo)ListData.Data;
-        return data.GetItemInfos[getItemList.Index];
+        var convert = MakeGetItemListData(data);
+        var getItemInfo = convert[getItemList.Index];
+        return (GetItemInfo)getItemInfo.Data;
     }
 
     public void SetGetItemInfoCallHandler(System.Action handler)
@@ -70,13 +72,13 @@ public class TacticsSymbol : ListItem ,IListViewItem
         symbolComponent.UpdateInfo(data);
         if (data.GetItemInfos.Count == 0)
         {
-            return;
+            //return;
         }
         if (_getItemInit == false)
         {
             getItemList.Initialize();
         }
-        getItemList.SetData(ListData.MakeListData(data.GetItemInfos));
+        getItemList.SetData(MakeGetItemListData(data));
         if (_getItemInit == false)
         {
             getItemList.SetSelectedHandler(() => {
@@ -93,6 +95,19 @@ public class TacticsSymbol : ListItem ,IListViewItem
         }
         UpdateItemIndex(_getItemIndex);
         UpdateSelected(data);
+        UpdateCleared(data);
+    }
+
+    private List<ListData> MakeGetItemListData(SymbolInfo symbolInfo)
+    {
+        var list = new List<ListData>();
+        foreach (var getItemInfo in symbolInfo.GetItemInfos)
+        {
+            var data = new ListData(getItemInfo);
+            data.SetEnable(symbolInfo.Cleared != true || getItemInfo.GetItemType != GetItemType.Numinous);
+            list.Add(data);
+        }
+        return list;
     }
 
     public void UpdateItemIndex(int getItemIndex)
@@ -113,6 +128,12 @@ public class TacticsSymbol : ListItem ,IListViewItem
     {
         if (selected == null) return;
         selected.SetActive(symbolInfo.Selected);
+    }
+
+    private void UpdateCleared(SymbolInfo symbolInfo)
+    {
+        if (selected == null) return;
+        //cleared.SetActive(symbolInfo.Cleared);
     }
 
     private void LateUpdate() {

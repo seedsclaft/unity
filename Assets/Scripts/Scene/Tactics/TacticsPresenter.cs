@@ -203,6 +203,7 @@ public class TacticsPresenter :BasePresenter
     private void InitializeView()
     {
         _model.RefreshTacticsEnable();
+        _model.AssignBattlerIndex();
         _view.SetHelpWindow();
         _view.SetUIButton();
         _view.ChangeBackCommandActive(false);
@@ -787,6 +788,7 @@ public class TacticsPresenter :BasePresenter
                     PlayTacticsBgm();
                 }
                 _view.SetActiveBackGround(false);
+                _model.SetPartyBattlerIdList();
                 _view.CommandSceneChange(Scene.Battle);
             } else
             {

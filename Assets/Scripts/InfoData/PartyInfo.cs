@@ -18,8 +18,9 @@ public class PartyInfo
         _battleResultVictory = false;
         _battleResultScore = 0;
         _symbolRecordList.Clear();
+        _alcanaInfo = new AlcanaInfo();
     }
-    // 所持するアクターリスト
+    // 所持アクターリスト
     private List<ActorInfo> _actorInfos = new();
     public List<ActorInfo> ActorInfos => _actorInfos;
 
@@ -33,6 +34,9 @@ public class PartyInfo
     private List<int> _alchemyIdList = new();
     public List<int> AlchemyIdList => _alchemyIdList;
 
+    private AlcanaInfo _alcanaInfo;
+    public AlcanaInfo AlcanaInfo => _alcanaInfo;
+
     private bool _battleResultVictory = false;
     public bool BattleResultVictory => _battleResultVictory;
     private int _battleResultScore = 0;
@@ -40,6 +44,13 @@ public class PartyInfo
 
     private int _clearTroopCount;
     public int ClearTroopCount => _clearTroopCount;
+
+    private List<int> _lastBattlerIdList = new();
+    public List<int> LastBattlerIdList => _lastBattlerIdList;
+    public void SetLastBattlerIdList(List<int> lastBattlerIdList)
+    {
+        _lastBattlerIdList = lastBattlerIdList;
+    }
 
     private List<SymbolResultInfo> _symbolRecordList = new ();
     public List<SymbolResultInfo> SymbolRecordList => _symbolRecordList;

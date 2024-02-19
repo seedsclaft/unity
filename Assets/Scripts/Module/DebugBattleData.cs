@@ -29,8 +29,7 @@ public class DebugBattleData : MonoBehaviour
         GameSystem.CurrentStageData = new SaveStageInfo();
         GameSystem.CurrentStageData.Initialize();
         GameSystem.CurrentStageData.MakeStageData(1);
-
-        GameSystem.CurrentStageData.StageAlcana.InitData(true);  
+        GameSystem.CurrentStageData.Party.AlcanaInfo.InitData(true);
         if (testBattle)
         {
             var TestBattleData = Resources.Load<TestBattleData>("Data/TestBattle").TestBattleDates;
@@ -48,7 +47,7 @@ public class DebugBattleData : MonoBehaviour
                 } else
                 {
                     // アルカナ
-                    var alcana = GameSystem.CurrentStageData.StageAlcana.OwnAlcanaList.Find(a => a.Id == TestBattle.Level);
+                    var alcana = GameSystem.CurrentStageData.Party.AlcanaInfo.OwnAlcanaList.Find(a => a.Id == TestBattle.Level);
                     if (alcana != null)
                     {
                         alcana.SetEnable(true);

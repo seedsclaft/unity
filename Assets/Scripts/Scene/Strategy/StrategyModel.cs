@@ -26,7 +26,7 @@ public class StrategyModel : BaseModel
 
     public List<ActorInfo> TacticsActors()
     {
-        return TempInfo.TempResultActorInfos.FindAll(a => a.BattleIndex >= 0);
+        return TempInfo.TempResultActorInfos.FindAll(a => a.BattleIndex == -1);
     }
 
     public void SetLvUp()
@@ -54,13 +54,18 @@ public class StrategyModel : BaseModel
     public void MakeResult()
     {
         var getItemInfos = TempInfo.TempGetItemInfos;
+        var record = CurrentStage.SymbolRecordList.Find(a => a.IsSameSymbol(CurrentStage.Id,CurrentStage.CurrentTurn,CurrentSaveData.CurrentStage.CurrentSeekIndex));
+        var beforeRecord = PartyInfo.SymbolRecordList.Find(a => a.IsSameSymbol(CurrentStage.Id,CurrentStage.CurrentTurn,CurrentSaveData.CurrentStage.CurrentSeekIndex));
         
         foreach (var getItemInfo in getItemInfos)
         {
             switch (getItemInfo.GetItemType)
             {
                 case GetItemType.Numinous:
-                    //PartyInfo.ChangeCurrency(Currency + getItemInfo.Param1);
+                    if (beforeRecord == null || (beforeRecord != null && beforeRecord.Cleared == false))
+                    {
+                        PartyInfo.ChangeCurrency(Currency + getItemInfo.Param1);
+                    }
                     break;
                 case GetItemType.Skill:
                     PartyInfo.AddAlchemy(getItemInfo.Param1);
@@ -98,7 +103,6 @@ public class StrategyModel : BaseModel
                     PartyInfo.AddActorId(getItemInfo.Param1);
                     break;
                 case GetItemType.SaveHuman:
-                    var record = CurrentStage.SymbolRecordList.Find(a => a.IsSameSymbol(CurrentStage.Id,CurrentStage.CurrentTurn,CurrentSaveData.CurrentStage.CurrentSeekIndex));
                     
                     var rate = PartyInfo.BattleResultScore * 0.01f;
                     rate *= getItemInfo.Param1;
@@ -108,6 +112,9 @@ public class StrategyModel : BaseModel
                     break;
             }
         }
+        // クリアフラグを立てる
+        record.SetCleared(true); 
+        
         if (CurrentStage.RecordStage)
         {
             foreach (var actorInfo in TempInfo.TempRecordActors)
@@ -278,8 +285,18 @@ public class StrategyModel : BaseModel
                 }
             }
         }
+
+        // データ復元
         foreach (var symbolResultInfo in records)
         {
+            var beforeRecord = beforeRecords.Find(a => a.IsSameSymbol(symbolResultInfo));
+            if (beforeRecord != null)
+            {
+                if (beforeRecord.Cleared)
+                {
+                    symbolResultInfo.SetCleared(true);
+                }
+            }
             PartyInfo.SetSymbolResultInfo(symbolResultInfo);
         }
 

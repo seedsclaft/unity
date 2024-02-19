@@ -13,15 +13,6 @@ public class AlcanaSelectModel : BaseModel
         _deleteAlcanaInfo = skillInfo;
     }
 
-    public List<ListData> SkillActionList()
-    {
-        var skillInfos = CurrentData.AlcanaInfo.OwnAlcanaList;
-        for (int i = 0; i < skillInfos.Count;i++)
-        {
-            skillInfos[i].SetEnable(_selectedAlcanaList.Contains(skillInfos[i]) == false);
-        }
-        return MakeListData(skillInfos);
-    }
 
     public void ChangeSelectAlcana(SkillInfo skillInfo)
     {
@@ -48,24 +39,16 @@ public class AlcanaSelectModel : BaseModel
                 _selectedAlcanaList.RemoveAt(index);
             }
         }
-        CurrentData.AlcanaInfo.DeleteAlcana(_deleteAlcanaInfo);
         SavePlayerData();
     }
 
     public bool CheckStageStart()
     {
         if (_selectedAlcanaList.Count == DataSystem.System.AlcanaSelectCount) return true;
-        if (_selectedAlcanaList.Count == CurrentData.AlcanaInfo.OwnAlcanaList.Count) return true;
         return false;
     }
 
     public void SetStageAlcanaList()
     {
-        CurrentSaveData.StageAlcana.ClearOwnAlcanaList();
-        foreach (var selectedAlcana in _selectedAlcanaList)
-        {
-            selectedAlcana.SetEnable(true);
-            CurrentSaveData.StageAlcana.AddAlcana(selectedAlcana);
-        }
     }
 }

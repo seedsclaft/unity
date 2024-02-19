@@ -92,24 +92,7 @@ public class ResultModel : BaseModel
         {
             var rand = UnityEngine.Random.Range(0,alcanaSkillsDates.Count);
             var randSkillData = alcanaSkillsDates[rand];
-            // 既に所有している
-            if (CurrentData.AlcanaInfo.OwnAlcanaList.Find(a => a.Id == randSkillData.Id) != null)
             {
-                // 重複可能かどうか featureが508魔法入手
-                if (randSkillData.FeatureDates.Find(a => a.FeatureType == FeatureType.AddSkillOrCurrency) != null)
-                {
-                    var addSkillInfo = new SkillInfo(randSkillData.Id);
-                    var skills = DataSystem.Skills.FindAll(a => a.Rank == 1 && a.Attribute == randSkillData.Attribute);
-                    if (skills.Count > 0)
-                    {
-                        var skillRand = UnityEngine.Random.Range(0,skills.Count);
-                        addSkillInfo.SetParam(skills[skillRand].Id,0,0);
-                        addSkillInfo.SetEnable(true);
-                        getAlcanaInfos.Add(addSkillInfo);
-                        getCount--;
-                    }
-                }
-            } else{
                 // 重複判定
                 if (getAlcanaInfos.Find(a => a.Id == randSkillData.Id) == null)
                 {
@@ -134,10 +117,6 @@ public class ResultModel : BaseModel
                     getCount--;
                 }
             }
-        }
-        foreach (var getAlcanaInfo in getAlcanaInfos)
-        {
-            CurrentData.AlcanaInfo.AddAlcana(getAlcanaInfo);        
         }
         return MakeListData(getAlcanaInfos);
     }

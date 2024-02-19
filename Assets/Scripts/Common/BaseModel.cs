@@ -13,7 +13,7 @@ public class BaseModel
     public SaveStageInfo CurrentSaveData => GameSystem.CurrentStageData;
     public TempInfo TempInfo => GameSystem.TempData;
     public StageInfo CurrentStage => CurrentSaveData.CurrentStage;
-    public AlcanaInfo StageAlcana => CurrentSaveData.StageAlcana;
+    public AlcanaInfo StageAlcana => CurrentSaveData.Party.AlcanaInfo;
 
     public PartyInfo PartyInfo => CurrentSaveData.Party;
 
@@ -346,7 +346,7 @@ public class BaseModel
 
     public bool NeedAlcana()
     {
-        return CurrentStage.Master.Alcana && CurrentData.AlcanaInfo.OwnAlcanaList.Count > 0;
+        return false;
     }
     
     public void SetAlcanaSkillInfo(List<SkillInfo> skillInfos)

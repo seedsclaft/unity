@@ -20,6 +20,13 @@ public class SymbolResultInfo
     {
         _selected = isSelected;
     }
+    // バトルで1度クリアしたことがある
+    public bool _cleared;
+    public bool Cleared => _cleared;
+    public void SetCleared(bool cleared)
+    {
+        _cleared = cleared;
+    }
     public int _battleScore;
     public int BattleScore => _battleScore;
     public void SetBattleScore(int battleScore)
@@ -79,7 +86,7 @@ public class SymbolResultInfo
             _actorInfos.Add(recordActorInfo);
         }
     }
-    public SymbolInfo _symbolInfo;
+    private SymbolInfo _symbolInfo;
     public SymbolInfo SymbolInfo => _symbolInfo;
 
     public SymbolResultInfo(SymbolInfo symbolInfo,int stageId,int seek,int seekIndex,int currency)

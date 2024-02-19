@@ -13,6 +13,16 @@ public class SymbolInfo
     public List<GetItemInfo> GetItemInfos => _getItemInfos;
     private bool _selected;
     public bool Selected => _selected;
+    public void SetSelected(bool selected)
+    {
+        _selected = selected;
+    }
+    private bool _cleared;
+    public bool Cleared => _cleared;
+    public void SetCleared(bool cleared)
+    {
+        _cleared = cleared;
+    }
     public SymbolInfo(StageSymbolData symbol = null)
     {
         if (symbol == null)
@@ -28,6 +38,7 @@ public class SymbolInfo
         _troopInfo = symbolInfo.TroopInfo;
         _getItemInfos = symbolInfo.GetItemInfos;
         _selected = symbolInfo.Selected;
+        _cleared = symbolInfo.Cleared;
     }
 
 
@@ -37,10 +48,7 @@ public class SymbolInfo
         _troopInfo = troopInfo;
     }
 
-    public void SetSelected(bool selected)
-    {
-        _selected = selected;
-    }
+
 
     public List<BattlerInfo> BattlerInfos()
     {

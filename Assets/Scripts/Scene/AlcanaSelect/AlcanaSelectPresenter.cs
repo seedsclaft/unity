@@ -97,8 +97,10 @@ public class AlcanaSelectPresenter : BasePresenter
     private void CommandRefresh(int selectIndex = 0)
     {
         _view.CommandRefresh(_model.SelectedAlcanaList);
+        /*
         var skillInfos = _model.SkillActionList();
         _view.RefreshMagicList(skillInfos,selectIndex);
+        */
         if (_model.CheckStageStart())
         {
             CommandStageStart();

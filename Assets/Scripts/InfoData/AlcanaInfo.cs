@@ -21,6 +21,7 @@ public class AlcanaInfo{
         _ownAlcanaList.Clear();
         if (isTestMode)
         {
+            _IsAlcana = true;
             for (var i = 1;i <= 22;i++)
             {
                 var alcana = new SkillInfo(500000 + i * 10);
@@ -74,7 +75,7 @@ public class AlcanaInfo{
                 if (triggerData.TriggerType == TriggerType.ExtendStageTurn)
                 {
                     var enable = GameSystem.CurrentStageData.CurrentStage.CurrentTurn <= 0;
-                    //alcana.SetEnable(enable);
+                    alcana.SetEnable(enable);
                 }
             }
         }

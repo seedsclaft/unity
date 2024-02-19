@@ -62,7 +62,7 @@ public class TempInfo
     }
     public void ClearTempGetItemInfos()
     {
-        _tempGetItemInfos.Clear();
+        //_tempGetItemInfos.Clear();
     }
     private List<ActorInfo> _tempResultActorInfos = new ();
     public List<ActorInfo> TempResultActorInfos => _tempResultActorInfos;

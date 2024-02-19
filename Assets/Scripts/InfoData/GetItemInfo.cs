@@ -37,7 +37,7 @@ public class GetItemInfo
         switch (_getItemType)
         {
             case GetItemType.Numinous:
-                SetResultData("+" + _param1.ToString() + DataSystem.GetTextData(1000).Text);
+                SetResultData("(初回クリアのみ)+" + _param1.ToString() + DataSystem.GetTextData(1000).Text);
                 break;
             case GetItemType.Skill:
                 var skillData = DataSystem.FindSkill(_param1);

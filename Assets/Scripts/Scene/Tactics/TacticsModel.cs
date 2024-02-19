@@ -383,6 +383,29 @@ public class TacticsModel : BaseModel
         }
     }
 
+    public void AssignBattlerIndex()
+    {
+        var idList = PartyInfo.LastBattlerIdList;
+        foreach (var id in idList)
+        {
+            var actor = StageMembers().Find(a => a.ActorId == id);
+            if (actor != null)
+            {
+                actor.SetBattleIndex(id);
+            }
+        }
+    }
+
+    public void SetPartyBattlerIdList()
+    {
+        var idList = new List<int>();
+        foreach (var battleMember in BattleMembers())
+        {
+            idList.Add(battleMember.ActorId);
+        }
+        PartyInfo.SetLastBattlerIdList(idList);
+    }
+
     public void SetSurvivalMode()
     {
         CurrentStage.SetSurvivalMode();

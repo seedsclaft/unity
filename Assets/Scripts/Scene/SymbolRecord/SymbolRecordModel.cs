@@ -14,6 +14,7 @@ public class SymbolRecordModel : BaseModel
             symbolInfo.CopyData(symbolInfos[i].SymbolInfo);
             var saveRecord = symbolRecords.Find(a => a.IsSameSymbol(CurrentStage.Id,seek+1,i));
             symbolInfo.SetSelected(saveRecord != null);
+            symbolInfo.SetCleared(symbolInfos[i].Cleared);
             MakePrizeData(saveRecord,symbolInfo.GetItemInfos);
             list.Add(symbolInfo);
         }
@@ -109,7 +110,20 @@ public class SymbolRecordModel : BaseModel
         {
             CurrentStage.SeekStage();
         }
-        CurrentStage.SetSymbolInfos(CurrentTurnSymbolInfos(CurrentStage.CurrentTurn));
+        var list = new List<SymbolInfo>();
+        var symbolInfos = PartyInfo.SymbolRecordList.FindAll(a => a.StageId == CurrentStage.Id && a.Seek == (seek+1));
+        var symbolRecords = PartyInfo.SymbolRecordList.FindAll(a => a.StageId == CurrentStage.Id && a.Selected == true);
+        for (int i = 0;i < symbolInfos.Count;i++)
+        {
+            var symbolInfo = new SymbolInfo();
+            symbolInfo.CopyData(symbolInfos[i].SymbolInfo);
+            var saveRecord = symbolRecords.Find(a => a.IsSameSymbol(CurrentStage.Id,seek+1,i));
+            //symbolInfo.SetSelected(saveRecord != null);
+            symbolInfo.SetCleared(symbolInfos[i].Cleared);
+            MakePrizeData(saveRecord,symbolInfo.GetItemInfos);
+            list.Add(symbolInfo);
+        }
+        CurrentStage.SetSymbolInfos(list);
         MakeSymbolResultInfos();
     }
 }

@@ -36,6 +36,10 @@ public class GetItem : ListItem ,IListViewItem
             resultName.text = _data.ResultName;
             resultName.rectTransform.sizeDelta = new Vector2(resultName.preferredWidth,resultName.preferredHeight);
         }
+        if (Disable != null)
+        {
+            Disable.gameObject.SetActive(ListData.Enable == false);
+        }
     }
 
     private void UpdateElementIcon(int index)
