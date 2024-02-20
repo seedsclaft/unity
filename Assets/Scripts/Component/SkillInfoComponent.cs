@@ -79,13 +79,28 @@ public class SkillInfoComponent : MonoBehaviour
             return;
         }
         var skillData = DataSystem.FindSkill(skillId);
-        if (icon != null)
+        if (skillData != null)
         {
-            UpdateSkillIcon(skillData.IconIndex);
-        }
-        if (iconBack != null)
+            if (icon != null)
+            {
+                icon.gameObject.SetActive(true);
+                UpdateSkillIcon(skillData.IconIndex);
+            }
+            if (iconBack != null)
+            {
+                iconBack.gameObject.SetActive(true);
+                UpdateSkillIconBack(skillData.Attribute);
+            }
+        } else
         {
-            UpdateSkillIconBack(skillData.Attribute);
+            if (icon != null)
+            {
+                icon.gameObject.SetActive(false);
+            }
+            if (iconBack != null)
+            {
+                iconBack.gameObject.SetActive(false);
+            }
         }
         if (nameText != null)
         {

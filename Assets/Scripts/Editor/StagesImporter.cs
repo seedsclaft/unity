@@ -47,6 +47,7 @@ public class StagesInfoImporter : AssetPostprocessor {
     {
 		Id = 0,
         Seek,
+		SeekIndex,
 		SymbolType,
 		_SymbolType,
 		Param1,
@@ -187,6 +188,7 @@ public class StagesInfoImporter : AssetPostprocessor {
 						{
 							SymbolData.StageId = (int)SymbolRow.GetCell((int)BaseSymbolColumn.Id)?.SafeNumericCellValue();
 							SymbolData.Seek = (int)SymbolRow.GetCell((int)BaseSymbolColumn.Seek)?.SafeNumericCellValue();
+							SymbolData.SeekIndex = (int)SymbolRow.GetCell((int)BaseSymbolColumn.SeekIndex)?.SafeNumericCellValue();
 							SymbolData.SymbolType = (SymbolType)SymbolRow.GetCell((int)BaseSymbolColumn.SymbolType)?.SafeNumericCellValue();
 							SymbolData.Param1 = (int)SymbolRow.GetCell((int)BaseSymbolColumn.Param1)?.SafeNumericCellValue();
 							SymbolData.Param2 = (int)SymbolRow.GetCell((int)BaseSymbolColumn.Param2)?.SafeNumericCellValue();

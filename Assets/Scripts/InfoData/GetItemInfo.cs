@@ -9,8 +9,8 @@ public class GetItemInfo
     public int Param1 => _param1;
     private int _param2 = -1;
     public int Param2 => _param2;
-    private int _skillElementId = -1;
-    public int SkillElementId => _skillElementId;
+    private int _skillId = -1;
+    public int SkillId => _skillId;
     private string _titleName = "";
     public string TitleName => _titleName;
     private string _resultName = "";
@@ -25,6 +25,16 @@ public class GetItemInfo
             _getItemType = getItemData.Type;
             MakeTextData();
         }
+    }
+
+    public void CopyData(GetItemInfo getItemInfo)
+    {
+        _param1 = getItemInfo.Param1;
+        _param2 = getItemInfo.Param2;
+        _getItemType = getItemInfo.GetItemType;
+        _skillId = getItemInfo.SkillId;
+        _titleName = getItemInfo.TitleName;
+        _resultName = getItemInfo.ResultName;
     }
 
     public void SetParam2(int param2)
@@ -42,7 +52,7 @@ public class GetItemInfo
             case GetItemType.Skill:
                 var skillData = DataSystem.FindSkill(_param1);
                 SetResultData(skillData.Name);
-                SetSkillElementId((int)skillData.Attribute);
+                SetSkillId(skillData.Id);
                 break;
             case GetItemType.Demigod:
                 SetResultData(DataSystem.GetTextData(14042).Text + "+" + _param1.ToString());
@@ -73,9 +83,9 @@ public class GetItemInfo
         }
     }
 
-    public void SetSkillElementId(int skillElementId)
+    public void SetSkillId(int skillId)
     {
-        _skillElementId = skillElementId;
+        _skillId = skillId;
     }
 
     public void SetTitleData(string titleName)
@@ -112,7 +122,7 @@ public class GetItemInfo
     public void MakeAlchemyResult(string name,SkillData skillData)
     {
         _titleName = (DataSystem.GetReplaceText(3000,name));
-        SetSkillElementId((int)skillData.Attribute);
+        SetSkillId(skillData.Id);
         var magicAlchemy = skillData.Name;
         _resultName = (DataSystem.GetReplaceText(3002,magicAlchemy));    
     }
@@ -121,7 +131,7 @@ public class GetItemInfo
     {
         _titleName = (DataSystem.GetTextData(14040).Text);
         _resultName = (skillData.Name);
-        SetSkillElementId((int)skillData.Attribute);            
+        SetSkillId(skillData.Id);            
     }
 
     public void MakeRecoveryResult(string name)
@@ -226,6 +236,6 @@ public class GetItemInfo
     {
         _titleName = (DataSystem.GetReplaceText(3000,actorName));
         _resultName = (skillData.Name + DataSystem.GetTextData(3230).Text);
-        SetSkillElementId((int)skillData.Attribute);            
+        SetSkillId(skillData.Id);            
     }
 }

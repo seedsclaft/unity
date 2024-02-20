@@ -70,10 +70,6 @@ public class TacticsSymbol : ListItem ,IListViewItem
         if (ListData == null) return;
         var data = (SymbolInfo)ListData.Data;
         symbolComponent.UpdateInfo(data);
-        if (data.GetItemInfos.Count == 0)
-        {
-            //return;
-        }
         if (_getItemInit == false)
         {
             getItemList.Initialize();

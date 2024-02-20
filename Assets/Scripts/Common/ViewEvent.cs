@@ -40,7 +40,7 @@ abstract public class ListItem : MonoBehaviour
     private Color _selectedColor;
     private Color _disableColor;
     private int _index;
-    public int Index{get {return _index;}}
+    public int Index => _index;
     private ListData _listData;
     public ListData ListData => _listData;
     public void SetListData(ListData listData,int index)
@@ -95,7 +95,7 @@ abstract public class ListItem : MonoBehaviour
         _index = index;
     }
     
-    public void SetSelectHandler(System.Action<int> handler){
+    public void SetSelectHandler(Action<int> handler){
         if (clickButton == null)
         {
             return;
@@ -114,7 +114,7 @@ abstract public class ListItem : MonoBehaviour
         });
     }
 
-    public void SetCallHandler(System.Action handler)
+    public void SetCallHandler(Action handler)
     {        
         if (clickButton == null)
         {

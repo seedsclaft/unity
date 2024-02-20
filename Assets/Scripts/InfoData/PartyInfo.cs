@@ -31,6 +31,7 @@ public class PartyInfo
     public List<ActorInfo> CurrentActorInfos => _actorInfos.FindAll(a => _actorIdList.Contains(a.ActorId));
     private int _currency = 0;
     public int Currency => _currency;
+    private int _parallelCount = 1;
     private List<int> _alchemyIdList = new();
     public List<int> AlchemyIdList => _alchemyIdList;
 
@@ -161,5 +162,15 @@ public class PartyInfo
             score += record.BattleScore;
         }
         return score;
+    }
+
+    public int ParallelCost()
+    {
+        return _parallelCount * _parallelCount;
+    }
+
+    public void GainParallelCount()
+    {
+        _parallelCount++;
     }
 }

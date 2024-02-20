@@ -36,7 +36,7 @@ public class StrategyModel : BaseModel
         //var lvUpActorInfos = TacticsActors().FindAll(a => a.TacticsCommandType == TacticsCommandType.Train);
         var lvUpList = new List<ActorInfo>();
         // 結果出力
-        foreach (var lvUpActorInfo in BattleResultActors())
+        foreach (var lvUpActorInfo in BattleMembers())
         {
             var statusInfo = lvUpActorInfo.LevelUp(0);
             lvUpActorInfo.TempStatus.SetParameter(
@@ -287,6 +287,7 @@ public class StrategyModel : BaseModel
         }
 
         // データ復元
+        records.Sort((a,b)=> a.SeekIndex > b.SeekIndex ? 1 : -1);
         foreach (var symbolResultInfo in records)
         {
             var beforeRecord = beforeRecords.Find(a => a.IsSameSymbol(symbolResultInfo));
@@ -360,6 +361,149 @@ public class StrategyModel : BaseModel
         TempInfo.ClearRecordAlchemyList();
         SavePlayerData();
         SavePlayerStageData(false);
+    }
+
+    public void CommitCurrentParallelResult()
+    {
+        var beforeRecords = PartyInfo.SymbolRecordList.FindAll(a => a.StageId == CurrentStage.Id && a.Seek == CurrentStage.CurrentTurn);
+        var records = CurrentStage.SymbolRecordList.FindAll(a => a.StageId == CurrentStage.Id && a.Seek == CurrentStage.CurrentTurn);
+         
+        var addAlchemyIdList = new List<int>();
+        var removeAlchemyIdList = new List<int>();
+
+        var addActorIdList = new List<int>();
+        var removeActorIdList = new List<int>();
+        // 差分確認
+        foreach (var beforeRecord in beforeRecords)
+        {
+            var currentRecord = records.Find(a => a.IsSameSymbol(beforeRecord));
+            if (beforeRecord.Selected != currentRecord.Selected)
+            {
+                var symbol = CurrentStage.CurrentSymbolInfos[currentRecord.SeekIndex];
+                if (symbol.SymbolType == SymbolType.Alcana)
+                {
+                    foreach (var getItemInfo in symbol.GetItemInfos)
+                    {
+                        if (currentRecord.Selected)
+                        {
+                            // 増える
+                            addAlchemyIdList.Add(getItemInfo.Param1);
+                        } else
+                        {
+                            //removeAlchemyIdList.Add(getItemInfo.Param1);
+                        }
+                    }
+                }
+                if (symbol.SymbolType == SymbolType.Actor)
+                {
+                    foreach (var getItemInfo in symbol.GetItemInfos)
+                    {
+                        if (currentRecord.Selected)
+                        {
+                            // 増える
+                            addActorIdList.Add(getItemInfo.Param1);
+                        } else
+                        {
+                            //removeActorIdList.Add(getItemInfo.Param1);
+                        }
+                    }
+                }
+            }
+        }
+
+        // データ復元
+        records.Sort((a,b)=> a.SeekIndex > b.SeekIndex ? 1 : -1);
+        foreach (var symbolResultInfo in records)
+        {
+            var beforeRecord = beforeRecords.Find(a => a.IsSameSymbol(symbolResultInfo));
+            if (beforeRecord != null)
+            {
+                if (beforeRecord.Cleared)
+                {
+                    symbolResultInfo.SetCleared(true);
+                }
+                if (beforeRecord.Selected)
+                {
+                    symbolResultInfo.SetSelected(true);
+                }
+            }
+            PartyInfo.SetSymbolResultInfo(symbolResultInfo);
+        }
+
+        PartyInfo.InitActorInfos();
+        foreach (var actorInfo in TempInfo.TempRecordActors)
+        {
+			PartyInfo.UpdateActorInfo(actorInfo);
+        }
+        foreach (var actorId in TempInfo.TempRecordActorIdList)
+        {
+            PartyInfo.AddActorId(actorId);
+        }
+        
+        PartyInfo.ClearAlchemy();
+        foreach (var alchemyId in TempInfo.TempRecordAlchemyList)
+        {
+            PartyInfo.AddAlchemy(alchemyId);
+        }
+        foreach (var alchemyId in addAlchemyIdList)
+        {
+            PartyInfo.AddAlchemy(alchemyId);
+        }
+        foreach (var alchemyId in removeAlchemyIdList)
+        {
+            PartyInfo.RemoveAlchemy(alchemyId);
+        }
+        foreach (var actorId in addActorIdList)
+        {
+            PartyInfo.AddActorId(actorId);
+        }
+        foreach (var actorId in removeActorIdList)
+        {
+            PartyInfo.RemoveActor(actorId);
+        }
+        
+        // 後のレコードを書き換え
+        var afterRecords = PartyInfo.SymbolRecordList.FindAll(a => a.StageId >= CurrentStage.Id && a.Seek > CurrentStage.CurrentTurn);
+        foreach (var symbolResultInfo in afterRecords)
+        {
+            foreach (var alchemyId in addAlchemyIdList)
+            {
+                symbolResultInfo.AddAlchemyId(alchemyId);
+            }
+            foreach (var alchemyId in removeAlchemyIdList)
+            {
+                symbolResultInfo.RemoveAlchemyId(alchemyId);
+            }
+            foreach (var actorId in addActorIdList)
+            {
+                symbolResultInfo.AddActorId(actorId);
+            }
+            foreach (var actorId in removeActorIdList)
+            {
+                symbolResultInfo.RemoveActorId(actorId);
+            }
+            PartyInfo.SetSymbolResultInfo(symbolResultInfo);
+        }
+
+        TempInfo.ClearRecordActors();
+        TempInfo.ClearRecordActorIdList();
+        TempInfo.ClearRecordAlchemyList();
+        SavePlayerData();
+        SavePlayerStageData(false);
+    }
+
+    public bool ChainParallelMode()
+    {
+        var chain = false;
+        var beforeRecords = PartyInfo.SymbolRecordList.FindAll(a => a.StageId == CurrentStage.Id && a.Seek == CurrentStage.CurrentTurn);
+        foreach (var record in beforeRecords)
+        {
+            if (record.Selected == false)
+            {
+                chain = true;
+            }
+        }
+        return chain;
     }
 
     public bool EnableBattleSkip()

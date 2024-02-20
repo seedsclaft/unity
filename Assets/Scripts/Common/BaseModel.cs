@@ -500,6 +500,7 @@ public class BaseModel
                 var data = PickUpSymbolData(groupDates);
                 data.StageId = symbol.StageId;
                 data.Seek = symbol.Seek;
+                data.SeekIndex = symbol.SeekIndex;
                 symbolInfo = new SymbolInfo(data);
             }
             var getItemInfos = new List<GetItemInfo>();
@@ -582,9 +583,9 @@ public class BaseModel
     public void MakeSymbolResultInfos()
     {
         // レコード作成
-        for (int i = 0;i < CurrentStage.CurrentSymbolInfos.Count;i++)
+        foreach (var symbolInfo in CurrentStage.CurrentSymbolInfos)
         {
-            var record = new SymbolResultInfo(CurrentStage.CurrentSymbolInfos[i],CurrentStage.Id,CurrentStage.CurrentTurn,i,GameSystem.CurrentStageData.Party.Currency);
+            var record = new SymbolResultInfo(symbolInfo,GameSystem.CurrentStageData.Party.Currency);
             var actorInfos = new List<ActorInfo>();
             foreach (var actorInfo in PartyInfo.ActorInfos)
             {
@@ -620,6 +621,88 @@ public class BaseModel
         CurrentSaveData.MakeStageData(stageId);
     }
 
+    public void MakeSymbolRecordStage(int seek)
+    {
+        CurrentSaveData.MakeStageData(CurrentStage.Id);
+        CurrentStage.SetRecordStage(true);
+        TempInfo.SetRecordActors(PartyInfo.ActorInfos);
+        TempInfo.SetRecordActorIdList(PartyInfo.ActorIdList);
+        TempInfo.SetRecordAlchemyList(PartyInfo.AlchemyIdList);
+        
+        PartyInfo.InitActorInfos();
+        foreach (var symbolActor in SymbolActorIdList(seek))
+        {
+            PartyInfo.AddActorId(symbolActor.ActorId);
+        }
+        foreach (var symbolActor in SymbolActorInfos(seek))
+        {
+            PartyInfo.UpdateActorInfo(symbolActor);
+        }
+
+        PartyInfo.ClearAlchemy();
+        foreach (var alchemyId in SymbolAlchemyList(seek))
+        {
+            PartyInfo.AddAlchemy(alchemyId);
+        }
+
+        for (int i = 0;i < seek;i++)
+        {
+            CurrentStage.SeekStage();
+        }
+        var list = new List<SymbolInfo>();
+        var symbolInfos = PartyInfo.SymbolRecordList.FindAll(a => a.StageId == CurrentStage.Id && a.Seek == (seek+1));
+        symbolInfos.Sort((a,b) => a.SeekIndex > b.SeekIndex ? 1 : -1);
+        var symbolRecords = PartyInfo.SymbolRecordList.FindAll(a => a.StageId == CurrentStage.Id && a.Selected == true);
+        for (int i = 0;i < symbolInfos.Count;i++)
+        {
+            var symbolInfo = new SymbolInfo();
+            symbolInfo.CopyData(symbolInfos[i].SymbolInfo);
+            var saveRecord = symbolRecords.Find(a => a.IsSameSymbol(CurrentStage.Id,seek+1,i));
+            symbolInfo.SetSelected(saveRecord != null);
+            symbolInfo.SetCleared(symbolInfos[i].Cleared);
+            MakePrizeData(saveRecord,symbolInfo.GetItemInfos);
+            list.Add(symbolInfo);
+        }
+        CurrentStage.SetSymbolInfos(list);
+        MakeSymbolResultInfos();
+    }
+    
+    public List<ActorInfo> SymbolActorIdList(int seek)
+    {
+        var symbolRecord = PartyInfo.SymbolRecordList.Find(a => a.StageId == CurrentStage.Id && a.Selected == true && a.Seek == seek+1);
+        return symbolRecord.ActorInfos.FindAll(a => symbolRecord.ActorIdList.Contains(a.ActorId));
+    }
+
+    public List<ActorInfo> SymbolActorInfos(int seek)
+    {
+        var symbolRecord = PartyInfo.SymbolRecordList.Find(a => a.StageId == CurrentStage.Id && a.Selected == true && a.Seek == seek+1);
+        return symbolRecord.ActorInfos;
+    }
+
+    public List<int> SymbolAlchemyList(int seek)
+    {
+        var symbolRecord = PartyInfo.SymbolRecordList.Find(a => a.StageId == CurrentStage.Id && a.Selected == true && a.Seek == seek+1);
+        return symbolRecord.AlchemyIdList;
+    }
+    
+
+    public void MakePrizeData(SymbolResultInfo saveRecord,List<GetItemInfo> getItemInfos)
+    {
+        foreach (var getItemInfo in getItemInfos)
+        {
+            if (saveRecord != null && getItemInfo.GetItemType == GetItemType.SaveHuman)
+            {
+                getItemInfo.SetParam2(saveRecord.BattleScore);
+                getItemInfo.MakeTextData();
+            }
+        }
+    }
+    
+    
+    public void SetParallelMode()
+    {
+        CurrentStage.SetParallelMode(true);
+    }
     public async UniTask LoadBattleResources(List<BattlerInfo> battlers)
     {
         _cancellationTokenSource = new CancellationTokenSource();
@@ -940,6 +1023,16 @@ public class BaseModel
         {
             PartyInfo.AddActorId(actorInfo.ActorId);
         }
+    }
+
+    public int ParallelCost()
+    {
+        return PartyInfo.ParallelCost();
+    }
+
+    public void GainParallelCount()
+    {
+        PartyInfo.GainParallelCount();
     }
 
     public bool SelectableSlot(int index)

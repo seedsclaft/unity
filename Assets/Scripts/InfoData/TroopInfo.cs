@@ -66,7 +66,7 @@ public class TroopInfo
             {
                 var skillData = DataSystem.FindSkill(getItemData.Param1);
                 getItemInfo.SetResultData(skillData.Name);
-                getItemInfo.SetSkillElementId((int)skillData.Attribute);
+                getItemInfo.SetSkillId(skillData.Id);
             }
             if (getItemData.Type == GetItemType.Numinous)
             {
@@ -80,7 +80,7 @@ public class TroopInfo
             {
                 string text = DataSystem.GetReplaceText(14051,DataSystem.GetTextData(330 + (int)getItemData.Type - 11).Text);
                 getItemInfo.SetResultData(text);
-                getItemInfo.SetSkillElementId((int)AttributeType.Fire + (int)getItemData.Type - 11);
+                getItemInfo.SetSkillId((int)AttributeType.Fire + (int)getItemData.Type - 11);
             }
             if (getItemData.Type == GetItemType.Ending)
             {

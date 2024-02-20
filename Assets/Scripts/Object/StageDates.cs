@@ -54,6 +54,7 @@ public class StageSymbolData
 {
     public int StageId;
     public int Seek;
+    public int SeekIndex;
     public SymbolType SymbolType;
     public int Param1;
     public int Param2;

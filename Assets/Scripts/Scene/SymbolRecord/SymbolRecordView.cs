@@ -13,6 +13,7 @@ public class SymbolRecordView : BaseView
     [SerializeField] private TextMeshProUGUI turnText = null;
     [SerializeField] private TextMeshProUGUI numinousText = null;
     [SerializeField] private StageInfoComponent stageInfoComponent = null;
+    [SerializeField] private BaseList parallelList = null;
 
     private new System.Action<SymbolRecordViewEvent> _commandData = null;
 
@@ -24,18 +25,26 @@ public class SymbolRecordView : BaseView
         
         tacticsSymbolList.Initialize();
         symbolRecordList.Initialize();
+        parallelList.Initialize();
         symbolRecordList.SetSelectedHandler(() => {
             var eventData = new SymbolRecordViewEvent(CommandType.SelectRecord);
             _commandData(eventData);
         });
-        symbolRecordList.SetInputHandler(InputKeyType.Decide,() => CallSymbolRecord());
+        //symbolRecordList.SetInputHandler(InputKeyType.Decide,() => CallSymbolRecord());
         new SymbolRecordPresenter(this);
         SetBackCommand(() => OnClickBack());
+        SetInputHandler(parallelList.GetComponent<IInputHandlerEvent>());
     }
 
     private void OnClickBack()
     {
         var eventData = new SymbolRecordViewEvent(CommandType.Back);
+        _commandData(eventData);
+    }    
+    
+    private void OnClickParallel()
+    {
+        var eventData = new SymbolRecordViewEvent(CommandType.Parallel);
         _commandData(eventData);
     }
 
@@ -48,6 +57,13 @@ public class SymbolRecordView : BaseView
             var eventData = new SymbolRecordViewEvent(CommandType.DecideRecord);
             _commandData(eventData);
         }
+    }
+
+    public void SetParallelCommand(List<ListData> commands)
+    {
+        parallelList.SetData(commands);
+        parallelList.SetInputHandler(InputKeyType.Cancel,() => CallSymbolRecord());
+        parallelList.SetInputHandler(InputKeyType.Decide,() => OnClickParallel());
     }
 
     public void SetTacticsCharaLayer(List<ActorInfo> actorInfos)
@@ -103,6 +119,7 @@ namespace SymbolRecord
         SelectRecord = 1,
         DecideRecord = 2,
         Back = 3,
+        Parallel = 4
     }
 }
 public class SymbolRecordViewEvent

@@ -8,9 +8,10 @@ using TMPro;
 
 public class GetItem : ListItem ,IListViewItem  
 {
-    [SerializeField] private Image iconImage;
+    [SerializeField] private SkillInfoComponent skillInfoComponent;
     [SerializeField] private TextMeshProUGUI titleName;
     [SerializeField] private TextMeshProUGUI resultName;
+
     private GetItemInfo _data;
 
     public void UpdateViewItem()
@@ -20,10 +21,9 @@ public class GetItem : ListItem ,IListViewItem
             _data = (GetItemInfo)ListData.Data;
         }
         if (_data == null) return;
-        if (iconImage != null)
+        if (skillInfoComponent != null)
         {
-            iconImage.gameObject.SetActive(_data.SkillElementId > -1);
-            if (_data.SkillElementId > -1) UpdateElementIcon((int)_data.SkillElementId);
+            skillInfoComponent.UpdateSkillData(_data.SkillId);
         }
         if (titleName != null)
         {
@@ -39,15 +39,6 @@ public class GetItem : ListItem ,IListViewItem
         if (Disable != null)
         {
             Disable.gameObject.SetActive(ListData.Enable == false);
-        }
-    }
-
-    private void UpdateElementIcon(int index)
-    {
-        var spriteAtlas = ResourceSystem.LoadSystems();
-        if (iconImage != null)
-        {
-            iconImage.sprite = spriteAtlas.GetSprite("ElementIcon_" + (index-1).ToString());
         }
     }
 }

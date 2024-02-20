@@ -54,20 +54,30 @@ public class TempInfo
         _tempInputType = inputType;
     }    
     
+    // Strategyで入手するアイテム群
     private List<GetItemInfo> _tempGetItemInfos = new ();
     public List<GetItemInfo> TempGetItemInfos => _tempGetItemInfos;
     public void SetTempGetItemInfos(List<GetItemInfo> tempGetItemInfos)
     {
-        _tempGetItemInfos = tempGetItemInfos;
+        var list = new List<GetItemInfo>();
+        foreach (var tempGetItemInfo in tempGetItemInfos)
+        {
+            var getItemInfo = new GetItemInfo(null);
+            getItemInfo.CopyData(tempGetItemInfo);
+            list.Add(getItemInfo);
+        }
+        _tempGetItemInfos = list;
     }
     public void ClearTempGetItemInfos()
     {
-        //_tempGetItemInfos.Clear();
+        _tempGetItemInfos.Clear();
     }
+    // Strategyで表示するアクター群
     private List<ActorInfo> _tempResultActorInfos = new ();
     public List<ActorInfo> TempResultActorInfos => _tempResultActorInfos;
     public void SetTempResultActorInfos(List<ActorInfo> tempResultActorInfos)
     {
+        // Lv上げのため参照渡し
         _tempResultActorInfos = tempResultActorInfos;
     }
     public void ClearTempResultActorInfos()
@@ -132,6 +142,13 @@ public class TempInfo
     public List<ActorInfo> TempStatusActorInfos => _tempStatusActorInfos;
     public void SetTempStatusActorInfos(List<ActorInfo> tempStatusActorInfos)
     {
-        _tempStatusActorInfos = tempStatusActorInfos;
+        var recordActorInfos = new List<ActorInfo>();
+        foreach (var actorInfo in tempStatusActorInfos)
+        {
+            var recordActorInfo = new ActorInfo(actorInfo.Master);
+            recordActorInfo.CopyData(actorInfo);		
+            recordActorInfos.Add(recordActorInfo);
+        }
+        _tempStatusActorInfos = recordActorInfos;
     }
 }

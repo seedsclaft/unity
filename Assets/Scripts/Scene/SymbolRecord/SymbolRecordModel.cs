@@ -1,12 +1,23 @@
 using System.Collections.Generic;
-using UnityEngine;
 
 public class SymbolRecordModel : BaseModel
 {
+
+    public bool CanParallel()
+    {
+        return PartyInfo.Currency >= PartyInfo.ParallelCost();
+    }
+
+    public List<ListData> ParallelCommand()
+    {
+        return MakeListData(BaseConfirmCommand(23050,23040));
+    }
+
     public List<ListData> StageSymbolInfos(int seek)
     {
         var list = new List<SymbolInfo>();
         var symbolInfos = PartyInfo.SymbolRecordList.FindAll(a => a.StageId == CurrentStage.Id && a.Seek == (seek+1));
+        symbolInfos.Sort((a,b) => a.SeekIndex > b.SeekIndex ? 1 : -1);
         var symbolRecords = PartyInfo.SymbolRecordList.FindAll(a => a.StageId == CurrentStage.Id && a.Selected == true);
         for (int i = 0;i < symbolInfos.Count;i++)
         {
@@ -32,98 +43,12 @@ public class SymbolRecordModel : BaseModel
             var symbolInfo = new SymbolInfo();
             symbolInfo.CopyData(symbolRecord.SymbolInfo);
             MakePrizeData(symbolRecord,symbolInfo.GetItemInfos);
-            symbolInfos.Add(symbolInfo);
+            if (symbolInfos.Find(a => a.StageSymbolData.Seek == symbolRecord.Seek) == null)
+            {
+                symbolInfos.Add(symbolInfo);
+            }
         }
         return MakeListData(symbolInfos);
     }
-
-    public List<ActorInfo> SymbolActorIdList(int seek)
-    {
-        var symbolRecord = PartyInfo.SymbolRecordList.Find(a => a.StageId == CurrentStage.Id && a.Selected == true && a.Seek == seek+1);
-        return symbolRecord.ActorInfos.FindAll(a => symbolRecord.ActorIdList.Contains(a.ActorId));
-    }
-
-    public List<ActorInfo> SymbolActorInfos(int seek)
-    {
-        var symbolRecord = PartyInfo.SymbolRecordList.Find(a => a.StageId == CurrentStage.Id && a.Selected == true && a.Seek == seek+1);
-        return symbolRecord.ActorInfos;
-    }
-
-    public List<int> SymbolAlchemyList(int seek)
-    {
-        var symbolRecord = PartyInfo.SymbolRecordList.Find(a => a.StageId == CurrentStage.Id && a.Selected == true && a.Seek == seek+1);
-        return symbolRecord.AlchemyIdList;
-    }
     
-    public TroopInfo BattleTroops(int troopId,int enemyCount)
-    {
-        var troopInfo = new TroopInfo(troopId,false);
-        troopInfo.MakeEnemyTroopDates(CurrentStage.ClearCount);
-        for (int j = 0;j < enemyCount;j++)
-        {
-            int rand = new System.Random().Next(1, CurrentStage.Master.RandomTroopCount);
-            var enemyData = DataSystem.Enemies.Find(a => a.Id == rand);
-            var enemy = new BattlerInfo(enemyData,CurrentStage.ClearCount + 1,j,0,false);
-            troopInfo.AddEnemy(enemy);
-        }
-        troopInfo.MakeGetItemInfos();
-        return troopInfo;
-    }
-
-    private void MakePrizeData(SymbolResultInfo saveRecord,List<GetItemInfo> getItemInfos)
-    {
-        foreach (var getItemInfo in getItemInfos)
-        {
-            if (saveRecord != null && getItemInfo.GetItemType == GetItemType.SaveHuman)
-            {
-                getItemInfo.SetParam2(saveRecord.BattleScore);
-                getItemInfo.MakeTextData();
-            }
-        }
-    }
-
-    public void MakeSymbolRecordStage(int seek)
-    {
-        CurrentSaveData.MakeStageData(CurrentStage.Id);
-        CurrentStage.SetRecordStage(true);
-        TempInfo.SetRecordActors(PartyInfo.ActorInfos);
-        TempInfo.SetRecordActorIdList(PartyInfo.ActorIdList);
-        TempInfo.SetRecordAlchemyList(PartyInfo.AlchemyIdList);
-        
-        PartyInfo.InitActorInfos();
-        foreach (var symbolActor in SymbolActorIdList(seek))
-        {
-            PartyInfo.AddActorId(symbolActor.ActorId);
-        }
-        foreach (var symbolActor in SymbolActorInfos(seek))
-        {
-            PartyInfo.UpdateActorInfo(symbolActor);
-        }
-
-        PartyInfo.ClearAlchemy();
-        foreach (var alchemyId in SymbolAlchemyList(seek))
-        {
-            PartyInfo.AddAlchemy(alchemyId);
-        }
-
-        for (int i = 0;i < seek;i++)
-        {
-            CurrentStage.SeekStage();
-        }
-        var list = new List<SymbolInfo>();
-        var symbolInfos = PartyInfo.SymbolRecordList.FindAll(a => a.StageId == CurrentStage.Id && a.Seek == (seek+1));
-        var symbolRecords = PartyInfo.SymbolRecordList.FindAll(a => a.StageId == CurrentStage.Id && a.Selected == true);
-        for (int i = 0;i < symbolInfos.Count;i++)
-        {
-            var symbolInfo = new SymbolInfo();
-            symbolInfo.CopyData(symbolInfos[i].SymbolInfo);
-            var saveRecord = symbolRecords.Find(a => a.IsSameSymbol(CurrentStage.Id,seek+1,i));
-            //symbolInfo.SetSelected(saveRecord != null);
-            symbolInfo.SetCleared(symbolInfos[i].Cleared);
-            MakePrizeData(saveRecord,symbolInfo.GetItemInfos);
-            list.Add(symbolInfo);
-        }
-        CurrentStage.SetSymbolInfos(list);
-        MakeSymbolResultInfos();
-    }
 }

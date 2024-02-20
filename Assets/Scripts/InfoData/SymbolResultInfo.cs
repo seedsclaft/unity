@@ -5,12 +5,9 @@ using UnityEngine;
 [Serializable]
 public class SymbolResultInfo
 {
-    private int _stageId;
-    public int StageId => _stageId;
-    private int _seek;
-    public int Seek => _seek;
-    private int _seekIndex;
-    public int SeekIndex => _seekIndex;
+    public int StageId => _symbolInfo.StageSymbolData.StageId;
+    public int Seek => _symbolInfo.StageSymbolData.Seek;
+    public int SeekIndex => _symbolInfo.StageSymbolData.SeekIndex;
 
     public int _currency;
     public int Currency => _currency;
@@ -89,12 +86,9 @@ public class SymbolResultInfo
     private SymbolInfo _symbolInfo;
     public SymbolInfo SymbolInfo => _symbolInfo;
 
-    public SymbolResultInfo(SymbolInfo symbolInfo,int stageId,int seek,int seekIndex,int currency)
+    public SymbolResultInfo(SymbolInfo symbolInfo,int currency)
     {
         _symbolInfo = symbolInfo;
-        _stageId = stageId;
-        _seek = seek;
-        _seekIndex = seekIndex;
         _currency = currency;
         _selected = false;
     }
@@ -102,11 +96,11 @@ public class SymbolResultInfo
 
     public bool IsSameSymbol(SymbolResultInfo symbolResultInfo)
     {
-        return symbolResultInfo._stageId == _stageId && symbolResultInfo._seek == _seek && symbolResultInfo._seekIndex == _seekIndex;
+        return symbolResultInfo.StageId == StageId && symbolResultInfo.Seek == Seek && symbolResultInfo.SeekIndex == SeekIndex;
     }
 
     public bool IsSameSymbol(int stageId,int seek,int seekIndex)
     {
-        return _stageId == stageId && _seek == seek && _seekIndex == seekIndex;
+        return StageId == stageId && Seek == seek && SeekIndex == seekIndex;
     }
 }

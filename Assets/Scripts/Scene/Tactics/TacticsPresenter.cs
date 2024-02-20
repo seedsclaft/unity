@@ -785,7 +785,7 @@ public class TacticsPresenter :BasePresenter
                 // ボス戦なら
                 if (_model.CurrentStage.CurrentSelectSymbol().SymbolType == SymbolType.Boss)
                 {
-                    PlayBossBgm();
+                    Ryneus.SoundManager.Instance.StopBgm();
                 } else
                 {
                     var bgmData = DataSystem.Data.GetBGM(_model.TacticsBgmKey());

@@ -37,7 +37,7 @@ public class BattleModel : BaseModel
     private Dictionary<int,List<int>> _passiveSkillInfos = new ();
     private Dictionary<int,List<int>> _usedPassiveSkillInfos = new ();
 
-    public UniTask<List<UnityEngine.AudioClip>> GetBattleBgm()
+    public UniTask<List<AudioClip>> GetBattleBgm()
     {
         if (CurrentStage != null)
         {

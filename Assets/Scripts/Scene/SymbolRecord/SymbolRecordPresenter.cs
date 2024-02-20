@@ -30,6 +30,7 @@ public class SymbolRecordPresenter : BasePresenter
         _view.SetEvent((type) => UpdateCommand(type));
 
         _view.SetSymbolRecords(_model.SymbolRecords());
+        _view.SetParallelCommand(_model.ParallelCommand());
         CommandRefresh();
         _busy = false;
     }
@@ -52,6 +53,10 @@ public class SymbolRecordPresenter : BasePresenter
         {
             CommandBack();
         }
+        if (viewEvent.commandType == CommandType.Parallel)
+        {
+            CommandParallel();
+        }
     }
 
     private void CommandDecideRecord()
@@ -72,6 +77,45 @@ public class SymbolRecordPresenter : BasePresenter
         }
     }
 
+    private void CommandBack()
+    {
+        Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cancel);
+        _view.CommandSceneChange(Scene.MainMenu);
+    }
+
+    private void CommandParallel()
+    {
+        Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
+        if (_model.CanParallel())
+        {
+            var index = _view.SymbolListIndex;
+            var popupInfo = new ConfirmInfo(DataSystem.GetReplaceText(23020,_model.ParallelCost().ToString()),(a) => UpdatePopupCheckParallelRecord((ConfirmCommandType)a));
+            _view.CommandCallConfirm(popupInfo);
+        } else
+        {
+            var popupInfo = new ConfirmInfo(DataSystem.GetReplaceText(23030,_model.ParallelCost().ToString()),(a) => UpdatePopupNoParallelRecord());
+            popupInfo.SetIsNoChoice(true);
+            _view.CommandCallConfirm(popupInfo);
+        }
+    }
+
+    private void UpdatePopupCheckParallelRecord(ConfirmCommandType confirmCommandType)
+    {
+        _view.CommandGameSystem(Base.CommandType.CloseConfirm);
+        if (confirmCommandType == ConfirmCommandType.Yes)
+        {
+            var index = _view.SymbolListIndex;
+            _model.MakeSymbolRecordStage(index);
+            _model.SetParallelMode();
+            _view.CommandSceneChange(Scene.Tactics);
+        }
+    }
+
+    private void UpdatePopupNoParallelRecord()
+    {
+        _view.CommandGameSystem(Base.CommandType.CloseConfirm);
+    }
+
     public void CommandRefresh()
     {
         _view.SetTurns(_model.RemainTurns);
@@ -80,14 +124,6 @@ public class SymbolRecordPresenter : BasePresenter
         _view.SetSymbols(_model.StageSymbolInfos(_view.SymbolListIndex));
         _view.SetTacticsCharaLayer(_model.SymbolActorIdList(_view.SymbolListIndex));
     }
-
-    private void CommandBack()
-    {
-        Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cancel);
-        _view.CommandSceneChange(Scene.MainMenu);
-    }
-
-
 
     private enum SymbolRecordState{
         None = 0,

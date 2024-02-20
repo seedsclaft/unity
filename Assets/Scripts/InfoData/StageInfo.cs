@@ -74,6 +74,10 @@ public class StageInfo
     public bool RecordStage => _recordStage;
     public void SetRecordStage(bool recordStage) {_recordStage = recordStage;}
 
+    private bool _parallelStage = false;
+    public bool ParallelStage => _parallelStage;
+    public void SetParallelMode(bool parallelStage) {_parallelStage = parallelStage;}
+
     private int _rebornActorIndex = -1;
     public int RebornActorIndex => _rebornActorIndex;
     public void SetRebornActorIndex(int rebornActorIndex) {_rebornActorIndex = rebornActorIndex;}

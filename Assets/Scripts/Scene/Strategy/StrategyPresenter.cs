@@ -394,8 +394,23 @@ public class StrategyPresenter : BasePresenter
         if (_model.CurrentStage.RecordStage)
         {
             _model.EndStrategy(false);
-            _model.CommitCurrentResult();
-            _view.CommandSceneChange(Scene.SymbolRecord);
+            if (_model.CurrentStage.ParallelStage)
+            {
+                _model.CommitCurrentParallelResult();
+                if (_model.ChainParallelMode())
+                {
+                    _model.MakeSymbolRecordStage(_model.CurrentStage.CurrentTurn-1);
+                    _model.SetParallelMode();
+                    _view.CommandSceneChange(Scene.Tactics);
+                } else
+                {
+                    _view.CommandSceneChange(Scene.SymbolRecord);
+                }
+            } else
+            {
+                _model.CommitCurrentResult();
+                _view.CommandSceneChange(Scene.SymbolRecord);
+            }
         } else
         if (_model.RemainTurns == 1)
         {
