@@ -6,11 +6,8 @@ public class SymbolRecordPresenter : BasePresenter
 {
     SymbolRecordModel _model = null;
     SymbolRecordView _view = null;
-
     private bool _busy = true;
-
-
-    private SymbolRecordState _strategyState = SymbolRecordState.None;
+    private CommandType _backEvent = CommandType.None;
     public SymbolRecordPresenter(SymbolRecordView view)
     {
         _view = view;
@@ -57,10 +54,19 @@ public class SymbolRecordPresenter : BasePresenter
         {
             CommandParallel();
         }
+        if (viewEvent.commandType == CommandType.SelectSymbol)
+        {
+            CommandSelectSymbol((SymbolInfo)viewEvent.template);
+        }
+        if (viewEvent.commandType == CommandType.CancelSymbol)
+        {
+            CommandCancelSymbol();
+        }
     }
 
     private void CommandDecideRecord()
     {
+        _view.HideSymbolBackGround();
         var index = _view.SymbolListIndex;
         var popupInfo = new ConfirmInfo(DataSystem.GetTextData(23010).Text,(a) => UpdatePopupCheckStartRecord((ConfirmCommandType)a));
         _view.CommandCallConfirm(popupInfo);
@@ -74,18 +80,34 @@ public class SymbolRecordPresenter : BasePresenter
             var index = _view.SymbolListIndex;
             _model.MakeSymbolRecordStage(index);
             _view.CommandSceneChange(Scene.Tactics);
+        } else
+        {
+            //_view.ShowSymbolBackGround();
         }
     }
 
     private void CommandBack()
     {
         Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cancel);
+        if (_backEvent != CommandType.None)
+        {
+            var eventData = new SymbolRecordViewEvent(CommandType.SelectRecord);
+            eventData.commandType = _backEvent;
+            UpdateCommand(eventData);
+            return;
+        }
         _view.CommandSceneChange(Scene.MainMenu);
     }
 
     private void CommandParallel()
     {
         Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
+        var ParallelIndex = _view.ParallelListIndex;
+        if (ParallelIndex == 0)
+        {
+            CommandDecideRecord();
+            return;
+        }
         if (_model.CanParallel())
         {
             var index = _view.SymbolListIndex;
@@ -108,6 +130,9 @@ public class SymbolRecordPresenter : BasePresenter
             _model.MakeSymbolRecordStage(index);
             _model.SetParallelMode();
             _view.CommandSceneChange(Scene.Tactics);
+        } else
+        {
+            //_view.ShowSymbolBackGround();
         }
     }
 
@@ -121,13 +146,23 @@ public class SymbolRecordPresenter : BasePresenter
         _view.SetTurns(_model.RemainTurns);
         _view.SetNuminous(_model.Currency);
         _view.SetStageInfo(_model.CurrentStage);
-        _view.SetSymbols(_model.StageSymbolInfos(_view.SymbolListIndex));
+        //_view.SetSymbols(_model.StageSymbolInfos(_view.SymbolListIndex));
         _view.SetTacticsCharaLayer(_model.SymbolActorIdList(_view.SymbolListIndex));
     }
 
-    private enum SymbolRecordState{
-        None = 0,
-        BattleResult = 1,
-        TacticsResult = 2,
+    private void CommandSelectSymbol(SymbolInfo symbolInfo)
+    {
+        _view.ShowTacticsSymbolList();
+        _view.ShowParallelList();
+        _view.HideSymbolBackGround();
+        _view.SetSymbols(_model.StageSymbolInfos(symbolInfo.StageSymbolData.Seek-1));
+        _backEvent = CommandType.CancelSymbol;
     }
+
+    private void CommandCancelSymbol()
+    {
+        _view.CommandCancelSymbol();
+        _backEvent = CommandType.None;
+    }
+
 }

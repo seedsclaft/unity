@@ -1,31 +1,35 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class SymbolRecordData : ListItem ,IListViewItem
 {
-    [SerializeField] private SymbolComponent symbolComponent;
-    [SerializeField] private BaseList getItemList = null;
-
-    private bool _getItemInit = false;
+    [SerializeField] private List<SymbolComponent> symbolComponents;
 
     public void UpdateViewItem()
     {
         if (ListData == null) return;
-        var data = (SymbolInfo)ListData.Data;
-        symbolComponent.UpdateInfo(data);
-        if (data.GetItemInfos.Count == 0)
+        var dates = (List<SymbolInfo>)ListData.Data;
+        foreach (var symbolComponent in symbolComponents)
         {
-            return;
+            symbolComponent.gameObject.SetActive(false);
         }
-        if (_getItemInit == false)
+        foreach (var data in dates)
         {
-            getItemList.Initialize();
-            _getItemInit = true;
+            var symbolComponent = symbolComponents[data.StageSymbolData.SeekIndex];
+            symbolComponent.gameObject.SetActive(true);
+            symbolComponent.UpdateInfo(data);
         }
-        getItemList.SetData(ListData.MakeListData(data.GetItemInfos));
-        getItemList.UpdateSelectIndex(-1);
     }
 
+    public void SetSymbolItemCallHandler(System.Action<SymbolInfo> handler)
+    {
+        foreach (var symbolComponent in symbolComponents)
+        {
+            var button = symbolComponent.GetComponentInChildren<Button>();
+            button.onClick.AddListener(() => handler(symbolComponent.SymbolInfo));
+        }
+    }
 
 }

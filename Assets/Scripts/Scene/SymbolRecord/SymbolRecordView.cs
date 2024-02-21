@@ -9,6 +9,8 @@ public class SymbolRecordView : BaseView
 {
     [SerializeField] private TacticsCharaLayer tacticsCharaLayer = null;
     [SerializeField] private TacticsSymbolList tacticsSymbolList = null;
+    [SerializeField] private Button tacticsSymbolListBack = null;
+    [SerializeField] private GameObject symbolRecordRoot = null;
     [SerializeField] private BaseList symbolRecordList = null;
     [SerializeField] private TextMeshProUGUI turnText = null;
     [SerializeField] private TextMeshProUGUI numinousText = null;
@@ -18,6 +20,7 @@ public class SymbolRecordView : BaseView
     private new System.Action<SymbolRecordViewEvent> _commandData = null;
 
     public int SymbolListIndex => symbolRecordList.Index;
+    public int ParallelListIndex => parallelList.Index;
 
     public override void Initialize() 
     {
@@ -31,6 +34,12 @@ public class SymbolRecordView : BaseView
             _commandData(eventData);
         });
         //symbolRecordList.SetInputHandler(InputKeyType.Decide,() => CallSymbolRecord());
+        tacticsSymbolListBack.onClick.AddListener(() => 
+        {
+            CommandCancelSymbol();
+        });
+        HideTacticsSymbolList();
+        HideParallelList();
         new SymbolRecordPresenter(this);
         SetBackCommand(() => OnClickBack());
         SetInputHandler(parallelList.GetComponent<IInputHandlerEvent>());
@@ -79,6 +88,18 @@ public class SymbolRecordView : BaseView
     public void SetSymbolRecords(List<ListData> symbolInfos)
     {
         symbolRecordList.SetData(symbolInfos);
+        var SymbolRecordDates = symbolRecordList.GetComponentsInChildren<SymbolRecordData>();
+        foreach (var SymbolRecordData in SymbolRecordDates)
+        {
+            SymbolRecordData.SetSymbolItemCallHandler((a) => OnClickSymbol(a));
+        }
+    }
+
+    private void OnClickSymbol(SymbolInfo symbolInfo)
+    {
+        var eventData = new SymbolRecordViewEvent(CommandType.SelectSymbol);
+        eventData.template = symbolInfo;
+        _commandData(eventData);
     }
 
     public void SetTurns(int turns)
@@ -106,8 +127,44 @@ public class SymbolRecordView : BaseView
         _commandData = commandData;
     }
     
+    public void ShowTacticsSymbolList()
+    {
+        tacticsSymbolList.gameObject.SetActive(true);
+        tacticsSymbolListBack.gameObject.SetActive(true);
+    }
 
+    public void HideTacticsSymbolList()
+    {
+        tacticsSymbolList.gameObject.SetActive(false);
+        tacticsSymbolListBack.gameObject.SetActive(false);
+    }
 
+    public void ShowParallelList()
+    {
+        parallelList.gameObject.SetActive(true);
+    }
+
+    public void HideParallelList()
+    {
+        parallelList.gameObject.SetActive(false);
+    }
+
+    public void ShowSymbolBackGround()
+    {
+        symbolRecordRoot.SetActive(true);
+    }
+
+    public void HideSymbolBackGround()
+    {
+        symbolRecordRoot.SetActive(false);
+    }
+
+    public void CommandCancelSymbol()
+    {
+        HideTacticsSymbolList();
+        HideParallelList();
+        ShowSymbolBackGround();
+    }
 
 }
 
@@ -119,7 +176,9 @@ namespace SymbolRecord
         SelectRecord = 1,
         DecideRecord = 2,
         Back = 3,
-        Parallel = 4
+        Parallel = 4,
+        SelectSymbol = 5,
+        CancelSymbol = 6,
     }
 }
 public class SymbolRecordViewEvent

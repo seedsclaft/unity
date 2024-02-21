@@ -29,6 +29,7 @@ abstract public class ListWindow : MonoBehaviour
     [SerializeField] private bool reverse = false; 
     [SerializeField] private bool warpMode = true; 
     [SerializeField] private ScrollRect scrollRect = null; 
+    [SerializeField] private bool itemPrefabMode = true; 
     public ScrollRect ScrollRect => scrollRect; 
     [SerializeField] private GameObject itemPrefab = null; 
     private List<GameObject> _itemPrefabList = new ();
@@ -124,6 +125,11 @@ abstract public class ListWindow : MonoBehaviour
     private void CreateList()
     {
         if (_itemPrefabList.Count > 0) return;
+        if (itemPrefabMode == false)
+        {
+            CreateListPrefab();
+            return;
+        }
         _blankObject = new GameObject("blank");
         _blankObject.AddComponent<RectTransform>();
         var rect = _blankObject.GetComponent<RectTransform>();
@@ -169,8 +175,26 @@ abstract public class ListWindow : MonoBehaviour
         Refresh();
     }
 
+    private void CreateListPrefab()
+    {
+        var listCount = _listDates.Count;
+        for (var i = 0; i < listCount;i++){
+            var prefab = Instantiate(itemPrefab);
+            prefab.name = i.ToString();
+            _itemPrefabList.Add(prefab);
+            var view = prefab.GetComponent<IListViewItem>();
+            if (view != null)
+            {
+                _itemList.AddLast(view);
+            }
+            prefab.transform.SetParent(scrollRect.content, false);
+            _objectList.Add(prefab);
+        }
+    }
+
     public void UpdateItemPrefab()
     {
+        if (itemPrefabMode == false) return;
         var startIndex = GetStartIndex();
         for (int i = 0;i < _itemPrefabList.Count;i++)
         {

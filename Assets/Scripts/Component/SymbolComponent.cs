@@ -11,7 +11,9 @@ public class SymbolComponent : MonoBehaviour
     [SerializeField] private List<Sprite> symbolSprites;
     [SerializeField] private GameObject evaluateRoot;
     [SerializeField] private TextMeshProUGUI evaluate;
+    [SerializeField] private GameObject selected;
     private SymbolInfo _symbolInfo = null;
+    public SymbolInfo SymbolInfo => _symbolInfo;
 
     public void UpdateInfo(SymbolInfo symbolInfo)
     {
@@ -23,6 +25,10 @@ public class SymbolComponent : MonoBehaviour
         UpdateCommandTitle();
         UpdateSymbolImage();
         UpdateEvaluate();
+        if (selected != null)
+        {
+            selected.SetActive(_symbolInfo.Selected);
+        }
     }
 
     private void UpdateCommandTitle()

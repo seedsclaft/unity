@@ -34,21 +34,41 @@ public class SymbolRecordModel : BaseModel
 
     public List<ListData> SymbolRecords()
     {
-        var symbolRecords = PartyInfo.SymbolRecordList.FindAll(a => a.StageId == CurrentStage.Id && a.Selected == true);
         var symbolInfos = new List<SymbolInfo>();
+        var symbolInfoList = new List<List<SymbolInfo>>();
         
         var stageData = DataSystem.FindStage(CurrentStage.Id);
+        var stageSeekList = new List<int>();
+        foreach (var stageSymbolData in stageData.StageSymbols)
+        {
+            if (!stageSeekList.Contains(stageSymbolData.Seek))
+            {
+                stageSeekList.Add(stageSymbolData.Seek);
+            }
+        }
+        foreach (var stageSeek in stageSeekList)
+        {
+            var list = new List<SymbolInfo>();
+            symbolInfoList.Add(list);
+        }
+        var symbolRecords = PartyInfo.SymbolRecordList.FindAll(a => a.StageId == CurrentStage.Id);
+        var selectRecords = PartyInfo.SymbolRecordList.FindAll(a => a.StageId == CurrentStage.Id && a.Selected == true);
         foreach (var symbolRecord in symbolRecords)
         {
             var symbolInfo = new SymbolInfo();
             symbolInfo.CopyData(symbolRecord.SymbolInfo);
+            var saveRecord = selectRecords.Find(a => a.IsSameSymbol(symbolRecord));
+            symbolInfo.SetSelected(saveRecord != null);
             MakePrizeData(symbolRecord,symbolInfo.GetItemInfos);
+            symbolInfoList[symbolInfo.StageSymbolData.Seek-1].Add(symbolInfo);
+            /*
             if (symbolInfos.Find(a => a.StageSymbolData.Seek == symbolRecord.Seek) == null)
             {
                 symbolInfos.Add(symbolInfo);
             }
+            */
         }
-        return MakeListData(symbolInfos);
+        return MakeListData(symbolInfoList);
     }
     
 }
