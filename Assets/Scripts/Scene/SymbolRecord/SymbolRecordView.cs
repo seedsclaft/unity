@@ -36,6 +36,7 @@ public class SymbolRecordView : BaseView
         //symbolRecordList.SetInputHandler(InputKeyType.Decide,() => CallSymbolRecord());
         tacticsSymbolListBack.onClick.AddListener(() => 
         {
+            Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cancel);
             CommandCancelSymbol();
         });
         HideTacticsSymbolList();
@@ -163,7 +164,6 @@ public class SymbolRecordView : BaseView
     {
         HideTacticsSymbolList();
         HideParallelList();
-        ShowSymbolBackGround();
     }
 
 }

@@ -77,7 +77,7 @@ public class NameEntryPresenter
             _model.SetPlayerName(nameText);
             _view.CommandDecidePlayerName(nameText);
             _model.StartOpeningStage();
-            _view.CommandSceneChange(Scene.Tactics);
+            _view.CommandGotoSceneChange(Scene.Tactics);
         }
     }
 }

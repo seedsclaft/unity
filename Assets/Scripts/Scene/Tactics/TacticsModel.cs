@@ -128,6 +128,10 @@ public class TacticsModel : BaseModel
             actorInfo.DecideStrength(0);
             actorInfo.GainLevelUpCost(cost);
             PartyInfo.ChangeCurrency(Currency - cost);
+            Ryneus.SoundManager.Instance.PlayStaticSe(SEType.LevelUp);
+        } else
+        {
+            Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Deny);
         }
     }
 

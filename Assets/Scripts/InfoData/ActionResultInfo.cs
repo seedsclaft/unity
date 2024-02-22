@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[System.Serializable]
+[Serializable]
 public class ActionResultInfo 
 {
     private int _subjectIndex = 0;
@@ -120,6 +120,8 @@ public class ActionResultInfo
 
     private bool _missed = false;
     public bool Missed => _missed;
+    private bool _critical = false;
+    public bool Critical => _critical;
     
     private List<StateInfo> _addedStates = new ();
     public List<StateInfo> AddedStates => _addedStates;
@@ -888,7 +890,8 @@ public class ActionResultInfo
         }
         int CriticalRate = subject.StateEffectAll(StateType.CriticalRateUp) + HitOver;
         int rand = new System.Random().Next(0, 100);
-        return (CriticalRate >= rand);
+        _critical = CriticalRate >= rand;
+        return _critical;
     }
 
     private int AntiDoteDamageValue(BattlerInfo target)

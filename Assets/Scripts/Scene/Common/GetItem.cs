@@ -12,14 +12,13 @@ public class GetItem : ListItem ,IListViewItem
     [SerializeField] private TextMeshProUGUI titleName;
     [SerializeField] private TextMeshProUGUI resultName;
 
-    private GetItemInfo _data;
-
     public void UpdateViewItem()
     {
-        if (ListData != null) 
+        if (ListData == null) 
         {
-            _data = (GetItemInfo)ListData.Data;
+            return;
         }
+        var _data = (GetItemInfo)ListData.Data;
         if (_data == null) return;
         if (skillInfoComponent != null)
         {

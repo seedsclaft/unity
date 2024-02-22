@@ -140,29 +140,33 @@ MonoBehaviour:
       BossFlag: 0
       Line: 0
       PrizeSetId: 0
+    StageTurn: 0
+    PrizeSetId: 610
+  - TroopId: 2001
+    TroopEnemies:
     - Id: 2001
-      TroopId: 1021
+      TroopId: 2001
       EnemyId: 1
       Lv: 10
       BossFlag: 1
       Line: 1
       PrizeSetId: 605
     - Id: 2001
-      TroopId: 1021
+      TroopId: 2001
       EnemyId: 6
       Lv: 10
       BossFlag: 0
       Line: 0
       PrizeSetId: 0
     - Id: 2001
-      TroopId: 1021
+      TroopId: 2001
       EnemyId: 8
       Lv: 10
       BossFlag: 0
       Line: 0
       PrizeSetId: 0
     StageTurn: 0
-    PrizeSetId: 610
+    PrizeSetId: 605
   - TroopId: 2011
     TroopEnemies:
     - Id: 2011

@@ -76,14 +76,14 @@ MonoBehaviour:
   SE:
   - Id: 1
     Key: DECIDE
-    FileName: decide
+    FileName: decide7
     Volume: 1
     Pitch: 1
   - Id: 2
     Key: CANCEL
-    FileName: cancel
-    Volume: 0.5
-    Pitch: 0.8
+    FileName: decide7
+    Volume: 1
+    Pitch: 1
   - Id: 3
     Key: CURSOR
     FileName: cursor
@@ -102,5 +102,25 @@ MonoBehaviour:
   - Id: 6
     Key: DEMIGOD
     FileName: demigod
+    Volume: 1
+    Pitch: 1
+  - Id: 7
+    Key: DENY
+    FileName: beap3
+    Volume: 1
+    Pitch: 1
+  - Id: 8
+    Key: LEVELUP
+    FileName: itemget1
+    Volume: 1
+    Pitch: 1
+  - Id: 9
+    Key: CRITICAL
+    FileName: Sword2
+    Volume: 1
+    Pitch: 1
+  - Id: 10
+    Key: SKILL
+    FileName: Skill1
     Volume: 1
     Pitch: 1

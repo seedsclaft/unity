@@ -21,16 +21,12 @@ public class SceneAssign : MonoBehaviour
     [SerializeField] private GameObject alcanaSelectScene = null;
     [SerializeField] private GameObject alcanaResultScene = null;
     [SerializeField] private GameObject symbolRecordScene = null;
-    private static List<Scene> _scenes = new ();
-    public static Scene CurrentScene => SceneAssign._scenes.Count > 0 ? SceneAssign._scenes[SceneAssign._scenes.Count-1] : Scene.None;
-    public static Scene LastScene => SceneAssign._scenes.Count > 1 ? SceneAssign._scenes[SceneAssign._scenes.Count-2] : Scene.None;
     public GameObject CreateScene(Scene scene,HelpWindow helpWindow)
     {
         var prefab = Instantiate(GetSceneObject(scene));
         prefab.transform.SetParent(uiRoot.transform, false);
         var view = prefab.GetComponent<BaseView>();
         view?.SetHelpWindow(helpWindow);
-        SceneAssign._scenes.Add(scene);
         return prefab;
     }
 
@@ -76,19 +72,13 @@ public class SceneAssign : MonoBehaviour
 
     public void ShowUI()
     {
-        if (CurrentScene != Scene.None)
-        {
-            var view = uiRoot.GetComponentInChildren<BaseView>();
-            view?.ChangeUIActive(true);
-        }
+        var view = uiRoot.GetComponentInChildren<BaseView>();
+        view?.ChangeUIActive(true);
     }
 
     public void HideUI()
     {
-        if (CurrentScene != Scene.None)
-        {
-            var view = uiRoot.GetComponentInChildren<BaseView>();
-            view?.ChangeUIActive(false);
-        }
+        var view = uiRoot.GetComponentInChildren<BaseView>();
+        view?.ChangeUIActive(false);
     }
 }

@@ -51,7 +51,7 @@ public class GetItemInfo
                 break;
             case GetItemType.Skill:
                 var skillData = DataSystem.FindSkill(_param1);
-                SetResultData(skillData.Name);
+                SetResultData(DataSystem.GetReplaceText(14110,skillData.Name));
                 SetSkillId(skillData.Id);
                 break;
             case GetItemType.Demigod:
@@ -70,12 +70,12 @@ public class GetItemInfo
                 SetResultData("ロスト復活");
                 break;
             case GetItemType.LearnSkill:
-                SetTitleData(DataSystem.GetReplaceText(3000,DataSystem.FindActor(_param1).Name));
+                //SetTitleData(DataSystem.GetReplaceText(3000,DataSystem.FindActor(_param1).Name));
                 SetResultData(DataSystem.GetReplaceText(3002,DataSystem.FindSkill(_param2).Name));
                 break;
             case GetItemType.AddActor:
-                SetTitleData(DataSystem.GetReplaceText(3003,DataSystem.FindActor(_param1).Name));
-                SetResultData(DataSystem.FindActor(_param1).Name);
+                //SetTitleData(DataSystem.GetReplaceText(3003,DataSystem.FindActor(_param1).Name));
+                SetResultData(DataSystem.GetReplaceText(14120,DataSystem.FindActor(_param1).Name));
                 break;
             case GetItemType.SaveHuman:
                 SetResultData(DataSystem.GetTextData(14100).Text + DataSystem.GetReplaceDecimalText(_param2) + "/" + DataSystem.GetReplaceDecimalText(_param1));

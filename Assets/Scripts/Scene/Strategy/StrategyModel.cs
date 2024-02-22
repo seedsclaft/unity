@@ -1,8 +1,17 @@
 using System.Collections.Generic;
-using UnityEngine;
 
 public class StrategyModel : BaseModel
 {
+    private StrategySceneInfo _sceneParam;
+    public StrategySceneInfo SceneParam => _sceneParam;
+    public StrategyModel()
+    {
+        _sceneParam = (StrategySceneInfo)GameSystem.SceneStackManager.LastSceneParam;
+    }
+    public void ClearSceneParam()
+    {
+        _sceneParam = null;
+    }
     private List<TacticsResultInfo> _resultInfos = new();
     
 
@@ -26,7 +35,11 @@ public class StrategyModel : BaseModel
 
     public List<ActorInfo> TacticsActors()
     {
-        return TempInfo.TempResultActorInfos.FindAll(a => a.BattleIndex == -1);
+        if (SceneParam != null)
+        {
+            return SceneParam.ActorInfos.FindAll(a => a.BattleIndex == -1);
+        }
+        return null;
     }
 
     public void SetLvUp()
@@ -53,7 +66,7 @@ public class StrategyModel : BaseModel
 
     public void MakeResult()
     {
-        var getItemInfos = TempInfo.TempGetItemInfos;
+        var getItemInfos = SceneParam.GetItemInfos;
         var record = CurrentStage.SymbolRecordList.Find(a => a.IsSameSymbol(CurrentStage.Id,CurrentStage.CurrentTurn,CurrentSaveData.CurrentStage.CurrentSeekIndex));
         var beforeRecord = PartyInfo.SymbolRecordList.Find(a => a.IsSameSymbol(CurrentStage.Id,CurrentStage.CurrentTurn,CurrentSaveData.CurrentStage.CurrentSeekIndex));
         
@@ -166,12 +179,12 @@ public class StrategyModel : BaseModel
 
     public List<ListData> BattleResultInfos()
     {
-        return MakeListData(TempInfo.TempGetItemInfos);
+        return MakeListData(SceneParam.GetItemInfos);
     }
 
     public List<ActorInfo> BattleResultActors()
     {
-        return TempInfo.TempResultActorInfos.FindAll(a => a.BattleIndex >= 0);
+        return SceneParam.ActorInfos.FindAll(a => a.BattleIndex >= 0);
     }
 
     public void ClearBattleData(List<ActorInfo> actorInfos)
@@ -517,11 +530,17 @@ public class StrategyModel : BaseModel
 
     public void ReturnTempBattleMembers()
     {
-        foreach (var tempActorInfo in TempInfo.TempActorInfos)
+        foreach (var tempActorInfo in SceneParam.ActorInfos)
         {
             tempActorInfo.SetBattleIndex(-1);
             PartyInfo.UpdateActorInfo(tempActorInfo);
         }
         TempInfo.ClearBattleActors();
     }
+}
+
+public class StrategySceneInfo
+{
+    public List<GetItemInfo> GetItemInfos;
+    public List<ActorInfo> ActorInfos;
 }

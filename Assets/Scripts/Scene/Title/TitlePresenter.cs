@@ -58,7 +58,7 @@ public class TitlePresenter : BasePresenter
         switch ((TitleCommandType)commandIndex){
             case TitleCommandType.NewGame:
             _model.InitSaveInfo();
-            _view.CommandSceneChange(Scene.NameEntry);
+            _view.CommandGotoSceneChange(Scene.NameEntry);
             //_view.CommandSceneChange(Scene.Battle);
             break;
             case TitleCommandType.Continue:
@@ -85,9 +85,9 @@ public class TitlePresenter : BasePresenter
             }
             if (GameSystem.CurrentStageData.ResumeStage)
             {
-                _view.CommandSceneChange(Scene.Tactics);
+                _view.CommandGotoSceneChange(Scene.Tactics);
             } else{
-                _view.CommandSceneChange(Scene.MainMenu);
+                _view.CommandGotoSceneChange(Scene.MainMenu);
             }
             break;
         }
@@ -135,9 +135,6 @@ public class TitlePresenter : BasePresenter
     private void updatePopup(ConfirmCommandType confirmCommandType)
     {
         _view.CommandGameSystem(Base.CommandType.CloseConfirm);
-        if (confirmCommandType == ConfirmCommandType.Yes)
-        {
-        }
-        _view.CommandSceneChange(Scene.Title);
+        _view.CommandGotoSceneChange(Scene.Title);
     }
 }

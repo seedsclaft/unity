@@ -36,10 +36,9 @@ public class TroopInfo
 
     public void MakeEnemyTroopDates(int level,int displayTurn = 1)
     {
-        var troopData = Master;
-        if (troopData.StageTurn == 0 || troopData.StageTurn >= displayTurn)
+        if (Master.StageTurn == 0 || Master.StageTurn >= displayTurn)
         {
-            foreach (var troopEnemies in troopData.TroopEnemies)
+            foreach (var troopEnemies in Master.TroopEnemies)
             {
                 var enemyData = DataSystem.Enemies.Find(a => a.Id == troopEnemies.EnemyId);
                 var battlerInfo = new BattlerInfo(enemyData,troopEnemies.Lv + level,_battlerInfos.Count,troopEnemies.Line,troopEnemies.BossFlag);
@@ -62,34 +61,6 @@ public class TroopInfo
         {
             var getItemData = prizeSetDates[i].GetItem;
             var getItemInfo = new GetItemInfo(getItemData);
-            if (getItemData.Type == GetItemType.Skill)
-            {
-                var skillData = DataSystem.FindSkill(getItemData.Param1);
-                getItemInfo.SetResultData(skillData.Name);
-                getItemInfo.SetSkillId(skillData.Id);
-            }
-            if (getItemData.Type == GetItemType.Numinous)
-            {
-                getItemInfo.SetResultData("+" + getItemData.Param1.ToString() + DataSystem.GetTextData(1000).Text);
-            }
-            if (getItemData.Type == GetItemType.Demigod)
-            {
-                getItemInfo.SetResultData(DataSystem.GetTextData(14042).Text + "+" + (getItemInfo.Param1).ToString());
-            }
-            if ((int)getItemData.Type >= (int)GetItemType.AttributeFire && (int)getItemData.Type <= (int)GetItemType.AttributeDark)
-            {
-                string text = DataSystem.GetReplaceText(14051,DataSystem.GetTextData(330 + (int)getItemData.Type - 11).Text);
-                getItemInfo.SetResultData(text);
-                getItemInfo.SetSkillId((int)AttributeType.Fire + (int)getItemData.Type - 11);
-            }
-            if (getItemData.Type == GetItemType.Ending)
-            {
-                getItemInfo.SetResultData(DataSystem.GetTextData(14060).Text);
-            }
-            if (getItemData.Type == GetItemType.StatusUp)
-            {
-                getItemInfo.SetResultData(DataSystem.GetReplaceText(14070,getItemData.Param1.ToString()));
-            }
             AddGetItemInfo(getItemInfo);
         }
     }

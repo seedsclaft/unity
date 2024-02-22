@@ -93,7 +93,7 @@ public class TacticsSelectCharacter : MonoBehaviour
             var characterListIndex = characterList.Index;
             if (characterListIndex == 0)
             {
-                Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cursor);
+                //Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cursor);
                 characterList.Deactivate();
                 characterList.UpdateSelectIndex(-1);
                 commandList.UpdateSelectIndex(1);
@@ -111,7 +111,7 @@ public class TacticsSelectCharacter : MonoBehaviour
         }
         if (keyType == InputKeyType.Up)
         {
-            Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cursor);
+            //Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cursor);
             commandList.Deactivate();
             commandList.UpdateSelectIndex(-1);
             characterList.UpdateSelectIndex(characterList.ObjectList.Count-1);

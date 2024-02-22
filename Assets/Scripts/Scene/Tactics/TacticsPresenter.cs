@@ -108,13 +108,13 @@ public class TacticsPresenter :BasePresenter
                     _eventBusy = true;
                     _model.AddEventReadFlag(stageEvent);
                     _model.StageClear();
-                    _view.CommandSceneChange(Scene.MainMenu);
+                    _view.CommandGotoSceneChange(Scene.MainMenu);
                     break;
                 case StageEventType.ChangeRouteSelectStage:
                     _eventBusy = true;
                     _model.AddEventReadFlag(stageEvent);
                     _model.ChangeRouteSelectStage(stageEvent.Param);
-                    _view.CommandSceneChange(Scene.Tactics);
+                    _view.CommandGotoSceneChange(Scene.Tactics);
                     break;
                 case StageEventType.SetDisplayTurns:
                     break;
@@ -166,7 +166,7 @@ public class TacticsPresenter :BasePresenter
     private bool CheckBeforeTacticsAdvEvent()
     {
         var isAbort = CheckAdvStageEvent(EventTiming.BeforeTactics,() => {
-            _view.CommandSceneChange(Scene.Tactics);
+            _view.CommandGotoSceneChange(Scene.Tactics);
         },_model.CurrentStage.SelectActorIdsClassId(0));
         if (isAbort)
         {
@@ -178,7 +178,7 @@ public class TacticsPresenter :BasePresenter
     private bool CheckRebornEvent()
     {
         var isReborn = CheckRebornEvent(EventTiming.BeforeTactics,() => {
-            _view.CommandSceneChange(Scene.RebornResult);
+            _view.CommandGotoSceneChange(Scene.RebornResult);
         });
         if (isReborn)
         {
@@ -191,7 +191,7 @@ public class TacticsPresenter :BasePresenter
     {
         InitializeView();
         var isAbort = CheckAdvStageEvent(EventTiming.StartTactics,() => {
-            _view.CommandSceneChange(Scene.Tactics);
+            _view.CommandGotoSceneChange(Scene.Tactics);
         },_model.CurrentStage.SelectActorIdsClassId(0));
         if (isAbort)
         {
@@ -385,7 +385,7 @@ public class TacticsPresenter :BasePresenter
         if (confirmCommandType == ConfirmCommandType.Yes)
         {
             _model.SavePlayerStageData(false);
-            _view.CommandSceneChange(Scene.MainMenu);
+            _view.CommandGotoSceneChange(Scene.MainMenu);
         } else{
             Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cancel);
         }
@@ -438,7 +438,7 @@ public class TacticsPresenter :BasePresenter
             Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cancel);
             if (isReturnScene)
             {
-                _view.CommandSceneChange(Scene.Tactics);
+                _view.CommandGotoSceneChange(Scene.Tactics);
             } else
             {
                 _view.ChangeUIActive(true);
@@ -457,7 +457,7 @@ public class TacticsPresenter :BasePresenter
             _view.CommandGameSystem(Base.CommandType.CloseConfirm);
             if (isReturnScene)
             {
-                _view.CommandSceneChange(Scene.Tactics);
+                _view.CommandGotoSceneChange(Scene.Tactics);
             } else
             {        
                 _view.ChangeUIActive(true);
@@ -636,10 +636,7 @@ public class TacticsPresenter :BasePresenter
         {
             var getItemInfos = _model.CurrentStage.CurrentSelectSymbol().GetItemInfos;
             var actorInfos = _model.PartyInfo.ActorInfos.FindAll(a => a.ActorId == getItemInfos[0].Param1);
-            _model.TempInfo.SetTempGetItemInfos(getItemInfos);
-            _model.TempInfo.SetTempResultActorInfos(actorInfos);
-            _model.ResetBattlerIndex();
-            _view.CommandSceneChange(Scene.Strategy);
+            GotoStrategyScene(getItemInfos,actorInfos);
         } else{
             CommandTacticsCommand(_model.TacticsCommandType);
         }
@@ -657,10 +654,7 @@ public class TacticsPresenter :BasePresenter
         if (confirmCommandType == ConfirmCommandType.Yes)
         {
             var currentSymbol = _model.CurrentStage.CurrentSelectSymbol();
-            _model.TempInfo.SetTempGetItemInfos(currentSymbol.GetItemInfos);
-            _model.TempInfo.SetTempResultActorInfos(_model.StageMembers());
-            _model.ResetBattlerIndex();
-            _view.CommandSceneChange(Scene.Strategy);
+            GotoStrategyScene(currentSymbol.GetItemInfos,_model.StageMembers());
         } else{
             CommandTacticsCommand(_model.TacticsCommandType);
         }
@@ -704,10 +698,7 @@ public class TacticsPresenter :BasePresenter
         if (confirmCommandType == ConfirmCommandType.Yes)
         {
             var getItemInfos = _model.CurrentStage.CurrentSelectSymbol().GetItemInfos;
-            _model.TempInfo.SetTempGetItemInfos(getItemInfos);
-            _model.TempInfo.SetTempResultActorInfos(_model.StageMembers());
-            _model.ResetBattlerIndex();
-            _view.CommandSceneChange(Scene.Strategy);
+            GotoStrategyScene(getItemInfos,_model.StageMembers());
         } else{
             CommandTacticsCommand(_model.TacticsCommandType);
         }
@@ -725,13 +716,21 @@ public class TacticsPresenter :BasePresenter
         if (confirmCommandType == ConfirmCommandType.Yes)
         {
             var currentSymbol = _model.CurrentStage.CurrentSelectSymbol();
-            _model.TempInfo.SetTempGetItemInfos(currentSymbol.GetItemInfos);
-            _model.TempInfo.SetTempResultActorInfos(_model.StageMembers());
-            _model.ResetBattlerIndex();
-            _view.CommandSceneChange(Scene.Strategy);
+            GotoStrategyScene(currentSymbol.GetItemInfos,_model.StageMembers());
         } else{
             CommandTacticsCommand(_model.TacticsCommandType);
         }
+    }
+
+    private void GotoStrategyScene(List<GetItemInfo> getItemInfos,List<ActorInfo> actorInfos)
+    {
+        var strategySceneInfo = new StrategySceneInfo
+        {
+            GetItemInfos = getItemInfos,
+            ActorInfos = actorInfos
+        };
+        _model.ResetBattlerIndex();
+        _view.CommandGotoSceneChange(Scene.Strategy,strategySceneInfo);
     }
 
     private void CheckRebirthSymbol(GetItemInfo getItemInfo)
@@ -746,10 +745,7 @@ public class TacticsPresenter :BasePresenter
         if (confirmCommandType == ConfirmCommandType.Yes)
         {
             var currentSymbol = _model.CurrentStage.CurrentSelectSymbol();
-            _model.TempInfo.SetTempGetItemInfos(currentSymbol.GetItemInfos);
-            _model.TempInfo.SetTempResultActorInfos(_model.StageMembers());
-            _model.ResetBattlerIndex();
-            _view.CommandSceneChange(Scene.Strategy);
+            GotoStrategyScene(currentSymbol.GetItemInfos,_model.StageMembers());
         } else{
             CommandTacticsCommand(_model.TacticsCommandType);
         }

@@ -25,7 +25,7 @@ public class StrategyPresenter : BasePresenter
         _busy = true;
         _view.SetHelpWindow();
 
-        _view.SetActors(_model.TempInfo.TempResultActorInfos);
+        _view.SetActors(_model.SceneParam.ActorInfos);
         _view.SetResultList(_model.ResultCommand());
         _view.SetBackGround(_model.CurrentStage.Master.BackGround);
         var bgm = await _model.GetBgmData(_model.TacticsBgmKey());
@@ -99,7 +99,7 @@ public class StrategyPresenter : BasePresenter
     private void CheckTacticsActors()
     {
         var tacticsActors = _model.TacticsActors();
-        if (tacticsActors.Count > 0)
+        if (tacticsActors != null && tacticsActors.Count > 0)
         {
             _strategyState = StrategyState.TacticsResult;
             SeekStrategyState();
@@ -233,7 +233,7 @@ public class StrategyPresenter : BasePresenter
                 if (battledMembers != null && battledMembers.Count > 0)
                 {
                     _model.ClearBattleData(battledMembers);
-                    _model.TempInfo.ClearTempResultActorInfos();
+                    _model.ClearSceneParam();
                 }
             }
             if (_strategyState == StrategyState.TacticsResult)
@@ -242,7 +242,7 @@ public class StrategyPresenter : BasePresenter
                 if (tacticsActors != null && tacticsActors.Count > 0)
                 {
                     _model.ClearBattleData(tacticsActors);
-                    _model.TempInfo.ClearTempResultActorInfos();
+                    _model.ClearSceneParam();
                 }
             }
             CheckTacticsActors();
@@ -334,7 +334,7 @@ public class StrategyPresenter : BasePresenter
         _model.GainContinueCount();
         // 復帰して結果をやり直し
         _model.ReturnTempBattleMembers();
-        _view.CommandSceneChange(Scene.Strategy);
+        _view.CommandGotoSceneChange(Scene.Strategy);
     }
 
     private void ShowStatus()
@@ -401,28 +401,28 @@ public class StrategyPresenter : BasePresenter
                 {
                     _model.MakeSymbolRecordStage(_model.CurrentStage.CurrentTurn-1);
                     _model.SetParallelMode();
-                    _view.CommandSceneChange(Scene.Tactics);
+                    _view.CommandGotoSceneChange(Scene.Tactics);
                 } else
                 {
-                    _view.CommandSceneChange(Scene.SymbolRecord);
+                    _view.CommandGotoSceneChange(Scene.SymbolRecord);
                 }
             } else
             {
                 _model.CommitCurrentResult();
-                _view.CommandSceneChange(Scene.SymbolRecord);
+                _view.CommandGotoSceneChange(Scene.SymbolRecord);
             }
         } else
         if (_model.RemainTurns == 1)
         {
             _model.EndStrategy(false);
             _model.CommitResult();
-            _view.CommandSceneChange(Scene.MainMenu);
+            _view.CommandGotoSceneChange(Scene.MainMenu);
         } else
         {
             _model.EndStrategy(true);
-            _view.CommandSceneChange(Scene.Tactics);
+            _view.CommandGotoSceneChange(Scene.Tactics);
         }
-        _model.TempInfo.ClearTempGetItemInfos();
+        //_model.TempInfo.ClearTempGetItemInfos();
     }
 
     private enum StrategyState{

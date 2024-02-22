@@ -53,13 +53,13 @@ public class TacticsSymbolList : BaseList
             {
                 tacticsSymbol.SetSelectable(true);
             }
-            Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cursor);
+            //Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cursor);
         }
         if (keyType == InputKeyType.Down)
         {
             var tacticsSymbol = ItemPrefabList[Index].GetComponent<TacticsSymbol>();
             tacticsSymbol.UpdateItemIndex(tacticsSymbol.GetItemIndex+1);
-            Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cursor);
+            //Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cursor);
         }
     }
 

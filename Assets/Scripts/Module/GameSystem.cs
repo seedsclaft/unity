@@ -37,7 +37,11 @@ public class GameSystem : MonoBehaviour
 
     public static string Version;
     public static DebugBattleData DebugBattleData;
-    public static Scene LastScene => SceneAssign.LastScene;
+
+    private static SceneStackManager _sceneStackManager = new SceneStackManager();
+    public static SceneStackManager SceneStackManager => _sceneStackManager;
+
+
     private void Awake() 
     {
 #if (UNITY_WEBGL || UNITY_ANDROID) && !UNITY_EDITOR
@@ -62,7 +66,7 @@ public class GameSystem : MonoBehaviour
 #if UNITY_ANDROID
         AdMobController.Instance.Initialize(() => {CommandSceneChange(Scene.Boot);});
 #else
-        CommandSceneChange(Scene.Boot);
+        CommandSceneChange(new SceneInfo(){ToScene = Scene.Boot});
 #endif
     }
 
@@ -95,10 +99,10 @@ public class GameSystem : MonoBehaviour
                     } else
                     {
                         debugBattleData.MakeBattleActor();
-                        CommandSceneChange((Scene)viewEvent.template);
+                        CommandSceneChange((SceneInfo)viewEvent.template);
                     }
                 } else{
-                    CommandSceneChange((Scene)viewEvent.template);
+                    CommandSceneChange((SceneInfo)viewEvent.template);
                 }
                 break;
             case Base.CommandType.CallConfirmView:
@@ -377,7 +381,7 @@ public class GameSystem : MonoBehaviour
         if(onComplete !=null) onComplete();
     }
 
-    private void CommandSceneChange(Scene scene)
+    private void CommandSceneChange(SceneInfo sceneInfo)
     {
         if (_currentScene != null)
         { 
@@ -386,11 +390,20 @@ public class GameSystem : MonoBehaviour
             ResourceSystem.ReleaseScene();
             Resources.UnloadUnusedAssets();
         }
-        var prefab = sceneAssign.CreateScene(scene,helpWindow);
+        if (sceneInfo.SceneChangeType == SceneChangeType.Pop)
+        {
+            sceneInfo.FromScene = _sceneStackManager.LastScene;
+            sceneInfo.ToScene = _sceneStackManager.LastScene;
+        } else
+        {
+            sceneInfo.FromScene = _sceneStackManager.Current;
+        }
+        var prefab = sceneAssign.CreateScene(sceneInfo.ToScene,helpWindow);
         _currentScene = prefab.GetComponent<BaseView>();
         _currentScene.SetTestMode(testMode);
         _currentScene.SetBattleTestMode(debugBattleData.TestBattle);
         _currentScene.SetEvent((type) => UpdateCommand(type));
+        _sceneStackManager.PushSceneInfo(sceneInfo);
         _currentScene.Initialize();
         tutorialView.HideFocusImage();
     }

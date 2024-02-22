@@ -54,37 +54,6 @@ public class TempInfo
         _tempInputType = inputType;
     }    
     
-    // Strategyで入手するアイテム群
-    private List<GetItemInfo> _tempGetItemInfos = new ();
-    public List<GetItemInfo> TempGetItemInfos => _tempGetItemInfos;
-    public void SetTempGetItemInfos(List<GetItemInfo> tempGetItemInfos)
-    {
-        var list = new List<GetItemInfo>();
-        foreach (var tempGetItemInfo in tempGetItemInfos)
-        {
-            var getItemInfo = new GetItemInfo(null);
-            getItemInfo.CopyData(tempGetItemInfo);
-            list.Add(getItemInfo);
-        }
-        _tempGetItemInfos = list;
-    }
-    public void ClearTempGetItemInfos()
-    {
-        _tempGetItemInfos.Clear();
-    }
-    // Strategyで表示するアクター群
-    private List<ActorInfo> _tempResultActorInfos = new ();
-    public List<ActorInfo> TempResultActorInfos => _tempResultActorInfos;
-    public void SetTempResultActorInfos(List<ActorInfo> tempResultActorInfos)
-    {
-        // Lv上げのため参照渡し
-        _tempResultActorInfos = tempResultActorInfos;
-    }
-    public void ClearTempResultActorInfos()
-    {
-        _tempResultActorInfos.Clear();
-    }
-    
     private List<ActorInfo> _tempRecordActors = new ();
     public List<ActorInfo> TempRecordActors => _tempRecordActors;
     public void SetRecordActors(List<ActorInfo> actorInfos)

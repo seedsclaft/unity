@@ -45,7 +45,7 @@ public class BootPresenter : BasePresenter
         if (_view.TestMode)
         {
             _model.InitSaveInfo();
-            _view.CommandSceneChange(Scene.Battle);
+            _view.CommandGotoSceneChange(Scene.Battle);
         } else{
             _view.SetEvent((type) => UpdateCommand(type));
         }
@@ -66,6 +66,6 @@ public class BootPresenter : BasePresenter
 
     private void CommandLogoClick()
     {
-        _view.CommandSceneChange(Scene.Title);
+        _view.CommandGotoSceneChange(Scene.Title);
     }
 }

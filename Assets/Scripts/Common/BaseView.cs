@@ -149,10 +149,27 @@ abstract public class BaseView : MonoBehaviour
         CallSceneChangeCommand(eventData);
     }
 
-    public void CommandSceneChange(Scene scene)
+    public void CommandSceneChange(Scene scene,object sceneParam = null,SceneChangeType sceneChangeType = SceneChangeType.Push)
     {
         var eventData = new ViewEvent(Base.CommandType.SceneChange);
-        eventData.template = scene;
+        var sceneInfo = new SceneInfo(){ToScene = scene,SceneChangeType = sceneChangeType,SceneParam = sceneParam};
+        eventData.template = sceneInfo;
+        CallSceneChangeCommand(eventData);
+    }
+
+    public void CommandPopSceneChange(object sceneParam = null)
+    {
+        var eventData = new ViewEvent(Base.CommandType.SceneChange);
+        var sceneInfo = new SceneInfo(){SceneChangeType = SceneChangeType.Pop,SceneParam = sceneParam};
+        eventData.template = sceneInfo;
+        CallSceneChangeCommand(eventData);
+    }
+
+    public void CommandGotoSceneChange(Scene scene,object sceneParam = null)
+    {
+        var eventData = new ViewEvent(Base.CommandType.SceneChange);
+        var sceneInfo = new SceneInfo(){ToScene = scene,SceneChangeType = SceneChangeType.Goto,SceneParam = sceneParam};
+        eventData.template = sceneInfo;
         CallSceneChangeCommand(eventData);
     }
 

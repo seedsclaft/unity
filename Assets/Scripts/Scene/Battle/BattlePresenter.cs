@@ -189,7 +189,6 @@ public class BattlePresenter : BasePresenter
             _view.HideStateOverlay();
             await UniTask.DelayFrame(180);
             _view.SetBattleBusy(false);
-            _model.TempInfo.SetTempResultActorInfos(_model.BattleMembers());
             if (Ryneus.SoundManager.Instance.CrossFadeMode)
             {
                 Ryneus.SoundManager.Instance.ChangeCrossFade();
@@ -197,7 +196,11 @@ public class BattlePresenter : BasePresenter
             {
                 PlayTacticsBgm();
             }
-            _view.CommandSceneChange(Scene.Strategy);
+            var strategySceneInfo = new StrategySceneInfo{
+                ActorInfos = _model.BattleMembers(),
+                GetItemInfos = new List<GetItemInfo>()
+            };
+            _view.CommandGotoSceneChange(Scene.Strategy);
         }
     }
 
@@ -662,6 +665,7 @@ public class BattlePresenter : BasePresenter
 
     private async void StartAnimationSkill()
     {
+        Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Skill);
         _view.ChangeSideMenuButtonActive(false);
         _view.SetBattlerThumbAlpha(true);
         //_view.ShowEnemyStateOverlay();
@@ -731,10 +735,11 @@ public class BattlePresenter : BasePresenter
             if (actionResultInfo.TargetIndex == targetIndex)
             {
                 _model.GainAttackCount(actionResultInfo.TargetIndex);
-                _view.StartDamage(targetIndex,DamageType.HpDamage,actionResultInfo.HpDamage,needPopupDelay);
+                var damageType = actionResultInfo.Critical ? DamageType.HpCritical : DamageType.HpDamage;
+                _view.StartDamage(targetIndex,damageType,actionResultInfo.HpDamage,needPopupDelay);
                 if (needDamageBlink){
                     _view.StartBlink(targetIndex);
-                    Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Damage);
+                    PlayDamageSound(damageType);
                 }
             }
         }
@@ -775,8 +780,9 @@ public class BattlePresenter : BasePresenter
         }
         if (actionResultInfo.ReDamage > 0)
         {
-            Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Damage);
-            _view.StartDamage(actionResultInfo.SubjectIndex,DamageType.HpDamage,actionResultInfo.ReDamage);
+            var damageType = actionResultInfo.Critical ? DamageType.HpCritical : DamageType.HpDamage;
+            PlayDamageSound(damageType);
+            _view.StartDamage(actionResultInfo.SubjectIndex,damageType,actionResultInfo.ReDamage);
             _view.StartBlink(actionResultInfo.SubjectIndex);
         }
         if (actionResultInfo.ReHeal > 0)
@@ -811,6 +817,18 @@ public class BattlePresenter : BasePresenter
                 //先制攻撃
                 _view.StartStatePopup(targetIndex,DamageType.State,DataSystem.GetTextData(431).Text);
             }
+        }
+    }
+
+    private void PlayDamageSound(DamageType damageType)
+    {
+        if (damageType == DamageType.HpDamage)
+        {
+            Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Damage);
+        } else
+        if (damageType == DamageType.HpCritical)
+        {
+            Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Critical);
         }
     }
 
@@ -1049,8 +1067,6 @@ public class BattlePresenter : BasePresenter
         _view.HideStateOverlay();
         await UniTask.DelayFrame(180);
         _view.SetBattleBusy(false);
-        _model.TempInfo.SetTempGetItemInfos(_model.MakeBattlerResult());
-        _model.TempInfo.SetTempResultActorInfos(_model.BattleMembers());
         if (Ryneus.SoundManager.Instance.CrossFadeMode)
         {
             Ryneus.SoundManager.Instance.ChangeCrossFade();
@@ -1058,8 +1074,11 @@ public class BattlePresenter : BasePresenter
         {
             PlayTacticsBgm();
         }
-
-        _view.CommandSceneChange(Scene.Strategy);
+        var strategySceneInfo = new StrategySceneInfo{
+            ActorInfos = _model.BattleMembers(),
+            GetItemInfos = _model.MakeBattlerResult()
+        };
+        _view.CommandGotoSceneChange(Scene.Strategy,strategySceneInfo);
     }
 
     private void CommandSelectEnemy()

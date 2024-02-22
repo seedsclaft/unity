@@ -30,12 +30,14 @@ public class RebornPresenter :BasePresenter
             CommandBackEvent();
         });
         // 初回なら
+        /*
         if (GameSystem.LastScene == Scene.MainMenu)
         {
             var confirmInfo = new ConfirmInfo(DataSystem.GetTextData(17010).Text,(a) => UpdatePopupStart(a));
             confirmInfo.SetIsNoChoice(true);
             _view.CommandCallConfirm(confirmInfo);
         }
+        */
         _busy = false;
     }
 

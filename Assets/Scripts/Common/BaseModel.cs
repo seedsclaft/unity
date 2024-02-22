@@ -27,7 +27,7 @@ public class BaseModel
     public List<StageTutorialData> CurrentStageTutorialDates => _currentStageTutorialDates;
     public void InitSaveInfo()
     {
-        GameSystem.CurrentData = new SaveInfo();;
+        GameSystem.CurrentData = new SaveInfo();
     }
 
     public void InitSaveStageInfo()
@@ -510,11 +510,14 @@ public class BaseModel
                     symbolInfo.SetTroopInfo(BattleTroop(symbolInfo.StageSymbolData.Param1,symbolInfo.StageSymbolData.Param2));
                 }
                 
-                var prizeSets = DataSystem.PrizeSets.FindAll(a => a.Id == symbolInfo.TroopInfo.Master.PrizeSetId);
-                foreach (var prizeSet in prizeSets)
+                if (symbolInfo.TroopInfo.Master.PrizeSetId > 0)
                 {
-                    var getItemInfo = new GetItemInfo(prizeSet.GetItem);
-                    getItemInfos.Add(getItemInfo);
+                    var prizeSets = DataSystem.PrizeSets.FindAll(a => a.Id == symbolInfo.TroopInfo.Master.PrizeSetId);
+                    foreach (var prizeSet in prizeSets)
+                    {
+                        var getItemInfo = new GetItemInfo(prizeSet.GetItem);
+                        getItemInfos.Add(getItemInfo);
+                    }
                 }
             }
             if (symbolInfo.StageSymbolData.PrizeSetId > 0)
@@ -557,15 +560,21 @@ public class BaseModel
     public TroopInfo BattleTroop(int troopId,int enemyCount)
     {
         var troopInfo = new TroopInfo(troopId,false);
-        troopInfo.MakeEnemyTroopDates(PartyInfo.ClearTroopCount);
-        for (int i = 0;i < enemyCount;i++)
+        if (troopInfo.Master == null)
         {
-            int rand = new System.Random().Next(1, CurrentStage.Master.RandomTroopCount);
-            var enemyData = DataSystem.Enemies.Find(a => a.Id == rand);
-            var enemy = new BattlerInfo(enemyData,PartyInfo.ClearTroopCount + 1,i,0,false);
-            troopInfo.AddEnemy(enemy);
+            Debug.LogError("troopId" + troopId + "のデータが不足");
+        } else
+        {
+            troopInfo.MakeEnemyTroopDates(PartyInfo.ClearTroopCount);
+            for (int i = 0;i < enemyCount;i++)
+            {
+                int rand = new System.Random().Next(1, CurrentStage.Master.RandomTroopCount);
+                var enemyData = DataSystem.Enemies.Find(a => a.Id == rand);
+                var enemy = new BattlerInfo(enemyData,PartyInfo.ClearTroopCount + 1,i,0,false);
+                troopInfo.AddEnemy(enemy);
+            }
+            troopInfo.MakeGetItemInfos();
         }
-        troopInfo.MakeGetItemInfos();
         return troopInfo;
     }
 

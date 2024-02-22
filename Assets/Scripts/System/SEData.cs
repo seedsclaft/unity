@@ -19,5 +19,9 @@ public enum SEType {
     Cursor,
     Damage,
     Defeat,
-    Demigod
+    Demigod,
+    Deny,
+    LevelUp,
+    Critical,
+    Skill,
 }

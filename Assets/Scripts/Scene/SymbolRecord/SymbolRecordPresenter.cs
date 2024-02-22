@@ -79,10 +79,10 @@ public class SymbolRecordPresenter : BasePresenter
         {
             var index = _view.SymbolListIndex;
             _model.MakeSymbolRecordStage(index);
-            _view.CommandSceneChange(Scene.Tactics);
+            _view.CommandPopSceneChange();
         } else
         {
-            //_view.ShowSymbolBackGround();
+            _view.ShowSymbolBackGround();
         }
     }
 
@@ -96,7 +96,7 @@ public class SymbolRecordPresenter : BasePresenter
             UpdateCommand(eventData);
             return;
         }
-        _view.CommandSceneChange(Scene.MainMenu);
+        _view.CommandPopSceneChange();
     }
 
     private void CommandParallel()
@@ -110,6 +110,7 @@ public class SymbolRecordPresenter : BasePresenter
         }
         if (_model.CanParallel())
         {
+            _view.HideSymbolBackGround();
             var index = _view.SymbolListIndex;
             var popupInfo = new ConfirmInfo(DataSystem.GetReplaceText(23020,_model.ParallelCost().ToString()),(a) => UpdatePopupCheckParallelRecord((ConfirmCommandType)a));
             _view.CommandCallConfirm(popupInfo);
@@ -129,10 +130,10 @@ public class SymbolRecordPresenter : BasePresenter
             var index = _view.SymbolListIndex;
             _model.MakeSymbolRecordStage(index);
             _model.SetParallelMode();
-            _view.CommandSceneChange(Scene.Tactics);
+            _view.CommandGotoSceneChange(Scene.Tactics);
         } else
         {
-            //_view.ShowSymbolBackGround();
+            _view.ShowSymbolBackGround();
         }
     }
 
@@ -152,9 +153,9 @@ public class SymbolRecordPresenter : BasePresenter
 
     private void CommandSelectSymbol(SymbolInfo symbolInfo)
     {
+        Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
         _view.ShowTacticsSymbolList();
         _view.ShowParallelList();
-        _view.HideSymbolBackGround();
         _view.SetSymbols(_model.StageSymbolInfos(symbolInfo.StageSymbolData.Seek-1));
         _backEvent = CommandType.CancelSymbol;
     }

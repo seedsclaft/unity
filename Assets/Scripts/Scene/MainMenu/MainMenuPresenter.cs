@@ -76,7 +76,7 @@ public class MainMenuPresenter : BasePresenter
             } else
             {
                 _model.StartSelectStage(stageId);
-                _view.CommandSceneChange(Scene.Tactics);
+                _view.CommandGotoSceneChange(Scene.Tactics);
             }
             /*
             var statusViewInfo = new StatusViewInfo(() => {

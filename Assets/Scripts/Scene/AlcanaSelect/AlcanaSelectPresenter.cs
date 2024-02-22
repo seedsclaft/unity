@@ -75,6 +75,7 @@ public class AlcanaSelectPresenter : BasePresenter
 
     private void CommandBack()
     {
+        /*
         if (GameSystem.LastScene == Scene.MainMenu)
         {
             var statusViewInfo = new StatusViewInfo(() => {
@@ -91,6 +92,7 @@ public class AlcanaSelectPresenter : BasePresenter
         {
             _view.CommandSceneChange(Scene.Reborn);
         }
+        */
         Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cancel);
     }
 
