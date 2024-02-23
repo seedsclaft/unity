@@ -4,26 +4,50 @@ using UtageExtensions;
 
 namespace Utage
 {
+	public interface IAdvCommandFade
+	{
+		public float Time { get; }
+		public bool Inverse { get; }
+		public Color Color { get; }
+		public string RuleImage { get; }
+		public float Vague { get; }
+		public Timer Timer { get; set; }
+		public AdvAnimationData AnimationData { get; }
+		public AdvAnimationPlayer AnimationPlayer { get; set; }
+		
+	}
 
 	/// <summary>
 	/// コマンド：フェードイン処理
 	/// </summary>
-	internal abstract class AdvCommandFadeBase: AdvCommandEffectBase
+	public abstract class AdvCommandFadeBase : AdvCommandEffectBase
 		, IAdvCommandEffect
+		, IAdvCommandFade
 	{
+		public float Time => time;
 		float time;
-		bool inverse;
-		Color color;
-		string ruleImage;
-		float vague;
-		Timer Timer { get; set; }
-		AdvAnimationData animationData;
-		protected AdvAnimationPlayer AnimationPlayer { get; set; }
 
+		public bool Inverse { get; }
+
+		public Color Color => color;
+		Color color;
+
+		public string RuleImage => ruleImage;
+		string ruleImage;
+
+		public float Vague => vague;
+		float vague;
+		
+		public Timer Timer { get; set; }
+		public AdvAnimationData AnimationData => animationData;
+		AdvAnimationData animationData;
+		
+		public AdvAnimationPlayer AnimationPlayer { get; set; }
+		
 		protected AdvCommandFadeBase(StringGridRow row, AdvSettingDataManager dataManager, bool inverse)
 			: base(row, dataManager)
 		{
-			this.inverse = inverse;
+			this.Inverse = inverse;
 		}
 
 		protected override void OnParse(AdvSettingDataManager dataManager)
@@ -68,94 +92,7 @@ namespace Utage
 		protected override void OnStartEffect(GameObject target, AdvEngine engine, AdvScenarioThread thread)
 		{
 			Camera camera = target.GetComponentInChildren<Camera>(true);
-
-			float start, end;
-			ImageEffectBase imageEffect = null;
-			IImageEffectStrength effectStrength = null;
-			if (string.IsNullOrEmpty(ruleImage))
-			{
-				bool alreadyEnabled;
-				bool ruleEnabled = camera.gameObject.GetComponent<RuleFade>();
-				if (ruleEnabled)
-				{
-					camera.gameObject.SafeRemoveComponent<RuleFade>();
-				}
-				ImageEffectUtil.TryGetComonentCreateIfMissing(ImageEffectType.ColorFade.ToString(), out imageEffect, out alreadyEnabled, camera.gameObject);
-				effectStrength = imageEffect as IImageEffectStrength;
-				ColorFade colorFade = imageEffect as ColorFade;
-				if (inverse)
-				{
-					//画面全体のフェードイン（つまりカメラのカラーフェードアウト）
-					//					start = colorFade.color.a;
-					start = (ruleEnabled) ? 1 : colorFade.color.a;
-					end = 0;
-				}
-				else
-				{
-					//画面全体のフェードアウト（つまりカメラのカラーフェードイン）
-					//colorFade.Strengthで、すでにフェードされているのでそちらの値をつかう
-					start = alreadyEnabled ? colorFade.Strength : 0;
-					end = this.color.a;
-				}
-				colorFade.enabled = true;
-				colorFade.color = color;
-			}
-			else
-			{
-				bool alreadyEnabled;
-				camera.gameObject.SafeRemoveComponent<ColorFade>();
-				ImageEffectUtil.TryGetComonentCreateIfMissing(ImageEffectType.RuleFade.ToString(), out imageEffect, out alreadyEnabled, camera.gameObject);
-				effectStrength = imageEffect as IImageEffectStrength;
-				RuleFade ruleFade = imageEffect as RuleFade;
-				ruleFade.ruleTexture = engine.EffectManager.FindRuleTexture(ruleImage);
-				ruleFade.vague = vague;
-				if (inverse)
-				{
-					start = 1;
-					end = 0;
-				}
-				else
-				{
-					start = alreadyEnabled ? ruleFade.Strength : 0;
-					end = 1;
-				}
-				ruleFade.enabled = true;
-				ruleFade.color = color;
-			}
-
-			if (animationData==null)
-			{
-				Timer = camera.gameObject.AddComponent<Timer>();
-				Timer.AutoDestroy = true;
-				Timer.StartTimer(
-					engine.Page.ToSkippedTime(this.time),
-					engine.Time.Unscaled,
-					(x) =>
-					{
-						effectStrength.Strength = x.GetCurve(start, end);
-					},
-					(x) =>
-					{
-						OnComplete(thread);
-						if (inverse)
-						{
-							imageEffect.enabled = false;
-							imageEffect.RemoveComponentMySelf();
-						}
-					});
-			}
-			else
-			{
-				//アニメーションを再生
-				AnimationPlayer = imageEffect.gameObject.AddComponent<AdvAnimationPlayer>();
-				AnimationPlayer.AutoDestory = true;
-				AnimationPlayer.Play(animationData.Clip, engine.Page.SkippedSpeed,
-					() =>
-					{
-						OnComplete(thread);
-					});
-
-			}
+			engine.AdvPostEffectManager.Fade.DoCommand(camera, this, ()=>OnComplete(thread));
 		}
 		
 		public void OnEffectSkip()

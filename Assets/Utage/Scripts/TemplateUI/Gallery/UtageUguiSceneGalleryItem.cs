@@ -4,45 +4,74 @@ using UnityEngine.UI;
 using UnityEngine.Events;
 using Utage;
 using System;
+using TMPro;
 
 
-
-/// <summary>
-/// シーン回想用のUIのサンプル
-/// </summary>
-[AddComponentMenu("Utage/TemplateUI/UtageUguiSceneGalleryItem")]
-public class UtageUguiSceneGalleryItem : MonoBehaviour
+namespace Utage
 {
-	public AdvUguiLoadGraphicFile texture;
-	public Text title;
-
-	public AdvSceneGallerySettingData Data { get { return data; } }
-	protected AdvSceneGallerySettingData data;
 
 	/// <summary>
-	/// 初期化
+	/// シーン回想用のUIのサンプル
 	/// </summary>
-	/// <param name="data">セーブデータ</param>
-	/// <param name="index">インデックス</param>
-	public virtual void Init(AdvSceneGallerySettingData data, Action<UtageUguiSceneGalleryItem> ButtonClickedEvent, AdvSystemSaveData saveData )
+	[AddComponentMenu("Utage/TemplateUI/UtageUguiSceneGalleryItem")]
+	public class UtageUguiSceneGalleryItem : MonoBehaviour
 	{
-		this.data = data;
+		public AdvUguiLoadGraphicFile texture;
+		[HideIfTMP] public Text title;
+		[HideIfLegacyText] public TextMeshProUGUI titleTmp;
+		[SerializeField] bool keepTextureActive; //テクスチャのアクティブのオンオフを切り替えるか
 
-		UnityEngine.UI.Button button = this.GetComponent<UnityEngine.UI.Button>();
-		button.onClick.AddListener( ()=>ButtonClickedEvent(this) );
-
-		bool isOpend = saveData.GalleryData.CheckSceneLabels(data.ScenarioLabel);
-
-		button.interactable = isOpend;
-		if (!isOpend)
+		public AdvSceneGallerySettingData Data
 		{
-			texture.gameObject.SetActive(false);
-			if (title) title.text = "";
+			get { return data; }
 		}
-		else{
-			texture.gameObject.SetActive(true);
-			texture.LoadTextureFile(data.ThumbnailPath);
-			if (title) title.text = data.LocalizedTitle;
+
+		protected AdvSceneGallerySettingData data;
+
+		/// <summary>
+		/// 初期化
+		/// </summary>
+		/// <param name="data">セーブデータ</param>
+		/// <param name="index">インデックス</param>
+		public virtual void Init(AdvSceneGallerySettingData data, Action<UtageUguiSceneGalleryItem> ButtonClickedEvent,
+			AdvSystemSaveData saveData)
+		{
+			Init(data, saveData);
+			UnityEngine.UI.Button button = this.GetComponent<UnityEngine.UI.Button>();
+			button.onClick.AddListener(() => ButtonClickedEvent(this));
+			bool isOpened = saveData.GalleryData.CheckSceneLabels(data.ScenarioLabel);
+			button.interactable = isOpened;
+		}
+
+		public virtual void Init(AdvSceneGallerySettingData data, AdvSystemSaveData saveData)
+		{
+			this.data = data;
+
+			bool isOpened = saveData.GalleryData.CheckSceneLabels(data.ScenarioLabel);
+			if (!isOpened)
+			{
+				if(!keepTextureActive) texture.gameObject.SetActive(false);
+				SetTextTitle("");
+			}
+			else
+			{
+				if (!keepTextureActive) texture.gameObject.SetActive(true);
+				texture.LoadTextureFile(data.ThumbnailPath);
+				SetTextTitle(data.LocalizedTitle);
+			}
+		}
+
+		//クリックイベントを登録しない場合はこちら経由で
+		//プレハブ上で、Buttonコンポーネントのインスペクターから登録しておく想定
+		public virtual void OnClicked()
+		{
+			this.GetComponentInParent<UtageUguiSceneGallery>().OnClickedButton(this);
+		}
+
+
+		public virtual void SetTextTitle(string text)
+		{
+			TextComponentWrapper.SetText(title, titleTmp, text);
 		}
 	}
 }

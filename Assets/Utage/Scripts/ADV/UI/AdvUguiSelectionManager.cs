@@ -35,7 +35,7 @@ namespace Utage
 
 
 		//表示する選択肢プレハブのリスト
-		protected List<GameObject> PrefabList { get { return prefabList; } }
+		public List<GameObject> PrefabList { get { return prefabList; } }
 		[SerializeField]
 		protected List<GameObject> prefabList;
 
@@ -109,7 +109,8 @@ namespace Utage
 					case SelectedColorMode.Change:
 						if (Engine.SystemSaveData.SelectionData.Check(data))
 						{
-							go.SendMessage("OnInitSelected", selectedColor);
+							selection.OnInitSelected(selectedColor);
+//							go.SendMessage("OnInitSelected", selectedColor);
 						}
 						break;
 					case SelectedColorMode.None:
@@ -158,13 +159,6 @@ namespace Utage
 			return prefab;
 		}
 
-		//リストビューのアイテムが作成されるときに呼ばれるコールバック
-		protected virtual void CallbackCreateItem(GameObject go, int index)
-		{
-			AdvSelection data = SelectionManager.Selections[index];
-			AdvUguiSelection selection = go.GetComponentInChildren<AdvUguiSelection>();
-			selection.Init(data, OnTap);
-		}
 
 		//選択肢が押された
 		protected virtual void OnTap(AdvUguiSelection item)

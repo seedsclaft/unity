@@ -7,7 +7,7 @@ namespace Utage
 	/// <summary>
 	/// コマンド：スプライト表示
 	/// </summary>
-	internal class AdvCommandSprite : AdvCommand
+	public class AdvCommandSprite : AdvCommand
 	{
 		public AdvCommandSprite(StringGridRow row, AdvSettingDataManager dataManager)
 			: base(row)

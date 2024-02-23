@@ -21,12 +21,9 @@ public class OptionPresenter
     private void Initialize()
     {
         _view.SetEvent((type) => UpdateCommand(type));
-        _view.SetOptionList(_model.OptionCommandData(
-            (a) => CommandVolumeSlider(a),
-            (a) => CommandVolumeMute(a),
-            (a) => CommandChangeToggle(a)
-        ));
+        _view.SetOptionCategoryList(_model.OptionCategoryList());
         _view.SetHelpWindow();
+        CommandSelectCategory();
         _busy = false;
     }
 
@@ -42,7 +39,11 @@ public class OptionPresenter
         }
         if (viewEvent.commandType == CommandType.SelectCategory)
         {
-           CommandSelectCategory((OptionCategory)viewEvent.template);
+           CommandSelectCategory();
+        }
+        if (viewEvent.commandType == CommandType.SelectOptionList)
+        {
+           CommandSelectOptionList();
         }
     }
 
@@ -113,7 +114,7 @@ public class OptionPresenter
 
     private void CommandVolumeSlider(float volume)
     {
-        var ListData = _view.CurrentOptionCommand;
+        var ListData = _view.OptionCommand;
         if (ListData != null)
         {
             var data = (OptionInfo)ListData.Data;
@@ -131,7 +132,7 @@ public class OptionPresenter
 
     private void CommandVolumeMute(bool isMute)
     {
-        var ListData = _view.CurrentOptionCommand;
+        var ListData = _view.OptionCommand;
         if (ListData != null)
         {
             var data = (OptionInfo)ListData.Data;
@@ -149,7 +150,7 @@ public class OptionPresenter
 
     private void CommandChangeToggle(int toggleIndex)
     {
-        var ListData = _view.CurrentOptionCommand;
+        var ListData = _view.OptionCommand;
         if (ListData != null)
         {
             var data = (OptionInfo)ListData.Data;
@@ -194,8 +195,54 @@ public class OptionPresenter
         _view.CommandRefresh();
     }
 
-    private void CommandSelectCategory(OptionCategory optionCategory)
+    private void CommandSelectCategory()
     {
-        var optionIndex = _model.OptionIndex(optionCategory);
+        var categoryIndex = _view.OptionCategoryIndex + 1;
+        if (categoryIndex >= 1 && categoryIndex < 3)
+        {
+            _view.SetOptionList(_model.OptionCommandData(
+                categoryIndex,
+                (a) => CommandVolumeSlider(a),
+                (a) => CommandVolumeMute(a),
+                (a) => CommandChangeToggle(a)
+            ));
+            _view.CommandRefresh();
+        }
+    }
+
+    private void CommandSelectOptionList()
+    {
+        var ListData = _view.OptionCommand;
+        if (ListData != null)
+        {
+            var data = (OptionInfo)ListData.Data;
+            if (data.OptionCommand.ButtonType == OptionButtonType.Button)
+            {
+                Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
+                switch (data.OptionCommand.Key)
+                {
+                    case "INITALIZE_GAMEDATA":
+                    var popupInfo = new ConfirmInfo(DataSystem.GetTextData(581).Text,(a) => UpdatePopupDeletePlayerData((ConfirmCommandType)a));
+                    _view.CommandCallConfirm(popupInfo);
+                    return;
+                }
+            }
+        }
+    }
+
+    private void UpdatePopupDeletePlayerData(ConfirmCommandType confirmCommandType)
+    {
+        _view.CommandGameSystem(Base.CommandType.CloseConfirm);
+        if (confirmCommandType == ConfirmCommandType.Yes)
+        {
+            _view.CommandGameSystem(Base.CommandType.ClosePopup);
+            _model.DeletePlayerData();
+            _view.CommandGameSystem(Base.CommandType.CloseConfirm);
+            var popupInfo = new ConfirmInfo(DataSystem.GetTextData(582).Text,(a) => {
+                Ryneus.SoundManager.Instance.StopBgm();
+                _view.CommandGotoSceneChange(Scene.Boot);
+            });
+            _view.CommandCallConfirm(popupInfo);
+        }
     }
 }

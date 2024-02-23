@@ -6,7 +6,7 @@ namespace Utage
 	/// <summary>
 	/// コマンド：スレッドの終了
 	/// </summary>
-	internal class AdvCommandEndThread : AdvCommand
+	public class AdvCommandEndThread : AdvCommand
 	{
 		public AdvCommandEndThread(StringGridRow row)
 			: base(row)

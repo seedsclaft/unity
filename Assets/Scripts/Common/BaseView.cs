@@ -19,6 +19,7 @@ abstract public class BaseView : MonoBehaviour
     private System.Action _backEvent = null;
     public System.Action BackEvent => _backEvent;
     [SerializeField] private GameObject uiRoot = null;
+    [SerializeField] private Button optionButton = null;
 
     private HelpWindow _helpWindow = null;
     public HelpWindow HelpWindow => _helpWindow;
@@ -50,6 +51,14 @@ abstract public class BaseView : MonoBehaviour
     {
         InitializeInput();
         SetInputHandler(gameObject.GetComponent<IInputHandlerEvent>());
+        if (optionButton != null)
+        {
+            optionButton.onClick.AddListener(() => {
+                CommandCallOption(() => {
+                    CommandGameSystem(Base.CommandType.ClosePopup);
+                });
+            });
+        }
     }
 
     public void InitializeInput()

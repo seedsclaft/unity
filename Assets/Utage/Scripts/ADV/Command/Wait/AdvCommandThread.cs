@@ -6,7 +6,7 @@ namespace Utage
 	/// <summary>
 	/// コマンド：別スレッド作成
 	/// </summary>
-	internal class AdvCommandThread : AdvCommand
+	public class AdvCommandThread : AdvCommand
 	{
 		public AdvCommandThread(StringGridRow row)
 			: base(row)

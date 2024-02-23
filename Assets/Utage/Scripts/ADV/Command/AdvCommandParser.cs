@@ -256,14 +256,7 @@ namespace Utage
 					return new AdvCommandSetPivot(row, dataManager);
 				case IdResetPivot:
 					return new AdvCommandResetPivot(row, dataManager);
-
-				case IdMovie:
-#if UNITY_2018_2_OR_NEWER
-					Debug.LogWarning("Movie command has been abolished due to Unity specification change. In Unity2018.2 or newer. ");
-#endif
-
-					return new AdvCommandMovie(row, dataManager);
-
+				
 				case IdVideo:
 					return new AdvCommandVideo(row, dataManager);
 

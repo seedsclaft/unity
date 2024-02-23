@@ -6,7 +6,7 @@ namespace Utage
 	/// <summary>
 	/// コマンド：シナリオ中断
 	/// </summary>
-	internal class AdvCommandPauseScenario : AdvCommand
+	public class AdvCommandPauseScenario : AdvCommand
 	{
 		public AdvCommandPauseScenario(StringGridRow row)
 			: base(row)

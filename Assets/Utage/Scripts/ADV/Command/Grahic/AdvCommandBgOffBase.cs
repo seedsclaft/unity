@@ -6,7 +6,7 @@ namespace Utage
 	/// <summary>
 	/// コマンド：背景表示OFF
 	/// </summary>
-	internal abstract class  AdvCommandBgOffBase : AdvCommand
+	public abstract class  AdvCommandBgOffBase : AdvCommand
 	{
 		protected float fadeTime;
 		protected AdvCommandBgOffBase(StringGridRow row)

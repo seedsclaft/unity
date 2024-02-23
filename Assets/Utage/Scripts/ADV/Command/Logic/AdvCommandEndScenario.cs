@@ -6,7 +6,7 @@ namespace Utage
 	/// <summary>
 	/// コマンド：シナリオ終了
 	/// </summary>
-	internal class AdvCommandEndScenario : AdvCommand
+	public class AdvCommandEndScenario : AdvCommand
 	{
 		public AdvCommandEndScenario(StringGridRow row)
 			: base(row)

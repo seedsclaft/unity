@@ -6,7 +6,7 @@ namespace Utage
 	/// <summary>
 	/// コマンド：BGM停止
 	/// </summary>
-	internal class AdvCommandStopBgm : AdvCommand
+	public class AdvCommandStopBgm : AdvCommand
 	{
 		public AdvCommandStopBgm(StringGridRow row)
 			: base(row)

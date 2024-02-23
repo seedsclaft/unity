@@ -9,7 +9,7 @@ namespace Utage
 	/// <summary>
 	/// コマンド：バイブレーションを作動
 	/// </summary>
-	internal class AdvCommandVibrate : AdvCommand
+	public class AdvCommandVibrate : AdvCommand
 	{
 		public AdvCommandVibrate(StringGridRow row, AdvSettingDataManager dataManager)
 			: base(row)

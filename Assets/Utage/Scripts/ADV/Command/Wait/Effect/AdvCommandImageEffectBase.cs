@@ -4,102 +4,70 @@ using UtageExtensions;
 
 namespace Utage
 {
+	public interface IAdvCommandImageEffect : IAdvCommandEffect
+	{
+		float Time { get; }
+		bool Inverse { get; }
+		string ImageEffectType { get; }
+		Timer Timer { get; set; }
+		AdvAnimationData AnimationData { get; }
+		AdvAnimationPlayer AnimationPlayer { get; set; }
+	}
 
 	/// <summary>
 	/// コマンド：イメージエフェクト開始
 	/// </summary>
-	internal class AdvCommandImageEffectBase : AdvCommandEffectBase
-		, IAdvCommandEffect
+	public class AdvCommandImageEffectBase : AdvCommandEffectBase
+		, IAdvCommandImageEffect
 	{
-		string animationName;
-		float time;
-		string imageEffectType { get; set; }
-		bool inverse;
-		Timer Timer { get; set; }
-		AdvAnimationPlayer AnimationPlayer { get; set; }
+		public float Time { get; }
+		public bool Inverse { get; }
+		public string ImageEffectType { get; }
+		public Timer Timer { get; set; }
+		public AdvAnimationData AnimationData { get; }
+		public AdvAnimationPlayer AnimationPlayer { get; set; }
+
 		public AdvCommandImageEffectBase(StringGridRow row, AdvSettingDataManager dataManager, bool inverse)
 			: base(row,dataManager)
 		{
-			this.inverse = inverse;
+			this.Inverse = inverse;
 			this.targetType = AdvEffectManager.TargetType.Camera;
-			this.imageEffectType = RowData.ParseCell<string>(AdvColumnName.Arg2.ToString());
-			this.animationName = ParseCellOptional<string>(AdvColumnName.Arg3,"");
-			this.time = ParseCellOptional<float>(AdvColumnName.Arg6, 0);
+			this.ImageEffectType = RowData.ParseCell<string>(AdvColumnName.Arg2.ToString());
+			var animationName = ParseCellOptional<string>(AdvColumnName.Arg3,"");
+			//アニメーションの適用
+			if (!string.IsNullOrEmpty(animationName))
+			{
+				AnimationData = dataManager.AnimationSetting.Find(animationName);
+				if (AnimationData == null)
+				{
+					Debug.LogError(RowData.ToErrorString("Animation " + animationName + " is not found"));
+				}
+			}
+			else
+			{
+				AnimationData = null;
+			}
+			this.Time = ParseCellOptional<float>(AdvColumnName.Arg6, 0);
+			
+			
 		}
 
 		//エフェクト開始時のコールバック
 		protected override void OnStartEffect(GameObject target, AdvEngine engine, AdvScenarioThread thread)
 		{
-			if (imageEffectType == "All")
-			{
-				OnStartAll(target,engine,thread);
-				return;
-			}
 			Camera camera = target.GetComponentInChildren<Camera>(true);
-			ImageEffectBase imageEffect;
-			bool alreadyEnabled;
-			if (!ImageEffectUtil.TryGetComonentCreateIfMissing( imageEffectType, out imageEffect, out alreadyEnabled, camera.gameObject))
+			var commandExecutor = engine.AdvPostEffectManager.ImageEffect;
+			if (ImageEffectType == "All")
 			{
-				Complete(imageEffect, thread);
+				commandExecutor.DoCommandAllOff(camera, this, () => OnComplete(thread));
+//				OnStartAll(target,engine,thread);
 				return;
 			}
 
-			if (!inverse) imageEffect.enabled = true;
-
-			bool enableAnimation = !string.IsNullOrEmpty(animationName);
-			bool enableFadeStregth = imageEffect is IImageEffectStrength;
-
-			if (!enableFadeStregth && !enableAnimation)
-			{
-				Complete(imageEffect, thread);
-				return;
-			}
-
-			if (enableFadeStregth)
-			{
-				IImageEffectStrength fade = imageEffect as IImageEffectStrength;
-				float start = inverse ? fade.Strength : 0;
-				float end = inverse ? 0 : 1;
-				Timer = camera.gameObject.AddComponent<Timer>();
-				Timer.AutoDestroy = true;
-				Timer.StartTimer(
-					engine.Page.ToSkippedTime(this.time),
-					engine.Time.Unscaled,
-					(x) =>
-					{
-						fade.Strength = x.GetCurve(start, end);
-					},
-					(x) =>
-					{
-						if (!enableAnimation)
-						{
-							Complete(imageEffect, thread);
-						}
-					});
-			}
-
-			if(enableAnimation)
-			{
-				//アニメーションの適用
-				AdvAnimationData animationData = engine.DataManager.SettingDataManager.AnimationSetting.Find(animationName);
-				if (animationData == null)
-				{
-					Debug.LogError(RowData.ToErrorString("Animation " + animationName + " is not found"));
-					Complete(imageEffect, thread);
-					return;
-				}
-
-				AnimationPlayer = camera.gameObject.AddComponent<AdvAnimationPlayer>();
-				AnimationPlayer.AutoDestory = true;
-				AnimationPlayer.EnableSave = true;
-				AnimationPlayer.Play(animationData.Clip, engine.Page.SkippedSpeed,
-					() =>
-					{
-						Complete(imageEffect,thread);
-					});
-			}
+			commandExecutor.DoCommand(camera, this, () => OnComplete(thread));
 		}
 
+/*
 		//エフェクト開始時のコールバック
 		void OnStartAll(GameObject target, AdvEngine engine, AdvScenarioThread thread)
 		{
@@ -118,17 +86,7 @@ namespace Utage
 			}
 			OnComplete(thread);
 		}
-
-		void Complete(ImageEffectBase imageEffect, AdvScenarioThread thread)
-		{
-			if (inverse) 
-            {
-                //                imageEffect.enabled = false;                
-                UnityEngine.Object.DestroyImmediate(imageEffect);
-            }
-			OnComplete(thread);
-		}
-		
+*/		
 		public void OnEffectSkip()
 		{
 			if (Timer != null)

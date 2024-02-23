@@ -8,25 +8,46 @@ using Option;
 public class OptionView : BaseView
 {
     private new System.Action<OptionViewEvent> _commandData = null;
+    [SerializeField] private BaseList optionCategoryList = null;
     [SerializeField] private BaseList optionList = null;
-    public ListData CurrentOptionCommand => optionList.ListData;
+    public ListData OptionCommand => optionList.ListData;
+    public int OptionCategoryIndex => optionCategoryList.Index;
 
     public override void Initialize() 
     {
         base.Initialize();
+        optionCategoryList.Initialize();
         optionList.Initialize();
+        SetInputHandler(optionList.GetComponent<IInputHandlerEvent>());
+        SetInputHandler(optionCategoryList.GetComponent<IInputHandlerEvent>());
         new OptionPresenter(this);
         Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
     }
     
+    public void SetOptionCategoryList(List<ListData> optionData)
+    {
+        optionCategoryList.SetData(optionData);
+        optionCategoryList.SetSelectedHandler(() =>{
+            var eventData = new OptionViewEvent(CommandType.SelectCategory);
+            _commandData(eventData);
+        });   
+    }
+
     public void SetOptionList(List<ListData> optionData)
     {
+        optionList.ResetScrollRect();
         optionList.SetData(optionData);
-        SetInputHandler(optionList.GetComponent<IInputHandlerEvent>());
         optionList.SetInputHandler(InputKeyType.Right,() => CallChangeOptionValue(InputKeyType.Right));
         optionList.SetInputHandler(InputKeyType.Left,() => CallChangeOptionValue(InputKeyType.Left));
         optionList.SetInputHandler(InputKeyType.Option1,() => CallChangeOptionValue(InputKeyType.Option1));
         optionList.SetInputHandler(InputKeyType.Cancel,() => BackEvent());
+        optionList.SetInputHandler(InputKeyType.Decide,() => OnClickOptionList());
+    }
+
+    private void OnClickOptionList()
+    {
+        var eventData = new OptionViewEvent(CommandType.SelectOptionList);
+        _commandData(eventData);
     }
 
     public void CommandRefresh()
@@ -83,6 +104,7 @@ namespace Option
     {
         None = 0,
         SelectCategory = 101,
+        SelectOptionList = 102,
         ChangeOptionValue = 2000,
     }
 }

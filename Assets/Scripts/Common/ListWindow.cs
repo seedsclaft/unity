@@ -245,12 +245,11 @@ abstract public class ListWindow : MonoBehaviour
         {
             if (startIndex > 0)
             {
-                //_prevPrefab.SetActive(true);
                 var listItem = _prevPrefab.GetComponent<ListItem>();
-                listItem.SetListData(_listDates[startIndex-1],startIndex-1);
-            } else
-            {
-                //_prevPrefab.SetActive(false);
+                if (_listDates.Count > startIndex-1)
+                {
+                    listItem.SetListData(_listDates[startIndex-1],startIndex-1);
+                }
             }
         }
         for (int i = 0; i < ObjectList.Count;i++)
@@ -660,7 +659,14 @@ abstract public class ListWindow : MonoBehaviour
     }
 
     public void ResetScrollRect(){
-        ScrollRect.normalizedPosition = new Vector2(0,1);
+        if (horizontal)
+        {   
+            ScrollRect.normalizedPosition = new Vector2(1,0);
+        } else
+        {
+            ScrollRect.normalizedPosition = new Vector2(0,1);
+        }
+        _lastStartIndex = -1;
     }
 
     public void Release() {

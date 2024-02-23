@@ -46,7 +46,7 @@ namespace Utage
 		}
 
 
-		internal DicingTextureData GetTextureData(string pattern)
+		public DicingTextureData GetTextureData(string pattern)
 		{
 			foreach (var item in textureDataList)
 			{
@@ -59,7 +59,7 @@ namespace Utage
 			return null;
 		}
 
-		internal bool Exists(string pattern)
+		public bool Exists(string pattern)
 		{
 			return textureDataList.Exists(x => x.Name == pattern);
 		}
@@ -70,7 +70,7 @@ namespace Utage
 		List<DicingTextureData> textureDataList = new List<DicingTextureData>();
 
 		//テクスチャデータのリストを先頭フォルダ指定で取得する
-		internal List<DicingTextureData> GetTextureDataList(string topDirectory)
+		public List<DicingTextureData> GetTextureDataList(string topDirectory)
 		{
 			if (string.IsNullOrEmpty(topDirectory)) return TextureDataList;
 

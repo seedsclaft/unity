@@ -8,7 +8,7 @@ namespace Utage
 	/// <summary>
 	/// コマンド：サブルーチンにジャンプ
 	/// </summary>
-	internal class AdvCommandJumpSubroutine : AdvCommand
+	public class AdvCommandJumpSubroutine : AdvCommand
 	, IAdvInitOnCreateEntity
 	{
 		public AdvCommandJumpSubroutine(StringGridRow row, AdvSettingDataManager dataManager)

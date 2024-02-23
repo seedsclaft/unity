@@ -8,9 +8,7 @@ using UtageExtensions;
 namespace Utage
 {
 
-	/// <summary>
-	/// メッセージウィドウ処理のサンプル
-	/// </summary>
+	/// メッセージウィドウ処理
 	[AddComponentMenu("Utage/ADV/AdvUguiMessageWindow")]
 	public class AdvUguiMessageWindow : MonoBehaviour, IAdvMessageWindow, IAdvMessageWindowCaracterCountChecker
 	{
@@ -38,12 +36,15 @@ namespace Utage
 
 		/// <summary>本文テキスト</summary>
 		public UguiNovelText Text { get { return text; } }
-		[SerializeField]
-		protected UguiNovelText text=null;
+		[SerializeField, HideIfTMP] protected UguiNovelText text=null;
+		[SerializeField, HideIfLegacyText] protected TextMeshProNovelText textPro = null;
 
 		/// <summary>名前表示テキスト</summary>
-		[SerializeField]
-		protected Text nameText;
+		[SerializeField, HideIfTMP] protected Text nameText;
+		[SerializeField, HideIfLegacyText] protected TextMeshProNovelText nameTextPro = null;
+
+		//キャラ名のルート（背景オブジェクトなどを表示、非表示するときに）
+		[SerializeField] protected GameObject characterNameRoot;
 
 		/// <summary>ウインドウのルート</summary>
 		[SerializeField]
@@ -75,19 +76,15 @@ namespace Utage
 		//ゲーム起動時の初期化
 		public virtual void OnInit(AdvMessageWindowManager windowManager)
 		{
-			defaultTextColor = text.color;
-			if (nameText)
-			{
-				defaultNameTextColor = nameText.color;
-			}
+			defaultTextColor = NovelTextComponentWrapper.GetColor(text, textPro);
+			defaultNameTextColor = NovelTextComponentWrapper.GetColor(nameText, nameTextPro);
 			Clear();
 		}
 
 		protected virtual void Clear()
 		{
-			text.text = "";
-			text.LengthOfView = 0;
-			if (nameText) nameText.text = "";
+			NovelTextComponentWrapper.Clear(text, textPro);
+			NovelTextComponentWrapper.Clear(nameText, nameTextPro);
 			if (iconWaitInput) iconWaitInput.SetActive(false);
 			if (iconBrPage) iconBrPage.SetActive(false);
 			rootChildren.SetActive(false);
@@ -122,32 +119,29 @@ namespace Utage
 		//テキストに変更があった場合
 		public virtual void OnTextChanged(AdvMessageWindow window)
 		{
-			//パラメーターを反映させるために、一度クリアさせてからもう一度設定
-			if (text)
-			{
-				text.text = "";
-				text.text = window.Text.OriginalText;
-				//テキストの長さを設定
-				text.LengthOfView = window.TextLength;
-			}
+			//表示テキストの設定
+			NovelTextComponentWrapper.SetNovelTextData(text, textPro, window.Text,window.TextLength);
 
-			if (nameText)
+			//名前テキストの設定			
+			if (nameText!=null)
 			{
+				//旧ノベルテキストは、パラメーターのタグの反映のためにいったん空文字を設定
 				nameText.text = "";
-				nameText.text = window.NameText;
+			}
+			NovelTextComponentWrapper.SetText(nameText, nameTextPro, window.NameText);
+			if (characterNameRoot != null)
+			{
+				characterNameRoot.SetActive(!string.IsNullOrEmpty(window.NameText));
 			}
 
 			switch (readColorMode)
 			{
 				case ReadColorMode.Change:
-					text.color = Engine.Page.CheckReadPage() ? readColor : defaultTextColor;
-					if (nameText)
-					{
-						nameText.color = Engine.Page.CheckReadPage() ? readColor : defaultNameTextColor;
-					}
+					NovelTextComponentWrapper.SetColor(text, textPro, Engine.Page.CheckReadPage() ? readColor : defaultTextColor);
+					NovelTextComponentWrapper.SetColor(nameText, nameTextPro, Engine.Page.CheckReadPage() ? readColor : defaultNameTextColor);
 					break;
 				case ReadColorMode.ChangeIgnoreNameText:
-					text.color = Engine.Page.CheckReadPage() ? readColor : defaultTextColor;
+					NovelTextComponentWrapper.SetColor(text, textPro, Engine.Page.CheckReadPage() ? readColor : defaultTextColor);
 					break;
 				case ReadColorMode.None:
 				default:
@@ -199,7 +193,7 @@ namespace Utage
 				if (Engine.UiManager.IsShowingMessageWindow)
 				{
 					//テキストの文字送り
-					text.LengthOfView = Engine.Page.CurrentTextLength;
+					NovelTextComponentWrapper.SetMaxVisibleCharacters(text, textPro, Engine.Page.CurrentTextLength);
 				}
 				LinkIcon();
 			}
@@ -235,7 +229,10 @@ namespace Utage
 			else
 			{
 				icon.SetActive(isActive);
-				if (isLinkPositionIconBrPage) icon.transform.localPosition = text.CurrentEndPosition;
+				if (isActive && isLinkPositionIconBrPage)
+				{
+					icon.transform.localPosition = NovelTextComponentWrapper.GetCurrentEndPosition(text,textPro);
+				}
 			}
 		}
 
@@ -254,27 +251,20 @@ namespace Utage
 		//表示文字数チェック開始（今設定されているテキストを返す）
 		public virtual string StartCheckCaracterCount()
 		{
-			if (text==null)
-			{
-				return "";
-			}
-			return text.text;
+			return NovelTextComponentWrapper.GetText(text, textPro);
 		}
 
 		//指定テキストに対する表示文字数チェック
-		public virtual bool TryCheckCaracterCount(string text, out int count, out string errorString)
+		public virtual bool TryCheckCaracterCount(string str, out int count, out string errorString)
 		{
-			return this.text.TextGenerator.EditorCheckRect(text, out count, out errorString);
+			return NovelTextComponentWrapper.TryCheckCharacterCount(text, textPro, str, out count, out errorString);
 		}
 
 		//Startで設定されていたテキストに戻す
-		public virtual void EndCheckCaracterCount(string text)
+		public virtual void EndCheckCaracterCount(string str)
 		{
-			if (this.text == null)
-			{
-				return;
-			}
-			this.text.text = text;
+			//コンポーネントの表示文字を戻すので、直接設定（SetTextDirect）する
+			NovelTextComponentWrapper.SetTextDirect(text, textPro, str);
 		}
 	}
 

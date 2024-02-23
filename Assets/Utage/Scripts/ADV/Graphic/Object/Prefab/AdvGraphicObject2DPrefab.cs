@@ -41,7 +41,7 @@ namespace Utage
 
 
 		//エフェクト用の色が変化したとき
-		internal override void OnEffectColorsChange(AdvEffectColor color)
+		public override void OnEffectColorsChange(AdvEffectColor color)
 		{
 			if (sprite == null) return;
 			sprite.color = color.MulColor;

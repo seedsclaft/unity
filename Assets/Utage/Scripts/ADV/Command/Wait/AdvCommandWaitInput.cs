@@ -7,7 +7,7 @@ namespace Utage
 	/// <summary>
 	/// コマンド：
 	/// </summary>
-	internal class AdvCommandWaitInput : AdvCommand
+	public class AdvCommandWaitInput : AdvCommand
 	{
 
 		public AdvCommandWaitInput(StringGridRow row)

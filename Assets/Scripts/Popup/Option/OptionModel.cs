@@ -9,16 +9,15 @@ public class OptionModel : BaseModel
 
     }
 
-    public List<SystemData.OptionCommand> OptionCommand()
-    {
-        return DataSystem.OptionCommand;
-    }
-
-    public List<ListData> OptionCommandData(System.Action<float> sliderEvent,System.Action<bool> muteEvent,System.Action<int> toggleEvent)
+    public List<ListData> OptionCommandData(int categoryIndex,System.Action<float> sliderEvent,System.Action<bool> muteEvent,System.Action<int> toggleEvent)
     {
         var list = new List<OptionInfo>();
         foreach (var optionCommand in DataSystem.OptionCommand)
         {
+            if (optionCommand.Category != categoryIndex)
+            {
+                continue;
+            }
 #if UNITY_ANDROID
             if (optionCommand.ExistAndroid == false)
             {
@@ -35,6 +34,29 @@ public class OptionModel : BaseModel
         return MakeListData(list);
     }
 
+    public List<ListData> OptionCategoryList()
+    {
+        var categoryIds = new List<int>();
+        foreach (var optionCommand in DataSystem.OptionCommand)
+        {
+            if (!categoryIds.Contains(optionCommand.Category))
+            {
+                categoryIds.Add(optionCommand.Category);
+            }
+        }
+        var commandDates = new List<SystemData.CommandData>();
+        foreach (var categoryId in categoryIds)
+        {
+            var Command = new SystemData.CommandData();
+            Command.Key = categoryId.ToString();
+            Command.Name = DataSystem.GetTextData(categoryId + 550).Text;
+            Command.Id = categoryId;
+            commandDates.Add(Command);
+        }
+
+        return MakeListData(commandDates);
+    }
+
     public int OptionIndex(OptionCategory optionCategory)
     {
         return (int)optionCategory;
@@ -45,6 +67,10 @@ public class OptionModel : BaseModel
         TempInfo.SetInputType(inputType);
     }
 
+    public void DeletePlayerData()
+    {
+        SaveSystem.DeletePlayerData();
+    }
 }
 
 public class OptionInfo
@@ -61,4 +87,11 @@ public enum OptionCategory{
     Tactics,
     Battle,
     Data
+}
+
+public enum OptionButtonType{
+    None = 0,
+    Slider,
+    Toggle,
+    Button
 }

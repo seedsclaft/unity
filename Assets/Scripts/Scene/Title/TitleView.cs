@@ -11,11 +11,19 @@ public class TitleView : BaseView
     private new System.Action<TitleViewEvent> _commandData = null;
     [SerializeField] private SideMenuList sideMenuList = null;
     [SerializeField] private BaseList titleCommandList = null;
+    [SerializeField] private Button tapTitle = null;
     public override void Initialize() 
     {
         base.Initialize();
         titleCommandList.Initialize();
         new TitlePresenter(this);
+        tapTitle.onClick.AddListener(() => OnClickTitle());
+    }
+
+    private void OnClickTitle()
+    {
+        var eventData = new TitleViewEvent(CommandType.SelectTitle);
+        _commandData(eventData);
     }
 
     private void OnClickOption()
@@ -133,6 +141,7 @@ namespace Title
         None = 0,
         TitleCommand,
         Option,
+        SelectTitle,
         SelectSideMenu,
     }
 }

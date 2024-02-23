@@ -104,7 +104,7 @@ namespace Utage
 		const int Version = 1;
 		const int Version0 = 0;
 		//セーブデータ用のバイナリ書き込み
-		internal void Write(BinaryWriter writer)
+		public void Write(BinaryWriter writer)
 		{
 			writer.Write(Version);
 			writer.Write((int)PlayMode);
@@ -127,7 +127,7 @@ namespace Utage
 		}
 
 		//セーブデータ用のバイナリ読み込み
-		internal void Read(BinaryReader reader)
+		public void Read(BinaryReader reader)
 		{
 			int version = reader.ReadInt32();
 			if (version <= Version)

@@ -19,11 +19,12 @@ namespace Utage
 		{
 			if (null == instance)
 			{
-				instance = WrapperUnityVersion.FindObjectOfType<DebugPrint>();
+				instance = WrapperFindObject.FindObjectOfType<DebugPrint>();
 			}
 			return instance;
 		}
 		static DebugPrint instance;
+
 		/// <summary>
 		/// デバッグログの追加
 		/// </summary>
@@ -88,6 +89,7 @@ namespace Utage
 			return
 				GetInstance().VersionString()
 				+ GetInstance().FpsToString()
+				+ GetInstance().LanguageToString()
 				+ GetInstance().MemToString();
 		}
 
@@ -115,6 +117,15 @@ namespace Utage
 		{
 			return string.Format("FPS:{0,3:#0.} Simple:{1,3:#0.00}\n", frameRate, 1.0f/Time.deltaTime);
 		}
+
+		//言語情報表示
+		string LanguageToString()
+		{
+			var language = LanguageManagerBase.Instance;
+			if(language ==null) return "Language:None";
+			return language.GetDebugString();
+		}
+
 		//メモリ情報表示文字列取得
 		string MemToString()
 		{

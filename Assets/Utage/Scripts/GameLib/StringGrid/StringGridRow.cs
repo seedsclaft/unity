@@ -511,8 +511,12 @@ namespace Utage
 			set{ debugInfo = value;} 
 		}
 
+
 #if UNITY_EDITOR
-		public UnityEngine.Object SourceAssetInEditor { get { return Grid.SourceAssetInEditor; } }
+		public UnityEngine.Object SourceAssetInEditor
+		{
+			get { return Grid.SourceAssetInEditor; }
+		}
 #else
 		public UnityEngine.Object SourceAssetInEditor { get { return null;} }
 #endif
@@ -556,7 +560,7 @@ namespace Utage
 		/// <returns>エラー用のテキスト</returns>
 		public string ToStringOfFileSheetLine()
 		{
-			int lineNo = rowIndex + 1;
+			int lineNo = this.DebugIndex + 1;
 			return "<b>" + Grid.Name + "</b>" + "  : " + lineNo;
 		}
 

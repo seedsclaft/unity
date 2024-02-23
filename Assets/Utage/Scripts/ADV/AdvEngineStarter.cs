@@ -1,4 +1,8 @@
 ﻿// UTAGE: Unity Text Adventure Game Engine (c) Ryohei Tokimura
+
+//waring:CS0414を無視
+#pragma warning disable 0414
+
 using UnityEngine;
 using UtageExtensions;
 using System;
@@ -99,6 +103,7 @@ namespace Utage
 
 		void Awake()
 		{
+			CheckProjectSetting();
 			if (isLoadOnAwake)
 			{
 				StartCoroutine(LoadEngineAsync(
@@ -380,9 +385,16 @@ namespace Utage
 		[SerializeField, HideInInspector]
 		int version = 0;
 
-		/// <summary>シナリオデータプロジェクト</summary>
-		public UnityEngine.Object ScenarioDataProject { get { return scenarioDataProject; } set { scenarioDataProject = value; } }
-		[SerializeField]
+		/// シナリオデータのプロジェクト設定
+		public AdvScenarioDataProject ScenarioProject
+		{
+			get { return scenarioProject; }
+			set { scenarioProject = value; }
+		}
+		[SerializeField] AdvScenarioDataProject scenarioProject;
+
+		/// シナリオデータのプロジェクト設定（旧設定）
+		[SerializeField,Hide()]
 		UnityEngine.Object scenarioDataProject;
 
 		//スクリプトから初期化
@@ -394,30 +406,52 @@ namespace Utage
 			EditorVersionUp();
 		}
 
-		//最新バージョンかチェック
-		public bool EditorCheckVersion()
-		{
-			if (version == Version)
-			{
-				if (this.scenarios != null && !this.scenarios.CheckVersion())
-				{
-					return false;
-				}
-				else
-				{
-					return true;
-				}
-			}
-			else
-			{
-				return false;
-			}
-		}
-
 		//最新バージョンにバージョンアップ
 		public void EditorVersionUp()
 		{
 			version = Version;
+		}
+
+		//プロジェクト設定をチェック
+		void CheckProjectSetting()
+		{
+			if (ScenarioProject ==null)
+			{
+				Debug.LogWarning($" {nameof(ScenarioProject)} is null.",this);
+				return;
+			}
+
+
+			var bootSetting = this.gameObject.scene.GetComponentInScene<BootCustomProjectSetting>(true);
+			if (bootSetting != null)
+			{
+				if (ScenarioProject.CustomProjectSetting != bootSetting.CustomProjectSetting)
+				{
+					//BootCustomProjectSettingコンポーネントに設定されている「CustomProjectSetting」と
+					//AdvScenarioDataProject に設定されている「CustomProjectSetting」が違う場合警告
+					Debug.LogWarning(
+						$"{nameof(BootCustomProjectSetting)} and {nameof(AdvScenarioDataProject)} have different CustomProjectSetting.",
+						bootSetting);
+				}
+			}
+
+		}
+
+		public void OnChangeEditorScene()
+		{
+			//宴3から宴4への以降で必要な処理
+			if (this.ScenarioProject == null && this.scenarioDataProject != null)
+			{
+				this.ScenarioProject = this.scenarioDataProject as AdvScenarioDataProject;
+				this.scenarioDataProject = null;
+				UnityEditor.EditorUtility.SetDirty(this);
+				Debug.LogWarning("Update ScenarioProject", this);
+			}
+		}
+
+#else
+		void CheckProjectSetting()
+		{
 		}
 #endif
 	}

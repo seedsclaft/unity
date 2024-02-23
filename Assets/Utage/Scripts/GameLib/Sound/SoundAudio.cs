@@ -2,6 +2,7 @@
 using System.Collections;
 using System.IO;
 using UnityEngine;
+using UnityEngine.Audio;
 
 namespace Utage
 {
@@ -44,8 +45,7 @@ namespace Utage
 		SoundAudioPlayer Player { get; set; }
 
 		internal bool IsLoading{ get; private set; }
-
-
+		
 		//フェードの値
 		LinearValue fadeValue = new LinearValue(true);
 
@@ -71,12 +71,10 @@ namespace Utage
 		{
 			this.Player = player;
 			this.Data = soundData;
-			this.Audio0 = this.gameObject.AddComponent<AudioSource>();
-			Audio0.playOnAwake = false;
+			this.Audio0 = CreateAudioSource();
 			if (Data.EnableIntroLoop)
 			{
-				Audio1 = this.gameObject.AddComponent<AudioSource>();
-				Audio1.playOnAwake = false;
+				Audio1 = CreateAudioSource();
 				Audio1.clip = Data.Clip;
 				Audio1.loop = false;
 			}
@@ -89,6 +87,26 @@ namespace Utage
 				Data.File.AddReferenceComponent(this.gameObject);
 			}
 		}
+
+		AudioSource CreateAudioSource()
+		{
+			var audioSource = this.gameObject.AddComponent<AudioSource>();
+			audioSource.playOnAwake = false;
+			audioSource.outputAudioMixerGroup = GetAudioMixerGroup();
+			return audioSource;
+		}
+
+		AudioMixerGroup GetAudioMixerGroup()
+		{
+			var group = this.Player.Group;
+			var taggedMasterVolume = group.SoundManager.TaggedMasterVolumes.Find(x => x.Tag == Data.Tag);
+			if (taggedMasterVolume != null && taggedMasterVolume.AudioMixerGroup !=null)
+			{
+				return taggedMasterVolume.AudioMixerGroup;
+			}
+			return group.AudioMixerGroup;
+		}
+
 
 		void OnDestroy()
 		{
@@ -126,10 +144,12 @@ namespace Utage
 		{
 			float volume = GetVolume();
 			AudioSource.clip = Data.Clip;
+			AudioSource.outputAudioMixerGroup = GetAudioMixerGroup();
+			
 			if (Data.EnableIntroLoop)
 			{
 				Audio1.clip = Data.Clip;
-				Audio1.volume = volume;
+				ApplyVolume(Audio1,volume);
 			}
 
 			if (fadeInTime > 0)
@@ -143,7 +163,7 @@ namespace Utage
 				fadeValue.Init(0, 1, 1);
 			}
 
-			AudioSource.volume = volume;
+			ApplyVolume(AudioSource,volume);
 			if (Data.EnableIntroLoop)
 			{
 				//イントロループする場合はPlayだとズレるので、PlayScheduledで正確に
@@ -156,7 +176,7 @@ namespace Utage
 				AudioSource.Play();
 			}
 		}
-
+		
 		//終了
 		public void End()
 		{
@@ -369,22 +389,23 @@ namespace Utage
 			float volume = GetVolume();
 			if (!Mathf.Approximately(volume, AudioSource.volume))
 			{
-				if (Audio0 != null)
-				{
-					Audio0.volume = volume;
-				}
-				if (Audio1 != null)
-				{
-					Audio1.volume = volume;
-				}
+				ApplyVolume(Audio0,volume);
+				ApplyVolume(Audio1,volume);
 			}
 		}
 
 		//ボリューム計算
 		float GetVolume()
 		{
-			float volume = fadeValue.GetValue() * Data.Volume * Player.Group.GetVolume(Data.Tag);
+			float volume = fadeValue.GetValue() * Data.Volume;
 			return volume;
+		}
+		
+		//音量を設定
+		void ApplyVolume( AudioSource audioSource, float volume)
+		{
+			if(audioSource==null) return;
+			audioSource.volume = volume;
 		}
 
 		//現在鳴っているボリュームを取得
@@ -410,9 +431,11 @@ namespace Utage
 			float sum = 0;
 			foreach (float s in waveData)
 			{
-				sum += Mathf.Abs(s);
+				sum += s*s;
 			}
-			return (sum / samples);
+			sum /= samples;
+			float dbVolume = 20.0f * Mathf.Log10(Mathf.Sqrt(sum)); // デシベルに変換する式
+			return Mathf.Clamp01(Mathf.InverseLerp(-80.0f, 0.0f, dbVolume)); // 0~1の範囲に変換する式
 		}
 	};
 }

@@ -23,8 +23,7 @@ namespace Utage
 		//シェーダーをチェックしてマテリアルを作る処理
 		protected override bool CheckShaderAndCreateMaterial()
 		{
-			Material mat;
-			bool ret = TryCheckShaderAndCreateMaterialSub(Shader, Material, out mat);
+			bool ret = TryCheckShaderAndCreateMaterialSub(Shader, Material, out Material mat);
 			Material = mat;
 			return ret;
 		}

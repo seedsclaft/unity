@@ -4,51 +4,57 @@ using UnityEngine.UI;
 using Utage;
 using System.Collections.Generic;
 
-/// <summary>
-/// ギャラリー表示のサンプル
-/// </summary>
-[AddComponentMenu("Utage/TemplateUI/UtageUguiGallery")]
-public class UtageUguiGallery : UguiView
+namespace Utage
 {
-	public UguiView[] views;
-	protected int tabIndex = -1;
 
 	/// <summary>
-	/// オープンしたときに呼ばれる
+	/// ギャラリー表示のサンプル
 	/// </summary>
-	protected virtual void OnOpen()
+	[AddComponentMenu("Utage/TemplateUI/UtageUguiGallery")]
+	public class UtageUguiGallery : UguiView
 	{
-		if (tabIndex >= 0)
-		{
-			views[tabIndex].ToggleOpen(true);
-		}
-	}
+		public UguiView[] views;
+		protected int tabIndex = -1;
 
-	//一時的に表示オフ
-	public virtual void Sleep()
-	{
-		this.gameObject.SetActive(false);
-	}
-
-	//一時的な表示オフを解除
-	public virtual void WakeUp()
-	{
-		this.gameObject.SetActive(true);
-	}
-
-	public virtual void OnTabIndexChanged( int index )
-	{
-		if (index >= views.Length)
+		/// <summary>
+		/// オープンしたときに呼ばれる
+		/// </summary>
+		protected virtual void OnOpen()
 		{
-			Debug.LogError("index < views.Length");
-			return;
+			if (tabIndex >= 0)
+			{
+				views[tabIndex].ToggleOpen(true);
+			}
 		}
-		for( int i = 0; i < views.Length; ++i )
+
+		//一時的に表示オフ
+		public virtual void Sleep()
 		{
-			if (i == index) continue;
-			views[i].ToggleOpen(false);
+			this.gameObject.SetActive(false);
 		}
-		views[index].ToggleOpen(true);
-		tabIndex = index;
+
+		//一時的な表示オフを解除
+		public virtual void WakeUp()
+		{
+			this.gameObject.SetActive(true);
+		}
+
+		public virtual void OnTabIndexChanged(int index)
+		{
+			if (index >= views.Length)
+			{
+				Debug.LogError("index < views.Length");
+				return;
+			}
+
+			for (int i = 0; i < views.Length; ++i)
+			{
+				if (i == index) continue;
+				views[i].ToggleOpen(false);
+			}
+
+			views[index].ToggleOpen(true);
+			tabIndex = index;
+		}
 	}
 }

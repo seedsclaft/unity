@@ -51,47 +51,67 @@ public class TitlePresenter : BasePresenter
         {
             CommandOption();
         }
+        if (viewEvent.commandType == CommandType.SelectTitle)
+        {
+            var loadFile = SaveSystem.ExistsLoadPlayerFile();
+            if (loadFile)
+            {
+                CommandContinue();
+            } else
+            {
+                CommandNewGame();
+            }
+        }
     }
 
     private void CommandTitle(int commandIndex){
         _busy = true;
         switch ((TitleCommandType)commandIndex){
             case TitleCommandType.NewGame:
-            _model.InitSaveInfo();
-            _view.CommandGotoSceneChange(Scene.NameEntry);
-            //_view.CommandSceneChange(Scene.Battle);
+                CommandNewGame();
             break;
             case TitleCommandType.Continue:
-            var loadSuccess = SaveSystem.LoadPlayerInfo();
-            if (loadSuccess == false)
-            {
-                var popupInfo = new ConfirmInfo("セーブデータを読み込めませんでした。\n誠に申し訳ないですがNewGameから開始をお願いします。",(menuCommandInfo) => updatePopup((ConfirmCommandType)menuCommandInfo));
-                popupInfo.SetIsNoChoice(true);
-                _view.CommandCallConfirm(popupInfo);
-                return;
-            }
-            // プレイヤーネームを設定しなおし
-            _view.CommandDecidePlayerName(GameSystem.CurrentData.PlayerInfo.PlayerName);
-            
-            var loadStage = SaveSystem.ExistsStageFile();
-            if (loadStage)
-            {
-                SaveSystem.LoadStageInfo();
-                // 習得データを変更
-                GameSystem.CurrentStageData.Party.ActorInfos.ForEach(a => a.UpdateLearningDates(DataSystem.Actors.Find(b => b.Id == a.ActorId).LearningSkills));
-            } else
-            {
-                _model.InitSaveStageInfo();
-            }
-            if (GameSystem.CurrentStageData.ResumeStage)
-            {
-                _view.CommandGotoSceneChange(Scene.Tactics);
-            } else{
-                _view.CommandGotoSceneChange(Scene.MainMenu);
-            }
-            break;
+                CommandContinue();
+                break;
         }
+    }
+
+    private void CommandNewGame()
+    {
+        _model.InitSaveInfo();
+        _view.CommandGotoSceneChange(Scene.NameEntry);
+    }
+
+    private void CommandContinue()
+    {
         Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
+        var loadSuccess = SaveSystem.LoadPlayerInfo();
+        if (loadSuccess == false)
+        {
+            var popupInfo = new ConfirmInfo("セーブデータを読み込めませんでした。\n誠に申し訳ないですがNewGameから開始をお願いします。",(menuCommandInfo) => updatePopup((ConfirmCommandType)menuCommandInfo));
+            popupInfo.SetIsNoChoice(true);
+            _view.CommandCallConfirm(popupInfo);
+            return;
+        }
+        // プレイヤーネームを設定しなおし
+        _view.CommandDecidePlayerName(GameSystem.CurrentData.PlayerInfo.PlayerName);
+        
+        var loadStage = SaveSystem.ExistsStageFile();
+        if (loadStage)
+        {
+            SaveSystem.LoadStageInfo();
+            // 習得データを変更
+            GameSystem.CurrentStageData.Party.ActorInfos.ForEach(a => a.UpdateLearningDates(DataSystem.Actors.Find(b => b.Id == a.ActorId).LearningSkills));
+        } else
+        {
+            _model.InitSaveStageInfo();
+        }
+        if (GameSystem.CurrentStageData.ResumeStage)
+        {
+            _view.CommandGotoSceneChange(Scene.Tactics);
+        } else{
+            _view.CommandGotoSceneChange(Scene.MainMenu);
+        }
     }
 
     private void CommandCredit()

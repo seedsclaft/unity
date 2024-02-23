@@ -9,6 +9,7 @@ namespace Utage
 	/// <summary>
 	/// インポートした全シナリオデータ
 	/// </summary>
+	[CreateAssetMenu(menuName = "Utage/Scenario/Scenarios")]
 	public class AdvImportScenarios : ScriptableObject
 	{
 		const int Version = 3;

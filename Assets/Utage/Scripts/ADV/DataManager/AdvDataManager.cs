@@ -111,6 +111,19 @@ namespace Utage
 			}
 		}
 
+		public void RemoveChapter(AdvChapterData chapter)
+		{
+			Dictionary<string, AdvScenarioData> scenarios = new Dictionary<string, AdvScenarioData>();
+			chapter.AddScenario(scenarios);
+			//チャプターデータを削除
+			foreach (var keyValue in scenarios)
+			{
+				if (this.scenarioDataTbl.ContainsValue(keyValue.Value))
+				{
+					this.scenarioDataTbl.Remove(keyValue.Key);
+				}
+			}
+		}
 
 		/// <summary>
 		/// シナリオデータのロードと初期化を開始

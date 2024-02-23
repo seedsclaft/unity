@@ -7,7 +7,7 @@ namespace Utage
 	/// <summary>
 	/// コマンド：SE再生
 	/// </summary>
-	internal class AdvCommandSe : AdvCommand
+	public class AdvCommandSe : AdvCommand
 	{
 
 		public AdvCommandSe(StringGridRow row, AdvSettingDataManager dataManager)

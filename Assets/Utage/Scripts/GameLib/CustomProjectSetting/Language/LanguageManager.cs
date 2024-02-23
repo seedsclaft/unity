@@ -8,13 +8,14 @@ namespace Utage
 	/// <summary>
 	/// 表示言語切り替え用のクラス
 	/// </summary>
+	[CreateAssetMenu(menuName = "Utage/Language/" + nameof(LanguageManager))]
 	public class LanguageManager : LanguageManagerBase
 	{
 		protected override void OnRefreshCurrentLanguage()
 		{
 			if (!IgnoreLocalizeUiText)
 			{
-				UguiLocalizeBase[] localizeTbl = WrapperUnityVersion.FindObjectsOfType<UguiLocalizeBase>();
+				UguiLocalizeBase[] localizeTbl = WrapperFindObject.FindObjectsOfType<UguiLocalizeBase>();
 				foreach (var item in localizeTbl)
 				{
 					item.OnLocalize();

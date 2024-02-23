@@ -27,6 +27,7 @@ namespace Utage
 		[SerializeField]
 		protected AdvUguiBacklogManager backLog;
 
+
 		//マウスホイールによるバックログの有効・無効
 		public bool DisableMouseWheelBackLog { get { return disableMouseWheelBackLog; } set { disableMouseWheelBackLog = value; } }
 		[SerializeField]
@@ -41,9 +42,10 @@ namespace Utage
 		};
 		
 		//InputUtilが無効の時に、UpdateやOnInputを無視する
+		//宴4から初期値を-1（EveryThing）に設定
 		public InputUtilDisableFilter FilterInputUtilDisable { get { return filterInputUtilDisable; } set { filterInputUtilDisable = value; } }
 		[EnumFlags,SerializeField]
-		protected InputUtilDisableFilter filterInputUtilDisable = 0;
+		protected InputUtilDisableFilter filterInputUtilDisable = (InputUtilDisableFilter)(-1);
 
 		//InputUtilが無効の時の設定されたフィルターをチェック
 		protected bool CheckInputUtilDisable(InputUtilDisableFilter flag)
@@ -117,7 +119,7 @@ namespace Utage
 					{	//通常画面に復帰
 						Status = UiStatus.Default;
 					}
-					else if (!disableMouseWheelBackLog && InputUtil.IsInputScrollWheelUp())
+					else if (!DisableMouseWheelBackLog && InputUtil.IsInputScrollWheelUp())
 					{
 						//バックログ開く
 						Status = UiStatus.Backlog;
@@ -135,7 +137,7 @@ namespace Utage
 						{	//右クリックでウィンドウ閉じる
 							Status = UiStatus.HideMessageWindow;
 						}
-						else if (!disableMouseWheelBackLog && InputUtil.IsInputScrollWheelUp())
+						else if (!DisableMouseWheelBackLog && InputUtil.IsInputScrollWheelUp())
 						{	//バックログ開く
 							Status = UiStatus.Backlog;
 						}

@@ -13,15 +13,15 @@ namespace Utage
 	[AddComponentMenu("Utage/Lib/File/StaticAssetManager")]
 	public class StaticAssetManager : MonoBehaviour
 	{
-		[SerializeField]
-		List<StaticAsset> assets = new List<StaticAsset>();
-		List<StaticAsset> Assets { get { return assets; } }
+		[SerializeField] List<StaticAsset> assets = new List<StaticAsset>();
+		
+		public List<StaticAsset> Assets => assets;
 
 		public AssetFileBase FindAssetFile(AssetFileManager mangager, AssetFileInfo fileInfo, IAssetFileSettingData settingData)
 		{
 			if (Assets == null) return null;
 			string assetName = FilePathUtil.GetFileNameWithoutExtension(fileInfo.FileName);
-			StaticAsset asset = Assets.Find((x) => (x.Asset.name == assetName));
+			StaticAsset asset = Find(assetName);
 			if (asset == null) return null;
 
 			return new StaticAssetFile(asset, mangager, fileInfo, settingData);
@@ -39,9 +39,25 @@ namespace Utage
 		public bool Contains(string path)
 		{
 			string assetName = FilePathUtil.GetFileNameWithoutExtension(path);
-			StaticAsset asset = Assets.Find((x) => (x.Asset.name == assetName));
+			StaticAsset asset = Find(assetName);
 			return (asset != null);
 		}
+
+		StaticAsset Find(string assetName)
+		{
+			return Assets.Find((x) =>
+			{
+				if (x.Asset==null)
+				{
+					//アセットが破壊されている
+					Debug.LogWarning($"Missing Asset in {nameof(StaticAssetManager)}", this);
+					return false;
+				}
+
+				return x.Asset.name == assetName;
+			});
+		}
+
 	}
 
 	//動的にロードしないアセットの情報
@@ -53,6 +69,7 @@ namespace Utage
 		public Object Asset
 		{
 			get { return asset; }
+			set { asset = value; }
 		}
 	}
 

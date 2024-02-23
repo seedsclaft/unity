@@ -7,7 +7,7 @@ namespace Utage
 	/// <summary>
 	/// コマンド：ムービー再生(Unity5.6以降のVideoClip版)
 	/// </summary>
-	internal class AdvCommandVideo : AdvCommand
+	public class AdvCommandVideo : AdvCommand
 	{
 		public AdvCommandVideo(StringGridRow row, AdvSettingDataManager dataManager)
 			: base(row)

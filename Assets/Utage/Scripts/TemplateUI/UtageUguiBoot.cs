@@ -6,65 +6,73 @@ using UtageExtensions;
 using System.Collections;
 using System.Collections.Generic;
 
-
-/// <summary>
-/// タイトル表示のサンプル
-/// </summary>
-[AddComponentMenu("Utage/TemplateUI/UtageUguiBoot")]
-public class UtageUguiBoot : UguiView
+namespace Utage
 {
-	/// <summary>ADVエンジン</summary>
-	public AdvEngine Engine { get { return this.GetComponentCacheFindIfMissing(ref engine); } }
-	[SerializeField]
-	protected AdvEngine engine;
 
-	
-	public UguiFadeTextureStream fadeTextureStream;
-	
-	public UtageUguiTitle title;
-	public UtageUguiLoadWait loadWait;
-
-	public bool isWaitBoot;
-	public bool isWaitDownLoad;
-	public bool isWaitSplashScreen = true;
-
-	///最初の画面なので自分でオープンする
-	public virtual void Start()
+	/// <summary>
+	/// タイトル表示のサンプル
+	/// </summary>
+	[AddComponentMenu("Utage/TemplateUI/UtageUguiBoot")]
+	public class UtageUguiBoot : UguiView
 	{
-		title.gameObject.SetActive(false);
-		StartCoroutine(CoUpdate());
-	}
+		/// <summary>ADVエンジン</summary>
+		public AdvEngine Engine
+		{
+			get { return this.GetComponentCacheFindIfMissing(ref engine); }
+		}
 
-	///
-	protected virtual IEnumerator CoUpdate()
-	{
+		[SerializeField] protected AdvEngine engine;
+
+
+		public UguiFadeTextureStream fadeTextureStream;
+
+		public UtageUguiTitle title;
+		public UtageUguiLoadWait loadWait;
+
+		public bool isWaitBoot;
+		public bool isWaitDownLoad;
+		public bool isWaitSplashScreen = true;
+
+		///最初の画面なので自分でオープンする
+		public virtual void Start()
+		{
+			title.gameObject.SetActive(false);
+			StartCoroutine(CoUpdate());
+		}
+
+		///
+		protected virtual IEnumerator CoUpdate()
+		{
 #if UNITY_5_3_OR_NEWER
-		if (isWaitSplashScreen)
-		{
-			while (!WrapperUnityVersion.IsFinishedSplashScreen()) yield return null;
-		}
+			if (isWaitSplashScreen)
+			{
+				while (!WrapperUnityVersion.IsFinishedSplashScreen()) yield return null;
+			}
 #endif
-		//BGMなどを鳴らすために追加
-		Open();
+			//BGMなどを鳴らすために追加
+			Open();
 
-		if (fadeTextureStream)
-		{
-			fadeTextureStream.gameObject.SetActive(true);
-			fadeTextureStream.Play();
-			while (fadeTextureStream.IsPlaying) yield return null;
-		}
-		if (isWaitBoot)
-		{
-			while (Engine.IsWaitBootLoading) yield return null;
-		}
-		this.Close();
-		if (isWaitDownLoad && loadWait != null)
-		{
-			loadWait.OpenOnBoot();
-		}
-		else
-		{
-			title.Open();
+			if (fadeTextureStream)
+			{
+				fadeTextureStream.gameObject.SetActive(true);
+				fadeTextureStream.Play();
+				while (fadeTextureStream.IsPlaying) yield return null;
+			}
+
+			if (isWaitBoot)
+			{
+				while (Engine.IsWaitBootLoading) yield return null;
+			}
+
+			this.Close();
+			if (isWaitDownLoad && loadWait != null)
+			{
+				loadWait.OpenOnBoot();
+			}
+			else
+			{
+				title.Open();
+			}
 		}
 	}
 }

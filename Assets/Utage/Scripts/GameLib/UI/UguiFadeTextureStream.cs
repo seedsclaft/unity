@@ -26,7 +26,6 @@ namespace Utage
 		public class FadeTextureInfo
 		{
 			public Texture texture;
-			public string moviePath;
 			public string videoPath;
 			public float fadeInTime = 0.5f;
 			public float duration = 3.0f;
@@ -107,10 +106,6 @@ namespace Utage
 					rawImage.CrossFadeAlpha(0, info.fadeOutTime, true);
 					yield return TimeUtil.WaitForSeconds(unscaledTime, info.fadeOutTime);
 				}
-				else if (!string.IsNullOrEmpty(info.moviePath))
-				{
-					yield return PlayMovie(info);
-				}
 				else if (!string.IsNullOrEmpty(info.videoPath))
 				{
 					yield return PlayVideo(info);
@@ -121,20 +116,6 @@ namespace Utage
 			}
 
 			isPlaying = false;
-		}
-
-		protected virtual IEnumerator PlayMovie(FadeTextureInfo info)
-		{
-			WrapperMoviePlayer.Play(info.moviePath);
-			while (WrapperMoviePlayer.IsPlaying())
-			{
-				yield return null;
-				if (IsInputSkip(info))
-				{
-					WrapperMoviePlayer.Cancel();
-				}
-				AllSkip = IsInputAllSkip;
-			}
 		}
 
 		protected virtual IEnumerator PlayVideo(FadeTextureInfo info)

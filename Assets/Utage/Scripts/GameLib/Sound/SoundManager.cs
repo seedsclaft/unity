@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine.Events;
 using UnityEngine;
+using UnityEngine.Audio;
+using UtageExtensions;
 
 namespace Utage
 {
@@ -28,7 +30,7 @@ namespace Utage
 		{
 			if (null == instance)
 			{
-				instance = WrapperUnityVersion.FindObjectOfType<SoundManager>();
+				instance = WrapperFindObject.FindObjectOfType<SoundManager>();
 			}
 			return instance;
 		}
@@ -45,7 +47,14 @@ namespace Utage
 		public float MasterVolume
 		{
 			get { return this.masterVolume; }
-			set { masterVolume = value; }
+			set
+			{
+				masterVolume = value;
+				if(SystemEx!=null)
+				{
+					SystemEx.OnChangedMasterVolume();
+				}
+			}
 		}
 		[SerializeField, Range(0, 1)]
 		float masterVolume = 1;
@@ -100,14 +109,19 @@ namespace Utage
 			TaggedMasterVolume data = TaggedMasterVolumes.Find(x => x.Tag == tag);
 			if (data == null)
 			{
-				TaggedMasterVolumes.Add(new TaggedMasterVolume() { Tag = tag, Volume = volmue });
+				data = new TaggedMasterVolume() { Tag = tag, Volume = volmue };
+				TaggedMasterVolumes.Add(data);
 			}
 			else
 			{
 				data.Volume = volmue;
 			}
+			if (SystemEx != null)
+			{
+				SystemEx.OnChangedTaggedMasterVolume(data);
+			}
 		}
-
+		
 		/// <summary>
 		/// キャラ別の音量設定など、個別のボリューム設定
 		/// </summary>
@@ -123,6 +137,10 @@ namespace Utage
 			public float Volume { get { return volume; } set { volume = value; } }
 			[Range(0, 1), SerializeField]
 			float volume = 1;
+			
+			//オーディオミキサーのグループ設定
+			public AudioMixerGroup AudioMixerGroup => audioMixerGroup;
+			[SerializeField] AudioMixerGroup audioMixerGroup = null;
 		};
 
 		/// <summary>
@@ -200,7 +218,12 @@ namespace Utage
 		}
 		[SerializeField]
 		SoundPlayMode voicePlayMode = SoundPlayMode.Replay;
-
+		
+		public AudioMixer AudioMixer => audioMixer;
+		[SerializeField] AudioMixer audioMixer = null;
+		
+		public string MasterVolumeFormat => masterVolumeFormat;
+		[SerializeField] string masterVolumeFormat = "MasterVolume{0}";
 
 		[System.Serializable]
 		public class SoundManagerEvent : UnityEvent<SoundManager> { }

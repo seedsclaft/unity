@@ -64,7 +64,7 @@ namespace Utage
 		protected override Material Material { get { return Avatar.Material; } set { Avatar.Material = value; } }
 
 		//エフェクト用の色が変化したとき
-		internal override void OnEffectColorsChange(AdvEffectColor color)
+		public override void OnEffectColorsChange(AdvEffectColor color)
 		{
 			Graphic[] graphics = GetComponentsInChildren<Graphic>();
 			foreach (Graphic graphic in graphics )
@@ -86,14 +86,14 @@ namespace Utage
 		}
 
 		//********描画時にクロスフェードが失敗するであろうかのチェック********//
-		internal override bool CheckFailedCrossFade(AdvGraphicInfo graphic)
+		public override bool CheckFailedCrossFade(AdvGraphicInfo graphic)
 		{
 			AvatarData avatarData = graphic.File.UnityObject as AvatarData;
 			return Avatar.AvatarData != avatarData;
 		}
 
 		//********描画時のリソース変更********//
-		internal override void ChangeResourceOnDraw(AdvGraphicInfo graphic, float fadeTime)
+		public override void ChangeResourceOnDraw(AdvGraphicInfo graphic, float fadeTime)
 		{
 			Avatar.Material = graphic.RenderTextureSetting.GetRenderMaterialIfEnable(Avatar.Material);
 
@@ -120,7 +120,7 @@ namespace Utage
 		}
 
 		//上下左右の反転
-		internal override void Flip(bool flipX, bool flipY)
+		public override void Flip(bool flipX, bool flipY)
 		{
 			Avatar.Flip(flipX, flipY);
 		}

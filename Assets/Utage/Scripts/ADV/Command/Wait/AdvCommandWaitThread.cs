@@ -6,7 +6,7 @@ namespace Utage
 	/// <summary>
 	/// コマンド：スレッドの終了を待つ
 	/// </summary>
-	internal class AdvCommandWaitThread : AdvCommand
+	public class AdvCommandWaitThread : AdvCommand
 	{
 		public AdvCommandWaitThread(StringGridRow row)
 			: base(row)

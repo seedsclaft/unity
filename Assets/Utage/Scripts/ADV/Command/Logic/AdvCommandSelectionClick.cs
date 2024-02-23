@@ -8,7 +8,7 @@ namespace Utage
 	/// <summary>
 	/// コマンド：クリックによる選択肢表示
 	/// </summary>
-	internal class AdvCommandSelectionClick : AdvCommand
+	public class AdvCommandSelectionClick : AdvCommand
 	{
 
 		public AdvCommandSelectionClick(StringGridRow row, AdvSettingDataManager dataManager)

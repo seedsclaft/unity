@@ -25,6 +25,26 @@ namespace Utage
 		[NonSerialized]
 		List<CameraRoot> cameraList = null;
 
+		//カメラのキャプチャ処理制御（RenderPipeLineによってコンポーネントが違う）
+		public ICameraCaptureManager CaptureManager
+		{
+			get
+			{
+				if (captureManager == null)
+				{
+					//Addされてるコンポーネントを取得
+					captureManager = this.GetComponent<ICameraCaptureManager>();
+					if (captureManager == null)
+					{
+						//なかったらビルトインのコンポーネントを作成
+						captureManager = this.gameObject.AddComponent<CameraCaptureManagerBuiltin>();
+					}
+				}
+				return captureManager;
+			}
+		}
+		ICameraCaptureManager captureManager;
+
 		public CameraRoot FindCameraRoot(string name)
 		{
 			return CameraList.Find(x=>x.name == name);

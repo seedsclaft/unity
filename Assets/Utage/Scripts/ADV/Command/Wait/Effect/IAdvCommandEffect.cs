@@ -27,5 +27,4 @@ namespace Utage
 	{
 		bool UpdateCheckWait();
 	}
-
 }

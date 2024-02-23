@@ -116,7 +116,7 @@ namespace Utage
 		/// <summary>
 		/// システムデータ含めてデフォルト値で初期化
 		/// </summary>
-		internal void InitDefaultAll(AdvParamManager src)
+		public void InitDefaultAll(AdvParamManager src)
 		{
 			this.DefaultParameter = src;
 			this.StructTbl.Clear();
@@ -131,7 +131,7 @@ namespace Utage
 		/// システムデータ以外の値をデフォルト値で初期化
 		/// </summary>
 		/// <param name="advParamSetting"></param>
-		internal void InitDefaultNormal(AdvParamManager src)
+		public void InitDefaultNormal(AdvParamManager src)
 		{
 			foreach (var keyValue in src.StructTbl)
 			{

@@ -13,10 +13,11 @@ namespace Utage
 	public class AdvGuiManager : MonoBehaviour, IAdvSaveData
 	{
 		//管理対象のUI
-		[SerializeField]
-		protected List<GameObject> guiObjects = new List<GameObject>();
+		public List<GameObject> GuiObjects => guiObjects;
+		[SerializeField] protected List<GameObject> guiObjects = new List<GameObject>();
+
 		protected Dictionary<string, AdvGuiBase> objects = new Dictionary<string, AdvGuiBase>();
-		public Dictionary<string, AdvGuiBase> Objects{ get{ return objects;}}
+		public Dictionary<string, AdvGuiBase> Objects => objects;
 
 		//
 		protected virtual void Awake()
@@ -32,7 +33,6 @@ namespace Utage
 				}
 			}
 		}
-
 
 		internal virtual bool TryGet(string name, out AdvGuiBase gui)
 		{

@@ -8,7 +8,7 @@ namespace Utage
 	/// <summary>
 	/// コマンド：ランダムジャンプ
 	/// </summary>
-	internal class AdvCommandJumpRandom : AdvCommand
+	public class AdvCommandJumpRandom : AdvCommand
 	{
 		public AdvCommandJumpRandom(StringGridRow row, AdvSettingDataManager dataManager)
 			: base(row)

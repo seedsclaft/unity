@@ -9,7 +9,7 @@ namespace Utage
 	/// <summary>
 	/// コマンド：キャプチャ画像の作成・表示
 	/// </summary>
-	internal class AdvCommandCaptureImage : AdvCommand
+	public class AdvCommandCaptureImage : AdvCommand
 	{
 		public AdvCommandCaptureImage(StringGridRow row)
 			: base(row)

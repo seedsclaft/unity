@@ -6,7 +6,7 @@ namespace Utage
 {
 	
 	// コマンド：オブジェクト単位のフェードアウト
-	internal class AdvCommandWaitEffectTime : AdvCommandWaitBase
+	public class AdvCommandWaitEffectTime : AdvCommandWaitBase
 		, IAdvCommandEffect
 		, IAdvCommandUpdateWait
 	{

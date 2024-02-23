@@ -6,11 +6,15 @@ using UnityEngine.UI;
 using Utage;
 using System.Collections;
 
-
-/// <summary>
-/// チャプター起動のサンプル
-/// </summary>
-[AddComponentMenu("Utage/TemplateUI/UtageUguiStartChapter")]
-public class UtageUguiStartChapter : MonoBehaviour
+namespace Utage
 {
+
+    /// <summary>
+    /// チャプター起動のサンプル
+    /// </summary>
+    [AddComponentMenu("Utage/TemplateUI/UtageUguiStartChapter")]
+    public class UtageUguiStartChapter : MonoBehaviour
+    {
+    }
+
 }

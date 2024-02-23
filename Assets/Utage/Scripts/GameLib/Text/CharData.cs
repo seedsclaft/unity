@@ -1,6 +1,7 @@
 ﻿// UTAGE: Unity Text Adventure Game Engine (c) Ryohei Tokimura
 using UnityEngine;
 using System.Collections.Generic;
+using System.Text;
 
 namespace Utage
 {
@@ -13,15 +14,6 @@ namespace Utage
 			Link,
 			Tips,
 		};
-
-		public const char Dash = '—';
-
-		/// <summary>
-		/// 文字
-		/// </summary>
-		public char Char { get { return this.c; } set { this.c = value; } }
-		char c;
-
 
 		//カスタム情報
 		public class CustomCharaInfo
@@ -83,6 +75,8 @@ namespace Utage
 			public bool IsEmoji{get;set;}
 			//絵文字のキー
 			public string EmojiKey { get; set; }
+			//絵文字タグのタイプ
+			public string EmojiType { get; set; }
 
 			//ダッシュ（ハイフン・横線）が設定されているか
 			public bool IsDash{get;set;}
@@ -431,6 +425,13 @@ namespace Utage
 		}
 
 
+		public const char Dash = '—';
+
+		/// <summary>
+		/// 文字
+		/// </summary>
+		public char Char { get; private set; }
+
 		/// <summary>
 		/// Unityのリッチテキストのインデックス
 		/// </summary>
@@ -443,8 +444,12 @@ namespace Utage
 		/// <summary>
 		/// カスタム情報
 		/// </summary>
-		public CustomCharaInfo CustomInfo { get { return this.customInfo; } }
-		CustomCharaInfo customInfo;
+		public CustomCharaInfo CustomInfo { get; }
+
+		//サロゲートペア文字の場合、下位サロゲートペア文字
+		public char CharSurrogatePair { get; private set; }
+		//サロゲートペア文字かどうか
+		public bool IsSurrogatePair { get; } = false;
 
 		/// <summary>
 		/// コンストラクタ
@@ -452,17 +457,42 @@ namespace Utage
 		/// <param name="c">文字</param>
 		public CharData(char c, CustomCharaInfo customInfo)
 		{
-			this.c = c;
-			this.customInfo = customInfo.Clone();
+			this.Char = c;
+			this.CustomInfo = customInfo.Clone();
 		}
+		//コンストラクタ
+		//サロゲートペア文字用
+		public CharData(char c, char surrogatePair, CustomCharaInfo customInfo)
+			: this(c, customInfo)
+		{
+			this.IsSurrogatePair = true;
+			CharSurrogatePair = surrogatePair;
+		}
+
 		/// <summary>
 		/// コンストラクタ
 		/// </summary>
 		/// <param name="c">文字</param>
 		public CharData(char c)
 		{
-			this.c = c;
-			this.customInfo = new CustomCharaInfo();
+			this.Char = c;
+			this.CustomInfo = new CustomCharaInfo();
+		}
+		
+		//文字を上書きする
+		public void OverrideChar(char c)
+		{
+			Char = c;
+		}
+
+		//文字列作成用に文字を追加する
+		public void AppendToStringBuilder(StringBuilder builder)
+		{
+			builder.Append(Char);
+			if (IsSurrogatePair)
+			{
+				builder.Append(CharSurrogatePair);
+			}
 		}
 
 		/// <summary>
@@ -472,7 +502,7 @@ namespace Utage
 
 		internal bool TryParseInterval(string arg)
 		{
-			return this.customInfo.TryParseInterval(arg);
+			return this.CustomInfo.TryParseInterval(arg);
 		}
 	};
 }

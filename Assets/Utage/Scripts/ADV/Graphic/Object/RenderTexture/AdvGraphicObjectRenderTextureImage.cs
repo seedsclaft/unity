@@ -56,7 +56,7 @@ namespace Utage
 		}
 
 		//初期化
-		internal void Init(AdvRenderTextureSpace renderTextureSpace)
+		public void Init(AdvRenderTextureSpace renderTextureSpace)
 		{
 			this.RenderTextureSpace = renderTextureSpace;
 			this.RawImage = this.gameObject.GetComponentCreateIfMissing<RawImage>();
@@ -73,13 +73,13 @@ namespace Utage
 		}
 
 		//********描画時にクロスフェードが失敗するであろうかのチェック********//
-		internal override bool CheckFailedCrossFade(AdvGraphicInfo graphic)
+		public override bool CheckFailedCrossFade(AdvGraphicInfo graphic)
 		{
 			return false;
 		}
 
 		//********描画時のリソース変更********//
-		internal override void ChangeResourceOnDraw(AdvGraphicInfo graphic, float fadeTime)
+		public override void ChangeResourceOnDraw(AdvGraphicInfo graphic, float fadeTime)
 		{
 			//既に描画されている場合は、クロスフェード用のイメージを作成
 			bool crossFade = TryCreateCrossFadeImage(fadeTime, graphic);

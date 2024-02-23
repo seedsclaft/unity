@@ -5,7 +5,7 @@ using UtageExtensions;
 namespace Utage
 {
 
-	internal abstract class AdvCommandRuleFadeBase : AdvCommandEffectBase
+	public abstract class AdvCommandRuleFadeBase : AdvCommandEffectBase
 		, IAdvCommandEffect
 	{
 		protected IAdvFadeSkippable Fade { get; set; }

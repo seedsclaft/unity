@@ -6,7 +6,7 @@ namespace Utage
 	/// <summary>
 	/// コマンド：ページ終了コマンド
 	/// </summary>
-	internal class AdvCommandEndPage : AdvCommand
+	public class AdvCommandEndPage : AdvCommand
 	{
 		public AdvCommandEndPage(StringGridRow row)
 			: base(row)

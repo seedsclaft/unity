@@ -7,7 +7,7 @@ namespace Utage
 	/// <summary>
 	/// コマンド：フェードイン処理
 	/// </summary>
-	internal class AdvCommandFadeIn : AdvCommandFadeBase
+	public class AdvCommandFadeIn : AdvCommandFadeBase
 	{
 
 		public AdvCommandFadeIn(StringGridRow row, AdvSettingDataManager dataManager)

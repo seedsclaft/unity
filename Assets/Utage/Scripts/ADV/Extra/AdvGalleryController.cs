@@ -25,6 +25,11 @@ namespace Utage
 
 		//シーン回想実行中のフラグを設定するパラメーター名
 		[SerializeField] string paramKeyPlayingSceneGallery = "";
+		public string ParamKeyPlayingSceneGallery
+		{
+			get => paramKeyPlayingSceneGallery;
+			set => paramKeyPlayingSceneGallery = value;
+		}
 
 
 		void Awake()
@@ -40,7 +45,6 @@ namespace Utage
 
 		public void OnBeginScenarioAfterParametersInitialized(AdvScenarioPlayer scenarioPlayer)
 		{
-			
 			if (!string.IsNullOrEmpty(paramKeyPlayingSceneGallery) && Engine.Param.ExistParameter(paramKeyPlayingSceneGallery))
 			{
 				Engine.Param.SetParameterBoolean(paramKeyPlayingSceneGallery, IsPlayingSceneGallery);

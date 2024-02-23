@@ -29,7 +29,7 @@ namespace Utage
 		}
 
 		//エフェクト用の色が変化したとき
-		internal override void OnEffectColorsChange(AdvEffectColor color)
+		public override void OnEffectColorsChange(AdvEffectColor color)
 		{
 			foreach (var item in this.GetComponentsInChildren<IAdvGraphicObjectCustom>())
 			{
@@ -38,7 +38,7 @@ namespace Utage
 		}
 
 		//********描画時の引数適用********//
-		internal override void SetCommandArg(AdvCommand command)
+		public override void SetCommandArg(AdvCommand command)
 		{
 			base.SetCommandArg(command);
 			foreach (var item in this.GetComponentsInChildren<IAdvGraphicObjectCustomCommand>())

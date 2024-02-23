@@ -1,21 +1,27 @@
 ﻿// UTAGE: Unity Text Adventure Game Engine (c) Ryohei Tokimura
+
+using System;
 using UnityEngine;
 using Utage;
 
-
-/// <summary>
-/// ゲーム起動処理のサンプル
-/// </summary>
-[ExecuteInEditMode]
-[AddComponentMenu("Utage/Lib/Other/BootCustomProjectSetting")]
-public class BootCustomProjectSetting : MonoBehaviour
+//ゲームのカスタムプロジェクト設定
+namespace Utage
 {
-	//独自カスタムのプロジェクト設定
-	public CustomProjectSetting CustomProjectSetting
+	[AddComponentMenu("Utage/Lib/Other/BootCustomProjectSetting")]
+	public class BootCustomProjectSetting : MonoBehaviour
 	{
-		get { return customProjectSetting; }
-		set { customProjectSetting = value; }
+		//独自カスタムのプロジェクト設定
+		public CustomProjectSetting CustomProjectSetting
+		{
+			get { return customProjectSetting; }
+			set { customProjectSetting = value; }
+		}
+
+		[SerializeField] CustomProjectSetting customProjectSetting;
+
+		private void OnDestroy()
+		{
+			LanguageManagerBase.Instance.OnFinalize();
+		}
 	}
-	[SerializeField]
-	CustomProjectSetting customProjectSetting;
 }

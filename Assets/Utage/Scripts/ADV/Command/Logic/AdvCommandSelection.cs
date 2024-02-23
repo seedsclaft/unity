@@ -8,8 +8,16 @@ namespace Utage
 	/// <summary>
 	/// コマンド：選択肢表示
 	/// </summary>
-	public class AdvCommandSelection : AdvCommand
+	public class AdvCommandSelection 
+		: AdvCommand
+			, IAdvCommandTexts
 	{
+		string jumpLabel;
+		ExpressionParser exp; //選択肢表示条件式
+		ExpressionParser selectedExp; //選択後に実行する演算式
+		string prefabName;
+		float? x;
+		float? y;
 
 		public AdvCommandSelection(StringGridRow row, AdvSettingDataManager dataManager)
 			: base(row)
@@ -87,13 +95,14 @@ namespace Utage
 		}
 
 		//ページ区切り系のコマンドか
-		public override bool IsTypePage() { return true; }
+		public override bool IsTypePage()
+		{
+			return true;
+		}
 
-		string jumpLabel;
-		ExpressionParser exp;				//選択肢表示条件式
-		ExpressionParser selectedExp;		//選択後に実行する演算式
-		string prefabName;
-		float? x;
-		float? y;
+		public IEnumerable<string> GetTextStrings()
+		{
+			yield return ParseCellLocalizedText();
+		}
 	}
 }

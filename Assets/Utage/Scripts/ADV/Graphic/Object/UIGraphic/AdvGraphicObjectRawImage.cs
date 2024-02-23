@@ -60,13 +60,13 @@ namespace Utage
 		}
 
 		//********描画時にクロスフェードが失敗するであろうかのチェック********//
-		internal override bool CheckFailedCrossFade(AdvGraphicInfo graphic)
+		public override bool CheckFailedCrossFade(AdvGraphicInfo graphic)
 		{
 			return !EnableCrossFade(graphic);
 		}
 
 		//********描画時のリソース変更********//
-		internal override void ChangeResourceOnDraw(AdvGraphicInfo graphic, float fadeTime)
+		public override void ChangeResourceOnDraw(AdvGraphicInfo graphic, float fadeTime)
 		{
 			Material = graphic.RenderTextureSetting.GetRenderMaterialIfEnable(Material);
 
@@ -133,22 +133,25 @@ namespace Utage
 		}
 
 		//カメラのキャプチャ画像を、Imageとして設定
-		internal void CaptureCamera(Camera camera)
+		internal void CaptureCamera(Camera targetCamera)
 		{
 			RawImage.enabled = false;
 
 			//カメラのキャプチャコンポーネントを有効に
-			CaptureCamera captureCamera = camera.gameObject.AddComponent<CaptureCamera>();
-			captureCamera.enabled = true;
-			captureCamera.OnCaptured.AddListener(OnCaptured);
+			var captureManager = targetCamera.gameObject.GetComponentInParent<CameraManager>().CaptureManager;
+			if (CaptureImage != null)
+			{
+				RenderTexture.ReleaseTemporary(CaptureImage);
+			}
+			CaptureImage = RenderTexture.GetTemporary (targetCamera.scaledPixelWidth, targetCamera.scaledPixelHeight);
+			captureManager.Capture(targetCamera,CaptureImage,()=>OnCaptured(targetCamera));
 		}
 
-		void OnCaptured(CaptureCamera captureCamera)
+		void OnCaptured(Camera targetCamera)
 		{
-			ReleaseCaptureImage();
 			RawImage.enabled = true;
-			RawImage.texture = CaptureImage = captureCamera.CaptureImage;
-			LetterBoxCamera letterBoxCamera = captureCamera.GetComponent<LetterBoxCamera>();
+			RawImage.texture = CaptureImage;
+			LetterBoxCamera letterBoxCamera = targetCamera.GetComponent<LetterBoxCamera>();
 			if (letterBoxCamera != null)
 			{
 				RawImage.rectTransform.SetSize(letterBoxCamera.CurrentSize);
@@ -172,9 +175,6 @@ namespace Utage
 				RawImage.rectTransform.SetSize(Screen.width, Screen.height);
 			}
 
-			//カメラのキャプチャコンポーネントを無効にする
-			captureCamera.OnCaptured.RemoveListener(OnCaptured);
-			Destroy(captureCamera);
 		}
 		public bool IsCrossFading
 		{

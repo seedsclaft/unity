@@ -6,7 +6,7 @@ namespace Utage
 	/// <summary>
 	/// コマンド：キャラクター＆台詞表示
 	/// </summary>
-	internal class AdvCommandCharacterOff : AdvCommand
+	public class AdvCommandCharacterOff : AdvCommand
 	{
 
 		public AdvCommandCharacterOff(StringGridRow row)

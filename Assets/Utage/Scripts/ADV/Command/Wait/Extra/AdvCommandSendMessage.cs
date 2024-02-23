@@ -24,7 +24,7 @@ namespace Utage
 
 		public override void DoCommand(AdvEngine engine)
 		{
-			this.text = ParseCellLocalizedText();
+			this.text = (IsEmptyCell(AdvColumnName.Text)) ? "" : ParseCellLocalizedText();
 			engine.ScenarioPlayer.SendMessageTarget.SafeSendMessage("OnDoCommand", this);
 		}
 

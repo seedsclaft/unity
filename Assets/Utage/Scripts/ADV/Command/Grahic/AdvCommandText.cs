@@ -1,4 +1,6 @@
 ﻿// UTAGE: Unity Text Adventure Game Engine (c) Ryohei Tokimura
+
+using System.Collections.Generic;
 using UnityEngine;
 using System.Text;
 
@@ -10,7 +12,17 @@ namespace Utage
 	/// </summary>
 	public class AdvCommandText : AdvCommand
 		, IAdvInitOnCreateEntity
+		, IAdvCommandTexts
 	{
+
+		public bool IsPageEnd { get; private set; }
+		public bool IsNextBr { get; private set; }
+		public AdvPageControllerType PageCtrlType { get; private set; }
+
+		public AssetFile VoiceFile { get; private set; }
+
+		AdvScenarioPageData PageData { get; set; }
+		int IndexPageData { get; set; }
 
 		public AdvCommandText(StringGridRow row, AdvSettingDataManager dataManager)
 			: base(row)
@@ -117,16 +129,20 @@ namespace Utage
 		}
 
 		//ページ区切り系のコマンドか
-		public override bool IsTypePage() { return true; }
+		public override bool IsTypePage()
+		{
+			return true;
+		}
+
 		//ページ終端のコマンドか
-		public override bool IsTypePageEnd() { return IsPageEnd; }
-		public bool IsPageEnd { get; private set; }
-		public bool IsNextBr { get; private set; }
-		public AdvPageControllerType PageCtrlType { get; private set; }
+		public override bool IsTypePageEnd()
+		{
+			return IsPageEnd;
+		}
 
-		public AssetFile VoiceFile { get; private set; }
-
-		AdvScenarioPageData PageData { get; set; }
-		int IndexPageData { get; set; }
+		public IEnumerable<string> GetTextStrings()
+		{
+			yield return ParseCellLocalizedText();
+		}
 	}
 }

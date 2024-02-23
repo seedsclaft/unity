@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 using System.Collections;
+using TMPro;
 
 namespace Utage
 {
@@ -13,8 +14,9 @@ namespace Utage
 	public class SystemUiDialog3Button : SystemUiDialog2Button
 	{
 
-		[SerializeField]
-		protected Text button3Text;
+		[SerializeField, HideIfTMP] protected Text button3Text;
+		[SerializeField, HideIfLegacyText] protected TextMeshProUGUI button3TextTmp;
+
 
 		/// <summary>
 		/// ボタン3を押したときのイベント
@@ -34,10 +36,15 @@ namespace Utage
 		/// <param name="callbackOnClickButton3">ボタン3を押したときの呼ばれるコールバック</param>
 		public virtual void Open(string text, string buttonText1, string buttonText2, string buttonText3, UnityAction callbackOnClickButton1, UnityAction callbackOnClickButton2, UnityAction callbackOnClickButton3 )
 		{
-			button3Text.text = buttonText3;
+			SetTextButton3(buttonText3);
 			this.OnClickButton3.RemoveAllListeners();
 			this.OnClickButton3.AddListener(callbackOnClickButton3);
 			base.Open(text, buttonText1, buttonText2, callbackOnClickButton1, callbackOnClickButton2);
+		}
+
+		public virtual void SetTextButton3(string text)
+		{
+			TextComponentWrapper.SetText(button3Text, button3TextTmp, text);
 		}
 
 		/// <summary>

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System;
 using UnityEngine;
+using UnityEngine.Audio;
 using UtageExtensions;
 
 namespace Utage
@@ -13,10 +14,7 @@ namespace Utage
 	/// </summary>
 	public class SoundManagerSystem : SoundManagerSystemInterface, SoundManagerSystemInterfaceEx
 	{
-		const string GameObjectNameSe = "One shot audio";
-
-		Dictionary<string, SoundGroup> Groups { get { return groups; } }
-		Dictionary<string, SoundGroup> groups = new Dictionary<string, SoundGroup>();	//BGM等のストリーム
+		private Dictionary<string, SoundGroup> Groups { get; } = new ();
 
 		//サウンドマネージャー
 		internal SoundManager SoundManager { get; private set; }
@@ -24,6 +22,12 @@ namespace Utage
 		public void Init(SoundManager soundManager, List<string> saveStreamNameList)
 		{
 			SoundManager = soundManager;
+			if (SoundManager.AudioMixer == null)
+			{
+				string msg = LanguageAdvErrorMsg.LocalizeTextFormat(AdvErrorMsg.Utage4VersionErrorSoundManager);
+				string url = @"https://madnesslabo.net/utage/?page_id=468";
+				Debug.LogError($"{msg}\n{StringTagUtil.HyperLinkTag(url)}",soundManager);
+			}
 		}
 
 		//指定の名前のグループを取得。なければ作成。
@@ -32,27 +36,12 @@ namespace Utage
 			SoundGroup group = GetGroup(name);
 			if (group == null)
 			{
-				//自分の子供以下にあればそれを、なければ自動作成
+				//自分の子供以下にあればそれを、なければエラー
 				group = SoundManager.transform.Find<SoundGroup>(name);
 				if (group == null)
 				{
-					group = SoundManager.transform.AddChildGameObjectComponent<SoundGroup>(name);
-					switch (name)
-					{
-						case SoundManager.IdBgm:
-							group.DuckGroups.Add(GetGroupAndCreateIfMissing(SoundManager.IdVoice));
-							break;
-						case SoundManager.IdAmbience:
-							group.DuckGroups.Add(GetGroupAndCreateIfMissing(SoundManager.IdVoice));
-							break;
-						case SoundManager.IdVoice:
-							group.AutoDestoryPlayer = true;
-							break;
-						case SoundManager.IdSe:
-							group.AutoDestoryPlayer = true;
-							group.MultiPlay = true;
-							break;
-					}
+					Debug.LogError($"Sound Group {name} is not found=" + name + "");
+					return null;
 				}
 				group.Init(this);
 				Groups.Add(name, group);
@@ -217,6 +206,30 @@ namespace Utage
 				return false;
 			}
 		}
+
+		// マスターボリューム変更時に呼ばれる
+		public void OnChangedMasterVolume()
+		{
+			if (SoundManager.AudioMixer != null)
+			{
+				SoundManager.AudioMixer.SetAudioMixerVolume(string.Format(SoundManager.MasterVolumeFormat,""), SoundManager.MasterVolume);
+			}
+		}
+
+		/// キャラ別の音量設定など、タグつきのボリューム変更時に呼ばれる
+		public void OnChangedTaggedMasterVolume(SoundManager.TaggedMasterVolume taggedMasterVolume)
+		{
+			if (taggedMasterVolume.AudioMixerGroup != null)
+			{
+				SetAudioMixerVolumeUsingFormat(taggedMasterVolume.AudioMixerGroup, taggedMasterVolume.Volume);
+			}
+		}
+		
+		public void SetAudioMixerVolumeUsingFormat( AudioMixerGroup target, float volume)
+		{
+			target.SetAudioMixerVolumeUsingFormat(SoundManager.MasterVolumeFormat, volume);
+		}
+
 
 		const int Version = 0;
 		//セーブデータ用のバイナリ書き込み

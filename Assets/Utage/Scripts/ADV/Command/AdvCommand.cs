@@ -38,10 +38,10 @@ namespace Utage
 		public StringGridRow RowData { get; set; }
 
 		//完全にオリジナルのデータ（エンティティ処理前）
-		internal AdvEntityData EntityData { get; set; }
+		public AdvEntityData EntityData { get; set; }
 
 		//コマンドID（本当ならコンストラクタに置きたいけど、互換性のために）
-		internal string Id { get; set; }
+		public string Id { get; set; }
 
 		//エンティティが設定されている
 		public bool IsEntityType { get { return EntityData != null; } }

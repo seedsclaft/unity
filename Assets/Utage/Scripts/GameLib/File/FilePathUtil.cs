@@ -281,7 +281,7 @@ namespace Utage
 			}
 		}
 
-		internal static bool IsUnderDirectory(string path, string directoryPath)
+		public static bool IsUnderDirectory(string path, string directoryPath)
 		{
 			path = Format(path);
 			directoryPath = Format(directoryPath);

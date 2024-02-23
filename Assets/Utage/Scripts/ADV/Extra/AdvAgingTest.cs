@@ -1,15 +1,17 @@
 ﻿// UTAGE: Unity Text Adventure Game Engine (c) Ryohei Tokimura
+
+using System;
 using UnityEngine;
 using UtageExtensions;
 using System.Collections;
 using System.Collections.Generic;
 
 
-/// <summary>
-/// エージングテスト。選択肢などを自動入力する
-/// </summary>
 namespace Utage
 {
+	/// <summary>
+	/// エージングテスト。選択肢などを自動入力する
+	/// </summary>
 	[AddComponentMenu("Utage/ADV/Extra/AdvAgingTest")]
 	public class AdvAgingTest : MonoBehaviour
 	{
@@ -21,7 +23,15 @@ namespace Utage
 		}
 		[SerializeField]
 		Type type = Type.Random;
+		public Type SelectType
+		{
+			get { return type; }
+			set { type = value; }
+		}
 
+		//自動選択しない選択肢のジャンプ先ラベルのリスト
+		public List<string> ExcludedAutoSelectJumpLabels => excludedAutoSelectJumpLabels;
+		[SerializeField] List<string> excludedAutoSelectJumpLabels = new();
 
 		//無効化フラグ
 		[SerializeField]
@@ -33,13 +43,19 @@ namespace Utage
 		}
 
 		[System.Flags]
-		enum SkipFlags
+		public enum SkipFlags
 		{
 			Voice = 0x1<<0,
 			Movie = 0x1 << 1,
 		}
 		[SerializeField,EnumFlags]
 		SkipFlags skipFilter = 0;
+
+		public SkipFlags SkipFilter
+		{
+			get { return skipFilter; }
+			set { skipFilter = value; }
+		}
 
 		/// <summary>ADVエンジン</summary>
 		public AdvEngine Engine { get { return this.GetComponentCacheFindIfMissing( ref engine); } }
@@ -50,6 +66,9 @@ namespace Utage
 		float time;
 
 		public bool clearOnEnd = true;
+
+		//選択した選択肢情報を記憶
+		private Dictionary<AdvScenarioPageData, int> SelectedDictionary { get; }= new ();
 
 		void Awake()
 		{
@@ -75,7 +94,17 @@ namespace Utage
 			time += Time.deltaTime;
 			if (time >= waitTime)
 			{
+				for(int i = 0; i < 100; ++i)
+				{
+					int index = GetIndex(selection);
+					if (CheckAutoSelect(selection,index))
+					{
+						selection.SelectWithTotalIndex(index);
+						return;
+					}
+				}
 				selection.SelectWithTotalIndex(GetIndex(selection));
+
 			}
 		}
 
@@ -94,23 +123,28 @@ namespace Utage
 			time += Time.deltaTime;
 			if (time >= waitTime)
 			{
-				if (command is AdvCommandWaitInput)
+				switch (command)
 				{
-					Engine.UiManager.IsInputTrig = true;
-				}
-				if (command is AdvCommandSendMessage)
-				{
-					engine.ScenarioPlayer.SendMessageTarget.SafeSendMessage("OnAgingInput", command);
-				}
-				if (command is AdvCommandMovie)
-				{
-					Engine.UiManager.IsInputTrig = true;
-				}
-				if (command is AdvCommandText)
-				{
-					if (Engine.SoundManager.IsPlayingVoice())
+					case AdvCommandWaitInput:
+						Engine.UiManager.IsInputTrig = true;
+						break;
+					case AdvCommandWaitCustom:
+						Engine.UiManager.IsInputTrigCustom = true;
+						break;
+					case AdvCommandSendMessage:
+						Engine.ScenarioPlayer.SendMessageTarget.SafeSendMessage("OnAgingInput", command);
+						break;
+					case AdvCommandVideo:
+						Engine.UiManager.IsInputTrig = true;
+						break;
+					case AdvCommandText:
 					{
-						Engine.Page.InputSendMessage();
+						if (Engine.SoundManager.IsPlayingVoice())
+						{
+							Engine.Page.InputSendMessage();
+						}
+
+						break;
 					}
 				}
 			}
@@ -120,30 +154,26 @@ namespace Utage
 		{
 			if (clearOnEnd)
 			{
-				this.selectedDictionary.Clear();
+				this.SelectedDictionary.Clear();
 			}
 		}
 
 
 		bool IsWaitInputCommand(AdvCommand command)
 		{
-			if (command is AdvCommandWaitInput)
+			switch (command)
 			{
-				return true;
+				case AdvCommandWaitInput:
+				case AdvCommandWaitCustom:
+				case AdvCommandSendMessage:
+					return true;
+				case AdvCommandVideo:
+					return (skipFilter & SkipFlags.Movie) == SkipFlags.Movie;
+				case AdvCommandText:
+					return (skipFilter & SkipFlags.Voice) == SkipFlags.Voice;
+				default:
+					return false;
 			}
-			if (command is AdvCommandSendMessage)
-			{
-				return true;
-			}
-			if (command is AdvCommandMovie)
-			{
-				return (skipFilter & SkipFlags.Movie) == SkipFlags.Movie;
-			}
-			if (command is AdvCommandText)
-			{
-				return (skipFilter & SkipFlags.Voice) == SkipFlags.Voice;
-			}
-			return false;
 		}
 
 
@@ -165,10 +195,10 @@ namespace Utage
 		int GetIndexDepthFirst(AdvSelectionManager selection)
 		{
 			int index;
-			if (!selectedDictionary.TryGetValue(Engine.Page.CurrentData, out index))
+			if (!SelectedDictionary.TryGetValue(Engine.Page.CurrentData, out index))
 			{
 				index = 0;
-				selectedDictionary.Add(Engine.Page.CurrentData, index);
+				SelectedDictionary.Add(Engine.Page.CurrentData, index);
 			}
 			else
 			{
@@ -176,11 +206,24 @@ namespace Utage
 				{
 					++index;
 				}
-				selectedDictionary[Engine.Page.CurrentData] = index;
+				SelectedDictionary[Engine.Page.CurrentData] = index;
 			}
 			return index;
 		}
-		//選択した選択肢情報を記憶
-		Dictionary<AdvScenarioPageData, int> selectedDictionary = new Dictionary<AdvScenarioPageData, int>();
+
+		//自動選択可能なインデックスかチェック
+		//除外リストにある等で自動選択が不可能な場合はfalseを返す
+		private bool CheckAutoSelect(AdvSelectionManager selection, int index)
+		{
+			if (ExcludedAutoSelectJumpLabels.Count <= 0) return true;
+			if (index >= selection.Selections.Count) return false;
+
+			var selected = selection.Selections[index];
+			if (ExcludedAutoSelectJumpLabels.Contains(selected.JumpLabel))
+			{
+				return false;
+			}
+			return true;
+		}
 	}
 }

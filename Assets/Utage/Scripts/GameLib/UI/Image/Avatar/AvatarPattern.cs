@@ -78,7 +78,7 @@ namespace Utage
 			return (pattern == null) ? "" : pattern.OriginalPatternName;
 		}
 
-		internal void SetPattern(StringGridRow rowData)
+		public void SetPattern(StringGridRow rowData)
 		{
 			foreach (var keyValue in rowData.Grid.ColumnIndexTbl)
 			{
@@ -135,9 +135,15 @@ namespace Utage
 		[CustomPropertyDrawer(typeof(NovelAvatarPatternAttribute))]
 		public class NovelAvatarPatternDrawer : PropertyDrawerEx<NovelAvatarPatternAttribute>
 		{
+			protected override GuiDrawerHelper Helper { get; }
+			public NovelAvatarPatternDrawer()
+			{
+				Helper = new GuiDrawerHelper<NovelAvatarPatternDrawer>(this);
+			}
+
 			public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
 			{
-				AvatarData data = CallFunction<AvatarData>(property, Attribute.Function);
+				AvatarData data = Helper.CallFunction<AvatarData>(property, Attribute.Function);
 				if (data == null) return;
 				//パターンデータ（タグとパターン名）
 				EditorGUI.BeginProperty(position, label, property);
@@ -167,7 +173,7 @@ namespace Utage
 
 				//オプションデータ（アクセサリなどの表示）
 				var optionPatternNameListProperty = property.FindPropertyRelative("optionPatternNameList");
-				List<string> list = DrawerUtil.GetStringList(optionPatternNameListProperty);
+				List<string> list = Helper.GetStringList(optionPatternNameListProperty);
 				List<string> newList = new List<string>();
 				bool hasChanged = false;
 				foreach (var optionPattern in data.GetAllOptionPatterns())
@@ -187,7 +193,7 @@ namespace Utage
 				}
 				if (hasChanged)
 				{
-					DrawerUtil.SetStringArray(optionPatternNameListProperty, newList);
+					Helper.SetStringList(optionPatternNameListProperty, newList);
 				}
 
 				EditorGUI.EndProperty();
@@ -195,7 +201,7 @@ namespace Utage
 
 			public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
 			{
-				AvatarData data = CallFunction<AvatarData>(property, Attribute.Function);
+				AvatarData data = Helper.CallFunction<AvatarData>(property, Attribute.Function);
 				if (data == null) return LineHeight();
 
 				SerializedProperty dataListProperty = property.FindPropertyRelative("avatarPatternDataList");
@@ -254,10 +260,10 @@ namespace Utage
 	}
 	public class NovelAvatarPatternAttribute : PropertyAttribute
 	{
-		public string Function { get; set; }
+		public GuiDrawerFunction Function { get; }
 		public NovelAvatarPatternAttribute(string function)
 		{
-			Function = function;
+			Function = new GuiDrawerFunction(function,false);
 		}
 	}
 }

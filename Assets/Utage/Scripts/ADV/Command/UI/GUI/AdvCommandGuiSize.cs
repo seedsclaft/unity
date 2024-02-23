@@ -8,7 +8,7 @@ namespace Utage
 	/// <summary>
 	/// コマンド：GUI操作　Size
 	/// </summary>
-	internal class AdvCommandGuiSize : AdvCommand
+	public class AdvCommandGuiSize : AdvCommand
 	{
 		public AdvCommandGuiSize(StringGridRow row)
 			: base(row)

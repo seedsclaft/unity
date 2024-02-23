@@ -2,9 +2,6 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-#if UNITY_EDITOR
-using UnityEditor;
-#endif
 
 namespace Utage
 {
@@ -25,7 +22,7 @@ namespace Utage
             {
                 if (instance == null)
                 {
-                    BootCustomProjectSetting boot = WrapperUnityVersion.FindObjectOfType<BootCustomProjectSetting>();
+                    BootCustomProjectSetting boot = WrapperFindObject.FindObjectOfType<BootCustomProjectSetting>();
                     if (boot != null)
                     {
                         instance = boot.CustomProjectSetting;
@@ -64,6 +61,10 @@ namespace Utage
             set { useSheetNameToScenarioLabel = value; }
         }
         [SerializeField] bool useSheetNameToScenarioLabel = true;
+
+        //カスタムデータの設定
+        public AdvCustomDataSettings CustomDataSettings => customDataSettings;
+        [SerializeField] AdvCustomDataSettings customDataSettings = new();
 
     }
 }

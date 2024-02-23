@@ -57,6 +57,8 @@ namespace Utage
 
 		readonly List<AdvGraphicObject> swapFadeObjects = new List<AdvGraphicObject>();
 
+		protected string ChangedAnimationPattern { get; set; }
+
 		public bool CheckType(AdvGraphicObjectType type)
 		{
 			if (LastResource == null) return false;
@@ -190,6 +192,11 @@ namespace Utage
 			}
 			RenderObject.Alignment(Layer.SettingData.Alignment, graphic);
 			RenderObject.Flip(Layer.SettingData.FlipX, Layer.SettingData.FlipY);
+			foreach (var flip in TargetObject.GetComponentsInChildren<IAdvGraphicEventFlip>(true))
+			{
+				flip.Flip(Layer.SettingData.FlipX, Layer.SettingData.FlipY);
+			}
+			
 			this.LastResource = graphic;
 			this.Layer.Manager.OnDrawGraphicObject.Invoke(this, graphic);
 		}
@@ -527,26 +534,40 @@ namespace Utage
 		//キャラクターのパターン変更をキーフレームアニメーションから呼ぶためのメソッド
 		public virtual void ChangePatternAnimation(string paraString)
 		{
+			//記録しておいてLateUpdateで呼ぶ
+			ChangedAnimationPattern = paraString;
+		}
+
+		protected void LateUpdate()
+		{
+			if (string.IsNullOrEmpty(ChangedAnimationPattern)) return;
+			ChangePatternAnimationOnLateUpdate(ChangedAnimationPattern);
+			ChangedAnimationPattern = "";
+		}
+
+		protected virtual void ChangePatternAnimationOnLateUpdate(string paraString)
+		{
 			if (LastResource == null)
 			{
 				Debug.LogError("ChangePatternAnimationError  LastResource is null");
 				return;
 			}
+
 			AdvCharacterSettingData characterData = LastResource.SettingData as AdvCharacterSettingData;
-			if (characterData==null)
+			if (characterData == null)
 			{
 				Debug.LogError("ChangePatternAnimationError  characterData is null");
 				return;
 			}
 
-			string[] after =paraString.Split(new char[]{','});
+			string[] after = paraString.Split(new char[] { ',' });
 			float fadeTime;
 			if (after.Length <= 0)
 			{
 				Debug.LogError("ChangePatternAnimationError  argString = " + paraString);
 				return;
 			}
-			else if(after.Length == 1)
+			else if (after.Length == 1)
 			{
 				fadeTime = 0;
 			}
@@ -554,33 +575,34 @@ namespace Utage
 			{
 				if (!WrapperUnityVersion.TryParseFloatGlobal(after[1], out fadeTime))
 				{
-					Debug.LogError("ChangePatternAnimationError  "  + after[1] + " is not float string");
+					Debug.LogError("ChangePatternAnimationError  " + after[1] + " is not float string");
 					return;
 				}
 			}
+
 			//0秒だと、DestroyImmediateが呼ばれてしまうが
 			//AnimationClip中でそれが許可されていないため
-			fadeTime = Mathf.Max(fadeTime,0.001f);
+			fadeTime = Mathf.Max(fadeTime, 0.001f);
 
 			string pattern = after[0];
-			AdvCharacterSettingData newPatternData = Engine.DataManager.SettingDataManager.CharacterSetting.GetCharacterData(characterData.Name, pattern);
-		    if (newPatternData==null)
-		    {
-			    Debug.LogError("ChangePatternAnimationError  pattern is not pattern name");
-			    return;
-		    }
-		    
-		    //Graphicのロードは考慮しない
-		    var graphic = newPatternData.Graphic.Main;
-		    //描画
-		    DrawSub(graphic,Engine.Page.ToSkippedTime(fadeTime));
-		    //モーション変更
-		    if (!string.IsNullOrEmpty(graphic.AnimationState))
-		    {
-			    TargetObject.ChangeAnimationState(graphic.AnimationState,fadeTime);
-		    }
+			AdvCharacterSettingData newPatternData =
+				Engine.DataManager.SettingDataManager.CharacterSetting.GetCharacterData(characterData.Name, pattern);
+			if (newPatternData == null)
+			{
+				Debug.LogError("ChangePatternAnimationError  pattern is not pattern name");
+				return;
+			}
+
+			//Graphicのロードは考慮しない
+			var graphic = newPatternData.Graphic.Main;
+			//描画
+			DrawSub(graphic, Engine.Page.ToSkippedTime(fadeTime));
+			//モーション変更
+			if (!string.IsNullOrEmpty(graphic.AnimationState))
+			{
+				TargetObject.ChangeAnimationState(graphic.AnimationState, fadeTime);
+			}
 		}
-		
 		
 		//セーブが有効なオブジェクトかをチェック
 		public virtual bool EnableSaveObject()

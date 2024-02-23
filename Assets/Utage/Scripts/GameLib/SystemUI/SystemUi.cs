@@ -50,7 +50,7 @@ namespace Utage
 
 		[SerializeField]
 		protected IndicatorIcon indicator = null;
-
+		
 		/// <summary>
 		/// Escapeボタンの入力有効か
 		/// </summary>
@@ -176,8 +176,6 @@ namespace Utage
 			//Android版・バックキーでアプリ終了確認
 			if (IsEnableInputEscape)
 			{
-				if (WrapperMoviePlayer.GetInstance() != null &&  WrapperMoviePlayer.IsPlaying()) return;
-
 				if (InputUtil.GetKeyDown(KeyCode.Escape))
 				{
 					OnOpenDialogExitGame();

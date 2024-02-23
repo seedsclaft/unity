@@ -7,7 +7,7 @@ namespace Utage
 	/// <summary>
 	/// コマンド：テキスト表示（地の文）
 	/// </summary>
-	internal class AdvCommandWait : AdvCommand
+	public class AdvCommandWait : AdvCommand
 	{
 
 		public AdvCommandWait(StringGridRow row)

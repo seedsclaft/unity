@@ -6,7 +6,7 @@ namespace Utage
 	/// <summary>
 	/// コマンド：サウンド停止
 	/// </summary>
-	internal class AdvCommandStopSound : AdvCommand
+	public class AdvCommandStopSound : AdvCommand
 	{
 		public AdvCommandStopSound(StringGridRow row)
 			:base(row)

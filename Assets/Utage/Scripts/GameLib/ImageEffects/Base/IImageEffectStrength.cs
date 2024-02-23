@@ -4,8 +4,7 @@ using UnityEngine;
 
 namespace Utage
 {
-    public interface IImageEffectStrength
+    public interface IImageEffectStrength : IPostEffectStrength
     {
-		float Strength { get; set; }
 	}
 }

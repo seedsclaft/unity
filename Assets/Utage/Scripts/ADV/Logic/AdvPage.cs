@@ -349,7 +349,10 @@ namespace Utage
 		public bool UpdatingText { get; private set; }
 
 		float deltaTimeSendMessage;			//テキスト送りに使う時間経過
-		float waitingTimeInput;				//入力待ち経過時間
+
+		//入力待ち経過時間
+		public float WaitingTimeAutoInput => waitingTimeInput;
+		float waitingTimeInput;
 
 		//エフェクトスキップが呼ばれている
 		bool HasEffectSkipped { get; set; }

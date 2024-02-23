@@ -6,7 +6,7 @@ namespace Utage
 	/// <summary>
 	/// コマンド：ページ制御
 	/// </summary>
-	internal class AdvCommandPageControler : AdvCommand
+	public class AdvCommandPageControler : AdvCommand
 	{
 		public AdvCommandPageControler(StringGridRow row, AdvSettingDataManager dataManager)
 			: base(row)

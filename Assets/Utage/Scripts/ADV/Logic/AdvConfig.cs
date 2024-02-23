@@ -1,7 +1,10 @@
 ﻿// UTAGE: Unity Text Adventure Game Engine (c) Ryohei Tokimura
+
+using System;
 using System.IO;
 using System.Collections.Generic;
 using UnityEngine;
+using UtageExtensions;
 
 namespace Utage
 {
@@ -19,10 +22,7 @@ namespace Utage
 
 		[SerializeField]
 		bool ignoreSoundVolume = false;			//サウンドマネージャーに対するボリューム設定等の操作を無視する(サウンドマネージャーのボリューム設定を別に行いたいときに)
-
-		[SerializeField,UnityEngine.Serialization.FormerlySerializedAs("dontUseFullScreen")]
-		bool dontSaveFullScreen = true;		//フルスクリーンの切り替えをセーブしない
-
+		
 		[SerializeField]
 		float sendCharWaitSecMax = 1.0f / 10;	//一文字送りの待ち時間の最大値
 		[SerializeField]
@@ -55,6 +55,11 @@ namespace Utage
 		protected AdvConfigSaveData defaultData;
 
 		protected AdvConfigSaveData current = new AdvConfigSaveData();
+
+		protected AdvEngine Engine=> this.GetComponentCache(ref engine);
+		AdvEngine engine;
+
+		protected ScreenResolution ScreenResolution => Engine.ScreenResolution;
 
 		/// <summary>
 		/// 初回（セーブデータがない場合）のみの初期化
@@ -105,18 +110,6 @@ namespace Utage
 		//データを設定
 		protected virtual void SetData(AdvConfigSaveData data, bool isSetDefault)
 		{
-			if ( UtageToolKit.IsPlatformStandAloneOrEditor())
-			{
-				//PC版のみ、フルスクリーン切り替え
-				if (dontSaveFullScreen)
-				{
-					IsFullScreen = Screen.fullScreen;
-				}
-				else
-				{
-					IsFullScreen = data.isFullScreen;
-				}
-			}
 			IsMouseWheelSendMessage = data.isMouseWheelSendMessage;
 
 			//エフェクトON・OFF切り替え
@@ -168,77 +161,16 @@ namespace Utage
 			}
 		}
 
-		/// <summary>
-		/// フルスクリーンか
-		/// </summary>
-		public bool IsFullScreen{
-			get
-			{
-				if (dontSaveFullScreen)
-				{
-					return Screen.fullScreen;
-				}
-				return current.isFullScreen;
-			}
-			set {
-				if (UtageToolKit.IsPlatformStandAloneOrEditor())
-				{
-					current.isFullScreen = value;
-					//PC版のみ、フルスクリーン切り替え
-					Unity5ChangeScreen(value);
-				}
-			}
-		}
-		//ウィンドウサイズを戻すための処理
-		bool isSavedWindowSize = false;
-		int windowWidth;
-		int windowHeight;
-		void Start()
+		[Obsolete("This method is deprecated. Please use ScreenResolution component instead.")]
+		public bool IsFullScreen
 		{
-			windowWidth = Screen.width;
-			windowHeight = Screen.height;
-			isSavedWindowSize = true;
+			get => ScreenResolution.IsFullScreen;
+			set => ScreenResolution.IsFullScreen = value;
 		}
-
-		void Unity5ChangeScreen(bool fullScreen)
-		{
-			if (!fullScreen)
-			{
-				LoadWindowSize();
-			}
-			else
-			{
-				SaveWindowSize();
-				Screen.SetResolution(Screen.currentResolution.width, Screen.currentResolution.height, true);
-			}
-		}
-		void SaveWindowSize()
-		{
-			if (!Screen.fullScreen && !current.isFullScreen)
-			{
-				windowWidth = Screen.width;
-				windowHeight = Screen.height;
-				isSavedWindowSize = true;
-			}
-		}
-		void LoadWindowSize()
-		{
-			if (isSavedWindowSize)
-			{
-				Screen.SetResolution(windowWidth, windowHeight, false);
-			}
-			else
-			{
-				Screen.fullScreen = false;
-			}
-		}
-
-		/// <summary>
-		/// フルスクリーン切り替え
-		/// </summary>
+		[Obsolete("This method is deprecated. Please use ScreenResolution component instead.")]
 		public void ToggleFullScreen()
 		{
-			IsFullScreen = !IsFullScreen;
+			ScreenResolution.ToggleFullScreen();
 		}
 
 		/// <summary>

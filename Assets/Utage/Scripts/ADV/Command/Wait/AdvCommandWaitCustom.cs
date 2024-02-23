@@ -7,7 +7,7 @@ namespace Utage
 	/// <summary>
 	/// コマンド：待機処理(カスタム入力用)
 	/// </summary>
-	internal class AdvCommandWaitCustom : AdvCommand
+	public class AdvCommandWaitCustom : AdvCommand
 	{
 		public AdvCommandWaitCustom(StringGridRow row)
 			: base(row)

@@ -7,7 +7,7 @@ namespace Utage
 	/// <summary>
 	/// コマンド：パーティクル表示
 	/// </summary>
-	internal class AdvCommandParticle : AdvCommand
+	public class AdvCommandParticle : AdvCommand
 	{
 		protected string label;
 		protected string layerName;

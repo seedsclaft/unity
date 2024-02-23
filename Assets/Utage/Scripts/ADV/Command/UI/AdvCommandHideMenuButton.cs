@@ -6,7 +6,7 @@ namespace Utage
 	/// <summary>
 	/// コマンド：メニューボタンを非表示
 	/// </summary>
-	internal class AdvCommandHideMenuButton : AdvCommand
+	public class AdvCommandHideMenuButton : AdvCommand
 	{
 		public AdvCommandHideMenuButton(StringGridRow row)
 			: base(row)

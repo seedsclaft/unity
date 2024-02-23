@@ -5,7 +5,7 @@ using UtageExtensions;
 namespace Utage
 {
 	// コマンド：オブジェクト単位のフェードアウト
-	internal class AdvCommandWaitFadeObjects : AdvCommandWaitBase
+	public class AdvCommandWaitFadeObjects : AdvCommandWaitBase
 		, IAdvCommandEffect
 		, IAdvCommandUpdateWait
 	{

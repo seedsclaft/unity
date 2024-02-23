@@ -6,7 +6,7 @@ namespace Utage
 	/// <summary>
 	/// コマンド：サウンドのボリュームを変更
 	/// </summary>
-	internal class AdvCommandChangeSoundVolume : AdvCommand
+	public class AdvCommandChangeSoundVolume : AdvCommand
 	{
 		public AdvCommandChangeSoundVolume(StringGridRow row)
 			:base(row)

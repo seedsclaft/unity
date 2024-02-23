@@ -102,6 +102,47 @@ namespace Utage
 			}
 		}
 
+		public string MakeNoneMetaStringWithEmojiTMP()
+		{
+			StringBuilder builder = new StringBuilder();
+			for (int i = 0; i < ParsedText.CharList.Count; ++i)
+			{
+				var c = ParsedText.CharList[i];
+				var cInfo = c.CustomInfo;
+				if(cInfo.IsEmoji)
+				{
+					string arg = c.CustomInfo.EmojiKey;
+					if (!arg.Contains("index") && !arg.Contains("name"))
+					{
+						//旧式のemojiタグ
+						arg = $" name=\"{arg}\"";
+					}
+					else
+					{
+						bool startsWithIndex = arg.StartsWith("index", StringComparison.OrdinalIgnoreCase);
+						bool startsWithName = arg.StartsWith("name", StringComparison.OrdinalIgnoreCase);
+						if (!startsWithIndex && !startsWithName)
+						{
+							//=で値にアセット名が指定されているタイプ
+							arg = "=" + arg;
+						}
+						else
+						{
+							//アセット名省略で指定されているタイプ
+							arg = " " + arg;
+						}
+					}
+					builder.Append($"<sprite{arg}>");
+				}
+				else
+				{
+					c.AppendToStringBuilder(builder);
+				}
+			}
+			return builder.ToString();
+		}
+
+
 		/// <summary>
 		/// Unityのリッチテキストフォーマットのテキスト
 		/// </summary>

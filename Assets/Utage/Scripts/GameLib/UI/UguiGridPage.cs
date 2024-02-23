@@ -1,6 +1,7 @@
 ﻿// UTAGE: Unity Text Adventure Game Engine (c) Ryohei Tokimura
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
@@ -131,10 +132,7 @@ namespace Utage
 				{
 					List<GameObject> children = 
 						pageCarouselAlignGroup.AddChildrenFromPrefab( MaxPage + 1, pageCarouselPrefab, null );
-					foreach( GameObject go in children )
-					{
-						pageCarouselToggles.Add(go.GetComponent<Toggle>());
-					}
+					pageCarouselToggles.AddToggles(children.Select(go => go.GetComponent<Toggle>()));
 					pageCarouselToggles.CurrentIndex = 0;
 					pageCarouselToggles.SetActiveLRButtons(true);
 				}

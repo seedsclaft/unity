@@ -3,6 +3,8 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 using System.Collections;
+using System.IO;
+using TMPro;
 
 namespace Utage
 {
@@ -20,14 +22,14 @@ namespace Utage
 		/// <summary>
 		/// 本文表示用のテキスト
 		/// </summary>
-		[SerializeField]
-		protected Text titleText;
+		[SerializeField, HideIfTMP] protected Text titleText;
+		[SerializeField, HideIfLegacyText] protected TextMeshProUGUI titleTextTmp;
 
 		/// <summary>
 		/// ボタン1用のテキスト
 		/// </summary>
-		[SerializeField]
-		protected Text button1Text;
+		[SerializeField, HideIfTMP] protected Text button1Text;
+		[SerializeField, HideIfLegacyText] protected TextMeshProUGUI button1TextTmp;
 
 		/// <summary>
 		/// ボタン1を押したときのイベント
@@ -43,11 +45,21 @@ namespace Utage
 		/// <param name="target">ボタンを押したときの呼ばれるコールバック</param>
 		public virtual void Open(string text, string buttonText1, UnityAction callbackOnClickButton1)
 		{
-			titleText.text = text;
-			button1Text.text = buttonText1;
+			SetTitle(text);
+			SetTextButton1(buttonText1);
 			this.OnClickButton1.RemoveAllListeners();
 			this.OnClickButton1.AddListener(callbackOnClickButton1);
 			Open();
+		}
+		
+		public virtual void SetTitle(string text)
+		{
+			TextComponentWrapper.SetText(titleText, titleTextTmp,text);
+		}
+
+		public virtual void SetTextButton1(string text)
+		{
+			TextComponentWrapper.SetText(button1Text, button1TextTmp, text);
 		}
 
 		/// <summary>

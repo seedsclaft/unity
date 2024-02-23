@@ -21,7 +21,11 @@ namespace Utage
 		/// <summary>
 		/// 「SendMessage」コマンドが実行されたときにSendMessageを受け取るGameObject
 		/// </summary>
-		public GameObject SendMessageTarget { get { return sendMessageTarget; } }
+		public GameObject SendMessageTarget
+		{
+			get => sendMessageTarget;
+			set => sendMessageTarget = value;
+		}
 		[SerializeField]
 		GameObject sendMessageTarget=null;
 

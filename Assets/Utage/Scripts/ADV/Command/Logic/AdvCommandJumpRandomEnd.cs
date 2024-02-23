@@ -6,7 +6,7 @@ namespace Utage
 	/// <summary>
 	/// コマンド：ランダムジャンプ終了
 	/// </summary>
-	internal class AdvCommandJumpRandomEnd : AdvCommand
+	public class AdvCommandJumpRandomEnd : AdvCommand
 	{
 		public AdvCommandJumpRandomEnd(StringGridRow row, AdvSettingDataManager dataManager)
 			: base(row)

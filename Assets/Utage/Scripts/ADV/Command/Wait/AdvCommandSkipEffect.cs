@@ -3,7 +3,7 @@
 namespace Utage
 {
 	// 演出の強制スキップコマンド
-	internal class AdvCommandSkipEffect : AdvCommand
+	public class AdvCommandSkipEffect : AdvCommand
 	{
 		//スキップタイプ
 		enum SkipEffectType

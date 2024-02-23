@@ -1,9 +1,14 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.Events;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UtageExtensions;
+
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 namespace Utage
 {
@@ -165,7 +170,7 @@ namespace Utage
 		void Update()
 		{
 			if (hasChanged ||
-			    (!Mathf.Approximately(screenAspectRatio, 1.0f * Screen.width / Screen.height))
+			    (!Mathf.Approximately(screenAspectRatio, GetScreenAspect()))
 			    )
 			{
 				Refresh();
@@ -189,7 +194,7 @@ namespace Utage
 
 		bool TryRefreshCurrentSize()
 		{
-			screenAspectRatio = 1.0f * Screen.width / Screen.height;
+			screenAspectRatio = GetScreenAspect();
 
 			float defaultAspectRatio = (float)Width/Height;
 			float wideAspectRatio = (float)FlexibleMaxWidth / FlexibleMinHeight;
@@ -293,6 +298,18 @@ namespace Utage
 			CachedCamera.transform.localPosition = zoom2DCenterOffset;
 		}
 
+		protected virtual float GetScreenAspect()
+		{
+			float w = Screen.width;
+			float h = Screen.height;
+			if (w <= 0 || h <= 0)
+			{
+				Debug.LogWarning($"Screen size is invalid. width={w} height={h}");
+				return 1;
+			}
+			return 1.0f*w / h;
+		}
+
 		const int Version = 0;
 		//セーブデータ用のバイナリ書き込み
 		public void Write(BinaryWriter writer)
@@ -320,5 +337,88 @@ namespace Utage
 			this.Zoom2D = 1;
             this.Zoom2DCenter = Vector2.zero;
 		}
+#if UNITY_EDITOR
+		//インスペクター表示の拡張
+		//nameofでprivateフィールド名を取得できるように、クラス内クラスで定義する
+		[CanEditMultipleObjects]
+		[CustomEditor(typeof(LetterBoxCamera))]
+		public class LetterBoxCameraInspector : Editor
+		{
+			SerializedProperty PropertyPixelsToUnits { get; set; }
+			SerializedProperty PropertyWidth { get; set; }
+			SerializedProperty PropertyHeight { get; set; }
+			SerializedProperty PropertyIsFlexible { get; set; }
+			SerializedProperty PropertyMaxWidth { get; set; }
+			SerializedProperty PropertyMaxHeight { get; set; }
+			SerializedProperty PropertyAnchor { get; set; }
+			SerializedProperty PropertyZoom2D { get; set; }
+			SerializedProperty PropertyZoom2DCenter { get; set; }
+
+			private void OnEnable()
+			{
+				PropertyPixelsToUnits = serializedObject.FindProperty(nameof(pixelsToUnits));
+				PropertyWidth = serializedObject.FindProperty(nameof(width));
+				PropertyHeight = serializedObject.FindProperty(nameof(height));
+				PropertyIsFlexible = serializedObject.FindProperty(nameof(isFlexible));
+				PropertyMaxWidth = serializedObject.FindProperty(nameof(maxWidth));
+				PropertyMaxHeight = serializedObject.FindProperty(nameof(maxHeight));
+				PropertyAnchor = serializedObject.FindProperty(nameof(anchor));
+				PropertyZoom2D = serializedObject.FindProperty(nameof(zoom2D));
+				PropertyZoom2DCenter = serializedObject.FindProperty(nameof(zoom2DCenter));
+			}
+
+			public override void OnInspectorGUI()
+			{
+				serializedObject.Update();
+				DrawProperties();
+				serializedObject.ApplyModifiedProperties();
+			}
+
+			void DrawProperties()
+			{
+				LetterBoxCamera obj = target as LetterBoxCamera;
+
+				EditorGUILayout.PropertyField(PropertyPixelsToUnits);
+				if (obj.PixelsToUnits < 1) obj.PixelsToUnits = 1;
+
+				//基本画面サイズ
+				EditorGUILayout.PropertyField(PropertyWidth, new GUIContent("Game Screen Width"));
+				if (obj.Width < 1) obj.Width = 1;
+				EditorGUILayout.PropertyField(PropertyHeight, new GUIContent("Game Screen Height"));
+				if (obj.Height < 1) obj.Height = 1;
+
+				//基本画面サイズ
+				UtageEditorToolKit.BeginGroup ("Flexible", PropertyIsFlexible);
+				if(obj.IsFlexible)
+				{
+					GUILayout.BeginHorizontal();
+					EditorGUILayout.LabelField("Wide  ", GUILayout.Width(50));
+					EditorGUILayout.PropertyField(PropertyMaxWidth, new GUIContent(""), GUILayout.Width(50));
+					if (obj.MaxWidth < obj.Width) obj.MaxWidth = obj.Width;
+					EditorGUILayout.LabelField(" x " + obj.Height, GUILayout.Width(50));
+					GUILayout.EndHorizontal();
+
+					GUILayout.Space(4f);
+					GUILayout.BeginHorizontal();
+					EditorGUILayout.LabelField("Nallow  ", GUILayout.Width(50));
+					EditorGUILayout.LabelField("" + obj.Width + " x ", GUILayout.Width(50));
+
+					EditorGUILayout.PropertyField(PropertyMaxHeight, new GUIContent(""), GUILayout.Width(50));
+					if (obj.MaxHeight < obj.Height) obj.MaxHeight = obj.Height;
+					GUILayout.EndHorizontal();
+				}
+				UtageEditorToolKit.EndGroup();
+
+				EditorGUILayout.LabelField("Current Size = " +  obj.CurrentSize.x +" x " + obj.CurrentSize.y);
+
+				EditorGUILayout.PropertyField(PropertyAnchor);
+
+				EditorGUILayout.PropertyField(PropertyZoom2D);
+				EditorGUILayout.PropertyField(PropertyZoom2DCenter);
+
+				if (obj.Height < 1) obj.Height = 1;
+			}
+		}
+#endif
 	}
 }

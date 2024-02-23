@@ -7,7 +7,7 @@ namespace Utage
 	/// <summary>
 	/// コマンド：背景表示・切り替え
 	/// </summary>
-	internal class AdvCommandBgEvent : AdvCommandBgBase
+	public class AdvCommandBgEvent : AdvCommandBgBase
 	{
 		//立ち絵表示をしないモードにするかどうか
 		bool IsEventMode { get; }

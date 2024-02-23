@@ -5,7 +5,7 @@ namespace Utage
 {
 
 	// コマンド：背景表示・切り替え
-	internal class AdvCommandBg : AdvCommandBgBase
+	public class AdvCommandBg : AdvCommandBgBase
 	{
 		public AdvCommandBg(StringGridRow row, AdvSettingDataManager dataManager)
 			: base(row,dataManager)

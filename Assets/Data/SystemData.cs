@@ -58,7 +58,8 @@ public class SystemData : ScriptableObject
 		public string Key;
 		public string Name;
 		public string Help;
-		public bool Toggles;
+		public int Category;
+		public OptionButtonType ButtonType;
 		public int ToggleText1;
 		public int ToggleText2;
 		public bool ExistAndroid;

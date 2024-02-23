@@ -4,7 +4,7 @@ using UnityEngine;
 namespace Utage
 {
 	// コマンド：ピボットのリセット
-	internal class AdvCommandResetPivot : AdvCommand
+	public class AdvCommandResetPivot : AdvCommand
 	{
 		private readonly string targetName;
 		public AdvCommandResetPivot(StringGridRow row, AdvSettingDataManager dataManager)

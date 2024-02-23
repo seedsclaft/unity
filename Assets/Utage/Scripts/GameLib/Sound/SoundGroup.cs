@@ -4,6 +4,7 @@ using System.IO;
 using UnityEngine.Events;
 using UnityEngine;
 using System;
+using UnityEngine.Audio;
 using UtageExtensions;
 
 namespace Utage
@@ -18,8 +19,7 @@ namespace Utage
 		internal SoundManager SoundManager { get { return SoundManagerSystem.SoundManager;  } }
 		internal SoundManagerSystem SoundManagerSystem { get; private set; }
 
-		internal Dictionary<string,SoundAudioPlayer> PlayerList { get { return playerList; } }
-		Dictionary<string, SoundAudioPlayer> playerList = new Dictionary<string, SoundAudioPlayer>();
+		internal Dictionary<string,SoundAudioPlayer> PlayerList { get; } = new ();
 
 		public string GroupName { get { return gameObject.name; } }
 
@@ -42,7 +42,19 @@ namespace Utage
 		bool autoDestoryPlayer;
 
 		//マスターボリューム
-		public float MasterVolume { get { return masterVolume; } set { masterVolume = value; } }
+		public float MasterVolume
+		{
+			get { return masterVolume; }
+			set
+			{
+				bool changed = !Mathf.Approximately(masterVolume, value); 
+				masterVolume = value;
+				if (changed)
+				{
+					UpdateAudioMixerVolume();
+				}
+			}
+		}
 		[Range(0, 1), SerializeField]
 		float masterVolume = 1;
 
@@ -57,66 +69,73 @@ namespace Utage
 		float groupVolumeFadeTime = 1;
 
 		//現在のグループボリューム
-		public float CurrentGroupVolume { get; set; }
+		public float CurrentGroupVolume
+		{
+			get => currentGroupVolume;
+			set
+			{
+				bool changed = !Mathf.Approximately(currentGroupVolume, value); 
+				currentGroupVolume = value;
+				if (changed)
+				{
+					UpdateAudioMixerVolume();
+				}
+			}
+		}
+		float currentGroupVolume;
 		float groupVolumeVelocity = 1;
 
-		//ダッキングの影響を与えるグループ
-		public List<SoundGroup> DuckGroups { get { return duckGroups; } }
+		//オーディオミキサーのグループ設定
+		public AudioMixerGroup AudioMixerGroup
+		{
+			get => audioMixerGroup;
+			set => audioMixerGroup = value;
+		}
 		[SerializeField]
-		List<SoundGroup> duckGroups = new List<SoundGroup>();
+		AudioMixerGroup audioMixerGroup = null;
 
-		float DuckVolume { get; set; }
-		float duckVelocity = 1;
+		string MasterVolumeExposedName { get; set; }
 
 		internal void Init(SoundManagerSystem soundManagerSystem)
 		{
 			SoundManagerSystem = soundManagerSystem;
-
-			this.CurrentGroupVolume = this.GroupVolume;
 			this.groupVolumeVelocity = 1;
-			DuckVolume = 1;
-			duckVelocity = 1;
+			if (AudioMixerGroup == null)
+			{
+				Debug.LogError("Set Audio Mixer Group", this);
+			}
+			MasterVolumeExposedName = string.Format(SoundManager.MasterVolumeFormat,AudioMixerGroup.name);
+			this.CurrentGroupVolume = this.GroupVolume;
 		}
 
-		internal float GetVolume(string tag)
+		internal float GetVolume(string volumeTag)
 		{
-			float masterVolume = this.CurrentGroupVolume * this.MasterVolume * SoundManager.MasterVolume;
+			return GetGroupVolume(volumeTag) * this.MasterVolume * SoundManager.MasterVolume;
+		}
+		internal float GetGroupVolume(string volumeTag)
+		{
+			float volume = this.CurrentGroupVolume;
 			foreach(var taggedVolume in SoundManager.TaggedMasterVolumes)
 			{
-				if (taggedVolume.Tag == tag)
+				if (taggedVolume.Tag == volumeTag)
 				{
-					masterVolume *= taggedVolume.Volume;
+					volume *= taggedVolume.Volume;
 				}
 			}
-			return masterVolume * DuckVolume;
+			return volume;
+		}
+		
+						
+		void UpdateAudioMixerVolume()
+		{
+			float volume = MasterVolume *CurrentGroupVolume;
+			AudioMixerGroup.SetAudioMixerVolume(MasterVolumeExposedName,volume);
 		}
 
 		void Update()
 		{
-			UpdateDucking();
+			if(SoundManagerSystem==null) return;
 			CurrentGroupVolume = UpdateFade(CurrentGroupVolume, GroupVolume, GroupVolumeFadeTime, ref groupVolumeVelocity);
-		}
-
-		void UpdateDucking()
-		{
-			//以下、ダッキング処理
-			if (Mathf.Approximately(1.0f, SoundManager.DuckVolume))
-			{
-				//ダッキングのボリュームが1なので常に影響受けない
-				DuckVolume = 1;
-				return;
-			}
-
-			//ダッキングの影響をうけるグループがない
-			if (DuckGroups.Count <= 0)
-			{
-				DuckVolume = 1;
-				return;
-			}
-			bool isPlaying = DuckGroups.Exists(x => x.IsPlaying());
-			float dukkingTo = (isPlaying) ? SoundManager.DuckVolume : 1;
-
-			DuckVolume = UpdateFade(DuckVolume, dukkingTo, SoundManager.DuckFadeTime, ref duckVelocity);
 		}
 
 		float UpdateFade(float from, float to, float fadeTime, ref float velocity)

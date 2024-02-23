@@ -8,7 +8,7 @@ namespace Utage
 	/// <summary>
 	/// コマンド：GUI操作　Active
 	/// </summary>
-	internal class AdvCommandGuiActive : AdvCommand
+	public class AdvCommandGuiActive : AdvCommand
 	{
 		public AdvCommandGuiActive(StringGridRow row)
 			: base(row)

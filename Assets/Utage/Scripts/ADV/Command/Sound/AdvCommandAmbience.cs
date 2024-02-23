@@ -7,7 +7,7 @@ namespace Utage
 	/// <summary>
 	/// コマンド：環境音再生
 	/// </summary>
-	internal class AdvCommandAmbience : AdvCommand
+	public class AdvCommandAmbience : AdvCommand
 	{
 		public AdvCommandAmbience( StringGridRow row, AdvSettingDataManager dataManager)
 			: base(row)

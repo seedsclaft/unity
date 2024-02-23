@@ -8,7 +8,7 @@ namespace Utage
 	/// <summary>
 	/// コマンド：ランダムにサブルーチンへジャンプ
 	/// </summary>
-	internal class AdvCommandJumpSubroutineRandom : AdvCommand
+	public class AdvCommandJumpSubroutineRandom : AdvCommand
 		, IAdvInitOnCreateEntity
 	{
 		public AdvCommandJumpSubroutineRandom(StringGridRow row, AdvSettingDataManager dataManager)

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System;
 using UnityEngine;
+using UnityEngine.Audio;
 
 namespace Utage
 {
@@ -13,5 +14,11 @@ namespace Utage
 		bool IsPlaying(string groupName);
 		// 指定のグループ名、ラベル、ファイルのサウンドが鳴っているかどうか
 		bool IsPlaying(string groupName, string label, AssetFile file);
+
+		// マスターボリューム変更時に呼ばれる
+		void OnChangedMasterVolume();
+
+		/// キャラ別の音量設定など、タグつきのボリューム変更時に呼ばれる
+		void OnChangedTaggedMasterVolume(SoundManager.TaggedMasterVolume taggedMasterVolume);
 	}
 }

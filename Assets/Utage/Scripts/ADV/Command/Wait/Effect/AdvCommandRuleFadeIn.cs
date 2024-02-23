@@ -6,7 +6,7 @@ namespace Utage
 {
 
 	// コマンド：ルール画像付きのフェードイン
-	internal class AdvCommandRuleFadeIn : AdvCommandRuleFadeBase
+	public class AdvCommandRuleFadeIn : AdvCommandRuleFadeBase
 	{
 		public AdvCommandRuleFadeIn(StringGridRow row, AdvSettingDataManager dataManager)
 			: base(row, dataManager)

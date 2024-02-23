@@ -1,6 +1,8 @@
 ﻿// UTAGE: Unity Text Adventure Game Engine (c) Ryohei Tokimura
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
@@ -46,14 +48,14 @@ namespace Utage
 			}
 		}
 
-		public void Clear()
+		public virtual void Clear()
 		{
 			categoryToggleGroup.ClearToggles();
 			categoryAlignGroup.DestroyAllChildren();
 			gridPage.ClearItems();
 		}
 
-		public void Init(string[] categoryList, System.Action<UguiCategoryGridPage> OpenCurrentCategory)
+		public virtual void Init(string[] categoryList, System.Action<UguiCategoryGridPage> OpenCurrentCategory)
 		{
 			this.categoryList = categoryList;
 			categoryToggleGroup.ClearToggles();
@@ -61,11 +63,7 @@ namespace Utage
 			if (categoryList.Length > 1)
 			{
 				List<GameObject> children = categoryAlignGroup.AddChildrenFromPrefab( categoryList.Length, categoryPrefab, CreateTabButton );
-				foreach( GameObject go in children )
-				{
-					categoryToggleGroup.Add(go.GetComponent<Toggle>());
-				}
-
+				categoryToggleGroup.AddToggles(children.Select(go => go.GetComponent<Toggle>()));
 				categoryToggleGroup.CurrentIndex = 0;
 			}
 
@@ -73,23 +71,26 @@ namespace Utage
 			OpenCurrentCategory(this);
 		}
 
-		/// <summary>
 		/// リストビューのアイテムが作成されるときに呼ばれるコールバック
-		/// </summary>
 		/// <param name="go">作成されたアイテムのGameObject</param>
 		/// <param name="index">作成されたアイテムのインデックス</param>
-		void CreateTabButton(GameObject go, int index)
+		protected virtual void CreateTabButton(GameObject go, int index)
 		{
-			Text text = go.GetComponentInChildren<Text>();
-			if (text && index < categoryList.Length)
+			if (index < categoryList.Length)
 			{
-				text.text = LanguageManager.Instance.LocalizeText(categoryList[index]);
+				SetTabText(go, LanguageManager.Instance.LocalizeText(categoryList[index]));
 			}
+
 			Image image = go.GetComponentInChildren<Image>();
 			if (image && index < buttonSpriteList.Count) image.sprite = buttonSpriteList[index];
 		}
 
-		public void OpenCurrentCategory(int itemCount, System.Action<GameObject, int> CreateItem)
+		protected virtual void SetTabText(GameObject go, string text)
+		{
+			TextComponentWrapper.SetTextInChildren(go,text);
+		}
+
+		public virtual void OpenCurrentCategory(int itemCount, System.Action<GameObject, int> CreateItem)
 		{
 			gridPage.Init(itemCount, CreateItem);
 			gridPage.CreateItems(0);

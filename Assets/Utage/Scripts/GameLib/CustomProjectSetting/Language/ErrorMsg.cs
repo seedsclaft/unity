@@ -65,8 +65,7 @@ namespace Utage
 			}
 			else
 			{
-				string text;
-				if (language.TryLocalizeText(type.ToString(), out text))
+				if (language.TryLocalizeText(type.ToString(), out string text))
 				{
 					return text;
 				}

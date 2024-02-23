@@ -6,7 +6,7 @@ namespace Utage
 {
 	
 	// コマンド：サウンドの終了待ち
-	internal class AdvCommandWaitSound : AdvCommandWaitBase
+	public class AdvCommandWaitSound : AdvCommandWaitBase
 		, IAdvCommandEffect
 		, IAdvCommandUpdateWait
 	{

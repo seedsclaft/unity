@@ -14,8 +14,7 @@ namespace Utage
 		/// <summary>
 		/// 対応する言語リスト
 		/// </summary>
-		public List<string> Languages { get { return languages; } }
-		List<string> languages = new List<string>();
+		List<string> Languages { get; } = new();
 
 		//言語による表示テキストデータ
 		Dictionary<string, LanguageStrings> dataTbl = new Dictionary<string, LanguageStrings>();
@@ -34,12 +33,12 @@ namespace Utage
 			}
 		}
 
-		public void AddLanguage(string language)
+		void AddLanguage(string language)
 		{
 			if (string.IsNullOrEmpty(language)) return;
-			if (!languages.Contains(language))
+			if (!Languages.Contains(language))
 			{
-				languages.Add(language);
+				Languages.Add(language);
 			}
 		}
 
@@ -53,7 +52,7 @@ namespace Utage
 			return dataTbl.ContainsKey(key);
 		}
 	
-		internal bool TryLocalizeText( out string text, string CurrentLanguage, string DefaultLanguage, string key, string dataName = "")
+		internal bool TryLocalizeText( out string text, string currentLanguage, string defaultLanguage, string key, string dataName = "")
 		{
 			text = key;
 			if (!ContainsKey(key))
@@ -61,18 +60,25 @@ namespace Utage
 				Debug.LogError(key + ": is not found in Language data");
 				return false;
 			}
-			string language = CurrentLanguage;
-			if (!Languages.Contains(CurrentLanguage))
-			{
-				if (!Languages.Contains(DefaultLanguage))  return false;
+			if(TryGetText(out text, currentLanguage, key)) return true;
+			if (TryGetText(out text, defaultLanguage, key)) return true;
+			return false;
+		}
 
-				language = DefaultLanguage;
+		bool TryGetText(out string text, string language, string key)
+		{
+			text = "";
+			int index = Languages.IndexOf(language);
+			if (index < 0)
+			{
+				return false;
 			}
 
-			int index = Languages.IndexOf(language);
 			LanguageStrings strings = dataTbl[key];
-			if (index >= strings.Strings.Count) return false;
-
+			if (index >= strings.Strings.Count)
+			{
+				return false;
+			}
 			text = strings.Strings[index];
 			return true;
 		}
@@ -93,7 +99,7 @@ namespace Utage
 				string language = header.Strings[i];
 				AddLanguage(language);
 
-				int index = languages.IndexOf(language);
+				int index = Languages.IndexOf(language);
 				if( indexTbl.ContainsKey(index) )
 				{
 					Debug.LogError(language + " already exists in  "  + grid.Name );
@@ -115,7 +121,7 @@ namespace Utage
 					dataTbl.Add(key,new LanguageStrings());
 				}
 
-				int count = languages.Count;
+				int count = Languages.Count;
 				List<string> strings = new List<string>(count);
 				for (int i = 0; i < count; ++i)
 				{

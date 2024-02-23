@@ -1,4 +1,6 @@
 ﻿// UTAGE: Unity Text Adventure Game Engine (c) Ryohei Tokimura
+
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Utage
@@ -8,7 +10,9 @@ namespace Utage
 	/// コマンド：キャラクター表示
 	/// （Ver3.0からテキスト表示、ボイス再生はTextコマンドを自動生成するように変更）
 	/// </summary>
-	public class AdvCommandCharacter : AdvCommand
+	public class AdvCommandCharacter 
+		: AdvCommand
+			, IAdvCommandTexts
 	{
 		protected AdvCharacterInfo characterInfo;
 		protected string layerName;
@@ -128,6 +132,11 @@ namespace Utage
 			{
 				return new string[] { AdvCommandParser.IdText};
 			}
+		}
+
+		public IEnumerable<string> GetTextStrings()
+		{
+			yield return characterInfo.LocalizeNameText;
 		}
 	}
 }

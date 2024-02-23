@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System;
+using UnityEngine.Events;
 
 namespace Utage
 {
@@ -14,6 +15,11 @@ namespace Utage
 		public string ThreadName { get { return threadName; } }
 		[SerializeField,NotEditable]
 		string threadName;
+
+		//シナリオラベルの開始時に呼ばれる
+		public UnityEvent OnStartScenarioLabel => onStartScenarioLabel;
+		[SerializeField]
+		UnityEvent onStartScenarioLabel = new ();
 
 		// メインスレッドかどうか
 		public bool IsMainThread { get; private set; }
@@ -60,6 +66,9 @@ namespace Utage
 
 		//プリロードするファイル
 		HashSet<AssetFile> preloadFileSet = new HashSet<AssetFile>();
+
+		//現在のシナリオラベル
+		public AdvScenarioLabelData CurrentLabelData { get; private set; }
 
 		//現在のコマンド
 		public AdvCommand CurrentCommand { get { return currentCommand; } }
@@ -133,6 +142,7 @@ namespace Utage
 			ResetOnJump();
 			WaitManager.Clear();
 			jumpManager.Clear();
+			CurrentLabelData = null;
 			StopAllCoroutines();
 		}
 
@@ -191,16 +201,17 @@ namespace Utage
 			
 
 			//ジャンプ先のシナリオデータを取得
-			AdvScenarioLabelData currentLabelData = Engine.DataManager.FindScenarioLabelData(label);
-			while (currentLabelData != null)
+			CurrentLabelData = Engine.DataManager.FindScenarioLabelData(label);
+			while (CurrentLabelData != null)
 			{
-				ScenarioPlayer.UpdateSceneGallery(currentLabelData.ScenarioLabel, Engine);
-				AdvScenarioPageData currentPageData = currentLabelData.GetPageData(page);
+				OnStartScenarioLabel.Invoke();
+				ScenarioPlayer.UpdateSceneGallery(CurrentLabelData.ScenarioLabel, Engine);
+				AdvScenarioPageData currentPageData = CurrentLabelData.GetPageData(page);
 				//ページデータを取得
 				while (currentPageData != null)
 				{
 					//プリロードを更新
-					UpdatePreLoadFiles(currentLabelData.ScenarioLabel, page);
+					UpdatePreLoadFiles(CurrentLabelData.ScenarioLabel, page);
 
 					///ページ開始処理
 					if (IsMainThread)
@@ -209,7 +220,7 @@ namespace Utage
 					}
 
 					//0フレーム即コルーチンが終わる場合を考えてこう書く
-					var pageCoroutine = StartCoroutine(CoStartPage(currentLabelData, currentPageData, returnToCommand, skipPageHeaer));
+					var pageCoroutine = StartCoroutine(CoStartPage(CurrentLabelData, currentPageData, returnToCommand, skipPageHeaer));
 					if (pageCoroutine != null)
 					{
 						yield return pageCoroutine;
@@ -243,11 +254,11 @@ namespace Utage
 							}
 						}
 					}
-					currentPageData = currentLabelData.GetPageData(++page);
+					currentPageData = CurrentLabelData.GetPageData(++page);
 				}
 				//ロード直後処理終了
 				IfManager.OldSaveDataStart = false;
-				currentLabelData = Engine.DataManager.NextScenarioLabelData(currentLabelData.ScenarioLabel);
+				CurrentLabelData = Engine.DataManager.NextScenarioLabelData(CurrentLabelData.ScenarioLabel);
 				page = 0;
 			}
 			OnEndThread();
@@ -257,6 +268,7 @@ namespace Utage
 		void OnEndThread()
 		{
 			IsPlaying = false;
+			CurrentLabelData = null;
 			if (IsMainThread)
 			{
 				ScenarioPlayer.EndScenario();

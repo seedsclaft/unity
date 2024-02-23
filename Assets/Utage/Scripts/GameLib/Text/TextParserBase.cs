@@ -32,9 +32,11 @@ namespace Utage
 		//テキストスキップタグが存在している
 		public bool SkipText { get; protected set; } 
 		//テキストスキップをする際にページコントロールを有効にするか
-		public bool EnablePageCtrlOnSkipText { get; protected set; } 
+		public bool EnablePageCtrlOnSkipText { get; protected set; }
 
-
+		//サロゲートペア文字の解析をするかどうか
+		protected virtual bool EnableParseSurrogatePair => false;
+		
 		/// <summary>
 		/// エラーメッセージ
 		/// </summary>
@@ -84,7 +86,7 @@ namespace Utage
 			StringBuilder builder = new StringBuilder();
 			for (int i = 0; i < CharList.Count; ++i)
 			{
-				builder.Append( CharList[i].Char );
+				CharList[i].AppendToStringBuilder(builder);
 			}
 			noneMetaString = builder.ToString();
 		}
@@ -125,7 +127,7 @@ namespace Utage
 						{
 							//タグがなかった
 							//通常パターンのテキストを1文字追加
-							AddChar(OriginalText[index]);
+							AddChar(OriginalText,ref index);
 							++index;
 						}
 						else
@@ -162,18 +164,33 @@ namespace Utage
 		}
 
 		//文字を追加
-		protected virtual void AddChar(char c)
+		protected virtual int AddChar(string srcString, ref int index)
 		{
-			CharData data = new CharData(c, parsingInfo);
-			AddCharData(data);
+			if(index >= srcString.Length)
+			{
+				return index;
+			}
+
+			//サロゲートペアを考慮した解析
+			if (EnableParseSurrogatePair && char.IsSurrogatePair(srcString, index))
+			{
+				AddCharData(new CharData(srcString[index], srcString[index+1], parsingInfo));
+				++index;
+				return index;
+			}
+			else
+			{
+				AddCharData(new CharData(srcString[index], parsingInfo));
+				return index;
+			}
 		}
 
 		//文字列を追加
-		protected virtual void AddStrng(string text)
+		protected virtual void AddString(string text)
 		{
-			foreach (char c in text)
+			for(int i=0; i<text.Length; ++i )
 			{
-				AddChar(c);
+				AddChar(text,ref i);
 			}
 		}
 

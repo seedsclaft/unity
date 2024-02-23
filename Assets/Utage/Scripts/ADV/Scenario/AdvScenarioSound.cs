@@ -50,6 +50,18 @@ namespace Utage
 			}
 		}
 
+		//リップシンク対象となるボイスが鳴っているか
+		public bool CheckLipSync(string characterLabel)
+		{
+			if (characterLabel.IsNullOrEmpty()) return false;
+			if (SoundManager==null) return false;
+			if (!IsPlayingScenarioVoice(characterLabel)) return false;
+
+			var samplesVolume = SoundManager.GetVoiceSamplesVolume(characterLabel);
+//			Debug.Log($"samplesVolume={samplesVolume}");
+			return samplesVolume > 0.3f;
+		}
+
 		//現在のシナリオ内のボイスが再生されているか
 		public bool IsPlayingScenarioVoice(string characterLabel)
 		{

@@ -5,7 +5,7 @@ namespace Utage
 	/// <summary>
 	/// コマンド：ボイス再生
 	/// </summary>
-	internal class AdvCommandVoice : AdvCommand
+	public class AdvCommandVoice : AdvCommand
 	{
 
 		public AdvCommandVoice(StringGridRow row, AdvSettingDataManager dataManager)

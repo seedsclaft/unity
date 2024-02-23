@@ -6,7 +6,7 @@ namespace Utage
 	/// <summary>
 	/// コマンド：サブルーチンの終了
 	/// </summary>
-	internal class AdvCommandEndSubroutine : AdvCommand
+	public class AdvCommandEndSubroutine : AdvCommand
 	{
 		public AdvCommandEndSubroutine(StringGridRow row, AdvSettingDataManager dataManager)
 			: base(row)

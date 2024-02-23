@@ -7,7 +7,7 @@ using UtageExtensions;
 namespace Utage
 {
     [RequireComponent(typeof (Camera))]
-    public abstract class ImageEffectBase : MonoBehaviour
+    public abstract class ImageEffectBase : MonoBehaviour, IPostEffect
     {
 		//作成したマテリアル
 		private List<Material> createdMaterials = new List<Material>();

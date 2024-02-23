@@ -6,7 +6,7 @@ namespace Utage
 	/// <summary>
 	/// コマンド：END_IF処理
 	/// </summary>
-	internal class AdvCommandEndIf : AdvCommand, IAdvCommandEndIf
+	public class AdvCommandEndIf : AdvCommand, IAdvCommandEndIf
 	{
 
 		public AdvCommandEndIf(StringGridRow row)

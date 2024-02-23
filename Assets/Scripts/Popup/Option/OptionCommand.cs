@@ -20,8 +20,8 @@ public class OptionCommand : ListItem ,IListViewItem
         var data = optionInfo.OptionCommand;
         optionName.text = data.Name;
         optionHelp.text = data.Help;
-        optionVolume.gameObject.SetActive(data.Toggles == false);
-        optionToggles.ForEach(a => a.gameObject.SetActive(data.Toggles == true));
+        optionVolume.gameObject.SetActive(data.ButtonType == OptionButtonType.Slider);
+        optionToggles.ForEach(a => a.gameObject.SetActive(data.ButtonType == OptionButtonType.Toggle));
         if (data.ToggleText1 > 0)
         {
             optionTexts[0].text = DataSystem.GetTextData(data.ToggleText1).Text;

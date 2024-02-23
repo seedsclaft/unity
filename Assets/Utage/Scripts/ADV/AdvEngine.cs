@@ -18,16 +18,6 @@ namespace Utage
 	/// メインエンジン
 	/// </summary>/
 	[AddComponentMenu("Utage/ADV/AdvEngine")]
-	[RequireComponent(typeof(DontDestoryOnLoad))]
-	[RequireComponent(typeof(AdvDataManager))]
-	[RequireComponent(typeof(AdvScenarioPlayer))]
-	[RequireComponent(typeof(AdvPage))]
-	[RequireComponent(typeof(AdvMessageWindowManager))]
-	[RequireComponent(typeof(AdvSelectionManager))]
-	[RequireComponent(typeof(AdvBacklogManager))]
-	[RequireComponent(typeof(AdvConfig))]	
-	[RequireComponent(typeof(AdvSystemSaveData))]	
-	[RequireComponent(typeof(AdvSaveManager))]	
 	public partial class AdvEngine : MonoBehaviour
 	{
 		/// <summary>
@@ -113,7 +103,7 @@ namespace Utage
 			{
 				if (this.graphicManager == null)
 				{
-					this.graphicManager = this.transform.GetCompoentInChildrenCreateIfMissing<AdvGraphicManager>();
+					this.graphicManager = this.transform.GetComponentInChildrenCreateIfMissing<AdvGraphicManager>();
 					this.graphicManager.transform.localPosition = new Vector3(0,0,20);
 				}
 				return this.graphicManager;
@@ -131,13 +121,27 @@ namespace Utage
 			{
 				if (effectManager == null)
 				{
-					effectManager = this.transform.GetCompoentInChildrenCreateIfMissing<AdvEffectManager>();
+					effectManager = this.transform.GetComponentInChildrenCreateIfMissing<AdvEffectManager>();
 				}
 				return effectManager;
 			}
 		}
 		[SerializeField]
 		AdvEffectManager effectManager;
+
+		public AdvPostEffectManager AdvPostEffectManager
+		{
+			get
+			{
+				if (postEffectManager == null)
+				{
+					postEffectManager = this.transform.GetComponentInChildrenCreateIfMissing<AdvPostEffectManager>();
+				}
+				return postEffectManager;
+			}
+		}
+		[SerializeField]
+		AdvPostEffectManager postEffectManager;
 
 		/// <summary>
 		/// UI管理
@@ -159,6 +163,22 @@ namespace Utage
 		public CameraManager CameraManager { get { return this.GetComponentCacheFindIfMissing(ref cameraManager ); } }
 		[SerializeField]
 		CameraManager cameraManager;
+
+
+		public virtual ScreenResolution ScreenResolution
+		{
+			get
+			{
+				this.GetComponentCacheFindIfMissing(ref screenResolution);
+				if (screenResolution == null)
+				{
+					Debug.LogWarning("Not found ScreenResolution Component");
+					screenResolution = this.gameObject.AddComponent<ScreenResolution>();
+				}
+				return screenResolution;
+			}
+		}
+		[SerializeField] protected ScreenResolution screenResolution;
 
 		/// <summary>
 		/// 時間管理
@@ -191,12 +211,20 @@ namespace Utage
 		bool isStopSeOnSoundStop = false;
 
 		//パラメーターに言語設定があればそれに合わせる
-		public string LanguageKeyOfParam { get { return languageKeyOfParam; } }
+		public string LanguageKeyOfParam
+		{
+			get => languageKeyOfParam;
+			set => languageKeyOfParam = value;
+		}
 		[SerializeField]
 		string languageKeyOfParam = "";
 
 		//パラメーターにボイス言語設定があればそれに合わせる
-		public string VoiceLanguageKeyOfParam { get { return voiceLanguageKeyOfParam; } }
+		public string VoiceLanguageKeyOfParam
+		{
+			get => languageKeyOfParam;
+			set => voiceLanguageKeyOfParam = value;
+		}
 		[SerializeField]
 		string voiceLanguageKeyOfParam = "";
 
@@ -347,7 +375,6 @@ namespace Utage
 				AdvGraphicInfo.CallbackExpression = null;
 				TextParser.CallbackCalcExpression -= Param.CalcExpressionNotSetParam;
 				iTweenData.CallbackGetValue -= Param.GetParameter;
-				LanguageManagerBase.Instance.OnChangeLanugage = null;
 			}
 		}
 
@@ -568,7 +595,13 @@ namespace Utage
 			AdvGraphicInfo.CallbackExpression = Param.CalcExpressionBoolean;
 			TextParser.CallbackCalcExpression += Param.CalcExpressionNotSetParam;
 			iTweenData.CallbackGetValue += Param.GetParameter;
-			LanguageManagerBase.Instance.OnChangeLanugage = ChangeLanguage;
+			LanguageManagerBase.Instance.OnChangeLanguage = ChangeLanguage;
+
+			//カスタム初期化処理を呼ぶ
+			foreach (var item in this.GetComponentsInChildren<IAdvEngineCustomEventBootInit>(true))
+			{
+				item.OnBootInit();
+			}
 
 			//システムセーブデータの初期化＆ロード
 			SystemSaveData.Init(this);

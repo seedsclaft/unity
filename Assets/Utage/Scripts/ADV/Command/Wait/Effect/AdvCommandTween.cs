@@ -48,12 +48,10 @@ namespace Utage
 			else if (!IsEmptyCell(AdvColumnName.Arg6))
 			{
 				//ウェイトタイプがなく、Arg6がある
-#if UNITY_EDITOR
 				if (AdvCommand.IsEditorErrorCheck && AdvCommand.IsEditorErrorCheckWaitType)
 				{
 					Debug.LogWarning( this.ToErrorString( "Please use 'WaitType' Column") );
 				}
-#endif
 				ParseWait(AdvColumnName.Arg6);
 			}
 			else 

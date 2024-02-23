@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 using System.Collections;
+using TMPro;
 
 namespace Utage
 {
@@ -14,10 +15,10 @@ namespace Utage
 	{
 
 		/// <summary>
-		/// ボタン2用のテキストエリア
+		/// ボタン2用のテキスト
 		/// </summary>
-		[SerializeField]
-		protected Text button2Text;
+		[SerializeField, HideIfTMP] protected Text button2Text;
+		[SerializeField, HideIfLegacyText] protected TextMeshProUGUI button2TextTmp;
 
 		/// <summary>
 		/// ボタン2を押したときのイベント
@@ -35,10 +36,21 @@ namespace Utage
 		/// <param name="callbackOnClickButton2">ボタン2を押したときの呼ばれるコールバック</param>
 		public virtual void Open(string text, string buttonText1, string buttonText2, UnityAction callbackOnClickButton1, UnityAction callbackOnClickButton2 )
 		{
-			button2Text.text = buttonText2;
+			SetTextButton2(buttonText2);
 			this.OnClickButton2.RemoveAllListeners();
 			this.OnClickButton2.AddListener(callbackOnClickButton2);
 			base.Open(text, buttonText1, callbackOnClickButton1 );
+		}
+
+		public virtual void OpenYesNo(string text, UnityAction callbackOnClickYes, UnityAction callbackOnClickNo)
+		{
+			Open(text, LanguageSystemText.LocalizeText(SystemText.Yes),
+				LanguageSystemText.LocalizeText(SystemText.No), callbackOnClickYes, callbackOnClickNo);
+		}
+
+		public virtual void SetTextButton2(string text)
+		{
+			TextComponentWrapper.SetText(button2Text, button2TextTmp, text);
 		}
 
 		/// <summary>

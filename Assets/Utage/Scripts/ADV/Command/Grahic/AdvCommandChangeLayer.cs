@@ -5,7 +5,7 @@ namespace Utage
 {
 
 	// コマンド：レイヤー変更
-	internal class AdvCommandChangeLayer : AdvCommand
+	public class AdvCommandChangeLayer : AdvCommand
 	{
 		readonly string objectName;
 		readonly string layerName;

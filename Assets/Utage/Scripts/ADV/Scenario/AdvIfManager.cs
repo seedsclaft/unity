@@ -60,7 +60,7 @@ namespace Utage
 		{
 			if (Current == null)
 			{
-				//Curretがないのはエラー
+				//Currentがないのはエラー
 				if (!OldSaveDataStart) Debug.LogError(LanguageAdvErrorMsg.LocalizeTextFormat(AdvErrorMsg.ElseIf, exp));
 				Current = new AdvIfData(Current);
 			}
@@ -77,7 +77,7 @@ namespace Utage
 		{
 			if (Current == null)
 			{
-				//Curretがないのはエラー
+				//Currentがないのはエラー
 				if (!OldSaveDataStart) Debug.LogError(LanguageAdvErrorMsg.LocalizeTextFormat(AdvErrorMsg.Else));
 				Current = new AdvIfData(Current);
 			}

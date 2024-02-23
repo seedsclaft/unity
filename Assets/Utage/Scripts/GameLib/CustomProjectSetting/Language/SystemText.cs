@@ -42,11 +42,19 @@ namespace Utage
 		ChangeCurrentProject,
 		VersionUpScene,
 		VersionUpScenario,
+		Language,
+		UtageGuideMessageQuickSave,
+		UtageGuideMessageQuickLoad,
+		UtageGuideMessageCgGalleryNotOpened,
+		UtageGuideMessageSceneGalleryNotOpened,
+		UtageGuideMessageLoadFailedNotSaved,
+		UtageGuideMessageSaveFailedAutoSave,
+		UtageDialogMessageSaveConfirm,
+		UtageDialogMessageBackTitleConfirm,
+		UtageDialogMessageResetConfigConfirm,
 	};
 
-	/// <summary>
-	/// システムとして使うテキスト
-	/// </summary>
+	/// ゲーム実行中にUI表示するシステムテキスト
 	public static class LanguageSystemText
 	{
 		/// <summary>

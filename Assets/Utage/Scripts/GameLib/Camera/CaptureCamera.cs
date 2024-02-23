@@ -18,23 +18,20 @@ namespace Utage
     public class CaptureCamera : MonoBehaviour
 	{
 		public RenderTexture CaptureImage { get; set; }
-
 		public CaptureCameraEvent OnCaptured = new CaptureCameraEvent();
 
 		void OnRenderImage(RenderTexture source, RenderTexture destination)
 		{
 			if (!this.enabled) return;
-
-			if (CaptureImage != null)
-			{
-				RenderTexture.ReleaseTemporary(CaptureImage);
-			}
-
-			CaptureImage = source.CreateCopyTemporary();
-
+			if(CaptureImage==null) return;
+			Graphics.Blit(source, CaptureImage);
 			Graphics.Blit(source, destination);
-
 			OnCaptured.Invoke(this);
+		}
+
+		void OnDestroy()
+		{
+			OnCaptured.RemoveAllListeners();
 		}
 	}
 }

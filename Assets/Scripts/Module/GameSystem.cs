@@ -363,8 +363,7 @@ public class GameSystem : MonoBehaviour
         _busy = true;
         advHelpWindow.SetInputInfo("ADV_READING");
         while (advEngine.IsWaitBootLoading) yield return null;
-        while (advEngine.GraphicManager.IsLoading) yield return null;
-        while (advEngine.SoundManager.IsLoading) yield return null;
+        while (advEngine.IsLoading) yield return null;
         advEngine.JumpScenario(label);
         advEngine.Config.IsSkip = ConfigData.EventSkipIndex;
         advController.StartAdv();
@@ -378,7 +377,7 @@ public class GameSystem : MonoBehaviour
         
         //_currentScene.SetActiveUi(true);
         _busy = false;
-        if(onComplete !=null) onComplete();
+        if(onComplete != null) onComplete();
     }
 
     private void CommandSceneChange(SceneInfo sceneInfo)

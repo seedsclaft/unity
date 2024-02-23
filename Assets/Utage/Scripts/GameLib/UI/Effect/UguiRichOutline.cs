@@ -6,6 +6,7 @@ using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 
+using UnityEngine.Pool;
 
 namespace Utage
 {
@@ -51,14 +52,14 @@ namespace Utage
             if (!IsActive())
                 return;
 
-			var verts = Utage.ListPool<UIVertex>.Get();
+			var verts = ListPool<UIVertex>.Get();
 			vh.GetUIVertexStream(verts);
 
             ModifyVerticesSub(verts);
 
             vh.Clear();
             vh.AddUIVertexTriangleStream(verts);
-			Utage.ListPool<UIVertex>.Release(verts);
+			ListPool<UIVertex>.Release(verts);
         }
 #endif
 

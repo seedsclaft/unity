@@ -88,13 +88,13 @@ namespace Utage
 
 
 		//********描画時にクロスフェードが失敗するであろうかのチェック********//
-		internal override bool CheckFailedCrossFade(AdvGraphicInfo graphic)
+		public override bool CheckFailedCrossFade(AdvGraphicInfo graphic)
 		{
 			return true;
 		}
 
 		//********描画時のリソース変更********//
-		internal override void ChangeResourceOnDraw(AdvGraphicInfo graphic, float fadeTime)
+		public override void ChangeResourceOnDraw(AdvGraphicInfo graphic, float fadeTime)
 		{
 			this.VideoClip = graphic.File.UnityObject as VideoClip;
 			this.VideoPlayer.clip = this.VideoClip;

@@ -6,7 +6,7 @@ namespace Utage
 	/// <summary>
 	/// コマンド：環境音停止
 	/// </summary>
-	internal class AdvCommandStopAmbience : AdvCommand
+	public class AdvCommandStopAmbience : AdvCommand
 	{
 		public AdvCommandStopAmbience(StringGridRow row)
 			: base(row)

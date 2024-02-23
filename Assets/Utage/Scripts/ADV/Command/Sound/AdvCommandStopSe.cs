@@ -7,7 +7,7 @@ namespace Utage
 	/// <summary>
 	/// コマンド：Se停止
 	/// </summary>
-	internal class AdvCommandStopSe : AdvCommand
+	public class AdvCommandStopSe : AdvCommand
 	{
 		public AdvCommandStopSe(StringGridRow row, AdvSettingDataManager dataManager)
 			: base(row)

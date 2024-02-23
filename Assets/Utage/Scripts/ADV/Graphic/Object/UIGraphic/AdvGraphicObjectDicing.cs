@@ -61,13 +61,13 @@ namespace Utage
 		protected override Material Material { get { return Dicing.material; } set { Dicing.material = value; } }
 
 		//********描画時にクロスフェードが失敗するであろうかのチェック********//
-		internal override bool CheckFailedCrossFade(AdvGraphicInfo graphic)
+		public override bool CheckFailedCrossFade(AdvGraphicInfo graphic)
 		{
 			return !EnableCrossFade(graphic);
 		}
 
 		//********描画時のリソース変更********//
-		internal override void ChangeResourceOnDraw(AdvGraphicInfo graphic, float fadeTime)
+		public override void ChangeResourceOnDraw(AdvGraphicInfo graphic, float fadeTime)
 		{
 			Dicing.material = graphic.RenderTextureSetting.GetRenderMaterialIfEnable(Dicing.material);
 			//既に描画されている場合は、クロスフェード用のイメージを作成

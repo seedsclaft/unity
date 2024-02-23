@@ -15,16 +15,23 @@ namespace Utage
 	public class AdvUguiBacklog : MonoBehaviour
 	{
 		/// <summary>テキスト</summary>
-		public UguiNovelText text;
+		[HideIfTMP] public UguiNovelText text;
+		[SerializeField, HideIfLegacyText] protected TextMeshProNovelText textMeshProLogText;
 
 		/// <summary>キャラ名</summary>
-		public Text characterName;
+		[HideIfTMP] public Text characterName;
+		[SerializeField, HideIfLegacyText] protected TextMeshProNovelText textMeshProCharacterName;
+		
+		//キャラ名のルート（背景オブジェクトなどを表示、非表示するときに）
+		[SerializeField] protected GameObject characterNameRoot;
+
 
 		/// <summary>ボイス再生アイコン</summary>
 		public GameObject soundIcon;
 
+		/// ボイス再生ボタン
 		public Button Button { get { return this.GetComponentCache(ref button); } }
-		Button button;
+		[SerializeField] protected Button button;
 
 		/// <summary>ページ内に複数行あるか（ログの長さにあわせて変えるたりする）</summary>
 		public bool isMultiTextInPage;
@@ -43,23 +50,51 @@ namespace Utage
 
 			if (isMultiTextInPage)
 			{
-				float defaltHeight = this.text.rectTransform.rect.height;
-				this.text.text = data.Text;
-				float height = this.text.preferredHeight;
-				(this.text.transform as RectTransform).SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, height);
-
-				float baseH = (this.transform as RectTransform).rect.height;
-				float scale = this.text.transform.lossyScale.y / this.transform.lossyScale.y;
-				baseH += (height - defaltHeight) * scale;
-				(this.transform as RectTransform).SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, baseH);
+				InitTextIfMulti();
 			}
 			else
 			{
-				this.text.text = data.Text;
+				InitTextIfSingle();
 			}
+			InitCharacterName();
+			InitVoice();
+		}
 
-			characterName.text = data.MainCharacterNameText;
+		//ページ内に複数テキストがある場合の初期化を行う
+		protected virtual void InitTextIfMulti()
+		{
+			RectTransform textRectTransform = NovelTextComponentWrapper.GetRectTransform(text,textMeshProLogText);
+			float defaultHeight = textRectTransform.rect.height;
+			NovelTextComponentWrapper.SetText(text, textMeshProLogText, data.Text);
+			float height = NovelTextComponentWrapper.GetPreferredHeight(text,textMeshProLogText);
 
+			RectTransform r = (RectTransform)this.transform;
+			textRectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, height);
+			float baseH = r.rect.height;
+			float scale = textRectTransform.lossyScale.y / this.transform.lossyScale.y;
+			baseH += (height - defaultHeight) * scale;
+			r.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, baseH);
+		}
+
+		//ページ内に1つのテキストがある場合の初期化を行う
+		protected virtual void InitTextIfSingle()
+		{
+			NovelTextComponentWrapper.SetText(text, textMeshProLogText, data.Text);
+		}
+
+		//キャラ名に関しての初期化を行う
+		protected virtual void InitCharacterName()
+		{
+			NovelTextComponentWrapper.SetText(characterName, textMeshProCharacterName, data.MainCharacterNameText);
+			if (characterNameRoot!=null)
+			{
+				characterNameRoot.SetActive(!string.IsNullOrEmpty(data.MainCharacterNameText));
+			}
+		}
+
+		//ボイスに関しての初期化を行う
+		protected virtual void InitVoice()
+		{
 			int countVoice = data.CountVoice;
 			if (countVoice <= 0)
 			{
@@ -70,14 +105,21 @@ namespace Utage
 			{
 				if (countVoice >= 2 || isMultiTextInPage)
 				{
-					UguiNovelTextEventTrigger trigger = text.gameObject.GetComponentCreateIfMissing<UguiNovelTextEventTrigger>();
-					trigger.OnClick.AddListener((x) => OnClickHitArea(x, OnClicked));
+					InitVoiceIfMulti();
 				}
 				else
 				{
 					Button.onClick.AddListener(() => OnClicked(data.MainVoiceFileName));
 				}
 			}
+		}
+
+		//ボイスが複数ある場合の初期化を行う
+		protected virtual void InitVoiceIfMulti()
+		{
+			UguiNovelTextEventTrigger trigger =
+				text.gameObject.GetComponentCreateIfMissing<UguiNovelTextEventTrigger>();
+			trigger.OnClick.AddListener((x) => OnClickHitArea(x, OnClicked));
 		}
 
 		protected virtual void OnClickHitArea(UguiNovelTextHitArea hitGroup, Action<string> OnClicked)

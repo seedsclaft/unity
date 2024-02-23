@@ -30,7 +30,7 @@ namespace Utage
 		}
 
 		//********描画時にクロスフェードが失敗するであろうかのチェック********//
-		internal override bool CheckFailedCrossFade(AdvGraphicInfo grapic)
+		public override bool CheckFailedCrossFade(AdvGraphicInfo grapic)
 		{
 			//ファイルが同じで、アニメーションステート名が違う場合、アニメーション変更だけのパターン変更とみなす
 			if (IsOnlyChangeAnimationState(grapic)) return false;
@@ -40,7 +40,7 @@ namespace Utage
 		}
 
 		//********描画時のリソース変更********//
-		internal override void ChangeResourceOnDraw(AdvGraphicInfo grapic, float fadeTime)
+		public override void ChangeResourceOnDraw(AdvGraphicInfo grapic, float fadeTime)
 		{
 			//新しくリソースを設定
 			if ( !IsOnlyChangeAnimationState(grapic))
@@ -83,24 +83,24 @@ namespace Utage
 		//		}
 
 		//拡大縮小の設定
-		internal override void Scale(AdvGraphicInfo graphic)
+		public override void Scale(AdvGraphicInfo graphic)
 		{
 			this.transform.localScale = graphic.Scale * Layer.Manager.PixelsToUnits;
 		}
 
 		//配置
-		internal override void Alignment(Utage.Alignment alignment, AdvGraphicInfo graphic)
+		public override void Alignment(Utage.Alignment alignment, AdvGraphicInfo graphic)
 		{
 			this.transform.localPosition = graphic.Position;
 		}
 
 		//上下左右の反転
-		internal override void Flip(bool flipX, bool flipY)
+		public override void Flip(bool flipX, bool flipY)
 		{
 		}
 
 		//********描画時の引数適用********//
-		internal override void SetCommandArg(AdvCommand command)
+		public override void SetCommandArg(AdvCommand command)
 		{
 			string stateName = GetAnimationStateName(command);
 			float fadeTime = command.ParseCellOptional<float>(AdvColumnName.Arg6, 0.2f);
@@ -121,7 +121,7 @@ namespace Utage
 			ChangeAnimationState(stateName, fadeTime);
 		}
 
-		internal override void ChangeAnimationState(string animationStateName, float fadeTime)
+		public override void ChangeAnimationState(string animationStateName, float fadeTime)
 		{
 			AnimationStateName = animationStateName;
 			if (!string.IsNullOrEmpty(AnimationStateName))

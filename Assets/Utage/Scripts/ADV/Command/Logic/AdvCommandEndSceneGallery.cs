@@ -6,7 +6,7 @@ namespace Utage
 	/// <summary>
 	/// コマンド：シーン回想終了
 	/// </summary>
-	internal class AdvCommandEndSceneGallery : AdvCommand
+	public class AdvCommandEndSceneGallery : AdvCommand
 	{
 		public AdvCommandEndSceneGallery(StringGridRow row)
 			: base(row)

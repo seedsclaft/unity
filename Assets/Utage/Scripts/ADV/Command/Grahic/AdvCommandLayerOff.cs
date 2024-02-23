@@ -7,7 +7,7 @@ namespace Utage
 	/// <summary>
 	/// コマンド：レイヤー操作　オブジェクトすべて消す
 	/// </summary>
-	internal class AdvCommandLayerOff : AdvCommand
+	public class AdvCommandLayerOff : AdvCommand
 	{
 		public AdvCommandLayerOff(StringGridRow row, AdvSettingDataManager dataManager)
 			: base(row)

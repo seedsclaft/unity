@@ -42,6 +42,9 @@ namespace Utage
 				return num;
 			}
 		}
+		
+		//解放されているか？（解放数が1以上）
+		public bool IsOpened => NumOpen > 0;
 
 		/// <summary>セーブデータ</summary>
 		AdvGallerySaveData saveData;

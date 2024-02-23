@@ -6,7 +6,7 @@ namespace Utage
 	/// <summary>
 	/// コマンド：ボイス停止
 	/// </summary>
-	internal class AdvCommandStopVoice : AdvCommand
+	public class AdvCommandStopVoice : AdvCommand
 	{
 		public AdvCommandStopVoice(StringGridRow row)
 			: base(row)

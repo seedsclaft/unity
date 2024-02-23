@@ -271,13 +271,18 @@ namespace Utage
 				RebuildSize();
 				//プレビュー用のパターンデータも作り直し
 				previewPattern.RebuildOnApply(this);
+				hasApply = false;
+				hasReimport = false;
+				GUIUtility.ExitGUI();
 			}
-			if (hasReimport)
+			else if (hasReimport)
 			{
+				Debug.Log("ReimportResources...", this);
 				dataList.ReimportResources("Tag" + this.name);
+				hasApply = false;
+				hasReimport = false;
+				GUIUtility.ExitGUI();
 			}
-			hasApply = false;
-			hasReimport = false;
 		}
 
 		//指定のタグ内にあるパターン名のリストを取得

@@ -195,7 +195,7 @@ namespace Utage
 		{
 			return AddColorTag(str, "#" + ColorUtil.ToColorString(color));
 		}
-
+		
 		//コンソールに表示するエラーメッセージに、エラーのカラータグなどを設定
 		public static string ToColorTagErrorMsg(string errorMsg, bool enableEscapeNewlines = true)
 		{
@@ -203,8 +203,7 @@ namespace Utage
 			{
 				//Unityのコンソールは、表示行数（ユーザー設定で可変）を超えた行はカットされてしまい、カラータグを閉じられなくなってしまうので
 				//メッセージに改行文字が含まれる場合は、改行文字をエスケープして改行を無効化する。
-				
-				errorMsg = EscapeNewlines(errorMsg);
+				errorMsg = StringUtil.EscapeNewlines(errorMsg);
 			}
 			
 			//エラーのカラータグを設定
@@ -220,16 +219,6 @@ namespace Utage
 			}
 		}
 		
-		//改行文字をエスケープ処理
-		public static string EscapeNewlines(string msg)
-		{
-			msg = msg.Replace("\r\n", @"\n");
-			msg = msg.Replace("\n", @"\n");
-			msg = msg.Replace("\r", @"\n");
-			return msg;
-		}
-
-
 		//コンソールに表示するエラー文字の色
 		public static Color GetErrorColorInEditor()
 		{
@@ -248,6 +237,12 @@ namespace Utage
 #endif
 			
 			return false;
+		}
+		
+		//エディター用のGUIボックスの背景色
+		public static Color GetEditorGuiBoxBgColor()
+		{
+			return IsDarkThemeInEditor() ? new Color(0.1875f, 0.1875f, 0.1875f) : new Color(0.75f, 0.75f, 0.75f);
 		}
 	}
 }

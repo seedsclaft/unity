@@ -26,6 +26,7 @@ namespace Utage
 		UpdateSceneLabel,
 		EndSceneGallery,
 		ChacacterCountOnImport,
+		Utage4VersionErrorSoundManager,
 	};
 
 	/// <summary>

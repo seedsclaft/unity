@@ -25,7 +25,7 @@ namespace Utage
 		[SerializeField]
 		List<Texture2D> ruleTextureList = new List<Texture2D>();
 
-		internal Texture2D FindRuleTexture(string name)
+		public Texture2D FindRuleTexture(string name)
 		{
 			foreach (var item in ruleTextureList)
 			{

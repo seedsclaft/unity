@@ -6,20 +6,23 @@ using System.Collections;
 using System.Collections.Generic;
 
 
-
-/// <summary>
-/// コンフィグ画面のサンプル
-/// </summary>
-[AddComponentMenu("Utage/TemplateUI/UtageUguiConfigTaggedMasterVolume")]
-public class UtageUguiConfigTaggedMasterVolume : MonoBehaviour
+namespace Utage
 {
-	public string volumeTag = "";
-	public UtageUguiConfig config;
 
-	//タグつきボリュームの設定
-	public virtual void OnValugeChanged(float value)
+	/// <summary>
+	/// コンフィグ画面のサンプル
+	/// </summary>
+	[AddComponentMenu("Utage/TemplateUI/UtageUguiConfigTaggedMasterVolume")]
+	public class UtageUguiConfigTaggedMasterVolume : MonoBehaviour
 	{
-		if (string.IsNullOrEmpty(volumeTag)) return;
-		config.OnValugeChangedTaggedMasterVolume(volumeTag, value);
+		public string volumeTag = "";
+		public UtageUguiConfig config;
+
+		//タグつきボリュームの設定
+		public virtual void OnValugeChanged(float value)
+		{
+			if (string.IsNullOrEmpty(volumeTag)) return;
+			config.OnValugeChangedTaggedMasterVolume(volumeTag, value);
+		}
 	}
 }

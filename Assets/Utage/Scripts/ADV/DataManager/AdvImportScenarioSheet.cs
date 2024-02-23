@@ -94,6 +94,10 @@ namespace Utage
 				data.DebugIndex = row.DebugIndex;
 				data.DebugInfo = row.DebugInfo;
 			}
+
+#if UNITY_EDITOR
+			this.SourceAssetInEditor = original.SourceAssetInEditor;
+#endif
 			this.InitLink();
 		}
 

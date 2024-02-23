@@ -44,7 +44,8 @@ using System.Reflection;
 using UnityEngine;
 #endregion
 
-
+namespace Utage
+{
 /// <summary>
 /// <para>Version: 2.0.46</para>	 
 /// <para>Author: Bob Berkebile (http://pixelplacement.com)</para>
@@ -7542,3 +7543,4 @@ public class iTween : MonoBehaviour{
 	*/
 #endregion
 } 
+}

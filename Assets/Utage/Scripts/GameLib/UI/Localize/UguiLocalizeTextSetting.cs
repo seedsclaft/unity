@@ -6,10 +6,7 @@ using UnityEngine.UI;
 
 namespace Utage
 {
-
-	/// <summary>
-	/// 表示言語切り替え用のクラス
-	/// </summary>
+	/// 表示言語によるテキスト設定の切り替え
 	[AddComponentMenu("Utage/Lib/UI/UguiLocalizeTextSetting")]
 	public class UguiLocalizeTextSetting : UguiLocalizeBase
 	{
@@ -23,21 +20,18 @@ namespace Utage
 			public float lineSpacing = 1;
 		};
 
+		public List<Setting> SettingList => settingList;
 		[SerializeField]
 		List<Setting> settingList = new List<Setting>();
 
 		[NonSerialized]
 		Setting defaultSetting = null;
 
-		/// <summary>
-		/// スプライトコンポーネント(アタッチされてない場合はnull)
-		/// </summary>
+		/// テキストコンポーネント
 		Text CachedText { get { if (null == cachedText) cachedText = this.GetComponent<Text>(); return cachedText; } }
 		Text cachedText;
 
-		/// <summary>
 		/// ノベルテキスト
-		/// </summary>
 		UguiNovelText NovelText { get { if (null == novelText) novelText = this.GetComponent<UguiNovelText>(); return novelText; } }
 		UguiNovelText novelText;
 

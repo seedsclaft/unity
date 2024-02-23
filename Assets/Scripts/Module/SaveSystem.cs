@@ -269,4 +269,41 @@ public class SaveSystem : MonoBehaviour
 	{
 		return ExistsLoadFile(_optionDataKey);
 	}
+
+	public static void DeletePlayerData(int fileId = 0)
+	{
+#if UNITY_WEBGL
+		try
+		{
+			PlayerPrefs.DeleteKey(_playerDataKey);
+			PlayerPrefs.DeleteKey(_playerStageDataKey + fileId);
+			GameSystem.CurrentStageData = new SaveStageInfo();
+			GameSystem.CurrentData = new SaveInfo();
+		}
+		catch(Exception e)
+		{
+			Debug.LogException(e);
+		}
+#else
+		try 
+		{
+			File.Delete(SaveFilePath(_playerDataKey));
+			File.Delete(SaveFilePath(_playerStageDataKey + fileId));
+			GameSystem.CurrentStageData = new SaveStageInfo();
+			GameSystem.CurrentData = new SaveInfo();
+		}
+		catch (Exception e)
+		{
+			Debug.LogException(e);
+		}
+		finally 
+		{
+			//	ファイル操作には明示的な破棄が必要です。Closeを忘れないように。
+			if( TempFileStream != null )
+			{
+				TempFileStream.Close();
+			}
+		}
+		#endif
+	}
 }

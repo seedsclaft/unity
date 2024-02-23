@@ -22,13 +22,13 @@ namespace Utage
 		protected override Material Material { get; set; }
 
 		//********描画時にクロスフェードが失敗するであろうかのチェック********//
-		internal override bool CheckFailedCrossFade(AdvGraphicInfo grapic)
+		public override bool CheckFailedCrossFade(AdvGraphicInfo grapic)
 		{
 			return LastResource != grapic;
 		}
 
 		//********描画時のリソース変更********//
-		internal override void ChangeResourceOnDraw(AdvGraphicInfo grapic, float fadeTime)
+		public override void ChangeResourceOnDraw(AdvGraphicInfo grapic, float fadeTime)
 		{
 			//新しくリソースを設定
 			if (LastResource != grapic)
@@ -54,7 +54,7 @@ namespace Utage
 		}
 
 		//********描画時のリソース変更********//
-		internal virtual void ChangeResourceOnDrawSub(AdvGraphicInfo graphic)
+		public virtual void ChangeResourceOnDrawSub(AdvGraphicInfo graphic)
 		{
 			foreach (var item in this.GetComponentsInChildren<IAdvGraphicObjectCustom>())
 			{
@@ -63,7 +63,7 @@ namespace Utage
 		}
 
 		//エフェクト用の色が変化したとき
-		internal override void OnEffectColorsChange(AdvEffectColor color)
+		public override void OnEffectColorsChange(AdvEffectColor color)
 		{
 			foreach (var item in this.GetComponentsInChildren<IAdvGraphicObjectCustom>())
 			{
@@ -72,7 +72,7 @@ namespace Utage
 		}
 
 		//********描画時の引数適用********//
-		internal override void SetCommandArg(AdvCommand command)
+		public override void SetCommandArg(AdvCommand command)
 		{
 			base.SetCommandArg(command);
 			foreach (var item in this.GetComponentsInChildren<IAdvGraphicObjectCustomCommand>())

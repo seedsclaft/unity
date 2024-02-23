@@ -8,7 +8,7 @@ namespace Utage
 	/// <summary>
 	/// コマンド：MessageWindow操作　ChangeCurrent
 	/// </summary>
-	internal class AdvCommandMessageWindowChangeCurrent : AdvCommand
+	public class AdvCommandMessageWindowChangeCurrent : AdvCommand
 	{
 		public AdvCommandMessageWindowChangeCurrent(StringGridRow row)
 			: base(row)

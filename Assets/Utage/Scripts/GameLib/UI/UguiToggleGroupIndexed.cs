@@ -5,6 +5,8 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using UtageExtensions;
+
 namespace Utage
 {
 
@@ -80,8 +82,10 @@ namespace Utage
 			for( int i = 0; i < toggles.Count; ++i )
 			{
 				Toggle toggle = toggles[i];
-				toggle.onValueChanged.AddListener( ( bool isOn )=>OnToggleValueChanged(toggle) );
+				toggle.onValueChanged.AddListener((bool isOn) => OnToggleValueChanged(toggle));
 			}
+			BroadcastToggleIndex();
+			
 			if(ignoreValueChangeOnAwake) currentIndex = firstIndexOnAwake;
 			CurrentIndex = firstIndexOnAwake;
 
@@ -102,11 +106,41 @@ namespace Utage
 //			Debug.Log ( "Real " + toggles.FindIndex( (Toggle obj) => obj.isOn ) );
 			isIgnoreValueChange = false;
 		}
-
-		public virtual void Add( Toggle toggle)
+		
+		//管理対象のToggleを追加
+		//BroadcastToggleIndexが何度も呼ばれてしまうので、複数Toggleを追加する場合はなるべくAddTogglesを使う
+		public virtual void Add(Toggle toggle)
 		{
-			toggles.Add (toggle);
-			toggle.onValueChanged.AddListener( ( bool isOn )=>OnToggleValueChanged(toggle) );
+			toggles.Add(toggle);
+			toggle.onValueChanged.AddListener((bool isOn) => OnToggleValueChanged(toggle));
+			BroadcastToggleIndex();
+		}
+
+		//管理対象のToggleを複数追加
+		public virtual void AddToggles( IEnumerable<Toggle> newToggles)
+		{
+			foreach (var toggle in newToggles)
+			{
+				toggles.Add(toggle);
+				toggle.onValueChanged.AddListener((bool isOn) => OnToggleValueChanged(toggle));
+			}
+			BroadcastToggleIndex();
+		}
+		
+		//Toggleのインデックスを子オブジェクト以下のコンポーネントに送信
+		protected virtual void BroadcastToggleIndex()
+		{
+			int count = toggles.Count;
+			for (var i = 0; i < count; i++)
+			{
+				var toggle = toggles[i];
+				//インデックスを設定するインターフェースがある場合は、インデックスを設定
+				foreach (var component in toggle.GetComponentsInChildren<IUguiIndex>())
+				{
+					component.SetIndex(i, count);
+				}
+			}
+
 		}
 
 		public virtual void ClearToggles()

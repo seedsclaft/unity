@@ -7,7 +7,7 @@ namespace Utage
 	/// <summary>
 	/// コマンド：パーティクル表示
 	/// </summary>
-	internal class AdvCommandParticleOff : AdvCommand
+	public class AdvCommandParticleOff : AdvCommand
 	{
 		string name;
 		AdvParticleStopType stopType;

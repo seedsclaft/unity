@@ -6,7 +6,7 @@ namespace Utage
 	/// <summary>
 	/// コマンド：メッセージウィンドウを非表示
 	/// </summary>
-	internal class AdvCommandHideMessageWindow : AdvCommand
+	public class AdvCommandHideMessageWindow : AdvCommand
 	{
 		public AdvCommandHideMessageWindow(StringGridRow row)
 			: base(row)

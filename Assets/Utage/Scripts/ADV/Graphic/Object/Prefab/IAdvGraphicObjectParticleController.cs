@@ -10,7 +10,7 @@ using UtageExtensions;
 
 namespace Utage
 {
-	interface IAdvGraphicObjectParticleController
+	public interface IAdvGraphicObjectParticleController
 	{
 		bool EnableSave { get; }
 		void Stop(AdvParticleStopType stopType);

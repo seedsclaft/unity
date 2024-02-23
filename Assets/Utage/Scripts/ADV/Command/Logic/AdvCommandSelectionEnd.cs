@@ -6,7 +6,7 @@ namespace Utage
 	/// <summary>
 	/// コマンド：選択肢追加終了
 	/// </summary>
-	internal class AdvCommandSelectionEnd : AdvCommand
+	public class AdvCommandSelectionEnd : AdvCommand
 	{
 		public AdvCommandSelectionEnd(StringGridRow row, AdvSettingDataManager dataManager)
 			: base(row)

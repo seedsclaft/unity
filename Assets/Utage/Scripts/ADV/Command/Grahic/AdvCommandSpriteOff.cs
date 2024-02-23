@@ -7,7 +7,7 @@ namespace Utage
 	/// <summary>
 	/// コマンド：スプライト表示
 	/// </summary>
-	internal class AdvCommandSpriteOff : AdvCommand
+	public class AdvCommandSpriteOff : AdvCommand
 	{
 		string name;
 		float fadeTime = 0.2f;

@@ -9,7 +9,7 @@ namespace Utage
 	/// <summary>
 	/// コマンド：シェイク表示
 	/// </summary>
-	internal class AdvCommandShake : AdvCommandTween
+	public class AdvCommandShake : AdvCommandTween
 	{
 		public AdvCommandShake(StringGridRow row, AdvSettingDataManager dataManager)
 			: base(row, dataManager)

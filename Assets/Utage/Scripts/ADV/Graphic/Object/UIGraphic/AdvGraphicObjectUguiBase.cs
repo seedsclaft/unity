@@ -34,14 +34,14 @@ namespace Utage
 		protected abstract Material Material { get; set; }
 
 		//拡大縮小の設定
-		internal override void Scale(AdvGraphicInfo graphic)
+		public override void Scale(AdvGraphicInfo graphic)
 		{
 			RectTransform rectTransform = this.transform as RectTransform;
 			rectTransform.localScale = graphic.Scale;
 		}
 
 		//配置
-		internal override void Alignment(Utage.Alignment alignment, AdvGraphicInfo graphic)
+		public override void Alignment(Utage.Alignment alignment, AdvGraphicInfo graphic)
 		{
 			RectTransform t = this.transform as RectTransform;
 			t.pivot = graphic.Pivot;

@@ -196,7 +196,7 @@ namespace Utage
 		protected virtual bool ParseParam(string arg)
 		{
 			string str = ExpressionToString(arg);
-			AddStrng(str);
+			AddString(str);
 			return true;
 		}
 
@@ -209,7 +209,7 @@ namespace Utage
 			string[] paramKeys = new string[num];
 			Array.Copy(args, 1, paramKeys, 0, num);
 			string str = FormatExpressionToString(args[0], paramKeys);
-			AddStrng(str);
+			AddString(str);
 			return true;
 		}
 
@@ -259,6 +259,13 @@ namespace Utage
 			{
 				return false;
 			}
+		}
+
+		//改行文字を追加
+		protected virtual void AddBr(string arg)
+		{
+			CharData data = new CharData('\n', parsingInfo);
+			AddCharData(data);
 		}
 
 		//インターバルの追加

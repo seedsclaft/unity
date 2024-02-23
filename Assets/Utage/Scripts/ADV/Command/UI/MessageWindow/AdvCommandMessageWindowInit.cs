@@ -9,7 +9,7 @@ namespace Utage
 	/// <summary>
 	/// コマンド：MessageWindow操作　初期化
 	/// </summary>
-	internal class AdvCommandMessageWindowInit : AdvCommand
+	public class AdvCommandMessageWindowInit : AdvCommand
 	{
 		List<string> names = new List<string>();
 		public AdvCommandMessageWindowInit(StringGridRow row)

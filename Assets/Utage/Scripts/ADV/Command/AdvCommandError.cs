@@ -6,7 +6,7 @@ namespace Utage
 	/// <summary>
 	/// コマンド：Errorコマンド
 	/// </summary>
-	internal class AdvCommandError : AdvCommand
+	public class AdvCommandError : AdvCommand
 	{
 
 		public AdvCommandError(StringGridRow row)

@@ -7,7 +7,7 @@ namespace Utage
 	/// <summary>
 	/// コマンド：パラメーターに数値代入
 	/// </summary>
-	internal class AdvCommandParam : AdvCommand
+	public class AdvCommandParam : AdvCommand
 	{
 
 		public AdvCommandParam(StringGridRow row, AdvSettingDataManager dataManager)

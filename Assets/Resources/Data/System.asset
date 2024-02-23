@@ -43,7 +43,8 @@ MonoBehaviour:
     Key: BGM_VOLUME
     Name: BGM Volume
     Help: " - BGM\u306E\u97F3\u91CF\u3092\u5909\u66F4\u3057\u307E\u3059"
-    Toggles: 0
+    Category: 1
+    ButtonType: 1
     ToggleText1: 0
     ToggleText2: 0
     ExistAndroid: 1
@@ -51,7 +52,8 @@ MonoBehaviour:
     Key: SE_VOLUME
     Name: SE Volume
     Help: " - SE\u306E\u97F3\u91CF\u3092\u5909\u66F4\u3057\u307E\u3059"
-    Toggles: 0
+    Category: 1
+    ButtonType: 1
     ToggleText1: 0
     ToggleText2: 0
     ExistAndroid: 1
@@ -59,7 +61,8 @@ MonoBehaviour:
     Key: GRAPHIC_QUALITY
     Name: Graphic Quality
     Help: " - \u753B\u8CEA\u306E\u30AF\u30AA\u30EA\u30C6\u30A3\u3092\u5909\u66F4\u3057\u307E\u3059"
-    Toggles: 1
+    Category: 1
+    ButtonType: 2
     ToggleText1: 521
     ToggleText2: 522
     ExistAndroid: 0
@@ -67,7 +70,8 @@ MonoBehaviour:
     Key: EVENT_SKIP
     Name: Event Skip
     Help: " - \u9078\u629E\u80A2\u3092\u9664\u304D\u30A4\u30D9\u30F3\u30C8\u3092\u30B9\u30AD\u30C3\u30D7\u3059\u308B\u304B\u5909\u66F4\u3057\u307E\u3059"
-    Toggles: 1
+    Category: 1
+    ButtonType: 2
     ToggleText1: 526
     ToggleText2: 527
     ExistAndroid: 1
@@ -75,7 +79,8 @@ MonoBehaviour:
     Key: COMMAND_END_CHECK
     Name: Command Check
     Help: " - \u5168\u3066\u306E\u30A2\u30EB\u30B1\u30DF\u30B9\u30C8\u306B\u547D\u4EE4\u3092\u7D42\u3048\u305F\u6642\u306B\u547D\u4EE4\u7D42\u4E86\u30B3\u30DE\u30F3\u30C9\u3092\u547C\u3076\u304B\u5909\u66F4\u3057\u307E\u3059"
-    Toggles: 1
+    Category: 1
+    ButtonType: 2
     ToggleText1: 531
     ToggleText2: 532
     ExistAndroid: 1
@@ -83,7 +88,8 @@ MonoBehaviour:
     Key: BATTLE_WAIT
     Name: Battle Wait
     Help: " - \u30D0\u30C8\u30EB\u3067\u884C\u52D5\u9806\u756A\u5F85\u3061\u6642\u9593\u3092\u8868\u793A\u3059\u308B\u304B\u30B9\u30AD\u30C3\u30D7\u3059\u308B\u5909\u66F4\u3057\u307E\u3059"
-    Toggles: 1
+    Category: 1
+    ButtonType: 2
     ToggleText1: 536
     ToggleText2: 527
     ExistAndroid: 1
@@ -91,7 +97,8 @@ MonoBehaviour:
     Key: BATTLE_ANIMATION
     Name: Battle Animation
     Help: " - \u30D0\u30C8\u30EB\u30A2\u30CB\u30E1\u30FC\u30B7\u30E7\u30F3\u6F14\u51FA\u8868\u793A\u306E\u6709\u7121\u3092\u5207\u308A\u66FF\u3048\u307E\u3059"
-    Toggles: 1
+    Category: 1
+    ButtonType: 2
     ToggleText1: 536
     ToggleText2: 527
     ExistAndroid: 1
@@ -99,7 +106,8 @@ MonoBehaviour:
     Key: INPUT_TYPE
     Name: Enable InputKey
     Help: " - \u30AD\u30FC\u30DC\u30FC\u30C9\u30FB\u30B2\u30FC\u30E0\u30D1\u30C3\u30C9\u64CD\u4F5C\u3092\u6709\u52B9\u306B\u3059\u308B\u304B\u5909\u66F4\u3057\u307E\u3059"
-    Toggles: 1
+    Category: 1
+    ButtonType: 2
     ToggleText1: 541
     ToggleText2: 542
     ExistAndroid: 0
@@ -107,9 +115,19 @@ MonoBehaviour:
     Key: BATTLE_AUTO
     Name: Battle Auto
     Help: " - \u30D0\u30C8\u30EB\u306E\u64CD\u4F5C\u65B9\u6CD5\u3092\u5909\u66F4\u3057\u307E\u3059"
-    Toggles: 1
+    Category: 1
+    ButtonType: 2
     ToggleText1: 543
     ToggleText2: 544
+    ExistAndroid: 1
+  - Id: 101
+    Key: INITALIZE_GAMEDATA
+    Name: "\u30C7\u30FC\u30BF\u521D\u671F\u5316"
+    Help: " - \u30D7\u30EC\u30A4\u30E4\u30FC\u30C7\u30FC\u30BF\u3092\u521D\u671F\u5316\u3057\u307E\u3059"
+    Category: 2
+    ButtonType: 3
+    ToggleText1: 0
+    ToggleText2: 0
     ExistAndroid: 1
   TitleCommandData:
   - Id: 1
@@ -423,6 +441,9 @@ MonoBehaviour:
   - Id: 509
     Text: Battle Auto
     Help: " - \u30D0\u30C8\u30EB\u306E\u64CD\u4F5C\u65B9\u6CD5\u3092\u5909\u66F4\u3057\u307E\u3059"
+  - Id: 510
+    Text: "\u30C7\u30FC\u30BF\u521D\u671F\u5316"
+    Help: " - \u30D7\u30EC\u30A4\u30E4\u30FC\u30C7\u30FC\u30BF\u3092\u521D\u671F\u5316\u3057\u307E\u3059"
   - Id: 521
     Text: Normal
     Help: '""'
@@ -455,6 +476,21 @@ MonoBehaviour:
     Help: '""'
   - Id: 544
     Text: "\u30AA\u30FC\u30C8"
+    Help: '""'
+  - Id: 551
+    Text: "\u30B2\u30FC\u30E0\u5185\u8A2D\u5B9A"
+    Help: '""'
+  - Id: 552
+    Text: "\u30C7\u30FC\u30BF"
+    Help: '""'
+  - Id: 553
+    Text: "\u7248\u6A29\u8868\u793A"
+    Help: '""'
+  - Id: 581
+    Text: "\u30D7\u30EC\u30A4\u30E4\u30FC\u30C7\u30FC\u30BF\u3092\u521D\u671F\u5316\u3057\u307E\u3059\u304B\uFF1F"
+    Help: '""'
+  - Id: 582
+    Text: "\u30B2\u30FC\u30E0\u3092\u518D\u8D77\u52D5\u3057\u307E\u3059"
     Help: '""'
   - Id: 600
     Text: "\u5473\u65B9"

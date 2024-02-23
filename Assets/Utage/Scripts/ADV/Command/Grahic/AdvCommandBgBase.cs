@@ -5,7 +5,7 @@ namespace Utage
 {
 
 	// コマンド：背景表示・切り替えの基底クラス
-	internal abstract class AdvCommandBgBase : AdvCommand
+	public abstract class AdvCommandBgBase : AdvCommand
 	{
 		protected string label;
 		protected AdvGraphicInfoList graphic;

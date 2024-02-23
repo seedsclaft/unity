@@ -1,4 +1,6 @@
 ﻿// UTAGE: Unity Text Adventure Game Engine (c) Ryohei Tokimura
+
+using System;
 using UnityEngine;
 using UnityEngine.Profiling;
 using System.Collections;
@@ -11,6 +13,7 @@ namespace Utage
 	/// インポートしたBook（エクセルファイル）のデータ
 	/// マクロを適用済みの文字列グリッドを持つ
 	/// </summary>
+	[CreateAssetMenu(menuName = "Utage/Scenario/Book")]
 	public class AdvImportBook : ScriptableObject
 	{
 		const int Version = 0;
@@ -39,7 +42,10 @@ namespace Utage
 		public List<StringGrid> GridList { get { return gridList; } }
 		[SerializeField]
 		List<StringGrid> gridList = new List<StringGrid>();
-
+#else
+		public List<StringGrid> GridList { get { return gridList; } }
+		[NonSerialized] List<StringGrid> gridList = new List<StringGrid>();
+#endif
 		public bool Reimport { get; set; }
 
 		public void Clear()
@@ -50,7 +56,7 @@ namespace Utage
 		}
 
 		//未インポートのシナリオデータを追加
-		public void AddSrourceBook(StringGridDictionary book)
+		public void AddSourceBook(StringGridDictionary book)
 		{
 			foreach (var sheet in book.List)
 			{
@@ -77,6 +83,6 @@ namespace Utage
 			Profiler.EndSample();
 			Reimport = false;
 		}
-#endif
+
 	}
 }

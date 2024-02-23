@@ -1,6 +1,7 @@
 ﻿// UTAGE: Unity Text Adventure Game Engine (c) Ryohei Tokimura
 using System;
 using System.Collections.Generic;
+using System.Text;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -20,13 +21,12 @@ namespace Utage
 		{
 			get
 			{
-				if (instance == null)
+				if (CustomProjectSetting.Instance == null) return null;
+				var current = CustomProjectSetting.Instance.Language;
+				if (instance != current)
 				{
-					if (CustomProjectSetting.Instance)
-					{
-						instance = CustomProjectSetting.Instance.Language;
-					}
-					if (instance != null)
+					instance = current;
+					if (instance!=null)
 					{
 						instance.Init();
 					}
@@ -38,22 +38,30 @@ namespace Utage
 		//言語がオート設定のときは、システム環境に依存する
 
 		const string Auto = "Auto";
-		/// <summary>
-		/// 設定言語
-		/// </summary>
-		public string Language{
-			get { return language; }
+		// 起動時の言語（言語名の場合は、その言語で起動する）
+		public string Language
+		{
+			get => language;
+			set => language = value;
 		}
 		[SerializeField]
 		protected string language = Auto;
 
 		//デフォルト言語
-		public string DefaultLanguage { get { return defaultLanguage; } }
+		public string DefaultLanguage
+		{
+			get => defaultLanguage;
+			set => defaultLanguage = value;
+		}
 		[SerializeField]
-		protected string defaultLanguage = "Japanese";
+		protected string defaultLanguage = "English";
 
 		//データの言語指定
-		public string DataLanguage { get { return dataLanguage; } }
+		public string DataLanguage
+		{
+			get => dataLanguage;
+			set => dataLanguage = value;
+		}
 		[SerializeField]
 		protected string dataLanguage = "";
 
@@ -63,12 +71,20 @@ namespace Utage
 
 
 		//UIのテキストローカライズを無視する
-		public bool IgnoreLocalizeUiText { get { return ignoreLocalizeUiText; } }
+		public bool IgnoreLocalizeUiText
+		{
+			get => ignoreLocalizeUiText;
+			set => ignoreLocalizeUiText = value;
+		}
 		[SerializeField]
 		bool ignoreLocalizeUiText = false;
 
 		//ボイスのローカライズを無視する
-		public bool IgnoreLocalizeVoice { get { return ignoreLocalizeVoice; } }
+		public bool IgnoreLocalizeVoice
+		{
+			get => ignoreLocalizeVoice;
+			set => ignoreLocalizeVoice = value;
+		}
 		[SerializeField]
 		bool ignoreLocalizeVoice = true;
 		
@@ -86,12 +102,20 @@ namespace Utage
 		public List<string> TextColumnLanguages { get { return textColumnLanguages; } }
 		[FormerlySerializedAs("textColumnErrorCheckLanguages")] [SerializeField]
 		List<string> textColumnLanguages = new List<string>();
-		
+
+		//言語切り替え時のイベントを、ScriptableObjectとして拡張管理可能にする
+		public List<LanguageChangeEventFactory> ChangeEvents => changeEvents;
+		[SerializeField] List<LanguageChangeEventFactory> changeEvents = new ();
+
+		//イベントとして実行するインスタンス
+		public List<ILanguageChangeEvent> OnChangeEvents { get; } = new(); 
+
 		//言語切り替えで呼ばれるコールバック
-		public Action OnChangeLanugage {
+		public Action OnChangeLanguage {
 			get;
 			set;
 		}
+
 		
 
 		/// <summary>
@@ -153,21 +177,48 @@ namespace Utage
 		LanguageData Data { get; set; }
 
 		//現在設定されている言語名のリスト
-		public List<string> Languages { get { return Data.Languages; } }
+		//宴4からは、TextColumnLanguagesとData.Languageを合わせたもの
+		public List<string> Languages { get; } = new (); 
 
+
+		//デバッグ表示用の文字列を取得
+		public string GetDebugString()
+		{
+			StringBuilder builder = new StringBuilder();
+			builder.AppendLine($"Language: {CurrentLanguage}  VoiceLang: {CurrentVoiceLanguage}");
+			builder.Append("Languages{ ");
+			for (var i = 0; i < Languages.Count; i++)
+			{
+				builder.Append( Languages[i].ToString());
+				if (i + 1 >= Languages.Count) break;
+				builder.Append(", ");
+			}
+			builder.Append(" }\n");
+			builder.AppendLine($"DataLang: {DataLanguage}  DefaultLang: {DefaultLanguage}");
+			return builder.ToString();
+		}
 
 		void OnEnable()
 		{
 			Init();
 		}
 		
-#if UNITY_EDITOR
-		void OnValidate()
+		//不使用になるので、後始末
+		public void OnFinalize()
+		{
+			foreach (var changeEvent in OnChangeEvents)
+			{
+				changeEvent.OnFinalize();
+			}
+			OnChangeEvents.Clear();
+			this.OnChangeLanguage = null;
+		}
+
+		//強制初期化
+		public void ForceInit()
 		{
 			Init();
 		}
-#endif
-
 		//初期化処理
 		void Init()
 		{
@@ -178,15 +229,28 @@ namespace Utage
 
 				Data.OverwriteData(item);
 			}
-			Data.AddLanguage(this.dataLanguage);
+
+			Languages.Clear();
+			Languages.Add(this.dataLanguage);
 			foreach (var item in TextColumnLanguages)
 			{
-				Data.AddLanguage(item);
+				if (!Languages.Contains(item))
+				{
+					Languages.Add(item);
+				}
 			}
 
 			//設定された言語か、システムの言語に変更
 			currentLanguage = (string.IsNullOrEmpty(language) || language == Auto) ? Application.systemLanguage.ToString() : language;
 			voiceLanguage = "";
+
+			//イベント用のinstanceを作成
+			OnChangeEvents.Clear();
+			foreach (var changeEvent in ChangeEvents)
+			{
+				if (changeEvent == null) continue;
+				OnChangeEvents.Add(changeEvent.CreateEvent(this));
+			}
 			RefreshCurrentLanguage();
 		}
 
@@ -195,8 +259,12 @@ namespace Utage
 		{
 			if (Instance != this) return;
 
-			if (OnChangeLanugage != null)
-				OnChangeLanugage();
+			foreach (var changeEvent in OnChangeEvents)
+			{
+				changeEvent.OnChangeLanguage();
+			}
+			if (OnChangeLanguage != null)
+				OnChangeLanguage();
 			OnRefreshCurrentLanguage();
 		}
 		//現在の言語が変わったときの処理
@@ -212,13 +280,11 @@ namespace Utage
 		{
 			if (Data.ContainsKey(key))
 			{
-				string text;
-				if (Data.TryLocalizeText(out text, CurrentLanguage, DefaultLanguage, key, dataName))
+				if (Data.TryLocalizeText(out string text, CurrentLanguage, DefaultLanguage, key, dataName))
 				{
 					return text;
 				}
 			}
-
 			Debug.LogError(key + " is not found in " + dataName);
 			return key;
 		}
@@ -239,17 +305,23 @@ namespace Utage
 		/// 指定のキーのテキストを、全データ内から検索して、設定された言語に翻訳して取得
 		/// </summary>
 		/// <param name="key">テキストのキー</param>
-		/// <returns>翻訳したテキスト</returns>
-		public bool TryLocalizeText(string key, out string text )
+		/// <param name="lang">言語名</param>
+		/// <param name="text">翻訳したテキスト</param>
+		public bool TryLocalizeText(string key, out string text)
+		{
+			return TryLocalizeText(key, CurrentLanguage, out text);
+		}
+		public bool TryLocalizeText(string key, string lang, out string text)
 		{
 			text = key;
 			if (Data.ContainsKey(key))
 			{
-				if (Data.TryLocalizeText(out text, CurrentLanguage, DefaultLanguage, key))
+				if (Data.TryLocalizeText(out text, lang, DefaultLanguage, key))
 				{
 					return true;
 				}
 			}
+
 			return false;
 		}
 
@@ -257,13 +329,11 @@ namespace Utage
 		{
 			if (Data.ContainsKey(key))
 			{
-				string text;
-				if (Data.TryLocalizeText(out text, DefaultLanguage, DefaultLanguage, key))
+				if (Data.TryLocalizeText(out string text, DefaultLanguage, DefaultLanguage, key))
 				{
 					return text;
 				}
 			}
-
 			Debug.LogError(key + " is not found in language key");
 			return "";
 		}
@@ -399,6 +469,59 @@ namespace Utage
 				return DefaultLanguage;
 			}
 			return defaultColumnName;
+		}
+
+
+
+		//「指定の名前＋接尾辞として言語名」をセル名としたテキストを取得
+		public string ParseCellSuffixedLanguageNameToLocalizedText(StringGridRow row, string cellName)
+		{
+			return row.ParseCell<string>(GetCellNameSuffixed(cellName));
+		}
+		public string ParseCellSuffixedLanguageNameToLocalizedTextOptional(StringGridRow row, string cellName,string defaultValue)
+		{
+			return row.ParseCellOptional<string>(GetCellNameSuffixed(cellName), defaultValue);
+		}
+		
+		//指定の
+		string GetCellNameSuffixed(string cellName)
+		{
+			//現在の言語キー
+			string languageKey = GetCurrentLanguageKey();
+			
+			//言語キー見つからない場合や、データ言語と同じ場合は、cellNameをそのまま返す
+			if (string.IsNullOrEmpty(languageKey) || DataLanguage == languageKey)
+			{
+				return cellName;
+			}
+			else
+			{
+				//接尾辞として言語名を追加したものを返す
+				return cellName + languageKey;
+			}
+		}
+		
+		//現在の言語キーを取得
+		string GetCurrentLanguageKey()
+		{
+			//対応言語名内にあれば、その言語名を返す
+			if (this.TextColumnLanguages.Contains(this.CurrentLanguage))
+			{
+				return CurrentLanguage;
+			}
+			//開発環境の言語と同じなら、その言語名を返す
+			if(DataLanguage==CurrentLanguage)
+			{
+				return CurrentLanguage;
+			}
+			
+			//開発環境言語がないなら、空文字を返す
+			if (string.IsNullOrEmpty(DataLanguage))
+			{
+				return "";
+			}
+			//ない場合はDefaultLanguageを返す
+			return DefaultLanguage;
 		}
 
 		//ローカライズによってスキップページかどうかチェック

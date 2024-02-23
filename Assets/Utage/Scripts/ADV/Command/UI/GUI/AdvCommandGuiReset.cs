@@ -8,7 +8,7 @@ namespace Utage
 	/// <summary>
 	/// コマンド：GUI操作　Reset
 	/// </summary>
-	internal class AdvCommandGuiReset : AdvCommand
+	public class AdvCommandGuiReset : AdvCommand
 	{
 		public AdvCommandGuiReset(StringGridRow row)
 			: base(row)

@@ -24,14 +24,20 @@ namespace Utage
 		public string tag;
 
 		/// <summary>
-		/// [ResouceData]表示のためのプロパティ描画
+		/// [AvatorFolderData]表示のためのプロパティ描画
 		/// </summary>
 		[CustomPropertyDrawer(typeof(AvatorFolderData))]
-		public class ResouceDataDrawer : PropertyDrawerEx
+		public class Drawer : PropertyDrawerEx
 		{
+			protected override GuiDrawerHelper Helper { get; }
+
+			public Drawer()
+			{
+				Helper = new GuiDrawerHelper<Drawer>(this);
+			}
 			public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
 			{
-				base.DrawHolizontalChildren(position, property, label);
+				Helper.DrawHorizontalChildren(position, property, label);
 			}
 		}
 
@@ -126,7 +132,6 @@ namespace Utage
 				hasChanged = true;
 			}
 #endif
-			
 			//Non Power of 2
 			if (importer.npotScale != TextureImporterNPOTScale.None)
 			{

@@ -2,6 +2,7 @@
 using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UtageExtensions;
 
 namespace Utage
@@ -25,14 +26,17 @@ namespace Utage
 		[SerializeField]
 		GameObject debugInfo = null;
 
-		[SerializeField]
-		Text debugInfoText = null;
+		[SerializeField,HideIfTMP] Text debugInfoText = null;
+		[SerializeField, HideIfLegacyText] protected TextMeshProUGUI debugInfoTextTmp = null;
 
 		[SerializeField]
 		GameObject debugLog = null;
 
-		[SerializeField]
-		Text debugLogText=null;
+		[SerializeField, HideIfTMP] Text debugLogText=null;
+		[SerializeField, HideIfLegacyText] protected TextMeshProUGUI debugLogTextTmp = null;
+
+		[SerializeField, HideIfTMP] Text languageButtonText = null;
+		[SerializeField, HideIfLegacyText] protected TextMeshProUGUI languageButtonTextTMP = null;
 
 		[SerializeField]
 		bool autoUpdateLogText = true;
@@ -44,6 +48,11 @@ namespace Utage
 		[SerializeField]
 		GameObject targetDeleteAllSaveData = null;
 
+		public bool EnableReleaseBuild
+		{
+			get => enabeReleaseBuild;
+			set => enabeReleaseBuild = value;
+		}
 		[SerializeField]
 		bool enabeReleaseBuild = false;
 
@@ -52,7 +61,7 @@ namespace Utage
 		{
 			get
 			{
-				return !enabeReleaseBuild && !UnityEngine.Debug.isDebugBuild;
+				return !EnableReleaseBuild && !UnityEngine.Debug.isDebugBuild;
 			}
 		}
 		void Start()
@@ -125,7 +134,7 @@ namespace Utage
 			debugInfo.SetActive(true);
 			while (true)
 			{
-				debugInfoText.text = DebugPrint.GetDebugString();
+				SetTextDebugInfo(DebugPrint.GetDebugString());
 				yield return null;
 			}
 		}
@@ -138,7 +147,7 @@ namespace Utage
 			debugLog.SetActive(true);
 			if (autoUpdateLogText)
 			{
-				debugLogText.text += DebugPrint.GetLogString();
+				AppendTextDebugLog(DebugPrint.GetLogString());
 			}
 
 			yield break;
@@ -148,9 +157,8 @@ namespace Utage
 		{
 			buttonViewRoot.SetActive(true);
 			buttonText.Key = SystemText.DebugMenu.ToString();
-
+			UpdateLanguageButtonText();
 			rootDebugMenu.SetActive(true);
-
 			yield break;
 		}
 
@@ -182,8 +190,9 @@ namespace Utage
 			//言語をシフトループ
 			int index = langManager.Languages.IndexOf(langManager.CurrentLanguage);
 			langManager.CurrentLanguage = langManager.Languages[(index+1) % langManager.Languages.Count];
+			UpdateLanguageButtonText();
 		}
-
+		
 		//言語切り替え
 		public void ChangeLanguage(string language)
 		{
@@ -192,6 +201,7 @@ namespace Utage
 			if (langManager.Languages.Count < 1) return;
 
 			langManager.CurrentLanguage = language;
+			UpdateLanguageButtonText();
 		}
 		
 		//ボイスのみ言語切り替え
@@ -201,6 +211,18 @@ namespace Utage
 			if (langManager == null) return;
 
 			langManager.VoiceLanguage = language;
+			UpdateLanguageButtonText();
+		}
+		
+		//言語切り替えボタンのテキストを設定
+		void UpdateLanguageButtonText()
+		{
+			LanguageManagerBase langManager = LanguageManagerBase.Instance;
+			if (langManager == null) return;
+
+			string text = LanguageSystemText.LocalizeText(SystemText.Language);
+			text += "\n" + langManager.CurrentLanguage;
+			SetLanguageButtonText(text);
 		}
 
 		//ボイスのみの言語切り替えを元に戻す
@@ -211,5 +233,26 @@ namespace Utage
 
 			langManager.VoiceLanguage = "";
 		}
+
+		protected virtual void SetTextDebugLog(string text)
+		{
+			TextComponentWrapper.SetText(this.debugLogText, this.debugLogTextTmp, text);
+		}
+
+		protected virtual void AppendTextDebugLog(string text)
+		{
+			TextComponentWrapper.AppendText(this.debugLogText, this.debugLogTextTmp,text);
+		}
+
+		protected virtual void SetTextDebugInfo(string text)
+		{
+			TextComponentWrapper.SetText(this.debugInfoText, this.debugInfoTextTmp, text);
+		}
+
+		protected virtual void SetLanguageButtonText(string text)
+		{
+			TextComponentWrapper.SetText(this.languageButtonText, this.languageButtonTextTMP, text);
+		}
+
 	}
 }

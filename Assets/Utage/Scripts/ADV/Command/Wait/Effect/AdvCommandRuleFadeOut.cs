@@ -6,7 +6,7 @@ namespace Utage
 {
 
 	// コマンド：ルール画像付きのフェードアウト
-	internal class AdvCommandRuleFadeOut : AdvCommandRuleFadeBase
+	public class AdvCommandRuleFadeOut : AdvCommandRuleFadeBase
 	{
 		public AdvCommandRuleFadeOut(StringGridRow row, AdvSettingDataManager dataManager)
 			: base(row, dataManager)

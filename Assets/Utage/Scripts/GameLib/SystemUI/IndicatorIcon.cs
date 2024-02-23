@@ -20,7 +20,7 @@ namespace Utage
 		float animTime = 1.0f / 12;		//アニメーション時間
 
 		[SerializeField]
-		float animRotZ = -36;			//一秒間にアニメーションする角度
+		float animRotZ = -36;			//アニメーションする角度
 
 		[SerializeField]
 		bool isDeviceIndicator = false;	//デバイスのインジケーターを使うか？

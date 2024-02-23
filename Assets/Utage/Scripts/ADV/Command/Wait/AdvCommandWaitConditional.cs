@@ -5,7 +5,7 @@ namespace Utage
 {
 
 	// コマンド：待機処理(条件文)
-	internal class AdvCommandWaitConditional : AdvCommand
+	public class AdvCommandWaitConditional : AdvCommand
 	{
 		readonly float time;
 		float waitEndTime;

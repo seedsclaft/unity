@@ -6,110 +6,152 @@ using UnityEngine.UI;
 using Utage;
 using UtageExtensions;
 
-/// <summary>
-/// サウンドルーム画面のサンプル
-/// </summary>
-[AddComponentMenu("Utage/TemplateUI/UtageUguiSoundRoom")]
-public class UtageUguiSoundRoom : UguiView
+namespace Utage
 {
-	public UtageUguiGallery Gallery { get { return this.GetComponentCacheFindIfMissing(ref gallery ); } }
-	[SerializeField]
-	protected UtageUguiGallery gallery;
 
 	/// <summary>
-	/// リストビュー
+	/// サウンドルーム画面のサンプル
 	/// </summary>
-	public UguiListView listView;
-
-	/// <summary>
-	/// リストビューアイテムのリスト
-	/// </summary>
-	protected List<AdvSoundSettingData> itemDataList = new List<AdvSoundSettingData>();
-
-	/// <summary>ADVエンジン</summary>
-	public AdvEngine Engine { get { return this.GetComponentCacheFindIfMissing(ref engine ); } }
-	[SerializeField]
-	protected AdvEngine engine;
-
-	protected bool isInit = false;
-	protected bool isChangedBgm = false;
-
-	/// <summary>
-	/// オープンしたときに呼ばれる
-	/// </summary>
-	protected virtual void OnOpen()
+	[AddComponentMenu("Utage/TemplateUI/UtageUguiSoundRoom")]
+	public class UtageUguiSoundRoom : UguiView
 	{
-		isInit = false;
-		isChangedBgm = false;
-		this.listView.ClearItems();	///いったん消去
-		StartCoroutine(CoWaitOpen());
-	}
-
-	/// <summary>
-	/// クローズしたときに呼ばれる
-	/// </summary>
-	protected virtual void OnClose()
-	{
-		isInit = false;
-		this.listView.ClearItems();
-		if(isChangedBgm) Engine.SoundManager.StopAll(0.2f);
-		isChangedBgm = false;
-	}
-
-	//起動待ちしてから開く
-	protected virtual IEnumerator CoWaitOpen()
-	{
-		while (Engine.IsWaitBootLoading)
+		public UtageUguiGallery Gallery
 		{
-			yield return null;
+			get { return this.GetComponentCacheFindIfMissing(ref gallery); }
 		}
 
-		itemDataList = Engine.DataManager.SettingDataManager.SoundSetting.GetSoundRoomList();
-		listView.CreateItems(itemDataList.Count, CallBackCreateItem);
-		isInit = true;
-	}
+		[SerializeField] protected UtageUguiGallery gallery;
 
+		/// リストビュー(旧仕様)
+		public UguiListView listView;
 
-	/// <summary>
-	/// リストビューのアイテムが作成されるときに呼ばれるコールバック
-	/// </summary>
-	/// <param name="go">作成されたアイテムのGameObject</param>
-	/// <param name="index">作成されたアイテムのインデックス</param>
-	protected virtual void CallBackCreateItem(GameObject go, int index)
-	{
-		UtageUguiSoundRoomItem item = go.GetComponent<UtageUguiSoundRoomItem>();
-		AdvSoundSettingData data = itemDataList[index];
-		item.Init(data, OnTap, index);
-	}
+		/// 各サウンド再生ボタンのルートオブジェクト
+		public RectTransform rootItems;
+		public GameObject itemPrefab;
 
-	protected virtual void Update()
-	{
-		//右クリックで戻る
-		if (isInit && InputUtil.IsMouseRightButtonDown())
+		/// <summary>
+		/// リストビューアイテムのリスト
+		/// </summary>
+		protected List<AdvSoundSettingData> itemDataList = new List<AdvSoundSettingData>();
+
+		/// <summary>ADVエンジン</summary>
+		public AdvEngine Engine
 		{
-			Gallery.Back();
+			get { return this.GetComponentCacheFindIfMissing(ref engine); }
 		}
-	}
 
-	/// <summary>
-	/// 各アイテムが押された
-	/// </summary>
-	/// <param name="button">押されたアイテム</param>
-	protected virtual void OnTap(UtageUguiSoundRoomItem item)
-	{
-		AdvSoundSettingData data = item.Data;
-		string path = Engine.DataManager.SettingDataManager.SoundSetting.LabelToFilePath(data.Key, SoundType.Bgm);
+		[SerializeField] protected AdvEngine engine;
 
-		StartCoroutine( CoPlaySound(path) );
-	}
+		protected bool isInit = false;
+		protected bool isChangedBgm = false;
 
-	//サウンドをロードして鳴らす
-	protected virtual IEnumerator CoPlaySound(string path)
-	{
-		isChangedBgm = true;
-		AssetFile file = AssetFileManager.Load(path,this);
-		while (!file.IsLoadEnd) yield return null;
-		Engine.SoundManager.PlayBgm(file);
-		file.Unuse(this);
+		/// <summary>
+		/// オープンしたときに呼ばれる
+		/// </summary>
+		protected virtual void OnOpen()
+		{
+			isInit = false;
+			isChangedBgm = false;
+			ClearItems();
+			StartCoroutine(CoWaitOpen());
+		}
+
+		/// <summary>
+		/// クローズしたときに呼ばれる
+		/// </summary>
+		protected virtual void OnClose()
+		{
+			isInit = false;
+			ClearItems();
+			if (isChangedBgm) Engine.SoundManager.StopAll(0.2f);
+			isChangedBgm = false;
+		}
+
+		//起動待ちしてから開く
+		protected virtual IEnumerator CoWaitOpen()
+		{
+			while (Engine.IsWaitBootLoading)
+			{
+				yield return null;
+			}
+			CreateItems();
+			isInit = true;
+		}
+		
+		//アイテム（ボタン）消去
+		protected virtual void ClearItems()
+		{
+			if (this.listView != null)
+			{
+				this.listView.ClearItems();
+			}
+			else if (rootItems != null)
+			{
+				rootItems.DestroyChildren();
+			}
+		}
+
+		//アイテム（ボタン）作成
+		protected virtual void CreateItems()
+		{
+			itemDataList = Engine.DataManager.SettingDataManager.SoundSetting.GetSoundRoomList();
+			if (this.listView != null)
+			{
+				listView.CreateItems(itemDataList.Count, CallBackCreateItem);
+			}
+			else if (rootItems != null)
+			{
+				rootItems.DestroyChildren();
+				for (var i = 0; i < itemDataList.Count; i++)
+				{
+					var go = rootItems.AddChildPrefab(itemPrefab);
+					CallBackCreateItem(go, i);
+				}
+			}
+		}
+
+
+		/// <summary>
+		/// リストビューのアイテムが作成されるときに呼ばれるコールバック
+		/// </summary>
+		/// <param name="go">作成されたアイテムのGameObject</param>
+		/// <param name="index">作成されたアイテムのインデックス</param>
+		protected virtual void CallBackCreateItem(GameObject go, int index)
+		{
+			UtageUguiSoundRoomItem item = go.GetComponent<UtageUguiSoundRoomItem>();
+			AdvSoundSettingData data = itemDataList[index];
+			item.Init(data, OnTap, index);
+		}
+
+		protected virtual void Update()
+		{
+			//右クリックで戻る
+			if (isInit && InputUtil.IsMouseRightButtonDown())
+			{
+				Gallery.Back();
+			}
+		}
+
+		/// <summary>
+		/// 各アイテムが押された
+		/// </summary>
+		/// <param name="button">押されたアイテム</param>
+		protected virtual void OnTap(UtageUguiSoundRoomItem item)
+		{
+			AdvSoundSettingData data = item.Data;
+			string path = Engine.DataManager.SettingDataManager.SoundSetting.LabelToFilePath(data.Key, SoundType.Bgm);
+
+			StartCoroutine(CoPlaySound(path));
+		}
+
+		//サウンドをロードして鳴らす
+		protected virtual IEnumerator CoPlaySound(string path)
+		{
+			isChangedBgm = true;
+			AssetFile file = AssetFileManager.Load(path, this);
+			while (!file.IsLoadEnd) yield return null;
+			Engine.SoundManager.PlayBgm(file);
+			file.Unuse(this);
+		}
 	}
 }

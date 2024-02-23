@@ -7,7 +7,7 @@ namespace Utage
 	/// <summary>
 	/// コマンド：レイヤー操作　Reset（位置なども初期状態に戻す）
 	/// </summary>
-	internal class AdvCommandLayerReset : AdvCommand
+	public class AdvCommandLayerReset : AdvCommand
 	{
 		string name;
 		public AdvCommandLayerReset(StringGridRow row, AdvSettingDataManager dataManager)

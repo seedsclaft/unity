@@ -6,14 +6,13 @@ using System;
 
 namespace Utage
 {
-	/// <summary>
-	/// 選択肢用UIのサンプル
-	/// </summary>
+	/// 選択肢用UI
 	[AddComponentMenu("Utage/ADV/AdvUguiSelection")]
 	public class AdvUguiSelection : MonoBehaviour
 	{
 		/// <summary>本文テキスト</summary>
-		public Text text;
+		[HideIfTMP] public Text text;
+		[SerializeField, HideIfLegacyText] protected TextMeshProNovelText textMeshPro;
 
 
 		/// <summary>選択肢データ</summary>
@@ -27,19 +26,16 @@ namespace Utage
 		public virtual void Init(AdvSelection data, Action<AdvUguiSelection> ButtonClickedEvent)
 		{
 			this.data = data;
-			this.text.text = data.Text;
+			NovelTextComponentWrapper.SetText(text,textMeshPro, data.Text);
 
 			UnityEngine.UI.Button button = this.GetComponent<UnityEngine.UI.Button> ();
 			button.onClick.AddListener( ()=>ButtonClickedEvent(this) );
 		}
 
-		/// <summary>
 		/// 選択済みの場合色を変える
-		/// </summary>
-		/// <param name="data">選択肢データ</param>
 		public virtual void OnInitSelected( Color color )
 		{
-			this.text.color = color;
+			NovelTextComponentWrapper.SetColor(text, textMeshPro, color);
 		}
 	}
 }

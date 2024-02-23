@@ -8,7 +8,7 @@ namespace Utage
 	/// サブルーチンのコールスタックをクリアして、サブルーチン中という状態を解除する。
 	/// サブルーチンの呼び出し元に戻れなくなる。
 	/// </summary>
-	internal class AdvCommandExitSubroutine : AdvCommand
+	public class AdvCommandExitSubroutine : AdvCommand
 	{
 		public AdvCommandExitSubroutine(StringGridRow row, AdvSettingDataManager dataManager)
 			: base(row)

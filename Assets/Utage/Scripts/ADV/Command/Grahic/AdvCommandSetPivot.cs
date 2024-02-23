@@ -4,7 +4,7 @@ using UnityEngine;
 namespace Utage
 {
 	// コマンド：ピボットの設定
-	internal class AdvCommandSetPivot : AdvCommand
+	public class AdvCommandSetPivot : AdvCommand
 	{
 		private readonly string targetName;
 		private readonly float pivotX;

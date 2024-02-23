@@ -151,7 +151,7 @@ namespace Utage
 			this.strArg = arg;
 			this.strEaseType = easeType;
 			this.strLoopType = loopType;
-
+			
 			ParseParameters(type, arg);
 			if (!string.IsNullOrEmpty(easeType))
 			{

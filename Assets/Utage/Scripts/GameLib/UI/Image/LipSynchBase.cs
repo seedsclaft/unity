@@ -201,7 +201,7 @@ namespace Utage
 			{
 				case LipSynchType.Voice:
 				case LipSynchType.TextAndVoice:
-					return Engine.ScenarioSound.IsPlayingScenarioVoice(CharacterLabel);
+					return Engine.ScenarioSound.CheckLipSync(CharacterLabel);
 				default:
 					break;
 			}
