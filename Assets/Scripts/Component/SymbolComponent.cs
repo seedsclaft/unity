@@ -12,6 +12,7 @@ public class SymbolComponent : MonoBehaviour
     [SerializeField] private GameObject evaluateRoot;
     [SerializeField] private TextMeshProUGUI evaluate;
     [SerializeField] private GameObject selected;
+    [SerializeField] private GameObject lastSelected;
     private SymbolInfo _symbolInfo = null;
     public SymbolInfo SymbolInfo => _symbolInfo;
 
@@ -28,6 +29,10 @@ public class SymbolComponent : MonoBehaviour
         if (selected != null)
         {
             selected.SetActive(_symbolInfo.Selected);
+        }
+        if (lastSelected != null)
+        {
+            lastSelected.SetActive(_symbolInfo.LastSelected);
         }
     }
 

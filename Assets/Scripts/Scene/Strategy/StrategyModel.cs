@@ -235,7 +235,7 @@ public class StrategyModel : BaseModel
         if (isSeek)
         {
             CurrentStage.SeekStage();
-            CurrentStage.SetSymbolInfos(CurrentTurnSymbolInfos(CurrentStage.CurrentTurn));
+            //CurrentStage.SetSymbolInfos(CurrentTurnSymbolInfos(CurrentStage.CurrentTurn));
             MakeSymbolResultInfos();
         }
     }

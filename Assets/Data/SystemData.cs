@@ -81,6 +81,7 @@ public enum TacticsCommandType {
 	Alchemy,
 	Recovery,
 	Status,
+	Symbol,
 }
 
 public enum TitleCommandType {

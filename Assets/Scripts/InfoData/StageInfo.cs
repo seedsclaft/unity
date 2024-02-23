@@ -45,8 +45,9 @@ public class StageInfo
     public int TroopClearCount => _troopClearCount;
 
 	private List<TroopData> _troopDates = new();
-	private List<SymbolInfo> _currentSymbolInfos = new();
-	public List<SymbolInfo> CurrentSymbolInfos => _currentSymbolInfos;
+	public List<SymbolInfo> CurrentSymbolInfos => _stageSymbolInfos.FindAll(a => a.StageSymbolData.Seek == CurrentTurn);
+	private List<SymbolInfo> _stageSymbolInfos = new();
+	public List<SymbolInfo> StageSymbolInfos => _stageSymbolInfos;
 	
     private int _currentSeekIndex = -1;
     public int CurrentSeekIndex => _currentSeekIndex;
@@ -111,7 +112,12 @@ public class StageInfo
 
     public void SetSymbolInfos(List<SymbolInfo> symbolInfos)
     {
-        _currentSymbolInfos = symbolInfos;
+        //_currentSymbolInfos = symbolInfos;
+    }
+
+    public void SetStageSymbolInfos(List<SymbolInfo> symbolInfos)
+    {
+        _stageSymbolInfos = symbolInfos;
     }
 
     public void SetSeekIndex(int battleIndex)
@@ -121,22 +127,22 @@ public class StageInfo
 
     public SymbolInfo CurrentSelectSymbol()
     {
-        return _currentSymbolInfos[_currentSeekIndex];
+        return CurrentSymbolInfos[_currentSeekIndex];
     }
 
     public TroopInfo CurrentTroopInfo()
     {
-        return _currentSymbolInfos[_currentSeekIndex].TroopInfo;
+        return CurrentSymbolInfos[_currentSeekIndex].TroopInfo;
     }
 
     public List<BattlerInfo> CurrentBattleInfos()
     {
-        return _currentSymbolInfos[_currentSeekIndex].BattlerInfos();
+        return CurrentSymbolInfos[_currentSeekIndex].BattlerInfos();
     }
     
     public void TestTroops(int troopId,int troopLv)
     {
-        _currentSymbolInfos.Clear();
+        //_currentSymbolInfos.Clear();
         var troopDate = DataSystem.Troops.Find(a => a.TroopId == troopId);
         
         var troopInfo = new TroopInfo(troopDate.TroopId,false);
@@ -150,7 +156,7 @@ public class StageInfo
         _currentSeekIndex = 0;
         var symbolInfo = new SymbolInfo();
         symbolInfo.SetTroopInfo(troopInfo);
-        _currentSymbolInfos.Add(symbolInfo);
+        _stageSymbolInfos.Add(symbolInfo);
     }
 
     public void SeekStage()

@@ -76,6 +76,25 @@ public class TacticsModel : BaseModel
         return new ListData(DataSystem.TacticsCommand[index],index,enable);
     }
 
+    public List<ListData> StageSymbolInfos(int seek)
+    {
+        var list = new List<SymbolInfo>();
+        var symbolInfos = CurrentStage.StageSymbolInfos.FindAll(a => a.StageSymbolData.Seek == seek);
+        var selectRecords = CurrentStage.SymbolRecordList.FindAll(a => a.StageId == CurrentStage.Id && a.Selected == true);
+        for (int i = 0;i < symbolInfos.Count;i++)
+        {
+            var symbolInfo = new SymbolInfo();
+            symbolInfo.CopyData(symbolInfos[i]);
+            var saveRecord = selectRecords.Find(a => a.IsSameSymbol(CurrentStage.Id,seek+1,i));
+            symbolInfo.SetSelected(saveRecord != null);
+            symbolInfo.SetCleared(symbolInfos[i].Cleared);
+            MakePrizeData(saveRecord,symbolInfo.GetItemInfos);
+            list.Add(symbolInfo);
+        }
+        return MakeListData(list);
+    }
+
+
 
     public void RefreshTacticsEnable()
     {

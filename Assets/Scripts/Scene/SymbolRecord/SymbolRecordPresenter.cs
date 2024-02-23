@@ -17,18 +17,19 @@ public class SymbolRecordPresenter : BasePresenter
         Initialize();
     }
 
-    private void Initialize()
+    private async void Initialize()
     {
         _busy = true;
         _view.SetHelpWindow();
 
-        //_view.SetActors(_model.TempData.TempResultActorInfos);
         _view.SetBackGround(_model.CurrentStage.Master.BackGround);
         _view.SetEvent((type) => UpdateCommand(type));
 
         _view.SetSymbolRecords(_model.SymbolRecords());
         _view.SetParallelCommand(_model.ParallelCommand());
         CommandRefresh();
+        var bgm = await _model.GetBgmData("MAINMENU");
+        Ryneus.SoundManager.Instance.PlayBgm(bgm,1.0f,true);
         _busy = false;
     }
 
@@ -79,7 +80,7 @@ public class SymbolRecordPresenter : BasePresenter
         {
             var index = _view.SymbolListIndex;
             _model.MakeSymbolRecordStage(index);
-            _view.CommandPopSceneChange();
+            _view.CommandGotoSceneChange(Scene.Tactics);
         } else
         {
             _view.ShowSymbolBackGround();
@@ -96,7 +97,7 @@ public class SymbolRecordPresenter : BasePresenter
             UpdateCommand(eventData);
             return;
         }
-        _view.CommandPopSceneChange();
+        _view.CommandGotoSceneChange(Scene.MainMenu);
     }
 
     private void CommandParallel()

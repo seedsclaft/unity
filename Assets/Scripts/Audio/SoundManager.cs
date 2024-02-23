@@ -136,6 +136,18 @@ namespace Ryneus
             _crossFadeMode = false;
         }
 
+        public void PlayBgmSub(List<AudioClip> clip, float volume = 1.0f, bool loop = true)
+        {
+            if (clip[0].name == _lastPlayAudio) return;
+            BgmSubTrack.Stop();
+            BgmSubTrack.SetClip(clip,loop);
+            _lastBgmVolume = volume;
+            UpdateBgmMute();
+            BgmSubTrack.Play();
+            _lastPlayAudio = clip[0].name;
+            _crossFadeMode = false;
+        }
+
         public void PlayCrossFadeBgm(List<AudioClip> clip, float volume = 1.0f)
         {
             if (clip.Count < 2) return;
@@ -175,6 +187,11 @@ namespace Ryneus
             _lastPlayAudio = null;
         }
 
+        public void FadeOutBgm()
+        {
+            BgmTrack.FadeVolume(0,1);
+            _lastPlayAudio = null;
+        }
 
         public async void PlaySe(AudioClip clip, float volume,float pitch,int delayFrame = 0)
         {

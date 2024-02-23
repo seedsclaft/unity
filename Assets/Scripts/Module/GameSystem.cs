@@ -134,6 +134,9 @@ public class GameSystem : MonoBehaviour
             case Base.CommandType.CallCharacterListView:
                 CommandCharacterListView((CharacterListInfo)viewEvent.template);
                 break;
+            case Base.CommandType.CallStageSymbolView:
+                CommandCallStageSymbolView((System.Action)viewEvent.template);
+                break;
             case Base.CommandType.CallHelpView:
                 CommandHelpView((List<ListData>)viewEvent.template);
                 break;
@@ -313,6 +316,20 @@ public class GameSystem : MonoBehaviour
                 characterListInfo.BackEvent();
             }
             UpdateCommand(new ViewEvent(Base.CommandType.ClosePopup));
+        });
+        SetIsBusyMainAndStatus();
+    }
+
+    private void CommandCallStageSymbolView(System.Action endEvent)
+    {
+        var prefab = popupAssign.CreatePopup(PopupType.StageSymbol,helpWindow);
+        var stageSymbolView = prefab.GetComponent<StageSymbolView>();
+        stageSymbolView.Initialize();
+        stageSymbolView.SetEvent((type) => UpdateCommand(type));
+        stageSymbolView.SetBackEvent(() => 
+        {
+            UpdateCommand(new ViewEvent(Base.CommandType.ClosePopup));
+            if (endEvent != null) endEvent();
         });
         SetIsBusyMainAndStatus();
     }

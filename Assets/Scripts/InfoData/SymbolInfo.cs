@@ -17,6 +17,12 @@ public class SymbolInfo
     {
         _selected = selected;
     }
+    private bool _lastSelected;
+    public bool LastSelected => _lastSelected;
+    public void SetLastSelected(bool lastSelected)
+    {
+        _lastSelected = lastSelected;
+    }
     private bool _cleared;
     public bool Cleared => _cleared;
     public void SetCleared(bool cleared)

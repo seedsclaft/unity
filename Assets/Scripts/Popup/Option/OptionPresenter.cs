@@ -240,8 +240,10 @@ public class OptionPresenter
             _view.CommandGameSystem(Base.CommandType.CloseConfirm);
             var popupInfo = new ConfirmInfo(DataSystem.GetTextData(582).Text,(a) => {
                 Ryneus.SoundManager.Instance.StopBgm();
+                _view.CommandGameSystem(Base.CommandType.CloseConfirm);
                 _view.CommandGotoSceneChange(Scene.Boot);
             });
+            popupInfo.SetIsNoChoice(true);
             _view.CommandCallConfirm(popupInfo);
         }
     }

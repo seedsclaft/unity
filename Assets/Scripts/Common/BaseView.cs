@@ -231,6 +231,13 @@ abstract public class BaseView : MonoBehaviour
         CallSceneChangeCommand(eventData);
     }
 
+    public void CommandCallStageSymbolView(System.Action endEvent)
+    {
+        var eventData = new ViewEvent(Base.CommandType.CallStageSymbolView);
+        eventData.template = endEvent;
+        CallSceneChangeCommand(eventData);
+    }
+
     public void CommandHelpList(List<ListData> helpTextList)
     {
         var eventData = new ViewEvent(Base.CommandType.CallHelpView);
@@ -390,6 +397,7 @@ namespace Base
         CallHelpView,
         CallAlcanaListView,
         CallSlotSaveView,
+        CallStageSymbolView,
         CallStatusView,
         CloseStatus,
         CallAdvScene,

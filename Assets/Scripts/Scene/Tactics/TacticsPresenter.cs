@@ -212,7 +212,7 @@ public class TacticsPresenter :BasePresenter
         _view.SetSelectCharacter(_model.TacticsCharacterData(),_model.NoChoiceConfirmCommand());
         
         _view.SetStageInfo(_model.CurrentStage);
-        _view.SetSymbols(ListData.MakeListData(_model.TacticsSymbols()));
+        //_view.SetSymbols(ListData.MakeListData(_model.TacticsSymbols()));
 
         _view.SetTacticsCommand(_model.TacticsCommand());
         _view.HideCommandList();
@@ -225,6 +225,7 @@ public class TacticsPresenter :BasePresenter
         {
             _view.CommandCallTutorialFocus(_model.CurrentStageTutorialDates[0]);
         }
+        _view.StartAnimation();
     }
 
 
@@ -325,6 +326,10 @@ public class TacticsPresenter :BasePresenter
         if (viewEvent.commandType == Tactics.CommandType.SymbolClose)
         {
             CommandSymbolClose();
+        }
+        if (viewEvent.commandType == Tactics.CommandType.StageSymbolClose)
+        {
+            CommandStageSymbolClose();
         }
         if (viewEvent.commandType == Tactics.CommandType.CallEnemyInfo)
         {
@@ -487,7 +492,16 @@ public class TacticsPresenter :BasePresenter
     private void CommandTacticsCommand(TacticsCommandType tacticsCommandType)
     {
         _model.SetTacticsCommandType(tacticsCommandType);
+        if (tacticsCommandType == TacticsCommandType.Symbol)
+        {
+            _view.ChangeUIActive(false);
+            _view.CommandCallStageSymbolView(() => {
+                _view.ChangeUIActive(true);
+            });
+            return;
+        }
         _view.HideConfirmCommand();
+        _view.SetSymbols(_model.StageSymbolInfos(_model.CurrentStage.CurrentTurn));
         if (tacticsCommandType == TacticsCommandType.Paradigm)
         {
             _view.ChangeBackCommandActive(true);
@@ -573,9 +587,10 @@ public class TacticsPresenter :BasePresenter
     }
 
 
-    private void CommandSelectSymbol(int symbolIndex)
+
+    private void CommandSelectSymbol(int selectIndex)
     {
-        _model.SetStageSeekIndex(symbolIndex);
+        _model.SetStageSeekIndex(selectIndex);
         _view.HideSymbolList();
         // 回路解析
         var currentSymbol = _model.CurrentStage.CurrentSelectSymbol();
@@ -781,7 +796,8 @@ public class TacticsPresenter :BasePresenter
                 // ボス戦なら
                 if (_model.CurrentStage.CurrentSelectSymbol().SymbolType == SymbolType.Boss)
                 {
-                    Ryneus.SoundManager.Instance.StopBgm();
+                    Ryneus.SoundManager.Instance.FadeOutBgm();
+                    PlayBossBgm();
                 } else
                 {
                     var bgmData = DataSystem.Data.GetBGM(_model.TacticsBgmKey());
@@ -834,6 +850,13 @@ public class TacticsPresenter :BasePresenter
         _view.HideSymbolList();
         //_view.SetActiveEnemyListClose(false);
         _view.ShowCommandList();
+    }
+
+    private void CommandStageSymbolClose()
+    {
+        Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cancel);
+        _view.HideSymbolList();
+        _backCommand = Tactics.CommandType.TacticsCommandClose;
     }
 
     private void CommandRefresh()

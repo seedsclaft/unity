@@ -17,9 +17,12 @@ public class SymbolRecordData : ListItem ,IListViewItem
         }
         foreach (var data in dates)
         {
-            var symbolComponent = symbolComponents[data.StageSymbolData.SeekIndex];
-            symbolComponent.gameObject.SetActive(true);
-            symbolComponent.UpdateInfo(data);
+            if (symbolComponents.Count > 0)
+            {
+                var symbolComponent = symbolComponents[data.StageSymbolData.SeekIndex];
+                symbolComponent.gameObject.SetActive(true);
+                symbolComponent.UpdateInfo(data);
+            }
         }
     }
 

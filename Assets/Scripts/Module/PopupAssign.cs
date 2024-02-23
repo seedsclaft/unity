@@ -14,6 +14,7 @@ public class PopupAssign : MonoBehaviour
     [SerializeField] private GameObject helpPrefab = null;
     [SerializeField] private GameObject alcanaListPrefab = null;
     [SerializeField] private GameObject slotSavePrefab = null;
+    [SerializeField] private GameObject stageSymbolPrefab = null;
     public GameObject CreatePopup(PopupType popupType,HelpWindow helpWindow)
     {
         if (confirmRoot.transform.childCount > 0)
@@ -50,6 +51,8 @@ public class PopupAssign : MonoBehaviour
             return alcanaListPrefab;
             case PopupType.SlotSave:
             return slotSavePrefab;
+            case PopupType.StageSymbol:
+            return stageSymbolPrefab;
         }
         return null;
     }
@@ -74,5 +77,6 @@ public enum PopupType{
     CharacterList,
     Help,
     AlcanaList,
-    SlotSave
+    SlotSave,
+    StageSymbol
 }

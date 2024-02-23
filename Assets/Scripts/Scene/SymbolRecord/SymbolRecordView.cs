@@ -4,6 +4,7 @@ using UnityEngine.UI;
 using SymbolRecord;
 using TMPro;
 using DG.Tweening;
+using Unity.VisualScripting;
 
 public class SymbolRecordView : BaseView
 {
