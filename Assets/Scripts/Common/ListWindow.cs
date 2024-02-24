@@ -223,7 +223,10 @@ abstract public class ListWindow : MonoBehaviour
             }
         } else
         {
-            _prevPrefab.SetActive(false);
+            if (_prevPrefab != null)
+            {
+                _prevPrefab.SetActive(false);
+            }
         }
         Refresh(_index);
     }
@@ -233,10 +236,14 @@ abstract public class ListWindow : MonoBehaviour
         var startIndex = Math.Max(0,GetStartIndex());
         for (int i = 0; i < ItemPrefabList.Count;i++)
         {
-            if (startIndex < 0) continue;
-            if (i + startIndex >= _listDates.Count) continue;
+            if (startIndex < 0 || (i + startIndex >= _listDates.Count)) 
+            {
+                ItemPrefabList[i].gameObject.SetActive(false);
+                continue;
+            }
             if (i < _listDates.Count) 
             {
+                ItemPrefabList[i].gameObject.SetActive(true);
                 var listItem = ItemPrefabList[i].GetComponent<ListItem>();
                 listItem.SetListData(_listDates[i + startIndex],i + startIndex);
             }

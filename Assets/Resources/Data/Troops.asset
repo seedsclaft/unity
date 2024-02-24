@@ -13,26 +13,26 @@ MonoBehaviour:
   m_Name: Troops
   m_EditorClassIdentifier: 
   Data:
-  - TroopId: 401
+  - TroopId: 1
     TroopEnemies:
     - Id: 1
-      TroopId: 401
-      EnemyId: 4
+      TroopId: 1
+      EnemyId: 204
       Lv: 1
       BossFlag: 1
       Line: 1
       PrizeSetId: 100
+    StageTurn: 0
+    PrizeSetId: 100
+  - TroopId: 402
+    TroopEnemies:
     - Id: 2
-      TroopId: 401
+      TroopId: 402
       EnemyId: 4
       Lv: 1
       BossFlag: 0
       Line: 0
       PrizeSetId: 0
-    StageTurn: 0
-    PrizeSetId: 100
-  - TroopId: 402
-    TroopEnemies:
     - Id: 3
       TroopId: 402
       EnemyId: 4

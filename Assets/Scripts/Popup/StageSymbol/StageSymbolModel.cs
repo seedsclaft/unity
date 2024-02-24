@@ -1,8 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Cysharp.Threading.Tasks;
-using System.Threading;
+using System.Linq;
 
 public class StageSymbolModel : BaseModel
 {
@@ -43,12 +42,14 @@ public class StageSymbolModel : BaseModel
             symbolInfoList.Add(list);
         }
         var selectRecords = CurrentStage.SymbolRecordList.FindAll(a => a.StageId == CurrentStage.Id && a.Selected == true);
+        var lastSelectSeek = selectRecords.Select(a => a.Seek).Max();
         foreach (var stageSymbolInfo in CurrentStage.StageSymbolInfos)
         {
             var symbolInfo = new SymbolInfo();
             symbolInfo.CopyData(stageSymbolInfo);
             var saveRecord = selectRecords.Find(a => a.IsSameSymbol(stageSymbolInfo.StageSymbolData.StageId,stageSymbolInfo.StageSymbolData.Seek,stageSymbolInfo.StageSymbolData.SeekIndex));
             symbolInfo.SetSelected(saveRecord != null);
+            symbolInfo.SetLastSelected(lastSelectSeek == symbolInfo.StageSymbolData.Seek);
             if (saveRecord != null)
             {
                 MakePrizeData(saveRecord,symbolInfo.GetItemInfos);

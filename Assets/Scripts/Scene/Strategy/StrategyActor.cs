@@ -27,7 +27,7 @@ public class StrategyActor : ListItem ,IListViewItem
         innerObj.transform.DOLocalMoveY(initPosy,0.0f);
         var sequence = DOTween.Sequence()
             .Append(innerObj.transform.DOLocalMoveY(0,0.8f))
-            .SetEase(Ease.OutQuad)
+            .SetEase(Ease.OutQuart)
             .OnComplete(() => {
                 if (isBonus) 
                 {
@@ -45,7 +45,7 @@ public class StrategyActor : ListItem ,IListViewItem
             .Append(bonusImage.transform.DOScaleY(1.5f,0.4f))
             .Join(bonusImage.DOFade(0.75f,0.1f))
             .Append(bonusImage.DOFade(0.0f,0.3f))
-            .SetEase(Ease.OutQuad)
+            .SetEase(Ease.OutQuart)
             .OnComplete(() => {
                 var sequence = DOTween.Sequence()
                 .SetDelay(rand * 0.01f)

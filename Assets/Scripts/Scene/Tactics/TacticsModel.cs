@@ -24,11 +24,11 @@ public class TacticsModel : BaseModel
     private int _selectSkillId = 0;
     public int SelectAlcanaSkillId => _selectSkillId;
 
-    private TacticsCommandType _tacticsCommandType = TacticsCommandType.Train;
-    public TacticsCommandType TacticsCommandType => _tacticsCommandType;
+    private TacticsCommandType _TacticsCommandType = TacticsCommandType.Train;
+    public TacticsCommandType TacticsCommandType => _TacticsCommandType;
     public void SetTacticsCommandType(TacticsCommandType tacticsCommandType)
     {
-        _tacticsCommandType = tacticsCommandType;
+        _TacticsCommandType = tacticsCommandType;
     }
     private Dictionary<TacticsCommandType,bool> _tacticsCommandEnables = new ();
     public void SetTacticsCommandEnables(TacticsCommandType tacticsCommand,bool isEnable)
@@ -327,7 +327,7 @@ public class TacticsModel : BaseModel
         foreach (var member in StageMembers())
         {
             var tacticsActorInfo = new TacticsActorInfo();
-            tacticsActorInfo.TacticsCommandType = _tacticsCommandType;
+            tacticsActorInfo.TacticsCommandType = _TacticsCommandType;
             tacticsActorInfo.ActorInfo = member;
             tacticsActorInfo.ActorInfos = StageMembers();
             list.Add(tacticsActorInfo);
@@ -337,7 +337,7 @@ public class TacticsModel : BaseModel
 
     public string TacticsCommandInputInfo()
     {
-        switch (_tacticsCommandType)
+        switch (_TacticsCommandType)
         {
             case TacticsCommandType.Train:
                 return "TRAIN";
@@ -360,7 +360,7 @@ public class TacticsModel : BaseModel
 
     private string CommandTitle()
     {
-        return DataSystem.GetTextData((int)_tacticsCommandType).Text;
+        return DataSystem.GetTextData((int)_TacticsCommandType).Text;
     }
 
     private int CommandRank()
@@ -375,10 +375,10 @@ public class TacticsModel : BaseModel
         {
             // %の確率で
             var bonusParam = rank * 10;
-            return DataSystem.GetReplaceText(10 + (int)_tacticsCommandType,bonusParam.ToString());
+            return DataSystem.GetReplaceText(10 + (int)_TacticsCommandType,bonusParam.ToString());
         }
         int count = 0;
-        switch (_tacticsCommandType)
+        switch (_TacticsCommandType)
         {
             case TacticsCommandType.Train:
                 count = DataSystem.System.TrainCount;

@@ -34,6 +34,10 @@ public class BaseList : ListWindow , IInputHandlerEvent
 
     public void SetData(List<ListData> listData)
     {
+        if (listData != ListDates)
+        {
+            ResetScrollRect();
+        }
         SetListData(listData);
         CreateObjectList();
         if (ListDates.Count > ObjectList.Count)

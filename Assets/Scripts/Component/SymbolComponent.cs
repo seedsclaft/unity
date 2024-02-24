@@ -16,6 +16,7 @@ public class SymbolComponent : MonoBehaviour
     private SymbolInfo _symbolInfo = null;
     public SymbolInfo SymbolInfo => _symbolInfo;
 
+    private bool _animationInit = false;
     public void UpdateInfo(SymbolInfo symbolInfo)
     {
         _symbolInfo = symbolInfo;
@@ -33,6 +34,17 @@ public class SymbolComponent : MonoBehaviour
         if (lastSelected != null)
         {
             lastSelected.SetActive(_symbolInfo.LastSelected);
+            selected.SetActive(_symbolInfo.Selected && !_symbolInfo.LastSelected);
+            symbolImage.gameObject.SetActive(!_symbolInfo.LastSelected);
+            if (_animationInit == false && _symbolInfo.LastSelected)
+            {
+                var uiView = lastSelected.GetComponent<RectTransform>();
+                AnimationUtility.LocalMoveToLoopTransform(uiView.gameObject,
+                    new Vector3(uiView.localPosition.x,uiView.localPosition.y + 4,0),
+                    new Vector3(uiView.localPosition.x,uiView.localPosition.y,0),
+                    1.2f);
+                _animationInit = true;
+            }
         }
     }
 

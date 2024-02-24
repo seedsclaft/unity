@@ -3310,6 +3310,7 @@ MonoBehaviour:
   reverse: 0
   warpMode: 1
   scrollRect: {fileID: 3942903921366044396}
+  itemPrefabMode: 1
   itemPrefab: {fileID: 8377295634972812392, guid: ff9b0432c352c324f8b2f6edb17efe20,
     type: 3}
   _helpWindow: {fileID: 0}
@@ -3362,7 +3363,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5727361115611400775}
   - component: {fileID: 8075312227975281658}
-  - component: {fileID: 7239891000515022433}
+  - component: {fileID: 8404056884022403188}
   m_Layer: 5
   m_Name: Bg
   m_TagString: Untagged
@@ -3380,7 +3381,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 100, y: 100, z: 1}
+  m_LocalScale: {x: 50, y: 50, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 279239741783795329}
@@ -3426,7 +3427,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 71df4dd1f571d14479a4c6ca107ba3fd, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 2cb175524cf13fd49bf398623dbdea81, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -3437,7 +3438,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &7239891000515022433
+--- !u!114 &8404056884022403188
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3446,16 +3447,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 5667879424559383101}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f40d78aeafe77db4c9191438047f3e6d, type: 3}
+  m_Script: {fileID: 11500000, guid: 2fdedaa643a506a44bdd8e43c4541988, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   ForceMaterial: {fileID: 0}
   ActiveChange: 1
   _Alpha: 1
-  Heat: 0.05
-  Speed: 0.001
-  EValue: 0.1
-  Light: -3.1
+  Noise: 0.09
   ShaderChange: 0
   ActiveUpdate: 1
 --- !u!1 &5728095484524826946
@@ -5078,6 +5076,7 @@ MonoBehaviour:
   _backCommand: {fileID: 0}
   _backGround: {fileID: 0}
   uiRoot: {fileID: 1740006770950926252}
+  optionButton: {fileID: 0}
   stageList: {fileID: 3033544215176505388}
   component: {fileID: 5443321860924494865}
   sideMenuList: {fileID: 5690209438290221548}

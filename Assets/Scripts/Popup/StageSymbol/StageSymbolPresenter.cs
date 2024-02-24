@@ -23,6 +23,8 @@ public class StageSymbolPresenter
         _busy = false;
         _view.SetEvent((type) => UpdateCommand(type));
         _view.SetSymbolRecords(_model.SymbolRecords());
+        _view.SetStage(_model.CurrentStage);
+        _view.StartAnimation();
     }
 
     private void UpdateCommand(StageSymbolViewEvent viewEvent)
@@ -30,6 +32,7 @@ public class StageSymbolPresenter
         if (_busy){
             return;
         }
+        Debug.Log(viewEvent.commandType);
         switch (viewEvent.commandType)
         {
             case CommandType.Back:
@@ -42,7 +45,7 @@ public class StageSymbolPresenter
                 CommandCancelRecord();
                 break;
             case CommandType.CallEnemyInfo:
-                CommandCallEnemyInfo((int)viewEvent.template);
+                CommandCallEnemyInfo((SymbolInfo)viewEvent.template);
                 break;
         }
     }
@@ -51,6 +54,7 @@ public class StageSymbolPresenter
     {
         _view.SetSymbols(_model.StageSymbolInfos(symbolInfo.StageSymbolData.Seek));
         _backCommand = CommandType.CancelRecord;
+        _view.ShowSymbolList();
     }
     
     private void CommandCancelRecord()
@@ -69,9 +73,9 @@ public class StageSymbolPresenter
         }
         _view.CommandBackEvent();
     }
-    private void CommandCallEnemyInfo(int symbolIndex)
+
+    private void CommandCallEnemyInfo(SymbolInfo symbolInfo)
     {
-        var symbolInfo = _model.TacticsSymbols()[symbolIndex];
         switch (symbolInfo.SymbolType)
         {
             case SymbolType.Battle:

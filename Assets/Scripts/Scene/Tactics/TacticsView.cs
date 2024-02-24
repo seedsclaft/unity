@@ -60,22 +60,24 @@ public class TacticsView : BaseView
 
     public void StartAnimation()
     {
+        /*
         var duration = 0.4f;
         var tacticsCommandListRect = tacticsCommandList.GetComponent<RectTransform>();
         AnimationUtility.LocalMoveToTransform(tacticsCommandListRect.gameObject,
-            new Vector3(tacticsCommandListRect.localPosition.x + 240,tacticsCommandListRect.localPosition.y,0),
+            new Vector3(tacticsCommandListRect.localPosition.x + 960,tacticsCommandListRect.localPosition.y,0),
             new Vector3(tacticsCommandListRect.localPosition.x,tacticsCommandListRect.localPosition.y,0),
             duration);
         var numinousRect = numinousText.gameObject.transform.parent.GetComponent<RectTransform>();
         AnimationUtility.LocalMoveToTransform(numinousRect.gameObject,
-            new Vector3(numinousRect.localPosition.x + 240,numinousRect.localPosition.y,0),
+            new Vector3(numinousRect.localPosition.x + 480,numinousRect.localPosition.y,0),
             new Vector3(numinousRect.localPosition.x,numinousRect.localPosition.y,0),
             duration);
         var borderRect = stageInfoComponent.gameObject.GetComponent<RectTransform>();
         AnimationUtility.LocalMoveToTransform(borderRect.gameObject,
-            new Vector3(borderRect.localPosition.x - 240,borderRect.localPosition.y,0),
+            new Vector3(borderRect.localPosition.x - 480,borderRect.localPosition.y,0),
             new Vector3(borderRect.localPosition.x,borderRect.localPosition.y,0),
             duration);
+            */
     }
     
     private void InitializeSelectCharacter()

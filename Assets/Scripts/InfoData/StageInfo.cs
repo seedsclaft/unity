@@ -154,8 +154,13 @@ public class StageInfo
             troopInfo.AddEnemy(enemy);
         }
         _currentSeekIndex = 0;
-        var symbolInfo = new SymbolInfo();
+        var stageSymbol = new StageSymbolData();
+        stageSymbol.StageId = 1;
+        stageSymbol.Seek = 1;
+        stageSymbol.SeekIndex = 0;
+        var symbolInfo = new SymbolInfo(stageSymbol);
         symbolInfo.SetTroopInfo(troopInfo);
+        
         _stageSymbolInfos.Add(symbolInfo);
     }
 

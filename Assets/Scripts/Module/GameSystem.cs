@@ -91,7 +91,8 @@ public class GameSystem : MonoBehaviour
         switch (viewEvent.commandType)
         {
             case Base.CommandType.SceneChange:
-                if (testMode && (Scene)viewEvent.template == Scene.Battle)
+                var sceneInfo = (SceneInfo)viewEvent.template; 
+                if (testMode && sceneInfo.ToScene == Scene.Battle)
                 {
                     if (debugBattleData.AdvName != "")
                     {
@@ -99,10 +100,10 @@ public class GameSystem : MonoBehaviour
                     } else
                     {
                         debugBattleData.MakeBattleActor();
-                        CommandSceneChange((SceneInfo)viewEvent.template);
+                        CommandSceneChange(sceneInfo);
                     }
                 } else{
-                    CommandSceneChange((SceneInfo)viewEvent.template);
+                    CommandSceneChange(sceneInfo);
                 }
                 break;
             case Base.CommandType.CallConfirmView:

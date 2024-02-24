@@ -47,37 +47,45 @@ public class GetItemInfo
         switch (_getItemType)
         {
             case GetItemType.Numinous:
+                SetTitleData(DataSystem.GetTextData(14090).Text + "+" + _param1.ToString() + DataSystem.GetTextData(1000).Text);
                 SetResultData(DataSystem.GetTextData(14090).Text + "+" + _param1.ToString() + DataSystem.GetTextData(1000).Text);
                 break;
             case GetItemType.Skill:
                 var skillData = DataSystem.FindSkill(_param1);
+                SetTitleData(skillData.Name);
                 SetResultData(DataSystem.GetReplaceText(14110,skillData.Name));
                 SetSkillId(skillData.Id);
                 break;
             case GetItemType.Demigod:
+                SetTitleData(DataSystem.GetTextData(14042).Text + "+" + _param1.ToString());
                 SetResultData(DataSystem.GetTextData(14042).Text + "+" + _param1.ToString());
                 break;
             case GetItemType.Ending:
                 SetResultData(DataSystem.GetTextData(14060).Text);
                 break;
             case GetItemType.StatusUp:
+                SetTitleData(DataSystem.GetReplaceText(14070,_param1.ToString()));
                 SetResultData(DataSystem.GetReplaceText(14070,_param1.ToString()));
                 break;
             case GetItemType.Regeneration:
+                SetTitleData(DataSystem.GetReplaceText(3240,_param1.ToString()));
                 SetResultData(DataSystem.GetReplaceText(3240,_param1.ToString()));
                 break;
             case GetItemType.ReBirth:
                 SetResultData("ロスト復活");
                 break;
             case GetItemType.LearnSkill:
+                SetTitleData(DataSystem.FindSkill(_param2).Name);
                 //SetTitleData(DataSystem.GetReplaceText(3000,DataSystem.FindActor(_param1).Name));
                 SetResultData(DataSystem.GetReplaceText(3002,DataSystem.FindSkill(_param2).Name));
                 break;
             case GetItemType.AddActor:
+                SetTitleData(DataSystem.FindActor(_param1).Name);
                 //SetTitleData(DataSystem.GetReplaceText(3003,DataSystem.FindActor(_param1).Name));
                 SetResultData(DataSystem.GetReplaceText(14120,DataSystem.FindActor(_param1).Name));
                 break;
             case GetItemType.SaveHuman:
+                SetTitleData(DataSystem.GetTextData(14100).Text + DataSystem.GetReplaceDecimalText(_param2) + "/" + DataSystem.GetReplaceDecimalText(_param1));
                 SetResultData(DataSystem.GetTextData(14100).Text + DataSystem.GetReplaceDecimalText(_param2) + "/" + DataSystem.GetReplaceDecimalText(_param1));
                 break;
         }
@@ -108,24 +116,6 @@ public class GetItemInfo
         return (int)_getItemType >= (int)GetItemType.AttributeFire && (int)_getItemType <= (int)GetItemType.AttributeDark;
     }
 
-    public void MakeTrainResult(string name,int lv,bool isBonus)
-    {
-        _titleName = (DataSystem.GetReplaceText(3000,name));
-        var trainResult = DataSystem.GetReplaceText(3001,lv.ToString());
-        if (isBonus)
-        {
-            trainResult += " " + DataSystem.GetTextData(3031).Text;
-        }
-        _resultName = (trainResult);
-    }
-
-    public void MakeAlchemyResult(string name,SkillData skillData)
-    {
-        _titleName = (DataSystem.GetReplaceText(3000,name));
-        SetSkillId(skillData.Id);
-        var magicAlchemy = skillData.Name;
-        _resultName = (DataSystem.GetReplaceText(3002,magicAlchemy));    
-    }
 
     public void MakeAlchemyBonusResult(SkillData skillData)
     {
@@ -134,17 +124,6 @@ public class GetItemInfo
         SetSkillId(skillData.Id);            
     }
 
-    public void MakeRecoveryResult(string name)
-    {
-        _titleName = (DataSystem.GetReplaceText(3010,name));
-        _resultName = (DataSystem.GetTextData(3011).Text);
-    }
-
-    public void MakeRecoveryBonusResult(string name)
-    {
-        _titleName = (DataSystem.GetTextData(3012).Text);
-        _resultName = (DataSystem.GetReplaceText(3013,name));
-    }
 
     public void MakeCommandCountResult(int commandLv,int toLv,TacticsCommandType tacticsCommandType)
     {
@@ -152,17 +131,6 @@ public class GetItemInfo
         _resultName = (DataSystem.GetTextData(316).Text + commandLv.ToString() + DataSystem.GetTextData(3090).Text + toLv.ToString());
     }
 
-    public void MakeCurrencyResult(int value)
-    {
-        _titleName = (DataSystem.GetTextData(14041).Text);
-        _resultName = ("+" + value.ToString() + DataSystem.GetTextData(1000).Text);
-    }
-
-    public void MakeDemigodResult(int value)
-    {
-        _titleName = (DataSystem.GetTextData(14042).Text);
-        _resultName = ("+" + value.ToString());
-    }
 
     public void MakeStatusRebornResult(string name, StatusParamType statusParamType,int bonus)
     {
@@ -220,11 +188,7 @@ public class GetItemInfo
         _resultName = (DataSystem.GetTextData(3225).Text);
     }
 
-    public void MakeCommandLvUpResult(int currentLv,int toLv,TacticsCommandType tacticsCommandType)
-    {
-        _titleName = (DataSystem.GetReplaceText(3030,DataSystem.GetTextData((int)tacticsCommandType).Text));
-        _resultName = (DataSystem.GetTextData(316).Text + currentLv.ToString() + DataSystem.GetTextData(3090).Text + toLv.ToString());
-    }
+
 
     public void MakeAddSkillCurrencyResult(string skillName,int currency)
     {

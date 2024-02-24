@@ -72,7 +72,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 0, y: -44}
+  m_AnchoredPosition: {x: 0, y: -32}
   m_SizeDelta: {x: 292, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &8231562796956567624
@@ -467,7 +467,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &87929684395205801
 RectTransform:
   m_ObjectHideFlags: 0
@@ -728,7 +728,7 @@ MonoBehaviour:
   changeCursorColor: 1
   disable: {fileID: 0}
   skillInfoComponent: {fileID: 8288144905245661808}
-  titleName: {fileID: 3456596041103376755}
+  titleName: {fileID: 0}
   resultName: {fileID: 7313307220274547664}
 --- !u!114 &8288144905245661808
 MonoBehaviour:
