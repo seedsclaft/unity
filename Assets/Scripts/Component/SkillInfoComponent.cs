@@ -54,7 +54,7 @@ public class SkillInfoComponent : MonoBehaviour
         if (learningCost != null)
         {
             learningCost.gameObject.SetActive(skillInfo.LearningCost > 0);
-            learningCost.text = skillInfo.LearningCost + DataSystem.System.GetTextData(1000).Text;
+            learningCost.text = skillInfo.LearningCost.ToString();// + DataSystem.System.GetTextData(1000).Text;
         }
         if (learningText != null)
         {

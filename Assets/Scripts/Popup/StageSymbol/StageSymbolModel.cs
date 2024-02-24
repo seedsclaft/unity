@@ -42,14 +42,15 @@ public class StageSymbolModel : BaseModel
             symbolInfoList.Add(list);
         }
         var selectRecords = CurrentStage.SymbolRecordList.FindAll(a => a.StageId == CurrentStage.Id && a.Selected == true);
-        var lastSelectSeek = selectRecords.Select(a => a.Seek).Max();
+        var lastSelectSeek = selectRecords.Count > 0 ? selectRecords.Select(a => a.Seek).Max() : -1;
         foreach (var stageSymbolInfo in CurrentStage.StageSymbolInfos)
         {
             var symbolInfo = new SymbolInfo();
             symbolInfo.CopyData(stageSymbolInfo);
             var saveRecord = selectRecords.Find(a => a.IsSameSymbol(stageSymbolInfo.StageSymbolData.StageId,stageSymbolInfo.StageSymbolData.Seek,stageSymbolInfo.StageSymbolData.SeekIndex));
             symbolInfo.SetSelected(saveRecord != null);
-            symbolInfo.SetLastSelected(lastSelectSeek == symbolInfo.StageSymbolData.Seek);
+            symbolInfo.SetLastSelected(saveRecord != null && lastSelectSeek == symbolInfo.StageSymbolData.Seek);
+            symbolInfo.SetPast(saveRecord == null && stageSymbolInfo.StageSymbolData.Seek <= lastSelectSeek);
             if (saveRecord != null)
             {
                 MakePrizeData(saveRecord,symbolInfo.GetItemInfos);

@@ -33,10 +33,11 @@ public class SymbolComponent : MonoBehaviour
         }
         if (lastSelected != null)
         {
-            lastSelected.SetActive(_symbolInfo.LastSelected);
-            selected.SetActive(_symbolInfo.Selected && !_symbolInfo.LastSelected);
-            symbolImage.gameObject.SetActive(!_symbolInfo.LastSelected);
-            if (_animationInit == false && _symbolInfo.LastSelected)
+            var lastSelect = _symbolInfo.LastSelected;
+            lastSelected.SetActive(lastSelect);
+            selected.SetActive(_symbolInfo.Selected && !lastSelect);
+            symbolImage.gameObject.SetActive(!_symbolInfo.Past && !lastSelect);
+            if (_animationInit == false && lastSelect)
             {
                 var uiView = lastSelected.GetComponent<RectTransform>();
                 AnimationUtility.LocalMoveToLoopTransform(uiView.gameObject,
@@ -54,6 +55,7 @@ public class SymbolComponent : MonoBehaviour
         {
             var textId = 40 + (int)_symbolInfo.SymbolType;
             commandTitle.text = DataSystem.System.GetTextData(textId).Text;
+            commandTitle.transform.parent.gameObject.SetActive(!_symbolInfo.Past);
         }
     }
 

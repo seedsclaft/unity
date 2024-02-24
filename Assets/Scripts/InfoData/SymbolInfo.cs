@@ -23,6 +23,12 @@ public class SymbolInfo
     {
         _lastSelected = lastSelected;
     }
+    private bool _past;
+    public bool Past => _past;
+    public void SetPast(bool past)
+    {
+        _past = past;
+    }
     private bool _cleared;
     public bool Cleared => _cleared;
     public void SetCleared(bool cleared)

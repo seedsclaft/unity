@@ -52,6 +52,7 @@ public class StageSymbolPresenter
 
     private void CommandSelectRecord(SymbolInfo symbolInfo)
     {
+        Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
         _view.SetSymbols(_model.StageSymbolInfos(symbolInfo.StageSymbolData.Seek));
         _backCommand = CommandType.CancelRecord;
         _view.ShowSymbolList();
