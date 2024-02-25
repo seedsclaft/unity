@@ -793,6 +793,10 @@ public class BattlerInfo
         {
             rate += StateEffectAll(StateType.TargetRateUp);
         }
+        if (IsState(StateType.Shadow))
+        {
+            rate = 0;
+        }
         rate = Math.Max(0,rate);
         return rate;
     }

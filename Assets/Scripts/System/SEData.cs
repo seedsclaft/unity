@@ -24,4 +24,5 @@ public enum SEType {
     LevelUp,
     Critical,
     Skill,
+    Awaken,
 }

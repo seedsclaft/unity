@@ -988,3 +988,33 @@ MonoBehaviour:
     CheckHit: 0
     RemoveByAttack: 0
     RemoveByDeath: 1
+  - StateType: 2380
+    Name: "\u900F\u660E"
+    Help: "\u72D9\u308F\u308C\u306A\u304F\u306A\u308B"
+    IconPath: Arrow
+    RemovalTiming: 1
+    OverWrite: 1
+    EffectPath: '""'
+    EffectPosition: 0
+    EffectScale: 1
+    OverLap: 0
+    Removal: 1
+    Abnormal: 0
+    CheckHit: 0
+    RemoveByAttack: 0
+    RemoveByDeath: 1
+  - StateType: 2390
+    Name: "\u6C88\u9ED9"
+    Help: "\u6D88\u8CBBMp0\u4EE5\u5916\u306EMagic\u4F7F\u7528\u4E0D\u53EF"
+    IconPath: Arrow
+    RemovalTiming: 1
+    OverWrite: 1
+    EffectPath: '""'
+    EffectPosition: 0
+    EffectScale: 1
+    OverLap: 0
+    Removal: 0
+    Abnormal: 1
+    CheckHit: 1
+    RemoveByAttack: 0
+    RemoveByDeath: 1

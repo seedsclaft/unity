@@ -148,6 +148,7 @@ public class ActionResultInfo
         switch (featureData.FeatureType)
         {
             case FeatureType.HpDamage:
+            case FeatureType.HpConsumeDamage:
                 if (CheckIsHit(subject,target,isOneTarget,range))
                 {
                     MakeHpDamage(subject,target,featureData,false,isOneTarget,range);
@@ -286,12 +287,12 @@ public class ActionResultInfo
         int hit = 100;
         if (range > 0)
         {
-            hit -= range * 25;
+            hit -= range * 15;
         }
-        // S⇒L Range.Sスキル = range=1で25%カット
-        // L⇒L Range.Sスキル = range=2で50%カット
+        // S⇒L Range.Sスキル = range=1で15%カット
+        // L⇒L Range.Sスキル = range=2で30%カット
         // S⇒L Range.Lスキル = range=0
-        // L⇒L Range.Lスキル = range=1で25%カット
+        // L⇒L Range.Lスキル = range=1で15%カット
         hit += subject.CurrentHit();
         if (subject.IsState(StateType.Blind))
         {
@@ -366,8 +367,8 @@ public class ActionResultInfo
         }
         if (skillData.Range == RangeType.S)
         {
-            // S⇒L Range.Sスキル = range=1で25%カット
-            // L⇒L Range.Sスキル = range=2で50%カット
+            // S⇒L Range.Sスキル = range=1で15%カット
+            // L⇒L Range.Sスキル = range=2で30%カット
             if (subject.LineIndex == LineType.Front && target.LineIndex == LineType.Back)
             {
                 range = 1;
@@ -384,7 +385,7 @@ public class ActionResultInfo
         if (skillData.Range == RangeType.L)
         {
             // S⇒L Range.Lスキル = range=0
-            // L⇒L Range.Lスキル = range=1で25%カット
+            // L⇒L Range.Lスキル = range=1で15%カット
             if (subject.LineIndex == LineType.Back && target.LineIndex == LineType.Back)
             {
                 range = 1;
@@ -447,11 +448,11 @@ public class ActionResultInfo
         }
         if (range > 0)
         {
-            // S⇒L Range.Sスキル = range=1で25%カット
-            // L⇒L Range.Sスキル = range=2で50%カット
+            // S⇒L Range.Sスキル = range=1で15%カット
+            // L⇒L Range.Sスキル = range=2で30%カット
             // S⇒L Range.Lスキル = range=0
-            // L⇒L Range.Lスキル = range=1で25%カット
-            hpDamage = (int)MathF.Round((float)hpDamage * (1 - (0.25f * range)));
+            // L⇒L Range.Lスキル = range=1で15%カット
+            hpDamage = (int)MathF.Round((float)hpDamage * (1 - (0.15f * range)));
         }
         _hpDamage += hpDamage; 
     }
@@ -620,6 +621,11 @@ public class ActionResultInfo
 
     private void MakeAddState(BattlerInfo subject,BattlerInfo target,SkillData.FeatureData featureData,bool checkCounter = false,bool isOneTarget = false,bool removeTimingIsNextTurn = false,int range = 0)
     {
+        if (featureData.Rate < UnityEngine.Random.Range(0,100))
+        {
+            _missed = true;
+            return;
+        }
         var stateInfo = new StateInfo((StateType)featureData.Param1,featureData.Param2,featureData.Param3,subject.Index,target.Index,_skillId);
         if (removeTimingIsNextTurn)
         {
@@ -946,10 +952,7 @@ public class ActionResultInfo
                     {
                         foreach (var featureData in skillData.FeatureDates)
                         {
-                            if (featureData.Rate >= UnityEngine.Random.Range(0,100))
-                            {
-                                MakeAddState(subject,target,featureData);
-                            }
+                            MakeAddState(subject,target,featureData);
                         }
                     }
                 }

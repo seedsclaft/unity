@@ -181,7 +181,7 @@ public class BattlerInfoComponent : MonoBehaviour
             }
         },delayCount);
         _battleDamages.Add(battleDamage);
-        if (damageType == DamageType.HpDamage)
+        if (damageType == DamageType.HpDamage || damageType == DamageType.HpCritical)
         {
             ChangeHpAnimation(_battlerInfo.Hp,value * -1 + _battlerInfo.Hp);
         }

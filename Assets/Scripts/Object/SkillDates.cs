@@ -31,7 +31,7 @@ public class SkillData
     public List<TriggerData> ScopeTriggers;
     public bool IsHpDamageFeature()
     {
-        return FeatureDates.Find(a => a.FeatureType == FeatureType.HpDamage) != null;
+        return FeatureDates.Find(a => a.FeatureType == FeatureType.HpDamage || a.FeatureType == FeatureType.HpConsumeDamage) != null;
     }
     public bool IsHpHealFeature()
     {
@@ -113,6 +113,7 @@ public class SkillData
             feature.Param1 = Param1;
             feature.Param2 = Param2;
             feature.Param3 = Param3;
+            feature.Rate = Rate;
             return feature;
         }
     }
@@ -403,6 +404,7 @@ public enum TriggerType
     DodgeCountOver = 1001, // 回避を〇回行う
     HpHealCountOver = 1004, // Hp回復魔法を〇回行う
     AwakenDemigodAttribute = 1005, // Demigod魔法の属性が〇の味方が神化する
+    ActionResultSelfDeath = 1006, // 自身が戦闘不能になる攻撃を受ける
 }
 
 public enum TriggerTiming
@@ -433,6 +435,7 @@ public enum FeatureType
     NoEffectHpDamage = 11,
     NoEffectHpPerDamage = 12,
     NoEffectHpAddDamage = 13,
+    HpConsumeDamage = 14,
     AddState = 21,
     RemoveState = 22,
     RemoveAbnormalState = 23,

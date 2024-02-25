@@ -468,7 +468,7 @@ public class BattleView : BaseView ,IInputHandlerEvent
             return;
         }
         // transformの位置でエフェクトを再生する
-        EffekseerHandle handle = EffekseerSystem.PlayEffect(effekseerEffectAsset, centerAnimPosition.transform.position);
+        EffekseerSystem.PlayEffect(effekseerEffectAsset, centerAnimPosition.transform.position);
     }
 
     public void PlayMakerEffectSound(List<MakerEffectData.SoundTimings> soundTimings)

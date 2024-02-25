@@ -92,7 +92,7 @@ MonoBehaviour:
   - Id: 4
     Key: DAMAGE
     FileName: damage
-    Volume: 1
+    Volume: 0.6
     Pitch: 1
   - Id: 5
     Key: DEFEAT
@@ -101,8 +101,8 @@ MonoBehaviour:
     Pitch: 1
   - Id: 6
     Key: DEMIGOD
-    FileName: demigod
-    Volume: 1
+    FileName: Skill2
+    Volume: 0.8
     Pitch: 1
   - Id: 7
     Key: DENY
@@ -122,5 +122,10 @@ MonoBehaviour:
   - Id: 10
     Key: SKILL
     FileName: Skill1
-    Volume: 1
+    Volume: 0.6
+    Pitch: 1
+  - Id: 11
+    Key: AWAKEN
+    FileName: demigod
+    Volume: 0.8
     Pitch: 1

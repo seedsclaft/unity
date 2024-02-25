@@ -206,7 +206,7 @@ public class BattleActorAI
         }
 
         // 攻撃値計算
-        var attackFeatures = skillInfo.Master.FeatureDates.FindAll(a => a.FeatureType == FeatureType.HpDamage);
+        var attackFeatures = skillInfo.Master.FeatureDates.FindAll(a => a.FeatureType == FeatureType.HpDamage || a.FeatureType == FeatureType.HpConsumeDamage);
         
         // 攻撃回数
         var repeatTime = skillInfo.Master.RepeatTime;

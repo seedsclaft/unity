@@ -91,6 +91,8 @@ public enum StateType
     HolyCoffin = 2350,
     MpCostZeroAddDamage = 2360,
     MpCostZeroAddState = 2370,
+    Shadow = 2380,
+    Silence = 2390,
 }
 
 public enum RemovalTiming

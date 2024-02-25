@@ -11,7 +11,7 @@ public class ActionInfo
 
     private int _lastTargetIndex = 0;
     public int LastTargetIndex => _lastTargetIndex;
-    public SkillData Master {get {return DataSystem.FindSkill(_skillId);}}
+    public SkillData Master => DataSystem.FindSkill(_skillId);
     private SkillInfo _skillInfo = null;
     public SkillInfo SkillInfo => _skillInfo;
     
@@ -27,6 +27,8 @@ public class ActionInfo
 
     private int _mpCost;
     public int MpCost => _mpCost;
+    private int _hpCost;
+    public int HpCost => _hpCost;
     private List<int> _targetIndexList;
     public List<int> TargetIndexList => _targetIndexList;
 
@@ -53,6 +55,11 @@ public class ActionInfo
     public void SetRangeType(RangeType rangeType)
     {
         _rangeType = rangeType;
+    }
+
+    public void SetHpCost(int hpCost)
+    {
+        _hpCost = hpCost;
     }
 
     public void SetMpCost(int mpCost)

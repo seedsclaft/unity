@@ -75,4 +75,5 @@ public class BattleUtility
             TriggerTiming.HpDamaged,
         };
     }
+
 }

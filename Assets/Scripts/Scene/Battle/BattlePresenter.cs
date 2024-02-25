@@ -175,6 +175,7 @@ public class BattlePresenter : BasePresenter
 
     private async void UpdatePopupEscape(ConfirmCommandType confirmCommandType)
     {
+        /*
         _view.CommandGameSystem(Base.CommandType.CloseConfirm);
         if (confirmCommandType == ConfirmCommandType.Yes)
         {
@@ -202,6 +203,7 @@ public class BattlePresenter : BasePresenter
             };
             _view.CommandGotoSceneChange(Scene.Strategy);
         }
+        */
     }
 
     private void UpdatePopupNoEscape(ConfirmCommandType confirmCommandType)
@@ -277,8 +279,7 @@ public class BattlePresenter : BasePresenter
             var plusSkill = skill.FeatureDates.Find(a => a.FeatureType == FeatureType.PlusSkill);
             if (plusSkill != null)
             {
-                var plusSkillId = plusSkill.Param1;
-                var PlusResults = _model.CheckPlusPassiveInfos(passiveResult,plusSkillId);
+                var PlusResults = _model.CheckPlusPassiveInfos(passiveResult,plusSkill.Param1);
                 ExecActionResult(PlusResults);
             }
         }
@@ -618,13 +619,15 @@ public class BattlePresenter : BasePresenter
         _view.StartAnimationDemigod(_model.CurrentBattler,_model.CurrentActionInfo().Master);
         _view.HideStateOverlay();
         _view.SetAnimationBusy(true);
-        await UniTask.DelayFrame(110);
+        await UniTask.DelayFrame(20);
+        Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Awaken);
+        await UniTask.DelayFrame(90);
         StartAnimationSkill();
     }
 
     private async void StartAnimationRegenerate(List<ActionResultInfo> regenerateActionResults)
     {
-        var animation = _model.SkillActionAnimation("tktk01/Cure1");
+        var animation = ResourceSystem.LoadResourceEffect("tktk01/Cure1");
         ExecActionResult(regenerateActionResults);
         foreach (var regenerateActionResult in regenerateActionResults)
         {
@@ -634,14 +637,14 @@ public class BattlePresenter : BasePresenter
                 _view.StartAnimation(targetIndex,animation,0);
             }
         }
-        var waitFrame = GameSystem.ConfigData.BattleAnimationSkip ? 1 : 64;
+        var waitFrame = GameSystem.ConfigData.BattleAnimationSkip ? 1 : 46;
         await UniTask.DelayFrame(waitFrame);
         EndTurn();
     }
 
     private async void StartAnimationSlipDamage(List<ActionResultInfo> slipDamageResults)
     {
-        var animation = _model.SkillActionAnimation("NA_Effekseer/NA_Fire_001");
+        var animation = ResourceSystem.LoadResourceEffect("NA_Effekseer/NA_Fire_001");
         ExecActionResult(slipDamageResults);
         foreach (var slipDamageResult in slipDamageResults)
         {
@@ -658,14 +661,13 @@ public class BattlePresenter : BasePresenter
         }
         var PassiveResults = _model.CheckTriggerPassiveInfos(BattleUtility.HpDamagedTriggerTimings(),null,slipDamageResults);
         ExecActionResult(PassiveResults);
-        var waitFrame = GameSystem.ConfigData.BattleAnimationSkip ? 1 : 64;
+        var waitFrame = GameSystem.ConfigData.BattleAnimationSkip ? 1 : 46;
         await UniTask.DelayFrame(waitFrame);
         EndTurn();
     }
 
     private async void StartAnimationSkill()
-    {
-        Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Skill);
+    {           
         _view.ChangeSideMenuButtonActive(false);
         _view.SetBattlerThumbAlpha(true);
         //_view.ShowEnemyStateOverlay();
@@ -678,10 +680,14 @@ public class BattlePresenter : BasePresenter
             CommandEndAnimation();
             return;
         }
+        Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Skill);
+        var selfAnimation = ResourceSystem.LoadResourceEffect("MAGICALxSPIRAL/WHead1");
+        _view.StartAnimation(actionInfo.SubjectIndex,selfAnimation,0,1f,1.0f);
+        
         var animationData = BattleUtility.AnimationData(actionInfo.Master.AnimationId);
         if (animationData != null && animationData.AnimationPath != "" && GameSystem.ConfigData.BattleAnimationSkip == false)
         {
-            var animation = _model.SkillActionAnimation(animationData.AnimationPath);
+            var animation = ResourceSystem.LoadResourceEffect(animationData.AnimationPath);
             var soundTimings = _model.SkillActionSoundTimings(animationData.AnimationPath);
             _view.PlayMakerEffectSound(soundTimings);
             _view.SetCurrentSkillData(actionInfo.Master);
@@ -693,7 +699,7 @@ public class BattlePresenter : BasePresenter
             {
                 foreach (var actionResultInfo in actionInfo.ActionResults)
                 {
-                    var oneAnimation = actionResultInfo.CursedDamage ? _model.SkillActionAnimation("NA_Effekseer/NA_curse_001") : animation;
+                    var oneAnimation = actionResultInfo.CursedDamage ? ResourceSystem.LoadResourceEffect("NA_Effekseer/NA_curse_001") : animation;
                     _view.StartAnimation(actionResultInfo.TargetIndex,oneAnimation,animationData.Position,animationData.Scale,animationData.Speed);
                 }
             }
@@ -704,17 +710,17 @@ public class BattlePresenter : BasePresenter
             {
                 PopupActionResult(actionResultInfo,actionResultInfo.TargetIndex,true,true);
             }
-            await UniTask.DelayFrame(64);
+            await UniTask.DelayFrame(60);
         } else
         {
             _view.SetCurrentSkillData(actionInfo.Master);
-            _view.ClearDamagePopup();
+            //_view.ClearDamagePopup();
             StartAliveAnimation(_model.CurrentActionInfo().ActionResults);
             foreach (var actionResultInfo in actionInfo.ActionResults)
             {
                 PopupActionResult(actionResultInfo,actionResultInfo.TargetIndex,true,true);
             }
-            var waitFrame = GameSystem.ConfigData.BattleAnimationSkip ? 1 : 32;
+            var waitFrame = GameSystem.ConfigData.BattleAnimationSkip ? 1 : 60;
             await UniTask.DelayFrame(waitFrame);
         }
         _nextCommandType = Battle.CommandType.EndAnimation;
@@ -723,60 +729,46 @@ public class BattlePresenter : BasePresenter
 
     private void PopupActionResult(ActionResultInfo actionResultInfo,int targetIndex,bool needDamageBlink = true,bool needPopupDelay = true)
     {
+        if (actionResultInfo.TargetIndex != targetIndex)
+        {
+            return;
+        }
         if (actionResultInfo.Missed)
         {
-            if (actionResultInfo.TargetIndex == targetIndex)
-            {
-                _view.StartStatePopup(targetIndex,DamageType.State,"Miss!");    
-            }
+            _view.StartStatePopup(targetIndex,DamageType.State,"Miss!");
         }
         if (actionResultInfo.HpDamage > 0)
         {
-            if (actionResultInfo.TargetIndex == targetIndex)
-            {
-                _model.GainAttackCount(actionResultInfo.TargetIndex);
-                var damageType = actionResultInfo.Critical ? DamageType.HpCritical : DamageType.HpDamage;
-                _view.StartDamage(targetIndex,damageType,actionResultInfo.HpDamage,needPopupDelay);
-                if (needDamageBlink){
-                    _view.StartBlink(targetIndex);
-                    PlayDamageSound(damageType);
-                }
+            _model.GainAttackCount(actionResultInfo.TargetIndex);
+            var damageType = actionResultInfo.Critical ? DamageType.HpCritical : DamageType.HpDamage;
+            _view.StartDamage(targetIndex,damageType,actionResultInfo.HpDamage,needPopupDelay);
+            if (needDamageBlink){
+                _view.StartBlink(targetIndex);
+                PlayDamageSound(damageType);
             }
         }
         if (actionResultInfo.HpHeal > 0)
         {
-            if (actionResultInfo.TargetIndex == targetIndex && !actionResultInfo.DeadIndexList.Contains(targetIndex))
+            if (!actionResultInfo.DeadIndexList.Contains(targetIndex))
             {
                 _view.StartHeal(targetIndex,DamageType.HpHeal,actionResultInfo.HpHeal,needPopupDelay);
             }
         }
         if (actionResultInfo.MpDamage > 0)
-        {
-            if (actionResultInfo.TargetIndex == targetIndex)
-            {
-                _view.StartDamage(targetIndex,DamageType.MpDamage,actionResultInfo.MpDamage);
-            }
+        {    
+            _view.StartDamage(targetIndex,DamageType.MpDamage,actionResultInfo.MpDamage);
         }
         if (actionResultInfo.MpHeal > 0)
         {
-            if (actionResultInfo.TargetIndex == targetIndex)
-            {
-                _view.StartHeal(targetIndex,DamageType.MpHeal,actionResultInfo.MpHeal);
-            }
+            _view.StartHeal(targetIndex,DamageType.MpHeal,actionResultInfo.MpHeal);
         }
         if (actionResultInfo.ApHeal > 0)
-        {
-            if (actionResultInfo.TargetIndex == targetIndex)
-            {
-                _view.StartStatePopup(targetIndex,DamageType.State,DataSystem.GetReplaceText(432,actionResultInfo.ApDamage.ToString()));
-            }
+        {    
+            _view.StartStatePopup(targetIndex,DamageType.State,DataSystem.GetReplaceText(432,actionResultInfo.ApDamage.ToString()));
         }
         if (actionResultInfo.ApDamage > 0)
-        {
-            if (actionResultInfo.TargetIndex == targetIndex)
-            {
-                _view.StartStatePopup(targetIndex,DamageType.State,DataSystem.GetReplaceText(433,actionResultInfo.ApDamage.ToString()));
-            }
+        {    
+            _view.StartStatePopup(targetIndex,DamageType.State,DataSystem.GetReplaceText(433,actionResultInfo.ApDamage.ToString()));
         }
         if (actionResultInfo.ReDamage > 0)
         {
@@ -790,33 +782,21 @@ public class BattlePresenter : BasePresenter
             _view.StartHeal(actionResultInfo.SubjectIndex,DamageType.HpHeal,actionResultInfo.ReHeal);
         }
         foreach (var addedState in actionResultInfo.AddedStates)
-        {
-            if (actionResultInfo.TargetIndex == targetIndex)
-            {
-                _view.StartStatePopup(addedState.TargetIndex,DamageType.State,"+" + addedState.Master.Name);
-            }
+        {    
+            _view.StartStatePopup(addedState.TargetIndex,DamageType.State,"+" + addedState.Master.Name);
         }
         foreach (var removedState in actionResultInfo.RemovedStates)
-        {
-            if (actionResultInfo.TargetIndex == targetIndex)
-            {
-                _view.StartStatePopup(removedState.TargetIndex,DamageType.State,"-" + removedState.Master.Name);
-            }
+        {    
+            _view.StartStatePopup(removedState.TargetIndex,DamageType.State,"-" + removedState.Master.Name);
         }
         foreach (var displayState in actionResultInfo.DisplayStates)
         {
-            if (actionResultInfo.TargetIndex == targetIndex)
-            {
-                _view.StartStatePopup(displayState.TargetIndex,DamageType.State,displayState.Master.Name);
-            }
+            _view.StartStatePopup(displayState.TargetIndex,DamageType.State,displayState.Master.Name);
         }
         if (actionResultInfo.StartDash)
-        {    
-            if (actionResultInfo.TargetIndex == targetIndex)
-            {
-                //先制攻撃
-                _view.StartStatePopup(targetIndex,DamageType.State,DataSystem.GetTextData(431).Text);
-            }
+        {        
+            //先制攻撃
+            _view.StartStatePopup(targetIndex,DamageType.State,DataSystem.GetTextData(431).Text);
         }
     }
 
@@ -834,26 +814,20 @@ public class BattlePresenter : BasePresenter
 
     private void StartDeathAnimation(List<ActionResultInfo> actionResultInfos)
     {
-        var deathBattlerIndex = _model.DeathBattlerIndex(actionResultInfos);
-        if (deathBattlerIndex.Count > 0)
+        var deathBattlerIndexes = _model.DeathBattlerIndex(actionResultInfos);
+        foreach (var deathBattlerIndex in deathBattlerIndexes)
         {
-            for (int i = 0; i < deathBattlerIndex.Count; i++)
-            {
-                Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Defeat);
-                _view.StartDeathAnimation(deathBattlerIndex[i]);
-            }
+            Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Defeat);
+            _view.StartDeathAnimation(deathBattlerIndex);
         }
     }
 
     private void StartAliveAnimation(List<ActionResultInfo> actionResultInfos)
     {
-        var aliveBattlerIndex = _model.AliveBattlerIndex(actionResultInfos);
-        if (aliveBattlerIndex.Count > 0)
+        var aliveBattlerIndexes = _model.AliveBattlerIndex(actionResultInfos);
+        foreach (var aliveBattlerIndex in aliveBattlerIndexes)
         {
-            for (int i = 0; i < aliveBattlerIndex.Count; i++)
-            {
-                _view.StartAliveAnimation(aliveBattlerIndex[i]);
-            }
+            _view.StartAliveAnimation(aliveBattlerIndex);
         }
     }
 
@@ -885,14 +859,14 @@ public class BattlePresenter : BasePresenter
     private void ExecActionResult(List<ActionResultInfo> resultInfos,bool needPopupDelay = true)
     {
         _model.AdjustActionResultInfo(resultInfos);
-        for (int i = 0; i < resultInfos.Count; i++)
-        {    
-            // ダメージ表現をしない
-            PopupActionResult(resultInfos[i],resultInfos[i].TargetIndex,false,needPopupDelay);
+        foreach (var resultInfo in resultInfos)
+        {
+              // ダメージ表現をしない
+            PopupActionResult(resultInfo,resultInfo.TargetIndex,false,needPopupDelay);
         }
-        for (int i = 0; i < resultInfos.Count; i++)
-        {    
-            _model.ExecActionResultInfo(resultInfos[i]);
+        foreach (var resultInfo in resultInfos)
+        {
+            _model.ExecActionResultInfo(resultInfo);
         }
         if (resultInfos.Count > 0)
         {
@@ -994,12 +968,19 @@ public class BattlePresenter : BasePresenter
         {
             _view.StartStatePopup(addState.TargetIndex,DamageType.State,"+" + addState.Master.Name);
         }
+        // 透明が外れるケースを適用
+        var removeShadowStates = _model.EndRemoveShadowState();
+        foreach (var removeShadowState in removeShadowStates)
+        {
+            _view.StartStatePopup(removeShadowState.TargetIndex,DamageType.State,"-" + removeShadowState.Master.Name);
+        };
         // 戦闘不能の拘束ステートを解除する
         var removeChainStates = _model.EndRemoveState();
         foreach (var removeChainState in removeChainStates)
         {
             _view.StartStatePopup(removeChainState.TargetIndex,DamageType.State,"-" + removeChainState.Master.Name);
-        }
+        };
+
         // 待機できなくなった場合は待機状態をはずす
         _model.RemoveOneMemberWaitBattlers();
         _view.RefreshStatus();
@@ -1042,7 +1023,7 @@ public class BattlePresenter : BasePresenter
     {
         var skillInfos = _model.SkillActionList();
         _view.RefreshMagicList(skillInfos,_model.SelectSkillIndex(skillInfos));
-        Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cursor);
+        //Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cursor);
     }
 
     private bool IsBattleEnd()
