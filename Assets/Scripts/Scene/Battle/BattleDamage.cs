@@ -66,7 +66,7 @@ public class BattleDamage : MonoBehaviour
             textMeshProUGUI.alpha = 0;
             int delay = i + delayCount * 8;
             var sequence = DOTween.Sequence()
-                .SetDelay(delay * 0.05f)
+                .SetDelay(delay * 0.04f)
                 .Append(textMeshProUGUI.DOFade(1.0f, 0.1f))
                 .Append(textMeshProUGUI.gameObject.transform.DOLocalMoveY(16, 0.1f))
                 .Append(textMeshProUGUI.gameObject.transform.DOLocalMoveY(0, 0.2f))
@@ -105,11 +105,11 @@ public class BattleDamage : MonoBehaviour
             textMeshProUGUI.alpha = 0;
             int delay = i + delayCount * 8;
             var sequence = DOTween.Sequence()
-                .SetDelay(delay * 0.05f)
+                .SetDelay(delay * 0.04f)
                 .Append(textMeshProUGUI.DOFade(1.0f, 0.1f))
                 .Join(textMeshProUGUI.gameObject.transform.DOLocalMoveY(16, 0.1f))
                 .Append(textMeshProUGUI.gameObject.transform.DOLocalMoveY(0, 0.2f))
-                .SetDelay(0.05f)
+                .SetDelay(0.04f)
                 .Append(textMeshProUGUI.gameObject.transform.DOLocalMoveY(4, 0.05f))
                 .Append(textMeshProUGUI.gameObject.transform.DOLocalMoveY(0, 0.05f))
                 .SetEase(Ease.InOutQuad)
@@ -133,7 +133,7 @@ public class BattleDamage : MonoBehaviour
 
         textMeshProUGUI.alpha = 0;
         var sequence = DOTween.Sequence()
-            .SetDelay(delay * 0.7f)
+            .SetDelay(delay * 0.5f)
             .Append(textMeshProUGUI.DOFade(1.0f, 0.1f))
             .Join(textMeshProUGUI.gameObject.transform.DOLocalMoveY(8, 0.2f))
             .Append(textMeshProUGUI.gameObject.transform.DOLocalMoveY(8, 1.0f))

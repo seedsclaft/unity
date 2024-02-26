@@ -637,7 +637,7 @@ public class BattlePresenter : BasePresenter
                 _view.StartAnimation(targetIndex,animation,0);
             }
         }
-        var waitFrame = GameSystem.ConfigData.BattleAnimationSkip ? 1 : 46;
+        var waitFrame = GameSystem.ConfigData.BattleAnimationSkip ? 1 : 60;
         await UniTask.DelayFrame(waitFrame);
         EndTurn();
     }
@@ -661,7 +661,7 @@ public class BattlePresenter : BasePresenter
         }
         var PassiveResults = _model.CheckTriggerPassiveInfos(BattleUtility.HpDamagedTriggerTimings(),null,slipDamageResults);
         ExecActionResult(PassiveResults);
-        var waitFrame = GameSystem.ConfigData.BattleAnimationSkip ? 1 : 46;
+        var waitFrame = GameSystem.ConfigData.BattleAnimationSkip ? 1 : 60;
         await UniTask.DelayFrame(waitFrame);
         EndTurn();
     }

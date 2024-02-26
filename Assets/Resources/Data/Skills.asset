@@ -48,7 +48,7 @@ MonoBehaviour:
     AliveOnly: 1
     FeatureDates:
     - SkillId: 1
-      FeatureType: 1
+      FeatureType: 1010
       Param1: 100
       Param2: 0
       Param3: 0
@@ -72,7 +72,7 @@ MonoBehaviour:
     AliveOnly: 1
     FeatureDates:
     - SkillId: 2
-      FeatureType: 1
+      FeatureType: 1010
       Param1: 50
       Param2: 0
       Param3: 0
@@ -96,7 +96,7 @@ MonoBehaviour:
     AliveOnly: 1
     FeatureDates:
     - SkillId: 11
-      FeatureType: 21
+      FeatureType: 3010
       Param1: 1010
       Param2: 0
       Param3: 10
@@ -120,7 +120,7 @@ MonoBehaviour:
     AliveOnly: 1
     FeatureDates:
     - SkillId: 21
-      FeatureType: 22
+      FeatureType: 3020
       Param1: 1010
       Param2: 0
       Param3: 0
@@ -144,13 +144,13 @@ MonoBehaviour:
     AliveOnly: 1
     FeatureDates:
     - SkillId: 31
-      FeatureType: 11
+      FeatureType: 1050
       Param1: 100
       Param2: 0
       Param3: 0
       Rate: 100
     - SkillId: 31
-      FeatureType: 22
+      FeatureType: 3020
       Param1: 2020
       Param2: 0
       Param3: 0
@@ -174,7 +174,7 @@ MonoBehaviour:
     AliveOnly: 1
     FeatureDates:
     - SkillId: 32
-      FeatureType: 22
+      FeatureType: 3020
       Param1: 2021
       Param2: 0
       Param3: 0
@@ -198,13 +198,13 @@ MonoBehaviour:
     AliveOnly: 1
     FeatureDates:
     - SkillId: 33
-      FeatureType: 1
+      FeatureType: 1010
       Param1: 150
       Param2: 0
       Param3: 0
       Rate: 100
     - SkillId: 33
-      FeatureType: 33
+      FeatureType: 5030
       Param1: 0
       Param2: 0
       Param3: 0
@@ -228,7 +228,7 @@ MonoBehaviour:
     AliveOnly: 1
     FeatureDates:
     - SkillId: 1010
-      FeatureType: 1
+      FeatureType: 1010
       Param1: 150
       Param2: 0
       Param3: 0
@@ -252,7 +252,7 @@ MonoBehaviour:
     AliveOnly: 1
     FeatureDates:
     - SkillId: 1020
-      FeatureType: 1
+      FeatureType: 1010
       Param1: 150
       Param2: 0
       Param3: 0
@@ -276,7 +276,7 @@ MonoBehaviour:
     AliveOnly: 1
     FeatureDates:
     - SkillId: 1030
-      FeatureType: 7
+      FeatureType: 4020
       Param1: 8
       Param2: 0
       Param3: 0
@@ -301,7 +301,7 @@ MonoBehaviour:
     AliveOnly: 1
     FeatureDates:
     - SkillId: 1040
-      FeatureType: 21
+      FeatureType: 3010
       Param1: 2290
       Param2: 999
       Param3: 10
@@ -325,7 +325,7 @@ MonoBehaviour:
     AliveOnly: 1
     FeatureDates:
     - SkillId: 1050
-      FeatureType: 21
+      FeatureType: 3010
       Param1: 2010
       Param2: 999
       Param3: 10
@@ -349,7 +349,7 @@ MonoBehaviour:
     AliveOnly: 1
     FeatureDates:
     - SkillId: 1060
-      FeatureType: 1
+      FeatureType: 1010
       Param1: 300
       Param2: 0
       Param3: 0
@@ -373,7 +373,7 @@ MonoBehaviour:
     AliveOnly: 1
     FeatureDates:
     - SkillId: 2010
-      FeatureType: 1
+      FeatureType: 1010
       Param1: 150
       Param2: 0
       Param3: 0
@@ -397,7 +397,7 @@ MonoBehaviour:
     AliveOnly: 1
     FeatureDates:
     - SkillId: 2020
-      FeatureType: 21
+      FeatureType: 3010
       Param1: 2020
       Param2: 10
       Param3: 1
@@ -421,7 +421,7 @@ MonoBehaviour:
     AliveOnly: 1
     FeatureDates:
     - SkillId: 2030
-      FeatureType: 21
+      FeatureType: 3010
       Param1: 1090
       Param2: 999
       Param3: 25
@@ -445,7 +445,7 @@ MonoBehaviour:
     AliveOnly: 1
     FeatureDates:
     - SkillId: 2040
-      FeatureType: 21
+      FeatureType: 3010
       Param1: 2150
       Param2: 100
       Param3: 0
@@ -469,7 +469,7 @@ MonoBehaviour:
     AliveOnly: 1
     FeatureDates:
     - SkillId: 2050
-      FeatureType: 32
+      FeatureType: 5020
       Param1: 250
       Param2: 0
       Param3: 0
@@ -493,7 +493,7 @@ MonoBehaviour:
     AliveOnly: 1
     FeatureDates:
     - SkillId: 2060
-      FeatureType: 21
+      FeatureType: 3010
       Param1: 2280
       Param2: 1
       Param3: 4
@@ -517,13 +517,13 @@ MonoBehaviour:
     AliveOnly: 1
     FeatureDates:
     - SkillId: 2070
-      FeatureType: 21
+      FeatureType: 3010
       Param1: 2100
       Param2: 100
       Param3: 0
       Rate: 100
     - SkillId: 2070
-      FeatureType: 31
+      FeatureType: 5010
       Param1: 2
       Param2: 0
       Param3: 0
@@ -547,19 +547,19 @@ MonoBehaviour:
     AliveOnly: 1
     FeatureDates:
     - SkillId: 2080
-      FeatureType: 24
+      FeatureType: 3040
       Param1: 1080
       Param2: 2
       Param3: 50
       Rate: 100
     - SkillId: 2080
-      FeatureType: 24
+      FeatureType: 3040
       Param1: 1090
       Param2: 2
       Param3: 50
       Rate: 100
     - SkillId: 2080
-      FeatureType: 31
+      FeatureType: 5010
       Param1: 0
       Param2: 0
       Param3: 0
@@ -583,7 +583,7 @@ MonoBehaviour:
     AliveOnly: 1
     FeatureDates:
     - SkillId: 2090
-      FeatureType: 14
+      FeatureType: 1080
       Param1: 150
       Param2: 1
       Param3: 20
@@ -607,7 +607,7 @@ MonoBehaviour:
     AliveOnly: 1
     FeatureDates:
     - SkillId: 3010
-      FeatureType: 1
+      FeatureType: 1010
       Param1: 150
       Param2: 0
       Param3: 0
@@ -631,13 +631,13 @@ MonoBehaviour:
     AliveOnly: 1
     FeatureDates:
     - SkillId: 3020
-      FeatureType: 21
+      FeatureType: 3010
       Param1: 2030
       Param2: 0
       Param3: 150
       Rate: 100
     - SkillId: 3020
-      FeatureType: 101
+      FeatureType: 7010
       Param1: 3021
       Param2: 0
       Param3: 0
@@ -661,7 +661,7 @@ MonoBehaviour:
     AliveOnly: 1
     FeatureDates:
     - SkillId: 3021
-      FeatureType: 21
+      FeatureType: 3010
       Param1: 2300
       Param2: 999
       Param3: 25
@@ -691,7 +691,7 @@ MonoBehaviour:
     AliveOnly: 1
     FeatureDates:
     - SkillId: 3030
-      FeatureType: 21
+      FeatureType: 3010
       Param1: 1050
       Param2: 999
       Param3: 8
@@ -715,7 +715,7 @@ MonoBehaviour:
     AliveOnly: 1
     FeatureDates:
     - SkillId: 3040
-      FeatureType: 21
+      FeatureType: 3010
       Param1: 2130
       Param2: 5
       Param3: 10
@@ -739,7 +739,7 @@ MonoBehaviour:
     AliveOnly: 1
     FeatureDates:
     - SkillId: 3050
-      FeatureType: 21
+      FeatureType: 3010
       Param1: 2140
       Param2: 1
       Param3: 50
@@ -763,7 +763,7 @@ MonoBehaviour:
     AliveOnly: 1
     FeatureDates:
     - SkillId: 3060
-      FeatureType: 21
+      FeatureType: 3010
       Param1: 2160
       Param2: 200
       Param3: 0
@@ -787,7 +787,7 @@ MonoBehaviour:
     AliveOnly: 1
     FeatureDates:
     - SkillId: 3070
-      FeatureType: 21
+      FeatureType: 3010
       Param1: 2050
       Param2: 1
       Param3: 0
@@ -811,13 +811,13 @@ MonoBehaviour:
     AliveOnly: 1
     FeatureDates:
     - SkillId: 4010
-      FeatureType: 1
+      FeatureType: 1010
       Param1: 150
       Param2: 0
       Param3: 0
       Rate: 100
     - SkillId: 4010
-      FeatureType: 202
+      FeatureType: 8020
       Param1: 1
       Param2: 0
       Param3: 200
@@ -842,13 +842,13 @@ MonoBehaviour:
     AliveOnly: 1
     FeatureDates:
     - SkillId: 4020
-      FeatureType: 11
+      FeatureType: 1040
       Param1: 150
       Param2: 0
       Param3: 0
       Rate: 100
     - SkillId: 4020
-      FeatureType: 202
+      FeatureType: 8020
       Param1: 1
       Param2: 0
       Param3: 200
@@ -872,19 +872,19 @@ MonoBehaviour:
     AliveOnly: 1
     FeatureDates:
     - SkillId: 4030
-      FeatureType: 2
+      FeatureType: 2010
       Param1: 25
       Param2: 0
       Param3: 0
       Rate: 100
     - SkillId: 4030
-      FeatureType: 201
+      FeatureType: 8010
       Param1: 1
       Param2: 0
       Param3: 200
       Rate: 100
     - SkillId: 4030
-      FeatureType: 202
+      FeatureType: 8020
       Param1: 0
       Param2: 0
       Param3: 0
@@ -908,7 +908,7 @@ MonoBehaviour:
     AliveOnly: 1
     FeatureDates:
     - SkillId: 4040
-      FeatureType: 23
+      FeatureType: 3030
       Param1: 0
       Param2: 0
       Param3: 0
@@ -932,7 +932,7 @@ MonoBehaviour:
     AliveOnly: 1
     FeatureDates:
     - SkillId: 4050
-      FeatureType: 21
+      FeatureType: 3010
       Param1: 2200
       Param2: 10
       Param3: 1
@@ -956,13 +956,13 @@ MonoBehaviour:
     AliveOnly: 0
     FeatureDates:
     - SkillId: 4060
-      FeatureType: 22
+      FeatureType: 3020
       Param1: 1
       Param2: 0
       Param3: 0
       Rate: 100
     - SkillId: 4060
-      FeatureType: 2
+      FeatureType: 2010
       Param1: 25
       Param2: 0
       Param3: 0
@@ -987,7 +987,7 @@ MonoBehaviour:
     AliveOnly: 1
     FeatureDates:
     - SkillId: 4070
-      FeatureType: 21
+      FeatureType: 3010
       Param1: 2080
       Param2: 999
       Param3: 1
@@ -1011,7 +1011,7 @@ MonoBehaviour:
     AliveOnly: 1
     FeatureDates:
     - SkillId: 4080
-      FeatureType: 21
+      FeatureType: 3010
       Param1: 2080
       Param2: 999
       Param3: 1
@@ -1035,7 +1035,7 @@ MonoBehaviour:
     AliveOnly: 1
     FeatureDates:
     - SkillId: 5010
-      FeatureType: 1
+      FeatureType: 1010
       Param1: 150
       Param2: 0
       Param3: 0
@@ -1059,7 +1059,7 @@ MonoBehaviour:
     AliveOnly: 1
     FeatureDates:
     - SkillId: 5020
-      FeatureType: 1
+      FeatureType: 1010
       Param1: 150
       Param2: 0
       Param3: 0
@@ -1083,7 +1083,7 @@ MonoBehaviour:
     AliveOnly: 1
     FeatureDates:
     - SkillId: 5030
-      FeatureType: 3
+      FeatureType: 1020
       Param1: 150
       Param2: 0
       Param3: 100
@@ -1107,7 +1107,7 @@ MonoBehaviour:
     AliveOnly: 1
     FeatureDates:
     - SkillId: 5040
-      FeatureType: 21
+      FeatureType: 3010
       Param1: 2320
       Param2: 0
       Param3: 0
@@ -1131,7 +1131,7 @@ MonoBehaviour:
     AliveOnly: 1
     FeatureDates:
     - SkillId: 5050
-      FeatureType: 21
+      FeatureType: 3010
       Param1: 2120
       Param2: 1
       Param3: 50
@@ -1155,7 +1155,7 @@ MonoBehaviour:
     AliveOnly: 1
     FeatureDates:
     - SkillId: 5060
-      FeatureType: 21
+      FeatureType: 3010
       Param1: 2170
       Param2: 5
       Param3: 50
@@ -1179,7 +1179,7 @@ MonoBehaviour:
     AliveOnly: 1
     FeatureDates:
     - SkillId: 5070
-      FeatureType: 21
+      FeatureType: 3010
       Param1: 1041
       Param2: 999
       Param3: 8
@@ -1203,13 +1203,13 @@ MonoBehaviour:
     AliveOnly: 1
     FeatureDates:
     - SkillId: 5080
-      FeatureType: 1
+      FeatureType: 1010
       Param1: 150
       Param2: 0
       Param3: 0
       Rate: 100
     - SkillId: 5080
-      FeatureType: 21
+      FeatureType: 3010
       Param1: 2010
       Param2: 2
       Param3: 10
@@ -1233,7 +1233,7 @@ MonoBehaviour:
     AliveOnly: 1
     FeatureDates:
     - SkillId: 7010
-      FeatureType: 21
+      FeatureType: 3010
       Param1: 10
       Param2: 999
       Param3: 0
@@ -1257,7 +1257,7 @@ MonoBehaviour:
     AliveOnly: 1
     FeatureDates:
     - SkillId: 10010
-      FeatureType: 21
+      FeatureType: 3010
       Param1: 2270
       Param2: 0
       Param3: 10
@@ -1287,7 +1287,7 @@ MonoBehaviour:
     AliveOnly: 1
     FeatureDates:
     - SkillId: 10020
-      FeatureType: 21
+      FeatureType: 3010
       Param1: 2190
       Param2: 999
       Param3: 0
@@ -1335,7 +1335,7 @@ MonoBehaviour:
     AliveOnly: 1
     FeatureDates:
     - SkillId: 11010
-      FeatureType: 21
+      FeatureType: 3010
       Param1: 1040
       Param2: 999
       Param3: 8
@@ -1365,7 +1365,7 @@ MonoBehaviour:
     AliveOnly: 1
     FeatureDates:
     - SkillId: 11020
-      FeatureType: 21
+      FeatureType: 3010
       Param1: 1040
       Param2: 999
       Param3: 16
@@ -1395,13 +1395,13 @@ MonoBehaviour:
     AliveOnly: 1
     FeatureDates:
     - SkillId: 11030
-      FeatureType: 21
+      FeatureType: 3010
       Param1: 1040
       Param2: 999
       Param3: 12
       Rate: 100
     - SkillId: 11030
-      FeatureType: 21
+      FeatureType: 3010
       Param1: 1051
       Param2: 999
       Param3: 12
@@ -1431,7 +1431,7 @@ MonoBehaviour:
     AliveOnly: 1
     FeatureDates:
     - SkillId: 11040
-      FeatureType: 21
+      FeatureType: 3010
       Param1: 1040
       Param2: 999
       Param3: 20
@@ -1461,13 +1461,13 @@ MonoBehaviour:
     AliveOnly: 1
     FeatureDates:
     - SkillId: 11050
-      FeatureType: 21
+      FeatureType: 3010
       Param1: 1030
       Param2: 999
       Param3: 12
       Rate: 100
     - SkillId: 11050
-      FeatureType: 7
+      FeatureType: 4020
       Param1: 8
       Param2: 0
       Param3: 0
@@ -1497,7 +1497,7 @@ MonoBehaviour:
     AliveOnly: 1
     FeatureDates:
     - SkillId: 11060
-      FeatureType: 7
+      FeatureType: 4020
       Param1: 12
       Param2: 0
       Param3: 0
@@ -1533,7 +1533,7 @@ MonoBehaviour:
     AliveOnly: 1
     FeatureDates:
     - SkillId: 11070
-      FeatureType: 7
+      FeatureType: 4020
       Param1: 4
       Param2: 0
       Param3: 0
@@ -1569,7 +1569,7 @@ MonoBehaviour:
     AliveOnly: 1
     FeatureDates:
     - SkillId: 12010
-      FeatureType: 21
+      FeatureType: 3010
       Param1: 2190
       Param2: 999
       Param3: 0
@@ -1599,7 +1599,7 @@ MonoBehaviour:
     AliveOnly: 1
     FeatureDates:
     - SkillId: 12020
-      FeatureType: 21
+      FeatureType: 3010
       Param1: 2310
       Param2: 999
       Param3: 50
@@ -1629,7 +1629,7 @@ MonoBehaviour:
     AliveOnly: 1
     FeatureDates:
     - SkillId: 12030
-      FeatureType: 21
+      FeatureType: 3010
       Param1: 1060
       Param2: 999
       Param3: 5
@@ -1659,7 +1659,7 @@ MonoBehaviour:
     AliveOnly: 1
     FeatureDates:
     - SkillId: 12040
-      FeatureType: 21
+      FeatureType: 3010
       Param1: 1060
       Param2: 999
       Param3: 15
@@ -1689,7 +1689,7 @@ MonoBehaviour:
     AliveOnly: 1
     FeatureDates:
     - SkillId: 12050
-      FeatureType: 21
+      FeatureType: 3010
       Param1: 1090
       Param2: 999
       Param3: 25
@@ -1719,7 +1719,7 @@ MonoBehaviour:
     AliveOnly: 1
     FeatureDates:
     - SkillId: 12060
-      FeatureType: 34
+      FeatureType: 5040
       Param1: 0
       Param2: 0
       Param3: 0
@@ -1749,7 +1749,7 @@ MonoBehaviour:
     AliveOnly: 1
     FeatureDates:
     - SkillId: 12070
-      FeatureType: 21
+      FeatureType: 3010
       Param1: 2260
       Param2: 999
       Param3: 8
@@ -1779,7 +1779,7 @@ MonoBehaviour:
     AliveOnly: 1
     FeatureDates:
     - SkillId: 13010
-      FeatureType: 21
+      FeatureType: 3010
       Param1: 2300
       Param2: 999
       Param3: 50
@@ -1809,7 +1809,7 @@ MonoBehaviour:
     AliveOnly: 1
     FeatureDates:
     - SkillId: 13020
-      FeatureType: 21
+      FeatureType: 3010
       Param1: 1050
       Param2: 999
       Param3: 8
@@ -1839,7 +1839,7 @@ MonoBehaviour:
     AliveOnly: 1
     FeatureDates:
     - SkillId: 13030
-      FeatureType: 21
+      FeatureType: 3010
       Param1: 1050
       Param2: 999
       Param3: 20
@@ -1869,7 +1869,7 @@ MonoBehaviour:
     AliveOnly: 1
     FeatureDates:
     - SkillId: 13040
-      FeatureType: 21
+      FeatureType: 3010
       Param1: 2031
       Param2: 999
       Param3: 8
@@ -1899,7 +1899,7 @@ MonoBehaviour:
     AliveOnly: 1
     FeatureDates:
     - SkillId: 13050
-      FeatureType: 21
+      FeatureType: 3010
       Param1: 2032
       Param2: 999
       Param3: 8
@@ -1929,7 +1929,7 @@ MonoBehaviour:
     AliveOnly: 1
     FeatureDates:
     - SkillId: 13060
-      FeatureType: 21
+      FeatureType: 3010
       Param1: 2040
       Param2: 999
       Param3: 10
@@ -1959,7 +1959,7 @@ MonoBehaviour:
     AliveOnly: 1
     FeatureDates:
     - SkillId: 13070
-      FeatureType: 35
+      FeatureType: 5050
       Param1: 400
       Param2: 0
       Param3: 0
@@ -1989,7 +1989,7 @@ MonoBehaviour:
     AliveOnly: 1
     FeatureDates:
     - SkillId: 14010
-      FeatureType: 21
+      FeatureType: 3010
       Param1: 2180
       Param2: 3
       Param3: 0
@@ -2019,7 +2019,7 @@ MonoBehaviour:
     AliveOnly: 1
     FeatureDates:
     - SkillId: 14020
-      FeatureType: 21
+      FeatureType: 3010
       Param1: 2210
       Param2: 999
       Param3: 2
@@ -2049,7 +2049,7 @@ MonoBehaviour:
     AliveOnly: 1
     FeatureDates:
     - SkillId: 14030
-      FeatureType: 21
+      FeatureType: 3010
       Param1: 1080
       Param2: 999
       Param3: 25
@@ -2079,7 +2079,7 @@ MonoBehaviour:
     AliveOnly: 1
     FeatureDates:
     - SkillId: 14040
-      FeatureType: 21
+      FeatureType: 3010
       Param1: 2040
       Param2: 999
       Param3: 5
@@ -2109,13 +2109,13 @@ MonoBehaviour:
     AliveOnly: 1
     FeatureDates:
     - SkillId: 14050
-      FeatureType: 21
+      FeatureType: 3010
       Param1: 1020
       Param2: 999
       Param3: 20
       Rate: 100
     - SkillId: 14050
-      FeatureType: 2
+      FeatureType: 2010
       Param1: 20
       Param2: 0
       Param3: 0
@@ -2145,7 +2145,7 @@ MonoBehaviour:
     AliveOnly: 1
     FeatureDates:
     - SkillId: 14060
-      FeatureType: 21
+      FeatureType: 3010
       Param1: 2230
       Param2: 999
       Param3: 4
@@ -2175,7 +2175,7 @@ MonoBehaviour:
     AliveOnly: 1
     FeatureDates:
     - SkillId: 14070
-      FeatureType: 21
+      FeatureType: 3010
       Param1: 2240
       Param2: 3
       Param3: 0
@@ -2205,7 +2205,7 @@ MonoBehaviour:
     AliveOnly: 1
     FeatureDates:
     - SkillId: 14080
-      FeatureType: 21
+      FeatureType: 3010
       Param1: 2250
       Param2: 999
       Param3: 1
@@ -2235,7 +2235,7 @@ MonoBehaviour:
     AliveOnly: 1
     FeatureDates:
     - SkillId: 15010
-      FeatureType: 21
+      FeatureType: 3010
       Param1: 1070
       Param2: 999
       Param3: 25
@@ -2265,7 +2265,7 @@ MonoBehaviour:
     AliveOnly: 1
     FeatureDates:
     - SkillId: 15020
-      FeatureType: 21
+      FeatureType: 3010
       Param1: 1070
       Param2: 999
       Param3: 50
@@ -2295,7 +2295,7 @@ MonoBehaviour:
     AliveOnly: 1
     FeatureDates:
     - SkillId: 15030
-      FeatureType: 21
+      FeatureType: 3010
       Param1: 2060
       Param2: 999
       Param3: 25
@@ -2325,7 +2325,7 @@ MonoBehaviour:
     AliveOnly: 1
     FeatureDates:
     - SkillId: 15040
-      FeatureType: 21
+      FeatureType: 3010
       Param1: 2220
       Param2: 999
       Param3: 5
@@ -2355,7 +2355,7 @@ MonoBehaviour:
     AliveOnly: 1
     FeatureDates:
     - SkillId: 15050
-      FeatureType: 2
+      FeatureType: 2010
       Param1: 20
       Param2: 0
       Param3: 0
@@ -2385,7 +2385,7 @@ MonoBehaviour:
     AliveOnly: 1
     FeatureDates:
     - SkillId: 15060
-      FeatureType: 21
+      FeatureType: 3010
       Param1: 2270
       Param2: 0
       Param3: 10
@@ -2421,7 +2421,7 @@ MonoBehaviour:
     AliveOnly: 1
     FeatureDates:
     - SkillId: 15070
-      FeatureType: 2
+      FeatureType: 2010
       Param1: 10
       Param2: 0
       Param3: 1
@@ -2451,13 +2451,13 @@ MonoBehaviour:
     AliveOnly: 1
     FeatureDates:
     - SkillId: 100110
-      FeatureType: 21
+      FeatureType: 3010
       Param1: 2330
       Param2: 999
       Param3: 25
       Rate: 100
     - SkillId: 100110
-      FeatureType: 101
+      FeatureType: 7010
       Param1: 11
       Param2: 0
       Param3: 0
@@ -2493,7 +2493,7 @@ MonoBehaviour:
     AliveOnly: 1
     FeatureDates:
     - SkillId: 100111
-      FeatureType: 61
+      FeatureType: 6010
       Param1: 110110
       Param2: 0
       Param3: 50
@@ -2524,13 +2524,13 @@ MonoBehaviour:
     AliveOnly: 1
     FeatureDates:
     - SkillId: 100120
-      FeatureType: 1
+      FeatureType: 1010
       Param1: 400
       Param2: 0
       Param3: 0
       Rate: 100
     - SkillId: 100120
-      FeatureType: 101
+      FeatureType: 7010
       Param1: 21
       Param2: 0
       Param3: 0
@@ -2555,13 +2555,13 @@ MonoBehaviour:
     AliveOnly: 1
     FeatureDates:
     - SkillId: 100210
-      FeatureType: 21
+      FeatureType: 3010
       Param1: 2380
       Param2: 999
       Param3: 0
       Rate: 100
     - SkillId: 100210
-      FeatureType: 101
+      FeatureType: 7010
       Param1: 11
       Param2: 0
       Param3: 0
@@ -2598,13 +2598,13 @@ MonoBehaviour:
     AliveOnly: 1
     FeatureDates:
     - SkillId: 100211
-      FeatureType: 1
+      FeatureType: 1010
       Param1: 300
       Param2: 0
       Param3: 0
       Rate: 100
     - SkillId: 100211
-      FeatureType: 101
+      FeatureType: 7010
       Param1: 21
       Param2: 0
       Param3: 0
@@ -2628,13 +2628,13 @@ MonoBehaviour:
     AliveOnly: 1
     FeatureDates:
     - SkillId: 100310
-      FeatureType: 21
+      FeatureType: 3010
       Param1: 2050
       Param2: 2
       Param3: 0
       Rate: 100
     - SkillId: 100310
-      FeatureType: 101
+      FeatureType: 7010
       Param1: 11
       Param2: 0
       Param3: 0
@@ -2671,13 +2671,13 @@ MonoBehaviour:
     AliveOnly: 1
     FeatureDates:
     - SkillId: 100311
-      FeatureType: 1
+      FeatureType: 1010
       Param1: 200
       Param2: 0
       Param3: 0
       Rate: 100
     - SkillId: 100311
-      FeatureType: 101
+      FeatureType: 7010
       Param1: 21
       Param2: 0
       Param3: 0
@@ -2702,13 +2702,13 @@ MonoBehaviour:
     AliveOnly: 1
     FeatureDates:
     - SkillId: 100320
-      FeatureType: 1
+      FeatureType: 1010
       Param1: 400
       Param2: 0
       Param3: 0
       Rate: 100
     - SkillId: 100320
-      FeatureType: 101
+      FeatureType: 7010
       Param1: 11
       Param2: 0
       Param3: 0
@@ -2745,13 +2745,13 @@ MonoBehaviour:
     AliveOnly: 1
     FeatureDates:
     - SkillId: 100321
-      FeatureType: 21
+      FeatureType: 3010
       Param1: 2140
       Param2: 999
       Param3: 100
       Rate: 100
     - SkillId: 100321
-      FeatureType: 101
+      FeatureType: 7010
       Param1: 21
       Param2: 0
       Param3: 0
@@ -2776,13 +2776,13 @@ MonoBehaviour:
     AliveOnly: 1
     FeatureDates:
     - SkillId: 100410
-      FeatureType: 21
+      FeatureType: 3010
       Param1: 2040
       Param2: 999
       Param3: 10
       Rate: 100
     - SkillId: 100410
-      FeatureType: 101
+      FeatureType: 7010
       Param1: 11
       Param2: 0
       Param3: 0
@@ -2819,13 +2819,13 @@ MonoBehaviour:
     AliveOnly: 1
     FeatureDates:
     - SkillId: 100411
-      FeatureType: 2
+      FeatureType: 2010
       Param1: 50
       Param2: 0
       Param3: 0
       Rate: 100
     - SkillId: 100411
-      FeatureType: 101
+      FeatureType: 7010
       Param1: 21
       Param2: 0
       Param3: 0
@@ -2849,13 +2849,13 @@ MonoBehaviour:
     AliveOnly: 1
     FeatureDates:
     - SkillId: 100420
-      FeatureType: 21
+      FeatureType: 3010
       Param1: 2090
       Param2: 999
       Param3: 0
       Rate: 100
     - SkillId: 100420
-      FeatureType: 101
+      FeatureType: 7010
       Param1: 11
       Param2: 0
       Param3: 0
@@ -2892,13 +2892,13 @@ MonoBehaviour:
     AliveOnly: 1
     FeatureDates:
     - SkillId: 100421
-      FeatureType: 1
+      FeatureType: 1010
       Param1: 150
       Param2: 0
       Param3: 0
       Rate: 100
     - SkillId: 100421
-      FeatureType: 101
+      FeatureType: 7010
       Param1: 21
       Param2: 0
       Param3: 0
@@ -2923,13 +2923,13 @@ MonoBehaviour:
     AliveOnly: 1
     FeatureDates:
     - SkillId: 100510
-      FeatureType: 21
+      FeatureType: 3010
       Param1: 2390
       Param2: 2
       Param3: 0
       Rate: 100
     - SkillId: 100510
-      FeatureType: 101
+      FeatureType: 7010
       Param1: 11
       Param2: 0
       Param3: 0
@@ -2966,13 +2966,13 @@ MonoBehaviour:
     AliveOnly: 1
     FeatureDates:
     - SkillId: 100511
-      FeatureType: 1
+      FeatureType: 1010
       Param1: 200
       Param2: 0
       Param3: 0
       Rate: 100
     - SkillId: 100511
-      FeatureType: 101
+      FeatureType: 7010
       Param1: 21
       Param2: 0
       Param3: 0
@@ -2997,13 +2997,13 @@ MonoBehaviour:
     AliveOnly: 1
     FeatureDates:
     - SkillId: 100610
-      FeatureType: 21
+      FeatureType: 3010
       Param1: 2280
       Param2: 0
       Param3: 0
       Rate: 100
     - SkillId: 100610
-      FeatureType: 101
+      FeatureType: 7010
       Param1: 11
       Param2: 0
       Param3: 0
@@ -3040,13 +3040,13 @@ MonoBehaviour:
     AliveOnly: 1
     FeatureDates:
     - SkillId: 100611
-      FeatureType: 21
+      FeatureType: 3010
       Param1: 2110
       Param2: 3
       Param3: 0
       Rate: 100
     - SkillId: 100611
-      FeatureType: 101
+      FeatureType: 7010
       Param1: 21
       Param2: 0
       Param3: 0
@@ -3071,13 +3071,13 @@ MonoBehaviour:
     AliveOnly: 1
     FeatureDates:
     - SkillId: 100710
-      FeatureType: 5
+      FeatureType: 1040
       Param1: 600
       Param2: 200
       Param3: 110
       Rate: 100
     - SkillId: 100710
-      FeatureType: 101
+      FeatureType: 7010
       Param1: 11
       Param2: 0
       Param3: 0
@@ -3114,13 +3114,13 @@ MonoBehaviour:
     AliveOnly: 1
     FeatureDates:
     - SkillId: 100711
-      FeatureType: 1
+      FeatureType: 1010
       Param1: 1800
       Param2: 0
       Param3: 0
       Rate: 100
     - SkillId: 100711
-      FeatureType: 101
+      FeatureType: 7010
       Param1: 21
       Param2: 0
       Param3: 0
@@ -3145,13 +3145,13 @@ MonoBehaviour:
     AliveOnly: 1
     FeatureDates:
     - SkillId: 200110
-      FeatureType: 21
+      FeatureType: 3010
       Param1: 1040
       Param2: 999
       Param3: 20
       Rate: 100
     - SkillId: 200110
-      FeatureType: 101
+      FeatureType: 7010
       Param1: 11
       Param2: 0
       Param3: 0
@@ -3182,13 +3182,13 @@ MonoBehaviour:
     AliveOnly: 1
     FeatureDates:
     - SkillId: 200120
-      FeatureType: 1
+      FeatureType: 1010
       Param1: 500
       Param2: 0
       Param3: 0
       Rate: 100
     - SkillId: 200120
-      FeatureType: 101
+      FeatureType: 7010
       Param1: 21
       Param2: 0
       Param3: 0
@@ -3212,7 +3212,7 @@ MonoBehaviour:
     AliveOnly: 1
     FeatureDates:
     - SkillId: 200130
-      FeatureType: 21
+      FeatureType: 3010
       Param1: 1040
       Param2: 999
       Param3: 20
@@ -3711,13 +3711,13 @@ MonoBehaviour:
     AliveOnly: 1
     FeatureDates:
     - SkillId: 500010
-      FeatureType: 21
+      FeatureType: 3010
       Param1: 1040
       Param2: 999
       Param3: 10
       Rate: 100
     - SkillId: 500010
-      FeatureType: 21
+      FeatureType: 3010
       Param1: 1050
       Param2: 999
       Param3: 10
@@ -3753,7 +3753,7 @@ MonoBehaviour:
     AliveOnly: 1
     FeatureDates:
     - SkillId: 500020
-      FeatureType: 21
+      FeatureType: 3010
       Param1: 1040
       Param2: 999
       Param3: 12
@@ -3789,7 +3789,7 @@ MonoBehaviour:
     AliveOnly: 1
     FeatureDates:
     - SkillId: 500030
-      FeatureType: 21
+      FeatureType: 3010
       Param1: 1070
       Param2: 999
       Param3: 10
@@ -3819,13 +3819,13 @@ MonoBehaviour:
     AliveOnly: 1
     FeatureDates:
     - SkillId: 500040
-      FeatureType: 21
+      FeatureType: 3010
       Param1: 2050
       Param2: 1
       Param3: 0
       Rate: 100
     - SkillId: 500040
-      FeatureType: 42
+      FeatureType: 2030
       Param1: 0
       Param2: 0
       Param3: 0
@@ -3855,7 +3855,7 @@ MonoBehaviour:
     AliveOnly: 1
     FeatureDates:
     - SkillId: 500050
-      FeatureType: 21
+      FeatureType: 3010
       Param1: 2040
       Param2: 4
       Param3: 10
@@ -3885,7 +3885,7 @@ MonoBehaviour:
     AliveOnly: 1
     FeatureDates:
     - SkillId: 500060
-      FeatureType: 21
+      FeatureType: 3010
       Param1: 1040
       Param2: 999
       Param3: 6
@@ -3921,13 +3921,13 @@ MonoBehaviour:
     AliveOnly: 1
     FeatureDates:
     - SkillId: 500070
-      FeatureType: 66
+      FeatureType: 6060
       Param1: 500070
       Param2: 1
       Param3: 1
       Rate: 100
     - SkillId: 500070
-      FeatureType: 21
+      FeatureType: 3010
       Param1: 1040
       Param2: 999
       Param3: 3
@@ -3957,7 +3957,7 @@ MonoBehaviour:
     AliveOnly: 1
     FeatureDates:
     - SkillId: 500080
-      FeatureType: 21
+      FeatureType: 3010
       Param1: 1090
       Param2: 999
       Param3: 20
@@ -3987,7 +3987,7 @@ MonoBehaviour:
     AliveOnly: 1
     FeatureDates:
     - SkillId: 500090
-      FeatureType: 21
+      FeatureType: 3010
       Param1: 1100
       Param2: 999
       Param3: 10
@@ -4017,13 +4017,13 @@ MonoBehaviour:
     AliveOnly: 1
     FeatureDates:
     - SkillId: 500100
-      FeatureType: 21
+      FeatureType: 3010
       Param1: 1080
       Param2: 999
       Param3: 20
       Rate: 100
     - SkillId: 500100
-      FeatureType: 21
+      FeatureType: 3010
       Param1: 1070
       Param2: 999
       Param3: 10
@@ -4053,25 +4053,25 @@ MonoBehaviour:
     AliveOnly: 1
     FeatureDates:
     - SkillId: 500110
-      FeatureType: 66
+      FeatureType: 6060
       Param1: 500110
       Param2: 2
       Param3: 1
       Rate: 100
     - SkillId: 500110
-      FeatureType: 66
+      FeatureType: 6060
       Param1: 500110
       Param2: 3
       Param3: 1
       Rate: 100
     - SkillId: 500110
-      FeatureType: 21
+      FeatureType: 3010
       Param1: 1020
       Param2: 999
       Param3: 10
       Rate: 100
     - SkillId: 500110
-      FeatureType: 21
+      FeatureType: 3010
       Param1: 1050
       Param2: 999
       Param3: 10
@@ -4101,7 +4101,7 @@ MonoBehaviour:
     AliveOnly: 1
     FeatureDates:
     - SkillId: 500120
-      FeatureType: 2
+      FeatureType: 2010
       Param1: 12
       Param2: 0
       Param3: 1
@@ -4131,7 +4131,7 @@ MonoBehaviour:
     AliveOnly: 1
     FeatureDates:
     - SkillId: 500130
-      FeatureType: 21
+      FeatureType: 3010
       Param1: 1080
       Param2: 999
       Param3: 20
@@ -4161,7 +4161,7 @@ MonoBehaviour:
     AliveOnly: 1
     FeatureDates:
     - SkillId: 500140
-      FeatureType: 21
+      FeatureType: 3010
       Param1: 1060
       Param2: 4
       Param3: 12
@@ -4191,7 +4191,7 @@ MonoBehaviour:
     AliveOnly: 1
     FeatureDates:
     - SkillId: 500150
-      FeatureType: 21
+      FeatureType: 3010
       Param1: 2370
       Param2: 999
       Param3: 500151
@@ -4221,7 +4221,7 @@ MonoBehaviour:
     AliveOnly: 1
     FeatureDates:
     - SkillId: 500151
-      FeatureType: 21
+      FeatureType: 3010
       Param1: 2010
       Param2: 3
       Param3: 10
@@ -4245,13 +4245,13 @@ MonoBehaviour:
     AliveOnly: 1
     FeatureDates:
     - SkillId: 500160
-      FeatureType: 12
+      FeatureType: 1060
       Param1: 30
       Param2: 1
       Param3: 0
       Rate: 100
     - SkillId: 500160
-      FeatureType: 21
+      FeatureType: 3010
       Param1: 2150
       Param2: 100
       Param3: 0
@@ -4287,13 +4287,13 @@ MonoBehaviour:
     AliveOnly: 1
     FeatureDates:
     - SkillId: 500170
-      FeatureType: 12
+      FeatureType: 1060
       Param1: 10
       Param2: 1
       Param3: 0
       Rate: 100
     - SkillId: 500170
-      FeatureType: 101
+      FeatureType: 7010
       Param1: 500171
       Param2: 0
       Param3: 0
@@ -4323,7 +4323,7 @@ MonoBehaviour:
     AliveOnly: 1
     FeatureDates:
     - SkillId: 500171
-      FeatureType: 21
+      FeatureType: 3010
       Param1: 2150
       Param2: 100
       Param3: 0
@@ -4353,7 +4353,7 @@ MonoBehaviour:
     AliveOnly: 1
     FeatureDates:
     - SkillId: 500180
-      FeatureType: 21
+      FeatureType: 3010
       Param1: 2350
       Param2: 10
       Param3: 100
@@ -4383,7 +4383,7 @@ MonoBehaviour:
     AliveOnly: 1
     FeatureDates:
     - SkillId: 500190
-      FeatureType: 35
+      FeatureType: 5050
       Param1: 1000
       Param2: 0
       Param3: 0
@@ -4413,7 +4413,7 @@ MonoBehaviour:
     AliveOnly: 1
     FeatureDates:
     - SkillId: 500200
-      FeatureType: 21
+      FeatureType: 3010
       Param1: 2360
       Param2: 999
       Param3: 10
@@ -4443,7 +4443,7 @@ MonoBehaviour:
     AliveOnly: 1
     FeatureDates:
     - SkillId: 500210
-      FeatureType: 12
+      FeatureType: 1060
       Param1: 20
       Param2: 0
       Param3: 0
@@ -4473,7 +4473,7 @@ MonoBehaviour:
     AliveOnly: 1
     FeatureDates:
     - SkillId: 500220
-      FeatureType: 12
+      FeatureType: 1060
       Param1: 10
       Param2: 0
       Param3: 0

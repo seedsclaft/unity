@@ -13,6 +13,7 @@ public class StatesImporter : AssetPostprocessor {
     {
 		Id = 0,
 		NameId,
+		_NameId,
 		IconIndex,
         RemovalTiming,
 		OverRight,

@@ -16,10 +16,9 @@ public class SkillsImporter : AssetPostprocessor {
 		_Name,
         IconIndex,
         _IconIndex,
-		AnimationName,
+		AnimationId,
 		AnimationType,
 		_AnimationType,
-		DamageTiming,
 		MpCost,
 		Rank,
 		Attribute,
@@ -38,6 +37,7 @@ public class SkillsImporter : AssetPostprocessor {
     enum BaseFeatureColumn
 	{
 		SkillId,
+		_SkillId,
 		FeatureType,
 		_FeatureType,
 		Param1,
@@ -108,7 +108,7 @@ public class SkillsImporter : AssetPostprocessor {
 					SkillData.Id = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.Id);
 					SkillData.Name = textData.Find(a => a.Id == AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.NameId)).Text;
 					SkillData.IconIndex = (MagicIconType)AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.IconIndex);
-					SkillData.AnimationId = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.AnimationName);
+					SkillData.AnimationId = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.AnimationId);
                     SkillData.AnimationType = (AnimationType)AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.AnimationType);
                     //SkillData.DamageTiming = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.DamageTiming);
                     SkillData.MpCost = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.MpCost);
