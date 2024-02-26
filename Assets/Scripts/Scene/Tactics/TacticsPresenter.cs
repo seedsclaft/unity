@@ -494,9 +494,27 @@ public class TacticsPresenter :BasePresenter
 
     private void CommandSelectActorTrain()
     {
-        _model.SelectActorTrain();
-        _view.ShowCharacterDetail(_model.TacticsActor(),_model.StageMembers());
-        CommandRefresh();
+        if (_model.CheckActorTrain())
+        {
+            Ryneus.SoundManager.Instance.PlayStaticSe(SEType.LevelUp);
+            var from = _model.SelectActorEvaluate();
+            _model.SelectActorTrain();
+            var to = _model.SelectActorEvaluate();
+            
+            var cautionInfo = new CautionInfo();
+            cautionInfo.SetLevelUp(from,to);
+            _view.CommandCallCaution(cautionInfo);
+
+            _view.ShowCharacterDetail(_model.TacticsActor(),_model.StageMembers());
+            CommandRefresh();
+            Ryneus.SoundManager.Instance.PlayStaticSe(SEType.CountUp);
+        } else
+        {
+            var cautionInfo = new CautionInfo();
+            cautionInfo.SetTitle(DataSystem.System.GetTextData(11170).Text);
+            _view.CommandCallCaution(cautionInfo);
+            Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Deny);
+        }
     }
 
     private void CommandTacticsCommandClose(ConfirmCommandType confirmCommandType)
@@ -780,14 +798,10 @@ public class TacticsPresenter :BasePresenter
 
     private void CheckBattleMember()
     {
-        var popupInfo = new ConfirmInfo(DataSystem.GetTextData(11160).Text,(a) => UpdatePopupBattleMember());
-        popupInfo.SetIsNoChoice(true);
-        _view.CommandCallConfirm(popupInfo);
-    }
-
-    private void UpdatePopupBattleMember()
-    {
-        _view.CommandGameSystem(Base.CommandType.CloseConfirm);
+        Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Deny);
+        var cautionInfo = new CautionInfo();
+        cautionInfo.SetTitle(DataSystem.GetTextData(11160).Text);
+        _view.CommandCallCaution(cautionInfo);
     }
 
     private void CommandPopupSkillInfo(GetItemInfo getItemInfo)

@@ -107,10 +107,11 @@ public class GameSystem : MonoBehaviour
                 }
                 break;
             case Base.CommandType.CallConfirmView:
+            case Base.CommandType.CallSkillDetailView:
                 CommandConfirmView((ConfirmInfo)viewEvent.template);
                 break;
-            case Base.CommandType.CallSkillDetailView:
-                CommandSkillDetailView((ConfirmInfo)viewEvent.template);
+            case Base.CommandType.CallCautionView:
+                CommandCautionView((CautionInfo)viewEvent.template);
                 break;
             case Base.CommandType.ClosePopup:
                 popupAssign.ClosePopup();
@@ -226,19 +227,26 @@ public class GameSystem : MonoBehaviour
 
     private void CommandConfirmView(ConfirmInfo confirmInfo)
     {
-        var prefab = confirmAssign.CreateConfirm(ConfirmType.Confirm,helpWindow);
+        var prefab = confirmAssign.CreateConfirm(confirmInfo.ConfirmType,helpWindow);
         var confirmView = prefab.GetComponent<ConfirmView>();
         confirmView.Initialize();
         confirmView.SetViewInfo(confirmInfo);
         SetIsBusyMainAndStatus();
     }
 
-    private void CommandSkillDetailView(ConfirmInfo confirmInfo)
+    private void CommandCautionView(CautionInfo confirmInfo)
     {
-        var prefab = popupAssign.CreatePopup(PopupType.SkillDetail,helpWindow);
-        var confirmView = prefab.GetComponent<ConfirmView>();
+        var prefab = confirmAssign.CreateConfirm(ConfirmType.Caution,helpWindow);
+        var confirmView = prefab.GetComponent<CautionView>();
         confirmView.Initialize();
-        confirmView.SetViewInfo(confirmInfo);
+        if (confirmInfo.Title != null)
+        {
+            confirmView.SetTitle(confirmInfo.Title);
+        }
+        if (confirmInfo.From > 0 && confirmInfo.To > 0 )
+        {
+            confirmView.SetLevelup(confirmInfo.From,confirmInfo.To);
+        }
         SetIsBusyMainAndStatus();
     }
 

@@ -878,18 +878,18 @@ public class BattlerInfo
     
     public int Evaluate()
     {
-        int statusValue = MaxHp * 2
-        + MaxMp * 2
-        + _status.Atk * 3
-        + _status.Def * 3
-        + _status.Spd * 3;
+        int statusValue = MaxHp * 6
+        + MaxMp * 4
+        + _status.Atk * 8
+        + _status.Def * 8
+        + _status.Spd * 8;
         float magicValue = 0;
         foreach (var skillInfo in _skills)
         {
             var rate = 1.0f;
-            magicValue += (rate * 25);
+            magicValue += (rate * 100);
         }
-        int total = statusValue + (int)magicValue + _demigodParam * 5;
+        int total = statusValue + (int)magicValue + _demigodParam * 10;
         return total;
     }
 }

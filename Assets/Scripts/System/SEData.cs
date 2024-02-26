@@ -25,4 +25,5 @@ public enum SEType {
     Critical,
     Skill,
     Awaken,
+    CountUp,
 }

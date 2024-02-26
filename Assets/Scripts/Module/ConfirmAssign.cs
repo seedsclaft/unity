@@ -6,6 +6,7 @@ public class ConfirmAssign : MonoBehaviour
 {
     [SerializeField] private GameObject confirmRoot = null;
     [SerializeField] private GameObject confirmPrefab = null;
+    [SerializeField] private GameObject cautionPrefab = null;
     public GameObject CreateConfirm(ConfirmType popupType,HelpWindow helpWindow)
     {
         if (confirmRoot.transform.childCount > 0)
@@ -26,6 +27,8 @@ public class ConfirmAssign : MonoBehaviour
         {
             case ConfirmType.Confirm:
             return confirmPrefab;
+            case ConfirmType.Caution:
+            return cautionPrefab;
         }
         return null;
     }
@@ -47,4 +50,5 @@ public class ConfirmAssign : MonoBehaviour
 public enum ConfirmType{
     None,
     Confirm,
+    Caution,
 }

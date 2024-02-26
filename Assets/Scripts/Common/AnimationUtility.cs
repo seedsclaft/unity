@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using TMPro;
+using Utage;
 
 public class AnimationUtility
 {
@@ -22,11 +24,29 @@ public class AnimationUtility
             .SetLoops(-1,LoopType.Yoyo);
     }
 
-    public static void AlphaToTransform(CanvasGroup canvasGroup,float from,float to,float duration)
+    public static void AlphaToTransform(CanvasGroup canvasGroup,float from,float to,float duration,float delay = 0f)
     {
         canvasGroup.alpha = from;
-        DOTween.Sequence()
-            .Append(canvasGroup.DOFade(to,duration))
-            .SetEase(Ease.OutQuart);
+        if (delay > 0)
+        {
+            DOTween.Sequence()
+                .SetDelay(delay)
+                .Append(canvasGroup.DOFade(to,duration))
+                .SetEase(Ease.OutQuart);
+        } else
+        {
+            DOTween.Sequence()
+                .Append(canvasGroup.DOFade(to,duration))
+                .SetEase(Ease.OutQuart);
+        }
+    }
+
+    public static void CountUpText(TextMeshProUGUI text,int from,int to)
+    {
+        int nowNumber = from;
+        int updateNumber = to;
+        // 指定したupdateNumberまでカウントアップ・カウントダウンする
+        DOTween.To(() => nowNumber, (n) => nowNumber = n, updateNumber, 0.5f)
+            .OnUpdate(() => text.text = nowNumber.ToString("#,0"));
     }
 }

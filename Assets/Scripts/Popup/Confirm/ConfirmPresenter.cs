@@ -74,9 +74,12 @@ public class ConfirmInfo
     public List<int> DisableIds => _disableIds;
     private List<int> _commandTextIds = new ();
     public List<int> CommandTextIds => _commandTextIds;
+    private ConfirmType _confirmType;
+    public ConfirmType ConfirmType => _confirmType;
 
-    public ConfirmInfo(string title,System.Action<ConfirmCommandType> callEvent)
+    public ConfirmInfo(string title,System.Action<ConfirmCommandType> callEvent,ConfirmType confirmType = ConfirmType.Confirm)
     {
+        _confirmType = confirmType;
         _title = title;
         _callEvent = callEvent;
     }

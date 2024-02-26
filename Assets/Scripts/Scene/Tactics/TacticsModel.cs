@@ -131,27 +131,33 @@ public class TacticsModel : BaseModel
         return false;
     }
 
+    public bool CheckActorTrain()
+    {
+        var actorInfo = TacticsActor();
+        var cost = TacticsUtility.TrainCost(actorInfo);
+        return Currency >= cost;
+    }
+
+    public int SelectActorEvaluate()
+    {
+        return TacticsActor().Evaluate();
+    }
+
     public void SelectActorTrain()
     {
         var actorInfo = TacticsActor();
         var cost = TacticsUtility.TrainCost(actorInfo);
-        if (Currency >= cost){
-            var statusInfo = actorInfo.LevelUp(0);
-            actorInfo.TempStatus.SetParameter(
-                statusInfo.Hp,
-                statusInfo.Mp,
-                statusInfo.Atk,
-                statusInfo.Def,
-                statusInfo.Spd
-            );
-            actorInfo.DecideStrength(0);
-            actorInfo.GainLevelUpCost(cost);
-            PartyInfo.ChangeCurrency(Currency - cost);
-            Ryneus.SoundManager.Instance.PlayStaticSe(SEType.LevelUp);
-        } else
-        {
-            Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Deny);
-        }
+        var statusInfo = actorInfo.LevelUp(0);
+        actorInfo.TempStatus.SetParameter(
+            statusInfo.Hp,
+            statusInfo.Mp,
+            statusInfo.Atk,
+            statusInfo.Def,
+            statusInfo.Spd
+        );
+        actorInfo.DecideStrength(0);
+        actorInfo.GainLevelUpCost(cost);
+        PartyInfo.ChangeCurrency(Currency - cost);
     }
 
     public void LearnMagic(int skillId)

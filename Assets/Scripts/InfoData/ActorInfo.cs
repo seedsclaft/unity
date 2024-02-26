@@ -485,11 +485,11 @@ public class ActorInfo
 
     public int Evaluate()
     {
-        int statusValue = CurrentParameter(StatusParamType.Hp) * 2
-        + CurrentParameter(StatusParamType.Mp) * 2
-        + CurrentParameter(StatusParamType.Atk) * 3
-        + CurrentParameter(StatusParamType.Def) * 3
-        + CurrentParameter(StatusParamType.Spd) * 3;
+        int statusValue = CurrentParameter(StatusParamType.Hp) * 6
+        + CurrentParameter(StatusParamType.Mp) * 4
+        + CurrentParameter(StatusParamType.Atk) * 8
+        + CurrentParameter(StatusParamType.Def) * 8
+        + CurrentParameter(StatusParamType.Spd) * 8;
         float magicValue = 0;
         foreach (var skillInfo in _skills)
         {
@@ -516,13 +516,9 @@ public class ActorInfo
                         break;
                 }
             }
-            magicValue += (rate * 25);
+            magicValue += (rate * 100);
         }
-        int total = statusValue + (int)magicValue + _demigodParam * 5;
-        if (Lost == true)
-        {
-            total = total / 2;
-        }
+        int total = statusValue + (int)magicValue + _demigodParam * 10;
         return total;
     }
 
