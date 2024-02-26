@@ -61,7 +61,7 @@ public class BattleSelectCharacter : MonoBehaviour
         }
         _selectCharacterTabType = selectCharacterTabType;
         UpdateTabs();
-        Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cursor);
+        //Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cursor);
     }
 
     public void SelectCharacterTabSmooth(int index)

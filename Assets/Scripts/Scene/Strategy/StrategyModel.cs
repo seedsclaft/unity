@@ -530,7 +530,7 @@ public class StrategyModel : BaseModel
 
     public void ReturnTempBattleMembers()
     {
-        foreach (var tempActorInfo in SceneParam.ActorInfos)
+        foreach (var tempActorInfo in TempInfo.TempActorInfos)
         {
             tempActorInfo.SetBattleIndex(-1);
             PartyInfo.UpdateActorInfo(tempActorInfo);

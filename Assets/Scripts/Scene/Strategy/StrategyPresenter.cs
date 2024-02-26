@@ -113,19 +113,26 @@ public class StrategyPresenter : BasePresenter
         if (_strategyState == StrategyState.BattleResult)
         {
             var battledResultActors = _model.BattleResultActors();
-            _model.SetLvUp();
-            _model.MakeResult();
             var bonusList = new List<bool>();
             foreach (var item in battledResultActors)
             {
                 bonusList.Add(false);
             }
-            _view.SetTitle(DataSystem.GetTextData(14030).Text);
-            _view.StartResultAnimation(_model.MakeListData(battledResultActors),bonusList);
-            if (_model.LevelUpData.Count > 0)
+            // 勝利時
+            if (_model.BattleResultVictory())
             {
-                _view.StartLvUpAnimation();
-                _view.HideResultList();
+                _model.SetLvUp();
+                _model.MakeResult();
+                _view.SetTitle(DataSystem.GetTextData(14030).Text);
+                _view.StartResultAnimation(_model.MakeListData(battledResultActors),bonusList);
+                if (_model.LevelUpData.Count > 0)
+                {
+                    _view.StartLvUpAnimation();
+                    _view.HideResultList();
+                }
+            } else{
+                _view.SetTitle(DataSystem.GetTextData(14030).Text);
+                _view.StartResultAnimation(_model.MakeListData(battledResultActors),bonusList);
             }
         } else
         if (_strategyState == StrategyState.TacticsResult)
@@ -146,31 +153,15 @@ public class StrategyPresenter : BasePresenter
     {
         if (_strategyState == StrategyState.BattleResult)
         {
-            if (_model.LevelUpData.Count == 0)
+            if (_model.BattleResultVictory())
             {
-                _view.ShowResultList(_model.BattleResultInfos());
-                // ロスト判定
-                var lostMembers = _model.LostMembers();
-                if (lostMembers.Count > 0)
+                if (_model.LevelUpData.Count == 0)
                 {
-                    var text = DataSystem.GetTextData(3060).Text;
-                    var lostMembersText = "";
-                    for (int i = 0;i < lostMembers.Count;i++)
-                    {
-                        lostMembersText += lostMembers[i].Master.Name;
-                        if (i != lostMembers.Count-1)
-                        {
-                            lostMembersText += ",";
-                        }
-                    }
-                    text = text.Replace("\\d",lostMembersText);
-                    var popupInfo = new ConfirmInfo(text,(a) => UpdatePopupLost((ConfirmCommandType)a));
-                    popupInfo.SetIsNoChoice(true);
-                    _view.CommandCallConfirm(popupInfo);
+                    _view.ShowResultList(_model.BattleResultInfos());
                 }
             } else
             {
-                CommandContinue();
+                _view.ShowResultList(_model.BattleResultInfos());
             }
         }
         if (_strategyState == StrategyState.TacticsResult)
@@ -411,6 +402,13 @@ public class StrategyPresenter : BasePresenter
                 _model.CommitCurrentResult();
                 _view.CommandGotoSceneChange(Scene.SymbolRecord);
             }
+        } else
+        
+        if (_model.BattleResultVictory() == false)
+        {
+            _model.ReturnTempBattleMembers();
+            _model.EndStrategy(false);
+            _view.CommandGotoSceneChange(Scene.Tactics);
         } else
         if (_model.RemainTurns == 1)
         {
