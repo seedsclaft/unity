@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
+using Ryneus;
 
 public class BattlePresenter : BasePresenter
 {
@@ -46,10 +47,10 @@ public class BattlePresenter : BasePresenter
         _view.SetHelpText("");
         _view.CreateBattleBackGround(_model.BattleBackGroundObject());
         await _model.LoadBattleResources(_model.Battlers);
-        if (Ryneus.SoundManager.Instance.CrossFadeMode == false)
+        if (SoundManager.Instance.CrossFadeMode == false)
         {
             var bgm = await _model.GetBattleBgm();
-            Ryneus.SoundManager.Instance.PlayBgm(bgm,1.0f,true);
+            SoundManager.Instance.PlayBgm(bgm,1.0f,true);
         }
         _view.CommandGameSystem(Base.CommandType.CloseLoading);
 
@@ -190,9 +191,9 @@ public class BattlePresenter : BasePresenter
             _view.HideStateOverlay();
             await UniTask.DelayFrame(180);
             _view.SetBattleBusy(false);
-            if (Ryneus.SoundManager.Instance.CrossFadeMode)
+            if (SoundManager.Instance.CrossFadeMode)
             {
-                Ryneus.SoundManager.Instance.ChangeCrossFade();
+                SoundManager.Instance.ChangeCrossFade();
             } else
             {
                 PlayTacticsBgm();
@@ -223,7 +224,7 @@ public class BattlePresenter : BasePresenter
 
     private void CommandEscape()
     {
-        Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
+        SoundManager.Instance.PlayStaticSe(SEType.Decide);
         if (_model.EnableEscape())
         {
             var popupInfo = new ConfirmInfo(DataSystem.GetTextData(410).Text,(a) => UpdatePopupEscape((ConfirmCommandType)a));
@@ -240,10 +241,10 @@ public class BattlePresenter : BasePresenter
     {
         _busy = true;
         _view.SetHelpInputInfo("RULING");
-        Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
+        SoundManager.Instance.PlayStaticSe(SEType.Decide);
         _view.CommandCallRuling(() => {
             _view.SetHelpInputInfo("OPTION");
-            Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cancel);
+            SoundManager.Instance.PlayStaticSe(SEType.Cancel);
             _busy = false;
         });
     }
@@ -266,7 +267,7 @@ public class BattlePresenter : BasePresenter
         statusViewInfo.SetEnemyInfos(new List<BattlerInfo>(){enemyInfo},true);
         _view.CommandCallEnemyInfo(statusViewInfo);
         //_view.SetActiveUi(false);
-        Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);    
+        SoundManager.Instance.PlayStaticSe(SEType.Decide);    
     }
     
     private void PassiveInfoAction(List<TriggerTiming> triggerTimings)
@@ -506,7 +507,7 @@ public class BattlePresenter : BasePresenter
         {
             return;
         }
-        Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
+        SoundManager.Instance.PlayStaticSe(SEType.Decide);
         _model.ClearActionInfo();
         _model.SetLastSkill(skillInfo.Id);
         var actionInfo = _model.MakeActionInfo(_model.CurrentBattler,skillInfo,false,false);
@@ -615,12 +616,12 @@ public class BattlePresenter : BasePresenter
 
     private async void StartAnimationDemigod()
     {
-        Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Demigod);
+        SoundManager.Instance.PlayStaticSe(SEType.Demigod);
         _view.StartAnimationDemigod(_model.CurrentBattler,_model.CurrentActionInfo().Master);
         _view.HideStateOverlay();
         _view.SetAnimationBusy(true);
         await UniTask.DelayFrame(20);
-        Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Awaken);
+        SoundManager.Instance.PlayStaticSe(SEType.Awaken);
         await UniTask.DelayFrame(90);
         StartAnimationSkill();
     }
@@ -655,7 +656,7 @@ public class BattlePresenter : BasePresenter
             }
             if (slipDamageResult.DeadIndexList.Contains(targetIndex))
             {
-                Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Defeat);
+                SoundManager.Instance.PlayStaticSe(SEType.Defeat);
                 _view.StartDeathAnimation(targetIndex);
             }
         }
@@ -680,7 +681,7 @@ public class BattlePresenter : BasePresenter
             CommandEndAnimation();
             return;
         }
-        Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Skill);
+        SoundManager.Instance.PlayStaticSe(SEType.Skill);
         var selfAnimation = ResourceSystem.LoadResourceEffect("MAGICALxSPIRAL/WHead1");
         _view.StartAnimation(actionInfo.SubjectIndex,selfAnimation,0,1f,1.0f);
         
@@ -804,11 +805,11 @@ public class BattlePresenter : BasePresenter
     {
         if (damageType == DamageType.HpDamage)
         {
-            Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Damage);
+            SoundManager.Instance.PlayStaticSe(SEType.Damage);
         } else
         if (damageType == DamageType.HpCritical)
         {
-            Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Critical);
+            SoundManager.Instance.PlayStaticSe(SEType.Critical);
         }
     }
 
@@ -817,7 +818,7 @@ public class BattlePresenter : BasePresenter
         var deathBattlerIndexes = _model.DeathBattlerIndex(actionResultInfos);
         foreach (var deathBattlerIndex in deathBattlerIndexes)
         {
-            Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Defeat);
+            SoundManager.Instance.PlayStaticSe(SEType.Defeat);
             _view.StartDeathAnimation(deathBattlerIndex);
         }
     }
@@ -1023,7 +1024,7 @@ public class BattlePresenter : BasePresenter
     {
         var skillInfos = _model.SkillActionList();
         _view.RefreshMagicList(skillInfos,_model.SelectSkillIndex(skillInfos));
-        //Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cursor);
+        //SoundManager.Instance.PlayStaticSe(SEType.Cursor);
     }
 
     private bool IsBattleEnd()
@@ -1048,9 +1049,9 @@ public class BattlePresenter : BasePresenter
         _view.HideStateOverlay();
         await UniTask.DelayFrame(180);
         _view.SetBattleBusy(false);
-        if (Ryneus.SoundManager.Instance.CrossFadeMode)
+        if (SoundManager.Instance.CrossFadeMode)
         {
-            Ryneus.SoundManager.Instance.ChangeCrossFade();
+            SoundManager.Instance.ChangeCrossFade();
         } else
         {
             PlayTacticsBgm();
@@ -1086,7 +1087,7 @@ public class BattlePresenter : BasePresenter
     private void CommandChangeBattleAuto()
     {
         if (_busy) return;
-        Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cancel);
+        SoundManager.Instance.PlayStaticSe(SEType.Cancel);
         _model.ChangeBattleAuto();
         _view.ChangeBattleAuto(GameSystem.ConfigData.BattleAuto == true);
         if (_view.AnimationBusy == false && _view.BattleBusy && _model.CurrentBattler.isActor && GameSystem.ConfigData.BattleAuto == true)

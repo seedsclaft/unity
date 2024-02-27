@@ -12,7 +12,7 @@ abstract public class BaseView : MonoBehaviour
     private InputSystem _input;
     private List<IInputHandlerEvent> _inputHandler = new List<IInputHandlerEvent>();
     private bool _busy = false;
-    public bool Busy { get {return _busy;}}
+    public bool Busy => _busy;
     public System.Action<ViewEvent> _commandData = null;
     [SerializeField] private Button _backCommand = null;
     [SerializeField] private SpriteRenderer _backGround = null;
@@ -20,6 +20,8 @@ abstract public class BaseView : MonoBehaviour
     public System.Action BackEvent => _backEvent;
     [SerializeField] private GameObject uiRoot = null;
     [SerializeField] private Button optionButton = null;
+    [SerializeField] private Button sideMenuButton = null;
+    public Button SideMenuButton => sideMenuButton;
 
     private HelpWindow _helpWindow = null;
     public HelpWindow HelpWindow => _helpWindow;
@@ -217,6 +219,13 @@ abstract public class BaseView : MonoBehaviour
         CallSceneChangeCommand(eventData);
     }
 
+    public void CommandCallSideMenu(SideMenuViewInfo sideMenuViewInfo)
+    {
+        var eventData = new ViewEvent(Base.CommandType.CallSideMenu);
+        eventData.template = sideMenuViewInfo;
+        CallSceneChangeCommand(eventData);
+    }
+
     public void CommandCallRanking(RankingViewInfo rankingViewInfo)
     {
         var eventData = new ViewEvent(Base.CommandType.CallRankingView);
@@ -397,8 +406,10 @@ namespace Base
         CallCautionView,
         ClosePopup,
         CloseConfirm,
+        CloseSideMenu,
         CallRulingView,
         CallOptionView,
+        CallSideMenu,
         CallRankingView,
         CallCreditView,
         CallCharacterListView,

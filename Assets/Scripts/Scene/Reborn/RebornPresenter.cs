@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Reborn;
+using Ryneus;
 
 public class RebornPresenter :BasePresenter
 {
@@ -92,9 +93,9 @@ public class RebornPresenter :BasePresenter
                 _model.SavePlayerStageData(true);
                 _view.CommandSceneChange(Scene.Tactics);
             }
-            Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
+            SoundManager.Instance.PlayStaticSe(SEType.Decide);
         } else{
-            Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cancel);
+            SoundManager.Instance.PlayStaticSe(SEType.Cancel);
         }
         _view.CommandGameSystem(Base.CommandType.CloseConfirm);
     }
@@ -107,14 +108,14 @@ public class RebornPresenter :BasePresenter
         {
             var confirmInfo = new ConfirmInfo(DataSystem.GetTextData(17020).Text,(a) => UpdatePopup(a));
             _view.CommandCallConfirm(confirmInfo);
-            Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
+            SoundManager.Instance.PlayStaticSe(SEType.Decide);
         }
     }
 
     private void CommandCancelActor()
     {
         CommandBackEvent();
-        Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cancel);
+        SoundManager.Instance.PlayStaticSe(SEType.Cancel);
     }
 
     private void CommandUpdateActor()
@@ -142,14 +143,14 @@ public class RebornPresenter :BasePresenter
     
     private void CommandLeftActor()
     {
-        Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cursor);
+        SoundManager.Instance.PlayStaticSe(SEType.Cursor);
         _model.ChangeActorIndex(-1);
         CommandRefresh();
     }
 
     private void CommandRightActor()
     {
-        Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cursor);
+        SoundManager.Instance.PlayStaticSe(SEType.Cursor);
         _model.ChangeActorIndex(1);
         CommandRefresh();
     }

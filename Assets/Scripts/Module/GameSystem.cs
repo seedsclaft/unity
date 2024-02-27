@@ -127,6 +127,9 @@ public class GameSystem : MonoBehaviour
             case Base.CommandType.CallOptionView:
                 CommandOptionView((System.Action)viewEvent.template);
                 break;
+            case Base.CommandType.CallSideMenu:
+                CommandSideMenu((SideMenuViewInfo)viewEvent.template);
+                break;
             case Base.CommandType.CallRankingView:
                 CommandRankingView((RankingViewInfo)viewEvent.template);
                 break;
@@ -281,6 +284,21 @@ public class GameSystem : MonoBehaviour
             if (endEvent != null) endEvent();
         });
         optionView.SetEvent((type) => UpdateCommand(type));
+        SetIsBusyMainAndStatus();
+    }
+
+    private void CommandSideMenu(SideMenuViewInfo sideMenuViewInfo)
+    {
+        var prefab = statusAssign.CreatePopup(StatusType.SideMenu,helpWindow);
+        var sideMenuView = prefab.GetComponent<SideMenuView>();
+        sideMenuView.Initialize();
+        sideMenuView.SetEvent((type) => UpdateCommand(type));
+        sideMenuView.SetBackEvent(() => 
+        {
+            UpdateCommand(new ViewEvent(Base.CommandType.CloseStatus));
+            if (sideMenuViewInfo.EndEvent != null) sideMenuViewInfo.EndEvent();
+        });
+        sideMenuView.SetSideMenuViewInfo(sideMenuViewInfo);
         SetIsBusyMainAndStatus();
     }
     

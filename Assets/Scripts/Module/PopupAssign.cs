@@ -78,5 +78,5 @@ public enum PopupType{
     Help,
     AlcanaList,
     SlotSave,
-    StageSymbol
+    StageSymbol,
 }

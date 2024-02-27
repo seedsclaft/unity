@@ -30,8 +30,6 @@ namespace Tactics
         //SelectActorResource,
         CallEnemyInfo,
         Back,
-        Dropout,
-        Option,
         SelectSideMenu,
         AlcanaCheck,
         ChangeSelectTacticsActor,

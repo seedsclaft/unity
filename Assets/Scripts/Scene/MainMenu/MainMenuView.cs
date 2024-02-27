@@ -9,7 +9,6 @@ public class MainMenuView : BaseView
 {
     [SerializeField] private BaseList stageList = null;
     [SerializeField] private StageInfoComponent component;
-    [SerializeField] private SideMenuList sideMenuList = null;
     [SerializeField] private TextMeshProUGUI numinous = null;
     [SerializeField] private TextMeshProUGUI totalScore = null;
 
@@ -40,18 +39,6 @@ public class MainMenuView : BaseView
 
     public void SetHelpWindow(){
         SetInitHelpText();
-        sideMenuList.SetHelpWindow(HelpWindow);
-        sideMenuList.SetOpenEvent(() => {
-            stageList.Deactivate();
-            sideMenuList.Activate();
-        });
-        sideMenuList.SetCloseEvent(() => {
-        SetInitHelpText();
-            stageList.Activate();
-            sideMenuList.Deactivate();
-            HelpWindow.SetInputInfo("MAINMENU");
-            stageList.UpdateHelpWindow();
-        });
     }
 
     public void SetEvent(System.Action<MainMenuViewEvent> commandData)
@@ -121,34 +108,32 @@ public class MainMenuView : BaseView
     }
 
     public void SetSideMenu(List<ListData> menuCommands){
+        /*
         sideMenuList.Initialize(menuCommands,(a) => CallSideMenu(a),() => OnClickOption(),() => CommandCloseSideMenu());
         SetInputHandler(sideMenuList.GetComponent<IInputHandlerEvent>());
         sideMenuList.Deactivate();
+        */
     }
     
     public void ActivateSideMenu()
     {
         HelpWindow.SetInputInfo("SIDEMENU");
-        sideMenuList.Activate();
     }
 
     public void DeactivateSideMenu()
     {
         HelpWindow.SetInputInfo("MAINMENU");
-        sideMenuList.Deactivate();
     }
 
     public new void CommandOpenSideMenu()
     {
         base.CommandOpenSideMenu();
-        sideMenuList.OpenSideMenu();
         stageList.Deactivate();
     }
 
     public void CommandCloseSideMenu()
     {
         stageList.Activate();
-        sideMenuList.CloseSideMenu();
         HelpWindow.SetInputInfo("MAINMENU");
         stageList.UpdateHelpWindow();
     }

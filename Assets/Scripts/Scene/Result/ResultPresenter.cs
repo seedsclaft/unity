@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Result;
+using Ryneus;
 
 public class ResultPresenter : BasePresenter
 {
@@ -30,7 +31,7 @@ public class ResultPresenter : BasePresenter
         _view.SetResultList(_model.ResultCommand());
         _view.SetActors(_model.ResultMembers());
         var bgm = await _model.GetBgmData("TACTICS1");
-        Ryneus.SoundManager.Instance.PlayBgm(bgm,1.0f,true);
+        SoundManager.Instance.PlayBgm(bgm,1.0f,true);
         _view.SetEvent((type) => UpdateCommand(type));
 
         _view.StartAnimation();
@@ -84,7 +85,7 @@ public class ResultPresenter : BasePresenter
         {
             ShowStatus();
         }
-        Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
+        SoundManager.Instance.PlayStaticSe(SEType.Decide);
     }
 
     private void CommandResultNext()
@@ -153,7 +154,7 @@ public class ResultPresenter : BasePresenter
             });
         } else
         {
-            Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cancel);
+            SoundManager.Instance.PlayStaticSe(SEType.Cancel);
             _view.CommandGameSystem(Base.CommandType.CloseConfirm);
             CommandResultNext();
         }
@@ -175,7 +176,7 @@ public class ResultPresenter : BasePresenter
         statusViewInfo.SetDisplayDecideButton(false);
         _view.CommandCallStatus(statusViewInfo);
         _view.ChangeUIActive(false);
-        Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
+        SoundManager.Instance.PlayStaticSe(SEType.Decide);
     }
 
     private void CommandActorAssign()
@@ -208,7 +209,7 @@ public class ResultPresenter : BasePresenter
     
     private void CommandDecideActor(int index)
     {
-        Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
+        SoundManager.Instance.PlayStaticSe(SEType.Decide);
         if (_model.ActorInfos().Count > 10)
         {
             var popupInfo = new ConfirmInfo(DataSystem.GetTextData(16060).Text,(a) => UpdatePopupRebornErase((ConfirmCommandType)a));
@@ -226,7 +227,7 @@ public class ResultPresenter : BasePresenter
             _model.EraseReborn();
             CommandResultNext();
         } else{        
-            Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cancel);
+            SoundManager.Instance.PlayStaticSe(SEType.Cancel);
         }
     }
 
@@ -263,7 +264,7 @@ public class ResultPresenter : BasePresenter
     private void UpdatePopupSlotSaveOpen()
     {
         _view.CommandGameSystem(Base.CommandType.CloseConfirm);
-        Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
+        SoundManager.Instance.PlayStaticSe(SEType.Decide);
         var slotView = new SlotSaveViewInfo();
         slotView.EndEvent = () => {
             _isSlotSaveEnd = true;

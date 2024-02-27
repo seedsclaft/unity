@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using SymbolRecord;
+using Ryneus;
 
 public class SymbolRecordPresenter : BasePresenter
 {
@@ -29,7 +30,7 @@ public class SymbolRecordPresenter : BasePresenter
         _view.SetParallelCommand(_model.ParallelCommand());
         CommandRefresh();
         var bgm = await _model.GetBgmData("MAINMENU");
-        Ryneus.SoundManager.Instance.PlayBgm(bgm,1.0f,true);
+        SoundManager.Instance.PlayBgm(bgm,1.0f,true);
         _busy = false;
     }
 
@@ -89,7 +90,7 @@ public class SymbolRecordPresenter : BasePresenter
 
     private void CommandBack()
     {
-        Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cancel);
+        SoundManager.Instance.PlayStaticSe(SEType.Cancel);
         if (_backEvent != CommandType.None)
         {
             var eventData = new SymbolRecordViewEvent(CommandType.SelectRecord);
@@ -102,7 +103,7 @@ public class SymbolRecordPresenter : BasePresenter
 
     private void CommandParallel()
     {
-        Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
+        SoundManager.Instance.PlayStaticSe(SEType.Decide);
         var ParallelIndex = _view.ParallelListIndex;
         if (ParallelIndex == 0)
         {
@@ -154,7 +155,7 @@ public class SymbolRecordPresenter : BasePresenter
 
     private void CommandSelectSymbol(SymbolInfo symbolInfo)
     {
-        Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
+        SoundManager.Instance.PlayStaticSe(SEType.Decide);
         _view.ShowTacticsSymbolList();
         _view.ShowParallelList();
         _view.SetSymbols(_model.StageSymbolInfos(symbolInfo.StageSymbolData.Seek-1));

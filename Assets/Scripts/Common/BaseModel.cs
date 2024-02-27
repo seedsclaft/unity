@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.AddressableAssets;
 using Cysharp.Threading.Tasks;
 using System.Threading;
-using Effekseer;
+using Ryneus;
 
 public class BaseModel
 {
@@ -107,9 +107,9 @@ public class BaseModel
         if (saveConfigInfo != null)
         {
             ChangeBGMValue(saveConfigInfo.BgmVolume);
-            Ryneus.SoundManager.Instance.BGMMute = saveConfigInfo.BgmMute;
+            SoundManager.Instance.BGMMute = saveConfigInfo.BgmMute;
             ChangeSEValue(saveConfigInfo.SeVolume);
-            Ryneus.SoundManager.Instance.SeMute = saveConfigInfo.SeMute;
+            SoundManager.Instance.SeMute = saveConfigInfo.SeMute;
             ChangeGraphicIndex(saveConfigInfo.GraphicIndex);
             ChangeEventSkipIndex(saveConfigInfo.EventSkipIndex);
             ChangeCommandEndCheck(saveConfigInfo.CommandEndCheck);
@@ -122,13 +122,13 @@ public class BaseModel
 
     public void ChangeBGMValue(float bgmVolume)
     {
-        Ryneus.SoundManager.Instance.BGMVolume = bgmVolume;
-        Ryneus.SoundManager.Instance.UpdateBgmVolume();
-        if (bgmVolume > 0 && Ryneus.SoundManager.Instance.BGMMute == false)
+        SoundManager.Instance.BGMVolume = bgmVolume;
+        SoundManager.Instance.UpdateBgmVolume();
+        if (bgmVolume > 0 && SoundManager.Instance.BGMMute == false)
         {
             ChangeBGMMute(false);
         }
-        if (bgmVolume == 0 && Ryneus.SoundManager.Instance.BGMMute == true)
+        if (bgmVolume == 0 && SoundManager.Instance.BGMMute == true)
         {
             ChangeBGMMute(true);
         }
@@ -136,20 +136,20 @@ public class BaseModel
 
     public void ChangeBGMMute(bool bgmMute)
     {
-        Ryneus.SoundManager.Instance.BGMMute = bgmMute;
-        Ryneus.SoundManager.Instance.UpdateBgmMute();
+        SoundManager.Instance.BGMMute = bgmMute;
+        SoundManager.Instance.UpdateBgmMute();
     }
     
     public void ChangeSEValue(float seVolume)
     {
-        Ryneus.SoundManager.Instance.SeVolume = seVolume;
+        SoundManager.Instance.SeVolume = seVolume;
         Effekseer.Internal.EffekseerSoundPlayer.SeVolume = seVolume;
-        Ryneus.SoundManager.Instance.UpdateSeVolume();
-        if (seVolume > 0 && Ryneus.SoundManager.Instance.SeMute == false)
+        SoundManager.Instance.UpdateSeVolume();
+        if (seVolume > 0 && SoundManager.Instance.SeMute == false)
         {
             ChangeSEMute(false);
         }
-        if (seVolume == 0 && Ryneus.SoundManager.Instance.SeMute == true)
+        if (seVolume == 0 && SoundManager.Instance.SeMute == true)
         {
             ChangeSEMute(true);
         }
@@ -157,7 +157,7 @@ public class BaseModel
 
     public void ChangeSEMute(bool seMute)
     {
-        Ryneus.SoundManager.Instance.SeMute = seMute;
+        SoundManager.Instance.SeMute = seMute;
     }
 
     public int GraphicIndex(){ return GameSystem.ConfigData.GraphicIndex; }
@@ -241,18 +241,6 @@ public class BaseModel
         {
             CurrentStage.AddEventReadFlag(stageEventDates.EventKey);
         }
-    }
-
-    public List<EffekseerEffectAsset> BattleCursorEffects()
-    {
-        var list = new List<EffekseerEffectAsset>();
-        var dates = DataSystem.Animations.FindAll(a => a.Id > 2000 && a.Id < 2100);
-        foreach (var data in dates)
-        {
-            var result = ResourceSystem.LoadResourceEffect(data.AnimationPath);
-            list.Add(result);
-        }
-        return list;
     }
 
     public async UniTask<List<AudioClip>> GetBgmData(string bgmKey){

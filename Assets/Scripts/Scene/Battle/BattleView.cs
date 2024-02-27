@@ -20,10 +20,9 @@ public class BattleView : BaseView ,IInputHandlerEvent
     [SerializeField] private GameObject animPrefab = null;
     [SerializeField] private SkillInfoComponent skillInfoComponent = null;
     [SerializeField] private GameObject currentSkillBg = null;
-    [SerializeField] private SideMenuList sideMenuList = null;
 
     [SerializeField] private GameObject centerAnimPosition = null;
-    [SerializeField] private SideMenu battleAutoButton = null;
+    [SerializeField] private SideMenuButton battleAutoButton = null;
     [SerializeField] private BattleCutinAnimation battleCutinAnimation = null;
     [SerializeField] private GameObject battleBackGroundRoot = null;
     private BattleBackGroundAnimation _backGroundAnimation = null;
@@ -83,7 +82,6 @@ public class BattleView : BaseView ,IInputHandlerEvent
         });
         SetInputHandler(selectCharacter.MagicList.GetComponent<IInputHandlerEvent>());
         selectCharacter.HideActionList();
-        sideMenuList.gameObject.SetActive(false);
     }
 
     public void SetBattleAutoButton(SystemData.CommandData data,bool isAuto)
@@ -179,7 +177,6 @@ public class BattleView : BaseView ,IInputHandlerEvent
 
     public void ChangeSideMenuButtonActive(bool isActive)
     {
-        sideMenuList.gameObject.SetActive(isActive);
     }
 
     private void OnClickBack()
@@ -289,7 +286,6 @@ public class BattleView : BaseView ,IInputHandlerEvent
     public void SelectedCharacter(BattlerInfo battlerInfo)
     {
         selectCharacter.ShowActionList();
-        sideMenuList.gameObject.SetActive(true);
         selectCharacter.UpdateStatus(battlerInfo);
         battleThumb.ShowBattleThumb(battlerInfo);
         battleThumb.gameObject.SetActive(true);
@@ -303,7 +299,6 @@ public class BattleView : BaseView ,IInputHandlerEvent
         selectCharacter.HideActionList();
         if (isSideMenuClose)
         {
-            sideMenuList.gameObject.SetActive(false);
         }
         // 敵のstateEffectを表示
         ShowStateOverlay();
@@ -320,7 +315,6 @@ public class BattleView : BaseView ,IInputHandlerEvent
         DeactivateActorList();
         DeactivateEnemyList();
         selectCharacter.ShowActionList();
-        sideMenuList.gameObject.SetActive(true);
         selectCharacter.SetSkillInfos(skillInfos);
         selectCharacter.RefreshAction(selectIndex);
     }
@@ -573,47 +567,28 @@ public class BattleView : BaseView ,IInputHandlerEvent
     }
 
     public void SetSideMenu(List<ListData> menuCommands){
-        sideMenuList.Initialize(menuCommands,(a) => CallSideMenu(a),() => OnClickOption(),() => CommandCloseSideMenu());
-        SetInputHandler(sideMenuList.GetComponent<IInputHandlerEvent>());
-        sideMenuList.Deactivate();
-        sideMenuList.SetHelpWindow(HelpWindow);
-        sideMenuList.SetOpenEvent(() => {
-            selectCharacter.MagicList.Deactivate();
-            sideMenuList.Activate();
-        });
-        sideMenuList.SetCloseEvent(() => {
-            HelpWindow.SetInputInfo("BATTLE");
-            selectCharacter.MagicList.Activate();
-            sideMenuList.Deactivate();
-            selectCharacter.MagicList.UpdateHelpWindow();
-            HelpWindow.SetHelpText(DataSystem.GetTextData(15010).Text);
-        });
     }
     
     public void ActivateSideMenu()
     {
         HelpWindow.SetInputInfo("SIDEMENU");
-        sideMenuList.Activate();
     }
 
     public void DeactivateSideMenu()
     {
         HelpWindow.SetInputInfo("BATTLE");
-        sideMenuList.Deactivate();
     }
 
     public new void CommandOpenSideMenu()
     {
         base.CommandOpenSideMenu();
         selectCharacter.MagicList.Deactivate();
-        sideMenuList.OpenSideMenu();
     }
 
     public void CommandCloseSideMenu()
     {
         HelpWindow.SetInputInfo("BATTLE");
         selectCharacter.MagicList.Activate();
-        sideMenuList.CloseSideMenu();
         selectCharacter.MagicList.UpdateHelpWindow();
         HelpWindow.SetHelpText(DataSystem.GetTextData(15010).Text);
     }

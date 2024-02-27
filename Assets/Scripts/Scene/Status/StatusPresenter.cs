@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Ryneus;
 public class StatusPresenter : BasePresenter
 {
     private StatusModel _model = null;
@@ -54,12 +55,12 @@ public class StatusPresenter : BasePresenter
     private void CommandBack()
     {
         _view.CommandBack();
-        Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cancel);
+        SoundManager.Instance.PlayStaticSe(SEType.Cancel);
     }
 
     private void CommandCharacterList()
     {
-        Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
+        SoundManager.Instance.PlayStaticSe(SEType.Decide);
         var characterListInfo = new CharacterListInfo((a) => {
             _view.CommandGameSystem(Base.CommandType.ClosePopup);
             _model.SelectActor(a);
@@ -78,7 +79,7 @@ public class StatusPresenter : BasePresenter
         var confirmInfo = new ConfirmInfo(text,(menuCommandInfo) => UpdatePopup((ConfirmCommandType)menuCommandInfo));
         _view.CommandCallConfirm(confirmInfo);
         _popupCommandType = Status.CommandType.DecideStage;
-        Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
+        SoundManager.Instance.PlayStaticSe(SEType.Decide);
     }
 
     private void UpdatePopup(ConfirmCommandType confirmCommandType)
@@ -119,14 +120,14 @@ public class StatusPresenter : BasePresenter
                 {
                 }
             } else{
-                Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cancel);
+                SoundManager.Instance.PlayStaticSe(SEType.Cancel);
             }
         }
     }
     
     private void CommandLeftActor()
     {
-        Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cursor);
+        SoundManager.Instance.PlayStaticSe(SEType.Cursor);
         SaveSelectedSkillId();
         _model.ChangeActorIndex(-1);
         CommandRefresh();
@@ -134,7 +135,7 @@ public class StatusPresenter : BasePresenter
 
     private void CommandRightActor()
     {
-        Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cursor);
+        SoundManager.Instance.PlayStaticSe(SEType.Cursor);
         SaveSelectedSkillId();
         _model.ChangeActorIndex(1);
         CommandRefresh();

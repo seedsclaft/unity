@@ -8,6 +8,7 @@ public class StatusAssign : MonoBehaviour
     public GameObject StatusRoot => statusRoot;
     [SerializeField] private GameObject statusPrefab = null;
     [SerializeField] private GameObject enemyDetailPrefab = null;
+    [SerializeField] private GameObject sideMenuPrefab = null;
     private BaseView _statusView;
     public GameObject CreatePopup(StatusType popupType,HelpWindow helpWindow)
     {
@@ -27,6 +28,8 @@ public class StatusAssign : MonoBehaviour
             return statusPrefab;
             case StatusType.EnemyDetail:
             return enemyDetailPrefab;
+            case StatusType.SideMenu:
+            return sideMenuPrefab;
         }
         return null;
     }    
@@ -48,4 +51,5 @@ public class StatusAssign : MonoBehaviour
 public enum StatusType{
     Status,
     EnemyDetail,
+    SideMenu,
 }

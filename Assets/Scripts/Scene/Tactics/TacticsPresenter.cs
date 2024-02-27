@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Cysharp.Threading.Tasks;
+using Ryneus;
 
 public class TacticsPresenter :BasePresenter
 {
@@ -300,17 +301,9 @@ public class TacticsPresenter :BasePresenter
                 CommandLearnSkill((SkillInfo)viewEvent.template);  
             }
         }
-        if (viewEvent.commandType == Tactics.CommandType.Dropout)
-        {
-            CommandDropout();
-        }
-        if (viewEvent.commandType == Tactics.CommandType.Option)
-        {
-            CommandOption();
-        }
         if (viewEvent.commandType == Tactics.CommandType.SelectSideMenu)
         {
-            CommandSelectSideMenu((SystemData.CommandData)viewEvent.template);
+            CommandSelectSideMenu();
         }
         if (viewEvent.commandType == Tactics.CommandType.AlcanaCheck)
         {
@@ -318,18 +311,6 @@ public class TacticsPresenter :BasePresenter
         }
     }
 
-    private void UpdatePopupDropout(ConfirmCommandType confirmCommandType)
-    {
-        if (confirmCommandType == ConfirmCommandType.Yes)
-        {
-            _model.SavePlayerStageData(false);
-            _view.CommandGotoSceneChange(Scene.MainMenu);
-        } else{
-            Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cancel);
-        }
-        //_view.ActivateCommandList();
-        _view.CommandGameSystem(Base.CommandType.CloseConfirm);
-    }
 
 
     private void UpdatePopupSelectAddActor(ConfirmCommandType confirmCommandType)
@@ -373,7 +354,7 @@ public class TacticsPresenter :BasePresenter
             }
         } else
         {
-            Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cancel);
+            SoundManager.Instance.PlayStaticSe(SEType.Cancel);
             if (isReturnScene)
             {
                 _view.CommandGotoSceneChange(Scene.Tactics);
@@ -415,7 +396,7 @@ public class TacticsPresenter :BasePresenter
         var eventData = new TacticsViewEvent(_backCommand);
         eventData.template = _model.TacticsCommandType;
         UpdateCommand(eventData);
-        Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cancel);
+        SoundManager.Instance.PlayStaticSe(SEType.Cancel);
     }
 
     private void CommandTacticsCommand(TacticsCommandType tacticsCommandType)
@@ -496,7 +477,7 @@ public class TacticsPresenter :BasePresenter
     {
         if (_model.CheckActorTrain())
         {
-            Ryneus.SoundManager.Instance.PlayStaticSe(SEType.LevelUp);
+            SoundManager.Instance.PlayStaticSe(SEType.LevelUp);
             var from = _model.SelectActorEvaluate();
             _model.SelectActorTrain();
             var to = _model.SelectActorEvaluate();
@@ -507,19 +488,19 @@ public class TacticsPresenter :BasePresenter
 
             _view.ShowCharacterDetail(_model.TacticsActor(),_model.StageMembers());
             CommandRefresh();
-            Ryneus.SoundManager.Instance.PlayStaticSe(SEType.CountUp);
+            SoundManager.Instance.PlayStaticSe(SEType.CountUp);
         } else
         {
             var cautionInfo = new CautionInfo();
             cautionInfo.SetTitle(DataSystem.System.GetTextData(11170).Text);
             _view.CommandCallCaution(cautionInfo);
-            Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Deny);
+            SoundManager.Instance.PlayStaticSe(SEType.Deny);
         }
     }
 
     private void CommandTacticsCommandClose(ConfirmCommandType confirmCommandType)
     {
-        Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cancel);
+        SoundManager.Instance.PlayStaticSe(SEType.Cancel);
         _view.ChangeBackCommandActive(false);
         _view.ShowCommandList();
         _view.HideSelectCharacter();
@@ -570,7 +551,7 @@ public class TacticsPresenter :BasePresenter
 
     private void CommandSelectRecoveryPlus()
     {
-        Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
+        SoundManager.Instance.PlayStaticSe(SEType.Decide);
         _model.SelectRecoveryPlus();
         _view.ShowCharacterDetail(_model.TacticsActor(),_model.StageMembers());
         CommandRefresh();
@@ -671,7 +652,7 @@ public class TacticsPresenter :BasePresenter
         _backCommand = Tactics.CommandType.TacticsCommand; 
         */
         CheckAlcanaSymbol(_model.AlcanaMagicSkillInfos(getItemInfos)[0]);
-        Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
+        SoundManager.Instance.PlayStaticSe(SEType.Decide);
     }
     
     private void CheckAlcanaSymbol(SkillInfo skillInfo)
@@ -769,14 +750,14 @@ public class TacticsPresenter :BasePresenter
                 // ボス戦なら
                 if (_model.CurrentStage.CurrentSelectSymbol().SymbolType == SymbolType.Boss)
                 {
-                    Ryneus.SoundManager.Instance.FadeOutBgm();
+                    SoundManager.Instance.FadeOutBgm();
                     PlayBossBgm();
                 } else
                 {
                     var bgmData = DataSystem.Data.GetBGM(_model.TacticsBgmKey());
-                    if (bgmData.CrossFade != "" && Ryneus.SoundManager.Instance.CrossFadeMode)
+                    if (bgmData.CrossFade != "" && SoundManager.Instance.CrossFadeMode)
                     {
-                        Ryneus.SoundManager.Instance.ChangeCrossFade();
+                        SoundManager.Instance.ChangeCrossFade();
                     } else
                     {
                         PlayTacticsBgm();
@@ -798,7 +779,7 @@ public class TacticsPresenter :BasePresenter
 
     private void CheckBattleMember()
     {
-        Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Deny);
+        SoundManager.Instance.PlayStaticSe(SEType.Deny);
         var cautionInfo = new CautionInfo();
         cautionInfo.SetTitle(DataSystem.GetTextData(11160).Text);
         _view.CommandCallCaution(cautionInfo);
@@ -810,12 +791,12 @@ public class TacticsPresenter :BasePresenter
         popupInfo.SetSkillInfo(_model.BasicSkillInfos(getItemInfo));
         popupInfo.SetIsNoChoice(true);
         _view.CommandCallSkillDetail(popupInfo);
-        Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
+        SoundManager.Instance.PlayStaticSe(SEType.Decide);
     }
 
     private void CommandSymbolClose()
     {
-        Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cancel);
+        SoundManager.Instance.PlayStaticSe(SEType.Cancel);
         _view.HideSymbolList();
         _view.ShowCommandList();
     }
@@ -861,65 +842,18 @@ public class TacticsPresenter :BasePresenter
                 _view.ChangeUIActive(false);
                 break;
         }
-        Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
+        SoundManager.Instance.PlayStaticSe(SEType.Decide);
     }
 
-    private void CommandRule()
+
+    private void CommandSelectSideMenu()
     {
-        _busy = true;
-        Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
-        _view.SetHelpInputInfo("RULING");
-        _view.CommandCallRuling(() => {
-            _busy = false;
-            _view.SetHelpInputInfo("OPTION");
-            Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cancel);
-        });
-    }
+        var sideMenuViewInfo = new SideMenuViewInfo();
+        sideMenuViewInfo.EndEvent = () => {
 
-    private void CommandDropout()
-    {  
-        Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
-        var popupInfo = new ConfirmInfo(DataSystem.GetTextData(1100).Text,(a) => UpdatePopupDropout((ConfirmCommandType)a));
-        _view.CommandCallConfirm(popupInfo);
-    }
-
-    private void CommandSave(bool isReturnScene)
-    {
-#if UNITY_ANDROID
-        var savePopupTitle = _model.SavePopupTitle();
-        var saveNeedAds = _model.NeedAdsSave();
-        var popupInfo = new ConfirmInfo(savePopupTitle,(a) => UpdatePopupSaveCommand((ConfirmCommandType)a,isReturnScene));
-        
-        popupInfo.SetSelectIndex(1);
-        if (saveNeedAds)
-        {
-            //popupInfo.SetDisableIds(new List<int>(){1});
-            popupInfo.SetCommandTextIds(_model.SaveAdsCommandTextIds());
-        } else
-        {
-        }
-        _view.CommandCallConfirm(popupInfo);
-        _view.ChangeUIActive(false);
-#elif UNITY_WEBGL
-        SuccessSave(isReturnScene);
-#endif
-    }
-
-    private void CommandSelectSideMenu(SystemData.CommandData sideMenu)
-    {
-        if (sideMenu.Key == "Retire")
-        {
-            CommandDropout();
-        }
-        if (sideMenu.Key == "Help")
-        {
-            CommandRule();
-        }
-        if (sideMenu.Key == "Save")
-        {
-            Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
-            CommandSave(false);
-        }
+        };
+        sideMenuViewInfo.CommandLists = _model.SideMenu();
+        _view.CommandCallSideMenu(sideMenuViewInfo);
     }
 
     public void CommandOption()
@@ -934,7 +868,7 @@ public class TacticsPresenter :BasePresenter
 
     private void CommandAlcanaCheck()
     {
-        Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
+        SoundManager.Instance.PlayStaticSe(SEType.Decide);
         _view.CommandCallAlcanaList(() => {
             _view.ChangeUIActive(true);
             _busy = false;

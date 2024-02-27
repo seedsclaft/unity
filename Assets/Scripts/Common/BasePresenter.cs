@@ -90,4 +90,48 @@ public class BasePresenter
         var bgm = await _model.GetBgmData(bgmData.Key);
         Ryneus.SoundManager.Instance.PlayBgmSub(bgm,1.0f);
     }
+    
+    public void CommandSave(bool isReturnScene)
+    {
+#if UNITY_ANDROID
+        var savePopupTitle = _model.SavePopupTitle();
+        var saveNeedAds = _model.NeedAdsSave();
+        var popupInfo = new ConfirmInfo(savePopupTitle,(a) => UpdatePopupSaveCommand((ConfirmCommandType)a,isReturnScene));
+        
+        popupInfo.SetSelectIndex(1);
+        if (saveNeedAds)
+        {
+            //popupInfo.SetDisableIds(new List<int>(){1});
+            popupInfo.SetCommandTextIds(_model.SaveAdsCommandTextIds());
+        } else
+        {
+        }
+        _view.CommandCallConfirm(popupInfo);
+        _view.ChangeUIActive(false);
+#elif UNITY_WEBGL
+        SuccessSave(isReturnScene);
+#endif
+    }
+
+    private void SuccessSave(bool isReturnScene)
+    {
+        // ロード非表示
+        _view.CommandGameSystem(Base.CommandType.CloseLoading);
+        _model.GainSaveCount();
+        _model.SavePlayerStageData(true);
+        // 成功表示
+        var confirmInfo = new ConfirmInfo(DataSystem.GetTextData(11084).Text,(a) => {
+            _view.CommandGameSystem(Base.CommandType.CloseConfirm);
+            if (isReturnScene)
+            {
+                _view.CommandGotoSceneChange(Scene.Tactics);
+            } else
+            {        
+                _view.ChangeUIActive(true);
+            }
+        });
+        confirmInfo.SetIsNoChoice(true);
+        _view.CommandCallConfirm(confirmInfo);
+    }
+
 }

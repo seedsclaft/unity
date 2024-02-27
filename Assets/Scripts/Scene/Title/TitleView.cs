@@ -9,7 +9,6 @@ public class TitleView : BaseView
 {
     [SerializeField] private TextMeshProUGUI versionText = null;
     private new System.Action<TitleViewEvent> _commandData = null;
-    [SerializeField] private SideMenuList sideMenuList = null;
     [SerializeField] private BaseList titleCommandList = null;
     [SerializeField] private Button tapTitle = null;
     public override void Initialize() 
@@ -33,17 +32,6 @@ public class TitleView : BaseView
     }
 
     public void SetHelpWindow(){
-        sideMenuList.SetHelpWindow(HelpWindow);
-        sideMenuList.SetOpenEvent(() => {
-            titleCommandList.Deactivate();
-            sideMenuList.Activate();
-        });
-        sideMenuList.SetCloseEvent(() => {
-            titleCommandList.Activate();
-            sideMenuList.Deactivate();
-            HelpWindow.SetInputInfo("TITLE");
-            UpdateHelpWindow();
-        });
     }
 
     public void SetEvent(System.Action<TitleViewEvent> commandData)
@@ -66,9 +54,11 @@ public class TitleView : BaseView
     }
 
     public void SetSideMenu(List<ListData> menuCommands){
+        /*
         sideMenuList.Initialize(menuCommands,(a) => CallSideMenu(a),() => OnClickOption(),() => CommandCloseSideMenu());
         SetInputHandler(sideMenuList.GetComponent<IInputHandlerEvent>());
         sideMenuList.Deactivate();
+        */
     }
 
     public void RefreshCommandIndex(int selectIndex)
@@ -80,27 +70,23 @@ public class TitleView : BaseView
     public void ActivateSideMenu()
     {
         HelpWindow.SetInputInfo("SIDEMENU");
-        sideMenuList.Activate();
         UpdateHelpWindow();
     }
 
     public void DeactivateSideMenu()
     {
         HelpWindow.SetInputInfo("CREDIT");
-        sideMenuList.Deactivate();
     }
 
     public new void CommandOpenSideMenu()
     {
         base.CommandOpenSideMenu();
-        sideMenuList.OpenSideMenu();
         titleCommandList.Deactivate();
     }
 
     public void CommandCloseSideMenu()
     {
         titleCommandList.Activate();
-        sideMenuList.CloseSideMenu();
         HelpWindow.SetInputInfo("TITLE");
         UpdateHelpWindow();
     }

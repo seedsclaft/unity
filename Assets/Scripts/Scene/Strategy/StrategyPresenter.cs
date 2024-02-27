@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Strategy;
+using Ryneus;
 
 public class StrategyPresenter : BasePresenter
 {
@@ -29,7 +30,7 @@ public class StrategyPresenter : BasePresenter
         _view.SetResultList(_model.ResultCommand());
         _view.SetBackGround(_model.CurrentStage.Master.BackGround);
         var bgm = await _model.GetBgmData(_model.TacticsBgmKey());
-        Ryneus.SoundManager.Instance.PlayBgm(bgm,1.0f,true);
+        SoundManager.Instance.PlayBgm(bgm,1.0f,true);
         _view.SetEvent((type) => UpdateCommand(type));
 
         CommandStartStrategy();
@@ -241,7 +242,7 @@ public class StrategyPresenter : BasePresenter
         {
             ShowStatus();
         }
-        Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
+        SoundManager.Instance.PlayStaticSe(SEType.Decide);
     }
 
 
@@ -339,7 +340,7 @@ public class StrategyPresenter : BasePresenter
         statusViewInfo.SetDisplayDecideButton(false);
         _view.CommandCallStatus(statusViewInfo);
         _view.ChangeUIActive(false);
-        Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
+        SoundManager.Instance.PlayStaticSe(SEType.Decide);
     }
 
     private void CommandPopupSkillInfo(GetItemInfo getItemInfo)
@@ -348,7 +349,7 @@ public class StrategyPresenter : BasePresenter
         popupInfo.SetSkillInfo(_model.BasicSkillInfos(getItemInfo));
         popupInfo.SetIsNoChoice(true);
         _view.CommandCallSkillDetail(popupInfo);
-        Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
+        SoundManager.Instance.PlayStaticSe(SEType.Decide);
     }
 
     private void CommandCallEnemyInfo()
@@ -365,7 +366,7 @@ public class StrategyPresenter : BasePresenter
         statusViewInfo.SetEnemyInfos(enemyInfos,false);
         _view.CommandCallEnemyInfo(statusViewInfo);
         _view.ChangeUIActive(false);
-        Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);    
+        SoundManager.Instance.PlayStaticSe(SEType.Decide);    
     }
 
     private void SetHelpInputSkipEnable()

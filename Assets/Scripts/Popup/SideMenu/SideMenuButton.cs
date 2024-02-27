@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class SideMenu : ListItem ,IListViewItem 
+public class SideMenuButton : ListItem ,IListViewItem 
 {
     [SerializeField] private TextMeshProUGUI commandName;
 
@@ -12,6 +12,7 @@ public class SideMenu : ListItem ,IListViewItem
     public void SetData(SystemData.CommandData data,int index){
         _data = data;
         SetIndex(index);
+        commandName.text = data.Name;
     }
 
     public void SetCallHandler(System.Action<SystemData.CommandData> handler)
@@ -25,15 +26,8 @@ public class SideMenu : ListItem ,IListViewItem
 
     public void UpdateViewItem()
     {
-        if (_data == null) return;
-        commandName.text = _data.Name;
-    }
-
-    public void SetDisable(SystemData.CommandData menuCommandData,bool IsDisable)
-    {
-        if (_data.Id == menuCommandData.Id)
-        {
-            Disable.SetActive(IsDisable);
-        }
+        if (ListData == null) return;
+        var data = (SystemData.CommandData)ListData.Data;
+        commandName.text = data.Name;
     }
 }

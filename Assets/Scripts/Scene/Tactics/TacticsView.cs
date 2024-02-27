@@ -24,7 +24,6 @@ public class TacticsView : BaseView
     private new System.Action<TacticsViewEvent> _commandData = null;
     [SerializeField] private TacticsAlcana tacticsAlcana = null;
 
-    [SerializeField] private SideMenuList sideMenuList = null;
 
     [SerializeField] private Button alcanaButton = null;
     
@@ -54,6 +53,11 @@ public class TacticsView : BaseView
         tacticsCommandList.Initialize();
         tacticsSymbolList.Initialize();
         battleSelectCharacter.gameObject.SetActive(false);
+
+        SideMenuButton.onClick.AddListener(() => {
+            var eventData = new TacticsViewEvent(CommandType.SelectSideMenu);
+            _commandData(eventData);
+        });
         new TacticsPresenter(this);
         selectCharacter.gameObject.SetActive(false);
     }
@@ -124,6 +128,7 @@ public class TacticsView : BaseView
 
     public void SetHelpWindow()
     {
+        /*
         sideMenuList.SetHelpWindow(HelpWindow);
         sideMenuList.SetOpenEvent(() => {
             tacticsCommandList.Deactivate();
@@ -135,23 +140,12 @@ public class TacticsView : BaseView
             tacticsCommandList.Activate();
             sideMenuList.Deactivate();
         });
+        */
     }
 
     public void SetEvent(System.Action<TacticsViewEvent> commandData)
     {
         _commandData = commandData;
-    }
-
-    private void OnClickDropout()
-    {
-        var eventData = new TacticsViewEvent(CommandType.Dropout);
-        _commandData(eventData);
-    }
-
-    private void OnClickOption()
-    {
-        var eventData = new TacticsViewEvent(CommandType.Option);
-        _commandData(eventData);
     }
 
     public void SetStageInfo(StageInfo stageInfo)
@@ -169,7 +163,6 @@ public class TacticsView : BaseView
         tacticsCommandList.SetData(menuCommands);
         tacticsCommandList.SetInputHandler(InputKeyType.Decide,() => CallTacticsCommand());
         tacticsCommandList.SetInputHandler(InputKeyType.Option1,() => CommandOpenSideMenu());
-        tacticsCommandList.SetInputHandler(InputKeyType.SideLeft1,() => OnClickDropout());
         tacticsCommandList.SetSelectedHandler(() => UpdateHelpWindow());
         SetInputHandler(tacticsCommandList.GetComponent<IInputHandlerEvent>());
         UpdateHelpWindow();
@@ -185,13 +178,13 @@ public class TacticsView : BaseView
 
     public void ShowCommandList()
     {
-        sideMenuList.gameObject.SetActive(true);
+        //sideMenuList.gameObject.SetActive(true);
         tacticsCommandList.gameObject.SetActive(true);
     }
 
     public void HideCommandList()
     {
-        sideMenuList.gameObject.SetActive(false);
+        //sideMenuList.gameObject.SetActive(false);
         tacticsCommandList.gameObject.SetActive(false);
     }
 
@@ -511,43 +504,38 @@ public class TacticsView : BaseView
     }
 
     public void SetSideMenu(List<ListData> menuCommands){
+        /*
         sideMenuList.Initialize(menuCommands,(a) => CallSideMenu(a),() => OnClickOption(),() => CommandCloseSideMenu());
         SetInputHandler(sideMenuList.GetComponent<IInputHandlerEvent>());
         sideMenuList.Deactivate();
+        */
     }
     
     public void ActivateSideMenu()
     {
         SetHelpInputInfo("SIDEMENU");
-        sideMenuList.Activate();
+        //sideMenuList.Activate();
     }
 
     public void DeactivateSideMenu()
     {
         SetHelpInputInfo("TACTICS");
-        sideMenuList.Deactivate();
+        //sideMenuList.Deactivate();
     }
 
     public new void CommandOpenSideMenu()
     {
         base.CommandOpenSideMenu();
-        sideMenuList.OpenSideMenu();
+        //sideMenuList.OpenSideMenu();
         tacticsCommandList.Deactivate();
     }
 
     public void CommandCloseSideMenu()
     {
         tacticsCommandList.Activate();
-        sideMenuList.CloseSideMenu();
+        //sideMenuList.CloseSideMenu();
         SetHelpInputInfo("TACTICS");
         UpdateHelpWindow();
-    }
-
-    private void CallSideMenu(SystemData.CommandData sideMenu)
-    {
-        var eventData = new TacticsViewEvent(CommandType.SelectSideMenu);
-        eventData.template = sideMenu;
-        _commandData(eventData);
     }
     
     private void UpdateHelpWindow()

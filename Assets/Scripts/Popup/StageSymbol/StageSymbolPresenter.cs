@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using StageSymbol;
+using Ryneus;
 
 public class StageSymbolPresenter 
 {
@@ -52,7 +53,7 @@ public class StageSymbolPresenter
 
     private void CommandSelectRecord(SymbolInfo symbolInfo)
     {
-        Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
+        SoundManager.Instance.PlayStaticSe(SEType.Decide);
         _view.SetSymbols(_model.StageSymbolInfos(symbolInfo.StageSymbolData.Seek));
         _backCommand = CommandType.CancelRecord;
         _view.ShowSymbolList();
@@ -104,7 +105,7 @@ public class StageSymbolPresenter
                 _view.ChangeUIActive(false);
                 break;
         }
-        Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
+        SoundManager.Instance.PlayStaticSe(SEType.Decide);
     }
     
     private void CommandPopupSkillInfo(GetItemInfo getItemInfo)
@@ -113,7 +114,7 @@ public class StageSymbolPresenter
         popupInfo.SetSkillInfo(_model.BasicSkillInfos(getItemInfo));
         popupInfo.SetIsNoChoice(true);
         _view.CommandCallSkillDetail(popupInfo);
-        Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
+        SoundManager.Instance.PlayStaticSe(SEType.Decide);
     }
     
     private void UpdatePopupSkillInfo(ConfirmCommandType confirmCommandType)

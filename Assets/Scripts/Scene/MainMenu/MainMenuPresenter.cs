@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using MainMenu;
+using Ryneus;
 
 public class MainMenuPresenter : BasePresenter
 {
@@ -31,8 +32,8 @@ public class MainMenuPresenter : BasePresenter
         //_model.InitStageData();
 
         var bgm = await _model.GetBgmData("MAINMENU");
-        Ryneus.SoundManager.Instance.PlayBgm(bgm,1.0f,true);
-        //Ryneus.SoundManager.Instance.PlayBgm(bgm,1.0f,true);
+        SoundManager.Instance.PlayBgm(bgm,1.0f,true);
+        //SoundManager.Instance.PlayBgm(bgm,1.0f,true);
         _view.UpdateMainMenuStage();
         _busy = false;
     }
@@ -63,7 +64,7 @@ public class MainMenuPresenter : BasePresenter
     private void CommandStageSelect(int stageId)
     {
         //_model.InitializeStageData(stageId);
-        Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
+        SoundManager.Instance.PlayStaticSe(SEType.Decide);
         if (_model.NeedSlotData(stageId))
         {
             _view.CommandSceneChange(Scene.Slot);
@@ -94,14 +95,14 @@ public class MainMenuPresenter : BasePresenter
     private void CommandRule()
     {
         _busy = true;
-        Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
+        SoundManager.Instance.PlayStaticSe(SEType.Decide);
         _view.DeactivateSideMenu();
         _view.SetHelpInputInfo("RULING");
         _view.CommandCallRuling(() => {
             _busy = false;
             _view.ActivateSideMenu();
             _view.SetHelpInputInfo("OPTION");
-            Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cancel);
+            SoundManager.Instance.PlayStaticSe(SEType.Cancel);
         });
     }
 
@@ -119,7 +120,7 @@ public class MainMenuPresenter : BasePresenter
     
     private void CommandSlotPopup()
     {
-        Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
+        SoundManager.Instance.PlayStaticSe(SEType.Decide);
         _view.CommandSceneChange(Scene.Slot);
     }
 
