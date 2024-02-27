@@ -141,6 +141,7 @@ public class SkillInfoComponent : MonoBehaviour
         }
         if (range != null)
         {
+            range.gameObject.SetActive(true);
             var rangeTextId = skillData.Range == RangeType.S ? 351 : 352;
             range.text = DataSystem.GetTextData(rangeTextId).Text;
         }
@@ -233,8 +234,10 @@ public class SkillInfoComponent : MonoBehaviour
         }
         if (learningCost != null)
         {
-            learningCost.gameObject.SetActive(false);
-            learningCost.text = "";
+            learningCost?.gameObject.SetActive(false);
+            learningCost?.SetText("");
         }
+        range?.gameObject.SetActive(false);
+        range?.SetText("");
     }
 }

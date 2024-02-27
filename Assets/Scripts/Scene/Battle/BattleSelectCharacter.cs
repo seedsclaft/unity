@@ -196,6 +196,7 @@ public class BattleSelectCharacter : MonoBehaviour
         {
             return;
         }
+        displaySelectCard.Clear();
         var listData = magicList.ListData;
         if (listData != null)
         {

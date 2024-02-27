@@ -304,6 +304,17 @@ public class TacticsPresenter :BasePresenter
         {
             CommandSelectSideMenu();
         }
+        if (viewEvent.commandType == Tactics.CommandType.StageHelp)
+        {
+            SoundManager.Instance.PlayStaticSe(SEType.Decide);
+            CommandStageHelp();
+        }
+        if (viewEvent.commandType == Tactics.CommandType.CommandHelp)
+        {
+            SoundManager.Instance.PlayStaticSe(SEType.Decide);
+            CommandCommandHelp();
+        }
+        
         if (viewEvent.commandType == Tactics.CommandType.AlcanaCheck)
         {
             CommandAlcanaCheck();
@@ -853,6 +864,31 @@ public class TacticsPresenter :BasePresenter
         };
         sideMenuViewInfo.CommandLists = _model.SideMenu();
         _view.CommandCallSideMenu(sideMenuViewInfo);
+    }
+
+    private void CommandStageHelp()
+    {
+        _view.CommandHelpList(DataSystem.HelpText("Tactics"));
+    }
+
+    private void CommandCommandHelp()
+    {
+        switch (_model.TacticsCommandType)
+        {
+            case TacticsCommandType.Paradigm:
+            _view.CommandHelpList(DataSystem.HelpText("Battle"));
+            return;
+            case TacticsCommandType.Train:
+            _view.CommandHelpList(DataSystem.HelpText("LevelUp"));
+            return;
+            case TacticsCommandType.Alchemy:
+            _view.CommandHelpList(DataSystem.HelpText("Alchemy"));
+            return;
+            case TacticsCommandType.Recovery:
+            _view.CommandHelpList(DataSystem.HelpText("Recovery"));
+            return;
+        }
+        
     }
 
     private void CommandAlcanaCheck()

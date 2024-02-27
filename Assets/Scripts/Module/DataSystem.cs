@@ -15,6 +15,7 @@ abstract public class DataSystem
     public static List<AdvData> Adventures = new ();
     public static List<EnemyData> Enemies = new ();
     public static List<RuleData> Rules = new ();
+    public static List<HelpData> Helps = new ();
     public static List<SkillData> Skills = new ();
     public static List<StageData> Stages = new ();
     public static List<SymbolGroupData> SymbolGroups = new ();
@@ -47,6 +48,7 @@ abstract public class DataSystem
         Adventures = Resources.Load<AdvDates>("Data/Adventures").Data;
         Enemies = Resources.Load<EnemyDates>("Data/Enemies").Data;
         Rules = Resources.Load<RuleDates>("Data/Rules").Data;
+        Helps = Resources.Load<HelpDates>("Data/Helps").Data;
         Skills = Resources.Load<SkillDates>("Data/Skills").Data;
         Stages = Resources.Load<StageDates>("Data/Stages").Data;
         SymbolGroups = Resources.Load<StageDates>("Data/Stages").SymbolGroupData;
@@ -105,6 +107,17 @@ abstract public class DataSystem
         }
         return text;
 	}
+
+    public static List<ListData> HelpText(string key)
+    {
+        var data = Helps.Find(a => a.Key == key);
+        if (data != null)
+        {
+            var texts = data.Help.Split("\n").ToList();
+            return ListData.MakeListData(texts);
+        }
+        return null;
+    }
 }
 
 [Serializable]

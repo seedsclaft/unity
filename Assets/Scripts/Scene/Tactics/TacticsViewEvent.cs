@@ -31,6 +31,8 @@ namespace Tactics
         CallEnemyInfo,
         Back,
         SelectSideMenu,
+        StageHelp,
+        CommandHelp,
         AlcanaCheck,
         ChangeSelectTacticsActor,
     }

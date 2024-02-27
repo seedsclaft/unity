@@ -26,6 +26,8 @@ public class TacticsView : BaseView
 
 
     [SerializeField] private Button alcanaButton = null;
+    [SerializeField] private Button stageHelpButton = null;
+    [SerializeField] private Button commandHelpButton = null;
     
     [SerializeField] private GameObject backGround = null;
     public void SetActiveBackGround(bool isActive)
@@ -56,6 +58,14 @@ public class TacticsView : BaseView
 
         SideMenuButton.onClick.AddListener(() => {
             var eventData = new TacticsViewEvent(CommandType.SelectSideMenu);
+            _commandData(eventData);
+        });
+        stageHelpButton.onClick.AddListener(() => {
+            var eventData = new TacticsViewEvent(CommandType.StageHelp);
+            _commandData(eventData);
+        });
+        commandHelpButton.onClick.AddListener(() => {
+            var eventData = new TacticsViewEvent(CommandType.CommandHelp);
             _commandData(eventData);
         });
         new TacticsPresenter(this);
