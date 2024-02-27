@@ -81,7 +81,6 @@ public class BattlePresenter : BasePresenter
         _view.SetActors(_model.BattlerActors());
         _view.SetEnemies(_model.BattlerEnemies());
         _view.BattlerBattleClearSelect();
-        _view.SetSideMenu(_model.SideMenu());
         _view.StartBattleStartAnim(DataSystem.GetTextData(61).Text);
         _view.StartBattleAnimation();
         await UniTask.WaitUntil(() => _view.StartAnimIsBusy == false);
@@ -156,17 +155,13 @@ public class BattlePresenter : BasePresenter
         {
             CommandEscape();
         }
-        if (viewEvent.commandType == Battle.CommandType.Option)
-        {
-            CommandOption();
-        }
         if (viewEvent.commandType == Battle.CommandType.EnemyDetail)
         {
             CommandEnemyDetail((int)viewEvent.template);
         }
         if (viewEvent.commandType == Battle.CommandType.SelectSideMenu)
         {
-            CommandSelectSideMenu((SystemData.CommandData)viewEvent.template);
+            CommandSelectSideMenu();
         }
         if (viewEvent.commandType == Battle.CommandType.ChangeBattleAuto)
         {
@@ -235,23 +230,6 @@ public class BattlePresenter : BasePresenter
             popupInfo.SetIsNoChoice(true);
             _view.CommandCallConfirm(popupInfo);
         }
-    }
-
-    private void CommandRule()
-    {
-        _busy = true;
-        _view.SetHelpInputInfo("RULING");
-        SoundManager.Instance.PlayStaticSe(SEType.Decide);
-        _view.CommandCallRuling(() => {
-            _view.SetHelpInputInfo("OPTION");
-            SoundManager.Instance.PlayStaticSe(SEType.Cancel);
-            _busy = false;
-        });
-    }
-
-    private void CommandAutoBattle()
-    {
-        CommandCloseSideMenu();
     }
 
     private void CommandEnemyDetail(int enemyIndex)
@@ -1067,21 +1045,15 @@ public class BattlePresenter : BasePresenter
     {
     }
 
-    private void CommandCloseSideMenu()
+    private void CommandSelectSideMenu()
     {
-        _view.CommandCloseSideMenu();
-    }
+        if (_busy) return;
+        var sideMenuViewInfo = new SideMenuViewInfo();
+        sideMenuViewInfo.EndEvent = () => {
 
-    private void CommandSelectSideMenu(SystemData.CommandData sideMenu)
-    {
-        if (sideMenu.Key == "Help")
-        {
-            CommandRule();
-        }
-        if (sideMenu.Key == "Escape")
-        {
-            CommandEscape();
-        }
+        };
+        sideMenuViewInfo.CommandLists = _model.SideMenu();
+        _view.CommandCallSideMenu(sideMenuViewInfo);
     }    
     
     private void CommandChangeBattleAuto()
@@ -1098,15 +1070,5 @@ public class BattlePresenter : BasePresenter
             _view.HideBattleThumb();
             CommandAutoActorSkillId();
         }
-    }
-
-    public void CommandOption()
-    {
-        _busy = true;
-        _view.DeactivateSideMenu();
-        _view.CommandCallOption(() => {
-            _busy = false;
-            _view.ActivateSideMenu();
-        });
     }
 }

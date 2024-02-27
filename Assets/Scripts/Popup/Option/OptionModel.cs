@@ -67,10 +67,6 @@ public class OptionModel : BaseModel
         TempInfo.SetInputType(inputType);
     }
 
-    public void DeletePlayerData()
-    {
-        SaveSystem.DeletePlayerData();
-    }
 }
 
 public class OptionInfo

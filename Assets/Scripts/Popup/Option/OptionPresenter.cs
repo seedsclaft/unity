@@ -219,32 +219,9 @@ public class OptionPresenter
             if (data.OptionCommand.ButtonType == OptionButtonType.Button)
             {
                 Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
-                switch (data.OptionCommand.Key)
-                {
-                    case "INITALIZE_GAMEDATA":
-                    var popupInfo = new ConfirmInfo(DataSystem.GetTextData(581).Text,(a) => UpdatePopupDeletePlayerData((ConfirmCommandType)a));
-                    _view.CommandCallConfirm(popupInfo);
-                    return;
-                }
+
             }
         }
     }
 
-    private void UpdatePopupDeletePlayerData(ConfirmCommandType confirmCommandType)
-    {
-        _view.CommandGameSystem(Base.CommandType.CloseConfirm);
-        if (confirmCommandType == ConfirmCommandType.Yes)
-        {
-            _view.CommandGameSystem(Base.CommandType.ClosePopup);
-            _model.DeletePlayerData();
-            _view.CommandGameSystem(Base.CommandType.CloseConfirm);
-            var popupInfo = new ConfirmInfo(DataSystem.GetTextData(582).Text,(a) => {
-                Ryneus.SoundManager.Instance.StopBgm();
-                _view.CommandGameSystem(Base.CommandType.CloseConfirm);
-                _view.CommandGotoSceneChange(Scene.Boot);
-            });
-            popupInfo.SetIsNoChoice(true);
-            _view.CommandCallConfirm(popupInfo);
-        }
-    }
 }

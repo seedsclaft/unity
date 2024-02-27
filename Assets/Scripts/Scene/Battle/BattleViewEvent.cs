@@ -26,8 +26,6 @@ namespace Battle
         SelectedSkill,
         EnemyLayer,
         EndAnimation,
-        EndRegenerateAnimation,
-        EndSlipDamageAnimation,
         SelectEnemy,
         SelectParty,
         EnemyDetail,

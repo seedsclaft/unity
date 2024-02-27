@@ -502,41 +502,6 @@ public class TacticsView : BaseView
     {
         if (selectCharacter.CharacterList.gameObject.activeSelf) selectCharacter.CharacterList.Deactivate();
     }
-
-    public void SetSideMenu(List<ListData> menuCommands){
-        /*
-        sideMenuList.Initialize(menuCommands,(a) => CallSideMenu(a),() => OnClickOption(),() => CommandCloseSideMenu());
-        SetInputHandler(sideMenuList.GetComponent<IInputHandlerEvent>());
-        sideMenuList.Deactivate();
-        */
-    }
-    
-    public void ActivateSideMenu()
-    {
-        SetHelpInputInfo("SIDEMENU");
-        //sideMenuList.Activate();
-    }
-
-    public void DeactivateSideMenu()
-    {
-        SetHelpInputInfo("TACTICS");
-        //sideMenuList.Deactivate();
-    }
-
-    public new void CommandOpenSideMenu()
-    {
-        base.CommandOpenSideMenu();
-        //sideMenuList.OpenSideMenu();
-        tacticsCommandList.Deactivate();
-    }
-
-    public void CommandCloseSideMenu()
-    {
-        tacticsCommandList.Activate();
-        //sideMenuList.CloseSideMenu();
-        SetHelpInputInfo("TACTICS");
-        UpdateHelpWindow();
-    }
     
     private void UpdateHelpWindow()
     {

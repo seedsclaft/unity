@@ -58,6 +58,9 @@ public class BattleView : BaseView ,IInputHandlerEvent
         battleGridLayer.Initialize();
         battleActorList.Initialize();
         battleEnemyLayer.Initialize();
+        SideMenuButton.onClick.AddListener(() => {
+            CallSideMenu();
+        });
         new BattlePresenter(this);
     }
 
@@ -177,6 +180,7 @@ public class BattleView : BaseView ,IInputHandlerEvent
 
     public void ChangeSideMenuButtonActive(bool isActive)
     {
+        SideMenuButton.gameObject.SetActive(isActive);
     }
 
     private void OnClickBack()
@@ -566,37 +570,9 @@ public class BattleView : BaseView ,IInputHandlerEvent
         battleGridLayer.UpdatePosition();
     }
 
-    public void SetSideMenu(List<ListData> menuCommands){
-    }
-    
-    public void ActivateSideMenu()
-    {
-        HelpWindow.SetInputInfo("SIDEMENU");
-    }
-
-    public void DeactivateSideMenu()
-    {
-        HelpWindow.SetInputInfo("BATTLE");
-    }
-
-    public new void CommandOpenSideMenu()
-    {
-        base.CommandOpenSideMenu();
-        selectCharacter.MagicList.Deactivate();
-    }
-
-    public void CommandCloseSideMenu()
-    {
-        HelpWindow.SetInputInfo("BATTLE");
-        selectCharacter.MagicList.Activate();
-        selectCharacter.MagicList.UpdateHelpWindow();
-        HelpWindow.SetHelpText(DataSystem.GetTextData(15010).Text);
-    }
-
-    private void CallSideMenu(SystemData.CommandData sideMenu)
+    private void CallSideMenu()
     {
         var eventData = new BattleViewEvent(CommandType.SelectSideMenu);
-        eventData.template = sideMenu;
         _commandData(eventData);
     }
     

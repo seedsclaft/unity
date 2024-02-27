@@ -124,15 +124,6 @@ MonoBehaviour:
     ToggleText1: 543
     ToggleText2: 544
     ExistAndroid: 1
-  - Id: 101
-    Key: INITALIZE_GAMEDATA
-    Name: "\u30C7\u30FC\u30BF\u521D\u671F\u5316"
-    Help: " - \u30D7\u30EC\u30A4\u30E4\u30FC\u30C7\u30FC\u30BF\u3092\u521D\u671F\u5316\u3057\u307E\u3059"
-    Category: 2
-    ButtonType: 3
-    ToggleText1: 0
-    ToggleText2: 0
-    ExistAndroid: 1
   TitleCommandData:
   - Id: 1
     Key: NEWGAME
@@ -530,7 +521,7 @@ MonoBehaviour:
     Text: "\u524D\u5217"
     Help: '""'
   - Id: 700
-    Text: "\u7248\u6A29\u8868\u793A"
+    Text: "\u30E9\u30A4\u30BB\u30F3\u30B9"
     Help: '""'
   - Id: 701
     Text: "\u30AA\u30D7\u30B7\u30E7\u30F3"
@@ -539,10 +530,10 @@ MonoBehaviour:
     Text: "\u5168\u4F53\u9806\u4F4D"
     Help: '""'
   - Id: 703
-    Text: "\u88C1\u5B9A\u771F\u7406"
+    Text: "\u30D8\u30EB\u30D7"
     Help: '""'
   - Id: 704
-    Text: "\u9694\u4E16\u96E2\u8131"
+    Text: "\u30B9\u30C6\u30FC\u30B8\u4E2D\u65AD"
     Help: '""'
   - Id: 705
     Text: "\u7DE8\u6210\u8FF0\u61D0"
@@ -552,6 +543,9 @@ MonoBehaviour:
     Help: '""'
   - Id: 707
     Text: "\u8A18\u61B6\u4FDD\u5B58"
+    Help: '""'
+  - Id: 708
+    Text: "\u30C7\u30FC\u30BF\u521D\u671F\u5316"
     Help: '""'
   - Id: 800
     Text: '""'

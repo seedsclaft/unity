@@ -46,13 +46,6 @@ public class MainMenuModel : BaseModel
         menuCommand.Name = DataSystem.GetTextData(703).Text;
         menuCommand.Key = "Help";
         list.Add(menuCommand);
-        /*
-        var slot = new SystemData.CommandData();
-        slot.Id = 0;
-        slot.Name = DataSystem.GetTextData(705).Text;
-        slot.Key = "Slot";
-        list.Add(slot);
-        */
         return MakeListData(list);
     }
 }

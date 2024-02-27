@@ -210,7 +210,6 @@ public class TacticsPresenter :BasePresenter
         _view.SetUIButton();
         _view.ChangeBackCommandActive(false);
         _view.SetEvent((type) => UpdateCommand(type));
-        _view.SetSideMenu(_model.SideMenu());
         _view.SetSelectCharacter(_model.TacticsCharacterData(),_model.NoChoiceConfirmCommand());
         
         _view.SetStageInfo(_model.CurrentStage);
@@ -854,16 +853,6 @@ public class TacticsPresenter :BasePresenter
         };
         sideMenuViewInfo.CommandLists = _model.SideMenu();
         _view.CommandCallSideMenu(sideMenuViewInfo);
-    }
-
-    public void CommandOption()
-    {
-        _busy = true;
-        _view.DeactivateSideMenu();
-        _view.CommandCallOption(() => {
-            _busy = false;
-            _view.ActivateSideMenu();
-        });
     }
 
     private void CommandAlcanaCheck()

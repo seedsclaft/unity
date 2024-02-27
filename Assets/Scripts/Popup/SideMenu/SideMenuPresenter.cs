@@ -56,6 +56,12 @@ public class SideMenuPresenter : BasePresenter
                 case "Save":
                 CommandSave(false);
                 break;
+                case "License":
+                CommandCredit();
+                break;
+                case "InitializeData":
+                CommandInitializeData();
+                break;
             }
         }
     }
@@ -90,5 +96,38 @@ public class SideMenuPresenter : BasePresenter
             //_view.SetHelpInputInfo("OPTION");
             SoundManager.Instance.PlayStaticSe(SEType.Cancel);
         });
+    }
+
+    private void CommandCredit()
+    {
+        _busy = true;
+        _view.CommandCallCredit(() => {
+            _busy = false;
+        });
+    }
+
+    private void CommandInitializeData()
+    {
+        SoundManager.Instance.PlayStaticSe(SEType.Decide);
+        var popupInfo = new ConfirmInfo(DataSystem.GetTextData(581).Text,(a) => UpdatePopupDeletePlayerData((ConfirmCommandType)a));
+        _view.CommandCallConfirm(popupInfo);
+    }
+
+    private void UpdatePopupDeletePlayerData(ConfirmCommandType confirmCommandType)
+    {
+        _view.CommandGameSystem(Base.CommandType.CloseConfirm);
+        if (confirmCommandType == ConfirmCommandType.Yes)
+        {
+            _view.CommandGameSystem(Base.CommandType.ClosePopup);
+            _model.DeletePlayerData();
+            _view.CommandGameSystem(Base.CommandType.CloseConfirm);
+            var popupInfo = new ConfirmInfo(DataSystem.GetTextData(582).Text,(a) => {
+                SoundManager.Instance.StopBgm();
+                _view.CommandGameSystem(Base.CommandType.CloseConfirm);
+                _view.CommandGotoSceneChange(Scene.Boot);
+            });
+            popupInfo.SetIsNoChoice(true);
+            _view.CommandCallConfirm(popupInfo);
+        }
     }
 }

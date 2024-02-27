@@ -18,6 +18,9 @@ public class MainMenuView : BaseView
     {
         base.Initialize();
         stageList.Initialize();
+        SideMenuButton.onClick.AddListener(() => {
+            CallSideMenu();
+        });
         new MainMenuPresenter(this);
     }
 
@@ -107,41 +110,9 @@ public class MainMenuView : BaseView
         _commandData(eventData);
     }
 
-    public void SetSideMenu(List<ListData> menuCommands){
-        /*
-        sideMenuList.Initialize(menuCommands,(a) => CallSideMenu(a),() => OnClickOption(),() => CommandCloseSideMenu());
-        SetInputHandler(sideMenuList.GetComponent<IInputHandlerEvent>());
-        sideMenuList.Deactivate();
-        */
-    }
-    
-    public void ActivateSideMenu()
-    {
-        HelpWindow.SetInputInfo("SIDEMENU");
-    }
-
-    public void DeactivateSideMenu()
-    {
-        HelpWindow.SetInputInfo("MAINMENU");
-    }
-
-    public new void CommandOpenSideMenu()
-    {
-        base.CommandOpenSideMenu();
-        stageList.Deactivate();
-    }
-
-    public void CommandCloseSideMenu()
-    {
-        stageList.Activate();
-        HelpWindow.SetInputInfo("MAINMENU");
-        stageList.UpdateHelpWindow();
-    }
-
-    private void CallSideMenu(SystemData.CommandData sideMenu)
+    private void CallSideMenu()
     {
         var eventData = new MainMenuViewEvent(CommandType.SelectSideMenu);
-        eventData.template = sideMenu;
         _commandData(eventData);
     }
 }

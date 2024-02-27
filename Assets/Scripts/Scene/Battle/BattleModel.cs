@@ -2534,11 +2534,6 @@ public class BattleModel : BaseModel
     public List<ListData> SideMenu()
     {
         var list = new List<SystemData.CommandData>();
-        var escapeCommand = new SystemData.CommandData();
-        escapeCommand.Id = 1;
-        escapeCommand.Name = DataSystem.GetTextData(411).Text;
-        escapeCommand.Key = "Escape";
-        list.Add(escapeCommand);
         var menuCommand = new SystemData.CommandData();
         menuCommand.Id = 2;
         menuCommand.Name = DataSystem.GetTextData(703).Text;

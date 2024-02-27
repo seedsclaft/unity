@@ -26,7 +26,6 @@ public class MainMenuPresenter : BasePresenter
         _view.SetEvent((type) => UpdateCommand(type));
 
         _view.SetStagesData(_model.Stages());
-        _view.SetSideMenu(_model.SideMenu());
         _view.SetNuminous(_model.Currency);
         _view.SetTotalScore(_model.TotalScore);
         //_model.InitStageData();
@@ -47,17 +46,9 @@ public class MainMenuPresenter : BasePresenter
         {
             CommandStageSelect((int)viewEvent.template);
         }
-        if (viewEvent.commandType == CommandType.Option)
-        {
-            CommandOption();
-        }
-        if (viewEvent.commandType == CommandType.Ranking)
-        {
-            CommandRanking((int)viewEvent.template);
-        }
         if (viewEvent.commandType == CommandType.SelectSideMenu)
         {
-            CommandSelectSideMenu((SystemData.CommandData)viewEvent.template);
+            CommandSelectSideMenu();
         }
     }
 
@@ -79,44 +70,10 @@ public class MainMenuPresenter : BasePresenter
                 _model.StartSelectStage(stageId);
                 _view.CommandGotoSceneChange(Scene.Tactics);
             }
-            /*
-            var statusViewInfo = new StatusViewInfo(() => {
-                _view.CommandGameSystem(Base.CommandType.CloseStatus);
-                _view.SetInitHelpText();
-                _view.ChangeUIActive(true);
-            });
-            statusViewInfo.SetDisplayDecideButton(true);
-            _view.CommandCallStatus(statusViewInfo);
-            _view.ChangeUIActive(false);
-            */
         }
     }
 
-    private void CommandRule()
-    {
-        _busy = true;
-        SoundManager.Instance.PlayStaticSe(SEType.Decide);
-        _view.DeactivateSideMenu();
-        _view.SetHelpInputInfo("RULING");
-        _view.CommandCallRuling(() => {
-            _busy = false;
-            _view.ActivateSideMenu();
-            _view.SetHelpInputInfo("OPTION");
-            SoundManager.Instance.PlayStaticSe(SEType.Cancel);
-        });
-    }
 
-    private void CommandRanking(int stageId)
-    {
-        _busy = true;
-        var rankingViewInfo = new RankingViewInfo();
-        rankingViewInfo.EndEvent = () => {
-            //_view.ActivateSideMenu();
-            _busy = false;
-        };
-        rankingViewInfo.StageId = stageId;
-        _view.CommandCallRanking(rankingViewInfo);
-    }
     
     private void CommandSlotPopup()
     {
@@ -124,25 +81,8 @@ public class MainMenuPresenter : BasePresenter
         _view.CommandSceneChange(Scene.Slot);
     }
 
-    private void CommandSelectSideMenu(SystemData.CommandData sideMenu)
+    private void CommandSelectSideMenu()
     {
-        if (sideMenu.Key == "Help")
-        {
-            CommandRule();
-        }
-        if (sideMenu.Key == "Slot")
-        {
-            CommandSlotPopup();
-        }
     }    
     
-    public void CommandOption()
-    {
-        _busy = true;
-        _view.DeactivateSideMenu();
-        _view.CommandCallOption(() => {
-            _busy = false;
-            _view.ActivateSideMenu();
-        });
-    }
 }

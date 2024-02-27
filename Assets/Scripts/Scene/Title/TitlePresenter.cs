@@ -27,7 +27,6 @@ public class TitlePresenter : BasePresenter
         _view.SetVersion(_model.VersionText());
         _view.SetHelpWindow();
         _view.SetTitleCommand(_model.TitleCommand());
-        _view.SetSideMenu(_model.SideMenu());
         CommandRefresh();
         var bgm = await _model.GetBgmData("TITLE");
         Ryneus.SoundManager.Instance.PlayBgm(bgm,1.0f,false);
@@ -45,11 +44,7 @@ public class TitlePresenter : BasePresenter
         }
         if (viewEvent.commandType == CommandType.SelectSideMenu)
         {
-            CommandSelectSideMenu((SystemData.CommandData)viewEvent.template);
-        }
-        if (viewEvent.commandType == CommandType.Option)
-        {
-            CommandOption();
+            CommandSelectSideMenu();
         }
         if (viewEvent.commandType == CommandType.SelectTitle)
         {
@@ -114,26 +109,6 @@ public class TitlePresenter : BasePresenter
         }
     }
 
-    private void CommandCredit()
-    {
-        _busy = true;
-        _view.DeactivateSideMenu();
-        _view.CommandCallCredit(() => {
-            _busy = false;
-            _view.ActivateSideMenu();
-        });
-    }
-
-    public void CommandOption()
-    {
-        _busy = true;
-        _view.DeactivateSideMenu();
-        _view.CommandCallOption(() => {
-            _busy = false;
-            _view.ActivateSideMenu();
-        });
-    }
-
     private void CommandRefresh(){
         int selectIndex = 0;
         if (_model.ExistsLoadFile())
@@ -144,12 +119,14 @@ public class TitlePresenter : BasePresenter
         //_view.RefreshView();
     }
 
-    private void CommandSelectSideMenu(SystemData.CommandData sideMenu)
+    private void CommandSelectSideMenu()
     {
-        if (sideMenu.Key == "License")
-        {
-            CommandCredit();
-        }
+        var sideMenuViewInfo = new SideMenuViewInfo();
+        sideMenuViewInfo.EndEvent = () => {
+
+        };
+        sideMenuViewInfo.CommandLists = _model.SideMenu();
+        _view.CommandCallSideMenu(sideMenuViewInfo);
     }
 
     private void updatePopup(ConfirmCommandType confirmCommandType)

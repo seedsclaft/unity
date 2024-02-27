@@ -15,6 +15,9 @@ public class TitleView : BaseView
     {
         base.Initialize();
         titleCommandList.Initialize();
+        SideMenuButton.onClick.AddListener(() => {
+            CallSideMenu();
+        });
         new TitlePresenter(this);
         tapTitle.onClick.AddListener(() => OnClickTitle());
     }
@@ -22,12 +25,6 @@ public class TitleView : BaseView
     private void OnClickTitle()
     {
         var eventData = new TitleViewEvent(CommandType.SelectTitle);
-        _commandData(eventData);
-    }
-
-    private void OnClickOption()
-    {
-        var eventData = new TitleViewEvent(CommandType.Option);
         _commandData(eventData);
     }
 
@@ -53,42 +50,10 @@ public class TitleView : BaseView
         titleCommandList.SetHelpWindow(HelpWindow);
     }
 
-    public void SetSideMenu(List<ListData> menuCommands){
-        /*
-        sideMenuList.Initialize(menuCommands,(a) => CallSideMenu(a),() => OnClickOption(),() => CommandCloseSideMenu());
-        SetInputHandler(sideMenuList.GetComponent<IInputHandlerEvent>());
-        sideMenuList.Deactivate();
-        */
-    }
-
     public void RefreshCommandIndex(int selectIndex)
     {
         titleCommandList.Refresh(selectIndex);
         titleCommandList.Activate();
-    }
-
-    public void ActivateSideMenu()
-    {
-        HelpWindow.SetInputInfo("SIDEMENU");
-        UpdateHelpWindow();
-    }
-
-    public void DeactivateSideMenu()
-    {
-        HelpWindow.SetInputInfo("CREDIT");
-    }
-
-    public new void CommandOpenSideMenu()
-    {
-        base.CommandOpenSideMenu();
-        titleCommandList.Deactivate();
-    }
-
-    public void CommandCloseSideMenu()
-    {
-        titleCommandList.Activate();
-        HelpWindow.SetInputInfo("TITLE");
-        UpdateHelpWindow();
     }
 
     private void CallTitleCommand(){
@@ -102,10 +67,9 @@ public class TitleView : BaseView
         }
     }
 
-    private void CallSideMenu(SystemData.CommandData sideMenu)
+    private void CallSideMenu()
     {
         var eventData = new TitleViewEvent(CommandType.SelectSideMenu);
-        eventData.template = sideMenu;
         _commandData(eventData);
     }
     

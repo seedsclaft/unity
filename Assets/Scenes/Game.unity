@@ -3449,8 +3449,6 @@ MonoBehaviour:
     type: 3}
   stageSymbolPrefab: {fileID: 2269674697626853040, guid: f01c32eafebaf584f9763c1588d5080b,
     type: 3}
-  sideMenuPrefab: {fileID: 3392146533743507209, guid: 3e24a80cd50af384cbd8d8e3524d5d9a,
-    type: 3}
 --- !u!1 &542946710
 GameObject:
   m_ObjectHideFlags: 0
@@ -7038,6 +7036,8 @@ MonoBehaviour:
     type: 3}
   enemyDetailPrefab: {fileID: 3990735083279080324, guid: 51fea3964f81fd94899a544dd668c168,
     type: 3}
+  sideMenuPrefab: {fileID: 3392146533743507209, guid: 3e24a80cd50af384cbd8d8e3524d5d9a,
+    type: 3}
 --- !u!4 &1137596730
 Transform:
   m_ObjectHideFlags: 0
@@ -10241,60 +10241,6 @@ MonoBehaviour:
   m_ChildScaleWidth: 1
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
---- !u!1 &1698464241
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1698464242}
-  - component: {fileID: 1698464243}
-  m_Layer: 5
-  m_Name: GameObject
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &1698464242
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1698464241}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1848313490}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1698464243
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1698464241}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 35d396bcb8480c24eb784eebe6096a99, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  TimingOfUpdate: 0
-  EmitterScale: 0
-  TimeScale: 0
-  effectAsset: {fileID: 11400000, guid: 0f497cf73f42d5f47acfb4ebcd328570, type: 2}
-  playOnStart: 0
-  isLooping: 0
 --- !u!21 &1720288700
 Material:
   serializedVersion: 8
@@ -12281,7 +12227,6 @@ RectTransform:
   - {fileID: 1125957570}
   - {fileID: 1810822422}
   - {fileID: 976855072}
-  - {fileID: 1698464242}
   m_Father: {fileID: 1931081345}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
