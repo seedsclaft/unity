@@ -634,7 +634,7 @@ public class BattlePresenter : BasePresenter
             }
             if (slipDamageResult.DeadIndexList.Contains(targetIndex))
             {
-                SoundManager.Instance.PlayStaticSe(SEType.Defeat);
+                //SoundManager.Instance.PlayStaticSe(SEType.Defeat);
                 _view.StartDeathAnimation(targetIndex);
             }
         }
@@ -714,6 +714,7 @@ public class BattlePresenter : BasePresenter
         }
         if (actionResultInfo.Missed)
         {
+            SoundManager.Instance.PlayStaticSe(SEType.Miss);
             _view.StartStatePopup(targetIndex,DamageType.State,"Miss!");
         }
         if (actionResultInfo.HpDamage > 0)
@@ -730,6 +731,7 @@ public class BattlePresenter : BasePresenter
         {
             if (!actionResultInfo.DeadIndexList.Contains(targetIndex))
             {
+                SoundManager.Instance.PlayStaticSe(SEType.Heal);
                 _view.StartHeal(targetIndex,DamageType.HpHeal,actionResultInfo.HpHeal,needPopupDelay);
             }
         }
@@ -758,10 +760,19 @@ public class BattlePresenter : BasePresenter
         }
         if (actionResultInfo.ReHeal > 0)
         {    
+            SoundManager.Instance.PlayStaticSe(SEType.Heal);
             _view.StartHeal(actionResultInfo.SubjectIndex,DamageType.HpHeal,actionResultInfo.ReHeal);
         }
         foreach (var addedState in actionResultInfo.AddedStates)
         {    
+            if (addedState.IsBuff())
+            {
+                SoundManager.Instance.PlayStaticSe(SEType.Buff);
+            } else
+            if (addedState.IsDeBuff())
+            {
+                SoundManager.Instance.PlayStaticSe(SEType.DeBuff);
+            }
             _view.StartStatePopup(addedState.TargetIndex,DamageType.State,"+" + addedState.Master.Name);
         }
         foreach (var removedState in actionResultInfo.RemovedStates)
@@ -796,7 +807,7 @@ public class BattlePresenter : BasePresenter
         var deathBattlerIndexes = _model.DeathBattlerIndex(actionResultInfos);
         foreach (var deathBattlerIndex in deathBattlerIndexes)
         {
-            SoundManager.Instance.PlayStaticSe(SEType.Defeat);
+            //SoundManager.Instance.PlayStaticSe(SEType.Defeat);
             _view.StartDeathAnimation(deathBattlerIndex);
         }
     }

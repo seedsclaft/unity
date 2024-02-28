@@ -26,4 +26,8 @@ public enum SEType {
     Skill,
     Awaken,
     CountUp,
+    Miss,
+    Heal,
+    Buff,
+    DeBuff,
 }

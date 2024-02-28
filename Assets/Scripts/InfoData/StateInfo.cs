@@ -98,4 +98,14 @@ public class StateInfo {
     {
         return _stateType == otherStateInfo.StateType && _skillId == otherStateInfo.SkillId && _targetIndex == otherStateInfo.TargetIndex;
     }
+
+    public bool IsBuff()
+    {
+        return Master.Removal || !Master.Abnormal;
+    }
+
+    public bool IsDeBuff()
+    {
+        return !Master.Removal;
+    }
 }

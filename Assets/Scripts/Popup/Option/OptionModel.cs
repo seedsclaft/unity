@@ -18,12 +18,12 @@ public class OptionModel : BaseModel
             {
                 continue;
             }
-#if UNITY_ANDROID
+//#if UNITY_ANDROID
             if (optionCommand.ExistAndroid == false)
             {
                 continue;
             }
-#endif
+//#endif
             var optionInfo = new OptionInfo();
             optionInfo.OptionCommand = optionCommand;
             optionInfo.SliderEvent = sliderEvent;
