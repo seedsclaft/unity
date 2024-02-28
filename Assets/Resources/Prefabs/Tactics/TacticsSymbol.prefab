@@ -1149,6 +1149,7 @@ MonoBehaviour:
   reverse: 0
   warpMode: 1
   scrollRect: {fileID: 1070853775615199575}
+  itemPrefabMode: 1
   itemPrefab: {fileID: 6145794166525957040, guid: ca4965df58f92f54a810c5e6f49b6098,
     type: 3}
   _helpWindow: {fileID: 0}
@@ -1937,6 +1938,8 @@ GameObject:
   - component: {fileID: 8721154197761516505}
   - component: {fileID: 1116801873639238952}
   - component: {fileID: 6802800820925126921}
+  - component: {fileID: 1796060761580203553}
+  - component: {fileID: 7521636968366711945}
   m_Layer: 5
   m_Name: TacticsSymbol
   m_TagString: Untagged
@@ -1970,7 +1973,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 16, y: 0}
   m_SizeDelta: {x: 200, y: 280}
   m_Pivot: {x: 0, y: 1}
 --- !u!222 &4006162585269645738
@@ -2100,6 +2103,41 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 7cdeed1c02ff6044aaa332d9236e233e, type: 3}
   evaluateRoot: {fileID: 1321871947288428694}
   evaluate: {fileID: 3288762194821435160}
+  selected: {fileID: 0}
+  lastSelected: {fileID: 0}
+--- !u!95 &1796060761580203553
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7418961508802935381}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 003fa8d9c2c904c41a503ae5599d64ca, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!225 &7521636968366711945
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7418961508802935381}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &8497871275935186191
 GameObject:
   m_ObjectHideFlags: 0

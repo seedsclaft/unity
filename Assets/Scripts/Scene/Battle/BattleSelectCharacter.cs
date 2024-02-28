@@ -45,6 +45,10 @@ public class BattleSelectCharacter : MonoBehaviour
             magicConditionTab.onValueChanged.AddListener((a) => 
             {
                 SelectCharacterTab((SelectCharacterTabType)tabIndex);
+                if (a == true)
+                {
+                    Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cursor);
+                }
             });
             idx++;
         }
