@@ -636,7 +636,7 @@ namespace Ryneus
                 }
                 if (slipDamageResult.DeadIndexList.Contains(targetIndex))
                 {
-                    //SoundManager.Instance.PlayStaticSe(SEType.Defeat);
+                    SoundManager.Instance.PlayStaticSe(SEType.Defeat);
                     _view.StartDeathAnimation(targetIndex);
                 }
             }
@@ -809,7 +809,7 @@ namespace Ryneus
             var deathBattlerIndexes = _model.DeathBattlerIndex(actionResultInfos);
             foreach (var deathBattlerIndex in deathBattlerIndexes)
             {
-                //SoundManager.Instance.PlayStaticSe(SEType.Defeat);
+                SoundManager.Instance.PlayStaticSe(SEType.Defeat);
                 _view.StartDeathAnimation(deathBattlerIndex);
             }
         }

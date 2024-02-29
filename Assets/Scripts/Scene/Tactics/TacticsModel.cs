@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using System.Linq;
 
 namespace Ryneus
 {
@@ -10,6 +11,13 @@ namespace Ryneus
         public TacticsModel()
         {
             _selectActorId = StageMembers()[0].ActorId;
+        }
+
+        private SymbolInfo _symbolInfo;
+        public SymbolInfo SymbolInfo => _symbolInfo;
+        public void SetSymbolInfo(SymbolInfo symbolInfo)
+        {
+            _symbolInfo = symbolInfo;
         }
         
         private int _selectActorId = 0;
@@ -40,10 +48,6 @@ namespace Ryneus
 
 
         private int _stageSeekIndex = -1; 
-        public int StageSeekIndex
-        {
-            get {return _stageSeekIndex;} set {_stageSeekIndex = value;}
-        }
         
         private bool _needAllTacticsCommand = false;
         public bool NeedAllTacticsCommand => _needAllTacticsCommand;
@@ -425,6 +429,86 @@ namespace Ryneus
                     actor.SetBattleIndex(id);
                 }
             }
+        }
+
+        public List<ListData> SymbolRecords()
+        {
+            var symbolInfos = new List<SymbolInfo>();
+            var symbolInfoList = new List<List<SymbolInfo>>();
+            
+            var stageSeekList = new List<int>();
+            foreach (var symbolInfo in CurrentStage.StageSymbolInfos)
+            {
+                if (!stageSeekList.Contains(symbolInfo.StageSymbolData.Seek))
+                {
+                    stageSeekList.Add(symbolInfo.StageSymbolData.Seek);
+                }
+            }
+            foreach (var stageSeek in stageSeekList)
+            {
+                var list = new List<SymbolInfo>();
+                symbolInfoList.Add(list);
+            }
+            var selectRecords = CurrentStage.SymbolRecordList.FindAll(a => a.StageId == CurrentStage.Id && a.Selected == true);
+            var lastSelectSeek = selectRecords.Count > 0 ? selectRecords.Select(a => a.Seek).Max() : -1;
+            foreach (var stageSymbolInfo in CurrentStage.StageSymbolInfos)
+            {
+                var symbolInfo = new SymbolInfo();
+                symbolInfo.CopyData(stageSymbolInfo);
+                var saveRecord = selectRecords.Find(a => a.IsSameSymbol(stageSymbolInfo.StageSymbolData.StageId,stageSymbolInfo.StageSymbolData.Seek,stageSymbolInfo.StageSymbolData.SeekIndex));
+                symbolInfo.SetSelected(saveRecord != null);
+                //symbolInfo.SetLastSelected(saveRecord != null && lastSelectSeek == symbolInfo.StageSymbolData.Seek);
+                symbolInfo.SetPast(saveRecord == null && stageSymbolInfo.StageSymbolData.Seek <= lastSelectSeek);
+                if (saveRecord != null)
+                {
+                    MakePrizeData(saveRecord,symbolInfo.GetItemInfos);
+                }
+                symbolInfoList[symbolInfo.StageSymbolData.Seek-1].Add(symbolInfo);
+            }
+            // 現在を挿入
+            var seekIndex = CurrentStage.CurrentTurn;
+            var currentSymbol = new StageSymbolData();
+            currentSymbol.Seek = seekIndex;
+            currentSymbol.SeekIndex = 0;
+            currentSymbol.SymbolType = SymbolType.None;
+            var currentInfo = new SymbolInfo(currentSymbol);
+            currentInfo.SetLastSelected(true);
+            var currentList = new List<SymbolInfo>(){currentInfo};
+            symbolInfoList.Insert(seekIndex-1,currentList);
+            return MakeListData(symbolInfoList);
+        }
+
+        public int PartyEvaluate()
+        {
+            var evaluate = 0;
+            foreach (var actorInfo in BattleMembers())
+            {
+                evaluate += actorInfo.Evaluate();
+            }
+            return evaluate;
+        }
+
+        public int TroopEvaluate()
+        {
+            if (_stageSeekIndex >= 0)
+            {
+                var symbol = CurrentStage.CurrentSelectSymbol();
+                if (symbol != null && symbol.SymbolType == SymbolType.Battle || symbol.SymbolType == SymbolType.Boss)
+                {
+                    return symbol.BattleEvaluate();
+                }
+            }
+            return 0;
+        }
+
+        public List<ListData> ParallelCommand()
+        {
+            return MakeListData(BaseConfirmCommand(23050,23040));
+        }
+        
+        public bool CanParallel()
+        {
+            return PartyInfo.Currency >= PartyInfo.ParallelCost();
         }
 
         public void ResetBattlerIndex()

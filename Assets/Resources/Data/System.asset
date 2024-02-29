@@ -33,10 +33,6 @@ MonoBehaviour:
     Key: STATUS
     Name: "\u30AD\u30E3\u30E9"
     Help: "\u30AD\u30E3\u30E9\u306E\u30B9\u30C6\u30FC\u30BF\u30B9\u3084\u9B54\u6CD5\u3092\u78BA\u8A8D\u3057\u307E\u3059"
-  - Id: 6
-    Key: SYMBOL
-    Name: "\u30B9\u30C6\u30FC\u30B8"
-    Help: "\u30B9\u30C6\u30FC\u30B8\u306E\u69CB\u6210\u3092\u78BA\u8A8D\u3057\u307E\u3059"
   StatusCommandData:
   - Id: 1
     Key: SKILLLIST
@@ -360,6 +356,9 @@ MonoBehaviour:
     Help: '""'
   - Id: 369
     Text: F
+    Help: '""'
+  - Id: 371
+    Text: vs
     Help: '""'
   - Id: 370
     Text: B

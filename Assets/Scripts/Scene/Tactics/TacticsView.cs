@@ -20,6 +20,8 @@ namespace Ryneus
         [SerializeField] private TacticsSymbolList tacticsSymbolList = null;
         [SerializeField] private StageInfoComponent stageInfoComponent = null;
         [SerializeField] private AlcanaInfoComponent alcanaInfoComponent = null;
+        [SerializeField] private BaseList symbolRecordList = null;
+        [SerializeField] private BaseList parallelList = null;
 
         [SerializeField] private TextMeshProUGUI turnText = null;
         [SerializeField] private TextMeshProUGUI numinousText = null;
@@ -41,6 +43,7 @@ namespace Ryneus
         private CommandType _lastCallEventType = CommandType.None;
 
         public SkillInfo SelectMagic => battleSelectCharacter.ActionData;
+        public int ParallelListIndex => parallelList.Index;
 
 
         public override void Initialize()
@@ -70,8 +73,12 @@ namespace Ryneus
                 var eventData = new TacticsViewEvent(CommandType.CommandHelp);
                 _commandData(eventData);
             });
+            symbolRecordList.Initialize();
+            parallelList.Initialize();
             new TacticsPresenter(this);
             selectCharacter.gameObject.SetActive(false);
+            HideSymbolRecord();
+            HideParallelList();
         }
 
         public void StartAnimation()
@@ -261,6 +268,11 @@ namespace Ryneus
         }
 
 
+        public void SetEvaluate(int partyEvaluate,int troopEvaluate)
+        {
+            selectCharacter.SetEvaluate(partyEvaluate,troopEvaluate);
+        }
+
         private void CallActorTrain()
         {
             if (_lastCallEventType != CommandType.None) return;
@@ -372,6 +384,41 @@ namespace Ryneus
             SetHelpInputInfo("ALCHEMY");
         }
 
+        public void SetSymbolRecords(List<ListData> symbolInfos)
+        {
+            if (symbolRecordList.ListDates.Count > 0)
+            {
+                return;
+            }
+            symbolRecordList.SetData(symbolInfos);
+            var SymbolRecordDates = symbolRecordList.GetComponentsInChildren<SymbolRecordData>();
+            foreach (var SymbolRecordData in SymbolRecordDates)
+            {
+                SymbolRecordData.SetSymbolItemCallHandler((a) => OnClickSymbol(a));
+            }
+        }
+        
+        private void OnClickSymbol(SymbolInfo symbolInfo)
+        {
+            if (symbolRecordList.ScrollRect.enabled == false) return;
+            if (symbolInfo.SymbolType != SymbolType.None)
+            {
+                var eventData = new TacticsViewEvent(CommandType.SelectRecord);
+                eventData.template = symbolInfo;
+                _commandData(eventData);
+            }
+        }
+
+        public void ShowSymbolRecord()
+        {
+            symbolRecordList.gameObject.SetActive(true);
+        }
+
+        public void HideSymbolRecord()
+        {
+            symbolRecordList.gameObject.SetActive(false);
+        }
+
         private void CallFrontBattleIndex()
         {
             if (_lastCallEventType != CommandType.None) return;
@@ -413,14 +460,18 @@ namespace Ryneus
             if (_lastCallEventType != CommandType.None) return;
             if (tacticsSymbolList.IsSelectSymbol())
             {
-                var listIndex = tacticsSymbolList.Index;
-                if (listIndex > -1)
+                var listData = tacticsSymbolList.ListData;
+                if (listData != null)
                 {
-                    Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
-                    var eventData = new TacticsViewEvent(CommandType.SelectSymbol);
-                    eventData.template = listIndex;
-                    _commandData(eventData);
-                    _lastCallEventType = eventData.commandType;
+                    var data = (SymbolInfo)listData.Data;
+                    if (data != null && data.SymbolType != SymbolType.None)
+                    {
+                        Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
+                        var eventData = new TacticsViewEvent(CommandType.SelectSymbol);
+                        eventData.template = data;
+                        _commandData(eventData);
+                        _lastCallEventType = eventData.commandType;
+                    }
                 }
             } else
             {
@@ -437,32 +488,67 @@ namespace Ryneus
 
         private void OnClickEnemyInfo(int selectIndex = -1)
         {
-            var index = tacticsSymbolList.Index;
-            if (index > -1)
+            var listData = tacticsSymbolList.ListData;
+            if (listData != null)
             {
-                if (selectIndex > -1)
+                var data = (SymbolInfo)listData.Data;
+                if (data != null && data.SymbolType != SymbolType.None)
                 {
-                    index = selectIndex;
+                    Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
+                    var eventData = new TacticsViewEvent(CommandType.CallEnemyInfo);
+                    eventData.template = data;
+                    _commandData(eventData);
                 }
-                var eventData = new TacticsViewEvent(CommandType.CallEnemyInfo);
-                eventData.template = index;
+            }
+        }
+
+        private void OnClickParallel()
+        {
+            var eventData = new TacticsViewEvent(CommandType.Parallel);
+            _commandData(eventData);
+        }
+
+        private void CallSymbolRecord()
+        {
+            var listData = symbolRecordList.ListData;
+            if (listData != null)
+            {
+                Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
+                var eventData = new TacticsViewEvent(CommandType.DecideRecord);
                 _commandData(eventData);
             }
+        }
+
+        public void SetParallelCommand(List<ListData> commands)
+        {
+            parallelList.SetData(commands);
+            parallelList.SetInputHandler(InputKeyType.Cancel,() => CallSymbolRecord());
+            parallelList.SetInputHandler(InputKeyType.Decide,() => OnClickParallel());
+        }
+
+        public void ShowParallelList()
+        {
+            parallelList.gameObject.SetActive(true);
+        }
+
+        public void HideParallelList()
+        {
+            parallelList.gameObject.SetActive(false);
         }
 
         public void ShowSymbolList()
         {
             tacticsSymbolList.gameObject.SetActive(true);
             tacticsSymbolList.ResetInputFrame(1);
-            ChangeBackCommandActive(true);
             SetHelpInputInfo("ENEMY_SELECT");
+            symbolRecordList.ScrollRect.enabled = false;
         }
 
         public void HideSymbolList()
         {
             tacticsSymbolList.gameObject.SetActive(false);
-            ChangeBackCommandActive(false);
             SetHelpInputInfo("TACTICS");
+            symbolRecordList.ScrollRect.enabled = true;
         }
 
         public void SetTurns(int turns)

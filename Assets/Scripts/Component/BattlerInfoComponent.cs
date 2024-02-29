@@ -22,6 +22,7 @@ namespace Ryneus
         [SerializeField] private BattleStateOverlay battleStateOverlay;
         [SerializeField] private CanvasGroup canvasGroup;
         [SerializeField] private TextMeshProUGUI battlePosition;
+        [SerializeField] private TextMeshProUGUI evaluate;
         
         private BattlerInfo _battlerInfo = null;
 
@@ -36,6 +37,10 @@ namespace Ryneus
             } else
             {
                 enemyInfoComponent.UpdateInfo(battlerInfo);
+            }
+            if (evaluate != null)
+            {
+                evaluate.text = battlerInfo.Evaluate().ToString();
             }
         }
 

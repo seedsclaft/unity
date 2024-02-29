@@ -1938,8 +1938,8 @@ GameObject:
   - component: {fileID: 8721154197761516505}
   - component: {fileID: 1116801873639238952}
   - component: {fileID: 6802800820925126921}
-  - component: {fileID: 1796060761580203553}
   - component: {fileID: 7521636968366711945}
+  - component: {fileID: 5688491686244013857}
   m_Layer: 5
   m_Name: TacticsSymbol
   m_TagString: Untagged
@@ -2105,7 +2105,19 @@ MonoBehaviour:
   evaluate: {fileID: 3288762194821435160}
   selected: {fileID: 0}
   lastSelected: {fileID: 0}
---- !u!95 &1796060761580203553
+--- !u!225 &7521636968366711945
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7418961508802935381}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
+--- !u!95 &5688491686244013857
 Animator:
   serializedVersion: 5
   m_ObjectHideFlags: 0
@@ -2126,18 +2138,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!225 &7521636968366711945
-CanvasGroup:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7418961508802935381}
-  m_Enabled: 1
-  m_Alpha: 1
-  m_Interactable: 1
-  m_BlocksRaycasts: 1
-  m_IgnoreParentGroups: 0
 --- !u!1 &8497871275935186191
 GameObject:
   m_ObjectHideFlags: 0

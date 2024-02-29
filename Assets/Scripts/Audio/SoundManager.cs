@@ -191,7 +191,7 @@ namespace Ryneus
             {
                 playVolume = 0;
             }
-            playTrack.FadeVolume((int)playVolume,1);
+            playTrack.FadeVolume(playVolume,1);
         }
 
         public void StopBgm()

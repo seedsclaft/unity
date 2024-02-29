@@ -55,9 +55,15 @@ namespace Ryneus
         {
             if (commandTitle != null)
             {
-                var textId = 40 + (int)_symbolInfo.SymbolType;
-                commandTitle.text = DataSystem.System.GetTextData(textId).Text;
-                commandTitle.transform.parent.gameObject.SetActive(!_symbolInfo.Past);
+                if (_symbolInfo.SymbolType != SymbolType.None)
+                {
+                    var textId = 40 + (int)_symbolInfo.SymbolType;
+                    commandTitle.text = DataSystem.System.GetTextData(textId).Text;
+                    commandTitle.transform.parent.gameObject.SetActive(!_symbolInfo.Past);
+                } else
+                {
+                    commandTitle.transform.parent.gameObject.SetActive(false);
+                }
             }
         }
 

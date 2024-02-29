@@ -9,6 +9,7 @@ namespace Ryneus
     {
         [SerializeField] private List<SymbolComponent> symbolComponents;
 
+        private bool _isButtonInit = false;
         public void UpdateViewItem()
         {
             if (ListData == null) return;
@@ -30,6 +31,8 @@ namespace Ryneus
 
         public void SetSymbolItemCallHandler(System.Action<SymbolInfo> handler)
         {
+            if (_isButtonInit) return;
+            _isButtonInit = true;
             foreach (var symbolComponent in symbolComponents)
             {
                 var button = symbolComponent.GetComponentInChildren<Button>();

@@ -89,9 +89,9 @@ namespace Ryneus
             return false;
         }
 
-        public void FadeVolume(int targetVolume,int duration)
+        public void FadeVolume(float targetVolume,int duration)
         {
-            _audioSource.DOFade( targetVolume, duration );
+            _audioSource.DOFade(targetVolume, duration);
         }
     }
 }

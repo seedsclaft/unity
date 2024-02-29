@@ -12,11 +12,11 @@ namespace Ryneus
 {
   public class IntroLoopAudio : MonoBehaviour
   {
-    private AudioSourceController _introAudioSource;
+    [SerializeField] private AudioSourceController _introAudioSource;
 
     /// <summary>BGM のループ部分の AudioSource。</summary>
-    private AudioSourceController _loopAudioSource = null;
-    private AudioSourceController _loopWebGLAudioSource = null;
+    [SerializeField] private AudioSourceController _loopAudioSource = null;
+    [SerializeField] private AudioSourceController _loopWebGLAudioSource = null;
 
     /// <summary>一時停止中かどうか。</summary>
     private bool _isPause;
@@ -25,13 +25,13 @@ namespace Ryneus
     private int _nowPlayIndex = -1;
 
     private float _reservedTime = 44100;
-
+/*
     /// <summary>再生中であるかどうか。一時停止、非アクティブの場合は false を返す。</summary>
     public bool IsPlaying
       => (_introAudioSource.isPlaying() || _introAudioSource.timeSamples() > 0)
         || (_loopAudioSource.isPlaying() || _loopAudioSource.timeSamples() > 0)
         || (_loopWebGLAudioSource != null && (_loopWebGLAudioSource.isPlaying() || _loopWebGLAudioSource.timeSamples() > 0));
-
+*/
   /*
     /// <summary>現在アクティブで再生しているループ側の AudioSource。</summary>
     private AudioSource LoopAudioSourceActive
@@ -52,9 +52,10 @@ namespace Ryneus
       {
         return -1;
       }
-      if (_introAudioSource.timeSamples() > 0)
+      var timeSamples = _introAudioSource.timeSamples();
+      if (timeSamples > 0)
       {
-        return _introAudioSource.timeSamples() / _introAudioSource.Clip.length;
+        return timeSamples / _introAudioSource.Clip.length;
       }
       return -1;
     }
@@ -71,12 +72,9 @@ namespace Ryneus
     void Awake()
     {
       // AudioSource を自身に追加
-      _introAudioSource = gameObject.AddComponent<AudioSourceController>();
       _introAudioSource.Initialize();
-      _loopAudioSource = gameObject.AddComponent<AudioSourceController>();
       _loopAudioSource.Initialize();
   #if UNITY_WEBGL
-      _loopWebGLAudioSource = gameObject.AddComponent<AudioSourceController>();
       _loopWebGLAudioSource.Initialize();
   #endif
     }
@@ -244,7 +242,7 @@ namespace Ryneus
       if (_loopWebGLAudioSource != null) _loopWebGLAudioSource.ChangeVolume(volume);
     }
 
-    public void FadeVolume(int targetVolume,int duration)
+    public void FadeVolume(float targetVolume,int duration)
     {
       if (_introAudioSource == null || _loopAudioSource == null) return;
       if (_introAudioSource.isPlaying())

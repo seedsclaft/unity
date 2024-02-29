@@ -30,4 +30,5 @@ public enum SEType {
     Heal,
     Buff,
     DeBuff,
+    BattleStart,
 }

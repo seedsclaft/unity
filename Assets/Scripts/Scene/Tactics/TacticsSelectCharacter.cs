@@ -16,6 +16,8 @@ namespace Ryneus
         [SerializeField] private TextMeshProUGUI commandLv;
         [SerializeField] private TextMeshProUGUI commandDescription;
         [SerializeField] private List<GameObject> infoObj;
+        [SerializeField] private TextMeshProUGUI partyEvaluate;
+        [SerializeField] private TextMeshProUGUI troopEvaluate;
         
         public ListData CommandData {
             get {
@@ -44,7 +46,7 @@ namespace Ryneus
             commandList.Activate();
             characterList.SetInputCallHandler((a) => CallCharacterInputHandler(a));
             commandList.SetInputCallHandler((a) => CallCommandInputHandler(a));
-            //infoObj.ForEach(a => a.SetActive(false));
+            infoObj.ForEach(a => a.SetActive(false));
         }
 
         public void SetCharacterData(List<ListData> characterData) {
@@ -136,11 +138,10 @@ namespace Ryneus
                 {
                     displaySelectCharacter.gameObject.SetActive(true);
                     displaySelectCharacter.UpdateInfo(tacticsActorInfo.ActorInfo,tacticsActorInfo.ActorInfos);
-                    /*
+                    
                     infoObj.ForEach(a => a.gameObject.SetActive(false));
                     infoObj[(int)tacticsActorInfo.TacticsCommandType-1].SetActive(true);
-                    infoObj[(int)tacticsActorInfo.TacticsCommandType-1].GetComponent<ActorInfoComponent>().UpdateInfo(tacticsActorInfo.ActorInfo,tacticsActorInfo.ActorInfos);
-                    */
+                    //infoObj[(int)tacticsActorInfo.TacticsCommandType-1].GetComponent<ActorInfoComponent>().UpdateInfo(tacticsActorInfo.ActorInfo,tacticsActorInfo.ActorInfos);
                 }
             }
         }
@@ -197,6 +198,12 @@ namespace Ryneus
         {
             characterList.UpdateAllItems();
             DisplaySelectCharacter();
+        }
+
+        public void SetEvaluate(int value,int value2)
+        {
+            partyEvaluate?.SetText(DataSystem.GetReplaceDecimalText(value).ToString());
+            troopEvaluate?.SetText(DataSystem.GetReplaceDecimalText(value2).ToString());
         }
 
         public void ShowCharacterList()
