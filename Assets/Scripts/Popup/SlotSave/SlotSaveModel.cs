@@ -4,23 +4,26 @@ using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using System.Threading;
 
-public class SlotSaveModel : BaseModel
+namespace Ryneus
 {
-    public SlotInfo CurrentSlotInfo = null;
-    private SlotInfo _baseSlotInfo = null;
-    public SlotInfo BaseSlotInfo => _baseSlotInfo;
-    public List<ListData> SlotList()
+    public class SlotSaveModel : BaseModel
     {
-        return MakeListData(CurrentData.PlayerInfo.SlotSaveList);
-    }
+        public SlotInfo CurrentSlotInfo = null;
+        private SlotInfo _baseSlotInfo = null;
+        public SlotInfo BaseSlotInfo => _baseSlotInfo;
+        public List<ListData> SlotList()
+        {
+            return MakeListData(CurrentData.PlayerInfo.SlotSaveList);
+        }
 
-    public void SetBaseSlotSaveInfo(SlotInfo slotInfo)
-    {
-        _baseSlotInfo = slotInfo;
-    }
+        public void SetBaseSlotSaveInfo(SlotInfo slotInfo)
+        {
+            _baseSlotInfo = slotInfo;
+        }
 
-    public void SaveSlotInfo(int slotId)
-    {
-        CurrentData.PlayerInfo.SaveSlotData(slotId,CurrentSlotInfo);
+        public void SaveSlotInfo(int slotId)
+        {
+            CurrentData.PlayerInfo.SaveSlotData(slotId,CurrentSlotInfo);
+        }
     }
 }

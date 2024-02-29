@@ -3,489 +3,492 @@ using System.Collections.Generic;
 using UnityEngine;
 using Utage;
 
-public class GameSystem : MonoBehaviour
+namespace Ryneus
 {
-    [SerializeField] private string version = "";
-    [SerializeField] private bool testMode = false;
-    [SerializeField] private SceneAssign sceneAssign = null;
-    [SerializeField] private PopupAssign popupAssign = null;
-    [SerializeField] private StatusAssign statusAssign = null;
-    [SerializeField] private ConfirmAssign confirmAssign = null;
-
-    [SerializeField] private GameObject transitionRoot = null;
-    [SerializeField] private Fade transitionFade = null;
-    [SerializeField] private LoadingView loadingView = null;
-    [SerializeField] private AdvEngine advEngine = null;
-    [SerializeField] private AdvController advController = null;
-
-    [SerializeField] private DebugBattleData debugBattleData = null;
-    [SerializeField] private HelpWindow helpWindow = null;
-    [SerializeField] private HelpWindow advHelpWindow = null;
-    [SerializeField] private TutorialView tutorialView = null;
-    
-    private BaseView _currentScene = null;
-
-    private BaseModel _model = null;
-    
-    public static SaveInfo CurrentData = null;
-    public static SaveStageInfo CurrentStageData = null;
-    public static SaveConfigInfo ConfigData = null;
-    public static TempInfo TempData = null;
-
-    private bool _busy = false;
-    public bool Busy => _busy;
-
-    public static string Version;
-    public static DebugBattleData DebugBattleData;
-
-    private static SceneStackManager _sceneStackManager = new SceneStackManager();
-    public static SceneStackManager SceneStackManager => _sceneStackManager;
-
-
-    private void Awake() 
+    public class GameSystem : MonoBehaviour
     {
-#if (UNITY_WEBGL || UNITY_ANDROID) && !UNITY_EDITOR
-        FirebaseController.Instance.Initialize();
-#endif
-        Application.targetFrameRate = 60;
-        advController.Initialize();
-        advController.SetHelpWindow(advHelpWindow);
-        transitionRoot.SetActive(false);
-        loadingView.Initialize();
-        loadingView.gameObject.SetActive(false);
-        tutorialView.Initialize();
-        tutorialView.HideFocusImage();
-        transitionFade.Init();
-        statusAssign.CloseStatus();
-        TempData = new TempInfo();
-        _model = new BaseModel();
-        GameSystem.Version = version;
-#if UNITY_EDITOR
-        GameSystem.DebugBattleData = debugBattleData;
-#endif
-#if UNITY_ANDROID
-        AdMobController.Instance.Initialize(() => {CommandSceneChange(Scene.Boot);});
-#else
-        CommandSceneChange(new SceneInfo(){ToScene = Scene.Boot});
-#endif
-    }
+        [SerializeField] private string version = "";
+        [SerializeField] private bool testMode = false;
+        [SerializeField] private SceneAssign sceneAssign = null;
+        [SerializeField] private PopupAssign popupAssign = null;
+        [SerializeField] private StatusAssign statusAssign = null;
+        [SerializeField] private ConfirmAssign confirmAssign = null;
 
-    private BaseView CreateStatus(StatusType statusType)
-    {
-        var prefab = statusAssign.CreatePopup(statusType,helpWindow);
-        if (statusType == StatusType.Status)
+        [SerializeField] private GameObject transitionRoot = null;
+        [SerializeField] private Fade transitionFade = null;
+        [SerializeField] private LoadingView loadingView = null;
+        [SerializeField] private AdvEngine advEngine = null;
+        [SerializeField] private AdvController advController = null;
+
+        [SerializeField] private DebugBattleData debugBattleData = null;
+        [SerializeField] private HelpWindow helpWindow = null;
+        [SerializeField] private HelpWindow advHelpWindow = null;
+        [SerializeField] private TutorialView tutorialView = null;
+        
+        private BaseView _currentScene = null;
+
+        private BaseModel _model = null;
+        
+        public static SaveInfo CurrentData = null;
+        public static SaveStageInfo CurrentStageData = null;
+        public static SaveConfigInfo ConfigData = null;
+        public static TempInfo TempData = null;
+
+        private bool _busy = false;
+        public bool Busy => _busy;
+
+        public static string Version;
+        public static DebugBattleData DebugBattleData;
+
+        private static SceneStackManager _sceneStackManager = new SceneStackManager();
+        public static SceneStackManager SceneStackManager => _sceneStackManager;
+
+
+        private void Awake() 
         {
-            prefab.GetComponent<StatusView>().Initialize();
-        } else
-        {
-            prefab.GetComponent<EnemyInfoView>().Initialize();
+    #if (UNITY_WEBGL || UNITY_ANDROID) && !UNITY_EDITOR
+            FirebaseController.Instance.Initialize();
+    #endif
+            Application.targetFrameRate = 60;
+            advController.Initialize();
+            advController.SetHelpWindow(advHelpWindow);
+            transitionRoot.SetActive(false);
+            loadingView.Initialize();
+            loadingView.gameObject.SetActive(false);
+            tutorialView.Initialize();
+            tutorialView.HideFocusImage();
+            transitionFade.Init();
+            statusAssign.CloseStatus();
+            TempData = new TempInfo();
+            _model = new BaseModel();
+            GameSystem.Version = version;
+    #if UNITY_EDITOR
+            GameSystem.DebugBattleData = debugBattleData;
+    #endif
+    #if UNITY_ANDROID
+            AdMobController.Instance.Initialize(() => {CommandSceneChange(Scene.Boot);});
+    #else
+            CommandSceneChange(new SceneInfo(){ToScene = Scene.Boot});
+    #endif
         }
-        return prefab.GetComponent<BaseView>();
-    }
 
-    private void UpdateCommand(ViewEvent viewEvent)
-    {
-        if (_busy){
-            return;
-        }
-        switch (viewEvent.commandType)
+        private BaseView CreateStatus(StatusType statusType)
         {
-            case Base.CommandType.SceneChange:
-                var sceneInfo = (SceneInfo)viewEvent.template; 
-                if (testMode && sceneInfo.ToScene == Scene.Battle)
-                {
-                    if (debugBattleData.AdvName != "")
+            var prefab = statusAssign.CreatePopup(statusType,helpWindow);
+            if (statusType == StatusType.Status)
+            {
+                prefab.GetComponent<StatusView>().Initialize();
+            } else
+            {
+                prefab.GetComponent<EnemyInfoView>().Initialize();
+            }
+            return prefab.GetComponent<BaseView>();
+        }
+
+        private void UpdateCommand(ViewEvent viewEvent)
+        {
+            if (_busy){
+                return;
+            }
+            switch (viewEvent.commandType)
+            {
+                case Base.CommandType.SceneChange:
+                    var sceneInfo = (SceneInfo)viewEvent.template; 
+                    if (testMode && sceneInfo.ToScene == Scene.Battle)
                     {
-                        StartCoroutine(JumpScenarioAsync(debugBattleData.AdvName,null));
-                    } else
-                    {
-                        debugBattleData.MakeBattleActor();
+                        if (debugBattleData.AdvName != "")
+                        {
+                            StartCoroutine(JumpScenarioAsync(debugBattleData.AdvName,null));
+                        } else
+                        {
+                            debugBattleData.MakeBattleActor();
+                            CommandSceneChange(sceneInfo);
+                        }
+                    } else{
                         CommandSceneChange(sceneInfo);
                     }
-                } else{
-                    CommandSceneChange(sceneInfo);
-                }
-                break;
-            case Base.CommandType.CallConfirmView:
-            case Base.CommandType.CallSkillDetailView:
-                CommandConfirmView((ConfirmInfo)viewEvent.template);
-                break;
-            case Base.CommandType.CallCautionView:
-                CommandCautionView((CautionInfo)viewEvent.template);
-                break;
-            case Base.CommandType.ClosePopup:
-                popupAssign.ClosePopup();
-                SetIsNotBusyMainAndStatus();
-                break;
-            case Base.CommandType.CloseConfirm:
-                confirmAssign.CloseConfirm();
-                SetIsNotBusyMainAndStatus();
-                break;
-            case Base.CommandType.CallRulingView:
-                CommandRulingView((System.Action)viewEvent.template);
-                break;
-            case Base.CommandType.CallOptionView:
-                CommandOptionView((System.Action)viewEvent.template);
-                break;
-            case Base.CommandType.CallSideMenu:
-                CommandSideMenu((SideMenuViewInfo)viewEvent.template);
-                break;
-            case Base.CommandType.CallRankingView:
-                CommandRankingView((RankingViewInfo)viewEvent.template);
-                break;
-            case Base.CommandType.CallCreditView:
-                CommandCreditView((System.Action)viewEvent.template);
-                break;
-            case Base.CommandType.CallCharacterListView:
-                CommandCharacterListView((CharacterListInfo)viewEvent.template);
-                break;
-            case Base.CommandType.CallStageSymbolView:
-                CommandCallStageSymbolView((System.Action)viewEvent.template);
-                break;
-            case Base.CommandType.CallHelpView:
-                CommandHelpView((List<ListData>)viewEvent.template);
-                break;
-            case Base.CommandType.CallAlcanaListView:
-                CommandAlcanaListView((System.Action)viewEvent.template);
-                break;
-            case Base.CommandType.CallSlotSaveView:
-                CommandSlotSaveView((SlotSaveViewInfo)viewEvent.template);
-                break;
-            case Base.CommandType.CallStatusView:
-                var statusView = CreateStatus(StatusType.Status) as StatusView;
-                var statusViewInfo = (StatusViewInfo)viewEvent.template;
-                statusView.SetViewInfo(statusViewInfo);
-                statusView.SetEvent((type) => UpdateCommand(type));
-                _currentScene.SetBusy(true);
-                break;
-            case Base.CommandType.CloseStatus:
-                statusAssign.CloseStatus();
-                _currentScene.SetBusy(false);
-                break;
-            case Base.CommandType.CallEnemyInfoView:
-                var enemyInfoView = CreateStatus(StatusType.EnemyDetail) as EnemyInfoView;
-                var enemyStatusInfo = (StatusViewInfo)viewEvent.template;
-                enemyInfoView.Initialize(enemyStatusInfo.EnemyInfos,enemyStatusInfo.IsBattle);
-                enemyInfoView.SetBackEvent(enemyStatusInfo.BackEvent);
-                enemyInfoView.SetEvent((type) => UpdateCommand(type));
-                _currentScene.SetBusy(true);
-                break;
-            case Base.CommandType.CallAdvScene:
-                SetIsBusyMainAndStatus();
-                var advCallInfo = viewEvent.template as AdvCallInfo;
-                if (!this.gameObject.activeSelf)
-                {
-                    this.gameObject.SetActive(true);
-                }
-                //_currentScene.SetActiveUi(false);
-                StartCoroutine(JumpScenarioAsync(advCallInfo.Label,advCallInfo.CallEvent));
-                break;
-            case Base.CommandType.DecidePlayerName:
-                string playerName = (string)advEngine.Param.GetParameter("PlayerName");
-                advEngine.Param.SetParameterString("PlayerName",(string)viewEvent.template);
-                break;
-            case Base.CommandType.CallLoading:
-                loadingView.gameObject.SetActive(true);
-                SetIsBusyMainAndStatus();
-                break;
-            case Base.CommandType.CloseLoading:
-                loadingView.gameObject.SetActive(false);
-                SetIsNotBusyMainAndStatus();
-                break;
-            case Base.CommandType.SetRouteSelect:
-                int routeSelect = (int)advEngine.Param.GetParameter("RouteSelect");
-                CurrentStageData.CurrentStage.SetRouteSelect(routeSelect);
-                break;
-            case Base.CommandType.ChangeViewToTransition:
-                transitionRoot.SetActive(true);
-                _currentScene.gameObject.transform.SetParent(transitionRoot.transform, false);
-                _currentScene = null;
-                break;
-            case Base.CommandType.StartTransition:
-                transitionFade.FadeIn(0.8f,() => {
-                    foreach(Transform child in transitionRoot.transform){
-                        var endEvent = (System.Action)viewEvent.template;
-                        if ((System.Action)viewEvent.template != null) endEvent();
-                        Destroy(child.gameObject);
-                        transitionFade.FadeOut(0);
-                        transitionRoot.SetActive(false);
+                    break;
+                case Base.CommandType.CallConfirmView:
+                case Base.CommandType.CallSkillDetailView:
+                    CommandConfirmView((ConfirmInfo)viewEvent.template);
+                    break;
+                case Base.CommandType.CallCautionView:
+                    CommandCautionView((CautionInfo)viewEvent.template);
+                    break;
+                case Base.CommandType.ClosePopup:
+                    popupAssign.ClosePopup();
+                    SetIsNotBusyMainAndStatus();
+                    break;
+                case Base.CommandType.CloseConfirm:
+                    confirmAssign.CloseConfirm();
+                    SetIsNotBusyMainAndStatus();
+                    break;
+                case Base.CommandType.CallRulingView:
+                    CommandRulingView((System.Action)viewEvent.template);
+                    break;
+                case Base.CommandType.CallOptionView:
+                    CommandOptionView((System.Action)viewEvent.template);
+                    break;
+                case Base.CommandType.CallSideMenu:
+                    CommandSideMenu((SideMenuViewInfo)viewEvent.template);
+                    break;
+                case Base.CommandType.CallRankingView:
+                    CommandRankingView((RankingViewInfo)viewEvent.template);
+                    break;
+                case Base.CommandType.CallCreditView:
+                    CommandCreditView((System.Action)viewEvent.template);
+                    break;
+                case Base.CommandType.CallCharacterListView:
+                    CommandCharacterListView((CharacterListInfo)viewEvent.template);
+                    break;
+                case Base.CommandType.CallStageSymbolView:
+                    CommandCallStageSymbolView((System.Action)viewEvent.template);
+                    break;
+                case Base.CommandType.CallHelpView:
+                    CommandHelpView((List<ListData>)viewEvent.template);
+                    break;
+                case Base.CommandType.CallAlcanaListView:
+                    CommandAlcanaListView((System.Action)viewEvent.template);
+                    break;
+                case Base.CommandType.CallSlotSaveView:
+                    CommandSlotSaveView((SlotSaveViewInfo)viewEvent.template);
+                    break;
+                case Base.CommandType.CallStatusView:
+                    var statusView = CreateStatus(StatusType.Status) as StatusView;
+                    var statusViewInfo = (StatusViewInfo)viewEvent.template;
+                    statusView.SetViewInfo(statusViewInfo);
+                    statusView.SetEvent((type) => UpdateCommand(type));
+                    _currentScene.SetBusy(true);
+                    break;
+                case Base.CommandType.CloseStatus:
+                    statusAssign.CloseStatus();
+                    _currentScene.SetBusy(false);
+                    break;
+                case Base.CommandType.CallEnemyInfoView:
+                    var enemyInfoView = CreateStatus(StatusType.EnemyDetail) as EnemyInfoView;
+                    var enemyStatusInfo = (StatusViewInfo)viewEvent.template;
+                    enemyInfoView.Initialize(enemyStatusInfo.EnemyInfos,enemyStatusInfo.IsBattle);
+                    enemyInfoView.SetBackEvent(enemyStatusInfo.BackEvent);
+                    enemyInfoView.SetEvent((type) => UpdateCommand(type));
+                    _currentScene.SetBusy(true);
+                    break;
+                case Base.CommandType.CallAdvScene:
+                    SetIsBusyMainAndStatus();
+                    var advCallInfo = viewEvent.template as AdvCallInfo;
+                    if (!this.gameObject.activeSelf)
+                    {
+                        this.gameObject.SetActive(true);
                     }
-                });
-                break;
-            case Base.CommandType.CallTutorialFocus:
-                var stageTutorialData = (StageTutorialData)viewEvent.template;
-                tutorialView.SeekFocusImage(stageTutorialData);
-                break;
-            case Base.CommandType.CloseTutorialFocus:
-                tutorialView.HideFocusImage();
-                break;
-            case Base.CommandType.SceneHideUI:
-                SceneHideUI();
-                break;
-            case Base.CommandType.SceneShowUI:
-                SceneShowUI();
-                break;
-        }
-    }
-
-    private void CommandConfirmView(ConfirmInfo confirmInfo)
-    {
-        var prefab = confirmAssign.CreateConfirm(confirmInfo.ConfirmType,helpWindow);
-        var confirmView = prefab.GetComponent<ConfirmView>();
-        confirmView.Initialize();
-        confirmView.SetViewInfo(confirmInfo);
-        SetIsBusyMainAndStatus();
-    }
-
-    private void CommandCautionView(CautionInfo confirmInfo)
-    {
-        var prefab = confirmAssign.CreateConfirm(ConfirmType.Caution,helpWindow);
-        var confirmView = prefab.GetComponent<CautionView>();
-        confirmView.Initialize();
-        if (confirmInfo.Title != null)
-        {
-            confirmView.SetTitle(confirmInfo.Title);
-        }
-        if (confirmInfo.From > 0 && confirmInfo.To > 0 )
-        {
-            confirmView.SetLevelup(confirmInfo.From,confirmInfo.To);
-        }
-        SetIsBusyMainAndStatus();
-    }
-
-    private void CommandRulingView(System.Action endEvent)
-    {
-        var prefab = popupAssign.CreatePopup(PopupType.Ruling,helpWindow);
-        var rulingView = prefab.GetComponent<RulingView>();
-        rulingView.Initialize();
-        rulingView.SetBackEvent(() => 
-        {
-            UpdateCommand(new ViewEvent(Base.CommandType.ClosePopup));
-            if (endEvent != null) endEvent();
-        });
-        SetIsBusyMainAndStatus();
-    }
-    
-    private void CommandOptionView(System.Action endEvent)
-    {
-        var prefab = popupAssign.CreatePopup(PopupType.Option,helpWindow);
-        var optionView = prefab.GetComponent<OptionView>();
-        optionView.Initialize();
-        optionView.SetBackEvent(() => 
-        {
-            GameSystem.ConfigData.UpdateSoundParameter(
-                Ryneus.SoundManager.Instance.BGMVolume,
-                Ryneus.SoundManager.Instance.BGMMute,
-                Ryneus.SoundManager.Instance.SeVolume,
-                Ryneus.SoundManager.Instance.SeMute
-            );
-            SaveSystem.SaveConfigStart(GameSystem.ConfigData);
-            UpdateCommand(new ViewEvent(Base.CommandType.ClosePopup));
-            if (endEvent != null) endEvent();
-        });
-        optionView.SetEvent((type) => UpdateCommand(type));
-        SetIsBusyMainAndStatus();
-    }
-
-    private void CommandSideMenu(SideMenuViewInfo sideMenuViewInfo)
-    {
-        var prefab = statusAssign.CreatePopup(StatusType.SideMenu,helpWindow);
-        var sideMenuView = prefab.GetComponent<SideMenuView>();
-        sideMenuView.Initialize();
-        sideMenuView.SetEvent((type) => UpdateCommand(type));
-        sideMenuView.SetBackEvent(() => 
-        {
-            UpdateCommand(new ViewEvent(Base.CommandType.CloseStatus));
-            if (sideMenuViewInfo.EndEvent != null) sideMenuViewInfo.EndEvent();
-        });
-        sideMenuView.SetSideMenuViewInfo(sideMenuViewInfo);
-        SetIsBusyMainAndStatus();
-    }
-    
-    private void CommandRankingView(RankingViewInfo rankingViewInfo)
-    {
-        var prefab = popupAssign.CreatePopup(PopupType.Ranking,helpWindow);
-        var rankingView = prefab.GetComponent<RankingView>();
-        rankingView.Initialize();
-        rankingView.SetEvent((type) => UpdateCommand(type));
-        rankingView.SetRankingViewInfo(rankingViewInfo);
-        rankingView.SetBackEvent(() => 
-        {
-            UpdateCommand(new ViewEvent(Base.CommandType.ClosePopup));
-            if (rankingViewInfo.EndEvent != null) rankingViewInfo.EndEvent();
-        });
-        SetIsBusyMainAndStatus();
-    }
-
-    private void CommandCreditView(System.Action endEvent)
-    {
-        var prefab = popupAssign.CreatePopup(PopupType.Credit,helpWindow);
-        var creditView = prefab.GetComponent<CreditView>();
-        creditView.Initialize();
-        creditView.SetBackEvent(() => 
-        {
-            UpdateCommand(new ViewEvent(Base.CommandType.ClosePopup));
-            if (endEvent != null) endEvent();
-        });
-        SetIsBusyMainAndStatus();
-    }
-
-    private void CommandCharacterListView(CharacterListInfo characterListInfo)
-    {
-        var prefab = popupAssign.CreatePopup(PopupType.CharacterList,helpWindow);
-        var characterListView = prefab.GetComponent<CharacterListView>();
-        characterListView.Initialize();
-        characterListView.SetViewInfo(characterListInfo);
-        characterListView.SetBackEvent(() => 
-        {
-            if (characterListInfo.BackEvent != null)
-            {
-                characterListInfo.BackEvent();
+                    //_currentScene.SetActiveUi(false);
+                    StartCoroutine(JumpScenarioAsync(advCallInfo.Label,advCallInfo.CallEvent));
+                    break;
+                case Base.CommandType.DecidePlayerName:
+                    string playerName = (string)advEngine.Param.GetParameter("PlayerName");
+                    advEngine.Param.SetParameterString("PlayerName",(string)viewEvent.template);
+                    break;
+                case Base.CommandType.CallLoading:
+                    loadingView.gameObject.SetActive(true);
+                    SetIsBusyMainAndStatus();
+                    break;
+                case Base.CommandType.CloseLoading:
+                    loadingView.gameObject.SetActive(false);
+                    SetIsNotBusyMainAndStatus();
+                    break;
+                case Base.CommandType.SetRouteSelect:
+                    int routeSelect = (int)advEngine.Param.GetParameter("RouteSelect");
+                    CurrentStageData.CurrentStage.SetRouteSelect(routeSelect);
+                    break;
+                case Base.CommandType.ChangeViewToTransition:
+                    transitionRoot.SetActive(true);
+                    _currentScene.gameObject.transform.SetParent(transitionRoot.transform, false);
+                    _currentScene = null;
+                    break;
+                case Base.CommandType.StartTransition:
+                    transitionFade.FadeIn(0.8f,() => {
+                        foreach(Transform child in transitionRoot.transform){
+                            var endEvent = (System.Action)viewEvent.template;
+                            if ((System.Action)viewEvent.template != null) endEvent();
+                            Destroy(child.gameObject);
+                            transitionFade.FadeOut(0);
+                            transitionRoot.SetActive(false);
+                        }
+                    });
+                    break;
+                case Base.CommandType.CallTutorialFocus:
+                    var stageTutorialData = (StageTutorialData)viewEvent.template;
+                    tutorialView.SeekFocusImage(stageTutorialData);
+                    break;
+                case Base.CommandType.CloseTutorialFocus:
+                    tutorialView.HideFocusImage();
+                    break;
+                case Base.CommandType.SceneHideUI:
+                    SceneHideUI();
+                    break;
+                case Base.CommandType.SceneShowUI:
+                    SceneShowUI();
+                    break;
             }
-            UpdateCommand(new ViewEvent(Base.CommandType.ClosePopup));
-        });
-        SetIsBusyMainAndStatus();
-    }
-
-    private void CommandCallStageSymbolView(System.Action endEvent)
-    {
-        var prefab = popupAssign.CreatePopup(PopupType.StageSymbol,helpWindow);
-        var stageSymbolView = prefab.GetComponent<StageSymbolView>();
-        stageSymbolView.Initialize();
-        stageSymbolView.SetEvent((type) => UpdateCommand(type));
-        stageSymbolView.SetBackEvent(() => 
-        {
-            UpdateCommand(new ViewEvent(Base.CommandType.ClosePopup));
-            if (endEvent != null) endEvent();
-        });
-        SetIsBusyMainAndStatus();
-    }
-
-    private void CommandHelpView(List<ListData> helpTextList)
-    {
-        var prefab = popupAssign.CreatePopup(PopupType.Help,helpWindow);
-        var characterListView = prefab.GetComponent<HelpView>();
-        characterListView.Initialize();
-        characterListView.SetHelp(helpTextList);
-        characterListView.SetBackEvent(() => 
-        {
-            UpdateCommand(new ViewEvent(Base.CommandType.ClosePopup));
-        });
-        SetIsBusyMainAndStatus();
-    }
-
-    private void CommandAlcanaListView(System.Action endEvent)
-    {
-        var prefab = popupAssign.CreatePopup(PopupType.AlcanaList,helpWindow);
-        var characterListView = prefab.GetComponent<AlcanaListView>();
-        characterListView.Initialize();
-        characterListView.SetBackEvent(() => 
-        {
-            UpdateCommand(new ViewEvent(Base.CommandType.ClosePopup));
-            if (endEvent != null) endEvent();
-        });
-        SetIsBusyMainAndStatus();
-    }
-
-    private void CommandSlotSaveView(SlotSaveViewInfo slotSaveViewInfo)
-    {
-        var prefab = popupAssign.CreatePopup(PopupType.SlotSave,helpWindow);
-        var slotSaveView = prefab.GetComponent<SlotSaveView>();
-        slotSaveView.Initialize();
-        slotSaveView.SetBackEvent(() => 
-        {
-            UpdateCommand(new ViewEvent(Base.CommandType.ClosePopup));
-            if (slotSaveViewInfo.EndEvent != null) slotSaveViewInfo.EndEvent();
-        });
-        slotSaveView.SetEvent((type) => UpdateCommand(type));
-        slotSaveView.SetSlotSaveViewInfo(slotSaveViewInfo);
-        SetIsBusyMainAndStatus();
-    }
-
-    IEnumerator JumpScenarioAsync(string label, System.Action onComplete)
-    {
-        _busy = true;
-        advHelpWindow.SetInputInfo("ADV_READING");
-        while (advEngine.IsWaitBootLoading) yield return null;
-        while (advEngine.IsLoading) yield return null;
-        advEngine.JumpScenario(label);
-        advEngine.Config.IsSkip = ConfigData.EventSkipIndex;
-        advController.StartAdv();
-        while (!advEngine.IsEndOrPauseScenario)
-        {
-            yield return null;
         }
-        SetIsNotBusyMainAndStatus();
-        advController.EndAdv();
-        advHelpWindow.SetInputInfo("");
+
+        private void CommandConfirmView(ConfirmInfo confirmInfo)
+        {
+            var prefab = confirmAssign.CreateConfirm(confirmInfo.ConfirmType,helpWindow);
+            var confirmView = prefab.GetComponent<ConfirmView>();
+            confirmView.Initialize();
+            confirmView.SetViewInfo(confirmInfo);
+            SetIsBusyMainAndStatus();
+        }
+
+        private void CommandCautionView(CautionInfo confirmInfo)
+        {
+            var prefab = confirmAssign.CreateConfirm(ConfirmType.Caution,helpWindow);
+            var confirmView = prefab.GetComponent<CautionView>();
+            confirmView.Initialize();
+            if (confirmInfo.Title != null)
+            {
+                confirmView.SetTitle(confirmInfo.Title);
+            }
+            if (confirmInfo.From > 0 && confirmInfo.To > 0 )
+            {
+                confirmView.SetLevelup(confirmInfo.From,confirmInfo.To);
+            }
+            SetIsBusyMainAndStatus();
+        }
+
+        private void CommandRulingView(System.Action endEvent)
+        {
+            var prefab = popupAssign.CreatePopup(PopupType.Ruling,helpWindow);
+            var rulingView = prefab.GetComponent<RulingView>();
+            rulingView.Initialize();
+            rulingView.SetBackEvent(() => 
+            {
+                UpdateCommand(new ViewEvent(Base.CommandType.ClosePopup));
+                if (endEvent != null) endEvent();
+            });
+            SetIsBusyMainAndStatus();
+        }
         
-        //_currentScene.SetActiveUi(true);
-        _busy = false;
-        if(onComplete != null) onComplete();
-    }
-
-    private void CommandSceneChange(SceneInfo sceneInfo)
-    {
-        if (_currentScene != null)
-        { 
-            Destroy(_currentScene.gameObject);
-            ResourceSystem.ReleaseAssets();
-            ResourceSystem.ReleaseScene();
-            Resources.UnloadUnusedAssets();
-        }
-        if (sceneInfo.SceneChangeType == SceneChangeType.Pop)
+        private void CommandOptionView(System.Action endEvent)
         {
-            sceneInfo.FromScene = _sceneStackManager.LastScene;
-            sceneInfo.ToScene = _sceneStackManager.LastScene;
-        } else
-        {
-            sceneInfo.FromScene = _sceneStackManager.Current;
+            var prefab = popupAssign.CreatePopup(PopupType.Option,helpWindow);
+            var optionView = prefab.GetComponent<OptionView>();
+            optionView.Initialize();
+            optionView.SetBackEvent(() => 
+            {
+                GameSystem.ConfigData.UpdateSoundParameter(
+                    Ryneus.SoundManager.Instance.BGMVolume,
+                    Ryneus.SoundManager.Instance.BGMMute,
+                    Ryneus.SoundManager.Instance.SeVolume,
+                    Ryneus.SoundManager.Instance.SeMute
+                );
+                SaveSystem.SaveConfigStart(GameSystem.ConfigData);
+                UpdateCommand(new ViewEvent(Base.CommandType.ClosePopup));
+                if (endEvent != null) endEvent();
+            });
+            optionView.SetEvent((type) => UpdateCommand(type));
+            SetIsBusyMainAndStatus();
         }
-        var prefab = sceneAssign.CreateScene(sceneInfo.ToScene,helpWindow);
-        _currentScene = prefab.GetComponent<BaseView>();
-        _currentScene.SetTestMode(testMode);
-        _currentScene.SetBattleTestMode(debugBattleData.TestBattle);
-        _currentScene.SetEvent((type) => UpdateCommand(type));
-        _sceneStackManager.PushSceneInfo(sceneInfo);
-        _currentScene.Initialize();
-        tutorialView.HideFocusImage();
+
+        private void CommandSideMenu(SideMenuViewInfo sideMenuViewInfo)
+        {
+            var prefab = statusAssign.CreatePopup(StatusType.SideMenu,helpWindow);
+            var sideMenuView = prefab.GetComponent<SideMenuView>();
+            sideMenuView.Initialize();
+            sideMenuView.SetEvent((type) => UpdateCommand(type));
+            sideMenuView.SetBackEvent(() => 
+            {
+                UpdateCommand(new ViewEvent(Base.CommandType.CloseStatus));
+                if (sideMenuViewInfo.EndEvent != null) sideMenuViewInfo.EndEvent();
+            });
+            sideMenuView.SetSideMenuViewInfo(sideMenuViewInfo);
+            SetIsBusyMainAndStatus();
+        }
+        
+        private void CommandRankingView(RankingViewInfo rankingViewInfo)
+        {
+            var prefab = popupAssign.CreatePopup(PopupType.Ranking,helpWindow);
+            var rankingView = prefab.GetComponent<RankingView>();
+            rankingView.Initialize();
+            rankingView.SetEvent((type) => UpdateCommand(type));
+            rankingView.SetRankingViewInfo(rankingViewInfo);
+            rankingView.SetBackEvent(() => 
+            {
+                UpdateCommand(new ViewEvent(Base.CommandType.ClosePopup));
+                if (rankingViewInfo.EndEvent != null) rankingViewInfo.EndEvent();
+            });
+            SetIsBusyMainAndStatus();
+        }
+
+        private void CommandCreditView(System.Action endEvent)
+        {
+            var prefab = popupAssign.CreatePopup(PopupType.Credit,helpWindow);
+            var creditView = prefab.GetComponent<CreditView>();
+            creditView.Initialize();
+            creditView.SetBackEvent(() => 
+            {
+                UpdateCommand(new ViewEvent(Base.CommandType.ClosePopup));
+                if (endEvent != null) endEvent();
+            });
+            SetIsBusyMainAndStatus();
+        }
+
+        private void CommandCharacterListView(CharacterListInfo characterListInfo)
+        {
+            var prefab = popupAssign.CreatePopup(PopupType.CharacterList,helpWindow);
+            var characterListView = prefab.GetComponent<CharacterListView>();
+            characterListView.Initialize();
+            characterListView.SetViewInfo(characterListInfo);
+            characterListView.SetBackEvent(() => 
+            {
+                if (characterListInfo.BackEvent != null)
+                {
+                    characterListInfo.BackEvent();
+                }
+                UpdateCommand(new ViewEvent(Base.CommandType.ClosePopup));
+            });
+            SetIsBusyMainAndStatus();
+        }
+
+        private void CommandCallStageSymbolView(System.Action endEvent)
+        {
+            var prefab = popupAssign.CreatePopup(PopupType.StageSymbol,helpWindow);
+            var stageSymbolView = prefab.GetComponent<StageSymbolView>();
+            stageSymbolView.Initialize();
+            stageSymbolView.SetEvent((type) => UpdateCommand(type));
+            stageSymbolView.SetBackEvent(() => 
+            {
+                UpdateCommand(new ViewEvent(Base.CommandType.ClosePopup));
+                if (endEvent != null) endEvent();
+            });
+            SetIsBusyMainAndStatus();
+        }
+
+        private void CommandHelpView(List<ListData> helpTextList)
+        {
+            var prefab = popupAssign.CreatePopup(PopupType.Help,helpWindow);
+            var characterListView = prefab.GetComponent<HelpView>();
+            characterListView.Initialize();
+            characterListView.SetHelp(helpTextList);
+            characterListView.SetBackEvent(() => 
+            {
+                UpdateCommand(new ViewEvent(Base.CommandType.ClosePopup));
+            });
+            SetIsBusyMainAndStatus();
+        }
+
+        private void CommandAlcanaListView(System.Action endEvent)
+        {
+            var prefab = popupAssign.CreatePopup(PopupType.AlcanaList,helpWindow);
+            var characterListView = prefab.GetComponent<AlcanaListView>();
+            characterListView.Initialize();
+            characterListView.SetBackEvent(() => 
+            {
+                UpdateCommand(new ViewEvent(Base.CommandType.ClosePopup));
+                if (endEvent != null) endEvent();
+            });
+            SetIsBusyMainAndStatus();
+        }
+
+        private void CommandSlotSaveView(SlotSaveViewInfo slotSaveViewInfo)
+        {
+            var prefab = popupAssign.CreatePopup(PopupType.SlotSave,helpWindow);
+            var slotSaveView = prefab.GetComponent<SlotSaveView>();
+            slotSaveView.Initialize();
+            slotSaveView.SetBackEvent(() => 
+            {
+                UpdateCommand(new ViewEvent(Base.CommandType.ClosePopup));
+                if (slotSaveViewInfo.EndEvent != null) slotSaveViewInfo.EndEvent();
+            });
+            slotSaveView.SetEvent((type) => UpdateCommand(type));
+            slotSaveView.SetSlotSaveViewInfo(slotSaveViewInfo);
+            SetIsBusyMainAndStatus();
+        }
+
+        IEnumerator JumpScenarioAsync(string label, System.Action onComplete)
+        {
+            _busy = true;
+            advHelpWindow.SetInputInfo("ADV_READING");
+            while (advEngine.IsWaitBootLoading) yield return null;
+            while (advEngine.IsLoading) yield return null;
+            advEngine.JumpScenario(label);
+            advEngine.Config.IsSkip = ConfigData.EventSkipIndex;
+            advController.StartAdv();
+            while (!advEngine.IsEndOrPauseScenario)
+            {
+                yield return null;
+            }
+            SetIsNotBusyMainAndStatus();
+            advController.EndAdv();
+            advHelpWindow.SetInputInfo("");
+            
+            //_currentScene.SetActiveUi(true);
+            _busy = false;
+            if(onComplete != null) onComplete();
+        }
+
+        private void CommandSceneChange(SceneInfo sceneInfo)
+        {
+            if (_currentScene != null)
+            { 
+                Destroy(_currentScene.gameObject);
+                ResourceSystem.ReleaseAssets();
+                ResourceSystem.ReleaseScene();
+                Resources.UnloadUnusedAssets();
+            }
+            if (sceneInfo.SceneChangeType == SceneChangeType.Pop)
+            {
+                sceneInfo.FromScene = _sceneStackManager.LastScene;
+                sceneInfo.ToScene = _sceneStackManager.LastScene;
+            } else
+            {
+                sceneInfo.FromScene = _sceneStackManager.Current;
+            }
+            var prefab = sceneAssign.CreateScene(sceneInfo.ToScene,helpWindow);
+            _currentScene = prefab.GetComponent<BaseView>();
+            _currentScene.SetTestMode(testMode);
+            _currentScene.SetBattleTestMode(debugBattleData.TestBattle);
+            _currentScene.SetEvent((type) => UpdateCommand(type));
+            _sceneStackManager.PushSceneInfo(sceneInfo);
+            _currentScene.Initialize();
+            tutorialView.HideFocusImage();
+        }
+
+        private void SetIsBusyMainAndStatus()
+        {
+            _currentScene.SetBusy(true);
+            statusAssign.SetBusy(true);
+        }
+
+        private void SetIsNotBusyMainAndStatus()
+        {
+            if (!statusAssign.StatusRoot.gameObject.activeSelf) _currentScene.SetBusy(false);
+            statusAssign.SetBusy(false);
+        }
+
+        private void SceneShowUI()
+        {
+            sceneAssign.ShowUI();
+        }
+
+        private void SceneHideUI()
+        {
+            sceneAssign.HideUI();
+        }
     }
 
-    private void SetIsBusyMainAndStatus()
-    {
-        _currentScene.SetBusy(true);
-        statusAssign.SetBusy(true);
-    }
 
-    private void SetIsNotBusyMainAndStatus()
-    {
-        if (!statusAssign.StatusRoot.gameObject.activeSelf) _currentScene.SetBusy(false);
-        statusAssign.SetBusy(false);
-    }
-
-    private void SceneShowUI()
-    {
-        sceneAssign.ShowUI();
-    }
-
-    private void SceneHideUI()
-    {
-        sceneAssign.HideUI();
-    }
-}
-
-
-public class AdvCallInfo{
-    private string _label;
-    public string Label { get {return _label;}}
-    public void SetLabel(string label)
-    {
-        _label = label;
-    }
-    private System.Action _callEvent;
-    public System.Action CallEvent { get {return _callEvent;}}
-    public void SetCallEvent(System.Action callEvent)
-    {
-        _callEvent = callEvent;
+    public class AdvCallInfo{
+        private string _label;
+        public string Label { get {return _label;}}
+        public void SetLabel(string label)
+        {
+            _label = label;
+        }
+        private System.Action _callEvent;
+        public System.Action CallEvent { get {return _callEvent;}}
+        public void SetCallEvent(System.Action callEvent)
+        {
+            _callEvent = callEvent;
+        }
     }
 }

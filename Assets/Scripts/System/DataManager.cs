@@ -29,7 +29,7 @@ public class DataManager : ScriptableObject
 
     public async UniTask<AudioClip> GetSE(string fileName){
         string sePath = "Assets/Audios/SE/" + fileName + ".ogg";
-        var result = await ResourceSystem.LoadAsset<AudioClip>(sePath);
+        var result = await Ryneus.ResourceSystem.LoadAsset<AudioClip>(sePath);
         return result;
     }
 }

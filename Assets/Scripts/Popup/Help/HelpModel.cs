@@ -1,6 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class HelpModel : BaseModel
+namespace Ryneus
 {
+    public class HelpModel : BaseModel
+    {
+    }
 }

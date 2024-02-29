@@ -2,29 +2,32 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-public class TroopDates : ScriptableObject
+namespace Ryneus
 {
-    [SerializeField] public List<TroopData> Data = new();
-}
+    public class TroopDates : ScriptableObject
+    {
+        [SerializeField] public List<TroopData> Data = new();
+    }
 
-[Serializable]
-public class TroopData
-{   
-    public int TroopId;
-    public List<TroopEnemyData> TroopEnemies;
-    public int StageTurn;
-    public int PrizeSetId;
-}
+    [Serializable]
+    public class TroopData
+    {   
+        public int TroopId;
+        public List<TroopEnemyData> TroopEnemies;
+        public int StageTurn;
+        public int PrizeSetId;
+    }
 
-[Serializable]
-public class TroopEnemyData
-{   
-    public int Id;
+    [Serializable]
+    public class TroopEnemyData
+    {   
+        public int Id;
 
-    public int TroopId;
-    public int EnemyId;
-    public int Lv;
-    public bool BossFlag;
-    public LineType Line;
-    public int PrizeSetId;
+        public int TroopId;
+        public int EnemyId;
+        public int Lv;
+        public bool BossFlag;
+        public LineType Line;
+        public int PrizeSetId;
+    }
 }

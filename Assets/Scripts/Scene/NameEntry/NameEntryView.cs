@@ -5,83 +5,86 @@ using UnityEngine.UI;
 using NameEntry;
 using TMPro;
 
-public class NameEntryView : BaseView, IInputHandlerEvent
+namespace Ryneus
 {
-    [SerializeField] private TMP_InputField inputField = null;
-    [SerializeField] private Button decideButton = null;
-
-    private new System.Action<NameEntryViewEvent> _commandData = null;
-
-    private int _inputLateUpdate = -1;
-    public override void Initialize() 
+    public class NameEntryView : BaseView, IInputHandlerEvent
     {
-        base.Initialize();
-        new NameEntryPresenter(this);
-        decideButton.onClick.AddListener(() => OnClickDecide());
-        inputField.gameObject.SetActive(false);
-        decideButton.gameObject.SetActive(false);
-        SetInputHandler(gameObject.GetComponent<IInputHandlerEvent>());
-    }
+        [SerializeField] private TMP_InputField inputField = null;
+        [SerializeField] private Button decideButton = null;
 
-    public void SetHelpWindow(){
-        HelpWindow.SetHelpText("");
-        HelpWindow.SetInputInfo("");
-    }
+        private new System.Action<NameEntryViewEvent> _commandData = null;
 
-    public void SetEvent(System.Action<NameEntryViewEvent> commandData)
-    {
-        _commandData = commandData;
-    }
-    
-    private void OnClickDecide()
-    {
-        var eventData = new NameEntryViewEvent(CommandType.EntryEnd);
-        eventData.template = inputField.text;
-        _commandData(eventData);
-        if (inputField != null) inputField.gameObject.SetActive(false);
-        if (decideButton != null) decideButton.gameObject.SetActive(false);
-    }
-
-    public void ShowNameEntry(string defaultName){
-        inputField.text = defaultName;
-    }
-
-    public void StartNameEntry(){
-        decideButton.gameObject.SetActive(true);
-        inputField.gameObject.SetActive(true);
-        inputField.Select();
-        _inputLateUpdate = 1;
-        HelpWindow.SetHelpText(DataSystem.GetTextData(5000).Text);
-        HelpWindow.SetInputInfo("NAMEENTRY");
-    }
-
-    public void InputHandler(InputKeyType keyType,bool pressed)
-    {
-        if (inputField.gameObject.activeSelf == true && inputField.IsActive())
+        private int _inputLateUpdate = -1;
+        public override void Initialize() 
         {
-            if (keyType == InputKeyType.Start)
+            base.Initialize();
+            new NameEntryPresenter(this);
+            decideButton.onClick.AddListener(() => OnClickDecide());
+            inputField.gameObject.SetActive(false);
+            decideButton.gameObject.SetActive(false);
+            SetInputHandler(gameObject.GetComponent<IInputHandlerEvent>());
+        }
+
+        public void SetHelpWindow(){
+            HelpWindow.SetHelpText("");
+            HelpWindow.SetInputInfo("");
+        }
+
+        public void SetEvent(System.Action<NameEntryViewEvent> commandData)
+        {
+            _commandData = commandData;
+        }
+        
+        private void OnClickDecide()
+        {
+            var eventData = new NameEntryViewEvent(CommandType.EntryEnd);
+            eventData.template = inputField.text;
+            _commandData(eventData);
+            if (inputField != null) inputField.gameObject.SetActive(false);
+            if (decideButton != null) decideButton.gameObject.SetActive(false);
+        }
+
+        public void ShowNameEntry(string defaultName){
+            inputField.text = defaultName;
+        }
+
+        public void StartNameEntry(){
+            decideButton.gameObject.SetActive(true);
+            inputField.gameObject.SetActive(true);
+            inputField.Select();
+            _inputLateUpdate = 1;
+            HelpWindow.SetHelpText(DataSystem.GetTextData(5000).Text);
+            HelpWindow.SetInputInfo("NAMEENTRY");
+        }
+
+        public void InputHandler(InputKeyType keyType,bool pressed)
+        {
+            if (inputField.gameObject.activeSelf == true && inputField.IsActive())
             {
-                OnClickDecide();
+                if (keyType == InputKeyType.Start)
+                {
+                    OnClickDecide();
+                }
             }
         }
-    }
 
-    private new void Update() {
-        if (_inputLateUpdate > -1)
-        {
-            _inputLateUpdate--;
-            if (_inputLateUpdate == -1)
+        private new void Update() {
+            if (_inputLateUpdate > -1)
             {
-                inputField.MoveTextEnd(true);
+                _inputLateUpdate--;
+                if (_inputLateUpdate == -1)
+                {
+                    inputField.MoveTextEnd(true);
+                }
+            } else{        
+                base.Update();
             }
-        } else{        
-            base.Update();
         }
     }
 }
 
 namespace NameEntry
-{
+    {
     public enum CommandType
     {
         None = 0,

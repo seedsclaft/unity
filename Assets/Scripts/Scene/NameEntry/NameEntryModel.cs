@@ -1,9 +1,13 @@
-public class NameEntryModel : BaseModel
-{
-    public void SetPlayerName(string name)
-    {
-        CurrentData.SetPlayerName(name);
-        SavePlayerData();
-    }
 
+namespace Ryneus
+{
+    public class NameEntryModel : BaseModel
+    {
+        public void SetPlayerName(string name)
+        {
+            CurrentData.SetPlayerName(name);
+            SavePlayerData();
+        }
+
+    }
 }

@@ -4,59 +4,62 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class StageInfoComponent : MonoBehaviour
+namespace Ryneus
 {
-    [SerializeField] private TextMeshProUGUI nameText;
-    [SerializeField] private GameObject achieve;
-    [SerializeField] private TextMeshProUGUI achieveText;
-    [SerializeField] private TextMeshProUGUI help;
-    [SerializeField] private TextMeshProUGUI turns;
-    [SerializeField] private TextMeshProUGUI clearCount;
-    [SerializeField] private TextMeshProUGUI score;
-    [SerializeField] private TextMeshProUGUI scoreMax;
-    [SerializeField] private TextMeshProUGUI stageLv;
-
-    public void UpdateInfo(StageInfo stageInfo)
+    public class StageInfoComponent : MonoBehaviour
     {
-        if (stageInfo == null){
-            return;
-        }
-        var stageData = stageInfo.Master;
-        if (nameText != null){
-            nameText.text = stageData.Name;
-        }
-        if (achieve != null)
-        {
-            achieve.SetActive(stageData.AchieveText != "");
-        }
-        if (achieveText != null){
-            if (stageData.AchieveText != "")
-            {
-                achieveText.text = DataSystem.GetTextData(31).Text + stageData.AchieveText;
-            } else
-            {
-                achieveText.text = DataSystem.GetTextData(31).Text + DataSystem.GetTextData(10000).Text;
-            }
-        }
-        if (help != null){
-            help.text = stageData.Help.Replace("\\p",GameSystem.CurrentData.PlayerInfo.PlayerName);
-        }
-        if (turns != null){
-            turns.text = (stageData.Turns).ToString();
-        }
-        if (clearCount != null){
-            clearCount.text = stageInfo.ClearCount.ToString();
-        }
+        [SerializeField] private TextMeshProUGUI nameText;
+        [SerializeField] private GameObject achieve;
+        [SerializeField] private TextMeshProUGUI achieveText;
+        [SerializeField] private TextMeshProUGUI help;
+        [SerializeField] private TextMeshProUGUI turns;
+        [SerializeField] private TextMeshProUGUI clearCount;
+        [SerializeField] private TextMeshProUGUI score;
+        [SerializeField] private TextMeshProUGUI scoreMax;
+        [SerializeField] private TextMeshProUGUI stageLv;
 
-        if (score != null){
-            score.SetText(DataSystem.GetReplaceDecimalText(stageInfo.Score));
-        }
-        if (scoreMax != null){
-            scoreMax.SetText(DataSystem.GetReplaceDecimalText(stageInfo.ScoreMax));
-        }
-        if (stageLv != null)
+        public void UpdateInfo(StageInfo stageInfo)
         {
-            stageLv.SetText(stageData.StageLv.ToString());
+            if (stageInfo == null){
+                return;
+            }
+            var stageData = stageInfo.Master;
+            if (nameText != null){
+                nameText.text = stageData.Name;
+            }
+            if (achieve != null)
+            {
+                achieve.SetActive(stageData.AchieveText != "");
+            }
+            if (achieveText != null){
+                if (stageData.AchieveText != "")
+                {
+                    achieveText.text = DataSystem.GetTextData(31).Text + stageData.AchieveText;
+                } else
+                {
+                    achieveText.text = DataSystem.GetTextData(31).Text + DataSystem.GetTextData(10000).Text;
+                }
+            }
+            if (help != null){
+                help.text = stageData.Help.Replace("\\p",GameSystem.CurrentData.PlayerInfo.PlayerName);
+            }
+            if (turns != null){
+                turns.text = (stageData.Turns).ToString();
+            }
+            if (clearCount != null){
+                clearCount.text = stageInfo.ClearCount.ToString();
+            }
+
+            if (score != null){
+                score.SetText(DataSystem.GetReplaceDecimalText(stageInfo.Score));
+            }
+            if (scoreMax != null){
+                scoreMax.SetText(DataSystem.GetReplaceDecimalText(stageInfo.ScoreMax));
+            }
+            if (stageLv != null)
+            {
+                stageLv.SetText(stageData.StageLv.ToString());
+            }
         }
     }
 }

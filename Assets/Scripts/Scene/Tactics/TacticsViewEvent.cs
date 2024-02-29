@@ -2,14 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TacticsViewEvent
+namespace Ryneus
 {
-    public Tactics.CommandType commandType;
-    public object template;
-
-    public TacticsViewEvent(Tactics.CommandType type)
+    public class TacticsViewEvent
     {
-        commandType = type;
+        public Tactics.CommandType commandType;
+        public object template;
+
+        public TacticsViewEvent(Tactics.CommandType type)
+        {
+            commandType = type;
+        }
     }
 }
 

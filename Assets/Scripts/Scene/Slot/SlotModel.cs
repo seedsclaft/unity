@@ -2,22 +2,25 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
-public class SlotModel : BaseModel
+namespace Ryneus
 {
-    public List<ListData> SlotList()
+    public class SlotModel : BaseModel
     {
-        return MakeListData(CurrentData.PlayerInfo.SlotSaveList);
-    }
-
-    public void SetSelectActorIds()
-    {
-    }
-
-    public void ResetActors()
-    {
-        foreach (var actorInfo in Actors())
+        public List<ListData> SlotList()
         {
-            actorInfo.ResetData();
+            return MakeListData(CurrentData.PlayerInfo.SlotSaveList);
+        }
+
+        public void SetSelectActorIds()
+        {
+        }
+
+        public void ResetActors()
+        {
+            foreach (var actorInfo in Actors())
+            {
+                actorInfo.ResetData();
+            }
         }
     }
 }

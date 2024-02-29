@@ -5,115 +5,118 @@ using UnityEngine.UI;
 using MainMenu;
 using TMPro;
 
-public class MainMenuView : BaseView
+namespace Ryneus
 {
-    [SerializeField] private BaseList stageList = null;
-    [SerializeField] private StageInfoComponent component;
-    [SerializeField] private TextMeshProUGUI numinous = null;
-    [SerializeField] private TextMeshProUGUI totalScore = null;
-
-    private new System.Action<MainMenuViewEvent> _commandData = null;
-
-    public override void Initialize() 
+    public class MainMenuView : BaseView
     {
-        base.Initialize();
-        stageList.Initialize();
-        SideMenuButton.onClick.AddListener(() => {
-            CallSideMenu();
-        });
-        new MainMenuPresenter(this);
-    }
+        [SerializeField] private BaseList stageList = null;
+        [SerializeField] private StageInfoComponent component;
+        [SerializeField] private TextMeshProUGUI numinous = null;
+        [SerializeField] private TextMeshProUGUI totalScore = null;
 
-    public void SetNuminous(int value)
-    {
-        numinous.SetText(DataSystem.GetReplaceDecimalText(value));
-    }
+        private new System.Action<MainMenuViewEvent> _commandData = null;
 
-    public void SetTotalScore(int value)
-    {
-        totalScore.SetText(DataSystem.GetReplaceDecimalText(value));
-    }
-
-    public void SetInitHelpText()
-    {
-        HelpWindow.SetHelpText(DataSystem.GetTextData(11040).Text);
-        HelpWindow.SetInputInfo("MAINMENU");
-    }
-
-    public void SetHelpWindow(){
-        SetInitHelpText();
-    }
-
-    public void SetEvent(System.Action<MainMenuViewEvent> commandData)
-    {
-        _commandData = commandData;
-    }
-    
-    public void SetStagesData(List<ListData> stages){
-        stageList.SetData(stages);
-        stageList.SetInputHandler(InputKeyType.Decide,() => CallMainMenuStage());
-        stageList.SetInputHandler(InputKeyType.Option1,() => CommandOpenSideMenu());
-        stageList.SetInputHandler(InputKeyType.Option2,() => CallStageRanking());
-        stageList.SetSelectedHandler(() => UpdateMainMenuStage());
-        for (var i = 0;i < stageList.ItemPrefabList.Count;i++)
+        public override void Initialize() 
         {
-            if (i < stages.Count)
+            base.Initialize();
+            stageList.Initialize();
+            SideMenuButton.onClick.AddListener(() => {
+                CallSideMenu();
+            });
+            new MainMenuPresenter(this);
+        }
+
+        public void SetNuminous(int value)
+        {
+            numinous.SetText(DataSystem.GetReplaceDecimalText(value));
+        }
+
+        public void SetTotalScore(int value)
+        {
+            totalScore.SetText(DataSystem.GetReplaceDecimalText(value));
+        }
+
+        public void SetInitHelpText()
+        {
+            HelpWindow.SetHelpText(DataSystem.GetTextData(11040).Text);
+            HelpWindow.SetInputInfo("MAINMENU");
+        }
+
+        public void SetHelpWindow(){
+            SetInitHelpText();
+        }
+
+        public void SetEvent(System.Action<MainMenuViewEvent> commandData)
+        {
+            _commandData = commandData;
+        }
+        
+        public void SetStagesData(List<ListData> stages){
+            stageList.SetData(stages);
+            stageList.SetInputHandler(InputKeyType.Decide,() => CallMainMenuStage());
+            stageList.SetInputHandler(InputKeyType.Option1,() => CommandOpenSideMenu());
+            stageList.SetInputHandler(InputKeyType.Option2,() => CallStageRanking());
+            stageList.SetSelectedHandler(() => UpdateMainMenuStage());
+            for (var i = 0;i < stageList.ItemPrefabList.Count;i++)
             {
-                var stageInfo = stageList.ItemPrefabList[i].GetComponent<MainMenuStage>();
-                stageInfo.SetRankingDetailHandler((a) => CallStageRanking(a));
+                if (i < stages.Count)
+                {
+                    var stageInfo = stageList.ItemPrefabList[i].GetComponent<MainMenuStage>();
+                    stageInfo.SetRankingDetailHandler((a) => CallStageRanking(a));
+                }
             }
+            stageList.UpdateSelectIndex(0);
+            SetInputHandler(stageList.GetComponent<IInputHandlerEvent>());
         }
-        stageList.UpdateSelectIndex(0);
-        SetInputHandler(stageList.GetComponent<IInputHandlerEvent>());
-    }
-    
-    private void CallMainMenuStage(){
-        var listData = stageList.ListData;
-        if (listData != null)
-        {
-            var eventData = new MainMenuViewEvent(CommandType.StageSelect);
-            var data = (StageInfo)listData.Data;
-            eventData.template = data.Id;
-            _commandData(eventData);
-        }
-    }    
-    
-    private void CallStageRanking(int stageId = -1){
-        var listData = stageList.ListData;
-        if (listData != null)
-        {
-            var eventData = new MainMenuViewEvent(CommandType.Ranking);
-            if (stageId > 0)
+        
+        private void CallMainMenuStage(){
+            var listData = stageList.ListData;
+            if (listData != null)
             {
-                eventData.template = stageId;
-            } else
-            {
+                var eventData = new MainMenuViewEvent(CommandType.StageSelect);
                 var data = (StageInfo)listData.Data;
                 eventData.template = data.Id;
+                _commandData(eventData);
             }
+        }    
+        
+        private void CallStageRanking(int stageId = -1){
+            var listData = stageList.ListData;
+            if (listData != null)
+            {
+                var eventData = new MainMenuViewEvent(CommandType.Ranking);
+                if (stageId > 0)
+                {
+                    eventData.template = stageId;
+                } else
+                {
+                    var data = (StageInfo)listData.Data;
+                    eventData.template = data.Id;
+                }
+                _commandData(eventData);
+            }
+        }
+
+        public void UpdateMainMenuStage()
+        {
+            var listData = stageList.ListData;
+            if (listData != null)
+            {
+                var data = (StageInfo)listData.Data;
+                component.UpdateInfo(data);
+            }
+        }
+
+        private void OnClickOption(){
+            var eventData = new MainMenuViewEvent(CommandType.Option);
             _commandData(eventData);
         }
-    }
 
-    public void UpdateMainMenuStage()
-    {
-        var listData = stageList.ListData;
-        if (listData != null)
+        private void CallSideMenu()
         {
-            var data = (StageInfo)listData.Data;
-            component.UpdateInfo(data);
+            var eventData = new MainMenuViewEvent(CommandType.SelectSideMenu);
+            _commandData(eventData);
         }
-    }
-
-    private void OnClickOption(){
-        var eventData = new MainMenuViewEvent(CommandType.Option);
-        _commandData(eventData);
-    }
-
-    private void CallSideMenu()
-    {
-        var eventData = new MainMenuViewEvent(CommandType.SelectSideMenu);
-        _commandData(eventData);
     }
 }
 

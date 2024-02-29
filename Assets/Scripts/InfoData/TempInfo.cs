@@ -2,122 +2,125 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-// セーブデータに保存しないデータ類を管理
-public class TempInfo
+namespace Ryneus
 {
-    private List<ActorInfo> _tempActorInfos = new ();
-    public List<ActorInfo> TempActorInfos => _tempActorInfos;
-    private List<SkillInfo> _tempAlcanaSkillInfos = new ();
-    public List<SkillInfo> TempAlcanaSkillInfos => _tempAlcanaSkillInfos;
-    private Dictionary<int,List<RankingInfo>> _tempRankingData = new ();
-    public Dictionary<int,List<RankingInfo>> TempRankingData => _tempRankingData;
-    private bool _tempInputType = false;
-    public bool TempInputType => _tempInputType;
-    public void CashBattleActors(List<ActorInfo> actorInfos)
+    // セーブデータに保存しないデータ類を管理
+    public class TempInfo
     {
-        ClearBattleActors();
-        foreach (var actorInfo in actorInfos)
+        private List<ActorInfo> _tempActorInfos = new ();
+        public List<ActorInfo> TempActorInfos => _tempActorInfos;
+        private List<SkillInfo> _tempAlcanaSkillInfos = new ();
+        public List<SkillInfo> TempAlcanaSkillInfos => _tempAlcanaSkillInfos;
+        private Dictionary<int,List<RankingInfo>> _tempRankingData = new ();
+        public Dictionary<int,List<RankingInfo>> TempRankingData => _tempRankingData;
+        private bool _tempInputType = false;
+        public bool TempInputType => _tempInputType;
+        public void CashBattleActors(List<ActorInfo> actorInfos)
         {
-            var tempInfo = new ActorInfo(actorInfo.Master);
-            tempInfo.CopyData(actorInfo);
-            _tempActorInfos.Add(tempInfo);
+            ClearBattleActors();
+            foreach (var actorInfo in actorInfos)
+            {
+                var tempInfo = new ActorInfo(actorInfo.Master);
+                tempInfo.CopyData(actorInfo);
+                _tempActorInfos.Add(tempInfo);
+            }
         }
-    }
 
-    public void ClearBattleActors()
-    {
-        _tempActorInfos.Clear();
-    }
-
-    public void SetAlcanaSkillInfo(List<SkillInfo> skillInfos)
-    {
-        _tempAlcanaSkillInfos = skillInfos;
-    }
-
-    public void ClearAlcana()
-    {
-        _tempAlcanaSkillInfos.Clear();
-    }
-    
-    public void SetRankingInfo(int stageId,List<RankingInfo> rankingInfos)
-    {
-        _tempRankingData[stageId] = rankingInfos;
-    }
-    
-    public void ClearRankingInfo()
-    {
-        _tempRankingData.Clear();
-    }
-    
-    public void SetInputType(bool inputType)
-    {
-        _tempInputType = inputType;
-    }    
-    
-    private List<ActorInfo> _tempRecordActors = new ();
-    public List<ActorInfo> TempRecordActors => _tempRecordActors;
-    public void SetRecordActors(List<ActorInfo> actorInfos)
-    {
-        _tempRecordActors.Clear();
-        var tempRecordActors = new List<ActorInfo>();
-        foreach (var actorInfo in actorInfos)
+        public void ClearBattleActors()
         {
-            var recordActorInfo = new ActorInfo(actorInfo.Master);
-            recordActorInfo.CopyData(actorInfo);		
-            tempRecordActors.Add(recordActorInfo);
+            _tempActorInfos.Clear();
         }
-        _tempRecordActors = tempRecordActors;
-    }
-    public void ClearRecordActors()
-    {
-        _tempRecordActors.Clear();
-    }
 
-    private List<int> _tempRecordActorIdList = new ();
-    public List<int> TempRecordActorIdList => _tempRecordActorIdList;
-    public void SetRecordActorIdList(List<int> actorIdList)
-    {
-        _tempRecordActorIdList.Clear();
-        var tempRecordActorIdList = new List<int>();
-        foreach (var actorId in actorIdList)
-        {	
-            tempRecordActorIdList.Add(actorId);
+        public void SetAlcanaSkillInfo(List<SkillInfo> skillInfos)
+        {
+            _tempAlcanaSkillInfos = skillInfos;
         }
-        _tempRecordActorIdList = tempRecordActorIdList;
-    }
-    public void ClearRecordActorIdList()
-    {
-        _tempRecordActorIdList.Clear();
-    }
 
-    private List<int> _tempRecordAlchemyList = new ();
-    public List<int> TempRecordAlchemyList => _tempRecordAlchemyList;
-    public void SetRecordAlchemyList(List<int> tempRecordAlchemyList)
-    {
-        _tempRecordAlchemyList.Clear();
-        var alchemyList = new List<int>();
-        foreach (var alchemyId in tempRecordAlchemyList)
+        public void ClearAlcana()
         {
-            alchemyList.Add(alchemyId);
+            _tempAlcanaSkillInfos.Clear();
         }
-        _tempRecordAlchemyList = alchemyList;
-    }
-    public void ClearRecordAlchemyList()
-    {
-        _tempRecordAlchemyList.Clear();
-    }
-    
-    private List<ActorInfo> _tempStatusActorInfos = new ();
-    public List<ActorInfo> TempStatusActorInfos => _tempStatusActorInfos;
-    public void SetTempStatusActorInfos(List<ActorInfo> tempStatusActorInfos)
-    {
-        var recordActorInfos = new List<ActorInfo>();
-        foreach (var actorInfo in tempStatusActorInfos)
+        
+        public void SetRankingInfo(int stageId,List<RankingInfo> rankingInfos)
         {
-            var recordActorInfo = new ActorInfo(actorInfo.Master);
-            recordActorInfo.CopyData(actorInfo);		
-            recordActorInfos.Add(recordActorInfo);
+            _tempRankingData[stageId] = rankingInfos;
         }
-        _tempStatusActorInfos = recordActorInfos;
+        
+        public void ClearRankingInfo()
+        {
+            _tempRankingData.Clear();
+        }
+        
+        public void SetInputType(bool inputType)
+        {
+            _tempInputType = inputType;
+        }    
+        
+        private List<ActorInfo> _tempRecordActors = new ();
+        public List<ActorInfo> TempRecordActors => _tempRecordActors;
+        public void SetRecordActors(List<ActorInfo> actorInfos)
+        {
+            _tempRecordActors.Clear();
+            var tempRecordActors = new List<ActorInfo>();
+            foreach (var actorInfo in actorInfos)
+            {
+                var recordActorInfo = new ActorInfo(actorInfo.Master);
+                recordActorInfo.CopyData(actorInfo);		
+                tempRecordActors.Add(recordActorInfo);
+            }
+            _tempRecordActors = tempRecordActors;
+        }
+        public void ClearRecordActors()
+        {
+            _tempRecordActors.Clear();
+        }
+
+        private List<int> _tempRecordActorIdList = new ();
+        public List<int> TempRecordActorIdList => _tempRecordActorIdList;
+        public void SetRecordActorIdList(List<int> actorIdList)
+        {
+            _tempRecordActorIdList.Clear();
+            var tempRecordActorIdList = new List<int>();
+            foreach (var actorId in actorIdList)
+            {	
+                tempRecordActorIdList.Add(actorId);
+            }
+            _tempRecordActorIdList = tempRecordActorIdList;
+        }
+        public void ClearRecordActorIdList()
+        {
+            _tempRecordActorIdList.Clear();
+        }
+
+        private List<int> _tempRecordAlchemyList = new ();
+        public List<int> TempRecordAlchemyList => _tempRecordAlchemyList;
+        public void SetRecordAlchemyList(List<int> tempRecordAlchemyList)
+        {
+            _tempRecordAlchemyList.Clear();
+            var alchemyList = new List<int>();
+            foreach (var alchemyId in tempRecordAlchemyList)
+            {
+                alchemyList.Add(alchemyId);
+            }
+            _tempRecordAlchemyList = alchemyList;
+        }
+        public void ClearRecordAlchemyList()
+        {
+            _tempRecordAlchemyList.Clear();
+        }
+        
+        private List<ActorInfo> _tempStatusActorInfos = new ();
+        public List<ActorInfo> TempStatusActorInfos => _tempStatusActorInfos;
+        public void SetTempStatusActorInfos(List<ActorInfo> tempStatusActorInfos)
+        {
+            var recordActorInfos = new List<ActorInfo>();
+            foreach (var actorInfo in tempStatusActorInfos)
+            {
+                var recordActorInfo = new ActorInfo(actorInfo.Master);
+                recordActorInfo.CopyData(actorInfo);		
+                recordActorInfos.Add(recordActorInfo);
+            }
+            _tempStatusActorInfos = recordActorInfos;
+        }
     }
 }

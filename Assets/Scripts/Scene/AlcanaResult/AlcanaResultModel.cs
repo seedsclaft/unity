@@ -1,50 +1,53 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class AlcanaResultModel : BaseModel
+namespace Ryneus
 {
-    public AlcanaResultModel()
+    public class AlcanaResultModel : BaseModel
     {
-        SetStageActor();
-    }
-
-    public List<ListData> AlcanaResultCommand()
-    {
-        var commandListDates = MakeListData(BaseConfirmCommand(3040,6));
-        foreach (var commandListData in commandListDates)
+        public AlcanaResultModel()
         {
-            var listData = (SystemData.CommandData)commandListData.Data;
-            if (listData.Id == 1)
+            SetStageActor();
+        }
+
+        public List<ListData> AlcanaResultCommand()
+        {
+            var commandListDates = MakeListData(BaseConfirmCommand(3040,6));
+            foreach (var commandListData in commandListDates)
             {
-                //commandListData.SetEnable(false);
+                var listData = (SystemData.CommandData)commandListData.Data;
+                if (listData.Id == 1)
+                {
+                    //commandListData.SetEnable(false);
+                }
             }
+            return commandListDates;
         }
-        return commandListDates;
-    }
 
-    public List<ActorInfo> AlcanaMembers()
-    {
-        return StageMembers();
-    }
-
-    public List<ListData> ResultGetItemInfos()
-    {
-        var getItemInfos = new List<GetItemInfo>();
-        var skillInfos = TempInfo.TempAlcanaSkillInfos;
-        foreach (var skillInfo in skillInfos)
+        public List<ActorInfo> AlcanaMembers()
         {
-            getItemInfos.AddRange(GetAlcanaResults(skillInfo));
+            return StageMembers();
         }
-        return MakeListData(getItemInfos);
-    }
 
-    public void ReleaseAlcana()
-    {
-        var skillInfos = TempInfo.TempAlcanaSkillInfos;
-        foreach (var skillInfo in skillInfos)
+        public List<ListData> ResultGetItemInfos()
         {
-            StageAlcana.DisableAlcana(skillInfo);
+            var getItemInfos = new List<GetItemInfo>();
+            var skillInfos = TempInfo.TempAlcanaSkillInfos;
+            foreach (var skillInfo in skillInfos)
+            {
+                getItemInfos.AddRange(GetAlcanaResults(skillInfo));
+            }
+            return MakeListData(getItemInfos);
         }
-        TempInfo.ClearAlcana();
+
+        public void ReleaseAlcana()
+        {
+            var skillInfos = TempInfo.TempAlcanaSkillInfos;
+            foreach (var skillInfo in skillInfos)
+            {
+                StageAlcana.DisableAlcana(skillInfo);
+            }
+            TempInfo.ClearAlcana();
+        }
     }
 }

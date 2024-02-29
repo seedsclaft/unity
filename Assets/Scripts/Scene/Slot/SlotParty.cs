@@ -3,29 +3,32 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SlotParty : ListItem,IListViewItem
+namespace Ryneus
 {
-    [SerializeField] private SlotInfoComponent slotInfoComponent = null;
-    [SerializeField] private Button infoButton = null;
-    
-    private bool _IsInit = false;
-    public void SetCallInfoHandler(System.Action<int> handler)
+    public class SlotParty : ListItem,IListViewItem
     {
-        if (_IsInit == true) return;
-        infoButton.onClick.AddListener(() =>
-            {
-                if (Disable != null && Disable.gameObject.activeSelf) return;
-                handler(Index);
-            }
-        );
-        _IsInit = true;
-    }
+        [SerializeField] private SlotInfoComponent slotInfoComponent = null;
+        [SerializeField] private Button infoButton = null;
+        
+        private bool _IsInit = false;
+        public void SetCallInfoHandler(System.Action<int> handler)
+        {
+            if (_IsInit == true) return;
+            infoButton.onClick.AddListener(() =>
+                {
+                    if (Disable != null && Disable.gameObject.activeSelf) return;
+                    handler(Index);
+                }
+            );
+            _IsInit = true;
+        }
 
-    public void UpdateViewItem()
-    {
-        if (ListData == null) return;
-        var data = (SlotInfo)ListData.Data;
-        slotInfoComponent.UpdateInfo(data);
-        if (Disable != null) Disable.SetActive(data.ActorInfos.Count == 0);
+        public void UpdateViewItem()
+        {
+            if (ListData == null) return;
+            var data = (SlotInfo)ListData.Data;
+            slotInfoComponent.UpdateInfo(data);
+            if (Disable != null) Disable.SetActive(data.ActorInfos.Count == 0);
+        }
     }
 }

@@ -4,274 +4,288 @@ using UnityEngine;
 using Result;
 using TMPro;
 
-public class ResultView : BaseView
-{   
-    [SerializeField] private StrategyActorList strategyActorList = null;
-    [SerializeField] private BaseList commandList = null; 
-    [SerializeField] private GameObject resultMain = null;
-    [SerializeField] private TextMeshProUGUI rankingTypeText = null; 
-    [SerializeField] private TextMeshProUGUI endingType = null; 
-    [SerializeField] private TextMeshProUGUI evaluateValue = null; 
-    [SerializeField] private TextMeshProUGUI evaluateNew = null; 
-    [SerializeField] private TextMeshProUGUI playerName = null; 
-    [SerializeField] private TextMeshProUGUI rankingInfo = null; 
-    [SerializeField] private GameObject animRoot = null;
-    [SerializeField] private GameObject animPrefab = null;
+namespace Ryneus
+{
+    public class ResultView : BaseView
+    {   
+        [SerializeField] private StrategyActorList strategyActorList = null;
+        [SerializeField] private BaseList commandList = null; 
+        [SerializeField] private GameObject resultMain = null;
+        [SerializeField] private TextMeshProUGUI rankingTypeText = null; 
+        [SerializeField] private TextMeshProUGUI endingType = null; 
+        [SerializeField] private TextMeshProUGUI evaluateValue = null; 
+        [SerializeField] private TextMeshProUGUI evaluateNew = null; 
+        [SerializeField] private TextMeshProUGUI playerName = null; 
+        [SerializeField] private TextMeshProUGUI rankingInfo = null; 
+        [SerializeField] private GameObject animRoot = null;
+        [SerializeField] private GameObject animPrefab = null;
 
-    [SerializeField] private BaseList actorInfoList = null;
-    public int ActorInfoListIndex => actorInfoList.Index;
+        [SerializeField] private BaseList actorInfoList = null;
+        public int ActorInfoListIndex => actorInfoList.Index;
 
-    [SerializeField] private BattleSelectCharacter selectCharacter = null; 
-    private BattleStartAnim _battleStartAnim = null;
-    private bool _animationBusy = false;
+        [SerializeField] private BattleSelectCharacter selectCharacter = null; 
+        private BattleStartAnim _battleStartAnim = null;
+        private bool _animationBusy = false;
 
-    private new System.Action<ResultViewEvent> _commandData = null;
+        private new System.Action<ResultViewEvent> _commandData = null;
 
-    public override void Initialize() 
-    {
-        base.Initialize();
-        commandList.Initialize();
-        actorInfoList.Initialize();
-        GameObject prefab = Instantiate(animPrefab);
-        prefab.transform.SetParent(animRoot.transform, false);
-        _battleStartAnim = prefab.GetComponent<BattleStartAnim>();
-        _battleStartAnim.gameObject.SetActive(false);
-        resultMain.SetActive(false);
-        rankingInfo.gameObject.SetActive(false);
-        evaluateNew.gameObject.SetActive(false);
-        selectCharacter.Initialize();
-        SetInputHandler(selectCharacter.GetComponent<IInputHandlerEvent>());
-        InitializeSelectCharacter();
-        SetInputHandler(actorInfoList.GetComponent<IInputHandlerEvent>());
-        actorInfoList.gameObject.SetActive(false);
-        selectCharacter.gameObject.SetActive(false);
-        new ResultPresenter(this);
-    }
+        public override void Initialize() 
+        {
+            base.Initialize();
+            commandList.Initialize();
+            actorInfoList.Initialize();
+            GameObject prefab = Instantiate(animPrefab);
+            prefab.transform.SetParent(animRoot.transform, false);
+            _battleStartAnim = prefab.GetComponent<BattleStartAnim>();
+            _battleStartAnim.gameObject.SetActive(false);
+            resultMain.SetActive(false);
+            rankingInfo.gameObject.SetActive(false);
+            evaluateNew.gameObject.SetActive(false);
+            selectCharacter.Initialize();
+            SetInputHandler(selectCharacter.GetComponent<IInputHandlerEvent>());
+            InitializeSelectCharacter();
+            SetInputHandler(actorInfoList.GetComponent<IInputHandlerEvent>());
+            actorInfoList.gameObject.SetActive(false);
+            selectCharacter.gameObject.SetActive(false);
+            new ResultPresenter(this);
+        }
 
-    private void InitializeSelectCharacter()
-    {
-        selectCharacter.SetInputHandlerAction(InputKeyType.Decide,() => {});
-        selectCharacter.SetInputHandlerAction(InputKeyType.Cancel,() => CallDecideAlcana());
-        //selectCharacter.SetInputHandlerAction(InputKeyType.Start,() => CallDecideAlcana());
+        private void InitializeSelectCharacter()
+        {
+            selectCharacter.SetInputHandlerAction(InputKeyType.Decide,() => {});
+            selectCharacter.SetInputHandlerAction(InputKeyType.Cancel,() => CallDecideAlcana());
+            //selectCharacter.SetInputHandlerAction(InputKeyType.Start,() => CallDecideAlcana());
 
-        selectCharacter.SetActiveTab(SelectCharacterTabType.Magic,false);
-        selectCharacter.SetActiveTab(SelectCharacterTabType.Condition,false);
-        selectCharacter.SetActiveTab(SelectCharacterTabType.Detail,false);
-        SetInputHandler(selectCharacter.MagicList.GetComponent<IInputHandlerEvent>());
-        selectCharacter.HideActionList();
-        selectCharacter.HideStatus();
-        selectCharacter.gameObject.SetActive(false);
-    }
+            selectCharacter.SetActiveTab(SelectCharacterTabType.Magic,false);
+            selectCharacter.SetActiveTab(SelectCharacterTabType.Condition,false);
+            selectCharacter.SetActiveTab(SelectCharacterTabType.Detail,false);
+            SetInputHandler(selectCharacter.MagicList.GetComponent<IInputHandlerEvent>());
+            selectCharacter.HideActionList();
+            selectCharacter.HideStatus();
+            selectCharacter.gameObject.SetActive(false);
+        }
 
-    public void StartAnimation()
-    {
-        _battleStartAnim.SetText(DataSystem.GetTextData(16090).Text);
-        _battleStartAnim.StartAnim();
-        _battleStartAnim.gameObject.SetActive(true);
-        _animationBusy = true;
-    }
+        public void StartAnimation()
+        {
+            _battleStartAnim.SetText(DataSystem.GetTextData(16090).Text);
+            _battleStartAnim.StartAnim();
+            _battleStartAnim.gameObject.SetActive(true);
+            _animationBusy = true;
+        }
 
-    public void SetActors(List<ActorInfo> actorInfos)
-    {
-        strategyActorList.Initialize();
-        strategyActorList.gameObject.SetActive(false);
-    }
-    
-    public void SetEvaluate(int evaluate,bool isNew)
-    {
-        evaluateValue.text = evaluate.ToString();
-        evaluateNew.gameObject.SetActive(isNew);
-    }
+        public void SetActors(List<ActorInfo> actorInfos)
+        {
+            strategyActorList.Initialize();
+            strategyActorList.gameObject.SetActive(false);
+        }
+        
+        public void SetEvaluate(int evaluate,bool isNew)
+        {
+            evaluateValue.text = evaluate.ToString();
+            evaluateNew.gameObject.SetActive(isNew);
+        }
 
-    public void SetEndingType(string endType)
-    {
-        endingType.text = endType;
-    }
+        public void SetEndingType(string endType)
+        {
+            endingType.text = endType;
+        }
 
-    public void SetPlayerName(string name)
-    {
-        playerName.text = name;
-        resultMain.SetActive(true);
-    }
+        public void SetPlayerName(string name)
+        {
+            playerName.text = name;
+            resultMain.SetActive(true);
+        }
 
-    public void SetRanking(string ranking)
-    {
-        rankingInfo.text = ranking;
-        rankingInfo.gameObject.SetActive(true);
-    }
+        public void SetRanking(string ranking)
+        {
+            rankingInfo.text = ranking;
+            rankingInfo.gameObject.SetActive(true);
+        }
 
-    public void SetRankingTypeText(string rankinType)
-    {
-        rankingTypeText.text = rankinType;
-    }
+        public void SetRankingTypeText(string rankinType)
+        {
+            rankingTypeText.text = rankinType;
+        }
 
-    public void SetHelpWindow(){
-        HelpWindow.SetHelpText(DataSystem.GetTextData(16030).Text);
-        HelpWindow.SetInputInfo("RESULT");
-    }
+        public void SetHelpWindow(){
+            HelpWindow.SetHelpText(DataSystem.GetTextData(16030).Text);
+            HelpWindow.SetInputInfo("RESULT");
+        }
 
-    public void SetResultList(List<ListData> confirmCommands)
-    {
-        commandList.SetData(confirmCommands);
-        commandList.SetInputHandler(InputKeyType.Decide,() => {
-            if (commandList.ListData.Enable == false)
+        public void SetResultList(List<ListData> confirmCommands)
+        {
+            commandList.SetData(confirmCommands);
+            commandList.SetInputHandler(InputKeyType.Decide,() => {
+                if (commandList.ListData.Enable == false)
+                {
+                    return;
+                }
+                var data = (SystemData.CommandData)commandList.ListData.Data;
+                if (data.Key == "Yes")
+                {
+                    CallResultCommand(ConfirmCommandType.Yes);
+                } else
+                if (data.Key == "No")
+                {
+                    CallResultCommand(ConfirmCommandType.No);
+                }
+            });
+            SetInputHandler(commandList.GetComponent<IInputHandlerEvent>());
+            commandList.gameObject.SetActive(false);
+        }
+
+        public void UpdateResultCommand(List<ListData> confirmCommands)
+        {
+            commandList.SetData(confirmCommands);
+        }
+
+        public void SetEvent(System.Action<ResultViewEvent> commandData)
+        {
+            _commandData = commandData;
+        }
+        
+        public void StartResultAnimation(List<ListData> actorInfos)
+        {
+            var bonusDummy = new List<bool>();
+            foreach (var item in actorInfos)
             {
+                bonusDummy.Add(false);
+            }
+            strategyActorList.gameObject.SetActive(true);
+            strategyActorList.SetData(actorInfos);
+            strategyActorList.StartResultAnimation(actorInfos.Count,bonusDummy,() => {
+            });
+        }
+
+        private void CallResultCommand(ConfirmCommandType commandType)
+        {
+            var eventData = new ResultViewEvent(CommandType.ResultClose);
+            eventData.template = commandType;
+            _commandData(eventData);
+        }
+
+        private new void Update() {
+            if (_animationBusy == true)
+            {
+                CheckAnimationBusy();
                 return;
             }
-            var data = (SystemData.CommandData)commandList.ListData.Data;
-            if (data.Key == "Yes")
+            base.Update();
+        }
+
+        private void CheckAnimationBusy()
+        {
+            if (_battleStartAnim.IsBusy == false)
             {
-                CallResultCommand(ConfirmCommandType.Yes);
-            } else
-            if (data.Key == "No")
-            {
-                CallResultCommand(ConfirmCommandType.No);
+                _animationBusy = false;
+                var eventData = new ResultViewEvent(CommandType.EndAnimation);
+                _commandData(eventData);
+                commandList.gameObject.SetActive(true);
             }
-        });
-        SetInputHandler(commandList.GetComponent<IInputHandlerEvent>());
-        commandList.gameObject.SetActive(false);
-    }
-
-    public void UpdateResultCommand(List<ListData> confirmCommands)
-    {
-        commandList.SetData(confirmCommands);
-    }
-
-    public void SetEvent(System.Action<ResultViewEvent> commandData)
-    {
-        _commandData = commandData;
-    }
-    
-    public void StartResultAnimation(List<ListData> actorInfos)
-    {
-        var bonusDummy = new List<bool>();
-        foreach (var item in actorInfos)
-        {
-            bonusDummy.Add(false);
         }
-        strategyActorList.gameObject.SetActive(true);
-        strategyActorList.SetData(actorInfos);
-        strategyActorList.StartResultAnimation(actorInfos.Count,bonusDummy,() => {
-        });
-    }
 
-    private void CallResultCommand(ConfirmCommandType commandType)
-    {
-        var eventData = new ResultViewEvent(CommandType.ResultClose);
-        eventData.template = commandType;
-        _commandData(eventData);
-    }
-
-    private new void Update() {
-        if (_animationBusy == true)
+        public void CommandActorAssign()
         {
-            CheckAnimationBusy();
-            return;
+            actorInfoList.gameObject.SetActive(true);
+            selectCharacter.gameObject.SetActive(true);
+            resultMain.SetActive(false);
+            rankingInfo.gameObject.SetActive(false);
+            evaluateNew.gameObject.SetActive(false);
+            commandList.gameObject.SetActive(false);
         }
-        base.Update();
-    }
-
-    private void CheckAnimationBusy()
-    {
-        if (_battleStartAnim.IsBusy == false)
+        
+        public void SetActorList(List<ListData> actorInfos) 
         {
-            _animationBusy = false;
-            var eventData = new ResultViewEvent(CommandType.EndAnimation);
+            actorInfoList.SetData(actorInfos);
+            actorInfoList.SetInputHandler(InputKeyType.Decide,() => CallDecide());
+            actorInfoList.SetInputHandler(InputKeyType.Cancel,() => CallCancelActor());
+            actorInfoList.SetSelectedHandler(() => {
+                CallUpdate();
+            });
+            actorInfoList.Refresh();
+            actorInfoList.Activate();
+        }
+
+        private void CallDecide()
+        {
+            var listData = actorInfoList.ListData;
+            if (listData != null)
+            {
+                var data = (ActorInfo)listData.Data;
+                var eventData = new ResultViewEvent(CommandType.DecideActor);
+                eventData.template = actorInfoList.Index;
+                _commandData(eventData);
+            }
+        }
+        
+        private void CallCancelActor()
+        {
+            var eventData = new ResultViewEvent(CommandType.CancelActor);
             _commandData(eventData);
+        }
+
+        private void CallUpdate()
+        {
+            var eventData = new ResultViewEvent(CommandType.UpdateActor);
+            _commandData(eventData);
+        }
+
+        public void UpdateActor(List<ListData> skillInfos)
+        {
+            selectCharacter.ShowActionList();
+            selectCharacter.MagicList.Activate();
+            selectCharacter.SetSkillInfos(skillInfos);
+        }
+
+        private void CallDecideAlcana()
+        {
+            var eventData = new ResultViewEvent(CommandType.DecideAlcana);
+            _commandData(eventData);
+        }
+
+        public void CommandAlcanaInfos(List<ListData> skillInfos)
+        {
+            actorInfoList.gameObject.SetActive(false);
+            selectCharacter.gameObject.SetActive(true);
+            resultMain.SetActive(false);
+            rankingInfo.gameObject.SetActive(false);
+            evaluateNew.gameObject.SetActive(false);
+            commandList.gameObject.SetActive(true);
+            selectCharacter.ShowActionList();
+            selectCharacter.MagicList.Activate();
+            selectCharacter.SetSkillInfos(skillInfos);
+        }
+
+        public void CommandDecideAlcana()
+        {
+            actorInfoList.gameObject.SetActive(false);
+            selectCharacter.gameObject.SetActive(false);
+            resultMain.SetActive(true);
+            rankingInfo.gameObject.SetActive(true);
+            evaluateNew.gameObject.SetActive(true);
             commandList.gameObject.SetActive(true);
         }
-    }
 
-    public void CommandActorAssign()
-    {
-        actorInfoList.gameObject.SetActive(true);
-        selectCharacter.gameObject.SetActive(true);
-        resultMain.SetActive(false);
-        rankingInfo.gameObject.SetActive(false);
-        evaluateNew.gameObject.SetActive(false);
-        commandList.gameObject.SetActive(false);
-    }
-    
-    public void SetActorList(List<ListData> actorInfos) 
-    {
-        actorInfoList.SetData(actorInfos);
-        actorInfoList.SetInputHandler(InputKeyType.Decide,() => CallDecide());
-        actorInfoList.SetInputHandler(InputKeyType.Cancel,() => CallCancelActor());
-        actorInfoList.SetSelectedHandler(() => {
-            CallUpdate();
-        });
-        actorInfoList.Refresh();
-        actorInfoList.Activate();
-    }
-
-    private void CallDecide()
-    {
-        var listData = actorInfoList.ListData;
-        if (listData != null)
+        public void CommandRefreshStatus(List<ListData> skillInfos,ActorInfo actorInfo,List<ActorInfo> party,int lastSelectIndex)
         {
-            var data = (ActorInfo)listData.Data;
-            var eventData = new ResultViewEvent(CommandType.DecideActor);
-            eventData.template = actorInfoList.Index;
-            _commandData(eventData);
+            selectCharacter.ShowActionList();
+            selectCharacter.MagicList.Activate();
+            //selectCharacter.SetActorThumbOnly(actorInfo);
+            selectCharacter.SetActorInfo(actorInfo,party);
+            selectCharacter.SetSkillInfos(skillInfos);
+            selectCharacter.RefreshAction(lastSelectIndex);
         }
     }
-    
-    private void CallCancelActor()
-    {
-        var eventData = new ResultViewEvent(CommandType.CancelActor);
-        _commandData(eventData);
-    }
 
-    private void CallUpdate()
+    public class ResultViewEvent
     {
-        var eventData = new ResultViewEvent(CommandType.UpdateActor);
-        _commandData(eventData);
-    }
+        public Result.CommandType commandType;
+        public object template;
 
-    public void UpdateActor(List<ListData> skillInfos)
-    {
-        selectCharacter.ShowActionList();
-        selectCharacter.MagicList.Activate();
-        selectCharacter.SetSkillInfos(skillInfos);
-    }
-
-    private void CallDecideAlcana()
-    {
-        var eventData = new ResultViewEvent(CommandType.DecideAlcana);
-        _commandData(eventData);
-    }
-
-    public void CommandAlcanaInfos(List<ListData> skillInfos)
-    {
-        actorInfoList.gameObject.SetActive(false);
-        selectCharacter.gameObject.SetActive(true);
-        resultMain.SetActive(false);
-        rankingInfo.gameObject.SetActive(false);
-        evaluateNew.gameObject.SetActive(false);
-        commandList.gameObject.SetActive(true);
-        selectCharacter.ShowActionList();
-        selectCharacter.MagicList.Activate();
-        selectCharacter.SetSkillInfos(skillInfos);
-    }
-
-    public void CommandDecideAlcana()
-    {
-        actorInfoList.gameObject.SetActive(false);
-        selectCharacter.gameObject.SetActive(false);
-        resultMain.SetActive(true);
-        rankingInfo.gameObject.SetActive(true);
-        evaluateNew.gameObject.SetActive(true);
-        commandList.gameObject.SetActive(true);
-    }
-
-    public void CommandRefreshStatus(List<ListData> skillInfos,ActorInfo actorInfo,List<ActorInfo> party,int lastSelectIndex)
-    {
-        selectCharacter.ShowActionList();
-        selectCharacter.MagicList.Activate();
-        //selectCharacter.SetActorThumbOnly(actorInfo);
-        selectCharacter.SetActorInfo(actorInfo,party);
-        selectCharacter.SetSkillInfos(skillInfos);
-        selectCharacter.RefreshAction(lastSelectIndex);
+        public ResultViewEvent(Result.CommandType type)
+        {
+            commandType = type;
+        }
     }
 }
 
@@ -289,15 +303,5 @@ namespace Result
         DecideActor = 11,
         CancelActor = 12,
         UpdateActor = 13,
-    }
-}
-public class ResultViewEvent
-{
-    public Result.CommandType commandType;
-    public object template;
-
-    public ResultViewEvent(Result.CommandType type)
-    {
-        commandType = type;
     }
 }

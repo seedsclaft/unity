@@ -4,14 +4,17 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class StatusCondition : ListItem ,IListViewItem 
+namespace Ryneus
 {
-    [SerializeField] private StateInfoComponent stateInfoComponent;
-
-    public void UpdateViewItem()
+    public class StatusCondition : ListItem ,IListViewItem 
     {
-        if (ListData == null) return;
-        var data = (StateInfo)ListData.Data;
-        stateInfoComponent.UpdateInfo(data);
+        [SerializeField] private StateInfoComponent stateInfoComponent;
+
+        public void UpdateViewItem()
+        {
+            if (ListData == null) return;
+            var data = (StateInfo)ListData.Data;
+            stateInfoComponent.UpdateInfo(data);
+        }
     }
 }

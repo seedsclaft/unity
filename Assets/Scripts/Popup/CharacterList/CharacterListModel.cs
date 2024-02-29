@@ -2,10 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CharacterListModel : BaseModel
+namespace Ryneus
 {
-    public List<ListData> CharacterList()
+    public class CharacterListModel : BaseModel
     {
-        return MakeListData(StatusActors());
+        public List<ListData> CharacterList()
+        {
+            return MakeListData(StatusActors());
+        }
     }
 }

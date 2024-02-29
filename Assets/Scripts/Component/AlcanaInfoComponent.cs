@@ -3,22 +3,25 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class AlcanaInfoComponent : MonoBehaviour
+namespace Ryneus
 {
-    [SerializeField] private GameObject alcana;
-    [SerializeField] private TextMeshProUGUI alcanaCount;
-    [SerializeField] private _2dxFX_Shiny_Reflect shinyReflect;
-    public void UpdateInfo(AlcanaInfo alcanaInfo)
+    public class AlcanaInfoComponent : MonoBehaviour
     {
-        if (alcana != null){
-            alcana.gameObject.SetActive(alcanaInfo.IsAlcana == true);
-        }
-        if (alcanaCount != null){
-            alcanaCount.text = alcanaInfo.EnableOwnAlcanaList.Count.ToString();
-        }
-        if (shinyReflect != null)
+        [SerializeField] private GameObject alcana;
+        [SerializeField] private TextMeshProUGUI alcanaCount;
+        [SerializeField] private _2dxFX_Shiny_Reflect shinyReflect;
+        public void UpdateInfo(AlcanaInfo alcanaInfo)
         {
-            shinyReflect.enabled = alcanaInfo.EnableOwnAlcanaList.Count > 0;
+            if (alcana != null){
+                alcana.gameObject.SetActive(alcanaInfo.IsAlcana == true);
+            }
+            if (alcanaCount != null){
+                alcanaCount.text = alcanaInfo.EnableOwnAlcanaList.Count.ToString();
+            }
+            if (shinyReflect != null)
+            {
+                shinyReflect.enabled = alcanaInfo.EnableOwnAlcanaList.Count > 0;
+            }
         }
     }
 }

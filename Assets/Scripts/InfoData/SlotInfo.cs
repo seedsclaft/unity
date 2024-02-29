@@ -1,21 +1,24 @@
 using System;
 using System.Collections.Generic;
 
-[Serializable]
-public class SlotInfo
+namespace Ryneus
 {
-    public SlotInfo(List<ActorInfo> actorInfos)
+    [Serializable]
+    public class SlotInfo
     {
-        _actorInfos = actorInfos;
-    }
-    private List<ActorInfo> _actorInfos = new ();
-    public List<ActorInfo> ActorInfos => _actorInfos; 
-    private string _timeRecord;
-    public string TimeRecord => _timeRecord; 
+        public SlotInfo(List<ActorInfo> actorInfos)
+        {
+            _actorInfos = actorInfos;
+        }
+        private List<ActorInfo> _actorInfos = new ();
+        public List<ActorInfo> ActorInfos => _actorInfos; 
+        private string _timeRecord;
+        public string TimeRecord => _timeRecord; 
 
-    public void SetTimeRecord()
-    {
-        DateTime dt1 = DateTime.Now;
-        _timeRecord = dt1.ToString("yyyy/MM/dd");
+        public void SetTimeRecord()
+        {
+            DateTime dt1 = DateTime.Now;
+            _timeRecord = dt1.ToString("yyyy/MM/dd");
+        }
     }
 }

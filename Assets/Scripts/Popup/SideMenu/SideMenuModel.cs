@@ -1,9 +1,10 @@
-
-public class SideMenuModel : BaseModel
+namespace Ryneus
 {
-    public void DeletePlayerData()
+    public class SideMenuModel : BaseModel
     {
-        SaveSystem.DeletePlayerData();
+        public void DeletePlayerData()
+        {
+            SaveSystem.DeletePlayerData();
+        }
     }
 }
-

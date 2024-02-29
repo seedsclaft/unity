@@ -4,63 +4,71 @@ using UnityEngine;
 using UnityEngine.UI;
 using SideMenu;
 
-public class SideMenuView : BaseView
+namespace Ryneus
 {
-    [SerializeField] private BaseList sideMenuInfoList = null;
-    [SerializeField] private Button closeButton = null;
-    private new System.Action<SideMenuViewEvent> _commandData = null;
+    public class SideMenuView : BaseView
+    {
+        [SerializeField] private BaseList sideMenuInfoList = null;
+        [SerializeField] private Button closeButton = null;
+        private new System.Action<SideMenuViewEvent> _commandData = null;
 
-    public SystemData.CommandData SideMenuCommand 
-    { 
-        get {
-        var listData = sideMenuInfoList.ListData;
-        if (listData != null)
-        {
-            return (SystemData.CommandData)listData.Data;
+        public SystemData.CommandData SideMenuCommand 
+        { 
+            get {
+            var listData = sideMenuInfoList.ListData;
+            if (listData != null)
+            {
+                return (SystemData.CommandData)listData.Data;
+            }
+            return null;
+            }
         }
-        return null;
+
+        public override void Initialize() 
+        {
+            base.Initialize();
+            sideMenuInfoList.Initialize();
+            new SideMenuPresenter(this);
+            closeButton.onClick.AddListener(() => 
+            {
+                BackEvent();
+            });
+        }
+
+        private void OnClickSideMenu()
+        {
+            var eventData = new SideMenuViewEvent(CommandType.SelectSideMenu);
+            _commandData(eventData);
+        }
+
+
+        public void SetEvent(System.Action<SideMenuViewEvent> commandData)
+        {
+            _commandData = commandData;
+        }
+        
+        public void SetSideMenuViewInfo(SideMenuViewInfo sideMenuViewInfo)
+        {
+            sideMenuInfoList.SetData(sideMenuViewInfo.CommandLists);
+            sideMenuInfoList.SetInputHandler(InputKeyType.Decide,() => OnClickSideMenu());
+            sideMenuInfoList.SetInputHandler(InputKeyType.Cancel,() => BackEvent());
+            SetInputHandler(sideMenuInfoList.GetComponent<IInputHandlerEvent>());
+        }
+
+        public void SetBackEvent(System.Action backEvent)
+        {
+            SetBackCommand(() => 
+            {    
+                Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cancel);
+                if (backEvent != null) backEvent();
+            });
+            ChangeBackCommandActive(true);
         }
     }
-
-    public override void Initialize() 
+    public class SideMenuViewInfo
     {
-        base.Initialize();
-        sideMenuInfoList.Initialize();
-        new SideMenuPresenter(this);
-        closeButton.onClick.AddListener(() => 
-        {
-            BackEvent();
-        });
-    }
-
-    private void OnClickSideMenu()
-    {
-        var eventData = new SideMenuViewEvent(CommandType.SelectSideMenu);
-        _commandData(eventData);
-    }
-
-
-    public void SetEvent(System.Action<SideMenuViewEvent> commandData)
-    {
-        _commandData = commandData;
-    }
-    
-    public void SetSideMenuViewInfo(SideMenuViewInfo sideMenuViewInfo)
-    {
-        sideMenuInfoList.SetData(sideMenuViewInfo.CommandLists);
-        sideMenuInfoList.SetInputHandler(InputKeyType.Decide,() => OnClickSideMenu());
-        sideMenuInfoList.SetInputHandler(InputKeyType.Cancel,() => BackEvent());
-        SetInputHandler(sideMenuInfoList.GetComponent<IInputHandlerEvent>());
-    }
-
-    public void SetBackEvent(System.Action backEvent)
-    {
-        SetBackCommand(() => 
-        {    
-            Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cancel);
-            if (backEvent != null) backEvent();
-        });
-        ChangeBackCommandActive(true);
+        public List<ListData> CommandLists;
+        public System.Action EndEvent;
     }
 }
 
@@ -85,7 +93,3 @@ public class SideMenuViewEvent
     }
 }
 
-public class SideMenuViewInfo{
-    public List<ListData> CommandLists;
-    public System.Action EndEvent;
-}

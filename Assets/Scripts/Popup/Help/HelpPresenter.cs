@@ -1,32 +1,34 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Help;
 
-public class HelpPresenter 
+namespace Ryneus
 {
-    HelpModel _model = null;
-    HelpView _view = null;
-
-    private bool _busy = true;
-    public HelpPresenter(HelpView view)
+    public class HelpPresenter 
     {
-        _view = view;
-        _model = new HelpModel();
+        HelpModel _model = null;
+        HelpView _view = null;
 
-        Initialize();
-    }
+        private bool _busy = true;
+        public HelpPresenter(HelpView view)
+        {
+            _view = view;
+            _model = new HelpModel();
 
-    private void Initialize()
-    {
-        _view.SetEvent((type) => UpdateCommand(type));
-        _view.SetHelpInputInfo("HELP_LIST");
-    }
+            Initialize();
+        }
 
-    private void UpdateCommand(HelpViewEvent viewEvent)
-    {
-        if (_busy){
-            return;
+        private void Initialize()
+        {
+            _view.SetEvent((type) => UpdateCommand(type));
+            _view.SetHelpInputInfo("HELP_LIST");
+        }
+
+        private void UpdateCommand(HelpViewEvent viewEvent)
+        {
+            if (_busy){
+                return;
+            }
         }
     }
 }

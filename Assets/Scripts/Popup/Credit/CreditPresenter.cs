@@ -1,33 +1,35 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Credit;
 
-public class CreditPresenter 
+namespace Ryneus
 {
-    private CreditView _view = null;
-    private bool _busy = true;
-    public CreditPresenter(CreditView view)
+    public class CreditPresenter 
     {
-        _view = view;
+        private CreditView _view = null;
+        private bool _busy = true;
+        public CreditPresenter(CreditView view)
+        {
+            _view = view;
 
-        Initialize();
-    }
+            Initialize();
+        }
 
-    private void Initialize()
-    {
-        _view.SetEvent((type) => UpdateCommand(type));
-        _busy = false;
-    }
+        private void Initialize()
+        {
+            _view.SetEvent((type) => UpdateCommand(type));
+            _busy = false;
+        }
 
-    private void UpdateCommand(CreditViewEvent viewEvent)
-    {
-        if (_busy){
-            return;
+        private void UpdateCommand(CreditViewEvent viewEvent)
+        {
+            if (_busy){
+                return;
+            }
         }
     }
-}
 
-public class CreditInfo
-{
+    public class CreditInfo
+    {
+    }
 }

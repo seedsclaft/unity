@@ -3,37 +3,38 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Boot;
-
-public class BootView : BaseView
+namespace Ryneus
 {
-    [SerializeField] private Button logoButton = null;
-    [SerializeField] private BaseList baseList = null;
-    private new System.Action<BootViewEvent> _commandData = null;
-    public override void Initialize() 
+    public class BootView : BaseView
     {
-        base.Initialize();
-        new BootPresenter(this);
-        if (TestMode == false)
+        [SerializeField] private Button logoButton = null;
+        [SerializeField] private BaseList baseList = null;
+        private new System.Action<BootViewEvent> _commandData = null;
+        public override void Initialize() 
         {
-            logoButton.onClick.AddListener(() => CallLogoClick());
+            base.Initialize();
+            new BootPresenter(this);
+            if (TestMode == false)
+            {
+                logoButton.onClick.AddListener(() => CallLogoClick());
+            }
+            logoButton.gameObject.SetActive(TestMode == false);
+            baseList.SetInputHandler(InputKeyType.Decide,() => CallLogoClick());
+            SetInputHandler(baseList.GetComponent<IInputHandlerEvent>());
         }
-        logoButton.gameObject.SetActive(TestMode == false);
-        baseList.SetInputHandler(InputKeyType.Decide,() => CallLogoClick());
-        SetInputHandler(baseList.GetComponent<IInputHandlerEvent>());
-    }
 
-    public void SetEvent(System.Action<BootViewEvent> commandData)
-    {
-        _commandData = commandData;
-    }
+        public void SetEvent(System.Action<BootViewEvent> commandData)
+        {
+            _commandData = commandData;
+        }
 
-    private void CallLogoClick()
-    {
-        var eventData = new BootViewEvent(CommandType.LogoClick);
-        _commandData(eventData);
+        private void CallLogoClick()
+        {
+            var eventData = new BootViewEvent(CommandType.LogoClick);
+            _commandData(eventData);
+        }
     }
 }
-
 
 namespace Boot
 {

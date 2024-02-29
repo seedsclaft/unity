@@ -6,13 +6,16 @@ using UnityEngine.EventSystems;
 using UnityEngine.Events;
 using TMPro;
 
-public class RuleHelp : ListItem ,IListViewItem 
+namespace Ryneus
 {
-    [SerializeField] private TextMeshProUGUI commandName;
-
-    public void UpdateViewItem()
+    public class RuleHelp : ListItem ,IListViewItem 
     {
-        if (ListData == null) return;
-        commandName.text = (string)ListData.Data;
+        [SerializeField] private TextMeshProUGUI commandName;
+
+        public void UpdateViewItem()
+        {
+            if (ListData == null) return;
+            commandName.text = (string)ListData.Data;
+        }
     }
 }

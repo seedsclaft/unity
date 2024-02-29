@@ -5,146 +5,149 @@ using UnityEngine.UI;
 using EnemyInfo;
 using Effekseer;
 
-public class EnemyInfoView : BaseView,IInputHandlerEvent
+namespace Ryneus
 {
-    [SerializeField] private BattleBattlerList battleEnemyLayer = null;
-    [SerializeField] private BattleSelectCharacter selectCharacter = null;
-    [SerializeField] private EnemyInfoComponent enemyInfoComponent = null;
-    private new System.Action<EnemyInfoViewEvent> _commandData = null;
-    private System.Action _backEvent = null;
-
-    public int EnemyListIndex => battleEnemyLayer.Index;
-
-    private bool _isBattle = false;
-    protected void Awake(){
-        InitializeInput();
-    }
-
-    public void Initialize(List<BattlerInfo> battlerInfos,bool isBattle){
-        _isBattle = isBattle;
-        battleEnemyLayer.Initialize();
-        battleEnemyLayer.SetSelectedHandler(() => {
-            var eventData = new EnemyInfoViewEvent(CommandType.SelectEnemy);
-            _commandData(eventData);
-        });
-        
-        selectCharacter.Initialize();
-        SetInputHandler(selectCharacter.GetComponent<IInputHandlerEvent>());
-        InitializeSelectCharacter();
-        new EnemyInfoPresenter(this,battlerInfos);
-        SetInputHandler(gameObject.GetComponent<IInputHandlerEvent>());
-    }
-
-    public void SetEnemies(List<ListData> battlerInfos)
+    public class EnemyInfoView : BaseView,IInputHandlerEvent
     {
-        battleEnemyLayer.SetData(battlerInfos);
-        battleEnemyLayer.SetInputHandler(InputKeyType.Decide,() => {});
-        battleEnemyLayer.SetInputHandler(InputKeyType.Cancel,() => OnClickBack());
-        SetInputHandler(battleEnemyLayer.GetComponent<IInputHandlerEvent>());
-    }
+        [SerializeField] private BattleBattlerList battleEnemyLayer = null;
+        [SerializeField] private BattleSelectCharacter selectCharacter = null;
+        [SerializeField] private EnemyInfoComponent enemyInfoComponent = null;
+        private new System.Action<EnemyInfoViewEvent> _commandData = null;
+        private System.Action _backEvent = null;
 
-    private void InitializeSelectCharacter()
-    {
-        selectCharacter.SetInputHandlerAction(InputKeyType.Decide,() => {});
-        selectCharacter.SetInputHandlerAction(InputKeyType.Cancel,() => OnClickBack());
-        selectCharacter.SetInputHandlerAction(InputKeyType.SideLeft1,() => {
-            selectCharacter.SelectCharacterTabSmooth(-1);
-        });
-        selectCharacter.SetInputHandlerAction(InputKeyType.SideRight1,() => {
-            selectCharacter.SelectCharacterTabSmooth(1);
-        });
-        SetInputHandler(selectCharacter.MagicList.GetComponent<IInputHandlerEvent>());
-        selectCharacter.HideActionList();
-        selectCharacter.SelectCharacterTabSmooth(0);
-    }
+        public int EnemyListIndex => battleEnemyLayer.Index;
 
-    public void CommandRefreshStatus(List<ListData> skillInfos,BattlerInfo battlerInfo,List<int> enemyIndexes,int lastSelectIndex)
-    {
-        selectCharacter.ShowActionList();
-        selectCharacter.SetEnemyBattlerInfo(battlerInfo);
-        selectCharacter.SetSkillInfos(skillInfos);
-        selectCharacter.RefreshAction(lastSelectIndex);
-        enemyInfoComponent.Clear();
-        enemyInfoComponent.UpdateInfo(battlerInfo);
-    }
-
-    public void UpdateEnemyList(int selectIndex)
-    {
-        battleEnemyLayer.UpdateSelectIndex(selectIndex);
-    }
-
-    private void OnClickBack()
-    {
-        var eventData = new EnemyInfoViewEvent(CommandType.Back);
-        _commandData(eventData);
-    }
-
-    public void SetHelpWindow()
-    {
-        HelpWindow.SetHelpText(DataSystem.GetTextData(809).Help);
-        if (_isBattle)
-        {
-            HelpWindow.SetInputInfo("ENEMYINFO_BATTLE");
-        } else
-        {
-            HelpWindow.SetInputInfo("ENEMYINFO");
+        private bool _isBattle = false;
+        protected void Awake(){
+            InitializeInput();
         }
-    }
 
-    public void SetEvent(System.Action<EnemyInfoViewEvent> commandData)
-    {
-        _commandData = commandData;
-    }
+        public void Initialize(List<BattlerInfo> battlerInfos,bool isBattle){
+            _isBattle = isBattle;
+            battleEnemyLayer.Initialize();
+            battleEnemyLayer.SetSelectedHandler(() => {
+                var eventData = new EnemyInfoViewEvent(CommandType.SelectEnemy);
+                _commandData(eventData);
+            });
+            
+            selectCharacter.Initialize();
+            SetInputHandler(selectCharacter.GetComponent<IInputHandlerEvent>());
+            InitializeSelectCharacter();
+            new EnemyInfoPresenter(this,battlerInfos);
+            SetInputHandler(gameObject.GetComponent<IInputHandlerEvent>());
+        }
 
+        public void SetEnemies(List<ListData> battlerInfos)
+        {
+            battleEnemyLayer.SetData(battlerInfos);
+            battleEnemyLayer.SetInputHandler(InputKeyType.Decide,() => {});
+            battleEnemyLayer.SetInputHandler(InputKeyType.Cancel,() => OnClickBack());
+            SetInputHandler(battleEnemyLayer.GetComponent<IInputHandlerEvent>());
+        }
 
-    public void SetCondition(List<ListData> skillInfos)
-    {
-        selectCharacter.SetConditionList(skillInfos);
-    }
+        private void InitializeSelectCharacter()
+        {
+            selectCharacter.SetInputHandlerAction(InputKeyType.Decide,() => {});
+            selectCharacter.SetInputHandlerAction(InputKeyType.Cancel,() => OnClickBack());
+            selectCharacter.SetInputHandlerAction(InputKeyType.SideLeft1,() => {
+                selectCharacter.SelectCharacterTabSmooth(-1);
+            });
+            selectCharacter.SetInputHandlerAction(InputKeyType.SideRight1,() => {
+                selectCharacter.SelectCharacterTabSmooth(1);
+            });
+            SetInputHandler(selectCharacter.MagicList.GetComponent<IInputHandlerEvent>());
+            selectCharacter.HideActionList();
+            selectCharacter.SelectCharacterTabSmooth(0);
+        }
 
-    public void SetBackEvent(System.Action backEvent)
-    {
-        _backEvent = backEvent;
-        SetBackCommand(() => 
-        {    
+        public void CommandRefreshStatus(List<ListData> skillInfos,BattlerInfo battlerInfo,List<int> enemyIndexes,int lastSelectIndex)
+        {
+            selectCharacter.ShowActionList();
+            selectCharacter.SetEnemyBattlerInfo(battlerInfo);
+            selectCharacter.SetSkillInfos(skillInfos);
+            selectCharacter.RefreshAction(lastSelectIndex);
+            enemyInfoComponent.Clear();
+            enemyInfoComponent.UpdateInfo(battlerInfo);
+        }
+
+        public void UpdateEnemyList(int selectIndex)
+        {
+            battleEnemyLayer.UpdateSelectIndex(selectIndex);
+        }
+
+        private void OnClickBack()
+        {
             var eventData = new EnemyInfoViewEvent(CommandType.Back);
             _commandData(eventData);
-        });
-        ChangeBackCommandActive(true);
-    }
-
-    public void CommandBack()
-    {
-        if (_backEvent != null)
-        {
-            _backEvent();
         }
-    }
 
-    public void InputHandler(InputKeyType keyType,bool pressed)
-    {
-        if (keyType == InputKeyType.SideLeft1)
+        public void SetHelpWindow()
         {
+            HelpWindow.SetHelpText(DataSystem.GetTextData(809).Help);
             if (_isBattle)
             {
+                HelpWindow.SetInputInfo("ENEMYINFO_BATTLE");
             } else
             {
+                HelpWindow.SetInputInfo("ENEMYINFO");
             }
         }
-        if (keyType == InputKeyType.SideRight1)
+
+        public void SetEvent(System.Action<EnemyInfoViewEvent> commandData)
         {
-            if (_isBattle)
+            _commandData = commandData;
+        }
+
+
+        public void SetCondition(List<ListData> skillInfos)
+        {
+            selectCharacter.SetConditionList(skillInfos);
+        }
+
+        public void SetBackEvent(System.Action backEvent)
+        {
+            _backEvent = backEvent;
+            SetBackCommand(() => 
+            {    
+                var eventData = new EnemyInfoViewEvent(CommandType.Back);
+                _commandData(eventData);
+            });
+            ChangeBackCommandActive(true);
+        }
+
+        public void CommandBack()
+        {
+            if (_backEvent != null)
             {
-            } else
-            {
+                _backEvent();
             }
         }
-    }
+
+        public void InputHandler(InputKeyType keyType,bool pressed)
+        {
+            if (keyType == InputKeyType.SideLeft1)
+            {
+                if (_isBattle)
+                {
+                } else
+                {
+                }
+            }
+            if (keyType == InputKeyType.SideRight1)
+            {
+                if (_isBattle)
+                {
+                } else
+                {
+                }
+            }
+        }
 
 
-    public new void MouseCancelHandler()
-    {
-        CommandBack();
+        public new void MouseCancelHandler()
+        {
+            CommandBack();
+        }
     }
 }
 

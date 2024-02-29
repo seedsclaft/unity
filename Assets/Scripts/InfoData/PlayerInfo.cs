@@ -1,162 +1,165 @@
 ﻿using System;
 using System.Collections.Generic;
 
-[Serializable]
-public class PlayerInfo
+namespace Ryneus
 {
-    public PlayerInfo()
+    [Serializable]
+    public class PlayerInfo
     {
-        InitSlotInfo();
-		ClearStageClearCount();
-		InitStageClearCount();
-    }
-
-    private int _userId = -1;
-    public int UserId => _userId;
-    public void SetUserId()
-    {
-        if (_userId == -1)
+        public PlayerInfo()
         {
-            int strong = 100;
-		    int sec = (int)DateTime.Now.Subtract(new DateTime(1970, 1, 1)).TotalSeconds;
-            _userId = sec + (strong*UnityEngine.Random.Range(0,strong));
+            InitSlotInfo();
+            ClearStageClearCount();
+            InitStageClearCount();
         }
-    }
 
-    private string _playerName = "";
-    public string PlayerName => _playerName;
-    public void SetPlayerName(string name)
-    {
-        _playerName = name;
-    }
-
-    private Dictionary<int,int> _bestScore = new ();
-    public int GetBestScore(int stageId)
-    {
-        if (!_bestScore.ContainsKey(stageId))
+        private int _userId = -1;
+        public int UserId => _userId;
+        public void SetUserId()
         {
+            if (_userId == -1)
+            {
+                int strong = 100;
+                int sec = (int)DateTime.Now.Subtract(new DateTime(1970, 1, 1)).TotalSeconds;
+                _userId = sec + (strong*UnityEngine.Random.Range(0,strong));
+            }
+        }
+
+        private string _playerName = "";
+        public string PlayerName => _playerName;
+        public void SetPlayerName(string name)
+        {
+            _playerName = name;
+        }
+
+        private Dictionary<int,int> _bestScore = new ();
+        public int GetBestScore(int stageId)
+        {
+            if (!_bestScore.ContainsKey(stageId))
+            {
+                return 0;
+            }
+            return _bestScore[stageId];
+        }
+        public void SetBestScore(int stageId,int score)
+        {
+            if (!_bestScore.ContainsKey(stageId))
+            {
+                _bestScore[stageId] = 0;
+            }
+            if (score > _bestScore[stageId])
+            {
+                _bestScore[stageId] = score;
+            }
+        }
+
+        // クリア情報
+        private Dictionary<int,int> _stageClearDict = new ();
+        public Dictionary<int,int> StageClearDict => _stageClearDict;
+        public int ClearCount(int stageId)
+        {
+            if (_stageClearDict.ContainsKey(stageId))
+            {
+                return _stageClearDict[stageId];
+            }
             return 0;
         }
-        return _bestScore[stageId];
-    }
-    public void SetBestScore(int stageId,int score)
-    {
-        if (!_bestScore.ContainsKey(stageId))
-        {
-            _bestScore[stageId] = 0;
-        }
-        if (score > _bestScore[stageId])
-        {
-            _bestScore[stageId] = score;
-        }
-    }
 
-    // クリア情報
-    private Dictionary<int,int> _stageClearDict = new ();
-    public Dictionary<int,int> StageClearDict => _stageClearDict;
-    public int ClearCount(int stageId)
-    {
-        if (_stageClearDict.ContainsKey(stageId))
+        private void ClearStageClearCount()
         {
-            return _stageClearDict[stageId];
+            _stageClearDict.Clear();
         }
-        return 0;
-    }
 
-    private void ClearStageClearCount()
-    {
-        _stageClearDict.Clear();
-    }
-
-	private void InitStageClearCount()
-	{
-        var stageDates = DataSystem.Stages;
-        foreach (var stageData in stageDates)
+        private void InitStageClearCount()
         {
-            if (stageData.Selectable)
+            var stageDates = DataSystem.Stages;
+            foreach (var stageData in stageDates)
             {
-                if (!_stageClearDict.ContainsKey(stageData.Id))
+                if (stageData.Selectable)
                 {
-                    _stageClearDict[stageData.Id] = 0;
+                    if (!_stageClearDict.ContainsKey(stageData.Id))
+                    {
+                        _stageClearDict[stageData.Id] = 0;
+                    }
                 }
             }
         }
-	}
 
-	public void StageClear(int stageId)
-	{
-        if (!_stageClearDict.ContainsKey(stageId))
+        public void StageClear(int stageId)
         {
-            _stageClearDict[stageId] = 0;
+            if (!_stageClearDict.ContainsKey(stageId))
+            {
+                _stageClearDict[stageId] = 0;
+            }
+            _stageClearDict[stageId]++;
         }
-        _stageClearDict[stageId]++;
-	}
 
-    private List<ActorInfo> _saveActorList = new ();
-    public List<ActorInfo> SaveActorList => _saveActorList;
+        private List<ActorInfo> _saveActorList = new ();
+        public List<ActorInfo> SaveActorList => _saveActorList;
 
-    public void InitSaveActorList()
-    {
-        if (_saveActorList.Count > 0) return;
-        var baseRebornSkill = DataSystem.Skills.Find(a => a.SkillType == SkillType.Reborn);
-        for (int i = 0;i < 5;i++)
+        public void InitSaveActorList()
         {
-            var tempActor = new ActorInfo(DataSystem.Actors[i]);
-            var rebornSkill = new SkillInfo(baseRebornSkill.Id+i); 
-            rebornSkill.SetParam(1,1,i+1);
-            tempActor.AddRebornSkill(rebornSkill);
-            AddActorInfo(tempActor);
+            if (_saveActorList.Count > 0) return;
+            var baseRebornSkill = DataSystem.Skills.Find(a => a.SkillType == SkillType.Reborn);
+            for (int i = 0;i < 5;i++)
+            {
+                var tempActor = new ActorInfo(DataSystem.Actors[i]);
+                var rebornSkill = new SkillInfo(baseRebornSkill.Id+i); 
+                rebornSkill.SetParam(1,1,i+1);
+                tempActor.AddRebornSkill(rebornSkill);
+                AddActorInfo(tempActor);
+            }
         }
-    }
 
-    private List<SlotInfo> _slotSaveList = new ();
-    public List<SlotInfo> SlotSaveList => _slotSaveList;
-    readonly int _slotSaveCount = 3;
+        private List<SlotInfo> _slotSaveList = new ();
+        public List<SlotInfo> SlotSaveList => _slotSaveList;
+        readonly int _slotSaveCount = 3;
 
-    public void AddActorInfo(ActorInfo actorInfo)
-    {
-        _saveActorList.Add(actorInfo);
-    }
-
-    public void EraseReborn(int index)
-    {
-        _saveActorList.RemoveAt(index);
-    }
-    
-    private void InitSlotInfo()
-    {
-        _slotSaveList.Clear();
-        for (int i = 0;i < _slotSaveCount;i++)
+        public void AddActorInfo(ActorInfo actorInfo)
         {
-            var slotInfo = new SlotInfo(new List<ActorInfo>(){});
-            _slotSaveList.Add(slotInfo);
+            _saveActorList.Add(actorInfo);
         }
-    }
-    
-    public void SaveSlotData(int index,SlotInfo slotInfo)
-    {
-        var saveSlot = new SlotInfo(slotInfo.ActorInfos);
-        saveSlot.SetTimeRecord();
-        UpdateSlotInfo(index,saveSlot);
-    }
 
-    private void UpdateSlotInfo(int slotId,SlotInfo slotInfo)
-    {
-        _slotSaveList[slotId] = slotInfo;
-    }
-
-    // 倒したTroopID
-    private List<int> _clearedTroopIds = new ();
-    public bool EnableBattleSkip(int troopId)
-    {
-        return _clearedTroopIds != null && _clearedTroopIds.Contains(troopId);
-    }
-
-    public void AddClearedTroopId(int troopId)
-    {
-        if (!EnableBattleSkip(troopId))
+        public void EraseReborn(int index)
         {
-            _clearedTroopIds.Add(troopId);
+            _saveActorList.RemoveAt(index);
+        }
+        
+        private void InitSlotInfo()
+        {
+            _slotSaveList.Clear();
+            for (int i = 0;i < _slotSaveCount;i++)
+            {
+                var slotInfo = new SlotInfo(new List<ActorInfo>(){});
+                _slotSaveList.Add(slotInfo);
+            }
+        }
+        
+        public void SaveSlotData(int index,SlotInfo slotInfo)
+        {
+            var saveSlot = new SlotInfo(slotInfo.ActorInfos);
+            saveSlot.SetTimeRecord();
+            UpdateSlotInfo(index,saveSlot);
+        }
+
+        private void UpdateSlotInfo(int slotId,SlotInfo slotInfo)
+        {
+            _slotSaveList[slotId] = slotInfo;
+        }
+
+        // 倒したTroopID
+        private List<int> _clearedTroopIds = new ();
+        public bool EnableBattleSkip(int troopId)
+        {
+            return _clearedTroopIds != null && _clearedTroopIds.Contains(troopId);
+        }
+
+        public void AddClearedTroopId(int troopId)
+        {
+            if (!EnableBattleSkip(troopId))
+            {
+                _clearedTroopIds.Add(troopId);
+            }
         }
     }
 }

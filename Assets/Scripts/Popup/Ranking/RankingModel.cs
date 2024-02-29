@@ -4,49 +4,52 @@ using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using System.Threading;
 
-public class RankingModel : BaseModel
+namespace Ryneus
 {
-    private int _stageId = 0;
-    public async void RankingInfos(int stageId,Action<List<ListData>> endEvent)
+    public class RankingModel : BaseModel
     {
-        _stageId = stageId;
-#if (UNITY_WEBGL || UNITY_ANDROID) //&& !UNITY_EDITOR
-        if (TempInfo.TempRankingData.ContainsKey(stageId) == false)
+        private int _stageId = 0;
+        public async void RankingInfos(int stageId,Action<List<ListData>> endEvent)
         {
-            FirebaseController.Instance.ReadRankingData(stageId,RankingTypeText(DataSystem.FindStage(stageId).RankingStage));
-            await UniTask.WaitUntil(() => FirebaseController.IsBusy == false);
-            
-            // 結果をそのまま参照渡しにしないこと
-            var list = new List<RankingInfo>();
-            foreach (var rankingInfo in FirebaseController.RankingInfos)
+            _stageId = stageId;
+    #if (UNITY_WEBGL || UNITY_ANDROID) //&& !UNITY_EDITOR
+            if (TempInfo.TempRankingData.ContainsKey(stageId) == false)
             {
-                var rankingData = new RankingInfo();
-                rankingData.CopyInfo(rankingInfo);
-                list.Add(rankingData);
+                FirebaseController.Instance.ReadRankingData(stageId,RankingTypeText(DataSystem.FindStage(stageId).RankingStage));
+                await UniTask.WaitUntil(() => FirebaseController.IsBusy == false);
+                
+                // 結果をそのまま参照渡しにしないこと
+                var list = new List<RankingInfo>();
+                foreach (var rankingInfo in FirebaseController.RankingInfos)
+                {
+                    var rankingData = new RankingInfo();
+                    rankingData.CopyInfo(rankingInfo);
+                    list.Add(rankingData);
+                }
+                TempInfo.SetRankingInfo(stageId,list);
             }
-            TempInfo.SetRankingInfo(stageId,list);
-        }
-        if (endEvent != null) 
-        {
-            var rankingDataList = MakeListData(TempInfo.TempRankingData[stageId]);
-            foreach (var rankingData in rankingDataList)
+            if (endEvent != null) 
             {
-                var data = (RankingInfo)rankingData.Data;
-                rankingData.SetSelected(data.Name == CurrentData.PlayerInfo.PlayerName && data.Score == CurrentData.PlayerInfo.GetBestScore(_stageId));
+                var rankingDataList = MakeListData(TempInfo.TempRankingData[stageId]);
+                foreach (var rankingData in rankingDataList)
+                {
+                    var data = (RankingInfo)rankingData.Data;
+                    rankingData.SetSelected(data.Name == CurrentData.PlayerInfo.PlayerName && data.Score == CurrentData.PlayerInfo.GetBestScore(_stageId));
+                }
+                endEvent(rankingDataList);
             }
-            endEvent(rankingDataList);
+    #endif
         }
-#endif
-    }
 
-    public void MakeDetailPartyInfo(int listIndex)
-    {
-        var rankingInfo = TempInfo.TempRankingData[_stageId][listIndex];
-        PartyInfo.InitActorInfos();
-        foreach (var actorInfo in rankingInfo.ActorInfos)
+        public void MakeDetailPartyInfo(int listIndex)
         {
-            PartyInfo.AddActorId(actorInfo.ActorId);
-            PartyInfo.UpdateActorInfo(actorInfo);
+            var rankingInfo = TempInfo.TempRankingData[_stageId][listIndex];
+            PartyInfo.InitActorInfos();
+            foreach (var actorInfo in rankingInfo.ActorInfos)
+            {
+                PartyInfo.AddActorId(actorInfo.ActorId);
+                PartyInfo.UpdateActorInfo(actorInfo);
+            }
         }
     }
 }

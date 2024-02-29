@@ -2,30 +2,33 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UnitInfo 
+namespace Ryneus
 {
-    private List<BattlerInfo> _battlerInfos;
-    public List<BattlerInfo> BattlerInfos => _battlerInfos;
-    public List<BattlerInfo> AliveBattlerInfos => _battlerInfos.FindAll(a => a.IsAlive());
-    
-    public void SetBattlers(List<BattlerInfo> battlerInfos)
+    public class UnitInfo 
     {
-        _battlerInfos = battlerInfos;
-    }
-    
-    public List<BattlerInfo> FrontBattlers()
-    {
-        // 最前列は
-        if (IsFrontAlive())
+        private List<BattlerInfo> _battlerInfos;
+        public List<BattlerInfo> BattlerInfos => _battlerInfos;
+        public List<BattlerInfo> AliveBattlerInfos => _battlerInfos.FindAll(a => a.IsAlive());
+        
+        public void SetBattlers(List<BattlerInfo> battlerInfos)
         {
-            return BattlerInfos.FindAll(a => a.LineIndex == LineType.Front);
+            _battlerInfos = battlerInfos;
         }
-        return BattlerInfos;
-    }
-    
-    public bool IsFrontAlive()
-    {
-        // 最前列は
-        return AliveBattlerInfos.Find(a => a.LineIndex == LineType.Front) != null;
+        
+        public List<BattlerInfo> FrontBattlers()
+        {
+            // 最前列は
+            if (IsFrontAlive())
+            {
+                return BattlerInfos.FindAll(a => a.LineIndex == LineType.Front);
+            }
+            return BattlerInfos;
+        }
+        
+        public bool IsFrontAlive()
+        {
+            // 最前列は
+            return AliveBattlerInfos.Find(a => a.LineIndex == LineType.Front) != null;
+        }
     }
 }

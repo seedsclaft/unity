@@ -4,21 +4,24 @@ using UnityEngine.UI;
 using UnityEngine;
 using TMPro;
 
-public class BattlerGrid : MonoBehaviour
+namespace Ryneus
 {
-    [SerializeField] private BattlerInfoComponent battlerInfoComponent;
-    [SerializeField] private TextMeshProUGUI turnWait;
-    [SerializeField] private CanvasGroup canvasGroup;
-
-    public void UpdateInfo(BattlerInfo battlerInfo,int turnWaitValue,int sortIndex)
+    public class BattlerGrid : MonoBehaviour
     {
-        battlerInfoComponent.UpdateInfo(battlerInfo);
-        turnWait.SetText(turnWaitValue.ToString());
-    }
+        [SerializeField] private BattlerInfoComponent battlerInfoComponent;
+        [SerializeField] private TextMeshProUGUI turnWait;
+        [SerializeField] private CanvasGroup canvasGroup;
 
-    public void UpdateAlpha(bool show)
-    {
-        var alpha = show ? 1 : 0;
-        canvasGroup.alpha = alpha;
+        public void UpdateInfo(BattlerInfo battlerInfo,int turnWaitValue,int sortIndex)
+        {
+            battlerInfoComponent.UpdateInfo(battlerInfo);
+            turnWait.SetText(turnWaitValue.ToString());
+        }
+
+        public void UpdateAlpha(bool show)
+        {
+            var alpha = show ? 1 : 0;
+            canvasGroup.alpha = alpha;
+        }
     }
 }

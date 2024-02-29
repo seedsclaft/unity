@@ -2,53 +2,56 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ConfirmAssign : MonoBehaviour
+namespace Ryneus
 {
-    [SerializeField] private GameObject confirmRoot = null;
-    [SerializeField] private GameObject confirmPrefab = null;
-    [SerializeField] private GameObject cautionPrefab = null;
-    public GameObject CreateConfirm(ConfirmType popupType,HelpWindow helpWindow)
+    public class ConfirmAssign : MonoBehaviour
     {
-        if (confirmRoot.transform.childCount > 0)
+        [SerializeField] private GameObject confirmRoot = null;
+        [SerializeField] private GameObject confirmPrefab = null;
+        [SerializeField] private GameObject cautionPrefab = null;
+        public GameObject CreateConfirm(ConfirmType popupType,HelpWindow helpWindow)
         {
-            CloseConfirm();
+            if (confirmRoot.transform.childCount > 0)
+            {
+                CloseConfirm();
+            }
+            var prefab = Instantiate(GetConfirmObject(popupType));
+            prefab.transform.SetParent(confirmRoot.transform, false);
+            confirmRoot.gameObject.SetActive(true);
+            var view = prefab.GetComponent<BaseView>();
+            view?.SetHelpWindow(helpWindow);
+            return prefab;
         }
-        var prefab = Instantiate(GetConfirmObject(popupType));
-        prefab.transform.SetParent(confirmRoot.transform, false);
-        confirmRoot.gameObject.SetActive(true);
-        var view = prefab.GetComponent<BaseView>();
-        view?.SetHelpWindow(helpWindow);
-        return prefab;
-    }
 
-    private GameObject GetConfirmObject(ConfirmType popupType)
-    {
-        switch (popupType)
+        private GameObject GetConfirmObject(ConfirmType popupType)
         {
-            case ConfirmType.Confirm:
-            return confirmPrefab;
-            case ConfirmType.Caution:
-            return cautionPrefab;
+            switch (popupType)
+            {
+                case ConfirmType.Confirm:
+                return confirmPrefab;
+                case ConfirmType.Caution:
+                return cautionPrefab;
+            }
+            return null;
         }
-        return null;
-    }
 
-    public void CloseConfirm()
-    {
-        foreach(Transform child in confirmRoot.transform){
-            Destroy(child.gameObject);
+        public void CloseConfirm()
+        {
+            foreach(Transform child in confirmRoot.transform){
+                Destroy(child.gameObject);
+            }
+            confirmRoot.gameObject.SetActive(false);
         }
-        confirmRoot.gameObject.SetActive(false);
+
+        public void HideConfirm()
+        {
+            confirmRoot.gameObject.SetActive(false);
+        }
     }
 
-    public void HideConfirm()
-    {
-        confirmRoot.gameObject.SetActive(false);
+    public enum ConfirmType{
+        None,
+        Confirm,
+        Caution,
     }
-}
-
-public enum ConfirmType{
-    None,
-    Confirm,
-    Caution,
 }

@@ -3,36 +3,39 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SymbolRecordData : ListItem ,IListViewItem
+namespace Ryneus
 {
-    [SerializeField] private List<SymbolComponent> symbolComponents;
-
-    public void UpdateViewItem()
+    public class SymbolRecordData : ListItem ,IListViewItem
     {
-        if (ListData == null) return;
-        var dates = (List<SymbolInfo>)ListData.Data;
-        foreach (var symbolComponent in symbolComponents)
+        [SerializeField] private List<SymbolComponent> symbolComponents;
+
+        public void UpdateViewItem()
         {
-            symbolComponent.gameObject.SetActive(false);
-        }
-        foreach (var data in dates)
-        {
-            if (symbolComponents.Count > 0)
+            if (ListData == null) return;
+            var dates = (List<SymbolInfo>)ListData.Data;
+            foreach (var symbolComponent in symbolComponents)
             {
-                var symbolComponent = symbolComponents[data.StageSymbolData.SeekIndex];
-                symbolComponent.gameObject.SetActive(true);
-                symbolComponent.UpdateInfo(data);
+                symbolComponent.gameObject.SetActive(false);
+            }
+            foreach (var data in dates)
+            {
+                if (symbolComponents.Count > 0)
+                {
+                    var symbolComponent = symbolComponents[data.StageSymbolData.SeekIndex];
+                    symbolComponent.gameObject.SetActive(true);
+                    symbolComponent.UpdateInfo(data);
+                }
             }
         }
-    }
 
-    public void SetSymbolItemCallHandler(System.Action<SymbolInfo> handler)
-    {
-        foreach (var symbolComponent in symbolComponents)
+        public void SetSymbolItemCallHandler(System.Action<SymbolInfo> handler)
         {
-            var button = symbolComponent.GetComponentInChildren<Button>();
-            button.onClick.AddListener(() => handler(symbolComponent.SymbolInfo));
+            foreach (var symbolComponent in symbolComponents)
+            {
+                var button = symbolComponent.GetComponentInChildren<Button>();
+                button.onClick.AddListener(() => handler(symbolComponent.SymbolInfo));
+            }
         }
-    }
 
+    }
 }

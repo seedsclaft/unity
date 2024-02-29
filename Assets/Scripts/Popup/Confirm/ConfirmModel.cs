@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class ConfirmModel : BaseModel
+namespace Ryneus
 {
-    private int _currentIndex = 0; 
-    public int CurrentIndex
+    public class ConfirmModel : BaseModel
     {
-        get {return _currentIndex;}
+        private int _currentIndex = 0; 
+        public int CurrentIndex
+        {
+            get {return _currentIndex;}
+        }
     }
 }
-

@@ -7,117 +7,120 @@ using NPOI.HSSF.UserModel;
 using NPOI.SS.UserModel;
 using NPOI.XSSF.UserModel;
 
-public class AssetPostImporter
+namespace Ryneus
 {
-	static public string ExcelPath = "Assets/Data";
-	static public string ExportExcelPath = "Assets/Resources/Data";
-
-	static public bool CheckOnPostprocessAllAssets(string asset,string ExcelName)
+	public class AssetPostImporter
 	{
-		string ext = Path.GetExtension(asset);
-		if (ext != ".xls" && ext != ".xlsx" && ext != ".xlsm") return false;
+		static public string ExcelPath = "Assets/Data";
+		static public string ExportExcelPath = "Assets/Resources/Data";
 
-		// エクセルを開いているデータはスキップ
-		string fileName = Path.GetFileName(asset);
-		if (fileName.StartsWith("~$")) return false;
-
-		// 同じパスのみ
-		string filePath = Path.GetDirectoryName(asset);
-		filePath = filePath.Replace("\\", "/");
-		if (filePath != AssetPostImporter.ExcelPath) return false;
-
-		// 同じファイルのみ
-		if (fileName != ExcelName) return false;
-		return true;
-	}
-    public static int ImportNumeric(IRow BaseRow,int Column)
-    {
-        //Debug.Log(Column);
-		var value = BaseRow.GetCell(Column);
-		if (value != null){
-	        return (int)value?.SafeNumericCellValue();
-		}
-		return 0;
-    }
-    public static float ImportFloat(IRow BaseRow,int Column)
-    {
-        //Debug.Log(Column);
-        return (float)BaseRow.GetCell(Column).SafeNumericCellValue();
-    }
-    public static string ImportString(IRow BaseRow,int Column)
-    {
-        //Debug.Log(Column);
-        return (string)BaseRow.GetCell(Column).SafeStringCellValue();
-    }
-	// エクセルワークブックを作成
-	public static void CreateBook(string path, Stream stream, out IWorkbook Workbook)
-	{
-		// 拡張子が".xls"の場合
-		if (Path.GetExtension(path) == ".xls")
+		static public bool CheckOnPostprocessAllAssets(string asset,string ExcelName)
 		{
-			Workbook = new HSSFWorkbook(stream);
+			string ext = Path.GetExtension(asset);
+			if (ext != ".xls" && ext != ".xlsx" && ext != ".xlsm") return false;
+
+			// エクセルを開いているデータはスキップ
+			string fileName = Path.GetFileName(asset);
+			if (fileName.StartsWith("~$")) return false;
+
+			// 同じパスのみ
+			string filePath = Path.GetDirectoryName(asset);
+			filePath = filePath.Replace("\\", "/");
+			if (filePath != AssetPostImporter.ExcelPath) return false;
+
+			// 同じファイルのみ
+			if (fileName != ExcelName) return false;
+			return true;
 		}
-		// 拡張子がそれ以外の場合
-		else
+		public static int ImportNumeric(IRow BaseRow,int Column)
 		{
-			Workbook = new XSSFWorkbook(stream);
-		}
-	}
-	// テキストデータを作成
-	public static List<TextData> CreateText(ISheet BaseSheet)
-	{
-		var textData = new List<TextData>();
-
-		for (int i = 1; i <= BaseSheet.LastRowNum; i++)
-		{
-			IRow BaseRow = BaseSheet.GetRow(i);
-			var TextData = new TextData();
-
-			TextData.Id = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseTextColumn.Id);
-			TextData.Text = AssetPostImporter.ImportString(BaseRow,(int)BaseTextColumn.Text);
-			TextData.Help = AssetPostImporter.ImportString(BaseRow,(int)BaseTextColumn.Help);
-			
-			textData.Add(TextData);
-		}
-
-		return textData;
-	}
-	// 文字列を分解
-	static string[] StringSplit(string str, int count)
-	{
-		List<string> List = new List<string>();
-
-		int Length = (int)Math.Ceiling((double)str.Length / count);
-
-		for (int i = 0; i < Length; i++)
-		{
-			int Start = count * i;
-
-			// 始まりが文字列の長さより多かったら
-			if (str.Length <= Start)
-			{
-				break;
+			//Debug.Log(Column);
+			var value = BaseRow.GetCell(Column);
+			if (value != null){
+				return (int)value?.SafeNumericCellValue();
 			}
-			// 読み取る大きさが文字列の長さより多かったら終わりを指定しない
-			if (str.Length < Start + count)
+			return 0;
+		}
+		public static float ImportFloat(IRow BaseRow,int Column)
+		{
+			//Debug.Log(Column);
+			return (float)BaseRow.GetCell(Column).SafeNumericCellValue();
+		}
+		public static string ImportString(IRow BaseRow,int Column)
+		{
+			//Debug.Log(Column);
+			return (string)BaseRow.GetCell(Column).SafeStringCellValue();
+		}
+		// エクセルワークブックを作成
+		public static void CreateBook(string path, Stream stream, out IWorkbook Workbook)
+		{
+			// 拡張子が".xls"の場合
+			if (Path.GetExtension(path) == ".xls")
 			{
-				List.Add(str.Substring(Start));
+				Workbook = new HSSFWorkbook(stream);
 			}
-			// 始まりの位置と終わりの位置を指定（始まりの値は含むが終わりの値は含まない）
+			// 拡張子がそれ以外の場合
 			else
 			{
-				List.Add(str.Substring(Start, count));
+				Workbook = new XSSFWorkbook(stream);
 			}
 		}
+		// テキストデータを作成
+		public static List<TextData> CreateText(ISheet BaseSheet)
+		{
+			var textData = new List<TextData>();
 
-		return List.ToArray();
+			for (int i = 1; i <= BaseSheet.LastRowNum; i++)
+			{
+				IRow BaseRow = BaseSheet.GetRow(i);
+				var TextData = new TextData();
+
+				TextData.Id = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseTextColumn.Id);
+				TextData.Text = AssetPostImporter.ImportString(BaseRow,(int)BaseTextColumn.Text);
+				TextData.Help = AssetPostImporter.ImportString(BaseRow,(int)BaseTextColumn.Help);
+				
+				textData.Add(TextData);
+			}
+
+			return textData;
+		}
+		// 文字列を分解
+		static string[] StringSplit(string str, int count)
+		{
+			List<string> List = new List<string>();
+
+			int Length = (int)Math.Ceiling((double)str.Length / count);
+
+			for (int i = 0; i < Length; i++)
+			{
+				int Start = count * i;
+
+				// 始まりが文字列の長さより多かったら
+				if (str.Length <= Start)
+				{
+					break;
+				}
+				// 読み取る大きさが文字列の長さより多かったら終わりを指定しない
+				if (str.Length < Start + count)
+				{
+					List.Add(str.Substring(Start));
+				}
+				// 始まりの位置と終わりの位置を指定（始まりの値は含むが終わりの値は含まない）
+				else
+				{
+					List.Add(str.Substring(Start, count));
+				}
+			}
+
+			return List.ToArray();
+		}
 	}
-}
 
-public enum BaseTextColumn
-{
+	public enum BaseTextColumn
+	{
 
-	Id = 0,
-	Text,
-	Help,
+		Id = 0,
+		Text,
+		Help,
+	}
 }

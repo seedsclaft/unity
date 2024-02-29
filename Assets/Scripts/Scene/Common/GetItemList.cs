@@ -4,27 +4,30 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
 
-public class GetItemList : BaseList
+namespace Ryneus
 {
-    [SerializeField] private BaseList tacticsCommandList;
-    public BaseList TacticsCommandList {get {return tacticsCommandList;}}
-    
-    public void InitializeConfirm(List<ListData> confirmCommands ,System.Action<ConfirmCommandType> callEvent)
+    public class GetItemList : BaseList
     {
-        tacticsCommandList.Initialize();
-        tacticsCommandList.SetData(confirmCommands);
-        tacticsCommandList.SetInputHandler(InputKeyType.Decide,() => 
+        [SerializeField] private BaseList tacticsCommandList;
+        public BaseList TacticsCommandList {get {return tacticsCommandList;}}
+        
+        public void InitializeConfirm(List<ListData> confirmCommands ,System.Action<ConfirmCommandType> callEvent)
         {
-            var data = (SystemData.CommandData)tacticsCommandList.ListData.Data;
-            if (data.Key == "Yes")
+            tacticsCommandList.Initialize();
+            tacticsCommandList.SetData(confirmCommands);
+            tacticsCommandList.SetInputHandler(InputKeyType.Decide,() => 
             {
-                callEvent(ConfirmCommandType.Yes);
-            } else
-            if (data.Key == "No")
-            {
-                callEvent(ConfirmCommandType.No);
-            }
-        });
-        tacticsCommandList.UpdateSelectIndex(0);
+                var data = (SystemData.CommandData)tacticsCommandList.ListData.Data;
+                if (data.Key == "Yes")
+                {
+                    callEvent(ConfirmCommandType.Yes);
+                } else
+                if (data.Key == "No")
+                {
+                    callEvent(ConfirmCommandType.No);
+                }
+            });
+            tacticsCommandList.UpdateSelectIndex(0);
+        }
     }
 }

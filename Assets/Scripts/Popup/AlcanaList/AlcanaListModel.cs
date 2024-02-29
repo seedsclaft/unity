@@ -2,15 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AlcanaListModel : BaseModel
+namespace Ryneus
 {
-    public List<ListData> AlcanaList()
+    public class AlcanaListModel : BaseModel
     {
-        var alcanaList = StageAlcana.OwnAlcanaList;
-        foreach (var alcana in alcanaList)
+        public List<ListData> AlcanaList()
         {
-            alcana.SetSelectedAlcana(StageAlcana.EnableOwnAlcanaList.Contains(alcana));
+            var alcanaList = StageAlcana.OwnAlcanaList;
+            foreach (var alcana in alcanaList)
+            {
+                alcana.SetSelectedAlcana(StageAlcana.EnableOwnAlcanaList.Contains(alcana));
+            }
+            return MakeListData(alcanaList);
         }
-        return MakeListData(alcanaList);
     }
 }

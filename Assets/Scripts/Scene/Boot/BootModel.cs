@@ -1,3 +1,6 @@
-﻿public class BootModel : BaseModel
+﻿namespace Ryneus
 {
+    public class BootModel : BaseModel
+    {
+    }
 }

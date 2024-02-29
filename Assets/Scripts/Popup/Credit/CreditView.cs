@@ -3,75 +3,78 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class CreditView : BaseView,IInputHandlerEvent
+namespace Ryneus
 {
-    [SerializeField] private ScrollRect scrollRect = null;
-    private new System.Action<CreditViewEvent> _commandData = null;
-    public override void Initialize() 
+    public class CreditView : BaseView,IInputHandlerEvent
     {
-        base.Initialize();
-        new CreditPresenter(this);
-        Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
-    }
-
-    public void SetEvent(System.Action<CreditViewEvent> commandData)
-    {
-        _commandData = commandData;
-    }
-
-    public void SetBackEvent(System.Action backEvent)
-    {
-        SetBackCommand(() => 
-        {    
-            Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cancel);
-            if (backEvent != null) backEvent();
-        });
-        ChangeBackCommandActive(true);
-    }
-
-
-    public void InputHandler(InputKeyType keyType,bool pressed)
-    {
-        if (keyType == InputKeyType.Cancel)
+        [SerializeField] private ScrollRect scrollRect = null;
+        private new System.Action<CreditViewEvent> _commandData = null;
+        public override void Initialize() 
         {
-            BackEvent();
+            base.Initialize();
+            new CreditPresenter(this);
+            Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
         }
-        if (keyType == InputKeyType.Down)
+
+        public void SetEvent(System.Action<CreditViewEvent> commandData)
         {
-            var value = scrollRect.normalizedPosition.y - 0.025f;
-            scrollRect.normalizedPosition = new Vector2(0,value);
-            if (scrollRect.normalizedPosition.y < 0)
+            _commandData = commandData;
+        }
+
+        public void SetBackEvent(System.Action backEvent)
+        {
+            SetBackCommand(() => 
+            {    
+                Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cancel);
+                if (backEvent != null) backEvent();
+            });
+            ChangeBackCommandActive(true);
+        }
+
+
+        public void InputHandler(InputKeyType keyType,bool pressed)
+        {
+            if (keyType == InputKeyType.Cancel)
             {
-                scrollRect.normalizedPosition = new Vector2(0,0);
+                BackEvent();
+            }
+            if (keyType == InputKeyType.Down)
+            {
+                var value = scrollRect.normalizedPosition.y - 0.025f;
+                scrollRect.normalizedPosition = new Vector2(0,value);
+                if (scrollRect.normalizedPosition.y < 0)
+                {
+                    scrollRect.normalizedPosition = new Vector2(0,0);
+                }
+            }
+            if (keyType == InputKeyType.Up)
+            {
+                var value = scrollRect.normalizedPosition.y + 0.025f;
+                scrollRect.normalizedPosition = new Vector2(0,value);
+                if (scrollRect.normalizedPosition.y > 1)
+                {
+                    scrollRect.normalizedPosition = new Vector2(0,1);
+                }
             }
         }
-        if (keyType == InputKeyType.Up)
+    }
+
+    namespace Credit
+    {
+        public enum CommandType
         {
-            var value = scrollRect.normalizedPosition.y + 0.025f;
-            scrollRect.normalizedPosition = new Vector2(0,value);
-            if (scrollRect.normalizedPosition.y > 1)
-            {
-                scrollRect.normalizedPosition = new Vector2(0,1);
-            }
+            None = 0,
         }
     }
-}
 
-namespace Credit
-{
-    public enum CommandType
+    public class CreditViewEvent
     {
-        None = 0,
-    }
-}
+        public Credit.CommandType commandType;
+        public object template;
 
-public class CreditViewEvent
-{
-    public Credit.CommandType commandType;
-    public object template;
-
-    public CreditViewEvent(Credit.CommandType type)
-    {
-        commandType = type;
+        public CreditViewEvent(Credit.CommandType type)
+        {
+            commandType = type;
+        }
     }
 }

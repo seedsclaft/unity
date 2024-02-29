@@ -4,65 +4,67 @@ using UnityEngine;
 using UnityEngine.UI;
 using Ranking;
 
-public class RankingView : BaseView
+namespace Ryneus
 {
-    [SerializeField] private BaseList rankingInfoList = null;
-    private new System.Action<RankingViewEvent> _commandData = null;
-
-    public override void Initialize() 
+    public class RankingView : BaseView
     {
-        base.Initialize();
-        new RankingPresenter(this);
-        rankingInfoList.Initialize();
-        rankingInfoList.SetInputHandler(InputKeyType.Cancel,() => BackEvent());
-        SetInputHandler(rankingInfoList.GetComponent<IInputHandlerEvent>());
-    }
+        [SerializeField] private BaseList rankingInfoList = null;
+        private new System.Action<RankingViewEvent> _commandData = null;
 
-
-    public void SetEvent(System.Action<RankingViewEvent> commandData)
-    {
-        _commandData = commandData;
-    }
-    
-    public void SetBackEvent(System.Action backEvent)
-    {
-        SetBackCommand(() => 
-        {    
-            Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cancel);
-            if (backEvent != null) backEvent();
-        });
-        ChangeBackCommandActive(true);
-    }
-
-    public void SetRankingViewInfo(RankingViewInfo rankingViewInfo)
-    {
-        var eventData = new RankingViewEvent(CommandType.RankingOpen);
-        eventData.template = rankingViewInfo.StageId;
-        _commandData(eventData);
-    }
-
-    public void SetRankingInfo(List<ListData> rankingInfo) 
-    {
-        foreach (var listDate in rankingInfo)
+        public override void Initialize() 
         {
-            var data = (RankingInfo)listDate.Data;
-            data.DetailEvent = CallDetail;
+            base.Initialize();
+            new RankingPresenter(this);
+            rankingInfoList.Initialize();
+            rankingInfoList.SetInputHandler(InputKeyType.Cancel,() => BackEvent());
+            SetInputHandler(rankingInfoList.GetComponent<IInputHandlerEvent>());
         }
-        rankingInfoList.SetData(rankingInfo);
-    }
 
-    private void CallDetail(int index)
-    {
-        var listData = rankingInfoList.ListData;
-        if (listData != null && listData.Enable)
+
+        public void SetEvent(System.Action<RankingViewEvent> commandData)
         {
-            var eventData = new RankingViewEvent(CommandType.Detail);
-            eventData.template = index;
+            _commandData = commandData;
+        }
+        
+        public void SetBackEvent(System.Action backEvent)
+        {
+            SetBackCommand(() => 
+            {    
+                Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cancel);
+                if (backEvent != null) backEvent();
+            });
+            ChangeBackCommandActive(true);
+        }
+
+        public void SetRankingViewInfo(RankingViewInfo rankingViewInfo)
+        {
+            var eventData = new RankingViewEvent(CommandType.RankingOpen);
+            eventData.template = rankingViewInfo.StageId;
             _commandData(eventData);
+        }
+
+        public void SetRankingInfo(List<ListData> rankingInfo) 
+        {
+            foreach (var listDate in rankingInfo)
+            {
+                var data = (RankingInfo)listDate.Data;
+                data.DetailEvent = CallDetail;
+            }
+            rankingInfoList.SetData(rankingInfo);
+        }
+
+        private void CallDetail(int index)
+        {
+            var listData = rankingInfoList.ListData;
+            if (listData != null && listData.Enable)
+            {
+                var eventData = new RankingViewEvent(CommandType.Detail);
+                eventData.template = index;
+                _commandData(eventData);
+            }
         }
     }
 }
-
 namespace Ranking
 {
     public enum CommandType

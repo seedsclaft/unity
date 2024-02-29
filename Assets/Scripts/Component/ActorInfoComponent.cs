@@ -4,279 +4,282 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class ActorInfoComponent : MonoBehaviour
+namespace Ryneus
 {
-    [SerializeField] private Image mainThumb;
-    public Image MainThumb => mainThumb;
-    [SerializeField] private Image awakenThumb;
-    public Image AwakenThumb => awakenThumb;
-    [SerializeField] private Material grayscale;
-    [SerializeField] private Image faceThumb;
-    public Image FaceThumb => faceThumb;
-    [SerializeField] private Image awakenFaceThumb;
-    public Image AwakenFaceThumb => awakenFaceThumb;
-    [SerializeField] private Image clipThumb;
-    [SerializeField] private TextMeshProUGUI nameText;
-    [SerializeField] private TextMeshProUGUI subNameText;
-    [SerializeField] private TextMeshProUGUI evaluate;
-    [SerializeField] private TextMeshProUGUI demigod;
-    [SerializeField] private TextMeshProUGUI lv;
-    [SerializeField] private TextMeshProUGUI sp;
-    [SerializeField] private StatusInfoComponent statusInfoComponent;
-    [SerializeField] private StatusInfoComponent needStatusInfoComponent;
-    
-    [SerializeField] private TextMeshProUGUI element1;
-    [SerializeField] private TextMeshProUGUI element2;
-    [SerializeField] private TextMeshProUGUI element3;
-    [SerializeField] private TextMeshProUGUI element4;
-    [SerializeField] private TextMeshProUGUI element5;
-
-    [SerializeField] private TextMeshProUGUI element1Cost;
-    [SerializeField] private TextMeshProUGUI element2Cost;
-    [SerializeField] private TextMeshProUGUI element3Cost;
-    [SerializeField] private TextMeshProUGUI element4Cost;
-    [SerializeField] private TextMeshProUGUI element5Cost;
-
-    [SerializeField] private TextMeshProUGUI recoveryCost;
-    [SerializeField] private TextMeshProUGUI resourceGain;
-
-    public void UpdateInfo(ActorInfo actorInfo,List<ActorInfo> actorInfos)
+    public class ActorInfoComponent : MonoBehaviour
     {
-        if (actorInfo == null)
-        {
-            return;
-        }
-        var actorData = actorInfo.Master;
+        [SerializeField] private Image mainThumb;
+        public Image MainThumb => mainThumb;
+        [SerializeField] private Image awakenThumb;
+        public Image AwakenThumb => awakenThumb;
+        [SerializeField] private Material grayscale;
+        [SerializeField] private Image faceThumb;
+        public Image FaceThumb => faceThumb;
+        [SerializeField] private Image awakenFaceThumb;
+        public Image AwakenFaceThumb => awakenFaceThumb;
+        [SerializeField] private Image clipThumb;
+        [SerializeField] private TextMeshProUGUI nameText;
+        [SerializeField] private TextMeshProUGUI subNameText;
+        [SerializeField] private TextMeshProUGUI evaluate;
+        [SerializeField] private TextMeshProUGUI demigod;
+        [SerializeField] private TextMeshProUGUI lv;
+        [SerializeField] private TextMeshProUGUI sp;
+        [SerializeField] private StatusInfoComponent statusInfoComponent;
+        [SerializeField] private StatusInfoComponent needStatusInfoComponent;
         
-        UpdateData(actorData);
-        if (mainThumb != null)
+        [SerializeField] private TextMeshProUGUI element1;
+        [SerializeField] private TextMeshProUGUI element2;
+        [SerializeField] private TextMeshProUGUI element3;
+        [SerializeField] private TextMeshProUGUI element4;
+        [SerializeField] private TextMeshProUGUI element5;
+
+        [SerializeField] private TextMeshProUGUI element1Cost;
+        [SerializeField] private TextMeshProUGUI element2Cost;
+        [SerializeField] private TextMeshProUGUI element3Cost;
+        [SerializeField] private TextMeshProUGUI element4Cost;
+        [SerializeField] private TextMeshProUGUI element5Cost;
+
+        [SerializeField] private TextMeshProUGUI recoveryCost;
+        [SerializeField] private TextMeshProUGUI resourceGain;
+
+        public void UpdateInfo(ActorInfo actorInfo,List<ActorInfo> actorInfos)
         {
-            if (actorInfo.CurrentHp == 0 && actorInfo.BattleIndex >= 0 || actorInfo.Lost)
+            if (actorInfo == null)
             {
-                UpdateLostMainThumb();
+                return;
+            }
+            var actorData = actorInfo.Master;
+            
+            UpdateData(actorData);
+            if (mainThumb != null)
+            {
+                if (actorInfo.CurrentHp == 0 && actorInfo.BattleIndex >= 0 || actorInfo.Lost)
+                {
+                    UpdateLostMainThumb();
+                }
+            }
+            if (demigod != null)
+            {
+                demigod.text = actorInfo.DemigodParam.ToString();
+            }
+            if (lv != null)
+            {
+                lv.text = actorInfo.Level.ToString();
+            }
+            if (sp != null){
+                sp.text = actorInfo.Sp.ToString();
+            }
+            if (statusInfoComponent != null)
+            {
+                statusInfoComponent.UpdateInfo(actorInfo.CurrentStatus);
+                statusInfoComponent.UpdateHp(actorInfo.CurrentHp,actorInfo.MaxHp);
+                statusInfoComponent.UpdateMp(actorInfo.CurrentMp,actorInfo.MaxMp);
+            }
+            if (needStatusInfoComponent != null)
+            {
+                var statusInfo = new StatusInfo();
+                statusInfo.SetParameter(
+                    actorInfo.GrowthRate(StatusParamType.Hp),
+                    actorInfo.GrowthRate(StatusParamType.Mp),
+                    actorInfo.GrowthRate(StatusParamType.Atk),
+                    actorInfo.GrowthRate(StatusParamType.Def),
+                    actorInfo.GrowthRate(StatusParamType.Spd)
+                );
+                needStatusInfoComponent.UpdateInfo(statusInfo);
+            }
+            if (element1 != null)
+            {
+                UpdateAttributeRank(element1,actorInfo,AttributeType.Fire,actorInfos);
+            }
+            if (element2 != null)
+            {
+                UpdateAttributeRank(element2,actorInfo,AttributeType.Thunder,actorInfos);
+            }
+            if (element3 != null)
+            {
+                UpdateAttributeRank(element3,actorInfo,AttributeType.Ice,actorInfos);
+            }
+            if (element4 != null)
+            {
+                UpdateAttributeRank(element4,actorInfo,AttributeType.Shine,actorInfos);
+            }
+            if (element5 != null)
+            {
+                UpdateAttributeRank(element5,actorInfo,AttributeType.Dark,actorInfos);
+            }
+            if (element1Cost != null)
+            {
+                element1Cost.text = TacticsUtility.LearningMagicCost(actorInfo,AttributeType.Fire,actorInfos).ToString();
+            }
+            if (element2Cost != null)
+            {
+                element2Cost.text = TacticsUtility.LearningMagicCost(actorInfo,AttributeType.Thunder,actorInfos).ToString();
+            }
+            if (element3Cost != null)
+            {
+                element3Cost.text = TacticsUtility.LearningMagicCost(actorInfo,AttributeType.Ice,actorInfos).ToString();
+            }
+            if (element4Cost != null)
+            {
+                element4Cost.text = TacticsUtility.LearningMagicCost(actorInfo,AttributeType.Shine,actorInfos).ToString();
+            }
+            if (element5Cost != null)
+            {
+                element5Cost.text = TacticsUtility.LearningMagicCost(actorInfo,AttributeType.Dark,actorInfos).ToString();
+            }
+            if (recoveryCost != null)
+            {
+                recoveryCost.text = TacticsUtility.RemainRecoveryCost(actorInfo,true).ToString();
+            }
+            if (resourceGain != null)
+            {
+                resourceGain.text = "+" + TacticsUtility.ResourceGain(actorInfo).ToString();
+            }
+            
+            if (evaluate != null)
+            {
+                evaluate.text = actorInfo.Evaluate().ToString();
             }
         }
-        if (demigod != null)
+
+        private void UpdateAttributeRank(TextMeshProUGUI text,ActorInfo actorInfo,AttributeType attributeType,List<ActorInfo> actorInfos)
         {
-            demigod.text = actorInfo.DemigodParam.ToString();
+            if (actorInfos != null)
+            {
+                UpdateAttributeParam(text,actorInfo.AttributeRanks(actorInfos)[(int)attributeType-1]);
+            } else
+            {
+                UpdateAttributeParam(text,actorInfo.GetAttributeRank()[(int)attributeType-1]);
+            }
         }
-        if (lv != null)
+
+
+        public void UpdateData(ActorData actorData)
         {
-            lv.text = actorInfo.Level.ToString();
+            if (mainThumb != null)
+            {
+                UpdateMainThumb(actorData.ImagePath,actorData.X,actorData.Y,actorData.Scale);
+            }
+            if (awakenThumb != null)
+            {
+                UpdateAwakenThumb(actorData.ImagePath,actorData.AwakenX,actorData.AwakenY,actorData.AwakenScale);
+            }
+            if (clipThumb != null)
+            {
+                UpdateClipThumb(actorData.ImagePath);
+            }
+            if (faceThumb != null)
+            {
+                UpdateMainFaceThumb(actorData.ImagePath);
+            }
+            if (awakenFaceThumb != null)
+            {
+                UpdateAwakenFaceThumb(actorData.ImagePath);
+            }
+            if (nameText != null)
+            {
+                nameText.text = actorData.Name;
+            }
+            if (subNameText != null)
+            {
+                subNameText.text = actorData.SubName;
+            }
         }
-        if (sp != null){
-            sp.text = actorInfo.Sp.ToString();
-        }
-        if (statusInfoComponent != null)
+        private void UpdateMainThumb(string imagePath,int x,int y,float scale)
         {
-            statusInfoComponent.UpdateInfo(actorInfo.CurrentStatus);
-            statusInfoComponent.UpdateHp(actorInfo.CurrentHp,actorInfo.MaxHp);
-            statusInfoComponent.UpdateMp(actorInfo.CurrentMp,actorInfo.MaxMp);
+            var handle = ResourceSystem.LoadActorMainSprite(imagePath);
+            if (mainThumb != null)
+            {
+                var rect = mainThumb.GetComponent<RectTransform>();
+                rect.localPosition = new Vector3(x, y, 0);
+                rect.localScale = new Vector3(scale, scale, 1);
+                mainThumb.sprite = handle;
+                rect.sizeDelta = new Vector3(mainThumb.mainTexture.width, mainThumb.mainTexture.height, 1);
+            }
         }
-        if (needStatusInfoComponent != null)
+
+        private void UpdateAwakenThumb(string imagePath,int x,int y,float scale)
         {
-            var statusInfo = new StatusInfo();
-            statusInfo.SetParameter(
-                actorInfo.GrowthRate(StatusParamType.Hp),
-                actorInfo.GrowthRate(StatusParamType.Mp),
-                actorInfo.GrowthRate(StatusParamType.Atk),
-                actorInfo.GrowthRate(StatusParamType.Def),
-                actorInfo.GrowthRate(StatusParamType.Spd)
-            );
-            needStatusInfoComponent.UpdateInfo(statusInfo);
+            var handle = ResourceSystem.LoadActorAwakenSprite(imagePath);
+            if (awakenThumb != null)
+            {
+                var rect = awakenThumb.GetComponent<RectTransform>();
+                rect.localPosition = new Vector3(x, y, 0);
+                rect.localScale = new Vector3(scale, scale, 1);
+                awakenThumb.sprite = handle;
+                rect.sizeDelta = new Vector3(mainThumb.mainTexture.width, mainThumb.mainTexture.height, 1);
+            }
         }
-        if (element1 != null)
+
+        private void UpdateClipThumb(string imagePath)
         {
-            UpdateAttributeRank(element1,actorInfo,AttributeType.Fire,actorInfos);
+            var handle = ResourceSystem.LoadActorClipSprite(imagePath);
+            if (clipThumb != null) clipThumb.sprite = handle;
         }
-        if (element2 != null)
-        {
-            UpdateAttributeRank(element2,actorInfo,AttributeType.Thunder,actorInfos);
+
+        private void UpdateMainFaceThumb(string imagePath)
+        {   
+            var handle = ResourceSystem.LoadActorMainFaceSprite(imagePath);
+            if (faceThumb != null) 
+            {
+                faceThumb.sprite = handle;
+                faceThumb.gameObject.SetActive(true);
+            }
         }
-        if (element3 != null)
+
+        private void UpdateAwakenFaceThumb(string imagePath)
         {
-            UpdateAttributeRank(element3,actorInfo,AttributeType.Ice,actorInfos);
+            if (awakenFaceThumb != null)
+            {
+                awakenFaceThumb.sprite = ResourceSystem.LoadActorAwakenFaceSprite(imagePath);
+                awakenFaceThumb.gameObject.SetActive(true);
+            }
         }
-        if (element4 != null)
-        {
-            UpdateAttributeRank(element4,actorInfo,AttributeType.Shine,actorInfos);
-        }
-        if (element5 != null)
-        {
-            UpdateAttributeRank(element5,actorInfo,AttributeType.Dark,actorInfos);
-        }
-        if (element1Cost != null)
-        {
-            element1Cost.text = TacticsUtility.LearningMagicCost(actorInfo,AttributeType.Fire,actorInfos).ToString();
-        }
-        if (element2Cost != null)
-        {
-            element2Cost.text = TacticsUtility.LearningMagicCost(actorInfo,AttributeType.Thunder,actorInfos).ToString();
-        }
-        if (element3Cost != null)
-        {
-            element3Cost.text = TacticsUtility.LearningMagicCost(actorInfo,AttributeType.Ice,actorInfos).ToString();
-        }
-        if (element4Cost != null)
-        {
-            element4Cost.text = TacticsUtility.LearningMagicCost(actorInfo,AttributeType.Shine,actorInfos).ToString();
-        }
-        if (element5Cost != null)
-        {
-            element5Cost.text = TacticsUtility.LearningMagicCost(actorInfo,AttributeType.Dark,actorInfos).ToString();
-        }
-        if (recoveryCost != null)
-        {
-            recoveryCost.text = TacticsUtility.RemainRecoveryCost(actorInfo,true).ToString();
-        }
-        if (resourceGain != null)
-        {
-            resourceGain.text = "+" + TacticsUtility.ResourceGain(actorInfo).ToString();
+
+        private void UpdateAttributeParam(TextMeshProUGUI textMeshProUGUI,AttributeRank param){
+            var textId = 321 + (int)param;
+            textMeshProUGUI.text = DataSystem.GetTextData(textId).Text;
         }
         
-        if (evaluate != null)
+        public void SetAwakeMode(bool IsAwaken)
         {
-            evaluate.text = actorInfo.Evaluate().ToString();
+            if (faceThumb != null && awakenFaceThumb != null)
+            {
+                faceThumb.gameObject.SetActive(!IsAwaken);
+                awakenFaceThumb.gameObject.SetActive(IsAwaken);
+            }
         }
-    }
 
-    private void UpdateAttributeRank(TextMeshProUGUI text,ActorInfo actorInfo,AttributeType attributeType,List<ActorInfo> actorInfos)
-    {
-        if (actorInfos != null)
+        private void UpdateLostMainThumb()
         {
-            UpdateAttributeParam(text,actorInfo.AttributeRanks(actorInfos)[(int)attributeType-1]);
-        } else
-        {
-            UpdateAttributeParam(text,actorInfo.GetAttributeRank()[(int)attributeType-1]);
+            if (mainThumb != null && grayscale != null)
+            {
+                mainThumb.material = grayscale;
+            }
         }
-    }
 
-
-    public void UpdateData(ActorData actorData)
-    {
-        if (mainThumb != null)
+        public void Clear()
         {
-            UpdateMainThumb(actorData.ImagePath,actorData.X,actorData.Y,actorData.Scale);
-        }
-        if (awakenThumb != null)
-        {
-            UpdateAwakenThumb(actorData.ImagePath,actorData.AwakenX,actorData.AwakenY,actorData.AwakenScale);
-        }
-        if (clipThumb != null)
-        {
-            UpdateClipThumb(actorData.ImagePath);
-        }
-        if (faceThumb != null)
-        {
-            UpdateMainFaceThumb(actorData.ImagePath);
-        }
-        if (awakenFaceThumb != null)
-        {
-            UpdateAwakenFaceThumb(actorData.ImagePath);
-        }
-        if (nameText != null)
-        {
-            nameText.text = actorData.Name;
-        }
-        if (subNameText != null)
-        {
-            subNameText.text = actorData.SubName;
-        }
-    }
-    private void UpdateMainThumb(string imagePath,int x,int y,float scale)
-    {
-        var handle = ResourceSystem.LoadActorMainSprite(imagePath);
-        if (mainThumb != null)
-        {
-            var rect = mainThumb.GetComponent<RectTransform>();
-            rect.localPosition = new Vector3(x, y, 0);
-            rect.localScale = new Vector3(scale, scale, 1);
-            mainThumb.sprite = handle;
-            rect.sizeDelta = new Vector3(mainThumb.mainTexture.width, mainThumb.mainTexture.height, 1);
-        }
-    }
-
-    private void UpdateAwakenThumb(string imagePath,int x,int y,float scale)
-    {
-        var handle = ResourceSystem.LoadActorAwakenSprite(imagePath);
-        if (awakenThumb != null)
-        {
-            var rect = awakenThumb.GetComponent<RectTransform>();
-            rect.localPosition = new Vector3(x, y, 0);
-            rect.localScale = new Vector3(scale, scale, 1);
-            awakenThumb.sprite = handle;
-            rect.sizeDelta = new Vector3(mainThumb.mainTexture.width, mainThumb.mainTexture.height, 1);
-        }
-    }
-
-    private void UpdateClipThumb(string imagePath)
-    {
-        var handle = ResourceSystem.LoadActorClipSprite(imagePath);
-        if (clipThumb != null) clipThumb.sprite = handle;
-    }
-
-    private void UpdateMainFaceThumb(string imagePath)
-    {   
-        var handle = ResourceSystem.LoadActorMainFaceSprite(imagePath);
-        if (faceThumb != null) 
-        {
-            faceThumb.sprite = handle;
-            faceThumb.gameObject.SetActive(true);
-        }
-    }
-
-    private void UpdateAwakenFaceThumb(string imagePath)
-    {
-        if (awakenFaceThumb != null)
-        {
-            awakenFaceThumb.sprite = ResourceSystem.LoadActorAwakenFaceSprite(imagePath);
-            awakenFaceThumb.gameObject.SetActive(true);
-        }
-    }
-
-    private void UpdateAttributeParam(TextMeshProUGUI textMeshProUGUI,AttributeRank param){
-        var textId = 321 + (int)param;
-        textMeshProUGUI.text = DataSystem.GetTextData(textId).Text;
-    }
-    
-    public void SetAwakeMode(bool IsAwaken)
-    {
-        if (faceThumb != null && awakenFaceThumb != null)
-        {
-            faceThumb.gameObject.SetActive(!IsAwaken);
-            awakenFaceThumb.gameObject.SetActive(IsAwaken);
-        }
-    }
-
-    private void UpdateLostMainThumb()
-    {
-        if (mainThumb != null && grayscale != null)
-        {
-            mainThumb.material = grayscale;
-        }
-    }
-
-    public void Clear()
-    {
-        if (mainThumb != null)
-        {
-            mainThumb.sprite = null;
-            //mainThumb.gameObject.SetActive(false);
-        }
-        if (awakenThumb != null)
-        {
-            awakenThumb.sprite = null;
-            //awakenThumb.gameObject.SetActive(false);
-        }
-        if (faceThumb != null)
-        {
-            faceThumb.sprite = null;
-            faceThumb.gameObject.SetActive(false);
-        }
-        if (awakenFaceThumb != null)
-        {
-            awakenFaceThumb.sprite = null;
-            awakenFaceThumb.gameObject.SetActive(false);
+            if (mainThumb != null)
+            {
+                mainThumb.sprite = null;
+                //mainThumb.gameObject.SetActive(false);
+            }
+            if (awakenThumb != null)
+            {
+                awakenThumb.sprite = null;
+                //awakenThumb.gameObject.SetActive(false);
+            }
+            if (faceThumb != null)
+            {
+                faceThumb.sprite = null;
+                faceThumb.gameObject.SetActive(false);
+            }
+            if (awakenFaceThumb != null)
+            {
+                awakenFaceThumb.sprite = null;
+                awakenFaceThumb.gameObject.SetActive(false);
+            }
         }
     }
 }

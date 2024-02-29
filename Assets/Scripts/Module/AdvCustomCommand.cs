@@ -48,7 +48,7 @@ namespace Utage
         //コマンド実行
         public override async void DoCommand(AdvEngine engine)
         {
-            var bgm = await ResourceSystem.LoadBGMAsset(bgmKey);
+            var bgm = await Ryneus.ResourceSystem.LoadBGMAsset(bgmKey);
             Ryneus.SoundManager.Instance.PlayBgm(bgm,1.0f,true);
         }
     }
@@ -76,11 +76,11 @@ namespace Utage
     
         public override void DoCommand(AdvEngine engine)
         {
-            if (GameSystem.CurrentStageData == null) return;
-            if (GameSystem.CurrentStageData.CurrentStage == null) return;
-            if (GameSystem.CurrentStageData.Party.ActorIdList.Count == 0) return;
-            int actorId = GameSystem.CurrentStageData.Party.ActorIdList[0];
-            var actorData = DataSystem.FindActor(actorId);
+            if (Ryneus.GameSystem.CurrentStageData == null) return;
+            if (Ryneus.GameSystem.CurrentStageData.CurrentStage == null) return;
+            if (Ryneus.GameSystem.CurrentStageData.Party.ActorIdList.Count == 0) return;
+            int actorId = Ryneus.GameSystem.CurrentStageData.Party.ActorIdList[0];
+            var actorData = Ryneus.DataSystem.FindActor(actorId);
             if (actorData != null)
             {
                 engine.Param.SetParameterString("Select1",actorData.Name);

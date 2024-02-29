@@ -1,66 +1,68 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Help;
 
-public class HelpView : BaseView
+namespace Ryneus
 {
-    [SerializeField] private BaseList helpTextList = null;
-    private new System.Action<HelpViewEvent> _commandData = null;
-    private System.Action<int> _callEvent = null;
-    
-    public override void Initialize() 
+    public class HelpView : BaseView
     {
-        base.Initialize();
-        helpTextList.Initialize();
-        new HelpPresenter(this);
-        helpTextList.SetInputHandler(InputKeyType.Cancel,() => BackEvent());
-        SetInputHandler(helpTextList.GetComponent<IInputHandlerEvent>());
-    }
-    
-    public void SetHelp(List<ListData> helpText)
-    {
-        helpTextList.SetData(helpText);
-        helpTextList.Activate();
-    }
-    
-    public void SetEvent(System.Action<HelpViewEvent> commandData)
-    {
-        _commandData = commandData;
+        [SerializeField] private BaseList helpTextList = null;
+        private new System.Action<HelpViewEvent> _commandData = null;
+        private System.Action<int> _callEvent = null;
+        
+        public override void Initialize() 
+        {
+            base.Initialize();
+            helpTextList.Initialize();
+            new HelpPresenter(this);
+            helpTextList.SetInputHandler(InputKeyType.Cancel,() => BackEvent());
+            SetInputHandler(helpTextList.GetComponent<IInputHandlerEvent>());
+        }
+        
+        public void SetHelp(List<ListData> helpText)
+        {
+            helpTextList.SetData(helpText);
+            helpTextList.Activate();
+        }
+        
+        public void SetEvent(System.Action<HelpViewEvent> commandData)
+        {
+            _commandData = commandData;
+        }
+
+        public void SetBackEvent(System.Action backEvent)
+        {
+            SetBackCommand(() => 
+            {    
+                Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cancel);
+                if (backEvent != null) backEvent();
+            });
+            ChangeBackCommandActive(true);
+        }
     }
 
-    public void SetBackEvent(System.Action backEvent)
+    namespace Help
     {
-        SetBackCommand(() => 
-        {    
-            Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cancel);
-            if (backEvent != null) backEvent();
-        });
-        ChangeBackCommandActive(true);
-    }
-}
+        public enum CommandType
+        {
+            None = 0,
+        }
 
-namespace Help
-{
-    public enum CommandType
-    {
-        None = 0,
+        public enum HelpType
+        {
+            None = 0,
+            Battle = 1,
+        }
     }
 
-    public enum HelpType
+    public class HelpViewEvent
     {
-        None = 0,
-        Battle = 1,
-    }
-}
+        public Help.CommandType commandType;
+        public object template;
 
-public class HelpViewEvent
-{
-    public Help.CommandType commandType;
-    public object template;
-
-    public HelpViewEvent(Help.CommandType type)
-    {
-        commandType = type;
+        public HelpViewEvent(Help.CommandType type)
+        {
+            commandType = type;
+        }
     }
 }

@@ -1,22 +1,25 @@
 using UnityEngine;
 
-public class LoadingModel : BaseModel
+namespace Ryneus
 {
-    public LoadingModel()
+    public class LoadingModel : BaseModel
     {
-    }
+        public LoadingModel()
+        {
+        }
 
-    public void RefreshTips()
-    {
-    }
+        public void RefreshTips()
+        {
+        }
 
-    public string TipsText()
-    {
-        return "";
-    }
-    
-    public Sprite TipsImage()
-    {
-        return null;
+        public string TipsText()
+        {
+            return "";
+        }
+        
+        public Sprite TipsImage()
+        {
+            return null;
+        }
     }
 }

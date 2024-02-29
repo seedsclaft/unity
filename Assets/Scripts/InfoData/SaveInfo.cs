@@ -1,20 +1,23 @@
 using System;
 using System.Collections.Generic;
 
-[Serializable]
-public class SaveInfo
+namespace Ryneus
 {
-	private PlayerInfo _playerInfo = null;
-    public PlayerInfo PlayerInfo => _playerInfo;
-
-    public SaveInfo()
-    {
-		_playerInfo = new PlayerInfo();
-	}
-
-	public void SetPlayerName(string name)
+	[Serializable]
+	public class SaveInfo
 	{
-		_playerInfo.SetPlayerName(name);
-		_playerInfo.SetUserId();
+		private PlayerInfo _playerInfo = null;
+		public PlayerInfo PlayerInfo => _playerInfo;
+
+		public SaveInfo()
+		{
+			_playerInfo = new PlayerInfo();
+		}
+
+		public void SetPlayerName(string name)
+		{
+			_playerInfo.SetPlayerName(name);
+			_playerInfo.SetUserId();
+		}
 	}
 }

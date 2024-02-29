@@ -1,15 +1,18 @@
 using UnityEngine;
 using TMPro;
 
-public class BaseCommand : ListItem ,IListViewItem 
+namespace Ryneus
 {
-    [SerializeField] private TextMeshProUGUI commandName;
-
-    public void UpdateViewItem()
+    public class BaseCommand : ListItem ,IListViewItem 
     {
-        if (ListData == null) return;
-        var data = (SystemData.CommandData)ListData.Data;
-        commandName.text = data.Name;
-        Disable.gameObject.SetActive(ListData.Enable == false);
+        [SerializeField] private TextMeshProUGUI commandName;
+
+        public void UpdateViewItem()
+        {
+            if (ListData == null) return;
+            var data = (SystemData.CommandData)ListData.Data;
+            commandName.text = data.Name;
+            Disable.gameObject.SetActive(ListData.Enable == false);
+        }
     }
 }

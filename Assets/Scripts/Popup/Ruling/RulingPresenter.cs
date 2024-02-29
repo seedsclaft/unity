@@ -3,60 +3,63 @@ using System.Collections.Generic;
 using UnityEngine;
 using Ruling;
 
-public class RulingPresenter 
+namespace Ryneus
 {
-    RulingView _view = null;
-
-    RulingModel _model = null;
-    private bool _busy = true;
-    public RulingPresenter(RulingView view)
+    public class RulingPresenter 
     {
-        _view = view;
-        _model = new RulingModel();
+        RulingView _view = null;
 
-        Initialize();
-    }
-
-    private void Initialize()
-    {
-        _view.SetEvent((type) => UpdateCommand(type));
-        _view.SetRulingCommand(_model.RulingCommand());
-        CommandRefresh();
-        _view.CommandSelectTitle(_model.RuleHelp());
-        _busy = false;
-    }
-
-    
-    private void UpdateCommand(RulingViewEvent viewEvent)
-    {
-        if (_busy){
-            return;
-        }
-        if (viewEvent.commandType == Ruling.CommandType.SelectTitle)
+        RulingModel _model = null;
+        private bool _busy = true;
+        public RulingPresenter(RulingView view)
         {
-            CommandSelectTitle((int)viewEvent.template);
+            _view = view;
+            _model = new RulingModel();
+
+            Initialize();
         }
-        if (viewEvent.commandType == Ruling.CommandType.SelectCategory)
+
+        private void Initialize()
         {
-            CommandSelectCategory((int)viewEvent.template);
+            _view.SetEvent((type) => UpdateCommand(type));
+            _view.SetRulingCommand(_model.RulingCommand());
+            CommandRefresh();
+            _view.CommandSelectTitle(_model.RuleHelp());
+            _busy = false;
         }
-    }
 
-    private void CommandSelectTitle(int id)
-    {
-        _model.SetId(id);
-        _view.CommandSelectTitle(_model.RuleHelp());
-    }
+        
+        private void UpdateCommand(RulingViewEvent viewEvent)
+        {
+            if (_busy){
+                return;
+            }
+            if (viewEvent.commandType == Ruling.CommandType.SelectTitle)
+            {
+                CommandSelectTitle((int)viewEvent.template);
+            }
+            if (viewEvent.commandType == Ruling.CommandType.SelectCategory)
+            {
+                CommandSelectCategory((int)viewEvent.template);
+            }
+        }
 
-    private void CommandSelectCategory(int id)
-    {
-        _model.SetCategory(id);
-        _model.SetId(-1);
-        CommandRefresh();
-    }
+        private void CommandSelectTitle(int id)
+        {
+            _model.SetId(id);
+            _view.CommandSelectTitle(_model.RuleHelp());
+        }
 
-    private void CommandRefresh()
-    {
-        _view.CommandRefresh(_model.RuleHelp());
+        private void CommandSelectCategory(int id)
+        {
+            _model.SetCategory(id);
+            _model.SetId(-1);
+            CommandRefresh();
+        }
+
+        private void CommandRefresh()
+        {
+            _view.CommandRefresh(_model.RuleHelp());
+        }
     }
 }

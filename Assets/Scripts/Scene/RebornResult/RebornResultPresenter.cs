@@ -3,68 +3,71 @@ using System.Collections.Generic;
 using UnityEngine;
 using RebornResult;
 
-public class RebornResultPresenter : BasePresenter
+namespace Ryneus
 {
-    RebornResultModel _model = null;
-    RebornResultView _view = null;
-
-    private bool _busy = true;
-    public RebornResultPresenter(RebornResultView view)
+    public class RebornResultPresenter : BasePresenter
     {
-        _view = view;
-        SetView(_view);
-        _model = new RebornResultModel();
-        SetModel(_model);
-        Initialize();
-    }
+        RebornResultModel _model = null;
+        RebornResultView _view = null;
 
-    private async void Initialize()
-    {
-        _view.SetHelpWindow();
-        _view.SetResultList(_model.RebornResultCommand());
-        _view.SetActors(_model.RebornMembers());
-        var bgm = await _model.GetBgmData("TACTICS1");
-        Ryneus.SoundManager.Instance.PlayBgm(bgm,1.0f,true);
-        _view.SetEvent((type) => UpdateCommand(type));
-        _busy = true;
-
-        _view.StartAnimation();
-        _view.StartRebornResultAnimation(_model.MakeListData(_model.RebornMembers()));
-        _busy = false;
-    }
-
-    private void UpdateCommand(RebornResultViewEvent viewEvent)
-    {
-        if (_busy){
-            return;
-        }
-        switch (viewEvent.commandType)
+        private bool _busy = true;
+        public RebornResultPresenter(RebornResultView view)
         {
-            case CommandType.EndAnimation:
-            CommandEndAnimation();
-            break;
-            case CommandType.RebornResultClose:
-            CommandRebornResultClose((ConfirmCommandType)viewEvent.template);
-            break;
+            _view = view;
+            SetView(_view);
+            _model = new RebornResultModel();
+            SetModel(_model);
+            Initialize();
         }
-    }
 
-    private void CommandEndAnimation()
-    {
-        _view.ShowResultList(_model.ResultGetItemInfos());
-    }
-
-    private void CommandRebornResultClose(ConfirmCommandType confirmCommandType)
-    {
-        if (confirmCommandType == ConfirmCommandType.Yes)
+        private async void Initialize()
         {
-            CommandEndReborn();
-        }
-        Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
-    }
+            _view.SetHelpWindow();
+            _view.SetResultList(_model.RebornResultCommand());
+            _view.SetActors(_model.RebornMembers());
+            var bgm = await _model.GetBgmData("TACTICS1");
+            Ryneus.SoundManager.Instance.PlayBgm(bgm,1.0f,true);
+            _view.SetEvent((type) => UpdateCommand(type));
+            _busy = true;
 
-    private void CommandEndReborn()
-    {
-        _view.CommandSceneChange(Scene.Tactics);
+            _view.StartAnimation();
+            _view.StartRebornResultAnimation(_model.MakeListData(_model.RebornMembers()));
+            _busy = false;
+        }
+
+        private void UpdateCommand(RebornResultViewEvent viewEvent)
+        {
+            if (_busy){
+                return;
+            }
+            switch (viewEvent.commandType)
+            {
+                case CommandType.EndAnimation:
+                CommandEndAnimation();
+                break;
+                case CommandType.RebornResultClose:
+                CommandRebornResultClose((ConfirmCommandType)viewEvent.template);
+                break;
+            }
+        }
+
+        private void CommandEndAnimation()
+        {
+            _view.ShowResultList(_model.ResultGetItemInfos());
+        }
+
+        private void CommandRebornResultClose(ConfirmCommandType confirmCommandType)
+        {
+            if (confirmCommandType == ConfirmCommandType.Yes)
+            {
+                CommandEndReborn();
+            }
+            Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
+        }
+
+        private void CommandEndReborn()
+        {
+            _view.CommandSceneChange(Scene.Tactics);
+        }
     }
 }
