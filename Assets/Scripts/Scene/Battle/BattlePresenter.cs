@@ -386,7 +386,7 @@ namespace Ryneus
                     return;
                 }
     #endif
-                if (_model.CurrentBattler.isActor)
+                if (_model.CurrentBattler.IsActor)
                 {
                     if (GameSystem.ConfigData.BattleAuto == true)
                     {
@@ -1075,7 +1075,7 @@ namespace Ryneus
             SoundManager.Instance.PlayStaticSe(SEType.Cancel);
             _model.ChangeBattleAuto();
             _view.ChangeBattleAuto(GameSystem.ConfigData.BattleAuto == true);
-            if (_view.AnimationBusy == false && _view.BattleBusy && _model.CurrentBattler.isActor && GameSystem.ConfigData.BattleAuto == true)
+            if (_view.AnimationBusy == false && _view.BattleBusy && _model.CurrentBattler.IsActor && GameSystem.ConfigData.BattleAuto == true)
             {
                 _model.ClearActionInfo();
                 _view.BattlerBattleClearSelect();

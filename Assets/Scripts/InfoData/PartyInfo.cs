@@ -34,7 +34,7 @@ namespace Ryneus
         public List<int> CurrentActorIdList(int stageId,int seek)
         {
             var actorIdList = new List<int>();
-            var records = _symbolRecordList.FindAll(a => a.StageId <= stageId && a.Seek <= seek && a.SymbolInfo.SymbolType == SymbolType.Actor && a.Selected);
+            var records = _symbolRecordList.FindAll(a => a.StageId <= stageId && a.Seek < seek && a.SymbolInfo.SymbolType == SymbolType.Actor && a.Selected);
             foreach (var record in records)
             {
                 foreach (var getItemInfo in record.SymbolInfo.GetItemInfos)
@@ -52,7 +52,7 @@ namespace Ryneus
         public List<int> CurrentAlchemyIdList(int stageId,int seek)
         {
             var alchemyIdList = new List<int>();
-            var records = _symbolRecordList.FindAll(a => a.StageId <= stageId && a.Seek <= seek && a.SymbolInfo.SymbolType == SymbolType.Alcana && a.Selected);
+            var records = _symbolRecordList.FindAll(a => a.StageId <= stageId && a.Seek < seek && a.SymbolInfo.SymbolType == SymbolType.Alcana && a.Selected);
             foreach (var record in records)
             {
                 foreach (var getItemInfo in record.SymbolInfo.GetItemInfos)
@@ -124,7 +124,6 @@ namespace Ryneus
         public void InitActorInfos()
         {
             ClearActorInfos();
-            ClearActorIds();
         }
 
         public void ClearActorInfos()
@@ -132,19 +131,6 @@ namespace Ryneus
             _actorInfos.Clear();
         }
 
-        // アクター加入
-        public void AddActorId(int actorId)
-        {
-        }
-
-        // アクター離脱
-        public void RemoveActor(int actorId)
-        {
-        }
-
-        public void ClearActorIds()
-        {
-        }
 
         public void ChangeCurrency(int currency)
         {
@@ -159,18 +145,6 @@ namespace Ryneus
         public void SetBattleScore(int score)
         {
             _battleResultScore = score;
-        }
-
-        public void AddAlchemy(int skillId)
-        {
-        }
-
-        public void RemoveAlchemy(int skillId)
-        {
-        }
-
-        public void ClearAlchemy()
-        {
         }
 
         public int TotalScore()

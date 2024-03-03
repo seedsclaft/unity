@@ -187,7 +187,7 @@ namespace Ryneus
                         if (subject.IsAlive())
                         {
                             var targets = new List<BattlerInfo>();
-                            if (subject.isActor)
+                            if (subject.IsActor)
                             {
                                 targets = _party.AliveBattlerInfos.FindAll(a => a.Index != subject.Index);
                             } else{
@@ -224,7 +224,7 @@ namespace Ryneus
 
         public void AssignWaitBattler()
         {
-            if (_currentTurnBattler != null && _currentTurnBattler.isActor)
+            if (_currentTurnBattler != null && _currentTurnBattler.IsActor)
             {
                 var waitBattlerIndex = _party.AliveBattlerInfos.FindIndex(a => a.IsState(StateType.Wait));
                 if (waitBattlerIndex > -1)
@@ -314,11 +314,11 @@ namespace Ryneus
         }
 
         public List<BattlerInfo> BattlerActors(){
-            return FieldBattlerInfos().FindAll(a => a.isActor == true);
+            return FieldBattlerInfos().FindAll(a => a.IsActor == true);
         }
 
         public List<BattlerInfo> BattlerEnemies(){
-            return FieldBattlerInfos().FindAll(a => a.isActor == false);
+            return FieldBattlerInfos().FindAll(a => a.IsActor == false);
         }
 
         public BattlerInfo GetBattlerInfo(int index)
@@ -366,7 +366,7 @@ namespace Ryneus
         public int SelectSkillIndex(List<ListData> skillInfos)
         {
             int selectIndex = 0;
-            if (_currentBattler != null && _currentBattler.isActor == true)
+            if (_currentBattler != null && _currentBattler.IsActor == true)
             {
                 var skillIndex = skillInfos.FindIndex(a => ((SkillInfo)a.Data).Id == _currentBattler.LastSelectSkillId);
                 if (skillIndex > -1)
@@ -404,7 +404,7 @@ namespace Ryneus
             }
             if (skillInfo.IsUnison())
             {
-                return FieldBattlerInfos().FindAll(a => a.IsAlive() && a.isActor == battlerInfo.isActor && a.CanMove()).Count > 1;
+                return FieldBattlerInfos().FindAll(a => a.IsAlive() && a.IsActor == battlerInfo.IsActor && a.CanMove()).Count > 1;
             }
             if (CanUseTrigger(skillInfo,battlerInfo) == false)
             {
@@ -463,7 +463,7 @@ namespace Ryneus
                 }
             }
             int lastTargetIndex = -1;
-            if (subject.isActor)
+            if (subject.IsActor)
             {
                 lastTargetIndex = subject.LastTargetIndex();
                 if (skillData.TargetType == TargetType.Opponent)
@@ -521,15 +521,15 @@ namespace Ryneus
             var targetIndexList = new List<int>();
             if (skillData.TargetType == TargetType.All)
             {
-                targetIndexList = TargetIndexAll(subject.isActor,targetIndexList,rangeType);
+                targetIndexList = TargetIndexAll(subject.IsActor,targetIndexList,rangeType);
             } else
             if (skillData.TargetType == TargetType.Opponent)
             {
-                targetIndexList = TargetIndexOpponent(subject.isActor,targetIndexList,rangeType,subject.LineIndex);
+                targetIndexList = TargetIndexOpponent(subject.IsActor,targetIndexList,rangeType,subject.LineIndex);
             } else
             if (skillData.TargetType == TargetType.Friend)
             {
-                targetIndexList = TargetIndexFriend(subject.isActor,targetIndexList);
+                targetIndexList = TargetIndexFriend(subject.IsActor,targetIndexList);
                 if (skillData.Scope == ScopeType.WithoutSelfOne || skillData.Scope == ScopeType.WithoutSelfAll)
                 {
                     targetIndexList.Remove(subject.Index);
@@ -701,10 +701,10 @@ namespace Ryneus
                     break;
                     case FeatureType.HpHeal:
                     case FeatureType.KindHeal:
-                    if (_currentBattler != null && _currentBattler.isActor)
+                    if (_currentBattler != null && _currentBattler.IsActor)
                     {
                         {
-                            if (!target.isActor)
+                            if (!target.IsActor)
                             {
                                 IsEnable = target.Kinds.Contains(KindType.Undead);
                             } else
@@ -716,7 +716,7 @@ namespace Ryneus
                     {
                         if (target.Hp < target.MaxHp)
                         {
-                            if (!target.isActor && !target.Kinds.Contains(KindType.Undead))
+                            if (!target.IsActor && !target.Kinds.Contains(KindType.Undead))
                             {
                                 IsEnable = true;
                             }
@@ -726,7 +726,7 @@ namespace Ryneus
                     case FeatureType.MpHeal:
                     if (_currentBattler != null)
                     {
-                        if (_currentBattler.isActor)
+                        if (_currentBattler.IsActor)
                         {
                             IsEnable = true;
                         } else
@@ -759,11 +759,11 @@ namespace Ryneus
                         {
                             IsEnable = true;
                         } else
-                        if (_currentBattler != null && _currentBattler.isActor || (StateType)featureData.Param1 == StateType.DamageUp || (StateType)featureData.Param1 == StateType.Prism)
+                        if (_currentBattler != null && _currentBattler.IsActor || (StateType)featureData.Param1 == StateType.DamageUp || (StateType)featureData.Param1 == StateType.Prism)
                         {
                             IsEnable = true;
                         } else
-                        if (_currentBattler != null && !_currentBattler.isActor && !target.IsState((StateType)featureData.Param1) && target.IsState(StateType.Barrier))
+                        if (_currentBattler != null && !_currentBattler.IsActor && !target.IsState((StateType)featureData.Param1) && target.IsState(StateType.Barrier))
                         {
                             if (UnityEngine.Random.Range(0,100) > 50)
                             {
@@ -785,12 +785,12 @@ namespace Ryneus
                     }
                     break;
                     case FeatureType.BreakUndead:
-                    if (_currentBattler.isActor)
+                    if (_currentBattler.IsActor)
                     {
                         IsEnable = true;
                     } else 
                     {
-                        if (!target.isActor && !target.Kinds.Contains(KindType.Undead))
+                        if (!target.IsActor && !target.Kinds.Contains(KindType.Undead))
                         {
                             IsEnable = true;
                         }
@@ -848,7 +848,7 @@ namespace Ryneus
             var subject = GetBattlerInfo(actionInfo.SubjectIndex);
             if (indexList.Count > 0)
             {
-                if (subject.isActor)
+                if (subject.IsActor)
                 {
                     if (actionInfo.Master.TargetType == TargetType.Opponent)
                     {
@@ -1419,7 +1419,7 @@ namespace Ryneus
                 if (actionInfo != null)
                 {
                     _actionInfos.Remove(actionInfo);
-                    var party = _currentBattler.isActor ? _party.AliveBattlerInfos : _troop.AliveBattlerInfos;
+                    var party = _currentBattler.IsActor ? _party.AliveBattlerInfos : _troop.AliveBattlerInfos;
                     var targetIndexes = new List<int>();
                     foreach (var member in party)
                     {
@@ -1461,7 +1461,7 @@ namespace Ryneus
                 if (actionInfo != null)
                 {
                     _actionInfos.Remove(actionInfo);
-                    var party = _currentBattler.isActor ? _party.AliveBattlerInfos : _troop.AliveBattlerInfos;
+                    var party = _currentBattler.IsActor ? _party.AliveBattlerInfos : _troop.AliveBattlerInfos;
                     party = party.FindAll(a => a.IsAlive());
                     var targetIndexes = new List<int>();
                     foreach (var member in party)
@@ -1662,9 +1662,9 @@ namespace Ryneus
             } else
             if (passiveInfo.Master.Scope == ScopeType.All)
             {
-                var partyMember = battlerInfo.isActor ? BattlerActors() : BattlerEnemies();
+                var partyMember = battlerInfo.IsActor ? BattlerActors() : BattlerEnemies();
                 if (passiveInfo.Master.TargetType == TargetType.Opponent){
-                    partyMember = battlerInfo.isActor ? BattlerEnemies() : BattlerActors();
+                    partyMember = battlerInfo.IsActor ? BattlerEnemies() : BattlerActors();
                 }
                 if (passiveInfo.Master.AliveOnly)
                 {
@@ -1709,9 +1709,9 @@ namespace Ryneus
             } else
             if (passiveInfo.Master.Scope == ScopeType.RandomOne)
             {
-                var partyMember = battlerInfo.isActor ? BattlerActors() : BattlerEnemies();
+                var partyMember = battlerInfo.IsActor ? BattlerActors() : BattlerEnemies();
                 if (passiveInfo.Master.TargetType == TargetType.Opponent){
-                    partyMember = battlerInfo.isActor ? BattlerEnemies() : BattlerActors();
+                    partyMember = battlerInfo.IsActor ? BattlerEnemies() : BattlerActors();
                 }
                 if (passiveInfo.Master.AliveOnly)
                 {
@@ -1809,7 +1809,7 @@ namespace Ryneus
                                 } else
                                 if (passiveSkillData.Scope == ScopeType.All)
                                 {
-                                    var partyMember = battlerInfo.isActor ? BattlerActors() : BattlerEnemies();
+                                    var partyMember = battlerInfo.IsActor ? BattlerActors() : BattlerEnemies();
                                     foreach (var member in partyMember)
                                     {
                                         if ((passiveSkillData.AliveOnly && member.IsAlive()) || (!passiveSkillData.AliveOnly && !member.IsAlive()))
@@ -1890,7 +1890,7 @@ namespace Ryneus
                                 if (actionResultInfo.HpDamage > 0 && actionResultInfo.TargetIndex != actionResultInfo.SubjectIndex)
                                 {
                                     var targetBattlerInfo = GetBattlerInfo(actionResultInfo.TargetIndex);
-                                    if (battlerInfo.isActor == targetBattlerInfo.isActor)
+                                    if (battlerInfo.IsActor == targetBattlerInfo.IsActor)
                                     {
                                         var targetHp = 0f;
                                         if (targetBattlerInfo.Hp != 0)
@@ -1915,7 +1915,7 @@ namespace Ryneus
                         case TriggerType.ActionResultDeath:
                         if (battlerInfo.IsAlive())
                         {
-                            var targetActionResultDeathParty = battlerInfo.isActor ? _party : _troop;
+                            var targetActionResultDeathParty = battlerInfo.IsActor ? _party : _troop;
                             if (actionResultInfos.Find(a => targetActionResultDeathParty.AliveBattlerInfos.Find(b => a.DeadIndexList.Contains(b.Index)) != null) != null)
                             {
                                 IsTriggered = true;
@@ -1923,7 +1923,7 @@ namespace Ryneus
                         }
                         break;
                         case TriggerType.DeadWithoutSelf:
-                        var targetDeadWithoutSelfParty = battlerInfo.isActor ? _party : _troop;
+                        var targetDeadWithoutSelfParty = battlerInfo.IsActor ? _party : _troop;
                         int count = targetDeadWithoutSelfParty.BattlerInfos.FindAll(a => a.IsState(StateType.Death)).Count;
                         if (battlerInfo.IsAlive() && count > 0 && (count+1) >= targetDeadWithoutSelfParty.BattlerInfos.Count)
                         {
@@ -1948,7 +1948,7 @@ namespace Ryneus
                         }
                         break;
                         case TriggerType.AllEnemyCurseState:
-                        var opponents = battlerInfo.isActor ? _troop.AliveBattlerInfos : _party.AliveBattlerInfos;
+                        var opponents = battlerInfo.IsActor ? _troop.AliveBattlerInfos : _party.AliveBattlerInfos;
                         if (battlerInfo.IsAlive() && opponents.Find(a => !a.IsState(StateType.Curse)) == null && opponents.FindAll(a => a.IsAlive()).Count > 0)
                         {
                             IsTriggered = true;
@@ -1957,7 +1957,7 @@ namespace Ryneus
                         case TriggerType.ActionResultAddState:
                         if (battlerInfo.IsAlive())
                         {
-                            if (actionInfo != null && battlerInfo.isActor != GetBattlerInfo(actionInfo.SubjectIndex).isActor)
+                            if (actionInfo != null && battlerInfo.IsActor != GetBattlerInfo(actionInfo.SubjectIndex).IsActor)
                             {
                                 var states = actionInfo.SkillInfo.FeatureDates.FindAll(a => a.FeatureType == FeatureType.AddState);
                                 foreach (var state in states)
@@ -1978,7 +1978,7 @@ namespace Ryneus
                             {
                                 foreach (var deadIndex in actionResultInfo.DeadIndexList)
                                 {
-                                    if (battlerInfo.isActor != GetBattlerInfo(deadIndex).isActor)
+                                    if (battlerInfo.IsActor != GetBattlerInfo(deadIndex).IsActor)
                                     {
                                         IsTriggered = true;
                                     }
@@ -1999,7 +1999,7 @@ namespace Ryneus
                         }
                         break;
                         case TriggerType.AwakenDemigodAttribute:
-                        var friends = battlerInfo.isActor ? _party.AliveBattlerInfos : _troop.AliveBattlerInfos;
+                        var friends = battlerInfo.IsActor ? _party.AliveBattlerInfos : _troop.AliveBattlerInfos;
                         friends = friends.FindAll(a => a.IsAwaken);
                         if (battlerInfo.IsAlive() && friends.Count > 0 && friends.Find(a => a.Skills.Find(b => (b.Attribute == (AttributeType)triggerData.Param1 && b.Master.SkillType == SkillType.Demigod)) != null) != null)
                         {
@@ -2059,7 +2059,7 @@ namespace Ryneus
                     case TriggerType.ActionResultDeath:
                     if (battlerInfo.IsAlive())
                     {
-                        var targetActionResultDeathParty = battlerInfo.isActor ? _party : _troop;
+                        var targetActionResultDeathParty = battlerInfo.IsActor ? _party : _troop;
                         var deathTarget = actionResultInfos.Find(a => targetActionResultDeathParty.AliveBattlerInfos.Find(b => a.DeadIndexList.Contains(b.Index)) != null);
                         if (deathTarget != null)
                         {
@@ -2204,7 +2204,7 @@ namespace Ryneus
                 var battlerInfo = GetBattlerInfo(targetIndex);
                 foreach (var targetBattlerInfo in FieldBattlerInfos())
                 {   
-                    if (battlerInfo.isActor && targetBattlerInfo.isActor)
+                    if (battlerInfo.IsActor && targetBattlerInfo.IsActor)
                     {
                         if (battlerInfo.LineIndex == targetBattlerInfo.LineIndex)
                         {
@@ -2214,7 +2214,7 @@ namespace Ryneus
                             }
                         }
                     }
-                    if (!battlerInfo.isActor && !targetBattlerInfo.isActor)
+                    if (!battlerInfo.IsActor && !targetBattlerInfo.IsActor)
                     {
                         if (battlerInfo.LineIndex == targetBattlerInfo.LineIndex)
                         {
@@ -2393,7 +2393,7 @@ namespace Ryneus
                         if (battler.StateInfos[i].StateType == StateType.HolyCoffin)
                         {
                             battler.RemoveState(battler.StateInfos[i],true);
-                            var randTargets = battler.isActor ? _party.AliveBattlerInfos : _troop.AliveBattlerInfos;
+                            var randTargets = battler.IsActor ? _party.AliveBattlerInfos : _troop.AliveBattlerInfos;
                             if (randTargets.Count > 0)
                             {
                                 var rand = UnityEngine.Random.Range(0,randTargets.Count);
@@ -2485,13 +2485,6 @@ namespace Ryneus
         {
             var list = new List<GetItemInfo>();
             list.AddRange(CurrentSelectSymbol().GetItemInfos);
-            if (CheckVictory() && CurrentStage.RecordStage == false)
-            {
-                foreach (var battlerInfo in _party.BattlerInfos)
-                {
-                    
-                }
-            }
             return list;
         }
 

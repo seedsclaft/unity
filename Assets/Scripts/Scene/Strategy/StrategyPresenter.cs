@@ -385,7 +385,7 @@ namespace Ryneus
         private void EndStrategy()
         {
             _view.EndShinyEffect();
-            if (_model.CurrentStage.RecordStage)
+            if (_model.CurrentStage.ReturnSeek > 0)
             {
                 _model.EndStrategy(false);
                 if (_model.CurrentStage.ParallelStage)
@@ -398,7 +398,7 @@ namespace Ryneus
                         _view.CommandGotoSceneChange(Scene.Tactics);
                     } else
                     {
-                        _view.CommandGotoSceneChange(Scene.SymbolRecord);
+                        _view.CommandGotoSceneChange(Scene.Tactics);
                     }
                 } else
                 {

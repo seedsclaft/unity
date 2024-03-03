@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
 
 namespace Ryneus
 {
-    [System.Serializable]
+    [Serializable]
     public class BattlerInfo 
     {
         private StatusInfo _status = null;
@@ -18,7 +17,7 @@ namespace Ryneus
         private int _index = 0;
         public int Index => _index;
         private bool _isActor = false;
-        public bool isActor => _isActor;
+        public bool IsActor => _isActor;
         private bool _isAlcana = false;
         public bool isAlcana => _isAlcana;
         private int _charaId;
@@ -426,7 +425,7 @@ namespace Ryneus
 
         public int LastTargetIndex()
         {
-            if (isActor){
+            if (IsActor){
                 return _lastTargetIndex;
             }
             return -1;

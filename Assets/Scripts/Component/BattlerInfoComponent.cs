@@ -31,7 +31,7 @@ namespace Ryneus
         public void UpdateInfo(BattlerInfo battlerInfo)
         {
             _battlerInfo = battlerInfo;
-            if (battlerInfo.isActor)
+            if (battlerInfo.IsActor)
             {
                 actorInfoComponent.UpdateInfo(battlerInfo.ActorInfo,null);
             } else
@@ -115,7 +115,7 @@ namespace Ryneus
 
         public void RefreshStatus()
         {
-            if (_battlerInfo.isActor)
+            if (_battlerInfo.IsActor)
             {
                 actorInfoComponent.UpdateInfo(_battlerInfo.ActorInfo,null);
                 actorInfoComponent.SetAwakeMode(_battlerInfo.IsState(StateType.Demigod));
@@ -255,7 +255,7 @@ namespace Ryneus
 
         public void StartDeathAnimation()
         {
-            if (!_battlerInfo.isActor)
+            if (!_battlerInfo.IsActor)
             {
                 if (deathAnimation)
                 {
@@ -268,7 +268,7 @@ namespace Ryneus
 
         public void StartAliveAnimation()
         {
-            if (!_battlerInfo.isActor)
+            if (!_battlerInfo.IsActor)
             {
                 _deathAnimation = 0;
                 deathAnimation.enabled = false;
@@ -320,7 +320,7 @@ namespace Ryneus
             {
                 return;
             }
-            if (!_battlerInfo.isActor)
+            if (!_battlerInfo.IsActor)
             {
                 if (isSelectable)
                 {
@@ -334,7 +334,7 @@ namespace Ryneus
 
         public void HideEnemyStateOverlay()
         {
-            if (!_battlerInfo.isActor)
+            if (!_battlerInfo.IsActor)
             {
                 battleStateOverlay.HideStateOverlay();
             }
@@ -383,7 +383,7 @@ namespace Ryneus
         {
             if (_battlerInfo == null) return null;
             Image image;
-            if (_battlerInfo.isActor)
+            if (_battlerInfo.IsActor)
             {
                 if (_battlerInfo.IsAwaken)
                 {

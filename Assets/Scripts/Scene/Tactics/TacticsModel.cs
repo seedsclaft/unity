@@ -516,7 +516,7 @@ namespace Ryneus
 
         public List<ListData> ParallelCommand()
         {
-            return MakeListData(BaseConfirmCommand(23050));
+            return MakeListData(BaseConfirmCommand(23050,23040));
         }
         
         public bool CanParallel()

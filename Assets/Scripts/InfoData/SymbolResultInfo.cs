@@ -32,27 +32,6 @@ namespace Ryneus
         {
             _battleScore = battleScore;
         }
-        private List<int> _alchemyIdList = new();
-        public List<int> AlchemyIdList => _alchemyIdList;
-        public void AddAlchemyId(int alchemyId)
-        {
-            if (!_alchemyIdList.Contains(alchemyId))
-            {
-                _alchemyIdList.Add(alchemyId);
-            }
-        }
-        public void RemoveAlchemyId(int alchemyId)
-        {
-            if (_alchemyIdList.Contains(alchemyId))
-            {
-                _alchemyIdList.Remove(alchemyId);
-            }
-        }
-        public void SetAlchemyIdList(List<int> alchemyIdList)
-        {
-            _alchemyIdList = alchemyIdList;
-        }
-
 
         public List<ActorInfo> _actorInfos = new ();
         public List<ActorInfo> ActorInfos => _actorInfos;

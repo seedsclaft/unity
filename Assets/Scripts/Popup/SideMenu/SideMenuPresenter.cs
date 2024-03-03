@@ -131,6 +131,7 @@ namespace Ryneus
                 _view.CommandGameSystem(Base.CommandType.CloseConfirm);
                 var popupInfo = new ConfirmInfo(DataSystem.GetTextData(582).Text,(a) => {
                     SoundManager.Instance.StopBgm();
+                    _view.CommandGameSystem(Base.CommandType.CloseStatus);
                     _view.CommandGameSystem(Base.CommandType.CloseConfirm);
                     _view.CommandGotoSceneChange(Scene.Boot);
                 });

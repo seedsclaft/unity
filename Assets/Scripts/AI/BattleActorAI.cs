@@ -37,21 +37,21 @@ namespace Ryneus
                     // 拘束
                     if (skillInfo.Master.IsStateFeature(StateType.Chain))
                     {
-                        var chainTargets = _batterInfo.isActor ? targetMember : partyMember;
+                        var chainTargets = _batterInfo.IsActor ? targetMember : partyMember;
                         CalcChainSkillWeight(skillInfo,attackTargets,skillTargetAI,chainTargets);
                     }
                     // CA
                     if (skillInfo.Master.IsStateFeature(StateType.CounterAura))
                     {
-                        var caTargets = _batterInfo.isActor ? targetMember : partyMember;
+                        var caTargets = _batterInfo.IsActor ? targetMember : partyMember;
                         CalcCounterOuraSkillWeight(skillInfo,caTargets,skillTargetAI);
                     }
                     // 回復
                     if (skillInfo.Master.IsHpHealFeature())
                     {
-                        var friends = _batterInfo.isActor ? partyMember : targetMember;
+                        var friends = _batterInfo.IsActor ? partyMember : targetMember;
                         friends.Sort((a,b) => a.Hp < b.Hp ? 1:-1);
-                        var opponents = _batterInfo.isActor ? targetMember : partyMember;
+                        var opponents = _batterInfo.IsActor ? targetMember : partyMember;
                         CalcHealSkillWeight(skillInfo,attackTargets,skillTargetAI,friends,opponents);
                     }
                     // 回避バフ
@@ -169,8 +169,8 @@ namespace Ryneus
             targets = targets.FindAll(a => a.IsAlive() == skillInfo.Master.AliveOnly);
             if (skillInfo.Master.Range == RangeType.S && !_batterInfo.IsState(StateType.Extension))
             {
-                var isActor = _batterInfo.isActor;
-                var findFront = targets.Find(a => a.isActor != isActor && a.IsAlive() && a.LineIndex == LineType.Front);
+                var isActor = _batterInfo.IsActor;
+                var findFront = targets.Find(a => a.IsActor != isActor && a.IsAlive() && a.LineIndex == LineType.Front);
                 if (findFront != null)
                 {
                     targets = targets.FindAll(a => a.LineIndex == LineType.Front);

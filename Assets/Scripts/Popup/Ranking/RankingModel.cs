@@ -47,7 +47,6 @@ namespace Ryneus
             PartyInfo.InitActorInfos();
             foreach (var actorInfo in rankingInfo.ActorInfos)
             {
-                PartyInfo.AddActorId(actorInfo.ActorId);
                 PartyInfo.UpdateActorInfo(actorInfo);
             }
         }

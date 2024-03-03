@@ -75,39 +75,6 @@ namespace Ryneus
             _tempRecordActors.Clear();
         }
 
-        private List<int> _tempRecordActorIdList = new ();
-        public List<int> TempRecordActorIdList => _tempRecordActorIdList;
-        public void SetRecordActorIdList(List<int> actorIdList)
-        {
-            _tempRecordActorIdList.Clear();
-            var tempRecordActorIdList = new List<int>();
-            foreach (var actorId in actorIdList)
-            {	
-                tempRecordActorIdList.Add(actorId);
-            }
-            _tempRecordActorIdList = tempRecordActorIdList;
-        }
-        public void ClearRecordActorIdList()
-        {
-            _tempRecordActorIdList.Clear();
-        }
-
-        private List<int> _tempRecordAlchemyList = new ();
-        public List<int> TempRecordAlchemyList => _tempRecordAlchemyList;
-        public void SetRecordAlchemyList(List<int> tempRecordAlchemyList)
-        {
-            _tempRecordAlchemyList.Clear();
-            var alchemyList = new List<int>();
-            foreach (var alchemyId in tempRecordAlchemyList)
-            {
-                alchemyList.Add(alchemyId);
-            }
-            _tempRecordAlchemyList = alchemyList;
-        }
-        public void ClearRecordAlchemyList()
-        {
-            _tempRecordAlchemyList.Clear();
-        }
         
         private List<ActorInfo> _tempStatusActorInfos = new ();
         public List<ActorInfo> TempStatusActorInfos => _tempStatusActorInfos;

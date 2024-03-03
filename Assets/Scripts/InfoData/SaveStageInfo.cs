@@ -30,9 +30,6 @@ namespace Ryneus
 			InitParty();
 			MakeStageData(stageId);
 			SetInitMembers();
-			// レコードを追加
-			var symbolInfo = new SymbolInfo();
-			_party.AddActorId(1);
 		}
 
 		public void MakeStageData(int stageId)
@@ -64,7 +61,6 @@ namespace Ryneus
 			{
 				var actorInfo = new ActorInfo(DataSystem.FindActor(actorData.Id));
 				_party.UpdateActorInfo(actorInfo);
-				_party.AddActorId(actorInfo.ActorId);
 				for (int i = 0;i < actorInfo.Master.LearningSkills.Count;i++)
 				{
 					var _learningData = actorInfo.Master.LearningSkills[i];

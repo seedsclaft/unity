@@ -6,7 +6,7 @@ namespace Ryneus
     [Serializable]
     public class ActorInfo
     {
-        public ActorData Master {get {return DataSystem.FindActor(ActorId);}}
+        public ActorData Master => DataSystem.FindActor(ActorId);
         private int _actorId;
         public int ActorId => _actorId;
         public int MaxHp => CurrentStatus.Hp;
@@ -69,7 +69,10 @@ namespace Ryneus
 
         private int _battleIndex = -1;
         public int BattleIndex => _battleIndex;
-        public void SetBattleIndex(int battleIndex) { _battleIndex = battleIndex;}
+        public void SetBattleIndex(int battleIndex) 
+        { 
+            _battleIndex = battleIndex;
+        }
         private bool _lost = false;
         public bool Lost => _lost;
         private int _sp = 0;
@@ -212,14 +215,14 @@ namespace Ryneus
             ChangeMp(9999);
         }
 
-        public StatusInfo LevelUp(int bonus)
+        public StatusInfo LevelUp(int plusCount)
         {
             var lvUpStatus = new StatusInfo();
             lvUpStatus.SetParameter(0,0,0,0,0);
             CalcLevelUpStatusInfo(lvUpStatus);
             _level++;
             //_sp += 10;
-            for (int i = 0;i < bonus;i++)
+            for (int i = 0;i < plusCount;i++)
             {
                 CalcLevelUpStatusInfo(lvUpStatus);
                 _level++;
@@ -249,24 +252,6 @@ namespace Ryneus
         private int IsLevelUpStatus(StatusParamType statusParamType)
         {
             return GrowthRate(statusParamType);
-            /*
-            int IsLevelUpStatus = 0;
-            int upperRate = _upperRate.GetParameter(statusParamType) + ((_level-1) * 10);
-            while (upperRate >= 0)
-            {
-                int rate = UnityEngine.Random.Range(0,100);
-                if (rate < upperRate)
-                {
-                    IsLevelUpStatus += 1;
-                }
-                upperRate -= 100;
-                if (upperRate < 0)
-                {
-                    break;
-                }
-            }
-            return IsLevelUpStatus;
-            */
         }
 
         public void GainLevelUpCost(int cost)
@@ -351,7 +336,7 @@ namespace Ryneus
             var plusHp = (int)Math.Round(_tempStatus.GetParameter(StatusParamType.Hp) * 0.01f);
             if (plusHp > 0)
             {
-                ChangeHp(_currentHp + plusHp);
+                //ChangeHp(_currentHp + plusHp);
             }
             ClearStrength();
             _numinous += useNuminous;

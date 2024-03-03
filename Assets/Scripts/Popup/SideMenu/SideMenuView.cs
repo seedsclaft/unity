@@ -54,16 +54,6 @@ namespace Ryneus
             sideMenuInfoList.SetInputHandler(InputKeyType.Cancel,() => BackEvent());
             SetInputHandler(sideMenuInfoList.GetComponent<IInputHandlerEvent>());
         }
-
-        public void SetBackEvent(System.Action backEvent)
-        {
-            SetBackCommand(() => 
-            {    
-                Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cancel);
-                if (backEvent != null) backEvent();
-            });
-            ChangeBackCommandActive(true);
-        }
     }
     public class SideMenuViewInfo
     {

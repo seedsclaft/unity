@@ -23,6 +23,10 @@ namespace Ryneus
         }
         private int _currentTurn;
         public int CurrentTurn => _currentTurn;
+        public void SetCurrentTurn(int currentTurn)
+        {
+            _currentTurn = currentTurn;
+        }
         private int _clearCount;
         public int ClearCount => _clearCount;
         public void SetClearCount(int count)
@@ -70,9 +74,12 @@ namespace Ryneus
         public bool StageClear => _stageClear;
         public void SetStageClear(bool stageClear) {_stageClear = stageClear;}
 
-        private bool _recordStage = false;
-        public bool RecordStage => _recordStage;
-        public void SetRecordStage(bool recordStage) {_recordStage = recordStage;}
+        private int _returnSeek = -1;
+        public int ReturnSeek => _returnSeek;
+        public void SetReturnSeek(int returnSeek) 
+        {
+            _returnSeek = returnSeek;
+        }
 
         private bool _parallelStage = false;
         public bool ParallelStage => _parallelStage;
@@ -94,10 +101,6 @@ namespace Ryneus
             _clearTroopIds.Clear();
         }
 
-        public void SetSymbolInfos(List<SymbolInfo> symbolInfos)
-        {
-            //_currentSymbolInfos = symbolInfos;
-        }
 
 
         public void SetSeekIndex(int battleIndex)
@@ -108,7 +111,6 @@ namespace Ryneus
         
         public void TestTroops(int troopId,int troopLv)
         {
-            //_currentSymbolInfos.Clear();
             var troopDate = DataSystem.Troops.Find(a => a.TroopId == troopId);
             
             var troopInfo = new TroopInfo(troopDate.TroopId,false);

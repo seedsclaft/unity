@@ -121,9 +121,9 @@ namespace Ryneus
             {
                 if (i > 9) continue;
                 var battler = sortedBattlerList[i];
-                _actorBattlers[i].UpdateAlpha(battler.isActor);
-                _enemyBattlers[i].UpdateAlpha(!battler.isActor);
-                if (battler.isActor)
+                _actorBattlers[i].UpdateAlpha(battler.IsActor);
+                _enemyBattlers[i].UpdateAlpha(!battler.IsActor);
+                if (battler.IsActor)
                 {
                     _actorBattlers[i].UpdateInfo(battler,(int)sortedBattlerApList[i],i);
                 } else

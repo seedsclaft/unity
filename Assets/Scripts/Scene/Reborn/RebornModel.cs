@@ -90,10 +90,7 @@ namespace Ryneus
             }
 
             var addSkillRebornSkills = rebornActorInfo.RebornSkillInfos.FindAll(a => a.Master.FeatureDates.Find(b => b.FeatureType == FeatureType.RebornAddSkill) != null);
-            foreach (var addSkill in addSkillRebornSkills)
-            {
-                PartyInfo.AddAlchemy(addSkill.Param3);
-            }
+
             
             var questRebornSkill = rebornActorInfo.RebornSkillInfos.Find(a => a.Master.FeatureDates.Find(b => b.FeatureType == FeatureType.RebornQuest) != null);
             if (questRebornSkill != null)

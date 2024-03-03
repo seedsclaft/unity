@@ -431,7 +431,11 @@ namespace Ryneus
             // 過去
             if (_model.SymbolInfo.StageSymbolData.Seek < _model.CurrentStage.CurrentTurn)
             {
-                _view.ShowParallelList();
+                // 過去の中ではさらに過去に戻らない
+                if (_model.CurrentStage.ReturnSeek < 0)
+                {
+                    _view.ShowParallelList();
+                }
             }
             _backCommand = Tactics.CommandType.TacticsCommand;
         }
@@ -492,17 +496,6 @@ namespace Ryneus
             }
         }
 
-        private void CommandParadigm()
-        {
-            _view.HideConfirmCommand();
-            _view.SetSymbols(_model.StageSymbolInfos(_model.CurrentStage.CurrentTurn));
-            _view.ShowSymbolList();
-            _view.ChangeBackCommandActive(true);
-            _backCommand = Tactics.CommandType.SymbolClose;
-            _view.ShowCommandList();
-            _view.HideSelectCharacter();
-            _view.HideAttributeList();
-        }
 
         private void CommandStatus()
         {
@@ -620,11 +613,6 @@ namespace Ryneus
             {
                 // 現在
                 CommandCurrentSelectSymbol();
-            } else
-            if (_model.SymbolInfo.StageSymbolData.Seek < _model.CurrentStage.CurrentTurn)
-            {
-            // 過去
-                CommandPastSelectSymbol();
             }
         }
 
@@ -666,11 +654,6 @@ namespace Ryneus
             }
         }
 
-        private void CommandPastSelectSymbol()
-        {
-            CommandDecideRecord();
-        }
-
         private void CommandCancelSelectSymbol()
         {
             SoundManager.Instance.PlayStaticSe(SEType.Decide);
@@ -691,6 +674,7 @@ namespace Ryneus
             _view.CommandGameSystem(Base.CommandType.CloseConfirm);
             if (confirmCommandType == ConfirmCommandType.Yes)
             {
+                // 過去のステージを作る
                 _model.MakeSymbolRecordStage(_model.SymbolInfo.StageSymbolData.Seek);
                 _view.CommandGotoSceneChange(Scene.Tactics);
             }

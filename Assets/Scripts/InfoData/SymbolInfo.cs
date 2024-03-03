@@ -11,6 +11,10 @@ namespace Ryneus
         public SymbolType SymbolType => _stageSymbolData.SymbolType;
         private TroopInfo _troopInfo;
         public TroopInfo TroopInfo => _troopInfo;
+        public void SetTroopInfo(TroopInfo troopInfo)
+        {
+            _troopInfo = troopInfo;
+        }
         private List<GetItemInfo> _getItemInfos = new ();
         public List<GetItemInfo> GetItemInfos => _getItemInfos;
         private bool _selected;
@@ -55,21 +59,12 @@ namespace Ryneus
             _cleared = symbolInfo.Cleared;
         }
 
-
-
-        public void SetTroopInfo(TroopInfo troopInfo)
-        {
-            _troopInfo = troopInfo;
-        }
-
-
-
         public List<BattlerInfo> BattlerInfos()
         {
             return _troopInfo.BattlerInfos;
         }
 
-        public void MakeGetItemInfos(List<GetItemInfo> getItemInfos)
+        public void SetGetItemInfos(List<GetItemInfo> getItemInfos)
         {
             _getItemInfos = getItemInfos;
         }

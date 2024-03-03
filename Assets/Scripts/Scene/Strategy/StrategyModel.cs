@@ -47,7 +47,7 @@ namespace Ryneus
         public void SetLvUp()
         {
             if (_levelUpData.Count > 0) return;
-            if (CurrentStage.RecordStage) return;
+            if (CurrentStage.ReturnSeek > 0) return;
             //var lvUpActorInfos = TacticsActors().FindAll(a => a.TacticsCommandType == TacticsCommandType.Train);
             var lvUpList = new List<ActorInfo>();
             // 結果出力
@@ -83,7 +83,6 @@ namespace Ryneus
                         }
                         break;
                     case GetItemType.Skill:
-                        PartyInfo.AddAlchemy(getItemInfo.Param1);
                         break;
                     case GetItemType.Regeneration:
                         foreach (var stageMember in StageMembers())
@@ -115,7 +114,6 @@ namespace Ryneus
                         }
                         break;
                     case GetItemType.AddActor:
-                        PartyInfo.AddActorId(getItemInfo.Param1);
                         break;
                     case GetItemType.SaveHuman:
                         
@@ -130,7 +128,7 @@ namespace Ryneus
             // クリアフラグを立てる
             record.SetCleared(true); 
             
-            if (CurrentStage.RecordStage)
+            if (CurrentStage.ReturnSeek > 0)
             {
                 foreach (var actorInfo in TempInfo.TempRecordActors)
                 {
@@ -252,9 +250,10 @@ namespace Ryneus
 
         public void CommitCurrentResult()
         {
-            var records = PartyInfo.SymbolRecordList.FindAll(a => a.StageId == CurrentStage.Id && a.Seek == CurrentStage.CurrentTurn);
             // 新たに選択したシンボル
             var newSymbolInfo = CurrentSelectSymbol();
+            
+            var records = PartyInfo.SymbolRecordList.FindAll(a => a.StageId == CurrentStage.Id && a.Seek == CurrentStage.CurrentTurn);
             foreach (var record in records)
             {
                 if (record.IsSameSymbol(newSymbolInfo))
@@ -270,23 +269,18 @@ namespace Ryneus
                 removeSymbolInfo.SetSelected(false);
             }
 
+            // 復帰処理
             PartyInfo.InitActorInfos();
             foreach (var actorInfo in TempInfo.TempRecordActors)
             {
                 PartyInfo.UpdateActorInfo(actorInfo);
             }
-            foreach (var actorId in TempInfo.TempRecordActorIdList)
-            {
-                PartyInfo.AddActorId(actorId);
-            }
-            
-            
 
             TempInfo.ClearRecordActors();
-            TempInfo.ClearRecordActorIdList();
-            TempInfo.ClearRecordAlchemyList();
-            SavePlayerData();
-            SavePlayerStageData(false);
+            CurrentStage.SetCurrentTurn(CurrentStage.ReturnSeek);
+            CurrentStage.SetReturnSeek(-1);
+            //SavePlayerData();
+            //SavePlayerStageData(false);
         }
 
         public void CommitCurrentParallelResult()
@@ -361,51 +355,15 @@ namespace Ryneus
             {
                 PartyInfo.UpdateActorInfo(actorInfo);
             }
-            foreach (var actorId in TempInfo.TempRecordActorIdList)
-            {
-                PartyInfo.AddActorId(actorId);
-            }
-            
-            PartyInfo.ClearAlchemy();
-            foreach (var alchemyId in TempInfo.TempRecordAlchemyList)
-            {
-                PartyInfo.AddAlchemy(alchemyId);
-            }
-            foreach (var alchemyId in addAlchemyIdList)
-            {
-                PartyInfo.AddAlchemy(alchemyId);
-            }
-            foreach (var alchemyId in removeAlchemyIdList)
-            {
-                PartyInfo.RemoveAlchemy(alchemyId);
-            }
-            foreach (var actorId in addActorIdList)
-            {
-                PartyInfo.AddActorId(actorId);
-            }
-            foreach (var actorId in removeActorIdList)
-            {
-                PartyInfo.RemoveActor(actorId);
-            }
             
             // 後のレコードを書き換え
             var afterRecords = PartyInfo.SymbolRecordList.FindAll(a => a.StageId >= CurrentStage.Id && a.Seek > CurrentStage.CurrentTurn);
             foreach (var symbolResultInfo in afterRecords)
             {
-                foreach (var alchemyId in addAlchemyIdList)
-                {
-                    symbolResultInfo.AddAlchemyId(alchemyId);
-                }
-                foreach (var alchemyId in removeAlchemyIdList)
-                {
-                    symbolResultInfo.RemoveAlchemyId(alchemyId);
-                }
                 PartyInfo.SetSymbolResultInfo(symbolResultInfo);
             }
 
             TempInfo.ClearRecordActors();
-            TempInfo.ClearRecordActorIdList();
-            TempInfo.ClearRecordAlchemyList();
             SavePlayerData();
             SavePlayerStageData(false);
         }

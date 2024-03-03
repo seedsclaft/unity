@@ -58,12 +58,6 @@ namespace Ryneus
 
         public void SetActors()
         {
-            // Party初期化
-            PartyInfo.ClearActorIds();
-            foreach (var resultMember in ResultMembers())
-            {
-                PartyInfo.AddActorId(resultMember.ActorId);
-            }
         }
 
         // アルカナ新規入手
