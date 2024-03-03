@@ -616,44 +616,59 @@ namespace Ryneus
 
         private void CommandSelectSymbol()
         {
-            // 現在
             if (_model.SymbolInfo.StageSymbolData.Seek == _model.CurrentStage.CurrentTurn)
             {
-                _view.HideSymbolRecord();
-                _model.SetStageSeekIndex(_model.SymbolInfo.StageSymbolData.SeekIndex);
-                _view.HideSymbolList();
-                // 回路解析
-                var currentSymbol = _model.CurrentSelectSymbol();
-                switch (currentSymbol.SymbolType)
-                {
-                    case SymbolType.Battle:
-                    case SymbolType.Boss:
-                        _view.ChangeBackCommandActive(true);
-                        _view.HideCommandList();
-                        _view.ShowSelectCharacter(_model.TacticsCharacterData(),_model.TacticsCommandData());
-                        _view.ShowCharacterDetail(_model.TacticsActor(),_model.StageMembers());
-                        _view.ActivateTacticsCommand();
-                        _view.ShowConfirmCommand();
-                        CommandRefresh();
-                        _backCommand = Tactics.CommandType.CancelSelectSymbol;
-                        break;
-                    case SymbolType.Recover:
-                        CheckRecoverSymbol(currentSymbol.GetItemInfos[0]);
-                        break;
-                    case SymbolType.Actor:
-                        CheckActorSymbol(currentSymbol.GetItemInfos[0]);
-                        break;
-                    case SymbolType.Alcana:
-                        CheckAlcanaSymbol(currentSymbol.GetItemInfos);
-                        break;
-                    case SymbolType.Resource:
-                        CheckResourceSymbol(currentSymbol.GetItemInfos[0]);
-                        break;
-                    case SymbolType.Rebirth:
-                        CheckRebirthSymbol(currentSymbol.GetItemInfos[0]);
-                        break;
-                }
+                // 現在
+                CommandCurrentSelectSymbol();
+            } else
+            if (_model.SymbolInfo.StageSymbolData.Seek < _model.CurrentStage.CurrentTurn)
+            {
+            // 過去
+                CommandPastSelectSymbol();
             }
+        }
+
+        private void CommandCurrentSelectSymbol()
+        {
+            _view.HideSymbolRecord();
+            _model.SetStageSeekIndex(_model.SymbolInfo.StageSymbolData.SeekIndex);
+            _view.HideSymbolList();
+            // 回路解析
+            var currentSymbol = _model.SelectStageInfo(_model.SymbolInfo.StageSymbolData.Seek);
+            switch (currentSymbol.SymbolType)
+            {
+                case SymbolType.Battle:
+                case SymbolType.Boss:
+                    _view.ChangeBackCommandActive(true);
+                    _view.HideCommandList();
+                    _view.ShowSelectCharacter(_model.TacticsCharacterData(),_model.TacticsCommandData());
+                    _view.ShowCharacterDetail(_model.TacticsActor(),_model.StageMembers());
+                    _view.ActivateTacticsCommand();
+                    _view.ShowConfirmCommand();
+                    CommandRefresh();
+                    _backCommand = Tactics.CommandType.CancelSelectSymbol;
+                    break;
+                case SymbolType.Recover:
+                    CheckRecoverSymbol(currentSymbol.GetItemInfos[0]);
+                    break;
+                case SymbolType.Actor:
+                    CheckActorSymbol(currentSymbol.GetItemInfos[0]);
+                    break;
+                case SymbolType.Alcana:
+                    CheckAlcanaSymbol(currentSymbol.GetItemInfos);
+                    break;
+                case SymbolType.Resource:
+                    CheckResourceSymbol(currentSymbol.GetItemInfos[0]);
+                    break;
+                case SymbolType.Rebirth:
+                    CheckRebirthSymbol(currentSymbol.GetItemInfos[0]);
+                    break;
+            }
+        }
+
+        private void CommandPastSelectSymbol()
+        {
+            CommandDecideRecord();
         }
 
         private void CommandCancelSelectSymbol()
@@ -678,8 +693,6 @@ namespace Ryneus
             {
                 _model.MakeSymbolRecordStage(_model.SymbolInfo.StageSymbolData.Seek);
                 _view.CommandGotoSceneChange(Scene.Tactics);
-            } else
-            {
             }
         }
 
@@ -712,8 +725,6 @@ namespace Ryneus
                 _model.MakeSymbolRecordStage(_model.SymbolInfo.StageSymbolData.Seek);
                 _model.SetParallelMode();
                 _view.CommandGotoSceneChange(Scene.Tactics);
-            } else
-            {
             }
         }
 

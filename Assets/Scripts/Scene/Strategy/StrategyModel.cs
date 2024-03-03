@@ -69,7 +69,7 @@ namespace Ryneus
         public void MakeResult()
         {
             var getItemInfos = SceneParam.GetItemInfos;
-            var record = CurrentStage.SymbolRecordList.Find(a => a.IsSameSymbol(CurrentStage.Id,CurrentStage.CurrentTurn,CurrentSaveData.CurrentStage.CurrentSeekIndex));
+            var record = PartyInfo.SymbolRecordList.Find(a => a.IsSameSymbol(CurrentStage.Id,CurrentStage.CurrentTurn,CurrentSaveData.CurrentStage.CurrentSeekIndex));
             var beforeRecord = PartyInfo.SymbolRecordList.Find(a => a.IsSameSymbol(CurrentStage.Id,CurrentStage.CurrentTurn,CurrentSaveData.CurrentStage.CurrentSeekIndex));
             
             foreach (var getItemInfo in getItemInfos)
@@ -224,28 +224,25 @@ namespace Ryneus
         public void EndStrategy(bool isSeek)
         {
             // レコード作成
-            var record = CurrentStage.SymbolRecordList.Find(a => a.IsSameSymbol(CurrentStage.Id,CurrentStage.CurrentTurn,CurrentSaveData.CurrentStage.CurrentSeekIndex));
+            var record = PartyInfo.SymbolRecordList.Find(a => a.IsSameSymbol(CurrentSelectSymbol()));
             record.SetSelected(true);
-            CurrentStage.SetSymbolResultInfo(record);
+            PartyInfo.SetSymbolResultInfo(record);
 
             foreach (var actorInfo in StageMembers())
             {
                 actorInfo.ChangeTacticsCostRate(1);
                 actorInfo.ClearTacticsCommand();
             }
-            //CurrentStage.ChangeSubordinateValue(-5);
             if (isSeek)
             {
                 CurrentStage.SeekStage();
-                //CurrentStage.SetSymbolInfos(CurrentTurnSymbolInfos(CurrentStage.CurrentTurn));
-                MakeSymbolResultInfos();
             }
         }
 
         public void CommitResult()
         {
             CurrentData.PlayerInfo.StageClear(CurrentStage.Id);
-            foreach (var symbolResultInfo in CurrentStage.SymbolRecordList)
+            foreach (var symbolResultInfo in PartyInfo.SymbolRecordList)
             {
                 PartyInfo.SetSymbolResultInfo(symbolResultInfo);
             }
@@ -255,65 +252,22 @@ namespace Ryneus
 
         public void CommitCurrentResult()
         {
-            var beforeRecords = PartyInfo.SymbolRecordList.FindAll(a => a.StageId == CurrentStage.Id && a.Seek == CurrentStage.CurrentTurn);
-            var records = CurrentStage.SymbolRecordList.FindAll(a => a.StageId == CurrentStage.Id && a.Seek == CurrentStage.CurrentTurn);
-            
-            var addAlchemyIdList = new List<int>();
-            var removeAlchemyIdList = new List<int>();
-
-            var addActorIdList = new List<int>();
-            var removeActorIdList = new List<int>();
-            // 差分確認
-            foreach (var beforeRecord in beforeRecords)
+            var records = PartyInfo.SymbolRecordList.FindAll(a => a.StageId == CurrentStage.Id && a.Seek == CurrentStage.CurrentTurn);
+            // 新たに選択したシンボル
+            var newSymbolInfo = CurrentSelectSymbol();
+            foreach (var record in records)
             {
-                var currentRecord = records.Find(a => a.IsSameSymbol(beforeRecord));
-                if (beforeRecord.Selected != currentRecord.Selected)
+                if (record.IsSameSymbol(newSymbolInfo))
                 {
-                    var symbol = PartyInfo.CurrentSymbolInfos(currentRecord.Seek)[currentRecord.SeekIndex];
-                    if (symbol.SymbolType == SymbolType.Alcana)
-                    {
-                        foreach (var getItemInfo in symbol.GetItemInfos)
-                        {
-                            if (currentRecord.Selected)
-                            {
-                                // 増える
-                                addAlchemyIdList.Add(getItemInfo.Param1);
-                            } else
-                            {
-                                removeAlchemyIdList.Add(getItemInfo.Param1);
-                            }
-                        }
-                    }
-                    if (symbol.SymbolType == SymbolType.Actor)
-                    {
-                        foreach (var getItemInfo in symbol.GetItemInfos)
-                        {
-                            if (currentRecord.Selected)
-                            {
-                                // 増える
-                                addActorIdList.Add(getItemInfo.Param1);
-                            } else
-                            {
-                                removeActorIdList.Add(getItemInfo.Param1);
-                            }
-                        }
-                    }
+                    record.SetSelected(true);
                 }
             }
-
-            // データ復元
-            records.Sort((a,b)=> a.SeekIndex > b.SeekIndex ? 1 : -1);
-            foreach (var symbolResultInfo in records)
+            newSymbolInfo.SetSelected(true);
+            // 選択から外れたシンボル
+            var removeSymbolInfos = records.FindAll(a => a.Selected && !a.IsSameSymbol(newSymbolInfo));
+            foreach (var removeSymbolInfo in removeSymbolInfos)
             {
-                var beforeRecord = beforeRecords.Find(a => a.IsSameSymbol(symbolResultInfo));
-                if (beforeRecord != null)
-                {
-                    if (beforeRecord.Cleared)
-                    {
-                        symbolResultInfo.SetCleared(true);
-                    }
-                }
-                PartyInfo.SetSymbolResultInfo(symbolResultInfo);
+                removeSymbolInfo.SetSelected(false);
             }
 
             PartyInfo.InitActorInfos();
@@ -326,50 +280,7 @@ namespace Ryneus
                 PartyInfo.AddActorId(actorId);
             }
             
-            PartyInfo.ClearAlchemy();
-            foreach (var alchemyId in TempInfo.TempRecordAlchemyList)
-            {
-                PartyInfo.AddAlchemy(alchemyId);
-            }
-            foreach (var alchemyId in addAlchemyIdList)
-            {
-                PartyInfo.AddAlchemy(alchemyId);
-            }
-            foreach (var alchemyId in removeAlchemyIdList)
-            {
-                PartyInfo.RemoveAlchemy(alchemyId);
-            }
-            foreach (var actorId in addActorIdList)
-            {
-                PartyInfo.AddActorId(actorId);
-            }
-            foreach (var actorId in removeActorIdList)
-            {
-                PartyInfo.RemoveActor(actorId);
-            }
             
-            // 後のレコードを書き換え
-            var afterRecords = PartyInfo.SymbolRecordList.FindAll(a => a.StageId >= CurrentStage.Id && a.Seek > CurrentStage.CurrentTurn);
-            foreach (var symbolResultInfo in afterRecords)
-            {
-                foreach (var alchemyId in addAlchemyIdList)
-                {
-                    symbolResultInfo.AddAlchemyId(alchemyId);
-                }
-                foreach (var alchemyId in removeAlchemyIdList)
-                {
-                    symbolResultInfo.RemoveAlchemyId(alchemyId);
-                }
-                foreach (var actorId in addActorIdList)
-                {
-                    symbolResultInfo.AddActorId(actorId);
-                }
-                foreach (var actorId in removeActorIdList)
-                {
-                    symbolResultInfo.RemoveActorId(actorId);
-                }
-                PartyInfo.SetSymbolResultInfo(symbolResultInfo);
-            }
 
             TempInfo.ClearRecordActors();
             TempInfo.ClearRecordActorIdList();
@@ -381,7 +292,7 @@ namespace Ryneus
         public void CommitCurrentParallelResult()
         {
             var beforeRecords = PartyInfo.SymbolRecordList.FindAll(a => a.StageId == CurrentStage.Id && a.Seek == CurrentStage.CurrentTurn);
-            var records = CurrentStage.SymbolRecordList.FindAll(a => a.StageId == CurrentStage.Id && a.Seek == CurrentStage.CurrentTurn);
+            var records = PartyInfo.SymbolRecordList.FindAll(a => a.StageId == CurrentStage.Id && a.Seek == CurrentStage.CurrentTurn);
             
             var addAlchemyIdList = new List<int>();
             var removeAlchemyIdList = new List<int>();
@@ -488,14 +399,6 @@ namespace Ryneus
                 foreach (var alchemyId in removeAlchemyIdList)
                 {
                     symbolResultInfo.RemoveAlchemyId(alchemyId);
-                }
-                foreach (var actorId in addActorIdList)
-                {
-                    symbolResultInfo.AddActorId(actorId);
-                }
-                foreach (var actorId in removeActorIdList)
-                {
-                    symbolResultInfo.RemoveActorId(actorId);
                 }
                 PartyInfo.SetSymbolResultInfo(symbolResultInfo);
             }

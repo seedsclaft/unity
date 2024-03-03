@@ -53,26 +53,6 @@ namespace Ryneus
             _alchemyIdList = alchemyIdList;
         }
 
-        public List<int> _actorIdList = new ();
-        public List<int> ActorIdList => _actorIdList;
-        public void SetActorIdList(List<int> actorIdList)
-        {
-            _actorIdList = actorIdList;
-        }
-        public void AddActorId(int actorId)
-        {
-            if (!_actorIdList.Contains(actorId))
-            {
-                _actorIdList.Add(actorId);
-            }
-        }
-        public void RemoveActorId(int actorId)
-        {
-            if (_actorIdList.Contains(actorId))
-            {
-                _actorIdList.Remove(actorId);
-            }
-        }
 
         public List<ActorInfo> _actorInfos = new ();
         public List<ActorInfo> ActorInfos => _actorInfos;
@@ -99,6 +79,11 @@ namespace Ryneus
         public bool IsSameSymbol(SymbolResultInfo symbolResultInfo)
         {
             return symbolResultInfo.StageId == StageId && symbolResultInfo.Seek == Seek && symbolResultInfo.SeekIndex == SeekIndex;
+        }
+
+        public bool IsSameSymbol(SymbolInfo symbolInfo)
+        {
+            return symbolInfo.StageSymbolData.StageId == StageId && symbolInfo.StageSymbolData.Seek == Seek && symbolInfo.StageSymbolData.SeekIndex == SeekIndex;
         }
 
         public bool IsSameSymbol(int stageId,int seek,int seekIndex)

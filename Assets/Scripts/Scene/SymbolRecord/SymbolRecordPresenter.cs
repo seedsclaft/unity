@@ -152,7 +152,7 @@ namespace Ryneus
             _view.SetNuminous(_model.Currency);
             _view.SetStageInfo(_model.CurrentStage);
             //_view.SetSymbols(_model.StageSymbolInfos(_view.SymbolListIndex));
-            _view.SetTacticsCharaLayer(_model.SymbolActorIdList(_view.SymbolListIndex));
+            //_view.SetTacticsCharaLayer(_model.SymbolActorIdList(_view.SymbolListIndex));
         }
 
         private void CommandSelectSymbol(SymbolInfo symbolInfo)

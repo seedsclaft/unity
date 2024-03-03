@@ -57,7 +57,7 @@ namespace Ryneus
 
         public List<ActorInfo> StageMembers()
         {
-            return PartyInfo.CurrentActorInfos;
+            return PartyInfo.CurrentActorInfos(CurrentStage.Id,CurrentStage.CurrentTurn);
         }
 
         public List<ActorInfo> BattleMembers()
@@ -70,22 +70,12 @@ namespace Ryneus
 
         public List<ActorInfo> PartyMembers()
         {
-            return PartyInfo.CurrentActorInfos;
+            return PartyInfo.CurrentActorInfos(CurrentStage.Id,CurrentStage.CurrentTurn);
         }
 
         public List<ActorInfo> ResultMembers()
         {
-            var SelectActorIds = PartyInfo.ActorIdList;
-            var members = new List<ActorInfo>();
-            for (int i = 0;i < SelectActorIds.Count ;i++)
-            {
-                var temp = Actors().Find(a => a.ActorId == SelectActorIds[i]);
-                if (temp != null)
-                {
-                    members.Add(temp);
-                }
-            }
-            return members;
+            return StageMembers();
         }
 
         public List<ActorInfo> StatusActors(){
@@ -351,7 +341,7 @@ namespace Ryneus
                             getItemInfo.MakeGainTurnResult((RemainTurns).ToString());
                             break;
                         case FeatureType.ActorLvUp: // featureData で param1 = 選択順のActorId、 param2 = 上昇値
-                            var actorInfo = StageMembers().Find(a => a.ActorId == PartyInfo.ActorIdList[featureData.Param1]);
+                            var actorInfo = StageMembers().Find(a => a.ActorId == PartyInfo.ActorInfos[featureData.Param1].ActorId);
                             if (actorInfo != null)
                             {
                                 var lv = featureData.Param2;
@@ -380,7 +370,7 @@ namespace Ryneus
                             break;
                         case FeatureType.AddSkillOrCurrency: // skillInfo で param1 = 入手スキルID,featureData で param2 = 上昇Currency値
                             var getSkillId = skillInfo.Param1;
-                            var hero = StageMembers().Find(a => a.ActorId == PartyInfo.ActorIdList[0]);
+                            var hero = StageMembers().Find(a => a.ActorId == PartyInfo.ActorInfos[0].ActorId);
                             if (!hero.IsLearnedSkill(getSkillId))
                             {
                                 getItemInfo.MakeSkillLearnResult(hero.Master.Name,DataSystem.FindSkill(skillInfo.Param1));    
@@ -517,6 +507,56 @@ namespace Ryneus
             return symbolInfos;
         }
 
+        public List<SymbolInfo> OpeningStageSymbolInfos()
+        {
+            var symbolInfos = new List<SymbolInfo>();
+            var symbols = DataSystem.FindStage(0).StageSymbols;
+            foreach (var symbol in symbols)
+            {
+                var symbolInfo = new SymbolInfo(symbol);
+                // ランダム
+                if (symbol.SymbolType > SymbolType.Rebirth){
+                    var groupId = (int)symbol.SymbolType;
+                    var groupDates = DataSystem.SymbolGroups.FindAll(a => a.GroupId == groupId);
+                    var data = PickUpSymbolData(groupDates);
+                    data.StageId = symbol.StageId;
+                    data.Seek = symbol.Seek;
+                    data.SeekIndex = symbol.SeekIndex;
+                    symbolInfo = new SymbolInfo(data);
+                }
+                var getItemInfos = new List<GetItemInfo>();
+                if (symbolInfo.SymbolType == SymbolType.Battle || symbolInfo.SymbolType == SymbolType.Boss){
+                    if (symbolInfo.StageSymbolData.Param1 > 0)
+                    {
+                        symbolInfo.SetTroopInfo(BattleTroop(symbolInfo.StageSymbolData.Param1,symbolInfo.StageSymbolData.Param2));
+                    }
+                    
+                    if (symbolInfo.TroopInfo.Master.PrizeSetId > 0)
+                    {
+                        var prizeSets = DataSystem.PrizeSets.FindAll(a => a.Id == symbolInfo.TroopInfo.Master.PrizeSetId);
+                        foreach (var prizeSet in prizeSets)
+                        {
+                            var getItemInfo = new GetItemInfo(prizeSet.GetItem);
+                            getItemInfos.Add(getItemInfo);
+                        }
+                    }
+                }
+                if (symbolInfo.StageSymbolData.PrizeSetId > 0)
+                {
+                    var prizeSets = DataSystem.PrizeSets.FindAll(a => a.Id == symbolInfo.StageSymbolData.PrizeSetId);
+                    foreach (var prizeSet in prizeSets)
+                    {
+                        var getItemInfo = new GetItemInfo(prizeSet.GetItem);
+                        getItemInfos.Add(getItemInfo);
+                    }
+                }
+                symbolInfo.MakeGetItemInfos(getItemInfos);
+                symbolInfo.SetSelected(true);
+                symbolInfos.Add(symbolInfo);
+            }
+            return symbolInfos;
+        }
+
         public List<SymbolInfo> StageSymbolInfos()
         {
             var symbolInfos = new List<SymbolInfo>();
@@ -613,6 +653,19 @@ namespace Ryneus
         {
             InitSaveStageInfo();
             CurrentSaveData.InitializeStageData(1);
+            PartyInfo.SetStageSymbolInfos(OpeningStageSymbolInfos());
+            foreach (var symbolInfo in  PartyInfo.StageSymbolInfos)
+            {
+                var record = new SymbolResultInfo(symbolInfo,GameSystem.CurrentStageData.Party.Currency);
+                var actorInfos = new List<ActorInfo>();
+                foreach (var actorInfo in PartyInfo.ActorInfos)
+                {
+                    actorInfos.Add(actorInfo);
+                }
+                record.SetActorInfos(actorInfos);
+                record.SetSelected(true);
+                PartyInfo.SetSymbolResultInfo(record);
+            }
             PartyInfo.ChangeCurrency(DataSystem.System.InitCurrency);
             PartyInfo.SetStageSymbolInfos(StageSymbolInfos());
             MakeSymbolResultInfos();
@@ -633,6 +686,16 @@ namespace Ryneus
             return PartyInfo.CurrentSymbolInfos(CurrentStage.CurrentTurn)[CurrentStage.CurrentSeekIndex];
         }
 
+        public SymbolInfo SelectStageInfo(int seek)
+        {
+            return PartyInfo.CurrentSymbolInfos(seek)[CurrentStage.CurrentSeekIndex];
+        }
+
+        public SymbolInfo PastSelectSymbol(int seek)
+        {
+            return PartyInfo.CurrentSymbolInfos(seek)[CurrentStage.CurrentSeekIndex];
+        }
+
         public TroopInfo CurrentTroopInfo()
         {
             return CurrentSelectSymbol().TroopInfo;
@@ -640,8 +703,9 @@ namespace Ryneus
 
         public void MakeSymbolResultInfos()
         {
-            // レコード作成
-            foreach (var symbolInfo in PartyInfo.CurrentSymbolInfos(CurrentStage.CurrentTurn))
+            // ステージ全てのレコードを作成
+            var currentStageSymbolInfos = PartyInfo.StageSymbolInfos.FindAll(a => a.StageSymbolData.StageId == CurrentStage.Id);
+            foreach (var symbolInfo in currentStageSymbolInfos)
             {
                 var record = new SymbolResultInfo(symbolInfo,GameSystem.CurrentStageData.Party.Currency);
                 var actorInfos = new List<ActorInfo>();
@@ -650,19 +714,7 @@ namespace Ryneus
                     actorInfos.Add(actorInfo);
                 }
                 record.SetActorInfos(actorInfos);
-                var actorIdList = new List<int>();
-                foreach (var actorId in PartyInfo.ActorIdList)
-                {
-                    actorIdList.Add(actorId);
-                }
-                record.SetActorIdList(actorIdList);
-                var alchemyIdList = new List<int>();
-                foreach (var alchemyId in PartyInfo.AlchemyIdList)
-                {
-                    alchemyIdList.Add(alchemyId);
-                }
-                record.SetAlchemyIdList(alchemyIdList);
-                CurrentStage.SetSymbolResultInfo(record);
+                PartyInfo.SetSymbolResultInfo(record);
             }
         }
         
@@ -678,14 +730,8 @@ namespace Ryneus
             CurrentSaveData.MakeStageData(CurrentStage.Id);
             CurrentStage.SetRecordStage(true);
             TempInfo.SetRecordActors(PartyInfo.ActorInfos);
-            TempInfo.SetRecordActorIdList(PartyInfo.ActorIdList);
-            TempInfo.SetRecordAlchemyList(PartyInfo.AlchemyIdList);
             
             PartyInfo.InitActorInfos();
-            foreach (var symbolActor in SymbolActorIdList(seek))
-            {
-                PartyInfo.AddActorId(symbolActor.ActorId);
-            }
             foreach (var symbolActor in SymbolActorInfos(seek))
             {
                 PartyInfo.UpdateActorInfo(symbolActor);
@@ -702,13 +748,13 @@ namespace Ryneus
                 CurrentStage.SeekStage();
             }
             var list = new List<SymbolInfo>();
-            var symbolInfos = PartyInfo.SymbolRecordList.FindAll(a => a.StageId == CurrentStage.Id && a.Seek == (seek+1));
-            symbolInfos.Sort((a,b) => a.SeekIndex > b.SeekIndex ? 1 : -1);
+            var symbolInfos = PartyInfo.StageSymbolInfos.FindAll(a => a.StageSymbolData.StageId == CurrentStage.Id && a.StageSymbolData.Seek == (seek+1));
+            symbolInfos.Sort((a,b) => a.StageSymbolData.SeekIndex > b.StageSymbolData.SeekIndex ? 1 : -1);
             var symbolRecords = PartyInfo.SymbolRecordList.FindAll(a => a.StageId == CurrentStage.Id && a.Selected == true);
             for (int i = 0;i < symbolInfos.Count;i++)
             {
                 var symbolInfo = new SymbolInfo();
-                symbolInfo.CopyData(symbolInfos[i].SymbolInfo);
+                symbolInfo.CopyData(symbolInfos[i]);
                 var saveRecord = symbolRecords.Find(a => a.IsSameSymbol(CurrentStage.Id,seek+1,i));
                 symbolInfo.SetSelected(saveRecord != null);
                 symbolInfo.SetCleared(symbolInfos[i].Cleared);
@@ -716,13 +762,6 @@ namespace Ryneus
                 list.Add(symbolInfo);
             }
             CurrentStage.SetSymbolInfos(list);
-            MakeSymbolResultInfos();
-        }
-        
-        public List<ActorInfo> SymbolActorIdList(int seek)
-        {
-            var symbolRecord = PartyInfo.SymbolRecordList.Find(a => a.StageId == CurrentStage.Id && a.Selected == true && a.Seek == seek+1);
-            return symbolRecord.ActorInfos.FindAll(a => symbolRecord.ActorIdList.Contains(a.ActorId));
         }
 
         public List<ActorInfo> SymbolActorInfos(int seek)
@@ -822,12 +861,7 @@ namespace Ryneus
 
         public List<ActorInfo> EvaluateMembers()
         {
-            var members = new List<ActorInfo>();
-            foreach (var actorInfo in PartyInfo.CurrentActorInfos)
-            {
-                members.Add(actorInfo);
-            }
-            return members;
+            return StageMembers();
         }
 
         public string RankingTypeText(RankingType rankingType)

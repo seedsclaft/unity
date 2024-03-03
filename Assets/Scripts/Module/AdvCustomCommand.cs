@@ -78,8 +78,8 @@ namespace Utage
         {
             if (Ryneus.GameSystem.CurrentStageData == null) return;
             if (Ryneus.GameSystem.CurrentStageData.CurrentStage == null) return;
-            if (Ryneus.GameSystem.CurrentStageData.Party.ActorIdList.Count == 0) return;
-            int actorId = Ryneus.GameSystem.CurrentStageData.Party.ActorIdList[0];
+            if (Ryneus.GameSystem.CurrentStageData.Party.ActorInfos.Count == 0) return;
+            int actorId = Ryneus.GameSystem.CurrentStageData.Party.ActorInfos[0].ActorId;
             var actorData = Ryneus.DataSystem.FindActor(actorId);
             if (actorData != null)
             {

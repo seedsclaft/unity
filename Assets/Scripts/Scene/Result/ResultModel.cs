@@ -262,7 +262,7 @@ namespace Ryneus
             foreach (var listDate in listDates)
             {
                 var actorInfo = (ActorInfo)listDate.Data;
-                if (actorInfo.Master.ClassId == DataSystem.FindActor(PartyInfo.ActorIdList[0]).ClassId)
+                if (actorInfo.Master.ClassId == DataSystem.FindActor(PartyInfo.ActorInfos[0].ActorId).ClassId)
                 {
                     //listDate.SetEnable(false);
                 }

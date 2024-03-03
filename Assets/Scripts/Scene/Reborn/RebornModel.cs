@@ -39,7 +39,7 @@ namespace Ryneus
             foreach (var actorInfo in actorInfos)
             {
                 var listData = new ListData(actorInfo,idx);
-                if (actorInfo.Master.ClassId == DataSystem.FindActor(PartyInfo.ActorIdList[0]).ClassId)
+                if (actorInfo.Master.ClassId == DataSystem.FindActor(PartyInfo.ActorInfos[0].ActorId).ClassId)
                 {
                     listData.SetEnable(false);
                 }

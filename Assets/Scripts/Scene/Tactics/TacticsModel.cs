@@ -222,7 +222,7 @@ namespace Ryneus
             var skillInfos = new List<SkillInfo>();
             var actorInfo = TacticsActor();
             
-            foreach (var alchemyId in PartyInfo.AlchemyIdList)
+            foreach (var alchemyId in PartyInfo.CurrentAlchemyIdList(CurrentStage.Id,CurrentStage.CurrentTurn))
             {
                 //if (actorInfo.IsLearnedSkill(alchemyId)) continue;
                 var skillInfo = new SkillInfo(alchemyId);
@@ -271,7 +271,7 @@ namespace Ryneus
         {
             if (CurrentStage.SurvivalMode)
             {
-                var isSurvivalGameOver = PartyInfo.ActorIdList.Count > 0 && !Actors().Exists(a => a.Lost == false);
+                var isSurvivalGameOver = StageMembers().Count > 0 && !Actors().Exists(a => a.Lost == false);
                 if (isSurvivalGameOver)
                 {
                     CurrentStage.SetEndingType(EndingType.C);
@@ -286,7 +286,7 @@ namespace Ryneus
                 }
                 return null;
             }
-            var isGameOver = PartyInfo.ActorIdList.Count > 0 && (Actors().Find(a => a.ActorId == PartyInfo.ActorIdList[0])).Lost;
+            var isGameOver = false;//PartyInfo.ActorIdList.Count > 0 && (Actors().Find(a => a.ActorId == PartyInfo.ActorIdList[0])).Lost;
             if (isGameOver)
             {
                 CurrentStage.SetEndingType(EndingType.C);
@@ -516,7 +516,7 @@ namespace Ryneus
 
         public List<ListData> ParallelCommand()
         {
-            return MakeListData(BaseConfirmCommand(23050,23040));
+            return MakeListData(BaseConfirmCommand(23050));
         }
         
         public bool CanParallel()

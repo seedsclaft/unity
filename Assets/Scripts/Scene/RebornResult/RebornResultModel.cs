@@ -44,7 +44,7 @@ namespace Ryneus
             {
                 var upStatusCount = statusRebornSkill.Param2;
                 var getItemInfo = new GetItemInfo(null);
-                var actorName = DataSystem.FindActor(PartyInfo.ActorIdList[0]).Name;
+                var actorName = DataSystem.FindActor(PartyInfo.ActorInfos[0].ActorId).Name;
                 getItemInfo.MakeStatusRebornResult(actorName,(StatusParamType)statusRebornSkill.Param3,upStatusCount);
                 getItemInfos.Add(getItemInfo);
             }
@@ -63,7 +63,7 @@ namespace Ryneus
             {
                 var upStatusCount = questRebornSkill.Param2;
                 var getItemInfo = new GetItemInfo(null);
-                var actorName = DataSystem.FindActor(PartyInfo.ActorIdList[0]).Name;
+                var actorName = DataSystem.FindActor(PartyInfo.ActorInfos[0].ActorId).Name;
                 getItemInfo.MakeQuestRebornResult(actorName,0,upStatusCount);
                 getItemInfos.Add(getItemInfo);
             }

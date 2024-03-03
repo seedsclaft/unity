@@ -30,6 +30,8 @@ namespace Ryneus
 			InitParty();
 			MakeStageData(stageId);
 			SetInitMembers();
+			// レコードを追加
+			var symbolInfo = new SymbolInfo();
 			_party.AddActorId(1);
 		}
 

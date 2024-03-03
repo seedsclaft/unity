@@ -403,10 +403,9 @@ namespace Ryneus
                 } else
                 {
                     _model.CommitCurrentResult();
-                    _view.CommandGotoSceneChange(Scene.SymbolRecord);
+                    _view.CommandGotoSceneChange(Scene.Tactics);
                 }
             } else
-            
             if (_model.BattleResultVictory() == false)
             {
                 _model.ReturnTempBattleMembers();
@@ -420,6 +419,8 @@ namespace Ryneus
                 _view.CommandGotoSceneChange(Scene.MainMenu);
             } else
             {
+                // レコード新規保存
+
                 _model.EndStrategy(true);
                 _view.CommandGotoSceneChange(Scene.Tactics);
             }

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace Ryneus
@@ -13,9 +14,7 @@ namespace Ryneus
 
         public void ClearData()
         {
-            _alchemyIdList.Clear();
             _actorInfos.Clear();
-            _actorIdList.Clear();
             _currency = 0;
             _battleResultVictory = false;
             _battleResultScore = 0;
@@ -26,17 +25,43 @@ namespace Ryneus
         private List<ActorInfo> _actorInfos = new();
         public List<ActorInfo> ActorInfos => _actorInfos;
 
-        // 現在使用可能なアクターIdリスト
-        private List<int> _actorIdList = new();
-        public List<int> ActorIdList => _actorIdList;
-
-        public List<ActorInfo> CurrentActorInfos => _actorInfos.FindAll(a => _actorIdList.Contains(a.ActorId));
+        
+        public List<ActorInfo> CurrentActorInfos(int stageId,int seek)
+        {
+            return _actorInfos.FindAll(a => CurrentActorIdList(stageId,seek).Contains(a.ActorId));
+        }
+        
+        public List<int> CurrentActorIdList(int stageId,int seek)
+        {
+            var actorIdList = new List<int>();
+            var records = _symbolRecordList.FindAll(a => a.StageId <= stageId && a.Seek <= seek && a.SymbolInfo.SymbolType == SymbolType.Actor && a.Selected);
+            foreach (var record in records)
+            {
+                foreach (var getItemInfo in record.SymbolInfo.GetItemInfos)
+                {
+                    actorIdList.Add(getItemInfo.Param1);
+                }
+            }
+            return actorIdList;
+        }
+        
         private int _currency = 0;
         public int Currency => _currency;
         private int _parallelCount = 1;
-        private List<int> _alchemyIdList = new();
-        public List<int> AlchemyIdList => _alchemyIdList;
 
+        public List<int> CurrentAlchemyIdList(int stageId,int seek)
+        {
+            var alchemyIdList = new List<int>();
+            var records = _symbolRecordList.FindAll(a => a.StageId <= stageId && a.Seek <= seek && a.SymbolInfo.SymbolType == SymbolType.Alcana && a.Selected);
+            foreach (var record in records)
+            {
+                foreach (var getItemInfo in record.SymbolInfo.GetItemInfos)
+                {
+                    alchemyIdList.Add(getItemInfo.Param1);
+                }
+            }
+            return alchemyIdList;
+        }
         private AlcanaInfo _alcanaInfo;
         public AlcanaInfo AlcanaInfo => _alcanaInfo;
 
@@ -110,26 +135,15 @@ namespace Ryneus
         // アクター加入
         public void AddActorId(int actorId)
         {
-            if (_actorIdList.IndexOf(actorId) != -1)
-            {
-                return;
-            }
-            _actorIdList.Add(actorId);
         }
 
         // アクター離脱
         public void RemoveActor(int actorId)
         {
-            if (_actorIdList.IndexOf(actorId) == -1)
-            {
-                return;
-            }
-            _actorIdList.Remove(actorId);
         }
 
         public void ClearActorIds()
         {
-            _actorIdList.Clear();
         }
 
         public void ChangeCurrency(int currency)
@@ -149,21 +163,14 @@ namespace Ryneus
 
         public void AddAlchemy(int skillId)
         {
-            _alchemyIdList.Add(skillId);
         }
 
         public void RemoveAlchemy(int skillId)
         {
-            var findIndex = _alchemyIdList.FindIndex(a => a == skillId);
-            if (findIndex > -1)
-            {
-                _alchemyIdList.RemoveAt(findIndex);
-            }
         }
 
         public void ClearAlchemy()
         {
-            _alchemyIdList.Clear();
         }
 
         public int TotalScore()

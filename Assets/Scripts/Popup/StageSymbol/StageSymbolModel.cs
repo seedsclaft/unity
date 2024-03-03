@@ -11,7 +11,7 @@ namespace Ryneus
         {
             var list = new List<SymbolInfo>();
             var symbolInfos = PartyInfo.StageSymbolInfos.FindAll(a => a.StageSymbolData.Seek == seek);
-            var selectRecords = CurrentStage.SymbolRecordList.FindAll(a => a.StageId == CurrentStage.Id && a.Selected == true);
+            var selectRecords = PartyInfo.SymbolRecordList.FindAll(a => a.StageId == CurrentStage.Id && a.Selected == true);
             for (int i = 0;i < symbolInfos.Count;i++)
             {
                 var symbolInfo = new SymbolInfo();
@@ -43,7 +43,7 @@ namespace Ryneus
                 var list = new List<SymbolInfo>();
                 symbolInfoList.Add(list);
             }
-            var selectRecords = CurrentStage.SymbolRecordList.FindAll(a => a.StageId == CurrentStage.Id && a.Selected == true);
+            var selectRecords = PartyInfo.SymbolRecordList.FindAll(a => a.StageId == CurrentStage.Id && a.Selected == true);
             var lastSelectSeek = selectRecords.Count > 0 ? selectRecords.Select(a => a.Seek).Max() : -1;
             foreach (var stageSymbolInfo in PartyInfo.StageSymbolInfos)
             {

@@ -85,20 +85,6 @@ namespace Ryneus
         private bool _survivalMode = false;
         public bool SurvivalMode => _survivalMode;
 
-        private List<SymbolResultInfo> _symbolRecordList = new ();
-        public List<SymbolResultInfo> SymbolRecordList => _symbolRecordList;
-        public void SetSymbolResultInfo(SymbolResultInfo symbolResultInfo)
-        {
-            var findIndex = _symbolRecordList.FindIndex(a => a.IsSameSymbol(symbolResultInfo));
-            if (findIndex < 0)
-            {
-            } else{
-                _symbolRecordList.RemoveAt(findIndex);
-            }
-            _symbolRecordList.Add(symbolResultInfo);
-            _symbolRecordList.Sort((a,b) => a.Seek - b.Seek > 0 ? 1 : -1);
-        }
-
         public StageInfo(StageData stageData)
         {
             _id = stageData.Id;
@@ -106,7 +92,6 @@ namespace Ryneus
             _troopClearCount = 0;
             _savedCount = 0;
             _clearTroopIds.Clear();
-            _symbolRecordList.Clear();
         }
 
         public void SetSymbolInfos(List<SymbolInfo> symbolInfos)
