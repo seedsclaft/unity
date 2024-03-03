@@ -207,10 +207,10 @@ namespace Ryneus
             CallSceneChangeCommand(eventData);
         }
 
-        public void CommandCallRuling(System.Action endEvent)
+        public void CommandCallPopup(PopupInfo popupInfo)
         {
-            var eventData = new ViewEvent(Base.CommandType.CallRulingView);
-            eventData.template = endEvent;
+            var eventData = new ViewEvent(Base.CommandType.CallPopupView);
+            eventData.template = popupInfo;
             CallSceneChangeCommand(eventData);
         }
 
@@ -235,13 +235,6 @@ namespace Ryneus
             CallSceneChangeCommand(eventData);
         }
 
-        public void CommandCallCredit(System.Action endEvent)
-        {
-            var eventData = new ViewEvent(Base.CommandType.CallCreditView);
-            eventData.template = endEvent;
-            CallSceneChangeCommand(eventData);
-        }
-
         public void CommandCallCharacterList(CharacterListInfo characterListInfo)
         {
             var eventData = new ViewEvent(Base.CommandType.CallCharacterListView);
@@ -249,24 +242,10 @@ namespace Ryneus
             CallSceneChangeCommand(eventData);
         }
 
-        public void CommandCallStageSymbolView(System.Action endEvent)
-        {
-            var eventData = new ViewEvent(Base.CommandType.CallStageSymbolView);
-            eventData.template = endEvent;
-            CallSceneChangeCommand(eventData);
-        }
-
         public void CommandHelpList(List<ListData> helpTextList)
         {
             var eventData = new ViewEvent(Base.CommandType.CallHelpView);
             eventData.template = helpTextList;
-            CallSceneChangeCommand(eventData);
-        }
-
-        public void CommandCallAlcanaList(System.Action endEvent)
-        {
-            var eventData = new ViewEvent(Base.CommandType.CallAlcanaListView);
-            eventData.template = endEvent;
             CallSceneChangeCommand(eventData);
         }
 
@@ -362,6 +341,15 @@ namespace Ryneus
             _backEvent = callEvent;
         }
 
+        public void SetBackEvent(System.Action backEvent)
+        {
+            SetBackCommand(() => 
+            {    
+                if (backEvent != null) backEvent();
+            });
+            ChangeBackCommandActive(true);
+        }
+        
         public void ChangeBackCommandActive(bool IsActive)
         {
             _backCommand?.gameObject.SetActive(IsActive);
@@ -406,19 +394,15 @@ namespace Ryneus
             CallConfirmView,
             CallSkillDetailView,
             CallCautionView,
+            CallPopupView,
             ClosePopup,
             CloseConfirm,
-            CloseSideMenu,
-            CallRulingView,
             CallOptionView,
             CallSideMenu,
             CallRankingView,
-            CallCreditView,
             CallCharacterListView,
             CallHelpView,
-            CallAlcanaListView,
             CallSlotSaveView,
-            CallStageSymbolView,
             CallStatusView,
             CloseStatus,
             CallAdvScene,

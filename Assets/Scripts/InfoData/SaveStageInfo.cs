@@ -28,8 +28,7 @@ namespace Ryneus
 		public void InitializeStageData(int stageId)
 		{
 			InitParty();
-			var stageData = DataSystem.FindStage(stageId);
-			_currentStage = new StageInfo(stageData);
+			MakeStageData(stageId);
 			SetInitMembers();
 			_party.AddActorId(1);
 		}

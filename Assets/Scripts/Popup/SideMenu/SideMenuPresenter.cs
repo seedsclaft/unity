@@ -93,19 +93,25 @@ namespace Ryneus
             _busy = true;
             SoundManager.Instance.PlayStaticSe(SEType.Decide);
             //_view.SetHelpInputInfo("RULING");
-            _view.CommandCallRuling(() => {
+            var popupInfo = new PopupInfo();
+            popupInfo.PopupType = PopupType.Ruling;
+            popupInfo.EndEvent = () => {
                 _busy = false;
                 //_view.SetHelpInputInfo("OPTION");
                 SoundManager.Instance.PlayStaticSe(SEType.Cancel);
-            });
+            };
+            _view.CommandCallPopup(popupInfo);
         }
 
         private void CommandCredit()
         {
             _busy = true;
-            _view.CommandCallCredit(() => {
+            var popupInfo = new PopupInfo();
+            popupInfo.PopupType = PopupType.Credit;
+            popupInfo.EndEvent = () => {
                 _busy = false;
-            });
+            };
+            _view.CommandCallPopup(popupInfo);
         }
 
         private void CommandInitializeData()

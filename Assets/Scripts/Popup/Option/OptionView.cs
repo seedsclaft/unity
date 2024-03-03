@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using Option;
+using Ryneus;
 
 namespace Ryneus
 {
@@ -120,4 +121,10 @@ public class OptionViewEvent
     {
         commandType = type;
     }
+}
+
+public class PopupInfo{
+    public PopupType PopupType;
+    public System.Action EndEvent;
+    public object template;
 }

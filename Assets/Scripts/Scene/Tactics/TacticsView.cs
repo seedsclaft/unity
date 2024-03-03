@@ -45,6 +45,8 @@ namespace Ryneus
         public SkillInfo SelectMagic => battleSelectCharacter.ActionData;
         public int ParallelListIndex => parallelList.Index;
 
+        private bool _initRecordDisplay = false;
+
 
         public override void Initialize()
         {
@@ -398,6 +400,15 @@ namespace Ryneus
             }
         }
         
+        public void SetPositionSymbolRecords(List<ListData> symbolInfos)
+        {
+            if (_initRecordDisplay == false)
+            {
+                symbolRecordList.UpdateScrollRect(symbolInfos.FindIndex(a => a.Selected));
+                _initRecordDisplay = true;
+            }
+        }
+
         private void OnClickSymbol(SymbolInfo symbolInfo)
         {
             if (symbolRecordList.ScrollRect.enabled == false) return;

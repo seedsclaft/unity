@@ -307,15 +307,8 @@ namespace Ryneus
         
         public List<SymbolInfo> TacticsSymbols()
         {
-            return CurrentStage.CurrentSymbolInfos;
+            return PartyInfo.CurrentSymbolInfos(CurrentStage.CurrentTurn);
         }
-
-
-        public TroopInfo CurrentTroopInfo()
-        {
-            return CurrentStage.CurrentTroopInfo();
-        }
-
 
         public void SetIsAlcana(bool isAlcana)
         {
@@ -620,17 +613,35 @@ namespace Ryneus
         {
             InitSaveStageInfo();
             CurrentSaveData.InitializeStageData(1);
-            //CurrentStage.AddSelectActorId(1);
             PartyInfo.ChangeCurrency(DataSystem.System.InitCurrency);
-            CurrentStage.SetStageSymbolInfos(StageSymbolInfos());
+            PartyInfo.SetStageSymbolInfos(StageSymbolInfos());
             MakeSymbolResultInfos();
             SavePlayerStageData(true);
+        }
+        
+        public void StartSelectStage(int stageId)
+        {
+            CurrentSaveData.MakeStageData(stageId);
+            //CurrentStage.SetStageSymbolInfos(StageSymbolInfos());
+            PartyInfo.SetStageSymbolInfos(StageSymbolInfos());
+            MakeSymbolResultInfos();
+            SavePlayerStageData(true);
+        }
+
+        public SymbolInfo CurrentSelectSymbol()
+        {
+            return PartyInfo.CurrentSymbolInfos(CurrentStage.CurrentTurn)[CurrentStage.CurrentSeekIndex];
+        }
+
+        public TroopInfo CurrentTroopInfo()
+        {
+            return CurrentSelectSymbol().TroopInfo;
         }
 
         public void MakeSymbolResultInfos()
         {
             // レコード作成
-            foreach (var symbolInfo in CurrentStage.CurrentSymbolInfos)
+            foreach (var symbolInfo in PartyInfo.CurrentSymbolInfos(CurrentStage.CurrentTurn))
             {
                 var record = new SymbolResultInfo(symbolInfo,GameSystem.CurrentStageData.Party.Currency);
                 var actorInfos = new List<ActorInfo>();
@@ -655,13 +666,7 @@ namespace Ryneus
             }
         }
         
-        public void StartSelectStage(int stageId)
-        {
-            CurrentSaveData.MakeStageData(stageId);
-            CurrentStage.SetStageSymbolInfos(StageSymbolInfos());
-            MakeSymbolResultInfos();
-            SavePlayerStageData(true);
-        }
+
 
         public void StartSymbolRecordStage(int stageId)
         {

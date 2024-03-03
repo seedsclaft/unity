@@ -47,9 +47,6 @@ namespace Ryneus
         public int TroopClearCount => _troopClearCount;
 
         private List<TroopData> _troopDates = new();
-        public List<SymbolInfo> CurrentSymbolInfos => _stageSymbolInfos.FindAll(a => a.StageSymbolData.Seek == CurrentTurn);
-        private List<SymbolInfo> _stageSymbolInfos = new();
-        public List<SymbolInfo> StageSymbolInfos => _stageSymbolInfos;
         
         private int _currentSeekIndex = -1;
         public int CurrentSeekIndex => _currentSeekIndex;
@@ -117,30 +114,12 @@ namespace Ryneus
             //_currentSymbolInfos = symbolInfos;
         }
 
-        public void SetStageSymbolInfos(List<SymbolInfo> symbolInfos)
-        {
-            _stageSymbolInfos = symbolInfos;
-        }
 
         public void SetSeekIndex(int battleIndex)
         {
             _currentSeekIndex = battleIndex;
         }
 
-        public SymbolInfo CurrentSelectSymbol()
-        {
-            return CurrentSymbolInfos[_currentSeekIndex];
-        }
-
-        public TroopInfo CurrentTroopInfo()
-        {
-            return CurrentSymbolInfos[_currentSeekIndex].TroopInfo;
-        }
-
-        public List<BattlerInfo> CurrentBattleInfos()
-        {
-            return CurrentSymbolInfos[_currentSeekIndex].BattlerInfos();
-        }
         
         public void TestTroops(int troopId,int troopLv)
         {
@@ -163,7 +142,7 @@ namespace Ryneus
             var symbolInfo = new SymbolInfo(stageSymbol);
             symbolInfo.SetTroopInfo(troopInfo);
             
-            _stageSymbolInfos.Add(symbolInfo);
+            //_stageSymbolInfos.Add(symbolInfo);
         }
 
         public void SeekStage()

@@ -85,8 +85,8 @@ namespace Ryneus
         public List<ListData> StageSymbolInfos(int seek)
         {
             var list = new List<SymbolInfo>();
-            var symbolInfos = CurrentStage.StageSymbolInfos.FindAll(a => a.StageSymbolData.Seek == seek);
-            var selectRecords = CurrentStage.SymbolRecordList.FindAll(a => a.StageId == CurrentStage.Id && a.Selected == true);
+            var symbolInfos = PartyInfo.StageSymbolInfos.FindAll(a => a.StageSymbolData.Seek == seek);
+            var selectRecords = PartyInfo.SymbolRecordList.FindAll(a => a.StageId == CurrentStage.Id && a.Selected == true);
             for (int i = 0;i < symbolInfos.Count;i++)
             {
                 var symbolInfo = new SymbolInfo();
@@ -437,7 +437,7 @@ namespace Ryneus
             var symbolInfoList = new List<List<SymbolInfo>>();
             
             var stageSeekList = new List<int>();
-            foreach (var symbolInfo in CurrentStage.StageSymbolInfos)
+            foreach (var symbolInfo in PartyInfo.StageSymbolInfos)
             {
                 if (!stageSeekList.Contains(symbolInfo.StageSymbolData.Seek))
                 {
@@ -449,9 +449,9 @@ namespace Ryneus
                 var list = new List<SymbolInfo>();
                 symbolInfoList.Add(list);
             }
-            var selectRecords = CurrentStage.SymbolRecordList.FindAll(a => a.StageId == CurrentStage.Id && a.Selected == true);
+            var selectRecords = PartyInfo.SymbolRecordList.FindAll(a => a.StageId == CurrentStage.Id && a.Selected == true);
             var lastSelectSeek = selectRecords.Count > 0 ? selectRecords.Select(a => a.Seek).Max() : -1;
-            foreach (var stageSymbolInfo in CurrentStage.StageSymbolInfos)
+            foreach (var stageSymbolInfo in PartyInfo.StageSymbolInfos)
             {
                 var symbolInfo = new SymbolInfo();
                 symbolInfo.CopyData(stageSymbolInfo);
@@ -475,7 +475,20 @@ namespace Ryneus
             currentInfo.SetLastSelected(true);
             var currentList = new List<SymbolInfo>(){currentInfo};
             symbolInfoList.Insert(seekIndex-1,currentList);
-            return MakeListData(symbolInfoList);
+
+            var listData = new List<ListData>();
+            foreach (var symbolInfos1 in symbolInfoList)
+            {
+                var list = new ListData(symbolInfos1);
+                list.SetSelected(false);
+                list.SetEnable(false);
+                if (symbolInfos1.Find(a => a.StageSymbolData.Seek == seekIndex) != null)
+                {
+                    list.SetSelected(true);
+                }
+                listData.Add(list);
+            }
+            return listData;
         }
 
         public int PartyEvaluate()
@@ -492,7 +505,7 @@ namespace Ryneus
         {
             if (_stageSeekIndex >= 0)
             {
-                var symbol = CurrentStage.CurrentSelectSymbol();
+                var symbol = CurrentSelectSymbol();
                 if (symbol != null && symbol.SymbolType == SymbolType.Battle || symbol.SymbolType == SymbolType.Boss)
                 {
                     return symbol.BattleEvaluate();

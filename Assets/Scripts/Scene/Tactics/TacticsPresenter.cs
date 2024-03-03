@@ -221,6 +221,7 @@ namespace Ryneus
             _view.SetTacticsCommand(_model.TacticsCommand());
             _view.HideCommandList();
             _view.SetBackGround(_model.CurrentStage.Master.BackGround);
+            _view.SetSymbolRecords(_model.SymbolRecords());
             CommandRefresh();
             PlayTacticsBgm();
             //_view.SetHelpInputInfo(_model.TacticsCommandInputInfo());
@@ -437,7 +438,6 @@ namespace Ryneus
 
         private void CommandCancelSymbolRecord()
         {
-            SoundManager.Instance.PlayStaticSe(SEType.Decide);
             _view.ShowCommandList();
             _view.HideSymbolList();
             _view.HideSymbolRecord();
@@ -524,7 +524,7 @@ namespace Ryneus
             _view.HideSelectCharacter();
             _view.HideSymbolList();
             _view.ShowSymbolRecord();
-            _view.SetSymbolRecords(_model.SymbolRecords());
+            _view.SetPositionSymbolRecords(_model.SymbolRecords());
             _view.ChangeBackCommandActive(true);
             _backCommand = Tactics.CommandType.CancelSymbolRecord;
         }
@@ -623,7 +623,7 @@ namespace Ryneus
                 _model.SetStageSeekIndex(_model.SymbolInfo.StageSymbolData.SeekIndex);
                 _view.HideSymbolList();
                 // 回路解析
-                var currentSymbol = _model.CurrentStage.CurrentSelectSymbol();
+                var currentSymbol = _model.CurrentSelectSymbol();
                 switch (currentSymbol.SymbolType)
                 {
                     case SymbolType.Battle:
@@ -748,7 +748,7 @@ namespace Ryneus
             _view.CommandGameSystem(Base.CommandType.CloseConfirm);
             if (confirmCommandType == ConfirmCommandType.Yes)
             {
-                var getItemInfos = _model.CurrentStage.CurrentSelectSymbol().GetItemInfos;
+                var getItemInfos = _model.CurrentSelectSymbol().GetItemInfos;
                 var actorInfos = _model.PartyInfo.ActorInfos.FindAll(a => a.ActorId == getItemInfos[0].Param1);
                 GotoStrategyScene(getItemInfos,actorInfos);
             } else{
@@ -767,7 +767,7 @@ namespace Ryneus
             _view.CommandGameSystem(Base.CommandType.CloseConfirm);
             if (confirmCommandType == ConfirmCommandType.Yes)
             {
-                var currentSymbol = _model.CurrentStage.CurrentSelectSymbol();
+                var currentSymbol = _model.CurrentSelectSymbol();
                 GotoStrategyScene(currentSymbol.GetItemInfos,_model.StageMembers());
             } else{
                 CommandTacticsCommand(_model.TacticsCommandType);
@@ -796,7 +796,7 @@ namespace Ryneus
             _view.CommandGameSystem(Base.CommandType.CloseConfirm);
             if (confirmCommandType == ConfirmCommandType.Yes)
             {
-                var getItemInfos = _model.CurrentStage.CurrentSelectSymbol().GetItemInfos;
+                var getItemInfos = _model.CurrentSelectSymbol().GetItemInfos;
                 GotoStrategyScene(getItemInfos,_model.StageMembers());
             } else{
                 CommandTacticsCommand(_model.TacticsCommandType);
@@ -814,7 +814,7 @@ namespace Ryneus
             _view.CommandGameSystem(Base.CommandType.CloseConfirm);
             if (confirmCommandType == ConfirmCommandType.Yes)
             {
-                var currentSymbol = _model.CurrentStage.CurrentSelectSymbol();
+                var currentSymbol = _model.CurrentSelectSymbol();
                 GotoStrategyScene(currentSymbol.GetItemInfos,_model.StageMembers());
             } else{
                 CommandTacticsCommand(_model.TacticsCommandType);
@@ -843,7 +843,7 @@ namespace Ryneus
             _view.CommandGameSystem(Base.CommandType.CloseConfirm);
             if (confirmCommandType == ConfirmCommandType.Yes)
             {
-                var currentSymbol = _model.CurrentStage.CurrentSelectSymbol();
+                var currentSymbol = _model.CurrentSelectSymbol();
                 GotoStrategyScene(currentSymbol.GetItemInfos,_model.StageMembers());
             } else{
                 CommandTacticsCommand(_model.TacticsCommandType);
@@ -878,7 +878,7 @@ namespace Ryneus
                     _model.SetStatusActorInfos();
                     _view.CommandChangeViewToTransition(null);
                     // ボス戦なら
-                    if (_model.CurrentStage.CurrentSelectSymbol().SymbolType == SymbolType.Boss)
+                    if (_model.CurrentSelectSymbol().SymbolType == SymbolType.Boss)
                     {
                         SoundManager.Instance.FadeOutBgm();
                         PlayBossBgm();
@@ -1015,10 +1015,13 @@ namespace Ryneus
         private void CommandAlcanaCheck()
         {
             SoundManager.Instance.PlayStaticSe(SEType.Decide);
-            _view.CommandCallAlcanaList(() => {
+            var popupInfo = new PopupInfo();
+            popupInfo.PopupType = PopupType.AlcanaList;
+            popupInfo.EndEvent = () => {
                 _view.ChangeUIActive(true);
                 _busy = false;
-            });
+            };
+            _view.CommandCallPopup(popupInfo);
             _busy = true;
             _view.ChangeUIActive(false);
         }

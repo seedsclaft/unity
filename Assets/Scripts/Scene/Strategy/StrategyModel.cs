@@ -269,7 +269,7 @@ namespace Ryneus
                 var currentRecord = records.Find(a => a.IsSameSymbol(beforeRecord));
                 if (beforeRecord.Selected != currentRecord.Selected)
                 {
-                    var symbol = CurrentStage.CurrentSymbolInfos[currentRecord.SeekIndex];
+                    var symbol = PartyInfo.CurrentSymbolInfos(currentRecord.Seek)[currentRecord.SeekIndex];
                     if (symbol.SymbolType == SymbolType.Alcana)
                     {
                         foreach (var getItemInfo in symbol.GetItemInfos)
@@ -394,7 +394,7 @@ namespace Ryneus
                 var currentRecord = records.Find(a => a.IsSameSymbol(beforeRecord));
                 if (beforeRecord.Selected != currentRecord.Selected)
                 {
-                    var symbol = CurrentStage.CurrentSymbolInfos[currentRecord.SeekIndex];
+                    var symbol = PartyInfo.CurrentSymbolInfos(currentRecord.Seek)[currentRecord.SeekIndex];
                     if (symbol.SymbolType == SymbolType.Alcana)
                     {
                         foreach (var getItemInfo in symbol.GetItemInfos)

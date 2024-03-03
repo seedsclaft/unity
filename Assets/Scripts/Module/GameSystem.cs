@@ -123,8 +123,8 @@ namespace Ryneus
                     confirmAssign.CloseConfirm();
                     SetIsNotBusyMainAndStatus();
                     break;
-                case Base.CommandType.CallRulingView:
-                    CommandRulingView((System.Action)viewEvent.template);
+                case Base.CommandType.CallPopupView:
+                    CommandPopupView((PopupInfo)viewEvent.template);
                     break;
                 case Base.CommandType.CallOptionView:
                     CommandOptionView((System.Action)viewEvent.template);
@@ -135,20 +135,11 @@ namespace Ryneus
                 case Base.CommandType.CallRankingView:
                     CommandRankingView((RankingViewInfo)viewEvent.template);
                     break;
-                case Base.CommandType.CallCreditView:
-                    CommandCreditView((System.Action)viewEvent.template);
-                    break;
                 case Base.CommandType.CallCharacterListView:
                     CommandCharacterListView((CharacterListInfo)viewEvent.template);
                     break;
-                case Base.CommandType.CallStageSymbolView:
-                    CommandCallStageSymbolView((System.Action)viewEvent.template);
-                    break;
                 case Base.CommandType.CallHelpView:
                     CommandHelpView((List<ListData>)viewEvent.template);
-                    break;
-                case Base.CommandType.CallAlcanaListView:
-                    CommandAlcanaListView((System.Action)viewEvent.template);
                     break;
                 case Base.CommandType.CallSlotSaveView:
                     CommandSlotSaveView((SlotSaveViewInfo)viewEvent.template);
@@ -255,15 +246,16 @@ namespace Ryneus
             SetIsBusyMainAndStatus();
         }
 
-        private void CommandRulingView(System.Action endEvent)
+        private void CommandPopupView(PopupInfo popupInfo)
         {
-            var prefab = popupAssign.CreatePopup(PopupType.Ruling,helpWindow);
-            var rulingView = prefab.GetComponent<RulingView>();
+            var prefab = popupAssign.CreatePopup(popupInfo.PopupType,helpWindow);
+            var rulingView = prefab.GetComponent<BaseView>();
             rulingView.Initialize();
+            rulingView.SetEvent((type) => UpdateCommand(type));
             rulingView.SetBackEvent(() => 
             {
                 UpdateCommand(new ViewEvent(Base.CommandType.ClosePopup));
-                if (endEvent != null) endEvent();
+                if (popupInfo.EndEvent != null) popupInfo.EndEvent();
             });
             SetIsBusyMainAndStatus();
         }
@@ -319,19 +311,6 @@ namespace Ryneus
             SetIsBusyMainAndStatus();
         }
 
-        private void CommandCreditView(System.Action endEvent)
-        {
-            var prefab = popupAssign.CreatePopup(PopupType.Credit,helpWindow);
-            var creditView = prefab.GetComponent<CreditView>();
-            creditView.Initialize();
-            creditView.SetBackEvent(() => 
-            {
-                UpdateCommand(new ViewEvent(Base.CommandType.ClosePopup));
-                if (endEvent != null) endEvent();
-            });
-            SetIsBusyMainAndStatus();
-        }
-
         private void CommandCharacterListView(CharacterListInfo characterListInfo)
         {
             var prefab = popupAssign.CreatePopup(PopupType.CharacterList,helpWindow);
@@ -349,20 +328,6 @@ namespace Ryneus
             SetIsBusyMainAndStatus();
         }
 
-        private void CommandCallStageSymbolView(System.Action endEvent)
-        {
-            var prefab = popupAssign.CreatePopup(PopupType.StageSymbol,helpWindow);
-            var stageSymbolView = prefab.GetComponent<StageSymbolView>();
-            stageSymbolView.Initialize();
-            stageSymbolView.SetEvent((type) => UpdateCommand(type));
-            stageSymbolView.SetBackEvent(() => 
-            {
-                UpdateCommand(new ViewEvent(Base.CommandType.ClosePopup));
-                if (endEvent != null) endEvent();
-            });
-            SetIsBusyMainAndStatus();
-        }
-
         private void CommandHelpView(List<ListData> helpTextList)
         {
             var prefab = popupAssign.CreatePopup(PopupType.Help,helpWindow);
@@ -372,19 +337,6 @@ namespace Ryneus
             characterListView.SetBackEvent(() => 
             {
                 UpdateCommand(new ViewEvent(Base.CommandType.ClosePopup));
-            });
-            SetIsBusyMainAndStatus();
-        }
-
-        private void CommandAlcanaListView(System.Action endEvent)
-        {
-            var prefab = popupAssign.CreatePopup(PopupType.AlcanaList,helpWindow);
-            var characterListView = prefab.GetComponent<AlcanaListView>();
-            characterListView.Initialize();
-            characterListView.SetBackEvent(() => 
-            {
-                UpdateCommand(new ViewEvent(Base.CommandType.ClosePopup));
-                if (endEvent != null) endEvent();
             });
             SetIsBusyMainAndStatus();
         }

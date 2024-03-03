@@ -10,7 +10,7 @@ namespace Ryneus
         public List<ListData> StageSymbolInfos(int seek)
         {
             var list = new List<SymbolInfo>();
-            var symbolInfos = CurrentStage.StageSymbolInfos.FindAll(a => a.StageSymbolData.Seek == seek);
+            var symbolInfos = PartyInfo.StageSymbolInfos.FindAll(a => a.StageSymbolData.Seek == seek);
             var selectRecords = CurrentStage.SymbolRecordList.FindAll(a => a.StageId == CurrentStage.Id && a.Selected == true);
             for (int i = 0;i < symbolInfos.Count;i++)
             {
@@ -31,7 +31,7 @@ namespace Ryneus
             var symbolInfoList = new List<List<SymbolInfo>>();
             
             var stageSeekList = new List<int>();
-            foreach (var symbolInfo in CurrentStage.StageSymbolInfos)
+            foreach (var symbolInfo in PartyInfo.StageSymbolInfos)
             {
                 if (!stageSeekList.Contains(symbolInfo.StageSymbolData.Seek))
                 {
@@ -45,7 +45,7 @@ namespace Ryneus
             }
             var selectRecords = CurrentStage.SymbolRecordList.FindAll(a => a.StageId == CurrentStage.Id && a.Selected == true);
             var lastSelectSeek = selectRecords.Count > 0 ? selectRecords.Select(a => a.Seek).Max() : -1;
-            foreach (var stageSymbolInfo in CurrentStage.StageSymbolInfos)
+            foreach (var stageSymbolInfo in PartyInfo.StageSymbolInfos)
             {
                 var symbolInfo = new SymbolInfo();
                 symbolInfo.CopyData(stageSymbolInfo);

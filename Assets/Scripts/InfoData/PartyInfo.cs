@@ -55,6 +55,16 @@ namespace Ryneus
             _lastBattlerIdList = lastBattlerIdList;
         }
 
+        // 生成したステージシンボル
+        private List<SymbolInfo> _stageSymbolInfos = new();
+        public List<SymbolInfo> StageSymbolInfos => _stageSymbolInfos;
+        public void SetStageSymbolInfos(List<SymbolInfo> symbolInfos)
+        {
+            _stageSymbolInfos = symbolInfos;
+        }
+        public List<SymbolInfo> CurrentSymbolInfos(int seek) => _stageSymbolInfos.FindAll(a => a.StageSymbolData.Seek == seek);
+        
+        // ステージシンボルの結果
         private List<SymbolResultInfo> _symbolRecordList = new ();
         public List<SymbolResultInfo> SymbolRecordList => _symbolRecordList;
         public void SetSymbolResultInfo(SymbolResultInfo symbolResultInfo)

@@ -44,7 +44,7 @@ namespace Ryneus
         {
             if (CurrentStage != null)
             {
-                if (CurrentStage.CurrentSelectSymbol().SymbolType == SymbolType.Boss)
+                if (CurrentSelectSymbol().SymbolType == SymbolType.Boss)
                 {
                     var bgmData = DataSystem.Data.GetBGM(CurrentStage.Master.BossBGMId);
                     return GetBgmData(bgmData.Key);
@@ -70,7 +70,7 @@ namespace Ryneus
                 var battlerRecord = new BattleRecord(battlerInfo.Index);
                 _battleRecords.Add(battlerRecord);
             }
-            var enemies = CurrentStage.CurrentBattleInfos();
+            var enemies = CurrentTroopInfo().BattlerInfos;
             foreach (var enemy in enemies)
             {
                 enemy.ResetData();
@@ -2484,7 +2484,7 @@ namespace Ryneus
         public List<GetItemInfo> MakeBattlerResult()
         {
             var list = new List<GetItemInfo>();
-            list.AddRange(CurrentStage.CurrentSelectSymbol().GetItemInfos);
+            list.AddRange(CurrentSelectSymbol().GetItemInfos);
             if (CheckVictory() && CurrentStage.RecordStage == false)
             {
                 foreach (var battlerInfo in _party.BattlerInfos)
