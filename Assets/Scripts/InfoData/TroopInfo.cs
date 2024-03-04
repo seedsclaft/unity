@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace Ryneus
 {
@@ -49,6 +51,25 @@ namespace Ryneus
             MakeGetItemInfos();
         }
 
+        public void MakeEnemyRandomTroopDates(int level)
+        {
+            var randMax = MathF.Min(3,level / 10);
+            var targetLengthRand = UnityEngine.Random.Range(2,2 + randMax);
+            while (_battlerInfos.Count <= targetLengthRand)
+            {
+                var targetIdRand = UnityEngine.Random.Range(1,15);
+                var enemyData = DataSystem.Enemies.Find(a => a.Id == targetIdRand);
+                var lineRand = UnityEngine.Random.Range(0,1);
+                var battlerInfo = new BattlerInfo(enemyData,level,_battlerInfos.Count,(LineType)lineRand,false);
+                AddEnemy(battlerInfo);
+            }
+            var getItemData = new GetItemData();
+            getItemData.Param1 = level;
+            getItemData.Type = GetItemType.Numinous;
+            var getItemInfo = new GetItemInfo(getItemData);
+            AddGetItemInfo(getItemInfo);
+        }
+
         public void AddEnemy(BattlerInfo battlerInfo)
         {
             _battlerInfos.Add(battlerInfo);
@@ -58,9 +79,9 @@ namespace Ryneus
         {
             var prizeSetId = Master.PrizeSetId;
             var prizeSetDates = DataSystem.PrizeSets.FindAll(a => a.Id == prizeSetId);
-            for (int i = 0;i < prizeSetDates.Count;i++)
+            foreach (var prizeSetData in prizeSetDates)
             {
-                var getItemData = prizeSetDates[i].GetItem;
+                var getItemData = prizeSetData.GetItem;
                 var getItemInfo = new GetItemInfo(getItemData);
                 AddGetItemInfo(getItemInfo);
             }

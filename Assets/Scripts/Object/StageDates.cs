@@ -69,6 +69,14 @@ namespace Ryneus
             Param2 = symbolGroupData.Param2;
             PrizeSetId = symbolGroupData.PrizeSetId;
         }
+
+        public void CopyData(StageSymbolData stageSymbolData)
+        {
+            SymbolType = stageSymbolData.SymbolType;
+            Param1 = stageSymbolData.Param1;
+            Param2 = stageSymbolData.Param2;
+            PrizeSetId = stageSymbolData.PrizeSetId;
+        }
     }
 
     [Serializable]
@@ -96,6 +104,7 @@ namespace Ryneus
     }
 
     public enum SymbolType{
+        Random = -1,
         None = 0,
         Battle = 1,
         Boss = 2,
@@ -103,7 +112,8 @@ namespace Ryneus
         Alcana = 4,
         Actor = 5,
         Resource = 6,
-        Rebirth = 7
+        Rebirth = 7,
+        Group = 99, // 99以上はグループ指定
     }
 
     public enum EventTiming{

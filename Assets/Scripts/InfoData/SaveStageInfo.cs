@@ -69,16 +69,19 @@ namespace Ryneus
 					skillInfo.SetLearningState(LearningState.Learned);
 					actorInfo.Skills.Add(skillInfo);
 				}
-				var statusInfo = actorInfo.LevelUp(lvUpNum-1);
-				actorInfo.TempStatus.SetParameter(
-					statusInfo.Hp,
-					statusInfo.Mp,
-					statusInfo.Atk,
-					statusInfo.Def,
-					statusInfo.Spd
-				);
-				actorInfo.DecideStrength(0);
-				actorInfo.ChangeHp(actorInfo.MaxHp);
+				if (lvUpNum > 0)
+				{
+					var statusInfo = actorInfo.LevelUp(lvUpNum-1);
+					actorInfo.TempStatus.SetParameter(
+						statusInfo.Hp,
+						statusInfo.Mp,
+						statusInfo.Atk,
+						statusInfo.Def,
+						statusInfo.Spd
+					);
+					actorInfo.DecideStrength(0);
+					actorInfo.ChangeHp(actorInfo.MaxHp);
+				}
 			}
 		}
 

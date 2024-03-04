@@ -176,13 +176,15 @@ namespace Ryneus
                     }
                     break;
                     case TriggerType.IsExistDeathMember:
-                    if (troops.FindAll(a => !a.IsAlive()).Count >= Param1)
+                    var IsExistDeathMember = battlerInfo.IsActor ? party : troops;
+                    if (IsExistDeathMember.FindAll(a => !a.IsAlive()).Count >= Param1)
                     {
                         CanUse = true;
                     }
                     break;
                     case TriggerType.IsExistAliveMember:
-                    if (troops.FindAll(a => a.IsAlive()).Count >= Param1)
+                    var IsExistAliveMember = battlerInfo.IsActor ? party : troops;
+                    if (IsExistAliveMember.FindAll(a => a.IsAlive()).Count >= Param1)
                     {
                         CanUse = true;
                     }

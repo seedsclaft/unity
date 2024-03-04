@@ -625,7 +625,7 @@ namespace Ryneus
         {
             if (featureData.Rate < UnityEngine.Random.Range(0,100))
             {
-                _missed = true;
+                //_missed = true;
                 return;
             }
             var stateInfo = new StateInfo((StateType)featureData.Param1,featureData.Param2,featureData.Param3,subject.Index,target.Index,_skillId);

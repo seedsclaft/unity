@@ -9,7 +9,6 @@ namespace Ryneus
     {
         public TMP_InputField consoleInputField = null;
         [SerializeField] private List<int> inBattleActorIds = null;
-        [SerializeField] private int actorLv = 0;
         [SerializeField] private int troopId = 0;
         [SerializeField] private int troopLv = 0;
         [SerializeField] private bool testBattle = false;
@@ -36,6 +35,7 @@ namespace Ryneus
             {
                 var TestBattleData = Resources.Load<TestBattleData>("Data/TestBattle").TestBattleDates;
                 var ActorIndex = 1;
+                var symbolInfoList = new List<SymbolInfo>();
                 foreach (var TestBattle in TestBattleData)
                 {
                     if (TestBattle.IsActor)
@@ -46,6 +46,7 @@ namespace Ryneus
                         actorInfo.SetBattleIndex(ActorIndex);
                         actorInfo.SetLineIndex(TestBattle.IsFront ? LineType.Front : LineType.Back);
                         ActorIndex++;
+                        symbolInfoList.AddRange(OpeningStageSymbolInfos(actorData.Id));
                     } else
                     {
                         // アルカナ
@@ -56,14 +57,34 @@ namespace Ryneus
                         }
                     }
                 }
-                GameSystem.CurrentStageData.CurrentStage.TestTroops(troopId,troopLv);
+                GameSystem.CurrentStageData.Party.SetStageSymbolInfos(symbolInfoList);
+                foreach (var symbolInfo1 in GameSystem.CurrentStageData.Party.StageSymbolInfos)
+                {
+                    var record = new SymbolResultInfo(symbolInfo1,GameSystem.CurrentStageData.Party.Currency);
+                    var actorInfos = new List<ActorInfo>();
+                    foreach (var actorInfo in GameSystem.CurrentStageData.Party.ActorInfos)
+                    {
+                        actorInfos.Add(actorInfo);
+                    }
+                    record.SetActorInfos(actorInfos);
+                    record.SetSelected(true);
+                    GameSystem.CurrentStageData.Party.SetSymbolResultInfo(record,false);
+                }
+                var troopInfo = GameSystem.CurrentStageData.CurrentStage.TestTroops(troopId,troopLv);
+                var stageSymbol = new StageSymbolData();
+                stageSymbol.StageId = 1;
+                stageSymbol.Seek = 1;
+                stageSymbol.SeekIndex = 0;
+                var symbolInfo = new SymbolInfo(stageSymbol);
+                symbolInfo.SetTroopInfo(troopInfo);
+                GameSystem.CurrentStageData.Party.SetStageSymbolInfos(new List<SymbolInfo>(){ symbolInfo});
             } else
             {
                 foreach (var actor in DataSystem.Actors)
                 { 
                     if (inBattleActorIds.Contains(actor.Id))
                     {
-                        GameSystem.CurrentStageData.AddTestActor(actor,actorLv);
+                        GameSystem.CurrentStageData.AddTestActor(actor,0);
                     }
                 }
                 var idx = 1;
@@ -74,6 +95,33 @@ namespace Ryneus
                 }
                 GameSystem.CurrentStageData.CurrentStage.TestTroops(troopId,troopLv);
             }
+        }
+
+        
+        public List<SymbolInfo> OpeningStageSymbolInfos(int actorId)
+        {
+            var symbolInfos = new List<SymbolInfo>();
+            var symbols = DataSystem.FindStage(0).StageSymbols;
+            foreach (var symbol in symbols)
+            {
+                var symbolInfo = new SymbolInfo(symbol);
+                symbolInfo.StageSymbolData.SeekIndex = actorId;
+                var getItemInfos = new List<GetItemInfo>();
+                if (symbolInfo.StageSymbolData.PrizeSetId > 0)
+                {
+                    var prizeSets = DataSystem.PrizeSets.FindAll(a => a.Id == symbolInfo.StageSymbolData.PrizeSetId);
+                    foreach (var prizeSet in prizeSets)
+                    {
+                        prizeSet.GetItem.Param1 = actorId;
+                        var getItemInfo = new GetItemInfo(prizeSet.GetItem);
+                        getItemInfos.Add(getItemInfo);
+                    }
+                }
+                symbolInfo.SetGetItemInfos(getItemInfos);
+                symbolInfo.SetSelected(true);
+                symbolInfos.Add(symbolInfo);
+            }
+            return symbolInfos;
         }
     #if UNITY_EDITOR
         private BattleModel _model;

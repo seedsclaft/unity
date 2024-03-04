@@ -109,7 +109,7 @@ namespace Ryneus
         }
 
         
-        public void TestTroops(int troopId,int troopLv)
+        public TroopInfo TestTroops(int troopId,int troopLv)
         {
             var troopDate = DataSystem.Troops.Find(a => a.TroopId == troopId);
             
@@ -122,12 +122,7 @@ namespace Ryneus
                 troopInfo.AddEnemy(enemy);
             }
             _currentSeekIndex = 0;
-            var stageSymbol = new StageSymbolData();
-            stageSymbol.StageId = 1;
-            stageSymbol.Seek = 1;
-            stageSymbol.SeekIndex = 0;
-            var symbolInfo = new SymbolInfo(stageSymbol);
-            symbolInfo.SetTroopInfo(troopInfo);
+            return troopInfo;
             
             //_stageSymbolInfos.Add(symbolInfo);
         }

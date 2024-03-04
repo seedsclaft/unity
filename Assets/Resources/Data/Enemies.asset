@@ -71,7 +71,7 @@ MonoBehaviour:
       _mp: 10
       _atk: 9
       _def: 1
-      _spd: 32
+      _spd: 31
     Kinds: 02000000
     LearningSkills:
     - SkillId: 2010
@@ -79,11 +79,11 @@ MonoBehaviour:
       Weight: 100
       TriggerDates: []
     - SkillId: 2030
-      Level: 5
+      Level: 20
       Weight: 100
       TriggerDates: []
-    - SkillId: 12010
-      Level: 10
+    - SkillId: 12050
+      Level: 40
       Weight: 100
       TriggerDates: []
   - Id: 4
@@ -102,15 +102,15 @@ MonoBehaviour:
       Weight: 100
       TriggerDates: []
     - SkillId: 11010
-      Level: 50
+      Level: 20
       Weight: 100
       TriggerDates: []
     - SkillId: 11020
-      Level: 100
+      Level: 40
       Weight: 100
       TriggerDates: []
     - SkillId: 11040
-      Level: 100
+      Level: 60
       Weight: 100
       TriggerDates: []
   - Id: 5
@@ -179,11 +179,11 @@ MonoBehaviour:
     Name: "\u30B5\u30FC\u30C1\u30E3\u30FC"
     ImagePath: Seacher
     BaseStatus:
-      _hp: 36
+      _hp: 34
       _mp: 10
-      _atk: 13
-      _def: 8
-      _spd: 32
+      _atk: 11
+      _def: 4
+      _spd: 25
     Kinds: 02000000
     LearningSkills:
     - SkillId: 5010
@@ -191,15 +191,11 @@ MonoBehaviour:
       Weight: 50
       TriggerDates: []
     - SkillId: 5060
-      Level: 5
+      Level: 20
       Weight: 50
       TriggerDates: []
     - SkillId: 15010
-      Level: 10
-      Weight: 50
-      TriggerDates: []
-    - SkillId: 15020
-      Level: 15
+      Level: 40
       Weight: 50
       TriggerDates: []
   - Id: 8
@@ -297,23 +293,23 @@ MonoBehaviour:
     Name: "\u30B9\u30AF\u30A4\u30C3\u30C9"
     ImagePath: Squid
     BaseStatus:
-      _hp: 44
+      _hp: 42
       _mp: 10
-      _atk: 14
-      _def: 13
-      _spd: 26
+      _atk: 7
+      _def: 7
+      _spd: 21
     Kinds: 02000000
     LearningSkills:
     - SkillId: 3010
       Level: 1
       Weight: 100
       TriggerDates: []
-    - SkillId: 13020
-      Level: 5
+    - SkillId: 3040
+      Level: 20
       Weight: 100
       TriggerDates: []
-    - SkillId: 3040
-      Level: 10
+    - SkillId: 13020
+      Level: 40
       Weight: 100
       TriggerDates: []
   - Id: 12
@@ -366,10 +362,10 @@ MonoBehaviour:
     Name: "\u30B4\u30FC\u30B9\u30C8\u30A2\u30FC\u30DE\u30FC"
     ImagePath: Armor
     BaseStatus:
-      _hp: 50
+      _hp: 45
       _mp: 10
-      _atk: 13
-      _def: 14
+      _atk: 9
+      _def: 4
       _spd: 11
     Kinds: 0100000002000000
     LearningSkills:
@@ -377,13 +373,9 @@ MonoBehaviour:
       Level: 1
       Weight: 50
       TriggerDates: []
-    - SkillId: 4040
-      Level: 5
-      Weight: 50
-      TriggerDates: []
     - SkillId: 4030
-      Level: 10
-      Weight: 80
+      Level: 20
+      Weight: 50
       TriggerDates:
       - SkillId: 0
         TriggerType: 6
@@ -392,7 +384,7 @@ MonoBehaviour:
         Param2: 0
         Param3: 0
     - SkillId: 14030
-      Level: 15
+      Level: 40
       Weight: 80
       TriggerDates: []
   - Id: 15

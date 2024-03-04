@@ -92,13 +92,16 @@ namespace Ryneus
         // ステージシンボルの結果
         private List<SymbolResultInfo> _symbolRecordList = new ();
         public List<SymbolResultInfo> SymbolRecordList => _symbolRecordList;
-        public void SetSymbolResultInfo(SymbolResultInfo symbolResultInfo)
+        public void SetSymbolResultInfo(SymbolResultInfo symbolResultInfo,bool checkFindIndex = true)
         {
-            var findIndex = _symbolRecordList.FindIndex(a => a.IsSameSymbol(symbolResultInfo));
-            if (findIndex < 0)
+            if (checkFindIndex)
             {
-            } else{
-                _symbolRecordList.RemoveAt(findIndex);
+                var findIndex = _symbolRecordList.FindIndex(a => a.IsSameSymbol(symbolResultInfo));
+                if (findIndex < 0)
+                {
+                } else{
+                    _symbolRecordList.RemoveAt(findIndex);
+                }
             }
             _symbolRecordList.Add(symbolResultInfo);
             _symbolRecordList.Sort((a,b) => a.Seek - b.Seek > 0 ? 1 : -1);
