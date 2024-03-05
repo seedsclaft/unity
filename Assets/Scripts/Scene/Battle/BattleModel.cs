@@ -2520,8 +2520,8 @@ namespace Ryneus
             foreach (var battler in _party.BattlerInfos)
             {
                 var actorInfo = Actors().Find(a => a.ActorId == battler.CharaId);
-                actorInfo.ChangeHp(battler.Hp);
-                actorInfo.ChangeMp(battler.Mp);
+                actorInfo.ChangeHp(battler.MaxHp);
+                actorInfo.ChangeMp(battler.MaxMp);
             }
             SaveSystem.SaveConfigStart(GameSystem.ConfigData);
         }

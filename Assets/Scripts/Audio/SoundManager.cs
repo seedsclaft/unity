@@ -129,30 +129,18 @@ namespace Ryneus
         public void PlayBgm(List<AudioClip> clip, float volume = 1.0f, bool loop = true)
         {
             if (clip[0].name == _lastPlayAudio) return;
-            BgmTrack.Stop();
-            BgmTrack.SetClip(clip,loop);
+            var playingTrack = _crossFadeTrackNo == 0 ? BgmTrack : BgmSubTrack;
+            var playTrack = _crossFadeTrackNo == 0 ? BgmSubTrack : BgmTrack;
+            playTrack.Stop();
+            playTrack.SetClip(clip,loop);
             _lastBgmVolume = volume;
             _lastPlayAudio = clip[0].name;
             
             _crossFadeMode = false;
             _crossFadeTrackNo = 0;
             UpdateBgmMute();
-            BgmTrack.Play();
-        }
-
-        public void PlayBgmSub(List<AudioClip> clip, float volume = 1.0f, bool loop = true)
-        {
-            if (clip[0].name == _lastPlayAudio) return;
-            BgmSubTrack.Stop();
-            BgmSubTrack.SetClip(clip,loop);
-            _lastBgmVolume = volume;
-            _lastPlayAudio = clip[0].name;
-
-            _crossFadeMode = false;
-            _crossFadeTrackNo = 0;
-            UpdateBgmMute();
-            BgmSubTrack.Play();
-            BgmTrack.FadeVolume(0,1);
+            playTrack.Play();
+            FadeOutBgm();
         }
 
         public void PlayCrossFadeBgm(List<AudioClip> clip, float volume = 1.0f)

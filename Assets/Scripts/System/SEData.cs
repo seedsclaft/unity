@@ -31,4 +31,5 @@ public enum SEType {
     Buff,
     DeBuff,
     BattleStart,
+    LearnSkill,
 }

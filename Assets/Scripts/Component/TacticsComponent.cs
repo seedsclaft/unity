@@ -94,6 +94,7 @@ namespace Ryneus
             
             if (statusInfoComponent != null)
             {
+                /*
                 int RecoveryCost = 0;
                 if (actorInfo.TacticsCommandType == TacticsCommandType.Recovery)
                 {
@@ -103,6 +104,7 @@ namespace Ryneus
                 int Mp = Mathf.Min(actorInfo.CurrentMp + RecoveryCost * 10,actorInfo.MaxMp);
                 statusInfoComponent.UpdateHp(Hp,actorInfo.MaxHp);
                 statusInfoComponent.UpdateMp(Mp,actorInfo.MaxMp);
+                */
             }
 
             if (enemyInfoComponent != null)

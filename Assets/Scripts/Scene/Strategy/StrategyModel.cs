@@ -206,7 +206,7 @@ namespace Ryneus
 
         public List<ListData> ResultCommand()
         {
-            return MakeListData(BaseConfirmCommand(3040,5));
+            return MakeListData(BaseConfirmCommand(3040,4));
         }
 
         public bool IsBonusTactics(int actorId)
@@ -221,11 +221,6 @@ namespace Ryneus
         
         public void EndStrategy(bool isSeek)
         {
-            // レコード作成
-            var record = PartyInfo.SymbolRecordList.Find(a => a.IsSameSymbol(CurrentSelectSymbol()));
-            record.SetSelected(true);
-            PartyInfo.SetSymbolResultInfo(record);
-
             foreach (var actorInfo in StageMembers())
             {
                 actorInfo.ChangeTacticsCostRate(1);
@@ -235,6 +230,14 @@ namespace Ryneus
             {
                 CurrentStage.SeekStage();
             }
+        }
+
+        public void SetSelectSymbol()
+        {
+            // レコード作成
+            var record = PartyInfo.SymbolRecordList.Find(a => a.IsSameSymbol(CurrentSelectSymbol()));
+            record.SetSelected(true);
+            PartyInfo.SetSymbolResultInfo(record);
         }
 
         public void CommitResult()

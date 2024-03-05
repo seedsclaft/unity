@@ -49,40 +49,9 @@ namespace Ryneus
             {
                 _battlerLists.Add(battlerInfos[i]);
             }
-            /*
-            for (int i = 0; i < battlerInfos.Count;i++)
-            {
-                var prefab = Instantiate(battleGridPrefab);
-                prefab.transform.SetParent(enemyRoot.transform, false);
-                var comp = prefab.GetComponent<BattlerInfoComponent>();
-                comp.UpdateInfo(battlerInfos[i]);
-                int gridKey = 0;
-                foreach (var item in _battlers)
-                {
-                    if (item.Key.EnemyData != null)
-                    {
-                        if (item.Key.EnemyData.Id == battlerInfos[i].EnemyData.Id)
-                        {
-                            gridKey++;
-                        }
-                    }
-                }
-                comp.SetEnemyGridKey(gridKey);
-                _battlers[battlerInfos[i]] = comp;
-                prefab.GetComponentInChildren<ActorInfoComponent>().Clear();
-            }
-            */
-            //UpdatePosition();
-            //RefreshStatus();
         }
 
         public void UpdatePosition()
-        {
-            UpdateWaitPosition();
-        }
-
-        
-        public void UpdateWaitPosition()
         {
             var waitFrameList = new List<float>();
             var turnWait = new Dictionary<BattlerInfo,List<float>>();
@@ -93,8 +62,12 @@ namespace Ryneus
                     turnWait[battler] = new List<float>();
                     for (int i = 0;i < 10;i++)
                     {
-                        waitFrameList.Add(battler.WaitFrame(i));
-                        turnWait[battler].Add(battler.WaitFrame(i));
+                        var waitFrame = battler.WaitFrame(i);
+                        if (!waitFrameList.Contains(waitFrame))
+                        {
+                            waitFrameList.Add(waitFrame);
+                            turnWait[battler].Add(waitFrame);
+                        }
                     }
                 }
             }

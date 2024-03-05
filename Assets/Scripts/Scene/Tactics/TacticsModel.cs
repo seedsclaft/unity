@@ -63,7 +63,7 @@ namespace Ryneus
             {
                 SetTacticsCommandEnables(TacticsCommandType.Train,false);
                 SetTacticsCommandEnables(TacticsCommandType.Alchemy,false);
-                SetTacticsCommandEnables(TacticsCommandType.Recovery,false);
+                //SetTacticsCommandEnables(TacticsCommandType.Recovery,false);
             }
             var commandListDates = MakeListData(DataSystem.TacticsCommand);
             foreach (var commandListData in commandListDates)
@@ -130,10 +130,12 @@ namespace Ryneus
             {
                 return true;
             }
+            /*
             if (tacticsCommandType == TacticsCommandType.Recovery)
             {
                 return Currency > 0;
             }
+            */
             return false;
         }
 
@@ -355,8 +357,10 @@ namespace Ryneus
                     return "TRAIN";
                 case TacticsCommandType.Alchemy:
                     return "ALCHEMY";
+                    /*
                 case TacticsCommandType.Recovery:
                     return "RECOVERY";
+                    */
             }
             return "";
         }
@@ -398,9 +402,11 @@ namespace Ryneus
                 case TacticsCommandType.Alchemy:
                     count = DataSystem.System.AlchemyCount;
                     break;
+                    /*
                 case TacticsCommandType.Recovery:
                     count = DataSystem.System.RecoveryCount;
                     break;
+                    */
             }
             return DataSystem.GetReplaceText(10,count.ToString());
         }
@@ -560,8 +566,10 @@ namespace Ryneus
                     return (viewEvent.commandType == Tactics.CommandType.TacticsCommand && (TacticsCommandType)viewEvent.template == TacticsCommandType.Train);
                 case TutorialType.TacticsCommandAlchemy:
                     return (viewEvent.commandType == Tactics.CommandType.TacticsCommand && (TacticsCommandType)viewEvent.template == TacticsCommandType.Alchemy);
+                /*
                 case TutorialType.TacticsCommandRecover:
                     return (viewEvent.commandType == Tactics.CommandType.TacticsCommand && (TacticsCommandType)viewEvent.template == TacticsCommandType.Recovery);
+                */
                 case TutorialType.TacticsSelectTacticsActor:
                     return (viewEvent.commandType == Tactics.CommandType.SelectTacticsActor);
                 case TutorialType.TacticsSelectTacticsDecide:

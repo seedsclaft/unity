@@ -596,13 +596,16 @@ namespace Ryneus
 
         private async void StartAnimationDemigod()
         {
-            SoundManager.Instance.PlayStaticSe(SEType.Demigod);
-            _view.StartAnimationDemigod(_model.CurrentBattler,_model.CurrentActionInfo().Master);
-            _view.HideStateOverlay();
-            _view.SetAnimationBusy(true);
-            await UniTask.DelayFrame(20);
-            SoundManager.Instance.PlayStaticSe(SEType.Awaken);
-            await UniTask.DelayFrame(90);
+            if (GameSystem.ConfigData.BattleAnimationSkip == false)
+            {
+                SoundManager.Instance.PlayStaticSe(SEType.Demigod);
+                _view.StartAnimationDemigod(_model.CurrentBattler,_model.CurrentActionInfo().Master);
+                _view.HideStateOverlay();
+                _view.SetAnimationBusy(true);
+                await UniTask.DelayFrame(20);
+                SoundManager.Instance.PlayStaticSe(SEType.Awaken);
+                await UniTask.DelayFrame(90);
+            }
             StartAnimationSkill();
         }
 
@@ -1026,13 +1029,17 @@ namespace Ryneus
         private async void BattleEnd()
         {
             if (_battleEnded == true) return;
+            var strategySceneInfo = new StrategySceneInfo();
+            strategySceneInfo.ActorInfos = _model.BattleMembers();
             if (_model.CheckVictory())
             {
                 _view.StartBattleStartAnim(DataSystem.GetTextData(15020).Text);
+                strategySceneInfo.GetItemInfos = _model.MakeBattlerResult();
             } else
             if (_model.CheckDefeat())
             {
-                _view.StartBattleStartAnim(DataSystem.GetTextData(15030).Text);            
+                _view.StartBattleStartAnim(DataSystem.GetTextData(15030).Text); 
+                strategySceneInfo.GetItemInfos = new List<GetItemInfo>();          
             }
             _model.EndBattle();
             _model.MakeBattleScore();
@@ -1047,10 +1054,6 @@ namespace Ryneus
             {
                 PlayTacticsBgm();
             }
-            var strategySceneInfo = new StrategySceneInfo{
-                ActorInfos = _model.BattleMembers(),
-                GetItemInfos = _model.MakeBattlerResult()
-            };
             _view.CommandGotoSceneChange(Scene.Strategy,strategySceneInfo);
         }
 

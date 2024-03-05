@@ -92,12 +92,12 @@ MonoBehaviour:
   - Id: 4
     Key: DAMAGE
     FileName: damage
-    Volume: 0.6
+    Volume: 0.5
     Pitch: 1
   - Id: 5
     Key: DEFEAT
     FileName: defeat
-    Volume: 1
+    Volume: 0.8
     Pitch: 1
   - Id: 6
     Key: DEMIGOD
@@ -117,7 +117,7 @@ MonoBehaviour:
   - Id: 9
     Key: CRITICAL
     FileName: Sword2
-    Volume: 1
+    Volume: 0.8
     Pitch: 1
   - Id: 10
     Key: SKILL
@@ -147,15 +147,20 @@ MonoBehaviour:
   - Id: 15
     Key: BUFF
     FileName: Sword1
-    Volume: 1
+    Volume: 0.8
     Pitch: 1
   - Id: 16
     Key: DEBUFF
     FileName: power36
-    Volume: 1
+    Volume: 0.8
     Pitch: 1
   - Id: 17
     Key: BATTLESTART
     FileName: swordspecial
+    Volume: 0.8
+    Pitch: 1
+  - Id: 18
+    Key: LEARNSKILL
+    FileName: Flash2
     Volume: 0.8
     Pitch: 1

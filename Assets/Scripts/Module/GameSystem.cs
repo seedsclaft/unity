@@ -249,14 +249,19 @@ namespace Ryneus
         private void CommandPopupView(PopupInfo popupInfo)
         {
             var prefab = popupAssign.CreatePopup(popupInfo.PopupType,helpWindow);
-            var rulingView = prefab.GetComponent<BaseView>();
-            rulingView.Initialize();
-            rulingView.SetEvent((type) => UpdateCommand(type));
-            rulingView.SetBackEvent(() => 
+            var baseView = prefab.GetComponent<BaseView>();
+            baseView.Initialize();
+            baseView.SetEvent((type) => UpdateCommand(type));
+            baseView.SetBackEvent(() => 
             {
                 UpdateCommand(new ViewEvent(Base.CommandType.ClosePopup));
                 if (popupInfo.EndEvent != null) popupInfo.EndEvent();
             });
+            if (popupInfo.PopupType == PopupType.LearnSkill)
+            {
+                var learnSkill = prefab.GetComponent<LearnSkillView>();
+                learnSkill.SetLearnSkillInfo((LearnSkillInfo)popupInfo.template);
+            }
             SetIsBusyMainAndStatus();
         }
         

@@ -81,7 +81,6 @@ namespace Ryneus
 		Paradigm,
 		Train,
 		Alchemy,
-		Recovery,
 		Status,
 		Symbol,
 	}

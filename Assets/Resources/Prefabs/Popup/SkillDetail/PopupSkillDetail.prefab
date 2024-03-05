@@ -144,8 +144,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -36}
-  m_SizeDelta: {x: 480, y: 136}
+  m_AnchoredPosition: {x: 0, y: -28}
+  m_SizeDelta: {x: 480, y: 160}
   m_Pivot: {x: 1, y: 1}
 --- !u!222 &3343868332321062111
 CanvasRenderer:
@@ -439,6 +439,7 @@ MonoBehaviour:
   reverse: 0
   warpMode: 1
   scrollRect: {fileID: 2287452057956876716}
+  itemPrefabMode: 1
   itemPrefab: {fileID: 8074712411941976607, guid: 0d298de792570c342926d072dfcb5cb7,
     type: 3}
   _helpWindow: {fileID: 0}
@@ -684,8 +685,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 540, y: 132}
-  m_SizeDelta: {x: 1080, y: 232}
+  m_AnchoredPosition: {x: 540, y: 156}
+  m_SizeDelta: {x: 1080, y: 256}
   m_Pivot: {x: 1, y: 1}
 --- !u!222 &6233458507410783310
 CanvasRenderer:
@@ -846,7 +847,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 6235694745632628091}
   m_Direction: 2
   m_Value: 1
-  m_Size: 0.9444444
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -935,7 +936,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _backCommand: {fileID: 7102144706739486485}
+  _backGround: {fileID: 0}
   uiRoot: {fileID: 0}
+  optionButton: {fileID: 0}
+  sideMenuButton: {fileID: 0}
   commandList: {fileID: 7576893219148288908}
   titleText: {fileID: 7310816681583832016}
   skillInfoList: {fileID: 2645013531368423424}
@@ -1310,6 +1314,7 @@ MonoBehaviour:
   reverse: 0
   warpMode: 1
   scrollRect: {fileID: 2523308010781386825}
+  itemPrefabMode: 1
   itemPrefab: {fileID: 8421530445655644752, guid: f9e4128ea2633e0448c9ff7df16a3047,
     type: 3}
   _helpWindow: {fileID: 0}

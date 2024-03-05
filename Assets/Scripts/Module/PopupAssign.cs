@@ -15,6 +15,7 @@ namespace Ryneus
         [SerializeField] private GameObject alcanaListPrefab = null;
         [SerializeField] private GameObject slotSavePrefab = null;
         [SerializeField] private GameObject stageSymbolPrefab = null;
+        [SerializeField] private GameObject learnSkillPrefab = null;
         public GameObject CreatePopup(PopupType popupType,HelpWindow helpWindow)
         {
             if (confirmRoot.transform.childCount > 0)
@@ -53,6 +54,8 @@ namespace Ryneus
                 return slotSavePrefab;
                 case PopupType.StageSymbol:
                 return stageSymbolPrefab;
+                case PopupType.LearnSkill:
+                return learnSkillPrefab;
             }
             return null;
         }
@@ -79,5 +82,6 @@ namespace Ryneus
         AlcanaList,
         SlotSave,
         StageSymbol,
+        LearnSkill,
     }
 }

@@ -63,11 +63,14 @@ namespace Ryneus
                 var battlerInfo = new BattlerInfo(enemyData,level,_battlerInfos.Count,(LineType)lineRand,false);
                 AddEnemy(battlerInfo);
             }
+            var getItemData2 = new GetItemData();
+            getItemData2.Param1 = level * 10 + 90;
+            getItemData2.Type = GetItemType.SaveHuman;
+            _getItemInfos.Add(new GetItemInfo(getItemData2));
             var getItemData = new GetItemData();
-            getItemData.Param1 = level;
+            getItemData.Param1 = level + 4;
             getItemData.Type = GetItemType.Numinous;
-            var getItemInfo = new GetItemInfo(getItemData);
-            AddGetItemInfo(getItemInfo);
+            _getItemInfos.Add(new GetItemInfo(getItemData));
         }
 
         public void AddEnemy(BattlerInfo battlerInfo)

@@ -52,12 +52,15 @@ namespace Ryneus
         public List<int> CurrentAlchemyIdList(int stageId,int seek)
         {
             var alchemyIdList = new List<int>();
-            var records = _symbolRecordList.FindAll(a => a.StageId <= stageId && a.Seek < seek && a.SymbolInfo.SymbolType == SymbolType.Alcana && a.Selected);
+            var records = _symbolRecordList.FindAll(a => a.StageId <= stageId && a.Seek < seek && a.Selected);
             foreach (var record in records)
             {
                 foreach (var getItemInfo in record.SymbolInfo.GetItemInfos)
                 {
-                    alchemyIdList.Add(getItemInfo.Param1);
+                    if (getItemInfo.GetItemType == GetItemType.Skill)
+                    {
+                        alchemyIdList.Add(getItemInfo.Param1);
+                    }
                 }
             }
             return alchemyIdList;

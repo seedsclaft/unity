@@ -318,6 +318,7 @@ namespace Ryneus
             {
                 if (_model.TacticsCommandType == TacticsCommandType.Alchemy)
                 {
+                    SoundManager.Instance.PlayStaticSe(SEType.Decide);
                     // 魔法習得
                     CommandLearnSkill((SkillInfo)viewEvent.template);  
                 }
@@ -469,7 +470,7 @@ namespace Ryneus
                     CommandStageSymbol();
                     return;
                 case TacticsCommandType.Train:
-                case TacticsCommandType.Recovery:
+                //case TacticsCommandType.Recovery:
                     _view.HideConfirmCommand();
                     _view.SetSymbols(_model.StageSymbolInfos(_model.CurrentStage.CurrentTurn));
                     _view.ShowSelectCharacter(_model.TacticsCharacterData(),_model.TacticsCommandData());
@@ -565,11 +566,12 @@ namespace Ryneus
             } else
             if (tacticsActorInfo.TacticsCommandType == TacticsCommandType.Alchemy)
             {
-            } else
+            }
+                /* else
             if (tacticsActorInfo.TacticsCommandType == TacticsCommandType.Recovery)
             {
                 CommandSelectRecoveryPlus();
-            } else
+            } */else
             if (tacticsActorInfo.TacticsCommandType == TacticsCommandType.Paradigm)
             {
                 CommandSelectActorParadigm();
@@ -583,7 +585,7 @@ namespace Ryneus
             {
                 case TacticsCommandType.Paradigm:
                 case TacticsCommandType.Train:
-                case TacticsCommandType.Recovery:
+                //case TacticsCommandType.Recovery:
                     _view.ShowCharacterDetail(_model.TacticsActor(),_model.StageMembers());
                     break;
                 case TacticsCommandType.Alchemy:
@@ -853,14 +855,29 @@ namespace Ryneus
 
         private void UpdatePopupLearnSkill(ConfirmCommandType confirmCommandType)
         {
+            _view.CommandGameSystem(Base.CommandType.CloseConfirm);
             if (confirmCommandType == ConfirmCommandType.Yes)
             {
+                var from = _model.SelectActorEvaluate();
                 var skillInfo = _view.SelectMagic;
                 _model.LearnMagic(skillInfo.Id);
+                var to = _model.SelectActorEvaluate();
+
+                var learnSKillInfo = new LearnSkillInfo(from,to,skillInfo);
                 CommandTacticsCommand(_model.TacticsCommandType);
-                CommandRefresh();
+                SoundManager.Instance.PlayStaticSe(SEType.LearnSkill);
+                
+                var popupInfo = new PopupInfo();
+                popupInfo.PopupType = PopupType.LearnSkill;
+                popupInfo.EndEvent = () => 
+                {
+                    UpdatePopupSkillInfo();
+                    CommandRefresh();
+                    SoundManager.Instance.PlayStaticSe(SEType.Cancel);
+                };
+                popupInfo.template = learnSKillInfo;
+                _view.CommandCallPopup(popupInfo);
             }
-            _view.CommandGameSystem(Base.CommandType.CloseConfirm);
         }
 
         private void CommandSelectEnemyClose(ConfirmCommandType confirmCommandType)
@@ -875,7 +892,7 @@ namespace Ryneus
                     // ボス戦なら
                     if (_model.CurrentSelectSymbol().SymbolType == SymbolType.Boss)
                     {
-                        SoundManager.Instance.FadeOutBgm();
+                        //SoundManager.Instance.FadeOutBgm();
                         PlayBossBgm();
                     } else
                     {
@@ -1000,9 +1017,11 @@ namespace Ryneus
                 case TacticsCommandType.Alchemy:
                 _view.CommandHelpList(DataSystem.HelpText("Alchemy"));
                 return;
+                /*
                 case TacticsCommandType.Recovery:
                 _view.CommandHelpList(DataSystem.HelpText("Recovery"));
                 return;
+                */
             }
             
         }

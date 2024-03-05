@@ -454,43 +454,11 @@ namespace Ryneus
         {
             var symbolInfos = new List<SymbolInfo>();
             var symbols = DataSystem.FindStage(0).StageSymbols;
+            symbols = symbols.FindAll(a => a.Seek == 0);
             foreach (var symbol in symbols)
             {
                 var symbolInfo = new SymbolInfo(symbol);
-                // グループ指定
-                if (symbol.SymbolType > SymbolType.Group){
-                    var groupId = (int)symbol.SymbolType;
-                    var groupDates = DataSystem.SymbolGroups.FindAll(a => a.GroupId == groupId);
-                    var data = PickUpSymbolData(groupDates);
-                    data.StageId = symbol.StageId;
-                    data.Seek = symbol.Seek;
-                    data.SeekIndex = symbol.SeekIndex;
-                    symbolInfo = new SymbolInfo(data);
-                } else
-                if (symbol.SymbolType == SymbolType.Random){
-                    var data = RandomSymbolData();
-                    data.StageId = symbol.StageId;
-                    data.Seek = symbol.Seek;
-                    data.SeekIndex = symbol.SeekIndex;
-                    symbolInfo = new SymbolInfo(data);
-                }
                 var getItemInfos = new List<GetItemInfo>();
-                if (symbolInfo.SymbolType == SymbolType.Battle || symbolInfo.SymbolType == SymbolType.Boss){
-                    if (symbolInfo.StageSymbolData.Param1 > 0)
-                    {
-                        symbolInfo.SetTroopInfo(BattleTroop(symbolInfo.StageSymbolData.Param1,symbolInfo.StageSymbolData.Param2));
-                    }
-                    
-                    if (symbolInfo.TroopInfo.Master.PrizeSetId > 0)
-                    {
-                        var prizeSets = DataSystem.PrizeSets.FindAll(a => a.Id == symbolInfo.TroopInfo.Master.PrizeSetId);
-                        foreach (var prizeSet in prizeSets)
-                        {
-                            var getItemInfo = new GetItemInfo(prizeSet.GetItem);
-                            getItemInfos.Add(getItemInfo);
-                        }
-                    }
-                }
                 if (symbolInfo.StageSymbolData.PrizeSetId > 0)
                 {
                     var prizeSets = DataSystem.PrizeSets.FindAll(a => a.Id == symbolInfo.StageSymbolData.PrizeSetId);
@@ -535,17 +503,12 @@ namespace Ryneus
                 if (symbolInfo.SymbolType == SymbolType.Battle || symbolInfo.SymbolType == SymbolType.Boss){
                     if (symbolInfo.StageSymbolData.Param1 > 0 || symbolInfo.StageSymbolData.Param1 == -1)
                     {
-                        symbolInfo.SetTroopInfo(BattleTroop(symbolInfo.StageSymbolData.Param1,symbolInfo.StageSymbolData.Param2));
+                        symbolInfo.SetTroopInfo(BattleTroop(symbolInfo.StageSymbolData));
                     }
                     
-                    if (symbolInfo.TroopInfo.Master != null && symbolInfo.TroopInfo.Master.PrizeSetId > 0)
+                    if (symbolInfo.TroopInfo != null && symbolInfo.TroopInfo.GetItemInfos.Count > 0)
                     {
-                        var prizeSets = DataSystem.PrizeSets.FindAll(a => a.Id == symbolInfo.TroopInfo.Master.PrizeSetId);
-                        foreach (var prizeSet in prizeSets)
-                        {
-                            var getItemInfo = new GetItemInfo(prizeSet.GetItem);
-                            getItemInfos.Add(getItemInfo);
-                        }
+                        getItemInfos.AddRange(symbolInfo.TroopInfo.GetItemInfos);
                     }
                 }
                 if (symbolInfo.StageSymbolData.PrizeSetId > 0)
@@ -599,9 +562,9 @@ namespace Ryneus
                     }
                 }
             }
-            var StageSymbolData = new StageSymbolData();
-            StageSymbolData.SymbolType = SymbolType.None;
-            while (StageSymbolData.SymbolType == SymbolType.None)
+            var stageSymbolData = new StageSymbolData();
+            stageSymbolData.SymbolType = SymbolType.None;
+            while (stageSymbolData.SymbolType == SymbolType.None)
             {
                 int targetRand = stageSymbolList.Count;
                 targetRand = UnityEngine.Random.Range(0,targetRand);
@@ -609,33 +572,36 @@ namespace Ryneus
                 switch (symbol.SymbolType)
                 {
                     case SymbolType.Battle:
-                        StageSymbolData.CopyData(symbol);
-                        StageSymbolData.Param1 = -1;
+                        stageSymbolData.CopyData(symbol);
+                        stageSymbolData.Param1 = -1;
+                        stageSymbolData.PrizeSetId = 0;
                         break;
                     case SymbolType.Actor:
                         if (!PartyInfo.CurrentActorIdList(CurrentStage.Id,CurrentStage.CurrentTurn).Contains(symbol.PrizeSetId - 500))
                         {
-                            StageSymbolData.CopyData(symbol);
+                            stageSymbolData.CopyData(symbol);
                         }
                         break;
                     case SymbolType.Alcana:
                         if (!PartyInfo.CurrentAlchemyIdList(CurrentStage.Id,CurrentStage.CurrentTurn).Contains(symbol.Param1))
                         {
-                            StageSymbolData.CopyData(symbol);
+                            stageSymbolData.CopyData(symbol);
                         }
                         break;
                 }
             }
-            return StageSymbolData;
+            return stageSymbolData;
         }
 
-        public TroopInfo BattleTroop(int troopId,int enemyCount)
+        public TroopInfo BattleTroop(StageSymbolData stageSymbolData)
         {
+            var troopId = stageSymbolData.Param1;
+            var enemyCount = stageSymbolData.Param2;
             var troopInfo = new TroopInfo(troopId,false);
             // ランダム生成
             if (troopId == -1)
             {
-                troopInfo.MakeEnemyRandomTroopDates(PartyInfo.ClearTroopCount);
+                troopInfo.MakeEnemyRandomTroopDates(PartyInfo.ClearTroopCount + stageSymbolData.Seek);
                 for (int i = 0;i < enemyCount;i++)
                 {
                     int rand = new System.Random().Next(1, CurrentStage.Master.RandomTroopCount);
@@ -651,6 +617,7 @@ namespace Ryneus
             } else
             {
                 troopInfo.MakeEnemyTroopDates(PartyInfo.ClearTroopCount);
+                /*
                 for (int i = 0;i < enemyCount;i++)
                 {
                     int rand = new System.Random().Next(1, CurrentStage.Master.RandomTroopCount);
@@ -658,7 +625,8 @@ namespace Ryneus
                     var enemy = new BattlerInfo(enemyData,PartyInfo.ClearTroopCount + 1,i,0,false);
                     troopInfo.AddEnemy(enemy);
                 }
-                troopInfo.MakeGetItemInfos();
+                */
+                //troopInfo.MakeGetItemInfos();
             }
             return troopInfo;
         }
@@ -668,7 +636,7 @@ namespace Ryneus
             InitSaveStageInfo();
             CurrentSaveData.InitializeStageData(1);
             PartyInfo.SetStageSymbolInfos(OpeningStageSymbolInfos());
-            foreach (var symbolInfo in  PartyInfo.StageSymbolInfos)
+            foreach (var symbolInfo in PartyInfo.StageSymbolInfos)
             {
                 var record = new SymbolResultInfo(symbolInfo,GameSystem.CurrentStageData.Party.Currency);
                 var actorInfos = new List<ActorInfo>();

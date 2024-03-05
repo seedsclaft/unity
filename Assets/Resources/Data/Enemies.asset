@@ -19,9 +19,9 @@ MonoBehaviour:
     BaseStatus:
       _hp: 42
       _mp: 10
-      _atk: 12
-      _def: 11
-      _spd: 20
+      _atk: 8
+      _def: 7
+      _spd: 19
     Kinds: 02000000
     LearningSkills:
     - SkillId: 3010
@@ -29,25 +29,21 @@ MonoBehaviour:
       Weight: 50
       TriggerDates: []
     - SkillId: 3060
-      Level: 5
+      Level: 20
       Weight: 70
       TriggerDates: []
     - SkillId: 3050
-      Level: 10
-      Weight: 100
-      TriggerDates: []
-    - SkillId: 13030
-      Level: 15
+      Level: 40
       Weight: 100
       TriggerDates: []
   - Id: 2
     Name: "\u30AB\u30FC\u30B9\u30C9"
     ImagePath: Cursed
     BaseStatus:
-      _hp: 32
+      _hp: 28
       _mp: 10
-      _atk: 20
-      _def: 5
+      _atk: 15
+      _def: 2
       _spd: 13
     Kinds: 0100000002000000
     LearningSkills:
@@ -56,11 +52,11 @@ MonoBehaviour:
       Weight: 50
       TriggerDates: []
     - SkillId: 5030
-      Level: 5
+      Level: 20
       Weight: 50
       TriggerDates: []
     - SkillId: 5040
-      Level: 10
+      Level: 40
       Weight: 50
       TriggerDates: []
   - Id: 3
@@ -117,11 +113,11 @@ MonoBehaviour:
     Name: "\u30AF\u30ED\u30A6"
     ImagePath: Crow
     BaseStatus:
-      _hp: 53
+      _hp: 30
       _mp: 10
-      _atk: 10
-      _def: 10
-      _spd: 16
+      _atk: 8
+      _def: 2
+      _spd: 30
     Kinds: 02000000
     LearningSkills:
     - SkillId: 2010
@@ -129,26 +125,26 @@ MonoBehaviour:
       Weight: 25
       TriggerDates: []
     - SkillId: 2040
-      Level: 5
+      Level: 20
       Weight: 50
       TriggerDates: []
     - SkillId: 12030
-      Level: 10
+      Level: 40
       Weight: 50
       TriggerDates: []
     - SkillId: 12060
-      Level: 15
+      Level: 60
       Weight: 50
       TriggerDates: []
   - Id: 6
     Name: "\u30CD\u30FC\u30E0\u30EC\u30B9"
     ImagePath: Nameless
     BaseStatus:
-      _hp: 45
+      _hp: 41
       _mp: 10
-      _atk: 11
-      _def: 12
-      _spd: 17
+      _atk: 8
+      _def: 6
+      _spd: 12
     Kinds: 02000000
     LearningSkills:
     - SkillId: 4010
@@ -156,7 +152,7 @@ MonoBehaviour:
       Weight: 100
       TriggerDates: []
     - SkillId: 4050
-      Level: 5
+      Level: 20
       Weight: 50
       TriggerDates:
       - SkillId: 0
@@ -166,7 +162,7 @@ MonoBehaviour:
         Param2: 0
         Param3: 0
     - SkillId: 4030
-      Level: 10
+      Level: 40
       Weight: 50
       TriggerDates:
       - SkillId: 0
@@ -202,10 +198,10 @@ MonoBehaviour:
     Name: "\u30B7\u30FC\u30EB\u30C9"
     ImagePath: Shiled
     BaseStatus:
-      _hp: 37
+      _hp: 45
       _mp: 10
-      _atk: 8
-      _def: 16
+      _atk: 6
+      _def: 14
       _spd: 14
     Kinds: 02000000
     LearningSkills:
@@ -214,25 +210,25 @@ MonoBehaviour:
       Weight: 25
       TriggerDates: []
     - SkillId: 3020
-      Level: 5
+      Level: 20
       Weight: 75
       TriggerDates: []
     - SkillId: 13030
-      Level: 10
+      Level: 40
       Weight: 75
       TriggerDates: []
     - SkillId: 13040
-      Level: 15
+      Level: 60
       Weight: 75
       TriggerDates: []
   - Id: 9
     Name: "\u30C9\u30E9\u30A4\u30A2\u30C9"
     ImagePath: Dryad
     BaseStatus:
-      _hp: 48
+      _hp: 42
       _mp: 10
       _atk: 11
-      _def: 10
+      _def: 2
       _spd: 12
     Kinds: 02000000
     LearningSkills:
@@ -241,7 +237,7 @@ MonoBehaviour:
       Weight: 50
       TriggerDates: []
     - SkillId: 1030
-      Level: 5
+      Level: 20
       Weight: 80
       TriggerDates:
       - SkillId: 0
@@ -251,22 +247,22 @@ MonoBehaviour:
         Param2: 0
         Param3: 0
     - SkillId: 11030
-      Level: 10
+      Level: 40
       Weight: 50
       TriggerDates: []
     - SkillId: 1050
-      Level: 15
+      Level: 60
       Weight: 50
       TriggerDates: []
   - Id: 10
     Name: "\u30B9\u30B3\u30FC\u30D4\u30AA\u30F3"
     ImagePath: Scorpion
     BaseStatus:
-      _hp: 35
+      _hp: 27
       _mp: 10
-      _atk: 15
-      _def: 9
-      _spd: 35
+      _atk: 10
+      _def: 2
+      _spd: 29
     Kinds: 02000000
     LearningSkills:
     - SkillId: 2010
@@ -278,15 +274,15 @@ MonoBehaviour:
       Weight: 100
       TriggerDates: []
     - SkillId: 12060
-      Level: 5
+      Level: 20
       Weight: 25
       TriggerDates: []
     - SkillId: 2050
-      Level: 10
+      Level: 40
       Weight: 100
       TriggerDates: []
     - SkillId: 12040
-      Level: 15
+      Level: 60
       Weight: 100
       TriggerDates: []
   - Id: 11
@@ -319,8 +315,8 @@ MonoBehaviour:
       _hp: 40
       _mp: 10
       _atk: 12
-      _def: 9
-      _spd: 23
+      _def: 6
+      _spd: 15
     Kinds: 0100000002000000
     LearningSkills:
     - SkillId: 5010
@@ -328,11 +324,11 @@ MonoBehaviour:
       Weight: 100
       TriggerDates: []
     - SkillId: 15010
-      Level: 5
+      Level: 20
       Weight: 100
       TriggerDates: []
     - SkillId: 15040
-      Level: 10
+      Level: 40
       Weight: 100
       TriggerDates: []
   - Id: 13
@@ -341,9 +337,9 @@ MonoBehaviour:
     BaseStatus:
       _hp: 42
       _mp: 10
-      _atk: 14
+      _atk: 11
       _def: 5
-      _spd: 30
+      _spd: 16
     Kinds: 02000000
     LearningSkills:
     - SkillId: 4010
@@ -351,11 +347,11 @@ MonoBehaviour:
       Weight: 20
       TriggerDates: []
     - SkillId: 14040
-      Level: 5
+      Level: 20
       Weight: 80
       TriggerDates: []
     - SkillId: 14060
-      Level: 10
+      Level: 40
       Weight: 50
       TriggerDates: []
   - Id: 14
@@ -364,7 +360,7 @@ MonoBehaviour:
     BaseStatus:
       _hp: 45
       _mp: 10
-      _atk: 9
+      _atk: 10
       _def: 4
       _spd: 11
     Kinds: 0100000002000000
@@ -393,8 +389,8 @@ MonoBehaviour:
     BaseStatus:
       _hp: 35
       _mp: 10
-      _atk: 21
-      _def: 10
+      _atk: 15
+      _def: 3
       _spd: 24
     Kinds: 02000000
     LearningSkills:
@@ -403,7 +399,7 @@ MonoBehaviour:
       Weight: 50
       TriggerDates: []
     - SkillId: 1040
-      Level: 5
+      Level: 20
       Weight: 50
       TriggerDates:
       - SkillId: 0
@@ -419,7 +415,7 @@ MonoBehaviour:
         Param2: 0
         Param3: 0
     - SkillId: 11030
-      Level: 10
+      Level: 40
       Weight: 100
       TriggerDates: []
   - Id: 101

@@ -387,6 +387,7 @@ namespace Ryneus
             _view.EndShinyEffect();
             if (_model.CurrentStage.ReturnSeek > 0)
             {
+                _model.SetSelectSymbol();
                 _model.EndStrategy(false);
                 if (_model.CurrentStage.ParallelStage)
                 {
@@ -414,13 +415,14 @@ namespace Ryneus
             } else
             if (_model.RemainTurns == 1)
             {
+                _model.SetSelectSymbol();
                 _model.EndStrategy(false);
                 _model.CommitResult();
                 _view.CommandGotoSceneChange(Scene.MainMenu);
             } else
             {
                 // レコード新規保存
-
+                _model.SetSelectSymbol();
                 _model.EndStrategy(true);
                 _view.CommandGotoSceneChange(Scene.Tactics);
             }
