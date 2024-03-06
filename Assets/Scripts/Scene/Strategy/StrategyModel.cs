@@ -109,7 +109,7 @@ namespace Ryneus
                             if (stageMember.Lost == false)
                             {
                                 stageMember.TempStatus.AddParameterAll(getItemInfo.Param1);
-                                stageMember.DecideStrength(0);
+                                stageMember.DecideStrength();
                             }
                         }
                         break;
@@ -149,7 +149,7 @@ namespace Ryneus
                                 statusInfo.Def,
                                 statusInfo.Spd
                             );
-                            actorInfo.DecideStrength(0);
+                            actorInfo.DecideStrength();
                             var getItemData = new GetItemData();
                             var getItemInfo = new GetItemInfo(getItemData);
                             getItemInfo.MakeActorLvUpResult(actorInfo.Master.Name,actorInfo.Level);
@@ -168,7 +168,7 @@ namespace Ryneus
         public void SetLevelUpStatus()
         {
             var actorInfo = _levelUpData[0];
-            actorInfo.DecideStrength(0);
+            actorInfo.DecideStrength();
             _levelUpData.RemoveAt(0);
         }
 
@@ -243,10 +243,6 @@ namespace Ryneus
         public void CommitResult()
         {
             CurrentData.PlayerInfo.StageClear(CurrentStage.Id);
-            foreach (var symbolResultInfo in PartyInfo.SymbolRecordList)
-            {
-                PartyInfo.SetSymbolResultInfo(symbolResultInfo);
-            }
             SavePlayerData();
             SavePlayerStageData(false);
         }

@@ -67,7 +67,6 @@ namespace Ryneus
                 lv.text = actorInfo.Level.ToString();
             }
             if (sp != null){
-                sp.text = actorInfo.Sp.ToString();
             }
             if (statusInfoComponent != null)
             {

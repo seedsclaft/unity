@@ -79,7 +79,7 @@ namespace Ryneus
 						statusInfo.Def,
 						statusInfo.Spd
 					);
-					actorInfo.DecideStrength(0);
+					actorInfo.DecideStrength();
 					actorInfo.ChangeHp(actorInfo.MaxHp);
 				}
 			}

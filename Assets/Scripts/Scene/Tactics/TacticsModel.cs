@@ -163,7 +163,8 @@ namespace Ryneus
                 statusInfo.Def,
                 statusInfo.Spd
             );
-            actorInfo.DecideStrength(0);
+            actorInfo.DecideStrength();
+            actorInfo.GainNuminousCost(cost);
             actorInfo.GainLevelUpCost(cost);
             PartyInfo.ChangeCurrency(Currency - cost);
         }
@@ -175,6 +176,7 @@ namespace Ryneus
             var learningCost = TacticsUtility.LearningMagicCost(actorInfo,skillInfo.Attribute,StageMembers());
             PartyInfo.ChangeCurrency(PartyInfo.Currency - learningCost);
             actorInfo.LearnSkill(skillInfo.Id);
+            actorInfo.GainNuminousCost(learningCost);
         }
 
         public void SelectActorParadigm()

@@ -99,7 +99,6 @@ namespace Ryneus
                 _commandData(eventData);
             });
             battleAutoButton.Cursor.SetActive(isAuto);
-            SetBattleAutoButton(false);
         }
         
         public void SetBattleAutoButton(bool isActive)
@@ -317,12 +316,13 @@ namespace Ryneus
         
         public void RefreshMagicList(List<ListData> skillInfos,int selectIndex)
         {
-            selectCharacter.SetActiveTab(SelectCharacterTabType.Detail,false);
+            //selectCharacter.SetActiveTab(SelectCharacterTabType.Detail,false);
             DeactivateActorList();
             DeactivateEnemyList();
             selectCharacter.ShowActionList();
             selectCharacter.SetSkillInfos(skillInfos);
             selectCharacter.RefreshAction(selectIndex);
+            selectCharacter.SelectCharacterTab(SelectCharacterTabType.Magic);
         }
 
         public void SetCondition(List<ListData> stateInfos)

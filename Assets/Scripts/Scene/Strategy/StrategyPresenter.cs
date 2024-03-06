@@ -407,7 +407,7 @@ namespace Ryneus
                     _view.CommandGotoSceneChange(Scene.Tactics);
                 }
             } else
-            if (_model.BattleResultVictory() == false)
+            if (_strategyState == StrategyState.BattleResult &&_model.BattleResultVictory() == false)
             {
                 _model.ReturnTempBattleMembers();
                 _model.EndStrategy(false);

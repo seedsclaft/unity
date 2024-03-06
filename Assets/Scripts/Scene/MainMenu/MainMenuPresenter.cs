@@ -56,7 +56,6 @@ namespace Ryneus
 
         private void CommandStageSelect(int stageId)
         {
-            //_model.InitializeStageData(stageId);
             SoundManager.Instance.PlayStaticSe(SEType.Decide);
             if (_model.NeedSlotData(stageId))
             {
@@ -65,8 +64,8 @@ namespace Ryneus
             {
                 if (_model.ClearedStage(stageId))
                 {
-                    _model.StartSymbolRecordStage(stageId);
-                    _view.CommandSceneChange(Scene.SymbolRecord);
+                    _model.StartClearedStage(stageId);
+                    _view.CommandGotoSceneChange(Scene.Tactics);
                 } else
                 {
                     _model.StartSelectStage(stageId);

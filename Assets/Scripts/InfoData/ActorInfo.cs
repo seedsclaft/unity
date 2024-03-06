@@ -75,8 +75,6 @@ namespace Ryneus
         }
         private bool _lost = false;
         public bool Lost => _lost;
-        private int _sp = 0;
-        public int Sp => _sp;
         private int _numinous = 0;
         public int Numinous => _numinous;
         private StatusInfo _plusStatus;
@@ -90,7 +88,6 @@ namespace Ryneus
             _actorId = actorData.Id;
             _attribute = actorData.Attribute;
             _level = actorData.InitLv;
-            _sp = 0;
             _upperRate = actorData.NeedStatus;
             SetInitialParameter(actorData);
             _currentHp = _baseStatus.Hp;
@@ -167,7 +164,6 @@ namespace Ryneus
             _tacticsCostRate = baseActorInfo.TacticsCostRate;
             _battleIndex = baseActorInfo.BattleIndex;
             _lost = baseActorInfo.Lost;
-            _sp = baseActorInfo.Sp;
             _numinous = baseActorInfo.Numinous;
         }
 
@@ -310,7 +306,6 @@ namespace Ryneus
 
         public void ChangeSp(int value)
         {
-            _sp = value;
         }
 
         public int GrowthRate(StatusParamType statusParamType)
@@ -318,7 +313,7 @@ namespace Ryneus
             return _upperRate.GetParameter(statusParamType) + ((_level-1) * 1);
         }
 
-        public void DecideStrength(int useNuminous)
+        public void DecideStrength()
         {
             // ここは百分率代入
             _plusStatus.AddParameter(StatusParamType.Hp,_tempStatus.GetParameter(StatusParamType.Hp) * 0.01f);
@@ -333,28 +328,19 @@ namespace Ryneus
                 CurrentParameter(StatusParamType.Def),
                 CurrentParameter(StatusParamType.Spd)
             );
-            var plusHp = (int)Math.Round(_tempStatus.GetParameter(StatusParamType.Hp) * 0.01f);
-            if (plusHp > 0)
-            {
-                //ChangeHp(_currentHp + plusHp);
-            }
+            ChangeHp(CurrentParameter(StatusParamType.Hp));
+            ChangeMp(CurrentParameter(StatusParamType.Mp));
             ClearStrength();
+        }
+
+        public void GainNuminousCost(int useNuminous)
+        {
             _numinous += useNuminous;
         }
 
         public void ClearStrength()
         {
-            TempStatus.Clear();
-        }
-
-        public void StrengthReset()
-        {
-            SetInitialParameter(Master);
-            ChangeHp(_currentHp);
-            ChangeMp(_currentMp);
-            ChangeSp((_level-1) * 10);
-            _numinous = 0;
-            ClearStrength();
+            _tempStatus.Clear();
         }
 
         public int CurrentParameter(StatusParamType statusParamType)

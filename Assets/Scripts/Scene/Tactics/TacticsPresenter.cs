@@ -658,7 +658,6 @@ namespace Ryneus
 
         private void CommandCancelSelectSymbol()
         {
-            SoundManager.Instance.PlayStaticSe(SEType.Decide);
             _view.ShowSymbolList();
             _view.HideSelectCharacter();
             _view.ShowSymbolRecord();

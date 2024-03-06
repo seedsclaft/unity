@@ -8,7 +8,6 @@ namespace Ryneus
         public EnemyInfoModel(List<BattlerInfo> enemyInfos)
         {
             _enemyBattlerInfos = enemyInfos;
-            _currentIndex = enemyInfos.Count - 1;
         }
         
         private List<BattlerInfo> _enemyBattlerInfos = new();

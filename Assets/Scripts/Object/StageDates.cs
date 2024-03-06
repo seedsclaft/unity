@@ -25,6 +25,7 @@ namespace Ryneus
         public string BackGround;
         public int BGMId;
         public int BossBGMId;
+        public int StageRect;
         public bool Reborn;
         public bool Alcana;
         public int SaveLimit;

@@ -355,7 +355,7 @@ namespace Ryneus
         public void ShowCharacterDetail(ActorInfo actorInfo,List<ActorInfo> party)
         {
             battleSelectCharacter.gameObject.SetActive(true);
-            battleSelectCharacter.SetActiveTab(SelectCharacterTabType.Magic,false);
+            battleSelectCharacter.SetActiveTab(SelectCharacterTabType.Magic,true);
             battleSelectCharacter.SetActiveTab(SelectCharacterTabType.Condition,false);
             battleSelectCharacter.SetActiveTab(SelectCharacterTabType.Detail,true);
             battleSelectCharacter.SelectCharacterTab(SelectCharacterTabType.Detail);

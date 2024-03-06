@@ -21,7 +21,7 @@ namespace Ryneus
         [SerializeField] private BattlerInfoComponent battlerInfoComponent;
         private bool _isInit = false;
 
-        private SelectCharacterTabType _selectCharacterTabType = SelectCharacterTabType.Magic;
+        private SelectCharacterTabType _selectCharacterTabType = SelectCharacterTabType.Detail;
         
         public SkillInfo ActionData{
             get {
@@ -50,7 +50,7 @@ namespace Ryneus
                     SelectCharacterTab((SelectCharacterTabType)tabIndex);
                     if (a == true)
                     {
-                        Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cursor);
+                        SoundManager.Instance.PlayStaticSe(SEType.Cursor);
                     }
                 });
                 idx++;
@@ -68,7 +68,6 @@ namespace Ryneus
             }
             _selectCharacterTabType = selectCharacterTabType;
             UpdateTabs();
-            //Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cursor);
         }
 
         public void SelectCharacterTabSmooth(int index)
@@ -128,6 +127,10 @@ namespace Ryneus
             {
                 detailTabCanvasGroup[i].alpha = (int)_selectCharacterTabType == i ? 1 : 0.75f;
             }
+            if (_selectCharacterTabType == SelectCharacterTabType.Magic)
+            {
+                DisplaySelectCard();
+            }
         }
         
         public void SetActiveTab(SelectCharacterTabType selectCharacterTabType,bool isActive)
@@ -164,7 +167,6 @@ namespace Ryneus
                 magicList.Initialize();
                 magicList.SetSelectedHandler(() => {
                     DisplaySelectCard();
-                    RefreshCardWidth();
                 });
             }
             magicList.SetData(skillInfoData);
@@ -175,7 +177,6 @@ namespace Ryneus
             SelectCharacterTab(_selectCharacterTabType);
             magicList.UpdateSelectIndex(skillInfoData.Count > 0 ? 0 : -1);
             DisplaySelectCard();
-            RefreshCardWidth();
         }
 
         public void SetConditionList(List<ListData> conditionData)
@@ -245,17 +246,11 @@ namespace Ryneus
             magicList.Deactivate();
             conditionList.Deactivate();
         }
-
-        public void RefreshCardWidth()
-        {
-            return;
-        }
-        
     }
 
     public enum SelectCharacterTabType{
-        Magic = 0,
-        Condition = 1,
-        Detail = 2
+        Detail = 0,
+        Magic = 1,
+        Condition = 2,
     }
 }

@@ -32,6 +32,8 @@ namespace Ryneus
             {
                 rankingButton.gameObject.SetActive(data.Master.RankingStage > 0);
             }
+            var rect = gameObject.GetComponent<RectTransform>();
+            rect.sizeDelta = new Vector2(rect.sizeDelta.x,data.Master.StageRect);
         }
     }
 }

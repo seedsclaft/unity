@@ -86,7 +86,7 @@ namespace Ryneus
             {
                 var upStatusCount = statusRebornSkill.Param2;
                 actorInfo.TempStatus.AddParameter((StatusParamType)statusRebornSkill.Param3,upStatusCount);
-                actorInfo.DecideStrength(0);
+                actorInfo.DecideStrength();
             }
 
             var addSkillRebornSkills = rebornActorInfo.RebornSkillInfos.FindAll(a => a.Master.FeatureDates.Find(b => b.FeatureType == FeatureType.RebornAddSkill) != null);
@@ -98,7 +98,7 @@ namespace Ryneus
                 var upStatusCount = questRebornSkill.Param2;
                 actorInfo.TempStatus.AddParameter(StatusParamType.Hp,upStatusCount);
                 actorInfo.TempStatus.AddParameter(StatusParamType.Mp,upStatusCount);
-                actorInfo.DecideStrength(0);
+                actorInfo.DecideStrength();
             }
         }
     }

@@ -89,7 +89,7 @@ namespace Ryneus
         {
             var bgmData = DataSystem.Data.GetBGM(_model.CurrentStage.Master.BossBGMId);
             var bgm = await _model.GetBgmData(bgmData.Key);
-            Ryneus.SoundManager.Instance.PlayBgm(bgm,1.0f);
+            SoundManager.Instance.PlayBgm(bgm,1.0f);
         }
         
         public void CommandSave(bool isReturnScene)

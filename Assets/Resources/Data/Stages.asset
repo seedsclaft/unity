@@ -25,6 +25,7 @@ MonoBehaviour:
     BackGround: NA_background image_3D like_404
     BGMId: 3
     BossBGMId: 11
+    StageRect: 320
     Reborn: 0
     Alcana: 0
     SaveLimit: 4
@@ -62,6 +63,7 @@ MonoBehaviour:
     BackGround: NA_background image_3D like_404
     BGMId: 3
     BossBGMId: 11
+    StageRect: 200
     Reborn: 0
     Alcana: 0
     SaveLimit: 4
@@ -181,12 +183,13 @@ MonoBehaviour:
     Selectable: 1
     Help: "\u7570\u5E38\u73FE\u8C61\u306B\u3088\u308A\u8C6A\u96EA\u304C\u5927\u548C\u4E2D\u8D8A\u5C71\u9593\u90E8\u3092\u8986\u3063\u305F\u5927\u707D\u5BB3\u3002\n\n<\u8A73\u7D30>\n\u5927\u96EA\u306B\u3088\u308A\u591A\u304F\u306E\u5EFA\u7269\u304C\u96EA\u306E\u91CD\u307F\u306B\u8010\u3048\u5207\u308C\u305A\u5012\u58CA\u3002\n\u4EA4\u901A\u306F\u5BF8\u65AD\u3055\u308C\u6551\u52A9\u6D3B\u52D5\u304C\u9045\u308C\n\u5B64\u7ACB\u3057\u305F\u5730\u57DF\u3067\u306F\u547D\u3092\u843D\u3068\u3059\u8005\u304C\u76F8\u6B21\u3044\u3060\u3002\n\n<\u6B7B\u8005\u6570>\n\u7D045\u4E07\u4EBA\u8D85\n\n<\u5099\u8003>\n\u547D\u540D\u306F\u6551\u52A9\u6D3B\u52D5\u304C\u99C6\u3051\u3064\u3051\u305F\u6642\u306E\u69D8\u5B50\u306B\u7531\u6765\u3059\u308B\u3002"
     StageLv: 10
-    Turns: 6
+    Turns: 10
     InitMembers: 0100000002000000030000000400000005000000
     RandomTroopCount: 15
     BackGround: NA_background image_3D like_404
     BGMId: 3
     BossBGMId: 11
+    StageRect: 80
     Reborn: 0
     Alcana: 0
     SaveLimit: 4
@@ -196,7 +199,126 @@ MonoBehaviour:
     SubordinateValue: 0
     UseSlot: 0
     StageEvents: []
-    StageSymbols: []
+    StageSymbols:
+    - StageId: 2
+      Seek: 1
+      SeekIndex: 0
+      SymbolType: 5
+      Param1: 0
+      Param2: 0
+      PrizeSetId: 502
+    - StageId: 2
+      Seek: 1
+      SeekIndex: 1
+      SymbolType: 5
+      Param1: 0
+      Param2: 0
+      PrizeSetId: 503
+    - StageId: 2
+      Seek: 2
+      SeekIndex: 0
+      SymbolType: -1
+      Param1: 0
+      Param2: 0
+      PrizeSetId: 0
+    - StageId: 2
+      Seek: 2
+      SeekIndex: 1
+      SymbolType: 1
+      Param1: 2001
+      Param2: 0
+      PrizeSetId: 0
+    - StageId: 2
+      Seek: 3
+      SeekIndex: 0
+      SymbolType: -1
+      Param1: 0
+      Param2: 0
+      PrizeSetId: 0
+    - StageId: 2
+      Seek: 4
+      SeekIndex: 0
+      SymbolType: -1
+      Param1: 0
+      Param2: 0
+      PrizeSetId: 0
+    - StageId: 2
+      Seek: 4
+      SeekIndex: 1
+      SymbolType: 201
+      Param1: 0
+      Param2: 0
+      PrizeSetId: 0
+    - StageId: 2
+      Seek: 5
+      SeekIndex: 0
+      SymbolType: 1
+      Param1: 2003
+      Param2: 0
+      PrizeSetId: 0
+    - StageId: 2
+      Seek: 6
+      SeekIndex: 0
+      SymbolType: 5
+      Param1: 0
+      Param2: 0
+      PrizeSetId: 504
+    - StageId: 2
+      Seek: 6
+      SeekIndex: 1
+      SymbolType: 5
+      Param1: 0
+      Param2: 0
+      PrizeSetId: 505
+    - StageId: 2
+      Seek: 7
+      SeekIndex: 0
+      SymbolType: -1
+      Param1: 0
+      Param2: 0
+      PrizeSetId: 0
+    - StageId: 2
+      Seek: 7
+      SeekIndex: 1
+      SymbolType: 202
+      Param1: 0
+      Param2: 0
+      PrizeSetId: 0
+    - StageId: 2
+      Seek: 8
+      SeekIndex: 0
+      SymbolType: -1
+      Param1: 0
+      Param2: 0
+      PrizeSetId: 0
+    - StageId: 2
+      Seek: 8
+      SeekIndex: 1
+      SymbolType: 203
+      Param1: 0
+      Param2: 0
+      PrizeSetId: 0
+    - StageId: 2
+      Seek: 9
+      SeekIndex: 0
+      SymbolType: 204
+      Param1: 0
+      Param2: 0
+      PrizeSetId: 0
+    - StageId: 2
+      Seek: 9
+      SeekIndex: 1
+      SymbolType: 205
+      Param1: 0
+      Param2: 0
+      PrizeSetId: 0
+    - StageId: 2
+      Seek: 10
+      SeekIndex: 0
+      SymbolType: 2
+      Param1: 2011
+      Param2: 0
+      PrizeSetId: 10
     Tutorials: []
   - Id: 3
     Name: "A.D.3324 \u5317\u6975\u661F\u306E\u5927\u7570\u5909"
@@ -210,6 +332,7 @@ MonoBehaviour:
     BackGround: clipart _0147
     BGMId: 3
     BossBGMId: 11
+    StageRect: 280
     Reborn: 0
     Alcana: 0
     SaveLimit: 4
@@ -233,6 +356,7 @@ MonoBehaviour:
     BackGround: NA_background image_3D like_404
     BGMId: 3
     BossBGMId: 11
+    StageRect: 120
     Reborn: 0
     Alcana: 0
     SaveLimit: 4
@@ -256,6 +380,7 @@ MonoBehaviour:
     BackGround: NA_background image_3D like_404
     BGMId: 3
     BossBGMId: 11
+    StageRect: 80
     Reborn: 0
     Alcana: 0
     SaveLimit: 4
@@ -279,6 +404,7 @@ MonoBehaviour:
     BackGround: NA_background image_3D like_404
     BGMId: 3
     BossBGMId: 11
+    StageRect: 120
     Reborn: 0
     Alcana: 0
     SaveLimit: 4
@@ -291,123 +417,123 @@ MonoBehaviour:
     StageSymbols: []
     Tutorials: []
   SymbolGroupData:
-  - GroupId: 101
-    SymbolType: 4
+  - GroupId: 201
+    SymbolType: 1
     Rate: 50
-    Param1: 0
+    Param1: 2002
     Param2: 0
     PrizeSetId: 11020
-  - GroupId: 101
-    SymbolType: 4
+  - GroupId: 201
+    SymbolType: 1
     Rate: 50
-    Param1: 0
+    Param1: 2002
     Param2: 0
     PrizeSetId: 11030
-  - GroupId: 101
-    SymbolType: 4
+  - GroupId: 201
+    SymbolType: 1
     Rate: 50
-    Param1: 0
+    Param1: 2002
     Param2: 0
     PrizeSetId: 11050
-  - GroupId: 101
-    SymbolType: 4
+  - GroupId: 201
+    SymbolType: 1
     Rate: 50
-    Param1: 0
+    Param1: 2002
     Param2: 0
     PrizeSetId: 11060
-  - GroupId: 102
-    SymbolType: 4
+  - GroupId: 202
+    SymbolType: 1
     Rate: 50
-    Param1: 0
+    Param1: 2004
     Param2: 0
     PrizeSetId: 12010
-  - GroupId: 102
-    SymbolType: 4
+  - GroupId: 202
+    SymbolType: 1
     Rate: 50
-    Param1: 0
+    Param1: 2004
     Param2: 0
     PrizeSetId: 12030
-  - GroupId: 102
-    SymbolType: 4
+  - GroupId: 202
+    SymbolType: 1
     Rate: 50
-    Param1: 0
+    Param1: 2004
     Param2: 0
     PrizeSetId: 12040
-  - GroupId: 102
-    SymbolType: 4
+  - GroupId: 202
+    SymbolType: 1
     Rate: 50
-    Param1: 0
+    Param1: 2004
     Param2: 0
     PrizeSetId: 12050
-  - GroupId: 103
-    SymbolType: 4
+  - GroupId: 203
+    SymbolType: 1
     Rate: 50
-    Param1: 0
+    Param1: 2005
     Param2: 0
     PrizeSetId: 13020
-  - GroupId: 103
-    SymbolType: 4
+  - GroupId: 203
+    SymbolType: 1
     Rate: 50
-    Param1: 0
+    Param1: 2005
     Param2: 0
     PrizeSetId: 13030
-  - GroupId: 103
-    SymbolType: 4
+  - GroupId: 203
+    SymbolType: 1
     Rate: 50
-    Param1: 0
+    Param1: 2005
     Param2: 0
     PrizeSetId: 13060
-  - GroupId: 103
-    SymbolType: 4
+  - GroupId: 203
+    SymbolType: 1
     Rate: 50
-    Param1: 0
+    Param1: 2005
     Param2: 0
     PrizeSetId: 13070
-  - GroupId: 104
-    SymbolType: 4
+  - GroupId: 204
+    SymbolType: 1
     Rate: 50
-    Param1: 0
+    Param1: 2006
     Param2: 0
     PrizeSetId: 14010
-  - GroupId: 104
-    SymbolType: 4
+  - GroupId: 204
+    SymbolType: 1
     Rate: 50
-    Param1: 0
+    Param1: 2006
     Param2: 0
     PrizeSetId: 14020
-  - GroupId: 104
-    SymbolType: 4
+  - GroupId: 204
+    SymbolType: 1
     Rate: 50
-    Param1: 0
+    Param1: 2006
     Param2: 0
     PrizeSetId: 14030
-  - GroupId: 104
-    SymbolType: 4
+  - GroupId: 204
+    SymbolType: 1
     Rate: 50
-    Param1: 0
+    Param1: 2006
     Param2: 0
     PrizeSetId: 14040
-  - GroupId: 105
-    SymbolType: 4
+  - GroupId: 205
+    SymbolType: 1
     Rate: 50
-    Param1: 0
+    Param1: 2007
     Param2: 0
     PrizeSetId: 15010
-  - GroupId: 105
-    SymbolType: 4
+  - GroupId: 205
+    SymbolType: 1
     Rate: 50
-    Param1: 0
+    Param1: 2007
     Param2: 0
     PrizeSetId: 15020
-  - GroupId: 105
-    SymbolType: 4
+  - GroupId: 205
+    SymbolType: 1
     Rate: 50
-    Param1: 0
+    Param1: 2007
     Param2: 0
     PrizeSetId: 15030
-  - GroupId: 105
-    SymbolType: 4
+  - GroupId: 205
+    SymbolType: 1
     Rate: 50
-    Param1: 0
+    Param1: 2007
     Param2: 0
     PrizeSetId: 15040

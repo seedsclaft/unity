@@ -55,7 +55,7 @@ namespace Ryneus
         {
             if (commandTitle != null)
             {
-                if (_symbolInfo.SymbolType != SymbolType.None)
+                if (_symbolInfo.SymbolType > SymbolType.None && _symbolInfo.SymbolType < SymbolType.Resource)
                 {
                     var textId = 40 + (int)_symbolInfo.SymbolType;
                     commandTitle.text = DataSystem.System.GetTextData(textId).Text;
@@ -69,6 +69,8 @@ namespace Ryneus
 
         private void UpdateSymbolImage()
         {
+            if (_symbolInfo.SymbolType > SymbolType.Resource) return;
+            if (_symbolInfo.SymbolType == SymbolType.Random) return;
             if (_symbolInfo.SymbolType == SymbolType.Battle || _symbolInfo.SymbolType == SymbolType.Boss){
                 symbolImage.sprite = ResourceSystem.LoadEnemySprite(_symbolInfo.TroopInfo.BossEnemy.EnemyData.ImagePath);
             } else

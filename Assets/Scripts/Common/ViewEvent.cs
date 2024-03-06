@@ -1,8 +1,9 @@
 ﻿using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using System;
+using TMPro;
 
 namespace Ryneus
 {
@@ -38,9 +39,6 @@ namespace Ryneus
     abstract public class ListItem : MonoBehaviour
     {    
         public Button clickButton;
-        private Color _normalColor;
-        private Color _selectedColor;
-        private Color _disableColor;
         private int _index;
         public int Index => _index;
         private ListData _listData;
@@ -56,6 +54,11 @@ namespace Ryneus
         [SerializeField] private GameObject disable;
         public GameObject Disable => disable;
 
+        [SerializeField] private Color selectColor;
+        [SerializeField] private Color unSelectColor;
+        [SerializeField] private List<TextMeshProUGUI> textUguiList = new ();
+        [SerializeField] private List<Image> imageUguiList = new ();
+        
         private bool _addListenHandler = false;
         public void SetAddListenHandler(bool add)
         {
@@ -63,20 +66,10 @@ namespace Ryneus
         }
         public void Awake()
         {
-            InitButtonColors();
             if (changeCursorColor)
             {
                 SetCursorColor();
             }
-        }
-
-        public void InitButtonColors()
-        {
-            if (clickButton == null) return;
-            ColorBlock cb = clickButton.colors;
-            _normalColor = new Color(cb.normalColor.r,cb.normalColor.g,cb.normalColor.b,cb.normalColor.a);
-            _selectedColor = new Color(cb.selectedColor.r,cb.selectedColor.g,cb.selectedColor.b,cb.selectedColor.a);
-            _disableColor = new Color(cb.disabledColor.r,cb.disabledColor.g,cb.disabledColor.b,cb.disabledColor.a);
         }
 
         public void SetSelect()
@@ -84,12 +77,28 @@ namespace Ryneus
             if (cursor == null) return;
             if (disable != null && disable.activeSelf) return;
             cursor.SetActive(true);
+            foreach (var text in textUguiList)
+            {
+                text.color = selectColor;
+            }
+            foreach (var image in imageUguiList)
+            {
+                image.color = selectColor;
+            }
         }
         
         public void SetUnSelect()
         {
             if (cursor == null) return;
             cursor.SetActive(false);
+            foreach (var text in textUguiList)
+            {
+                text.color = unSelectColor;
+            }
+            foreach (var image in imageUguiList)
+            {
+                image.color = unSelectColor;
+            }
         }
 
         public void SetIndex(int index)

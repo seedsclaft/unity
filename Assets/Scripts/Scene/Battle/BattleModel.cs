@@ -2454,7 +2454,7 @@ namespace Ryneus
             if (CheckVictory())
             {
                 PartyInfo.SetBattleResultVictory(true);
-                float score = 100;
+                float score = 100f;
                 float damageAll = 0;
                 float healAll = 0;
                 float damagedAll = 0;
@@ -2522,6 +2522,10 @@ namespace Ryneus
                 var actorInfo = Actors().Find(a => a.ActorId == battler.CharaId);
                 actorInfo.ChangeHp(battler.MaxHp);
                 actorInfo.ChangeMp(battler.MaxMp);
+            }
+            foreach (var battlerInfo in _troop.BattlerInfos)
+            {
+                battlerInfo.ResetData();
             }
             SaveSystem.SaveConfigStart(GameSystem.ConfigData);
         }

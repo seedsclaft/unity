@@ -85,6 +85,7 @@ namespace Ryneus
             _view.BattlerBattleClearSelect();
             _view.StartBattleStartAnim(DataSystem.GetTextData(61).Text);
             _view.StartBattleAnimation();
+            _view.SetBattleAutoButton(true);
             await UniTask.WaitUntil(() => _view.StartAnimIsBusy == false);
 
             var isAbort = CheckAdvStageEvent(EventTiming.StartBattle,() => {
@@ -101,13 +102,16 @@ namespace Ryneus
             }
 
             _view.SetBattleBusy(false);
-            _view.SetBattleAutoButton(true);
             CommandStartBattleAction();
             _busy = false;
         }
 
         private void UpdateCommand(BattleViewEvent viewEvent)
         {
+            if (viewEvent.commandType == Battle.CommandType.ChangeBattleAuto)
+            {
+                CommandChangeBattleAuto();
+            }
             if (_busy){
                 return;
             }
@@ -164,10 +168,6 @@ namespace Ryneus
             if (viewEvent.commandType == Battle.CommandType.SelectSideMenu)
             {
                 CommandSelectSideMenu();
-            }
-            if (viewEvent.commandType == Battle.CommandType.ChangeBattleAuto)
-            {
-                CommandChangeBattleAuto();
             }
         }
 
@@ -1074,11 +1074,10 @@ namespace Ryneus
         
         private void CommandChangeBattleAuto()
         {
-            if (_busy) return;
             SoundManager.Instance.PlayStaticSe(SEType.Cancel);
             _model.ChangeBattleAuto();
             _view.ChangeBattleAuto(GameSystem.ConfigData.BattleAuto == true);
-            if (_view.AnimationBusy == false && _view.BattleBusy && _model.CurrentBattler.IsActor && GameSystem.ConfigData.BattleAuto == true)
+            if (_view.AnimationBusy == false && _view.BattleBusy && GameSystem.ConfigData.BattleAuto == true)
             {
                 _model.ClearActionInfo();
                 _view.BattlerBattleClearSelect();

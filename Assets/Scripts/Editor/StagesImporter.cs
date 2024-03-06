@@ -24,6 +24,7 @@ namespace Ryneus
 			BGMId,
 			BossBGMId,
 			BackGround,
+			StageRect,
 			Reborn,
 			Alcana,
 			SaveLimit,
@@ -149,12 +150,13 @@ namespace Ryneus
 						StageData.BackGround = AssetPostImporter.ImportString(BaseRow,(int)BaseColumn.BackGround);
 						StageData.BGMId = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.BGMId);
 						StageData.BossBGMId = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.BossBGMId);
-						StageData.Reborn = (AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.Reborn) == 1);
-						StageData.Alcana = (AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.Alcana) == 1);
-						StageData.SaveLimit = (AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.SaveLimit));
-						StageData.ContinueLimit = (AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.ContinueLimit));
-						StageData.RankingStage = (RankingType)(AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.RankingStage));
-						StageData.SlotSave = (AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.SlotSave) == 1);
+						StageData.StageRect = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.StageRect);
+						StageData.Reborn = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.Reborn) == 1;
+						StageData.Alcana = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.Alcana) == 1;
+						StageData.SaveLimit = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.SaveLimit);
+						StageData.ContinueLimit = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.ContinueLimit);
+						StageData.RankingStage = (RankingType)AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.RankingStage);
+						StageData.SlotSave = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.SlotSave) == 1;
 						StageData.SubordinateValue = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.SubordinateValue);
 						StageData.UseSlot = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.UseSlot) == 1;
 						

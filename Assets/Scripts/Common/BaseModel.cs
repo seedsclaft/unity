@@ -491,8 +491,8 @@ namespace Ryneus
                     data.Seek = symbol.Seek;
                     data.SeekIndex = symbol.SeekIndex;
                     symbolInfo = new SymbolInfo(data);
-                } else
-                if (symbol.SymbolType == SymbolType.Random){
+                }
+                if (symbol.SymbolType == SymbolType.Random || symbolInfo.StageSymbolData.SymbolType == SymbolType.Random){
                     var data = RandomSymbolData();
                     data.StageId = symbol.StageId;
                     data.Seek = symbol.Seek;
@@ -526,6 +526,17 @@ namespace Ryneus
             return symbolInfos;
         }
 
+        public List<SymbolInfo> ClearedSymbolInfos(int stageId)
+        {
+            var list = new List<SymbolInfo>();
+            var records = PartyInfo.SymbolRecordList.FindAll(a => a.SymbolInfo.StageSymbolData.StageId == stageId);
+            foreach (var record in records)
+            {
+                list.Add(record.SymbolInfo);
+            }
+            return list;
+        }
+
         public StageSymbolData PickUpSymbolData(List<SymbolGroupData> groupDates)
         {
             int targetRand = 0;
@@ -552,14 +563,11 @@ namespace Ryneus
         {
             // 候補を生成
             var stageSymbolList = new List<StageSymbolData>();
-            foreach (var stage in DataSystem.Stages)
+            foreach (var stageSymbol in DataSystem.FindStage(0).StageSymbols)
             {
-                foreach (var stageSymbol in stage.StageSymbols)
+                if (stageSymbol.Seek > 0)
                 {
-                    if (stageSymbol.SymbolType < SymbolType.Group && stageSymbol.SymbolType != SymbolType.Boss && stageSymbol.SymbolType != SymbolType.Random)
-                    {
-                        stageSymbolList.Add(stageSymbol);
-                    }
+                    stageSymbolList.Add(stageSymbol);
                 }
             }
             var stageSymbolData = new StageSymbolData();
@@ -601,7 +609,7 @@ namespace Ryneus
             // ランダム生成
             if (troopId == -1)
             {
-                troopInfo.MakeEnemyRandomTroopDates(PartyInfo.ClearTroopCount + stageSymbolData.Seek);
+                troopInfo.MakeEnemyRandomTroopDates(PartyInfo.ClearTroopCount + stageSymbolData.Seek + CurrentStage.Master.StageLv);
                 for (int i = 0;i < enemyCount;i++)
                 {
                     int rand = new System.Random().Next(1, CurrentStage.Master.RandomTroopCount);
@@ -660,6 +668,13 @@ namespace Ryneus
             //CurrentStage.SetStageSymbolInfos(StageSymbolInfos());
             PartyInfo.SetStageSymbolInfos(StageSymbolInfos());
             MakeSymbolResultInfos();
+            SavePlayerStageData(true);
+        }
+
+        public void StartClearedStage(int stageId)
+        {
+            CurrentSaveData.MakeStageData(stageId);
+            PartyInfo.SetStageSymbolInfos(ClearedSymbolInfos(stageId));
             SavePlayerStageData(true);
         }
 
