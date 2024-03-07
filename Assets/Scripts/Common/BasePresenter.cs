@@ -78,10 +78,10 @@ namespace Ryneus
             var bgm = await _model.GetBgmData(bgmKey);
             if (bgmData.CrossFade != "")
             {
-                Ryneus.SoundManager.Instance.PlayCrossFadeBgm(bgm,1.0f);
+                SoundManager.Instance.PlayCrossFadeBgm(bgm,1.0f);
             } else
             {
-                Ryneus.SoundManager.Instance.PlayBgm(bgm,1.0f);
+                SoundManager.Instance.PlayBgm(bgm,1.0f);
             }
         }
 

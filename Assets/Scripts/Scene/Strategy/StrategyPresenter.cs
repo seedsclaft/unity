@@ -207,13 +207,39 @@ namespace Ryneus
 
         private void CommandLvUpNext()
         {
-            _model.SetLevelUpStatus();
-            if (_model.LevelUpData.Count > 0)
+            var learnSkillInfo = _model.LearnSkillInfo.Count > 0 ? _model.LearnSkillInfo[0] : null;
+            if (learnSkillInfo != null && learnSkillInfo.SkillInfo != null)
             {
-                CommandEndLvUpAnimation();
+                _model.DecideStrength();
+                learnSkillInfo.SetToValue(_model.LevelUpData[0].Evaluate());
+                SoundManager.Instance.PlayStaticSe(SEType.LearnSkill);
+                    
+                var popupInfo = new PopupInfo();
+                popupInfo.PopupType = PopupType.LearnSkill;
+                popupInfo.EndEvent = () => 
+                {
+                    _model.RemoveLevelUpData();
+                    if (_model.LevelUpData.Count > 0)
+                    {
+                        CommandEndLvUpAnimation();
+                    } else
+                    {
+                        _view.ShowResultList(_model.ResultGetItemInfos);
+                    }
+                };
+                popupInfo.template = learnSkillInfo;
+                _view.CommandCallPopup(popupInfo);
             } else
             {
-                _view.ShowResultList(_model.ResultGetItemInfos);
+                _model.DecideStrength();
+                _model.RemoveLevelUpData();
+                if (_model.LevelUpData.Count > 0)
+                {
+                    CommandEndLvUpAnimation();
+                } else
+                {
+                    _view.ShowResultList(_model.ResultGetItemInfos);
+                }
             }
         }
 

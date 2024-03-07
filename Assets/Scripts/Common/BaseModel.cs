@@ -714,8 +714,6 @@ namespace Ryneus
                 PartyInfo.SetSymbolResultInfo(record);
             }
         }
-        
-
 
         public void StartSymbolRecordStage(int stageId)
         {
@@ -753,7 +751,6 @@ namespace Ryneus
                 }
             }
         }
-        
         
         public void SetParallelMode()
         {

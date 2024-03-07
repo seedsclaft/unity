@@ -2449,9 +2449,9 @@ namespace Ryneus
             return isVictory;
         }
 
-        public void MakeBattleScore()
+        public void MakeBattleScore(bool isVictory)
         {
-            if (CheckVictory())
+            if (isVictory)
             {
                 PartyInfo.SetBattleResultVictory(true);
                 float score = 100f;

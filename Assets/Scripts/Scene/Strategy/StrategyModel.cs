@@ -19,7 +19,8 @@ namespace Ryneus
 
         private List<ActorInfo> _levelUpData = new();
         public List<ActorInfo> LevelUpData => _levelUpData;
-        private List<int> _levelUpBonusActorIds = new();
+        private List<LearnSkillInfo> _learnSkillInfo = new();
+        public List<LearnSkillInfo> LearnSkillInfo => _learnSkillInfo;
         public List<ListData> LevelUpActorStatus(int index)
         {
             var list = new List<ListData>();
@@ -53,7 +54,19 @@ namespace Ryneus
             // 結果出力
             foreach (var lvUpActorInfo in BattleMembers())
             {
+                // 新規魔法取得があるか
+                var skills = lvUpActorInfo.LearningSkills(1);
+                var from = lvUpActorInfo.Evaluate();
                 var statusInfo = lvUpActorInfo.LevelUp(0);
+                var to = lvUpActorInfo.Evaluate();
+                if (skills.Count > 0)
+                {
+                    var learnSkillInfo = new LearnSkillInfo(from,to,skills[0]);
+                    _learnSkillInfo.Add(learnSkillInfo);
+                } else
+                {
+                    _learnSkillInfo.Add(null);
+                }
                 lvUpActorInfo.TempStatus.SetParameter(
                     statusInfo.Hp,
                     statusInfo.Mp,
@@ -165,11 +178,16 @@ namespace Ryneus
             }
         }
 
-        public void SetLevelUpStatus()
+        public void DecideStrength()
         {
             var actorInfo = _levelUpData[0];
             actorInfo.DecideStrength();
+        }
+
+        public void RemoveLevelUpData()
+        {
             _levelUpData.RemoveAt(0);
+            _learnSkillInfo.RemoveAt(0);
         }
 
         public bool BattleResultVictory()

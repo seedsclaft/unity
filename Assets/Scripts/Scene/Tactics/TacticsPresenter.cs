@@ -528,17 +528,40 @@ namespace Ryneus
             if (_model.CheckActorTrain())
             {
                 SoundManager.Instance.PlayStaticSe(SEType.LevelUp);
+                // 新規魔法取得があるか
+                var skills = _model.TacticsActor().LearningSkills(1);
+                
                 var from = _model.SelectActorEvaluate();
                 _model.SelectActorTrain();
                 var to = _model.SelectActorEvaluate();
                 
-                var cautionInfo = new CautionInfo();
-                cautionInfo.SetLevelUp(from,to);
-                _view.CommandCallCaution(cautionInfo);
+                if (skills.Count > 0)
+                {
+                    var learnSkillInfo = new LearnSkillInfo(from,to,skills[0]);
+                    CommandTacticsCommand(_model.TacticsCommandType);
+                    SoundManager.Instance.PlayStaticSe(SEType.LearnSkill);
+                    
+                    var popupInfo = new PopupInfo();
+                    popupInfo.PopupType = PopupType.LearnSkill;
+                    popupInfo.EndEvent = () => 
+                    {
+                        UpdatePopupSkillInfo();
+                        _view.ShowCharacterDetail(_model.TacticsActor(),_model.StageMembers());
+                        CommandRefresh();
+                        SoundManager.Instance.PlayStaticSe(SEType.Cancel);
+                    };
+                    popupInfo.template = learnSkillInfo;
+                    _view.CommandCallPopup(popupInfo);
+                } else
+                {
+                    var cautionInfo = new CautionInfo();
+                    cautionInfo.SetLevelUp(from,to);
+                    _view.CommandCallCaution(cautionInfo);
 
-                _view.ShowCharacterDetail(_model.TacticsActor(),_model.StageMembers());
-                CommandRefresh();
-                SoundManager.Instance.PlayStaticSe(SEType.CountUp);
+                    _view.ShowCharacterDetail(_model.TacticsActor(),_model.StageMembers());
+                    CommandRefresh();
+                    SoundManager.Instance.PlayStaticSe(SEType.CountUp);
+                }
             } else
             {
                 var cautionInfo = new CautionInfo();
@@ -862,7 +885,7 @@ namespace Ryneus
                 _model.LearnMagic(skillInfo.Id);
                 var to = _model.SelectActorEvaluate();
 
-                var learnSKillInfo = new LearnSkillInfo(from,to,skillInfo);
+                var learnSkillInfo = new LearnSkillInfo(from,to,skillInfo);
                 CommandTacticsCommand(_model.TacticsCommandType);
                 SoundManager.Instance.PlayStaticSe(SEType.LearnSkill);
                 
@@ -874,7 +897,7 @@ namespace Ryneus
                     CommandRefresh();
                     SoundManager.Instance.PlayStaticSe(SEType.Cancel);
                 };
-                popupInfo.template = learnSKillInfo;
+                popupInfo.template = learnSkillInfo;
                 _view.CommandCallPopup(popupInfo);
             }
         }

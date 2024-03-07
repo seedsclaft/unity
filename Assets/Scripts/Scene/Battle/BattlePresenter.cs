@@ -49,11 +49,13 @@ namespace Ryneus
             _view.SetHelpText("");
             _view.CreateBattleBackGround(_model.BattleBackGroundObject());
             await _model.LoadBattleResources(_model.Battlers);
+            /*
             if (SoundManager.Instance.CrossFadeMode == false)
             {
                 var bgm = await _model.GetBattleBgm();
                 SoundManager.Instance.PlayBgm(bgm,1.0f,true);
             }
+            */
             _view.CommandGameSystem(Base.CommandType.CloseLoading);
 
             _view.ClearCurrentSkillData();
@@ -1035,14 +1037,15 @@ namespace Ryneus
             {
                 _view.StartBattleStartAnim(DataSystem.GetTextData(15020).Text);
                 strategySceneInfo.GetItemInfos = _model.MakeBattlerResult();
+                _model.MakeBattleScore(true);
             } else
             if (_model.CheckDefeat())
             {
                 _view.StartBattleStartAnim(DataSystem.GetTextData(15030).Text); 
-                strategySceneInfo.GetItemInfos = new List<GetItemInfo>();          
+                strategySceneInfo.GetItemInfos = new List<GetItemInfo>();   
+                _model.MakeBattleScore(false);       
             }
             _model.EndBattle();
-            _model.MakeBattleScore();
             _battleEnded = true;
             _view.HideStateOverlay();
             await UniTask.DelayFrame(180);

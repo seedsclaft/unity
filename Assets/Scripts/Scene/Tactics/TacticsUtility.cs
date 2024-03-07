@@ -23,33 +23,33 @@ namespace Ryneus
 
         public static int LearningMagicCost(ActorInfo actorInfo,AttributeType attributeType,List<ActorInfo> stageMembers)
         {
-            int cost = 2;
+            int cost = 4;
             var param = actorInfo.AttributeRanks(stageMembers)[(int)attributeType-1];
             switch (param)
             {
                 case AttributeRank.S:
-                    cost = 1;
-                    break;
-                case AttributeRank.A:
                     cost = 2;
                     break;
-                case AttributeRank.B:
+                case AttributeRank.A:
                     cost = 4;
                     break;
+                case AttributeRank.B:
+                    cost = 9;
+                    break;
                 case AttributeRank.C:
-                    cost = 6;
-                    break;
-                case AttributeRank.D:
-                    cost = 8;
-                    break;
-                case AttributeRank.E:
-                    cost = 12;
-                    break;
-                case AttributeRank.F:
                     cost = 16;
                     break;
+                case AttributeRank.D:
+                    cost = 25;
+                    break;
+                case AttributeRank.E:
+                    cost = 36;
+                    break;
+                case AttributeRank.F:
+                    cost = 42;
+                    break;
                 case AttributeRank.G:
-                    cost = 24;
+                    cost = 64;
                     break;
             }
             

@@ -135,9 +135,11 @@ namespace Ryneus
             _lastBgmVolume = volume;
             _lastPlayAudio = clip[0].name;
             
+            var playingTrack = _crossFadeTrackNo == 0 ? BgmTrack : BgmSubTrack;
+            playingTrack.FadeVolume(0,1);
             UpdateBgmMute();
             playTrack.Play();
-            FadeOutBgm();
+            playTrack.FadeVolume(1,1);
             _crossFadeMode = false;
             _crossFadeTrackNo = 0;
         }

@@ -53,14 +53,14 @@ namespace Ryneus
 
         public void MakeEnemyRandomTroopDates(int level)
         {
-            var randMax = MathF.Min(3,level / 10);
-            var targetLengthRand = UnityEngine.Random.Range(2,2 + randMax);
+            var randMax = MathF.Min(3,level / 15);
+            var targetLengthRand = 1 + randMax;
             while (_battlerInfos.Count <= targetLengthRand)
             {
                 var targetIdRand = UnityEngine.Random.Range(1,15);
                 var enemyData = DataSystem.Enemies.Find(a => a.Id == targetIdRand);
                 var lineRand = UnityEngine.Random.Range(0,1);
-                var battlerInfo = new BattlerInfo(enemyData,level,_battlerInfos.Count,(LineType)lineRand,false);
+                var battlerInfo = new BattlerInfo(enemyData,level,_battlerInfos.Count,(LineType)lineRand,_battlerInfos.Count == 0);
                 AddEnemy(battlerInfo);
             }
             var getItemData2 = new GetItemData();

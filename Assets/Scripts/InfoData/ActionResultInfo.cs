@@ -404,10 +404,6 @@ namespace Ryneus
             float UpperDamageRate = CurrentDamageRate(subject,isNoEffect,isOneTarget);
             float DamageRate = featureData.Param1 * UpperDamageRate;
             float SkillDamage = (DamageRate * 0.01f * (AtkValue * 0.5f));
-            if (target.CanMove() && !isNoEffect)
-            {
-                CalcCounterDamage(subject,target,SkillDamage);
-            }
             CalcFreezeDamage(subject,SkillDamage);
 
             SkillDamage *= GetDefenseRateValue(AtkValue * 0.5f,DefValue);
@@ -443,6 +439,10 @@ namespace Ryneus
                         hpDamage = target.Hp;
                     }
                 }
+            }
+            if (target.CanMove() && !isNoEffect)
+            {
+                CalcCounterDamage(subject,target,hpDamage);
             }
             if (subject.IsState(StateType.Drain))
             {
@@ -539,10 +539,6 @@ namespace Ryneus
             float UpperDamageRate = CurrentDamageRate(subject,isNoEffect,isOneTarget);
             DamageRate *= UpperDamageRate;
             float SkillDamage = (DamageRate * 0.01f * (AtkValue * 0.5f));
-            if (target.CanMove() && !isNoEffect)
-            {
-                CalcCounterDamage(subject,target,SkillDamage);
-            }
             CalcFreezeDamage(subject,SkillDamage);
 
             SkillDamage *= GetDefenseRateValue((AtkValue * 0.5f),DefValue);
@@ -573,6 +569,10 @@ namespace Ryneus
                         hpDamage = target.Hp;
                     }
                 }
+            }
+            if (target.CanMove() && !isNoEffect)
+            {
+                CalcCounterDamage(subject,target,hpDamage);
             }
             if (subject.IsState(StateType.Drain))
             {
@@ -640,10 +640,6 @@ namespace Ryneus
                     return;
                 }
             }
-            if (stateInfo.Master.StateType == StateType.CounterAura || stateInfo.Master.StateType == StateType.Benediction)
-            {
-                stateInfo.Turns = 200 - subject.Status.Spd * 2;
-            } else
             if (stateInfo.Master.StateType == StateType.Death)
             {
                 _hpDamage = target.Hp;
@@ -868,7 +864,7 @@ namespace Ryneus
             return ReDamage;
         }
 
-        private void CalcCounterDamage(BattlerInfo subject,BattlerInfo target,float skillDamage)
+        private void CalcCounterDamage(BattlerInfo subject,BattlerInfo target,float hpDamage)
         {
             if (target.IsState(StateType.CounterAura))
             {
@@ -878,14 +874,14 @@ namespace Ryneus
                     SeekStateCount(subject,StateType.NoDamage);
                 } else
                 {                
-                    _reDamage += CounterDamageValue(target);
+                    _reDamage += CounterDamageValue(target,hpDamage);
                 }
             }
         }
 
-        private int CounterDamageValue(BattlerInfo target)
+        private int CounterDamageValue(BattlerInfo target,float hpDamage)
         {
-            int ReDamage = (int)Mathf.Floor((target.CurrentDef(false) * 0.5f) * target.StateEffectAll(StateType.CounterAura) * 0.01f);
+            int ReDamage = (int)Mathf.Floor(hpDamage * target.StateEffectAll(StateType.CounterAura) * 0.01f);
             ReDamage += target.StateEffectAll(StateType.CounterAuraDamage);
             return ReDamage;
         }

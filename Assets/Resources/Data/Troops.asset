@@ -239,7 +239,35 @@ MonoBehaviour:
     TroopEnemies:
     - Id: 2003
       TroopId: 2003
-      EnemyId: 101
+      EnemyId: 4
+      Lv: 10
+      BossFlag: 1
+      Line: 0
+      PrizeSetId: 605
+    - Id: 2003
+      TroopId: 2003
+      EnemyId: 3
+      Lv: 10
+      BossFlag: 0
+      Line: 0
+      PrizeSetId: 605
+    - Id: 2003
+      TroopId: 2003
+      EnemyId: 7
+      Lv: 10
+      BossFlag: 0
+      Line: 0
+      PrizeSetId: 605
+    - Id: 2003
+      TroopId: 2003
+      EnemyId: 14
+      Lv: 10
+      BossFlag: 0
+      Line: 0
+      PrizeSetId: 605
+    - Id: 2003
+      TroopId: 2003
+      EnemyId: 2
       Lv: 10
       BossFlag: 0
       Line: 0
@@ -350,31 +378,24 @@ MonoBehaviour:
     TroopEnemies:
     - Id: 2011
       TroopId: 2011
-      EnemyId: 201
+      EnemyId: 101
       Lv: 20
       BossFlag: 1
       Line: 1
       PrizeSetId: 650
     - Id: 2011
       TroopId: 2011
-      EnemyId: 1
+      EnemyId: 4
       Lv: 20
       BossFlag: 0
       Line: 0
       PrizeSetId: 0
     - Id: 2011
       TroopId: 2011
-      EnemyId: 9
+      EnemyId: 4
       Lv: 20
       BossFlag: 0
-      Line: 1
-      PrizeSetId: 0
-    - Id: 2011
-      TroopId: 2011
-      EnemyId: 5
-      Lv: 20
-      BossFlag: 0
-      Line: 1
+      Line: 0
       PrizeSetId: 0
     StageTurn: 0
     PrizeSetId: 650

@@ -43,5 +43,10 @@ namespace Ryneus
             _skillInfo = skillInfo;
         }
 
+        public void SetToValue(int to)
+        {
+            _to = to;
+        }
+
     }
 }
