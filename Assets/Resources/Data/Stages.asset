@@ -40,16 +40,10 @@ MonoBehaviour:
       Seek: 0
       SeekIndex: 0
       SymbolType: 5
+      Rate: 100
       Param1: 0
       Param2: 0
       PrizeSetId: 501
-    - StageId: 0
-      Seek: 1
-      SeekIndex: 0
-      SymbolType: 1
-      Param1: 0
-      Param2: 0
-      PrizeSetId: 0
     Tutorials: []
   - Id: 1
     Name: "A.D.3946 VR\u50AC\u7720\u30B3\u30EC\u30AF\u30C6\u30A3\u30D6"
@@ -93,9 +87,18 @@ MonoBehaviour:
       ReadFlag: 0
     StageSymbols:
     - StageId: 1
+      Seek: 0
+      SeekIndex: 0
+      SymbolType: 1
+      Rate: 100
+      Param1: 100
+      Param2: 0
+      PrizeSetId: 0
+    - StageId: 1
       Seek: 1
       SeekIndex: 0
       SymbolType: -1
+      Rate: 100
       Param1: 0
       Param2: 0
       PrizeSetId: 0
@@ -103,6 +106,7 @@ MonoBehaviour:
       Seek: 2
       SeekIndex: 0
       SymbolType: -1
+      Rate: 100
       Param1: 0
       Param2: 0
       PrizeSetId: 0
@@ -110,6 +114,7 @@ MonoBehaviour:
       Seek: 2
       SeekIndex: 1
       SymbolType: 1
+      Rate: 100
       Param1: 1001
       Param2: 0
       PrizeSetId: 1001
@@ -117,6 +122,7 @@ MonoBehaviour:
       Seek: 3
       SeekIndex: 0
       SymbolType: -1
+      Rate: 100
       Param1: 0
       Param2: 0
       PrizeSetId: 0
@@ -124,6 +130,7 @@ MonoBehaviour:
       Seek: 3
       SeekIndex: 1
       SymbolType: 1
+      Rate: 100
       Param1: 1002
       Param2: 0
       PrizeSetId: 1002
@@ -131,6 +138,7 @@ MonoBehaviour:
       Seek: 4
       SeekIndex: 0
       SymbolType: -1
+      Rate: 100
       Param1: 0
       Param2: 0
       PrizeSetId: 0
@@ -138,6 +146,7 @@ MonoBehaviour:
       Seek: 4
       SeekIndex: 1
       SymbolType: 1
+      Rate: 100
       Param1: 1003
       Param2: 0
       PrizeSetId: 1003
@@ -145,6 +154,7 @@ MonoBehaviour:
       Seek: 5
       SeekIndex: 0
       SymbolType: -1
+      Rate: 100
       Param1: 0
       Param2: 0
       PrizeSetId: 0
@@ -152,6 +162,7 @@ MonoBehaviour:
       Seek: 5
       SeekIndex: 1
       SymbolType: 1
+      Rate: 100
       Param1: 1004
       Param2: 0
       PrizeSetId: 1004
@@ -159,6 +170,7 @@ MonoBehaviour:
       Seek: 6
       SeekIndex: 0
       SymbolType: -1
+      Rate: 100
       Param1: 0
       Param2: 0
       PrizeSetId: 0
@@ -166,6 +178,7 @@ MonoBehaviour:
       Seek: 6
       SeekIndex: 1
       SymbolType: 1
+      Rate: 100
       Param1: 1005
       Param2: 0
       PrizeSetId: 1005
@@ -173,6 +186,7 @@ MonoBehaviour:
       Seek: 7
       SeekIndex: 0
       SymbolType: 2
+      Rate: 100
       Param1: 1011
       Param2: 0
       PrizeSetId: 10
@@ -183,7 +197,7 @@ MonoBehaviour:
     Selectable: 1
     Help: "\u7570\u5E38\u73FE\u8C61\u306B\u3088\u308A\u8C6A\u96EA\u304C\u5927\u548C\u4E2D\u8D8A\u5C71\u9593\u90E8\u3092\u8986\u3063\u305F\u5927\u707D\u5BB3\u3002\n\n<\u8A73\u7D30>\n\u5927\u96EA\u306B\u3088\u308A\u591A\u304F\u306E\u5EFA\u7269\u304C\u96EA\u306E\u91CD\u307F\u306B\u8010\u3048\u5207\u308C\u305A\u5012\u58CA\u3002\n\u4EA4\u901A\u306F\u5BF8\u65AD\u3055\u308C\u6551\u52A9\u6D3B\u52D5\u304C\u9045\u308C\n\u5B64\u7ACB\u3057\u305F\u5730\u57DF\u3067\u306F\u547D\u3092\u843D\u3068\u3059\u8005\u304C\u76F8\u6B21\u3044\u3060\u3002\n\n<\u6B7B\u8005\u6570>\n\u7D045\u4E07\u4EBA\u8D85\n\n<\u5099\u8003>\n\u547D\u540D\u306F\u6551\u52A9\u6D3B\u52D5\u304C\u99C6\u3051\u3064\u3051\u305F\u6642\u306E\u69D8\u5B50\u306B\u7531\u6765\u3059\u308B\u3002"
     StageLv: 10
-    Turns: 10
+    Turns: 12
     InitMembers: 0100000002000000030000000400000005000000
     RandomTroopCount: 15
     BackGround: NA_background image_3D like_404
@@ -201,9 +215,18 @@ MonoBehaviour:
     StageEvents: []
     StageSymbols:
     - StageId: 2
+      Seek: 0
+      SeekIndex: 0
+      SymbolType: 1
+      Rate: 100
+      Param1: 100
+      Param2: 0
+      PrizeSetId: 0
+    - StageId: 2
       Seek: 1
       SeekIndex: 0
       SymbolType: 5
+      Rate: 100
       Param1: 0
       Param2: 0
       PrizeSetId: 502
@@ -211,6 +234,7 @@ MonoBehaviour:
       Seek: 1
       SeekIndex: 1
       SymbolType: 5
+      Rate: 100
       Param1: 0
       Param2: 0
       PrizeSetId: 503
@@ -218,6 +242,7 @@ MonoBehaviour:
       Seek: 2
       SeekIndex: 0
       SymbolType: -1
+      Rate: 100
       Param1: 0
       Param2: 0
       PrizeSetId: 0
@@ -225,41 +250,47 @@ MonoBehaviour:
       Seek: 2
       SeekIndex: 1
       SymbolType: 1
-      Param1: 2001
+      Rate: 100
+      Param1: 2021
       Param2: 0
       PrizeSetId: 0
     - StageId: 2
       Seek: 3
       SeekIndex: 0
       SymbolType: -1
+      Rate: 100
       Param1: 0
       Param2: 0
       PrizeSetId: 0
     - StageId: 2
       Seek: 4
       SeekIndex: 0
-      SymbolType: -1
-      Param1: 0
-      Param2: 0
-      PrizeSetId: 0
-    - StageId: 2
-      Seek: 4
-      SeekIndex: 1
-      SymbolType: 201
-      Param1: 0
+      SymbolType: 1
+      Rate: 100
+      Param1: 2001
       Param2: 0
       PrizeSetId: 0
     - StageId: 2
       Seek: 5
       SeekIndex: 0
-      SymbolType: 1
-      Param1: 2003
+      SymbolType: -1
+      Rate: 100
+      Param1: 0
+      Param2: 0
+      PrizeSetId: 0
+    - StageId: 2
+      Seek: 5
+      SeekIndex: 1
+      SymbolType: 201
+      Rate: 100
+      Param1: 0
       Param2: 0
       PrizeSetId: 0
     - StageId: 2
       Seek: 6
       SeekIndex: 0
       SymbolType: -1
+      Rate: 100
       Param1: 0
       Param2: 0
       PrizeSetId: 0
@@ -267,6 +298,7 @@ MonoBehaviour:
       Seek: 6
       SeekIndex: 1
       SymbolType: 202
+      Rate: 100
       Param1: 0
       Param2: 0
       PrizeSetId: 0
@@ -274,6 +306,7 @@ MonoBehaviour:
       Seek: 7
       SeekIndex: 0
       SymbolType: -1
+      Rate: 100
       Param1: 0
       Param2: 0
       PrizeSetId: 0
@@ -281,6 +314,7 @@ MonoBehaviour:
       Seek: 7
       SeekIndex: 1
       SymbolType: 203
+      Rate: 100
       Param1: 0
       Param2: 0
       PrizeSetId: 0
@@ -288,34 +322,63 @@ MonoBehaviour:
       Seek: 8
       SeekIndex: 0
       SymbolType: -1
-      Param1: 0
-      Param2: 0
-      PrizeSetId: 0
-    - StageId: 2
-      Seek: 8
-      SeekIndex: 1
-      SymbolType: -1
-      Param1: 0
+      Rate: 100
+      Param1: 2001
       Param2: 0
       PrizeSetId: 0
     - StageId: 2
       Seek: 9
       SeekIndex: 0
       SymbolType: -1
+      Rate: 100
       Param1: 0
       Param2: 0
       PrizeSetId: 0
     - StageId: 2
       Seek: 9
       SeekIndex: 1
-      SymbolType: -1
+      SymbolType: 204
+      Rate: 100
       Param1: 0
       Param2: 0
       PrizeSetId: 0
     - StageId: 2
       Seek: 10
       SeekIndex: 0
+      SymbolType: -1
+      Rate: 100
+      Param1: 0
+      Param2: 0
+      PrizeSetId: 0
+    - StageId: 2
+      Seek: 10
+      SeekIndex: 1
+      SymbolType: 205
+      Rate: 100
+      Param1: 0
+      Param2: 0
+      PrizeSetId: 0
+    - StageId: 2
+      Seek: 11
+      SeekIndex: 0
+      SymbolType: -1
+      Rate: 100
+      Param1: 0
+      Param2: 0
+      PrizeSetId: 0
+    - StageId: 2
+      Seek: 11
+      SeekIndex: 1
+      SymbolType: -1
+      Rate: 100
+      Param1: 0
+      Param2: 0
+      PrizeSetId: 0
+    - StageId: 2
+      Seek: 12
+      SeekIndex: 0
       SymbolType: 2
+      Rate: 100
       Param1: 2011
       Param2: 0
       PrizeSetId: 10
@@ -326,7 +389,7 @@ MonoBehaviour:
     Selectable: 1
     Help: "\u5317\u6975\u661F\u306E\u4F4D\u7F6E\u3084\u52D5\u304D\u304C\u7A81\u7136\u5909\u7570\u3057\n\u5730\u7403\u306E\u6C17\u5019\u3084\u5929\u5019\u306B\u5927\u304D\u306A\u5F71\u97FF\u3092\u53CA\u307C\u3057\u305F\u4E00\u9023\u306E\u51FA\u6765\u4E8B\u3002\n\n<\u8A73\u7D30>\n\u6D77\u9762\u4E0A\u6607\u3084\u5730\u6BBB\u5909\u52D5\u304C\u6D3B\u767A\u5316\u3057\u5730\u9707\u3084\u706B\u5C71\u5674\u706B\u304C\u983B\u767A\u3057\u305F\u3002\n\n<\u6B7B\u8005\u6570>\n\u7D043\u4E07\u4EBA\n\n<\u5099\u8003>\n\u5927\u548C\u5168\u571F\u3092\u542B\u3080\u5168\u4E16\u754C\u5E83\u57DF\u306B\u3066\u767A\u751F\u3002"
     StageLv: 20
-    Turns: 8
+    Turns: 12
     InitMembers: 0100000002000000030000000400000005000000
     RandomTroopCount: 15
     BackGround: clipart _0147
@@ -342,7 +405,247 @@ MonoBehaviour:
     SubordinateValue: 0
     UseSlot: 0
     StageEvents: []
-    StageSymbols: []
+    StageSymbols:
+    - StageId: 3
+      Seek: 0
+      SeekIndex: 0
+      SymbolType: 1
+      Rate: 70
+      Param1: -1
+      Param2: 0
+      PrizeSetId: 0
+    - StageId: 3
+      Seek: 0
+      SeekIndex: 0
+      SymbolType: 201
+      Rate: 4
+      Param1: 0
+      Param2: 0
+      PrizeSetId: 0
+    - StageId: 3
+      Seek: 0
+      SeekIndex: 0
+      SymbolType: 202
+      Rate: 4
+      Param1: 0
+      Param2: 0
+      PrizeSetId: 0
+    - StageId: 3
+      Seek: 0
+      SeekIndex: 0
+      SymbolType: 203
+      Rate: 4
+      Param1: 0
+      Param2: 0
+      PrizeSetId: 0
+    - StageId: 3
+      Seek: 0
+      SeekIndex: 0
+      SymbolType: 204
+      Rate: 4
+      Param1: 0
+      Param2: 0
+      PrizeSetId: 0
+    - StageId: 3
+      Seek: 0
+      SeekIndex: 0
+      SymbolType: 205
+      Rate: 4
+      Param1: 0
+      Param2: 0
+      PrizeSetId: 0
+    - StageId: 3
+      Seek: 0
+      SeekIndex: 0
+      SymbolType: 6
+      Rate: 4
+      Param1: 0
+      Param2: 0
+      PrizeSetId: 10
+    - StageId: 3
+      Seek: 0
+      SeekIndex: 0
+      SymbolType: 6
+      Rate: 2
+      Param1: 0
+      Param2: 0
+      PrizeSetId: 20
+    - StageId: 3
+      Seek: 0
+      SeekIndex: 0
+      SymbolType: 6
+      Rate: 1
+      Param1: 0
+      Param2: 0
+      PrizeSetId: 30
+    - StageId: 3
+      Seek: 1
+      SeekIndex: 0
+      SymbolType: -1
+      Rate: 100
+      Param1: 0
+      Param2: 0
+      PrizeSetId: 0
+    - StageId: 3
+      Seek: 1
+      SeekIndex: 1
+      SymbolType: -1
+      Rate: 100
+      Param1: 0
+      Param2: 0
+      PrizeSetId: 0
+    - StageId: 3
+      Seek: 2
+      SeekIndex: 0
+      SymbolType: 5
+      Rate: 100
+      Param1: 0
+      Param2: 0
+      PrizeSetId: 505
+    - StageId: 3
+      Seek: 2
+      SeekIndex: 1
+      SymbolType: 4
+      Rate: 100
+      Param1: -1
+      Param2: 10
+      PrizeSetId: 0
+    - StageId: 3
+      Seek: 3
+      SeekIndex: 0
+      SymbolType: -1
+      Rate: 100
+      Param1: 0
+      Param2: 0
+      PrizeSetId: 0
+    - StageId: 3
+      Seek: 3
+      SeekIndex: 1
+      SymbolType: 6
+      Rate: 100
+      Param1: 0
+      Param2: 0
+      PrizeSetId: 620
+    - StageId: 3
+      Seek: 4
+      SeekIndex: 0
+      SymbolType: -1
+      Rate: 100
+      Param1: 3001
+      Param2: 0
+      PrizeSetId: 0
+    - StageId: 3
+      Seek: 5
+      SeekIndex: 0
+      SymbolType: -1
+      Rate: 100
+      Param1: 0
+      Param2: 0
+      PrizeSetId: 0
+    - StageId: 3
+      Seek: 5
+      SeekIndex: 1
+      SymbolType: -1
+      Rate: 100
+      Param1: 0
+      Param2: 0
+      PrizeSetId: 0
+    - StageId: 3
+      Seek: 6
+      SeekIndex: 0
+      SymbolType: 5
+      Rate: 100
+      Param1: 0
+      Param2: 0
+      PrizeSetId: 504
+    - StageId: 3
+      Seek: 6
+      SeekIndex: 1
+      SymbolType: 4
+      Rate: 100
+      Param1: -1
+      Param2: 10
+      PrizeSetId: 0
+    - StageId: 3
+      Seek: 7
+      SeekIndex: 0
+      SymbolType: -1
+      Rate: 100
+      Param1: 0
+      Param2: 0
+      PrizeSetId: 0
+    - StageId: 3
+      Seek: 7
+      SeekIndex: 1
+      SymbolType: 6
+      Rate: 100
+      Param1: 0
+      Param2: 0
+      PrizeSetId: 620
+    - StageId: 3
+      Seek: 8
+      SeekIndex: 0
+      SymbolType: -1
+      Rate: 100
+      Param1: 3002
+      Param2: 0
+      PrizeSetId: 0
+    - StageId: 3
+      Seek: 9
+      SeekIndex: 0
+      SymbolType: -1
+      Rate: 100
+      Param1: 0
+      Param2: 0
+      PrizeSetId: 0
+    - StageId: 3
+      Seek: 9
+      SeekIndex: 1
+      SymbolType: -1
+      Rate: 100
+      Param1: 0
+      Param2: 0
+      PrizeSetId: 0
+    - StageId: 3
+      Seek: 10
+      SeekIndex: 0
+      SymbolType: 4
+      Rate: 100
+      Param1: -1
+      Param2: 10
+      PrizeSetId: 0
+    - StageId: 3
+      Seek: 10
+      SeekIndex: 1
+      SymbolType: 6
+      Rate: 100
+      Param1: 0
+      Param2: 0
+      PrizeSetId: 630
+    - StageId: 3
+      Seek: 11
+      SeekIndex: 0
+      SymbolType: -1
+      Rate: 100
+      Param1: 0
+      Param2: 0
+      PrizeSetId: 0
+    - StageId: 3
+      Seek: 11
+      SeekIndex: 1
+      SymbolType: 4
+      Rate: 100
+      Param1: -1
+      Param2: 1
+      PrizeSetId: 0
+    - StageId: 3
+      Seek: 12
+      SeekIndex: 0
+      SymbolType: 2
+      Rate: 100
+      Param1: 3011
+      Param2: 0
+      PrizeSetId: 10
     Tutorials: []
   - Id: 4
     Name: "A.D.2504 \u30AE\u30D9\u30AA\u30F3\u9695\u77F3\u843D\u4E0B"
@@ -420,25 +723,25 @@ MonoBehaviour:
   - GroupId: 201
     SymbolType: 1
     Rate: 50
-    Param1: 2002
+    Param1: 2003
     Param2: 0
     PrizeSetId: 11020
   - GroupId: 201
     SymbolType: 1
     Rate: 50
-    Param1: 2002
+    Param1: 2003
     Param2: 0
     PrizeSetId: 11030
   - GroupId: 201
     SymbolType: 1
     Rate: 50
-    Param1: 2002
+    Param1: 2003
     Param2: 0
     PrizeSetId: 11050
   - GroupId: 201
     SymbolType: 1
     Rate: 50
-    Param1: 2002
+    Param1: 2003
     Param2: 0
     PrizeSetId: 11060
   - GroupId: 202

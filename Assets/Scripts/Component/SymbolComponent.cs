@@ -55,7 +55,7 @@ namespace Ryneus
         {
             if (commandTitle != null)
             {
-                if (_symbolInfo.SymbolType > SymbolType.None && _symbolInfo.SymbolType < SymbolType.Resource)
+                if (_symbolInfo.SymbolType > SymbolType.None && _symbolInfo.SymbolType <= SymbolType.Resource)
                 {
                     var textId = 40 + (int)_symbolInfo.SymbolType;
                     commandTitle.text = DataSystem.System.GetTextData(textId).Text;

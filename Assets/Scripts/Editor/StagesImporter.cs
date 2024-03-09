@@ -53,6 +53,7 @@ namespace Ryneus
 			SeekIndex,
 			SymbolType,
 			_SymbolType,
+			Rate,
 			Param1,
 			Param2,
 			PrizeSetId
@@ -194,6 +195,7 @@ namespace Ryneus
 								SymbolData.Seek = (int)SymbolRow.GetCell((int)BaseSymbolColumn.Seek)?.SafeNumericCellValue();
 								SymbolData.SeekIndex = (int)SymbolRow.GetCell((int)BaseSymbolColumn.SeekIndex)?.SafeNumericCellValue();
 								SymbolData.SymbolType = (SymbolType)SymbolRow.GetCell((int)BaseSymbolColumn.SymbolType)?.SafeNumericCellValue();
+								SymbolData.Rate = (int)SymbolRow.GetCell((int)BaseSymbolColumn.Rate)?.SafeNumericCellValue();
 								SymbolData.Param1 = (int)SymbolRow.GetCell((int)BaseSymbolColumn.Param1)?.SafeNumericCellValue();
 								SymbolData.Param2 = (int)SymbolRow.GetCell((int)BaseSymbolColumn.Param2)?.SafeNumericCellValue();
 								SymbolData.PrizeSetId = (int)SymbolRow.GetCell((int)BaseSymbolColumn.PrizeSetId)?.SafeNumericCellValue();

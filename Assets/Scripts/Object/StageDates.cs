@@ -59,6 +59,7 @@ namespace Ryneus
         public int Seek;
         public int SeekIndex;
         public SymbolType SymbolType;
+        public int Rate;
         public int Param1;
         public int Param2;
         public int PrizeSetId;

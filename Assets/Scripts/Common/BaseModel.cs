@@ -478,7 +478,7 @@ namespace Ryneus
         public List<SymbolInfo> StageSymbolInfos()
         {
             var symbolInfos = new List<SymbolInfo>();
-            var symbols = CurrentStage.Master.StageSymbols;
+            var symbols = CurrentStage.Master.StageSymbols.FindAll(a => a.Seek > 0);
             foreach (var symbol in symbols)
             {
                 var symbolInfo = new SymbolInfo(symbol);
@@ -509,6 +509,26 @@ namespace Ryneus
                     if (symbolInfo.TroopInfo != null && symbolInfo.TroopInfo.GetItemInfos.Count > 0)
                     {
                         getItemInfos.AddRange(symbolInfo.TroopInfo.GetItemInfos);
+                    }
+                }
+                // アルカナランダムで報酬設定
+                if (symbolInfo.SymbolType == SymbolType.Alcana)
+                {
+                    if (symbolInfo.StageSymbolData.Param1 == -1)
+                    {
+                        var alcanaRank = symbolInfo.StageSymbolData.Param2;
+                        var alcanaSkills = DataSystem.Skills.FindAll(a => a.Rank == alcanaRank);
+                        var rand = UnityEngine.Random.Range(0,alcanaSkills.Count);
+                        if (alcanaSkills.Count > 0)
+                        {
+                            var getItemData = new GetItemData();
+                            getItemData.Type = GetItemType.Skill;
+                            getItemData.Param1 = alcanaSkills[rand].Id;
+                            var getItemInfo = new GetItemInfo(getItemData);
+                            symbolInfo.SetGetItemInfos(new List<GetItemInfo>(){getItemInfo});
+                            getItemInfos.Add(getItemInfo);
+                        }
+
                     }
                 }
                 if (symbolInfo.StageSymbolData.PrizeSetId > 0)
@@ -563,20 +583,33 @@ namespace Ryneus
         {
             // 候補を生成
             var stageSymbolList = new List<StageSymbolData>();
-            foreach (var stageSymbol in DataSystem.FindStage(0).StageSymbols)
+            foreach (var stageSymbol in DataSystem.FindStage(CurrentStage.Id).StageSymbols)
             {
-                if (stageSymbol.Seek > 0)
+                if (stageSymbol.Seek == 0)
                 {
                     stageSymbolList.Add(stageSymbol);
                 }
             }
             var stageSymbolData = new StageSymbolData();
             stageSymbolData.SymbolType = SymbolType.None;
+            int targetRand = 0;
+            foreach (var stageSymbol in stageSymbolList)
+            {
+                targetRand += stageSymbol.Rate;
+            }
+            targetRand = UnityEngine.Random.Range(0,targetRand);
             while (stageSymbolData.SymbolType == SymbolType.None)
             {
-                int targetRand = stageSymbolList.Count;
-                targetRand = UnityEngine.Random.Range(0,targetRand);
-                var symbol = stageSymbolList[targetRand];
+                int targetIndex = -1;
+                for (int i = 0;i < stageSymbolList.Count;i++)
+                {
+                    targetRand -= stageSymbolList[i].Rate;
+                    if (targetRand <= 0 && targetIndex == -1)
+                    {
+                        targetIndex = i;
+                    }
+                }
+                var symbol = stageSymbolList[targetIndex];
                 switch (symbol.SymbolType)
                 {
                     case SymbolType.Battle:

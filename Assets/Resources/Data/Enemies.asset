@@ -457,7 +457,7 @@ MonoBehaviour:
       TriggerDates: []
   - Id: 102
     Name: "\u30B5\u30EB\u30EF"
-    ImagePath: Bifrons
+    ImagePath: Paimon
     BaseStatus:
       _hp: 100
       _mp: 10
@@ -466,13 +466,17 @@ MonoBehaviour:
       _spd: 15
     Kinds: 
     LearningSkills:
-    - SkillId: 3010
+    - SkillId: 4010
       Level: 1
-      Weight: 30
+      Weight: 40
       TriggerDates: []
-    - SkillId: 13070
+    - SkillId: 4030
       Level: 1
-      Weight: 0
+      Weight: 40
+      TriggerDates: []
+    - SkillId: 4060
+      Level: 1
+      Weight: 40
       TriggerDates: []
     - SkillId: 200210
       Level: 1
@@ -540,7 +544,7 @@ MonoBehaviour:
       TriggerDates: []
   - Id: 105
     Name: "\u30C9\u30A5\u30EB\u30B8"
-    ImagePath: Paimon
+    ImagePath: Bifrons
     BaseStatus:
       _hp: 80
       _mp: 10

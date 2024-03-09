@@ -144,7 +144,7 @@ namespace Ryneus
                     case TriggerType.HpRateUnder:
                     if (battlerInfo.Hp == 0)
                     {
-                        CanUse = (Param1 == 0);
+                        CanUse = Param1 == 0;
                     } else
                     if (((float)battlerInfo.Hp / (float)battlerInfo.MaxHp) < Param1 * 0.01f)
                     {
@@ -159,6 +159,12 @@ namespace Ryneus
                     break;
                     case TriggerType.HpValue:
                     if (battlerInfo.Hp == Param1)
+                    {
+                        CanUse = true;
+                    }
+                    break;
+                    case TriggerType.HpUnder:
+                    if (battlerInfo.Hp <= Param1)
                     {
                         CanUse = true;
                     }
@@ -373,6 +379,7 @@ namespace Ryneus
         HpRateUnder = 1, // Hpが〇%以下
         HpRateUpper = 2, // Hpが〇%以上
         HpValue = 3, // Hpが〇
+        HpUnder = 4, // Hpが〇
         PartyHpRateUnder = 6, // 味方にHpが〇%以下がいる
         MpUnder = 11, // Mpが〇以下
         MpUpper = 12, // Mpが〇以上
