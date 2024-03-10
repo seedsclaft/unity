@@ -61,14 +61,6 @@ namespace Ryneus
 			{
 				var actorInfo = new ActorInfo(DataSystem.FindActor(actorData.Id));
 				_party.UpdateActorInfo(actorInfo);
-				for (int i = 0;i < actorInfo.Master.LearningSkills.Count;i++)
-				{
-					var _learningData = actorInfo.Master.LearningSkills[i];
-					if (actorInfo.Skills.Find(a =>a.Id == _learningData.SkillId) != null) continue;
-					var skillInfo = new SkillInfo(_learningData.SkillId);
-					skillInfo.SetLearningState(LearningState.Learned);
-					actorInfo.Skills.Add(skillInfo);
-				}
 				if (lvUpNum > 0)
 				{
 					actorInfo.LevelUp(lvUpNum-1);

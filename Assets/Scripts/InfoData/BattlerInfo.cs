@@ -95,7 +95,7 @@ namespace Ryneus
             );
             _status = statusInfo;
             _index = index;
-            _skills = actorInfo.Skills.FindAll(a => a.LearningState == LearningState.Learned || a.LearningState == LearningState.Equipment);
+            _skills = actorInfo.LearningSkillInfos().FindAll(a => a.LearningState == LearningState.Learned || a.LearningState == LearningState.Equipment);
             
             _demigodParam = actorInfo.DemigodParam;
             _isActor = true;

@@ -30,8 +30,8 @@ namespace Ryneus
             }
             return list;
         }
-        private List<SkillInfo> _skills = new ();
-        public List<SkillInfo> Skills => _skills;
+        private List<int> _learnSkillIds = new ();
+        private List<int> LearnSkillIds => _learnSkillIds;
 
         private int _lastSelectSkillId = 0;
         public int LastSelectSkillId => _lastSelectSkillId;
@@ -124,13 +124,7 @@ namespace Ryneus
                 baseActorInfo._plusStatus.GetParameter(StatusParamType.Def),
                 baseActorInfo._plusStatus.GetParameter(StatusParamType.Spd)
             );
-            _skills.Clear();
-            foreach (var baseSkill in baseActorInfo.Skills)
-            {
-                var skillInfo = new SkillInfo(baseSkill.Id);
-                skillInfo.CopyData(baseSkill);
-                _skills.Add(skillInfo);
-            }
+            _learnSkillIds = baseActorInfo._learnSkillIds;
             _lastSelectSkillId = baseActorInfo.LastSelectSkillId;
             _currentHp = baseActorInfo.CurrentHp;
             _currentMp = baseActorInfo.CurrentMp;
@@ -152,11 +146,21 @@ namespace Ryneus
 
         private void InitSkillInfo()
         {
-            _skills.Clear();
+            _lastSelectSkillId = 0;
+            var selectSkill = LearningSkillInfos().Find(a => a.Id >= 100);
+            if (selectSkill != null){
+                _lastSelectSkillId = selectSkill.Id;
+            }
+
+        }
+
+        public List<SkillInfo> LearningSkillInfos()
+        {
+            var list = new List<SkillInfo>();
             for (int i = 0;i < Master.LearningSkills.Count;i++)
             {
                 var _learningData = Master.LearningSkills[i];
-                if (_skills.Find(a =>a.Id == _learningData.SkillId) != null) continue;
+                if (list.Find(a =>a.Id == _learningData.SkillId) != null) continue;
                 var skillInfo = new SkillInfo(_learningData.SkillId);
                 if (_level >= _learningData.Level)
                 {
@@ -166,14 +170,15 @@ namespace Ryneus
                     skillInfo.SetLearningLv(_learningData.Level);
                     skillInfo.SetLearningState(LearningState.NotLearn);
                 }
-                _skills.Add(skillInfo);
+                list.Add(skillInfo);
             }
-            _lastSelectSkillId = 0;
-            var selectSkill = _skills.Find(a => a.Id >= 100);
-            if (selectSkill != null){
-                _lastSelectSkillId = selectSkill.Id;
+            foreach (var _learnSkillId in _learnSkillIds)
+            {
+                var skillInfo = new SkillInfo(_learnSkillId);
+                skillInfo.SetLearningState(LearningState.Learned);
+                list.Add(skillInfo);
             }
-
+            return list;
         }
 
         public void ResetData()
@@ -228,7 +233,7 @@ namespace Ryneus
 
         public List<SkillInfo> LearningSkills(int plusLv = 0)
         {
-            return _skills.FindAll(a => a.LearningState == LearningState.NotLearn && a.LearningLv <= (_level+plusLv));
+            return LearningSkillInfos().FindAll(a => a.LearningState == LearningState.NotLearn && a.LearningLv <= (_level+plusLv));
         }
 
         public void GainLevelUpCost(int cost)
@@ -238,22 +243,20 @@ namespace Ryneus
 
         public bool IsLearnedSkill(int skillId)
         {
-            return _skills.Find(a => a.Id == skillId) != null;
+            return _learnSkillIds.Contains(skillId);
         }
 
         public void LearnSkill(int skillId)
         {
-            var skillInfo = new SkillInfo(skillId);
-            skillInfo.SetLearningState(LearningState.Learned);
-            _skills.Add(skillInfo);
+            _learnSkillIds.Add(skillId);
         }
 
         public void ForgetSkill(SkillInfo skillInfo)
         {
-            int skillIdx = _skills.FindIndex(a => a == skillInfo);
+            int skillIdx = _learnSkillIds.FindIndex(a => a == skillInfo.Id);
             if (skillIdx > 0)
             {
-                _skills.RemoveAt(skillIdx);
+                _learnSkillIds.RemoveAt(skillIdx);
             }
         }
 
@@ -323,7 +326,7 @@ namespace Ryneus
             var alchemyFeatures = new List<SkillData.FeatureData>();
             foreach (var actorInfo in actorInfos)
             {
-                var skillInfos = actorInfo.Skills.FindAll(a => a.Master.FeatureDates.Find(b => b.FeatureType == FeatureType.MagicAlchemy)!= null);
+                var skillInfos = actorInfo.LearningSkillInfos().FindAll(a => a.Master.FeatureDates.Find(b => b.FeatureType == FeatureType.MagicAlchemy)!= null);
                 foreach (var skillInfo in skillInfos)
                 {
                     foreach (var featureData in skillInfo.Master.FeatureDates)
@@ -415,7 +418,7 @@ namespace Ryneus
             + CurrentParameter(StatusParamType.Def) * 8
             + CurrentParameter(StatusParamType.Spd) * 8;
             float magicValue = 0;
-            foreach (var skillInfo in _skills)
+            foreach (var skillInfo in LearningSkillInfos())
             {
                 if (skillInfo.LearningState == LearningState.Learned)
                 {
@@ -461,7 +464,7 @@ namespace Ryneus
 
         public List<ListData> SkillActionList()
         {
-            var skillInfos = Skills.FindAll(a => a.Id > 100);
+            var skillInfos = LearningSkillInfos().FindAll(a => a.Id > 100);
 
             skillInfos.ForEach(a => a.SetEnable(a.LearningState == LearningState.Learned));
             var sortList1 = new List<SkillInfo>();
@@ -489,25 +492,6 @@ namespace Ryneus
             skillInfos.AddRange(sortList3);
             //skillInfos.Sort((a,b) => {return a.LearningState > b.LearningState ? 1 : -1;});
             return ListData.MakeListData(skillInfos);
-        }
-
-        public void UpdateLearningDates(List<LearningData> learningDates)
-        {
-            foreach (var skillInfo in _skills)
-            {
-                var learningDate = learningDates.Find(a => a.SkillId == skillInfo.Id);
-                if (learningDate != null)
-                {
-                    skillInfo.SetLearningLv(learningDate.Level);
-                    if (_level >= learningDate.Level)
-                    {
-                        skillInfo.SetLearningState(LearningState.Learned);
-                    } else
-                    {
-                        skillInfo.SetLearningState(LearningState.NotLearn);
-                    }
-                }
-            }
         }
 
         public int LevelUpByCost()

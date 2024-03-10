@@ -31,7 +31,7 @@ namespace Ryneus
             _view.SetTitleCommand(_model.TitleCommand());
             CommandRefresh();
             var bgm = await _model.GetBgmData("TITLE");
-            Ryneus.SoundManager.Instance.PlayBgm(bgm,1.0f,false);
+            SoundManager.Instance.PlayBgm(bgm,1.0f,false);
             _busy = false;
         }
 
@@ -97,8 +97,6 @@ namespace Ryneus
             if (loadStage)
             {
                 SaveSystem.LoadStageInfo();
-                // 習得データを変更
-                GameSystem.CurrentStageData.Party.ActorInfos.ForEach(a => a.UpdateLearningDates(DataSystem.Actors.Find(b => b.Id == a.ActorId).LearningSkills));
             } else
             {
                 _model.InitSaveStageInfo();

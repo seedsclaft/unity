@@ -28,13 +28,22 @@ namespace Ryneus
 
 		private static void SaveInfo<T>(string path,T userSaveInfo)
 		{
-	#if UNITY_WEBGL
+	#if UNITY_WEBGL 
 			//	バイナリ形式でシリアル化
 			var TempBinaryFormatter = new BinaryFormatter();
 			var memoryStream = new MemoryStream();
 			TempBinaryFormatter.Serialize (memoryStream,userSaveInfo);
 			var saveData = Convert.ToBase64String (memoryStream.GetBuffer());
 			PlayerPrefs.SetString(path, saveData);
+	#elif UNITY_STANDALONE_WIN
+			var TempBinaryFormatter = new BinaryFormatter();
+			var memoryStream = new MemoryStream();
+			TempBinaryFormatter.Serialize (memoryStream,userSaveInfo);
+			var saveData = Convert.ToBase64String (memoryStream.GetBuffer());
+			StreamWriter Stm_Writer = new StreamWriter(path,false);
+			Stm_Writer.Write(saveData);
+			Stm_Writer.Flush();
+			Stm_Writer.Close();
 	#else
 			try
 			{
@@ -63,9 +72,9 @@ namespace Ryneus
 			{
 				userSaveInfo = new SaveInfo();
 			}
-	#if UNITY_ANDROID
+	#if UNITY_ANDROID || UNITY_STANDALONE_WIN
 			SaveInfo(SaveFilePath(_playerDataKey),userSaveInfo);
-	#elif UNITY_WEBGL
+	#elif UNITY_WEBGL 
 			SaveInfo(_playerDataKey,userSaveInfo);
 	#endif
 		}
@@ -86,6 +95,24 @@ namespace Ryneus
 			}
 			// Jsonへの展開失敗　改ざんの可能性あり
 			catch(Exception e)
+			{
+				// 例外が発生するのでここで処理
+				Debug.LogException(e);
+				GameSystem.CurrentData = new SaveInfo();
+				return false;
+			}
+	#elif UNITY_STANDALONE_WIN
+			try
+			{
+				var	TempBinaryFormatter = new BinaryFormatter();
+				StreamReader Stm_Reader = new StreamReader(SaveFilePath(_playerDataKey));
+				var saveData = Stm_Reader.ReadToEnd();
+				var bytes = Convert.FromBase64String(saveData);
+				Stm_Reader.Close();
+				var memoryStream = new MemoryStream(bytes);
+				GameSystem.CurrentData = (SaveInfo)TempBinaryFormatter.Deserialize (memoryStream);
+				return true;
+			} catch(Exception e)
 			{
 				// 例外が発生するのでここで処理
 				Debug.LogException(e);
@@ -144,7 +171,7 @@ namespace Ryneus
 
 		public static void SaveStageInfo(SaveStageInfo userSaveInfo = null,int fileId = 0)
 		{
-	#if UNITY_ANDROID
+	#if UNITY_ANDROID || UNITY_STANDALONE_WIN
 			SaveInfo(SaveFilePath(_playerStageDataKey,fileId),userSaveInfo);
 	#elif UNITY_WEBGL
 			SaveInfo(PlayerStageDataKey(fileId),userSaveInfo);
@@ -154,12 +181,34 @@ namespace Ryneus
 			
 		public static bool LoadStageInfo(int fileId = 0)
 		{
-	#if UNITY_WEBGL		
+	#if UNITY_WEBGL
 			try
 			{
 				//	バイナリ形式でデシリアライズ
 				var	TempBinaryFormatter = new BinaryFormatter();
 				var saveData = PlayerPrefs.GetString(PlayerStageDataKey(fileId));
+				var bytes = Convert.FromBase64String(saveData);
+				var memoryStream = new MemoryStream(bytes);
+				GameSystem.CurrentStageData = (SaveStageInfo)TempBinaryFormatter.Deserialize (memoryStream);
+				return true;
+			}
+			// Jsonへの展開失敗　改ざんの可能性あり
+			catch(Exception e)
+			{
+				// 例外が発生するのでここで処理
+				Debug.LogException(e);
+				Debug.Log("改ざんされたため　冒険の書は消えてしまいました");
+				GameSystem.CurrentData = new SaveInfo();
+				return false;
+			}
+	#elif UNITY_STANDALONE_WIN
+			try
+			{
+				StreamReader Stm_Reader = new StreamReader(SaveFilePath(_playerStageDataKey,fileId));
+				var saveData = Stm_Reader.ReadToEnd();
+				Stm_Reader.Close();
+				//	バイナリ形式でデシリアライズ
+				var	TempBinaryFormatter = new BinaryFormatter();
 				var bytes = Convert.FromBase64String(saveData);
 				var memoryStream = new MemoryStream(bytes);
 				GameSystem.CurrentStageData = (SaveStageInfo)TempBinaryFormatter.Deserialize (memoryStream);
@@ -202,9 +251,9 @@ namespace Ryneus
 	#endif
 		}
 
-		public static bool ExistsStageFile(int fileId = 0)
+		public static bool ExistsStageFile()
 		{
-			return ExistsLoadFile(_playerStageDataKey + fileId);
+			return ExistsLoadFile(_playerStageDataKey);
 		}
 
 		public static void SaveConfigStart(SaveConfigInfo userSaveInfo = null)
@@ -214,7 +263,7 @@ namespace Ryneus
 			{
 				userSaveInfo = new SaveConfigInfo();
 			}
-	#if UNITY_ANDROID
+	#if UNITY_ANDROID || UNITY_STANDALONE_WIN
 			SaveInfo(SaveFilePath(_optionDataKey),userSaveInfo);
 	#elif UNITY_WEBGL
 			SaveInfo(_optionDataKey,userSaveInfo);
@@ -230,6 +279,25 @@ namespace Ryneus
 				//	バイナリ形式でデシリアライズ
 				var	TempBinaryFormatter = new BinaryFormatter();
 				var saveData = PlayerPrefs.GetString(_optionDataKey);
+				var memoryStream = new MemoryStream(Convert.FromBase64String (saveData));
+				GameSystem.ConfigData = (SaveConfigInfo)TempBinaryFormatter.Deserialize (memoryStream);
+			}
+			// Jsonへの展開失敗　改ざんの可能性あり
+			catch(Exception e)
+			{
+				// 例外が発生するのでここで処理
+				Debug.LogException(e);
+				Debug.Log("改ざんされたため　冒険の書は消えてしまいました");
+				GameSystem.ConfigData  = new SaveConfigInfo();
+			}
+	#elif UNITY_STANDALONE_WIN
+			try
+			{
+				//	バイナリ形式でデシリアライズ
+				StreamReader Stm_Reader = new StreamReader(SaveFilePath(_optionDataKey));
+				var saveData = Stm_Reader.ReadToEnd();
+				Stm_Reader.Close();
+				var	TempBinaryFormatter = new BinaryFormatter();
 				var memoryStream = new MemoryStream(Convert.FromBase64String (saveData));
 				GameSystem.ConfigData = (SaveConfigInfo)TempBinaryFormatter.Deserialize (memoryStream);
 			}
@@ -286,6 +354,18 @@ namespace Ryneus
 			{
 				Debug.LogException(e);
 			}
+	#elif UNITY_STANDALONE_WIN
+			try
+			{
+				File.Delete(SaveFilePath(_playerDataKey));
+				File.Delete(SaveFilePath(_playerStageDataKey + fileId));
+				GameSystem.CurrentStageData = new SaveStageInfo();
+				GameSystem.CurrentData = new SaveInfo();
+			}
+			catch(Exception e)
+			{
+				Debug.LogException(e);
+			}
 	#else
 			try 
 			{
@@ -297,14 +377,6 @@ namespace Ryneus
 			catch (Exception e)
 			{
 				Debug.LogException(e);
-			}
-			finally 
-			{
-				//	ファイル操作には明示的な破棄が必要です。Closeを忘れないように。
-				if( TempFileStream != null )
-				{
-					TempFileStream.Close();
-				}
 			}
 			#endif
 		}

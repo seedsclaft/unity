@@ -725,7 +725,7 @@ namespace Ryneus
             var baseText = DataSystem.GetTextData(3061).Text;
     #if UNITY_ANDROID
             var subText = DataSystem.GetReplaceText(3062,CurrentStage.Master.ContinueLimit.ToString());
-    #elif UNITY_WEBGL
+    #else
             var subText = DataSystem.GetReplaceText(3064,CurrentStage.Master.ContinueLimit.ToString());
     #endif
             var continueCount = DataSystem.GetReplaceText(3063,(CurrentStage.ContinueCount+1).ToString());

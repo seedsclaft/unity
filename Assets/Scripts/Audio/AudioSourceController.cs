@@ -23,6 +23,7 @@ namespace Ryneus
 
         public void Play(int timeSamples = 0)
         {
+            if (_audioSource == null) return;
             _audioSource.timeSamples = timeSamples;
             _audioSource.Play();
             _isPlay = true;
@@ -30,27 +31,32 @@ namespace Ryneus
 
         public void PlayDelay(float reserveTime)
         {
+            if (_audioSource == null) return;
             _audioSource.PlayDelayed(reserveTime);
         }
 
         public void Pause()
         {
+            if (_audioSource == null) return;
             _audioSource.Pause();
         }
 
         public void Stop()
         {
+            if (_audioSource == null) return;
             _audioSource.Stop();
             _isPlay = false;
         }
 
         public void ChangeVolume(float volume)
         {
+            if (_audioSource == null) return;
             _audioSource.volume = volume;
         }
 
         public void SetAudioData(AudioClip clip,bool isLoop = false,bool playOnAwake = false)
         {
+            if (_audioSource == null) return;
             _audioSource.clip = clip;
             _audioSource.loop = isLoop;
             _audioSource.playOnAwake = playOnAwake;
@@ -63,6 +69,7 @@ namespace Ryneus
 
         public void SetReserveTimestamp()
         {
+            if (_audioSource == null) return;
             _reserveTimeSample = (int)(_audioSource.clip.length * _audioSource.clip.frequency);
         }
 
@@ -91,6 +98,7 @@ namespace Ryneus
 
         public void FadeVolume(float targetVolume,int duration)
         {
+            if (_audioSource == null) return;
             _audioSource.DOFade(targetVolume, duration);
         }
     }

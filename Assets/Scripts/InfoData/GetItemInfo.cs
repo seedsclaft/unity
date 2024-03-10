@@ -49,8 +49,8 @@ namespace Ryneus
             switch (_getItemType)
             {
                 case GetItemType.Numinous:
-                    SetTitleData(DataSystem.GetTextData(14090).Text + "+" + _param1.ToString() + DataSystem.GetTextData(1000).Text);
-                    SetResultData(DataSystem.GetTextData(14090).Text + "+" + _param1.ToString() + DataSystem.GetTextData(1000).Text);
+                    SetTitleData("+" + _param1.ToString() + DataSystem.GetTextData(1000).Text);
+                    SetResultData("+" + _param1.ToString() + DataSystem.GetTextData(1000).Text);
                     break;
                 case GetItemType.Skill:
                     var skillData = DataSystem.FindSkill(_param1);

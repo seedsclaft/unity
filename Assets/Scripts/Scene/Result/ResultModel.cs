@@ -200,25 +200,6 @@ namespace Ryneus
         private List<SkillInfo> AddMagicRebornSkill()
         {
             var list = new List<SkillInfo>();
-            var magicReborn = DataSystem.Skills.Find(a => a.FeatureDates.Find(b => b.FeatureType == FeatureType.RebornAddSkill) != null);
-            
-            var actorInfo = StageMembers()[0];
-            var skills = actorInfo.Skills.FindAll(a => a.Master.Rank == 1 && actorInfo.Master.LearningSkills.Find(b => b.SkillId == a.Master.Id) == null);
-            foreach (var skill in skills)
-            {
-                var rate = 10;
-                if ((int)actorInfo.GetAttributeRank()[(int)(skill.Attribute-1)] <= 1)
-                {
-                    rate = 20;
-                }
-                var skillRand = UnityEngine.Random.Range(0,100);
-                if (rate >= skillRand)
-                {
-                    var rebornSkillInfo = new SkillInfo(magicReborn.Id);
-                    rebornSkillInfo.SetParam(skill.Id,0,skill.Master.Id);
-                    list.Add(rebornSkillInfo);
-                }
-            }
             return list;
         }
 

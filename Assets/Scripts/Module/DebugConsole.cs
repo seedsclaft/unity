@@ -14,6 +14,7 @@ namespace Ryneus
         {
     #if UNITY_EDITOR
             consoleInputField.onEndEdit.AddListener((a) => CallConsoleCommand(a));
+            gameObject.SetActive(true);
     #else
             gameObject.SetActive(false);
     #endif
