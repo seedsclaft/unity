@@ -57,7 +57,7 @@ namespace Ryneus
                 // 新規魔法取得があるか
                 var skills = lvUpActorInfo.LearningSkills(1);
                 var from = lvUpActorInfo.Evaluate();
-                var statusInfo = lvUpActorInfo.LevelUp(0);
+                lvUpActorInfo.LevelUp(0);
                 var to = lvUpActorInfo.Evaluate();
                 if (skills.Count > 0)
                 {
@@ -67,13 +67,6 @@ namespace Ryneus
                 {
                     _learnSkillInfo.Add(null);
                 }
-                lvUpActorInfo.TempStatus.SetParameter(
-                    statusInfo.Hp,
-                    statusInfo.Mp,
-                    statusInfo.Atk,
-                    statusInfo.Def,
-                    statusInfo.Spd
-                );
                 lvUpList.Add(lvUpActorInfo);
             }
             _levelUpData = lvUpList;
@@ -121,8 +114,7 @@ namespace Ryneus
                         {
                             if (stageMember.Lost == false)
                             {
-                                stageMember.TempStatus.AddParameterAll(getItemInfo.Param1);
-                                stageMember.DecideStrength();
+                                stageMember.LevelUp(0);
                             }
                         }
                         break;
@@ -154,15 +146,7 @@ namespace Ryneus
                         var levelUpByCost = actorInfo.LevelUpByCost();
                         if (levelUpByCost > 0)
                         {
-                            var statusInfo = actorInfo.LevelUp(levelUpByCost-1);
-                            actorInfo.TempStatus.SetParameter(
-                                statusInfo.Hp,
-                                statusInfo.Mp,
-                                statusInfo.Atk,
-                                statusInfo.Def,
-                                statusInfo.Spd
-                            );
-                            actorInfo.DecideStrength();
+                            actorInfo.LevelUp(levelUpByCost-1);
                             var getItemData = new GetItemData();
                             var getItemInfo = new GetItemInfo(getItemData);
                             getItemInfo.MakeActorLvUpResult(actorInfo.Master.Name,actorInfo.Level);
@@ -180,8 +164,6 @@ namespace Ryneus
 
         public void DecideStrength()
         {
-            var actorInfo = _levelUpData[0];
-            actorInfo.DecideStrength();
         }
 
         public void RemoveLevelUpData()

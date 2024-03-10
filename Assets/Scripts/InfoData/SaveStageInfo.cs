@@ -71,16 +71,7 @@ namespace Ryneus
 				}
 				if (lvUpNum > 0)
 				{
-					var statusInfo = actorInfo.LevelUp(lvUpNum-1);
-					actorInfo.TempStatus.SetParameter(
-						statusInfo.Hp,
-						statusInfo.Mp,
-						statusInfo.Atk,
-						statusInfo.Def,
-						statusInfo.Spd
-					);
-					actorInfo.DecideStrength();
-					actorInfo.ChangeHp(actorInfo.MaxHp);
+					actorInfo.LevelUp(lvUpNum-1);
 				}
 			}
 		}

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using UnityEngine;
 
 namespace Ryneus
 {
@@ -17,17 +18,12 @@ namespace Ryneus
         private int _levelUpCost = 0;
         public int LevelUpCost => _levelUpCost;
         
-        private StatusInfo _baseStatus;
-        private StatusInfo _currentStatus;
-        public StatusInfo CurrentStatus => _currentStatus;
-        private StatusInfo _upperRate;
-        private List<AttributeRank> _attribute;
-        public List<AttributeRank> Attribute => _attribute;
+        public StatusInfo CurrentStatus => LevelUpStatus(_level);
         public List<AttributeRank> GetAttributeRank()
         {
             var list = new List<AttributeRank>();
             var idx = 0;
-            foreach (var attribute in _attribute)
+            foreach (var attribute in Master.Attribute)
             {
                 list.Add(attribute);
                 idx++;
@@ -79,20 +75,16 @@ namespace Ryneus
         private int _numinous = 0;
         public int Numinous => _numinous;
         private StatusInfo _plusStatus;
-        private StatusInfo _tempStatus;
-        public StatusInfo TempStatus => _tempStatus;
 
         private List<SkillInfo> _rebornSkillInfos = new ();
         public List<SkillInfo> RebornSkillInfos => _rebornSkillInfos;
         public ActorInfo(ActorData actorData)
         {
             _actorId = actorData.Id;
-            _attribute = actorData.Attribute;
             _level = actorData.InitLv;
-            _upperRate = actorData.NeedStatus;
             SetInitialParameter(actorData);
-            _currentHp = _baseStatus.Hp;
-            _currentMp = _baseStatus.Mp;
+            _currentHp = Master.InitStatus.Hp;
+            _currentMp = Master.InitStatus.Mp;
             _demigodParam = 10;
             InitSkillInfo();
         }
@@ -106,17 +98,17 @@ namespace Ryneus
             _sp = 0;
             _upperRate = Master.NeedStatus;
             SetInitialParameter(Master);
-            _currentHp = _baseStatus.Hp;
-            _currentMp = _baseStatus.Mp;
+            _currentHp = Master.InitStatus.Hp;
+            _currentMp = Master.InitStatus.Mp;
             _demigodParam = rankingActorData.DemigodParam;
             InitSkillInfo();
             
             _plusStatus.SetParameter(
-                rankingActorData.Hp - _baseStatus.Hp,
-                rankingActorData.Mp - _baseStatus.Mp,
-                rankingActorData.Atk - _baseStatus.Atk,
-                rankingActorData.Def - _baseStatus.Def,
-                rankingActorData.Spd - _baseStatus.Spd
+                rankingActorData.Hp - Master.InitStatus.Hp,
+                rankingActorData.Mp - Master.InitStatus.Mp,
+                rankingActorData.Atk - Master.InitStatus.Atk,
+                rankingActorData.Def - Master.InitStatus.Def,
+                rankingActorData.Spd - Master.InitStatus.Spd
             );
         }
     #endif
@@ -131,22 +123,6 @@ namespace Ryneus
                 baseActorInfo._plusStatus.GetParameter(StatusParamType.Atk),
                 baseActorInfo._plusStatus.GetParameter(StatusParamType.Def),
                 baseActorInfo._plusStatus.GetParameter(StatusParamType.Spd)
-            );
-            _currentStatus = new StatusInfo();
-            _currentStatus.SetParameter(
-                baseActorInfo.CurrentStatus.GetParameter(StatusParamType.Hp),
-                baseActorInfo.CurrentStatus.GetParameter(StatusParamType.Mp),
-                baseActorInfo.CurrentStatus.GetParameter(StatusParamType.Atk),
-                baseActorInfo.CurrentStatus.GetParameter(StatusParamType.Def),
-                baseActorInfo.CurrentStatus.GetParameter(StatusParamType.Spd)
-            );
-            _tempStatus = new StatusInfo();
-            _tempStatus.SetParameter(
-                baseActorInfo.TempStatus.GetParameter(StatusParamType.Hp),
-                baseActorInfo.TempStatus.GetParameter(StatusParamType.Mp),
-                baseActorInfo.TempStatus.GetParameter(StatusParamType.Atk),
-                baseActorInfo.TempStatus.GetParameter(StatusParamType.Def),
-                baseActorInfo.TempStatus.GetParameter(StatusParamType.Spd)
             );
             _skills.Clear();
             foreach (var baseSkill in baseActorInfo.Skills)
@@ -170,12 +146,8 @@ namespace Ryneus
 
         private void SetInitialParameter(ActorData actorData)
         {
-            _baseStatus = actorData.InitStatus;
             _plusStatus = new StatusInfo();
             _plusStatus.SetParameter(actorData.PlusStatus.Hp,actorData.PlusStatus.Mp,actorData.PlusStatus.Atk,actorData.PlusStatus.Def,actorData.PlusStatus.Spd);
-            _tempStatus = new StatusInfo();
-            _currentStatus = new StatusInfo();
-            _currentStatus.SetParameter(_baseStatus.Hp,_baseStatus.Mp,_baseStatus.Atk,_baseStatus.Def,_baseStatus.Spd);
         }
 
         private void InitSkillInfo()
@@ -212,43 +184,51 @@ namespace Ryneus
             ChangeMp(9999);
         }
 
-        public StatusInfo LevelUp(int plusCount)
+        public void LevelUp(int plusCount)
         {
-            var lvUpStatus = new StatusInfo();
-            lvUpStatus.SetParameter(0,0,0,0,0);
-            CalcLevelUpStatusInfo(lvUpStatus);
             _level++;
-            //_sp += 10;
             for (int i = 0;i < plusCount;i++)
             {
-                CalcLevelUpStatusInfo(lvUpStatus);
                 _level++;
-                //_sp += 10;
             }
             foreach (var skillInfo in LearningSkills())
             {
                 skillInfo.SetLearningState(LearningState.Learned);
             }
+            ChangeHp(CurrentParameter(StatusParamType.Hp));
+            ChangeMp(CurrentParameter(StatusParamType.Mp));
+        }
+
+        public StatusInfo LevelUpStatus(int level)
+        {
+            var lvUpStatus = new StatusInfo();
+            LevelUpStatusInfo(lvUpStatus,level);
             return lvUpStatus;
+        }
+
+        private void LevelUpStatusInfo(StatusInfo statusInfo,int level)
+        {
+            statusInfo.AddParameter(StatusParamType.Hp,Master.InitStatus.Hp);
+            statusInfo.AddParameter(StatusParamType.Mp,Master.InitStatus.Mp);
+            statusInfo.AddParameter(StatusParamType.Atk,Master.InitStatus.Atk);
+            statusInfo.AddParameter(StatusParamType.Def,Master.InitStatus.Def);
+            statusInfo.AddParameter(StatusParamType.Spd,Master.InitStatus.Spd);
+        
+            statusInfo.AddParameter(StatusParamType.Hp,LevelGrowthRate(StatusParamType.Hp,level)); 
+            statusInfo.AddParameter(StatusParamType.Mp,LevelGrowthRate(StatusParamType.Mp,level));  
+            statusInfo.AddParameter(StatusParamType.Atk,LevelGrowthRate(StatusParamType.Atk,level));  
+            statusInfo.AddParameter(StatusParamType.Def,LevelGrowthRate(StatusParamType.Def,level));  
+            statusInfo.AddParameter(StatusParamType.Spd,LevelGrowthRate(StatusParamType.Spd,level));     
+        }
+
+        public int LevelGrowthRate(StatusParamType statusParamType,int level)
+        {
+            return (int)Mathf.Round(Master.NeedStatus.GetParameter(statusParamType) * 0.01f * (level-1));
         }
 
         public List<SkillInfo> LearningSkills(int plusLv = 0)
         {
             return _skills.FindAll(a => a.LearningState == LearningState.NotLearn && a.LearningLv <= (_level+plusLv));
-        }
-
-        private void CalcLevelUpStatusInfo(StatusInfo statusInfo)
-        {
-            statusInfo.AddParameter(StatusParamType.Hp,IsLevelUpStatus(StatusParamType.Hp)); 
-            statusInfo.AddParameter(StatusParamType.Mp,IsLevelUpStatus(StatusParamType.Mp));  
-            statusInfo.AddParameter(StatusParamType.Atk,IsLevelUpStatus(StatusParamType.Atk));  
-            statusInfo.AddParameter(StatusParamType.Def,IsLevelUpStatus(StatusParamType.Def));  
-            statusInfo.AddParameter(StatusParamType.Spd,IsLevelUpStatus(StatusParamType.Spd));     
-        }
-
-        private int IsLevelUpStatus(StatusParamType statusParamType)
-        {
-            return GrowthRate(statusParamType);
         }
 
         public void GainLevelUpCost(int cost)
@@ -309,44 +289,14 @@ namespace Ryneus
         {
         }
 
-        public int GrowthRate(StatusParamType statusParamType)
-        {
-            return _upperRate.GetParameter(statusParamType) + ((_level-1) * 1);
-        }
-
-        public void DecideStrength()
-        {
-            // ここは百分率代入
-            _plusStatus.AddParameter(StatusParamType.Hp,_tempStatus.GetParameter(StatusParamType.Hp) * 0.01f);
-            _plusStatus.AddParameter(StatusParamType.Mp,_tempStatus.GetParameter(StatusParamType.Mp) * 0.01f);
-            _plusStatus.AddParameter(StatusParamType.Atk,_tempStatus.GetParameter(StatusParamType.Atk) * 0.01f);
-            _plusStatus.AddParameter(StatusParamType.Def,_tempStatus.GetParameter(StatusParamType.Def) * 0.01f);
-            _plusStatus.AddParameter(StatusParamType.Spd,_tempStatus.GetParameter(StatusParamType.Spd) * 0.01f);
-            _currentStatus.SetParameter(
-                CurrentParameter(StatusParamType.Hp),
-                CurrentParameter(StatusParamType.Mp),
-                CurrentParameter(StatusParamType.Atk),
-                CurrentParameter(StatusParamType.Def),
-                CurrentParameter(StatusParamType.Spd)
-            );
-            ChangeHp(CurrentParameter(StatusParamType.Hp));
-            ChangeMp(CurrentParameter(StatusParamType.Mp));
-            ClearStrength();
-        }
-
         public void GainNuminousCost(int useNuminous)
         {
             _numinous += useNuminous;
         }
 
-        public void ClearStrength()
-        {
-            _tempStatus.Clear();
-        }
-
         public int CurrentParameter(StatusParamType statusParamType)
         {
-            return _baseStatus.GetParameter(statusParamType) + _plusStatus.GetParameter(statusParamType);
+            return LevelUpStatus(_level).GetParameter(statusParamType);
         }
 
         public void ChangeHp(int hp)
@@ -472,7 +422,7 @@ namespace Ryneus
                     var rate = 1.0f;
                     if (skillInfo.Attribute != AttributeType.None)
                     {
-                        switch (_attribute[(int)skillInfo.Attribute-1])
+                        switch (Master.Attribute[(int)skillInfo.Attribute-1])
                         {
                             case AttributeRank.S:
                             case AttributeRank.A:

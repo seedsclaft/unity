@@ -154,15 +154,7 @@ namespace Ryneus
         {
             var actorInfo = TacticsActor();
             var cost = TacticsUtility.TrainCost(actorInfo);
-            var statusInfo = actorInfo.LevelUp(0);
-            actorInfo.TempStatus.SetParameter(
-                statusInfo.Hp,
-                statusInfo.Mp,
-                statusInfo.Atk,
-                statusInfo.Def,
-                statusInfo.Spd
-            );
-            actorInfo.DecideStrength();
+            actorInfo.LevelUp(0);
             actorInfo.GainNuminousCost(cost);
             actorInfo.GainLevelUpCost(cost);
             PartyInfo.ChangeCurrency(Currency - cost);

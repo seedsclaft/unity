@@ -76,15 +76,7 @@ namespace Ryneus
             }
             if (needStatusInfoComponent != null)
             {
-                var statusInfo = new StatusInfo();
-                statusInfo.SetParameter(
-                    actorInfo.GrowthRate(StatusParamType.Hp),
-                    actorInfo.GrowthRate(StatusParamType.Mp),
-                    actorInfo.GrowthRate(StatusParamType.Atk),
-                    actorInfo.GrowthRate(StatusParamType.Def),
-                    actorInfo.GrowthRate(StatusParamType.Spd)
-                );
-                needStatusInfoComponent.UpdateInfo(statusInfo);
+                needStatusInfoComponent.UpdateInfo(actorData.NeedStatus);
             }
             if (element1 != null)
             {
