@@ -69,7 +69,7 @@ namespace Ryneus
         public List<ListData> GetAlcanaSkillInfos()
         {
             // ヒロイン
-            var actorInfo = EvaluateMembers()[0];
+            var actorInfo = StageMembers()[0];
             // Aエンドは3枚　Bエンドは2枚　Cエンドは1枚
             var getCount = 1;
             if (CurrentStage.EndingType == EndingType.B)
@@ -120,7 +120,7 @@ namespace Ryneus
         // 転生スキル習得
         public void GetRebornSkills()
         {
-            var actorInfo = EvaluateMembers()[0];
+            var actorInfo = StageMembers()[0];
             var commandReborn = AddCommandRebornSkill();
             if (commandReborn != null)
             {
@@ -202,7 +202,7 @@ namespace Ryneus
             var list = new List<SkillInfo>();
             var magicReborn = DataSystem.Skills.Find(a => a.FeatureDates.Find(b => b.FeatureType == FeatureType.RebornAddSkill) != null);
             
-            var actorInfo = EvaluateMembers()[0];
+            var actorInfo = StageMembers()[0];
             var skills = actorInfo.Skills.FindAll(a => a.Master.Rank == 1 && actorInfo.Master.LearningSkills.Find(b => b.SkillId == a.Master.Id) == null);
             foreach (var skill in skills)
             {
@@ -282,7 +282,7 @@ namespace Ryneus
         public List<int> DisableActorIndexes()
         {
             var list = new List<int>();
-            var evaluateActorInfo = EvaluateMembers()[0];
+            var evaluateActorInfo = StageMembers()[0];
             var actorListIndexes = new List<int>();
             foreach (var listData in ActorInfos())
             {
@@ -329,12 +329,12 @@ namespace Ryneus
         public SlotInfo MakeSlotInfo()
         {
             var list = new List<ActorInfo>();
-            foreach (var evaluateMember in EvaluateMembers())
+            foreach (var evaluateMember in StageMembers())
             {
                 evaluateMember.ResetData();
                 list.Add(evaluateMember);
             }
-            var slotInfo = new SlotInfo(EvaluateMembers());
+            var slotInfo = new SlotInfo(StageMembers());
             slotInfo.SetTimeRecord();
             return slotInfo;
         }

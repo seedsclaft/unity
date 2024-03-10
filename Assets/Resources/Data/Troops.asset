@@ -190,7 +190,7 @@ MonoBehaviour:
     - Id: 2001
       TroopId: 2001
       EnemyId: 4
-      Lv: 20
+      Lv: 15
       BossFlag: 1
       Line: 0
       PrizeSetId: 605
@@ -215,7 +215,7 @@ MonoBehaviour:
     - Id: 2002
       TroopId: 2002
       EnemyId: 5
-      Lv: 20
+      Lv: 17
       BossFlag: 1
       Line: 1
       PrizeSetId: 605
@@ -239,120 +239,152 @@ MonoBehaviour:
     TroopEnemies:
     - Id: 2003
       TroopId: 2003
-      EnemyId: 9
-      Lv: 20
-      BossFlag: 1
-      Line: 1
-      PrizeSetId: 605
-    - Id: 2003
-      TroopId: 2003
-      EnemyId: 4
-      Lv: 10
-      BossFlag: 0
-      Line: 0
-      PrizeSetId: 0
-    - Id: 2003
-      TroopId: 2003
-      EnemyId: 4
-      Lv: 10
-      BossFlag: 0
-      Line: 0
-      PrizeSetId: 0
-    StageTurn: 0
-    PrizeSetId: 605
-  - TroopId: 2004
-    TroopEnemies:
-    - Id: 2004
-      TroopId: 2004
       EnemyId: 5
-      Lv: 20
+      Lv: 19
       BossFlag: 1
       Line: 1
       PrizeSetId: 605
-    - Id: 2004
-      TroopId: 2004
-      EnemyId: 3
-      Lv: 10
-      BossFlag: 0
-      Line: 0
-      PrizeSetId: 0
-    - Id: 2004
-      TroopId: 2004
-      EnemyId: 3
-      Lv: 10
-      BossFlag: 0
-      Line: 0
-      PrizeSetId: 0
-    StageTurn: 0
-    PrizeSetId: 605
-  - TroopId: 2005
-    TroopEnemies:
-    - Id: 2005
-      TroopId: 2005
-      EnemyId: 8
-      Lv: 20
-      BossFlag: 1
-      Line: 1
-      PrizeSetId: 605
-    - Id: 2005
-      TroopId: 2005
-      EnemyId: 7
-      Lv: 10
-      BossFlag: 0
-      Line: 0
-      PrizeSetId: 0
-    - Id: 2005
-      TroopId: 2005
-      EnemyId: 7
-      Lv: 10
-      BossFlag: 0
-      Line: 0
-      PrizeSetId: 0
-    StageTurn: 0
-    PrizeSetId: 605
-  - TroopId: 2006
-    TroopEnemies:
-    - Id: 2006
-      TroopId: 2006
-      EnemyId: 6
-      Lv: 20
-      BossFlag: 1
-      Line: 1
-      PrizeSetId: 605
-    - Id: 2006
-      TroopId: 2006
-      EnemyId: 14
-      Lv: 10
-      BossFlag: 0
-      Line: 0
-      PrizeSetId: 0
-    - Id: 2006
-      TroopId: 2006
-      EnemyId: 14
-      Lv: 10
-      BossFlag: 0
-      Line: 0
-      PrizeSetId: 0
-    StageTurn: 0
-    PrizeSetId: 605
-  - TroopId: 2007
-    TroopEnemies:
-    - Id: 2007
-      TroopId: 2007
-      EnemyId: 12
-      Lv: 20
-      BossFlag: 1
-      Line: 1
-      PrizeSetId: 605
-    - Id: 2007
-      TroopId: 2007
+    - Id: 2003
+      TroopId: 2003
       EnemyId: 2
       Lv: 10
       BossFlag: 0
       Line: 0
       PrizeSetId: 0
-    - Id: 2007
-      TroopId: 2007
+    - Id: 2003
+      TroopId: 2003
+      EnemyId: 14
+      Lv: 10
+      BossFlag: 0
+      Line: 0
+      PrizeSetId: 0
+    - Id: 2003
+      TroopId: 2003
+      EnemyId: 14
+      Lv: 10
+      BossFlag: 0
+      Line: 0
+      PrizeSetId: 0
+    StageTurn: 0
+    PrizeSetId: 605
+  - TroopId: 2103
+    TroopEnemies:
+    - Id: 2103
+      TroopId: 2103
+      EnemyId: 9
+      Lv: 20
+      BossFlag: 1
+      Line: 1
+      PrizeSetId: 605
+    - Id: 2103
+      TroopId: 2103
+      EnemyId: 4
+      Lv: 10
+      BossFlag: 0
+      Line: 0
+      PrizeSetId: 0
+    - Id: 2103
+      TroopId: 2103
+      EnemyId: 4
+      Lv: 10
+      BossFlag: 0
+      Line: 0
+      PrizeSetId: 0
+    StageTurn: 0
+    PrizeSetId: 605
+  - TroopId: 2104
+    TroopEnemies:
+    - Id: 2104
+      TroopId: 2104
+      EnemyId: 5
+      Lv: 20
+      BossFlag: 1
+      Line: 1
+      PrizeSetId: 605
+    - Id: 2104
+      TroopId: 2104
+      EnemyId: 3
+      Lv: 10
+      BossFlag: 0
+      Line: 0
+      PrizeSetId: 0
+    - Id: 2104
+      TroopId: 2104
+      EnemyId: 3
+      Lv: 10
+      BossFlag: 0
+      Line: 0
+      PrizeSetId: 0
+    StageTurn: 0
+    PrizeSetId: 605
+  - TroopId: 2105
+    TroopEnemies:
+    - Id: 2105
+      TroopId: 2105
+      EnemyId: 8
+      Lv: 20
+      BossFlag: 1
+      Line: 1
+      PrizeSetId: 605
+    - Id: 2105
+      TroopId: 2105
+      EnemyId: 7
+      Lv: 10
+      BossFlag: 0
+      Line: 0
+      PrizeSetId: 0
+    - Id: 2105
+      TroopId: 2105
+      EnemyId: 7
+      Lv: 10
+      BossFlag: 0
+      Line: 0
+      PrizeSetId: 0
+    StageTurn: 0
+    PrizeSetId: 605
+  - TroopId: 2106
+    TroopEnemies:
+    - Id: 2106
+      TroopId: 2106
+      EnemyId: 6
+      Lv: 20
+      BossFlag: 1
+      Line: 1
+      PrizeSetId: 605
+    - Id: 2106
+      TroopId: 2106
+      EnemyId: 14
+      Lv: 10
+      BossFlag: 0
+      Line: 0
+      PrizeSetId: 0
+    - Id: 2106
+      TroopId: 2106
+      EnemyId: 14
+      Lv: 10
+      BossFlag: 0
+      Line: 0
+      PrizeSetId: 0
+    StageTurn: 0
+    PrizeSetId: 605
+  - TroopId: 2107
+    TroopEnemies:
+    - Id: 2107
+      TroopId: 2107
+      EnemyId: 12
+      Lv: 20
+      BossFlag: 1
+      Line: 1
+      PrizeSetId: 605
+    - Id: 2107
+      TroopId: 2107
+      EnemyId: 2
+      Lv: 10
+      BossFlag: 0
+      Line: 0
+      PrizeSetId: 0
+    - Id: 2107
+      TroopId: 2107
       EnemyId: 2
       Lv: 10
       BossFlag: 0
@@ -415,10 +447,10 @@ MonoBehaviour:
     - Id: 3001
       TroopId: 3001
       EnemyId: 6
-      Lv: 30
+      Lv: 25
       BossFlag: 1
       Line: 1
-      PrizeSetId: 610
+      PrizeSetId: 620
     - Id: 3001
       TroopId: 3001
       EnemyId: 13
@@ -441,16 +473,16 @@ MonoBehaviour:
       Line: 0
       PrizeSetId: 0
     StageTurn: 0
-    PrizeSetId: 610
+    PrizeSetId: 620
   - TroopId: 3002
     TroopEnemies:
     - Id: 3002
       TroopId: 3002
       EnemyId: 2
-      Lv: 30
+      Lv: 27
       BossFlag: 1
       Line: 1
-      PrizeSetId: 610
+      PrizeSetId: 620
     - Id: 3002
       TroopId: 3002
       EnemyId: 12
@@ -473,7 +505,46 @@ MonoBehaviour:
       Line: 0
       PrizeSetId: 0
     StageTurn: 0
-    PrizeSetId: 610
+    PrizeSetId: 620
+  - TroopId: 3003
+    TroopEnemies:
+    - Id: 3003
+      TroopId: 3003
+      EnemyId: 6
+      Lv: 29
+      BossFlag: 1
+      Line: 1
+      PrizeSetId: 620
+    - Id: 3003
+      TroopId: 3003
+      EnemyId: 2
+      Lv: 20
+      BossFlag: 0
+      Line: 0
+      PrizeSetId: 0
+    - Id: 3003
+      TroopId: 3003
+      EnemyId: 7
+      Lv: 20
+      BossFlag: 0
+      Line: 0
+      PrizeSetId: 0
+    - Id: 3003
+      TroopId: 3003
+      EnemyId: 12
+      Lv: 20
+      BossFlag: 0
+      Line: 0
+      PrizeSetId: 0
+    - Id: 3003
+      TroopId: 3003
+      EnemyId: 13
+      Lv: 20
+      BossFlag: 0
+      Line: 0
+      PrizeSetId: 0
+    StageTurn: 0
+    PrizeSetId: 620
   - TroopId: 3011
     TroopEnemies:
     - Id: 3011

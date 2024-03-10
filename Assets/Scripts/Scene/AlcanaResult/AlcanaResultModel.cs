@@ -7,7 +7,6 @@ namespace Ryneus
     {
         public AlcanaResultModel()
         {
-            SetStageActor();
         }
 
         public List<ListData> AlcanaResultCommand()

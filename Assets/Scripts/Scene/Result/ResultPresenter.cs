@@ -31,13 +31,13 @@ namespace Ryneus
             _busy = true;
             _view.SetHelpWindow();
             _view.SetResultList(_model.ResultCommand());
-            _view.SetActors(_model.ResultMembers());
+            _view.SetActors(_model.StageMembers());
             var bgm = await _model.GetBgmData("TACTICS1");
             SoundManager.Instance.PlayBgm(bgm,1.0f,true);
             _view.SetEvent((type) => UpdateCommand(type));
 
             _view.StartAnimation();
-            _view.StartResultAnimation(_model.MakeListData(_model.ResultMembers()));
+            _view.StartResultAnimation(_model.MakeListData(_model.StageMembers()));
             _busy = false;
         }
 

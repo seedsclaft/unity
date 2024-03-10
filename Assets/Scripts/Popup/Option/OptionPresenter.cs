@@ -57,58 +57,58 @@ namespace Ryneus
                 case "BGM_VOLUME":
                     if (inputKeyType == InputKeyType.Right)
                     {
-                        _model.ChangeBGMValue(Mathf.Min(1, Ryneus.SoundManager.Instance.BGMVolume + 0.05f));
+                        ConfigUtility.ChangeBGMValue(Mathf.Min(1, SoundManager.Instance.BGMVolume + 0.05f));
                     }
                     if (inputKeyType == InputKeyType.Left)
                     {
-                        _model.ChangeBGMValue(Mathf.Max(0, Ryneus.SoundManager.Instance.BGMVolume - 0.05f));
+                        ConfigUtility.ChangeBGMValue(Mathf.Max(0, SoundManager.Instance.BGMVolume - 0.05f));
                     }
                     if (inputKeyType == InputKeyType.Option1)
                     {
-                        _model.ChangeBGMMute(!Ryneus.SoundManager.Instance.BGMMute);
+                        ConfigUtility.ChangeBGMMute(!Ryneus.SoundManager.Instance.BGMMute);
                     }
                     break;
                 case "SE_VOLUME":
                     if (inputKeyType == InputKeyType.Right)
                     {
-                        _model.ChangeSEValue(Mathf.Min(1, Ryneus.SoundManager.Instance.SeVolume + 0.05f));
+                        ConfigUtility.ChangeSEValue(Mathf.Min(1, Ryneus.SoundManager.Instance.SeVolume + 0.05f));
                     }
                     if (inputKeyType == InputKeyType.Left)
                     {
-                        _model.ChangeSEValue(Mathf.Max(0, Ryneus.SoundManager.Instance.SeVolume - 0.05f));
+                        ConfigUtility.ChangeSEValue(Mathf.Max(0, Ryneus.SoundManager.Instance.SeVolume - 0.05f));
                     }
                     if (inputKeyType == InputKeyType.Option1)
                     {
-                        _model.ChangeSEMute(!Ryneus.SoundManager.Instance.SeMute);
+                        ConfigUtility.ChangeSEMute(!Ryneus.SoundManager.Instance.SeMute);
                     }
                     break;
                 case "GRAPHIC_QUALITY":
                     if (inputKeyType == InputKeyType.Right)
                     {
-                        _model.ChangeGraphicIndex(1);
+                        ConfigUtility.ChangeGraphicIndex(1);
                     }
                     if (inputKeyType == InputKeyType.Left)
                     {
-                        _model.ChangeGraphicIndex(2);
+                        ConfigUtility.ChangeGraphicIndex(2);
                     };
                     break;
                 case "EVENT_SKIP":
-                    _model.ChangeEventSkipIndex(inputKeyType == InputKeyType.Right);
+                    ConfigUtility.ChangeEventSkipIndex(inputKeyType == InputKeyType.Right);
                     break;
                 case "COMMAND_END_CHECK":
-                    _model.ChangeCommandEndCheck(inputKeyType == InputKeyType.Left);
+                    ConfigUtility.ChangeCommandEndCheck(inputKeyType == InputKeyType.Left);
                     break;
                 case "BATTLE_WAIT":
-                    _model.ChangeBattleWait(inputKeyType == InputKeyType.Left);
+                    ConfigUtility.ChangeBattleWait(inputKeyType == InputKeyType.Left);
                     break;
                 case "BATTLE_ANIMATION":
-                    _model.ChangeBattleAnimation(inputKeyType == InputKeyType.Right);
+                    ConfigUtility.ChangeBattleAnimation(inputKeyType == InputKeyType.Right);
                     break;
                 case "INPUT_TYPE":
                     _model.ChangeTempInputType(inputKeyType == InputKeyType.Right);
                     break;
                 case "BATTLE_AUTO":
-                    _model.ChangeBattleAuto(inputKeyType == InputKeyType.Right);
+                    ConfigUtility.ChangeBattleAuto(inputKeyType == InputKeyType.Right);
                     break;
             }
             CommandRefresh();
@@ -122,11 +122,11 @@ namespace Ryneus
                 var data = (OptionInfo)ListData.Data;
                 if (data.OptionCommand.Key == "BGM_VOLUME")
                 {
-                    _model.ChangeBGMValue(volume);
+                    ConfigUtility.ChangeBGMValue(volume);
                 } else
                 if (data.OptionCommand.Key == "SE_VOLUME")
                 {
-                    _model.ChangeSEValue(volume);
+                    ConfigUtility.ChangeSEValue(volume);
                 }
                 CommandRefresh();
             }
@@ -140,11 +140,11 @@ namespace Ryneus
                 var data = (OptionInfo)ListData.Data;
                 if (data.OptionCommand.Key == "BGM_VOLUME")
                 {
-                    _model.ChangeBGMMute(isMute);
+                    ConfigUtility.ChangeBGMMute(isMute);
                 } else
                 if (data.OptionCommand.Key == "SE_VOLUME")
                 {
-                    _model.ChangeSEMute(isMute);
+                    ConfigUtility.ChangeSEMute(isMute);
                 }
                 CommandRefresh();
             }
@@ -161,30 +161,30 @@ namespace Ryneus
                     case "GRAPHIC_QUALITY":
                         if (toggleIndex == 1)
                         {
-                            _model.ChangeGraphicIndex(1);
+                            ConfigUtility.ChangeGraphicIndex(1);
                         }
                         if (toggleIndex == 0)
                         {
-                            _model.ChangeGraphicIndex(2);
+                            ConfigUtility.ChangeGraphicIndex(2);
                         };
                         break;
                     case "EVENT_SKIP":
-                        _model.ChangeEventSkipIndex(toggleIndex == 1);
+                        ConfigUtility.ChangeEventSkipIndex(toggleIndex == 1);
                         break;
                     case "COMMAND_END_CHECK":
-                        _model.ChangeCommandEndCheck(toggleIndex == 0);
+                        ConfigUtility.ChangeCommandEndCheck(toggleIndex == 0);
                         break;
                     case "BATTLE_WAIT":
-                        _model.ChangeBattleWait(toggleIndex == 0);
+                        ConfigUtility.ChangeBattleWait(toggleIndex == 0);
                         break;
                     case "BATTLE_ANIMATION":
-                        _model.ChangeBattleAnimation(toggleIndex == 1);
+                        ConfigUtility.ChangeBattleAnimation(toggleIndex == 1);
                         break;
                     case "INPUT_TYPE":
                         _model.ChangeTempInputType(toggleIndex == 1);
                         break;
                     case "BATTLE_AUTO":
-                        _model.ChangeBattleAuto(toggleIndex == 1);
+                        ConfigUtility.ChangeBattleAuto(toggleIndex == 1);
                         break;
                 }
                 CommandRefresh();

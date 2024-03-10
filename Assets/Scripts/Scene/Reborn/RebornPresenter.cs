@@ -137,7 +137,6 @@ namespace Ryneus
                 _view.CommandGameSystem(Base.CommandType.CloseStatus);
                 _view.CommandSceneChange(Scene.MainMenu);
             });
-            _model.InitializeStageData(_model.CurrentStage.Id);
             statusViewInfo.SetDisplayDecideButton(true);
             _view.ChangeUIActive(false);
             _view.CommandCallStatus(statusViewInfo);

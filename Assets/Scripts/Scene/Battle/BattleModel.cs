@@ -2552,7 +2552,7 @@ namespace Ryneus
 
         public void ChangeBattleAuto()
         {
-            ChangeBattleAuto(!GameSystem.ConfigData.BattleAuto);
+            ConfigUtility.ChangeBattleAuto(!GameSystem.ConfigData.BattleAuto);
         }
 
         public List<ListData> SelectCharacterConditions()

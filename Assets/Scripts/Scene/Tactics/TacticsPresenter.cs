@@ -102,7 +102,6 @@ namespace Ryneus
                         CommandSave(true);
                         break;
                     case StageEventType.SetDefineBossIndex:
-                        _model.SetDefineBossIndex(stageEvent.Param);
                         break;
                     case StageEventType.SetRouteSelectParam:
                         _view.CommandSetRouteSelect();
@@ -116,7 +115,6 @@ namespace Ryneus
                     case StageEventType.ChangeRouteSelectStage:
                         _eventBusy = true;
                         _model.AddEventReadFlag(stageEvent);
-                        _model.ChangeRouteSelectStage(stageEvent.Param);
                         _view.CommandGotoSceneChange(Scene.Tactics);
                         break;
                     case StageEventType.SetDisplayTurns:
@@ -348,7 +346,6 @@ namespace Ryneus
 
         private void UpdatePopupSelectAddActor(ConfirmCommandType confirmCommandType)
         {
-            _model.SetSelectAddActor();
             _view.CommandGameSystem(Base.CommandType.CloseConfirm);
             var statusViewInfo = new StatusViewInfo(null);
             statusViewInfo.SetDisplayDecideButton(true);

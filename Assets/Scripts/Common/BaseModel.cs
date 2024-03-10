@@ -73,11 +73,6 @@ namespace Ryneus
             return PartyInfo.CurrentActorInfos(CurrentStage.Id,CurrentStage.CurrentTurn);
         }
 
-        public List<ActorInfo> ResultMembers()
-        {
-            return StageMembers();
-        }
-
         public List<ActorInfo> StatusActors(){
             return TempInfo.TempStatusActorInfos;
         }
@@ -90,103 +85,6 @@ namespace Ryneus
                 return bgmData.Key;
             }
             return "TACTICS1";
-        }
-
-        public void ApplyConfigData()
-        {
-            var saveConfigInfo = GameSystem.ConfigData;
-            if (saveConfigInfo != null)
-            {
-                ChangeBGMValue(saveConfigInfo.BgmVolume);
-                SoundManager.Instance.BGMMute = saveConfigInfo.BgmMute;
-                ChangeSEValue(saveConfigInfo.SeVolume);
-                SoundManager.Instance.SeMute = saveConfigInfo.SeMute;
-                ChangeGraphicIndex(saveConfigInfo.GraphicIndex);
-                ChangeEventSkipIndex(saveConfigInfo.EventSkipIndex);
-                ChangeCommandEndCheck(saveConfigInfo.CommandEndCheck);
-                ChangeBattleWait(saveConfigInfo.BattleWait);
-                ChangeBattleAnimation(saveConfigInfo.BattleAnimationSkip);
-                ChangeInputType(saveConfigInfo.InputType);
-                ChangeBattleAuto(saveConfigInfo.BattleAuto);
-            }
-        }
-
-        public void ChangeBGMValue(float bgmVolume)
-        {
-            SoundManager.Instance.BGMVolume = bgmVolume;
-            SoundManager.Instance.UpdateBgmVolume();
-            if (bgmVolume > 0 && SoundManager.Instance.BGMMute == false)
-            {
-                ChangeBGMMute(false);
-            }
-            if (bgmVolume == 0 && SoundManager.Instance.BGMMute == true)
-            {
-                ChangeBGMMute(true);
-            }
-        }
-
-        public void ChangeBGMMute(bool bgmMute)
-        {
-            SoundManager.Instance.BGMMute = bgmMute;
-            SoundManager.Instance.UpdateBgmMute();
-        }
-        
-        public void ChangeSEValue(float seVolume)
-        {
-            SoundManager.Instance.SeVolume = seVolume;
-            Effekseer.Internal.EffekseerSoundPlayer.SeVolume = seVolume;
-            SoundManager.Instance.UpdateSeVolume();
-            if (seVolume > 0 && SoundManager.Instance.SeMute == false)
-            {
-                ChangeSEMute(false);
-            }
-            if (seVolume == 0 && SoundManager.Instance.SeMute == true)
-            {
-                ChangeSEMute(true);
-            }
-        }
-
-        public void ChangeSEMute(bool seMute)
-        {
-            SoundManager.Instance.SeMute = seMute;
-        }
-
-        public int GraphicIndex(){ return GameSystem.ConfigData.GraphicIndex; }
-
-        public void ChangeGraphicIndex(int graphicIndex)
-        {
-            GameSystem.ConfigData.GraphicIndex = graphicIndex;
-            QualitySettings.SetQualityLevel(graphicIndex);
-        }
-
-        public void ChangeEventSkipIndex(bool eventSkipIndex)
-        {
-            GameSystem.ConfigData.EventSkipIndex = eventSkipIndex;
-        }
-
-        public void ChangeCommandEndCheck(bool commandEndCheck)
-        {
-            GameSystem.ConfigData.CommandEndCheck = commandEndCheck;
-        }
-
-        public void ChangeBattleWait(bool battleWait)
-        {
-            GameSystem.ConfigData.BattleWait = battleWait;
-        }
-
-        public void ChangeBattleAnimation(bool battleAnimation)
-        {
-            GameSystem.ConfigData.BattleAnimationSkip = battleAnimation;
-        }
-
-        public void ChangeInputType(bool inputType)
-        {
-            GameSystem.ConfigData.InputType = inputType;
-        }
-
-        public void ChangeBattleAuto(bool battleAuto)
-        {
-            GameSystem.ConfigData.BattleAuto = battleAuto;
         }
 
         public string PlayerName()
@@ -305,11 +203,6 @@ namespace Ryneus
             StageAlcana.SetIsAlcana(isAlcana);
         }
 
-        public void InitializeStageData(int stageId)
-        {
-            //CurrentStageData.MakeStageData(stageId);
-        }
-
         public List<SkillInfo> CheckAlcanaSkillInfos(TriggerTiming triggerTiming)
         {
             var skillInfos = StageAlcana.CheckAlcanaSkillInfo(triggerTiming);
@@ -401,35 +294,9 @@ namespace Ryneus
             return DataSystem.GetReplaceText(textId,actorName);
         }
 
-        public void SetStageActor()
-        {
-        }
-
         public void SetStatusActorInfos()
         {
             TempInfo.SetTempStatusActorInfos(StageMembers());
-        }
-
-        public void SetSelectAddActor()
-        {
-            //　加入しているパーティ
-            var stageMembers = StageMembers();
-            //　加入していないパーティを生成
-            var selectActorIds = Actors().FindAll(a => !StageMembers().Contains(a));
-            
-            foreach (var actorInfo in selectActorIds)
-            {
-                if (actorInfo.Lost == false)
-                {
-                    if (stageMembers.Find(a => a.Master.ClassId == actorInfo.Master.ClassId) == null)
-                    {
-                    }
-                }
-            }
-        }
-
-        public void SetDefineBossIndex(int index)
-        {
         }
 
         public string GetAdvFile(int id)
@@ -440,14 +307,6 @@ namespace Ryneus
         public void StageClear()
         {
             CurrentData.PlayerInfo.StageClear(CurrentStage.Id);
-        }
-        
-
-        public void ChangeRouteSelectStage(int stageId)
-        {
-            // stageId + RouteSelect
-            int route = GameSystem.CurrentStageData.CurrentStage.RouteSelect;
-            CurrentSaveData.ChangeRouteSelectStage(stageId + route);
         }
 
         public List<SymbolInfo> OpeningStageSymbolInfos()
@@ -477,73 +336,7 @@ namespace Ryneus
 
         public List<SymbolInfo> StageSymbolInfos()
         {
-            var symbolInfos = new List<SymbolInfo>();
-            var symbols = CurrentStage.Master.StageSymbols.FindAll(a => a.Seek > 0);
-            foreach (var symbol in symbols)
-            {
-                var symbolInfo = new SymbolInfo(symbol);
-                // グループ指定
-                if (symbol.SymbolType > SymbolType.Rebirth){
-                    var groupId = (int)symbol.SymbolType;
-                    var groupDates = DataSystem.SymbolGroups.FindAll(a => a.GroupId == groupId);
-                    var data = PickUpSymbolData(groupDates);
-                    data.StageId = symbol.StageId;
-                    data.Seek = symbol.Seek;
-                    data.SeekIndex = symbol.SeekIndex;
-                    symbolInfo = new SymbolInfo(data);
-                }
-                if (symbol.SymbolType == SymbolType.Random || symbolInfo.StageSymbolData.SymbolType == SymbolType.Random){
-                    var data = RandomSymbolData();
-                    data.StageId = symbol.StageId;
-                    data.Seek = symbol.Seek;
-                    data.SeekIndex = symbol.SeekIndex;
-                    symbolInfo = new SymbolInfo(data);
-                }
-                var getItemInfos = new List<GetItemInfo>();
-                if (symbolInfo.SymbolType == SymbolType.Battle || symbolInfo.SymbolType == SymbolType.Boss){
-                    if (symbolInfo.StageSymbolData.Param1 > 0 || symbolInfo.StageSymbolData.Param1 == -1)
-                    {
-                        symbolInfo.SetTroopInfo(BattleTroop(symbolInfo.StageSymbolData));
-                    }
-                    
-                    if (symbolInfo.TroopInfo != null && symbolInfo.TroopInfo.GetItemInfos.Count > 0)
-                    {
-                        getItemInfos.AddRange(symbolInfo.TroopInfo.GetItemInfos);
-                    }
-                }
-                // アルカナランダムで報酬設定
-                if (symbolInfo.SymbolType == SymbolType.Alcana)
-                {
-                    if (symbolInfo.StageSymbolData.Param1 == -1)
-                    {
-                        var alcanaRank = symbolInfo.StageSymbolData.Param2;
-                        var alcanaSkills = DataSystem.Skills.FindAll(a => a.Rank == alcanaRank);
-                        var rand = UnityEngine.Random.Range(0,alcanaSkills.Count);
-                        if (alcanaSkills.Count > 0)
-                        {
-                            var getItemData = new GetItemData();
-                            getItemData.Type = GetItemType.Skill;
-                            getItemData.Param1 = alcanaSkills[rand].Id;
-                            var getItemInfo = new GetItemInfo(getItemData);
-                            symbolInfo.SetGetItemInfos(new List<GetItemInfo>(){getItemInfo});
-                            getItemInfos.Add(getItemInfo);
-                        }
-
-                    }
-                }
-                if (symbolInfo.StageSymbolData.PrizeSetId > 0)
-                {
-                    var prizeSets = DataSystem.PrizeSets.FindAll(a => a.Id == symbolInfo.StageSymbolData.PrizeSetId);
-                    foreach (var prizeSet in prizeSets)
-                    {
-                        var getItemInfo = new GetItemInfo(prizeSet.GetItem);
-                        getItemInfos.Add(getItemInfo);
-                    }
-                }
-                symbolInfo.SetGetItemInfos(getItemInfos);
-                symbolInfos.Add(symbolInfo);
-            }
-            return symbolInfos;
+            return SymbolUtility.StageSymbolInfos(CurrentStage.Master.StageSymbols);
         }
 
         public List<SymbolInfo> ClearedSymbolInfos(int stageId)
@@ -555,121 +348,6 @@ namespace Ryneus
                 list.Add(record.SymbolInfo);
             }
             return list;
-        }
-
-        public StageSymbolData PickUpSymbolData(List<SymbolGroupData> groupDates)
-        {
-            int targetRand = 0;
-            for (int i = 0;i < groupDates.Count;i++)
-            {
-                targetRand += groupDates[i].Rate;
-            }
-            targetRand = UnityEngine.Random.Range (0,targetRand);
-            int targetIndex = -1;
-            for (int i = 0;i < groupDates.Count;i++)
-            {
-                targetRand -= groupDates[i].Rate;
-                if (targetRand <= 0 && targetIndex == -1)
-                {
-                    targetIndex = i;
-                }
-            }
-            var StageSymbolData = new StageSymbolData();
-            StageSymbolData.ConvertSymbolGroupData(groupDates[targetIndex]);
-            return StageSymbolData;
-        }
-
-        public StageSymbolData RandomSymbolData()
-        {
-            // 候補を生成
-            var stageSymbolList = new List<StageSymbolData>();
-            foreach (var stageSymbol in DataSystem.FindStage(CurrentStage.Id).StageSymbols)
-            {
-                if (stageSymbol.Seek == 0)
-                {
-                    stageSymbolList.Add(stageSymbol);
-                }
-            }
-            var stageSymbolData = new StageSymbolData();
-            stageSymbolData.SymbolType = SymbolType.None;
-            int targetRand = 0;
-            foreach (var stageSymbol in stageSymbolList)
-            {
-                targetRand += stageSymbol.Rate;
-            }
-            targetRand = UnityEngine.Random.Range(0,targetRand);
-            while (stageSymbolData.SymbolType == SymbolType.None)
-            {
-                int targetIndex = -1;
-                for (int i = 0;i < stageSymbolList.Count;i++)
-                {
-                    targetRand -= stageSymbolList[i].Rate;
-                    if (targetRand <= 0 && targetIndex == -1)
-                    {
-                        targetIndex = i;
-                    }
-                }
-                var symbol = stageSymbolList[targetIndex];
-                switch (symbol.SymbolType)
-                {
-                    case SymbolType.Battle:
-                        stageSymbolData.CopyData(symbol);
-                        stageSymbolData.Param1 = -1;
-                        stageSymbolData.PrizeSetId = 0;
-                        break;
-                    case SymbolType.Actor:
-                        if (!PartyInfo.CurrentActorIdList(CurrentStage.Id,CurrentStage.CurrentTurn).Contains(symbol.PrizeSetId - 500))
-                        {
-                            stageSymbolData.CopyData(symbol);
-                        }
-                        break;
-                    case SymbolType.Alcana:
-                        if (!PartyInfo.CurrentAlchemyIdList(CurrentStage.Id,CurrentStage.CurrentTurn).Contains(symbol.Param1))
-                        {
-                            stageSymbolData.CopyData(symbol);
-                        }
-                        break;
-                }
-            }
-            return stageSymbolData;
-        }
-
-        public TroopInfo BattleTroop(StageSymbolData stageSymbolData)
-        {
-            var troopId = stageSymbolData.Param1;
-            var enemyCount = stageSymbolData.Param2;
-            var troopInfo = new TroopInfo(troopId,false);
-            // ランダム生成
-            if (troopId == -1)
-            {
-                troopInfo.MakeEnemyRandomTroopDates(PartyInfo.ClearTroopCount + stageSymbolData.Seek + CurrentStage.Master.StageLv);
-                for (int i = 0;i < enemyCount;i++)
-                {
-                    int rand = new System.Random().Next(1, CurrentStage.Master.RandomTroopCount);
-                    var enemyData = DataSystem.Enemies.Find(a => a.Id == rand);
-                    var enemy = new BattlerInfo(enemyData,PartyInfo.ClearTroopCount + 1,i,0,false);
-                    troopInfo.AddEnemy(enemy);
-                }
-                return troopInfo;
-            }
-            if (troopInfo.Master == null)
-            {
-                Debug.LogError("troopId" + troopId + "のデータが不足");
-            } else
-            {
-                troopInfo.MakeEnemyTroopDates(PartyInfo.ClearTroopCount);
-                /*
-                for (int i = 0;i < enemyCount;i++)
-                {
-                    int rand = new System.Random().Next(1, CurrentStage.Master.RandomTroopCount);
-                    var enemyData = DataSystem.Enemies.Find(a => a.Id == rand);
-                    var enemy = new BattlerInfo(enemyData,PartyInfo.ClearTroopCount + 1,i,0,false);
-                    troopInfo.AddEnemy(enemy);
-                }
-                */
-                //troopInfo.MakeGetItemInfos();
-            }
-            return troopInfo;
         }
 
         public void StartOpeningStage()
@@ -721,11 +399,6 @@ namespace Ryneus
             return PartyInfo.CurrentSymbolInfos(seek)[CurrentStage.CurrentSeekIndex];
         }
 
-        public SymbolInfo PastSelectSymbol(int seek)
-        {
-            return PartyInfo.CurrentSymbolInfos(seek)[CurrentStage.CurrentSeekIndex];
-        }
-
         public TroopInfo CurrentTroopInfo()
         {
             return CurrentSelectSymbol().TroopInfo;
@@ -746,11 +419,6 @@ namespace Ryneus
                 record.SetActorInfos(actorInfos);
                 PartyInfo.SetSymbolResultInfo(record);
             }
-        }
-
-        public void StartSymbolRecordStage(int stageId)
-        {
-            CurrentSaveData.MakeStageData(stageId);
         }
 
         public void MakeSymbolRecordStage(int seek)
@@ -789,6 +457,7 @@ namespace Ryneus
         {
             CurrentStage.SetParallelMode(true);
         }
+
         public async UniTask LoadBattleResources(List<BattlerInfo> battlers)
         {
             _cancellationTokenSource = new CancellationTokenSource();
@@ -854,11 +523,6 @@ namespace Ryneus
             return MakeListData(skillInfos);
         }
 
-        public List<ActorInfo> EvaluateMembers()
-        {
-            return StageMembers();
-        }
-
         public string RankingTypeText(RankingType rankingType)
         {
             switch (rankingType)
@@ -875,7 +539,7 @@ namespace Ryneus
         public List<RankingActorData> RankingActorDates()
         {
             var list = new List<RankingActorData>();
-            foreach (var actorInfo in EvaluateMembers())
+            foreach (var actorInfo in StageMembers())
             {
                 var skillIds = new List<int>();
                 foreach (var skill in actorInfo.Skills)
@@ -905,7 +569,7 @@ namespace Ryneus
             var evaluate = 0;
             if (CurrentStage.Master.RankingStage == RankingType.Evaluate)
             {
-                foreach (var actorInfo in EvaluateMembers())
+                foreach (var actorInfo in StageMembers())
                 {
                     evaluate += actorInfo.Evaluate();
                 }
@@ -928,7 +592,7 @@ namespace Ryneus
         public List<int> SelectIdxList()
         {
             var selectIdx = new List<int>();
-            foreach (var actorInfo in EvaluateMembers())
+            foreach (var actorInfo in StageMembers())
             {
                 selectIdx.Add(actorInfo.ActorId);
             }
@@ -938,14 +602,14 @@ namespace Ryneus
         public List<int> SelectRankList()
         {
             var selectIdRank = new List<int>();
-            foreach (var actorInfo in EvaluateMembers())
+            foreach (var actorInfo in StageMembers())
             {
                 selectIdRank.Add(actorInfo.Evaluate());
             }
             return selectIdRank;
         }
 
-        public async void CurrentRankingData(System.Action<string> endEvent)
+        public async void CurrentRankingData(Action<string> endEvent)
         {
             var userId = CurrentData.PlayerInfo.UserId.ToString();
             var rankingText = "";

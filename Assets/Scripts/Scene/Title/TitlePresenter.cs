@@ -23,7 +23,7 @@ namespace Ryneus
         private async void Initialize()
         {
             _busy = true;
-            _model.ApplyConfigData();
+            ConfigUtility.ApplyConfigData();
 
             _view.SetEvent((type) => UpdateCommand(type));
             _view.SetVersion(_model.VersionText());
