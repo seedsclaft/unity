@@ -342,8 +342,6 @@ namespace Ryneus
             }
         }
 
-
-
         private void UpdatePopupSelectAddActor(ConfirmCommandType confirmCommandType)
         {
             _view.CommandGameSystem(Base.CommandType.CloseConfirm);
@@ -803,7 +801,7 @@ namespace Ryneus
         
         private void CheckAlcanaSymbol(SkillInfo skillInfo)
         {
-            var popupInfo = new ConfirmInfo(DataSystem.GetReplaceText(11140,skillInfo.Master.Name),(a) => UpdatePopupAlcanaSymbol((ConfirmCommandType)a));
+            var popupInfo = new ConfirmInfo(DataSystem.GetReplaceText(11140,skillInfo.Master.Name),(a) => UpdatePopupAlcanaSymbol((ConfirmCommandType)a),ConfirmType.SkillDetail);
             _view.CommandCallConfirm(popupInfo);
         }
 
@@ -949,7 +947,7 @@ namespace Ryneus
 
         private void CommandPopupSkillInfo(GetItemInfo getItemInfo)
         {
-            var confirmInfo = new ConfirmInfo("",(a) => UpdatePopupSkillInfo());
+            var confirmInfo = new ConfirmInfo("",(a) => UpdatePopupSkillInfo(),ConfirmType.SkillDetail);
             confirmInfo.SetSkillInfo(_model.BasicSkillInfos(getItemInfo));
             confirmInfo.SetIsNoChoice(true);
             _view.CommandCallSkillDetail(confirmInfo);
@@ -1000,6 +998,7 @@ namespace Ryneus
                         _view.CommandGameSystem(Base.CommandType.CloseStatus);
                         _view.ChangeUIActive(true);
                     });
+                    statusViewInfo.SetDisplayCharacterList(false);
                     _view.CommandCallStatus(statusViewInfo);
                     _view.ChangeUIActive(false);
                     break;

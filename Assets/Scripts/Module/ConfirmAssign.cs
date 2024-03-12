@@ -9,6 +9,7 @@ namespace Ryneus
         [SerializeField] private GameObject confirmRoot = null;
         [SerializeField] private GameObject confirmPrefab = null;
         [SerializeField] private GameObject cautionPrefab = null;
+        [SerializeField] private GameObject skillDetailPrefab = null;
         public GameObject CreateConfirm(ConfirmType popupType,HelpWindow helpWindow)
         {
             if (confirmRoot.transform.childCount > 0)
@@ -31,6 +32,9 @@ namespace Ryneus
                 return confirmPrefab;
                 case ConfirmType.Caution:
                 return cautionPrefab;
+                case ConfirmType.SkillDetail:
+                return skillDetailPrefab;
+
             }
             return null;
         }
@@ -53,5 +57,6 @@ namespace Ryneus
         None,
         Confirm,
         Caution,
+        SkillDetail,
     }
 }

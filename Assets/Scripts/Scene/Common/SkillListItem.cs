@@ -9,13 +9,12 @@ namespace Ryneus
     public class SkillListItem : ListItem ,IListViewItem  
     {
         [SerializeField] private SkillInfoComponent skillInfoComponent1;
-        [SerializeField] private SkillInfoComponent skillInfoComponent2;
+
         public void UpdateViewItem()
         {
             if (ListData == null) return;
             var data = (SkillInfo)ListData.Data;
             skillInfoComponent1.UpdateSkillInfo(data);
-            skillInfoComponent2.UpdateSkillInfo(data);
         }
     }
 }

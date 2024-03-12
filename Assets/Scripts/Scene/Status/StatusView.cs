@@ -113,6 +113,7 @@ namespace Ryneus
         {
             DisplayDecideButton(statusViewInfo.DisplayDecideButton);
             DisplayBackButton(statusViewInfo.DisplayBackButton);
+            DisplayCharacterList(statusViewInfo.DisplayCharacterList);
             SetBackEvent(statusViewInfo.BackEvent);
         }
 
@@ -142,6 +143,11 @@ namespace Ryneus
         private void DisplayBackButton(bool isDisplay)
         {
             _isDisplayBack = isDisplay;
+        }
+
+        private void DisplayCharacterList(bool isDisplay)
+        {
+            characterListButton.gameObject.SetActive(isDisplay);
         }
 
         private void OnClickBack()
@@ -286,6 +292,8 @@ namespace Ryneus
         public bool DisplayDecideButton => _displayDecideButton;
         private bool _displayBackButton = true;
         public bool DisplayBackButton => _displayBackButton;
+        private bool _displayCharacterList = true;
+        public bool DisplayCharacterList => _displayCharacterList;
         private List<BattlerInfo> _enemyInfos = null;
         public List<BattlerInfo> EnemyInfos => _enemyInfos;
         private bool _isBattle = false;
@@ -306,6 +314,11 @@ namespace Ryneus
             _displayBackButton = isDisplay;
         }
         
+        public void SetDisplayCharacterList(bool isDisplay)
+        {
+            _displayCharacterList = isDisplay;
+        }
+
         public void SetEnemyInfos(List<BattlerInfo> enemyInfos,bool isBattle)
         {
             _enemyInfos = enemyInfos;

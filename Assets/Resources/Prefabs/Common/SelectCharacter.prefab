@@ -3452,6 +3452,11 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1712879561968927032, guid: bf6c28c076115c34d99e234ec6622c82,
+        type: 3}
+      propertyPath: statusInfoComponent
+      value: 
+      objectReference: {fileID: 1082463302998928237}
     - target: {fileID: 1799417783505110257, guid: bf6c28c076115c34d99e234ec6622c82,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -3983,6 +3988,18 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 7343654959371047202}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1082463302998928237 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7704614312165079631, guid: bf6c28c076115c34d99e234ec6622c82,
+    type: 3}
+  m_PrefabInstance: {fileID: 7343654959371047202}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 920680104576701680}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2402955de89268e4e84a86b325832163, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &1534731429824046021 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8117053729105179367, guid: bf6c28c076115c34d99e234ec6622c82,

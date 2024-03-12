@@ -272,13 +272,13 @@ namespace Ryneus
             optionView.Initialize();
             optionView.SetBackEvent(() => 
             {
-                GameSystem.ConfigData.UpdateSoundParameter(
-                    Ryneus.SoundManager.Instance.BGMVolume,
-                    Ryneus.SoundManager.Instance.BGMMute,
-                    Ryneus.SoundManager.Instance.SeVolume,
-                    Ryneus.SoundManager.Instance.SeMute
+                ConfigData.UpdateSoundParameter(
+                    SoundManager.Instance.BGMVolume,
+                    SoundManager.Instance.BGMMute,
+                    SoundManager.Instance.SeVolume,
+                    SoundManager.Instance.SeMute
                 );
-                SaveSystem.SaveConfigStart(GameSystem.ConfigData);
+                SaveSystem.SaveConfigStart(ConfigData);
                 UpdateCommand(new ViewEvent(Base.CommandType.ClosePopup));
                 if (endEvent != null) endEvent();
             });
