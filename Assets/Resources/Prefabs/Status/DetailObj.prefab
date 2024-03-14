@@ -3230,6 +3230,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7424876129748374028}
   - component: {fileID: 1562406957494166581}
+  - component: {fileID: 6600233666213625568}
   m_Layer: 5
   m_Name: UsePoint
   m_TagString: Untagged
@@ -3287,6 +3288,31 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!114 &6600233666213625568
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4988810179748181077}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2402955de89268e4e84a86b325832163, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHp: {fileID: 2477522248668025516}
+  hp: {fileID: 0}
+  maxMp: {fileID: 6635220629913634249}
+  mp: {fileID: 0}
+  atk: {fileID: 9108031248651929592}
+  def: {fileID: 4794774012878741748}
+  spd: {fileID: 7323506535918904451}
+  hpGaugeAnimation: {fileID: 0}
+  mpGaugeAnimation: {fileID: 0}
+  normalColor: {r: 1, g: 1, b: 1, a: 1}
+  upperColor: {r: 0, g: 1, b: 0, a: 1}
+  downColor: {r: 1, g: 0, b: 0, a: 1}
+  canvasGroup: {fileID: 0}
 --- !u!1 &5101507352088738214
 GameObject:
   m_ObjectHideFlags: 0
@@ -5454,6 +5480,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7665439533000593950}
+  - component: {fileID: 6578588397049122213}
   m_Layer: 5
   m_Name: Status
   m_TagString: Untagged
@@ -5487,6 +5514,31 @@ RectTransform:
   m_AnchoredPosition: {x: 25, y: -47}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &6578588397049122213
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7182481901869440790}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2402955de89268e4e84a86b325832163, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHp: {fileID: 1535771169832229740}
+  hp: {fileID: 1802726155880394012}
+  maxMp: {fileID: 4916720301653357590}
+  mp: {fileID: 7198330433987592203}
+  atk: {fileID: 4553844771255815107}
+  def: {fileID: 59470111716990581}
+  spd: {fileID: 5584259011345176085}
+  hpGaugeAnimation: {fileID: 0}
+  mpGaugeAnimation: {fileID: 0}
+  normalColor: {r: 1, g: 1, b: 1, a: 1}
+  upperColor: {r: 0, g: 1, b: 0, a: 1}
+  downColor: {r: 1, g: 0, b: 0, a: 1}
+  canvasGroup: {fileID: 0}
 --- !u!1 &7200754703449441664
 GameObject:
   m_ObjectHideFlags: 0
@@ -5707,8 +5759,6 @@ GameObject:
   m_Component:
   - component: {fileID: 268151075732570311}
   - component: {fileID: 5045385368945564373}
-  - component: {fileID: 8117053729105179367}
-  - component: {fileID: 7704614312165079631}
   - component: {fileID: 1712879561968927032}
   - component: {fileID: 2397192218920283626}
   m_Layer: 5
@@ -5765,8 +5815,8 @@ MonoBehaviour:
   demigod: {fileID: 8385200825177033773}
   lv: {fileID: 4887695457252645890}
   sp: {fileID: 0}
-  statusInfoComponent: {fileID: 7704614312165079631}
-  needStatusInfoComponent: {fileID: 8117053729105179367}
+  statusInfoComponent: {fileID: 6578588397049122213}
+  needStatusInfoComponent: {fileID: 6600233666213625568}
   element1: {fileID: 801175977473239728}
   element2: {fileID: 2153919539294215550}
   element3: {fileID: 7308223262482505965}
@@ -5779,56 +5829,6 @@ MonoBehaviour:
   element5Cost: {fileID: 0}
   recoveryCost: {fileID: 0}
   resourceGain: {fileID: 0}
---- !u!114 &8117053729105179367
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7579293103308703186}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2402955de89268e4e84a86b325832163, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxHp: {fileID: 2477522248668025516}
-  hp: {fileID: 0}
-  maxMp: {fileID: 6635220629913634249}
-  mp: {fileID: 0}
-  atk: {fileID: 9108031248651929592}
-  def: {fileID: 4794774012878741748}
-  spd: {fileID: 7323506535918904451}
-  hpGaugeAnimation: {fileID: 0}
-  mpGaugeAnimation: {fileID: 0}
-  normalColor: {r: 0, g: 0, b: 0, a: 0}
-  upperColor: {r: 0, g: 0, b: 0, a: 0}
-  downColor: {r: 0, g: 0, b: 0, a: 0}
-  canvasGroup: {fileID: 0}
---- !u!114 &7704614312165079631
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7579293103308703186}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2402955de89268e4e84a86b325832163, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxHp: {fileID: 1535771169832229740}
-  hp: {fileID: 1802726155880394012}
-  maxMp: {fileID: 4916720301653357590}
-  mp: {fileID: 7198330433987592203}
-  atk: {fileID: 4553844771255815107}
-  def: {fileID: 59470111716990581}
-  spd: {fileID: 5584259011345176085}
-  hpGaugeAnimation: {fileID: 0}
-  mpGaugeAnimation: {fileID: 0}
-  normalColor: {r: 0, g: 0, b: 0, a: 0}
-  upperColor: {r: 0, g: 0, b: 0, a: 0}
-  downColor: {r: 0, g: 0, b: 0, a: 0}
-  canvasGroup: {fileID: 0}
 --- !u!114 &1712879561968927032
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5843,7 +5843,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   actorInfoComponent: {fileID: 5045385368945564373}
   enemyInfoComponent: {fileID: 2397192218920283626}
-  statusInfoComponent: {fileID: 7704614312165079631}
+  statusInfoComponent: {fileID: 6578588397049122213}
   effekseerEmitter: {fileID: 0}
   deathAnimation: {fileID: 0}
   battleDamagePrefab: {fileID: 0}
@@ -5866,7 +5866,7 @@ MonoBehaviour:
   mainThumb: {fileID: 6131210522335343132}
   nameText: {fileID: 5126224929218253817}
   lv: {fileID: 4887695457252645890}
-  statusInfoComponent: {fileID: 7704614312165079631}
+  statusInfoComponent: {fileID: 6578588397049122213}
   gridKey: {fileID: 0}
 --- !u!1 &7602475003738178822
 GameObject:

@@ -185,7 +185,7 @@ MonoBehaviour:
     Attribute: 0400000007000000010000000200000007000000
     X: -4
     Y: -64
-    Scale: 0.5
+    Scale: 0.55
     AwakenX: 10
     AwakenY: 0
     AwakenScale: 1
@@ -253,8 +253,8 @@ MonoBehaviour:
       _def: 35
       _spd: 30
     Attribute: 0700000004000000030000000100000007000000
-    X: 0
-    Y: -56
+    X: -4
+    Y: -72
     Scale: 0.52
     AwakenX: 24
     AwakenY: 40
@@ -321,7 +321,7 @@ MonoBehaviour:
     Attribute: 0400000004000000040000000700000001000000
     X: 16
     Y: -54
-    Scale: 0.5
+    Scale: 0.52
     AwakenX: -20
     AwakenY: 32
     AwakenScale: 1.1
@@ -360,7 +360,7 @@ MonoBehaviour:
       Weight: 0
       TriggerDates: []
   - Id: 6
-    Name: "\u30CA\u30E6\u30BF"
+    Name: "\u30B1\u30A4\u30C6\u30A3"
     SubName: "\u3010Faked-Magician\u3011"
     ClassId: 6
     ImagePath: 0006
@@ -385,9 +385,9 @@ MonoBehaviour:
       _def: 20
       _spd: 80
     Attribute: 0700000001000000020000000700000007000000
-    X: 20
-    Y: 56
-    Scale: 1
+    X: 0
+    Y: -48
+    Scale: 0.5
     AwakenX: 24
     AwakenY: -12
     AwakenScale: 1
@@ -426,9 +426,9 @@ MonoBehaviour:
       Weight: 0
       TriggerDates: []
   - Id: 7
-    Name: "\u30B1\u30A4\u30C8"
-    SubName: "\u3010\u7121\u57A2\u306A\u308B\u69CB\u6210\u5B98\u3011"
-    ClassId: 1
+    Name: "\u30E6\u30CB"
+    SubName: "\u3010\u7D76\u5BFE\u306A\u308B\u5F27\u72B6\u3011"
+    ClassId: 7
     ImagePath: 0007
     InitLv: 1
     MaxLv: 40
@@ -452,8 +452,8 @@ MonoBehaviour:
       _spd: 30
     Attribute: 0400000003000000070000000700000001000000
     X: 4
-    Y: -56
-    Scale: 0.95
+    Y: -72
+    Scale: 0.54
     AwakenX: 0
     AwakenY: 160
     AwakenScale: 0.6
@@ -469,8 +469,8 @@ MonoBehaviour:
       TriggerDates: []
   - Id: 8
     Name: "\u30DE\u30EA\u30FC\u30D9\u30EB"
-    SubName: "\u3010\u83DC\u5712\u306E\u4FEE\u9053\u58EB\u3011"
-    ClassId: 1
+    SubName: "\u3010\u552F\u5FC3\u306E\u5728\u51E6\u3011"
+    ClassId: 8
     ImagePath: 0008
     InitLv: 1
     MaxLv: 40
@@ -493,9 +493,9 @@ MonoBehaviour:
       _def: 20
       _spd: 30
     Attribute: 0400000003000000070000000700000001000000
-    X: -8
-    Y: 36
-    Scale: 1.05
+    X: -32
+    Y: -64
+    Scale: 0.54
     AwakenX: 0
     AwakenY: 160
     AwakenScale: 0.6
@@ -509,10 +509,78 @@ MonoBehaviour:
       Level: 0
       Weight: 0
       TriggerDates: []
+  - Id: 9
+    Name: "\u30CA\u30C4\u30AD"
+    SubName: "\u3010\u9EC4\u660F\u30CB\u30D2\u30EA\u30B9\u30C8\u3011"
+    ClassId: 9
+    ImagePath: 0009
+    InitLv: 1
+    MaxLv: 40
+    InitStatus:
+      _hp: 45
+      _mp: 15
+      _atk: 33
+      _def: 11
+      _spd: 15
+    PlusStatus:
+      _hp: 0
+      _mp: 0
+      _atk: 0
+      _def: 0
+      _spd: 0
+    NeedStatus:
+      _hp: 110
+      _mp: 20
+      _atk: 70
+      _def: 20
+      _spd: 30
+    Attribute: 0400000003000000070000000700000001000000
+    X: -32
+    Y: -64
+    Scale: 0.52
+    AwakenX: 0
+    AwakenY: 160
+    AwakenScale: 0.6
+    Kinds: 01000000
+    LearningSkills: []
+  - Id: 10
+    Name: "\u30E1\u30EA\u30A2\u30C9\u30FC\u30EB"
+    SubName: "\u3010\u6028\u55DF\u306E\u9396\u3011"
+    ClassId: 10
+    ImagePath: 0010
+    InitLv: 1
+    MaxLv: 40
+    InitStatus:
+      _hp: 38
+      _mp: 15
+      _atk: 15
+      _def: 33
+      _spd: 22
+    PlusStatus:
+      _hp: 0
+      _mp: 0
+      _atk: 0
+      _def: 0
+      _spd: 0
+    NeedStatus:
+      _hp: 50
+      _mp: 20
+      _atk: 10
+      _def: 100
+      _spd: 30
+    Attribute: 0400000007000000010000000300000007000000
+    X: 12
+    Y: -64
+    Scale: 0.52
+    AwakenX: 80
+    AwakenY: 64
+    AwakenScale: 0.8
+    Kinds: 
+    LearningSkills: []
   - Id: 11
-    Name: "\u30D8\u30AB\u30C6\u30FC"
-    SubName: "\u3010\u9CF3\u51F0\u6F14\u821E\u3011"
-    ClassId: 1
+    Name: "\u30BB\u30EA\u30CA"
+    SubName: "\u3010\u6C37\u96EA\u306E\u52FF\u5FD8\u8349\u3011"
+    ClassId: 11
     ImagePath: 0011
     InitLv: 1
     MaxLv: 40
@@ -535,9 +603,9 @@ MonoBehaviour:
       _def: 50
       _spd: 50
     Attribute: 0100000004000000070000000500000003000000
-    X: 0
-    Y: -16
-    Scale: 0.78
+    X: -32
+    Y: -54
+    Scale: 0.57
     AwakenX: 24
     AwakenY: 120
     AwakenScale: 0.9
@@ -572,138 +640,6 @@ MonoBehaviour:
       Weight: 0
       TriggerDates: []
     - SkillId: 11040
-      Level: 0
-      Weight: 0
-      TriggerDates: []
-  - Id: 13
-    Name: "\u30A2\u30EA\u30B9"
-    SubName: "\u3010\u93E1\u306E\u56FD\u306E\u6C37\u6620\u8B5A\u3011"
-    ClassId: 3
-    ImagePath: 0013
-    InitLv: 1
-    MaxLv: 40
-    InitStatus:
-      _hp: 38
-      _mp: 15
-      _atk: 15
-      _def: 33
-      _spd: 22
-    PlusStatus:
-      _hp: 0
-      _mp: 0
-      _atk: 0
-      _def: 0
-      _spd: 0
-    NeedStatus:
-      _hp: 50
-      _mp: 20
-      _atk: 10
-      _def: 100
-      _spd: 30
-    Attribute: 0400000007000000010000000300000007000000
-    X: 16
-    Y: -8
-    Scale: 0.9
-    AwakenX: 80
-    AwakenY: 64
-    AwakenScale: 0.8
-    Kinds: 
-    LearningSkills:
-    - SkillId: 11
-      Level: 0
-      Weight: 0
-      TriggerDates: []
-    - SkillId: 21
-      Level: 0
-      Weight: 0
-      TriggerDates: []
-    - SkillId: 31
-      Level: 0
-      Weight: 0
-      TriggerDates: []
-    - SkillId: 3010
-      Level: 0
-      Weight: 0
-      TriggerDates: []
-    - SkillId: 3070
-      Level: 0
-      Weight: 0
-      TriggerDates: []
-    - SkillId: 7010
-      Level: 0
-      Weight: 0
-      TriggerDates: []
-    - SkillId: 100320
-      Level: 0
-      Weight: 0
-      TriggerDates: []
-    - SkillId: 100321
-      Level: 0
-      Weight: 0
-      TriggerDates: []
-  - Id: 14
-    Name: "\u30D5\u30EA\u30EB"
-    SubName: "\u3010\u30E9\u30A4\u30D6\u30D5\u30A9\u30FC\u30EA\u30CA\u30FC\u3011"
-    ClassId: 4
-    ImagePath: 0014
-    InitLv: 1
-    MaxLv: 40
-    InitStatus:
-      _hp: 44
-      _mp: 15
-      _atk: 30
-      _def: 13
-      _spd: 32
-    PlusStatus:
-      _hp: 0
-      _mp: 0
-      _atk: 0
-      _def: 0
-      _spd: 0
-    NeedStatus:
-      _hp: 60
-      _mp: 20
-      _atk: 50
-      _def: 30
-      _spd: 70
-    Attribute: 0700000004000000030000000100000007000000
-    X: 20
-    Y: -12
-    Scale: 0.88
-    AwakenX: -16
-    AwakenY: 40
-    AwakenScale: 0.8
-    Kinds: 
-    LearningSkills:
-    - SkillId: 11
-      Level: 0
-      Weight: 0
-      TriggerDates: []
-    - SkillId: 21
-      Level: 0
-      Weight: 0
-      TriggerDates: []
-    - SkillId: 31
-      Level: 0
-      Weight: 0
-      TriggerDates: []
-    - SkillId: 4010
-      Level: 0
-      Weight: 0
-      TriggerDates: []
-    - SkillId: 4070
-      Level: 0
-      Weight: 0
-      TriggerDates: []
-    - SkillId: 7010
-      Level: 0
-      Weight: 0
-      TriggerDates: []
-    - SkillId: 100420
-      Level: 0
-      Weight: 0
-      TriggerDates: []
-    - SkillId: 100421
       Level: 0
       Weight: 0
       TriggerDates: []
