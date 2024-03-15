@@ -27,10 +27,23 @@ namespace Ryneus
             if (data.ToggleText1 > 0)
             {
                 optionTexts[0].text = DataSystem.GetTextData(data.ToggleText1).Text;
+            } else
+            {
+                optionToggles[0].gameObject.SetActive(false);
             }
             if (data.ToggleText2 > 0)
             {
                 optionTexts[1].text = DataSystem.GetTextData(data.ToggleText2).Text;
+            } else
+            {
+                optionToggles[1].gameObject.SetActive(false);
+            }
+            if (data.ToggleText3 > 0)
+            {
+                optionTexts[2].text = DataSystem.GetTextData(data.ToggleText3).Text;
+            } else
+            {
+                optionToggles[2].gameObject.SetActive(false);
             }
             UpdateOptionValues(data);
 
@@ -111,6 +124,12 @@ namespace Ryneus
                     for (int i = 0;i < optionToggles.Count;i++)
                     {
                         optionToggles[i].SetIsOnWithoutNotify(i == (GameSystem.ConfigData.BattleAuto == true ? 1 : 0));
+                    }
+                    return;
+                case "BATTLE_SPEED":
+                    for (int i = 0;i < optionToggles.Count;i++)
+                    {
+                        optionToggles[i].SetIsOnWithoutNotify(ConfigUtility.SpeedList[i+1] == GameSystem.ConfigData.BattleSpeed);
                     }
                     return;
             }

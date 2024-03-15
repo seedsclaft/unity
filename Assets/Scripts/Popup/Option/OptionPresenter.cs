@@ -65,21 +65,21 @@ namespace Ryneus
                     }
                     if (inputKeyType == InputKeyType.Option1)
                     {
-                        ConfigUtility.ChangeBGMMute(!Ryneus.SoundManager.Instance.BGMMute);
+                        ConfigUtility.ChangeBGMMute(!SoundManager.Instance.BGMMute);
                     }
                     break;
                 case "SE_VOLUME":
                     if (inputKeyType == InputKeyType.Right)
                     {
-                        ConfigUtility.ChangeSEValue(Mathf.Min(1, Ryneus.SoundManager.Instance.SeVolume + 0.05f));
+                        ConfigUtility.ChangeSEValue(Mathf.Min(1, SoundManager.Instance.SeVolume + 0.05f));
                     }
                     if (inputKeyType == InputKeyType.Left)
                     {
-                        ConfigUtility.ChangeSEValue(Mathf.Max(0, Ryneus.SoundManager.Instance.SeVolume - 0.05f));
+                        ConfigUtility.ChangeSEValue(Mathf.Max(0, SoundManager.Instance.SeVolume - 0.05f));
                     }
                     if (inputKeyType == InputKeyType.Option1)
                     {
-                        ConfigUtility.ChangeSEMute(!Ryneus.SoundManager.Instance.SeMute);
+                        ConfigUtility.ChangeSEMute(!SoundManager.Instance.SeMute);
                     }
                     break;
                 case "GRAPHIC_QUALITY":
@@ -109,6 +109,16 @@ namespace Ryneus
                     break;
                 case "BATTLE_AUTO":
                     ConfigUtility.ChangeBattleAuto(inputKeyType == InputKeyType.Right);
+                    break;
+                case "BATTLE_SPEED":
+                    if (inputKeyType == InputKeyType.Right)
+                    {                    
+                        ConfigUtility.ChangeBattleSpeed(1);
+                    }
+                    if (inputKeyType == InputKeyType.Left)
+                    {
+                        ConfigUtility.ChangeBattleSpeed(-1);
+                    }
                     break;
             }
             CommandRefresh();
@@ -185,6 +195,9 @@ namespace Ryneus
                         break;
                     case "BATTLE_AUTO":
                         ConfigUtility.ChangeBattleAuto(toggleIndex == 1);
+                        break;
+                    case "BATTLE_SPEED":
+                        ConfigUtility.SetBattleSpeed(ConfigUtility.SpeedList[toggleIndex+1]);
                         break;
                 }
                 CommandRefresh();

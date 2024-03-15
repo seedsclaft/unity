@@ -30,6 +30,7 @@ namespace Battle
         SelectParty,
         EnemyDetail,
         ChangeBattleAuto,
+        ChangeBattleSpeed,
         EndBattle
     }
 }

@@ -43,6 +43,7 @@ MonoBehaviour:
     ButtonType: 1
     ToggleText1: 0
     ToggleText2: 0
+    ToggleText3: 0
     ExistAndroid: 1
   - Id: 2
     Key: SE_VOLUME
@@ -52,6 +53,7 @@ MonoBehaviour:
     ButtonType: 1
     ToggleText1: 0
     ToggleText2: 0
+    ToggleText3: 0
     ExistAndroid: 1
   - Id: 3
     Key: GRAPHIC_QUALITY
@@ -61,6 +63,7 @@ MonoBehaviour:
     ButtonType: 2
     ToggleText1: 521
     ToggleText2: 522
+    ToggleText3: 0
     ExistAndroid: 0
   - Id: 4
     Key: EVENT_SKIP
@@ -70,6 +73,7 @@ MonoBehaviour:
     ButtonType: 2
     ToggleText1: 526
     ToggleText2: 527
+    ToggleText3: 0
     ExistAndroid: 1
   - Id: 5
     Key: COMMAND_END_CHECK
@@ -79,6 +83,7 @@ MonoBehaviour:
     ButtonType: 2
     ToggleText1: 531
     ToggleText2: 532
+    ToggleText3: 0
     ExistAndroid: 0
   - Id: 6
     Key: BATTLE_WAIT
@@ -88,6 +93,7 @@ MonoBehaviour:
     ButtonType: 2
     ToggleText1: 536
     ToggleText2: 527
+    ToggleText3: 0
     ExistAndroid: 0
   - Id: 7
     Key: BATTLE_ANIMATION
@@ -97,6 +103,7 @@ MonoBehaviour:
     ButtonType: 2
     ToggleText1: 536
     ToggleText2: 527
+    ToggleText3: 0
     ExistAndroid: 1
   - Id: 8
     Key: INPUT_TYPE
@@ -106,6 +113,7 @@ MonoBehaviour:
     ButtonType: 2
     ToggleText1: 541
     ToggleText2: 542
+    ToggleText3: 0
     ExistAndroid: 0
   - Id: 9
     Key: BATTLE_AUTO
@@ -115,6 +123,17 @@ MonoBehaviour:
     ButtonType: 2
     ToggleText1: 543
     ToggleText2: 544
+    ToggleText3: 0
+    ExistAndroid: 1
+  - Id: 10
+    Key: BATTLE_SPEED
+    Name: "\u30D0\u30C8\u30EB\u901F\u5EA6"
+    Help: " - \u30D0\u30C8\u30EB\u306E\u901F\u5EA6\u3092\u5909\u66F4\u3057\u307E\u3059"
+    Category: 1
+    ButtonType: 2
+    ToggleText1: 545
+    ToggleText2: 546
+    ToggleText3: 547
     ExistAndroid: 1
   TitleCommandData:
   - Id: 1
@@ -437,6 +456,9 @@ MonoBehaviour:
   - Id: 510
     Text: "\u30C7\u30FC\u30BF\u521D\u671F\u5316"
     Help: " - \u30D7\u30EC\u30A4\u30E4\u30FC\u30C7\u30FC\u30BF\u3092\u521D\u671F\u5316\u3057\u307E\u3059"
+  - Id: 511
+    Text: "\u30D0\u30C8\u30EB\u901F\u5EA6"
+    Help: " - \u30D0\u30C8\u30EB\u306E\u901F\u5EA6\u3092\u5909\u66F4\u3057\u307E\u3059"
   - Id: 521
     Text: Normal
     Help: '""'
@@ -469,6 +491,15 @@ MonoBehaviour:
     Help: '""'
   - Id: 544
     Text: "\u30AA\u30FC\u30C8"
+    Help: '""'
+  - Id: 545
+    Text: x1
+    Help: '""'
+  - Id: 546
+    Text: x2
+    Help: '""'
+  - Id: 547
+    Text: x4
     Help: '""'
   - Id: 551
     Text: "\u30B2\u30FC\u30E0\u5185\u8A2D\u5B9A"

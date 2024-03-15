@@ -87,6 +87,7 @@ namespace Ryneus
             _view.BattlerBattleClearSelect();
             _view.StartBattleStartAnim(DataSystem.GetTextData(61).Text);
             _view.StartBattleAnimation();
+            _view.SetBattleSpeedButton(ConfigUtility.CurrentBattleSpeedText());
             _view.SetBattleAutoButton(true);
             await UniTask.WaitUntil(() => _view.StartAnimIsBusy == false);
 
@@ -113,6 +114,10 @@ namespace Ryneus
             if (viewEvent.commandType == Battle.CommandType.ChangeBattleAuto)
             {
                 CommandChangeBattleAuto();
+            }
+            if (viewEvent.commandType == Battle.CommandType.ChangeBattleSpeed)
+            {
+                CommandChangeBattleSpeed();
             }
             if (_busy){
                 return;
@@ -601,12 +606,12 @@ namespace Ryneus
             if (GameSystem.ConfigData.BattleAnimationSkip == false)
             {
                 SoundManager.Instance.PlayStaticSe(SEType.Demigod);
-                _view.StartAnimationDemigod(_model.CurrentBattler,_model.CurrentActionInfo().Master);
+                _view.StartAnimationDemigod(_model.CurrentBattler,_model.CurrentActionInfo().Master,GameSystem.ConfigData.BattleSpeed);
                 _view.HideStateOverlay();
                 _view.SetAnimationBusy(true);
-                await UniTask.DelayFrame(20);
+                await UniTask.DelayFrame((int)(20 / GameSystem.ConfigData.BattleSpeed));
                 SoundManager.Instance.PlayStaticSe(SEType.Awaken);
-                await UniTask.DelayFrame(90);
+                await UniTask.DelayFrame((int)(90 / GameSystem.ConfigData.BattleSpeed));
             }
             StartAnimationSkill();
         }
@@ -624,7 +629,7 @@ namespace Ryneus
                 }
             }
             var waitFrame = GameSystem.ConfigData.BattleAnimationSkip ? 1 : 60;
-            await UniTask.DelayFrame(waitFrame);
+            await UniTask.DelayFrame((int)(waitFrame / GameSystem.ConfigData.BattleSpeed));
             EndTurn();
         }
 
@@ -648,7 +653,7 @@ namespace Ryneus
             var PassiveResults = _model.CheckTriggerPassiveInfos(BattleUtility.HpDamagedTriggerTimings(),null,slipDamageResults);
             ExecActionResult(PassiveResults);
             var waitFrame = GameSystem.ConfigData.BattleAnimationSkip ? 1 : 60;
-            await UniTask.DelayFrame(waitFrame);
+            await UniTask.DelayFrame((int)(waitFrame / GameSystem.ConfigData.BattleSpeed));
             EndTurn();
         }
 
@@ -691,12 +696,12 @@ namespace Ryneus
                 }
                 StartAliveAnimation(_model.CurrentActionInfo().ActionResults);
 
-                await UniTask.DelayFrame(animationData.DamageTiming);
+                await UniTask.DelayFrame((int)(animationData.DamageTiming / GameSystem.ConfigData.BattleSpeed));
                 foreach (var actionResultInfo in actionInfo.ActionResults)
                 {
                     PopupActionResult(actionResultInfo,actionResultInfo.TargetIndex,true,true);
                 }
-                await UniTask.DelayFrame(60);
+                await UniTask.DelayFrame((int)(60 / GameSystem.ConfigData.BattleSpeed));
             } else
             {
                 _view.SetCurrentSkillData(actionInfo.Master);
@@ -707,7 +712,7 @@ namespace Ryneus
                     PopupActionResult(actionResultInfo,actionResultInfo.TargetIndex,true,true);
                 }
                 var waitFrame = GameSystem.ConfigData.BattleAnimationSkip ? 1 : 60;
-                await UniTask.DelayFrame(waitFrame);
+                await UniTask.DelayFrame((int)(waitFrame / GameSystem.ConfigData.BattleSpeed));
             }
             _nextCommandType = Battle.CommandType.EndAnimation;
             CommandEndAnimation();
@@ -1088,6 +1093,13 @@ namespace Ryneus
                 _view.HideBattleThumb();
                 CommandAutoActorSkillId();
             }
+        }
+
+        private void CommandChangeBattleSpeed()
+        {
+            SoundManager.Instance.PlayStaticSe(SEType.Cancel);
+            ConfigUtility.ChangeBattleSpeed(1);
+            _view.SetBattleSpeedButton(ConfigUtility.CurrentBattleSpeedText());
         }
     }
 }

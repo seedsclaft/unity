@@ -64,6 +64,7 @@ namespace Ryneus
 			public OptionButtonType ButtonType;
 			public int ToggleText1;
 			public int ToggleText2;
+			public int ToggleText3;
 			public bool ExistAndroid;
 		}
 

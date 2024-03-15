@@ -22,6 +22,7 @@ namespace Ryneus
                 ChangeBattleAnimation(saveConfigInfo.BattleAnimationSkip);
                 ChangeInputType(saveConfigInfo.InputType);
                 ChangeBattleAuto(saveConfigInfo.BattleAuto);
+                SetBattleSpeed(saveConfigInfo.BattleSpeed);
             }
         }
         public static void ChangeBGMValue(float bgmVolume)
@@ -98,6 +99,43 @@ namespace Ryneus
         public static void ChangeBattleAuto(bool battleAuto)
         {
             GameSystem.ConfigData.BattleAuto = battleAuto;
+        }
+
+        public static List<float> SpeedList = new List<float>(){0,0.75f,1,2};
+        public static void SetBattleSpeed(float battleSpeed)
+        {
+            GameSystem.ConfigData.BattleSpeed = battleSpeed;
+        }
+        public static void ChangeBattleSpeed(int plus)
+        {
+            var current = SpeedList.FindIndex(a => a == GameSystem.ConfigData.BattleSpeed);
+            var next = current + plus;
+            if (next < 0){
+                GameSystem.ConfigData.BattleSpeed = SpeedList[SpeedList.Count-1];
+            } else
+            if (next > SpeedList.Count-1)
+            {
+                GameSystem.ConfigData.BattleSpeed = SpeedList[1];
+            } else
+            {
+                GameSystem.ConfigData.BattleSpeed = SpeedList[next];
+            }
+        }
+
+        public static string CurrentBattleSpeedText()
+        {
+            var current = SpeedList.FindIndex(a => a == GameSystem.ConfigData.BattleSpeed);
+            var option = DataSystem.System.OptionCommandData.Find(a => a.Key == "BATTLE_SPEED");
+            switch (current)
+            {
+                case 1:
+                return DataSystem.System.GetTextData(option.ToggleText1).Text;
+                case 2:
+                return DataSystem.System.GetTextData(option.ToggleText2).Text;
+                case 3:
+                return DataSystem.System.GetTextData(option.ToggleText3).Text;
+            }
+            return "";
         }
     }
 }

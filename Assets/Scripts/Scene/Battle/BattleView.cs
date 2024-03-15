@@ -4,7 +4,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using Battle;
 using Effekseer;
-using UnityEngine.U2D.IK;
 
 namespace Ryneus
 {
@@ -25,6 +24,7 @@ namespace Ryneus
 
         [SerializeField] private GameObject centerAnimPosition = null;
         [SerializeField] private SideMenuButton battleAutoButton = null;
+        [SerializeField] private SideMenuButton battleSpeedButton = null;
         [SerializeField] private BattleCutinAnimation battleCutinAnimation = null;
         [SerializeField] private GameObject battleBackGroundRoot = null;
         private BattleBackGroundAnimation _backGroundAnimation = null;
@@ -62,6 +62,11 @@ namespace Ryneus
             battleEnemyLayer.Initialize();
             SideMenuButton.onClick.AddListener(() => {
                 CallSideMenu();
+            });
+            battleSpeedButton.SetCallHandler((a) => {
+                if (battleSpeedButton.gameObject.activeSelf == false) return;
+                var eventData = new BattleViewEvent(CommandType.ChangeBattleSpeed);
+                _commandData(eventData);
             });
             new BattlePresenter(this);
         }
@@ -104,6 +109,15 @@ namespace Ryneus
         public void SetBattleAutoButton(bool isActive)
         {
             battleAutoButton.gameObject.SetActive(isActive);
+            battleSpeedButton.gameObject.SetActive(isActive);
+        }
+
+        public void SetBattleSpeedButton(string data)
+        {
+            SystemData.CommandData system = new SystemData.CommandData();
+            system.Name = data;
+            battleSpeedButton.SetData(system,-1);
+            battleSpeedButton.UpdateViewItem();
         }
 
         private void CallSkillAction()
@@ -456,6 +470,7 @@ namespace Ryneus
             {
                 return;
             }
+            animationSpeed *= GameSystem.ConfigData.BattleSpeed;
             _battlerComps[targetIndex].StartAnimation(effekseerEffectAsset,animationPosition,animationScale,animationSpeed);
         }
 
@@ -491,11 +506,11 @@ namespace Ryneus
             }
         }
 
-        public void StartAnimationDemigod(BattlerInfo battlerInfo,SkillData skillData)
+        public void StartAnimationDemigod(BattlerInfo battlerInfo,SkillData skillData,float speedRate)
         {
             DeactivateActorList();
             DeactivateEnemyList();
-            battleCutinAnimation.StartAnimation(battlerInfo,skillData);
+            battleCutinAnimation.StartAnimation(battlerInfo,skillData,speedRate);
             //var handle = EffekseerSystem.PlayEffect(effekseerEffectAsset, centerAnimPosition.transform.position);
         }
 

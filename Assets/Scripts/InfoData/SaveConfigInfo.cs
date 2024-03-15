@@ -17,6 +17,7 @@ namespace Ryneus
 		public bool BattleAnimationSkip;
 		public bool InputType;
 		public bool BattleAuto;
+		public float BattleSpeed;
 		public SaveConfigInfo()
 		{
 			this.InitParameter();
@@ -35,6 +36,7 @@ namespace Ryneus
 			BattleAnimationSkip = false;
 			InputType = true;
 			BattleAuto = false;
+			BattleSpeed = ConfigUtility.SpeedList[1];
 		}
 
 		public void UpdateSoundParameter(float bgmVolume,bool bgmMute,float seVolume,bool seMute)

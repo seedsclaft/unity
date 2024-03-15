@@ -23,6 +23,7 @@ namespace Ryneus
 			ButtonType,
 			ToggleText1,
 			ToggleText2,
+			ToggleText3,
 			ExistAndroid,
 		}
 
@@ -134,13 +135,14 @@ namespace Ryneus
 
 						var OptionCommand = new SystemData.OptionCommand();
 						OptionCommand.Id = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.Id);
-						OptionCommand.Category = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.Category);
 						OptionCommand.Key = AssetPostImporter.ImportString(BaseRow,(int)BaseColumn.Key);
 						OptionCommand.Name = textData.Find(a => a.Id == AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.NameTextId)).Text;
+						OptionCommand.Category = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.Category);
 						OptionCommand.Help = textData.Find(a => a.Id == AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.NameTextId)).Help;
 						OptionCommand.ButtonType = (OptionButtonType)AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.ButtonType);
 						OptionCommand.ToggleText1 = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.ToggleText1);
 						OptionCommand.ToggleText2 = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.ToggleText2);
+						OptionCommand.ToggleText3 = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.ToggleText3);
 						OptionCommand.ExistAndroid = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.ExistAndroid) == 1;
 						Data.OptionCommandData.Add(OptionCommand);
 					}

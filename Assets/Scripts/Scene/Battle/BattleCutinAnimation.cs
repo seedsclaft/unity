@@ -22,11 +22,11 @@ namespace Ryneus
         [SerializeField] private BattlerInfoComponent battlerInfoComponent;
         [SerializeField] private SkillInfoComponent skillInfoComponent;
         
-    private void OnEnable() {
-                    StartAnimation(null,null);
+        private void OnEnable() {
+            StartAnimation(null,null,1);
         }
 
-        public void StartAnimation(BattlerInfo battlerInfo,SkillData skillData)
+        public void StartAnimation(BattlerInfo battlerInfo,SkillData skillData,float speedRate)
         {
             if (battlerInfo != null)
             {
@@ -38,9 +38,9 @@ namespace Ryneus
             }
             
             var time1 = 0f;
-            var time2 = 0.2f;
-            var time3 = 2.0f;
-            var time4 = 0.3f;
+            var time2 = 0.2f / speedRate;
+            var time3 = 2.0f / speedRate;
+            var time4 = 0.3f / speedRate;
 
             var backUnMask1X = 120;
             backUnMask1.transform.DOLocalMove(new Vector3(backUnMask1X,-0,0),time1);

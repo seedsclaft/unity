@@ -19,7 +19,6 @@ namespace Ryneus
 
         public void SetCallHandler(System.Action<SystemData.CommandData> handler)
         {
-            if (_data == null) return;
             clickButton.onClick.AddListener(() => 
             {
                 handler(_data);
