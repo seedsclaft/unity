@@ -464,6 +464,7 @@ namespace Ryneus
         ChangeFeatureParam1StageWinCount = 6040,
         ChangeFeatureParam2StageWinCount = 6050,
         ChangeFeatureParam3StageWinCount = 6060,
+        ChangeSkillRepeatTime = 6100,
         PlusSkill = 7010,
         KindHeal = 8010,
         BreakUndead = 8020,

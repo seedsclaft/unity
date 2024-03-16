@@ -58,6 +58,7 @@ namespace Ryneus
             return ResourceSystem.LoadBattleBackGround(CurrentStage.Master.BackGround);
         }
 
+
         public void CreateBattleData()
         {
             _actionIndex = 0;
@@ -80,6 +81,7 @@ namespace Ryneus
                 _battleRecords.Add(battlerRecord);
             }
             // アルカナ
+            StageAlcana.RefreshOwnAlcana(UpdateAlcanaSkillInfos());
             StageAlcana.CheckEnableSkillTrigger();
             var alcana = new BattlerInfo(StageAlcana,true,1);
             _battlers.Add(alcana);
@@ -873,7 +875,7 @@ namespace Ryneus
             actionInfo.SetHpCost(HpCost);
 
             var isPrism = PrismRepeatTime(subject,actionInfo) > 0;
-            var repeatTime = CalcRepeatTime(actionInfo);
+            var repeatTime = CalcRepeatTime(subject,actionInfo);
             repeatTime += PrismRepeatTime(subject,actionInfo);
 
             // 攻撃前の攻撃無効回数を管理
@@ -999,9 +1001,19 @@ namespace Ryneus
             return actionInfo.Master.MpCost;
         }
 
-        private int CalcRepeatTime(ActionInfo actionInfo)
+        private int CalcRepeatTime(BattlerInfo subject,ActionInfo actionInfo)
         {
-            return actionInfo.Master.RepeatTime;
+            var repeatTime = actionInfo.Master.RepeatTime;
+            // パッシブで回数増加を計算
+            var addFeatures = subject.Skills.FindAll(a => a.Master.FeatureDates.Find(b => b.FeatureType == FeatureType.ChangeSkillRepeatTime && actionInfo.Master.Id == b.Param1) != null);
+            foreach (var addFeature in addFeatures)
+            {
+                foreach (var featureData in addFeature.FeatureDates)
+                {
+                    repeatTime += featureData.Param3;
+                }
+            }
+            return repeatTime;
         }
 
         private int PrismRepeatTime(BattlerInfo subject,ActionInfo actionInfo)

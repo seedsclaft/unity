@@ -10,6 +10,7 @@ namespace Ryneus
         public TacticsModel()
         {
             _selectActorId = StageMembers()[0].ActorId;
+            StageAlcana.RefreshOwnAlcana(UpdateAlcanaSkillInfos());
         }
 
         private SymbolInfo _symbolInfo;
@@ -29,10 +30,6 @@ namespace Ryneus
             return StageMembers().Find(a => a.ActorId == _selectActorId);
         }
 
-
-        private int _selectSkillId = 0;
-        public int SelectAlcanaSkillId => _selectSkillId;
-
         private TacticsCommandType _TacticsCommandType = TacticsCommandType.Train;
         public TacticsCommandType TacticsCommandType => _TacticsCommandType;
         public void SetTacticsCommandType(TacticsCommandType tacticsCommandType)
@@ -44,8 +41,6 @@ namespace Ryneus
         {
             _tacticsCommandEnables[tacticsCommand] = isEnable;
         }
-
-
 
         public List<ListData> TacticsCommand()
         {

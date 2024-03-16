@@ -34,7 +34,8 @@ namespace Ryneus
         public List<int> CurrentActorIdList(int stageId,int seek)
         {
             var actorIdList = new List<int>();
-            var records = _symbolRecordList.FindAll(a => a.StageId <= stageId && a.Seek < seek && a.SymbolInfo.SymbolType == SymbolType.Actor && a.Selected);
+            var records = _symbolRecordList.FindAll(a => a.SymbolInfo.SymbolType == SymbolType.Actor && a.Selected);
+            records = records.FindAll(a => a.StageId == stageId && a.Seek < seek || a.StageId < stageId);
             foreach (var record in records)
             {
                 foreach (var getItemInfo in record.SymbolInfo.GetItemInfos)
@@ -52,18 +53,43 @@ namespace Ryneus
         public List<int> CurrentAlchemyIdList(int stageId,int seek)
         {
             var alchemyIdList = new List<int>();
-            var records = _symbolRecordList.FindAll(a => a.StageId <= stageId && a.Seek < seek && a.Selected);
+            var records = _symbolRecordList.FindAll(a => a.Selected);
+            records = records.FindAll(a => a.StageId == stageId && a.Seek < seek || a.StageId < stageId);
             foreach (var record in records)
             {
                 foreach (var getItemInfo in record.SymbolInfo.GetItemInfos)
                 {
                     if (getItemInfo.GetItemType == GetItemType.Skill)
                     {
-                        alchemyIdList.Add(getItemInfo.Param1);
+                        if (DataSystem.FindSkill(getItemInfo.Param1).SkillType != SkillType.UseAlcana)
+                        {
+                            alchemyIdList.Add(getItemInfo.Param1);
+                        }
                     }
                 }
             }
             return alchemyIdList;
+        }
+
+        public List<int> CurrentAlcanaIdList(int stageId,int seek)
+        {
+            var alcanaIdList = new List<int>();
+            var records = _symbolRecordList.FindAll(a => a.Selected);
+            records = records.FindAll(a => a.StageId == stageId && a.Seek < seek || a.StageId < stageId);
+            foreach (var record in records)
+            {
+                foreach (var getItemInfo in record.SymbolInfo.GetItemInfos)
+                {
+                    if (getItemInfo.GetItemType == GetItemType.Skill)
+                    {
+                        if (DataSystem.FindSkill(getItemInfo.Param1).SkillType == SkillType.UseAlcana)
+                        {
+                            alcanaIdList.Add(getItemInfo.Param1);
+                        }
+                    }
+                }
+            }
+            return alcanaIdList;
         }
         private AlcanaInfo _alcanaInfo;
         public AlcanaInfo AlcanaInfo => _alcanaInfo;

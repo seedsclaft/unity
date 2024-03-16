@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 using Train;
 
 namespace Ryneus
@@ -11,6 +12,7 @@ namespace Ryneus
 
         [SerializeField] private BattleSelectCharacter battleSelectCharacter = null;
         [SerializeField] private TacticsSelectCharacter selectCharacter = null;
+        [SerializeField] private TextMeshProUGUI numinousText = null;
         private new System.Action<TrainViewEvent> _commandData = null;
 
 
@@ -44,6 +46,11 @@ namespace Ryneus
             _commandData(eventData);
         }
 
+        public void SetNuminous(int numinous)
+        {
+            numinousText.SetText(DataSystem.GetReplaceDecimalText(numinous));
+        }
+        
 
         public void RefreshListData(ListData listData)
         {

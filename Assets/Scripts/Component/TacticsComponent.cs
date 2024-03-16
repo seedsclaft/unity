@@ -49,6 +49,9 @@ namespace Ryneus
                 if (tacticsCommandType == TacticsCommandType.Paradigm)
                 {
                     checkToggle.SetIsOnWithoutNotify(actorInfo.BattleIndex >= 0);
+                } else
+                {
+                    checkToggle.SetIsOnWithoutNotify(false);
                 }
             }
 
@@ -59,7 +62,7 @@ namespace Ryneus
 
             if (trainCost != null)
             {
-                trainCost.text = "-" + TacticsUtility.TrainCost(actorInfo).ToString();
+                trainCost.text = TacticsUtility.TrainCost(actorInfo).ToString();
             }
             
             if (recoveryCost != null)

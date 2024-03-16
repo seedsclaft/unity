@@ -203,6 +203,18 @@ namespace Ryneus
             StageAlcana.SetIsAlcana(isAlcana);
         }
 
+        public List<SkillInfo> UpdateAlcanaSkillInfos()
+        {
+            var skillInfos = new List<SkillInfo>();
+            foreach (var alchemyId in PartyInfo.CurrentAlcanaIdList(CurrentStage.Id,CurrentStage.CurrentTurn))
+            {
+                var skillInfo = new SkillInfo(alchemyId);
+                skillInfo.SetEnable(true);
+                skillInfos.Add(skillInfo);
+            }
+            return skillInfos;
+        }
+
         public List<SkillInfo> CheckAlcanaSkillInfos(TriggerTiming triggerTiming)
         {
             var skillInfos = StageAlcana.CheckAlcanaSkillInfo(triggerTiming);

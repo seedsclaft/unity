@@ -65,26 +65,17 @@ namespace Ryneus
         private void CommandTacticsCommand(TacticsCommandType tacticsCommandType)
         {
             _model.SetTacticsCommandType(tacticsCommandType);
-            //_view.HideCommandList();
             _view.SetHelpInputInfo(_model.TacticsCommandInputInfo());
+            _view.CallTrainCommand(tacticsCommandType);
             switch (tacticsCommandType)
             {
                 case TacticsCommandType.Paradigm:
                     return;
                 case TacticsCommandType.Train:
-                    _view.CallTrainCommand(tacticsCommandType);
-                    _view.ChangeBackCommandActive(true);
-                    _backCommand = CommandType.TacticsCommandClose;
                     break;
                 case TacticsCommandType.Alchemy:
-                    _view.CallTrainCommand(tacticsCommandType);
-                    _view.ShowLeaningList(_model.SelectActorLearningMagicList());
-                    _view.ChangeBackCommandActive(true);
-                    //_view.ShowSelectCharacterCommand();
-                    _backCommand = CommandType.TacticsCommandClose;
                     break;
                 case TacticsCommandType.Status:
-                    _view.CallTrainCommand(tacticsCommandType);
                     break;
             }
         }

@@ -213,6 +213,7 @@ namespace Ryneus
             _view.SetUIButton();
             _view.SetBackGround(_model.CurrentStage.Master.BackGround);
             _view.SetSymbolRecords(_model.SymbolRecords());
+            _view.SetAlcanaInfo(_model.StageAlcana);
             CommandRefresh();
             PlayTacticsBgm();
             //_view.SetHelpInputInfo(_model.TacticsCommandInputInfo());
@@ -432,29 +433,14 @@ namespace Ryneus
                     CommandStageSymbol();
                     return;
                 case TacticsCommandType.Train:
-                //case TacticsCommandType.Recovery:
-                    _view.HideConfirmCommand();
-                    _view.SetSymbols(_model.StageSymbolInfos(_model.CurrentStage.CurrentTurn));
-                    
-                    _view.ActivateTacticsCommand();
-                    _view.ChangeBackCommandActive(true);
-                    _backCommand = Tactics.CommandType.TacticsCommandClose;
-                    break;
                 case TacticsCommandType.Alchemy:
-                    _view.HideConfirmCommand();
                     _view.SetSymbols(_model.StageSymbolInfos(_model.CurrentStage.CurrentTurn));
-
-                    _view.ActivateTacticsCommand();
-                    _view.ChangeBackCommandActive(true);
-                    _view.ShowSelectCharacterCommand();
                     _backCommand = Tactics.CommandType.TacticsCommandClose;
                     break;
                 case TacticsCommandType.Status:
                     break;
             }
         }
-
-
 
         private void CommandStageSymbol()
         {
@@ -635,6 +621,7 @@ namespace Ryneus
         private void CheckAlcanaSymbol(SkillInfo skillInfo)
         {
             var popupInfo = new ConfirmInfo(DataSystem.GetReplaceText(11140,skillInfo.Master.Name),(a) => UpdatePopupAlcanaSymbol((ConfirmCommandType)a),ConfirmType.SkillDetail);
+            popupInfo.SetSkillInfo(new List<SkillInfo>(){skillInfo});
             _view.CommandCallConfirm(popupInfo);
         }
 
@@ -764,7 +751,6 @@ namespace Ryneus
         private void CommandRefresh()
         {
             _view.SetTurns(_model.RemainTurns);
-            _view.SetNuminous(_model.Currency);
             _view.SetStageInfo(_model.CurrentStage);
             _view.SetAlcanaInfo(_model.StageAlcana);
             _view.SetTacticsCharaLayer(_model.StageMembers());

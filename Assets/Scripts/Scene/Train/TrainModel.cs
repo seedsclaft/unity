@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System;
-using System.Linq;
 
 namespace Ryneus
 {
@@ -10,13 +9,6 @@ namespace Ryneus
         public TrainModel()
         {
             _selectActorId = StageMembers()[0].ActorId;
-        }
-
-        private SymbolInfo _symbolInfo;
-        public SymbolInfo SymbolInfo => _symbolInfo;
-        public void SetSymbolInfo(SymbolInfo symbolInfo)
-        {
-            _symbolInfo = symbolInfo;
         }
         
         private int _selectActorId = 0;
@@ -29,10 +21,6 @@ namespace Ryneus
             return StageMembers().Find(a => a.ActorId == _selectActorId);
         }
 
-
-        private int _selectSkillId = 0;
-        public int SelectAlcanaSkillId => _selectSkillId;
-
         private TacticsCommandType _TacticsCommandType = TacticsCommandType.Train;
         public TacticsCommandType TacticsCommandType => _TacticsCommandType;
         public void SetTacticsCommandType(TacticsCommandType tacticsCommandType)
@@ -43,51 +31,6 @@ namespace Ryneus
         public void SetTacticsCommandEnables(TacticsCommandType tacticsCommand,bool isEnable)
         {
             _tacticsCommandEnables[tacticsCommand] = isEnable;
-        }
-
-
-
-        public List<ListData> TacticsCommand()
-        {
-            if (CurrentStage.SurvivalMode)
-            {
-                SetTacticsCommandEnables(TacticsCommandType.Train,false);
-                SetTacticsCommandEnables(TacticsCommandType.Alchemy,false);
-                //SetTacticsCommandEnables(TacticsCommandType.Recovery,false);
-            }
-            var commandListDates = MakeListData(DataSystem.TacticsCommand);
-            foreach (var commandListData in commandListDates)
-            {
-                var commandData = (SystemData.CommandData)commandListData.Data;
-                if (_tacticsCommandEnables.ContainsKey((TacticsCommandType)commandData.Id))
-                {
-                    commandListData.SetEnable(_tacticsCommandEnables[(TacticsCommandType)commandData.Id]);
-                }
-            }
-            return commandListDates;
-        }
-
-        public ListData ChangeEnableCommandData(int index,bool enable)
-        {
-            return new ListData(DataSystem.TacticsCommand[index],index,enable);
-        }
-
-        public List<ListData> StageSymbolInfos(int seek)
-        {
-            var list = new List<SymbolInfo>();
-            var symbolInfos = PartyInfo.StageSymbolInfos.FindAll(a => a.StageSymbolData.Seek == seek);
-            var selectRecords = PartyInfo.SymbolRecordList.FindAll(a => a.StageId == CurrentStage.Id && a.Selected == true);
-            for (int i = 0;i < symbolInfos.Count;i++)
-            {
-                var symbolInfo = new SymbolInfo();
-                symbolInfo.CopyData(symbolInfos[i]);
-                var saveRecord = selectRecords.Find(a => a.IsSameSymbol(CurrentStage.Id,seek+1,i));
-                symbolInfo.SetSelected(saveRecord != null);
-                symbolInfo.SetCleared(symbolInfos[i].Cleared);
-                MakePrizeData(saveRecord,symbolInfo.GetItemInfos);
-                list.Add(symbolInfo);
-            }
-            return MakeListData(list);
         }
 
         public bool CheckActorTrain()
@@ -119,11 +62,6 @@ namespace Ryneus
             PartyInfo.ChangeCurrency(Currency - learningCost);
             actorInfo.LearnSkill(skillInfo.Id);
             actorInfo.GainNuminousCost(learningCost);
-        }
-
-        public void SetStageSeekIndex(int symbolIndex)
-        {
-            CurrentStage.SetSeekIndex(symbolIndex);
         }
 
         public void SaveTempBattleMembers()
@@ -162,103 +100,10 @@ namespace Ryneus
             return MakeListData(skillInfos);
         }
 
-        public List<SkillInfo> AlcanaMagicSkillInfos(List<GetItemInfo> getItemInfos)
-        {
-            var skillInfos = new List<SkillInfo>();
-            foreach (var getItemInfo in getItemInfos)
-            {
-                var skillInfo = new SkillInfo(getItemInfo.Param1);
-                var cost = getItemInfo.Param2;
-                skillInfo.SetEnable(cost <= PartyInfo.Currency);
-                skillInfos.Add(skillInfo);
-            }
-            return skillInfos;
-        }
-
         public void SetTempAddActorStatusInfos(int actorId)
         {
             var actorInfos = PartyInfo.ActorInfos.FindAll(a => a.ActorId == actorId);
             TempInfo.SetTempStatusActorInfos(actorInfos);
-        }
-
-        public void SelectRecoveryPlus()
-        {
-            var actorInfo = TacticsActor();
-            var remain = TacticsUtility.RemainRecoveryCost(actorInfo);
-            if (actorInfo != null && remain > 0){
-                var cost = TacticsUtility.RecoveryCost(actorInfo);
-                if (Currency >= cost){
-                    actorInfo.ChangeHp(actorInfo.CurrentHp + 10);
-                    actorInfo.ChangeMp(actorInfo.CurrentMp + 10);
-                    PartyInfo.ChangeCurrency(Currency - cost);
-                }
-            }
-        }
-        
-        public AdvData StartTacticsAdvData()
-        {
-            if (CurrentStage.SurvivalMode)
-            {
-                var isSurvivalGameOver = StageMembers().Count > 0 && !Actors().Exists(a => a.Lost == false);
-                if (isSurvivalGameOver)
-                {
-                    CurrentStage.SetEndingType(EndingType.C);
-                    return DataSystem.Adventures.Find(a => a.Id == 21);
-                }
-                var isSurvivalClear = RemainTurns <= 0;
-                if (isSurvivalClear)
-                {
-                    CurrentStage.SetEndingType(EndingType.A);
-                    StageClear();
-                    return DataSystem.Adventures.Find(a => a.Id == 151);
-                }
-                return null;
-            }
-            var isGameOver = false;//PartyInfo.ActorIdList.Count > 0 && (Actors().Find(a => a.ActorId == PartyInfo.ActorIdList[0])).Lost;
-            if (isGameOver)
-            {
-                CurrentStage.SetEndingType(EndingType.C);
-                return DataSystem.Adventures.Find(a => a.Id == 21);
-            }
-            var isAEndGameClear = CurrentStage.StageClear;
-            if (isAEndGameClear)
-            {
-                CurrentStage.SetEndingType(EndingType.A);
-                StageClear();
-                return DataSystem.Adventures.Find(a => a.Id == 151);
-            }
-            var isBEndGameClear = CurrentStage.ClearTroopIds.Contains(4010);
-            if (isBEndGameClear)
-            {
-                CurrentStage.SetEndingType(EndingType.B);
-                StageClear();
-                return DataSystem.Adventures.Find(a => a.Id == 152);
-            }
-            return null;
-        }
-
-        public List<ListData> SideMenu()
-        {
-            var list = new List<SystemData.CommandData>();
-            var retire = new SystemData.CommandData();
-            retire.Id = 1;
-            retire.Name = DataSystem.GetTextData(704).Text;
-            retire.Key = "Retire";
-            list.Add(retire);
-            var menuCommand = new SystemData.CommandData();
-            menuCommand.Id = 2;
-            menuCommand.Name = DataSystem.GetTextData(703).Text;
-            menuCommand.Key = "Help";
-            list.Add(menuCommand);
-            if (CurrentStage.SurvivalMode == false)
-            {
-                var saveCommand = new SystemData.CommandData();
-                saveCommand.Id = 3;
-                saveCommand.Name = DataSystem.GetTextData(707).Text;
-                saveCommand.Key = "Save";
-                list.Add(saveCommand);
-            }
-            return MakeListData(list);
         }
 
         public List<ListData> TacticsCharacterData()

@@ -6093,7 +6093,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 248, y: 260}
+  m_AnchoredPosition: {x: 248, y: 200}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &3950555240941426187
@@ -6132,7 +6132,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 96, y: -376}
+  m_AnchoredPosition: {x: 96, y: -280}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
 --- !u!114 &7463771779326960090
@@ -6151,6 +6151,7 @@ MonoBehaviour:
   reverse: 0
   warpMode: 1
   scrollRect: {fileID: 3456013651485056097}
+  itemPrefabMode: 1
   itemPrefab: {fileID: 1609593056959980719, guid: c51b960e7447df54e84904dd05566e30,
     type: 3}
   _helpWindow: {fileID: 0}
@@ -6696,6 +6697,7 @@ MonoBehaviour:
   reverse: 0
   warpMode: 1
   scrollRect: {fileID: 6393707526161764516}
+  itemPrefabMode: 1
   itemPrefab: {fileID: 5506509304731845662, guid: 1808d4d823ec82b4396a8a38d2b70f44,
     type: 3}
   _helpWindow: {fileID: 0}
@@ -7885,6 +7887,8 @@ MonoBehaviour:
   _backCommand: {fileID: 0}
   _backGround: {fileID: 2874244035317246270}
   uiRoot: {fileID: 2158858007626561530}
+  optionButton: {fileID: 0}
+  sideMenuButton: {fileID: 0}
   backgroundImage: {fileID: 0}
   strategyActorList: {fileID: 8644336505725030254}
   strategyResultList: {fileID: 1085437304443565386}

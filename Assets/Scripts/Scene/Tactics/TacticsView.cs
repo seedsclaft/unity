@@ -19,7 +19,6 @@ namespace Ryneus
         [SerializeField] private BaseList parallelList = null;
 
         [SerializeField] private TextMeshProUGUI turnText = null;
-        [SerializeField] private TextMeshProUGUI numinousText = null;
         private new System.Action<TacticsViewEvent> _commandData = null;
         [SerializeField] private TacticsAlcana tacticsAlcana = null;
 
@@ -240,11 +239,6 @@ namespace Ryneus
             trainView.ShowCharacterDetail(actorInfo,party);
         }
 
-        public void ShowLeaningList(List<ListData> learnMagicList)
-        {
-            trainView.ShowLeaningList(learnMagicList);
-        }
-
         public void SetSymbolRecords(List<ListData> symbolInfos)
         {
             if (symbolRecordList.ListDates.Count > 0)
@@ -386,12 +380,6 @@ namespace Ryneus
         {
             turnText.text = (turns).ToString();
         }
-        
-        public void SetNuminous(int numinous)
-        {
-            numinousText.SetText(DataSystem.GetReplaceDecimalText(numinous));
-        }
-
 
         public void ActivateTacticsCommand()
         {

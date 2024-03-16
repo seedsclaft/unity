@@ -228,6 +228,7 @@ namespace Ryneus
             {
                 CurrentStage.SeekStage();
             }
+            CurrentStage.SetSeekIndex(0);
         }
 
         public void SetSelectSymbol()

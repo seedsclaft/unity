@@ -6,7 +6,7 @@ namespace Ryneus
 {
     [Serializable]
     public class AlcanaInfo{
-        private bool _IsAlcana;
+        private bool _IsAlcana = true;
         public bool IsAlcana => _IsAlcana;
         private List<SkillInfo> _ownAlcanaList = new ();
         public List<SkillInfo> OwnAlcanaList => _ownAlcanaList;
@@ -19,11 +19,9 @@ namespace Ryneus
 
         public void InitData(bool isTestMode)
         {
-            _IsAlcana = false;
             _ownAlcanaList.Clear();
             if (isTestMode)
             {
-                _IsAlcana = true;
                 for (var i = 1;i <= 22;i++)
                 {
                     var alcana = new SkillInfo(500000 + i * 10);
@@ -33,19 +31,9 @@ namespace Ryneus
             }
         }
 
-        public void ClearOwnAlcanaList()
-        {
-            _ownAlcanaList.Clear();
-        }
-
         public List<SkillInfo> CheckAlcanaSkillInfo(TriggerTiming triggerTiming)
         {
             return _ownAlcanaList.FindAll(a => a.Enable && a.Master.TriggerDates.Find(b => b.TriggerTiming == triggerTiming) != null);
-        }
-
-        public void AddAlcana(SkillInfo skillInfo)
-        {
-            _ownAlcanaList.Add(skillInfo);
         }
 
         public void DisableAlcana(SkillInfo skillInfo)
@@ -53,18 +41,14 @@ namespace Ryneus
             skillInfo.SetEnable(false);
         }
 
-        public void DeleteAlcana(SkillInfo skillInfo)
-        {
-            var findIndex = _ownAlcanaList.FindIndex(a => a == skillInfo);
-            if (findIndex > -1)
-            {
-                _ownAlcanaList.RemoveAt(findIndex);
-            }
-        }
-
         public void SetIsAlcana(bool isAlcana)
         {
             _IsAlcana = isAlcana;
+        }
+
+        public void RefreshOwnAlcana(List<SkillInfo> ownAlcanaSkillInfos)
+        {
+            _ownAlcanaList = ownAlcanaSkillInfos;
         }
 
         public void CheckEnableSkillTrigger()

@@ -2609,6 +2609,30 @@ MonoBehaviour:
       Rate: 100
     TriggerDates: []
     ScopeTriggers: []
+  - Id: 100130
+    Name: "\u30A4\u30AF\u30B9\u30C6\u30A3\u30F3\u30AF\u30B7\u30E7\u30F3+"
+    IconIndex: 6
+    AnimationId: 0
+    AnimationType: 1
+    MpCost: 0
+    Rank: 2
+    Attribute: 1
+    Scope: 4
+    SkillType: 2
+    TargetType: 4
+    Help: "\u30A4\u30AF\u30B9\u30C6\u30A3\u30F3\u30AF\u30B7\u30E7\u30F3\u306E\u653B\u6483\u56DE\u6570\u3092+1"
+    Range: 1
+    RepeatTime: 1
+    AliveOnly: 1
+    FeatureDates:
+    - SkillId: 100130
+      FeatureType: 6100
+      Param1: 1060
+      Param2: 0
+      Param3: 1
+      Rate: 100
+    TriggerDates: []
+    ScopeTriggers: []
   - Id: 100210
     Name: "\u30B7\u30E3\u30C9\u30A6\u30E1\u30A2"
     IconIndex: 10

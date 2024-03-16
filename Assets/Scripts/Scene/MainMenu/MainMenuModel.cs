@@ -108,22 +108,6 @@ namespace Ryneus
             return MakeListData(list);
         }
         
-        public List<ListData> SelectActorLearningMagicList()
-        {
-            var skillInfos = new List<SkillInfo>();
-            var actorInfo = TacticsActor();
-            
-            foreach (var alchemyId in PartyInfo.CurrentAlchemyIdList(CurrentStage.Id,CurrentStage.CurrentTurn))
-            {
-                //if (actorInfo.IsLearnedSkill(alchemyId)) continue;
-                var skillInfo = new SkillInfo(alchemyId);
-                var cost = TacticsUtility.LearningMagicCost(actorInfo,skillInfo.Attribute,StageMembers());
-                skillInfo.SetEnable(Currency >= cost && !actorInfo.IsLearnedSkill(alchemyId));
-                skillInfo.SetLearningCost(cost);
-                skillInfos.Add(skillInfo);
-            }
-            return MakeListData(skillInfos);
-        }
 
         public List<ListData> Stages(){
             var list = new List<StageInfo>();
