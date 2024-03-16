@@ -195,7 +195,6 @@ namespace Ryneus
                 {
                     actorInfo.SetBattleIndex(-1);
                 }
-                actorInfo.ClearTacticsCommand();
             }
         }
 
@@ -224,7 +223,6 @@ namespace Ryneus
             foreach (var actorInfo in StageMembers())
             {
                 actorInfo.ChangeTacticsCostRate(1);
-                actorInfo.ClearTacticsCommand();
             }
             if (isSeek)
             {

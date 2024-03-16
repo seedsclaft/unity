@@ -81,7 +81,7 @@ namespace Ryneus
 
         private void CommandContinue()
         {
-            Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
+            SoundManager.Instance.PlayStaticSe(SEType.Decide);
             var loadSuccess = SaveSystem.LoadPlayerInfo();
             if (loadSuccess == false)
             {

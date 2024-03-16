@@ -5,9 +5,9 @@ using System.Linq;
 
 namespace Ryneus
 {
-    public class TacticsModel : BaseModel
+    public class TrainModel : BaseModel
     {
-        public TacticsModel()
+        public TrainModel()
         {
             _selectActorId = StageMembers()[0].ActorId;
         }
@@ -90,6 +90,37 @@ namespace Ryneus
             return MakeListData(list);
         }
 
+        public bool CheckActorTrain()
+        {
+            var cost = TacticsUtility.TrainCost(TacticsActor());
+            return Currency >= cost;
+        }
+
+        public int SelectActorEvaluate()
+        {
+            return TacticsActor().Evaluate();
+        }
+
+        public void SelectActorTrain()
+        {
+            var actorInfo = TacticsActor();
+            var cost = TacticsUtility.TrainCost(actorInfo);
+            actorInfo.LevelUp(0);
+            actorInfo.GainNuminousCost(cost);
+            actorInfo.GainLevelUpCost(cost);
+            PartyInfo.ChangeCurrency(Currency - cost);
+        }
+
+        public void LearnMagic(int skillId)
+        {
+            var actorInfo = TacticsActor();
+            var skillInfo = new SkillInfo(skillId);
+            var learningCost = TacticsUtility.LearningMagicCost(actorInfo,skillInfo.Attribute,StageMembers());
+            PartyInfo.ChangeCurrency(Currency - learningCost);
+            actorInfo.LearnSkill(skillInfo.Id);
+            actorInfo.GainNuminousCost(learningCost);
+        }
+
         public void SetStageSeekIndex(int symbolIndex)
         {
             CurrentStage.SetSeekIndex(symbolIndex);
@@ -100,6 +131,36 @@ namespace Ryneus
             TempInfo.CashBattleActors(BattleMembers());
         }
 
+        public void SetInBattle()
+        {
+            var actorInfo = TacticsActor();
+            var battleIndex = StageMembers().FindAll(a => a.BattleIndex >= 0).Count + 1;
+            if (battleIndex >= 5) return;
+            if (actorInfo.BattleIndex >= 0)
+            {
+                actorInfo.SetBattleIndex(-1);
+            } else
+            {
+                actorInfo.SetBattleIndex(battleIndex);
+            }
+        }
+
+        public List<ListData> SelectActorLearningMagicList()
+        {
+            var skillInfos = new List<SkillInfo>();
+            var actorInfo = TacticsActor();
+            
+            foreach (var alchemyId in PartyInfo.CurrentAlchemyIdList(CurrentStage.Id,CurrentStage.CurrentTurn))
+            {
+                //if (actorInfo.IsLearnedSkill(alchemyId)) continue;
+                var skillInfo = new SkillInfo(alchemyId);
+                var cost = TacticsUtility.LearningMagicCost(actorInfo,skillInfo.Attribute,StageMembers());
+                skillInfo.SetEnable(Currency >= cost && !actorInfo.IsLearnedSkill(alchemyId));
+                skillInfo.SetLearningCost(cost);
+                skillInfos.Add(skillInfo);
+            }
+            return MakeListData(skillInfos);
+        }
 
         public List<SkillInfo> AlcanaMagicSkillInfos(List<GetItemInfo> getItemInfos)
         {
@@ -120,6 +181,20 @@ namespace Ryneus
             TempInfo.SetTempStatusActorInfos(actorInfos);
         }
 
+        public void SelectRecoveryPlus()
+        {
+            var actorInfo = TacticsActor();
+            var remain = TacticsUtility.RemainRecoveryCost(actorInfo);
+            if (actorInfo != null && remain > 0){
+                var cost = TacticsUtility.RecoveryCost(actorInfo);
+                if (Currency >= cost){
+                    actorInfo.ChangeHp(actorInfo.CurrentHp + 10);
+                    actorInfo.ChangeMp(actorInfo.CurrentMp + 10);
+                    PartyInfo.ChangeCurrency(Currency - cost);
+                }
+            }
+        }
+        
         public AdvData StartTacticsAdvData()
         {
             if (CurrentStage.SurvivalMode)
@@ -262,6 +337,19 @@ namespace Ryneus
             return DataSystem.GetReplaceText(10,count.ToString());
         }
 
+        public void ChangeBattleLineIndex(int actorId,bool isFront)
+        {
+            var actorInfo = TacticsActor();
+            if (actorInfo.LineIndex == LineType.Front && isFront == false)
+            {
+                actorInfo.SetLineIndex(LineType.Back);
+            } else
+            if (actorInfo.LineIndex == LineType.Back && isFront == true)
+            {
+                actorInfo.SetLineIndex(LineType.Front);
+            }
+        }
+
         public void AssignBattlerIndex()
         {
             var idList = PartyInfo.LastBattlerIdList;
@@ -275,65 +363,6 @@ namespace Ryneus
             }
         }
 
-        public List<ListData> SymbolRecords()
-        {
-            var symbolInfos = new List<SymbolInfo>();
-            var symbolInfoList = new List<List<SymbolInfo>>();
-            
-            var stageSeekList = new List<int>();
-            foreach (var symbolInfo in PartyInfo.StageSymbolInfos)
-            {
-                if (!stageSeekList.Contains(symbolInfo.StageSymbolData.Seek))
-                {
-                    stageSeekList.Add(symbolInfo.StageSymbolData.Seek);
-                }
-            }
-            foreach (var stageSeek in stageSeekList)
-            {
-                var list = new List<SymbolInfo>();
-                symbolInfoList.Add(list);
-            }
-            var selectRecords = PartyInfo.SymbolRecordList.FindAll(a => a.StageId == CurrentStage.Id && a.Selected == true);
-            var lastSelectSeek = selectRecords.Count > 0 ? selectRecords.Select(a => a.Seek).Max() : -1;
-            foreach (var stageSymbolInfo in PartyInfo.StageSymbolInfos)
-            {
-                var symbolInfo = new SymbolInfo();
-                symbolInfo.CopyData(stageSymbolInfo);
-                var saveRecord = selectRecords.Find(a => a.IsSameSymbol(stageSymbolInfo.StageSymbolData.StageId,stageSymbolInfo.StageSymbolData.Seek,stageSymbolInfo.StageSymbolData.SeekIndex));
-                symbolInfo.SetSelected(saveRecord != null);
-                //symbolInfo.SetLastSelected(saveRecord != null && lastSelectSeek == symbolInfo.StageSymbolData.Seek);
-                symbolInfo.SetPast(saveRecord == null && stageSymbolInfo.StageSymbolData.Seek <= lastSelectSeek);
-                if (saveRecord != null)
-                {
-                    MakePrizeData(saveRecord,symbolInfo.GetItemInfos);
-                }
-                symbolInfoList[symbolInfo.StageSymbolData.Seek-1].Add(symbolInfo);
-            }
-            // 現在を挿入
-            var seekIndex = CurrentStage.CurrentTurn;
-            var currentSymbol = new StageSymbolData();
-            currentSymbol.Seek = seekIndex;
-            currentSymbol.SeekIndex = 0;
-            currentSymbol.SymbolType = SymbolType.None;
-            var currentInfo = new SymbolInfo(currentSymbol);
-            currentInfo.SetLastSelected(true);
-            var currentList = new List<SymbolInfo>(){currentInfo};
-            symbolInfoList.Insert(seekIndex-1,currentList);
-
-            var listData = new List<ListData>();
-            foreach (var symbolInfos1 in symbolInfoList)
-            {
-                var list = new ListData(symbolInfos1);
-                list.SetSelected(false);
-                list.SetEnable(false);
-                if (symbolInfos1.Find(a => a.StageSymbolData.Seek == seekIndex) != null)
-                {
-                    list.SetSelected(true);
-                }
-                listData.Add(list);
-            }
-            return listData;
-        }
 
         public List<ListData> ParallelCommand()
         {
@@ -368,46 +397,5 @@ namespace Ryneus
             CurrentStage.SetSurvivalMode();
         }
 
-        public bool CheckTutorial(TacticsViewEvent viewEvent)
-        {
-            if (CurrentStageTutorialDates.Count == 0)
-            {
-                return false;
-            }
-            var tutorial = CurrentStageTutorialDates[0];
-            switch (tutorial.Type)
-            {
-                case TutorialType.TacticsCommandTrain:
-                    return (viewEvent.commandType == Tactics.CommandType.TacticsCommand && (TacticsCommandType)viewEvent.template == TacticsCommandType.Train);
-                case TutorialType.TacticsCommandAlchemy:
-                    return (viewEvent.commandType == Tactics.CommandType.TacticsCommand && (TacticsCommandType)viewEvent.template == TacticsCommandType.Alchemy);
-                /*
-                case TutorialType.TacticsCommandRecover:
-                    return (viewEvent.commandType == Tactics.CommandType.TacticsCommand && (TacticsCommandType)viewEvent.template == TacticsCommandType.Recovery);
-                */
-                case TutorialType.TacticsSelectTacticsActor:
-                    return (viewEvent.commandType == Tactics.CommandType.SelectTacticsActor);
-                case TutorialType.TacticsSelectTacticsDecide:
-                    return (viewEvent.commandType == Tactics.CommandType.TacticsCommandClose);
-                case TutorialType.TacticsSelectEnemy:
-                    return (viewEvent.commandType == Tactics.CommandType.SelectSymbol);
-                case TutorialType.TacticsSelectAlchemyMagic:
-                    return (viewEvent.commandType == Tactics.CommandType.SkillAlchemy && (SkillInfo)viewEvent.template != null);
-                
-            }
-            return false;
-        }
-    }
-
-    public class TacticsActorInfo{
-        public ActorInfo ActorInfo;
-        public List<ActorInfo> ActorInfos;
-        public TacticsCommandType TacticsCommandType;
-    }
-
-    public class TacticsCommandData{
-        public string Title;
-        public int Rank;
-        public string Description;
     }
 }

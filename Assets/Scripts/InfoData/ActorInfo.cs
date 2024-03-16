@@ -54,11 +54,7 @@ namespace Ryneus
         private int _demigodParam;
         public int DemigodParam => _demigodParam;
 
-        private TacticsCommandType _tacticsCommandType = TacticsCommandType.None;
-        public TacticsCommandType TacticsCommandType => _tacticsCommandType;
-
     // Tactics
-        private Dictionary<TacticsCommandType,bool> _tacticsEnable = new ();
         private int _tacticsCost = 0;
         public int TacticsCost => _tacticsCost;
         private int _tacticsCostRate = 1;
@@ -129,8 +125,6 @@ namespace Ryneus
             _currentHp = baseActorInfo.CurrentHp;
             _currentMp = baseActorInfo.CurrentMp;
             _demigodParam = baseActorInfo.DemigodParam;
-            _tacticsCommandType = baseActorInfo.TacticsCommandType;
-            _tacticsEnable = baseActorInfo._tacticsEnable;
             _tacticsCost = baseActorInfo.TacticsCost;
             _tacticsCostRate = baseActorInfo.TacticsCostRate;
             _battleIndex = baseActorInfo.BattleIndex;
@@ -184,7 +178,6 @@ namespace Ryneus
         public void ResetData()
         {
             ChangeLost(false);
-            ClearTacticsCommand();
             ChangeHp(9999);
             ChangeMp(9999);
         }
@@ -260,33 +253,10 @@ namespace Ryneus
             }
         }
 
-        public void RefreshTacticsEnable(TacticsCommandType tacticsCommandType,bool enable)
-        {
-            _tacticsEnable[tacticsCommandType] = enable;
-        }
-
-        public bool EnableTactics(TacticsCommandType tacticsCommandType)
-        {
-            return _tacticsEnable[tacticsCommandType];
-        }
-
         public void ChangeTacticsCostRate(int tacticsCostRate)
         {
             _tacticsCostRate = tacticsCostRate;
         }
-
-        public void SetTacticsCommand(TacticsCommandType tacticsCommandType,int tacticsCost)
-        {
-            _tacticsCommandType = tacticsCommandType;
-            _tacticsCost = tacticsCost;
-        }
-
-        public void ClearTacticsCommand()
-        {
-            _tacticsCommandType = TacticsCommandType.None;
-            _tacticsCost = 0;
-        }
-        
 
         public void ChangeSp(int value)
         {

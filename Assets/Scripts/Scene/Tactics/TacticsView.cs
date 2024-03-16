@@ -9,14 +9,9 @@ namespace Ryneus
 {
     public class TacticsView : BaseView
     {
+        [SerializeField] private TrainView trainView = null;
         [SerializeField] private BaseList tacticsCommandList = null;
         [SerializeField] private TacticsCharaLayer tacticsCharaLayer = null;
-
-
-        [SerializeField] private BattleSelectCharacter battleSelectCharacter = null;
-        [SerializeField] private TacticsSelectCharacter selectCharacter = null;
-
-        
         [SerializeField] private TacticsSymbolList tacticsSymbolList = null;
         [SerializeField] private StageInfoComponent stageInfoComponent = null;
         [SerializeField] private AlcanaInfoComponent alcanaInfoComponent = null;
@@ -40,28 +35,21 @@ namespace Ryneus
         }
 
 
-        private CommandType _lastCallEventType = CommandType.None;
 
-        public SkillInfo SelectMagic => battleSelectCharacter.ActionData;
         public int ParallelListIndex => parallelList.Index;
 
         private bool _initRecordDisplay = false;
-
 
         public override void Initialize()
         {
             base.Initialize();
 
-            battleSelectCharacter.Initialize();
-            SetInputHandler(battleSelectCharacter.GetComponent<IInputHandlerEvent>());
-            InitializeSelectCharacter();
 
+            tacticsCommandList.Initialize();
             tacticsAlcana.gameObject.SetActive(false);
             alcanaButton.onClick.AddListener(() => CallAlcanaCheck());
             
-            tacticsCommandList.Initialize();
             tacticsSymbolList.Initialize();
-            battleSelectCharacter.gameObject.SetActive(false);
 
             SideMenuButton.onClick.AddListener(() => {
                 var eventData = new TacticsViewEvent(CommandType.SelectSideMenu);
@@ -77,8 +65,10 @@ namespace Ryneus
             });
             symbolRecordList.Initialize();
             parallelList.Initialize();
+            trainView.Initialize(base._commandData);
+            trainView.SetHelpWindow(HelpWindow);
             new TacticsPresenter(this);
-            selectCharacter.gameObject.SetActive(false);
+            trainView.HideSelectCharacter();
             HideSymbolRecord();
             HideParallelList();
         }
@@ -104,13 +94,43 @@ namespace Ryneus
                 duration);
                 */
         }
-        
-        private void InitializeSelectCharacter()
+
+        public void SetTacticsCommand(List<ListData> menuCommands)
         {
-            battleSelectCharacter.SetInputHandlerAction(InputKeyType.Decide,() => CallSkillAlchemy());
-            battleSelectCharacter.SetInputHandlerAction(InputKeyType.Cancel,() => OnClickBack());
-            SetInputHandler(battleSelectCharacter.MagicList.GetComponent<IInputHandlerEvent>());
-            battleSelectCharacter.HideActionList();
+            tacticsCommandList.SetData(menuCommands);
+            tacticsCommandList.SetInputHandler(InputKeyType.Decide,() => CallTacticsCommand());
+            tacticsCommandList.SetInputHandler(InputKeyType.Option1,() => CommandOpenSideMenu());
+            tacticsCommandList.SetSelectedHandler(() => UpdateHelpWindow());
+            SetInputHandler(tacticsCommandList.GetComponent<IInputHandlerEvent>());
+            UpdateHelpWindow();
+        }
+        
+        private void CallTacticsCommand()
+        {
+            var listData = tacticsCommandList.ListData;
+            if (listData != null && listData.Enable)
+            {
+                var commandData = (SystemData.CommandData)listData.Data;
+                SoundManager.Instance.PlayStaticSe(SEType.Decide);
+                var eventData = new TacticsViewEvent(CommandType.TacticsCommand);
+                eventData.template = commandData.Id;
+                _commandData(eventData);
+            }
+        }
+
+        public void CallTrainCommand(TacticsCommandType tacticsCommandType)
+        {
+            trainView.CallTrainCommand(tacticsCommandType);
+        }
+
+        private void UpdateHelpWindow()
+        {
+            var listData = tacticsCommandList.ListData;
+            if (listData != null)
+            {
+                var commandData = (SystemData.CommandData)listData.Data;
+                SetHelpText(commandData.Help);
+            }
         }
 
         public void SetUIButton()
@@ -125,27 +145,9 @@ namespace Ryneus
 
         private void OnClickBack()
         {
-            if (_lastCallEventType != CommandType.None) return;
             var eventData = new TacticsViewEvent(CommandType.Back);
             _commandData(eventData);
-            _lastCallEventType = eventData.commandType;
         }
-
-        private void CancelSymbol()
-        {
-            var eventData = new TacticsViewEvent(CommandType.TacticsCommandClose);
-            eventData.template = ConfirmCommandType.No;
-            _commandData(eventData);
-        }
-
-        private void OnClickEnemyListClose()
-        {
-            if (_lastCallEventType != CommandType.None) return;
-            var eventData = new TacticsViewEvent(CommandType.SymbolClose);
-            _commandData(eventData);
-            _lastCallEventType = eventData.commandType;
-        }
-
 
         public void SetHelpWindow()
         {
@@ -179,78 +181,6 @@ namespace Ryneus
             alcanaInfoComponent.UpdateInfo(alcanaInfo);
         }
 
-        public void SetTacticsCommand(List<ListData> menuCommands)
-        {
-            tacticsCommandList.SetData(menuCommands);
-            tacticsCommandList.SetInputHandler(InputKeyType.Decide,() => CallTacticsCommand());
-            tacticsCommandList.SetInputHandler(InputKeyType.Option1,() => CommandOpenSideMenu());
-            tacticsCommandList.SetSelectedHandler(() => UpdateHelpWindow());
-            SetInputHandler(tacticsCommandList.GetComponent<IInputHandlerEvent>());
-            UpdateHelpWindow();
-        }
-
-        public void RefreshListData(ListData listData)
-        {
-            tacticsCommandList.RefreshListData(listData);
-            tacticsCommandList.Refresh();
-            UpdateHelpWindow();
-            //tacticsCommandList.SelectEnableIndex();
-        }
-
-        public void ShowCommandList()
-        {
-            //sideMenuList.gameObject.SetActive(true);
-            tacticsCommandList.gameObject.SetActive(true);
-        }
-
-        public void HideCommandList()
-        {
-            //sideMenuList.gameObject.SetActive(false);
-            tacticsCommandList.gameObject.SetActive(false);
-        }
-
-        private void CallTacticsCommand()
-        {
-            if (_lastCallEventType != CommandType.None) return;
-            var listData = tacticsCommandList.ListData;
-            if (listData != null && listData.Enable)
-            {
-                var commandData = (SystemData.CommandData)listData.Data;
-                Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
-                var eventData = new TacticsViewEvent(CommandType.TacticsCommand);
-                eventData.template = commandData.Id;
-                _commandData(eventData);
-                _lastCallEventType = eventData.commandType;
-            }
-        }
-
-        public void SetSelectCharacter(List<ListData> actorInfos,List<ListData> confirmCommands)
-        {
-            selectCharacter.Initialize();
-            selectCharacter.SetCharacterData(actorInfos);
-            SetInputHandler(selectCharacter.GetComponent<IInputHandlerEvent>());
-            selectCharacter.SetTacticsCommand(confirmCommands);
-            selectCharacter.SetInputHandlerCharacter(InputKeyType.Decide,() => CallActorTrain());
-            selectCharacter.SetInputHandlerCharacter(InputKeyType.Right,() => CallFrontBattleIndex());
-            selectCharacter.SetInputHandlerCharacter(InputKeyType.Left,() => CallBattleBackIndex());
-            selectCharacter.SetInputHandlerCharacter(InputKeyType.Cancel,() => CallTrainCommandCancel());
-            selectCharacter.SetInputHandlerCommand(InputKeyType.Decide,() => CallTrainCommand());
-            selectCharacter.SetInputHandlerCommand(InputKeyType.Cancel,() => CallTrainCommandCancel());
-            SetInputHandler(selectCharacter.CharacterList.GetComponent<IInputHandlerEvent>());
-            SetInputHandler(selectCharacter.CommandList.GetComponent<IInputHandlerEvent>());
-            selectCharacter.CharacterList.SetSelectedHandler(() => {
-                var listData = selectCharacter.CharacterData;
-                if (listData != null)
-                {
-                    var data = (TacticsActorInfo)listData.Data;
-                    var eventData = new TacticsViewEvent(CommandType.ChangeSelectTacticsActor);
-                    eventData.template = data.ActorInfo.ActorId;
-                    _commandData(eventData);
-                }
-            });
-            HideSelectCharacter();
-
-        }
 
         public void SetTacticsCharaLayer(List<ActorInfo> actorInfos)
         {
@@ -266,124 +196,53 @@ namespace Ryneus
 
         public void CommandRefresh()
         {
-            selectCharacter.Refresh();
+            trainView.CommandRefresh();
         }
-
 
         public void SetEvaluate(int partyEvaluate,int troopEvaluate)
         {
-            selectCharacter.SetEvaluate(partyEvaluate,troopEvaluate);
+            trainView.SetEvaluate(partyEvaluate,troopEvaluate);
         }
 
-        private void CallActorTrain()
-        {
-            if (_lastCallEventType != CommandType.None) return;
-            var listData = selectCharacter.CharacterData;
-            if (listData != null)
-            {
-                var data = (TacticsActorInfo)listData.Data;
-                var eventData = new TacticsViewEvent(CommandType.SelectTacticsActor);
-                eventData.template = data;
-                _commandData(eventData);
-                _lastCallEventType = eventData.commandType;
-            }
-        }
-
-        private void CallTrainCommand()
-        {
-            if (_lastCallEventType != CommandType.None) return;
-            var commandData = selectCharacter.CommandData;
-            if (commandData != null)
-            {
-                var data = (SystemData.CommandData)commandData.Data;
-                var commandType = ConfirmCommandType.No;
-                if (data.Key == "Yes")
-                {
-                    commandType = ConfirmCommandType.Yes;
-                }
-                var eventData = new TacticsViewEvent(CommandType.TacticsCommandClose);
-                eventData.template = commandType;
-                _commandData(eventData);
-                _lastCallEventType = eventData.commandType;
-            }
-        }
-
-        private void CallTrainCommandCancel()
-        {
-            if (_lastCallEventType != CommandType.None) return;
-            var eventData = new TacticsViewEvent(CommandType.TacticsCommandClose);
-            eventData.template = ConfirmCommandType.No;
-            _commandData(eventData);
-            _lastCallEventType = eventData.commandType;
-        }
 
         public void ShowSelectCharacter(List<ListData> tacticsActorInfo,TacticsCommandData tacticsCommandData)
         {
-            selectCharacter.SetTacticsCharacter(tacticsActorInfo);
-            selectCharacter.SetTacticsCommandData(tacticsCommandData);
-            selectCharacter.UpdateSmoothSelect();
-            selectCharacter.gameObject.SetActive(true);
+            trainView.ShowSelectCharacter(tacticsActorInfo,tacticsCommandData);
         }
 
         public void HideSelectCharacter()
         {
-            battleSelectCharacter.gameObject.SetActive(false);
-            selectCharacter.gameObject.SetActive(false); 
-            SetHelpInputInfo("TACTICS");
+            trainView.HideSelectCharacter();
         }
 
         public void ShowSelectCharacterCommand()
         {
-            selectCharacter.ShowCharacterList();
+            trainView.ShowSelectCharacterCommand();
         }
 
         public void HideSelectCharacterCommand()
         {
-            selectCharacter.HideCharacterList();
+            trainView.HideSelectCharacterCommand();
         }
 
         public void ShowConfirmCommand()
         {
-            selectCharacter.ShowCommandList();
+            trainView.ShowConfirmCommand();
         }
         
         public void HideConfirmCommand()
         {
-            selectCharacter.HideCommandList();
+            trainView.HideConfirmCommand();
         }
 
         public void ShowCharacterDetail(ActorInfo actorInfo,List<ActorInfo> party)
         {
-            battleSelectCharacter.gameObject.SetActive(true);
-            battleSelectCharacter.SetActiveTab(SelectCharacterTabType.Magic,true);
-            battleSelectCharacter.SetActiveTab(SelectCharacterTabType.Condition,false);
-            battleSelectCharacter.SetActiveTab(SelectCharacterTabType.Detail,true);
-            battleSelectCharacter.SelectCharacterTab(SelectCharacterTabType.Detail);
-            battleSelectCharacter.SetActorInfo(actorInfo,party);
-            battleSelectCharacter.SetSkillInfos(actorInfo.SkillActionList());
-            SetHelpInputInfo("ALCHEMY_ATTRIBUTE");
+            trainView.ShowCharacterDetail(actorInfo,party);
         }
 
         public void ShowLeaningList(List<ListData> learnMagicList)
         {
-            battleSelectCharacter.gameObject.SetActive(true);
-            battleSelectCharacter.SetActiveTab(SelectCharacterTabType.Magic,true);
-            battleSelectCharacter.SetActiveTab(SelectCharacterTabType.Condition,false);
-            battleSelectCharacter.SetActiveTab(SelectCharacterTabType.Detail,false);
-            battleSelectCharacter.SelectCharacterTab(SelectCharacterTabType.Magic);
-            battleSelectCharacter.SetSkillInfos(learnMagicList);
-            battleSelectCharacter.ShowActionList();
-            battleSelectCharacter.HideStatus();
-            battleSelectCharacter.MagicList.Activate();
-            SetHelpInputInfo("ALCHEMY_ATTRIBUTE");
-        }
-
-        public void HideAttributeList()
-        {
-            battleSelectCharacter.HideActionList();
-            battleSelectCharacter.MagicList.Deactivate();
-            
-            SetHelpInputInfo("ALCHEMY");
+            trainView.ShowLeaningList(learnMagicList);
         }
 
         public void SetSymbolRecords(List<ListData> symbolInfos)
@@ -430,45 +289,8 @@ namespace Ryneus
             symbolRecordList.gameObject.SetActive(false);
         }
 
-        private void CallFrontBattleIndex()
-        {
-            if (_lastCallEventType != CommandType.None) return;
-            var listData = selectCharacter.CharacterData;
-            if (listData != null)
-            {
-                var data = (TacticsActorInfo)listData.Data;
-                if (data.TacticsCommandType != TacticsCommandType.Paradigm)
-                {
-                    return;
-                }
-                var eventData = new TacticsViewEvent(CommandType.SelectFrontBattleIndex);
-                eventData.template = data.ActorInfo.ActorId;
-                _commandData(eventData);
-                _lastCallEventType = eventData.commandType;
-            }
-        }
-
-        private void CallBattleBackIndex()
-        {
-            if (_lastCallEventType != CommandType.None) return;
-            var listData = selectCharacter.CharacterData;
-            if (listData != null)
-            {
-                var data = (TacticsActorInfo)listData.Data;
-                if (data.TacticsCommandType != TacticsCommandType.Paradigm)
-                {
-                    return;
-                }
-                var eventData = new TacticsViewEvent(CommandType.SelectBackBattleIndex);
-                eventData.template = data.ActorInfo.ActorId;
-                _commandData(eventData);
-                _lastCallEventType = eventData.commandType;
-            }
-        }
-
         private void CallBattleEnemy()
         {
-            if (_lastCallEventType != CommandType.None) return;
             if (tacticsSymbolList.IsSelectSymbol())
             {
                 var listData = tacticsSymbolList.ListData;
@@ -481,7 +303,6 @@ namespace Ryneus
                         var eventData = new TacticsViewEvent(CommandType.SelectSymbol);
                         eventData.template = data;
                         _commandData(eventData);
-                        _lastCallEventType = eventData.commandType;
                     }
                 }
             } else
@@ -492,7 +313,6 @@ namespace Ryneus
                     var eventData = new TacticsViewEvent(CommandType.PopupSkillInfo);
                     eventData.template = getItemInfo;
                     _commandData(eventData);
-                    _lastCallEventType = eventData.commandType;
                 }
             }
         }
@@ -505,7 +325,7 @@ namespace Ryneus
                 var data = (SymbolInfo)listData.Data;
                 if (data != null && data.SymbolType != SymbolType.None)
                 {
-                    Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
+                    SoundManager.Instance.PlayStaticSe(SEType.Decide);
                     var eventData = new TacticsViewEvent(CommandType.CallEnemyInfo);
                     eventData.template = data;
                     _commandData(eventData);
@@ -524,7 +344,7 @@ namespace Ryneus
             var listData = symbolRecordList.ListData;
             if (listData != null)
             {
-                Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
+                SoundManager.Instance.PlayStaticSe(SEType.Decide);
                 var eventData = new TacticsViewEvent(CommandType.DecideRecord);
                 _commandData(eventData);
             }
@@ -572,55 +392,17 @@ namespace Ryneus
             numinousText.SetText(DataSystem.GetReplaceDecimalText(numinous));
         }
 
-        private void CallSkillAlchemy()
-        {
-            if (_lastCallEventType != CommandType.None) return;
-            var listData = battleSelectCharacter.ActionData;
-            if (listData != null && listData.Enable)
-            {
-                var eventData = new TacticsViewEvent(CommandType.SkillAlchemy);
-                var data = (SkillInfo)listData;
-                eventData.template = listData;
-                _commandData(eventData);
-                _lastCallEventType = eventData.commandType;
-            }
-        }
-
-        public void ActivateCommandList()
-        {
-            tacticsCommandList.Activate();
-        }
-
-        public void DeactivateCommandList()
-        {
-            tacticsCommandList.Deactivate();
-        }
-
-        void LateUpdate() {
-            if (_lastCallEventType != CommandType.None){
-                _lastCallEventType = CommandType.None;
-            }
-        }
 
         public void ActivateTacticsCommand()
         {
-            if (selectCharacter.CharacterList.gameObject.activeSelf) selectCharacter.CharacterList.Activate();
+            trainView.ActivateTacticsCommand();
         }
 
         public void DeactivateTacticsCommand()
         {
-            if (selectCharacter.CharacterList.gameObject.activeSelf) selectCharacter.CharacterList.Deactivate();
+            trainView.DeactivateTacticsCommand();
         }
         
-        private void UpdateHelpWindow()
-        {
-            var listData = tacticsCommandList.ListData;
-            if (listData != null)
-            {
-                var commandData = (SystemData.CommandData)listData.Data;
-                HelpWindow.SetHelpText(commandData.Help);
-            }
-        }
         
         public void StartAlcanaAnimation(System.Action endEvent)
         {

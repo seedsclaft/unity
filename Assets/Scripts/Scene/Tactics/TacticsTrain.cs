@@ -44,7 +44,7 @@ namespace Ryneus
             if (ListData == null) return;
             var data = (TacticsActorInfo)ListData.Data;
             tacticsComponent.UpdateInfo(data.ActorInfo,data.TacticsCommandType);
-            Disable.SetActive(!data.ActorInfo.EnableTactics(data.TacticsCommandType));
+            Disable.SetActive(false);
         }
     }
 }

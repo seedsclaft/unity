@@ -39,7 +39,6 @@ namespace Ryneus
             viewObjects.ForEach(a => a.SetActive(false));
             UpdateViewObjects(tacticsCommandType);
 
-            var currentTacticsCommandType = actorInfo.TacticsCommandType;
             if (actorInfoComponent != null)
             {
                 actorInfoComponent.UpdateInfo(actorInfo,null);
@@ -50,9 +49,6 @@ namespace Ryneus
                 if (tacticsCommandType == TacticsCommandType.Paradigm)
                 {
                     checkToggle.SetIsOnWithoutNotify(actorInfo.BattleIndex >= 0);
-                } else
-                {
-                    checkToggle.SetIsOnWithoutNotify(actorInfo.TacticsCommandType == tacticsCommandType);
                 }
             }
 
@@ -123,17 +119,6 @@ namespace Ryneus
             }
 
 
-            if (busyRoot != null && busyText != null)
-            {
-                busyRoot.gameObject.SetActive(false);
-                if (tacticsCommandType != actorInfo.TacticsCommandType && actorInfo.TacticsCommandType != TacticsCommandType.None)
-                {
-                    busyRoot.gameObject.SetActive(true);
-                    var textData = DataSystem.GetTextData((int)actorInfo.TacticsCommandType);
-                    var subtextData = DataSystem.GetTextData(1020);
-                    busyText.text = textData.Text + subtextData.Text;
-                }
-            }
 
             //checkToggle.gameObject.SetActive(tacticsCommandType == TacticsCommandType.Paradigm);
         }

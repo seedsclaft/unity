@@ -9,6 +9,8 @@ namespace Ryneus
 {
     public class MainMenuView : BaseView
     {
+        [SerializeField] private TrainView trainView = null;
+        [SerializeField] private BaseList tacticsCommandList = null;
         [SerializeField] private BaseList stageList = null;
         [SerializeField] private StageInfoComponent component;
         [SerializeField] private TextMeshProUGUI numinous = null;
@@ -23,7 +25,76 @@ namespace Ryneus
             SideMenuButton.onClick.AddListener(() => {
                 CallSideMenu();
             });
+            tacticsCommandList.Initialize();
+            trainView.Initialize(base._commandData);
+            trainView.SetHelpWindow(HelpWindow);
             new MainMenuPresenter(this);
+        }
+
+        public void SetTacticsCommand(List<ListData> menuCommands)
+        {
+            tacticsCommandList.SetData(menuCommands);
+            tacticsCommandList.SetInputHandler(InputKeyType.Decide,() => CallTacticsCommand());
+            tacticsCommandList.SetInputHandler(InputKeyType.Option1,() => CommandOpenSideMenu());
+            tacticsCommandList.SetSelectedHandler(() => UpdateHelpWindow());
+            SetInputHandler(tacticsCommandList.GetComponent<IInputHandlerEvent>());
+            UpdateHelpWindow();
+        }
+        
+        public void CallTrainCommand(TacticsCommandType tacticsCommandType)
+        {
+            trainView.CallTrainCommand(tacticsCommandType);
+        }
+        
+        private void UpdateHelpWindow()
+        {
+            var listData = tacticsCommandList.ListData;
+            if (listData != null)
+            {
+                var commandData = (SystemData.CommandData)listData.Data;
+                HelpWindow.SetHelpText(commandData.Help);
+            }
+        }
+
+        private void CallTacticsCommand()
+        {
+            var listData = tacticsCommandList.ListData;
+            if (listData != null && listData.Enable)
+            {
+                var commandData = (SystemData.CommandData)listData.Data;
+                SoundManager.Instance.PlayStaticSe(SEType.Decide);
+                var eventData = new MainMenuViewEvent(CommandType.TacticsCommand);
+                eventData.template = commandData.Id;
+                _commandData(eventData);
+            }
+        }
+
+        public void ShowCommandList()
+        {
+            //sideMenuList.gameObject.SetActive(true);
+            tacticsCommandList.gameObject.SetActive(true);
+        }
+
+        public void HideCommandList()
+        {
+            //sideMenuList.gameObject.SetActive(false);
+            tacticsCommandList.gameObject.SetActive(false);
+        }
+        
+        public void ShowSelectCharacter(List<ListData> tacticsActorInfo,TacticsCommandData tacticsCommandData)
+        {
+            trainView.ShowSelectCharacter(tacticsActorInfo,tacticsCommandData);
+        }
+
+        public void HideSelectCharacter()
+        {
+            trainView.HideSelectCharacter();
+        }
+
+
+        public void ShowLeaningList(List<ListData> learnMagicList)
+        {
+            trainView.ShowLeaningList(learnMagicList);
         }
 
         public void SetNuminous(int value)
@@ -125,6 +196,8 @@ namespace MainMenu
     public enum CommandType
     {
         None = 0,
+        TacticsCommand,
+        TacticsCommandClose,
         StageSelect = 101,
         Option = 103,
         Ranking = 104,

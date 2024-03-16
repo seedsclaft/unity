@@ -29,12 +29,12 @@ namespace Ryneus
         public HelpWindow HelpWindow => _helpWindow;
         public void SetHelpInputInfo(string key)
         {
-            _helpWindow.SetInputInfo(key);
+            _helpWindow?.SetInputInfo(key);
         }
 
         public void SetHelpText(string text)
         {
-            _helpWindow.SetHelpText(text);
+            _helpWindow?.SetHelpText(text);
         }
 
         public void SetBackGround(string fileName)

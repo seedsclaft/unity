@@ -109,7 +109,7 @@ namespace Ryneus
             }
             _view.CommandCallConfirm(popupInfo);
             _view.ChangeUIActive(false);
-    #elif UNITY_WEBGL
+    #else
             SuccessSave(isReturnScene);
     #endif
         }

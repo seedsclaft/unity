@@ -782,5 +782,27 @@ namespace Ryneus
         {
             return CurrentData.PlayerInfo.SlotSaveList[index].ActorInfos.Count > 0;
         }
+        public int PartyEvaluate()
+        {
+            var evaluate = 0;
+            foreach (var actorInfo in BattleMembers())
+            {
+                evaluate += actorInfo.Evaluate();
+            }
+            return evaluate;
+        }
+
+        public int TroopEvaluate()
+        {
+            if (CurrentStage.CurrentSeekIndex >= 0)
+            {
+                var symbol = CurrentSelectSymbol();
+                if (symbol != null && symbol.SymbolType == SymbolType.Battle || symbol.SymbolType == SymbolType.Boss)
+                {
+                    return symbol.BattleEvaluate();
+                }
+            }
+            return 0;
+        }
     }
 }
