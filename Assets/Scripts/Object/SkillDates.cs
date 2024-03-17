@@ -26,7 +26,7 @@ namespace Ryneus
         public string Help;
         public RangeType Range;
         public int RepeatTime;
-        public bool AliveOnly;
+        public AliveType AliveType;
 
         public List<FeatureData> FeatureDates;
         public List<TriggerData> TriggerDates;
@@ -270,6 +270,18 @@ namespace Ryneus
                         CanUse = true;
                     }
                     break;
+                    case TriggerType.IsNotAwaken:
+                    if (!battlerInfo.IsAwaken)
+                    {
+                        CanUse = true;
+                    }
+                    break;
+                    case TriggerType.IsAwaken:
+                    if (battlerInfo.IsAwaken)
+                    {
+                        CanUse = true;
+                    }
+                    break;
                     case TriggerType.LessTroopMembers:
                     if ( troops.Count >= party.Count )
                     {
@@ -325,6 +337,7 @@ namespace Ryneus
         WithoutSelfOne = 11,
         WithoutSelfAll = 13,
         RandomOne = 21,
+        OneAndNeighbor = 31,
     }
 
     public enum SkillType{
@@ -337,7 +350,8 @@ namespace Ryneus
         Reborn  = 12 // 転生
     }
 
-    public enum AttributeType{
+    public enum AttributeType
+    {
         None = 0,
         Fire = 1,
         Thunder = 2,
@@ -346,7 +360,8 @@ namespace Ryneus
         Dark = 5
     }
 
-    public enum TargetType{
+    public enum TargetType
+    {
         None = 0,
         Opponent = 1,
         Friend = 2,
@@ -357,7 +372,8 @@ namespace Ryneus
         Party = 101
     }
 
-    public enum RangeType{
+    public enum RangeType
+    {
         None = 0,
         S = 1,
         L = 2
@@ -373,6 +389,13 @@ namespace Ryneus
         State = 5,
         MpDamage = 6,
 
+    }
+
+    public enum AliveType
+    {
+        DeathOnly = 0,
+        AliveOnly = 1,
+        All = 2,
     }
 
     public enum TriggerType
@@ -392,6 +415,8 @@ namespace Ryneus
         IsState = 41, // StateId状態になっている
         IsNotState = 42, // StateId状態になっていない
         IsAbnormalState = 43, // AbnormalのState状態になっている
+        IsNotAwaken = 44, // 神化発動前
+        IsAwaken = 45, // 神化発動後
         LessTroopMembers = 51, // 味方より敵が多い
         MoreTroopMembers = 52, // 味方より敵が少ない
         TurnNumUnder = 61, // ターン数が〇以内
@@ -449,6 +474,7 @@ namespace Ryneus
         HpHeal = 2010,
         RemainHpOne = 2020,
         RemainHpOneTarget = 2030,
+        DamageHpHealParty = 2110,
         AddState = 3010,
         RemoveState = 3020,
         RemoveAbnormalState = 3030,
@@ -467,6 +493,7 @@ namespace Ryneus
         ChangeFeatureParam2StageWinCount = 6050,
         ChangeFeatureParam3StageWinCount = 6060,
         ChangeSkillRepeatTime = 6100,
+        ChangeSkillScope = 6210,
         PlusSkill = 7010,
         KindHeal = 8010,
         BreakUndead = 8020,

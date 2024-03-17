@@ -95,6 +95,7 @@ namespace Ryneus
         MpCostZeroAddState = 2370,
         Shadow = 2380,
         Silence = 2390,
+        NotHeal = 2400,
     }
 
     public enum RemovalTiming

@@ -440,7 +440,7 @@ namespace Ryneus
                     }
                 }
             }
-            if (target.CanMove() && !isNoEffect)
+            if (!isNoEffect)
             {
                 CalcCounterDamage(subject,target,hpDamage);
             }
@@ -487,6 +487,11 @@ namespace Ryneus
             } else
             {
                 healValue += (int)Mathf.Round(HealValue);
+            }
+            if (target.IsState(StateType.NotHeal))
+            {
+                _displayStates.Add(target.GetStateInfo(StateType.NotHeal));
+                healValue = 0;
             }
             _hpHeal += healValue;
             if (subject != target)
@@ -570,7 +575,7 @@ namespace Ryneus
                     }
                 }
             }
-            if (target.CanMove() && !isNoEffect)
+            if (!isNoEffect)
             {
                 CalcCounterDamage(subject,target,hpDamage);
             }
@@ -681,11 +686,13 @@ namespace Ryneus
                 {
                     _reDamage += AntiDoteDamageValue(target);
                 }
-                var counterAddState = new SkillData.FeatureData();
-                counterAddState.FeatureType = FeatureType.AddState;
-                counterAddState.Param1 = featureData.Param1;
-                counterAddState.Param2 = featureData.Param2;
-                counterAddState.Param3 = featureData.Param3;
+                var counterAddState = new SkillData.FeatureData
+                {
+                    FeatureType = FeatureType.AddState,
+                    Param1 = featureData.Param1,
+                    Param2 = featureData.Param2,
+                    Param3 = featureData.Param3
+                };
                 MakeAddState(target,subject,counterAddState,false);
             }
         }
@@ -938,7 +945,7 @@ namespace Ryneus
 
         private void CalcAddState(BattlerInfo subject,BattlerInfo target)
         {
-            if (subject.IsState(StateType.MpCostZeroAddState))
+            if (subject.IsState(StateType.MpCostZeroAddState) && _skillId > 0)
             {
                 if (DataSystem.FindSkill(_skillId).MpCost == 0)
                 {

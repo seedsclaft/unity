@@ -765,10 +765,13 @@ namespace Ryneus
             }
             if (actionResultInfo.ReDamage > 0)
             {
-                var damageType = actionResultInfo.Critical ? DamageType.HpCritical : DamageType.HpDamage;
-                PlayDamageSound(damageType);
-                _view.StartDamage(actionResultInfo.SubjectIndex,damageType,actionResultInfo.ReDamage);
-                _view.StartBlink(actionResultInfo.SubjectIndex);
+                if (_model.GetBattlerInfo(targetIndex).IsAlive())
+                {
+                    var damageType = actionResultInfo.Critical ? DamageType.HpCritical : DamageType.HpDamage;
+                    PlayDamageSound(damageType);
+                    _view.StartDamage(actionResultInfo.SubjectIndex,damageType,actionResultInfo.ReDamage);
+                    _view.StartBlink(actionResultInfo.SubjectIndex);
+                }
             }
             if (actionResultInfo.ReHeal > 0)
             {    

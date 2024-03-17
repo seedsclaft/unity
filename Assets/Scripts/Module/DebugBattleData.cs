@@ -48,7 +48,8 @@ namespace Ryneus
                         ActorIndex++;
                         symbolInfoList.AddRange(OpeningStageSymbolInfos(actorData.Id));
                     } else
-                    {
+                    {    
+                        symbolInfoList.AddRange(DebugStageSymbolInfos(TestBattle.BattlerId));
                     }
                 }
                 GameSystem.CurrentStageData.Party.SetStageSymbolInfos(symbolInfoList);
@@ -65,10 +66,12 @@ namespace Ryneus
                     GameSystem.CurrentStageData.Party.SetSymbolResultInfo(record,false);
                 }
                 var troopInfo = GameSystem.CurrentStageData.CurrentStage.TestTroops(troopId,troopLv);
-                var stageSymbol = new StageSymbolData();
-                stageSymbol.StageId = 1;
-                stageSymbol.Seek = 1;
-                stageSymbol.SeekIndex = 0;
+                var stageSymbol = new StageSymbolData
+                {
+                    StageId = 1,
+                    Seek = 1,
+                    SeekIndex = 0
+                };
                 var symbolInfo = new SymbolInfo(stageSymbol);
                 symbolInfo.SetTroopInfo(troopInfo);
                 GameSystem.CurrentStageData.Party.SetStageSymbolInfos(new List<SymbolInfo>(){ symbolInfo});
@@ -107,6 +110,31 @@ namespace Ryneus
                     foreach (var prizeSet in prizeSets)
                     {
                         prizeSet.GetItem.Param1 = actorId;
+                        var getItemInfo = new GetItemInfo(prizeSet.GetItem);
+                        getItemInfos.Add(getItemInfo);
+                    }
+                }
+                symbolInfo.SetGetItemInfos(getItemInfos);
+                symbolInfo.SetSelected(true);
+                symbolInfos.Add(symbolInfo);
+            }
+            return symbolInfos;
+        }
+        public List<SymbolInfo> DebugStageSymbolInfos(int skillId)
+        {
+            var symbolInfos = new List<SymbolInfo>();
+            var symbols = DataSystem.FindStage(0).StageSymbols;
+            foreach (var symbol in symbols)
+            {
+                var symbolInfo = new SymbolInfo(symbol);
+                symbolInfo.StageSymbolData.SeekIndex = skillId;
+                var getItemInfos = new List<GetItemInfo>();
+                if (symbolInfo.StageSymbolData.PrizeSetId > 0)
+                {
+                    var prizeSets = DataSystem.PrizeSets.FindAll(a => a.Id == symbolInfo.StageSymbolData.PrizeSetId);
+                    foreach (var prizeSet in prizeSets)
+                    {
+                        prizeSet.GetItem.Param1 = skillId;
                         var getItemInfo = new GetItemInfo(prizeSet.GetItem);
                         getItemInfos.Add(getItemInfo);
                     }

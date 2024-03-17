@@ -122,7 +122,7 @@ namespace Ryneus
                             Scope = (ScopeType)AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.Scope),
                             Range = (RangeType)AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.Range),
                             RepeatTime = AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.RepeatTime),
-                            AliveOnly = AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.AliveOnly) == 1,
+                            AliveType = (AliveType)AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.AliveOnly),
                             Help = textData.Find(a => a.Id == AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.NameId)).Help
                         };
                         Data.Data.Add(SkillData);

@@ -140,6 +140,7 @@ namespace Ryneus
                 enemyData.BaseStatus.Def + (int)Math.Floor(lvRate / 4) + (int)Math.Floor(lvRate * enemyData.BaseStatus.Def * 0.05f),
                 Math.Min(100, enemyData.BaseStatus.Spd + (int)Math.Floor(lvRate / 4))
             );
+            _demigodParam = lv / 2;
             _status = statusInfo;
             _index = index + 100;
             _isActor = false;
@@ -171,6 +172,30 @@ namespace Ryneus
             ResetAp(true);
         }
         
+        public void ResetSkillInfos()
+        {
+            _skills = new List<SkillInfo>();
+            for (int i = 0;i < EnemyData.LearningSkills.Count;i++)
+            {
+                if (_level >= EnemyData.LearningSkills[i].Level)
+                {
+                    var skillInfo = new SkillInfo(EnemyData.LearningSkills[i].SkillId);
+                    skillInfo.SetTriggerDates(EnemyData.LearningSkills[i].TriggerDates);
+                    skillInfo.SetWeight(EnemyData.LearningSkills[i].Weight);
+                    _skills.Add(skillInfo);
+                }
+            }
+            foreach (var kind in EnemyData.Kinds)
+            {
+                _kinds.Add(kind);
+            }
+            AddKindPassive();
+            foreach (var skill in _skills)
+            {
+                skill.SetUseCount(0);
+            }
+        }
+
         public BattlerInfo(List<SkillInfo> skillInfos,bool isActor,int index){
             _charaId = index + 1000;
             var statusInfo = new StatusInfo();
@@ -224,11 +249,6 @@ namespace Ryneus
 
         public void ResetAp(bool IsBattleStart)
         {
-            if (IsState(StateType.CounterAura))
-            {
-                _ap = 1;
-                return;
-            }
             int rand = 0;
             if (IsBattleStart == true)
             {
@@ -331,7 +351,7 @@ namespace Ryneus
                 apValue = 6;
                 return apValue;
             }
-            if (IsState(StateType.CounterAura) || IsState(StateType.Benediction))
+            if (IsState(StateType.Benediction))
             {
                 _ap = 1;
                 apValue = 0;
@@ -375,10 +395,6 @@ namespace Ryneus
             if (IsState(StateType.Chain))
             {
                 wait += StateTurn(StateType.Chain) * 6;
-            } else
-            if (IsState(StateType.CounterAura))
-            {
-                wait += StateTurn(StateType.CounterAura);
             } else
             if (IsState(StateType.Benediction))
             {

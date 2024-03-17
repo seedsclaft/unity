@@ -75,6 +75,7 @@ namespace Ryneus
             foreach (var enemy in enemies)
             {
                 enemy.ResetData();
+                enemy.ResetSkillInfos();
                 //enemy.GainHp(-9999);
                 _battlers.Add(enemy);
                 var battlerRecord = new BattleRecord(enemy.Index);
@@ -492,6 +493,8 @@ namespace Ryneus
             {
                 actionInfo.SetRangeType(RangeType.L);
             }
+            var actionScopeType = CalcScopeType(subject,actionInfo);
+            actionInfo.SetScopeType(actionScopeType);
             if (IsTrigger)
             {
                 actionInfo.SetTriggerSkill(true);
@@ -540,12 +543,16 @@ namespace Ryneus
                 targetIndexList.Add(subject.Index);
             }
 
-            if (skillData.AliveOnly)
+            switch (skillData.AliveType)
             {
-                targetIndexList = targetIndexList.FindAll(a => FieldBattlerInfos().Find(b => a == b.Index).IsAlive());
-            } else
-            {
-                targetIndexList = targetIndexList.FindAll(a => !FieldBattlerInfos().Find(b => a == b.Index).IsAlive());
+                case AliveType.DeathOnly:
+                    targetIndexList = targetIndexList.FindAll(a => !FieldBattlerInfos().Find(b => a == b.Index).IsAlive());
+                    break;
+                case AliveType.AliveOnly:
+                    targetIndexList = targetIndexList.FindAll(a => FieldBattlerInfos().Find(b => a == b.Index).IsAlive());
+                    break;
+                case AliveType.All:
+                    break;
             }
             if (skillData.ScopeTriggers.Count > 0)
             {
@@ -664,6 +671,22 @@ namespace Ryneus
                 case ScopeType.Self:
                     targetIndexList.Clear();
                     targetIndexList.Add(selectIndex);
+                    break;
+                case ScopeType.OneAndNeighbor:
+                    targetIndexList.Clear();
+                    targetIndexList.Add(selectIndex);
+                    // 両隣を追加
+                    var targetUnit = subject.IsActor ? _party.AliveBattlerInfos : _troop.AliveBattlerInfos;
+                    var before = targetUnit.Find(a => a.Index < selectIndex);
+                    if (before != null)
+                    {
+                        targetIndexList.Add(before.Index);
+                    }
+                    var after = targetUnit.FindAll(a => a.Index > selectIndex);
+                    if (after.Count > 0)
+                    {
+                        targetIndexList.Add(after[0].Index);
+                    }
                     break;
             }
             return targetIndexList;
@@ -915,6 +938,10 @@ namespace Ryneus
 
                     var actionResultInfo = new ActionResultInfo(subject,target,featureDates,actionInfo.Master.Id,actionInfo.Master.Scope == ScopeType.One);
                     
+                    // Hpダメージ分の回復計算
+                    var DamageHealPartyResultInfos = CalcDamageHealParty(subject,featureDates,actionResultInfo.HpDamage);
+                    actionResultInfos.AddRange(DamageHealPartyResultInfos);
+
                     if (actionResultInfo.RemoveAttackStateDamage())            
                     {
                         var chainStateInfos = CheckAttackedBattlerState(StateType.Chain,actionResultInfo.TargetIndex);
@@ -976,6 +1003,28 @@ namespace Ryneus
             actionInfo.SetActionResult(actionResultInfos);
         }
 
+        private List<ActionResultInfo> CalcDamageHealParty(BattlerInfo subject,List<SkillData.FeatureData> featureDates,int hpDamage)
+        {
+            var actionResultInfos = new List<ActionResultInfo>();
+            var damageHealParty = featureDates.Find(a => a.FeatureType == FeatureType.DamageHpHealParty);
+            if (damageHealParty != null)
+            {
+                var friends = subject.IsActor ? _party.AliveBattlerInfos : _troop.AliveBattlerInfos;
+                var hpHeal = hpDamage * damageHealParty.Param3 * 0.01f;
+                foreach (var friend in friends)
+                {
+                    var featureData = new SkillData.FeatureData
+                    {
+                        FeatureType = FeatureType.HpHeal,
+                        Param1 = (int)hpHeal
+                    };
+                    var actionResultInfo = new ActionResultInfo(subject,GetBattlerInfo(friend.Index),new List<SkillData.FeatureData>(){featureData},-1);
+                    actionResultInfos.Add(actionResultInfo);
+                }
+            }
+            return actionResultInfos;
+        }
+
         private int CalcHpCost(ActionInfo actionInfo)
         {
             int hpCost = 0;
@@ -1012,6 +1061,18 @@ namespace Ryneus
                 }
             }
             return repeatTime;
+        }
+
+        private ScopeType CalcScopeType(BattlerInfo subject,ActionInfo actionInfo)
+        {
+            var scopeType = actionInfo.Master.Scope;
+            // パッシブで回数増加を計算
+            var changeScopeFeature = subject.Skills.Find(a => a.Master.FeatureDates.Find(b => b.FeatureType == FeatureType.ChangeSkillScope && actionInfo.Master.Id == b.Param1) != null);
+            if (changeScopeFeature != null)
+            {
+                scopeType = (ScopeType)changeScopeFeature.FeatureDates[0].Param3;
+            }
+            return scopeType;
         }
 
         private int PrismRepeatTime(BattlerInfo subject,ActionInfo actionInfo)
@@ -1250,7 +1311,10 @@ namespace Ryneus
             }
             if (actionResultInfo.ReDamage != 0)
             {
-                subject.GainHp(-1 * actionResultInfo.ReDamage);
+                if (target.IsAlive())
+                {
+                    subject.GainHp(-1 * actionResultInfo.ReDamage);
+                }
             }
             if (actionResultInfo.Missed == true)
             {
@@ -1264,20 +1328,6 @@ namespace Ryneus
                     foreach (var stateInfo in targetIndex.Value)
                     {
                         execTarget.UpdateStateCount(RemovalTiming.UpdateCount,stateInfo);
-                    }
-                }
-            }
-            //if (actionResultInfo.AddedStates.Find(a => a.Master.Id == (int)StateType.Stun) != null
-            //    || actionResultInfo.DeadIndexList.Contains(actionResultInfo.TargetIndex))  
-            if (actionResultInfo.HpDamage > 0 || actionResultInfo.ExecStateInfos[target.Index].Find(a => a.StateType == StateType.CounterAura) != null)
-            {
-                if (target.IsState(StateType.CounterAura))
-                {
-                    var counterAuraStateInfos = target.GetStateInfoAll(StateType.CounterAura);
-                    for (int j = 0; j < counterAuraStateInfos.Count;j++)
-                    {
-                        target.RemoveState(counterAuraStateInfos[j],true);
-                        actionResultInfo.AddRemoveState(counterAuraStateInfos[j]);
                     }
                 }
             }
@@ -1676,12 +1726,16 @@ namespace Ryneus
                 if (passiveInfo.Master.TargetType == TargetType.Opponent){
                     partyMember = battlerInfo.IsActor ? BattlerEnemies() : BattlerActors();
                 }
-                if (passiveInfo.Master.AliveOnly)
+                switch (passiveInfo.Master.AliveType)
                 {
-                    partyMember = partyMember.FindAll(a => a.IsAlive());
-                } else
-                {
-                    partyMember = partyMember.FindAll(a => !a.IsAlive());
+                    case AliveType.DeathOnly:
+                        partyMember = partyMember.FindAll(a => !a.IsAlive());
+                        break;
+                    case AliveType.AliveOnly:                        
+                        partyMember = partyMember.FindAll(a => a.IsAlive());
+                        break;
+                    case AliveType.All:
+                        break;
                 }
                 var targetIndexList = new List<int>();
                 foreach (var member in partyMember)
@@ -1723,12 +1777,16 @@ namespace Ryneus
                 if (passiveInfo.Master.TargetType == TargetType.Opponent){
                     partyMember = battlerInfo.IsActor ? BattlerEnemies() : BattlerActors();
                 }
-                if (passiveInfo.Master.AliveOnly)
+                switch (passiveInfo.Master.AliveType)
                 {
-                    partyMember = partyMember.FindAll(a => a.IsAlive());
-                } else
-                {
-                    partyMember = partyMember.FindAll(a => !a.IsAlive());
+                    case AliveType.DeathOnly:
+                        partyMember = partyMember.FindAll(a => !a.IsAlive());
+                        break;
+                    case AliveType.AliveOnly:                        
+                        partyMember = partyMember.FindAll(a => a.IsAlive());
+                        break;
+                    case AliveType.All:
+                        break;
                 }
                 var rand = UnityEngine.Random.Range(0,partyMember.Count);
                 var actionResultInfo = new ActionResultInfo(battlerInfo,partyMember[rand],passiveInfo.FeatureDates,passiveInfo.Id);
@@ -1820,21 +1878,29 @@ namespace Ryneus
                                 if (passiveSkillData.Scope == ScopeType.All)
                                 {
                                     var partyMember = battlerInfo.IsActor ? BattlerActors() : BattlerEnemies();
+                                    
+                                    switch (passiveSkillData.AliveType)
+                                    {
+                                        case AliveType.DeathOnly:
+                                            partyMember = partyMember.FindAll(a => !a.IsAlive());
+                                            break;
+                                        case AliveType.AliveOnly:                        
+                                            partyMember = partyMember.FindAll(a => a.IsAlive());
+                                            break;
+                                        case AliveType.All:
+                                            break;
+                                    }
                                     foreach (var member in partyMember)
                                     {
-                                        if ((passiveSkillData.AliveOnly && member.IsAlive()) || (!passiveSkillData.AliveOnly && !member.IsAlive()))
+                                        var actionResultInfo = new ActionResultInfo(battlerInfo,member,new List<SkillData.FeatureData>(){featureData},passiveSkillData.Id);
+                                        if (actionResultInfos.Find(a => a.RemovedStates.Find(b => b.Master.StateType == (StateType)featureData.FeatureType) != null) != null)
                                         {
-
-                                            var actionResultInfo = new ActionResultInfo(battlerInfo,member,new List<SkillData.FeatureData>(){featureData},passiveSkillData.Id);
-                                            if (actionResultInfos.Find(a => a.RemovedStates.Find(b => b.Master.StateType == (StateType)featureData.FeatureType) != null) != null)
+                                            
+                                        } else{
+                                            var stateInfos = battlerInfo.GetStateInfoAll((StateType)feature.Param1);
+                                            if (member.IsAlive() && stateInfos.Find(a => a.SkillId == passiveSkillData.Id) != null)
                                             {
-                                                
-                                            } else{
-                                                var stateInfos = battlerInfo.GetStateInfoAll((StateType)feature.Param1);
-                                                if (member.IsAlive() && stateInfos.Find(a => a.SkillId == passiveSkillData.Id) != null)
-                                                {
-                                                    actionResultInfos.Add(actionResultInfo);
-                                                }
+                                                actionResultInfos.Add(actionResultInfo);
                                             }
                                         }
                                     }
@@ -2237,12 +2303,16 @@ namespace Ryneus
                 }
             }
             // 生存判定
-            if (actionInfo.Master.AliveOnly)
+            switch (actionInfo.Master.AliveType)
             {
-                indexList = indexList.FindAll(a => _battlers.Find(b => a == b.Index).IsAlive());
-            } else
-            {
-                indexList = indexList.FindAll(a => !_battlers.Find(b => a == b.Index).IsAlive());
+                case AliveType.DeathOnly:
+                    indexList = indexList.FindAll(a => !_battlers.Find(b => a == b.Index).IsAlive());
+                    break;
+                case AliveType.AliveOnly:                        
+                    indexList = indexList.FindAll(a => _battlers.Find(b => a == b.Index).IsAlive());
+                    break;
+                case AliveType.All:
+                    break;
             }
             return indexList;
         }

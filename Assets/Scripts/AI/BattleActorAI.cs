@@ -166,7 +166,7 @@ namespace Ryneus
             {
                 targets = partyMember.FindAll(a => a.Index == _batterInfo.Index);
             }
-            targets = targets.FindAll(a => a.IsAlive() == skillInfo.Master.AliveOnly);
+            targets = targets.FindAll(a => a.IsAlive() && (skillInfo.Master.AliveType != AliveType.DeathOnly));
             if (skillInfo.Master.Range == RangeType.S && !_batterInfo.IsState(StateType.Extension))
             {
                 var isActor = _batterInfo.IsActor;

@@ -59,6 +59,11 @@ namespace Ryneus
             _rangeType = rangeType;
         }
 
+        public void SetScopeType(ScopeType scopeType)
+        {
+            _scopeType = scopeType;
+        }
+
         public void SetHpCost(int hpCost)
         {
             _hpCost = hpCost;

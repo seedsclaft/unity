@@ -270,14 +270,17 @@ namespace Ryneus
         {
             if (!_battlerInfo.IsActor)
             {
-                _deathAnimation = 0;
-                deathAnimation.enabled = false;
-                deathAnimation.Destroyed = 0;
-                gameObject.SetActive(true);
-                var image = BattleImage();
-                var sequence = DOTween.Sequence()
-                    .Append(image.DOFade(0f, 0))
-                    .Append(image.DOFade(1f, 0.5f));
+                if (deathAnimation)
+                {
+                    _deathAnimation = 0;
+                    //deathAnimation.enabled = false;
+                    //deathAnimation.Destroyed = 0;
+                    gameObject.SetActive(true);
+                    var image = BattleImage();
+                    var sequence = DOTween.Sequence()
+                        .Append(image.DOFade(0f, 0))
+                        .Append(image.DOFade(1f, 0.5f));
+                }
             }
         }
         

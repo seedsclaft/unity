@@ -422,7 +422,7 @@ MonoBehaviour:
     Name: "\u30AB\u30A6\u30F3\u30BF"
     Help: "\u653B\u6483\u3092\u53D7\u3051\u308B\u3068\u53CD\u6483\u30C0\u30E1\u30FC\u30B8"
     IconPath: ShieldReflect
-    RemovalTiming: 4
+    RemovalTiming: 1
     OverWrite: 0
     EffectPath: MAGICALxSPIRAL/AquaPoint
     EffectPosition: 0
@@ -1006,6 +1006,21 @@ MonoBehaviour:
   - StateType: 2390
     Name: "\u6C88\u9ED9"
     Help: "\u6D88\u8CBBMp0\u4EE5\u5916\u306EMagic\u4F7F\u7528\u4E0D\u53EF"
+    IconPath: Arrow
+    RemovalTiming: 1
+    OverWrite: 1
+    EffectPath: '""'
+    EffectPosition: 0
+    EffectScale: 1
+    OverLap: 0
+    Removal: 0
+    Abnormal: 1
+    CheckHit: 1
+    RemoveByAttack: 0
+    RemoveByDeath: 1
+  - StateType: 2400
+    Name: "\u4E0D\u6CBB"
+    Help: "Hp\u56DE\u5FA9\u3057\u306A\u304F\u306A\u308B"
     IconPath: Arrow
     RemovalTiming: 1
     OverWrite: 1

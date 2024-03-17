@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Ryneus
 {
-    [System.Serializable]
+    [Serializable]
     public class TroopInfo 
     {
         public TroopData Master => DataSystem.Troops.Find(a => a.TroopId == _troopId);
