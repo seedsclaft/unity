@@ -175,9 +175,9 @@ namespace Ryneus
             stageInfoComponent.UpdateInfo(stageInfo);
         }
 
-        public void SetAlcanaInfo(AlcanaInfo alcanaInfo)
+        public void SetAlcanaInfo(List<SkillInfo> skillInfos)
         {
-            alcanaInfoComponent.UpdateInfo(alcanaInfo);
+            alcanaInfoComponent.UpdateInfo(skillInfos);
         }
 
 

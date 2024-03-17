@@ -1,7 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
-using AlcanaList;
 
 namespace Ryneus
 {
@@ -22,7 +20,6 @@ namespace Ryneus
         private void Initialize()
         {
             _view.SetEvent((type) => UpdateCommand(type));
-            //_view.SetHelpInputInfo("AlcanaList");
             _view.SetAlcanaList(_model.AlcanaList());
         }
 

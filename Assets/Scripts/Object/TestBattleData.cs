@@ -7,8 +7,8 @@ namespace Ryneus
 {
     public class TestBattleData : ScriptableObject
     {
-        [SerializeField] public List<TestBattlerData> TestBattleDates = new();
-        [SerializeField] public List<TestActionData> TestActionDates = new();
+        public List<TestBattlerData> TestBattleDates = new();
+        public List<TestActionData> TestActionDates = new();
     }
 
     [Serializable]

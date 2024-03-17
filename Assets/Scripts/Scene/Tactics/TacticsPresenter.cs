@@ -20,16 +20,6 @@ namespace Ryneus
             _model = new TacticsModel();
             SetModel(_model);
 
-            if (CheckBeforeAlcanaEvent())
-            {
-                InitializeView();
-                _busy = true;
-                _view.StartAlcanaAnimation(() => 
-                {
-                    _view.CommandSceneChange(Scene.AlcanaResult);
-                });
-                return;
-            }
             if (CheckAdvEvent())
             {
                 return;
@@ -45,16 +35,6 @@ namespace Ryneus
             CheckStageEvent();
             if (_eventBusy)
             {
-                return;
-            }
-            if (CheckCurrentAlcanaEvent())
-            {
-                InitializeView();
-                _busy = true;
-                _view.StartAlcanaAnimation(() => 
-                {
-                    _view.CommandSceneChange(Scene.AlcanaResult);
-                });
                 return;
             }
             Initialize();
@@ -80,7 +60,7 @@ namespace Ryneus
                     case StageEventType.IsSubordinate:
                         break;
                     case StageEventType.IsAlcana:
-                        _model.SetIsAlcana(stageEvent.Param == 1);
+                        //_model.SetIsAlcana(stageEvent.Param == 1);
                         break;
                     case StageEventType.SelectAddActor:
                         _eventBusy = true;
@@ -126,20 +106,6 @@ namespace Ryneus
                         break;
                 }
             }
-        }
-
-        private bool CheckBeforeAlcanaEvent()
-        {
-            var results = _model.CheckAlcanaSkillInfos(TriggerTiming.BeforeTacticsTurn);
-            _model.SetAlcanaSkillInfo(results);
-            return results.Count > 0;
-        }
-
-        private bool CheckCurrentAlcanaEvent()
-        {
-            var results = _model.CheckAlcanaSkillInfos(TriggerTiming.CurrentTacticsTurn);
-            _model.SetAlcanaSkillInfo(results);
-            return results.Count > 0;
         }
 
         private bool CheckAdvEvent()
@@ -213,7 +179,7 @@ namespace Ryneus
             _view.SetUIButton();
             _view.SetBackGround(_model.CurrentStage.Master.BackGround);
             _view.SetSymbolRecords(_model.SymbolRecords());
-            _view.SetAlcanaInfo(_model.StageAlcana);
+            _view.SetAlcanaInfo(_model.AlcanaSkillInfos());
             CommandRefresh();
             PlayTacticsBgm();
             //_view.SetHelpInputInfo(_model.TacticsCommandInputInfo());
@@ -752,7 +718,7 @@ namespace Ryneus
         {
             _view.SetTurns(_model.RemainTurns);
             _view.SetStageInfo(_model.CurrentStage);
-            _view.SetAlcanaInfo(_model.StageAlcana);
+            _view.SetAlcanaInfo(_model.AlcanaSkillInfos());
             _view.SetTacticsCharaLayer(_model.StageMembers());
             _view.SetEvaluate(_model.PartyEvaluate(),_model.TroopEvaluate());
             _view.CommandRefresh();

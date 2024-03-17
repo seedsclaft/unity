@@ -171,7 +171,7 @@ namespace Ryneus
             ResetAp(true);
         }
         
-        public BattlerInfo(AlcanaInfo alcanaInfo,bool isActor,int index){
+        public BattlerInfo(List<SkillInfo> skillInfos,bool isActor,int index){
             _charaId = index + 1000;
             var statusInfo = new StatusInfo();
             statusInfo.SetParameter(
@@ -186,12 +186,7 @@ namespace Ryneus
             _index = index + 1000;
             _isActor = isActor;
             _isAlcana = true;
-            _skills = new List<SkillInfo>();
-            foreach (var alcana in alcanaInfo.EnableOwnAlcanaList)
-            {
-                var skillInfo = new SkillInfo(alcana.Id);
-                _skills.Add(skillInfo);
-            }
+            _skills = skillInfos;
             foreach (var skill in _skills)
             {
                 skill.SetUseCount(0);

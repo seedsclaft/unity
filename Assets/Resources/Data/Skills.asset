@@ -222,7 +222,7 @@ MonoBehaviour:
     Scope: 1
     SkillType: 1
     TargetType: 1
-    Help: "\\s\u306B\u30C0\u30E1\u30FC\u30B8"
+    Help: "\\s\u306BATKx150%\u30C0\u30E1\u30FC\u30B8"
     Range: 1
     RepeatTime: 1
     AliveOnly: 1
@@ -246,7 +246,7 @@ MonoBehaviour:
     Scope: 2
     SkillType: 1
     TargetType: 1
-    Help: "\\s\u306B\u30C0\u30E1\u30FC\u30B8"
+    Help: "\\s\u306BATKx150%\u30C0\u30E1\u30FC\u30B8"
     Range: 1
     RepeatTime: 1
     AliveOnly: 1
@@ -343,7 +343,7 @@ MonoBehaviour:
     Scope: 1
     SkillType: 1
     TargetType: 1
-    Help: "\\s\u306B\u9AD8\u5A01\u529B\u30C0\u30E1\u30FC\u30B8"
+    Help: "\\s\u306BATKx300%\u30C0\u30E1\u30FC\u30B8"
     Range: 1
     RepeatTime: 1
     AliveOnly: 1
@@ -367,7 +367,7 @@ MonoBehaviour:
     Scope: 1
     SkillType: 1
     TargetType: 1
-    Help: "\\s\u306B\u30C0\u30E1\u30FC\u30B8"
+    Help: "\\s\u306BATKx150%\u30C0\u30E1\u30FC\u30B8"
     Range: 1
     RepeatTime: 1
     AliveOnly: 1
@@ -607,7 +607,7 @@ MonoBehaviour:
     Scope: 1
     SkillType: 1
     TargetType: 1
-    Help: "\\s\u306B\u30C0\u30E1\u30FC\u30B8"
+    Help: "\\s\u306BATKx150%\u30C0\u30E1\u30FC\u30B8"
     Range: 1
     RepeatTime: 1
     AliveOnly: 1
@@ -811,7 +811,7 @@ MonoBehaviour:
     Scope: 1
     SkillType: 1
     TargetType: 1
-    Help: "\\s\u306B\u30C0\u30E1\u30FC\u30B8\n\u30A2\u30F3\u30C7\u30C3\u30C9\u306B\u306F2\u500D\u306E\u30C0\u30E1\u30FC\u30B8"
+    Help: "\\s\u306BATKx150%\u30C0\u30E1\u30FC\u30B8\n\u30A2\u30F3\u30C7\u30C3\u30C9\u306B\u306F\u3055\u3089\u306B2\u500D\u30C0\u30E1\u30FC\u30B8"
     Range: 1
     RepeatTime: 1
     AliveOnly: 1
@@ -1035,7 +1035,7 @@ MonoBehaviour:
     Scope: 1
     SkillType: 1
     TargetType: 1
-    Help: "\\s\u306B\u30C0\u30E1\u30FC\u30B8"
+    Help: "\\s\u306BATKx150%\u30C0\u30E1\u30FC\u30B8"
     Range: 1
     RepeatTime: 1
     AliveOnly: 1
@@ -2620,16 +2620,16 @@ MonoBehaviour:
     Scope: 4
     SkillType: 2
     TargetType: 4
-    Help: "\u30A4\u30AF\u30B9\u30C6\u30A3\u30F3\u30AF\u30B7\u30E7\u30F3\u306E\u653B\u6483\u56DE\u6570\u3092+1"
+    Help: "\u30A4\u30AF\u30B9\u30C6\u30A3\u30F3\u30AF\u30B7\u30E7\u30F3\u306E\u30C0\u30E1\u30FC\u30B8\u304CATKx450%\u306B\u306A\u308B"
     Range: 1
     RepeatTime: 1
     AliveOnly: 1
     FeatureDates:
     - SkillId: 100130
-      FeatureType: 6100
+      FeatureType: 6010
       Param1: 1060
       Param2: 0
-      Param3: 1
+      Param3: 150
       Rate: 100
     TriggerDates: []
     ScopeTriggers: []

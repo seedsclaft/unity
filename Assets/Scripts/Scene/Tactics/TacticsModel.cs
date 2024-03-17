@@ -10,7 +10,6 @@ namespace Ryneus
         public TacticsModel()
         {
             _selectActorId = StageMembers()[0].ActorId;
-            StageAlcana.RefreshOwnAlcana(UpdateAlcanaSkillInfos());
         }
 
         private SymbolInfo _symbolInfo;

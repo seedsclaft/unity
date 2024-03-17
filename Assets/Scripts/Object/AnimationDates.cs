@@ -1,15 +1,13 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using Effekseer;
-using UnityEditor;
 
 namespace Ryneus
 {
     [Serializable]
     public class AnimationDates : ScriptableObject
     {
-        [SerializeField] public List<AnimationData> Data = new();
+        public List<AnimationData> Data = new();
     }
 
     [Serializable]

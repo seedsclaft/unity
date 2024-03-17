@@ -6,7 +6,7 @@ namespace Ryneus
 {
     public class StateDates : ScriptableObject
     {
-        [SerializeField] public List<StateData> Data = new();
+        public List<StateData> Data = new();
     }
 
     [Serializable]

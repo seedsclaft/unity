@@ -10,17 +10,17 @@ namespace Ryneus
         [SerializeField] private GameObject alcana;
         [SerializeField] private TextMeshProUGUI alcanaCount;
         [SerializeField] private _2dxFX_Shiny_Reflect shinyReflect;
-        public void UpdateInfo(AlcanaInfo alcanaInfo)
+        public void UpdateInfo(List<SkillInfo> skillInfos)
         {
             if (alcana != null){
-                alcana.gameObject.SetActive(alcanaInfo.IsAlcana == true);
+                alcana.gameObject.SetActive(skillInfos.Count > 0);
             }
             if (alcanaCount != null){
-                alcanaCount.text = alcanaInfo.EnableOwnAlcanaList.Count.ToString();
+                alcanaCount.text = skillInfos.Count.ToString();
             }
             if (shinyReflect != null)
             {
-                shinyReflect.enabled = alcanaInfo.EnableOwnAlcanaList.Count > 0;
+                //shinyReflect.enabled = alcanaInfo.EnableOwnAlcanaList.Count > 0;
             }
         }
     }

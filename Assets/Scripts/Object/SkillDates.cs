@@ -6,7 +6,7 @@ namespace Ryneus
 {
     public class SkillDates : ScriptableObject
     {
-        [SerializeField] public List<SkillData> Data = new();
+        public List<SkillData> Data = new();
     }
 
     [Serializable]
@@ -109,13 +109,15 @@ namespace Ryneus
             public int Rate;
             public FeatureData CopyData()
             {
-                var feature = new FeatureData();
-                feature.SkillId = SkillId;
-                feature.FeatureType = FeatureType;
-                feature.Param1 = Param1;
-                feature.Param2 = Param2;
-                feature.Param3 = Param3;
-                feature.Rate = Rate;
+                var feature = new FeatureData
+                {
+                    SkillId = SkillId,
+                    FeatureType = FeatureType,
+                    Param1 = Param1,
+                    Param2 = Param2,
+                    Param3 = Param3,
+                    Rate = Rate
+                };
                 return feature;
             }
         }

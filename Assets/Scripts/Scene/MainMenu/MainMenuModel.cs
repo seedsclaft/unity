@@ -24,12 +24,15 @@ namespace Ryneus
         
         public List<ListData> TacticsCommand()
         {
-            var commandListDates = MakeListData(DataSystem.TacticsCommand);
-            foreach (var commandListData in commandListDates)
+            var commandListDates = new List<SystemData.CommandData>();
+            foreach (var commandListData in DataSystem.TacticsCommand)
             {
-                var commandData = (SystemData.CommandData)commandListData.Data;
+                if ((TacticsCommandType)commandListData.Id != TacticsCommandType.Paradigm)
+                {
+                    commandListDates.Add(commandListData);
+                }
             }
-            return commandListDates;
+            return MakeListData(commandListDates);
         }
 
         public string TacticsCommandInputInfo()

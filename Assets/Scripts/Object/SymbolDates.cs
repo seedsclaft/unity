@@ -7,7 +7,7 @@ namespace Ryneus
     [Serializable]
     public class SymbolDates : ScriptableObject
     {
-        [SerializeField] public List<SymbolData> Data = new();
+        public List<SymbolData> Data = new();
     }
 
     [Serializable]

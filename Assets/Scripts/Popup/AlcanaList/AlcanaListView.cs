@@ -1,16 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using AlcanaList;
 
 namespace Ryneus
 {
     public class AlcanaListView : BaseView
     {
         [SerializeField] private BaseList alcanaList = null;
-        [SerializeField] private SkillInfoComponent skillInfoComponent = null;
         private new System.Action<AlcanaListViewEvent> _commandData = null;
-        private System.Action<int> _callEvent = null;
         
         public override void Initialize() 
         {
@@ -18,9 +15,6 @@ namespace Ryneus
             new AlcanaListPresenter(this);
             alcanaList.SetInputHandler(InputKeyType.Cancel,() => BackEvent());
             alcanaList.SetInputHandler(InputKeyType.Decide,() => {});
-            alcanaList.SetSelectedHandler(() => {        
-                UpdateSkillInfo();
-            });
             SetInputHandler(alcanaList.GetComponent<IInputHandlerEvent>());
         }
         
@@ -29,33 +23,10 @@ namespace Ryneus
             _commandData = commandData;
         }
 
-        public void SetBackEvent(System.Action backEvent)
-        {
-            SetBackCommand(() => 
-            {    
-                Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cancel);
-                if (backEvent != null) backEvent();
-            });
-            ChangeBackCommandActive(true);
-        }
-
         public void SetAlcanaList(List<ListData> alcanaLists)
         {
             alcanaList.SetData(alcanaLists);
             alcanaList.Activate();
-            UpdateSkillInfo();
-        }
-
-        private void UpdateSkillInfo()
-        {
-            if (alcanaList.ListData != null)
-            {
-                var data = (SkillInfo)alcanaList.ListData.Data;
-                if (data != null)
-                {
-                    skillInfoComponent.UpdateSkillInfo(data);
-                }
-            }
         }
     }
 }

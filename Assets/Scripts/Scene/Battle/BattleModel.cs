@@ -81,9 +81,7 @@ namespace Ryneus
                 _battleRecords.Add(battlerRecord);
             }
             // アルカナ
-            StageAlcana.RefreshOwnAlcana(UpdateAlcanaSkillInfos());
-            StageAlcana.CheckEnableSkillTrigger();
-            var alcana = new BattlerInfo(StageAlcana,true,1);
+            var alcana = new BattlerInfo(AlcanaSkillInfos(),true,1);
             _battlers.Add(alcana);
             var alcanaBattlerRecord = new BattleRecord(1001);
             _battleRecords.Add(alcanaBattlerRecord);

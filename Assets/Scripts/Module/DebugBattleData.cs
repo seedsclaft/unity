@@ -31,7 +31,6 @@ namespace Ryneus
             GameSystem.CurrentStageData = new SaveStageInfo();
             GameSystem.CurrentStageData.Initialize();
             GameSystem.CurrentStageData.MakeStageData(1);
-            GameSystem.CurrentStageData.Party.AlcanaInfo.InitData(true);
             if (testBattle)
             {
                 var TestBattleData = Resources.Load<TestBattleData>("Data/TestBattle").TestBattleDates;
@@ -50,12 +49,6 @@ namespace Ryneus
                         symbolInfoList.AddRange(OpeningStageSymbolInfos(actorData.Id));
                     } else
                     {
-                        // アルカナ
-                        var alcana = GameSystem.CurrentStageData.Party.AlcanaInfo.OwnAlcanaList.Find(a => a.Id == TestBattle.Level);
-                        if (alcana != null)
-                        {
-                            alcana.SetEnable(true);
-                        }
                     }
                 }
                 GameSystem.CurrentStageData.Party.SetStageSymbolInfos(symbolInfoList);

@@ -198,12 +198,7 @@ namespace Ryneus
             return PartyInfo.CurrentSymbolInfos(CurrentStage.CurrentTurn);
         }
 
-        public void SetIsAlcana(bool isAlcana)
-        {
-            StageAlcana.SetIsAlcana(isAlcana);
-        }
-
-        public List<SkillInfo> UpdateAlcanaSkillInfos()
+        public List<SkillInfo> AlcanaSkillInfos()
         {
             var skillInfos = new List<SkillInfo>();
             foreach (var alchemyId in PartyInfo.CurrentAlcanaIdList(CurrentStage.Id,CurrentStage.CurrentTurn))
@@ -215,12 +210,6 @@ namespace Ryneus
             return skillInfos;
         }
 
-        public List<SkillInfo> CheckAlcanaSkillInfos(TriggerTiming triggerTiming)
-        {
-            var skillInfos = StageAlcana.CheckAlcanaSkillInfo(triggerTiming);
-            return skillInfos.FindAll(a => a.Master.TriggerDates.Find(b => b.Param1 == RemainTurns) != null);
-        }
-
         public bool NeedAlcana()
         {
             return false;
@@ -229,68 +218,6 @@ namespace Ryneus
         public void SetAlcanaSkillInfo(List<SkillInfo> skillInfos)
         {
             TempInfo.SetAlcanaSkillInfo(skillInfos);
-        }
-
-        public List<GetItemInfo> GetAlcanaResults(SkillInfo skillInfo)
-        {
-            var list = new List<GetItemInfo>();
-            if (StageAlcana.IsAlcana)
-            {
-                foreach (var featureData in skillInfo.Master.FeatureDates)
-                {
-                    var getItemInfo = new GetItemInfo(null);
-                    switch (featureData.FeatureType)
-                    {
-                        case FeatureType.GainTurn: // param固定
-                            CurrentSaveData.CurrentStage.DeSeekStage();
-                            getItemInfo.MakeGainTurnResult((RemainTurns).ToString());
-                            break;
-                        case FeatureType.ActorLvUp: // featureData で param1 = 選択順のActorId、 param2 = 上昇値
-                            var actorInfo = StageMembers().Find(a => a.ActorId == PartyInfo.ActorInfos[featureData.Param1].ActorId);
-                            if (actorInfo != null)
-                            {
-                                var lv = featureData.Param2;
-                                getItemInfo.MakeActorLvUpResult(actorInfo.Master.Name,actorInfo.Level+lv);
-                                actorInfo.LevelUp(lv);
-                            }
-                            break;
-                        case FeatureType.AlchemyCostZero: // featureData で param1 = 属性番号
-                            var attributeText = DataSystem.GetTextData(330 + featureData.Param1 - 1);
-                            getItemInfo.MakeAlchemyCostZeroResult(attributeText.Text);
-                            break;
-                        case FeatureType.NoBattleLost: // param固定
-                            getItemInfo.MakeNoBattleLostResult();
-                            break;
-                        case FeatureType.ResourceBonus: // param固定
-                            getItemInfo.MakeResourceBonusResult();
-                            break;
-                        case FeatureType.CommandCostZero: // featureData で param1 = tacticsCommand
-                            var commandText = DataSystem.GetTextData(featureData.Param1);
-                            getItemInfo.MakeCommandCostZeroResult(commandText.Text);
-                            break;
-                        case FeatureType.AlchemyCostBonus: // param固定
-                            getItemInfo.MakeAlchemyCostBonusResult();
-                            break;
-                        case FeatureType.CommandLvUp: // featureData で param1 = tacticsCommand param2 = 上昇値
-                            break;
-                        case FeatureType.AddSkillOrCurrency: // skillInfo で param1 = 入手スキルID,featureData で param2 = 上昇Currency値
-                            var getSkillId = skillInfo.Param1;
-                            var hero = StageMembers().Find(a => a.ActorId == PartyInfo.ActorInfos[0].ActorId);
-                            if (!hero.IsLearnedSkill(getSkillId))
-                            {
-                                getItemInfo.MakeSkillLearnResult(hero.Master.Name,DataSystem.FindSkill(skillInfo.Param1));    
-                                hero.LearnSkill(getSkillId);
-                            } else
-                            {
-                                PartyInfo.ChangeCurrency(Currency + featureData.Param2);
-                                getItemInfo.MakeAddSkillCurrencyResult(skillInfo.Master.Name,featureData.Param2);                                
-                            }
-                            break;
-                    }
-                    list.Add(getItemInfo);
-                }
-            }
-            return list;
         }
 
         public string SelectAddActorConfirmText(string actorName)

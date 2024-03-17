@@ -6,8 +6,8 @@ namespace Ryneus
 {
     public class StageDates : ScriptableObject
     {
-        [SerializeField] public List<StageData> Data = new();
-        [SerializeField] public List<SymbolGroupData> SymbolGroupData = new();
+        public List<StageData> Data = new();
+        public List<SymbolGroupData> SymbolGroupData = new();
     }
 
     [Serializable]
