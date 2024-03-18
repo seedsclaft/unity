@@ -28,6 +28,7 @@ namespace Ryneus
         public int Lv;
         public bool BossFlag;
         public LineType Line;
+        public int StageLv;
         public int PrizeSetId;
     }
 }

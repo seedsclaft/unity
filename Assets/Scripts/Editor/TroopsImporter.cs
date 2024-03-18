@@ -20,7 +20,7 @@ namespace Ryneus
 			Lv,
 			BossFlag,
 			Line,
-			StageTurn,
+			StageLv,
 			PrizeSetId
 		}
 		enum BaseGetItemColumn
@@ -90,6 +90,7 @@ namespace Ryneus
 						TroopEnemyData.Lv = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.Lv);
 						TroopEnemyData.BossFlag = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.BossFlag) == 1;
 						TroopEnemyData.Line = (LineType)AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.Line);
+						TroopEnemyData.StageLv = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.StageLv);
 						TroopEnemyData.PrizeSetId = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.PrizeSetId);
 						//TroopData.GetItemDates = new List<GetItemData>();
 						TroopEnemyDates.Add(TroopEnemyData);

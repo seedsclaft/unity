@@ -134,13 +134,40 @@ namespace Ryneus
                         stageSymbolData.PrizeSetId = 0;
                         break;
                     case SymbolType.Actor:
-                        if (!PartyInfo.CurrentActorIdList(CurrentStage.Id,CurrentStage.CurrentTurn).Contains(symbol.PrizeSetId - 500))
+                        // 今まで遭遇していないアクターを選定
+                        var list = new List<int>();
+                        foreach (var actorInfo in PartyInfo.ActorInfos)
+                        {
+                            if (!PartyInfo.PastActorIdList(CurrentStage.Id,CurrentStage.CurrentTurn).Contains(actorInfo.ActorId))
+                            {
+                                list.Add(actorInfo.ActorId);
+                            }
+                        }
+                        targetRand = Random.Range(0,list.Count-1);
+                        stageSymbolData.CopyData(symbol);
+                        stageSymbolData.Param1 = 0;
+                        stageSymbolData.Param2 = 0;
+                        stageSymbolData.PrizeSetId = 500 + list[targetRand];
+                        break;
+                    case SymbolType.Alcana:
+                        if (!PartyInfo.CurrentAlchemyIdList(CurrentStage.Id,CurrentStage.CurrentTurn).Contains(symbol.Param1))
                         {
                             stageSymbolData.CopyData(symbol);
                         }
                         break;
-                    case SymbolType.Alcana:
-                        if (!PartyInfo.CurrentAlchemyIdList(CurrentStage.Id,CurrentStage.CurrentTurn).Contains(symbol.Param1))
+                    default:
+                        if (symbol.SymbolType > SymbolType.Rebirth)
+                        {
+                            var groupId = (int)symbol.SymbolType;
+                            var groupDates = DataSystem.SymbolGroups.FindAll(a => a.GroupId == groupId);
+                            stageSymbolData = PickUpSymbolData(groupDates);
+                            // GroupのBattleはParam2をコンバート前にする
+                            if (stageSymbolData.SymbolType == SymbolType.Battle)
+                            {
+                                stageSymbolData.Param2 = symbol.Param2;
+                            }
+                            
+                        } else
                         {
                             stageSymbolData.CopyData(symbol);
                         }
@@ -153,12 +180,13 @@ namespace Ryneus
         public static TroopInfo BattleTroop(StageSymbolData stageSymbolData)
         {
             var troopId = stageSymbolData.Param1;
-            var enemyCount = stageSymbolData.Param2;
+            var plusLevel = stageSymbolData.Param2;
             var troopInfo = new TroopInfo(troopId,false);
             // ランダム生成
             if (troopId == -1)
             {
-                troopInfo.MakeEnemyRandomTroopDates(PartyInfo.ClearTroopCount + stageSymbolData.Seek + CurrentStage.Master.StageLv);
+                troopInfo.MakeEnemyRandomTroopDates(stageSymbolData.Seek + CurrentStage.Master.StageLv + plusLevel);
+                /*
                 for (int i = 0;i < enemyCount;i++)
                 {
                     int rand = new System.Random().Next(1, CurrentStage.Master.RandomTroopCount);
@@ -166,14 +194,15 @@ namespace Ryneus
                     var enemy = new BattlerInfo(enemyData,PartyInfo.ClearTroopCount + 1,i,0,false);
                     troopInfo.AddEnemy(enemy);
                 }
+                */
                 return troopInfo;
             }
-            if (troopInfo.Master == null)
+            if (troopInfo.TroopMaster == null)
             {
                 Debug.LogError("troopId" + troopId + "のデータが不足");
             } else
             {
-                troopInfo.MakeEnemyTroopDates(PartyInfo.ClearTroopCount);
+                troopInfo.MakeEnemyTroopDates(plusLevel);
             }
             return troopInfo;
         }

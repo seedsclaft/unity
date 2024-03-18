@@ -8,7 +8,7 @@ namespace Ryneus
     [Serializable]
     public class TroopInfo 
     {
-        public TroopData Master => DataSystem.Troops.Find(a => a.TroopId == _troopId);
+        public TroopData TroopMaster => DataSystem.Troops.Find(a => a.TroopId == _troopId);
         private int _troopId = 0;
         public int TroopId => _troopId;
         private List<BattlerInfo> _battlerInfos = new(); 
@@ -37,14 +37,14 @@ namespace Ryneus
             _escapeEnable = escapeEnable;
         }
 
-        public void MakeEnemyTroopDates(int level,int displayTurn = 1)
+        public void MakeEnemyTroopDates(int plusLevel)
         {
-            if (Master.StageTurn == 0 || Master.StageTurn >= displayTurn)
+            foreach (var troopEnemies in TroopMaster.TroopEnemies)
             {
-                foreach (var troopEnemies in Master.TroopEnemies)
+                if (troopEnemies.StageLv <= plusLevel)
                 {
                     var enemyData = DataSystem.Enemies.Find(a => a.Id == troopEnemies.EnemyId);
-                    var battlerInfo = new BattlerInfo(enemyData,troopEnemies.Lv + level,_battlerInfos.Count,troopEnemies.Line,troopEnemies.BossFlag);
+                    var battlerInfo = new BattlerInfo(enemyData,troopEnemies.Lv + plusLevel,_battlerInfos.Count,troopEnemies.Line,troopEnemies.BossFlag);
                     AddEnemy(battlerInfo);
                 }
             }
@@ -80,7 +80,7 @@ namespace Ryneus
 
         public void MakeGetItemInfos()
         {
-            var prizeSetId = Master.PrizeSetId;
+            var prizeSetId = TroopMaster.PrizeSetId;
             var prizeSetDates = DataSystem.PrizeSets.FindAll(a => a.Id == prizeSetId);
             foreach (var prizeSetData in prizeSetDates)
             {

@@ -135,7 +135,7 @@ namespace Ryneus
             }
             statusInfo.SetParameter(
                 enemyData.BaseStatus.Hp + (int)Math.Floor(plusHpParam + (int)Math.Floor(lvRate / 4) + lvRate * enemyData.BaseStatus.Hp * 0.02f),
-                Math.Min(50, enemyData.BaseStatus.Mp),
+                Math.Min(50, (int)Math.Floor(lvRate / 4) + enemyData.BaseStatus.Mp),
                 enemyData.BaseStatus.Atk + (int)Math.Floor(lvRate / 4) + (int)Math.Floor(lvRate * enemyData.BaseStatus.Atk * 0.05f),
                 enemyData.BaseStatus.Def + (int)Math.Floor(lvRate / 4) + (int)Math.Floor(lvRate * enemyData.BaseStatus.Def * 0.05f),
                 Math.Min(100, enemyData.BaseStatus.Spd + (int)Math.Floor(lvRate / 4))

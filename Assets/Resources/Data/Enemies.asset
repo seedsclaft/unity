@@ -423,7 +423,7 @@ MonoBehaviour:
     ImagePath: Ammon
     BaseStatus:
       _hp: 100
-      _mp: 10
+      _mp: 30
       _atk: 15
       _def: 10
       _spd: 15
@@ -460,10 +460,10 @@ MonoBehaviour:
     ImagePath: Paimon
     BaseStatus:
       _hp: 100
-      _mp: 10
-      _atk: 15
-      _def: 10
-      _spd: 15
+      _mp: 30
+      _atk: 14
+      _def: 5
+      _spd: 22
     Kinds: 
     LearningSkills:
     - SkillId: 4010
@@ -471,10 +471,6 @@ MonoBehaviour:
       Weight: 40
       TriggerDates: []
     - SkillId: 4030
-      Level: 1
-      Weight: 40
-      TriggerDates: []
-    - SkillId: 4060
       Level: 1
       Weight: 40
       TriggerDates: []
@@ -495,10 +491,10 @@ MonoBehaviour:
     ImagePath: Andras
     BaseStatus:
       _hp: 100
-      _mp: 10
-      _atk: 15
-      _def: 10
-      _spd: 15
+      _mp: 30
+      _atk: 21
+      _def: 2
+      _spd: 17
     Kinds: 
     LearningSkills:
     - SkillId: 2010

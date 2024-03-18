@@ -46,6 +46,21 @@ namespace Ryneus
             return actorIdList;
         }
         
+        public List<int> PastActorIdList(int stageId,int seek)
+        {
+            var actorIdList = new List<int>();
+            var records = _symbolRecordList.FindAll(a => a.SymbolInfo.SymbolType == SymbolType.Actor);
+            records = records.FindAll(a => a.StageId == stageId && a.Seek < seek || a.StageId < stageId);
+            foreach (var record in records)
+            {
+                foreach (var getItemInfo in record.SymbolInfo.GetItemInfos)
+                {
+                    actorIdList.Add(getItemInfo.Param1);
+                }
+            }
+            return actorIdList;
+        }
+
         private int _currency = 0;
         public int Currency => _currency;
         private int _parallelCount = 1;
@@ -98,9 +113,6 @@ namespace Ryneus
         public bool BattleResultVictory => _battleResultVictory;
         private int _battleResultScore = 0;
         public int BattleResultScore => _battleResultScore;
-
-        private int _clearTroopCount;
-        public int ClearTroopCount => _clearTroopCount;
 
         private List<int> _lastBattlerIdList = new();
         public List<int> LastBattlerIdList => _lastBattlerIdList;

@@ -349,7 +349,7 @@ MonoBehaviour:
     Selectable: 1
     Help: "\u5317\u6975\u661F\u306E\u4F4D\u7F6E\u3084\u52D5\u304D\u304C\u7A81\u7136\u5909\u7570\u3057\n\u5730\u7403\u306E\u6C17\u5019\u3084\u5929\u5019\u306B\u5927\u304D\u306A\u5F71\u97FF\u3092\u53CA\u307C\u3057\u305F\u4E00\u9023\u306E\u51FA\u6765\u4E8B\u3002\n\n<\u8A73\u7D30>\n\u6D77\u9762\u4E0A\u6607\u3084\u5730\u6BBB\u5909\u52D5\u304C\u6D3B\u767A\u5316\u3057\u5730\u9707\u3084\u706B\u5C71\u5674\u706B\u304C\u983B\u767A\u3057\u305F\u3002\n\n<\u6B7B\u8005\u6570>\n\u7D043\u4E07\u4EBA\n\n<\u5099\u8003>\n\u5927\u548C\u5168\u571F\u3092\u542B\u3080\u5168\u4E16\u754C\u5E83\u57DF\u306B\u3066\u767A\u751F\u3002"
     StageLv: 25
-    Turns: 12
+    Turns: 9
     InitMembers: 0100000002000000030000000400000005000000060000000700000008000000090000000a0000000b000000
     RandomTroopCount: 15
     BackGround: clipart _0147
@@ -418,7 +418,7 @@ MonoBehaviour:
       Seek: 0
       SeekIndex: 0
       SymbolType: 6
-      Rate: 4
+      Rate: 5
       Param1: 0
       Param2: 0
       PrizeSetId: 10
@@ -426,7 +426,7 @@ MonoBehaviour:
       Seek: 0
       SeekIndex: 0
       SymbolType: 6
-      Rate: 2
+      Rate: 3
       Param1: 0
       Param2: 0
       PrizeSetId: 20
@@ -434,7 +434,7 @@ MonoBehaviour:
       Seek: 0
       SeekIndex: 0
       SymbolType: 6
-      Rate: 1
+      Rate: 2
       Param1: 0
       Param2: 0
       PrizeSetId: 30
@@ -553,46 +553,6 @@ MonoBehaviour:
     - StageId: 3
       Seek: 9
       SeekIndex: 0
-      SymbolType: 1
-      Rate: 100
-      Param1: 3003
-      Param2: 0
-      PrizeSetId: 20
-    - StageId: 3
-      Seek: 10
-      SeekIndex: 0
-      SymbolType: 4
-      Rate: 100
-      Param1: -1
-      Param2: 10
-      PrizeSetId: 0
-    - StageId: 3
-      Seek: 10
-      SeekIndex: 1
-      SymbolType: 6
-      Rate: 100
-      Param1: 0
-      Param2: 0
-      PrizeSetId: 630
-    - StageId: 3
-      Seek: 11
-      SeekIndex: 0
-      SymbolType: -1
-      Rate: 100
-      Param1: 0
-      Param2: 0
-      PrizeSetId: 0
-    - StageId: 3
-      Seek: 11
-      SeekIndex: 1
-      SymbolType: 4
-      Rate: 100
-      Param1: -1
-      Param2: 1
-      PrizeSetId: 0
-    - StageId: 3
-      Seek: 12
-      SeekIndex: 0
       SymbolType: 2
       Rate: 100
       Param1: 3011
@@ -605,7 +565,7 @@ MonoBehaviour:
     Selectable: 1
     Help: "\u30A2\u30D5\u30EA\u30AB\u4E2D\u592E\u90E8\u306B\u843D\u4E0B\u3057\u305F\u5DE8\u5927\u9695\u77F3\u3002\n\n<\u8A73\u7D30>\n\u885D\u7A81\u306B\u3088\u308B\u71B1\u30A8\u30CD\u30EB\u30AE\u30FC\u306E\u4ED6\u3001\u5927\u91CF\u306E\u3061\u308A\u304C\u5DFB\u304D\u4E0A\u304C\u308A\u5927\u9678\u5168\u571F\u306B\u6C17\u5019\u5909\u52D5\u3092\u3082\u305F\u3089\u3057\u305F\u3002\n\n<\u6B7B\u8005\u6570>\n12\u4E07\u4EBA\u8D85\u3002\n\n<\u5099\u8003>\n\u6B7B\u8005\u306F\u6C17\u5019\u5909\u52D5\u95A2\u9023\u6B7B\u3082\u542B\u3080\u3002"
     StageLv: 30
-    Turns: 8
+    Turns: 9
     InitMembers: 0100000002000000030000000400000005000000060000000700000008000000090000000a0000000b000000
     RandomTroopCount: 15
     BackGround: NA_background image_3D like_404
@@ -621,7 +581,231 @@ MonoBehaviour:
     SubordinateValue: 0
     UseSlot: 0
     StageEvents: []
-    StageSymbols: []
+    StageSymbols:
+    - StageId: 4
+      Seek: 0
+      SeekIndex: 0
+      SymbolType: 1
+      Rate: 70
+      Param1: -1
+      Param2: 0
+      PrizeSetId: 0
+    - StageId: 4
+      Seek: 0
+      SeekIndex: 0
+      SymbolType: 201
+      Rate: 4
+      Param1: 0
+      Param2: 20
+      PrizeSetId: 0
+    - StageId: 4
+      Seek: 0
+      SeekIndex: 0
+      SymbolType: 202
+      Rate: 4
+      Param1: 0
+      Param2: 20
+      PrizeSetId: 0
+    - StageId: 4
+      Seek: 0
+      SeekIndex: 0
+      SymbolType: 203
+      Rate: 4
+      Param1: 0
+      Param2: 20
+      PrizeSetId: 0
+    - StageId: 4
+      Seek: 0
+      SeekIndex: 0
+      SymbolType: 204
+      Rate: 4
+      Param1: 0
+      Param2: 20
+      PrizeSetId: 0
+    - StageId: 4
+      Seek: 0
+      SeekIndex: 0
+      SymbolType: 205
+      Rate: 4
+      Param1: 0
+      Param2: 20
+      PrizeSetId: 0
+    - StageId: 4
+      Seek: 0
+      SeekIndex: 0
+      SymbolType: 5
+      Rate: 10
+      Param1: 0
+      Param2: 0
+      PrizeSetId: 10
+    - StageId: 4
+      Seek: 0
+      SeekIndex: 0
+      SymbolType: 6
+      Rate: 5
+      Param1: 0
+      Param2: 0
+      PrizeSetId: 20
+    - StageId: 4
+      Seek: 0
+      SeekIndex: 0
+      SymbolType: 6
+      Rate: 3
+      Param1: 0
+      Param2: 0
+      PrizeSetId: 30
+    - StageId: 4
+      Seek: 0
+      SeekIndex: 0
+      SymbolType: 6
+      Rate: 2
+      Param1: 0
+      Param2: 0
+      PrizeSetId: 40
+    - StageId: 4
+      Seek: 1
+      SeekIndex: 0
+      SymbolType: -1
+      Rate: 100
+      Param1: 0
+      Param2: 0
+      PrizeSetId: 0
+    - StageId: 4
+      Seek: 1
+      SeekIndex: 1
+      SymbolType: -1
+      Rate: 100
+      Param1: 0
+      Param2: 0
+      PrizeSetId: 0
+    - StageId: 4
+      Seek: 2
+      SeekIndex: 0
+      SymbolType: -1
+      Rate: 100
+      Param1: 0
+      Param2: 0
+      PrizeSetId: 0
+    - StageId: 4
+      Seek: 2
+      SeekIndex: 1
+      SymbolType: -1
+      Rate: 100
+      Param1: 0
+      Param2: 0
+      PrizeSetId: 0
+    - StageId: 4
+      Seek: 3
+      SeekIndex: 0
+      SymbolType: 1
+      Rate: 100
+      Param1: 4001
+      Param2: 0
+      PrizeSetId: 20
+    - StageId: 4
+      Seek: 4
+      SeekIndex: 0
+      SymbolType: -1
+      Rate: 100
+      Param1: 0
+      Param2: 0
+      PrizeSetId: 0
+    - StageId: 4
+      Seek: 4
+      SeekIndex: 1
+      SymbolType: -1
+      Rate: 100
+      Param1: 0
+      Param2: 0
+      PrizeSetId: 0
+    - StageId: 4
+      Seek: 5
+      SeekIndex: 0
+      SymbolType: -1
+      Rate: 100
+      Param1: 0
+      Param2: 0
+      PrizeSetId: 0
+    - StageId: 4
+      Seek: 5
+      SeekIndex: 1
+      SymbolType: -1
+      Rate: 100
+      Param1: 0
+      Param2: 0
+      PrizeSetId: 0
+    - StageId: 4
+      Seek: 5
+      SeekIndex: 2
+      SymbolType: -1
+      Rate: 100
+      Param1: 0
+      Param2: 0
+      PrizeSetId: 0
+    - StageId: 4
+      Seek: 6
+      SeekIndex: 0
+      SymbolType: 1
+      Rate: 100
+      Param1: 4002
+      Param2: 0
+      PrizeSetId: 20
+    - StageId: 4
+      Seek: 6
+      SeekIndex: 1
+      SymbolType: 1
+      Rate: 100
+      Param1: 4021
+      Param2: 0
+      PrizeSetId: 20
+    - StageId: 4
+      Seek: 7
+      SeekIndex: 0
+      SymbolType: -1
+      Rate: 100
+      Param1: 0
+      Param2: 0
+      PrizeSetId: 0
+    - StageId: 4
+      Seek: 7
+      SeekIndex: 1
+      SymbolType: -1
+      Rate: 100
+      Param1: 0
+      Param2: 0
+      PrizeSetId: 0
+    - StageId: 4
+      Seek: 7
+      SeekIndex: 2
+      SymbolType: -1
+      Rate: 100
+      Param1: 0
+      Param2: 0
+      PrizeSetId: 0
+    - StageId: 4
+      Seek: 8
+      SeekIndex: 0
+      SymbolType: -1
+      Rate: 100
+      Param1: 0
+      Param2: 0
+      PrizeSetId: 0
+    - StageId: 4
+      Seek: 8
+      SeekIndex: 1
+      SymbolType: -1
+      Rate: 100
+      Param1: 0
+      Param2: 0
+      PrizeSetId: 0
+    - StageId: 4
+      Seek: 9
+      SeekIndex: 0
+      SymbolType: 2
+      Rate: 100
+      Param1: 4011
+      Param2: 0
+      PrizeSetId: 40
     Tutorials: []
   - Id: 5
     Name: "A.D.2011 \u6771\u5927\u548C\u5927\u9707\u707D"
@@ -629,7 +813,7 @@ MonoBehaviour:
     Selectable: 1
     Help: "\u5927\u548C\u306E\u6771\u6D77\u57DF\u3067\u767A\u751F\u3057\u305F\u5DE8\u5927\u5730\u9707\u3002\n\n<\u8A73\u7D30>\n\u5730\u9707\u306B\u3088\u308A\u5927\u304D\u306A\u63FA\u308C\u3084\u5927\u6D25\u6CE2\u30FB\u706B\u707D\u306A\u3069\u306B\u3088\u308A\u591A\u304F\u306E\u88AB\u5BB3\u3092\u3082\u305F\u3089\u3057\u305F\u3002\n\n<\u6B7B\u8005\u6570>\n\u7D042\u4E07\u4EBA\u3002\n\n<\u5099\u8003>\n\u6B7B\u8005\u306F\u9707\u707D\u95A2\u9023\u6B7B\u3082\u542B\u3080\u3002"
     StageLv: 40
-    Turns: 8
+    Turns: 9
     InitMembers: 0100000002000000030000000400000005000000060000000700000008000000090000000a0000000b000000
     RandomTroopCount: 15
     BackGround: NA_background image_3D like_404
@@ -653,7 +837,7 @@ MonoBehaviour:
     Selectable: 1
     Help: "\u65E5\u672C\u306E\u95A2\u6771\u5730\u65B9\u3067\u767A\u751F\u3057\u305F\u5DE8\u5927\u5730\u9707\u3002\n\n<\u8A73\u7D30>\n\u5730\u9707\u306B\u3088\u308A\u5BB6\u5C4B\u306E\u5012\u58CA\u304C\u5F37\u98A8\u306B\u3088\u308A\u706B\u707D\u304C\u5E83\u7BC4\u56F2\u306B\u767A\u751F\u3057\u305F\u3002\n\n<\u6B7B\u8005\u6570>\n10\u4E07\u4EBA\u8D85\u3002\n\n<\u5099\u8003>\n\u6B7B\u8005\u306F\u884C\u65B9\u4E0D\u660E\u8005\u3082\u542B\u3080\u3002"
     StageLv: 50
-    Turns: 10
+    Turns: 9
     InitMembers: 0100000002000000030000000400000005000000060000000700000008000000090000000a0000000b000000
     RandomTroopCount: 15
     BackGround: NA_background image_3D like_404
@@ -792,3 +976,123 @@ MonoBehaviour:
     Param1: 2107
     Param2: 0
     PrizeSetId: 15040
+  - GroupId: 0
+    SymbolType: 0
+    Rate: 0
+    Param1: 0
+    Param2: 0
+    PrizeSetId: 0
+  - GroupId: 0
+    SymbolType: 0
+    Rate: 0
+    Param1: 0
+    Param2: 0
+    PrizeSetId: 0
+  - GroupId: 0
+    SymbolType: 0
+    Rate: 0
+    Param1: 0
+    Param2: 0
+    PrizeSetId: 0
+  - GroupId: 0
+    SymbolType: 0
+    Rate: 0
+    Param1: 0
+    Param2: 0
+    PrizeSetId: 0
+  - GroupId: 0
+    SymbolType: 0
+    Rate: 0
+    Param1: 0
+    Param2: 0
+    PrizeSetId: 0
+  - GroupId: 0
+    SymbolType: 0
+    Rate: 0
+    Param1: 0
+    Param2: 0
+    PrizeSetId: 0
+  - GroupId: 0
+    SymbolType: 0
+    Rate: 0
+    Param1: 0
+    Param2: 0
+    PrizeSetId: 0
+  - GroupId: 0
+    SymbolType: 0
+    Rate: 0
+    Param1: 0
+    Param2: 0
+    PrizeSetId: 0
+  - GroupId: 0
+    SymbolType: 0
+    Rate: 0
+    Param1: 0
+    Param2: 0
+    PrizeSetId: 0
+  - GroupId: 0
+    SymbolType: 0
+    Rate: 0
+    Param1: 0
+    Param2: 0
+    PrizeSetId: 0
+  - GroupId: 0
+    SymbolType: 0
+    Rate: 0
+    Param1: 0
+    Param2: 0
+    PrizeSetId: 0
+  - GroupId: 0
+    SymbolType: 0
+    Rate: 0
+    Param1: 0
+    Param2: 0
+    PrizeSetId: 0
+  - GroupId: 0
+    SymbolType: 0
+    Rate: 0
+    Param1: 0
+    Param2: 0
+    PrizeSetId: 0
+  - GroupId: 0
+    SymbolType: 0
+    Rate: 0
+    Param1: 0
+    Param2: 0
+    PrizeSetId: 0
+  - GroupId: 0
+    SymbolType: 0
+    Rate: 0
+    Param1: 0
+    Param2: 0
+    PrizeSetId: 0
+  - GroupId: 0
+    SymbolType: 0
+    Rate: 0
+    Param1: 0
+    Param2: 0
+    PrizeSetId: 0
+  - GroupId: 0
+    SymbolType: 0
+    Rate: 0
+    Param1: 0
+    Param2: 0
+    PrizeSetId: 0
+  - GroupId: 0
+    SymbolType: 0
+    Rate: 0
+    Param1: 0
+    Param2: 0
+    PrizeSetId: 0
+  - GroupId: 0
+    SymbolType: 0
+    Rate: 0
+    Param1: 0
+    Param2: 0
+    PrizeSetId: 0
+  - GroupId: 0
+    SymbolType: 0
+    Rate: 0
+    Param1: 0
+    Param2: 0
+    PrizeSetId: 0

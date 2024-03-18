@@ -677,10 +677,10 @@ namespace Ryneus
                     targetIndexList.Add(selectIndex);
                     // 両隣を追加
                     var targetUnit = subject.IsActor ? _party.AliveBattlerInfos : _troop.AliveBattlerInfos;
-                    var before = targetUnit.Find(a => a.Index < selectIndex);
-                    if (before != null)
+                    var before = targetUnit.FindAll(a => a.Index < selectIndex);
+                    if (before.Count > 0)
                     {
-                        targetIndexList.Add(before.Index);
+                        targetIndexList.Add(before[before.Count-1].Index);
                     }
                     var after = targetUnit.FindAll(a => a.Index > selectIndex);
                     if (after.Count > 0)
