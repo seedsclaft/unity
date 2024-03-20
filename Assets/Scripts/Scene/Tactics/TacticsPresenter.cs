@@ -40,7 +40,7 @@ namespace Ryneus
             Initialize();
         }
 
-        private async void CheckStageEvent()
+        private void CheckStageEvent()
         {
             // イベントチェック
             var stageEvents = _model.StageEvents(EventTiming.StartTactics);

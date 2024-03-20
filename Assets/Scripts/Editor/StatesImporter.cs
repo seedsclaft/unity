@@ -25,6 +25,8 @@ namespace Ryneus
 			OverLap,
 			Removal,
 			Abnormal,
+			Buff,
+			DeBuff,
 			CheckHit,
 			RemoveByAttack,
 			RemoveByDeath,
@@ -94,6 +96,8 @@ namespace Ryneus
 						StateData.OverLap = (bool)(AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.OverLap) == 1);
 						StateData.Removal = (bool)(AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.Removal) == 1);
 						StateData.Abnormal = (bool)(AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.Abnormal) == 1);
+						StateData.Buff = (bool)(AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.Buff) == 1);
+						StateData.DeBuff = (bool)(AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.DeBuff) == 1);
 						StateData.CheckHit = (bool)(AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.CheckHit) == 1);
 						StateData.RemoveByAttack = (bool)(AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.RemoveByAttack) == 1);
 						StateData.RemoveByDeath = (bool)(AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.RemoveByDeath) == 1);

@@ -67,7 +67,7 @@ MonoBehaviour:
       Level: 0
       Weight: 0
       TriggerDates: []
-    - SkillId: 7010
+    - SkillId: 20010
       Level: 0
       Weight: 0
       TriggerDates: []
@@ -145,7 +145,7 @@ MonoBehaviour:
       Level: 0
       Weight: 0
       TriggerDates: []
-    - SkillId: 7010
+    - SkillId: 20010
       Level: 0
       Weight: 0
       TriggerDates: []
@@ -219,7 +219,7 @@ MonoBehaviour:
       Level: 0
       Weight: 0
       TriggerDates: []
-    - SkillId: 7010
+    - SkillId: 20010
       Level: 0
       Weight: 0
       TriggerDates: []
@@ -293,7 +293,7 @@ MonoBehaviour:
       Level: 0
       Weight: 0
       TriggerDates: []
-    - SkillId: 7010
+    - SkillId: 20010
       Level: 0
       Weight: 0
       TriggerDates: []
@@ -367,7 +367,7 @@ MonoBehaviour:
       Level: 0
       Weight: 0
       TriggerDates: []
-    - SkillId: 7010
+    - SkillId: 20010
       Level: 0
       Weight: 0
       TriggerDates: []
@@ -388,7 +388,7 @@ MonoBehaviour:
       Weight: 0
       TriggerDates: []
   - Id: 6
-    Name: "\u30B1\u30A4\u30C6\u30A3"
+    Name: "\u30EA\u30B7\u30A7\u30EA"
     SubName: "\u3010Faked-Magician\u3011"
     ClassId: 6
     ImagePath: 0006
@@ -437,7 +437,11 @@ MonoBehaviour:
       Level: 0
       Weight: 0
       TriggerDates: []
-    - SkillId: 1060
+    - SkillId: 1030
+      Level: 0
+      Weight: 0
+      TriggerDates: []
+    - SkillId: 20010
       Level: 0
       Weight: 0
       TriggerDates: []
@@ -445,12 +449,16 @@ MonoBehaviour:
       Level: 0
       Weight: 0
       TriggerDates: []
-    - SkillId: 100611
+    - SkillId: 100620
       Level: 0
       Weight: 0
       TriggerDates: []
-    - SkillId: 7010
-      Level: 0
+    - SkillId: 1070
+      Level: 11
+      Weight: 0
+      TriggerDates: []
+    - SkillId: 100630
+      Level: 21
       Weight: 0
       TriggerDates: []
   - Id: 7

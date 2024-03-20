@@ -278,17 +278,6 @@ namespace Ryneus
             return SymbolUtility.StageSymbolInfos(CurrentStage.Master.StageSymbols);
         }
 
-        public List<SymbolInfo> ClearedSymbolInfos(int stageId)
-        {
-            var list = new List<SymbolInfo>();
-            var records = PartyInfo.SymbolRecordList.FindAll(a => a.SymbolInfo.StageSymbolData.StageId == stageId);
-            foreach (var record in records)
-            {
-                list.Add(record.SymbolInfo);
-            }
-            return list;
-        }
-
         public void StartOpeningStage()
         {
             InitSaveStageInfo();
@@ -309,22 +298,6 @@ namespace Ryneus
             PartyInfo.ChangeCurrency(DataSystem.System.InitCurrency);
             PartyInfo.SetStageSymbolInfos(StageSymbolInfos());
             MakeSymbolResultInfos();
-            SavePlayerStageData(true);
-        }
-        
-        public void StartSelectStage(int stageId)
-        {
-            CurrentSaveData.MakeStageData(stageId);
-            //CurrentStage.SetStageSymbolInfos(StageSymbolInfos());
-            PartyInfo.SetStageSymbolInfos(StageSymbolInfos());
-            MakeSymbolResultInfos();
-            SavePlayerStageData(true);
-        }
-
-        public void StartClearedStage(int stageId)
-        {
-            CurrentSaveData.MakeStageData(stageId);
-            PartyInfo.SetStageSymbolInfos(ClearedSymbolInfos(stageId));
             SavePlayerStageData(true);
         }
 

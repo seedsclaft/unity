@@ -137,9 +137,50 @@ namespace Ryneus
             return MakeListData(list);
         }
 
-        public bool ClearedStage(int stageId)
+        public void StartSelectStage(int stageId)
         {
-            return CurrentData.PlayerInfo.ClearCount(stageId) > 0;
+            CurrentSaveData.MakeStageData(stageId);
+            if (SelectedStage(stageId))
+            {
+                PartyInfo.SetStageSymbolInfos(SelectedSymbolInfos(stageId));
+                CurrentStage.SetCurrentTurn(SelectedStageCurrentTurn(stageId));
+            } else
+            {
+                PartyInfo.SetStageSymbolInfos(StageSymbolInfos());
+                MakeSymbolResultInfos();
+            }
+            SavePlayerStageData(true);
+        }
+
+        public List<SymbolInfo> SelectedSymbolInfos(int stageId)
+        {
+            var list = new List<SymbolInfo>();
+            var records = PartyInfo.SymbolRecordList.FindAll(a => a.SymbolInfo.StageSymbolData.StageId == stageId);
+            foreach (var record in records)
+            {
+                list.Add(record.SymbolInfo);
+            }
+            return list;
+        }
+        
+        private bool SelectedStage(int stageId)
+        {
+            var records = PartyInfo.SymbolRecordList.FindAll(a => a.SymbolInfo.StageSymbolData.StageId == stageId);
+            return records.Count > 0;
+        }
+
+        public int SelectedStageCurrentTurn(int stageId)
+        {
+            var turn = 0;
+            var records = PartyInfo.SymbolRecordList.FindAll(a => a.SymbolInfo.StageSymbolData.StageId == stageId && a.Selected);
+            foreach (var record in records)
+            {
+                if (record.SymbolInfo.StageSymbolData.Seek >= turn)
+                {
+                    turn = record.SymbolInfo.StageSymbolData.Seek;
+                }
+            }
+            return turn + 1;
         }
 
         public bool NeedSlotData(int stageId)

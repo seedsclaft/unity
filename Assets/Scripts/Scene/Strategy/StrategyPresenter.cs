@@ -13,7 +13,6 @@ namespace Ryneus
         private bool _busy = true;
 
 
-        private StrategyState _strategyState = StrategyState.None;
         public StrategyPresenter(StrategyView view)
         {
             _view = view;
@@ -88,10 +87,8 @@ namespace Ryneus
         }
 
         private void CommandStartStrategy(){
-            var battledResultActors = _model.BattleResultActors();
-            if (battledResultActors.Count > 0)
+            if (_model.BattleResult)
             {
-                _strategyState = StrategyState.BattleResult;
                 SeekStrategyState();
             } else
             {
@@ -104,7 +101,6 @@ namespace Ryneus
             var tacticsActors = _model.TacticsActors();
             if (tacticsActors != null && tacticsActors.Count > 0)
             {
-                _strategyState = StrategyState.TacticsResult;
                 SeekStrategyState();
             } else{
                 EndStrategy();
@@ -113,7 +109,7 @@ namespace Ryneus
 
         private void SeekStrategyState()
         {
-            if (_strategyState == StrategyState.BattleResult)
+            if (_model.BattleResult)
             {
                 var battledResultActors = _model.BattleResultActors();
                 var bonusList = new List<bool>();
@@ -138,7 +134,6 @@ namespace Ryneus
                     _view.StartResultAnimation(_model.MakeListData(battledResultActors),bonusList);
                 }
             } else
-            if (_strategyState == StrategyState.TacticsResult)
             {
                 var tacticsActors = _model.TacticsActors();
                 _model.MakeResult();
@@ -154,7 +149,7 @@ namespace Ryneus
 
         private void CommandEndAnimation()
         {
-            if (_strategyState == StrategyState.BattleResult)
+            if (_model.BattleResult)
             {
                 if (_model.BattleResultVictory())
                 {
@@ -166,8 +161,7 @@ namespace Ryneus
                 {
                     _view.ShowResultList(_model.BattleResultInfos());
                 }
-            }
-            if (_strategyState == StrategyState.TacticsResult)
+            } else
             {
                 if (_model.LevelUpData.Count == 0)
                 {
@@ -247,7 +241,7 @@ namespace Ryneus
         {
             if (confirmCommandType == ConfirmCommandType.Yes)
             {
-                if (_strategyState == StrategyState.BattleResult)
+                if (_model.BattleResult)
                 {
                     var battledMembers = _model.BattleResultActors();
                     if (battledMembers != null && battledMembers.Count > 0)
@@ -255,8 +249,7 @@ namespace Ryneus
                         _model.ClearBattleData(battledMembers);
                         _model.ClearSceneParam();
                     }
-                }
-                if (_strategyState == StrategyState.TacticsResult)
+                } else
                 {
                     var tacticsActors = _model.TacticsActors();
                     if (tacticsActors != null && tacticsActors.Count > 0)
@@ -268,7 +261,14 @@ namespace Ryneus
                 CheckTacticsActors();
             } else
             {
-                ShowStatus();
+                if (_model.BattleResult && _model.BattleResultVictory() == false)
+                {
+                    _model.ReturnTempBattleMembers();            
+                    _view.CommandGotoSceneChange(Scene.Battle);
+                } else
+                {
+                    ShowStatus();
+                }
             }
             SoundManager.Instance.PlayStaticSe(SEType.Decide);
         }
@@ -414,7 +414,7 @@ namespace Ryneus
             if (_model.CurrentStage.ReturnSeek > 0)
             {
                 _model.SetSelectSymbol();
-                _model.EndStrategy(false);
+                _model.EndStrategy();
                 if (_model.CurrentStage.ParallelStage)
                 {
                     _model.CommitCurrentParallelResult();
@@ -422,34 +422,34 @@ namespace Ryneus
                     {
                         _model.MakeSymbolRecordStage(_model.CurrentStage.CurrentTurn-1);
                         _model.SetParallelMode();
-                        _view.CommandGotoSceneChange(Scene.Tactics);
                     } else
                     {
-                        _view.CommandGotoSceneChange(Scene.Tactics);
                     }
+                    _view.CommandGotoSceneChange(Scene.Tactics);
                 } else
                 {
                     _model.CommitCurrentResult();
                     _view.CommandGotoSceneChange(Scene.Tactics);
                 }
             } else
-            if (_strategyState == StrategyState.BattleResult &&_model.BattleResultVictory() == false)
+            if (_model.BattleResult && _model.BattleResultVictory() == false)
             {
                 _model.ReturnTempBattleMembers();
-                _model.EndStrategy(false);
+                _model.EndStrategy();
                 _view.CommandGotoSceneChange(Scene.Tactics);
             } else
             if (_model.RemainTurns == 1)
             {
                 _model.SetSelectSymbol();
-                _model.EndStrategy(false);
+                _model.EndStrategy();
                 _model.CommitResult();
                 _view.CommandGotoSceneChange(Scene.MainMenu);
             } else
             {
                 // レコード新規保存
                 _model.SetSelectSymbol();
-                _model.EndStrategy(true);
+                _model.EndStrategy();
+                _model.SeekStage();
                 _view.CommandGotoSceneChange(Scene.Tactics);
             }
             //_model.TempInfo.ClearTempGetItemInfos();

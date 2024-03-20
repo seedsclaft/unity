@@ -6,9 +6,13 @@ namespace Ryneus
     {
         private StrategySceneInfo _sceneParam;
         public StrategySceneInfo SceneParam => _sceneParam;
+
+        private bool _battleResult = false;
+        public bool BattleResult => _battleResult;
         public StrategyModel()
         {
             _sceneParam = (StrategySceneInfo)GameSystem.SceneStackManager.LastSceneParam;
+            _battleResult = _sceneParam.ActorInfos.FindAll(a => a.BattleIndex >= 0).Count > 0;
         }
         public void ClearSceneParam()
         {
@@ -205,6 +209,10 @@ namespace Ryneus
 
         public List<ListData> ResultCommand()
         {
+            if (_battleResult && BattleResultVictory() == false)
+            {
+                return MakeListData(BaseConfirmCommand(3040,3054)); // 再戦
+            }
             return MakeListData(BaseConfirmCommand(3040,4));
         }
 
@@ -218,17 +226,18 @@ namespace Ryneus
             return false;
         }
         
-        public void EndStrategy(bool isSeek)
+        public void EndStrategy()
         {
             foreach (var actorInfo in StageMembers())
             {
                 actorInfo.ChangeTacticsCostRate(1);
             }
-            if (isSeek)
-            {
-                CurrentStage.SeekStage();
-            }
             CurrentStage.SetSeekIndex(0);
+        }
+
+        public void SeekStage()
+        {
+            CurrentStage.SeekStage();
         }
 
         public void SetSelectSymbol()

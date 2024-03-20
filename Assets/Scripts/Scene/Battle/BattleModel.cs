@@ -941,6 +941,8 @@ namespace Ryneus
                     // Hpダメージ分の回復計算
                     var DamageHealPartyResultInfos = CalcDamageHealParty(subject,featureDates,actionResultInfo.HpDamage);
                     actionResultInfos.AddRange(DamageHealPartyResultInfos);
+                    var DamageMpHealPartyResultInfos = CalcDamageMpHealParty(subject,featureDates,actionResultInfo.HpDamage);
+                    actionResultInfos.AddRange(DamageMpHealPartyResultInfos);
 
                     if (actionResultInfo.RemoveAttackStateDamage())            
                     {
@@ -1017,6 +1019,28 @@ namespace Ryneus
                     {
                         FeatureType = FeatureType.HpHeal,
                         Param1 = (int)hpHeal
+                    };
+                    var actionResultInfo = new ActionResultInfo(subject,GetBattlerInfo(friend.Index),new List<SkillData.FeatureData>(){featureData},-1);
+                    actionResultInfos.Add(actionResultInfo);
+                }
+            }
+            return actionResultInfos;
+        }
+
+        private List<ActionResultInfo> CalcDamageMpHealParty(BattlerInfo subject,List<SkillData.FeatureData> featureDates,int hpDamage)
+        {
+            var actionResultInfos = new List<ActionResultInfo>();
+            var damageHealParty = featureDates.Find(a => a.FeatureType == FeatureType.DamageMpHealParty);
+            if (damageHealParty != null)
+            {
+                var friends = subject.IsActor ? _party.AliveBattlerInfos : _troop.AliveBattlerInfos;
+                var mpHeal = hpDamage * damageHealParty.Param3 * 0.01f;
+                foreach (var friend in friends)
+                {
+                    var featureData = new SkillData.FeatureData
+                    {
+                        FeatureType = FeatureType.MpHeal,
+                        Param1 = (int)mpHeal
                     };
                     var actionResultInfo = new ActionResultInfo(subject,GetBattlerInfo(friend.Index),new List<SkillData.FeatureData>(){featureData},-1);
                     actionResultInfos.Add(actionResultInfo);

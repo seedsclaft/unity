@@ -207,6 +207,12 @@ namespace Ryneus
                 case FeatureType.RemoveAbnormalState:
                     MakeRemoveAbnormalState(subject,target,featureData);
                     return;
+                case FeatureType.RemoveBuffState:
+                    MakeRemoveBuffState(subject,target,featureData);
+                    return;
+                case FeatureType.RemoveDeBuffState:
+                    MakeRemoveDeBuffState(subject,target,featureData);
+                    return;
                 case FeatureType.RemoveStatePassive:
                     MakeRemoveStatePassive(subject,target,featureData);
                     return;
@@ -712,6 +718,34 @@ namespace Ryneus
         {
             // skillId -1のRemoveは強制で解除する
             var abnormalStates = target.StateInfos.FindAll(a => a.Master.Abnormal == true && a.BattlerId != target.Index);
+            foreach (var abnormalState in abnormalStates)
+            {
+                bool IsRemoved = target.RemoveState(abnormalState,false);
+                if (IsRemoved)
+                {
+                    _removedStates.Add(abnormalState);
+                }
+            }
+        }
+
+        private void MakeRemoveBuffState(BattlerInfo subject,BattlerInfo target,SkillData.FeatureData featureData)
+        {
+            // skillId -1のRemoveは強制で解除する
+            var abnormalStates = target.StateInfos.FindAll(a => a.Master.Buff == true && a.BattlerId != target.Index);
+            foreach (var abnormalState in abnormalStates)
+            {
+                bool IsRemoved = target.RemoveState(abnormalState,false);
+                if (IsRemoved)
+                {
+                    _removedStates.Add(abnormalState);
+                }
+            }
+        }
+
+        private void MakeRemoveDeBuffState(BattlerInfo subject,BattlerInfo target,SkillData.FeatureData featureData)
+        {
+            // skillId -1のRemoveは強制で解除する
+            var abnormalStates = target.StateInfos.FindAll(a => a.Master.DeBuff == true && a.BattlerId != target.Index);
             foreach (var abnormalState in abnormalStates)
             {
                 bool IsRemoved = target.RemoveState(abnormalState,false);

@@ -88,15 +88,8 @@ namespace Ryneus
                 _view.CommandSceneChange(Scene.Slot);
             } else
             {
-                if (_model.ClearedStage(stageId))
-                {
-                    _model.StartClearedStage(stageId);
-                    _view.CommandGotoSceneChange(Scene.Tactics);
-                } else
-                {
-                    _model.StartSelectStage(stageId);
-                    _view.CommandGotoSceneChange(Scene.Tactics);
-                }
+                _model.StartSelectStage(stageId);
+                _view.CommandGotoSceneChange(Scene.Tactics);
             }
         }
 

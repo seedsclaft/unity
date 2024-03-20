@@ -24,6 +24,8 @@ namespace Ryneus
         public bool OverLap;
         public bool Removal;
         public bool Abnormal;
+        public bool Buff;
+        public bool DeBuff;
         public bool CheckHit; // 命中回避判定をするか
         public bool RemoveByAttack;
         // 付与者が戦闘不能になった時に効果が切れるか
