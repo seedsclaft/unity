@@ -367,6 +367,7 @@ namespace Ryneus
         Friend = 2,
         All = 3,
         Self = 4,
+        Counter = 6,
         AttackTarget = 7,
         IsTriggerTarget = 11,
         Party = 101
@@ -435,6 +436,7 @@ namespace Ryneus
         SelfDead = 105, // 自身が戦闘不能
         AttackedCount = 106, // 攻撃を〇回受ける
         AllEnemyCurseState = 107, // 敵全員が呪い
+        BeCriticalCount = 108, // クリティカル攻撃を〇回受ける
         ActionResultAddState = 113, // 相手が状態異常を発動する前
         DefeatEnemyByAttack = 114, // 攻撃で敵を撃破する
         DemigodMagicAttribute = 204, // Demigod魔法の属性が〇の味方が神化する

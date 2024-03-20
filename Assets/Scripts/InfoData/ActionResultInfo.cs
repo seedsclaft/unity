@@ -462,18 +462,21 @@ namespace Ryneus
                 // L⇒L Range.Lスキル = range=1で15%カット
                 hpDamage = (int)MathF.Round((float)hpDamage * (1 - (0.15f * range)));
             }
+            hpDamage = CalcDamageShield(subject,target,hpDamage);
             _hpDamage += hpDamage; 
         }
 
         private void MakeHpPerDamage(BattlerInfo subject,BattlerInfo target,SkillData.FeatureData featureData,bool isNoEffect,bool isOneTarget,int range)
         {
             var hpDamage = (int)Math.Round(target.MaxHp * 0.01f * featureData.Param1);
+            hpDamage = CalcDamageShield(subject,target,hpDamage);
             _hpDamage += hpDamage; 
         }
 
         private void MakeHpAddDamage(BattlerInfo subject,BattlerInfo target,SkillData.FeatureData featureData,bool isNoEffect,bool isOneTarget,int range)
         {
             var hpDamage = (int)Math.Round(_hpDamage * 0.01f * featureData.Param1);
+            hpDamage = CalcDamageShield(subject,target,hpDamage);
             _hpDamage += hpDamage;
             // 追加ダメージで戦闘不能にならない
             if (_hpDamage > target.Hp)
@@ -589,6 +592,7 @@ namespace Ryneus
             {
                 _reHeal += (int)Mathf.Floor(hpDamage * subject.StateEffectAll(StateType.Drain) * 0.01f);
             }
+            hpDamage = CalcDamageShield(subject,target,hpDamage);
             _hpDamage += hpDamage; 
         }
 
@@ -617,6 +621,7 @@ namespace Ryneus
                 _reHeal = (int)Mathf.Floor(hpDamage * subject.StateEffectAll(StateType.Drain) * 0.01f);
             }
             */
+            hpDamage = CalcDamageShield(subject,target,hpDamage);
             _hpDamage += hpDamage;
         }
 
@@ -997,6 +1002,19 @@ namespace Ryneus
                     }
                 }
             }
+        }
+
+        private int CalcDamageShield(BattlerInfo subject,BattlerInfo target,int hpDamage)
+        {
+            if (target.IsState(StateType.DamageShield))
+            {
+                var shield = target.StateEffectAll(StateType.DamageShield);
+                if (shield > hpDamage)
+                {
+                    hpDamage = 0;
+                }
+            }
+            return hpDamage;
         }
 
         private int ApplyCritical(int value)

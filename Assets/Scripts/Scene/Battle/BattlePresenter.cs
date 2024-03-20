@@ -732,6 +732,10 @@ namespace Ryneus
             if (actionResultInfo.HpDamage > 0)
             {
                 _model.GainAttackCount(actionResultInfo.TargetIndex);
+                if (actionResultInfo.Critical)
+                {
+                    _model.GainBeCriticalCount(actionResultInfo.TargetIndex);
+                }
                 var damageType = actionResultInfo.Critical ? DamageType.HpCritical : DamageType.HpDamage;
                 _view.StartDamage(targetIndex,damageType,actionResultInfo.HpDamage,needPopupDelay);
                 if (needDamageBlink){

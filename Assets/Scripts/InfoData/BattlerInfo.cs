@@ -68,6 +68,8 @@ namespace Ryneus
         public int DodgeCount => _dodgeCount;
         private int _healCount = 0;
         public int HealCount => _healCount;
+        private int _beCriticalCount = 0;
+        public int BeCriticalCount => _beCriticalCount;
         
         private int _lastTargetIndex = 0;
         public void SetLastTargetIndex(int index){
@@ -229,6 +231,8 @@ namespace Ryneus
             _chainSuccessCount = 0;
             _payBattleMp = 0;
             _attackedCount = 0;
+            _beCriticalCount = 0;
+            _dodgeCount = 0;
             ResetAp(true);
         }
 
@@ -836,6 +840,11 @@ namespace Ryneus
         public void GainDodgeCount(int value)
         {
             _dodgeCount += value;
+        }
+
+        public void GainBeCriticalCount(int value)
+        {
+            _beCriticalCount += value;
         }
 
         public void GainHealCount(int value)

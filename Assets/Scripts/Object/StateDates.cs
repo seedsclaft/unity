@@ -98,6 +98,7 @@ namespace Ryneus
         Shadow = 2380,
         Silence = 2390,
         NotHeal = 2400,
+        DamageShield = 2410,
     }
 
     public enum RemovalTiming

@@ -4,7 +4,6 @@ using Effekseer;
 using Cysharp.Threading.Tasks;
 using System.Linq;
 using UnityEngine;
-using Unity.VisualScripting;
 
 namespace Ryneus
 {
@@ -541,6 +540,13 @@ namespace Ryneus
             if (skillData.TargetType == TargetType.Self)
             {
                 targetIndexList.Add(subject.Index);
+            } else 
+            if (skillData.TargetType == TargetType.Counter)
+            {
+                if (_currentTurnBattler != null)
+                {
+                    targetIndexList.Add(_currentTurnBattler.Index);
+                }
             }
 
             switch (skillData.AliveType)
@@ -2054,6 +2060,12 @@ namespace Ryneus
                             IsTriggered = true;
                         }
                         break;
+                        case TriggerType.BeCriticalCount:
+                        if (battlerInfo.IsAlive() && battlerInfo.BeCriticalCount >= triggerData.Param1)
+                        {
+                            IsTriggered = true;
+                        }
+                        break;
                         case TriggerType.ActionResultAddState:
                         if (battlerInfo.IsAlive())
                         {
@@ -2248,6 +2260,8 @@ namespace Ryneus
                     }
                 }
             }
+            // 反撃
+
             if (targetIndex == -1)
             {
                 targetIndex = targetIndexList [UnityEngine.Random.Range (0, targetIndexList.Count)];
@@ -2546,6 +2560,10 @@ namespace Ryneus
             GetBattlerInfo(targetIndex).GainAttackedCount(1);
         }
 
+        public void GainBeCriticalCount(int targetIndex)
+        {
+            GetBattlerInfo(targetIndex).GainBeCriticalCount(1);
+        }
 
         public bool CheckVictory()
         {
