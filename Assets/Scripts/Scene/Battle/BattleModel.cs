@@ -2534,7 +2534,10 @@ namespace Ryneus
             if (isVictory)
             {
                 PartyInfo.SetBattleResultVictory(true);
-                float score = 100f;
+                var score = 100f;
+                var turns = (5 * _troop.BattlerInfos.Count) - _turnCount;
+                score -= turns;
+                /*
                 float damageAll = 0;
                 float healAll = 0;
                 float damagedAll = 0;
@@ -2549,15 +2552,17 @@ namespace Ryneus
                 }
                 if (damageAll == 0 && damagedAll == 0)
                 {
-                    PartyInfo.SetBattleScore((int)score);
                 } else
                 {
                     var scoreRate = 1f - ((damagedAll-(healAll/2)) / (damageAll+damagedAll));
                     score *= scoreRate;
                     score = Math.Max(0,score);
                     score = Math.Min(100,score);
-                    PartyInfo.SetBattleScore((int)score);
                 }
+                */
+                score = Math.Max(0,score);
+                score = Math.Min(100,score);
+                PartyInfo.SetBattleScore((int)score);
             }
         }
 
@@ -2587,12 +2592,6 @@ namespace Ryneus
                 return troopData.EscapeEnable;
             }
             return false;
-        }
-
-        public void EscapeBattle()
-        {
-            PartyInfo.SetBattleResultVictory(false);
-            PartyInfo.SetBattleScore(0);
         }
 
         public void EndBattle()

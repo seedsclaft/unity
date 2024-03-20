@@ -61,9 +61,9 @@ namespace Ryneus
             statusAssign.CloseStatus();
             TempData = new TempInfo();
             _model = new BaseModel();
-            GameSystem.Version = version;
+            Version = version;
     #if UNITY_EDITOR
-            GameSystem.DebugBattleData = debugBattleData;
+            DebugBattleData = debugBattleData;
     #endif
     #if UNITY_ANDROID
             AdMobController.Instance.Initialize(() => {CommandSceneChange(Scene.Boot);});

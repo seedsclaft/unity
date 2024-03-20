@@ -20,13 +20,13 @@ namespace Ryneus
             _selected = isSelected;
         }
         // バトルで1度クリアしたことがある
-        public bool _cleared;
+        private bool _cleared;
         public bool Cleared => _cleared;
         public void SetCleared(bool cleared)
         {
             _cleared = cleared;
         }
-        public int _battleScore;
+        private int _battleScore;
         public int BattleScore => _battleScore;
         public void SetBattleScore(int battleScore)
         {
