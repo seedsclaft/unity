@@ -437,6 +437,7 @@ namespace Ryneus
         AttackedCount = 106, // 攻撃を〇回受ける
         AllEnemyCurseState = 107, // 敵全員が呪い
         BeCriticalCount = 108, // クリティカル攻撃を〇回受ける
+        DemigodMemberCount = 111, // 味方の神化状態が〇以上
         ActionResultAddState = 113, // 相手が状態異常を発動する前
         DefeatEnemyByAttack = 114, // 攻撃で敵を撃破する
         DemigodMagicAttribute = 204, // Demigod魔法の属性が〇の味方が神化する

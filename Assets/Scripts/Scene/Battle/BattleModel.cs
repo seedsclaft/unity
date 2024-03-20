@@ -2066,6 +2066,17 @@ namespace Ryneus
                             IsTriggered = true;
                         }
                         break;
+                        case TriggerType.DemigodMemberCount:
+                        var demigodOpponents = battlerInfo.IsActor ? _troop.AliveBattlerInfos : _party.AliveBattlerInfos;
+                        if (battlerInfo.IsAlive())
+                        {
+                            var demigodMember = demigodOpponents.FindAll(a => a.IsState(StateType.Demigod));
+                            if (demigodMember.Count >= triggerData.Param1)
+                            {
+                                IsTriggered = true;
+                            }
+                        }
+                        break;
                         case TriggerType.ActionResultAddState:
                         if (battlerInfo.IsAlive())
                         {

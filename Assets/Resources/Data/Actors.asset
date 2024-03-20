@@ -231,7 +231,7 @@ MonoBehaviour:
       Level: 0
       Weight: 0
       TriggerDates: []
-    - SkillId: 3020
+    - SkillId: 3040
       Level: 11
       Weight: 0
       TriggerDates: []
@@ -716,7 +716,47 @@ MonoBehaviour:
     AwakenY: 64
     AwakenScale: 0.8
     Kinds: 
-    LearningSkills: []
+    LearningSkills:
+    - SkillId: 11
+      Level: 0
+      Weight: 0
+      TriggerDates: []
+    - SkillId: 21
+      Level: 0
+      Weight: 0
+      TriggerDates: []
+    - SkillId: 31
+      Level: 0
+      Weight: 0
+      TriggerDates: []
+    - SkillId: 2010
+      Level: 0
+      Weight: 0
+      TriggerDates: []
+    - SkillId: 2090
+      Level: 0
+      Weight: 0
+      TriggerDates: []
+    - SkillId: 20010
+      Level: 0
+      Weight: 0
+      TriggerDates: []
+    - SkillId: 101010
+      Level: 0
+      Weight: 0
+      TriggerDates: []
+    - SkillId: 101020
+      Level: 0
+      Weight: 0
+      TriggerDates: []
+    - SkillId: 2030
+      Level: 11
+      Weight: 0
+      TriggerDates: []
+    - SkillId: 101030
+      Level: 21
+      Weight: 0
+      TriggerDates: []
   - Id: 11
     Name: "\u30BB\u30EA\u30CA"
     SubName: "\u3010\u6C37\u96EA\u306E\u52FF\u5FD8\u8349\u3011"
@@ -751,6 +791,10 @@ MonoBehaviour:
     AwakenScale: 0.9
     Kinds: 
     LearningSkills:
+    - SkillId: 11
+      Level: 0
+      Weight: 0
+      TriggerDates: []
     - SkillId: 21
       Level: 0
       Weight: 0
@@ -759,23 +803,31 @@ MonoBehaviour:
       Level: 0
       Weight: 0
       TriggerDates: []
-    - SkillId: 1010
+    - SkillId: 3010
       Level: 0
       Weight: 0
       TriggerDates: []
-    - SkillId: 1040
+    - SkillId: 3020
       Level: 0
       Weight: 0
       TriggerDates: []
-    - SkillId: 7010
+    - SkillId: 20010
       Level: 0
       Weight: 0
       TriggerDates: []
-    - SkillId: 11030
+    - SkillId: 101110
       Level: 0
       Weight: 0
       TriggerDates: []
-    - SkillId: 11040
+    - SkillId: 101120
       Level: 0
+      Weight: 0
+      TriggerDates: []
+    - SkillId: 3050
+      Level: 11
+      Weight: 0
+      TriggerDates: []
+    - SkillId: 101130
+      Level: 21
       Weight: 0
       TriggerDates: []
