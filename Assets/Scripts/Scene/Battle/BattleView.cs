@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Battle;
 using Effekseer;
+using System.Linq;
 
 namespace Ryneus
 {
@@ -153,6 +154,7 @@ namespace Ryneus
             battleActorList.SetInputHandler(InputKeyType.Decide,() => CallActorList());
             battleActorList.SetInputHandler(InputKeyType.Cancel,() => OnClickBack());
             battleActorList.SetInputHandler(InputKeyType.SideLeft1,() => OnClickSelectEnemy());
+            battleActorList.SetSelectedHandler(() => CallSelectActorList());
             SetInputHandler(battleActorList.GetComponent<IInputHandlerEvent>());
             battleActorList.Deactivate();
             
@@ -253,6 +255,7 @@ namespace Ryneus
             battleEnemyLayer.SetInputHandler(InputKeyType.Cancel,() => OnClickBack());
             battleEnemyLayer.SetInputHandler(InputKeyType.SideRight1,() => OnClickSelectParty());
             battleEnemyLayer.SetInputHandler(InputKeyType.Option1,() => CallEnemyDetailInfo(battlerInfos));
+            battleEnemyLayer.SetSelectedHandler(() => CallSelectEnemyList());
             SetInputHandler(battleEnemyLayer.GetComponent<IInputHandlerEvent>());
             foreach (var battlerInfo in battlerInfos)
             {
@@ -301,6 +304,39 @@ namespace Ryneus
             }
         }
 
+        private void CallSelectActorList()
+        {
+            if (_animationBusy) return;
+            var listData = battleActorList.ListData;
+            if (listData != null && listData.Enable)
+            {
+                var data = (BattlerInfo)listData.Data;
+                var eventData = new BattleViewEvent(CommandType.SelectActorList);
+                eventData.template = data.Index;
+                _commandData(eventData);
+            }
+        }
+
+        private void CallSelectEnemyList()
+        {
+            if (_animationBusy) return;
+            var listData = battleEnemyLayer.ListData;
+            if (listData != null && listData.Enable)
+            {
+                var data = (BattlerInfo)listData.Data;
+                var eventData = new BattleViewEvent(CommandType.SelectEnemyList);
+                eventData.template = data.Index;
+                _commandData(eventData);
+            }
+        }
+
+        public void UpdateSelectIndexList(List<int> targetIndexes)
+        {
+            var map1 = targetIndexes.Select(a => a - 1);
+            battleActorList.UpdateSelectIndexList(map1.ToList());
+            var map = targetIndexes.Select(a => a - 100);
+            battleEnemyLayer.UpdateSelectIndexList(map.ToList());
+        }
 
         public void SelectedCharacter(BattlerInfo battlerInfo)
         {

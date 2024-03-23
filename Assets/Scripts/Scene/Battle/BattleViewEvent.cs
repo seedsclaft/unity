@@ -22,6 +22,8 @@ namespace Battle
         StartSelect,
         DecideActor,
         ActorList,
+        SelectActorList,
+        SelectEnemyList,
         UpdateAp,
         SelectedSkill,
         EnemyLayer,

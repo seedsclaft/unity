@@ -1431,6 +1431,17 @@ namespace Ryneus
                         reAction = true;
                     }
                 }
+                if (_currentBattler.IsState(StateType.Combo))
+                {
+                    var friends = _currentBattler.IsActor ? _party.AliveBattlerInfos : _troop.AliveBattlerInfos;
+                    foreach (var friend in friends)
+                    {
+                        if (friend.Index != _currentBattler.Index)
+                        {
+                            friend.SetAp(0);
+                        }
+                    }
+                }
             }
             _actionInfos.RemoveAt(0);
             if (reAction == false)

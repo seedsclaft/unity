@@ -50,6 +50,10 @@ namespace Ryneus
             return null;
         }
         
+        public void UpdateSelectIndexList(List<int> indexes){
+            SetSelectIndexes(indexes);
+        }
+
         /*
         private void CallInputHandler(InputKeyType keyType, System.Action<List<int>> callEvent)
         {
@@ -179,6 +183,7 @@ namespace Ryneus
 
         public void ClearSelect()
         {
+            SetSelectIndexes(new List<int>(){-1});
             UpdateSelectIndex(-1);
             foreach (var battleBattler in _battleBattler)
             {

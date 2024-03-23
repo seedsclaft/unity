@@ -122,63 +122,55 @@ namespace Ryneus
             if (_busy){
                 return;
             }
-            if (viewEvent.commandType == Battle.CommandType.UpdateAp)
+            switch (viewEvent.commandType)
             {
-                CommandUpdateAp();
-            }
-            if (viewEvent.commandType == Battle.CommandType.SelectedSkill)
-            {
-                CommandSelectedSkill((SkillInfo)viewEvent.template);
-            }
-            if (viewEvent.commandType == Battle.CommandType.EnemyLayer)
-            {    
-                var targetIndexes = _model.CurrentActionTargetIndexes((int)viewEvent.template);
-                CommandSelectTargetIndexes(targetIndexes);
-            }
-            if (viewEvent.commandType == Battle.CommandType.ActorList)
-            {
-                var targetIndexes = _model.CurrentActionTargetIndexes((int)viewEvent.template);
-                CommandSelectTargetIndexes(targetIndexes);
-            }
-            if (viewEvent.commandType == Battle.CommandType.EndAnimation)
-            {
-                CommandEndAnimation();
-            }
-            if (viewEvent.commandType == Battle.CommandType.AttributeType)
-            {
-                RefreshSkillInfos();
-            }
-            if (viewEvent.commandType == Battle.CommandType.DecideActor)
-            {
-                CommandDecideActor();
-            }
-            if (viewEvent.commandType == Battle.CommandType.SelectEnemy)
-            {
-                CommandSelectEnemy();
-            }
-            if (viewEvent.commandType == Battle.CommandType.StartSelect)
-            {
-                CommandStartSelect();
-            }
-            if (viewEvent.commandType == Battle.CommandType.Back)
-            {
-                CommandBack();
-            }
-            if (viewEvent.commandType == Battle.CommandType.Escape)
-            {
-                CommandEscape();
-            }
-            if (viewEvent.commandType == Battle.CommandType.EnemyDetail)
-            {
-                CommandEnemyDetail((int)viewEvent.template);
-            }
-            if (viewEvent.commandType == Battle.CommandType.SelectSideMenu)
-            {
-                CommandSelectSideMenu();
+                case Battle.CommandType.UpdateAp:
+                    CommandUpdateAp();
+                    break;
+                case Battle.CommandType.SelectedSkill:
+                    CommandSelectedSkill((SkillInfo)viewEvent.template);
+                    break;
+                case Battle.CommandType.ActorList:
+                case Battle.CommandType.EnemyLayer:
+                    var targetIndexes = _model.CurrentActionTargetIndexes((int)viewEvent.template);
+                    CommandSelectTargetIndexes(targetIndexes);
+                    break;
+                case Battle.CommandType.SelectActorList:
+                case Battle.CommandType.SelectEnemyList:
+                    var targetIndexes2 = _model.CurrentActionTargetIndexes((int)viewEvent.template);
+                    _view.UpdateSelectIndexList(targetIndexes2);
+                    break;
+                case Battle.CommandType.EndAnimation:
+                    CommandEndAnimation();
+                    break;
+                case Battle.CommandType.AttributeType:
+                    RefreshSkillInfos();
+                    break;
+                case Battle.CommandType.DecideActor:
+                    CommandDecideActor();
+                    break;
+                case Battle.CommandType.SelectEnemy:
+                    CommandSelectEnemy();
+                    break;
+                case Battle.CommandType.StartSelect:
+                    CommandStartSelect();
+                    break;
+                case Battle.CommandType.Back:
+                    CommandBack();
+                    break;
+                case Battle.CommandType.Escape:
+                    CommandEscape();
+                    break;
+                case Battle.CommandType.EnemyDetail:
+                    CommandEnemyDetail((int)viewEvent.template);
+                    break;
+                case Battle.CommandType.SelectSideMenu:
+                    CommandSelectSideMenu();
+                    break;
             }
         }
 
-        private async void UpdatePopupEscape(ConfirmCommandType confirmCommandType)
+        private void UpdatePopupEscape(ConfirmCommandType confirmCommandType)
         {
             /*
             _view.CommandGameSystem(Base.CommandType.CloseConfirm);

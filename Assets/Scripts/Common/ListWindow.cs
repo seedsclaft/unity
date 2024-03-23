@@ -13,6 +13,12 @@ namespace Ryneus
 
         private int _index = 0;
         public int Index => _index;
+        private List<int> _selectIndexes = new ();
+        public List<int> SelectIndexes => _selectIndexes;
+        public void SetSelectIndexes(List<int> selectIndexes)
+        {
+            _selectIndexes = selectIndexes;
+        }
         private int _defaultInputFrame = 0;
 
         private int _listMoveInputFrameFirst = 36;
@@ -45,17 +51,17 @@ namespace Ryneus
         private List<GameObject> _objectList = new ();
         public List<GameObject> ObjectList => _objectList;
 
-        private System.Action<InputKeyType> _inputCallHandler = null;
-        private Dictionary<InputKeyType, System.Action> _inputHandler = new ();
+        private Action<InputKeyType> _inputCallHandler = null;
+        private Dictionary<InputKeyType, Action> _inputHandler = new ();
 
-        private System.Action _selectedHandler = null;
+        private Action _selectedHandler = null;
 
         public HelpWindow _helpWindow = null;
 
-        private System.Action _cancelEvent = null;
+        private Action _cancelEvent = null;
 
         private GameObject _blankObject;
-        public void SetCancelEvent(System.Action cancelEvent)
+        public void SetCancelEvent(Action cancelEvent)
         {
             _cancelEvent = cancelEvent;
         }
@@ -526,7 +532,13 @@ namespace Ryneus
                 if (index == listItem.Index){
                     listItem.SetSelect();
                 } else{
-                    listItem.SetUnSelect();
+                    if (_selectIndexes.Contains(listItem.Index))
+                    {
+                        listItem.SetSelect();
+                    } else
+                    {
+                        listItem.SetUnSelect();
+                    }
                 }
             }
         }
