@@ -464,7 +464,7 @@ MonoBehaviour:
       _atk: 14
       _def: 5
       _spd: 22
-    Kinds: 
+    Kinds: 01000000
     LearningSkills:
     - SkillId: 4010
       Level: 1
@@ -473,6 +473,10 @@ MonoBehaviour:
     - SkillId: 4030
       Level: 1
       Weight: 40
+      TriggerDates: []
+    - SkillId: 10030
+      Level: 1
+      Weight: 0
       TriggerDates: []
     - SkillId: 200210
       Level: 1
@@ -509,12 +513,24 @@ MonoBehaviour:
       Level: 1
       Weight: 0
       TriggerDates: []
+    - SkillId: 200310
+      Level: 1
+      Weight: 0
+      TriggerDates: []
+    - SkillId: 200320
+      Level: 1
+      Weight: 0
+      TriggerDates: []
+    - SkillId: 200330
+      Level: 1
+      Weight: 0
+      TriggerDates: []
   - Id: 104
     Name: "\u30BF\u30ED\u30FC\u30DE\u30C6\u30A3"
     ImagePath: Berith
     BaseStatus:
       _hp: 100
-      _mp: 10
+      _mp: 30
       _atk: 15
       _def: 10
       _spd: 15
@@ -543,7 +559,7 @@ MonoBehaviour:
     ImagePath: Bifrons
     BaseStatus:
       _hp: 80
-      _mp: 10
+      _mp: 30
       _atk: 15
       _def: 10
       _spd: 15
@@ -572,7 +588,7 @@ MonoBehaviour:
     ImagePath: Byakhee
     BaseStatus:
       _hp: 100
-      _mp: 10
+      _mp: 30
       _atk: 15
       _def: 10
       _spd: 15

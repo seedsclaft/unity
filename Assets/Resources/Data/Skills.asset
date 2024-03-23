@@ -1426,24 +1426,6 @@ MonoBehaviour:
       Param2: 0
       Param3: 0
     ScopeTriggers: []
-  - Id: 10040
-    Name: "\u30C0\u30A8\u30FC\u30EF(\u30B6\u30EA\u30C1\u30E5)"
-    IconIndex: 6
-    AnimationId: 0
-    AnimationType: 1
-    MpCost: 0
-    Rank: 2
-    Attribute: 0
-    Scope: 4
-    SkillType: 2
-    TargetType: 4
-    Help: "(\u6761\u4EF6)Hp\u304C50%\u672A\u6E80\n\u5358\u4F53\u306E\u52B9\u679C\u5BFE\u8C61\u304C\u5217\u306B\u306A\u308B"
-    Range: 1
-    RepeatTime: 1
-    AliveType: 1
-    FeatureDates: []
-    TriggerDates: []
-    ScopeTriggers: []
   - Id: 11010
     Name: "\u30A6\u30EB\u30D5\u30BD\u30A6\u30EB"
     IconIndex: 6
@@ -4075,19 +4057,153 @@ MonoBehaviour:
     Scope: 4
     SkillType: 2
     TargetType: 4
-    Help: "\u81F4\u547D\u653B\u6483\u767A\u751F\u738730%\u30A2\u30C3\u30D7(\u6C38\u7D9A)"
+    Help: "\u653B\u6483\u7BC4\u56F2\u304C\u5217\u306B\u306A\u308B(\u6C38\u7D9A)"
     Range: 1
     RepeatTime: 1
     AliveType: 1
     FeatureDates:
     - SkillId: 200230
       FeatureType: 3010
-      Param1: 1070
+      Param1: 2340
       Param2: 999
-      Param3: 30
+      Param3: 0
       Rate: 100
     TriggerDates:
     - SkillId: 200230
+      TriggerType: 0
+      TriggerTiming: 4
+      Param1: 0
+      Param2: 0
+      Param3: 0
+    ScopeTriggers: []
+  - Id: 200310
+    Name: "\u30B3\u30A6\u30BD\u30AF\u30C6\u30F3\u30B7\u30E7\u30A6"
+    IconIndex: 10
+    AnimationId: 21
+    AnimationType: 1
+    MpCost: 0
+    Rank: 2
+    Attribute: 2
+    Scope: 3
+    SkillType: 3
+    TargetType: 1
+    Help: "(\u6761\u4EF6)\u81EA\u8EAB\u306EHp\u304C40%\u4EE5\u4E0B\n\\s\u306BATKx300%\u30C0\u30E1\u30FC\u30B8
+      \u795E\u5316\u72B6\u614B\u306B\u79FB\u884C\n\u81EA\u8EAB\u306B\u30C0\u30E1\u30FC\u30B8\u306E25%\u5206Hp\u56DE\u5FA9\u30C9\u30EC\u30A4\u30F3\u3092\u4ED8\u4E0E"
+    Range: 2
+    RepeatTime: 1
+    AliveType: 1
+    FeatureDates:
+    - SkillId: 200310
+      FeatureType: 1010
+      Param1: 300
+      Param2: 0
+      Param3: 0
+      Rate: 100
+    - SkillId: 200310
+      FeatureType: 7010
+      Param1: 200311
+      Param2: 0
+      Param3: 0
+      Rate: 100
+    TriggerDates:
+    - SkillId: 200310
+      TriggerType: 44
+      TriggerTiming: 2
+      Param1: 0
+      Param2: 0
+      Param3: 1
+    - SkillId: 200310
+      TriggerType: 1
+      TriggerTiming: 2
+      Param1: 40
+      Param2: 0
+      Param3: 0
+    ScopeTriggers: []
+  - Id: 200311
+    Name: "\u30B3\u30A6\u30BD\u30AF\u30C6\u30F3\u30B7\u30E7\u30A6"
+    IconIndex: 10
+    AnimationId: 21
+    AnimationType: 1
+    MpCost: 0
+    Rank: 2
+    Attribute: 2
+    Scope: 4
+    SkillType: 3
+    TargetType: 4
+    Help: "(\u6761\u4EF6)\u81EA\u8EAB\u306EHp\u304C40%\u4EE5\u4E0B\n\\s\u306BATKx300%\u30C0\u30E1\u30FC\u30B8
+      \u795E\u5316\u72B6\u614B\u306B\u79FB\u884C\n\u81EA\u8EAB\u306B25%\u5206Hp\u56DE\u5FA9\u30C9\u30EC\u30A4\u30F3\u3092\u4ED8\u4E0E(\u6C38\u7D9A)"
+    Range: 1
+    RepeatTime: 1
+    AliveType: 1
+    FeatureDates:
+    - SkillId: 200311
+      FeatureType: 3010
+      Param1: 2060
+      Param2: 999
+      Param3: 25
+      Rate: 100
+    - SkillId: 200311
+      FeatureType: 7010
+      Param1: 11
+      Param2: 0
+      Param3: 0
+      Rate: 100
+    TriggerDates: []
+    ScopeTriggers: []
+  - Id: 200320
+    Name: "\u30A2\u30F3\u30C1\u30D0\u30D5"
+    IconIndex: 11
+    AnimationId: 0
+    AnimationType: 1
+    MpCost: 0
+    Rank: 2
+    Attribute: 2
+    Scope: 3
+    SkillType: 4
+    TargetType: 1
+    Help: "(\u6761\u4EF6)\u795E\u5316\u72B6\u614B\n\\s\u306B\u30D0\u30D5\u89E3\u9664\n\u795E\u5316\u89E3\u9664"
+    Range: 2
+    RepeatTime: 1
+    AliveType: 1
+    FeatureDates:
+    - SkillId: 200320
+      FeatureType: 3050
+      Param1: 0
+      Param2: 0
+      Param3: 0
+      Rate: 100
+    - SkillId: 200320
+      FeatureType: 7010
+      Param1: 21
+      Param2: 0
+      Param3: 0
+      Rate: 100
+    TriggerDates: []
+    ScopeTriggers: []
+  - Id: 200330
+    Name: "\u30C0\u30A8\u30FC\u30EF(\u30B6\u30EA\u30C1\u30E5)"
+    IconIndex: 6
+    AnimationId: 0
+    AnimationType: 1
+    MpCost: 0
+    Rank: 2
+    Attribute: 0
+    Scope: 4
+    SkillType: 2
+    TargetType: 4
+    Help: "\u30C7\u30A3\u30B9\u30C1\u30E3\u30FC\u30B8\u306E\u653B\u6483\u56DE\u6570\u304C3\u56DE\u306B\u306A\u308B"
+    Range: 1
+    RepeatTime: 1
+    AliveType: 1
+    FeatureDates:
+    - SkillId: 200330
+      FeatureType: 6100
+      Param1: 2010
+      Param2: 0
+      Param3: 3
+      Rate: 100
+    TriggerDates:
+    - SkillId: 200330
       TriggerType: 0
       TriggerTiming: 4
       Param1: 0
