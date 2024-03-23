@@ -2064,6 +2064,12 @@ namespace Ryneus
                             IsTriggered = true;
                         }
                         break;
+                        case TriggerType.OneAttackOverDamage:
+                        if (battlerInfo.IsAlive() && battlerInfo.MaxDamage >= triggerData.Param1)
+                        {
+                            IsTriggered = true;
+                        }
+                        break;
                         case TriggerType.AllEnemyCurseState:
                         var opponents = battlerInfo.IsActor ? _troop.AliveBattlerInfos : _party.AliveBattlerInfos;
                         if (battlerInfo.IsAlive() && opponents.Find(a => !a.IsState(StateType.Curse)) == null && opponents.FindAll(a => a.IsAlive()).Count > 0)
@@ -2585,6 +2591,11 @@ namespace Ryneus
         public void GainBeCriticalCount(int targetIndex)
         {
             GetBattlerInfo(targetIndex).GainBeCriticalCount(1);
+        }
+
+        public void GainMaxDamage(int targetIndex,int damage)
+        {
+            GetBattlerInfo(targetIndex).GainMaxDamage(damage);
         }
 
         public bool CheckVictory()

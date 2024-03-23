@@ -255,6 +255,9 @@ namespace Ryneus
                 case FeatureType.ChangeFeatureParam3StageWinCount:
                     MakeAddFeatureParamStageWinCount(subject,target,featureData,3);
                     return;
+                case FeatureType.ChangeFeatureRate:
+                    MakeChangeFeatureRate(subject,target,featureData,1);
+                    return;
             }
         }
 
@@ -871,6 +874,23 @@ namespace Ryneus
             }
 
         }
+
+
+        public void MakeChangeFeatureRate(BattlerInfo subject,BattlerInfo target,SkillData.FeatureData featureData,int featureParamIndex)
+        {
+            // 即代入
+            var skillInfo = subject.Skills.Find(a => a.Id == featureData.Param1);
+            if (skillInfo != null)
+            {
+                // featureのIndex
+                var feature = skillInfo.FeatureDates.Count >= featureData.Param2 ? skillInfo.FeatureDates[featureData.Param2] : null;
+                if (feature != null)
+                {
+                    feature.Rate = featureData.Param3;
+                }
+            }
+        }
+
         public void AddRemoveState(StateInfo stateInfo)
         {
             if (_removedStates.IndexOf(stateInfo) == -1){

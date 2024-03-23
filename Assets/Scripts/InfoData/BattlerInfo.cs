@@ -64,6 +64,8 @@ namespace Ryneus
         public int PayBattleMp => _payBattleMp;
         private int _attackedCount = 0;
         public int AttackedCount => _attackedCount;
+        private int _maxDamage = 0;
+        public int MaxDamage => _maxDamage;
         private int _dodgeCount = 0;
         public int DodgeCount => _dodgeCount;
         private int _healCount = 0;
@@ -835,6 +837,14 @@ namespace Ryneus
         public void GainAttackedCount(int value)
         {
             _attackedCount += value;
+        }
+
+        public void GainMaxDamage(int value)
+        {
+            if (value > _maxDamage)
+            {
+                _maxDamage = value;
+            }
         }
 
         public void GainDodgeCount(int value)

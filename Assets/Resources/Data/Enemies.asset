@@ -419,7 +419,7 @@ MonoBehaviour:
       Weight: 100
       TriggerDates: []
   - Id: 101
-    Name: "\u30BF\u30EB\u30A6\u30A3"
+    Name: "\u30A2\u30E2\u30F3"
     ImagePath: Ammon
     BaseStatus:
       _hp: 100
@@ -456,7 +456,7 @@ MonoBehaviour:
       Weight: 0
       TriggerDates: []
   - Id: 102
-    Name: "\u30B5\u30EB\u30EF"
+    Name: "\u30D1\u30A4\u30E2\u30F3"
     ImagePath: Paimon
     BaseStatus:
       _hp: 100
@@ -470,13 +470,9 @@ MonoBehaviour:
       Level: 1
       Weight: 40
       TriggerDates: []
-    - SkillId: 4030
+    - SkillId: 3080
       Level: 1
       Weight: 40
-      TriggerDates: []
-    - SkillId: 10030
-      Level: 1
-      Weight: 0
       TriggerDates: []
     - SkillId: 200210
       Level: 1
@@ -491,7 +487,7 @@ MonoBehaviour:
       Weight: 0
       TriggerDates: []
   - Id: 103
-    Name: "\u30B6\u30EA\u30C1\u30E5"
+    Name: "\u30A2\u30F3\u30C9\u30E9\u30B9"
     ImagePath: Andras
     BaseStatus:
       _hp: 100
@@ -509,10 +505,6 @@ MonoBehaviour:
       Level: 1
       Weight: 50
       TriggerDates: []
-    - SkillId: 10040
-      Level: 1
-      Weight: 0
-      TriggerDates: []
     - SkillId: 200310
       Level: 1
       Weight: 0
@@ -526,7 +518,7 @@ MonoBehaviour:
       Weight: 0
       TriggerDates: []
   - Id: 104
-    Name: "\u30BF\u30ED\u30FC\u30DE\u30C6\u30A3"
+    Name: "\u30D9\u30EA\u30C8"
     ImagePath: Berith
     BaseStatus:
       _hp: 100
@@ -536,128 +528,36 @@ MonoBehaviour:
       _spd: 15
     Kinds: 
     LearningSkills:
-    - SkillId: 1010
+    - SkillId: 5010
       Level: 1
       Weight: 20
       TriggerDates: []
-    - SkillId: 1050
+    - SkillId: 5080
       Level: 1
       Weight: 80
-      TriggerDates:
-      - SkillId: 0
-        TriggerType: 21
-        TriggerTiming: 1
-        Param1: 2
-        Param2: 0
-        Param3: 0
-    - SkillId: 12010
+      TriggerDates: []
+    - SkillId: 15030
+      Level: 1
+      Weight: 0
+      TriggerDates: []
+    - SkillId: 200410
+      Level: 1
+      Weight: 0
+      TriggerDates: []
+    - SkillId: 200420
+      Level: 1
+      Weight: 0
+      TriggerDates: []
+    - SkillId: 200430
       Level: 1
       Weight: 0
       TriggerDates: []
   - Id: 105
-    Name: "\u30C9\u30A5\u30EB\u30B8"
+    Name: "\u30D3\u30D5\u30ED\u30F3\u30B9"
     ImagePath: Bifrons
     BaseStatus:
       _hp: 80
       _mp: 30
-      _atk: 15
-      _def: 10
-      _spd: 15
-    Kinds: 
-    LearningSkills:
-    - SkillId: 4010
-      Level: 1
-      Weight: 20
-      TriggerDates: []
-    - SkillId: 4050
-      Level: 1
-      Weight: 80
-      TriggerDates:
-      - SkillId: 0
-        TriggerType: 22
-        TriggerTiming: 1
-        Param1: 2
-        Param2: 0
-        Param3: 0
-    - SkillId: 14010
-      Level: 1
-      Weight: 30
-      TriggerDates: []
-  - Id: 106
-    Name: "\u30D3\u30E4\u30FC\u30AD\u30FC"
-    ImagePath: Byakhee
-    BaseStatus:
-      _hp: 100
-      _mp: 30
-      _atk: 15
-      _def: 10
-      _spd: 15
-    Kinds: 
-    LearningSkills:
-    - SkillId: 2010
-      Level: 1
-      Weight: 20
-      TriggerDates: []
-    - SkillId: 2050
-      Level: 1
-      Weight: 60
-      TriggerDates: []
-  - Id: 107
-    Name: "\u30DD\u30EA\u30D7"
-    ImagePath: Polyp
-    BaseStatus:
-      _hp: 100
-      _mp: 10
-      _atk: 15
-      _def: 10
-      _spd: 15
-    Kinds: 
-    LearningSkills:
-    - SkillId: 5010
-      Level: 1
-      Weight: 20
-      TriggerDates: []
-    - SkillId: 5060
-      Level: 1
-      Weight: 60
-      TriggerDates:
-      - SkillId: 0
-        TriggerType: 22
-        TriggerTiming: 1
-        Param1: 2
-        Param2: 0
-        Param3: 0
-  - Id: 113
-    Name: "\u30A2\u30A4\u30DB\u30FC\u30C8"
-    ImagePath: Eihort
-    BaseStatus:
-      _hp: 80
-      _mp: 10
-      _atk: 15
-      _def: 10
-      _spd: 15
-    Kinds: 
-    LearningSkills:
-    - SkillId: 5010
-      Level: 1
-      Weight: 20
-      TriggerDates: []
-    - SkillId: 5050
-      Level: 1
-      Weight: 80
-      TriggerDates:
-      - SkillId: 0
-        TriggerType: 21
-        TriggerTiming: 1
-        Param1: 2
-        Param2: 0
-        Param3: 0
-  - Id: 114
-    Name: "\u30CE\u30FC\u30C7\u30F3\u30B9"
-    ImagePath: Nodens
-    BaseStatus:
-      _hp: 80
-      _mp: 10
       _atk: 15
       _def: 10
       _spd: 15
@@ -671,7 +571,77 @@ MonoBehaviour:
       Level: 1
       Weight: 80
       TriggerDates: []
-    - SkillId: 2060
+    - SkillId: 200510
+      Level: 1
+      Weight: 0
+      TriggerDates: []
+    - SkillId: 200520
+      Level: 1
+      Weight: 0
+      TriggerDates: []
+    - SkillId: 200530
+      Level: 1
+      Weight: 0
+      TriggerDates: []
+  - Id: 106
+    Name: "\u30A2\u30A4\u30DB\u30FC\u30C8"
+    ImagePath: Eihort
+    BaseStatus:
+      _hp: 100
+      _mp: 30
+      _atk: 15
+      _def: 10
+      _spd: 15
+    Kinds: 
+    LearningSkills:
+    - SkillId: 4010
+      Level: 1
+      Weight: 20
+      TriggerDates: []
+    - SkillId: 4080
+      Level: 1
+      Weight: 60
+      TriggerDates: []
+    - SkillId: 200610
+      Level: 1
+      Weight: 0
+      TriggerDates: []
+    - SkillId: 200620
+      Level: 1
+      Weight: 0
+      TriggerDates: []
+    - SkillId: 200630
+      Level: 1
+      Weight: 0
+      TriggerDates: []
+  - Id: 107
+    Name: "\u30D3\u30E4\u30FC\u30AD\u30FC"
+    ImagePath: Byakhee
+    BaseStatus:
+      _hp: 100
+      _mp: 10
+      _atk: 15
+      _def: 10
+      _spd: 15
+    Kinds: 
+    LearningSkills:
+    - SkillId: 5010
+      Level: 1
+      Weight: 20
+      TriggerDates: []
+    - SkillId: 4020
+      Level: 1
+      Weight: 60
+      TriggerDates: []
+    - SkillId: 200710
+      Level: 1
+      Weight: 0
+      TriggerDates: []
+    - SkillId: 200720
+      Level: 1
+      Weight: 0
+      TriggerDates: []
+    - SkillId: 200730
       Level: 1
       Weight: 0
       TriggerDates: []

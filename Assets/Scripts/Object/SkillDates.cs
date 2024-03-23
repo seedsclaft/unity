@@ -429,6 +429,7 @@ namespace Ryneus
         LvUpper = 92, // Lvが〇以上
         ActionMpCost = 93, // 行動Magicの消費Mpが〇
         TargetHpRateUnder = 94, // 攻撃を受けた対象のHpが〇%以下
+        OneAttackOverDamage = 95, // 1回の攻撃で〇ダメージ以上受ける
         PayBattleMp = 101, // Mpを〇消費する
         ChainCount = 102, // 拘束成功回数
         ActionResultDeath = 103, // 攻撃を受けると戦闘不能になる
@@ -498,6 +499,7 @@ namespace Ryneus
         ChangeFeatureParam1StageWinCount = 6040,
         ChangeFeatureParam2StageWinCount = 6050,
         ChangeFeatureParam3StageWinCount = 6060,
+        ChangeFeatureRate = 6070,
         ChangeSkillRepeatTime = 6100,
         ChangeSkillScope = 6210,
         PlusSkill = 7010,
