@@ -286,8 +286,21 @@ namespace Ryneus
             TempInfo.ClearRecordActors();
             CurrentStage.SetCurrentTurn(CurrentStage.ReturnSeek);
             CurrentStage.SetReturnSeek(-1);
+            CurrentStage.SetSeekIndex(-1);
+            PartyInfo.SetStageSymbolInfos(SelectedSymbolInfos(CurrentStage.Id));
             //SavePlayerData();
             //SavePlayerStageData(false);
+        }
+
+        public List<SymbolInfo> SelectedSymbolInfos(int stageId)
+        {
+            var list = new List<SymbolInfo>();
+            var records = PartyInfo.SymbolRecordList.FindAll(a => a.SymbolInfo.StageSymbolData.StageId == stageId);
+            foreach (var record in records)
+            {
+                list.Add(record.SymbolInfo);
+            }
+            return list;
         }
 
         public void CommitCurrentParallelResult()

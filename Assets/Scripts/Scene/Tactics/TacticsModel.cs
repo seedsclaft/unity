@@ -75,7 +75,7 @@ namespace Ryneus
             {
                 var symbolInfo = new SymbolInfo();
                 symbolInfo.CopyData(symbolInfos[i]);
-                var saveRecord = selectRecords.Find(a => a.IsSameSymbol(CurrentStage.Id,seek+1,i));
+                var saveRecord = selectRecords.Find(a => a.IsSameSymbol(CurrentStage.Id,symbolInfos[i].StageSymbolData.Seek,symbolInfos[i].StageSymbolData.SeekIndex));
                 symbolInfo.SetSelected(saveRecord != null);
                 symbolInfo.SetCleared(symbolInfos[i].Cleared);
                 MakePrizeData(saveRecord,symbolInfo.GetItemInfos);

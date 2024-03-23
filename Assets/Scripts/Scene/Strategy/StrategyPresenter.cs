@@ -414,7 +414,7 @@ namespace Ryneus
             if (_model.CurrentStage.ReturnSeek > 0)
             {
                 _model.SetSelectSymbol();
-                _model.EndStrategy();
+                //_model.EndStrategy();
                 if (_model.CurrentStage.ParallelStage)
                 {
                     _model.CommitCurrentParallelResult();
