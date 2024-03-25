@@ -23,7 +23,7 @@ namespace Ryneus
             var data = (RankingInfo)ListData.Data;
             playerName.text = data.Name;
             score.text = data.Score.ToString();
-            rank.text = data.Rank.ToString() + DataSystem.GetTextData(16070).Text;
+            rank.text = data.Rank.ToString() + DataSystem.GetText(16070);
             rankingTypeText.text = data.RankingTypeText;
             for (int i = 0;i < actorImages.Count;i++)
             {

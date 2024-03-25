@@ -12,7 +12,7 @@ namespace Ryneus
         public void Awake(){
             if (id != 0)
             {
-                var textData = DataSystem.GetTextData(id);
+                var textData = DataSystem.GetText(id);
                 if (textData == null)
                 {
                     Debug.Log("error" + gameObject.name);
@@ -20,7 +20,7 @@ namespace Ryneus
                 var textMeshPro = gameObject.GetComponent<TextMeshProUGUI>();
                 if (textMeshPro != null)
                 {
-                    textMeshPro.text = textData.Text;
+                    textMeshPro.text = textData;
                 }
             }
         }

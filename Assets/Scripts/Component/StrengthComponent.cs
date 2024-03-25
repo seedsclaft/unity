@@ -20,8 +20,8 @@ namespace Ryneus
             
             if (nameText != null)
             {
-                var textData = DataSystem.GetTextData(300 + (int)statusParamType);
-                nameText.text = textData.Text;
+                var textData = DataSystem.GetText(300 + (int)statusParamType);
+                nameText.text = textData;
             }
             if (currentStatus != null)
             {

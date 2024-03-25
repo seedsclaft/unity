@@ -62,7 +62,7 @@ namespace Ryneus
 
         private void CommandStartEntry()
         {
-            var popupInfo = new ConfirmInfo(DataSystem.GetTextData(5000).Text,(menuCommandInfo) => UpdatePopup((ConfirmCommandType)menuCommandInfo));
+            var popupInfo = new ConfirmInfo(DataSystem.GetText(5000),(menuCommandInfo) => UpdatePopup((ConfirmCommandType)menuCommandInfo));
             popupInfo.SetIsNoChoice(true);
             _view.CommandCallConfirm(popupInfo);
             _view.ShowNameEntry("");
@@ -72,7 +72,7 @@ namespace Ryneus
         {
             if (nameText == "")
             {
-                var popupInfo = new ConfirmInfo(DataSystem.GetTextData(5002).Text,(menuCommandInfo) => UpdatePopup((ConfirmCommandType)menuCommandInfo));
+                var popupInfo = new ConfirmInfo(DataSystem.GetText(5002),(menuCommandInfo) => UpdatePopup((ConfirmCommandType)menuCommandInfo));
                 popupInfo.SetIsNoChoice(true);
                 _view.CommandCallConfirm(popupInfo);
             } else{

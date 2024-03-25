@@ -53,7 +53,7 @@ namespace Ryneus
             inputField.gameObject.SetActive(true);
             inputField.Select();
             _inputLateUpdate = 1;
-            HelpWindow.SetHelpText(DataSystem.GetTextData(5000).Text);
+            HelpWindow.SetHelpText(DataSystem.GetText(5000));
             HelpWindow.SetInputInfo("NAMEENTRY");
         }
 

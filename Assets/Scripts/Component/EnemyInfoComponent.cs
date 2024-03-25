@@ -67,7 +67,7 @@ namespace Ryneus
         public void SetGridKey(int index)
         {
             var textId = 360 + index;
-            gridKey.text = DataSystem.GetTextData(textId).Text;
+            gridKey.text = DataSystem.GetText(textId);
         }
 
         public void Clear()

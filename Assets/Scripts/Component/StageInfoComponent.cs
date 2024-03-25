@@ -34,10 +34,10 @@ namespace Ryneus
             if (achieveText != null){
                 if (stageData.AchieveText != "")
                 {
-                    achieveText.text = DataSystem.GetTextData(31).Text + stageData.AchieveText;
+                    achieveText.text = DataSystem.GetText(31) + stageData.AchieveText;
                 } else
                 {
-                    achieveText.text = DataSystem.GetTextData(31).Text + DataSystem.GetTextData(10000).Text;
+                    achieveText.text = DataSystem.GetText(31) + DataSystem.GetText(10000);
                 }
             }
             if (help != null){

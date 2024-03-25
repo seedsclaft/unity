@@ -109,7 +109,7 @@ namespace Ryneus
 
         public void SetInitHelpText()
         {
-            HelpWindow.SetHelpText(DataSystem.GetTextData(11040).Text);
+            HelpWindow.SetHelpText(DataSystem.GetText(11040));
             HelpWindow.SetInputInfo("MAINMENU");
         }
 

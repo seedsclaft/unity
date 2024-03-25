@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace Ryneus
@@ -82,12 +83,7 @@ namespace Ryneus
         
         public static StageSymbolData PickUpSymbolData(List<SymbolGroupData> groupDates)
         {
-            int targetRand = 0;
-            for (int i = 0;i < groupDates.Count;i++)
-            {
-                targetRand += groupDates[i].Rate;
-            }
-            targetRand = Random.Range (0,targetRand);
+            int targetRand = Random.Range(0,groupDates.Sum(a => a.Rate));
             int targetIndex = -1;
             for (int i = 0;i < groupDates.Count;i++)
             {
@@ -108,12 +104,7 @@ namespace Ryneus
             var stageSymbolList = stageSymbolDates.FindAll(a => a.Seek == 0);
             var stageSymbolData = new StageSymbolData();
             stageSymbolData.SymbolType = SymbolType.None;
-            int targetRand = 0;
-            foreach (var stageSymbol in stageSymbolList)
-            {
-                targetRand += stageSymbol.Rate;
-            }
-            targetRand = Random.Range(0,targetRand);
+            int targetRand = Random.Range(0,stageSymbolList.Sum(a => a.Rate));
             while (stageSymbolData.SymbolType == SymbolType.None)
             {
                 int targetIndex = -1;

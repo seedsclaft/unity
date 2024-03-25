@@ -27,7 +27,7 @@ namespace Ryneus
 
         public string EndingTypeText()
         {
-            return DataSystem.GetTextData(16080).Text + CurrentStage.EndingType;
+            return DataSystem.GetText(16080) + CurrentStage.EndingType;
         }
 
         public bool IsNewRecord()

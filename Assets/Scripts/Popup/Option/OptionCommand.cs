@@ -26,21 +26,21 @@ namespace Ryneus
             optionToggles.ForEach(a => a.gameObject.SetActive(data.ButtonType == OptionButtonType.Toggle));
             if (data.ToggleText1 > 0)
             {
-                optionTexts[0].text = DataSystem.GetTextData(data.ToggleText1).Text;
+                optionTexts[0].text = DataSystem.GetText(data.ToggleText1);
             } else
             {
                 optionToggles[0].gameObject.SetActive(false);
             }
             if (data.ToggleText2 > 0)
             {
-                optionTexts[1].text = DataSystem.GetTextData(data.ToggleText2).Text;
+                optionTexts[1].text = DataSystem.GetText(data.ToggleText2);
             } else
             {
                 optionToggles[1].gameObject.SetActive(false);
             }
             if (data.ToggleText3 > 0)
             {
-                optionTexts[2].text = DataSystem.GetTextData(data.ToggleText3).Text;
+                optionTexts[2].text = DataSystem.GetText(data.ToggleText3);
             } else
             {
                 optionToggles[2].gameObject.SetActive(false);

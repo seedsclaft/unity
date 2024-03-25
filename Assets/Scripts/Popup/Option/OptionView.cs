@@ -60,7 +60,7 @@ namespace Ryneus
 
         public void SetHelpWindow()
         {
-            SetHelpText(DataSystem.GetTextData(500).Help);
+            SetHelpText(DataSystem.GetHelp(500));
             SetHelpInputInfo("OPTION");
         }
 

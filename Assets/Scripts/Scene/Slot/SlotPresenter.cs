@@ -24,7 +24,7 @@ namespace Ryneus
             _busy = true;
             _view.SetEvent((type) => UpdateCommand(type));
             _view.SetHelpInputInfo("SLOT");
-            _view.SetHelpText(DataSystem.GetTextData(21020).Text);
+            _view.SetHelpText(DataSystem.GetText(21020));
             _view.SetBackEvent();
             CommandRefresh();
             _busy = false;
@@ -54,7 +54,7 @@ namespace Ryneus
             if (_model.SelectableSlot(slotIndex))
             {
                 Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
-                var confirmInfo = new ConfirmInfo(DataSystem.GetTextData(21010).Text,(a) => UpdatePopupStageStart((ConfirmCommandType)a));
+                var confirmInfo = new ConfirmInfo(DataSystem.GetText(21010),(a) => UpdatePopupStageStart((ConfirmCommandType)a));
                 _view.CommandCallConfirm(confirmInfo);
             }
         }

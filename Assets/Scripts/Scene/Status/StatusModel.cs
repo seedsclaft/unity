@@ -18,7 +18,7 @@ namespace Ryneus
 
             if (textId >= 0)
             {
-                return DataSystem.GetTextData(textId).Text;
+                return DataSystem.GetText(textId);
             }
             return "";
         }

@@ -143,7 +143,7 @@ namespace Ryneus
         public void CommandOpenSideMenu()
         {
             _helpWindow.SetInputInfo("SIDEMENU");
-            _helpWindow.SetHelpText(DataSystem.GetTextData(701).Help);
+            _helpWindow.SetHelpText(DataSystem.GetHelp(701));
         }
 
         public void SetEvent(System.Action<ViewEvent> commandData)

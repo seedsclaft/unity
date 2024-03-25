@@ -71,7 +71,7 @@ namespace Ryneus
         private void CommandDropout()
         {  
             SoundManager.Instance.PlayStaticSe(SEType.Decide);
-            var popupInfo = new ConfirmInfo(DataSystem.GetTextData(1100).Text,(a) => UpdatePopupDropout((ConfirmCommandType)a));
+            var popupInfo = new ConfirmInfo(DataSystem.GetText(1100),(a) => UpdatePopupDropout((ConfirmCommandType)a));
             _view.CommandCallConfirm(popupInfo);
         }
 
@@ -117,7 +117,7 @@ namespace Ryneus
         private void CommandInitializeData()
         {
             SoundManager.Instance.PlayStaticSe(SEType.Decide);
-            var popupInfo = new ConfirmInfo(DataSystem.GetTextData(581).Text,(a) => UpdatePopupDeletePlayerData((ConfirmCommandType)a));
+            var popupInfo = new ConfirmInfo(DataSystem.GetText(581),(a) => UpdatePopupDeletePlayerData((ConfirmCommandType)a));
             _view.CommandCallConfirm(popupInfo);
         }
 
@@ -129,7 +129,7 @@ namespace Ryneus
                 _view.CommandGameSystem(Base.CommandType.ClosePopup);
                 _model.DeletePlayerData();
                 _view.CommandGameSystem(Base.CommandType.CloseConfirm);
-                var popupInfo = new ConfirmInfo(DataSystem.GetTextData(582).Text,(a) => {
+                var popupInfo = new ConfirmInfo(DataSystem.GetText(582),(a) => {
                     SoundManager.Instance.StopBgm();
                     _view.CommandGameSystem(Base.CommandType.CloseStatus);
                     _view.CommandGameSystem(Base.CommandType.CloseConfirm);

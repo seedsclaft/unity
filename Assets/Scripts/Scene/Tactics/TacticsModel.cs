@@ -161,19 +161,19 @@ namespace Ryneus
             var list = new List<SystemData.CommandData>();
             var retire = new SystemData.CommandData();
             retire.Id = 1;
-            retire.Name = DataSystem.GetTextData(704).Text;
+            retire.Name = DataSystem.GetText(704);
             retire.Key = "Retire";
             list.Add(retire);
             var menuCommand = new SystemData.CommandData();
             menuCommand.Id = 2;
-            menuCommand.Name = DataSystem.GetTextData(703).Text;
+            menuCommand.Name = DataSystem.GetText(703);
             menuCommand.Key = "Help";
             list.Add(menuCommand);
             if (CurrentStage.SurvivalMode == false)
             {
                 var saveCommand = new SystemData.CommandData();
                 saveCommand.Id = 3;
-                saveCommand.Name = DataSystem.GetTextData(707).Text;
+                saveCommand.Name = DataSystem.GetText(707);
                 saveCommand.Key = "Save";
                 list.Add(saveCommand);
             }
@@ -221,7 +221,7 @@ namespace Ryneus
 
         private string CommandTitle()
         {
-            return DataSystem.GetTextData((int)_TacticsCommandType).Text;
+            return DataSystem.GetText((int)_TacticsCommandType);
         }
 
         private int CommandRank()

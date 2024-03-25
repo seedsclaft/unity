@@ -67,7 +67,7 @@ namespace Ryneus
 
         public void StartAnimation()
         {
-            _battleStartAnim.SetText(DataSystem.GetTextData(16090).Text);
+            _battleStartAnim.SetText(DataSystem.GetText(16090));
             _battleStartAnim.StartAnim();
             _battleStartAnim.gameObject.SetActive(true);
             _animationBusy = true;
@@ -108,7 +108,7 @@ namespace Ryneus
         }
 
         public void SetHelpWindow(){
-            HelpWindow.SetHelpText(DataSystem.GetTextData(16030).Text);
+            HelpWindow.SetHelpText(DataSystem.GetText(16030));
             HelpWindow.SetInputInfo("RESULT");
         }
 

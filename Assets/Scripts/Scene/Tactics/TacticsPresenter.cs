@@ -65,7 +65,7 @@ namespace Ryneus
                     case StageEventType.SelectAddActor:
                         _eventBusy = true;
                         _model.AddEventReadFlag(stageEvent);
-                        var selectAddActor = new ConfirmInfo(DataSystem.GetTextData(11050).Text,(menuCommandInfo) => UpdatePopupSelectAddActor((ConfirmCommandType)menuCommandInfo));
+                        var selectAddActor = new ConfirmInfo(DataSystem.GetText(11050),(menuCommandInfo) => UpdatePopupSelectAddActor((ConfirmCommandType)menuCommandInfo));
                         selectAddActor.SetIsNoChoice(true);
                         selectAddActor.SetSelectIndex(0);
                         _view.CommandCallConfirm(selectAddActor);
@@ -336,7 +336,7 @@ namespace Ryneus
             _model.GainSaveCount();
             _model.SavePlayerStageData(true);
             // 成功表示
-            var confirmInfo = new ConfirmInfo(DataSystem.GetTextData(11084).Text,(a) => {
+            var confirmInfo = new ConfirmInfo(DataSystem.GetText(11084),(a) => {
                 _view.CommandGameSystem(Base.CommandType.CloseConfirm);
                 if (isReturnScene)
                 {
@@ -482,7 +482,7 @@ namespace Ryneus
 
         private void CommandDecideRecord()
         {
-            var popupInfo = new ConfirmInfo(DataSystem.GetTextData(23010).Text,(a) => UpdatePopupCheckStartRecord((ConfirmCommandType)a));
+            var popupInfo = new ConfirmInfo(DataSystem.GetText(23010),(a) => UpdatePopupCheckStartRecord((ConfirmCommandType)a));
             _view.CommandCallConfirm(popupInfo);
         }
 
@@ -605,7 +605,7 @@ namespace Ryneus
 
         private void CheckResourceSymbol(GetItemInfo getItemInfo)
         {
-            var popupInfo = new ConfirmInfo(DataSystem.GetReplaceText(11140,getItemInfo.Param1 + DataSystem.GetTextData(1000).Text),(a) => UpdatePopupResourceSymbol((ConfirmCommandType)a));
+            var popupInfo = new ConfirmInfo(DataSystem.GetReplaceText(11140,getItemInfo.Param1 + DataSystem.GetText(1000)),(a) => UpdatePopupResourceSymbol((ConfirmCommandType)a));
             _view.CommandCallConfirm(popupInfo);
         }
 
@@ -695,7 +695,7 @@ namespace Ryneus
         {
             SoundManager.Instance.PlayStaticSe(SEType.Deny);
             var cautionInfo = new CautionInfo();
-            cautionInfo.SetTitle(DataSystem.GetTextData(11160).Text);
+            cautionInfo.SetTitle(DataSystem.GetText(11160));
             _view.CommandCallCaution(cautionInfo);
         }
 

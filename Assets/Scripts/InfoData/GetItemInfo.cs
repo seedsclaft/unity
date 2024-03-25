@@ -49,8 +49,8 @@ namespace Ryneus
             switch (_getItemType)
             {
                 case GetItemType.Numinous:
-                    SetTitleData("+" + _param1.ToString() + DataSystem.GetTextData(1000).Text);
-                    SetResultData("+" + _param1.ToString() + DataSystem.GetTextData(1000).Text);
+                    SetTitleData("+" + _param1.ToString() + DataSystem.GetText(1000));
+                    SetResultData("+" + _param1.ToString() + DataSystem.GetText(1000));
                     break;
                 case GetItemType.Skill:
                     var skillData = DataSystem.FindSkill(_param1);
@@ -59,11 +59,11 @@ namespace Ryneus
                     SetSkillId(skillData.Id);
                     break;
                 case GetItemType.Demigod:
-                    SetTitleData(DataSystem.GetTextData(14042).Text + "+" + _param1.ToString());
-                    SetResultData(DataSystem.GetTextData(14042).Text + "+" + _param1.ToString());
+                    SetTitleData(DataSystem.GetText(14042) + "+" + _param1.ToString());
+                    SetResultData(DataSystem.GetText(14042) + "+" + _param1.ToString());
                     break;
                 case GetItemType.Ending:
-                    SetResultData(DataSystem.GetTextData(14060).Text);
+                    SetResultData(DataSystem.GetText(14060));
                     break;
                 case GetItemType.StatusUp:
                     SetTitleData(DataSystem.GetReplaceText(14070,_param1.ToString()));
@@ -87,8 +87,8 @@ namespace Ryneus
                     SetResultData(DataSystem.GetReplaceText(14120,DataSystem.FindActor(_param1).Name));
                     break;
                 case GetItemType.SaveHuman:
-                    SetTitleData(DataSystem.GetTextData(14100).Text + DataSystem.GetReplaceDecimalText(_param2) + "/" + DataSystem.GetReplaceDecimalText(_param1));
-                    SetResultData(DataSystem.GetTextData(14100).Text + DataSystem.GetReplaceDecimalText(_param2) + "/" + DataSystem.GetReplaceDecimalText(_param1));
+                    SetTitleData(DataSystem.GetText(14100) + DataSystem.GetReplaceDecimalText(_param2) + "/" + DataSystem.GetReplaceDecimalText(_param1));
+                    SetResultData(DataSystem.GetText(14100) + DataSystem.GetReplaceDecimalText(_param2) + "/" + DataSystem.GetReplaceDecimalText(_param1));
                     break;
             }
         }
@@ -121,7 +121,7 @@ namespace Ryneus
 
         public void MakeAlchemyBonusResult(SkillData skillData)
         {
-            _titleName = (DataSystem.GetTextData(14040).Text);
+            _titleName = DataSystem.GetText(14040);
             _resultName = (skillData.Name);
             SetSkillId(skillData.Id);            
         }
@@ -129,8 +129,8 @@ namespace Ryneus
 
         public void MakeCommandCountResult(int commandLv,int toLv,TacticsCommandType tacticsCommandType)
         {
-            _titleName = (DataSystem.GetReplaceText(3030,DataSystem.GetTextData((int)tacticsCommandType).Text));
-            _resultName = (DataSystem.GetTextData(316).Text + commandLv.ToString() + DataSystem.GetTextData(3090).Text + toLv.ToString());
+            _titleName = (DataSystem.GetReplaceText(3030,DataSystem.GetText((int)tacticsCommandType)));
+            _resultName = (DataSystem.GetText(316) + commandLv.ToString() + DataSystem.GetText(3090) + toLv.ToString());
         }
 
 
@@ -138,7 +138,7 @@ namespace Ryneus
         {
             _titleName = (DataSystem.GetReplaceText(3070,name));
             var result = "";
-            var textId = 300 + (int)statusParamType;result += DataSystem.GetReplaceText(3071,DataSystem.GetTextData(textId).Text);
+            var textId = 300 + (int)statusParamType;result += DataSystem.GetReplaceText(3071,DataSystem.GetText(textId));
             _resultName = (result + DataSystem.GetReplaceText(3072,bonus.ToString()));
         }
         
@@ -150,7 +150,7 @@ namespace Ryneus
 
         public void MakeGainTurnResult(string turn)
         {
-            _titleName = (DataSystem.GetTextData(3210).Text);
+            _titleName = (DataSystem.GetText(3210));
             _resultName = (DataSystem.GetReplaceText(3211,turn));
         }
 
@@ -162,32 +162,32 @@ namespace Ryneus
 
         public void MakeAlchemyCostZeroResult(string attributeText)
         {
-            _titleName = (DataSystem.GetTextData(3220).Text);
-            _resultName = (DataSystem.GetReplaceText(3221,attributeText));
+            _titleName = DataSystem.GetText(3220);
+            _resultName = DataSystem.GetReplaceText(3221,attributeText);
         }
 
         public void MakeNoBattleLostResult()
         {
-            _titleName = (DataSystem.GetTextData(3220).Text);
-            _resultName = (DataSystem.GetTextData(3222).Text);
+            _titleName = DataSystem.GetText(3220);
+            _resultName = DataSystem.GetText(3222);
         }
 
         public void MakeResourceBonusResult()
         {
-            _titleName = (DataSystem.GetTextData(3220).Text);
-            _resultName = (DataSystem.GetTextData(3223).Text);
+            _titleName = DataSystem.GetText(3220);
+            _resultName = DataSystem.GetText(3223);
         }
         
         public void MakeCommandCostZeroResult(string commandText)
         {
-            _titleName = (DataSystem.GetTextData(3220).Text);
-            _resultName = (DataSystem.GetReplaceText(3224,commandText));
+            _titleName = DataSystem.GetText(3220);
+            _resultName = DataSystem.GetReplaceText(3224,commandText);
         }    
         
         public void MakeAlchemyCostBonusResult()
         {
-            _titleName = (DataSystem.GetTextData(3220).Text);
-            _resultName = (DataSystem.GetTextData(3225).Text);
+            _titleName = DataSystem.GetText(3220);
+            _resultName = DataSystem.GetText(3225);
         }
 
 
@@ -200,8 +200,8 @@ namespace Ryneus
         
         public void MakeSkillLearnResult(string actorName,SkillData skillData)
         {
-            _titleName = (DataSystem.GetReplaceText(3000,actorName));
-            _resultName = (skillData.Name + DataSystem.GetTextData(3230).Text);
+            _titleName = DataSystem.GetReplaceText(3000,actorName);
+            _resultName = skillData.Name + DataSystem.GetText(3230);
             SetSkillId(skillData.Id);            
         }
     }

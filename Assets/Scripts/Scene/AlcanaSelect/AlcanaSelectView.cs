@@ -29,7 +29,7 @@ namespace Ryneus
         
         public void StartAnimation()
         {
-            battleStartAnim.SetText(DataSystem.GetTextData(19010).Text);
+            battleStartAnim.SetText(DataSystem.GetText(19010));
             battleStartAnim.StartAnim();
             battleStartAnim.gameObject.SetActive(true);
             _animationBusy = true;
@@ -52,7 +52,7 @@ namespace Ryneus
 
         public void SetInitHelpText()
         {
-            HelpWindow.SetHelpText(DataSystem.GetTextData(20020).Text);
+            HelpWindow.SetHelpText(DataSystem.GetText(20020));
             //HelpWindow.SetInputInfo("MAINMENU");
         }
 

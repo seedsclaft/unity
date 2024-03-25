@@ -61,6 +61,7 @@ namespace Ryneus
             _view.ClearCurrentSkillData();
             _view.CreateObject(_model.BattlerActors().Count);
             _view.SetUIButton();
+            _view.RefreshTurn(_model.TurnCount);
             _view.SetBattleAutoButton(_model.BattleAutoButton(),GameSystem.ConfigData.BattleAuto == true);
             _view.ChangeBackCommandActive(false);
 
@@ -85,7 +86,7 @@ namespace Ryneus
             _view.SetActors(_model.BattlerActors());
             _view.SetEnemies(_model.BattlerEnemies());
             _view.BattlerBattleClearSelect();
-            _view.StartBattleStartAnim(DataSystem.GetTextData(61).Text);
+            _view.StartBattleStartAnim(DataSystem.GetText(61));
             _view.StartBattleAnimation();
             _view.SetBattleSpeedButton(ConfigUtility.CurrentBattleSpeedText());
             _view.SetBattleAutoButton(true);
@@ -223,11 +224,11 @@ namespace Ryneus
             SoundManager.Instance.PlayStaticSe(SEType.Decide);
             if (_model.EnableEscape())
             {
-                var popupInfo = new ConfirmInfo(DataSystem.GetTextData(410).Text,(a) => UpdatePopupEscape((ConfirmCommandType)a));
+                var popupInfo = new ConfirmInfo(DataSystem.GetText(410),(a) => UpdatePopupEscape((ConfirmCommandType)a));
                 _view.CommandCallConfirm(popupInfo);
             } else
             {
-                var popupInfo = new ConfirmInfo(DataSystem.GetTextData(412).Text,(a) => UpdatePopupNoEscape((ConfirmCommandType)a));
+                var popupInfo = new ConfirmInfo(DataSystem.GetText(412),(a) => UpdatePopupNoEscape((ConfirmCommandType)a));
                 popupInfo.SetIsNoChoice(true);
                 _view.CommandCallConfirm(popupInfo);
             }
@@ -445,7 +446,7 @@ namespace Ryneus
         private void CommandDecideActor()
         {
             _view.SetAnimationBusy(false);
-            _view.SetHelpText(DataSystem.GetTextData(15010).Text);
+            _view.SetHelpText(DataSystem.GetText(15010));
             _view.SelectedCharacter(_model.CurrentBattler);
             _view.SetCondition(_model.SelectCharacterConditions());
             _view.ChangeSideMenuButtonActive(true);
@@ -469,7 +470,7 @@ namespace Ryneus
         private void CommandDecideEnemy()
         {
             _view.SetAnimationBusy(false);
-            _view.SetHelpText(DataSystem.GetTextData(15010).Text);
+            _view.SetHelpText(DataSystem.GetText(15010));
             //_view.SelectedCharacter(_model.CurrentBattler);
             _view.SetCondition(_model.SelectCharacterConditions());
             //_view.ChangeSideMenuButtonActive(true);
@@ -798,7 +799,7 @@ namespace Ryneus
             if (actionResultInfo.StartDash)
             {        
                 //先制攻撃
-                _view.StartStatePopup(targetIndex,DamageType.State,DataSystem.GetTextData(431).Text);
+                _view.StartStatePopup(targetIndex,DamageType.State,DataSystem.GetText(431));
             }
         }
 
@@ -1010,6 +1011,7 @@ namespace Ryneus
             }
             // 行動を全て終了する
             _model.SeekTurnCount();
+            _view.RefreshTurn(_model.TurnCount);
             _view.ShowStateOverlay();
             _triggerInterruptChecked = false;
             _triggerAfterChecked = false;
@@ -1040,13 +1042,13 @@ namespace Ryneus
             strategySceneInfo.ActorInfos = _model.BattleMembers();
             if (_model.CheckVictory())
             {
-                _view.StartBattleStartAnim(DataSystem.GetTextData(15020).Text);
+                _view.StartBattleStartAnim(DataSystem.GetText(15020));
                 strategySceneInfo.GetItemInfos = _model.MakeBattlerResult();
                 _model.MakeBattleScore(true);
             } else
             if (_model.CheckDefeat())
             {
-                _view.StartBattleStartAnim(DataSystem.GetTextData(15030).Text); 
+                _view.StartBattleStartAnim(DataSystem.GetText(15030)); 
                 strategySceneInfo.GetItemInfos = new List<GetItemInfo>();   
                 _model.MakeBattleScore(false);       
             }

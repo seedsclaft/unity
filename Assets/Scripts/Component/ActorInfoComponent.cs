@@ -229,7 +229,7 @@ namespace Ryneus
 
         private void UpdateAttributeParam(TextMeshProUGUI textMeshProUGUI,AttributeRank param){
             var textId = 321 + (int)param;
-            textMeshProUGUI.text = DataSystem.GetTextData(textId).Text;
+            textMeshProUGUI.text = DataSystem.GetText(textId);
         }
         
         public void SetAwakeMode(bool IsAwaken)

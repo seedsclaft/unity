@@ -28,12 +28,12 @@ namespace Ryneus
             var list = new List<SystemData.CommandData>();
             var menuCommand = new SystemData.CommandData();
             menuCommand.Id = 1;
-            menuCommand.Name = DataSystem.GetTextData(700).Text;
+            menuCommand.Name = DataSystem.GetText(700);
             menuCommand.Key = "License";
             list.Add(menuCommand);
             var initCommand = new SystemData.CommandData();
             initCommand.Id = 1;
-            initCommand.Name = DataSystem.GetTextData(708).Text;
+            initCommand.Name = DataSystem.GetText(708);
             initCommand.Key = "InitializeData";
             list.Add(initCommand);
             return MakeListData(list);

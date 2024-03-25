@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using Battle;
 using Effekseer;
 using System.Linq;
+using TMPro;
 
 namespace Ryneus
 {
@@ -16,6 +17,7 @@ namespace Ryneus
         [SerializeField] private BattleGridLayer battleGridLayer = null;
         [SerializeField] private BattleSelectCharacter selectCharacter = null;
         [SerializeField] private BattleThumb battleThumb;
+        [SerializeField] private TextMeshProUGUI turns;
         
 
         [SerializeField] private GameObject animRoot = null;
@@ -596,6 +598,11 @@ namespace Ryneus
             {
                 item.Value.RefreshStatus();
             }
+        }
+
+        public void RefreshTurn(int turn)
+        {
+            turns?.SetText(turn.ToString());
         }
 
         public void SetBattlerThumbAlpha(bool selectable)

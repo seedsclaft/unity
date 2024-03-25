@@ -147,7 +147,7 @@ namespace Ryneus
 
         private string CommandTitle()
         {
-            return DataSystem.GetTextData((int)_TacticsCommandType).Text;
+            return DataSystem.GetText((int)_TacticsCommandType);
         }
 
         private int CommandRank()

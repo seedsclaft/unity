@@ -82,6 +82,26 @@ namespace Ryneus
             return System.GetTextData(id);
         }
 
+        public static string GetText(int id)
+        {
+            var textData = GetTextData(id);
+            if (textData != null)
+            {
+                return textData.Text;
+            }
+            return "";
+        }
+
+        public static string GetHelp(int id)
+        {
+            var textData = GetTextData(id);
+            if (textData != null)
+            {
+                return textData.Help;
+            }
+            return "";
+        }
+
         public static string GetReplaceText(int id,string replace)
         {
             return System.GetReplaceText(id,replace);

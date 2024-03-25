@@ -55,7 +55,7 @@ namespace Ryneus
 
         private void CommandSlotSave(SlotInfo slotInfo)
         {
-            var confirmView = new ConfirmInfo(DataSystem.GetTextData(22010).Text,(a) => UpdatePopupSlotSave(a));
+            var confirmView = new ConfirmInfo(DataSystem.GetText(22010),(a) => UpdatePopupSlotSave(a));
             _model.SetBaseSlotSaveInfo(slotInfo);
             _view.CommandCallConfirm(confirmView);
             Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);

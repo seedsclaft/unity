@@ -38,7 +38,7 @@ namespace Ryneus
                 {
                     if (stateInfo.Turns > 900)
                     {
-                        turns.text = DataSystem.GetTextData(403).Text;
+                        turns.text = DataSystem.GetText(403);
                     } else
                     {
                         turns.text = DataSystem.GetReplaceText(401,stateInfo.Turns.ToString());
@@ -52,7 +52,7 @@ namespace Ryneus
                 {
                     if (stateInfo.Turns > 900)
                     {
-                        turns.text = DataSystem.GetTextData(403).Text;
+                        turns.text = DataSystem.GetText(403);
                     } else
                     {
                         turns.text = DataSystem.GetReplaceText(405,stateInfo.Turns.ToString());

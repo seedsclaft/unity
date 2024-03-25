@@ -83,7 +83,7 @@ namespace Ryneus
 
         public void SetHelpWindow()
         {
-            HelpWindow.SetHelpText(DataSystem.GetTextData(809).Help);
+            HelpWindow.SetHelpText(DataSystem.GetHelp(809));
             if (_isBattle)
             {
                 HelpWindow.SetInputInfo("ENEMYINFO_BATTLE");

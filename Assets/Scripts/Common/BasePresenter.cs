@@ -121,7 +121,7 @@ namespace Ryneus
             _model.GainSaveCount();
             _model.SavePlayerStageData(true);
             // 成功表示
-            var confirmInfo = new ConfirmInfo(DataSystem.GetTextData(11084).Text,(a) => {
+            var confirmInfo = new ConfirmInfo(DataSystem.GetText(11084),(a) => {
                 _view.CommandGameSystem(Base.CommandType.CloseConfirm);
                 if (isReturnScene)
                 {

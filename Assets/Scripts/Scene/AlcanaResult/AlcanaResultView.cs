@@ -37,14 +37,14 @@ namespace Ryneus
 
         public void StartAnimation()
         {
-            _battleStartAnim.SetText(DataSystem.GetTextData(19010).Text);
+            _battleStartAnim.SetText(DataSystem.GetText(19010));
             _battleStartAnim.StartAnim();
             _battleStartAnim.gameObject.SetActive(true);
             _animationBusy = true;
         }
 
         public void SetHelpWindow(){
-            HelpWindow.SetHelpText(DataSystem.GetTextData(19020).Text);
+            HelpWindow.SetHelpText(DataSystem.GetText(19020));
             HelpWindow.SetInputInfo("RESULT");
         }
 

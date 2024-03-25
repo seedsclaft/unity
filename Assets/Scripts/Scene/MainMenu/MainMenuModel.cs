@@ -62,7 +62,7 @@ namespace Ryneus
 
         private string CommandTitle()
         {
-            return DataSystem.GetTextData((int)_TacticsCommandType).Text;
+            return DataSystem.GetText((int)_TacticsCommandType);
         }
 
         private int CommandRank()
@@ -193,7 +193,7 @@ namespace Ryneus
             var list = new List<SystemData.CommandData>();
             var menuCommand = new SystemData.CommandData();
             menuCommand.Id = 2;
-            menuCommand.Name = DataSystem.GetTextData(703).Text;
+            menuCommand.Name = DataSystem.GetText(703);
             menuCommand.Key = "Help";
             list.Add(menuCommand);
             return MakeListData(list);

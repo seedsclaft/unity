@@ -141,13 +141,13 @@ namespace Ryneus
             var menuCommandDates = new List<SystemData.CommandData>();
             var yesCommand = new SystemData.CommandData();
             yesCommand.Key = "Yes";
-            yesCommand.Name = DataSystem.GetTextData(yesTextId).Text;
+            yesCommand.Name = DataSystem.GetText(yesTextId);
             yesCommand.Id = 0;
             if (noTextId != 0)
             {
                 var noCommand = new SystemData.CommandData();
                 noCommand.Key = "No";
-                noCommand.Name = DataSystem.GetTextData(noTextId).Text;
+                noCommand.Name = DataSystem.GetText(noTextId);
                 noCommand.Id = 1;
                 menuCommandDates.Add(noCommand);
             }
@@ -440,9 +440,9 @@ namespace Ryneus
             switch (rankingType)
             {
                 case RankingType.Evaluate:
-                return DataSystem.GetTextData(16120).Text;
+                return DataSystem.GetText(16120);
                 case RankingType.Turns:
-                return DataSystem.GetTextData(16121).Text;
+                return DataSystem.GetText(16121);
             }
             return "";
         }
@@ -575,16 +575,16 @@ namespace Ryneus
                 if (include == true)
                 {
                     // 〇位
-                    rankingText = rank.ToString() + DataSystem.GetTextData(16070).Text;
+                    rankingText = rank.ToString() + DataSystem.GetText(16070);
                 } else
                 {
                     // 圏外
-                    rankingText = DataSystem.GetTextData(16071).Text;
+                    rankingText = DataSystem.GetText(16071);
                 }
             } else
             {          
                 // 記録更新なし  
-                rankingText = DataSystem.GetTextData(16072).Text;
+                rankingText = DataSystem.GetText(16072);
             }
     #endif
             endEvent(rankingText);
@@ -592,7 +592,7 @@ namespace Ryneus
 
         public string SavePopupTitle()
         {
-            var baseText = DataSystem.GetTextData(11080).Text;
+            var baseText = DataSystem.GetText(11080);
             var subText = DataSystem.GetReplaceText(11081,CurrentStage.Master.SaveLimit.ToString());
             var savedCount = DataSystem.GetReplaceText(11083,(CurrentStage.SavedCount+1).ToString());
             return baseText + savedCount + "\n" + subText;
@@ -600,7 +600,7 @@ namespace Ryneus
 
         public string FailedSavePopupTitle()
         {
-            var baseText = DataSystem.GetTextData(11082).Text;
+            var baseText = DataSystem.GetText(11082);
             return baseText;
         }
 
@@ -634,7 +634,7 @@ namespace Ryneus
 
         public string ContinuePopupTitle()
         {
-            var baseText = DataSystem.GetTextData(3061).Text;
+            var baseText = DataSystem.GetText(3061);
     #if UNITY_ANDROID
             var subText = DataSystem.GetReplaceText(3062,CurrentStage.Master.ContinueLimit.ToString());
     #else

@@ -135,7 +135,7 @@ namespace Ryneus
                 SetHelpInputInfo("SELECT_HEROINE");
             } else
             {
-                SetHelpText(DataSystem.GetTextData(202).Help);
+                SetHelpText(DataSystem.GetHelp(202));
                 SetHelpInputInfo("STATUS");
             }
         }
@@ -241,7 +241,7 @@ namespace Ryneus
                 SetHelpInputInfo("SELECT_HEROINE");
             } else
             {
-                SetHelpText(DataSystem.GetTextData(202).Help);
+                SetHelpText(DataSystem.GetHelp(202));
                 SetHelpInputInfo("STATUS");
             }
         }

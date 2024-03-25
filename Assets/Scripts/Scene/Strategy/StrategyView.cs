@@ -58,7 +58,7 @@ namespace Ryneus
 
         public void StartLvUpAnimation()
         {
-            _battleStartAnim.SetText(DataSystem.GetTextData(3080).Text);
+            _battleStartAnim.SetText(DataSystem.GetText(3080));
             _battleStartAnim.StartAnim();
             _battleStartAnim.gameObject.SetActive(true);
             _animationBusy = true;
@@ -91,7 +91,7 @@ namespace Ryneus
 
         public void SetHelpWindow(){
             HelpWindow.SetInputInfo("");
-            HelpWindow.SetHelpText(DataSystem.GetTextData(14010).Text);
+            HelpWindow.SetHelpText(DataSystem.GetText(14010));
         }
 
         public void SetActors(List<ActorInfo> actorInfos)

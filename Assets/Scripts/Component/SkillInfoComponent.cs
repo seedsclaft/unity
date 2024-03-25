@@ -145,7 +145,7 @@ namespace Ryneus
             {
                 range.gameObject.SetActive(true);
                 var rangeTextId = skillData.Range == RangeType.S ? 351 : 352;
-                range.text = DataSystem.GetTextData(rangeTextId).Text;
+                range.text = DataSystem.GetText(rangeTextId);
             }
         }
 

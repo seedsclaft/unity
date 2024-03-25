@@ -375,7 +375,7 @@ namespace Ryneus
         {
             SoundManager.Instance.PlayStaticSe(SEType.Deny);
             var cautionInfo = new CautionInfo();
-            cautionInfo.SetTitle(DataSystem.GetTextData(11160).Text);
+            cautionInfo.SetTitle(DataSystem.GetText(11160));
             _view.CommandCallCaution(cautionInfo);
         }
 

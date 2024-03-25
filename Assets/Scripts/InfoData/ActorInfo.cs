@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using UnityEngine;
 
 namespace Ryneus
@@ -337,7 +338,7 @@ namespace Ryneus
             foreach (var attribute in GetAttributeRank())
             {
                 int textId = 320 + (int)attribute;
-                attributeValues.Add(DataSystem.GetTextData(textId).Text);
+                attributeValues.Add(DataSystem.GetText(textId));
             }
             return attributeValues;
         }
@@ -357,12 +358,7 @@ namespace Ryneus
         public AttributeType AlchemyAttribute(List<ActorInfo> actorInfos)
         {
             var alchemyAttributeRates = AlchemyAttributeRates(actorInfos);
-            int targetRand = 0;
-            foreach (var alchemyAttributeRate in alchemyAttributeRates)
-            {
-                targetRand += alchemyAttributeRate;
-            }
-            targetRand = UnityEngine.Random.Range (0,targetRand);
+            int targetRand = UnityEngine.Random.Range(0,alchemyAttributeRates.Sum(a => a));
             int targetIndex = -1;
             for (int i = 0;i < alchemyAttributeRates.Count;i++)
             {

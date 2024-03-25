@@ -124,7 +124,7 @@ namespace Ryneus
             if (_isSlotSaveEnd == false && _model.CurrentStage.Master.SlotSave)
             {
                 _isSlotSaveEnd = true;
-                var confirmView = new ConfirmInfo(DataSystem.GetTextData(16110).Text,(a) => UpdatePopupSlotSaveOpen());
+                var confirmView = new ConfirmInfo(DataSystem.GetText(16110),(a) => UpdatePopupSlotSaveOpen());
                 confirmView.SetIsNoChoice(true);
                 _view.CommandCallConfirm(confirmView);
                 return;
@@ -134,7 +134,7 @@ namespace Ryneus
 
         private void CommandRanking()
         {
-            var popupInfo = new ConfirmInfo(DataSystem.GetTextData(16010).Text,(a) => UpdateAddRankingPopup((ConfirmCommandType)a));
+            var popupInfo = new ConfirmInfo(DataSystem.GetText(16010),(a) => UpdateAddRankingPopup((ConfirmCommandType)a));
             popupInfo.SetSelectIndex(1);
             _view.CommandCallConfirm(popupInfo);
         }
@@ -185,7 +185,7 @@ namespace Ryneus
         {
             _model.GetRebornSkills();
             int textId = 16040;
-            var popupInfo = new ConfirmInfo(DataSystem.GetTextData(textId).Text,(a) => UpdatePopupReborn((ConfirmCommandType)a));
+            var popupInfo = new ConfirmInfo(DataSystem.GetText(textId),(a) => UpdatePopupReborn((ConfirmCommandType)a));
             popupInfo.SetIsNoChoice(true);
             _view.CommandCallConfirm(popupInfo);
         }
@@ -198,7 +198,7 @@ namespace Ryneus
             _view.CommandGameSystem(Base.CommandType.CloseConfirm);
             if (_model.ActorInfos().Count > 10)
             {
-                var popupInfo = new ConfirmInfo(DataSystem.GetTextData(16051).Text,(a) => UpdatePopupRebornEraseCheck((ConfirmCommandType)a));
+                var popupInfo = new ConfirmInfo(DataSystem.GetText(16051),(a) => UpdatePopupRebornEraseCheck((ConfirmCommandType)a));
                 popupInfo.SetIsNoChoice(true);
                 _view.CommandCallConfirm(popupInfo);
             }
@@ -214,7 +214,7 @@ namespace Ryneus
             SoundManager.Instance.PlayStaticSe(SEType.Decide);
             if (_model.ActorInfos().Count > 10)
             {
-                var popupInfo = new ConfirmInfo(DataSystem.GetTextData(16060).Text,(a) => UpdatePopupRebornErase((ConfirmCommandType)a));
+                var popupInfo = new ConfirmInfo(DataSystem.GetText(16060),(a) => UpdatePopupRebornErase((ConfirmCommandType)a));
                 _view.CommandCallConfirm(popupInfo);
                 return;
             }
@@ -246,7 +246,7 @@ namespace Ryneus
         public void CommandGetAlcana()
         {
             // ポップアップ表示        
-            var popupInfo = new ConfirmInfo(DataSystem.GetTextData(16100).Text,(a) => UpdateGetAlcanaPopup((ConfirmCommandType)a));
+            var popupInfo = new ConfirmInfo(DataSystem.GetText(16100),(a) => UpdateGetAlcanaPopup((ConfirmCommandType)a));
             popupInfo.SetIsNoChoice(true);
             _view.CommandCallConfirm(popupInfo);
         }

@@ -57,13 +57,13 @@ namespace Ryneus
             switch (TargetType)
             {
                 case TargetType.Friend:
-                return DataSystem.GetTextData(600).Text;
+                return DataSystem.GetText(600);
                 case TargetType.Opponent:
-                return DataSystem.GetTextData(601).Text;
+                return DataSystem.GetText(601);
                 case TargetType.Self:
-                return DataSystem.GetTextData(602).Text;
+                return DataSystem.GetText(602);
                 case TargetType.All:
-                return DataSystem.GetTextData(603).Text;
+                return DataSystem.GetText(603);
             }
             return "";
         }
@@ -74,20 +74,20 @@ namespace Ryneus
                 case ScopeType.All:
                 if (TargetType == TargetType.Opponent)
                 {
-                    return DataSystem.GetTextData(620).Text;
+                    return DataSystem.GetText(620);
                 }
-                return DataSystem.GetTextData(621).Text;
+                return DataSystem.GetText(621);
                 case ScopeType.Line:
-                return DataSystem.GetTextData(622).Text;
+                return DataSystem.GetText(622);
                 case ScopeType.One:
                 if (TargetType == TargetType.Opponent){
-                    return DataSystem.GetTextData(623).Text;
+                    return DataSystem.GetText(623);
                 }
-                return DataSystem.GetTextData(624).Text;
+                return DataSystem.GetText(624);
                 case ScopeType.Self:
                 return "";
                 case ScopeType.FrontLine:
-                return DataSystem.GetTextData(625).Text;
+                return DataSystem.GetText(625);
             }
             return "";
         }
@@ -283,19 +283,19 @@ namespace Ryneus
                     }
                     break;
                     case TriggerType.LessTroopMembers:
-                    if ( troops.Count >= party.Count )
+                    if (troops.Count >= party.Count)
                     {
                         CanUse = true;
                     }
                     break;
                     case TriggerType.MoreTroopMembers:
-                    if ( troops.Count <= party.Count )
+                    if (troops.Count <= party.Count)
                     {
                         CanUse = true;
                     }
                     break;
                     case TriggerType.LvUpper:
-                    if ( Param1 <= battlerInfo.Level )
+                    if (Param1 <= battlerInfo.Level)
                     {
                         CanUse = true;
                     }

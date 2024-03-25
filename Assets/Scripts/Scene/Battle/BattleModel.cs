@@ -10,7 +10,8 @@ namespace Ryneus
     public class BattleModel : BaseModel
     {
         private int _actionIndex = 0;
-        private int _turnCount = 0;
+        private int _turnCount = 1;
+        public int TurnCount => _turnCount;
         public void SeekTurnCount(){_turnCount++;}
 
         private List<BattlerInfo> _battlers = new List<BattlerInfo>();
@@ -2084,9 +2085,9 @@ namespace Ryneus
                         }
                         break;
                         case TriggerType.DemigodMemberCount:
-                        var demigodOpponents = battlerInfo.IsActor ? _troop.AliveBattlerInfos : _party.AliveBattlerInfos;
                         if (battlerInfo.IsAlive())
                         {
+                            var demigodOpponents = battlerInfo.IsActor ? _troop.AliveBattlerInfos : _party.AliveBattlerInfos;
                             var demigodMember = demigodOpponents.FindAll(a => a.IsState(StateType.Demigod));
                             if (demigodMember.Count >= triggerData.Param1)
                             {
@@ -2257,7 +2258,7 @@ namespace Ryneus
                 }
                 targetRand += battlerInfo.TargetRate();
             }
-            targetRand = UnityEngine.Random.Range (0,targetRand);
+            targetRand = UnityEngine.Random.Range(0,targetRand);
             int targetIndex = -1;
             for (int i = 0;i < targetIndexList.Count;i++)
             {
@@ -2689,7 +2690,7 @@ namespace Ryneus
             var list = new List<SystemData.CommandData>();
             var menuCommand = new SystemData.CommandData();
             menuCommand.Id = 2;
-            menuCommand.Name = DataSystem.GetTextData(703).Text;
+            menuCommand.Name = DataSystem.GetText(703);
             menuCommand.Key = "Help";
             list.Add(menuCommand);
             return MakeListData(list);
@@ -2699,7 +2700,7 @@ namespace Ryneus
         {
             var menuCommand = new SystemData.CommandData();
             menuCommand.Id = 1;
-            menuCommand.Name = DataSystem.GetTextData(706).Text;
+            menuCommand.Name = DataSystem.GetText(706);
             menuCommand.Key = "BATTLE_AUTO";
             return menuCommand;
         }

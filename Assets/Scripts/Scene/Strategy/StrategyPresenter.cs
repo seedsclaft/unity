@@ -122,7 +122,7 @@ namespace Ryneus
                 {
                     _model.SetLvUp();
                     _model.MakeResult();
-                    _view.SetTitle(DataSystem.GetTextData(14030).Text);
+                    _view.SetTitle(DataSystem.GetText(14030));
                     _view.StartResultAnimation(_model.MakeListData(battledResultActors),bonusList);
                     if (_model.LevelUpData.Count > 0)
                     {
@@ -130,7 +130,7 @@ namespace Ryneus
                         _view.HideResultList();
                     }
                 } else{
-                    _view.SetTitle(DataSystem.GetTextData(14030).Text);
+                    _view.SetTitle(DataSystem.GetText(14030));
                     _view.StartResultAnimation(_model.MakeListData(battledResultActors),bonusList);
                 }
             } else
@@ -142,7 +142,7 @@ namespace Ryneus
                 {
                     bonusList.Add(_model.IsBonusTactics(item.ActorId));
                 }
-                _view.SetTitle(DataSystem.GetTextData(14020).Text);
+                _view.SetTitle(DataSystem.GetText(14020));
                 _view.StartResultAnimation(_model.MakeListData(tacticsActors),bonusList);
             }
         }
@@ -362,7 +362,7 @@ namespace Ryneus
             var statusViewInfo = new StatusViewInfo(() => {
                 _view.CommandGameSystem(Base.CommandType.CloseStatus);
                 SetHelpInputSkipEnable();
-                _view.SetHelpText(DataSystem.GetTextData(14010).Text);
+                _view.SetHelpText(DataSystem.GetText(14010));
                 _view.ChangeUIActive(true);
             });
             statusViewInfo.SetDisplayDecideButton(false);
@@ -389,7 +389,7 @@ namespace Ryneus
                 _view.CommandGameSystem(Base.CommandType.CloseStatus);
                 _view.ChangeUIActive(true);
                 SetHelpInputSkipEnable();
-                _view.SetHelpText(DataSystem.GetTextData(14010).Text);
+                _view.SetHelpText(DataSystem.GetText(14010));
             });
             statusViewInfo.SetEnemyInfos(enemyInfos,false);
             _view.CommandCallEnemyInfo(statusViewInfo);
