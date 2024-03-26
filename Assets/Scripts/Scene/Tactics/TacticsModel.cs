@@ -81,6 +81,7 @@ namespace Ryneus
                 MakePrizeData(saveRecord,symbolInfo.GetItemInfos);
                 list.Add(symbolInfo);
             }
+            list.Sort((a,b) => a.StageSymbolData.SeekIndex > b.StageSymbolData.SeekIndex ? 1 : -1);
             return MakeListData(list);
         }
 
@@ -159,22 +160,28 @@ namespace Ryneus
         public List<ListData> SideMenu()
         {
             var list = new List<SystemData.CommandData>();
-            var retire = new SystemData.CommandData();
-            retire.Id = 1;
-            retire.Name = DataSystem.GetText(704);
-            retire.Key = "Retire";
+            var retire = new SystemData.CommandData
+            {
+                Id = 1,
+                Name = DataSystem.GetText(704),
+                Key = "Retire"
+            };
             list.Add(retire);
-            var menuCommand = new SystemData.CommandData();
-            menuCommand.Id = 2;
-            menuCommand.Name = DataSystem.GetText(703);
-            menuCommand.Key = "Help";
+            var menuCommand = new SystemData.CommandData
+            {
+                Id = 2,
+                Name = DataSystem.GetText(703),
+                Key = "Help"
+            };
             list.Add(menuCommand);
             if (CurrentStage.SurvivalMode == false)
             {
-                var saveCommand = new SystemData.CommandData();
-                saveCommand.Id = 3;
-                saveCommand.Name = DataSystem.GetText(707);
-                saveCommand.Key = "Save";
+                var saveCommand = new SystemData.CommandData
+                {
+                    Id = 3,
+                    Name = DataSystem.GetText(707),
+                    Key = "Save"
+                };
                 list.Add(saveCommand);
             }
             return MakeListData(list);
@@ -185,10 +192,12 @@ namespace Ryneus
             var list = new List<TacticsActorInfo>();
             foreach (var member in StageMembers())
             {
-                var tacticsActorInfo = new TacticsActorInfo();
-                tacticsActorInfo.TacticsCommandType = _TacticsCommandType;
-                tacticsActorInfo.ActorInfo = member;
-                tacticsActorInfo.ActorInfos = StageMembers();
+                var tacticsActorInfo = new TacticsActorInfo
+                {
+                    TacticsCommandType = _TacticsCommandType,
+                    ActorInfo = member,
+                    ActorInfos = StageMembers()
+                };
                 list.Add(tacticsActorInfo);
             }
             return MakeListData(list);
@@ -212,10 +221,12 @@ namespace Ryneus
 
         public TacticsCommandData TacticsCommandData()
         {
-            var tacticsCommandData = new TacticsCommandData();
-            tacticsCommandData.Title = CommandTitle();
-            tacticsCommandData.Description = CommandDescription();
-            tacticsCommandData.Rank = CommandRank();
+            var tacticsCommandData = new TacticsCommandData
+            {
+                Title = CommandTitle(),
+                Description = CommandDescription(),
+                Rank = CommandRank()
+            };
             return tacticsCommandData;
         }
 
@@ -305,10 +316,12 @@ namespace Ryneus
             }
             // 現在を挿入
             var seekIndex = CurrentStage.CurrentTurn;
-            var currentSymbol = new StageSymbolData();
-            currentSymbol.Seek = seekIndex;
-            currentSymbol.SeekIndex = 0;
-            currentSymbol.SymbolType = SymbolType.None;
+            var currentSymbol = new StageSymbolData
+            {
+                Seek = seekIndex,
+                SeekIndex = 0,
+                SymbolType = SymbolType.None
+            };
             var currentInfo = new SymbolInfo(currentSymbol);
             currentInfo.SetLastSelected(true);
             var currentList = new List<SymbolInfo>(){currentInfo};

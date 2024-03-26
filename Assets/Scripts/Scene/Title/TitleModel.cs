@@ -26,15 +26,19 @@ namespace Ryneus
         public List<ListData> SideMenu()
         {
             var list = new List<SystemData.CommandData>();
-            var menuCommand = new SystemData.CommandData();
-            menuCommand.Id = 1;
-            menuCommand.Name = DataSystem.GetText(700);
-            menuCommand.Key = "License";
+            var menuCommand = new SystemData.CommandData
+            {
+                Id = 1,
+                Name = DataSystem.GetText(700),
+                Key = "License"
+            };
             list.Add(menuCommand);
-            var initCommand = new SystemData.CommandData();
-            initCommand.Id = 1;
-            initCommand.Name = DataSystem.GetText(708);
-            initCommand.Key = "InitializeData";
+            var initCommand = new SystemData.CommandData
+            {
+                Id = 1,
+                Name = DataSystem.GetText(708),
+                Key = "InitializeData"
+            };
             list.Add(initCommand);
             return MakeListData(list);
         }

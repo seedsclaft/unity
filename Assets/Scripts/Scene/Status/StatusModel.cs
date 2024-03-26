@@ -15,12 +15,7 @@ namespace Ryneus
             {
                 textId = 11050;
             }
-
-            if (textId >= 0)
-            {
-                return DataSystem.GetText(textId);
-            }
-            return "";
+            return DataSystem.GetText(textId);
         }
 
         private int _currentIndex = 0;

@@ -42,11 +42,11 @@ namespace Ryneus
             }
             if (viewEvent.commandType == CommandType.StartEntry)
             {
-            CommandStartEntry();
+                CommandStartEntry();
             }
             if (viewEvent.commandType == CommandType.EntryEnd)
             {
-                Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
+                SoundManager.Instance.PlayStaticSe(SEType.Decide);
                 CommandEntryEnd((string)viewEvent.template);
             }
         }

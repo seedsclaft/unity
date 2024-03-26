@@ -251,6 +251,13 @@ namespace Ryneus
             {
                 SymbolRecordData.SetSymbolItemCallHandler((a) => OnClickSymbol(a));
             }
+            symbolRecordList.SetSelectedHandler(() => 
+            {
+                foreach (var SymbolRecordData in symbolRecordList.GetComponentsInChildren<SymbolRecordData>())
+                {
+                    SymbolRecordData.UpdateSelect(symbolRecordList.Index);
+                }
+            });
         }
         
         public void SetPositionSymbolRecords(List<ListData> symbolInfos)

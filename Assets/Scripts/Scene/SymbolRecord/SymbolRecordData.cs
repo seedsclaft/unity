@@ -2,12 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 namespace Ryneus
 {
     public class SymbolRecordData : ListItem ,IListViewItem
     {
         [SerializeField] private List<SymbolComponent> symbolComponents;
+        [SerializeField] private GameObject pastObj;
+        [SerializeField] private GameObject currentObj;
+        [SerializeField] private GameObject futureObj;
+        [SerializeField] private TextMeshProUGUI seekerText;
 
         private bool _isButtonInit = false;
         public void UpdateViewItem()
@@ -27,6 +32,24 @@ namespace Ryneus
                     symbolComponent.UpdateInfo(data);
                 }
             }
+            if (dates.Count > 0)
+            {
+                var symbolSeek = dates[0].StageSymbolData.Seek;
+                var current = GameSystem.CurrentStageData.CurrentStage.CurrentTurn;
+                pastObj?.SetActive(symbolSeek < current);
+                currentObj?.SetActive(symbolSeek == current);
+                futureObj?.SetActive(symbolSeek > current);
+                var textId = 81;
+                if (symbolSeek == current)
+                {
+                    textId = 82;
+                } else
+                if (symbolSeek > current)
+                {
+                    textId = 83;
+                }
+                seekerText?.SetText(DataSystem.GetText(textId));
+            }
         }
 
         public void SetSymbolItemCallHandler(System.Action<SymbolInfo> handler)
@@ -40,5 +63,9 @@ namespace Ryneus
             }
         }
 
+        public void UpdateSelect(int index)
+        {
+            seekerText?.gameObject?.SetActive(index == Index);
+        }
     }
 }

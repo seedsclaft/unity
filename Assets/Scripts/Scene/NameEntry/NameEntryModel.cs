@@ -8,6 +8,5 @@ namespace Ryneus
             CurrentData.SetPlayerName(name);
             SavePlayerData();
         }
-
     }
 }
