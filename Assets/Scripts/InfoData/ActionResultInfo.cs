@@ -1026,13 +1026,11 @@ namespace Ryneus
 
         private int CalcDamageShield(BattlerInfo subject,BattlerInfo target,int hpDamage)
         {
-            if (target.IsState(StateType.DamageShield))
+            var shield = target.StateEffectAll(StateType.DamageShield);
+            if (shield > hpDamage)
             {
-                var shield = target.StateEffectAll(StateType.DamageShield);
-                if (shield > hpDamage)
-                {
-                    hpDamage = 0;
-                }
+                hpDamage = 0;
+                _displayStates.Add(target.GetStateInfo(StateType.DamageShield));
             }
             return hpDamage;
         }

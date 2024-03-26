@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Ryneus
 {
@@ -560,12 +561,8 @@ namespace Ryneus
             int effect = 0;
             if (IsState(stateType))
             {
-                List<StateInfo> stateInfos = GetStateInfoAll(stateType);
-                
-                for (var i = 0;i < stateInfos.Count;i++)
-                {
-                    effect += stateInfos[i].Effect;
-                }
+                var stateInfos = GetStateInfoAll(stateType);
+                effect = stateInfos.Sum(a => a.Effect);
             }
             return effect;
         }
@@ -582,7 +579,7 @@ namespace Ryneus
             }
             if (IsState(StateType.Undead))
             {
-                if ((StateType)stateInfo.Master.StateType == StateType.Regenerate)
+                if (stateInfo.Master.StateType == StateType.Regenerate)
                 {
                     return false;
                 }
