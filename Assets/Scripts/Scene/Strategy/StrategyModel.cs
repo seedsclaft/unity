@@ -415,10 +415,10 @@ namespace Ryneus
         {
             foreach (var tempActorInfo in TempInfo.TempActorInfos)
             {
-                tempActorInfo.SetBattleIndex(-1);
+                //tempActorInfo.SetBattleIndex(-1);
                 PartyInfo.UpdateActorInfo(tempActorInfo);
             }
-            TempInfo.ClearBattleActors();
+            //TempInfo.ClearBattleActors();
         }
     }
 

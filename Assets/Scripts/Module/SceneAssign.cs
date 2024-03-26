@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Ryneus
@@ -22,7 +20,6 @@ namespace Ryneus
         [SerializeField] private GameObject fastBattleScene = null;
         [SerializeField] private GameObject alcanaSelectScene = null;
         [SerializeField] private GameObject alcanaResultScene = null;
-        [SerializeField] private GameObject symbolRecordScene = null;
         public GameObject CreateScene(Scene scene,HelpWindow helpWindow)
         {
             var prefab = Instantiate(GetSceneObject(scene));
@@ -66,8 +63,6 @@ namespace Ryneus
                 return alcanaSelectScene;
                 case Scene.AlcanaResult:
                 return alcanaResultScene;
-                case Scene.SymbolRecord:
-                return symbolRecordScene;
             }
             return null;
         }

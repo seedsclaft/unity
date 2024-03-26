@@ -35,7 +35,10 @@ namespace Ryneus
                     symbolInfo = new SymbolInfo(data);
                 }
                 var getItemInfos = new List<GetItemInfo>();
-                if (symbolInfo.SymbolType == SymbolType.Battle || symbolInfo.SymbolType == SymbolType.Boss){
+                switch (symbolInfo.SymbolType)
+                {
+                    case SymbolType.Battle:
+                    case SymbolType.Boss:
                     if (symbolInfo.StageSymbolData.Param1 > 0 || symbolInfo.StageSymbolData.Param1 == -1)
                     {
                         symbolInfo.SetTroopInfo(BattleTroop(symbolInfo.StageSymbolData));
@@ -45,10 +48,9 @@ namespace Ryneus
                     {
                         getItemInfos.AddRange(symbolInfo.TroopInfo.GetItemInfos);
                     }
-                }
-                // アルカナランダムで報酬設定
-                if (symbolInfo.SymbolType == SymbolType.Alcana)
-                {
+                    break;
+                    case SymbolType.Alcana:
+                    // アルカナランダムで報酬設定
                     if (symbolInfo.StageSymbolData.Param1 == -1)
                     {
                         var alcanaRank = symbolInfo.StageSymbolData.Param2;
@@ -56,15 +58,36 @@ namespace Ryneus
                         var rand = Random.Range(0,alcanaSkills.Count);
                         if (alcanaSkills.Count > 0)
                         {
-                            var getItemData = new GetItemData();
-                            getItemData.Type = GetItemType.Skill;
-                            getItemData.Param1 = alcanaSkills[rand].Id;
-                            var getItemInfo = new GetItemInfo(getItemData);
-                            symbolInfo.SetGetItemInfos(new List<GetItemInfo>(){getItemInfo});
+                            // 報酬設定
+                            var alcanaData = new GetItemData
+                            {
+                                Type = GetItemType.Skill,
+                                Param1 = alcanaSkills[rand].Id
+                            };
+                            var getItemInfo = new GetItemInfo(alcanaData);
+                            symbolInfo.SetGetItemInfos(new List<GetItemInfo>(){new GetItemInfo(alcanaData)});
                             getItemInfos.Add(getItemInfo);
                         }
-
                     }
+                    break;
+                    case SymbolType.Resource:
+                        // 報酬設定
+                        var resourceData = new GetItemData
+                        {
+                            Type = GetItemType.Numinous,
+                            Param1 = symbolInfo.StageSymbolData.Param1
+                        };
+                        getItemInfos.Add(new GetItemInfo(resourceData));
+                    break;
+                    case SymbolType.Actor:
+                        // 表示用に報酬設定
+                        var actorData = new GetItemData
+                        {
+                            Type = GetItemType.AddActor,
+                            Param1 = symbolInfo.StageSymbolData.Param1
+                        };
+                        getItemInfos.Add(new GetItemInfo(actorData));
+                    break;
                 }
                 if (symbolInfo.StageSymbolData.PrizeSetId > 0)
                 {
@@ -134,11 +157,10 @@ namespace Ryneus
                                 list.Add(actorInfo.ActorId);
                             }
                         }
-                        targetRand = Random.Range(0,list.Count-1);
+                        targetRand = Random.Range(0,list.Count);
                         stageSymbolData.CopyData(symbol);
-                        stageSymbolData.Param1 = 0;
+                        stageSymbolData.Param1 = list[targetRand];
                         stageSymbolData.Param2 = 0;
-                        stageSymbolData.PrizeSetId = 500 + list[targetRand];
                         break;
                     case SymbolType.Alcana:
                         if (!PartyInfo.CurrentAlchemyIdList(CurrentStage.Id,CurrentStage.CurrentTurn).Contains(symbol.Param1))

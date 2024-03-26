@@ -79,13 +79,6 @@ namespace Ryneus
             _view.CommandGameSystem(Base.CommandType.ClosePopup);
         }
 
-        private void UpdatePopupLost(ConfirmCommandType confirmCommandType)
-        {
-            _view.CommandGameSystem(Base.CommandType.CloseConfirm);
-            CommandContinue();
-            //_model.LostActors(_model.LostMembers());
-        }
-
         private void CommandStartStrategy(){
             if (_model.BattleResult)
             {
@@ -207,21 +200,24 @@ namespace Ryneus
                 _model.DecideStrength();
                 learnSkillInfo.SetToValue(_model.LevelUpData[0].Evaluate());
                 SoundManager.Instance.PlayStaticSe(SEType.LearnSkill);
-                    
-                var popupInfo = new PopupInfo();
-                popupInfo.PopupType = PopupType.LearnSkill;
-                popupInfo.EndEvent = () => 
+
+                var popupInfo = new PopupInfo
                 {
-                    _model.RemoveLevelUpData();
-                    if (_model.LevelUpData.Count > 0)
+                    PopupType = PopupType.LearnSkill,
+                    EndEvent = () =>
                     {
-                        CommandEndLvUpAnimation();
-                    } else
-                    {
-                        _view.ShowResultList(_model.ResultGetItemInfos);
-                    }
+                        _model.RemoveLevelUpData();
+                        if (_model.LevelUpData.Count > 0)
+                        {
+                            CommandEndLvUpAnimation();
+                        }
+                        else
+                        {
+                            _view.ShowResultList(_model.ResultGetItemInfos);
+                        }
+                    },
+                    template = learnSkillInfo
                 };
-                popupInfo.template = learnSkillInfo;
                 _view.CommandCallPopup(popupInfo);
             } else
             {
@@ -263,7 +259,24 @@ namespace Ryneus
             {
                 if (_model.BattleResult && _model.BattleResultVictory() == false)
                 {
-                    _model.ReturnTempBattleMembers();            
+                    _model.ReturnTempBattleMembers(); 
+                    _view.CommandChangeViewToTransition(null);  
+                    // ボス戦なら
+                    if (_model.CurrentSelectSymbol().SymbolType == SymbolType.Boss)
+                    {
+                        //SoundManager.Instance.FadeOutBgm();
+                        PlayBossBgm();
+                    } else
+                    {
+                        var bgmData = DataSystem.Data.GetBGM(_model.TacticsBgmKey());
+                        if (bgmData.CrossFade != "" && SoundManager.Instance.CrossFadeMode)
+                        {
+                            SoundManager.Instance.ChangeCrossFade();
+                        } else
+                        {
+                            PlayTacticsBgm();
+                        }
+                    }      
                     _view.CommandGotoSceneChange(Scene.Battle);
                 } else
                 {

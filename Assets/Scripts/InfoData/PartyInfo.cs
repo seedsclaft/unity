@@ -38,10 +38,7 @@ namespace Ryneus
             records = records.FindAll(a => a.StageId == stageId && a.Seek < seek || a.StageId < stageId);
             foreach (var record in records)
             {
-                foreach (var getItemInfo in record.SymbolInfo.GetItemInfos)
-                {
-                    actorIdList.Add(getItemInfo.Param1);
-                }
+                actorIdList.Add(record.SymbolInfo.StageSymbolData.Param1);
             }
             return actorIdList;
         }
@@ -53,10 +50,7 @@ namespace Ryneus
             records = records.FindAll(a => a.StageId == stageId && a.Seek < seek || a.StageId < stageId);
             foreach (var record in records)
             {
-                foreach (var getItemInfo in record.SymbolInfo.GetItemInfos)
-                {
-                    actorIdList.Add(getItemInfo.Param1);
-                }
+                actorIdList.Add(record.SymbolInfo.StageSymbolData.Param1);
             }
             return actorIdList;
         }

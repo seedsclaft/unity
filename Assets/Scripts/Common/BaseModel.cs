@@ -139,16 +139,20 @@ namespace Ryneus
         public List<SystemData.CommandData> BaseConfirmCommand(int yesTextId,int noTextId = 0)
         {
             var menuCommandDates = new List<SystemData.CommandData>();
-            var yesCommand = new SystemData.CommandData();
-            yesCommand.Key = "Yes";
-            yesCommand.Name = DataSystem.GetText(yesTextId);
-            yesCommand.Id = 0;
+            var yesCommand = new SystemData.CommandData
+            {
+                Key = "Yes",
+                Name = DataSystem.GetText(yesTextId),
+                Id = 0
+            };
             if (noTextId != 0)
             {
-                var noCommand = new SystemData.CommandData();
-                noCommand.Key = "No";
-                noCommand.Name = DataSystem.GetText(noTextId);
-                noCommand.Id = 1;
+                var noCommand = new SystemData.CommandData
+                {
+                    Key = "No",
+                    Name = DataSystem.GetText(noTextId),
+                    Id = 1
+                };
                 menuCommandDates.Add(noCommand);
             }
             menuCommandDates.Add(yesCommand);

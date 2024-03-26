@@ -204,6 +204,5 @@ namespace Ryneus
         FastBattle,
         AlcanaSelect,
         AlcanaResult,
-        SymbolRecord,
     }
 }
