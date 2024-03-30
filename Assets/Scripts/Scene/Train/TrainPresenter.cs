@@ -186,9 +186,11 @@ namespace Ryneus
                 _view.CommandGameSystem(Base.CommandType.CloseStatus);
                 _view.ChangeUIActive(true);
                 _view.SetHelpInputInfo("TACTICS");
+                _view.SetNuminous(_model.Currency);
             });
             _view.ChangeUIActive(false);
             statusViewInfo.SetDisplayDecideButton(false);
+            statusViewInfo.SetDisplayLevelResetButton(true);
             _view.CommandCallStatus(statusViewInfo);
         }
 

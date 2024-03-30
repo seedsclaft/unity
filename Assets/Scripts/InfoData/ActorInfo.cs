@@ -14,12 +14,13 @@ namespace Ryneus
         public int ActorId => _actorId;
         public int MaxHp => CurrentStatus.Hp;
         public int MaxMp => CurrentStatus.Mp;
-        private int _level;
-        public int Level => _level;
+        private List<LevelUpInfo> _levelUpInfos = new ();
+        
+        public int Level => _levelUpInfos.Count + 1;
         private int _levelUpCost = 0;
         public int LevelUpCost => _levelUpCost;
         
-        public StatusInfo CurrentStatus => LevelUpStatus(_level);
+        public StatusInfo CurrentStatus => LevelUpStatus(Level);
         public List<AttributeRank> GetAttributeRank()
         {
             var list = new List<AttributeRank>();
@@ -78,7 +79,6 @@ namespace Ryneus
         public ActorInfo(ActorData actorData)
         {
             _actorId = actorData.Id;
-            _level = actorData.InitLv;
             SetInitialParameter(actorData);
             _currentHp = Master.InitStatus.Hp;
             _currentMp = Master.InitStatus.Mp;
@@ -91,7 +91,6 @@ namespace Ryneus
         {
             _actorId = rankingActorData.ActorId;
             _attribute = Master.Attribute;
-            _level = rankingActorData.Level;
             _sp = 0;
             _upperRate = Master.NeedStatus;
             SetInitialParameter(Master);
@@ -112,7 +111,6 @@ namespace Ryneus
 
         public void CopyData(ActorInfo baseActorInfo)
         {
-            _level = baseActorInfo.Level;
             _plusStatus = new StatusInfo();
             _plusStatus.SetParameter(
                 baseActorInfo._plusStatus.GetParameter(StatusParamType.Hp),
@@ -131,6 +129,7 @@ namespace Ryneus
             _battleIndex = baseActorInfo.BattleIndex;
             _lost = baseActorInfo.Lost;
             _numinous = baseActorInfo.Numinous;
+            _levelUpInfos = baseActorInfo._levelUpInfos;
         }
 
         private void SetInitialParameter(ActorData actorData)
@@ -157,7 +156,7 @@ namespace Ryneus
                 var _learningData = Master.LearningSkills[i];
                 if (list.Find(a =>a.Id == _learningData.SkillId) != null) continue;
                 var skillInfo = new SkillInfo(_learningData.SkillId);
-                if (_level >= _learningData.Level)
+                if (Level >= _learningData.Level)
                 {
                     skillInfo.SetLearningState(LearningState.Learned);
                 } else
@@ -183,19 +182,45 @@ namespace Ryneus
             ChangeMp(9999);
         }
 
-        public void LevelUp(int plusCount)
+        public void LevelUp(int useCost = 0,int stageId = -1,int seek = -1,int seekIndex = -1)
         {
-            _level++;
-            for (int i = 0;i < plusCount;i++)
-            {
-                _level++;
-            }
+            var levelUpInfo = new LevelUpInfo(
+                useCost,stageId,seek,seekIndex
+            );
+            _levelUpInfos.Add(levelUpInfo);
             foreach (var skillInfo in LearningSkills())
             {
                 skillInfo.SetLearningState(LearningState.Learned);
             }
             ChangeHp(CurrentParameter(StatusParamType.Hp));
             ChangeMp(CurrentParameter(StatusParamType.Mp));
+        }
+
+        public bool EnableLvReset()
+        {
+            return _numinous > 0 || _levelUpInfos.Find(a => a.Currency > 0) != null;
+        }
+
+        public int LevelReset()
+        {
+            int currency = 0;
+            var currencyIndexes = new List<int>();
+            for (int i = 0;i < _levelUpInfos.Count;i++)
+            {
+                if (_levelUpInfos[i].Currency > 0)
+                {
+                    currency += _levelUpInfos[i].Currency;
+                    currencyIndexes.Add(i);
+                }
+            }
+            for (int i = currencyIndexes.Count-1;i >= 0;i--)
+            {
+                _levelUpInfos.RemoveAt(currencyIndexes[i]);
+            }
+            currency += _numinous;
+            _numinous = 0;
+            _learnSkillIds.Clear();
+            return currency;
         }
 
         public StatusInfo LevelUpStatus(int level)
@@ -227,7 +252,7 @@ namespace Ryneus
 
         public List<SkillInfo> LearningSkills(int plusLv = 0)
         {
-            return LearningSkillInfos().FindAll(a => a.LearningState == LearningState.NotLearn && a.LearningLv <= (_level+plusLv));
+            return LearningSkillInfos().FindAll(a => a.LearningState == LearningState.NotLearn && a.LearningLv <= (Level+plusLv));
         }
 
         public void GainLevelUpCost(int cost)
@@ -270,7 +295,7 @@ namespace Ryneus
 
         public int CurrentParameter(StatusParamType statusParamType)
         {
-            return LevelUpStatus(_level).GetParameter(statusParamType);
+            return LevelUpStatus(Level).GetParameter(statusParamType);
         }
 
         public void ChangeHp(int hp)
@@ -466,7 +491,7 @@ namespace Ryneus
             var useCost = 0;
             for (int i = 0;i <= LevelUpCost;i++)
             {
-                if (i >= (TacticsUtility.TrainCost(_level+levelUpNum,this) + useCost))
+                if (i >= (TacticsUtility.TrainCost(Level+levelUpNum,this) + useCost))
                 {
                     useCost += i;
                     levelUpNum++;

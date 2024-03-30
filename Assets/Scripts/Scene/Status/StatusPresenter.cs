@@ -33,25 +33,26 @@ namespace Ryneus
                 return;
             }
             UnityEngine.Debug.Log(viewEvent.commandType);
-            if (viewEvent.commandType == Status.CommandType.DecideActor)
+            switch (viewEvent.commandType)
             {
-                CommandDecideActor();
-            }
-            if (viewEvent.commandType == Status.CommandType.LeftActor)
-            {
-                CommandLeftActor();
-            }
-            if (viewEvent.commandType == Status.CommandType.RightActor)
-            {
-                CommandRightActor();
-            }
-            if (viewEvent.commandType == Status.CommandType.Back)
-            {
-                CommandBack();
-            }
-            if (viewEvent.commandType == Status.CommandType.CharacterList)
-            {
-                CommandCharacterList();
+                case Status.CommandType.DecideActor:
+                    CommandDecideActor();
+                    return;
+                case Status.CommandType.LeftActor:
+                    CommandLeftActor();
+                    return;
+                case Status.CommandType.RightActor:
+                    CommandRightActor();
+                    return;
+                case Status.CommandType.Back:
+                    CommandBack();
+                    return;
+                case Status.CommandType.CharacterList:
+                    CommandCharacterList();
+                    return;
+                case Status.CommandType.LvReset:
+                    CommandLvReset();
+                    return;
             }
         }
 
@@ -73,6 +74,41 @@ namespace Ryneus
                 CommandRefresh();
             });
             _view.CommandCallCharacterList(characterListInfo);
+        }
+
+        private void CommandLvReset()
+        {
+            var enable = _model.EnableLvReset();
+            if (enable)
+            {
+                SoundManager.Instance.PlayStaticSe(SEType.Decide);
+                var confirmInfo = new ConfirmInfo(DataSystem.GetReplaceText(14160,_model.CurrentActor.Master.Name),(a) => UpdatePopupActorLvReset(a));
+                _view.CommandCallConfirm(confirmInfo);
+                _popupCommandType = Status.CommandType.DecideStage;
+            } else
+            {
+                SoundManager.Instance.PlayStaticSe(SEType.Deny);
+                var cautionInfo = new CautionInfo();
+                cautionInfo.SetTitle(DataSystem.GetText(14150));
+                _view.CommandCallCaution(cautionInfo);
+            }
+        }
+
+        private void UpdatePopupActorLvReset(ConfirmCommandType confirmCommandType)
+        {
+            _view.CommandGameSystem(Base.CommandType.CloseConfirm);
+            if (confirmCommandType == ConfirmCommandType.Yes)
+            {
+                var currency = _model.ActorLvReset();
+                var confirmInfo = new ConfirmInfo(DataSystem.GetReplaceText(14170,currency.ToString()),(a) => {
+                    SoundManager.Instance.PlayStaticSe(SEType.Decide);
+                    CommandRefresh();
+                    _view.CommandGameSystem(Base.CommandType.CloseConfirm);
+                });
+                confirmInfo.SetIsNoChoice(true);
+                _view.CommandCallConfirm(confirmInfo);
+                SoundManager.Instance.PlayStaticSe(SEType.Decide);
+            }
         }
 
         private void CommandDecideActor()

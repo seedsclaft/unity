@@ -62,7 +62,7 @@ namespace Ryneus
 
         private void CommandStartEntry()
         {
-            var popupInfo = new ConfirmInfo(DataSystem.GetText(5000),(menuCommandInfo) => UpdatePopup((ConfirmCommandType)menuCommandInfo));
+            var popupInfo = new ConfirmInfo(DataSystem.GetText(5000),(a) => UpdatePopup((ConfirmCommandType)a));
             popupInfo.SetIsNoChoice(true);
             _view.CommandCallConfirm(popupInfo);
             _view.ShowNameEntry("");

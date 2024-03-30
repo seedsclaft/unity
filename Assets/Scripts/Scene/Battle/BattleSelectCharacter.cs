@@ -19,6 +19,7 @@ namespace Ryneus
         [SerializeField] private GameObject detailObj;
         [SerializeField] private ActorInfoComponent actorInfoComponent;
         [SerializeField] private BattlerInfoComponent battlerInfoComponent;
+        [SerializeField] private SideMenuButton lvResetButton;
         private bool _isInit = false;
 
         private SelectCharacterTabType _selectCharacterTabType = SelectCharacterTabType.Detail;
@@ -56,8 +57,17 @@ namespace Ryneus
                 idx++;
             }
             gameObject.SetActive(false);
+            lvResetButton?.gameObject.SetActive(false);
             displaySelectCard.Clear();
             UpdateTabs();
+        }
+
+        public void InitializeLvReset(System.Action lvResetEvent)
+        {
+            lvResetButton?.gameObject.SetActive(true);
+            lvResetButton?.SetCallHandler(() => {
+                if (lvResetEvent != null) lvResetEvent(); 
+            });
         }
 
         public void SelectCharacterTab(SelectCharacterTabType selectCharacterTabType)
@@ -100,7 +110,6 @@ namespace Ryneus
                     }
                 } else
                 {
-                    
                     for (int i = detailTabs.Count-1;i >= 0;i--)
                     {
                         if (!detailTabs[i].gameObject.activeSelf && (i == nextIndex))

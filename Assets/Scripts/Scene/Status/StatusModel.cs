@@ -77,5 +77,16 @@ namespace Ryneus
             return new List<GetItemInfo>(){getItemInfo};
         }
 
+        public bool EnableLvReset()
+        {
+            return CurrentActor.EnableLvReset();
+        }
+
+        public int ActorLvReset()
+        {
+            var resetCurrency = CurrentActor.LevelReset();
+            PartyInfo.ChangeCurrency(Currency + resetCurrency);
+            return resetCurrency;
+        }
     }
 }

@@ -61,7 +61,7 @@ namespace Ryneus
                 // 新規魔法取得があるか
                 var skills = lvUpActorInfo.LearningSkills(1);
                 var from = lvUpActorInfo.Evaluate();
-                lvUpActorInfo.LevelUp(0);
+                lvUpActorInfo.LevelUp(0,CurrentStage.Id,CurrentStage.CurrentTurn,CurrentStage.CurrentSeekIndex);
                 var to = lvUpActorInfo.Evaluate();
                 if (skills.Count > 0)
                 {
@@ -118,7 +118,7 @@ namespace Ryneus
                         {
                             if (stageMember.Lost == false)
                             {
-                                stageMember.LevelUp(0);
+                                //stageMember.LevelUp(0);
                             }
                         }
                         break;
@@ -150,7 +150,10 @@ namespace Ryneus
                         var levelUpByCost = actorInfo.LevelUpByCost();
                         if (levelUpByCost > 0)
                         {
-                            actorInfo.LevelUp(levelUpByCost-1);
+                            for (int i = 0;i < levelUpByCost-1;i++)
+                            {
+                                //actorInfo.LevelUp(0);
+                            }
                             var getItemData = new GetItemData();
                             var getItemInfo = new GetItemInfo(getItemData);
                             getItemInfo.MakeActorLvUpResult(actorInfo.Master.Name,actorInfo.Level);

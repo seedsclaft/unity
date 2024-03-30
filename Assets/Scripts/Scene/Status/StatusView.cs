@@ -18,11 +18,12 @@ namespace Ryneus
         [SerializeField] private Button rightButton = null;
         [SerializeField] private GameObject decideAnimation = null;
 
+        private StatusViewInfo _statusViewInfo = null; 
+
         private System.Action _backEvent = null;
-        private bool _isDisplayDecide = false;
+        private bool _isDisplayDecide => _statusViewInfo != null && _statusViewInfo.DisplayDecideButton;
         private string _helpText;
-        private bool _isDisplayBack = true;
-        public bool IsDisplayBack => _isDisplayBack;
+        private bool _isDisplayBack => _statusViewInfo != null && _statusViewInfo.DisplayBackButton;
         public override void Initialize() 
         {
             base.Initialize();
@@ -111,9 +112,11 @@ namespace Ryneus
 
         public void SetViewInfo(StatusViewInfo statusViewInfo)
         {
-            DisplayDecideButton(statusViewInfo.DisplayDecideButton);
-            DisplayBackButton(statusViewInfo.DisplayBackButton);
+            _statusViewInfo = statusViewInfo;
+            DisplayDecideButton();
+            _backEvent = statusViewInfo.BackEvent;
             DisplayCharacterList(statusViewInfo.DisplayCharacterList);
+            DisplayLvResetButton(statusViewInfo.DisplayLvResetButton);
             SetBackEvent(statusViewInfo.BackEvent);
         }
 
@@ -125,10 +128,9 @@ namespace Ryneus
             }
         }
 
-        private void DisplayDecideButton(bool isDisplay)
+        private void DisplayDecideButton()
         {
-            _isDisplayDecide = isDisplay;
-            decideButton.gameObject.SetActive(isDisplay);
+            decideButton.gameObject.SetActive(_isDisplayDecide);
             if (_isDisplayDecide)
             {
                 SetHelpText(_helpText);
@@ -140,9 +142,17 @@ namespace Ryneus
             }
         }
 
-        private void DisplayBackButton(bool isDisplay)
+        private void DisplayLvResetButton(bool isDisplay)
         {
-            _isDisplayBack = isDisplay;
+            if (isDisplay == false) return;
+            selectCharacter.InitializeLvReset(() => {
+                var eventData = new StatusViewEvent(CommandType.LvReset);
+                _commandData(eventData);
+            });
+        }
+
+        private void DisplayBackButton()
+        {
         }
 
         private void DisplayCharacterList(bool isDisplay)
@@ -276,10 +286,10 @@ namespace Ryneus
 
     public class StatusViewEvent
     {
-        public Status.CommandType commandType;
+        public CommandType commandType;
         public object template;
 
-        public StatusViewEvent(Status.CommandType type)
+        public StatusViewEvent(CommandType type)
         {
             commandType = type;
         }
@@ -294,6 +304,8 @@ namespace Ryneus
         public bool DisplayBackButton => _displayBackButton;
         private bool _displayCharacterList = true;
         public bool DisplayCharacterList => _displayCharacterList;
+        private bool _displayLvResetButton = false;
+        public bool DisplayLvResetButton => _displayLvResetButton;
         private List<BattlerInfo> _enemyInfos = null;
         public List<BattlerInfo> EnemyInfos => _enemyInfos;
         private bool _isBattle = false;
@@ -319,6 +331,11 @@ namespace Ryneus
             _displayCharacterList = isDisplay;
         }
 
+        public void SetDisplayLevelResetButton(bool isDisplay)
+        {
+            _displayLvResetButton = isDisplay;
+        }
+
         public void SetEnemyInfos(List<BattlerInfo> enemyInfos,bool isBattle)
         {
             _enemyInfos = enemyInfos;
@@ -338,6 +355,7 @@ namespace Status
         SelectSkillAction,
         DecideStage,
         CharacterList,
+        LvReset,
         Back
     }
 }
