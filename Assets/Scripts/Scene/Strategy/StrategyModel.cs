@@ -305,87 +305,37 @@ namespace Ryneus
 
         public void CommitCurrentParallelResult()
         {
-            var beforeRecords = PartyInfo.SymbolRecordList.FindAll(a => a.StageId == CurrentStage.Id && a.Seek == CurrentStage.CurrentTurn);
-            var records = PartyInfo.SymbolRecordList.FindAll(a => a.StageId == CurrentStage.Id && a.Seek == CurrentStage.CurrentTurn);
+            // 新たに選択したシンボル
+            var newSymbolInfo = CurrentSelectSymbol();
             
-            var addAlchemyIdList = new List<int>();
-            var removeAlchemyIdList = new List<int>();
-
-            var addActorIdList = new List<int>();
-            var removeActorIdList = new List<int>();
-            // 差分確認
-            foreach (var beforeRecord in beforeRecords)
+            var records = PartyInfo.SymbolRecordList.FindAll(a => a.StageId == CurrentStage.Id && a.Seek == CurrentStage.CurrentTurn);
+            foreach (var record in records)
             {
-                var currentRecord = records.Find(a => a.IsSameSymbol(beforeRecord));
-                if (beforeRecord.Selected != currentRecord.Selected)
+                if (record.IsSameSymbol(newSymbolInfo))
                 {
-                    var symbol = PartyInfo.CurrentSymbolInfos(currentRecord.Seek)[currentRecord.SeekIndex];
-                    if (symbol.SymbolType == SymbolType.Alcana)
-                    {
-                        foreach (var getItemInfo in symbol.GetItemInfos)
-                        {
-                            if (currentRecord.Selected)
-                            {
-                                // 増える
-                                addAlchemyIdList.Add(getItemInfo.Param1);
-                            } else
-                            {
-                                //removeAlchemyIdList.Add(getItemInfo.Param1);
-                            }
-                        }
-                    }
-                    if (symbol.SymbolType == SymbolType.Actor)
-                    {
-                        foreach (var getItemInfo in symbol.GetItemInfos)
-                        {
-                            if (currentRecord.Selected)
-                            {
-                                // 増える
-                                addActorIdList.Add(getItemInfo.Param1);
-                            } else
-                            {
-                                //removeActorIdList.Add(getItemInfo.Param1);
-                            }
-                        }
-                    }
+                    record.SetSelected(true);
                 }
             }
-
-            // データ復元
-            records.Sort((a,b)=> a.SeekIndex > b.SeekIndex ? 1 : -1);
-            foreach (var symbolResultInfo in records)
+            newSymbolInfo.SetSelected(true);
+            // 選択から外れたシンボル
+            var removeSymbolInfos = records.FindAll(a => a.Selected && !a.IsSameSymbol(newSymbolInfo));
+            foreach (var removeSymbolInfo in removeSymbolInfos)
             {
-                var beforeRecord = beforeRecords.Find(a => a.IsSameSymbol(symbolResultInfo));
-                if (beforeRecord != null)
-                {
-                    if (beforeRecord.Cleared)
-                    {
-                        symbolResultInfo.SetCleared(true);
-                    }
-                    if (beforeRecord.Selected)
-                    {
-                        symbolResultInfo.SetSelected(true);
-                    }
-                }
-                PartyInfo.SetSymbolResultInfo(symbolResultInfo);
+                //removeSymbolInfo.SetSelected(false);
             }
 
+            // 復帰処理
             PartyInfo.InitActorInfos();
             foreach (var actorInfo in TempInfo.TempRecordActors)
             {
                 PartyInfo.UpdateActorInfo(actorInfo);
             }
-            
-            // 後のレコードを書き換え
-            var afterRecords = PartyInfo.SymbolRecordList.FindAll(a => a.StageId >= CurrentStage.Id && a.Seek > CurrentStage.CurrentTurn);
-            foreach (var symbolResultInfo in afterRecords)
-            {
-                PartyInfo.SetSymbolResultInfo(symbolResultInfo);
-            }
 
             TempInfo.ClearRecordActors();
-            SavePlayerData();
-            SavePlayerStageData(false);
+            CurrentStage.SetCurrentTurn(CurrentStage.ReturnSeek);
+            CurrentStage.SetReturnSeek(-1);
+            CurrentStage.SetSeekIndex(-1);
+            PartyInfo.SetStageSymbolInfos(SelectedSymbolInfos(CurrentStage.Id));
         }
 
         public bool ChainParallelMode()

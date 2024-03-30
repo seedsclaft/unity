@@ -115,6 +115,13 @@ namespace Ryneus
             TempInfo.SetTempStatusActorInfos(actorInfos);
         }
 
+        public void SetTempAddSelectActorStatusInfos()
+        {
+            var currentActorInfos = PartyInfo.CurrentActorInfos(CurrentStage.Id,CurrentStage.CurrentTurn);
+            var actorInfos = PartyInfo.ActorInfos.FindAll(a => currentActorInfos.Find(b => b.ActorId == a.ActorId) == null);
+            TempInfo.SetTempStatusActorInfos(actorInfos);
+        }
+
         public AdvData StartTacticsAdvData()
         {
             if (CurrentStage.SurvivalMode)

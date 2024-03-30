@@ -18,7 +18,7 @@ namespace Ryneus
             {
                 var symbolInfo = new SymbolInfo(symbol);
                 // グループ指定
-                if (symbol.SymbolType > SymbolType.Rebirth){
+                if (symbol.IsRandomSymbol()){
                     var groupId = (int)symbol.SymbolType;
                     var groupDates = DataSystem.SymbolGroups.FindAll(a => a.GroupId == groupId);
                     var data = PickUpSymbolData(groupDates);
@@ -39,37 +39,37 @@ namespace Ryneus
                 {
                     case SymbolType.Battle:
                     case SymbolType.Boss:
-                    if (symbolInfo.StageSymbolData.Param1 > 0 || symbolInfo.StageSymbolData.Param1 == -1)
-                    {
-                        symbolInfo.SetTroopInfo(BattleTroop(symbolInfo.StageSymbolData));
-                    }
-                    
-                    if (symbolInfo.TroopInfo != null && symbolInfo.TroopInfo.GetItemInfos.Count > 0)
-                    {
-                        getItemInfos.AddRange(symbolInfo.TroopInfo.GetItemInfos);
-                    }
-                    break;
-                    case SymbolType.Alcana:
-                    // アルカナランダムで報酬設定
-                    if (symbolInfo.StageSymbolData.Param1 == -1)
-                    {
-                        var alcanaRank = symbolInfo.StageSymbolData.Param2;
-                        var alcanaSkills = DataSystem.Skills.FindAll(a => a.Rank == alcanaRank);
-                        var rand = Random.Range(0,alcanaSkills.Count);
-                        if (alcanaSkills.Count > 0)
+                        if (symbolInfo.StageSymbolData.Param1 > 0 || symbolInfo.StageSymbolData.Param1 == -1)
                         {
-                            // 報酬設定
-                            var alcanaData = new GetItemData
-                            {
-                                Type = GetItemType.Skill,
-                                Param1 = alcanaSkills[rand].Id
-                            };
-                            var getItemInfo = new GetItemInfo(alcanaData);
-                            symbolInfo.SetGetItemInfos(new List<GetItemInfo>(){new GetItemInfo(alcanaData)});
-                            getItemInfos.Add(getItemInfo);
+                            symbolInfo.SetTroopInfo(BattleTroop(symbolInfo.StageSymbolData));
                         }
-                    }
-                    break;
+                        
+                        if (symbolInfo.TroopInfo != null && symbolInfo.TroopInfo.GetItemInfos.Count > 0)
+                        {
+                            getItemInfos.AddRange(symbolInfo.TroopInfo.GetItemInfos);
+                        }
+                        break;
+                    case SymbolType.Alcana:
+                        // アルカナランダムで報酬設定
+                        if (symbolInfo.StageSymbolData.Param1 == -1)
+                        {
+                            var alcanaRank = symbolInfo.StageSymbolData.Param2;
+                            var alcanaSkills = DataSystem.Skills.FindAll(a => a.Rank == alcanaRank);
+                            var rand = Random.Range(0,alcanaSkills.Count);
+                            if (alcanaSkills.Count > 0)
+                            {
+                                // 報酬設定
+                                var alcanaData = new GetItemData
+                                {
+                                    Type = GetItemType.Skill,
+                                    Param1 = alcanaSkills[rand].Id
+                                };
+                                var getItemInfo = new GetItemInfo(alcanaData);
+                                symbolInfo.SetGetItemInfos(new List<GetItemInfo>(){new GetItemInfo(alcanaData)});
+                                getItemInfos.Add(getItemInfo);
+                            }
+                        }
+                        break;
                     case SymbolType.Resource:
                         // 報酬設定
                         var resourceData = new GetItemData
@@ -78,7 +78,7 @@ namespace Ryneus
                             Param1 = symbolInfo.StageSymbolData.Param1
                         };
                         getItemInfos.Add(new GetItemInfo(resourceData));
-                    break;
+                        break;
                     case SymbolType.Actor:
                         // 表示用に報酬設定
                         var actorData = new GetItemData
@@ -87,7 +87,13 @@ namespace Ryneus
                             Param1 = symbolInfo.StageSymbolData.Param1
                         };
                         getItemInfos.Add(new GetItemInfo(actorData));
-                    break;
+                        break;
+                    case SymbolType.SelectActor:
+                        // 表示用に報酬設定
+                        var actorData2 =new GetItemInfo(new GetItemData());
+                        actorData2.MakeSelectActorSymbolResult();
+                        getItemInfos.Add(actorData2);
+                        break;
                 }
                 if (symbolInfo.StageSymbolData.PrizeSetId > 0)
                 {
@@ -169,7 +175,7 @@ namespace Ryneus
                         }
                         break;
                     default:
-                        if (symbol.SymbolType > SymbolType.Rebirth)
+                        if (symbol.IsRandomSymbol())
                         {
                             var groupId = (int)symbol.SymbolType;
                             var groupDates = DataSystem.SymbolGroups.FindAll(a => a.GroupId == groupId);

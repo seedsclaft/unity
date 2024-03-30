@@ -34,7 +34,7 @@ namespace Ryneus
         public List<int> CurrentActorIdList(int stageId,int seek)
         {
             var actorIdList = new List<int>();
-            var records = _symbolRecordList.FindAll(a => a.SymbolInfo.SymbolType == SymbolType.Actor && a.Selected);
+            var records = _symbolRecordList.FindAll(a => a.SymbolInfo.IsActorSymbol() && a.Selected);
             records = records.FindAll(a => a.StageId == stageId && a.Seek < seek || a.StageId < stageId);
             foreach (var record in records)
             {
@@ -46,7 +46,7 @@ namespace Ryneus
         public List<int> PastActorIdList(int stageId,int seek)
         {
             var actorIdList = new List<int>();
-            var records = _symbolRecordList.FindAll(a => a.SymbolInfo.SymbolType == SymbolType.Actor);
+            var records = _symbolRecordList.FindAll(a => a.SymbolInfo.IsActorSymbol());
             records = records.FindAll(a => a.StageId == stageId && a.Seek < seek || a.StageId < stageId);
             foreach (var record in records)
             {

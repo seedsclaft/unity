@@ -95,5 +95,15 @@ namespace Ryneus
             }
             return scoreMax;
         }
+
+        public bool IsBattleSymbol()
+        {
+            return SymbolType == SymbolType.Battle || SymbolType == SymbolType.Boss;
+        }
+
+        public bool IsActorSymbol()
+        {
+            return SymbolType == SymbolType.Actor || SymbolType == SymbolType.SelectActor;
+        }
     }
 }

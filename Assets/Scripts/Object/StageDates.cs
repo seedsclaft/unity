@@ -79,6 +79,11 @@ namespace Ryneus
             Param2 = stageSymbolData.Param2;
             PrizeSetId = stageSymbolData.PrizeSetId;
         }
+
+        public bool IsRandomSymbol()
+        {
+            return SymbolType > SymbolType.SelectActor;
+        }
     }
 
     [Serializable]
@@ -115,6 +120,7 @@ namespace Ryneus
         Actor = 5,
         Resource = 6,
         Rebirth = 7,
+        SelectActor = 8,
         Group = 99, // 99以上はグループ指定
     }
 

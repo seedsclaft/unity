@@ -150,14 +150,20 @@ namespace Ryneus
 
         public void MakeGainTurnResult(string turn)
         {
-            _titleName = (DataSystem.GetText(3210));
-            _resultName = (DataSystem.GetReplaceText(3211,turn));
+            _titleName = DataSystem.GetText(3210);
+            _resultName = DataSystem.GetReplaceText(3211,turn);
         }
 
         public void MakeActorLvUpResult(string name,int lv)
         {
-            _titleName = (DataSystem.GetReplaceText(3000,name));
-        _resultName = DataSystem.GetReplaceText(3001,lv.ToString());
+            _titleName = DataSystem.GetReplaceText(3000,name);
+            _resultName = DataSystem.GetReplaceText(3001,lv.ToString());
+        }
+
+        public void MakeSelectActorSymbolResult()
+        {
+            _titleName = DataSystem.GetText(14031);
+            _resultName = DataSystem.GetText(14030);
         }
 
         public void MakeAlchemyCostZeroResult(string attributeText)

@@ -460,6 +460,9 @@ namespace Ryneus
                 case SymbolType.Actor:
                     CheckActorSymbol(currentSymbol.GetItemInfos[0]);
                     break;
+                case SymbolType.SelectActor:
+                    CheckSelectActorSymbol(currentSymbol.GetItemInfos);
+                    break;
                 case SymbolType.Alcana:
                     CheckAlcanaSymbol(currentSymbol.GetItemInfos);
                     break;
@@ -550,6 +553,31 @@ namespace Ryneus
                 var getItemInfos = _model.CurrentSelectSymbol().GetItemInfos;
                 var actorInfos = _model.PartyInfo.ActorInfos.FindAll(a => a.ActorId == getItemInfos[0].Param1);
                 GotoStrategyScene(getItemInfos,actorInfos);
+            } else{
+                CommandTacticsCommand(_model.TacticsCommandType);
+            }
+        }
+
+        private void CheckSelectActorSymbol(List<GetItemInfo> getItemInfos)
+        {
+            var popupInfo = new ConfirmInfo("",(a) => UpdatePopupSelectActorSymbol((ConfirmCommandType)a));
+            _view.CommandCallConfirm(popupInfo);
+        }
+
+        private void UpdatePopupSelectActorSymbol(ConfirmCommandType confirmCommandType)
+        {
+            _view.CommandGameSystem(Base.CommandType.CloseConfirm);
+            if (confirmCommandType == ConfirmCommandType.Yes)
+            {
+                _model.SetTempAddSelectActorStatusInfos();
+                var statusViewInfo2 = new StatusViewInfo(() => {
+                    _view.CommandGameSystem(Base.CommandType.CloseStatus);
+                    _view.ChangeUIActive(true);
+                });
+                statusViewInfo2.SetDisplayCharacterList(false);
+                statusViewInfo2.SetDisplayDecideButton(true);
+                _view.CommandCallStatus(statusViewInfo2);
+                _view.ChangeUIActive(false);
             } else{
                 CommandTacticsCommand(_model.TacticsCommandType);
             }
@@ -752,6 +780,16 @@ namespace Ryneus
                     });
                     statusViewInfo.SetDisplayCharacterList(false);
                     _view.CommandCallStatus(statusViewInfo);
+                    _view.ChangeUIActive(false);
+                    break;
+                case SymbolType.SelectActor:
+                    _model.SetTempAddSelectActorStatusInfos();
+                    var statusViewInfo2 = new StatusViewInfo(() => {
+                        _view.CommandGameSystem(Base.CommandType.CloseStatus);
+                        _view.ChangeUIActive(true);
+                    });
+                    statusViewInfo2.SetDisplayCharacterList(false);
+                    _view.CommandCallStatus(statusViewInfo2);
                     _view.ChangeUIActive(false);
                     break;
             }

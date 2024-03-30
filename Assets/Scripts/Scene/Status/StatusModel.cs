@@ -61,5 +61,21 @@ namespace Ryneus
             return CurrentStage.Master.Reborn;
         }
 
+        public List<ActorInfo> MakeSelectActorInfos()
+        {
+            return new List<ActorInfo>(){CurrentActor};
+        }
+
+        public List<GetItemInfo> MakeSelectGetItemInfos()
+        {
+            var getItemData = new GetItemData
+            {
+                Param1 = CurrentActor.ActorId,
+                Type = GetItemType.AddActor
+            };
+            var getItemInfo = new GetItemInfo(getItemData);
+            return new List<GetItemInfo>(){getItemInfo};
+        }
+
     }
 }

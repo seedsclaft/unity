@@ -121,6 +121,14 @@ namespace Ryneus
                     }
                     if (_model.StageMembers().Count > 1)
                     {
+                        var makeSelectActorInfos = _model.MakeSelectActorInfos();
+                        var makeSelectGetItemInfos = _model.MakeSelectGetItemInfos();
+                        var strategySceneInfo = new StrategySceneInfo
+                        {
+                            GetItemInfos = makeSelectGetItemInfos,
+                            ActorInfos = makeSelectActorInfos
+                        };
+                        _view.CommandGotoSceneChange(Scene.Strategy,strategySceneInfo);
                     }
                 } else{
                     SoundManager.Instance.PlayStaticSe(SEType.Cancel);
