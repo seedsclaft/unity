@@ -388,7 +388,7 @@ namespace Ryneus
             {
                 return false;
             }
-            if (skillInfo.Master.SkillType == SkillType.Demigod)
+            if (skillInfo.Master.SkillType == SkillType.Messiah)
             {
                 return false;
             }
@@ -844,7 +844,7 @@ namespace Ryneus
                 {
                     if (scopeTrigger.TriggerType == TriggerType.DemigodMagicAttribute)
                     {
-                        if (target.Skills.Find(a => a.Master.SkillType == SkillType.Demigod && a.Attribute == (AttributeType)scopeTrigger.Param1) == null)
+                        if (target.Skills.Find(a => a.Master.SkillType == SkillType.Messiah && a.Attribute == (AttributeType)scopeTrigger.Param1) == null)
                         {
                             remove = true;
                         }
@@ -1682,7 +1682,7 @@ namespace Ryneus
                 {
                     for (var j = 0;j < triggeredSkills.Count;j++)
                     {
-                        if (triggeredSkills[j].Master.SkillType == SkillType.Demigod){
+                        if (triggeredSkills[j].Master.SkillType == SkillType.Messiah){
                             if (checkBattler.IsAwaken == false)
                             {
                                 checkBattler.SetAwaken();
@@ -2142,7 +2142,7 @@ namespace Ryneus
                         case TriggerType.AwakenDemigodAttribute:
                         var friends = battlerInfo.IsActor ? _party.AliveBattlerInfos : _troop.AliveBattlerInfos;
                         friends = friends.FindAll(a => a.IsAwaken);
-                        if (battlerInfo.IsAlive() && friends.Count > 0 && friends.Find(a => a.Skills.Find(b => (b.Attribute == (AttributeType)triggerData.Param1 && b.Master.SkillType == SkillType.Demigod)) != null) != null)
+                        if (battlerInfo.IsAlive() && friends.Count > 0 && friends.Find(a => a.Skills.Find(b => (b.Attribute == (AttributeType)triggerData.Param1 && b.Master.SkillType == SkillType.Messiah)) != null) != null)
                         {
                             IsTriggered = true;
                         }

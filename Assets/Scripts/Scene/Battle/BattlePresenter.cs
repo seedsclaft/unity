@@ -521,7 +521,7 @@ namespace Ryneus
                     _view.SetBattleBusy(false);
                     return;
                 }
-                if (actionInfo.Master.SkillType == SkillType.Demigod && actionInfo.SubjectIndex < 100 || actionInfo.Master.SkillType == SkillType.Awaken && actionInfo.SubjectIndex < 100)
+                if (actionInfo.Master.SkillType == SkillType.Messiah && actionInfo.SubjectIndex < 100 || actionInfo.Master.SkillType == SkillType.Awaken && actionInfo.SubjectIndex < 100)
                 {
                     StartAnimationDemigod();
                 } else

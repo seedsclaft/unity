@@ -114,7 +114,7 @@ namespace Ryneus
             }
             if (mpCost != null)
             {
-                if (skillData.SkillType == SkillType.Magic)
+                if (skillData.SkillType == SkillType.Active)
                 {
                     mpCost.text = "(" + skillData.MpCost.ToString() + ")";
                 } else

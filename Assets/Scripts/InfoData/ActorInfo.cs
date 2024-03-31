@@ -395,7 +395,7 @@ namespace Ryneus
                         }
                     }
                     magicValue += (rate * 100);
-                    if (skillInfo.Master.SkillType == SkillType.Demigod || skillInfo.Master.SkillType == SkillType.Awaken)
+                    if (skillInfo.Master.SkillType == SkillType.Messiah || skillInfo.Master.SkillType == SkillType.Awaken)
                     {
                         magicValue += 200;
                     }
@@ -422,7 +422,7 @@ namespace Ryneus
             skillInfos.Sort((a,b) => {return a.Master.Id > b.Master.Id ? 1 : -1;});
             foreach (var skillInfo in skillInfos)
             {
-                if (skillInfo.LearningState == LearningState.Learned && skillInfo.Master.SkillType == SkillType.Magic || skillInfo.Master.SkillType == SkillType.Demigod || skillInfo.Master.SkillType == SkillType.Awaken)
+                if (skillInfo.LearningState == LearningState.Learned && skillInfo.Master.SkillType == SkillType.Active || skillInfo.Master.SkillType == SkillType.Messiah || skillInfo.Master.SkillType == SkillType.Awaken)
                 {
                     sortList1.Add(skillInfo);
                 } else
