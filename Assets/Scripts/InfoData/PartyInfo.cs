@@ -28,11 +28,17 @@ namespace Ryneus
         
         public List<ActorInfo> CurrentActorInfos(int stageId,int seek)
         {
-            var actorInfos = _actorInfos.FindAll(a => CurrentActorIdList(stageId,seek).Contains(a.ActorId));
-            foreach (var actorInfo in actorInfos)
+            var actorIdList = CurrentActorIdList(stageId,seek);
+            var actorInfos = new List<ActorInfo>();
+            foreach (var actorId in actorIdList)
             {
-                var levelUpInfos = _levelUpInfos.FindAll(a => a.Enable && a.ActorId == actorInfo.ActorId);
-                actorInfo.SetLevelUpInfo(levelUpInfos);
+                var actorInfo = _actorInfos.Find(a => a.ActorId == actorId);
+                if (actorInfo != null)
+                {
+                    var levelUpInfos = _levelUpInfos.FindAll(a => a.Enable && a.ActorId == actorInfo.ActorId);
+                    actorInfo.SetLevelUpInfo(levelUpInfos);
+                }
+                actorInfos.Add(actorInfo);
             }
             return actorInfos;
         }
@@ -184,7 +190,7 @@ namespace Ryneus
                 }
             }
             _symbolRecordList.Add(symbolResultInfo);
-            _symbolRecordList.Sort((a,b) => a.Seek - b.Seek > 0 ? 1 : -1);
+            _symbolRecordList.Sort((a,b) => a.StageId*100 + a.Seek - b.StageId*100 + b.Seek > 0 ? 1 : -1);
         }
 
         public void SetActorInfos(List<ActorInfo> actorInfos)

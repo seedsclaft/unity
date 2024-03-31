@@ -72,14 +72,21 @@ namespace Ryneus
         {
             var actorInfo = TacticsActor();
             var battleIndex = StageMembers().FindAll(a => a.BattleIndex >= 0).Count + 1;
-            if (battleIndex >= 5) return;
             if (actorInfo.BattleIndex >= 0)
             {
                 actorInfo.SetBattleIndex(-1);
-            } else
-            {
-                actorInfo.SetBattleIndex(battleIndex);
+                var battleMembers = BattleMembers();
+                for (int i = 0;i < battleMembers.Count;i++)
+                {
+                    battleMembers[i].SetBattleIndex(i + 1);
+                }
+                return;
             }
+            if (battleIndex >= 5) 
+            {
+                return;
+            }
+            actorInfo.SetBattleIndex(battleIndex);
         }
 
         public List<ListData> SelectActorLearningMagicList()

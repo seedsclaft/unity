@@ -40,6 +40,7 @@ namespace Tactics
         Back,
         SelectSideMenu,
         StageHelp,
+        CancelSymbolList,
         CommandHelp,
         AlcanaCheck,
         ChangeSelectTacticsActor,

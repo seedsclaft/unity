@@ -82,6 +82,7 @@ namespace Ryneus
                     SetResultData(DataSystem.GetReplaceText(3002,DataSystem.FindSkill(_param2).Name));
                     break;
                 case GetItemType.AddActor:
+                case GetItemType.SelectAddActor:
                     SetTitleData(DataSystem.FindActor(_param1).Name);
                     //SetTitleData(DataSystem.GetReplaceText(3003,DataSystem.FindActor(_param1).Name));
                     SetResultData(DataSystem.GetReplaceText(14120,DataSystem.FindActor(_param1).Name));

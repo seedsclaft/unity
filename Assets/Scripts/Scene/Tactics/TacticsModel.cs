@@ -117,8 +117,8 @@ namespace Ryneus
 
         public void SetTempAddSelectActorStatusInfos()
         {
-            var currentActorInfos = PartyInfo.CurrentActorInfos(CurrentStage.Id,CurrentStage.CurrentTurn);
-            var actorInfos = PartyInfo.ActorInfos.FindAll(a => currentActorInfos.Find(b => b.ActorId == a.ActorId) == null);
+            var pastActorIdList = PartyInfo.PastActorIdList(CurrentStage.Id,CurrentStage.CurrentTurn);
+            var actorInfos = PartyInfo.ActorInfos.FindAll(a => !pastActorIdList.Contains(a.ActorId));
             TempInfo.SetTempStatusActorInfos(actorInfos);
         }
 

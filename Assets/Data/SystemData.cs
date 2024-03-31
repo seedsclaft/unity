@@ -127,6 +127,7 @@ namespace Ryneus
 		Regeneration = 31,
 		LearnSkill = 41,
 		AddActor = 51,
+		SelectAddActor = 52,
 		SaveHuman = 61,
 	}
 }

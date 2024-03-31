@@ -109,7 +109,8 @@ namespace Ryneus
                         break;
                     case GetItemType.StatusUp:
                         break;
-                    case GetItemType.AddActor:
+                    case GetItemType.SelectAddActor:
+                        record.SymbolInfo.StageSymbolData.Param1 = getItemInfo.Param1;
                         break;
                     case GetItemType.SaveHuman:
                         

@@ -114,7 +114,7 @@ namespace Ryneus
         private void CommandDecideActor()
         {
             var actorInfo = _model.CurrentActor;
-            var text = _model.SelectAddActorConfirmText(actorInfo.Master.Name);
+            var text = DataSystem.GetReplaceText(14180,actorInfo.Master.Name);
             var confirmInfo = new ConfirmInfo(text,(menuCommandInfo) => UpdatePopup((ConfirmCommandType)menuCommandInfo));
             _view.CommandCallConfirm(confirmInfo);
             _popupCommandType = Status.CommandType.DecideStage;

@@ -226,14 +226,7 @@ namespace Ryneus
 
         public string SelectAddActorConfirmText(string actorName)
         {
-            int textId = 0;
-            if (CurrentStage == null)
-            {
-                textId = 11060;
-            } else
-            {
-                textId = 11070;
-            }
+            int textId = 14180;
             return DataSystem.GetReplaceText(textId,actorName);
         }
 

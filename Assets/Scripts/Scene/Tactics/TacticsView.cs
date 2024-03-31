@@ -28,6 +28,7 @@ namespace Ryneus
         [SerializeField] private Button commandHelpButton = null;
         
         [SerializeField] private GameObject backGround = null;
+        [SerializeField] private Button symbolBackButton = null;
         public void SetActiveBackGround(bool isActive)
         {
             backGround.SetActive(isActive);
@@ -60,6 +61,10 @@ namespace Ryneus
             });
             commandHelpButton.onClick.AddListener(() => {
                 var eventData = new TacticsViewEvent(CommandType.CommandHelp);
+                _commandData(eventData);
+            });
+            symbolBackButton?.onClick.AddListener(() => {
+                var eventData = new TacticsViewEvent(CommandType.CancelSymbolList);
                 _commandData(eventData);
             });
             symbolRecordList.Initialize();
@@ -140,6 +145,11 @@ namespace Ryneus
             tacticsSymbolList.SetInputHandler(InputKeyType.Cancel,() => OnClickBack());
             SetInputHandler(tacticsSymbolList.GetComponent<IInputHandlerEvent>());
             tacticsSymbolList.SetInputCallHandler();
+        }
+
+        public void ChangeSymbolBackCommandActive(bool IsActive)
+        {
+            symbolBackButton?.gameObject.SetActive(IsActive);
         }
 
         private void OnClickBack()
