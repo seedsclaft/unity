@@ -277,12 +277,14 @@ namespace Ryneus
         public void AssignBattlerIndex()
         {
             var idList = PartyInfo.LastBattlerIdList;
+            var idx = 1;
             foreach (var id in idList)
             {
                 var actor = StageMembers().Find(a => a.ActorId == id);
                 if (actor != null)
                 {
-                    actor.SetBattleIndex(id);
+                    actor.SetBattleIndex(idx);
+                    idx++;
                 }
             }
         }

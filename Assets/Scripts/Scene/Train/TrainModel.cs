@@ -82,7 +82,7 @@ namespace Ryneus
                 }
                 return;
             }
-            if (battleIndex >= 5) 
+            if (battleIndex > 5) 
             {
                 return;
             }

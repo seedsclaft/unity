@@ -1088,7 +1088,7 @@ namespace Ryneus
             {
                 foreach (var featureData in addFeature.FeatureDates)
                 {
-                    repeatTime += featureData.Param3;
+                    repeatTime = featureData.Param3;
                 }
             }
             return repeatTime;

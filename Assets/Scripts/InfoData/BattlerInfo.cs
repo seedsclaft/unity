@@ -812,6 +812,10 @@ namespace Ryneus
             {
                 rate = 0;
             }
+            if (LineIndex == LineType.Front)
+            {
+                rate *= 2;
+            }
             rate = Math.Max(0,rate);
             return rate;
         }

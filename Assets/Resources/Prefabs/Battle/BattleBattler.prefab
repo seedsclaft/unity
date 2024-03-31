@@ -111,8 +111,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: -28, y: -64}
-  m_SizeDelta: {x: 20, y: 20}
+  m_AnchoredPosition: {x: -40, y: -60}
+  m_SizeDelta: {x: 28, y: 28}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4814047770897160251
 CanvasRenderer:
@@ -1100,7 +1100,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 32, y: 32}
+  m_SizeDelta: {x: 48, y: 48}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3583781556678258344
 CanvasRenderer:
@@ -1289,6 +1289,10 @@ MonoBehaviour:
   cursor: {fileID: 2436298873947078674}
   changeCursorColor: 1
   disable: {fileID: 318993757850537702}
+  selectColor: {r: 0, g: 0, b: 0, a: 0}
+  unSelectColor: {r: 0, g: 0, b: 0, a: 0}
+  textUguiList: []
+  imageUguiList: []
   battlerInfoComponent: {fileID: 2487896425995048115}
 --- !u!114 &2487896425995048115
 MonoBehaviour:
@@ -1312,6 +1316,7 @@ MonoBehaviour:
   battleStateOverlay: {fileID: 2112697237621803839}
   canvasGroup: {fileID: 919741410587461747}
   battlePosition: {fileID: 4247544591993893162}
+  evaluate: {fileID: 0}
 --- !u!114 &5925626230249670501
 MonoBehaviour:
   m_ObjectHideFlags: 0
