@@ -197,7 +197,6 @@ namespace Ryneus
             var learnSkillInfo = _model.LearnSkillInfo.Count > 0 ? _model.LearnSkillInfo[0] : null;
             if (learnSkillInfo != null && learnSkillInfo.SkillInfo != null)
             {
-                _model.DecideStrength();
                 learnSkillInfo.SetToValue(_model.LevelUpData[0].Evaluate());
                 SoundManager.Instance.PlayStaticSe(SEType.LearnSkill);
 
@@ -221,7 +220,6 @@ namespace Ryneus
                 _view.CommandCallPopup(popupInfo);
             } else
             {
-                _model.DecideStrength();
                 _model.RemoveLevelUpData();
                 if (_model.LevelUpData.Count > 0)
                 {

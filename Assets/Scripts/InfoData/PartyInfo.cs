@@ -28,7 +28,19 @@ namespace Ryneus
         
         public List<ActorInfo> CurrentActorInfos(int stageId,int seek)
         {
-            return _actorInfos.FindAll(a => CurrentActorIdList(stageId,seek).Contains(a.ActorId));
+            var actorInfos = _actorInfos.FindAll(a => CurrentActorIdList(stageId,seek).Contains(a.ActorId));
+            foreach (var actorInfo in actorInfos)
+            {
+                var levelUpInfos = _levelUpInfos.FindAll(a => a.Enable && a.ActorId == actorInfo.ActorId);
+                actorInfo.SetLevelUpInfo(levelUpInfos);
+            }
+            return actorInfos;
+        }
+
+        public List<LevelUpInfo> AssignedLevelUpInfos(int actorId)
+        {
+            var actorInfo = _actorInfos.Find(a => a.ActorId == actorId);
+            return _levelUpInfos.FindAll(a => a.Enable && a.ActorId == actorInfo.ActorId);
         }
         
         public List<int> CurrentActorIdList(int stageId,int seek)
@@ -113,6 +125,39 @@ namespace Ryneus
         public void SetLastBattlerIdList(List<int> lastBattlerIdList)
         {
             _lastBattlerIdList = lastBattlerIdList;
+        }
+
+        private List<LevelUpInfo> _levelUpInfos = new();
+        public List<LevelUpInfo> LevelUpInfos => _levelUpInfos;
+        public void SetLevelUpInfo(LevelUpInfo levelUpInfo)
+        {
+            var findIndex = _levelUpInfos.FindIndex(a => a.IsSameLevelUpInfo(levelUpInfo));
+            if (findIndex < 0)
+            {
+            } else{
+                _levelUpInfos.RemoveAt(findIndex);
+            }
+            _levelUpInfos.Add(levelUpInfo);
+        }
+
+        public int ActorLevelReset(int actorId)
+        {
+            int currency = 0;
+            var levelUpInfos = _levelUpInfos.FindAll(a => a.ActorId == actorId);
+            var currencyIndexes = new List<int>();
+            for (int i = 0;i < levelUpInfos.Count;i++)
+            {
+                if (levelUpInfos[i].Enable && levelUpInfos[i].Currency > 0)
+                {
+                    currency += levelUpInfos[i].Currency;
+                    currencyIndexes.Add(i);
+                }
+            }
+            for (int i = currencyIndexes.Count-1;i >= 0;i--)
+            {
+                _levelUpInfos.RemoveAt(currencyIndexes[i]);
+            }
+            return currency;
         }
 
         // 生成したステージシンボル

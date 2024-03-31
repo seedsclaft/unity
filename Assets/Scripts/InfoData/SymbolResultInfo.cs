@@ -33,17 +33,7 @@ namespace Ryneus
             _battleScore = battleScore;
         }
 
-        public List<ActorInfo> _actorInfos = new ();
-        public List<ActorInfo> ActorInfos => _actorInfos;
-        public void SetActorInfos(List<ActorInfo> actorInfos)
-        {
-            foreach (var actorInfo in actorInfos)
-            {
-                var recordActorInfo = new ActorInfo(actorInfo.Master);
-                recordActorInfo.CopyData(actorInfo);		
-                _actorInfos.Add(recordActorInfo);
-            }
-        }
+
         private SymbolInfo _symbolInfo;
         public SymbolInfo SymbolInfo => _symbolInfo;
 

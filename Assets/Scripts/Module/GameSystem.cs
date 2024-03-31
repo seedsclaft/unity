@@ -243,7 +243,7 @@ namespace Ryneus
             {
                 confirmView.SetLevelup(confirmInfo.From,confirmInfo.To);
             }
-            SetIsBusyMainAndStatus();
+            //SetIsBusyMainAndStatus();
         }
 
         private void CommandPopupView(PopupInfo popupInfo)

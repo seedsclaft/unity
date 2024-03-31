@@ -290,12 +290,7 @@ namespace Ryneus
             foreach (var symbolInfo in PartyInfo.StageSymbolInfos)
             {
                 var record = new SymbolResultInfo(symbolInfo,GameSystem.CurrentStageData.Party.Currency);
-                var actorInfos = new List<ActorInfo>();
-                foreach (var actorInfo in PartyInfo.ActorInfos)
-                {
-                    actorInfos.Add(actorInfo);
-                }
-                record.SetActorInfos(actorInfos);
+
                 record.SetSelected(true);
                 PartyInfo.SetSymbolResultInfo(record);
             }
@@ -327,12 +322,7 @@ namespace Ryneus
             foreach (var symbolInfo in currentStageSymbolInfos)
             {
                 var record = new SymbolResultInfo(symbolInfo,GameSystem.CurrentStageData.Party.Currency);
-                var actorInfos = new List<ActorInfo>();
-                foreach (var actorInfo in PartyInfo.ActorInfos)
-                {
-                    actorInfos.Add(actorInfo);
-                }
-                record.SetActorInfos(actorInfos);
+
                 PartyInfo.SetSymbolResultInfo(record);
             }
         }
@@ -353,8 +343,7 @@ namespace Ryneus
 
         public List<ActorInfo> SymbolActorInfos(int seek)
         {
-            var symbolRecord = PartyInfo.SymbolRecordList.Find(a => a.StageId == CurrentStage.Id && a.Selected == true && a.Seek == seek);
-            return symbolRecord.ActorInfos;
+            return PartyInfo.CurrentActorInfos(CurrentStage.Id,seek);
         }
 
         public void MakePrizeData(SymbolResultInfo saveRecord,List<GetItemInfo> getItemInfos)

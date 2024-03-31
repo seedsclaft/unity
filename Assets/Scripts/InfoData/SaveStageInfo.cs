@@ -65,7 +65,8 @@ namespace Ryneus
 				{
 					for (int i = 0;i < lvUpNum-1;i++)
 					{
-						actorInfo.LevelUp(0);
+						var levelUpInfo = actorInfo.LevelUp(0);
+            			_party.SetLevelUpInfo(levelUpInfo);
 					}
 				}
 			}

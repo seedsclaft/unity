@@ -9,16 +9,18 @@ namespace Ryneus
     [Serializable]
     public class ActorInfo
     {
-        public ActorData Master => DataSystem.FindActor(ActorId);
-        private int _actorId;
+        public ActorData Master => DataSystem.FindActor(_actorId);
+        private int _actorId = -1;
         public int ActorId => _actorId;
         public int MaxHp => CurrentStatus.Hp;
         public int MaxMp => CurrentStatus.Mp;
         private List<LevelUpInfo> _levelUpInfos = new ();
+        public void SetLevelUpInfo(List<LevelUpInfo> levelUpInfos)
+        {
+            _levelUpInfos = levelUpInfos;
+        }
         
-        public int Level => _levelUpInfos.Count + 1;
-        private int _levelUpCost = 0;
-        public int LevelUpCost => _levelUpCost;
+        public int Level => _levelUpInfos.FindAll(a => a.Enable).Count + 1;
         
         public StatusInfo CurrentStatus => LevelUpStatus(Level);
         public List<AttributeRank> GetAttributeRank()
@@ -32,8 +34,16 @@ namespace Ryneus
             }
             return list;
         }
-        private List<int> _learnSkillIds = new ();
-        private List<int> LearnSkillIds => _learnSkillIds;
+        private List<int> LearnSkillIds()
+        {
+            var list = new List<int>();
+            var learnSkills = _levelUpInfos.FindAll(a => a.Enable && a.SkillId > -1);
+            foreach (var learnSkill in learnSkills)
+            {
+                list.Add(learnSkill.SkillId);
+            }
+            return list;
+        }
 
         private int _lastSelectSkillId = 0;
         public int LastSelectSkillId => _lastSelectSkillId;
@@ -53,8 +63,8 @@ namespace Ryneus
         public int CurrentHp => _currentHp;
         private int _currentMp;
         public int CurrentMp => _currentMp;
-        private int _demigodParam;
-        public int DemigodParam => _demigodParam;
+        // バトル勝利数
+        public int DemigodParam => 0 + _levelUpInfos.FindAll(a => a.Enable && a.StageId > -1 && a.Currency == 0 && a.SkillId == -1).Count;
 
     // Tactics
         private int _tacticsCost = 0;
@@ -70,8 +80,6 @@ namespace Ryneus
         }
         private bool _lost = false;
         public bool Lost => _lost;
-        private int _numinous = 0;
-        public int Numinous => _numinous;
         private StatusInfo _plusStatus;
 
         private List<SkillInfo> _rebornSkillInfos = new ();
@@ -82,7 +90,6 @@ namespace Ryneus
             SetInitialParameter(actorData);
             _currentHp = Master.InitStatus.Hp;
             _currentMp = Master.InitStatus.Mp;
-            _demigodParam = 10;
             InitSkillInfo();
         }
 
@@ -119,16 +126,13 @@ namespace Ryneus
                 baseActorInfo._plusStatus.GetParameter(StatusParamType.Def),
                 baseActorInfo._plusStatus.GetParameter(StatusParamType.Spd)
             );
-            _learnSkillIds = baseActorInfo._learnSkillIds;
             _lastSelectSkillId = baseActorInfo.LastSelectSkillId;
             _currentHp = baseActorInfo.CurrentHp;
             _currentMp = baseActorInfo.CurrentMp;
-            _demigodParam = baseActorInfo.DemigodParam;
             _tacticsCost = baseActorInfo.TacticsCost;
             _tacticsCostRate = baseActorInfo.TacticsCostRate;
             _battleIndex = baseActorInfo.BattleIndex;
             _lost = baseActorInfo.Lost;
-            _numinous = baseActorInfo.Numinous;
             _levelUpInfos = baseActorInfo._levelUpInfos;
         }
 
@@ -166,7 +170,7 @@ namespace Ryneus
                 }
                 list.Add(skillInfo);
             }
-            foreach (var _learnSkillId in _learnSkillIds)
+            foreach (var _learnSkillId in LearnSkillIds())
             {
                 var skillInfo = new SkillInfo(_learnSkillId);
                 skillInfo.SetLearningState(LearningState.Learned);
@@ -182,11 +186,12 @@ namespace Ryneus
             ChangeMp(9999);
         }
 
-        public void LevelUp(int useCost = 0,int stageId = -1,int seek = -1,int seekIndex = -1)
+        public LevelUpInfo LevelUp(int useCost = 0,int stageId = -1,int seek = -1,int seekIndex = -1)
         {
             var levelUpInfo = new LevelUpInfo(
-                useCost,stageId,seek,seekIndex
+                _actorId,useCost,stageId,seek,seekIndex
             );
+            levelUpInfo.SetLevel(Level);
             _levelUpInfos.Add(levelUpInfo);
             foreach (var skillInfo in LearningSkills())
             {
@@ -194,33 +199,12 @@ namespace Ryneus
             }
             ChangeHp(CurrentParameter(StatusParamType.Hp));
             ChangeMp(CurrentParameter(StatusParamType.Mp));
+            return levelUpInfo;
         }
 
         public bool EnableLvReset()
         {
-            return _numinous > 0 || _levelUpInfos.Find(a => a.Currency > 0) != null;
-        }
-
-        public int LevelReset()
-        {
-            int currency = 0;
-            var currencyIndexes = new List<int>();
-            for (int i = 0;i < _levelUpInfos.Count;i++)
-            {
-                if (_levelUpInfos[i].Currency > 0)
-                {
-                    currency += _levelUpInfos[i].Currency;
-                    currencyIndexes.Add(i);
-                }
-            }
-            for (int i = currencyIndexes.Count-1;i >= 0;i--)
-            {
-                _levelUpInfos.RemoveAt(currencyIndexes[i]);
-            }
-            currency += _numinous;
-            _numinous = 0;
-            _learnSkillIds.Clear();
-            return currency;
+            return LearnSkillIds().Count > 0 || _levelUpInfos.Find(a => a.Enable && a.Currency > 0) != null;
         }
 
         public StatusInfo LevelUpStatus(int level)
@@ -255,42 +239,21 @@ namespace Ryneus
             return LearningSkillInfos().FindAll(a => a.LearningState == LearningState.NotLearn && a.LearningLv <= (Level+plusLv));
         }
 
-        public void GainLevelUpCost(int cost)
-        {
-            _levelUpCost += cost;
-        }
-
         public bool IsLearnedSkill(int skillId)
         {
-            return _learnSkillIds.Contains(skillId);
+            return LearnSkillIds().Contains(skillId);
         }
 
-        public void LearnSkill(int skillId)
+        public LevelUpInfo LearnSkill(int skillId,int cost,int stageId = -1,int seek = -1,int seekIndex = -1)
         {
-            _learnSkillIds.Add(skillId);
-        }
-
-        public void ForgetSkill(SkillInfo skillInfo)
-        {
-            int skillIdx = _learnSkillIds.FindIndex(a => a == skillInfo.Id);
-            if (skillIdx > 0)
-            {
-                _learnSkillIds.RemoveAt(skillIdx);
-            }
+            var skillLevelUpInfo = new LevelUpInfo(_actorId,cost,stageId,seek,seekIndex);
+            skillLevelUpInfo.SetSkillId(skillId);
+            return skillLevelUpInfo;
         }
 
         public void ChangeTacticsCostRate(int tacticsCostRate)
         {
             _tacticsCostRate = tacticsCostRate;
-        }
-
-        public void ChangeSp(int value)
-        {
-        }
-
-        public void GainNuminousCost(int useNuminous)
-        {
-            _numinous += useNuminous;
         }
 
         public int CurrentParameter(StatusParamType statusParamType)
@@ -396,11 +359,6 @@ namespace Ryneus
             return (AttributeType)(targetIndex+1);
         }
 
-        public void GainDemigod(int param)
-        {
-            _demigodParam += param;
-        }
-
         public int Evaluate()
         {
             int statusValue = CurrentParameter(StatusParamType.Hp) * 7
@@ -443,7 +401,7 @@ namespace Ryneus
                     }
                 }
             }
-            int total = statusValue + (int)magicValue + _demigodParam * 10;
+            int total = statusValue + (int)magicValue + DemigodParam * 10;
             return total;
         }
 
@@ -485,23 +443,6 @@ namespace Ryneus
             return ListData.MakeListData(skillInfos);
         }
 
-        public int LevelUpByCost()
-        {
-            var levelUpNum = 0;
-            var useCost = 0;
-            for (int i = 0;i <= LevelUpCost;i++)
-            {
-                if (i >= (TacticsUtility.TrainCost(Level+levelUpNum,this) + useCost))
-                {
-                    useCost += i;
-                    levelUpNum++;
-                }
-            }
-
-            _levelUpCost -= useCost;
-
-            return levelUpNum;
-        }
     }
 
 

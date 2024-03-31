@@ -61,7 +61,8 @@ namespace Ryneus
                 // 新規魔法取得があるか
                 var skills = lvUpActorInfo.LearningSkills(1);
                 var from = lvUpActorInfo.Evaluate();
-                lvUpActorInfo.LevelUp(0,CurrentStage.Id,CurrentStage.CurrentTurn,CurrentStage.CurrentSeekIndex);
+                var levelUpInfo = lvUpActorInfo.LevelUp(0,CurrentStage.Id,CurrentStage.CurrentTurn,CurrentStage.CurrentSeekIndex);
+                PartyInfo.SetLevelUpInfo(levelUpInfo);
                 var to = lvUpActorInfo.Evaluate();
                 if (skills.Count > 0)
                 {
@@ -105,22 +106,8 @@ namespace Ryneus
                         }
                         break;
                     case GetItemType.Demigod:
-                        foreach (var stageMember in StageMembers())
-                        {
-                            if (stageMember.Lost == false)
-                            {
-                                stageMember.GainDemigod(getItemInfo.Param1);
-                            }
-                        }
                         break;
                     case GetItemType.StatusUp:
-                        foreach (var stageMember in StageMembers())
-                        {
-                            if (stageMember.Lost == false)
-                            {
-                                //stageMember.LevelUp(0);
-                            }
-                        }
                         break;
                     case GetItemType.AddActor:
                         break;
@@ -137,40 +124,7 @@ namespace Ryneus
             // クリアフラグを立てる
             record.SetCleared(true); 
             
-            if (CurrentStage.ReturnSeek > 0)
-            {
-                foreach (var actorInfo in TempInfo.TempRecordActors)
-                {
-                    // 強さ差分を適用
-                    var recordActor = Actors().Find(a => a.ActorId == actorInfo.ActorId);
-                    if (recordActor != null)
-                    {
-                        var levelUpCost = recordActor.LevelUpCost;
-                        actorInfo.GainLevelUpCost(levelUpCost);
-                        var levelUpByCost = actorInfo.LevelUpByCost();
-                        if (levelUpByCost > 0)
-                        {
-                            for (int i = 0;i < levelUpByCost-1;i++)
-                            {
-                                //actorInfo.LevelUp(0);
-                            }
-                            var getItemData = new GetItemData();
-                            var getItemInfo = new GetItemInfo(getItemData);
-                            getItemInfo.MakeActorLvUpResult(actorInfo.Master.Name,actorInfo.Level);
-                            getItemInfos.Add(getItemInfo);
-                        }
-                    }
-                }
-
-                _resultItemInfos = ListData.MakeListData(getItemInfos);
-            } else
-            {
-                _resultItemInfos = ListData.MakeListData(getItemInfos);
-            }
-        }
-
-        public void DecideStrength()
-        {
+            _resultItemInfos = ListData.MakeListData(getItemInfos);
         }
 
         public void RemoveLevelUpData()
@@ -277,7 +231,14 @@ namespace Ryneus
             foreach (var removeSymbolInfo in removeSymbolInfos)
             {
                 removeSymbolInfo.SetSelected(false);
+                // 選択から外れたシンボルがバトルならレベルアップを無効にする
+                var levelUpInfos = PartyInfo.LevelUpInfos.FindAll(a => a.StageId == removeSymbolInfo.StageId && a.Seek == removeSymbolInfo.Seek && a.SeekIndex == removeSymbolInfo.SeekIndex);
+                foreach (var levelUpInfo in levelUpInfos)
+                {
+                    levelUpInfo.SetEnable(false);
+                }
             }
+
 
             // 復帰処理
             PartyInfo.InitActorInfos();

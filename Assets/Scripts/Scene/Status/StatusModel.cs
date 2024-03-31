@@ -84,7 +84,9 @@ namespace Ryneus
 
         public int ActorLvReset()
         {
-            var resetCurrency = CurrentActor.LevelReset();
+            var resetCurrency = PartyInfo.ActorLevelReset(CurrentActor.ActorId);
+            var tempActor = TempInfo.TempStatusActorInfos.Find(a => a.ActorId == CurrentActor.ActorId);
+            tempActor.SetLevelUpInfo(PartyInfo.AssignedLevelUpInfos(tempActor.ActorId));
             PartyInfo.ChangeCurrency(Currency + resetCurrency);
             return resetCurrency;
         }

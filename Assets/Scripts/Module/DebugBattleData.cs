@@ -56,12 +56,7 @@ namespace Ryneus
                 foreach (var symbolInfo1 in GameSystem.CurrentStageData.Party.StageSymbolInfos)
                 {
                     var record = new SymbolResultInfo(symbolInfo1,GameSystem.CurrentStageData.Party.Currency);
-                    var actorInfos = new List<ActorInfo>();
-                    foreach (var actorInfo in GameSystem.CurrentStageData.Party.ActorInfos)
-                    {
-                        actorInfos.Add(actorInfo);
-                    }
-                    record.SetActorInfos(actorInfos);
+                    
                     record.SetSelected(true);
                     GameSystem.CurrentStageData.Party.SetSymbolResultInfo(record,false);
                 }
