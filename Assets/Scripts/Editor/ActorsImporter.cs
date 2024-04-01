@@ -50,6 +50,13 @@ namespace Ryneus
 			SkillId,
 			Level,
 		}
+		enum BaseSkillTriggerColumn
+		{
+			ActorId = 0,
+			SkillId,
+			TriggerType1,
+			TriggerType2,
+		}
 		static readonly string ExcelName = "Actors.xlsx";
 
 		// アセット更新があると呼ばれる
@@ -90,7 +97,7 @@ namespace Ryneus
 				{
 					// エクセルブックを作成
 					AssetPostImporter.CreateBook(asset, Mainstream, out IWorkbook Book);
-					List<TextData> textData = AssetPostImporter.CreateText(Book.GetSheetAt(2));
+					List<TextData> textData = AssetPostImporter.CreateText(Book.GetSheetAt(3));
 
 					// 情報の初期化
 					Data.Data.Clear();
@@ -180,7 +187,22 @@ namespace Ryneus
 							Actor.LearningSkills.Add(LearningData);
 						}
 					}
+					// トリガースキル情報設定
+					BaseSheet = Book.GetSheetAt(2);
+					for (int i = 1; i <= BaseSheet.LastRowNum; i++)
+					{
+						IRow BaseRow = BaseSheet.GetRow(i);
 
+						int ActorId = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseLearningColumn.ActorId);
+						ActorData Actor = Data.Data.Find(a => a.Id == ActorId);
+						var SkillTriggerData = new SkillTriggerData();
+						SkillTriggerData.SkillId = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseSkillTriggerColumn.SkillId);
+						var skillTypes = new List<TriggerType>();
+						SkillTriggerData.TriggerTypeDates = new List<TriggerType>();
+						SkillTriggerData.TriggerTypeDates.Add((TriggerType)AssetPostImporter.ImportNumeric(BaseRow,(int)BaseSkillTriggerColumn.TriggerType1));
+						SkillTriggerData.TriggerTypeDates.Add((TriggerType)AssetPostImporter.ImportNumeric(BaseRow,(int)BaseSkillTriggerColumn.TriggerType2));
+						Actor.SkillTriggerDates.Add(SkillTriggerData);
+					}
 				}
 			}
 			catch (Exception ex)

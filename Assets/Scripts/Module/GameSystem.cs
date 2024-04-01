@@ -144,6 +144,9 @@ namespace Ryneus
                 case Base.CommandType.CallSlotSaveView:
                     CommandSlotSaveView((SlotSaveViewInfo)viewEvent.template);
                     break;
+                case Base.CommandType.CallSkillTriggerView:
+                    CommandSkillTriggerView((SkillTriggerViewInfo)viewEvent.template);
+                    break;
                 case Base.CommandType.CallStatusView:
                     var statusView = CreateStatus(StatusType.Status) as StatusView;
                     var statusViewInfo = (StatusViewInfo)viewEvent.template;
@@ -283,6 +286,21 @@ namespace Ryneus
                 if (endEvent != null) endEvent();
             });
             optionView.SetEvent((type) => UpdateCommand(type));
+            SetIsBusyMainAndStatus();
+        }
+
+        private void CommandSkillTriggerView(SkillTriggerViewInfo skillTriggerViewInfo)
+        {
+            var prefab = popupAssign.CreatePopup(PopupType.SkillTrigger,helpWindow);
+            var skillTriggerView = prefab.GetComponent<SkillTriggerView>();
+            skillTriggerView.SetSkillTriggerViewInfo(skillTriggerViewInfo);
+            skillTriggerView.Initialize();
+            skillTriggerView.SetBackEvent(() => 
+            {
+                UpdateCommand(new ViewEvent(Base.CommandType.ClosePopup));
+                if (skillTriggerViewInfo.EndEvent != null) skillTriggerViewInfo.EndEvent();
+            });
+            skillTriggerView.SetEvent((type) => UpdateCommand(type));
             SetIsBusyMainAndStatus();
         }
 

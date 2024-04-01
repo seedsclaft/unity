@@ -187,6 +187,15 @@ namespace Ryneus
                     tacticsTrain.SetBattleBackToggleHandler(() => callEvent());
                 }
             }
+            if (keyType == InputKeyType.Option1)
+            {
+                for (int i = 0; i < characterList.ItemPrefabList.Count;i++)
+                {
+                    var tacticsTrain = characterList.ItemPrefabList[i].GetComponent<TacticsTrain>();
+                    //tacticsTrain.SetMinusHandler(() => callEvent());
+                    tacticsTrain.SetSkillTriggerHandler(() => callEvent());
+                }
+            }
         }
 
         public void SetInputHandlerCommand(InputKeyType keyType,System.Action callEvent)

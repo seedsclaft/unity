@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
 
 namespace Ryneus
 {
@@ -10,6 +9,7 @@ namespace Ryneus
     {
         [SerializeField] private TacticsComponent tacticsComponent;
         [SerializeField] private Toggle checkToggle;
+        [SerializeField] private Button skillTriggerButton;
         [SerializeField] private Button plusButton;
         [SerializeField] private Button minusButton;
         [SerializeField] private List<Toggle> battlePositionToggles;
@@ -27,6 +27,11 @@ namespace Ryneus
         public void SetBattleBackToggleHandler(System.Action handler)
         {
             battlePositionToggles[1].onValueChanged.AddListener((a) => handler());
+        }
+
+        public void SetSkillTriggerHandler(System.Action handler)
+        {
+            skillTriggerButton.onClick.AddListener(() => handler());
         }
 
         public void SetPlusHandler(System.Action handler)

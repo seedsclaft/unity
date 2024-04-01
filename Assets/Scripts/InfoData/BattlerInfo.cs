@@ -36,6 +36,12 @@ namespace Ryneus
         
         private List<SkillInfo> _skills;
         public List<SkillInfo> Skills => _skills;
+        private List<SkillTriggerInfo> _skillTriggerInfo = new ();
+        public List<SkillTriggerInfo> SkillTriggerInfo => _skillTriggerInfo;
+        public void SetSkillTriggerInfo(List<SkillTriggerInfo> skillTriggerInfo)
+        {
+            _skillTriggerInfo = skillTriggerInfo;
+        }
         private ActorInfo _actorInfo;
         public ActorInfo ActorInfo => _actorInfo;
         private EnemyData _enemyData;

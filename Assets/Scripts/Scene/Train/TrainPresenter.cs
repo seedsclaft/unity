@@ -79,6 +79,10 @@ namespace Ryneus
                     if (_model.CurrentStageTutorialDates.Count > 0) return;
                     CommandSelectBackBattleIndex((int)viewEvent.template);
                     break;
+                case Train.CommandType.SkillTrigger:
+                    if (_model.CurrentStageTutorialDates.Count > 0) return;
+                    CommandSkillTrigger((int)viewEvent.template);
+                    break;
                 case Train.CommandType.SymbolClose:
                     CommandSymbolClose();
                     break;
@@ -301,6 +305,14 @@ namespace Ryneus
             SoundManager.Instance.PlayStaticSe(SEType.Cursor);
             _model.ChangeBattleLineIndex(actorId,false);
             CommandRefresh();
+        }
+
+        private void CommandSkillTrigger(int actorId)
+        {
+            var skillTriggerViewInfo = new SkillTriggerViewInfo(actorId,() => {
+                CommandRefresh();
+            });
+            _view.CommandCallSkillTrigger(skillTriggerViewInfo);
         }
 
         private void CommandLearnSkill(SkillInfo skillInfo)

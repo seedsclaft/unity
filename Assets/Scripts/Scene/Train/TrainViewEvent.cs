@@ -27,6 +27,7 @@ namespace Train
         SkillAlchemy,
         SelectFrontBattleIndex,
         SelectBackBattleIndex,
+        SkillTrigger,
         PopupSkillInfo,
         SymbolClose,
         SelectRecord,

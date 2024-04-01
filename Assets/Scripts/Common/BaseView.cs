@@ -270,6 +270,13 @@ namespace Ryneus
             CallSceneChangeCommand(eventData);
         }
 
+        public void CommandCallSkillTrigger(SkillTriggerViewInfo skillTriggerViewInfo)
+        {
+            var eventData = new ViewEvent(Base.CommandType.CallSkillTriggerView);
+            eventData.template = skillTriggerViewInfo;
+            CallSceneChangeCommand(eventData);
+        }
+
         public void CommandCallAdv(AdvCallInfo advCallInfo)
         {
             var eventData = new ViewEvent(Base.CommandType.CallAdvScene);
@@ -407,6 +414,7 @@ namespace Ryneus
             CloseStatus,
             CallAdvScene,
             CallEnemyInfoView,
+            CallSkillTriggerView,
             DecidePlayerName,
             CallLoading,
             CloseLoading,

@@ -196,6 +196,7 @@ namespace Ryneus
         public void SetActorInfos(List<ActorInfo> actorInfos)
         {
             _actorInfos = actorInfos;
+            InitSkillTriggerInfos();
         }
 
         public void UpdateActorInfo(ActorInfo actorInfo)
@@ -220,7 +221,67 @@ namespace Ryneus
             _actorInfos.Clear();
         }
 
+        // 作戦データ
+        private List<SkillTriggerInfo> _actorSkillTriggerInfos = new ();
+        public List<SkillTriggerInfo> SkillTriggerInfos(int actorId)
+        {
+            return _actorSkillTriggerInfos.FindAll(a => a.ActorId == actorId);
+        }
+        public void InitSkillTriggerInfos()
+        {
+            foreach (var actorInfo in _actorInfos)
+            {
+                var skillTriggerDates = actorInfo.Master.SkillTriggerDates;
+                foreach (var skillTriggerData in skillTriggerDates)
+                {
+                    var skillTriggerInfo = new SkillTriggerInfo();
+                    skillTriggerInfo.SetSkillId(skillTriggerData.SkillId);
+                    skillTriggerInfo.UpdateTriggerType(skillTriggerData.TriggerTypeDates);
+                    skillTriggerInfo.SetActorId(actorInfo.ActorId);
+                    _actorSkillTriggerInfos.Add(skillTriggerInfo);
+                }
+            }
+        }
+        public void SetSkillTriggerSkill(int actorId,int index,int skillId)
+        {
+            var skillTriggerInfos = SkillTriggerInfos(actorId);
+            if (skillTriggerInfos.Count > index)
+            {
+                skillTriggerInfos[index].SetSkillId(skillId);
+            }
+        }
+        public void SetSkillTriggerTrigger1(int actorId,int index,TriggerType triggerType)
+        {
+            var skillTriggerInfos = SkillTriggerInfos(actorId);
+            if (skillTriggerInfos.Count > index)
+            {
+                var triggerTypes = skillTriggerInfos[index].TriggerTypes;
+                var list = new List<TriggerType>();
+                if (triggerType == 0 && triggerTypes[1] != 0)
+                {
+                    list.Add(triggerTypes[1]);
+                    list.Add(triggerType);
+                } else
+                {
+                    list.Add(triggerType);
+                    list.Add(triggerTypes[1]);
+                }
+                skillTriggerInfos[index].UpdateTriggerType(list);
+            }
+        }
 
+        public void SetSkillTriggerTrigger2(int actorId,int index,TriggerType triggerType)
+        {
+            var skillTriggerInfos = SkillTriggerInfos(actorId);
+            if (skillTriggerInfos.Count > index)
+            {
+                var triggerTypes = skillTriggerInfos[index].TriggerTypes;
+                var list = new List<TriggerType>();
+                list.Add(triggerTypes[0]);
+                list.Add(triggerType);
+                skillTriggerInfos[index].UpdateTriggerType(list);
+            }
+        }
         public void ChangeCurrency(int currency)
         {
             _currency = currency;

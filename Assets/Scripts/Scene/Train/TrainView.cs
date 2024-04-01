@@ -95,6 +95,7 @@ namespace Ryneus
             selectCharacter.SetInputHandlerCharacter(InputKeyType.Right,() => CallFrontBattleIndex());
             selectCharacter.SetInputHandlerCharacter(InputKeyType.Left,() => CallBattleBackIndex());
             selectCharacter.SetInputHandlerCharacter(InputKeyType.Cancel,() => CallTrainCommandCancel());
+            selectCharacter.SetInputHandlerCharacter(InputKeyType.Option1,() => CallSkillTriggerCommand());
             selectCharacter.SetInputHandlerCommand(InputKeyType.Decide,() => CallTrainCommand());
             selectCharacter.SetInputHandlerCommand(InputKeyType.Cancel,() => CallTrainCommandCancel());
             SetInputHandler(selectCharacter.CharacterList.GetComponent<IInputHandlerEvent>());
@@ -248,6 +249,22 @@ namespace Ryneus
                     return;
                 }
                 var eventData = new TrainViewEvent(CommandType.SelectBackBattleIndex);
+                eventData.template = data.ActorInfo.ActorId;
+                _commandData(eventData);
+            }
+        }
+
+        private void CallSkillTriggerCommand()
+        {
+            var listData = selectCharacter.CharacterData;
+            if (listData != null)
+            {
+                var data = (TacticsActorInfo)listData.Data;
+                if (data.TacticsCommandType != TacticsCommandType.Paradigm)
+                {
+                    return;
+                }
+                var eventData = new TrainViewEvent(CommandType.SkillTrigger);
                 eventData.template = data.ActorInfo.ActorId;
                 _commandData(eventData);
             }
