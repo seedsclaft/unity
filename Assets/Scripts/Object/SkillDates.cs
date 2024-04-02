@@ -141,20 +141,44 @@ namespace Ryneus
                     case TriggerType.None:
                     case TriggerType.InBattleUseCountUnder: // 別処理で判定するためここではパス
                     case TriggerType.ExtendStageTurn: // 別処理で判定するためここではパス
+                    case TriggerType.LessHpFriend: // 別処理で判定するためここではパス
+                    case TriggerType.MostHpFriend: // 別処理で判定するためここではパス
+                    case TriggerType.LessHpTarget: // 別処理で判定するためここではパス
+                    case TriggerType.MostHpTarget: // 別処理で判定するためここではパス
                         CanUse = true;
                     break;
-                    case TriggerType.HpRateUnder:
-                    if (battlerInfo.Hp == 0)
-                    {
-                        CanUse = Param1 == 0;
-                    } else
-                    if (((float)battlerInfo.Hp / (float)battlerInfo.MaxHp) < Param1 * 0.01f)
+                    case TriggerType.SelfHpRateUnder:
+                    if (battlerInfo.HpRate <= Param1 * 0.01f)
                     {
                         CanUse = true;
                     }
                     break;
-                    case TriggerType.HpRateUpper:
-                    if (((float)battlerInfo.Hp / (float)battlerInfo.MaxHp) > Param1 * 0.01f)
+                    case TriggerType.SelfHpRateUpper:
+                    if (battlerInfo.HpRate >= Param1 * 0.01f)
+                    {
+                        CanUse = true;
+                    }
+                    break;
+                    case TriggerType.FriendHpRateUnder:
+                    if (party.Find(a => a.HpRate <= Param1 * 0.01f) != null)
+                    {
+                        CanUse = true;
+                    }
+                    break;
+                    case TriggerType.FriendHpRateUpper:
+                    if (party.Find(a => a.HpRate >= Param1 * 0.01f) != null)
+                    {
+                        CanUse = true;
+                    }
+                    break;
+                    case TriggerType.OpponentHpRateUnder:
+                    if (troops.Find(a => a.HpRate <= Param1 * 0.01f) != null)
+                    {
+                        CanUse = true;
+                    }
+                    break;
+                    case TriggerType.OpponentHpRateUpper:
+                    if (troops.Find(a => a.HpRate >= Param1 * 0.01f) != null)
                     {
                         CanUse = true;
                     }
@@ -171,14 +195,38 @@ namespace Ryneus
                         CanUse = true;
                     }
                     break;
-                    case TriggerType.MpUnder:
-                    if (battlerInfo.Mp <= Param1)
+                    case TriggerType.SelfMpUnder:
+                    if (battlerInfo.MpRate <= Param1 * 0.01f)
                     {
                         CanUse = true;
                     }
                     break;
-                    case TriggerType.MpUpper:
-                    if (battlerInfo.Mp >= Param1)
+                    case TriggerType.SelfMpUpper:
+                    if (battlerInfo.MpRate >= Param1 * 0.01f)
+                    {
+                        CanUse = true;
+                    }
+                    break;
+                    case TriggerType.FriendMpUnder:
+                    if (party.Find(a => a.MpRate >= Param1 * 0.01f) != null)
+                    {
+                        CanUse = true;
+                    }
+                    break;
+                    case TriggerType.FriendMpUpper:
+                    if (troops.Find(a => a.MpRate <= Param1 * 0.01f) != null)
+                    {
+                        CanUse = true;
+                    }
+                    break;
+                    case TriggerType.OpponentMpUnder:
+                    if (troops.Find(a => a.MpRate >= Param1 * 0.01f) != null)
+                    {
+                        CanUse = true;
+                    }
+                    break;
+                    case TriggerType.OpponentMpUpper:
+                    if (troops.Find(a => a.MpRate <= Param1 * 0.01f) != null)
                     {
                         CanUse = true;
                     }
@@ -402,13 +450,25 @@ namespace Ryneus
     public enum TriggerType
     {
         None = 0,
-        HpRateUnder = 1010, // Hpが〇%以下
-        HpRateUpper = 1020, // Hpが〇%以上
-        HpValue = 1030, // Hpが〇
-        HpUnder = 1040, // Hpが〇以下
+        SelfHpRateUnder = 1010, // 自分のHpが〇%未満
+        SelfHpRateUpper = 1020, // 自分のHpが〇%以上
+        FriendHpRateUnder = 1030, // Hp〇%未満の味方
+        FriendHpRateUpper = 1040, // Hp〇%以上の味方
+        OpponentHpRateUnder = 1050, // Hp〇%未満の敵
+        OpponentHpRateUpper = 1060, // Hp〇%以上の敵
+        LessHpFriend = 1130, // 最もHpが少ない味方
+        MostHpFriend = 1140, // 最もHpが多い味方
+        LessHpTarget = 1150, // 最もHpが少ない敵
+        MostHpTarget = 1160, // 最もHpが多い敵
+        HpValue = 991030, // Hpが〇
+        HpUnder = 991040, // Hpが〇以下
         PartyHpRateUnder = 2010, // 味方にHpが〇%以下がいる
-        MpUnder = 3010, // Mpが〇以下
-        MpUpper = 3020, // Mpが〇以上
+        SelfMpUnder = 3010, // 自身のMpが〇以下
+        SelfMpUpper = 3020, // 自身のMpが〇以上
+        FriendMpUnder = 3030, // Mpが〇以下の味方
+        FriendMpUpper = 3040, // Mpが〇以上の味方
+        OpponentMpUnder = 3050, // Mpが〇以下の敵
+        OpponentMpUpper = 3060, // Mpが〇以上の敵
         IsExistDeathMember = 4010, // 戦闘不能が〇以上存在する
         IsExistAliveMember = 4020, // 生存者が〇以上存在する
         SelfLineFront = 5010, // 自分が前列にいる

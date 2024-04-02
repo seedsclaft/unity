@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Ryneus
 {
@@ -10,7 +11,7 @@ namespace Ryneus
         [SerializeField] private BaseList skillList = null;
         [SerializeField] private BaseList trigger1List = null;
         [SerializeField] private BaseList trigger2List = null;
-        [SerializeField] private GameObject listBlock = null;
+        [SerializeField] private Button listBlock = null;
         private new Action<SkillTriggerViewEvent> _commandData = null;
         public int SkillTriggerIndex => skillTriggerList.Index;
         private SkillTriggerViewInfo _skillTriggerViewInfo;
@@ -33,6 +34,9 @@ namespace Ryneus
             skillTriggerList.SetInputHandler(InputKeyType.Cancel,() => BackEvent());
             skillTriggerList.SetInputCallHandler();
             SetInputHandler(skillTriggerList.GetComponent<IInputHandlerEvent>());
+            listBlock.onClick.AddListener(() => {
+                CancelSelect();
+            });
             new SkillTriggerPresenter(this);
         }
 
@@ -63,27 +67,27 @@ namespace Ryneus
             skillList.gameObject.SetActive(false);
             trigger1List.gameObject.SetActive(false);
             trigger2List.gameObject.SetActive(false);
-            listBlock.SetActive(false);
+            listBlock.gameObject.SetActive(false);
         }
 
         public void SetSkillList(List<ListData> skillInfos)
         {
             skillList.gameObject.SetActive(true);
-            listBlock.SetActive(true);
+            listBlock.gameObject.SetActive(true);
             skillList.SetData(skillInfos);
         }
 
         public void SetTrigger1List(List<ListData> triggerDates)
         {
             trigger1List.gameObject.SetActive(true);
-            listBlock.SetActive(true);
+            listBlock.gameObject.SetActive(true);
             trigger1List.SetData(triggerDates);
         }
 
         public void SetTrigger2List(List<ListData> triggerDates)
         {
             trigger2List.gameObject.SetActive(true);
-            listBlock.SetActive(true);
+            listBlock.gameObject.SetActive(true);
             trigger2List.SetData(triggerDates);
         }
 
@@ -104,7 +108,7 @@ namespace Ryneus
             var listData = trigger1List.ListData;
             if (listData != null)
             {
-                var data = (TriggerType)listData.Data;
+                var data = (SkillTriggerData)listData.Data;
                 var eventData = new SkillTriggerViewEvent(SkillTrigger.CommandType.DecideTrigger1Select);
                 eventData.template = data;
                 _commandData(eventData);
@@ -116,7 +120,7 @@ namespace Ryneus
             var listData = trigger2List.ListData;
             if (listData != null)
             {
-                var data = (TriggerType)listData.Data;
+                var data = (SkillTriggerData)listData.Data;
                 var eventData = new SkillTriggerViewEvent(SkillTrigger.CommandType.DecideTrigger2Select);
                 eventData.template = data;
                 _commandData(eventData);

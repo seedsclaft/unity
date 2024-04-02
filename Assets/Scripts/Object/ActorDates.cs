@@ -32,7 +32,7 @@ namespace Ryneus
         public float AwakenScale;
         public List<KindType> Kinds;
         public List<LearningData> LearningSkills = new();
-        public List<SkillTriggerData> SkillTriggerDates = new();
+        public List<SkillTriggerActorData> SkillTriggerDates = new();
     }
 
     [Serializable]
@@ -45,9 +45,10 @@ namespace Ryneus
     }
 
     [Serializable]
-    public class SkillTriggerData
+    public class SkillTriggerActorData
     {   
         public int SkillId;
-        public List<TriggerType> TriggerTypeDates;
+        public int Trigger1;
+        public int Trigger2;
     }
 }

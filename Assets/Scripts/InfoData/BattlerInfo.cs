@@ -29,8 +29,10 @@ namespace Ryneus
         public int MaxMp {get {return _status.GetParameter(StatusParamType.Mp) + StateEffectAll(StateType.MaxMpUp);}}
         private int _hp;
         public int Hp => _hp;
+        public float HpRate => _hp > 0 ? (float)_hp / (float)MaxHp : 0;
         private int _mp;
         public int Mp => _mp;
+        public float MpRate => _mp > 0 ? (float)_mp / (float)MaxMp : 0;
         private float _ap;
         public float Ap => _ap;
         

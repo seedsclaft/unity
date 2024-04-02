@@ -25,11 +25,7 @@ namespace Ryneus
         
         public List<ListData> SkillTriggerDataList()
         {
-            var list = new List<TriggerType>();
-            foreach (TriggerType name in Enum.GetValues(typeof(TriggerType)))
-            {
-                list.Add(name);
-            }
+            var list = DataSystem.SkillTriggers.FindAll(a => a.Category > 0);
             return MakeListData(list);
         }
 
@@ -38,11 +34,11 @@ namespace Ryneus
             PartyInfo.SetSkillTriggerSkill(_actorId,index,skillId);
         }
 
-        public void SetSkillTrigger1(int index,TriggerType triggerType)
+        public void SetSkillTrigger1(int index,SkillTriggerData triggerType)
         {
             PartyInfo.SetSkillTriggerTrigger1(_actorId,index,triggerType);
         }
-        public void SetSkillTrigger2(int index,TriggerType triggerType)
+        public void SetSkillTrigger2(int index,SkillTriggerData triggerType)
         {
             PartyInfo.SetSkillTriggerTrigger2(_actorId,index,triggerType);
         }

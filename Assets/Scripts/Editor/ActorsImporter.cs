@@ -195,13 +195,14 @@ namespace Ryneus
 
 						int ActorId = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseLearningColumn.ActorId);
 						ActorData Actor = Data.Data.Find(a => a.Id == ActorId);
-						var SkillTriggerData = new SkillTriggerData();
+						
+						var SkillTriggerData = new SkillTriggerActorData();
 						SkillTriggerData.SkillId = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseSkillTriggerColumn.SkillId);
 						var skillTypes = new List<TriggerType>();
-						SkillTriggerData.TriggerTypeDates = new List<TriggerType>();
-						SkillTriggerData.TriggerTypeDates.Add((TriggerType)AssetPostImporter.ImportNumeric(BaseRow,(int)BaseSkillTriggerColumn.TriggerType1));
-						SkillTriggerData.TriggerTypeDates.Add((TriggerType)AssetPostImporter.ImportNumeric(BaseRow,(int)BaseSkillTriggerColumn.TriggerType2));
+						SkillTriggerData.Trigger1 = (int)AssetPostImporter.ImportNumeric(BaseRow,(int)BaseSkillTriggerColumn.TriggerType1);
+						SkillTriggerData.Trigger2 = (int)AssetPostImporter.ImportNumeric(BaseRow,(int)BaseSkillTriggerColumn.TriggerType2);
 						Actor.SkillTriggerDates.Add(SkillTriggerData);
+						
 					}
 				}
 			}

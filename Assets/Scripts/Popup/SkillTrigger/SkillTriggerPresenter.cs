@@ -44,10 +44,10 @@ namespace Ryneus
                 CommandDecideSkillSelect((SkillInfo)viewEvent.template);
                 break;
                 case SkillTrigger.CommandType.DecideTrigger1Select:
-                CommandDecideTrigger1Select((TriggerType)viewEvent.template);
+                CommandDecideTrigger1Select((SkillTriggerData)viewEvent.template);
                 break;
                 case SkillTrigger.CommandType.DecideTrigger2Select:
-                CommandDecideTrigger2Select((TriggerType)viewEvent.template);
+                CommandDecideTrigger2Select((SkillTriggerData)viewEvent.template);
                 break;
                 case SkillTrigger.CommandType.CancelSelect:
                 CommandCancelSelect();
@@ -64,7 +64,7 @@ namespace Ryneus
             CommandRefresh();
         }
 
-        private void CommandDecideTrigger1Select(TriggerType triggerType)
+        private void CommandDecideTrigger1Select(SkillTriggerData triggerType)
         {
             SoundManager.Instance.PlayStaticSe(SEType.Decide);
             var index = _view.SkillTriggerIndex;
@@ -73,7 +73,7 @@ namespace Ryneus
             CommandRefresh();
         }
         
-        private void CommandDecideTrigger2Select(TriggerType triggerType)
+        private void CommandDecideTrigger2Select(SkillTriggerData triggerType)
         {
             SoundManager.Instance.PlayStaticSe(SEType.Decide);
             var index = _view.SkillTriggerIndex;

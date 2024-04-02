@@ -25,11 +25,11 @@ namespace Ryneus
         {
             _skillId = skillId;
         }
-        private List<TriggerType> _triggerTypes = new ();
-        public List<TriggerType> TriggerTypes => _triggerTypes;
-        public void UpdateTriggerType(List<TriggerType> triggerTypes)
+        private List<SkillTriggerData> _skillTriggerDates = new ();
+        public List<SkillTriggerData> SkillTriggerDates => _skillTriggerDates;
+        public void UpdateTriggerDates(List<SkillTriggerData> skillTriggerDates)
         {
-            _triggerTypes = triggerTypes;
+            _skillTriggerDates = skillTriggerDates;
         }
 
     }
