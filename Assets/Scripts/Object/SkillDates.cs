@@ -135,7 +135,12 @@ namespace Ryneus
             public bool IsTriggeredSkillInfo(BattlerInfo battlerInfo,List<BattlerInfo> party,List<BattlerInfo> troops)
             {
                 bool CanUse = false;
-                
+                var friends = battlerInfo.IsActor ? party : troops;
+                var opponents = battlerInfo.IsActor ? troops : party;
+                var friendFronts = friends.FindAll(a => a.LineIndex == LineType.Front);
+                var friendBacks = friends.FindAll(a => a.LineIndex == LineType.Back);
+                var opponentFronts = friends.FindAll(a => a.LineIndex == LineType.Front);
+                var opponentBacks = friends.FindAll(a => a.LineIndex == LineType.Back);
                 switch (TriggerType)
                 {
                     case TriggerType.None:
@@ -145,6 +150,10 @@ namespace Ryneus
                     case TriggerType.MostHpFriend: // 別処理で判定するためここではパス
                     case TriggerType.LessHpTarget: // 別処理で判定するためここではパス
                     case TriggerType.MostHpTarget: // 別処理で判定するためここではパス
+                    case TriggerType.FriendLineMoreTarget:
+                    case TriggerType.FriendLineLessTarget:
+                    case TriggerType.OpponentLineMoreTarget:
+                    case TriggerType.OpponentLineLessTarget:
                         CanUse = true;
                     break;
                     case TriggerType.SelfHpRateUnder:
@@ -160,25 +169,25 @@ namespace Ryneus
                     }
                     break;
                     case TriggerType.FriendHpRateUnder:
-                    if (party.Find(a => a.HpRate <= Param1 * 0.01f) != null)
+                    if (friends.Find(a => a.HpRate <= Param1 * 0.01f) != null)
                     {
                         CanUse = true;
                     }
                     break;
                     case TriggerType.FriendHpRateUpper:
-                    if (party.Find(a => a.HpRate >= Param1 * 0.01f) != null)
+                    if (friends.Find(a => a.HpRate >= Param1 * 0.01f) != null)
                     {
                         CanUse = true;
                     }
                     break;
                     case TriggerType.OpponentHpRateUnder:
-                    if (troops.Find(a => a.HpRate <= Param1 * 0.01f) != null)
+                    if (opponents.Find(a => a.HpRate <= Param1 * 0.01f) != null)
                     {
                         CanUse = true;
                     }
                     break;
                     case TriggerType.OpponentHpRateUpper:
-                    if (troops.Find(a => a.HpRate >= Param1 * 0.01f) != null)
+                    if (opponents.Find(a => a.HpRate >= Param1 * 0.01f) != null)
                     {
                         CanUse = true;
                     }
@@ -208,25 +217,25 @@ namespace Ryneus
                     }
                     break;
                     case TriggerType.FriendMpUnder:
-                    if (party.Find(a => a.MpRate >= Param1 * 0.01f) != null)
+                    if (friends.Find(a => a.MpRate >= Param1 * 0.01f) != null)
                     {
                         CanUse = true;
                     }
                     break;
                     case TriggerType.FriendMpUpper:
-                    if (troops.Find(a => a.MpRate <= Param1 * 0.01f) != null)
+                    if (friends.Find(a => a.MpRate <= Param1 * 0.01f) != null)
                     {
                         CanUse = true;
                     }
                     break;
                     case TriggerType.OpponentMpUnder:
-                    if (troops.Find(a => a.MpRate >= Param1 * 0.01f) != null)
+                    if (opponents.Find(a => a.MpRate >= Param1 * 0.01f) != null)
                     {
                         CanUse = true;
                     }
                     break;
                     case TriggerType.OpponentMpUpper:
-                    if (troops.Find(a => a.MpRate <= Param1 * 0.01f) != null)
+                    if (opponents.Find(a => a.MpRate <= Param1 * 0.01f) != null)
                     {
                         CanUse = true;
                     }
@@ -296,6 +305,58 @@ namespace Ryneus
                     break;
                     case TriggerType.SelfLineBack:
                     if (battlerInfo.LineIndex == LineType.Back)
+                    {
+                        CanUse = true;
+                    }
+                    break;
+                    case TriggerType.FriendLineFront:
+                    if (friends.Find(a => a.LineIndex == LineType.Front) != null)
+                    {
+                        CanUse = true;
+                    }
+                    if (Param1 == 1)
+                    {
+                        CanUse = friends.Count > 0;
+                    }
+                    break;
+                    case TriggerType.FriendLineBack:
+                    if (friends.Find(a => a.LineIndex == LineType.Back) != null)
+                    {
+                        CanUse = true;
+                    }
+                    if (Param1 == 1)
+                    {
+                        CanUse = friends.Count > 0;
+                    }
+                    break;
+                    case TriggerType.OpponentLineFront:
+                    if (opponents.Find(a => a.LineIndex == LineType.Front) != null)
+                    {
+                        CanUse = true;
+                    }
+                    if (Param1 == 1)
+                    {
+                        CanUse = opponents.Count > 0;
+                    }
+                    break;
+                    case TriggerType.OpponentLineBack:
+                    if (opponents.Find(a => a.LineIndex == LineType.Back) != null)
+                    {
+                        CanUse = true;
+                    }
+                    if (Param1 == 1)
+                    {
+                        CanUse = opponents.Count > 0;
+                    }
+                    break;
+                    case TriggerType.FriendMoreTargetCount:
+                    if (friendFronts.Count >= Param1 || friendBacks.Count >= Param1)
+                    {
+                        CanUse = true;
+                    }
+                    break;
+                    case TriggerType.OpponentMoreTargetCount:
+                    if (opponentFronts.Count >= Param1 || opponentBacks.Count >= Param1)
                     {
                         CanUse = true;
                     }
@@ -473,6 +534,16 @@ namespace Ryneus
         IsExistAliveMember = 4020, // 生存者が〇以上存在する
         SelfLineFront = 5010, // 自分が前列にいる
         SelfLineBack = 5020, // 自分が後列にいる
+        FriendLineFront = 5030, // 前列の味方
+        FriendLineBack = 5040, // 後列の味方
+        OpponentLineFront = 5050, // 前列の敵
+        OpponentLineBack = 5060, // 後列の敵
+        FriendLineMoreTarget = 5070, // 人数が多い列の味方
+        OpponentLineMoreTarget = 5080, // 人数が多い列の敵
+        FriendLineLessTarget = 5090, // 人数が少ない列の味方
+        OpponentLineLessTarget = 5100, // 人数が少ない列の敵
+        FriendMoreTargetCount = 5110, // 〇人以上いる列の味方限定
+        OpponentMoreTargetCount = 5120, // 〇人以上いる列の敵限定
         IsState = 6010, // StateId状態になっている
         IsNotState = 6020, // StateId状態になっていない
         IsAbnormalState = 6030, // AbnormalのState状態になっている

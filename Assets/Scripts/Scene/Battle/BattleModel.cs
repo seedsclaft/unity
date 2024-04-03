@@ -2243,6 +2243,8 @@ namespace Ryneus
             }
             var targetIndexList1 = new List<int>();
             var targetIndexList2 = new List<int>();
+            // ～を優先判定用
+            var targetIndexWithInList = new List<int>();
             if (triggerDates.Count == 1)
             {
                 targetIndexList2 = targetIndexes;
@@ -2254,8 +2256,11 @@ namespace Ryneus
                 {
                     var triggerDate = triggerDates[i];
                     var targetBattler = GetBattlerInfo(targetIndex);
+                    var friends = targetBattler.IsActor ? _party : _troop;
+                    var opponents = targetBattler.IsActor ? _troop : _party;
                     switch (triggerDate.TriggerType)
                     {
+                        // ターゲットに含めるか判定
                         case TriggerType.FriendHpRateUnder:
                         if (battlerInfo.IsActor == targetBattler.IsActor && targetBattler.HpRate <= 0.01f * triggerDate.Param1)
                         {
@@ -2280,7 +2285,6 @@ namespace Ryneus
                             targetIndexList.Add(targetIndex);
                         }
                         break;
-                        
                         case TriggerType.FriendMpUnder:
                         if (battlerInfo.IsActor == targetBattler.IsActor && targetBattler.MpRate <= 0.01f * triggerDate.Param1)
                         {
@@ -2305,6 +2309,58 @@ namespace Ryneus
                             targetIndexList.Add(targetIndex);
                         }
                         break;
+                        case TriggerType.FriendLineFront:
+                        if (battlerInfo.IsActor == targetBattler.IsActor && targetBattler.LineIndex == LineType.Front)
+                        {
+                            targetIndexList.Add(targetIndex);
+                        }
+                        if (triggerDate.Param1 == 1)
+                        {
+                            targetIndexWithInList.Add(targetIndex);
+                        }
+                        break;
+                        case TriggerType.FriendLineBack:
+                        if (battlerInfo.IsActor == targetBattler.IsActor && targetBattler.LineIndex == LineType.Back)
+                        {
+                            targetIndexList.Add(targetIndex);
+                        }
+                        if (triggerDate.Param1 == 1)
+                        {
+                            targetIndexWithInList.Add(targetIndex);
+                        }
+                        break;
+                        case TriggerType.OpponentLineFront:
+                        if (battlerInfo.IsActor != targetBattler.IsActor && targetBattler.LineIndex == LineType.Front)
+                        {
+                            targetIndexList.Add(targetIndex);
+                        }
+                        if (triggerDate.Param1 == 1)
+                        {
+                            targetIndexWithInList.Add(targetIndex);
+                        }
+                        break;
+                        case TriggerType.OpponentLineBack:
+                        if (battlerInfo.IsActor != targetBattler.IsActor && targetBattler.LineIndex == LineType.Back)
+                        {
+                            targetIndexList.Add(targetIndex);
+                        }
+                        if (triggerDate.Param1 == 1)
+                        {
+                            targetIndexWithInList.Add(targetIndex);
+                        }
+                        break;
+                        case TriggerType.FriendMoreTargetCount:
+                        if (battlerInfo.IsActor == targetBattler.IsActor && friends.AliveBattlerInfos.FindAll(a => a.LineIndex == targetBattler.LineIndex).Count >= triggerDate.Param1)
+                        {
+                            targetIndexList.Add(targetIndex);
+                        }
+                        break;
+                        case TriggerType.OpponentMoreTargetCount:
+                        if (battlerInfo.IsActor != targetBattler.IsActor && opponents.AliveBattlerInfos.FindAll(a => a.LineIndex == targetBattler.LineIndex).Count >= triggerDate.Param1)
+                        {
+                            targetIndexList.Add(targetIndex);
+                        }
+                        break;
                         default:
                             targetIndexList.Add(targetIndex);
                         break;
@@ -2320,18 +2376,24 @@ namespace Ryneus
                 }
             }
 
-            // 優先順位で選択
-            var friends = new List<BattlerInfo>();
-            var opponents = new List<BattlerInfo>();
+            // ～範囲優先の第二候補があれば変更
+            if (bindTargetIndexList.Count == 0)
+            {   
+                bindTargetIndexList = targetIndexWithInList;
+            }
+
+            // ～が高い・低い順位で選択
+            var friendTargets = new List<BattlerInfo>();
+            var opponentTargets = new List<BattlerInfo>();
             foreach (var bindTargetIndex in bindTargetIndexList)
             {
                 var bindBattlerInfo = GetBattlerInfo(bindTargetIndex);
                 if (bindBattlerInfo.IsActor && battlerInfo.IsActor)
                 {
-                    friends.Add(bindBattlerInfo);
+                    friendTargets.Add(bindBattlerInfo);
                 } else
                 {
-                    opponents.Add(bindBattlerInfo);
+                    opponentTargets.Add(bindBattlerInfo);
                 }
             }
             for (int i = 0;i < triggerDates.Count;i++)
@@ -2340,31 +2402,87 @@ namespace Ryneus
                 switch (triggerDate.TriggerType)
                 {
                     case TriggerType.LessHpFriend:
-                    if (friends.Count > 0)
+                    if (friendTargets.Count > 0)
                     {
-                        friends.Sort((a,b) => a.Hp < b.Hp ? -1: 1);
-                        return friends[0].Index;
+                        friendTargets.Sort((a,b) => a.Hp < b.Hp ? -1: 1);
+                        return friendTargets[0].Index;
                     }
                     break;
                     case TriggerType.MostHpFriend:
-                    if (friends.Count > 0)
+                    if (friendTargets.Count > 0)
                     {
-                        friends.Sort((a,b) => a.Hp < b.Hp ? 1: -1);
-                        return friends[0].Index;
+                        friendTargets.Sort((a,b) => a.Hp < b.Hp ? 1: -1);
+                        return friendTargets[0].Index;
                     }
                     break;
                     case TriggerType.LessHpTarget:
-                    if (opponents.Count > 0)
+                    if (opponentTargets.Count > 0)
                     {
-                        opponents.Sort((a,b) => a.Hp < b.Hp ? -1: 1);
-                        return opponents[0].Index;
+                        opponentTargets.Sort((a,b) => a.Hp < b.Hp ? -1: 1);
+                        return opponentTargets[0].Index;
                     }
                     break;
                     case TriggerType.MostHpTarget:
-                    if (opponents.Count > 0)
+                    if (opponentTargets.Count > 0)
                     {
-                        opponents.Sort((a,b) => a.Hp < b.Hp ? 1: -1);
-                        return opponents[0].Index;
+                        opponentTargets.Sort((a,b) => a.Hp < b.Hp ? 1: -1);
+                        return opponentTargets[0].Index;
+                    }
+                    break;
+                    case TriggerType.FriendLineMoreTarget:
+                    if (friendTargets.Count > 0)
+                    {
+                        var front = friendTargets.FindAll(a => a.LineIndex == LineType.Front);
+                        var back = friendTargets.FindAll(a => a.LineIndex == LineType.Back);
+                        if (back.Count > front.Count)
+                        {
+                            return back[0].Index;
+                        } else
+                        {
+                            return front[0].Index;
+                        }
+                    }
+                    break;
+                    case TriggerType.FriendLineLessTarget:
+                    if (friendTargets.Count > 0)
+                    {
+                        var front = friendTargets.FindAll(a => a.LineIndex == LineType.Front);
+                        var back = friendTargets.FindAll(a => a.LineIndex == LineType.Back);
+                        if (back.Count < front.Count)
+                        {
+                            return back[0].Index;
+                        } else
+                        {
+                            return front[0].Index;
+                        }
+                    }
+                    break;
+                    case TriggerType.OpponentLineMoreTarget:
+                    if (opponentTargets.Count > 0)
+                    {
+                        var front = opponentTargets.FindAll(a => a.LineIndex == LineType.Front);
+                        var back = opponentTargets.FindAll(a => a.LineIndex == LineType.Back);
+                        if (back.Count > front.Count)
+                        {
+                            return back[0].Index;
+                        } else
+                        {
+                            return front[0].Index;
+                        }
+                    }
+                    break;
+                    case TriggerType.OpponentLineLessTarget:
+                    if (opponentTargets.Count > 0)
+                    {
+                        var front = opponentTargets.FindAll(a => a.LineIndex == LineType.Front);
+                        var back = opponentTargets.FindAll(a => a.LineIndex == LineType.Back);
+                        if (back.Count < front.Count)
+                        {
+                            return back[0].Index;
+                        } else
+                        {
+                            return front[0].Index;
+                        }
                     }
                     break;
                     default:

@@ -23,9 +23,18 @@ namespace Ryneus
             return MakeListData(list);
         }
         
-        public List<ListData> SkillTriggerDataList()
+        public List<ListData> SkillTriggerCategoryList()
         {
-            var list = DataSystem.SkillTriggers.FindAll(a => a.Category > 0);
+            var list = new List<string>();
+            list.Add("隊列・状況");
+            list.Add("HP");
+            list.Add("MP");
+            return MakeListData(list);
+        }
+
+        public List<ListData> SkillTriggerDataList(int category)
+        {
+            var list = DataSystem.SkillTriggers.FindAll(a => a.Category == -1 || a.Category == category);
             return MakeListData(list);
         }
 

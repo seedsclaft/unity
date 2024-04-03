@@ -22,6 +22,7 @@ namespace Ryneus
         {
             _view.SetEvent((type) => UpdateCommand(type));
             _view.SetSkillTrigger(_model.SkillTrigger(_view.SkillTriggerViewInfo.ActorId));
+            _view.SetTriggerCategoryList(_model.SkillTriggerCategoryList());
         }
 
         private void UpdateCommand(SkillTriggerViewEvent viewEvent)
@@ -49,8 +50,17 @@ namespace Ryneus
                 case SkillTrigger.CommandType.DecideTrigger2Select:
                 CommandDecideTrigger2Select((SkillTriggerData)viewEvent.template);
                 break;
+                case SkillTrigger.CommandType.DecideCategory1Select:
+                CommandDecideCategory1Select();
+                break;
+                case SkillTrigger.CommandType.DecideCategory2Select:
+                CommandDecideCategory2Select();
+                break;
                 case SkillTrigger.CommandType.CancelSelect:
                 CommandCancelSelect();
+                break;
+                case SkillTrigger.CommandType.CancelCategory:
+                CommandCancelCategory();
                 break;
             }
         }
@@ -70,6 +80,7 @@ namespace Ryneus
             var index = _view.SkillTriggerIndex;
             _model.SetSkillTrigger1(index,triggerType);
             _view.HideSelectList();
+            _view.HideSelectCategoryList();
             CommandRefresh();
         }
         
@@ -79,13 +90,44 @@ namespace Ryneus
             var index = _view.SkillTriggerIndex;
             _model.SetSkillTrigger2(index,triggerType);
             _view.HideSelectList();
+            _view.HideSelectCategoryList();
             CommandRefresh();
+        }
+
+        private void CommandDecideCategory1Select()
+        {
+            var index = _view.Trigger1CategoryIndex;
+            if (index > -1)
+            {
+                SoundManager.Instance.PlayStaticSe(SEType.Decide);
+                var list = _model.SkillTriggerDataList(index + 1);
+                _view.SetTrigger1List(list);
+            }
+        }
+
+        private void CommandDecideCategory2Select()
+        {
+            var index = _view.Trigger2CategoryIndex;
+            if (index > -1)
+            {
+                SoundManager.Instance.PlayStaticSe(SEType.Decide);
+                var list = _model.SkillTriggerDataList(index + 1);
+                _view.SetTrigger2List(list);
+            }
         }
 
         private void CommandCancelSelect()
         {
             SoundManager.Instance.PlayStaticSe(SEType.Cancel);
             _view.HideSelectList();
+            _view.HideSelectCategoryList();
+        }
+
+        private void CommandCancelCategory()
+        {
+            SoundManager.Instance.PlayStaticSe(SEType.Cancel);
+            _view.HideSelectList();
+            _view.HideSelectCategoryList();
         }
 
         private void CommandCallSkillSelect()
@@ -96,14 +138,14 @@ namespace Ryneus
 
         private void CommandCallTrigger1Select()
         {
-            var skillInfos = _model.SkillTriggerDataList();
-            _view.SetTrigger1List(skillInfos);
+            SoundManager.Instance.PlayStaticSe(SEType.Decide);
+            _view.ShowTrigger1Category();
             
         }
         private void CommandCallTrigger2Select()
         {
-            var skillInfos = _model.SkillTriggerDataList();
-            _view.SetTrigger2List(skillInfos);
+            SoundManager.Instance.PlayStaticSe(SEType.Decide);
+            _view.ShowTrigger2Category();
         }
 
         private void CommandRefresh()

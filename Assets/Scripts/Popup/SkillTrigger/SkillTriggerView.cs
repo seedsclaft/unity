@@ -11,10 +11,15 @@ namespace Ryneus
         [SerializeField] private BaseList skillList = null;
         [SerializeField] private BaseList trigger1List = null;
         [SerializeField] private BaseList trigger2List = null;
+        [SerializeField] private BaseList triggerCategory1List = null;
+        [SerializeField] private BaseList triggerCategory2List = null;
         [SerializeField] private Button listBlock = null;
         private new Action<SkillTriggerViewEvent> _commandData = null;
         public int SkillTriggerIndex => skillTriggerList.Index;
         private SkillTriggerViewInfo _skillTriggerViewInfo;
+
+        public int Trigger1CategoryIndex => triggerCategory1List.Index;
+        public int Trigger2CategoryIndex => triggerCategory2List.Index;
         
         public SkillTriggerViewInfo SkillTriggerViewInfo => _skillTriggerViewInfo;
         public override void Initialize() 
@@ -30,6 +35,15 @@ namespace Ryneus
             trigger2List.SetInputHandler(InputKeyType.Decide,() => OnClickTrigger2Select());
             trigger2List.SetInputHandler(InputKeyType.Cancel,() => CancelSelect());
             HideSelectList();
+            triggerCategory1List.Initialize();
+            triggerCategory1List.SetSelectedHandler(() => OnClickTriggerCategory1Select());
+            triggerCategory1List.SetInputHandler(InputKeyType.Cancel,() => CancelCategory());
+            
+            triggerCategory2List.Initialize();
+            triggerCategory2List.SetSelectedHandler(() => OnClickTriggerCategory2Select());
+            triggerCategory2List.SetInputHandler(InputKeyType.Cancel,() => CancelCategory());
+            HideSelectCategoryList();
+            
             skillTriggerList.Initialize();
             skillTriggerList.SetInputHandler(InputKeyType.Cancel,() => BackEvent());
             skillTriggerList.SetInputCallHandler();
@@ -67,6 +81,22 @@ namespace Ryneus
             skillList.gameObject.SetActive(false);
             trigger1List.gameObject.SetActive(false);
             trigger2List.gameObject.SetActive(false);
+        }
+
+        public void ShowTrigger1Category()
+        {
+            triggerCategory1List.gameObject.SetActive(true);
+        }
+
+        public void ShowTrigger2Category()
+        {
+            triggerCategory2List.gameObject.SetActive(true);
+        }
+
+        public void HideSelectCategoryList()
+        {
+            triggerCategory1List.gameObject.SetActive(false);
+            triggerCategory2List.gameObject.SetActive(false);
             listBlock.gameObject.SetActive(false);
         }
 
@@ -75,6 +105,12 @@ namespace Ryneus
             skillList.gameObject.SetActive(true);
             listBlock.gameObject.SetActive(true);
             skillList.SetData(skillInfos);
+        }
+
+        public void SetTriggerCategoryList(List<ListData> triggerDates)
+        {
+            triggerCategory1List.SetData(triggerDates);
+            triggerCategory2List.SetData(triggerDates);
         }
 
         public void SetTrigger1List(List<ListData> triggerDates)
@@ -127,9 +163,27 @@ namespace Ryneus
             }
         }
 
+        private void OnClickTriggerCategory1Select()
+        {
+            var eventData = new SkillTriggerViewEvent(SkillTrigger.CommandType.DecideCategory1Select);
+            _commandData(eventData);
+        }
+
+        private void OnClickTriggerCategory2Select()
+        {
+            var eventData = new SkillTriggerViewEvent(SkillTrigger.CommandType.DecideCategory2Select);
+            _commandData(eventData);
+        }
+
         private void CancelSelect()
         {
             var eventData = new SkillTriggerViewEvent(SkillTrigger.CommandType.CancelSelect);
+            _commandData(eventData);
+        }
+
+        private void CancelCategory()
+        {
+            var eventData = new SkillTriggerViewEvent(SkillTrigger.CommandType.CancelCategory);
             _commandData(eventData);
         }
 
@@ -182,7 +236,10 @@ namespace SkillTrigger
         DecideSkillSelect,
         DecideTrigger1Select,
         DecideTrigger2Select,
+        DecideCategory1Select,
+        DecideCategory2Select,
         CancelSelect,
+        CancelCategory,
         None = 0,
     }
 }

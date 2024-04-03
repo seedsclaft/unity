@@ -16,7 +16,7 @@ MonoBehaviour:
   - Id: 0
     Name: '-'
     Help: '""'
-    Category: 0
+    Category: -1
     TriggerType: 0
     Param1: 0
   - Id: 1010
@@ -28,25 +28,25 @@ MonoBehaviour:
   - Id: 1011
     Name: "\u81EA\u8EAB\u306EHp\u304C100%\u672A\u6E80"
     Help: '""'
-    Category: 1
+    Category: 2
     TriggerType: 1010
     Param1: 100
   - Id: 1012
     Name: "\u81EA\u8EAB\u306EHp\u304C75%\u4EE5\u4E0B"
     Help: '""'
-    Category: 1
+    Category: 2
     TriggerType: 1010
     Param1: 75
   - Id: 1013
     Name: "\u81EA\u8EAB\u306EHp\u304C50%\u4EE5\u4E0B"
     Help: '""'
-    Category: 1
+    Category: 2
     TriggerType: 1010
     Param1: 50
   - Id: 1014
     Name: "\u81EA\u8EAB\u306EHp\u304C25%\u4EE5\u4E0B"
     Help: '""'
-    Category: 1
+    Category: 2
     TriggerType: 1010
     Param1: 25
   - Id: 1020
@@ -58,25 +58,25 @@ MonoBehaviour:
   - Id: 1021
     Name: "\u81EA\u8EAB\u306EHp\u304C100%\u4EE5\u4E0A"
     Help: '""'
-    Category: 1
+    Category: 2
     TriggerType: 1020
     Param1: 100
   - Id: 1022
     Name: "\u81EA\u8EAB\u306EHp\u304C75%\u4EE5\u4E0A"
     Help: '""'
-    Category: 1
+    Category: 2
     TriggerType: 1020
     Param1: 75
   - Id: 1023
     Name: "\u81EA\u8EAB\u306EHp\u304C50%\u4EE5\u4E0A"
     Help: '""'
-    Category: 1
+    Category: 2
     TriggerType: 1020
     Param1: 50
   - Id: 1024
     Name: "\u81EA\u8EAB\u306EHp\u304C25%\u4EE5\u4E0A"
     Help: '""'
-    Category: 1
+    Category: 2
     TriggerType: 1020
     Param1: 25
   - Id: 1030
@@ -88,25 +88,25 @@ MonoBehaviour:
   - Id: 1031
     Name: "Hp100%\u672A\u6E80\u306E\u5473\u65B9"
     Help: '""'
-    Category: 1
+    Category: 2
     TriggerType: 1030
     Param1: 100
   - Id: 1032
     Name: "Hp75%\u4EE5\u4E0B\u306E\u5473\u65B9"
     Help: '""'
-    Category: 1
+    Category: 2
     TriggerType: 1030
     Param1: 75
   - Id: 1033
     Name: "Hp50%\u4EE5\u4E0B\u306E\u5473\u65B9"
     Help: '""'
-    Category: 1
+    Category: 2
     TriggerType: 1030
     Param1: 50
   - Id: 1034
     Name: "Hp25%\u4EE5\u4E0B\u306E\u5473\u65B9"
     Help: '""'
-    Category: 1
+    Category: 2
     TriggerType: 1030
     Param1: 25
   - Id: 1040
@@ -118,25 +118,25 @@ MonoBehaviour:
   - Id: 1041
     Name: "Hp100%\u4EE5\u4E0A\u306E\u5473\u65B9"
     Help: '""'
-    Category: 1
+    Category: 2
     TriggerType: 1040
     Param1: 100
   - Id: 1042
     Name: "Hp75%\u4EE5\u4E0A\u306E\u5473\u65B9"
     Help: '""'
-    Category: 1
+    Category: 2
     TriggerType: 1040
     Param1: 75
   - Id: 1043
     Name: "Hp50%\u4EE5\u4E0A\u306E\u5473\u65B9"
     Help: '""'
-    Category: 1
+    Category: 2
     TriggerType: 1040
     Param1: 50
   - Id: 1044
     Name: "Hp25%\u4EE5\u4E0A\u306E\u5473\u65B9"
     Help: '""'
-    Category: 1
+    Category: 2
     TriggerType: 1040
     Param1: 25
   - Id: 1050
@@ -148,25 +148,25 @@ MonoBehaviour:
   - Id: 1051
     Name: "Hp100%\u672A\u6E80\u306E\u6575"
     Help: '""'
-    Category: 1
+    Category: 2
     TriggerType: 1050
     Param1: 100
   - Id: 1052
     Name: "Hp75%\u4EE5\u4E0B\u306E\u6575"
     Help: '""'
-    Category: 1
+    Category: 2
     TriggerType: 1050
     Param1: 75
   - Id: 1053
     Name: "Hp50%\u4EE5\u4E0B\u306E\u6575"
     Help: '""'
-    Category: 1
+    Category: 2
     TriggerType: 1050
     Param1: 50
   - Id: 1054
     Name: "Hp25%\u4EE5\u4E0B\u306E\u6575"
     Help: '""'
-    Category: 1
+    Category: 2
     TriggerType: 1050
     Param1: 25
   - Id: 1060
@@ -178,49 +178,49 @@ MonoBehaviour:
   - Id: 1061
     Name: "Hp100%\u4EE5\u4E0A\u306E\u6575"
     Help: '""'
-    Category: 1
+    Category: 2
     TriggerType: 1060
     Param1: 100
   - Id: 1062
     Name: "Hp75%\u4EE5\u4E0A\u306E\u6575"
     Help: '""'
-    Category: 1
+    Category: 2
     TriggerType: 1060
     Param1: 75
   - Id: 1063
     Name: "Hp50%\u4EE5\u4E0A\u306E\u6575"
     Help: '""'
-    Category: 1
+    Category: 2
     TriggerType: 1060
     Param1: 50
   - Id: 1064
     Name: "Hp25%\u4EE5\u4E0A\u306E\u6575"
     Help: '""'
-    Category: 1
+    Category: 2
     TriggerType: 1060
     Param1: 25
   - Id: 1130
     Name: "\u6700\u3082Hp\u304C\u5C11\u306A\u3044\u5473\u65B9"
     Help: '""'
-    Category: 1
+    Category: 2
     TriggerType: 1130
     Param1: 0
   - Id: 1140
     Name: "\u6700\u3082Hp\u304C\u591A\u3044\u5473\u65B9"
     Help: '""'
-    Category: 1
+    Category: 2
     TriggerType: 1140
     Param1: 0
   - Id: 1150
     Name: "\u6700\u3082Hp\u304C\u5C11\u306A\u3044\u6575"
     Help: '""'
-    Category: 1
+    Category: 2
     TriggerType: 1150
     Param1: 0
   - Id: 1160
     Name: "\u6700\u3082Hp\u304C\u591A\u3044\u6575"
     Help: '""'
-    Category: 1
+    Category: 2
     TriggerType: 1160
     Param1: 0
   - Id: 2010
@@ -433,6 +433,138 @@ MonoBehaviour:
     Category: 0
     TriggerType: 5020
     Param1: 0
+  - Id: 5030
+    Name: "\u524D\u5217\u306E\u5473\u65B9\u3092\u72D9\u3046"
+    Help: '""'
+    Category: 0
+    TriggerType: 5030
+    Param1: 0
+  - Id: 5031
+    Name: "\u524D\u5217\u306E\u5473\u65B9\u3092\u512A\u5148"
+    Help: '""'
+    Category: 1
+    TriggerType: 5030
+    Param1: 1
+  - Id: 5032
+    Name: "\u524D\u5217\u306E\u5473\u65B9"
+    Help: '""'
+    Category: 1
+    TriggerType: 5030
+    Param1: 0
+  - Id: 5040
+    Name: "\u5F8C\u5217\u306E\u5473\u65B9\u3092\u72D9\u3046"
+    Help: '""'
+    Category: 0
+    TriggerType: 5040
+    Param1: 0
+  - Id: 5041
+    Name: "\u5F8C\u5217\u306E\u5473\u65B9\u3092\u512A\u5148"
+    Help: '""'
+    Category: 1
+    TriggerType: 5040
+    Param1: 1
+  - Id: 5042
+    Name: "\u5F8C\u5217\u306E\u5473\u65B9"
+    Help: '""'
+    Category: 1
+    TriggerType: 5040
+    Param1: 0
+  - Id: 5050
+    Name: "\u524D\u5217\u306E\u6575\u3092\u72D9\u3046"
+    Help: '""'
+    Category: 0
+    TriggerType: 5050
+    Param1: 0
+  - Id: 5051
+    Name: "\u524D\u5217\u306E\u6575\u3092\u512A\u5148"
+    Help: '""'
+    Category: 1
+    TriggerType: 5050
+    Param1: 1
+  - Id: 5052
+    Name: "\u524D\u5217\u306E\u6575"
+    Help: '""'
+    Category: 1
+    TriggerType: 5050
+    Param1: 0
+  - Id: 5060
+    Name: "\u5F8C\u5217\u306E\u6575\u3092\u72D9\u3046"
+    Help: '""'
+    Category: 0
+    TriggerType: 5060
+    Param1: 0
+  - Id: 5061
+    Name: "\u5F8C\u5217\u306E\u6575\u3092\u512A\u5148"
+    Help: '""'
+    Category: 1
+    TriggerType: 5060
+    Param1: 1
+  - Id: 5062
+    Name: "\u5F8C\u5217\u306E\u6575"
+    Help: '""'
+    Category: 1
+    TriggerType: 5060
+    Param1: 0
+  - Id: 5070
+    Name: "\u4EBA\u6570\u304C\u591A\u3044\u5217\u306E\u5473\u65B9"
+    Help: '""'
+    Category: 1
+    TriggerType: 5070
+    Param1: 0
+  - Id: 5080
+    Name: "\u4EBA\u6570\u304C\u591A\u3044\u5217\u306E\u6575"
+    Help: '""'
+    Category: 1
+    TriggerType: 5080
+    Param1: 0
+  - Id: 5090
+    Name: "\u4EBA\u6570\u304C\u5C11\u306A\u3044\u5217\u306E\u5473\u65B9"
+    Help: '""'
+    Category: 1
+    TriggerType: 5090
+    Param1: 0
+  - Id: 5100
+    Name: "\u4EBA\u6570\u304C\u5C11\u306A\u3044\u5217\u306E\u6575"
+    Help: '""'
+    Category: 1
+    TriggerType: 5100
+    Param1: 0
+  - Id: 5110
+    Name: "\u3007\u4EBA\u4EE5\u4E0A\u3044\u308B\u5217\u306E\u5473\u65B9\u9650\u5B9A"
+    Help: '""'
+    Category: 0
+    TriggerType: 5110
+    Param1: 0
+  - Id: 5111
+    Name: "2\u4F53\u4EE5\u4E0A\u3044\u308B\u5217\u306E\u5473\u65B9"
+    Help: '""'
+    Category: 1
+    TriggerType: 5110
+    Param1: 2
+  - Id: 5112
+    Name: "3\u4F53\u4EE5\u4E0A\u3044\u308B\u5217\u306E\u5473\u65B9"
+    Help: '""'
+    Category: 1
+    TriggerType: 5110
+    Param1: 3
+  - Id: 5120
+    Name: "\u3007\u4EBA\u4EE5\u4E0A\u3044\u308B\u5217\u306E\u6575\u9650\u5B9A"
+    Help: '""'
+    Category: 0
+    TriggerType: 5120
+    Param1: 0
+  - Id: 5121
+    Name: "2\u4F53\u4EE5\u4E0A\u3044\u308B\u5217\u306E\u6575"
+    Help: '""'
+    Category: 1
+    TriggerType: 5120
+    Param1: 2
+  - Id: 5122
+    Name: "3\u4F53\u4EE5\u4E0A\u3044\u308B\u5217\u306E\u6575"
+    Help: '""'
+    Category: 1
+    TriggerType: 5120
+    Param1: 3
   - Id: 6010
     Name: "StateId\u72B6\u614B\u306B\u306A\u3063\u3066\u3044\u308B"
     Help: '""'
