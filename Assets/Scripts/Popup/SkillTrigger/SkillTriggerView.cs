@@ -18,6 +18,8 @@ namespace Ryneus
         public int SkillTriggerIndex => skillTriggerList.Index;
         private SkillTriggerViewInfo _skillTriggerViewInfo;
 
+        public int SkillTriggerListIndex => skillTriggerList.Index;
+
         public int Trigger1CategoryIndex => triggerCategory1List.Index;
         public int Trigger2CategoryIndex => triggerCategory2List.Index;
         

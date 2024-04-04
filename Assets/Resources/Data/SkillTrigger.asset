@@ -17,756 +17,1360 @@ MonoBehaviour:
     Name: '-'
     Help: '""'
     Category: -1
+    Priority: 0
+    TargetType: 3
     TriggerType: 0
     Param1: 0
+    Param2: 0
+    Param3: 0
   - Id: 1010
     Name: "\u81EA\u8EAB\u306EHp\u304C\u3007%\u4EE5\u4E0B"
     Help: '""'
     Category: 0
+    Priority: 0
+    TargetType: 4
     TriggerType: 1010
     Param1: 0
+    Param2: 0
+    Param3: 0
   - Id: 1011
     Name: "\u81EA\u8EAB\u306EHp\u304C100%\u672A\u6E80"
     Help: '""'
-    Category: 2
+    Category: 3
+    Priority: 0
+    TargetType: 4
     TriggerType: 1010
     Param1: 100
+    Param2: 0
+    Param3: 0
   - Id: 1012
     Name: "\u81EA\u8EAB\u306EHp\u304C75%\u4EE5\u4E0B"
     Help: '""'
-    Category: 2
+    Category: 3
+    Priority: 0
+    TargetType: 4
     TriggerType: 1010
     Param1: 75
+    Param2: 0
+    Param3: 0
   - Id: 1013
     Name: "\u81EA\u8EAB\u306EHp\u304C50%\u4EE5\u4E0B"
     Help: '""'
-    Category: 2
+    Category: 3
+    Priority: 0
+    TargetType: 4
     TriggerType: 1010
     Param1: 50
+    Param2: 0
+    Param3: 0
   - Id: 1014
     Name: "\u81EA\u8EAB\u306EHp\u304C25%\u4EE5\u4E0B"
     Help: '""'
-    Category: 2
+    Category: 3
+    Priority: 0
+    TargetType: 4
     TriggerType: 1010
     Param1: 25
+    Param2: 0
+    Param3: 0
   - Id: 1020
     Name: "\u81EA\u8EAB\u306EHp\u304C\u3007%\u4EE5\u4E0A"
     Help: '""'
     Category: 0
+    Priority: 0
+    TargetType: 4
     TriggerType: 1020
     Param1: 0
+    Param2: 0
+    Param3: 0
   - Id: 1021
     Name: "\u81EA\u8EAB\u306EHp\u304C100%\u4EE5\u4E0A"
     Help: '""'
-    Category: 2
+    Category: 3
+    Priority: 0
+    TargetType: 4
     TriggerType: 1020
     Param1: 100
+    Param2: 0
+    Param3: 0
   - Id: 1022
     Name: "\u81EA\u8EAB\u306EHp\u304C75%\u4EE5\u4E0A"
     Help: '""'
-    Category: 2
+    Category: 3
+    Priority: 0
+    TargetType: 4
     TriggerType: 1020
     Param1: 75
+    Param2: 0
+    Param3: 0
   - Id: 1023
     Name: "\u81EA\u8EAB\u306EHp\u304C50%\u4EE5\u4E0A"
     Help: '""'
-    Category: 2
+    Category: 3
+    Priority: 0
+    TargetType: 4
     TriggerType: 1020
     Param1: 50
+    Param2: 0
+    Param3: 0
   - Id: 1024
     Name: "\u81EA\u8EAB\u306EHp\u304C25%\u4EE5\u4E0A"
     Help: '""'
-    Category: 2
+    Category: 3
+    Priority: 0
+    TargetType: 4
     TriggerType: 1020
     Param1: 25
+    Param2: 0
+    Param3: 0
   - Id: 1030
     Name: "Hp%\u3007\u672A\u6E80\u306E\u5473\u65B9"
     Help: '""'
     Category: 0
+    Priority: 0
+    TargetType: 2
     TriggerType: 1030
     Param1: 0
+    Param2: 0
+    Param3: 0
   - Id: 1031
-    Name: "Hp100%\u672A\u6E80\u306E\u5473\u65B9"
-    Help: '""'
-    Category: 2
+    Name: "Hp<color=\"green\">100%</color>\u672A\u6E80\u306E<color=\"blue\">\u5473\u65B9</color>"
+    Help: "Hp\u304C100%\u672A\u6E80\u306E\u5473\u65B9\u306B\u9650\u5B9A\u3057\u307E\u3059\n<color=\"red\">\u8A72\u5F53\u3059\u308B\u5473\u65B9\u304C\u3044\u306A\u3044\u5834\u5408\u3001\u9B54\u6CD5\u3092\u767A\u52D5\u3057\u307E\u305B\u3093</color>"
+    Category: 3
+    Priority: 131
+    TargetType: 2
     TriggerType: 1030
     Param1: 100
+    Param2: 0
+    Param3: 0
   - Id: 1032
-    Name: "Hp75%\u4EE5\u4E0B\u306E\u5473\u65B9"
-    Help: '""'
-    Category: 2
+    Name: "Hp<color=\"green\">75%</color>\u4EE5\u4E0B\u306E<color=\"blue\">\u5473\u65B9</color>"
+    Help: "Hp\u304C75%\u4EE5\u4E0B\u306E\u5473\u65B9\u306B\u9650\u5B9A\u3057\u307E\u3059\n<color=\"red\">\u8A72\u5F53\u3059\u308B\u5473\u65B9\u304C\u3044\u306A\u3044\u5834\u5408\u3001\u9B54\u6CD5\u3092\u767A\u52D5\u3057\u307E\u305B\u3093</color>"
+    Category: 3
+    Priority: 71
+    TargetType: 2
     TriggerType: 1030
     Param1: 75
+    Param2: 0
+    Param3: 0
   - Id: 1033
-    Name: "Hp50%\u4EE5\u4E0B\u306E\u5473\u65B9"
-    Help: '""'
-    Category: 2
+    Name: "Hp<color=\"green\">50%</color>\u4EE5\u4E0B\u306E<color=\"blue\">\u5473\u65B9</color>"
+    Help: "Hp\u304C50%\u4EE5\u4E0B\u306E\u5473\u65B9\u306B\u9650\u5B9A\u3057\u307E\u3059\n<color=\"red\">\u8A72\u5F53\u3059\u308B\u5473\u65B9\u304C\u3044\u306A\u3044\u5834\u5408\u3001\u9B54\u6CD5\u3092\u767A\u52D5\u3057\u307E\u305B\u3093</color>"
+    Category: 3
+    Priority: 61
+    TargetType: 2
     TriggerType: 1030
     Param1: 50
+    Param2: 0
+    Param3: 0
   - Id: 1034
-    Name: "Hp25%\u4EE5\u4E0B\u306E\u5473\u65B9"
-    Help: '""'
-    Category: 2
+    Name: "Hp<color=\"green\">25%</color>\u4EE5\u4E0B\u306E<color=\"blue\">\u5473\u65B9</color>"
+    Help: "Hp\u304C25%\u4EE5\u4E0B\u306E\u5473\u65B9\u306B\u9650\u5B9A\u3057\u307E\u3059\n<color=\"red\">\u8A72\u5F53\u3059\u308B\u5473\u65B9\u304C\u3044\u306A\u3044\u5834\u5408\u3001\u9B54\u6CD5\u3092\u767A\u52D5\u3057\u307E\u305B\u3093</color>"
+    Category: 3
+    Priority: 51
+    TargetType: 2
     TriggerType: 1030
     Param1: 25
+    Param2: 0
+    Param3: 0
   - Id: 1040
     Name: "Hp%\u3007\u4EE5\u4E0A\u306E\u5473\u65B9"
     Help: '""'
     Category: 0
+    Priority: 0
+    TargetType: 2
     TriggerType: 1040
     Param1: 0
+    Param2: 0
+    Param3: 0
   - Id: 1041
-    Name: "Hp100%\u4EE5\u4E0A\u306E\u5473\u65B9"
-    Help: '""'
-    Category: 2
+    Name: "Hp<color=\"green\">100%</color>\u4EE5\u4E0A\u306E<color=\"blue\">\u5473\u65B9</color>"
+    Help: "Hp\u304C100%\u4EE5\u4E0A\u3042\u308B\u5473\u65B9\u306B\u9650\u5B9A\u3057\u307E\u3059\n<color=\"red\">\u8A72\u5F53\u3059\u308B\u5473\u65B9\u304C\u3044\u306A\u3044\u5834\u5408\u3001\u9B54\u6CD5\u3092\u767A\u52D5\u3057\u307E\u305B\u3093</color>"
+    Category: 3
+    Priority: 121
+    TargetType: 2
     TriggerType: 1040
     Param1: 100
+    Param2: 0
+    Param3: 0
   - Id: 1042
-    Name: "Hp75%\u4EE5\u4E0A\u306E\u5473\u65B9"
-    Help: '""'
-    Category: 2
+    Name: "Hp<color=\"green\">75%</color>\u4EE5\u4E0A\u306E<color=\"blue\">\u5473\u65B9</color>"
+    Help: "Hp\u304C75%\u4EE5\u4E0A\u3042\u308B\u5473\u65B9\u306B\u9650\u5B9A\u3057\u307E\u3059\n<color=\"red\">\u8A72\u5F53\u3059\u308B\u5473\u65B9\u304C\u3044\u306A\u3044\u5834\u5408\u3001\u9B54\u6CD5\u3092\u767A\u52D5\u3057\u307E\u305B\u3093</color>"
+    Category: 3
+    Priority: 111
+    TargetType: 2
     TriggerType: 1040
     Param1: 75
+    Param2: 0
+    Param3: 0
   - Id: 1043
-    Name: "Hp50%\u4EE5\u4E0A\u306E\u5473\u65B9"
-    Help: '""'
-    Category: 2
+    Name: "Hp<color=\"green\">50%</color>\u4EE5\u4E0A\u306E<color=\"blue\">\u5473\u65B9</color>"
+    Help: "Hp\u304C50%\u4EE5\u4E0A\u3042\u308B\u5473\u65B9\u306B\u9650\u5B9A\u3057\u307E\u3059\n<color=\"red\">\u8A72\u5F53\u3059\u308B\u5473\u65B9\u304C\u3044\u306A\u3044\u5834\u5408\u3001\u9B54\u6CD5\u3092\u767A\u52D5\u3057\u307E\u305B\u3093</color>"
+    Category: 3
+    Priority: 101
+    TargetType: 2
     TriggerType: 1040
     Param1: 50
+    Param2: 0
+    Param3: 0
   - Id: 1044
-    Name: "Hp25%\u4EE5\u4E0A\u306E\u5473\u65B9"
-    Help: '""'
-    Category: 2
+    Name: "Hp<color=\"green\">25%</color>\u4EE5\u4E0A\u306E<color=\"blue\">\u5473\u65B9</color>"
+    Help: "Hp\u304C25%\u4EE5\u4E0A\u3042\u308B\u5473\u65B9\u306B\u9650\u5B9A\u3057\u307E\u3059\n<color=\"red\">\u8A72\u5F53\u3059\u308B\u5473\u65B9\u304C\u3044\u306A\u3044\u5834\u5408\u3001\u9B54\u6CD5\u3092\u767A\u52D5\u3057\u307E\u305B\u3093</color>"
+    Category: 3
+    Priority: 91
+    TargetType: 2
     TriggerType: 1040
     Param1: 25
+    Param2: 0
+    Param3: 0
   - Id: 1050
     Name: "Hp%\u3007\u672A\u6E80\u306E\u6575"
     Help: '""'
     Category: 0
+    Priority: 0
+    TargetType: 1
     TriggerType: 1050
     Param1: 0
+    Param2: 0
+    Param3: 0
   - Id: 1051
-    Name: "Hp100%\u672A\u6E80\u306E\u6575"
-    Help: '""'
-    Category: 2
+    Name: "Hp<color=\"green\">100%</color>\u672A\u6E80\u306E<color=\"red\">\u6575</color>"
+    Help: "Hp\u304C100%\u672A\u6E80\u306E\u76F8\u624B\u306B\u9650\u5B9A\u3057\u307E\u3059\n<color=\"red\">\u8A72\u5F53\u3059\u308B\u76F8\u624B\u304C\u3044\u306A\u3044\u5834\u5408\u3001\u9B54\u6CD5\u3092\u767A\u52D5\u3057\u307E\u305B\u3093</color>"
+    Category: 3
+    Priority: 130
+    TargetType: 1
     TriggerType: 1050
     Param1: 100
+    Param2: 0
+    Param3: 0
   - Id: 1052
-    Name: "Hp75%\u4EE5\u4E0B\u306E\u6575"
-    Help: '""'
-    Category: 2
+    Name: "Hp<color=\"green\">75%</color>\u4EE5\u4E0B\u306E<color=\"red\">\u6575</color>"
+    Help: "Hp75%\u4EE5\u4E0B\u306E\u76F8\u624B\u306B\u9650\u5B9A\u3057\u307E\u3059\n<color=\"red\">\u8A72\u5F53\u3059\u308B\u76F8\u624B\u304C\u3044\u306A\u3044\u5834\u5408\u3001\u9B54\u6CD5\u3092\u767A\u52D5\u3057\u307E\u305B\u3093</color>"
+    Category: 3
+    Priority: 70
+    TargetType: 1
     TriggerType: 1050
     Param1: 75
+    Param2: 0
+    Param3: 0
   - Id: 1053
-    Name: "Hp50%\u4EE5\u4E0B\u306E\u6575"
-    Help: '""'
-    Category: 2
+    Name: "Hp<color=\"green\">50%</color>\u4EE5\u4E0B\u306E<color=\"red\">\u6575</color>"
+    Help: "Hp\u304C50%\u4EE5\u4E0B\u306E\u76F8\u624B\u306B\u9650\u5B9A\u3057\u307E\u3059\n<color=\"red\">\u8A72\u5F53\u3059\u308B\u76F8\u624B\u304C\u3044\u306A\u3044\u5834\u5408\u3001\u9B54\u6CD5\u3092\u767A\u52D5\u3057\u307E\u305B\u3093</color>"
+    Category: 3
+    Priority: 60
+    TargetType: 1
     TriggerType: 1050
     Param1: 50
+    Param2: 0
+    Param3: 0
   - Id: 1054
-    Name: "Hp25%\u4EE5\u4E0B\u306E\u6575"
-    Help: '""'
-    Category: 2
+    Name: "Hp<color=\"green\">25%</color>\u4EE5\u4E0B\u306E<color=\"red\">\u6575</color>"
+    Help: "Hp\u304C25%\u4EE5\u4E0B\u306E\u76F8\u624B\u306B\u9650\u5B9A\u3057\u307E\u3059\n<color=\"red\">\u8A72\u5F53\u3059\u308B\u76F8\u624B\u304C\u3044\u306A\u3044\u5834\u5408\u3001\u9B54\u6CD5\u3092\u767A\u52D5\u3057\u307E\u305B\u3093</color>"
+    Category: 3
+    Priority: 50
+    TargetType: 1
     TriggerType: 1050
     Param1: 25
+    Param2: 0
+    Param3: 0
   - Id: 1060
     Name: "Hp%\u3007\u4EE5\u4E0A\u306E\u6575"
     Help: '""'
     Category: 0
+    Priority: 0
+    TargetType: 1
     TriggerType: 1060
     Param1: 0
+    Param2: 0
+    Param3: 0
   - Id: 1061
-    Name: "Hp100%\u4EE5\u4E0A\u306E\u6575"
-    Help: '""'
-    Category: 2
+    Name: "Hp<color=\"green\">100%</color>\u4EE5\u4E0A\u306E<color=\"red\">\u6575</color>"
+    Help: "Hp\u304C100%\u4EE5\u4E0A\u3042\u308B\u76F8\u624B\u306B\u9650\u5B9A\u3057\u307E\u3059\n<color=\"red\">\u8A72\u5F53\u3059\u308B\u76F8\u624B\u304C\u3044\u306A\u3044\u5834\u5408\u3001\u9B54\u6CD5\u3092\u767A\u52D5\u3057\u307E\u305B\u3093</color>"
+    Category: 3
+    Priority: 120
+    TargetType: 1
     TriggerType: 1060
     Param1: 100
+    Param2: 0
+    Param3: 0
   - Id: 1062
-    Name: "Hp75%\u4EE5\u4E0A\u306E\u6575"
-    Help: '""'
-    Category: 2
+    Name: "Hp<color=\"green\">75%</color>\u4EE5\u4E0A\u306E<color=\"red\">\u6575</color>"
+    Help: "Hp\u304C75%\u4EE5\u4E0A\u3042\u308B\u76F8\u624B\u306B\u9650\u5B9A\u3057\u307E\u3059\n<color=\"red\">\u8A72\u5F53\u3059\u308B\u76F8\u624B\u304C\u3044\u306A\u3044\u5834\u5408\u3001\u9B54\u6CD5\u3092\u767A\u52D5\u3057\u307E\u305B\u3093</color>"
+    Category: 3
+    Priority: 110
+    TargetType: 1
     TriggerType: 1060
     Param1: 75
+    Param2: 0
+    Param3: 0
   - Id: 1063
-    Name: "Hp50%\u4EE5\u4E0A\u306E\u6575"
-    Help: '""'
-    Category: 2
+    Name: "Hp<color=\"green\">50%</color>\u4EE5\u4E0A\u306E<color=\"red\">\u6575</color>"
+    Help: "Hp\u304C50%\u4EE5\u4E0A\u3042\u308B\u76F8\u624B\u306B\u9650\u5B9A\u3057\u307E\u3059\n<color=\"red\">\u8A72\u5F53\u3059\u308B\u76F8\u624B\u304C\u3044\u306A\u3044\u5834\u5408\u3001\u9B54\u6CD5\u3092\u767A\u52D5\u3057\u307E\u305B\u3093</color>"
+    Category: 3
+    Priority: 100
+    TargetType: 1
     TriggerType: 1060
     Param1: 50
+    Param2: 0
+    Param3: 0
   - Id: 1064
-    Name: "Hp25%\u4EE5\u4E0A\u306E\u6575"
-    Help: '""'
-    Category: 2
+    Name: "Hp<color=\"green\">25%</color>\u4EE5\u4E0A\u306E<color=\"red\">\u6575</color>"
+    Help: "Hp\u304C25%\u4EE5\u4E0A\u3042\u308B\u76F8\u624B\u306B\u9650\u5B9A\u3057\u307E\u3059\n<color=\"red\">\u8A72\u5F53\u3059\u308B\u76F8\u624B\u304C\u3044\u306A\u3044\u5834\u5408\u3001\u9B54\u6CD5\u3092\u767A\u52D5\u3057\u307E\u305B\u3093</color>"
+    Category: 3
+    Priority: 90
+    TargetType: 1
     TriggerType: 1060
     Param1: 25
+    Param2: 0
+    Param3: 0
   - Id: 1130
-    Name: "\u6700\u3082Hp\u304C\u5C11\u306A\u3044\u5473\u65B9"
-    Help: '""'
-    Category: 2
+    Name: "<color=\"green\">Hp</color>\u304C\u6700\u3082\u4F4E\u3044<color=\"blue\">\u5473\u65B9</color>"
+    Help: "Hp\u304C\u6700\u3082\u4F4E\u3044\u5473\u65B9\u3092\u512A\u5148\u3057\u307E\u3059"
+    Category: 3
+    Priority: 21
+    TargetType: 2
     TriggerType: 1130
     Param1: 0
+    Param2: 1
+    Param3: 0
+  - Id: 1131
+    Name: "<color=\"green\">Hp</color>\u5272\u5408\u304C\u6700\u3082\u4F4E\u3044<color=\"blue\">\u5473\u65B9</color>"
+    Help: "Hp\u5272\u5408\u304C\u6700\u3082\u4F4E\u3044\u5473\u65B9\u3092\u512A\u5148\u3057\u307E\u3059"
+    Category: 3
+    Priority: 23
+    TargetType: 2
+    TriggerType: 1130
+    Param1: 1
+    Param2: 1
+    Param3: 0
   - Id: 1140
-    Name: "\u6700\u3082Hp\u304C\u591A\u3044\u5473\u65B9"
-    Help: '""'
-    Category: 2
+    Name: "<color=\"green\">Hp</color>\u304C\u6700\u3082\u9AD8\u3044<color=\"blue\">\u5473\u65B9</color>"
+    Help: "Hp\u304C\u6700\u3082\u9AD8\u3044\u5473\u65B9\u3092\u512A\u5148\u3057\u307E\u3059"
+    Category: 3
+    Priority: 20
+    TargetType: 2
     TriggerType: 1140
     Param1: 0
+    Param2: 1
+    Param3: 0
+  - Id: 1141
+    Name: "<color=\"green\">Hp</color>\u5272\u5408\u304C\u6700\u3082\u9AD8\u3044<color=\"blue\">\u5473\u65B9</color>"
+    Help: "Hp\u5272\u5408\u304C\u6700\u3082\u9AD8\u3044\u5473\u65B9\u3092\u512A\u5148\u3057\u307E\u3059"
+    Category: 3
+    Priority: 22
+    TargetType: 2
+    TriggerType: 1140
+    Param1: 1
+    Param2: 1
+    Param3: 0
   - Id: 1150
-    Name: "\u6700\u3082Hp\u304C\u5C11\u306A\u3044\u6575"
-    Help: '""'
-    Category: 2
+    Name: "<color=\"green\">Hp</color>\u304C\u6700\u3082\u4F4E\u3044<color=\"red\">\u6575</color>"
+    Help: "Hp\u304C\u6700\u3082\u4F4E\u3044\u76F8\u624B\u3092\u512A\u5148\u3057\u307E\u3059"
+    Category: 3
+    Priority: 11
+    TargetType: 1
     TriggerType: 1150
     Param1: 0
+    Param2: 1
+    Param3: 0
+  - Id: 1151
+    Name: "<color=\"green\">Hp</color>\u5272\u5408\u304C\u6700\u3082\u4F4E\u3044<color=\"red\">\u6575</color>"
+    Help: "Hp\u5272\u5408\u304C\u6700\u3082\u4F4E\u3044\u76F8\u624B\u3092\u512A\u5148\u3057\u307E\u3059"
+    Category: 3
+    Priority: 13
+    TargetType: 1
+    TriggerType: 1150
+    Param1: 1
+    Param2: 1
+    Param3: 0
   - Id: 1160
-    Name: "\u6700\u3082Hp\u304C\u591A\u3044\u6575"
-    Help: '""'
-    Category: 2
+    Name: "<color=\"green\">Hp</color>\u304C\u6700\u3082\u9AD8\u3044<color=\"red\">\u6575</color>"
+    Help: "Hp\u304C\u6700\u3082\u9AD8\u3044\u76F8\u624B\u3092\u512A\u5148\u3057\u307E\u3059"
+    Category: 3
+    Priority: 10
+    TargetType: 1
     TriggerType: 1160
     Param1: 0
+    Param2: 1
+    Param3: 0
+  - Id: 1161
+    Name: "<color=\"green\">Hp</color>\u5272\u5408\u304C\u6700\u3082\u9AD8\u3044<color=\"red\">\u6575</color>"
+    Help: "Hp\u5272\u5408\u304C\u6700\u3082\u9AD8\u3044\u76F8\u624B\u3092\u512A\u5148\u3057\u307E\u3059"
+    Category: 3
+    Priority: 12
+    TargetType: 1
+    TriggerType: 1160
+    Param1: 1
+    Param2: 1
+    Param3: 0
   - Id: 2010
     Name: "\u5473\u65B9\u306BHp\u304C\u3007%\u4EE5\u4E0B\u304C\u3044\u308B"
     Help: '""'
     Category: 0
+    Priority: 0
+    TargetType: 2
     TriggerType: 2010
     Param1: 0
+    Param2: 0
+    Param3: 0
   - Id: 3010
     Name: "\u81EA\u8EAB\u306EMp\u304C\u3007\u4EE5\u4E0B"
     Help: '""'
     Category: 0
+    Priority: 0
+    TargetType: 4
     TriggerType: 3010
     Param1: 0
+    Param2: 0
+    Param3: 0
   - Id: 3011
     Name: "\u81EA\u8EAB\u306EMp\u304C100%\u4EE5\u4E0B"
     Help: '""'
-    Category: 3
+    Category: 4
+    Priority: 0
+    TargetType: 4
     TriggerType: 3010
     Param1: 100
+    Param2: 0
+    Param3: 0
   - Id: 3012
     Name: "\u81EA\u8EAB\u306EMp\u304C75%\u4EE5\u4E0B"
     Help: '""'
-    Category: 3
+    Category: 4
+    Priority: 0
+    TargetType: 4
     TriggerType: 3010
     Param1: 75
+    Param2: 0
+    Param3: 0
   - Id: 3013
     Name: "\u81EA\u8EAB\u306EMp\u304C50%\u4EE5\u4E0B"
     Help: '""'
-    Category: 3
+    Category: 4
+    Priority: 0
+    TargetType: 4
     TriggerType: 3010
     Param1: 50
+    Param2: 0
+    Param3: 0
   - Id: 3014
     Name: "\u81EA\u8EAB\u306EMp\u304C25%\u4EE5\u4E0B"
     Help: '""'
-    Category: 3
+    Category: 4
+    Priority: 0
+    TargetType: 4
     TriggerType: 3010
     Param1: 25
+    Param2: 0
+    Param3: 0
   - Id: 3020
     Name: "\u81EA\u8EAB\u306EMp\u304C\u3007\u4EE5\u4E0A"
     Help: '""'
     Category: 0
+    Priority: 0
+    TargetType: 4
     TriggerType: 3020
     Param1: 0
+    Param2: 0
+    Param3: 0
   - Id: 3021
     Name: "\u81EA\u8EAB\u306EMp\u304C100%\u4EE5\u4E0A"
     Help: '""'
-    Category: 3
+    Category: 4
+    Priority: 0
+    TargetType: 4
     TriggerType: 3020
     Param1: 100
+    Param2: 0
+    Param3: 0
   - Id: 3022
     Name: "\u81EA\u8EAB\u306EMp\u304C75%\u4EE5\u4E0A"
     Help: '""'
-    Category: 3
+    Category: 4
+    Priority: 0
+    TargetType: 4
     TriggerType: 3020
     Param1: 75
+    Param2: 0
+    Param3: 0
   - Id: 3023
     Name: "\u81EA\u8EAB\u306EMp\u304C50%\u4EE5\u4E0A"
     Help: '""'
-    Category: 3
+    Category: 4
+    Priority: 0
+    TargetType: 4
     TriggerType: 3020
     Param1: 50
+    Param2: 0
+    Param3: 0
   - Id: 3024
     Name: "\u81EA\u8EAB\u306EMp\u304C25%\u4EE5\u4E0A"
     Help: '""'
-    Category: 3
+    Category: 4
+    Priority: 0
+    TargetType: 4
     TriggerType: 3020
     Param1: 25
+    Param2: 0
+    Param3: 0
   - Id: 3030
     Name: "Mp\u3007\u672A\u6E80\u306E\u5473\u65B9"
     Help: '""'
     Category: 0
+    Priority: 0
+    TargetType: 2
     TriggerType: 3030
     Param1: 0
+    Param2: 0
+    Param3: 0
   - Id: 3031
-    Name: "Mp100%\u4EE5\u4E0B\u306E\u5473\u65B9"
-    Help: '""'
-    Category: 3
+    Name: "Mp<color=\"green\">100%</color>\u4EE5\u4E0B\u306E<color=\"blue\">\u5473\u65B9</color>"
+    Help: "Mp\u304C100%\u672A\u6E80\u306E\u5473\u65B9\u306B\u9650\u5B9A\u3057\u307E\u3059\n<color=\"red\">\u8A72\u5F53\u3059\u308B\u5473\u65B9\u304C\u3044\u306A\u3044\u5834\u5408\u3001\u9B54\u6CD5\u3092\u767A\u52D5\u3057\u307E\u305B\u3093</color>"
+    Category: 4
+    Priority: 0
+    TargetType: 2
     TriggerType: 3030
     Param1: 100
+    Param2: 0
+    Param3: 0
   - Id: 3032
-    Name: "Mp75%\u4EE5\u4E0B\u306E\u5473\u65B9"
-    Help: '""'
-    Category: 3
+    Name: "Mp<color=\"green\">75%</color>\u4EE5\u4E0B\u306E<color=\"blue\">\u5473\u65B9</color>"
+    Help: "Mp\u304C75%\u4EE5\u4E0B\u306E\u5473\u65B9\u306B\u9650\u5B9A\u3057\u307E\u3059\n<color=\"red\">\u8A72\u5F53\u3059\u308B\u5473\u65B9\u304C\u3044\u306A\u3044\u5834\u5408\u3001\u9B54\u6CD5\u3092\u767A\u52D5\u3057\u307E\u305B\u3093</color>"
+    Category: 4
+    Priority: 0
+    TargetType: 2
     TriggerType: 3030
     Param1: 75
+    Param2: 0
+    Param3: 0
   - Id: 3033
-    Name: "Mp50%\u4EE5\u4E0B\u306E\u5473\u65B9"
-    Help: '""'
-    Category: 3
+    Name: "Mp<color=\"green\">50%</color>\u4EE5\u4E0B\u306E<color=\"blue\">\u5473\u65B9</color>"
+    Help: "Mp\u304C50%\u4EE5\u4E0B\u306E\u5473\u65B9\u306B\u9650\u5B9A\u3057\u307E\u3059\n<color=\"red\">\u8A72\u5F53\u3059\u308B\u5473\u65B9\u304C\u3044\u306A\u3044\u5834\u5408\u3001\u9B54\u6CD5\u3092\u767A\u52D5\u3057\u307E\u305B\u3093</color>"
+    Category: 4
+    Priority: 0
+    TargetType: 2
     TriggerType: 3030
     Param1: 50
+    Param2: 0
+    Param3: 0
   - Id: 3034
-    Name: "Mp25%\u4EE5\u4E0B\u306E\u5473\u65B9"
-    Help: '""'
-    Category: 3
+    Name: "Mp<color=\"green\">25%</color>\u4EE5\u4E0B\u306E<color=\"blue\">\u5473\u65B9</color>"
+    Help: "Mp\u304C25%\u4EE5\u4E0B\u306E\u5473\u65B9\u306B\u9650\u5B9A\u3057\u307E\u3059\n<color=\"red\">\u8A72\u5F53\u3059\u308B\u5473\u65B9\u304C\u3044\u306A\u3044\u5834\u5408\u3001\u9B54\u6CD5\u3092\u767A\u52D5\u3057\u307E\u305B\u3093</color>"
+    Category: 4
+    Priority: 0
+    TargetType: 2
     TriggerType: 3030
     Param1: 25
+    Param2: 0
+    Param3: 0
   - Id: 3040
     Name: "Mp\u3007\u4EE5\u4E0A\u306E\u5473\u65B9"
     Help: '""'
     Category: 0
+    Priority: 0
+    TargetType: 2
     TriggerType: 3040
     Param1: 0
+    Param2: 0
+    Param3: 0
   - Id: 3041
-    Name: "Mp100%\u4EE5\u4E0A\u306E\u5473\u65B9"
-    Help: '""'
-    Category: 3
+    Name: "Mp<color=\"green\">100%</color>\u4EE5\u4E0A\u306E<color=\"blue\">\u5473\u65B9</color>"
+    Help: "Mp\u304C100%\u4EE5\u4E0A\u3042\u308B\u5473\u65B9\u306B\u9650\u5B9A\u3057\u307E\u3059\n<color=\"red\">\u8A72\u5F53\u3059\u308B\u5473\u65B9\u304C\u3044\u306A\u3044\u5834\u5408\u3001\u9B54\u6CD5\u3092\u767A\u52D5\u3057\u307E\u305B\u3093</color>"
+    Category: 4
+    Priority: 0
+    TargetType: 2
     TriggerType: 3040
     Param1: 100
+    Param2: 0
+    Param3: 0
   - Id: 3042
-    Name: "Mp75%\u4EE5\u4E0A\u306E\u5473\u65B9"
-    Help: '""'
-    Category: 3
+    Name: "Mp<color=\"green\">75%</color>\u4EE5\u4E0A\u306E<color=\"blue\">\u5473\u65B9</color>"
+    Help: "Mp\u304C75%\u4EE5\u4E0A\u3042\u308B\u5473\u65B9\u306B\u9650\u5B9A\u3057\u307E\u3059\n<color=\"red\">\u8A72\u5F53\u3059\u308B\u5473\u65B9\u304C\u3044\u306A\u3044\u5834\u5408\u3001\u9B54\u6CD5\u3092\u767A\u52D5\u3057\u307E\u305B\u3093</color>"
+    Category: 4
+    Priority: 0
+    TargetType: 2
     TriggerType: 3040
     Param1: 75
+    Param2: 0
+    Param3: 0
   - Id: 3043
-    Name: "Mp50%\u4EE5\u4E0A\u306E\u5473\u65B9"
-    Help: '""'
-    Category: 3
+    Name: "Mp<color=\"green\">50%</color>\u4EE5\u4E0A\u306E<color=\"blue\">\u5473\u65B9</color>"
+    Help: "Mp\u304C50%\u4EE5\u4E0A\u3042\u308B\u5473\u65B9\u306B\u9650\u5B9A\u3057\u307E\u3059\n<color=\"red\">\u8A72\u5F53\u3059\u308B\u5473\u65B9\u304C\u3044\u306A\u3044\u5834\u5408\u3001\u9B54\u6CD5\u3092\u767A\u52D5\u3057\u307E\u305B\u3093</color>"
+    Category: 4
+    Priority: 0
+    TargetType: 2
     TriggerType: 3040
     Param1: 50
+    Param2: 0
+    Param3: 0
   - Id: 3044
-    Name: "Mp25%\u4EE5\u4E0A\u306E\u5473\u65B9"
-    Help: '""'
-    Category: 3
+    Name: "Mp<color=\"green\">25%</color>\u4EE5\u4E0A\u306E<color=\"blue\">\u5473\u65B9</color>"
+    Help: "Mp\u304C25%\u4EE5\u4E0A\u3042\u308B\u5473\u65B9\u306B\u9650\u5B9A\u3057\u307E\u3059\n<color=\"red\">\u8A72\u5F53\u3059\u308B\u5473\u65B9\u304C\u3044\u306A\u3044\u5834\u5408\u3001\u9B54\u6CD5\u3092\u767A\u52D5\u3057\u307E\u305B\u3093</color>"
+    Category: 4
+    Priority: 0
+    TargetType: 2
     TriggerType: 3040
     Param1: 25
+    Param2: 0
+    Param3: 0
   - Id: 3050
     Name: "Mp\u3007\u672A\u6E80\u306E\u6575"
     Help: '""'
     Category: 0
+    Priority: 0
+    TargetType: 1
     TriggerType: 3050
     Param1: 0
+    Param2: 0
+    Param3: 0
   - Id: 3051
-    Name: "Mp100%\u4EE5\u4E0B\u306E\u6575"
-    Help: '""'
-    Category: 3
+    Name: "Mp<color=\"green\">100%</color>\u672A\u6E80\u306E<color=\"red\">\u6575</color>"
+    Help: "Mp\u304C100%\u672A\u6E80\u306E\u76F8\u624B\u306B\u9650\u5B9A\u3057\u307E\u3059\n<color=\"red\">\u8A72\u5F53\u3059\u308B\u76F8\u624B\u304C\u3044\u306A\u3044\u5834\u5408\u3001\u9B54\u6CD5\u3092\u767A\u52D5\u3057\u307E\u305B\u3093</color>"
+    Category: 4
+    Priority: 0
+    TargetType: 1
     TriggerType: 3050
     Param1: 100
+    Param2: 0
+    Param3: 0
   - Id: 3052
-    Name: "Mp75%\u4EE5\u4E0B\u306E\u6575"
-    Help: '""'
-    Category: 3
+    Name: "Mp<color=\"green\">75%</color>\u4EE5\u4E0B\u306E<color=\"red\">\u6575</color>"
+    Help: "Mp\u304C75%\u4EE5\u4E0B\u306E\u76F8\u624B\u306B\u9650\u5B9A\u3057\u307E\u3059\n<color=\"red\">\u8A72\u5F53\u3059\u308B\u76F8\u624B\u304C\u3044\u306A\u3044\u5834\u5408\u3001\u9B54\u6CD5\u3092\u767A\u52D5\u3057\u307E\u305B\u3093</color>"
+    Category: 4
+    Priority: 0
+    TargetType: 1
     TriggerType: 3050
     Param1: 75
+    Param2: 0
+    Param3: 0
   - Id: 3053
-    Name: "Mp50%\u4EE5\u4E0B\u306E\u6575"
-    Help: '""'
-    Category: 3
+    Name: "Mp<color=\"green\">50%</color>\u4EE5\u4E0B\u306E<color=\"red\">\u6575</color>"
+    Help: "Mp\u304C50%\u4EE5\u4E0B\u306E\u76F8\u624B\u306B\u9650\u5B9A\u3057\u307E\u3059\n<color=\"red\">\u8A72\u5F53\u3059\u308B\u76F8\u624B\u304C\u3044\u306A\u3044\u5834\u5408\u3001\u9B54\u6CD5\u3092\u767A\u52D5\u3057\u307E\u305B\u3093</color>"
+    Category: 4
+    Priority: 0
+    TargetType: 1
     TriggerType: 3050
     Param1: 50
+    Param2: 0
+    Param3: 0
   - Id: 3054
-    Name: "Mp25%\u4EE5\u4E0B\u306E\u6575"
-    Help: '""'
-    Category: 3
+    Name: "Mp<color=\"green\">25%</color>\u4EE5\u4E0B\u306E<color=\"red\">\u6575</color>"
+    Help: "Mp\u304C25%\u4EE5\u4E0B\u306E\u76F8\u624B\u306B\u9650\u5B9A\u3057\u307E\u3059\n<color=\"red\">\u8A72\u5F53\u3059\u308B\u76F8\u624B\u304C\u3044\u306A\u3044\u5834\u5408\u3001\u9B54\u6CD5\u3092\u767A\u52D5\u3057\u307E\u305B\u3093</color>"
+    Category: 4
+    Priority: 0
+    TargetType: 1
     TriggerType: 3050
     Param1: 25
+    Param2: 0
+    Param3: 0
   - Id: 3060
     Name: "Mp\u3007\u4EE5\u4E0A\u306E\u6575"
     Help: '""'
     Category: 0
+    Priority: 0
+    TargetType: 1
     TriggerType: 3060
     Param1: 0
+    Param2: 0
+    Param3: 0
   - Id: 3061
-    Name: "Mp100%\u4EE5\u4E0A\u306E\u6575"
-    Help: '""'
-    Category: 3
+    Name: "Mp<color=\"green\">100%</color>\u4EE5\u4E0A\u306E<color=\"red\">\u6575</color>"
+    Help: "Mp\u304C100%\u4EE5\u4E0A\u3042\u308B\u76F8\u624B\u306B\u9650\u5B9A\u3057\u307E\u3059\n<color=\"red\">\u8A72\u5F53\u3059\u308B\u76F8\u624B\u304C\u3044\u306A\u3044\u5834\u5408\u3001\u9B54\u6CD5\u3092\u767A\u52D5\u3057\u307E\u305B\u3093</color>"
+    Category: 4
+    Priority: 0
+    TargetType: 1
     TriggerType: 3060
     Param1: 100
+    Param2: 0
+    Param3: 0
   - Id: 3062
-    Name: "Mp75%\u4EE5\u4E0A\u306E\u6575"
-    Help: '""'
-    Category: 3
+    Name: "Mp<color=\"green\">75%</color>\u4EE5\u4E0A\u306E<color=\"red\">\u6575</color>"
+    Help: "Mp\u304C75%\u4EE5\u4E0A\u3042\u308B\u76F8\u624B\u306B\u9650\u5B9A\u3057\u307E\u3059\n<color=\"red\">\u8A72\u5F53\u3059\u308B\u76F8\u624B\u304C\u3044\u306A\u3044\u5834\u5408\u3001\u9B54\u6CD5\u3092\u767A\u52D5\u3057\u307E\u305B\u3093</color>"
+    Category: 4
+    Priority: 0
+    TargetType: 1
     TriggerType: 3060
     Param1: 75
+    Param2: 0
+    Param3: 0
   - Id: 3063
-    Name: "Mp50%\u4EE5\u4E0A\u306E\u6575"
-    Help: '""'
-    Category: 3
+    Name: "Mp<color=\"green\">50%</color>\u4EE5\u4E0A\u306E<color=\"red\">\u6575</color>"
+    Help: "Mp\u304C50%\u4EE5\u4E0A\u3042\u308B\u76F8\u624B\u306B\u9650\u5B9A\u3057\u307E\u3059\n<color=\"red\">\u8A72\u5F53\u3059\u308B\u76F8\u624B\u304C\u3044\u306A\u3044\u5834\u5408\u3001\u9B54\u6CD5\u3092\u767A\u52D5\u3057\u307E\u305B\u3093</color>"
+    Category: 4
+    Priority: 0
+    TargetType: 1
     TriggerType: 3060
     Param1: 50
+    Param2: 0
+    Param3: 0
   - Id: 3064
-    Name: "Mp25%\u4EE5\u4E0A\u306E\u6575"
-    Help: '""'
-    Category: 3
+    Name: "Mp<color=\"green\">25%</color>\u4EE5\u4E0A\u306E<color=\"red\">\u6575</color>"
+    Help: "Mp\u304C25%\u4EE5\u4E0A\u3042\u308B\u76F8\u624B\u306B\u9650\u5B9A\u3057\u307E\u3059\n<color=\"red\">\u8A72\u5F53\u3059\u308B\u76F8\u624B\u304C\u3044\u306A\u3044\u5834\u5408\u3001\u9B54\u6CD5\u3092\u767A\u52D5\u3057\u307E\u305B\u3093</color>"
+    Category: 4
+    Priority: 0
+    TargetType: 1
     TriggerType: 3060
     Param1: 25
+    Param2: 0
+    Param3: 0
   - Id: 4010
     Name: "\u6226\u95D8\u4E0D\u80FD\u304C\u3007\u4EE5\u4E0A\u5B58\u5728\u3059\u308B"
     Help: '""'
     Category: 0
+    Priority: 0
+    TargetType: 0
     TriggerType: 4010
     Param1: 0
+    Param2: 0
+    Param3: 0
   - Id: 4020
     Name: "\u751F\u5B58\u8005\u304C\u3007\u4EE5\u4E0A\u5B58\u5728\u3059\u308B"
     Help: '""'
     Category: 0
+    Priority: 0
+    TargetType: 0
     TriggerType: 4020
     Param1: 0
+    Param2: 0
+    Param3: 0
   - Id: 5010
     Name: "\u81EA\u5206\u304C\u524D\u5217\u306B\u3044\u308B"
     Help: '""'
     Category: 0
+    Priority: 0
+    TargetType: 4
     TriggerType: 5010
     Param1: 0
+    Param2: 0
+    Param3: 0
   - Id: 5020
     Name: "\u81EA\u5206\u304C\u5F8C\u5217\u306B\u3044\u308B"
     Help: '""'
     Category: 0
+    Priority: 0
+    TargetType: 4
     TriggerType: 5020
     Param1: 0
+    Param2: 0
+    Param3: 0
   - Id: 5030
     Name: "\u524D\u5217\u306E\u5473\u65B9\u3092\u72D9\u3046"
     Help: '""'
     Category: 0
+    Priority: 0
+    TargetType: 2
     TriggerType: 5030
     Param1: 0
-  - Id: 5031
-    Name: "\u524D\u5217\u306E\u5473\u65B9\u3092\u512A\u5148"
-    Help: '""'
-    Category: 1
-    TriggerType: 5030
-    Param1: 1
-  - Id: 5032
-    Name: "\u524D\u5217\u306E\u5473\u65B9"
-    Help: '""'
-    Category: 1
-    TriggerType: 5030
-    Param1: 0
+    Param2: 0
+    Param3: 0
   - Id: 5040
     Name: "\u5F8C\u5217\u306E\u5473\u65B9\u3092\u72D9\u3046"
     Help: '""'
     Category: 0
+    Priority: 0
+    TargetType: 2
     TriggerType: 5040
     Param1: 0
+    Param2: 0
+    Param3: 0
   - Id: 5041
-    Name: "\u5F8C\u5217\u306E\u5473\u65B9\u3092\u512A\u5148"
-    Help: '""'
+    Name: "\u524D\u5217\u306E\u5473\u65B9\u3092\u512A\u5148"
+    Help: "\u524D\u5217\u306E\u76F8\u624B\u3092\u512A\u5148\u3057\u307E\u3059"
     Category: 1
-    TriggerType: 5040
-    Param1: 1
+    Priority: 0
+    TargetType: 2
+    TriggerType: 5030
+    Param1: 0
+    Param2: 1
+    Param3: 0
   - Id: 5042
-    Name: "\u5F8C\u5217\u306E\u5473\u65B9"
-    Help: '""'
+    Name: "\u5F8C\u5217\u306E\u5473\u65B9\u3092\u512A\u5148"
+    Help: "\u5F8C\u5217\u306E\u5473\u65B9\u3092\u512A\u5148\u3057\u307E\u3059"
     Category: 1
+    Priority: 0
+    TargetType: 2
     TriggerType: 5040
     Param1: 0
+    Param2: 1
+    Param3: 0
+  - Id: 5043
+    Name: "\u524D\u5217\u306E\u5473\u65B9"
+    Help: "\u524D\u5217\u306E\u5473\u65B9\u306B\u9650\u5B9A\u3057\u307E\u3059\n<color=\"red\">\u8A72\u5F53\u3059\u308B\u5473\u65B9\u304C\u3044\u306A\u3044\u5834\u5408\u3001\u9B54\u6CD5\u3092\u767A\u52D5\u3057\u307E\u305B\u3093</color>"
+    Category: 1
+    Priority: 0
+    TargetType: 2
+    TriggerType: 5030
+    Param1: 0
+    Param2: 0
+    Param3: 0
+  - Id: 5044
+    Name: "\u5F8C\u5217\u306E\u5473\u65B9"
+    Help: "\u5F8C\u5217\u306E\u5473\u65B9\u306B\u9650\u5B9A\u3057\u307E\u3059\n<color=\"red\">\u8A72\u5F53\u3059\u308B\u5473\u65B9\u304C\u3044\u306A\u3044\u5834\u5408\u3001\u9B54\u6CD5\u3092\u767A\u52D5\u3057\u307E\u305B\u3093</color>"
+    Category: 1
+    Priority: 0
+    TargetType: 2
+    TriggerType: 5040
+    Param1: 0
+    Param2: 0
+    Param3: 0
   - Id: 5050
     Name: "\u524D\u5217\u306E\u6575\u3092\u72D9\u3046"
     Help: '""'
     Category: 0
+    Priority: 0
+    TargetType: 1
     TriggerType: 5050
     Param1: 0
-  - Id: 5051
-    Name: "\u524D\u5217\u306E\u6575\u3092\u512A\u5148"
-    Help: '""'
-    Category: 1
-    TriggerType: 5050
-    Param1: 1
-  - Id: 5052
-    Name: "\u524D\u5217\u306E\u6575"
-    Help: '""'
-    Category: 1
-    TriggerType: 5050
-    Param1: 0
+    Param2: 0
+    Param3: 0
   - Id: 5060
     Name: "\u5F8C\u5217\u306E\u6575\u3092\u72D9\u3046"
     Help: '""'
     Category: 0
+    Priority: 0
+    TargetType: 1
     TriggerType: 5060
     Param1: 0
+    Param2: 0
+    Param3: 0
   - Id: 5061
-    Name: "\u5F8C\u5217\u306E\u6575\u3092\u512A\u5148"
-    Help: '""'
+    Name: "<color=\"green\">\u524D\u5217</color>\u306E<color=\"red\">\u6575</color>\u3092\u512A\u5148"
+    Help: "\u524D\u5217\u306E\u76F8\u624B\u3092\u512A\u5148\u3057\u307E\u3059"
     Category: 1
-    TriggerType: 5060
-    Param1: 1
+    Priority: 0
+    TargetType: 1
+    TriggerType: 5050
+    Param1: 0
+    Param2: 1
+    Param3: 0
   - Id: 5062
-    Name: "\u5F8C\u5217\u306E\u6575"
-    Help: '""'
+    Name: "<color=\"green\">\u5F8C\u5217</color>\u306E<color=\"red\">\u6575</color>\u3092\u512A\u5148"
+    Help: "\u5F8C\u5217\u306E\u76F8\u624B\u3092\u512A\u5148\u3057\u307E\u3059"
     Category: 1
+    Priority: 0
+    TargetType: 1
     TriggerType: 5060
     Param1: 0
-  - Id: 5070
-    Name: "\u4EBA\u6570\u304C\u591A\u3044\u5217\u306E\u5473\u65B9"
-    Help: '""'
+    Param2: 1
+    Param3: 0
+  - Id: 5063
+    Name: "<color=\"green\">\u524D\u5217</color>\u306E<color=\"red\">\u6575</color>\u3092\u512A\u5148"
+    Help: "\u524D\u5217\u306E\u76F8\u624B\u306B\u9650\u5B9A\u3057\u307E\u3059\n<color=\"red\">\u8A72\u5F53\u3059\u308B\u76F8\u624B\u304C\u3044\u306A\u3044\u5834\u5408\u3001\u9B54\u6CD5\u3092\u767A\u52D5\u3057\u307E\u305B\u3093</color>"
     Category: 1
+    Priority: 0
+    TargetType: 1
+    TriggerType: 5050
+    Param1: 0
+    Param2: 0
+    Param3: 0
+  - Id: 5064
+    Name: "<color=\"green\">\u5F8C\u5217</color>\u306E<color=\"red\">\u6575</color>\u3092\u512A\u5148"
+    Help: "\u5F8C\u5217\u306E\u76F8\u624B\u306B\u9650\u5B9A\u3057\u307E\u3059\n<color=\"red\">\u8A72\u5F53\u3059\u308B\u76F8\u624B\u304C\u3044\u306A\u3044\u5834\u5408\u3001\u9B54\u6CD5\u3092\u767A\u52D5\u3057\u307E\u305B\u3093</color>"
+    Category: 1
+    Priority: 0
+    TargetType: 1
+    TriggerType: 5060
+    Param1: 0
+    Param2: 0
+    Param3: 0
+  - Id: 5070
+    Name: "\u4EBA\u6570\u304C<color=\"green\">\u6700\u3082\u591A\u3044</color>\u5217\u306E<color=\"blue\">\u5473\u65B9</color>"
+    Help: "\u6700\u3082\u4EBA\u6570\u306E\u591A\u3044\u5217\u306E\u5473\u65B9\u3092\u512A\u5148\u3057\u307E\u3059"
+    Category: 1
+    Priority: 0
+    TargetType: 2
     TriggerType: 5070
     Param1: 0
+    Param2: 0
+    Param3: 0
   - Id: 5080
-    Name: "\u4EBA\u6570\u304C\u591A\u3044\u5217\u306E\u6575"
-    Help: '""'
+    Name: "\u4EBA\u6570\u304C<color=\"green\">\u6700\u3082\u591A\u3044</color>\u5217\u306E<color=\"red\">\u6575</color>"
+    Help: "\u6700\u3082\u4EBA\u6570\u306E\u591A\u3044\u5217\u306E\u76F8\u624B\u3092\u512A\u5148\u3057\u307E\u3059"
     Category: 1
+    Priority: 0
+    TargetType: 1
     TriggerType: 5080
     Param1: 0
+    Param2: 0
+    Param3: 0
   - Id: 5090
-    Name: "\u4EBA\u6570\u304C\u5C11\u306A\u3044\u5217\u306E\u5473\u65B9"
-    Help: '""'
+    Name: "\u4EBA\u6570\u304C<color=\"green\">\u6700\u3082\u5C11\u306A\u3044</color>\u5217\u306E<color=\"blue\">\u5473\u65B9</color>"
+    Help: "\u6700\u3082\u4EBA\u6570\u306E\u5C11\u306A\u3044\u5217\u306E\u5473\u65B9\u3092\u512A\u5148\u3057\u307E\u3059"
     Category: 1
+    Priority: 0
+    TargetType: 2
     TriggerType: 5090
     Param1: 0
+    Param2: 0
+    Param3: 0
   - Id: 5100
-    Name: "\u4EBA\u6570\u304C\u5C11\u306A\u3044\u5217\u306E\u6575"
-    Help: '""'
+    Name: "\u4EBA\u6570\u304C<color=\"green\">\u6700\u3082\u5C11\u306A\u3044</color>\u5217\u306E<color=\"red\">\u6575</color>"
+    Help: "\u6700\u3082\u4EBA\u6570\u306E\u5C11\u306A\u3044\u5217\u306E\u76F8\u624B\u3092\u512A\u5148\u3057\u307E\u3059"
     Category: 1
+    Priority: 0
+    TargetType: 1
     TriggerType: 5100
     Param1: 0
+    Param2: 0
+    Param3: 0
   - Id: 5110
     Name: "\u3007\u4EBA\u4EE5\u4E0A\u3044\u308B\u5217\u306E\u5473\u65B9\u9650\u5B9A"
     Help: '""'
     Category: 0
+    Priority: 0
+    TargetType: 2
     TriggerType: 5110
     Param1: 0
+    Param2: 0
+    Param3: 0
   - Id: 5111
-    Name: "2\u4F53\u4EE5\u4E0A\u3044\u308B\u5217\u306E\u5473\u65B9"
-    Help: '""'
+    Name: "<color=\"green\">2\u4F53</color>\u4EE5\u4E0A\u3044\u308B\u5217\u306E<color=\"blue\">\u5473\u65B9</color>"
+    Help: "2\u4F53\u4EE5\u4E0A\u3044\u308B\u5217\u306E\u5473\u65B9\u306B\u9650\u5B9A\u3057\u307E\u3059\n<color=\"red\">\u8A72\u5F53\u3059\u308B\u5473\u65B9\u304C\u3044\u306A\u3044\u5834\u5408\u3001\u9B54\u6CD5\u3092\u767A\u52D5\u3057\u307E\u305B\u3093</color>"
     Category: 1
+    Priority: 0
+    TargetType: 2
     TriggerType: 5110
     Param1: 2
+    Param2: 0
+    Param3: 0
   - Id: 5112
-    Name: "3\u4F53\u4EE5\u4E0A\u3044\u308B\u5217\u306E\u5473\u65B9"
-    Help: '""'
+    Name: "<color=\"green\">3\u4F53</color>\u4EE5\u4E0A\u3044\u308B\u5217\u306E<color=\"blue\">\u5473\u65B9</color>"
+    Help: "3\u4F53\u4EE5\u4E0A\u3044\u308B\u5217\u306E\u76F8\u624B\u306B\u9650\u5B9A\u3057\u307E\u3059\n<color=\"red\">\u8A72\u5F53\u3059\u308B\u5473\u65B9\u304C\u3044\u306A\u3044\u5834\u5408\u3001\u9B54\u6CD5\u3092\u767A\u52D5\u3057\u307E\u305B\u3093</color>"
     Category: 1
+    Priority: 0
+    TargetType: 2
     TriggerType: 5110
     Param1: 3
+    Param2: 0
+    Param3: 0
   - Id: 5120
     Name: "\u3007\u4EBA\u4EE5\u4E0A\u3044\u308B\u5217\u306E\u6575\u9650\u5B9A"
     Help: '""'
     Category: 0
+    Priority: 0
+    TargetType: 1
     TriggerType: 5120
     Param1: 0
+    Param2: 0
+    Param3: 0
   - Id: 5121
-    Name: "2\u4F53\u4EE5\u4E0A\u3044\u308B\u5217\u306E\u6575"
-    Help: '""'
+    Name: "<color=\"green\">2\u4F53</color>\u4EE5\u4E0A\u3044\u308B\u5217\u306E<color=\"red\">\u6575</color>"
+    Help: "2\u4F53\u4EE5\u4E0A\u3044\u308B\u5217\u306E\u76F8\u624B\u306B\u9650\u5B9A\u3057\u307E\u3059\n<color=\"red\">\u8A72\u5F53\u3059\u308B\u76F8\u624B\u304C\u3044\u306A\u3044\u5834\u5408\u3001\u9B54\u6CD5\u3092\u767A\u52D5\u3057\u307E\u305B\u3093</color>"
     Category: 1
+    Priority: 0
+    TargetType: 1
     TriggerType: 5120
     Param1: 2
+    Param2: 0
+    Param3: 0
   - Id: 5122
-    Name: "3\u4F53\u4EE5\u4E0A\u3044\u308B\u5217\u306E\u6575"
-    Help: '""'
+    Name: "<color=\"green\">3\u4F53</color>\u4EE5\u4E0A\u3044\u308B\u5217\u306E<color=\"red\">\u6575</color>"
+    Help: "3\u4F53\u4EE5\u4E0A\u3044\u308B\u5217\u306E\u76F8\u624B\u306B\u9650\u5B9A\u3057\u307E\u3059\n<color=\"red\">\u8A72\u5F53\u3059\u308B\u76F8\u624B\u304C\u3044\u306A\u3044\u5834\u5408\u3001\u9B54\u6CD5\u3092\u767A\u52D5\u3057\u307E\u305B\u3093</color>"
     Category: 1
+    Priority: 0
+    TargetType: 1
     TriggerType: 5120
     Param1: 3
+    Param2: 0
+    Param3: 0
   - Id: 6010
     Name: "StateId\u72B6\u614B\u306B\u306A\u3063\u3066\u3044\u308B"
     Help: '""'
     Category: 0
+    Priority: 0
+    TargetType: 0
     TriggerType: 6010
     Param1: 0
+    Param2: 0
+    Param3: 0
   - Id: 6020
     Name: "StateId\u72B6\u614B\u306B\u306A\u3063\u3066\u3044\u306A\u3044"
     Help: '""'
     Category: 0
+    Priority: 0
+    TargetType: 0
     TriggerType: 6020
     Param1: 0
+    Param2: 0
+    Param3: 0
   - Id: 6030
     Name: "Abnormal\u306EState\u306B\u304B\u304B\u3063\u3066\u3044\u308B"
     Help: '""'
     Category: 0
+    Priority: 0
+    TargetType: 0
     TriggerType: 6030
     Param1: 0
+    Param2: 0
+    Param3: 0
   - Id: 7010
     Name: "\u795E\u5316\u767A\u52D5\u524D"
     Help: '""'
     Category: 0
+    Priority: 0
+    TargetType: 0
     TriggerType: 7010
     Param1: 0
+    Param2: 0
+    Param3: 0
   - Id: 7020
     Name: "\u795E\u5316\u767A\u52D5\u5F8C"
     Help: '""'
     Category: 0
+    Priority: 0
+    TargetType: 0
     TriggerType: 7020
     Param1: 0
+    Param2: 0
+    Param3: 0
   - Id: 8010
     Name: "\u5473\u65B9\u3088\u308A\u6575\u304C\u591A\u3044"
     Help: '""'
     Category: 0
+    Priority: 0
+    TargetType: 0
     TriggerType: 8010
     Param1: 0
+    Param2: 0
+    Param3: 0
   - Id: 8020
     Name: "\u5473\u65B9\u3088\u308A\u6575\u304C\u5C11\u306A\u3044"
     Help: '""'
     Category: 0
+    Priority: 0
+    TargetType: 0
     TriggerType: 8020
     Param1: 0
+    Param2: 0
+    Param3: 0
   - Id: 9010
     Name: "\u30BF\u30FC\u30F3\u6570\u304C\u3007\u4EE5\u5185"
     Help: '""'
     Category: 0
+    Priority: 0
+    TargetType: 0
     TriggerType: 9010
     Param1: 0
+    Param2: 0
+    Param3: 0
   - Id: 9030
     Name: "\u30BF\u30FC\u30F3\u6570\u304Cparam1 x \u30BF\u30FC\u30F3\u6570 + param2"
     Help: '""'
     Category: 0
+    Priority: 0
+    TargetType: 0
     TriggerType: 9030
     Param1: 0
+    Param2: 0
+    Param3: 0
   - Id: 9040
     Name: "\u5168\u4F53\u306E\u884C\u52D5\u6570\u304Cparam1 x \u884C\u52D5\u6570
       + param2"
     Help: '""'
     Category: 0
+    Priority: 0
+    TargetType: 0
     TriggerType: 9040
     Param1: 0
+    Param2: 0
+    Param3: 0
   - Id: 10010
     Name: "\u653B\u6483\u6210\u529F\u6642\u3007%\u3067"
     Help: '""'
     Category: 0
+    Priority: 0
+    TargetType: 0
     TriggerType: 10010
     Param1: 0
+    Param2: 0
+    Param3: 0
   - Id: 10020
     Name: "\u3007%\u3067"
     Help: '""'
     Category: 0
+    Priority: 0
+    TargetType: 0
     TriggerType: 10020
     Param1: 0
+    Param2: 0
+    Param3: 0
   - Id: 11010
     Name: "\u30D0\u30C8\u30EB\u4E2D\u4F7F\u7528\u56DE\u6570\u304C\u3007\u4EE5\u4E0B"
     Help: '""'
     Category: 0
+    Priority: 0
+    TargetType: 0
     TriggerType: 11010
     Param1: 0
+    Param2: 0
+    Param3: 0
   - Id: 12020
     Name: "Lv\u304C\u3007\u4EE5\u4E0A"
     Help: '""'
     Category: 0
+    Priority: 0
+    TargetType: 0
     TriggerType: 12020
     Param1: 0
+    Param2: 0
+    Param3: 0
   - Id: 12030
     Name: "\u884C\u52D5Magic\u306E\u6D88\u8CBBMp\u304C\u3007"
     Help: '""'
     Category: 0
+    Priority: 0
+    TargetType: 0
     TriggerType: 12030
     Param1: 0
+    Param2: 0
+    Param3: 0
   - Id: 12040
     Name: "\u653B\u6483\u3092\u53D7\u3051\u305F\u5BFE\u8C61\u306EHp\u304C\u3007%\u4EE5\u4E0B"
     Help: '""'
     Category: 0
+    Priority: 0
+    TargetType: 0
     TriggerType: 12040
     Param1: 0
+    Param2: 0
+    Param3: 0
   - Id: 12050
     Name: "1\u56DE\u306E\u653B\u6483\u3067\u3007\u30C0\u30E1\u30FC\u30B8\u4EE5\u4E0A\u53D7\u3051\u308B"
     Help: '""'
     Category: 0
+    Priority: 0
+    TargetType: 0
     TriggerType: 12050
     Param1: 0
+    Param2: 0
+    Param3: 0
+  - Id: 13010
+    Name: "\u3007\u306EKind\u3092\u6301\u3063\u3066\u3044\u308B\u5473\u65B9"
+    Help: '""'
+    Category: 0
+    Priority: 0
+    TargetType: 0
+    TriggerType: 13010
+    Param1: 0
+    Param2: 0
+    Param3: 0
+  - Id: 13020
+    Name: "\u3007\u306EKind\u3092\u6301\u3063\u3066\u3044\u308B\u6575"
+    Help: '""'
+    Category: 0
+    Priority: 0
+    TargetType: 0
+    TriggerType: 13020
+    Param1: 0
+    Param2: 0
+    Param3: 0
+  - Id: 13021
+    Name: "\u6C4E\u7528\u6575(\u30AF\u30EA\u30FC\u30C1\u30E3\u30FC)\u3092\u512A\u5148"
+    Help: "\u6C4E\u7528\u6575(\u30AF\u30EA\u30FC\u30C1\u30E3\u30FC)\u3092\u512A\u5148\u3057\u307E\u3059"
+    Category: 2
+    Priority: 0
+    TargetType: 1
+    TriggerType: 13020
+    Param1: 0
+    Param2: 1
+    Param3: 0
+  - Id: 13022
+    Name: "\u30DC\u30B9(\u60AA\u9B54)\u3092\u512A\u5148"
+    Help: "\u30DC\u30B9(\u60AA\u9B54)\u3092\u512A\u5148\u3057\u307E\u3059"
+    Category: 2
+    Priority: 0
+    TargetType: 1
+    TriggerType: 13020
+    Param1: 0
+    Param2: 1
+    Param3: 0
+  - Id: 13026
+    Name: "\u6C4E\u7528\u6575(\u30AF\u30EA\u30FC\u30C1\u30E3\u30FC)"
+    Help: "\u6C4E\u7528\u6575(\u30AF\u30EA\u30FC\u30C1\u30E3\u30FC)\u306B\u9650\u5B9A\u3057\u307E\u3059\n\u8A72\u5F53\u3059\u308B\u76F8\u624B\u304C\u3044\u306A\u3044\u5834\u5408\u3001\u9B54\u6CD5\u3092\u767A\u52D5\u3057\u307E\u305B\u3093"
+    Category: 2
+    Priority: 0
+    TargetType: 1
+    TriggerType: 13020
+    Param1: 0
+    Param2: 0
+    Param3: 0
+  - Id: 13027
+    Name: "\u30DC\u30B9(\u60AA\u9B54)"
+    Help: "\u30DC\u30B9(\u60AA\u9B54)\u306B\u9650\u5B9A\u3057\u307E\u3059\n\u8A72\u5F53\u3059\u308B\u76F8\u624B\u304C\u3044\u306A\u3044\u5834\u5408\u3001\u9B54\u6CD5\u3092\u767A\u52D5\u3057\u307E\u305B\u3093"
+    Category: 2
+    Priority: 0
+    TargetType: 1
+    TriggerType: 13020
+    Param1: 0
+    Param2: 0
+    Param3: 0
   - Id: 20010
     Name: "Mp\u3092\u3007\u6D88\u8CBB\u3059\u308B"
     Help: '""'
     Category: 0
+    Priority: 0
+    TargetType: 0
     TriggerType: 20010
     Param1: 0
+    Param2: 0
+    Param3: 0
   - Id: 20020
     Name: "\u62D8\u675F3\u56DE\u6210\u529F"
     Help: '""'
     Category: 0
+    Priority: 0
+    TargetType: 0
     TriggerType: 20020
     Param1: 0
+    Param2: 0
+    Param3: 0
   - Id: 20030
     Name: "\u653B\u6483\u3067\u6226\u95D8\u4E0D\u80FD\u306B\u306A\u308B"
     Help: '""'
     Category: 0
+    Priority: 0
+    TargetType: 0
     TriggerType: 20030
     Param1: 0
+    Param2: 0
+    Param3: 0
   - Id: 20040
     Name: "\u81EA\u5206\u4EE5\u5916\u304C\u6226\u95D8\u4E0D\u80FD"
     Help: '""'
     Category: 0
+    Priority: 0
+    TargetType: 0
     TriggerType: 20040
     Param1: 0
+    Param2: 0
+    Param3: 0
   - Id: 20050
     Name: "\u81EA\u8EAB\u304C\u6226\u95D8\u4E0D\u80FD\u306B\u306A\u308B"
     Help: '""'
     Category: 0
+    Priority: 0
+    TargetType: 0
     TriggerType: 20050
     Param1: 0
+    Param2: 0
+    Param3: 0
   - Id: 20060
     Name: "\u653B\u6483\u3092\u3007\u56DE\u53D7\u3051\u308B"
     Help: '""'
     Category: 0
+    Priority: 0
+    TargetType: 0
     TriggerType: 20060
     Param1: 0
+    Param2: 0
+    Param3: 0
   - Id: 20070
     Name: "\u6575\u5168\u54E1\u304C\u546A\u3044\u72B6\u614B"
     Help: '""'
     Category: 0
+    Priority: 0
+    TargetType: 0
     TriggerType: 20070
     Param1: 0
+    Param2: 0
+    Param3: 0
   - Id: 20080
     Name: "\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB\u653B\u6483\u3092\u53D7\u3051\u308B"
     Help: '""'
     Category: 0
+    Priority: 0
+    TargetType: 0
     TriggerType: 20080
     Param1: 0
+    Param2: 0
+    Param3: 0
   - Id: 20090
     Name: "\u56DE\u907F\u3092\u3007\u56DE\u884C\u3046"
     Help: '""'
     Category: 0
+    Priority: 0
+    TargetType: 0
     TriggerType: 20090
     Param1: 0
+    Param2: 0
+    Param3: 0
   - Id: 20100
     Name: "\u56DE\u5FA9\u52B9\u679C\u9B54\u6CD5\u3092\u3007\u56DE\u884C\u3046"
     Help: '""'
     Category: 0
+    Priority: 0
+    TargetType: 0
     TriggerType: 20100
     Param1: 0
+    Param2: 0
+    Param3: 0
   - Id: 20110
     Name: "\u5473\u65B9\u306B\u795E\u5316\u72B6\u614B\u304C\u3007\u4EE5\u4E0A"
     Help: '""'
     Category: 0
+    Priority: 0
+    TargetType: 0
     TriggerType: 20110
     Param1: 0
+    Param2: 0
+    Param3: 0
   - Id: 20120
     Name: "Demigod\u9B54\u6CD5\u306E\u5C5E\u6027\u304C\u3007\u306E\u5473\u65B9\u304C\u795E\u5316\u3059\u308B"
     Help: '""'
     Category: 0
+    Priority: 0
+    TargetType: 0
     TriggerType: 20120
     Param1: 0
+    Param2: 0
+    Param3: 0
   - Id: 20130
     Name: "\u76F8\u624B\u304C\u72B6\u614B\u7570\u5E38\u3092\u767A\u52D5\u3059\u308B"
     Help: '""'
     Category: 0
+    Priority: 0
+    TargetType: 0
     TriggerType: 20130
     Param1: 0
+    Param2: 0
+    Param3: 0
   - Id: 20140
     Name: "\u81EA\u8EAB\u306E\u653B\u6483\u3067\u6575\u3092\u5012\u3059"
     Help: '""'
     Category: 0
+    Priority: 0
+    TargetType: 0
     TriggerType: 20140
     Param1: 0
+    Param2: 0
+    Param3: 0
   - Id: 20150
     Name: "Demigod\u9B54\u6CD5\u306E\u5C5E\u6027\u304C\u3007"
     Help: '""'
     Category: 0
+    Priority: 0
+    TargetType: 0
     TriggerType: 20150
     Param1: 0
+    Param2: 0
+    Param3: 0
   - Id: 20160
     Name: "\u81EA\u8EAB\u304C\u6226\u95D8\u4E0D\u80FD\u306B\u306A\u308B\u653B\u6483\u3092\u53D7\u3051\u308B"
     Help: '""'
     Category: 0
+    Priority: 0
+    TargetType: 0
     TriggerType: 20160
     Param1: 0
+    Param2: 0
+    Param3: 0
   - Id: 30010
     Name: "\u7D42\u7109\u307E\u3067\u3007\u30BF\u30FC\u30F3"
     Help: '""'
     Category: 0
+    Priority: 0
+    TargetType: 0
     TriggerType: 30010
     Param1: 0
+    Param2: 0
+    Param3: 0

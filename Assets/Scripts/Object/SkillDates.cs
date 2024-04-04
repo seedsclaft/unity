@@ -314,7 +314,7 @@ namespace Ryneus
                     {
                         CanUse = true;
                     }
-                    if (Param1 == 1)
+                    if (Param2 == 1)
                     {
                         CanUse = friends.Count > 0;
                     }
@@ -324,7 +324,7 @@ namespace Ryneus
                     {
                         CanUse = true;
                     }
-                    if (Param1 == 1)
+                    if (Param2 == 1)
                     {
                         CanUse = friends.Count > 0;
                     }
@@ -334,7 +334,7 @@ namespace Ryneus
                     {
                         CanUse = true;
                     }
-                    if (Param1 == 1)
+                    if (Param2 == 1)
                     {
                         CanUse = opponents.Count > 0;
                     }
@@ -344,7 +344,7 @@ namespace Ryneus
                     {
                         CanUse = true;
                     }
-                    if (Param1 == 1)
+                    if (Param2 == 1)
                     {
                         CanUse = opponents.Count > 0;
                     }
@@ -420,6 +420,26 @@ namespace Ryneus
                     if (rand <= Param1)
                     {
                         CanUse = true;
+                    }
+                    break;
+                    case TriggerType.FriendHasKind:
+                    if (friends.Find(a => a.Kinds.Contains((KindType)Param1)) != null)
+                    {
+                        CanUse = true;
+                    }
+                    if (Param2 == 1)
+                    {
+                        CanUse = friends.Count > 0;
+                    }
+                    break;
+                    case TriggerType.OpponentHasKind:
+                    if (opponents.Find(a => a.Kinds.Contains((KindType)Param1)) != null)
+                    {
+                        CanUse = true;
+                    }
+                    if (Param2 == 1)
+                    {
+                        CanUse = friends.Count > 0;
                     }
                     break;
                 }
@@ -561,6 +581,8 @@ namespace Ryneus
         ActionMpCost = 12030, // 行動Magicの消費Mpが〇
         TargetHpRateUnder = 12040, // 攻撃を受けた対象のHpが〇%以下
         OneAttackOverDamage = 12050, // 1回の攻撃で〇ダメージ以上受ける
+        FriendHasKind = 13010, // 〇のKindを持っている
+        OpponentHasKind = 13020, // 〇のKindを持っている
         PayBattleMp = 20010, // Mpを〇消費する
         ChainCount = 20020, // 拘束成功回数
         ActionResultDeath = 20030, // 攻撃を受けると戦闘不能になる

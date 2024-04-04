@@ -97,21 +97,23 @@ namespace Ryneus
         private void CommandDecideCategory1Select()
         {
             var index = _view.Trigger1CategoryIndex;
-            if (index > -1)
+            var skillListIndex = _view.SkillTriggerListIndex;
+            if (index > -1 && skillListIndex > -1)
             {
                 SoundManager.Instance.PlayStaticSe(SEType.Decide);
-                var list = _model.SkillTriggerDataList(index + 1);
+                var list = _model.SkillTriggerDataList(skillListIndex,index + 1);
                 _view.SetTrigger1List(list);
             }
         }
 
         private void CommandDecideCategory2Select()
         {
-            var index = _view.Trigger2CategoryIndex;
-            if (index > -1)
+            var index = _view.Trigger1CategoryIndex;
+            var skillListIndex = _view.SkillTriggerListIndex;
+            if (index > -1 && skillListIndex > -1)
             {
                 SoundManager.Instance.PlayStaticSe(SEType.Decide);
-                var list = _model.SkillTriggerDataList(index + 1);
+                var list = _model.SkillTriggerDataList(skillListIndex,index + 1);
                 _view.SetTrigger2List(list);
             }
         }

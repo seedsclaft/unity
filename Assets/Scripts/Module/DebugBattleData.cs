@@ -29,8 +29,9 @@ namespace Ryneus
         public void MakeBattleActor()
         {
             GameSystem.CurrentStageData = new SaveStageInfo();
-            GameSystem.CurrentStageData.Initialize();
-            GameSystem.CurrentStageData.MakeStageData(1);
+            var currentStageData = GameSystem.CurrentStageData;
+            currentStageData.Initialize();
+            currentStageData.InitializeStageData(1);
             if (testBattle)
             {
                 var TestBattleData = Resources.Load<TestBattleData>("Data/TestBattle").TestBattleDates;
@@ -41,8 +42,8 @@ namespace Ryneus
                     if (TestBattle.IsActor)
                     {
                         var actorData = DataSystem.FindActor(TestBattle.BattlerId);
-                        GameSystem.CurrentStageData.AddTestActor(actorData,TestBattle.Level);
-                        var actorInfo = GameSystem.CurrentStageData.Party.ActorInfos.Find(a => a.ActorId == actorData.Id);
+                        currentStageData.AddTestActor(actorData,TestBattle.Level);
+                        var actorInfo = currentStageData.Party.ActorInfos.Find(a => a.ActorId == actorData.Id);
                         actorInfo.SetBattleIndex(ActorIndex);
                         actorInfo.SetLineIndex(TestBattle.IsFront ? LineType.Front : LineType.Back);
                         ActorIndex++;
@@ -52,15 +53,15 @@ namespace Ryneus
                         symbolInfoList.AddRange(DebugStageSymbolInfos(TestBattle.BattlerId));
                     }
                 }
-                GameSystem.CurrentStageData.Party.SetStageSymbolInfos(symbolInfoList);
-                foreach (var symbolInfo1 in GameSystem.CurrentStageData.Party.StageSymbolInfos)
+                currentStageData.Party.SetStageSymbolInfos(symbolInfoList);
+                foreach (var symbolInfo1 in currentStageData.Party.StageSymbolInfos)
                 {
-                    var record = new SymbolResultInfo(symbolInfo1,GameSystem.CurrentStageData.Party.Currency);
+                    var record = new SymbolResultInfo(symbolInfo1,currentStageData.Party.Currency);
                     
                     record.SetSelected(true);
-                    GameSystem.CurrentStageData.Party.SetSymbolResultInfo(record,false);
+                    currentStageData.Party.SetSymbolResultInfo(record,false);
                 }
-                var troopInfo = GameSystem.CurrentStageData.CurrentStage.TestTroops(troopId,troopLv);
+                var troopInfo = currentStageData.CurrentStage.TestTroops(troopId,troopLv);
                 var stageSymbol = new StageSymbolData
                 {
                     StageId = 1,
@@ -69,23 +70,23 @@ namespace Ryneus
                 };
                 var symbolInfo = new SymbolInfo(stageSymbol);
                 symbolInfo.SetTroopInfo(troopInfo);
-                GameSystem.CurrentStageData.Party.SetStageSymbolInfos(new List<SymbolInfo>(){ symbolInfo});
+                currentStageData.Party.SetStageSymbolInfos(new List<SymbolInfo>(){ symbolInfo});
             } else
             {
                 foreach (var actor in DataSystem.Actors)
                 { 
                     if (inBattleActorIds.Contains(actor.Id))
                     {
-                        GameSystem.CurrentStageData.AddTestActor(actor,0);
+                        currentStageData.AddTestActor(actor,0);
                     }
                 }
                 var idx = 1;
-                foreach (var actorInfo in GameSystem.CurrentStageData.Party.ActorInfos)
+                foreach (var actorInfo in currentStageData.Party.ActorInfos)
                 {
                     actorInfo.SetBattleIndex(idx);
                     idx++;
                 }
-                GameSystem.CurrentStageData.CurrentStage.TestTroops(troopId,troopLv);
+                currentStageData.CurrentStage.TestTroops(troopId,troopLv);
             }
         }
 

@@ -16,7 +16,11 @@ namespace Ryneus
         public string Name;
         public string Help;
         public int Category;
+        public int Priority;
+        public TargetType TargetType;
         public TriggerType TriggerType;
         public int Param1;
+        public int Param2;
+        public int Param3;
     }
 }

@@ -17,8 +17,12 @@ namespace Ryneus
 			NameId,
 			_NameId,
 			Category,
+			Priority,
+			TargetType,
 			TriggerType,
 			Param1,
+			Param2,
+			Param3
 		}
 		static readonly string ExcelName = "SkillTrigger.xlsx";
 
@@ -77,8 +81,12 @@ namespace Ryneus
                             Name = textData.Find(a => a.Id == AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.NameId)).Text,
                             Help = textData.Find(a => a.Id == AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.NameId)).Help,
                             Category = AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.Category),
+                            Priority = AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.Priority),
+                            TargetType = (TargetType)AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.TargetType),
                             TriggerType = (TriggerType)AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.TriggerType),
-                            Param1 = AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.Param1)
+                            Param1 = AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.Param1),
+                            Param2 = AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.Param2),
+                            Param3 = AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.Param3)
                         };
                         Data.Data.Add(SkillTriggerData);
 					}

@@ -2258,105 +2258,102 @@ namespace Ryneus
                     var targetBattler = GetBattlerInfo(targetIndex);
                     var friends = targetBattler.IsActor ? _party : _troop;
                     var opponents = targetBattler.IsActor ? _troop : _party;
+                    var IsFriend = battlerInfo.IsActor == targetBattler.IsActor;
                     switch (triggerDate.TriggerType)
                     {
                         // ターゲットに含めるか判定
                         case TriggerType.FriendHpRateUnder:
-                        if (battlerInfo.IsActor == targetBattler.IsActor && targetBattler.HpRate <= 0.01f * triggerDate.Param1)
+                        if (IsFriend && targetBattler.HpRate <= 0.01f * triggerDate.Param1)
                         {
                             targetIndexList.Add(targetIndex);
                         }
                         break;
                         case TriggerType.FriendHpRateUpper:
-                        if (battlerInfo.IsActor == targetBattler.IsActor && targetBattler.HpRate >= 0.01f * triggerDate.Param1)
+                        if (IsFriend && targetBattler.HpRate >= 0.01f * triggerDate.Param1)
                         {
                             targetIndexList.Add(targetIndex);
                         }
                         break;
                         case TriggerType.OpponentHpRateUnder:
-                        if (battlerInfo.IsActor != targetBattler.IsActor && targetBattler.HpRate <= 0.01f * triggerDate.Param1)
+                        if (!IsFriend && targetBattler.HpRate <= 0.01f * triggerDate.Param1)
                         {
                             targetIndexList.Add(targetIndex);
                         }
                         break;
                         case TriggerType.OpponentHpRateUpper:
-                        if (battlerInfo.IsActor != targetBattler.IsActor && targetBattler.HpRate >= 0.01f * triggerDate.Param1)
+                        if (!IsFriend && targetBattler.HpRate >= 0.01f * triggerDate.Param1)
                         {
                             targetIndexList.Add(targetIndex);
                         }
                         break;
                         case TriggerType.FriendMpUnder:
-                        if (battlerInfo.IsActor == targetBattler.IsActor && targetBattler.MpRate <= 0.01f * triggerDate.Param1)
+                        if (IsFriend && targetBattler.MpRate <= 0.01f * triggerDate.Param1)
                         {
                             targetIndexList.Add(targetIndex);
                         }
                         break;
                         case TriggerType.FriendMpUpper:
-                        if (battlerInfo.IsActor == targetBattler.IsActor && targetBattler.MpRate >= 0.01f * triggerDate.Param1)
+                        if (IsFriend && targetBattler.MpRate >= 0.01f * triggerDate.Param1)
                         {
                             targetIndexList.Add(targetIndex);
                         }
                         break;
                         case TriggerType.OpponentMpUnder:
-                        if (battlerInfo.IsActor != targetBattler.IsActor && targetBattler.MpRate <= 0.01f * triggerDate.Param1)
+                        if (!IsFriend && targetBattler.MpRate <= 0.01f * triggerDate.Param1)
                         {
                             targetIndexList.Add(targetIndex);
                         }
                         break;
                         case TriggerType.OpponentMpUpper:
-                        if (battlerInfo.IsActor != targetBattler.IsActor && targetBattler.MpRate >= 0.01f * triggerDate.Param1)
+                        if (!IsFriend && targetBattler.MpRate >= 0.01f * triggerDate.Param1)
                         {
                             targetIndexList.Add(targetIndex);
                         }
                         break;
                         case TriggerType.FriendLineFront:
-                        if (battlerInfo.IsActor == targetBattler.IsActor && targetBattler.LineIndex == LineType.Front)
+                        if (IsFriend && targetBattler.LineIndex == LineType.Front)
                         {
                             targetIndexList.Add(targetIndex);
-                        }
-                        if (triggerDate.Param1 == 1)
-                        {
-                            targetIndexWithInList.Add(targetIndex);
                         }
                         break;
                         case TriggerType.FriendLineBack:
-                        if (battlerInfo.IsActor == targetBattler.IsActor && targetBattler.LineIndex == LineType.Back)
+                        if (IsFriend && targetBattler.LineIndex == LineType.Back)
                         {
                             targetIndexList.Add(targetIndex);
-                        }
-                        if (triggerDate.Param1 == 1)
-                        {
-                            targetIndexWithInList.Add(targetIndex);
                         }
                         break;
                         case TriggerType.OpponentLineFront:
-                        if (battlerInfo.IsActor != targetBattler.IsActor && targetBattler.LineIndex == LineType.Front)
+                        if (!IsFriend && targetBattler.LineIndex == LineType.Front)
                         {
                             targetIndexList.Add(targetIndex);
-                        }
-                        if (triggerDate.Param1 == 1)
-                        {
-                            targetIndexWithInList.Add(targetIndex);
                         }
                         break;
                         case TriggerType.OpponentLineBack:
-                        if (battlerInfo.IsActor != targetBattler.IsActor && targetBattler.LineIndex == LineType.Back)
+                        if (!IsFriend && targetBattler.LineIndex == LineType.Back)
                         {
                             targetIndexList.Add(targetIndex);
                         }
-                        if (triggerDate.Param1 == 1)
-                        {
-                            targetIndexWithInList.Add(targetIndex);
-                        }
                         break;
                         case TriggerType.FriendMoreTargetCount:
-                        if (battlerInfo.IsActor == targetBattler.IsActor && friends.AliveBattlerInfos.FindAll(a => a.LineIndex == targetBattler.LineIndex).Count >= triggerDate.Param1)
+                        if (IsFriend && friends.AliveBattlerInfos.FindAll(a => a.LineIndex == targetBattler.LineIndex).Count >= triggerDate.Param1)
                         {
                             targetIndexList.Add(targetIndex);
                         }
                         break;
                         case TriggerType.OpponentMoreTargetCount:
-                        if (battlerInfo.IsActor != targetBattler.IsActor && opponents.AliveBattlerInfos.FindAll(a => a.LineIndex == targetBattler.LineIndex).Count >= triggerDate.Param1)
+                        if (!IsFriend && opponents.AliveBattlerInfos.FindAll(a => a.LineIndex == targetBattler.LineIndex).Count >= triggerDate.Param1)
+                        {
+                            targetIndexList.Add(targetIndex);
+                        }
+                        break;
+                        case TriggerType.FriendHasKind:
+                        if (IsFriend && targetBattler.Kinds.Contains((KindType)triggerDate.Param1))
+                        {
+                            targetIndexList.Add(targetIndex);
+                        }
+                        break;
+                        case TriggerType.OpponentHasKind:
+                        if (!IsFriend && targetBattler.Kinds.Contains((KindType)triggerDate.Param1))
                         {
                             targetIndexList.Add(targetIndex);
                         }
@@ -2364,6 +2361,10 @@ namespace Ryneus
                         default:
                             targetIndexList.Add(targetIndex);
                         break;
+                    }
+                    if (triggerDate.Param2 == 1)
+                    {
+                        targetIndexWithInList.Add(targetIndex);
                     }
                 }
             }
@@ -2404,28 +2405,53 @@ namespace Ryneus
                     case TriggerType.LessHpFriend:
                     if (friendTargets.Count > 0)
                     {
-                        friendTargets.Sort((a,b) => a.Hp < b.Hp ? -1: 1);
+                        // Param1==1の場合は割合
+                        if (triggerDate.Param1 == 1)
+                        {
+                            friendTargets.Sort((a,b) => a.HpRate < b.HpRate ? -1: 1);
+                        } else
+                        {
+                            friendTargets.Sort((a,b) => a.Hp < b.Hp ? -1: 1);
+                        }
                         return friendTargets[0].Index;
                     }
                     break;
                     case TriggerType.MostHpFriend:
                     if (friendTargets.Count > 0)
                     {
-                        friendTargets.Sort((a,b) => a.Hp < b.Hp ? 1: -1);
+                        if (triggerDate.Param1 == 1)
+                        {
+                            friendTargets.Sort((a,b) => a.HpRate < b.HpRate ? 1: -1);
+                        } else
+                        {
+                            friendTargets.Sort((a,b) => a.Hp < b.Hp ? 1: -1);
+                        }
                         return friendTargets[0].Index;
                     }
                     break;
                     case TriggerType.LessHpTarget:
                     if (opponentTargets.Count > 0)
                     {
-                        opponentTargets.Sort((a,b) => a.Hp < b.Hp ? -1: 1);
+                        if (triggerDate.Param1 == 1)
+                        {
+                            opponentTargets.Sort((a,b) => a.HpRate < b.HpRate ? -1: 1);
+                        } else
+                        {
+                            opponentTargets.Sort((a,b) => a.Hp < b.Hp ? -1: 1);
+                        }
                         return opponentTargets[0].Index;
                     }
                     break;
                     case TriggerType.MostHpTarget:
                     if (opponentTargets.Count > 0)
                     {
-                        opponentTargets.Sort((a,b) => a.Hp < b.Hp ? 1: -1);
+                        if (triggerDate.Param1 == 1)
+                        {
+                            opponentTargets.Sort((a,b) => a.HpRate < b.HpRate ? 1: -1);
+                        } else
+                        {
+                            opponentTargets.Sort((a,b) => a.Hp < b.Hp ? 1: -1);
+                        }
                         return opponentTargets[0].Index;
                     }
                     break;

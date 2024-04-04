@@ -6,6 +6,7 @@ namespace Ryneus
     public class SkillTriggerModel : BaseModel
     {
         private int _actorId = -1;
+        private SkillTriggerData _skillTrigger = null;
         public List<ListData> SkillTrigger(int actorId)
         {
             _actorId = actorId;
@@ -27,14 +28,24 @@ namespace Ryneus
         {
             var list = new List<string>();
             list.Add("隊列・状況");
+            list.Add("種族");
             list.Add("HP");
             list.Add("MP");
             return MakeListData(list);
         }
 
-        public List<ListData> SkillTriggerDataList(int category)
+        public List<ListData> SkillTriggerDataList(int index,int category)
         {
             var list = DataSystem.SkillTriggers.FindAll(a => a.Category == -1 || a.Category == category);
+            // 対象のマッチング
+            var skillTriggerData = PartyInfo.SkillTriggerInfos(_actorId);
+            if (skillTriggerData.Count > index)
+            {
+                var skill = DataSystem.FindSkill(skillTriggerData[index].SkillId);
+                list = list.FindAll(a => (int)a.TargetType == -1 || a.TargetType == skill.TargetType);
+            }
+            // ソート
+            list.Sort((a,b) => a.Priority > b.Priority ? 1 : -1);
             return MakeListData(list);
         }
 
@@ -43,13 +54,14 @@ namespace Ryneus
             PartyInfo.SetSkillTriggerSkill(_actorId,index,skillId);
         }
 
-        public void SetSkillTrigger1(int index,SkillTriggerData triggerType)
+        public void SetSkillTrigger1(int index,SkillTriggerData triggerData)
         {
-            PartyInfo.SetSkillTriggerTrigger1(_actorId,index,triggerType);
+            PartyInfo.SetSkillTriggerTrigger1(_actorId,index,triggerData);
         }
-        public void SetSkillTrigger2(int index,SkillTriggerData triggerType)
+
+        public void SetSkillTrigger2(int index,SkillTriggerData triggerData)
         {
-            PartyInfo.SetSkillTriggerTrigger2(_actorId,index,triggerType);
+            PartyInfo.SetSkillTriggerTrigger2(_actorId,index,triggerData);
         }
     }
 }

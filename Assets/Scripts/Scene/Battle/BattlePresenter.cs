@@ -416,6 +416,10 @@ namespace Ryneus
         private void CommandAutoActorSkillId()
         {
             var (autoSkillId,targetIndex) = _model.MakeAutoActorSkillId(_model.CurrentBattler);
+            if (autoSkillId == -1)
+            {
+                autoSkillId = 20010;
+            }
             var skillInfo = new SkillInfo(autoSkillId);
             var actionInfo = _model.MakeActionInfo(_model.CurrentBattler,skillInfo,false,false);
             CommandSelectTargetIndexes(_model.MakeAutoSelectIndex(actionInfo,targetIndex));
