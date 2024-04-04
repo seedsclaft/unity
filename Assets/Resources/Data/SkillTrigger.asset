@@ -17,8 +17,8 @@ MonoBehaviour:
     Name: '-'
     Help: '""'
     Category: -1
-    Priority: 0
-    TargetType: 3
+    Priority: -1
+    TargetType: -1
     TriggerType: 0
     Param1: 0
     Param2: 0
@@ -28,47 +28,47 @@ MonoBehaviour:
     Help: '""'
     Category: 0
     Priority: 0
-    TargetType: 4
+    TargetType: 0
     TriggerType: 1010
     Param1: 0
     Param2: 0
     Param3: 0
   - Id: 1011
-    Name: "\u81EA\u8EAB\u306EHp\u304C100%\u672A\u6E80"
+    Name: "\u81EA\u8EAB\u306EHp\u304C<color=\"green\">100%</color>\u672A\u6E80"
     Help: '""'
-    Category: 3
-    Priority: 0
-    TargetType: 4
+    Category: 9
+    Priority: 80
+    TargetType: -1
     TriggerType: 1010
     Param1: 100
     Param2: 0
     Param3: 0
   - Id: 1012
-    Name: "\u81EA\u8EAB\u306EHp\u304C75%\u4EE5\u4E0B"
+    Name: "\u81EA\u8EAB\u306EHp\u304C<color=\"green\">75%</color>\u4EE5\u4E0B"
     Help: '""'
-    Category: 3
-    Priority: 0
-    TargetType: 4
+    Category: 9
+    Priority: 30
+    TargetType: -1
     TriggerType: 1010
     Param1: 75
     Param2: 0
     Param3: 0
   - Id: 1013
-    Name: "\u81EA\u8EAB\u306EHp\u304C50%\u4EE5\u4E0B"
+    Name: "\u81EA\u8EAB\u306EHp\u304C<color=\"green\">50%</color>\u4EE5\u4E0B"
     Help: '""'
-    Category: 3
-    Priority: 0
-    TargetType: 4
+    Category: 9
+    Priority: 20
+    TargetType: -1
     TriggerType: 1010
     Param1: 50
     Param2: 0
     Param3: 0
   - Id: 1014
-    Name: "\u81EA\u8EAB\u306EHp\u304C25%\u4EE5\u4E0B"
+    Name: "\u81EA\u8EAB\u306EHp\u304C<color=\"green\">25%</color>\u4EE5\u4E0B"
     Help: '""'
-    Category: 3
-    Priority: 0
-    TargetType: 4
+    Category: 9
+    Priority: 10
+    TargetType: -1
     TriggerType: 1010
     Param1: 25
     Param2: 0
@@ -78,47 +78,47 @@ MonoBehaviour:
     Help: '""'
     Category: 0
     Priority: 0
-    TargetType: 4
+    TargetType: 0
     TriggerType: 1020
     Param1: 0
     Param2: 0
     Param3: 0
   - Id: 1021
-    Name: "\u81EA\u8EAB\u306EHp\u304C100%\u4EE5\u4E0A"
+    Name: "\u81EA\u8EAB\u306EHp\u304C<color=\"green\">100%</color>\u4EE5\u4E0A"
     Help: '""'
-    Category: 3
-    Priority: 0
-    TargetType: 4
+    Category: 9
+    Priority: 70
+    TargetType: -1
     TriggerType: 1020
     Param1: 100
     Param2: 0
     Param3: 0
   - Id: 1022
-    Name: "\u81EA\u8EAB\u306EHp\u304C75%\u4EE5\u4E0A"
+    Name: "\u81EA\u8EAB\u306EHp\u304C<color=\"green\">75%</color>\u4EE5\u4E0A"
     Help: '""'
-    Category: 3
-    Priority: 0
-    TargetType: 4
+    Category: 9
+    Priority: 60
+    TargetType: -1
     TriggerType: 1020
     Param1: 75
     Param2: 0
     Param3: 0
   - Id: 1023
-    Name: "\u81EA\u8EAB\u306EHp\u304C50%\u4EE5\u4E0A"
+    Name: "\u81EA\u8EAB\u306EHp\u304C<color=\"green\">50%</color>\u4EE5\u4E0A"
     Help: '""'
-    Category: 3
-    Priority: 0
-    TargetType: 4
+    Category: 9
+    Priority: 50
+    TargetType: -1
     TriggerType: 1020
     Param1: 50
     Param2: 0
     Param3: 0
   - Id: 1024
-    Name: "\u81EA\u8EAB\u306EHp\u304C25%\u4EE5\u4E0A"
+    Name: "\u81EA\u8EAB\u306EHp\u304C<color=\"green\">25%</color>\u4EE5\u4E0A"
     Help: '""'
-    Category: 3
-    Priority: 0
-    TargetType: 4
+    Category: 9
+    Priority: 40
+    TargetType: -1
     TriggerType: 1020
     Param1: 25
     Param2: 0
@@ -128,7 +128,7 @@ MonoBehaviour:
     Help: '""'
     Category: 0
     Priority: 0
-    TargetType: 2
+    TargetType: 0
     TriggerType: 1030
     Param1: 0
     Param2: 0
@@ -568,7 +568,7 @@ MonoBehaviour:
     Help: '""'
     Category: 0
     Priority: 0
-    TargetType: 2
+    TargetType: 0
     TriggerType: 2010
     Param1: 0
     Param2: 0
@@ -578,47 +578,47 @@ MonoBehaviour:
     Help: '""'
     Category: 0
     Priority: 0
-    TargetType: 4
+    TargetType: 0
     TriggerType: 3010
     Param1: 0
     Param2: 0
     Param3: 0
   - Id: 3011
-    Name: "\u81EA\u8EAB\u306EMp\u304C100%\u4EE5\u4E0B"
+    Name: "\u81EA\u8EAB\u306EMp\u304C<color=\"green\">100%</color>\u672A\u6E80"
     Help: '""'
-    Category: 4
-    Priority: 0
-    TargetType: 4
+    Category: 10
+    Priority: 80
+    TargetType: -1
     TriggerType: 3010
     Param1: 100
     Param2: 0
     Param3: 0
   - Id: 3012
-    Name: "\u81EA\u8EAB\u306EMp\u304C75%\u4EE5\u4E0B"
+    Name: "\u81EA\u8EAB\u306EMp\u304C<color=\"green\">75%</color>\u4EE5\u4E0B"
     Help: '""'
-    Category: 4
-    Priority: 0
-    TargetType: 4
+    Category: 10
+    Priority: 30
+    TargetType: -1
     TriggerType: 3010
     Param1: 75
     Param2: 0
     Param3: 0
   - Id: 3013
-    Name: "\u81EA\u8EAB\u306EMp\u304C50%\u4EE5\u4E0B"
+    Name: "\u81EA\u8EAB\u306EMp\u304C<color=\"green\">50%</color>\u4EE5\u4E0B"
     Help: '""'
-    Category: 4
-    Priority: 0
-    TargetType: 4
+    Category: 10
+    Priority: 20
+    TargetType: -1
     TriggerType: 3010
     Param1: 50
     Param2: 0
     Param3: 0
   - Id: 3014
-    Name: "\u81EA\u8EAB\u306EMp\u304C25%\u4EE5\u4E0B"
+    Name: "\u81EA\u8EAB\u306EMp\u304C<color=\"green\">25%</color>\u4EE5\u4E0B"
     Help: '""'
-    Category: 4
-    Priority: 0
-    TargetType: 4
+    Category: 10
+    Priority: 10
+    TargetType: -1
     TriggerType: 3010
     Param1: 25
     Param2: 0
@@ -628,47 +628,47 @@ MonoBehaviour:
     Help: '""'
     Category: 0
     Priority: 0
-    TargetType: 4
+    TargetType: 0
     TriggerType: 3020
     Param1: 0
     Param2: 0
     Param3: 0
   - Id: 3021
-    Name: "\u81EA\u8EAB\u306EMp\u304C100%\u4EE5\u4E0A"
+    Name: "\u81EA\u8EAB\u306EMp\u304C<color=\"green\">100%</color>\u4EE5\u4E0A"
     Help: '""'
-    Category: 4
-    Priority: 0
-    TargetType: 4
+    Category: 10
+    Priority: 70
+    TargetType: -1
     TriggerType: 3020
     Param1: 100
     Param2: 0
     Param3: 0
   - Id: 3022
-    Name: "\u81EA\u8EAB\u306EMp\u304C75%\u4EE5\u4E0A"
+    Name: "\u81EA\u8EAB\u306EMp\u304C<color=\"green\">75%</color>\u4EE5\u4E0A"
     Help: '""'
-    Category: 4
-    Priority: 0
-    TargetType: 4
+    Category: 10
+    Priority: 60
+    TargetType: -1
     TriggerType: 3020
     Param1: 75
     Param2: 0
     Param3: 0
   - Id: 3023
-    Name: "\u81EA\u8EAB\u306EMp\u304C50%\u4EE5\u4E0A"
+    Name: "\u81EA\u8EAB\u306EMp\u304C<color=\"green\">50%</color>\u4EE5\u4E0A"
     Help: '""'
-    Category: 4
-    Priority: 0
-    TargetType: 4
+    Category: 10
+    Priority: 50
+    TargetType: -1
     TriggerType: 3020
     Param1: 50
     Param2: 0
     Param3: 0
   - Id: 3024
-    Name: "\u81EA\u8EAB\u306EMp\u304C25%\u4EE5\u4E0A"
+    Name: "\u81EA\u8EAB\u306EMp\u304C<color=\"green\">25%</color>\u4EE5\u4E0A"
     Help: '""'
-    Category: 4
-    Priority: 0
-    TargetType: 4
+    Category: 10
+    Priority: 40
+    TargetType: -1
     TriggerType: 3020
     Param1: 25
     Param2: 0
@@ -1154,13 +1154,583 @@ MonoBehaviour:
     Param2: 0
     Param3: 0
   - Id: 6030
-    Name: "Abnormal\u306EState\u306B\u304B\u304B\u3063\u3066\u3044\u308B"
+    Name: "StateId\u72B6\u614B\u306B\u306A\u3063\u3066\u3044\u308B\u5473\u65B9"
     Help: '""'
     Category: 0
     Priority: 0
     TargetType: 0
     TriggerType: 6030
     Param1: 0
+    Param2: 0
+    Param3: 0
+  - Id: 6040
+    Name: "StateId\u72B6\u614B\u306B\u306A\u3063\u3066\u3044\u308B\u6575"
+    Help: '""'
+    Category: 0
+    Priority: 0
+    TargetType: 0
+    TriggerType: 6040
+    Param1: 0
+    Param2: 0
+    Param3: 0
+  - Id: 6050
+    Name: "StateId\u72B6\u614B\u306B\u306A\u3063\u3066\u3044\u306A\u3044\u5473\u65B9"
+    Help: '""'
+    Category: 0
+    Priority: 0
+    TargetType: 0
+    TriggerType: 6050
+    Param1: 0
+    Param2: 0
+    Param3: 0
+  - Id: 6060
+    Name: "StateId\u72B6\u614B\u306B\u306A\u3063\u3066\u3044\u306A\u3044\u6575"
+    Help: '""'
+    Category: 0
+    Priority: 0
+    TargetType: 0
+    TriggerType: 6060
+    Param1: 0
+    Param2: 0
+    Param3: 0
+  - Id: 6110
+    Name: "Abnormal\u306EState\u306B\u304B\u304B\u3063\u3066\u3044\u308B"
+    Help: '""'
+    Category: 0
+    Priority: 0
+    TargetType: 0
+    TriggerType: 6110
+    Param1: 0
+    Param2: 0
+    Param3: 0
+  - Id: 6120
+    Name: "Abnormal\u306EState\u306B\u304B\u304B\u3063\u3066\u3044\u308B\u5473\u65B9"
+    Help: '""'
+    Category: 0
+    Priority: 0
+    TargetType: 0
+    TriggerType: 6120
+    Param1: 0
+    Param2: 0
+    Param3: 0
+  - Id: 6121
+    Name: "\u72B6\u614B\u7570\u5E38\u306E<color=\"blue\">\u5473\u65B9</color>"
+    Help: '""'
+    Category: 5
+    Priority: 51
+    TargetType: 2
+    TriggerType: 6120
+    Param1: 0
+    Param2: 0
+    Param3: 0
+  - Id: 6130
+    Name: "Abnormal\u306EState\u306B\u304B\u304B\u3063\u3066\u3044\u308B\u6575"
+    Help: '""'
+    Category: 0
+    Priority: 0
+    TargetType: 0
+    TriggerType: 6130
+    Param1: 0
+    Param2: 0
+    Param3: 0
+  - Id: 6131
+    Name: "\u72B6\u614B\u7570\u5E38\u306E<color=\"red\">\u6575</color>"
+    Help: '""'
+    Category: 5
+    Priority: 50
+    TargetType: 1
+    TriggerType: 6130
+    Param1: 0
+    Param2: 0
+    Param3: 0
+  - Id: 6140
+    Name: "Abnormal\u306EState\u306B\u304B\u304B\u3063\u3066\u3044\u306A\u3044\u5473\u65B9"
+    Help: '""'
+    Category: 0
+    Priority: 0
+    TargetType: 0
+    TriggerType: 6140
+    Param1: 0
+    Param2: 0
+    Param3: 0
+  - Id: 6150
+    Name: "Abnormal\u306EState\u306B\u304B\u304B\u3063\u3066\u3044\u306A\u3044\u6575"
+    Help: '""'
+    Category: 0
+    Priority: 0
+    TargetType: 0
+    TriggerType: 6150
+    Param1: 0
+    Param2: 0
+    Param3: 0
+  - Id: 6151
+    Name: "<color=\"green\">\u72B6\u614B\u7570\u5E38</color>\u3067\u306F\u306A\u3044<color=\"red\">\u6575</color>"
+    Help: '""'
+    Category: 5
+    Priority: 140
+    TargetType: 0
+    TriggerType: 6150
+    Param1: 0
+    Param2: 0
+    Param3: 0
+  - Id: 6210
+    Name: "Buff\u306EState\u306B\u304B\u304B\u3063\u3066\u3044\u308B"
+    Help: '""'
+    Category: 0
+    Priority: 0
+    TargetType: 0
+    TriggerType: 6210
+    Param1: 0
+    Param2: 0
+    Param3: 0
+  - Id: 6220
+    Name: "Buff\u306EState\u306B\u304B\u304B\u3063\u3066\u3044\u308B\u5473\u65B9"
+    Help: '""'
+    Category: 0
+    Priority: 0
+    TargetType: 0
+    TriggerType: 6220
+    Param1: 0
+    Param2: 0
+    Param3: 0
+  - Id: 6221
+    Name: "<color=\"green\">\u30D0\u30D5</color>\u72B6\u614B\u306E<color=\"blue\">\u5473\u65B9</color>\u3092\u512A\u5148"
+    Help: '""'
+    Category: 5
+    Priority: 11
+    TargetType: 2
+    TriggerType: 6220
+    Param1: 0
+    Param2: 1
+    Param3: 0
+  - Id: 6222
+    Name: "<color=\"green\">\u30D0\u30D5</color>\u72B6\u614B\u306E<color=\"blue\">\u5473\u65B9</color>"
+    Help: '""'
+    Category: 5
+    Priority: 21
+    TargetType: 2
+    TriggerType: 6220
+    Param1: 0
+    Param2: 0
+    Param3: 0
+  - Id: 6230
+    Name: "Buff\u306EState\u306B\u304B\u304B\u3063\u3066\u3044\u308B\u6575"
+    Help: '""'
+    Category: 0
+    Priority: 0
+    TargetType: 0
+    TriggerType: 6220
+    Param1: 0
+    Param2: 0
+    Param3: 0
+  - Id: 6231
+    Name: "<color=\"green\">\u30D0\u30D5</color>\u72B6\u614B\u306E<color=\"red\">\u6575</color>\u3092\u512A\u5148"
+    Help: '""'
+    Category: 5
+    Priority: 10
+    TargetType: 1
+    TriggerType: 6230
+    Param1: 0
+    Param2: 1
+    Param3: 0
+  - Id: 6232
+    Name: "<color=\"green\">\u30D0\u30D5</color>\u72B6\u614B\u306E<color=\"red\">\u6575</color>"
+    Help: '""'
+    Category: 5
+    Priority: 20
+    TargetType: 1
+    TriggerType: 6230
+    Param1: 0
+    Param2: 0
+    Param3: 0
+  - Id: 6240
+    Name: "Buff\u306EState\u306B\u304B\u304B\u3063\u3066\u3044\u306A\u3044\u5473\u65B9"
+    Help: '""'
+    Category: 0
+    Priority: 0
+    TargetType: 0
+    TriggerType: 6240
+    Param1: 0
+    Param2: 0
+    Param3: 0
+  - Id: 6241
+    Name: "<color=\"green\">\u30D0\u30D5</color>\u72B6\u614B\u3067\u306F\u306A\u3044<color=\"blue\">\u5473\u65B9</color>"
+    Help: '""'
+    Category: 5
+    Priority: 121
+    TargetType: 2
+    TriggerType: 6240
+    Param1: 0
+    Param2: 0
+    Param3: 0
+  - Id: 6250
+    Name: "Buff\u306EState\u306B\u304B\u304B\u3063\u3066\u3044\u306A\u3044\u6575"
+    Help: '""'
+    Category: 0
+    Priority: 0
+    TargetType: 0
+    TriggerType: 6250
+    Param1: 0
+    Param2: 0
+    Param3: 0
+  - Id: 6251
+    Name: "<color=\"green\">\u30D0\u30D5</color>\u72B6\u614B\u3067\u306F\u306A\u3044<color=\"red\">\u6575</color>"
+    Help: '""'
+    Category: 5
+    Priority: 120
+    TargetType: 1
+    TriggerType: 6250
+    Param1: 0
+    Param2: 0
+    Param3: 0
+  - Id: 6310
+    Name: "DeBuff\u306EState\u306B\u304B\u304B\u3063\u3066\u3044\u308B"
+    Help: '""'
+    Category: 0
+    Priority: 0
+    TargetType: 0
+    TriggerType: 6310
+    Param1: 0
+    Param2: 0
+    Param3: 0
+  - Id: 6320
+    Name: "DeBuff\u306EState\u306B\u304B\u304B\u3063\u3066\u3044\u308B\u5473\u65B9"
+    Help: '""'
+    Category: 0
+    Priority: 0
+    TargetType: 0
+    TriggerType: 6320
+    Param1: 0
+    Param2: 0
+    Param3: 0
+  - Id: 6321
+    Name: "<color=\"green\">\u30C7\u30D0\u30D5</color>\u72B6\u614B\u306E<color=\"blue\">\u5473\u65B9</color>\u3092\u512A\u5148"
+    Help: '""'
+    Category: 5
+    Priority: 31
+    TargetType: 2
+    TriggerType: 6320
+    Param1: 0
+    Param2: 1
+    Param3: 0
+  - Id: 6322
+    Name: "<color=\"green\">\u30C7\u30D0\u30D5</color>\u72B6\u614B\u306E<color=\"blue\">\u5473\u65B9</color>"
+    Help: '""'
+    Category: 5
+    Priority: 41
+    TargetType: 2
+    TriggerType: 6320
+    Param1: 0
+    Param2: 0
+    Param3: 0
+  - Id: 6330
+    Name: "DeBuff\u306EState\u306B\u304B\u304B\u3063\u3066\u3044\u308B\u6575"
+    Help: '""'
+    Category: 0
+    Priority: 0
+    TargetType: 0
+    TriggerType: 6330
+    Param1: 0
+    Param2: 0
+    Param3: 0
+  - Id: 6331
+    Name: "<color=\"green\">\u30C7\u30D0\u30D5</color>\u72B6\u614B\u306E<color=\"red\">\u6575</color>\u3092\u512A\u5148"
+    Help: '""'
+    Category: 5
+    Priority: 30
+    TargetType: 1
+    TriggerType: 6330
+    Param1: 0
+    Param2: 1
+    Param3: 0
+  - Id: 6332
+    Name: "<color=\"green\">\u30C7\u30D0\u30D5</color>\u72B6\u614B\u306E<color=\"red\">\u6575</color>"
+    Help: '""'
+    Category: 5
+    Priority: 40
+    TargetType: 1
+    TriggerType: 6330
+    Param1: 0
+    Param2: 0
+    Param3: 0
+  - Id: 6340
+    Name: "DeBuff\u306EState\u306B\u304B\u304B\u3063\u3066\u3044\u306A\u3044\u5473\u65B9"
+    Help: '""'
+    Category: 0
+    Priority: 0
+    TargetType: 0
+    TriggerType: 6340
+    Param1: 0
+    Param2: 0
+    Param3: 0
+  - Id: 6341
+    Name: "<color=\"green\">\u30C7\u30D0\u30D5</color>\u72B6\u614B\u3067\u306F\u306A\u3044<color=\"blue\">\u5473\u65B9</color>"
+    Help: '""'
+    Category: 5
+    Priority: 131
+    TargetType: 2
+    TriggerType: 6340
+    Param1: 0
+    Param2: 0
+    Param3: 0
+  - Id: 6350
+    Name: "DeBuff\u306EState\u306B\u304B\u304B\u3063\u3066\u3044\u306A\u3044\u6575"
+    Help: '""'
+    Category: 0
+    Priority: 0
+    TargetType: 0
+    TriggerType: 6350
+    Param1: 0
+    Param2: 0
+    Param3: 0
+  - Id: 6351
+    Name: "<color=\"green\">\u30C7\u30D0\u30D5</color>\u72B6\u614B\u3067\u306F\u306A\u3044<color=\"red\">\u6575</color>"
+    Help: '""'
+    Category: 5
+    Priority: 130
+    TargetType: 1
+    TriggerType: 6350
+    Param1: 0
+    Param2: 0
+    Param3: 0
+  - Id: 6411
+    Name: "<color=\"green\">\u6BD2</color>\u72B6\u614B\u306E<color=\"blue\">\u5473\u65B9</color>"
+    Help: '""'
+    Category: 5
+    Priority: 61
+    TargetType: 2
+    TriggerType: 6040
+    Param1: 2010
+    Param2: 0
+    Param3: 0
+  - Id: 6412
+    Name: "<color=\"green\">\u51CD\u7D50</color>\u72B6\u614B\u306E<color=\"blue\">\u5473\u65B9</color>"
+    Help: '""'
+    Category: 5
+    Priority: 71
+    TargetType: 2
+    TriggerType: 6040
+    Param1: 2140
+    Param2: 0
+    Param3: 0
+  - Id: 6413
+    Name: "<color=\"green\">\u30B9\u30BF\u30F3</color>\u72B6\u614B\u306E<color=\"blue\">\u5473\u65B9</color>"
+    Help: '""'
+    Category: 5
+    Priority: 81
+    TargetType: 2
+    TriggerType: 6040
+    Param1: 2150
+    Param2: 0
+    Param3: 0
+  - Id: 6414
+    Name: "<color=\"green\">\u6C88\u9ED9</color>\u72B6\u614B\u306E<color=\"blue\">\u5473\u65B9</color>"
+    Help: '""'
+    Category: 5
+    Priority: 91
+    TargetType: 2
+    TriggerType: 6040
+    Param1: 2390
+    Param2: 0
+    Param3: 0
+  - Id: 6415
+    Name: "<color=\"green\">\u4E0D\u6CBB</color>\u72B6\u614B\u306E<color=\"blue\">\u5473\u65B9</color>"
+    Help: '""'
+    Category: 5
+    Priority: 101
+    TargetType: 2
+    TriggerType: 6040
+    Param1: 2400
+    Param2: 0
+    Param3: 0
+  - Id: 6416
+    Name: "<color=\"green\">\u30D1\u30C3\u30B7\u30D6\u7121\u52B9</color>\u72B6\u614B\u306E<color=\"blue\">\u5473\u65B9</color>"
+    Help: '""'
+    Category: 5
+    Priority: 111
+    TargetType: 2
+    TriggerType: 6040
+    Param1: 2090
+    Param2: 0
+    Param3: 0
+  - Id: 6511
+    Name: "<color=\"green\">\u6BD2</color>\u72B6\u614B\u3067\u306F\u306A\u3044<color=\"blue\">\u5473\u65B9</color>"
+    Help: '""'
+    Category: 5
+    Priority: 211
+    TargetType: 2
+    TriggerType: 6050
+    Param1: 2010
+    Param2: 0
+    Param3: 0
+  - Id: 6512
+    Name: "<color=\"green\">\u51CD\u7D50</color>\u72B6\u614B\u3067\u306F\u306A\u3044<color=\"blue\">\u5473\u65B9</color>"
+    Help: '""'
+    Category: 5
+    Priority: 221
+    TargetType: 2
+    TriggerType: 6050
+    Param1: 2140
+    Param2: 0
+    Param3: 0
+  - Id: 6513
+    Name: "<color=\"green\">\u30B9\u30BF\u30F3</color>\u72B6\u614B\u3067\u306F\u306A\u3044<color=\"blue\">\u5473\u65B9</color>"
+    Help: '""'
+    Category: 5
+    Priority: 231
+    TargetType: 2
+    TriggerType: 6050
+    Param1: 2150
+    Param2: 0
+    Param3: 0
+  - Id: 6514
+    Name: "<color=\"green\">\u6C88\u9ED9</color>\u72B6\u614B\u3067\u306F\u306A\u3044<color=\"blue\">\u5473\u65B9</color>"
+    Help: '""'
+    Category: 5
+    Priority: 241
+    TargetType: 2
+    TriggerType: 6050
+    Param1: 2390
+    Param2: 0
+    Param3: 0
+  - Id: 6515
+    Name: "<color=\"green\">\u4E0D\u6CBB</color>\u72B6\u614B\u3067\u306F\u306A\u3044<color=\"blue\">\u5473\u65B9</color>"
+    Help: '""'
+    Category: 5
+    Priority: 251
+    TargetType: 2
+    TriggerType: 6050
+    Param1: 2400
+    Param2: 0
+    Param3: 0
+  - Id: 6516
+    Name: "<color=\"green\">\u30D1\u30C3\u30B7\u30D6\u7121\u52B9</color>\u72B6\u614B\u3067\u306F\u306A\u3044<color=\"blue\">\u5473\u65B9</color>"
+    Help: '""'
+    Category: 5
+    Priority: 261
+    TargetType: 2
+    TriggerType: 6050
+    Param1: 2090
+    Param2: 0
+    Param3: 0
+  - Id: 6611
+    Name: "<color=\"green\">\u6BD2</color>\u72B6\u614B\u306E<color=\"red\">\u6575</color>"
+    Help: '""'
+    Category: 5
+    Priority: 60
+    TargetType: 1
+    TriggerType: 6040
+    Param1: 2010
+    Param2: 0
+    Param3: 0
+  - Id: 6612
+    Name: "<color=\"green\">\u51CD\u7D50</color>\u72B6\u614B\u306E<color=\"red\">\u6575</color>"
+    Help: '""'
+    Category: 5
+    Priority: 70
+    TargetType: 1
+    TriggerType: 6040
+    Param1: 2140
+    Param2: 0
+    Param3: 0
+  - Id: 6613
+    Name: "<color=\"green\">\u30B9\u30BF\u30F3</color>\u72B6\u614B\u306E<color=\"red\">\u6575</color>"
+    Help: '""'
+    Category: 5
+    Priority: 80
+    TargetType: 1
+    TriggerType: 6040
+    Param1: 2150
+    Param2: 0
+    Param3: 0
+  - Id: 6614
+    Name: "<color=\"green\">\u6C88\u9ED9</color>\u72B6\u614B\u306E<color=\"red\">\u6575</color>"
+    Help: '""'
+    Category: 5
+    Priority: 90
+    TargetType: 1
+    TriggerType: 6040
+    Param1: 2390
+    Param2: 0
+    Param3: 0
+  - Id: 6615
+    Name: "<color=\"green\">\u4E0D\u6CBB</color>\u72B6\u614B\u306E<color=\"red\">\u6575</color>"
+    Help: '""'
+    Category: 5
+    Priority: 100
+    TargetType: 1
+    TriggerType: 6040
+    Param1: 2400
+    Param2: 0
+    Param3: 0
+  - Id: 6616
+    Name: "<color=\"green\">\u30D1\u30C3\u30B7\u30D6\u7121\u52B9</color>\u72B6\u614B\u306E<color=\"red\">\u6575</color>"
+    Help: '""'
+    Category: 5
+    Priority: 110
+    TargetType: 1
+    TriggerType: 6040
+    Param1: 2090
+    Param2: 0
+    Param3: 0
+  - Id: 6711
+    Name: "<color=\"green\">\u6BD2</color>\u72B6\u614B\u3067\u306F\u306A\u3044<color=\"red\">\u6575</color>"
+    Help: '""'
+    Category: 5
+    Priority: 210
+    TargetType: 1
+    TriggerType: 6050
+    Param1: 2010
+    Param2: 0
+    Param3: 0
+  - Id: 6712
+    Name: "<color=\"green\">\u51CD\u7D50</color>\u72B6\u614B\u3067\u306F\u306A\u3044<color=\"red\">\u6575</color>"
+    Help: '""'
+    Category: 5
+    Priority: 220
+    TargetType: 1
+    TriggerType: 6050
+    Param1: 2140
+    Param2: 0
+    Param3: 0
+  - Id: 6713
+    Name: "<color=\"green\">\u30B9\u30BF\u30F3</color>\u72B6\u614B\u3067\u306F\u306A\u3044<color=\"red\">\u6575</color>"
+    Help: '""'
+    Category: 5
+    Priority: 230
+    TargetType: 1
+    TriggerType: 6050
+    Param1: 2150
+    Param2: 0
+    Param3: 0
+  - Id: 6714
+    Name: "<color=\"green\">\u6C88\u9ED9</color>\u72B6\u614B\u3067\u306F\u306A\u3044<color=\"red\">\u6575</color>"
+    Help: '""'
+    Category: 5
+    Priority: 240
+    TargetType: 1
+    TriggerType: 6050
+    Param1: 2390
+    Param2: 0
+    Param3: 0
+  - Id: 6715
+    Name: "<color=\"green\">\u4E0D\u6CBB</color>\u72B6\u614B\u3067\u306F\u306A\u3044<color=\"red\">\u6575</color>"
+    Help: '""'
+    Category: 5
+    Priority: 250
+    TargetType: 1
+    TriggerType: 6050
+    Param1: 2400
+    Param2: 0
+    Param3: 0
+  - Id: 6716
+    Name: "<color=\"green\">\u30D1\u30C3\u30B7\u30D6\u7121\u52B9</color>\u72B6\u614B\u3067\u306F\u306A\u3044<color=\"red\">\u6575</color>"
+    Help: '""'
+    Category: 5
+    Priority: 260
+    TargetType: 1
+    TriggerType: 6050
+    Param1: 2090
     Param2: 0
     Param3: 0
   - Id: 7010

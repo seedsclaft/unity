@@ -6,7 +6,6 @@ namespace Ryneus
     public class SkillTriggerModel : BaseModel
     {
         private int _actorId = -1;
-        private SkillTriggerData _skillTrigger = null;
         public List<ListData> SkillTrigger(int actorId)
         {
             _actorId = actorId;
@@ -31,6 +30,14 @@ namespace Ryneus
             list.Add("種族");
             list.Add("HP");
             list.Add("MP");
+            list.Add("状態");
+            list.Add("攻撃タイミング");
+            list.Add("編成人数");
+            list.Add("自身の状態");
+            list.Add("自身のHp");
+            list.Add("自身のMp");
+            list.Add("一番高いステータス");
+            list.Add("一番低いステータス");
             return MakeListData(list);
         }
 

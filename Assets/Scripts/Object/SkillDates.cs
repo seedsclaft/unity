@@ -410,10 +410,182 @@ namespace Ryneus
                         CanUse = true;
                     }
                     break;
+                    case TriggerType.FriendIsState:
+                    if (friends.Find(a => a.IsState((StateType)Param1)) != null)
+                    {
+                        CanUse = true;
+                    }
+                    if (Param2 == 1)
+                    {
+                        CanUse = friends.Count > 0;
+                    }
+                    break;
+                    case TriggerType.OpponentIsState:
+                    if (opponents.Find(a => a.IsState((StateType)Param1)) != null)
+                    {
+                        CanUse = true;
+                    }
+                    if (Param2 == 1)
+                    {
+                        CanUse = opponents.Count > 0;
+                    }
+                    break;
+                    case TriggerType.FriendIsNotState:
+                    if (friends.Find(a => !a.IsState((StateType)Param1)) != null)
+                    {
+                        CanUse = true;
+                    }
+                    if (Param2 == 1)
+                    {
+                        CanUse = friends.Count > 0;
+                    }
+                    break;
+                    case TriggerType.OpponentIsNotState:
+                    if (opponents.Find(a => !a.IsState((StateType)Param1)) != null)
+                    {
+                        CanUse = true;
+                    }
+                    if (Param2 == 1)
+                    {
+                        CanUse = opponents.Count > 0;
+                    }
+                    break;
                     case TriggerType.IsAbnormalState:
                     if (battlerInfo.StateInfos.Find(a => a.Master.Abnormal == true) != null)
                     {
                         CanUse = true;
+                    }
+                    break;
+                    case TriggerType.FriendIsAbnormalState:
+                    if (friends.Find(a => a.StateInfos.Find(a => a.Master.Abnormal == true) != null) != null)
+                    {
+                        CanUse = true;
+                    }
+                    if (Param2 == 1)
+                    {
+                        CanUse = friends.Count > 0;
+                    }
+                    break;
+                    case TriggerType.OpponentIsAbnormalState:
+                    if (opponents.Find(a => a.StateInfos.Find(a => a.Master.Abnormal == true) != null) != null)
+                    {
+                        CanUse = true;
+                    }
+                    if (Param2 == 1)
+                    {
+                        CanUse = opponents.Count > 0;
+                    }
+                    break;
+                    case TriggerType.FriendIsNotAbnormalState:
+                    if (friends.Find(a => a.StateInfos.Find(a => a.Master.Abnormal == true) == null) != null)
+                    {
+                        CanUse = true;
+                    }
+                    if (Param2 == 1)
+                    {
+                        CanUse = friends.Count > 0;
+                    }
+                    break;
+                    case TriggerType.OpponentIsNotAbnormalState:
+                    if (opponents.Find(a => a.StateInfos.Find(a => a.Master.Abnormal == true) == null) != null)
+                    {
+                        CanUse = true;
+                    }
+                    if (Param2 == 1)
+                    {
+                        CanUse = opponents.Count > 0;
+                    }
+                    break;
+                    case TriggerType.IsBuffState:
+                    if (battlerInfo.StateInfos.Find(a => a.Master.Buff == true) != null)
+                    {
+                        CanUse = true;
+                    }
+                    break;
+                    case TriggerType.FriendIsBuffState:
+                    if (friends.Find(a => a.StateInfos.Find(a => a.Master.Buff == true) != null) != null)
+                    {
+                        CanUse = true;
+                    }
+                    if (Param2 == 1)
+                    {
+                        CanUse = friends.Count > 0;
+                    }
+                    break;
+                    case TriggerType.OpponentIsBuffState:
+                    if (opponents.Find(a => a.StateInfos.Find(a => a.Master.Buff == true) != null) != null)
+                    {
+                        CanUse = true;
+                    }
+                    if (Param2 == 1)
+                    {
+                        CanUse = opponents.Count > 0;
+                    }
+                    break;
+                    case TriggerType.FriendIsNotBuffState:
+                    if (friends.Find(a => a.StateInfos.Find(a => a.Master.Buff == true) == null) != null)
+                    {
+                        CanUse = true;
+                    }
+                    if (Param2 == 1)
+                    {
+                        CanUse = friends.Count > 0;
+                    }
+                    break;
+                    case TriggerType.OpponentIsNotBuffState:
+                    if (opponents.Find(a => a.StateInfos.Find(a => a.Master.Buff == true) == null) != null)
+                    {
+                        CanUse = true;
+                    }
+                    if (Param2 == 1)
+                    {
+                        CanUse = opponents.Count > 0;
+                    }
+                    break;
+                    case TriggerType.IsDeBuffState:
+                    if (battlerInfo.StateInfos.Find(a => a.Master.DeBuff == true) != null)
+                    {
+                        CanUse = true;
+                    }
+                    break;
+                    case TriggerType.FriendIsDeBuffState:
+                    if (friends.Find(a => a.StateInfos.Find(a => a.Master.DeBuff == true) != null) != null)
+                    {
+                        CanUse = true;
+                    }
+                    if (Param2 == 1)
+                    {
+                        CanUse = friends.Count > 0;
+                    }
+                    break;
+                    case TriggerType.OpponentIsDeBuffState:
+                    if (opponents.Find(a => a.StateInfos.Find(a => a.Master.DeBuff == true) != null) != null)
+                    {
+                        CanUse = true;
+                    }
+                    if (Param2 == 1)
+                    {
+                        CanUse = opponents.Count > 0;
+                    }
+                    break;
+                    case TriggerType.FriendIsNotDeBuffState:
+                    if (friends.Find(a => a.StateInfos.Find(a => a.Master.DeBuff == true) == null) != null)
+                    {
+                        CanUse = true;
+                    }
+                    if (Param2 == 1)
+                    {
+                        CanUse = friends.Count > 0;
+                    }
+                    break;
+                    case TriggerType.OpponentIsNotDeBuffState:
+                    if (opponents.Find(a => a.StateInfos.Find(a => a.Master.DeBuff == true) == null) != null)
+                    {
+                        CanUse = true;
+                    }
+                    if (Param2 == 1)
+                    {
+                        CanUse = opponents.Count > 0;
                     }
                     break;
                     case TriggerType.IsNotAwaken:
@@ -603,7 +775,25 @@ namespace Ryneus
         OpponentMoreTargetCount = 5120, // 〇人以上いる列の敵限定
         IsState = 6010, // StateId状態になっている
         IsNotState = 6020, // StateId状態になっていない
-        IsAbnormalState = 6030, // AbnormalのState状態になっている
+        FriendIsState = 6030, // StateId状態になっている味方
+        OpponentIsState = 6040, // StateId状態になっている敵
+        FriendIsNotState = 6050, // StateId状態になっていない味方
+        OpponentIsNotState = 6060, // StateId状態になっていない敵
+        IsAbnormalState = 6110, // AbnormalのState状態になっている
+        FriendIsAbnormalState = 6120, // AbnormalのState状態になっている味方
+        OpponentIsAbnormalState = 6130, // AbnormalのState状態になっている敵
+        FriendIsNotAbnormalState = 6140, // AbnormalのState状態になっていない味方
+        OpponentIsNotAbnormalState = 6150, // AbnormalのState状態になっていない敵
+        IsBuffState = 6210, // バフのState状態になっている
+        FriendIsBuffState = 6220, // バフのState状態になっている味方
+        OpponentIsBuffState = 6230, // バフのState状態になっている敵
+        FriendIsNotBuffState = 6240, // バフのState状態になっていない味方
+        OpponentIsNotBuffState = 6250, // バフのState状態になっていない敵
+        IsDeBuffState = 6310, // デバフのState状態になっている
+        FriendIsDeBuffState = 6320, // デバフのState状態になっている味方
+        OpponentIsDeBuffState = 6330, // デバフのState状態になっている敵
+        FriendIsNotDeBuffState = 6340, // デバフのState状態になっていない味方
+        OpponentIsNotDeBuffState = 6350, // デバフのState状態になっていない敵
         IsNotAwaken = 7010, // 神化発動前
         IsAwaken = 7020, // 神化発動後
         LessTroopMembers = 8010, // 味方より敵が多い
