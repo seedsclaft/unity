@@ -139,8 +139,8 @@ namespace Ryneus
                 var opponents = battlerInfo.IsActor ? troops : party;
                 var friendFronts = friends.FindAll(a => a.LineIndex == LineType.Front);
                 var friendBacks = friends.FindAll(a => a.LineIndex == LineType.Back);
-                var opponentFronts = friends.FindAll(a => a.LineIndex == LineType.Front);
-                var opponentBacks = friends.FindAll(a => a.LineIndex == LineType.Back);
+                var opponentFronts = opponents.FindAll(a => a.LineIndex == LineType.Front);
+                var opponentBacks = opponents.FindAll(a => a.LineIndex == LineType.Back);
                 switch (TriggerType)
                 {
                     case TriggerType.None:
@@ -169,9 +169,19 @@ namespace Ryneus
                     }
                     break;
                     case TriggerType.FriendHpRateUnder:
-                    if (friends.Find(a => a.HpRate <= Param1 * 0.01f) != null)
+                    // Param1==100の場合は未満
+                    if (Param1 == 100)
                     {
-                        CanUse = true;
+                        if (friends.Find(a => a.HpRate < Param1 * 0.01f) != null)
+                        {
+                            CanUse = true;
+                    }
+                    } else
+                    {
+                        if (friends.Find(a => a.HpRate <= Param1 * 0.01f) != null)
+                        {
+                            CanUse = true;
+                        }
                     }
                     break;
                     case TriggerType.FriendHpRateUpper:
@@ -181,9 +191,18 @@ namespace Ryneus
                     }
                     break;
                     case TriggerType.OpponentHpRateUnder:
-                    if (opponents.Find(a => a.HpRate <= Param1 * 0.01f) != null)
+                    if (Param1 == 100)
                     {
-                        CanUse = true;
+                        if (opponents.Find(a => a.HpRate < Param1 * 0.01f) != null)
+                        {
+                            CanUse = true;
+                        }
+                    } else
+                    {
+                        if (opponents.Find(a => a.HpRate <= Param1 * 0.01f) != null)
+                        {
+                            CanUse = true;
+                        }
                     }
                     break;
                     case TriggerType.OpponentHpRateUpper:
@@ -217,21 +236,39 @@ namespace Ryneus
                     }
                     break;
                     case TriggerType.FriendMpUnder:
+                    if (Param1 == 100)
+                    {
+                        if (friends.Find(a => a.MpRate < Param1 * 0.01f) != null)
+                        {
+                            CanUse = true;
+                        }
+                    } else
+                    {
+                        if (friends.Find(a => a.MpRate <= Param1 * 0.01f) != null)
+                        {
+                            CanUse = true;
+                        }
+                    }
+                    break;
+                    case TriggerType.FriendMpUpper:
                     if (friends.Find(a => a.MpRate >= Param1 * 0.01f) != null)
                     {
                         CanUse = true;
                     }
                     break;
-                    case TriggerType.FriendMpUpper:
-                    if (friends.Find(a => a.MpRate <= Param1 * 0.01f) != null)
-                    {
-                        CanUse = true;
-                    }
-                    break;
                     case TriggerType.OpponentMpUnder:
-                    if (opponents.Find(a => a.MpRate >= Param1 * 0.01f) != null)
+                    if (Param1 == 100)
                     {
-                        CanUse = true;
+                        if (opponents.Find(a => a.MpRate < Param1 * 0.01f) != null)
+                        {
+                            CanUse = true;
+                        }
+                    } else
+                    {
+                        if (opponents.Find(a => a.MpRate <= Param1 * 0.01f) != null)
+                        {
+                            CanUse = true;
+                        }
                     }
                     break;
                     case TriggerType.OpponentMpUpper:

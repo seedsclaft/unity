@@ -2234,13 +2234,14 @@ namespace Ryneus
             return CanUse;
         }
 
-        private int CanUseSkillTriggerTarget(List<SkillData.TriggerData> triggerDates,BattlerInfo battlerInfo,List<int> targetIndexes)
+        private int CanUseSkillTriggerTarget(int skillId,List<SkillData.TriggerData> triggerDates,BattlerInfo battlerInfo,List<int> targetIndexes)
         {
             // 条件なし
             if (triggerDates.Count == 0)
             {
                 return targetIndexes[0];
             }
+            var skillData = DataSystem.FindSkill(skillId);
             var targetIndexList1 = new List<int>();
             var targetIndexList2 = new List<int>();
             // ～を優先判定用
@@ -2263,33 +2264,109 @@ namespace Ryneus
                     {
                         // ターゲットに含めるか判定
                         case TriggerType.FriendHpRateUnder:
-                        if (IsFriend && targetBattler.HpRate <= 0.01f * triggerDate.Param1)
+                        // Param3==1はその対象を起点に平均Hpで比較する
+                        if (triggerDate.Param3 == 1)
                         {
-                            targetIndexList.Add(targetIndex);
+                            // この時点で有効なtargetIndexesが判定されているので人数で判定
+                            var lineTargets = LineTargetBattlers(skillData.Scope,targetBattler,friends.AliveBattlerInfos);
+                            if (lineTargets.All(a => targetIndexes.Contains(a.Index)))
+                            {
+                                targetIndexList.Add(targetIndex);
+                            }
+                        } else
+                        {
+                            // Param1==100の場合は未満
+                            if (triggerDate.Param1 == 100)
+                            {
+                                if (IsFriend && targetBattler.HpRate < 0.01f * triggerDate.Param1)
+                                {
+                                    targetIndexList.Add(targetIndex);
+                                }
+                            } else
+                            {
+                                if (IsFriend && targetBattler.HpRate <= 0.01f * triggerDate.Param1)
+                                {
+                                    targetIndexList.Add(targetIndex);
+                                }
+                            }
                         }
                         break;
                         case TriggerType.FriendHpRateUpper:
-                        if (IsFriend && targetBattler.HpRate >= 0.01f * triggerDate.Param1)
+                        // Param3==1はその対象を起点に平均Hpで比較する
+                        if (triggerDate.Param3 == 1)
                         {
-                            targetIndexList.Add(targetIndex);
+                            // この時点で有効なtargetIndexesが判定されているので人数で判定
+                            var lineTargets = LineTargetBattlers(skillData.Scope,targetBattler,friends.AliveBattlerInfos);
+                            if (lineTargets.All(a => targetIndexes.Contains(a.Index)))
+                            {
+                                targetIndexList.Add(targetIndex);
+                            }
+                        } else
+                        {
+                            if (IsFriend && targetBattler.HpRate >= 0.01f * triggerDate.Param1)
+                            {
+                                targetIndexList.Add(targetIndex);
+                            }
                         }
                         break;
                         case TriggerType.OpponentHpRateUnder:
-                        if (!IsFriend && targetBattler.HpRate <= 0.01f * triggerDate.Param1)
+                        // Param3==1はその対象を起点に平均Hpで比較する
+                        if (triggerDate.Param3 == 1)
                         {
-                            targetIndexList.Add(targetIndex);
+                            // この時点で有効なtargetIndexesが判定されているので人数で判定
+                            var lineTargets = LineTargetBattlers(skillData.Scope,targetBattler,opponents.AliveBattlerInfos);
+                            if (lineTargets.All(a => targetIndexes.Contains(a.Index)))
+                            {
+                                targetIndexList.Add(targetIndex);
+                            }
+                        } else
+                        {
+                            if (triggerDate.Param1 == 100)
+                            {
+                                if (!IsFriend && targetBattler.HpRate < 0.01f * triggerDate.Param1)
+                                {
+                                    targetIndexList.Add(targetIndex);
+                                }
+                            } else
+                            {
+                                if (!IsFriend && targetBattler.HpRate <= 0.01f * triggerDate.Param1)
+                                {
+                                    targetIndexList.Add(targetIndex);
+                                }
+                            }
                         }
                         break;
                         case TriggerType.OpponentHpRateUpper:
-                        if (!IsFriend && targetBattler.HpRate >= 0.01f * triggerDate.Param1)
+                        // Param3==1はその対象を起点に平均Hpで比較する
+                        if (triggerDate.Param3 == 1)
                         {
-                            targetIndexList.Add(targetIndex);
+                            // この時点で有効なtargetIndexesが判定されているので人数で判定
+                            var lineTargets = LineTargetBattlers(skillData.Scope,targetBattler,opponents.AliveBattlerInfos);
+                            if (lineTargets.All(a => targetIndexes.Contains(a.Index)))
+                            {
+                                targetIndexList.Add(targetIndex);
+                            }
+                        } else
+                        {
+                            if (!IsFriend && targetBattler.HpRate >= 0.01f * triggerDate.Param1)
+                            {
+                                targetIndexList.Add(targetIndex);
+                            }
                         }
                         break;
                         case TriggerType.FriendMpUnder:
-                        if (IsFriend && targetBattler.MpRate <= 0.01f * triggerDate.Param1)
+                        if (triggerDate.Param1 == 100)
                         {
-                            targetIndexList.Add(targetIndex);
+                            if (IsFriend && targetBattler.MpRate < 0.01f * triggerDate.Param1)
+                            {
+                                targetIndexList.Add(targetIndex);
+                            }
+                        } else
+                        {
+                            if (IsFriend && targetBattler.MpRate <= 0.01f * triggerDate.Param1)
+                            {
+                                targetIndexList.Add(targetIndex);
+                            }
                         }
                         break;
                         case TriggerType.FriendMpUpper:
@@ -2299,9 +2376,18 @@ namespace Ryneus
                         }
                         break;
                         case TriggerType.OpponentMpUnder:
-                        if (!IsFriend && targetBattler.MpRate <= 0.01f * triggerDate.Param1)
+                        if (triggerDate.Param1 == 100)
                         {
-                            targetIndexList.Add(targetIndex);
+                            if (!IsFriend && targetBattler.MpRate < 0.01f * triggerDate.Param1)
+                            {
+                                targetIndexList.Add(targetIndex);
+                            }
+                        } else
+                        {
+                            if (!IsFriend && targetBattler.MpRate <= 0.01f * triggerDate.Param1)
+                            {
+                                targetIndexList.Add(targetIndex);
+                            }
                         }
                         break;
                         case TriggerType.OpponentMpUpper:
@@ -2520,6 +2606,32 @@ namespace Ryneus
                 return bindTargetIndexList[0];
             }
             return -1;
+        }
+
+        private List<BattlerInfo> LineTargetBattlers(ScopeType scopeType,BattlerInfo targetBattler,List<BattlerInfo> targetBatterInfos)
+        {
+            var fronts = targetBatterInfos.FindAll(a => a.LineIndex == LineType.Front);
+            var backs = targetBatterInfos.FindAll(a => a.LineIndex == LineType.Back);
+            // この時点で有効なtargetIndexesが判定されているので人数で判定
+            var lineTargets = new List<BattlerInfo>(){targetBattler};
+            if (scopeType == ScopeType.Line)
+            {
+                lineTargets = targetBattler.LineIndex == LineType.Front ? fronts : backs;
+            } else
+            if (scopeType == ScopeType.All)
+            {
+                lineTargets = targetBatterInfos;
+            } else
+            if (scopeType == ScopeType.FrontLine)
+            {
+                lineTargets = fronts;
+            } else
+            if (scopeType == ScopeType.WithoutSelfAll)
+            {
+                lineTargets = targetBatterInfos;
+                lineTargets.Remove(targetBattler);
+            }
+            return lineTargets;
         }
 
         public List<int> MakeAutoSelectIndex(ActionInfo actionInfo,int oneTargetIndex = -1)
@@ -2767,7 +2879,7 @@ namespace Ryneus
                     {
                         selectSkillId = -1;
                     }
-                    var target = CanUseSkillTriggerTarget(triggerDates,battlerInfo,targetIndexList);
+                    var target = CanUseSkillTriggerTarget(selectSkillId,triggerDates,battlerInfo,targetIndexList);
                     if (target > -1)
                     {
                         selectTargetIndex = target;
