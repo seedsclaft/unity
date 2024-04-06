@@ -1283,6 +1283,16 @@ MonoBehaviour:
     Param1: 0
     Param2: 0
     Param3: 0
+  - Id: 6211
+    Name: "\u81EA\u8EAB\u304C<color=\"green\">\u30D0\u30D5</color>\u72B6\u614B"
+    Help: "\u81EA\u8EAB\u306B\u30D0\u30D5\u304C\u4ED8\u4E0E\u3055\u308C\u3066\u3044\u308B\u5834\u5408\u306B\u306E\u307F\u3001\u9B54\u6CD5\u3092\u767A\u52D5\u3057\u307E\u3059\n<color=\"red\">\u6761\u4EF6\u3092\u6E80\u305F\u3055\u306A\u3044\u5834\u5408\u3001\u9B54\u6CD5\u3092\u767A\u52D5\u3057\u307E\u305B\u3093</color>"
+    Category: 8
+    Priority: 30
+    TargetType: 0
+    TriggerType: 6210
+    Param1: 0
+    Param2: 0
+    Param3: 0
   - Id: 6220
     Name: "Buff\u306EState\u306B\u304B\u304B\u3063\u3066\u3044\u308B\u5473\u65B9"
     Help: '""'
@@ -1388,6 +1398,16 @@ MonoBehaviour:
     Help: '""'
     Category: 0
     Priority: 0
+    TargetType: 0
+    TriggerType: 6310
+    Param1: 0
+    Param2: 0
+    Param3: 0
+  - Id: 6311
+    Name: "\u81EA\u8EAB\u304C<color=\"green\">\u30C7\u30D0\u30D5</color>\u72B6\u614B"
+    Help: "\u81EA\u8EAB\u306B\u30C7\u30D0\u30D5\u304C\u4ED8\u4E0E\u3055\u308C\u3066\u3044\u308B\u5834\u5408\u306B\u306E\u307F\u3001\u9B54\u6CD5\u3092\u767A\u52D5\u3057\u307E\u3059\n<color=\"red\">\u6761\u4EF6\u3092\u6E80\u305F\u3055\u306A\u3044\u5834\u5408\u3001\u9B54\u6CD5\u3092\u767A\u52D5\u3057\u307E\u305B\u3093</color>"
+    Category: 8
+    Priority: 40
     TargetType: 0
     TriggerType: 6310
     Param1: 0
@@ -1983,6 +2003,66 @@ MonoBehaviour:
     Param1: 0
     Param2: 0
     Param3: 0
+  - Id: 9020
+    Name: "\u30BF\u30FC\u30F3\u6570\u304C\u3007"
+    Help: '""'
+    Category: 0
+    Priority: 0
+    TargetType: 0
+    TriggerType: 9020
+    Param1: 0
+    Param2: 0
+    Param3: 0
+  - Id: 9021
+    Name: "<color=\"green\">1\u884C\u52D5</color>\u76EE"
+    Help: "\u81EA\u8EAB\u306E1\u884C\u52D5\u76EE\u306B\u3001\u9B54\u6CD5\u3092\u767A\u52D5\u3057\u307E\u3059\n<color=\"red\">\u6761\u4EF6\u3092\u6E80\u305F\u3055\u306A\u3044\u5834\u5408\u3001\u9B54\u6CD5\u3092\u767A\u52D5\u3057\u307E\u305B\u3093</color>"
+    Category: 8
+    Priority: 50
+    TargetType: -1
+    TriggerType: 9020
+    Param1: 1
+    Param2: 0
+    Param3: 0
+  - Id: 9022
+    Name: "<color=\"green\">2\u884C\u52D5</color>\u76EE"
+    Help: "\u81EA\u8EAB\u306E2\u884C\u52D5\u76EE\u306B\u3001\u9B54\u6CD5\u3092\u767A\u52D5\u3057\u307E\u3059\n<color=\"red\">\u6761\u4EF6\u3092\u6E80\u305F\u3055\u306A\u3044\u5834\u5408\u3001\u9B54\u6CD5\u3092\u767A\u52D5\u3057\u307E\u305B\u3093</color>"
+    Category: 8
+    Priority: 60
+    TargetType: -1
+    TriggerType: 9020
+    Param1: 2
+    Param2: 0
+    Param3: 0
+  - Id: 9023
+    Name: "<color=\"green\">3\u884C\u52D5</color>\u76EE"
+    Help: "\u81EA\u8EAB\u306E3\u884C\u52D5\u76EE\u306B\u3001\u9B54\u6CD5\u3092\u767A\u52D5\u3057\u307E\u3059\n<color=\"red\">\u6761\u4EF6\u3092\u6E80\u305F\u3055\u306A\u3044\u5834\u5408\u3001\u9B54\u6CD5\u3092\u767A\u52D5\u3057\u307E\u305B\u3093</color>"
+    Category: 8
+    Priority: 70
+    TargetType: -1
+    TriggerType: 9020
+    Param1: 3
+    Param2: 0
+    Param3: 0
+  - Id: 9024
+    Name: "<color=\"green\">4\u884C\u52D5</color>\u76EE"
+    Help: "\u81EA\u8EAB\u306E4\u884C\u52D5\u76EE\u306B\u3001\u9B54\u6CD5\u3092\u767A\u52D5\u3057\u307E\u3059\n<color=\"red\">\u6761\u4EF6\u3092\u6E80\u305F\u3055\u306A\u3044\u5834\u5408\u3001\u9B54\u6CD5\u3092\u767A\u52D5\u3057\u307E\u305B\u3093</color>"
+    Category: 8
+    Priority: 80
+    TargetType: -1
+    TriggerType: 9020
+    Param1: 4
+    Param2: 0
+    Param3: 0
+  - Id: 9025
+    Name: "<color=\"green\">5\u884C\u52D5</color>\u76EE"
+    Help: "\u81EA\u8EAB\u306E5\u884C\u52D5\u76EE\u306B\u3001\u9B54\u6CD5\u3092\u767A\u52D5\u3057\u307E\u3059\n<color=\"red\">\u6761\u4EF6\u3092\u6E80\u305F\u3055\u306A\u3044\u5834\u5408\u3001\u9B54\u6CD5\u3092\u767A\u52D5\u3057\u307E\u305B\u3093</color>"
+    Category: 8
+    Priority: 90
+    TargetType: -1
+    TriggerType: 9020
+    Param1: 5
+    Param2: 0
+    Param3: 0
   - Id: 9030
     Name: "\u30BF\u30FC\u30F3\u6570\u304Cparam1 x \u30BF\u30FC\u30F3\u6570 + param2"
     Help: '""'
@@ -1993,6 +2073,46 @@ MonoBehaviour:
     Param1: 0
     Param2: 0
     Param3: 0
+  - Id: 9031
+    Name: "<color=\"green\">2\u884C\u52D5</color>\u9593\u9694"
+    Help: "\u81EA\u8EAB\u306E2\u884C\u52D5\u9593\u9694\u3067\u3001\u9B54\u6CD5\u3092\u767A\u52D5\u3057\u307E\u3059\n<color=\"red\">\u6761\u4EF6\u3092\u6E80\u305F\u3055\u306A\u3044\u5834\u5408\u3001\u9B54\u6CD5\u3092\u767A\u52D5\u3057\u307E\u305B\u3093</color>"
+    Category: 8
+    Priority: 100
+    TargetType: -1
+    TriggerType: 9030
+    Param1: 2
+    Param2: 0
+    Param3: 0
+  - Id: 9032
+    Name: "<color=\"green\">3\u884C\u52D5</color>\u9593\u9694"
+    Help: "\u81EA\u8EAB\u306E3\u884C\u52D5\u9593\u9694\u3067\u3001\u9B54\u6CD5\u3092\u767A\u52D5\u3057\u307E\u3059\n<color=\"red\">\u6761\u4EF6\u3092\u6E80\u305F\u3055\u306A\u3044\u5834\u5408\u3001\u9B54\u6CD5\u3092\u767A\u52D5\u3057\u307E\u305B\u3093</color>"
+    Category: 8
+    Priority: 110
+    TargetType: -1
+    TriggerType: 9030
+    Param1: 3
+    Param2: 0
+    Param3: 0
+  - Id: 9033
+    Name: "<color=\"green\">4\u884C\u52D5</color>\u9593\u9694"
+    Help: "\u81EA\u8EAB\u306E4\u884C\u52D5\u9593\u9694\u3067\u3001\u9B54\u6CD5\u3092\u767A\u52D5\u3057\u307E\u3059\n<color=\"red\">\u6761\u4EF6\u3092\u6E80\u305F\u3055\u306A\u3044\u5834\u5408\u3001\u9B54\u6CD5\u3092\u767A\u52D5\u3057\u307E\u305B\u3093</color>"
+    Category: 8
+    Priority: 120
+    TargetType: -1
+    TriggerType: 9030
+    Param1: 4
+    Param2: 0
+    Param3: 0
+  - Id: 9034
+    Name: "<color=\"green\">5\u884C\u52D5</color>\u9593\u9694"
+    Help: "\u81EA\u8EAB\u306E5\u884C\u52D5\u9593\u9694\u3067\u3001\u9B54\u6CD5\u3092\u767A\u52D5\u3057\u307E\u3059\n<color=\"red\">\u6761\u4EF6\u3092\u6E80\u305F\u3055\u306A\u3044\u5834\u5408\u3001\u9B54\u6CD5\u3092\u767A\u52D5\u3057\u307E\u305B\u3093</color>"
+    Category: 8
+    Priority: 130
+    TargetType: -1
+    TriggerType: 9030
+    Param1: 5
+    Param2: 0
+    Param3: 0
   - Id: 9040
     Name: "\u5168\u4F53\u306E\u884C\u52D5\u6570\u304Cparam1 x \u884C\u52D5\u6570
       + param2"
@@ -2001,6 +2121,26 @@ MonoBehaviour:
     Priority: 0
     TargetType: 0
     TriggerType: 9040
+    Param1: 0
+    Param2: 0
+    Param3: 0
+  - Id: 9110
+    Name: "\u81EA\u8EAB"
+    Help: "\u81EA\u8EAB\u306B\u9650\u5B9A\u3057\u307E\u3059\n<color=\"red\">\u8A72\u5F53\u3059\u308B\u5BFE\u8C61\u304C\u3044\u306A\u3044\u5834\u5408\u3001\u9B54\u6CD5\u3092\u767A\u52D5\u3057\u307E\u305B\u3093</color>"
+    Category: 8
+    Priority: 10
+    TargetType: -1
+    TriggerType: 9110
+    Param1: 0
+    Param2: 0
+    Param3: 0
+  - Id: 9120
+    Name: "\u81EA\u8EAB\u4EE5\u5916"
+    Help: "\u81EA\u8EAB\u4EE5\u5916\u306B\u9650\u5B9A\u3057\u307E\u3059\n<color=\"red\">\u8A72\u5F53\u3059\u308B\u5BFE\u8C61\u304C\u3044\u306A\u3044\u5834\u5408\u3001\u9B54\u6CD5\u3092\u767A\u52D5\u3057\u307E\u305B\u3093</color>"
+    Category: 8
+    Priority: 20
+    TargetType: -1
+    TriggerType: 9120
     Param1: 0
     Param2: 0
     Param3: 0

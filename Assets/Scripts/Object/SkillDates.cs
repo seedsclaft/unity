@@ -297,6 +297,12 @@ namespace Ryneus
                         CanUse = true;
                     }
                     break;
+                    case TriggerType.TurnNum:
+                    if (battlerInfo.TurnCount == Param1)
+                    {
+                        CanUse = true;
+                    }
+                    break;
                     case TriggerType.TurnNumPer:
                     if ((battlerInfo.TurnCount % Param1) - Param2 == 0)
                     {
@@ -636,6 +642,18 @@ namespace Ryneus
                         CanUse = true;
                     }
                     break;
+                    case TriggerType.SelfTargetOnly:
+                    if (battlerInfo.IsAlive())
+                    {
+                        CanUse = true;
+                    }
+                    break;
+                    case TriggerType.SelfTargetNotOnly:
+                    if (friends.Count > 1)
+                    {
+                        CanUse = true;
+                    }
+                    break;
                     case TriggerType.LvUpper:
                     if (Param1 <= battlerInfo.Level)
                     {
@@ -827,8 +845,11 @@ namespace Ryneus
         OpponentMembersMoreCount = 8050, // 敵の数が〇以上
         OpponentMembersLessCount = 8060, // 敵の数が〇以下
         TurnNumUnder = 9010, // ターン数が〇以内
+        TurnNum = 9020, // ターン数が〇
         TurnNumPer = 9030, // ターン数がparam1 x ターン数 + param2
         ActionCountPer = 9040, // 全体の行動数がparam1 x 行動数 + param2
+        SelfTargetOnly = 9110, // 自身を対象にする
+        SelfTargetNotOnly = 9120, // 自身を対象にしない
         AttackState = 10010, // 攻撃成功時〇%で
         Percent = 10020, // 〇%で
         InBattleUseCountUnder = 11010, // バトル中使用回数が〇以下

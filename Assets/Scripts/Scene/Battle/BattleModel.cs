@@ -2492,6 +2492,12 @@ namespace Ryneus
                             targetIndexList.Add(targetIndex);
                         }
                         break;
+                        case TriggerType.IsBuffState:
+                        if (battlerInfo.Index == targetIndex && targetBattler.StateInfos.Find(a => a.Master.Buff == true) != null)
+                        {
+                            targetIndexList.Add(targetIndex);
+                        }
+                        break;
                         case TriggerType.FriendIsBuffState:
                         if (IsFriend && targetBattler.StateInfos.Find(a => a.Master.Buff == true) != null)
                         {
@@ -2512,6 +2518,12 @@ namespace Ryneus
                         break;
                         case TriggerType.OpponentIsNotBuffState:
                         if (!IsFriend && targetBattler.StateInfos.Find(a => a.Master.Buff == true) == null)
+                        {
+                            targetIndexList.Add(targetIndex);
+                        }
+                        break;
+                        case TriggerType.IsDeBuffState:
+                        if (battlerInfo.Index == targetIndex && targetBattler.StateInfos.Find(a => a.Master.DeBuff == true) != null)
                         {
                             targetIndexList.Add(targetIndex);
                         }
@@ -2560,6 +2572,30 @@ namespace Ryneus
                         break;
                         case TriggerType.OpponentMembersLessCount:
                         if (opponents.AliveBattlerInfos.Count <= triggerDate.Param1)
+                        {
+                            targetIndexList.Add(targetIndex);
+                        }
+                        break;
+                        case TriggerType.TurnNum:
+                        if (battlerInfo.Index == targetIndex && battlerInfo.TurnCount == triggerDate.Param1)
+                        {
+                            targetIndexList.Add(targetIndex);
+                        }
+                        break;
+                        case TriggerType.TurnNumPer:
+                        if (battlerInfo.Index == targetIndex && (battlerInfo.TurnCount % triggerDate.Param1) - triggerDate.Param2 == 0)
+                        {
+                            targetIndexList.Add(targetIndex);
+                        }
+                        break;
+                        case TriggerType.SelfTargetOnly:
+                        if (battlerInfo.Index == targetIndex)
+                        {
+                            targetIndexList.Add(targetIndex);
+                        }
+                        break;
+                        case TriggerType.SelfTargetNotOnly:
+                        if (battlerInfo.Index != targetIndex)
                         {
                             targetIndexList.Add(targetIndex);
                         }
