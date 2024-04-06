@@ -2552,6 +2552,42 @@ namespace Ryneus
                             targetIndexList.Add(targetIndex);
                         }
                         break;
+                        case TriggerType.IsNotAwaken:
+                        if (battlerInfo.Index == targetIndex && !targetBattler.IsAwaken)
+                        {
+                            targetIndexList.Add(targetIndex);
+                        }
+                        break;
+                        case TriggerType.IsAwaken:
+                        if (battlerInfo.Index == targetIndex && targetBattler.IsAwaken)
+                        {
+                            targetIndexList.Add(targetIndex);
+                        }
+                        break;
+                        case TriggerType.FriendIsNotAwaken:
+                        if (IsFriend && !targetBattler.IsAwaken)
+                        {
+                            targetIndexList.Add(targetIndex);
+                        }
+                        break;
+                        case TriggerType.FriendIsAwaken:
+                        if (IsFriend && targetBattler.IsAwaken)
+                        {
+                            targetIndexList.Add(targetIndex);
+                        }
+                        break;
+                        case TriggerType.OpponentIsNotAwaken:
+                        if (!IsFriend && !targetBattler.IsAwaken)
+                        {
+                            targetIndexList.Add(targetIndex);
+                        }
+                        break;
+                        case TriggerType.OpponentIsAwaken:
+                        if (!IsFriend && targetBattler.IsAwaken)
+                        {
+                            targetIndexList.Add(targetIndex);
+                        }
+                        break;
                         case TriggerType.FriendMembersMoreCount:
                         if (friends.AliveBattlerInfos.Count >= triggerDate.Param1)
                         {

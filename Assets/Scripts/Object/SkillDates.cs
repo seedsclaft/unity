@@ -610,6 +610,46 @@ namespace Ryneus
                         CanUse = true;
                     }
                     break;
+                    case TriggerType.FriendIsNotAwaken:
+                    if (friends.Find(a => !a.IsAwaken) != null)
+                    {
+                        CanUse = true;
+                    }
+                    if (Param2 == 1)
+                    {
+                        CanUse = friends.Count > 0;
+                    }
+                    break;
+                    case TriggerType.FriendIsAwaken:
+                    if (friends.Find(a => a.IsAwaken) != null)
+                    {
+                        CanUse = true;
+                    }
+                    if (Param2 == 1)
+                    {
+                        CanUse = friends.Count > 0;
+                    }
+                    break;
+                    case TriggerType.OpponentIsNotAwaken:
+                    if (opponents.Find(a => !a.IsAwaken) != null)
+                    {
+                        CanUse = true;
+                    }
+                    if (Param2 == 1)
+                    {
+                        CanUse = friends.Count > 0;
+                    }
+                    break;
+                    case TriggerType.OpponentIsAwaken:
+                    if (opponents.Find(a => a.IsAwaken) != null)
+                    {
+                        CanUse = true;
+                    }
+                    if (Param2 == 1)
+                    {
+                        CanUse = friends.Count > 0;
+                    }
+                    break;
                     case TriggerType.LessTroopMembers:
                     if (troops.Count >= party.Count)
                     {
@@ -842,6 +882,10 @@ namespace Ryneus
         OpponentIsNotDeBuffState = 6350, // デバフのState状態になっていない敵
         IsNotAwaken = 7010, // 神化発動前
         IsAwaken = 7020, // 神化発動後
+        FriendIsNotAwaken = 7030, // 神化発動前の味方
+        FriendIsAwaken = 7040, // 神化発動後の味方
+        OpponentIsNotAwaken = 7050, // 神化発動前の敵
+        OpponentIsAwaken = 7060, // 神化発動後の敵
         LessTroopMembers = 8010, // 味方より敵が多い
         MoreTroopMembers = 8020, // 味方より敵が少ない
         FriendMembersMoreCount = 8030, // 味方の数が〇以上

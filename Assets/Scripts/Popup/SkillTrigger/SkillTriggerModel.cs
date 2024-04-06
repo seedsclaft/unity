@@ -26,18 +26,10 @@ namespace Ryneus
         public List<ListData> SkillTriggerCategoryList()
         {
             var list = new List<string>();
-            list.Add("隊列・状況");
-            list.Add("種族");
-            list.Add("HP");
-            list.Add("MP");
-            list.Add("状態");
-            list.Add("攻撃タイミング");
-            list.Add("編成人数");
-            list.Add("自身の状態");
-            list.Add("自身のHp");
-            list.Add("自身のMp");
-            list.Add("一番高いステータス");
-            list.Add("一番低いステータス");
+            for (int i = 24110;i <= 24122;i++)
+            {
+                list.Add(DataSystem.GetText(i));
+            }
             return MakeListData(list);
         }
 
