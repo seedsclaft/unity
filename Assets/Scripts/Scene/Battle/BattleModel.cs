@@ -2753,6 +2753,18 @@ namespace Ryneus
                         }
                     }
                     break;
+                    case TriggerType.FriendStatusUpper:
+                        var friendStatusUpperIndex = SortStatusUpperTargetIndex(friendTargets,(StatusParamType)triggerDate.Param1);
+                        return friendStatusUpperIndex;
+                    case TriggerType.FriendStatusUnder:
+                        var friendStatusUnderIndex = SortStatusUnderTargetIndex(friendTargets,(StatusParamType)triggerDate.Param1);
+                        return friendStatusUnderIndex;
+                    case TriggerType.OpponentStatusUpper:
+                        var opponentStatusUpperIndex = SortStatusUpperTargetIndex(opponentTargets,(StatusParamType)triggerDate.Param1);
+                        return opponentStatusUpperIndex;
+                    case TriggerType.OpponentStatusUnder:
+                        var opponentStatusUnderIndex = SortStatusUnderTargetIndex(opponentTargets,(StatusParamType)triggerDate.Param1);
+                        return opponentStatusUnderIndex;
                     default:
                     break;
                 }
@@ -2788,6 +2800,63 @@ namespace Ryneus
                 lineTargets.Remove(targetBattler);
             }
             return lineTargets;
+        }
+
+        private int SortStatusUpperTargetIndex(List<BattlerInfo> targetInfos,StatusParamType statusParamType)
+        {
+            if (targetInfos.Count > 0)
+            {
+                if (statusParamType == (int)StatusParamType.Hp)
+                {
+                    targetInfos.Sort((a,b) => a.MaxHp < b.MaxHp ? -1: 1);
+                } else
+                if (statusParamType == StatusParamType.Mp)
+                {
+                    targetInfos.Sort((a,b) => a.MaxMp < b.MaxMp ? -1: 1);
+                } else
+                if (statusParamType == StatusParamType.Atk)
+                {
+                    targetInfos.Sort((a,b) => a.CurrentAtk() < b.CurrentAtk() ? -1: 1);
+                } else
+                if (statusParamType == StatusParamType.Def)
+                {
+                    targetInfos.Sort((a,b) => a.CurrentDef() < b.CurrentDef() ? -1: 1);
+                } else
+                if (statusParamType == StatusParamType.Spd)
+                {
+                    targetInfos.Sort((a,b) => a.CurrentSpd() < b.CurrentSpd() ? -1: 1);
+                }
+                return targetInfos[0].Index;
+            }
+            return -1;
+        }
+        private int SortStatusUnderTargetIndex(List<BattlerInfo> targetInfos,StatusParamType statusParamType)
+        {
+            if (targetInfos.Count > 0)
+            {
+                if (statusParamType == (int)StatusParamType.Hp)
+                {
+                    targetInfos.Sort((a,b) => a.MaxHp < b.MaxHp ? 1: -1);
+                } else
+                if (statusParamType == StatusParamType.Mp)
+                {
+                    targetInfos.Sort((a,b) => a.MaxMp < b.MaxMp ? 1: -1);
+                } else
+                if (statusParamType == StatusParamType.Atk)
+                {
+                    targetInfos.Sort((a,b) => a.CurrentAtk() < b.CurrentAtk() ? 1: -1);
+                } else
+                if (statusParamType == StatusParamType.Def)
+                {
+                    targetInfos.Sort((a,b) => a.CurrentDef() < b.CurrentDef() ? 1: -1);
+                } else
+                if (statusParamType == StatusParamType.Spd)
+                {
+                    targetInfos.Sort((a,b) => a.CurrentSpd() < b.CurrentSpd() ? 1: -1);
+                }
+                return targetInfos[0].Index;
+            }
+            return -1;
         }
 
         public List<int> MakeAutoSelectIndex(ActionInfo actionInfo,int oneTargetIndex = -1)

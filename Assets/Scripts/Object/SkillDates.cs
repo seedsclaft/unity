@@ -154,6 +154,10 @@ namespace Ryneus
                     case TriggerType.FriendLineLessTarget:
                     case TriggerType.OpponentLineMoreTarget:
                     case TriggerType.OpponentLineLessTarget:
+                    case TriggerType.FriendStatusUpper:
+                    case TriggerType.FriendStatusUnder:
+                    case TriggerType.OpponentStatusUpper:
+                    case TriggerType.OpponentStatusUnder:
                         CanUse = true;
                     break;
                     case TriggerType.SelfHpRateUnder:
@@ -859,6 +863,10 @@ namespace Ryneus
         OneAttackOverDamage = 12050, // 1回の攻撃で〇ダメージ以上受ける
         FriendHasKind = 13010, // 〇のKindを持っている
         OpponentHasKind = 13020, // 〇のKindを持っている
+        FriendStatusUpper = 14010, // ステータスの高い味方
+        FriendStatusUnder = 14110, // ステータスの低い味方
+        OpponentStatusUpper = 14210, // ステータスの高い敵
+        OpponentStatusUnder = 14310, // ステータスの低い敵
         PayBattleMp = 20010, // Mpを〇消費する
         ChainCount = 20020, // 拘束成功回数
         ActionResultDeath = 20030, // 攻撃を受けると戦闘不能になる

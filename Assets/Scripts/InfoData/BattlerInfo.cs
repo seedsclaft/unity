@@ -711,7 +711,7 @@ namespace Ryneus
         }
 
 
-        public int CurrentAtk(bool isNoEffect)
+        public int CurrentAtk(bool isNoEffect = false)
         {
             int atk = Status.Atk;
             if (isNoEffect == false)
@@ -736,7 +736,7 @@ namespace Ryneus
             return atk;
         }
         
-        public int CurrentDef(bool isNoEffect)
+        public int CurrentDef(bool isNoEffect = false)
         {
             int def = Status.Def;
             if (isNoEffect == false)
@@ -765,7 +765,7 @@ namespace Ryneus
             return def;
         }
         
-        public int CurrentSpd(bool isNoEffect)
+        public int CurrentSpd(bool isNoEffect = false)
         {
             int spd = Status.Spd;
             if (isNoEffect == false)
