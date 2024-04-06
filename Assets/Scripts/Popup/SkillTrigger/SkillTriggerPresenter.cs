@@ -100,7 +100,7 @@ namespace Ryneus
             var skillListIndex = _view.SkillTriggerListIndex;
             if (index > -1 && skillListIndex > -1)
             {
-                SoundManager.Instance.PlayStaticSe(SEType.Decide);
+                //SoundManager.Instance.PlayStaticSe(SEType.Decide);
                 var list = _model.SkillTriggerDataList(skillListIndex,index + 1);
                 _view.SetTrigger1List(list);
             }
@@ -112,7 +112,7 @@ namespace Ryneus
             var skillListIndex = _view.SkillTriggerListIndex;
             if (index > -1 && skillListIndex > -1)
             {
-                SoundManager.Instance.PlayStaticSe(SEType.Decide);
+                //SoundManager.Instance.PlayStaticSe(SEType.Decide);
                 var list = _model.SkillTriggerDataList(skillListIndex,index + 1);
                 _view.SetTrigger2List(list);
             }
@@ -134,19 +134,18 @@ namespace Ryneus
 
         private void CommandCallSkillSelect()
         {
+            SoundManager.Instance.PlayStaticSe(SEType.Decide);
             var skillInfos = _model.SkillTriggerSkillList();
             _view.SetSkillList(skillInfos);
         }
 
         private void CommandCallTrigger1Select()
         {
-            SoundManager.Instance.PlayStaticSe(SEType.Decide);
             _view.ShowTrigger1Category();
             
         }
         private void CommandCallTrigger2Select()
         {
-            SoundManager.Instance.PlayStaticSe(SEType.Decide);
             _view.ShowTrigger2Category();
         }
 

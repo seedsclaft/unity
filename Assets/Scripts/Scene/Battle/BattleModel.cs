@@ -2540,6 +2540,30 @@ namespace Ryneus
                             targetIndexList.Add(targetIndex);
                         }
                         break;
+                        case TriggerType.FriendMembersMoreCount:
+                        if (friends.AliveBattlerInfos.Count >= triggerDate.Param1)
+                        {
+                            targetIndexList.Add(targetIndex);
+                        }
+                        break;
+                        case TriggerType.FriendMembersLessCount:
+                        if (friends.AliveBattlerInfos.Count <= triggerDate.Param1)
+                        {
+                            targetIndexList.Add(targetIndex);
+                        }
+                        break;
+                        case TriggerType.OpponentMembersMoreCount:
+                        if (opponents.AliveBattlerInfos.Count >= triggerDate.Param1)
+                        {
+                            targetIndexList.Add(targetIndex);
+                        }
+                        break;
+                        case TriggerType.OpponentMembersLessCount:
+                        if (opponents.AliveBattlerInfos.Count <= triggerDate.Param1)
+                        {
+                            targetIndexList.Add(targetIndex);
+                        }
+                        break;
                         default:
                             targetIndexList.Add(targetIndex);
                         break;

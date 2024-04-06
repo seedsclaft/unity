@@ -309,6 +309,7 @@ namespace Ryneus
 
         private void CommandSkillTrigger(int actorId)
         {
+            SoundManager.Instance.PlayStaticSe(SEType.Decide);
             var skillTriggerViewInfo = new SkillTriggerViewInfo(actorId,() => {
                 CommandRefresh();
             });

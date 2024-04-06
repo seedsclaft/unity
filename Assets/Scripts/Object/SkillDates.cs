@@ -612,6 +612,30 @@ namespace Ryneus
                         CanUse = true;
                     }
                     break;
+                    case TriggerType.FriendMembersMoreCount:
+                    if (friends.Count >= Param1)
+                    {
+                        CanUse = true;
+                    }
+                    break;
+                    case TriggerType.FriendMembersLessCount:
+                    if (friends.Count <= Param1)
+                    {
+                        CanUse = true;
+                    }
+                    break;
+                    case TriggerType.OpponentMembersMoreCount:
+                    if (opponents.Count >= Param1)
+                    {
+                        CanUse = true;
+                    }
+                    break;
+                    case TriggerType.OpponentMembersLessCount:
+                    if (opponents.Count <= Param1)
+                    {
+                        CanUse = true;
+                    }
+                    break;
                     case TriggerType.LvUpper:
                     if (Param1 <= battlerInfo.Level)
                     {
@@ -798,6 +822,10 @@ namespace Ryneus
         IsAwaken = 7020, // 神化発動後
         LessTroopMembers = 8010, // 味方より敵が多い
         MoreTroopMembers = 8020, // 味方より敵が少ない
+        FriendMembersMoreCount = 8030, // 味方の数が〇以上
+        FriendMembersLessCount = 8040, // 味方の数が〇以下
+        OpponentMembersMoreCount = 8050, // 敵の数が〇以上
+        OpponentMembersLessCount = 8060, // 敵の数が〇以下
         TurnNumUnder = 9010, // ターン数が〇以内
         TurnNumPer = 9030, // ターン数がparam1 x ターン数 + param2
         ActionCountPer = 9040, // 全体の行動数がparam1 x 行動数 + param2

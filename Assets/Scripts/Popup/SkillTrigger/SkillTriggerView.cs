@@ -83,16 +83,21 @@ namespace Ryneus
             skillList.gameObject.SetActive(false);
             trigger1List.gameObject.SetActive(false);
             trigger2List.gameObject.SetActive(false);
+            listBlock.gameObject.SetActive(false);
         }
 
         public void ShowTrigger1Category()
         {
             triggerCategory1List.gameObject.SetActive(true);
+            triggerCategory1List.UpdateSelectIndex(-1);
+            triggerCategory1List.UpdateSelectIndex(0);
         }
 
         public void ShowTrigger2Category()
         {
             triggerCategory2List.gameObject.SetActive(true);
+            triggerCategory2List.UpdateSelectIndex(-1);
+            triggerCategory2List.UpdateSelectIndex(0);
         }
 
         public void HideSelectCategoryList()
