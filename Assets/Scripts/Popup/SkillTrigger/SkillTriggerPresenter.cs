@@ -56,6 +56,9 @@ namespace Ryneus
                 case SkillTrigger.CommandType.DecideCategory2Select:
                 CommandDecideCategory2Select();
                 break;
+                case SkillTrigger.CommandType.SelectSkillTrigger:
+                CommandSelectSkillTrigger((SkillTriggerInfo)viewEvent.template);
+                break;
                 case SkillTrigger.CommandType.CancelSelect:
                 CommandCancelSelect();
                 break;
@@ -100,7 +103,6 @@ namespace Ryneus
             var skillListIndex = _view.SkillTriggerListIndex;
             if (index > -1 && skillListIndex > -1)
             {
-                //SoundManager.Instance.PlayStaticSe(SEType.Decide);
                 var list = _model.SkillTriggerDataList(skillListIndex,index + 1);
                 _view.SetTrigger1List(list);
             }
@@ -112,7 +114,6 @@ namespace Ryneus
             var skillListIndex = _view.SkillTriggerListIndex;
             if (index > -1 && skillListIndex > -1)
             {
-                //SoundManager.Instance.PlayStaticSe(SEType.Decide);
                 var list = _model.SkillTriggerDataList(skillListIndex,index + 1);
                 _view.SetTrigger2List(list);
             }
@@ -147,6 +148,13 @@ namespace Ryneus
         private void CommandCallTrigger2Select()
         {
             _view.ShowTrigger2Category();
+        }
+
+        private void CommandSelectSkillTrigger(SkillTriggerInfo triggerInfo)
+        {
+            _view.UpdateSkillInfo(triggerInfo.SkillId);
+            _view.UpdateSkillTriggerHelp(triggerInfo.SkillTriggerDates[0].Help,triggerInfo.SkillTriggerDates[1].Help);
+
         }
 
         private void CommandRefresh()

@@ -2,18 +2,22 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 namespace Ryneus
 {
     public class SkillTriggerView : BaseView
     {
         [SerializeField] private SkillTriggerList skillTriggerList = null;
-        [SerializeField] private BaseList skillList = null;
-        [SerializeField] private BaseList trigger1List = null;
-        [SerializeField] private BaseList trigger2List = null;
+        [SerializeField] private MagicList skillList = null;
+        [SerializeField] private SkillTriggerDataList trigger1List = null;
+        [SerializeField] private SkillTriggerDataList trigger2List = null;
         [SerializeField] private BaseList triggerCategory1List = null;
         [SerializeField] private BaseList triggerCategory2List = null;
         [SerializeField] private Button listBlock = null;
+        [SerializeField] private SkillInfoComponent skillInfoComponent = null;
+        [SerializeField] private TextMeshProUGUI trigger1Help = null;
+        [SerializeField] private TextMeshProUGUI trigger2Help = null;
         private new Action<SkillTriggerViewEvent> _commandData = null;
         public int SkillTriggerIndex => skillTriggerList.Index;
         private SkillTriggerViewInfo _skillTriggerViewInfo;
@@ -33,6 +37,7 @@ namespace Ryneus
             trigger1List.Initialize();
             trigger1List.SetInputHandler(InputKeyType.Decide,() => OnClickTrigger1Select());
             trigger1List.SetInputHandler(InputKeyType.Cancel,() => CancelSelect());
+
             trigger2List.Initialize();
             trigger2List.SetInputHandler(InputKeyType.Decide,() => OnClickTrigger2Select());
             trigger2List.SetInputHandler(InputKeyType.Cancel,() => CancelSelect());
@@ -48,6 +53,7 @@ namespace Ryneus
             
             skillTriggerList.Initialize();
             skillTriggerList.SetInputHandler(InputKeyType.Cancel,() => BackEvent());
+            skillTriggerList.SetSelectedHandler(() => SelectSkillTriggerList());
             skillTriggerList.SetInputCallHandler();
             SetInputHandler(skillTriggerList.GetComponent<IInputHandlerEvent>());
             listBlock.onClick.AddListener(() => {
@@ -80,7 +86,7 @@ namespace Ryneus
 
         public void HideSelectList()
         {
-            skillList.gameObject.SetActive(false);
+            skillList.Hide();
             trigger1List.gameObject.SetActive(false);
             trigger2List.gameObject.SetActive(false);
             listBlock.gameObject.SetActive(false);
@@ -109,7 +115,7 @@ namespace Ryneus
 
         public void SetSkillList(List<ListData> skillInfos)
         {
-            skillList.gameObject.SetActive(true);
+            skillList.Show();
             listBlock.gameObject.SetActive(true);
             skillList.SetData(skillInfos);
         }
@@ -134,6 +140,17 @@ namespace Ryneus
             trigger2List.SetData(triggerDates);
         }
 
+        public void UpdateSkillInfo(int skillId)
+        {
+            skillInfoComponent?.UpdateSkillData(skillId);
+        }
+
+        public void UpdateSkillTriggerHelp(string help1,string help2)
+        {
+            trigger1Help?.SetText(help1);
+            trigger2Help?.SetText(help2);
+        }
+
         private void OnClickSkillSelect()
         {
             var listData = skillList.ListData;
@@ -141,6 +158,18 @@ namespace Ryneus
             {
                 var data = (SkillInfo)listData.Data;
                 var eventData = new SkillTriggerViewEvent(SkillTrigger.CommandType.DecideSkillSelect);
+                eventData.template = data;
+                _commandData(eventData);
+            }
+        }
+
+        private void SelectSkillTriggerList()
+        {
+            var listData = skillTriggerList.ListData;
+            if (listData != null)
+            {
+                var data = (SkillTriggerInfo)listData.Data;
+                var eventData = new SkillTriggerViewEvent(SkillTrigger.CommandType.SelectSkillTrigger);
                 eventData.template = data;
                 _commandData(eventData);
             }
@@ -247,6 +276,7 @@ namespace SkillTrigger
         DecideCategory2Select,
         CancelSelect,
         CancelCategory,
+        SelectSkillTrigger,
         None = 0,
     }
 }

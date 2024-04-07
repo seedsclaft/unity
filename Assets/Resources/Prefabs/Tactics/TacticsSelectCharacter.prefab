@@ -1899,7 +1899,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   displaySelectCard: {fileID: 1684694348345624350}
-  magicList: {fileID: 8403143758130245200}
+  magicList: {fileID: 4704669415522227562}
   conditionList: {fileID: 8325664321315105402}
   detailTabs:
   - {fileID: 7140375638208475348}
@@ -1917,6 +1917,7 @@ MonoBehaviour:
   detailObj: {fileID: 5645569503442240801}
   actorInfoComponent: {fileID: 7021910219245001254}
   battlerInfoComponent: {fileID: 0}
+  lvResetButton: {fileID: 0}
 --- !u!225 &6473706958130388230
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -3337,24 +3338,24 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 073e42c42d9bead42892ac5239aa933a, type: 3}
---- !u!224 &7066731394653922371 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 5010018393785678409, guid: 073e42c42d9bead42892ac5239aa933a,
-    type: 3}
-  m_PrefabInstance: {fileID: 2852251825731935754}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &8403143758130245200 stripped
+--- !u!114 &4704669415522227562 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5983257872489967706, guid: 073e42c42d9bead42892ac5239aa933a,
+  m_CorrespondingSourceObject: {fileID: 7412762277242129248, guid: 073e42c42d9bead42892ac5239aa933a,
     type: 3}
   m_PrefabInstance: {fileID: 2852251825731935754}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cf409b824ca9622468dd57c00bf805ed, type: 3}
+  m_Script: {fileID: 11500000, guid: ae8e7886993f17348b643eb8380b11cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!224 &7066731394653922371 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 5010018393785678409, guid: 073e42c42d9bead42892ac5239aa933a,
+    type: 3}
+  m_PrefabInstance: {fileID: 2852251825731935754}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &3403180557085086798
 PrefabInstance:
   m_ObjectHideFlags: 0
