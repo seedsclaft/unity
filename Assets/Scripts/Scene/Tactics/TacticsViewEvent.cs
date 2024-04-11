@@ -43,6 +43,8 @@ namespace Tactics
         CancelSymbolList,
         CommandHelp,
         AlcanaCheck,
+        SelectAlcanaList,
+        HideAlcanaList,
         ChangeSelectTacticsActor,
     }
 }

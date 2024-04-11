@@ -141,31 +141,15 @@ namespace Ryneus
                 {
                     _model.SelectAddActor();
                     _view.CommandGameSystem(Base.CommandType.CloseStatus);
-                    var NeedReborn = _model.NeedReborn();
-                    var NeedAlcana = _model.NeedAlcana();
-                    if (_model.StageMembers().Count == 1 && NeedReborn)
+
+                    var makeSelectActorInfos = _model.MakeSelectActorInfos();
+                    var makeSelectGetItemInfos = _model.MakeSelectGetItemInfos();
+                    var strategySceneInfo = new StrategySceneInfo
                     {
-                        _view.CommandSceneChange(Scene.Reborn);
-                    } else
-                    if (_model.StageMembers().Count == 1 && NeedAlcana)
-                    {
-                        _view.CommandSceneChange(Scene.AlcanaSelect);
-                    } else
-                    if (_model.StageMembers().Count == 1)
-                    {
-                        _view.CommandSceneChange(Scene.Tactics);
-                    }
-                    if (_model.StageMembers().Count > 1)
-                    {
-                        var makeSelectActorInfos = _model.MakeSelectActorInfos();
-                        var makeSelectGetItemInfos = _model.MakeSelectGetItemInfos();
-                        var strategySceneInfo = new StrategySceneInfo
-                        {
-                            GetItemInfos = makeSelectGetItemInfos,
-                            ActorInfos = makeSelectActorInfos
-                        };
-                        _view.CommandGotoSceneChange(Scene.Strategy,strategySceneInfo);
-                    }
+                        GetItemInfos = makeSelectGetItemInfos,
+                        ActorInfos = makeSelectActorInfos
+                    };
+                    _view.CommandGotoSceneChange(Scene.Strategy,strategySceneInfo);
                 } else{
                     SoundManager.Instance.PlayStaticSe(SEType.Cancel);
                 }

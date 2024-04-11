@@ -54,19 +54,37 @@ namespace Ryneus
                         if (symbolInfo.StageSymbolData.Param1 == -1)
                         {
                             var alcanaRank = symbolInfo.StageSymbolData.Param2;
-                            var alcanaSkills = DataSystem.Skills.FindAll(a => a.Rank == alcanaRank);
-                            var rand = Random.Range(0,alcanaSkills.Count);
-                            if (alcanaSkills.Count > 0)
+                            var alcanaIds = PartyInfo.CurrentAlcanaIdList(CurrentStage.Id,CurrentStage.CurrentTurn);
+                            var alcanaSkills = DataSystem.Skills.FindAll(a => a.Rank == alcanaRank && !alcanaIds.Contains(a.Id));
+                            var count = 2;
+                            if (alcanaSkills.Count < 2)
+                            {
+                                count = alcanaSkills.Count;
+                            }
+                            if (count == 0)
                             {
                                 // 報酬設定
-                                var alcanaData = new GetItemData
+                                var resourceData2 = new GetItemData
                                 {
-                                    Type = GetItemType.Skill,
-                                    Param1 = alcanaSkills[rand].Id
+                                    Type = GetItemType.Numinous,
+                                    Param1 = 20
                                 };
-                                var getItemInfo = new GetItemInfo(alcanaData);
-                                symbolInfo.SetGetItemInfos(new List<GetItemInfo>(){new GetItemInfo(alcanaData)});
-                                getItemInfos.Add(getItemInfo);
+                                getItemInfos.Add(new GetItemInfo(resourceData2));
+                            } else
+                            {
+                                while (getItemInfos.Count <= count)
+                                {
+                                    var rand = Random.Range(0,alcanaSkills.Count);
+                                    // 報酬設定
+                                    var alcanaData = new GetItemData
+                                    {
+                                        Type = GetItemType.Skill,
+                                        Param1 = alcanaSkills[rand].Id
+                                    };
+                                    var getItemInfo = new GetItemInfo(alcanaData);
+                                    symbolInfo.SetGetItemInfos(new List<GetItemInfo>(){new GetItemInfo(alcanaData)});
+                                    getItemInfos.Add(getItemInfo);
+                                }
                             }
                         }
                         break;
@@ -90,9 +108,44 @@ namespace Ryneus
                         break;
                     case SymbolType.SelectActor:
                         // 表示用に報酬設定
-                        var actorData2 =new GetItemInfo(new GetItemData());
-                        actorData2.MakeSelectActorSymbolResult();
-                        getItemInfos.Add(actorData2);
+                        if (symbolInfo.StageSymbolData.Param2 == 0)
+                        {
+                            var actorData2 = new GetItemInfo(new GetItemData());
+                            actorData2.MakeSelectActorSymbolResult();
+                            getItemInfos.Add(actorData2);
+                        } else
+                        {
+                            // 選択できるアクターが3人まで
+                            var pastActorIdList = PartyInfo.PastActorIdList(CurrentStage.Id,CurrentStage.CurrentTurn);
+                            var actorInfos = PartyInfo.ActorInfos.FindAll(a => !pastActorIdList.Contains(a.ActorId));
+                            var count = 2;
+                            if (actorInfos.Count < 2)
+                            {
+                                count = actorInfos.Count;
+                            }
+                            if (count == 0)
+                            {
+                                // 報酬設定
+                                var resourceData2 = new GetItemData
+                                {
+                                    Type = GetItemType.Numinous,
+                                    Param1 = 20
+                                };
+                                getItemInfos.Add(new GetItemInfo(resourceData2));
+                            } else
+                            {
+                                while (getItemInfos.Count <= count)
+                                {
+                                    var rand = Random.Range(0,actorInfos.Count);
+                                    var actorData2 = new GetItemData
+                                    {
+                                        Type = GetItemType.AddActor,
+                                        Param1 = actorInfos[rand].ActorId
+                                    };
+                                    getItemInfos.Add(new GetItemInfo(actorData2));
+                                }
+                            }
+                        }
                         break;
                 }
                 if (symbolInfo.StageSymbolData.PrizeSetId > 0)

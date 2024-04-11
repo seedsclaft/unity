@@ -196,6 +196,30 @@ namespace Ryneus
             return skillInfos;
         }
 
+        public List<SkillInfo> BasicSkillGetItemInfos(List<GetItemInfo> getItemInfos)
+        {
+            var skillInfos = new List<SkillInfo>();
+            foreach (var getItemInfo in getItemInfos)
+            {
+                if (getItemInfo.IsSkill())
+                {
+                    var skillInfo = new SkillInfo(getItemInfo.Param1);
+                    skillInfo.SetEnable(true);
+                    skillInfos.Add(skillInfo);
+                }
+                if (getItemInfo.IsAttributeSkill())
+                {
+                    var skillDates = DataSystem.Skills.FindAll(a => a.Rank == getItemInfo.Param1 && a.Attribute == (AttributeType)((int)getItemInfo.GetItemType - 10));
+                    foreach (var skillData in skillDates)
+                    {
+                        var skillInfo = new SkillInfo(skillData.Id);
+                        skillInfo.SetEnable(true);
+                        skillInfos.Add(skillInfo);
+                    }
+                }
+            }
+            return skillInfos;
+        }
         
         public List<SymbolInfo> TacticsSymbols()
         {
@@ -295,12 +319,8 @@ namespace Ryneus
 
         public SymbolInfo CurrentSelectSymbol()
         {
-            return PartyInfo.CurrentSymbolInfos(CurrentStage.CurrentTurn)[CurrentStage.CurrentSeekIndex];
-        }
-
-        public SymbolInfo SelectStageInfo(int seek)
-        {
-            return PartyInfo.CurrentSymbolInfos(seek)[CurrentStage.CurrentSeekIndex];
+            var symbolInfos = PartyInfo.CurrentSymbolInfos(CurrentStage.CurrentTurn);
+            return symbolInfos.Find(a => a.StageSymbolData.SeekIndex == CurrentStage.CurrentSeekIndex);
         }
 
         public TroopInfo CurrentTroopInfo()
@@ -325,7 +345,7 @@ namespace Ryneus
             //CurrentSaveData.MakeStageData(CurrentStage.Id);
             TempInfo.SetRecordActors(PartyInfo.ActorInfos);
             
-            PartyInfo.InitActorInfos();
+            //PartyInfo.InitActorInfos();
             foreach (var symbolActor in SymbolActorInfos(seek))
             {
                 PartyInfo.UpdateActorInfo(symbolActor);

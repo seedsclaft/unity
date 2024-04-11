@@ -27,6 +27,7 @@ namespace Ryneus
         {
             gameObject.SetActive(true);
             skillInfoComponent.gameObject.SetActive(true);
+            UpdateSkillHelp();
         }
 
         public void Hide()

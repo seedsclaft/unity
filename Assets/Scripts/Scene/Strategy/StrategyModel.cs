@@ -52,7 +52,8 @@ namespace Ryneus
         public void SetLvUp()
         {
             if (_levelUpData.Count > 0) return;
-            if (CurrentStage.ReturnSeek > 0) return;
+            var record = PartyInfo.SymbolRecordList.Find(a => a.IsSameSymbol(CurrentStage.Id,CurrentStage.CurrentTurn,CurrentSaveData.CurrentStage.CurrentSeekIndex));
+            if (record.Cleared) return;
             //var lvUpActorInfos = TacticsActors().FindAll(a => a.TacticsCommandType == TacticsCommandType.Train);
             var lvUpList = new List<ActorInfo>();
             // 結果出力
@@ -94,6 +95,7 @@ namespace Ryneus
                         }
                         break;
                     case GetItemType.Skill:
+                        record.SetSelectedIndex(getItemInfo.Param1);
                         break;
                     case GetItemType.Regeneration:
                         foreach (var stageMember in StageMembers())

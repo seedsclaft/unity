@@ -3094,19 +3094,18 @@ namespace Ryneus
             {
                 // 条件
                 var triggerDates = new List<SkillData.TriggerData>();
-                if (skillTriggerInfo.SkillTriggerDates[0].Id > 0)
+                var skillTriggerDates = skillTriggerInfo.SkillTriggerDates;
+                foreach (var skillTriggerData in skillTriggerDates)
                 {
-                    var triggerData = new SkillData.TriggerData();
-                    triggerData.TriggerType = skillTriggerInfo.SkillTriggerDates[0].TriggerType;
-                    triggerData.Param1 = skillTriggerInfo.SkillTriggerDates[0].Param1;
-                    triggerDates.Add(triggerData);
-                }
-                if (skillTriggerInfo.SkillTriggerDates[1].Id > 0)
-                {
-                    var triggerData = new SkillData.TriggerData();
-                    triggerData.TriggerType = skillTriggerInfo.SkillTriggerDates[1].TriggerType;
-                    triggerData.Param1 = skillTriggerInfo.SkillTriggerDates[1].Param1;
-                    triggerDates.Add(triggerData);
+                    if (skillTriggerData != null && skillTriggerData.Id > 0)
+                    {
+                        var triggerData = new SkillData.TriggerData
+                        {
+                            TriggerType = skillTriggerData.TriggerType,
+                            Param1 = skillTriggerData.Param1
+                        };
+                        triggerDates.Add(triggerData);
+                    }
                 }
                 if (selectSkillId == -1 && selectTargetIndex == -1 && skillTriggerInfo.SkillId > -1)
                 {

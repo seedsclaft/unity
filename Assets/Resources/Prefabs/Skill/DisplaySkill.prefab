@@ -966,7 +966,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &4732466909056543248
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1541,6 +1541,10 @@ MonoBehaviour:
   cursor: {fileID: 214878875483014079}
   changeCursorColor: 1
   disable: {fileID: 2806420390202976053}
+  selectColor: {r: 0, g: 0, b: 0, a: 0}
+  unSelectColor: {r: 0, g: 0, b: 0, a: 0}
+  textUguiList: []
+  imageUguiList: []
   skillInfoComponent: {fileID: 4061044251296617296}
   DisableSkill: {fileID: 2806420390202976053}
 --- !u!114 &4061044251296617296

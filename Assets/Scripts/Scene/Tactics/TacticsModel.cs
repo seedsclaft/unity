@@ -122,6 +122,20 @@ namespace Ryneus
             TempInfo.SetTempStatusActorInfos(actorInfos);
         }
 
+        public void SetTempAddSelectActorGetItemInfoStatusInfos(List<GetItemInfo> getItemInfos)
+        {
+            var actorInfos = new List<ActorInfo>();
+            foreach (var getItemInfo in getItemInfos)
+            {
+                if (getItemInfo.GetItemType == GetItemType.AddActor)
+                {
+                    var actorInfo = PartyInfo.ActorInfos.Find(a => a.ActorId == getItemInfo.Param1);
+                    actorInfos.Add(actorInfo);
+                }
+            }
+            TempInfo.SetTempStatusActorInfos(actorInfos);
+        }
+
         public AdvData StartTacticsAdvData()
         {
             if (CurrentStage.SurvivalMode)

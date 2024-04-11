@@ -19,6 +19,12 @@ namespace Ryneus
         {
             _selected = isSelected;
         }
+        public int _selectedIndex = 0;
+        public int SelectedIndex => _selectedIndex;
+        public void SetSelectedIndex(int selectedIndex)
+        {
+            _selectedIndex = selectedIndex;
+        }
         // バトルで1度クリアしたことがある
         private bool _cleared;
         public bool Cleared => _cleared;

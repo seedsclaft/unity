@@ -17,6 +17,7 @@ namespace Ryneus
         [SerializeField] private AlcanaInfoComponent alcanaInfoComponent = null;
         [SerializeField] private BaseList symbolRecordList = null;
         [SerializeField] private BaseList parallelList = null;
+        [SerializeField] private MagicList alcanaSelectList = null;
 
         [SerializeField] private TextMeshProUGUI turnText = null;
         private new System.Action<TacticsViewEvent> _commandData = null;
@@ -71,10 +72,12 @@ namespace Ryneus
             parallelList.Initialize();
             trainView.Initialize(base._commandData);
             trainView.SetHelpWindow(HelpWindow);
+            alcanaSelectList.Initialize();
             new TacticsPresenter(this);
             trainView.HideSelectCharacter();
             HideSymbolRecord();
             HideParallelList();
+            alcanaSelectList.Hide();
         }
 
         public void StartAnimation()
@@ -418,6 +421,36 @@ namespace Ryneus
         {
             var eventData = new TacticsViewEvent(CommandType.AlcanaCheck);
             _commandData(eventData);
+        }
+
+        public void HideAlcanaList()
+        {
+            alcanaSelectList.Hide();
+        }
+
+        public void SetAlcanaSelectInfos(List<ListData> skillInfos)
+        {
+            SetBackEvent(() => {});
+            alcanaSelectList.SetData(skillInfos);
+            alcanaSelectList.SetInputHandler(InputKeyType.Decide,() => {
+                if (AlcanaSelectSkillInfo() != null)
+                {
+                    var eventData = new TacticsViewEvent(CommandType.SelectAlcanaList);
+                    eventData.template = AlcanaSelectSkillInfo();
+                    _commandData(eventData);
+                }
+            });
+            alcanaSelectList.Show();
+        }
+
+        public SkillInfo AlcanaSelectSkillInfo() 
+        {
+            var listData = alcanaSelectList.ListData;
+            if (listData != null)
+            {
+                return (SkillInfo)listData.Data;
+            }
+            return null;
         }
     }
 }

@@ -103,9 +103,11 @@ namespace Ryneus
             var alcanaIdList = new List<int>();
             var records = _symbolRecordList.FindAll(a => a.Selected);
             records = records.FindAll(a => a.StageId == stageId && a.Seek < seek || a.StageId < stageId);
+            records = records.FindAll(a => a.SelectedIndex > 0);
             foreach (var record in records)
             {
-                foreach (var getItemInfo in record.SymbolInfo.GetItemInfos)
+                var getItemInfos = record.SymbolInfo.GetItemInfos.FindAll(a => a.Param1 == record.SelectedIndex);
+                foreach (var getItemInfo in getItemInfos)
                 {
                     if (getItemInfo.GetItemType == GetItemType.Skill)
                     {
@@ -190,7 +192,7 @@ namespace Ryneus
                 }
             }
             _symbolRecordList.Add(symbolResultInfo);
-            _symbolRecordList.Sort((a,b) => a.StageId*100 + a.Seek - b.StageId*100 + b.Seek > 0 ? 1 : -1);
+            _symbolRecordList.Sort((a,b) => a.StageId*1000 + a.Seek*100 + a.SeekIndex - b.StageId*1000 + b.Seek*100 + b.SeekIndex > 0 ? 1 : -1);
         }
 
         public void SetActorInfos(List<ActorInfo> actorInfos)
