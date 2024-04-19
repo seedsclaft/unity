@@ -1406,6 +1406,17 @@ namespace Ryneus
             return result;
         }
 
+        public int CheckActionAfterGainAp()
+        {
+            var gainAp = CurrentActionInfo().SkillInfo.ActionAfterGainAp();
+            return gainAp;
+        }
+
+        public void ActionAfterGainAp(int gainAp)
+        {
+            _currentTurnBattler.GainMp(gainAp);
+        }
+
         public List<StateInfo> UpdateNextSelfTurn()
         {
             var result = _currentBattler.UpdateState(RemovalTiming.NextSelfTurn);
@@ -2112,16 +2123,19 @@ namespace Ryneus
                         }
                         break;
                         case TriggerType.DefeatEnemyByAttack:
-                        var attackBattler = GetBattlerInfo(actionInfo.SubjectIndex);
-                        if (battlerInfo.IsAlive() && attackBattler != null && battlerInfo.Index == attackBattler.Index)
+                        if (actionInfo != null && actionResultInfos != null)
                         {
-                            foreach (var actionResultInfo in actionResultInfos)
+                            var attackBattler = GetBattlerInfo(actionInfo.SubjectIndex);
+                            if (battlerInfo.IsAlive() && attackBattler != null && battlerInfo.Index == attackBattler.Index)
                             {
-                                foreach (var deadIndex in actionResultInfo.DeadIndexList)
+                                foreach (var actionResultInfo in actionResultInfos)
                                 {
-                                    if (battlerInfo.IsActor != GetBattlerInfo(deadIndex).IsActor)
+                                    foreach (var deadIndex in actionResultInfo.DeadIndexList)
                                     {
-                                        IsTriggered = true;
+                                        if (battlerInfo.IsActor != GetBattlerInfo(deadIndex).IsActor)
+                                        {
+                                            IsTriggered = true;
+                                        }
                                     }
                                 }
                             }

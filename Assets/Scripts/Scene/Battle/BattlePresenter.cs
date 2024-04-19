@@ -593,7 +593,7 @@ namespace Ryneus
                     _triggerInterruptChecked = true;
                 }
                 
-                var PassiveResults = _model.CheckTriggerPassiveInfos(new List<TriggerTiming>(){TriggerTiming.Use},actionInfo);
+                var PassiveResults = _model.CheckTriggerPassiveInfos(new List<TriggerTiming>(){TriggerTiming.Use},actionInfo,actionInfo.ActionResults);
                 actionInfo.ActionResults.AddRange(PassiveResults);
             }
         }
@@ -838,7 +838,7 @@ namespace Ryneus
             }
         }
 
-        private void CommandEndAnimation()
+        private async void CommandEndAnimation()
         {
             if (_nextCommandType == Battle.CommandType.None)
             {
@@ -851,7 +851,12 @@ namespace Ryneus
             // ダメージなどを適用
             _model.ExecCurrentActionResult();
             var PassiveResults = _model.CheckTriggerPassiveInfos(BattleUtility.HpDamagedTriggerTimings(),_model.CurrentActionInfo(),_model.CurrentActionInfo().ActionResults);
-            ExecActionResult(PassiveResults);
+            if (PassiveResults.Count > 0)
+            {
+                ExecActionResult(PassiveResults);
+                var waitFrame = GameSystem.ConfigData.BattleAnimationSkip ? 1 : 30;
+                await UniTask.DelayFrame((int)(waitFrame / GameSystem.ConfigData.BattleSpeed));           
+            }
             
             _view.ClearCurrentSkillData();
             var actionInfo = _model.CurrentActionInfo();
@@ -881,7 +886,7 @@ namespace Ryneus
             }
         }
 
-        private void EndTurn()
+        private async void EndTurn()
         {
             // ターン終了
             _view.RefreshStatus();
@@ -939,6 +944,18 @@ namespace Ryneus
                 // Passive解除
                 RemovePassiveResults = _model.CheckRemovePassiveInfos();
                 ExecActionResult(RemovePassiveResults);
+
+                // 10010行動後にAP+
+                var gainAp = _model.CheckActionAfterGainAp();
+                if (gainAp > 0)
+                {
+                    _view.StartHeal(_model.CurrentTurnBattler.Index,DamageType.MpHeal,gainAp); 
+                    var waitFrame = GameSystem.ConfigData.BattleAnimationSkip ? 1 : 30;
+                    await UniTask.DelayFrame((int)(waitFrame / GameSystem.ConfigData.BattleSpeed));           
+                    _model.ActionAfterGainAp(gainAp);
+                    _view.RefreshStatus();
+                }
+
             }
             _model.TurnEnd();
             if (isTriggeredSkill == false)

@@ -75,9 +75,9 @@ namespace Ryneus
             {
                 foreach (var actor in DataSystem.Actors)
                 { 
-                    if (inBattleActorIds.Contains(actor.Id))
+                    if (inBattleActorIds.Contains(actor.Key))
                     {
-                        currentStageData.AddTestActor(actor,0);
+                        currentStageData.AddTestActor(actor.Value,0);
                     }
                 }
                 var idx = 1;

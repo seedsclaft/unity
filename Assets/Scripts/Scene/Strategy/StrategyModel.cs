@@ -53,7 +53,7 @@ namespace Ryneus
         {
             if (_levelUpData.Count > 0) return;
             var record = PartyInfo.SymbolRecordList.Find(a => a.IsSameSymbol(CurrentStage.Id,CurrentStage.CurrentTurn,CurrentSaveData.CurrentStage.CurrentSeekIndex));
-            if (record.Cleared) return;
+            if (record != null && record.Cleared) return;
             //var lvUpActorInfos = TacticsActors().FindAll(a => a.TacticsCommandType == TacticsCommandType.Train);
             var lvUpList = new List<ActorInfo>();
             // 結果出力
@@ -255,8 +255,6 @@ namespace Ryneus
             CurrentStage.SetReturnSeek(-1);
             CurrentStage.SetSeekIndex(-1);
             PartyInfo.SetStageSymbolInfos(SelectedSymbolInfos(CurrentStage.Id));
-            //SavePlayerData();
-            //SavePlayerStageData(false);
         }
 
         public List<SymbolInfo> SelectedSymbolInfos(int stageId)

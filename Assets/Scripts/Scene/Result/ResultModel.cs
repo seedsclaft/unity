@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using System.Threading;
 using UnityEngine;
+using System.Linq;
 
 namespace Ryneus
 {
@@ -81,7 +82,7 @@ namespace Ryneus
                 getCount = 3;
             }
             // 候補アルカナ
-            var alcanaSkillsDates = DataSystem.Skills.FindAll(a => a.SkillType == SkillType.UseAlcana);
+            var alcanaSkillsDates = DataSystem.Skills.Where(a => a.Value.SkillType == SkillType.UseAlcana).ToList();
             
             var getAlcanaInfos = new List<SkillInfo>();
             while (getCount > 0)
@@ -90,23 +91,23 @@ namespace Ryneus
                 var randSkillData = alcanaSkillsDates[rand];
                 {
                     // 重複判定
-                    if (getAlcanaInfos.Find(a => a.Id == randSkillData.Id) == null)
+                    if (getAlcanaInfos.Where(a => a.Id == randSkillData.Value.Id) == null)
                     {
                         // featureが508魔法入手
-                        if (randSkillData.FeatureDates.Find(a => a.FeatureType == FeatureType.AddSkillOrCurrency) != null)
+                        if (randSkillData.Value.FeatureDates.Find(a => a.FeatureType == FeatureType.AddSkillOrCurrency) != null)
                         {
-                            var addSkillInfo = new SkillInfo(randSkillData.Id);
-                            var skills = DataSystem.Skills.FindAll(a => a.Rank == 1 && a.Attribute == randSkillData.Attribute);
+                            var addSkillInfo = new SkillInfo(randSkillData.Key);
+                            var skills = DataSystem.Skills.Where(a => a.Value.Rank == 1 && a.Value.Attribute == randSkillData.Value.Attribute).ToList();
                             if (skills.Count > 0)
                             {
                                 var skillRand = UnityEngine.Random.Range(0,skills.Count);
-                                addSkillInfo.SetParam(skills[skillRand].Id,0,0);
+                                addSkillInfo.SetParam(skills[skillRand].Key,0,0);
                                 addSkillInfo.SetEnable(true);
                                 getAlcanaInfos.Add(addSkillInfo);
                             }
                         } else
                         {
-                            var uniqueSkillInfo = new SkillInfo(randSkillData.Id);
+                            var uniqueSkillInfo = new SkillInfo(randSkillData.Key);
                             uniqueSkillInfo.SetEnable(true);
                             getAlcanaInfos.Add(uniqueSkillInfo);
                         }
@@ -141,7 +142,7 @@ namespace Ryneus
         private SkillInfo AddCommandRebornSkill()
         {
             // コマンドLvアップ
-            var commandReborn = DataSystem.Skills.FindAll(a => a.FeatureDates.Find(b => b.FeatureType == FeatureType.RebornCommandLvUp) != null);
+            var commandReborn = DataSystem.Skills.Where(a => a.Value.FeatureDates.Find(b => b.FeatureType == FeatureType.RebornCommandLvUp) != null).ToList();
             var commandRand = UnityEngine.Random.Range(0,commandReborn.Count);
             var param2 = 0;
             var rank1 = 0;
@@ -165,14 +166,14 @@ namespace Ryneus
             {
                 return null;
             }
-            var skill = new SkillInfo(commandReborn[commandRand].Id);
+            var skill = new SkillInfo(commandReborn[commandRand].Key);
             skill.SetParam(param2,param2,(commandRand+1));
             return skill;
         }    
         
         private SkillInfo AddStatusRebornSkill()
         {
-            var statusReborn = DataSystem.Skills.FindAll(a => a.FeatureDates.Find(b => b.FeatureType == FeatureType.RebornStatusUp) != null);
+            var statusReborn = DataSystem.Skills.Where(a => a.Value.FeatureDates.Find(b => b.FeatureType == FeatureType.RebornStatusUp) != null).ToList();
             var statusRand = UnityEngine.Random.Range(0,statusReborn.Count);
             var param2 = 2;
             var rank1 = 0;
@@ -192,7 +193,7 @@ namespace Ryneus
             {
                 param2 = 4;
             }
-            var skill = new SkillInfo(statusReborn[statusRand].Id);
+            var skill = new SkillInfo(statusReborn[statusRand].Key);
             skill.SetParam(param2,param2,statusRand);
             return skill;
         }
@@ -205,7 +206,7 @@ namespace Ryneus
 
         private SkillInfo AddQuestRebornSkill()
         {
-            var questReborn = DataSystem.Skills.Find(a => a.FeatureDates.Find(b => b.FeatureType == FeatureType.RebornQuest) != null);
+            var questReborn = DataSystem.Skills.Where(a => a.Value.FeatureDates.Find(b => b.FeatureType == FeatureType.RebornQuest) != null);
             var param2 = 2;
             var rank1 = 0;
             if (CurrentStage.EndingType == EndingType.A || CurrentStage.EndingType == EndingType.B)
@@ -224,7 +225,7 @@ namespace Ryneus
             {
                 param2 = 4;
             }
-            var skill = new SkillInfo(questReborn.Id);
+            var skill = new SkillInfo(questReborn.FirstOrDefault().Key);
             skill.SetParam(param2,param2,0);
             return skill;
         }

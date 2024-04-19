@@ -236,7 +236,7 @@ namespace Ryneus
         {
             _stateInfos.Clear();
             GainHp(_status.Hp);
-            GainMp(_status.Mp);
+            //GainMp(_status.Mp);
             _isAwaken = false;
             _preserveAlive = false;
             _chainSuccessCount = 0;

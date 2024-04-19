@@ -429,19 +429,11 @@ namespace Ryneus
                 if (_model.CurrentStage.ParallelStage)
                 {
                     _model.CommitCurrentParallelResult();
-                    if (_model.ChainParallelMode())
-                    {
-                        _model.MakeSymbolRecordStage(_model.CurrentStage.CurrentTurn-1);
-                        _model.SetParallelMode();
-                    } else
-                    {
-                    }
-                    _view.CommandGotoSceneChange(Scene.Tactics);
                 } else
                 {
                     _model.CommitCurrentResult();
-                    _view.CommandGotoSceneChange(Scene.Tactics);
                 }
+                _view.CommandGotoSceneChange(Scene.Tactics);
             } else
             if (_model.BattleResult && _model.BattleResultVictory() == false)
             {

@@ -22,7 +22,7 @@ MonoBehaviour:
     MaxLv: 99
     InitStatus:
       _hp: 35
-      _mp: 15
+      _mp: 5
       _atk: 27
       _def: 14
       _spd: 15
@@ -34,7 +34,7 @@ MonoBehaviour:
       _spd: 0
     NeedStatus:
       _hp: 65
-      _mp: 25
+      _mp: 0
       _atk: 60
       _def: 40
       _spd: 35
@@ -67,6 +67,10 @@ MonoBehaviour:
       Level: 0
       Weight: 0
       TriggerDates: []
+    - SkillId: 11080
+      Level: 0
+      Weight: 0
+      TriggerDates: []
     - SkillId: 100110
       Level: 0
       Weight: 0
@@ -91,10 +95,10 @@ MonoBehaviour:
     - SkillId: 1060
       Trigger1: 5051
       Trigger2: 0
-    - SkillId: 1010
+    - SkillId: 100120
       Trigger1: 5051
       Trigger2: 0
-    - SkillId: 100120
+    - SkillId: 1010
       Trigger1: 5051
       Trigger2: 0
     - SkillId: 0
@@ -112,7 +116,7 @@ MonoBehaviour:
     MaxLv: 99
     InitStatus:
       _hp: 27
-      _mp: 15
+      _mp: 3
       _atk: 21
       _def: 5
       _spd: 28
@@ -124,7 +128,7 @@ MonoBehaviour:
       _spd: 0
     NeedStatus:
       _hp: 55
-      _mp: 25
+      _mp: 0
       _atk: 40
       _def: 20
       _spd: 65
@@ -198,7 +202,7 @@ MonoBehaviour:
     MaxLv: 99
     InitStatus:
       _hp: 30
-      _mp: 15
+      _mp: 3
       _atk: 17
       _def: 12
       _spd: 9
@@ -210,7 +214,7 @@ MonoBehaviour:
       _spd: 0
     NeedStatus:
       _hp: 75
-      _mp: 25
+      _mp: 0
       _atk: 25
       _def: 60
       _spd: 25
@@ -284,7 +288,7 @@ MonoBehaviour:
     MaxLv: 99
     InitStatus:
       _hp: 26
-      _mp: 15
+      _mp: 3
       _atk: 15
       _def: 12
       _spd: 21
@@ -296,7 +300,7 @@ MonoBehaviour:
       _spd: 0
     NeedStatus:
       _hp: 85
-      _mp: 25
+      _mp: 0
       _atk: 35
       _def: 35
       _spd: 30
@@ -370,7 +374,7 @@ MonoBehaviour:
     MaxLv: 99
     InitStatus:
       _hp: 35
-      _mp: 15
+      _mp: 3
       _atk: 12
       _def: 9
       _spd: 12
@@ -382,7 +386,7 @@ MonoBehaviour:
       _spd: 0
     NeedStatus:
       _hp: 70
-      _mp: 25
+      _mp: 0
       _atk: 30
       _def: 50
       _spd: 45
@@ -456,7 +460,7 @@ MonoBehaviour:
     MaxLv: 40
     InitStatus:
       _hp: 33
-      _mp: 15
+      _mp: 3
       _atk: 39
       _def: 9
       _spd: 30
@@ -468,7 +472,7 @@ MonoBehaviour:
       _spd: 0
     NeedStatus:
       _hp: 40
-      _mp: 20
+      _mp: 0
       _atk: 90
       _def: 20
       _spd: 80
@@ -542,7 +546,7 @@ MonoBehaviour:
     MaxLv: 40
     InitStatus:
       _hp: 45
-      _mp: 15
+      _mp: 3
       _atk: 33
       _def: 11
       _spd: 15
@@ -554,7 +558,7 @@ MonoBehaviour:
       _spd: 0
     NeedStatus:
       _hp: 110
-      _mp: 20
+      _mp: 0
       _atk: 70
       _def: 20
       _spd: 30
@@ -628,7 +632,7 @@ MonoBehaviour:
     MaxLv: 40
     InitStatus:
       _hp: 45
-      _mp: 15
+      _mp: 3
       _atk: 33
       _def: 11
       _spd: 15
@@ -640,7 +644,7 @@ MonoBehaviour:
       _spd: 0
     NeedStatus:
       _hp: 110
-      _mp: 20
+      _mp: 0
       _atk: 70
       _def: 20
       _spd: 30
@@ -714,7 +718,7 @@ MonoBehaviour:
     MaxLv: 40
     InitStatus:
       _hp: 45
-      _mp: 15
+      _mp: 3
       _atk: 33
       _def: 11
       _spd: 15
@@ -726,7 +730,7 @@ MonoBehaviour:
       _spd: 0
     NeedStatus:
       _hp: 110
-      _mp: 20
+      _mp: 0
       _atk: 70
       _def: 20
       _spd: 30
@@ -800,7 +804,7 @@ MonoBehaviour:
     MaxLv: 40
     InitStatus:
       _hp: 38
-      _mp: 15
+      _mp: 3
       _atk: 15
       _def: 33
       _spd: 22
@@ -812,7 +816,7 @@ MonoBehaviour:
       _spd: 0
     NeedStatus:
       _hp: 50
-      _mp: 20
+      _mp: 0
       _atk: 10
       _def: 100
       _spd: 30
@@ -886,7 +890,7 @@ MonoBehaviour:
     MaxLv: 40
     InitStatus:
       _hp: 48
-      _mp: 15
+      _mp: 3
       _atk: 35
       _def: 18
       _spd: 18
@@ -898,7 +902,7 @@ MonoBehaviour:
       _spd: 0
     NeedStatus:
       _hp: 70
-      _mp: 20
+      _mp: 0
       _atk: 60
       _def: 50
       _spd: 50

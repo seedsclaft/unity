@@ -55,7 +55,7 @@ namespace Ryneus
                         {
                             var alcanaRank = symbolInfo.StageSymbolData.Param2;
                             var alcanaIds = PartyInfo.CurrentAlcanaIdList(CurrentStage.Id,CurrentStage.CurrentTurn);
-                            var alcanaSkills = DataSystem.Skills.FindAll(a => a.Rank == alcanaRank && !alcanaIds.Contains(a.Id));
+                            var alcanaSkills = DataSystem.Skills.Where(a => a.Value.Rank == alcanaRank && !alcanaIds.Contains(a.Value.Id)).ToList();
                             var count = 2;
                             if (alcanaSkills.Count < 2)
                             {
@@ -79,7 +79,7 @@ namespace Ryneus
                                     var alcanaData = new GetItemData
                                     {
                                         Type = GetItemType.Skill,
-                                        Param1 = alcanaSkills[rand].Id
+                                        Param1 = alcanaSkills[rand].Value.Id
                                     };
                                     var getItemInfo = new GetItemInfo(alcanaData);
                                     symbolInfo.SetGetItemInfos(new List<GetItemInfo>(){new GetItemInfo(alcanaData)});

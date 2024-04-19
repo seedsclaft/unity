@@ -68,7 +68,7 @@ namespace Ryneus
             if (ListData == null) return;
             var data = (SkillTriggerInfo)ListData.Data;
             skillInfoComponent.UpdateSkillData(data.SkillId);
-            if (data.SkillTriggerDates.Count > 0)
+            if (data.SkillTriggerDates.Count > 0 && data.SkillTriggerDates[0] != null)
             {
                 trigger1Text.SetText(data.SkillTriggerDates[0].Name);
             } else
@@ -76,7 +76,7 @@ namespace Ryneus
                 trigger1Text.SetText("-");
             }
             
-            if (data.SkillTriggerDates.Count > 1)
+            if (data.SkillTriggerDates.Count > 1 && data.SkillTriggerDates[1] != null)
             {
                 trigger2Text.SetText(data.SkillTriggerDates[1].Name);
             } else

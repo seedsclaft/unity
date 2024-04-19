@@ -986,6 +986,7 @@ namespace Ryneus
         PlusSkill = 7010,
         KindHeal = 8010,
         BreakUndead = 8020,
+        ActionAfterGainAp = 10010, // 行動後にAp+
         Numinous = 301,
         TacticsCost = 302,
         EnemyLv = 303,

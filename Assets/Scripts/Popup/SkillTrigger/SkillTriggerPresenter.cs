@@ -153,8 +153,7 @@ namespace Ryneus
         private void CommandSelectSkillTrigger(SkillTriggerInfo triggerInfo)
         {
             _view.UpdateSkillInfo(triggerInfo.SkillId);
-            _view.UpdateSkillTriggerHelp(triggerInfo.SkillTriggerDates[0].Help,triggerInfo.SkillTriggerDates[1].Help);
-
+            _view.UpdateSkillTriggerHelp(triggerInfo.SkillTriggerDates[0]?.Help,triggerInfo.SkillTriggerDates[1]?.Help);
         }
 
         private void CommandRefresh()

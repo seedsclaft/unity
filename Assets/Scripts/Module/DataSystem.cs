@@ -13,12 +13,12 @@ namespace Ryneus
     {
         private static DataManager _data;
         public static DataManager Data => _data;
-        public static List<ActorData> Actors = new ();
+        public static Dictionary<int,ActorData> Actors = new ();
         public static List<AdvData> Adventures = new ();
         public static List<EnemyData> Enemies = new ();
         public static List<RuleData> Rules = new ();
         public static List<HelpData> Helps = new ();
-        public static List<SkillData> Skills = new ();
+        public static Dictionary<int,SkillData> Skills = new ();
         public static List<StageData> Stages = new ();
         public static List<SymbolGroupData> SymbolGroups = new ();
         public static List<StateData> States = new ();
@@ -47,12 +47,20 @@ namespace Ryneus
 
 
         public static void LoadData(){
-            Actors = Resources.Load<ActorDates>("Data/Actors").Data;
+            var ActorsData = Resources.Load<ActorDates>("Data/Actors").Data;
+            foreach (var actorData in ActorsData)
+            {
+                Actors[actorData.Id] = actorData;
+            }
             Adventures = Resources.Load<AdvDates>("Data/Adventures").Data;
             Enemies = Resources.Load<EnemyDates>("Data/Enemies").Data;
             Rules = Resources.Load<RuleDates>("Data/Rules").Data;
             Helps = Resources.Load<HelpDates>("Data/Helps").Data;
-            Skills = Resources.Load<SkillDates>("Data/Skills").Data;
+            var SkillsData = Resources.Load<SkillDates>("Data/Skills").Data;
+            foreach (var skillData in SkillsData)
+            {
+                Skills[skillData.Id] = skillData;
+            }
             Stages = Resources.Load<StageDates>("Data/Stages").Data;
             SymbolGroups = Resources.Load<StageDates>("Data/Stages").SymbolGroupData;
             States = Resources.Load<StateDates>("Data/States").Data;
@@ -66,12 +74,20 @@ namespace Ryneus
         }
         public static ActorData FindActor(int id)
         {
-            return Actors.Find(a => a.Id == id);
+            if (Actors.ContainsKey(id))
+            {
+                return Actors[id];
+            }
+            return null;
         }
 
         public static SkillData FindSkill(int id)
         {
-            return Skills.Find(a => a.Id == id);
+            if (Skills.ContainsKey(id))
+            {
+                return Skills[id];
+            }
+            return null;
         }
         
         public static StageData FindStage(int id)

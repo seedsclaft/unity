@@ -119,7 +119,7 @@ namespace Ryneus
     #if UNITY_EDITOR
             foreach (var skillTargetAI in skillTargetAIs)
             {
-                Debug.Log("スキル = " + DataSystem.Skills.Find(a => a.Id == skillTargetAI.SkillId).Name + " W =" + skillTargetAI.Weigth);
+                Debug.Log("スキル = " + DataSystem.Skills[skillTargetAI.SkillId].Name + " W =" + skillTargetAI.Weigth);
             }
     #endif
             var (skillId,targetId) = GetSkillTargetAI(skillTargetAIs);

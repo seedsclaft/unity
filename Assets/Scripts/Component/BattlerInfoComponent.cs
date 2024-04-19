@@ -164,7 +164,7 @@ namespace Ryneus
         {
             foreach ( Transform n in _battleDamageRoot.transform )
             {
-                GameObject.Destroy(n.gameObject);
+                //Destroy(n.gameObject);
             }
             _battleDamages.Clear();
         }

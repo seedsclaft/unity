@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Ryneus
 {
@@ -100,11 +101,11 @@ namespace Ryneus
         public void InitSaveActorList()
         {
             if (_saveActorList.Count > 0) return;
-            var baseRebornSkill = DataSystem.Skills.Find(a => a.SkillType == SkillType.Reborn);
+            var baseRebornSkill = DataSystem.Skills.Where(a => a.Value.SkillType == SkillType.Reborn).ToList();
             for (int i = 0;i < 5;i++)
             {
                 var tempActor = new ActorInfo(DataSystem.Actors[i]);
-                var rebornSkill = new SkillInfo(baseRebornSkill.Id+i); 
+                var rebornSkill = new SkillInfo(baseRebornSkill[i].Key+i); 
                 rebornSkill.SetParam(1,1,i+1);
                 tempActor.AddRebornSkill(rebornSkill);
                 AddActorInfo(tempActor);

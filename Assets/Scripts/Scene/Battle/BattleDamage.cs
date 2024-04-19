@@ -49,7 +49,7 @@ namespace Ryneus
 
         public void StartDamage(DamageType damageType,int value,System.Action endEvent,int delayCount)
         {
-            UpdateAllHide();
+            //UpdateAllHide();
             _busy = true;
             string result = value.ToString();
             var _damageList = new List<GameObject>();
@@ -88,7 +88,7 @@ namespace Ryneus
 
         public void StartHeal(DamageType damageType,int value,System.Action endEvent,int delayCount)
         {
-            UpdateAllHide();
+            //UpdateAllHide();
             _busy = true;
             var result = value.ToString();
             var _damageList = new List<GameObject>();

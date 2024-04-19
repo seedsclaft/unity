@@ -821,6 +821,7 @@ namespace Ryneus
             }
         }
 
+
         public void MakeChangeFeatureParam(BattlerInfo subject,BattlerInfo target,SkillData.FeatureData featureData,int featureParamIndex)
         {
             // 即代入

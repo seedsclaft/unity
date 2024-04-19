@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.AddressableAssets;
 using Cysharp.Threading.Tasks;
 using System.Threading;
+using System.Linq;
 
 namespace Ryneus
 {
@@ -185,10 +186,10 @@ namespace Ryneus
             }
             if (getItemInfo.IsAttributeSkill())
             {
-                var skillDates = DataSystem.Skills.FindAll(a => a.Rank == getItemInfo.Param1 && a.Attribute == (AttributeType)((int)getItemInfo.GetItemType - 10));
+                var skillDates = DataSystem.Skills.Where(a => a.Value.Rank == getItemInfo.Param1 && a.Value.Attribute == (AttributeType)((int)getItemInfo.GetItemType - 10));
                 foreach (var skillData in skillDates)
                 {
-                    var skillInfo = new SkillInfo(skillData.Id);
+                    var skillInfo = new SkillInfo(skillData.Key);
                     skillInfo.SetEnable(true);
                     skillInfos.Add(skillInfo);
                 }
@@ -209,10 +210,10 @@ namespace Ryneus
                 }
                 if (getItemInfo.IsAttributeSkill())
                 {
-                    var skillDates = DataSystem.Skills.FindAll(a => a.Rank == getItemInfo.Param1 && a.Attribute == (AttributeType)((int)getItemInfo.GetItemType - 10));
+                    var skillDates = DataSystem.Skills.Where(a => a.Value.Rank == getItemInfo.Param1 && a.Value.Attribute == (AttributeType)((int)getItemInfo.GetItemType - 10));
                     foreach (var skillData in skillDates)
                     {
-                        var skillInfo = new SkillInfo(skillData.Id);
+                        var skillInfo = new SkillInfo(skillData.Key);
                         skillInfo.SetEnable(true);
                         skillInfos.Add(skillInfo);
                     }

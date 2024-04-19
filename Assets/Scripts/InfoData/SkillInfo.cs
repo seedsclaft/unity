@@ -117,5 +117,17 @@ namespace Ryneus
             return FeatureDates.Find(a => a.FeatureType == FeatureType.AddState && (StateType)a.Param1 == StateType.Wait) != null;
         }
 
+        public int ActionAfterGainAp()
+        {
+            var gainAp = 0;
+            foreach (var featureData in FeatureDates)
+            {
+                if (featureData.FeatureType == FeatureType.ActionAfterGainAp)
+                {
+                    gainAp += featureData.Param1;
+                }
+            }
+            return gainAp;
+        }
     }
 }
