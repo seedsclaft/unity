@@ -6,7 +6,7 @@ namespace Ryneus
     [Serializable]
     public class SkillInfo 
     {
-        public SkillData Master {get {return DataSystem.FindSkill(_id);}}
+        public SkillData Master => DataSystem.FindSkill(_id);
         private int _id;
         public int Id => _id;
 
@@ -70,6 +70,20 @@ namespace Ryneus
             _useCount++;
         }
 
+        private int _turnCount = 0;
+        public int TurnCount => _turnCount;
+        public void SetTurnCount(int turnCount)
+        {
+            _turnCount = turnCount;
+        }
+        public void SeekTurnCount()
+        {
+            if (_turnCount > 0)
+            {
+                _turnCount--;
+            }
+        }
+
         private bool _selectedAlcana = false;
         public bool SelectedAlcana => _selectedAlcana;
         public void SetSelectedAlcana(bool selectedAlcana)
@@ -81,12 +95,15 @@ namespace Ryneus
         {
             _id = id;
             _learningState = LearningState.None;
-            var list = new List<SkillData.FeatureData>();
-            foreach (var featureData in Master.FeatureDates)
+            if (Master != null)
             {
-                list.Add(featureData.CopyData());
+                var list = new List<SkillData.FeatureData>();
+                foreach (var featureData in Master.FeatureDates)
+                {
+                    list.Add(featureData.CopyData());
+                }
+                _featureDates = list;
             }
-            _featureDates = list;
         }
 
         public void CopyData(SkillInfo skillInfo)

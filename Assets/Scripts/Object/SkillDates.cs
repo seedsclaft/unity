@@ -27,13 +27,14 @@ namespace Ryneus
         public RangeType Range;
         public int RepeatTime;
         public AliveType AliveType;
+        public int TurnCount;
 
         public List<FeatureData> FeatureDates;
         public List<TriggerData> TriggerDates;
         public List<TriggerData> ScopeTriggers;
         public bool IsHpDamageFeature()
         {
-            return FeatureDates.Find(a => a.FeatureType == FeatureType.HpDamage || a.FeatureType == FeatureType.HpConsumeDamage) != null;
+            return FeatureDates.Find(a => a.FeatureType == FeatureType.HpDamage || a.FeatureType == FeatureType.HpConsumeDamage || a.FeatureType == FeatureType.RevengeHpDamage) != null;
         }
         public bool IsHpHealFeature()
         {
@@ -42,6 +43,10 @@ namespace Ryneus
         public bool IsStateFeature(StateType stateType)
         {
             return FeatureDates.Find(a => (a.FeatureType == FeatureType.AddState || a.FeatureType == FeatureType.AddStateNextTurn) && a.Param1 == (int)stateType) != null;
+        }
+        public bool IsRevengeHpDamageFeature()
+        {
+            return FeatureDates.Find(a => a.FeatureType == FeatureType.RevengeHpDamage) != null;
         }
         [Serializable]
         public class SkillAttributeInfo
@@ -770,6 +775,7 @@ namespace Ryneus
         Passive = 2, // パッシブ
         Messiah = 3, // 神化
         Awaken = 4, // 覚醒
+        ActivePassive = 5, // アクティブのパッシブ
         UseAlcana = 11, // アルカナ使用
         Reborn  = 12 // 転生
     }
@@ -905,6 +911,7 @@ namespace Ryneus
         ActionMpCost = 12030, // 行動Magicの消費Mpが〇
         TargetHpRateUnder = 12040, // 攻撃を受けた対象のHpが〇%以下
         OneAttackOverDamage = 12050, // 1回の攻撃で〇ダメージ以上受ける
+        AttackedAction = 12060, // 攻撃を受ける
         FriendHasKind = 13010, // 〇のKindを持っている
         OpponentHasKind = 13020, // 〇のKindを持っている
         FriendStatusUpper = 14010, // ステータスの高い味方
@@ -927,6 +934,7 @@ namespace Ryneus
         DefeatEnemyByAttack = 20140, // 攻撃で敵を撃破する
         DemigodMagicAttribute = 20150, // Demigod魔法の属性が〇の味方が神化する
         ActionResultSelfDeath = 20160, // 自身が戦闘不能になる攻撃を受ける
+        InterruptAttackDodge = 23010, // 攻撃を回避した時
         ExtendStageTurn = 30010, // 存在猶予を延長している
     }
 
@@ -941,6 +949,8 @@ namespace Ryneus
         HpDamaged = 11,
         BeforeAndStartBattle = 20,
         AfterAndStartBattle = 24,
+        BeforeSelfUse = 31,
+        BeforeOpponentUse = 32,
         BeforeTacticsTurn = 51,
         CurrentTacticsTurn = 52
     }
@@ -956,6 +966,7 @@ namespace Ryneus
         NoEffectHpPerDamage = 1060,
         NoEffectHpAddDamage = 1070,
         HpConsumeDamage = 1080,
+        RevengeHpDamage = 1090,
         HpHeal = 2010,
         RemainHpOne = 2020,
         RemainHpOneTarget = 2030,

@@ -18,6 +18,7 @@ namespace Ryneus
 			_NameId,
 			IconIndex,
 			RemovalTiming,
+			_RemovalTiming,
 			OverRight,
 			EffectPath,
 			EffectPosition,

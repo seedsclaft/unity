@@ -93,13 +93,13 @@ MonoBehaviour:
       TriggerDates: []
     SkillTriggerDates:
     - SkillId: 1060
-      Trigger1: 5051
+      Trigger1: 0
       Trigger2: 0
     - SkillId: 100120
-      Trigger1: 5051
+      Trigger1: 0
       Trigger2: 0
     - SkillId: 1010
-      Trigger1: 5051
+      Trigger1: 0
       Trigger2: 0
     - SkillId: 0
       Trigger1: 0
@@ -116,7 +116,7 @@ MonoBehaviour:
     MaxLv: 99
     InitStatus:
       _hp: 27
-      _mp: 3
+      _mp: 2
       _atk: 21
       _def: 5
       _spd: 28
@@ -161,6 +161,10 @@ MonoBehaviour:
       Level: 0
       Weight: 0
       TriggerDates: []
+    - SkillId: 12080
+      Level: 0
+      Weight: 0
+      TriggerDates: []
     - SkillId: 100210
       Level: 0
       Weight: 0
@@ -178,13 +182,13 @@ MonoBehaviour:
       Weight: 0
       TriggerDates: []
     SkillTriggerDates:
-    - SkillId: 2010
-      Trigger1: 0
-      Trigger2: 0
     - SkillId: 2080
       Trigger1: 0
       Trigger2: 0
     - SkillId: 100220
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 2010
       Trigger1: 0
       Trigger2: 0
     - SkillId: 0
@@ -202,7 +206,7 @@ MonoBehaviour:
     MaxLv: 99
     InitStatus:
       _hp: 30
-      _mp: 3
+      _mp: 4
       _atk: 17
       _def: 12
       _spd: 9
@@ -243,7 +247,11 @@ MonoBehaviour:
       Level: 0
       Weight: 0
       TriggerDates: []
-    - SkillId: 3070
+    - SkillId: 3020
+      Level: 0
+      Weight: 0
+      TriggerDates: []
+    - SkillId: 13080
       Level: 0
       Weight: 0
       TriggerDates: []
@@ -264,13 +272,13 @@ MonoBehaviour:
       Weight: 0
       TriggerDates: []
     SkillTriggerDates:
-    - SkillId: 3010
-      Trigger1: 0
-      Trigger2: 0
-    - SkillId: 3070
+    - SkillId: 3020
       Trigger1: 0
       Trigger2: 0
     - SkillId: 100320
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 3010
       Trigger1: 0
       Trigger2: 0
     - SkillId: 0
@@ -288,9 +296,9 @@ MonoBehaviour:
     MaxLv: 99
     InitStatus:
       _hp: 26
-      _mp: 3
+      _mp: 5
       _atk: 15
-      _def: 12
+      _def: 10
       _spd: 21
     PlusStatus:
       _hp: 0
@@ -333,6 +341,10 @@ MonoBehaviour:
       Level: 0
       Weight: 0
       TriggerDates: []
+    - SkillId: 14100
+      Level: 0
+      Weight: 0
+      TriggerDates: []
     - SkillId: 100410
       Level: 0
       Weight: 0
@@ -350,13 +362,13 @@ MonoBehaviour:
       Weight: 0
       TriggerDates: []
     SkillTriggerDates:
-    - SkillId: 4010
-      Trigger1: 0
-      Trigger2: 0
     - SkillId: 4030
       Trigger1: 0
       Trigger2: 0
     - SkillId: 100420
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 4010
       Trigger1: 0
       Trigger2: 0
     - SkillId: 0
@@ -374,7 +386,7 @@ MonoBehaviour:
     MaxLv: 99
     InitStatus:
       _hp: 35
-      _mp: 3
+      _mp: 5
       _atk: 12
       _def: 9
       _spd: 12
@@ -416,6 +428,10 @@ MonoBehaviour:
       Weight: 0
       TriggerDates: []
     - SkillId: 5080
+      Level: 0
+      Weight: 0
+      TriggerDates: []
+    - SkillId: 15090
       Level: 0
       Weight: 0
       TriggerDates: []

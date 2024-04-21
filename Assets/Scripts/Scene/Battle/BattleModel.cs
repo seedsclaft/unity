@@ -388,6 +388,10 @@ namespace Ryneus
             {
                 return false;
             }
+            if (skillInfo.Master.SkillType == SkillType.ActivePassive)
+            {
+                return false;
+            }
             if (skillInfo.Master.SkillType == SkillType.Messiah)
             {
                 return false;
@@ -419,6 +423,50 @@ namespace Ryneus
             return true;
         }
 
+        private bool CheckCanUsePassive(SkillInfo skillInfo,BattlerInfo battlerInfo)
+        {
+            if (skillInfo.Master.MpCost > battlerInfo.Mp)
+            {
+                return false;
+            }
+            if (skillInfo.Master.SkillType == SkillType.Passive)
+            {
+                //return false;
+            }
+            if (skillInfo.Master.SkillType == SkillType.ActivePassive)
+            {
+                //return false;
+            }
+            if (skillInfo.Master.SkillType == SkillType.Messiah)
+            {
+                return false;
+            }
+            if (battlerInfo.IsState(StateType.Silence) && skillInfo.Master.MpCost != 0)
+            {
+                return false;
+            }
+            if (skillInfo.Master.SkillType == SkillType.Awaken)
+            {
+                if (!battlerInfo.IsState(StateType.Demigod))
+                {
+                    return false;
+                }
+            }
+            if (skillInfo.IsUnison())
+            {
+                return FieldBattlerInfos().FindAll(a => a.IsAlive() && a.IsActor == battlerInfo.IsActor && a.CanMove()).Count > 1;
+            }
+            if (CanUseTrigger(skillInfo,battlerInfo) == false)
+            {
+                return false;
+            }
+            var targetIndexList = GetSkillTargetIndexes(skillInfo.Master.Id,battlerInfo.Index,true);
+            if (targetIndexList.Count == 0)
+            {
+                //return false;
+            }
+            return true;
+        }
         /// <summary>
         /// 行動を初期化
         /// </summary>
@@ -487,7 +535,7 @@ namespace Ryneus
                     }
                 }
             }
-            var actionInfo = new ActionInfo(skillInfo,_actionIndex,skillInfo.Id,subject.Index,lastTargetIndex,targetIndexList);
+            var actionInfo = new ActionInfo(skillInfo,_actionIndex,subject.Index,lastTargetIndex,targetIndexList);
             _actionIndex++;
             if (subject.IsState(StateType.Extension))
             {
@@ -872,10 +920,8 @@ namespace Ryneus
             return _actionInfos[0];
         }
 
-        // indexListにActionを使ったときのリザルトを生成
-        public void MakeActionResultInfo(ActionInfo actionInfo,List<int> indexList)
+        private void SetActorLastTarget(ActionInfo actionInfo,BattlerInfo subject,List<int> indexList)
         {
-            var subject = GetBattlerInfo(actionInfo.SubjectIndex);
             if (indexList.Count > 0)
             {
                 if (subject.IsActor)
@@ -893,11 +939,12 @@ namespace Ryneus
                     }
                 }
             }
+        }
+
+        public void SetActionInfo(ActionInfo actionInfo)
+        {
+            var subject = GetBattlerInfo(actionInfo.SubjectIndex);
             int MpCost = CalcMpCost(actionInfo);
-            if (subject.IsState(StateType.Silence) && MpCost != 0)
-            {
-                return;
-            }
             actionInfo.SetMpCost(MpCost);
             int HpCost = CalcHpCost(actionInfo);
             actionInfo.SetHpCost(HpCost);
@@ -905,108 +952,120 @@ namespace Ryneus
             var isPrism = PrismRepeatTime(subject,actionInfo) > 0;
             var repeatTime = CalcRepeatTime(subject,actionInfo);
             repeatTime += PrismRepeatTime(subject,actionInfo);
+            actionInfo.SetRepeatTime(repeatTime);
+        }
 
-            // 攻撃前の攻撃無効回数を管理
-            var noDamageDict = new Dictionary<int,int>();
-            for (int i = 0; i < indexList.Count;i++)
+        // indexListにActionを使ったときのリザルトを生成
+        public void MakeActionResultInfo(ActionInfo actionInfo,List<int> indexList)
+        {
+            if (actionInfo.RepeatTime == 0)
             {
-                noDamageDict[indexList[i]] = GetBattlerInfo(indexList[i]).StateTurn(StateType.NoDamage);
+                return;
             }
+            actionInfo.SetRepeatTime(actionInfo.RepeatTime - 1);
+            var subject = GetBattlerInfo(actionInfo.SubjectIndex);
+            SetActorLastTarget(actionInfo,subject,indexList);
+            if (subject.IsState(StateType.Silence) && actionInfo.MpCost != 0)
+            {
+                return;
+            }
+
             var actionResultInfos = new List<ActionResultInfo>();
 
-            for (int i = 0; i < repeatTime;i++)
+            foreach (var targetIndex in indexList)
             {
-                foreach (var targetIndex in indexList)
+                var target = GetBattlerInfo(targetIndex);
+                var featureDates = new List<SkillData.FeatureData>();
+                foreach (var featureData in actionInfo.SkillInfo.FeatureDates)
                 {
-                    var target = GetBattlerInfo(targetIndex);
-                    var featureDates = new List<SkillData.FeatureData>();
-                    foreach (var featureData in actionInfo.SkillInfo.FeatureDates)
+                    /*
+                    if (isPrism)
                     {
-                        if (isPrism)
+                        // 攻撃増加分のダメージ種別を追加
+                        if (featureData.FeatureType == FeatureType.HpDamage || featureData.FeatureType == FeatureType.HpDefineDamage)
                         {
-                            // 攻撃増加分のダメージ種別を追加
-                            if (featureData.FeatureType == FeatureType.HpDamage || featureData.FeatureType == FeatureType.HpDefineDamage)
+                            var prismCount = (subject.GetStateInfoAll(StateType.Prism).Count + 1);
+                            var prismTime = (i+1) % prismCount;
+                            if (prismTime == 0)
                             {
-                                var prismCount = (subject.GetStateInfoAll(StateType.Prism).Count + 1);
-                                var prismTime = (i+1) % prismCount;
-                                if (prismTime == 0)
-                                {
-                                    prismTime = prismCount;
-                                }
-                                var damageFeature = featureData.CopyData();
-                                var ratio = 1.0f / (prismTime);
-                                damageFeature.Param1 = (int)(damageFeature.Param1 * ratio);
-                                featureDates.Add(damageFeature);
-                                continue;
+                                prismTime = prismCount;
                             }
-                        }
-                        featureDates.Add(featureData);
-                    }
-
-                    var actionResultInfo = new ActionResultInfo(subject,target,featureDates,actionInfo.Master.Id,actionInfo.Master.Scope == ScopeType.One);
-                    
-                    // Hpダメージ分の回復計算
-                    var DamageHealPartyResultInfos = CalcDamageHealParty(subject,featureDates,actionResultInfo.HpDamage);
-                    actionResultInfos.AddRange(DamageHealPartyResultInfos);
-                    var DamageMpHealPartyResultInfos = CalcDamageMpHealParty(subject,featureDates,actionResultInfo.HpDamage);
-                    actionResultInfos.AddRange(DamageMpHealPartyResultInfos);
-
-                    if (actionResultInfo.RemoveAttackStateDamage())            
-                    {
-                        var chainStateInfos = CheckAttackedBattlerState(StateType.Chain,actionResultInfo.TargetIndex);
-                        if (chainStateInfos.Count > 0)
-                        {
-                            for (int k = 0; k < chainStateInfos.Count;k++)
-                            {
-                                var chainedBattlerInfo = GetBattlerInfo(chainStateInfos[k].TargetIndex);
-                                chainedBattlerInfo.RemoveState(chainStateInfos[k],true);
-                                actionResultInfo.AddRemoveState(chainStateInfos[k]);
-                            }
-                        }
-                        if (target.IsState(StateType.Benediction))
-                        {
-                            var benedictStateInfos = target.GetStateInfoAll(StateType.Benediction);
-                            for (int k = 0; k < benedictStateInfos.Count;k++)
-                            {
-                                target.RemoveState(benedictStateInfos[k],true);
-                                target.ResetAp(false);
-                                actionResultInfo.AddRemoveState(benedictStateInfos[k]);
-                            }
+                            var damageFeature = featureData.CopyData();
+                            var ratio = 1.0f / (prismTime);
+                            damageFeature.Param1 = (int)(damageFeature.Param1 * ratio);
+                            featureDates.Add(damageFeature);
+                            continue;
                         }
                     }
+                    */
+                    featureDates.Add(featureData);
+                }
 
-                    // 無敵回数
-                    int noDamageCount = target.StateTurn(StateType.NoDamage);
-                    // このリザルトでの無敵進行回数
-                    int seekCount = actionResultInfo.SeekCount(target,StateType.NoDamage);
-                    if (seekCount > 0)
+                var actionResultInfo = new ActionResultInfo(subject,target,featureDates,actionInfo.Master.Id,actionInfo.Master.Scope == ScopeType.One);
+                
+                // Hpダメージ分の回復計算
+                var DamageHealPartyResultInfos = CalcDamageHealParty(subject,featureDates,actionResultInfo.HpDamage);
+                actionResultInfos.AddRange(DamageHealPartyResultInfos);
+                var DamageMpHealPartyResultInfos = CalcDamageMpHealParty(subject,featureDates,actionResultInfo.HpDamage);
+                actionResultInfos.AddRange(DamageMpHealPartyResultInfos);
+
+                if (actionResultInfo.RemoveAttackStateDamage())            
+                {
+                    var chainStateInfos = CheckAttackedBattlerState(StateType.Chain,actionResultInfo.TargetIndex);
+                    if (chainStateInfos.Count > 0)
                     {
-                        // 今までのリザルトでの無敵進行回数
-                        int seekCountAll = actionResultInfos.Sum(a => a.SeekCount(target,StateType.NoDamage));
-                        if ((seekCountAll+1) >= noDamageDict[targetIndex])
+                        for (int k = 0; k < chainStateInfos.Count;k++)
                         {
-                            var noDamageState = target.GetStateInfo(StateType.NoDamage);
-                            if (noDamageState != null)
-                            {
-                                target.RemoveState(noDamageState,true);
-                                actionResultInfo.AddRemoveState(noDamageState);
-                                var displayedResults = actionResultInfos.FindAll(a => a.DisplayStates.Find(b => b.Master.StateType == StateType.NoDamage) != null);
+                            var chainedBattlerInfo = GetBattlerInfo(chainStateInfos[k].TargetIndex);
+                            chainedBattlerInfo.RemoveState(chainStateInfos[k],true);
+                            actionResultInfo.AddRemoveState(chainStateInfos[k]);
+                        }
+                    }
+                    if (target.IsState(StateType.Benediction))
+                    {
+                        var benedictStateInfos = target.GetStateInfoAll(StateType.Benediction);
+                        for (int k = 0; k < benedictStateInfos.Count;k++)
+                        {
+                            target.RemoveState(benedictStateInfos[k],true);
+                            target.ResetAp(false);
+                            actionResultInfo.AddRemoveState(benedictStateInfos[k]);
+                        }
+                    }
+                }
 
-                                foreach (var displayedResult in displayedResults)
+                // 無敵回数
+                /*
+                int noDamageCount = target.StateTurn(StateType.NoDamage);
+                // このリザルトでの無敵進行回数
+                int seekCount = actionResultInfo.SeekCount(target,StateType.NoDamage);
+                if (seekCount > 0)
+                {
+                    // 今までのリザルトでの無敵進行回数
+                    int seekCountAll = actionResultInfos.Sum(a => a.SeekCount(target,StateType.NoDamage));
+                    if ((seekCountAll+1) >= noDamageDict[targetIndex])
+                    {
+                        var noDamageState = target.GetStateInfo(StateType.NoDamage);
+                        if (noDamageState != null)
+                        {
+                            target.RemoveState(noDamageState,true);
+                            actionResultInfo.AddRemoveState(noDamageState);
+                            var displayedResults = actionResultInfos.FindAll(a => a.DisplayStates.Find(b => b.Master.StateType == StateType.NoDamage) != null);
+
+                            foreach (var displayedResult in displayedResults)
+                            {
+                                for (int j = displayedResult.DisplayStates.Count-1; j >= 0;j--)
                                 {
-                                    for (int j = displayedResult.DisplayStates.Count-1; j >= 0;j--)
+                                    if (displayedResult.DisplayStates[j] == noDamageState)
                                     {
-                                        if (displayedResult.DisplayStates[j] == noDamageState)
-                                        {
-                                            displayedResult.DisplayStates.Remove(noDamageState);
-                                        }
+                                        displayedResult.DisplayStates.Remove(noDamageState);
                                     }
                                 }
                             }
                         }
                     }
-                    actionResultInfos.Add(actionResultInfo);
                 }
+                */
+                actionResultInfos.Add(actionResultInfo);
             }
             AdjustActionResultInfo(actionResultInfos);
             actionInfo.SetActionResult(actionResultInfos);
@@ -1198,6 +1257,11 @@ namespace Ryneus
                     ExecActionResultInfo(actionResultInfo);
                 }
                 actionInfo.SetTurnCount(_turnCount);
+                if (actionInfo.Master.IsRevengeHpDamageFeature())
+                {
+                    // 受けたダメージをリセット
+                    _currentBattler.SetDamagedValue(0);
+                }
                 _battleActionRecords.Add(actionInfo);
             }
         }
@@ -1312,6 +1376,7 @@ namespace Ryneus
             if (actionResultInfo.HpDamage != 0)
             {
                 target.GainHp(-1 * actionResultInfo.HpDamage);
+                target.GainDamagedValue(actionResultInfo.HpDamage);
                 targetRecord.GainDamagedValue(actionResultInfo.HpDamage);
                 subjectRecord.GainDamageValue(actionResultInfo.HpDamage);
             }
@@ -1693,15 +1758,16 @@ namespace Ryneus
                 {
                     for (var j = 0;j < triggeredSkills.Count;j++)
                     {
+                        var IsInterrupt = triggerTiming == TriggerTiming.Interrupt || triggerTiming == TriggerTiming.BeforeSelfUse || triggerTiming == TriggerTiming.BeforeOpponentUse;
                         if (triggeredSkills[j].Master.SkillType == SkillType.Messiah){
                             if (checkBattler.IsAwaken == false)
                             {
                                 checkBattler.SetAwaken();
-                                var makeActionInfo = MakeActionInfo(checkBattler,triggeredSkills[j],triggerTiming == TriggerTiming.Interrupt,true);
+                                var makeActionInfo = MakeActionInfo(checkBattler,triggeredSkills[j],IsInterrupt,true);
                                 madeActionInfos.Add(makeActionInfo);
                             }
                         } else{
-                            var makeActionInfo = MakeActionInfo(checkBattler,triggeredSkills[j],triggerTiming == TriggerTiming.Interrupt,true);
+                            var makeActionInfo = MakeActionInfo(checkBattler,triggeredSkills[j],IsInterrupt,true);
                             madeActionInfos.Add(makeActionInfo);
                         }
                     }
@@ -1723,6 +1789,7 @@ namespace Ryneus
                         continue;
                     }
                     var triggerDates = passiveInfo.Master.TriggerDates.FindAll(a => triggerTimings.Contains(a.TriggerTiming));
+                    
                     // バトル中〇回以下使用
                     var inBattleUseCountUnder = triggerDates.Find(a => a.TriggerType == TriggerType.InBattleUseCountUnder);
                     if (inBattleUseCountUnder != null)
@@ -1735,9 +1802,9 @@ namespace Ryneus
                     if (IsTriggeredSkillInfo(battlerInfo,triggerDates,actionInfo,actionResultInfos))
                     {                
                         bool usable = CanUsePassiveCount(battlerInfo,passiveInfo.Id,triggerDates);
-                        if (usable)
+                        if (usable && passiveInfo.TurnCount == 0)
                         {
-                            var makeResultInfos = MakePassiveSkillActionResults(battlerInfo,triggerDates,actionResultInfos,passiveInfo);
+                            var makeResultInfos = MakePassiveSkillActionResults(battlerInfo,triggerDates,actionInfo,actionResultInfos,passiveInfo);
                             makeActionResults.AddRange(makeResultInfos);
                         }
                     }
@@ -1765,9 +1832,13 @@ namespace Ryneus
             return usable;
         }
 
-        private List<ActionResultInfo> MakePassiveSkillActionResults(BattlerInfo battlerInfo,List<SkillData.TriggerData> triggerDates,List<ActionResultInfo> actionResultInfos,SkillInfo passiveInfo)
+        private List<ActionResultInfo> MakePassiveSkillActionResults(BattlerInfo battlerInfo,List<SkillData.TriggerData> triggerDates,ActionInfo actionInfo,List<ActionResultInfo> actionResultInfos,SkillInfo passiveInfo)
         {
             var makeResultInfos = new List<ActionResultInfo>();
+            if (!CheckCanUsePassive(passiveInfo,battlerInfo))
+            {
+                return makeResultInfos;
+            }
             if (passiveInfo.Master.Scope == ScopeType.Self)
             {
                 var actionResultInfo = new ActionResultInfo(battlerInfo,battlerInfo,passiveInfo.FeatureDates,passiveInfo.Id);
@@ -1809,6 +1880,14 @@ namespace Ryneus
                     if (targetList.Count > 0)
                     {
                         var actionResultInfo = new ActionResultInfo(battlerInfo,targetList[0],passiveInfo.FeatureDates,passiveInfo.Id);
+                        makeResultInfos.Add(actionResultInfo);
+                    }
+                }
+                if (passiveInfo.Master.TargetType == TargetType.Counter)
+                {
+                    if (actionInfo != null)
+                    {
+                        var actionResultInfo = new ActionResultInfo(battlerInfo,GetBattlerInfo(actionInfo.SubjectIndex),passiveInfo.FeatureDates,passiveInfo.Id);
                         makeResultInfos.Add(actionResultInfo);
                     }
                 }
@@ -1863,6 +1942,8 @@ namespace Ryneus
                 _passiveSkillInfos[battlerInfo.Index].Add(passiveInfo.Master.Id);
             }
             passiveInfo.GainUseCount();
+            passiveInfo.SetTurnCount(passiveInfo.Master.TurnCount);
+            battlerInfo.GainMp(passiveInfo.Master.MpCost * -1);
             return makeResultInfos;
         }
 
@@ -1884,7 +1965,7 @@ namespace Ryneus
             }
             if (enable)
             {
-                var makeResultInfos = MakePassiveSkillActionResults(battlerInfo,triggerDates,new List<ActionResultInfo>(){actionResultInfo},new SkillInfo(skillId));
+                var makeResultInfos = MakePassiveSkillActionResults(battlerInfo,triggerDates,null,new List<ActionResultInfo>(){actionResultInfo},new SkillInfo(skillId));
                 actionResultInfos.AddRange(makeResultInfos);
             }
             return actionResultInfos;
@@ -1974,6 +2055,26 @@ namespace Ryneus
             {
                 foreach (var triggerData in triggerDates)
                 {
+                    // 自身の行動前判定
+                    if (triggerData.TriggerTiming == TriggerTiming.BeforeSelfUse)
+                    {
+                        if (battlerInfo.Index != actionInfo.SubjectIndex)
+                        {
+                            continue;
+                        }
+                    }
+                    // 相手の行動前判定
+                    if (triggerData.TriggerTiming == TriggerTiming.BeforeSelfUse)
+                    {
+                        if (battlerInfo.Index == actionInfo.SubjectIndex)
+                        {
+                            continue;
+                        }
+                        if (battlerInfo.IsActor == GetBattlerInfo(actionInfo.SubjectIndex).IsActor)
+                        {
+                            continue;
+                        }
+                    }
                     /*
                     if (triggerTiming == TriggerTiming.Use)
                     {
@@ -2082,6 +2183,18 @@ namespace Ryneus
                             IsTriggered = true;
                         }
                         break;
+                        case TriggerType.AttackedAction:
+                        if (battlerInfo.IsAlive())
+                        {
+                            if (actionInfo != null && battlerInfo.IsActor != GetBattlerInfo(actionInfo.SubjectIndex).IsActor)
+                            {
+                                if (actionInfo.Master.IsHpDamageFeature())
+                                {
+                                    IsTriggered = true;
+                                }
+                            }
+                        }
+                        break;
                         case TriggerType.AllEnemyCurseState:
                         var opponents = battlerInfo.IsActor ? _troop.AliveBattlerInfos : _party.AliveBattlerInfos;
                         if (battlerInfo.IsAlive() && opponents.Find(a => !a.IsState(StateType.Curse)) == null && opponents.FindAll(a => a.IsAlive()).Count > 0)
@@ -2170,6 +2283,24 @@ namespace Ryneus
                             }
                         }
                         break;
+                        case TriggerType.InterruptAttackDodge:
+                        if (battlerInfo.IsAlive())
+                        {
+                            if (actionInfo != null && battlerInfo.IsActor != GetBattlerInfo(actionInfo.SubjectIndex).IsActor)
+                            {
+                                foreach (var actionResultInfo in actionInfo.ActionResults)
+                                {
+                                    if (actionResultInfo.TargetIndex == battlerInfo.Index)
+                                    {
+                                        if (actionResultInfo.Missed)
+                                        {
+                                            IsTriggered = true;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        break;
                     }
                     // Param3をAnd条件フラグにする
                     if (triggerData.Param3 == 1)
@@ -2222,6 +2353,8 @@ namespace Ryneus
                             list.Add(targetBattlerInfo);
                         }
                     }
+                    break;
+                    
                     break;
                 }
             }
@@ -3067,6 +3200,24 @@ namespace Ryneus
                     break;
             }
             return indexList;
+        }
+
+        public void ResetTargetIndexList(ActionInfo actionInfo)
+        {
+            var needReset = false;
+            foreach (var targetIndex in actionInfo.TargetIndexList)
+            {
+                var target = GetBattlerInfo(targetIndex);
+                if (!target.IsAlive() && actionInfo.Master.IsHpDamageFeature())
+                {
+                    needReset = true;
+                }
+            }
+            if (needReset)
+            {
+                actionInfo.ActionResults.Clear();
+                actionInfo.SetTargetIndexList(MakeAutoSelectIndex(actionInfo));
+            }
         }
 
         public int MakeAutoSkillId(BattlerInfo battlerInfo)

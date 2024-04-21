@@ -234,6 +234,23 @@ MonoBehaviour:
     CheckHit: 0
     RemoveByAttack: 0
     RemoveByDeath: 1
+  - StateType: 1043
+    Name: "\u653B\u6483\u30C0\u30A6\u30F3"
+    Help: "ATK\\d\u30C0\u30A6\u30F3"
+    IconPath: SwordBreak
+    RemovalTiming: 1
+    OverWrite: 1
+    EffectPath: '""'
+    EffectPosition: 0
+    EffectScale: 1
+    OverLap: 0
+    Removal: 0
+    Abnormal: 0
+    Buff: 0
+    DeBuff: 1
+    CheckHit: 0
+    RemoveByAttack: 0
+    RemoveByDeath: 1
   - StateType: 1050
     Name: "\u9632\u5FA1\u30A2\u30C3\u30D7"
     Help: "DEF\\d\u30A2\u30C3\u30D7"

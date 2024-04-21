@@ -100,7 +100,6 @@ namespace Ryneus
         public void SetBattleAutoButton(SystemData.CommandData data,bool isAuto)
         {
             battleAutoButton.gameObject.SetActive(false);
-            /*
             battleAutoButton.SetData(data,0);
             battleAutoButton.UpdateViewItem();
             battleAutoButton.SetCallHandler((a) => {
@@ -109,12 +108,11 @@ namespace Ryneus
                 _commandData(eventData);
             });
             battleAutoButton.Cursor.SetActive(isAuto);
-            */
         }
         
         public void SetBattleAutoButton(bool isActive)
         {
-            //battleAutoButton.gameObject.SetActive(isActive);
+            battleAutoButton.gameObject.SetActive(isActive);
             battleSpeedButton.gameObject.SetActive(isActive);
         }
 
@@ -651,7 +649,7 @@ namespace Ryneus
 
         public void ChangeBattleAuto(bool isAuto)
         {
-            //battleAutoButton.Cursor.SetActive(isAuto);
+            battleAutoButton.Cursor.SetActive(isAuto);
         }
     }
 }

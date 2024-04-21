@@ -6,14 +6,13 @@ namespace Ryneus
     public class ActionInfo 
     {
         private int _index;
-        private int _skillId = 0;
         
         private int _subjectIndex = 0;
         public int SubjectIndex => _subjectIndex;
 
         private int _lastTargetIndex = 0;
         public int LastTargetIndex => _lastTargetIndex;
-        public SkillData Master => DataSystem.FindSkill(_skillId);
+        public SkillData Master => DataSystem.FindSkill(_skillInfo.Id);
         private SkillInfo _skillInfo = null;
         public SkillInfo SkillInfo => _skillInfo;
         
@@ -31,8 +30,18 @@ namespace Ryneus
         public int MpCost => _mpCost;
         private int _hpCost;
         public int HpCost => _hpCost;
+        private int _repeatTime;
+        public int RepeatTime => _repeatTime;
+        public void SetRepeatTime(int repeatTime)
+        {
+            _repeatTime = repeatTime;
+        }
         private List<int> _targetIndexList;
         public List<int> TargetIndexList => _targetIndexList;
+        public void SetTargetIndexList(List<int> targetIndexList)
+        {
+            _targetIndexList = targetIndexList;
+        }
 
         private bool _triggeredSkill = false;
         public bool TriggeredSkill => _triggeredSkill;
@@ -41,17 +50,16 @@ namespace Ryneus
         public int TurnCount => _turnCount;
         public void SetTurnCount(int turnCount) {_turnCount = turnCount;}
 
-        public ActionInfo(SkillInfo skillInfo,int index,int skillId,int subjectIndex,int lastTargetIndex,List<int> targetIndexList)
+        public ActionInfo(SkillInfo skillInfo,int index,int subjectIndex,int lastTargetIndex,List<int> targetIndexList)
         {
             _index = index;
-            _skillId = skillId;
+            _skillInfo = skillInfo;
             _scopeType = Master.Scope;
             _rangeType = Master.Range;
             _targetType = Master.TargetType;
             _subjectIndex = subjectIndex;
             _lastTargetIndex = lastTargetIndex;
             _targetIndexList = targetIndexList;
-            _skillInfo = skillInfo;
         }
 
         public void SetRangeType(RangeType rangeType)
@@ -87,7 +95,7 @@ namespace Ryneus
             var actionInfos = new List<ActionInfo>();
             for (var i = 0;i < PlusSkill.Count;i++){
                 var skillInfo = new SkillInfo(PlusSkill[i].Param1);
-                var actionInfo = new ActionInfo(skillInfo,_index,skillInfo.Id,SubjectIndex,-1,null);
+                var actionInfo = new ActionInfo(skillInfo,_index,SubjectIndex,-1,null);
                 actionInfo.SetTriggerSkill(true);
                 actionInfos.Add(actionInfo);
             }

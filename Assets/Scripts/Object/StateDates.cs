@@ -44,6 +44,7 @@ namespace Ryneus
         MaxMpUp = 1030,
         AtkUp = 1040,
         AtkDown = 1041,
+        AtkDownPer = 1043,
         DefUp = 1050,
         DefDown = 1051,
         DefPerDown = 1052,

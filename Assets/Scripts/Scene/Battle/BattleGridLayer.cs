@@ -66,8 +66,8 @@ namespace Ryneus
                         if (!waitFrameList.Contains(waitFrame))
                         {
                             waitFrameList.Add(waitFrame);
-                            turnWait[battler].Add(waitFrame);
                         }
+                        turnWait[battler].Add(waitFrame);
                     }
                 }
             }

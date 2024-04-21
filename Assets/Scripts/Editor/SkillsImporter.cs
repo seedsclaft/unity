@@ -34,6 +34,7 @@ namespace Ryneus
 			Range,
 			RepeatTime,
 			AliveOnly,
+			TurnCount,
 		}
 
 		enum BaseFeatureColumn
@@ -123,7 +124,8 @@ namespace Ryneus
                             Range = (RangeType)AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.Range),
                             RepeatTime = AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.RepeatTime),
                             AliveType = (AliveType)AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.AliveOnly),
-                            Help = textData.Find(a => a.Id == AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.NameId)).Help
+                            Help = textData.Find(a => a.Id == AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.NameId)).Help,
+                        	TurnCount = AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.TurnCount),
                         };
                         Data.Data.Add(SkillData);
 					}

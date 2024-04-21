@@ -21,6 +21,8 @@ namespace Ryneus
     #endif
         private bool _triggerAfterChecked = false;
         private bool _triggerInterruptChecked = false;
+        private bool _triggerUseBeforeChecked = false;
+        private bool _triggerOpponentBeforeChecked = false;
         private bool _slipDamageChecked = false;
         private bool _regenerateChecked = false;
         private bool _battleEnded = false;
@@ -508,6 +510,7 @@ namespace Ryneus
         {
             _view.SetHelpText("");
             _view.ChangeBackCommandActive(false);
+            SetActionInfo();
             MakeActionResultInfo(indexList);
             var actionInfo = _model.CurrentActionInfo();
             if (actionInfo != null)
@@ -525,13 +528,27 @@ namespace Ryneus
                     _view.SetBattleBusy(false);
                     return;
                 }
-                if (actionInfo.Master.SkillType == SkillType.Messiah && actionInfo.SubjectIndex < 100 || actionInfo.Master.SkillType == SkillType.Awaken && actionInfo.SubjectIndex < 100)
-                {
-                    StartAnimationDemigod();
-                } else
-                {
-                    StartAnimationSkill();
-                }
+                StartSkillAnimation(actionInfo);
+            }
+        }
+
+        private void StartSkillAnimation(ActionInfo actionInfo)
+        {
+            if (actionInfo.Master.SkillType == SkillType.Messiah && actionInfo.SubjectIndex < 100 || actionInfo.Master.SkillType == SkillType.Awaken && actionInfo.SubjectIndex < 100)
+            {
+                StartAnimationDemigod();
+            } else
+            {
+                StartAnimationSkill();
+            }
+        }
+
+        private void SetActionInfo()
+        {
+            var actionInfo = _model.CurrentActionInfo();
+            if (actionInfo != null)
+            {
+                _model.SetActionInfo(actionInfo);
             }
         }
 
@@ -540,8 +557,22 @@ namespace Ryneus
             var actionInfo = _model.CurrentActionInfo();
             if (actionInfo != null)
             {
+                if (_triggerUseBeforeChecked == false)
+                {
+                    _triggerUseBeforeChecked = true;
+                    var PassiveResults = _model.CheckTriggerPassiveInfos(new List<TriggerTiming>(){TriggerTiming.BeforeSelfUse},actionInfo,actionInfo.ActionResults);
+                    ExecActionResult(PassiveResults);
+                }
+                // 行動割り込みパッシブ判定
+                if (_triggerOpponentBeforeChecked == false)
+                {
+                    _triggerOpponentBeforeChecked = true;
+                    var PassiveResults = _model.CheckTriggerPassiveInfos(new List<TriggerTiming>(){TriggerTiming.BeforeOpponentUse},actionInfo,actionInfo.ActionResults);
+                    ExecActionResult(PassiveResults);
+                }
                 _view.BattlerBattleClearSelect();
                 _model.MakeActionResultInfo(actionInfo,indexList);
+                actionInfo.SetTargetIndexList(indexList);
                 _model.MakeCurseActionResults(actionInfo,indexList);
                 // 行動割り込みスキル判定
                 if (_triggerInterruptChecked == false)
@@ -550,6 +581,7 @@ namespace Ryneus
                     if (result.Count > 0)
                     {
                         _model.SetActionBattler(result[0].SubjectIndex);
+                        _model.SetActionInfo(result[0]);
                         _model.MakeActionResultInfo(result[0],_model.MakeAutoSelectIndex(result[0]));
                     } else
                     {
@@ -582,6 +614,7 @@ namespace Ryneus
                                     _model.ClearActionInfo();
                                     actionInfo = _model.MakeActionInfo(RevengeActBattler,new SkillInfo(33),false,false);
                                     _model.SetActionBattler(RevengeActBattler.Index);
+                                    _model.SetActionInfo(actionInfo);
                                     _model.MakeActionResultInfo(actionInfo,new List<int>(){RevengeActTarget.Index});
                                     
                                     actionInfo.ActionResults[0].AddRemoveState(RevengeActState);
@@ -593,8 +626,8 @@ namespace Ryneus
                     _triggerInterruptChecked = true;
                 }
                 
-                var PassiveResults = _model.CheckTriggerPassiveInfos(new List<TriggerTiming>(){TriggerTiming.Use},actionInfo,actionInfo.ActionResults);
-                actionInfo.ActionResults.AddRange(PassiveResults);
+                var PassiveResults2 = _model.CheckTriggerPassiveInfos(new List<TriggerTiming>(){TriggerTiming.Use},actionInfo,actionInfo.ActionResults);
+                actionInfo.ActionResults.AddRange(PassiveResults2);
             }
         }
 
@@ -708,7 +741,7 @@ namespace Ryneus
                 {
                     PopupActionResult(actionResultInfo,actionResultInfo.TargetIndex,true,true);
                 }
-                var waitFrame = GameSystem.ConfigData.BattleAnimationSkip ? 1 : 60;
+                var waitFrame = GameSystem.ConfigData.BattleAnimationSkip ? 1 : 30;
                 await UniTask.DelayFrame((int)(waitFrame / GameSystem.ConfigData.BattleSpeed));
             }
             _nextCommandType = Battle.CommandType.EndAnimation;
@@ -890,6 +923,14 @@ namespace Ryneus
         {
             // ターン終了
             _view.RefreshStatus();
+            var actionInfo = _model.CurrentActionInfo();
+            if (actionInfo != null && actionInfo.RepeatTime > 0)
+            {
+                _model.ResetTargetIndexList(actionInfo);
+                MakeActionResultInfo(actionInfo.TargetIndexList);
+                StartAnimationSkill();
+                return;
+            }
             // スリップダメージ
             if (_triggerAfterChecked == false && _slipDamageChecked == false)
             {
@@ -1035,6 +1076,8 @@ namespace Ryneus
             _view.RefreshTurn(_model.TurnCount);
             _view.ShowStateOverlay();
             _triggerInterruptChecked = false;
+            _triggerUseBeforeChecked = false;
+            _triggerOpponentBeforeChecked = false;
             _triggerAfterChecked = false;
             _slipDamageChecked = false;
             _regenerateChecked = false;

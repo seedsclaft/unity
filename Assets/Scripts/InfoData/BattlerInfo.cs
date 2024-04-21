@@ -81,6 +81,16 @@ namespace Ryneus
         public int HealCount => _healCount;
         private int _beCriticalCount = 0;
         public int BeCriticalCount => _beCriticalCount;
+        private int _damagedValue = 0;
+        public int DamagedValue => _damagedValue;
+        public void SetDamagedValue(int damagedValue)
+        {
+            _damagedValue = damagedValue;
+        }
+        public void GainDamagedValue(int damagedValue)
+        {
+            _damagedValue += damagedValue;
+        }
         
         private int _lastTargetIndex = 0;
         public void SetLastTargetIndex(int index){
@@ -131,6 +141,7 @@ namespace Ryneus
             foreach (var skill in _skills)
             {
                 skill.SetUseCount(0);
+                skill.SetTurnCount(0);
             }
             ResetAp(true);
         }
@@ -181,6 +192,7 @@ namespace Ryneus
             foreach (var skill in _skills)
             {
                 skill.SetUseCount(0);
+                skill.SetTurnCount(0);
             }
             ResetAp(true);
         }
@@ -206,6 +218,7 @@ namespace Ryneus
             foreach (var skill in _skills)
             {
                 skill.SetUseCount(0);
+                skill.SetTurnCount(0);
             }
         }
 
@@ -228,6 +241,7 @@ namespace Ryneus
             foreach (var skill in _skills)
             {
                 skill.SetUseCount(0);
+                skill.SetTurnCount(0);
             }
             ResetAp(true);
         }
@@ -236,7 +250,7 @@ namespace Ryneus
         {
             _stateInfos.Clear();
             GainHp(_status.Hp);
-            //GainMp(_status.Mp);
+            GainMp(_status.Mp);
             _isAwaken = false;
             _preserveAlive = false;
             _chainSuccessCount = 0;
@@ -732,6 +746,10 @@ namespace Ryneus
                 {
                     atk -= StateEffectAll(StateType.AtkDown);
                 }
+                if (IsState(StateType.AtkDownPer))
+                {
+                    atk -= (int)(Status.Atk * StateEffectAll(StateType.AtkDownPer) * 0.01f);
+                }
             }
             return atk;
         }
@@ -879,6 +897,10 @@ namespace Ryneus
             {
                 StateInfo stateInfo = GetStateInfo(StateType.Accel);
                 stateInfo.Turns += 1;
+            }
+            foreach (var skillInfo in _skills)
+            {
+                skillInfo.SeekTurnCount();
             }
         }
 
