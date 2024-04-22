@@ -756,7 +756,8 @@ namespace Ryneus
         All = 3
     }
 
-    public enum ScopeType{
+    public enum ScopeType
+    {
         None = 0,
         One = 1,
         Line = 2,
@@ -769,13 +770,13 @@ namespace Ryneus
         OneAndNeighbor = 31,
     }
 
-    public enum SkillType{
+    public enum SkillType
+    {
         None = 0,
         Active = 1, // 通常スキル
         Passive = 2, // パッシブ
         Messiah = 3, // 神化
         Awaken = 4, // 覚醒
-        ActivePassive = 5, // アクティブのパッシブ
         UseAlcana = 11, // アルカナ使用
         Reborn  = 12 // 転生
     }

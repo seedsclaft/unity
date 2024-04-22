@@ -388,10 +388,6 @@ namespace Ryneus
             {
                 return false;
             }
-            if (skillInfo.Master.SkillType == SkillType.ActivePassive)
-            {
-                return false;
-            }
             if (skillInfo.Master.SkillType == SkillType.Messiah)
             {
                 return false;
@@ -430,10 +426,6 @@ namespace Ryneus
                 return false;
             }
             if (skillInfo.Master.SkillType == SkillType.Passive)
-            {
-                //return false;
-            }
-            if (skillInfo.Master.SkillType == SkillType.ActivePassive)
             {
                 //return false;
             }
@@ -1756,18 +1748,17 @@ namespace Ryneus
                 }
                 if (triggeredSkills.Count > 0)
                 {
-                    for (var j = 0;j < triggeredSkills.Count;j++)
+                    foreach (var triggeredSkill in triggeredSkills)
                     {
                         var IsInterrupt = triggerTiming == TriggerTiming.Interrupt || triggerTiming == TriggerTiming.BeforeSelfUse || triggerTiming == TriggerTiming.BeforeOpponentUse;
-                        if (triggeredSkills[j].Master.SkillType == SkillType.Messiah){
-                            if (checkBattler.IsAwaken == false)
-                            {
-                                checkBattler.SetAwaken();
-                                var makeActionInfo = MakeActionInfo(checkBattler,triggeredSkills[j],IsInterrupt,true);
-                                madeActionInfos.Add(makeActionInfo);
-                            }
-                        } else{
-                            var makeActionInfo = MakeActionInfo(checkBattler,triggeredSkills[j],IsInterrupt,true);
+                        if (triggeredSkill.Master.SkillType == SkillType.Messiah && checkBattler.IsAwaken == false)
+                        {
+                            checkBattler.SetAwaken();
+                            var makeActionInfo = MakeActionInfo(checkBattler,triggeredSkill,IsInterrupt,true);
+                            madeActionInfos.Add(makeActionInfo);
+                        } else
+                        {
+                            var makeActionInfo = MakeActionInfo(checkBattler,triggeredSkill,IsInterrupt,true);
                             madeActionInfos.Add(makeActionInfo);
                         }
                     }
@@ -1777,8 +1768,9 @@ namespace Ryneus
             return madeActionInfos;
         }
 
-        public List<ActionResultInfo> CheckTriggerPassiveInfos(List<TriggerTiming> triggerTimings,ActionInfo actionInfo = null, List<ActionResultInfo> actionResultInfos = null)
+        public List<List<ActionResultInfo>> CheckTriggerPassiveInfos(List<TriggerTiming> triggerTimings,ActionInfo actionInfo = null, List<ActionResultInfo> actionResultInfos = null)
         {
+            var passiveActionInfos = new List<List<ActionResultInfo>>();
             var makeActionResults = new List<ActionResultInfo>();
             foreach (var battlerInfo in _battlers)
             {
@@ -1805,12 +1797,13 @@ namespace Ryneus
                         if (usable && passiveInfo.TurnCount == 0)
                         {
                             var makeResultInfos = MakePassiveSkillActionResults(battlerInfo,triggerDates,actionInfo,actionResultInfos,passiveInfo);
-                            makeActionResults.AddRange(makeResultInfos);
+                            //makeActionResults.AddRange(makeResultInfos);
+                            passiveActionInfos.Add(makeResultInfos);
                         }
                     }
                 }
             }
-            return makeActionResults;
+            return passiveActionInfos;
         }
 
         private bool CanUsePassiveCount(BattlerInfo battlerInfo,int skillId,List<SkillData.TriggerData> triggerDates)
