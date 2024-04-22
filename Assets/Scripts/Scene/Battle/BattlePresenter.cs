@@ -943,8 +943,8 @@ namespace Ryneus
                 if (animationData != null && animationData.AnimationPath != "" && GameSystem.ConfigData.BattleAnimationSkip == false)
                 {
                     PlayAnimation(animationData,skillData.AnimationType,new List<int>(){resultInfo.TargetIndex});
+                    await UniTask.DelayFrame((int)(animationData.DamageTiming / GameSystem.ConfigData.BattleSpeed));
                 }
-                await UniTask.DelayFrame((int)(animationData.DamageTiming / GameSystem.ConfigData.BattleSpeed));
                 // ダメージ表現をしない
                 PopupActionResult(resultInfo,resultInfo.TargetIndex,true,false);
                 await UniTask.DelayFrame((int)(60 / GameSystem.ConfigData.BattleSpeed));

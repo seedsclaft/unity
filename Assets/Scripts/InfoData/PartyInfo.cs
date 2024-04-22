@@ -194,6 +194,35 @@ namespace Ryneus
             _symbolRecordList.Add(symbolResultInfo);
             _symbolRecordList.Sort((a,b) => a.StageId*1000 + a.Seek*100 + a.SeekIndex - b.StageId*1000 + b.Seek*100 + b.SeekIndex > 0 ? 1 : -1);
         }
+        public (int,int) LastStageIdTurns()
+        {
+            var stageId = 0;
+            foreach (var symbolResultInfo in _symbolRecordList)
+            {
+                if (symbolResultInfo.Selected)
+                {
+                    if (symbolResultInfo.SymbolInfo.StageSymbolData.StageId > stageId)
+                    {
+                        stageId = symbolResultInfo.SymbolInfo.StageSymbolData.StageId;
+                    }
+                }
+            }
+            var currentTurn = 0;
+            foreach (var symbolResultInfo in _symbolRecordList)
+            {
+                if (symbolResultInfo.Selected)
+                {
+                    if (symbolResultInfo.SymbolInfo.StageSymbolData.StageId == stageId)
+                    {
+                        if (symbolResultInfo.SymbolInfo.StageSymbolData.Seek > currentTurn)
+                        {
+                            currentTurn = symbolResultInfo.SymbolInfo.StageSymbolData.Seek;
+                        }
+                    }
+                }
+            }
+            return (stageId,currentTurn);
+        }
 
         public void SetActorInfos(List<ActorInfo> actorInfos)
         {

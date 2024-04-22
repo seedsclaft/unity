@@ -446,6 +446,7 @@ namespace Ryneus
                 _model.SetSelectSymbol();
                 _model.EndStrategy();
                 _model.CommitResult();
+                _model.EndStage();
                 _view.CommandGotoSceneChange(Scene.MainMenu);
             } else
             {

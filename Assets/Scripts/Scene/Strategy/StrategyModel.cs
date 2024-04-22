@@ -200,6 +200,17 @@ namespace Ryneus
             CurrentStage.SeekStage();
         }
 
+        public void EndStage()
+        {
+            var (stageId,currentTurn) = PartyInfo.LastStageIdTurns();
+            if (currentTurn == DataSystem.FindStage(stageId).Turns)
+            {
+                currentTurn += 1;
+            }
+            CurrentSaveData.MakeStageData(stageId);
+            CurrentStage.SetCurrentTurn(currentTurn);
+        }
+
         public void SetSelectSymbol()
         {
             // レコード作成
