@@ -1457,19 +1457,13 @@ MonoBehaviour:
       FeatureType: 3010
       Param1: 2270
       Param2: 0
-      Param3: 10
+      Param3: 5
       Rate: 100
     TriggerDates:
     - SkillId: 10010
-      TriggerType: 9030
+      TriggerType: 0
       TriggerTiming: 4
-      Param1: 1
-      Param2: 0
-      Param3: 1
-    - SkillId: 10010
-      TriggerType: 12020
-      TriggerTiming: 4
-      Param1: 20
+      Param1: 0
       Param2: 0
       Param3: 0
     ScopeTriggers: []
@@ -1781,7 +1775,7 @@ MonoBehaviour:
     Scope: 4
     SkillType: 2
     TargetType: 4
-    Help: "(\u6761\u4EF6)\u6575\u3092\u5012\u3057\u305F\u5F8C\n\\s\u306EAP+1"
+    Help: "(\u6761\u4EF6)\u81EA\u8EAB\u306E\u884C\u52D5\u3067\u6575\u3092\u5012\u3057\u305F\u6642\n\\s\u306EAP+1"
     Range: 1
     RepeatTime: 1
     AliveType: 1
@@ -2275,7 +2269,7 @@ MonoBehaviour:
   - Id: 13080
     Name: "\u30E9\u30A4\u30D5\u30B9\u30C6\u30A3\u30FC\u30EB"
     IconIndex: 6
-    AnimationId: 0
+    AnimationId: 51
     AnimationType: 1
     MpCost: 0
     Rank: 1
@@ -2283,7 +2277,7 @@ MonoBehaviour:
     Scope: 4
     SkillType: 2
     TargetType: 4
-    Help: "(\u6761\u4EF6)\u81EA\u8EAB\u304C\u884C\u52D5\u3059\u308B\u524D\u306B\u767A\u52D5\n(\u5236\u9650)\u540C\u6642\u767A\u52D5\u5236\u9650\n\u30C0\u30E1\u30FC\u30B8\u306E25%\u5206Hp\u56DE\u5FA9"
+    Help: "(\u6761\u4EF6)\u81EA\u8EAB\u304C\u884C\u52D5\u3059\u308B\u524D\u306B\u767A\u52D5\n\u30C0\u30E1\u30FC\u30B8\u306E25%\u5206Hp\u56DE\u5FA9"
     Range: 1
     RepeatTime: 1
     AliveType: 1
@@ -2292,12 +2286,12 @@ MonoBehaviour:
     - SkillId: 13080
       FeatureType: 3010
       Param1: 2060
-      Param2: 999
+      Param2: 1
       Param3: 25
       Rate: 100
     TriggerDates:
     - SkillId: 13080
-      TriggerType: 0
+      TriggerType: 15010
       TriggerTiming: 31
       Param1: 0
       Param2: 0
@@ -2876,7 +2870,7 @@ MonoBehaviour:
   - Id: 15090
     Name: "\u30AF\u30A4\u30C3\u30AF\u30AB\u30FC\u30B9"
     IconIndex: 6
-    AnimationId: 0
+    AnimationId: 61
     AnimationType: 1
     MpCost: 1
     Rank: 1
@@ -2954,9 +2948,9 @@ MonoBehaviour:
       Rate: 100
     TriggerDates:
     - SkillId: 100110
-      TriggerType: 6020
+      TriggerType: 7010
       TriggerTiming: 2
-      Param1: 1010
+      Param1: 0
       Param2: 0
       Param3: 1
     - SkillId: 100110
@@ -3091,9 +3085,9 @@ MonoBehaviour:
       Rate: 100
     TriggerDates:
     - SkillId: 100210
-      TriggerType: 6020
+      TriggerType: 7010
       TriggerTiming: 2
-      Param1: 1010
+      Param1: 0
       Param2: 0
       Param3: 1
     - SkillId: 100210
@@ -3197,9 +3191,9 @@ MonoBehaviour:
       Rate: 100
     TriggerDates:
     - SkillId: 100310
-      TriggerType: 6020
+      TriggerType: 7010
       TriggerTiming: 2
-      Param1: 1010
+      Param1: 0
       Param2: 0
       Param3: 1
     - SkillId: 100310
@@ -3309,9 +3303,9 @@ MonoBehaviour:
       Rate: 100
     TriggerDates:
     - SkillId: 100410
-      TriggerType: 6020
+      TriggerType: 7010
       TriggerTiming: 2
-      Param1: 1010
+      Param1: 0
       Param2: 0
       Param3: 1
     - SkillId: 100410
@@ -3416,9 +3410,9 @@ MonoBehaviour:
       Rate: 100
     TriggerDates:
     - SkillId: 100510
-      TriggerType: 6020
+      TriggerType: 7010
       TriggerTiming: 3
-      Param1: 1010
+      Param1: 0
       Param2: 0
       Param3: 1
     - SkillId: 100510
@@ -3522,9 +3516,9 @@ MonoBehaviour:
       Rate: 100
     TriggerDates:
     - SkillId: 100610
-      TriggerType: 6020
+      TriggerType: 7010
       TriggerTiming: 2
-      Param1: 1010
+      Param1: 0
       Param2: 0
       Param3: 1
     - SkillId: 100610
@@ -3635,9 +3629,9 @@ MonoBehaviour:
       Rate: 100
     TriggerDates:
     - SkillId: 100710
-      TriggerType: 6020
+      TriggerType: 7010
       TriggerTiming: 2
-      Param1: 1010
+      Param1: 0
       Param2: 0
       Param3: 1
     - SkillId: 100710
@@ -3747,9 +3741,9 @@ MonoBehaviour:
       Rate: 100
     TriggerDates:
     - SkillId: 100810
-      TriggerType: 6020
+      TriggerType: 7010
       TriggerTiming: 11
-      Param1: 1010
+      Param1: 0
       Param2: 0
       Param3: 1
     - SkillId: 100810
@@ -3853,9 +3847,9 @@ MonoBehaviour:
       Rate: 100
     TriggerDates:
     - SkillId: 100910
-      TriggerType: 6020
+      TriggerType: 7010
       TriggerTiming: 11
-      Param1: 1010
+      Param1: 0
       Param2: 0
       Param3: 1
     - SkillId: 100910
@@ -4028,9 +4022,9 @@ MonoBehaviour:
       Rate: 100
     TriggerDates:
     - SkillId: 101010
-      TriggerType: 6020
+      TriggerType: 7010
       TriggerTiming: 2
-      Param1: 1010
+      Param1: 0
       Param2: 0
       Param3: 1
     - SkillId: 101010
@@ -4134,9 +4128,9 @@ MonoBehaviour:
       Rate: 100
     TriggerDates:
     - SkillId: 101110
-      TriggerType: 6020
+      TriggerType: 7010
       TriggerTiming: 2
-      Param1: 1010
+      Param1: 0
       Param2: 0
       Param3: 1
     - SkillId: 101110
@@ -4241,9 +4235,9 @@ MonoBehaviour:
       Rate: 100
     TriggerDates:
     - SkillId: 200110
-      TriggerType: 6020
+      TriggerType: 7010
       TriggerTiming: 2
-      Param1: 1010
+      Param1: 0
       Param2: 0
       Param3: 1
     - SkillId: 200110

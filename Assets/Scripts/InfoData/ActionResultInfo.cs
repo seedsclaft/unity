@@ -873,7 +873,7 @@ namespace Ryneus
 
         public void MakeKindHeal(BattlerInfo subject,BattlerInfo target,SkillData.FeatureData featureData)
         {
-            if (target.IsState(StateType.Undead))
+            if (target.IsState(StateType.Undead) || (target.EnemyData != null && target.EnemyData.Kinds.Contains(KindType.Undead)))
             {
                 _hpDamage = (int)Mathf.Floor( _hpHeal * featureData.Param3 * 0.01f);
                 _hpHeal = 0;
