@@ -492,7 +492,6 @@ namespace Ryneus
                 skillInfoComponent.UpdateSkillData(skillData.Id);
                 currentSkillBg.GetComponent<RectTransform>().sizeDelta = new Vector2(480,56 + ((skillData.Help.Split("\n").Length-1) * 24));
             }
-
         }
 
         public void ClearCurrentSkillData()

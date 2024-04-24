@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using Effekseer;
 using Cysharp.Threading.Tasks;
 using System.Linq;
 using UnityEngine;
@@ -37,8 +36,27 @@ namespace Ryneus
         public BattlerInfo CurrentBattler => _currentBattler;
 
         private List<ActionInfo> _actionInfos = new ();
+        private Dictionary<int,List<ActionInfo>> _turnActionInfos = new ();
+        private Dictionary<int,List<ActionInfo>> TurnActionInfos => _turnActionInfos;
+        public void AddTurnActionInfos(ActionInfo actionInfo,bool Interrupt)
+        {
+            if (!_turnActionInfos.ContainsKey(_turnCount))
+            {
+                _turnActionInfos[_turnCount] = new List<ActionInfo>();
+            }
+            if (Interrupt)
+            {
+                _turnActionInfos[_turnCount].Insert(0,actionInfo);
+            } else
+            {
+                _turnActionInfos[_turnCount].Add(actionInfo);
+            }
+        }
+        private bool UsedTurnActionInfo(SkillInfo skillInfo)
+        {
+            return _turnActionInfos.ContainsKey(_turnCount) && _turnActionInfos[_turnCount].Find(a => a.Master.Id == skillInfo.Id) != null;
+        }
         private Dictionary<int,List<int>> _passiveSkillInfos = new ();
-        private Dictionary<int,List<int>> _usedPassiveSkillInfos = new ();
 
         public UniTask<List<AudioClip>> GetBattleBgm()
         {
@@ -90,7 +108,6 @@ namespace Ryneus
             foreach (var battlerInfo1 in _battlers)
             {
                 _passiveSkillInfos[battlerInfo1.Index] = new ();
-                _usedPassiveSkillInfos[battlerInfo1.Index] = new ();
             }
             _party = new UnitInfo();
             _party.SetBattlers(BattlerActors());
@@ -546,6 +563,7 @@ namespace Ryneus
             {
                 _actionInfos.Add(actionInfo);
             }
+            AddTurnActionInfos(actionInfo,IsInterrupt);
             return actionInfo;
         }
 
@@ -1538,24 +1556,13 @@ namespace Ryneus
                 {
                     if (plusActionInfo.Master.SkillType == SkillType.Passive)
                     {
-                        var useLimit = plusActionInfo.Master.TriggerDates.Find(a => a.Param2 >= 1);
-                        if (useLimit != null)
-                        {
-                            var usedCount = _usedPassiveSkillInfos[actionInfo.SubjectIndex].FindAll(a => a == plusActionInfo.Master.Id);
-                            if (usedCount.Count < useLimit.Param2)
-                            {
-                                _usedPassiveSkillInfos[actionInfo.SubjectIndex].Add(plusActionInfo.Master.Id);
-                            } else
-                            {
-                                continue;
-                            }
-                        }
                         if (!_passiveSkillInfos[actionInfo.SubjectIndex].Contains(plusActionInfo.Master.Id))
                         {
                             _passiveSkillInfos[actionInfo.SubjectIndex].Add(plusActionInfo.Master.Id);
                         }
                     }
                     _actionInfos.Add(plusActionInfo);
+                    AddTurnActionInfos(plusActionInfo,false);
                 }
             }
         }
@@ -1739,6 +1746,10 @@ namespace Ryneus
                 triggeredSkills.Clear();
                 foreach (var skillInfo in checkBattler.ActiveSkills())
                 {
+                    if (UsedTurnActionInfo(skillInfo))
+                    {
+                        continue;
+                    }
                     if (actionInfo == null || (actionInfo.Master.Id != skillInfo.Id))
                     {
                         var triggerDates = skillInfo.Master.TriggerDates.FindAll(a => a.TriggerTiming == triggerTiming);
@@ -1756,13 +1767,9 @@ namespace Ryneus
                         if (triggeredSkill.Master.SkillType == SkillType.Messiah && checkBattler.IsAwaken == false)
                         {
                             checkBattler.SetAwaken();
-                            var makeActionInfo = MakeActionInfo(checkBattler,triggeredSkill,IsInterrupt,true);
-                            madeActionInfos.Add(makeActionInfo);
-                        } else
-                        {
-                            var makeActionInfo = MakeActionInfo(checkBattler,triggeredSkill,IsInterrupt,true);
-                            madeActionInfos.Add(makeActionInfo);
                         }
+                        var makeActionInfo = MakeActionInfo(checkBattler,triggeredSkill,IsInterrupt,true);
+                        madeActionInfos.Add(makeActionInfo);
                     }
                 }
             }
@@ -1791,15 +1798,24 @@ namespace Ryneus
                             continue;
                         }
                     }
-                    foreach (var triggerData in triggerDates)
+                    if (_passiveSkillInfos[battlerInfo.Index].Contains(passiveInfo.Id))
                     {
-                        if (IsTriggeredSkillInfo(battlerInfo,new List<SkillData.TriggerData>(){triggerData},actionInfo,actionResultInfos))
-                        {                
-                            bool usable = CanUsePassiveCount(battlerInfo,passiveInfo.Id,triggerDates);
-                            if (usable && passiveInfo.TurnCount == 0)
+                        continue;
+                    }
+                    if (IsTriggeredSkillInfo(battlerInfo,triggerDates,actionInfo,actionResultInfos))
+                    {
+                        //bool usable = CanUsePassiveCount(battlerInfo,passiveInfo.Id,triggerDates);
+                        if (passiveInfo.TurnCount == 0)
+                        {
+                            var IsInterrupt = triggerDates[0].TriggerTiming == TriggerTiming.BeforeSelfUse ||  triggerDates[0].TriggerTiming == TriggerTiming.BeforeOpponentUse;
+                            var result = MakePassiveSkillActionResults(battlerInfo,passiveInfo,IsInterrupt,actionInfo,actionResultInfos, triggerDates[0]);
+                            if (result != null && result.ActionResults.Count > 0)
                             {
-                                var IsInterrupt = triggerData.TriggerTiming == TriggerTiming.BeforeSelfUse || triggerData.TriggerTiming == TriggerTiming.BeforeOpponentUse;
-                                MakePassiveSkillActionResults(battlerInfo,passiveInfo,IsInterrupt,actionInfo,actionResultInfos,triggerData);
+                                // 継続パッシブは保存
+                                if (passiveInfo.FeatureDates.Find(a => a.FeatureType == FeatureType.AddState) != null)
+                                {
+                                    _passiveSkillInfos[battlerInfo.Index].Add(passiveInfo.Id);
+                                }
                             }
                         }
                     }
@@ -1807,6 +1823,7 @@ namespace Ryneus
             }
         }
 
+/*
         private bool CanUsePassiveCount(BattlerInfo battlerInfo,int skillId,List<SkillData.TriggerData> triggerDates)
         {
             bool usable = true;
@@ -1825,6 +1842,7 @@ namespace Ryneus
             }
             return usable;
         }
+*/
 
         private ActionInfo MakePassiveSkillActionResults(BattlerInfo battlerInfo,SkillInfo passiveInfo,bool IsInterrupt,ActionInfo actionInfo = null,List<ActionResultInfo> actionResultInfos = null,SkillData.TriggerData triggerData = null)
         {
@@ -1833,6 +1851,10 @@ namespace Ryneus
                 return null;
             }
             
+            if (UsedTurnActionInfo(passiveInfo))
+            {
+                return null;
+            }
             var makeActionInfo = MakeActionInfo(battlerInfo,passiveInfo,IsInterrupt,true);
             var selectIndexList = MakeAutoSelectIndex(makeActionInfo);
             if (selectIndexList.Count == 0 && passiveInfo.Master.TargetType == TargetType.IsTriggerTarget)
@@ -1981,13 +2003,12 @@ namespace Ryneus
         public List<ActionResultInfo> CheckRemovePassiveInfos()
         {
             var actionResultInfos = new List<ActionResultInfo>();
-            for (int i = 0;i < _battlers.Count;i++)
+            foreach (var battlerInfo in _battlers)
             {
-                var battlerInfo = _battlers[i];
                 var passiveSkillIds = _passiveSkillInfos[battlerInfo.Index];
-                for (int j = 0;j < passiveSkillIds.Count;j++)
+                for (int i = 0;i < passiveSkillIds.Count;i++)
                 {
-                    var passiveSkillData = DataSystem.FindSkill(passiveSkillIds[j]);
+                    var passiveSkillData = DataSystem.FindSkill(passiveSkillIds[i]);
                     bool IsRemove = false;
                     
                     foreach (var feature in passiveSkillData.FeatureDates)
@@ -1998,10 +2019,11 @@ namespace Ryneus
                             if (IsRemove == false && !IsTriggeredSkillInfo(battlerInfo,triggerDates,null,new List<ActionResultInfo>()))
                             {
                                 IsRemove = true;
-                                
-                                var featureData = new SkillData.FeatureData();
-                                featureData.FeatureType = FeatureType.RemoveStatePassive;
-                                featureData.Param1 = feature.Param1;
+                                var featureData = new SkillData.FeatureData
+                                {
+                                    FeatureType = FeatureType.RemoveStatePassive,
+                                    Param1 = feature.Param1
+                                };
                                 if (passiveSkillData.Scope == ScopeType.Self)
                                 {
                                     var actionResultInfo = new ActionResultInfo(battlerInfo,battlerInfo,new List<SkillData.FeatureData>(){featureData},passiveSkillData.Id);
@@ -2046,7 +2068,6 @@ namespace Ryneus
                                         }
                                     }
                                 }
-
                             }
                         }
                     }
@@ -2322,6 +2343,7 @@ namespace Ryneus
                         {
                             IsTriggered = false;
                         } else{
+                            IsTriggered = false;
                             break;
                         }
                     }

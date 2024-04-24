@@ -20,9 +20,11 @@ namespace Ryneus
         private bool _testBattle = false;
     #endif
         private bool _triggerAfterChecked = false;
+        /*
         private bool _triggerInterruptChecked = false;
         private bool _triggerUseBeforeChecked = false;
         private bool _triggerOpponentBeforeChecked = false;
+        */
         private bool _slipDamageChecked = false;
         private bool _regenerateChecked = false;
         private bool _battleEnded = false;
@@ -365,7 +367,6 @@ namespace Ryneus
                     }
                     // 開始前トリガー
                     _model.CheckTriggerPassiveInfos(BattleUtility.BeforeTriggerTimings(),null,null);
-                    //PassiveInfoAction(BattleUtility.BeforeTriggerTimings());
                 }
                 // 行動不可の場合は行動しない
                 if (!_model.EnableCurrentBattler())
@@ -570,22 +571,18 @@ namespace Ryneus
             if (actionInfo != null)
             {
                 // 自分の行動前パッシブ
-                if (_triggerUseBeforeChecked == false)
-                {
-                    _triggerUseBeforeChecked = true;
-                    _model.CheckTriggerPassiveInfos(new List<TriggerTiming>(){TriggerTiming.BeforeSelfUse},actionInfo,actionInfo.ActionResults);
-                }
+                _model.CheckTriggerPassiveInfos(new List<TriggerTiming>(){TriggerTiming.BeforeSelfUse},actionInfo,actionInfo.ActionResults);
+                
                 // 相手の行動前パッシブ
-                if (_triggerOpponentBeforeChecked == false)
-                {
-                    _triggerOpponentBeforeChecked = true;
-                    _model.CheckTriggerPassiveInfos(new List<TriggerTiming>(){TriggerTiming.BeforeOpponentUse},actionInfo,actionInfo.ActionResults);
-                }
+                _model.CheckTriggerPassiveInfos(new List<TriggerTiming>(){TriggerTiming.BeforeOpponentUse},actionInfo,actionInfo.ActionResults);
+
                 _view.BattlerBattleClearSelect();
                 _model.MakeActionResultInfo(actionInfo,indexList);
                 actionInfo.SetTargetIndexList(indexList);
                 _model.MakeCurseActionResults(actionInfo,indexList);
                 // 行動割り込みスキル判定
+                _model.CheckTriggerSkillInfos(TriggerTiming.Interrupt,actionInfo,actionInfo.ActionResults);
+                /*
                 if (_triggerInterruptChecked == false)
                 {
                     var result = _model.CheckTriggerSkillInfos(TriggerTiming.Interrupt,actionInfo,actionInfo.ActionResults);
@@ -636,7 +633,7 @@ namespace Ryneus
                     }
                     _triggerInterruptChecked = true;
                 }
-                
+                */
                 _model.CheckTriggerPassiveInfos(new List<TriggerTiming>(){TriggerTiming.Use},actionInfo,actionInfo.ActionResults);
                 
             }
@@ -1147,9 +1144,6 @@ namespace Ryneus
             _model.SeekTurnCount();
             _view.RefreshTurn(_model.TurnCount);
             _view.ShowStateOverlay();
-            _triggerInterruptChecked = false;
-            _triggerUseBeforeChecked = false;
-            _triggerOpponentBeforeChecked = false;
             _triggerAfterChecked = false;
             _slipDamageChecked = false;
             _regenerateChecked = false;

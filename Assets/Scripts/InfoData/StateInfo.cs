@@ -3,9 +3,7 @@ namespace Ryneus
 {
     [System.Serializable]
     public class StateInfo {
-        public StateData Master {
-            get {return DataSystem.States.Find(a => a.StateType == _stateType);}
-        }
+        public StateData Master => DataSystem.States.Find(a => a.StateType == _stateType);
         private StateType _stateType = 0;
         public StateType StateType => _stateType;
         private int _turns = 0;
@@ -61,13 +59,13 @@ namespace Ryneus
             }
             if (stateInfo.StateType == StateType.Death)
             {
-                return (stateInfo.StateType == _stateType);
+                return stateInfo.StateType == _stateType;
             }
             if (stateInfo.Master.OverWrite)
             {
                 return (stateInfo.StateType == _stateType) && (stateInfo._skillId == _skillId);
             }
-            return (stateInfo.StateType == _stateType);
+            return stateInfo.StateType == _stateType;
         }
 
         public bool UpdateTurn()
