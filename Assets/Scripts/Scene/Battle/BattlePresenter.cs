@@ -666,8 +666,6 @@ namespace Ryneus
                     _view.StartAnimation(targetIndex,animation,0);
                 }
             }
-            //var waitFrame = GameSystem.ConfigData.BattleAnimationSkip ? 1 : 30;
-            //await UniTask.DelayFrame((int)(waitFrame / GameSystem.ConfigData.BattleSpeed));
             EndTurn();
         }
 
@@ -690,8 +688,6 @@ namespace Ryneus
             }
             _model.CheckTriggerPassiveInfos(BattleUtility.HpDamagedTriggerTimings(),null,slipDamageResults);
 
-            //var waitFrame = GameSystem.ConfigData.BattleAnimationSkip ? 1 : 30;
-            //await UniTask.DelayFrame((int)(waitFrame / GameSystem.ConfigData.BattleSpeed));
             EndTurn();
         }
 
@@ -712,8 +708,17 @@ namespace Ryneus
             SoundManager.Instance.PlayStaticSe(SEType.Skill);
             var selfAnimation = ResourceSystem.LoadResourceEffect("MAGICALxSPIRAL/WHead1");
             _view.StartAnimation(actionInfo.SubjectIndex,selfAnimation,0,1f,1.0f);
-            
-            _view.SetCurrentSkillData(actionInfo.Master);
+            if (actionInfo.TriggeredSkill)
+            {
+                if (actionInfo.Master.IsDisplayBattleSkill())
+                {
+                    _view.ShowCutinBattleThumb(actionInfo.Master,_model.CurrentBattler);
+                }
+            }
+            if (actionInfo.Master.IsDisplayBattleSkill())
+            {
+                _view.SetCurrentSkillData(actionInfo.Master);
+            }
             var animationData = BattleUtility.AnimationData(actionInfo.Master.AnimationId);
             if (animationData != null && animationData.AnimationPath != "" && GameSystem.ConfigData.BattleAnimationSkip == false)
             {
@@ -730,7 +735,7 @@ namespace Ryneus
                 {
                     PopupActionResult(actionResultInfo,actionResultInfo.TargetIndex,true,true);
                 }
-                var waitFrame = (int)(60 / GameSystem.ConfigData.BattleSpeed);
+                var waitFrame = (int)(48 / GameSystem.ConfigData.BattleSpeed);
                 if (actionInfo.RepeatTime != 0 && waitFrame > 1)
                 {
                     waitFrame = 8;
@@ -743,12 +748,12 @@ namespace Ryneus
                 {
                     PopupActionResult(actionResultInfo,actionResultInfo.TargetIndex,true,true);
                 }
-                var waitFrame = GameSystem.ConfigData.BattleAnimationSkip ? 1 : 30;
+                var waitFrame = _model.WaitFrameTime(30);
                 if (actionInfo.RepeatTime != 0 && waitFrame > 1)
                 {
                     waitFrame = 8;
                 }
-                await UniTask.DelayFrame((int)(waitFrame / GameSystem.ConfigData.BattleSpeed));
+                await UniTask.DelayFrame(waitFrame);
             }
             _nextCommandType = Battle.CommandType.EndAnimation;
             CommandEndAnimation();
@@ -764,15 +769,17 @@ namespace Ryneus
                 return;
             }
             
-            _view.SetCurrentSkillData(actionInfo.Master);
+            if (actionInfo.Master.IsDisplayBattleSkill())
+            {
+                _view.SetCurrentSkillData(actionInfo.Master);
+            }
 
             StartAliveAnimation(_model.CurrentActionInfo().ActionResults);
             foreach (var actionResultInfo in actionInfo.ActionResults)
             {
                 PopupActionResult(actionResultInfo,actionResultInfo.TargetIndex,true,true);
             }
-            var waitFrame = GameSystem.ConfigData.BattleAnimationSkip ? 1 : 8;
-            await UniTask.DelayFrame((int)(waitFrame / GameSystem.ConfigData.BattleSpeed));
+            await UniTask.DelayFrame(_model.WaitFrameTime(8));
             _nextCommandType = Battle.CommandType.EndAnimation;
             CommandEndAnimation();
         }
@@ -957,7 +964,7 @@ namespace Ryneus
             if (resultInfos.Count > 0)
             {
                 var skillData = DataSystem.FindSkill(resultInfos[0].SkillId);
-                if (skillData != null)
+                if (skillData != null && skillData.IsDisplayBattleSkill())
                 {
                     _view.SetCurrentSkillData(skillData);
                 }
@@ -976,7 +983,7 @@ namespace Ryneus
                 }
                 // ダメージ表現をしない
                 PopupActionResult(resultInfo,resultInfo.TargetIndex,true,false);
-                await UniTask.DelayFrame((int)(60 / GameSystem.ConfigData.BattleSpeed));
+                await UniTask.DelayFrame(_model.WaitFrameTime(30));
             }
             foreach (var resultInfo in resultInfos)
             {
@@ -1060,8 +1067,7 @@ namespace Ryneus
                 if (gainAp > 0)
                 {
                     _view.StartHeal(_model.CurrentTurnBattler.Index,DamageType.MpHeal,gainAp); 
-                    var waitFrame = GameSystem.ConfigData.BattleAnimationSkip ? 1 : 30;
-                    await UniTask.DelayFrame((int)(waitFrame / GameSystem.ConfigData.BattleSpeed));           
+                    await UniTask.DelayFrame(_model.WaitFrameTime(30));           
                     _model.ActionAfterGainAp(gainAp);
                     _view.RefreshStatus();
                 }

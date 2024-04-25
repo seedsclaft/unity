@@ -3652,6 +3652,12 @@ namespace Ryneus
         {
             return MakeListData(_currentBattler.StateInfos);
         }
+
+        public int WaitFrameTime(int time)
+        {
+            var waitFrame = GameSystem.ConfigData.BattleAnimationSkip ? 1 : time;
+            return (int)(waitFrame / GameSystem.ConfigData.BattleSpeed);
+        }
         
     #if UNITY_EDITOR
         public List<TestActionData> testActionDates = new ();

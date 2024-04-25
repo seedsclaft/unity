@@ -2134,6 +2134,7 @@ GameObject:
   - component: {fileID: 259990858579148611}
   - component: {fileID: 45273967617180794}
   - component: {fileID: 6611883778909717016}
+  - component: {fileID: 2909970338903588826}
   m_Layer: 5
   m_Name: Thumb
   m_TagString: Untagged
@@ -2178,6 +2179,7 @@ MonoBehaviour:
   actorInfoComponent: {fileID: 6611883778909717016}
   mainThumbRoot: {fileID: 3254761042057098431}
   awakenThumbRoot: {fileID: 4798535137436176062}
+  canvasGroup: {fileID: 2909970338903588826}
 --- !u!114 &6611883778909717016
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2216,6 +2218,18 @@ MonoBehaviour:
   element5Cost: {fileID: 0}
   recoveryCost: {fileID: 0}
   resourceGain: {fileID: 0}
+--- !u!225 &2909970338903588826
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6148819202521490573}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &6510051384594972750
 GameObject:
   m_ObjectHideFlags: 0

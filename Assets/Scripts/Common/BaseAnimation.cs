@@ -8,15 +8,25 @@ namespace Ryneus
 {
     public class BaseAnimation : MonoBehaviour
     {
+        private static Sequence _sequence;
         public static void MoveAndFade(RectTransform rect,Image image,float moveX,float fade,float duration = 0.1f,System.Action endEvent = null)
         {
-            var sequence = DOTween.Sequence()
+            _sequence = DOTween.Sequence()
                 .Append(rect.DOLocalMoveX(moveX,duration))
-                .Join(image.DOFade(fade,duration)
-                .OnComplete(() => {
+                .Join(image.DOColor(new Color(255,255,255,fade),duration)
+                .OnComplete(() => 
+                {
                     if (endEvent != null) endEvent();
                 })
                 .SetEase(Ease.InOutQuad));
+        }
+
+        public static void Kill()
+        {
+            if (_sequence != null)
+            {
+                _sequence.Complete();
+            }
         }
     }
 }

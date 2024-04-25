@@ -70,10 +70,11 @@ namespace Ryneus
 
             actorMain.transform.DOLocalMove(new Vector3(-240,-124,0),time1);
             actorCanvasGroup.alpha = 0;
+            var delay = 0.1f;// / speedRate;
             var actor = DOTween.Sequence()
-                .SetDelay(0.1f)
-                .Append(actorMain.transform.DOLocalMove(new Vector3(-184,-124,0),time2  - 0.1f))
-                .Join(actorCanvasGroup.DOFade(1,time2 - 0.1f))
+                .SetDelay(delay)
+                .Append(actorMain.transform.DOLocalMove(new Vector3(-184,-124,0),time2 - delay))
+                .Join(actorCanvasGroup.DOFade(1,time2 - delay))
                 .Append(actorMain.transform.DOLocalMove(new Vector3(-184 + 16,-124,0),time3))
                 .Append(actorMain.transform.DOLocalMove(new Vector3(720,-64,0),time4))
                 .Join(actorCanvasGroup.DOFade(0,time4))
