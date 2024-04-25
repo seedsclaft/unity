@@ -33,6 +33,8 @@ namespace Ryneus
 			_SkillName,
 			Level,
 			Weight,
+			TriggerType1,
+			TriggerType2,
 		}
 		enum BaseTriggersColumn
 		{
@@ -141,6 +143,13 @@ namespace Ryneus
 						LearningData.Weight = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseLearningColumn.Weight);
 						LearningData.TriggerDates = new List<SkillData.TriggerData>();
 						Enemy.LearningSkills.Add(LearningData);
+
+						var SkillTriggerData = new SkillTriggerActorData();
+						SkillTriggerData.SkillId = LearningData.SkillId;
+						var skillTypes = new List<TriggerType>();
+						SkillTriggerData.Trigger1 = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseLearningColumn.TriggerType1);
+						SkillTriggerData.Trigger2 = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseLearningColumn.TriggerType2);
+						Enemy.SkillTriggerDates.Add(SkillTriggerData);
 					}
 
 					

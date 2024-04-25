@@ -37,7 +37,6 @@ namespace Ryneus
 
         private List<ActionInfo> _actionInfos = new ();
         private Dictionary<int,List<ActionInfo>> _turnActionInfos = new ();
-        private Dictionary<int,List<ActionInfo>> TurnActionInfos => _turnActionInfos;
         public void AddTurnActionInfos(ActionInfo actionInfo,bool Interrupt)
         {
             if (!_turnActionInfos.ContainsKey(_turnCount))
@@ -52,9 +51,9 @@ namespace Ryneus
                 _turnActionInfos[_turnCount].Add(actionInfo);
             }
         }
-        private bool UsedTurnActionInfo(SkillInfo skillInfo)
+        private bool UsedTurnActionInfo(SkillInfo skillInfo,int subjectIndex)
         {
-            return _turnActionInfos.ContainsKey(_turnCount) && _turnActionInfos[_turnCount].Find(a => a.Master.Id == skillInfo.Id) != null;
+            return _turnActionInfos.ContainsKey(_turnCount) && _turnActionInfos[_turnCount].Find(a => a.Master.Id == skillInfo.Id && a.SubjectIndex == subjectIndex) != null;
         }
         private Dictionary<int,List<int>> _passiveSkillInfos = new ();
 
@@ -1746,7 +1745,7 @@ namespace Ryneus
                 triggeredSkills.Clear();
                 foreach (var skillInfo in checkBattler.ActiveSkills())
                 {
-                    if (UsedTurnActionInfo(skillInfo))
+                    if (UsedTurnActionInfo(skillInfo,checkBattler.Index))
                     {
                         continue;
                     }
@@ -1851,7 +1850,7 @@ namespace Ryneus
                 return null;
             }
             
-            if (UsedTurnActionInfo(passiveInfo))
+            if (UsedTurnActionInfo(passiveInfo,battlerInfo.Index))
             {
                 return null;
             }
@@ -3283,7 +3282,7 @@ namespace Ryneus
         public (int,int) MakeAutoActorSkillId(BattlerInfo battlerInfo)
         {
             var skillInfos = battlerInfo.ActiveSkills().FindAll(a => CheckCanUse(a,battlerInfo));
-            var (skillId,targetIndex) = BattleActorAI.MakeAutoActorSkillId(skillInfos,battlerInfo,BattlerActors(),BattlerEnemies());
+            //var (skillId,targetIndex) = BattleActorAI.MakeAutoActorSkillId(skillInfos,battlerInfo,BattlerActors(),BattlerEnemies());
             
             // トリガーデータからスキル検索
             var skillTriggerInfos = PartyInfo.SkillTriggerInfos(battlerInfo.ActorInfo.ActorId);
@@ -3301,7 +3300,101 @@ namespace Ryneus
                         var triggerData = new SkillData.TriggerData
                         {
                             TriggerType = skillTriggerData.TriggerType,
-                            Param1 = skillTriggerData.Param1
+                            Param1 = skillTriggerData.Param1,
+                            Param2 = skillTriggerData.Param2,
+                            Param3 = skillTriggerData.Param3,
+                        };
+                        triggerDates.Add(triggerData);
+                    }
+                }
+                if (selectSkillId == -1 && selectTargetIndex == -1 && skillTriggerInfo.SkillId > -1)
+                {
+                    // 条件なし
+                    if (triggerDates.Count == 0)
+                    {
+                        if (skillInfos.Find(a => a.Id == skillTriggerInfo.SkillId) != null)
+                        {
+                            selectSkillId = skillTriggerInfo.SkillId;
+                        }
+                    } else
+                    {
+                        if (triggerDates.Count == 2)
+                        {
+                            triggerDates[0].Param3 = 1; // and判定
+                        }
+                        if (CanUseSkillTrigger(triggerDates,battlerInfo))
+                        {           
+                            if (skillInfos.Find(a => a.Id == skillTriggerInfo.SkillId) != null)
+                            {
+                                selectSkillId = skillTriggerInfo.SkillId;
+                            }  
+                        }
+                    }
+                }
+                // 優先指定の判定
+                if (selectSkillId > -1 && selectTargetIndex == -1)
+                {
+                    var targetIndexList = GetSkillTargetIndexes(selectSkillId,battlerInfo.Index,true);
+                    if (targetIndexList.Count == 0)
+                    {
+                        selectSkillId = -1;
+                    }
+                    var target = CanUseSkillTriggerTarget(selectSkillId,triggerDates,battlerInfo,targetIndexList);
+                    if (target > -1)
+                    {
+                        selectTargetIndex = target;
+                    } else
+                    {
+                        selectSkillId = -1;
+                    }
+                }
+                if (selectSkillId > -1 && selectTargetIndex > -1)
+                {
+                    return (selectSkillId,selectTargetIndex);
+                }
+            }
+            return (selectSkillId,selectTargetIndex);
+        }
+
+        public (int,int) MakeAutoEnemySkillId(BattlerInfo battlerInfo)
+        {
+            var skillInfos = battlerInfo.ActiveSkills().FindAll(a => CheckCanUse(a,battlerInfo));
+            //var (skillId,targetIndex) = BattleActorAI.MakeAutoActorSkillId(skillInfos,battlerInfo,BattlerActors(),BattlerEnemies());
+            skillInfos.Sort((a,b) => a.Weight > b.Weight ? 1:-1);
+            var skillTriggerInfos = new List<SkillTriggerInfo>();
+            foreach (var skillInfo in skillInfos)
+            {
+                var skillTriggerData = DataSystem.Enemies.Find(a => a.Id == battlerInfo.EnemyData.Id).SkillTriggerDates.Find(a => a.SkillId == skillInfo.Id);
+                if (skillTriggerData == null)
+                {
+                    continue;
+                }
+                var skillTriggerInfo = new SkillTriggerInfo();
+                skillTriggerInfo.SetSkillId(skillTriggerData.SkillId);
+                var SkillTriggerData1 = DataSystem.SkillTriggers.Find(a => a.Id == skillTriggerData.Trigger1);
+                var SkillTriggerData2 = DataSystem.SkillTriggers.Find(a => a.Id == skillTriggerData.Trigger2);
+                skillTriggerInfo.UpdateTriggerDates(new List<SkillTriggerData>(){SkillTriggerData1,SkillTriggerData2});
+                skillTriggerInfo.SetActorId(battlerInfo.EnemyData.Id);
+                skillTriggerInfos.Add(skillTriggerInfo);
+            }
+
+            var selectSkillId = -1;
+            var selectTargetIndex = -1;
+            foreach (var skillTriggerInfo in skillTriggerInfos)
+            {
+                // 条件
+                var triggerDates = new List<SkillData.TriggerData>();
+                var skillTriggerDates = skillTriggerInfo.SkillTriggerDates;
+                foreach (var skillTriggerData in skillTriggerDates)
+                {
+                    if (skillTriggerData != null && skillTriggerData.Id > 0)
+                    {
+                        var triggerData = new SkillData.TriggerData
+                        {
+                            TriggerType = skillTriggerData.TriggerType,
+                            Param1 = skillTriggerData.Param1,
+                            Param2 = skillTriggerData.Param2,
+                            Param3 = skillTriggerData.Param3,
                         };
                         triggerDates.Add(triggerData);
                     }

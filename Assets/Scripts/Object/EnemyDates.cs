@@ -18,6 +18,7 @@ namespace Ryneus
         public StatusInfo BaseStatus;
         public List<KindType> Kinds;
         public List<LearningData> LearningSkills = new();
+        public List<SkillTriggerActorData> SkillTriggerDates = new();
         
         public int CurrentParam(StatusParamType growType,int level)
         {

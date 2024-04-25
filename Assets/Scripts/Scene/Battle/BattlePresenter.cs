@@ -421,10 +421,21 @@ namespace Ryneus
                         return;
                     }
                     #endif
+
+                    var (autoSkillId,targetIndex) = _model.MakeAutoEnemySkillId(_model.CurrentBattler);
+                    if (autoSkillId == -1)
+                    {
+                        autoSkillId = 20010;
+                    }
+                    var skillInfo = new SkillInfo(autoSkillId);
+                    var actionInfo = _model.MakeActionInfo(_model.CurrentBattler,skillInfo,false,false);
+                    CommandSelectTargetIndexes(_model.MakeAutoSelectIndex(actionInfo,targetIndex));
+                    /*
                     int autoSkillId = _model.MakeAutoSkillId(_model.CurrentBattler);
                     var skillInfo = new SkillInfo(autoSkillId);
                     var actionInfo = _model.MakeActionInfo(_model.CurrentBattler,skillInfo,false,false);
                     CommandSelectTargetIndexes(_model.MakeAutoSelectIndex(actionInfo));
+                    */
                 }
             }
         }

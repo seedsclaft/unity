@@ -46,8 +46,8 @@ namespace Ryneus
         }
         private ActorInfo _actorInfo;
         public ActorInfo ActorInfo => _actorInfo;
-        private EnemyData _enemyData;
-        public EnemyData EnemyData => _enemyData;
+        private int _enemyId;
+        public EnemyData EnemyData => DataSystem.Enemies.Find(a => a.Id == _enemyId);
         private List<KindType> _kinds = new ();
         public List<KindType> Kinds => _kinds;
         private int _lastSelectSkillId = 0;
@@ -169,7 +169,7 @@ namespace Ryneus
             _index = index + 100;
             _isActor = false;
             _isAlcana = false;
-            _enemyData = enemyData;
+            _enemyId = enemyData.Id;
             _hp = _status.Hp;
             _mp = _status.Mp;
             _lineIndex = lineIndex;

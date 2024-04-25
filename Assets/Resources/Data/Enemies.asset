@@ -36,6 +36,16 @@ MonoBehaviour:
       Level: 40
       Weight: 100
       TriggerDates: []
+    SkillTriggerDates:
+    - SkillId: 3010
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 3060
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 3050
+      Trigger1: 0
+      Trigger2: 0
   - Id: 2
     Name: "\u30AB\u30FC\u30B9\u30C9"
     ImagePath: Cursed
@@ -59,6 +69,16 @@ MonoBehaviour:
       Level: 40
       Weight: 50
       TriggerDates: []
+    SkillTriggerDates:
+    - SkillId: 5010
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 5030
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 5040
+      Trigger1: 0
+      Trigger2: 0
   - Id: 3
     Name: "\u30D3\u30FC"
     ImagePath: Bee
@@ -82,6 +102,16 @@ MonoBehaviour:
       Level: 40
       Weight: 100
       TriggerDates: []
+    SkillTriggerDates:
+    - SkillId: 2010
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 2030
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 12050
+      Trigger1: 0
+      Trigger2: 0
   - Id: 4
     Name: "\u30A6\u30EB\u30D5"
     ImagePath: Wolf
@@ -99,16 +129,29 @@ MonoBehaviour:
       TriggerDates: []
     - SkillId: 11010
       Level: 20
-      Weight: 100
+      Weight: 0
       TriggerDates: []
     - SkillId: 11020
       Level: 40
-      Weight: 100
+      Weight: 0
       TriggerDates: []
     - SkillId: 11040
       Level: 60
-      Weight: 100
+      Weight: 0
       TriggerDates: []
+    SkillTriggerDates:
+    - SkillId: 1010
+      Trigger1: 5061
+      Trigger2: 0
+    - SkillId: 11010
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 11020
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 11040
+      Trigger1: 0
+      Trigger2: 0
   - Id: 5
     Name: "\u30AF\u30ED\u30A6"
     ImagePath: Crow
@@ -136,6 +179,19 @@ MonoBehaviour:
       Level: 60
       Weight: 50
       TriggerDates: []
+    SkillTriggerDates:
+    - SkillId: 2010
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 2040
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 12030
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 12060
+      Trigger1: 0
+      Trigger2: 0
   - Id: 6
     Name: "\u30CD\u30FC\u30E0\u30EC\u30B9"
     ImagePath: Nameless
@@ -171,6 +227,16 @@ MonoBehaviour:
         Param1: 50
         Param2: 0
         Param3: 0
+    SkillTriggerDates:
+    - SkillId: 4010
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 4050
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 4030
+      Trigger1: 0
+      Trigger2: 0
   - Id: 7
     Name: "\u30B5\u30FC\u30C1\u30E3\u30FC"
     ImagePath: Seacher
@@ -194,6 +260,16 @@ MonoBehaviour:
       Level: 40
       Weight: 50
       TriggerDates: []
+    SkillTriggerDates:
+    - SkillId: 5010
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 5060
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 15010
+      Trigger1: 0
+      Trigger2: 0
   - Id: 8
     Name: "\u30B7\u30FC\u30EB\u30C9"
     ImagePath: Shiled
@@ -221,6 +297,19 @@ MonoBehaviour:
       Level: 60
       Weight: 75
       TriggerDates: []
+    SkillTriggerDates:
+    - SkillId: 3010
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 3020
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 13030
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 13040
+      Trigger1: 0
+      Trigger2: 0
   - Id: 9
     Name: "\u30C9\u30E9\u30A4\u30A2\u30C9"
     ImagePath: Dryad
@@ -254,6 +343,19 @@ MonoBehaviour:
       Level: 60
       Weight: 50
       TriggerDates: []
+    SkillTriggerDates:
+    - SkillId: 1010
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 1030
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 11030
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 1050
+      Trigger1: 0
+      Trigger2: 0
   - Id: 10
     Name: "\u30B9\u30B3\u30FC\u30D4\u30AA\u30F3"
     ImagePath: Scorpion
@@ -285,6 +387,22 @@ MonoBehaviour:
       Level: 60
       Weight: 100
       TriggerDates: []
+    SkillTriggerDates:
+    - SkillId: 2010
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 12010
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 12060
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 2050
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 12040
+      Trigger1: 0
+      Trigger2: 0
   - Id: 11
     Name: "\u30B9\u30AF\u30A4\u30C3\u30C9"
     ImagePath: Squid
@@ -308,6 +426,16 @@ MonoBehaviour:
       Level: 40
       Weight: 100
       TriggerDates: []
+    SkillTriggerDates:
+    - SkillId: 3010
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 3040
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 13020
+      Trigger1: 0
+      Trigger2: 0
   - Id: 12
     Name: "\u30AF\u30EA\u30FC\u30D1\u30FC"
     ImagePath: Creeper
@@ -331,6 +459,16 @@ MonoBehaviour:
       Level: 40
       Weight: 100
       TriggerDates: []
+    SkillTriggerDates:
+    - SkillId: 5010
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 15010
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 15040
+      Trigger1: 0
+      Trigger2: 0
   - Id: 13
     Name: "\u30A4\u30F3\u30D7"
     ImagePath: Imp
@@ -354,6 +492,16 @@ MonoBehaviour:
       Level: 40
       Weight: 50
       TriggerDates: []
+    SkillTriggerDates:
+    - SkillId: 4010
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 14040
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 14060
+      Trigger1: 0
+      Trigger2: 0
   - Id: 14
     Name: "\u30B4\u30FC\u30B9\u30C8\u30A2\u30FC\u30DE\u30FC"
     ImagePath: Armor
@@ -383,6 +531,16 @@ MonoBehaviour:
       Level: 40
       Weight: 80
       TriggerDates: []
+    SkillTriggerDates:
+    - SkillId: 4010
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 4030
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 14030
+      Trigger1: 0
+      Trigger2: 0
   - Id: 15
     Name: "\u30BD\u30FC\u30C9"
     ImagePath: Sword
@@ -418,6 +576,16 @@ MonoBehaviour:
       Level: 40
       Weight: 100
       TriggerDates: []
+    SkillTriggerDates:
+    - SkillId: 1010
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 1040
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 11030
+      Trigger1: 0
+      Trigger2: 0
   - Id: 101
     Name: "\u30A2\u30E2\u30F3"
     ImagePath: Ammon
@@ -435,7 +603,7 @@ MonoBehaviour:
       TriggerDates: []
     - SkillId: 1040
       Level: 1
-      Weight: 50
+      Weight: 60
       TriggerDates:
       - SkillId: 0
         TriggerType: 4020
@@ -455,6 +623,22 @@ MonoBehaviour:
       Level: 1
       Weight: 0
       TriggerDates: []
+    SkillTriggerDates:
+    - SkillId: 1010
+      Trigger1: 5061
+      Trigger2: 0
+    - SkillId: 1040
+      Trigger1: 8032
+      Trigger2: 0
+    - SkillId: 200110
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 200120
+      Trigger1: 5061
+      Trigger2: 0
+    - SkillId: 200130
+      Trigger1: 0
+      Trigger2: 0
   - Id: 102
     Name: "\u30D1\u30A4\u30E2\u30F3"
     ImagePath: Paimon
@@ -486,6 +670,22 @@ MonoBehaviour:
       Level: 1
       Weight: 0
       TriggerDates: []
+    SkillTriggerDates:
+    - SkillId: 4010
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 3080
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 200210
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 200220
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 200230
+      Trigger1: 0
+      Trigger2: 0
   - Id: 103
     Name: "\u30A2\u30F3\u30C9\u30E9\u30B9"
     ImagePath: Andras
@@ -517,6 +717,22 @@ MonoBehaviour:
       Level: 1
       Weight: 0
       TriggerDates: []
+    SkillTriggerDates:
+    - SkillId: 2010
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 2060
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 200310
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 200320
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 200330
+      Trigger1: 0
+      Trigger2: 0
   - Id: 104
     Name: "\u30D9\u30EA\u30C8"
     ImagePath: Berith
@@ -552,6 +768,25 @@ MonoBehaviour:
       Level: 1
       Weight: 0
       TriggerDates: []
+    SkillTriggerDates:
+    - SkillId: 5010
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 5080
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 15030
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 200410
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 200420
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 200430
+      Trigger1: 0
+      Trigger2: 0
   - Id: 105
     Name: "\u30D3\u30D5\u30ED\u30F3\u30B9"
     ImagePath: Bifrons
@@ -583,6 +818,22 @@ MonoBehaviour:
       Level: 1
       Weight: 0
       TriggerDates: []
+    SkillTriggerDates:
+    - SkillId: 3010
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 3070
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 200510
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 200520
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 200530
+      Trigger1: 0
+      Trigger2: 0
   - Id: 106
     Name: "\u30A2\u30A4\u30DB\u30FC\u30C8"
     ImagePath: Eihort
@@ -614,6 +865,22 @@ MonoBehaviour:
       Level: 1
       Weight: 0
       TriggerDates: []
+    SkillTriggerDates:
+    - SkillId: 4010
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 4080
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 200610
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 200620
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 200630
+      Trigger1: 0
+      Trigger2: 0
   - Id: 107
     Name: "\u30D3\u30E4\u30FC\u30AD\u30FC"
     ImagePath: Byakhee
@@ -645,6 +912,22 @@ MonoBehaviour:
       Level: 1
       Weight: 0
       TriggerDates: []
+    SkillTriggerDates:
+    - SkillId: 5010
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 4020
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 200710
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 200720
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 200730
+      Trigger1: 0
+      Trigger2: 0
   - Id: 201
     Name: "\u30A2\u30AB\u30DE\u30CA\u30D5"
     ImagePath: Buer
@@ -672,6 +955,19 @@ MonoBehaviour:
       Level: 1
       Weight: 50
       TriggerDates: []
+    SkillTriggerDates:
+    - SkillId: 5010
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 5020
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 100510
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 100511
+      Trigger1: 0
+      Trigger2: 0
   - Id: 202
     Name: "\u30C7\u30AB\u30E9\u30D3\u30A2"
     ImagePath: Decarabia
@@ -699,6 +995,19 @@ MonoBehaviour:
       Level: 1
       Weight: 80
       TriggerDates: []
+    SkillTriggerDates:
+    - SkillId: 2010
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 2020
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 100210
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 100211
+      Trigger1: 0
+      Trigger2: 0
   - Id: 203
     Name: "\u30B6\u30AC\u30F3"
     ImagePath: Zagan
@@ -736,6 +1045,22 @@ MonoBehaviour:
       Level: 1
       Weight: 50
       TriggerDates: []
+    SkillTriggerDates:
+    - SkillId: 3010
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 3020
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 3050
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 100310
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 100311
+      Trigger1: 0
+      Trigger2: 0
   - Id: 204
     Name: "\u30E1\u30D5\u30A3\u30B9\u30C8\u30D5\u30A7\u30EC\u30B9"
     ImagePath: Mephisto
@@ -795,6 +1120,34 @@ MonoBehaviour:
       Level: 1
       Weight: 30
       TriggerDates: []
+    SkillTriggerDates:
+    - SkillId: 4010
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 14040
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 100410
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 100411
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 14010
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 12010
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 4050
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 4060
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 14070
+      Trigger1: 0
+      Trigger2: 0
   - Id: 205
     Name: "\u30A2\u30B9\u30BF\u30ED\u30C8"
     ImagePath: Astaroth
@@ -826,6 +1179,22 @@ MonoBehaviour:
       Level: 1
       Weight: 0
       TriggerDates: []
+    SkillTriggerDates:
+    - SkillId: 1010
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 1020
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 100110
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 100111
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 12010
+      Trigger1: 0
+      Trigger2: 0
   - Id: 206
     Name: "\u30A4\u30BF\u30AF\u30A1"
     ImagePath: Ithaqua
@@ -857,6 +1226,22 @@ MonoBehaviour:
       Level: 1
       Weight: 0
       TriggerDates: []
+    SkillTriggerDates:
+    - SkillId: 2010
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 2070
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 100610
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 100611
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 12010
+      Trigger1: 0
+      Trigger2: 0
   - Id: 207
     Name: "\u30A2\u30F3\u30EA\u30FB\u30DE\u30F3\u30E6"
     ImagePath: Cyaegha
@@ -888,6 +1273,22 @@ MonoBehaviour:
       Level: 1
       Weight: 50
       TriggerDates: []
+    SkillTriggerDates:
+    - SkillId: 5010
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 5050
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 15040
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 100710
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 100711
+      Trigger1: 0
+      Trigger2: 0
   - Id: 213
     Name: "\u30B6\u30AC\u30F3"
     ImagePath: Zagan
@@ -919,6 +1320,22 @@ MonoBehaviour:
       Level: 1
       Weight: 80
       TriggerDates: []
+    SkillTriggerDates:
+    - SkillId: 3010
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 3050
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 3070
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 100320
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 100321
+      Trigger1: 0
+      Trigger2: 0
   - Id: 214
     Name: "\u30E1\u30D5\u30A3\u30B9\u30C8\u30D5\u30A7\u30EC\u30B9"
     ImagePath: Mephisto
@@ -966,6 +1383,34 @@ MonoBehaviour:
       Level: 1
       Weight: 30
       TriggerDates: []
+    SkillTriggerDates:
+    - SkillId: 4010
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 14040
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 100420
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 100421
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 14080
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 12010
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 4070
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 4060
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 14070
+      Trigger1: 0
+      Trigger2: 0
   - Id: 301
     Name: "\u30C7\u30D3\u30EB\u30C9\u30E9\u30B4\u30F3"
     ImagePath: Devildragon
@@ -995,3 +1440,13 @@ MonoBehaviour:
       Level: 1
       Weight: 0
       TriggerDates: []
+    SkillTriggerDates:
+    - SkillId: 2010
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 6010
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 12010
+      Trigger1: 0
+      Trigger2: 0
