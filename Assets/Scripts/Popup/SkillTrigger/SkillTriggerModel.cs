@@ -41,10 +41,16 @@ namespace Ryneus
             if (skillTriggerData.Count > index)
             {
                 var skill = DataSystem.FindSkill(skillTriggerData[index].SkillId);
-                list = list.FindAll(a => (int)a.TargetType == -1 || a.TargetType == skill.TargetType);
+                if (skill.TargetType == TargetType.All)
+                {
+                    list = list.FindAll(a => (int)a.TargetType == -1 || a.TargetType == TargetType.All || a.TargetType == TargetType.Friend || a.TargetType == TargetType.Opponent);
+                } else
+                {
+                    list = list.FindAll(a => (int)a.TargetType == -1 || a.TargetType == skill.TargetType);
+                }
             }
             // ソート
-            list.Sort((a,b) => a.Priority > b.Priority ? 1 : -1);
+            list.Sort((a,b) => a.Priority >= b.Priority ? 1 : -1);
             return MakeListData(list);
         }
 

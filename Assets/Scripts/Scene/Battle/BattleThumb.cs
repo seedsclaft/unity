@@ -57,11 +57,11 @@ namespace Ryneus
             }
             var awaken = false;//battlerInfo.IsAwaken;
             var image = awaken ? actorInfoComponent.AwakenThumb : actorInfoComponent.MainThumb;
-            gameObject.GetComponent<RectTransform>().localPosition = new Vector3(-20,0,0);
+            gameObject.GetComponent<RectTransform>().localPosition = new Vector3(20,0,0);
             canvasGroup.alpha = 1;
             _animationBusy = true;
-            var waitFrame = 0.4f / GameSystem.ConfigData.BattleSpeed;
-            MoveAndFade(gameObject.GetComponent<RectTransform>(),20,0,waitFrame,() => {
+            var waitFrame = 0.6f / GameSystem.ConfigData.BattleSpeed;
+            MoveAndFade(gameObject.GetComponent<RectTransform>(),0,0,waitFrame,() => {
                 _animationBusy = false;
             });
             awakenThumbRoot.SetActive(awaken);

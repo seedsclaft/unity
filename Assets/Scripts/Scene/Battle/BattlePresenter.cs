@@ -561,7 +561,7 @@ namespace Ryneus
         {
             if (actionInfo.Master.SkillType == SkillType.Messiah && actionInfo.SubjectIndex < 100 || actionInfo.Master.SkillType == SkillType.Awaken && actionInfo.SubjectIndex < 100)
             {
-                StartAnimationDemigod();
+                StartAnimationDemigod(actionInfo.SubjectIndex);
             } else
             {
                 StartAnimationSkill();
@@ -592,7 +592,8 @@ namespace Ryneus
                 actionInfo.SetTargetIndexList(indexList);
                 _model.MakeCurseActionResults(actionInfo,indexList);
                 // 行動割り込みスキル判定
-                _model.CheckTriggerSkillInfos(TriggerTiming.Interrupt,actionInfo,actionInfo.ActionResults);
+                _model.CheckTriggerSkillInfos(TriggerTiming.Interrupt,actionInfo,actionInfo.ActionResults,true);
+
                 /*
                 if (_triggerInterruptChecked == false)
                 {
@@ -650,12 +651,12 @@ namespace Ryneus
             }
         }
 
-        private async void StartAnimationDemigod()
+        private async void StartAnimationDemigod(int subjectIndex)
         {
             if (GameSystem.ConfigData.BattleAnimationSkip == false)
             {
                 SoundManager.Instance.PlayStaticSe(SEType.Demigod);
-                _view.StartAnimationDemigod(_model.CurrentBattler,_model.CurrentActionInfo().Master,GameSystem.ConfigData.BattleSpeed);
+                _view.StartAnimationDemigod(_model.GetBattlerInfo(subjectIndex),_model.CurrentActionInfo().Master,GameSystem.ConfigData.BattleSpeed);
                 _view.HideStateOverlay();
                 _view.SetAnimationBusy(true);
                 await UniTask.DelayFrame((int)(20 / GameSystem.ConfigData.BattleSpeed));
@@ -721,9 +722,9 @@ namespace Ryneus
             _view.StartAnimation(actionInfo.SubjectIndex,selfAnimation,0,1f,1.0f);
             if (actionInfo.TriggeredSkill)
             {
-                if (actionInfo.Master.IsDisplayBattleSkill())
+                if (actionInfo.Master.IsDisplayBattleSkill() && _model.GetBattlerInfo(actionInfo.SubjectIndex).IsActor)
                 {
-                    _view.ShowCutinBattleThumb(actionInfo.Master,_model.CurrentBattler);
+                    _view.ShowCutinBattleThumb(actionInfo.Master,_model.GetBattlerInfo(actionInfo.SubjectIndex));
                 }
             }
             if (actionInfo.Master.IsDisplayBattleSkill())

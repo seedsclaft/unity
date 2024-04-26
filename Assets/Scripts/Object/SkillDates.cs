@@ -81,6 +81,8 @@ namespace Ryneus
                 return DataSystem.GetText(602);
                 case TargetType.All:
                 return DataSystem.GetText(603);
+                case TargetType.Counter:
+                return DataSystem.GetText(606);
             }
             return "";
         }
