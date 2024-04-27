@@ -177,9 +177,17 @@ MonoBehaviour:
     - StageId: 1
       Seek: 7
       SeekIndex: 1
-      SymbolType: 8
+      SymbolType: 5
       Rate: 100
-      Param1: 0
+      Param1: 2
+      Param2: 0
+      PrizeSetId: 0
+    - StageId: 1
+      Seek: 7
+      SeekIndex: 2
+      SymbolType: 5
+      Rate: 100
+      Param1: 3
       Param2: 0
       PrizeSetId: 0
     Tutorials: []
@@ -290,8 +298,8 @@ MonoBehaviour:
       Seek: 5
       SeekIndex: 0
       SymbolType: 6
-      Rate: 20
-      Param1: 0
+      Rate: 100
+      Param1: 20
       Param2: 0
       PrizeSetId: 0
     - StageId: 2
@@ -321,9 +329,17 @@ MonoBehaviour:
     - StageId: 2
       Seek: 7
       SeekIndex: 1
-      SymbolType: 8
+      SymbolType: 5
       Rate: 100
-      Param1: 0
+      Param1: 4
+      Param2: 0
+      PrizeSetId: 0
+    - StageId: 2
+      Seek: 7
+      SeekIndex: 2
+      SymbolType: 5
+      Rate: 100
+      Param1: 5
       Param2: 0
       PrizeSetId: 0
     Tutorials: []

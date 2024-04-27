@@ -3408,7 +3408,7 @@ namespace Ryneus
         {
             var skillInfos = battlerInfo.ActiveSkills().FindAll(a => CheckCanUse(a,battlerInfo));
             //var (skillId,targetIndex) = BattleActorAI.MakeAutoActorSkillId(skillInfos,battlerInfo,BattlerActors(),BattlerEnemies());
-            skillInfos.Sort((a,b) => a.Weight > b.Weight ? 1:-1);
+            skillInfos.Sort((a,b) => a.Weight > b.Weight ? -1:1);
             var skillTriggerInfos = new List<SkillTriggerInfo>();
             foreach (var skillInfo in skillInfos)
             {

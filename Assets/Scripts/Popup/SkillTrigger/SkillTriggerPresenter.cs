@@ -110,7 +110,7 @@ namespace Ryneus
 
         private void CommandDecideCategory2Select()
         {
-            var index = _view.Trigger1CategoryIndex;
+            var index = _view.Trigger2CategoryIndex;
             var skillListIndex = _view.SkillTriggerListIndex;
             if (index > -1 && skillListIndex > -1)
             {

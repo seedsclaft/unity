@@ -141,6 +141,7 @@ namespace Ryneus
             _battleIndex = baseActorInfo.BattleIndex;
             _lost = baseActorInfo.Lost;
             _levelUpInfos = baseActorInfo._levelUpInfos;
+            _lineIndex = baseActorInfo._lineIndex;
         }
 
         private void SetInitialParameter(ActorData actorData)
