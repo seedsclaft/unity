@@ -9,6 +9,8 @@ namespace Ryneus
 {
 	public class SaveSystem : MonoBehaviour
 	{
+		private static bool _useEasySave = true;
+
 	#if !UNITY_WEBGL
 		private static FileStream TempFileStream = null;
 	#endif
@@ -28,6 +30,7 @@ namespace Ryneus
 
 		private static void SaveInfo<T>(string path,T userSaveInfo)
 		{
+			/*
 	#if UNITY_WEBGL 
 			//	バイナリ形式でシリアル化
 			var TempBinaryFormatter = new BinaryFormatter();
@@ -63,6 +66,54 @@ namespace Ryneus
 				}
 			}
 	#endif
+	*/
+		}
+
+		private static void SaveFile<T>(string key,T data)
+		{
+			if (_useEasySave)
+			{
+				var TempBinaryFormatter = new BinaryFormatter();
+				var memoryStream = new MemoryStream();
+				TempBinaryFormatter.Serialize (memoryStream,data);
+				var saveData = Convert.ToBase64String (memoryStream.GetBuffer());
+				ES3.Save(key,saveData,key);
+			} else
+			{
+#if UNITY_ANDROID || UNITY_STANDALONE_WIN
+				SaveInfo(SaveFilePath(key),data);
+#elif UNITY_WEBGL 
+				SaveInfo(key,data);
+#endif
+			}
+		}
+
+		private static T LoadFile<T>(string key,Action<T> successAction)
+		{
+			if (_useEasySave)
+			{
+				try
+				{
+					var data = ES3.Load<string>(key,key);
+					var bytes = Convert.FromBase64String(data);
+					var	TempBinaryFormatter = new BinaryFormatter();
+					var memoryStream = new MemoryStream(bytes);
+					var saveData = (T)TempBinaryFormatter.Deserialize(memoryStream);
+					successAction(saveData);
+					return saveData;
+				} catch(Exception e)
+				{
+					Debug.LogException(e);
+				} finally 
+				{
+					//	ファイル操作には明示的な破棄が必要です。Closeを忘れないように。
+					if( TempFileStream != null )
+					{
+						TempFileStream.Close();
+					}
+				}
+			}
+			return default;
 		}
 
 		public static void SavePlayerInfo(SaveInfo userSaveInfo = null)
@@ -72,16 +123,17 @@ namespace Ryneus
 			{
 				userSaveInfo = new SaveInfo();
 			}
-	#if UNITY_ANDROID || UNITY_STANDALONE_WIN
-			SaveInfo(SaveFilePath(_playerDataKey),userSaveInfo);
-	#elif UNITY_WEBGL 
-			SaveInfo(_playerDataKey,userSaveInfo);
-	#endif
+			SaveFile(_playerDataKey,userSaveInfo);
 		}
 
 			
 		public static bool LoadPlayerInfo()
 		{
+			var playerInfo = LoadFile<SaveInfo>(_playerDataKey,(a) => {
+				GameSystem.CurrentData = a;
+			});
+			return playerInfo != null;
+			/*
 	#if UNITY_WEBGL
 			try
 			{
@@ -145,10 +197,17 @@ namespace Ryneus
 				}
 			}
 	#endif
+	*/
 		}
 
 		private static bool ExistsLoadFile(string key)
 		{
+			if (_useEasySave)
+			{
+				return ES3.FileExists(key);
+			}
+			return false;
+			/*
 	#if UNITY_WEBGL
 			return PlayerPrefs.GetString(key) != "";
 	#else
@@ -162,6 +221,7 @@ namespace Ryneus
 				return false;
 			}
 	#endif
+	*/
 		}
 
 		public static bool ExistsLoadPlayerFile()
@@ -171,16 +231,16 @@ namespace Ryneus
 
 		public static void SaveStageInfo(SaveStageInfo userSaveInfo = null,int fileId = 0)
 		{
-	#if UNITY_ANDROID || UNITY_STANDALONE_WIN
-			SaveInfo(SaveFilePath(_playerStageDataKey,fileId),userSaveInfo);
-	#elif UNITY_WEBGL
-			SaveInfo(PlayerStageDataKey(fileId),userSaveInfo);
-	#endif
+			SaveFile(PlayerStageDataKey(fileId),userSaveInfo);
 		}
 
-			
 		public static bool LoadStageInfo(int fileId = 0)
 		{
+			var playerInfo = LoadFile<SaveStageInfo>(PlayerStageDataKey(fileId),(a) => {
+				GameSystem.CurrentStageData = a;
+			});
+			return playerInfo != null;
+			/*
 	#if UNITY_WEBGL
 			try
 			{
@@ -249,11 +309,12 @@ namespace Ryneus
 				}
 			}
 	#endif
+	*/
 		}
 
-		public static bool ExistsStageFile()
+		public static bool ExistsStageFile(int fileId = 0)
 		{
-			return ExistsLoadFile(_playerStageDataKey);
+			return ExistsLoadFile(PlayerStageDataKey(fileId));
 		}
 
 		public static void SaveConfigStart(SaveConfigInfo userSaveInfo = null)
@@ -263,16 +324,17 @@ namespace Ryneus
 			{
 				userSaveInfo = new SaveConfigInfo();
 			}
-	#if UNITY_ANDROID || UNITY_STANDALONE_WIN
-			SaveInfo(SaveFilePath(_optionDataKey),userSaveInfo);
-	#elif UNITY_WEBGL
-			SaveInfo(_optionDataKey,userSaveInfo);
-	#endif
+			SaveFile(_optionDataKey,userSaveInfo);
 		}
 
 
 		public static void LoadConfigStart()
 		{
+			var playerInfo = LoadFile<SaveConfigInfo>(_optionDataKey,(a) => {
+				GameSystem.ConfigData = a;
+			});
+			return;
+			/*
 	#if UNITY_WEBGL
 			try
 			{
@@ -333,6 +395,7 @@ namespace Ryneus
 				}
 			}
 			#endif
+			*/
 		}
 
 		public static bool ExistsConfigFile()
@@ -342,6 +405,12 @@ namespace Ryneus
 
 		public static void DeletePlayerData(int fileId = 0)
 		{
+			if (_useEasySave)
+			{
+				ES3.DeleteFile(_playerDataKey);
+				ES3.DeleteFile(PlayerStageDataKey(fileId));
+			}
+			/*
 	#if UNITY_WEBGL
 			try
 			{
@@ -379,6 +448,7 @@ namespace Ryneus
 				Debug.LogException(e);
 			}
 			#endif
+			*/
 		}
 	}
 }

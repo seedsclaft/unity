@@ -4,7 +4,8 @@ namespace Ryneus
 {
     public class TitleModel : BaseModel
     {
-        public List<ListData> TitleCommand() {
+        public List<ListData> TitleCommand() 
+        {
             var listDates = MakeListData(DataSystem.TitleCommand);
             if (!ExistsLoadFile())
             {
