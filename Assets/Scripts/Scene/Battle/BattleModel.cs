@@ -330,11 +330,13 @@ namespace Ryneus
             return stateInfos;
         }
 
-        public List<BattlerInfo> BattlerActors(){
+        public List<BattlerInfo> BattlerActors()
+        {
             return FieldBattlerInfos().FindAll(a => a.IsActor == true);
         }
 
-        public List<BattlerInfo> BattlerEnemies(){
+        public List<BattlerInfo> BattlerEnemies()
+        {
             return FieldBattlerInfos().FindAll(a => a.IsActor == false);
         }
 
@@ -427,7 +429,7 @@ namespace Ryneus
             {
                 return false;
             }
-            var targetIndexList = GetSkillTargetIndexes(skillInfo.Master.Id,battlerInfo.Index,true);
+            var targetIndexList = GetSkillTargetIndexList(skillInfo.Master.Id,battlerInfo.Index,true);
             if (targetIndexList.Count == 0)
             {
                 return false;
@@ -468,7 +470,7 @@ namespace Ryneus
             {
                 return false;
             }
-            var targetIndexList = GetSkillTargetIndexes(skillInfo.Master.Id,battlerInfo.Index,true);
+            var targetIndexList = GetSkillTargetIndexList(skillInfo.Master.Id,battlerInfo.Index,true);
             if (targetIndexList.Count == 0)
             {
                 //return false;
@@ -502,7 +504,7 @@ namespace Ryneus
         public ActionInfo MakeActionInfo(BattlerInfo subject,SkillInfo skillInfo,bool IsInterrupt,bool IsTrigger)
         {
             var skillData = skillInfo.Master;
-            var targetIndexList = GetSkillTargetIndexes(skillInfo.Id,subject.Index,true);
+            var targetIndexList = GetSkillTargetIndexList(skillInfo.Id,subject.Index,true);
             if (subject.IsState(StateType.Substitute))
             {
                 int substituteId = subject.GetStateInfo(StateType.Substitute).BattlerId;
@@ -511,7 +513,7 @@ namespace Ryneus
                     targetIndexList.Clear();
                     targetIndexList.Add(substituteId);
                 } else{
-                    var tempIndexList = GetSkillTargetIndexes(skillInfo.Id,subject.Index,false);
+                    var tempIndexList = GetSkillTargetIndexList(skillInfo.Id,subject.Index,false);
                     if (tempIndexList.Contains(substituteId))
                     {
                         targetIndexList.Clear();
@@ -567,7 +569,7 @@ namespace Ryneus
         }
 
         // 選択可能な対象のインデックスを取得
-        public List<int> GetSkillTargetIndexes(int skillId,int subjectIndex,bool checkCondition,int counterSubjectIndex = -1)
+        public List<int> GetSkillTargetIndexList(int skillId,int subjectIndex,bool checkCondition,int counterSubjectIndex = -1)
         {
             var skillData = DataSystem.FindSkill(skillId);
             var subject = GetBattlerInfo(subjectIndex);
@@ -621,6 +623,16 @@ namespace Ryneus
             {
                 targetIndexList = CheckScopeTriggers(targetIndexList,skillData.ScopeTriggers);
             }
+            
+            var withinRangeTargetList = WithinRangeTargetList(subject,rangeType);
+            // 範囲外にいない場合は候補から外す
+            for (int i = targetIndexList.Count-1;i >= 0;i--)
+            {
+                if (!withinRangeTargetList.Contains(targetIndexList[i]))
+                {
+                    targetIndexList.Remove(targetIndexList[i]);
+                }
+            }
             if (checkCondition == true)
             {
                 for (int i = targetIndexList.Count-1;i >= 0;i--)
@@ -628,6 +640,65 @@ namespace Ryneus
                     if (CanUseCondition(skillId,subject,targetIndexList[i]) == false)
                     {
                         targetIndexList.Remove(targetIndexList[i]);
+                    }
+                }
+            }
+            return targetIndexList;
+        }
+
+        private List<int> WithinRangeTargetList(BattlerInfo battlerInfo,RangeType skillRangeType)
+        {
+            var targetIndexList = new List<int>();
+            var isActor = battlerInfo.IsActor;
+            var targetUnit = isActor ? _troop : _party;
+            var friendUnit = isActor ? _party : _troop;
+            foreach (var friend in friendUnit.BattlerInfos)
+            {
+                targetIndexList.Add(friend.Index);
+            }
+
+            if (skillRangeType == RangeType.L)
+            {
+                foreach (var opponent in targetUnit.BattlerInfos)
+                {
+                    targetIndexList.Add(opponent.Index);
+                }
+                return targetIndexList;
+            }
+        
+            var selfIsFront = false;
+            if (battlerInfo.LineIndex == LineType.Front)
+            {
+                selfIsFront = true;
+            } else
+            {
+                // 前面の味方が一人もいない場合は前面
+                if (friendUnit.AliveBattlerInfos.Find(a => a.LineIndex == LineType.Front) == null)
+                {
+                    selfIsFront = true;
+                }
+            }
+
+            if (selfIsFront)
+            {
+                var targetIsFrontAlive = targetUnit.AliveBattlerInfos.Find(a => a.LineIndex == LineType.Front);
+                foreach (var opponent in targetUnit.BattlerInfos)
+                {
+                    var opponentIsFront = false;
+                    if (opponent.LineIndex == LineType.Front)
+                    {
+                        opponentIsFront = true;
+                    } else
+                    {
+                        // 前面の味方が一人もいない場合は前面
+                        if (targetIsFrontAlive == null)
+                        {
+                            opponentIsFront = true;
+                        }
+                    }
+                    if (opponentIsFront)
+                    {
+                        targetIndexList.Add(opponent.Index);
                     }
                 }
             }
@@ -651,12 +722,13 @@ namespace Ryneus
         // 選択範囲が相手
         private List<int> TargetIndexOpponent(bool isActor,List<int> targetIndexList,RangeType rangeType,LineType lineType)
         {   
+            var isFrontOnly = rangeType == RangeType.S;
             if (isActor)
             {
                 foreach (var battlerInfo in _troop.BattlerInfos)
                 {
                     targetIndexList.Add(battlerInfo.Index);
-                    }
+                }
             } else{
                 foreach (var battlerInfo in _party.BattlerInfos)
                 {
@@ -712,7 +784,7 @@ namespace Ryneus
                 return new List<int>();
             }
             var subject = GetBattlerInfo(actionInfo.SubjectIndex);
-            var targetIndexList = GetSkillTargetIndexes(actionInfo.Master.Id,subject.Index,true);
+            var targetIndexList = GetSkillTargetIndexList(actionInfo.Master.Id,subject.Index,true);
             var scopeType = actionInfo.ScopeType;
             if (subject.IsState(StateType.EffectLine))
             {
@@ -1904,111 +1976,7 @@ namespace Ryneus
             }
             SetActionInfo(makeActionInfo);
             MakeActionResultInfo(makeActionInfo,ActionInfoTargetIndexes(makeActionInfo,selectIndexList[0]));
-            /*
-            if (passiveInfo.Master.Scope == ScopeType.Self)
-            {
-                MakeActionResultInfo(makeActionInfo,ActionInfoTargetIndexes(makeActionInfo,selectIndexList[0]));
-            } else
-            if (passiveInfo.Master.Scope == ScopeType.All)
-            {
-                MakeActionResultInfo(makeActionInfo,ActionInfoTargetIndexes(makeActionInfo,selectIndexList[0]));
             
-                var partyMember = battlerInfo.IsActor ? BattlerActors() : BattlerEnemies();
-                if (passiveInfo.Master.TargetType == TargetType.Opponent){
-                    partyMember = battlerInfo.IsActor ? BattlerEnemies() : BattlerActors();
-                }
-                switch (passiveInfo.Master.AliveType)
-                {
-                    case AliveType.DeathOnly:
-                        partyMember = partyMember.FindAll(a => !a.IsAlive());
-                        break;
-                    case AliveType.AliveOnly:                        
-                        partyMember = partyMember.FindAll(a => a.IsAlive());
-                        break;
-                    case AliveType.All:
-                        break;
-                }
-                var targetIndexList = new List<int>();
-                foreach (var member in partyMember)
-                {
-                    targetIndexList.Add(member.Index);
-                }
-                targetIndexList = CheckScopeTriggers(targetIndexList,passiveInfo.Master.ScopeTriggers);
-                foreach (var targetIndex in targetIndexList)
-                {
-                    var actionResultInfo = new ActionResultInfo(battlerInfo,GetBattlerInfo(targetIndex),passiveInfo.FeatureDates,passiveInfo.Id);
-                    makeResultInfos.Add(actionResultInfo);
-                }
-            } else
-            if (passiveInfo.Master.Scope == ScopeType.One){
-                if (passiveInfo.Master.TargetType == TargetType.IsTriggerTarget)
-                {
-                    var targetList = TriggerTargetList(battlerInfo,triggerDates,actionResultInfos);
-                    if (targetList.Count > 0)
-                    {
-                        var actionResultInfo = new ActionResultInfo(battlerInfo,targetList[0],passiveInfo.FeatureDates,passiveInfo.Id);
-                        makeResultInfos.Add(actionResultInfo);
-                    }
-                }
-                if (passiveInfo.Master.TargetType == TargetType.Counter)
-                {
-                    if (actionInfo != null)
-                    {
-                        var actionResultInfo = new ActionResultInfo(battlerInfo,GetBattlerInfo(actionInfo.SubjectIndex),passiveInfo.FeatureDates,passiveInfo.Id);
-                        makeResultInfos.Add(actionResultInfo);
-                    }
-                }
-                if (passiveInfo.Master.TargetType == TargetType.AttackTarget)
-                {
-                    foreach (var actionResult in actionResultInfos)
-                    {
-                        if (actionResult.Missed == false)
-                        {
-                            var actionResultInfo = new ActionResultInfo(battlerInfo,GetBattlerInfo(actionResult.TargetIndex),passiveInfo.FeatureDates,passiveInfo.Id);
-                            makeResultInfos.Add(actionResultInfo);
-                        }
-                    }
-                }
-            } else
-            if (passiveInfo.Master.Scope == ScopeType.RandomOne)
-            {
-                var partyMember = battlerInfo.IsActor ? BattlerActors() : BattlerEnemies();
-                if (passiveInfo.Master.TargetType == TargetType.Opponent){
-                    partyMember = battlerInfo.IsActor ? BattlerEnemies() : BattlerActors();
-                }
-                switch (passiveInfo.Master.AliveType)
-                {
-                    case AliveType.DeathOnly:
-                        partyMember = partyMember.FindAll(a => !a.IsAlive());
-                        break;
-                    case AliveType.AliveOnly:                        
-                        partyMember = partyMember.FindAll(a => a.IsAlive());
-                        break;
-                    case AliveType.All:
-                        break;
-                }
-                var rand = UnityEngine.Random.Range(0,partyMember.Count);
-                var actionResultInfo = new ActionResultInfo(battlerInfo,partyMember[rand],passiveInfo.FeatureDates,passiveInfo.Id);
-                makeResultInfos.Add(actionResultInfo);
-            } else
-            {
-                if (passiveInfo.Master.TargetType == TargetType.AttackTarget)
-                {
-                    foreach (var actionResult in actionResultInfos)
-                    {
-                        if (actionResult.Missed == false)
-                        {
-                            var actionResultInfo = new ActionResultInfo(battlerInfo,GetBattlerInfo(actionResult.TargetIndex),passiveInfo.FeatureDates,passiveInfo.Id);
-                            makeResultInfos.Add(actionResultInfo);
-                        }
-                    }
-                }
-            }
-            if (!_passiveSkillInfos[battlerInfo.Index].Contains(passiveInfo.Master.Id))
-            {
-                _passiveSkillInfos[battlerInfo.Index].Add(passiveInfo.Master.Id);
-            }
-            */
             passiveInfo.GainUseCount();
             passiveInfo.SetTurnCount(passiveInfo.Master.TurnCount);
             return makeActionInfo;
@@ -3201,7 +3169,7 @@ namespace Ryneus
                 }
                 return indexList;
             }
-            var targetIndexList = GetSkillTargetIndexes(actionInfo.Master.Id,actionInfo.SubjectIndex,true,counterSubjectIndex);
+            var targetIndexList = GetSkillTargetIndexList(actionInfo.Master.Id,actionInfo.SubjectIndex,true,counterSubjectIndex);
             if (targetIndexList.Count == 0)
             {
                 return targetIndexList;
@@ -3245,7 +3213,7 @@ namespace Ryneus
                     targetIndex = substituteId;
                 } else
                 {
-                    var tempIndexList = GetSkillTargetIndexes(actionInfo.Master.Id,actionInfo.SubjectIndex,false);
+                    var tempIndexList = GetSkillTargetIndexList(actionInfo.Master.Id,actionInfo.SubjectIndex,false);
                     if (tempIndexList.Contains(substituteId))
                     {
                         targetIndex = substituteId;
@@ -3479,7 +3447,7 @@ namespace Ryneus
                 // 優先指定の判定
                 if (selectSkillId > -1 && selectTargetIndex == -1)
                 {
-                    var targetIndexList = GetSkillTargetIndexes(selectSkillId,battlerInfo.Index,true);
+                    var targetIndexList = GetSkillTargetIndexList(selectSkillId,battlerInfo.Index,true);
                     if (targetIndexList.Count == 0)
                     {
                         var triggeredSkill = DataSystem.FindSkill(selectSkillId);

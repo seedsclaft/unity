@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 
 namespace Ryneus
 {
@@ -20,12 +19,12 @@ namespace Ryneus
             // 最前列は
             if (IsFrontAlive())
             {
-                return BattlerInfos.FindAll(a => a.LineIndex == LineType.Front);
+                return _battlerInfos.FindAll(a => a.LineIndex == LineType.Front);
             }
-            return BattlerInfos;
+            return _battlerInfos;
         }
         
-        public bool IsFrontAlive()
+        private bool IsFrontAlive()
         {
             // 最前列は
             return AliveBattlerInfos.Find(a => a.LineIndex == LineType.Front) != null;
