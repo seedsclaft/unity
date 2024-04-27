@@ -218,14 +218,10 @@ namespace Ryneus
                     if (_model.TacticsCommandType == TacticsCommandType.Paradigm)
                     {
                         CommandSelectEnemyClose((ConfirmCommandType)viewEvent.template);
-                    } else
-                    {
-                        CommandTacticsCommandClose((ConfirmCommandType)viewEvent.template);
                     }
                     break;
                 case Tactics.CommandType.SelectSymbol:
-                    _model.SetSymbolInfo((SymbolInfo)viewEvent.template);
-                    CommandSelectSymbol();
+                    CommandSelectSymbol((SymbolInfo)viewEvent.template);
                     break;
                 case Tactics.CommandType.SymbolClose:
                     CommandSymbolClose();
@@ -238,8 +234,7 @@ namespace Ryneus
                     CommandPopupSkillInfo((GetItemInfo)viewEvent.template);
                     break;
                 case Tactics.CommandType.SelectRecord:
-                    _model.SetSymbolInfo((SymbolInfo)viewEvent.template);
-                    CommandSelectRecord();
+                    CommandSelectRecord((int)viewEvent.template);
                     break;
                 case Tactics.CommandType.CancelSymbolRecord:
                     if (_alcanaSelectBusy == true)
@@ -282,10 +277,10 @@ namespace Ryneus
                 SoundManager.Instance.PlayStaticSe(SEType.Decide);
                 CommandStageHelp();
             }
-            if (viewEvent.commandType == Tactics.CommandType.CancelSymbolList)
+            if (viewEvent.commandType == Tactics.CommandType.CancelRecordList)
             {
                 SoundManager.Instance.PlayStaticSe(SEType.Decide);
-                CommandCancelSymbolList();
+                CommandCancelRecordList();
             }
             if (viewEvent.commandType == Tactics.CommandType.CommandHelp)
             {
@@ -376,13 +371,15 @@ namespace Ryneus
             _view.CommandGameSystem(Base.CommandType.CloseConfirm);
         }
 
-        private void CommandSelectRecord()
+        private void CommandSelectRecord(int seek)
         {
             SoundManager.Instance.PlayStaticSe(SEType.Decide);
-            _view.SetSymbols(_model.StageSymbolInfos(_model.SymbolInfo.StageSymbolData.Seek));
+            //Seekに対応したシンボルを表示
+            _view.SetSymbols(_model.StageSymbolInfos(seek));
             _view.ShowSymbolList();
+            _view.ChangeSymbolBackCommandActive(true);
             // 過去
-            if (_model.SymbolInfo.StageSymbolData.Seek < _model.CurrentStage.CurrentTurn)
+            if (seek < _model.CurrentStage.CurrentTurn)
             {
                 // 過去の中ではさらに過去に戻らない
                 if (_model.CurrentStage.ReturnSeek < 0)
@@ -395,7 +392,7 @@ namespace Ryneus
 
         private void CommandCancelSymbolRecord()
         {
-            _view.HideSymbolList();
+            _view.HideRecordList();
             _view.HideSymbolRecord();
             _view.ChangeBackCommandActive(false);
             _view.ChangeSymbolBackCommandActive(false);
@@ -434,7 +431,7 @@ namespace Ryneus
         {
             _view.HideParallelList();
             _view.HideSelectCharacter();
-            _view.HideSymbolList();
+            _view.HideRecordList();
             _view.ShowSymbolRecord();
             _view.SetPositionSymbolRecords(_model.SymbolRecords());
             _view.ChangeBackCommandActive(true);
@@ -442,31 +439,23 @@ namespace Ryneus
             _backCommand = Tactics.CommandType.CancelSymbolRecord;
         }
 
-        private void CommandTacticsCommandClose(ConfirmCommandType confirmCommandType)
+        private void CommandSelectSymbol(SymbolInfo symbolInfo)
         {
-            SoundManager.Instance.PlayStaticSe(SEType.Cancel);
-            _view.ChangeBackCommandActive(false);
-            _view.ChangeSymbolBackCommandActive(false);
-            _view.HideSelectCharacter();
-        }
-
-        private void CommandSelectSymbol()
-        {
-            if (_model.SymbolInfo.StageSymbolData.Seek == _model.CurrentStage.CurrentTurn)
+            _model.SetSymbolInfo(symbolInfo);
+            if (symbolInfo.StageSymbolData.Seek == _model.CurrentStage.CurrentTurn)
             {
                 // 現在
-                CommandCurrentSelectSymbol();
+                CommandCurrentSelectSymbol(symbolInfo);
             }
         }
 
-        private void CommandCurrentSelectSymbol()
+        private void CommandCurrentSelectSymbol(SymbolInfo symbolInfo)
         {
             _view.HideSymbolRecord();
-            _model.SetStageSeekIndex(_model.SymbolInfo.StageSymbolData.SeekIndex);
-            _view.HideSymbolList();
+            _model.SetStageSeekIndex(symbolInfo.StageSymbolData.SeekIndex);
+            _view.HideRecordList();
             // 回路解析
-            var currentSymbol = _model.SymbolInfo;
-            switch (currentSymbol.SymbolType)
+            switch (symbolInfo.SymbolType)
             {
                 case SymbolType.Battle:
                 case SymbolType.Boss:
@@ -480,22 +469,22 @@ namespace Ryneus
                     _backCommand = Tactics.CommandType.CancelSelectSymbol;
                     break;
                 case SymbolType.Recover:
-                    CheckRecoverSymbol(currentSymbol.GetItemInfos[0]);
+                    CheckRecoverSymbol(symbolInfo.GetItemInfos[0]);
                     break;
                 case SymbolType.Actor:
-                    CheckActorSymbol(currentSymbol.GetItemInfos[0]);
+                    CheckActorSymbol(symbolInfo.GetItemInfos[0]);
                     break;
                 case SymbolType.SelectActor:
-                    CheckSelectActorSymbol(currentSymbol.GetItemInfos);
+                    CheckSelectActorSymbol(symbolInfo.GetItemInfos);
                     break;
                 case SymbolType.Alcana:
-                    CheckAlcanaSymbol(currentSymbol.GetItemInfos);
+                    CheckAlcanaSymbol(symbolInfo.GetItemInfos);
                     break;
                 case SymbolType.Resource:
-                    CheckResourceSymbol(currentSymbol.GetItemInfos[0]);
+                    CheckResourceSymbol(symbolInfo.GetItemInfos[0]);
                     break;
                 case SymbolType.Rebirth:
-                    CheckRebirthSymbol(currentSymbol.GetItemInfos[0]);
+                    CheckRebirthSymbol(symbolInfo.GetItemInfos[0]);
                     break;
             }
         }
@@ -803,7 +792,7 @@ namespace Ryneus
         private void CommandSymbolClose()
         {
             SoundManager.Instance.PlayStaticSe(SEType.Cancel);
-            _view.HideSymbolList();
+            _view.HideRecordList();
         }
 
         private void CommandRefresh()
@@ -882,10 +871,12 @@ namespace Ryneus
             _view.CommandHelpList(DataSystem.HelpText("Tactics"));
         }
 
-        private void CommandCancelSymbolList()
+        private void CommandCancelRecordList()
         {
-            _view.HideSymbolList();
+            _view.HideRecordList();
+            _view.HideParallelList();
             _view.ChangeSymbolBackCommandActive(false);
+            _backCommand = Tactics.CommandType.CancelSymbolRecord;
         }
 
         private void CommandCommandHelp()

@@ -103,6 +103,12 @@ namespace Ryneus
 
         private void CommandSelectSideMenu()
         {
+            var sideMenuViewInfo = new SideMenuViewInfo();
+            sideMenuViewInfo.EndEvent = () => {
+
+            };
+            sideMenuViewInfo.CommandLists = _model.SideMenu();
+            _view.CommandCallSideMenu(sideMenuViewInfo);
         }    
         
     }

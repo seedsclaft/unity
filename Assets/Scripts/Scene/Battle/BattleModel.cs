@@ -625,23 +625,11 @@ namespace Ryneus
             }
             
             var withinRangeTargetList = WithinRangeTargetList(subject,rangeType);
-            // 範囲外にいない場合は候補から外す
-            for (int i = targetIndexList.Count-1;i >= 0;i--)
-            {
-                if (!withinRangeTargetList.Contains(targetIndexList[i]))
-                {
-                    targetIndexList.Remove(targetIndexList[i]);
-                }
-            }
+            // 範囲外にいる対象を候補から外す
+            targetIndexList = targetIndexList.FindAll(a => withinRangeTargetList.Contains(a));
             if (checkCondition == true)
             {
-                for (int i = targetIndexList.Count-1;i >= 0;i--)
-                {
-                    if (CanUseCondition(skillId,subject,targetIndexList[i]) == false)
-                    {
-                        targetIndexList.Remove(targetIndexList[i]);
-                    }
-                }
+                targetIndexList = targetIndexList.FindAll(a => CanUseCondition(skillId,subject,a));
             }
             return targetIndexList;
         }
@@ -722,7 +710,6 @@ namespace Ryneus
         // 選択範囲が相手
         private List<int> TargetIndexOpponent(bool isActor,List<int> targetIndexList,RangeType rangeType,LineType lineType)
         {   
-            var isFrontOnly = rangeType == RangeType.S;
             if (isActor)
             {
                 foreach (var battlerInfo in _troop.BattlerInfos)
@@ -2421,7 +2408,7 @@ namespace Ryneus
             // 条件なし
             if (triggerDates.Count == 0)
             {
-                return NearTargetIndex(battlerInfo,targetIndexes);
+                return BattleUtility.NearTargetIndex(battlerInfo,targetIndexes);
             }
             var skillData = DataSystem.FindSkill(skillId);
             var targetIndexList1 = new List<int>();
@@ -2877,7 +2864,7 @@ namespace Ryneus
                             var hp = friendTargets[0].Hp;
                             friendTargets = friendTargets.FindAll(a => a.Hp == hp);
                         }
-                        return NearTargetIndex(battlerInfo,friendTargets);
+                        return BattleUtility.NearTargetIndex(battlerInfo,friendTargets);
                     }
                     break;
                     case TriggerType.MostHpFriend:
@@ -2894,7 +2881,7 @@ namespace Ryneus
                             var hp = friendTargets[0].Hp;
                             friendTargets = friendTargets.FindAll(a => a.Hp == hp);
                         }
-                        return NearTargetIndex(battlerInfo,friendTargets);
+                        return BattleUtility.NearTargetIndex(battlerInfo,friendTargets);
                     }
                     break;
                     case TriggerType.LessHpTarget:
@@ -2911,7 +2898,7 @@ namespace Ryneus
                             var hp = opponentTargets[0].Hp;
                             opponentTargets = opponentTargets.FindAll(a => a.Hp == hp);
                         }
-                        return NearTargetIndex(battlerInfo,opponentTargets);
+                        return BattleUtility.NearTargetIndex(battlerInfo,opponentTargets);
                     }
                     break;
                     case TriggerType.MostHpTarget:
@@ -2928,7 +2915,7 @@ namespace Ryneus
                             var hp = opponentTargets[0].Hp;
                             opponentTargets = opponentTargets.FindAll(a => a.Hp == hp);
                         }
-                        return NearTargetIndex(battlerInfo,opponentTargets);
+                        return BattleUtility.NearTargetIndex(battlerInfo,opponentTargets);
                     }
                     break;
                     case TriggerType.FriendLineMoreTarget:
@@ -2938,10 +2925,10 @@ namespace Ryneus
                         var back = friendTargets.FindAll(a => a.LineIndex == LineType.Back);
                         if (back.Count > front.Count)
                         {
-                            return NearTargetIndex(battlerInfo,back);
+                            return BattleUtility.NearTargetIndex(battlerInfo,back);
                         } else
                         {
-                            return NearTargetIndex(battlerInfo,front);
+                            return BattleUtility.NearTargetIndex(battlerInfo,front);
                         }
                     }
                     break;
@@ -2952,10 +2939,10 @@ namespace Ryneus
                         var back = friendTargets.FindAll(a => a.LineIndex == LineType.Back);
                         if (back.Count < front.Count)
                         {
-                            return NearTargetIndex(battlerInfo,back);
+                            return BattleUtility.NearTargetIndex(battlerInfo,back);
                         } else
                         {
-                            return NearTargetIndex(battlerInfo,front);
+                            return BattleUtility.NearTargetIndex(battlerInfo,front);
                         }
                     }
                     break;
@@ -2966,10 +2953,10 @@ namespace Ryneus
                         var back = opponentTargets.FindAll(a => a.LineIndex == LineType.Back);
                         if (back.Count > front.Count)
                         {
-                            return NearTargetIndex(battlerInfo,back);
+                            return BattleUtility.NearTargetIndex(battlerInfo,back);
                         } else
                         {
-                            return NearTargetIndex(battlerInfo,front);
+                            return BattleUtility.NearTargetIndex(battlerInfo,front);
                         }
                     }
                     break;
@@ -2980,10 +2967,10 @@ namespace Ryneus
                         var back = opponentTargets.FindAll(a => a.LineIndex == LineType.Back);
                         if (back.Count < front.Count)
                         {
-                            return NearTargetIndex(battlerInfo,back);
+                            return BattleUtility.NearTargetIndex(battlerInfo,back);
                         } else
                         {
-                            return NearTargetIndex(battlerInfo,front);
+                            return BattleUtility.NearTargetIndex(battlerInfo,front);
                         }
                     }
                     break;
@@ -3006,49 +2993,9 @@ namespace Ryneus
             if (bindTargetIndexList.Count > 0)
             {
                 // 複数候補は列に近い方を選ぶ
-                return NearTargetIndex(battlerInfo,bindTargetIndexList);
+                return BattleUtility.NearTargetIndex(battlerInfo,bindTargetIndexList);
             }
             return -1;
-        }
-
-        private int NearTargetIndex(BattlerInfo battlerInfo,List<int> targetIndexList)
-        {
-            // 複数候補は列が近い方を選ぶ
-            var selfIndex = battlerInfo.Index % 100;
-            if (battlerInfo.IsActor == false)
-            {
-                selfIndex += 1;
-            } else
-            {
-                selfIndex -= 1;
-            }
-            for (int i = 0;i < 5;i++)
-            {
-                var same = targetIndexList.FindIndex(a => a%100 == selfIndex+i);
-                if (same > -1)
-                {
-                    return targetIndexList[same];
-                }
-                if (i > 0)
-                {
-                    var reBound = targetIndexList.FindIndex(a => a%100 == selfIndex + (i*-1));
-                    if (reBound > -1)
-                    {
-                        return targetIndexList[reBound];
-                    }
-                }
-            }
-            return targetIndexList[0];
-        }
-    
-        private int NearTargetIndex(BattlerInfo battlerInfo,List<BattlerInfo> targetBattlerInfos)
-        {
-            var targetIndexList = new List<int>();
-            foreach (var targetBattlerInfo in targetBattlerInfos)
-            {
-                targetIndexList.Add(targetBattlerInfo.Index);
-            }
-            return NearTargetIndex(battlerInfo,targetIndexList);
         }
 
         private List<BattlerInfo> LineTargetBattlers(ScopeType scopeType,BattlerInfo targetBattler,List<BattlerInfo> targetBatterInfos)
@@ -3111,10 +3058,11 @@ namespace Ryneus
                     var spd = targetInfos[0].CurrentSpd();
                     targetInfos = targetInfos.FindAll(a => a.CurrentSpd() == spd);
                 }
-                return NearTargetIndex(battlerInfo,targetInfos);
+                return BattleUtility.NearTargetIndex(battlerInfo,targetInfos);
             }
             return -1;
         }
+
         private int SortStatusUnderTargetIndex(BattlerInfo battlerInfo,List<BattlerInfo> targetInfos,StatusParamType statusParamType)
         {
             if (targetInfos.Count > 0)
@@ -3149,7 +3097,7 @@ namespace Ryneus
                     var spd = targetInfos[0].CurrentSpd();
                     targetInfos = targetInfos.FindAll(a => a.CurrentSpd() == spd);
                 }
-                return NearTargetIndex(battlerInfo,targetInfos);
+                return BattleUtility.NearTargetIndex(battlerInfo,targetInfos);
             }
             return -1;
         }
@@ -3221,12 +3169,10 @@ namespace Ryneus
                 }
             }
             // 反撃
-
             if (targetIndex == -1)
             {
-                targetIndex = targetIndexList [UnityEngine.Random.Range (0, targetIndexList.Count)];
+                targetIndex = targetIndexList[UnityEngine.Random.Range(0, targetIndexList.Count)];
             }
-            //int targetIndex = targetIndexList [UnityEngine.Random.Range (0, targetIndexList.Count)];
             
             var scopeType = actionInfo.Master.Scope;
             if (subject != null)

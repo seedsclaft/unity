@@ -80,6 +80,7 @@ namespace Ryneus
             if (confirmCommandType == ConfirmCommandType.Yes)
             {
                 _model.SavePlayerStageData(false);
+                _view.CommandGameSystem(Base.CommandType.CloseStatus);
                 _view.CommandGotoSceneChange(Scene.MainMenu);
             } else{
                 SoundManager.Instance.PlayStaticSe(SEType.Cancel);

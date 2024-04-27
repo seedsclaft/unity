@@ -52,20 +52,24 @@ namespace Ryneus
             
             tacticsSymbolList.Initialize();
 
-            SideMenuButton.onClick.AddListener(() => {
+            SideMenuButton.onClick.AddListener(() => 
+            {
                 var eventData = new TacticsViewEvent(CommandType.SelectSideMenu);
                 _commandData(eventData);
             });
-            stageHelpButton.onClick.AddListener(() => {
+            stageHelpButton.onClick.AddListener(() => 
+            {
                 var eventData = new TacticsViewEvent(CommandType.StageHelp);
                 _commandData(eventData);
             });
-            commandHelpButton.onClick.AddListener(() => {
+            commandHelpButton.onClick.AddListener(() => 
+            {
                 var eventData = new TacticsViewEvent(CommandType.CommandHelp);
                 _commandData(eventData);
             });
-            symbolBackButton?.onClick.AddListener(() => {
-                var eventData = new TacticsViewEvent(CommandType.CancelSymbolList);
+            symbolBackButton?.onClick.AddListener(() => 
+            {
+                var eventData = new TacticsViewEvent(CommandType.CancelRecordList);
                 _commandData(eventData);
             });
             symbolRecordList.Initialize();
@@ -203,7 +207,7 @@ namespace Ryneus
         {
             tacticsSymbolList.SetData(symbolInfos);
             tacticsSymbolList.SetInfoHandler((a) => OnClickEnemyInfo(a));
-            HideSymbolList();
+            HideRecordList();
         }
 
         public void CommandRefresh()
@@ -282,15 +286,12 @@ namespace Ryneus
             }
         }
 
-        private void OnClickSymbol(SymbolInfo symbolInfo)
+        private void OnClickSymbol(int seek)
         {
             if (symbolRecordList.ScrollRect.enabled == false) return;
-            if (symbolInfo.SymbolType != SymbolType.None)
-            {
-                var eventData = new TacticsViewEvent(CommandType.SelectRecord);
-                eventData.template = symbolInfo;
-                _commandData(eventData);
-            }
+            var eventData = new TacticsViewEvent(CommandType.SelectRecord);
+            eventData.template = seek;
+            _commandData(eventData);
         }
 
         public void ShowSymbolRecord()
@@ -389,7 +390,7 @@ namespace Ryneus
             symbolRecordList.ScrollRect.enabled = false;
         }
 
-        public void HideSymbolList()
+        public void HideRecordList()
         {
             tacticsSymbolList.gameObject.SetActive(false);
             SetHelpInputInfo("TACTICS");

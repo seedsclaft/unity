@@ -52,14 +52,14 @@ namespace Ryneus
             }
         }
 
-        public void SetSymbolItemCallHandler(System.Action<SymbolInfo> handler)
+        public void SetSymbolItemCallHandler(System.Action<int> handler)
         {
             if (_isButtonInit) return;
             _isButtonInit = true;
             foreach (var symbolComponent in symbolComponents)
             {
                 var button = symbolComponent.GetComponentInChildren<Button>();
-                button.onClick.AddListener(() => handler(symbolComponent.SymbolInfo));
+                button.onClick.AddListener(() => handler(symbolComponent.SymbolInfo.StageSymbolData.Seek));
             }
         }
 

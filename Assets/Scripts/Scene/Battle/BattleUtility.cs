@@ -60,5 +60,53 @@ namespace Ryneus
             };
         }
 
+        // 計算メソッドなど
+        
+        /// <summary>
+        /// 作戦結果対象に複数候補がある場合に列に近い方のIndexを取得
+        /// </summary>
+        /// <param name="battlerInfo"></param>
+        /// <param name="targetIndexList"></param>
+        /// <returns></returns>
+        public static int NearTargetIndex(BattlerInfo battlerInfo,List<int> targetIndexList)
+        {
+            // 複数候補は列が近い方を選ぶ
+            var selfIndex = battlerInfo.Index % 100;
+            if (battlerInfo.IsActor == false)
+            {
+                selfIndex += 1;
+            } else
+            {
+                selfIndex -= 1;
+            }
+            for (int i = 0;i < 5;i++)
+            {
+                var same = targetIndexList.FindIndex(a => a%100 == selfIndex+i);
+                if (same > -1)
+                {
+                    return targetIndexList[same];
+                }
+                if (i > 0)
+                {
+                    var reBound = targetIndexList.FindIndex(a => a%100 == selfIndex + (i*-1));
+                    if (reBound > -1)
+                    {
+                        return targetIndexList[reBound];
+                    }
+                }
+            }
+            return targetIndexList[0];
+        }
+
+        public static int NearTargetIndex(BattlerInfo battlerInfo,List<BattlerInfo> targetBattlerInfos)
+        {
+            var targetIndexList = new List<int>();
+            foreach (var targetBattlerInfo in targetBattlerInfos)
+            {
+                targetIndexList.Add(targetBattlerInfo.Index);
+            }
+            return NearTargetIndex(battlerInfo,targetIndexList);
+        }
+
     }
 }

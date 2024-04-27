@@ -40,7 +40,7 @@ namespace Tactics
         Back,
         SelectSideMenu,
         StageHelp,
-        CancelSymbolList,
+        CancelRecordList, // レコードリストを非表示にする
         CommandHelp,
         AlcanaCheck,
         SelectAlcanaList,

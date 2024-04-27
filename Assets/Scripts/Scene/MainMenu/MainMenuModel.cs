@@ -130,11 +130,20 @@ namespace Ryneus
         public List<ListData> SideMenu()
         {
             var list = new List<SystemData.CommandData>();
-            var menuCommand = new SystemData.CommandData();
-            menuCommand.Id = 2;
-            menuCommand.Name = DataSystem.GetText(703);
-            menuCommand.Key = "Help";
+            var menuCommand = new SystemData.CommandData
+            {
+                Id = 2,
+                Name = DataSystem.GetText(703),
+                Key = "Help"
+            };
             list.Add(menuCommand);
+            var saveCommand = new SystemData.CommandData
+            {
+                Id = 3,
+                Name = DataSystem.GetText(707),
+                Key = "Save"
+            };
+            list.Add(saveCommand);
             return MakeListData(list);
         }
     }

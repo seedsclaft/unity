@@ -116,7 +116,7 @@ namespace Ryneus
             if (_backEvent != null) _backEvent();
         }
         
-        private void OnClickSymbol(SymbolInfo symbolInfo)
+        private void OnClickSymbol(int symbolInfo)
         {
             var eventData = new StageSymbolViewEvent(CommandType.SelectRecord);
             eventData.template = symbolInfo;
