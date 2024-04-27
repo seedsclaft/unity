@@ -561,10 +561,10 @@ namespace Ryneus
         {
             if (actionInfo.Master.SkillType == SkillType.Messiah && actionInfo.SubjectIndex < 100 || actionInfo.Master.SkillType == SkillType.Awaken && actionInfo.SubjectIndex < 100)
             {
-                StartAnimationDemigod(actionInfo.SubjectIndex);
+                StartAnimationDemigod(actionInfo);
             } else
             {
-                StartAnimationSkill();
+                StartAnimationSkill(actionInfo);
             }
         }
 
@@ -651,19 +651,19 @@ namespace Ryneus
             }
         }
 
-        private async void StartAnimationDemigod(int subjectIndex)
+        private async void StartAnimationDemigod(ActionInfo actionInfo)
         {
             if (GameSystem.ConfigData.BattleAnimationSkip == false)
             {
                 SoundManager.Instance.PlayStaticSe(SEType.Demigod);
-                _view.StartAnimationDemigod(_model.GetBattlerInfo(subjectIndex),_model.CurrentActionInfo().Master,GameSystem.ConfigData.BattleSpeed);
+                _view.StartAnimationDemigod(_model.GetBattlerInfo(actionInfo.SubjectIndex),_model.CurrentActionInfo().Master,GameSystem.ConfigData.BattleSpeed);
                 _view.HideStateOverlay();
                 _view.SetAnimationBusy(true);
                 await UniTask.DelayFrame((int)(20 / GameSystem.ConfigData.BattleSpeed));
                 SoundManager.Instance.PlayStaticSe(SEType.Awaken);
                 await UniTask.DelayFrame((int)(90 / GameSystem.ConfigData.BattleSpeed));
             }
-            StartAnimationSkill();
+            StartAnimationSkill(actionInfo);
         }
 
         private async void StartAnimationRegenerate(List<ActionResultInfo> regenerateActionResults)
@@ -703,14 +703,13 @@ namespace Ryneus
             EndTurn();
         }
 
-        private async void StartAnimationSkill()
+        private async void StartAnimationSkill(ActionInfo actionInfo)
         {           
             _view.ChangeSideMenuButtonActive(false);
             _view.SetBattlerThumbAlpha(true);
             //_view.ShowEnemyStateOverlay();
             _view.HideStateOverlay();
             _view.SetAnimationBusy(true);
-            var actionInfo = _model.CurrentActionInfo();
             if (actionInfo.ActionResults.Count == 0)
             {
                 _nextCommandType = Battle.CommandType.SelectedSkill;
@@ -724,7 +723,7 @@ namespace Ryneus
             {
                 if (actionInfo.Master.IsDisplayBattleSkill() && _model.GetBattlerInfo(actionInfo.SubjectIndex).IsActor)
                 {
-                    _view.ShowCutinBattleThumb(actionInfo.Master,_model.GetBattlerInfo(actionInfo.SubjectIndex));
+                    _view.ShowCutinBattleThumb(_model.GetBattlerInfo(actionInfo.SubjectIndex));
                 }
             }
             if (actionInfo.Master.IsDisplayBattleSkill())
@@ -995,7 +994,7 @@ namespace Ryneus
                 }
                 // ダメージ表現をしない
                 PopupActionResult(resultInfo,resultInfo.TargetIndex,true,false);
-                await UniTask.DelayFrame(_model.WaitFrameTime(30));
+                await UniTask.DelayFrame(_model.WaitFrameTime(16));
             }
             foreach (var resultInfo in resultInfos)
             {
@@ -1079,7 +1078,7 @@ namespace Ryneus
                 if (gainAp > 0)
                 {
                     _view.StartHeal(_model.CurrentTurnBattler.Index,DamageType.MpHeal,gainAp); 
-                    await UniTask.DelayFrame(_model.WaitFrameTime(30));           
+                    await UniTask.DelayFrame(_model.WaitFrameTime(16));           
                     _model.ActionAfterGainAp(gainAp);
                     _view.RefreshStatus();
                 }

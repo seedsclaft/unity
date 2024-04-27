@@ -23,6 +23,7 @@ namespace Ryneus
             var image = awaken ? actorInfoComponent.AwakenThumb : actorInfoComponent.MainThumb;
             gameObject.GetComponent<RectTransform>().localPosition = new Vector3(-24,0,0);
             image.color = new Color(255,255,255,0);
+            canvasGroup.alpha = 1;
             MoveAndFade(gameObject.GetComponent<RectTransform>(),0,1,0.1f);
             awakenThumbRoot.SetActive(awaken);
             mainThumbRoot.SetActive(!awaken);

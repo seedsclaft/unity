@@ -2901,9 +2901,13 @@ namespace Ryneus
                         if (triggerDate.Param1 == 1)
                         {
                             friendTargets.Sort((a,b) => a.HpRate < b.HpRate ? -1: 1);
+                            var hpRate = friendTargets[0].HpRate;
+                            friendTargets = friendTargets.FindAll(a => a.HpRate == hpRate);
                         } else
                         {
                             friendTargets.Sort((a,b) => a.Hp < b.Hp ? -1: 1);
+                            var hp = friendTargets[0].Hp;
+                            friendTargets = friendTargets.FindAll(a => a.Hp == hp);
                         }
                         return NearTargetIndex(battlerInfo,friendTargets);
                     }
@@ -2914,9 +2918,13 @@ namespace Ryneus
                         if (triggerDate.Param1 == 1)
                         {
                             friendTargets.Sort((a,b) => a.HpRate < b.HpRate ? 1: -1);
+                            var hpRate = friendTargets[0].HpRate;
+                            friendTargets = friendTargets.FindAll(a => a.HpRate == hpRate);
                         } else
                         {
                             friendTargets.Sort((a,b) => a.Hp < b.Hp ? 1: -1);
+                            var hp = friendTargets[0].Hp;
+                            friendTargets = friendTargets.FindAll(a => a.Hp == hp);
                         }
                         return NearTargetIndex(battlerInfo,friendTargets);
                     }
@@ -2927,9 +2935,13 @@ namespace Ryneus
                         if (triggerDate.Param1 == 1)
                         {
                             opponentTargets.Sort((a,b) => a.HpRate < b.HpRate ? -1: 1);
+                            var hpRate = opponentTargets[0].HpRate;
+                            opponentTargets = opponentTargets.FindAll(a => a.HpRate == hpRate);
                         } else
                         {
                             opponentTargets.Sort((a,b) => a.Hp < b.Hp ? -1: 1);
+                            var hp = opponentTargets[0].Hp;
+                            opponentTargets = opponentTargets.FindAll(a => a.Hp == hp);
                         }
                         return NearTargetIndex(battlerInfo,opponentTargets);
                     }
@@ -2940,9 +2952,13 @@ namespace Ryneus
                         if (triggerDate.Param1 == 1)
                         {
                             opponentTargets.Sort((a,b) => a.HpRate < b.HpRate ? 1: -1);
+                            var hpRate = opponentTargets[0].HpRate;
+                            opponentTargets = opponentTargets.FindAll(a => a.HpRate == hpRate);
                         } else
                         {
                             opponentTargets.Sort((a,b) => a.Hp < b.Hp ? 1: -1);
+                            var hp = opponentTargets[0].Hp;
+                            opponentTargets = opponentTargets.FindAll(a => a.Hp == hp);
                         }
                         return NearTargetIndex(battlerInfo,opponentTargets);
                     }
@@ -3004,16 +3020,16 @@ namespace Ryneus
                     }
                     break;
                     case TriggerType.FriendStatusUpper:
-                        var friendStatusUpperIndex = SortStatusUpperTargetIndex(friendTargets,(StatusParamType)triggerDate.Param1);
+                        var friendStatusUpperIndex = SortStatusUpperTargetIndex(battlerInfo,friendTargets,(StatusParamType)triggerDate.Param1);
                         return friendStatusUpperIndex;
                     case TriggerType.FriendStatusUnder:
-                        var friendStatusUnderIndex = SortStatusUnderTargetIndex(friendTargets,(StatusParamType)triggerDate.Param1);
+                        var friendStatusUnderIndex = SortStatusUnderTargetIndex(battlerInfo,friendTargets,(StatusParamType)triggerDate.Param1);
                         return friendStatusUnderIndex;
                     case TriggerType.OpponentStatusUpper:
-                        var opponentStatusUpperIndex = SortStatusUpperTargetIndex(opponentTargets,(StatusParamType)triggerDate.Param1);
+                        var opponentStatusUpperIndex = SortStatusUpperTargetIndex(battlerInfo,opponentTargets,(StatusParamType)triggerDate.Param1);
                         return opponentStatusUpperIndex;
                     case TriggerType.OpponentStatusUnder:
-                        var opponentStatusUnderIndex = SortStatusUnderTargetIndex(opponentTargets,(StatusParamType)triggerDate.Param1);
+                        var opponentStatusUnderIndex = SortStatusUnderTargetIndex(battlerInfo,opponentTargets,(StatusParamType)triggerDate.Param1);
                         return opponentStatusUnderIndex;
                     default:
                     break;
@@ -3093,59 +3109,79 @@ namespace Ryneus
             return lineTargets;
         }
 
-        private int SortStatusUpperTargetIndex(List<BattlerInfo> targetInfos,StatusParamType statusParamType)
+        private int SortStatusUpperTargetIndex(BattlerInfo battlerInfo,List<BattlerInfo> targetInfos,StatusParamType statusParamType)
         {
             if (targetInfos.Count > 0)
             {
                 if (statusParamType == (int)StatusParamType.Hp)
                 {
                     targetInfos.Sort((a,b) => a.MaxHp < b.MaxHp ? -1: 1);
+                    var hp = targetInfos[0].MaxHp;
+                    targetInfos = targetInfos.FindAll(a => a.MaxHp == hp);
                 } else
                 if (statusParamType == StatusParamType.Mp)
                 {
                     targetInfos.Sort((a,b) => a.MaxMp < b.MaxMp ? -1: 1);
+                    var mp = targetInfos[0].MaxMp;
+                    targetInfos = targetInfos.FindAll(a => a.MaxMp == mp);
                 } else
                 if (statusParamType == StatusParamType.Atk)
                 {
                     targetInfos.Sort((a,b) => a.CurrentAtk() < b.CurrentAtk() ? -1: 1);
+                    var atk = targetInfos[0].CurrentAtk();
+                    targetInfos = targetInfos.FindAll(a => a.CurrentAtk() == atk);
                 } else
                 if (statusParamType == StatusParamType.Def)
                 {
                     targetInfos.Sort((a,b) => a.CurrentDef() < b.CurrentDef() ? -1: 1);
+                    var def = targetInfos[0].CurrentDef();
+                    targetInfos = targetInfos.FindAll(a => a.CurrentDef() == def);
                 } else
                 if (statusParamType == StatusParamType.Spd)
                 {
                     targetInfos.Sort((a,b) => a.CurrentSpd() < b.CurrentSpd() ? -1: 1);
+                    var spd = targetInfos[0].CurrentSpd();
+                    targetInfos = targetInfos.FindAll(a => a.CurrentSpd() == spd);
                 }
-                return targetInfos[0].Index;
+                return NearTargetIndex(battlerInfo,targetInfos);
             }
             return -1;
         }
-        private int SortStatusUnderTargetIndex(List<BattlerInfo> targetInfos,StatusParamType statusParamType)
+        private int SortStatusUnderTargetIndex(BattlerInfo battlerInfo,List<BattlerInfo> targetInfos,StatusParamType statusParamType)
         {
             if (targetInfos.Count > 0)
             {
                 if (statusParamType == (int)StatusParamType.Hp)
                 {
                     targetInfos.Sort((a,b) => a.MaxHp < b.MaxHp ? 1: -1);
+                    var hp = targetInfos[0].MaxHp;
+                    targetInfos = targetInfos.FindAll(a => a.MaxHp == hp);
                 } else
                 if (statusParamType == StatusParamType.Mp)
                 {
                     targetInfos.Sort((a,b) => a.MaxMp < b.MaxMp ? 1: -1);
+                    var mp = targetInfos[0].MaxMp;
+                    targetInfos = targetInfos.FindAll(a => a.MaxMp == mp);
                 } else
                 if (statusParamType == StatusParamType.Atk)
                 {
                     targetInfos.Sort((a,b) => a.CurrentAtk() < b.CurrentAtk() ? 1: -1);
+                    var atk = targetInfos[0].CurrentAtk();
+                    targetInfos = targetInfos.FindAll(a => a.CurrentAtk() == atk);
                 } else
                 if (statusParamType == StatusParamType.Def)
                 {
                     targetInfos.Sort((a,b) => a.CurrentDef() < b.CurrentDef() ? 1: -1);
+                    var def = targetInfos[0].CurrentDef();
+                    targetInfos = targetInfos.FindAll(a => a.CurrentDef() == def);
                 } else
                 if (statusParamType == StatusParamType.Spd)
                 {
                     targetInfos.Sort((a,b) => a.CurrentSpd() < b.CurrentSpd() ? 1: -1);
+                    var spd = targetInfos[0].CurrentSpd();
+                    targetInfos = targetInfos.FindAll(a => a.CurrentSpd() == spd);
                 }
-                return targetInfos[0].Index;
+                return NearTargetIndex(battlerInfo,targetInfos);
             }
             return -1;
         }

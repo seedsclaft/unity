@@ -20,7 +20,7 @@ namespace Ryneus
             _levelUpInfos = levelUpInfos;
         }
         
-        public int Level => _levelUpInfos.FindAll(a => a.Enable).Count + 1;
+        public int Level => _levelUpInfos.FindAll(a => a.Enable && a.SkillId == -1).Count + 1;
         
         private List<SkillTriggerInfo> _skillTriggerInfo = new ();
         public List<SkillTriggerInfo> SkillTriggerInfo => _skillTriggerInfo;

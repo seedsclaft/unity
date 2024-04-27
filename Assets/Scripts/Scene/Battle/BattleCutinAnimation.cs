@@ -23,7 +23,7 @@ namespace Ryneus
         [SerializeField] private SkillInfoComponent skillInfoComponent;
         
         private void OnEnable() {
-            StartAnimation(null,null,1);
+            //StartAnimation(null,null,1);
         }
 
         public void StartAnimation(BattlerInfo battlerInfo,SkillData skillData,float speedRate)
@@ -68,9 +68,9 @@ namespace Ryneus
                 //.Append(backUnMask3.transform.DOLocalMove(new Vector3(backUnMask2X,20,0),time4))
                 .SetEase(Ease.InOutCubic);
 
-            actorMain.transform.DOLocalMove(new Vector3(-240,-124,0),time1);
+            actorMain.gameObject.GetComponent<RectTransform>().localPosition = new Vector3(-240,-124,0);
             actorCanvasGroup.alpha = 0;
-            var delay = 0.1f;// / speedRate;
+            var delay = 0.1f / speedRate;
             var actor = DOTween.Sequence()
                 .SetDelay(delay)
                 .Append(actorMain.transform.DOLocalMove(new Vector3(-184,-124,0),time2 - delay))
@@ -82,6 +82,7 @@ namespace Ryneus
                 .OnComplete(() => {
                     mainBack.gameObject.SetActive(false);
                     gameObject.SetActive(false);
+
                 });
         
 

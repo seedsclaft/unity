@@ -352,7 +352,7 @@ namespace Ryneus
             //HideActorStateOverlay();
         }
 
-        public void ShowCutinBattleThumb(SkillData skillData,BattlerInfo battlerInfo)
+        public void ShowCutinBattleThumb(BattlerInfo battlerInfo)
         {
             battleThumb.ShowCutinBattleThumb(battlerInfo);
             battleThumb.gameObject.SetActive(true);
