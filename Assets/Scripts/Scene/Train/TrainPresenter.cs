@@ -60,16 +60,43 @@ namespace Ryneus
                     CommandTacticsCommand((TacticsCommandType)viewEvent.template);
                     break;
                 case Train.CommandType.TacticsCommandClose:
-                    if (_model.TacticsCommandType != TacticsCommandType.Paradigm)
+                    if (_model.TacticsCommandType == TacticsCommandType.Paradigm)
                     {
-                        CommandTacticsCommandClose();
+                        CommandSelectEnemyClose((ConfirmCommandType)viewEvent.template);
+                    } else
+                    {
+                        CommandTacticsCommandClose((ConfirmCommandType)viewEvent.template);
                     }
                     break;
                 case Train.CommandType.SelectTacticsActor:
                     CommandSelectTacticsActor((TacticsActorInfo)viewEvent.template);
                     break;
+                case Train.CommandType.SelectFrontBattleIndex:
+                    if (_model.CurrentStageTutorialDates.Count > 0) return;
+                    CommandSelectFrontBattleIndex((int)viewEvent.template);
+                    break;
+                case Train.CommandType.SelectBackBattleIndex:
+                    if (_model.CurrentStageTutorialDates.Count > 0) return;
+                    CommandSelectBackBattleIndex((int)viewEvent.template);
+                    break;
+                case Train.CommandType.SkillTrigger:
+                    if (_model.CurrentStageTutorialDates.Count > 0) return;
+                    CommandSkillTrigger((int)viewEvent.template);
+                    break;
+                case Train.CommandType.SymbolClose:
+                    CommandSymbolClose();
+                    break;
+                case Train.CommandType.CallEnemyInfo:
+                    if (_model.CurrentStageTutorialDates.Count > 0) return;
+                    CommandCallEnemyInfo((SymbolInfo)viewEvent.template);
+                    break;
                 case Train.CommandType.PopupSkillInfo:
                     CommandPopupSkillInfo((GetItemInfo)viewEvent.template);
+                    break;
+                case Train.CommandType.SelectRecord:
+                    break;
+                case Train.CommandType.CancelSymbolRecord:
+                    CommandCancelSymbolRecord();
                     break;
                 case Train.CommandType.Back:
                     CommandBack();
@@ -110,6 +137,13 @@ namespace Ryneus
         private void UpdatePopupSkillInfo()
         {
             _view.CommandGameSystem(Base.CommandType.CloseConfirm);
+        }
+
+
+        private void CommandCancelSymbolRecord()
+        {
+            _view.ChangeBackCommandActive(false);
+            _backCommand = Train.CommandType.None;
         }
 
         private void CommandBack()
@@ -164,6 +198,7 @@ namespace Ryneus
             _view.CommandCallStatus(statusViewInfo);
         }
 
+
         private void CommandSelectActorTrain()
         {
             if (_model.CheckActorTrain())
@@ -212,7 +247,7 @@ namespace Ryneus
             }
         }
 
-        private void CommandTacticsCommandClose()
+        private void CommandTacticsCommandClose(ConfirmCommandType confirmCommandType)
         {
             SoundManager.Instance.PlayStaticSe(SEType.Cancel);
             _view.ChangeBackCommandActive(false);
@@ -226,6 +261,13 @@ namespace Ryneus
             if (tacticsActorInfo.TacticsCommandType == TacticsCommandType.Train)
             {
                 CommandSelectActorTrain();
+            } else
+            if (tacticsActorInfo.TacticsCommandType == TacticsCommandType.Alchemy)
+            {
+            } else
+            if (tacticsActorInfo.TacticsCommandType == TacticsCommandType.Paradigm)
+            {
+                CommandSelectActorParadigm();
             }
         }
 
@@ -242,6 +284,36 @@ namespace Ryneus
                     _view.ShowLeaningList(_model.SelectActorLearningMagicList());
                     break;
             }
+        }
+
+        private void CommandSelectActorParadigm()
+        {
+            SoundManager.Instance.PlayStaticSe(SEType.Decide);
+            _model.SetInBattle();
+            CommandRefresh();
+        }
+
+        private void CommandSelectFrontBattleIndex(int actorId)
+        {
+            SoundManager.Instance.PlayStaticSe(SEType.Cursor);
+            _model.ChangeBattleLineIndex(actorId,true);
+            CommandRefresh();
+        }
+
+        private void CommandSelectBackBattleIndex(int actorId)
+        {
+            SoundManager.Instance.PlayStaticSe(SEType.Cursor);
+            _model.ChangeBattleLineIndex(actorId,false);
+            CommandRefresh();
+        }
+
+        private void CommandSkillTrigger(int actorId)
+        {
+            SoundManager.Instance.PlayStaticSe(SEType.Decide);
+            var skillTriggerViewInfo = new SkillTriggerViewInfo(actorId,() => {
+                CommandRefresh();
+            });
+            _view.CommandCallSkillTrigger(skillTriggerViewInfo);
         }
 
         private void CommandLearnSkill(SkillInfo skillInfo)
@@ -277,6 +349,51 @@ namespace Ryneus
             }
         }
 
+        private void CommandSelectEnemyClose(ConfirmCommandType confirmCommandType)
+        {
+            if (confirmCommandType == ConfirmCommandType.Yes)
+            {
+                if (_model.BattleMembers().Count > 0)
+                {
+                    _model.SaveTempBattleMembers();
+                    _model.SetStatusActorInfos();
+                    _view.CommandChangeViewToTransition(null);
+                    // ボス戦なら
+                    if (_model.CurrentSelectSymbol().SymbolType == SymbolType.Boss)
+                    {
+                        //SoundManager.Instance.FadeOutBgm();
+                        PlayBossBgm();
+                    } else
+                    {
+                        var bgmData = DataSystem.Data.GetBGM(_model.TacticsBgmKey());
+                        if (bgmData.CrossFade != "" && SoundManager.Instance.CrossFadeMode)
+                        {
+                            SoundManager.Instance.ChangeCrossFade();
+                        } else
+                        {
+                            PlayTacticsBgm();
+                        }
+                    }
+                    _model.SetPartyBattlerIdList();
+                    SoundManager.Instance.PlayStaticSe(SEType.BattleStart);
+                    _view.CommandSceneChange(Scene.Battle);
+                } else
+                {
+                    CheckBattleMember();
+                }
+            } else{
+                _view.HideSelectCharacter();
+            }
+        }
+
+        private void CheckBattleMember()
+        {
+            SoundManager.Instance.PlayStaticSe(SEType.Deny);
+            var cautionInfo = new CautionInfo();
+            cautionInfo.SetTitle(DataSystem.GetText(11160));
+            _view.CommandCallCaution(cautionInfo);
+        }
+
         private void CommandPopupSkillInfo(GetItemInfo getItemInfo)
         {
             var confirmInfo = new ConfirmInfo("",(a) => UpdatePopupSkillInfo(),ConfirmType.SkillDetail);
@@ -286,12 +403,52 @@ namespace Ryneus
             SoundManager.Instance.PlayStaticSe(SEType.Decide);
         }
 
+        private void CommandSymbolClose()
+        {
+            SoundManager.Instance.PlayStaticSe(SEType.Cancel);
+        }
+
         private void CommandRefresh()
         {
             _view.SetNuminous(_model.Currency);
             _view.SetEvaluate(_model.PartyEvaluate(),_model.TroopEvaluate());
             _view.CommandRefresh();
         }
+
+        private void CommandCallEnemyInfo(SymbolInfo symbolInfo)
+        {
+            switch (symbolInfo.SymbolType)
+            {
+                case SymbolType.Battle:
+                case SymbolType.Boss:
+                    var enemyInfos = symbolInfo.BattlerInfos();
+                    
+                    var enemyViewInfo = new StatusViewInfo(() => {
+                        _view.CommandGameSystem(Base.CommandType.CloseStatus);
+                        _view.ChangeUIActive(true);
+                    });
+                    enemyViewInfo.SetEnemyInfos(enemyInfos,false);
+                    _view.CommandCallEnemyInfo(enemyViewInfo);
+                    _view.ChangeUIActive(false);
+                    break;
+                case SymbolType.Alcana:
+                    CommandPopupSkillInfo(symbolInfo.GetItemInfos[0]);
+                    break;
+                case SymbolType.Actor:
+                    _model.SetTempAddActorStatusInfos(symbolInfo.GetItemInfos[0].Param1);
+                    var statusViewInfo = new StatusViewInfo(() => {
+                        _view.CommandGameSystem(Base.CommandType.CloseStatus);
+                        _view.ChangeUIActive(true);
+                    });
+                    statusViewInfo.SetDisplayCharacterList(false);
+                    _view.CommandCallStatus(statusViewInfo);
+                    _view.ChangeUIActive(false);
+                    break;
+            }
+            SoundManager.Instance.PlayStaticSe(SEType.Decide);
+        }
+
+
 
         private void CommandStageHelp()
         {

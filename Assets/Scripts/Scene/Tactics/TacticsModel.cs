@@ -325,6 +325,10 @@ namespace Ryneus
             var lastSelectSeek = selectRecords.Count > 0 ? selectRecords.Select(a => a.Seek).Max() : -1;
             foreach (var stageSymbolInfo in PartyInfo.StageSymbolInfos)
             {
+                if (stageSymbolInfo.StageSymbolData.Seek == 0)
+                {
+                    continue;
+                }
                 var symbolInfo = new SymbolInfo();
                 symbolInfo.CopyData(stageSymbolInfo);
                 var saveRecord = selectRecords.Find(a => a.IsSameSymbol(stageSymbolInfo.StageSymbolData.StageId,stageSymbolInfo.StageSymbolData.Seek,stageSymbolInfo.StageSymbolData.SeekIndex));

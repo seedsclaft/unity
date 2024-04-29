@@ -39,6 +39,7 @@ namespace Ryneus
 
         private void CallInputHandler(InputKeyType keyType)
         {
+            return;
             if (keyType == InputKeyType.Right || keyType == InputKeyType.Left)
             {
                 if (DataCount > 1)
@@ -50,7 +51,7 @@ namespace Ryneus
             if (keyType == InputKeyType.Up)
             {
                 var tacticsSymbol = ItemPrefabList[Index].GetComponent<TacticsSymbol>();
-                tacticsSymbol.UpdateItemIndex(tacticsSymbol.GetItemIndex-1);
+                //tacticsSymbol.UpdateItemIndex(tacticsSymbol.GetItemIndex-1);
                 if (tacticsSymbol.GetItemIndex == -1)
                 {
                     tacticsSymbol.SetSelectable(true);
@@ -59,8 +60,8 @@ namespace Ryneus
             }
             if (keyType == InputKeyType.Down)
             {
-                var tacticsSymbol = ItemPrefabList[Index].GetComponent<TacticsSymbol>();
-                tacticsSymbol.UpdateItemIndex(tacticsSymbol.GetItemIndex+1);
+                //var tacticsSymbol = ItemPrefabList[Index].GetComponent<TacticsSymbol>();
+                //tacticsSymbol.UpdateItemIndex(tacticsSymbol.GetItemIndex+1);
                 //Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cursor);
             }
         }

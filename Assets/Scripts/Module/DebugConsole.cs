@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
+using System.Dynamic;
 
 namespace Ryneus
 {
@@ -22,6 +23,48 @@ namespace Ryneus
 
         void CallConsoleCommand(string inputText)
         {
+            if (consoleInputField.text.Contains("TS"))
+            {
+                var replace = consoleInputField.text.Replace("TS","");
+                var command = replace.Split(",");
+                if (command.Length != 2) return;
+                GameSystem.CurrentStageData.MakeStageData(int.Parse( replace ));
+            }
+            if (consoleInputField.text.Contains("TT"))
+            {
+                var replace = consoleInputField.text.Replace("TT","");
+                GameSystem.CurrentStageData.CurrentStage.SetCurrentTurn(int.Parse( replace ));
+            }
+            if (consoleInputField.text.Contains("DEBUG"))
+            {
+                GameSystem.CurrentStageData.Party.ChangeCurrency(9999);
+                for (int i = 1; i <= 11;i++)
+                {
+                    GameSystem.CurrentStageData.AddTestActor(DataSystem.FindActor(i),0);
+                }
+                foreach (var skill in DataSystem.Skills)
+                {
+                    if (skill.Value.Rank > 2 || skill.Value.Rank == 0)
+                    {
+                        continue;
+                    }
+                    var stageSymbol = new StageSymbolData
+                    {
+                        StageId = 1,
+                        Seek = 0,
+                        SeekIndex = 0
+                    };
+                    var symbolInfo = new SymbolInfo(stageSymbol);
+                    var getItemData = new GetItemData();
+                    getItemData.Type = GetItemType.Skill;
+                    getItemData.Param1 = skill.Value.Id;
+                    symbolInfo.SetGetItemInfos(new List<GetItemInfo>(){new GetItemInfo(getItemData)});
+                    var record = new SymbolResultInfo(symbolInfo,GameSystem.CurrentStageData.Party.Currency);
+                    
+                    record.SetSelected(true);
+                    GameSystem.CurrentStageData.Party.SetSymbolResultInfo(record,false);
+                }
+            }
             if (consoleInputField.text == "R")
             {
                 SceneManager.LoadScene(0);

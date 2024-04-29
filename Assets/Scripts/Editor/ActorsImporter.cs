@@ -109,17 +109,19 @@ namespace Ryneus
 					{
 						IRow BaseRow = BaseSheet.GetRow(i);
 
-						var ActorData = new ActorData();
-						ActorData.Id = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.Id);
-						ActorData.Name = textData.Find(a => a.Id == AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.NameId)).Text;
-						ActorData.SubName = textData.Find(a => a.Id == AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.NameId)).Help;
-						
-						ActorData.ClassId = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.ClassId);
-						ActorData.ImagePath = AssetPostImporter.ImportString(BaseRow,(int)BaseColumn.ImagePath);
-						ActorData.InitLv = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.InitLv);
-						ActorData.MaxLv = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.MaxLv);
+                        var ActorData = new ActorData
+                        {
+                            Id = AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.Id),
+                            Name = textData.Find(a => a.Id == AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.NameId)).Text,
+                            SubName = textData.Find(a => a.Id == AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.NameId)).Help,
 
-						int InitHp = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.InitHp);
+                            ClassId = AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.ClassId),
+                            ImagePath = AssetPostImporter.ImportString(BaseRow, (int)BaseColumn.ImagePath),
+                            InitLv = AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.InitLv),
+                            MaxLv = AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.MaxLv)
+                        };
+
+                        int InitHp = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.InitHp);
 						int InitMp = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.InitMp);
 						int InitAtk = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.InitAtk);
 						int InitSpd = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.InitSpd);
@@ -140,12 +142,14 @@ namespace Ryneus
 						int Element3 = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.Element3);
 						int Element4 = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.Element4);
 						int Element5 = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.Element5);
-						ActorData.Attribute = new List<AttributeRank>();
-						ActorData.Attribute.Add((AttributeRank)Element1);
-						ActorData.Attribute.Add((AttributeRank)Element2);
-						ActorData.Attribute.Add((AttributeRank)Element3);
-						ActorData.Attribute.Add((AttributeRank)Element4);
-						ActorData.Attribute.Add((AttributeRank)Element5);
+						ActorData.Attribute = new List<AttributeRank>
+                        {
+                            (AttributeRank)Element1,
+                            (AttributeRank)Element2,
+                            (AttributeRank)Element3,
+                            (AttributeRank)Element4,
+                            (AttributeRank)Element5
+                        };
 
 						int X = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.X);
 						int Y = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.Y);
@@ -181,10 +185,12 @@ namespace Ryneus
 						string[] list = AssetPostImporter.ImportString(BaseRow,(int)BaseLearningColumn.SkillId).Split(',');
 						foreach (string item in list)
 						{
-							var LearningData = new LearningData();
-							LearningData.SkillId = int.Parse(item);
-							LearningData.Level = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseLearningColumn.Level);
-							Actor.LearningSkills.Add(LearningData);
+                            var LearningData = new LearningData
+                            {
+                                SkillId = int.Parse(item),
+                                Level = AssetPostImporter.ImportNumeric(BaseRow, (int)BaseLearningColumn.Level)
+                            };
+                            Actor.LearningSkills.Add(LearningData);
 						}
 					}
 					// トリガースキル情報設定

@@ -58,7 +58,9 @@ namespace Ryneus
 
         public List<ActorInfo> StageMembers()
         {
-            return PartyInfo.CurrentActorInfos(CurrentStage.Id,CurrentStage.CurrentTurn);
+            var actorInfos = PartyInfo.CurrentActorInfos(CurrentStage.Id,CurrentStage.CurrentTurn);
+            actorInfos.Sort((a,b)=> a.Level < b.Level ? 1 :-1);
+            return actorInfos;
         }
 
         public List<ActorInfo> BattleMembers()

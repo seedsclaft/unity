@@ -3590,7 +3590,7 @@ namespace Ryneus
             return removeStateInfos;
         }
 
-        public void GainAttackCount(int targetIndex)
+        public void GainAttackedCount(int targetIndex)
         {
             GetBattlerInfo(targetIndex).GainAttackedCount(1);
         }

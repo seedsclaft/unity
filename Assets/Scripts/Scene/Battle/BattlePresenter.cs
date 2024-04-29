@@ -827,7 +827,7 @@ namespace Ryneus
             }
             if (actionResultInfo.HpDamage > 0)
             {
-                _model.GainAttackCount(actionResultInfo.TargetIndex);
+                _model.GainAttackedCount(actionResultInfo.TargetIndex);
                 _model.GainMaxDamage(actionResultInfo.TargetIndex,actionResultInfo.HpDamage);
                 if (actionResultInfo.Critical)
                 {

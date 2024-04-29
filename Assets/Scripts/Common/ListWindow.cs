@@ -469,6 +469,10 @@ namespace Ryneus
                         nextIndex -= _listDates.Count;
                     }
                     var listItem = ObjectList[nextIndex].GetComponent<ListItem>();
+                    if (listItem == null)
+                    {
+                        break;
+                    }
                     if (listItem.Disable == null)
                     {
                         break;
