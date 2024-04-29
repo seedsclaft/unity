@@ -38,6 +38,19 @@ namespace Ryneus
 
 
         public int ParallelListIndex => parallelList.Index;
+        public int RecordSeekIndex() 
+        {
+            var listData = symbolRecordList.ListData;
+            if (listData != null)
+            {
+                var data = (List<SymbolInfo>)listData.Data;
+                if (data != null && data.Count > 0)
+                {
+                    return data[0].StageSymbolData.Seek;
+                }
+            }
+            return -1;
+        }
 
         private bool _initRecordDisplay = false;
 

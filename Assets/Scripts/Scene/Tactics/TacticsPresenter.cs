@@ -250,7 +250,6 @@ namespace Ryneus
                     CommandBack();
                     break;
                 case Tactics.CommandType.DecideRecord:
-                    _model.SetSymbolInfo((SymbolInfo)viewEvent.template);
                     CommandDecideRecord();
                     break;
                 case Tactics.CommandType.Parallel:
@@ -266,7 +265,6 @@ namespace Ryneus
                 case Tactics.CommandType.HideAlcanaList:
                     CommandHideAlcanaList();
                     break;
-                
             }
             if (viewEvent.commandType == Tactics.CommandType.SelectSideMenu)
             {
@@ -508,9 +506,13 @@ namespace Ryneus
             _view.CommandGameSystem(Base.CommandType.CloseConfirm);
             if (confirmCommandType == ConfirmCommandType.Yes)
             {
-                // 過去のステージを作る
-                _model.MakeSymbolRecordStage(_model.SymbolInfo.StageSymbolData.Seek);
-                _view.CommandGotoSceneChange(Scene.Tactics);
+                var selectSeek = _view.RecordSeekIndex();
+                if (selectSeek > -1)
+                {
+                    // 過去のステージを作る
+                    _model.MakeSymbolRecordStage(selectSeek);
+                    _view.CommandGotoSceneChange(Scene.Tactics);
+                }
             }
         }
 
@@ -540,9 +542,14 @@ namespace Ryneus
             _view.CommandGameSystem(Base.CommandType.CloseConfirm);
             if (confirmCommandType == ConfirmCommandType.Yes)
             {
-                _model.MakeSymbolRecordStage(_model.SymbolInfo.StageSymbolData.Seek);
-                _model.SetParallelMode();
-                _view.CommandGotoSceneChange(Scene.Tactics);
+                var selectSeek = _view.RecordSeekIndex();
+                if (selectSeek > -1)
+                {
+                    // 過去のステージを作る
+                    _model.MakeSymbolRecordStage(selectSeek);
+                    _model.SetParallelMode();
+                    _view.CommandGotoSceneChange(Scene.Tactics);
+                }
             }
         }
 

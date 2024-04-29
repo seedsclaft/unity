@@ -1313,14 +1313,15 @@ namespace Ryneus
             var actionInfo = CurrentActionInfo();
             if (actionInfo != null)
             {
+                var subject = GetBattlerInfo(actionInfo.SubjectIndex);
                 // Hpの支払い
-                _currentBattler.GainHp(actionInfo.HpCost * -1);
+                subject.GainHp(actionInfo.HpCost * -1);
                 // Mpの支払い
-                _currentBattler.GainMp(actionInfo.MpCost * -1);
-                _currentBattler.GainPayBattleMp(actionInfo.MpCost);
+                subject.GainMp(actionInfo.MpCost * -1);
+                subject.GainPayBattleMp(actionInfo.MpCost);
                 if (actionInfo.Master.IsHpHealFeature())
                 {
-                    _currentBattler.GainHealCount(1);
+                    subject.GainHealCount(1);
                 }
                 var actionResultInfos = CalcDeathIndexList(actionInfo.ActionResults);
                 foreach (var actionResultInfo in actionResultInfos)
@@ -1331,7 +1332,7 @@ namespace Ryneus
                 if (actionInfo.Master.IsRevengeHpDamageFeature())
                 {
                     // 受けたダメージをリセット
-                    _currentBattler.SetDamagedValue(0);
+                    subject.SetDamagedValue(0);
                 }
                 _battleActionRecords.Add(actionInfo);
             }
@@ -1564,27 +1565,28 @@ namespace Ryneus
             var reAction = false;
             var actionInfo = CurrentActionInfo();
             if (actionInfo.TriggeredSkill == false)
-            {    
+            {
+                var subject = GetBattlerInfo(actionInfo.SubjectIndex);
                 var noResetAp = actionInfo.SkillInfo.FeatureDates.Find(a => a.FeatureType == FeatureType.NoResetAp);
                 if (noResetAp == null)
                 {
-                    _currentBattler.ResetAp(false);
+                    subject.ResetAp(false);
                 }
                 var afterAp = actionInfo.SkillInfo.FeatureDates.Find(a => a.FeatureType == FeatureType.SetAfterAp);
                 if (afterAp != null)
                 {
-                    _currentBattler.SetAp(afterAp.Param1);
+                    subject.SetAp(afterAp.Param1);
                     if (afterAp.Param1 == 0)
                     {
                         reAction = true;
                     }
                 }
-                if (_currentBattler.IsState(StateType.Combo))
+                if (subject.IsState(StateType.Combo))
                 {
-                    var friends = _currentBattler.IsActor ? _party.AliveBattlerInfos : _troop.AliveBattlerInfos;
+                    var friends = subject.IsActor ? _party.AliveBattlerInfos : _troop.AliveBattlerInfos;
                     foreach (var friend in friends)
                     {
-                        if (friend.Index != _currentBattler.Index)
+                        if (friend.Index != subject.Index)
                         {
                             friend.SetAp(0);
                         }
@@ -1726,8 +1728,8 @@ namespace Ryneus
 
         public List<ActionResultInfo> CheckBurnDamage()
         {
-            var results = MakeStateActionResult(_currentBattler,StateType.BurnDamage,FeatureType.HpDefineDamage);
-            var results2 = MakeStateActionResult(_currentBattler,StateType.BurnDamagePer,FeatureType.NoEffectHpPerDamage);
+            var results = MakeStateActionResult(_currentTurnBattler,StateType.BurnDamage,FeatureType.HpDefineDamage);
+            var results2 = MakeStateActionResult(_currentTurnBattler,StateType.BurnDamagePer,FeatureType.NoEffectHpPerDamage);
             results.AddRange(results2);
             // 対象ごとにHpダメージでまとめる
             var targetIndexes = new List<int>();
@@ -3168,7 +3170,6 @@ namespace Ryneus
                     }
                 }
             }
-            // 反撃
             if (targetIndex == -1)
             {
                 targetIndex = targetIndexList[UnityEngine.Random.Range(0, targetIndexList.Count)];

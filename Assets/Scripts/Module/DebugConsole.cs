@@ -40,7 +40,22 @@ namespace Ryneus
                 GameSystem.CurrentStageData.Party.ChangeCurrency(9999);
                 for (int i = 1; i <= 11;i++)
                 {
-                    GameSystem.CurrentStageData.AddTestActor(DataSystem.FindActor(i),0);
+                    var stageSymbol = new StageSymbolData
+                    {
+                        StageId = 1,
+                        Seek = 0,
+                        SeekIndex = 0
+                    };
+                    var symbolInfo = new SymbolInfo(stageSymbol);
+                    var getItemData = new GetItemData();
+                    getItemData.Type = GetItemType.AddActor;
+                    getItemData.Param1 = i;
+                    symbolInfo.SetGetItemInfos(new List<GetItemInfo>(){new GetItemInfo(getItemData)});
+                    var record = new SymbolResultInfo(symbolInfo,GameSystem.CurrentStageData.Party.Currency);
+                    
+                    record.SetSelected(true);
+                    GameSystem.CurrentStageData.Party.SetSymbolResultInfo(record,false);
+                    //GameSystem.CurrentStageData.AddTestActor(DataSystem.FindActor(i),0);
                 }
                 foreach (var skill in DataSystem.Skills)
                 {

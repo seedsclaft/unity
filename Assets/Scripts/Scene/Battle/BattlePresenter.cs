@@ -1140,7 +1140,7 @@ namespace Ryneus
             var CurrentActionInfo = _model.CurrentActionInfo();
             if (CurrentActionInfo != null)
             {
-                _model.SetActionBattler(CurrentActionInfo.SubjectIndex);
+                //_model.SetActionBattler(CurrentActionInfo.SubjectIndex);
                 CommandSelectTargetIndexes(_model.MakeAutoSelectIndex(CurrentActionInfo));
                 return;
             }

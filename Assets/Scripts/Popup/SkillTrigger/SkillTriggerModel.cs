@@ -45,6 +45,13 @@ namespace Ryneus
                 {
                     list = list.FindAll(a => (int)a.TargetType == -1 || a.TargetType == TargetType.All || a.TargetType == TargetType.Friend || a.TargetType == TargetType.Opponent);
                 } else
+                if (skill.TargetType == TargetType.IsTriggerTarget)
+                {
+                    if (skill.IsHpHealFeature())
+                    {
+                        list = list.FindAll(a => (int)a.TargetType == -1 || a.TargetType == TargetType.All || a.TargetType == TargetType.Friend);
+                    }
+                } else
                 {
                     list = list.FindAll(a => (int)a.TargetType == -1 || a.TargetType == skill.TargetType);
                 }
