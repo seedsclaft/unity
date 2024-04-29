@@ -455,6 +455,10 @@ namespace Ryneus
             {
                 return false;
             }
+            if (!battlerInfo.CanMove())
+            {
+                return false;
+            }
             if (skillInfo.Master.SkillType == SkillType.Awaken)
             {
                 if (!battlerInfo.IsState(StateType.Demigod))
@@ -773,7 +777,7 @@ namespace Ryneus
             var subject = GetBattlerInfo(actionInfo.SubjectIndex);
             var targetIndexList = GetSkillTargetIndexList(actionInfo.Master.Id,subject.Index,true);
             var scopeType = actionInfo.ScopeType;
-            if (subject.IsState(StateType.EffectLine))
+            if (subject.IsState(StateType.EffectLine) && scopeType != ScopeType.All)
             {
                 scopeType = ScopeType.Line;
             }
@@ -3178,7 +3182,7 @@ namespace Ryneus
             var scopeType = actionInfo.Master.Scope;
             if (subject != null)
             {
-                if (subject.IsState(StateType.EffectLine))
+                if (subject.IsState(StateType.EffectLine) && scopeType != ScopeType.All)
                 {
                     scopeType = ScopeType.Line;
                 }

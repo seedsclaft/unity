@@ -27,6 +27,10 @@ namespace Ryneus
             damageRoots.ForEach(a => a.SetActive(false));
             for (var i = 0;i < ItemPrefabList.Count;i++)
             {
+                if (i >= 5)
+                {
+                    continue;
+                }
                 var battleBattler = ItemPrefabList[i].GetComponent<BattleBattler>();
                 if (battleBattler.ListData != null)
                 {

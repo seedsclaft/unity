@@ -45,7 +45,8 @@ namespace Ryneus
     public enum KindType
     {
         None = 0,
-        Undead = 1
+        Undead = 1,
+        Air = 2
     }
 
     public enum LineType

@@ -60,16 +60,25 @@ namespace Ryneus
                 var targetIdRand = UnityEngine.Random.Range(1,15);
                 var enemyData = DataSystem.Enemies.Find(a => a.Id == targetIdRand);
                 var lineRand = UnityEngine.Random.Range(0,1);
+                // 遠隔持っていない場合は前列
+                if (!enemyData.Kinds.Contains(KindType.Air) && lineRand == 1)
+                {
+                    lineRand = 0;
+                }
                 var battlerInfo = new BattlerInfo(enemyData,level,_battlerInfos.Count,(LineType)lineRand,_battlerInfos.Count == 0);
                 AddEnemy(battlerInfo);
             }
-            var getItemData2 = new GetItemData();
-            getItemData2.Param1 = level * 10 + 90;
-            getItemData2.Type = GetItemType.SaveHuman;
+            var getItemData2 = new GetItemData
+            {
+                Param1 = level * 100,
+                Type = GetItemType.SaveHuman
+            };
             _getItemInfos.Add(new GetItemInfo(getItemData2));
-            var getItemData = new GetItemData();
-            getItemData.Param1 = level + 4;
-            getItemData.Type = GetItemType.Numinous;
+            var getItemData = new GetItemData
+            {
+                Param1 = level + 4,
+                Type = GetItemType.Numinous
+            };
             _getItemInfos.Add(new GetItemInfo(getItemData));
         }
 

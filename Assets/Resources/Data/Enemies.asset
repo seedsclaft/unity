@@ -22,7 +22,7 @@ MonoBehaviour:
       _atk: 8
       _def: 7
       _spd: 19
-    Kinds: 02000000
+    Kinds: 04000000
     LearningSkills:
     - SkillId: 3010
       Level: 1
@@ -38,13 +38,13 @@ MonoBehaviour:
       TriggerDates: []
     SkillTriggerDates:
     - SkillId: 3010
-      Trigger1: 0
+      Trigger1: 14215
       Trigger2: 0
     - SkillId: 3060
-      Trigger1: 0
+      Trigger1: 14215
       Trigger2: 0
     - SkillId: 3050
-      Trigger1: 0
+      Trigger1: 14215
       Trigger2: 0
   - Id: 2
     Name: "\u30AB\u30FC\u30B9\u30C9"
@@ -55,7 +55,7 @@ MonoBehaviour:
       _atk: 15
       _def: 2
       _spd: 13
-    Kinds: 0100000002000000
+    Kinds: 01000000
     LearningSkills:
     - SkillId: 5010
       Level: 1
@@ -63,21 +63,21 @@ MonoBehaviour:
       TriggerDates: []
     - SkillId: 5030
       Level: 20
-      Weight: 50
+      Weight: 100
       TriggerDates: []
     - SkillId: 5040
       Level: 40
-      Weight: 50
+      Weight: 200
       TriggerDates: []
     SkillTriggerDates:
     - SkillId: 5010
-      Trigger1: 0
+      Trigger1: 1161
       Trigger2: 0
     - SkillId: 5030
-      Trigger1: 0
+      Trigger1: 1161
       Trigger2: 0
     - SkillId: 5040
-      Trigger1: 0
+      Trigger1: 6231
       Trigger2: 0
   - Id: 3
     Name: "\u30D3\u30FC"
@@ -100,14 +100,14 @@ MonoBehaviour:
       TriggerDates: []
     - SkillId: 12050
       Level: 40
-      Weight: 100
+      Weight: 0
       TriggerDates: []
     SkillTriggerDates:
     - SkillId: 2010
       Trigger1: 0
       Trigger2: 0
     - SkillId: 2030
-      Trigger1: 0
+      Trigger1: 9021
       Trigger2: 0
     - SkillId: 12050
       Trigger1: 0
@@ -121,7 +121,7 @@ MonoBehaviour:
       _atk: 13
       _def: 3
       _spd: 17
-    Kinds: 02000000
+    Kinds: 05000000
     LearningSkills:
     - SkillId: 1010
       Level: 1
@@ -169,22 +169,22 @@ MonoBehaviour:
       TriggerDates: []
     - SkillId: 2040
       Level: 20
-      Weight: 50
+      Weight: 100
       TriggerDates: []
     - SkillId: 12030
       Level: 40
-      Weight: 50
+      Weight: 0
       TriggerDates: []
     - SkillId: 12060
       Level: 60
-      Weight: 50
+      Weight: 0
       TriggerDates: []
     SkillTriggerDates:
     - SkillId: 2010
       Trigger1: 0
       Trigger2: 0
     - SkillId: 2040
-      Trigger1: 0
+      Trigger1: 14213
       Trigger2: 0
     - SkillId: 12030
       Trigger1: 0
@@ -201,7 +201,7 @@ MonoBehaviour:
       _atk: 8
       _def: 6
       _spd: 12
-    Kinds: 02000000
+    Kinds: 06000000
     LearningSkills:
     - SkillId: 4010
       Level: 1
@@ -209,7 +209,7 @@ MonoBehaviour:
       TriggerDates: []
     - SkillId: 4050
       Level: 20
-      Weight: 50
+      Weight: 150
       TriggerDates:
       - SkillId: 0
         TriggerType: 2010
@@ -219,7 +219,7 @@ MonoBehaviour:
         Param3: 0
     - SkillId: 4030
       Level: 40
-      Weight: 50
+      Weight: 200
       TriggerDates:
       - SkillId: 0
         TriggerType: 2010
@@ -229,13 +229,13 @@ MonoBehaviour:
         Param3: 0
     SkillTriggerDates:
     - SkillId: 4010
-      Trigger1: 0
+      Trigger1: 5061
       Trigger2: 0
     - SkillId: 4050
-      Trigger1: 0
+      Trigger1: 1037
       Trigger2: 0
     - SkillId: 4030
-      Trigger1: 0
+      Trigger1: 1033
       Trigger2: 0
   - Id: 7
     Name: "\u30B5\u30FC\u30C1\u30E3\u30FC"
@@ -254,19 +254,19 @@ MonoBehaviour:
       TriggerDates: []
     - SkillId: 5060
       Level: 20
-      Weight: 50
+      Weight: 100
       TriggerDates: []
     - SkillId: 15010
       Level: 40
-      Weight: 50
+      Weight: 0
       TriggerDates: []
     SkillTriggerDates:
     - SkillId: 5010
-      Trigger1: 0
+      Trigger1: 14213
       Trigger2: 0
     - SkillId: 5060
-      Trigger1: 0
-      Trigger2: 0
+      Trigger1: 6231
+      Trigger2: 9032
     - SkillId: 15010
       Trigger1: 0
       Trigger2: 0
@@ -279,30 +279,30 @@ MonoBehaviour:
       _atk: 6
       _def: 14
       _spd: 14
-    Kinds: 02000000
+    Kinds: 06000000
     LearningSkills:
     - SkillId: 3010
       Level: 1
-      Weight: 25
+      Weight: 50
       TriggerDates: []
     - SkillId: 3020
       Level: 20
-      Weight: 75
+      Weight: 100
       TriggerDates: []
     - SkillId: 13030
       Level: 40
-      Weight: 75
+      Weight: 0
       TriggerDates: []
     - SkillId: 13040
       Level: 60
-      Weight: 75
+      Weight: 0
       TriggerDates: []
     SkillTriggerDates:
     - SkillId: 3010
       Trigger1: 0
       Trigger2: 0
     - SkillId: 3020
-      Trigger1: 0
+      Trigger1: 1023
       Trigger2: 0
     - SkillId: 13030
       Trigger1: 0
@@ -319,7 +319,7 @@ MonoBehaviour:
       _atk: 11
       _def: 2
       _spd: 12
-    Kinds: 02000000
+    Kinds: 04000000
     LearningSkills:
     - SkillId: 1010
       Level: 1
@@ -337,24 +337,24 @@ MonoBehaviour:
         Param3: 0
     - SkillId: 11030
       Level: 40
-      Weight: 50
+      Weight: 0
       TriggerDates: []
     - SkillId: 1050
       Level: 60
-      Weight: 50
+      Weight: 100
       TriggerDates: []
     SkillTriggerDates:
     - SkillId: 1010
-      Trigger1: 0
+      Trigger1: 5062
       Trigger2: 0
     - SkillId: 1030
-      Trigger1: 0
+      Trigger1: 3033
       Trigger2: 0
     - SkillId: 11030
       Trigger1: 0
       Trigger2: 0
     - SkillId: 1050
-      Trigger1: 0
+      Trigger1: 5062
       Trigger2: 0
   - Id: 10
     Name: "\u30B9\u30B3\u30FC\u30D4\u30AA\u30F3"
@@ -365,19 +365,15 @@ MonoBehaviour:
       _atk: 10
       _def: 2
       _spd: 29
-    Kinds: 02000000
+    Kinds: 05000000
     LearningSkills:
     - SkillId: 2010
       Level: 1
-      Weight: 100
-      TriggerDates: []
-    - SkillId: 12010
-      Level: 1
-      Weight: 100
+      Weight: 50
       TriggerDates: []
     - SkillId: 12060
       Level: 20
-      Weight: 25
+      Weight: 0
       TriggerDates: []
     - SkillId: 2050
       Level: 40
@@ -385,20 +381,17 @@ MonoBehaviour:
       TriggerDates: []
     - SkillId: 12040
       Level: 60
-      Weight: 100
+      Weight: 0
       TriggerDates: []
     SkillTriggerDates:
     - SkillId: 2010
-      Trigger1: 0
-      Trigger2: 0
-    - SkillId: 12010
       Trigger1: 0
       Trigger2: 0
     - SkillId: 12060
       Trigger1: 0
       Trigger2: 0
     - SkillId: 2050
-      Trigger1: 0
+      Trigger1: 5111
       Trigger2: 0
     - SkillId: 12040
       Trigger1: 0
@@ -412,11 +405,11 @@ MonoBehaviour:
       _atk: 7
       _def: 7
       _spd: 21
-    Kinds: 02000000
+    Kinds: 05000000
     LearningSkills:
     - SkillId: 3010
       Level: 1
-      Weight: 100
+      Weight: 50
       TriggerDates: []
     - SkillId: 3040
       Level: 20
@@ -424,14 +417,14 @@ MonoBehaviour:
       TriggerDates: []
     - SkillId: 13020
       Level: 40
-      Weight: 100
+      Weight: 0
       TriggerDates: []
     SkillTriggerDates:
     - SkillId: 3010
       Trigger1: 0
       Trigger2: 0
     - SkillId: 3040
-      Trigger1: 0
+      Trigger1: 5061
       Trigger2: 0
     - SkillId: 13020
       Trigger1: 0
@@ -445,23 +438,23 @@ MonoBehaviour:
       _atk: 12
       _def: 6
       _spd: 15
-    Kinds: 0100000002000000
+    Kinds: 01000000
     LearningSkills:
     - SkillId: 5010
       Level: 1
-      Weight: 100
+      Weight: 50
       TriggerDates: []
     - SkillId: 15010
       Level: 20
-      Weight: 100
+      Weight: 0
       TriggerDates: []
     - SkillId: 15040
       Level: 40
-      Weight: 100
+      Weight: 0
       TriggerDates: []
     SkillTriggerDates:
     - SkillId: 5010
-      Trigger1: 0
+      Trigger1: 14211
       Trigger2: 0
     - SkillId: 15010
       Trigger1: 0
@@ -478,29 +471,29 @@ MonoBehaviour:
       _atk: 11
       _def: 5
       _spd: 16
-    Kinds: 02000000
+    Kinds: 04000000
     LearningSkills:
     - SkillId: 4010
       Level: 1
-      Weight: 20
+      Weight: 50
       TriggerDates: []
     - SkillId: 14040
       Level: 20
       Weight: 80
       TriggerDates: []
-    - SkillId: 14060
+    - SkillId: 14100
       Level: 40
-      Weight: 50
+      Weight: 0
       TriggerDates: []
     SkillTriggerDates:
     - SkillId: 4010
       Trigger1: 0
       Trigger2: 0
     - SkillId: 14040
-      Trigger1: 0
+      Trigger1: 1033
       Trigger2: 0
-    - SkillId: 14060
-      Trigger1: 0
+    - SkillId: 14100
+      Trigger1: 1033
       Trigger2: 0
   - Id: 14
     Name: "\u30B4\u30FC\u30B9\u30C8\u30A2\u30FC\u30DE\u30FC"
@@ -511,7 +504,7 @@ MonoBehaviour:
       _atk: 10
       _def: 4
       _spd: 11
-    Kinds: 0100000002000000
+    Kinds: 01000000
     LearningSkills:
     - SkillId: 4010
       Level: 1
@@ -519,7 +512,7 @@ MonoBehaviour:
       TriggerDates: []
     - SkillId: 4030
       Level: 20
-      Weight: 50
+      Weight: 100
       TriggerDates:
       - SkillId: 0
         TriggerType: 2010
@@ -529,14 +522,14 @@ MonoBehaviour:
         Param3: 0
     - SkillId: 14030
       Level: 40
-      Weight: 80
+      Weight: 0
       TriggerDates: []
     SkillTriggerDates:
     - SkillId: 4010
       Trigger1: 0
       Trigger2: 0
     - SkillId: 4030
-      Trigger1: 0
+      Trigger1: 1033
       Trigger2: 0
     - SkillId: 14030
       Trigger1: 0
@@ -550,7 +543,7 @@ MonoBehaviour:
       _atk: 15
       _def: 3
       _spd: 24
-    Kinds: 02000000
+    Kinds: 06000000
     LearningSkills:
     - SkillId: 1010
       Level: 1
@@ -558,7 +551,7 @@ MonoBehaviour:
       TriggerDates: []
     - SkillId: 1040
       Level: 20
-      Weight: 50
+      Weight: 100
       TriggerDates:
       - SkillId: 0
         TriggerType: 1020
@@ -574,14 +567,14 @@ MonoBehaviour:
         Param3: 0
     - SkillId: 11030
       Level: 40
-      Weight: 100
+      Weight: 0
       TriggerDates: []
     SkillTriggerDates:
     - SkillId: 1010
       Trigger1: 0
       Trigger2: 0
     - SkillId: 1040
-      Trigger1: 0
+      Trigger1: 3024
       Trigger2: 0
     - SkillId: 11030
       Trigger1: 0
@@ -595,7 +588,7 @@ MonoBehaviour:
       _atk: 15
       _def: 10
       _spd: 15
-    Kinds: 03000000
+    Kinds: 05000000
     LearningSkills:
     - SkillId: 1010
       Level: 1
@@ -648,7 +641,7 @@ MonoBehaviour:
       _atk: 14
       _def: 5
       _spd: 22
-    Kinds: 0100000003000000
+    Kinds: 06000000
     LearningSkills:
     - SkillId: 4010
       Level: 1
@@ -656,7 +649,7 @@ MonoBehaviour:
       TriggerDates: []
     - SkillId: 3080
       Level: 1
-      Weight: 40
+      Weight: 50
       TriggerDates: []
     - SkillId: 200210
       Level: 1
@@ -664,7 +657,7 @@ MonoBehaviour:
       TriggerDates: []
     - SkillId: 200220
       Level: 1
-      Weight: 50
+      Weight: 100
       TriggerDates: []
     - SkillId: 200230
       Level: 1
@@ -695,7 +688,7 @@ MonoBehaviour:
       _atk: 21
       _def: 2
       _spd: 17
-    Kinds: 03000000
+    Kinds: 02000000
     LearningSkills:
     - SkillId: 2010
       Level: 1
@@ -742,7 +735,7 @@ MonoBehaviour:
       _atk: 15
       _def: 10
       _spd: 15
-    Kinds: 03000000
+    Kinds: 04000000
     LearningSkills:
     - SkillId: 5010
       Level: 1
@@ -796,7 +789,7 @@ MonoBehaviour:
       _atk: 15
       _def: 10
       _spd: 15
-    Kinds: 03000000
+    Kinds: 05000000
     LearningSkills:
     - SkillId: 3010
       Level: 1
@@ -843,7 +836,7 @@ MonoBehaviour:
       _atk: 15
       _def: 10
       _spd: 15
-    Kinds: 03000000
+    Kinds: 01000000
     LearningSkills:
     - SkillId: 4010
       Level: 1
@@ -890,7 +883,7 @@ MonoBehaviour:
       _atk: 15
       _def: 10
       _spd: 15
-    Kinds: 03000000
+    Kinds: 02000000
     LearningSkills:
     - SkillId: 5010
       Level: 1
@@ -937,7 +930,7 @@ MonoBehaviour:
       _atk: 15
       _def: 10
       _spd: 15
-    Kinds: 03000000
+    Kinds: 06000000
     LearningSkills:
     - SkillId: 5010
       Level: 1
@@ -977,7 +970,7 @@ MonoBehaviour:
       _atk: 15
       _def: 10
       _spd: 15
-    Kinds: 03000000
+    Kinds: 05000000
     LearningSkills:
     - SkillId: 2010
       Level: 1
@@ -1017,7 +1010,7 @@ MonoBehaviour:
       _atk: 15
       _def: 10
       _spd: 15
-    Kinds: 03000000
+    Kinds: 06000000
     LearningSkills:
     - SkillId: 3010
       Level: 1
@@ -1070,7 +1063,7 @@ MonoBehaviour:
       _atk: 15
       _def: 10
       _spd: 15
-    Kinds: 03000000
+    Kinds: 01000000
     LearningSkills:
     - SkillId: 4010
       Level: 1
@@ -1157,7 +1150,7 @@ MonoBehaviour:
       _atk: 15
       _def: 10
       _spd: 15
-    Kinds: 03000000
+    Kinds: 05000000
     LearningSkills:
     - SkillId: 1010
       Level: 1
@@ -1204,7 +1197,7 @@ MonoBehaviour:
       _atk: 15
       _def: 10
       _spd: 15
-    Kinds: 03000000
+    Kinds: 02000000
     LearningSkills:
     - SkillId: 2010
       Level: 1
@@ -1251,7 +1244,7 @@ MonoBehaviour:
       _atk: 15
       _def: 10
       _spd: 15
-    Kinds: 03000000
+    Kinds: 06000000
     LearningSkills:
     - SkillId: 5010
       Level: 1
