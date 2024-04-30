@@ -79,7 +79,9 @@ namespace Ryneus
             skillTriggerList.SetInputListHandler(
                 () => CallSkillEvent(),
                 () => CallTrigger1Event(),
-                () => CallTrigger2Event()
+                () => CallTrigger2Event(),
+                () => CallTriggerUpEvent(),
+                () => CallTriggerDownEvent()
             );
             skillTriggerList.Activate();
         }
@@ -258,6 +260,30 @@ namespace Ryneus
                 _commandData(eventData);
             }
         }
+
+        private void CallTriggerUpEvent()
+        {
+            var listData = skillTriggerList.ListData;
+            if (listData != null)
+            {
+                var data = (SkillTriggerInfo)listData.Data;
+                var eventData = new SkillTriggerViewEvent(SkillTrigger.CommandType.CallTriggerUp);
+                eventData.template = data;
+                _commandData(eventData);
+            }
+        }
+
+        private void CallTriggerDownEvent()
+        {
+            var listData = skillTriggerList.ListData;
+            if (listData != null)
+            {
+                var data = (SkillTriggerInfo)listData.Data;
+                var eventData = new SkillTriggerViewEvent(SkillTrigger.CommandType.CallTriggerDown);
+                eventData.template = data;
+                _commandData(eventData);
+            }
+        }
     }
 
 }
@@ -269,6 +295,8 @@ namespace SkillTrigger
         CallSkillSelect,
         CallTrigger1Select,
         CallTrigger2Select,
+        CallTriggerUp,
+        CallTriggerDown,
         DecideSkillSelect,
         DecideTrigger1Select,
         DecideTrigger2Select,

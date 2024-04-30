@@ -75,5 +75,15 @@ namespace Ryneus
         {
             PartyInfo.SetSkillTriggerTrigger2(_actorId,index,triggerData);
         }
+
+        public void SetTriggerIndexUp(int index)
+        {
+            PartyInfo.SetTriggerIndexUp(_actorId,index);
+        }
+
+        public void SetTriggerIndexDown(int index)
+        {
+            PartyInfo.SetTriggerIndexDown(_actorId,index);
+        }
     }
 }

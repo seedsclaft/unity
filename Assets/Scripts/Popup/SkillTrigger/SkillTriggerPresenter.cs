@@ -41,6 +41,12 @@ namespace Ryneus
                 case SkillTrigger.CommandType.CallTrigger2Select:
                 CommandCallTrigger2Select();
                 break;
+                case SkillTrigger.CommandType.CallTriggerUp:
+                CommandCallTriggerUp();
+                break;
+                case SkillTrigger.CommandType.CallTriggerDown:
+                CommandCallTriggerDown();
+                break;
                 case SkillTrigger.CommandType.DecideSkillSelect:
                 CommandDecideSkillSelect((SkillInfo)viewEvent.template);
                 break;
@@ -148,6 +154,20 @@ namespace Ryneus
         private void CommandCallTrigger2Select()
         {
             _view.ShowTrigger2Category();
+        }
+
+        private void CommandCallTriggerUp()
+        {
+            var index = _view.SkillTriggerIndex;
+            _model.SetTriggerIndexUp(index);
+            CommandRefresh();
+        }
+
+        private void CommandCallTriggerDown()
+        {
+            var index = _view.SkillTriggerIndex;
+            _model.SetTriggerIndexDown(index);
+            CommandRefresh();
         }
 
         private void CommandSelectSkillTrigger(SkillTriggerInfo triggerInfo)

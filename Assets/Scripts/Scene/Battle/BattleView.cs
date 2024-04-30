@@ -28,6 +28,7 @@ namespace Ryneus
         [SerializeField] private GameObject centerAnimPosition = null;
         [SerializeField] private SideMenuButton battleAutoButton = null;
         [SerializeField] private SideMenuButton battleSpeedButton = null;
+        [SerializeField] private SideMenuButton battleSkipButton = null;
         [SerializeField] private BattleCutinAnimation battleCutinAnimation = null;
         [SerializeField] private GameObject battleBackGroundRoot = null;
         private BattleBackGroundAnimation _backGroundAnimation = null;
@@ -52,6 +53,7 @@ namespace Ryneus
 
         private Dictionary<int,BattlerInfoComponent> _battlerComps = new ();
 
+        private bool _skipBattle = false;
         public override void Initialize() 
         {
             base.Initialize();
@@ -63,14 +65,24 @@ namespace Ryneus
             battleGridLayer.Initialize();
             battleActorList.Initialize();
             battleEnemyLayer.Initialize();
-            SideMenuButton.onClick.AddListener(() => {
+            SideMenuButton.onClick.AddListener(() => 
+            {
                 CallSideMenu();
             });
-            battleSpeedButton.SetCallHandler((a) => {
+            battleSpeedButton.SetCallHandler((a) => 
+            {
                 if (battleSpeedButton.gameObject.activeSelf == false) return;
                 var eventData = new BattleViewEvent(CommandType.ChangeBattleSpeed);
                 _commandData(eventData);
             });
+            battleSkipButton.SetCallHandler((a) => 
+            {
+                if (battleSkipButton.gameObject.activeSelf == false) return;
+                var eventData = new BattleViewEvent(CommandType.SkipBattle);
+                _skipBattle = true;
+                _commandData(eventData);
+            });
+            battleSkipButton.gameObject.SetActive(false);
             new BattlePresenter(this);
         }
 
@@ -114,14 +126,23 @@ namespace Ryneus
         {
             battleAutoButton.gameObject.SetActive(isActive);
             battleSpeedButton.gameObject.SetActive(isActive);
+            battleSkipButton.gameObject.SetActive(isActive);
         }
 
-        public void SetBattleSpeedButton(string data)
+        public void SetBattleSpeedButton(string commandName)
         {
             SystemData.CommandData system = new SystemData.CommandData();
-            system.Name = data;
+            system.Name = commandName;
             battleSpeedButton.SetData(system,-1);
             battleSpeedButton.UpdateViewItem();
+        }
+
+        public void SetBattleSkipButton(string commandName)
+        {
+            SystemData.CommandData system = new SystemData.CommandData();
+            system.Name = commandName;
+            battleSkipButton.SetData(system,-1);
+            battleSkipButton.UpdateViewItem();
         }
 
         private void CallSkillAction()
@@ -491,13 +512,9 @@ namespace Ryneus
 
         public void SetCurrentSkillData(SkillData skillData)
         {
-            // 居合・拘束解除も表示
-            if (skillData.Id >= 100 || skillData.Id == 31 || skillData.Id == 33)
-            {
-                skillInfoComponent.gameObject.SetActive(true);
-                skillInfoComponent.UpdateSkillData(skillData.Id);
-                currentSkillBg.GetComponent<RectTransform>().sizeDelta = new Vector2(480,56 + ((skillData.Help.Split("\n").Length-1) * 24));
-            }
+            skillInfoComponent.gameObject.SetActive(true);
+            skillInfoComponent.UpdateSkillData(skillData.Id);
+            currentSkillBg.GetComponent<RectTransform>().sizeDelta = new Vector2(480,56 + ((skillData.Help.Split("\n").Length-1) * 24));
         }
 
         public void ClearCurrentSkillData()
@@ -625,10 +642,6 @@ namespace Ryneus
             if (_battleBusy == true) return;
             var eventData = new BattleViewEvent(CommandType.UpdateAp);
             _commandData(eventData);
-        }
-
-        public void UpdateAp() 
-        {
         }
 
         public void UpdateGridLayer()

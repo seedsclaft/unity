@@ -15,15 +15,19 @@ namespace Ryneus
         [SerializeField] private TextMeshProUGUI trigger1Text;
         [SerializeField] private SideMenuButton trigger2Button;
         [SerializeField] private TextMeshProUGUI trigger2Text;
+        [SerializeField] private SideMenuButton upButton;
+        [SerializeField] private SideMenuButton downButton;
 
         private bool _buttonInit = false;
 
-        public void SetInputListHandler(Action skillEvent,Action trigger1Event,Action trigger2Event)
+        public void SetInputListHandler(Action skillEvent,Action trigger1Event,Action trigger2Event,Action upButtonEvent,Action downButtonEvent)
         {
             if (_buttonInit) return;
             skillButton.SetCallHandler(() => skillEvent());
             trigger1Button.SetCallHandler(() => trigger1Event());
             trigger2Button.SetCallHandler(() => trigger2Event());
+            upButton.SetCallHandler(() => upButtonEvent());
+            downButton.SetCallHandler(() => downButtonEvent());
             _buttonInit = true;
             UpdateItemIndex(-1);
         }

@@ -361,7 +361,15 @@ namespace Ryneus
             return UpperDamageRate;
         }
 
-        private float CalcDamageCut(BattlerInfo target,bool isNoEffect)
+        private float CalcDamageValue(BattlerInfo subject,BattlerInfo target,float SkillDamage,bool isNoEffect)
+        {
+            float DamageValue = Mathf.Max(1,SkillDamage);
+            DamageValue = CalcHolyCoffin(subject,target,DamageValue);
+            DamageValue *= 1f - CalcDamageCut(subject,target,isNoEffect);
+            return DamageValue;
+        }
+
+        private float CalcDamageCut(BattlerInfo subject,BattlerInfo target,bool isNoEffect)
         {
             float damageCutRate = 0;
             if (isNoEffect == false)
@@ -369,6 +377,15 @@ namespace Ryneus
                 if (target.IsState(StateType.DamageCut))
                 {
                     damageCutRate += target.StateEffectAll(StateType.DamageCut) * 0.01f;
+                }
+                var substituteStateInfos = subject.GetStateInfoAll(StateType.Substitute);
+                if (substituteStateInfos.Count > 0)
+                {
+                    if (substituteStateInfos.Find(a => a.BattlerId == target.Index) != null)
+                    {
+                        // 挑発でダメージカット50%
+                        damageCutRate += 0.5f;
+                    }
                 }
             }
             return damageCutRate;
@@ -418,14 +435,11 @@ namespace Ryneus
             int DefValue = CurrentDefense(subject,target,isNoEffect);
             float UpperDamageRate = CurrentDamageRate(subject,isNoEffect,isOneTarget);
             float DamageRate = featureData.Param1 * UpperDamageRate;
-            float SkillDamage = (DamageRate * 0.01f * (AtkValue * 0.5f));
+            float SkillDamage = DamageRate * 0.01f * (AtkValue * 0.5f);
             CalcFreezeDamage(subject,SkillDamage);
 
             SkillDamage *= GetDefenseRateValue(AtkValue * 0.5f,DefValue);
-            float DamageValue = Mathf.Max(1,SkillDamage);
-            DamageValue = CalcHolyCoffin(subject,target,DamageValue);
-            DamageValue *= 1f - CalcDamageCut(target,isNoEffect);
-            hpDamage = (int)Mathf.Round(DamageValue);
+            hpDamage = (int)Mathf.Round(CalcDamageValue(subject,target,SkillDamage,isNoEffect));
             // 属性補正
             // クリティカル
             if (IsCritical(subject,target))
@@ -504,10 +518,7 @@ namespace Ryneus
             CalcFreezeDamage(subject,SkillDamage);
 
             SkillDamage *= 1;
-            float DamageValue = Mathf.Max(1,SkillDamage);
-            DamageValue = CalcHolyCoffin(subject,target,DamageValue);
-            DamageValue *= 1f - CalcDamageCut(target,isNoEffect);
-            hpDamage = (int)Mathf.Round(DamageValue);
+            hpDamage = (int)Mathf.Round(CalcDamageValue(subject,target,SkillDamage,isNoEffect));
             // 属性補正
             // クリティカル
             if (IsCritical(subject,target))
@@ -598,11 +609,8 @@ namespace Ryneus
             float DamageRate = 100;
             float UpperDamageRate = CurrentDamageRate(subject,isNoEffect,false);
             DamageRate *= UpperDamageRate;
-            float SkillDamage = (DamageRate * 0.01f * AtkValue);
-            float DamageValue = Mathf.Max(1,SkillDamage);
-            DamageValue = CalcHolyCoffin(subject,target,DamageValue);
-            DamageValue *= (1f - CalcDamageCut(target,isNoEffect));
-            hpDamage = (int)Mathf.Round(DamageValue);
+            float SkillDamage = DamageRate * 0.01f * AtkValue;
+            hpDamage = (int)Mathf.Round(CalcDamageValue(subject,target,SkillDamage,isNoEffect));
             hpDamage = Mathf.Max(1,hpDamage);
             if (subject.IsState(StateType.Drain))
             {
@@ -623,15 +631,12 @@ namespace Ryneus
             }
             float UpperDamageRate = CurrentDamageRate(subject,isNoEffect,isOneTarget);
             DamageRate *= UpperDamageRate;
-            float SkillDamage = (DamageRate * 0.01f * (AtkValue * 0.5f));
+            float SkillDamage = DamageRate * 0.01f * (AtkValue * 0.5f);
             CalcFreezeDamage(subject,SkillDamage);
 
             SkillDamage *= GetDefenseRateValue((AtkValue * 0.5f),DefValue);
             //SkillDamage -= (DefValue * 0.5f);
-            float DamageValue = Mathf.Max(1,SkillDamage);
-            DamageValue = CalcHolyCoffin(subject,target,DamageValue);
-            DamageValue *= (1f - CalcDamageCut(target,isNoEffect));
-            hpDamage = (int)Mathf.Round(DamageValue);
+            hpDamage = (int)Mathf.Round(CalcDamageValue(subject,target,SkillDamage,isNoEffect));
             // 属性補正
             // クリティカル
             if (IsCritical(subject,target))
@@ -675,11 +680,8 @@ namespace Ryneus
             float DamageRate = 100;
             float UpperDamageRate = CurrentDamageRate(subject,isNoEffect,isOneTarget);
             DamageRate *= UpperDamageRate;
-            float SkillDamage = (DamageRate * 0.01f * AtkValue);
-            float DamageValue = Mathf.Max(1,SkillDamage);
-            DamageValue = CalcHolyCoffin(subject,target,DamageValue);
-            DamageValue *= (1f - CalcDamageCut(target,isNoEffect));
-            hpDamage = (int)Mathf.Round(DamageValue);
+            float SkillDamage = DamageRate * 0.01f * AtkValue;
+            hpDamage = (int)Mathf.Round(CalcDamageValue(subject,target,SkillDamage,isNoEffect));
             hpDamage = Mathf.Max(1,hpDamage);
             if (target.IsState(StateType.NoDamage) && !isNoEffect)
             {

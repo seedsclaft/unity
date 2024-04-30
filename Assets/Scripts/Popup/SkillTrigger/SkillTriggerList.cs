@@ -17,12 +17,12 @@ namespace Ryneus
             SetInputHandler(InputKeyType.Up,() => CallInputHandler(InputKeyType.Up));
         }
 
-        public void SetInputListHandler(Action skillEvent,Action trigger1Event,Action trigger2Event)
+        public void SetInputListHandler(Action skillEvent,Action trigger1Event,Action trigger2Event,Action upButtonEvent,Action downButtonEvent)
         {
             for (int i = 0; i < ItemPrefabList.Count;i++)
             {
                 var skillTriggerListItem = ItemPrefabList[i].GetComponent<SkillTriggerListItem>();
-                skillTriggerListItem.SetInputListHandler(skillEvent,trigger1Event,trigger2Event);
+                skillTriggerListItem.SetInputListHandler(skillEvent,trigger1Event,trigger2Event,upButtonEvent,downButtonEvent);
                 skillTriggerListItem.SetSelectItemHandler(
                     (a) => {
                         _selectItemIndex = 0;

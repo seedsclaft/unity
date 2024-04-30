@@ -717,7 +717,7 @@ MonoBehaviour:
     IconIndex: 2
     AnimationId: 301
     AnimationType: 1
-    MpCost: 4
+    MpCost: 3
     Rank: 2
     Attribute: 3
     Scope: 4
@@ -765,7 +765,7 @@ MonoBehaviour:
   - Id: 3040
     Name: "\u30A8\u30B9\u30B3\u30FC\u30C8\u30BD\u30FC\u30EB"
     IconIndex: 3
-    AnimationId: 51
+    AnimationId: 61
     AnimationType: 1
     MpCost: 3
     Rank: 2
@@ -773,7 +773,7 @@ MonoBehaviour:
     Scope: 3
     SkillType: 1
     TargetType: 1
-    Help: "\\s\u306B\u6311\u767A\u4ED8\u4E0E"
+    Help: "\\s\u306B\u6311\u767A\u4ED8\u4E0E\n\u6311\u767A\u3057\u305F\u76F8\u624B\u304B\u3089\u306E\u30C0\u30E1\u30FC\u30B8\u309250%\u30C0\u30A6\u30F3"
     Range: 1
     RepeatTime: 1
     AliveType: 1
@@ -4445,7 +4445,7 @@ MonoBehaviour:
     Scope: 4
     SkillType: 2
     TargetType: 4
-    Help: "\u653B\u6483\u7BC4\u56F2\u304C\u5217\u306B\u306A\u308B(\u6C38\u7D9A)"
+    Help: "\u653B\u6483\u7BC4\u56F2\u304C\u5217\u306B\u306A\u308B(\u6C38\u7D9A)\n\u653B\u6483\u7BC4\u56F2\u304C\u5EF6\u9577\u3059\u308B(\u6C38\u7D9A)"
     Range: 1
     RepeatTime: 1
     AliveType: 1
@@ -4454,6 +4454,12 @@ MonoBehaviour:
     - SkillId: 200230
       FeatureType: 3010
       Param1: 2340
+      Param2: 999
+      Param3: 0
+      Rate: 100
+    - SkillId: 200230
+      FeatureType: 3010
+      Param1: 2190
       Param2: 999
       Param3: 0
       Rate: 100

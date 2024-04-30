@@ -854,7 +854,7 @@ namespace Ryneus
                     break;
                     case FeatureType.HpHeal:
                     case FeatureType.KindHeal:
-                    if (_currentBattler != null && _currentBattler.IsActor)
+                    if (subject != null && subject.IsActor)
                     {
                         {
                             if (!target.IsActor)
@@ -877,9 +877,9 @@ namespace Ryneus
                     }
                     break;
                     case FeatureType.MpHeal:
-                    if (_currentBattler != null)
+                    if (subject != null)
                     {
-                        if (_currentBattler.IsActor)
+                        if (subject.IsActor)
                         {
                             IsEnable = true;
                         } else
@@ -912,11 +912,11 @@ namespace Ryneus
                         {
                             IsEnable = true;
                         } else
-                        if (_currentBattler != null && _currentBattler.IsActor || (StateType)featureData.Param1 == StateType.DamageUp || (StateType)featureData.Param1 == StateType.Prism)
+                        if (subject != null && subject.IsActor || (StateType)featureData.Param1 == StateType.DamageUp || (StateType)featureData.Param1 == StateType.Prism)
                         {
                             IsEnable = true;
                         } else
-                        if (_currentBattler != null && !_currentBattler.IsActor && !target.IsState((StateType)featureData.Param1) && target.IsState(StateType.Barrier))
+                        if (subject != null && !subject.IsActor && !target.IsState((StateType)featureData.Param1) && target.IsState(StateType.Barrier))
                         {
                             if (UnityEngine.Random.Range(0,100) > 50)
                             {
@@ -938,7 +938,7 @@ namespace Ryneus
                     }
                     break;
                     case FeatureType.BreakUndead:
-                    if (_currentBattler.IsActor)
+                    if (subject.IsActor)
                     {
                         IsEnable = true;
                     } else 
@@ -2788,13 +2788,13 @@ namespace Ryneus
                         }
                         break;
                         case TriggerType.TurnNum:
-                        if (battlerInfo.Index == targetIndex && battlerInfo.TurnCount == triggerDate.Param1)
+                        if (battlerInfo.TurnCount == triggerDate.Param1)
                         {
                             targetIndexList.Add(targetIndex);
                         }
                         break;
                         case TriggerType.TurnNumPer:
-                        if (battlerInfo.Index == targetIndex && (battlerInfo.TurnCount % triggerDate.Param1) - triggerDate.Param2 == 0)
+                        if ((battlerInfo.TurnCount % triggerDate.Param1) - triggerDate.Param2 == 0)
                         {
                             targetIndexList.Add(targetIndex);
                         }

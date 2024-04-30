@@ -33,6 +33,7 @@ namespace Battle
         EnemyDetail,
         ChangeBattleAuto,
         ChangeBattleSpeed,
+        SkipBattle,
         EndBattle
     }
 }

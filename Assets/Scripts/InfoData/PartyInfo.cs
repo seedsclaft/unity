@@ -254,22 +254,27 @@ namespace Ryneus
         private List<SkillTriggerInfo> _actorSkillTriggerInfos = new ();
         public List<SkillTriggerInfo> SkillTriggerInfos(int actorId)
         {
-            return _actorSkillTriggerInfos.FindAll(a => a.ActorId == actorId);
+            var findAll = _actorSkillTriggerInfos.FindAll(a => a.ActorId == actorId);
+            findAll.Sort((a,b) => a.Priority - b.Priority > 0 ? 1:-1);
+            return findAll;
         }
         public void InitSkillTriggerInfos()
         {
             foreach (var actorInfo in _actorInfos)
             {
                 var skillTriggerDates = actorInfo.Master.SkillTriggerDates;
+                var index = 0;
                 foreach (var skillTriggerData in skillTriggerDates)
                 {
                     var skillTriggerInfo = new SkillTriggerInfo();
                     skillTriggerInfo.SetSkillId(skillTriggerData.SkillId);
+                    skillTriggerInfo.SetPriority(index);
                     var SkillTriggerData1 = DataSystem.SkillTriggers.Find(a => a.Id == skillTriggerData.Trigger1);
                     var SkillTriggerData2 = DataSystem.SkillTriggers.Find(a => a.Id == skillTriggerData.Trigger2);
                     skillTriggerInfo.UpdateTriggerDates(new List<SkillTriggerData>(){SkillTriggerData1,SkillTriggerData2});
                     skillTriggerInfo.SetActorId(actorInfo.ActorId);
                     _actorSkillTriggerInfos.Add(skillTriggerInfo);
+                    index++;
                 }
             }
         }
@@ -315,6 +320,31 @@ namespace Ryneus
                 skillTriggerInfos[index].UpdateTriggerDates(list);
             }
         }
+
+        public void SetTriggerIndexUp(int actorId,int index)
+        {
+            var skillTriggerInfos = SkillTriggerInfos(actorId);
+            if (index > 0)
+            {
+                var upTriggerData = skillTriggerInfos[index];
+                var downTriggerData = skillTriggerInfos[index - 1];
+                upTriggerData.SetPriority(index-1);
+                downTriggerData.SetPriority(index);
+            }
+        }
+
+        public void SetTriggerIndexDown(int actorId,int index)
+        {
+            var skillTriggerInfos = SkillTriggerInfos(actorId);
+            if (index <= skillTriggerInfos.Count)
+            {
+                var upTriggerData = skillTriggerInfos[index+1];
+                var downTriggerData = skillTriggerInfos[index];
+                upTriggerData.SetPriority(index);
+                downTriggerData.SetPriority(index+1);
+            }
+        }
+
         public void ChangeCurrency(int currency)
         {
             _currency = currency;

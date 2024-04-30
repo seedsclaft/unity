@@ -97,7 +97,7 @@ namespace Ryneus
             _lastTargetIndex = index;
         }
 
-        private int _turnCount = 0;
+        private int _turnCount = 1;
         public int TurnCount => _turnCount;
         private int _demigodParam = 0;
         public int DemigodParam => _demigodParam;
