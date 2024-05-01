@@ -1318,11 +1318,15 @@ namespace Ryneus
             if (actionInfo != null)
             {
                 var subject = GetBattlerInfo(actionInfo.SubjectIndex);
-                // Hpの支払い
-                subject.GainHp(actionInfo.HpCost * -1);
-                // Mpの支払い
-                subject.GainMp(actionInfo.MpCost * -1);
-                subject.GainPayBattleMp(actionInfo.MpCost);
+                // 支払いは最後の1回
+                if (actionInfo.RepeatTime == 0)
+                {
+                    // Hpの支払い
+                    subject.GainHp(actionInfo.HpCost * -1);
+                    // Mpの支払い
+                    subject.GainMp(actionInfo.MpCost * -1);
+                    subject.GainPayBattleMp(actionInfo.MpCost);
+                }
                 if (actionInfo.Master.IsHpHealFeature())
                 {
                     subject.GainHealCount(1);
@@ -1915,7 +1919,18 @@ namespace Ryneus
                                 var addPassive = passiveInfo.FeatureDates.Find(a => a.FeatureType == FeatureType.AddState);
                                 if (addPassive != null && addPassive.Param2 == 999)
                                 {
-                                    _passiveSkillInfos[battlerInfo.Index].Add(passiveInfo.Id);
+                                    var stateData = DataSystem.FindState(addPassive.Param1);
+                                    if (stateData.OverLap == 0)
+                                    {
+                                        _passiveSkillInfos[battlerInfo.Index].Add(passiveInfo.Id);
+                                    } else
+                                    {
+                                        var overLapCount = battlerInfo.GetStateInfoAll(stateData.StateType).Count;
+                                        if (stateData.OverLap-1 <= overLapCount)
+                                        {
+                                            _passiveSkillInfos[battlerInfo.Index].Add(passiveInfo.Id);
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -2014,7 +2029,7 @@ namespace Ryneus
                         if (feature.FeatureType == FeatureType.AddState)
                         {
                             var triggerDates = passiveSkillData.TriggerDates.FindAll(a => a.TriggerTiming == TriggerTiming.After || a.TriggerTiming == TriggerTiming.StartBattle || a.TriggerTiming == TriggerTiming.AfterAndStartBattle);
-                            if (IsRemove == false && !IsTriggeredSkillInfo(battlerInfo,triggerDates,null,new List<ActionResultInfo>()))
+                            if (IsRemove == false && triggerDates.Count > 0 && !IsTriggeredSkillInfo(battlerInfo,triggerDates,null,new List<ActionResultInfo>()))
                             {
                                 IsRemove = true;
                                 var featureData = new SkillData.FeatureData
@@ -3041,31 +3056,31 @@ namespace Ryneus
             {
                 if (statusParamType == (int)StatusParamType.Hp)
                 {
-                    targetInfos.Sort((a,b) => a.MaxHp < b.MaxHp ? -1: 1);
+                    targetInfos.Sort((a,b) => a.MaxHp > b.MaxHp ? -1: 1);
                     var hp = targetInfos[0].MaxHp;
                     targetInfos = targetInfos.FindAll(a => a.MaxHp == hp);
                 } else
                 if (statusParamType == StatusParamType.Mp)
                 {
-                    targetInfos.Sort((a,b) => a.MaxMp < b.MaxMp ? -1: 1);
+                    targetInfos.Sort((a,b) => a.MaxMp > b.MaxMp ? -1: 1);
                     var mp = targetInfos[0].MaxMp;
                     targetInfos = targetInfos.FindAll(a => a.MaxMp == mp);
                 } else
                 if (statusParamType == StatusParamType.Atk)
                 {
-                    targetInfos.Sort((a,b) => a.CurrentAtk() < b.CurrentAtk() ? -1: 1);
+                    targetInfos.Sort((a,b) => a.CurrentAtk() > b.CurrentAtk() ? -1: 1);
                     var atk = targetInfos[0].CurrentAtk();
                     targetInfos = targetInfos.FindAll(a => a.CurrentAtk() == atk);
                 } else
                 if (statusParamType == StatusParamType.Def)
                 {
-                    targetInfos.Sort((a,b) => a.CurrentDef() < b.CurrentDef() ? -1: 1);
+                    targetInfos.Sort((a,b) => a.CurrentDef() > b.CurrentDef() ? -1: 1);
                     var def = targetInfos[0].CurrentDef();
                     targetInfos = targetInfos.FindAll(a => a.CurrentDef() == def);
                 } else
                 if (statusParamType == StatusParamType.Spd)
                 {
-                    targetInfos.Sort((a,b) => a.CurrentSpd() < b.CurrentSpd() ? -1: 1);
+                    targetInfos.Sort((a,b) => a.CurrentSpd() > b.CurrentSpd() ? -1: 1);
                     var spd = targetInfos[0].CurrentSpd();
                     targetInfos = targetInfos.FindAll(a => a.CurrentSpd() == spd);
                 }
@@ -3080,31 +3095,31 @@ namespace Ryneus
             {
                 if (statusParamType == (int)StatusParamType.Hp)
                 {
-                    targetInfos.Sort((a,b) => a.MaxHp < b.MaxHp ? 1: -1);
+                    targetInfos.Sort((a,b) => a.MaxHp > b.MaxHp ? 1: -1);
                     var hp = targetInfos[0].MaxHp;
                     targetInfos = targetInfos.FindAll(a => a.MaxHp == hp);
                 } else
                 if (statusParamType == StatusParamType.Mp)
                 {
-                    targetInfos.Sort((a,b) => a.MaxMp < b.MaxMp ? 1: -1);
+                    targetInfos.Sort((a,b) => a.MaxMp > b.MaxMp ? 1: -1);
                     var mp = targetInfos[0].MaxMp;
                     targetInfos = targetInfos.FindAll(a => a.MaxMp == mp);
                 } else
                 if (statusParamType == StatusParamType.Atk)
                 {
-                    targetInfos.Sort((a,b) => a.CurrentAtk() < b.CurrentAtk() ? 1: -1);
+                    targetInfos.Sort((a,b) => a.CurrentAtk() > b.CurrentAtk() ? 1: -1);
                     var atk = targetInfos[0].CurrentAtk();
                     targetInfos = targetInfos.FindAll(a => a.CurrentAtk() == atk);
                 } else
                 if (statusParamType == StatusParamType.Def)
                 {
-                    targetInfos.Sort((a,b) => a.CurrentDef() < b.CurrentDef() ? 1: -1);
+                    targetInfos.Sort((a,b) => a.CurrentDef() > b.CurrentDef() ? 1: -1);
                     var def = targetInfos[0].CurrentDef();
                     targetInfos = targetInfos.FindAll(a => a.CurrentDef() == def);
                 } else
                 if (statusParamType == StatusParamType.Spd)
                 {
-                    targetInfos.Sort((a,b) => a.CurrentSpd() < b.CurrentSpd() ? 1: -1);
+                    targetInfos.Sort((a,b) => a.CurrentSpd() > b.CurrentSpd() ? 1: -1);
                     var spd = targetInfos[0].CurrentSpd();
                     targetInfos = targetInfos.FindAll(a => a.CurrentSpd() == spd);
                 }

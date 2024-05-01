@@ -21,7 +21,7 @@ namespace Ryneus
         public string EffectPath;
         public EffectPositionType EffectPosition;
         public float EffectScale;
-        public bool OverLap;
+        public int OverLap;
         public bool Removal;
         public bool Abnormal;
         public bool Buff;
@@ -45,6 +45,7 @@ namespace Ryneus
         AtkUp = 1040,
         AtkDown = 1041,
         AtkDownPer = 1043,
+        AtkUpOver = 1044,
         DefUp = 1050,
         DefDown = 1051,
         DefPerDown = 1052,

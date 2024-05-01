@@ -94,7 +94,7 @@ namespace Ryneus
 						StateData.EffectPath = AssetPostImporter.ImportString(BaseRow,(int)BaseColumn.EffectPath);
 						StateData.EffectPosition = (EffectPositionType)AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.EffectPosition);
 						StateData.EffectScale = (float)AssetPostImporter.ImportFloat(BaseRow,(int)BaseColumn.EffectScale);
-						StateData.OverLap = (bool)(AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.OverLap) == 1);
+						StateData.OverLap = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.OverLap);
 						StateData.Removal = (bool)(AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.Removal) == 1);
 						StateData.Abnormal = (bool)(AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.Abnormal) == 1);
 						StateData.Buff = (bool)(AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.Buff) == 1);

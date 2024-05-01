@@ -40,7 +40,8 @@ namespace Ryneus
             return false;
         }
 
-        public StateInfo(StateType stateType,int turns,int effect,int battlerId,int targetIndex,int skillId){
+        public StateInfo(StateType stateType,int turns,int effect,int battlerId,int targetIndex,int skillId)
+        {
             _stateType = stateType;
             _turns = turns;
             _baseTurns = turns;
@@ -51,12 +52,13 @@ namespace Ryneus
             _removeTiming = Master.RemovalTiming;
         }
 
-        public bool CheckOverWriteState(StateInfo stateInfo)
+        public bool CheckOverWriteState(StateInfo stateInfo,int overLapCount = 0)
         {
-            // 重複可能スキルはfalse
-            if (stateInfo.Master.OverLap)
+            // 重複可能カウント判定
+            if (stateInfo.Master.OverLap != 0)
             {
-                return false;
+                // 重複不可
+                return stateInfo.Master.OverLap <= overLapCount;
             }
             if (stateInfo.StateType == StateType.Death)
             {

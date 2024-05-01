@@ -251,6 +251,23 @@ MonoBehaviour:
     CheckHit: 0
     RemoveByAttack: 0
     RemoveByDeath: 1
+  - StateType: 1044
+    Name: "\u653B\u6483\u30A2\u30C3\u30D7"
+    Help: "ATK\\d\u30A2\u30C3\u30D7"
+    IconPath: Arrow
+    RemovalTiming: 1
+    OverWrite: 1
+    EffectPath: '""'
+    EffectPosition: 0
+    EffectScale: 1
+    OverLap: 5
+    Removal: 1
+    Abnormal: 0
+    Buff: 1
+    DeBuff: 0
+    CheckHit: 0
+    RemoveByAttack: 0
+    RemoveByDeath: 1
   - StateType: 1050
     Name: "\u9632\u5FA1\u30A2\u30C3\u30D7"
     Help: "DEF\\d\u30A2\u30C3\u30D7"
@@ -974,7 +991,7 @@ MonoBehaviour:
     EffectPath: '""'
     EffectPosition: 0
     EffectScale: 1
-    OverLap: 1
+    OverLap: 10
     Removal: 0
     Abnormal: 0
     Buff: 1

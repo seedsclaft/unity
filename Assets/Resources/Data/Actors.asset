@@ -476,7 +476,7 @@ MonoBehaviour:
     ClassId: 6
     ImagePath: 0006
     InitLv: 1
-    MaxLv: 40
+    MaxLv: 99
     InitStatus:
       _hp: 33
       _mp: 3
@@ -562,7 +562,7 @@ MonoBehaviour:
     ClassId: 7
     ImagePath: 0007
     InitLv: 1
-    MaxLv: 40
+    MaxLv: 99
     InitStatus:
       _hp: 45
       _mp: 3
@@ -588,7 +588,7 @@ MonoBehaviour:
     AwakenX: 0
     AwakenY: 160
     AwakenScale: 0.6
-    Kinds: 01000000
+    Kinds: 
     LearningSkills:
     - SkillId: 11
       Level: 0
@@ -648,7 +648,7 @@ MonoBehaviour:
     ClassId: 8
     ImagePath: 0008
     InitLv: 1
-    MaxLv: 40
+    MaxLv: 99
     InitStatus:
       _hp: 45
       _mp: 3
@@ -674,7 +674,7 @@ MonoBehaviour:
     AwakenX: 0
     AwakenY: 160
     AwakenScale: 0.6
-    Kinds: 01000000
+    Kinds: 
     LearningSkills:
     - SkillId: 11
       Level: 0
@@ -734,13 +734,13 @@ MonoBehaviour:
     ClassId: 9
     ImagePath: 0009
     InitLv: 1
-    MaxLv: 40
+    MaxLv: 99
     InitStatus:
-      _hp: 45
-      _mp: 3
-      _atk: 33
-      _def: 11
-      _spd: 15
+      _hp: 36
+      _mp: 2
+      _atk: 25
+      _def: 12
+      _spd: 24
     PlusStatus:
       _hp: 0
       _mp: 0
@@ -748,19 +748,19 @@ MonoBehaviour:
       _def: 0
       _spd: 0
     NeedStatus:
-      _hp: 110
+      _hp: 50
       _mp: 10
-      _atk: 70
-      _def: 20
-      _spd: 30
-    Attribute: 0400000003000000070000000700000001000000
+      _atk: 65
+      _def: 45
+      _spd: 55
+    Attribute: 0100000005000000040000000700000002000000
     X: -16
     Y: -52
     Scale: 0.5
     AwakenX: 0
     AwakenY: 160
     AwakenScale: 0.6
-    Kinds: 01000000
+    Kinds: 
     LearningSkills:
     - SkillId: 11
       Level: 0
@@ -778,7 +778,11 @@ MonoBehaviour:
       Level: 0
       Weight: 0
       TriggerDates: []
-    - SkillId: 1040
+    - SkillId: 1090
+      Level: 0
+      Weight: 0
+      TriggerDates: []
+    - SkillId: 11090
       Level: 0
       Weight: 0
       TriggerDates: []
@@ -799,10 +803,10 @@ MonoBehaviour:
       Weight: 0
       TriggerDates: []
     SkillTriggerDates:
-    - SkillId: 1010
+    - SkillId: 1090
       Trigger1: 0
       Trigger2: 0
-    - SkillId: 1040
+    - SkillId: 1010
       Trigger1: 0
       Trigger2: 0
     - SkillId: 100920
@@ -820,7 +824,7 @@ MonoBehaviour:
     ClassId: 10
     ImagePath: 0010
     InitLv: 1
-    MaxLv: 40
+    MaxLv: 99
     InitStatus:
       _hp: 38
       _mp: 3
@@ -906,7 +910,7 @@ MonoBehaviour:
     ClassId: 11
     ImagePath: 0011
     InitLv: 1
-    MaxLv: 40
+    MaxLv: 99
     InitStatus:
       _hp: 48
       _mp: 3

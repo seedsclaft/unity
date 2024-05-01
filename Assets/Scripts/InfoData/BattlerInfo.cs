@@ -10,7 +10,8 @@ namespace Ryneus
     {
         private StatusInfo _status = null;
         public StatusInfo Status => _status;
-        public StatusInfo CurrentStatus(bool isNoEffect){
+        public StatusInfo CurrentStatus(bool isNoEffect)
+        {
             var currentStatus = new StatusInfo();
             currentStatus.SetParameter(MaxHp,MaxMp,CurrentAtk(isNoEffect),CurrentDef(isNoEffect),CurrentSpd(isNoEffect));
             return currentStatus;
@@ -606,7 +607,8 @@ namespace Ryneus
                     return false;
                 }
             }
-            if (_stateInfos.Find(a => a.CheckOverWriteState(stateInfo) == true) == null)
+            var overLapCount = GetStateInfoAll(stateInfo.StateType).Count;
+            if (_stateInfos.Find(a => a.CheckOverWriteState(stateInfo,overLapCount) == true) == null)
             {
                 if (doAdd)
                 {
@@ -741,6 +743,10 @@ namespace Ryneus
                 if (IsState(StateType.AtkUp))
                 {
                     atk += StateEffectAll(StateType.AtkUp);
+                }
+                if (IsState(StateType.AtkUpOver))
+                {
+                    atk += StateEffectAll(StateType.AtkUpOver);
                 }
                 if (IsState(StateType.AtkDown))
                 {

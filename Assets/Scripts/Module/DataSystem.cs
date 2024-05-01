@@ -95,6 +95,11 @@ namespace Ryneus
             return Stages.Find(a => a.Id == id);
         }
 
+        public static StateData FindState(int id)
+        {
+            return States.Find(a => a.StateType == (StateType)id);
+        }
+
         public static TextData GetTextData(int id)
         {
             return System.GetTextData(id);
