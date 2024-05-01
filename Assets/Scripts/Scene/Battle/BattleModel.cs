@@ -1840,7 +1840,7 @@ namespace Ryneus
                             if (selectIndexList.Count == 0 && triggeredSkill.Master.TargetType == TargetType.IsTriggerTarget)
                             {
                                 var triggerDates = triggeredSkill.Master.TriggerDates.FindAll(a => a.TriggerTiming == triggerTiming);
-                                selectIndexList = TriggerTargetList(checkBattler,triggerDates[0],actionResultInfos);
+                                selectIndexList = TriggerTargetList(checkBattler,triggerDates[0],actionInfo,actionResultInfos);
                             }
                             if (selectIndexList.Count == 0)
                             {
@@ -1961,7 +1961,7 @@ namespace Ryneus
             var selectIndexList = MakeAutoSelectIndex(makeActionInfo,-1,counterSubjectIndex);
             if (selectIndexList.Count == 0 && passiveInfo.Master.TargetType == TargetType.IsTriggerTarget)
             {
-                selectIndexList = TriggerTargetList(battlerInfo,triggerData,actionResultInfos);
+                selectIndexList = TriggerTargetList(battlerInfo,triggerData,makeActionInfo,actionResultInfos);
             }
             if (selectIndexList.Count == 0)
             {
@@ -2350,7 +2350,7 @@ namespace Ryneus
             return IsTriggered;
         }
 
-        private List<int> TriggerTargetList(BattlerInfo battlerInfo,SkillData.TriggerData triggerData,List<ActionResultInfo> actionResultInfos)
+        private List<int> TriggerTargetList(BattlerInfo battlerInfo,SkillData.TriggerData triggerData,ActionInfo actionInfo, List<ActionResultInfo> actionResultInfos)
         {
             var list = new List<int>();
             switch (triggerData.TriggerType)
@@ -2364,7 +2364,7 @@ namespace Ryneus
                         var targetHp = 0f;
                         if (targetBattlerInfo.Hp != 0)
                         {
-                            targetHp = (float)targetBattlerInfo.Hp / (float)targetBattlerInfo.MaxHp;
+                            targetHp = targetBattlerInfo.Hp / (float)targetBattlerInfo.MaxHp;
                         }
                         if (targetHp <= triggerData.Param1 * 0.01f)
                         {
@@ -2385,6 +2385,11 @@ namespace Ryneus
                     }
                 }
                 break;
+            }
+            // 生存判定
+            if (actionInfo != null)
+            {
+                list = CalcAliveTypeIndexList(list,actionInfo.Master.AliveType);
             }
             return list;
         }
@@ -2432,15 +2437,15 @@ namespace Ryneus
                 {
                     var triggerDate = triggerDates[i];
                     var targetBattler = GetBattlerInfo(targetIndex);
-                    var friends = targetBattler.IsActor ? _party : _troop;
-                    var opponents = targetBattler.IsActor ? _troop : _party;
+                    var friends = battlerInfo.IsActor ? _party : _troop;
+                    var opponents = battlerInfo.IsActor ? _troop : _party;
                     var IsFriend = battlerInfo.IsActor == targetBattler.IsActor;
                     switch (triggerDate.TriggerType)
                     {
                         // ターゲットに含めるか判定
                         case TriggerType.FriendHpRateUnder:
-                        // Param3==1はその対象を起点に平均Hpで比較する
-                        if (triggerDate.Param3 == 1)
+                        // Param2==-1はその対象を起点に平均Hpで比較する
+                        if (triggerDate.Param2 == -1)
                         {
                             // この時点で有効なtargetIndexesが判定されているので人数で判定
                             var lineTargets = LineTargetBattlers(skillData.Scope,targetBattler,friends.AliveBattlerInfos);
@@ -2467,8 +2472,8 @@ namespace Ryneus
                         }
                         break;
                         case TriggerType.FriendHpRateUpper:
-                        // Param3==1はその対象を起点に平均Hpで比較する
-                        if (triggerDate.Param3 == 1)
+                        // Param2==-1はその対象を起点に平均Hpで比較する
+                        if (triggerDate.Param2 == -1)
                         {
                             // この時点で有効なtargetIndexesが判定されているので人数で判定
                             var lineTargets = LineTargetBattlers(skillData.Scope,targetBattler,friends.AliveBattlerInfos);
@@ -2485,8 +2490,8 @@ namespace Ryneus
                         }
                         break;
                         case TriggerType.OpponentHpRateUnder:
-                        // Param3==1はその対象を起点に平均Hpで比較する
-                        if (triggerDate.Param3 == 1)
+                        // Param2==-1はその対象を起点に平均Hpで比較する
+                        if (triggerDate.Param2 == -1)
                         {
                             // この時点で有効なtargetIndexesが判定されているので人数で判定
                             var lineTargets = LineTargetBattlers(skillData.Scope,targetBattler,opponents.AliveBattlerInfos);
@@ -2512,8 +2517,8 @@ namespace Ryneus
                         }
                         break;
                         case TriggerType.OpponentHpRateUpper:
-                        // Param3==1はその対象を起点に平均Hpで比較する
-                        if (triggerDate.Param3 == 1)
+                        // Param2==-1はその対象を起点に平均Hpで比較する
+                        if (triggerDate.Param2 == -1)
                         {
                             // この時点で有効なtargetIndexesが判定されているので人数で判定
                             var lineTargets = LineTargetBattlers(skillData.Scope,targetBattler,opponents.AliveBattlerInfos);
@@ -3255,7 +3260,13 @@ namespace Ryneus
                 }
             }
             // 生存判定
-            switch (actionInfo.Master.AliveType)
+            indexList = CalcAliveTypeIndexList(indexList,actionInfo.Master.AliveType);
+            return indexList;
+        }
+
+        private List<int> CalcAliveTypeIndexList(List<int> indexList,AliveType aliveType)
+        {
+            switch (aliveType)
             {
                 case AliveType.DeathOnly:
                     indexList = indexList.FindAll(a => !_battlers.Find(b => a == b.Index).IsAlive());
@@ -3404,7 +3415,7 @@ namespace Ryneus
                         var triggeredSkill = DataSystem.FindSkill(selectSkillId);
                         if (actionResultInfos != null && triggeredSkill != null && triggeredSkill.TargetType == TargetType.IsTriggerTarget)
                         {
-                            targetIndexList = TriggerTargetList(battlerInfo,triggeredSkill.TriggerDates[0],actionResultInfos);
+                            targetIndexList = TriggerTargetList(battlerInfo,triggeredSkill.TriggerDates[0],null,actionResultInfos);
                         }
                         if (targetIndexList.Count == 0)
                         {
