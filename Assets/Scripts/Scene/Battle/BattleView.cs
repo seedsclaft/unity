@@ -82,7 +82,7 @@ namespace Ryneus
                 _skipBattle = true;
                 _commandData(eventData);
             });
-            battleSkipButton.gameObject.SetActive(false);
+            SetBattleSkipActive(false);
             new BattlePresenter(this);
         }
 
@@ -125,6 +125,10 @@ namespace Ryneus
         public void SetBattleAutoButton(bool isActive)
         {
             battleAutoButton.gameObject.SetActive(isActive);
+        }
+
+        public void SetBattleSkipActive(bool isActive)
+        {
             battleSpeedButton.gameObject.SetActive(isActive);
             battleSkipButton.gameObject.SetActive(isActive);
         }

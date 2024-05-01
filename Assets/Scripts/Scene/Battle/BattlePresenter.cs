@@ -97,6 +97,7 @@ namespace Ryneus
             _view.SetBattleSkipButton(DataSystem.GetText(62));
             _view.SetBattleAutoButton(true);
             await UniTask.WaitUntil(() => _view.StartAnimIsBusy == false);
+            _view.SetBattleSkipActive(true);
 
             var isAbort = CheckAdvStageEvent(EventTiming.StartBattle,() => 
             {
@@ -260,42 +261,10 @@ namespace Ryneus
             //_view.SetActiveUi(false);
             SoundManager.Instance.PlayStaticSe(SEType.Decide);    
         }
-        
-        private async void PassiveInfoAction(List<TriggerTiming> triggerTimings)
-        {
-            /*
-            var PassiveResultLists = _model.CheckTriggerPassiveInfos(triggerTimings);
-            foreach (var PassiveResultList in PassiveResultLists)
-            {
-                await ExecActionResult(PassiveResultList);
-            }
-            foreach (var PassiveResultList in PassiveResultLists)
-            {
-                foreach (var passiveResult in PassiveResultList)
-                {
-                    var skill = DataSystem.FindSkill(passiveResult.SkillId);
-                    var plusSkill = skill.FeatureDates.Find(a => a.FeatureType == FeatureType.PlusSkill);
-                    if (plusSkill != null)
-                    {
-                        var PlusResults = _model.CheckPlusPassiveInfos(passiveResult,plusSkill.Param1);
-                        await ExecActionResult(PlusResults);
-                    }
-                }
-            }
-            */
-        }
 
         private void CommandStartBattleAction()
         {
-            /*
-            PassiveInfoAction(BattleUtility.StartTriggerTimings());
-            var startTriggerTimings = new List<TriggerTiming>(){
-                TriggerTiming.After,
-            };
-            PassiveInfoAction(startTriggerTimings);
-            */
             _model.CheckTriggerPassiveInfos(BattleUtility.StartTriggerTimings(),null,null);
-            
         }
 
         private async void CommandUpdateAp()
@@ -490,7 +459,8 @@ namespace Ryneus
             _view.BattlerBattleClearSelect();
             _view.ChangeBackCommandActive(false);
             _view.SetBattlerThumbAlpha(true);
-            var isAbort = CheckAdvStageEvent(EventTiming.TurnedBattle,() => {  
+            var isAbort = CheckAdvStageEvent(EventTiming.TurnedBattle,() => 
+            {  
                 _view.SetBattleBusy(false);
                 _busy = false;
                 CommandDecideActor();
@@ -749,19 +719,22 @@ namespace Ryneus
             SoundManager.Instance.PlayStaticSe(SEType.Skill);
             var selfAnimation = ResourceSystem.LoadResourceEffect("MAGICALxSPIRAL/WHead1");
             _view.StartAnimation(actionInfo.SubjectIndex,selfAnimation,0,1f,1.0f);
-            if (actionInfo.TriggeredSkill)
+            if (actionInfo.IsBattleDisplay == false)
             {
-                if (actionInfo.Master.IsDisplayBattleSkill() && _model.GetBattlerInfo(actionInfo.SubjectIndex).IsActor)
+                if (actionInfo.TriggeredSkill)
                 {
-                    _view.ShowCutinBattleThumb(_model.GetBattlerInfo(actionInfo.SubjectIndex));
+                    if (actionInfo.Master.IsDisplayBattleSkill() && _model.GetBattlerInfo(actionInfo.SubjectIndex).IsActor)
+                    {
+                        _view.ShowCutinBattleThumb(_model.GetBattlerInfo(actionInfo.SubjectIndex));
+                    }
+                }
+                if (actionInfo.Master.IsDisplayBattleSkill() || _model.GetBattlerInfo(actionInfo.SubjectIndex).IsActor == false)
+                {
+                    _view.SetCurrentSkillData(actionInfo.Master);
                 }
             }
-            if (actionInfo.Master.IsDisplayBattleSkill() || _model.GetBattlerInfo(actionInfo.SubjectIndex).IsActor == false)
-            {
-                _view.SetCurrentSkillData(actionInfo.Master);
-            }
             var animationData = BattleUtility.AnimationData(actionInfo.Master.AnimationId);
-            if (animationData != null && animationData.AnimationPath != "" && GameSystem.ConfigData.BattleAnimationSkip == false)
+            if (actionInfo.IsBattleDisplay == false && animationData != null &&  animationData.AnimationPath != "" && GameSystem.ConfigData.BattleAnimationSkip == false)
             {
                 var targetIndexList = new List<int>();
                 foreach (var actionResult in actionInfo.ActionResults)
@@ -812,7 +785,10 @@ namespace Ryneus
             
             if (actionInfo.Master.IsDisplayBattleSkill())
             {
-                _view.SetCurrentSkillData(actionInfo.Master);
+                if (actionInfo.IsBattleDisplay == false)
+                {
+                    _view.SetCurrentSkillData(actionInfo.Master);
+                }
             }
 
             StartAliveAnimation(_model.CurrentActionInfo().ActionResults);

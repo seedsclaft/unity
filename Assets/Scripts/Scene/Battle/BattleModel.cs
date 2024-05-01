@@ -505,7 +505,7 @@ namespace Ryneus
         }
 
         // 行動を生成
-        public ActionInfo MakeActionInfo(BattlerInfo subject,SkillInfo skillInfo,bool IsInterrupt,bool IsTrigger)
+        public ActionInfo MakeActionInfo(BattlerInfo subject,SkillInfo skillInfo,bool IsInterrupt,bool IsTrigger,bool IsBattleDisplay = false)
         {
             var skillData = skillInfo.Master;
             var targetIndexList = GetSkillTargetIndexList(skillInfo.Id,subject.Index,true);
@@ -549,7 +549,7 @@ namespace Ryneus
                     }
                 }
             }
-            var actionInfo = new ActionInfo(skillInfo,_actionIndex,subject.Index,lastTargetIndex,targetIndexList);
+            var actionInfo = new ActionInfo(skillInfo,_actionIndex,subject.Index,lastTargetIndex,targetIndexList,IsBattleDisplay);
             _actionIndex++;
             if (subject.IsState(StateType.Extension))
             {
@@ -1956,7 +1956,7 @@ namespace Ryneus
             {
                 return null;
             }
-            var makeActionInfo = MakeActionInfo(battlerInfo,passiveInfo,IsInterrupt,true);
+            var makeActionInfo = MakeActionInfo(battlerInfo,passiveInfo,IsInterrupt,true,triggerData.TriggerTiming == TriggerTiming.StartBattle);
             var counterSubjectIndex = actionInfo != null ? actionInfo.SubjectIndex : -1;
             var selectIndexList = MakeAutoSelectIndex(makeActionInfo,-1,counterSubjectIndex);
             if (selectIndexList.Count == 0 && passiveInfo.Master.TargetType == TargetType.IsTriggerTarget)
