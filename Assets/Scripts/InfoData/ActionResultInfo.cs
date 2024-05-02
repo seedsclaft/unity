@@ -264,6 +264,11 @@ namespace Ryneus
                 case FeatureType.ChangeFeatureRate:
                     MakeChangeFeatureRate(subject,target,featureData,1);
                     return;
+                case FeatureType.AddSkillPlusSkill:
+                    MakeAddSkillPlusSkill(subject,featureData);
+                    return;
+
+                    
             }
         }
 
@@ -958,6 +963,24 @@ namespace Ryneus
                 if (feature != null)
                 {
                     feature.Rate = featureData.Param3;
+                }
+            }
+        }
+
+        private void MakeAddSkillPlusSkill(BattlerInfo subject,SkillData.FeatureData featureData)
+        {
+            // 即代入
+            var skillInfo = subject.Skills.Find(a => a.Id == featureData.Param1);
+            if (skillInfo != null)
+            {
+                var plusSkill = DataSystem.FindSkill(featureData.Param3);
+                // plusSkillのfeatureを追加する
+                foreach (var feature in plusSkill.FeatureDates)
+                {
+                    if (skillInfo.FeatureDates.Find(a => a.SkillId == feature.SkillId) == null)
+                    {
+                        skillInfo.FeatureDates.Add(feature);
+                    }
                 }
             }
         }

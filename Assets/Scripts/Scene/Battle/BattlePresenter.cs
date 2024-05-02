@@ -864,7 +864,7 @@ namespace Ryneus
             }
             if (actionResultInfo.ApHeal > 0)
             {    
-                _view.StartStatePopup(targetIndex,DamageType.State,DataSystem.GetReplaceText(432,actionResultInfo.ApDamage.ToString()));
+                _view.StartStatePopup(targetIndex,DamageType.State,DataSystem.GetReplaceText(432,actionResultInfo.ApHeal.ToString()));
             }
             if (actionResultInfo.ApDamage > 0)
             {    

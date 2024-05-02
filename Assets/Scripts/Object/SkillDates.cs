@@ -926,7 +926,8 @@ namespace Ryneus
         ActionMpCost = 12030, // 行動Magicの消費Mpが〇
         TargetHpRateUnder = 12040, // 攻撃を受けた対象のHpが〇%以下
         OneAttackOverDamage = 12050, // 1回の攻撃で〇ダメージ以上受ける
-        AttackedAction = 12060, // 攻撃を受ける
+        FriendAttackedAction = 12060, // 味方が攻撃を受ける
+        SelfAttackedAction = 12061, // 自身が攻撃を受ける
         FriendHasKind = 13010, // 〇のKindを持っている
         OpponentHasKind = 13020, // 〇のKindを持っている
         FriendStatusUpper = 14010, // ステータスの高い味方
@@ -1010,6 +1011,7 @@ namespace Ryneus
         ChangeFeatureRate = 6070,
         ChangeSkillRepeatTime = 6100,
         ChangeSkillScope = 6210,
+        AddSkillPlusSkill = 6310,
         PlusSkill = 7010,
         KindHeal = 8010,
         BreakUndead = 8020,

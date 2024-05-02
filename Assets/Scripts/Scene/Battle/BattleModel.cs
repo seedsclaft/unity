@@ -2230,7 +2230,7 @@ namespace Ryneus
                             IsTriggered = true;
                         }
                         break;
-                        case TriggerType.AttackedAction:
+                        case TriggerType.FriendAttackedAction:
                         if (battlerInfo.IsAlive())
                         {
                             if (actionInfo != null && battlerInfo.IsActor != GetBattlerInfo(actionInfo.SubjectIndex).IsActor)
@@ -2238,6 +2238,22 @@ namespace Ryneus
                                 if (actionInfo.Master.IsHpDamageFeature())
                                 {
                                     IsTriggered = true;
+                                }
+                            }
+                        }
+                        break;
+                        case TriggerType.SelfAttackedAction:
+                        if (battlerInfo.IsAlive())
+                        {
+                            if (actionInfo != null && actionInfo.ActionResults != null)
+                            {
+                                if (actionInfo.Master.IsHpDamageFeature())
+                                {
+                                    var results = actionInfo.ActionResults.FindAll(a => a.HpDamage > 0 && a.TargetIndex == battlerInfo.Index);
+                                    if (results.Count > 0)
+                                    {
+                                        IsTriggered = true;
+                                    }
                                 }
                             }
                         }

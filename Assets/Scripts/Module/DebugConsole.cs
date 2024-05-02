@@ -37,7 +37,7 @@ namespace Ryneus
             }
             if (consoleInputField.text.Contains("DEBUG"))
             {
-                GameSystem.CurrentStageData.Party.ChangeCurrency(9999);
+                GameSystem.CurrentStageData.Party.ChangeCurrency(10000);
                 for (int i = 1; i <= 11;i++)
                 {
                     var stageSymbol = new StageSymbolData
@@ -46,6 +46,8 @@ namespace Ryneus
                         Seek = 0,
                         SeekIndex = 0
                     };
+                    stageSymbol.SymbolType = SymbolType.Actor;
+                    stageSymbol.Param1 = i;
                     var symbolInfo = new SymbolInfo(stageSymbol);
                     var getItemData = new GetItemData();
                     getItemData.Type = GetItemType.AddActor;

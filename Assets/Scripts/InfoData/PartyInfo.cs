@@ -54,7 +54,11 @@ namespace Ryneus
             records = records.FindAll(a => a.StageId == stageId && a.Seek < seek || a.StageId < stageId);
             foreach (var record in records)
             {
-                actorIdList.Add(record.SymbolInfo.StageSymbolData.Param1);
+                var actorId = record.SymbolInfo.StageSymbolData.Param1;
+                if (!actorIdList.Contains(actorId))
+                {
+                    actorIdList.Add(actorId);
+                }
             }
             return actorIdList;
         }
@@ -66,7 +70,11 @@ namespace Ryneus
             records = records.FindAll(a => a.StageId == stageId && a.Seek < seek || a.StageId < stageId);
             foreach (var record in records)
             {
-                actorIdList.Add(record.SymbolInfo.StageSymbolData.Param1);
+                var actorId = record.SymbolInfo.StageSymbolData.Param1;
+                if (!actorIdList.Contains(actorId))
+                {
+                    actorIdList.Add(actorId);
+                }
             }
             return actorIdList;
         }
@@ -149,13 +157,12 @@ namespace Ryneus
         public int ActorLevelReset(int actorId)
         {
             int currency = 0;
-            var levelUpInfos = _levelUpInfos.FindAll(a => a.ActorId == actorId);
             var currencyIndexes = new List<int>();
-            for (int i = 0;i < levelUpInfos.Count;i++)
+            for (int i = 0;i < _levelUpInfos.Count;i++)
             {
-                if (levelUpInfos[i].Enable && levelUpInfos[i].Currency > 0)
+                if (_levelUpInfos[i].Enable && _levelUpInfos[i].ActorId == actorId && _levelUpInfos[i].Currency > 0)
                 {
-                    currency += levelUpInfos[i].Currency;
+                    currency += _levelUpInfos[i].Currency;
                     currencyIndexes.Add(i);
                 }
             }

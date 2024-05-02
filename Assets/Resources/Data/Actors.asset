@@ -406,8 +406,8 @@ MonoBehaviour:
       _def: 50
       _spd: 45
     Attribute: 0400000004000000040000000700000001000000
-    X: 16
-    Y: -26
+    X: 0
+    Y: -40
     Scale: 0.53
     AwakenX: -20
     AwakenY: 32
@@ -478,11 +478,11 @@ MonoBehaviour:
     InitLv: 1
     MaxLv: 99
     InitStatus:
-      _hp: 33
+      _hp: 30
       _mp: 3
-      _atk: 39
-      _def: 9
-      _spd: 30
+      _atk: 15
+      _def: 10
+      _spd: 20
     PlusStatus:
       _hp: 0
       _mp: 0
@@ -558,17 +558,17 @@ MonoBehaviour:
       Trigger2: 0
   - Id: 7
     Name: "\u30E6\u30CB"
-    SubName: "\u3010\u7D76\u5BFE\u306A\u308B\u5F27\u72B6\u3011"
+    SubName: "\u3010\u5947\u8DE1\u306E\u4E59\u5973\u3011"
     ClassId: 7
     ImagePath: 0007
     InitLv: 1
     MaxLv: 99
     InitStatus:
-      _hp: 45
+      _hp: 40
       _mp: 3
-      _atk: 33
-      _def: 11
-      _spd: 15
+      _atk: 22
+      _def: 12
+      _spd: 21
     PlusStatus:
       _hp: 0
       _mp: 0
@@ -576,10 +576,10 @@ MonoBehaviour:
       _def: 0
       _spd: 0
     NeedStatus:
-      _hp: 110
+      _hp: 60
       _mp: 10
-      _atk: 70
-      _def: 20
+      _atk: 50
+      _def: 45
       _spd: 30
     Attribute: 0400000003000000070000000700000001000000
     X: -16
@@ -606,7 +606,11 @@ MonoBehaviour:
       Level: 0
       Weight: 0
       TriggerDates: []
-    - SkillId: 2090
+    - SkillId: 2100
+      Level: 0
+      Weight: 0
+      TriggerDates: []
+    - SkillId: 12090
       Level: 0
       Weight: 0
       TriggerDates: []
@@ -618,7 +622,7 @@ MonoBehaviour:
       Level: 0
       Weight: 0
       TriggerDates: []
-    - SkillId: 2060
+    - SkillId: 2050
       Level: 11
       Weight: 0
       TriggerDates: []
@@ -627,10 +631,10 @@ MonoBehaviour:
       Weight: 0
       TriggerDates: []
     SkillTriggerDates:
-    - SkillId: 2010
-      Trigger1: 0
+    - SkillId: 2100
+      Trigger1: 6232
       Trigger2: 0
-    - SkillId: 2090
+    - SkillId: 2010
       Trigger1: 0
       Trigger2: 0
     - SkillId: 100720
@@ -650,11 +654,11 @@ MonoBehaviour:
     InitLv: 1
     MaxLv: 99
     InitStatus:
-      _hp: 45
+      _hp: 30
       _mp: 3
-      _atk: 33
-      _def: 11
-      _spd: 15
+      _atk: 15
+      _def: 10
+      _spd: 20
     PlusStatus:
       _hp: 0
       _mp: 0
@@ -738,7 +742,7 @@ MonoBehaviour:
     InitStatus:
       _hp: 36
       _mp: 2
-      _atk: 25
+      _atk: 27
       _def: 12
       _spd: 24
     PlusStatus:
@@ -826,11 +830,11 @@ MonoBehaviour:
     InitLv: 1
     MaxLv: 99
     InitStatus:
-      _hp: 38
+      _hp: 30
       _mp: 3
       _atk: 15
-      _def: 33
-      _spd: 22
+      _def: 10
+      _spd: 20
     PlusStatus:
       _hp: 0
       _mp: 0
@@ -912,11 +916,11 @@ MonoBehaviour:
     InitLv: 1
     MaxLv: 99
     InitStatus:
-      _hp: 48
+      _hp: 30
       _mp: 3
-      _atk: 35
-      _def: 18
-      _spd: 18
+      _atk: 15
+      _def: 10
+      _spd: 20
     PlusStatus:
       _hp: 0
       _mp: 0
