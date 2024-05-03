@@ -902,7 +902,7 @@ namespace Ryneus
             if (IsState(StateType.Accel))
             {
                 StateInfo stateInfo = GetStateInfo(StateType.Accel);
-                stateInfo.Turns += 1;
+                stateInfo.SetTurn(stateInfo.Turns + 1);
             }
             foreach (var skillInfo in _skills)
             {

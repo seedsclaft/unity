@@ -222,6 +222,9 @@ namespace Ryneus
                 case FeatureType.RemoveStatePassive:
                     MakeRemoveStatePassive(subject,target,featureData);
                     return;
+                case FeatureType.ChangeStateParam:
+                    MakeChangeStateParam(subject,target,featureData);
+                    return;
                 case FeatureType.RemainHpOne:
                     MakeRemainHpOne(subject);
                     return;
@@ -516,7 +519,6 @@ namespace Ryneus
         private void MakeRevengeHpDamage(BattlerInfo subject,BattlerInfo target,SkillData.FeatureData featureData,bool isNoEffect,bool isOneTarget,int range)
         {
             var hpDamage = 0;
-            int AtkValue = CurrentAttack(subject,isNoEffect);
             float UpperDamageRate = CurrentDamageRate(subject,isNoEffect,isOneTarget);
             float DamageRate = featureData.Param1 * UpperDamageRate;
             float SkillDamage = DamageRate * 0.01f * subject.DamagedValue;
@@ -847,6 +849,27 @@ namespace Ryneus
             if (IsRemoved)
             {
                 _removedStates.Add(stateInfo);
+            }
+        }
+
+        private void MakeChangeStateParam(BattlerInfo subject,BattlerInfo target,SkillData.FeatureData featureData)
+        {
+            // ステートのparam2とparam3を上書き
+            var stateInfos = target.GetStateInfoAll((StateType)featureData.Param1);
+            foreach (var stateInfo in stateInfos)
+            {
+                if (featureData.Param2 > stateInfo.Turns)
+                {
+                    stateInfo.SetTurn(featureData.Param2);
+                }
+                if (featureData.Param3 > stateInfo.Effect)
+                {
+                    stateInfo.SetEffect(featureData.Param3);
+                }
+            }
+            if (stateInfos.Count > 0)
+            {
+                _displayStates.Add(stateInfos[0]);
             }
         }
 

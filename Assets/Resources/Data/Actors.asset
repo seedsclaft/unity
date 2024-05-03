@@ -495,7 +495,7 @@ MonoBehaviour:
       _atk: 90
       _def: 20
       _spd: 80
-    Attribute: 0700000001000000020000000700000007000000
+    Attribute: 0100000005000000020000000500000005000000
     X: 24
     Y: -64
     Scale: 0.5
@@ -581,7 +581,7 @@ MonoBehaviour:
       _atk: 50
       _def: 45
       _spd: 30
-    Attribute: 0400000003000000070000000700000001000000
+    Attribute: 0400000001000000040000000400000004000000
     X: -16
     Y: -56
     Scale: 0.53
@@ -671,7 +671,7 @@ MonoBehaviour:
       _atk: 70
       _def: 20
       _spd: 30
-    Attribute: 0400000003000000070000000700000001000000
+    Attribute: 0600000004000000010000000700000004000000
     X: -40
     Y: -52
     Scale: 0.53
@@ -847,7 +847,7 @@ MonoBehaviour:
       _atk: 10
       _def: 100
       _spd: 30
-    Attribute: 0400000007000000010000000300000007000000
+    Attribute: 0400000001000000050000000500000003000000
     X: 12
     Y: -60
     Scale: 0.51
@@ -916,10 +916,10 @@ MonoBehaviour:
     InitLv: 1
     MaxLv: 99
     InitStatus:
-      _hp: 30
+      _hp: 32
       _mp: 3
-      _atk: 15
-      _def: 10
+      _atk: 18
+      _def: 15
       _spd: 20
     PlusStatus:
       _hp: 0
@@ -930,10 +930,10 @@ MonoBehaviour:
     NeedStatus:
       _hp: 70
       _mp: 10
-      _atk: 60
+      _atk: 40
       _def: 50
-      _spd: 50
-    Attribute: 0100000004000000070000000500000003000000
+      _spd: 40
+    Attribute: 0700000007000000010000000200000004000000
     X: 0
     Y: -54
     Scale: 0.58
@@ -983,13 +983,13 @@ MonoBehaviour:
       Weight: 0
       TriggerDates: []
     SkillTriggerDates:
-    - SkillId: 3010
-      Trigger1: 0
-      Trigger2: 0
-    - SkillId: 3020
-      Trigger1: 0
+    - SkillId: 3050
+      Trigger1: 6712
       Trigger2: 0
     - SkillId: 101120
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 3010
       Trigger1: 0
       Trigger2: 0
     - SkillId: 0

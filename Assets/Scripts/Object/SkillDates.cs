@@ -34,7 +34,7 @@ namespace Ryneus
         public List<TriggerData> ScopeTriggers;
         public bool IsHpDamageFeature()
         {
-            return FeatureDates.Find(a => a.FeatureType == FeatureType.HpDamage || a.FeatureType == FeatureType.HpConsumeDamage || a.FeatureType == FeatureType.RevengeHpDamage) != null;
+            return FeatureDates.Find(a => a.FeatureType == FeatureType.HpDamage || a.FeatureType == FeatureType.HpConsumeDamage || a.FeatureType == FeatureType.RevengeHpDamage || a.FeatureType == FeatureType.HpStateDamage) != null;
         }
         public bool IsHpHealFeature()
         {
@@ -921,6 +921,7 @@ namespace Ryneus
         SelfTargetNotOnly = 9120, // 自身を対象にしない
         AttackState = 10010, // 攻撃成功時〇%で
         Percent = 10020, // 〇%で
+        AttackStateNoFreeze = 10110, // 攻撃成功時対象が凍結ではない%で
         InBattleUseCountUnder = 11010, // バトル中使用回数が〇以下
         LvUpper = 12020, // Lvが〇以上
         ActionMpCost = 12030, // 行動Magicの消費Mpが〇
@@ -996,6 +997,7 @@ namespace Ryneus
         AddStateNextTurn = 3040,
         RemoveBuffState = 3050,
         RemoveDeBuffState = 3060,
+        ChangeStateParam = 3070,
         MpDamage = 4010,
         MpHeal = 4020,
         SetAfterAp = 5010,

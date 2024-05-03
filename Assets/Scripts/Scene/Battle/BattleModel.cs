@@ -474,11 +474,6 @@ namespace Ryneus
             {
                 return false;
             }
-            var targetIndexList = GetSkillTargetIndexList(skillInfo.Master.Id,battlerInfo.Index,true);
-            if (targetIndexList.Count == 0)
-            {
-                //return false;
-            }
             return true;
         }
         /// <summary>
@@ -573,7 +568,7 @@ namespace Ryneus
         }
 
         // 選択可能な対象のインデックスを取得
-        public List<int> GetSkillTargetIndexList(int skillId,int subjectIndex,bool checkCondition,int counterSubjectIndex = -1)
+        public List<int> GetSkillTargetIndexList(int skillId,int subjectIndex,bool checkCondition,int counterSubjectIndex = -1,ActionInfo actionInfo = null,List<ActionResultInfo> actionResultInfos = null)
         {
             var skillData = DataSystem.FindSkill(skillId);
             var subject = GetBattlerInfo(subjectIndex);
@@ -610,6 +605,19 @@ namespace Ryneus
                 if (counterSubjectIndex > -1)
                 {
                     targetIndexList.Add(counterSubjectIndex);
+                }
+            } else
+            if (skillData.TargetType == TargetType.AttackTarget)
+            {
+                if (actionInfo != null && actionResultInfos.Count > 0)
+                {
+                    foreach (var actionResultInfo in actionResultInfos)
+                    {
+                        if (!targetIndexList.Contains(actionResultInfo.TargetIndex))
+                        {
+                            targetIndexList.Add(actionResultInfo.TargetIndex);     
+                        }               
+                    }
                 }
             }
             switch (skillData.AliveType)
@@ -768,14 +776,14 @@ namespace Ryneus
         }
 
         // actionInfoでselectIndexに発動した時の全効果範囲を取得
-        public List<int> ActionInfoTargetIndexes(ActionInfo actionInfo,int selectIndex)
+        public List<int> ActionInfoTargetIndexes(ActionInfo actionInfo,int selectIndex,int counterSubjectIndex = -1,ActionInfo baseActionInfo = null,List<ActionResultInfo> baseActionResultInfos = null)
         {
             if (actionInfo == null)
             {
                 return new List<int>();
             }
             var subject = GetBattlerInfo(actionInfo.SubjectIndex);
-            var targetIndexList = GetSkillTargetIndexList(actionInfo.Master.Id,subject.Index,true);
+            var targetIndexList = GetSkillTargetIndexList(actionInfo.Master.Id,subject.Index,true,counterSubjectIndex,baseActionInfo,baseActionResultInfos);
             var scopeType = actionInfo.ScopeType;
             if (subject.IsState(StateType.EffectLine) && scopeType != ScopeType.All)
             {
@@ -1110,6 +1118,7 @@ namespace Ryneus
 
                 // 無敵回数
                 /*
+                
                 int noDamageCount = target.StateTurn(StateType.NoDamage);
                 // このリザルトでの無敵進行回数
                 int seekCount = actionResultInfo.SeekCount(target,StateType.NoDamage);
@@ -1851,7 +1860,7 @@ namespace Ryneus
                                 continue;
                             }
                             SetActionInfo(makeActionInfo);
-                            MakeActionResultInfo(makeActionInfo,ActionInfoTargetIndexes(makeActionInfo,selectIndexList[0]));
+                            MakeActionResultInfo(makeActionInfo,ActionInfoTargetIndexes(makeActionInfo,selectIndexList[0],counterSubjectIndex,actionInfo,actionResultInfos));
                         }
                         
                         madeActionInfos.Add(makeActionInfo);
@@ -1973,7 +1982,7 @@ namespace Ryneus
             }
             var makeActionInfo = MakeActionInfo(battlerInfo,passiveInfo,IsInterrupt,true,triggerData.TriggerTiming == TriggerTiming.StartBattle);
             var counterSubjectIndex = actionInfo != null ? actionInfo.SubjectIndex : -1;
-            var selectIndexList = MakeAutoSelectIndex(makeActionInfo,-1,counterSubjectIndex);
+            var selectIndexList = MakeAutoSelectIndex(makeActionInfo,-1,counterSubjectIndex,actionInfo,actionInfo.ActionResults);
             if (selectIndexList.Count == 0 && passiveInfo.Master.TargetType == TargetType.IsTriggerTarget)
             {
                 selectIndexList = TriggerTargetList(battlerInfo,triggerData,makeActionInfo,actionResultInfos);
@@ -1983,7 +1992,7 @@ namespace Ryneus
                 return null;
             }
             SetActionInfo(makeActionInfo);
-            MakeActionResultInfo(makeActionInfo,ActionInfoTargetIndexes(makeActionInfo,selectIndexList[0]));
+            MakeActionResultInfo(makeActionInfo,ActionInfoTargetIndexes(makeActionInfo,selectIndexList[0],counterSubjectIndex,actionInfo,actionResultInfos));
             
             passiveInfo.GainUseCount();
             passiveInfo.SetTurnCount(passiveInfo.Master.TurnCount);
@@ -2146,6 +2155,18 @@ namespace Ryneus
                             if (triggerData.Param1 > UnityEngine.Random.Range(0,100))
                             {
                                 IsTriggered = true;
+                            }
+                        }
+                        break;
+                        case TriggerType.AttackStateNoFreeze:
+                        if (battlerInfo.IsAlive() && actionInfo != null && actionInfo.SubjectIndex == battlerInfo.Index && actionInfo.ActionResults.Find(a => a.HpDamage > 0) != null)
+                        {
+                            if (actionInfo.ActionResults.Count > 0)
+                            {
+                                if (actionInfo.ActionResults.Find(a => GetBattlerInfo(a.TargetIndex).GetStateInfo(StateType.Freeze) == null) != null)
+                                {
+                                    IsTriggered = true;
+                                }
                             }
                         }
                         break;
@@ -3148,7 +3169,7 @@ namespace Ryneus
             return -1;
         }
 
-        public List<int> MakeAutoSelectIndex(ActionInfo actionInfo,int oneTargetIndex = -1,int counterSubjectIndex = -1)
+        public List<int> MakeAutoSelectIndex(ActionInfo actionInfo,int oneTargetIndex = -1,int counterSubjectIndex = -1,ActionInfo baseActionInfo = null,List<ActionResultInfo> baseActionResultInfos = null)
         {
             var indexList = new List<int>();
             // interruptされた行動の対象を引き継ぐ
@@ -3163,7 +3184,7 @@ namespace Ryneus
                 }
                 return indexList;
             }
-            var targetIndexList = GetSkillTargetIndexList(actionInfo.Master.Id,actionInfo.SubjectIndex,true,counterSubjectIndex);
+            var targetIndexList = GetSkillTargetIndexList(actionInfo.Master.Id,actionInfo.SubjectIndex,true,counterSubjectIndex,baseActionInfo,baseActionResultInfos);
             if (targetIndexList.Count == 0)
             {
                 return targetIndexList;

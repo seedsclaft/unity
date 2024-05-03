@@ -2485,10 +2485,10 @@ MonoBehaviour:
     MpCost: 0
     Rank: 1
     Attribute: 3
-    Scope: 1
+    Scope: 3
     SkillType: 2
     TargetType: 7
-    Help: "(\u6761\u4EF6)\u81EA\u8EAB\u304C\u653B\u6483\u3059\u308B\u524D\u306B\u767A\u52D5\n\u653B\u6483\u6210\u529F\u664225%\u30C0\u30E1\u30FC\u30B8\u306E\u51CD\u7D50\u4ED8\u4E0E"
+    Help: "(\u6761\u4EF6)\u81EA\u8EAB\u306E\u653B\u6483\u6210\u529F\u6642\n\u51CD\u7D50\u72B6\u614B\u3067\u306F\u306A\u3044\u5BFE\u8C61\u306B25%\u30C0\u30E1\u30FC\u30B8\u306E\u51CD\u7D50\u4ED8\u4E0E"
     Range: 1
     RepeatTime: 1
     AliveType: 1
@@ -2502,8 +2502,8 @@ MonoBehaviour:
       Rate: 100
     TriggerDates:
     - SkillId: 13090
-      TriggerType: 15010
-      TriggerTiming: 31
+      TriggerType: 10110
+      TriggerTiming: 2
       Param1: 0
       Param2: 0
       Param3: 0
@@ -4344,25 +4344,25 @@ MonoBehaviour:
   - Id: 101110
     Name: "\u30A2\u30D0\u30E9\u30F3\u30B7\u30E5"
     IconIndex: 10
-    AnimationId: 101
+    AnimationId: 301
     AnimationType: 1
     MpCost: 0
     Rank: 10
     Attribute: 3
-    Scope: 3
+    Scope: 2
     SkillType: 3
     TargetType: 1
-    Help: "(\u6761\u4EF6)\u6575\u5168\u54E1\u304C\u51CD\u7D50\u72B6\u614B\u306B\u306A\u308B\n\\s\u306E\u51CD\u7D50\u30C0\u30E1\u30FC\u30B8\u3092100%\u30C0\u30E1\u30FC\u30B8\u306B\u3059\u308B\n\u795E\u5316\u72B6\u614B\u306B\u79FB\u884C"
+    Help: "(\u6761\u4EF6)\u6575\u5168\u54E1\u304C\u51CD\u7D50\u72B6\u614B\u306B\u306A\u308B\n\\s\u306E\u51CD\u7D50\u30C0\u30E1\u30FC\u30B8\u52B9\u679C\u3092200%\u306B\u3059\u308B\n\u795E\u5316\u72B6\u614B\u306B\u79FB\u884C"
     Range: 2
     RepeatTime: 1
     AliveType: 1
     TurnCount: 0
     FeatureDates:
     - SkillId: 101110
-      FeatureType: 3010
+      FeatureType: 3070
       Param1: 2140
       Param2: 1
-      Param3: 50
+      Param3: 200
       Rate: 100
     - SkillId: 101110
       FeatureType: 7010
@@ -4392,21 +4392,21 @@ MonoBehaviour:
     MpCost: 0
     Rank: 10
     Attribute: 3
-    Scope: 3
+    Scope: 2
     SkillType: 4
     TargetType: 1
     Help: "(\u6761\u4EF6)\u795E\u5316\u72B6\u614B\n\\s\u306BATKx300%\u30C0\u30E1\u30FC\u30B8
-      \u795E\u5316\u89E3\u9664"
+      \u795E\u5316\u89E3\u9664\n\u51CD\u7D50\u72B6\u614B\u306E\u5BFE\u8C61\u306B\u306F\u3055\u3089\u306BATKx200%\u30C0\u30E1\u30FC\u30B8"
     Range: 2
     RepeatTime: 1
     AliveType: 1
     TurnCount: 0
     FeatureDates:
     - SkillId: 101120
-      FeatureType: 1010
-      Param1: 300
-      Param2: 0
-      Param3: 0
+      FeatureType: 1040
+      Param1: 500
+      Param2: 300
+      Param3: 2140
       Rate: 100
     - SkillId: 101120
       FeatureType: 7010

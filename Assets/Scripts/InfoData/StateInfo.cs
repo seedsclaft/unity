@@ -8,11 +8,19 @@ namespace Ryneus
         private StateType _stateType = 0;
         public StateType StateType => _stateType;
         private int _turns = 0;
-        public int Turns{ get {return _turns;} set {_turns = value;}}
+        public int Turns => _turns;
+        public void SetTurn(int turns)
+        {
+            _turns = turns;
+        }
         private int _baseTurns = 0;
         public int BaseTurns => _baseTurns;
         private int _effect = 0;
-        public int Effect{ get {return _effect;} set {_effect = value;} }
+        public int Effect => _effect;
+        public void SetEffect(int effect)
+        {
+            _effect = effect;
+        }
         private int _battlerId = 0;
         public int BattlerId => _battlerId;
         private int _targetIndex = 0;
