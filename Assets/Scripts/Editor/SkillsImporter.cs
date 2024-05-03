@@ -10,7 +10,8 @@ using NPOI.XSSF.UserModel;
 
 namespace Ryneus
 {
-	public class SkillsImporter : AssetPostprocessor {
+	public class SkillsImporter : AssetPostprocessor 
+	{
 		enum BaseColumn
 		{
 			Id = 0,
@@ -60,7 +61,8 @@ namespace Ryneus
 		static readonly string ExcelName = "Skills.xlsx";
 
 		// アセット更新があると呼ばれる
-		static void OnPostprocessAllAssets(string[] importedAssets, string[] deletedAssets, string[] movedAssets, string[] movedFromAssetPaths) {
+		static void OnPostprocessAllAssets(string[] importedAssets, string[] deletedAssets, string[] movedAssets, string[] movedFromAssetPaths) 
+		{
 			foreach (string asset in importedAssets) {
 
 				if (AssetPostImporter.CheckOnPostprocessAllAssets(asset,ExcelName))

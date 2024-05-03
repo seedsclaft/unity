@@ -942,6 +942,7 @@ namespace Ryneus
         SelfDead = 20050, // 自身が戦闘不能
         AttackedCount = 20060, // 攻撃を〇回受ける
         AllEnemyCurseState = 20070, // 敵全員が呪い
+        AllEnemyFreezeState = 20071, // 敵全員が呪い
         BeCriticalCount = 20080, // クリティカル攻撃を〇回受ける
         DodgeCountOver = 20090, // 回避を〇回行う
         HpHealCountOver = 20100, // Hp回復魔法を〇回行う

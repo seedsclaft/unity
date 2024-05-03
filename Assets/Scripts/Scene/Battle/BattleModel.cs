@@ -2091,6 +2091,8 @@ namespace Ryneus
 
         private bool IsTriggeredSkillInfo(BattlerInfo battlerInfo,List<SkillData.TriggerData> triggerDates,ActionInfo actionInfo,List<ActionResultInfo> actionResultInfos)
         {
+            var friends = battlerInfo.IsActor ? _party : _troop;            
+            var opponents = battlerInfo.IsActor ? _troop : _party;
             bool IsTriggered = false;
             if (triggerDates.Count > 0)
             {
@@ -2192,8 +2194,7 @@ namespace Ryneus
                         case TriggerType.ActionResultDeath:
                         if (battlerInfo.IsAlive())
                         {
-                            var targetActionResultDeathParty = battlerInfo.IsActor ? _party : _troop;
-                            if (actionResultInfos.Find(a => targetActionResultDeathParty.AliveBattlerInfos.Find(b => a.DeadIndexList.Contains(b.Index)) != null) != null)
+                            if (actionResultInfos.Find(a => opponents.AliveBattlerInfos.Find(b => a.DeadIndexList.Contains(b.Index)) != null) != null)
                             {
                                 IsTriggered = true;
                             }
@@ -2259,8 +2260,13 @@ namespace Ryneus
                         }
                         break;
                         case TriggerType.AllEnemyCurseState:
-                        var opponents = battlerInfo.IsActor ? _troop.AliveBattlerInfos : _party.AliveBattlerInfos;
-                        if (battlerInfo.IsAlive() && opponents.Find(a => !a.IsState(StateType.Curse)) == null && opponents.FindAll(a => a.IsAlive()).Count > 0)
+                        if (battlerInfo.IsAlive() && opponents.AliveBattlerInfos.Find(a => !a.IsState(StateType.Curse)) == null && opponents.AliveBattlerInfos.FindAll(a => a.IsAlive()).Count > 0)
+                        {
+                            IsTriggered = true;
+                        }
+                        break;
+                        case TriggerType.AllEnemyFreezeState:
+                        if (battlerInfo.IsAlive() && opponents.AliveBattlerInfos.Find(a => !a.IsState(StateType.Freeze)) == null && opponents.AliveBattlerInfos.FindAll(a => a.IsAlive()).Count > 0)
                         {
                             IsTriggered = true;
                         }
@@ -2274,8 +2280,7 @@ namespace Ryneus
                         case TriggerType.DemigodMemberCount:
                         if (battlerInfo.IsAlive())
                         {
-                            var demigodOpponents = battlerInfo.IsActor ? _troop.AliveBattlerInfos : _party.AliveBattlerInfos;
-                            var demigodMember = demigodOpponents.FindAll(a => a.IsState(StateType.Demigod));
+                            var demigodMember = opponents.AliveBattlerInfos.FindAll(a => a.IsState(StateType.Demigod));
                             if (demigodMember.Count >= triggerData.Param1)
                             {
                                 IsTriggered = true;
@@ -2330,9 +2335,8 @@ namespace Ryneus
                         }
                         break;
                         case TriggerType.AwakenDemigodAttribute:
-                        var friends = battlerInfo.IsActor ? _party.AliveBattlerInfos : _troop.AliveBattlerInfos;
-                        friends = friends.FindAll(a => a.IsAwaken);
-                        if (battlerInfo.IsAlive() && friends.Count > 0 && friends.Find(a => a.Skills.Find(b => (b.Attribute == (AttributeType)triggerData.Param1 && b.Master.SkillType == SkillType.Messiah)) != null) != null)
+                        var DemigodAttributes = friends.AliveBattlerInfos.FindAll(a => a.IsAwaken);
+                        if (battlerInfo.IsAlive() && DemigodAttributes.Count > 0 && DemigodAttributes.Find(a => a.Skills.Find(b => b.Attribute == (AttributeType)triggerData.Param1 && b.Master.SkillType == SkillType.Messiah) != null) != null)
                         {
                             IsTriggered = true;
                         }
