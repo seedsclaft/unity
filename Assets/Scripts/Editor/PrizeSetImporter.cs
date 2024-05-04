@@ -4,9 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEditor;
 using UnityEngine;
-using NPOI.HSSF.UserModel;
 using NPOI.SS.UserModel;
-using NPOI.XSSF.UserModel;
 
 namespace Ryneus
 {
@@ -66,14 +64,14 @@ namespace Ryneus
 					ISheet BaseSheet = Book.GetSheetAt(0);
 					for (int i = 1; i <= BaseSheet.LastRowNum; i++)
 					{
-						IRow Baserow = BaseSheet.GetRow(i);
+						IRow BaseRow = BaseSheet.GetRow(i);
 
 						var PrizeSet = new PrizeSetData();
-						PrizeSet.Id = AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.Id);
+						PrizeSet.Id = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.Id);
 						var getItemData = new GetItemData();
-						getItemData.Type = (GetItemType)AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.Type);
-						getItemData.Param1 = AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.Param1);
-						getItemData.Param2 = AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.Param2);
+						getItemData.Type = (GetItemType)AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.Type);
+						getItemData.Param1 = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.Param1);
+						getItemData.Param2 = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.Param2);
 						PrizeSet.GetItem = getItemData;
 						Data.Data.Add(PrizeSet);
 					}

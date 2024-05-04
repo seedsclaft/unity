@@ -37,6 +37,16 @@ namespace Ryneus
             }
             if (subject != null && target != null)
             {
+                // 攻撃を受けたら外れるステートを解除
+                var allStateInfos = target.StateInfos;
+                foreach (var stateInfo in allStateInfos)
+                {
+                    if (stateInfo.Master.RemoveByAttack)
+                    {                
+                        _removedStates.Add(stateInfo);
+                    }
+                }
+
                 if (_hpDamage >= (target.Hp + _hpHeal) && target.IsAlive())
                 {
                     if (target.IsState(StateType.Undead) && featureDates.Find(a => a.FeatureType == FeatureType.BreakUndead) == null)
@@ -200,6 +210,12 @@ namespace Ryneus
                     return;
                 case FeatureType.MpHeal:
                     MakeMpHeal(subject,target,featureData);
+                    return;
+                case FeatureType.MpDrain:
+                    if (CheckIsHit(subject,target,isOneTarget,range))
+                    {
+                        MakeMpDrain(subject,target,featureData);
+                    }
                     return;
                 case FeatureType.AddState:
                     MakeAddState(subject,target,featureData,true);
@@ -708,6 +724,13 @@ namespace Ryneus
         private void MakeMpDamage(BattlerInfo subject,BattlerInfo target,SkillData.FeatureData featureData)
         {
             _mpDamage = featureData.Param1;
+        }
+
+        private void MakeMpDrain(BattlerInfo subject,BattlerInfo target,SkillData.FeatureData featureData)
+        {
+            var mpDamage = Math.Min(featureData.Param1,target.Mp);
+            _mpDamage = mpDamage;
+            _mpHeal = mpDamage;
         }
 
         private void MakeMpHeal(BattlerInfo subject,BattlerInfo target,SkillData.FeatureData featureData)

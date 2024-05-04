@@ -654,11 +654,11 @@ MonoBehaviour:
     InitLv: 1
     MaxLv: 99
     InitStatus:
-      _hp: 30
+      _hp: 38
       _mp: 3
       _atk: 15
-      _def: 10
-      _spd: 20
+      _def: 21
+      _spd: 16
     PlusStatus:
       _hp: 0
       _mp: 0
@@ -666,11 +666,11 @@ MonoBehaviour:
       _def: 0
       _spd: 0
     NeedStatus:
-      _hp: 110
+      _hp: 80
       _mp: 10
-      _atk: 70
-      _def: 20
-      _spd: 30
+      _atk: 40
+      _def: 60
+      _spd: 40
     Attribute: 0600000004000000010000000700000004000000
     X: -40
     Y: -52
@@ -697,6 +697,10 @@ MonoBehaviour:
       Weight: 0
       TriggerDates: []
     - SkillId: 3070
+      Level: 0
+      Weight: 0
+      TriggerDates: []
+    - SkillId: 13100
       Level: 0
       Weight: 0
       TriggerDates: []
@@ -831,10 +835,10 @@ MonoBehaviour:
     MaxLv: 99
     InitStatus:
       _hp: 30
-      _mp: 3
-      _atk: 15
-      _def: 10
-      _spd: 20
+      _mp: 4
+      _atk: 17
+      _def: 7
+      _spd: 25
     PlusStatus:
       _hp: 0
       _mp: 0
@@ -842,11 +846,11 @@ MonoBehaviour:
       _def: 0
       _spd: 0
     NeedStatus:
-      _hp: 50
+      _hp: 40
       _mp: 10
-      _atk: 10
-      _def: 100
-      _spd: 30
+      _atk: 30
+      _def: 25
+      _spd: 60
     Attribute: 0400000001000000050000000500000003000000
     X: 12
     Y: -60
@@ -876,6 +880,10 @@ MonoBehaviour:
       Level: 0
       Weight: 0
       TriggerDates: []
+    - SkillId: 12070
+      Level: 0
+      Weight: 0
+      TriggerDates: []
     - SkillId: 101010
       Level: 0
       Weight: 0
@@ -884,7 +892,7 @@ MonoBehaviour:
       Level: 0
       Weight: 0
       TriggerDates: []
-    - SkillId: 2030
+    - SkillId: 12100
       Level: 11
       Weight: 0
       TriggerDates: []

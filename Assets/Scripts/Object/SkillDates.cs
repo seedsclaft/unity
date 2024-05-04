@@ -926,9 +926,11 @@ namespace Ryneus
         LvUpper = 12020, // Lvが〇以上
         ActionMpCost = 12030, // 行動Magicの消費Mpが〇
         TargetHpRateUnder = 12040, // 攻撃を受けた対象のHpが〇%以下
+        TargetDeath = 12041, // 攻撃を受けた対象が戦闘不能になった
         OneAttackOverDamage = 12050, // 1回の攻撃で〇ダメージ以上受ける
         FriendAttackedAction = 12060, // 味方が攻撃を受ける
         SelfAttackedAction = 12061, // 自身が攻撃を受ける
+        FriendAttackAction = 12071, // 味方が攻撃を成功する
         FriendHasKind = 13010, // 〇のKindを持っている
         OpponentHasKind = 13020, // 〇のKindを持っている
         FriendStatusUpper = 14010, // ステータスの高い味方
@@ -1000,6 +1002,7 @@ namespace Ryneus
         ChangeStateParam = 3070,
         MpDamage = 4010,
         MpHeal = 4020,
+        MpDrain = 4030,
         SetAfterAp = 5010,
         ApHeal = 5020,
         NoResetAp = 5030,

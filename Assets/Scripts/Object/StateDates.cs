@@ -102,6 +102,7 @@ namespace Ryneus
         NotHeal = 2400,
         DamageShield = 2410,
         Combo = 2420,
+        Cover = 2430,
     }
 
     public enum RemovalTiming

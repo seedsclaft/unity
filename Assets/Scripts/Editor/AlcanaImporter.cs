@@ -4,9 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEditor;
 using UnityEngine;
-using NPOI.HSSF.UserModel;
 using NPOI.SS.UserModel;
-using NPOI.XSSF.UserModel;
 
 namespace Ryneus
 {
@@ -67,14 +65,14 @@ namespace Ryneus
 					ISheet BaseSheet = Book.GetSheetAt(0);
 					for (int i = 1; i <= BaseSheet.LastRowNum; i++)
 					{
-						IRow Baserow = BaseSheet.GetRow(i);
+						IRow BaseRow = BaseSheet.GetRow(i);
 
 						var Alcana = new AlcanaData.Alcana();
-						Alcana.Id = AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.Id);
-						Alcana.Name = textData.Find(a => a.Id == AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.NameId)).Text;
-						Alcana.Help = textData.Find(a => a.Id == AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.NameId)).Help;
-						Alcana.FilePath = AssetPostImporter.ImportString(Baserow,(int)BaseColumn.FilePath);
-						Alcana.SkillId = AssetPostImporter.ImportNumeric(Baserow,(int)BaseColumn.SkillId);
+						Alcana.Id = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.Id);
+						Alcana.Name = textData.Find(a => a.Id == AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.NameId)).Text;
+						Alcana.Help = textData.Find(a => a.Id == AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.NameId)).Help;
+						Alcana.FilePath = AssetPostImporter.ImportString(BaseRow,(int)BaseColumn.FilePath);
+						Alcana.SkillId = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.SkillId);
 						
 						Data._data.Add(Alcana);
 					}

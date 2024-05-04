@@ -1237,3 +1237,20 @@ MonoBehaviour:
     CheckHit: 1
     RemoveByAttack: 0
     RemoveByDeath: 1
+  - StateType: 2430
+    Name: "\u304B\u3070\u3046"
+    Help: "\u653B\u6483\u3092\u4EE3\u308F\u308A\u306B\u53D7\u3051\u308B"
+    IconPath: Arrow
+    RemovalTiming: 0
+    OverWrite: 1
+    EffectPath: '""'
+    EffectPosition: 0
+    EffectScale: 1
+    OverLap: 0
+    Removal: 1
+    Abnormal: 0
+    Buff: 1
+    DeBuff: 0
+    CheckHit: 1
+    RemoveByAttack: 1
+    RemoveByDeath: 1

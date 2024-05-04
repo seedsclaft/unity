@@ -44,7 +44,16 @@ namespace Ryneus
         {
             if (SceneParam != null)
             {
-                return SceneParam.ActorInfos.FindAll(a => a.BattleIndex == -1);
+                var actorInfos = SceneParam.ActorInfos.FindAll(a => a.BattleIndex == -1);
+                var list = new List<ActorInfo>();
+                for (int i = 0;i < 5;i++)
+                {
+                    if (actorInfos.Count > i)
+                    {
+                        list.Add(actorInfos[i]);
+                    }
+                }
+                return list;
             }
             return null;
         }
