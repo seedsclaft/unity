@@ -399,7 +399,7 @@ namespace Ryneus
 
         private bool CheckCanUse(SkillInfo skillInfo,BattlerInfo battlerInfo)
         {
-            if (skillInfo.Master.MpCost > battlerInfo.Mp)
+            if (CalcMpCost(battlerInfo,skillInfo.Master.MpCost) > battlerInfo.Mp)
             {
                 return false;
             }
@@ -440,7 +440,7 @@ namespace Ryneus
 
         private bool CheckCanUsePassive(SkillInfo skillInfo,BattlerInfo battlerInfo)
         {
-            if (skillInfo.Master.MpCost > battlerInfo.Mp)
+            if (CalcMpCost(battlerInfo,skillInfo.Master.MpCost) > battlerInfo.Mp)
             {
                 return false;
             }
@@ -1025,7 +1025,7 @@ namespace Ryneus
         public void SetActionInfo(ActionInfo actionInfo)
         {
             var subject = GetBattlerInfo(actionInfo.SubjectIndex);
-            int MpCost = CalcMpCost(actionInfo);
+            int MpCost = CalcMpCost(subject,actionInfo.Master.MpCost);
             actionInfo.SetMpCost(MpCost);
             int HpCost = CalcHpCost(actionInfo);
             actionInfo.SetHpCost(HpCost);
@@ -1215,9 +1215,9 @@ namespace Ryneus
             return hpCost;
         }
 
-        private int CalcMpCost(ActionInfo actionInfo)
+        private int CalcMpCost(BattlerInfo battlerInfo,int mpCost)
         {
-            return actionInfo.Master.MpCost;
+            return battlerInfo.CalcMpCost(mpCost);
         }
 
         private int CalcRepeatTime(BattlerInfo subject,ActionInfo actionInfo)
@@ -2436,6 +2436,8 @@ namespace Ryneus
         private List<int> TriggerTargetList(BattlerInfo battlerInfo,SkillData.TriggerData triggerData,ActionInfo actionInfo, List<ActionResultInfo> actionResultInfos)
         {
             var list = new List<int>();
+            var opponents = battlerInfo.IsActor ? _troop : _party;
+            var friends = battlerInfo.IsActor ? _party : _troop;
             switch (triggerData.TriggerType)
             {
                 case TriggerType.TargetHpRateUnder:
@@ -2459,12 +2461,23 @@ namespace Ryneus
                 case TriggerType.ActionResultDeath:
                 if (battlerInfo.IsAlive())
                 {
-                    var targetActionResultDeathParty = battlerInfo.IsActor ? _party : _troop;
-                    var deathTarget = actionResultInfos.Find(a => targetActionResultDeathParty.AliveBattlerInfos.Find(b => a.DeadIndexList.Contains(b.Index)) != null);
+                    var deathTarget = actionResultInfos.Find(a => friends.AliveBattlerInfos.Find(b => a.DeadIndexList.Contains(b.Index)) != null);
                     if (deathTarget != null)
                     {
                         var targetBattlerInfo = GetBattlerInfo(deathTarget.TargetIndex);
                         list.Add(targetBattlerInfo.Index);
+                    }
+                }
+                break;
+                case TriggerType.FriendIsAwaken:
+                if (battlerInfo.IsAlive())
+                {
+                    foreach (var targetBattler in friends.AliveBattlerInfos)
+                    {
+                        if (targetBattler.IsAwaken)
+                        {
+                            list.Add(targetBattler.Index);
+                        }
                     }
                 }
                 break;

@@ -726,6 +726,20 @@ namespace Ryneus
             return stateInfos;
         }
 
+        public float MpCostRate()
+        {
+            var mpCost = 1f;
+            foreach (var mpCostStateInfo in GetStateInfoAll(StateType.MpCostRate))
+            {
+                mpCost += mpCostStateInfo.Effect * -0.01f;
+            }
+            return mpCost;
+        }
+
+        public int CalcMpCost(int mpCost)
+        {
+            return (int)Math.Ceiling(mpCost * MpCostRate());
+        }
 
         public int CurrentAtk(bool isNoEffect = false)
         {

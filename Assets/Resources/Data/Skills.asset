@@ -3773,15 +3773,16 @@ MonoBehaviour:
   - Id: 100610
     Name: "\u30B5\u30F3\u30D5\u30EC\u30A4\u30E0"
     IconIndex: 10
-    AnimationId: 101
+    AnimationId: 51
     AnimationType: 1
     MpCost: 0
     Rank: 10
     Attribute: 1
     Scope: 3
     SkillType: 3
-    TargetType: 2
-    Help: "(\u6761\u4EF6)\u72B6\u614B\u7570\u5E38\u3092\u53D7\u3051\u308B\u524D\n\\s\u306B3\u30BF\u30FC\u30F3\u306E\u72B6\u614B\u7570\u5E38\u30AB\u30A6\u30F3\u30BF\u4ED8\u4E0E\n\u795E\u5316\u72B6\u614B\u306B\u79FB\u884C"
+    TargetType: 11
+    Help: "(\u6761\u4EF6)\u795E\u5316\u72B6\u614B\u306E\u5473\u65B9\u304C2\u4EBA\u4EE5\u4E0A\u3044\u308B\u6642\n\u81EA\u8EAB\u3068\u795E\u5316\u72B6\u614B\u306E\u5473\u65B9\u306B\\s\u306B1\u30BF\u30FC\u30F3\u306E\u6D88\u8CBBAp\u534A\u6E1B\u3092\u4ED8\u4E0E
+      \u795E\u5316\u72B6\u614B\u306B\u79FB\u884C"
     Range: 2
     RepeatTime: 1
     AliveType: 1
@@ -3789,8 +3790,8 @@ MonoBehaviour:
     FeatureDates:
     - SkillId: 100610
       FeatureType: 3010
-      Param1: 2070
-      Param2: 3
+      Param1: 2440
+      Param2: 1
       Param3: 50
       Rate: 100
     - SkillId: 100610
@@ -3807,10 +3808,10 @@ MonoBehaviour:
       Param2: 0
       Param3: 1
     - SkillId: 100610
-      TriggerType: 20130
-      TriggerTiming: 3
+      TriggerType: 7040
+      TriggerTiming: 2
       Param1: 0
-      Param2: 0
+      Param2: 2
       Param3: 0
     ScopeTriggers: []
   - Id: 100620
@@ -3862,17 +3863,17 @@ MonoBehaviour:
     Scope: 4
     SkillType: 2
     TargetType: 4
-    Help: "\u30D2\u30FC\u30C8\u30B9\u30BF\u30F3\u30D7\u306E\u56DE\u5FA9\u91CF\u304C15\u306B\u306A\u308B"
+    Help: "\u30D2\u30FC\u30C8\u30B9\u30BF\u30F3\u30D7\u306E\u52B9\u679C\u5BFE\u8C61\u304C\u5168\u4F53\u306B\u306A\u308B"
     Range: 1
     RepeatTime: 1
     AliveType: 1
     TurnCount: 0
     FeatureDates:
     - SkillId: 100630
-      FeatureType: 6010
+      FeatureType: 6210
       Param1: 1030
       Param2: 0
-      Param3: 15
+      Param3: 3
       Rate: 100
     TriggerDates:
     - SkillId: 100630
@@ -3893,8 +3894,7 @@ MonoBehaviour:
     Scope: 3
     SkillType: 3
     TargetType: 2
-    Help: "(\u6761\u4EF6)Hp\u304C\u6700\u5927Hp\u306E25%\u4EE5\u4E0B\u306B\u306A\u308B\n\\s\u306EATK\u3068DEF\u30928\u30A2\u30C3\u30D7(\u6C38\u7D9A)
-      \u795E\u5316\u72B6\u614B\u306B\u79FB\u884C"
+    Help: "(\u6761\u4EF6)\u81EA\u5206\u306E\u653B\u6483\u3067\u6575\u3092\u5012\u3059\n\\s\u306B3\u30BF\u30FC\u30F3\u306E\u9023\u7D50\u4ED8\u4E0E\n\u795E\u5316\u72B6\u614B\u306B\u79FB\u884C"
     Range: 2
     RepeatTime: 1
     AliveType: 1
@@ -3902,15 +3902,9 @@ MonoBehaviour:
     FeatureDates:
     - SkillId: 100710
       FeatureType: 3010
-      Param1: 1040
-      Param2: 999
-      Param3: 8
-      Rate: 100
-    - SkillId: 100710
-      FeatureType: 3010
-      Param1: 1050
-      Param2: 999
-      Param3: 8
+      Param1: 2420
+      Param2: 3
+      Param3: 0
       Rate: 100
     - SkillId: 100710
       FeatureType: 7010
@@ -3926,9 +3920,9 @@ MonoBehaviour:
       Param2: 0
       Param3: 1
     - SkillId: 100710
-      TriggerType: 1010
+      TriggerType: 20140
       TriggerTiming: 2
-      Param1: 25
+      Param1: 0
       Param2: 0
       Param3: 0
     ScopeTriggers: []
@@ -4034,20 +4028,26 @@ MonoBehaviour:
     MpCost: 0
     Rank: 10
     Attribute: 3
-    Scope: 1
+    Scope: 3
     SkillType: 3
-    TargetType: 6
-    Help: "(\u6761\u4EF6)\u81EA\u8EAB\u304C\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB\u30C0\u30E1\u30FC\u30B8\u3092\u53D7\u3051\u308B\n\u653B\u6483\u3057\u3066\u304D\u305F\u5BFE\u8C61\u306EATK\u309250%\u30C0\u30A6\u30F3\n\u795E\u5316\u72B6\u614B\u306B\u79FB\u884C"
-    Range: 1
+    TargetType: 2
+    Help: "(\u6761\u4EF6)\u81EA\u8EAB\u304C10\u56DE\u884C\u52D5\u3057\u305F\u5F8C\n\\s\u306EATK\u3068DEF\u30928\u30A2\u30C3\u30D7(\u6C38\u7D9A)\n\u795E\u5316\u72B6\u614B\u306B\u79FB\u884C"
+    Range: 2
     RepeatTime: 1
     AliveType: 1
     TurnCount: 0
     FeatureDates:
     - SkillId: 100810
       FeatureType: 3010
-      Param1: 1041
+      Param1: 1040
       Param2: 999
-      Param3: 50
+      Param3: 8
+      Rate: 100
+    - SkillId: 100810
+      FeatureType: 3010
+      Param1: 1050
+      Param2: 999
+      Param3: 8
       Rate: 100
     - SkillId: 100810
       FeatureType: 7010
@@ -4058,14 +4058,14 @@ MonoBehaviour:
     TriggerDates:
     - SkillId: 100810
       TriggerType: 7010
-      TriggerTiming: 11
+      TriggerTiming: 2
       Param1: 0
       Param2: 0
       Param3: 1
     - SkillId: 100810
-      TriggerType: 20080
-      TriggerTiming: 11
-      Param1: 1
+      TriggerType: 9020
+      TriggerTiming: 2
+      Param1: 10
       Param2: 0
       Param3: 0
     ScopeTriggers: []
@@ -4102,7 +4102,7 @@ MonoBehaviour:
     TriggerDates: []
     ScopeTriggers: []
   - Id: 100830
-    Name: "\u30D5\u30ED\u30B9\u30C8\u30B7\u30FC\u30EB\u30C9+"
+    Name: "\u30A2\u30AF\u30A2\u30DF\u30E9\u30FC\u30B8\u30E5+"
     IconIndex: 6
     AnimationId: 0
     AnimationType: 1
@@ -4112,17 +4112,17 @@ MonoBehaviour:
     Scope: 4
     SkillType: 2
     TargetType: 4
-    Help: "\u30D5\u30ED\u30B9\u30C8\u30B7\u30FC\u30EB\u30C9\u306E\u7121\u52B9\u30C0\u30E1\u30FC\u30B8\u304C30\u306B\u306A\u308B"
+    Help: "\u30A2\u30AF\u30A2\u30DF\u30E9\u30FC\u30B8\u30E5\u306E\u653B\u6483\u7121\u52B9\u56DE\u6570\u304C2\u56DE\u306B\u306A\u308B"
     Range: 1
     RepeatTime: 1
     AliveType: 1
     TurnCount: 0
     FeatureDates:
     - SkillId: 100830
-      FeatureType: 6030
-      Param1: 3080
+      FeatureType: 6020
+      Param1: 3070
       Param2: 0
-      Param3: 30
+      Param3: 2
       Rate: 100
     TriggerDates:
     - SkillId: 100830
@@ -4314,7 +4314,7 @@ MonoBehaviour:
     Scope: 4
     SkillType: 3
     TargetType: 4
-    Help: "(\u6761\u4EF6)\u81EA\u5206\u306E\u653B\u6483\u3067\u6575\u3092\u5012\u3059\n\\s\u306B3\u30BF\u30FC\u30F3\u306E\u9023\u7D50\u4ED8\u4E0E\n\u795E\u5316\u72B6\u614B\u306B\u79FB\u884C"
+    Help: "(\u6761\u4EF6)\u72B6\u614B\u7570\u5E38\u3092\u53D7\u3051\u308B\u524D\n\\s\u306B3\u30BF\u30FC\u30F3\u306E\u72B6\u614B\u7570\u5E38\u30AB\u30A6\u30F3\u30BF\u4ED8\u4E0E\n\u795E\u5316\u72B6\u614B\u306B\u79FB\u884C"
     Range: 1
     RepeatTime: 1
     AliveType: 1
@@ -4322,9 +4322,9 @@ MonoBehaviour:
     FeatureDates:
     - SkillId: 101010
       FeatureType: 3010
-      Param1: 2420
+      Param1: 2070
       Param2: 3
-      Param3: 800
+      Param3: 50
       Rate: 100
     - SkillId: 101010
       FeatureType: 7010
@@ -4340,8 +4340,8 @@ MonoBehaviour:
       Param2: 0
       Param3: 1
     - SkillId: 101010
-      TriggerType: 20140
-      TriggerTiming: 2
+      TriggerType: 20130
+      TriggerTiming: 3
       Param1: 0
       Param2: 0
       Param3: 0
