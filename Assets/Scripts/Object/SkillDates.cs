@@ -931,13 +931,16 @@ namespace Ryneus
         FriendAttackedAction = 12060, // 味方が攻撃を受ける
         SelfAttackedAction = 12061, // 自身が攻撃を受ける
         FriendAttackAction = 12071, // 味方が攻撃を成功する
+        OpponentHealAction = 12082, // 相手が回復を成功する
         FriendHasKind = 13010, // 〇のKindを持っている
         OpponentHasKind = 13020, // 〇のKindを持っている
         FriendStatusUpper = 14010, // ステータスの高い味方
         FriendStatusUnder = 14110, // ステータスの低い味方
         OpponentStatusUpper = 14210, // ステータスの高い敵
         OpponentStatusUnder = 14310, // ステータスの低い敵
-        AttackActionInfo = 15010, // 攻撃タイプの行動をしようとしている
+        SelfAttackActionInfo = 15010, // 自身が攻撃タイプの行動をしようとしている
+        FriendAttackActionInfo = 15011, // 味方が攻撃タイプの行動をしようとしている
+        OpponentAttackActionInfo = 15012, // 相手が攻撃タイプの行動をしようとしている
         PayBattleMp = 20010, // Mpを〇消費する
         ChainCount = 20020, // 拘束成功回数
         ActionResultDeath = 20030, // 攻撃を受けると戦闘不能になる
@@ -972,6 +975,7 @@ namespace Ryneus
         AfterAndStartBattle = 24,
         BeforeSelfUse = 31,
         BeforeOpponentUse = 32,
+        BeforeFriendUse = 33,
         BeforeTacticsTurn = 51,
         CurrentTacticsTurn = 52
     }

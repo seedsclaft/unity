@@ -401,6 +401,7 @@ namespace Ryneus
                 if (target.IsState(StateType.DamageCut))
                 {
                     damageCutRate += target.StateEffectAll(StateType.DamageCut) * 0.01f;
+                    SeekStateCount(target,StateType.DamageCut);
                 }
                 var substituteStateInfos = subject.GetStateInfoAll(StateType.Substitute);
                 if (substituteStateInfos.Count > 0)

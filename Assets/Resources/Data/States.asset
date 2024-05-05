@@ -387,6 +387,23 @@ MonoBehaviour:
     CheckHit: 0
     RemoveByAttack: 0
     RemoveByDeath: 1
+  - StateType: 1082
+    Name: "\u547D\u4E2D\u30C0\u30A6\u30F3"
+    Help: "\u547D\u4E2D\u7387\\d%\u30C0\u30A6\u30F3"
+    IconPath: ArrowScope
+    RemovalTiming: 1
+    OverWrite: 1
+    EffectPath: '""'
+    EffectPosition: 0
+    EffectScale: 1
+    OverLap: 0
+    Removal: 0
+    Abnormal: 0
+    Buff: 0
+    DeBuff: 1
+    CheckHit: 0
+    RemoveByAttack: 0
+    RemoveByDeath: 1
   - StateType: 1090
     Name: "\u56DE\u907F\u30A2\u30C3\u30D7"
     Help: "\u56DE\u907F\u7387\\d%\u30A2\u30C3\u30D7"
@@ -425,7 +442,7 @@ MonoBehaviour:
     Name: "\u30C0\u30E1\u30FC\u30B8\u30AB\u30C3\u30C8"
     Help: "\u88AB\u30C0\u30E1\u30FC\u30B8\u3092\\d%\u30AB\u30C3\u30C8\u3059\u308B"
     IconPath: ArmorUpgrade
-    RemovalTiming: 1
+    RemovalTiming: 4
     OverWrite: 1
     EffectPath: '""'
     EffectPosition: 0

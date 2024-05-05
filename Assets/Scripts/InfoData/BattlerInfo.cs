@@ -832,6 +832,7 @@ namespace Ryneus
         {
             int hit = 0;
             hit += StateEffectAll(StateType.HitUp);
+            hit -= StateEffectAll(StateType.HitDown);
             return hit;
         }
 
@@ -846,14 +847,6 @@ namespace Ryneus
         public int TargetRate()
         {
             int rate = 100;
-            if (IsState(StateType.TargetRateDown))
-            {
-                rate -= StateEffectAll(StateType.TargetRateDown);
-            }
-            if (IsState(StateType.TargetRateUp))
-            {
-                rate += StateEffectAll(StateType.TargetRateUp);
-            }
             if (IsState(StateType.Shadow))
             {
                 rate = 0;

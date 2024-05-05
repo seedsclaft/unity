@@ -564,12 +564,9 @@ namespace Ryneus
             var actionInfo = _model.CurrentActionInfo();
             if (actionInfo != null)
             {
-                // 自分の行動前パッシブ
-                _model.CheckTriggerPassiveInfos(new List<TriggerTiming>(){TriggerTiming.BeforeSelfUse},actionInfo,actionInfo.ActionResults);
+                // 自分,味方,相手の行動前パッシブ
+                _model.CheckTriggerPassiveInfos(BattleUtility.BeforeActionInfoTriggerTimings(),actionInfo,actionInfo.ActionResults);
                 
-                // 相手の行動前パッシブ
-                _model.CheckTriggerPassiveInfos(new List<TriggerTiming>(){TriggerTiming.BeforeOpponentUse},actionInfo,actionInfo.ActionResults);
-
                 _view.BattlerBattleClearSelect();
                 // 行動前の行動のため再取得
                 actionInfo = _model.CurrentActionInfo();

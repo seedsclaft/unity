@@ -60,6 +60,15 @@ namespace Ryneus
             };
         }
 
+        // 行動前パッシブ
+        public static List<TriggerTiming> BeforeActionInfoTriggerTimings()
+        {
+            return new List<TriggerTiming>(){
+                TriggerTiming.BeforeSelfUse,
+                TriggerTiming.BeforeFriendUse,
+                TriggerTiming.BeforeOpponentUse,
+            };
+        }
         // 計算メソッドなど
         
         /// <summary>
@@ -70,6 +79,10 @@ namespace Ryneus
         /// <returns></returns>
         public static int NearTargetIndex(BattlerInfo battlerInfo,List<int> targetIndexList)
         {
+            if (targetIndexList.Count == 0)
+            {
+                return -1;
+            }
             // 複数候補は列が近い方を選ぶ
             var selfIndex = battlerInfo.Index % 100;
             if (battlerInfo.IsActor == false)
