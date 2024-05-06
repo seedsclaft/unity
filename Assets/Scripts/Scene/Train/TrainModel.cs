@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Ryneus
 {
@@ -8,6 +10,12 @@ namespace Ryneus
         public TrainModel()
         {
             _selectActorId = StageMembers()[0].ActorId;
+        }
+
+        private int _selectAttribute = 0;
+        public void SetSelectAttribute(int selectAttribute)
+        {
+            _selectAttribute = selectAttribute;
         }
         
         private int _selectActorId = 0;
@@ -89,7 +97,7 @@ namespace Ryneus
             actorInfo.SetBattleIndex(battleIndex);
         }
 
-        public List<ListData> SelectActorLearningMagicList()
+        public List<ListData> SelectActorLearningMagicList(int selectedSkillId = -1)
         {
             var skillInfos = new List<SkillInfo>();
             var actorInfo = TacticsActor();
@@ -98,12 +106,32 @@ namespace Ryneus
             {
                 //if (actorInfo.IsLearnedSkill(alchemyId)) continue;
                 var skillInfo = new SkillInfo(alchemyId);
+                if (_selectAttribute > 0)
+                {
+                    if ((int)skillInfo.Master.Attribute != _selectAttribute)
+                    {
+                        continue;
+                    }
+                }
                 var cost = TacticsUtility.LearningMagicCost(actorInfo,skillInfo.Attribute,StageMembers());
                 skillInfo.SetEnable(Currency >= cost && !actorInfo.IsLearnedSkill(alchemyId));
                 skillInfo.SetLearningCost(cost);
                 skillInfos.Add(skillInfo);
             }
-            return MakeListData(skillInfos);
+            var selectIndex = skillInfos.FindIndex(a => a.Id == selectedSkillId);
+            var listData = MakeListData(skillInfos,selectIndex);
+            return listData;
+        }
+
+        public List<ListData> AttributeTabList()
+        {
+            var list = new List<AttributeType>();
+            foreach (var attribute in Enum.GetValues(typeof(AttributeType)))
+            {
+                var attributeType = (AttributeType)attribute;
+                list.Add(attributeType);
+            }
+            return MakeListData(list);
         }
 
         public void SetTempAddActorStatusInfos(int actorId)
@@ -117,10 +145,12 @@ namespace Ryneus
             var list = new List<TacticsActorInfo>();
             foreach (var member in StageMembers())
             {
-                var tacticsActorInfo = new TacticsActorInfo();
-                tacticsActorInfo.TacticsCommandType = _TacticsCommandType;
-                tacticsActorInfo.ActorInfo = member;
-                tacticsActorInfo.ActorInfos = StageMembers();
+                var tacticsActorInfo = new TacticsActorInfo
+                {
+                    TacticsCommandType = _TacticsCommandType,
+                    ActorInfo = member,
+                    ActorInfos = StageMembers()
+                };
                 list.Add(tacticsActorInfo);
             }
             return MakeListData(list);

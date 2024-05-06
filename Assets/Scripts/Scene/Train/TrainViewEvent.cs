@@ -39,5 +39,6 @@ namespace Train
         CommandHelp,
         AlcanaCheck,
         ChangeSelectTacticsActor,
+        SelectAttribute,
     }
 }

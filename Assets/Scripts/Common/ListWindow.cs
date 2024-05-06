@@ -207,10 +207,15 @@ namespace Ryneus
             {
                 _itemPrefabList[i].gameObject.SetActive(false);
                 _itemPrefabList[i].transform.SetParent(gameObject.transform,false);
-                if (_listDates.Count <= i+startIndex){
+                if (_listDates.Count <= i+startIndex)
+                {
                     continue;
                 }
                 _itemPrefabList[i].gameObject.SetActive(true);
+                if (_objectList.Count <= i+startIndex || i+startIndex < 0)
+                {
+                    continue;
+                }
                 _itemPrefabList[i].transform.SetParent(_objectList[i+startIndex].transform,false);
             }
             if (startIndex > 0)
@@ -353,7 +358,7 @@ namespace Ryneus
             }
         }
 
-        private void UpdateListItem()
+        public void UpdateListItem()
         {
             int startIndex = GetStartIndex();
             if (startIndex != _lastStartIndex)
@@ -525,7 +530,8 @@ namespace Ryneus
             }
         }
 
-        public void UpdateSelectIndex(int index){
+        public void UpdateSelectIndex(int index)
+        {
             SelectIndex(index);
             UpdateHelpWindow();
             for (int i = 0; i < ObjectList.Count;i++)
@@ -615,7 +621,8 @@ namespace Ryneus
             }
         }
 
-        public void UpdateScrollRect(InputKeyType keyType){
+        private void UpdateScrollRect(InputKeyType keyType)
+        {
             if (_index < 0) return;
             var listCount = ListItemCount();
             var dataCount = _listDates.Count;
@@ -646,15 +653,21 @@ namespace Ryneus
             }
         }
 
-        public void UpdateScrollRect(int selectIndex){
+        public void UpdateScrollRect(int selectIndex)
+        {
             if (_index < 0) return;
             var listCount = ListItemCount();
             var dataCount = _listDates.Count;
             var listIndex = selectIndex - (listCount - 1);
+            // 下まで表示できる場合は
+            if (dataCount > selectIndex+listCount)
+            {
+                listIndex = selectIndex+listCount-1;
+            }
             if (listIndex > 0)
             {
                 var num = 1.0f / (float)(dataCount - listCount);
-                var normalizedPosition = 1.0f - (num * (Index - (listCount-1)));
+                var normalizedPosition = 1.0f - (num * (listIndex - (listCount-1)));
                 if (horizontal)
                 {
                     ScrollRect.normalizedPosition = new Vector2(normalizedPosition,0);
@@ -682,7 +695,8 @@ namespace Ryneus
             }
         }
 
-        public void ResetScrollRect(){
+        public void ResetScrollRect()
+        {
             if (horizontal)
             {   
                 ScrollRect.normalizedPosition = new Vector2(1,0);

@@ -3473,7 +3473,7 @@ namespace Ryneus
                         triggerDates.Add(triggerData);
                     }
                 }
-                if (selectSkillId == -1 && selectTargetIndex == -1 && skillTriggerInfo.SkillId > -1)
+                if (selectSkillId == -1 && selectTargetIndex == -1 && skillTriggerInfo.SkillId > 0)
                 {
                     // 条件なし
                     if (triggerDates.Count == 0)

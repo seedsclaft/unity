@@ -12,6 +12,7 @@ namespace Ryneus
 
         [SerializeField] private BattleSelectCharacter battleSelectCharacter = null;
         [SerializeField] private TacticsSelectCharacter selectCharacter = null;
+        [SerializeField] private BaseList attributeList = null;
         [SerializeField] private TextMeshProUGUI numinousText = null;
         private new System.Action<TrainViewEvent> _commandData = null;
 
@@ -30,11 +31,15 @@ namespace Ryneus
             InitializeSelectCharacter();
 
             battleSelectCharacter.gameObject.SetActive(false);
-            commandHelpButton.onClick.AddListener(() => {
+            commandHelpButton.onClick.AddListener(() => 
+            {
                 var eventData = new TrainViewEvent(CommandType.CommandHelp);
                 _commandData(eventData);
             });
             SetBackCommand(() => OnClickBack());
+            attributeList.Initialize();
+            SetInputHandler(attributeList.GetComponent<IInputHandlerEvent>());
+            attributeList.gameObject.SetActive(false);
             new TrainPresenter(this);
             selectCharacter.gameObject.SetActive(false);
         }
@@ -51,15 +56,24 @@ namespace Ryneus
             numinousText.SetText(DataSystem.GetReplaceDecimalText(numinous));
         }
         
-
-        public void RefreshListData(ListData listData)
+        public void SetAttributeList(List<ListData> list)
         {
+            attributeList.SetData(list);
+            attributeList.SetSelectedHandler(() => OnSelectAttribute());
         }
 
-        public void StartAnimation()
+        private void OnSelectAttribute()
         {
+            var listData = attributeList.ListData;
+            if (listData != null)
+            {
+                var data = (AttributeType)listData.Data;
+                var eventData = new TrainViewEvent(CommandType.SelectAttribute);
+                eventData.template = data;
+                _commandData(eventData);
+            }
         }
-        
+
         private void InitializeSelectCharacter()
         {
             battleSelectCharacter.SetInputHandlerAction(InputKeyType.Decide,() => CallSkillAlchemy());
@@ -100,7 +114,8 @@ namespace Ryneus
             selectCharacter.SetInputHandlerCommand(InputKeyType.Cancel,() => CallTrainCommandCancel());
             SetInputHandler(selectCharacter.CharacterList.GetComponent<IInputHandlerEvent>());
             SetInputHandler(selectCharacter.CommandList.GetComponent<IInputHandlerEvent>());
-            selectCharacter.CharacterList.SetSelectedHandler(() => {
+            selectCharacter.CharacterList.SetSelectedHandler(() => 
+            {
                 var listData = selectCharacter.CharacterData;
                 if (listData != null)
                 {
@@ -171,6 +186,7 @@ namespace Ryneus
 
         public void HideSelectCharacter()
         {
+            attributeList.gameObject.SetActive(false);
             battleSelectCharacter.gameObject.SetActive(false);
             selectCharacter.gameObject.SetActive(false); 
             SetHelpInputInfo("TACTICS");
@@ -210,8 +226,9 @@ namespace Ryneus
 
         public void ShowLeaningList(List<ListData> learnMagicList)
         {
+            attributeList.gameObject.SetActive(true);
             battleSelectCharacter.gameObject.SetActive(true);
-            battleSelectCharacter.SetActiveTab(SelectCharacterTabType.Magic,true);
+            battleSelectCharacter.SetActiveTab(SelectCharacterTabType.Magic,false);
             battleSelectCharacter.SetActiveTab(SelectCharacterTabType.Condition,false);
             battleSelectCharacter.SetActiveTab(SelectCharacterTabType.Detail,false);
             battleSelectCharacter.SelectCharacterTab(SelectCharacterTabType.Magic);

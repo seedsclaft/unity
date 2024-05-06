@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Ryneus
 {
@@ -12,7 +13,8 @@ namespace Ryneus
         private int _beforeSelectIndex = -1;
         public ListData ListData 
         { 
-            get {
+            get 
+            {
                 if (Index > -1 && ListDates.Count > Index)
                 {
                     return ListDates[Index];
@@ -47,7 +49,14 @@ namespace Ryneus
                 AddCreateList(ListDates.Count-ObjectList.Count);
             }
             SetListCallHandler();
-            Refresh(ListDates.FindIndex(a => a.Selected || a.Enable));
+            var selectIndex = ListDates.FindIndex(a => a.Selected);
+            if (selectIndex > -1)
+            {
+                Refresh(selectIndex);
+            } else
+            {
+                Refresh(ListDates.FindIndex(a => a.Enable));
+            }
         }
 
         
@@ -68,6 +77,12 @@ namespace Ryneus
         public new void Refresh(int selectIndex = 0)
         {
             base.Refresh(selectIndex);
+            if (selectIndex > 0)
+            {
+                Canvas.ForceUpdateCanvases();
+                UpdateScrollRect(selectIndex);
+                UpdateListItem();
+            }
             _beforeSelectIndex = selectIndex;
         }
 
@@ -122,7 +137,7 @@ namespace Ryneus
         {
             _enable = enable;
         }
-        private bool _selected = true;
+        private bool _selected = false;
         public bool Selected => _selected;
         public void SetSelected(bool selected)
         {

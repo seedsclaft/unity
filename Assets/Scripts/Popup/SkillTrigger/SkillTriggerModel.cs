@@ -18,7 +18,14 @@ namespace Ryneus
             var list = new List<SkillInfo>();
             if (actorInfo != null)
             {
-                return actorInfo.SkillActionList();
+                var skillInfo = new SkillInfo(0);
+                list.Add(skillInfo);
+                var listData = MakeListData(list);
+                foreach (var actionInfo in actorInfo.SkillActionList())
+                {
+                    listData.Add(actionInfo);
+                }
+                return listData;
             }
             return MakeListData(list);
         }

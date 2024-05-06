@@ -162,9 +162,14 @@ namespace Ryneus
             return menuCommandDates;
         }
 
-        public List<ListData> MakeListData<T>(List<T> dataList)
+        public List<ListData> MakeListData<T>(List<T> dataList,int selectIndex = -1)
         {
-            return ListData.MakeListData(dataList);
+            var listData = ListData.MakeListData(dataList);
+            if (selectIndex != -1 && listData.Count > selectIndex)
+            {
+                listData[selectIndex].SetSelected(true);
+            }
+            return listData;
         }
 
         public List<ListData> ConfirmCommand()

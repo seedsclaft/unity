@@ -24,13 +24,14 @@ namespace Ryneus
             SetInputHandler(optionList.GetComponent<IInputHandlerEvent>());
             SetInputHandler(optionCategoryList.GetComponent<IInputHandlerEvent>());
             new OptionPresenter(this);
-            Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
+            SoundManager.Instance.PlayStaticSe(SEType.Decide);
         }
         
         public void SetOptionCategoryList(List<ListData> optionData)
         {
             optionCategoryList.SetData(optionData);
-            optionCategoryList.SetSelectedHandler(() =>{
+            optionCategoryList.SetSelectedHandler(() =>
+            {
                 var eventData = new OptionViewEvent(CommandType.SelectCategory);
                 _commandData(eventData);
             });   

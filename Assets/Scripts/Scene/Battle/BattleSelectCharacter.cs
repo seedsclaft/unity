@@ -24,8 +24,10 @@ namespace Ryneus
 
         private SelectCharacterTabType _selectCharacterTabType = SelectCharacterTabType.Detail;
         
-        public SkillInfo ActionData{
-            get {
+        public SkillInfo ActionData
+        {
+            get 
+            {
                 if (magicList.ListData != null)
                 {
                     return (SkillInfo)magicList.ListData.Data;
@@ -185,7 +187,10 @@ namespace Ryneus
                 displaySelectCard.gameObject.SetActive(false);
             }
             SelectCharacterTab(_selectCharacterTabType);
-            magicList.UpdateSelectIndex(skillInfoData.Count > 0 ? 0 : -1);
+            if (skillInfoData.Count == 0)
+            {
+                magicList.UpdateSelectIndex(-1);
+            }
             DisplaySelectCard();
         }
 

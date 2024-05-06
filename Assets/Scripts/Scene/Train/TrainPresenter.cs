@@ -42,10 +42,9 @@ namespace Ryneus
             _view.ChangeBackCommandActive(false);
             _view.SetEvent((type) => UpdateCommand(type));
             _view.SetSelectCharacter(_model.TacticsCharacterData(),_model.NoChoiceConfirmCommand());
-            
+            _view.SetAttributeList(_model.AttributeTabList());
             CommandRefresh();
             _view.ChangeUIActive(true);
-            _view.StartAnimation();
         }
 
         private void UpdateCommand(TrainViewEvent viewEvent)
@@ -103,6 +102,9 @@ namespace Ryneus
                     break;
                 case Train.CommandType.ChangeSelectTacticsActor:
                     CommandChangeSelectTacticsActor((int)viewEvent.template);
+                    break;
+                case Train.CommandType.SelectAttribute:
+                    CommandSelectAttribute((int)viewEvent.template);
                     break;
             }
             if (viewEvent.commandType == Train.CommandType.SkillAlchemy)
@@ -170,7 +172,7 @@ namespace Ryneus
                     _view.ChangeBackCommandActive(true);
                     if (tacticsCommandType == TacticsCommandType.Alchemy)
                     {                    
-                        _view.ShowLeaningList(_model.SelectActorLearningMagicList());
+                        ShowLearningSkillInfos();
                     } else
                     {
                         _view.ShowCharacterDetail(_model.StageMembers()[0],_model.StageMembers());
@@ -281,9 +283,15 @@ namespace Ryneus
                     _view.ShowCharacterDetail(_model.TacticsActor(),_model.StageMembers());
                     break;
                 case TacticsCommandType.Alchemy:
-                    _view.ShowLeaningList(_model.SelectActorLearningMagicList());
+                    ShowLearningSkillInfos();
                     break;
             }
+        }
+
+        private void CommandSelectAttribute(int attribute)
+        {
+            _model.SetSelectAttribute(attribute);
+            ShowLearningSkillInfos();
         }
 
         private void CommandSelectActorParadigm()
@@ -392,6 +400,17 @@ namespace Ryneus
             var cautionInfo = new CautionInfo();
             cautionInfo.SetTitle(DataSystem.GetText(11160));
             _view.CommandCallCaution(cautionInfo);
+        }
+
+        private void ShowLearningSkillInfos()
+        {
+            var lastSelectSkillId = -1;
+            var lastSelectSkill = _view.SelectMagic;
+            if (lastSelectSkill != null)
+            {
+                lastSelectSkillId = lastSelectSkill.Id;
+            }
+            _view.ShowLeaningList(_model.SelectActorLearningMagicList(lastSelectSkillId));            
         }
 
         private void CommandPopupSkillInfo(GetItemInfo getItemInfo)
