@@ -36,14 +36,22 @@ namespace Ryneus
         {
             return FeatureDates.Find(a => a.FeatureType == FeatureType.HpDamage || a.FeatureType == FeatureType.HpConsumeDamage || a.FeatureType == FeatureType.RevengeHpDamage || a.FeatureType == FeatureType.HpStateDamage) != null;
         }
+
         public bool IsHpHealFeature()
         {
-            return FeatureDates.Find(a => a.FeatureType == FeatureType.HpHeal) != null;
+            return FeatureDates.Find(a => a.FeatureType == FeatureType.HpHeal || a.FeatureType == FeatureType.HpDivide) != null;
         }
+
+        public bool IsAbsoluteHit()
+        {
+            return FeatureDates.Find(a => a.FeatureType == FeatureType.AbsoluteHit) != null;
+        }
+
         public bool IsStateFeature(StateType stateType)
         {
             return FeatureDates.Find(a => (a.FeatureType == FeatureType.AddState || a.FeatureType == FeatureType.AddStateNextTurn) && a.Param1 == (int)stateType) != null;
         }
+
         public bool IsRevengeHpDamageFeature()
         {
             return FeatureDates.Find(a => a.FeatureType == FeatureType.RevengeHpDamage) != null;
@@ -60,6 +68,7 @@ namespace Ryneus
             }
             return false;
         }
+
         [Serializable]
         public class SkillAttributeInfo
         {   
@@ -86,6 +95,7 @@ namespace Ryneus
             }
             return "";
         }
+
         public string ScopeTypeText()
         {
             switch (Scope)
@@ -110,6 +120,7 @@ namespace Ryneus
             }
             return "";
         }
+
         public string ConvertHelpText(string help)
         {
             var targetText = TargetTypeText();
@@ -932,6 +943,7 @@ namespace Ryneus
         SelfAttackedAction = 12061, // 自身が攻撃を受ける
         FriendAttackAction = 12071, // 味方が攻撃を成功する
         OpponentHealAction = 12082, // 相手が回復を成功する
+        OpponentDamageShieldAction = 12092, // 相手が攻撃無効を発動する
         FriendHasKind = 13010, // 〇のKindを持っている
         OpponentHasKind = 13020, // 〇のKindを持っている
         FriendStatusUpper = 14010, // ステータスの高い味方
@@ -995,6 +1007,7 @@ namespace Ryneus
         HpHeal = 2010,
         RemainHpOne = 2020,
         RemainHpOneTarget = 2030,
+        HpDivide = 2040,
         DamageHpHealParty = 2110,
         DamageMpHealParty = 2120,
         AddState = 3010,
@@ -1023,9 +1036,11 @@ namespace Ryneus
         ChangeSkillScope = 6210,
         AddSkillPlusSkill = 6310,
         PlusSkill = 7010,
+        PlusSkillTrigger = 7020,
         KindHeal = 8010,
         BreakUndead = 8020,
         ActionAfterGainAp = 10010, // 行動後にAp+
+        AbsoluteHit = 11010,
         Numinous = 301,
         TacticsCost = 302,
         EnemyLv = 303,

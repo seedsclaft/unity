@@ -103,6 +103,7 @@ namespace Ryneus
         Combo = 2420,
         Cover = 2430,
         MpCostRate = 2440,
+        Reraise = 2450,
     }
 
     public enum RemovalTiming

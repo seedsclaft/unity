@@ -1680,6 +1680,30 @@ namespace Ryneus
                     _actionInfos.Add(plusActionInfo);
                     AddTurnActionInfos(plusActionInfo,false);
                 }
+
+                var plusTriggerSkillInfos = actionInfo.CheckPlusSkillTrigger();
+                foreach (var skillInfo in plusTriggerSkillInfos)
+                {
+                    var triggerDates = skillInfo.Master.TriggerDates;
+                    if (IsTriggeredSkillInfo(GetBattlerInfo(actionInfo.SubjectIndex),triggerDates,actionInfo,actionInfo.ActionResults))
+                    {
+                        if (skillInfo.Master.SkillType == SkillType.Passive)
+                        {
+                            if (!_passiveSkillInfos[actionInfo.SubjectIndex].Contains(skillInfo.Master.Id))
+                            {
+                                _passiveSkillInfos[actionInfo.SubjectIndex].Add(skillInfo.Master.Id);
+                            }
+                        }
+                        var plusTriggerActionInfo = new ActionInfo(skillInfo,_actionIndex,actionInfo.SubjectIndex,-1,null);
+                        plusTriggerActionInfo.SetTriggerSkill(true);
+                        _actionInfos.Add(plusTriggerActionInfo);
+                        AddTurnActionInfos(plusTriggerActionInfo,false);
+                        if (GetBattlerInfo(actionInfo.SubjectIndex).IsState(StateType.Extension))
+                        {
+                            plusTriggerActionInfo.SetRangeType(RangeType.L);
+                        }
+                    }
+                }
             }
         }
 
@@ -2405,6 +2429,22 @@ namespace Ryneus
                                 if (battlerInfo.IsActor != GetBattlerInfo(actionInfo.SubjectIndex).IsActor && battlerInfo.Index != actionInfo.SubjectIndex)
                                 {
                                     var results = actionInfo.ActionResults.FindAll(a => a.HpHeal > 0);
+                                    if (results.Count > 0)
+                                    {
+                                        IsTriggered = true;
+                                    }
+                                }
+                            }
+                        }
+                        break;
+                        case TriggerType.OpponentDamageShieldAction:
+                        if (battlerInfo.IsAlive())
+                        {
+                            if (actionInfo != null && actionInfo.ActionResults != null)
+                            {
+                                if (battlerInfo.IsActor != GetBattlerInfo(actionInfo.SubjectIndex).IsActor && battlerInfo.Index != actionInfo.SubjectIndex)
+                                {
+                                    var results = actionInfo.ActionResults.FindAll(a => a.DisplayStates.Find(a => a.StateType == StateType.DamageShield) != null);
                                     if (results.Count > 0)
                                     {
                                         IsTriggered = true;

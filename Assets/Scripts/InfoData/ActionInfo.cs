@@ -93,17 +93,32 @@ namespace Ryneus
 
         public List<ActionInfo> CheckPlusSkill()
         {
+            // 行動後スキル
             var featureDates = SkillInfo.FeatureDates;
             var PlusSkill = featureDates.FindAll(a => a.FeatureType == FeatureType.PlusSkill);
             
             var actionInfos = new List<ActionInfo>();
-            for (var i = 0;i < PlusSkill.Count;i++){
+            for (var i = 0;i < PlusSkill.Count;i++)
+            {
                 var skillInfo = new SkillInfo(PlusSkill[i].Param1);
                 var actionInfo = new ActionInfo(skillInfo,_index,SubjectIndex,-1,null);
                 actionInfo.SetTriggerSkill(true);
                 actionInfos.Add(actionInfo);
             }
             return actionInfos;
+        }
+
+        public List<SkillInfo> CheckPlusSkillTrigger()
+        {
+            var featureDates = SkillInfo.FeatureDates;
+            var skillInfos = new List<SkillInfo>();
+            var PlusSkillTrigger = featureDates.FindAll(a => a.FeatureType == FeatureType.PlusSkillTrigger);
+            for (var i = 0;i < PlusSkillTrigger.Count;i++)
+            {
+                var skillInfo = new SkillInfo(PlusSkillTrigger[i].Param1);
+                skillInfos.Add(skillInfo);
+            }
+            return skillInfos;
         }
 
         public void SetTriggerSkill(bool triggeredSkill)

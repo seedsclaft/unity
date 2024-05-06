@@ -59,7 +59,15 @@ namespace Ryneus
                         _hpDamage = target.Hp - 1;
                     } else
                     {
-                        _deadIndexList.Add(target.Index);
+                        if (target.IsState(StateType.Reraise))
+                        {
+                            SeekStateCount(target,StateType.Reraise);
+                            _overkillHpDamage = _hpDamage;
+                            _hpDamage = target.Hp - 1;
+                        } else
+                        {
+                            _deadIndexList.Add(target.Index);
+                        }
                     }
                 }
                 int reduceHp = subject.MaxHp - subject.Hp;
@@ -75,7 +83,15 @@ namespace Ryneus
                         _reDamage = subject.Hp - 1;
                     } else
                     {
-                        _deadIndexList.Add(subject.Index);
+                        if (target.IsState(StateType.Reraise))
+                        {
+                            SeekStateCount(target,StateType.Reraise);
+                            _overkillHpDamage = _hpDamage;
+                            _hpDamage = target.Hp - 1;
+                        } else
+                        {
+                            _deadIndexList.Add(target.Index);
+                        }
                     }
                 }
                 foreach (var removeState in _removedStates)
@@ -168,6 +184,9 @@ namespace Ryneus
                     return;
                 case FeatureType.HpHeal:
                     MakeHpHeal(subject,target,featureData);
+                    return;
+                case FeatureType.HpDivide:
+                    MakeHpDivide(subject,target,featureData);
                     return;
                 case FeatureType.HpDrain:
                     if (CheckIsHit(subject,target,isOneTarget,range))
@@ -295,6 +314,10 @@ namespace Ryneus
         {
             var skillData = DataSystem.FindSkill(_skillId);
             if (skillData != null && (skillData.SkillType == SkillType.Messiah || skillData.SkillType == SkillType.Awaken))
+            {
+                return true;
+            }
+            if (skillData != null && skillData.IsAbsoluteHit())
             {
                 return true;
             }
@@ -618,6 +641,27 @@ namespace Ryneus
             }
         }
 
+        private void MakeHpDivide(BattlerInfo subject,BattlerInfo target,SkillData.FeatureData featureData)
+        {
+            float HealValue = featureData.Param1 * 0.01f * subject.MaxHp;
+            HealValue = Math.Min(subject.MaxHp,HealValue);
+            // param3が1の時は割合
+            var healValue = (int)Mathf.Round(HealValue);
+            if (target.IsState(StateType.NotHeal))
+            {
+                _displayStates.Add(target.GetStateInfo(StateType.NotHeal));
+                healValue = 0;
+            }
+            _hpHeal += healValue;
+            _reDamage += healValue;
+            if (subject != target)
+            {
+                if (subject.IsState(StateType.HealActionSelfHeal))
+                {
+                    _reHeal += healValue;
+                }
+            }
+        }
 
         private void MakeHpDrain(BattlerInfo subject,BattlerInfo target,SkillData.FeatureData featureData,bool isOneTarget,int range)
         {
