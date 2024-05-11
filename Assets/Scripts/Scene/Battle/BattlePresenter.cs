@@ -575,7 +575,8 @@ namespace Ryneus
                 _model.MakeCurseActionResults(actionInfo,indexList);
                 // 行動割り込みスキル判定
                 _model.CheckTriggerSkillInfos(TriggerTiming.Interrupt,actionInfo,actionInfo.ActionResults,true);
-
+                _model.CheckTriggerPassiveInfos(new List<TriggerTiming>(){TriggerTiming.Interrupt},actionInfo,actionInfo.ActionResults);
+                
                 /*
                 if (_triggerInterruptChecked == false)
                 {

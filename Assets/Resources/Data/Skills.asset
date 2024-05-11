@@ -785,7 +785,7 @@ MonoBehaviour:
     Scope: 1
     SkillType: 1
     TargetType: 1
-    Help: "\\s\u306BATKx150%\u5FC5\u4E2D\u30C0\u30E1\u30FC\u30B8\n\u5BFE\u8C61\u3092\u5012\u3057\u305F\u5834\u5408AP+2"
+    Help: "\\s\u306BATKx150%\u5FC5\u4E2D\u30C0\u30E1\u30FC\u30B8\n\u5BFE\u8C61\u3092\u5012\u3057\u305F\u5834\u5408AP+2\n\u884C\u52D5\u5F8C\u306E\u5F85\u6A5F\u6642\u9593\u3092\u534A\u5206\u306B\u6291\u3048\u308B"
     Range: 1
     RepeatTime: 1
     AliveType: 1
@@ -809,6 +809,12 @@ MonoBehaviour:
       Param2: 0
       Param3: 0
       Rate: 100
+    - SkillId: 2110
+      FeatureType: 5011
+      Param1: 50
+      Param2: 0
+      Param3: 0
+      Rate: 100
     TriggerDates: []
     ScopeTriggers: []
   - Id: 2111
@@ -822,7 +828,7 @@ MonoBehaviour:
     Scope: 4
     SkillType: 2
     TargetType: 4
-    Help: "\\s\u306BATKx150%\u5FC5\u4E2D\u30C0\u30E1\u30FC\u30B8\n\u5BFE\u8C61\u3092\u5012\u3057\u305F\u5834\u5408AP+2"
+    Help: "\\s\u306BATKx150%\u5FC5\u4E2D\u30C0\u30E1\u30FC\u30B8\n\u5BFE\u8C61\u3092\u5012\u3057\u305F\u5834\u5408AP+2\n\u884C\u52D5\u5F8C\u306E\u5F85\u6A5F\u6642\u9593\u3092\u534A\u5206\u306B\u6291\u3048\u308B"
     Range: 1
     RepeatTime: 1
     AliveType: 1
@@ -1122,7 +1128,7 @@ MonoBehaviour:
     IconIndex: 2
     AnimationId: 21
     AnimationType: 1
-    MpCost: 4
+    MpCost: 3
     Rank: 2
     Attribute: 4
     Scope: 1
@@ -2536,8 +2542,8 @@ MonoBehaviour:
     Attribute: 2
     Scope: 1
     SkillType: 2
-    TargetType: 6
-    Help: "(\u6761\u4EF6)\u6575\u304C\u9632\u5FA1\u7121\u8996\u3067\u653B\u6483\u3092\u9632\u3044\u3060\u969B\u306B\u767A\u52D5\n(\u5236\u9650)\u767A\u52D5\u5F8C4\u30BF\u30FC\u30F3\u5F8C\u307E\u3067\u767A\u52D5\u3067\u304D\u306A\u3044\n\\s\u306BDEF30%\u7121\u8996\u306EATKx150%\u30C0\u30E1\u30FC\u30B8"
+    TargetType: 7
+    Help: "(\u6761\u4EF6)\u76F8\u624B\u304C\u9632\u5FA1\u7121\u8996\u3067\u653B\u6483\u3092\u9632\u3044\u3060\u969B\u306B\u767A\u52D5\n\\s\u306BDEF30%\u7121\u8996\u306EATKx150%\u30C0\u30E1\u30FC\u30B8"
     Range: 2
     RepeatTime: 1
     AliveType: 1
@@ -2692,7 +2698,7 @@ MonoBehaviour:
     Scope: 4
     SkillType: 2
     TargetType: 4
-    Help: "(\u6761\u4EF6)CA\u6210\u529F\u6642\n\\s\u306E\u53D7\u3051\u308B\u30C0\u30E1\u30FC\u30B8\u30928\u30C0\u30A6\u30F3"
+    Help: "(\u6761\u4EF6)\u81EA\u8EAB\u304C\u653B\u6483\u3092\u53D7\u3051\u308B\u76F4\u524D\n\\s\u306E\u53D7\u3051\u308B\u30C0\u30E1\u30FC\u30B8\u30924\u30C0\u30A6\u30F3\n\\s\u306EHp\u309225%\u56DE\u5FA9\u3059\u308B"
     Range: 1
     RepeatTime: 1
     AliveType: 1
@@ -2700,9 +2706,15 @@ MonoBehaviour:
     FeatureDates:
     - SkillId: 13050
       FeatureType: 3010
-      Param1: 2032
-      Param2: 999
-      Param3: 8
+      Param1: 1101
+      Param2: 1
+      Param3: 4
+      Rate: 100
+    - SkillId: 13050
+      FeatureType: 2010
+      Param1: 25
+      Param2: 0
+      Param3: 1
       Rate: 100
     TriggerDates:
     - SkillId: 13050
@@ -3239,7 +3251,7 @@ MonoBehaviour:
       Rate: 100
     TriggerDates:
     - SkillId: 14110
-      TriggerType: 20030
+      TriggerType: 20050
       TriggerTiming: 3
       Param1: 0
       Param2: 0
@@ -3256,7 +3268,7 @@ MonoBehaviour:
     Scope: 4
     SkillType: 2
     TargetType: 4
-    Help: "\\s\u306E\u81F4\u547D\u653B\u6483\u767A\u751F\u7387\u304C25%\u30A2\u30C3\u30D7"
+    Help: "\\s\u306E\u4F1A\u5FC3\u7387\u304C25%\u30A2\u30C3\u30D7"
     Range: 1
     RepeatTime: 1
     AliveType: 1
@@ -3287,7 +3299,7 @@ MonoBehaviour:
     Scope: 4
     SkillType: 2
     TargetType: 4
-    Help: "(\u6761\u4EF6)Hp\u304C25%\u4EE5\u4E0B\n\\s\u306E\u81F4\u547D\u653B\u6483\u767A\u751F\u7387\u304C75%\u30A2\u30C3\u30D7"
+    Help: "(\u6761\u4EF6)Hp\u304C25%\u4EE5\u4E0B\n\\s\u306E\u4F1A\u5FC3\u7387\u304C75%\u30A2\u30C3\u30D7"
     Range: 1
     RepeatTime: 1
     AliveType: 1
@@ -3479,7 +3491,7 @@ MonoBehaviour:
     Scope: 4
     SkillType: 2
     TargetType: 4
-    Help: "\\s\u306E\u81F4\u547D\u653B\u6483\u767A\u751F\u738725%\u30A2\u30C3\u30D7"
+    Help: "\\s\u306E\u4F1A\u5FC3\u738725%\u30A2\u30C3\u30D7"
     Range: 1
     RepeatTime: 1
     AliveType: 1
@@ -3541,7 +3553,7 @@ MonoBehaviour:
     Scope: 1
     SkillType: 2
     TargetType: 11
-    Help: "(\u6761\u4EF6)\u4ED6\u306E\u5473\u65B9\u304C\u653B\u6483\u3059\u308B\u76F4\u524D\u306B\u767A\u52D5\n(\u5236\u9650)\u767A\u52D5\u5F8C4\u30BF\u30FC\u30F3\u5F8C\u307E\u3067\u767A\u52D5\u3067\u304D\u306A\u3044\n\\s\u306E\u547D\u4E2D\u7387\u3092\u534A\u6E1B\u3057\u81F4\u547D\u653B\u6483\u767A\u751F\u7387\u304C50%\u30A2\u30C3\u30D7"
+    Help: "(\u6761\u4EF6)\u4ED6\u306E\u5473\u65B9\u304C\u653B\u6483\u3059\u308B\u76F4\u524D\u306B\u767A\u52D5\n(\u5236\u9650)\u767A\u52D5\u5F8C4\u30BF\u30FC\u30F3\u5F8C\u307E\u3067\u767A\u52D5\u3067\u304D\u306A\u3044\n\\s\u306E\u547D\u4E2D\u7387\u3092\u534A\u6E1B\u3057\u4F1A\u5FC3\u7387\u304C50%\u30A2\u30C3\u30D7"
     Range: 1
     RepeatTime: 1
     AliveType: 1
@@ -3606,7 +3618,7 @@ MonoBehaviour:
     MpCost: 0
     Rank: 1
     Attribute: 5
-    Scope: 1
+    Scope: 4
     SkillType: 2
     TargetType: 4
     Help: "(\u6761\u4EF6)\u5473\u65B9\u304C\u653B\u6483\u3067\u6226\u95D8\u4E0D\u80FD\u306B\u306A\u3063\u305F\u969B\u306B\u767A\u52D5\n\\s\u306EAP+2"
@@ -3628,6 +3640,37 @@ MonoBehaviour:
       Param1: 0
       Param2: 0
       Param3: 0
+    ScopeTriggers: []
+  - Id: 15130
+    Name: "\u30C9\u30E9\u30B0\u30FC\u30F3\u30B9\u30D4\u30A2"
+    IconIndex: 6
+    AnimationId: 51
+    AnimationType: 1
+    MpCost: 0
+    Rank: 1
+    Attribute: 5
+    Scope: 4
+    SkillType: 2
+    TargetType: 4
+    Help: "(\u6761\u4EF6)\u30D0\u30C8\u30EB\u958B\u59CB\u6642\n\\s\u306E\u4F1A\u5FC3\u7387\u304C10%\u4F1A\u5FC3\u30C0\u30E1\u30FC\u30B8\u304C25%\u30A2\u30C3\u30D7"
+    Range: 1
+    RepeatTime: 1
+    AliveType: 1
+    TurnCount: 0
+    FeatureDates:
+    - SkillId: 15130
+      FeatureType: 3010
+      Param1: 1070
+      Param2: 999
+      Param3: 10
+      Rate: 100
+    - SkillId: 15130
+      FeatureType: 3010
+      Param1: 1074
+      Param2: 999
+      Param3: 20
+      Rate: 100
+    TriggerDates: []
     ScopeTriggers: []
   - Id: 20010
     Name: "\u30A6\u30A7\u30A4\u30C8\u30E6\u30CB\u30BE\u30F3"

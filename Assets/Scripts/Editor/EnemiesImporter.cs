@@ -8,7 +8,8 @@ using NPOI.SS.UserModel;
 
 namespace Ryneus
 {
-	public class EnemiesImporter : AssetPostprocessor {
+	public class EnemiesImporter : AssetPostprocessor 
+	{
 		enum BaseColumn
 		{
 			Id = 0,
@@ -23,6 +24,7 @@ namespace Ryneus
 			Kind2,
 			Kind3,
 		}
+
 		enum BaseLearningColumn
 		{
 
@@ -48,7 +50,6 @@ namespace Ryneus
 		}
 		enum BaseTextColumn
 		{
-
 			Id = 0,
 			Text,
 			Help
@@ -56,7 +57,8 @@ namespace Ryneus
 		static readonly string ExcelName = "Enemies.xlsx";
 
 		// アセット更新があると呼ばれる
-		static void OnPostprocessAllAssets(string[] importedAssets, string[] deletedAssets, string[] movedAssets, string[] movedFromAssetPaths) {
+		static void OnPostprocessAllAssets(string[] importedAssets, string[] deletedAssets, string[] movedAssets, string[] movedFromAssetPaths) 
+		{
 			foreach (string asset in importedAssets) {
 
 				if (AssetPostImporter.CheckOnPostprocessAllAssets(asset,ExcelName))
@@ -104,12 +106,14 @@ namespace Ryneus
 					{
 						IRow BaseRow = BaseSheet.GetRow(i);
 
-						var EnemyData = new EnemyData();
-						EnemyData.Id = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.Id);
-						EnemyData.Name = textData.Find(a => a.Id == AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.NameId)).Text;
-						EnemyData.ImagePath = AssetPostImporter.ImportString(BaseRow,(int)BaseColumn.ImagePath);
-						
-						int Hp = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.Hp);
+                        var EnemyData = new EnemyData
+                        {
+                            Id = AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.Id),
+                            Name = textData.Find(a => a.Id == AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.NameId)).Text,
+                            ImagePath = AssetPostImporter.ImportString(BaseRow, (int)BaseColumn.ImagePath)
+                        };
+
+                        int Hp = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.Hp);
 						int Mp = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.Mp);
 						int Atk = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.Atk);
 						int Def = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.Def);
@@ -142,9 +146,11 @@ namespace Ryneus
 						LearningData.TriggerDates = new List<SkillData.TriggerData>();
 						Enemy.LearningSkills.Add(LearningData);
 
-						var SkillTriggerData = new SkillTriggerActorData();
-						SkillTriggerData.SkillId = LearningData.SkillId;
-						var skillTypes = new List<TriggerType>();
+                        var SkillTriggerData = new SkillTriggerActorData
+                        {
+                            SkillId = LearningData.SkillId
+                        };
+                        var skillTypes = new List<TriggerType>();
 						SkillTriggerData.Trigger1 = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseLearningColumn.TriggerType1);
 						SkillTriggerData.Trigger2 = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseLearningColumn.TriggerType2);
 						Enemy.SkillTriggerDates.Add(SkillTriggerData);
@@ -163,13 +169,15 @@ namespace Ryneus
 						LearningData learningData = Enemy.LearningSkills.Find(a => a.SkillId == SkillId);
 						if (learningData != null)
 						{
-							SkillData.TriggerData triggerData = new SkillData.TriggerData();
-							triggerData.TriggerType = (TriggerType)AssetPostImporter.ImportNumeric(BaseRow,(int)BaseTriggersColumn.TriggerType);
-							triggerData.TriggerTiming = (TriggerTiming)AssetPostImporter.ImportNumeric(BaseRow,(int)BaseTriggersColumn.TriggerTiming);
-							triggerData.Param1 = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseTriggersColumn.Param1);
-							triggerData.Param2 = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseTriggersColumn.Param2);
-							triggerData.Param3 = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseTriggersColumn.Param3);
-							learningData.TriggerDates.Add(triggerData);
+                            SkillData.TriggerData triggerData = new SkillData.TriggerData
+                            {
+                                TriggerType = (TriggerType)AssetPostImporter.ImportNumeric(BaseRow, (int)BaseTriggersColumn.TriggerType),
+                                TriggerTiming = (TriggerTiming)AssetPostImporter.ImportNumeric(BaseRow, (int)BaseTriggersColumn.TriggerTiming),
+                                Param1 = AssetPostImporter.ImportNumeric(BaseRow, (int)BaseTriggersColumn.Param1),
+                                Param2 = AssetPostImporter.ImportNumeric(BaseRow, (int)BaseTriggersColumn.Param2),
+                                Param3 = AssetPostImporter.ImportNumeric(BaseRow, (int)BaseTriggersColumn.Param3)
+                            };
+                            learningData.TriggerDates.Add(triggerData);
 						}
 					}
 				}

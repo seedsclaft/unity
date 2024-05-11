@@ -51,11 +51,13 @@ namespace Ryneus
         DefPerDown = 1052,
         SpdUp = 1060,
         CriticalRateUp = 1070,
+        CriticalDamageRateUp = 1074,
         HitUp = 1080,
         HitDown = 1082,
         EvaUp = 1090,
         EvaDown = 1091,
-        DamageCut = 1100,
+        DamageCutRate = 1100,
+        DamageCut = 1101,
         BurnDamage = 2010, // 火傷(ダメージ固定)
         BurnDamagePer = 2011, // 火傷(ダメージ割合)
         Chain = 2020, // 拘束

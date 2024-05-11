@@ -1628,6 +1628,12 @@ namespace Ryneus
                 {
                     subject.ResetAp(false);
                 }
+                var afterApHalf = actionInfo.SkillInfo.FeatureDates.Find(a => a.FeatureType == FeatureType.SetAfterApHalf);
+                if (afterApHalf != null)
+                {
+                    subject.ResetAp(false);
+                    subject.SetAp((int)(subject.Ap * afterApHalf.Param1 * 0.01f));
+                }
                 var afterAp = actionInfo.SkillInfo.FeatureDates.Find(a => a.FeatureType == FeatureType.SetAfterAp);
                 if (afterAp != null)
                 {
@@ -1988,7 +1994,7 @@ namespace Ryneus
                                     continue;
                                 }
                             }
-                            var IsInterrupt = triggerDates[0].TriggerTiming == TriggerTiming.BeforeSelfUse || triggerDates[0].TriggerTiming == TriggerTiming.BeforeOpponentUse || triggerDates[0].TriggerTiming == TriggerTiming.BeforeFriendUse;
+                            var IsInterrupt = triggerDates[0].TriggerTiming == TriggerTiming.Interrupt || triggerDates[0].TriggerTiming == TriggerTiming.BeforeSelfUse || triggerDates[0].TriggerTiming == TriggerTiming.BeforeOpponentUse || triggerDates[0].TriggerTiming == TriggerTiming.BeforeFriendUse;
                             var result = MakePassiveSkillActionResults(battlerInfo,passiveInfo,IsInterrupt,selectTarget,actionInfo,actionResultInfos,triggerDates[0]);
                             if (result != null && result.ActionResults.Count > 0)
                             {
@@ -2442,12 +2448,20 @@ namespace Ryneus
                         {
                             if (actionInfo != null && actionInfo.ActionResults != null)
                             {
-                                if (battlerInfo.IsActor != GetBattlerInfo(actionInfo.SubjectIndex).IsActor && battlerInfo.Index != actionInfo.SubjectIndex)
+                                if (battlerInfo.IsActor == GetBattlerInfo(actionInfo.SubjectIndex).IsActor && battlerInfo.Index != actionInfo.SubjectIndex)
                                 {
-                                    var results = actionInfo.ActionResults.FindAll(a => a.DisplayStates.Find(a => a.StateType == StateType.DamageShield) != null);
-                                    if (results.Count > 0)
+                                    foreach (var actionResultInfo in actionInfo.ActionResults)
                                     {
-                                        IsTriggered = true;
+                                        foreach (var execStateInfo in actionResultInfo.ExecStateInfos)
+                                        {
+                                            if (execStateInfo.Key == actionResultInfo.TargetIndex)
+                                            {
+                                                if (execStateInfo.Value.Find(a => a.StateType == StateType.NoDamage) != null)
+                                                {
+                                                    IsTriggered = true;
+                                                }
+                                            }
+                                        }
                                     }
                                 }
                             }
@@ -3494,6 +3508,7 @@ namespace Ryneus
         {
             var selectSkillId = -1;
             var selectTargetIndex = -1;
+            var counterSubjectIndex = actionInfo != null ? actionInfo.SubjectIndex : -1;
             foreach (var skillTriggerInfo in skillTriggerInfos)
             {
                 // 条件
@@ -3534,7 +3549,7 @@ namespace Ryneus
                 // 優先指定の判定
                 if (selectSkillId > -1 && selectTargetIndex == -1)
                 {
-                    var targetIndexList = GetSkillTargetIndexList(selectSkillId,battlerInfo.Index,true);
+                    var targetIndexList = GetSkillTargetIndexList(selectSkillId,battlerInfo.Index,true,counterSubjectIndex,actionInfo,actionResultInfos);
                     if (targetIndexList.Count == 0)
                     {
                         var triggeredSkill = DataSystem.FindSkill(selectSkillId);

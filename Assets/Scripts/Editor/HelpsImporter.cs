@@ -8,7 +8,8 @@ using NPOI.SS.UserModel;
 
 namespace Ryneus
 {
-	public class HelpsImporter : AssetPostprocessor {
+	public class HelpsImporter : AssetPostprocessor 
+	{
 		enum BaseColumn
 		{
 			Id = 0,
@@ -18,9 +19,10 @@ namespace Ryneus
 		static readonly string ExcelName = "Helps.xlsx";
 
 		// アセット更新があると呼ばれる
-		static void OnPostprocessAllAssets(string[] importedAssets, string[] deletedAssets, string[] movedAssets, string[] movedFromAssetPaths) {
-			foreach (string asset in importedAssets) {
-
+		static void OnPostprocessAllAssets(string[] importedAssets, string[] deletedAssets, string[] movedAssets, string[] movedFromAssetPaths) 
+		{
+			foreach (string asset in importedAssets) 
+			{
 				if (AssetPostImporter.CheckOnPostprocessAllAssets(asset,ExcelName))
 				{
 					CreateHelpInfo(asset);
@@ -66,11 +68,13 @@ namespace Ryneus
 					{
 						IRow BaseRow = BaseSheet.GetRow(i);
 
-						var HelpData = new HelpData();
-						HelpData.Id = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.Id);
-						HelpData.Key = AssetPostImporter.ImportString(BaseRow,(int)BaseColumn.Key);
-						HelpData.Help = textData.Find(a => a.Id == AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.Help)).Help;
-						Data.Data.Add(HelpData);
+                        var HelpData = new HelpData
+                        {
+                            Id = AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.Id),
+                            Key = AssetPostImporter.ImportString(BaseRow, (int)BaseColumn.Key),
+                            Help = textData.Find(a => a.Id == AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.Help)).Help
+                        };
+                        Data.Data.Add(HelpData);
 					}
 				}
 			}

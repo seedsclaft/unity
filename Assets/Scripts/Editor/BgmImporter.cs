@@ -7,7 +7,8 @@ using NPOI.SS.UserModel;
 
 namespace Ryneus
 {
-	public class BgmImporter : AssetPostprocessor {
+	public class BgmImporter : AssetPostprocessor 
+	{
 		enum BaseColumn
 		{
 			Id = 0,
@@ -20,7 +21,8 @@ namespace Ryneus
 		static readonly string ExcelName = "BGM.xlsx";
 
 		// アセット更新があると呼ばれる
-		static void OnPostprocessAllAssets(string[] importedAssets, string[] deletedAssets, string[] movedAssets, string[] movedFromAssetPaths) {
+		static void OnPostprocessAllAssets(string[] importedAssets, string[] deletedAssets, string[] movedAssets, string[] movedFromAssetPaths) 
+		{
 			foreach (string asset in importedAssets) {
 
 				string ext = Path.GetExtension(asset);
