@@ -12,17 +12,14 @@ namespace Ryneus
         [SerializeField] private BaseList magicList;
         public BaseList MagicList => magicList;
         [SerializeField] private BaseList conditionList;
-        [SerializeField] private List<Toggle> detailTabs;
-        [SerializeField] private List<GameObject> detailObjs;
-        [SerializeField] private List<CanvasGroup> detailTabCanvasGroup;
+        [SerializeField] private ToggleSelect toggleSelect;
+
         [SerializeField] private StatusInfoComponent statusInfoComponent;
-        [SerializeField] private GameObject detailObj;
         [SerializeField] private ActorInfoComponent actorInfoComponent;
         [SerializeField] private BattlerInfoComponent battlerInfoComponent;
         [SerializeField] private SideMenuButton lvResetButton;
         private bool _isInit = false;
 
-        private SelectCharacterTabType _selectCharacterTabType = SelectCharacterTabType.Detail;
         
         public SkillInfo ActionData
         {
@@ -44,20 +41,19 @@ namespace Ryneus
             }
             conditionList.Initialize();
             _isInit = true;
-            var idx = 0;
-            foreach (var magicConditionTab in detailTabs)
+            toggleSelect.Initialize(new List<string>()
             {
-                var tabIndex = idx;
-                magicConditionTab.onValueChanged.AddListener((a) => 
+                DataSystem.GetText(421),
+                DataSystem.GetText(420),
+                DataSystem.GetText(402)
+            });
+            toggleSelect.SetClickHandler(() => 
+            {
+                if (toggleSelect.SelectTabIndex == (int)SelectCharacterTabType.Magic)
                 {
-                    SelectCharacterTab((SelectCharacterTabType)tabIndex);
-                    if (a == true)
-                    {
-                        SoundManager.Instance.PlayStaticSe(SEType.Cursor);
-                    }
-                });
-                idx++;
-            }
+                    DisplaySelectCard();
+                }
+            });
             gameObject.SetActive(false);
             lvResetButton?.gameObject.SetActive(false);
             displaySelectCard.Clear();
@@ -72,81 +68,24 @@ namespace Ryneus
             });
         }
 
-        public void SelectCharacterTab(SelectCharacterTabType selectCharacterTabType)
+        public void SelectCharacterTab(int tabIndex)
         {
-            if (_selectCharacterTabType == selectCharacterTabType)
-            {
-                return;
-            }
-            _selectCharacterTabType = selectCharacterTabType;
-            UpdateTabs();
+            toggleSelect.SetSelectTabIndex((int)tabIndex);
         }
 
         public void SelectCharacterTabSmooth(int index)
         {
-            var nextIndex = (int)_selectCharacterTabType + index;
-            var displayTabs = detailTabs.FindAll(a => a.gameObject.activeSelf);
-            if (nextIndex < 0)
-            {
-                for (int i = 0;i < detailTabs.Count;i++)
-                {
-                    if (detailTabs[i].gameObject.activeSelf)
-                    {            
-                        nextIndex = i;
-                    }
-                }
-            } else
-            if (nextIndex > displayTabs.Count)
-            {
-                nextIndex = detailTabs.FindIndex(a => a.gameObject.activeSelf);
-            } else
-            {
-                if (index > 0)
-                {
-                    for (int i = 0;i < detailTabs.Count;i++)
-                    {
-                        if (!detailTabs[i].gameObject.activeSelf && (i == nextIndex))
-                        {
-                            nextIndex++;
-                        }
-                    }
-                } else
-                {
-                    for (int i = detailTabs.Count-1;i >= 0;i--)
-                    {
-                        if (!detailTabs[i].gameObject.activeSelf && (i == nextIndex))
-                        {
-                            nextIndex--;
-                        }
-                    }
-                }
-            }
-            SelectCharacterTab((SelectCharacterTabType)nextIndex);
+            toggleSelect.SelectCharacterTabSmooth(index);
         }
 
         private void UpdateTabs()
         {
-            for (int i = 0;i < detailTabs.Count;i++)
-            {
-                detailTabs[i].SetIsOnWithoutNotify((int)_selectCharacterTabType == i);
-            }
-            for (int i = 0;i < detailObjs.Count;i++)
-            {
-                detailObjs[i].SetActive((int)_selectCharacterTabType == i);
-            }
-            for (int i = 0;i < detailTabCanvasGroup.Count;i++)
-            {
-                detailTabCanvasGroup[i].alpha = (int)_selectCharacterTabType == i ? 1 : 0.75f;
-            }
-            if (_selectCharacterTabType == SelectCharacterTabType.Magic)
-            {
-                DisplaySelectCard();
-            }
+            toggleSelect.UpdateTabs();
         }
         
         public void SetActiveTab(SelectCharacterTabType selectCharacterTabType,bool isActive)
         {    
-            detailTabs[(int)selectCharacterTabType].gameObject.SetActive(isActive);
+            toggleSelect.SetActiveTab((int)selectCharacterTabType,isActive);
         }
 
         public void UpdateStatus(ActorInfo actorInfo)
@@ -186,7 +125,7 @@ namespace Ryneus
             {
                 displaySelectCard.gameObject.SetActive(false);
             }
-            SelectCharacterTab(_selectCharacterTabType);
+            SelectCharacterTab(toggleSelect.SelectTabIndex);
             if (skillInfoData.Count == 0)
             {
                 magicList.UpdateSelectIndex(-1);
@@ -215,7 +154,7 @@ namespace Ryneus
             {
                 return;
             }
-            if (_selectCharacterTabType != SelectCharacterTabType.Magic)
+            if (toggleSelect.SelectTabIndex != (int)SelectCharacterTabType.Magic)
             {
                 return;
             }

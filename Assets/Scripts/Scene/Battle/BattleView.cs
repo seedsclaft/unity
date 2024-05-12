@@ -406,7 +406,7 @@ namespace Ryneus
             selectCharacter.ShowActionList();
             selectCharacter.SetSkillInfos(skillInfos);
             selectCharacter.RefreshAction(selectIndex);
-            selectCharacter.SelectCharacterTab(SelectCharacterTabType.Magic);
+            selectCharacter.SelectCharacterTab((int)SelectCharacterTabType.Magic);
         }
 
         public void SetCondition(List<ListData> stateInfos)

@@ -22,9 +22,9 @@ namespace Ryneus
         private void Initialize()
         {
             _view.SetEvent((type) => UpdateCommand(type));
-            _view.SetRulingCommand(_model.RulingCommand());
+            _view.SetRuleCommand(_model.RulingCommand());
             CommandRefresh();
-            _view.CommandSelectTitle(_model.RuleHelp());
+            _view.CommandSelectRule(_model.RuleHelp());
             _busy = false;
         }
 
@@ -34,26 +34,27 @@ namespace Ryneus
             if (_busy){
                 return;
             }
-            if (viewEvent.commandType == Ruling.CommandType.SelectTitle)
+            switch (viewEvent.commandType)
             {
-                CommandSelectTitle((int)viewEvent.template);
-            }
-            if (viewEvent.commandType == Ruling.CommandType.SelectCategory)
-            {
-                CommandSelectCategory((int)viewEvent.template);
+                case CommandType.SelectRule:
+                    CommandSelectRule((int)viewEvent.template);
+                    break;
+                case CommandType.SelectCategory:
+                    CommandSelectCategory((int)viewEvent.template);
+                    break;
             }
         }
 
-        private void CommandSelectTitle(int id)
+        private void CommandSelectRule(int id)
         {
             _model.SetId(id);
-            _view.CommandSelectTitle(_model.RuleHelp());
+            _view.CommandSelectRule(_model.RuleHelp());
         }
 
         private void CommandSelectCategory(int id)
         {
             _model.SetCategory(id);
-            _model.SetId(-1);
+            _view.SetRuleCommand(_model.RulingCommand());
             CommandRefresh();
         }
 

@@ -218,7 +218,7 @@ namespace Ryneus
             battleSelectCharacter.SetActiveTab(SelectCharacterTabType.Magic,true);
             battleSelectCharacter.SetActiveTab(SelectCharacterTabType.Condition,false);
             battleSelectCharacter.SetActiveTab(SelectCharacterTabType.Detail,true);
-            battleSelectCharacter.SelectCharacterTab(SelectCharacterTabType.Detail);
+            battleSelectCharacter.SelectCharacterTab((int)SelectCharacterTabType.Detail);
             battleSelectCharacter.SetActorInfo(actorInfo,party);
             battleSelectCharacter.SetSkillInfos(actorInfo.SkillActionList());
             SetHelpInputInfo("ALCHEMY_ATTRIBUTE");
@@ -231,7 +231,7 @@ namespace Ryneus
             battleSelectCharacter.SetActiveTab(SelectCharacterTabType.Magic,false);
             battleSelectCharacter.SetActiveTab(SelectCharacterTabType.Condition,false);
             battleSelectCharacter.SetActiveTab(SelectCharacterTabType.Detail,false);
-            battleSelectCharacter.SelectCharacterTab(SelectCharacterTabType.Magic);
+            battleSelectCharacter.SelectCharacterTab((int)SelectCharacterTabType.Magic);
             battleSelectCharacter.SetSkillInfos(learnMagicList);
             battleSelectCharacter.ShowActionList();
             battleSelectCharacter.HideStatus();

@@ -94,12 +94,15 @@ namespace Ryneus
             _busy = true;
             SoundManager.Instance.PlayStaticSe(SEType.Decide);
             //_view.SetHelpInputInfo("RULING");
-            var popupInfo = new PopupInfo();
-            popupInfo.PopupType = PopupType.Ruling;
-            popupInfo.EndEvent = () => {
-                _busy = false;
-                //_view.SetHelpInputInfo("OPTION");
-                SoundManager.Instance.PlayStaticSe(SEType.Cancel);
+            var popupInfo = new PopupInfo
+            {
+                PopupType = PopupType.Ruling,
+                EndEvent = () =>
+                {
+                    _busy = false;
+                    //_view.SetHelpInputInfo("OPTION");
+                    SoundManager.Instance.PlayStaticSe(SEType.Cancel);
+                }
             };
             _view.CommandCallPopup(popupInfo);
         }

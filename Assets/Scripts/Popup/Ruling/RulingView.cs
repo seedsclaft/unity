@@ -11,6 +11,8 @@ namespace Ryneus
     {
         [SerializeField] private BaseList commandList = null;
         
+        [SerializeField] private ToggleSelect toggleSelect = null;
+        
         [SerializeField] private BaseList ruleList = null;
         [SerializeField] private TextMeshProUGUI titleText = null;
         private new System.Action<RulingViewEvent> _commandData = null;
@@ -20,6 +22,19 @@ namespace Ryneus
             base.Initialize();
             ruleList.Initialize();
             commandList.Initialize();
+            toggleSelect.Initialize(new List<string>()
+            {
+                DataSystem.GetText(900),
+                DataSystem.GetText(901),
+                DataSystem.GetText(902)
+            });
+            toggleSelect.SetClickHandler(() => 
+            {
+                var eventData = new RulingViewEvent(CommandType.SelectCategory);
+                var data = toggleSelect.SelectTabIndex;
+                eventData.template = data;
+                _commandData(eventData);
+            });
             new RulingPresenter(this);
         }
         
@@ -33,16 +48,14 @@ namespace Ryneus
             _commandData = commandData;
         }
 
-        public void SetBackEvent(System.Action backEvent)
-        {
-            SetBackCommand(() => 
-            {    
-                if (backEvent != null) backEvent();
-            });
-            ChangeBackCommandActive(true);
-        }
         
-        public void SetRulingCommand(List<ListData> ruleList)
+        public void SetRuleCategory(List<ListData> ruleList)
+        {
+            //categoryList.SetSelectedHandler(() => CallRulingCommand());
+            SetInputHandler(commandList.GetComponent<IInputHandlerEvent>());
+        }
+
+        public void SetRuleCommand(List<ListData> ruleList)
         {
             commandList.SetData(ruleList);
             commandList.SetInputHandler(InputKeyType.Down,() => CallRulingCommand());
@@ -57,14 +70,14 @@ namespace Ryneus
             var listData = commandList.ListData;
             if (listData != null)
             {
-                var eventData = new RulingViewEvent(CommandType.SelectTitle);
+                var eventData = new RulingViewEvent(CommandType.SelectRule);
                 var data = (SystemData.CommandData)listData.Data;
                 eventData.template = data.Id;
                 _commandData(eventData);
             }
         }
 
-        public void CommandSelectTitle(List<ListData> helpList )
+        public void CommandSelectRule(List<ListData> helpList )
         {
             ruleList.SetData(helpList);
         }
@@ -82,7 +95,7 @@ namespace Ruling
     public enum CommandType
     {
         None = 0,
-        SelectTitle = 1,
+        SelectRule = 1,
         SelectCategory = 2,
         Back
     }
@@ -90,10 +103,10 @@ namespace Ruling
 
 public class RulingViewEvent
 {
-    public Ruling.CommandType commandType;
+    public CommandType commandType;
     public object template;
 
-    public RulingViewEvent(Ruling.CommandType type)
+    public RulingViewEvent(CommandType type)
     {
         commandType = type;
     }
