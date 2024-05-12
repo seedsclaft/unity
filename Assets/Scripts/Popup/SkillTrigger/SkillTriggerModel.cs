@@ -6,10 +6,26 @@ namespace Ryneus
     public class SkillTriggerModel : BaseModel
     {
         private int _actorId = -1;
-        public List<ListData> SkillTrigger(int actorId)
+        public List<ListData> SkillTrigger(int actorId,int selectIndex = -1)
         {
             _actorId = actorId;
-            return MakeListData(PartyInfo.SkillTriggerInfos(_actorId));
+            var listData = MakeListData(PartyInfo.SkillTriggerInfos(_actorId),selectIndex);
+            return listData;
+        }
+
+        public int SelectCategoryIndex(int selectIndex,int skillTriggerIndex)
+        {
+            var categoryIndex = 1;
+            var skillTriggerInfo = PartyInfo.SkillTriggerInfos(_actorId)[selectIndex];
+            if (skillTriggerInfo != null)
+            {
+                categoryIndex = skillTriggerInfo.SkillTriggerDates[skillTriggerIndex].Category;
+            }
+            if (categoryIndex <= 0)
+            {
+                categoryIndex = 1;
+            }
+            return categoryIndex;
         }
 
         public List<ListData> SkillTriggerSkillList()

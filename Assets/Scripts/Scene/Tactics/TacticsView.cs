@@ -90,11 +90,12 @@ namespace Ryneus
             trainView.Initialize(base._commandData);
             trainView.SetHelpWindow(HelpWindow);
             alcanaSelectList.Initialize();
-            new TacticsPresenter(this);
+            var presenter = new TacticsPresenter(this);
             trainView.HideSelectCharacter();
             HideSymbolRecord();
             HideParallelList();
             alcanaSelectList.Hide();
+            presenter.CommandReturnStrategy();
         }
 
         public void StartAnimation()

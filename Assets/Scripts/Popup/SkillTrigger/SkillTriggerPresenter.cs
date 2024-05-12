@@ -148,12 +148,18 @@ namespace Ryneus
 
         private void CommandCallTrigger1Select()
         {
-            _view.ShowTrigger1Category();
-            
+            SoundManager.Instance.PlayStaticSe(SEType.Decide);
+            var index = _view.SkillTriggerIndex;
+            var categoryIndex = _model.SelectCategoryIndex(index,0);
+            _view.ShowTrigger1Category(categoryIndex-1);
         }
+
         private void CommandCallTrigger2Select()
         {
-            _view.ShowTrigger2Category();
+            SoundManager.Instance.PlayStaticSe(SEType.Decide);
+            var index = _view.SkillTriggerIndex;
+            var categoryIndex = _model.SelectCategoryIndex(index,1);
+            _view.ShowTrigger2Category(categoryIndex-1);
         }
 
         private void CommandCallTriggerUp()
@@ -178,7 +184,8 @@ namespace Ryneus
 
         private void CommandRefresh()
         {
-            _view.SetSkillTrigger(_model.SkillTrigger(_view.SkillTriggerViewInfo.ActorId));
+            var selectIndex = _view.SkillTriggerIndex;
+            _view.SetSkillTrigger(_model.SkillTrigger(_view.SkillTriggerViewInfo.ActorId,selectIndex));
         }
     }
     public class SkillTriggerViewInfo

@@ -7,7 +7,8 @@ using NPOI.SS.UserModel;
 
 namespace Ryneus
 {
-	public class ActorsImporter : AssetPostprocessor {
+	public class ActorsImporter : AssetPostprocessor 
+	{
 		enum BaseColumn
 		{
 			Id = 0,
@@ -58,9 +59,10 @@ namespace Ryneus
 		static readonly string ExcelName = "Actors.xlsx";
 
 		// アセット更新があると呼ばれる
-		static void OnPostprocessAllAssets(string[] importedAssets, string[] deletedAssets, string[] movedAssets, string[] movedFromAssetPaths) {
-			foreach (string asset in importedAssets) {
-
+		static void OnPostprocessAllAssets(string[] importedAssets, string[] deletedAssets, string[] movedAssets, string[] movedFromAssetPaths) 
+		{
+			foreach (string asset in importedAssets) 
+			{
 				if (AssetPostImporter.CheckOnPostprocessAllAssets(asset,ExcelName))
 				{
 					CreateActorInfo(asset);
@@ -199,10 +201,12 @@ namespace Ryneus
 
 						int ActorId = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseLearningColumn.ActorId);
 						ActorData Actor = Data.Data.Find(a => a.Id == ActorId);
-						
-						var SkillTriggerData = new SkillTriggerActorData();
-						SkillTriggerData.SkillId = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseSkillTriggerColumn.SkillId);
-						var skillTypes = new List<TriggerType>();
+
+                        var SkillTriggerData = new SkillTriggerActorData
+                        {
+                            SkillId = AssetPostImporter.ImportNumeric(BaseRow, (int)BaseSkillTriggerColumn.SkillId)
+                        };
+                        var skillTypes = new List<TriggerType>();
 						SkillTriggerData.Trigger1 = (int)AssetPostImporter.ImportNumeric(BaseRow,(int)BaseSkillTriggerColumn.TriggerType1);
 						SkillTriggerData.Trigger2 = (int)AssetPostImporter.ImportNumeric(BaseRow,(int)BaseSkillTriggerColumn.TriggerType2);
 						Actor.SkillTriggerDates.Add(SkillTriggerData);

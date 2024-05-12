@@ -35,9 +35,9 @@ namespace Ryneus
             _isInit = true;
         }
 
-        public void SetData(List<ListData> listData)
+        public void SetData(List<ListData> listData,bool resetScrollRect = true)
         {
-            if (listData != ListDates)
+            if (resetScrollRect && listData != ListDates)
             {
                 ResetScrollRect();
             }
@@ -49,13 +49,21 @@ namespace Ryneus
                 AddCreateList(ListDates.Count-ObjectList.Count);
             }
             SetListCallHandler();
-            var selectIndex = ListDates.FindIndex(a => a.Selected);
-            if (selectIndex > -1)
+            if (resetScrollRect == false && listData.Count == ListDates.Count)
             {
-                Refresh(selectIndex);
-            } else
+                Refresh(_beforeSelectIndex);
+                return;
+            }
+            if (resetScrollRect)
             {
-                Refresh(ListDates.FindIndex(a => a.Enable));
+                var selectIndex = ListDates.FindIndex(a => a.Selected);
+                if (selectIndex > -1)
+                {
+                    Refresh(selectIndex);
+                } else
+                {
+                    Refresh(ListDates.FindIndex(a => a.Enable));
+                }
             }
         }
 

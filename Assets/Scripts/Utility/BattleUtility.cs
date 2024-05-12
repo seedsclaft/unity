@@ -113,6 +113,10 @@ namespace Ryneus
 
         public static int NearTargetIndex(BattlerInfo battlerInfo,List<BattlerInfo> targetBattlerInfos)
         {
+            if (targetBattlerInfos.Count == 1)
+            {
+                return targetBattlerInfos[0].Index;
+            }
             var targetIndexList = new List<int>();
             foreach (var targetBattlerInfo in targetBattlerInfos)
             {

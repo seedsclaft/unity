@@ -44,33 +44,29 @@ namespace Ryneus
                 return;
             }
             Debug.Log(viewEvent.commandType);
-            if (viewEvent.commandType == CommandType.StartStrategy)
+            switch (viewEvent.commandType)
             {
+                case CommandType.StartStrategy:
                 CommandStartStrategy();
-            }
-            if (viewEvent.commandType == CommandType.EndAnimation)
-            {
+                break;
+                case CommandType.EndAnimation:
                 CommandEndAnimation();
-            }
-            if (viewEvent.commandType == CommandType.CallEnemyInfo)
-            {
+                break;
+                case CommandType.CallEnemyInfo:
                 CommandCallEnemyInfo();
-            }
-            if (viewEvent.commandType == CommandType.PopupSkillInfo)
-            {
+                break;
+                case CommandType.PopupSkillInfo:
                 CommandPopupSkillInfo((GetItemInfo)viewEvent.template);
-            }
-            if (viewEvent.commandType == CommandType.ResultClose)
-            {
+                break;
+                case CommandType.ResultClose:
                 CommandResultClose((ConfirmCommandType)viewEvent.template);
-            }
-            if (viewEvent.commandType == CommandType.EndLvUpAnimation)
-            {
+                break;
+                case CommandType.EndLvUpAnimation:
                 CommandEndLvUpAnimation();
-            }
-            if (viewEvent.commandType == CommandType.LvUpNext)
-            {
+                break;
+                case CommandType.LvUpNext:
                 CommandLvUpNext();
+                break;
             }
         }
 
@@ -437,6 +433,7 @@ namespace Ryneus
             } else
             if (_model.BattleResult && _model.BattleResultVictory() == false)
             {
+                // 敗北して戻る
                 _model.ReturnTempBattleMembers();
                 _model.EndStrategy();
                 _view.CommandGotoSceneChange(Scene.Tactics);

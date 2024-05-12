@@ -100,7 +100,8 @@ namespace Ryneus
         private bool _preserveAlive = false;
         public bool PreserveAlive => _preserveAlive;
 
-        public BattlerInfo(ActorInfo actorInfo,int index){
+        public BattlerInfo(ActorInfo actorInfo,int index,List<SkillTriggerInfo> skillTriggerInfos)
+        {
             _charaId = actorInfo.ActorId;
             _level = actorInfo.Level;
             var statusInfo = new StatusInfo();
@@ -113,8 +114,7 @@ namespace Ryneus
             );
             _status = statusInfo;
             _index = index;
-            _skills = actorInfo.LearningSkillInfos().FindAll(a => a.LearningState == LearningState.Learned || a.LearningState == LearningState.Equipment);
-            
+            _skills = actorInfo.LearningSkillInfos().FindAll(a => a.IsParamUpSkill() || skillTriggerInfos.Find(b => b.SkillId == a.Id) != null && a.LearningState == LearningState.Learned);
             _demigodParam = actorInfo.DemigodParam;
             _isActor = true;
             _isAlcana = false;

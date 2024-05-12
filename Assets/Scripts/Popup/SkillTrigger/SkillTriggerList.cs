@@ -24,15 +24,18 @@ namespace Ryneus
                 var skillTriggerListItem = ItemPrefabList[i].GetComponent<SkillTriggerListItem>();
                 skillTriggerListItem.SetInputListHandler(skillEvent,trigger1Event,trigger2Event,upButtonEvent,downButtonEvent);
                 skillTriggerListItem.SetSelectItemHandler(
-                    (a) => {
+                    (a) => 
+                    {
                         _selectItemIndex = 0;
                         UpdateListItem(a);
                     },
-                    (a) => {
+                    (a) => 
+                    {
                         _selectItemIndex = 1;
                         UpdateListItem(a);
                     },
-                    (a) => {
+                    (a) => 
+                    {
                         _selectItemIndex = 2;
                         UpdateListItem(a);
                     }
@@ -67,11 +70,12 @@ namespace Ryneus
         private void UpdateListItem(int selectIndex)
         {
             if (_selectItemIndex < 0) return;
-            var skillTriggerListItem = ItemPrefabList[selectIndex].GetComponent<SkillTriggerListItem>();
+            var startIndex = GetStartIndex();
+            var skillTriggerListItem = ItemPrefabList[selectIndex - startIndex].GetComponent<SkillTriggerListItem>();
             skillTriggerListItem.UpdateItemIndex(_selectItemIndex);
             foreach (var ItemPrefab in ItemPrefabList)
             {
-                if (ItemPrefab != ItemPrefabList[selectIndex])
+                if (ItemPrefab != ItemPrefabList[selectIndex - startIndex])
                 {
                     var skillTriggerListItem1 = ItemPrefab.GetComponent<SkillTriggerListItem>();
                     skillTriggerListItem1.UpdateItemIndex(-1);

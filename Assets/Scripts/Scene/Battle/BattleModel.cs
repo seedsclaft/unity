@@ -81,9 +81,10 @@ namespace Ryneus
             _actionIndex = 0;
             _battlers.Clear();
             var battleMembers = BattleMembers();
-            foreach (var battleMember in battleMembers)
+            foreach (var actorInfo in battleMembers)
             {
-                var battlerInfo = new BattlerInfo(battleMember,battleMember.BattleIndex);
+                var skillTriggerInfos = PartyInfo.SkillTriggerInfos(actorInfo.ActorId);
+                var battlerInfo = new BattlerInfo(actorInfo,actorInfo.BattleIndex,skillTriggerInfos);
                 _battlers.Add(battlerInfo);
                 var battlerRecord = new BattleRecord(battlerInfo.Index);
                 _battleRecords.Add(battlerRecord);
@@ -352,7 +353,7 @@ namespace Ryneus
 
         public List<ListData> SkillActionList()
         {
-            var skillInfos = _currentBattler.Skills.FindAll(a => a.Master.SkillType != SkillType.None && a.Master.Id > 100);
+            var skillInfos = _currentBattler.Skills.FindAll(a => a.Master.SkillType != SkillType.None && a.Master.Id > 100 && a.IsParamUpSkill() == false);
             for (int i = 0; i < skillInfos.Count;i++)
             {
                 skillInfos[i].SetEnable(CheckCanUse(skillInfos[i],_currentBattler));
@@ -3404,7 +3405,12 @@ namespace Ryneus
             {
                 return targetIndexList;
             }
-            return ActionInfoTargetIndexes(actionInfo,targetIndexList[0],counterSubjectIndex,baseActionInfo,baseActionResultInfos);
+            var selectIndex = targetIndexList[0];
+            if (oneTargetIndex > -1 && targetIndexList.Contains(oneTargetIndex))
+            {
+                selectIndex = oneTargetIndex;
+            }
+            return ActionInfoTargetIndexes(actionInfo,selectIndex,counterSubjectIndex,baseActionInfo,baseActionResultInfos);
         }
 
         private List<int> CalcAliveTypeIndexList(List<int> indexList,AliveType aliveType)

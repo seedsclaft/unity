@@ -311,8 +311,6 @@ namespace Ryneus
                 case FeatureType.AddSkillPlusSkill:
                     MakeAddSkillPlusSkill(subject,featureData);
                     return;
-
-                    
             }
         }
 
@@ -408,7 +406,7 @@ namespace Ryneus
                 }
                 if (battlerInfo.IsState(StateType.Rebellious) && isOneTarget)
                 {
-                    UpperDamageRate += (1f - ((float)battlerInfo.Hp / (float)battlerInfo.MaxHp));
+                    UpperDamageRate += 1f - (battlerInfo.Hp / (float)battlerInfo.MaxHp);
                 }
             }
             return UpperDamageRate;
@@ -533,7 +531,8 @@ namespace Ryneus
                 if (!target.IsState(StateType.Barrier))
                 {
                     int rand = new System.Random().Next(0, 100);
-                    if (subject.StateEffectAll(StateType.Deadly) >= rand){
+                    if (subject.StateEffectAll(StateType.Deadly) >= rand)
+                    {
                         hpDamage = target.Hp;
                     }
                 }
@@ -611,7 +610,8 @@ namespace Ryneus
                 if (!target.IsState(StateType.Barrier))
                 {
                     int rand = new System.Random().Next(0, 100);
-                    if (subject.StateEffectAll(StateType.Deadly) >= rand){
+                    if (subject.StateEffectAll(StateType.Deadly) >= rand)
+                    {
                         hpDamage = target.Hp;
                     }
                 }
@@ -674,7 +674,8 @@ namespace Ryneus
                 if (!target.IsState(StateType.Barrier))
                 {
                     int rand = new System.Random().Next(0, 100);
-                    if (subject.StateEffectAll(StateType.Deadly) >= rand){
+                    if (subject.StateEffectAll(StateType.Deadly) >= rand)
+                    {
                         hpDamage = target.Hp;
                     }
                 }
@@ -787,7 +788,7 @@ namespace Ryneus
             float SkillDamage = DamageRate * 0.01f * (AtkValue * 0.5f);
             CalcFreezeDamage(subject,SkillDamage);
 
-            SkillDamage *= GetDefenseRateValue((AtkValue * 0.5f),DefValue);
+            SkillDamage *= GetDefenseRateValue(AtkValue * 0.5f,DefValue);
             //SkillDamage -= (DefValue * 0.5f);
             hpDamage = (int)Mathf.Round(CalcDamageValue(subject,target,SkillDamage,isNoEffect));
             // 属性補正
@@ -808,7 +809,8 @@ namespace Ryneus
                 if (!target.IsState(StateType.Barrier))
                 {
                     int rand = new System.Random().Next(0, 100);
-                    if (subject.StateEffectAll(StateType.Deadly) >= rand){
+                    if (subject.StateEffectAll(StateType.Deadly) >= rand)
+                    {
                         hpDamage = target.Hp;
                     }
                 }
@@ -901,9 +903,11 @@ namespace Ryneus
                     var removeStates = target.GetRemovalBuffStates();
                     foreach (var removeState in removeStates)
                     {
-                        var removeFeature = new SkillData.FeatureData();
-                        removeFeature.FeatureType = FeatureType.RemoveState;
-                        removeFeature.Param1 = (int)removeState.Master.StateType;
+                        var removeFeature = new SkillData.FeatureData
+                        {
+                            FeatureType = FeatureType.RemoveState,
+                            Param1 = (int)removeState.Master.StateType
+                        };
                         MakeRemoveState(subject,target,removeFeature);
                     }
                 } else
@@ -1124,9 +1128,7 @@ namespace Ryneus
                     }
                 }
             }
-
         }
-
 
         public void MakeChangeFeatureRate(BattlerInfo subject,BattlerInfo target,SkillData.FeatureData featureData,int featureParamIndex)
         {
@@ -1163,7 +1165,8 @@ namespace Ryneus
 
         public void AddRemoveState(StateInfo stateInfo)
         {
-            if (_removedStates.IndexOf(stateInfo) == -1){
+            if (_removedStates.IndexOf(stateInfo) == -1)
+            {
                 _removedStates.Add(stateInfo);
             }
         }
@@ -1171,9 +1174,11 @@ namespace Ryneus
         private float GetDefenseRateValue(float atk,float def){
             // 防御率 ＝ 1 - 防御 / (攻撃 + 防御)　※攻撃 + 防御 < 1の時、1
             float _defenseRateValue;
-            if ((atk + def) < 1){
+            if ((atk + def) < 1)
+            {
                 _defenseRateValue = 1;
-            } else{
+            } else
+            {
                 _defenseRateValue = 1 - (def / (atk + def));
             }
             return _defenseRateValue;
@@ -1230,7 +1235,7 @@ namespace Ryneus
             }
             int CriticalRate = subject.StateEffectAll(StateType.CriticalRateUp) + HitOver;
             int rand = new System.Random().Next(0, 100);
-            _critical = CriticalRate >= rand;
+            _critical = CriticalRate > rand;
             return _critical;
         }
 
@@ -1241,7 +1246,7 @@ namespace Ryneus
 
         private int AntiDoteDamageValue(BattlerInfo target)
         {
-            int ReDamage = (int)Mathf.Floor((target.CurrentDef(false) * 0.5f));
+            int ReDamage = (int)Mathf.Floor(target.CurrentDef(false) * 0.5f);
             return ReDamage;
         }
 
@@ -1249,7 +1254,7 @@ namespace Ryneus
         {
             if (target.IsState(StateType.HolyCoffin))
             {
-                hpDamage *= (1 + target.StateEffectAll(StateType.HolyCoffin) * 0.01f);
+                hpDamage *= 1 + target.StateEffectAll(StateType.HolyCoffin) * 0.01f;
             }
             return hpDamage;
         }

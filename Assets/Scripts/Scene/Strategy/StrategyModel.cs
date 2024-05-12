@@ -145,11 +145,6 @@ namespace Ryneus
             _learnSkillInfo.RemoveAt(0);
         }
 
-        public bool BattleResultVictory()
-        {
-            return PartyInfo.BattleResultVictory;
-        }
-
         public List<ListData> BattleResultInfos()
         {
             return MakeListData(SceneParam.GetItemInfos);

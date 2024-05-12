@@ -336,6 +336,11 @@ namespace Ryneus
             return CurrentSelectSymbol().TroopInfo;
         }
 
+        public bool BattleResultVictory()
+        {
+            return PartyInfo.BattleResultVictory;
+        }
+        
         public void MakeSymbolResultInfos()
         {
             // ステージ全てのレコードを作成

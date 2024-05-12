@@ -99,10 +99,12 @@ namespace Ryneus
             selectCharacter.SetInputHandlerAction(InputKeyType.Cancel,() => OnClickBack());
             selectCharacter.SetInputHandlerAction(InputKeyType.Option1,() => CommandOpenSideMenu());
             selectCharacter.SetInputHandlerAction(InputKeyType.Option2,() => OnClickEscape());
-            selectCharacter.SetInputHandlerAction(InputKeyType.SideLeft2,() => {
+            selectCharacter.SetInputHandlerAction(InputKeyType.SideLeft2,() => 
+            {
                 selectCharacter.SelectCharacterTabSmooth(-1);
             });
-            selectCharacter.SetInputHandlerAction(InputKeyType.SideRight2,() => {
+            selectCharacter.SetInputHandlerAction(InputKeyType.SideRight2,() => 
+            {
                 selectCharacter.SelectCharacterTabSmooth(1);
             });
             SetInputHandler(selectCharacter.MagicList.GetComponent<IInputHandlerEvent>());

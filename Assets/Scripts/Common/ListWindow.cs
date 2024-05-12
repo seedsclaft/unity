@@ -339,7 +339,7 @@ namespace Ryneus
             }
         }
 
-        private int GetStartIndex()
+        public int GetStartIndex()
         {
             if (horizontal)
             {   //Math.Truncate

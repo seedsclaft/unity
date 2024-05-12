@@ -146,5 +146,10 @@ namespace Ryneus
             }
             return gainAp;
         }
+
+        public bool IsParamUpSkill()
+        {
+            return FeatureDates.Find(a => a.FeatureType >= FeatureType.ChangeFeatureParam1 && a.FeatureType < FeatureType.PlusSkill) != null;
+        }
     }
 }

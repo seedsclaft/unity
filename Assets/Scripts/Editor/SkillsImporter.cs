@@ -148,8 +148,10 @@ namespace Ryneus
                         };
 
                         var SkillData = Data.Data.Find(a => a.Id == FeatureData.SkillId);
-						if (SkillData != null){
-							if (SkillData.FeatureDates == null){
+						if (SkillData != null)
+						{
+							if (SkillData.FeatureDates == null)
+							{
 								SkillData.FeatureDates = new List<SkillData.FeatureData>();
 							}
 							SkillData.FeatureDates.Add(FeatureData);
@@ -195,8 +197,10 @@ namespace Ryneus
                         };
 
                         var SkillData = Data.Data.Find(a => a.Id == ScopeTriggerData.SkillId);
-						if (SkillData != null){
-							if (SkillData.ScopeTriggers == null){
+						if (SkillData != null)
+						{
+							if (SkillData.ScopeTriggers == null)
+							{
 								SkillData.ScopeTriggers = new List<SkillData.TriggerData>();
 							}
 							SkillData.ScopeTriggers.Add(ScopeTriggerData);

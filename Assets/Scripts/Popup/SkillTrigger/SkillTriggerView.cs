@@ -75,7 +75,7 @@ namespace Ryneus
 
         public void SetSkillTrigger(List<ListData> skillTriggerLists)
         {
-            skillTriggerList.SetData(skillTriggerLists);
+            skillTriggerList.SetData(skillTriggerLists,false);
             skillTriggerList.SetInputListHandler(
                 () => CallSkillEvent(),
                 () => CallTrigger1Event(),
@@ -94,18 +94,20 @@ namespace Ryneus
             listBlock.gameObject.SetActive(false);
         }
 
-        public void ShowTrigger1Category()
+        public void ShowTrigger1Category(int selectIndex)
         {
             triggerCategory1List.gameObject.SetActive(true);
             triggerCategory1List.UpdateSelectIndex(-1);
-            triggerCategory1List.UpdateSelectIndex(0);
+            // 選択番号を変化させてリスト表示する
+            triggerCategory1List.UpdateSelectIndex(selectIndex);
         }
 
-        public void ShowTrigger2Category()
+        public void ShowTrigger2Category(int selectIndex)
         {
             triggerCategory2List.gameObject.SetActive(true);
             triggerCategory2List.UpdateSelectIndex(-1);
-            triggerCategory2List.UpdateSelectIndex(0);
+            // 選択番号を変化させてリスト表示する
+            triggerCategory2List.UpdateSelectIndex(selectIndex);
         }
 
         public void HideSelectCategoryList()

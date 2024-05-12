@@ -352,6 +352,11 @@ namespace Ryneus
             }
         }
 
+        public bool EnableSkillTriggerSkill(int actorId,int skillId)
+        {
+            return SkillTriggerInfos(actorId).Find(a => a.SkillId == skillId) != null;
+        }
+
         public void ChangeCurrency(int currency)
         {
             _currency = currency;

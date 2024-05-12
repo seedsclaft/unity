@@ -192,6 +192,22 @@ namespace Ryneus
             _view.StartAnimation();
         }
 
+        public void CommandReturnStrategy()
+        {
+            if (_model.BattleResultVictory() == false && GameSystem.SceneStackManager.LastScene == Scene.Strategy)
+            {
+                // 敗北して戻ってきたとき
+                var currentSymbol = _model.CurrentSelectSymbol();
+                if (currentSymbol != null)
+                {
+                    CommandTacticsCommand(TacticsCommandType.Paradigm);
+                    CommandStageSymbol();
+                    CommandSelectRecord(currentSymbol.StageSymbolData.Seek);
+                    CommandSelectSymbol(currentSymbol);
+                }
+            }
+        }
+
 
         private void UpdateCommand(TacticsViewEvent viewEvent)
         {
@@ -205,7 +221,8 @@ namespace Ryneus
                 if (_model.CurrentStageTutorialDates.Count == 0)
                 {
                     _view.CommandCloseTutorialFocus();
-                } else{            
+                } else
+                {            
                     _view.CommandCallTutorialFocus(_model.CurrentStageTutorialDates[0]);
                 }
             }
