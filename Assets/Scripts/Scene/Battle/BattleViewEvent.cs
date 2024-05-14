@@ -24,6 +24,7 @@ namespace Battle
         ActorList,
         SelectActorList,
         SelectEnemyList,
+        SkillLog,
         UpdateAp,
         SelectedSkill,
         EnemyLayer,

@@ -20,6 +20,7 @@ namespace Ryneus
         [SerializeField] private SideMenuButton lvResetButton;
         private bool _isInit = false;
 
+        public int SelectedTabIndex => toggleSelect.SelectTabIndex;
         
         public SkillInfo ActionData
         {

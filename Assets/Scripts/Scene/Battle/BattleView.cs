@@ -29,6 +29,7 @@ namespace Ryneus
         [SerializeField] private SideMenuButton battleAutoButton = null;
         [SerializeField] private SideMenuButton battleSpeedButton = null;
         [SerializeField] private SideMenuButton battleSkipButton = null;
+        [SerializeField] private SideMenuButton skillLogButton = null;
         [SerializeField] private BattleCutinAnimation battleCutinAnimation = null;
         [SerializeField] private GameObject battleBackGroundRoot = null;
         private BattleBackGroundAnimation _backGroundAnimation = null;
@@ -80,6 +81,12 @@ namespace Ryneus
                 if (battleSkipButton.gameObject.activeSelf == false) return;
                 var eventData = new BattleViewEvent(CommandType.SkipBattle);
                 _skipBattle = true;
+                _commandData(eventData);
+            });
+            skillLogButton.SetCallHandler((a) => 
+            {
+                if (skillLogButton.gameObject.activeSelf == false) return;
+                var eventData = new BattleViewEvent(CommandType.SkillLog);
                 _commandData(eventData);
             });
             SetBattleSkipActive(false);

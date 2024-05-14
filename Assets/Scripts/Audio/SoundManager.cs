@@ -185,8 +185,8 @@ namespace Ryneus
 
         public void StopBgm()
         {
-            var playingTrack = _crossFadeTrackNo == 0 ? BgmTrack : BgmSubTrack;
-            playingTrack.Stop();
+            BgmSubTrack.Stop();
+            BgmTrack.Stop();
             _lastPlayAudio = null;
         }
 

@@ -247,7 +247,8 @@ MonoBehaviour:
     type: 1
     textLength: 407
     headerRow: 0
-    sourceAssetInEditor: {fileID: 0}
+    sourceAssetInEditor: {fileID: 102900000, guid: cfe001472457b044c85053811f5aa116,
+      type: 3}
     entityIndexTbl: 
     entityDataList: []
   gridList:
@@ -281,14 +282,14 @@ MonoBehaviour:
     - rowIndex: 1
       debugIndex: 1
       strings:
-      - Chara1
-      - "\u30D8\u30AB\u30C6\u30FC"
+      - Actor0001
+      - "\u30DF\u30AB"
       - 
       - 
-      - -240
+      - 0
       - 
       - 
-      - .78
+      - .5
       - 
       - Actors/0001/Main
       isEmpty: 0
@@ -297,14 +298,14 @@ MonoBehaviour:
     - rowIndex: 2
       debugIndex: 2
       strings:
-      - Chara2
-      - "\u30AD\u30E3\u30ED\u30E9\u30A4\u30F3"
+      - Actor0002
+      - "\u30A8\u30EA\u30B6\u30D9\u30FC\u30C8"
       - 
       - 
-      - -360
+      - 0
       - 
       - 
-      - 1
+      - .5
       - 
       - Actors/0002/Main
       isEmpty: 0
@@ -313,14 +314,14 @@ MonoBehaviour:
     - rowIndex: 3
       debugIndex: 3
       strings:
-      - Chara3
-      - "\u30A2\u30EA\u30B9"
+      - Actor0003
+      - "\u30A2\u30EA\u30A8\u30B9"
       - 
       - 
-      - -310
+      - 0
       - 
       - 
-      - .9
+      - .5
       - 
       - Actors/0003/Main
       isEmpty: 0
@@ -329,69 +330,53 @@ MonoBehaviour:
     - rowIndex: 4
       debugIndex: 4
       strings:
-      - Chara4
-      - "\u30D5\u30EA\u30EB"
+      - Actor0001_2
+      - "\u8D64\u9AEA\u306E\u5973\u6027"
       - 
       - 
-      - -280
+      - 0
       - 
       - 
-      - .88
+      - .5
       - 
-      - Actors/0004/Main
+      - Actors/0001/Main
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
     - rowIndex: 5
       debugIndex: 5
       strings:
-      - Chara5
-      - "\u30CB\u30E5\u30AF\u30B9"
+      - Actor0002_2
+      - "\u91D1\u9AEA\u306E\u5973\u6027"
       - 
       - 
-      - -300
+      - 0
       - 
       - 
-      - .95
+      - .5
       - 
-      - Actors/0005/Main
+      - Actors/0002/Main
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
     - rowIndex: 6
       debugIndex: 6
       strings:
-      - Chara6
-      - "\u30D5\u30A7\u30EA\u30AA"
+      - Actor0003_2
+      - "\u6C17\u3060\u308B\u305D\u3046\u306A\u5973\u6027"
       - 
       - 
-      - -280
+      - 0
       - 
       - 
-      - .85
+      - .5
       - 
-      - Actors/0006/Main
+      - Actors/0003/Main
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
     - rowIndex: 7
       debugIndex: 7
-      strings:
-      - Chara7
-      - "\u30E1\u30EA\u30FC"
-      - 
-      - 
-      - -220
-      - 
-      - 
-      - .8
-      - 
-      - Actors/0007/Main
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 8
-      debugIndex: 8
       strings:
       - HighOnes1
       - "\u4E0A\u4F4D\u8005(\u60AA\u9B54)"
@@ -408,9 +393,10 @@ MonoBehaviour:
       debugInfo: 
     name: Assets/ADVScene/ADVScene.xls:Character
     type: 1
-    textLength: 418
+    textLength: 396
     headerRow: 0
-    sourceAssetInEditor: {fileID: 0}
+    sourceAssetInEditor: {fileID: 102900000, guid: cfe001472457b044c85053811f5aa116,
+      type: 3}
   - rows:
     - rowIndex: 0
       debugIndex: 0
@@ -445,7 +431,7 @@ MonoBehaviour:
       - 
       - 1
       - 
-      - white_377
+      - NA_Background image_Simple_034
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
@@ -460,7 +446,7 @@ MonoBehaviour:
       - 
       - 1
       - 
-      - blue_230
+      - NA_background image_3D like_656
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
@@ -490,7 +476,7 @@ MonoBehaviour:
       - 
       - 1
       - 
-      - yellow_177
+      - NA_background image_3D like_404
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
@@ -571,9 +557,10 @@ MonoBehaviour:
       debugInfo: 
     name: Assets/ADVScene/ADVScene.xls:Texture
     type: 1
-    textLength: 282
+    textLength: 347
     headerRow: 0
-    sourceAssetInEditor: {fileID: 0}
+    sourceAssetInEditor: {fileID: 102900000, guid: cfe001472457b044c85053811f5aa116,
+      type: 3}
   - rows:
     - rowIndex: 0
       debugIndex: 0
@@ -587,7 +574,8 @@ MonoBehaviour:
     type: 1
     textLength: 13
     headerRow: 0
-    sourceAssetInEditor: {fileID: 0}
+    sourceAssetInEditor: {fileID: 102900000, guid: cfe001472457b044c85053811f5aa116,
+      type: 3}
   - rows:
     - rowIndex: 0
       debugIndex: 0
@@ -612,11 +600,59 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
+    - rowIndex: 1
+      debugIndex: 1
+      strings:
+      - Character1
+      - Character
+      - 0
+      - -200
+      - 200
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 2
+      debugIndex: 2
+      strings:
+      - Character0
+      - Character
+      - -280
+      - -200
+      - 190
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 3
+      debugIndex: 3
+      strings:
+      - Character2
+      - Character
+      - 280
+      - -200
+      - 190
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 4
+      debugIndex: 4
+      strings:
+      - Character1_1
+      - Character
+      - 0
+      - -240
+      - 200
+      - 
+      - 1.25
+      - 1.25
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
     name: Assets/ADVScene/ADVScene.xls:Layer
     type: 1
-    textLength: 109
+    textLength: 232
     headerRow: 0
-    sourceAssetInEditor: {fileID: 0}
+    sourceAssetInEditor: {fileID: 102900000, guid: cfe001472457b044c85053811f5aa116,
+      type: 3}
   - rows:
     - rowIndex: 0
       debugIndex: 0
@@ -643,7 +679,8 @@ MonoBehaviour:
     type: 1
     textLength: 112
     headerRow: 0
-    sourceAssetInEditor: {fileID: 0}
+    sourceAssetInEditor: {fileID: 102900000, guid: cfe001472457b044c85053811f5aa116,
+      type: 3}
   - rows:
     - rowIndex: 0
       debugIndex: 0
@@ -670,7 +707,8 @@ MonoBehaviour:
     type: 1
     textLength: 106
     headerRow: 0
-    sourceAssetInEditor: {fileID: 0}
+    sourceAssetInEditor: {fileID: 102900000, guid: cfe001472457b044c85053811f5aa116,
+      type: 3}
   - rows:
     - rowIndex: 0
       debugIndex: 0
@@ -767,7 +805,8 @@ MonoBehaviour:
     type: 1
     textLength: 93
     headerRow: 0
-    sourceAssetInEditor: {fileID: 0}
+    sourceAssetInEditor: {fileID: 102900000, guid: cfe001472457b044c85053811f5aa116,
+      type: 3}
   - rows:
     - rowIndex: 0
       debugIndex: 0
@@ -785,7 +824,8 @@ MonoBehaviour:
     type: 1
     textLength: 37
     headerRow: 0
-    sourceAssetInEditor: {fileID: 0}
+    sourceAssetInEditor: {fileID: 102900000, guid: cfe001472457b044c85053811f5aa116,
+      type: 3}
   - rows:
     - rowIndex: 0
       debugIndex: 0
@@ -831,7 +871,8 @@ MonoBehaviour:
     type: 1
     textLength: 94
     headerRow: 0
-    sourceAssetInEditor: {fileID: 0}
+    sourceAssetInEditor: {fileID: 102900000, guid: cfe001472457b044c85053811f5aa116,
+      type: 3}
   - rows:
     - rowIndex: 0
       debugIndex: 0
@@ -858,7 +899,8 @@ MonoBehaviour:
     type: 1
     textLength: 16
     headerRow: 0
-    sourceAssetInEditor: {fileID: 0}
+    sourceAssetInEditor: {fileID: 102900000, guid: cfe001472457b044c85053811f5aa116,
+      type: 3}
   - rows:
     - rowIndex: 0
       debugIndex: 0
@@ -873,7 +915,8 @@ MonoBehaviour:
     type: 1
     textLength: 27
     headerRow: 0
-    sourceAssetInEditor: {fileID: 0}
+    sourceAssetInEditor: {fileID: 102900000, guid: cfe001472457b044c85053811f5aa116,
+      type: 3}
   - rows:
     - rowIndex: 0
       debugIndex: 0
@@ -886,7 +929,8 @@ MonoBehaviour:
     type: 1
     textLength: 3
     headerRow: 0
-    sourceAssetInEditor: {fileID: 0}
+    sourceAssetInEditor: {fileID: 102900000, guid: cfe001472457b044c85053811f5aa116,
+      type: 3}
   - rows:
     - rowIndex: 0
       debugIndex: 0
@@ -910,7 +954,8 @@ MonoBehaviour:
     type: 1
     textLength: 66
     headerRow: 0
-    sourceAssetInEditor: {fileID: 0}
+    sourceAssetInEditor: {fileID: 102900000, guid: cfe001472457b044c85053811f5aa116,
+      type: 3}
   - rows:
     - rowIndex: 0
       debugIndex: 0
@@ -1150,4 +1195,5 @@ MonoBehaviour:
     type: 1
     textLength: 407
     headerRow: 0
-    sourceAssetInEditor: {fileID: 0}
+    sourceAssetInEditor: {fileID: 102900000, guid: cfe001472457b044c85053811f5aa116,
+      type: 3}

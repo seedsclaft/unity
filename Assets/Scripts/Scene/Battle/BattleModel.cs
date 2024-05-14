@@ -13,6 +13,9 @@ namespace Ryneus
         public int TurnCount => _turnCount;
         public void SeekTurnCount(){_turnCount++;}
 
+        private List<SkillLogListInfo> _skillLogs = new ();
+        public List<SkillLogListInfo> SkillLogs => _skillLogs;
+
         private List<BattlerInfo> _battlers = new List<BattlerInfo>();
         public List<BattlerInfo> Battlers => _battlers;
 
@@ -1656,6 +1659,12 @@ namespace Ryneus
                     }
                 }
             }
+            var skillLog = new SkillLogListInfo
+            {
+                battlerInfo = GetBattlerInfo(actionInfo.SubjectIndex),
+                skillInfo = actionInfo.SkillInfo
+            };
+            _skillLogs.Add(skillLog);
             _actionInfos.RemoveAt(0);
             if (reAction == false)
             {

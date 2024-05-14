@@ -180,6 +180,9 @@ namespace Ryneus
                 case Battle.CommandType.SelectSideMenu:
                     CommandSelectSideMenu();
                     break;
+                case Battle.CommandType.SkillLog:
+                    CommandSkillLog();
+                    break;
             }
         }
 
@@ -1218,6 +1221,7 @@ namespace Ryneus
             _model.EndBattle();
             _battleEnded = true;
             _view.HideStateOverlay();
+            _view.CommandGameSystem(Base.CommandType.CallLoading);
             await UniTask.DelayFrame(180);
             _view.SetBattleBusy(false);
             if (SoundManager.Instance.CrossFadeMode)
@@ -1233,6 +1237,18 @@ namespace Ryneus
 
         private void CommandSelectEnemy()
         {
+        }
+
+        private void CommandSkillLog()
+        {
+            _busy = true;
+            SoundManager.Instance.PlayStaticSe(SEType.Decide);
+            var SkillLogViewInfo = new SkillLogViewInfo(_model.SkillLogs,() => 
+            {
+                _busy = false;
+            });
+
+            _view.CommandCallSkillLog(SkillLogViewInfo);
         }
 
         private void CommandSelectSideMenu()

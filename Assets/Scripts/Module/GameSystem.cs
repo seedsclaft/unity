@@ -147,6 +147,9 @@ namespace Ryneus
                 case Base.CommandType.CallSkillTriggerView:
                     CommandSkillTriggerView((SkillTriggerViewInfo)viewEvent.template);
                     break;
+                case Base.CommandType.CallSkillLogView:
+                    CommandCallSkillLogView((SkillLogViewInfo)viewEvent.template);
+                    break;
                 case Base.CommandType.CallStatusView:
                     var statusView = CreateStatus(StatusType.Status) as StatusView;
                     var statusViewInfo = (StatusViewInfo)viewEvent.template;
@@ -301,6 +304,21 @@ namespace Ryneus
                 if (skillTriggerViewInfo.EndEvent != null) skillTriggerViewInfo.EndEvent();
             });
             skillTriggerView.SetEvent((type) => UpdateCommand(type));
+            SetIsBusyMainAndStatus();
+        }
+
+        private void CommandCallSkillLogView(SkillLogViewInfo skillLogViewInfo)
+        {
+            var prefab = popupAssign.CreatePopup(PopupType.SkillLog,helpWindow);
+            var skillLogView = prefab.GetComponent<SkillLogView>();
+            skillLogView.Initialize();
+            skillLogView.SetSkillLogViewInfo(skillLogViewInfo.SkillLogListInfos);
+            skillLogView.SetEvent((type) => UpdateCommand(type));
+            skillLogView.SetBackEvent(() => 
+            {
+                UpdateCommand(new ViewEvent(Base.CommandType.ClosePopup));
+                if (skillLogViewInfo.EndEvent != null) skillLogViewInfo.EndEvent();
+            });
             SetIsBusyMainAndStatus();
         }
 

@@ -104,7 +104,8 @@ namespace Ryneus
             if (GameSystem.CurrentStageData.ResumeStage)
             {
                 _view.CommandGotoSceneChange(Scene.Tactics);
-            } else{
+            } else
+            {
                 _view.CommandGotoSceneChange(Scene.MainMenu);
             }
         }

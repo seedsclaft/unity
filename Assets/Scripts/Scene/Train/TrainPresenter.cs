@@ -175,7 +175,7 @@ namespace Ryneus
                         ShowLearningSkillInfos();
                     } else
                     {
-                        _view.ShowCharacterDetail(_model.StageMembers()[0],_model.StageMembers());
+                        _view.ShowCharacterDetail(_model.StageMembers()[0],_model.StageMembers(),true);
                     }
                     _backCommand = Train.CommandType.TacticsCommandClose;
                     break;
