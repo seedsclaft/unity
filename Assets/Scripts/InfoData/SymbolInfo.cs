@@ -6,9 +6,8 @@ namespace Ryneus
     [Serializable]
     public class SymbolInfo
     {
-        private StageSymbolData _stageSymbolData;
-        public StageSymbolData StageSymbolData => _stageSymbolData;
-        public SymbolType SymbolType => _stageSymbolData.SymbolType;
+        private SymbolType _SymbolType;
+        public SymbolType SymbolType => _SymbolType;
         private TroopInfo _troopInfo;
         public TroopInfo TroopInfo => _troopInfo;
         public void SetTroopInfo(TroopInfo troopInfo)
@@ -17,23 +16,11 @@ namespace Ryneus
         }
         private List<GetItemInfo> _getItemInfos = new ();
         public List<GetItemInfo> GetItemInfos => _getItemInfos;
-        private bool _selected;
-        public bool Selected => _selected;
-        public void SetSelected(bool selected)
-        {
-            _selected = selected;
-        }
         private bool _lastSelected;
         public bool LastSelected => _lastSelected;
         public void SetLastSelected(bool lastSelected)
         {
             _lastSelected = lastSelected;
-        }
-        private bool _past;
-        public bool Past => _past;
-        public void SetPast(bool past)
-        {
-            _past = past;
         }
         private bool _cleared;
         public bool Cleared => _cleared;
@@ -47,16 +34,8 @@ namespace Ryneus
             {
                 return;
             }
-            _stageSymbolData = symbol;
-        }
-
-        public void CopyData(SymbolInfo symbolInfo)
-        {
-            _stageSymbolData = symbolInfo.StageSymbolData;
-            _troopInfo = symbolInfo.TroopInfo;
-            _getItemInfos = symbolInfo.GetItemInfos;
-            _selected = symbolInfo.Selected;
-            _cleared = symbolInfo.Cleared;
+            _SymbolType = symbol.SymbolType;
+            //_stageSymbolData = symbol;
         }
 
         public List<BattlerInfo> BattlerInfos()
@@ -94,11 +73,6 @@ namespace Ryneus
                 }
             }
             return scoreMax;
-        }
-
-        public bool IsBattleSymbol()
-        {
-            return SymbolType == SymbolType.Battle || SymbolType == SymbolType.Boss;
         }
 
         public bool IsActorSymbol()

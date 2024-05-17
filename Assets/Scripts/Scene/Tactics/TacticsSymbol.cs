@@ -29,8 +29,8 @@ namespace Ryneus
         public GetItemInfo GetItemInfo()
         {
             if (ListData == null) return null;
-            var data = (SymbolInfo)ListData.Data;
-            var convert = MakeGetItemListData(data);
+            var data = (SymbolResultInfo)ListData.Data;
+            var convert = MakeGetItemListData(data.SymbolInfo);
             var getItemInfo = convert[getItemList.Index];
             return (GetItemInfo)getItemInfo.Data;
         }
@@ -70,13 +70,13 @@ namespace Ryneus
         public void UpdateViewItem()
         {
             if (ListData == null) return;
-            var data = (SymbolInfo)ListData.Data;
-            symbolComponent.UpdateInfo(data);
+            var data = (SymbolResultInfo)ListData.Data;
+            symbolComponent.UpdateInfo(data.SymbolInfo,data.Selected,data.Seek);
             if (_getItemInit == false)
             {
                 getItemList.Initialize();
             }
-            getItemList.SetData(MakeGetItemListData(data));
+            getItemList.SetData(MakeGetItemListData(data.SymbolInfo));
             if (_getItemInit == false)
             {
                 getItemList.SetSelectedHandler(() => {
@@ -92,8 +92,8 @@ namespace Ryneus
                 _getItemInit = true;
             }
             UpdateItemIndex(_getItemIndex);
-            UpdateSelected(data);
-            UpdateCleared(data);
+            UpdateSelected(data.Selected);
+            //UpdateCleared(data);
         }
 
         private List<ListData> MakeGetItemListData(SymbolInfo symbolInfo)
@@ -122,10 +122,9 @@ namespace Ryneus
             getItemList.Refresh(_getItemIndex);
         }
 
-        private void UpdateSelected(SymbolInfo symbolInfo)
+        private void UpdateSelected(bool select)
         {
-            if (selected == null) return;
-            selected.SetActive(symbolInfo.Selected);
+            selected.SetActive(select);
         }
 
         private void UpdateCleared(SymbolInfo symbolInfo)

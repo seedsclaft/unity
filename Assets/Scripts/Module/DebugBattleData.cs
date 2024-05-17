@@ -36,7 +36,7 @@ namespace Ryneus
             {
                 var TestBattleData = Resources.Load<TestBattleData>("Data/TestBattle").TestBattleDates;
                 var ActorIndex = 1;
-                var symbolInfoList = new List<SymbolInfo>();
+                var symbolInfoList = new List<SymbolResultInfo>();
                 foreach (var TestBattle in TestBattleData)
                 {
                     if (TestBattle.IsActor)
@@ -53,13 +53,9 @@ namespace Ryneus
                         symbolInfoList.AddRange(DebugStageSymbolInfos(TestBattle.BattlerId));
                     }
                 }
-                currentStageData.Party.SetStageSymbolInfos(symbolInfoList);
-                foreach (var symbolInfo1 in currentStageData.Party.StageSymbolInfos)
+                foreach (var symbolInfo1 in symbolInfoList)
                 {
-                    var record = new SymbolResultInfo(symbolInfo1,currentStageData.Party.Currency);
-                    
-                    record.SetSelected(true);
-                    currentStageData.Party.SetSymbolResultInfo(record,false);
+                    currentStageData.Party.SetSymbolResultInfo(symbolInfo1,false);
                 }
                 var troopInfo = currentStageData.CurrentStage.TestTroops(troopId,troopLv);
                 var stageSymbol = new StageSymbolData
@@ -70,7 +66,7 @@ namespace Ryneus
                 };
                 var symbolInfo = new SymbolInfo(stageSymbol);
                 symbolInfo.SetTroopInfo(troopInfo);
-                currentStageData.Party.SetStageSymbolInfos(new List<SymbolInfo>(){ symbolInfo});
+                //currentStageData.Party.SetStageSymbolInfos(new List<SymbolInfo>(){ symbolInfo});
             } else
             {
                 foreach (var actor in DataSystem.Actors)
@@ -91,18 +87,17 @@ namespace Ryneus
         }
 
         
-        public List<SymbolInfo> OpeningStageSymbolInfos(int actorId)
+        public List<SymbolResultInfo> OpeningStageSymbolInfos(int actorId)
         {
-            var symbolInfos = new List<SymbolInfo>();
+            var symbolInfos = new List<SymbolResultInfo>();
             var symbols = DataSystem.FindStage(0).StageSymbols;
             foreach (var symbol in symbols)
             {
                 var symbolInfo = new SymbolInfo(symbol);
-                symbolInfo.StageSymbolData.SeekIndex = actorId;
                 var getItemInfos = new List<GetItemInfo>();
-                if (symbolInfo.StageSymbolData.PrizeSetId > 0)
+                if (symbol.PrizeSetId > 0)
                 {
-                    var prizeSets = DataSystem.PrizeSets.FindAll(a => a.Id == symbolInfo.StageSymbolData.PrizeSetId);
+                    var prizeSets = DataSystem.PrizeSets.FindAll(a => a.Id == symbol.PrizeSetId);
                     foreach (var prizeSet in prizeSets)
                     {
                         prizeSet.GetItem.Param1 = actorId;
@@ -111,23 +106,25 @@ namespace Ryneus
                     }
                 }
                 symbolInfo.SetGetItemInfos(getItemInfos);
-                symbolInfo.SetSelected(true);
-                symbolInfos.Add(symbolInfo);
+                //symbolInfo.SetSelected(true);
+                symbol.SeekIndex = actorId;
+                var record = new SymbolResultInfo(symbolInfo,symbol,0);
+                record.SetSelected(true);
+                symbolInfos.Add(record);
             }
             return symbolInfos;
         }
-        public List<SymbolInfo> DebugStageSymbolInfos(int skillId)
+        public List<SymbolResultInfo> DebugStageSymbolInfos(int skillId)
         {
-            var symbolInfos = new List<SymbolInfo>();
+            var symbolInfos = new List<SymbolResultInfo>();
             var symbols = DataSystem.FindStage(0).StageSymbols;
             foreach (var symbol in symbols)
             {
                 var symbolInfo = new SymbolInfo(symbol);
-                symbolInfo.StageSymbolData.SeekIndex = skillId;
                 var getItemInfos = new List<GetItemInfo>();
-                if (symbolInfo.StageSymbolData.PrizeSetId > 0)
+                if (symbol.PrizeSetId > 0)
                 {
-                    var prizeSets = DataSystem.PrizeSets.FindAll(a => a.Id == symbolInfo.StageSymbolData.PrizeSetId);
+                    var prizeSets = DataSystem.PrizeSets.FindAll(a => a.Id == symbol.PrizeSetId);
                     foreach (var prizeSet in prizeSets)
                     {
                         prizeSet.GetItem.Param1 = skillId;
@@ -136,8 +133,11 @@ namespace Ryneus
                     }
                 }
                 symbolInfo.SetGetItemInfos(getItemInfos);
-                symbolInfo.SetSelected(true);
-                symbolInfos.Add(symbolInfo);
+                //symbolInfo.SetSelected(true);
+                symbol.SeekIndex = skillId;
+                var record = new SymbolResultInfo(symbolInfo,symbol,0);
+                record.SetSelected(true);
+                symbolInfos.Add(record);
             }
             return symbolInfos;
         }

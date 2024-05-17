@@ -53,7 +53,7 @@ namespace Ryneus
                     getItemData.Type = GetItemType.AddActor;
                     getItemData.Param1 = i;
                     symbolInfo.SetGetItemInfos(new List<GetItemInfo>(){new GetItemInfo(getItemData)});
-                    var record = new SymbolResultInfo(symbolInfo,GameSystem.CurrentStageData.Party.Currency);
+                    var record = new SymbolResultInfo(symbolInfo,stageSymbol,GameSystem.CurrentStageData.Party.Currency);
                     
                     record.SetSelected(true);
                     GameSystem.CurrentStageData.Party.SetSymbolResultInfo(record,false);
@@ -76,7 +76,7 @@ namespace Ryneus
                     getItemData.Type = GetItemType.Skill;
                     getItemData.Param1 = skill.Value.Id;
                     symbolInfo.SetGetItemInfos(new List<GetItemInfo>(){new GetItemInfo(getItemData)});
-                    var record = new SymbolResultInfo(symbolInfo,GameSystem.CurrentStageData.Party.Currency);
+                    var record = new SymbolResultInfo(symbolInfo,stageSymbol,GameSystem.CurrentStageData.Party.Currency);
                     
                     record.SetSelected(true);
                     GameSystem.CurrentStageData.Party.SetSymbolResultInfo(record,false);

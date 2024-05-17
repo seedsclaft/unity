@@ -256,7 +256,7 @@ namespace Ryneus
                     _model.ReturnTempBattleMembers(); 
                     _view.CommandChangeViewToTransition(null);  
                     // ボス戦なら
-                    if (_model.CurrentSelectSymbol().SymbolType == SymbolType.Boss)
+                    if (_model.CurrentSelectRecord().SymbolInfo.SymbolType == SymbolType.Boss)
                     {
                         //SoundManager.Instance.FadeOutBgm();
                         PlayBossBgm();
@@ -390,9 +390,10 @@ namespace Ryneus
         private void CommandCallEnemyInfo()
         {
             var enemyIndex = _model.CurrentStage.CurrentSeekIndex;
-            var enemyInfos = _model.TacticsSymbols()[enemyIndex].BattlerInfos();
+            var enemyInfos = _model.TacticsSymbols()[enemyIndex].SymbolInfo.BattlerInfos();
             
-            var statusViewInfo = new StatusViewInfo(() => {
+            var statusViewInfo = new StatusViewInfo(() => 
+            {
                 _view.CommandGameSystem(Base.CommandType.CloseStatus);
                 _view.ChangeUIActive(true);
                 SetHelpInputSkipEnable();

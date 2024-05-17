@@ -121,7 +121,7 @@ namespace Ryneus
                     case GetItemType.StatusUp:
                         break;
                     case GetItemType.SelectAddActor:
-                        record.SymbolInfo.StageSymbolData.Param1 = getItemInfo.Param1;
+                        record.StageSymbolData.Param1 = getItemInfo.Param1;
                         break;
                     case GetItemType.SaveHuman:
                         
@@ -218,7 +218,7 @@ namespace Ryneus
         public void SetSelectSymbol()
         {
             // レコード作成
-            var record = PartyInfo.SymbolRecordList.Find(a => a.IsSameSymbol(CurrentSelectSymbol()));
+            var record = PartyInfo.SymbolRecordList.Find(a => a.IsSameSymbol(CurrentSelectRecord()));
             record.SetSelected(true);
             PartyInfo.SetSymbolResultInfo(record);
         }
@@ -233,7 +233,7 @@ namespace Ryneus
         public void CommitCurrentResult()
         {
             // 新たに選択したシンボル
-            var newSymbolInfo = CurrentSelectSymbol();
+            var newSymbolInfo = CurrentSelectRecord();
             
             var records = PartyInfo.SymbolRecordList.FindAll(a => a.StageId == CurrentStage.Id && a.Seek == CurrentStage.CurrentTurn);
             foreach (var record in records)
@@ -243,7 +243,6 @@ namespace Ryneus
                     record.SetSelected(true);
                 }
             }
-            newSymbolInfo.SetSelected(true);
             // 選択から外れたシンボル
             var removeSymbolInfos = records.FindAll(a => a.Selected && !a.IsSameSymbol(newSymbolInfo));
             foreach (var removeSymbolInfo in removeSymbolInfos)
@@ -269,13 +268,13 @@ namespace Ryneus
             CurrentStage.SetCurrentTurn(CurrentStage.ReturnSeek);
             CurrentStage.SetReturnSeek(-1);
             CurrentStage.SetSeekIndex(-1);
-            PartyInfo.SetStageSymbolInfos(SelectedSymbolInfos(CurrentStage.Id));
+            //PartyInfo.SetStageSymbolInfos(SelectedSymbolInfos(CurrentStage.Id));
         }
 
         public List<SymbolInfo> SelectedSymbolInfos(int stageId)
         {
             var list = new List<SymbolInfo>();
-            var records = PartyInfo.SymbolRecordList.FindAll(a => a.SymbolInfo.StageSymbolData.StageId == stageId);
+            var records = PartyInfo.SymbolRecordList.FindAll(a => a.StageSymbolData.StageId == stageId);
             foreach (var record in records)
             {
                 list.Add(record.SymbolInfo);
@@ -286,7 +285,7 @@ namespace Ryneus
         public void CommitCurrentParallelResult()
         {
             // 新たに選択したシンボル
-            var newSymbolInfo = CurrentSelectSymbol();
+            var newSymbolInfo = CurrentSelectRecord();
             
             var records = PartyInfo.SymbolRecordList.FindAll(a => a.StageId == CurrentStage.Id && a.Seek == CurrentStage.CurrentTurn);
             foreach (var record in records)
@@ -296,7 +295,6 @@ namespace Ryneus
                     record.SetSelected(true);
                 }
             }
-            newSymbolInfo.SetSelected(true);
             // 選択から外れたシンボル
             var removeSymbolInfos = records.FindAll(a => a.Selected && !a.IsSameSymbol(newSymbolInfo));
             foreach (var removeSymbolInfo in removeSymbolInfos)
@@ -315,7 +313,7 @@ namespace Ryneus
             CurrentStage.SetCurrentTurn(CurrentStage.ReturnSeek);
             CurrentStage.SetReturnSeek(-1);
             CurrentStage.SetSeekIndex(-1);
-            PartyInfo.SetStageSymbolInfos(SelectedSymbolInfos(CurrentStage.Id));
+            //PartyInfo.SetStageSymbolInfos(SelectedSymbolInfos(CurrentStage.Id));
         }
 
         public bool ChainParallelMode()

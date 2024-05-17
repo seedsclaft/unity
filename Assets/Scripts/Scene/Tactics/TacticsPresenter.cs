@@ -197,13 +197,13 @@ namespace Ryneus
             if (_model.BattleResultVictory() == false && GameSystem.SceneStackManager.LastScene == Scene.Strategy)
             {
                 // 敗北して戻ってきたとき
-                var currentSymbol = _model.CurrentSelectSymbol();
-                if (currentSymbol != null)
+                var currentRecord = _model.CurrentSelectRecord();
+                if (currentRecord != null)
                 {
                     CommandTacticsCommand(TacticsCommandType.Paradigm);
                     CommandStageSymbol();
-                    CommandSelectRecord(currentSymbol.StageSymbolData.Seek);
-                    CommandSelectSymbol(currentSymbol);
+                    CommandSelectRecord(currentRecord.StageSymbolData.Seek);
+                    CommandSelectRecord(currentRecord);
                 }
             }
         }
@@ -238,14 +238,14 @@ namespace Ryneus
                     }
                     break;
                 case Tactics.CommandType.SelectSymbol:
-                    CommandSelectSymbol((SymbolInfo)viewEvent.template);
+                    CommandSelectRecord((SymbolResultInfo)viewEvent.template);
                     break;
                 case Tactics.CommandType.SymbolClose:
                     CommandSymbolClose();
                     break;
                 case Tactics.CommandType.CallEnemyInfo:
                     if (_model.CurrentStageTutorialDates.Count > 0) return;
-                    CommandCallEnemyInfo((SymbolInfo)viewEvent.template);
+                    CommandCallEnemyInfo((SymbolResultInfo)viewEvent.template);
                     break;
                 case Tactics.CommandType.PopupSkillInfo:
                     CommandPopupSkillInfo((GetItemInfo)viewEvent.template);
@@ -454,23 +454,23 @@ namespace Ryneus
             _backCommand = Tactics.CommandType.CancelSymbolRecord;
         }
 
-        private void CommandSelectSymbol(SymbolInfo symbolInfo)
+        private void CommandSelectRecord(SymbolResultInfo recordInfo)
         {
-            _model.SetSymbolInfo(symbolInfo);
-            if (symbolInfo.StageSymbolData.Seek == _model.CurrentStage.CurrentTurn)
+            _model.SetRecordInfo(recordInfo);
+            if (recordInfo.StageSymbolData.Seek == _model.CurrentStage.CurrentTurn)
             {
                 // 現在
-                CommandCurrentSelectSymbol(symbolInfo);
+                CommandCurrentSelectRecord(recordInfo);
             }
         }
 
-        private void CommandCurrentSelectSymbol(SymbolInfo symbolInfo)
+        private void CommandCurrentSelectRecord(SymbolResultInfo recordInfo)
         {
             _view.HideSymbolRecord();
-            _model.SetStageSeekIndex(symbolInfo.StageSymbolData.SeekIndex);
+            _model.SetStageSeekIndex(recordInfo.StageSymbolData.SeekIndex);
             _view.HideRecordList();
             // 回路解析
-            switch (symbolInfo.SymbolType)
+            switch (recordInfo.SymbolInfo.SymbolType)
             {
                 case SymbolType.Battle:
                 case SymbolType.Boss:
@@ -484,22 +484,22 @@ namespace Ryneus
                     _backCommand = Tactics.CommandType.CancelSelectSymbol;
                     break;
                 case SymbolType.Recover:
-                    CheckRecoverSymbol(symbolInfo.GetItemInfos[0]);
+                    CheckRecoverSymbol(recordInfo.SymbolInfo.GetItemInfos[0]);
                     break;
                 case SymbolType.Actor:
-                    CheckActorSymbol(symbolInfo.GetItemInfos[0]);
+                    CheckActorSymbol(recordInfo.SymbolInfo.GetItemInfos[0]);
                     break;
                 case SymbolType.SelectActor:
-                    CheckSelectActorSymbol(symbolInfo.GetItemInfos);
+                    CheckSelectActorSymbol(recordInfo.SymbolInfo.GetItemInfos);
                     break;
                 case SymbolType.Alcana:
-                    CheckAlcanaSymbol(symbolInfo.GetItemInfos);
+                    CheckAlcanaSymbol(recordInfo.SymbolInfo.GetItemInfos);
                     break;
                 case SymbolType.Resource:
-                    CheckResourceSymbol(symbolInfo.GetItemInfos[0]);
+                    CheckResourceSymbol(recordInfo.SymbolInfo.GetItemInfos[0]);
                     break;
                 case SymbolType.Rebirth:
-                    CheckRebirthSymbol(symbolInfo.GetItemInfos[0]);
+                    CheckRebirthSymbol(recordInfo.SymbolInfo.GetItemInfos[0]);
                     break;
             }
         }
@@ -588,7 +588,7 @@ namespace Ryneus
             if (confirmCommandType == ConfirmCommandType.Yes)
             {
                 // アルカナ選択
-                var getItemInfos = _model.CurrentSelectSymbol().GetItemInfos;
+                var getItemInfos = _model.CurrentSelectRecord().SymbolInfo.GetItemInfos;
                 var alcanaSelect = _view.AlcanaSelectSkillInfo();
                 getItemInfos = getItemInfos.FindAll(a => a.Param1 == alcanaSelect.Id);
                 GotoStrategyScene(getItemInfos,_model.StageMembers());
@@ -608,7 +608,7 @@ namespace Ryneus
             _view.CommandGameSystem(Base.CommandType.CloseConfirm);
             if (confirmCommandType == ConfirmCommandType.Yes)
             {
-                var getItemInfos = _model.CurrentSelectSymbol().GetItemInfos;
+                var getItemInfos = _model.CurrentSelectRecord().SymbolInfo.GetItemInfos;
                 var actorInfos = _model.PartyInfo.ActorInfos.FindAll(a => a.ActorId == getItemInfos[0].Param1);
                 GotoStrategyScene(getItemInfos,actorInfos);
             } else{
@@ -627,12 +627,12 @@ namespace Ryneus
             _view.CommandGameSystem(Base.CommandType.CloseConfirm);
             if (confirmCommandType == ConfirmCommandType.Yes)
             {
-                if (_model.CurrentSelectSymbol().StageSymbolData.Param2 == 0)
+                if (_model.CurrentSelectRecord().StageSymbolData.Param2 == 0)
                 {
                     _model.SetTempAddSelectActorStatusInfos();
                 } else
                 {
-                    _model.SetTempAddSelectActorGetItemInfoStatusInfos(_model.CurrentSelectSymbol().GetItemInfos);
+                    _model.SetTempAddSelectActorGetItemInfoStatusInfos(_model.CurrentSelectRecord().SymbolInfo.GetItemInfos);
                 }
                 var statusViewInfo = new StatusViewInfo(() => {
                     _view.CommandGameSystem(Base.CommandType.CloseStatus);
@@ -659,8 +659,8 @@ namespace Ryneus
             _view.CommandGameSystem(Base.CommandType.CloseConfirm);
             if (confirmCommandType == ConfirmCommandType.Yes)
             {
-                var currentSymbol = _model.CurrentSelectSymbol();
-                GotoStrategyScene(currentSymbol.GetItemInfos,_model.StageMembers());
+                var currentSymbol = _model.CurrentSelectRecord();
+                GotoStrategyScene(currentSymbol.SymbolInfo.GetItemInfos,_model.StageMembers());
             } else{
                 CommandTacticsCommand(_model.TacticsCommandType);
             }
@@ -691,7 +691,7 @@ namespace Ryneus
             {
                 _alcanaSelectBusy = true;
                 // アルカナ選択
-                var getItemInfos = _model.CurrentSelectSymbol().GetItemInfos;
+                var getItemInfos = _model.CurrentSelectRecord().SymbolInfo.GetItemInfos;
                 _view.SetAlcanaSelectInfos(ListData.MakeListData(_model.AlcanaMagicSkillInfos(getItemInfos)));
                 //GotoStrategyScene(getItemInfos,_model.StageMembers());
             } else{
@@ -710,8 +710,8 @@ namespace Ryneus
             _view.CommandGameSystem(Base.CommandType.CloseConfirm);
             if (confirmCommandType == ConfirmCommandType.Yes)
             {
-                var currentSymbol = _model.CurrentSelectSymbol();
-                GotoStrategyScene(currentSymbol.GetItemInfos,_model.StageMembers());
+                var currentRecord = _model.CurrentSelectRecord();
+                GotoStrategyScene(currentRecord.SymbolInfo.GetItemInfos,_model.StageMembers());
             } else{
                 CommandTacticsCommand(_model.TacticsCommandType);
             }
@@ -739,8 +739,8 @@ namespace Ryneus
             _view.CommandGameSystem(Base.CommandType.CloseConfirm);
             if (confirmCommandType == ConfirmCommandType.Yes)
             {
-                var currentSymbol = _model.CurrentSelectSymbol();
-                GotoStrategyScene(currentSymbol.GetItemInfos,_model.StageMembers());
+                var currentSymbol = _model.CurrentSelectRecord();
+                GotoStrategyScene(currentSymbol.SymbolInfo.GetItemInfos,_model.StageMembers());
             } else{
                 CommandTacticsCommand(_model.TacticsCommandType);
             }
@@ -757,7 +757,7 @@ namespace Ryneus
                     _model.SetStatusActorInfos();
                     _view.CommandChangeViewToTransition(null);
                     // ボス戦なら
-                    if (_model.CurrentSelectSymbol().SymbolType == SymbolType.Boss)
+                    if (_model.CurrentSelectRecord().SymbolInfo.SymbolType == SymbolType.Boss)
                     {
                         //SoundManager.Instance.FadeOutBgm();
                         PlayBossBgm();
@@ -830,13 +830,13 @@ namespace Ryneus
                     
         }
 
-        private void CommandCallEnemyInfo(SymbolInfo symbolInfo)
+        private void CommandCallEnemyInfo(SymbolResultInfo symbolInfo)
         {
-            switch (symbolInfo.SymbolType)
+            switch (symbolInfo.SymbolInfo.SymbolType)
             {
                 case SymbolType.Battle:
                 case SymbolType.Boss:
-                    var enemyInfos = symbolInfo.BattlerInfos();
+                    var enemyInfos = symbolInfo.SymbolInfo.BattlerInfos();
                     
                     var enemyViewInfo = new StatusViewInfo(() => {
                         _view.CommandGameSystem(Base.CommandType.CloseStatus);
@@ -847,10 +847,10 @@ namespace Ryneus
                     _view.ChangeUIActive(false);
                     break;
                 case SymbolType.Alcana:
-                    CommandPopupSkillInfo(symbolInfo.GetItemInfos);
+                    CommandPopupSkillInfo(symbolInfo.SymbolInfo.GetItemInfos);
                     break;
                 case SymbolType.Actor:
-                    _model.SetTempAddActorStatusInfos(symbolInfo.GetItemInfos[0].Param1);
+                    _model.SetTempAddActorStatusInfos(symbolInfo.SymbolInfo.GetItemInfos[0].Param1);
                     var statusViewInfo = new StatusViewInfo(() => {
                         _view.CommandGameSystem(Base.CommandType.CloseStatus);
                         _view.ChangeUIActive(true);
@@ -865,7 +865,7 @@ namespace Ryneus
                         _model.SetTempAddSelectActorStatusInfos();
                     } else
                     {
-                        _model.SetTempAddSelectActorGetItemInfoStatusInfos(symbolInfo.GetItemInfos);
+                        _model.SetTempAddSelectActorGetItemInfoStatusInfos(symbolInfo.SymbolInfo.GetItemInfos);
                     }
                     var statusViewInfo2 = new StatusViewInfo(() => {
                         _view.CommandGameSystem(Base.CommandType.CloseStatus);

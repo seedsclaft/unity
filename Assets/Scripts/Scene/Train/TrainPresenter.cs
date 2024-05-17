@@ -367,7 +367,7 @@ namespace Ryneus
                     _model.SetStatusActorInfos();
                     _view.CommandChangeViewToTransition(null);
                     // ボス戦なら
-                    if (_model.CurrentSelectSymbol().SymbolType == SymbolType.Boss)
+                    if (_model.CurrentSelectRecord().SymbolInfo.SymbolType == SymbolType.Boss)
                     {
                         //SoundManager.Instance.FadeOutBgm();
                         PlayBossBgm();

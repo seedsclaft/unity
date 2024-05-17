@@ -17,12 +17,11 @@ namespace Ryneus
             _battleResultVictory = false;
             _battleResultScore = 0;
             _symbolRecordList.Clear();
-            _alcanaInfo = new AlcanaInfo();
         }
+
         // 所持アクターリスト
         private List<ActorInfo> _actorInfos = new();
         public List<ActorInfo> ActorInfos => _actorInfos;
-
         
         public List<ActorInfo> CurrentActorInfos(int stageId,int seek)
         {
@@ -54,7 +53,7 @@ namespace Ryneus
             records = records.FindAll(a => a.StageId == stageId && a.Seek < seek || a.StageId < stageId);
             foreach (var record in records)
             {
-                var actorId = record.SymbolInfo.StageSymbolData.Param1;
+                var actorId = record.StageSymbolData.Param1;
                 if (!actorIdList.Contains(actorId))
                 {
                     actorIdList.Add(actorId);
@@ -70,7 +69,7 @@ namespace Ryneus
             records = records.FindAll(a => a.StageId == stageId && a.Seek < seek || a.StageId < stageId);
             foreach (var record in records)
             {
-                var actorId = record.SymbolInfo.StageSymbolData.Param1;
+                var actorId = record.StageSymbolData.Param1;
                 if (!actorIdList.Contains(actorId))
                 {
                     actorIdList.Add(actorId);
@@ -126,8 +125,6 @@ namespace Ryneus
             }
             return alcanaIdList;
         }
-        private AlcanaInfo _alcanaInfo;
-        public AlcanaInfo AlcanaInfo => _alcanaInfo;
 
         private bool _battleResultVictory = false;
         public bool BattleResultVictory => _battleResultVictory;
@@ -173,14 +170,7 @@ namespace Ryneus
             return currency;
         }
 
-        // 生成したステージシンボル
-        private List<SymbolInfo> _stageSymbolInfos = new();
-        public List<SymbolInfo> StageSymbolInfos => _stageSymbolInfos;
-        public void SetStageSymbolInfos(List<SymbolInfo> symbolInfos)
-        {
-            _stageSymbolInfos = symbolInfos;
-        }
-        public List<SymbolInfo> CurrentSymbolInfos(int seek) => _stageSymbolInfos.FindAll(a => a.StageSymbolData.Seek == seek);
+        public List<SymbolResultInfo> CurrentRecordInfos(int stageId,int seek) => _symbolRecordList.FindAll(a => a.StageSymbolData.StageId == stageId && a.StageSymbolData.Seek == seek);
         
         // ステージシンボルの結果
         private List<SymbolResultInfo> _symbolRecordList = new ();
@@ -206,9 +196,9 @@ namespace Ryneus
             {
                 if (symbolResultInfo.Selected)
                 {
-                    if (symbolResultInfo.SymbolInfo.StageSymbolData.StageId > stageId)
+                    if (symbolResultInfo.StageSymbolData.StageId > stageId)
                     {
-                        stageId = symbolResultInfo.SymbolInfo.StageSymbolData.StageId;
+                        stageId = symbolResultInfo.StageSymbolData.StageId;
                     }
                 }
             }
@@ -217,11 +207,11 @@ namespace Ryneus
             {
                 if (symbolResultInfo.Selected)
                 {
-                    if (symbolResultInfo.SymbolInfo.StageSymbolData.StageId == stageId)
+                    if (symbolResultInfo.StageSymbolData.StageId == stageId)
                     {
-                        if (symbolResultInfo.SymbolInfo.StageSymbolData.Seek > currentTurn)
+                        if (symbolResultInfo.StageSymbolData.Seek > currentTurn)
                         {
-                            currentTurn = symbolResultInfo.SymbolInfo.StageSymbolData.Seek;
+                            currentTurn = symbolResultInfo.StageSymbolData.Seek;
                         }
                     }
                 }
@@ -262,7 +252,7 @@ namespace Ryneus
         public List<SkillTriggerInfo> SkillTriggerInfos(int actorId)
         {
             var findAll = _actorSkillTriggerInfos.FindAll(a => a.ActorId == actorId);
-            findAll.Sort((a,b) => a.Priority - b.Priority > 0 ? 1:-1);
+            findAll.Sort((a,b) => a.Priority - b.Priority > 0 ? 1 : -1);
             return findAll;
         }
         public void InitSkillTriggerInfos()
@@ -285,6 +275,7 @@ namespace Ryneus
                 }
             }
         }
+
         public void SetSkillTriggerSkill(int actorId,int index,int skillId)
         {
             var skillTriggerInfos = SkillTriggerInfos(actorId);
@@ -293,6 +284,7 @@ namespace Ryneus
                 skillTriggerInfos[index].SetSkillId(skillId);
             }
         }
+        
         public void SetSkillTriggerTrigger1(int actorId,int index,SkillTriggerData triggerType)
         {
             var skillTriggerInfos = SkillTriggerInfos(actorId);

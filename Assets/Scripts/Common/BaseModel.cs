@@ -15,7 +15,6 @@ namespace Ryneus
         public SaveStageInfo CurrentSaveData => GameSystem.CurrentStageData;
         public TempInfo TempInfo => GameSystem.TempData;
         public StageInfo CurrentStage => CurrentSaveData.CurrentStage;
-        public AlcanaInfo StageAlcana => CurrentSaveData.Party.AlcanaInfo;
 
         public PartyInfo PartyInfo => CurrentSaveData.Party;
 
@@ -229,9 +228,9 @@ namespace Ryneus
             return skillInfos;
         }
         
-        public List<SymbolInfo> TacticsSymbols()
+        public List<SymbolResultInfo> TacticsSymbols()
         {
-            return PartyInfo.CurrentSymbolInfos(CurrentStage.CurrentTurn);
+            return PartyInfo.CurrentRecordInfos(CurrentStage.Id,CurrentStage.CurrentTurn);
         }
 
         public List<SkillInfo> AlcanaSkillInfos()
@@ -277,18 +276,18 @@ namespace Ryneus
             CurrentData.PlayerInfo.StageClear(CurrentStage.Id);
         }
 
-        public List<SymbolInfo> OpeningStageSymbolInfos()
+        public List<SymbolResultInfo> OpeningStageSymbolInfos()
         {
-            var symbolInfos = new List<SymbolInfo>();
+            var recordInfos = new List<SymbolResultInfo>();
             var symbols = DataSystem.FindStage(0).StageSymbols;
             symbols = symbols.FindAll(a => a.Seek == 0);
             foreach (var symbol in symbols)
             {
                 var symbolInfo = new SymbolInfo(symbol);
                 var getItemInfos = new List<GetItemInfo>();
-                if (symbolInfo.StageSymbolData.PrizeSetId > 0)
+                if (symbol.PrizeSetId > 0)
                 {
-                    var prizeSets = DataSystem.PrizeSets.FindAll(a => a.Id == symbolInfo.StageSymbolData.PrizeSetId);
+                    var prizeSets = DataSystem.PrizeSets.FindAll(a => a.Id == symbol.PrizeSetId);
                     foreach (var prizeSet in prizeSets)
                     {
                         var getItemInfo = new GetItemInfo(prizeSet.GetItem);
@@ -296,61 +295,49 @@ namespace Ryneus
                     }
                 }
                 symbolInfo.SetGetItemInfos(getItemInfos);
-                symbolInfo.SetSelected(true);
-                symbolInfos.Add(symbolInfo);
+                var record = new SymbolResultInfo(symbolInfo,symbol,GameSystem.CurrentStageData.Party.Currency);
+                record.SetSelected(true);
+                recordInfos.Add(record);
             }
-            return symbolInfos;
+            return recordInfos;
         }
 
-        public List<SymbolInfo> StageSymbolInfos()
+        public List<SymbolResultInfo> StageSymbolInfos()
         {
-            return SymbolUtility.StageSymbolInfos(CurrentStage.Master.StageSymbols);
+            return SymbolUtility.StageRecordInfos(CurrentStage.Master.StageSymbols);
         }
 
         public void StartOpeningStage()
         {
             InitSaveStageInfo();
             CurrentSaveData.InitializeStageData(1);
-            PartyInfo.SetStageSymbolInfos(OpeningStageSymbolInfos());
-            foreach (var symbolInfo in PartyInfo.StageSymbolInfos)
+            foreach (var record in OpeningStageSymbolInfos())
             {
-                var record = new SymbolResultInfo(symbolInfo,GameSystem.CurrentStageData.Party.Currency);
-
-                record.SetSelected(true);
                 PartyInfo.SetSymbolResultInfo(record);
             }
             PartyInfo.ChangeCurrency(DataSystem.System.InitCurrency);
-            PartyInfo.SetStageSymbolInfos(StageSymbolInfos());
-            MakeSymbolResultInfos();
+            foreach (var record in StageSymbolInfos())
+            {
+                PartyInfo.SetSymbolResultInfo(record);
+            }
+            //MakeSymbolResultInfos();
             SavePlayerStageData(true);
         }
 
-        public SymbolInfo CurrentSelectSymbol()
+        public SymbolResultInfo CurrentSelectRecord()
         {
-            var symbolInfos = PartyInfo.CurrentSymbolInfos(CurrentStage.CurrentTurn);
+            var symbolInfos = PartyInfo.CurrentRecordInfos(CurrentStage.Id,CurrentStage.CurrentTurn);
             return symbolInfos.Find(a => a.StageSymbolData.SeekIndex == CurrentStage.CurrentSeekIndex);
         }
 
         public TroopInfo CurrentTroopInfo()
         {
-            return CurrentSelectSymbol().TroopInfo;
+            return CurrentSelectRecord().SymbolInfo.TroopInfo;
         }
 
         public bool BattleResultVictory()
         {
             return PartyInfo.BattleResultVictory;
-        }
-        
-        public void MakeSymbolResultInfos()
-        {
-            // ステージ全てのレコードを作成
-            var currentStageSymbolInfos = PartyInfo.StageSymbolInfos.FindAll(a => a.StageSymbolData.StageId == CurrentStage.Id);
-            foreach (var symbolInfo in currentStageSymbolInfos)
-            {
-                var record = new SymbolResultInfo(symbolInfo,GameSystem.CurrentStageData.Party.Currency);
-
-                PartyInfo.SetSymbolResultInfo(record);
-            }
         }
 
         public void MakeSymbolRecordStage(int seek)
@@ -727,10 +714,10 @@ namespace Ryneus
         {
             if (CurrentStage.CurrentSeekIndex >= 0)
             {
-                var symbol = CurrentSelectSymbol();
-                if (symbol != null && symbol.SymbolType == SymbolType.Battle || symbol.SymbolType == SymbolType.Boss)
+                var symbol = CurrentSelectRecord();
+                if (symbol != null && symbol.SymbolInfo.SymbolType == SymbolType.Battle || symbol.SymbolInfo.SymbolType == SymbolType.Boss)
                 {
-                    return symbol.BattleEvaluate();
+                    return symbol.SymbolInfo.BattleEvaluate();
                 }
             }
             return 0;

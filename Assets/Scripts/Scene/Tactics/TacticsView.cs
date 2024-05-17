@@ -43,7 +43,7 @@ namespace Ryneus
             var listData = symbolRecordList.ListData;
             if (listData != null)
             {
-                var data = (List<SymbolInfo>)listData.Data;
+                var data = (List<SymbolResultInfo>)listData.Data;
                 if (data != null && data.Count > 0)
                 {
                     return data[0].StageSymbolData.Seek;
@@ -270,13 +270,13 @@ namespace Ryneus
             trainView.ShowCharacterDetail(actorInfo,party);
         }
 
-        public void SetSymbolRecords(List<ListData> symbolInfos)
+        public void SetSymbolRecords(List<ListData> recordInfos)
         {
             if (symbolRecordList.ListDates.Count > 0)
             {
                 return;
             }
-            symbolRecordList.SetData(symbolInfos);
+            symbolRecordList.SetData(recordInfos);
             var SymbolRecordDates = symbolRecordList.GetComponentsInChildren<SymbolRecordData>();
             foreach (var SymbolRecordData in SymbolRecordDates)
             {
@@ -325,10 +325,10 @@ namespace Ryneus
                 var listData = tacticsSymbolList.ListData;
                 if (listData != null)
                 {
-                    var data = (SymbolInfo)listData.Data;
-                    if (data != null && data.SymbolType != SymbolType.None)
+                    var data = (SymbolResultInfo)listData.Data;
+                    if (data != null && data.SymbolInfo.SymbolType != SymbolType.None)
                     {
-                        Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
+                        SoundManager.Instance.PlayStaticSe(SEType.Decide);
                         var eventData = new TacticsViewEvent(CommandType.SelectSymbol);
                         eventData.template = data;
                         _commandData(eventData);
@@ -351,8 +351,8 @@ namespace Ryneus
             var listData = tacticsSymbolList.ListData;
             if (listData != null)
             {
-                var data = (SymbolInfo)listData.Data;
-                if (data != null && data.SymbolType != SymbolType.None)
+                var data = (SymbolResultInfo)listData.Data;
+                if (data != null && data.SymbolInfo.SymbolType != SymbolType.None)
                 {
                     SoundManager.Instance.PlayStaticSe(SEType.Decide);
                     var eventData = new TacticsViewEvent(CommandType.CallEnemyInfo);

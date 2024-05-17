@@ -7,7 +7,8 @@ namespace Ryneus
     public class TacticsSymbolList : BaseList
     {
         
-        public bool IsSelectSymbol(){
+        public bool IsSelectSymbol()
+        {
             if (ItemPrefabList.Count > Index)
             {
                 var tacticsSymbol = ItemPrefabList[Index].GetComponent<TacticsSymbol>();
@@ -19,7 +20,8 @@ namespace Ryneus
             return false;
         }
 
-        public GetItemInfo GetItemInfo(){
+        public GetItemInfo GetItemInfo()
+        {
             var tacticsSymbol = ItemPrefabList[Index].GetComponent<TacticsSymbol>();
             if (tacticsSymbol.GetItemList.Index != -1)
             {
@@ -85,7 +87,8 @@ namespace Ryneus
                     CallListInputHandler(InputKeyType.Decide);
                 });
                 //tacticsSymbol.SetSymbolInfoCallHandler((a) => CallListInputHandler(InputKeyType.Option1));
-                tacticsSymbol.SetGetItemInfoSelectHandler((a) => {
+                tacticsSymbol.SetGetItemInfoSelectHandler((a) => 
+                {
                     for (int i = 0; i < ItemPrefabList.Count;i++)
                     {
                         var tacticsSymbol = ItemPrefabList[i].GetComponent<TacticsSymbol>();

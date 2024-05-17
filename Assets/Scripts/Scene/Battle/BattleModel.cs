@@ -64,7 +64,7 @@ namespace Ryneus
         {
             if (CurrentStage != null)
             {
-                if (CurrentSelectSymbol().SymbolType == SymbolType.Boss)
+                if (CurrentSelectRecord().SymbolInfo.SymbolType == SymbolType.Boss)
                 {
                     var bgmData = DataSystem.Data.GetBGM(CurrentStage.Master.BossBGMId);
                     return GetBgmData(bgmData.Key);
@@ -3822,7 +3822,7 @@ namespace Ryneus
         public List<GetItemInfo> MakeBattlerResult()
         {
             var list = new List<GetItemInfo>();
-            list.AddRange(CurrentSelectSymbol().GetItemInfos);
+            list.AddRange(CurrentSelectRecord().SymbolInfo.GetItemInfos);
             return list;
         }
 

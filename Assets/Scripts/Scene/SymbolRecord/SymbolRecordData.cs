@@ -18,7 +18,7 @@ namespace Ryneus
         public void UpdateViewItem()
         {
             if (ListData == null) return;
-            var dates = (List<SymbolInfo>)ListData.Data;
+            var dates = (List<SymbolResultInfo>)ListData.Data;
             foreach (var symbolComponent in symbolComponents)
             {
                 symbolComponent.gameObject.SetActive(false);
@@ -29,7 +29,7 @@ namespace Ryneus
                 {
                     var symbolComponent = symbolComponents[data.StageSymbolData.SeekIndex];
                     symbolComponent.gameObject.SetActive(true);
-                    symbolComponent.UpdateInfo(data);
+                    symbolComponent.UpdateInfo(data.SymbolInfo,data.Selected,data.Seek);
                 }
             }
             if (dates.Count > 0)
@@ -59,7 +59,7 @@ namespace Ryneus
             foreach (var symbolComponent in symbolComponents)
             {
                 var button = symbolComponent.GetComponentInChildren<Button>();
-                button.onClick.AddListener(() => handler(symbolComponent.SymbolInfo.StageSymbolData.Seek));
+                button.onClick.AddListener(() => handler(symbolComponent.Seek));
             }
         }
 

@@ -12,11 +12,11 @@ namespace Ryneus
             _selectActorId = StageMembers()[0].ActorId;
         }
 
-        private SymbolInfo _symbolInfo;
-        public SymbolInfo SymbolInfo => _symbolInfo;
-        public void SetSymbolInfo(SymbolInfo symbolInfo)
+        private SymbolResultInfo _recordInfo;
+        public SymbolResultInfo SymbolInfo => _recordInfo;
+        public void SetRecordInfo(SymbolResultInfo recordInfo)
         {
-            _symbolInfo = symbolInfo;
+            _recordInfo = recordInfo;
         }
         
         private int _selectActorId = 0;
@@ -68,18 +68,20 @@ namespace Ryneus
 
         public List<ListData> StageSymbolInfos(int seek)
         {
-            var list = new List<SymbolInfo>();
-            var symbolInfos = PartyInfo.StageSymbolInfos.FindAll(a => a.StageSymbolData.Seek == seek);
-            var selectRecords = PartyInfo.SymbolRecordList.FindAll(a => a.StageId == CurrentStage.Id && a.Selected == true);
-            for (int i = 0;i < symbolInfos.Count;i++)
+            var list = new List<SymbolResultInfo>();
+            //var symbolInfos = PartyInfo.StageSymbolInfos.FindAll(a => a.StageSymbolData.Seek == seek);
+            var selectRecords = PartyInfo.SymbolRecordList.FindAll(a => a.StageId == CurrentStage.Id && a.StageSymbolData.Seek == seek);
+            for (int i = 0;i < selectRecords.Count;i++)
             {
+                /*
                 var symbolInfo = new SymbolInfo();
                 symbolInfo.CopyData(symbolInfos[i]);
                 var saveRecord = selectRecords.Find(a => a.IsSameSymbol(CurrentStage.Id,symbolInfos[i].StageSymbolData.Seek,symbolInfos[i].StageSymbolData.SeekIndex));
                 symbolInfo.SetSelected(saveRecord != null);
                 symbolInfo.SetCleared(symbolInfos[i].Cleared);
                 MakePrizeData(saveRecord,symbolInfo.GetItemInfos);
-                list.Add(symbolInfo);
+                */
+                list.Add(selectRecords[i]);
             }
             list.Sort((a,b) => a.StageSymbolData.SeekIndex > b.StageSymbolData.SeekIndex ? 1 : -1);
             return MakeListData(list);
@@ -306,40 +308,32 @@ namespace Ryneus
         public List<ListData> SymbolRecords()
         {
             var symbolInfos = new List<SymbolInfo>();
-            var symbolInfoList = new List<List<SymbolInfo>>();
+            var recordList = new List<List<SymbolResultInfo>>();
             
             var stageSeekList = new List<int>();
-            foreach (var symbolInfo in PartyInfo.StageSymbolInfos)
+            var selectRecords = PartyInfo.SymbolRecordList.FindAll(a => a.StageId == CurrentStage.Id);
+            
+            foreach (var selectRecord in selectRecords)
             {
-                if (!stageSeekList.Contains(symbolInfo.StageSymbolData.Seek))
+                if (!stageSeekList.Contains(selectRecord.StageSymbolData.Seek))
                 {
-                    stageSeekList.Add(symbolInfo.StageSymbolData.Seek);
+                    stageSeekList.Add(selectRecord.StageSymbolData.Seek);
                 }
             }
+            
             foreach (var stageSeek in stageSeekList)
             {
-                var list = new List<SymbolInfo>();
-                symbolInfoList.Add(list);
+                var list = new List<SymbolResultInfo>();
+                recordList.Add(list);
             }
-            var selectRecords = PartyInfo.SymbolRecordList.FindAll(a => a.StageId == CurrentStage.Id && a.Selected == true);
             var lastSelectSeek = selectRecords.Count > 0 ? selectRecords.Select(a => a.Seek).Max() : -1;
-            foreach (var stageSymbolInfo in PartyInfo.StageSymbolInfos)
+            foreach (var selectRecord in selectRecords)
             {
-                if (stageSymbolInfo.StageSymbolData.Seek == 0)
+                if (selectRecord.StageSymbolData.Seek == 0)
                 {
                     continue;
                 }
-                var symbolInfo = new SymbolInfo();
-                symbolInfo.CopyData(stageSymbolInfo);
-                var saveRecord = selectRecords.Find(a => a.IsSameSymbol(stageSymbolInfo.StageSymbolData.StageId,stageSymbolInfo.StageSymbolData.Seek,stageSymbolInfo.StageSymbolData.SeekIndex));
-                symbolInfo.SetSelected(saveRecord != null);
-                //symbolInfo.SetLastSelected(saveRecord != null && lastSelectSeek == symbolInfo.StageSymbolData.Seek);
-                symbolInfo.SetPast(saveRecord == null && stageSymbolInfo.StageSymbolData.Seek <= lastSelectSeek);
-                if (saveRecord != null)
-                {
-                    MakePrizeData(saveRecord,symbolInfo.GetItemInfos);
-                }
-                symbolInfoList[symbolInfo.StageSymbolData.Seek-1].Add(symbolInfo);
+                recordList[selectRecord.StageSymbolData.Seek-1].Add(selectRecord);
             }
             // 現在を挿入
             var seekIndex = CurrentStage.CurrentTurn;
@@ -350,17 +344,18 @@ namespace Ryneus
                 SymbolType = SymbolType.None
             };
             var currentInfo = new SymbolInfo(currentSymbol);
+            var currentResult = new SymbolResultInfo(currentInfo,currentSymbol,0);
             currentInfo.SetLastSelected(true);
-            var currentList = new List<SymbolInfo>(){currentInfo};
-            symbolInfoList.Insert(seekIndex-1,currentList);
+            var currentList = new List<SymbolResultInfo>(){currentResult};
+            recordList.Insert(seekIndex-1,currentList);
 
             var listData = new List<ListData>();
-            foreach (var symbolInfos1 in symbolInfoList)
+            foreach (var record in recordList)
             {
-                var list = new ListData(symbolInfos1);
+                var list = new ListData(record);
                 list.SetSelected(false);
                 list.SetEnable(false);
-                if (symbolInfos1.Find(a => a.StageSymbolData.Seek == seekIndex) != null)
+                if (record.Find(a => a.StageSymbolData.Seek == seekIndex) != null)
                 {
                     list.SetSelected(true);
                 }

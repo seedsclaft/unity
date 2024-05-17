@@ -7,9 +7,11 @@ namespace Ryneus
     [Serializable]
     public class SymbolResultInfo
     {
-        public int StageId => _symbolInfo.StageSymbolData.StageId;
-        public int Seek => _symbolInfo.StageSymbolData.Seek;
-        public int SeekIndex => _symbolInfo.StageSymbolData.SeekIndex;
+        private StageSymbolData _stageSymbolData;
+        public StageSymbolData StageSymbolData => _stageSymbolData;
+        public int StageId => StageSymbolData.StageId;
+        public int Seek => StageSymbolData.Seek;
+        public int SeekIndex => StageSymbolData.SeekIndex;
 
         public int _currency;
         public int Currency => _currency;
@@ -19,6 +21,7 @@ namespace Ryneus
         {
             _selected = isSelected;
         }
+        // 選択式のシンボルの行動結果
         public int _selectedIndex = 0;
         public int SelectedIndex => _selectedIndex;
         public void SetSelectedIndex(int selectedIndex)
@@ -43,9 +46,10 @@ namespace Ryneus
         private SymbolInfo _symbolInfo;
         public SymbolInfo SymbolInfo => _symbolInfo;
 
-        public SymbolResultInfo(SymbolInfo symbolInfo,int currency)
+        public SymbolResultInfo(SymbolInfo symbolInfo,StageSymbolData stageSymbolData,int currency)
         {
             _symbolInfo = symbolInfo;
+            _stageSymbolData = stageSymbolData;
             _currency = currency;
             _selected = false;
         }
@@ -54,11 +58,6 @@ namespace Ryneus
         public bool IsSameSymbol(SymbolResultInfo symbolResultInfo)
         {
             return symbolResultInfo.StageId == StageId && symbolResultInfo.Seek == Seek && symbolResultInfo.SeekIndex == SeekIndex;
-        }
-
-        public bool IsSameSymbol(SymbolInfo symbolInfo)
-        {
-            return symbolInfo.StageSymbolData.StageId == StageId && symbolInfo.StageSymbolData.Seek == Seek && symbolInfo.StageSymbolData.SeekIndex == SeekIndex;
         }
 
         public bool IsSameSymbol(int stageId,int seek,int seekIndex)

@@ -17,11 +17,14 @@ namespace Ryneus
         [SerializeField] private GameObject lastSelected;
         private SymbolInfo _symbolInfo = null;
         public SymbolInfo SymbolInfo => _symbolInfo;
+        private int _seek = -1;
+        public int Seek => _seek;
 
         private bool _animationInit = false;
-        public void UpdateInfo(SymbolInfo symbolInfo)
+        public void UpdateInfo(SymbolInfo symbolInfo,bool select,int seek)
         {
             _symbolInfo = symbolInfo;
+            _seek = seek;
             if (_symbolInfo == null)
             {
                 return;
@@ -31,14 +34,13 @@ namespace Ryneus
             UpdateEvaluate();
             if (selected != null)
             {
-                selected.SetActive(_symbolInfo.Selected);
+                selected.SetActive(select);
             }
             if (lastSelected != null)
             {
                 var lastSelect = _symbolInfo.LastSelected;
                 lastSelected.SetActive(lastSelect);
-                selected.SetActive(_symbolInfo.Selected && !lastSelect);
-                symbolImage.gameObject.SetActive(!_symbolInfo.Past && !lastSelect);
+                //symbolImage.gameObject.SetActive(!_symbolInfo.Past && !lastSelect);
                 if (_animationInit == false && lastSelect)
                 {
                     var uiView = lastSelected.GetComponent<RectTransform>();
@@ -55,11 +57,12 @@ namespace Ryneus
         {
             if (commandTitle != null)
             {
-                if (_symbolInfo.SymbolType > SymbolType.None && !_symbolInfo.StageSymbolData.IsRandomSymbol())
+                //if (_symbolInfo.SymbolType > SymbolType.None && !_symbolInfo.StageSymbolData.IsRandomSymbol())
+                if (_symbolInfo.SymbolType > SymbolType.None)
                 {
                     var textId = 40 + (int)_symbolInfo.SymbolType;
                     commandTitle.text = DataSystem.System.GetTextData(textId).Text;
-                    commandTitle.transform.parent.gameObject.SetActive(!_symbolInfo.Past);
+                    //commandTitle.transform.parent.gameObject.SetActive(!_symbolInfo.Past);
                 } else
                 {
                     commandTitle.transform.parent.gameObject.SetActive(false);
