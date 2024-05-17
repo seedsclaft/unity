@@ -91,7 +91,7 @@ namespace Ryneus
             _view.SetActors(_model.BattlerActors());
             _view.SetEnemies(_model.BattlerEnemies());
             _view.BattlerBattleClearSelect();
-            _view.StartBattleStartAnim(DataSystem.GetText(61));
+            _view.StartBattleStartAnim(_model.BattleStartText());
             _view.StartBattleAnimation();
             _view.SetBattleSpeedButton(ConfigUtility.CurrentBattleSpeedText());
             _view.SetBattleSkipButton(DataSystem.GetText(62));

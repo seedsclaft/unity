@@ -256,7 +256,7 @@ namespace Ryneus
                     _model.ReturnTempBattleMembers(); 
                     _view.CommandChangeViewToTransition(null);  
                     // ボス戦なら
-                    if (_model.CurrentSelectRecord().SymbolInfo.SymbolType == SymbolType.Boss)
+                    if (_model.CurrentSelectRecord().SymbolType == SymbolType.Boss)
                     {
                         //SoundManager.Instance.FadeOutBgm();
                         PlayBossBgm();

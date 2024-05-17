@@ -12,6 +12,7 @@ namespace Ryneus
         public int StageId => StageSymbolData.StageId;
         public int Seek => StageSymbolData.Seek;
         public int SeekIndex => StageSymbolData.SeekIndex;
+        public SymbolType SymbolType => StageSymbolData.SymbolType;
 
         public int _currency;
         public int Currency => _currency;
@@ -27,13 +28,6 @@ namespace Ryneus
         public void SetSelectedIndex(int selectedIndex)
         {
             _selectedIndex = selectedIndex;
-        }
-        // バトルで1度クリアしたことがある
-        private bool _cleared;
-        public bool Cleared => _cleared;
-        public void SetCleared(bool cleared)
-        {
-            _cleared = cleared;
         }
         private int _battleScore;
         public int BattleScore => _battleScore;

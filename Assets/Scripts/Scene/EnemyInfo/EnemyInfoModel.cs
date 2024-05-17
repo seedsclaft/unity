@@ -15,7 +15,8 @@ namespace Ryneus
         private int _currentIndex = 0; 
         public int CurrentIndex => _currentIndex;
 
-        public List<ListData> EnemyInfoListDates(){
+        public List<ListData> EnemyInfoListDates()
+        {
             return ListData.MakeListData(_enemyBattlerInfos,true);
         }
 

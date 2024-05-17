@@ -25,7 +25,8 @@ namespace Ryneus
         public void Initialize(List<BattlerInfo> battlerInfos,bool isBattle){
             _isBattle = isBattle;
             battleEnemyLayer.Initialize();
-            battleEnemyLayer.SetSelectedHandler(() => {
+            battleEnemyLayer.SetSelectedHandler(() => 
+            {
                 var eventData = new EnemyInfoViewEvent(CommandType.SelectEnemy);
                 _commandData(eventData);
             });
@@ -49,15 +50,18 @@ namespace Ryneus
         {
             selectCharacter.SetInputHandlerAction(InputKeyType.Decide,() => {});
             selectCharacter.SetInputHandlerAction(InputKeyType.Cancel,() => OnClickBack());
-            selectCharacter.SetInputHandlerAction(InputKeyType.SideLeft1,() => {
+            selectCharacter.SetInputHandlerAction(InputKeyType.SideLeft1,() => 
+            {
                 selectCharacter.SelectCharacterTabSmooth(-1);
             });
-            selectCharacter.SetInputHandlerAction(InputKeyType.SideRight1,() => {
+            selectCharacter.SetInputHandlerAction(InputKeyType.SideRight1,() => 
+            {
                 selectCharacter.SelectCharacterTabSmooth(1);
             });
             SetInputHandler(selectCharacter.MagicList.GetComponent<IInputHandlerEvent>());
             selectCharacter.HideActionList();
-            selectCharacter.SelectCharacterTabSmooth(0);
+            selectCharacter.SelectCharacterTab(0);
+            selectCharacter.SetActiveTab(SelectCharacterTabType.Condition,false);
         }
 
         public void CommandRefreshStatus(List<ListData> skillInfos,BattlerInfo battlerInfo,List<int> enemyIndexes,int lastSelectIndex)

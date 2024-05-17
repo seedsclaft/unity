@@ -72,9 +72,15 @@ namespace Ryneus
 
         private void UpdateSymbolImage()
         {
+            if (_symbolInfo.SymbolType == SymbolType.None) 
+            {
+                symbolImage.gameObject.SetActive(false);
+                return;
+            }
             if (_symbolInfo.SymbolType > SymbolType.SelectActor) return;
             if (_symbolInfo.SymbolType == SymbolType.Random) return;
-            if (_symbolInfo.SymbolType == SymbolType.Battle || _symbolInfo.SymbolType == SymbolType.Boss){
+            if (_symbolInfo.SymbolType == SymbolType.Battle || _symbolInfo.SymbolType == SymbolType.Boss)
+            {
                 symbolImage.sprite = ResourceSystem.LoadEnemySprite(_symbolInfo.TroopInfo.BossEnemy.EnemyData.ImagePath);
             } else
             {

@@ -13,8 +13,6 @@ namespace Ryneus
         public BaseList CommandList => commandList;
         [SerializeField] private ActorInfoComponent displaySelectCharacter;
         [SerializeField] private TextMeshProUGUI commandTitle;
-        [SerializeField] private TextMeshProUGUI commandLv;
-        [SerializeField] private TextMeshProUGUI commandDescription;
         [SerializeField] private List<GameObject> infoObj;
         [SerializeField] private TextMeshProUGUI partyEvaluate;
         [SerializeField] private TextMeshProUGUI troopEvaluate;
@@ -61,8 +59,6 @@ namespace Ryneus
         public void SetTacticsCommandData(TacticsCommandData tacticsCommandData)
         {
             commandTitle.text = tacticsCommandData.Title;
-            commandLv.text = tacticsCommandData.Rank.ToString();
-            commandDescription.text = tacticsCommandData.Description;
         }
 
         public void SetTacticsCharacter(List<ListData> characterData)

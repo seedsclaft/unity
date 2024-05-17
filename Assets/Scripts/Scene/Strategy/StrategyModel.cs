@@ -62,7 +62,7 @@ namespace Ryneus
         {
             if (_levelUpData.Count > 0) return;
             var record = PartyInfo.SymbolRecordList.Find(a => a.IsSameSymbol(CurrentStage.Id,CurrentStage.CurrentTurn,CurrentSaveData.CurrentStage.CurrentSeekIndex));
-            if (record != null && record.Cleared) return;
+            if (record != null && record.SymbolInfo.Cleared) return;
             //var lvUpActorInfos = TacticsActors().FindAll(a => a.TacticsCommandType == TacticsCommandType.Train);
             var lvUpList = new List<ActorInfo>();
             // 結果出力
@@ -98,7 +98,7 @@ namespace Ryneus
                 switch (getItemInfo.GetItemType)
                 {
                     case GetItemType.Numinous:
-                        if (beforeRecord == null || (beforeRecord != null && beforeRecord.Cleared == false))
+                        if (beforeRecord == null || (beforeRecord != null && beforeRecord.SymbolInfo.Cleared == false))
                         {
                             PartyInfo.ChangeCurrency(Currency + getItemInfo.Param1);
                         }
@@ -134,7 +134,7 @@ namespace Ryneus
                 }
             }
             // クリアフラグを立てる
-            record.SetCleared(true); 
+            record.SymbolInfo.SetCleared(true); 
             
             _resultItemInfos = ListData.MakeListData(getItemInfos);
         }

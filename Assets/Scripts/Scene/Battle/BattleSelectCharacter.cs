@@ -71,7 +71,7 @@ namespace Ryneus
 
         public void SelectCharacterTab(int tabIndex)
         {
-            toggleSelect.SetSelectTabIndex((int)tabIndex);
+            toggleSelect.SetSelectTabIndex(tabIndex);
         }
 
         public void SelectCharacterTabSmooth(int index)

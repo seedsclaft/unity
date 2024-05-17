@@ -64,7 +64,7 @@ namespace Ryneus
         {
             if (CurrentStage != null)
             {
-                if (CurrentSelectRecord().SymbolInfo.SymbolType == SymbolType.Boss)
+                if (CurrentSelectRecord().SymbolType == SymbolType.Boss)
                 {
                     var bgmData = DataSystem.Data.GetBGM(CurrentStage.Master.BossBGMId);
                     return GetBgmData(bgmData.Key);
@@ -3896,6 +3896,15 @@ namespace Ryneus
         {
             var waitFrame = GameSystem.ConfigData.BattleAnimationSkip ? 1 : time;
             return (int)(waitFrame / GameSystem.ConfigData.BattleSpeed);
+        }
+
+        public string BattleStartText()
+        {
+            if (CurrentSelectRecord().SymbolType == SymbolType.Boss)
+            {
+                return DataSystem.GetText(42);
+            }
+            return DataSystem.GetText(41);
         }
         
     #if UNITY_EDITOR

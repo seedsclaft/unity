@@ -326,7 +326,7 @@ namespace Ryneus
                 if (listData != null)
                 {
                     var data = (SymbolResultInfo)listData.Data;
-                    if (data != null && data.SymbolInfo.SymbolType != SymbolType.None)
+                    if (data != null && data.SymbolType != SymbolType.None)
                     {
                         SoundManager.Instance.PlayStaticSe(SEType.Decide);
                         var eventData = new TacticsViewEvent(CommandType.SelectSymbol);
@@ -352,7 +352,7 @@ namespace Ryneus
             if (listData != null)
             {
                 var data = (SymbolResultInfo)listData.Data;
-                if (data != null && data.SymbolInfo.SymbolType != SymbolType.None)
+                if (data != null && data.SymbolType != SymbolType.None)
                 {
                     SoundManager.Instance.PlayStaticSe(SEType.Decide);
                     var eventData = new TacticsViewEvent(CommandType.CallEnemyInfo);

@@ -9,24 +9,11 @@ namespace Ryneus
     {
         public TacticsModel()
         {
-            _selectActorId = StageMembers()[0].ActorId;
-        }
-
-        private SymbolResultInfo _recordInfo;
-        public SymbolResultInfo SymbolInfo => _recordInfo;
-        public void SetRecordInfo(SymbolResultInfo recordInfo)
-        {
-            _recordInfo = recordInfo;
         }
         
-        private int _selectActorId = 0;
-        public void SetSelectActorId(int actorId)
-        {
-            _selectActorId = actorId;
-        }    
         public ActorInfo TacticsActor()
         {
-            return StageMembers().Find(a => a.ActorId == _selectActorId);
+            return StageMembers()[0];
         }
 
         private TacticsCommandType _TacticsCommandType = TacticsCommandType.Train;
@@ -66,25 +53,11 @@ namespace Ryneus
             return new ListData(DataSystem.TacticsCommand[index],index,enable);
         }
 
-        public List<ListData> StageSymbolInfos(int seek)
+        public List<ListData> StageRecords(int seek)
         {
-            var list = new List<SymbolResultInfo>();
-            //var symbolInfos = PartyInfo.StageSymbolInfos.FindAll(a => a.StageSymbolData.Seek == seek);
             var selectRecords = PartyInfo.SymbolRecordList.FindAll(a => a.StageId == CurrentStage.Id && a.StageSymbolData.Seek == seek);
-            for (int i = 0;i < selectRecords.Count;i++)
-            {
-                /*
-                var symbolInfo = new SymbolInfo();
-                symbolInfo.CopyData(symbolInfos[i]);
-                var saveRecord = selectRecords.Find(a => a.IsSameSymbol(CurrentStage.Id,symbolInfos[i].StageSymbolData.Seek,symbolInfos[i].StageSymbolData.SeekIndex));
-                symbolInfo.SetSelected(saveRecord != null);
-                symbolInfo.SetCleared(symbolInfos[i].Cleared);
-                MakePrizeData(saveRecord,symbolInfo.GetItemInfos);
-                */
-                list.Add(selectRecords[i]);
-            }
-            list.Sort((a,b) => a.StageSymbolData.SeekIndex > b.StageSymbolData.SeekIndex ? 1 : -1);
-            return MakeListData(list);
+            selectRecords.Sort((a,b) => a.StageSymbolData.SeekIndex > b.StageSymbolData.SeekIndex ? 1 : -1);
+            return MakeListData(selectRecords);
         }
 
         public void SetStageSeekIndex(int symbolIndex)
@@ -247,8 +220,6 @@ namespace Ryneus
             var tacticsCommandData = new TacticsCommandData
             {
                 Title = CommandTitle(),
-                Description = CommandDescription(),
-                Rank = CommandRank()
             };
             return tacticsCommandData;
         }
@@ -256,38 +227,6 @@ namespace Ryneus
         private string CommandTitle()
         {
             return DataSystem.GetText((int)_TacticsCommandType);
-        }
-
-        private int CommandRank()
-        {
-            return 0;
-        }
-
-        private string CommandDescription()
-        {
-            int rank = CommandRank();
-            if (rank > 0)
-            {
-                // %の確率で
-                var bonusParam = rank * 10;
-                return DataSystem.GetReplaceText(10 + (int)_TacticsCommandType,bonusParam.ToString());
-            }
-            int count = 0;
-            switch (_TacticsCommandType)
-            {
-                case TacticsCommandType.Train:
-                    count = DataSystem.System.TrainCount;
-                    break;
-                case TacticsCommandType.Alchemy:
-                    count = DataSystem.System.AlchemyCount;
-                    break;
-                    /*
-                case TacticsCommandType.Recovery:
-                    count = DataSystem.System.RecoveryCount;
-                    break;
-                    */
-            }
-            return DataSystem.GetReplaceText(10,count.ToString());
         }
 
         public void AssignBattlerIndex()
@@ -428,15 +367,15 @@ namespace Ryneus
         }
     }
 
-    public class TacticsActorInfo{
+    public class TacticsActorInfo
+    {
         public ActorInfo ActorInfo;
         public List<ActorInfo> ActorInfos;
         public TacticsCommandType TacticsCommandType;
     }
 
-    public class TacticsCommandData{
+    public class TacticsCommandData
+    {
         public string Title;
-        public int Rank;
-        public string Description;
     }
 }

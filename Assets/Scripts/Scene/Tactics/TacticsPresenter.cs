@@ -390,7 +390,7 @@ namespace Ryneus
         {
             SoundManager.Instance.PlayStaticSe(SEType.Decide);
             //Seekに対応したシンボルを表示
-            _view.SetSymbols(_model.StageSymbolInfos(seek));
+            _view.SetSymbols(_model.StageRecords(seek));
             _view.ShowSymbolList();
             _view.ChangeSymbolBackCommandActive(true);
             // 過去
@@ -434,7 +434,7 @@ namespace Ryneus
                     return;
                 case TacticsCommandType.Train:
                 case TacticsCommandType.Alchemy:
-                    _view.SetSymbols(_model.StageSymbolInfos(_model.CurrentStage.CurrentTurn));
+                    _view.SetSymbols(_model.StageRecords(_model.CurrentStage.CurrentTurn));
                     _backCommand = Tactics.CommandType.TacticsCommandClose;
                     break;
                 case TacticsCommandType.Status:
@@ -456,7 +456,6 @@ namespace Ryneus
 
         private void CommandSelectRecord(SymbolResultInfo recordInfo)
         {
-            _model.SetRecordInfo(recordInfo);
             if (recordInfo.StageSymbolData.Seek == _model.CurrentStage.CurrentTurn)
             {
                 // 現在
@@ -470,7 +469,7 @@ namespace Ryneus
             _model.SetStageSeekIndex(recordInfo.StageSymbolData.SeekIndex);
             _view.HideRecordList();
             // 回路解析
-            switch (recordInfo.SymbolInfo.SymbolType)
+            switch (recordInfo.SymbolType)
             {
                 case SymbolType.Battle:
                 case SymbolType.Boss:
@@ -757,7 +756,7 @@ namespace Ryneus
                     _model.SetStatusActorInfos();
                     _view.CommandChangeViewToTransition(null);
                     // ボス戦なら
-                    if (_model.CurrentSelectRecord().SymbolInfo.SymbolType == SymbolType.Boss)
+                    if (_model.CurrentSelectRecord().SymbolType == SymbolType.Boss)
                     {
                         //SoundManager.Instance.FadeOutBgm();
                         PlayBossBgm();
@@ -832,7 +831,7 @@ namespace Ryneus
 
         private void CommandCallEnemyInfo(SymbolResultInfo symbolInfo)
         {
-            switch (symbolInfo.SymbolInfo.SymbolType)
+            switch (symbolInfo.SymbolType)
             {
                 case SymbolType.Battle:
                 case SymbolType.Boss:

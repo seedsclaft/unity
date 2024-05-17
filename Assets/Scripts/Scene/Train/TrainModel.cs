@@ -176,46 +176,12 @@ namespace Ryneus
         {
             var tacticsCommandData = new TacticsCommandData();
             tacticsCommandData.Title = CommandTitle();
-            tacticsCommandData.Description = CommandDescription();
-            tacticsCommandData.Rank = CommandRank();
             return tacticsCommandData;
         }
 
         private string CommandTitle()
         {
             return DataSystem.GetText((int)_TacticsCommandType);
-        }
-
-        private int CommandRank()
-        {
-            return 0;
-        }
-
-        private string CommandDescription()
-        {
-            int rank = CommandRank();
-            if (rank > 0)
-            {
-                // %の確率で
-                var bonusParam = rank * 10;
-                return DataSystem.GetReplaceText(10 + (int)_TacticsCommandType,bonusParam.ToString());
-            }
-            int count = 0;
-            switch (_TacticsCommandType)
-            {
-                case TacticsCommandType.Train:
-                    count = DataSystem.System.TrainCount;
-                    break;
-                case TacticsCommandType.Alchemy:
-                    count = DataSystem.System.AlchemyCount;
-                    break;
-                    /*
-                case TacticsCommandType.Recovery:
-                    count = DataSystem.System.RecoveryCount;
-                    break;
-                    */
-            }
-            return DataSystem.GetReplaceText(10,count.ToString());
         }
 
         public void ChangeBattleLineIndex(int actorId,bool isFront)

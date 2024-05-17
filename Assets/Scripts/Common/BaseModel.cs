@@ -714,10 +714,10 @@ namespace Ryneus
         {
             if (CurrentStage.CurrentSeekIndex >= 0)
             {
-                var symbol = CurrentSelectRecord();
-                if (symbol != null && symbol.SymbolInfo.SymbolType == SymbolType.Battle || symbol.SymbolInfo.SymbolType == SymbolType.Boss)
+                var record = CurrentSelectRecord();
+                if (record != null && record.SymbolType == SymbolType.Battle || record.SymbolType == SymbolType.Boss)
                 {
-                    return symbol.SymbolInfo.BattleEvaluate();
+                    return record.SymbolInfo.BattleEvaluate();
                 }
             }
             return 0;
