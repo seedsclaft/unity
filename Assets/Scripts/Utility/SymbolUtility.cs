@@ -14,34 +14,45 @@ namespace Ryneus
         {
             var symbolInfos = new List<SymbolResultInfo>();
             var symbols = stageSymbolDates.FindAll(a => a.Seek > 0);
-            foreach (var symbol in symbols)
+            foreach (var symbolMaster in symbols)
             {
-                var symbolInfo = new SymbolInfo(symbol);
+                var symbolInfo = new SymbolInfo(symbolMaster.SymbolType);
+                var stageSymbolData = new StageSymbolData();
+                stageSymbolData.CopyData(symbolMaster);
                 // グループ指定
-                if (symbol.IsRandomSymbol()){
-                    var groupId = (int)symbol.SymbolType;
+                if (stageSymbolData.IsGroupSymbol())
+                {
+                    var groupId = (int)stageSymbolData.SymbolType;
                     var groupDates = DataSystem.SymbolGroups.FindAll(a => a.GroupId == groupId);
-                    var data = PickUpSymbolData(groupDates);
-                    data.StageId = symbol.StageId;
-                    data.Seek = symbol.Seek;
-                    data.SeekIndex = symbol.SeekIndex;
-                    symbolInfo = new SymbolInfo(data);
+                    stageSymbolData = PickUpSymbolData(groupDates);
+                    stageSymbolData.StageId = symbolMaster.StageId;
+                    stageSymbolData.Seek = symbolMaster.Seek;
+                    stageSymbolData.SeekIndex = symbolMaster.SeekIndex;
+                    symbolInfo = new SymbolInfo(stageSymbolData.SymbolType);
+                    if (stageSymbolData.SymbolType == SymbolType.Battle)
+                    {
+                        symbolInfo.SetTroopInfo(BattleTroop(stageSymbolData));
+                    }
                 }
-                if (symbol.SymbolType == SymbolType.Random || symbol.SymbolType == SymbolType.Random){
-                    var data = RandomSymbolData(stageSymbolDates);
-                    data.StageId = symbol.StageId;
-                    data.Seek = symbol.Seek;
-                    data.SeekIndex = symbol.SeekIndex;
-                    symbolInfo = new SymbolInfo(data);
+                if (stageSymbolData.SymbolType == SymbolType.Random || stageSymbolData.SymbolType == SymbolType.Random){
+                    stageSymbolData = RandomSymbolData(stageSymbolDates);
+                    stageSymbolData.StageId = symbolMaster.StageId;
+                    stageSymbolData.Seek = symbolMaster.Seek;
+                    stageSymbolData.SeekIndex = symbolMaster.SeekIndex;
+                    symbolInfo = new SymbolInfo(stageSymbolData.SymbolType);
+                    if (stageSymbolData.SymbolType == SymbolType.Battle && stageSymbolData.Param1 == -1)
+                    {
+                        symbolInfo.SetTroopInfo(BattleTroop(stageSymbolData));
+                    }
                 }
                 var getItemInfos = new List<GetItemInfo>();
-                switch (symbolInfo.SymbolType)
+                switch (stageSymbolData.SymbolType)
                 {
                     case SymbolType.Battle:
                     case SymbolType.Boss:
-                        if (symbol.Param1 > 0 || symbol.Param1 == -1)
+                        if (stageSymbolData.Param1 > 0)
                         {
-                            symbolInfo.SetTroopInfo(BattleTroop(symbol));
+                            symbolInfo.SetTroopInfo(BattleTroop(stageSymbolData));
                         }
                         
                         if (symbolInfo.TroopInfo != null && symbolInfo.TroopInfo.GetItemInfos.Count > 0)
@@ -51,9 +62,9 @@ namespace Ryneus
                         break;
                     case SymbolType.Alcana:
                         // アルカナランダムで報酬設定
-                        if (symbol.Param1 == -1)
+                        if (stageSymbolData.Param1 == -1)
                         {
-                            var alcanaRank = symbol.Param2;
+                            var alcanaRank = stageSymbolData.Param2;
                             var alcanaIds = PartyInfo.CurrentAlcanaIdList(CurrentStage.Id,CurrentStage.CurrentTurn);
                             var alcanaSkills = DataSystem.Skills.Where(a => a.Value.Rank == alcanaRank && !alcanaIds.Contains(a.Value.Id)).ToList();
                             var count = 2;
@@ -93,7 +104,7 @@ namespace Ryneus
                         var resourceData = new GetItemData
                         {
                             Type = GetItemType.Numinous,
-                            Param1 = symbol.Param1
+                            Param1 = stageSymbolData.Param1
                         };
                         getItemInfos.Add(new GetItemInfo(resourceData));
                         break;
@@ -102,13 +113,13 @@ namespace Ryneus
                         var actorData = new GetItemData
                         {
                             Type = GetItemType.AddActor,
-                            Param1 = symbol.Param1
+                            Param1 = stageSymbolData.Param1
                         };
                         getItemInfos.Add(new GetItemInfo(actorData));
                         break;
                     case SymbolType.SelectActor:
                         // 表示用に報酬設定
-                        if (symbol.Param2 == 0)
+                        if (stageSymbolData.Param2 == 0)
                         {
                             var actorData2 = new GetItemInfo(new GetItemData());
                             actorData2.MakeSelectActorSymbolResult();
@@ -148,9 +159,9 @@ namespace Ryneus
                         }
                         break;
                 }
-                if (symbol.PrizeSetId > 0)
+                if (stageSymbolData.PrizeSetId > 0)
                 {
-                    var prizeSets = DataSystem.PrizeSets.FindAll(a => a.Id == symbol.PrizeSetId);
+                    var prizeSets = DataSystem.PrizeSets.FindAll(a => a.Id == stageSymbolData.PrizeSetId);
                     foreach (var prizeSet in prizeSets)
                     {
                         var getItemInfo = new GetItemInfo(prizeSet.GetItem);
@@ -158,7 +169,7 @@ namespace Ryneus
                     }
                 }
                 symbolInfo.SetGetItemInfos(getItemInfos);
-                var record = new SymbolResultInfo(symbolInfo,symbol,GameSystem.CurrentStageData.Party.Currency);
+                var record = new SymbolResultInfo(symbolInfo,stageSymbolData,GameSystem.CurrentStageData.Party.Currency);
                 symbolInfos.Add(record);
             }
             return symbolInfos;
@@ -203,7 +214,7 @@ namespace Ryneus
                 switch (symbol.SymbolType)
                 {
                     case SymbolType.Battle:
-                        stageSymbolData.CopyData(symbol);
+                        stageSymbolData.CopyParamData(symbol);
                         stageSymbolData.Param1 = -1;
                         stageSymbolData.PrizeSetId = 0;
                         break;
@@ -218,18 +229,18 @@ namespace Ryneus
                             }
                         }
                         targetRand = Random.Range(0,list.Count);
-                        stageSymbolData.CopyData(symbol);
+                        stageSymbolData.CopyParamData(symbol);
                         stageSymbolData.Param1 = list[targetRand];
                         stageSymbolData.Param2 = 0;
                         break;
                     case SymbolType.Alcana:
                         if (!PartyInfo.CurrentAlchemyIdList(CurrentStage.Id,CurrentStage.CurrentTurn).Contains(symbol.Param1))
                         {
-                            stageSymbolData.CopyData(symbol);
+                            stageSymbolData.CopyParamData(symbol);
                         }
                         break;
                     default:
-                        if (symbol.IsRandomSymbol())
+                        if (symbol.IsGroupSymbol())
                         {
                             var groupId = (int)symbol.SymbolType;
                             var groupDates = DataSystem.SymbolGroups.FindAll(a => a.GroupId == groupId);
@@ -242,7 +253,7 @@ namespace Ryneus
                             
                         } else
                         {
-                            stageSymbolData.CopyData(symbol);
+                            stageSymbolData.CopyParamData(symbol);
                         }
                         break;
                 }

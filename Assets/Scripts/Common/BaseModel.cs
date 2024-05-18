@@ -171,6 +171,16 @@ namespace Ryneus
             return listData;
         }
 
+        public List<ListData> MakeListData<T>(List<T> dataList,Func<T,bool> enable,int selectIndex = -1)
+        {
+            var listData = ListData.MakeListData(dataList,enable);
+            if (selectIndex != -1 && listData.Count > selectIndex)
+            {
+                listData[selectIndex].SetSelected(true);
+            }
+            return listData;
+        }
+
         public List<ListData> ConfirmCommand()
         {
             return MakeListData(BaseConfirmCommand(3050,3051));
@@ -276,14 +286,14 @@ namespace Ryneus
             CurrentData.PlayerInfo.StageClear(CurrentStage.Id);
         }
 
-        public List<SymbolResultInfo> OpeningStageSymbolInfos()
+        public List<SymbolResultInfo> OpeningStageRecordInfos()
         {
             var recordInfos = new List<SymbolResultInfo>();
             var symbols = DataSystem.FindStage(0).StageSymbols;
             symbols = symbols.FindAll(a => a.Seek == 0);
             foreach (var symbol in symbols)
             {
-                var symbolInfo = new SymbolInfo(symbol);
+                var symbolInfo = new SymbolInfo(symbol.SymbolType);
                 var getItemInfos = new List<GetItemInfo>();
                 if (symbol.PrizeSetId > 0)
                 {
@@ -302,21 +312,22 @@ namespace Ryneus
             return recordInfos;
         }
 
-        public List<SymbolResultInfo> StageSymbolInfos()
+        public List<SymbolResultInfo> StageRecordInfos(int stageId)
         {
-            return SymbolUtility.StageRecordInfos(CurrentStage.Master.StageSymbols);
+            var stageData = DataSystem.FindStage(stageId);
+            return SymbolUtility.StageRecordInfos(stageData.StageSymbols);
         }
 
         public void StartOpeningStage()
         {
             InitSaveStageInfo();
             CurrentSaveData.InitializeStageData(1);
-            foreach (var record in OpeningStageSymbolInfos())
+            foreach (var record in OpeningStageRecordInfos())
             {
                 PartyInfo.SetSymbolResultInfo(record);
             }
             PartyInfo.ChangeCurrency(DataSystem.System.InitCurrency);
-            foreach (var record in StageSymbolInfos())
+            foreach (var record in StageRecordInfos(CurrentStage.Id))
             {
                 PartyInfo.SetSymbolResultInfo(record);
             }

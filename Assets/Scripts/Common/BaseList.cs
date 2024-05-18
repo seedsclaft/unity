@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -167,6 +168,20 @@ namespace Ryneus
             {
                 var listData = new ListData(data,idx);
                 listData.SetEnable(isEnable);
+                list.Add(listData);
+                idx++;
+            }
+            return list;
+        }
+
+        public static List<ListData> MakeListData<T>(List<T> dataList,Func<T,bool> Enable)
+        {
+            var list = new List<ListData>();
+            var idx = 0;
+            foreach (var data in dataList)
+            {
+                var listData = new ListData(data,idx);
+                listData.SetEnable(Enable(data));
                 list.Add(listData);
                 idx++;
             }

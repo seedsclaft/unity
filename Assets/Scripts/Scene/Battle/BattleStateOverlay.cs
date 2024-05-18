@@ -5,12 +5,15 @@ using UnityEngine.UI;
 using DG.Tweening;
 using UnityEngine.U2D;
 using Effekseer;
+using UtageExtensions;
 
 namespace Ryneus
 {
     public class BattleStateOverlay : MonoBehaviour
     {
-        [SerializeField] private Image icon = null;
+        [SerializeField] private GameObject iconPrefab = null;
+        [SerializeField] private GameObject iconRoot = null;
+        //[SerializeField] private Image icon = null;
         [SerializeField] private EffekseerEmitter effekseerEmitter = null;
         private List<StateInfo> _stateInfos = new List<StateInfo>();
         private string _overlayEffectPath = null;
@@ -19,11 +22,54 @@ namespace Ryneus
 
         private int _iconAnimIndex = -1;
 
+        private List<BattleStateIcon> _stateIconImages = new ();
+
+        public void Initialize()
+        {
+            iconRoot.transform.DestroyChildren();
+        }
+
         public void SetStates(List<StateInfo> stateInfos)
         {
             _stateInfos = stateInfos;
-            IconAnimation();
+            //IconAnimation();
+            UpdateStateIcons();
             OverlayAnimation();
+        }
+
+        private void UpdateStateIcons()
+        {
+            HideStateIcons();
+            for (int i = 0;i < _stateInfos.Count ;i++)
+            {
+                var stateInfo = _stateInfos[i];
+                if (_stateIconImages.Count <= i)
+                {
+                    var prefab = Instantiate(iconPrefab);
+                    prefab.transform.SetParent(iconRoot.transform,false);
+                    _stateIconImages.Add(prefab.GetComponent<BattleStateIcon>());
+                }
+                var stateIconImage = _stateIconImages[i];
+                SetActiveStateIcon(stateIconImage,true);
+                var spriteAtlas = Resources.Load<SpriteAtlas>("Texture/Icons");
+                if (stateIconImage != null)
+                {
+                    stateIconImage.SetStateImage(spriteAtlas.GetSprite(stateInfo.Master.IconPath));
+                }
+            }
+        }
+
+        private void SetActiveStateIcon(BattleStateIcon stateIconImage ,bool isActive)
+        {
+            stateIconImage.transform.parent.gameObject.SetActive(isActive);
+        }
+
+        private void HideStateIcons()
+        {
+            foreach (var stateIconImage in _stateIconImages)
+            {
+                SetActiveStateIcon(stateIconImage,false);
+            }
         }
 
         private void IconAnimation()
@@ -69,6 +115,7 @@ namespace Ryneus
 
         private void StopAnimation()
         {
+            /*
             _iconAnimIndex = -1;
             if (_iconSequence != null) 
             {
@@ -79,10 +126,12 @@ namespace Ryneus
             {
                 icon.gameObject.SetActive(false);
             }
+            */
         }
 
         private void UpdateStateIcon()
         {
+            /*
             if (_stateInfos.Count < _iconAnimIndex) return;
             icon.gameObject.SetActive(true);
             var stateInfo = _stateInfos[_iconAnimIndex];
@@ -91,6 +140,7 @@ namespace Ryneus
             {
                 icon.sprite = spriteAtlas.GetSprite(stateInfo.Master.IconPath);
             }
+            */
         }
 
         private void OverlayAnimation()
@@ -128,7 +178,7 @@ namespace Ryneus
         private EffekseerEffectAsset UpdateStateOverlay()
         {
             string path = "Animations/" + _overlayEffectPath;
-            var result = UnityEngine.Resources.Load<EffekseerEffectAsset>(path);
+            var result = Resources.Load<EffekseerEffectAsset>(path);
             return result;
         }
 

@@ -28,13 +28,9 @@ namespace Ryneus
         {
             _cleared = cleared;
         }
-        public SymbolInfo(StageSymbolData symbol = null)
+        public SymbolInfo(SymbolType symbolType)
         {
-            if (symbol == null)
-            {
-                return;
-            }
-            _SymbolType = symbol.SymbolType;
+            _SymbolType = symbolType;
             //_stageSymbolData = symbol;
         }
 

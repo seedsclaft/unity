@@ -6,12 +6,14 @@ namespace Ryneus
     [Serializable]
     public class SkillTriggerInfo
     {
-        private int _actorId = -1;
-        public int ActorId => _actorId;
-        public void SetActorId(int actorId)
+        public SkillTriggerInfo(int actorId,int skillId)
         {
             _actorId = actorId;
+            _skillId = skillId;
         }
+
+        private int _actorId = -1;
+        public int ActorId => _actorId;
         private int _priority = -1;
         public int Priority => _priority;
         public void SetPriority(int priority)

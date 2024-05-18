@@ -64,7 +64,7 @@ namespace Ryneus
                     Seek = 1,
                     SeekIndex = 0
                 };
-                var symbolInfo = new SymbolInfo(stageSymbol);
+                var symbolInfo = new SymbolInfo(SymbolType.Battle);
                 symbolInfo.SetTroopInfo(troopInfo);
                 //currentStageData.Party.SetStageSymbolInfos(new List<SymbolInfo>(){ symbolInfo});
             } else
@@ -93,7 +93,7 @@ namespace Ryneus
             var symbols = DataSystem.FindStage(0).StageSymbols;
             foreach (var symbol in symbols)
             {
-                var symbolInfo = new SymbolInfo(symbol);
+                var symbolInfo = new SymbolInfo(symbol.SymbolType);
                 var getItemInfos = new List<GetItemInfo>();
                 if (symbol.PrizeSetId > 0)
                 {
@@ -120,7 +120,7 @@ namespace Ryneus
             var symbols = DataSystem.FindStage(0).StageSymbols;
             foreach (var symbol in symbols)
             {
-                var symbolInfo = new SymbolInfo(symbol);
+                var symbolInfo = new SymbolInfo(symbol.SymbolType);
                 var getItemInfos = new List<GetItemInfo>();
                 if (symbol.PrizeSetId > 0)
                 {

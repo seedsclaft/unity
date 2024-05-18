@@ -48,6 +48,10 @@ namespace Ryneus
         {
             _battleDamageRoot = damageRoot;
             _battleDamageRoot.SetActive(true);
+            if (battleStateOverlay != null) 
+            {
+                battleStateOverlay.Initialize();
+            }
         }
 
         public void SetStatusRoot(GameObject statusRoot)

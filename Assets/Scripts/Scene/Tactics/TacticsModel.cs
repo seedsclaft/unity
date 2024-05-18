@@ -57,7 +57,11 @@ namespace Ryneus
         {
             var selectRecords = PartyInfo.SymbolRecordList.FindAll(a => a.StageId == CurrentStage.Id && a.StageSymbolData.Seek == seek);
             selectRecords.Sort((a,b) => a.StageSymbolData.SeekIndex > b.StageSymbolData.SeekIndex ? 1 : -1);
-            return MakeListData(selectRecords);
+            Func<SymbolResultInfo,bool> enable = (a) => 
+            {
+                return a.StageSymbolData.Seek == CurrentStage.CurrentTurn;
+            };
+            return MakeListData(selectRecords,enable);
         }
 
         public void SetStageSeekIndex(int symbolIndex)
@@ -282,7 +286,7 @@ namespace Ryneus
                 SeekIndex = 0,
                 SymbolType = SymbolType.None
             };
-            var currentInfo = new SymbolInfo(currentSymbol);
+            var currentInfo = new SymbolInfo(currentSymbol.SymbolType);
             var currentResult = new SymbolResultInfo(currentInfo,currentSymbol,0);
             currentInfo.SetLastSelected(true);
             var currentList = new List<SymbolResultInfo>(){currentResult};

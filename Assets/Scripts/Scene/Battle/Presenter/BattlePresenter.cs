@@ -5,7 +5,7 @@ using Ryneus;
 
 namespace Ryneus
 {
-    public class BattlePresenter : BasePresenter
+    public partial class BattlePresenter : BasePresenter
     {
         BattleModel _model = null;
         BattleView _view = null;
@@ -188,35 +188,6 @@ namespace Ryneus
 
         private void UpdatePopupEscape(ConfirmCommandType confirmCommandType)
         {
-            /*
-            _view.CommandGameSystem(Base.CommandType.CloseConfirm);
-            if (confirmCommandType == ConfirmCommandType.Yes)
-            {
-                _view.HideSkillActionList();
-                _view.HideBattleThumb();
-                _view.SetBattleBusy(true);
-                _model.EscapeBattle();
-                _view.StartBattleStartAnim(DataSystem.GetTextData(15030).Text);
-
-                _model.EndBattle();
-                _battleEnded = true;
-                _view.HideStateOverlay();
-                await UniTask.DelayFrame(180);
-                _view.SetBattleBusy(false);
-                if (SoundManager.Instance.CrossFadeMode)
-                {
-                    SoundManager.Instance.ChangeCrossFade();
-                } else
-                {
-                    PlayTacticsBgm();
-                }
-                var strategySceneInfo = new StrategySceneInfo{
-                    ActorInfos = _model.BattleMembers(),
-                    GetItemInfos = new List<GetItemInfo>()
-                };
-                _view.CommandGotoSceneChange(Scene.Strategy);
-            }
-            */
         }
 
         private void UpdatePopupNoEscape(ConfirmCommandType confirmCommandType)
@@ -574,7 +545,7 @@ namespace Ryneus
                 // 行動前の行動のため再取得
                 actionInfo = _model.CurrentActionInfo();
                 _model.MakeActionResultInfo(actionInfo,indexList);
-                actionInfo.SetTargetIndexList(indexList);
+                actionInfo.SetCandidateTargetIndexList(indexList);
                 _model.MakeCurseActionResults(actionInfo,indexList);
                 // 行動割り込みスキル判定
                 _model.CheckTriggerSkillInfos(TriggerTiming.Interrupt,actionInfo,actionInfo.ActionResults,true);
@@ -967,7 +938,7 @@ namespace Ryneus
                 if (actionInfo.RepeatTime > 0)
                 {
                     _model.ResetTargetIndexList(actionInfo);
-                    MakeActionResultInfo(actionInfo.TargetIndexList);
+                    MakeActionResultInfo(actionInfo.CandidateTargetIndexList);
                     RepeatAnimationSkill();
                     return;
                 }
@@ -1221,7 +1192,10 @@ namespace Ryneus
             _model.EndBattle();
             _battleEnded = true;
             _view.HideStateOverlay();
-            _view.CommandGameSystem(Base.CommandType.CallLoading);
+            if (_skipBattle)
+            {
+                _view.CommandGameSystem(Base.CommandType.CallLoading);
+            }
             await UniTask.DelayFrame(180);
             _view.SetBattleBusy(false);
             if (SoundManager.Instance.CrossFadeMode)

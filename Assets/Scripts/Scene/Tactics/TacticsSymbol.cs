@@ -93,6 +93,7 @@ namespace Ryneus
             }
             UpdateItemIndex(_getItemIndex);
             UpdateSelected(data.Selected);
+            Cursor?.SetActive(ListData.Enable);
             //UpdateCleared(data);
         }
 
@@ -133,8 +134,9 @@ namespace Ryneus
             //cleared.SetActive(symbolInfo.Cleared);
         }
 
-        private void LateUpdate() {
-            Cursor.SetActive(_getItemIndex == -1 && _selectable);
+        private void LateUpdate() 
+        {
+            Cursor.SetActive(_getItemIndex == -1 && _selectable && ListData.Enable);
         }
     }
 }

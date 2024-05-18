@@ -74,13 +74,21 @@ namespace Ryneus
 
         public void CopyData(StageSymbolData stageSymbolData)
         {
+            CopyParamData(stageSymbolData);
+            StageId = stageSymbolData.StageId;
+            Seek = stageSymbolData.Seek;
+            SeekIndex = stageSymbolData.SeekIndex;
+        }
+
+        public void CopyParamData(StageSymbolData stageSymbolData)
+        {
             SymbolType = stageSymbolData.SymbolType;
             Param1 = stageSymbolData.Param1;
             Param2 = stageSymbolData.Param2;
             PrizeSetId = stageSymbolData.PrizeSetId;
         }
 
-        public bool IsRandomSymbol()
+        public bool IsGroupSymbol()
         {
             return SymbolType > SymbolType.SelectActor;
         }

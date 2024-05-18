@@ -263,15 +263,26 @@ namespace Ryneus
                 var index = 0;
                 foreach (var skillTriggerData in skillTriggerDates)
                 {
-                    var skillTriggerInfo = new SkillTriggerInfo();
-                    skillTriggerInfo.SetSkillId(skillTriggerData.SkillId);
+                    var skillTriggerInfo = new SkillTriggerInfo(actorInfo.ActorId,skillTriggerData.SkillId);
                     skillTriggerInfo.SetPriority(index);
                     var SkillTriggerData1 = DataSystem.SkillTriggers.Find(a => a.Id == skillTriggerData.Trigger1);
                     var SkillTriggerData2 = DataSystem.SkillTriggers.Find(a => a.Id == skillTriggerData.Trigger2);
                     skillTriggerInfo.UpdateTriggerDates(new List<SkillTriggerData>(){SkillTriggerData1,SkillTriggerData2});
-                    skillTriggerInfo.SetActorId(actorInfo.ActorId);
                     _actorSkillTriggerInfos.Add(skillTriggerInfo);
                     index++;
+                }
+            }
+        }
+        public void AddSkillTriggerSkill(int actorId,int skillId)
+        {
+            var skillTriggerInfos = SkillTriggerInfos(actorId);
+            for (int i = 0;i < skillTriggerInfos.Count;i++)
+            {
+                var skillTriggerInfo = skillTriggerInfos[i];
+                if (skillTriggerInfo.SkillId == 0)
+                {
+                    skillTriggerInfo.SetSkillId(skillId);
+                    break;
                 }
             }
         }

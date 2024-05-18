@@ -29,8 +29,112 @@ MonoBehaviour:
     Key: STATUS
     Name: "\u30AD\u30E3\u30E9"
     Help: "\u30AD\u30E3\u30E9\u306E\u30B9\u30C6\u30FC\u30BF\u30B9\u3084\u9B54\u6CD5\u3092\u78BA\u8A8D\u3057\u307E\u3059"
-  StatusCommandData: []
-  OptionCommandData: []
+  StatusCommandData:
+  - Id: 1
+    Key: SKILLLIST
+    Name: "\u63A2\u7D22"
+    Help: "\u30B9\u30C6\u30FC\u30B8\u3092\u63A2\u7D22\u3057\u307E\u3059"
+  OptionCommandData:
+  - Id: 1
+    Key: BGM_VOLUME
+    Name: BGM Volume
+    Help: " - BGM\u306E\u97F3\u91CF\u3092\u5909\u66F4\u3057\u307E\u3059"
+    Category: 1
+    ButtonType: 1
+    ToggleText1: 0
+    ToggleText2: 0
+    ToggleText3: 0
+    ExistAndroid: 1
+  - Id: 2
+    Key: SE_VOLUME
+    Name: SE Volume
+    Help: " - SE\u306E\u97F3\u91CF\u3092\u5909\u66F4\u3057\u307E\u3059"
+    Category: 1
+    ButtonType: 1
+    ToggleText1: 0
+    ToggleText2: 0
+    ToggleText3: 0
+    ExistAndroid: 1
+  - Id: 3
+    Key: GRAPHIC_QUALITY
+    Name: Graphic Quality
+    Help: " - \u753B\u8CEA\u306E\u30AF\u30AA\u30EA\u30C6\u30A3\u3092\u5909\u66F4\u3057\u307E\u3059"
+    Category: 1
+    ButtonType: 2
+    ToggleText1: 521
+    ToggleText2: 522
+    ToggleText3: 0
+    ExistAndroid: 0
+  - Id: 4
+    Key: EVENT_SKIP
+    Name: Event Skip
+    Help: " - \u9078\u629E\u80A2\u3092\u9664\u304D\u30A4\u30D9\u30F3\u30C8\u3092\u30B9\u30AD\u30C3\u30D7\u3059\u308B\u304B\u5909\u66F4\u3057\u307E\u3059"
+    Category: 1
+    ButtonType: 2
+    ToggleText1: 526
+    ToggleText2: 527
+    ToggleText3: 0
+    ExistAndroid: 1
+  - Id: 5
+    Key: COMMAND_END_CHECK
+    Name: Command Check
+    Help: " - \u5168\u3066\u306E\u30A2\u30EB\u30B1\u30DF\u30B9\u30C8\u306B\u547D\u4EE4\u3092\u7D42\u3048\u305F\u6642\u306B\u547D\u4EE4\u7D42\u4E86\u30B3\u30DE\u30F3\u30C9\u3092\u547C\u3076\u304B\u5909\u66F4\u3057\u307E\u3059"
+    Category: 1
+    ButtonType: 2
+    ToggleText1: 531
+    ToggleText2: 532
+    ToggleText3: 0
+    ExistAndroid: 0
+  - Id: 6
+    Key: BATTLE_WAIT
+    Name: Battle Wait
+    Help: " - \u30D0\u30C8\u30EB\u3067\u884C\u52D5\u9806\u756A\u5F85\u3061\u6642\u9593\u3092\u8868\u793A\u3059\u308B\u304B\u30B9\u30AD\u30C3\u30D7\u3059\u308B\u5909\u66F4\u3057\u307E\u3059"
+    Category: 1
+    ButtonType: 2
+    ToggleText1: 536
+    ToggleText2: 527
+    ToggleText3: 0
+    ExistAndroid: 0
+  - Id: 7
+    Key: BATTLE_ANIMATION
+    Name: Battle Animation
+    Help: " - \u30D0\u30C8\u30EB\u30A2\u30CB\u30E1\u30FC\u30B7\u30E7\u30F3\u6F14\u51FA\u8868\u793A\u306E\u6709\u7121\u3092\u5207\u308A\u66FF\u3048\u307E\u3059"
+    Category: 1
+    ButtonType: 2
+    ToggleText1: 536
+    ToggleText2: 527
+    ToggleText3: 0
+    ExistAndroid: 1
+  - Id: 8
+    Key: INPUT_TYPE
+    Name: Enable InputKey
+    Help: " - \u30AD\u30FC\u30DC\u30FC\u30C9\u30FB\u30B2\u30FC\u30E0\u30D1\u30C3\u30C9\u64CD\u4F5C\u3092\u6709\u52B9\u306B\u3059\u308B\u304B\u5909\u66F4\u3057\u307E\u3059"
+    Category: 1
+    ButtonType: 2
+    ToggleText1: 541
+    ToggleText2: 542
+    ToggleText3: 0
+    ExistAndroid: 0
+  - Id: 9
+    Key: BATTLE_AUTO
+    Name: Battle Auto
+    Help: " - \u30D0\u30C8\u30EB\u306E\u64CD\u4F5C\u65B9\u6CD5\u3092\u5909\u66F4\u3057\u307E\u3059"
+    Category: 1
+    ButtonType: 2
+    ToggleText1: 543
+    ToggleText2: 544
+    ToggleText3: 0
+    ExistAndroid: 1
+  - Id: 10
+    Key: BATTLE_SPEED
+    Name: "\u30D0\u30C8\u30EB\u901F\u5EA6"
+    Help: " - \u30D0\u30C8\u30EB\u306E\u901F\u5EA6\u3092\u5909\u66F4\u3057\u307E\u3059"
+    Category: 1
+    ButtonType: 2
+    ToggleText1: 545
+    ToggleText2: 546
+    ToggleText3: 547
+    ExistAndroid: 1
   TitleCommandData:
   - Id: 1
     Key: NEWGAME
@@ -1024,6 +1128,9 @@ MonoBehaviour:
   - Id: 23050
     Text: "\u4E26\u884C\u4E16\u754C\u5316"
     Help: '""'
+  - Id: 23060
+    Text: "\u672A\u6765\u306E\u30DE\u30B9\u306E\u305F\u3081\u9078\u629E\u3067\u304D\u307E\u305B\u3093"
+    Help: '""'
   - Id: 24010
     Text: "\u512A\u5148\u9806\u4F4D"
     Help: '""'
@@ -1075,4 +1182,505 @@ MonoBehaviour:
   - Id: 24122
     Text: "\u30B9\u30C6\u30FC\u30BF\u30B9\u964D\u9806"
     Help: '""'
-  InputDataList: []
+  InputDataList:
+  - Key: TITLE
+    KeyId: 4
+    Name: "\u6C7A\u5B9A"
+  - Key: TITLE
+    KeyId: 6
+    Name: "\u30AA\u30D7\u30B7\u30E7\u30F3"
+  - Key: TITLE
+    KeyId: 1
+    Name: "\u30AB\u30FC\u30BD\u30EB\u79FB\u52D5"
+  - Key: TITLE
+    KeyId: 0
+    Name: '""'
+  - Key: SIDEMENU
+    KeyId: 4
+    Name: "\u6C7A\u5B9A"
+  - Key: SIDEMENU
+    KeyId: 5
+    Name: "\u623B\u308B"
+  - Key: SIDEMENU
+    KeyId: 3
+    Name: "\u30AB\u30FC\u30BD\u30EB\u79FB\u52D5"
+  - Key: SIDEMENU
+    KeyId: 2
+    Name: '""'
+  - Key: OPTION
+    KeyId: 5
+    Name: "\u623B\u308B"
+  - Key: OPTION
+    KeyId: 3
+    Name: "\u5024\u5909\u66F4"
+  - Key: OPTION
+    KeyId: 2
+    Name: "\u5024\u5909\u66F4"
+  - Key: OPTION
+    KeyId: 1
+    Name: "\u30AB\u30FC\u30BD\u30EB\u79FB\u52D5"
+  - Key: OPTION
+    KeyId: 0
+    Name: '""'
+  - Key: CREDIT
+    KeyId: 5
+    Name: "\u623B\u308B"
+  - Key: TACTICS
+    KeyId: 4
+    Name: "\u6C7A\u5B9A"
+  - Key: TACTICS
+    KeyId: 6
+    Name: "\u30AA\u30D7\u30B7\u30E7\u30F3"
+  - Key: TACTICS
+    KeyId: 3
+    Name: "\u30AB\u30FC\u30BD\u30EB\u79FB\u52D5"
+  - Key: TACTICS
+    KeyId: 2
+    Name: '""'
+  - Key: TRAIN
+    KeyId: 4
+    Name: "\u6C7A\u5B9A"
+  - Key: TRAIN
+    KeyId: 5
+    Name: "\u623B\u308B"
+  - Key: TRAIN
+    KeyId: 3
+    Name: "\u30AB\u30FC\u30BD\u30EB\u79FB\u52D5"
+  - Key: TRAIN
+    KeyId: 2
+    Name: '""'
+  - Key: TRAIN
+    KeyId: 1
+    Name: '""'
+  - Key: TRAIN
+    KeyId: 0
+    Name: '""'
+  - Key: ALCHEMY
+    KeyId: 4
+    Name: "\u6C7A\u5B9A"
+  - Key: ALCHEMY
+    KeyId: 5
+    Name: "\u623B\u308B"
+  - Key: ALCHEMY
+    KeyId: 3
+    Name: "\u30AB\u30FC\u30BD\u30EB\u79FB\u52D5"
+  - Key: ALCHEMY
+    KeyId: 2
+    Name: '""'
+  - Key: ALCHEMY
+    KeyId: 1
+    Name: '""'
+  - Key: ALCHEMY
+    KeyId: 0
+    Name: '""'
+  - Key: ALCHEMY_ATTRIBUTE
+    KeyId: 4
+    Name: "\u6C7A\u5B9A"
+  - Key: ALCHEMY_ATTRIBUTE
+    KeyId: 5
+    Name: "\u623B\u308B"
+  - Key: ALCHEMY_ATTRIBUTE
+    KeyId: 3
+    Name: "\u30AB\u30FC\u30BD\u30EB\u79FB\u52D5"
+  - Key: ALCHEMY_ATTRIBUTE
+    KeyId: 2
+    Name: '""'
+  - Key: ALCHEMY_SKILL
+    KeyId: 4
+    Name: "\u6C7A\u5B9A"
+  - Key: ALCHEMY_SKILL
+    KeyId: 5
+    Name: "\u623B\u308B"
+  - Key: ALCHEMY_SKILL
+    KeyId: 1
+    Name: "\u30AB\u30FC\u30BD\u30EB\u79FB\u52D5"
+  - Key: ALCHEMY_SKILL
+    KeyId: 0
+    Name: '""'
+  - Key: RECOVERY
+    KeyId: 4
+    Name: "\u6C7A\u5B9A"
+  - Key: RECOVERY
+    KeyId: 5
+    Name: "\u623B\u308B"
+  - Key: RECOVERY
+    KeyId: 3
+    Name: "\u5024\u5909\u66F4"
+  - Key: RECOVERY
+    KeyId: 2
+    Name: '""'
+  - Key: RECOVERY
+    KeyId: 3
+    Name: "\u30AB\u30FC\u30BD\u30EB\u79FB\u52D5"
+  - Key: RECOVERY
+    KeyId: 2
+    Name: '""'
+  - Key: RECOVERY
+    KeyId: 1
+    Name: '""'
+  - Key: RECOVERY
+    KeyId: 0
+    Name: '""'
+  - Key: ENEMY_SELECT
+    KeyId: 4
+    Name: "\u6C7A\u5B9A"
+  - Key: ENEMY_SELECT
+    KeyId: 5
+    Name: "\u623B\u308B"
+  - Key: ENEMY_SELECT
+    KeyId: 6
+    Name: "\u6575\u8A73\u7D30"
+  - Key: ENEMY_SELECT
+    KeyId: 3
+    Name: "\u30AB\u30FC\u30BD\u30EB\u79FB\u52D5"
+  - Key: ENEMY_SELECT
+    KeyId: 2
+    Name: '""'
+  - Key: ENEMY_SELECT
+    KeyId: 1
+    Name: '""'
+  - Key: ENEMY_SELECT
+    KeyId: 0
+    Name: '""'
+  - Key: ENEMY_BATTLE
+    KeyId: 4
+    Name: "\u6C7A\u5B9A"
+  - Key: ENEMY_BATTLE
+    KeyId: 5
+    Name: "\u623B\u308B"
+  - Key: ENEMY_BATTLE
+    KeyId: 3
+    Name: "\u30AB\u30FC\u30BD\u30EB\u79FB\u52D5"
+  - Key: ENEMY_BATTLE
+    KeyId: 2
+    Name: '""'
+  - Key: ENEMY_BATTLE
+    KeyId: 1
+    Name: '""'
+  - Key: ENEMY_BATTLE
+    KeyId: 0
+    Name: '""'
+  - Key: RESOURCE
+    KeyId: 4
+    Name: "\u6C7A\u5B9A"
+  - Key: RESOURCE
+    KeyId: 5
+    Name: "\u623B\u308B"
+  - Key: RESOURCE
+    KeyId: 3
+    Name: "\u30AB\u30FC\u30BD\u30EB\u79FB\u52D5"
+  - Key: RESOURCE
+    KeyId: 2
+    Name: '""'
+  - Key: RESOURCE
+    KeyId: 1
+    Name: '""'
+  - Key: RESOURCE
+    KeyId: 0
+    Name: '""'
+  - Key: NAMEENTRY
+    KeyId: 12
+    Name: "\u6C7A\u5B9A"
+  - Key: MAINMENU
+    KeyId: 4
+    Name: "\u6C7A\u5B9A"
+  - Key: MAINMENU
+    KeyId: 6
+    Name: "\u30AA\u30D7\u30B7\u30E7\u30F3"
+  - Key: MAINMENU
+    KeyId: 7
+    Name: "\u30E9\u30F3\u30AD\u30F3\u30B0\u78BA\u8A8D"
+  - Key: MAINMENU
+    KeyId: 1
+    Name: "\u30AB\u30FC\u30BD\u30EB\u79FB\u52D5"
+  - Key: MAINMENU
+    KeyId: 0
+    Name: '""'
+  - Key: STRATEGY
+    KeyId: 4
+    Name: "\u6C7A\u5B9A"
+  - Key: STRATEGY
+    KeyId: 3
+    Name: "\u30AB\u30FC\u30BD\u30EB\u79FB\u52D5"
+  - Key: STRATEGY
+    KeyId: 2
+    Name: '""'
+  - Key: STRATEGY
+    KeyId: 1
+    Name: "\u7D50\u679C\u8868\u793A\u5207\u66FF"
+  - Key: STRATEGY
+    KeyId: 0
+    Name: '""'
+  - Key: LEVELUP
+    KeyId: 4
+    Name: "\u6C7A\u5B9A"
+  - Key: STRATEGY_BATTLE
+    KeyId: 4
+    Name: "\u6C7A\u5B9A"
+  - Key: STRATEGY_BATTLE
+    KeyId: 6
+    Name: "\u6575\u8A73\u7D30"
+  - Key: STRATEGY_BATTLE
+    KeyId: 3
+    Name: "\u30AB\u30FC\u30BD\u30EB\u79FB\u52D5"
+  - Key: STRATEGY_BATTLE
+    KeyId: 2
+    Name: '""'
+  - Key: STRATEGY_BATTLE_SKIP
+    KeyId: 4
+    Name: "\u6C7A\u5B9A"
+  - Key: STRATEGY_BATTLE_SKIP
+    KeyId: 6
+    Name: "\u6575\u8A73\u7D30"
+  - Key: STRATEGY_BATTLE_SKIP
+    KeyId: 7
+    Name: "\u30D0\u30C8\u30EB\u30B9\u30AD\u30C3\u30D7\u5207\u66FF"
+  - Key: STRATEGY_BATTLE_SKIP
+    KeyId: 3
+    Name: "\u30AB\u30FC\u30BD\u30EB\u79FB\u52D5"
+  - Key: STRATEGY_BATTLE_SKIP
+    KeyId: 2
+    Name: '""'
+  - Key: BATTLE
+    KeyId: 4
+    Name: "\u6C7A\u5B9A"
+  - Key: BATTLE
+    KeyId: 5
+    Name: "\u81EA\u52D5\u6226\u95D8\u5207\u66FF"
+  - Key: BATTLE
+    KeyId: 7
+    Name: "\u64A4\u9000\u3059\u308B"
+  - Key: BATTLE
+    KeyId: 6
+    Name: "\u30AA\u30D7\u30B7\u30E7\u30F3"
+  - Key: BATTLE
+    KeyId: 9
+    Name: "\u5C5E\u6027\u5207\u66FF"
+  - Key: BATTLE
+    KeyId: 8
+    Name: '""'
+  - Key: BATTLE
+    KeyId: 1
+    Name: "\u30AB\u30FC\u30BD\u30EB\u79FB\u52D5"
+  - Key: BATTLE
+    KeyId: 0
+    Name: '""'
+  - Key: BATTLE_ENEMY
+    KeyId: 4
+    Name: "\u6C7A\u5B9A"
+  - Key: BATTLE_ENEMY
+    KeyId: 5
+    Name: "\u623B\u308B"
+  - Key: BATTLE_ENEMY
+    KeyId: 6
+    Name: "\u6575\u8A73\u7D30"
+  - Key: BATTLE_ENEMY
+    KeyId: 9
+    Name: "\u6575\u5473\u65B9\u5207\u66FF"
+  - Key: BATTLE_ENEMY
+    KeyId: 8
+    Name: '""'
+  - Key: BATTLE_ENEMY
+    KeyId: 1
+    Name: "\u5217\u5909\u66F4"
+  - Key: BATTLE_ENEMY
+    KeyId: 0
+    Name: '""'
+  - Key: BATTLE_ENEMY
+    KeyId: 3
+    Name: "\u30AB\u30FC\u30BD\u30EB\u79FB\u52D5"
+  - Key: BATTLE_ENEMY
+    KeyId: 2
+    Name: '""'
+  - Key: BATTLE_PARTY
+    KeyId: 4
+    Name: "\u6C7A\u5B9A"
+  - Key: BATTLE_PARTY
+    KeyId: 5
+    Name: "\u623B\u308B"
+  - Key: BATTLE_PARTY
+    KeyId: 9
+    Name: "\u6575\u5473\u65B9\u5207\u66FF"
+  - Key: BATTLE_PARTY
+    KeyId: 8
+    Name: '""'
+  - Key: BATTLE_PARTY
+    KeyId: 1
+    Name: "\u30AB\u30FC\u30BD\u30EB\u79FB\u52D5"
+  - Key: BATTLE_PARTY
+    KeyId: 0
+    Name: '""'
+  - Key: BATTLE_AUTO
+    KeyId: 5
+    Name: "\u81EA\u52D5\u6226\u95D8\u5207\u66FF"
+  - Key: STATUS
+    KeyId: 5
+    Name: "\u623B\u308B"
+  - Key: STATUS
+    KeyId: 6
+    Name: "\u8853\u8005\u4E00\u89A7"
+  - Key: STATUS
+    KeyId: 11
+    Name: "\u9805\u76EE\u5207\u66FF"
+  - Key: STATUS
+    KeyId: 10
+    Name: '""'
+  - Key: STATUS
+    KeyId: 3
+    Name: "\u9B54\u6CD5\u5207\u66FF"
+  - Key: STATUS
+    KeyId: 2
+    Name: '""'
+  - Key: STATUS
+    KeyId: 9
+    Name: "\u8853\u8005\u5207\u66FF"
+  - Key: STATUS
+    KeyId: 8
+    Name: '""'
+  - Key: SELECT_HEROINE
+    KeyId: 12
+    Name: "\u6C7A\u5B9A"
+  - Key: SELECT_HEROINE
+    KeyId: 5
+    Name: "\u623B\u308B"
+  - Key: SELECT_HEROINE
+    KeyId: 6
+    Name: "\u8853\u8005\u4E00\u89A7"
+  - Key: SELECT_HEROINE
+    KeyId: 11
+    Name: "\u9805\u76EE\u5207\u66FF"
+  - Key: SELECT_HEROINE
+    KeyId: 10
+    Name: '""'
+  - Key: SELECT_HEROINE
+    KeyId: 3
+    Name: "\u9B54\u6CD5\u5207\u66FF"
+  - Key: SELECT_HEROINE
+    KeyId: 2
+    Name: '""'
+  - Key: SELECT_HEROINE
+    KeyId: 9
+    Name: "\u8853\u8005\u5207\u66FF"
+  - Key: SELECT_HEROINE
+    KeyId: 8
+    Name: '""'
+  - Key: ENEMYINFO
+    KeyId: 5
+    Name: "\u623B\u308B"
+  - Key: ENEMYINFO
+    KeyId: 9
+    Name: "\u6575\u5207\u66FF"
+  - Key: ENEMYINFO
+    KeyId: 8
+    Name: '""'
+  - Key: ENEMYINFO
+    KeyId: 1
+    Name: "\u30AB\u30FC\u30BD\u30EB\u79FB\u52D5"
+  - Key: ENEMYINFO
+    KeyId: 0
+    Name: '""'
+  - Key: ENEMYINFO_BATTLE
+    KeyId: 5
+    Name: "\u623B\u308B"
+  - Key: ENEMYINFO_BATTLE
+    KeyId: 9
+    Name: "\u9805\u76EE\u5207\u66FF"
+  - Key: ENEMYINFO_BATTLE
+    KeyId: 8
+    Name: '""'
+  - Key: ENEMYINFO_BATTLE
+    KeyId: 1
+    Name: "\u30AB\u30FC\u30BD\u30EB\u79FB\u52D5"
+  - Key: ENEMYINFO_BATTLE
+    KeyId: 0
+    Name: '""'
+  - Key: RULING
+    KeyId: 5
+    Name: "\u623B\u308B"
+  - Key: RULING
+    KeyId: 1
+    Name: "\u30AB\u30FC\u30BD\u30EB\u79FB\u52D5"
+  - Key: RULING
+    KeyId: 0
+    Name: '""'
+  - Key: ADV_READING
+    KeyId: 5
+    Name: "\u6587\u5B57\u9001\u308A"
+  - Key: ADV_READING
+    KeyId: 4
+    Name: '""'
+  - Key: ADV_READING
+    KeyId: 6
+    Name: "\u30B9\u30AD\u30C3\u30D7\u5207\u66FF"
+  - Key: ADV_SELECTING
+    KeyId: 9
+    Name: "\u9078\u629E\u80A2\u4E0B\u3092\u9078\u629E"
+  - Key: ADV_SELECTING
+    KeyId: 8
+    Name: "\u9078\u629E\u80A2\u4E0A\u3092\u9078\u629E"
+  - Key: ADV_SELECTING_ONE
+    KeyId: 8
+    Name: "\u9078\u629E\u80A2\u4E0B\u3092\u9078\u629E"
+  - Key: RESULT
+    KeyId: 4
+    Name: "\u6C7A\u5B9A"
+  - Key: RESULT
+    KeyId: 3
+    Name: "\u30AB\u30FC\u30BD\u30EB\u79FB\u52D5"
+  - Key: RESULT
+    KeyId: 2
+    Name: '""'
+  - Key: RANKING
+    KeyId: 5
+    Name: "\u623B\u308B"
+  - Key: RANKING
+    KeyId: 1
+    Name: "\u30AB\u30FC\u30BD\u30EB\u79FB\u52D5"
+  - Key: RANKING
+    KeyId: 0
+    Name: '""'
+  - Key: REBORN
+    KeyId: 4
+    Name: "\u6C7A\u5B9A"
+  - Key: REBORN
+    KeyId: 5
+    Name: "\u623B\u308B"
+  - Key: REBORN
+    KeyId: 3
+    Name: "\u9B54\u6CD5\u5207\u66FF"
+  - Key: REBORN
+    KeyId: 2
+    Name: '""'
+  - Key: REBORN
+    KeyId: 1
+    Name: "\u30AB\u30FC\u30BD\u30EB\u79FB\u52D5"
+  - Key: REBORN
+    KeyId: 0
+    Name: '""'
+  - Key: SLOT
+    KeyId: 5
+    Name: "\u623B\u308B"
+  - Key: SLOT
+    KeyId: 6
+    Name: "\u30B9\u30C6\u30FC\u30BF\u30B9\u78BA\u8A8D"
+  - Key: SLOT
+    KeyId: 4
+    Name: "\u4FDD\u6301\u5207\u66FF"
+  - Key: SLOT
+    KeyId: 1
+    Name: "\u30AB\u30FC\u30BD\u30EB\u79FB\u52D5"
+  - Key: SLOT
+    KeyId: 0
+    Name: '""'
+  - Key: CHARACTER_LIST
+    KeyId: 5
+    Name: "\u623B\u308B"
+  - Key: CHARACTER_LIST
+    KeyId: 4
+    Name: "\u6C7A\u5B9A"
+  - Key: CHARACTER_LIST
+    KeyId: 1
+    Name: "\u30AB\u30FC\u30BD\u30EB\u79FB\u52D5"
+  - Key: CHARACTER_LIST
+    KeyId: 0
+    Name: '""'

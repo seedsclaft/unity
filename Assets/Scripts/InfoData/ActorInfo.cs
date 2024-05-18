@@ -34,6 +34,7 @@ namespace Ryneus
             }
             return list;
         }
+    
         private List<int> LearnSkillIds()
         {
             var list = new List<int>();

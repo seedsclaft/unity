@@ -84,6 +84,11 @@ namespace Ryneus
                 CurrentStage.SetCurrentTurn(SelectedStageCurrentTurn(stageId));
             } else
             {
+                // 新規レコード作成
+                foreach (var record in StageRecordInfos(stageId))
+                {
+                    PartyInfo.SetSymbolResultInfo(record);
+                }
             }
             SavePlayerStageData(true);
         }

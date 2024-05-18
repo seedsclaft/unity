@@ -6,7 +6,6 @@ namespace Ryneus
 {
     public class TacticsSymbolList : BaseList
     {
-        
         public bool IsSelectSymbol()
         {
             if (ItemPrefabList.Count > Index)
@@ -68,7 +67,7 @@ namespace Ryneus
             }
         }
 
-        public new void SetData(List<ListData> symbolInfos)
+        public void SetData(List<ListData> symbolInfos)
         {
             base.SetData(symbolInfos);
             for (int i = 0; i < ObjectList.Count;i++)
@@ -77,7 +76,8 @@ namespace Ryneus
                 if (tacticsSymbol == null) continue;
                 tacticsSymbol.SetCallHandler(() => CallSelectHandler(InputKeyType.Decide));
                 tacticsSymbol.SetAddListenHandler(false);
-                tacticsSymbol.SetSelectHandler((System.Action<int>)((a) => {
+                tacticsSymbol.SetSelectHandler((System.Action<int>)((a) => 
+                {
                     UpdateUnSelectAll();
                     UpdateSelectIndex(a);
                     tacticsSymbol.SetSelectable(true);

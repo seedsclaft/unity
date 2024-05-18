@@ -36,11 +36,12 @@ namespace Ryneus
         {
             _repeatTime = repeatTime;
         }
-        private List<int> _targetIndexList;
-        public List<int> TargetIndexList => _targetIndexList;
-        public void SetTargetIndexList(List<int> targetIndexList)
+        // 選択可能な対象情報
+        private List<int> _candidateTargetIndexList;
+        public List<int> CandidateTargetIndexList => _candidateTargetIndexList;
+        public void SetCandidateTargetIndexList(List<int> candidateTargetIndexList)
         {
-            _targetIndexList = targetIndexList;
+            _candidateTargetIndexList = candidateTargetIndexList;
         }
 
         private bool _triggeredSkill = false;
@@ -62,7 +63,7 @@ namespace Ryneus
             _targetType = Master.TargetType;
             _subjectIndex = subjectIndex;
             _lastTargetIndex = lastTargetIndex;
-            _targetIndexList = targetIndexList;
+            _candidateTargetIndexList = targetIndexList;
             _isBattleDisplay = IsBattleDisplay;
         }
 

@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
-using System.Linq;
 using UnityEngine;
 
 namespace Ryneus
 {
-    public class BattleModel : BaseModel
+    public partial class BattleModel : BaseModel
     {
         private int _actionIndex = 0;
         private int _turnCount = 1;
@@ -550,10 +549,7 @@ namespace Ryneus
             }
             var actionInfo = new ActionInfo(skillInfo,_actionIndex,subject.Index,lastTargetIndex,targetIndexList,IsBattleDisplay);
             _actionIndex++;
-            if (subject.IsState(StateType.Extension))
-            {
-                actionInfo.SetRangeType(RangeType.L);
-            }
+            actionInfo.SetRangeType(CalcRangeType(actionInfo.Master,subject));
             var actionScopeType = CalcScopeType(subject,actionInfo);
             actionInfo.SetScopeType(actionScopeType);
             if (IsTrigger)
@@ -571,183 +567,6 @@ namespace Ryneus
             return actionInfo;
         }
 
-        // 選択可能な対象のインデックスを取得
-        public List<int> GetSkillTargetIndexList(int skillId,int subjectIndex,bool checkCondition,int counterSubjectIndex = -1,ActionInfo actionInfo = null,List<ActionResultInfo> actionResultInfos = null)
-        {
-            var skillData = DataSystem.FindSkill(skillId);
-            var subject = GetBattlerInfo(subjectIndex);
-            
-            var rangeType = skillData.Range;
-            if (subject.IsState(StateType.Extension))
-            {
-                rangeType = RangeType.L;
-            }
-
-            var targetIndexList = new List<int>();
-            switch (skillData.TargetType)
-            {
-                case TargetType.All:
-                    targetIndexList = TargetIndexAll(subject.IsActor,targetIndexList,rangeType);
-                    break;
-                case TargetType.Opponent:
-                    targetIndexList = TargetIndexOpponent(subject.IsActor,targetIndexList,rangeType,subject.LineIndex);
-                    break;
-                case TargetType.Friend:
-                    targetIndexList = TargetIndexFriend(subject.IsActor,targetIndexList);
-                    if (skillData.Scope == ScopeType.WithoutSelfOne || skillData.Scope == ScopeType.WithoutSelfAll)
-                    {
-                        targetIndexList.Remove(subject.Index);
-                    }
-                    break;
-                case TargetType.Self:
-                    targetIndexList.Add(subject.Index);
-                    break;
-                case TargetType.Counter:
-                    if (counterSubjectIndex > -1)
-                    {
-                        targetIndexList.Add(counterSubjectIndex);
-                    }
-                    break;
-                case TargetType.AttackTarget:
-                    if (actionInfo != null && actionResultInfos.Count > 0)
-                    {
-                        foreach (var actionResultInfo in actionResultInfos)
-                        {
-                            if (!targetIndexList.Contains(actionResultInfo.TargetIndex))
-                            {
-                                targetIndexList.Add(actionResultInfo.TargetIndex);     
-                            }               
-                        }
-                    }
-                    break;
-            }
-            switch (skillData.AliveType)
-            {
-                case AliveType.DeathOnly:
-                    targetIndexList = targetIndexList.FindAll(a => !FieldBattlerInfos().Find(b => a == b.Index).IsAlive());
-                    break;
-                case AliveType.AliveOnly:
-                    targetIndexList = targetIndexList.FindAll(a => FieldBattlerInfos().Find(b => a == b.Index).IsAlive());
-                    break;
-                case AliveType.All:
-                    break;
-            }
-            if (skillData.ScopeTriggers.Count > 0)
-            {
-                targetIndexList = CheckScopeTriggers(targetIndexList,skillData.ScopeTriggers);
-            }
-            
-            var withinRangeTargetList = WithinRangeTargetList(subject,rangeType);
-            // 範囲外にいる対象を候補から外す
-            targetIndexList = targetIndexList.FindAll(a => withinRangeTargetList.Contains(a));
-            if (checkCondition == true)
-            {
-                targetIndexList = targetIndexList.FindAll(a => CanUseCondition(skillId,subject,a));
-            }
-            return targetIndexList;
-        }
-
-        private List<int> WithinRangeTargetList(BattlerInfo battlerInfo,RangeType skillRangeType)
-        {
-            var targetIndexList = new List<int>();
-            var isActor = battlerInfo.IsActor;
-            var targetUnit = isActor ? _troop : _party;
-            var friendUnit = isActor ? _party : _troop;
-            foreach (var friend in friendUnit.BattlerInfos)
-            {
-                targetIndexList.Add(friend.Index);
-            }
-
-            if (skillRangeType == RangeType.L)
-            {
-                foreach (var opponent in targetUnit.BattlerInfos)
-                {
-                    targetIndexList.Add(opponent.Index);
-                }
-                return targetIndexList;
-            }
-        
-            var selfIsFront = false;
-            if (battlerInfo.LineIndex == LineType.Front)
-            {
-                selfIsFront = true;
-            } else
-            {
-                // 前面の味方が一人もいない場合は前面
-                if (friendUnit.AliveBattlerInfos.Find(a => a.LineIndex == LineType.Front) == null)
-                {
-                    selfIsFront = true;
-                }
-            }
-
-            if (selfIsFront)
-            {
-                var targetIsFrontAlive = targetUnit.AliveBattlerInfos.Find(a => a.LineIndex == LineType.Front);
-                foreach (var opponent in targetUnit.BattlerInfos)
-                {
-                    var opponentIsFront = false;
-                    if (opponent.LineIndex == LineType.Front)
-                    {
-                        opponentIsFront = true;
-                    } else
-                    {
-                        // 前面の味方が一人もいない場合は前面
-                        if (targetIsFrontAlive == null)
-                        {
-                            opponentIsFront = true;
-                        }
-                    }
-                    if (opponentIsFront)
-                    {
-                        targetIndexList.Add(opponent.Index);
-                    }
-                }
-            }
-            return targetIndexList;
-        }
-
-        // 選択範囲が敵味方全員の場合
-        private List<int> TargetIndexAll(bool isActor,List<int> targetIndexList,RangeType rangeType)
-        {
-            foreach (var battlerInfo in _party.BattlerInfos)
-            {
-                targetIndexList.Add(battlerInfo.Index);
-            }
-            foreach (var battlerInfo in _troop.BattlerInfos)
-            {
-                targetIndexList.Add(battlerInfo.Index);
-            }
-            return targetIndexList;
-        }
-
-        // 選択範囲が相手
-        private List<int> TargetIndexOpponent(bool isActor,List<int> targetIndexList,RangeType rangeType,LineType lineType)
-        {   
-            if (isActor)
-            {
-                foreach (var battlerInfo in _troop.BattlerInfos)
-                {
-                    targetIndexList.Add(battlerInfo.Index);
-                }
-            } else{
-                foreach (var battlerInfo in _party.BattlerInfos)
-                {
-                    targetIndexList.Add(battlerInfo.Index);
-                }
-            }
-            return targetIndexList;
-        }
-
-        private List<int> TargetIndexFriend(bool isActor,List<int> targetIndexList)
-        {
-            var battlerInfos = isActor ? _party.BattlerInfos : _troop.BattlerInfos;
-            foreach (var battlerInfo in battlerInfos)
-            {
-                targetIndexList.Add(battlerInfo.Index);
-            }
-            return targetIndexList;
-        }
-
         // 選択可能なBattlerInfoを取得
         public List<ListData> TargetBattlerPartyInfos(ActionInfo actionInfo)
         {
@@ -755,7 +574,7 @@ namespace Ryneus
             foreach (var battlerInfo in _party.BattlerInfos)
             {
                 var listData = new ListData(battlerInfo);
-                listData.SetEnable(actionInfo.TargetIndexList.Contains(battlerInfo.Index));
+                listData.SetEnable(actionInfo.CandidateTargetIndexList.Contains(battlerInfo.Index));
                 listData.SetSelected(actionInfo.LastTargetIndex == battlerInfo.Index);
                 targetBattlerInfos.Add(listData);
             }
@@ -769,7 +588,7 @@ namespace Ryneus
             foreach (var battlerInfo in _troop.BattlerInfos)
             {
                 var listData = new ListData(battlerInfo);
-                listData.SetEnable(actionInfo.TargetIndexList.Contains(battlerInfo.Index));
+                listData.SetEnable(actionInfo.CandidateTargetIndexList.Contains(battlerInfo.Index));
                 listData.SetSelected(actionInfo.LastTargetIndex == battlerInfo.Index);
                 targetBattlerInfos.Add(listData);
             }
@@ -1104,26 +923,6 @@ namespace Ryneus
                 var featureDates = new List<SkillData.FeatureData>();
                 foreach (var featureData in actionInfo.SkillInfo.FeatureDates)
                 {
-                    /*
-                    if (isPrism)
-                    {
-                        // 攻撃増加分のダメージ種別を追加
-                        if (featureData.FeatureType == FeatureType.HpDamage || featureData.FeatureType == FeatureType.HpDefineDamage)
-                        {
-                            var prismCount = (subject.GetStateInfoAll(StateType.Prism).Count + 1);
-                            var prismTime = (i+1) % prismCount;
-                            if (prismTime == 0)
-                            {
-                                prismTime = prismCount;
-                            }
-                            var damageFeature = featureData.CopyData();
-                            var ratio = 1.0f / (prismTime);
-                            damageFeature.Param1 = (int)(damageFeature.Param1 * ratio);
-                            featureDates.Add(damageFeature);
-                            continue;
-                        }
-                    }
-                    */
                     featureDates.Add(featureData);
                 }
 
@@ -1158,40 +957,6 @@ namespace Ryneus
                         }
                     }
                 }
-
-                // 無敵回数
-                /*
-                
-                int noDamageCount = target.StateTurn(StateType.NoDamage);
-                // このリザルトでの無敵進行回数
-                int seekCount = actionResultInfo.SeekCount(target,StateType.NoDamage);
-                if (seekCount > 0)
-                {
-                    // 今までのリザルトでの無敵進行回数
-                    int seekCountAll = actionResultInfos.Sum(a => a.SeekCount(target,StateType.NoDamage));
-                    if ((seekCountAll+1) >= noDamageDict[targetIndex])
-                    {
-                        var noDamageState = target.GetStateInfo(StateType.NoDamage);
-                        if (noDamageState != null)
-                        {
-                            target.RemoveState(noDamageState,true);
-                            actionResultInfo.AddRemoveState(noDamageState);
-                            var displayedResults = actionResultInfos.FindAll(a => a.DisplayStates.Find(b => b.Master.StateType == StateType.NoDamage) != null);
-
-                            foreach (var displayedResult in displayedResults)
-                            {
-                                for (int j = displayedResult.DisplayStates.Count-1; j >= 0;j--)
-                                {
-                                    if (displayedResult.DisplayStates[j] == noDamageState)
-                                    {
-                                        displayedResult.DisplayStates.Remove(noDamageState);
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-                */
                 actionResultInfos.Add(actionResultInfo);
             }
             AdjustActionResultInfo(actionResultInfos);
@@ -1299,7 +1064,7 @@ namespace Ryneus
                 var damageFeatures = actionInfo.SkillInfo.FeatureDates.FindAll(a => a.FeatureType == FeatureType.HpDamage || a.FeatureType == FeatureType.HpDefineDamage);
                 if (damageFeatures.Count > 0)
                 {
-                    return (subject.GetStateInfoAll(StateType.Prism).Count + 1);
+                    return subject.GetStateInfoAll(StateType.Prism).Count + 1;
                 }
             }
             return 0;
@@ -1337,9 +1102,11 @@ namespace Ryneus
                         }
                         if (hpDamage > 0)
                         {
-                            var featureData = new SkillData.FeatureData();
-                            featureData.FeatureType = FeatureType.HpCursedDamage;
-                            featureData.Param1 = (int)MathF.Floor(hpDamage * curseStateInfos[j].Effect * 0.01f);
+                            var featureData = new SkillData.FeatureData
+                            {
+                                FeatureType = FeatureType.HpCursedDamage,
+                                Param1 = (int)MathF.Floor(hpDamage * curseStateInfos[j].Effect * 0.01f)
+                            };
 
                             var curseBattlerInfo = GetBattlerInfo(curseStateInfos[j].TargetIndex);
                             var curseActionResultInfo = new ActionResultInfo(GetBattlerInfo(curseStateInfos[j].BattlerId),curseBattlerInfo,new List<SkillData.FeatureData>(){featureData},-1);
@@ -1356,7 +1123,7 @@ namespace Ryneus
         {
             var makerEffectPath = animationName.Replace("MakerEffect/","");
             var path = "Animations/AnimationData/" + makerEffectPath;
-            var result = UnityEngine.Resources.Load<MakerEffectAssetData>(path);
+            var result = Resources.Load<MakerEffectAssetData>(path);
             if (result != null)
             {
                 return result.AssetData.soundTimings;
@@ -1383,8 +1150,8 @@ namespace Ryneus
                 {
                     subject.GainHealCount(1);
                 }
-                var actionResultInfos = CalcDeathIndexList(actionInfo.ActionResults);
-                foreach (var actionResultInfo in actionResultInfos)
+                //var actionResultInfos = CalcDeathIndexList(actionInfo.ActionResults);
+                foreach (var actionResultInfo in actionInfo.ActionResults)
                 {
                     ExecActionResultInfo(actionResultInfo);
                 }
@@ -1677,12 +1444,9 @@ namespace Ryneus
             if (actionInfo != null)
             {
                 var plusActionInfos = actionInfo.CheckPlusSkill();
-                if (GetBattlerInfo(actionInfo.SubjectIndex).IsState(StateType.Extension))
+                foreach (var plusActionInfo in plusActionInfos)
                 {
-                    foreach (var plusActionInfo in plusActionInfos)
-                    {
-                        plusActionInfo.SetRangeType(RangeType.L);
-                    }
+                    plusActionInfo.SetRangeType(CalcRangeType(plusActionInfo.Master,GetBattlerInfo(actionInfo.SubjectIndex)));
                 }
                 foreach (var plusActionInfo in plusActionInfos)
                 {
@@ -1714,10 +1478,7 @@ namespace Ryneus
                         plusTriggerActionInfo.SetTriggerSkill(true);
                         _actionInfos.Add(plusTriggerActionInfo);
                         AddTurnActionInfos(plusTriggerActionInfo,false);
-                        if (GetBattlerInfo(actionInfo.SubjectIndex).IsState(StateType.Extension))
-                        {
-                            plusTriggerActionInfo.SetRangeType(RangeType.L);
-                        }
+                        plusTriggerActionInfo.SetRangeType(CalcRangeType(plusTriggerActionInfo.Master,GetBattlerInfo(actionInfo.SubjectIndex)));
                     }
                 }
             }
@@ -1765,9 +1526,11 @@ namespace Ryneus
                     }
                     foreach (var targetIndex in targetIndexes)
                     {
-                        var featureData = new SkillData.FeatureData();
-                        featureData.FeatureType = FeatureType.HpHeal;
-                        featureData.Param1 = stateInfo.Effect;
+                        var featureData = new SkillData.FeatureData
+                        {
+                            FeatureType = FeatureType.HpHeal,
+                            Param1 = stateInfo.Effect
+                        };
 
                         var actionResultInfo = new ActionResultInfo(GetBattlerInfo(targetIndex),GetBattlerInfo(targetIndex),new List<SkillData.FeatureData>(){featureData},-1);
                         afterHealResults.Add(actionResultInfo);
@@ -1810,9 +1573,11 @@ namespace Ryneus
                     var healValue = CurrentActionInfo().ActionResults.FindAll(a => a.HpDamage > 0).Count;
                     foreach (var targetIndex in targetIndexes)
                     {
-                        var featureData = new SkillData.FeatureData();
-                        featureData.FeatureType = FeatureType.HpHeal;
-                        featureData.Param1 = healValue * stateInfo.Effect;
+                        var featureData = new SkillData.FeatureData
+                        {
+                            FeatureType = FeatureType.HpHeal,
+                            Param1 = healValue * stateInfo.Effect
+                        };
 
                         var actionResultInfo = new ActionResultInfo(GetBattlerInfo(targetIndex),GetBattlerInfo(targetIndex),new List<SkillData.FeatureData>(){featureData},-1);
                         assistHealResults.Add(actionResultInfo);
@@ -1869,9 +1634,11 @@ namespace Ryneus
         {
             var actionResultInfos = new List<ActionResultInfo>();
             var stateInfos = battlerInfo.GetStateInfoAll(stateType);
-            
-            var featureData = new SkillData.FeatureData();
-            featureData.FeatureType = featureType;
+
+            var featureData = new SkillData.FeatureData
+            {
+                FeatureType = featureType
+            };
 
             for (int i = 0;i < stateInfos.Count;i++)
             {
@@ -2032,27 +1799,6 @@ namespace Ryneus
             }
         }
 
-/*
-        private bool CanUsePassiveCount(BattlerInfo battlerInfo,int skillId,List<SkillData.TriggerData> triggerDates)
-        {
-            bool usable = true;
-            // トリガーのParam2を使用回数制限にする
-            var useLimit = triggerDates.Find(a => a.Param2 >= 1);
-            if (useLimit != null)
-            {
-                var usedCount = _usedPassiveSkillInfos[battlerInfo.Index].FindAll(a => a == skillId);
-                if (usedCount.Count < useLimit.Param2)
-                {
-                    _usedPassiveSkillInfos[battlerInfo.Index].Add(skillId);
-                } else
-                {
-                    usable = false;
-                }
-            }
-            return usable;
-        }
-*/
-
         private ActionInfo MakePassiveSkillActionResults(BattlerInfo battlerInfo,SkillInfo passiveInfo,bool IsInterrupt,int selectIndex,ActionInfo actionInfo = null,List<ActionResultInfo> actionResultInfos = null,SkillData.TriggerData triggerData = null)
         {
             if (!CheckCanUsePassive(passiveInfo,battlerInfo))
@@ -2086,29 +1832,6 @@ namespace Ryneus
             passiveInfo.GainUseCount();
             passiveInfo.SetTurnCount(passiveInfo.Master.TurnCount);
             return makeActionInfo;
-        }
-
-        public List<ActionResultInfo> CheckPlusPassiveInfos(ActionResultInfo actionResultInfo,int skillId)
-        {
-            var actionResultInfos = new List<ActionResultInfo>();
-            var skill = DataSystem.FindSkill(skillId);
-            var triggerDates = skill.TriggerDates;
-            var battlerInfo = GetBattlerInfo(actionResultInfo.SubjectIndex);
-            var target = GetBattlerInfo(actionResultInfo.TargetIndex);
-            var enable = true;
-            // 簡易判定
-            foreach (var triggerData in triggerDates)
-            {
-                if (!triggerData.IsTriggeredSkillInfo(battlerInfo,BattlerActors(),BattlerEnemies()))
-                {
-                    enable = false;
-                }
-            }
-            if (enable)
-            {
-                MakePassiveSkillActionResults(battlerInfo,new SkillInfo(skillId),false,-1);
-            }
-            return actionResultInfos;
         }
         
         public List<ActionResultInfo> CheckRemovePassiveInfos()
@@ -2593,7 +2316,8 @@ namespace Ryneus
                         if (IsTriggered)
                         {
                             IsTriggered = false;
-                        } else{
+                        } else
+                        {
                             IsTriggered = false;
                             break;
                         }
@@ -2660,7 +2384,7 @@ namespace Ryneus
                 case TriggerType.OpponentAttackActionInfo:
                 if (battlerInfo.IsAlive() && actionInfo != null)
                 {
-                    foreach (var targetIndex in actionInfo.TargetIndexList)
+                    foreach (var targetIndex in actionInfo.CandidateTargetIndexList)
                     {
                         list.Add(targetIndex);
                     }
@@ -2683,611 +2407,6 @@ namespace Ryneus
                 CanUse = IsTriggeredSkillInfo(battlerInfo,skillInfo.TriggerDates,null,new List<ActionResultInfo>());
             }
             return CanUse;
-        }
-
-        private bool CanUseSkillTrigger(List<SkillData.TriggerData> triggerDates,BattlerInfo battlerInfo)
-        {
-            bool CanUse = true;
-            if (triggerDates.Count > 0)
-            {
-                CanUse = IsTriggeredSkillInfo(battlerInfo,triggerDates,null,new List<ActionResultInfo>());
-            }
-            return CanUse;
-        }
-
-        private int CanUseSkillTriggerTarget(int skillId,List<SkillData.TriggerData> triggerDates,BattlerInfo battlerInfo,List<int> targetIndexes)
-        {
-            // 条件なし
-            if (triggerDates.Count == 0)
-            {
-                return BattleUtility.NearTargetIndex(battlerInfo,targetIndexes);
-            }
-            var skillData = DataSystem.FindSkill(skillId);
-            var targetIndexList1 = new List<int>();
-            var targetIndexList2 = new List<int>();
-            // ～を優先判定用
-            var targetIndexWithInList = new List<int>();
-            if (triggerDates.Count == 1)
-            {
-                targetIndexList2 = targetIndexes;
-            }
-            for (int i = 0;i < triggerDates.Count;i++)
-            {
-                var targetIndexList = i == 0 ? targetIndexList1 : targetIndexList2;
-                foreach (var targetIndex in targetIndexes)
-                {
-                    var triggerDate = triggerDates[i];
-                    var targetBattler = GetBattlerInfo(targetIndex);
-                    var friends = battlerInfo.IsActor ? _party : _troop;
-                    var opponents = battlerInfo.IsActor ? _troop : _party;
-                    var IsFriend = battlerInfo.IsActor == targetBattler.IsActor;
-                    switch (triggerDate.TriggerType)
-                    {
-                        // ターゲットに含めるか判定
-                        case TriggerType.FriendHpRateUnder:
-                        // Param2==-1はその対象を起点に平均Hpで比較する
-                        if (triggerDate.Param2 == -1)
-                        {
-                            // この時点で有効なtargetIndexesが判定されているので人数で判定
-                            var lineTargets = LineTargetBattlers(skillData.Scope,targetBattler,friends.AliveBattlerInfos);
-                            if (lineTargets.All(a => targetIndexes.Contains(a.Index)))
-                            {
-                                targetIndexList.Add(targetIndex);
-                            }
-                        } else
-                        {
-                            // Param1==100の場合は未満
-                            if (triggerDate.Param1 == 100)
-                            {
-                                if (IsFriend && targetBattler.HpRate < 0.01f * triggerDate.Param1)
-                                {
-                                    targetIndexList.Add(targetIndex);
-                                }
-                            } else
-                            {
-                                if (IsFriend && targetBattler.HpRate <= 0.01f * triggerDate.Param1)
-                                {
-                                    targetIndexList.Add(targetIndex);
-                                }
-                            }
-                        }
-                        break;
-                        case TriggerType.FriendHpRateUpper:
-                        // Param2==-1はその対象を起点に平均Hpで比較する
-                        if (triggerDate.Param2 == -1)
-                        {
-                            // この時点で有効なtargetIndexesが判定されているので人数で判定
-                            var lineTargets = LineTargetBattlers(skillData.Scope,targetBattler,friends.AliveBattlerInfos);
-                            if (lineTargets.All(a => targetIndexes.Contains(a.Index)))
-                            {
-                                targetIndexList.Add(targetIndex);
-                            }
-                        } else
-                        {
-                            if (IsFriend && targetBattler.HpRate >= 0.01f * triggerDate.Param1)
-                            {
-                                targetIndexList.Add(targetIndex);
-                            }
-                        }
-                        break;
-                        case TriggerType.OpponentHpRateUnder:
-                        // Param2==-1はその対象を起点に平均Hpで比較する
-                        if (triggerDate.Param2 == -1)
-                        {
-                            // この時点で有効なtargetIndexesが判定されているので人数で判定
-                            var lineTargets = LineTargetBattlers(skillData.Scope,targetBattler,opponents.AliveBattlerInfos);
-                            if (lineTargets.All(a => targetIndexes.Contains(a.Index)))
-                            {
-                                targetIndexList.Add(targetIndex);
-                            }
-                        } else
-                        {
-                            if (triggerDate.Param1 == 100)
-                            {
-                                if (!IsFriend && targetBattler.HpRate < 0.01f * triggerDate.Param1)
-                                {
-                                    targetIndexList.Add(targetIndex);
-                                }
-                            } else
-                            {
-                                if (!IsFriend && targetBattler.HpRate <= 0.01f * triggerDate.Param1)
-                                {
-                                    targetIndexList.Add(targetIndex);
-                                }
-                            }
-                        }
-                        break;
-                        case TriggerType.OpponentHpRateUpper:
-                        // Param2==-1はその対象を起点に平均Hpで比較する
-                        if (triggerDate.Param2 == -1)
-                        {
-                            // この時点で有効なtargetIndexesが判定されているので人数で判定
-                            var lineTargets = LineTargetBattlers(skillData.Scope,targetBattler,opponents.AliveBattlerInfos);
-                            if (lineTargets.All(a => targetIndexes.Contains(a.Index)))
-                            {
-                                targetIndexList.Add(targetIndex);
-                            }
-                        } else
-                        {
-                            if (!IsFriend && targetBattler.HpRate >= 0.01f * triggerDate.Param1)
-                            {
-                                targetIndexList.Add(targetIndex);
-                            }
-                        }
-                        break;
-                        case TriggerType.FriendMpUnder:
-                        if (triggerDate.Param1 == 100)
-                        {
-                            if (IsFriend && targetBattler.MpRate < 0.01f * triggerDate.Param1)
-                            {
-                                targetIndexList.Add(targetIndex);
-                            }
-                        } else
-                        {
-                            if (IsFriend && targetBattler.MpRate <= 0.01f * triggerDate.Param1)
-                            {
-                                targetIndexList.Add(targetIndex);
-                            }
-                        }
-                        break;
-                        case TriggerType.FriendMpUpper:
-                        if (IsFriend && targetBattler.MpRate >= 0.01f * triggerDate.Param1)
-                        {
-                            targetIndexList.Add(targetIndex);
-                        }
-                        break;
-                        case TriggerType.OpponentMpUnder:
-                        if (triggerDate.Param1 == 100)
-                        {
-                            if (!IsFriend && targetBattler.MpRate < 0.01f * triggerDate.Param1)
-                            {
-                                targetIndexList.Add(targetIndex);
-                            }
-                        } else
-                        {
-                            if (!IsFriend && targetBattler.MpRate <= 0.01f * triggerDate.Param1)
-                            {
-                                targetIndexList.Add(targetIndex);
-                            }
-                        }
-                        break;
-                        case TriggerType.OpponentMpUpper:
-                        if (!IsFriend && targetBattler.MpRate >= 0.01f * triggerDate.Param1)
-                        {
-                            targetIndexList.Add(targetIndex);
-                        }
-                        break;
-                        case TriggerType.FriendLineFront:
-                        if (IsFriend && targetBattler.LineIndex == LineType.Front)
-                        {
-                            targetIndexList.Add(targetIndex);
-                        }
-                        break;
-                        case TriggerType.FriendLineBack:
-                        if (IsFriend && targetBattler.LineIndex == LineType.Back)
-                        {
-                            targetIndexList.Add(targetIndex);
-                        }
-                        break;
-                        case TriggerType.OpponentLineFront:
-                        if (!IsFriend && targetBattler.LineIndex == LineType.Front)
-                        {
-                            targetIndexList.Add(targetIndex);
-                        }
-                        break;
-                        case TriggerType.OpponentLineBack:
-                        if (!IsFriend && targetBattler.LineIndex == LineType.Back)
-                        {
-                            targetIndexList.Add(targetIndex);
-                        }
-                        break;
-                        case TriggerType.FriendMoreTargetCount:
-                        if (IsFriend && friends.AliveBattlerInfos.FindAll(a => a.LineIndex == targetBattler.LineIndex).Count >= triggerDate.Param1)
-                        {
-                            targetIndexList.Add(targetIndex);
-                        }
-                        break;
-                        case TriggerType.OpponentMoreTargetCount:
-                        if (!IsFriend && opponents.AliveBattlerInfos.FindAll(a => a.LineIndex == targetBattler.LineIndex).Count >= triggerDate.Param1)
-                        {
-                            targetIndexList.Add(targetIndex);
-                        }
-                        break;
-                        case TriggerType.FriendHasKind:
-                        if (IsFriend && targetBattler.Kinds.Contains((KindType)triggerDate.Param1))
-                        {
-                            targetIndexList.Add(targetIndex);
-                        }
-                        break;
-                        case TriggerType.OpponentHasKind:
-                        if (!IsFriend && targetBattler.Kinds.Contains((KindType)triggerDate.Param1))
-                        {
-                            targetIndexList.Add(targetIndex);
-                        }
-                        break;
-                        case TriggerType.FriendIsState:
-                        if (IsFriend && targetBattler.IsState((StateType)triggerDate.Param1))
-                        {
-                            targetIndexList.Add(targetIndex);
-                        }
-                        break;
-                        case TriggerType.OpponentIsState:
-                        if (!IsFriend && targetBattler.IsState((StateType)triggerDate.Param1))
-                        {
-                            targetIndexList.Add(targetIndex);
-                        }
-                        break;
-                        case TriggerType.FriendIsNotState:
-                        if (IsFriend && !targetBattler.IsState((StateType)triggerDate.Param1))
-                        {
-                            targetIndexList.Add(targetIndex);
-                        }
-                        break;
-                        case TriggerType.OpponentIsNotState:
-                        if (!IsFriend && !targetBattler.IsState((StateType)triggerDate.Param1))
-                        {
-                            targetIndexList.Add(targetIndex);
-                        }
-                        break;
-                        case TriggerType.FriendIsAbnormalState:
-                        if (IsFriend && targetBattler.StateInfos.Find(a => a.Master.Abnormal == true) != null)
-                        {
-                            targetIndexList.Add(targetIndex);
-                        }
-                        break;
-                        case TriggerType.OpponentIsAbnormalState:
-                        if (!IsFriend && targetBattler.StateInfos.Find(a => a.Master.Abnormal == true) != null)
-                        {
-                            targetIndexList.Add(targetIndex);
-                        }
-                        break;
-                        case TriggerType.FriendIsNotAbnormalState:
-                        if (IsFriend && targetBattler.StateInfos.Find(a => a.Master.Abnormal == true) == null)
-                        {
-                            targetIndexList.Add(targetIndex);
-                        }
-                        break;
-                        case TriggerType.OpponentIsNotAbnormalState:
-                        if (!IsFriend && targetBattler.StateInfos.Find(a => a.Master.Abnormal == true) == null)
-                        {
-                            targetIndexList.Add(targetIndex);
-                        }
-                        break;
-                        case TriggerType.IsBuffState:
-                        if (battlerInfo.Index == targetIndex && targetBattler.StateInfos.Find(a => a.Master.Buff == true) != null)
-                        {
-                            targetIndexList.Add(targetIndex);
-                        }
-                        break;
-                        case TriggerType.FriendIsBuffState:
-                        if (IsFriend && targetBattler.StateInfos.Find(a => a.Master.Buff == true) != null)
-                        {
-                            targetIndexList.Add(targetIndex);
-                        }
-                        break;
-                        case TriggerType.OpponentIsBuffState:
-                        if (!IsFriend && targetBattler.StateInfos.Find(a => a.Master.Buff == true) != null)
-                        {
-                            targetIndexList.Add(targetIndex);
-                        }
-                        break;
-                        case TriggerType.FriendIsNotBuffState:
-                        if (IsFriend && targetBattler.StateInfos.Find(a => a.Master.Buff == true) == null)
-                        {
-                            targetIndexList.Add(targetIndex);
-                        }
-                        break;
-                        case TriggerType.OpponentIsNotBuffState:
-                        if (!IsFriend && targetBattler.StateInfos.Find(a => a.Master.Buff == true) == null)
-                        {
-                            targetIndexList.Add(targetIndex);
-                        }
-                        break;
-                        case TriggerType.IsDeBuffState:
-                        if (battlerInfo.Index == targetIndex && targetBattler.StateInfos.Find(a => a.Master.DeBuff == true) != null)
-                        {
-                            targetIndexList.Add(targetIndex);
-                        }
-                        break;
-                        case TriggerType.FriendIsDeBuffState:
-                        if (IsFriend && targetBattler.StateInfos.Find(a => a.Master.DeBuff == true) != null)
-                        {
-                            targetIndexList.Add(targetIndex);
-                        }
-                        break;
-                        case TriggerType.OpponentIsDeBuffState:
-                        if (!IsFriend && targetBattler.StateInfos.Find(a => a.Master.DeBuff == true) != null)
-                        {
-                            targetIndexList.Add(targetIndex);
-                        }
-                        break;
-                        case TriggerType.FriendIsNotDeBuffState:
-                        if (IsFriend && targetBattler.StateInfos.Find(a => a.Master.DeBuff == true) == null)
-                        {
-                            targetIndexList.Add(targetIndex);
-                        }
-                        break;
-                        case TriggerType.OpponentIsNotDeBuffState:
-                        if (!IsFriend && targetBattler.StateInfos.Find(a => a.Master.DeBuff == true) == null)
-                        {
-                            targetIndexList.Add(targetIndex);
-                        }
-                        break;
-                        case TriggerType.IsNotAwaken:
-                        if (battlerInfo.Index == targetIndex && !targetBattler.IsAwaken)
-                        {
-                            targetIndexList.Add(targetIndex);
-                        }
-                        break;
-                        case TriggerType.IsAwaken:
-                        if (battlerInfo.Index == targetIndex && targetBattler.IsAwaken)
-                        {
-                            targetIndexList.Add(targetIndex);
-                        }
-                        break;
-                        case TriggerType.FriendIsNotAwaken:
-                        if (IsFriend && !targetBattler.IsAwaken)
-                        {
-                            targetIndexList.Add(targetIndex);
-                        }
-                        break;
-                        case TriggerType.FriendIsAwaken:
-                        if (IsFriend && targetBattler.IsAwaken)
-                        {
-                            targetIndexList.Add(targetIndex);
-                        }
-                        break;
-                        case TriggerType.OpponentIsNotAwaken:
-                        if (!IsFriend && !targetBattler.IsAwaken)
-                        {
-                            targetIndexList.Add(targetIndex);
-                        }
-                        break;
-                        case TriggerType.OpponentIsAwaken:
-                        if (!IsFriend && targetBattler.IsAwaken)
-                        {
-                            targetIndexList.Add(targetIndex);
-                        }
-                        break;
-                        case TriggerType.FriendMembersMoreCount:
-                        if (friends.AliveBattlerInfos.Count >= triggerDate.Param1)
-                        {
-                            targetIndexList.Add(targetIndex);
-                        }
-                        break;
-                        case TriggerType.FriendMembersLessCount:
-                        if (friends.AliveBattlerInfos.Count <= triggerDate.Param1)
-                        {
-                            targetIndexList.Add(targetIndex);
-                        }
-                        break;
-                        case TriggerType.OpponentMembersMoreCount:
-                        if (opponents.AliveBattlerInfos.Count >= triggerDate.Param1)
-                        {
-                            targetIndexList.Add(targetIndex);
-                        }
-                        break;
-                        case TriggerType.OpponentMembersLessCount:
-                        if (opponents.AliveBattlerInfos.Count <= triggerDate.Param1)
-                        {
-                            targetIndexList.Add(targetIndex);
-                        }
-                        break;
-                        case TriggerType.TurnNum:
-                        if (battlerInfo.TurnCount == triggerDate.Param1)
-                        {
-                            targetIndexList.Add(targetIndex);
-                        }
-                        break;
-                        case TriggerType.TurnNumPer:
-                        if ((battlerInfo.TurnCount % triggerDate.Param1) - triggerDate.Param2 == 0)
-                        {
-                            targetIndexList.Add(targetIndex);
-                        }
-                        break;
-                        case TriggerType.SelfTargetOnly:
-                        if (battlerInfo.Index == targetIndex)
-                        {
-                            targetIndexList.Add(targetIndex);
-                        }
-                        break;
-                        case TriggerType.SelfTargetNotOnly:
-                        if (battlerInfo.Index != targetIndex)
-                        {
-                            targetIndexList.Add(targetIndex);
-                        }
-                        break;
-                        default:
-                            targetIndexList.Add(targetIndex);
-                        break;
-                    }
-                    if (triggerDate.Param2 == 1)
-                    {
-                        targetIndexWithInList.Add(targetIndex);
-                    }
-                }
-            }
-            var bindTargetIndexList = new List<int>();
-            foreach (var targetIndex1 in targetIndexList1)
-            {
-                if (targetIndexList2.Contains(targetIndex1))
-                {
-                    bindTargetIndexList.Add(targetIndex1);
-                }
-            }
-
-            // ～範囲優先の第二候補があれば変更
-            if (bindTargetIndexList.Count == 0)
-            {   
-                bindTargetIndexList = targetIndexWithInList;
-            }
-
-            // ～が高い・低い順位で選択
-            var friendTargets = new List<BattlerInfo>();
-            var opponentTargets = new List<BattlerInfo>();
-            foreach (var bindTargetIndex in bindTargetIndexList)
-            {
-                var bindBattlerInfo = GetBattlerInfo(bindTargetIndex);
-                if (bindBattlerInfo.IsActor && battlerInfo.IsActor)
-                {
-                    friendTargets.Add(bindBattlerInfo);
-                } else
-                {
-                    opponentTargets.Add(bindBattlerInfo);
-                }
-            }
-            for (int i = 0;i < triggerDates.Count;i++)
-            {
-                var triggerDate = triggerDates[i];
-                switch (triggerDate.TriggerType)
-                {
-                    case TriggerType.LessHpFriend:
-                    if (friendTargets.Count > 0)
-                    {
-                        // Param1==1の場合は割合
-                        if (triggerDate.Param1 == 1)
-                        {
-                            friendTargets.Sort((a,b) => a.HpRate < b.HpRate ? -1: 1);
-                            var hpRate = friendTargets[0].HpRate;
-                            friendTargets = friendTargets.FindAll(a => a.HpRate == hpRate);
-                        } else
-                        {
-                            friendTargets.Sort((a,b) => a.Hp < b.Hp ? -1: 1);
-                            var hp = friendTargets[0].Hp;
-                            friendTargets = friendTargets.FindAll(a => a.Hp == hp);
-                        }
-                        return BattleUtility.NearTargetIndex(battlerInfo,friendTargets);
-                    }
-                    break;
-                    case TriggerType.MostHpFriend:
-                    if (friendTargets.Count > 0)
-                    {
-                        if (triggerDate.Param1 == 1)
-                        {
-                            friendTargets.Sort((a,b) => a.HpRate < b.HpRate ? 1: -1);
-                            var hpRate = friendTargets[0].HpRate;
-                            friendTargets = friendTargets.FindAll(a => a.HpRate == hpRate);
-                        } else
-                        {
-                            friendTargets.Sort((a,b) => a.Hp < b.Hp ? 1: -1);
-                            var hp = friendTargets[0].Hp;
-                            friendTargets = friendTargets.FindAll(a => a.Hp == hp);
-                        }
-                        return BattleUtility.NearTargetIndex(battlerInfo,friendTargets);
-                    }
-                    break;
-                    case TriggerType.LessHpTarget:
-                    if (opponentTargets.Count > 0)
-                    {
-                        if (triggerDate.Param1 == 1)
-                        {
-                            opponentTargets.Sort((a,b) => a.HpRate < b.HpRate ? -1: 1);
-                            var hpRate = opponentTargets[0].HpRate;
-                            opponentTargets = opponentTargets.FindAll(a => a.HpRate == hpRate);
-                        } else
-                        {
-                            opponentTargets.Sort((a,b) => a.Hp < b.Hp ? -1: 1);
-                            var hp = opponentTargets[0].Hp;
-                            opponentTargets = opponentTargets.FindAll(a => a.Hp == hp);
-                        }
-                        return BattleUtility.NearTargetIndex(battlerInfo,opponentTargets);
-                    }
-                    break;
-                    case TriggerType.MostHpTarget:
-                    if (opponentTargets.Count > 0)
-                    {
-                        if (triggerDate.Param1 == 1)
-                        {
-                            opponentTargets.Sort((a,b) => a.HpRate < b.HpRate ? 1: -1);
-                            var hpRate = opponentTargets[0].HpRate;
-                            opponentTargets = opponentTargets.FindAll(a => a.HpRate == hpRate);
-                        } else
-                        {
-                            opponentTargets.Sort((a,b) => a.Hp < b.Hp ? 1: -1);
-                            var hp = opponentTargets[0].Hp;
-                            opponentTargets = opponentTargets.FindAll(a => a.Hp == hp);
-                        }
-                        return BattleUtility.NearTargetIndex(battlerInfo,opponentTargets);
-                    }
-                    break;
-                    case TriggerType.FriendLineMoreTarget:
-                    if (friendTargets.Count > 0)
-                    {
-                        var front = friendTargets.FindAll(a => a.LineIndex == LineType.Front);
-                        var back = friendTargets.FindAll(a => a.LineIndex == LineType.Back);
-                        if (back.Count > front.Count)
-                        {
-                            return BattleUtility.NearTargetIndex(battlerInfo,back);
-                        } else
-                        {
-                            return BattleUtility.NearTargetIndex(battlerInfo,front);
-                        }
-                    }
-                    break;
-                    case TriggerType.FriendLineLessTarget:
-                    if (friendTargets.Count > 0)
-                    {
-                        var front = friendTargets.FindAll(a => a.LineIndex == LineType.Front);
-                        var back = friendTargets.FindAll(a => a.LineIndex == LineType.Back);
-                        if (back.Count < front.Count)
-                        {
-                            return BattleUtility.NearTargetIndex(battlerInfo,back);
-                        } else
-                        {
-                            return BattleUtility.NearTargetIndex(battlerInfo,front);
-                        }
-                    }
-                    break;
-                    case TriggerType.OpponentLineMoreTarget:
-                    if (opponentTargets.Count > 0)
-                    {
-                        var front = opponentTargets.FindAll(a => a.LineIndex == LineType.Front);
-                        var back = opponentTargets.FindAll(a => a.LineIndex == LineType.Back);
-                        if (back.Count > front.Count)
-                        {
-                            return BattleUtility.NearTargetIndex(battlerInfo,back);
-                        } else
-                        {
-                            return BattleUtility.NearTargetIndex(battlerInfo,front);
-                        }
-                    }
-                    break;
-                    case TriggerType.OpponentLineLessTarget:
-                    if (opponentTargets.Count > 0)
-                    {
-                        var front = opponentTargets.FindAll(a => a.LineIndex == LineType.Front);
-                        var back = opponentTargets.FindAll(a => a.LineIndex == LineType.Back);
-                        if (back.Count < front.Count)
-                        {
-                            return BattleUtility.NearTargetIndex(battlerInfo,back);
-                        } else
-                        {
-                            return BattleUtility.NearTargetIndex(battlerInfo,front);
-                        }
-                    }
-                    break;
-                    case TriggerType.FriendStatusUpper:
-                        var friendStatusUpperIndex = SortStatusUpperTargetIndex(battlerInfo,friendTargets,(StatusParamType)triggerDate.Param1);
-                        return friendStatusUpperIndex;
-                    case TriggerType.FriendStatusUnder:
-                        var friendStatusUnderIndex = SortStatusUnderTargetIndex(battlerInfo,friendTargets,(StatusParamType)triggerDate.Param1);
-                        return friendStatusUnderIndex;
-                    case TriggerType.OpponentStatusUpper:
-                        var opponentStatusUpperIndex = SortStatusUpperTargetIndex(battlerInfo,opponentTargets,(StatusParamType)triggerDate.Param1);
-                        return opponentStatusUpperIndex;
-                    case TriggerType.OpponentStatusUnder:
-                        var opponentStatusUnderIndex = SortStatusUnderTargetIndex(battlerInfo,opponentTargets,(StatusParamType)triggerDate.Param1);
-                        return opponentStatusUnderIndex;
-                    default:
-                    break;
-                }
-            }
-            if (bindTargetIndexList.Count > 0)
-            {
-                // 複数候補は列に近い方を選ぶ
-                return BattleUtility.NearTargetIndex(battlerInfo,bindTargetIndexList);
-            }
-            return -1;
         }
 
         private List<BattlerInfo> LineTargetBattlers(ScopeType scopeType,BattlerInfo targetBattler,List<BattlerInfo> targetBatterInfos)
@@ -3314,84 +2433,6 @@ namespace Ryneus
                 lineTargets.Remove(targetBattler);
             }
             return lineTargets;
-        }
-
-        private int SortStatusUpperTargetIndex(BattlerInfo battlerInfo,List<BattlerInfo> targetInfos,StatusParamType statusParamType)
-        {
-            if (targetInfos.Count > 0)
-            {
-                if (statusParamType == (int)StatusParamType.Hp)
-                {
-                    targetInfos.Sort((a,b) => a.MaxHp > b.MaxHp ? -1: 1);
-                    var hp = targetInfos[0].MaxHp;
-                    targetInfos = targetInfos.FindAll(a => a.MaxHp == hp);
-                } else
-                if (statusParamType == StatusParamType.Mp)
-                {
-                    targetInfos.Sort((a,b) => a.MaxMp > b.MaxMp ? -1: 1);
-                    var mp = targetInfos[0].MaxMp;
-                    targetInfos = targetInfos.FindAll(a => a.MaxMp == mp);
-                } else
-                if (statusParamType == StatusParamType.Atk)
-                {
-                    targetInfos.Sort((a,b) => a.CurrentAtk() > b.CurrentAtk() ? -1: 1);
-                    var atk = targetInfos[0].CurrentAtk();
-                    targetInfos = targetInfos.FindAll(a => a.CurrentAtk() == atk);
-                } else
-                if (statusParamType == StatusParamType.Def)
-                {
-                    targetInfos.Sort((a,b) => a.CurrentDef() > b.CurrentDef() ? -1: 1);
-                    var def = targetInfos[0].CurrentDef();
-                    targetInfos = targetInfos.FindAll(a => a.CurrentDef() == def);
-                } else
-                if (statusParamType == StatusParamType.Spd)
-                {
-                    targetInfos.Sort((a,b) => a.CurrentSpd() > b.CurrentSpd() ? -1: 1);
-                    var spd = targetInfos[0].CurrentSpd();
-                    targetInfos = targetInfos.FindAll(a => a.CurrentSpd() == spd);
-                }
-                return BattleUtility.NearTargetIndex(battlerInfo,targetInfos);
-            }
-            return -1;
-        }
-
-        private int SortStatusUnderTargetIndex(BattlerInfo battlerInfo,List<BattlerInfo> targetInfos,StatusParamType statusParamType)
-        {
-            if (targetInfos.Count > 0)
-            {
-                if (statusParamType == (int)StatusParamType.Hp)
-                {
-                    targetInfos.Sort((a,b) => a.MaxHp > b.MaxHp ? 1: -1);
-                    var hp = targetInfos[0].MaxHp;
-                    targetInfos = targetInfos.FindAll(a => a.MaxHp == hp);
-                } else
-                if (statusParamType == StatusParamType.Mp)
-                {
-                    targetInfos.Sort((a,b) => a.MaxMp > b.MaxMp ? 1: -1);
-                    var mp = targetInfos[0].MaxMp;
-                    targetInfos = targetInfos.FindAll(a => a.MaxMp == mp);
-                } else
-                if (statusParamType == StatusParamType.Atk)
-                {
-                    targetInfos.Sort((a,b) => a.CurrentAtk() > b.CurrentAtk() ? 1: -1);
-                    var atk = targetInfos[0].CurrentAtk();
-                    targetInfos = targetInfos.FindAll(a => a.CurrentAtk() == atk);
-                } else
-                if (statusParamType == StatusParamType.Def)
-                {
-                    targetInfos.Sort((a,b) => a.CurrentDef() > b.CurrentDef() ? 1: -1);
-                    var def = targetInfos[0].CurrentDef();
-                    targetInfos = targetInfos.FindAll(a => a.CurrentDef() == def);
-                } else
-                if (statusParamType == StatusParamType.Spd)
-                {
-                    targetInfos.Sort((a,b) => a.CurrentSpd() > b.CurrentSpd() ? 1: -1);
-                    var spd = targetInfos[0].CurrentSpd();
-                    targetInfos = targetInfos.FindAll(a => a.CurrentSpd() == spd);
-                }
-                return BattleUtility.NearTargetIndex(battlerInfo,targetInfos);
-            }
-            return -1;
         }
 
         public List<int> MakeAutoSelectIndex(ActionInfo actionInfo,int oneTargetIndex = -1,int counterSubjectIndex = -1,ActionInfo baseActionInfo = null,List<ActionResultInfo> baseActionResultInfos = null)
@@ -3441,7 +2482,7 @@ namespace Ryneus
         public void ResetTargetIndexList(ActionInfo actionInfo)
         {
             var needReset = false;
-            foreach (var targetIndex in actionInfo.TargetIndexList)
+            foreach (var targetIndex in actionInfo.CandidateTargetIndexList)
             {
                 var target = GetBattlerInfo(targetIndex);
                 if (!target.IsAlive() && actionInfo.Master.IsHpDamageFeature())
@@ -3452,40 +2493,13 @@ namespace Ryneus
             if (needReset)
             {
                 actionInfo.ActionResults.Clear();
-                actionInfo.SetTargetIndexList(MakeAutoSelectIndex(actionInfo,-1,actionInfo.SubjectIndex));
+                actionInfo.SetCandidateTargetIndexList(MakeAutoSelectIndex(actionInfo,-1,actionInfo.SubjectIndex));
             }
-        }
-
-        public int MakeAutoSkillId(BattlerInfo battlerInfo)
-        {
-            var skillInfos = battlerInfo.ActiveSkills().FindAll(a => CheckCanUse(a,battlerInfo));
-            if (skillInfos.Count == 0)
-            {
-                return 0;
-            }
-            int weight = 0;
-            foreach (var skillInfo in skillInfos)
-            {
-                weight += skillInfo.Weight;
-            }
-            weight = UnityEngine.Random.Range(0,weight);
-            int skillIndex = -1;
-            for (int i = 0;i < skillInfos.Count;i++)
-            {
-                weight -= skillInfos[i].Weight;
-                if (weight <= 0 && skillIndex == -1)
-                {
-                    skillIndex = i;
-                }
-            }
-            
-            return skillInfos[skillIndex].Id;
         }
 
         public (int,int) MakeAutoActorSkillId(BattlerInfo battlerInfo)
         {
             var skillInfos = battlerInfo.ActiveSkills().FindAll(a => CheckCanUse(a,battlerInfo));
-            //var (skillId,targetIndex) = BattleActorAI.MakeAutoActorSkillId(skillInfos,battlerInfo,BattlerActors(),BattlerEnemies());
             
             // トリガーデータからスキル検索
             var skillTriggerInfos = PartyInfo.SkillTriggerInfos(battlerInfo.ActorInfo.ActorId);
@@ -3507,93 +2521,17 @@ namespace Ryneus
                 {
                     continue;
                 }
-                var skillTriggerInfo = new SkillTriggerInfo();
-                skillTriggerInfo.SetSkillId(skillTriggerData.SkillId);
+                var skillTriggerInfo = new SkillTriggerInfo(battlerInfo.EnemyData.Id,skillTriggerData.SkillId);
                 var SkillTriggerData1 = DataSystem.SkillTriggers.Find(a => a.Id == skillTriggerData.Trigger1);
                 var SkillTriggerData2 = DataSystem.SkillTriggers.Find(a => a.Id == skillTriggerData.Trigger2);
                 skillTriggerInfo.UpdateTriggerDates(new List<SkillTriggerData>(){SkillTriggerData1,SkillTriggerData2});
-                skillTriggerInfo.SetActorId(battlerInfo.EnemyData.Id);
                 skillTriggerInfos.Add(skillTriggerInfo);
             }
             skillTriggerInfos = skillTriggerInfos.FindAll(a => skillInfos.Find(b => b.Id == a.SkillId) != null);
             return SelectSkillTargetBySkillTriggerDates(battlerInfo,skillTriggerInfos);
         }
 
-        private (int,int) SelectSkillTargetBySkillTriggerDates(BattlerInfo battlerInfo,List<SkillTriggerInfo> skillTriggerInfos,ActionInfo actionInfo = null,List<ActionResultInfo> actionResultInfos = null)
-        {
-            var selectSkillId = -1;
-            var selectTargetIndex = -1;
-            var counterSubjectIndex = actionInfo != null ? actionInfo.SubjectIndex : -1;
-            foreach (var skillTriggerInfo in skillTriggerInfos)
-            {
-                // 条件
-                var triggerDates = new List<SkillData.TriggerData>();
-                var skillTriggerDates = skillTriggerInfo.SkillTriggerDates;
-                foreach (var skillTriggerData in skillTriggerDates)
-                {
-                    if (skillTriggerData != null && skillTriggerData.Id > 0)
-                    {
-                        var triggerData = new SkillData.TriggerData
-                        {
-                            TriggerType = skillTriggerData.TriggerType,
-                            Param1 = skillTriggerData.Param1,
-                            Param2 = skillTriggerData.Param2,
-                            Param3 = skillTriggerData.Param3,
-                        };
-                        triggerDates.Add(triggerData);
-                    }
-                }
-                if (selectSkillId == -1 && selectTargetIndex == -1 && skillTriggerInfo.SkillId > 0)
-                {
-                    // 条件なし
-                    if (triggerDates.Count == 0)
-                    {
-                        selectSkillId = skillTriggerInfo.SkillId;
-                    } else
-                    {
-                        if (triggerDates.Count == 2)
-                        {
-                            triggerDates[0].Param3 = 1; // and判定
-                        }
-                        if (CanUseSkillTrigger(triggerDates,battlerInfo))
-                        {           
-                            selectSkillId = skillTriggerInfo.SkillId;
-                        }
-                    }
-                }
-                // 優先指定の判定
-                if (selectSkillId > -1 && selectTargetIndex == -1)
-                {
-                    var targetIndexList = GetSkillTargetIndexList(selectSkillId,battlerInfo.Index,true,counterSubjectIndex,actionInfo,actionResultInfos);
-                    if (targetIndexList.Count == 0)
-                    {
-                        var triggeredSkill = DataSystem.FindSkill(selectSkillId);
-                        if (actionResultInfos != null && triggeredSkill != null && triggeredSkill.TargetType == TargetType.IsTriggerTarget)
-                        {
-                            targetIndexList = TriggerTargetList(battlerInfo,triggeredSkill.TriggerDates[0],actionInfo,actionResultInfos);
-                        }
-                        if (targetIndexList.Count == 0)
-                        {
-                            selectSkillId = -1;
-                        }
-                    }
-                    var target = CanUseSkillTriggerTarget(selectSkillId,triggerDates,battlerInfo,targetIndexList);
-                    if (target > -1)
-                    {
-                        selectTargetIndex = target;
-                    } else
-                    {
-                        selectSkillId = -1;
-                    }
-                }
-                if (selectSkillId > -1 && selectTargetIndex > -1)
-                {
-                    return (selectSkillId,selectTargetIndex);
-                }
-            }
-            return (selectSkillId,selectTargetIndex);
-        }
-
+/*
         public List<ActionResultInfo> CalcDeathIndexList(List<ActionResultInfo> actionResultInfos)
         {
             // 複数回ダメージで戦闘不能になるかチェック
@@ -3645,6 +2583,7 @@ namespace Ryneus
             }
             return actionResultInfos;
         }
+*/
 
         public List<BattlerInfo> PreservedAliveEnemies()
         {

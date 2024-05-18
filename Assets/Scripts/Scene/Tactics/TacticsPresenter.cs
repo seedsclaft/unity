@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Ryneus
 {
-    public class TacticsPresenter :BasePresenter
+    public partial class TacticsPresenter : BasePresenter
     {
         TacticsModel _model = null;
         TacticsView _view = null;
@@ -41,121 +41,11 @@ namespace Ryneus
             Initialize();
         }
 
-        private void CheckStageEvent()
-        {
-            // イベントチェック
-            var stageEvents = _model.StageEvents(EventTiming.StartTactics);
-            foreach (var stageEvent in stageEvents)
-            {
-                if (_eventBusy)
-                {
-                    continue;
-                }
-                switch (stageEvent.Type)
-                {
-                    case StageEventType.CommandDisable:
-                        _model.SetTacticsCommandEnables((TacticsCommandType)stageEvent.Param + 1,false);
-                        break;
-                    case StageEventType.NeedAllTactics:
-                        break;
-                    case StageEventType.IsSubordinate:
-                        break;
-                    case StageEventType.IsAlcana:
-                        //_model.SetIsAlcana(stageEvent.Param == 1);
-                        break;
-                    case StageEventType.SelectAddActor:
-                        _eventBusy = true;
-                        _model.AddEventReadFlag(stageEvent);
-                        var selectAddActor = new ConfirmInfo(DataSystem.GetText(11050),(menuCommandInfo) => UpdatePopupSelectAddActor((ConfirmCommandType)menuCommandInfo));
-                        selectAddActor.SetIsNoChoice(true);
-                        selectAddActor.SetSelectIndex(0);
-                        _view.CommandCallConfirm(selectAddActor);
-                        _view.ChangeUIActive(false);
-                        PlayTacticsBgm();
-                        
-                        break;
-                    case StageEventType.SaveCommand:
-                        _eventBusy = true;
-                        _model.AddEventReadFlag(stageEvent);
-                        CommandSave(true);
-                        break;
-                    case StageEventType.SetDefineBossIndex:
-                        break;
-                    case StageEventType.SetRouteSelectParam:
-                        _view.CommandSetRouteSelect();
-                        break;
-                    case StageEventType.ClearStage:
-                        _eventBusy = true;
-                        _model.AddEventReadFlag(stageEvent);
-                        _model.StageClear();
-                        _view.CommandGotoSceneChange(Scene.MainMenu);
-                        break;
-                    case StageEventType.ChangeRouteSelectStage:
-                        _eventBusy = true;
-                        _model.AddEventReadFlag(stageEvent);
-                        _view.CommandGotoSceneChange(Scene.Tactics);
-                        break;
-                    case StageEventType.SetDisplayTurns:
-                        break;
-                    case StageEventType.MoveStage:
-                        break;
-                    case StageEventType.SetDefineBoss:
-                        //_model.SetDefineBoss(stageEvent.Param);
-                        break;
-                    case StageEventType.SurvivalMode:
-                        _model.SetSurvivalMode();
-                        break;
-                }
-            }
-        }
-
-        private bool CheckAdvEvent()
-        {
-            var StartTacticsAdvData = _model.StartTacticsAdvData();
-            if (StartTacticsAdvData != null)
-            {
-                var advInfo = new AdvCallInfo();
-                advInfo.SetLabel(_model.GetAdvFile(StartTacticsAdvData.Id));
-                advInfo.SetCallEvent(() => {
-                    if (StartTacticsAdvData.EndJump != Scene.None)
-                    {
-                        _view.CommandSceneChange(StartTacticsAdvData.EndJump);
-                    }   
-                });
-                _view.CommandCallAdv(advInfo);
-                _view.ChangeUIActive(false);
-            }
-            return StartTacticsAdvData != null;
-        }
-
-        private bool CheckBeforeTacticsAdvEvent()
-        {
-            var isAbort = CheckAdvStageEvent(EventTiming.BeforeTactics,() => {
-                _view.CommandGotoSceneChange(Scene.Tactics);
-            },_model.CurrentStage.SelectActorIdsClassId(0));
-            if (isAbort)
-            {
-                _view.ChangeUIActive(false);
-            }
-            return isAbort;
-        }
-
-        private bool CheckRebornEvent()
-        {
-            var isReborn = CheckRebornEvent(EventTiming.BeforeTactics,() => {
-                _view.CommandGotoSceneChange(Scene.RebornResult);
-            });
-            if (isReborn)
-            {
-                _view.ChangeUIActive(false);
-            }
-            return isReborn;
-        }
-
         private void Initialize()
         {
             InitializeView();
-            var isAbort = CheckAdvStageEvent(EventTiming.StartTactics,() => {
+            var isAbort = CheckAdvStageEvent(EventTiming.StartTactics,() => 
+            {
                 _view.CommandGotoSceneChange(Scene.Tactics);
             },_model.CurrentStage.SelectActorIdsClassId(0));
             if (isAbort)
@@ -202,7 +92,7 @@ namespace Ryneus
                 {
                     CommandTacticsCommand(TacticsCommandType.Paradigm);
                     CommandStageSymbol();
-                    CommandSelectRecord(currentRecord.StageSymbolData.Seek);
+                    CommandSelectRecordSeek(currentRecord.StageSymbolData.Seek);
                     CommandSelectRecord(currentRecord);
                 }
             }
@@ -251,7 +141,7 @@ namespace Ryneus
                     CommandPopupSkillInfo((GetItemInfo)viewEvent.template);
                     break;
                 case Tactics.CommandType.SelectRecord:
-                    CommandSelectRecord((int)viewEvent.template);
+                    CommandSelectRecordSeek((int)viewEvent.template);
                     break;
                 case Tactics.CommandType.CancelSymbolRecord:
                     if (_alcanaSelectBusy == true)
@@ -386,7 +276,7 @@ namespace Ryneus
             _view.CommandGameSystem(Base.CommandType.CloseConfirm);
         }
 
-        private void CommandSelectRecord(int seek)
+        private void CommandSelectRecordSeek(int seek)
         {
             SoundManager.Instance.PlayStaticSe(SEType.Decide);
             //Seekに対応したシンボルを表示
@@ -456,10 +346,18 @@ namespace Ryneus
 
         private void CommandSelectRecord(SymbolResultInfo recordInfo)
         {
-            if (recordInfo.StageSymbolData.Seek == _model.CurrentStage.CurrentTurn)
+            var currentTurn = _model.CurrentStage.CurrentTurn;
+            if (recordInfo.StageSymbolData.Seek == currentTurn)
             {
                 // 現在
                 CommandCurrentSelectRecord(recordInfo);
+            } else
+            if (recordInfo.StageSymbolData.Seek > currentTurn)
+            {
+                // 未来
+                var cautionInfo = new CautionInfo();
+                cautionInfo.SetTitle(DataSystem.GetText(23060));
+                _view.CommandCallCaution(cautionInfo);
             }
         }
 
@@ -881,11 +779,13 @@ namespace Ryneus
 
         private void CommandSelectSideMenu()
         {
-            var sideMenuViewInfo = new SideMenuViewInfo();
-            sideMenuViewInfo.EndEvent = () => {
-
+            var sideMenuViewInfo = new SideMenuViewInfo
+            {
+                EndEvent = () =>
+                {
+                },
+                CommandLists = _model.SideMenu()
             };
-            sideMenuViewInfo.CommandLists = _model.SideMenu();
             _view.CommandCallSideMenu(sideMenuViewInfo);
         }
 
@@ -915,11 +815,6 @@ namespace Ryneus
                 case TacticsCommandType.Alchemy:
                 _view.CommandHelpList(DataSystem.HelpText("Alchemy"));
                 return;
-                /*
-                case TacticsCommandType.Recovery:
-                _view.CommandHelpList(DataSystem.HelpText("Recovery"));
-                return;
-                */
             }
             
         }
