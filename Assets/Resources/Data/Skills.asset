@@ -230,7 +230,7 @@ MonoBehaviour:
     Scope: 1
     SkillType: 1
     TargetType: 1
-    Help: "\\s\u306BATKx150%\u30C0\u30E1\u30FC\u30B8\n\u884C\u52D5\u5F8CAP+1"
+    Help: "\\s\u306BATKx/f[f,0,1]%\u30C0\u30E1\u30FC\u30B8\n\u884C\u52D5\u5F8CAP+/f[f,1,1]"
     Range: 1
     RepeatTime: 1
     AliveType: 1
@@ -261,7 +261,7 @@ MonoBehaviour:
     Scope: 2
     SkillType: 1
     TargetType: 1
-    Help: "\\s\u306BATKx150%\u30C0\u30E1\u30FC\u30B8"
+    Help: "\\s\u306BATKx/f[f,0,1]%\u30C0\u30E1\u30FC\u30B8"
     Range: 1
     RepeatTime: 1
     AliveType: 1
@@ -286,7 +286,7 @@ MonoBehaviour:
     Scope: 2
     SkillType: 1
     TargetType: 2
-    Help: "\\s\u306EAP+1"
+    Help: "\\s\u306EAP+/f[f,0,1]"
     Range: 2
     RepeatTime: 1
     AliveType: 1
@@ -311,7 +311,7 @@ MonoBehaviour:
     Scope: 4
     SkillType: 1
     TargetType: 4
-    Help: "\\s\u306E\u4E0E\u30C0\u30E1\u30FC\u30B8\u7387\u309210%\u30A2\u30C3\u30D7(\u6C38\u7D9A)
+    Help: "\\s\u306E\u4E0E\u30C0\u30E1\u30FC\u30B8\u7387\u3092/f[f,0,3]%\u30A2\u30C3\u30D7(\u6C38\u7D9A)
       \u91CD\u306D\u639B\u3051\u53EF\u80FD"
     Range: 1
     RepeatTime: 1
@@ -362,7 +362,7 @@ MonoBehaviour:
     Scope: 1
     SkillType: 1
     TargetType: 1
-    Help: "\\s\u306BATKx300%\u30C0\u30E1\u30FC\u30B8"
+    Help: "\\s\u306BATKx/f[f,0,1]%\u30C0\u30E1\u30FC\u30B8"
     Range: 1
     RepeatTime: 1
     AliveType: 1
@@ -412,7 +412,7 @@ MonoBehaviour:
     Scope: 4
     SkillType: 1
     TargetType: 4
-    Help: "\u6B21\u306B\u884C\u52D5\u3059\u308B\u307E\u3067\\s\u306E\u81F4\u547D\u653B\u6483\u767A\u751F\u7387\u309230%\u30A2\u30C3\u30D7\n\u4F7F\u7528\u5F8C\u518D\u884C\u52D5\u3067\u304D\u308B"
+    Help: "\u6B21\u306B\u884C\u52D5\u3059\u308B\u307E\u3067\\s\u306E\u81F4\u547D\u653B\u6483\u767A\u751F\u7387\u3092/f[f,0,3]%\u30A2\u30C3\u30D7\n\u4F7F\u7528\u5F8C\u518D\u884C\u52D5\u3067\u304D\u308B"
     Range: 1
     RepeatTime: 1
     AliveType: 1
@@ -443,7 +443,7 @@ MonoBehaviour:
     Scope: 1
     SkillType: 1
     TargetType: 1
-    Help: "\\s\u306BATKx40%\u306E5\u9023\u30C0\u30E1\u30FC\u30B8"
+    Help: "\\s\u306BATKx/f[f,0,1]%\u306E5\u9023\u30C0\u30E1\u30FC\u30B8"
     Range: 1
     RepeatTime: 5
     AliveType: 1
@@ -468,7 +468,7 @@ MonoBehaviour:
     Scope: 31
     SkillType: 1
     TargetType: 1
-    Help: "\\s\u306BATKx100%\u306E\u30C0\u30E1\u30FC\u30B8"
+    Help: "\\s\u306BATKx/f[f,0,1]%\u306E\u30C0\u30E1\u30FC\u30B8"
     Range: 1
     RepeatTime: 1
     AliveType: 1
@@ -493,7 +493,7 @@ MonoBehaviour:
     Scope: 1
     SkillType: 1
     TargetType: 1
-    Help: "\\s\u306BATKx150%\u30C0\u30E1\u30FC\u30B8\n\u884C\u52D5\u5F8CAP+1"
+    Help: "\\s\u306BATKx/f[f,0,1]%\u30C0\u30E1\u30FC\u30B8\n\u884C\u52D5\u5F8CAP+/f[f,1,1]"
     Range: 1
     RepeatTime: 1
     AliveType: 1
@@ -549,7 +549,7 @@ MonoBehaviour:
     Scope: 4
     SkillType: 1
     TargetType: 4
-    Help: "\\s\u306B\u56DE\u907F\u738725%\u30A2\u30C3\u30D7\u3092\u4ED8\u4E0E(\u6C38\u7D9A)"
+    Help: "\\s\u306B\u56DE\u907F\u7387/f[f,0,3]%\u30A2\u30C3\u30D7\u3092\u4ED8\u4E0E(\u6C38\u7D9A)"
     Range: 1
     RepeatTime: 1
     AliveType: 1
@@ -574,7 +574,7 @@ MonoBehaviour:
     Scope: 1
     SkillType: 1
     TargetType: 1
-    Help: "\\s\u306BATKx150%\u30C0\u30E1\u30FC\u30B8\n100%\u306E\u78BA\u7387\u30671\u30BF\u30FC\u30F3\u306E\u30B9\u30BF\u30F3\u4ED8\u4E0E"
+    Help: "\\s\u306BATKx/f[f,0,1]%\u30C0\u30E1\u30FC\u30B8\n\u30B9\u30BF\u30F3\u4ED8\u4E0E"
     Range: 2
     RepeatTime: 1
     AliveType: 1
@@ -605,7 +605,7 @@ MonoBehaviour:
     Scope: 13
     SkillType: 1
     TargetType: 2
-    Help: "\u81EA\u8EAB\u4EE5\u5916\u306E\u5F85\u6A5F\u6642\u9593\u3092250\u77ED\u7E2E\u3059\u308B"
+    Help: "\u81EA\u8EAB\u4EE5\u5916\u306E\u5F85\u6A5F\u6642\u9593\u3092/f[f,0,1]\u77ED\u7E2E\u3059\u308B"
     Range: 1
     RepeatTime: 1
     AliveType: 1
@@ -630,7 +630,7 @@ MonoBehaviour:
     Scope: 1
     SkillType: 1
     TargetType: 2
-    Help: "\\s\u306ESPD\u3092\u884C\u52D5\u6BCE\u306B4\u30A2\u30C3\u30D7"
+    Help: "\\s\u306ESPD\u3092\u884C\u52D5\u6BCE\u306B/f[f,0,3]\u30A2\u30C3\u30D7"
     Range: 1
     RepeatTime: 1
     AliveType: 1
@@ -686,7 +686,7 @@ MonoBehaviour:
     Scope: 4
     SkillType: 1
     TargetType: 4
-    Help: "\u6B21\u306B\u884C\u52D5\u3059\u308B\u307E\u3067\\s\u306E\u547D\u4E2D\u3068\u56DE\u907F\u309250%\u30A2\u30C3\u30D7\n\u4F7F\u7528\u5F8C\u518D\u884C\u52D5\u3067\u304D\u308B"
+    Help: "\u6B21\u306B\u884C\u52D5\u3059\u308B\u307E\u3067\\s\u306E\u547D\u4E2D\u3068\u56DE\u907F\u3092/f[f,0,3]%\u30A2\u30C3\u30D7\n\u4F7F\u7528\u5F8C\u518D\u884C\u52D5\u3067\u304D\u308B"
     Range: 1
     RepeatTime: 1
     AliveType: 1
@@ -723,7 +723,7 @@ MonoBehaviour:
     Scope: 1
     SkillType: 1
     TargetType: 1
-    Help: "\\s\u306BATKx150%\u30C0\u30E1\u30FC\u30B8\n\u6700\u59274\u307E\u3067AP\u3092\u3059\u3079\u3066\u596A\u3046"
+    Help: "\\s\u306BATKx/f[f,0,1]%\u30C0\u30E1\u30FC\u30B8\n\u6700\u5927/f[f,1,1]\u307E\u3067AP\u3092\u3059\u3079\u3066\u596A\u3046"
     Range: 1
     RepeatTime: 2
     AliveType: 1
@@ -754,7 +754,7 @@ MonoBehaviour:
     Scope: 1
     SkillType: 1
     TargetType: 1
-    Help: "\\s\u306BATKx150%\u30C0\u30E1\u30FC\u30B8\n\u5BFE\u8C61\u306E\u30D0\u30D5\u52B9\u679C\u3092\u89E3\u9664\u3059\u308B"
+    Help: "\\s\u306BATKx/f[f,0,1]%\u30C0\u30E1\u30FC\u30B8\n\u5BFE\u8C61\u306E\u30D0\u30D5\u52B9\u679C\u3092\u89E3\u9664\u3059\u308B"
     Range: 1
     RepeatTime: 1
     AliveType: 1
@@ -859,7 +859,7 @@ MonoBehaviour:
     Scope: 1
     SkillType: 1
     TargetType: 1
-    Help: "\\s\u306BATKx150%\u30C0\u30E1\u30FC\u30B8\n\u884C\u52D5\u5F8CAP+1"
+    Help: "\\s\u306BATKx/f[f,0,1]%\u30C0\u30E1\u30FC\u30B8\n\u884C\u52D5\u5F8CAP+/f[f,1,1]"
     Range: 1
     RepeatTime: 1
     AliveType: 1
@@ -890,7 +890,7 @@ MonoBehaviour:
     Scope: 4
     SkillType: 1
     TargetType: 4
-    Help: "\\s\u306B\u30AB\u30A6\u30F3\u30BF\u3092\u4ED8\u4E0E\n4\u30BF\u30FC\u30F325%\u30C0\u30E1\u30FC\u30B8\u306E\u30AB\u30A6\u30F3\u30BF\u3092\u4ED8\u4E0E"
+    Help: "\\s\u306B\u30AB\u30A6\u30F3\u30BF\u3092\u4ED8\u4E0E\n/f[f,0,2]\u30BF\u30FC\u30F3/f[f,0,3]%\u30C0\u30E1\u30FC\u30B8\u306E\u30AB\u30A6\u30F3\u30BF\u3092\u4ED8\u4E0E"
     Range: 1
     RepeatTime: 1
     AliveType: 1
@@ -915,7 +915,7 @@ MonoBehaviour:
     Scope: 1
     SkillType: 1
     TargetType: 2
-    Help: "\\s\u306EDEF\u30928\u30A2\u30C3\u30D7"
+    Help: "\\s\u306EDEF\u3092/f[f,0,3]\u30A2\u30C3\u30D7"
     Range: 1
     RepeatTime: 1
     AliveType: 1
@@ -965,7 +965,7 @@ MonoBehaviour:
     Scope: 2
     SkillType: 1
     TargetType: 1
-    Help: "\\s\u306B25%\u30C0\u30E1\u30FC\u30B8\u306E\u51CD\u7D50\u4ED8\u4E0E"
+    Help: "\\s\u306B/f[f,0,3]%\u30C0\u30E1\u30FC\u30B8\u306E\u51CD\u7D50\u4ED8\u4E0E"
     Range: 1
     RepeatTime: 1
     AliveType: 1
@@ -990,7 +990,7 @@ MonoBehaviour:
     Scope: 1
     SkillType: 1
     TargetType: 1
-    Help: "\\s\u306B\u7D041\u30BF\u30FC\u30F3\u5206\u306E\u920D\u8DB3\u4ED8\u4E0E"
+    Help: "\\s\u306B\u920D\u8DB3\u4ED8\u4E0E"
     Range: 1
     RepeatTime: 1
     AliveType: 1
@@ -1015,7 +1015,7 @@ MonoBehaviour:
     Scope: 1
     SkillType: 1
     TargetType: 2
-    Help: "\\s\u306B1\u56DE\u6709\u52B9\u306E\u653B\u6483\u7121\u52B9\u3092\u4ED8\u4E0E"
+    Help: "\\s\u306B/f[f,0,2]\u56DE\u6709\u52B9\u306E\u653B\u6483\u7121\u52B9\u3092\u4ED8\u4E0E"
     Range: 2
     RepeatTime: 1
     AliveType: 1
@@ -1040,7 +1040,7 @@ MonoBehaviour:
     Scope: 3
     SkillType: 1
     TargetType: 2
-    Help: "\\s\u306B2\u30BF\u30FC\u30F320\u30C0\u30E1\u30FC\u30B8\u306E\u30B7\u30FC\u30EB\u30C9\u4ED8\u4E0E"
+    Help: "\\s\u306B/f[f,0,2]\u30BF\u30FC\u30F3/f[f,0,3]\u30C0\u30E1\u30FC\u30B8\u307E\u3067\u306E\u30B7\u30FC\u30EB\u30C9\u4ED8\u4E0E"
     Range: 2
     RepeatTime: 1
     AliveType: 1
@@ -1065,7 +1065,7 @@ MonoBehaviour:
     Scope: 1
     SkillType: 1
     TargetType: 1
-    Help: "\\s\u306BATKx150%\u30C0\u30E1\u30FC\u30B8\n\u30A2\u30F3\u30C7\u30C3\u30C9\u306B\u306F\u3055\u3089\u306B2\u500D\u30C0\u30E1\u30FC\u30B8\n\u884C\u52D5\u5F8CAP+1"
+    Help: "\\s\u306BATKx/f[f,0,1]%\u30C0\u30E1\u30FC\u30B8\n\u30A2\u30F3\u30C7\u30C3\u30C9\u306B\u306F\u3055\u3089\u306B2\u500D\u30C0\u30E1\u30FC\u30B8\n\u884C\u52D5\u5F8CAP+/f[f,1,1]"
     Range: 1
     RepeatTime: 1
     AliveType: 1
@@ -1134,7 +1134,7 @@ MonoBehaviour:
     Scope: 1
     SkillType: 1
     TargetType: 3
-    Help: "\u6575\u5473\u65B9\u4E00\u4EBA\u306EHp\u309225\u56DE\u5FA9\n\u30A2\u30F3\u30C7\u30C3\u30C9\u306B\u306F2\u500D\u306E\u30C0\u30E1\u30FC\u30B8"
+    Help: "\u6575\u5473\u65B9\u4E00\u4EBA\u306EHp\u3092/f[f,0,1]\u56DE\u5FA9\n\u30A2\u30F3\u30C7\u30C3\u30C9\u306B\u306F2\u500D\u306E\u30C0\u30E1\u30FC\u30B8"
     Range: 1
     RepeatTime: 1
     AliveType: 1
@@ -1196,7 +1196,7 @@ MonoBehaviour:
     Scope: 13
     SkillType: 1
     TargetType: 2
-    Help: "\u81EA\u8EAB\u4EE5\u5916\u306EHp\u309215\u56DE\u5FA9\n\u5BFE\u8C61\u306EAp+1"
+    Help: "\u81EA\u8EAB\u4EE5\u5916\u306EHp\u3092/f[f,0,1]\u56DE\u5FA9\n\u5BFE\u8C61\u306EAp+/f[f,1,1]"
     Range: 2
     RepeatTime: 1
     AliveType: 1
@@ -1227,7 +1227,7 @@ MonoBehaviour:
     Scope: 1
     SkillType: 1
     TargetType: 2
-    Help: "\\s\u3092\u8607\u751F\u3057\u3066Hp\u309225\u56DE\u5FA9"
+    Help: "\\s\u3092\u8607\u751F\u3057\u3066Hp\u3092/f[f,0,1]\u56DE\u5FA9"
     Range: 1
     RepeatTime: 1
     AliveType: 0
@@ -1284,7 +1284,7 @@ MonoBehaviour:
     Scope: 1
     SkillType: 1
     TargetType: 1
-    Help: "\\d\u306E\u56DE\u907F\u7387\u309220%\u30C0\u30A6\u30F3(\u6C38\u7D9A)"
+    Help: "\\s\u306E\u56DE\u907F\u7387\u3092/f[f,0,3]%\u30C0\u30A6\u30F3(\u6C38\u7D9A)"
     Range: 1
     RepeatTime: 1
     AliveType: 1
@@ -1292,9 +1292,9 @@ MonoBehaviour:
     FeatureDates:
     - SkillId: 4080
       FeatureType: 3010
-      Param1: 2080
+      Param1: 1091
       Param2: 999
-      Param3: 1
+      Param3: 20
       Rate: 100
     TriggerDates: []
     ScopeTriggers: []
@@ -1309,7 +1309,7 @@ MonoBehaviour:
     Scope: 1
     SkillType: 1
     TargetType: 1
-    Help: "\\s\u306BATKx150%\u30C0\u30E1\u30FC\u30B8\n\u5473\u65B9\u5168\u54E1\u306B\u4E0E\u30C0\u30E1\u30FC\u30B8\u306E20%\u5206\u306EHp\u56DE\u5FA9"
+    Help: "\\s\u306BATKx/f[f,0,1]%\u30C0\u30E1\u30FC\u30B8\n\u5473\u65B9\u5168\u54E1\u306B\u4E0E\u30C0\u30E1\u30FC\u30B8\u306E/f[f,0,1]%\u5206\u306EHp\u56DE\u5FA9"
     Range: 1
     RepeatTime: 1
     AliveType: 1
@@ -1340,7 +1340,7 @@ MonoBehaviour:
     Scope: 1
     SkillType: 1
     TargetType: 1
-    Help: "\\s\u306BATKx150%\u30C0\u30E1\u30FC\u30B8\n\u884C\u52D5\u5F8CAP+1"
+    Help: "\\s\u306BATKx/f[f,0,1]%\u30C0\u30E1\u30FC\u30B8\n\u884C\u52D5\u5F8CAP+/f[f,1,1]"
     Range: 1
     RepeatTime: 1
     AliveType: 1
@@ -1371,7 +1371,7 @@ MonoBehaviour:
     Scope: 3
     SkillType: 1
     TargetType: 1
-    Help: "\\s\u306B\u30C0\u30E1\u30FC\u30B8"
+    Help: "\\s\u306BATKx/f[f,0,1]%\u30C0\u30E1\u30FC\u30B8"
     Range: 2
     RepeatTime: 1
     AliveType: 1
@@ -1396,7 +1396,7 @@ MonoBehaviour:
     Scope: 1
     SkillType: 1
     TargetType: 1
-    Help: "\\s\u306B\u30C0\u30E1\u30FC\u30B8\n\u30C0\u30E1\u30FC\u30B8\u306E50%\u5206Hp\u56DE\u5FA9"
+    Help: "\\s\u306BATKx/f[f,0,1]%\u30C0\u30E1\u30FC\u30B8\n\u30C0\u30E1\u30FC\u30B8\u306E/f[f,0,3]%\u5206Hp\u56DE\u5FA9"
     Range: 1
     RepeatTime: 1
     AliveType: 1
@@ -1446,7 +1446,7 @@ MonoBehaviour:
     Scope: 1
     SkillType: 1
     TargetType: 1
-    Help: "\\s\u306BATKx150%\u30C0\u30E1\u30FC\u30B8\nAp2\u30C0\u30E1\u30FC\u30B8"
+    Help: "\\s\u306BATKx/f[f,0,1]%\u30C0\u30E1\u30FC\u30B8\nAp/f[f,1,1]\u30C0\u30E1\u30FC\u30B8"
     Range: 1
     RepeatTime: 1
     AliveType: 1
@@ -1477,7 +1477,7 @@ MonoBehaviour:
     Scope: 1
     SkillType: 1
     TargetType: 1
-    Help: "\\s\u306B5\u30BF\u30FC\u30F3\u306E\u6697\u95C7(\u547D\u4E2D\u738725%\u30C0\u30A6\u30F3)\u3092\u4ED8\u4E0E"
+    Help: "\\s\u306B/f[f,0,2]\u30BF\u30FC\u30F3\u306E\u547D\u4E2D\u7387/f[f,0,3]%\u30C0\u30A6\u30F3\u3092\u4ED8\u4E0E"
     Range: 1
     RepeatTime: 1
     AliveType: 1
@@ -1502,7 +1502,7 @@ MonoBehaviour:
     Scope: 3
     SkillType: 1
     TargetType: 1
-    Help: "\\s\u306EATK\u30928\u30C0\u30A6\u30F3"
+    Help: "\\s\u306EATK\u3092/f[f,0,3]\u30C0\u30A6\u30F3"
     Range: 2
     RepeatTime: 1
     AliveType: 1
@@ -1527,7 +1527,7 @@ MonoBehaviour:
     Scope: 1
     SkillType: 1
     TargetType: 1
-    Help: "\\s\u306BATKx150%\u30C0\u30E1\u30FC\u30B8\n2\u30BF\u30FC\u30F310\u30C0\u30E1\u30FC\u30B8\u306E\u6BD2\u4ED8\u4E0E"
+    Help: "\\s\u306BATKx/f[f,0,1]%\u30C0\u30E1\u30FC\u30B8\n/f[f,1,2]\u30BF\u30FC\u30F3/f[f,1,3]\u30C0\u30E1\u30FC\u30B8\u306E\u6BD2\u4ED8\u4E0E"
     Range: 1
     RepeatTime: 1
     AliveType: 1
@@ -1558,7 +1558,7 @@ MonoBehaviour:
     Scope: 1
     SkillType: 1
     TargetType: 1
-    Help: "\\s\u306BATKx150%\u30C0\u30E1\u30FC\u30B8\n3\u30BF\u30FC\u30F3\u306E\u4E0D\u6CBB\u4ED8\u4E0E"
+    Help: "\\s\u306BATKx/f[f,0,1]%\u30C0\u30E1\u30FC\u30B8\n/f[f,1,2]\u30BF\u30FC\u30F3\u306E\u4E0D\u6CBB\u4ED8\u4E0E"
     Range: 1
     RepeatTime: 1
     AliveType: 1
@@ -1589,7 +1589,7 @@ MonoBehaviour:
     Scope: 4
     SkillType: 2
     TargetType: 4
-    Help: "(\u6761\u4EF6)Lv20\u4EE5\u4E0A\n\u30A2\u30F3\u30C7\u30C3\u30C9\u72B6\u614B\u306B\u306A\u308B\n\u884C\u52D5\u5F8C\u81EA\u8EAB\u306EHp\u309210%\u56DE\u5FA9\u3059\u308B"
+    Help: "(\u6761\u4EF6)Lv20\u4EE5\u4E0A\n\u30A2\u30F3\u30C7\u30C3\u30C9\u72B6\u614B\u306B\u306A\u308B\n\u884C\u52D5\u5F8C\u81EA\u8EAB\u306EHp\u3092/f[f,0,3]%\u56DE\u5FA9\u3059\u308B"
     Range: 1
     RepeatTime: 1
     AliveType: 1
@@ -1599,7 +1599,7 @@ MonoBehaviour:
       FeatureType: 3010
       Param1: 2270
       Param2: 0
-      Param3: 5
+      Param3: 10
       Rate: 100
     TriggerDates:
     - SkillId: 10010
@@ -1651,7 +1651,7 @@ MonoBehaviour:
     Scope: 4
     SkillType: 2
     TargetType: 4
-    Help: "(\u6761\u4EF6)Lv10\u4EE5\u4E0A\n\u6700\u5927AP+3"
+    Help: "(\u6761\u4EF6)Lv10\u4EE5\u4E0A\n\u6700\u5927AP+/f[f,0,3]"
     Range: 1
     RepeatTime: 1
     AliveType: 1
@@ -1682,7 +1682,7 @@ MonoBehaviour:
     Scope: 4
     SkillType: 2
     TargetType: 4
-    Help: "(\u6761\u4EF6)Lv10\u4EE5\u4E0A\n\u6700\u5927Hp\u304C20\u30A2\u30C3\u30D7"
+    Help: "(\u6761\u4EF6)Lv10\u4EE5\u4E0A\n\u6700\u5927Hp\u304C/f[f,0,3]\u30A2\u30C3\u30D7"
     Range: 1
     RepeatTime: 1
     AliveType: 1
@@ -1713,7 +1713,7 @@ MonoBehaviour:
     Scope: 4
     SkillType: 2
     TargetType: 4
-    Help: "(\u6761\u4EF6)Lv10\u4EE5\u4E0A\nATK\u304C4\u30A2\u30C3\u30D7"
+    Help: "(\u6761\u4EF6)Lv10\u4EE5\u4E0A\nATK\u304C/f[f,0,3]\u30A2\u30C3\u30D7"
     Range: 1
     RepeatTime: 1
     AliveType: 1
@@ -1744,7 +1744,7 @@ MonoBehaviour:
     Scope: 4
     SkillType: 2
     TargetType: 4
-    Help: "(\u6761\u4EF6)Lv10\u4EE5\u4E0A\nDEF\u304C4\u30A2\u30C3\u30D7"
+    Help: "(\u6761\u4EF6)Lv10\u4EE5\u4E0A\nDEF\u304C/f[f,0,3]\u30A2\u30C3\u30D7"
     Range: 1
     RepeatTime: 1
     AliveType: 1
@@ -1775,7 +1775,7 @@ MonoBehaviour:
     Scope: 4
     SkillType: 2
     TargetType: 4
-    Help: "\u30D0\u30C8\u30EB\u958B\u59CB\u6642\\s\u306EATK\u304C4\u30A2\u30C3\u30D7"
+    Help: "\\s\u306EATK\u304C/f[f,0,3]\u30A2\u30C3\u30D7"
     Range: 1
     RepeatTime: 1
     AliveType: 1
@@ -1806,7 +1806,7 @@ MonoBehaviour:
     Scope: 4
     SkillType: 2
     TargetType: 4
-    Help: "(\u6761\u4EF6)Hp\u304C25%\u4EE5\u4E0B\n\\s\u306EATK\u304C8\u30A2\u30C3\u30D7"
+    Help: "(\u6761\u4EF6)Hp\u304C25%\u4EE5\u4E0B\n\\s\u306EATK\u304C/f[f,0,3]\u30A2\u30C3\u30D7"
     Range: 1
     RepeatTime: 1
     AliveType: 1
@@ -1837,7 +1837,7 @@ MonoBehaviour:
     Scope: 4
     SkillType: 2
     TargetType: 4
-    Help: "\u30D0\u30C8\u30EB\u958B\u59CB\u6642\\s\u306EDEF\u304C4\u30C0\u30A6\u30F3\u3057ATK\u304C4\u30A2\u30C3\u30D7"
+    Help: "\u30D0\u30C8\u30EB\u958B\u59CB\u6642\n\\s\u306EDEF\u304C/f[f,0,3]\u30C0\u30A6\u30F3\u3057ATK\u304C/f[f,0,3]\u30A2\u30C3\u30D7"
     Range: 1
     RepeatTime: 1
     AliveType: 1
@@ -1874,7 +1874,7 @@ MonoBehaviour:
     Scope: 4
     SkillType: 2
     TargetType: 4
-    Help: "(\u6761\u4EF6)3\u30BF\u30FC\u30F3\u4EE5\u5185\n\\s\u306EATK\u304C4\u30A2\u30C3\u30D7"
+    Help: "(\u6761\u4EF6)3\u30BF\u30FC\u30F3\u4EE5\u5185\n\\s\u306EATK\u304C/f[f,0,3]\u30A2\u30C3\u30D7"
     Range: 1
     RepeatTime: 1
     AliveType: 1
@@ -1905,7 +1905,7 @@ MonoBehaviour:
     Scope: 4
     SkillType: 2
     TargetType: 4
-    Help: "\u30D0\u30C8\u30EB\u958B\u59CB\u6642\\s\u306E\u6700\u5927AP+1"
+    Help: "\u30D0\u30C8\u30EB\u958B\u59CB\u6642\\s\u306E\u6700\u5927AP+/f[f,0,3]"
     Range: 1
     RepeatTime: 1
     AliveType: 1
@@ -1942,7 +1942,7 @@ MonoBehaviour:
     Scope: 4
     SkillType: 2
     TargetType: 4
-    Help: "(\u6761\u4EF6)\u795E\u5316\u72B6\u614B\u306B\u306A\u3063\u305F\u6642\n(\u5236\u9650)\u30D0\u30C8\u30EB\u4E2D1\u56DE\u307E\u3067\n\\s\u306EAP+3"
+    Help: "(\u6761\u4EF6)\u795E\u5316\u72B6\u614B\u306B\u306A\u3063\u305F\u6642\n(\u5236\u9650)\u30D0\u30C8\u30EB\u4E2D1\u56DE\u307E\u3067\n\\s\u306EAP+/f[f,0,1]"
     Range: 1
     RepeatTime: 1
     AliveType: 1
@@ -1979,7 +1979,7 @@ MonoBehaviour:
     Scope: 4
     SkillType: 2
     TargetType: 4
-    Help: "(\u6761\u4EF6)Mp4\u672A\u6E80\u306E\u72B6\u614B\u3067\u884C\u52D5\u5F8C\n(\u5236\u9650)\u30D0\u30C8\u30EB\u4E2D3\u56DE\u307E\u3067\n\\s\u306EAP+2"
+    Help: "(\u6761\u4EF6)Mp4\u672A\u6E80\u306E\u72B6\u614B\u3067\u884C\u52D5\u5F8C\n(\u5236\u9650)\u30D0\u30C8\u30EB\u4E2D3\u56DE\u307E\u3067\n\\s\u306EAP+/f[f,0,1]"
     Range: 1
     RepeatTime: 1
     AliveType: 1
@@ -2016,7 +2016,7 @@ MonoBehaviour:
     Scope: 4
     SkillType: 2
     TargetType: 4
-    Help: "(\u6761\u4EF6)\u81EA\u8EAB\u306E\u884C\u52D5\u3067\u6575\u3092\u5012\u3057\u305F\u6642\n\\s\u306EAP+1"
+    Help: "(\u6761\u4EF6)\u81EA\u8EAB\u306E\u884C\u52D5\u3067\u6575\u3092\u5012\u3057\u305F\u6642\n\\s\u306EAP+/f[f,0,1]"
     Range: 1
     RepeatTime: 1
     AliveType: 1
@@ -2047,7 +2047,7 @@ MonoBehaviour:
     Scope: 4
     SkillType: 2
     TargetType: 4
-    Help: "(\u6761\u4EF6)\u653B\u6483\u3092\u53D7\u3051\u305F\u6642\n\\s\u306EATK\u304C2\u30A2\u30C3\u30D7\n\u6700\u59275\u56DE\u307E\u3067\u91CD\u306D\u639B\u3051\u53EF\u80FD"
+    Help: "(\u6761\u4EF6)\u653B\u6483\u3092\u53D7\u3051\u305F\u6642\n\\s\u306EATK\u304C/f[f,0,3]\u30A2\u30C3\u30D7\n\u6700\u59275\u56DE\u307E\u3067\u91CD\u306D\u639B\u3051\u53EF\u80FD"
     Range: 1
     RepeatTime: 1
     AliveType: 1
@@ -2057,7 +2057,7 @@ MonoBehaviour:
       FeatureType: 3010
       Param1: 1044
       Param2: 999
-      Param3: 1
+      Param3: 2
       Rate: 100
     TriggerDates:
     - SkillId: 11090
@@ -2078,7 +2078,7 @@ MonoBehaviour:
     Scope: 1
     SkillType: 2
     TargetType: 11
-    Help: "(\u6761\u4EF6)\u4ED6\u306E\u5473\u65B9\u304C\u653B\u6483\u3059\u308B\u76F4\u524D\u306B\u767A\u52D5\n(\u5236\u9650)\u767A\u52D5\u5F8C4\u30BF\u30FC\u30F3\u5F8C\u307E\u3067\u767A\u52D5\u3067\u304D\u306A\u3044\n\\s\u306EATK\u30928\u30A2\u30C3\u30D7"
+    Help: "(\u6761\u4EF6)\u4ED6\u306E\u5473\u65B9\u304C\u653B\u6483\u3059\u308B\u76F4\u524D\u306B\u767A\u52D5\n(\u5236\u9650)\u767A\u52D5\u5F8C4\u30BF\u30FC\u30F3\u5F8C\u307E\u3067\u767A\u52D5\u3067\u304D\u306A\u3044\n\\s\u306EATK\u3092/f[f,0,3]\u30A2\u30C3\u30D7"
     Range: 1
     RepeatTime: 1
     AliveType: 1
@@ -2109,7 +2109,7 @@ MonoBehaviour:
     Scope: 4
     SkillType: 2
     TargetType: 4
-    Help: "(\u6761\u4EF6)\u81EA\u8EAB\u304C\u884C\u52D5\u3059\u308B\u524D\u306B\u767A\u52D5\n(\u5236\u9650)\u767A\u52D5\u5F8C4\u30BF\u30FC\u30F3\u5F8C\u307E\u3067\u767A\u52D5\u3067\u304D\u306A\u3044\n\\s\u306BDEF25%\u7121\u8996\u306E\u8CAB\u901A\u3092\u4ED8\u4E0E\uFF08\u6C38\u7D9A\uFF09"
+    Help: "(\u6761\u4EF6)\u81EA\u8EAB\u304C\u884C\u52D5\u3059\u308B\u524D\u306B\u767A\u52D5\n(\u5236\u9650)\u767A\u52D5\u5F8C4\u30BF\u30FC\u30F3\u5F8C\u307E\u3067\u767A\u52D5\u3067\u304D\u306A\u3044\n\\s\u306BDEF/f[f,0,3]%\u7121\u8996\u306E\u8CAB\u901A\u3092\u4ED8\u4E0E\uFF08\u6C38\u7D9A\uFF09"
     Range: 1
     RepeatTime: 1
     AliveType: 1
@@ -2140,7 +2140,7 @@ MonoBehaviour:
     Scope: 4
     SkillType: 2
     TargetType: 4
-    Help: "(\u6761\u4EF6)\u30D0\u30C8\u30EB\u958B\u59CB\u6642\nAP\u30924\u6D88\u8CBB\u3057\u3066\\s\u306EATK\u30928\u30A2\u30C3\u30D7\uFF08\u6C38\u7D9A\uFF09"
+    Help: "(\u6761\u4EF6)\u30D0\u30C8\u30EB\u958B\u59CB\u6642\nAP\u30924\u6D88\u8CBB\u3057\u3066\\s\u306EATK\u3092/f[f,0,3]\u30A2\u30C3\u30D7\uFF08\u6C38\u7D9A\uFF09"
     Range: 1
     RepeatTime: 1
     AliveType: 1
@@ -2233,7 +2233,7 @@ MonoBehaviour:
     Scope: 4
     SkillType: 2
     TargetType: 4
-    Help: "\\s\u306ESPD\u304C5\u30A2\u30C3\u30D7"
+    Help: "\\s\u306ESPD\u304C/f[f,0,3]\u30A2\u30C3\u30D7"
     Range: 1
     RepeatTime: 1
     AliveType: 1
@@ -2264,7 +2264,7 @@ MonoBehaviour:
     Scope: 4
     SkillType: 2
     TargetType: 4
-    Help: "(\u6761\u4EF6)Hp\u304C25%\u4EE5\u4E0B\n\\s\u306ESPD\u304C15\u30A2\u30C3\u30D7"
+    Help: "(\u6761\u4EF6)Hp\u304C25%\u4EE5\u4E0B\n\\s\u306ESPD\u304C/f[f,0,3]\u30A2\u30C3\u30D7"
     Range: 1
     RepeatTime: 1
     AliveType: 1
@@ -2295,7 +2295,7 @@ MonoBehaviour:
     Scope: 4
     SkillType: 2
     TargetType: 4
-    Help: "\\s\u306E\u56DE\u907F\u7387\u304C25%\u30A2\u30C3\u30D7"
+    Help: "\\s\u306E\u56DE\u907F\u7387\u304C/f[f,0,3]%\u30A2\u30C3\u30D7"
     Range: 1
     RepeatTime: 1
     AliveType: 1
@@ -2326,7 +2326,7 @@ MonoBehaviour:
     Scope: 1
     SkillType: 2
     TargetType: 2
-    Help: "(\u6761\u4EF6)\u30D0\u30C8\u30EB\u958B\u59CB\u6642\n\\s\u306E\u5F85\u6A5F\u6642\u9593\u3092200\u6E1B\u5C11\u3059\u308B"
+    Help: "(\u6761\u4EF6)\u30D0\u30C8\u30EB\u958B\u59CB\u6642\n\\s\u306E\u5F85\u6A5F\u6642\u9593\u3092/f[f,0,1]\u6E1B\u5C11\u3059\u308B"
     Range: 1
     RepeatTime: 1
     AliveType: 1
@@ -2357,7 +2357,7 @@ MonoBehaviour:
     Scope: 1
     SkillType: 2
     TargetType: 6
-    Help: "(\u6761\u4EF6)\u81EA\u8EAB\u304C\u653B\u6483\u3092\u53D7\u3051\u305F\u6642\nATKx150%\u30C0\u30E1\u30FC\u30B8\u306E\u53CD\u6483\u3059\u308B"
+    Help: "(\u6761\u4EF6)\u81EA\u8EAB\u304C\u653B\u6483\u3092\u53D7\u3051\u305F\u6642\nATKx/f[f,0,1]%\u30C0\u30E1\u30FC\u30B8\u306E\u53CD\u6483\u3059\u308B"
     Range: 2
     RepeatTime: 1
     AliveType: 1
@@ -2388,7 +2388,7 @@ MonoBehaviour:
     Scope: 1
     SkillType: 2
     TargetType: 6
-    Help: "(\u6761\u4EF6)\u653B\u6483\u3092\u56DE\u907F\u3057\u305F\u6642\nATKx150%\u30C0\u30E1\u30FC\u30B8\u306E\u53CD\u6483\u3059\u308B"
+    Help: "(\u6761\u4EF6)\u653B\u6483\u3092\u56DE\u907F\u3057\u305F\u6642\nATKx/f[f,0,1]%\u30C0\u30E1\u30FC\u30B8\u306E\u53CD\u6483\u3059\u308B"
     Range: 2
     RepeatTime: 1
     AliveType: 1
@@ -2419,7 +2419,7 @@ MonoBehaviour:
     Scope: 3
     SkillType: 2
     TargetType: 2
-    Help: "(\u6761\u4EF6)\u30D0\u30C8\u30EB\u958B\u59CB\u6642\nA\uFF50\u30922\u6D88\u8CBB\u3057\u3066\\s\u306E\u5F85\u6A5F\u6642\u9593\u3092200\u6E1B\u5C11\u3059\u308B"
+    Help: "(\u6761\u4EF6)\u30D0\u30C8\u30EB\u958B\u59CB\u6642\nA\uFF50\u30922\u6D88\u8CBB\u3057\u3066\\s\u306E\u5F85\u6A5F\u6642\u9593\u3092/f[f,0,1]\u6E1B\u5C11\u3059\u308B"
     Range: 2
     RepeatTime: 1
     AliveType: 1
@@ -2450,7 +2450,7 @@ MonoBehaviour:
     Scope: 1
     SkillType: 2
     TargetType: 7
-    Help: "(\u6761\u4EF6)\u4ED6\u306E\u5473\u65B9\u304C\u653B\u6483\u3057\u305F\u969B\u306B\u767A\u52D5\nAP\u30921\u6D88\u8CBB\u3057\u3066\\s\u306BATKx150%\u30C0\u30E1\u30FC\u30B8"
+    Help: "(\u6761\u4EF6)\u4ED6\u306E\u5473\u65B9\u304C\u653B\u6483\u3057\u305F\u969B\u306B\u767A\u52D5\nAP\u30921\u6D88\u8CBB\u3057\u3066\\s\u306BATKx/f[f,0,1]%\u30C0\u30E1\u30FC\u30B8"
     Range: 1
     RepeatTime: 1
     AliveType: 1
@@ -2481,7 +2481,7 @@ MonoBehaviour:
     Scope: 1
     SkillType: 2
     TargetType: 11
-    Help: "(\u6761\u4EF6)\u4ED6\u306E\u5473\u65B9\u304C\u653B\u6483\u3059\u308B\u76F4\u524D\u306B\u767A\u52D5\nAP\u30921\u6D88\u8CBB\u3057\u30662\u30BF\u30FC\u30F3\u306E\u9593\n\\s\u306EATK\u30928\u30A2\u30C3\u30D7\u3057\u81EA\u8EAB\u306EATK\u30928\u30C0\u30A6\u30F3"
+    Help: "(\u6761\u4EF6)\u4ED6\u306E\u5473\u65B9\u304C\u653B\u6483\u3059\u308B\u76F4\u524D\u306B\u767A\u52D5\nAP\u30921\u6D88\u8CBB\u3057\u30662\u30BF\u30FC\u30F3\u306E\u9593\n\\s\u306EATK\u3092/f[f,0,3]\u30A2\u30C3\u30D7\u3057\u81EA\u8EAB\u306EATK\u3092/f[f,0,3]\u30C0\u30A6\u30F3"
     Range: 1
     RepeatTime: 1
     AliveType: 1
@@ -2518,7 +2518,7 @@ MonoBehaviour:
     Scope: 4
     SkillType: 2
     TargetType: 4
-    Help: "(\u6761\u4EF6)\u4ED6\u306E\u5473\u65B9\u304C\u653B\u6483\u3059\u308B\u76F4\u524D\u306B\u767A\u52D5\nAP\u30921\u6D88\u8CBB\u3057\u30662\u30BF\u30FC\u30F3\u306E\u9593\n\\s\u306EATK\u30928\u30A2\u30C3\u30D7\u3057\u81EA\u8EAB\u306EATK\u30928\u30C0\u30A6\u30F3"
+    Help: "(\u6761\u4EF6)\u4ED6\u306E\u5473\u65B9\u304C\u653B\u6483\u3059\u308B\u76F4\u524D\u306B\u767A\u52D5\nAP\u30921\u6D88\u8CBB\u3057\u30662\u30BF\u30FC\u30F3\u306E\u9593\n\\s\u306EATK\u3092/f[f,0,3]\u30A2\u30C3\u30D7\u3057\u81EA\u8EAB\u306EATK\u3092/f[f,0,3]\u30C0\u30A6\u30F3"
     Range: 1
     RepeatTime: 1
     AliveType: 1
@@ -2543,7 +2543,7 @@ MonoBehaviour:
     Scope: 1
     SkillType: 2
     TargetType: 7
-    Help: "(\u6761\u4EF6)\u76F8\u624B\u304C\u9632\u5FA1\u7121\u8996\u3067\u653B\u6483\u3092\u9632\u3044\u3060\u969B\u306B\u767A\u52D5\n\\s\u306BDEF30%\u7121\u8996\u306EATKx150%\u30C0\u30E1\u30FC\u30B8"
+    Help: "(\u6761\u4EF6)\u76F8\u624B\u304C\u9632\u5FA1\u7121\u8996\u3067\u653B\u6483\u3092\u9632\u3044\u3060\u969B\u306B\u767A\u52D5\n\\s\u306BDEF/f[f,0,3]%\u7121\u8996\u306EATKx/f[f,0,1]%\u30C0\u30E1\u30FC\u30B8"
     Range: 2
     RepeatTime: 1
     AliveType: 1
@@ -2605,7 +2605,7 @@ MonoBehaviour:
     Scope: 4
     SkillType: 2
     TargetType: 4
-    Help: "\\s\u306EDEF\u304C4\u30A2\u30C3\u30D7"
+    Help: "\\s\u306EDEF\u304C/f[f,0,3]\u30A2\u30C3\u30D7"
     Range: 1
     RepeatTime: 1
     AliveType: 1
@@ -2636,7 +2636,7 @@ MonoBehaviour:
     Scope: 4
     SkillType: 2
     TargetType: 4
-    Help: "(\u6761\u4EF6)Hp\u304C25%\u4EE5\u4E0B\n\\s\u306EDEF\u304C4\u30A2\u30C3\u30D7"
+    Help: "(\u6761\u4EF6)Hp\u304C25%\u4EE5\u4E0B\n\\s\u306EDEF\u304C/f[f,0,3]\u30A2\u30C3\u30D7"
     Range: 1
     RepeatTime: 1
     AliveType: 1
@@ -2667,7 +2667,7 @@ MonoBehaviour:
     Scope: 4
     SkillType: 2
     TargetType: 4
-    Help: "(\u6761\u4EF6)\u81EA\u8EAB\u304C\u653B\u6483\u3092\u53D7\u3051\u308B\u76F4\u524D\nAp\u30921\u6D88\u8CBB\u3057\u3066\u30C0\u30E1\u30FC\u30B8\u309250%\u30AB\u30C3\u30C8"
+    Help: "(\u6761\u4EF6)\u81EA\u8EAB\u304C\u653B\u6483\u3092\u53D7\u3051\u308B\u76F4\u524D\nAp\u30921\u6D88\u8CBB\u3057\u3066\u30C0\u30E1\u30FC\u30B8\u3092/f[f,0,3]%\u30AB\u30C3\u30C8"
     Range: 1
     RepeatTime: 1
     AliveType: 1
@@ -2698,7 +2698,7 @@ MonoBehaviour:
     Scope: 4
     SkillType: 2
     TargetType: 4
-    Help: "(\u6761\u4EF6)\u81EA\u8EAB\u304C\u653B\u6483\u3092\u53D7\u3051\u308B\u76F4\u524D\n\\s\u306E\u53D7\u3051\u308B\u30C0\u30E1\u30FC\u30B8\u30924\u30C0\u30A6\u30F3\n\\s\u306EHp\u309225%\u56DE\u5FA9\u3059\u308B"
+    Help: "(\u6761\u4EF6)\u81EA\u8EAB\u304C\u653B\u6483\u3092\u53D7\u3051\u308B\u76F4\u524D\n\\s\u306E\u53D7\u3051\u308B\u30C0\u30E1\u30FC\u30B8\u3092/f[f,0,3]\u30C0\u30A6\u30F3\n\\s\u306EHp\u3092/f[f,1,1]%\u56DE\u5FA9\u3059\u308B"
     Range: 1
     RepeatTime: 1
     AliveType: 1
@@ -2735,7 +2735,7 @@ MonoBehaviour:
     Scope: 4
     SkillType: 2
     TargetType: 4
-    Help: "(\u6761\u4EF6)\u72B6\u614B\u7570\u5E38\u72B6\u614B\n\u884C\u52D5\u5F8C\u81EA\u8EAB\u306EHp\u309210\u56DE\u5FA9\u3059\u308B"
+    Help: "(\u6761\u4EF6)\u72B6\u614B\u7570\u5E38\u72B6\u614B\n\u884C\u52D5\u5F8C\u81EA\u8EAB\u306EHp\u3092/f[f,0,3]\u56DE\u5FA9\u3059\u308B"
     Range: 1
     RepeatTime: 1
     AliveType: 1
@@ -2766,7 +2766,7 @@ MonoBehaviour:
     Scope: 1
     SkillType: 2
     TargetType: 7
-    Help: "(\u6761\u4EF6)\u653B\u6483\u6210\u529F\u664233%\u306E\u78BA\u7387\u3067\n\u884C\u52D5\u5F85\u6A5F\u6642\u9593\u3092400\u5EF6\u9577"
+    Help: "(\u6761\u4EF6)\u653B\u6483\u6210\u529F\u664233%\u306E\u78BA\u7387\u3067\n\u884C\u52D5\u5F85\u6A5F\u6642\u9593\u3092/f[f,0,1]\u5EF6\u9577"
     Range: 1
     RepeatTime: 1
     AliveType: 1
@@ -2797,7 +2797,7 @@ MonoBehaviour:
     Scope: 4
     SkillType: 2
     TargetType: 4
-    Help: "(\u6761\u4EF6)\u81EA\u8EAB\u304C\u884C\u52D5\u3059\u308B\u524D\u306B\u767A\u52D5\n(\u5236\u9650)\u767A\u52D5\u5F8C4\u30BF\u30FC\u30F3\u5F8C\u307E\u3067\u767A\u52D5\u3067\u304D\u306A\u3044\n\u30C0\u30E1\u30FC\u30B8\u306E25%\u5206Hp\u56DE\u5FA9"
+    Help: "(\u6761\u4EF6)\u81EA\u8EAB\u304C\u884C\u52D5\u3059\u308B\u524D\u306B\u767A\u52D5\n(\u5236\u9650)\u767A\u52D5\u5F8C4\u30BF\u30FC\u30F3\u5F8C\u307E\u3067\u767A\u52D5\u3067\u304D\u306A\u3044\n\u30C0\u30E1\u30FC\u30B8\u306E/f[f,0,3]%\u5206Hp\u56DE\u5FA9"
     Range: 1
     RepeatTime: 1
     AliveType: 1
@@ -2828,7 +2828,7 @@ MonoBehaviour:
     Scope: 3
     SkillType: 2
     TargetType: 7
-    Help: "(\u6761\u4EF6)\u81EA\u8EAB\u306E\u653B\u6483\u6210\u529F\u6642\n\u51CD\u7D50\u72B6\u614B\u3067\u306F\u306A\u3044\u5BFE\u8C61\u306B25%\u30C0\u30E1\u30FC\u30B8\u306E\u51CD\u7D50\u4ED8\u4E0E"
+    Help: "(\u6761\u4EF6)\u81EA\u8EAB\u306E\u653B\u6483\u6210\u529F\u6642\n\u51CD\u7D50\u72B6\u614B\u3067\u306F\u306A\u3044\u5BFE\u8C61\u306B/f[f,0,3]%\u30C0\u30E1\u30FC\u30B8\u306E\u51CD\u7D50\u4ED8\u4E0E"
     Range: 1
     RepeatTime: 1
     AliveType: 1
@@ -2859,7 +2859,7 @@ MonoBehaviour:
     Scope: 4
     SkillType: 2
     TargetType: 4
-    Help: "(\u6761\u4EF6)\u5473\u65B9\u304C\u653B\u6483\u3092\u53D7\u3051\u308B\u76F4\u524D\n(\u5236\u9650)\u767A\u52D5\u5F8C4\u30BF\u30FC\u30F3\u5F8C\u307E\u3067\u767A\u52D5\u3067\u304D\u306A\u3044\n\u4EE3\u308F\u308A\u306B\u30C0\u30E1\u30FC\u30B8\u3092\u53D7\u3051\u81EA\u8EAB\u306EAP+1"
+    Help: "(\u6761\u4EF6)\u5473\u65B9\u304C\u653B\u6483\u3092\u53D7\u3051\u308B\u76F4\u524D\n(\u5236\u9650)\u767A\u52D5\u5F8C4\u30BF\u30FC\u30F3\u5F8C\u307E\u3067\u767A\u52D5\u3067\u304D\u306A\u3044\n\u4EE3\u308F\u308A\u306B\u30C0\u30E1\u30FC\u30B8\u3092\u53D7\u3051\u81EA\u8EAB\u306EAP+/f[f,1,1]"
     Range: 1
     RepeatTime: 1
     AliveType: 1
@@ -2896,7 +2896,7 @@ MonoBehaviour:
     Scope: 1
     SkillType: 2
     TargetType: 11
-    Help: "(\u6761\u4EF6)\u5473\u65B9\u304C\u653B\u6483\u3092\u53D7\u3051\u308B\u76F4\u524D\nAp\u30922\u6D88\u8CBB\u3057\u3066\u5BFE\u8C61\u306E\u30C0\u30E1\u30FC\u30B8\u309250%\u30AB\u30C3\u30C8"
+    Help: "(\u6761\u4EF6)\u5473\u65B9\u304C\u653B\u6483\u3092\u53D7\u3051\u308B\u76F4\u524D\nAp\u30922\u6D88\u8CBB\u3057\u3066\u5BFE\u8C61\u306E\u30C0\u30E1\u30FC\u30B8\u3092/f[f,0,3]%\u30AB\u30C3\u30C8"
     Range: 1
     RepeatTime: 1
     AliveType: 1
@@ -2989,7 +2989,7 @@ MonoBehaviour:
     Scope: 3
     SkillType: 2
     TargetType: 2
-    Help: "\\s\u306E\u547D\u4E2D\u7387\u304C25%\u30A2\u30C3\u30D7"
+    Help: "\\s\u306E\u547D\u4E2D\u7387\u304C/f[f,0,3]%\u30A2\u30C3\u30D7"
     Range: 1
     RepeatTime: 1
     AliveType: 1
@@ -3020,7 +3020,7 @@ MonoBehaviour:
     Scope: 4
     SkillType: 2
     TargetType: 4
-    Help: "\u884C\u52D5\u5F8C\u81EA\u8EAB\u306EHp\u30925\u56DE\u5FA9\u3059\u308B"
+    Help: "\u884C\u52D5\u5F8C\u81EA\u8EAB\u306EHp\u3092/f[f,0,3]\u56DE\u5FA9\u3059\u308B"
     Range: 1
     RepeatTime: 1
     AliveType: 1
@@ -3051,7 +3051,7 @@ MonoBehaviour:
     Scope: 3
     SkillType: 2
     TargetType: 2
-    Help: "(\u6761\u4EF6)\u30D0\u30C8\u30EB\u958B\u59CB\u6642\nAp\u30923\u6D88\u8CBB\u3057\u3066\\s\u306B5\u30BF\u30FC\u30F35\u56DE\u5FA9\u306E\u30EA\u30B8\u30A7\u30CD\u4ED8\u4E0E"
+    Help: "(\u6761\u4EF6)\u30D0\u30C8\u30EB\u958B\u59CB\u6642\nAp\u30923\u6D88\u8CBB\u3057\u3066\\s\u306B/f[f,0,2]\u30BF\u30FC\u30F3/f[f,0,3]\u56DE\u5FA9\u306E\u30EA\u30B8\u30A7\u30CD\u4ED8\u4E0E"
     Range: 2
     RepeatTime: 1
     AliveType: 1
@@ -3175,7 +3175,7 @@ MonoBehaviour:
     Scope: 4
     SkillType: 2
     TargetType: 4
-    Help: "\\s\u306E\u6700\u5927Hp\u304C10\u30A2\u30C3\u30D7"
+    Help: "\\s\u306E\u6700\u5927Hp\u304C/f[f,0,3]\u30A2\u30C3\u30D7"
     Range: 1
     RepeatTime: 1
     AliveType: 1
@@ -3206,7 +3206,7 @@ MonoBehaviour:
     Scope: 1
     SkillType: 2
     TargetType: 11
-    Help: "(\u6761\u4EF6)\u5473\u65B9\u304C\u653B\u6483\u3092\u53D7\u3051\u305F\u969B\u306B\u767A\u52D5\nAp\u30922\u6D88\u8CBB\u3057\u3066\u5BFE\u8C61\u306EHp\u309210\u56DE\u5FA9"
+    Help: "(\u6761\u4EF6)\u5473\u65B9\u304C\u653B\u6483\u3092\u53D7\u3051\u305F\u969B\u306B\u767A\u52D5\nAp\u30922\u6D88\u8CBB\u3057\u3066\u5BFE\u8C61\u306EHp\u3092/f[f,0,1]\u56DE\u5FA9"
     Range: 1
     RepeatTime: 1
     AliveType: 1
@@ -3268,7 +3268,7 @@ MonoBehaviour:
     Scope: 4
     SkillType: 2
     TargetType: 4
-    Help: "\\s\u306E\u4F1A\u5FC3\u7387\u304C25%\u30A2\u30C3\u30D7"
+    Help: "\\s\u306E\u4F1A\u5FC3\u7387\u304C/f[f,0,3]%\u30A2\u30C3\u30D7"
     Range: 1
     RepeatTime: 1
     AliveType: 1
@@ -3299,7 +3299,7 @@ MonoBehaviour:
     Scope: 4
     SkillType: 2
     TargetType: 4
-    Help: "(\u6761\u4EF6)Hp\u304C25%\u4EE5\u4E0B\n\\s\u306E\u4F1A\u5FC3\u7387\u304C75%\u30A2\u30C3\u30D7"
+    Help: "(\u6761\u4EF6)Hp\u304C25%\u4EE5\u4E0B\n\\s\u306E\u4F1A\u5FC3\u7387\u304C/f[f,0,3]%\u30A2\u30C3\u30D7"
     Range: 1
     RepeatTime: 1
     AliveType: 1
@@ -3330,7 +3330,7 @@ MonoBehaviour:
     Scope: 4
     SkillType: 2
     TargetType: 4
-    Help: "(\u6761\u4EF6)Hp\u304C50%\u4EE5\u4E0B\n\u30C0\u30E1\u30FC\u30B8\u306E25%\u5206Hp\u56DE\u5FA9"
+    Help: "(\u6761\u4EF6)Hp\u304C50%\u4EE5\u4E0B\n\u30C0\u30E1\u30FC\u30B8\u306E/f[f,0,3]%\u5206Hp\u56DE\u5FA9"
     Range: 1
     RepeatTime: 1
     AliveType: 1
@@ -3361,7 +3361,7 @@ MonoBehaviour:
     Scope: 4
     SkillType: 2
     TargetType: 4
-    Help: "(\u6761\u4EF6)Hp\u304C100%\u4EE5\u4E0A\n5%\u306E\u78BA\u7387\u3067\u5373\u6B7B\u4ED8\u4E0E"
+    Help: "(\u6761\u4EF6)Hp\u304C100%\u4EE5\u4E0A\n/f[f,0,3]%\u306E\u78BA\u7387\u3067\u5373\u6B7B\u4ED8\u4E0E"
     Range: 1
     RepeatTime: 1
     AliveType: 1
@@ -3392,7 +3392,7 @@ MonoBehaviour:
     Scope: 4
     SkillType: 2
     TargetType: 4
-    Help: "(\u6761\u4EF6)\u30D0\u30C8\u30EB\u958B\u59CB\u6642Hp\u304C50%\u4EE5\u4E0B\n\\s\u306EHp\u304C20\u56DE\u5FA9"
+    Help: "(\u6761\u4EF6)\u30D0\u30C8\u30EB\u958B\u59CB\u6642Hp\u304C50%\u4EE5\u4E0B\n\\s\u306EHp\u304C/f[f,0,1]\u56DE\u5FA9"
     Range: 1
     RepeatTime: 1
     AliveType: 1
@@ -3423,7 +3423,7 @@ MonoBehaviour:
     Scope: 4
     SkillType: 2
     TargetType: 4
-    Help: "\u30A2\u30F3\u30C7\u30C3\u30C9\u72B6\u614B\u306B\u306A\u308B\n\u884C\u52D5\u5F8C\u81EA\u8EAB\u306EHp\u309210%\u56DE\u5FA9\u3059\u308B"
+    Help: "\u30A2\u30F3\u30C7\u30C3\u30C9\u72B6\u614B\u306B\u306A\u308B\n\u884C\u52D5\u5F8C\u81EA\u8EAB\u306EHp\u3092/f[f,0,3]%\u56DE\u5FA9\u3059\u308B"
     Range: 1
     RepeatTime: 1
     AliveType: 1
@@ -3460,7 +3460,7 @@ MonoBehaviour:
     Scope: 4
     SkillType: 2
     TargetType: 4
-    Help: "(\u6761\u4EF6)\u30A2\u30F3\u30C7\u30C3\u30C9\u72B6\u614B\u3067\u884C\u52D5\u5F8C\n\u81EA\u8EAB\u306EHp\u309210%\u56DE\u5FA9\u3059\u308B"
+    Help: "(\u6761\u4EF6)\u30A2\u30F3\u30C7\u30C3\u30C9\u72B6\u614B\u3067\u884C\u52D5\u5F8C\n\u81EA\u8EAB\u306EHp\u3092/f[f,0,1]%\u56DE\u5FA9\u3059\u308B"
     Range: 1
     RepeatTime: 1
     AliveType: 1
@@ -3491,7 +3491,7 @@ MonoBehaviour:
     Scope: 4
     SkillType: 2
     TargetType: 4
-    Help: "\\s\u306E\u4F1A\u5FC3\u738725%\u30A2\u30C3\u30D7"
+    Help: "\\s\u306E\u4F1A\u5FC3\u7387/f[f,0,3]%\u30A2\u30C3\u30D7"
     Range: 1
     RepeatTime: 1
     AliveType: 1
@@ -3522,7 +3522,7 @@ MonoBehaviour:
     Scope: 1
     SkillType: 2
     TargetType: 6
-    Help: "(\u6761\u4EF6)\u76F8\u624B\u304C\u653B\u6483\u3059\u308B\u524D\u306B\u767A\u52D5\nAP\u30922\u6D88\u8CBB\u3057\u3066\\s\u306EATK\u3068\u547D\u4E2D\u7387\u309220%\u30C0\u30A6\u30F3"
+    Help: "(\u6761\u4EF6)\u76F8\u624B\u304C\u653B\u6483\u3059\u308B\u524D\u306B\u767A\u52D5\nAP\u30922\u6D88\u8CBB\u3057\u3066\\s\u306EATK\u3068\u547D\u4E2D\u7387\u3092/f[f,0,3]%\u30C0\u30A6\u30F3"
     Range: 2
     RepeatTime: 1
     AliveType: 1
@@ -3553,7 +3553,7 @@ MonoBehaviour:
     Scope: 1
     SkillType: 2
     TargetType: 11
-    Help: "(\u6761\u4EF6)\u4ED6\u306E\u5473\u65B9\u304C\u653B\u6483\u3059\u308B\u76F4\u524D\u306B\u767A\u52D5\n(\u5236\u9650)\u767A\u52D5\u5F8C4\u30BF\u30FC\u30F3\u5F8C\u307E\u3067\u767A\u52D5\u3067\u304D\u306A\u3044\n\\s\u306E\u547D\u4E2D\u7387\u3092\u534A\u6E1B\u3057\u4F1A\u5FC3\u7387\u304C50%\u30A2\u30C3\u30D7"
+    Help: "(\u6761\u4EF6)\u4ED6\u306E\u5473\u65B9\u304C\u653B\u6483\u3059\u308B\u76F4\u524D\u306B\u767A\u52D5\n(\u5236\u9650)\u767A\u52D5\u5F8C4\u30BF\u30FC\u30F3\u5F8C\u307E\u3067\u767A\u52D5\u3067\u304D\u306A\u3044\n\\s\u306E\u547D\u4E2D\u7387\u3092\u534A\u6E1B\u3057\u4F1A\u5FC3\u7387\u304C/f[f,0,3]%\u30A2\u30C3\u30D7"
     Range: 1
     RepeatTime: 1
     AliveType: 1
@@ -3590,7 +3590,7 @@ MonoBehaviour:
     Scope: 1
     SkillType: 2
     TargetType: 6
-    Help: "(\u6761\u4EF6)\u6575\u304C\u56DE\u5FA9\u9B54\u6CD5\u3092\u4F7F\u7528\u3057\u305F\u969B\u306B\u767A\u52D5\n(\u5236\u9650)\u767A\u52D5\u5F8C4\u30BF\u30FC\u30F3\u5F8C\u307E\u3067\u767A\u52D5\u3067\u304D\u306A\u3044\n\\s\u306BDEF30%\u7121\u8996\u306EATKx150%\u30C0\u30E1\u30FC\u30B8"
+    Help: "(\u6761\u4EF6)\u6575\u304C\u56DE\u5FA9\u9B54\u6CD5\u3092\u4F7F\u7528\u3057\u305F\u969B\u306B\u767A\u52D5\n(\u5236\u9650)\u767A\u52D5\u5F8C4\u30BF\u30FC\u30F3\u5F8C\u307E\u3067\u767A\u52D5\u3067\u304D\u306A\u3044\n\\s\u3067DEF/f[f,0,3]%\u7121\u8996\u306EATKx/f[f,0,1]%\u30C0\u30E1\u30FC\u30B8"
     Range: 2
     RepeatTime: 1
     AliveType: 1
@@ -3621,7 +3621,7 @@ MonoBehaviour:
     Scope: 4
     SkillType: 2
     TargetType: 4
-    Help: "(\u6761\u4EF6)\u5473\u65B9\u304C\u653B\u6483\u3067\u6226\u95D8\u4E0D\u80FD\u306B\u306A\u3063\u305F\u969B\u306B\u767A\u52D5\n\\s\u306EAP+2"
+    Help: "(\u6761\u4EF6)\u5473\u65B9\u304C\u653B\u6483\u3067\u6226\u95D8\u4E0D\u80FD\u306B\u306A\u3063\u305F\u969B\u306B\u767A\u52D5\n\\s\u306EAP+/f[f,0,1]"
     Range: 1
     RepeatTime: 1
     AliveType: 1
@@ -3652,7 +3652,7 @@ MonoBehaviour:
     Scope: 4
     SkillType: 2
     TargetType: 4
-    Help: "(\u6761\u4EF6)\u30D0\u30C8\u30EB\u958B\u59CB\u6642\n\\s\u306E\u4F1A\u5FC3\u7387\u304C10%\u4F1A\u5FC3\u30C0\u30E1\u30FC\u30B8\u304C25%\u30A2\u30C3\u30D7"
+    Help: "(\u6761\u4EF6)\u30D0\u30C8\u30EB\u958B\u59CB\u6642\n\\s\u306E\u4F1A\u5FC3\u7387\u304C/f[f,0,3]%\u4F1A\u5FC3\u30C0\u30E1\u30FC\u30B8\u304C/f[f,1,3]%\u30A2\u30C3\u30D7"
     Range: 1
     RepeatTime: 1
     AliveType: 1
@@ -3702,7 +3702,7 @@ MonoBehaviour:
     Scope: 5
     SkillType: 3
     TargetType: 2
-    Help: "(\u6761\u4EF6)\u30D0\u30C8\u30EB\u4E2DAp\u30929\u4EE5\u4E0A\u6D88\u8CBB\n\\s\u306BDEF25%\u7121\u8996\u306E\u8CAB\u901A\u3092\u4ED8\u4E0E\uFF08\u6C38\u7D9A\uFF09\n\u795E\u5316\u72B6\u614B\u306B\u79FB\u884C"
+    Help: "(\u6761\u4EF6)\u30D0\u30C8\u30EB\u4E2DAp\u30929\u4EE5\u4E0A\u6D88\u8CBB\n\\s\u306BDEF/f[f,0,3]%\u7121\u8996\u306E\u8CAB\u901A\u3092\u4ED8\u4E0E\uFF08\u6C38\u7D9A\uFF09\n\u795E\u5316\u72B6\u614B\u306B\u79FB\u884C"
     Range: 2
     RepeatTime: 1
     AliveType: 1
@@ -3745,7 +3745,7 @@ MonoBehaviour:
     Scope: 3
     SkillType: 4
     TargetType: 1
-    Help: "(\u6761\u4EF6)\u795E\u5316\u72B6\u614B\n\\s\u306BATKx400%\u30C0\u30E1\u30FC\u30B8
+    Help: "(\u6761\u4EF6)\u795E\u5316\u72B6\u614B\n\\s\u306BATKx/f[f,0,1]%\u30C0\u30E1\u30FC\u30B8
       \u795E\u5316\u89E3\u9664"
     Range: 2
     RepeatTime: 1
@@ -3777,7 +3777,7 @@ MonoBehaviour:
     Scope: 4
     SkillType: 2
     TargetType: 4
-    Help: "\u30A4\u30AF\u30B9\u30C6\u30A3\u30F3\u30AF\u30B7\u30E7\u30F3\u306E\u30C0\u30E1\u30FC\u30B8\u304CATKx450%\u306B\u306A\u308B"
+    Help: "\u30A4\u30AF\u30B9\u30C6\u30A3\u30F3\u30AF\u30B7\u30E7\u30F3\u306E\u30C0\u30E1\u30FC\u30B8\u304CATKx/f[f,0,3]%\u306B\u306A\u308B"
     Range: 1
     RepeatTime: 1
     AliveType: 1
@@ -3808,7 +3808,7 @@ MonoBehaviour:
     Scope: 4
     SkillType: 2
     TargetType: 4
-    Help: "\u30BD\u30FC\u30A4\u30F3\u30B0\u30A2\u30FC\u30E0\u30C9\u306E\u8CAB\u901A\u52B9\u679C\u309225%\u30A2\u30C3\u30D7"
+    Help: "\u30BD\u30FC\u30A4\u30F3\u30B0\u30A2\u30FC\u30E0\u30C9\u306E\u8CAB\u901A\u52B9\u679C\u3092/f[f,0,3]%\u30A2\u30C3\u30D7"
     Range: 1
     RepeatTime: 1
     AliveType: 1
@@ -3839,7 +3839,7 @@ MonoBehaviour:
     Scope: 4
     SkillType: 3
     TargetType: 4
-    Help: "(\u6761\u4EF6)3\u56DE\u653B\u6483\u3092\u56DE\u907F\u3059\u308B\n\\s\u306B3\u30BF\u30FC\u30F3100%\u306E\u56DE\u907F\u7387\u30A2\u30C3\u30D7\u3092\u4ED8\u4E0E\n\u795E\u5316\u72B6\u614B\u306B\u79FB\u884C"
+    Help: "(\u6761\u4EF6)3\u56DE\u653B\u6483\u3092\u56DE\u907F\u3059\u308B\n\\s\u306B3\u30BF\u30FC\u30F3/f[f,0,3]%\u306E\u56DE\u907F\u7387\u30A2\u30C3\u30D7\u3092\u4ED8\u4E0E\n\u795E\u5316\u72B6\u614B\u306B\u79FB\u884C"
     Range: 1
     RepeatTime: 1
     AliveType: 1
@@ -3882,7 +3882,7 @@ MonoBehaviour:
     Scope: 1
     SkillType: 4
     TargetType: 1
-    Help: "(\u6761\u4EF6)\u795E\u5316\u72B6\u614B\n\\s\u306BATKx50%\u306E7\u9023\u30C0\u30E1\u30FC\u30B8
+    Help: "(\u6761\u4EF6)\u795E\u5316\u72B6\u614B\n\\s\u306BATKx/f[f,0,1]%\u306E7\u9023\u30C0\u30E1\u30FC\u30B8
       \u795E\u5316\u89E3\u9664"
     Range: 2
     RepeatTime: 7
@@ -3914,7 +3914,7 @@ MonoBehaviour:
     Scope: 3
     SkillType: 2
     TargetType: 2
-    Help: "(\u6761\u4EF6)\u30D0\u30C8\u30EB\u958B\u59CB\u6642\n\\s\u306E\u56DE\u907F\u7387\u309220%\u30A2\u30C3\u30D7(\u6C38\u7D9A)"
+    Help: "(\u6761\u4EF6)\u30D0\u30C8\u30EB\u958B\u59CB\u6642\n\\s\u306E\u56DE\u907F\u7387\u3092/f[f,0,3]%\u30A2\u30C3\u30D7(\u6C38\u7D9A)"
     Range: 2
     RepeatTime: 1
     AliveType: 1
@@ -3945,7 +3945,7 @@ MonoBehaviour:
     Scope: 3
     SkillType: 3
     TargetType: 2
-    Help: "(\u6761\u4EF6)\u30D0\u30C8\u30EB\u4E2D\u653B\u6483\u30925\u56DE\u53D7\u3051\u308B\n\\s\u306B1\u56DE\u6709\u52B9\u306E\u653B\u6483\u7121\u52B9\u3092\u4ED8\u4E0E\n\u795E\u5316\u72B6\u614B\u306B\u79FB\u884C"
+    Help: "(\u6761\u4EF6)\u30D0\u30C8\u30EB\u4E2D\u653B\u6483\u30925\u56DE\u53D7\u3051\u308B\n\\s\u306B/f[f,0,2]\u56DE\u6709\u52B9\u306E\u653B\u6483\u7121\u52B9\u3092\u4ED8\u4E0E\n\u795E\u5316\u72B6\u614B\u306B\u79FB\u884C"
     Range: 1
     RepeatTime: 1
     AliveType: 1
@@ -4020,7 +4020,7 @@ MonoBehaviour:
     Scope: 4
     SkillType: 2
     TargetType: 4
-    Help: "\u30A2\u30A4\u30B9\u30D6\u30EC\u30A4\u30C9\u306E\u30C0\u30E1\u30FC\u30B8\u304CATKx250%\u306B\u306A\u308B"
+    Help: "\u30A2\u30A4\u30B9\u30D6\u30EC\u30A4\u30C9\u306E\u30C0\u30E1\u30FC\u30B8\u304CATKx/f[f,0,3]%\u306B\u306A\u308B"
     Range: 1
     RepeatTime: 1
     AliveType: 1
@@ -4045,7 +4045,7 @@ MonoBehaviour:
     Scope: 3
     SkillType: 3
     TargetType: 2
-    Help: "(\u6761\u4EF6)\u81EA\u5206\u4EE5\u5916\u304C\u6226\u95D8\u4E0D\u80FD\u306B\u306A\u308B\n\\s\u3092\u8607\u751F\u30573\u30BF\u30FC\u30F310\u56DE\u5FA9\u306E\u30EA\u30B8\u30A7\u30CD\u4ED8\u4E0E\n\u795E\u5316\u72B6\u614B\u306B\u79FB\u884C"
+    Help: "(\u6761\u4EF6)\u81EA\u5206\u4EE5\u5916\u304C\u6226\u95D8\u4E0D\u80FD\u306B\u306A\u308B\n\\s\u3092\u8607\u751F\u3057/f[f,2,2]\u30BF\u30FC\u30F3/f[f,2,3]\u56DE\u5FA9\u306E\u30EA\u30B8\u30A7\u30CD\u4ED8\u4E0E\n\u795E\u5316\u72B6\u614B\u306B\u79FB\u884C"
     Range: 2
     RepeatTime: 1
     AliveType: 0
@@ -4100,7 +4100,7 @@ MonoBehaviour:
     Scope: 3
     SkillType: 4
     TargetType: 2
-    Help: "(\u6761\u4EF6)\u795E\u5316\u72B6\u614B\n\\s\u306EHp\u309225\u56DE\u5FA9
+    Help: "(\u6761\u4EF6)\u795E\u5316\u72B6\u614B\n\\s\u306EHp\u3092/f[f,0,1]\u56DE\u5FA9
       \u795E\u5316\u89E3\u9664"
     Range: 2
     RepeatTime: 1
@@ -4163,8 +4163,7 @@ MonoBehaviour:
     Scope: 1
     SkillType: 3
     TargetType: 6
-    Help: "(\u6761\u4EF6)\u81EA\u8EAB\u304C\u6226\u95D8\u4E0D\u80FD\u306B\u306A\u308B\u653B\u6483\u3092\u53D7\u3051\u308B\u524D\n\\s\u306B\u6C88\u9ED9\u4ED8\u4E0E(2\u30BF\u30FC\u30F3)
-      \u795E\u5316\u72B6\u614B\u306B\u79FB\u884C"
+    Help: "(\u6761\u4EF6)\u81EA\u8EAB\u304C\u6226\u95D8\u4E0D\u80FD\u306B\u306A\u308B\u653B\u6483\u3092\u53D7\u3051\u308B\u524D\n\\s\u306B/f[f,0,2]\u306E\u6C88\u9ED9\u4ED8\u4E0E\n\u795E\u5316\u72B6\u614B\u306B\u79FB\u884C"
     Range: 2
     RepeatTime: 1
     AliveType: 1
@@ -4207,7 +4206,7 @@ MonoBehaviour:
     Scope: 1
     SkillType: 4
     TargetType: 1
-    Help: "(\u6761\u4EF6)\u795E\u5316\u72B6\u614B\n\\s\u306BATKx300%\u30C0\u30E1\u30FC\u30B8
+    Help: "(\u6761\u4EF6)\u795E\u5316\u72B6\u614B\n\\s\u306BATKx/f[f,0,1]%\u30C0\u30E1\u30FC\u30B8
       \u795E\u5316\u89E3\u9664"
     Range: 1
     RepeatTime: 1
@@ -4239,7 +4238,7 @@ MonoBehaviour:
     Scope: 4
     SkillType: 2
     TargetType: 4
-    Help: "\u30C7\u30A3\u30B9\u30DA\u30A2\u30FC\u30B9\u30AB\u30EB\u306E\u6BD2\u30C0\u30E1\u30FC\u30B8\u304C20\u306B\u306A\u308B"
+    Help: "\u30C7\u30A3\u30B9\u30DA\u30A2\u30FC\u30B9\u30AB\u30EB\u306E\u6BD2\u30C0\u30E1\u30FC\u30B8\u304C/f[f,0,3]\u306B\u306A\u308B"
     Range: 1
     RepeatTime: 1
     AliveType: 1
@@ -4314,8 +4313,8 @@ MonoBehaviour:
     Scope: 3
     SkillType: 4
     TargetType: 2
-    Help: "(\u6761\u4EF6)\u795E\u5316\u72B6\u614B\n\\s\u306BATKx200%\u30C0\u30E1\u30FC\u30B8
-      \u795E\u5316\u89E3\u9664\n\u5473\u65B9\u5168\u54E1\u306B\u4E0E\u30C0\u30E1\u30FC\u30B8\u306E10%\u5206\u306EMp\u56DE\u5FA9"
+    Help: "(\u6761\u4EF6)\u795E\u5316\u72B6\u614B\n\\s\u306BATKx/f[f,0,1]%\u30C0\u30E1\u30FC\u30B8
+      \u795E\u5316\u89E3\u9664\n\u5473\u65B9\u5168\u54E1\u306B\u4E0E\u30C0\u30E1\u30FC\u30B8\u306E/f[f,1,3]%\u5206\u306EMp\u56DE\u5FA9"
     Range: 2
     RepeatTime: 1
     AliveType: 1
@@ -4383,7 +4382,7 @@ MonoBehaviour:
     Scope: 3
     SkillType: 3
     TargetType: 2
-    Help: "(\u6761\u4EF6)\u81EA\u5206\u306E\u653B\u6483\u3067\u6575\u3092\u5012\u3059\n\\s\u306B3\u30BF\u30FC\u30F3\u306E\u9023\u7D50\u4ED8\u4E0E\n\u795E\u5316\u72B6\u614B\u306B\u79FB\u884C"
+    Help: "(\u6761\u4EF6)\u81EA\u5206\u306E\u653B\u6483\u3067\u6575\u3092\u5012\u3059\n\\s\u306B/f[f,0,2]\u30BF\u30FC\u30F3\u306E\u9023\u7D50\u4ED8\u4E0E\n\u795E\u5316\u72B6\u614B\u306B\u79FB\u884C"
     Range: 2
     RepeatTime: 1
     AliveType: 1
@@ -4426,7 +4425,7 @@ MonoBehaviour:
     Scope: 3
     SkillType: 4
     TargetType: 1
-    Help: "(\u6761\u4EF6)\u795E\u5316\u72B6\u614B\n\\s\u306BATKx200%\u30C0\u30E1\u30FC\u30B8
+    Help: "(\u6761\u4EF6)\u795E\u5316\u72B6\u614B\n\\s\u306BATKx/f[f,0,1]%\u30C0\u30E1\u30FC\u30B8
       \u795E\u5316\u89E3\u9664\n\u5BFE\u8C61\u306B\u30D1\u30C3\u30B7\u30D6\u7121\u52B9\u3092\u4ED8\u4E0E(\u6C38\u7D9A)"
     Range: 2
     RepeatTime: 1
@@ -4520,7 +4519,7 @@ MonoBehaviour:
     Scope: 3
     SkillType: 3
     TargetType: 2
-    Help: "(\u6761\u4EF6)\u81EA\u8EAB\u304C10\u56DE\u884C\u52D5\u3057\u305F\u5F8C\n\\s\u306EATK\u3068DEF\u30928\u30A2\u30C3\u30D7(\u6C38\u7D9A)\n\u795E\u5316\u72B6\u614B\u306B\u79FB\u884C"
+    Help: "(\u6761\u4EF6)\u81EA\u8EAB\u304C10\u56DE\u884C\u52D5\u3057\u305F\u5F8C\n\\s\u306EATK\u3068DEF\u3092/f[f,0,3]\u30A2\u30C3\u30D7(\u6C38\u7D9A)\n\u795E\u5316\u72B6\u614B\u306B\u79FB\u884C"
     Range: 2
     RepeatTime: 1
     AliveType: 1
@@ -4569,7 +4568,7 @@ MonoBehaviour:
     Scope: 3
     SkillType: 4
     TargetType: 1
-    Help: "(\u6761\u4EF6)\u795E\u5316\u72B6\u614B\n\\s\u306BATKx300%\u30C0\u30E1\u30FC\u30B8
+    Help: "(\u6761\u4EF6)\u795E\u5316\u72B6\u614B\n\\s\u306BATKx/f[f,0,1]%\u30C0\u30E1\u30FC\u30B8
       \u795E\u5316\u89E3\u9664"
     Range: 2
     RepeatTime: 1
@@ -4601,7 +4600,7 @@ MonoBehaviour:
     Scope: 4
     SkillType: 2
     TargetType: 4
-    Help: "\u30A2\u30AF\u30A2\u30DF\u30E9\u30FC\u30B8\u30E5\u306E\u653B\u6483\u7121\u52B9\u56DE\u6570\u304C2\u56DE\u306B\u306A\u308B"
+    Help: "\u30A2\u30AF\u30A2\u30DF\u30E9\u30FC\u30B8\u30E5\u306E\u653B\u6483\u7121\u52B9\u56DE\u6570\u304C/f[f,0,3]\u56DE\u306B\u306A\u308B"
     Range: 1
     RepeatTime: 1
     AliveType: 1
@@ -4632,7 +4631,7 @@ MonoBehaviour:
     Scope: 1
     SkillType: 3
     TargetType: 6
-    Help: "(\u6761\u4EF6)\u5473\u65B9\u304C\u6226\u95D8\u4E0D\u80FD\u306B\u306A\u308B\n\u6700\u5F8C\u306B\u653B\u6483\u3057\u305F\u5BFE\u8C61\u306BATKx500%\u30C0\u30E1\u30FC\u30B8
+    Help: "(\u6761\u4EF6)\u5473\u65B9\u304C\u6226\u95D8\u4E0D\u80FD\u306B\u306A\u308B\n\u6700\u5F8C\u306B\u653B\u6483\u3057\u305F\u5BFE\u8C61\u306BATKx/f[f,0,1]%\u30C0\u30E1\u30FC\u30B8
       \u795E\u5316\u72B6\u614B\u306B\u79FB\u884C"
     Range: 1
     RepeatTime: 1
@@ -4676,7 +4675,7 @@ MonoBehaviour:
     Scope: 4
     SkillType: 2
     TargetType: 4
-    Help: "(\u6761\u4EF6)\u5473\u65B9\u304C\u6226\u95D8\u4E0D\u80FD\u306B\u306A\u308B\n\u6700\u5F8C\u306B\u653B\u6483\u3057\u305F\u5BFE\u8C61\u306BATKx500%\u30C0\u30E1\u30FC\u30B8
+    Help: "(\u6761\u4EF6)\u5473\u65B9\u304C\u6226\u95D8\u4E0D\u80FD\u306B\u306A\u308B\n\u6700\u5F8C\u306B\u653B\u6483\u3057\u305F\u5BFE\u8C61\u306BATKx/f[f,0,1]%\u30C0\u30E1\u30FC\u30B8
       \u795E\u5316\u72B6\u614B\u306B\u79FB\u884C"
     Range: 1
     RepeatTime: 1
@@ -4708,7 +4707,7 @@ MonoBehaviour:
     Scope: 3
     SkillType: 4
     TargetType: 1
-    Help: "(\u6761\u4EF6)\u795E\u5316\u72B6\u614B\n\u5473\u65B9\u5168\u4F53\u306B\u81F4\u547D\u653B\u6483\u767A\u751F\u7387\u309230%\u30A2\u30C3\u30D7(\u6C38\u7D9A)\n\\s\u306BATKx200%\u30C0\u30E1\u30FC\u30B8
+    Help: "(\u6761\u4EF6)\u795E\u5316\u72B6\u614B\n\u5473\u65B9\u5168\u4F53\u306B\u81F4\u547D\u653B\u6483\u767A\u751F\u7387\u309230%\u30A2\u30C3\u30D7(\u6C38\u7D9A)\n\\s\u306BATKx/f[f,0,1]%\u30C0\u30E1\u30FC\u30B8
       \u795E\u5316\u89E3\u9664"
     Range: 2
     RepeatTime: 1
@@ -4740,7 +4739,7 @@ MonoBehaviour:
     Scope: 3
     SkillType: 4
     TargetType: 2
-    Help: "(\u6761\u4EF6)\u795E\u5316\u72B6\u614B\n\u5473\u65B9\u5168\u4F53\u306B\u81F4\u547D\u653B\u6483\u767A\u751F\u7387\u309230%\u30A2\u30C3\u30D7(\u6C38\u7D9A)\n\\s\u306BATKx200%\u30C0\u30E1\u30FC\u30B8
+    Help: "(\u6761\u4EF6)\u795E\u5316\u72B6\u614B\n\u5473\u65B9\u5168\u4F53\u306B\u81F4\u547D\u653B\u6483\u767A\u751F\u7387\u309230%\u30A2\u30C3\u30D7(\u6C38\u7D9A)\n\\s\u306BATKx/f[f,0,1]%\u30C0\u30E1\u30FC\u30B8
       \u795E\u5316\u89E3\u9664"
     Range: 2
     RepeatTime: 1
@@ -4772,7 +4771,7 @@ MonoBehaviour:
     Scope: 4
     SkillType: 2
     TargetType: 4
-    Help: "\u30D5\u30EC\u30A4\u30E0\u30EC\u30A4\u30F3\u306E\u30C0\u30E1\u30FC\u30B8\u304CATKx50%\u306B\u306A\u308B"
+    Help: "\u30D5\u30EC\u30A4\u30E0\u30EC\u30A4\u30F3\u306E\u30C0\u30E1\u30FC\u30B8\u304CATKx/f[f,0,3]%\u306B\u306A\u308B"
     Range: 1
     RepeatTime: 1
     AliveType: 1
@@ -4803,7 +4802,7 @@ MonoBehaviour:
     Scope: 4
     SkillType: 3
     TargetType: 4
-    Help: "(\u6761\u4EF6)\u72B6\u614B\u7570\u5E38\u3092\u53D7\u3051\u308B\u524D\n\\s\u306B3\u30BF\u30FC\u30F3\u306E\u72B6\u614B\u7570\u5E38\u30AB\u30A6\u30F3\u30BF\u4ED8\u4E0E\n\u795E\u5316\u72B6\u614B\u306B\u79FB\u884C"
+    Help: "(\u6761\u4EF6)\u72B6\u614B\u7570\u5E38\u3092\u53D7\u3051\u308B\u524D\n\\s\u306B/f[f,0,2]\u30BF\u30FC\u30F3\u306E\u72B6\u614B\u7570\u5E38\u30AB\u30A6\u30F3\u30BF\u4ED8\u4E0E\n\u795E\u5316\u72B6\u614B\u306B\u79FB\u884C"
     Range: 1
     RepeatTime: 1
     AliveType: 1
@@ -4846,7 +4845,7 @@ MonoBehaviour:
     Scope: 3
     SkillType: 4
     TargetType: 1
-    Help: "(\u6761\u4EF6)\u795E\u5316\u72B6\u614B\n\\s\u306BATKx300%\u30C0\u30E1\u30FC\u30B8
+    Help: "(\u6761\u4EF6)\u795E\u5316\u72B6\u614B\n\\s\u306BATKx/f[f,0,1]%\u30C0\u30E1\u30FC\u30B8
       \u795E\u5316\u89E3\u9664"
     Range: 2
     RepeatTime: 1
@@ -4878,7 +4877,7 @@ MonoBehaviour:
     Scope: 4
     SkillType: 2
     TargetType: 4
-    Help: "\u30DE\u30B8\u30C3\u30AF\u30B9\u30C6\u30A3\u30FC\u30EB\u306EAP\u596A\u53D6\u52B9\u679C\u304C\u6700\u59278\u307E\u3067\u306B\u306A\u308B"
+    Help: "\u30DE\u30B8\u30C3\u30AF\u30B9\u30C6\u30A3\u30FC\u30EB\u306EAP\u596A\u53D6\u52B9\u679C\u304C\u6700\u5927/f[f,0,3]\u307E\u3067\u306B\u306A\u308B"
     Range: 1
     RepeatTime: 1
     AliveType: 1
@@ -4909,7 +4908,7 @@ MonoBehaviour:
     Scope: 2
     SkillType: 3
     TargetType: 1
-    Help: "(\u6761\u4EF6)\u6575\u5168\u54E1\u304C\u51CD\u7D50\u72B6\u614B\u306B\u306A\u308B\n\\s\u306E\u51CD\u7D50\u30C0\u30E1\u30FC\u30B8\u52B9\u679C\u3092200%\u306B\u3059\u308B\n\u795E\u5316\u72B6\u614B\u306B\u79FB\u884C"
+    Help: "(\u6761\u4EF6)\u6575\u5168\u54E1\u304C\u51CD\u7D50\u72B6\u614B\u306B\u306A\u308B\n\\s\u306E\u51CD\u7D50\u30C0\u30E1\u30FC\u30B8\u52B9\u679C\u3092/f[f,0,3]%\u306B\u3059\u308B\n\u795E\u5316\u72B6\u614B\u306B\u79FB\u884C"
     Range: 2
     RepeatTime: 1
     AliveType: 1
@@ -4952,8 +4951,8 @@ MonoBehaviour:
     Scope: 2
     SkillType: 4
     TargetType: 1
-    Help: "(\u6761\u4EF6)\u795E\u5316\u72B6\u614B\n\\s\u306BATKx300%\u30C0\u30E1\u30FC\u30B8
-      \u795E\u5316\u89E3\u9664\n\u51CD\u7D50\u72B6\u614B\u306E\u5BFE\u8C61\u306B\u306F\u3055\u3089\u306BATKx200%\u30C0\u30E1\u30FC\u30B8"
+    Help: "(\u6761\u4EF6)\u795E\u5316\u72B6\u614B\n\\s\u306BATKx/f[f,0,1]%\u30C0\u30E1\u30FC\u30B8
+      \u795E\u5316\u89E3\u9664\n\u51CD\u7D50\u72B6\u614B\u306E\u5BFE\u8C61\u306B\u306F\u3055\u3089\u306BATKx/f[f,0,2]%\u30C0\u30E1\u30FC\u30B8"
     Range: 2
     RepeatTime: 1
     AliveType: 1
@@ -4984,7 +4983,7 @@ MonoBehaviour:
     Scope: 4
     SkillType: 2
     TargetType: 4
-    Help: "\u30C7\u30A3\u30FC\u30D7\u30D5\u30EA\u30FC\u30BA\u306E\u51CD\u7D50\u30C0\u30E1\u30FC\u30B8\u304C40%\u306B\u306A\u308B"
+    Help: "\u30C7\u30A3\u30FC\u30D7\u30D5\u30EA\u30FC\u30BA\u306E\u51CD\u7D50\u30C0\u30E1\u30FC\u30B8\u304C/f[f,0,3]%\u306B\u306A\u308B"
     Range: 1
     RepeatTime: 1
     AliveType: 1
@@ -5015,7 +5014,7 @@ MonoBehaviour:
     Scope: 4
     SkillType: 3
     TargetType: 4
-    Help: "(\u6761\u4EF6)\u81EA\u8EAB\u4EE5\u5916\u304C\u6226\u95D8\u4E0D\u80FD\u306B\u306A\u308B\n\u81EA\u8EAB\u306B\u653B\u6483\u30A2\u30C3\u30D7(\u6C38\u7D9A)
+    Help: "(\u6761\u4EF6)\u81EA\u8EAB\u4EE5\u5916\u304C\u6226\u95D8\u4E0D\u80FD\u306B\u306A\u308B\n\\s\u306EATK\u3092/f[f,0,3]\u30A2\u30C3\u30D7(\u6C38\u7D9A)
       \u795E\u5316\u72B6\u614B\u306B\u79FB\u884C"
     Range: 1
     RepeatTime: 1
@@ -5059,7 +5058,7 @@ MonoBehaviour:
     Scope: 1
     SkillType: 4
     TargetType: 1
-    Help: "(\u6761\u4EF6)\u795E\u5316\u72B6\u614B\n\\s\u306BATKx500%\u30C0\u30E1\u30FC\u30B8
+    Help: "(\u6761\u4EF6)\u795E\u5316\u72B6\u614B\n\\s\u306BATKx/f[f,0,1]%\u30C0\u30E1\u30FC\u30B8
       \u795E\u5316\u89E3\u9664"
     Range: 1
     RepeatTime: 1
@@ -5091,7 +5090,7 @@ MonoBehaviour:
     Scope: 4
     SkillType: 2
     TargetType: 4
-    Help: "(\u6761\u4EF6)Hp\u304C25%\u672A\u6E80\n\u81EA\u8EAB\u306B\u653B\u6483\u30A2\u30C3\u30D7(\u6C38\u7D9A)"
+    Help: "(\u6761\u4EF6)Hp\u304C25%\u672A\u6E80\n\\s\u306EATK\u3092/f[f,0,3]\u30A2\u30C3\u30D7(\u6C38\u7D9A)"
     Range: 1
     RepeatTime: 1
     AliveType: 1
@@ -5122,7 +5121,7 @@ MonoBehaviour:
     Scope: 3
     SkillType: 3
     TargetType: 2
-    Help: "(\u6761\u4EF6)\u81EA\u8EAB\u306EHp\u304C50%\u4EE5\u4E0B\n\\s\u306B3\u30BF\u30FC\u30F3\u306E25\u56DE\u5FA9\u306E\u30EA\u30B8\u30A7\u30CD\u4ED8\u4E0E\n\u795E\u5316\u72B6\u614B\u306B\u79FB\u884C"
+    Help: "(\u6761\u4EF6)\u81EA\u8EAB\u306EHp\u304C50%\u4EE5\u4E0B\n\\s\u306B/f[f,0,2]\u30BF\u30FC\u30F3\u306E/f[f,0,3]\u56DE\u5FA9\u306E\u30EA\u30B8\u30A7\u30CD\u4ED8\u4E0E\n\u795E\u5316\u72B6\u614B\u306B\u79FB\u884C"
     Range: 2
     RepeatTime: 1
     AliveType: 1
@@ -5165,7 +5164,7 @@ MonoBehaviour:
     Scope: 4
     SkillType: 4
     TargetType: 4
-    Help: "(\u6761\u4EF6)\u795E\u5316\u72B6\u614B\n\\s\u306B50%\u53CD\u5C04\u30C0\u30E1\u30FC\u30B8\u306E\u30AB\u30A6\u30F3\u30BF\u3092\u4ED8\u4E0E(\u6C38\u7D9A)\n\u795E\u5316\u89E3\u9664"
+    Help: "(\u6761\u4EF6)\u795E\u5316\u72B6\u614B\n\\s\u306B/f[f,0,3]%\u53CD\u5C04\u30C0\u30E1\u30FC\u30B8\u306E\u30AB\u30A6\u30F3\u30BF\u3092\u4ED8\u4E0E(\u6C38\u7D9A)\n\u795E\u5316\u89E3\u9664"
     Range: 1
     RepeatTime: 1
     AliveType: 1
@@ -5233,7 +5232,7 @@ MonoBehaviour:
     Scope: 2
     SkillType: 3
     TargetType: 1
-    Help: "(\u6761\u4EF6)\u81EA\u8EAB\u306EHp\u304C40%\u4EE5\u4E0B\n\\s\u306BATKx300%\u30C0\u30E1\u30FC\u30B8
+    Help: "(\u6761\u4EF6)\u81EA\u8EAB\u306EHp\u304C40%\u4EE5\u4E0B\n\\s\u306BATKx/f[f,0,1]%\u30C0\u30E1\u30FC\u30B8
       \u795E\u5316\u72B6\u614B\u306B\u79FB\u884C\n\u81EA\u8EAB\u306B\u30C0\u30E1\u30FC\u30B8\u306E25%\u5206Hp\u56DE\u5FA9\u30C9\u30EC\u30A4\u30F3\u3092\u4ED8\u4E0E"
     Range: 2
     RepeatTime: 1
@@ -5277,7 +5276,7 @@ MonoBehaviour:
     Scope: 4
     SkillType: 3
     TargetType: 4
-    Help: "(\u6761\u4EF6)\u81EA\u8EAB\u306EHp\u304C40%\u4EE5\u4E0B\n\\s\u306BATKx300%\u30C0\u30E1\u30FC\u30B8
+    Help: "(\u6761\u4EF6)\u81EA\u8EAB\u306EHp\u304C40%\u4EE5\u4E0B\n\\s\u306BATKx/f[f,0,3]%\u30C0\u30E1\u30FC\u30B8
       \u795E\u5316\u72B6\u614B\u306B\u79FB\u884C\n\u81EA\u8EAB\u306B25%\u5206Hp\u56DE\u5FA9\u30C9\u30EC\u30A4\u30F3\u3092\u4ED8\u4E0E(\u6C38\u7D9A)"
     Range: 1
     RepeatTime: 1
@@ -5340,7 +5339,7 @@ MonoBehaviour:
     Scope: 4
     SkillType: 2
     TargetType: 4
-    Help: "\u30C7\u30A3\u30B9\u30C1\u30E3\u30FC\u30B8\u306E\u653B\u6483\u56DE\u6570\u304C3\u56DE\u306B\u306A\u308B"
+    Help: "\u30C7\u30A3\u30B9\u30C1\u30E3\u30FC\u30B8\u306E\u653B\u6483\u56DE\u6570\u304C/f[f,0,3]\u56DE\u306B\u306A\u308B"
     Range: 1
     RepeatTime: 1
     AliveType: 1
@@ -5371,7 +5370,7 @@ MonoBehaviour:
     Scope: 3
     SkillType: 3
     TargetType: 1
-    Help: "(\u6761\u4EF6)\u81EA\u8EAB\u304C\u6226\u95D8\u4E0D\u80FD\u306B\u306A\u308B\n\\s\u306BATKx300%\u30C0\u30E1\u30FC\u30B8\n\\s\u306B\u4E0D\u6CBB\u4ED8\u4E0E(\u6C38\u7D9A)
+    Help: "(\u6761\u4EF6)\u81EA\u8EAB\u304C\u6226\u95D8\u4E0D\u80FD\u306B\u306A\u308B\n\\s\u306BATKx/f[f,0,1]%\u30C0\u30E1\u30FC\u30B8\n\\s\u306B\u4E0D\u6CBB\u4ED8\u4E0E(\u6C38\u7D9A)
       \u795E\u5316\u72B6\u614B\u306B\u79FB\u884C"
     Range: 1
     RepeatTime: 1
@@ -5421,7 +5420,7 @@ MonoBehaviour:
     Scope: 1
     SkillType: 4
     TargetType: 1
-    Help: "(\u6761\u4EF6)\u795E\u5316\u72B6\u614B\n\\s\u306BATKx450%\u30C0\u30E1\u30FC\u30B8\n\u795E\u5316\u89E3\u9664"
+    Help: "(\u6761\u4EF6)\u795E\u5316\u72B6\u614B\n\\s\u306BATKx/f[f,0,1]%\u30C0\u30E1\u30FC\u30B8\n\u795E\u5316\u89E3\u9664"
     Range: 1
     RepeatTime: 1
     AliveType: 1
@@ -5452,7 +5451,7 @@ MonoBehaviour:
     Scope: 4
     SkillType: 2
     TargetType: 4
-    Help: "\u30C7\u30A3\u30B9\u30DA\u30A2\u30FC\u30B9\u30AB\u30EB\u306E\u6BD2\u6210\u529F\u7387\u304C100%\u306B\u306A\u308B"
+    Help: "\u30C7\u30A3\u30B9\u30DA\u30A2\u30FC\u30B9\u30AB\u30EB\u306E\u6BD2\u6210\u529F\u7387\u304C/f[f,0,3]%\u306B\u306A\u308B"
     Range: 1
     RepeatTime: 1
     AliveType: 1
@@ -5557,7 +5556,7 @@ MonoBehaviour:
     Scope: 4
     SkillType: 2
     TargetType: 4
-    Help: "\u30A2\u30AF\u30A2\u30DF\u30E9\u30FC\u30B8\u30E5\u306E\u6709\u52B9\u56DE\u6570\u304C2\u56DE\u306B\u306A\u308B"
+    Help: "\u30A2\u30AF\u30A2\u30DF\u30E9\u30FC\u30B8\u30E5\u306E\u6709\u52B9\u56DE\u6570\u304C/f[f,0,3]\u56DE\u306B\u306A\u308B"
     Range: 1
     RepeatTime: 1
     AliveType: 1
@@ -5631,7 +5630,7 @@ MonoBehaviour:
     Scope: 3
     SkillType: 4
     TargetType: 3
-    Help: "(\u6761\u4EF6)\u795E\u5316\u72B6\u614B\n\\s\u306B100Hp\u56DE\u5FA9\n\u795E\u5316\u89E3\u9664"
+    Help: "(\u6761\u4EF6)\u795E\u5316\u72B6\u614B\n\\s\u306B/f[f,0,1]Hp\u56DE\u5FA9\n\u795E\u5316\u89E3\u9664"
     Range: 2
     RepeatTime: 1
     AliveType: 1
@@ -5662,7 +5661,7 @@ MonoBehaviour:
     Scope: 4
     SkillType: 2
     TargetType: 4
-    Help: "\u30BB\u30A4\u30F3\u30C8\u30EC\u30FC\u30B6\u30FC\u306E\u30C0\u30E1\u30FC\u30B8\u304CATKx300%\u306B\u306A\u308B"
+    Help: "\u30BB\u30A4\u30F3\u30C8\u30EC\u30FC\u30B6\u30FC\u306E\u30C0\u30E1\u30FC\u30B8\u304CATKx/f[f,0,3]%\u306B\u306A\u308B"
     Range: 1
     RepeatTime: 1
     AliveType: 1
@@ -5767,7 +5766,7 @@ MonoBehaviour:
     Scope: 4
     SkillType: 2
     TargetType: 4
-    Help: "\\s\u306EATK,DEF\u309225\u30A2\u30C3\u30D7"
+    Help: "\\s\u306EATK,DEF\u3092/f[f,0,3]\u30A2\u30C3\u30D7"
     Range: 1
     RepeatTime: 1
     AliveType: 1

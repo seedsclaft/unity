@@ -117,6 +117,8 @@ namespace Ryneus
                 return "";
                 case ScopeType.FrontLine:
                 return DataSystem.GetText(625);
+                case ScopeType.OneAndNeighbor:
+                return DataSystem.GetText(651);
             }
             return "";
         }

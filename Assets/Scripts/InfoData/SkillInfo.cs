@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 
 namespace Ryneus
 {
@@ -150,6 +151,46 @@ namespace Ryneus
         public bool IsParamUpSkill()
         {
             return FeatureDates.Find(a => a.FeatureType >= FeatureType.ChangeFeatureParam1 && a.FeatureType < FeatureType.PlusSkill) != null;
+        }
+
+        public string ConvertHelpText()
+        {
+            var help = Master.ConvertHelpText(Master.Help);
+            var regex = new Regex(@"\[.+?\]");
+            var splits = regex.Matches(help);
+            if (splits.Count > 0)
+            {
+                foreach (var split in splits)
+                {
+                    var paramText = "";
+                    var array = split.ToString().Substring(1,5).Split(",");
+                    
+                    var p1 = array[0];
+                    var p2 = int.Parse(array[1]);
+                    var p3 = int.Parse(array[2]);
+                    if (p1 == "f")
+                    {
+                        var targetFeature = FeatureDates[p2];
+                        
+                        if (p3 == 1)
+                        {
+                            paramText = targetFeature.Param1.ToString();
+                        } else
+                        if (p3 == 2)
+                        {
+                            paramText = targetFeature.Param2.ToString();
+                        }
+                        if (p3 == 3)
+                        {
+                            paramText = targetFeature.Param3.ToString();
+                        }
+                        Regex reg1 = new Regex("/f");
+                        help = reg1.Replace(help,paramText,1);
+                    }
+                    help = help.Replace(split.ToString(),"");
+                }
+            }
+            return help;
         }
     }
 }

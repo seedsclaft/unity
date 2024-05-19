@@ -31,8 +31,8 @@ namespace Ryneus
             }
             if (skillInfo.Master.SkillType == SkillType.Reborn)
             {
-                UpdateSkillData(skillInfo.Id);
-                UpdateRebornInfo(skillInfo);
+                //UpdateSkillData(skillInfo.Id);
+                //UpdateRebornInfo(skillInfo);
             } else
             {
                 UpdateSkillData(skillInfo.Id);
@@ -41,13 +41,17 @@ namespace Ryneus
             {
                 if (skillInfo.Master.FeatureDates.Find(a => a.FeatureType == FeatureType.AddSkillOrCurrency) != null)
                 {
-                    var convertText = skillInfo.Master.ConvertHelpText(skillInfo.Master.Help);
+                    var convertText = skillInfo.ConvertHelpText();
                     var skillNameData = DataSystem.FindSkill(skillInfo.Param1);
                     if (skillNameData != null)
                     {
                         description.text = convertText.Replace("\\d",skillNameData.Name);
                     }
                 }
+            }
+            if (description != null)
+            {
+                description.text = skillInfo.ConvertHelpText();
             }
             if (selectable != null)
             {
@@ -130,6 +134,7 @@ namespace Ryneus
             {
                 type.text = skillData.SkillType.ToString();
             }
+            /*
             if (description != null)
             {
                 var convertText = skillData.ConvertHelpText(skillData.Help);
@@ -141,6 +146,7 @@ namespace Ryneus
                     description.text = convertText;
                 }
             }
+            */
             if (range != null)
             {
                 range.gameObject.SetActive(true);
