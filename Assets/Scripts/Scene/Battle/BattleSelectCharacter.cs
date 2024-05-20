@@ -18,6 +18,7 @@ namespace Ryneus
         [SerializeField] private ActorInfoComponent actorInfoComponent;
         [SerializeField] private BattlerInfoComponent battlerInfoComponent;
         [SerializeField] private SideMenuButton lvResetButton;
+        [SerializeField] private SkillTriggerList skillTriggerList;
         private bool _isInit = false;
 
         public int SelectedTabIndex => toggleSelect.SelectTabIndex;
@@ -41,12 +42,14 @@ namespace Ryneus
                 return;
             }
             conditionList.Initialize();
+            skillTriggerList?.Initialize();
             _isInit = true;
             toggleSelect.Initialize(new List<string>()
             {
                 DataSystem.GetText(421),
                 DataSystem.GetText(420),
-                DataSystem.GetText(402)
+                DataSystem.GetText(402),
+                DataSystem.GetText(402),
             });
             toggleSelect.SetClickHandler(() => 
             {
@@ -139,6 +142,11 @@ namespace Ryneus
             conditionList.SetData(conditionData);
         }
 
+        public void SetSkillTriggerList(List<ListData> skillTriggerLists)
+        {
+            skillTriggerList.SetData(skillTriggerLists,false);
+        }
+
         public void SetActorInfo(ActorInfo actorInfo,List<ActorInfo> party)
         {
             actorInfoComponent.UpdateInfo(actorInfo,party);
@@ -193,6 +201,7 @@ namespace Ryneus
             gameObject.SetActive(true);
             magicList.Activate();
             conditionList.Deactivate();
+            skillTriggerList?.Deactivate();
         }
 
         public void HideActionList()
@@ -200,6 +209,7 @@ namespace Ryneus
             gameObject.SetActive(false);
             magicList.Deactivate();
             conditionList.Deactivate();
+            skillTriggerList?.Deactivate();
         }
     }
 
@@ -207,5 +217,6 @@ namespace Ryneus
         Detail = 0,
         Magic = 1,
         Condition = 2,
+        SkillTrigger = 3
     }
 }

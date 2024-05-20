@@ -62,7 +62,7 @@ namespace Ryneus
             var skillInfos = _model.SkillActionList();
             var lastSelectIndex = 0;
             _view.SetCondition(_model.SelectCharacterConditions());
-            _view.CommandRefreshStatus(skillInfos,_model.CurrentEnemy,_model.EnemyIndexes(),lastSelectIndex);
+            _view.CommandRefreshStatus(skillInfos,_model.CurrentEnemy,_model.EnemySkillTriggerInfo(),_model.EnemyIndexes(),lastSelectIndex);
         }
     }
 }

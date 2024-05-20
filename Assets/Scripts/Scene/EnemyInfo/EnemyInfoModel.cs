@@ -48,5 +48,27 @@ namespace Ryneus
         {
             return MakeListData(CurrentEnemy.StateInfos);
         }
+
+        public List<ListData> EnemySkillTriggerInfo()
+        {
+            var skillInfos = CurrentEnemy.Skills;
+            skillInfos.Sort((a,b) => a.Weight > b.Weight ? -1:1);
+            var skillTriggerInfos = new List<SkillTriggerInfo>();
+            foreach (var skillInfo in skillInfos)
+            {
+                var skillTriggerData = DataSystem.Enemies.Find(a => a.Id == CurrentEnemy.EnemyData.Id).SkillTriggerDates.Find(a => a.SkillId == skillInfo.Id);
+                if (skillTriggerData == null)
+                {
+                    continue;
+                }
+                var skillTriggerInfo = new SkillTriggerInfo(CurrentEnemy.EnemyData.Id,skillTriggerData.SkillId);
+                var SkillTriggerData1 = DataSystem.SkillTriggers.Find(a => a.Id == skillTriggerData.Trigger1);
+                var SkillTriggerData2 = DataSystem.SkillTriggers.Find(a => a.Id == skillTriggerData.Trigger2);
+                skillTriggerInfo.UpdateTriggerDates(new List<SkillTriggerData>(){SkillTriggerData1,SkillTriggerData2});
+                skillTriggerInfos.Add(skillTriggerInfo);
+            }
+            skillTriggerInfos = skillTriggerInfos.FindAll(a => skillInfos.Find(b => b.Id == a.SkillId) != null);
+            return MakeListData(skillTriggerInfos);
+        }
     }
 }

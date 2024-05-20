@@ -139,7 +139,7 @@ namespace Ryneus
                     break;
                 case TargetType.Friend:
                     targetIndexList.AddRange(TargetIndexFriend(subject.IsActor));
-                    if (skillData.Scope == ScopeType.WithoutSelfOne || skillData.Scope == ScopeType.WithoutSelfAll)
+                    if (skillData.Scope == ScopeType.WithoutSelfOne || skillData.Scope == ScopeType.WithoutSelfLine || skillData.Scope == ScopeType.WithoutSelfAll)
                     {
                         targetIndexList.Remove(subject.Index);
                     }

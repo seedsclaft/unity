@@ -100,7 +100,7 @@ namespace Ryneus
             {
                 UpdateAllSelect();
             } else
-            if (_targetScopeType == ScopeType.Line)
+            if (_targetScopeType == ScopeType.Line || _targetScopeType == ScopeType.WithoutSelfLine)
             {
                 UpdateLineSelect(_selectIndex);
             } else
@@ -143,7 +143,7 @@ namespace Ryneus
                 UpdateAllSelect();
                 return;
             }
-            if (_targetScopeType == ScopeType.Line)
+            if (_targetScopeType == ScopeType.Line || _targetScopeType == ScopeType.WithoutSelfLine)
             {
                 UpdateLineSelect(index);
                 return;
@@ -294,7 +294,7 @@ namespace Ryneus
                     }
                 }
             } else
-            if (_targetScopeType == ScopeType.Line)
+            if (_targetScopeType == ScopeType.Line || _targetScopeType == ScopeType.WithoutSelfLine)
             {
                 for (int i = 0; i < _battleEnemies.Count;i++)
                 {

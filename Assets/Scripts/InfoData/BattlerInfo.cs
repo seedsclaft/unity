@@ -371,37 +371,49 @@ namespace Ryneus
             {
                 return apValue;
             }
+            /*
             if (IsState(StateType.Chain))
             {
                 apValue = 6;
                 return apValue;
             }
+            */
+            /*
             if (IsState(StateType.Benediction))
             {
                 _ap = 1;
                 apValue = 0;
                 return apValue;
             }
+            */
+            /*
             if (IsState(StateType.RevengeAct))
             {
                 apValue = 2;
                 return apValue;
             }
+            */
+            /*
             if (IsState(StateType.Heist) && IsState(StateType.Slow))
             {
                 apValue = -8;
                 return apValue;
             }
+            */
+            /*
             if (IsState(StateType.Heist))
             {
                 apValue = -12;
                 return apValue;
             }
+            */
+            /*
             if (IsState(StateType.Slow))
             {
                 apValue = -4;
                 return apValue;
             }
+            */
             apValue = -8;
             return apValue;
         }
@@ -416,30 +428,31 @@ namespace Ryneus
             if (IsState(StateType.Stun))
             {
                 wait += StateTurn(StateType.Stun);
-            } else
+            }/* else
             if (IsState(StateType.Chain))
             {
                 wait += StateTurn(StateType.Chain) * 6;
-            } else
+            }*/ /* else
             if (IsState(StateType.Benediction))
             {
                 wait += StateTurn(StateType.Benediction);
-            } else
+            } */ /*else
             if (IsState(StateType.RevengeAct))
             {
                 wait += StateTurn(StateType.RevengeAct) * 2;
-            } else
+            } */ /*else
             if (IsState(StateType.Heist) && IsState(StateType.Slow))
             {
-            } else
+            } */ /*else
             if (IsState(StateType.Heist))
             {
                 wait -= StateTurn(StateType.Heist) * 1.5f;
-            } else
+            } */ /*else
             if (IsState(StateType.Slow))
             {
                 wait += StateTurn(StateType.Slow) * 2;
             }
+            */
             return wait;
         }
 
@@ -516,10 +529,12 @@ namespace Ryneus
             {
                 return false;
             }
+            /*
             if (IsState(StateType.Chain))
             {
                 return false;
             }
+            */
             if (IsState(StateType.Wait))
             {
                 return false;
@@ -759,11 +774,11 @@ namespace Ryneus
                 }
                 if (IsState(StateType.AtkDown))
                 {
-                    atk -= StateEffectAll(StateType.AtkDown);
+                    atk -= (int)DeBuffUpperParam(StateEffectAll(StateType.AtkDown));
                 }
                 if (IsState(StateType.AtkDownPer))
                 {
-                    atk -= (int)(Status.Atk * StateEffectAll(StateType.AtkDownPer) * 0.01f);
+                    atk = (int)(atk * ((100 - DeBuffUpperParam(StateEffectAll(StateType.AtkDownPer))) * 0.01f));
                 }
             }
             return atk;
@@ -788,11 +803,11 @@ namespace Ryneus
                 }
                 if (IsState(StateType.DefDown))
                 {
-                    def -= StateEffectAll(StateType.DefDown);
+                    def -= (int)DeBuffUpperParam(StateEffectAll(StateType.DefDown));
                 }
                 if (IsState(StateType.DefPerDown))
                 {
-                    def = (int)((float)def * ((100 - StateEffectAll(StateType.DefPerDown)) * 0.01f));
+                    def = (int)(def * ((100 - DeBuffUpperParam(StateEffectAll(StateType.DefPerDown))) * 0.01f));
                 }
             }
             return def;
@@ -827,7 +842,7 @@ namespace Ryneus
         {
             int hit = 0;
             hit += StateEffectAll(StateType.HitUp);
-            hit -= StateEffectAll(StateType.HitDown);
+            hit -= (int)DeBuffUpperParam(StateEffectAll(StateType.HitDown));
             return hit;
         }
 
@@ -835,8 +850,13 @@ namespace Ryneus
         {
             int eva = 0;
             eva += StateEffectAll(StateType.EvaUp);
-            eva -= StateEffectAll(StateType.EvaDown);
+            eva -= (int)DeBuffUpperParam(StateEffectAll(StateType.EvaDown));
             return eva;
+        }
+
+        private float DeBuffUpperParam(int param)
+        {
+            return param * (1f + StateEffectAll(StateType.DeBuffUpper) * 0.01f);
         }
 
         public int TargetRate()

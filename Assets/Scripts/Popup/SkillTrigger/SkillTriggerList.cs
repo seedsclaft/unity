@@ -6,8 +6,25 @@ namespace Ryneus
 {
     public class SkillTriggerList : BaseList
     {
-
+        [SerializeField] private SkillTriggerHelp skillTriggerHelp = null;
         private int _selectItemIndex = -1;
+        public new void Initialize()
+        {
+            base.Initialize();
+            SetSelectedHandler(() => SelectSkillTriggerList());
+        }
+
+        private void SelectSkillTriggerList()
+        {
+            var listData = ListData;
+            if (listData != null)
+            {
+                var data = (SkillTriggerInfo)listData.Data;
+                skillTriggerHelp.UpdateSkillInfo(data.SkillId);
+                skillTriggerHelp.UpdateSkillTriggerHelp(data.SkillTriggerDates[0]?.Help,data.SkillTriggerDates?[1].Help);
+            }
+        }
+
         public void SetInputCallHandler()
         {
             //SetInputCallHandler((a) => CallInputHandler(a));

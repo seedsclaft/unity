@@ -64,11 +64,12 @@ namespace Ryneus
             selectCharacter.SetActiveTab(SelectCharacterTabType.Condition,false);
         }
 
-        public void CommandRefreshStatus(List<ListData> skillInfos,BattlerInfo battlerInfo,List<int> enemyIndexes,int lastSelectIndex)
+        public void CommandRefreshStatus(List<ListData> skillInfos,BattlerInfo battlerInfo,List<ListData> skillTriggerInfos,List<int> enemyIndexes,int lastSelectIndex)
         {
             selectCharacter.ShowActionList();
             selectCharacter.SetEnemyBattlerInfo(battlerInfo);
             selectCharacter.SetSkillInfos(skillInfos);
+            selectCharacter.SetSkillTriggerList(skillTriggerInfos);
             selectCharacter.RefreshAction(lastSelectIndex);
             enemyInfoComponent.Clear();
             enemyInfoComponent.UpdateInfo(battlerInfo);

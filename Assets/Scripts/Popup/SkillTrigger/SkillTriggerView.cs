@@ -15,9 +15,6 @@ namespace Ryneus
         [SerializeField] private BaseList triggerCategory1List = null;
         [SerializeField] private BaseList triggerCategory2List = null;
         [SerializeField] private Button listBlock = null;
-        [SerializeField] private SkillInfoComponent skillInfoComponent = null;
-        [SerializeField] private TextMeshProUGUI trigger1Help = null;
-        [SerializeField] private TextMeshProUGUI trigger2Help = null;
         private new Action<SkillTriggerViewEvent> _commandData = null;
         public int SkillTriggerIndex => skillTriggerList.Index;
         private SkillTriggerViewInfo _skillTriggerViewInfo;
@@ -53,7 +50,6 @@ namespace Ryneus
             
             skillTriggerList.Initialize();
             skillTriggerList.SetInputHandler(InputKeyType.Cancel,() => BackEvent());
-            skillTriggerList.SetSelectedHandler(() => SelectSkillTriggerList());
             skillTriggerList.SetInputCallHandler();
             SetInputHandler(skillTriggerList.GetComponent<IInputHandlerEvent>());
             listBlock.onClick.AddListener(() => {
@@ -144,17 +140,6 @@ namespace Ryneus
             trigger2List.SetData(triggerDates);
         }
 
-        public void UpdateSkillInfo(int skillId)
-        {
-            skillInfoComponent?.UpdateSkillData(skillId);
-        }
-
-        public void UpdateSkillTriggerHelp(string help1,string help2)
-        {
-            trigger1Help?.SetText(help1);
-            trigger2Help?.SetText(help2);
-        }
-
         private void OnClickSkillSelect()
         {
             var listData = skillList.ListData;
@@ -162,18 +147,6 @@ namespace Ryneus
             {
                 var data = (SkillInfo)listData.Data;
                 var eventData = new SkillTriggerViewEvent(SkillTrigger.CommandType.DecideSkillSelect);
-                eventData.template = data;
-                _commandData(eventData);
-            }
-        }
-
-        private void SelectSkillTriggerList()
-        {
-            var listData = skillTriggerList.ListData;
-            if (listData != null)
-            {
-                var data = (SkillTriggerInfo)listData.Data;
-                var eventData = new SkillTriggerViewEvent(SkillTrigger.CommandType.SelectSkillTrigger);
                 eventData.template = data;
                 _commandData(eventData);
             }
@@ -306,7 +279,6 @@ namespace SkillTrigger
         DecideCategory2Select,
         CancelSelect,
         CancelCategory,
-        SelectSkillTrigger,
         None = 0,
     }
 }

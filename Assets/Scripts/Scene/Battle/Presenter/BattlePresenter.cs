@@ -266,7 +266,7 @@ namespace Ryneus
             _view.SetHelpInputInfo("BATTLE_AUTO");
             while (_model.CurrentBattler == null)
             {
-                BeforeUpdateAp();
+                //BeforeUpdateAp();
                 var CurrentActionInfo = _model.CurrentActionInfo();
                 if (CurrentActionInfo != null)
                 {
@@ -400,9 +400,10 @@ namespace Ryneus
             CommandSelectTargetIndexes(_model.MakeAutoSelectIndex(actionInfo,targetIndex));
         }
 
-        private async void BeforeUpdateAp()
+        private void BeforeUpdateAp()
         {
             // 拘束
+            /*
             var chainActionResults = _model.UpdateChainState();
             await ExecActionResult(chainActionResults,false);
             _model.CheckTriggerSkillInfos(TriggerTiming.After,null,chainActionResults);
@@ -410,8 +411,10 @@ namespace Ryneus
             
             StartAliveAnimation(chainActionResults);
             StartDeathAnimation(chainActionResults);
+            */
 
             // 祝福
+            /*
             var benedictionActionResults = _model.UpdateBenedictionState();
             await ExecActionResult(benedictionActionResults,false);
             _model.CheckTriggerSkillInfos(TriggerTiming.After,null,benedictionActionResults);
@@ -419,6 +422,7 @@ namespace Ryneus
         
             StartDeathAnimation(benedictionActionResults);
             StartAliveAnimation(benedictionActionResults);
+            */
         }
 
         // 行動選択開始

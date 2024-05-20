@@ -62,9 +62,6 @@ namespace Ryneus
                 case SkillTrigger.CommandType.DecideCategory2Select:
                 CommandDecideCategory2Select();
                 break;
-                case SkillTrigger.CommandType.SelectSkillTrigger:
-                CommandSelectSkillTrigger((SkillTriggerInfo)viewEvent.template);
-                break;
                 case SkillTrigger.CommandType.CancelSelect:
                 CommandCancelSelect();
                 break;
@@ -174,12 +171,6 @@ namespace Ryneus
             var index = _view.SkillTriggerIndex;
             _model.SetTriggerIndexDown(index);
             CommandRefresh();
-        }
-
-        private void CommandSelectSkillTrigger(SkillTriggerInfo triggerInfo)
-        {
-            _view.UpdateSkillInfo(triggerInfo.SkillId);
-            _view.UpdateSkillTriggerHelp(triggerInfo.SkillTriggerDates[0]?.Help,triggerInfo.SkillTriggerDates[1]?.Help);
         }
 
         private void CommandRefresh()

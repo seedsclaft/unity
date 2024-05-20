@@ -92,6 +92,8 @@ namespace Ryneus
                 return DataSystem.GetText(603);
                 case TargetType.Counter:
                 return DataSystem.GetText(606);
+                case TargetType.IsTriggerTarget:
+                return DataSystem.GetText(611);
             }
             return "";
         }
@@ -792,6 +794,7 @@ namespace Ryneus
         Self = 4,
         FrontLine = 5,
         WithoutSelfOne = 11,
+        WithoutSelfLine = 12,
         WithoutSelfAll = 13,
         RandomOne = 21,
         OneAndNeighbor = 31,
@@ -1007,6 +1010,7 @@ namespace Ryneus
         HpConsumeDamage = 1080,
         RevengeHpDamage = 1090,
         PenetrateHpDamage = 1100,
+        HpParamHpDamage = 1110,
         HpHeal = 2010,
         RemainHpOne = 2020,
         RemainHpOneTarget = 2030,

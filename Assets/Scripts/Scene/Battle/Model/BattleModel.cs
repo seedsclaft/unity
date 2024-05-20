@@ -160,6 +160,7 @@ namespace Ryneus
         public List<ActionResultInfo> UpdateChainState()
         {
             var actionResultInfos = new List<ActionResultInfo>();
+            /*
             for (int i = 0;i < FieldBattlerInfos().Count;i++)
             {
                 var chainStateInfos = FieldBattlerInfos()[i].UpdateChainState();
@@ -189,12 +190,14 @@ namespace Ryneus
                     }
                 }
             }
+            */
             return actionResultInfos;
         }
 
         public List<ActionResultInfo> UpdateBenedictionState()
         {
             var actionResultInfos = new List<ActionResultInfo> ();
+            /*
             for (int i = 0;i < FieldBattlerInfos().Count;i++)
             {
                 var benedictionStateInfos = FieldBattlerInfos()[i].GetStateInfoAll(StateType.Benediction);
@@ -226,6 +229,7 @@ namespace Ryneus
                     }
                 }
             }
+            */
             return actionResultInfos;
         }
 
@@ -293,6 +297,7 @@ namespace Ryneus
         public List<int> CheckChainBattler(BattlerInfo subject)
         {
             var targetIndexes = new List<int>();
+            /*
             foreach (var battler in FieldBattlerInfos())
             {
                 var stateInfos = battler.GetStateInfoAll(StateType.Chain);
@@ -310,6 +315,7 @@ namespace Ryneus
                     }
                 }
             }
+            */
             return targetIndexes;
         }
 
@@ -622,6 +628,7 @@ namespace Ryneus
                     break;
                 case ScopeType.Line:
                 case ScopeType.FrontLine:
+                case ScopeType.WithoutSelfLine:
                     targetIndexList = targetIndexList.FindAll(a => GetBattlerInfo(a).LineIndex == TargetBattler.LineIndex);
                     break;
                 case ScopeType.One:
@@ -782,7 +789,7 @@ namespace Ryneus
                         {
                             IsEnable = true;
                         } else
-                        if (subject != null && subject.IsActor || (StateType)featureData.Param1 == StateType.DamageUp || (StateType)featureData.Param1 == StateType.Prism)
+                        if (subject != null && subject.IsActor || (StateType)featureData.Param1 == StateType.DamageUp)
                         {
                             IsEnable = true;
                         } else
@@ -894,9 +901,9 @@ namespace Ryneus
             int HpCost = CalcHpCost(actionInfo);
             actionInfo.SetHpCost(HpCost);
 
-            var isPrism = PrismRepeatTime(subject,actionInfo) > 0;
+            //var isPrism = PrismRepeatTime(subject,actionInfo) > 0;
             var repeatTime = CalcRepeatTime(subject,actionInfo);
-            repeatTime += PrismRepeatTime(subject,actionInfo);
+            //repeatTime += PrismRepeatTime(subject,actionInfo);
             actionInfo.SetRepeatTime(repeatTime);
         }
 
@@ -936,6 +943,7 @@ namespace Ryneus
 
                 if (actionResultInfo.RemoveAttackStateDamage())            
                 {
+                    /*
                     var chainStateInfos = CheckAttackedBattlerState(StateType.Chain,actionResultInfo.TargetIndex);
                     if (chainStateInfos.Count > 0)
                     {
@@ -946,6 +954,8 @@ namespace Ryneus
                             actionResultInfo.AddRemoveState(chainStateInfos[k]);
                         }
                     }
+                    */
+                    /*
                     if (target.IsState(StateType.Benediction))
                     {
                         var benedictStateInfos = target.GetStateInfoAll(StateType.Benediction);
@@ -956,6 +966,7 @@ namespace Ryneus
                             actionResultInfo.AddRemoveState(benedictStateInfos[k]);
                         }
                     }
+                    */
                 }
                 actionResultInfos.Add(actionResultInfo);
             }
@@ -1059,6 +1070,7 @@ namespace Ryneus
 
         private int PrismRepeatTime(BattlerInfo subject,ActionInfo actionInfo)
         {
+            /*
             if (actionInfo.Master.Attribute == AttributeType.Shine && subject.IsState(StateType.Prism))
             {
                 var damageFeatures = actionInfo.SkillInfo.FeatureDates.FindAll(a => a.FeatureType == FeatureType.HpDamage || a.FeatureType == FeatureType.HpDefineDamage);
@@ -1067,6 +1079,7 @@ namespace Ryneus
                     return subject.GetStateInfoAll(StateType.Prism).Count + 1;
                 }
             }
+            */
             return 0;
         }
 
@@ -1085,7 +1098,8 @@ namespace Ryneus
             for (int i = 0; i < indexList.Count;i++)
             {
                 // 呪い
-                var curseStateInfos = CheckAttackedBattlerState(StateType.Curse,indexList[i]);
+                /*
+                var curseStateInfos = CheckAttackedBattlerState(StateType.DeBuffUpper,indexList[i]);
                 if (curseStateInfos.Count > 0)
                 {
                     for (int j = 0; j < curseStateInfos.Count;j++)
@@ -1116,6 +1130,7 @@ namespace Ryneus
                         }
                     }
                 }
+                */
             }
         }
 
@@ -2201,10 +2216,12 @@ namespace Ryneus
                         }
                         break;
                         case TriggerType.AllEnemyCurseState:
-                        if (battlerInfo.IsAlive() && opponents.AliveBattlerInfos.Find(a => !a.IsState(StateType.Curse)) == null && opponents.AliveBattlerInfos.FindAll(a => a.IsAlive()).Count > 0)
+                        /*
+                        if (battlerInfo.IsAlive() && opponents.AliveBattlerInfos.Find(a => !a.IsState(StateType.DeBuffUpper)) == null && opponents.AliveBattlerInfos.FindAll(a => a.IsAlive()).Count > 0)
                         {
                             IsTriggered = true;
                         }
+                        */
                         break;
                         case TriggerType.AllEnemyFreezeState:
                         if (battlerInfo.IsAlive() && opponents.AliveBattlerInfos.Find(a => !a.IsState(StateType.Freeze)) == null && opponents.AliveBattlerInfos.FindAll(a => a.IsAlive()).Count > 0)
@@ -2236,7 +2253,7 @@ namespace Ryneus
                                 var states = actionInfo.SkillInfo.FeatureDates.FindAll(a => a.FeatureType == FeatureType.AddState);
                                 foreach (var state in states)
                                 {
-                                    if (state.Param1 == (int)StateType.Stun || state.Param1 == (int)StateType.Slow || state.Param1 == (int)StateType.Curse || state.Param1 == (int)StateType.BurnDamage || state.Param1 == (int)StateType.Blind || state.Param1 == (int)StateType.Freeze)
+                                    if (state.Param1 == (int)StateType.Stun || state.Param1 == (int)StateType.BurnDamage || state.Param1 == (int)StateType.Blind || state.Param1 == (int)StateType.Freeze)
                                     {
                                         IsTriggered = true;
                                     }

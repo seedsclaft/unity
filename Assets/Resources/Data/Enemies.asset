@@ -87,7 +87,7 @@ MonoBehaviour:
       _mp: 3
       _atk: 9
       _def: 1
-      _spd: 31
+      _spd: 29
     Kinds: 02000000
     LearningSkills:
     - SkillId: 2010
@@ -102,6 +102,10 @@ MonoBehaviour:
       Level: 40
       Weight: 0
       TriggerDates: []
+    - SkillId: 12100
+      Level: 60
+      Weight: 0
+      TriggerDates: []
     SkillTriggerDates:
     - SkillId: 2010
       Trigger1: 0
@@ -110,6 +114,9 @@ MonoBehaviour:
       Trigger1: 0
       Trigger2: 0
     - SkillId: 12050
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 12100
       Trigger1: 0
       Trigger2: 0
   - Id: 4
@@ -171,7 +178,7 @@ MonoBehaviour:
       Level: 20
       Weight: 100
       TriggerDates: []
-    - SkillId: 12030
+    - SkillId: 12040
       Level: 40
       Weight: 0
       TriggerDates: []
@@ -186,7 +193,7 @@ MonoBehaviour:
     - SkillId: 2040
       Trigger1: 14213
       Trigger2: 0
-    - SkillId: 12030
+    - SkillId: 12040
       Trigger1: 0
       Trigger2: 0
     - SkillId: 12060
@@ -309,7 +316,7 @@ MonoBehaviour:
     ImagePath: Dryad
     BaseStatus:
       _hp: 42
-      _mp: 3
+      _mp: 4
       _atk: 11
       _def: 2
       _spd: 12
@@ -329,13 +336,13 @@ MonoBehaviour:
         Param1: 10
         Param2: 0
         Param3: 0
-    - SkillId: 11030
+    - SkillId: 11130
       Level: 40
       Weight: 0
       TriggerDates: []
-    - SkillId: 1050
+    - SkillId: 15080
       Level: 60
-      Weight: 100
+      Weight: 0
       TriggerDates: []
     SkillTriggerDates:
     - SkillId: 1010
@@ -344,36 +351,36 @@ MonoBehaviour:
     - SkillId: 1030
       Trigger1: 3033
       Trigger2: 0
-    - SkillId: 11030
+    - SkillId: 11130
       Trigger1: 0
       Trigger2: 0
-    - SkillId: 1050
-      Trigger1: 5062
+    - SkillId: 15080
+      Trigger1: 0
       Trigger2: 0
   - Id: 10
     Name: "\u30B9\u30B3\u30FC\u30D4\u30AA\u30F3"
     ImagePath: Scorpion
     BaseStatus:
-      _hp: 27
+      _hp: 26
       _mp: 3
       _atk: 10
       _def: 2
-      _spd: 29
+      _spd: 31
     Kinds: 05000000
     LearningSkills:
     - SkillId: 2010
       Level: 1
       Weight: 50
       TriggerDates: []
-    - SkillId: 2030
+    - SkillId: 2090
       Level: 20
       Weight: 100
       TriggerDates: []
-    - SkillId: 12060
+    - SkillId: 5060
       Level: 40
-      Weight: 0
+      Weight: 120
       TriggerDates: []
-    - SkillId: 12040
+    - SkillId: 12030
       Level: 60
       Weight: 0
       TriggerDates: []
@@ -381,13 +388,13 @@ MonoBehaviour:
     - SkillId: 2010
       Trigger1: 0
       Trigger2: 0
-    - SkillId: 2030
+    - SkillId: 2090
       Trigger1: 9021
-      Trigger2: 0
-    - SkillId: 12060
+      Trigger2: 14212
+    - SkillId: 5060
       Trigger1: 0
       Trigger2: 0
-    - SkillId: 12040
+    - SkillId: 12030
       Trigger1: 0
       Trigger2: 0
   - Id: 11
