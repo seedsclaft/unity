@@ -8,7 +8,8 @@ using NPOI.SS.UserModel;
 
 namespace Ryneus
 {
-	public class StatesImporter : AssetPostprocessor {
+	public class StatesImporter : AssetPostprocessor 
+	{
 		enum BaseColumn
 		{
 			Id = 0,

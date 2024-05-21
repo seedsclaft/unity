@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 namespace Ryneus
@@ -34,7 +35,8 @@ namespace Ryneus
                         symbolInfo.SetTroopInfo(BattleTroop(stageSymbolData));
                     }
                 }
-                if (stageSymbolData.SymbolType == SymbolType.Random || stageSymbolData.SymbolType == SymbolType.Random){
+                if (stageSymbolData.SymbolType == SymbolType.Random)
+                {
                     stageSymbolData = RandomSymbolData(stageSymbolDates);
                     stageSymbolData.StageId = symbolMaster.StageId;
                     stageSymbolData.Seek = symbolMaster.Seek;
@@ -269,7 +271,8 @@ namespace Ryneus
             // ランダム生成
             if (troopId == -1)
             {
-                troopInfo.MakeEnemyRandomTroopDates(stageSymbolData.Seek + CurrentStage.Master.StageLv + plusLevel);
+                var lv = stageSymbolData.Seek + CurrentStage.Master.StageLv + plusLevel;
+                troopInfo.MakeEnemyRandomTroopDates(lv);
                 /*
                 for (int i = 0;i < enemyCount;i++)
                 {
@@ -279,6 +282,33 @@ namespace Ryneus
                     troopInfo.AddEnemy(enemy);
                 }
                 */
+                // ランダム報酬データ設定
+                // 80 = Numinos,10 = Rank1,7 = Rank2,3 = Rank3
+                GetItemData getItemData = null;
+                int rand = Random.Range(0,100);
+                if (rand < 80)
+                {
+                    getItemData = new GetItemData
+                    {
+                        Param1 = lv + 4,
+                        Type = GetItemType.Numinous
+                    };
+                } else
+                if (rand >= 80 && rand < 90)
+                {
+                    getItemData = AddSkillGetItemData(1);
+                } else
+                if (rand >= 91 && rand < 97)
+                {
+                    getItemData = AddSkillGetItemData(2);
+                } else
+                {
+                    getItemData = AddSkillGetItemData(3);
+                }
+                if (getItemData != null)
+                {
+                    troopInfo.AddGetItemInfo(new GetItemInfo(getItemData));
+                }
                 return troopInfo;
             }
             if (troopInfo.TroopMaster == null)
@@ -291,5 +321,22 @@ namespace Ryneus
             return troopInfo;
         }
 
+        private static GetItemData AddSkillGetItemData(int rank)
+        {
+            var hasSkills = CurrentSaveData.Party.CurrentAlchemyIdList(CurrentStage.Id,CurrentStage.CurrentTurn);
+            var skillList = new List<SkillData>(DataSystem.Skills.Values);
+            var skills = skillList.FindAll(a => a.Rank == rank && !hasSkills.Contains(a.Id));
+            if (skills.Count > 0)
+            {
+                var skillRand = Random.Range(0,skills.Count);
+                var getItemData = new GetItemData
+                {
+                    Param1 = skills[skillRand].Id,
+                    Type = GetItemType.Skill
+                };
+                return getItemData;
+            }
+            return null;
+        }
     }
 }
