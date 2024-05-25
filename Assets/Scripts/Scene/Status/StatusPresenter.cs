@@ -181,7 +181,7 @@ namespace Ryneus
             {
                 lastSelectIndex = 0;
             }
-            _view.CommandRefreshStatus(skillInfos,_model.CurrentActor,_model.PartyMembers(),lastSelectIndex);
+            _view.CommandRefreshStatus(skillInfos,_model.CurrentActor,_model.PartyMembers(),lastSelectIndex,_model.SkillTrigger());
         }
 
         private void SaveSelectedSkillId()

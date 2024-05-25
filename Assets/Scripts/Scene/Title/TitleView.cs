@@ -54,7 +54,7 @@ namespace Ryneus
 
         public void RefreshCommandIndex(int selectIndex)
         {
-            titleCommandList.Refresh(selectIndex);
+            //titleCommandList.Refresh(selectIndex);
             titleCommandList.Activate();
         }
 

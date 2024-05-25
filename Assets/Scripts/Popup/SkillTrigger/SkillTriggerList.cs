@@ -20,7 +20,7 @@ namespace Ryneus
             if (listData != null)
             {
                 var data = (SkillTriggerInfo)listData.Data;
-                skillTriggerHelp.UpdateSkillInfo(data.SkillId);
+                skillTriggerHelp.UpdateSkillInfo(data.SkillInfo);
                 skillTriggerHelp.UpdateSkillTriggerHelp(data.SkillTriggerDates[0]?.Help,data.SkillTriggerDates?[1].Help);
             }
         }

@@ -27,8 +27,10 @@ namespace Ryneus
             }
         }    
         
-        public ListData CharacterData {
-            get {
+        public ListData CharacterData 
+        {
+            get 
+            {
                 if (characterList.Index > -1)
                 {
                     return characterList.ListData;
@@ -37,7 +39,8 @@ namespace Ryneus
             }
         }    
 
-        public void Initialize() {
+        public void Initialize() 
+        {
             characterList.Initialize();
             characterList.Activate();
             commandList.Initialize();
@@ -45,10 +48,6 @@ namespace Ryneus
             characterList.SetInputCallHandler((a) => CallCharacterInputHandler(a));
             commandList.SetInputCallHandler((a) => CallCommandInputHandler(a));
             infoObj.ForEach(a => a.SetActive(false));
-        }
-
-        public void SetCharacterData(List<ListData> characterData) {
-            characterList.SetData(characterData);
         }
         
         public void SetTacticsCommand(List<ListData> commandData)
@@ -69,7 +68,8 @@ namespace Ryneus
             {
                 displaySelectCharacter.gameObject.SetActive(false);
             }
-            DisplaySelectCharacter();
+            //DisplaySelectCharacter();
+            Refresh();
         }
 
         public void UpdateSmoothSelect()

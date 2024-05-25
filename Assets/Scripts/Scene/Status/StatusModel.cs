@@ -90,5 +90,11 @@ namespace Ryneus
             PartyInfo.ChangeCurrency(Currency + resetCurrency);
             return resetCurrency;
         }
+
+        public List<ListData> SkillTrigger(int selectIndex = -1)
+        {
+            var listData = MakeListData(PartyInfo.SkillTriggerInfos(CurrentActor.ActorId),selectIndex);
+            return listData;
+        }
     }
 }

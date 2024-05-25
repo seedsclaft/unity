@@ -447,7 +447,8 @@ namespace Ryneus
         {
             SetBackEvent(() => {});
             alcanaSelectList.SetData(skillInfos);
-            alcanaSelectList.SetInputHandler(InputKeyType.Decide,() => {
+            alcanaSelectList.SetInputHandler(InputKeyType.Decide,() => 
+            {
                 if (AlcanaSelectSkillInfo() != null)
                 {
                     var eventData = new TacticsViewEvent(CommandType.SelectAlcanaList);

@@ -489,16 +489,13 @@ MonoBehaviour:
   uiRoot: {fileID: 1898229821374275561}
   optionButton: {fileID: 0}
   sideMenuButton: {fileID: 0}
-  skillTriggerList: {fileID: 3128011764956043274}
+  skillTriggerList: {fileID: 7890400187818742857}
   skillList: {fileID: 8595626389577917144}
   trigger1List: {fileID: 8187463598038733350}
   trigger2List: {fileID: 8846220513391294796}
   triggerCategory1List: {fileID: 5279109085496346036}
   triggerCategory2List: {fileID: 5440862273826872464}
   listBlock: {fileID: 6949415940103370314}
-  skillInfoComponent: {fileID: 4777394727220292228}
-  trigger1Help: {fileID: 7763212535346090705}
-  trigger2Help: {fileID: 5381351516691938565}
 --- !u!1 &1333836239334982956
 GameObject:
   m_ObjectHideFlags: 0
@@ -3213,12 +3210,12 @@ PrefabInstance:
     - target: {fileID: 522949388612697021, guid: 073e42c42d9bead42892ac5239aa933a,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 522949388612697021, guid: 073e42c42d9bead42892ac5239aa933a,
         type: 3}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 596986291807426848, guid: 073e42c42d9bead42892ac5239aa933a,
         type: 3}
@@ -3278,17 +3275,17 @@ PrefabInstance:
     - target: {fileID: 2224937388977483780, guid: 073e42c42d9bead42892ac5239aa933a,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2224937388977483780, guid: 073e42c42d9bead42892ac5239aa933a,
         type: 3}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2224937388977483780, guid: 073e42c42d9bead42892ac5239aa933a,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -88
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2260118489204302749, guid: 073e42c42d9bead42892ac5239aa933a,
         type: 3}
@@ -3333,17 +3330,17 @@ PrefabInstance:
     - target: {fileID: 3113302718113879253, guid: 073e42c42d9bead42892ac5239aa933a,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3113302718113879253, guid: 073e42c42d9bead42892ac5239aa933a,
         type: 3}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3113302718113879253, guid: 073e42c42d9bead42892ac5239aa933a,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -44
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3441034025866207140, guid: 073e42c42d9bead42892ac5239aa933a,
         type: 3}
@@ -3513,17 +3510,17 @@ PrefabInstance:
     - target: {fileID: 5043966807608372257, guid: 073e42c42d9bead42892ac5239aa933a,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5043966807608372257, guid: 073e42c42d9bead42892ac5239aa933a,
         type: 3}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5043966807608372257, guid: 073e42c42d9bead42892ac5239aa933a,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -132
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5254325424210154100, guid: 073e42c42d9bead42892ac5239aa933a,
         type: 3}
@@ -3746,6 +3743,11 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1429568464481117201, guid: 788480fae5b463142a8846b7695a742c,
+        type: 3}
+      propertyPath: m_Value
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1724133945890019431, guid: 788480fae5b463142a8846b7695a742c,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -3942,9 +3944,9 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 4006619547639392937}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &3128011764956043274 stripped
+--- !u!114 &7890400187818742857 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2085924606259770019, guid: 788480fae5b463142a8846b7695a742c,
+  m_CorrespondingSourceObject: {fileID: 6492513264494329568, guid: 788480fae5b463142a8846b7695a742c,
     type: 3}
   m_PrefabInstance: {fileID: 4006619547639392937}
   m_PrefabAsset: {fileID: 0}
@@ -3952,42 +3954,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bd8d766692f81f64aa8760e2717a4f1d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &4777394727220292228 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8491229721443729453, guid: 788480fae5b463142a8846b7695a742c,
-    type: 3}
-  m_PrefabInstance: {fileID: 4006619547639392937}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6488e88892547374da643cec24c6bb2f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &5381351516691938565 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 9021899662872811436, guid: 788480fae5b463142a8846b7695a742c,
-    type: 3}
-  m_PrefabInstance: {fileID: 4006619547639392937}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &7763212535346090705 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6640038592117176440, guid: 788480fae5b463142a8846b7695a742c,
-    type: 3}
-  m_PrefabInstance: {fileID: 4006619547639392937}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &5122889290817949427

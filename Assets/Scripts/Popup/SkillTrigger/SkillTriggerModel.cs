@@ -86,7 +86,9 @@ namespace Ryneus
 
         public void SetSkillTriggerSkill(int index,int skillId)
         {
-            PartyInfo.SetSkillTriggerSkill(_actorId,index,skillId);
+            var actorInfo = StageMembers().Find(a => a.ActorId == _actorId);
+            var skills = actorInfo.SkillInfos();
+            PartyInfo.SetSkillTriggerSkill(_actorId,index,skills.Find(a => a.Id == skillId));
         }
 
         public void SetSkillTrigger1(int index,SkillTriggerData triggerData)

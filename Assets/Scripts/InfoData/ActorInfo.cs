@@ -445,6 +445,37 @@ namespace Ryneus
             return ListData.MakeListData(skillInfos);
         }
 
+        public List<SkillInfo> SkillInfos()
+        {
+            var skillInfos = LearningSkillInfos().FindAll(a => a.Id > 100);
+
+            skillInfos.ForEach(a => a.SetEnable(a.LearningState == LearningState.Learned));
+            var sortList1 = new List<SkillInfo>();
+            var sortList2 = new List<SkillInfo>();
+            var sortList3 = new List<SkillInfo>();
+            skillInfos.Sort((a,b) => {return a.Master.Id > b.Master.Id ? 1 : -1;});
+            foreach (var skillInfo in skillInfos)
+            {
+                if (skillInfo.LearningState == LearningState.Learned && skillInfo.Master.SkillType == SkillType.Active || skillInfo.Master.SkillType == SkillType.Messiah || skillInfo.Master.SkillType == SkillType.Awaken)
+                {
+                    sortList1.Add(skillInfo);
+                } else
+                if (skillInfo.LearningState == LearningState.Learned && skillInfo.Master.SkillType == SkillType.Passive)
+                {
+                    sortList2.Add(skillInfo);
+                } else
+                {
+                    sortList3.Add(skillInfo);
+                }
+            }
+            skillInfos.Clear();
+            skillInfos.AddRange(sortList1);
+            skillInfos.AddRange(sortList2);
+            sortList3.Sort((a,b) => {return a.LearningLv > b.LearningLv ? 1 : -1;});
+            skillInfos.AddRange(sortList3);
+            //skillInfos.Sort((a,b) => {return a.LearningState > b.LearningState ? 1 : -1;});
+            return skillInfos;
+        }
     }
 
 

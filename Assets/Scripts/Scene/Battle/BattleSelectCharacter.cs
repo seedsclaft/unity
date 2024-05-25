@@ -8,9 +8,8 @@ namespace Ryneus
 
     public class BattleSelectCharacter : MonoBehaviour
     {   
-        [SerializeField] private SkillInfoComponent displaySelectCard;
-        [SerializeField] private BaseList magicList;
-        public BaseList MagicList => magicList;
+        [SerializeField] private MagicList magicList;
+        public MagicList MagicList => magicList;
         [SerializeField] private BaseList conditionList;
         [SerializeField] private ToggleSelect toggleSelect;
 
@@ -49,25 +48,25 @@ namespace Ryneus
                 DataSystem.GetText(421),
                 DataSystem.GetText(420),
                 DataSystem.GetText(402),
-                DataSystem.GetText(402),
+                DataSystem.GetText(422),
             });
             toggleSelect.SetClickHandler(() => 
             {
                 if (toggleSelect.SelectTabIndex == (int)SelectCharacterTabType.Magic)
                 {
-                    DisplaySelectCard();
+                    //magicList.Refresh();
                 }
             });
             gameObject.SetActive(false);
             lvResetButton?.gameObject.SetActive(false);
-            displaySelectCard.Clear();
             UpdateTabs();
         }
 
         public void InitializeLvReset(System.Action lvResetEvent)
         {
             lvResetButton?.gameObject.SetActive(true);
-            lvResetButton?.SetCallHandler(() => {
+            lvResetButton?.SetCallHandler(() => 
+            {
                 if (lvResetEvent != null) lvResetEvent(); 
             });
         }
@@ -120,21 +119,13 @@ namespace Ryneus
             if (magicList.IsInit == false)
             {
                 magicList.Initialize();
-                magicList.SetSelectedHandler(() => {
-                    DisplaySelectCard();
-                });
             }
             magicList.SetData(skillInfoData);
-            if (displaySelectCard == null)
-            {
-                displaySelectCard.gameObject.SetActive(false);
-            }
             SelectCharacterTab(toggleSelect.SelectTabIndex);
             if (skillInfoData.Count == 0)
             {
                 magicList.UpdateSelectIndex(-1);
             }
-            DisplaySelectCard();
         }
 
         public void SetConditionList(List<ListData> conditionData)
@@ -145,6 +136,7 @@ namespace Ryneus
         public void SetSkillTriggerList(List<ListData> skillTriggerLists)
         {
             skillTriggerList.SetData(skillTriggerLists,false);
+            skillTriggerList.UpdateSelectIndex(0);
         }
 
         public void SetActorInfo(ActorInfo actorInfo,List<ActorInfo> party)
@@ -155,29 +147,6 @@ namespace Ryneus
         public void SetEnemyBattlerInfo(BattlerInfo enemyInfo)
         {
             battlerInfoComponent.UpdateInfo(enemyInfo);
-        }
-
-        private void DisplaySelectCard()
-        {
-            if (displaySelectCard == null)
-            {
-                return;
-            }
-            if (toggleSelect.SelectTabIndex != (int)SelectCharacterTabType.Magic)
-            {
-                return;
-            }
-            displaySelectCard.Clear();
-            var listData = magicList.ListData;
-            if (listData != null)
-            {
-                var skillInfo = (SkillInfo)listData.Data;
-                if (skillInfo != null)
-                {
-                    displaySelectCard.gameObject.SetActive(true);
-                    displaySelectCard.UpdateSkillInfo(skillInfo);
-                }
-            }
         }
 
         public void SetInputHandlerAction(InputKeyType keyType,System.Action callEvent)

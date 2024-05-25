@@ -216,7 +216,7 @@ namespace Ryneus
             var listData = selectCharacter.ActionData;
             if (listData != null)
             {
-                return ((SkillInfo)listData).Id;
+                return listData.Id;
             }
             return -1;
         }
@@ -231,14 +231,16 @@ namespace Ryneus
             selectCharacter.MagicList.Deactivate();
         }
         
-        public void CommandRefreshStatus(List<ListData> skillInfos,ActorInfo actorInfo,List<ActorInfo> party,int lastSelectIndex)
+        public void CommandRefreshStatus(List<ListData> skillInfos,ActorInfo actorInfo,List<ActorInfo> party,int lastSelectIndex,List<ListData> skillTriggerInfos)
         {
             selectCharacter.SetActiveTab(SelectCharacterTabType.Condition,false);
+            selectCharacter.SetActiveTab(SelectCharacterTabType.SkillTrigger,false);
             ShowSkillActionList();
             selectCharacter.UpdateStatus(actorInfo);
             selectCharacter.SetActorInfo(actorInfo,party);
             selectCharacter.SetSkillInfos(skillInfos);
             selectCharacter.RefreshAction(lastSelectIndex);
+            selectCharacter.SetSkillTriggerList(skillTriggerInfos);
             actorInfoComponent.UpdateInfo(actorInfo,party);
         }
 

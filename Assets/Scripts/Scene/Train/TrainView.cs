@@ -180,7 +180,7 @@ namespace Ryneus
         {
             selectCharacter.SetTacticsCharacter(tacticsActorInfo);
             selectCharacter.SetTacticsCommandData(tacticsCommandData);
-            selectCharacter.UpdateSmoothSelect();
+            //selectCharacter.UpdateSmoothSelect();
             selectCharacter.gameObject.SetActive(true);
         }
 
@@ -218,6 +218,7 @@ namespace Ryneus
             battleSelectCharacter.SetActiveTab(SelectCharacterTabType.Magic,true);
             battleSelectCharacter.SetActiveTab(SelectCharacterTabType.Condition,false);
             battleSelectCharacter.SetActiveTab(SelectCharacterTabType.Detail,true);
+            battleSelectCharacter.SetActiveTab(SelectCharacterTabType.SkillTrigger,false);
             if (tabSelect)
             {
                 battleSelectCharacter.SelectCharacterTab((int)SelectCharacterTabType.Detail);
@@ -234,10 +235,11 @@ namespace Ryneus
             battleSelectCharacter.SetActiveTab(SelectCharacterTabType.Magic,false);
             battleSelectCharacter.SetActiveTab(SelectCharacterTabType.Condition,false);
             battleSelectCharacter.SetActiveTab(SelectCharacterTabType.Detail,false);
+            battleSelectCharacter.SetActiveTab(SelectCharacterTabType.SkillTrigger,false);
             battleSelectCharacter.SelectCharacterTab((int)SelectCharacterTabType.Magic);
             battleSelectCharacter.SetSkillInfos(learnMagicList);
             battleSelectCharacter.ShowActionList();
-            battleSelectCharacter.HideStatus();
+            //battleSelectCharacter.HideStatus();
             battleSelectCharacter.MagicList.Activate();
             SetHelpInputInfo("ALCHEMY_ATTRIBUTE");
         }

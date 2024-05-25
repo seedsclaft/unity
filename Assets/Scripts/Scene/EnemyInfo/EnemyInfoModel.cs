@@ -61,7 +61,7 @@ namespace Ryneus
                 {
                     continue;
                 }
-                var skillTriggerInfo = new SkillTriggerInfo(CurrentEnemy.EnemyData.Id,skillTriggerData.SkillId);
+                var skillTriggerInfo = new SkillTriggerInfo(CurrentEnemy.EnemyData.Id,skillInfo);
                 var SkillTriggerData1 = DataSystem.SkillTriggers.Find(a => a.Id == skillTriggerData.Trigger1);
                 var SkillTriggerData2 = DataSystem.SkillTriggers.Find(a => a.Id == skillTriggerData.Trigger2);
                 skillTriggerInfo.UpdateTriggerDates(new List<SkillTriggerData>(){SkillTriggerData1,SkillTriggerData2});

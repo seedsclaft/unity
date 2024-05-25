@@ -19,7 +19,7 @@ namespace Ryneus
             if (listData != null)
             {
                 var skillData = (SkillInfo)listData.Data;
-                skillInfoComponent?.UpdateSkillData(skillData.Id);
+                skillInfoComponent?.UpdateSkillInfo(skillData);
             }
         }
 

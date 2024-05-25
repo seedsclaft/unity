@@ -1,8 +1,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
+using UtageExtensions;
 
 namespace Ryneus
 {
@@ -11,6 +13,7 @@ namespace Ryneus
         [SerializeField] private bool beforeSelect = true; 
         private bool _isInit = false;
         public bool IsInit => _isInit;
+        private bool _initializeList = false;
         private int _beforeSelectIndex = -1;
         public ListData ListData 
         { 
@@ -36,36 +39,57 @@ namespace Ryneus
             _isInit = true;
         }
 
-        public void SetData(List<ListData> listData,bool resetScrollRect = true)
+        public async void SetData(List<ListData> listData,bool resetScrollRect = true)
         {
             if (resetScrollRect && listData != ListDates)
             {
                 ResetScrollRect();
             }
             SetListData(listData);
-            CreateObjectList();
+            CreateList();
             if (ListDates.Count > ObjectList.Count)
             {
-                var objectListCount = ObjectList.Count;
                 AddCreateList(ListDates.Count-ObjectList.Count);
             }
+            await UniTask.DelayFrame(1);
+            UpdateObjectList();
             SetListCallHandler();
+            var selectIndex = -1;
             if (resetScrollRect == false && listData.Count == ListDates.Count)
             {
-                Refresh(_beforeSelectIndex);
-                return;
+                selectIndex = _beforeSelectIndex;
             }
             if (resetScrollRect)
             {
-                var selectIndex = ListDates.FindIndex(a => a.Selected);
-                if (selectIndex > -1)
+                selectIndex = ListDates.FindIndex(a => a.Selected);
+                if (selectIndex == -1)
                 {
-                    Refresh(selectIndex);
-                } else
-                {
-                    Refresh(ListDates.FindIndex(a => a.Enable));
+                    selectIndex = ListDates.FindIndex(a => a.Enable);
                 }
             }
+            if (ScrollRect.content.GetComponent<RectTransform>().GetHeight() == 0)
+            {
+                InitializeRefresh(selectIndex);
+            } else
+            {
+                Refresh(selectIndex);
+            }
+            _initializeList = true;
+        }
+
+        private void InitializeRefresh(int selectIndex)
+        {
+            UpdateItemPrefab(selectIndex);
+            UpdateAllItems();
+            UpdateSelectIndex(selectIndex);
+            //base.Refresh(selectIndex);
+            if (selectIndex > 0)
+            {
+                //Canvas.ForceUpdateCanvases();
+                //UpdateScrollRect(selectIndex);
+                //UpdateListItem();
+            }
+            _beforeSelectIndex = selectIndex;
         }
 
         
@@ -88,9 +112,9 @@ namespace Ryneus
             base.Refresh(selectIndex);
             if (selectIndex > 0)
             {
-                Canvas.ForceUpdateCanvases();
-                UpdateScrollRect(selectIndex);
-                UpdateListItem();
+                //Canvas.ForceUpdateCanvases();
+                //UpdateScrollRect(selectIndex);
+                //UpdateListItem();
             }
             _beforeSelectIndex = selectIndex;
         }
