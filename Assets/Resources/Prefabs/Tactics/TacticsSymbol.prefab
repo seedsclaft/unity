@@ -1147,9 +1147,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   horizontal: 0
   reverse: 0
-  warpMode: 1
+  warpMode: 0
   scrollRect: {fileID: 1070853775615199575}
-  itemPrefabMode: 1
+  itemPrefabMode: 0
   itemPrefab: {fileID: 6145794166525957040, guid: ca4965df58f92f54a810c5e6f49b6098,
     type: 3}
   _helpWindow: {fileID: 0}
@@ -2074,6 +2074,10 @@ MonoBehaviour:
   cursor: {fileID: 4215362546520688750}
   changeCursorColor: 1
   disable: {fileID: 2195213094539144420}
+  selectColor: {r: 0, g: 0, b: 0, a: 0}
+  unSelectColor: {r: 0, g: 0, b: 0, a: 0}
+  textUguiList: []
+  imageUguiList: []
   symbolComponent: {fileID: 6802800820925126921}
   getItemList: {fileID: 2051000966984268405}
   enemyInfoButton: {fileID: 7374994888609725107}

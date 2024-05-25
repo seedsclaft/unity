@@ -11,6 +11,8 @@ namespace Ryneus
         [SerializeField] private MagicList magicList;
         public MagicList MagicList => magicList;
         [SerializeField] private BaseList conditionList;
+        [SerializeField] private BaseList attributeList = null;
+        public BaseList AttributeList => attributeList;
         [SerializeField] private ToggleSelect toggleSelect;
 
         [SerializeField] private StatusInfoComponent statusInfoComponent;
@@ -42,6 +44,9 @@ namespace Ryneus
             }
             conditionList.Initialize();
             skillTriggerList?.Initialize();
+            attributeList?.Initialize();
+            //SetInputHandler(attributeList.GetComponent<IInputHandlerEvent>());
+            attributeList?.gameObject.SetActive(false);
             _isInit = true;
             toggleSelect.Initialize(new List<string>()
             {
@@ -128,6 +133,11 @@ namespace Ryneus
             }
         }
 
+        public void SetAttributeList(List<ListData> list)
+        {
+            attributeList.SetData(list);
+        }
+
         public void SetConditionList(List<ListData> conditionData)
         {
             conditionList.SetData(conditionData);
@@ -136,6 +146,7 @@ namespace Ryneus
         public void SetSkillTriggerList(List<ListData> skillTriggerLists)
         {
             skillTriggerList.SetData(skillTriggerLists,false);
+            skillTriggerList.UpdateSelectIndex(-1);
             skillTriggerList.UpdateSelectIndex(0);
         }
 

@@ -13,12 +13,13 @@ namespace Ryneus
         public BaseList CommandList => commandList;
         [SerializeField] private ActorInfoComponent displaySelectCharacter;
         [SerializeField] private TextMeshProUGUI commandTitle;
-        [SerializeField] private List<GameObject> infoObj;
         [SerializeField] private TextMeshProUGUI partyEvaluate;
         [SerializeField] private TextMeshProUGUI troopEvaluate;
         
-        public ListData CommandData {
-            get {
+        public ListData CommandData 
+        {
+            get 
+            {
                 if (commandList.Index > -1)
                 {
                     return commandList.ListData;
@@ -47,7 +48,7 @@ namespace Ryneus
             commandList.Activate();
             characterList.SetInputCallHandler((a) => CallCharacterInputHandler(a));
             commandList.SetInputCallHandler((a) => CallCommandInputHandler(a));
-            infoObj.ForEach(a => a.SetActive(false));
+            //infoObj.ForEach(a => a.SetActive(false));
         }
         
         public void SetTacticsCommand(List<ListData> commandData)
@@ -135,8 +136,8 @@ namespace Ryneus
                     displaySelectCharacter.gameObject.SetActive(true);
                     displaySelectCharacter.UpdateInfo(tacticsActorInfo.ActorInfo,tacticsActorInfo.ActorInfos);
                     
-                    infoObj.ForEach(a => a.gameObject.SetActive(false));
-                    infoObj[(int)tacticsActorInfo.TacticsCommandType-1].SetActive(true);
+                    //infoObj.ForEach(a => a.gameObject.SetActive(false));
+                    //infoObj[(int)tacticsActorInfo.TacticsCommandType-1].SetActive(true);
                     //infoObj[(int)tacticsActorInfo.TacticsCommandType-1].GetComponent<ActorInfoComponent>().UpdateInfo(tacticsActorInfo.ActorInfo,tacticsActorInfo.ActorInfos);
                 }
             }

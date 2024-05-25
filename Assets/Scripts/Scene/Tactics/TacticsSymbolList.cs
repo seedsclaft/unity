@@ -11,7 +11,7 @@ namespace Ryneus
             if (ItemPrefabList.Count > Index)
             {
                 var tacticsSymbol = ItemPrefabList[Index].GetComponent<TacticsSymbol>();
-                if (tacticsSymbol.Selectable)
+                if (tacticsSymbol.Selectable && tacticsSymbol.GetItemIndex == -1)
                 {
                     return true;
                 }
@@ -74,19 +74,20 @@ namespace Ryneus
             {
                 var tacticsSymbol = ObjectList[i].GetComponentInChildren<TacticsSymbol>();
                 if (tacticsSymbol == null) continue;
-                tacticsSymbol.SetCallHandler(() => CallSelectHandler(InputKeyType.Decide));
+                tacticsSymbol.SetCallHandler(() => CallListInputHandler(InputKeyType.Decide));
                 tacticsSymbol.SetAddListenHandler(false);
-                tacticsSymbol.SetSelectHandler((System.Action<int>)((a) => 
+                tacticsSymbol.SetSelectHandler((a) =>
                 {
                     UpdateUnSelectAll();
                     UpdateSelectIndex(a);
                     tacticsSymbol.SetSelectable(true);
-                }));
+                    tacticsSymbol.UpdateItemIndex(-1);
+                });
                 tacticsSymbol.SetGetItemInfoCallHandler(() => 
                 {
                     CallListInputHandler(InputKeyType.Decide);
                 });
-                //tacticsSymbol.SetSymbolInfoCallHandler((a) => CallListInputHandler(InputKeyType.Option1));
+                tacticsSymbol.SetSymbolInfoCallHandler((a) => CallListInputHandler(InputKeyType.Option1));
                 tacticsSymbol.SetGetItemInfoSelectHandler((a) => 
                 {
                     for (int i = 0; i < ItemPrefabList.Count;i++)
@@ -96,9 +97,9 @@ namespace Ryneus
                         {
                             tacticsSymbol.UpdateItemIndex(-1);
                         }
-                        tacticsSymbol.SetSelectable(false);
+                        tacticsSymbol.SetSelectable(i == Index);
                     }
-                    UpdateSelectIndex(a);
+                    //UpdateSelectIndex(a);
                 });
                 tacticsSymbol.UpdateItemIndex(-1);
                 tacticsSymbol.SetSelectable(i == 0);

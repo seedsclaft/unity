@@ -84,7 +84,7 @@ namespace Ryneus
             UpdateListItem(Index);
         }
 
-        private void UpdateListItem(int selectIndex)
+        public void UpdateListItem(int selectIndex)
         {
             if (_selectItemIndex < 0) return;
             var startIndex = GetStartIndex();

@@ -565,11 +565,6 @@ namespace Ryneus
 
         private void CheckAlcanaSymbol(List<GetItemInfo> getItemInfos)
         {
-            /*
-            _view.ShowLeaningList(_model.AlcanaMagicSkillInfos(getItemInfos));
-            _view.ChangeBackCommandActive(true);
-            _backCommand = Tactics.CommandType.TacticsCommand; 
-            */
             CheckAlcanaSymbol(_model.AlcanaMagicSkillInfos(getItemInfos));
             SoundManager.Instance.PlayStaticSe(SEType.Decide);
         }

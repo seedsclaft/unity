@@ -129,7 +129,7 @@ namespace Ryneus
             if (_itemPrefabList.Count > 0) return;
             if (itemPrefabMode == false)
             {
-                CreateListPrefab();
+                CreateListPrefab(_listDates.Count);
             } else
             {
                 CreateObjectPrefab();
@@ -186,9 +186,9 @@ namespace Ryneus
             }
         }
 
-        private void CreateListPrefab()
+        private void CreateListPrefab(int count)
         {
-            var listCount = _listDates.Count;
+            var listCount = count;
             for (var i = 0; i < listCount;i++)
             {
                 var prefab = Instantiate(itemPrefab);
@@ -202,13 +202,17 @@ namespace Ryneus
                     listItem.SetListData(_listDates[i],i);
                 }
                 prefab.transform.SetParent(scrollRect.content, false);
-                //_objectList.Add(prefab);
+                _objectList.Add(prefab);
             }
         }
 
         public void UpdateItemPrefab(int selectIndex = -1)
         {
-            if (itemPrefabMode == false) return;
+            if (itemPrefabMode == false) 
+            {
+                UpdateListItemData();
+                return;
+            }
             var startIndex = selectIndex == -1 ? GetStartIndex(): selectIndex;
             for (int i = 0;i < _itemPrefabList.Count;i++)
             {
@@ -268,6 +272,11 @@ namespace Ryneus
 
         public void AddCreateList(int count)
         {
+            if (itemPrefabMode == false) 
+            {
+                AddCreateListPlus(count);
+                return;
+            }
             int createCount = count;
             for (var i = 0; i < createCount;i++)
             {
@@ -282,6 +291,41 @@ namespace Ryneus
                     continue;
                 }
                 //_itemPrefabList[i].transform.SetParent(_objectList[i].transform,false);
+            }
+        }
+
+        public void AddCreateListPlus(int count)
+        {
+            if (itemPrefabMode == true) 
+            {
+                return;
+            }
+            var listCount = count;
+            for (var i = 0; i < listCount;i++)
+            {
+                var prefab = Instantiate(itemPrefab);
+                prefab.name = i.ToString();
+                _itemPrefabList.Add(prefab);
+                var view = prefab.GetComponent<IListViewItem>();
+                if (view != null)
+                {
+                    _itemList.AddLast(view);
+                }
+                prefab.transform.SetParent(scrollRect.content, false);
+                _objectList.Add(prefab);
+            }
+            UpdateListItemData();
+        }
+
+        private void UpdateListItemData()
+        {
+            for (int i = 0;i < _itemPrefabList.Count;i++)
+            {
+                if (_listDates.Count > i)
+                {
+                    var listItem = _itemPrefabList[i].GetComponent<ListItem>();
+                    listItem.SetListData(_listDates[i],i);
+                }
             }
         }
 

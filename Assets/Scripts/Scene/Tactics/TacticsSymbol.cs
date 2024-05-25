@@ -76,10 +76,11 @@ namespace Ryneus
             {
                 getItemList.Initialize();
             }
-            getItemList.SetData(MakeGetItemListData(data.SymbolInfo));
+            getItemList.SetData(MakeGetItemListData(data.SymbolInfo),false);
             if (_getItemInit == false)
             {
-                getItemList.SetSelectedHandler(() => {
+                getItemList.SetSelectedHandler(() => 
+                {
                     _getItemIndex = getItemList.Index;
                     if (_getItemInfoSelectHandler != null)
                     {

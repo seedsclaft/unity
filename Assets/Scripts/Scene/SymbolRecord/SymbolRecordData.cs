@@ -59,7 +59,14 @@ namespace Ryneus
             foreach (var symbolComponent in symbolComponents)
             {
                 var button = symbolComponent.GetComponentInChildren<Button>();
-                button.onClick.AddListener(() => handler(symbolComponent.Seek));
+                button.onClick.AddListener(() => 
+                {
+                    if (symbolComponent?.SymbolInfo?.SymbolType == SymbolType.None)
+                    {
+                        return;
+                    }
+                    handler(symbolComponent.Seek);
+                });
             }
         }
 

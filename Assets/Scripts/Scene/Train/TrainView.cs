@@ -12,7 +12,7 @@ namespace Ryneus
 
         [SerializeField] private BattleSelectCharacter battleSelectCharacter = null;
         [SerializeField] private TacticsSelectCharacter selectCharacter = null;
-        [SerializeField] private BaseList attributeList = null;
+        //private BaseList attributeList = null;
         [SerializeField] private TextMeshProUGUI numinousText = null;
         private new System.Action<TrainViewEvent> _commandData = null;
 
@@ -37,9 +37,9 @@ namespace Ryneus
                 _commandData(eventData);
             });
             SetBackCommand(() => OnClickBack());
-            attributeList.Initialize();
-            SetInputHandler(attributeList.GetComponent<IInputHandlerEvent>());
-            attributeList.gameObject.SetActive(false);
+            //attributeList.Initialize();
+            //SetInputHandler(attributeList.GetComponent<IInputHandlerEvent>());
+            //attributeList.gameObject.SetActive(false);
             new TrainPresenter(this);
             selectCharacter.gameObject.SetActive(false);
         }
@@ -58,13 +58,13 @@ namespace Ryneus
         
         public void SetAttributeList(List<ListData> list)
         {
-            attributeList.SetData(list);
-            attributeList.SetSelectedHandler(() => OnSelectAttribute());
+            battleSelectCharacter.SetAttributeList(list);
+            battleSelectCharacter.AttributeList.SetSelectedHandler(() => OnSelectAttribute());
         }
 
         private void OnSelectAttribute()
         {
-            var listData = attributeList.ListData;
+            var listData = battleSelectCharacter.AttributeList.ListData;
             if (listData != null)
             {
                 var data = (AttributeType)listData.Data;
@@ -186,7 +186,7 @@ namespace Ryneus
 
         public void HideSelectCharacter()
         {
-            attributeList.gameObject.SetActive(false);
+            //attributeList.gameObject.SetActive(false);
             battleSelectCharacter.gameObject.SetActive(false);
             selectCharacter.gameObject.SetActive(false); 
             SetHelpInputInfo("TACTICS");
@@ -214,6 +214,7 @@ namespace Ryneus
 
         public void ShowCharacterDetail(ActorInfo actorInfo,List<ActorInfo> party,bool tabSelect = false)
         {
+            battleSelectCharacter.AttributeList.gameObject.SetActive(false);
             battleSelectCharacter.gameObject.SetActive(true);
             battleSelectCharacter.SetActiveTab(SelectCharacterTabType.Magic,true);
             battleSelectCharacter.SetActiveTab(SelectCharacterTabType.Condition,false);
@@ -230,7 +231,7 @@ namespace Ryneus
 
         public void ShowLeaningList(List<ListData> learnMagicList)
         {
-            attributeList.gameObject.SetActive(true);
+            battleSelectCharacter.AttributeList.gameObject.SetActive(true);
             battleSelectCharacter.gameObject.SetActive(true);
             battleSelectCharacter.SetActiveTab(SelectCharacterTabType.Magic,false);
             battleSelectCharacter.SetActiveTab(SelectCharacterTabType.Condition,false);
