@@ -32,7 +32,7 @@ namespace Ryneus
                 var actorInfo = _actorInfos.Find(a => a.ActorId == actorId);
                 if (actorInfo != null)
                 {
-                    var levelUpInfos = _levelUpInfos.FindAll(a => a.Enable && a.ActorId == actorInfo.ActorId);
+                    var levelUpInfos = _levelUpInfos.FindAll(a => a.Enable && a.ActorId == actorInfo.ActorId && a.StageId <= stageId && a.Seek < seek);
                     actorInfo.SetLevelUpInfo(levelUpInfos);
                 }
                 actorInfos.Add(actorInfo);
@@ -151,23 +151,32 @@ namespace Ryneus
             _levelUpInfos.Add(levelUpInfo);
         }
 
-        public int ActorLevelReset(int actorId)
+        public int ActorLevelReset(ActorInfo actorInfo)
         {
-            int currency = 0;
             var currencyIndexes = new List<int>();
+            // リセットされる数
+            var resetLv = 0;
             for (int i = 0;i < _levelUpInfos.Count;i++)
             {
-                if (_levelUpInfos[i].Enable && _levelUpInfos[i].ActorId == actorId && _levelUpInfos[i].Currency > 0)
+                if (_levelUpInfos[i].Enable && _levelUpInfos[i].ActorId == actorInfo.ActorId && _levelUpInfos[i].Currency > 0)
                 {
-                    currency += _levelUpInfos[i].Currency;
+                    resetLv++;
                     currencyIndexes.Add(i);
                 }
+            }
+            // 今のLvから還元する
+            var actorLv = actorInfo.Level - 1;
+            var resetCurrency = 0;
+            for (int i = 0;i < resetLv;i++)
+            {
+                var reset = actorLv - i;
+                resetCurrency += reset;
             }
             for (int i = currencyIndexes.Count-1;i >= 0;i--)
             {
                 _levelUpInfos.RemoveAt(currencyIndexes[i]);
             }
-            return currency;
+            return resetCurrency;
         }
 
         public List<SymbolResultInfo> CurrentRecordInfos(int stageId,int seek) => _symbolRecordList.FindAll(a => a.StageSymbolData.StageId == stageId && a.StageSymbolData.Seek == seek);

@@ -7,7 +7,7 @@ namespace Ryneus
     public class BattleBattler : ListItem ,IListViewItem 
     {    
         [SerializeField] private BattlerInfoComponent battlerInfoComponent;
-        public BattlerInfoComponent BattlerInfoComponent{get { return battlerInfoComponent;}}
+        public BattlerInfoComponent BattlerInfoComponent => battlerInfoComponent;
 
         public void SetDamageRoot(GameObject damageRoot)
         {

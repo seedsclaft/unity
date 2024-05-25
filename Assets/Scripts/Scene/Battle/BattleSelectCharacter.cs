@@ -145,9 +145,7 @@ namespace Ryneus
 
         public void SetSkillTriggerList(List<ListData> skillTriggerLists)
         {
-            skillTriggerList.SetData(skillTriggerLists,false);
-            skillTriggerList.UpdateSelectIndex(-1);
-            skillTriggerList.UpdateSelectIndex(0);
+            skillTriggerList.SetData(skillTriggerLists);
         }
 
         public void SetActorInfo(ActorInfo actorInfo,List<ActorInfo> party)

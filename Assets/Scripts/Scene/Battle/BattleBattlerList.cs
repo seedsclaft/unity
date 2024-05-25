@@ -14,7 +14,7 @@ namespace Ryneus
         public new void SetData(List<ListData> listDates)
         {
             base.SetData(listDates);
-            SetBattlerInfoComp();
+            SetBattlerInfoComp(listDates);
         }
 
         public void SetTargetListData(List<ListData> listDates)
@@ -22,9 +22,20 @@ namespace Ryneus
             base.SetData(listDates);
         }
 
-        public void SetBattlerInfoComp()
+        public void SetBattlerInfoComp(List<ListData> listDates)
         {
             damageRoots.ForEach(a => a.SetActive(false));
+            for (var i = 0;i < listDates.Count;i++)
+            {
+                var battleBattler = ItemPrefabList[i].GetComponent<BattleBattler>();
+                var battlerInfo = (BattlerInfo)listDates[i].Data;
+                if (battleBattler != null && battlerInfo != null)
+                {
+                    _battleBattler[battlerInfo.Index] = battleBattler;
+                    battleBattler.SetDamageRoot(damageRoots[i]);
+                }
+            }
+            /*
             for (var i = 0;i < ItemPrefabList.Count;i++)
             {
                 if (i >= 5)
@@ -32,16 +43,17 @@ namespace Ryneus
                     continue;
                 }
                 var battleBattler = ItemPrefabList[i].GetComponent<BattleBattler>();
-                if (battleBattler.ListData != null)
-                {
-                    var battlerInfo = (BattlerInfo)battleBattler.ListData.Data;
+                //if (battleBattler.ListData != null)
+                //{
+                    var battlerInfo = (BattlerInfo)listDates[i].Data;
                     if (battleBattler != null && battlerInfo != null)
                     {
                         _battleBattler[battlerInfo.Index] = battleBattler;
                         battleBattler.SetDamageRoot(damageRoots[i]);
                     }
-                }
+                //}
             }
+            */
         }
 
         public BattlerInfoComponent GetBattlerInfoComp(int battlerIndex)
@@ -54,7 +66,8 @@ namespace Ryneus
             return null;
         }
         
-        public void UpdateSelectIndexList(List<int> indexes){
+        public void UpdateSelectIndexList(List<int> indexes)
+        {
             SetSelectIndexes(indexes);
         }
 

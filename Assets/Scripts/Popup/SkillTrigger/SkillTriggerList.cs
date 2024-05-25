@@ -99,5 +99,10 @@ namespace Ryneus
                 }
             }
         }
+
+        public override void UpdateHelpWindow()
+        {
+            SelectSkillTriggerList();
+        }
     }
 }

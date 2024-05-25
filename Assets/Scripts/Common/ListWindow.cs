@@ -397,14 +397,14 @@ namespace Ryneus
                 var itemSpace = ItemSpace();
                 var listMargin = ListMargin();
                 var space = ItemSpace();
-                return (int)Math.Round( (width - itemSpace - listMargin) / (_itemSize.x + space) );
+                return (int)Math.Floor( (width - itemSpace - listMargin + 4) / (_itemSize.x + space) );
             } else
             {
                 var height = GetScrolledHeight();
                 var itemSpace = ItemSpace();
                 var listMargin = ListMargin();
                 var space = ItemSpace();
-                return (int)Math.Round( (height - itemSpace - listMargin) / (_itemSize.y + space) );
+                return (int)Math.Floor( (height - itemSpace - listMargin + 4) / (_itemSize.y + space) );
             }
         }
 

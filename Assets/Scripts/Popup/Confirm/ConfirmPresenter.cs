@@ -21,7 +21,6 @@ namespace Ryneus
         private void Initialize()
         {
             _view.SetEvent((type) => UpdateCommand(type));
-            _view.SetConfirmCommand(_model.ConfirmCommand());
             _busy = false;
         }
 
@@ -33,12 +32,21 @@ namespace Ryneus
             }
             if (viewEvent.commandType == CommandType.IsNoChoice)
             {
-            CommandIsNoChoice();
+                CommandIsNoChoice();
+            }
+            if (viewEvent.commandType == CommandType.IsChoice)
+            {
+                CommandIsChoice();
             }
             if (viewEvent.commandType == CommandType.DisableIds)
             {
-            CommandDisableIds((List<int>)viewEvent.template);
+                CommandDisableIds((List<int>)viewEvent.template);
             }
+        }
+
+        private void CommandIsChoice()
+        {
+            _view.SetConfirmCommand(_model.ConfirmCommand());
         }
 
         private void CommandIsNoChoice()

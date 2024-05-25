@@ -35,5 +35,10 @@ namespace Ryneus
             gameObject.SetActive(false);
             skillInfoComponent.gameObject.SetActive(false);
         }
+
+        public override void UpdateHelpWindow()
+        {
+            UpdateSkillHelp();
+        }
     }
 }

@@ -8,7 +8,6 @@ namespace Ryneus
     public class BootView : BaseView
     {
         [SerializeField] private Button logoButton = null;
-        [SerializeField] private BaseList baseList = null;
         private new System.Action<BootViewEvent> _commandData = null;
         public override void Initialize() 
         {
@@ -19,8 +18,6 @@ namespace Ryneus
                 logoButton.onClick.AddListener(() => CallLogoClick());
             }
             logoButton.gameObject.SetActive(TestMode == false);
-            baseList.SetInputHandler(InputKeyType.Decide,() => CallLogoClick());
-            SetInputHandler(baseList.GetComponent<IInputHandlerEvent>());
         }
 
         public void SetEvent(System.Action<BootViewEvent> commandData)

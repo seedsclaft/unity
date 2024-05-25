@@ -55,7 +55,7 @@ namespace Ryneus
             UpdateObjectList();
             SetListCallHandler();
             var selectIndex = -1;
-            if (resetScrollRect == false && listData.Count == ListDates.Count)
+            if (resetScrollRect == false)
             {
                 selectIndex = _beforeSelectIndex;
             }

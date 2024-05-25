@@ -37,11 +37,9 @@ namespace Ryneus
 
         public void SetIsNoChoice(bool isNoChoice)
         {
-            if (isNoChoice)
-            {
-                var eventData = new ConfirmViewEvent(CommandType.IsNoChoice);
-                _commandData(eventData);
-            }
+            var commandType = isNoChoice ? CommandType.IsNoChoice : CommandType.IsChoice;
+            var eventData = new ConfirmViewEvent(commandType);
+            _commandData(eventData);
         }
 
         public void SetDisableIds(List<int> disableIds)
@@ -132,6 +130,7 @@ namespace Confirm
     public enum CommandType
     {
         None = 0,
+        IsChoice = 100,
         IsNoChoice = 101,
         DisableIds = 102,
     }

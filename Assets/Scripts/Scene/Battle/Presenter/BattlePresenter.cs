@@ -706,7 +706,7 @@ namespace Ryneus
                 }
                 if (actionInfo.Master.IsDisplayBattleSkill() || _model.GetBattlerInfo(actionInfo.SubjectIndex).IsActor == false)
                 {
-                    _view.SetCurrentSkillData(actionInfo.Master);
+                    _view.SetCurrentSkillData(actionInfo.SkillInfo);
                 }
             }
             var animationData = BattleUtility.AnimationData(actionInfo.Master.AnimationId);
@@ -763,7 +763,7 @@ namespace Ryneus
             {
                 if (actionInfo.IsBattleDisplay == false)
                 {
-                    _view.SetCurrentSkillData(actionInfo.Master);
+                    _view.SetCurrentSkillData(actionInfo.SkillInfo);
                 }
             }
 
@@ -967,7 +967,7 @@ namespace Ryneus
                 var skillData = DataSystem.FindSkill(resultInfos[0].SkillId);
                 if (skillData != null && skillData.IsDisplayBattleSkill())
                 {
-                    _view.SetCurrentSkillData(skillData);
+                    //_view.SetCurrentSkillData(resultInfos[0]);
                 }
             }
             foreach (var resultInfo in resultInfos)

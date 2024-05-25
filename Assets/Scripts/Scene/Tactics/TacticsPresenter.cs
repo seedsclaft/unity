@@ -508,7 +508,8 @@ namespace Ryneus
                 var getItemInfos = _model.CurrentSelectRecord().SymbolInfo.GetItemInfos;
                 var actorInfos = _model.PartyInfo.ActorInfos.FindAll(a => a.ActorId == getItemInfos[0].Param1);
                 GotoStrategyScene(getItemInfos,actorInfos);
-            } else{
+            } else
+            {
                 CommandTacticsCommand(_model.TacticsCommandType);
             }
         }
@@ -540,7 +541,8 @@ namespace Ryneus
                 statusViewInfo.SetDisplayBackButton(false);
                 _view.CommandCallStatus(statusViewInfo);
                 _view.ChangeUIActive(false);
-            } else{
+            } else
+            {
                 CommandTacticsCommand(_model.TacticsCommandType);
             }
         }
@@ -558,7 +560,8 @@ namespace Ryneus
             {
                 var currentSymbol = _model.CurrentSelectRecord();
                 GotoStrategyScene(currentSymbol.SymbolInfo.GetItemInfos,_model.StageMembers());
-            } else{
+            } else
+            {
                 CommandTacticsCommand(_model.TacticsCommandType);
             }
         }
@@ -586,7 +589,8 @@ namespace Ryneus
                 var getItemInfos = _model.CurrentSelectRecord().SymbolInfo.GetItemInfos;
                 _view.SetAlcanaSelectInfos(ListData.MakeListData(_model.AlcanaMagicSkillInfos(getItemInfos)));
                 //GotoStrategyScene(getItemInfos,_model.StageMembers());
-            } else{
+            } else
+            {
                 CommandTacticsCommand(_model.TacticsCommandType);
             }
         }
@@ -604,7 +608,8 @@ namespace Ryneus
             {
                 var currentRecord = _model.CurrentSelectRecord();
                 GotoStrategyScene(currentRecord.SymbolInfo.GetItemInfos,_model.StageMembers());
-            } else{
+            } else
+            {
                 CommandTacticsCommand(_model.TacticsCommandType);
             }
         }
@@ -633,11 +638,11 @@ namespace Ryneus
             {
                 var currentSymbol = _model.CurrentSelectRecord();
                 GotoStrategyScene(currentSymbol.SymbolInfo.GetItemInfos,_model.StageMembers());
-            } else{
+            } else
+            {
                 CommandTacticsCommand(_model.TacticsCommandType);
             }
         }
-
 
         private void CommandSelectEnemyClose(ConfirmCommandType confirmCommandType)
         {
