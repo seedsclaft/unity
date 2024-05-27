@@ -67,6 +67,9 @@ namespace Ryneus
                     case "InitializeData":
                     CommandInitializeData();
                     break;
+                    case "Title":
+                    CommandTitle();
+                    break;
                 }
             }
         }
@@ -93,7 +96,8 @@ namespace Ryneus
                 _model.SavePlayerStageData(false);
                 _view.CommandGameSystem(Base.CommandType.CloseStatus);
                 _view.CommandGotoSceneChange(Scene.MainMenu);
-            } else{
+            } else
+            {
                 SoundManager.Instance.PlayStaticSe(SEType.Cancel);
             }
             //_view.ActivateCommandList();
@@ -136,6 +140,13 @@ namespace Ryneus
             _view.CommandCallConfirm(popupInfo);
         }
 
+        private void CommandTitle()
+        {
+            SoundManager.Instance.PlayStaticSe(SEType.Decide);
+            var popupInfo = new ConfirmInfo(DataSystem.GetText(583),(a) => UpdatePopupTitle((ConfirmCommandType)a));
+            _view.CommandCallConfirm(popupInfo);
+        }
+
         private void UpdatePopupDeletePlayerData(ConfirmCommandType confirmCommandType)
         {
             _view.CommandGameSystem(Base.CommandType.CloseConfirm);
@@ -152,6 +163,16 @@ namespace Ryneus
                 });
                 popupInfo.SetIsNoChoice(true);
                 _view.CommandCallConfirm(popupInfo);
+            }
+        }
+
+        private void UpdatePopupTitle(ConfirmCommandType confirmCommandType)
+        {
+            _view.CommandGameSystem(Base.CommandType.CloseConfirm);
+            if (confirmCommandType == ConfirmCommandType.Yes)
+            {
+                _view.CommandGameSystem(Base.CommandType.CloseStatus);
+                _view.CommandGotoSceneChange(Scene.Title);
             }
         }
     }

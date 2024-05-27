@@ -83,8 +83,6 @@ namespace Ryneus
         public bool Lost => _lost;
         private StatusInfo _plusStatus;
 
-        private List<SkillInfo> _rebornSkillInfos = new ();
-        public List<SkillInfo> RebornSkillInfos => _rebornSkillInfos;
         public ActorInfo(ActorData actorData)
         {
             _actorId = actorData.Id;
@@ -405,12 +403,6 @@ namespace Ryneus
             }
             int total = statusValue + (int)magicValue + DemigodParam * 10;
             return total;
-        }
-
-        public void AddRebornSkill(SkillInfo rebornSkillInfo)
-        {
-            rebornSkillInfo.SetEnable(true);
-            _rebornSkillInfos.Add(rebornSkillInfo);
         }
 
         public List<ListData> SkillActionList()

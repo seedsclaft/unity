@@ -59,10 +59,10 @@ namespace Ryneus
                     if (a == true)
                     {
                         SoundManager.Instance.PlayStaticSe(SEType.Cursor);
-                    }
-                    if (clickEvent != null)
-                    {
-                        clickEvent();
+                        if (clickEvent != null)
+                        {
+                            clickEvent();
+                        }
                     }
                 });
                 idx++;

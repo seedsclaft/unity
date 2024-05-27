@@ -221,15 +221,19 @@ namespace Ryneus
                 var itemIndex = i+startIndex;
                 itemPrefab.gameObject.SetActive(false);
                 itemPrefab.transform.SetParent(scrollRect.content,false);
+                var listItem = itemPrefab.GetComponent<ListItem>();
                 if (_listDates.Count <= itemIndex)
                 {
+                    listItem.SetListData(null,-1);
+                    listItem.SetUnSelect();
                     continue;
                 }
                 if (_objectList.Count <= itemIndex || itemIndex < 0)
                 {
+                    listItem.SetListData(null,-1);
+                    listItem.SetUnSelect();
                     continue;
                 }
-                var listItem = itemPrefab.GetComponent<ListItem>();
                 listItem.SetListData(_listDates[itemIndex],itemIndex);
                 itemPrefab.transform.SetParent(_objectList[itemIndex].transform,false);
                 itemPrefab.gameObject.SetActive(true);
@@ -594,7 +598,8 @@ namespace Ryneus
                 if (index == listItem.Index)
                 {
                     listItem.SetSelect();
-                } else{
+                } else
+                {
                     if (_selectIndexes.Contains(listItem.Index))
                     {
                         listItem.SetSelect();

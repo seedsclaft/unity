@@ -140,6 +140,7 @@ namespace Ryneus
         {
             battleSpeedButton.gameObject.SetActive(isActive);
             battleSkipButton.gameObject.SetActive(isActive);
+            skillLogButton.gameObject.SetActive(isActive);
         }
 
         public void SetBattleSpeedButton(string commandName)
@@ -156,6 +157,14 @@ namespace Ryneus
             system.Name = commandName;
             battleSkipButton.SetData(system,-1);
             battleSkipButton.UpdateViewItem();
+        }
+
+        public void SetSkillLogButton(string commandName)
+        {
+            SystemData.CommandData system = new SystemData.CommandData();
+            system.Name = commandName;
+            skillLogButton.SetData(system,-1);
+            skillLogButton.UpdateViewItem();
         }
 
         private void CallSkillAction()

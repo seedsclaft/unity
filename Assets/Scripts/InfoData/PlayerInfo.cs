@@ -105,9 +105,6 @@ namespace Ryneus
             for (int i = 0;i < 5;i++)
             {
                 var tempActor = new ActorInfo(DataSystem.Actors[i]);
-                var rebornSkill = new SkillInfo(baseRebornSkill[i].Key+i); 
-                rebornSkill.SetParam(1,1,i+1);
-                tempActor.AddRebornSkill(rebornSkill);
                 AddActorInfo(tempActor);
             }
         }

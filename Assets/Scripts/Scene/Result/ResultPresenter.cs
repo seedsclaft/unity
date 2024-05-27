@@ -183,7 +183,6 @@ namespace Ryneus
 
         private void CommandActorAssign()
         {
-            _model.GetRebornSkills();
             int textId = 16040;
             var popupInfo = new ConfirmInfo(DataSystem.GetText(textId),(a) => UpdatePopupReborn((ConfirmCommandType)a));
             popupInfo.SetIsNoChoice(true);
@@ -235,12 +234,6 @@ namespace Ryneus
 
         private void CommandUpdateActor()
         {
-            _model.SetRebornActorIndex(_view.ActorInfoListIndex);
-            var rebornActor = _model.RebornActorInfo();
-            if (rebornActor != null)
-            {
-                _view.UpdateActor(ListData.MakeListData(rebornActor.RebornSkillInfos));
-            }
         }
 
         public void CommandGetAlcana()
@@ -285,19 +278,10 @@ namespace Ryneus
 
         private void CommandAlcanaRefresh()
         {
-            var skillInfos = _model.GetAlcanaSkillInfos();
-            _view.CommandAlcanaInfos(skillInfos);
         }
 
         private void CommandRebornRefresh()
         {
-            var skillInfos = _model.RebornSkillInfos(_model.RebornActorInfo());
-            var lastSelectIndex = skillInfos.FindIndex(a => ((SkillInfo)a.Data).Id == _model.RebornActorInfo().LastSelectSkillId);
-            if (lastSelectIndex == -1)
-            {
-                lastSelectIndex = 0;
-            }
-            _view.CommandRefreshStatus(skillInfos,_model.RebornActorInfo(),_model.PartyMembers(),lastSelectIndex);
         }
     }
 }

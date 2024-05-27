@@ -51,8 +51,8 @@ namespace Ryneus
             {
                 AddCreateList(ListDates.Count-ObjectList.Count);
             }
-            await UniTask.DelayFrame(1);
             UpdateObjectList();
+            await UniTask.DelayFrame(1);
             SetListCallHandler();
             var selectIndex = -1;
             if (resetScrollRect == false)

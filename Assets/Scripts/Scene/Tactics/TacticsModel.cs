@@ -163,8 +163,8 @@ namespace Ryneus
             var retire = new SystemData.CommandData
             {
                 Id = 1,
-                Name = DataSystem.GetText(704),
-                Key = "Retire"
+                Name = DataSystem.GetText(701),
+                Key = "Option"
             };
             list.Add(retire);
             var menuCommand = new SystemData.CommandData
@@ -184,6 +184,13 @@ namespace Ryneus
                 };
                 list.Add(saveCommand);
             }
+            var titleCommand = new SystemData.CommandData
+            {
+                Id = 4,
+                Name = DataSystem.GetText(709),
+                Key = "Title"
+            };
+            list.Add(titleCommand);
             return MakeListData(list);
         }
 

@@ -2815,6 +2815,7 @@ namespace Ryneus
             {
                 battlerInfo.ResetData();
             }
+            var data = _battleActionRecords;
             SaveSystem.SaveConfigStart(GameSystem.ConfigData);
         }
 

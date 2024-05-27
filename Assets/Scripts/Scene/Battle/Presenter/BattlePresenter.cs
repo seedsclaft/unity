@@ -95,6 +95,7 @@ namespace Ryneus
             _view.StartBattleAnimation();
             _view.SetBattleSpeedButton(ConfigUtility.CurrentBattleSpeedText());
             _view.SetBattleSkipButton(DataSystem.GetText(62));
+            _view.SetSkillLogButton(DataSystem.GetText(64));
             _view.SetBattleAutoButton(true);
             await UniTask.WaitUntil(() => _view.StartAnimIsBusy == false);
             _view.SetBattleSkipActive(true);

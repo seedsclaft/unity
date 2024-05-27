@@ -37,18 +37,6 @@ namespace Ryneus
             {
                 UpdateSkillData(skillInfo.Id);
             }
-            if (skillInfo.Master.SkillType == SkillType.UseAlcana)
-            {
-                if (skillInfo.Master.FeatureDates.Find(a => a.FeatureType == FeatureType.AddSkillOrCurrency) != null)
-                {
-                    var convertText = skillInfo.ConvertHelpText();
-                    var skillNameData = DataSystem.FindSkill(skillInfo.Param1);
-                    if (skillNameData != null)
-                    {
-                        description.text = convertText.Replace("\\d",skillNameData.Name);
-                    }
-                }
-            }
             if (description != null)
             {
                 description.text = skillInfo.ConvertHelpText();
@@ -183,30 +171,6 @@ namespace Ryneus
             {
                 nameText.rectTransform.sizeDelta = new Vector2(nameText.preferredWidth,nameText.preferredHeight);
                 lineImage.rectTransform.sizeDelta = new Vector2(nameText.rectTransform.sizeDelta.x,lineImage.rectTransform.sizeDelta.y);
-            }
-        }
-
-        public void UpdateRebornInfo(SkillInfo rebornSkillInfo)
-        {
-            var skillData = DataSystem.FindSkill(rebornSkillInfo.Id);
-            var rebornAddSkill = skillData.FeatureDates.Find(a => a.FeatureType == FeatureType.RebornAddSkill) != null;
-            if (nameText != null)
-            {
-                if (rebornAddSkill)
-                {
-                    nameText.text = skillData.Name.Replace("\\d",DataSystem.FindSkill(rebornSkillInfo.Param1).Name);
-                } else
-                {
-                    nameText.text = skillData.Name.Replace("\\d",rebornSkillInfo.Param1.ToString());
-                }
-                if (nameAndMpCost)
-                {
-                    nameText.rectTransform.sizeDelta = new Vector2(nameText.preferredWidth,nameText.preferredHeight);
-                }
-            }
-            if (description != null)
-            {
-                description.text = skillData.Help.Replace("\\d",rebornSkillInfo.Param1.ToString());
             }
         }
 
