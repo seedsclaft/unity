@@ -15,12 +15,12 @@ namespace Ryneus
         public SystemData.CommandData SideMenuCommand 
         { 
             get {
-            var listData = sideMenuInfoList.ListData;
-            if (listData != null)
-            {
-                return (SystemData.CommandData)listData.Data;
-            }
-            return null;
+                var listData = sideMenuInfoList.ListData;
+                if (listData != null)
+                {
+                    return (SystemData.CommandData)listData.Data;
+                }
+                return null;
             }
         }
 

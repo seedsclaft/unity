@@ -51,7 +51,7 @@ namespace Ryneus
             {
                 var Command = new SystemData.CommandData();
                 Command.Key = categoryId.ToString();
-                Command.Name = DataSystem.GetText(categoryId + 550);
+                Command.Name = DataSystem.GetText(categoryId + 6000);
                 Command.Id = categoryId;
                 commandDates.Add(Command);
             }

@@ -59,81 +59,81 @@ MonoBehaviour:
     Key: GRAPHIC_QUALITY
     Name: Graphic Quality
     Help: " - \u753B\u8CEA\u306E\u30AF\u30AA\u30EA\u30C6\u30A3\u3092\u5909\u66F4\u3057\u307E\u3059"
-    Category: 1
+    Category: 2
     ButtonType: 2
-    ToggleText1: 521
-    ToggleText2: 522
+    ToggleText1: 6201
+    ToggleText2: 6202
     ToggleText3: 0
     ExistAndroid: 0
   - Id: 4
     Key: EVENT_SKIP
     Name: Event Skip
     Help: " - \u9078\u629E\u80A2\u3092\u9664\u304D\u30A4\u30D9\u30F3\u30C8\u3092\u30B9\u30AD\u30C3\u30D7\u3059\u308B\u304B\u5909\u66F4\u3057\u307E\u3059"
-    Category: 1
+    Category: 2
     ButtonType: 2
-    ToggleText1: 526
-    ToggleText2: 527
+    ToggleText1: 6211
+    ToggleText2: 6212
     ToggleText3: 0
     ExistAndroid: 1
   - Id: 5
     Key: COMMAND_END_CHECK
     Name: Command Check
     Help: " - \u5168\u3066\u306E\u30A2\u30EB\u30B1\u30DF\u30B9\u30C8\u306B\u547D\u4EE4\u3092\u7D42\u3048\u305F\u6642\u306B\u547D\u4EE4\u7D42\u4E86\u30B3\u30DE\u30F3\u30C9\u3092\u547C\u3076\u304B\u5909\u66F4\u3057\u307E\u3059"
-    Category: 1
+    Category: 2
     ButtonType: 2
-    ToggleText1: 531
-    ToggleText2: 532
+    ToggleText1: 6221
+    ToggleText2: 6222
     ToggleText3: 0
     ExistAndroid: 0
   - Id: 6
     Key: BATTLE_WAIT
     Name: Battle Wait
     Help: " - \u30D0\u30C8\u30EB\u3067\u884C\u52D5\u9806\u756A\u5F85\u3061\u6642\u9593\u3092\u8868\u793A\u3059\u308B\u304B\u30B9\u30AD\u30C3\u30D7\u3059\u308B\u5909\u66F4\u3057\u307E\u3059"
-    Category: 1
+    Category: 2
     ButtonType: 2
-    ToggleText1: 536
-    ToggleText2: 527
+    ToggleText1: 6223
+    ToggleText2: 6222
     ToggleText3: 0
     ExistAndroid: 0
   - Id: 7
     Key: BATTLE_ANIMATION
     Name: Battle Animation
     Help: " - \u30D0\u30C8\u30EB\u30A2\u30CB\u30E1\u30FC\u30B7\u30E7\u30F3\u6F14\u51FA\u8868\u793A\u306E\u6709\u7121\u3092\u5207\u308A\u66FF\u3048\u307E\u3059"
-    Category: 1
+    Category: 2
     ButtonType: 2
-    ToggleText1: 536
-    ToggleText2: 527
+    ToggleText1: 6223
+    ToggleText2: 6222
     ToggleText3: 0
     ExistAndroid: 1
   - Id: 8
     Key: INPUT_TYPE
     Name: Enable InputKey
     Help: " - \u30AD\u30FC\u30DC\u30FC\u30C9\u30FB\u30B2\u30FC\u30E0\u30D1\u30C3\u30C9\u64CD\u4F5C\u3092\u6709\u52B9\u306B\u3059\u308B\u304B\u5909\u66F4\u3057\u307E\u3059"
-    Category: 1
+    Category: 2
     ButtonType: 2
-    ToggleText1: 541
-    ToggleText2: 542
+    ToggleText1: 6231
+    ToggleText2: 6232
     ToggleText3: 0
     ExistAndroid: 0
   - Id: 9
     Key: BATTLE_AUTO
     Name: Battle Auto
     Help: " - \u30D0\u30C8\u30EB\u306E\u64CD\u4F5C\u65B9\u6CD5\u3092\u5909\u66F4\u3057\u307E\u3059"
-    Category: 1
+    Category: 2
     ButtonType: 2
-    ToggleText1: 543
-    ToggleText2: 544
+    ToggleText1: 6241
+    ToggleText2: 6242
     ToggleText3: 0
     ExistAndroid: 1
   - Id: 10
     Key: BATTLE_SPEED
-    Name: "\u30D0\u30C8\u30EB\u901F\u5EA6"
+    Name: Battle Speed
     Help: " - \u30D0\u30C8\u30EB\u306E\u901F\u5EA6\u3092\u5909\u66F4\u3057\u307E\u3059"
-    Category: 1
+    Category: 2
     ButtonType: 2
-    ToggleText1: 545
-    ToggleText2: 546
-    ToggleText3: 547
+    ToggleText1: 6251
+    ToggleText2: 6252
+    ToggleText3: 6253
     ExistAndroid: 1
   TitleCommandData:
   - Id: 1
@@ -313,7 +313,7 @@ MonoBehaviour:
     Text: "\u95C7"
     Help: '""'
   - Id: 340
-    Text: LearningCost(s)
+    Text: LearningCost
     Help: '""'
   - Id: 341
     Text: "\u5168\u56DE\u5FA9\u307E\u3067"
@@ -413,87 +413,6 @@ MonoBehaviour:
     Help: '""'
   - Id: 433
     Text: "\u884C\u52D5\u9045\u5EF6+\\d"
-    Help: '""'
-  - Id: 500
-    Text: '""'
-    Help: "\u30B2\u30FC\u30E0\u306E\u8A2D\u5B9A\u3092\u5909\u66F4\u3057\u307E\u3059"
-  - Id: 501
-    Text: BGM Volume
-    Help: " - BGM\u306E\u97F3\u91CF\u3092\u5909\u66F4\u3057\u307E\u3059"
-  - Id: 502
-    Text: SE Volume
-    Help: " - SE\u306E\u97F3\u91CF\u3092\u5909\u66F4\u3057\u307E\u3059"
-  - Id: 503
-    Text: Graphic Quality
-    Help: " - \u753B\u8CEA\u306E\u30AF\u30AA\u30EA\u30C6\u30A3\u3092\u5909\u66F4\u3057\u307E\u3059"
-  - Id: 504
-    Text: Event Skip
-    Help: " - \u9078\u629E\u80A2\u3092\u9664\u304D\u30A4\u30D9\u30F3\u30C8\u3092\u30B9\u30AD\u30C3\u30D7\u3059\u308B\u304B\u5909\u66F4\u3057\u307E\u3059"
-  - Id: 505
-    Text: Command Check
-    Help: " - \u5168\u3066\u306E\u30A2\u30EB\u30B1\u30DF\u30B9\u30C8\u306B\u547D\u4EE4\u3092\u7D42\u3048\u305F\u6642\u306B\u547D\u4EE4\u7D42\u4E86\u30B3\u30DE\u30F3\u30C9\u3092\u547C\u3076\u304B\u5909\u66F4\u3057\u307E\u3059"
-  - Id: 506
-    Text: Battle Wait
-    Help: " - \u30D0\u30C8\u30EB\u3067\u884C\u52D5\u9806\u756A\u5F85\u3061\u6642\u9593\u3092\u8868\u793A\u3059\u308B\u304B\u30B9\u30AD\u30C3\u30D7\u3059\u308B\u5909\u66F4\u3057\u307E\u3059"
-  - Id: 507
-    Text: Battle Animation
-    Help: " - \u30D0\u30C8\u30EB\u30A2\u30CB\u30E1\u30FC\u30B7\u30E7\u30F3\u6F14\u51FA\u8868\u793A\u306E\u6709\u7121\u3092\u5207\u308A\u66FF\u3048\u307E\u3059"
-  - Id: 508
-    Text: Enable InputKey
-    Help: " - \u30AD\u30FC\u30DC\u30FC\u30C9\u30FB\u30B2\u30FC\u30E0\u30D1\u30C3\u30C9\u64CD\u4F5C\u3092\u6709\u52B9\u306B\u3059\u308B\u304B\u5909\u66F4\u3057\u307E\u3059"
-  - Id: 509
-    Text: Battle Auto
-    Help: " - \u30D0\u30C8\u30EB\u306E\u64CD\u4F5C\u65B9\u6CD5\u3092\u5909\u66F4\u3057\u307E\u3059"
-  - Id: 510
-    Text: "\u30C7\u30FC\u30BF\u521D\u671F\u5316"
-    Help: " - \u30D7\u30EC\u30A4\u30E4\u30FC\u30C7\u30FC\u30BF\u3092\u521D\u671F\u5316\u3057\u307E\u3059"
-  - Id: 511
-    Text: "\u30D0\u30C8\u30EB\u901F\u5EA6"
-    Help: " - \u30D0\u30C8\u30EB\u306E\u901F\u5EA6\u3092\u5909\u66F4\u3057\u307E\u3059"
-  - Id: 521
-    Text: Normal
-    Help: '""'
-  - Id: 522
-    Text: Low
-    Help: '""'
-  - Id: 526
-    Text: "\u30B9\u30AD\u30C3\u30D7\u3057\u306A\u3044"
-    Help: '""'
-  - Id: 527
-    Text: "\u30B9\u30AD\u30C3\u30D7\u3059\u308B"
-    Help: '""'
-  - Id: 531
-    Text: "\u547C\u3073\u51FA\u3059"
-    Help: '""'
-  - Id: 532
-    Text: "\u547C\u3070\u306A\u3044"
-    Help: '""'
-  - Id: 536
-    Text: "\u8868\u793A\u3059\u308B"
-    Help: '""'
-  - Id: 541
-    Text: "\u30DE\u30A6\u30B9\u306E\u307F"
-    Help: '""'
-  - Id: 542
-    Text: "\u6709\u52B9\u306B\u3059\u308B"
-    Help: '""'
-  - Id: 543
-    Text: "\u30DE\u30CB\u30E5\u30A2\u30EB"
-    Help: '""'
-  - Id: 544
-    Text: "\u30AA\u30FC\u30C8"
-    Help: '""'
-  - Id: 545
-    Text: x1
-    Help: '""'
-  - Id: 546
-    Text: x2
-    Help: '""'
-  - Id: 547
-    Text: x4
-    Help: '""'
-  - Id: 551
-    Text: "\u30B2\u30FC\u30E0\u5185\u8A2D\u5B9A"
     Help: '""'
   - Id: 552
     Text: "\u30C7\u30FC\u30BF"
@@ -866,6 +785,87 @@ MonoBehaviour:
     Help: '""'
   - Id: 5002
     Text: "1\u6587\u5B57\u4EE5\u4E0A\u306E\u540D\u524D\u3092\u5165\u529B\u3057\u3066\u304F\u3060\u3055\u3044"
+    Help: '""'
+  - Id: 6001
+    Text: "\u97F3\u91CF\u8A2D\u5B9A"
+    Help: '""'
+  - Id: 6002
+    Text: "\u30B7\u30B9\u30C6\u30E0"
+    Help: '""'
+  - Id: 6100
+    Text: '""'
+    Help: "\u30B2\u30FC\u30E0\u306E\u8A2D\u5B9A\u3092\u5909\u66F4\u3057\u307E\u3059"
+  - Id: 6101
+    Text: BGM Volume
+    Help: " - BGM\u306E\u97F3\u91CF\u3092\u5909\u66F4\u3057\u307E\u3059"
+  - Id: 6102
+    Text: SE Volume
+    Help: " - SE\u306E\u97F3\u91CF\u3092\u5909\u66F4\u3057\u307E\u3059"
+  - Id: 6103
+    Text: Graphic Quality
+    Help: " - \u753B\u8CEA\u306E\u30AF\u30AA\u30EA\u30C6\u30A3\u3092\u5909\u66F4\u3057\u307E\u3059"
+  - Id: 6104
+    Text: Event Skip
+    Help: " - \u9078\u629E\u80A2\u3092\u9664\u304D\u30A4\u30D9\u30F3\u30C8\u3092\u30B9\u30AD\u30C3\u30D7\u3059\u308B\u304B\u5909\u66F4\u3057\u307E\u3059"
+  - Id: 6105
+    Text: Command Check
+    Help: " - \u5168\u3066\u306E\u30A2\u30EB\u30B1\u30DF\u30B9\u30C8\u306B\u547D\u4EE4\u3092\u7D42\u3048\u305F\u6642\u306B\u547D\u4EE4\u7D42\u4E86\u30B3\u30DE\u30F3\u30C9\u3092\u547C\u3076\u304B\u5909\u66F4\u3057\u307E\u3059"
+  - Id: 6106
+    Text: Battle Wait
+    Help: " - \u30D0\u30C8\u30EB\u3067\u884C\u52D5\u9806\u756A\u5F85\u3061\u6642\u9593\u3092\u8868\u793A\u3059\u308B\u304B\u30B9\u30AD\u30C3\u30D7\u3059\u308B\u5909\u66F4\u3057\u307E\u3059"
+  - Id: 6107
+    Text: Battle Animation
+    Help: " - \u30D0\u30C8\u30EB\u30A2\u30CB\u30E1\u30FC\u30B7\u30E7\u30F3\u6F14\u51FA\u8868\u793A\u306E\u6709\u7121\u3092\u5207\u308A\u66FF\u3048\u307E\u3059"
+  - Id: 6108
+    Text: Enable InputKey
+    Help: " - \u30AD\u30FC\u30DC\u30FC\u30C9\u30FB\u30B2\u30FC\u30E0\u30D1\u30C3\u30C9\u64CD\u4F5C\u3092\u6709\u52B9\u306B\u3059\u308B\u304B\u5909\u66F4\u3057\u307E\u3059"
+  - Id: 6109
+    Text: Battle Auto
+    Help: " - \u30D0\u30C8\u30EB\u306E\u64CD\u4F5C\u65B9\u6CD5\u3092\u5909\u66F4\u3057\u307E\u3059"
+  - Id: 6110
+    Text: Battle Speed
+    Help: " - \u30D0\u30C8\u30EB\u306E\u901F\u5EA6\u3092\u5909\u66F4\u3057\u307E\u3059"
+  - Id: 6201
+    Text: Normal
+    Help: '""'
+  - Id: 6202
+    Text: Low
+    Help: '""'
+  - Id: 6211
+    Text: "\u30B9\u30AD\u30C3\u30D7\u3057\u306A\u3044"
+    Help: '""'
+  - Id: 6212
+    Text: "\u30B9\u30AD\u30C3\u30D7\u3059\u308B"
+    Help: '""'
+  - Id: 6221
+    Text: "\u547C\u3073\u51FA\u3059"
+    Help: '""'
+  - Id: 6222
+    Text: "\u547C\u3070\u306A\u3044"
+    Help: '""'
+  - Id: 6223
+    Text: "\u8868\u793A\u3059\u308B"
+    Help: '""'
+  - Id: 6231
+    Text: "\u30DE\u30A6\u30B9\u306E\u307F"
+    Help: '""'
+  - Id: 6232
+    Text: "\u6709\u52B9\u306B\u3059\u308B"
+    Help: '""'
+  - Id: 6241
+    Text: "\u30DE\u30CB\u30E5\u30A2\u30EB"
+    Help: '""'
+  - Id: 6242
+    Text: "\u30AA\u30FC\u30C8"
+    Help: '""'
+  - Id: 6251
+    Text: x1
+    Help: '""'
+  - Id: 6252
+    Text: x2
+    Help: '""'
+  - Id: 6253
+    Text: x4
     Help: '""'
   - Id: 10000
     Text: "\uFF1F\uFF1F\uFF1F"

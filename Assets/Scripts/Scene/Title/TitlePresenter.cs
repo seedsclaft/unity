@@ -27,8 +27,6 @@ namespace Ryneus
 
             _view.SetEvent((type) => UpdateCommand(type));
             _view.SetVersion(_model.VersionText());
-            _view.SetHelpWindow();
-            _view.SetTitleCommand(_model.TitleCommand());
             CommandRefresh();
             var bgm = await _model.GetBgmData("TITLE");
             SoundManager.Instance.PlayBgm(bgm,1.0f,false);
@@ -116,7 +114,6 @@ namespace Ryneus
             {
                 selectIndex = 1;
             }
-            _view.RefreshCommandIndex(selectIndex);
             //_view.RefreshView();
         }
 

@@ -11,7 +11,8 @@ namespace Ryneus
         [SerializeField] private TextMeshProUGUI commandName;
 
         private SystemData.CommandData _data; 
-        public void SetData(SystemData.CommandData data,int index){
+        public void SetData(SystemData.CommandData data,int index)
+        {
             _data = data;
             SetIndex(index);
             commandName.text = data.Name;

@@ -32,10 +32,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 5238943445725666628}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 200, y: 0}
-  m_SizeDelta: {x: 400, y: 72}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1402901379025572908
 CanvasRenderer:
@@ -119,7 +119,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 360, y: 72}
+  m_SizeDelta: {x: 440, y: 72}
   m_Pivot: {x: 0, y: 1}
 --- !u!222 &7561816341407154896
 CanvasRenderer:
@@ -235,6 +235,10 @@ MonoBehaviour:
   cursor: {fileID: 7284486250059168532}
   changeCursorColor: 1
   disable: {fileID: 0}
+  selectColor: {r: 0, g: 0, b: 0, a: 0}
+  unSelectColor: {r: 0, g: 0, b: 0, a: 0}
+  textUguiList: []
+  imageUguiList: []
   stateInfoComponent: {fileID: 1322117437308582591}
 --- !u!1 &4541659874688349640
 GameObject:
@@ -572,7 +576,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &5238943445725666628
 RectTransform:
   m_ObjectHideFlags: 0
@@ -588,8 +592,8 @@ RectTransform:
   - {fileID: 2922418609336465116}
   m_Father: {fileID: 330347402605771645}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.5}
-  m_AnchorMax: {x: 0, y: 0.5}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -627,7 +631,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 208, y: -4}
+  m_AnchoredPosition: {x: 288, y: -4}
   m_SizeDelta: {x: 144, y: 32}
   m_Pivot: {x: 0, y: 1}
 --- !u!222 &3964558173420384062

@@ -21,6 +21,8 @@ namespace Ryneus
         [SerializeField] private Color upperColor;
         [SerializeField] private Color downColor;
         [SerializeField] private CanvasGroup canvasGroup;
+
+        private int _rectWidth = 80;
         public void UpdateInfo(StatusInfo statusInfo,StatusInfo baseStatus = null)
         {
             if (statusInfo == null){
@@ -96,9 +98,9 @@ namespace Ryneus
                 var rate = 0f;
                 if (currentHp > 0)
                 {
-                    rate = (float)currentHp / (float)maxStatusHp;
+                    rate = currentHp / (float)maxStatusHp;
                 }
-                hpGaugeAnimation.UpdateGauge(80,3,rate);
+                hpGaugeAnimation.UpdateGauge(_rectWidth,3,rate);
             }
         }
         public void UpdateMp(int currentMp,int maxStatusMp)
@@ -111,10 +113,12 @@ namespace Ryneus
             {
                 currentMp = maxStatusMp;
             }
-            if (mp != null){
+            if (mp != null)
+            {
                 mp.text = currentMp.ToString();
             }
-            if (maxMp != null){
+            if (maxMp != null)
+            {
                 maxMp.text = maxStatusMp.ToString();
             }
             if (mpGaugeAnimation != null)
@@ -122,7 +126,7 @@ namespace Ryneus
                 var rate = 0f;
                 if (currentMp > 0)
                 {
-                    rate = (float)currentMp / (float)maxStatusMp;
+                    rate = currentMp / (float)maxStatusMp;
                 }
                 mpGaugeAnimation.SetGaugeAnimation(maxStatusMp * 1.5f,3,rate);
                 mpGaugeAnimation.UpdateGauge(maxStatusMp * 1.5f,3,rate);
@@ -136,13 +140,13 @@ namespace Ryneus
                 var fromRate = 0f;
                 if (fromHp > 0)
                 {
-                    fromRate = (float)fromHp / (float)maxStatusHp;
+                    fromRate = fromHp / (float)maxStatusHp;
                 }
-                hpGaugeAnimation.SetGaugeAnimation(80,3,fromRate);
+                hpGaugeAnimation.SetGaugeAnimation(_rectWidth,3,fromRate);
                 var rate = 0f;
                 if (currentHp > 0)
                 {
-                    rate = (float)currentHp / (float)maxStatusHp;
+                    rate = currentHp / (float)maxStatusHp;
                 }
                 hpGaugeAnimation.UpdateGaugeAnimation(rate);
             }
@@ -155,7 +159,7 @@ namespace Ryneus
                 var fromRate = 0f;
                 if (fromMp > 0)
                 {
-                    fromRate = (float)fromMp / (float)maxStatusMp;
+                    fromRate = fromMp / (float)maxStatusMp;
                 }
                 mpGaugeAnimation.SetGaugeAnimation(maxStatusMp * 1.5f,3,fromRate);
                 var rate = 0f;

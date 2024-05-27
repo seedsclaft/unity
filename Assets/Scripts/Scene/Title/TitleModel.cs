@@ -4,16 +4,6 @@ namespace Ryneus
 {
     public class TitleModel : BaseModel
     {
-        public List<ListData> TitleCommand() 
-        {
-            var listDates = MakeListData(DataSystem.TitleCommand);
-            if (!ExistsLoadFile())
-            {
-                listDates[1].SetEnable(false);
-            }
-            return listDates;
-        }
-
         public bool ExistsLoadFile()
         {
             return SaveSystem.ExistsLoadPlayerFile();
@@ -27,16 +17,23 @@ namespace Ryneus
         public List<ListData> SideMenu()
         {
             var list = new List<SystemData.CommandData>();
-            var menuCommand = new SystemData.CommandData
+            var optionCommand = new SystemData.CommandData
             {
                 Id = 1,
+                Name = DataSystem.GetText(701),
+                Key = "Option"
+            };
+            list.Add(optionCommand);
+            var menuCommand = new SystemData.CommandData
+            {
+                Id = 2,
                 Name = DataSystem.GetText(700),
                 Key = "License"
             };
             list.Add(menuCommand);
             var initCommand = new SystemData.CommandData
             {
-                Id = 1,
+                Id = 3,
                 Name = DataSystem.GetText(708),
                 Key = "InitializeData"
             };

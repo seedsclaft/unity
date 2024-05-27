@@ -49,6 +49,9 @@ namespace Ryneus
             {
                 switch (data.Key)
                 {
+                    case "Option":
+                    CommandOption();
+                    break;
                     case "Retire":
                     CommandDropout();
                     break;
@@ -66,6 +69,14 @@ namespace Ryneus
                     break;
                 }
             }
+        }
+
+        private void CommandOption()
+        {
+            SoundManager.Instance.PlayStaticSe(SEType.Decide);
+            _view.CommandCallOption(() => {
+                _view.CommandGameSystem(Base.CommandType.ClosePopup);
+            });
         }
 
         private void CommandDropout()

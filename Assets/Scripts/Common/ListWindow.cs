@@ -79,7 +79,8 @@ namespace Ryneus
 
         private void DestroyListChildren()
         {
-            foreach(Transform child in scrollRect.content.transform){
+            foreach(Transform child in scrollRect.content.transform)
+            {
                 Destroy(child.gameObject);
             }
         }
