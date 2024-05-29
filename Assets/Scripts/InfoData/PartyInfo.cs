@@ -32,7 +32,9 @@ namespace Ryneus
                 var actorInfo = _actorInfos.Find(a => a.ActorId == actorId);
                 if (actorInfo != null)
                 {
-                    var levelUpInfos = _levelUpInfos.FindAll(a => a.Enable && a.ActorId == actorInfo.ActorId && a.StageId <= stageId && a.Seek < seek);
+                    var levelUpInfos = _levelUpInfos.FindAll(a => a.Enable && a.ActorId == actorInfo.ActorId && a.StageId < stageId);
+                    var sameStage = _levelUpInfos.FindAll(a => a.Enable && a.ActorId == actorInfo.ActorId && a.StageId == stageId && a.Seek <= seek);
+                    levelUpInfos.AddRange(sameStage);
                     actorInfo.SetLevelUpInfo(levelUpInfos);
                 }
                 actorInfos.Add(actorInfo);

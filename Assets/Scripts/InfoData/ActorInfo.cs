@@ -188,7 +188,8 @@ namespace Ryneus
 
         public LevelUpInfo LevelUp(int useCost = 0,int stageId = -1,int seek = -1,int seekIndex = -1)
         {
-            var levelUpInfo = new LevelUpInfo(
+            var levelUpInfo = new LevelUpInfo
+            (
                 _actorId,useCost,stageId,seek,seekIndex
             );
             levelUpInfo.SetLevel(Level);

@@ -351,13 +351,7 @@ MonoBehaviour:
     - SkillId: 1030
       Level: 20
       Weight: 80
-      TriggerDates:
-      - SkillId: 0
-        TriggerType: 3010
-        TriggerTiming: 1
-        Param1: 10
-        Param2: 0
-        Param3: 0
+      TriggerDates: []
     - SkillId: 11040
       Level: 40
       Weight: 0
@@ -521,13 +515,7 @@ MonoBehaviour:
     - SkillId: 4060
       Level: 40
       Weight: 100
-      TriggerDates:
-      - SkillId: 0
-        TriggerType: 4010
-        TriggerTiming: 1
-        Param1: 1
-        Param2: 0
-        Param3: 0
+      TriggerDates: []
     - SkillId: 14100
       Level: 60
       Weight: 0
@@ -563,13 +551,7 @@ MonoBehaviour:
     - SkillId: 4030
       Level: 20
       Weight: 100
-      TriggerDates:
-      - SkillId: 0
-        TriggerType: 2010
-        TriggerTiming: 1
-        Param1: 50
-        Param2: 0
-        Param3: 0
+      TriggerDates: []
     - SkillId: 14020
       Level: 40
       Weight: 0
@@ -654,6 +636,18 @@ MonoBehaviour:
       Level: 1
       Weight: 0
       TriggerDates: []
+    - SkillId: 200110
+      Level: 1
+      Weight: 0
+      TriggerDates: []
+    - SkillId: 200120
+      Level: 1
+      Weight: 150
+      TriggerDates: []
+    - SkillId: 200130
+      Level: 1
+      Weight: 0
+      TriggerDates: []
     SkillTriggerDates:
     - SkillId: 1010
       Trigger1: 5061
@@ -662,6 +656,15 @@ MonoBehaviour:
       Trigger1: 5061
       Trigger2: 0
     - SkillId: 11010
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 200110
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 200120
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 200130
       Trigger1: 0
       Trigger2: 0
   - Id: 102
@@ -687,6 +690,18 @@ MonoBehaviour:
       Level: 1
       Weight: 0
       TriggerDates: []
+    - SkillId: 200210
+      Level: 1
+      Weight: 0
+      TriggerDates: []
+    - SkillId: 200220
+      Level: 1
+      Weight: 150
+      TriggerDates: []
+    - SkillId: 200230
+      Level: 1
+      Weight: 0
+      TriggerDates: []
     SkillTriggerDates:
     - SkillId: 4010
       Trigger1: 0
@@ -696,6 +711,15 @@ MonoBehaviour:
       Trigger2: 0
     - SkillId: 14100
       Trigger1: 1033
+      Trigger2: 0
+    - SkillId: 200210
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 200220
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 200230
+      Trigger1: 0
       Trigger2: 0
   - Id: 103
     Name: "\u30A2\u30F3\u30C9\u30E9\u30B9"
@@ -1034,7 +1058,7 @@ MonoBehaviour:
       Trigger1: 0
       Trigger2: 0
   - Id: 203
-    Name: "\u30B6\u30AC\u30F3"
+    Name: "\u30D6\u30A8\u30EB"
     ImagePath: Buer
     BaseStatus:
       _hp: 75
@@ -1051,13 +1075,7 @@ MonoBehaviour:
     - SkillId: 3020
       Level: 1
       Weight: 50
-      TriggerDates:
-      - SkillId: 0
-        TriggerType: 4020
-        TriggerTiming: 1
-        Param1: 2
-        Param2: 0
-        Param3: 0
+      TriggerDates: []
     - SkillId: 3050
       Level: 1
       Weight: 50
@@ -1087,7 +1105,7 @@ MonoBehaviour:
       Trigger1: 0
       Trigger2: 0
   - Id: 204
-    Name: "\u30E1\u30D5\u30A3\u30B9\u30C8\u30D5\u30A7\u30EC\u30B9"
+    Name: "\u30C7\u30AB\u30E9\u30D3\u30A2"
     ImagePath: Decarabia
     BaseStatus:
       _hp: 75
@@ -1124,19 +1142,7 @@ MonoBehaviour:
     - SkillId: 4050
       Level: 1
       Weight: 30
-      TriggerDates:
-      - SkillId: 0
-        TriggerType: 4020
-        TriggerTiming: 1
-        Param1: 2
-        Param2: 0
-        Param3: 1
-      - SkillId: 0
-        TriggerType: 9030
-        TriggerTiming: 1
-        Param1: 3
-        Param2: 1
-        Param3: 0
+      TriggerDates: []
     - SkillId: 4060
       Level: 1
       Weight: 30
@@ -1174,7 +1180,7 @@ MonoBehaviour:
       Trigger1: 0
       Trigger2: 0
   - Id: 205
-    Name: "\u30A2\u30B9\u30BF\u30ED\u30C8"
+    Name: "\u30A4\u30F3\u30C9\u30E9"
     ImagePath: Mephisto
     BaseStatus:
       _hp: 75
@@ -1221,7 +1227,7 @@ MonoBehaviour:
       Trigger1: 0
       Trigger2: 0
   - Id: 206
-    Name: "\u30A4\u30BF\u30AF\u30A1"
+    Name: "\u30BA\u30EB\u30EF\u30FC\u30F3"
     ImagePath: Ithaqua
     BaseStatus:
       _hp: 75
@@ -1268,7 +1274,7 @@ MonoBehaviour:
       Trigger1: 0
       Trigger2: 0
   - Id: 207
-    Name: "\u30A2\u30F3\u30EA\u30FB\u30DE\u30F3\u30E6"
+    Name: "\u30A2\u30F3\u30EA\u30DE\u30E6"
     ImagePath: Cyaegha
     BaseStatus:
       _hp: 75
@@ -1314,128 +1320,6 @@ MonoBehaviour:
     - SkillId: 100711
       Trigger1: 0
       Trigger2: 0
-  - Id: 213
-    Name: "\u30B6\u30AC\u30F3"
-    ImagePath: Zagan
-    BaseStatus:
-      _hp: 75
-      _mp: 5
-      _atk: 15
-      _def: 10
-      _spd: 15
-    Kinds: 0300000003000000
-    LearningSkills:
-    - SkillId: 3010
-      Level: 1
-      Weight: 10
-      TriggerDates: []
-    - SkillId: 3050
-      Level: 1
-      Weight: 40
-      TriggerDates: []
-    - SkillId: 3070
-      Level: 1
-      Weight: 25
-      TriggerDates: []
-    - SkillId: 100320
-      Level: 1
-      Weight: 50
-      TriggerDates: []
-    - SkillId: 100321
-      Level: 1
-      Weight: 80
-      TriggerDates: []
-    SkillTriggerDates:
-    - SkillId: 3010
-      Trigger1: 0
-      Trigger2: 0
-    - SkillId: 3050
-      Trigger1: 0
-      Trigger2: 0
-    - SkillId: 3070
-      Trigger1: 0
-      Trigger2: 0
-    - SkillId: 100320
-      Trigger1: 0
-      Trigger2: 0
-    - SkillId: 100321
-      Trigger1: 0
-      Trigger2: 0
-  - Id: 214
-    Name: "\u30E1\u30D5\u30A3\u30B9\u30C8\u30D5\u30A7\u30EC\u30B9"
-    ImagePath: Mephisto
-    BaseStatus:
-      _hp: 75
-      _mp: 5
-      _atk: 15
-      _def: 10
-      _spd: 15
-    Kinds: 0300000003000000
-    LearningSkills:
-    - SkillId: 4010
-      Level: 1
-      Weight: 30
-      TriggerDates: []
-    - SkillId: 14040
-      Level: 1
-      Weight: 30
-      TriggerDates: []
-    - SkillId: 100420
-      Level: 1
-      Weight: 30
-      TriggerDates: []
-    - SkillId: 100421
-      Level: 1
-      Weight: 80
-      TriggerDates: []
-    - SkillId: 14080
-      Level: 1
-      Weight: 30
-      TriggerDates: []
-    - SkillId: 12010
-      Level: 1
-      Weight: 0
-      TriggerDates: []
-    - SkillId: 4070
-      Level: 1
-      Weight: 50
-      TriggerDates: []
-    - SkillId: 4060
-      Level: 1
-      Weight: 50
-      TriggerDates: []
-    - SkillId: 14070
-      Level: 1
-      Weight: 30
-      TriggerDates: []
-    SkillTriggerDates:
-    - SkillId: 4010
-      Trigger1: 0
-      Trigger2: 0
-    - SkillId: 14040
-      Trigger1: 0
-      Trigger2: 0
-    - SkillId: 100420
-      Trigger1: 0
-      Trigger2: 0
-    - SkillId: 100421
-      Trigger1: 0
-      Trigger2: 0
-    - SkillId: 14080
-      Trigger1: 0
-      Trigger2: 0
-    - SkillId: 12010
-      Trigger1: 0
-      Trigger2: 0
-    - SkillId: 4070
-      Trigger1: 0
-      Trigger2: 0
-    - SkillId: 4060
-      Trigger1: 0
-      Trigger2: 0
-    - SkillId: 14070
-      Trigger1: 0
-      Trigger2: 0
   - Id: 301
     Name: "\u30C7\u30D3\u30EB\u30C9\u30E9\u30B4\u30F3"
     ImagePath: Devildragon
@@ -1454,13 +1338,7 @@ MonoBehaviour:
     - SkillId: 6010
       Level: 1
       Weight: 80
-      TriggerDates:
-      - SkillId: 0
-        TriggerType: 1010
-        TriggerTiming: 1
-        Param1: 100
-        Param2: 0
-        Param3: 0
+      TriggerDates: []
     - SkillId: 12010
       Level: 1
       Weight: 0
