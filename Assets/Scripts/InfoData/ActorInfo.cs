@@ -155,9 +155,8 @@ namespace Ryneus
         public List<SkillInfo> LearningSkillInfos()
         {
             var list = new List<SkillInfo>();
-            for (int i = 0;i < Master.LearningSkills.Count;i++)
+            foreach (var _learningData in Master.LearningSkills)
             {
-                var _learningData = Master.LearningSkills[i];
                 if (list.Find(a =>a.Id == _learningData.SkillId) != null) continue;
                 var skillInfo = new SkillInfo(_learningData.SkillId);
                 if (Level >= _learningData.Level)

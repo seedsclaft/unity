@@ -351,7 +351,13 @@ MonoBehaviour:
     - SkillId: 1030
       Level: 20
       Weight: 80
-      TriggerDates: []
+      TriggerDates:
+      - SkillId: 0
+        TriggerType: 3010
+        TriggerTiming: 1
+        Param1: 10
+        Param2: 0
+        Param3: 0
     - SkillId: 11040
       Level: 40
       Weight: 0
@@ -515,7 +521,13 @@ MonoBehaviour:
     - SkillId: 4060
       Level: 40
       Weight: 100
-      TriggerDates: []
+      TriggerDates:
+      - SkillId: 0
+        TriggerType: 4010
+        TriggerTiming: 1
+        Param1: 1
+        Param2: 0
+        Param3: 0
     - SkillId: 14100
       Level: 60
       Weight: 0
@@ -551,7 +563,13 @@ MonoBehaviour:
     - SkillId: 4030
       Level: 20
       Weight: 100
-      TriggerDates: []
+      TriggerDates:
+      - SkillId: 0
+        TriggerType: 2010
+        TriggerTiming: 1
+        Param1: 50
+        Param2: 0
+        Param3: 0
     - SkillId: 14020
       Level: 40
       Weight: 0
@@ -973,43 +991,8 @@ MonoBehaviour:
       _def: 10
       _spd: 15
     Kinds: 0500000003000000
-    LearningSkills:
-    - SkillId: 1010
-      Level: 1
-      Weight: 50
-      TriggerDates: []
-    - SkillId: 1040
-      Level: 1
-      Weight: 60
-      TriggerDates: []
-    - SkillId: 200110
-      Level: 1
-      Weight: 0
-      TriggerDates: []
-    - SkillId: 200120
-      Level: 1
-      Weight: 300
-      TriggerDates: []
-    - SkillId: 200130
-      Level: 1
-      Weight: 0
-      TriggerDates: []
-    SkillTriggerDates:
-    - SkillId: 1010
-      Trigger1: 5061
-      Trigger2: 0
-    - SkillId: 1040
-      Trigger1: 8031
-      Trigger2: 0
-    - SkillId: 200110
-      Trigger1: 0
-      Trigger2: 0
-    - SkillId: 200120
-      Trigger1: 5061
-      Trigger2: 0
-    - SkillId: 200130
-      Trigger1: 0
-      Trigger2: 0
+    LearningSkills: []
+    SkillTriggerDates: []
   - Id: 202
     Name: "\u30B6\u30AC\u30F3"
     ImagePath: Zagan
@@ -1020,43 +1003,8 @@ MonoBehaviour:
       _def: 10
       _spd: 15
     Kinds: 0600000003000000
-    LearningSkills:
-    - SkillId: 4010
-      Level: 1
-      Weight: 40
-      TriggerDates: []
-    - SkillId: 3080
-      Level: 1
-      Weight: 50
-      TriggerDates: []
-    - SkillId: 200210
-      Level: 1
-      Weight: 0
-      TriggerDates: []
-    - SkillId: 200220
-      Level: 1
-      Weight: 100
-      TriggerDates: []
-    - SkillId: 200230
-      Level: 1
-      Weight: 0
-      TriggerDates: []
-    SkillTriggerDates:
-    - SkillId: 4010
-      Trigger1: 0
-      Trigger2: 0
-    - SkillId: 3080
-      Trigger1: 0
-      Trigger2: 0
-    - SkillId: 200210
-      Trigger1: 0
-      Trigger2: 0
-    - SkillId: 200220
-      Trigger1: 0
-      Trigger2: 0
-    - SkillId: 200230
-      Trigger1: 0
-      Trigger2: 0
+    LearningSkills: []
+    SkillTriggerDates: []
   - Id: 203
     Name: "\u30D6\u30A8\u30EB"
     ImagePath: Buer
@@ -1067,43 +1015,8 @@ MonoBehaviour:
       _def: 10
       _spd: 15
     Kinds: 0600000003000000
-    LearningSkills:
-    - SkillId: 3010
-      Level: 1
-      Weight: 10
-      TriggerDates: []
-    - SkillId: 3020
-      Level: 1
-      Weight: 50
-      TriggerDates: []
-    - SkillId: 3050
-      Level: 1
-      Weight: 50
-      TriggerDates: []
-    - SkillId: 100310
-      Level: 1
-      Weight: 50
-      TriggerDates: []
-    - SkillId: 100311
-      Level: 1
-      Weight: 50
-      TriggerDates: []
-    SkillTriggerDates:
-    - SkillId: 3010
-      Trigger1: 0
-      Trigger2: 0
-    - SkillId: 3020
-      Trigger1: 0
-      Trigger2: 0
-    - SkillId: 3050
-      Trigger1: 0
-      Trigger2: 0
-    - SkillId: 100310
-      Trigger1: 0
-      Trigger2: 0
-    - SkillId: 100311
-      Trigger1: 0
-      Trigger2: 0
+    LearningSkills: []
+    SkillTriggerDates: []
   - Id: 204
     Name: "\u30C7\u30AB\u30E9\u30D3\u30A2"
     ImagePath: Decarabia
@@ -1114,71 +1027,8 @@ MonoBehaviour:
       _def: 10
       _spd: 15
     Kinds: 0500000003000000
-    LearningSkills:
-    - SkillId: 4010
-      Level: 1
-      Weight: 30
-      TriggerDates: []
-    - SkillId: 14040
-      Level: 1
-      Weight: 30
-      TriggerDates: []
-    - SkillId: 100410
-      Level: 1
-      Weight: 30
-      TriggerDates: []
-    - SkillId: 100411
-      Level: 1
-      Weight: 30
-      TriggerDates: []
-    - SkillId: 14010
-      Level: 1
-      Weight: 30
-      TriggerDates: []
-    - SkillId: 12010
-      Level: 1
-      Weight: 0
-      TriggerDates: []
-    - SkillId: 4050
-      Level: 1
-      Weight: 30
-      TriggerDates: []
-    - SkillId: 4060
-      Level: 1
-      Weight: 30
-      TriggerDates: []
-    - SkillId: 14070
-      Level: 1
-      Weight: 30
-      TriggerDates: []
-    SkillTriggerDates:
-    - SkillId: 4010
-      Trigger1: 0
-      Trigger2: 0
-    - SkillId: 14040
-      Trigger1: 0
-      Trigger2: 0
-    - SkillId: 100410
-      Trigger1: 0
-      Trigger2: 0
-    - SkillId: 100411
-      Trigger1: 0
-      Trigger2: 0
-    - SkillId: 14010
-      Trigger1: 0
-      Trigger2: 0
-    - SkillId: 12010
-      Trigger1: 0
-      Trigger2: 0
-    - SkillId: 4050
-      Trigger1: 0
-      Trigger2: 0
-    - SkillId: 4060
-      Trigger1: 0
-      Trigger2: 0
-    - SkillId: 14070
-      Trigger1: 0
-      Trigger2: 0
+    LearningSkills: []
+    SkillTriggerDates: []
   - Id: 205
     Name: "\u30A4\u30F3\u30C9\u30E9"
     ImagePath: Mephisto
@@ -1189,43 +1039,8 @@ MonoBehaviour:
       _def: 10
       _spd: 15
     Kinds: 0100000003000000
-    LearningSkills:
-    - SkillId: 1010
-      Level: 1
-      Weight: 30
-      TriggerDates: []
-    - SkillId: 1020
-      Level: 1
-      Weight: 80
-      TriggerDates: []
-    - SkillId: 100110
-      Level: 1
-      Weight: 0
-      TriggerDates: []
-    - SkillId: 100111
-      Level: 1
-      Weight: 0
-      TriggerDates: []
-    - SkillId: 12010
-      Level: 1
-      Weight: 0
-      TriggerDates: []
-    SkillTriggerDates:
-    - SkillId: 1010
-      Trigger1: 0
-      Trigger2: 0
-    - SkillId: 1020
-      Trigger1: 0
-      Trigger2: 0
-    - SkillId: 100110
-      Trigger1: 0
-      Trigger2: 0
-    - SkillId: 100111
-      Trigger1: 0
-      Trigger2: 0
-    - SkillId: 12010
-      Trigger1: 0
-      Trigger2: 0
+    LearningSkills: []
+    SkillTriggerDates: []
   - Id: 206
     Name: "\u30BA\u30EB\u30EF\u30FC\u30F3"
     ImagePath: Ithaqua
@@ -1236,43 +1051,8 @@ MonoBehaviour:
       _def: 10
       _spd: 15
     Kinds: 0200000003000000
-    LearningSkills:
-    - SkillId: 2010
-      Level: 1
-      Weight: 30
-      TriggerDates: []
-    - SkillId: 2060
-      Level: 1
-      Weight: 80
-      TriggerDates: []
-    - SkillId: 100610
-      Level: 1
-      Weight: 0
-      TriggerDates: []
-    - SkillId: 100611
-      Level: 1
-      Weight: 30
-      TriggerDates: []
-    - SkillId: 12010
-      Level: 1
-      Weight: 0
-      TriggerDates: []
-    SkillTriggerDates:
-    - SkillId: 2010
-      Trigger1: 0
-      Trigger2: 0
-    - SkillId: 2060
-      Trigger1: 0
-      Trigger2: 0
-    - SkillId: 100610
-      Trigger1: 0
-      Trigger2: 0
-    - SkillId: 100611
-      Trigger1: 0
-      Trigger2: 0
-    - SkillId: 12010
-      Trigger1: 0
-      Trigger2: 0
+    LearningSkills: []
+    SkillTriggerDates: []
   - Id: 207
     Name: "\u30A2\u30F3\u30EA\u30DE\u30E6"
     ImagePath: Cyaegha
@@ -1283,43 +1063,8 @@ MonoBehaviour:
       _def: 10
       _spd: 15
     Kinds: 0600000003000000
-    LearningSkills:
-    - SkillId: 5010
-      Level: 1
-      Weight: 30
-      TriggerDates: []
-    - SkillId: 5050
-      Level: 1
-      Weight: 80
-      TriggerDates: []
-    - SkillId: 15040
-      Level: 1
-      Weight: 0
-      TriggerDates: []
-    - SkillId: 100710
-      Level: 1
-      Weight: 50
-      TriggerDates: []
-    - SkillId: 100711
-      Level: 1
-      Weight: 50
-      TriggerDates: []
-    SkillTriggerDates:
-    - SkillId: 5010
-      Trigger1: 0
-      Trigger2: 0
-    - SkillId: 5050
-      Trigger1: 0
-      Trigger2: 0
-    - SkillId: 15040
-      Trigger1: 0
-      Trigger2: 0
-    - SkillId: 100710
-      Trigger1: 0
-      Trigger2: 0
-    - SkillId: 100711
-      Trigger1: 0
-      Trigger2: 0
+    LearningSkills: []
+    SkillTriggerDates: []
   - Id: 301
     Name: "\u30C7\u30D3\u30EB\u30C9\u30E9\u30B4\u30F3"
     ImagePath: Devildragon
@@ -1330,26 +1075,5 @@ MonoBehaviour:
       _def: 10
       _spd: 15
     Kinds: 0300000003000000
-    LearningSkills:
-    - SkillId: 2010
-      Level: 1
-      Weight: 30
-      TriggerDates: []
-    - SkillId: 6010
-      Level: 1
-      Weight: 80
-      TriggerDates: []
-    - SkillId: 12010
-      Level: 1
-      Weight: 0
-      TriggerDates: []
-    SkillTriggerDates:
-    - SkillId: 2010
-      Trigger1: 0
-      Trigger2: 0
-    - SkillId: 6010
-      Trigger1: 0
-      Trigger2: 0
-    - SkillId: 12010
-      Trigger1: 0
-      Trigger2: 0
+    LearningSkills: []
+    SkillTriggerDates: []

@@ -275,7 +275,7 @@ namespace Ryneus
             var rect = decideAnimation.GetComponent<RectTransform>();
             var canvasGroup = decideAnimation.GetComponent<CanvasGroup>();
             var duration = 1f;
-            var sequence = DOTween.Sequence()
+            DOTween.Sequence()
                 .Append(rect.DOScaleX(1.25f,duration))
                 .Join(rect.DOScaleY(1.1f,duration))
                 .Join(canvasGroup.DOFade(0,duration))

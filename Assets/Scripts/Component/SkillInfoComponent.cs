@@ -35,6 +35,7 @@ namespace Ryneus
                 //UpdateRebornInfo(skillInfo);
             } else
             {
+                Debug.Log(skillInfo.Id);
                 UpdateSkillData(skillInfo.Id);
             }
             if (description != null)
@@ -85,6 +86,24 @@ namespace Ryneus
                     iconBack.gameObject.SetActive(true);
                     UpdateSkillIconBack(skillData.Attribute);
                 }
+                if (nameText != null)
+                {
+                    nameText.text = skillData.Name;
+                    if (nameAndMpCost)
+                    {
+                        nameText.rectTransform.sizeDelta = new Vector2(nameText.preferredWidth,nameText.preferredHeight);
+                    }
+                }
+                if (mpCost != null)
+                {
+                    if (skillData.SkillType == SkillType.Active)
+                    {
+                        mpCost.text = "(" + skillData.MpCost.ToString() + ")";
+                    } else
+                    {
+                        mpCost.text = "";
+                    }
+                }
             } else
             {
                 if (icon != null)
@@ -94,24 +113,6 @@ namespace Ryneus
                 if (iconBack != null)
                 {
                     iconBack.gameObject.SetActive(false);
-                }
-            }
-            if (nameText != null)
-            {
-                nameText.text = skillData.Name;
-                if (nameAndMpCost)
-                {
-                    nameText.rectTransform.sizeDelta = new Vector2(nameText.preferredWidth,nameText.preferredHeight);
-                }
-            }
-            if (mpCost != null)
-            {
-                if (skillData.SkillType == SkillType.Active)
-                {
-                    mpCost.text = "(" + skillData.MpCost.ToString() + ")";
-                } else
-                {
-                    mpCost.text = "";
                 }
             }
             if (lineImage != null)
