@@ -12,13 +12,13 @@ using Firebase.Extensions;
 
 namespace Ryneus
 {
-    public class FirebaseController : SingletonMonoBehaviour<FirebaseController>
+    public partial class FirebaseController : SingletonMonoBehaviour<FirebaseController>
     {
         private bool _isInit = false;
         public static bool IsBusy = false;
         public static List<RankingInfo> RankingInfos = new ();
         public static int CurrentScore = 0;
-    #if UNITY_WEBGL 
+    #if UNITY_WEBGL
         [DllImport("__Internal")]
         private static extern void FirebaseInit();
 

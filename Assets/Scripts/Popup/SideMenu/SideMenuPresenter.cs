@@ -70,6 +70,9 @@ namespace Ryneus
                     case "Title":
                     CommandTitle();
                     break;
+                    case "EndGame":
+                    CommandEndGame();
+                    break;
                 }
             }
         }
@@ -77,7 +80,8 @@ namespace Ryneus
         private void CommandOption()
         {
             SoundManager.Instance.PlayStaticSe(SEType.Decide);
-            _view.CommandCallOption(() => {
+            _view.CommandCallOption(() => 
+            {
                 _view.CommandGameSystem(Base.CommandType.ClosePopup);
             });
         }
@@ -125,10 +129,13 @@ namespace Ryneus
         private void CommandCredit()
         {
             _busy = true;
-            var popupInfo = new PopupInfo();
-            popupInfo.PopupType = PopupType.Credit;
-            popupInfo.EndEvent = () => {
-                _busy = false;
+            var popupInfo = new PopupInfo
+            {
+                PopupType = PopupType.Credit,
+                EndEvent = () =>
+                {
+                    _busy = false;
+                }
             };
             _view.CommandCallPopup(popupInfo);
         }
@@ -155,7 +162,8 @@ namespace Ryneus
                 _view.CommandGameSystem(Base.CommandType.ClosePopup);
                 _model.DeletePlayerData();
                 _view.CommandGameSystem(Base.CommandType.CloseConfirm);
-                var popupInfo = new ConfirmInfo(DataSystem.GetText(582),(a) => {
+                var popupInfo = new ConfirmInfo(DataSystem.GetText(582),(a) => 
+                {
                     SoundManager.Instance.StopBgm();
                     _view.CommandGameSystem(Base.CommandType.CloseStatus);
                     _view.CommandGameSystem(Base.CommandType.CloseConfirm);
@@ -174,6 +182,11 @@ namespace Ryneus
                 _view.CommandGameSystem(Base.CommandType.CloseStatus);
                 _view.CommandGotoSceneChange(Scene.Title);
             }
+        }
+
+        private void CommandEndGame()
+        {
+            Application.Quit();
         }
     }
 }

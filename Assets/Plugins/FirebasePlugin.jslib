@@ -1,14 +1,15 @@
 var FirebasePlugin = {
 
   FirebaseInit: function () {
+    console.log("FirebaseInit");
     const FirebaseConfig = {
-        apiKey: "AIzaSyBezj2DIhbIHqnJ1Z3Lun9dVf3iKX9_l5M",
-        authDomain: "numinos-9a795.firebaseapp.com",
-        projectId: "numinos-9a795",
-        storageBucket: "numinos-9a795.appspot.com",
-        messagingSenderId: "411399856788",
-        appId: "1:411399856788:web:05bf5f4f329b0185200a81",
-        measurementId: "G-FQ7NQ9K52L"
+      apiKey: "AIzaSyCWY2ryuuifGEqqgDaktajcYYFFsWToI0A",
+      authDomain: "norm-4d161.firebaseapp.com",
+      projectId: "norm-4d161",
+      storageBucket: "norm-4d161.appspot.com",
+      messagingSenderId: "426265705279",
+      appId: "1:426265705279:web:819d8d95887bc24ae8718a",
+      measurementId: "G-JWHMEGC4VZ"
     };
     window.firebase.initializeApp(FirebaseConfig);
   },

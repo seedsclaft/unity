@@ -55,6 +55,7 @@ namespace Ryneus
             SetInputHandler(sideMenuInfoList.GetComponent<IInputHandlerEvent>());
         }
     }
+
     public class SideMenuViewInfo
     {
         public List<ListData> CommandLists;

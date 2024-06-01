@@ -15,6 +15,8 @@ namespace Ryneus
         private List<SkillLogListInfo> _skillLogs = new ();
         public List<SkillLogListInfo> SkillLogs => _skillLogs;
 
+        private SaveBattleInfo _saveBattleInfo = new SaveBattleInfo();
+
         private List<BattlerInfo> _battlers = new List<BattlerInfo>();
         public List<BattlerInfo> Battlers => _battlers;
 
@@ -1343,6 +1345,7 @@ namespace Ryneus
             }
             
             actionResultInfo.SetTurnCount(_turnCount);
+            _saveBattleInfo.AddData(_actionIndex,actionResultInfo);
         }
         
         public List<int> DeathBattlerIndex(List<ActionResultInfo> actionResultInfos)
@@ -2817,6 +2820,7 @@ namespace Ryneus
             }
             var data = _battleActionRecords;
             SaveSystem.SaveConfigStart(GameSystem.ConfigData);
+            SaveSystem.SaveBattleInfo(1,_saveBattleInfo);
         }
 
         public List<ListData> SideMenu()

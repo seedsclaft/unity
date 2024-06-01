@@ -46,7 +46,7 @@ namespace Ryneus
 
         private void Awake() 
         {
-    #if (UNITY_WEBGL || UNITY_ANDROID) && !UNITY_EDITOR
+    #if (UNITY_WEBGL || UNITY_ANDROID || UNITY_STANDALONE_WIN)// && !UNITY_EDITOR
             FirebaseController.Instance.Initialize();
     #endif
             Application.targetFrameRate = 60;

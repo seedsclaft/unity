@@ -38,6 +38,13 @@ namespace Ryneus
                 Key = "InitializeData"
             };
             list.Add(initCommand);
+            var endCommand = new SystemData.CommandData
+            {
+                Id = 4,
+                Name = DataSystem.GetText(710),
+                Key = "EndGame"
+            };
+            list.Add(endCommand);
             return MakeListData(list);
         }
     }

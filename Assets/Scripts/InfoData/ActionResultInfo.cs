@@ -15,8 +15,6 @@ namespace Ryneus
 
         private int _skillId = -1;
         public int SkillId => _skillId;
-
-        private SkillInfo _skillInfo = null;
         public ActionResultInfo(BattlerInfo subject,BattlerInfo target,List<SkillData.FeatureData> featureDates,int skillId,bool isOneTarget = false,SkillInfo skillInfo = null)
         {
             if (subject != null && target != null)
@@ -27,13 +25,9 @@ namespace Ryneus
                 _execStateInfos[_targetIndex] = new ();
                 _skillId = skillId;
             }
-            if (skillInfo != null)
+            foreach (var featureData in featureDates)
             {
-                _skillInfo = skillInfo;
-            }
-            for (int i = 0; i < featureDates.Count; i++)
-            {
-                MakeFeature(subject,target,featureDates[i],skillId,isOneTarget);
+                MakeFeature(subject,target,featureData,skillId,isOneTarget);
             }
             if (subject != null && target != null)
             {
@@ -51,9 +45,11 @@ namespace Ryneus
                 {
                     if (target.IsState(StateType.Undead) && featureDates.Find(a => a.FeatureType == FeatureType.BreakUndead) == null)
                     {
-                        var undeadFeature = new SkillData.FeatureData();
-                        undeadFeature.FeatureType = FeatureType.RemoveState;
-                        undeadFeature.Param1 = (int)StateType.Undead;
+                        var undeadFeature = new SkillData.FeatureData
+                        {
+                            FeatureType = FeatureType.RemoveState,
+                            Param1 = (int)StateType.Undead
+                        };
                         MakeRemoveState(target,target,undeadFeature);
                         _overkillHpDamage = _hpDamage;
                         _hpDamage = target.Hp - 1;
@@ -76,9 +72,11 @@ namespace Ryneus
                 {
                     if (subject.IsState(StateType.Undead) && featureDates.Find(a => a.FeatureType == FeatureType.BreakUndead) == null)
                     {
-                        var undeadFeature = new SkillData.FeatureData();
-                        undeadFeature.FeatureType = FeatureType.RemoveState;
-                        undeadFeature.Param1 = (int)StateType.Undead;
+                        var undeadFeature = new SkillData.FeatureData
+                        {
+                            FeatureType = FeatureType.RemoveState,
+                            Param1 = (int)StateType.Undead
+                        };
                         MakeRemoveState(subject,subject,undeadFeature);
                         _reDamage = subject.Hp - 1;
                     } else
@@ -113,21 +111,27 @@ namespace Ryneus
         private int _overkillHpDamage = 0;
         public int OverkillHpDamage => _overkillHpDamage;
         private int _hpHeal = 0;
-        public int HpHeal {
-            get { return _hpHeal;} set{_hpHeal = value;}
+        public int HpHeal => _hpHeal;
+        public void SetHpHeal(int hpHeal)
+        {
+            _hpHeal = hpHeal;
         }
         private int _mpDamage = 0;
         public int MpDamage => _mpDamage;
         private int _mpHeal = 0;
-        public int MpHeal {
-            get {return _mpHeal;} set{_mpHeal = value;}
+        public int MpHeal => _mpHeal;
+        public void SetMpHeal(int mpHeal)
+        {
+            _mpHeal = mpHeal;
         }
         private int _apDamage = 0;
         public int ApDamage => _apDamage;
 
         private int _apHeal = 0;
-        public int ApHeal {
-            get {return _apHeal;} set{_apHeal = value;}
+        public int ApHeal => _apHeal;
+        public void SetApHeal(int apHeal)
+        {
+            _apHeal = apHeal;
         }
         private int _reDamage = 0;
         public int ReDamage => _reDamage;

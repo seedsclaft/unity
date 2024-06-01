@@ -61,7 +61,8 @@ namespace Ryneus
 
         private void CommandTitle(int commandIndex){
             _busy = true;
-            switch ((TitleCommandType)commandIndex){
+            switch ((TitleCommandType)commandIndex)
+            {
                 case TitleCommandType.NewGame:
                     CommandNewGame();
                 break;
