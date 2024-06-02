@@ -8,44 +8,44 @@ using NPOI.SS.UserModel;
 
 namespace Ryneus
 {
-	public class PrizeSetInfoImporter : AssetPostprocessor 
+	public class ScorePrizesImporter : AssetPostprocessor 
 	{
 		enum BaseColumn
 		{
 			Id = 0,
-			Type,
-			Param1,
-			Param2
+			PrizeSetId,
+			Score,
+            ConditionName
 		}
-		static readonly string ExcelName = "PrizeSets.xlsx";
+		static readonly string ExcelName = "ScorePrizes.xlsx";
 
 		// アセット更新があると呼ばれる
-		static void OnPostprocessAllAssets(string[] importedAssets, string[] deletedAssets, string[] movedAssets, string[] movedFromAssetPaths) {
-			foreach (string asset in importedAssets) {
-
+		static void OnPostprocessAllAssets(string[] importedAssets, string[] deletedAssets, string[] movedAssets, string[] movedFromAssetPaths) 
+		{
+			foreach (string asset in importedAssets) 
+			{
 				if (AssetPostImporter.CheckOnPostprocessAllAssets(asset,ExcelName))
 				{
-					CreatePrizeSetData(asset);
+					CreateScorePrizeInfo(asset);
 					AssetDatabase.SaveAssets();
 					return;
 				}
 			}
 		}
 
-		static void CreatePrizeSetData(string asset)
+		static void CreateScorePrizeInfo(string asset)
 		{
-			Debug.Log("CreatePrizeSetData");
 			// 拡張子なしのファイル名を取得
 			string FileName = Path.GetFileNameWithoutExtension(asset);
 
 			// ディレクトリ情報とファイル名の文字列を結合してアセット名を指定
 			string ExportPath = $"{Path.Combine(AssetPostImporter.ExportExcelPath, FileName)}.asset";
 
-			PrizeSetDates Data = AssetDatabase.LoadAssetAtPath<PrizeSetDates>(ExportPath);
+			ScorePrizeDates Data = AssetDatabase.LoadAssetAtPath<ScorePrizeDates>(ExportPath);
 			if (!Data)
 			{
 				// データがなければ作成
-				Data = ScriptableObject.CreateInstance<PrizeSetDates>();
+				Data = ScriptableObject.CreateInstance<ScorePrizeDates>();
 				AssetDatabase.CreateAsset(Data, ExportPath);
 				Data.hideFlags = HideFlags.NotEditable;
 			}
@@ -57,24 +57,26 @@ namespace Ryneus
 				{
 					// エクセルブックを作成
 					AssetPostImporter.CreateBook(asset, Mainstream, out IWorkbook Book);
-					
+					List<TextData> textData = AssetPostImporter.CreateText(Book.GetSheetAt(1));
+
 					// 情報の初期化
 					Data.Data.Clear();
 
 					// エクセルシートからセル単位で読み込み
 					ISheet BaseSheet = Book.GetSheetAt(0);
+
 					for (int i = 1; i <= BaseSheet.LastRowNum; i++)
 					{
 						IRow BaseRow = BaseSheet.GetRow(i);
 
-						var PrizeSet = new PrizeSetData();
-						PrizeSet.Id = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.Id);
-						var getItemData = new GetItemData();
-						getItemData.Type = (GetItemType)AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.Type);
-						getItemData.Param1 = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.Param1);
-						getItemData.Param2 = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.Param2);
-						PrizeSet.GetItem = getItemData;
-						Data.Data.Add(PrizeSet);
+                        var ScorePrizeData = new ScorePrizeData
+                        {
+                            Id = AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.Id),
+                            PriseSetId = AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.PrizeSetId),
+                            Score = AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.Score),
+                            ConditionName = textData.Find(a => a.Id == AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.ConditionName)).Text
+                        };
+                        Data.Data.Add(ScorePrizeData);
 					}
 				}
 			}

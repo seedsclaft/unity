@@ -21,7 +21,6 @@ namespace Ryneus
         private System.Action _backEvent = null;
         public System.Action BackEvent => _backEvent;
         [SerializeField] private GameObject uiRoot = null;
-        [SerializeField] private Button optionButton = null;
         [SerializeField] private Button sideMenuButton = null;
         public Button SideMenuButton => sideMenuButton;
 
@@ -55,14 +54,6 @@ namespace Ryneus
         {
             InitializeInput();
             SetInputHandler(gameObject.GetComponent<IInputHandlerEvent>());
-            if (optionButton != null)
-            {
-                optionButton.onClick.AddListener(() => {
-                    CommandCallOption(() => {
-                        CommandGameSystem(Base.CommandType.ClosePopup);
-                    });
-                });
-            }
         }
 
         public void InitializeInput()
@@ -85,7 +76,8 @@ namespace Ryneus
             if (_busy) return;
             for (int i = _inputHandler.Count-1;i >= 0;i--)
             {
-                if (_inputHandler[i] != null && _inputBusyFrame < 0){
+                if (_inputHandler[i] != null && _inputBusyFrame < 0)
+                {
                     _inputHandler[i].InputHandler(keyType,pressed);
                 }
             }
@@ -96,9 +88,7 @@ namespace Ryneus
             if (_busy) return;
             foreach (var handler in _inputHandler)
             {
-                if (handler != null){
-                    handler.MouseCancelHandler();
-                }
+                handler?.MouseCancelHandler();
             }
         }
 
@@ -251,50 +241,64 @@ namespace Ryneus
 
         public void CommandSlotSave(SlotSaveViewInfo slotSaveViewInfo)
         {
-            var eventData = new ViewEvent(Base.CommandType.CallSlotSaveView);
-            eventData.template = slotSaveViewInfo;
+            var eventData = new ViewEvent(Base.CommandType.CallSlotSaveView)
+            {
+                template = slotSaveViewInfo
+            };
             CallSceneChangeCommand(eventData);
         }
 
         public void CommandCallStatus(StatusViewInfo statusViewInfo)
         {
-            var eventData = new ViewEvent(Base.CommandType.CallStatusView);
-            eventData.template = statusViewInfo;
+            var eventData = new ViewEvent(Base.CommandType.CallStatusView)
+            {
+                template = statusViewInfo
+            };
             CallSceneChangeCommand(eventData);
         }
 
         public void CommandCallEnemyInfo(StatusViewInfo statusViewInfo)
         {
-            var eventData = new ViewEvent(Base.CommandType.CallEnemyInfoView);
-            eventData.template = statusViewInfo;
+            var eventData = new ViewEvent(Base.CommandType.CallEnemyInfoView)
+            {
+                template = statusViewInfo
+            };
             CallSceneChangeCommand(eventData);
         }
 
         public void CommandCallSkillTrigger(SkillTriggerViewInfo skillTriggerViewInfo)
         {
-            var eventData = new ViewEvent(Base.CommandType.CallSkillTriggerView);
-            eventData.template = skillTriggerViewInfo;
+            var eventData = new ViewEvent(Base.CommandType.CallSkillTriggerView)
+            {
+                template = skillTriggerViewInfo
+            };
             CallSceneChangeCommand(eventData);
         }
 
         public void CommandCallSkillLog(SkillLogViewInfo skillLogViewInfo)
         {
-            var eventData = new ViewEvent(Base.CommandType.CallSkillLogView);
-            eventData.template = skillLogViewInfo;
+            var eventData = new ViewEvent(Base.CommandType.CallSkillLogView)
+            {
+                template = skillLogViewInfo
+            };
             CallSceneChangeCommand(eventData);
         }
 
         public void CommandCallAdv(AdvCallInfo advCallInfo)
         {
-            var eventData = new ViewEvent(Base.CommandType.CallAdvScene);
-            eventData.template = advCallInfo;
+            var eventData = new ViewEvent(Base.CommandType.CallAdvScene)
+            {
+                template = advCallInfo
+            };
             CallSceneChangeCommand(eventData);
         }
 
         public void CommandDecidePlayerName(string nameText)
         {
-            var eventData = new ViewEvent(Base.CommandType.DecidePlayerName);
-            eventData.template = nameText;
+            var eventData = new ViewEvent(Base.CommandType.DecidePlayerName)
+            {
+                template = nameText
+            };
             CallSceneChangeCommand(eventData);
         }
 
@@ -306,22 +310,28 @@ namespace Ryneus
 
         public void CommandChangeViewToTransition(System.Action<string> endEvent)
         {
-            var eventData = new ViewEvent(Base.CommandType.ChangeViewToTransition);
-            eventData.template = endEvent;
+            var eventData = new ViewEvent(Base.CommandType.ChangeViewToTransition)
+            {
+                template = endEvent
+            };
             CallSceneChangeCommand(eventData);
         }
 
         public void CommandStartTransition(System.Action endEvent)
         {
-            var eventData = new ViewEvent(Base.CommandType.StartTransition);
-            eventData.template = endEvent;
+            var eventData = new ViewEvent(Base.CommandType.StartTransition)
+            {
+                template = endEvent
+            };
             CallSceneChangeCommand(eventData);
         }
 
         public void CommandCallTutorialFocus(StageTutorialData stageTutorialDate)
         {
-            var eventData = new ViewEvent(Base.CommandType.CallTutorialFocus);
-            eventData.template = stageTutorialDate;
+            var eventData = new ViewEvent(Base.CommandType.CallTutorialFocus)
+            {
+                template = stageTutorialDate
+            };
             CallSceneChangeCommand(eventData);
         }
 
@@ -347,7 +357,8 @@ namespace Ryneus
         {
             if (_backCommand != null)
             {
-                _backCommand.onClick.AddListener(() => {        
+                _backCommand.onClick.AddListener(() => {
+                            
                     if (!_backCommand.gameObject.activeSelf) return;
                     callEvent();
                 });
@@ -358,8 +369,8 @@ namespace Ryneus
         public void SetBackEvent(System.Action backEvent)
         {
             SetBackCommand(() => 
-            {    
-                if (backEvent != null) backEvent();
+            {
+                backEvent?.Invoke();
             });
             ChangeBackCommandActive(true);
         }
@@ -371,7 +382,7 @@ namespace Ryneus
 
         public void ChangeUIActive(bool IsActive)
         {
-            uiRoot.gameObject.SetActive(IsActive);
+            uiRoot.SetActive(IsActive);
         }
 
         public void SetTestMode(bool isTest)

@@ -142,7 +142,8 @@ namespace Ryneus
             ResetAp(true);
         }
 
-        public BattlerInfo(EnemyData enemyData,int lv,int index,LineType lineIndex,bool isBoss){
+        public BattlerInfo(EnemyData enemyData,int lv,int index,LineType lineIndex,bool isBoss)
+        {
             _charaId = enemyData.Id;
             _level = lv;
             _bossFlag = isBoss;

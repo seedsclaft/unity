@@ -8,6 +8,11 @@ namespace Ryneus
         public PartyInfo()
         {
             ClearData();
+            foreach (var scorePrizeData in DataSystem.ScorePrizes)
+            {
+                var scorePrizeInfo = new ScorePrizeInfo(scorePrizeData.Id);
+                _scorePrizeInfos.Add(scorePrizeInfo);
+            }
         }
 
         public void ClearData()
@@ -17,6 +22,7 @@ namespace Ryneus
             _battleResultVictory = false;
             _battleResultScore = 0;
             _symbolRecordList.Clear();
+            _scorePrizeInfos.Clear();
         }
 
         // 所持アクターリスト
@@ -83,6 +89,9 @@ namespace Ryneus
         private int _currency = 0;
         public int Currency => _currency;
         private int _parallelCount = 1;
+        // スコア報酬リスト
+        private List<ScorePrizeInfo> _scorePrizeInfos = new ();
+        public List<ScorePrizeInfo> ScorePrizeInfos => _scorePrizeInfos;
 
         public List<int> CurrentAlchemyIdList(int stageId,int seek)
         {

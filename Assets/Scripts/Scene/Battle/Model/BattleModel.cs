@@ -23,8 +23,6 @@ namespace Ryneus
         private UnitInfo _party;
         private UnitInfo _troop;
 
-        private List<BattleRecord> _battleRecords = new ();
-        public List<BattleRecord> BattleRecords => _battleRecords;
 
         // 行動したバトラー
         private BattlerInfo _currentTurnBattler = null;
@@ -85,8 +83,6 @@ namespace Ryneus
                 var skillTriggerInfos = PartyInfo.SkillTriggerInfos(actorInfo.ActorId);
                 var battlerInfo = new BattlerInfo(actorInfo,actorInfo.BattleIndex,skillTriggerInfos);
                 _battlers.Add(battlerInfo);
-                var battlerRecord = new BattleRecord(battlerInfo.Index);
-                _battleRecords.Add(battlerRecord);
             }
             var enemies = CurrentTroopInfo().BattlerInfos;
             foreach (var enemy in enemies)
@@ -95,14 +91,10 @@ namespace Ryneus
                 enemy.ResetSkillInfos();
                 //enemy.GainHp(-9999);
                 _battlers.Add(enemy);
-                var battlerRecord = new BattleRecord(enemy.Index);
-                _battleRecords.Add(battlerRecord);
             }
             // アルカナ
             var alcana = new BattlerInfo(AlcanaSkillInfos(),true,1);
             _battlers.Add(alcana);
-            var alcanaBattlerRecord = new BattleRecord(1001);
-            _battleRecords.Add(alcanaBattlerRecord);
 
             foreach (var battlerInfo1 in _battlers)
             {
@@ -287,11 +279,6 @@ namespace Ryneus
         public BattlerInfo GetBattlerInfo(int index)
         {
             return _battlers.Find(a => a.Index == index);
-        }
-
-        public BattleRecord GetBattlerRecord(int index)
-        {
-            return _battleRecords.Find(a => a.BattlerIndex == index);
         }
 
         public List<ListData> SkillActionList()
@@ -1113,8 +1100,6 @@ namespace Ryneus
         {
             var subject = GetBattlerInfo(actionResultInfo.SubjectIndex);
             var target = GetBattlerInfo(actionResultInfo.TargetIndex);
-            var subjectRecord = GetBattlerRecord(actionResultInfo.SubjectIndex);
-            var targetRecord = GetBattlerRecord(actionResultInfo.TargetIndex);
             foreach (var addState in actionResultInfo.AddedStates)
             {
                 var addTarget = GetBattlerInfo(addState.TargetIndex);
@@ -1129,13 +1114,10 @@ namespace Ryneus
             {
                 target.GainHp(-1 * actionResultInfo.HpDamage);
                 target.GainDamagedValue(actionResultInfo.HpDamage);
-                targetRecord.GainDamagedValue(actionResultInfo.HpDamage);
-                subjectRecord.GainDamageValue(actionResultInfo.HpDamage);
             }
             if (actionResultInfo.HpHeal != 0 && (!actionResultInfo.DeadIndexList.Contains(target.Index) || actionResultInfo.AliveIndexList.Contains(target.Index)))
             {
                 target.GainHp(actionResultInfo.HpHeal);
-                subjectRecord.GainHealValue(actionResultInfo.HpHeal);
             }
             if (actionResultInfo.MpDamage != 0)
             {
@@ -2474,31 +2456,8 @@ namespace Ryneus
             {
                 PartyInfo.SetBattleResultVictory(true);
                 var score = 100f;
-                var turns = (4 * _troop.BattlerInfos.Count) - _turnCount;
-                score -= turns;
-                /*
-                float damageAll = 0;
-                float healAll = 0;
-                float damagedAll = 0;
-                foreach (var battleRecord in _battleRecords)
-                {
-                    if (battleRecord.BattlerIndex < 100)
-                    {
-                        damageAll += battleRecord.DamageValue;
-                        healAll += battleRecord.HealValue;
-                        damagedAll += battleRecord.DamagedValue;
-                    }
-                }
-                if (damageAll == 0 && damagedAll == 0)
-                {
-                } else
-                {
-                    var scoreRate = 1f - ((damagedAll-(healAll/2)) / (damageAll+damagedAll));
-                    score *= scoreRate;
-                    score = Math.Max(0,score);
-                    score = Math.Min(100,score);
-                }
-                */
+                var turns = (5 * _troop.BattlerInfos.Count) - _turnCount;
+                score += turns;
                 score = Math.Max(0,score);
                 score = Math.Min(100,score);
                 PartyInfo.SetBattleScore((int)score);
@@ -2546,7 +2505,14 @@ namespace Ryneus
                 battlerInfo.ResetData();
             }
             SaveSystem.SaveConfigStart(GameSystem.ConfigData);
-            SaveSystem.SaveBattleInfo(1,_saveBattleInfo);
+            
+            if (CurrentSelectRecord().SymbolType == SymbolType.Boss)
+            {
+                var stageId = string.Format(CurrentStage.Id.ToString(),"0:00");
+                var turn = string.Format(CurrentStage.CurrentTurn.ToString(),"0:00");
+                var seek = string.Format(CurrentStage.CurrentSeekIndex.ToString(),"0:00");
+                SaveSystem.SaveReplay(stageId+turn+seek,_saveBattleInfo);
+            }
         }
 
         public List<ListData> SideMenu()

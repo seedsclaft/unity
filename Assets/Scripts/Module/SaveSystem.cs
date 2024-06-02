@@ -28,10 +28,10 @@ namespace Ryneus
 			return _playerStageDataKey + fileId.ToString();
 		}
 		private static readonly string _optionDataKey = "OptionData";
-		private static readonly string _battleDataKey = "PlayerBattleData";
-		private static string PlayerBattleDataKey(int fileId)
+		private static readonly string _replayDataKey = "ReplayData_";
+		private static string ReplayDataKey(string stageKey)
 		{
-			return _battleDataKey + fileId.ToString();
+			return _replayDataKey + stageKey;
 		}
 
 		private static void SaveInfo<T>(string path,T userSaveInfo)
@@ -170,14 +170,14 @@ namespace Ryneus
 			return playerInfo != null;
 		}
 
-		public static void SaveBattleInfo(int userId,SaveBattleInfo userSaveInfo = null)
+		public static void SaveReplay(string stageKey,SaveBattleInfo userSaveInfo = null)
 		{
-			SaveFile(PlayerBattleDataKey(userId),userSaveInfo);
+			SaveFile(ReplayDataKey(stageKey),userSaveInfo);
 		}
 			
-		public static async UniTask<SaveBattleInfo> LoadBattleInfo(int userId)
+		public static async UniTask<SaveBattleInfo> LoadReplay(string stageKey)
 		{
-			var playerInfo = await LoadFileAsync(PlayerBattleDataKey(userId));
+			var playerInfo = await LoadFileAsync(ReplayDataKey(stageKey));
 			return playerInfo;
 		}
 

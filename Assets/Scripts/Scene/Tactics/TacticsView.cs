@@ -19,7 +19,7 @@ namespace Ryneus
         [SerializeField] private BaseList parallelList = null;
         [SerializeField] private MagicList alcanaSelectList = null;
 
-        [SerializeField] private TextMeshProUGUI turnText = null;
+        [SerializeField] private TextMeshProUGUI saveScoreText = null;
         private new System.Action<TacticsViewEvent> _commandData = null;
         [SerializeField] private TacticsAlcana tacticsAlcana = null;
 
@@ -27,6 +27,7 @@ namespace Ryneus
         [SerializeField] private Button alcanaButton = null;
         [SerializeField] private Button stageHelpButton = null;
         [SerializeField] private Button commandHelpButton = null;
+        [SerializeField] private Button scorePrizeButton = null;
         
         [SerializeField] private GameObject backGround = null;
         [SerializeField] private Button symbolBackButton = null;
@@ -78,6 +79,11 @@ namespace Ryneus
             commandHelpButton.onClick.AddListener(() => 
             {
                 var eventData = new TacticsViewEvent(CommandType.CommandHelp);
+                _commandData(eventData);
+            });
+            scorePrizeButton?.onClick.AddListener(() => 
+            {
+                var eventData = new TacticsViewEvent(CommandType.ScorePrize);
                 _commandData(eventData);
             });
             symbolBackButton?.onClick.AddListener(() => 
@@ -411,9 +417,9 @@ namespace Ryneus
             symbolRecordList.ScrollRect.enabled = true;
         }
 
-        public void SetTurns(int turns)
+        public void SetSaveScore(int saveScore)
         {
-            turnText.text = (turns).ToString();
+            saveScoreText?.SetText(DataSystem.GetReplaceDecimalText(saveScore));
         }
 
         public void ActivateTacticsCommand()

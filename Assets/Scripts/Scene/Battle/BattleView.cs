@@ -53,7 +53,7 @@ namespace Ryneus
         
         private List<MakerEffectData.SoundTimings> _soundTimings = null;
 
-        private Dictionary<int,BattlerInfoComponent> _battlerComps = new ();
+        private readonly Dictionary<int,BattlerInfoComponent> _battlerComps = new ();
 
         private bool _skipBattle = false;
         public override void Initialize() 
@@ -91,7 +91,7 @@ namespace Ryneus
                 _commandData(eventData);
             });
             SetBattleSkipActive(false);
-            if (false)
+            if (TestMode)
             {
                 new BattleReplayPresenter(this);
             } else
@@ -130,7 +130,8 @@ namespace Ryneus
             battleAutoButton.gameObject.SetActive(false);
             battleAutoButton.SetData(data,0);
             battleAutoButton.UpdateViewItem();
-            battleAutoButton.SetCallHandler((a) => {
+            battleAutoButton.SetCallHandler((a) => 
+            {
                 if (battleAutoButton.gameObject.activeSelf == false) return;
                 var eventData = new BattleViewEvent(CommandType.ChangeBattleAuto);
                 _commandData(eventData);

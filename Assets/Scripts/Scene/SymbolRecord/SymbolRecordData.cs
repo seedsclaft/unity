@@ -13,6 +13,7 @@ namespace Ryneus
         [SerializeField] private GameObject currentObj;
         [SerializeField] private GameObject futureObj;
         [SerializeField] private TextMeshProUGUI seekerText;
+        [SerializeField] private TextMeshProUGUI stageDataText;
 
         private bool _isButtonInit = false;
         public void UpdateViewItem()
@@ -49,6 +50,13 @@ namespace Ryneus
                     textId = 83;
                 }
                 seekerText?.SetText(DataSystem.GetText(textId));
+                if (dates[0].SymbolType == SymbolType.None)
+                {
+                    stageDataText?.SetText("");
+                } else
+                {
+                    stageDataText?.SetText(dates[0].StageSymbolData.StageId.ToString() + "-" + dates[0].StageSymbolData.Seek.ToString());
+                }
             }
         }
 

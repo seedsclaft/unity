@@ -42,6 +42,7 @@ namespace Tactics
         StageHelp,
         CancelRecordList, // レコードリストを非表示にする
         CommandHelp,
+        ScorePrize,
         AlcanaCheck,
         SelectAlcanaList,
         HideAlcanaList,

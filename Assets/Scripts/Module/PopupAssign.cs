@@ -14,10 +14,11 @@ namespace Ryneus
         [SerializeField] private GameObject helpPrefab = null;
         [SerializeField] private GameObject alcanaListPrefab = null;
         [SerializeField] private GameObject slotSavePrefab = null;
-        [SerializeField] private GameObject stageSymbolPrefab = null;
         [SerializeField] private GameObject learnSkillPrefab = null;
         [SerializeField] private GameObject skillTriggerPrefab = null;
         [SerializeField] private GameObject skillLogPrefab = null;
+        [SerializeField] private GameObject scorePrizePrefab = null;
+        
         public GameObject CreatePopup(PopupType popupType,HelpWindow helpWindow)
         {
             if (confirmRoot.transform.childCount > 0)
@@ -54,29 +55,31 @@ namespace Ryneus
                 return alcanaListPrefab;
                 case PopupType.SlotSave:
                 return slotSavePrefab;
-                case PopupType.StageSymbol:
-                return stageSymbolPrefab;
                 case PopupType.LearnSkill:
                 return learnSkillPrefab;
                 case PopupType.SkillTrigger:
                 return skillTriggerPrefab;
                 case PopupType.SkillLog:
                 return skillLogPrefab;
+                case PopupType.ScorePrize:
+                return scorePrizePrefab;
             }
             return null;
         }
 
         public void ClosePopup()
         {
-            foreach(Transform child in confirmRoot.transform){
+            foreach(Transform child in confirmRoot.transform)
+            {
                 Destroy(child.gameObject);
             }
-            confirmRoot.gameObject.SetActive(false);
+            confirmRoot.SetActive(false);
         }
 
     }
 
-    public enum PopupType{
+    public enum PopupType
+    {
         None,
         SkillDetail,
         Ruling,
@@ -87,9 +90,9 @@ namespace Ryneus
         Help,
         AlcanaList,
         SlotSave,
-        StageSymbol,
         LearnSkill,
         SkillTrigger,
-        SkillLog
+        SkillLog,
+        ScorePrize,
     }
 }

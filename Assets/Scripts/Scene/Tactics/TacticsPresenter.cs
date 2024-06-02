@@ -168,6 +168,9 @@ namespace Ryneus
                 case Tactics.CommandType.HideAlcanaList:
                     CommandHideAlcanaList();
                     break;
+                case Tactics.CommandType.ScorePrize:
+                    CommandScorePrize();
+                    break;
             }
             if (viewEvent.commandType == Tactics.CommandType.SelectSideMenu)
             {
@@ -714,7 +717,7 @@ namespace Ryneus
 
         private void CommandRefresh()
         {
-            _view.SetTurns(_model.RemainTurns);
+            _view.SetSaveScore(_model.TotalScore);
             _view.SetStageInfo(_model.CurrentStage);
             _view.SetAlcanaInfo(_model.AlcanaSkillInfos());
             _view.SetTacticsCharaLayer(_model.StageMembers());
@@ -812,7 +815,21 @@ namespace Ryneus
                 _view.CommandHelpList(DataSystem.HelpText("Alchemy"));
                 return;
             }
-            
+        }
+
+        private void CommandScorePrize()
+        {
+            _busy = true;
+            var popupInfo = new PopupInfo
+            {
+                PopupType = PopupType.ScorePrize,
+                EndEvent = () =>
+                {
+                    _busy = false;
+                    SoundManager.Instance.PlayStaticSe(SEType.Cancel);
+                }
+            };
+            _view.CommandCallPopup(popupInfo);
         }
 
         private void CommandAlcanaCheck()

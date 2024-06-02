@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 8
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25d0144abc303ea4c9cc2755b2e8ee91, type: 3}
+  m_Name: ScorePrizes
+  m_EditorClassIdentifier: 
+  Data:
+  - Id: 1
+    PriseSetId: 1
+    Score: 100
+    ConditionName: "\u300C\u904E\u53BB\u6539\u7DE8\u300D\u304C\u5B9F\u884C\u53EF\u80FD\u306B\u306A\u308B"
+  - Id: 2
+    PriseSetId: 1
+    Score: 1000
+    ConditionName: "\u300C\u4E26\u884C\u4E16\u754C\u5316\u300D\u304C\u5B9F\u884C\u53EF\u80FD\u306B\u306A\u308B"

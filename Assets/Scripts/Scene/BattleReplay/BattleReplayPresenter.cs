@@ -28,7 +28,7 @@ namespace Ryneus
 
         public async void Initialize()
         {
-            var replayData = await SaveSystem.LoadBattleInfo(1);
+            var replayData = await SaveSystem.LoadReplay("");
             await UniTask.WaitUntil(() => replayData != null);
             _view.SetBattleBusy(true);
             _model.CreateBattleData();
