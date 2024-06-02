@@ -558,6 +558,16 @@ namespace Ryneus
             return _stateInfos.FindAll(a => a.StateType == stateType);
         }
 
+        public int GetStateEffectAll(StateType stateType)
+        {
+            var effect = 0;
+            foreach (var stateInfo in GetStateInfoAll(stateType))
+            {
+                effect += stateInfo.Effect;
+            }
+            return effect;
+        }
+
         // ステートを消す
         public void EraseStateInfo(StateType stateType)
         {
@@ -981,6 +991,24 @@ namespace Ryneus
             }
             int total = statusValue + (int)magicValue + _demigodParam * 10;
             return total;
+        }
+
+        public int BurnDamage()
+        {
+            var BurnDamage = 0;
+            BurnDamage += GetStateEffectAll(StateType.BurnDamage);
+            var perDamageValue = GetStateEffectAll(StateType.BurnDamagePer);
+            BurnDamage += (int)Math.Round(MaxHp * 0.01f * perDamageValue);
+            return BurnDamage;
+        }
+
+        public int RegenerateHpValue()
+        {
+            var regenerate = 0;
+            regenerate += GetStateEffectAll(StateType.Regenerate);
+            var perDamageValue = GetStateEffectAll(StateType.Undead);
+            regenerate += (int)Math.Round(MaxHp * 0.01f * perDamageValue);
+            return regenerate;
         }
     }
 }

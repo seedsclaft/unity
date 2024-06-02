@@ -175,6 +175,7 @@ namespace Ryneus
                 if (skillInfo == null) return;
                 _model.SetActionBattler(battlerInfo.Index);
                 ActionInfo actionInfo = _model.MakeActionInfo(battlerInfo,skillInfo,false,false);
+                _model.AddActionInfo(actionInfo,false);
                 _presenter.CommandSelectTargetIndexes(_model.MakeAutoSelectIndex(actionInfo));
             }
         }

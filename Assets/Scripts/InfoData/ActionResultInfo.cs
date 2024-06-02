@@ -1442,5 +1442,16 @@ namespace Ryneus
                     || AddedStates.Find(a => a.Master.StateType == StateType.Death) != null
                     || DeadIndexList.Contains(TargetIndex);
         }
+
+        public static List<int> ConvertIndexes(List<ActionResultInfo> actionResultInfos)
+        {
+            var targetIndexes = new List<int>();
+            foreach (var actionResultInfo in actionResultInfos)
+            {
+                var targetIndex = actionResultInfo.TargetIndex;
+                targetIndexes.Add(targetIndex);
+            }
+            return targetIndexes;
+        }
     }
 }

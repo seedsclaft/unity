@@ -6,6 +6,7 @@ using Battle;
 using Effekseer;
 using System.Linq;
 using TMPro;
+using Cysharp.Threading.Tasks;
 
 namespace Ryneus
 {
@@ -90,7 +91,13 @@ namespace Ryneus
                 _commandData(eventData);
             });
             SetBattleSkipActive(false);
-            new BattlePresenter(this);
+            if (false)
+            {
+                new BattleReplayPresenter(this);
+            } else
+            {
+                new BattlePresenter(this);
+            }
         }
 
         public void CreateBattleBackGround(GameObject gameObject)
@@ -178,24 +185,7 @@ namespace Ryneus
             }
         }
 
-        public void HideSkillAction(ActionInfo actionInfo)
-        {
-            
-        }
-
-        public void ShowEnemyTarget()
-        {
-            battleEnemyLayer.gameObject.SetActive(true);
-            HelpWindow.SetInputInfo("BATTLE_ENEMY");
-        }
-
-        public void ShowPartyTarget()
-        {
-            battleActorList.gameObject.SetActive(true);
-            HelpWindow.SetInputInfo("BATTLE_PARTY");
-        }
-
-        public void CreateObject(int battleActorsCount)
+        public void CreateObject()
         {
             battleActorList.SetInputHandler(InputKeyType.Decide,() => CallActorList());
             battleActorList.SetInputHandler(InputKeyType.Cancel,() => OnClickBack());
@@ -215,8 +205,10 @@ namespace Ryneus
             _battleStartAnim.StartAnim();
         }
 
-        public void StartBattleAnimation()
+        public void StartUIAnimation()
         {
+            battleActorList.gameObject.SetActive(true);
+            battleEnemyLayer.gameObject.SetActive(true);
             var duration = 0.8f;
             var actorListRect = battleActorList.GetComponent<RectTransform>();
             AnimationUtility.LocalMoveToTransform(battleActorList.gameObject,
@@ -259,12 +251,6 @@ namespace Ryneus
             _commandData(eventData);
         }
 
-        private void OnClickOption()
-        {
-            var eventData = new BattleViewEvent(CommandType.Option);
-            _commandData(eventData);
-        }
-
         public new void SetHelpText(string text)
         {
             HelpWindow.SetHelpText(text);
@@ -285,13 +271,13 @@ namespace Ryneus
         public void SetActors(List<BattlerInfo> battlerInfos)
         {
             battleActorList.SetData(ListData.MakeListData(battlerInfos,false));
-            //battleActorList.Refresh(battlerInfos);
             foreach (var battlerInfo in battlerInfos)
             {
                 _battlerComps[battlerInfo.Index] = battleActorList.GetBattlerInfoComp(battlerInfo.Index);
             }
             battleGridLayer.SetActorInfo(battlerInfos);
             battleActorList.Deactivate();
+            battleActorList.gameObject.SetActive(false);
         }
         
         public void SetEnemies(List<BattlerInfo> battlerInfos)
@@ -309,6 +295,7 @@ namespace Ryneus
             }
             battleGridLayer.SetEnemyInfo(battlerInfos);
             DeactivateEnemyList();
+            battleEnemyLayer.gameObject.SetActive(false);
         }
 
         private void CallEnemyInfo()
@@ -690,6 +677,45 @@ namespace Ryneus
         public void ChangeBattleAuto(bool isAuto)
         {
             battleAutoButton.Cursor.SetActive(isAuto);
+        }
+
+        public async UniTask StartAnimationDemigod(BattlerInfo battlerInfo,SkillData skillData)
+        {
+            var speed = GameSystem.ConfigData.BattleSpeed;
+            if (GameSystem.ConfigData.BattleAnimationSkip == false)
+            {
+                SoundManager.Instance.PlayStaticSe(SEType.Demigod);
+                StartAnimationDemigod(battlerInfo,skillData,speed);
+                HideStateOverlay();
+                SetAnimationBusy(true);
+                await UniTask.DelayFrame((int)(20 / speed));
+                SoundManager.Instance.PlayStaticSe(SEType.Awaken);
+                await UniTask.DelayFrame((int)(90 / speed));
+            }
+        }
+
+        public void StartAnimationBeforeSkill(int subjectIndex,EffekseerEffectAsset effekseerEffect)
+        {
+            SoundManager.Instance.PlayStaticSe(SEType.Skill);
+            StartAnimation(subjectIndex,effekseerEffect,0,1f,1.0f);
+        }
+
+        public void StartAnimationSlipDamage(List<int> targetIndexes)
+        {
+            var animation = ResourceSystem.LoadResourceEffect("NA_Effekseer/NA_Fire_001");
+            foreach (var targetIndex in targetIndexes)
+            {
+                StartAnimation(targetIndex,animation,0);
+            }
+        }
+
+        public void StartAnimationRegenerate(List<int> targetIndexes)
+        {
+            var animation = ResourceSystem.LoadResourceEffect("tktk01/Cure1");
+            foreach (var targetIndex in targetIndexes)
+            {
+                StartAnimation(targetIndex,animation,0);
+            }
         }
     }
 }

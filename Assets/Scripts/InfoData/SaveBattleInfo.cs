@@ -8,16 +8,36 @@ namespace Ryneus
 	[Serializable]
     public class SaveBattleInfo
     {
+        private int _countIndex = 0;
+        private UnitInfo _party;
+        public UnitInfo Party => _party;
+        public void SetParty(UnitInfo party)
+        {
+            _party = party;
+        }
+        private UnitInfo _troop;
+        public UnitInfo Troop => _troop;
+        public void SetTroop(UnitInfo troop)
+        {
+            _troop = troop;
+        }
+        public Dictionary<int,ActionInfo> actionInfos = new ();
         public Dictionary<int,List<ActionResultInfo>> actionResultInfos = new ();
 
-        public void AddData(int index,ActionResultInfo actionResultInfo)
+
+        public void AddActionData(ActionInfo actionInfo)
         {
-            if (!actionResultInfos.ContainsKey(index))
+            actionInfos[_countIndex] = actionInfo;
+            _countIndex++;
+        }
+        public void AddResultData(ActionResultInfo actionResultInfo)
+        {
+            if (!actionResultInfos.ContainsKey(_countIndex))
             {
-                actionResultInfos[index].Clear();
-                actionResultInfos[index] = new ();
+                actionResultInfos[_countIndex] = new ();
             }
-            actionResultInfos[index].Add(actionResultInfo);
+            actionResultInfos[_countIndex].Add(actionResultInfo);
+            _countIndex++;
         }
     }
 }

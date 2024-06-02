@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
+using Cysharp.Threading.Tasks;
 
 namespace Ryneus
 {
@@ -121,6 +122,34 @@ namespace Ryneus
 			return default;
 		}
 
+		private static async UniTask<SaveBattleInfo> LoadFileAsync(string key)
+		{
+			if (_useEasySave)
+			{
+				try
+				{
+					var data = ES3.Load<string>(key,key);
+					var bytes = Convert.FromBase64String(data);
+					var	TempBinaryFormatter = new BinaryFormatter();
+					var memoryStream = new MemoryStream(bytes);
+					var saveData = (SaveBattleInfo)TempBinaryFormatter.Deserialize(memoryStream);
+					await UniTask.WaitUntil(() => saveData != null);
+					return saveData;
+				} catch(Exception e)
+				{
+					Debug.LogException(e);
+				} finally 
+				{
+					//	ファイル操作には明示的な破棄が必要です。Closeを忘れないように。
+					if( TempFileStream != null )
+					{
+						TempFileStream.Close();
+					}
+				}
+			}
+			return default;
+		}
+
 		public static void SavePlayerInfo(SaveInfo userSaveInfo = null)
 		{
 			//	保存情報
@@ -146,13 +175,10 @@ namespace Ryneus
 			SaveFile(PlayerBattleDataKey(userId),userSaveInfo);
 		}
 			
-		public static bool LoadBattleInfo(int userId)
+		public static async UniTask<SaveBattleInfo> LoadBattleInfo(int userId)
 		{
-			var playerInfo = LoadFile<SaveBattleInfo>(PlayerBattleDataKey(userId),(a) => 
-			{
-				//GameSystem.CurrentData = a;
-			});
-			return playerInfo != null;
+			var playerInfo = await LoadFileAsync(PlayerBattleDataKey(userId));
+			return playerInfo;
 		}
 
 		private static bool ExistsLoadFile(string key)

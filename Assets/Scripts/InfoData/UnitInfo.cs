@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 namespace Ryneus
 {
+    [System.Serializable]
     public class UnitInfo 
     {
         private List<BattlerInfo> _battlerInfos;

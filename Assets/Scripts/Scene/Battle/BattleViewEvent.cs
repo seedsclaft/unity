@@ -28,7 +28,6 @@ namespace Battle
         UpdateAp,
         SelectedSkill,
         EnemyLayer,
-        EndAnimation,
         SelectEnemy,
         SelectParty,
         EnemyDetail,
