@@ -29,10 +29,6 @@ namespace Ryneus
             {
                 return;
             }
-            if (CheckRebornEvent())
-            {
-                return;
-            }
             CheckStageEvent();
             if (_eventBusy)
             {

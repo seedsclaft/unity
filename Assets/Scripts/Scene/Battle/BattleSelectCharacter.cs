@@ -191,7 +191,8 @@ namespace Ryneus
         }
     }
 
-    public enum SelectCharacterTabType{
+    public enum SelectCharacterTabType
+    {
         Detail = 0,
         Magic = 1,
         Condition = 2,

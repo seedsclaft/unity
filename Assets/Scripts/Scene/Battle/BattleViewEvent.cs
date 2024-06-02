@@ -16,7 +16,6 @@ namespace Battle
         None = 0,
         Back,
         Escape,
-        Option,
         SelectSideMenu,
         AttributeType,
         StartSelect,

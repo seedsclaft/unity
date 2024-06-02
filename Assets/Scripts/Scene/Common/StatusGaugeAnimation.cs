@@ -45,10 +45,7 @@ namespace Ryneus
         {
             if (gaugeAnimation != null)
             {
-                if (_animation != null)
-                {
-                    _animation.Kill(true);
-                }
+                _animation?.Kill(true);
                 var sequence = DOTween.Sequence()
                     .Append(gaugeAnimation.DOFillAmount(gaugeAmount,_waitDuration)
                     .SetDelay(_delayDuration)

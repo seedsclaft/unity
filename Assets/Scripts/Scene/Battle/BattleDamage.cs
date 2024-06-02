@@ -24,10 +24,9 @@ namespace Ryneus
         //[SerializeField] private List<TextMeshProUGUI> mpHealList;
 
         private bool _busy = false;
-        public bool IsBusy{
-            get {return _busy;}
-        }
-        private void Awake() {
+        public bool IsBusy => _busy;
+        private void Awake() 
+        {
             UpdateAllHide();
         }
 
@@ -42,7 +41,8 @@ namespace Ryneus
 
         private void DestroyChild(GameObject gameObject)
         {
-            foreach(Transform child in gameObject.transform){
+            foreach(Transform child in gameObject.transform)
+            {
                 Destroy(child.gameObject);
             }
         }

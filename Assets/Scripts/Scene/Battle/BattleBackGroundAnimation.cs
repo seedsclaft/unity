@@ -10,7 +10,6 @@ namespace Ryneus
     {
         [SerializeField] private SpriteRenderer spriteRenderer = null;
         [SerializeField] private _2dxFX_DestroyedFX destroy = null;
-        private int _lastSpriteIndex = -1;
         
         private bool _seekAnimation = false;
         private int _seekFrame = 60;
@@ -21,7 +20,8 @@ namespace Ryneus
             _seekFrame = 24;
         }
 
-        private void Update() {
+        private void Update() 
+        {
             if (destroy != null)
             {
                 if (_seekAnimation)

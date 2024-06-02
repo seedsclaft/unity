@@ -101,7 +101,6 @@ namespace Ryneus
         public void InitSaveActorList()
         {
             if (_saveActorList.Count > 0) return;
-            var baseRebornSkill = DataSystem.Skills.Where(a => a.Value.SkillType == SkillType.Reborn).ToList();
             for (int i = 0;i < 5;i++)
             {
                 var tempActor = new ActorInfo(DataSystem.Actors[i]);

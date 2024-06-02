@@ -18,11 +18,13 @@ namespace Ryneus
         public int EnemyListIndex => battleEnemyLayer.Index;
 
         private bool _isBattle = false;
-        protected void Awake(){
+        protected void Awake()
+        {
             InitializeInput();
         }
 
-        public void Initialize(List<BattlerInfo> battlerInfos,bool isBattle){
+        public void Initialize(List<BattlerInfo> battlerInfos,bool isBattle)
+        {
             _isBattle = isBattle;
             battleEnemyLayer.Initialize();
             battleEnemyLayer.SetSelectedHandler(() => 

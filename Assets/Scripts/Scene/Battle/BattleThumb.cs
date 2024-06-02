@@ -62,7 +62,8 @@ namespace Ryneus
             canvasGroup.alpha = 1;
             _animationBusy = true;
             var waitFrame = 0.6f / GameSystem.ConfigData.BattleSpeed;
-            MoveAndFade(gameObject.GetComponent<RectTransform>(),0,0,waitFrame,() => {
+            MoveAndFade(gameObject.GetComponent<RectTransform>(),0,0,waitFrame,() => 
+            {
                 _animationBusy = false;
             });
             awakenThumbRoot.SetActive(awaken);
@@ -84,11 +85,9 @@ namespace Ryneus
         }
         public void Kill()
         {
-            if (_sequence != null)
-            {
-                _sequence.Complete();
-            }
+            _sequence?.Complete();
         }
+
         private void Clear()
         {
             actorInfoComponent.Clear();

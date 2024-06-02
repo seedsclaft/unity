@@ -13,9 +13,6 @@ namespace Ryneus
         [SerializeField] private GameObject statusScene = null;
         [SerializeField] private GameObject tacticsScene = null;
         [SerializeField] private GameObject strategyScene = null;
-        [SerializeField] private GameObject resultScene = null;
-        [SerializeField] private GameObject rebornScene = null;
-        [SerializeField] private GameObject rebornResultScene = null;
         [SerializeField] private GameObject slotScene = null;
         [SerializeField] private GameObject fastBattleScene = null;
         [SerializeField] private GameObject alcanaSelectScene = null;
@@ -49,12 +46,6 @@ namespace Ryneus
                 return tacticsScene;
                 case Scene.Strategy:
                 return strategyScene;
-                case Scene.Result:
-                return resultScene;
-                case Scene.Reborn:
-                return rebornScene;
-                case Scene.RebornResult:
-                return rebornResultScene;
                 case Scene.Slot:
                 return slotScene;
                 case Scene.FastBattle:

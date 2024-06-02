@@ -13,7 +13,7 @@ namespace Ryneus
         {
             base.Initialize();
             new CreditPresenter(this);
-            Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
+            SoundManager.Instance.PlayStaticSe(SEType.Decide);
         }
 
         public void SetEvent(System.Action<CreditViewEvent> commandData)

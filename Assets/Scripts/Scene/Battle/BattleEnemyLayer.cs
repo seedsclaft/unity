@@ -74,7 +74,8 @@ namespace Ryneus
                     callEvent(MakeTargetIndexes(battlerInfo));
                 });
                 battleEnemy.SetSelectHandler((data) => UpdateEnemyIndex(data));
-                battleEnemy.SetPressHandler((enemyIndex) => {
+                battleEnemy.SetPressHandler((enemyIndex) => 
+                {
                     _selectIndex = enemyIndex;
                     CallListInputHandler(InputKeyType.Option1);
                 });
@@ -88,7 +89,8 @@ namespace Ryneus
         public void RefreshTarget(int selectIndex,List<int> targetIndexList,ScopeType scopeType,AttributeType attributeType = AttributeType.None)
         {
             UpdateAllUnSelect();
-            if (selectIndex == -1) {
+            if (selectIndex == -1) 
+            {
                 ClearSelect();
                 return;
             }
@@ -165,8 +167,10 @@ namespace Ryneus
             }
         }
 
-        private void UpdateLineSelect(int index){
-            if (_targetScopeType != ScopeType.Line){
+        private void UpdateLineSelect(int index)
+        {
+            if (_targetScopeType != ScopeType.Line)
+            {
                 return;
             }
             bool isFront = index < _backStartIndex;
@@ -179,7 +183,8 @@ namespace Ryneus
                         {
                             _battleEnemies[i].SetSelect(_cursorEffects[(int)_attributeType]);
                         }
-                    } else{
+                    } else
+                    {
                         _battleEnemies[i].SetUnSelect();
                     }
                 } else
@@ -189,7 +194,8 @@ namespace Ryneus
                         {
                             _battleEnemies[i].SetSelect(_cursorEffects[(int)_attributeType]);
                         }
-                    } else{
+                    } else
+                    {
                         _battleEnemies[i].SetUnSelect();
                     }
                 }
@@ -244,7 +250,7 @@ namespace Ryneus
                     var targets = _battleInfos.FindAll(a => a.Index < current.Index && a.IsAlive() && current.LineIndex == a.LineIndex);
                     if (targets.Count > 0)
                     {
-                        Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cursor);
+                        SoundManager.Instance.PlayStaticSe(SEType.Cursor);
                         UpdateEnemyIndex(targets[targets.Count-1].Index);
                     }
                 }

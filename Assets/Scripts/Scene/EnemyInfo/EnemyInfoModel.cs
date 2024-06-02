@@ -20,7 +20,8 @@ namespace Ryneus
             return ListData.MakeListData(_enemyBattlerInfos,true);
         }
 
-        public List<int> EnemyIndexes(){
+        public List<int> EnemyIndexes()
+        {
             var list = new List<int>();
             foreach (var enemy in _enemyBattlerInfos)
             {

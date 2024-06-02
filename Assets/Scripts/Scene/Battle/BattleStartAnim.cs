@@ -15,10 +15,11 @@ namespace Ryneus
         [SerializeField] private TextMeshProUGUI subText;
 
         private bool _busy = false;
-        public bool IsBusy{ get { return _busy;}}
+        public bool IsBusy => _busy;
 
 
-        private void OnEnable() {
+        private void OnEnable() 
+        {
             Reset();
         }
 
@@ -79,7 +80,8 @@ namespace Ryneus
                 .AppendInterval(1.6f)
                 .Append(backBlack.DOFade(0f, 0.1f))
                 .Join(backBlack.transform.DOScaleY(0f, 0.1f))
-                .OnComplete(() => {
+                .OnComplete(() => 
+                {
                     _busy = false;
                 });
         }

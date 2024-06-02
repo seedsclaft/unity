@@ -11,7 +11,7 @@ namespace Ryneus
         private int _selectIndex = -1;
         public int SelectedIndex => _selectIndex;
 
-        public new void SetData(List<ListData> listDates)
+        public void SetData(List<ListData> listDates)
         {
             base.SetData(listDates);
             SetBattlerInfoComp(listDates);

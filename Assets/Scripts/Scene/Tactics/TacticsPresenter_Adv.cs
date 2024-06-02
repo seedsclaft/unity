@@ -106,16 +106,5 @@ namespace Ryneus
             return isAbort;
         }
 
-        private bool CheckRebornEvent()
-        {
-            var isReborn = CheckRebornEvent(EventTiming.BeforeTactics,() => {
-                _view.CommandGotoSceneChange(Scene.RebornResult);
-            });
-            if (isReborn)
-            {
-                _view.ChangeUIActive(false);
-            }
-            return isReborn;
-        }
     }
 }

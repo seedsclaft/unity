@@ -9,7 +9,7 @@ namespace Ryneus
     public class BattleEnemy : ListItem 
     {
         [SerializeField] private BattlerInfoComponent battlerInfoComponent;
-        public BattlerInfoComponent BattlerInfoComponent {get {return battlerInfoComponent;}}
+        public BattlerInfoComponent BattlerInfoComponent => battlerInfoComponent;
         [SerializeField] private Image enemyImage;
         [SerializeField] private EffekseerEmitter effekseerEmitter;
         [SerializeField] private GameObject statusObject;
@@ -19,9 +19,7 @@ namespace Ryneus
         private string textureName = null;
         private bool _isFront = false;
 
-        public int EnemyIndex{
-            get {return _battlerInfo.Index;}
-        }
+        public int EnemyIndex => _battlerInfo.Index;
 
         public void SetData(BattlerInfo battlerInfo,int index,bool isFront)
         {

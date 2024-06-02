@@ -1,7 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
-using CharacterList;
 
 namespace Ryneus
 {
@@ -28,7 +26,8 @@ namespace Ryneus
 
         private void UpdateCommand(CharacterListViewEvent viewEvent)
         {
-            if (_busy){
+            if (_busy)
+            {
                 return;
             }
         }

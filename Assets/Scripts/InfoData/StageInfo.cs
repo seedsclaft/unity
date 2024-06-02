@@ -85,10 +85,6 @@ namespace Ryneus
         public bool ParallelStage => _parallelStage;
         public void SetParallelMode(bool parallelStage) {_parallelStage = parallelStage;}
 
-        private int _rebornActorIndex = -1;
-        public int RebornActorIndex => _rebornActorIndex;
-        public void SetRebornActorIndex(int rebornActorIndex) {_rebornActorIndex = rebornActorIndex;}
-        
         private bool _survivalMode = false;
         public bool SurvivalMode => _survivalMode;
 
@@ -163,7 +159,6 @@ namespace Ryneus
             //_readEventKeys = stageInfo._readEventKeys;
             _endingType = stageInfo._endingType;
             _stageClear = stageInfo._stageClear;
-            _rebornActorIndex = stageInfo._rebornActorIndex;
             _survivalMode = stageInfo._survivalMode;
         }
 

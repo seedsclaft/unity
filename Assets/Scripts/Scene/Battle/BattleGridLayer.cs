@@ -13,7 +13,7 @@ namespace Ryneus
         private Dictionary<BattlerInfo,BattlerInfoComponent> _battlers = new ();
         private List<BattlerGrid> _actorBattlers = new ();
         private List<BattlerGrid> _enemyBattlers = new ();
-        private List<BattlerInfo> _battlerLists = new ();
+        private List<BattlerInfo> _battlerInfos = new ();
 
         public void Initialize()
         {
@@ -39,7 +39,7 @@ namespace Ryneus
         {
             for (int i = 0; i < battlerInfos.Count;i++)
             {
-                _battlerLists.Add(battlerInfos[i]);
+                _battlerInfos.Add(battlerInfos[i]);
             }
         }
         
@@ -47,7 +47,7 @@ namespace Ryneus
         {
             for (int i = 0; i < battlerInfos.Count;i++)
             {
-                _battlerLists.Add(battlerInfos[i]);
+                _battlerInfos.Add(battlerInfos[i]);
             }
         }
 
@@ -55,7 +55,7 @@ namespace Ryneus
         {
             var waitFrameList = new List<float>();
             var turnWait = new Dictionary<BattlerInfo,List<float>>();
-            foreach (var battler in _battlerLists)
+            foreach (var battler in _battlerInfos)
             {
                 if (battler.IsAlive())
                 {

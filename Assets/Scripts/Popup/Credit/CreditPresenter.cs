@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 
 namespace Ryneus
 {
@@ -23,7 +22,8 @@ namespace Ryneus
 
         private void UpdateCommand(CreditViewEvent viewEvent)
         {
-            if (_busy){
+            if (_busy)
+            {
                 return;
             }
         }

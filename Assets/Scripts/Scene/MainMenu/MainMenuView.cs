@@ -22,7 +22,8 @@ namespace Ryneus
         {
             base.Initialize();
             stageList.Initialize();
-            SideMenuButton.onClick.AddListener(() => {
+            SideMenuButton.onClick.AddListener(() => 
+            {
                 CallSideMenu();
             });
             tacticsCommandList.Initialize();

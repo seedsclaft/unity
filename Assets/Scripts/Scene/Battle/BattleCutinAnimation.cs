@@ -4,7 +4,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 using TMPro;
-using Unity.VisualScripting;
 
 namespace Ryneus
 {

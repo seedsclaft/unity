@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using MainMenu;
-using Ryneus;
 
 namespace Ryneus
 {
@@ -43,7 +42,8 @@ namespace Ryneus
 
         private void UpdateCommand(MainMenuViewEvent viewEvent)
         {
-            if (_busy){
+            if (_busy)
+            {
                 return;
             }
             switch (viewEvent.commandType)
@@ -93,8 +93,6 @@ namespace Ryneus
             }
         }
 
-
-        
         private void CommandSlotPopup()
         {
             SoundManager.Instance.PlayStaticSe(SEType.Decide);

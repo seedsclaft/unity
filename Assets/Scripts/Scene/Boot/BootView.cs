@@ -44,10 +44,10 @@ namespace Boot
 
 public class BootViewEvent
 {
-    public Boot.CommandType commandType;
+    public CommandType commandType;
     public object template;
 
-    public BootViewEvent(Boot.CommandType type)
+    public BootViewEvent(CommandType type)
     {
         commandType = type;
     }

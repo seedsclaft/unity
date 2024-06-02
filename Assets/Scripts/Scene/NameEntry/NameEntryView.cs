@@ -25,7 +25,8 @@ namespace Ryneus
             SetInputHandler(gameObject.GetComponent<IInputHandlerEvent>());
         }
 
-        public void SetHelpWindow(){
+        public void SetHelpWindow()
+        {
             HelpWindow.SetHelpText("");
             HelpWindow.SetInputInfo("");
         }
@@ -44,11 +45,13 @@ namespace Ryneus
             if (decideButton != null) decideButton.gameObject.SetActive(false);
         }
 
-        public void ShowNameEntry(string defaultName){
+        public void ShowNameEntry(string defaultName)
+        {
             inputField.text = defaultName;
         }
 
-        public void StartNameEntry(){
+        public void StartNameEntry()
+        {
             decideButton.gameObject.SetActive(true);
             inputField.gameObject.SetActive(true);
             inputField.Select();
@@ -68,7 +71,8 @@ namespace Ryneus
             }
         }
 
-        private new void Update() {
+        private new void Update() 
+        {
             if (_inputLateUpdate > -1)
             {
                 _inputLateUpdate--;
@@ -76,7 +80,8 @@ namespace Ryneus
                 {
                     inputField.MoveTextEnd(true);
                 }
-            } else{        
+            } else
+            {
                 base.Update();
             }
         }
@@ -94,10 +99,10 @@ namespace NameEntry
 }
 public class NameEntryViewEvent
 {
-    public NameEntry.CommandType commandType;
+    public CommandType commandType;
     public object template;
 
-    public NameEntryViewEvent(NameEntry.CommandType type)
+    public NameEntryViewEvent(CommandType type)
     {
         commandType = type;
     }

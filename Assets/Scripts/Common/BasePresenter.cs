@@ -51,26 +51,6 @@ namespace Ryneus
             return isAbort;
         }
 
-        public bool CheckRebornEvent(EventTiming eventTiming,System.Action endCall)
-        {
-            var isReborn = false;
-            var stageEvents = _model.StageEvents(eventTiming);
-            foreach (var stageEvent in stageEvents)
-            {
-                if (stageEvent.Type == StageEventType.RebornSkillEffect)
-                {
-                    _model.AddEventReadFlag(stageEvent);
-                    isReborn = true;
-                    break;
-                }
-            }
-            if (isReborn)
-            {
-                if (endCall != null) endCall();
-            }
-            return isReborn;
-        }
-
         public async void PlayTacticsBgm()
         {
             var bgmKey = _model.TacticsBgmKey();
@@ -121,7 +101,7 @@ namespace Ryneus
             _model.GainSaveCount();
             _model.SavePlayerStageData(true);
             // 成功表示
-            var confirmInfo = new ConfirmInfo(DataSystem.GetText(11084),(a) => {
+            var confirmInfo = new ConfirmInfo(DataSystem.GetText(11080),(a) => {
                 _view.CommandGameSystem(Base.CommandType.CloseConfirm);
                 if (isReturnScene)
                 {

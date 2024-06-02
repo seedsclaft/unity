@@ -92,19 +92,6 @@ namespace Ryneus
             }
             SavePlayerStageData(true);
         }
-
-        public List<SymbolInfo> SelectedSymbolInfos(int stageId)
-        {
-            var list = new List<SymbolInfo>();
-            /*
-            var records = PartyInfo.SymbolRecordList.FindAll(a => a.SymbolInfo.StageSymbolData.StageId == stageId);
-            foreach (var record in records)
-            {
-                list.Add(record.SymbolInfo);
-            }
-            */
-            return list;
-        }
         
         private bool SelectedStage(int stageId)
         {

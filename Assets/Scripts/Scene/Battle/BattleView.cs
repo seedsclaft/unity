@@ -571,7 +571,7 @@ namespace Ryneus
                     var volume = soundTimingsData.se.volume * 0.01f;
                     var pitch = soundTimingsData.se.pitch * 0.01f;
                     var frame = soundTimingsData.frame;
-                    Ryneus.SoundManager.Instance.PlaySe(clip,volume,pitch,frame);
+                    SoundManager.Instance.PlaySe(clip,volume,pitch,frame);
                 }
             }
         }

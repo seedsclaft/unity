@@ -1,15 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.Events;
 
 namespace Ryneus
 {
     public class GetItemList : BaseList
     {
         [SerializeField] private BaseList tacticsCommandList;
-        public BaseList TacticsCommandList {get {return tacticsCommandList;}}
+        public BaseList TacticsCommandList => tacticsCommandList;
         
         public void InitializeConfirm(List<ListData> confirmCommands ,System.Action<ConfirmCommandType> callEvent)
         {

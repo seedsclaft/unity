@@ -808,7 +808,6 @@ namespace Ryneus
         Messiah = 3, // 神化
         Awaken = 4, // 覚醒
         UseAlcana = 11, // アルカナ使用
-        Reborn  = 12 // 転生
     }
 
     public enum AttributeType

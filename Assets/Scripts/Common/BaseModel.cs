@@ -579,10 +579,7 @@ namespace Ryneus
 
         public string SavePopupTitle()
         {
-            var baseText = DataSystem.GetText(11080);
-            var subText = DataSystem.GetReplaceText(11081,CurrentStage.Master.SaveLimit.ToString());
-            var savedCount = DataSystem.GetReplaceText(11083,(CurrentStage.SavedCount+1).ToString());
-            return baseText + savedCount + "\n" + subText;
+            return DataSystem.GetText(11080);
         }
 
         public string FailedSavePopupTitle()

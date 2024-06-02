@@ -11,7 +11,8 @@ namespace Ryneus
         [SerializeField] private SkillInfoComponent skillInfoComponent;
         [SerializeField] private GameObject DisableSkill;
         private SkillInfo _skillInfo; 
-        public void SetData(SkillInfo data,int index){
+        public void SetData(SkillInfo data,int index)
+        {
             _skillInfo = data;
             SetIndex(index);
         }
@@ -21,7 +22,7 @@ namespace Ryneus
             clickButton.onClick.AddListener(() =>
                 {
                     if (Disable.gameObject.activeSelf) return;
-                    handler((int)_skillInfo.Id);
+                    handler(_skillInfo.Id);
                 }
             );
         }

@@ -29,15 +29,7 @@ namespace Ryneus
                 Clear();
                 return;
             }
-            if (skillInfo.Master.SkillType == SkillType.Reborn)
-            {
-                //UpdateSkillData(skillInfo.Id);
-                //UpdateRebornInfo(skillInfo);
-            } else
-            {
-                Debug.Log(skillInfo.Id);
-                UpdateSkillData(skillInfo.Id);
-            }
+            UpdateSkillData(skillInfo.Id);
             if (description != null)
             {
                 description.text = skillInfo.ConvertHelpText();

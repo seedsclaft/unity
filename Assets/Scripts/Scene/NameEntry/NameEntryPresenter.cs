@@ -19,7 +19,7 @@ namespace Ryneus
             Initialize();
         }
 
-        private async void Initialize()
+        private void Initialize()
         {
             _view.SetHelpWindow();
             _view.SetEvent((type) => UpdateCommand(type));
@@ -37,7 +37,8 @@ namespace Ryneus
 
         private void UpdateCommand(NameEntryViewEvent viewEvent)
         {
-            if (_busy){
+            if (_busy)
+            {
                 return;
             }
             if (viewEvent.commandType == CommandType.StartEntry)
@@ -75,7 +76,8 @@ namespace Ryneus
                 var popupInfo = new ConfirmInfo(DataSystem.GetText(5002),(menuCommandInfo) => UpdatePopup((ConfirmCommandType)menuCommandInfo));
                 popupInfo.SetIsNoChoice(true);
                 _view.CommandCallConfirm(popupInfo);
-            } else{
+            } else
+            {
                 _model.SetPlayerName(nameText);
                 _view.CommandDecidePlayerName(nameText);
                 _model.StartOpeningStage();
