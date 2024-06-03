@@ -18,6 +18,11 @@ namespace Ryneus
             commandName.text = data.Name;
         }
 
+        public void SetText(string text)
+        {
+            commandName.text = text;
+        }
+
         public void SetCallHandler(System.Action<SystemData.CommandData> handler)
         {
             clickButton.onClick.AddListener(() => 

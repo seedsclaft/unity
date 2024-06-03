@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 
 namespace Ryneus
 {
@@ -13,8 +12,10 @@ namespace Ryneus
         public int TroopId => _troopId;
         private List<BattlerInfo> _battlerInfos = new(); 
         public List<BattlerInfo> BattlerInfos => _battlerInfos;
-        public BattlerInfo BossEnemy {
-            get {
+        public BattlerInfo BossEnemy 
+        {
+            get 
+            {
                 var boss = _battlerInfos.Find(a => a.BossFlag == true);
                 if (boss != null) return boss;
                 if (_battlerInfos.Count > 0)
@@ -27,14 +28,14 @@ namespace Ryneus
         private List<GetItemInfo> _getItemInfos = new (); 
         public List<GetItemInfo> GetItemInfos => _getItemInfos;
 
-        private bool _escapeEnable = false;
-        public bool EscapeEnable => _escapeEnable;
-        public TroopInfo(int troopId,bool escapeEnable)
+        private bool _randomTroop = false;
+        public bool RandomTroop => _randomTroop;
+        public TroopInfo(int troopId,bool randomTroop)
         {
             _troopId = troopId;
             _battlerInfos.Clear();
             _getItemInfos.Clear();
-            _escapeEnable = escapeEnable;
+            _randomTroop = randomTroop;
         }
 
         public void MakeEnemyTroopDates(int plusLevel)
@@ -98,15 +99,6 @@ namespace Ryneus
                 var getItemData = prizeSetData.GetItem;
                 var getItemInfo = new GetItemInfo(getItemData);
                 AddGetItemInfo(getItemInfo);
-            }
-        }
-
-        public void RemoveAtEnemyIndex(int enemyIndex)
-        {
-            var battler = _battlerInfos.Find(a => a.Index == enemyIndex);
-            if (battler != null)
-            {
-                _battlerInfos.Remove(battler);
             }
         }
         

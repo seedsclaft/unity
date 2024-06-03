@@ -69,7 +69,7 @@ namespace Ryneus
             });
         }
 
-        private void ViewInitialize()
+        public void ViewInitialize()
         {
             _view.SetUIButton();
 

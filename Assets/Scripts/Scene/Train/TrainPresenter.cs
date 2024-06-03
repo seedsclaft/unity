@@ -106,6 +106,9 @@ namespace Ryneus
                 case Train.CommandType.SelectAttribute:
                     CommandSelectAttribute((int)viewEvent.template);
                     break;
+                case Train.CommandType.BattleReplay:
+                    CommandBattleReplay();
+                    break;
             }
             if (viewEvent.commandType == Train.CommandType.SkillAlchemy)
             {
@@ -294,6 +297,22 @@ namespace Ryneus
             ShowLearningSkillInfos();
         }
 
+        private void CommandBattleReplay()
+        {
+            var popupInfo = new PopupInfo
+            {
+                PopupType = PopupType.ClearParty,
+                EndEvent = () =>
+                {
+                    _busy = false;
+                    //_view.SetHelpInputInfo("OPTION");
+                    SoundManager.Instance.PlayStaticSe(SEType.Cancel);
+                }
+            };
+            _view.CommandCallPopup(popupInfo);
+            return;
+        }
+
         private void CommandSelectActorParadigm()
         {
             SoundManager.Instance.PlayStaticSe(SEType.Decide);
@@ -389,7 +408,8 @@ namespace Ryneus
                 {
                     CheckBattleMember();
                 }
-            } else{
+            } else
+            {
                 _view.HideSelectCharacter();
             }
         }

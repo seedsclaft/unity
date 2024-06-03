@@ -14,7 +14,7 @@ namespace Ryneus
         /// ActionInfoのアニメーション開始
         /// </summary>
         /// <param name="actionInfo"></param>
-        private void StartActionInfoAnimation(ActionInfo actionInfo)
+        public void StartActionInfoAnimation(ActionInfo actionInfo)
         {
             if (_skipBattle)
             {

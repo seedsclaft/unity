@@ -93,6 +93,13 @@ namespace Ryneus
         private List<ScorePrizeInfo> _scorePrizeInfos = new ();
         public List<ScorePrizeInfo> ScorePrizeInfos => _scorePrizeInfos;
 
+        private bool _inReplay = false;
+        public bool InReplay => _inReplay;
+        public void SetInReplay(bool inReplay)
+        {
+            _inReplay = inReplay;
+        }
+
         public List<int> CurrentAlchemyIdList(int stageId,int seek)
         {
             var alchemyIdList = new List<int>();

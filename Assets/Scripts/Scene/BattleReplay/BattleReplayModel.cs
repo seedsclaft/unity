@@ -5,6 +5,13 @@ namespace Ryneus
 {
     public class BattleReplayModel : BattleModel
     {
+        public string ReplayFilePath()
+        {
+            var stageId = string.Format(CurrentStage.Id.ToString(),"0:00");
+            var turn = string.Format(CurrentStage.CurrentTurn.ToString(),"0:00");
+            var seek = string.Format(CurrentStage.CurrentSeekIndex.ToString(),"0:00");
+            return stageId + turn + seek;
+        }
         private int _replayIndex = 1;
         public void SeekReplayCounter()
         {

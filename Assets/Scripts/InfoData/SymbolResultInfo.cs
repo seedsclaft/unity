@@ -58,5 +58,14 @@ namespace Ryneus
         {
             return StageId == stageId && Seek == seek && SeekIndex == seekIndex;
         }
+
+        public bool SaveBattleReplayStage()
+        {
+            if (_symbolInfo?.TroopInfo != null)
+            {
+                return _symbolInfo?.TroopInfo.RandomTroop == false;
+            }
+            return false;
+        }
     }
 }

@@ -267,7 +267,7 @@ namespace Ryneus
         {
             var troopId = stageSymbolData.Param1;
             var plusLevel = stageSymbolData.Param2;
-            var troopInfo = new TroopInfo(troopId,false);
+            var troopInfo = new TroopInfo(troopId,troopId == -1);
             // ランダム生成
             if (troopId == -1)
             {

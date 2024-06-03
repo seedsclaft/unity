@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using Unity.VisualScripting;
 
 namespace Ryneus
 {
@@ -15,6 +16,7 @@ namespace Ryneus
         [SerializeField] private TextMeshProUGUI commandTitle;
         [SerializeField] private TextMeshProUGUI partyEvaluate;
         [SerializeField] private TextMeshProUGUI troopEvaluate;
+        [SerializeField] private SideMenuButton replayButton;
         
         public ListData CommandData 
         {
@@ -40,7 +42,7 @@ namespace Ryneus
             }
         }    
 
-        public void Initialize() 
+        public void Initialize(System.Action replayEvent) 
         {
             characterList.Initialize();
             characterList.Activate();
@@ -48,6 +50,9 @@ namespace Ryneus
             commandList.Activate();
             characterList.SetInputCallHandler((a) => CallCharacterInputHandler(a));
             commandList.SetInputCallHandler((a) => CallCommandInputHandler(a));
+            replayButton?.SetCallHandler((a) => 
+                replayEvent?.Invoke()
+            );
             //infoObj.ForEach(a => a.SetActive(false));
         }
         
@@ -119,6 +124,11 @@ namespace Ryneus
                 characterList.Activate();
                 characterList.ResetInputFrame(36);
             }
+        }
+
+        private void CallReplay()
+        {
+
         }
 
         private void DisplaySelectCharacter()
@@ -225,6 +235,11 @@ namespace Ryneus
         public void ShowCommandList()
         {
             commandList.gameObject.SetActive(true);
+        }
+
+        public void ShowBattleReplay(bool isActive)
+        {
+            replayButton?.gameObject.SetActive(isActive);
         }
 
         public void HideCommandList()

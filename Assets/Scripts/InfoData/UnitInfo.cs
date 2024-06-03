@@ -30,5 +30,16 @@ namespace Ryneus
             // 最前列は
             return AliveBattlerInfos.Find(a => a.LineIndex == LineType.Front) != null;
         }
+
+        public int TotalEvaluate()
+        {
+            var evaluate = 0;
+            foreach (var battlerInfo in _battlerInfos)
+            {
+                evaluate += battlerInfo.Evaluate();
+            }
+            return evaluate;
+        }
+
     }
 }

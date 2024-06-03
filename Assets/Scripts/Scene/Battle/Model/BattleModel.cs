@@ -2484,11 +2484,6 @@ namespace Ryneus
 
         public bool EnableEscape()
         {
-            var troopData = CurrentTroopInfo();
-            if (troopData != null)
-            {
-                return troopData.EscapeEnable;
-            }
             return false;
         }
 
@@ -2506,7 +2501,7 @@ namespace Ryneus
             }
             SaveSystem.SaveConfigStart(GameSystem.ConfigData);
             
-            if (CurrentSelectRecord().SymbolType == SymbolType.Boss)
+            if (CurrentSelectRecord().SaveBattleReplayStage())
             {
                 var stageId = string.Format(CurrentStage.Id.ToString(),"0:00");
                 var turn = string.Format(CurrentStage.CurrentTurn.ToString(),"0:00");

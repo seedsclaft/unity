@@ -376,6 +376,7 @@ namespace Ryneus
                     _view.ShowCharacterDetail(_model.TacticsActor(),_model.StageMembers());
                     _view.ActivateTacticsCommand();
                     _view.ShowConfirmCommand();
+                    _view.ShowBattleReplay(recordInfo.SaveBattleReplayStage());
                     CommandRefresh();
                     _backCommand = Tactics.CommandType.CancelSelectSymbol;
                     break;

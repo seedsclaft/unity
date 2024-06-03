@@ -99,7 +99,7 @@ namespace Ryneus
 
         public void SetSelectCharacter(List<ListData> tacticsActorInfo,List<ListData> confirmCommands)
         {
-            selectCharacter.Initialize();
+            selectCharacter.Initialize(() => CallBattleReplay());
             //selectCharacter.SetCharacterData(actorInfos);
             SetInputHandler(selectCharacter.GetComponent<IInputHandlerEvent>());
             selectCharacter.SetTacticsCommand(confirmCommands);
@@ -126,7 +126,6 @@ namespace Ryneus
                 }
             });
             HideSelectCharacter();
-
         }
 
         public void CommandRefresh()
@@ -176,6 +175,12 @@ namespace Ryneus
             _commandData(eventData);
         }
 
+        private void CallBattleReplay()
+        {
+            var eventData = new TrainViewEvent(CommandType.BattleReplay);
+            _commandData(eventData);
+        }
+
         public void ShowSelectCharacter(List<ListData> tacticsActorInfo,TacticsCommandData tacticsCommandData)
         {
             selectCharacter.SetTacticsCharacter(tacticsActorInfo);
@@ -205,6 +210,11 @@ namespace Ryneus
         public void ShowConfirmCommand()
         {
             selectCharacter.ShowCommandList();
+        }
+
+        public void ShowBattleReplay(bool isActive)
+        {
+            selectCharacter.ShowBattleReplay(isActive);
         }
         
         public void HideConfirmCommand()

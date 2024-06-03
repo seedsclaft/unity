@@ -39,6 +39,8 @@ namespace Train
         CommandHelp,
         AlcanaCheck,
         ChangeSelectTacticsActor,
+        BattleReplay,
+
         SelectAttribute,
     }
 }

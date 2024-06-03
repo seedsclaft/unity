@@ -91,8 +91,9 @@ namespace Ryneus
                 _commandData(eventData);
             });
             SetBattleSkipActive(false);
-            if (TestMode)
+            if (GameSystem.CurrentStageData.Party.InReplay)
             {
+                GameSystem.CurrentStageData.Party.SetInReplay(false);
                 new BattleReplayPresenter(this);
             } else
             {

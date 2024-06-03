@@ -266,6 +266,11 @@ namespace Ryneus
             trainView.ShowConfirmCommand();
         }
         
+        public void ShowBattleReplay(bool isActive)
+        {
+            trainView.ShowBattleReplay(isActive);
+        }
+
         public void HideConfirmCommand()
         {
             trainView.HideConfirmCommand();
