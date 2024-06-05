@@ -27,10 +27,10 @@ namespace Ryneus
         [SerializeField] private GameObject currentSkillBg = null;
 
         [SerializeField] private GameObject centerAnimPosition = null;
-        [SerializeField] private SideMenuButton battleAutoButton = null;
-        [SerializeField] private SideMenuButton battleSpeedButton = null;
-        [SerializeField] private SideMenuButton battleSkipButton = null;
-        [SerializeField] private SideMenuButton skillLogButton = null;
+        [SerializeField] private OnOffButton battleAutoButton = null;
+        [SerializeField] private OnOffButton battleSpeedButton = null;
+        [SerializeField] private OnOffButton battleSkipButton = null;
+        [SerializeField] private OnOffButton skillLogButton = null;
         [SerializeField] private BattleCutinAnimation battleCutinAnimation = null;
         [SerializeField] private GameObject battleBackGroundRoot = null;
         private BattleBackGroundAnimation _backGroundAnimation = null;
@@ -71,20 +71,20 @@ namespace Ryneus
             {
                 CallSideMenu();
             });
-            battleSpeedButton.SetCallHandler((a) => 
+            battleSpeedButton.SetCallHandler(() => 
             {
                 if (battleSpeedButton.gameObject.activeSelf == false) return;
                 var eventData = new BattleViewEvent(CommandType.ChangeBattleSpeed);
                 _commandData(eventData);
             });
-            battleSkipButton.SetCallHandler((a) => 
+            battleSkipButton.SetCallHandler(() => 
             {
                 if (battleSkipButton.gameObject.activeSelf == false) return;
                 var eventData = new BattleViewEvent(CommandType.SkipBattle);
                 _skipBattle = true;
                 _commandData(eventData);
             });
-            skillLogButton.SetCallHandler((a) => 
+            skillLogButton.SetCallHandler(() => 
             {
                 if (skillLogButton.gameObject.activeSelf == false) return;
                 var eventData = new BattleViewEvent(CommandType.SkillLog);
@@ -129,13 +129,15 @@ namespace Ryneus
         public void SetBattleAutoButton(SystemData.CommandData data,bool isAuto)
         {
             battleAutoButton.gameObject.SetActive(false);
-            battleAutoButton.SetData(data,0);
-            battleAutoButton.UpdateViewItem();
-            battleAutoButton.SetCallHandler((a) => 
+            battleAutoButton.SetText(data.Name);
+            battleAutoButton.SetCallHandler(() => 
             {
                 if (battleAutoButton.gameObject.activeSelf == false) return;
                 var eventData = new BattleViewEvent(CommandType.ChangeBattleAuto);
                 _commandData(eventData);
+            },() => 
+            {
+                battleAutoButton.Cursor.SetActive(isAuto);
             });
             battleAutoButton.Cursor.SetActive(isAuto);
         }
@@ -154,25 +156,19 @@ namespace Ryneus
 
         public void SetBattleSpeedButton(string commandName)
         {
-            SystemData.CommandData system = new SystemData.CommandData();
-            system.Name = commandName;
-            battleSpeedButton.SetData(system,-1);
+            battleSpeedButton.SetText(commandName);
             battleSpeedButton.UpdateViewItem();
         }
 
         public void SetBattleSkipButton(string commandName)
         {
-            SystemData.CommandData system = new SystemData.CommandData();
-            system.Name = commandName;
-            battleSkipButton.SetData(system,-1);
+            battleSkipButton.SetText(commandName);
             battleSkipButton.UpdateViewItem();
         }
 
         public void SetSkillLogButton(string commandName)
         {
-            SystemData.CommandData system = new SystemData.CommandData();
-            system.Name = commandName;
-            skillLogButton.SetData(system,-1);
+            skillLogButton.SetText(commandName);
             skillLogButton.UpdateViewItem();
         }
 
@@ -232,12 +228,12 @@ namespace Ryneus
         public void SetUIButton()
         {
             SetBackCommand(() => OnClickBack());
-            ChangeSideMenuButtonActive(false);
+            //ChangeSideMenuButtonActive(false);
         }
 
         public void ChangeSideMenuButtonActive(bool isActive)
         {
-            SideMenuButton.gameObject.SetActive(isActive);
+            //SideMenuButton.gameObject.SetActive(isActive);
         }
 
         private void OnClickBack()
@@ -679,6 +675,12 @@ namespace Ryneus
         public void ChangeBattleAuto(bool isAuto)
         {
             battleAutoButton.Cursor.SetActive(isAuto);
+            battleAutoButton.SetCallHandler(() => 
+            {
+            },() => 
+            {
+                battleAutoButton.Cursor.SetActive(isAuto);
+            });
         }
 
         public async UniTask StartAnimationDemigod(BattlerInfo battlerInfo,SkillData skillData)

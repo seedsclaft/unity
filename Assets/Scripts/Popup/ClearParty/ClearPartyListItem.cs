@@ -8,14 +8,14 @@ namespace Ryneus
         [SerializeField] private TextMeshProUGUI userName;
         [SerializeField] private TextMeshProUGUI totalEvaluate;
         [SerializeField] private BaseList actorInfos;
-        [SerializeField] private SideMenuButton replayButton;
+        [SerializeField] private OnOffButton replayButton;
 
         private bool _eventInit = false;
         
         public void SetBattleReplayHandler(System.Action<SaveBattleInfo> callEvent)
         {
             if (_eventInit) return;
-            replayButton.SetCallHandler((a) => 
+            replayButton.SetCallHandler(() => 
             {
                 if (replayButton.gameObject.activeSelf == false) return;
                 callEvent((SaveBattleInfo)ListData.Data);
@@ -36,7 +36,7 @@ namespace Ryneus
                 //getItemButton.SetData("",0);
                 replayButton.SetText("再生");
                 actorInfos.SetData(ListData.MakeListData(data.Party.BattlerInfos));
-                replayButton.Cursor.SetActive(ListData.Enable);
+                //replayButton.Cursor.SetActive(ListData.Enable);
             }
         }
     }

@@ -331,7 +331,7 @@ GameObject:
   m_Component:
   - component: {fileID: 571385609855397447}
   - component: {fileID: 5012021628069240388}
-  - component: {fileID: 4855135070705154274}
+  - component: {fileID: 3059482992224895502}
   m_Layer: 5
   m_Name: OnOffButton
   m_TagString: Untagged
@@ -390,10 +390,11 @@ MonoBehaviour:
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
-    m_HighlightedSprite: {fileID: 0}
-    m_PressedSprite: {fileID: 0}
-    m_SelectedSprite: {fileID: 0}
-    m_DisabledSprite: {fileID: 0}
+    m_HighlightedSprite: {fileID: 21300000, guid: 43737c7a469a19e469fb70ef5021f47f,
+      type: 3}
+    m_PressedSprite: {fileID: 21300000, guid: 43737c7a469a19e469fb70ef5021f47f, type: 3}
+    m_SelectedSprite: {fileID: 21300000, guid: 43737c7a469a19e469fb70ef5021f47f, type: 3}
+    m_DisabledSprite: {fileID: 21300000, guid: 7ef45e3f32cbf174ab5b9b9701859b32, type: 3}
   m_AnimationTriggers:
     m_NormalTrigger: Normal
     m_HighlightedTrigger: Highlighted
@@ -401,11 +402,11 @@ MonoBehaviour:
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
   m_Interactable: 1
-  m_TargetGraphic: {fileID: 0}
+  m_TargetGraphic: {fileID: 1704000673915248353}
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &4855135070705154274
+--- !u!114 &3059482992224895502
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -414,7 +415,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7313347675400518973}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0d391e336de458f49ba0505cdbcda82c, type: 3}
+  m_Script: {fileID: 11500000, guid: 52c2e7ae1c9d147439d29de33ce077db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   clickButton: {fileID: 5012021628069240388}

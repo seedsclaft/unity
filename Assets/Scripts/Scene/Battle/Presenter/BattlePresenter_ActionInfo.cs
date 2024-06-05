@@ -122,7 +122,7 @@ namespace Ryneus
             if (actionInfo != null)
             {
                 // ダメージなどを適用
-                _model.ExecCurrentAction(actionInfo);
+                _model.ExecCurrentAction(actionInfo,true);
                 _model.CheckTriggerPassiveInfos(BattleUtility.HpDamagedTriggerTimings(),actionInfo,actionInfo.ActionResults);
             
                 StartDeathAnimation(actionInfo.ActionResults);

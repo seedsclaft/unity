@@ -106,7 +106,8 @@ namespace Ryneus
             _index = index;
         }
         
-        public void SetSelectHandler(Action<int> handler){
+        public void SetSelectHandler(Action<int> handler,Action exitAction = null)
+        {
             if (clickButton == null)
             {
                 return;
@@ -122,6 +123,10 @@ namespace Ryneus
                 //{
                     handler(_index);
                 //}
+            });
+            enterListener.SetExitEvent(() => 
+            {
+                exitAction?.Invoke();
             });
         }
 

@@ -16,7 +16,7 @@ namespace Ryneus
         [SerializeField] private TextMeshProUGUI commandTitle;
         [SerializeField] private TextMeshProUGUI partyEvaluate;
         [SerializeField] private TextMeshProUGUI troopEvaluate;
-        [SerializeField] private SideMenuButton replayButton;
+        [SerializeField] private OnOffButton replayButton;
         
         public ListData CommandData 
         {
@@ -50,7 +50,8 @@ namespace Ryneus
             commandList.Activate();
             characterList.SetInputCallHandler((a) => CallCharacterInputHandler(a));
             commandList.SetInputCallHandler((a) => CallCommandInputHandler(a));
-            replayButton?.SetCallHandler((a) => 
+            replayButton?.SetText("クリア編成");
+            replayButton?.SetCallHandler(() => 
                 replayEvent?.Invoke()
             );
             //infoObj.ForEach(a => a.SetActive(false));

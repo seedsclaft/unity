@@ -18,7 +18,7 @@ namespace Ryneus
         [SerializeField] private StatusInfoComponent statusInfoComponent;
         [SerializeField] private ActorInfoComponent actorInfoComponent;
         [SerializeField] private BattlerInfoComponent battlerInfoComponent;
-        [SerializeField] private SideMenuButton lvResetButton;
+        [SerializeField] private OnOffButton lvResetButton;
         [SerializeField] private SkillTriggerList skillTriggerList;
         private bool _isInit = false;
 

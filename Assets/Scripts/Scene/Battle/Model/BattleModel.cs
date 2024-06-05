@@ -104,8 +104,29 @@ namespace Ryneus
             _party.SetBattlers(BattlerActors());
             _troop = new UnitInfo();
             _troop.SetBattlers(BattlerEnemies());
-            _saveBattleInfo.SetParty(_party);
-            _saveBattleInfo.SetTroop(_troop);
+            _saveBattleInfo.SetParty(_party.CopyData());
+            _saveBattleInfo.SetTroop(_troop.CopyData());
+        }
+
+        public void CreateBattleData(SaveBattleInfo saveBattleInfo)
+        {
+            _actionIndex = 0;
+            _battlers.Clear();
+            _battlers.AddRange(saveBattleInfo.Party.BattlerInfos);
+            _battlers.AddRange(saveBattleInfo.Troop.BattlerInfos);
+
+            // アルカナ
+            var alcana = new BattlerInfo(AlcanaSkillInfos(),true,1);
+            _battlers.Add(alcana);
+
+            foreach (var battlerInfo1 in _battlers)
+            {
+                _passiveSkillInfos[battlerInfo1.Index] = new ();
+            }
+            _party = new UnitInfo();
+            _party.SetBattlers(BattlerActors());
+            _troop = new UnitInfo();
+            _troop.SetBattlers(BattlerEnemies());
         }
 
         public List<BattlerInfo> FieldBattlerInfos()
@@ -966,7 +987,7 @@ namespace Ryneus
             return null;
         }
 
-        public void ExecCurrentAction(ActionInfo actionInfo)
+        public void ExecCurrentAction(ActionInfo actionInfo,bool addSaveData)
         {
             if (actionInfo != null)
             {
@@ -983,6 +1004,10 @@ namespace Ryneus
                 if (actionInfo.Master.IsHpHealFeature())
                 {
                     subject.GainHealCount(1);
+                }
+                if (addSaveData)
+                {
+                    _saveBattleInfo.AddActionData(actionInfo);
                 }
                 ExecActionResultInfos(actionInfo.ActionResults,false);
                 actionInfo.SetTurnCount(_turnCount);
@@ -1269,7 +1294,6 @@ namespace Ryneus
                 battlerInfo = GetBattlerInfo(actionInfo.SubjectIndex),
                 skillInfo = actionInfo.SkillInfo
             };
-            _saveBattleInfo.AddActionData(actionInfo);
             _skillLogs.Add(skillLog);
             PopActionInfo();
             if (reAction == false)

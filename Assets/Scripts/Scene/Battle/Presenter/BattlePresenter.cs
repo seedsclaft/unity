@@ -31,6 +31,7 @@ namespace Ryneus
         private Battle.CommandType _backCommandType = Battle.CommandType.None;
         public BattlePresenter(BattleView view)
         {
+            if (view == null) return;
             _view = view;
             SetView(_view);
             _model = new BattleModel();
@@ -685,7 +686,7 @@ namespace Ryneus
                     await UniTask.DelayFrame(_model.WaitFrameTime(16));
                 }
             }
-            _model.ExecActionResultInfos(resultInfos);
+            _model.ExecActionResultInfos(resultInfos,true);
             if (resultInfos.Count > 0)
             {
                 _view.RefreshStatus();

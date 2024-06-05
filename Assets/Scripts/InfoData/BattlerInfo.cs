@@ -115,7 +115,7 @@ namespace Ryneus
             _status = statusInfo;
             _index = index;
             _skills = actorInfo.LearningSkillInfos().FindAll(a => a.LearningState == LearningState.Learned);
-            _skills = _skills.FindAll(a => a.IsParamUpSkill() || skillTriggerInfos.Find(b => b.SkillId == a.Id) != null);
+            _skills = _skills.FindAll(a => a.IsParamUpSkill() || (skillTriggerInfos != null && skillTriggerInfos.Find(b => b.SkillId == a.Id) != null));
             _demigodParam = actorInfo.DemigodParam;
             _isActor = true;
             _isAlcana = false;

@@ -181,6 +181,11 @@ namespace Ryneus
 			return playerInfo;
 		}
 
+		public static bool ExistReplay(string stageKey)
+		{
+			return ES3.FileExists(ReplayDataKey(stageKey));
+		}
+
 		private static bool ExistsLoadFile(string key)
 		{
 			if (_useEasySave)
