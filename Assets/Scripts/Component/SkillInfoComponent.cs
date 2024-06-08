@@ -24,12 +24,12 @@ namespace Ryneus
         [SerializeField] private GameObject selectedAlcana;
         [SerializeField] private _2dxFX_Shiny_Reflect shinyReflect;
 
-        public void UpdateSkillInfo(SkillInfo skillInfo){
+        public void UpdateInfo(SkillInfo skillInfo){
             if (skillInfo == null){
                 Clear();
                 return;
             }
-            UpdateSkillData(skillInfo.Id);
+            UpdateData(skillInfo.Id);
             if (description != null)
             {
                 description.text = skillInfo.ConvertHelpText();
@@ -58,7 +58,7 @@ namespace Ryneus
             }
         }
 
-        public void UpdateSkillData(int skillId)
+        public void UpdateData(int skillId)
         {
             if (skillId == 0)
             {

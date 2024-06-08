@@ -21,7 +21,7 @@ namespace Ryneus
             if (_data == null) return;
             if (skillInfoComponent != null)
             {
-                skillInfoComponent.UpdateSkillData(_data.SkillId);
+                skillInfoComponent.UpdateData(_data.SkillId);
             }
             if (titleName != null)
             {

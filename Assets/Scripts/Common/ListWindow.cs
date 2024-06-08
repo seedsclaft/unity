@@ -396,20 +396,19 @@ namespace Ryneus
 
         public int GetStartIndex()
         {
+            var width = GetScrolledWidth();
+            var height = Math.Max(0,GetScrolledHeight());
+            var itemSpace = ItemSpace();
+            var listMargin = ListMargin();
+            var space = ItemSpace();
             if (horizontal)
             {   //Math.Truncate
-                var width = GetScrolledWidth();
-                var itemSpace = ItemSpace();
-                var listMargin = ListMargin();
-                var space = ItemSpace();
-                return (int)Math.Floor( (width - itemSpace - listMargin + 4) / (_itemSize.x + space) );
+                var index = (int)Math.Floor( (width - itemSpace - listMargin + 4) / (_itemSize.x + space) );
+                return Math.Max(0,index);
             } else
             {
-                var height = GetScrolledHeight();
-                var itemSpace = ItemSpace();
-                var listMargin = ListMargin();
-                var space = ItemSpace();
-                return (int)Math.Floor( (height - itemSpace - listMargin + 4) / (_itemSize.y + space) );
+                var index = (int)Math.Floor( (height - itemSpace - listMargin + 4) / (_itemSize.y + space) );
+                return Math.Max(0,index);
             }
         }
 
@@ -738,17 +737,15 @@ namespace Ryneus
 
         private int ListItemCount()
         {
+            var width = GetViewPortWidth();
+            var height = GetViewPortHeight();
+            var listMargin = ListMargin();
+            var space = ItemSpace();
             if (horizontal)
             {   
-                var width = GetViewPortWidth();
-                var listMargin = ListMargin();
-                var space = ItemSpace();
                 return (int)Math.Round( (width - listMargin) / (_itemSize.x + space));
             } else
             {
-                var height = GetViewPortHeight();
-                var listMargin = ListMargin();
-                var space = ItemSpace();
                 return (int)Math.Round( (height - listMargin) / (_itemSize.y + space));
             }
         }

@@ -46,7 +46,13 @@ namespace Ryneus
     {
         None = 0,
         Undead = 1,
-        Air = 2
+        Air = 2,
+        Demon = 3,
+        Creature = 4,
+        Animal = 5,
+        UnKnown = 6,
+        Normal = 11,
+        Boss = 12
     }
 
     public enum LineType

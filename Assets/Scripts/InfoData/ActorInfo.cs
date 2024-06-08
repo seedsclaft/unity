@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using UnityEngine;
 
@@ -23,6 +22,99 @@ namespace Ryneus
         public int Level => _levelUpInfos.FindAll(a => a.Enable && a.SkillId == -1).Count + 1;
 
         public StatusInfo CurrentStatus => LevelUpStatus(Level);
+        private List<SkillTriggerInfo> _skillTriggerInfos = new ();
+        public List<SkillTriggerInfo> SkillTriggerInfos => _skillTriggerInfos;
+
+        public void InitSkillTriggerInfos()
+        {
+            var skillTriggerDates = Master.SkillTriggerDates;
+            for (int i = 0;i < skillTriggerDates.Count;i++)
+            {
+                var skillTriggerData = skillTriggerDates[i];
+                var skillTriggerInfo = new SkillTriggerInfo(_actorId,new SkillInfo(skillTriggerData.SkillId));
+                skillTriggerInfo.SetPriority(i);
+                var skillTriggerData1 = DataSystem.SkillTriggers.Find(a => a.Id == skillTriggerData.Trigger1);
+                var skillTriggerData2 = DataSystem.SkillTriggers.Find(a => a.Id == skillTriggerData.Trigger2);
+                skillTriggerInfo.UpdateTriggerDates(new List<SkillTriggerData>(){skillTriggerData1,skillTriggerData2});
+                _skillTriggerInfos.Add(skillTriggerInfo);
+            }
+        }
+
+        public void AddSkillTriggerSkill(int skillId)
+        {
+            for (int i = 0;i < _skillTriggerInfos.Count;i++)
+            {
+                var skillTriggerInfo = _skillTriggerInfos[i];
+                if (skillTriggerInfo.SkillId == 0)
+                {
+                    skillTriggerInfo.SetSkillInfo(new SkillInfo(skillId));
+                    break;
+                }
+            }
+        }
+        public void SetSkillTriggerSkill(int index,SkillInfo skillInfo)
+        {
+            if (_skillTriggerInfos.Count > index)
+            {
+                _skillTriggerInfos[index].SetSkillInfo(skillInfo);
+            }
+        }
+        
+        public void SetSkillTriggerTrigger1(int index,SkillTriggerData triggerType)
+        {
+            if (_skillTriggerInfos.Count > index)
+            {
+                var triggerTypes = _skillTriggerInfos[index].SkillTriggerDates;
+                var list = new List<SkillTriggerData>();
+                if (triggerType == null && triggerTypes[1] != null)
+                {
+                    list.Add(triggerTypes[1]);
+                    list.Add(triggerType);
+                } else
+                {
+                    list.Add(triggerType);
+                    list.Add(triggerTypes[1]);
+                }
+                _skillTriggerInfos[index].UpdateTriggerDates(list);
+            }
+        }
+
+        public void SetSkillTriggerTrigger2(int index,SkillTriggerData triggerType)
+        {
+            if (_skillTriggerInfos.Count > index)
+            {
+                var triggerTypes = _skillTriggerInfos[index].SkillTriggerDates;
+                var list = new List<SkillTriggerData>
+                {
+                    triggerTypes[0],
+                    triggerType
+                };
+                _skillTriggerInfos[index].UpdateTriggerDates(list);
+            }
+        }
+
+        public void SetTriggerIndexUp(int index)
+        {
+            if (index > 0)
+            {
+                var upTriggerData = _skillTriggerInfos[index];
+                var downTriggerData = _skillTriggerInfos[index - 1];
+                upTriggerData.SetPriority(index-1);
+                downTriggerData.SetPriority(index);
+            }
+        }
+
+        public void SetTriggerIndexDown(int index)
+        {
+            if (index <= _skillTriggerInfos.Count)
+            {
+                var upTriggerData = _skillTriggerInfos[index+1];
+                var downTriggerData = _skillTriggerInfos[index];
+                upTriggerData.SetPriority(index);
+                downTriggerData.SetPriority(index+1);
+            }
+        }
+
         public List<AttributeRank> GetAttributeRank()
         {
             var list = new List<AttributeRank>();
@@ -90,6 +182,7 @@ namespace Ryneus
             _currentHp = Master.InitStatus.Hp;
             _currentMp = Master.InitStatus.Mp;
             InitSkillInfo();
+            InitSkillTriggerInfos();
         }
 
     #if UNITY_ANDROID
@@ -134,6 +227,7 @@ namespace Ryneus
             _lost = baseActorInfo.Lost;
             _levelUpInfos = baseActorInfo._levelUpInfos;
             _lineIndex = baseActorInfo._lineIndex;
+            _skillTriggerInfos = baseActorInfo._skillTriggerInfos;
         }
 
         private void SetInitialParameter(ActorData actorData)
@@ -146,7 +240,8 @@ namespace Ryneus
         {
             _lastSelectSkillId = 0;
             var selectSkill = LearningSkillInfos().Find(a => a.Id >= 100);
-            if (selectSkill != null){
+            if (selectSkill != null)
+            {
                 _lastSelectSkillId = selectSkill.Id;
             }
 
@@ -169,9 +264,9 @@ namespace Ryneus
                 }
                 list.Add(skillInfo);
             }
-            foreach (var _learnSkillId in LearnSkillIds())
+            foreach (var learnSkillId in LearnSkillIds())
             {
-                var skillInfo = new SkillInfo(_learnSkillId);
+                var skillInfo = new SkillInfo(learnSkillId);
                 skillInfo.SetLearningState(LearningState.Learned);
                 list.Add(skillInfo);
             }

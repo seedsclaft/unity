@@ -519,7 +519,7 @@ namespace Ryneus
         public void SetCurrentSkillData(SkillInfo skillInfo)
         {
             skillInfoComponent.gameObject.SetActive(true);
-            skillInfoComponent.UpdateSkillInfo(skillInfo);
+            skillInfoComponent.UpdateInfo(skillInfo);
             currentSkillBg.GetComponent<RectTransform>().sizeDelta = new Vector2(480,60 + ((skillInfo.Master.Help.Split("\n").Length-1) * 28));
         }
 

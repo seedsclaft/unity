@@ -376,13 +376,7 @@ namespace Ryneus
             var currentBattler = _model.CurrentBattler;
             int autoSkillId;
             int targetIndex;
-            if (currentBattler.IsActor)
-            {
-                (autoSkillId,targetIndex) = _model.MakeAutoActorSkillId(currentBattler);
-            } else
-            {
-                (autoSkillId,targetIndex) = _model.MakeAutoEnemySkillId(currentBattler);
-            }
+            (autoSkillId,targetIndex) = _model.MakeAutoSkillTriggerSkillId(currentBattler);
             if (autoSkillId == -1)
             {
                 autoSkillId = 20010;
@@ -716,11 +710,11 @@ namespace Ryneus
             // 行動者のActionInfoか
             bool isTriggeredSkill = actionInfo.TriggeredSkill;
             // TriggerAfterがある
-            var result = _model.CheckTriggerSkillInfos(TriggerTiming.After,actionInfo,actionInfo.ActionResults);
-            var result2 = _model.CheckTriggerSkillInfos(TriggerTiming.AfterAndStartBattle,actionInfo,actionInfo.ActionResults);
+            var result = _model.CheckTriggerSkillInfos(TriggerTiming.After,actionInfo,actionInfo.ActionResults,true);
+            var result2 = _model.CheckTriggerSkillInfos(TriggerTiming.AfterAndStartBattle,actionInfo,actionInfo.ActionResults,true);
             result.AddRange(result2);
 
-            if (/*result.Count == 0 && */_triggerAfterChecked == false && isTriggeredSkill == false)
+            if (result.Count == 0 && _triggerAfterChecked == false && isTriggeredSkill == false)
             {
                 // 行動者のターンを進める
                 var removed =_model.UpdateTurn();

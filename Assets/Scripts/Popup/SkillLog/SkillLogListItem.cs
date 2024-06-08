@@ -14,7 +14,7 @@ namespace Ryneus
             if (ListData == null) return;
             var data = (SkillLogListInfo)ListData.Data;
             battlerInfoComponent.UpdateInfo(data.battlerInfo);
-            skillInfoComponent.UpdateSkillInfo(data.skillInfo);
+            skillInfoComponent.UpdateInfo(data.skillInfo);
         }
     }
 

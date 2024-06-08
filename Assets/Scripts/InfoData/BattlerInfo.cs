@@ -100,8 +100,12 @@ namespace Ryneus
         private bool _preserveAlive = false;
         public bool PreserveAlive => _preserveAlive;
 
-        public BattlerInfo(ActorInfo actorInfo,int index,List<SkillTriggerInfo> skillTriggerInfos)
+        private List<SkillTriggerInfo> _skillTriggerInfos = new ();
+        public List<SkillTriggerInfo> SkillTriggerInfos => _skillTriggerInfos;
+
+        public BattlerInfo(ActorInfo actorInfo,int index)
         {
+            _skillTriggerInfos = actorInfo.SkillTriggerInfos;
             _charaId = actorInfo.ActorId;
             _level = actorInfo.Level;
             var statusInfo = new StatusInfo();
@@ -115,7 +119,7 @@ namespace Ryneus
             _status = statusInfo;
             _index = index;
             _skills = actorInfo.LearningSkillInfos().FindAll(a => a.LearningState == LearningState.Learned);
-            _skills = _skills.FindAll(a => a.IsParamUpSkill() || (skillTriggerInfos != null && skillTriggerInfos.Find(b => b.SkillId == a.Id) != null));
+            _skills = _skills.FindAll(a => a.IsParamUpSkill() || (_skillTriggerInfos != null && _skillTriggerInfos.Find(b => b.SkillId == a.Id) != null));
             _demigodParam = actorInfo.DemigodParam;
             _isActor = true;
             _isAlcana = false;
@@ -191,6 +195,21 @@ namespace Ryneus
                 skill.SetUseCount(0);
                 skill.SetTurnCount(0);
             }
+            _skills.Sort((a,b) => a.Weight > b.Weight ? -1:1);
+            foreach (var skillInfo in _skills)
+            {
+                var skillTriggerData = DataSystem.Enemies.Find(a => a.Id == EnemyData.Id).SkillTriggerDates.Find(a => a.SkillId == skillInfo.Id);
+                if (skillTriggerData == null)
+                {
+                    continue;
+                }
+                var skillTriggerInfo = new SkillTriggerInfo(EnemyData.Id,skillInfo);
+                var SkillTriggerData1 = DataSystem.SkillTriggers.Find(a => a.Id == skillTriggerData.Trigger1);
+                var SkillTriggerData2 = DataSystem.SkillTriggers.Find(a => a.Id == skillTriggerData.Trigger2);
+                skillTriggerInfo.UpdateTriggerDates(new List<SkillTriggerData>(){SkillTriggerData1,SkillTriggerData2});
+                _skillTriggerInfos.Add(skillTriggerInfo);
+            }
+            _skillTriggerInfos = _skillTriggerInfos.FindAll(a => _skills.Find(b => b.Id == a.SkillId) != null);
             ResetAp(true);
         }
         
@@ -264,10 +283,14 @@ namespace Ryneus
             {
                 if (kind > 0)
                 {
-                    var skillInfo = new SkillInfo((int)kind * 10 + 10000);
-                    if (_skills.Find(a => a.Id == skillInfo.Id) == null)
+                    var skillData = DataSystem.Skills.ContainsKey((int)kind * 10 + 10000);
+                    if (skillData)
                     {
-                        _skills.Add(skillInfo);
+                        var skillInfo = new SkillInfo((int)kind * 10 + 10000);
+                        if (_skills.Find(a => a.Id == skillInfo.Id) == null)
+                        {
+                            _skills.Add(skillInfo);
+                        }
                     }
                 }
             }

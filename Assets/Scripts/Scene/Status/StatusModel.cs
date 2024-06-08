@@ -93,7 +93,7 @@ namespace Ryneus
 
         public List<ListData> SkillTrigger(int selectIndex = -1)
         {
-            var listData = MakeListData(PartyInfo.SkillTriggerInfos(CurrentActor.ActorId),selectIndex);
+            var listData = MakeListData(CurrentActor.SkillTriggerInfos,selectIndex);
             return listData;
         }
     }

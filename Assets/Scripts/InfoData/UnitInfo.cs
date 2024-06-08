@@ -50,8 +50,7 @@ namespace Ryneus
             {
                 if (battlerInfo.IsActor)
                 {
-                    var skillTriggerInfos = GameSystem.CurrentStageData.Party.SkillTriggerInfos(battlerInfo.ActorInfo.ActorId);
-                    var copyBattlerInfo = new BattlerInfo(battlerInfo.ActorInfo,idx+1,skillTriggerInfos);
+                    var copyBattlerInfo = new BattlerInfo(battlerInfo.ActorInfo,idx+1);
                     battlerInfos.Add(copyBattlerInfo);
                 } else
                 {

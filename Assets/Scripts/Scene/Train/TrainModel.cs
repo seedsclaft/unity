@@ -69,7 +69,7 @@ namespace Ryneus
             var levelUpInfo = actorInfo.LearnSkill(skillInfo.Id,learningCost,CurrentStage.Id,CurrentStage.CurrentTurn,-1);
             PartyInfo.SetLevelUpInfo(levelUpInfo);
             // 作戦項目に追加
-            PartyInfo.AddSkillTriggerSkill(actorInfo.ActorId,skillId);
+            actorInfo.AddSkillTriggerSkill(skillId);
             //actorInfo.GainNuminousCost(learningCost);
         }
 

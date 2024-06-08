@@ -20,7 +20,7 @@ namespace Ryneus
         {
             _priority = priority;
         }
-        public int SkillId => _skillInfo.Id;
+        public int SkillId => _skillInfo != null ? _skillInfo.Id : 0;
         private SkillInfo _skillInfo = null;
         public SkillInfo SkillInfo => _skillInfo;
         public void SetSkillInfo(SkillInfo skillInfo)

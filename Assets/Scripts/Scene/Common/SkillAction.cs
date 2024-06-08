@@ -31,7 +31,7 @@ namespace Ryneus
         {
             if (ListData == null) return;
             var data = (SkillInfo)ListData.Data;
-            skillInfoComponent.UpdateSkillInfo(data);
+            skillInfoComponent.UpdateInfo(data);
             if (DisableSkill != null) DisableSkill.SetActive(data.Enable == false);
         }
     }

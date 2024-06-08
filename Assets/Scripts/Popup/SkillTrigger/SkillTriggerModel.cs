@@ -6,17 +6,18 @@ namespace Ryneus
     public class SkillTriggerModel : BaseModel
     {
         private int _actorId = -1;
+        public ActorInfo CurrentActor => StageMembers().Find(a => a.ActorId == _actorId);
         public List<ListData> SkillTrigger(int actorId,int selectIndex = -1)
         {
             _actorId = actorId;
-            var listData = MakeListData(PartyInfo.SkillTriggerInfos(_actorId),selectIndex);
+            var listData = MakeListData(CurrentActor.SkillTriggerInfos,selectIndex);
             return listData;
         }
 
         public int SelectCategoryIndex(int selectIndex,int skillTriggerIndex)
         {
             var categoryIndex = 1;
-            var skillTriggerInfo = PartyInfo.SkillTriggerInfos(_actorId)[selectIndex];
+            var skillTriggerInfo = CurrentActor.SkillTriggerInfos[selectIndex];
             if (skillTriggerInfo != null)
             {
                 categoryIndex = skillTriggerInfo.SkillTriggerDates[skillTriggerIndex].Category;
@@ -30,14 +31,13 @@ namespace Ryneus
 
         public List<ListData> SkillTriggerSkillList()
         {
-            var actorInfo = StageMembers().Find(a => a.ActorId == _actorId);
             var list = new List<SkillInfo>();
-            if (actorInfo != null)
+            if (CurrentActor != null)
             {
                 var skillInfo = new SkillInfo(0);
                 list.Add(skillInfo);
                 var listData = MakeListData(list);
-                foreach (var actionInfo in actorInfo.SkillActionList())
+                foreach (var actionInfo in CurrentActor.SkillActionList())
                 {
                     listData.Add(actionInfo);
                 }
@@ -60,7 +60,7 @@ namespace Ryneus
         {
             var list = DataSystem.SkillTriggers.FindAll(a => a.Category == -1 || a.Category == category);
             // 対象のマッチング
-            var skillTriggerData = PartyInfo.SkillTriggerInfos(_actorId);
+            var skillTriggerData = CurrentActor.SkillTriggerInfos;
             if (skillTriggerData.Count > index)
             {
                 var skill = DataSystem.FindSkill(skillTriggerData[index].SkillId);
@@ -86,29 +86,28 @@ namespace Ryneus
 
         public void SetSkillTriggerSkill(int index,int skillId)
         {
-            var actorInfo = StageMembers().Find(a => a.ActorId == _actorId);
-            var skills = actorInfo.SkillInfos();
-            PartyInfo.SetSkillTriggerSkill(_actorId,index,skills.Find(a => a.Id == skillId));
+            var skills = CurrentActor.SkillInfos();
+            CurrentActor.SetSkillTriggerSkill(index,skills.Find(a => a.Id == skillId));
         }
 
         public void SetSkillTrigger1(int index,SkillTriggerData triggerData)
         {
-            PartyInfo.SetSkillTriggerTrigger1(_actorId,index,triggerData);
+            CurrentActor.SetSkillTriggerTrigger1(index,triggerData);
         }
 
         public void SetSkillTrigger2(int index,SkillTriggerData triggerData)
         {
-            PartyInfo.SetSkillTriggerTrigger2(_actorId,index,triggerData);
+            CurrentActor.SetSkillTriggerTrigger2(index,triggerData);
         }
 
         public void SetTriggerIndexUp(int index)
         {
-            PartyInfo.SetTriggerIndexUp(_actorId,index);
+            CurrentActor.SetTriggerIndexUp(index);
         }
 
         public void SetTriggerIndexDown(int index)
         {
-            PartyInfo.SetTriggerIndexDown(_actorId,index);
+            CurrentActor.SetTriggerIndexDown(index);
         }
     }
 }

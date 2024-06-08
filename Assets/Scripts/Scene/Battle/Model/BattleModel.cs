@@ -80,8 +80,7 @@ namespace Ryneus
             var battleMembers = BattleMembers();
             foreach (var actorInfo in battleMembers)
             {
-                var skillTriggerInfos = PartyInfo.SkillTriggerInfos(actorInfo.ActorId);
-                var battlerInfo = new BattlerInfo(actorInfo,actorInfo.BattleIndex,skillTriggerInfos);
+                var battlerInfo = new BattlerInfo(actorInfo,actorInfo.BattleIndex);
                 _battlers.Add(battlerInfo);
             }
             var enemies = CurrentTroopInfo().BattlerInfos;
@@ -1552,9 +1551,9 @@ namespace Ryneus
                             // 作戦で可否判定
                             var selectSkill = -1;
                             var selectTarget = -1;
-                            if (battlerInfo.IsActor)
+                            if (true)
                             {
-                                var skillTriggerInfos = PartyInfo.SkillTriggerInfos(battlerInfo.ActorInfo.ActorId);
+                                var skillTriggerInfos = battlerInfo.SkillTriggerInfos;
                                 var sameSkillTriggerInfo = skillTriggerInfos.Find(a => a.SkillId == passiveInfo.Id);
                                 if (sameSkillTriggerInfo != null)
                                 {
@@ -1893,8 +1892,8 @@ namespace Ryneus
                         break;
                         case TriggerType.DeadWithoutSelf:
                         var targetDeadWithoutSelfParty = battlerInfo.IsActor ? _party : _troop;
-                        int count = targetDeadWithoutSelfParty.BattlerInfos.FindAll(a => a.IsState(StateType.Death)).Count;
-                        if (battlerInfo.IsAlive() && count > 0 && (count+1) >= targetDeadWithoutSelfParty.BattlerInfos.Count)
+                        int aliveCount = targetDeadWithoutSelfParty.BattlerInfos.Count - targetDeadWithoutSelfParty.AliveBattlerInfos.Count;
+                        if (battlerInfo.IsAlive() && aliveCount == 1)
                         {
                             IsTriggered = true;
                         }
@@ -2305,37 +2304,13 @@ namespace Ryneus
             }
         }
 
-        public (int,int) MakeAutoActorSkillId(BattlerInfo battlerInfo)
+        public (int,int) MakeAutoSkillTriggerSkillId(BattlerInfo battlerInfo)
         {
             var skillInfos = battlerInfo.ActiveSkills().FindAll(a => CheckCanUse(a,battlerInfo));
             
             // トリガーデータからスキル検索
-            var skillTriggerInfos = PartyInfo.SkillTriggerInfos(battlerInfo.ActorInfo.ActorId);
             // 使用可能なものに絞る
-            skillTriggerInfos = skillTriggerInfos.FindAll(a => skillInfos.Find(b => b.Id == a.SkillId) != null);
-            return SelectSkillTargetBySkillTriggerDates(battlerInfo,skillTriggerInfos);
-        }
-
-        public (int,int) MakeAutoEnemySkillId(BattlerInfo battlerInfo)
-        {
-            var skillInfos = battlerInfo.ActiveSkills().FindAll(a => CheckCanUse(a,battlerInfo));
-            //var (skillId,targetIndex) = BattleActorAI.MakeAutoActorSkillId(skillInfos,battlerInfo,BattlerActors(),BattlerEnemies());
-            skillInfos.Sort((a,b) => a.Weight > b.Weight ? -1:1);
-            var skillTriggerInfos = new List<SkillTriggerInfo>();
-            foreach (var skillInfo in skillInfos)
-            {
-                var skillTriggerData = DataSystem.Enemies.Find(a => a.Id == battlerInfo.EnemyData.Id).SkillTriggerDates.Find(a => a.SkillId == skillInfo.Id);
-                if (skillTriggerData == null)
-                {
-                    continue;
-                }
-                var skillTriggerInfo = new SkillTriggerInfo(battlerInfo.EnemyData.Id,skillInfo);
-                var SkillTriggerData1 = DataSystem.SkillTriggers.Find(a => a.Id == skillTriggerData.Trigger1);
-                var SkillTriggerData2 = DataSystem.SkillTriggers.Find(a => a.Id == skillTriggerData.Trigger2);
-                skillTriggerInfo.UpdateTriggerDates(new List<SkillTriggerData>(){SkillTriggerData1,SkillTriggerData2});
-                skillTriggerInfos.Add(skillTriggerInfo);
-            }
-            skillTriggerInfos = skillTriggerInfos.FindAll(a => skillInfos.Find(b => b.Id == a.SkillId) != null);
+            var skillTriggerInfos = battlerInfo.SkillTriggerInfos.FindAll(a => skillInfos.Find(b => b.Id == a.SkillId) != null);
             return SelectSkillTargetBySkillTriggerDates(battlerInfo,skillTriggerInfos);
         }
 

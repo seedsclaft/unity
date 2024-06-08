@@ -22,7 +22,7 @@ namespace Ryneus
         {
             evaluateText?.SetText(learnSkillInfo.From.ToString());
             afterEvaluateText?.SetText(learnSkillInfo.To.ToString());
-            skillInfoComponent.UpdateSkillInfo(learnSkillInfo.SkillInfo);
+            skillInfoComponent.UpdateInfo(learnSkillInfo.SkillInfo);
         }
 
 

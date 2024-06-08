@@ -96,7 +96,7 @@ namespace Ryneus
                 skillInfoComponents[i].gameObject.SetActive(selectAlcanaInfo.Count > i);
                 if (selectAlcanaInfo.Count > i)
                 {
-                    skillInfoComponents[i].UpdateSkillInfo(selectAlcanaInfo[i]);
+                    skillInfoComponents[i].UpdateInfo(selectAlcanaInfo[i]);
                 }
             }
         }

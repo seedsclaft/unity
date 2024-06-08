@@ -14,7 +14,7 @@ namespace Ryneus
         
         public void UpdateSkillInfo(SkillInfo skillInfo)
         {
-            skillInfoComponent?.UpdateSkillInfo(skillInfo);
+            skillInfoComponent?.UpdateInfo(skillInfo);
         }
 
         public void UpdateSkillTriggerHelp(string help1,string help2)

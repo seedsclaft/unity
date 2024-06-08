@@ -33,7 +33,7 @@ namespace Ryneus
             }
             if (skillData != null)
             {
-                skillInfoComponent.UpdateSkillData(skillData.Id);
+                skillInfoComponent.UpdateData(skillData.Id);
             }
             
             var time1 = 0f;

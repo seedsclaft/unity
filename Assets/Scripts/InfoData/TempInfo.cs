@@ -8,6 +8,7 @@ namespace Ryneus
     public class TempInfo
     {
         private List<ActorInfo> _tempActorInfos = new ();
+        // バトル前のアクターデータを設定
         public List<ActorInfo> TempActorInfos => _tempActorInfos;
         private List<SkillInfo> _tempAlcanaSkillInfos = new ();
         public List<SkillInfo> TempAlcanaSkillInfos => _tempAlcanaSkillInfos;
