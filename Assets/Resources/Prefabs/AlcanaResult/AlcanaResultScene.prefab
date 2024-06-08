@@ -802,7 +802,6 @@ MonoBehaviour:
   _backCommand: {fileID: 0}
   _backGround: {fileID: 0}
   uiRoot: {fileID: 2238281165375268732}
-  optionButton: {fileID: 0}
   sideMenuButton: {fileID: 0}
   strategyActorList: {fileID: 7839185271444317202}
   strategyResultList: {fileID: 4585081744591336504}
@@ -1162,17 +1161,17 @@ PrefabInstance:
     - target: {fileID: 7766958757579192581, guid: 1b82f5d0b31c2ea43824164714f130c8,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7766958757579192581, guid: 1b82f5d0b31c2ea43824164714f130c8,
         type: 3}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7766958757579192581, guid: 1b82f5d0b31c2ea43824164714f130c8,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 208
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8200264307045333030, guid: 1b82f5d0b31c2ea43824164714f130c8,
         type: 3}
@@ -1212,12 +1211,12 @@ PrefabInstance:
     - target: {fileID: 8956343859032753493, guid: 1b82f5d0b31c2ea43824164714f130c8,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8956343859032753493, guid: 1b82f5d0b31c2ea43824164714f130c8,
         type: 3}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

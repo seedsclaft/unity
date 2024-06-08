@@ -2513,25 +2513,30 @@ namespace Ryneus
 
         public void EndBattle()
         {
-            foreach (var battler in _party.BattlerInfos)
+            if (PartyInfo.InReplay)
             {
-                var actorInfo = Actors().Find(a => a.ActorId == battler.CharaId);
-                actorInfo.ChangeHp(battler.MaxHp);
-                actorInfo.ChangeMp(battler.MaxMp);
-            }
-            foreach (var battlerInfo in _troop.BattlerInfos)
+                PartyInfo.SetInReplay(false);
+            } else
             {
-                battlerInfo.ResetData();
+                foreach (var battler in _party.BattlerInfos)
+                {
+                    var actorInfo = Actors().Find(a => a.ActorId == battler.CharaId);
+                    actorInfo.ChangeHp(battler.MaxHp);
+                    actorInfo.ChangeMp(battler.MaxMp);
+                }
+                foreach (var battlerInfo in _troop.BattlerInfos)
+                {
+                    battlerInfo.ResetData();
+                }
+                if (CurrentSelectRecord().SaveBattleReplayStage())
+                {
+                    var stageKey = CurrentStageKey();
+                    var userId = CurrentData.PlayerInfo.UserId;
+                    SaveSystem.SaveReplay(stageKey,_saveBattleInfo);
+                    FirebaseController.UploadReplayFile(stageKey,userId.ToString(),_saveBattleInfo);
+                }
             }
             SaveSystem.SaveConfigStart(GameSystem.ConfigData);
-            
-            if (CurrentSelectRecord().SaveBattleReplayStage())
-            {
-                var stageId = string.Format(CurrentStage.Id.ToString(),"0:00");
-                var turn = string.Format(CurrentStage.CurrentTurn.ToString(),"0:00");
-                var seek = string.Format(CurrentStage.CurrentSeekIndex.ToString(),"0:00");
-                SaveSystem.SaveReplay(stageId+turn+seek,_saveBattleInfo);
-            }
         }
 
         public List<ListData> SideMenu()

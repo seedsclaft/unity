@@ -93,7 +93,6 @@ namespace Ryneus
             SetBattleSkipActive(false);
             if (GameSystem.CurrentStageData.Party.InReplay)
             {
-                GameSystem.CurrentStageData.Party.SetInReplay(false);
                 new BattleReplayPresenter(this);
             } else
             {

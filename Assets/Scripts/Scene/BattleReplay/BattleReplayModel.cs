@@ -7,10 +7,7 @@ namespace Ryneus
     {
         public string ReplayFilePath()
         {
-            var stageId = string.Format(CurrentStage.Id.ToString(),"0:00");
-            var turn = string.Format(CurrentStage.CurrentTurn.ToString(),"0:00");
-            var seek = string.Format(CurrentStage.CurrentSeekIndex.ToString(),"0:00");
-            return stageId + turn + seek;
+            return CurrentStageKey();
         }
         private int _replayIndex = -1;
         public void SeekReplayCounter()

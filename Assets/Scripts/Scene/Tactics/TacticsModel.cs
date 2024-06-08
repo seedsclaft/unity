@@ -184,6 +184,13 @@ namespace Ryneus
                 };
                 list.Add(saveCommand);
             }
+                var stageCommand = new SystemData.CommandData
+                {
+                    Id = 3,
+                    Name = "ステージ選択へ",
+                    Key = "Retire"
+                };
+                list.Add(stageCommand);
             var titleCommand = new SystemData.CommandData
             {
                 Id = 4,

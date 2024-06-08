@@ -700,5 +700,17 @@ namespace Ryneus
             }
             return 0;
         }
+
+        public string CurrentStageKey()
+        {
+            var stageKey = new System.Text.StringBuilder();
+            if (CurrentStage != null)
+            {
+                stageKey.Append(string.Format(CurrentStage.Id.ToString("00")));
+                stageKey.Append(string.Format(CurrentStage.CurrentTurn.ToString("00")));
+                stageKey.Append(string.Format(CurrentStage.CurrentSeekIndex.ToString("00")));
+            }
+            return stageKey.ToString();
+        }
     }
 }

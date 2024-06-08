@@ -56,7 +56,7 @@ MonoBehaviour:
   statusInfoComponent: {fileID: 4597712222119138946}
   actorInfoComponent: {fileID: 2486342000157688306}
   battlerInfoComponent: {fileID: 8304869985664358943}
-  lvResetButton: {fileID: 5358435129780717313}
+  lvResetButton: {fileID: 1400310965177147082}
   skillTriggerList: {fileID: 4444423340240985163}
 --- !u!1 &660523885294766031
 GameObject:
@@ -358,7 +358,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6360621817125248897}
   - component: {fileID: 1657763678219718526}
-  - component: {fileID: 5358435129780717313}
+  - component: {fileID: 1400310965177147082}
   m_Layer: 5
   m_Name: Reset
   m_TagString: Untagged
@@ -432,7 +432,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &5358435129780717313
+--- !u!114 &1400310965177147082
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -441,7 +441,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2086961248031785327}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0d391e336de458f49ba0505cdbcda82c, type: 3}
+  m_Script: {fileID: 11500000, guid: 52c2e7ae1c9d147439d29de33ce077db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   clickButton: {fileID: 1657763678219718526}
@@ -3555,7 +3555,7 @@ PrefabInstance:
     - target: {fileID: 3124891097487444757, guid: 412b76b422af28a4886ecda6a22bedf7,
         type: 3}
       propertyPath: m_Value
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3402134641514163276, guid: 412b76b422af28a4886ecda6a22bedf7,
         type: 3}

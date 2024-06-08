@@ -35,6 +35,7 @@ namespace Ryneus
                 
                 //getItemButton.SetData("",0);
                 replayButton.SetText("再生");
+                actorInfos.Initialize();
                 actorInfos.SetData(ListData.MakeListData(data.Party.BattlerInfos));
                 //replayButton.Cursor.SetActive(ListData.Enable);
             }
