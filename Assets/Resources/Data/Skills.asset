@@ -4462,7 +4462,7 @@ MonoBehaviour:
       Param3: 0
     ScopeTriggers: []
   - Id: 100720
-    Name: "\u30D5\u30EB\u30D5\u30E9\u30C3\u30C8"
+    Name: "\u30AA\u30FC\u30D0\u30FC\u30EA\u30DF\u30C3\u30C8"
     IconIndex: 11
     AnimationId: 1005
     AnimationType: 1
@@ -4472,24 +4472,23 @@ MonoBehaviour:
     Scope: 3
     SkillType: 4
     TargetType: 1
-    Help: "(\u6761\u4EF6)\u795E\u5316\u72B6\u614B\n\\s\u306BATKx/f[f,0,1]%\u30C0\u30E1\u30FC\u30B8
-      \u795E\u5316\u89E3\u9664\n\u5BFE\u8C61\u306B\u30D1\u30C3\u30B7\u30D6\u7121\u52B9\u3092\u4ED8\u4E0E(\u6C38\u7D9A)"
+    Help: "(\u6761\u4EF6)\u795E\u5316\u72B6\u614B\n\\s\u306EATK\u3068DEF\u3092/f[f,0,3]\u30A2\u30C3\u30D7\uFF08\u6C38\u7D9A\uFF09(\u6C38\u7D9A)"
     Range: 2
     RepeatTime: 1
     AliveType: 1
     TurnCount: 0
     FeatureDates:
     - SkillId: 100720
-      FeatureType: 1010
-      Param1: 200
-      Param2: 0
-      Param3: 0
+      FeatureType: 3010
+      Param1: 1040
+      Param2: 999
+      Param3: 8
       Rate: 100
     - SkillId: 100720
       FeatureType: 3010
-      Param1: 2090
+      Param1: 1050
       Param2: 999
-      Param3: 0
+      Param3: 8
       Rate: 100
     - SkillId: 100720
       FeatureType: 7010

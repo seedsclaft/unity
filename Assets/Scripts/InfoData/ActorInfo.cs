@@ -138,6 +138,16 @@ namespace Ryneus
             return list;
         }
 
+        private List<int> LearningSkillIds()
+        {
+            var list = new List<int>();
+            foreach (var learningData in Master.LearningSkills)
+            {
+                list.Add(learningData.SkillId);
+            }
+            return list;
+        }
+
         private int _lastSelectSkillId = 0;
         public int LastSelectSkillId => _lastSelectSkillId;
         public void SetLastSelectSkillId(int selectSkillId)
@@ -336,7 +346,7 @@ namespace Ryneus
 
         public bool IsLearnedSkill(int skillId)
         {
-            return LearnSkillIds().Contains(skillId);
+            return LearnSkillIds().Contains(skillId) || LearningSkillIds().Contains(skillId);
         }
 
         public LevelUpInfo LearnSkill(int skillId,int cost,int stageId = -1,int seek = -1,int seekIndex = -1)

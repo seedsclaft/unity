@@ -52,10 +52,7 @@ namespace Ryneus
         public int TurnCount => _turnCount;
         public void SetTurnCount(int turnCount) {_turnCount = turnCount;}
 
-        private bool _isBattleDisplay;
-        public bool IsBattleDisplay => _isBattleDisplay;
-
-        public ActionInfo(SkillInfo skillInfo,int index,int subjectIndex,int lastTargetIndex,List<int> targetIndexList,bool IsBattleDisplay = false)
+        public ActionInfo(SkillInfo skillInfo,int index,int subjectIndex,int lastTargetIndex,List<int> targetIndexList)
         {
             _index = index;
             _skillInfo = skillInfo;
@@ -65,7 +62,6 @@ namespace Ryneus
             _subjectIndex = subjectIndex;
             _lastTargetIndex = lastTargetIndex;
             _candidateTargetIndexList = targetIndexList;
-            _isBattleDisplay = IsBattleDisplay;
         }
 
         public void SetRangeType(RangeType rangeType)

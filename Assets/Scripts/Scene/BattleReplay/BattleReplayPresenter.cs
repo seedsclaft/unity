@@ -256,23 +256,20 @@ namespace Ryneus
             var selfAnimation = ResourceSystem.LoadResourceEffect("MAGICALxSPIRAL/WHead1");
             _view.StartAnimationBeforeSkill(actionInfo.SubjectIndex,selfAnimation);
             
-            if (actionInfo.IsBattleDisplay == false)
+            if (actionInfo.TriggeredSkill)
             {
-                if (actionInfo.TriggeredSkill)
+                if (actionInfo.Master.IsDisplayBattleSkill() && _model.GetBattlerInfo(actionInfo.SubjectIndex).IsActor)
                 {
-                    if (actionInfo.Master.IsDisplayBattleSkill() && _model.GetBattlerInfo(actionInfo.SubjectIndex).IsActor)
-                    {
-                        _view.ShowCutinBattleThumb(_model.GetBattlerInfo(actionInfo.SubjectIndex));
-                    }
+                    _view.ShowCutinBattleThumb(_model.GetBattlerInfo(actionInfo.SubjectIndex));
                 }
-                if (actionInfo.Master.IsDisplayBattleSkill() || _model.GetBattlerInfo(actionInfo.SubjectIndex).IsActor == false)
-                {
-                    _view.SetCurrentSkillData(actionInfo.SkillInfo);
-                }
+            }
+            if (actionInfo.Master.IsDisplayBattleSkill() || _model.GetBattlerInfo(actionInfo.SubjectIndex).IsActor == false)
+            {
+                _view.SetCurrentSkillData(actionInfo.SkillInfo);
             }
             
             var animationData = BattleUtility.AnimationData(actionInfo.Master.AnimationId);
-            if (actionInfo.IsBattleDisplay == false && animationData != null &&  animationData.AnimationPath != "" && GameSystem.ConfigData.BattleAnimationSkip == false)
+            if (animationData != null && animationData.AnimationPath != "" && GameSystem.ConfigData.BattleAnimationSkip == false)
             {
                 var targetIndexList = new List<int>();
                 foreach (var actionResult in actionInfo.ActionResults)

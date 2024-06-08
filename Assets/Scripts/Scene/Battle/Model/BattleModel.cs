@@ -1610,7 +1610,7 @@ namespace Ryneus
             {
                 return null;
             }
-            var makeActionInfo = MakeActionInfo(battlerInfo,passiveInfo,IsInterrupt,true,triggerData.TriggerTiming == TriggerTiming.StartBattle);
+            var makeActionInfo = MakeActionInfo(battlerInfo,passiveInfo,IsInterrupt,true);
             var counterSubjectIndex = actionInfo != null ? actionInfo.SubjectIndex : -1;
             if (selectIndex == -1)
             {
@@ -1891,8 +1891,8 @@ namespace Ryneus
                         }
                         break;
                         case TriggerType.DeadWithoutSelf:
-                        var targetDeadWithoutSelfParty = battlerInfo.IsActor ? _party : _troop;
-                        int aliveCount = targetDeadWithoutSelfParty.BattlerInfos.Count - targetDeadWithoutSelfParty.AliveBattlerInfos.Count;
+                        var dWithoutSelfUnit = battlerInfo.IsActor ? _party : _troop;
+                        int aliveCount = dWithoutSelfUnit.AliveBattlerInfos.Count;
                         if (battlerInfo.IsAlive() && aliveCount == 1)
                         {
                             IsTriggered = true;

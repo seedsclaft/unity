@@ -41,7 +41,7 @@ namespace Ryneus
 
 
         // 行動を生成
-        public ActionInfo MakeActionInfo(BattlerInfo subject,SkillInfo skillInfo,bool IsInterrupt,bool IsTrigger,bool IsBattleDisplay = false)
+        public ActionInfo MakeActionInfo(BattlerInfo subject,SkillInfo skillInfo,bool IsInterrupt,bool IsTrigger)
         {
             var skillData = skillInfo.Master;
             var targetIndexList = GetSkillTargetIndexList(skillInfo.Id,subject.Index,true);
@@ -86,7 +86,7 @@ namespace Ryneus
                     }
                 }
             }
-            var actionInfo = new ActionInfo(skillInfo,_actionIndex,subject.Index,lastTargetIndex,targetIndexList,IsBattleDisplay);
+            var actionInfo = new ActionInfo(skillInfo,_actionIndex,subject.Index,lastTargetIndex,targetIndexList);
             _actionIndex++;
             actionInfo.SetRangeType(CalcRangeType(actionInfo.Master,subject));
             var actionScopeType = CalcScopeType(subject,actionInfo);
