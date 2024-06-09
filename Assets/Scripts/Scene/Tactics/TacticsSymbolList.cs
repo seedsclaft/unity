@@ -1,11 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Ryneus
 {
     public class TacticsSymbolList : BaseList
     {
+        [SerializeField] private Button symbolBackButton = null;
         public bool IsSelectSymbol()
         {
             if (ItemPrefabList.Count > Index)
@@ -27,6 +29,19 @@ namespace Ryneus
                 return tacticsSymbol.GetItemInfo();
             }
             return null;
+        }
+
+        public void Initialize(System.Action backEvent)
+        {
+            symbolBackButton?.onClick.AddListener(() => 
+            {
+                backEvent?.Invoke();
+            });
+        }
+
+        public void ChangeSymbolBackCommandActive(bool IsActive)
+        {
+            symbolBackButton?.gameObject.SetActive(IsActive);
         }
 
         public void SetInputCallHandler()
@@ -90,6 +105,7 @@ namespace Ryneus
                 tacticsSymbol.SetSymbolInfoCallHandler((a) => CallListInputHandler(InputKeyType.Option1));
                 tacticsSymbol.SetGetItemInfoSelectHandler((a) => 
                 {
+                    UpdateSelectIndex(a);
                     for (int i = 0; i < ItemPrefabList.Count;i++)
                     {
                         var tacticsSymbol = ItemPrefabList[i].GetComponent<TacticsSymbol>();
@@ -97,9 +113,8 @@ namespace Ryneus
                         {
                             tacticsSymbol.UpdateItemIndex(-1);
                         }
-                        tacticsSymbol.SetSelectable(i == Index);
+                        tacticsSymbol.SetSelectable(false);
                     }
-                    //UpdateSelectIndex(a);
                 });
                 tacticsSymbol.UpdateItemIndex(-1);
                 tacticsSymbol.SetSelectable(i == 0);

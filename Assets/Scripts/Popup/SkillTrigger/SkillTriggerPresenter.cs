@@ -27,7 +27,8 @@ namespace Ryneus
 
         private void UpdateCommand(SkillTriggerViewEvent viewEvent)
         {
-            if (_busy){
+            if (_busy)
+            {
                 return;
             }
             switch (viewEvent.commandType)

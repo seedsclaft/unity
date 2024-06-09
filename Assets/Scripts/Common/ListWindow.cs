@@ -220,7 +220,7 @@ namespace Ryneus
                 var itemPrefab = _itemPrefabList[i];
                 var itemIndex = i+startIndex;
                 itemPrefab.gameObject.SetActive(false);
-                itemPrefab.transform.SetParent(scrollRect.content,false);
+                //itemPrefab.transform.SetParent(scrollRect.content,false);
                 var listItem = itemPrefab.GetComponent<ListItem>();
                 if (_listDates.Count <= itemIndex)
                 {
@@ -283,6 +283,14 @@ namespace Ryneus
                 return;
             }
             int createCount = count;
+            foreach (var objectList in _objectList)
+            {
+                for (int i = 0;i < objectList.transform.childCount;i++)
+                {
+                    var child = objectList.transform.GetChild(i);
+                    child.transform.SetParent(scrollRect.content, false);
+                }
+            }
             for (var i = 0; i < createCount;i++)
             {
                 var prefab = Instantiate(_blankObject);
@@ -295,7 +303,7 @@ namespace Ryneus
                 if (_listDates.Count <= i){
                     continue;
                 }
-                //_itemPrefabList[i].transform.SetParent(_objectList[i].transform,false);
+                _itemPrefabList[i].transform.SetParent(_objectList[i].transform,false);
             }
         }
 

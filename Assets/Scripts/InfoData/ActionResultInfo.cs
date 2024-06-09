@@ -198,7 +198,7 @@ namespace Ryneus
                         MakeHpDrain(subject,target,featureData,isOneTarget,range);
                     }
                     return;
-                case FeatureType.HpDefineDamage:
+                case FeatureType.HpSlipDamage:
                     MakeHpDefineDamage(subject,target,featureData,false);
                     return;
                 case FeatureType.HpStateDamage:
@@ -838,18 +838,8 @@ namespace Ryneus
         // スリップダメージ計算
         private void MakeHpDefineDamage(BattlerInfo subject,BattlerInfo target,SkillData.FeatureData featureData,bool isNoEffect)
         {
-            var hpDamage = 0;
-            int AtkValue = featureData.Param1;
-            float DamageRate = 100;
-            float UpperDamageRate = CurrentDamageRate(subject,isNoEffect,false);
-            DamageRate *= UpperDamageRate;
-            float SkillDamage = DamageRate * 0.01f * AtkValue;
-            hpDamage = (int)Mathf.Round(CalcDamageValue(subject,target,SkillDamage,isNoEffect));
+            var hpDamage = featureData.Param1;
             hpDamage = Mathf.Max(1,hpDamage);
-            if (subject.IsState(StateType.Drain))
-            {
-                _reHeal = (int)Mathf.Floor(hpDamage * subject.StateEffectAll(StateType.Drain) * 0.01f);
-            }
             _hpDamage += hpDamage;
         }
 

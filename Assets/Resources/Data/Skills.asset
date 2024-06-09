@@ -2889,7 +2889,7 @@ MonoBehaviour:
     IconIndex: 6
     AnimationId: 51
     AnimationType: 1
-    MpCost: 0
+    MpCost: 1
     Rank: 1
     Attribute: 3
     Scope: 3
@@ -3915,7 +3915,7 @@ MonoBehaviour:
     TriggerDates: []
     ScopeTriggers: []
   - Id: 100230
-    Name: "\u30A4\u30F4\u30A7\u30A4\u30C9"
+    Name: "\u30A4\u30F4\u30A7\u30A4\u30C9\u30AA\u30FC\u30EB"
     IconIndex: 6
     AnimationId: 0
     AnimationType: 1
@@ -3935,7 +3935,7 @@ MonoBehaviour:
       FeatureType: 3010
       Param1: 1090
       Param2: 999
-      Param3: 20
+      Param3: 10
       Rate: 100
     TriggerDates:
     - SkillId: 100230
@@ -4200,7 +4200,7 @@ MonoBehaviour:
       Param2: 0
       Param3: 1
     - SkillId: 100510
-      TriggerType: 20030
+      TriggerType: 20160
       TriggerTiming: 3
       Param1: 0
       Param2: 0
@@ -4472,7 +4472,7 @@ MonoBehaviour:
     Scope: 3
     SkillType: 4
     TargetType: 1
-    Help: "(\u6761\u4EF6)\u795E\u5316\u72B6\u614B\n\\s\u306EATK\u3068DEF\u3092/f[f,0,3]\u30A2\u30C3\u30D7\uFF08\u6C38\u7D9A\uFF09(\u6C38\u7D9A)"
+    Help: "(\u6761\u4EF6)\u795E\u5316\u72B6\u614B\n\\s\u306EATK\u3068DEF\u3092/f[f,0,3]\u30A2\u30C3\u30D7\uFF08\u6C38\u7D9A\uFF09"
     Range: 2
     RepeatTime: 1
     AliveType: 1

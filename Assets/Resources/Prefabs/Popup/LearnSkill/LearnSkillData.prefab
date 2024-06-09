@@ -441,7 +441,7 @@ MonoBehaviour:
   nameText: {fileID: 648851971358455854}
   mpCost: {fileID: 4286084713638432108}
   lineImage: {fileID: 995870913733595114}
-  type: {fileID: 0}
+  type: {fileID: 4808448393484765652}
   value: {fileID: 0}
   description: {fileID: 5701549323641829400}
   range: {fileID: 7111117011006834696}
@@ -1015,6 +1015,18 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 5654082970295667418}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &4808448393484765652 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 922214103558783758, guid: 2533c3a0ba6260543ac6b73de353e4ad,
+    type: 3}
+  m_PrefabInstance: {fileID: 5654082970295667418}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &5701549323641829400 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 101522752879801026, guid: 2533c3a0ba6260543ac6b73de353e4ad,

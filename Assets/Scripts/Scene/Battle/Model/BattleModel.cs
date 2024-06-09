@@ -1448,7 +1448,8 @@ namespace Ryneus
             {
                 var featureData = new SkillData.FeatureData
                 {
-                    FeatureType = FeatureType.HpDefineDamage
+                    FeatureType = FeatureType.HpSlipDamage,
+                    Param1 = BurnDamage
                 };
                 var actionResultInfo = new ActionResultInfo(GetBattlerInfo(_currentTurnBattler.Index),GetBattlerInfo(_currentTurnBattler.Index),new List<SkillData.FeatureData>(){featureData},-1);
                 actionResultInfos.Add(actionResultInfo);

@@ -89,7 +89,7 @@ namespace Ryneus
         {
             _id = id;
             _learningState = LearningState.None;
-            if (Master != null)
+            if (Master != null && Master.FeatureDates != null)
             {
                 var list = new List<SkillData.FeatureData>();
                 foreach (var featureData in Master.FeatureDates)

@@ -581,7 +581,7 @@ namespace Ryneus
             }
             if (actionResultInfo.ReDamage > 0)
             {
-                if (_model.GetBattlerInfo(targetIndex).IsAlive())
+                if (!actionResultInfo.DeadIndexList.Contains(targetIndex) && _model.GetBattlerInfo(targetIndex).IsAlive())
                 {
                     var damageType = actionResultInfo.Critical ? DamageType.HpCritical : DamageType.HpDamage;
                     PlayDamageSound(damageType);

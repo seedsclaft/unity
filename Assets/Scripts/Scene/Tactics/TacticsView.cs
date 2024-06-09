@@ -86,7 +86,7 @@ namespace Ryneus
                 var eventData = new TacticsViewEvent(CommandType.ScorePrize);
                 _commandData(eventData);
             });
-            symbolBackButton?.onClick.AddListener(() => 
+            tacticsSymbolList.Initialize(() => 
             {
                 var eventData = new TacticsViewEvent(CommandType.CancelRecordList);
                 _commandData(eventData);
@@ -176,7 +176,7 @@ namespace Ryneus
 
         public void ChangeSymbolBackCommandActive(bool IsActive)
         {
-            symbolBackButton?.gameObject.SetActive(IsActive);
+            tacticsSymbolList.ChangeSymbolBackCommandActive(IsActive);
         }
 
         private void OnClickBack()

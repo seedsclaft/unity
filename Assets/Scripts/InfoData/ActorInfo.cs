@@ -102,6 +102,7 @@ namespace Ryneus
                 upTriggerData.SetPriority(index-1);
                 downTriggerData.SetPriority(index);
             }
+            _skillTriggerInfos.Sort((a,b) => a.Priority - b.Priority > 0 ? 1 : -1);
         }
 
         public void SetTriggerIndexDown(int index)
@@ -113,6 +114,7 @@ namespace Ryneus
                 upTriggerData.SetPriority(index);
                 downTriggerData.SetPriority(index+1);
             }
+            _skillTriggerInfos.Sort((a,b) => a.Priority - b.Priority > 0 ? 1 : -1);
         }
 
         public List<AttributeRank> GetAttributeRank()
@@ -301,6 +303,8 @@ namespace Ryneus
             foreach (var skillInfo in LearningSkills())
             {
                 skillInfo.SetLearningState(LearningState.Learned);
+                // 作戦項目に追加
+                AddSkillTriggerSkill(skillInfo.Id);
             }
             ChangeHp(CurrentParameter(StatusParamType.Hp));
             ChangeMp(CurrentParameter(StatusParamType.Mp));

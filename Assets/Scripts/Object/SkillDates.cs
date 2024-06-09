@@ -1001,7 +1001,7 @@ namespace Ryneus
         None = 0,
         HpDamage = 1010,
         HpDrain = 1020,
-        HpDefineDamage = 1030,
+        HpSlipDamage = 1030,
         HpStateDamage = 1040,
         NoEffectHpDamage = 1050,
         NoEffectHpPerDamage = 1060,

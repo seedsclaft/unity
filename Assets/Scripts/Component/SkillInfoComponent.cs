@@ -25,15 +25,13 @@ namespace Ryneus
         [SerializeField] private _2dxFX_Shiny_Reflect shinyReflect;
 
         public void UpdateInfo(SkillInfo skillInfo){
-            if (skillInfo == null){
+            if (skillInfo == null)
+            {
                 Clear();
                 return;
             }
             UpdateData(skillInfo.Id);
-            if (description != null)
-            {
-                description.text = skillInfo.ConvertHelpText();
-            }
+            description?.SetText(skillInfo.ConvertHelpText());
             if (selectable != null)
             {
                 selectable.SetActive(skillInfo.LearningState == LearningState.SelectLearn);
@@ -86,48 +84,17 @@ namespace Ryneus
                         nameText.rectTransform.sizeDelta = new Vector2(nameText.preferredWidth,nameText.preferredHeight);
                     }
                 }
-                if (mpCost != null)
-                {
-                    if (skillData.SkillType == SkillType.Active)
-                    {
-                        mpCost.text = "(" + skillData.MpCost.ToString() + ")";
-                    } else
-                    {
-                        mpCost.text = "";
-                    }
-                }
+                var mpCostText = skillData.SkillType == SkillType.Active ? "(" + skillData.MpCost.ToString() + ")" : "";
+                mpCost?.SetText(mpCostText);
+                type?.SetText(skillData.SkillType.ToString());
             } else
             {
-                if (icon != null)
-                {
-                    icon.gameObject.SetActive(false);
-                }
-                if (iconBack != null)
-                {
-                    iconBack.gameObject.SetActive(false);
-                }
+                Clear();
             }
             if (lineImage != null)
             {
                 UpdateLineImage();
             }
-            if (type != null)
-            {
-                type.text = skillData.SkillType.ToString();
-            }
-            /*
-            if (description != null)
-            {
-                var convertText = skillData.ConvertHelpText(skillData.Help);
-                if (skillData.FeatureDates.Find(a => a.FeatureType == FeatureType.AddSkillOrCurrency) != null)
-                {
-                    //description.text = convertText.Replace("\\d",replace);
-                } else
-                {
-                    description.text = convertText;
-                }
-            }
-            */
             if (range != null)
             {
                 range.gameObject.SetActive(true);
@@ -177,25 +144,13 @@ namespace Ryneus
             {
                 iconBack.gameObject.SetActive(false);
             }
-            if (nameText != null)
-            {
-                nameText.text = "";
-            }
-            if (mpCost != null)
-            {
-                mpCost.text = "";
-            }
+            nameText?.SetText("");
+            mpCost?.SetText("");
+            type?.SetText("");
+            description?.SetText("");
             if (lineImage != null)
             {
                 lineImage.gameObject.SetActive(false);
-            }
-            if (type != null)
-            {
-                type.text = "";
-            }
-            if (description != null)
-            {
-                description.text = "";
             }
             if (learningCost != null)
             {
