@@ -81,7 +81,15 @@ namespace Ryneus
                     var target = CanUseSkillTriggerTarget(selectSkillId,triggerDates,battlerInfo,targetIndexList);
                     if (target > -1)
                     {
-                        selectTargetIndex = target;
+                        // 対象が有効か
+                        var condition = CanUseCondition(selectSkillId,battlerInfo,target);
+                        if (condition)
+                        {
+                            selectTargetIndex = target;
+                        } else
+                        {
+                            selectSkillId = -1;
+                        }
                     } else
                     {
                         selectSkillId = -1;

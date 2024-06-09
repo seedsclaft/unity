@@ -1569,10 +1569,10 @@ MonoBehaviour:
     IconIndex: 5
     AnimationId: 61
     AnimationType: 1
-    MpCost: 5
+    MpCost: 2
     Rank: 2
     Attribute: 5
-    Scope: 3
+    Scope: 2
     SkillType: 1
     TargetType: 1
     Help: "\\s\u306EATK\u3092/f[f,0,3]\u30C0\u30A6\u30F3"
@@ -1584,7 +1584,7 @@ MonoBehaviour:
     - SkillId: 5070
       FeatureType: 3010
       Param1: 1041
-      Param2: 999
+      Param2: 1
       Param3: 8
       Rate: 100
     TriggerDates: []
@@ -3589,13 +3589,13 @@ MonoBehaviour:
     IconIndex: 6
     AnimationId: 61
     AnimationType: 1
-    MpCost: 2
+    MpCost: 1
     Rank: 1
     Attribute: 5
     Scope: 1
     SkillType: 2
     TargetType: 6
-    Help: "(\u6761\u4EF6)\u76F8\u624B\u304C\u653B\u6483\u3059\u308B\u524D\u306B\u767A\u52D5\nAP\u30922\u6D88\u8CBB\u3057\u3066\\s\u306EATK\u3068\u547D\u4E2D\u7387\u3092/f[f,0,3]%\u30C0\u30A6\u30F3"
+    Help: "(\u6761\u4EF6)\u76F8\u624B\u304C\u653B\u6483\u3059\u308B\u524D\u306B\u767A\u52D5\nAP\u30921\u6D88\u8CBB\u3057\u3066\\s\u306EATK\u3068\u547D\u4E2D\u7387\u3092/f[f,0,3]%\u30C0\u30A6\u30F3"
     Range: 2
     RepeatTime: 1
     AliveType: 1

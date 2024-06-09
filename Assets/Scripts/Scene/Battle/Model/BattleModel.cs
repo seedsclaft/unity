@@ -1370,20 +1370,20 @@ namespace Ryneus
         private List<ActionResultInfo> AfterHealActionResults()
         {
             var afterHealResults = new List<ActionResultInfo>();
-            var afterSkillInfo = _currentBattler.Skills.Find(a => a.FeatureDates.Find(b => b.FeatureType == FeatureType.AddState && (StateType)b.Param1 == StateType.AfterHeal) != null);
-            if (_currentBattler.IsState(StateType.AfterHeal) && afterSkillInfo != null)
+            var afterSkillInfo = _currentTurnBattler.Skills.Find(a => a.FeatureDates.Find(b => b.FeatureType == FeatureType.AddState && (StateType)b.Param1 == StateType.AfterHeal) != null);
+            if (_currentTurnBattler.IsState(StateType.AfterHeal) && afterSkillInfo != null)
             {
-                var stateInfo = _currentBattler.GetStateInfo(StateType.AfterHeal);
+                var stateInfo = _currentTurnBattler.GetStateInfo(StateType.AfterHeal);
                 var skillInfo = new SkillInfo(afterSkillInfo.Id);
-                var actionInfo = MakeActionInfo(_currentBattler,skillInfo,false,false);
+                var actionInfo = MakeActionInfo(_currentTurnBattler,skillInfo,false,false);
                 
                 if (actionInfo != null)
                 {
-                    var party = _currentBattler.IsActor ? _party.AliveBattlerInfos : _troop.AliveBattlerInfos;
+                    var party = _currentTurnBattler.IsActor ? _party.AliveBattlerInfos : _troop.AliveBattlerInfos;
                     var targetIndexes = new List<int>();
                     foreach (var member in party)
                     {
-                        if (_currentBattler.Index != member.Index)
+                        if (_currentTurnBattler.Index != member.Index)
                         {
                             targetIndexes.Add(member.Index);
                         }   
@@ -1407,6 +1407,10 @@ namespace Ryneus
         private List<ActionResultInfo> AssistHealActionResults()
         {
             var assistHealResults = new List<ActionResultInfo>();
+            if (_currentBattler == null)
+            {
+                return assistHealResults;
+            }
             var afterSkillInfo = _currentBattler.Skills.Find(a => a.FeatureDates.Find(b => b.FeatureType == FeatureType.AddState && (StateType)b.Param1 == StateType.AssistHeal) != null);
             if (_currentBattler.IsState(StateType.AssistHeal) && afterSkillInfo != null)
             {
