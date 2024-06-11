@@ -282,6 +282,9 @@ namespace Ryneus
                 case FeatureType.RemainHpOneTarget:
                     MakeHpOne(target);
                     return;
+                case FeatureType.ActionResultSetAp:
+                    MakeActionResultSetAp(target,featureData);
+                    return;
                 case FeatureType.ApHeal:
                     MakeApHeal(subject,target,featureData);
                     return;
@@ -792,6 +795,10 @@ namespace Ryneus
             {
                 healValue += (int)Mathf.Round(HealValue);
             }
+            if (target.IsState(StateType.HealValueUp))
+            {
+                healValue += target.GetStateEffectAll(StateType.HealValueUp);
+            }
             if (target.IsState(StateType.NotHeal))
             {
                 _displayStates.Add(target.GetStateInfo(StateType.NotHeal));
@@ -813,6 +820,10 @@ namespace Ryneus
             HealValue = Math.Min(subject.MaxHp,HealValue);
             // param3が1の時は割合
             var healValue = (int)Mathf.Round(HealValue);
+            if (target.IsState(StateType.HealValueUp))
+            {
+                healValue += target.GetStateEffectAll(StateType.HealValueUp);
+            }
             if (target.IsState(StateType.NotHeal))
             {
                 _displayStates.Add(target.GetStateInfo(StateType.NotHeal));
@@ -939,7 +950,6 @@ namespace Ryneus
         {
             float HealValue = featureData.Param1;
             _mpHeal = (int)Mathf.Round(HealValue);
-            //_hpHeal = ApplyVariance(_hpHeal);
         }
 
         private void MakeAddState(BattlerInfo subject,BattlerInfo target,SkillData.FeatureData featureData,bool checkCounter = false,bool isOneTarget = false,bool removeTimingIsNextTurn = false,int range = 0)
@@ -1108,6 +1118,12 @@ namespace Ryneus
         private void MakeHpOne(BattlerInfo battlerInfo)
         {
             battlerInfo.SetHp(1);
+        }
+
+        private void MakeActionResultSetAp(BattlerInfo target,SkillData.FeatureData featureData)
+        {
+            int apValue = featureData.Param1;
+            target.SetAp(apValue);
         }
 
         private void MakeApHeal(BattlerInfo subject,BattlerInfo target,SkillData.FeatureData featureData)

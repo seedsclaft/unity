@@ -704,7 +704,7 @@ namespace Ryneus
             return IsEnable;
         }
 
-        public List<int> CheckScopeTriggers(List<int> targetIndexList,List<SkillData.TriggerData> scopeTriggers)
+        public List<int> CheckScopeTriggers(List<int> targetIndexList,List<SkillData.TriggerData> scopeTriggers,ActionInfo actionInfo,List<ActionResultInfo> actionResultInfos)
         {
             for (int i = targetIndexList.Count-1;i >= 0;i--)
             {
@@ -720,10 +720,16 @@ namespace Ryneus
                         }
                     } else
                     {
+                        if (!IsTriggeredSkillInfo(target,scopeTriggers,actionInfo,actionResultInfos))
+                        {
+                            remove = true;
+                        }
+                        /*
                         if (!scopeTrigger.IsTriggeredSkillInfo(target,BattlerActors(),BattlerEnemies()))
                         {
                             remove = true;
                         }
+                        */
                     }
                 }
                 if (remove)
@@ -1479,10 +1485,13 @@ namespace Ryneus
                     }
                     if (actionInfo == null || (actionInfo.Master.Id != skillInfo.Id))
                     {
-                        var triggerDates = skillInfo.Master.TriggerDates.FindAll(a => a.TriggerTiming == triggerTiming);
-                        if (IsTriggeredSkillInfo(checkBattler,triggerDates,actionInfo,actionResultInfos))
+                        if (skillInfo != null && skillInfo.Master != null)
                         {
-                            triggeredSkills.Add(skillInfo);
+                            var triggerDates = skillInfo.Master.TriggerDates?.FindAll(a => a.TriggerTiming == triggerTiming);
+                            if (IsTriggeredSkillInfo(checkBattler,triggerDates,actionInfo,actionResultInfos))
+                            {
+                                triggeredSkills.Add(skillInfo);
+                            }
                         }
                     }
                 }
@@ -1780,6 +1789,25 @@ namespace Ryneus
                     }
                     switch (triggerData.TriggerType)
                     {
+                        case TriggerType.ActionInfoTurnNumPer:
+                        if (actionInfo != null)
+                        {
+                            var actionBattlerInfo = GetBattlerInfo(actionInfo.SubjectIndex);
+                            if (triggerData.Param1 == 0)
+                            {
+                                if (actionBattlerInfo.TurnCount - triggerData.Param2 == 0)
+                                {
+                                    IsTriggered = true;
+                                }
+                            } else
+                            {
+                                if ((actionBattlerInfo.TurnCount % triggerData.Param1) - triggerData.Param2 == 0)
+                                {
+                                    IsTriggered = true;
+                                }
+                            }
+                        }
+                        break;
                         case TriggerType.AttackState:
                         if (battlerInfo.IsAlive() && actionInfo != null && actionInfo.SubjectIndex == battlerInfo.Index && actionInfo.ActionResults.Find(a => a.HpDamage > 0) != null)
                         {
@@ -1808,8 +1836,12 @@ namespace Ryneus
                         }
                         break;
                         case TriggerType.TargetHpRateUnder:
-                        if (battlerInfo.IsAlive() && actionResultInfos != null && actionResultInfos.Count > 0)
+                        if (actionResultInfos != null && actionResultInfos.Count > 0)
                         {
+                            if (!battlerInfo.IsAlive() && triggerData.Param2 == 0)
+                            {
+                                break;
+                            }
                             foreach (var actionResultInfo in actionResultInfos)
                             {
                                 if (actionResultInfo.HpDamage > 0 && actionResultInfo.TargetIndex != actionResultInfo.SubjectIndex)
@@ -1880,6 +1912,15 @@ namespace Ryneus
                             }
                         }
                         break;
+                        case TriggerType.SelfActionInfo:
+                        if (battlerInfo.IsAlive() && actionInfo != null)
+                        {
+                            if (actionInfo.SubjectIndex == battlerInfo.Index)
+                            {
+                                IsTriggered = true;
+                            }
+                        }
+                        break;
                         case TriggerType.PayBattleMp:
                         if (battlerInfo.IsAlive() && battlerInfo.PayBattleMp >= triggerData.Param1)
                         {
@@ -1947,6 +1988,22 @@ namespace Ryneus
                                 if (results.Count > 0)
                                 {
                                     IsTriggered = true;
+                                }
+                            }
+                        }
+                        break;
+                        case TriggerType.FriendAction:
+                        if (battlerInfo.IsAlive())
+                        {
+                            if (actionInfo != null && actionInfo.ActionResults != null && actionInfo.Master.IsHpDamageFeature())
+                            {
+                                if (battlerInfo.IsActor == GetBattlerInfo(actionInfo.SubjectIndex).IsActor && battlerInfo.Index != actionInfo.SubjectIndex)
+                                {
+                                    var success = actionInfo.ActionResults.Count > 0;
+                                    if (success)
+                                    {
+                                        IsTriggered = true;
+                                    }
                                 }
                             }
                         }

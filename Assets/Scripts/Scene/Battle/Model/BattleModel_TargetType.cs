@@ -179,7 +179,7 @@ namespace Ryneus
             }
             if (skillData.ScopeTriggers.Count > 0)
             {
-                targetIndexList = CheckScopeTriggers(targetIndexList,skillData.ScopeTriggers);
+                targetIndexList = CheckScopeTriggers(targetIndexList,skillData.ScopeTriggers,actionInfo,actionResultInfos);
             }
             
             var withinRangeTargetList = WithinRangeTargetList(subject,rangeType);

@@ -342,9 +342,18 @@ namespace Ryneus
                     }
                     break;
                     case TriggerType.TurnNumPer:
-                    if ((battlerInfo.TurnCount % Param1) - Param2 == 0)
+                    if (Param1 == 0)
                     {
-                        CanUse = true;
+                        if (battlerInfo.TurnCount - Param2 == 0)
+                        {
+                            CanUse = true;
+                        }
+                    } else
+                    {
+                        if ((battlerInfo.TurnCount % Param1) - Param2 == 0)
+                        {
+                            CanUse = true;
+                        }
                     }
                     break;
                     case TriggerType.ActionCountPer:
@@ -768,7 +777,7 @@ namespace Ryneus
                     }
                     if (Param2 == 1)
                     {
-                        CanUse = friends.Count > 0;
+                        CanUse = opponents.Count > 0;
                     }
                     break;
                 }
@@ -931,6 +940,7 @@ namespace Ryneus
         TurnNumUnder = 9010, // ターン数が〇以内
         TurnNum = 9020, // ターン数が〇
         TurnNumPer = 9030, // ターン数がparam1 x ターン数 + param2
+        ActionInfoTurnNumPer = 9031, // 行動者のターン数がparam1 x ターン数 + param2
         ActionCountPer = 9040, // 全体の行動数がparam1 x 行動数 + param2
         SelfTargetOnly = 9110, // 自身を対象にする
         SelfTargetNotOnly = 9120, // 自身を対象にしない
@@ -945,6 +955,7 @@ namespace Ryneus
         OneAttackOverDamage = 12050, // 1回の攻撃で〇ダメージ以上受ける
         FriendAttackedAction = 12060, // 味方が攻撃を受ける
         SelfAttackedAction = 12061, // 自身が攻撃を受ける
+        FriendAction = 12070, // 味方が行動を成功する
         FriendAttackAction = 12071, // 味方が攻撃を成功する
         OpponentHealAction = 12082, // 相手が回復を成功する
         OpponentDamageShieldAction = 12092, // 相手が攻撃無効を発動する
@@ -957,6 +968,7 @@ namespace Ryneus
         SelfAttackActionInfo = 15010, // 自身が攻撃タイプの行動をしようとしている
         FriendAttackActionInfo = 15011, // 味方が攻撃タイプの行動をしようとしている
         OpponentAttackActionInfo = 15012, // 相手が攻撃タイプの行動をしようとしている
+        SelfActionInfo = 16010, // 行動したのが自身
         PayBattleMp = 20010, // Mpを〇消費する
         ChainCount = 20020, // 拘束成功回数
         ActionResultDeath = 20030, // 攻撃を受けると戦闘不能になる
@@ -1028,6 +1040,7 @@ namespace Ryneus
         MpDrain = 4030,
         SetAfterAp = 5010,
         SetAfterApHalf = 5011,
+        ActionResultSetAp = 5012,
         ApHeal = 5020,
         NoResetAp = 5030,
         StartDash = 5040,

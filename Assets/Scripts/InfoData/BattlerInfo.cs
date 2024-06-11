@@ -254,6 +254,11 @@ namespace Ryneus
             _isActor = isActor;
             _isAlcana = true;
             _skills = skillInfos;
+            foreach (var skillInfo in skillInfos)
+            {
+                var skillTrigger = new SkillTriggerInfo(_index,skillInfo);
+                _skillTriggerInfos.Add(skillTrigger);
+            }
             foreach (var skill in _skills)
             {
                 skill.SetUseCount(0);

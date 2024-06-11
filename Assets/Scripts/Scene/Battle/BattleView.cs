@@ -538,7 +538,10 @@ namespace Ryneus
                 return;
             }
             animationSpeed *= GameSystem.ConfigData.BattleSpeed;
-            _battlerComps[targetIndex].StartAnimation(effekseerEffectAsset,animationPosition,animationScale,animationSpeed);
+            if (_battlerComps.ContainsKey(targetIndex))
+            {
+                _battlerComps[targetIndex].StartAnimation(effekseerEffectAsset,animationPosition,animationScale,animationSpeed);
+            }
         }
 
         public void StartAnimationAll(EffekseerEffectAsset effekseerEffectAsset)

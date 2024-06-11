@@ -392,16 +392,19 @@ namespace Ryneus
         public List<AttributeRank> AttributeRanks(List<ActorInfo> actorInfos)
         {
             var alchemyFeatures = new List<SkillData.FeatureData>();
-            foreach (var actorInfo in actorInfos)
+            if (actorInfos != null)
             {
-                var skillInfos = actorInfo.LearningSkillInfos().FindAll(a => a.Master.FeatureDates.Find(b => b.FeatureType == FeatureType.MagicAlchemy)!= null);
-                foreach (var skillInfo in skillInfos)
+                foreach (var actorInfo in actorInfos)
                 {
-                    foreach (var featureData in skillInfo.Master.FeatureDates)
+                    var skillInfos = actorInfo.LearningSkillInfos().FindAll(a => a.Master.FeatureDates.Find(b => b.FeatureType == FeatureType.MagicAlchemy)!= null);
+                    foreach (var skillInfo in skillInfos)
                     {
-                        if (featureData.FeatureType == FeatureType.MagicAlchemy)
+                        foreach (var featureData in skillInfo.Master.FeatureDates)
                         {
-                            alchemyFeatures.Add(featureData);
+                            if (featureData.FeatureType == FeatureType.MagicAlchemy)
+                            {
+                                alchemyFeatures.Add(featureData);
+                            }
                         }
                     }
                 }

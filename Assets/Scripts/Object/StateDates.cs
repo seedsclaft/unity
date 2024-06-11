@@ -106,6 +106,7 @@ namespace Ryneus
         Cover = 2430,
         MpCostRate = 2440,
         Reraise = 2450,
+        HealValueUp = 2460,
     }
 
     public enum RemovalTiming

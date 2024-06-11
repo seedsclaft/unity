@@ -66,7 +66,8 @@ namespace Ryneus
                 };
                 var symbolInfo = new SymbolInfo(SymbolType.Battle);
                 symbolInfo.SetTroopInfo(troopInfo);
-                //currentStageData.Party.SetStageSymbolInfos(new List<SymbolInfo>(){ symbolInfo});
+                var record = new SymbolResultInfo(symbolInfo,stageSymbol,0);
+                currentStageData.Party.SetSymbolResultInfo(record);
             } else
             {
                 foreach (var actor in DataSystem.Actors)

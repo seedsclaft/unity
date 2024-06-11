@@ -56,6 +56,10 @@ namespace Ryneus
             {
                 return;
             }
+            if (battlerInfo.ActorInfo == null)
+            {
+                return;
+            }
             var awaken = false;//battlerInfo.IsAwaken;
             var image = awaken ? actorInfoComponent.AwakenThumb : actorInfoComponent.MainThumb;
             gameObject.GetComponent<RectTransform>().localPosition = new Vector3(20,0,0);
