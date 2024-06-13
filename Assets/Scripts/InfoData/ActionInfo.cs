@@ -47,10 +47,6 @@ namespace Ryneus
 
         private bool _triggeredSkill = false;
         public bool TriggeredSkill => _triggeredSkill;
-        
-        private int _turnCount;
-        public int TurnCount => _turnCount;
-        public void SetTurnCount(int turnCount) {_turnCount = turnCount;}
 
         public ActionInfo(SkillInfo skillInfo,int index,int subjectIndex,int lastTargetIndex,List<int> targetIndexList)
         {

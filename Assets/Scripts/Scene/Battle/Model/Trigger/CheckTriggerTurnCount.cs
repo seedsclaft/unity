@@ -43,6 +43,25 @@ namespace Ryneus
                     return battlerInfo.IsAlive();
                 case TriggerType.SelfTargetNotOnly:
                     return checkTriggerInfo.Friends.Count > 1;
+                case TriggerType.ActionInfoTurnNumPer:
+                if (checkTriggerInfo.ActionInfo != null)
+                {
+                    var actionBattlerInfo = checkTriggerInfo.GetBattlerInfo(checkTriggerInfo.ActionInfo.SubjectIndex);
+                    if (triggerData.Param1 == 0)
+                    {
+                        if (actionBattlerInfo.TurnCount - triggerData.Param2 == 0)
+                        {
+                            isTrigger = true;
+                        }
+                    } else
+                    {
+                        if ((actionBattlerInfo.TurnCount % triggerData.Param1) - triggerData.Param2 == 0)
+                        {
+                            isTrigger = true;
+                        }
+                    }
+                }
+                break;
             }
             return isTrigger;
         }

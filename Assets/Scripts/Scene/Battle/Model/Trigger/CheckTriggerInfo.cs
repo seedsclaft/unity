@@ -6,6 +6,7 @@ namespace Ryneus
     public class CheckTriggerInfo 
     {
         public ActionInfo ActionInfo;
+        public List<ActionResultInfo> ActionResultInfos;
         public BattlerInfo BattlerInfo;
         public List<BattlerInfo> Friends;
         public List<BattlerInfo> FriendFrontBattlerInfos;
@@ -13,7 +14,7 @@ namespace Ryneus
         public List<BattlerInfo> Opponents;
         public List<BattlerInfo> OpponentsFrontBattlerInfos;
         public List<BattlerInfo> OpponentsBackBattlerInfos;
-        public CheckTriggerInfo(BattlerInfo battlerInfo,List<BattlerInfo> party,List<BattlerInfo> troops,ActionInfo actionInfo = null)
+        public CheckTriggerInfo(BattlerInfo battlerInfo,List<BattlerInfo> party,List<BattlerInfo> troops,ActionInfo actionInfo = null,List<ActionResultInfo> actionResultInfos = null)
         {
             BattlerInfo = battlerInfo;
             Friends = battlerInfo.IsActor ? party : troops;
@@ -23,6 +24,7 @@ namespace Ryneus
             OpponentsFrontBattlerInfos = Opponents.FindAll(a => a.LineIndex == LineType.Front);
             OpponentsBackBattlerInfos = Opponents.FindAll(a => a.LineIndex == LineType.Back);
             ActionInfo = actionInfo;
+            ActionResultInfos = actionResultInfos;
         }
 
         public BattlerInfo GetBattlerInfo(int index)

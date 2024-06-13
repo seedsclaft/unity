@@ -5,7 +5,6 @@ namespace Ryneus
 {
     public partial class BattleModel : BaseModel
     {
-
         private List<ActionInfo> _actionInfos = new ();
 
         // 現在最優先の行動
@@ -37,8 +36,6 @@ namespace Ryneus
         {
             _actionInfos.Clear();
         }
-
-
 
         // 行動を生成
         public ActionInfo MakeActionInfo(BattlerInfo subject,SkillInfo skillInfo,bool IsInterrupt,bool IsTrigger)

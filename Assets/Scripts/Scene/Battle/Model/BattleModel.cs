@@ -72,11 +72,13 @@ namespace Ryneus
             _checkTriggerDict[9] = new CheckTriggerTurnCount();
             _checkTriggerDict[10] = new CheckTriggerPercent();
             _checkTriggerDict[11] = new CheckTriggerUseCount();
+            _checkTriggerDict[12] = new CheckTriggerActionInfo();
             
             _checkTriggerDict[13] = new CheckTriggerKind();
             _checkTriggerDict[14] = new CheckTriggerStatus();
-            
             _checkTriggerDict[15] = new CheckTriggerAttackAction();
+
+            _checkTriggerDict[17] = new CheckTriggerBattleCount();
         }
 
         public UniTask<List<AudioClip>> GetBattleBgm()
@@ -452,6 +454,7 @@ namespace Ryneus
             }
             return true;
         }
+
         public bool EnableCurrentBattler()
         {
             if (_currentBattler.CanMove() == false)
@@ -939,21 +942,6 @@ namespace Ryneus
             return scopeType;
         }
 
-        private int PrismRepeatTime(BattlerInfo subject,ActionInfo actionInfo)
-        {
-            /*
-            if (actionInfo.Master.Attribute == AttributeType.Shine && subject.IsState(StateType.Prism))
-            {
-                var damageFeatures = actionInfo.SkillInfo.FeatureDates.FindAll(a => a.FeatureType == FeatureType.HpDamage || a.FeatureType == FeatureType.HpDefineDamage);
-                if (damageFeatures.Count > 0)
-                {
-                    return subject.GetStateInfoAll(StateType.Prism).Count + 1;
-                }
-            }
-            */
-            return 0;
-        }
-
         public void MakeCurseActionResults(ActionInfo actionInfo,List<int> indexList)
         {
             var actionResultInfos = actionInfo.ActionResults;
@@ -1040,7 +1028,6 @@ namespace Ryneus
                     _saveBattleInfo.AddActionData(actionInfo);
                 }
                 ExecActionResultInfos(actionInfo.ActionResults,false);
-                actionInfo.SetTurnCount(_turnCount);
                 if (actionInfo.Master.IsRevengeHpDamageFeature())
                 {
                     // 受けたダメージをリセット
@@ -1147,6 +1134,7 @@ namespace Ryneus
                 ExecActionResultInfo(actionResultInfo,addSaveData);
             }
         }
+
         /// <summary>
         /// ダメージなどを適用
         /// </summary>
@@ -1756,7 +1744,7 @@ namespace Ryneus
             var friends = battlerInfo.IsActor ? _party : _troop;            
             var opponents = battlerInfo.IsActor ? _troop : _party;
             bool IsTriggered = false;
-            var checkTriggerInfo = new CheckTriggerInfo(battlerInfo,BattlerActors(),BattlerEnemies(),actionInfo);
+            var checkTriggerInfo = new CheckTriggerInfo(battlerInfo,BattlerActors(),BattlerEnemies(),actionInfo,actionResultInfos);
             if (triggerDates.Count > 0)
             {
                 foreach (var triggerData in triggerDates)
@@ -1822,81 +1810,6 @@ namespace Ryneus
                             case TriggerType.ExtendStageTurn: // 別処理で判定するためここではパス
                                 IsTriggered = true;
                             break;
-                            case TriggerType.ChainCount:
-                            if (battlerInfo.ChainSuccessCount >= triggerData.Param1)
-                            {
-                                IsTriggered = true;
-                            }
-                            break;
-                            case TriggerType.ActionInfoTurnNumPer:
-                            if (actionInfo != null)
-                            {
-                                var actionBattlerInfo = GetBattlerInfo(actionInfo.SubjectIndex);
-                                if (triggerData.Param1 == 0)
-                                {
-                                    if (actionBattlerInfo.TurnCount - triggerData.Param2 == 0)
-                                    {
-                                        IsTriggered = true;
-                                    }
-                                } else
-                                {
-                                    if ((actionBattlerInfo.TurnCount % triggerData.Param1) - triggerData.Param2 == 0)
-                                    {
-                                        IsTriggered = true;
-                                    }
-                                }
-                            }
-                            break;
-                            case TriggerType.ActionMpCost:
-                            if (battlerInfo.IsAlive() && actionInfo != null && actionInfo.MpCost == triggerData.Param1)
-                            {
-                                IsTriggered = true;
-                            }
-                            break;
-                            case TriggerType.TargetHpRateUnder:
-                            if (actionResultInfos != null && actionResultInfos.Count > 0)
-                            {
-                                if (!battlerInfo.IsAlive() && triggerData.Param2 == 0)
-                                {
-                                    break;
-                                }
-                                foreach (var actionResultInfo in actionResultInfos)
-                                {
-                                    if (actionResultInfo.HpDamage > 0 && actionResultInfo.TargetIndex != actionResultInfo.SubjectIndex)
-                                    {
-                                        var targetBattlerInfo = GetBattlerInfo(actionResultInfo.TargetIndex);
-                                        if (battlerInfo.IsActor == targetBattlerInfo.IsActor)
-                                        {
-                                            var targetHp = 0f;
-                                            if (targetBattlerInfo.Hp != 0)
-                                            {
-                                                targetHp = (float)targetBattlerInfo.Hp / (float)targetBattlerInfo.MaxHp;
-                                            }
-                                            if (targetHp <= triggerData.Param1 * 0.01f)
-                                            {
-                                                IsTriggered = true;
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                            break;
-                            case TriggerType.TargetDeath:
-                            if (battlerInfo.IsAlive() && actionResultInfos != null && actionResultInfos.Count > 0)
-                            {
-                                foreach (var actionResultInfo in actionResultInfos)
-                                {
-                                    if (actionResultInfo.TargetIndex != actionResultInfo.SubjectIndex)
-                                    {
-                                        var targetBattlerInfo = GetBattlerInfo(actionResultInfo.TargetIndex);
-                                        if (actionResultInfo.DeadIndexList.Contains(targetBattlerInfo.Index))
-                                        {
-                                            IsTriggered = true;
-                                        }               
-                                    }
-                                }
-                            }
-                            break;
                             case TriggerType.SelfActionInfo:
                             if (battlerInfo.IsAlive() && actionInfo != null)
                             {
@@ -1904,12 +1817,6 @@ namespace Ryneus
                                 {
                                     IsTriggered = true;
                                 }
-                            }
-                            break;
-                            case TriggerType.PayBattleMp:
-                            if (battlerInfo.IsAlive() && battlerInfo.PayBattleMp >= triggerData.Param1)
-                            {
-                                IsTriggered = true;
                             }
                             break;
                             case TriggerType.ActionResultDeath:
@@ -1940,115 +1847,6 @@ namespace Ryneus
                                 }
                             }
                             break;
-                            case TriggerType.AttackedCount:
-                            if (battlerInfo.IsAlive() && battlerInfo.AttackedCount >= triggerData.Param1)
-                            {
-                                IsTriggered = true;
-                            }
-                            break;
-                            case TriggerType.OneAttackOverDamage:
-                            if (battlerInfo.IsAlive() && battlerInfo.MaxDamage >= triggerData.Param1)
-                            {
-                                IsTriggered = true;
-                            }
-                            break;
-                            case TriggerType.FriendAttackedAction:
-                            if (battlerInfo.IsAlive())
-                            {
-                                if (actionInfo != null && actionInfo.Master.IsHpDamageFeature())
-                                {
-                                    if (battlerInfo.IsActor != GetBattlerInfo(actionInfo.SubjectIndex).IsActor)
-                                    {
-                                        IsTriggered = true;
-                                    }
-                                }
-                            }
-                            break;
-                            case TriggerType.SelfAttackedAction:
-                            if (battlerInfo.IsAlive())
-                            {
-                                if (actionInfo != null && actionInfo.ActionResults != null && actionInfo.Master.IsHpDamageFeature())
-                                {
-                                    var results = actionInfo.ActionResults.FindAll(a => a.HpDamage > 0 && a.TargetIndex == battlerInfo.Index);
-                                    if (results.Count > 0)
-                                    {
-                                        IsTriggered = true;
-                                    }
-                                }
-                            }
-                            break;
-                            case TriggerType.FriendAction:
-                            if (battlerInfo.IsAlive())
-                            {
-                                if (actionInfo != null && actionInfo.ActionResults != null && actionInfo.Master.IsHpDamageFeature())
-                                {
-                                    if (battlerInfo.IsActor == GetBattlerInfo(actionInfo.SubjectIndex).IsActor && battlerInfo.Index != actionInfo.SubjectIndex)
-                                    {
-                                        var success = actionInfo.ActionResults.Count > 0;
-                                        if (success)
-                                        {
-                                            IsTriggered = true;
-                                        }
-                                    }
-                                }
-                            }
-                            break;
-                            case TriggerType.FriendAttackAction:
-                            if (battlerInfo.IsAlive())
-                            {
-                                if (actionInfo != null && actionInfo.ActionResults != null && actionInfo.Master.IsHpDamageFeature())
-                                {
-                                    if (battlerInfo.IsActor == GetBattlerInfo(actionInfo.SubjectIndex).IsActor && battlerInfo.Index != actionInfo.SubjectIndex)
-                                    {
-                                        var results = actionInfo.ActionResults.FindAll(a => a.HpDamage > 0);
-                                        if (results.Count > 0)
-                                        {
-                                            IsTriggered = true;
-                                        }
-                                    }
-                                }
-                            }
-                            break;
-                            case TriggerType.OpponentHealAction:
-                            if (battlerInfo.IsAlive())
-                            {
-                                if (actionInfo != null && actionInfo.ActionResults != null && actionInfo.Master.IsHpHealFeature())
-                                {
-                                    if (battlerInfo.IsActor != GetBattlerInfo(actionInfo.SubjectIndex).IsActor && battlerInfo.Index != actionInfo.SubjectIndex)
-                                    {
-                                        var results = actionInfo.ActionResults.FindAll(a => a.HpHeal > 0);
-                                        if (results.Count > 0)
-                                        {
-                                            IsTriggered = true;
-                                        }
-                                    }
-                                }
-                            }
-                            break;
-                            case TriggerType.OpponentDamageShieldAction:
-                            if (battlerInfo.IsAlive())
-                            {
-                                if (actionInfo != null && actionInfo.ActionResults != null)
-                                {
-                                    if (battlerInfo.IsActor == GetBattlerInfo(actionInfo.SubjectIndex).IsActor && battlerInfo.Index != actionInfo.SubjectIndex)
-                                    {
-                                        foreach (var actionResultInfo in actionInfo.ActionResults)
-                                        {
-                                            foreach (var execStateInfo in actionResultInfo.ExecStateInfos)
-                                            {
-                                                if (execStateInfo.Key == actionResultInfo.TargetIndex)
-                                                {
-                                                    if (execStateInfo.Value.Find(a => a.StateType == StateType.NoDamage) != null)
-                                                    {
-                                                        IsTriggered = true;
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                            break;
                             case TriggerType.AllEnemyCurseState:
                             /*
                             if (battlerInfo.IsAlive() && opponents.AliveBattlerInfos.Find(a => !a.IsState(StateType.DeBuffUpper)) == null && opponents.AliveBattlerInfos.FindAll(a => a.IsAlive()).Count > 0)
@@ -2059,12 +1857,6 @@ namespace Ryneus
                             break;
                             case TriggerType.AllEnemyFreezeState:
                             if (battlerInfo.IsAlive() && opponents.AliveBattlerInfos.Find(a => !a.IsState(StateType.Freeze)) == null && opponents.AliveBattlerInfos.FindAll(a => a.IsAlive()).Count > 0)
-                            {
-                                IsTriggered = true;
-                            }
-                            break;
-                            case TriggerType.BeCriticalCount:
-                            if (battlerInfo.IsAlive() && battlerInfo.BeCriticalCount >= triggerData.Param1)
                             {
                                 IsTriggered = true;
                             }
@@ -2112,18 +1904,6 @@ namespace Ryneus
                                         }
                                     }
                                 }
-                            }
-                            break;
-                            case TriggerType.DodgeCountOver:
-                            if (battlerInfo.IsAlive() && battlerInfo.DodgeCount >= triggerData.Param1)
-                            {
-                                IsTriggered = true;
-                            }
-                            break;
-                            case TriggerType.HpHealCountOver:
-                            if (battlerInfo.IsAlive() && battlerInfo.HealCount >= triggerData.Param1)
-                            {
-                                IsTriggered = true;
                             }
                             break;
                             case TriggerType.AwakenDemigodAttribute:
