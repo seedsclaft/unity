@@ -366,7 +366,8 @@ namespace Ryneus
 
         private void ShowStatus()
         {
-            var statusViewInfo = new StatusViewInfo(() => {
+            var statusViewInfo = new StatusViewInfo(() => 
+            {
                 _view.CommandGameSystem(Base.CommandType.CloseStatus);
                 SetHelpInputSkipEnable();
                 _view.SetHelpText(DataSystem.GetText(14010));
@@ -436,8 +437,14 @@ namespace Ryneus
             {
                 // 敗北して戻る
                 _model.ReturnTempBattleMembers();
+                var returnSeekIndex = _model.CurrentStage.CurrentSeekIndex;
                 _model.EndStrategy();
-                _view.CommandGotoSceneChange(Scene.Tactics);
+                var tacticsSceneInfo = new TacticsSceneInfo
+                {
+                    ReturnBeforeBattle = true,
+                    SeekIndex = returnSeekIndex
+                };
+                _view.CommandGotoSceneChange(Scene.Tactics,tacticsSceneInfo);
             } else
             if (_model.RemainTurns == 1)
             {
@@ -455,12 +462,6 @@ namespace Ryneus
                 _view.CommandGotoSceneChange(Scene.Tactics);
             }
             //_model.TempInfo.ClearTempGetItemInfos();
-        }
-
-        private enum StrategyState{
-            None = 0,
-            BattleResult = 1,
-            TacticsResult = 2,
         }
     }
 }

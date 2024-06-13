@@ -26,15 +26,14 @@ namespace Ryneus
                 {
                     list.Add(item);
                 }
-
             }
             return MakeListData(list);
         }
         
-        public void SetInReplay()
+        public void SetInReplay(SaveBattleInfo saveBattleInfo)
         {
             PartyInfo.SetInReplay(true);
+            TempInfo.SetSaveBattleInfo(saveBattleInfo);
         }
-
     }
 }

@@ -7,8 +7,11 @@ namespace Ryneus
 {
     public class TacticsModel : BaseModel
     {
+        private TacticsSceneInfo _sceneParam;
+        public TacticsSceneInfo SceneParam => _sceneParam;
         public TacticsModel()
         {
+            _sceneParam = (TacticsSceneInfo)GameSystem.SceneStackManager.LastSceneParam;
         }
         
         public ActorInfo TacticsActor()
@@ -64,9 +67,9 @@ namespace Ryneus
             return MakeListData(selectRecords,enable);
         }
 
-        public void SetStageSeekIndex(int symbolIndex)
+        public void SetStageSeekIndex(int seekIndex)
         {
-            CurrentStage.SetSeekIndex(symbolIndex);
+            CurrentStage.SetSeekIndex(seekIndex);
         }
 
         public void SaveTempBattleMembers()
@@ -383,6 +386,13 @@ namespace Ryneus
             }
             return false;
         }
+    }
+
+    public class TacticsSceneInfo
+    {
+        // バトル直前に戻る
+        public bool ReturnBeforeBattle;
+        public int SeekIndex = 0;
     }
 
     public class TacticsActorInfo

@@ -8,6 +8,23 @@ namespace Ryneus
 	[Serializable]
     public class SaveBattleInfo
     {
+        public SaveBattleInfo()
+        {
+        }
+        private string _userName = "";
+        public string UserName => _userName;
+        public void SetUserName(string userName)
+        {
+            _userName = userName;
+        }
+
+        private string _version = "";
+        public string Version => _version;
+        public void SetVersion(string version)
+        {
+            _version = version;
+        }
+
         private int _countIndex = 0;
         private UnitInfo _party;
         public UnitInfo Party => _party;
@@ -30,6 +47,7 @@ namespace Ryneus
             actionInfos[_countIndex] = actionInfo;
             _countIndex++;
         }
+
         public void AddResultData(ActionResultInfo actionResultInfo)
         {
             if (!actionResultInfos.ContainsKey(_countIndex))

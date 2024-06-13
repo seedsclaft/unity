@@ -90,5 +90,13 @@ namespace Ryneus
             }
             _tempStatusActorInfos = recordActorInfos;
         }
+
+        // リプレイデータ
+        private SaveBattleInfo _clearPartyReplayData;
+        public SaveBattleInfo ClearPartyReplayData => _clearPartyReplayData;
+        public void SetSaveBattleInfo(SaveBattleInfo clearPartyReplayData)
+        {
+            _clearPartyReplayData = clearPartyReplayData;
+        }
     }
 }

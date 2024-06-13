@@ -5,21 +5,19 @@ namespace Ryneus
 {
     public class BattleReplayModel : BattleModel
     {
-        public string ReplayFilePath()
+        public BattleReplayModel()
         {
-            return CurrentStageKey();
+            _saveBattleInfo = TempInfo.ClearPartyReplayData;
         }
         private int _replayIndex = -1;
         public void SeekReplayCounter()
         {
             _replayIndex++;
         }
+
+
         private SaveBattleInfo _saveBattleInfo;
         public SaveBattleInfo SaveBattleInfo => _saveBattleInfo;
-        public void SetSaveBattleInfo(SaveBattleInfo saveBattleInfo)
-        {
-            _saveBattleInfo = saveBattleInfo;
-        }
 
         public ActionInfo GetSaveActionData()
         {
@@ -30,6 +28,7 @@ namespace Ryneus
             }
             return null;
         }
+        
         public List<ActionResultInfo> GetSaveResultData()
         {
             if (_saveBattleInfo.actionResultInfos.ContainsKey(_replayIndex))

@@ -10,11 +10,7 @@ namespace Ryneus
         BattleView _view = null;
         bool _busy = false;
         private bool _skipBattle = false;
-        private bool _triggerAfterChecked = false;
-        private bool _slipDamageChecked = false;
-        private bool _regenerateChecked = false;
-        private bool _battleEnded = false;
-        private Battle.CommandType _nextCommandType = Battle.CommandType.None;
+
 
         public BattleReplayPresenter(BattleView view)
         {
@@ -27,13 +23,10 @@ namespace Ryneus
             Initialize();
         }
 
-        public async void Initialize()
+        public void Initialize()
         {
-            var replayData = await SaveSystem.LoadReplay(_model.ReplayFilePath());
-            await UniTask.WaitUntil(() => replayData != null);
             _view.SetBattleBusy(true);
-            _model.CreateBattleData(replayData);
-            _model.SetSaveBattleInfo(replayData);
+            _model.CreateBattleData(_model.SaveBattleInfo);
             _view.CommandGameSystem(Base.CommandType.CloseLoading);
 
             ViewInitialize();
@@ -63,14 +56,77 @@ namespace Ryneus
         }
         private async void StartBattle()
         {
-            //_view.SetEvent((type) => UpdateCommand(type));
+            _view.SetEvent((type) => UpdateCommand(type));
             _view.StartBattleStartAnim(_model.BattleStartText());
             _view.StartUIAnimation();
             await UniTask.WaitUntil(() => _view.StartAnimIsBusy == false);
+            _view.SetBattleSkipActive(true);
 
             //_view.SetBattleBusy(false);
             SeekReplayData();
             _busy = false;
+        }
+
+        private void UpdateCommand(BattleViewEvent viewEvent)
+        {
+            if (viewEvent.commandType == Battle.CommandType.ChangeBattleSpeed)
+            {
+                CommandChangeBattleSpeed();
+            }
+            if (viewEvent.commandType == Battle.CommandType.SkipBattle)
+            {
+                CommandSkipBattle();
+            }
+            if (_busy)
+            {
+                return;
+            }
+            switch (viewEvent.commandType)
+            {
+                case Battle.CommandType.SelectSideMenu:
+                    CommandSelectSideMenu();
+                    break;
+                case Battle.CommandType.SkillLog:
+                    CommandSkillLog();
+                    break;
+            }
+        }
+
+        private void CommandSkillLog()
+        {
+            _busy = true;
+            SoundManager.Instance.PlayStaticSe(SEType.Decide);
+            var SkillLogViewInfo = new SkillLogViewInfo(_model.SkillLogs,() => 
+            {
+                _busy = false;
+            });
+
+            _view.CommandCallSkillLog(SkillLogViewInfo);
+        }
+
+        private void CommandSelectSideMenu()
+        {
+            if (_busy) return;
+            var sideMenuViewInfo = new SideMenuViewInfo();
+            sideMenuViewInfo.EndEvent = () => {
+
+            };
+            sideMenuViewInfo.CommandLists = _model.SideMenu();
+            _view.CommandCallSideMenu(sideMenuViewInfo);
+        }
+
+        private void CommandChangeBattleSpeed()
+        {
+            SoundManager.Instance.PlayStaticSe(SEType.Cancel);
+            ConfigUtility.ChangeBattleSpeed(1);
+            _view.SetBattleSpeedButton(ConfigUtility.CurrentBattleSpeedText());
+        }
+
+        private void CommandSkipBattle()
+        {
+            SoundManager.Instance.PlayStaticSe(SEType.Cancel);
+            _skipBattle = true;
+            _view.CommandGameSystem(Base.CommandType.CallLoading);
         }
 
         private async void SeekReplayData()
@@ -146,21 +202,14 @@ namespace Ryneus
         private async void BattleEnd(bool victory)
         {
             //if (_battleEnded == true) return;
-            var strategySceneInfo = new StrategySceneInfo();
-            strategySceneInfo.ActorInfos = _model.BattleMembers();
             if (victory)
             {
                 _view.StartBattleStartAnim(DataSystem.GetText(15020));
-                strategySceneInfo.GetItemInfos = _model.MakeBattlerResult();
-                _model.MakeBattleScore(true);
             } else
             {
                 _view.StartBattleStartAnim(DataSystem.GetText(15030)); 
-                strategySceneInfo.GetItemInfos = new List<GetItemInfo>();   
-                _model.MakeBattleScore(false);       
             }
             _model.EndBattle();
-            _battleEnded = true;
             _view.HideStateOverlay();
             if (_skipBattle)
             {
@@ -176,7 +225,12 @@ namespace Ryneus
                 PlayTacticsBgm();
             }
             _view.CommandGameSystem(Base.CommandType.CloseLoading);
-            _view.CommandGotoSceneChange(Scene.Strategy,strategySceneInfo);
+            var tacticsSceneInfo = new TacticsSceneInfo
+            {
+                ReturnBeforeBattle = true,
+                SeekIndex = _model.CurrentStage.CurrentSeekIndex
+            };
+            _view.CommandGotoSceneChange(Scene.Tactics,tacticsSceneInfo);
         }
 
         

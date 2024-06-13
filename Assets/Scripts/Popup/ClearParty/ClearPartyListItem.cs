@@ -29,15 +29,13 @@ namespace Ryneus
             var data = (SaveBattleInfo)ListData.Data;
             if (data != null)
             {
-                userName?.SetText("test");
+                userName?.SetText(data.UserName);
                 var totalScore = data.Party.TotalEvaluate();
                 totalEvaluate?.SetText(totalScore.ToString());
                 
-                //getItemButton.SetData("",0);
                 replayButton.SetText("再生");
                 actorInfos.Initialize();
                 actorInfos.SetData(ListData.MakeListData(data.Party.BattlerInfos));
-                //replayButton.Cursor.SetActive(ListData.Enable);
             }
         }
     }

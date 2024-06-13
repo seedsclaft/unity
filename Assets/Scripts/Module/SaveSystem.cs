@@ -138,6 +138,7 @@ namespace Ryneus
 				} catch(Exception e)
 				{
 					Debug.LogException(e);
+					return null;
 				} finally 
 				{
 					//	ファイル操作には明示的な破棄が必要です。Closeを忘れないように。
