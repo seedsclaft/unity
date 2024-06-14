@@ -70,12 +70,10 @@ namespace Ryneus
         public void SetTacticsCharacter(List<ListData> characterData)
         {
             characterList.SetData(characterData);
-            //characterList.SetSelectedHandler(() => DisplaySelectCharacter());
             if (displaySelectCharacter == null)
             {
                 displaySelectCharacter.gameObject.SetActive(false);
             }
-            //DisplaySelectCharacter();
             Refresh();
         }
 
@@ -91,6 +89,7 @@ namespace Ryneus
 
         private void CallCharacterInputHandler(InputKeyType keyType)
         {
+            return;
             if (!characterList.Active)
             {
                 return;

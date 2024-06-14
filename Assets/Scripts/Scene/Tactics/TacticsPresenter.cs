@@ -507,7 +507,7 @@ namespace Ryneus
                 GotoStrategyScene(getItemInfos,actorInfos);
             } else
             {
-                CommandTacticsCommand(_model.TacticsCommandType);
+                CommandSelectRecordSeek(_model.CurrentSelectRecord().Seek);
             }
         }
 
@@ -529,7 +529,8 @@ namespace Ryneus
                 {
                     _model.SetTempAddSelectActorGetItemInfoStatusInfos(_model.CurrentSelectRecord().SymbolInfo.GetItemInfos);
                 }
-                var statusViewInfo = new StatusViewInfo(() => {
+                var statusViewInfo = new StatusViewInfo(() => 
+                {
                     _view.CommandGameSystem(Base.CommandType.CloseStatus);
                     _view.ChangeUIActive(true);
                 });
@@ -540,7 +541,7 @@ namespace Ryneus
                 _view.ChangeUIActive(false);
             } else
             {
-                CommandTacticsCommand(_model.TacticsCommandType);
+                CommandSelectRecordSeek(_model.CurrentSelectRecord().Seek);
             }
         }
 
@@ -588,7 +589,7 @@ namespace Ryneus
                 //GotoStrategyScene(getItemInfos,_model.StageMembers());
             } else
             {
-                CommandTacticsCommand(_model.TacticsCommandType);
+                CommandSelectRecordSeek(_model.CurrentSelectRecord().Seek);
             }
         }
 
@@ -607,7 +608,7 @@ namespace Ryneus
                 GotoStrategyScene(currentRecord.SymbolInfo.GetItemInfos,_model.StageMembers());
             } else
             {
-                CommandTacticsCommand(_model.TacticsCommandType);
+                CommandSelectRecordSeek(_model.CurrentSelectRecord().Seek);
             }
         }
 
@@ -776,10 +777,13 @@ namespace Ryneus
 
         private void CommandSelectSideMenu()
         {
+            _busy = true;
             var sideMenuViewInfo = new SideMenuViewInfo
             {
                 EndEvent = () =>
                 {
+                    _busy = false;
+                    _view.SetBusyTrain(false);
                 },
                 CommandLists = _model.SideMenu()
             };
@@ -824,6 +828,7 @@ namespace Ryneus
                 EndEvent = () =>
                 {
                     _busy = false;
+                    _view.SetBusyTrain(false);
                     SoundManager.Instance.PlayStaticSe(SEType.Cancel);
                 }
             };

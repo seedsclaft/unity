@@ -48,10 +48,30 @@ namespace Ryneus
             _inputKeyEvent = inputKeyEvent;
         }
 
+        public new void SetBusy(bool isBusy)
+        {
+            base.SetBusy(isBusy);
+            if (isBusy)
+            {
+                selectCharacter.CharacterList.Deactivate();
+                selectCharacter.CommandList.Deactivate();
+                battleSelectCharacter.MagicList.Deactivate();
+                battleSelectCharacter.AttributeList.Deactivate();
+            } else
+            {
+                selectCharacter.CharacterList.Activate();
+                selectCharacter.CommandList.Activate();
+                battleSelectCharacter.MagicList.Activate();
+                battleSelectCharacter.AttributeList.Activate();
+            }
+        }
+
         public void CallTrainCommand(TacticsCommandType tacticsCommandType)
         {
-            var eventData = new TrainViewEvent(CommandType.TacticsCommand);
-            eventData.template = tacticsCommandType;
+            var eventData = new TrainViewEvent(CommandType.TacticsCommand)
+            {
+                template = tacticsCommandType
+            };
             _commandData(eventData);
         }
 
@@ -72,8 +92,10 @@ namespace Ryneus
             if (listData != null)
             {
                 var data = (AttributeType)listData.Data;
-                var eventData = new TrainViewEvent(CommandType.SelectAttribute);
-                eventData.template = data;
+                var eventData = new TrainViewEvent(CommandType.SelectAttribute)
+                {
+                    template = data
+                };
                 _commandData(eventData);
             }
         }
@@ -124,8 +146,10 @@ namespace Ryneus
                 if (listData != null)
                 {
                     var data = (TacticsActorInfo)listData.Data;
-                    var eventData = new TrainViewEvent(CommandType.ChangeSelectTacticsActor);
-                    eventData.template = data.ActorInfo.ActorId;
+                    var eventData = new TrainViewEvent(CommandType.ChangeSelectTacticsActor)
+                    {
+                        template = data.ActorInfo.ActorId
+                    };
                     _commandData(eventData);
                 }
             });
@@ -149,8 +173,10 @@ namespace Ryneus
             if (listData != null)
             {
                 var data = (TacticsActorInfo)listData.Data;
-                var eventData = new TrainViewEvent(CommandType.SelectTacticsActor);
-                eventData.template = data;
+                var eventData = new TrainViewEvent(CommandType.SelectTacticsActor)
+                {
+                    template = data
+                };
                 _commandData(eventData);
             }
         }
@@ -273,8 +299,10 @@ namespace Ryneus
                 {
                     return;
                 }
-                var eventData = new TrainViewEvent(CommandType.SelectFrontBattleIndex);
-                eventData.template = data.ActorInfo.ActorId;
+                var eventData = new TrainViewEvent(CommandType.SelectFrontBattleIndex)
+                {
+                    template = data.ActorInfo.ActorId
+                };
                 _commandData(eventData);
             }
         }
@@ -289,8 +317,10 @@ namespace Ryneus
                 {
                     return;
                 }
-                var eventData = new TrainViewEvent(CommandType.SelectBackBattleIndex);
-                eventData.template = data.ActorInfo.ActorId;
+                var eventData = new TrainViewEvent(CommandType.SelectBackBattleIndex)
+                {
+                    template = data.ActorInfo.ActorId
+                };
                 _commandData(eventData);
             }
         }
@@ -305,8 +335,10 @@ namespace Ryneus
                 {
                     return;
                 }
-                var eventData = new TrainViewEvent(CommandType.SkillTrigger);
-                eventData.template = data.ActorInfo.ActorId;
+                var eventData = new TrainViewEvent(CommandType.SkillTrigger)
+                {
+                    template = data.ActorInfo.ActorId
+                };
                 _commandData(eventData);
             }
         }
@@ -317,7 +349,7 @@ namespace Ryneus
             if (listData != null && listData.Enable)
             {
                 var eventData = new TrainViewEvent(CommandType.SkillAlchemy);
-                var data = (SkillInfo)listData;
+                var data = listData;
                 eventData.template = listData;
                 _commandData(eventData);
             }

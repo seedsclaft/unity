@@ -55,29 +55,38 @@ namespace Ryneus
 
         private void CallInputHandler(InputKeyType keyType)
         {
-            return;
-            if (keyType == InputKeyType.Right || keyType == InputKeyType.Left)
+            if (keyType == InputKeyType.Right)
             {
-                if (DataCount > 1)
+                var selectIndex = Index;
+                if (selectIndex > DataCount)
                 {
-                    var tacticsSymbol = ObjectList[Index].GetComponent<TacticsSymbol>();
-                    tacticsSymbol.UpdateItemIndex(-1);
+                    selectIndex = 0;
                 }
-            }
+                Refresh(selectIndex);
+            } else
+            if (keyType == InputKeyType.Left)
+            {
+                var selectIndex = Index;
+                if (selectIndex < 0)
+                {
+                    selectIndex = DataCount;
+                }
+                Refresh(selectIndex);
+            } else
             if (keyType == InputKeyType.Up)
             {
                 var tacticsSymbol = ItemPrefabList[Index].GetComponent<TacticsSymbol>();
-                //tacticsSymbol.UpdateItemIndex(tacticsSymbol.GetItemIndex-1);
+                tacticsSymbol.UpdateItemIndex(tacticsSymbol.GetItemIndex-1);
                 if (tacticsSymbol.GetItemIndex == -1)
                 {
                     tacticsSymbol.SetSelectable(true);
                 }
                 //Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cursor);
-            }
+            } else
             if (keyType == InputKeyType.Down)
             {
-                //var tacticsSymbol = ItemPrefabList[Index].GetComponent<TacticsSymbol>();
-                //tacticsSymbol.UpdateItemIndex(tacticsSymbol.GetItemIndex+1);
+                var tacticsSymbol = ItemPrefabList[Index].GetComponent<TacticsSymbol>();
+                tacticsSymbol.UpdateItemIndex(tacticsSymbol.GetItemIndex+1);
                 //Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cursor);
             }
         }
@@ -93,10 +102,7 @@ namespace Ryneus
                 tacticsSymbol.SetAddListenHandler(false);
                 tacticsSymbol.SetSelectHandler((a) =>
                 {
-                    UpdateUnSelectAll();
-                    UpdateSelectIndex(a);
-                    tacticsSymbol.SetSelectable(true);
-                    tacticsSymbol.UpdateItemIndex(-1);
+                    Refresh(a);
                 });
                 tacticsSymbol.SetGetItemInfoCallHandler(() => 
                 {
@@ -119,6 +125,19 @@ namespace Ryneus
                 tacticsSymbol.UpdateItemIndex(-1);
                 tacticsSymbol.SetSelectable(i == 0);
                 tacticsSymbol.SetAddListenHandler(true);
+            }
+            Refresh(symbolInfos.FindIndex(a => a.Selected));
+        }
+
+        public new void Refresh(int selectIndex = 0)
+        {
+            UpdateUnSelectAll();
+            UpdateSelectIndex(selectIndex);
+            if (ObjectList.Count > selectIndex)
+            {
+                var tacticsSymbol = ObjectList[selectIndex].GetComponentInChildren<TacticsSymbol>();
+                tacticsSymbol.SetSelectable(true);
+                tacticsSymbol.UpdateItemIndex(-1);
             }
         }
 

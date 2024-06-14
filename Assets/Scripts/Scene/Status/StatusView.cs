@@ -198,8 +198,10 @@ namespace Ryneus
             var listData = selectCharacter.ActionData;
             if (listData != null)
             {
-                var eventData = new StatusViewEvent(CommandType.SelectSkillAction);
-                eventData.template = (SkillInfo)listData;
+                var eventData = new StatusViewEvent(CommandType.SelectSkillAction)
+                {
+                    template = (SkillInfo)listData
+                };
                 _commandData(eventData);
             }
         }
@@ -260,7 +262,10 @@ namespace Ryneus
 
         public void InputHandler(InputKeyType keyType,bool pressed)
         {
-
+            if (keyType == InputKeyType.Cancel)
+            {
+                OnClickBack();
+            }
         }
 
         public new void MouseCancelHandler()
@@ -297,7 +302,8 @@ namespace Ryneus
         }
     }
 
-    public class StatusViewInfo{
+    public class StatusViewInfo
+    {
         private System.Action _backEvent = null;
         public System.Action BackEvent => _backEvent;
         private bool _displayDecideButton = false;

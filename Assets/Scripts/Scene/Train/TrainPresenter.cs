@@ -182,6 +182,7 @@ namespace Ryneus
                     {
                         _view.ShowCharacterDetail(_model.StageMembers()[0],_model.StageMembers(),true);
                     }
+                    _view.ShowBattleReplay(false);
                     _backCommand = Train.CommandType.TacticsCommandClose;
                     break;
                 case TacticsCommandType.Status:
@@ -193,7 +194,8 @@ namespace Ryneus
         private void CommandStatus()
         {
             _model.SetStatusActorInfos();
-            var statusViewInfo = new StatusViewInfo(() => {
+            var statusViewInfo = new StatusViewInfo(() => 
+            {
                 _view.CommandGameSystem(Base.CommandType.CloseStatus);
                 _view.ChangeUIActive(true);
                 _view.SetHelpInputInfo("TACTICS");
@@ -301,6 +303,7 @@ namespace Ryneus
 
         private void CommandBattleReplay()
         {
+            _busy = true;
             var popupInfo = new PopupInfo
             {
                 PopupType = PopupType.ClearParty,
@@ -520,6 +523,7 @@ namespace Ryneus
 
         private void CommandAlcanaCheck()
         {
+            _busy = true;
             SoundManager.Instance.PlayStaticSe(SEType.Decide);
             var popupInfo = new PopupInfo();
             popupInfo.PopupType = PopupType.AlcanaList;

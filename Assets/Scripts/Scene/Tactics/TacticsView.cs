@@ -7,7 +7,7 @@ using TMPro;
 
 namespace Ryneus
 {
-    public class TacticsView : BaseView
+    public class TacticsView : BaseView ,IInputHandlerEvent
     {
         [SerializeField] private TrainView trainView = null;
         [SerializeField] private BaseList tacticsCommandList = null;
@@ -68,8 +68,7 @@ namespace Ryneus
 
             SideMenuButton.onClick.AddListener(() => 
             {
-                var eventData = new TacticsViewEvent(CommandType.SelectSideMenu);
-                _commandData(eventData);
+                CallSideMenu();
             });
             stageHelpButton.onClick.AddListener(() => 
             {
@@ -94,6 +93,11 @@ namespace Ryneus
             symbolRecordList.Initialize();
             SetInputHandler(symbolRecordList.gameObject);
             symbolRecordList.SetInputHandler(InputKeyType.Decide,() => OnClickSymbol());
+            symbolRecordList.SetInputHandler(InputKeyType.Cancel,() => 
+            {
+                var eventData = new TacticsViewEvent(CommandType.CancelSymbolRecord);
+                _commandData(eventData);
+            });
 
             parallelList.Initialize();
             trainView.Initialize(base._commandData);
@@ -129,6 +133,19 @@ namespace Ryneus
                 duration);
                 */
         }
+
+        private void CallSideMenu()
+        {
+            SetBusyTrain(true);
+            var eventData = new TacticsViewEvent(CommandType.SelectSideMenu);
+            _commandData(eventData);
+        }
+
+        public void SetBusyTrain(bool busy)
+        {
+            trainView.SetBusy(busy);
+        }
+
 
         public void SetTacticsCommand(List<ListData> menuCommands)
         {
@@ -175,7 +192,11 @@ namespace Ryneus
             SetBackCommand(() => OnClickBack());
             tacticsSymbolList.SetInputHandler(InputKeyType.Decide,() => CallBattleEnemy());
             tacticsSymbolList.SetInputHandler(InputKeyType.Option1,() => OnClickEnemyInfo());
-            tacticsSymbolList.SetInputHandler(InputKeyType.Cancel,() => OnClickBack());
+            tacticsSymbolList.SetInputHandler(InputKeyType.Cancel,() => 
+            {
+                var eventData = new TacticsViewEvent(CommandType.CancelRecordList);
+                _commandData(eventData);
+            });
             SetInputHandler(tacticsSymbolList.GetComponent<IInputHandlerEvent>());
             tacticsSymbolList.SetInputCallHandler();
         }
@@ -323,7 +344,6 @@ namespace Ryneus
             var listData = symbolRecordList.ListData;
             if (listData != null)
             {
-                symbolRecordList.Deactivate();
                 var data = (List<SymbolResultInfo>)listData.Data;
                 var eventData = new TacticsViewEvent(CommandType.SelectRecord)
                 {
@@ -335,13 +355,11 @@ namespace Ryneus
 
         public void ShowSymbolRecord()
         {
-            symbolRecordList.Activate();
             symbolRecordList.gameObject.SetActive(true);
         }
 
         public void HideSymbolRecord()
         {
-            symbolRecordList.Deactivate();
             symbolRecordList.gameObject.SetActive(false);
         }
 
@@ -501,15 +519,16 @@ namespace Ryneus
             switch (viewEvent.commandType)
             {
                 case CommandType.TacticsCommand:
-                    tacticsCommandList.Deactivate();
                     var tacticsCommandType = (TacticsCommandType)viewEvent.template;
                     switch (tacticsCommandType)
                     {
                         case TacticsCommandType.Paradigm:
                             symbolRecordList.Activate();
+                            tacticsCommandList.Deactivate();
                             break;
                         case TacticsCommandType.Train:
                         case TacticsCommandType.Alchemy:
+                            tacticsCommandList.Deactivate();
                             break;
                         case TacticsCommandType.Status:
                             break;
@@ -541,6 +560,14 @@ namespace Ryneus
                     tacticsCommandList.Activate();
                 }
                 break;
+            }
+        }
+
+        public void InputHandler(InputKeyType keyType, bool pressed)
+        {
+            if (keyType == InputKeyType.Option1)
+            {
+                CallSideMenu();
             }
         }
     }
